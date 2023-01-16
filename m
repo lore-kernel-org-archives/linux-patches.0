@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C7C46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:28:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16615C433F1;
-	Mon, 16 Jan 2023 16:27:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3614346B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:28:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFE34C433F0;
+	Mon, 16 Jan 2023 16:28:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886480;
-	bh=+XUpq7tjXmgq1/QAbNfwAYqbHUhuREjj+arXjvvXF1w=;
+	s=korg; t=1673886483;
+	bh=L7QBOubpQX1WNlFRy75XautUJd4viMxIeZ6KVlGJcfk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tJa/Ks0EuelGzdrY9i2cTs5gdmXbO3pvd+yPu03bgbuDM4z95ZD88ahvYkOUDN7hJ
-	 TSaeaWMLkaxyvWqSOR/nr2j2ni3G6EsjNDDPKV+sohkglCeiec4VytXgergY/aVsxP
-	 kIBn+0Yt7loA2D7hf8zDR1D34cyB913eib2F0Fa8=
+	b=ZsMmzFP7/W+qcDqH8Zq7ds2WJ27AcgFNusWjVLO5H3FBgOOY/Si3hmxNRXTly4AfQ
+	 x57+VmoOJXpEAsNQcAdGpuIL+F1l2TQd6OfAnPBV9SABN0rPNW1/VaQ59Das7m9lo3
+	 wPN1XyNyfbfP5FrBfZOem3yKgCYU51BUynOCLdXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>,
-	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 5.4 445/658] HID: wacom: Ensure bootloader PID is usable in hidraw mode
-Date: Mon, 16 Jan 2023 16:48:53 +0100
-Message-Id: <20230116154929.876570396@linuxfoundation.org>
+	syzbot+8dd0551dda6020944c5d@syzkaller.appspotmail.com,
+	Stanislav Fomichev <sdf@google.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Yonghong Song <yhs@fb.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 416/658] bpf: Prevent decl_tag from being referenced in func_proto arg
+Date: Mon, 16 Jan 2023 16:48:24 +0100
+Message-Id: <20230116154928.623040840@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,89 +37,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Gerecke <killertofu@gmail.com>
+From: Stanislav Fomichev <sdf@google.com>
 
-commit 1db1f392591aff13fd643f0ec7c1d5e27391d700 upstream.
+[ Upstream commit f17472d4599697d701aa239b4c475a506bccfd19 ]
 
-Some Wacom devices have a special "bootloader" mode that is used for
-firmware flashing. When operating in this mode, the device cannot be
-used for input, and the HID descriptor is not able to be processed by
-the driver. The driver generates an "Unknown device_type" warning and
-then returns an error code from wacom_probe(). This is a problem because
-userspace still needs to be able to interact with the device via hidraw
-to perform the firmware flash.
+Syzkaller managed to hit another decl_tag issue:
 
-This commit adds a non-generic device definition for 056a:0094 which
-is used when devices are in "bootloader" mode. It marks the devices
-with a special BOOTLOADER type that is recognized by wacom_probe() and
-wacom_raw_event(). When we see this type we ensure a hidraw device is
-created and otherwise keep our hands off so that userspace is in full
-control.
+  btf_func_proto_check kernel/bpf/btf.c:4506 [inline]
+  btf_check_all_types kernel/bpf/btf.c:4734 [inline]
+  btf_parse_type_sec+0x1175/0x1980 kernel/bpf/btf.c:4763
+  btf_parse kernel/bpf/btf.c:5042 [inline]
+  btf_new_fd+0x65a/0xb00 kernel/bpf/btf.c:6709
+  bpf_btf_load+0x6f/0x90 kernel/bpf/syscall.c:4342
+  __sys_bpf+0x50a/0x6c0 kernel/bpf/syscall.c:5034
+  __do_sys_bpf kernel/bpf/syscall.c:5093 [inline]
+  __se_sys_bpf kernel/bpf/syscall.c:5091 [inline]
+  __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5091
+  do_syscall_64+0x54/0x70 arch/x86/entry/common.c:48
 
-Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
-Tested-by: Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This seems similar to commit ea68376c8bed ("bpf: prevent decl_tag from being
+referenced in func_proto") but for the argument.
+
+Reported-by: syzbot+8dd0551dda6020944c5d@syzkaller.appspotmail.com
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/bpf/20221123035422.872531-2-sdf@google.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/wacom_sys.c |    8 ++++++++
- drivers/hid/wacom_wac.c |    4 ++++
- drivers/hid/wacom_wac.h |    1 +
- 3 files changed, 13 insertions(+)
+ kernel/bpf/btf.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -160,6 +160,9 @@ static int wacom_raw_event(struct hid_de
- {
- 	struct wacom *wacom = hid_get_drvdata(hdev);
+diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
+index a28bbec8c59f..8fd65a0eb7f3 100644
+--- a/kernel/bpf/btf.c
++++ b/kernel/bpf/btf.c
+@@ -2849,6 +2849,11 @@ static int btf_func_proto_check(struct btf_verifier_env *env,
+ 			break;
+ 		}
  
-+	if (wacom->wacom_wac.features.type == BOOTLOADER)
-+		return 0;
++		if (btf_type_is_resolve_source_only(arg_type)) {
++			btf_verifier_log_type(env, t, "Invalid arg#%u", i + 1);
++			return -EINVAL;
++		}
 +
- 	if (size > WACOM_PKGLEN_MAX)
- 		return 1;
- 
-@@ -2786,6 +2789,11 @@ static int wacom_probe(struct hid_device
- 		return error;
- 	}
- 
-+	if (features->type == BOOTLOADER) {
-+		hid_warn(hdev, "Using device in hidraw-only mode");
-+		return hid_hw_start(hdev, HID_CONNECT_HIDRAW);
-+	}
-+
- 	error = wacom_parse_and_register(wacom, false);
- 	if (error)
- 		return error;
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -4782,6 +4782,9 @@ static const struct wacom_features wacom
- static const struct wacom_features wacom_features_HID_ANY_ID =
- 	{ "Wacom HID", .type = HID_GENERIC, .oVid = HID_ANY_ID, .oPid = HID_ANY_ID };
- 
-+static const struct wacom_features wacom_features_0x94 =
-+	{ "Wacom Bootloader", .type = BOOTLOADER };
-+
- #define USB_DEVICE_WACOM(prod)						\
- 	HID_DEVICE(BUS_USB, HID_GROUP_WACOM, USB_VENDOR_ID_WACOM, prod),\
- 	.driver_data = (kernel_ulong_t)&wacom_features_##prod
-@@ -4855,6 +4858,7 @@ const struct hid_device_id wacom_ids[] =
- 	{ USB_DEVICE_WACOM(0x84) },
- 	{ USB_DEVICE_WACOM(0x90) },
- 	{ USB_DEVICE_WACOM(0x93) },
-+	{ USB_DEVICE_WACOM(0x94) },
- 	{ USB_DEVICE_WACOM(0x97) },
- 	{ USB_DEVICE_WACOM(0x9A) },
- 	{ USB_DEVICE_WACOM(0x9F) },
---- a/drivers/hid/wacom_wac.h
-+++ b/drivers/hid/wacom_wac.h
-@@ -242,6 +242,7 @@ enum {
- 	MTTPC,
- 	MTTPC_B,
- 	HID_GENERIC,
-+	BOOTLOADER,
- 	MAX_TYPE
- };
- 
+ 		if (args[i].name_off &&
+ 		    (!btf_name_offset_valid(btf, args[i].name_off) ||
+ 		     !btf_name_valid_identifier(btf, args[i].name_off))) {
+-- 
+2.35.1
+
 
 
