@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E209146B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:09:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6601DC433EF;
-	Mon, 16 Jan 2023 16:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 819B846B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:09:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05D3FC433F0;
+	Mon, 16 Jan 2023 16:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885369;
-	bh=0RWuGOQ8ucpU8zDmK8dktypipPzlNsFUxCK5JZsmDFM=;
+	s=korg; t=1673885372;
+	bh=hky+L9OqszPzzfyyNFRtDqP5ZOd/0ysZcJ2HNj/l+b4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XziFgHufh0p0AkzjPX5RdwLdn6xoG9bbkhNGzV4X01C38G1EWGRB4BCg+UjmlBuaH
-	 gnN/Vft/f05ESV0mzMu0dxYvwKF370sRJixJoiAx7IFt74vjXrnAK7lgSeFQQMyyWG
-	 RczwClQOlgfjVAloeXgV463C9dLbk2NuNA+Q5Sko=
+	b=uklBN41bHP1/nYbZXgWz8YyQSPfNRrmtY8y9G3vghmJvX5jvL77fHI3tWA6hwy2Uy
+	 htJ7RKK7wXowEncazZMzZ3Xbq5XLpPohoHzqhAKjjZAawwVcwG3EhF6rJhgCZNNuiD
+	 lAO3MjKeGZqLAMl+dUjKyU6dHdQ56QeCZpC3rRw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 025/658] soc: qcom: llcc: make irq truly optional
-Date: Mon, 16 Jan 2023 16:41:53 +0100
-Message-Id: <20230116154910.785165536@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 5.4 003/658] udf: Fix preallocation discarding at indirect extent boundary
+Date: Mon, 16 Jan 2023 16:41:31 +0100
+Message-Id: <20230116154909.820623910@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,40 +33,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Weiss <luca.weiss@fairphone.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit c882c899ead3545102a4d71b5fbe73b9e4bc2657 ]
+commit cfe4c1b25dd6d2f056afc00b7c98bcb3dd0b1fc3 upstream.
 
-The function platform_get_irq prints an error message into the kernel
-log when the irq isn't found.
+When preallocation extent is the first one in the extent block, the
+code would corrupt extent tree header instead. Fix the problem and use
+udf_delete_aext() for deleting extent to avoid some code duplication.
 
-Since the interrupt is actually optional and not provided by some SoCs,
-use platform_get_irq_optional which does not print an error message.
-
-Fixes: c081f3060fab ("soc: qcom: Add support to register LLCC EDAC driver")
-Signed-off-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221104153041.412020-1-luca.weiss@fairphone.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/llcc-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/truncate.c |   45 +++++++++++++--------------------------------
+ 1 file changed, 13 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
-index 19039f19af97..69abc99b812d 100644
---- a/drivers/soc/qcom/llcc-qcom.c
-+++ b/drivers/soc/qcom/llcc-qcom.c
-@@ -415,7 +415,7 @@ static int qcom_llcc_probe(struct platform_device *pdev,
- 	if (ret)
- 		goto err;
+--- a/fs/udf/truncate.c
++++ b/fs/udf/truncate.c
+@@ -120,60 +120,41 @@ void udf_truncate_tail_extent(struct ino
  
--	drv_data->ecc_irq = platform_get_irq(pdev, 0);
-+	drv_data->ecc_irq = platform_get_irq_optional(pdev, 0);
- 	if (drv_data->ecc_irq >= 0) {
- 		llcc_edac = platform_device_register_data(&pdev->dev,
- 						"qcom_llcc_edac", -1, drv_data,
--- 
-2.35.1
-
+ void udf_discard_prealloc(struct inode *inode)
+ {
+-	struct extent_position epos = { NULL, 0, {0, 0} };
++	struct extent_position epos = {};
++	struct extent_position prev_epos = {};
+ 	struct kernel_lb_addr eloc;
+ 	uint32_t elen;
+ 	uint64_t lbcount = 0;
+ 	int8_t etype = -1, netype;
+-	int adsize;
+ 	struct udf_inode_info *iinfo = UDF_I(inode);
+ 
+ 	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB ||
+ 	    inode->i_size == iinfo->i_lenExtents)
+ 		return;
+ 
+-	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
+-		adsize = sizeof(struct short_ad);
+-	else if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_LONG)
+-		adsize = sizeof(struct long_ad);
+-	else
+-		adsize = 0;
+-
+ 	epos.block = iinfo->i_location;
+ 
+ 	/* Find the last extent in the file */
+-	while ((netype = udf_next_aext(inode, &epos, &eloc, &elen, 1)) != -1) {
+-		etype = netype;
++	while ((netype = udf_next_aext(inode, &epos, &eloc, &elen, 0)) != -1) {
++		brelse(prev_epos.bh);
++		prev_epos = epos;
++		if (prev_epos.bh)
++			get_bh(prev_epos.bh);
++
++		etype = udf_next_aext(inode, &epos, &eloc, &elen, 1);
+ 		lbcount += elen;
+ 	}
+ 	if (etype == (EXT_NOT_RECORDED_ALLOCATED >> 30)) {
+-		epos.offset -= adsize;
+ 		lbcount -= elen;
+-		extent_trunc(inode, &epos, &eloc, etype, elen, 0);
+-		if (!epos.bh) {
+-			iinfo->i_lenAlloc =
+-				epos.offset -
+-				udf_file_entry_alloc_offset(inode);
+-			mark_inode_dirty(inode);
+-		} else {
+-			struct allocExtDesc *aed =
+-				(struct allocExtDesc *)(epos.bh->b_data);
+-			aed->lengthAllocDescs =
+-				cpu_to_le32(epos.offset -
+-					    sizeof(struct allocExtDesc));
+-			if (!UDF_QUERY_FLAG(inode->i_sb, UDF_FLAG_STRICT) ||
+-			    UDF_SB(inode->i_sb)->s_udfrev >= 0x0201)
+-				udf_update_tag(epos.bh->b_data, epos.offset);
+-			else
+-				udf_update_tag(epos.bh->b_data,
+-					       sizeof(struct allocExtDesc));
+-			mark_buffer_dirty_inode(epos.bh, inode);
+-		}
++		udf_delete_aext(inode, prev_epos);
++		udf_free_blocks(inode->i_sb, inode, &eloc, 0,
++				DIV_ROUND_UP(elen, 1 << inode->i_blkbits));
+ 	}
+ 	/* This inode entry is in-memory only and thus we don't have to mark
+ 	 * the inode dirty */
+ 	iinfo->i_lenExtents = lbcount;
+ 	brelse(epos.bh);
++	brelse(prev_epos.bh);
+ }
+ 
+ static void udf_update_alloc_ext_desc(struct inode *inode,
 
 
