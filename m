@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD1146B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212F7C433D2;
-	Mon, 16 Jan 2023 16:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433BA46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC077C433F0;
+	Mon, 16 Jan 2023 16:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885845;
-	bh=tCdDXiEB4f7Rnmk54YUYOQZ5oM6PkV7nDSXefdE5fZ4=;
+	s=korg; t=1673885848;
+	bh=xSuSUAasYCp98YQTYGI48uYqoA4vMXFpSR5usBPDZ8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xyIMS1uuvJNYeCcHzKZPC8BPGfG7hag2iTf1D/fZsI9Uj2Tz72w61uabiHtKg9tAs
-	 CSa55uL8ketZlUT77zQvRXkhsgtexmwB71s09m3cv2yJcNvrS7N9MoNL5qVE0Negli
-	 b+RnTA0c0hMQaKG9uhZLVeQdVsTKj1LGsFKbQOqc=
+	b=AF3XBV8KuOnYQdcdMXICVEpwr1gn7nJH6aBJr+xTg+q38H6DDiTVETxv+Zf2wyAlO
+	 GMU+o76uF21uwLvx7KRdXIt4jrJgE0IDTxEY3LDn1MudgI1UE0k+GAC0nB7e+Ou9mS
+	 xX7uYy+GiAYq8j8jn5JKkgJrkOzLS2R05nnFuI5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Kris Bahnsen <kris@embeddedTS.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 205/658] clk: samsung: Fix memory leak in _samsung_clk_register_pll()
-Date: Mon, 16 Jan 2023 16:44:53 +0100
-Message-Id: <20230116154918.829618614@linuxfoundation.org>
+Subject: [PATCH 5.4 206/658] spi: spi-gpio: Dont set MOSI as an input if not 3WIRE mode
+Date: Mon, 16 Jan 2023 16:44:54 +0100
+Message-Id: <20230116154918.872435427@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,36 +35,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Kris Bahnsen <kris@embeddedTS.com>
 
-[ Upstream commit 5174e5b0d1b669a489524192b6adcbb3c54ebc72 ]
+[ Upstream commit 3a6f994f848a69deb2bf3cd9d130dd0c09730e55 ]
 
-If clk_register() fails, @pll->rate_table may have allocated memory by
-kmemdup(), so it needs to be freed, otherwise will cause memory leak
-issue, this patch fixes it.
+The addition of 3WIRE support would affect MOSI direction even
+when still in standard (4 wire) mode. This can lead to MOSI being
+at an invalid logic level when a device driver sets an SPI
+message with a NULL tx_buf.
 
-Fixes: 3ff6e0d8d64d ("clk: samsung: Add support to register rate_table for samsung plls")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Link: https://lore.kernel.org/r/20221123032015.63980-1-xiujianfeng@huawei.com
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+spi.h states that if tx_buf is NULL then "zeros will be shifted
+out ... " If MOSI is tristated then the data shifted out is subject
+to pull resistors, keepers, or in the absence of those, noise.
+
+This issue came to light when using spi-gpio connected to an
+ADS7843 touchscreen controller. MOSI pulled high when clocking
+MISO data in caused the SPI device to interpret this as a command
+which would put the device in an unexpected and non-functional
+state.
+
+Fixes: 4b859db2c606 ("spi: spi-gpio: add SPI_3WIRE support")
+Fixes: 5132b3d28371 ("spi: gpio: Support 3WIRE high-impedance turn-around")
+Signed-off-by: Kris Bahnsen <kris@embeddedTS.com>
+Link: https://lore.kernel.org/r/20221207230853.6174-1-kris@embeddedTS.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/samsung/clk-pll.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/spi/spi-gpio.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/clk/samsung/clk-pll.c b/drivers/clk/samsung/clk-pll.c
-index ac70ad785d8e..33df20f813d5 100644
---- a/drivers/clk/samsung/clk-pll.c
-+++ b/drivers/clk/samsung/clk-pll.c
-@@ -1390,6 +1390,7 @@ static void __init _samsung_clk_register_pll(struct samsung_clk_provider *ctx,
- 	if (ret) {
- 		pr_err("%s: failed to register pll clock %s : %d\n",
- 			__func__, pll_clk->name, ret);
-+		kfree(pll->rate_table);
- 		kfree(pll);
- 		return;
- 	}
+diff --git a/drivers/spi/spi-gpio.c b/drivers/spi/spi-gpio.c
+index e7dc1fad4a87..282c5ee41a62 100644
+--- a/drivers/spi/spi-gpio.c
++++ b/drivers/spi/spi-gpio.c
+@@ -244,9 +244,19 @@ static int spi_gpio_set_direction(struct spi_device *spi, bool output)
+ 	if (output)
+ 		return gpiod_direction_output(spi_gpio->mosi, 1);
+ 
+-	ret = gpiod_direction_input(spi_gpio->mosi);
+-	if (ret)
+-		return ret;
++	/*
++	 * Only change MOSI to an input if using 3WIRE mode.
++	 * Otherwise, MOSI could be left floating if there is
++	 * no pull resistor connected to the I/O pin, or could
++	 * be left logic high if there is a pull-up. Transmitting
++	 * logic high when only clocking MISO data in can put some
++	 * SPI devices in to a bad state.
++	 */
++	if (spi->mode & SPI_3WIRE) {
++		ret = gpiod_direction_input(spi_gpio->mosi);
++		if (ret)
++			return ret;
++	}
+ 	/*
+ 	 * Send a turnaround high impedance cycle when switching
+ 	 * from output to input. Theoretically there should be
 -- 
 2.35.1
 
