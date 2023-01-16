@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F0AA33F0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:21:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C65F4C433D2;
-	Mon, 16 Jan 2023 16:21:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D28933F0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:21:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A7E1C433D2;
+	Mon, 16 Jan 2023 16:21:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886067;
-	bh=7i2azwZ+Xdv4ccGKG3x6KIEYjfZZxiiCMsHlS/+CyrU=;
+	s=korg; t=1673886069;
+	bh=2KndtAhOkAJrzwFY49r5OkKk0ML9BK70QC9mRXvqCng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IrRyfVhu3WxhrLxs665XLz+lhVN0kQO3HACHnOGaPo2vZ/FI/RYOIO8f3fKjy6Gyj
-	 JnG9P48AzooWg2ac3+S/kluOjkYxSKwR3Swu1k0qMuy6mtSmc+eE4qGCWXpOPGItBB
-	 uUdmk7UXnVZgGj8qLVNrIMkr9xrDBUjgxxTOpsoI=
+	b=Mtxx1bU0mLBRSSuVjbzppe3h0ikivNfZMWOymWAxa+avQtQauFgGxFp1RfU0Fm6TL
+	 0R/yhUyE99f7OWoGrwEbyRNYiaPKCWBwxs0UwhCxhxTSTx+JQ0HS2sv8leK1JJ/6uz
+	 i4QeIpEQglzaWOEnrfWEaWopY3buOHf2HqG1b558=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sven Peter <sven@svenpeter.dev>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 250/658] crypto: ccree - swap SHA384 and SHA512 larval hashes at build time
-Date: Mon, 16 Jan 2023 16:45:38 +0100
-Message-Id: <20230116154920.992793626@linuxfoundation.org>
+Subject: [PATCH 5.4 283/658] usb: typec: Check for ops->exit instead of ops->enter in altmode_exit
+Date: Mon, 16 Jan 2023 16:46:11 +0100
+Message-Id: <20230116154922.524640504@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,133 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Sven Peter <sven@svenpeter.dev>
 
-[ Upstream commit f08b58501c74d6ec0828b55a0d4e0b2e840c2b9e ]
+[ Upstream commit b6ddd180e3d9f92c1e482b3cdeec7dda086b1341 ]
 
-Due to the way the hardware works, every double word in the SHA384 and
-SHA512 larval hashes must be swapped.  Currently this is done at run
-time, during driver initialization.
+typec_altmode_exit checks if ops->enter is not NULL but then calls
+ops->exit a few lines below. Fix that and check for the function
+pointer it's about to call instead.
 
-However, this swapping can easily be done at build time.  Treating each
-double word as two words has the benefit of changing the larval hashes'
-types from u64[] to u32[], like for all other hashes, and allows
-dropping the casts and size doublings when calling cc_set_sram_desc().
-
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Stable-dep-of: 4f1c596df706 ("crypto: ccree - Remove debugfs when platform_driver_register failed")
+Fixes: 8a37d87d72f0 ("usb: typec: Bus type for alternate modes")
+Signed-off-by: Sven Peter <sven@svenpeter.dev>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20221114165924.33487-1-sven@svenpeter.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccree/cc_driver.c |  1 -
- drivers/crypto/ccree/cc_hash.c   | 49 +++++++++++---------------------
- drivers/crypto/ccree/cc_hash.h   |  2 --
- 3 files changed, 17 insertions(+), 35 deletions(-)
+ drivers/usb/typec/bus.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/ccree/cc_driver.c b/drivers/crypto/ccree/cc_driver.c
-index 8b8eee513c27..58ca59af0b2e 100644
---- a/drivers/crypto/ccree/cc_driver.c
-+++ b/drivers/crypto/ccree/cc_driver.c
-@@ -653,7 +653,6 @@ static struct platform_driver ccree_driver = {
+diff --git a/drivers/usb/typec/bus.c b/drivers/usb/typec/bus.c
+index c950171556d8..0369ad92a1c8 100644
+--- a/drivers/usb/typec/bus.c
++++ b/drivers/usb/typec/bus.c
+@@ -126,7 +126,7 @@ int typec_altmode_exit(struct typec_altmode *adev)
+ 	if (!adev || !adev->active)
+ 		return 0;
  
- static int __init ccree_init(void)
- {
--	cc_hash_global_init();
- 	cc_debugfs_global_init();
+-	if (!pdev->ops || !pdev->ops->enter)
++	if (!pdev->ops || !pdev->ops->exit)
+ 		return -EOPNOTSUPP;
  
- 	return platform_driver_register(&ccree_driver);
-diff --git a/drivers/crypto/ccree/cc_hash.c b/drivers/crypto/ccree/cc_hash.c
-index bc71bdf44a9f..9f67df0a4921 100644
---- a/drivers/crypto/ccree/cc_hash.c
-+++ b/drivers/crypto/ccree/cc_hash.c
-@@ -39,12 +39,19 @@ static const u32 cc_sha256_init[] = {
- 	SHA256_H3, SHA256_H2, SHA256_H1, SHA256_H0 };
- static const u32 cc_digest_len_sha512_init[] = {
- 	0x00000080, 0x00000000, 0x00000000, 0x00000000 };
--static u64 cc_sha384_init[] = {
--	SHA384_H7, SHA384_H6, SHA384_H5, SHA384_H4,
--	SHA384_H3, SHA384_H2, SHA384_H1, SHA384_H0 };
--static u64 cc_sha512_init[] = {
--	SHA512_H7, SHA512_H6, SHA512_H5, SHA512_H4,
--	SHA512_H3, SHA512_H2, SHA512_H1, SHA512_H0 };
-+
-+/*
-+ * Due to the way the HW works, every double word in the SHA384 and SHA512
-+ * larval hashes must be stored in hi/lo order
-+ */
-+#define hilo(x)	upper_32_bits(x), lower_32_bits(x)
-+static const u32 cc_sha384_init[] = {
-+	hilo(SHA384_H7), hilo(SHA384_H6), hilo(SHA384_H5), hilo(SHA384_H4),
-+	hilo(SHA384_H3), hilo(SHA384_H2), hilo(SHA384_H1), hilo(SHA384_H0) };
-+static const u32 cc_sha512_init[] = {
-+	hilo(SHA512_H7), hilo(SHA512_H6), hilo(SHA512_H5), hilo(SHA512_H4),
-+	hilo(SHA512_H3), hilo(SHA512_H2), hilo(SHA512_H1), hilo(SHA512_H0) };
-+
- static const u32 cc_sm3_init[] = {
- 	SM3_IVH, SM3_IVG, SM3_IVF, SM3_IVE,
- 	SM3_IVD, SM3_IVC, SM3_IVB, SM3_IVA };
-@@ -1948,8 +1955,8 @@ int cc_init_hash_sram(struct cc_drvdata *drvdata)
- 	}
- 
- 	if (large_sha_supported) {
--		cc_set_sram_desc((u32 *)cc_sha384_init, sram_buff_ofs,
--				 (ARRAY_SIZE(cc_sha384_init) * 2), larval_seq,
-+		cc_set_sram_desc(cc_sha384_init, sram_buff_ofs,
-+				 ARRAY_SIZE(cc_sha384_init), larval_seq,
- 				 &larval_seq_len);
- 		rc = send_request_init(drvdata, larval_seq, larval_seq_len);
- 		if (rc)
-@@ -1957,8 +1964,8 @@ int cc_init_hash_sram(struct cc_drvdata *drvdata)
- 		sram_buff_ofs += sizeof(cc_sha384_init);
- 		larval_seq_len = 0;
- 
--		cc_set_sram_desc((u32 *)cc_sha512_init, sram_buff_ofs,
--				 (ARRAY_SIZE(cc_sha512_init) * 2), larval_seq,
-+		cc_set_sram_desc(cc_sha512_init, sram_buff_ofs,
-+				 ARRAY_SIZE(cc_sha512_init), larval_seq,
- 				 &larval_seq_len);
- 		rc = send_request_init(drvdata, larval_seq, larval_seq_len);
- 		if (rc)
-@@ -1969,28 +1976,6 @@ int cc_init_hash_sram(struct cc_drvdata *drvdata)
- 	return rc;
- }
- 
--static void __init cc_swap_dwords(u32 *buf, unsigned long size)
--{
--	int i;
--	u32 tmp;
--
--	for (i = 0; i < size; i += 2) {
--		tmp = buf[i];
--		buf[i] = buf[i + 1];
--		buf[i + 1] = tmp;
--	}
--}
--
--/*
-- * Due to the way the HW works we need to swap every
-- * double word in the SHA384 and SHA512 larval hashes
-- */
--void __init cc_hash_global_init(void)
--{
--	cc_swap_dwords((u32 *)&cc_sha384_init, (ARRAY_SIZE(cc_sha384_init) * 2));
--	cc_swap_dwords((u32 *)&cc_sha512_init, (ARRAY_SIZE(cc_sha512_init) * 2));
--}
--
- int cc_hash_alloc(struct cc_drvdata *drvdata)
- {
- 	struct cc_hash_handle *hash_handle;
-diff --git a/drivers/crypto/ccree/cc_hash.h b/drivers/crypto/ccree/cc_hash.h
-index 0d6dc61484d7..3dbd0abefea0 100644
---- a/drivers/crypto/ccree/cc_hash.h
-+++ b/drivers/crypto/ccree/cc_hash.h
-@@ -104,6 +104,4 @@ cc_digest_len_addr(void *drvdata, u32 mode);
-  */
- cc_sram_addr_t cc_larval_digest_addr(void *drvdata, u32 mode);
- 
--void cc_hash_global_init(void);
--
- #endif /*__CC_HASH_H__*/
+ 	/* Moving to USB Safe State */
 -- 
 2.35.1
 
