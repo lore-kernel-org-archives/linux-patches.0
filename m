@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E69A46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86FA7C433EF;
-	Mon, 16 Jan 2023 16:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9529246B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D6DAC433EF;
+	Mon, 16 Jan 2023 16:16:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885813;
-	bh=IyXG2EepHfyo8Fk7TQ9ltHxf8Z7mjl01f2oYFFIjIRE=;
+	s=korg; t=1673885816;
+	bh=z2BiFwyVN7/HrQny4egfmwKGt8y2xWYlSwBb/JISuoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bDaDulOm8bobFKLMYZE/WqRXUjBEPfiKWW7opA6UditKTL42LU5ALmK3mbzDQ9BTx
-	 2Bsq1qO0gViRPXr/BASETXSP0htr8j+rG+tF5U+e8gERMvmYr9SsngthH+2s4pZVz0
-	 l7xvnqEIPKFqCpgpv4FkStSon0UXaMXH+8HkMzqM=
+	b=JI7Gkx667ltSQvA0or3Oe2LrDmTN5+sZEMPm1wSmljk3E9CEaIaY+UIF7fRjmGfQt
+	 0Wk+yWbQDevkjU67Qpf/+LeGr0nherez2ThEMDsW3GfRtCIiVdi8rRteDHGi64zIyu
+	 i4md/m3GQl4XdOBJnmqgOyNHE8aM5yC88Y0QFNh8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 186/658] SUNRPC: Fix missing release socket in rpc_sockname()
-Date: Mon, 16 Jan 2023 16:44:34 +0100
-Message-Id: <20230116154917.968503763@linuxfoundation.org>
+Subject: [PATCH 5.4 195/658] mmc: wmt-sdmmc: fix return value check of mmc_add_host()
+Date: Mon, 16 Jan 2023 16:44:43 +0100
+Message-Id: <20230116154918.360505896@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,35 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang ShaoBo <bobo.shaobowang@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 50fa355bc0d75911fe9d5072a5ba52cdb803aff7 ]
+[ Upstream commit 29276d56f6ed138db0f38cd31aedc0b725c8c76c ]
 
-socket dynamically created is not released when getting an unintended
-address family type in rpc_sockname(), direct to out_release for calling
-sock_release().
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
-Fixes: 2e738fdce22f ("SUNRPC: Add API to acquire source address")
-Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+So fix this by checking the return value and goto error path which will call
+mmc_free_host(), besides, clk_disable_unprepare() also needs be called.
+
+Fixes: 3a96dff0f828 ("mmc: SD/MMC Host Controller for Wondermedia WM8505/WM8650")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-10-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/clnt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/wmt-sdmmc.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
-index 1893203cc94f..012b0504264d 100644
---- a/net/sunrpc/clnt.c
-+++ b/net/sunrpc/clnt.c
-@@ -1354,7 +1354,7 @@ static int rpc_sockname(struct net *net, struct sockaddr *sap, size_t salen,
- 		break;
- 	default:
- 		err = -EAFNOSUPPORT;
--		goto out;
-+		goto out_release;
- 	}
- 	if (err < 0) {
- 		dprintk("RPC:       can't bind UDP socket (%d)\n", err);
+diff --git a/drivers/mmc/host/wmt-sdmmc.c b/drivers/mmc/host/wmt-sdmmc.c
+index d774068dba30..b1e4199f8292 100644
+--- a/drivers/mmc/host/wmt-sdmmc.c
++++ b/drivers/mmc/host/wmt-sdmmc.c
+@@ -859,11 +859,15 @@ static int wmt_mci_probe(struct platform_device *pdev)
+ 	/* configure the controller to a known 'ready' state */
+ 	wmt_reset_hardware(mmc);
+ 
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret)
++		goto fail7;
+ 
+ 	dev_info(&pdev->dev, "WMT SDHC Controller initialized\n");
+ 
+ 	return 0;
++fail7:
++	clk_disable_unprepare(priv->clk_sdmmc);
+ fail6:
+ 	clk_put(priv->clk_sdmmc);
+ fail5_and_a_half:
 -- 
 2.35.1
 
