@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4069646B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6E5FC433D2;
-	Mon, 16 Jan 2023 16:16:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEDC446B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7246DC433EF;
+	Mon, 16 Jan 2023 16:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885782;
-	bh=iQbpAhiKOrFyEtUs6r3HKl9qv4t0ZiBrKLR8S7SDHKM=;
+	s=korg; t=1673885784;
+	bh=Bk17wbfieS+IATCK1z+OCL7gxgWLt1xr1VuQzhqPW2E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bWs65lm/d4mcuVcPgzFy7JNKHOJQGnm9MXFPzUxOY39ySKc0h46C+0ES8HbUWk4QH
-	 k0aXfvrfC7s/tf0XLCBhccwcjNNBbYy6bMd+7gA4/FNiuF7B+nfHiIQNeFitalZbpU
-	 TwyJ/4enKUYMtNn6R0TVSLl0uqJJ8CehOpsAzUwo=
+	b=Ya6lWaJhweAPWBjEF6NYTy5aUKq05VG4AAorNZTwjKcy2YzRPytUim7d5pUtvJrmB
+	 mPHwE45fwEiK3I7Gp2XmEfbyhO+m3l+mVCZkxFQfmzU4xvC85Msy2wWFYOeoMCtQNV
+	 ql8QGIdvP7TNEMSdSxeh+vLA615bO/d0vMSa3Bns=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Song Liu <songliubraving@fb.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 181/658] regulator: core: fix resource leak in regulator_register()
-Date: Mon, 16 Jan 2023 16:44:29 +0100
-Message-Id: <20230116154917.723055909@linuxfoundation.org>
+Subject: [PATCH 5.4 182/658] bpf, sockmap: fix race in sock_map_free()
+Date: Mon, 16 Jan 2023 16:44:30 +0100
+Message-Id: <20230116154917.764334302@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,69 +40,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit ba62319a42c50e6254e98b3f316464fac8e77968 ]
+[ Upstream commit 0a182f8d607464911756b4dbef5d6cad8de22469 ]
 
-I got some resource leak reports while doing fault injection test:
+sock_map_free() calls release_sock(sk) without owning a reference
+on the socket. This can cause use-after-free as syzbot found [1]
 
-  OF: ERROR: memory leak, expected refcount 1 instead of 100,
-  of_node_get()/of_node_put() unbalanced - destroy cset entry:
-  attach overlay node /i2c/pmic@64/regulators/buck1
+Jakub Sitnicki already took care of a similar issue
+in sock_hash_free() in commit 75e68e5bf2c7 ("bpf, sockhash:
+Synchronize delete from bucket list on map free")
 
-unreferenced object 0xffff88810deea000 (size 512):
-  comm "490-i2c-rt5190a", pid 253, jiffies 4294859840 (age 5061.046s)
-  hex dump (first 32 bytes):
-    00 00 00 00 ad 4e ad de ff ff ff ff 00 00 00 00  .....N..........
-    ff ff ff ff ff ff ff ff a0 1e 00 a1 ff ff ff ff  ................
-  backtrace:
-    [<00000000d78541e2>] kmalloc_trace+0x21/0x110
-    [<00000000b343d153>] device_private_init+0x32/0xd0
-    [<00000000be1f0c70>] device_add+0xb2d/0x1030
-    [<00000000e3e6344d>] regulator_register+0xaf2/0x12a0
-    [<00000000e2f5e754>] devm_regulator_register+0x57/0xb0
-    [<000000008b898197>] rt5190a_probe+0x52a/0x861 [rt5190a_regulator]
+[1]
+refcount_t: decrement hit 0; leaking memory.
+WARNING: CPU: 0 PID: 3785 at lib/refcount.c:31 refcount_warn_saturate+0x17c/0x1a0 lib/refcount.c:31
+Modules linked in:
+CPU: 0 PID: 3785 Comm: kworker/u4:6 Not tainted 6.1.0-rc7-syzkaller-00103-gef4d3ea40565 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+Workqueue: events_unbound bpf_map_free_deferred
+RIP: 0010:refcount_warn_saturate+0x17c/0x1a0 lib/refcount.c:31
+Code: 68 8b 31 c0 e8 75 71 15 fd 0f 0b e9 64 ff ff ff e8 d9 6e 4e fd c6 05 62 9c 3d 0a 01 48 c7 c7 80 bb 68 8b 31 c0 e8 54 71 15 fd <0f> 0b e9 43 ff ff ff 89 d9 80 e1 07 80 c1 03 38 c1 0f 8c a2 fe ff
+RSP: 0018:ffffc9000456fb60 EFLAGS: 00010246
+RAX: eae59bab72dcd700 RBX: 0000000000000004 RCX: ffff8880207057c0
+RDX: 0000000000000000 RSI: 0000000000000201 RDI: 0000000000000000
+RBP: 0000000000000004 R08: ffffffff816fdabd R09: fffff520008adee5
+R10: fffff520008adee5 R11: 1ffff920008adee4 R12: 0000000000000004
+R13: dffffc0000000000 R14: ffff88807b1c6c00 R15: 1ffff1100f638dcf
+FS: 0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
+CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000001b30c30000 CR3: 000000000d08e000 CR4: 00000000003506f0
+DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+Call Trace:
+<TASK>
+__refcount_dec include/linux/refcount.h:344 [inline]
+refcount_dec include/linux/refcount.h:359 [inline]
+__sock_put include/net/sock.h:779 [inline]
+tcp_release_cb+0x2d0/0x360 net/ipv4/tcp_output.c:1092
+release_sock+0xaf/0x1c0 net/core/sock.c:3468
+sock_map_free+0x219/0x2c0 net/core/sock_map.c:356
+process_one_work+0x81c/0xd10 kernel/workqueue.c:2289
+worker_thread+0xb14/0x1330 kernel/workqueue.c:2436
+kthread+0x266/0x300 kernel/kthread.c:376
+ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
+</TASK>
 
-unreferenced object 0xffff88810b617b80 (size 32):
-  comm "490-i2c-rt5190a", pid 253, jiffies 4294859904 (age 5060.983s)
-  hex dump (first 32 bytes):
-    72 65 67 75 6c 61 74 6f 72 2e 32 38 36 38 2d 53  regulator.2868-S
-    55 50 50 4c 59 00 ff ff 29 00 00 00 2b 00 00 00  UPPLY...)...+...
-  backtrace:
-    [<000000009da9280d>] __kmalloc_node_track_caller+0x44/0x1b0
-    [<0000000025c6a4e5>] kstrdup+0x3a/0x70
-    [<00000000790efb69>] create_regulator+0xc0/0x4e0
-    [<0000000005ed203a>] regulator_resolve_supply+0x2d4/0x440
-    [<0000000045796214>] regulator_register+0x10b3/0x12a0
-    [<00000000e2f5e754>] devm_regulator_register+0x57/0xb0
-    [<000000008b898197>] rt5190a_probe+0x52a/0x861 [rt5190a_regulator]
-
-After calling regulator_resolve_supply(), the 'rdev->supply' is set
-by set_supply(), after this set, in the error path, the resources
-need be released, so call regulator_put() to avoid the leaks.
-
-Fixes: aea6cb99703e ("regulator: resolve supply after creating regulator")
-Fixes: 8a866d527ac0 ("regulator: core: Resolve supply name earlier to prevent double-init")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221202025111.496402-1-yangyingliang@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 7e81a3530206 ("bpf: Sockmap, ensure sock lock held during tear down")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Cc: Jakub Sitnicki <jakub@cloudflare.com>
+Cc: John Fastabend <john.fastabend@gmail.com>
+Cc: Alexei Starovoitov <ast@kernel.org>
+Cc: Daniel Borkmann <daniel@iogearbox.net>
+Cc: Song Liu <songliubraving@fb.com>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20221202111640.2745533-1-edumazet@google.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/sock_map.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 3f2a18536fce..5dd17a341577 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -5268,6 +5268,7 @@ regulator_register(const struct regulator_desc *regulator_desc,
- 	regulator_remove_coupling(rdev);
- 	mutex_unlock(&regulator_list_mutex);
- wash:
-+	regulator_put(rdev->supply);
- 	kfree(rdev->coupling_desc.coupled_rdevs);
- 	mutex_lock(&regulator_list_mutex);
- 	regulator_ena_gpio_free(rdev);
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index 2646e8f98f67..5bce6d4d2057 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -279,11 +279,13 @@ static void sock_map_free(struct bpf_map *map)
+ 
+ 		sk = xchg(psk, NULL);
+ 		if (sk) {
++			sock_hold(sk);
+ 			lock_sock(sk);
+ 			rcu_read_lock();
+ 			sock_map_unref(sk, psk);
+ 			rcu_read_unlock();
+ 			release_sock(sk);
++			sock_put(sk);
+ 		}
+ 	}
+ 
 -- 
 2.35.1
 
