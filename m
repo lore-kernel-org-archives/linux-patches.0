@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5F646FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:43:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49E56C433D2;
-	Mon, 16 Jan 2023 16:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A71C6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:43:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5DCC433EF;
+	Mon, 16 Jan 2023 16:43:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887386;
-	bh=D++9V9Oyy3oxs2XcPMNi7DAfIPKA9ks4j1KYZ9XVxrM=;
+	s=korg; t=1673887389;
+	bh=3cIPwQhwbu9JN3mpUfg6hlWmLwiCRFsZZwVKxUucJXY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNswLKSf1eOSgtHa/an2LGVy+lRwVYLyCzxpTWVN0W9D/acokSbKVKr0dPR1Sj/gL
-	 dGO+QIGwLmDBYiJ2TkI9nP6amXhCkSmjU0/Vl/KhkJqp7EEgfZFIIyHlIzKzyGnc6r
-	 oS/b/alzCboDcnmvpL5q2GY69QA8z0fR2pQwfLSc=
+	b=Mpgd6oZD1e3PKH3JHiRWrySSgxXgVqQ+jbmFz5XqZA6haehRcH5Z/f9Kq0hhIr7LI
+	 rrzvkB/OkJM8qQj8ItfJt2z5R70T88F0bkPuaasITsfrNwti54edSV3LA8FQ1LCt24
+	 NFvh9KOgv/FwFlXBXN1yY1lhKyi1xow8cya6qIbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 129/521] wifi: mac80211: fix memory leak in ieee80211_if_add()
-Date: Mon, 16 Jan 2023 16:46:31 +0100
-Message-Id: <20230116154853.031531034@linuxfoundation.org>
+Subject: [PATCH 4.19 103/521] regulator: core: fix unbalanced of node refcount in regulator_dev_lookup()
+Date: Mon, 16 Jan 2023 16:46:05 +0100
+Message-Id: <20230116154851.862358900@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,34 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 13e5afd3d773c6fc6ca2b89027befaaaa1ea7293 ]
+[ Upstream commit f2b41b748c19962b82709d9f23c6b2b0ce9d2f91 ]
 
-When register_netdevice() failed in ieee80211_if_add(), ndev->tstats
-isn't released. Fix it.
+I got the the following report:
 
-Fixes: 5a490510ba5f ("mac80211: use per-CPU TX/RX statistics")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20221117064500.319983-1-shaozhengchao@huawei.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+  OF: ERROR: memory leak, expected refcount 1 instead of 2,
+  of_node_get()/of_node_put() unbalanced - destroy cset entry:
+  attach overlay node /i2c/pmic@62/regulators/exten
+
+In of_get_regulator(), the node is returned from of_parse_phandle()
+with refcount incremented, after using it, of_node_put() need be called.
+
+Fixes: 69511a452e6d ("regulator: map consumer regulator based on device tree")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221115091508.900752-1-yangyingliang@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/iface.c | 1 +
+ drivers/regulator/core.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index 358028a09ce4..5d252d144cb9 100644
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -1888,6 +1888,7 @@ int ieee80211_if_add(struct ieee80211_local *local, const char *name,
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 045075cd256c..07982143ec18 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1541,6 +1541,7 @@ static struct regulator_dev *regulator_dev_lookup(struct device *dev,
+ 		node = of_get_regulator(dev, supply);
+ 		if (node) {
+ 			r = of_find_regulator_by_node(node);
++			of_node_put(node);
+ 			if (r)
+ 				return r;
  
- 		ret = register_netdevice(ndev);
- 		if (ret) {
-+			ieee80211_if_free(ndev);
- 			free_netdev(ndev);
- 			return ret;
- 		}
 -- 
 2.35.1
 
