@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00F866FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:59:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77970C433D2;
-	Mon, 16 Jan 2023 16:59:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C36E6FA3
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:59:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21600C433D2;
+	Mon, 16 Jan 2023 16:59:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888368;
-	bh=nPTC9Blxo1S3T4A3/lck0EhGYeZuX2xvBdYvv4r3Py8=;
+	s=korg; t=1673888371;
+	bh=+eGu38+WVypl2Yt+4zgAa1by+cPIFe5MdMylbWn+d78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LeMeHcXBXcOSD0ubt8D9iESvO2pjRUV33czaW0kjk2fy0/s/awz6nZNsacqUw3vxS
-	 vybGfX2FNOyks3jqaEDXZZVP1biPu9Rnd03svrWAIfDXiWqQS7MqRLfftcEuuBG1Ml
-	 M9tiPWZEw49ljuyxJFIf/jW3StJ5lvyKCcLe2rBY=
+	b=o2fTyvDRtxY+Q6kiEhoWlxSfqSY6RhDcPNbg3USljrgicGj9CpRqqOI4WphuwZaXM
+	 AdADU3IiuaP40LF1RisjLc+XDWbVZz/Rqa/hi22LFxG0lhdZ3u4fiX0FEofmfh7/HJ
+	 ihKT/igcGssZ9mrc8xLnR2wtX/+ljk/5tCoPN89g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Adam Ward <DLG-Adam.Ward.opensource@dm.renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 503/521] regulator: da9211: Use irq handler when ready
-Date: Mon, 16 Jan 2023 16:52:45 +0100
-Message-Id: <20230116154909.693073749@linuxfoundation.org>
+Subject: [PATCH 4.19 504/521] hvc/xen: lock console list traversal
+Date: Mon, 16 Jan 2023 16:52:46 +0100
+Message-Id: <20230116154909.738554621@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,64 +36,181 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Roger Pau Monne <roger.pau@citrix.com>
 
-[ Upstream commit 02228f6aa6a64d588bc31e3267d05ff184d772eb ]
+[ Upstream commit c0dccad87cf68fc6012aec7567e354353097ec1a ]
 
-If the system does not come from reset (like when it is kexec()), the
-regulator might have an IRQ waiting for us.
+The currently lockless access to the xen console list in
+vtermno_to_xencons() is incorrect, as additions and removals from the
+list can happen anytime, and as such the traversal of the list to get
+the private console data for a given termno needs to happen with the
+lock held.  Note users that modify the list already do so with the
+lock taken.
 
-If we enable the IRQ handler before its structures are ready, we crash.
+Adjust current lock takers to use the _irq{save,restore} helpers,
+since the context in which vtermno_to_xencons() is called can have
+interrupts disabled.  Use the _irq{save,restore} set of helpers to
+switch the current callers to disable interrupts in the locked region.
+I haven't checked if existing users could instead use the _irq
+variant, as I think it's safer to use _irq{save,restore} upfront.
 
-This patch fixes:
+While there switch from using list_for_each_entry_safe to
+list_for_each_entry: the current entry cursor won't be removed as
+part of the code in the loop body, so using the _safe variant is
+pointless.
 
-[    1.141839] Unable to handle kernel read from unreadable memory at virtual address 0000000000000078
-[    1.316096] Call trace:
-[    1.316101]  blocking_notifier_call_chain+0x20/0xa8
-[    1.322757] cpu cpu0: dummy supplies not allowed for exclusive requests
-[    1.327823]  regulator_notifier_call_chain+0x1c/0x2c
-[    1.327825]  da9211_irq_handler+0x68/0xf8
-[    1.327829]  irq_thread+0x11c/0x234
-[    1.327833]  kthread+0x13c/0x154
-
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Adam Ward <DLG-Adam.Ward.opensource@dm.renesas.com>
-Link: https://lore.kernel.org/r/20221124-da9211-v2-0-1779e3c5d491@chromium.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 02e19f9c7cac ('hvc_xen: implement multiconsole support')
+Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Link: https://lore.kernel.org/r/20221130163611.14686-1-roger.pau@citrix.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/da9211-regulator.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/tty/hvc/hvc_xen.c | 46 ++++++++++++++++++++++++---------------
+ 1 file changed, 29 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/regulator/da9211-regulator.c b/drivers/regulator/da9211-regulator.c
-index 6c122b3df5d0..8847d15c2b90 100644
---- a/drivers/regulator/da9211-regulator.c
-+++ b/drivers/regulator/da9211-regulator.c
-@@ -469,6 +469,12 @@ static int da9211_i2c_probe(struct i2c_client *i2c,
+diff --git a/drivers/tty/hvc/hvc_xen.c b/drivers/tty/hvc/hvc_xen.c
+index 080adf7bcae4..47ffb485ff34 100644
+--- a/drivers/tty/hvc/hvc_xen.c
++++ b/drivers/tty/hvc/hvc_xen.c
+@@ -52,17 +52,22 @@ static DEFINE_SPINLOCK(xencons_lock);
  
- 	chip->chip_irq = i2c->irq;
+ static struct xencons_info *vtermno_to_xencons(int vtermno)
+ {
+-	struct xencons_info *entry, *n, *ret = NULL;
++	struct xencons_info *entry, *ret = NULL;
++	unsigned long flags;
  
-+	ret = da9211_regulator_init(chip);
-+	if (ret < 0) {
-+		dev_err(chip->dev, "Failed to initialize regulator: %d\n", ret);
-+		return ret;
+-	if (list_empty(&xenconsoles))
+-			return NULL;
++	spin_lock_irqsave(&xencons_lock, flags);
++	if (list_empty(&xenconsoles)) {
++		spin_unlock_irqrestore(&xencons_lock, flags);
++		return NULL;
 +	}
-+
- 	if (chip->chip_irq != 0) {
- 		ret = devm_request_threaded_irq(chip->dev, chip->chip_irq, NULL,
- 					da9211_irq_handler,
-@@ -483,11 +489,6 @@ static int da9211_i2c_probe(struct i2c_client *i2c,
- 		dev_warn(chip->dev, "No IRQ configured\n");
- 	}
  
--	ret = da9211_regulator_init(chip);
--
--	if (ret < 0)
--		dev_err(chip->dev, "Failed to initialize regulator: %d\n", ret);
--
+-	list_for_each_entry_safe(entry, n, &xenconsoles, list) {
++	list_for_each_entry(entry, &xenconsoles, list) {
+ 		if (entry->vtermno == vtermno) {
+ 			ret  = entry;
+ 			break;
+ 		}
+ 	}
++	spin_unlock_irqrestore(&xencons_lock, flags);
+ 
  	return ret;
  }
+@@ -223,7 +228,7 @@ static int xen_hvm_console_init(void)
+ {
+ 	int r;
+ 	uint64_t v = 0;
+-	unsigned long gfn;
++	unsigned long gfn, flags;
+ 	struct xencons_info *info;
  
+ 	if (!xen_hvm_domain())
+@@ -258,9 +263,9 @@ static int xen_hvm_console_init(void)
+ 		goto err;
+ 	info->vtermno = HVC_COOKIE;
+ 
+-	spin_lock(&xencons_lock);
++	spin_lock_irqsave(&xencons_lock, flags);
+ 	list_add_tail(&info->list, &xenconsoles);
+-	spin_unlock(&xencons_lock);
++	spin_unlock_irqrestore(&xencons_lock, flags);
+ 
+ 	return 0;
+ err:
+@@ -283,6 +288,7 @@ static int xencons_info_pv_init(struct xencons_info *info, int vtermno)
+ static int xen_pv_console_init(void)
+ {
+ 	struct xencons_info *info;
++	unsigned long flags;
+ 
+ 	if (!xen_pv_domain())
+ 		return -ENODEV;
+@@ -299,9 +305,9 @@ static int xen_pv_console_init(void)
+ 		/* already configured */
+ 		return 0;
+ 	}
+-	spin_lock(&xencons_lock);
++	spin_lock_irqsave(&xencons_lock, flags);
+ 	xencons_info_pv_init(info, HVC_COOKIE);
+-	spin_unlock(&xencons_lock);
++	spin_unlock_irqrestore(&xencons_lock, flags);
+ 
+ 	return 0;
+ }
+@@ -309,6 +315,7 @@ static int xen_pv_console_init(void)
+ static int xen_initial_domain_console_init(void)
+ {
+ 	struct xencons_info *info;
++	unsigned long flags;
+ 
+ 	if (!xen_initial_domain())
+ 		return -ENODEV;
+@@ -323,9 +330,9 @@ static int xen_initial_domain_console_init(void)
+ 	info->irq = bind_virq_to_irq(VIRQ_CONSOLE, 0, false);
+ 	info->vtermno = HVC_COOKIE;
+ 
+-	spin_lock(&xencons_lock);
++	spin_lock_irqsave(&xencons_lock, flags);
+ 	list_add_tail(&info->list, &xenconsoles);
+-	spin_unlock(&xencons_lock);
++	spin_unlock_irqrestore(&xencons_lock, flags);
+ 
+ 	return 0;
+ }
+@@ -380,10 +387,12 @@ static void xencons_free(struct xencons_info *info)
+ 
+ static int xen_console_remove(struct xencons_info *info)
+ {
++	unsigned long flags;
++
+ 	xencons_disconnect_backend(info);
+-	spin_lock(&xencons_lock);
++	spin_lock_irqsave(&xencons_lock, flags);
+ 	list_del(&info->list);
+-	spin_unlock(&xencons_lock);
++	spin_unlock_irqrestore(&xencons_lock, flags);
+ 	if (info->xbdev != NULL)
+ 		xencons_free(info);
+ 	else {
+@@ -464,6 +473,7 @@ static int xencons_probe(struct xenbus_device *dev,
+ {
+ 	int ret, devid;
+ 	struct xencons_info *info;
++	unsigned long flags;
+ 
+ 	devid = dev->nodename[strlen(dev->nodename) - 1] - '0';
+ 	if (devid == 0)
+@@ -482,9 +492,9 @@ static int xencons_probe(struct xenbus_device *dev,
+ 	ret = xencons_connect_backend(dev, info);
+ 	if (ret < 0)
+ 		goto error;
+-	spin_lock(&xencons_lock);
++	spin_lock_irqsave(&xencons_lock, flags);
+ 	list_add_tail(&info->list, &xenconsoles);
+-	spin_unlock(&xencons_lock);
++	spin_unlock_irqrestore(&xencons_lock, flags);
+ 
+ 	return 0;
+ 
+@@ -583,10 +593,12 @@ static int __init xen_hvc_init(void)
+ 
+ 	info->hvc = hvc_alloc(HVC_COOKIE, info->irq, ops, 256);
+ 	if (IS_ERR(info->hvc)) {
++		unsigned long flags;
++
+ 		r = PTR_ERR(info->hvc);
+-		spin_lock(&xencons_lock);
++		spin_lock_irqsave(&xencons_lock, flags);
+ 		list_del(&info->list);
+-		spin_unlock(&xencons_lock);
++		spin_unlock_irqrestore(&xencons_lock, flags);
+ 		if (info->irq)
+ 			unbind_from_irqhandler(info->irq, NULL);
+ 		kfree(info);
 -- 
 2.35.1
 
