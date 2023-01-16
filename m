@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88AAD4C83
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:33:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0CC01C433F1;
-	Mon, 16 Jan 2023 16:33:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C2AC4C83
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:33:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2609C433F2;
+	Mon, 16 Jan 2023 16:33:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886791;
-	bh=xjQYmfARQnJY1+jSGLas8jXFQIn/IjZC7ndNe5304iQ=;
+	s=korg; t=1673886794;
+	bh=0lwioDfunWYjjqHrkqEpFJFLhHm0Tnz5VmbHu/4/Has=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tsX+4XgxbVxEYa8DycCrNaXgetrr3dx6wLdkDW/2fyJcUOJtm2BUIqbDN6RPiPwgS
-	 3H+/lzsgOrSJ85iRGcGuxj1bitr2dDhwO3wNX0CwT1bSj6pLWmyoMfck1qR5U4FzrQ
-	 QeFRo6TQzR4x4y30sZXGJk9xwZZwGFkGAObFzBbE=
+	b=ZQxOdG0kCs7DRA8PnX/GhZaDNH36gjPfXwJM2IWvj9bAFi8/kmeyqhyTULVLBFaBX
+	 NlXkJdAhyComqXNefS3j6u+4szuBcnmhH11wyuigHlg6caqF46RcHJACXt8HJp9QIn
+	 01G819O4W21fGDv/6CJG49MfjK7yl5LgNlwcTCIo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrea Arcangeli <aarcange@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 546/658] KVM: x86: optimize more exit handlers in vmx.c
-Date: Mon, 16 Jan 2023 16:50:34 +0100
-Message-Id: <20230116154934.508827223@linuxfoundation.org>
+Subject: [PATCH 5.4 564/658] ext4: unindent codeblock in ext4_xattr_block_set()
+Date: Mon, 16 Jan 2023 16:50:52 +0100
+Message-Id: <20230116154935.294187733@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,84 +35,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrea Arcangeli <aarcange@redhat.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit f399e60c45f6b6e6ad6dfcedff1dd6386e086b0b ]
+[ Upstream commit fd48e9acdf26d0cbd80051de07d4a735d05d29b2 ]
 
-Eliminate wasteful call/ret non RETPOLINE case and unnecessary fentry
-dynamic tracing hooking points.
+Remove unnecessary else (and thus indentation level) from a code block
+in ext4_xattr_block_set(). It will also make following code changes
+easier. No functional changes.
 
-Signed-off-by: Andrea Arcangeli <aarcange@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: 31de69f4eea7 ("KVM: nVMX: Properly expose ENABLE_USR_WAIT_PAUSE control to L1")
+CC: stable@vger.kernel.org
+Fixes: 82939d7999df ("ext4: convert to mbcache2")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20220712105436.32204-4-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: a44e84a9b776 ("ext4: fix deadlock due to mbcache entry corruption")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/vmx.c | 30 +++++-------------------------
- 1 file changed, 5 insertions(+), 25 deletions(-)
+ fs/ext4/xattr.c | 77 ++++++++++++++++++++++++-------------------------
+ 1 file changed, 38 insertions(+), 39 deletions(-)
 
-diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index 52f024eeac3d..0fae9b448ab9 100644
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -4802,7 +4802,7 @@ static int handle_exception_nmi(struct kvm_vcpu *vcpu)
- 	return 0;
- }
+diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
+index 4ade87a32315..24a4396933c0 100644
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -1863,6 +1863,8 @@ ext4_xattr_block_set(handle_t *handle, struct inode *inode,
+ #define header(x) ((struct ext4_xattr_header *)(x))
  
--static int handle_external_interrupt(struct kvm_vcpu *vcpu)
-+static __always_inline int handle_external_interrupt(struct kvm_vcpu *vcpu)
- {
- 	++vcpu->stat.irq_exits;
- 	return 1;
-@@ -5074,21 +5074,6 @@ static void vmx_set_dr7(struct kvm_vcpu *vcpu, unsigned long val)
- 	vmcs_writel(GUEST_DR7, val);
- }
+ 	if (s->base) {
++		int offset = (char *)s->here - bs->bh->b_data;
++
+ 		BUFFER_TRACE(bs->bh, "get_write_access");
+ 		error = ext4_journal_get_write_access(handle, bs->bh);
+ 		if (error)
+@@ -1894,49 +1896,46 @@ ext4_xattr_block_set(handle_t *handle, struct inode *inode,
+ 			if (error)
+ 				goto cleanup;
+ 			goto inserted;
+-		} else {
+-			int offset = (char *)s->here - bs->bh->b_data;
++		}
++		unlock_buffer(bs->bh);
++		ea_bdebug(bs->bh, "cloning");
++		s->base = kmemdup(BHDR(bs->bh), bs->bh->b_size, GFP_NOFS);
++		error = -ENOMEM;
++		if (s->base == NULL)
++			goto cleanup;
++		s->first = ENTRY(header(s->base)+1);
++		header(s->base)->h_refcount = cpu_to_le32(1);
++		s->here = ENTRY(s->base + offset);
++		s->end = s->base + bs->bh->b_size;
  
--static int handle_cpuid(struct kvm_vcpu *vcpu)
--{
--	return kvm_emulate_cpuid(vcpu);
--}
--
--static int handle_rdmsr(struct kvm_vcpu *vcpu)
--{
--	return kvm_emulate_rdmsr(vcpu);
--}
--
--static int handle_wrmsr(struct kvm_vcpu *vcpu)
--{
--	return kvm_emulate_wrmsr(vcpu);
--}
--
- static int handle_tpr_below_threshold(struct kvm_vcpu *vcpu)
- {
- 	kvm_apic_update_ppr(vcpu);
-@@ -5105,11 +5090,6 @@ static int handle_interrupt_window(struct kvm_vcpu *vcpu)
- 	return 1;
- }
+-			unlock_buffer(bs->bh);
+-			ea_bdebug(bs->bh, "cloning");
+-			s->base = kmemdup(BHDR(bs->bh), bs->bh->b_size, GFP_NOFS);
+-			error = -ENOMEM;
+-			if (s->base == NULL)
++		/*
++		 * If existing entry points to an xattr inode, we need
++		 * to prevent ext4_xattr_set_entry() from decrementing
++		 * ref count on it because the reference belongs to the
++		 * original block. In this case, make the entry look
++		 * like it has an empty value.
++		 */
++		if (!s->not_found && s->here->e_value_inum) {
++			ea_ino = le32_to_cpu(s->here->e_value_inum);
++			error = ext4_xattr_inode_iget(inode, ea_ino,
++				      le32_to_cpu(s->here->e_hash),
++				      &tmp_inode);
++			if (error)
+ 				goto cleanup;
+-			s->first = ENTRY(header(s->base)+1);
+-			header(s->base)->h_refcount = cpu_to_le32(1);
+-			s->here = ENTRY(s->base + offset);
+-			s->end = s->base + bs->bh->b_size;
  
--static int handle_halt(struct kvm_vcpu *vcpu)
--{
--	return kvm_emulate_halt(vcpu);
--}
+-			/*
+-			 * If existing entry points to an xattr inode, we need
+-			 * to prevent ext4_xattr_set_entry() from decrementing
+-			 * ref count on it because the reference belongs to the
+-			 * original block. In this case, make the entry look
+-			 * like it has an empty value.
+-			 */
+-			if (!s->not_found && s->here->e_value_inum) {
+-				ea_ino = le32_to_cpu(s->here->e_value_inum);
+-				error = ext4_xattr_inode_iget(inode, ea_ino,
+-					      le32_to_cpu(s->here->e_hash),
+-					      &tmp_inode);
+-				if (error)
+-					goto cleanup;
 -
- static int handle_vmcall(struct kvm_vcpu *vcpu)
- {
- 	return kvm_emulate_hypercall(vcpu);
-@@ -5657,11 +5637,11 @@ static int (*kvm_vmx_exit_handlers[])(struct kvm_vcpu *vcpu) = {
- 	[EXIT_REASON_IO_INSTRUCTION]          = handle_io,
- 	[EXIT_REASON_CR_ACCESS]               = handle_cr,
- 	[EXIT_REASON_DR_ACCESS]               = handle_dr,
--	[EXIT_REASON_CPUID]                   = handle_cpuid,
--	[EXIT_REASON_MSR_READ]                = handle_rdmsr,
--	[EXIT_REASON_MSR_WRITE]               = handle_wrmsr,
-+	[EXIT_REASON_CPUID]                   = kvm_emulate_cpuid,
-+	[EXIT_REASON_MSR_READ]                = kvm_emulate_rdmsr,
-+	[EXIT_REASON_MSR_WRITE]               = kvm_emulate_wrmsr,
- 	[EXIT_REASON_PENDING_INTERRUPT]       = handle_interrupt_window,
--	[EXIT_REASON_HLT]                     = handle_halt,
-+	[EXIT_REASON_HLT]                     = kvm_emulate_halt,
- 	[EXIT_REASON_INVD]		      = handle_invd,
- 	[EXIT_REASON_INVLPG]		      = handle_invlpg,
- 	[EXIT_REASON_RDPMC]                   = handle_rdpmc,
+-				if (!ext4_test_inode_state(tmp_inode,
+-						EXT4_STATE_LUSTRE_EA_INODE)) {
+-					/*
+-					 * Defer quota free call for previous
+-					 * inode until success is guaranteed.
+-					 */
+-					old_ea_inode_quota = le32_to_cpu(
+-							s->here->e_value_size);
+-				}
+-				iput(tmp_inode);
+-
+-				s->here->e_value_inum = 0;
+-				s->here->e_value_size = 0;
++			if (!ext4_test_inode_state(tmp_inode,
++					EXT4_STATE_LUSTRE_EA_INODE)) {
++				/*
++				 * Defer quota free call for previous
++				 * inode until success is guaranteed.
++				 */
++				old_ea_inode_quota = le32_to_cpu(
++						s->here->e_value_size);
+ 			}
++			iput(tmp_inode);
++
++			s->here->e_value_inum = 0;
++			s->here->e_value_size = 0;
+ 		}
+ 	} else {
+ 		/* Allocate a buffer where we construct the new block. */
 -- 
 2.35.1
 
