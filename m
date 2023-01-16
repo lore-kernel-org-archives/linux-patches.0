@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2056FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:39:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48A9C433D2;
-	Mon, 16 Jan 2023 16:39:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09976FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:39:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7679EC433EF;
+	Mon, 16 Jan 2023 16:39:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887188;
-	bh=mSF9HgdZMm4uM2D8BspleO3nHli7v048Tg8Wkc1ZckU=;
+	s=korg; t=1673887190;
+	bh=bloqT0XLlL6pZlvfDkPmdF+ymEdYgihtx++/A0gF1zA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cB1TgVaNjb39D5zmweQ91mN0vBlIJyuif9uNJsq3D1fwBkRo0g0E3wcEnBPPx1Tyf
-	 C2dNw5ibfBGwsBgppnLEt32b0n+4UOXlG48Ewc+COKAUKldp9zvqhYIq2Aw1fNHsDg
-	 nbwN8sgwCjhGSDlWEO51yt65gAUCqTAD9WlffJiI=
+	b=yKl5Yyn6xkflXyNzyaqw+Vzv7xzfxdunhE3/26NteUwSUAAQF+O1G6k/dojsUKJot
+	 l5On3nqwiMH+dlZG8xWSrdcYn4eZji9PFHrUimJVPD0RlS7FxQYLyyFOPEF+Wgbh+/
+	 bkrB/42cMa9PRnCUwhl8fi1W+vMi8c/L1I9oh3EU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 055/521] perf/x86/intel/uncore: Fix reference count leak in hswep_has_limit_sbox()
-Date: Mon, 16 Jan 2023 16:45:17 +0100
-Message-Id: <20230116154849.718497195@linuxfoundation.org>
+Subject: [PATCH 4.19 056/521] irqchip: gic-pm: Use pm_runtime_resume_and_get() in gic_probe()
+Date: Mon, 16 Jan 2023 16:45:18 +0100
+Message-Id: <20230116154849.766128921@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,36 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 1ff9dd6e7071a561f803135c1d684b13c7a7d01d ]
+[ Upstream commit f9ee20c85b3a3ba0afd3672630ec4f93d339f015 ]
 
-pci_get_device() will increase the reference count for the returned
-'dev'. We need to call pci_dev_put() to decrease the reference count.
-Since 'dev' is only used in pci_read_config_dword(), let's add
-pci_dev_put() right after it.
+gic_probe() calls pm_runtime_get_sync() and added fail path as
+rpm_put to put usage_counter. However, pm_runtime_get_sync()
+will increment usage_counter even it failed. Fix it by replacing it with
+pm_runtime_resume_and_get() to keep usage counter balanced.
 
-Fixes: 9d480158ee86 ("perf/x86/intel/uncore: Remove uncore extra PCI dev HSWEP_PCI_PCU_3")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
-Link: https://lore.kernel.org/r/20221118063137.121512-3-wangxiongfeng2@huawei.com
+Fixes: 9c8edddfc992 ("irqchip/gic: Add platform driver for non-root GICs that require RPM")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20221124065150.22809-1-shangxiaojing@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/intel/uncore_snbep.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/irqchip/irq-gic-pm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
-index 2bf1170f7afd..34da6d27d839 100644
---- a/arch/x86/events/intel/uncore_snbep.c
-+++ b/arch/x86/events/intel/uncore_snbep.c
-@@ -2699,6 +2699,7 @@ static bool hswep_has_limit_sbox(unsigned int device)
- 		return false;
+diff --git a/drivers/irqchip/irq-gic-pm.c b/drivers/irqchip/irq-gic-pm.c
+index ecafd295c31c..21c5decfc55b 100644
+--- a/drivers/irqchip/irq-gic-pm.c
++++ b/drivers/irqchip/irq-gic-pm.c
+@@ -112,7 +112,7 @@ static int gic_probe(struct platform_device *pdev)
  
- 	pci_read_config_dword(dev, HSWEP_PCU_CAPID4_OFFET, &capid4);
-+	pci_dev_put(dev);
- 	if (!hswep_get_chop(capid4))
- 		return true;
+ 	pm_runtime_enable(dev);
+ 
+-	ret = pm_runtime_get_sync(dev);
++	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret < 0)
+ 		goto rpm_disable;
  
 -- 
 2.35.1
