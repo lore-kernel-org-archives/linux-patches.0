@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38D26FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:37:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2829FC433EF;
-	Mon, 16 Jan 2023 16:37:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 50EB66FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:37:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE9EC433F0;
+	Mon, 16 Jan 2023 16:37:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887074;
-	bh=EQVw4W6XHpoYTwqKxUANMXO6GShKlmTRNZQPeDq9RPo=;
+	s=korg; t=1673887077;
+	bh=ZaQD/WVS9g1OcjcjJYZXkfWsF/I/ER9r62lK5f8TOd0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vj/q1NKl451JMPmgZd2dFFA8EI1nrGVqvRAbWuTX7GgTG1ZgB0ktbaYgxcN7Vz2hM
-	 crKwScIH9ghtTN1tl2XlZ07FvIC84CI0OA32oqyOpzp/AGHvXFEvVZ+fa5H3aH3qlG
-	 dQkbu0IUSCr9/WWqajNpXPCI69pva3TOp3O/yeHw=
+	b=woMyAGN/tU3LEqpak5tV3thLq4aXk0QBZRm++k/OFHwcC04nbdQ8OjdBGtyWpHr8V
+	 de+d9RxUJPC8O493Ag6Vf8rfnWhoqsbvP2ENR73COR74wz4QCOy8moP3+VBhQ+UN80
+	 RrxJYE5Jh6zv6KvJeArsomFyO+iDiW1jTHwuEwXQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jialiang Wang <wangjialiang0806@163.com>,
-	Yinjun Zhang <yinjun.zhang@corigine.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.19 004/521] nfp: fix use-after-free in area_cache_get()
-Date: Mon, 16 Jan 2023 16:44:26 +0100
-Message-Id: <20230116154847.444518915@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 005/521] ASoC: ops: Check bounds for second channel in snd_soc_put_volsw_sx()
+Date: Mon, 16 Jan 2023 16:44:27 +0100
+Message-Id: <20230116154847.493765089@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,74 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jialiang Wang <wangjialiang0806@163.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit 02e1a114fdb71e59ee6770294166c30d437bf86a upstream.
+[ Upstream commit 97eea946b93961fffd29448dcda7398d0d51c4b2 ]
 
-area_cache_get() is used to distribute cache->area and set cache->id,
- and if cache->id is not 0 and cache->area->kref refcount is 0, it will
- release the cache->area by nfp_cpp_area_release(). area_cache_get()
- set cache->id before cpp->op->area_init() and nfp_cpp_area_acquire().
+The bounds checks in snd_soc_put_volsw_sx() are only being applied to the
+first channel, meaning it is possible to write out of bounds values to the
+second channel in stereo controls. Add appropriate checks.
 
-But if area_init() or nfp_cpp_area_acquire() fails, the cache->id is
- is already set but the refcount is not increased as expected. At this
- time, calling the nfp_cpp_area_release() will cause use-after-free.
-
-To avoid the use-after-free, set cache->id after area_init() and
- nfp_cpp_area_acquire() complete successfully.
-
-Note: This vulnerability is triggerable by providing emulated device
- equipped with specified configuration.
-
- BUG: KASAN: use-after-free in nfp6000_area_init (drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c:760)
-  Write of size 4 at addr ffff888005b7f4a0 by task swapper/0/1
-
- Call Trace:
-  <TASK>
- nfp6000_area_init (drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c:760)
- area_cache_get.constprop.8 (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:884)
-
- Allocated by task 1:
- nfp_cpp_area_alloc_with_name (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:303)
- nfp_cpp_area_cache_add (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:802)
- nfp6000_init (drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c:1230)
- nfp_cpp_from_operations (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:1215)
- nfp_pci_probe (drivers/net/ethernet/netronome/nfp/nfp_main.c:744)
-
- Freed by task 1:
- kfree (mm/slub.c:4562)
- area_cache_get.constprop.8 (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:873)
- nfp_cpp_read (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:924 drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:973)
- nfp_cpp_readl (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cpplib.c:48)
-
-Signed-off-by: Jialiang Wang <wangjialiang0806@163.com>
-Reviewed-by: Yinjun Zhang <yinjun.zhang@corigine.com>
-Acked-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20220810073057.4032-1-wangjialiang0806@163.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/r/20220511134137.169575-2-broonie@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/soc-ops.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c
-@@ -874,7 +874,6 @@ area_cache_get(struct nfp_cpp *cpp, u32
- 	}
- 
- 	/* Adjust the start address to be cache size aligned */
--	cache->id = id;
- 	cache->addr = addr & ~(u64)(cache->size - 1);
- 
- 	/* Re-init to the new ID and address */
-@@ -894,6 +893,8 @@ area_cache_get(struct nfp_cpp *cpp, u32
- 		return NULL;
- 	}
- 
-+	cache->id = id;
+diff --git a/sound/soc/soc-ops.c b/sound/soc/soc-ops.c
+index 2faf95d4bb75..fbd46a737652 100644
+--- a/sound/soc/soc-ops.c
++++ b/sound/soc/soc-ops.c
+@@ -460,6 +460,12 @@ int snd_soc_put_volsw_sx(struct snd_kcontrol *kcontrol,
+ 	if (snd_soc_volsw_is_stereo(mc)) {
+ 		val_mask = mask << rshift;
+ 		val2 = (ucontrol->value.integer.value[1] + min) & mask;
 +
- exit:
- 	/* Adjust offset */
- 	*offset = addr - cache->addr;
++		if (mc->platform_max && val2 > mc->platform_max)
++			return -EINVAL;
++		if (val2 > max)
++			return -EINVAL;
++
+ 		val2 = val2 << rshift;
+ 
+ 		err = snd_soc_component_update_bits(component, reg2, val_mask,
+-- 
+2.35.1
+
 
 
