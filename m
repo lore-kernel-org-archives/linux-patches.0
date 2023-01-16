@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6E46FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D2FC433D2;
-	Mon, 16 Jan 2023 16:56:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DEF656FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64FFDC433D2;
+	Mon, 16 Jan 2023 16:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888179;
-	bh=XVGttKS9A4NCunIbTeoK+gQpvjWTgoCvhQan3ZS2N58=;
+	s=korg; t=1673888181;
+	bh=qw/KD6iqfHiPywJLPTpFLCt4P14A+piAw5bsN32ygHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xv7K7ZGGg9P6VGXLNPb9iFsMH5gcTphtiM5JWSNO4VKOFEangzhCrgu1SBG8dHgsd
-	 bT5bvFgYcHpbxtYzBHro1dkFRzn6qFiMa6ReYw2FU29wv+S8fZYXFyNhBwwh3ot3vn
-	 0YbfbYZ3VtKhUUYx1V3sN4UkiRanzLvBopkVEOdo=
+	b=SuVyMz65NZsFae7c07l+fzXez5YbC8F4GkBAyAZp3+gNM4wKGNaXaeNXAgE5AHv/J
+	 pzr0rDWFrIo5edrdCQqqcjdvSzE4UtvPmvC7cYqPhOGGZ4zZjDrTzCHGL1zwi34agt
+	 1iqsKiKhkya7kGwUQz2aiJmK5hiBKVr9NqTv0+PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-fsd@tesla.com,
-	Smitha T Murthy <smitha.t@samsung.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Jason Yan <yanaijie@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 423/521] media: s5p-mfc: Fix in register read and write for H264
-Date: Mon, 16 Jan 2023 16:51:25 +0100
-Message-Id: <20230116154906.048327074@linuxfoundation.org>
+Subject: [PATCH 4.19 432/521] ext4: goto right label failed_mount3a
+Date: Mon, 16 Jan 2023 16:51:34 +0100
+Message-Id: <20230116154906.460965356@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,83 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Smitha T Murthy <smitha.t@samsung.com>
+From: Jason Yan <yanaijie@huawei.com>
 
-[ Upstream commit 06710cd5d2436135046898d7e4b9408c8bb99446 ]
+[ Upstream commit 43bd6f1b49b61f43de4d4e33661b8dbe8c911f14 ]
 
-Few of the H264 encoder registers written were not getting reflected
-since the read values were not stored and getting overwritten.
+Before these two branches neither loaded the journal nor created the
+xattr cache. So the right label to goto is 'failed_mount3a'. Although
+this did not cause any issues because the error handler validated if the
+pointer is null. However this still made me confused when reading
+the code. So it's still worth to modify to goto the right label.
 
-Fixes: 6a9c6f681257 ("[media] s5p-mfc: Add variants to access mfc registers")
-
-Cc: stable@vger.kernel.org
-Cc: linux-fsd@tesla.com
-Signed-off-by: Smitha T Murthy <smitha.t@samsung.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Jason Yan <yanaijie@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Link: https://lore.kernel.org/r/20220916141527.1012715-2-yanaijie@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 89481b5fa8c0 ("ext4: correct inconsistent error msg in nojournal mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/ext4/super.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c b/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c
-index 7c629be43205..1171b76df036 100644
---- a/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c
-+++ b/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c
-@@ -1063,7 +1063,7 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
- 	}
- 
- 	/* aspect ratio VUI */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 5);
- 	reg |= ((p_h264->vui_sar & 0x1) << 5);
- 	writel(reg, mfc_regs->e_h264_options);
-@@ -1086,7 +1086,7 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
- 
- 	/* intra picture period for H.264 open GOP */
- 	/* control */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 4);
- 	reg |= ((p_h264->open_gop & 0x1) << 4);
- 	writel(reg, mfc_regs->e_h264_options);
-@@ -1100,23 +1100,23 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
- 	}
- 
- 	/* 'WEIGHTED_BI_PREDICTION' for B is disable */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x3 << 9);
- 	writel(reg, mfc_regs->e_h264_options);
- 
- 	/* 'CONSTRAINED_INTRA_PRED_ENABLE' is disable */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 14);
- 	writel(reg, mfc_regs->e_h264_options);
- 
- 	/* ASO */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 6);
- 	reg |= ((p_h264->aso & 0x1) << 6);
- 	writel(reg, mfc_regs->e_h264_options);
- 
- 	/* hier qp enable */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 8);
- 	reg |= ((p_h264->open_gop & 0x1) << 8);
- 	writel(reg, mfc_regs->e_h264_options);
-@@ -1137,7 +1137,7 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
- 	writel(reg, mfc_regs->e_h264_num_t_layer);
- 
- 	/* frame packing SEI generation */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 25);
- 	reg |= ((p_h264->sei_frame_packing & 0x1) << 25);
- 	writel(reg, mfc_regs->e_h264_options);
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 796588dc531b..3198c276b434 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -4302,30 +4302,30 @@ static int ext4_fill_super(struct super_block *sb, void *data, int silent)
+ 		   ext4_has_feature_journal_needs_recovery(sb)) {
+ 		ext4_msg(sb, KERN_ERR, "required journal recovery "
+ 		       "suppressed and not mounted read-only");
+-		goto failed_mount_wq;
++		goto failed_mount3a;
+ 	} else {
+ 		/* Nojournal mode, all journal mount options are illegal */
+ 		if (test_opt2(sb, EXPLICIT_JOURNAL_CHECKSUM)) {
+ 			ext4_msg(sb, KERN_ERR, "can't mount with "
+ 				 "journal_checksum, fs mounted w/o journal");
+-			goto failed_mount_wq;
++			goto failed_mount3a;
+ 		}
+ 		if (test_opt(sb, JOURNAL_ASYNC_COMMIT)) {
+ 			ext4_msg(sb, KERN_ERR, "can't mount with "
+ 				 "journal_async_commit, fs mounted w/o journal");
+-			goto failed_mount_wq;
++			goto failed_mount3a;
+ 		}
+ 		if (sbi->s_commit_interval != JBD2_DEFAULT_MAX_COMMIT_AGE*HZ) {
+ 			ext4_msg(sb, KERN_ERR, "can't mount with "
+ 				 "commit=%lu, fs mounted w/o journal",
+ 				 sbi->s_commit_interval / HZ);
+-			goto failed_mount_wq;
++			goto failed_mount3a;
+ 		}
+ 		if (EXT4_MOUNT_DATA_FLAGS &
+ 		    (sbi->s_mount_opt ^ sbi->s_def_mount_opt)) {
+ 			ext4_msg(sb, KERN_ERR, "can't mount with "
+ 				 "data=, fs mounted w/o journal");
+-			goto failed_mount_wq;
++			goto failed_mount3a;
+ 		}
+ 		sbi->s_def_mount_opt &= ~EXT4_MOUNT_JOURNAL_CHECKSUM;
+ 		clear_opt(sb, JOURNAL_CHECKSUM);
 -- 
 2.35.1
 
