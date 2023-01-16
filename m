@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F07733EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12973C433EF;
-	Mon, 16 Jan 2023 16:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CB5333EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9286C433D2;
+	Mon, 16 Jan 2023 16:00:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884843;
-	bh=cS1P93Myt0HzPeEL8NZ4bXLt9OLBFuoUHBIXvf3xhlI=;
+	s=korg; t=1673884846;
+	bh=PfRQSYh6dXAJ6wy8EVH2O+u1IAcIYf141Qr/D/CCf/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kTk5ONhalxCu0SNuVPBJn1sAhgj5owiWOQEmpYZr3znE0d3zVR2LUG+XB3zRTUWcy
-	 NTv3Dan5JqtSpBNfyGe4DrabJtHVbPv7mpsNuJJ0CgNocopxmPTg3FgcmnAACLMEt/
-	 WXARFNCb/SwwHj0edtbi0WgW6dOpjx1No7QfHdH4=
+	b=t0ftcMOanmwP5QwOOfsRjG+BGxz3L6RUMZvO6/Cm+u7Z4xkVnr2c6NWiqwS66nlTm
+	 cMlL5amqj43XnRIXIj60whdhCk/iXMrqhukQqZycbOSasu30hF6+04NPZ5DSE8BCG9
+	 PPnDUnoqZ3TV57Bxoee8uNfC+87HjWE13n740/OY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emeel Hakim <ehakim@nvidia.com>,
-	Raed Salem <raeds@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Guillaume Nault <gnault@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 160/183] net/mlx5e: Fix macsec possible null dereference when updating MAC security entity (SecY)
-Date: Mon, 16 Jan 2023 16:51:23 +0100
-Message-Id: <20230116154810.068747068@linuxfoundation.org>
+Subject: [PATCH 6.1 161/183] selftests/net: l2_tos_ttl_inherit.sh: Set IPv6 addresses with "nodad".
+Date: Mon, 16 Jan 2023 16:51:24 +0100
+Message-Id: <20230116154810.098875433@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,54 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emeel Hakim <ehakim@nvidia.com>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit 9828994ac492e8e7de47fe66097b7e665328f348 ]
+[ Upstream commit e59370b2e96eb8e7e057a2a16e999ff385a3f2fb ]
 
-Upon updating MAC security entity (SecY) in hw offload path, the macsec
-security association (SA) initialization routine is called. In case of
-extended packet number (epn) is enabled the salt and ssci attributes are
-retrieved using the MACsec driver rx_sa context which is unavailable when
-updating a SecY property such as encoding-sa hence the null dereference.
-Fix by using the provided SA to set those attributes.
+The ping command can run before DAD completes. In that case, ping may
+fail and break the selftest.
 
-Fixes: 4411a6c0abd3 ("net/mlx5e: Support MACsec offload extended packet number (EPN)")
-Signed-off-by: Emeel Hakim <ehakim@nvidia.com>
-Reviewed-by: Raed Salem <raeds@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+We don't need DAD here since we're working on isolated device pairs.
+
+Fixes: b690842d12fd ("selftests/net: test l2 tunnel TOS/TTL inheriting")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_accel/macsec.c    | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+ tools/testing/selftests/net/l2_tos_ttl_inherit.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
-index 7c0085ba2fc5..b92d541b5286 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_accel/macsec.c
-@@ -359,7 +359,6 @@ static int mlx5e_macsec_init_sa(struct macsec_context *ctx,
- 	struct mlx5_core_dev *mdev = priv->mdev;
- 	struct mlx5_macsec_obj_attrs obj_attrs;
- 	union mlx5e_macsec_rule *macsec_rule;
--	struct macsec_key *key;
- 	int err;
+diff --git a/tools/testing/selftests/net/l2_tos_ttl_inherit.sh b/tools/testing/selftests/net/l2_tos_ttl_inherit.sh
+index dca1e6f777a8..e2574b08eabc 100755
+--- a/tools/testing/selftests/net/l2_tos_ttl_inherit.sh
++++ b/tools/testing/selftests/net/l2_tos_ttl_inherit.sh
+@@ -137,8 +137,8 @@ setup() {
+ 		if [ "$type" = "gre" ]; then
+ 			type="ip6gretap"
+ 		fi
+-		ip addr add fdd1:ced0:5d88:3fce::1/64 dev veth0
+-		$ns ip addr add fdd1:ced0:5d88:3fce::2/64 dev veth1
++		ip addr add fdd1:ced0:5d88:3fce::1/64 dev veth0 nodad
++		$ns ip addr add fdd1:ced0:5d88:3fce::2/64 dev veth1 nodad
+ 		ip link add name tep0 type $type $local_addr1 \
+ 		remote fdd1:ced0:5d88:3fce::2 tos $test_tos ttl $test_ttl \
+ 		$vxlan $geneve
+@@ -170,8 +170,8 @@ setup() {
+ 		ip addr add 198.19.0.1/24 brd + dev ${parent}0
+ 		$ns ip addr add 198.19.0.2/24 brd + dev ${parent}1
+ 	elif [ "$inner" = "6" ]; then
+-		ip addr add fdd4:96cf:4eae:443b::1/64 dev ${parent}0
+-		$ns ip addr add fdd4:96cf:4eae:443b::2/64 dev ${parent}1
++		ip addr add fdd4:96cf:4eae:443b::1/64 dev ${parent}0 nodad
++		$ns ip addr add fdd4:96cf:4eae:443b::2/64 dev ${parent}1 nodad
+ 	fi
+ }
  
- 	obj_attrs.next_pn = sa->next_pn;
-@@ -369,13 +368,9 @@ static int mlx5e_macsec_init_sa(struct macsec_context *ctx,
- 	obj_attrs.aso_pdn = macsec->aso.pdn;
- 	obj_attrs.epn_state = sa->epn_state;
- 
--	key = (is_tx) ? &ctx->sa.tx_sa->key : &ctx->sa.rx_sa->key;
--
- 	if (sa->epn_state.epn_enabled) {
--		obj_attrs.ssci = (is_tx) ? cpu_to_be32((__force u32)ctx->sa.tx_sa->ssci) :
--					   cpu_to_be32((__force u32)ctx->sa.rx_sa->ssci);
--
--		memcpy(&obj_attrs.salt, &key->salt, sizeof(key->salt));
-+		obj_attrs.ssci = cpu_to_be32((__force u32)sa->ssci);
-+		memcpy(&obj_attrs.salt, &sa->salt, sizeof(sa->salt));
- 	}
- 
- 	obj_attrs.replay_window = ctx->secy->replay_window;
 -- 
 2.35.1
 
