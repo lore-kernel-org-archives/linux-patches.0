@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EA266FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:10:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBE48C433F0;
-	Mon, 16 Jan 2023 17:10:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025D76FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:10:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6E9C433D2;
+	Mon, 16 Jan 2023 17:10:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889048;
-	bh=PVhcjVzAUeNugRXlHTdzEDoRqWPeFjIb70gftrIpG9k=;
+	s=korg; t=1673889050;
+	bh=aZ0JKpZUSDhGF4muQfj/pOfCpHaLsON8A2w+yYEIG1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gIv/HGHg1AjG2231Dk1UZk9bpGJiXjDVwhlsDwpjyb/43a4FsOciEusOq8vxs2wTD
-	 CJIefqkFVo6Lkd8PGFW7XlkQBESWCHPl57XHDu2MG2p7ThiwzUbV2moM9MACgo+WRZ
-	 k7MJJQx1nIGk0S2DRxyuOklCNwSOeVsHRdvK1JaU=
+	b=HxgL/ByfeaK9D/ar4yf/Ee+JXCit6zufQvYZp1TkXP3eKmAZqfvgoivqUnEuAKhyw
+	 Bod+t3kG/C7DM0Sep3NWFDok132IP57Fdd2/lD+GXRqg9cQqj2Xv1tcExdtNgVk9ZG
+	 kWztaqaPgcNi797Nak+ewGL3JQLisslKtDbNd3WY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Mackerras <paulus@samba.org>,
-	linux-ppp@vger.kernel.org,
-	syzbot+41cab52ab62ee99ed24a@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@google.com>,
+	Jun Nie <jun.nie@linaro.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Cong Wang <cong.wang@bytedance.com>,
 	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 238/338] ppp: associate skb with a device at tx
-Date: Mon, 16 Jan 2023 16:51:51 +0100
-Message-Id: <20230116154831.422444961@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+4caeae4c7103813598ae@syzkaller.appspotmail.com
+Subject: [PATCH 4.14 212/338] net_sched: reject TCF_EM_SIMPLE case for complex ematch module
+Date: Mon, 16 Jan 2023 16:51:25 +0100
+Message-Id: <20230116154830.266662295@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -38,60 +39,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Cong Wang <cong.wang@bytedance.com>
 
-[ Upstream commit 9f225444467b98579cf28d94f4ad053460dfdb84 ]
+[ Upstream commit 9cd3fd2054c3b3055163accbf2f31a4426f10317 ]
 
-Syzkaller triggered flow dissector warning with the following:
+When TCF_EM_SIMPLE was introduced, it is supposed to be convenient
+for ematch implementation:
 
-r0 = openat$ppp(0xffffffffffffff9c, &(0x7f0000000000), 0xc0802, 0x0)
-ioctl$PPPIOCNEWUNIT(r0, 0xc004743e, &(0x7f00000000c0))
-ioctl$PPPIOCSACTIVE(r0, 0x40107446, &(0x7f0000000240)={0x2, &(0x7f0000000180)=[{0x20, 0x0, 0x0, 0xfffff034}, {0x6}]})
-pwritev(r0, &(0x7f0000000040)=[{&(0x7f0000000140)='\x00!', 0x2}], 0x1, 0x0, 0x0)
+https://lore.kernel.org/all/20050105110048.GO26856@postel.suug.ch/
 
-[    9.485814] WARNING: CPU: 3 PID: 329 at net/core/flow_dissector.c:1016 __skb_flow_dissect+0x1ee0/0x1fa0
-[    9.485929]  skb_get_poff+0x53/0xa0
-[    9.485937]  bpf_skb_get_pay_offset+0xe/0x20
-[    9.485944]  ? ppp_send_frame+0xc2/0x5b0
-[    9.485949]  ? _raw_spin_unlock_irqrestore+0x40/0x60
-[    9.485958]  ? __ppp_xmit_process+0x7a/0xe0
-[    9.485968]  ? ppp_xmit_process+0x5b/0xb0
-[    9.485974]  ? ppp_write+0x12a/0x190
-[    9.485981]  ? do_iter_write+0x18e/0x2d0
-[    9.485987]  ? __import_iovec+0x30/0x130
-[    9.485997]  ? do_pwritev+0x1b6/0x240
-[    9.486016]  ? trace_hardirqs_on+0x47/0x50
-[    9.486023]  ? __x64_sys_pwritev+0x24/0x30
-[    9.486026]  ? do_syscall_64+0x3d/0x80
-[    9.486031]  ? entry_SYSCALL_64_after_hwframe+0x63/0xcd
+"You don't have to, providing a 32bit data chunk without TCF_EM_SIMPLE
+set will simply result in allocating & copy. It's an optimization,
+nothing more."
 
-Flow dissector tries to find skb net namespace either via device
-or via socket. Neigher is set in ppp_send_frame, so let's manually
-use ppp->dev.
+So if an ematch module provides ops->datalen that means it wants a
+complex data structure (saved in its em->data) instead of a simple u32
+value. We should simply reject such a combination, otherwise this u32
+could be misinterpreted as a pointer.
 
-Cc: Paul Mackerras <paulus@samba.org>
-Cc: linux-ppp@vger.kernel.org
-Reported-by: syzbot+41cab52ab62ee99ed24a@syzkaller.appspotmail.com
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-and-tested-by: syzbot+4caeae4c7103813598ae@syzkaller.appspotmail.com
+Reported-by: Jun Nie <jun.nie@linaro.org>
+Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 2 ++
+ net/sched/ematch.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index 81a4fe9706be..5bcbf0e0616d 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -1542,6 +1542,8 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
- 	int len;
- 	unsigned char *cp;
- 
-+	skb->dev = ppp->dev;
-+
- 	if (proto < 0x8000) {
- #ifdef CONFIG_PPP_FILTER
- 		/* check if we should pass this packet */
+diff --git a/net/sched/ematch.c b/net/sched/ematch.c
+index a48dca26f178..e6078a3da76a 100644
+--- a/net/sched/ematch.c
++++ b/net/sched/ematch.c
+@@ -259,6 +259,8 @@ static int tcf_em_validate(struct tcf_proto *tp,
+ 			 * the value carried.
+ 			 */
+ 			if (em_hdr->flags & TCF_EM_SIMPLE) {
++				if (em->ops->datalen > 0)
++					goto errout;
+ 				if (data_len < sizeof(u32))
+ 					goto errout;
+ 				em->data = *(u32 *) data;
 -- 
 2.35.1
 
