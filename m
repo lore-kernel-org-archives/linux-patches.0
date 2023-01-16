@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3D2633EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AF9BC433EF;
-	Mon, 16 Jan 2023 16:03:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AFEE33F0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8093C433F0;
+	Mon, 16 Jan 2023 16:03:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884989;
-	bh=pvltEXSiUFC9diafDbsx26spIIwbWPkznqU+5td83ng=;
+	s=korg; t=1673884995;
+	bh=69t2bdjOS+7RBEE+s/cEdTXDu49Bwlf/my39Dl5z8Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XmdQBuKw6f61gmjQqcdPMBrn+nBrRK3mP6ITZvbf6ghmx1x0WtN4fl89kXd/oEC0g
-	 kjoNAL8swmcZ7FT5nszu7H5E/VzECnUUbT3lIwgcPAZk8i+ZtG5QzbnJcoQUqn9h2t
-	 4vthg2wPwe+J8EjxDJ9XdkRChQpmedZknVq4UGig=
+	b=W5Pekvxzs31QYXduG2i9C9yxAoy/N/GDrzDSrumG2LF+fkfHHfjDxX73VDxea75tN
+	 Oi1Xa7dqm2sSpHWml31RI5Dd3hU7Uzsha1joNuM1eBXoo7WMZzPV2gEoUMl9BJHGYj
+	 UnKUj1wOx4LJhvFwQjNBPWgENb9av/0EzoKhb+Y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jinrong Liang <cloudliang@tencent.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Subject: [PATCH 5.15 07/86] selftests: kvm: Fix a compile error in selftests/kvm/rseq_test.c
-Date: Mon, 16 Jan 2023 16:50:41 +0100
-Message-Id: <20230116154747.362531821@linuxfoundation.org>
+	=?UTF-8?q?Martin=20Li=C5=A1ka?= <mliska@suse.cz>,
+	Jonathan Corbet <corbet@lwn.net>
+Subject: [PATCH 5.15 09/86] docs: Fix the docs build with Sphinx 6.0
+Date: Mon, 16 Jan 2023 16:50:43 +0100
+Message-Id: <20230116154747.447602691@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -35,45 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jinrong Liang <cloudliang@tencent.com>
+From: Jonathan Corbet <corbet@lwn.net>
 
-commit 561cafebb2cf97b0927b4fb0eba22de6200f682e upstream.
+commit 0283189e8f3d0917e2ac399688df85211f48447b upstream.
 
-The following warning appears when executing:
-	make -C tools/testing/selftests/kvm
+Sphinx 6.0 removed the execfile_() function, which we use as part of the
+configuration process.  They *did* warn us...  Just open-code the
+functionality as is done in Sphinx itself.
 
-rseq_test.c: In function ‘main’:
-rseq_test.c:237:33: warning: implicit declaration of function ‘gettid’; did you mean ‘getgid’? [-Wimplicit-function-declaration]
-          (void *)(unsigned long)gettid());
-                                 ^~~~~~
-                                 getgid
-/usr/bin/ld: /tmp/ccr5mMko.o: in function `main':
-../kvm/tools/testing/selftests/kvm/rseq_test.c:237: undefined reference to `gettid'
-collect2: error: ld returned 1 exit status
-make: *** [../lib.mk:173: ../kvm/tools/testing/selftests/kvm/rseq_test] Error 1
+Tested (using SPHINX_CONF, since this code is only executed with an
+alternative config file) on various Sphinx versions from 2.5 through 6.0.
 
-Use the more compatible syscall(SYS_gettid) instead of gettid() to fix it.
-More subsequent reuse may cause it to be wrapped in a lib file.
-
-Signed-off-by: Jinrong Liang <cloudliang@tencent.com>
-Message-Id: <20220802071240.84626-1-cloudliang@tencent.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reported-by: Martin Liška <mliska@suse.cz>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/kvm/rseq_test.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/sphinx/load_config.py |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/kvm/rseq_test.c
-+++ b/tools/testing/selftests/kvm/rseq_test.c
-@@ -233,7 +233,7 @@ int main(int argc, char *argv[])
- 	ucall_init(vm, NULL);
+--- a/Documentation/sphinx/load_config.py
++++ b/Documentation/sphinx/load_config.py
+@@ -3,7 +3,7 @@
  
- 	pthread_create(&migration_thread, NULL, migration_worker,
--		       (void *)(unsigned long)gettid());
-+		       (void *)(unsigned long)syscall(SYS_gettid));
+ import os
+ import sys
+-from sphinx.util.pycompat import execfile_
++from sphinx.util.osutil import fs_encoding
  
- 	for (i = 0; !done; i++) {
- 		vcpu_run(vm, VCPU_ID);
+ # ------------------------------------------------------------------------------
+ def loadConfig(namespace):
+@@ -48,7 +48,9 @@ def loadConfig(namespace):
+             sys.stdout.write("load additional sphinx-config: %s\n" % config_file)
+             config = namespace.copy()
+             config['__file__'] = config_file
+-            execfile_(config_file, config)
++            with open(config_file, 'rb') as f:
++                code = compile(f.read(), fs_encoding, 'exec')
++                exec(code, config)
+             del config['__file__']
+             namespace.update(config)
+         else:
 
 
