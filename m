@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 259EC4C84
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:51:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B06EC433F1;
-	Mon, 16 Jan 2023 16:51:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7F8C6D24
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:51:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36F54C433D2;
+	Mon, 16 Jan 2023 16:51:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887895;
-	bh=v3rsYLW/Hkn9ggyyLGYMgSr/niGDYjo7G5oPRDwWYgo=;
+	s=korg; t=1673887897;
+	bh=A7k0JLRPG1AYWghF/fcDyvp8aoeko8s39hYAt8NoGzI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xbiJbT+Z4nnFpEnhWton+6CGqytcUIIKUNmoNznHkh+DrDYyDSyvgXldfm5NJSTqy
-	 P3u48UwCt3wS4lObYwW9UxDgTGS3ByV4nHi3MkLWI5Ecc440a8A352kZBt38u3Higg
-	 Yl5xfa4XIiD3+PIsC4PC8qYG6Sc0yDLmjHp3iaPQ=
+	b=NogywRrqSh9W5eOU2rVlYOUQ7NgFITxdPqbjWM9nEhOdxIQX5ga7KeJPcpfX73I/X
+	 E0BCFopMj4FZf7TaYbYvJA3baOXfJUvUmwA3SZL1cbwbP6FMHVQ78aqFfDOx+tDESo
+	 S6mDjCt5/6D1Ap3MQtMz271P23CuJ3OWKxc5LPxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	syzbot+f635e86ec3fa0a37e019@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 322/521] bpf: make sure skb->len != 0 when redirecting to a tunneling device
-Date: Mon, 16 Jan 2023 16:49:44 +0100
-Message-Id: <20230116154901.547846044@linuxfoundation.org>
+Subject: [PATCH 4.19 296/521] rtc: st-lpc: Add missing clk_disable_unprepare in st_rtc_probe()
+Date: Mon, 16 Jan 2023 16:49:18 +0100
+Message-Id: <20230116154900.363196320@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -38,71 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 07ec7b502800ba9f7b8b15cb01dd6556bb41aaca ]
+[ Upstream commit 5fb733d7bd6949e90028efdce8bd528c6ab7cf1e ]
 
-syzkaller managed to trigger another case where skb->len == 0
-when we enter __dev_queue_xmit:
+The clk_disable_unprepare() should be called in the error handling
+of clk_get_rate(), fix it.
 
-WARNING: CPU: 0 PID: 2470 at include/linux/skbuff.h:2576 skb_assert_len include/linux/skbuff.h:2576 [inline]
-WARNING: CPU: 0 PID: 2470 at include/linux/skbuff.h:2576 __dev_queue_xmit+0x2069/0x35e0 net/core/dev.c:4295
-
-Call Trace:
- dev_queue_xmit+0x17/0x20 net/core/dev.c:4406
- __bpf_tx_skb net/core/filter.c:2115 [inline]
- __bpf_redirect_no_mac net/core/filter.c:2140 [inline]
- __bpf_redirect+0x5fb/0xda0 net/core/filter.c:2163
- ____bpf_clone_redirect net/core/filter.c:2447 [inline]
- bpf_clone_redirect+0x247/0x390 net/core/filter.c:2419
- bpf_prog_48159a89cb4a9a16+0x59/0x5e
- bpf_dispatcher_nop_func include/linux/bpf.h:897 [inline]
- __bpf_prog_run include/linux/filter.h:596 [inline]
- bpf_prog_run include/linux/filter.h:603 [inline]
- bpf_test_run+0x46c/0x890 net/bpf/test_run.c:402
- bpf_prog_test_run_skb+0xbdc/0x14c0 net/bpf/test_run.c:1170
- bpf_prog_test_run+0x345/0x3c0 kernel/bpf/syscall.c:3648
- __sys_bpf+0x43a/0x6c0 kernel/bpf/syscall.c:5005
- __do_sys_bpf kernel/bpf/syscall.c:5091 [inline]
- __se_sys_bpf kernel/bpf/syscall.c:5089 [inline]
- __x64_sys_bpf+0x7c/0x90 kernel/bpf/syscall.c:5089
- do_syscall_64+0x54/0x70 arch/x86/entry/common.c:48
- entry_SYSCALL_64_after_hwframe+0x61/0xc6
-
-The reproducer doesn't really reproduce outside of syzkaller
-environment, so I'm taking a guess here. It looks like we
-do generate correct ETH_HLEN-sized packet, but we redirect
-the packet to the tunneling device. Before we do so, we
-__skb_pull l2 header and arrive again at skb->len == 0.
-Doesn't seem like we can do anything better than having
-an explicit check after __skb_pull?
-
-Cc: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot+f635e86ec3fa0a37e019@syzkaller.appspotmail.com
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/r/20221027225537.353077-1-sdf@google.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: b5b2bdfc2893 ("rtc: st: Add new driver for ST's LPC RTC")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221123014805.1993052-1-cuigaosheng1@huawei.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/rtc/rtc-st-lpc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 5129e89f52bb..aa2e7baa13c4 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2025,6 +2025,10 @@ static int __bpf_redirect_no_mac(struct sk_buff *skb, struct net_device *dev,
+diff --git a/drivers/rtc/rtc-st-lpc.c b/drivers/rtc/rtc-st-lpc.c
+index bee75ca7ff79..e66439b6247a 100644
+--- a/drivers/rtc/rtc-st-lpc.c
++++ b/drivers/rtc/rtc-st-lpc.c
+@@ -249,6 +249,7 @@ static int st_rtc_probe(struct platform_device *pdev)
  
- 	if (mlen) {
- 		__skb_pull(skb, mlen);
-+		if (unlikely(!skb->len)) {
-+			kfree_skb(skb);
-+			return -ERANGE;
-+		}
- 
- 		/* At ingress, the mac header has already been pulled once.
- 		 * At egress, skb_pospull_rcsum has to be done in case that
+ 	rtc->clkrate = clk_get_rate(rtc->clk);
+ 	if (!rtc->clkrate) {
++		clk_disable_unprepare(rtc->clk);
+ 		dev_err(&pdev->dev, "Unable to fetch clock rate\n");
+ 		return -EINVAL;
+ 	}
 -- 
 2.35.1
 
