@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A764646B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:14:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDDFC433F0;
-	Mon, 16 Jan 2023 16:14:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A26B46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:14:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C435DC433EF;
+	Mon, 16 Jan 2023 16:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885640;
-	bh=gjjed9r8e7W6DB9U2pJosuYea/5yQuY5MqTPMijgpDw=;
+	s=korg; t=1673885643;
+	bh=aFBB8ySts1CB76SBPlZ0R2XMtuLtItuo46tCJd7e6Ts=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mP6HS2/jlr2MtW5KY7G2hr9z9s1B775gzANKBrjhaZ/4cusBoUZtZZEjhn1mwx5kf
-	 HQKVsDF0hBie2+A3bgdbei3W/AN2jKQHAt7VkY1X5L/nIA0mgXWgyJnUBRbQZ/CCy5
-	 PGx9RI6nYgWhx07jZafX1KYWw6zgspqHHI0qYwb0=
+	b=0qTBveyi6aTlsvQA5X7V8XfL++D5ZzUOcn/QDop3pmo7qi/tp5kB7Og+8wnOHoLIy
+	 nhV1PBR0H2ZAdJFxWULEjPyU3VBF7VOOjYrA5ZSZWtX4cQXPg7TTIVR6ippfkIHXAq
+	 ztHT/LohOInLutf6F5s1W60reiyWo7TPpKuZO7V0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 089/658] PM: runtime: Do not call __rpm_callback() from rpm_idle()
-Date: Mon, 16 Jan 2023 16:42:57 +0100
-Message-Id: <20230116154913.641851336@linuxfoundation.org>
+Subject: [PATCH 5.4 122/658] mtd: Fix device name leak when register device failed in add_mtd_device()
+Date: Mon, 16 Jan 2023 16:43:30 +0100
+Message-Id: <20230116154915.046436315@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,52 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit bc80c2e438dcbfcf748452ec0f7ad5b79ff3ad88 ]
+[ Upstream commit 895d68a39481a75c680aa421546931fb11942fa6 ]
 
-Calling __rpm_callback() from rpm_idle() after adding device links
-support to the former is a clear mistake.
+There is a kmemleak when register device failed:
+  unreferenced object 0xffff888101aab550 (size 8):
+    comm "insmod", pid 3922, jiffies 4295277753 (age 925.408s)
+    hex dump (first 8 bytes):
+      6d 74 64 30 00 88 ff ff                          mtd0....
+    backtrace:
+      [<00000000bde26724>] __kmalloc_node_track_caller+0x4e/0x150
+      [<000000003c32b416>] kvasprintf+0xb0/0x130
+      [<000000001f7a8f15>] kobject_set_name_vargs+0x2f/0xb0
+      [<000000006e781163>] dev_set_name+0xab/0xe0
+      [<00000000e30d0c78>] add_mtd_device+0x4bb/0x700
+      [<00000000f3d34de7>] mtd_device_parse_register+0x2ac/0x3f0
+      [<00000000c0d88488>] 0xffffffffa0238457
+      [<00000000b40d0922>] 0xffffffffa02a008f
+      [<0000000023d17b9d>] do_one_initcall+0x87/0x2a0
+      [<00000000770f6ca6>] do_init_module+0xdf/0x320
+      [<000000007b6768fe>] load_module+0x2f98/0x3330
+      [<00000000346bed5a>] __do_sys_finit_module+0x113/0x1b0
+      [<00000000674c2290>] do_syscall_64+0x35/0x80
+      [<000000004c6a8d97>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Not only it causes rpm_idle() to carry out unnecessary actions, but it
-is also against the assumption regarding the stability of PM-runtime
-status across __rpm_callback() invocations, because rpm_suspend() and
-rpm_resume() may run in parallel with __rpm_callback() when it is called
-by rpm_idle() and the device's PM-runtime status can be updated by any
-of them.
+If register device failed, should call put_device() to give up the
+reference.
 
-Fixes: 21d5c57b3726 ("PM / runtime: Use device links")
-Link: https://lore.kernel.org/linux-pm/36aed941-a73e-d937-2721-4f0decd61ce0@quicinc.com
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Fixes: 1f24b5a8ecbb ("[MTD] driver model updates")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20221022121352.2534682-1-zhangxiaoxu5@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/runtime.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/mtd/mtdcore.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index 24a3013728c3..9ee58bf49d13 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -465,7 +465,17 @@ static int rpm_idle(struct device *dev, int rpmflags)
+diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
+index ac5d3b6db9b8..83012d74dcd5 100644
+--- a/drivers/mtd/mtdcore.c
++++ b/drivers/mtd/mtdcore.c
+@@ -673,8 +673,10 @@ int add_mtd_device(struct mtd_info *mtd)
+ 	dev_set_drvdata(&mtd->dev, mtd);
+ 	of_node_get(mtd_get_of_node(mtd));
+ 	error = device_register(&mtd->dev);
+-	if (error)
++	if (error) {
++		put_device(&mtd->dev);
+ 		goto fail_added;
++	}
  
- 	dev->power.idle_notification = true;
- 
--	retval = __rpm_callback(callback, dev);
-+	if (dev->power.irq_safe)
-+		spin_unlock(&dev->power.lock);
-+	else
-+		spin_unlock_irq(&dev->power.lock);
-+
-+	retval = callback(dev);
-+
-+	if (dev->power.irq_safe)
-+		spin_lock(&dev->power.lock);
-+	else
-+		spin_lock_irq(&dev->power.lock);
- 
- 	dev->power.idle_notification = false;
- 	wake_up_all(&dev->power.wait_queue);
+ 	/* Add the nvmem provider */
+ 	error = mtd_nvmem_add(mtd);
 -- 
 2.35.1
 
