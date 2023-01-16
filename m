@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D61C33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F260DC433EF;
-	Mon, 16 Jan 2023 16:01:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B30C33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9F2C433EF;
+	Mon, 16 Jan 2023 16:01:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884903;
-	bh=kudM798/kcei4T9wKUjSprpmfWS0PRt+yng+0kWIehA=;
+	s=korg; t=1673884906;
+	bh=7ngtpNpRdyuMIe9jf8cRtnaBAiVtorvis9hHf1pqhiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z9cDcpBEttgOvVrc43PcL3yJlgYh9BCfnV90BPeQi5xt9yJeo+u4PFdEocGCYb/Q3
-	 4ROK1U/YByyhLvCwLFQuyDs+nUagrlrkzcgniqDWO5YpEnA1Vn21w48cgCgfVXNrZq
-	 49EEP34rNuHs5jZX4ZAbMqKYmvlT/tRXpDPdjK8w=
+	b=l/dYQD4jrsa/OldTO84qW1CBBFZeuPn4cdppxwVXixScK8BjkZPaSyRKEIimFDKBA
+	 B+arq/2I1wK27rRoHFaX8cTXHM9aujaCRPAnlPxdrBkxwYFDqXouI/Fs5fDmRtrYQ5
+	 deyXqBbIAP9bcRQhIRU1A0F2Hff+3f2xGfZNccFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -29,9 +29,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Vlastimil Babka <vbabka@suse.cz>,
 	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 166/183] perf kmem: Support legacy tracepoints
-Date: Mon, 16 Jan 2023 16:51:29 +0100
-Message-Id: <20230116154810.314865374@linuxfoundation.org>
+Subject: [PATCH 6.1 167/183] perf kmem: Support field "node" in evsel__process_alloc_event() coping with recent tracepoint restructuring
+Date: Mon, 16 Jan 2023 16:51:30 +0100
+Message-Id: <20230116154810.345729215@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -47,15 +47,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Leo Yan <leo.yan@linaro.org>
 
-[ Upstream commit b3719108ae60169eda5c941ca5e1be1faa371c57 ]
+[ Upstream commit dce088ab0d51ae3b14fb2bd608e9c649aadfe5dc ]
 
 Commit 11e9734bcb6a7361 ("mm/slab_common: unify NUMA and UMA version of
-tracepoints") removed tracepoints 'kmalloc_node' and
-'kmem_cache_alloc_node', we need to consider the tool should be backward
-compatible.
+tracepoints") adds the field "node" into the tracepoints 'kmalloc' and
+'kmem_cache_alloc', so this patch modifies the event process function to
+support the field "node".
 
-If it detect the tracepoint "kmem:kmalloc_node", this patch enables the
-legacy tracepoints, otherwise, it will ignore them.
+If field "node" is detected by checking function evsel__field(), it
+stats the cross allocation.
+
+When the "node" value is NUMA_NO_NODE (-1), it means the memory can be
+allocated from any memory node, in this case, we don't account it as a
+cross allocation.
 
 Fixes: 11e9734bcb6a7361 ("mm/slab_common: unify NUMA and UMA version of tracepoints")
 Reported-by: Ravi Bangoria <ravi.bangoria@amd.com>
@@ -69,80 +73,80 @@ Cc: Mark Rutland <mark.rutland@arm.com>
 Cc: Namhyung Kim <namhyung@kernel.org>
 Cc: Peter Zijlstra <peterz@infradead.org>
 Cc: Vlastimil Babka <vbabka@suse.cz>
-Link: https://lore.kernel.org/r/20230108062400.250690-1-leo.yan@linaro.org
+Link: https://lore.kernel.org/r/20230108062400.250690-2-leo.yan@linaro.org
 Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-kmem.c | 29 ++++++++++++++++++++++++++---
- 1 file changed, 26 insertions(+), 3 deletions(-)
+ tools/perf/builtin-kmem.c | 36 ++++++++++++++++++++++++------------
+ 1 file changed, 24 insertions(+), 12 deletions(-)
 
 diff --git a/tools/perf/builtin-kmem.c b/tools/perf/builtin-kmem.c
-index ebfab2ca1702..63c759edb8bc 100644
+index 63c759edb8bc..40dd52acc48a 100644
 --- a/tools/perf/builtin-kmem.c
 +++ b/tools/perf/builtin-kmem.c
-@@ -1823,6 +1823,19 @@ static int parse_line_opt(const struct option *opt __maybe_unused,
- 	return 0;
+@@ -26,6 +26,7 @@
+ #include "util/string2.h"
+ 
+ #include <linux/kernel.h>
++#include <linux/numa.h>
+ #include <linux/rbtree.h>
+ #include <linux/string.h>
+ #include <linux/zalloc.h>
+@@ -184,22 +185,33 @@ static int evsel__process_alloc_event(struct evsel *evsel, struct perf_sample *s
+ 	total_allocated += bytes_alloc;
+ 
+ 	nr_allocs++;
+-	return 0;
+-}
+ 
+-static int evsel__process_alloc_node_event(struct evsel *evsel, struct perf_sample *sample)
+-{
+-	int ret = evsel__process_alloc_event(evsel, sample);
++	/*
++	 * Commit 11e9734bcb6a ("mm/slab_common: unify NUMA and UMA
++	 * version of tracepoints") adds the field "node" into the
++	 * tracepoints 'kmalloc' and 'kmem_cache_alloc'.
++	 *
++	 * The legacy tracepoints 'kmalloc_node' and 'kmem_cache_alloc_node'
++	 * also contain the field "node".
++	 *
++	 * If the tracepoint contains the field "node" the tool stats the
++	 * cross allocation.
++	 */
++	if (evsel__field(evsel, "node")) {
++		int node1, node2;
+ 
+-	if (!ret) {
+-		int node1 = cpu__get_node((struct perf_cpu){.cpu = sample->cpu}),
+-		    node2 = evsel__intval(evsel, sample, "node");
++		node1 = cpu__get_node((struct perf_cpu){.cpu = sample->cpu});
++		node2 = evsel__intval(evsel, sample, "node");
+ 
+-		if (node1 != node2)
++		/*
++		 * If the field "node" is NUMA_NO_NODE (-1), we don't take it
++		 * as a cross allocation.
++		 */
++		if ((node2 != NUMA_NO_NODE) && (node1 != node2))
+ 			nr_cross_allocs++;
+ 	}
+ 
+-	return ret;
++	return 0;
  }
  
-+static bool slab_legacy_tp_is_exposed(void)
-+{
-+	/*
-+	 * The tracepoints "kmem:kmalloc_node" and
-+	 * "kmem:kmem_cache_alloc_node" have been removed on the latest
-+	 * kernel, if the tracepoint "kmem:kmalloc_node" is existed it
-+	 * means the tool is running on an old kernel, we need to
-+	 * rollback to support these legacy tracepoints.
-+	 */
-+	return IS_ERR(trace_event__tp_format("kmem", "kmalloc_node")) ?
-+		false : true;
-+}
-+
- static int __cmd_record(int argc, const char **argv)
- {
- 	const char * const record_args[] = {
-@@ -1830,22 +1843,28 @@ static int __cmd_record(int argc, const char **argv)
- 	};
- 	const char * const slab_events[] = {
- 	"-e", "kmem:kmalloc",
--	"-e", "kmem:kmalloc_node",
- 	"-e", "kmem:kfree",
- 	"-e", "kmem:kmem_cache_alloc",
--	"-e", "kmem:kmem_cache_alloc_node",
- 	"-e", "kmem:kmem_cache_free",
- 	};
-+	const char * const slab_legacy_events[] = {
-+	"-e", "kmem:kmalloc_node",
-+	"-e", "kmem:kmem_cache_alloc_node",
-+	};
- 	const char * const page_events[] = {
- 	"-e", "kmem:mm_page_alloc",
- 	"-e", "kmem:mm_page_free",
- 	};
- 	unsigned int rec_argc, i, j;
- 	const char **rec_argv;
-+	unsigned int slab_legacy_tp_exposed = slab_legacy_tp_is_exposed();
- 
- 	rec_argc = ARRAY_SIZE(record_args) + argc - 1;
--	if (kmem_slab)
-+	if (kmem_slab) {
- 		rec_argc += ARRAY_SIZE(slab_events);
-+		if (slab_legacy_tp_exposed)
-+			rec_argc += ARRAY_SIZE(slab_legacy_events);
-+	}
- 	if (kmem_page)
- 		rec_argc += ARRAY_SIZE(page_events) + 1; /* for -g */
- 
-@@ -1860,6 +1879,10 @@ static int __cmd_record(int argc, const char **argv)
- 	if (kmem_slab) {
- 		for (j = 0; j < ARRAY_SIZE(slab_events); j++, i++)
- 			rec_argv[i] = strdup(slab_events[j]);
-+		if (slab_legacy_tp_exposed) {
-+			for (j = 0; j < ARRAY_SIZE(slab_legacy_events); j++, i++)
-+				rec_argv[i] = strdup(slab_legacy_events[j]);
-+		}
- 	}
- 	if (kmem_page) {
- 		rec_argv[i++] = strdup("-g");
+ static int ptr_cmp(void *, void *);
+@@ -1368,8 +1380,8 @@ static int __cmd_kmem(struct perf_session *session)
+ 		/* slab allocator */
+ 		{ "kmem:kmalloc",		evsel__process_alloc_event, },
+ 		{ "kmem:kmem_cache_alloc",	evsel__process_alloc_event, },
+-		{ "kmem:kmalloc_node",		evsel__process_alloc_node_event, },
+-		{ "kmem:kmem_cache_alloc_node", evsel__process_alloc_node_event, },
++		{ "kmem:kmalloc_node",		evsel__process_alloc_event, },
++		{ "kmem:kmem_cache_alloc_node", evsel__process_alloc_event, },
+ 		{ "kmem:kfree",			evsel__process_free_event, },
+ 		{ "kmem:kmem_cache_free",	evsel__process_free_event, },
+ 		/* page allocator */
 -- 
 2.35.1
 
