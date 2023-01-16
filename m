@@ -1,80 +1,111 @@
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+Received: from mail-wm1-f52.google.com (mail-wm1-f52.google.com [209.85.128.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C0EA28
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 00:03:16 +0000 (UTC)
-Received: by mail-yb1-f178.google.com with SMTP id 188so28514280ybi.9
-        for <patches@lists.linux.dev>; Sun, 15 Jan 2023 16:03:16 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=utF0T11NIO5fzdSYdTniamVGFsvJmq4s7ZlcItgmdGo=;
-        b=pTclYOItmik5tHCwf8CHR9HEI+jxxHl9DpN6G3hseWDVWz0WKC+e5ZjXrboN34vRfX
-         33Bav9oBN2rl4ifdPBg9mopNU8+OME5/3vb0EGLRy4hpEnZou3TawUjewrn7VrpwfV2J
-         8zmskMMVx/wGqDW8xuV8ZN2/DlU3nNlkcoEtd028kFWatiSJr2nUoPcnzr3dUmbAy7Im
-         LsduvSOzVQJoC0UW413NdmK5a5Y6OVmA6G3B8hX79z0EYEtXIJyhHvuZD2ucjwAPqYH2
-         4mpDd4N8mFQpWipR19rLRubB60j6njQiMVSDDZ4z7WG5TWm1hOYFmKNloonwJK7x8IUY
-         8dIg==
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB1721108
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 05:44:12 +0000 (UTC)
+Received: by mail-wm1-f52.google.com with SMTP id l41-20020a05600c1d2900b003daf986faaeso1421194wms.3
+        for <patches@lists.linux.dev>; Sun, 15 Jan 2023 21:44:12 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=utF0T11NIO5fzdSYdTniamVGFsvJmq4s7ZlcItgmdGo=;
-        b=adIKt0hR5+e/yywqeUbQotrW9fBbZNVn7jsbnwjMPgY579DCh2pxPbgaG44PMIWKhH
-         JrFy+tpjJ3vwYmzdrI03QuB51ci8/EU0mhdFquhsNtCSrHz3J1zndNRw8lGniR+UrDuk
-         Tm23EzIYdXcF/yVOZNDriMf9QsHV4Wi134QSZouekTt1yINdHBJGTK/6H6Ck73V3/O5+
-         KLIrUFo2aB3ZlgouC91tX7FtsfZG+9A1SrBMJPxKOqD7dEU5Z4C2VHiWSrGV4WHMNScb
-         ikm1n/Fxr1EOYlisfKp9KzaPOooW9kwGMpe+Ddvr0h6B6QjZZHoDa+hiQ4cOkTH2BKq8
-         GA7A==
-X-Gm-Message-State: AFqh2koc99euza+gDlW/FQYBgawlhSDnDXs3XgdSI4a0g1oW47SCdGYL
-	w+TyG3nX6Z6GIMwiEVwPP7F2eWjmILB8NK0Lptk=
-X-Google-Smtp-Source: AMrXdXsGXvJ6fgLaVz+5qZXQBdJFCTv3K8NVETV+4FyUgyVMQCuNqGCqmRkc0+hweH28ipKE+hbdONR7DsrMxDekZ6E=
-X-Received: by 2002:a25:7702:0:b0:7b4:bdd7:e631 with SMTP id
- s2-20020a257702000000b007b4bdd7e631mr4296168ybc.507.1673827395991; Sun, 15
- Jan 2023 16:03:15 -0800 (PST)
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=7zRCfVXAHn6QI7MUc3yzNddVItUeMkttZMVHdMI9lzI=;
+        b=79Immi82AXBHBdtuAwmdHlkxbWf+HZqPLQrShoh3V+cnxeHzwSbzkuWV4LsnOwf3z1
+         9xme7tDxRoGtKO21tSuCd84k25lu8X42fwNtVROCwsSYY4cNIHfS/k4ieVlPKU39CSd4
+         fyEzUhyluxFzUEduleGwvKmMM6y8IEQ0uWNqMbhBJ9NxJuL8T+XNWLpyutmNDFSZXozm
+         fZEYvDc3/4ma9mylCe2+FnwTiSM3pMPjjLmBN2pHY7GMVkfPWfYecxppdWin8fLjwkl5
+         U/4ZmfMOp4FIQ77Pa7NpDdNFDHo+AdszBCSTDTdQwBwQeSRvV+ek3dkytTMsaP2liABo
+         6CPw==
+X-Gm-Message-State: AFqh2koaP0xITMpdgYvZg/RPuH/glasvGoDgXu16VqgVjRIl5Up3QFjJ
+	0Ri0SgLywHq8NB2sqZOu4tU=
+X-Google-Smtp-Source: AMrXdXs/lEjg0thvylnDtAtEHXTD/Wa8S6KWaDuNlRMVx6agb9MEQayHgLF1TjfYsEn8WR01Jr08cQ==
+X-Received: by 2002:a05:600c:1c1b:b0:3da:fada:e38a with SMTP id j27-20020a05600c1c1b00b003dafadae38amr2395835wms.24.1673847851170;
+        Sun, 15 Jan 2023 21:44:11 -0800 (PST)
+Received: from ?IPV6:2a0b:e7c0:0:107::aaaa:49? ([2a0b:e7c0:0:107::aaaa:49])
+        by smtp.gmail.com with ESMTPSA id 2-20020a05600c020200b003d9ef8ad6b2sm24204067wmi.13.2023.01.15.21.44.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 15 Jan 2023 21:44:10 -0800 (PST)
+Message-ID: <7ecae85c-7562-aee6-a174-5d12af3c64b1@kernel.org>
+Date: Mon, 16 Jan 2023 06:44:09 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230109204912.539790-1-ojeda@kernel.org>
-In-Reply-To: <20230109204912.539790-1-ojeda@kernel.org>
-From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date: Mon, 16 Jan 2023 01:03:05 +0100
-Message-ID: <CANiq72k9OP2TTPty2OcC5Od-R3wHsfhnc0BFR_XYjBtC5zf3gA@mail.gmail.com>
-Subject: Re: [PATCH] rust: print: avoid evaluating arguments in `pr_*` macros
- in `unsafe` blocks
-To: Miguel Ojeda <ojeda@kernel.org>
-Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
-	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
-	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, 
-	Domen Puncer Kugler <domen.puncerkugler@nccgroup.com>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 6.1 09/10] gcc: disable -Warray-bounds for gcc-11 too
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Kees Cook <kees@kernel.org>,
+ Vlastimil Babka <vbabka@suse.cz>, Guenter Roeck <linux@roeck-us.net>,
+ Linus Torvalds <torvalds@linux-foundation.org>
+References: <20230112135326.981869724@linuxfoundation.org>
+ <20230112135327.373332907@linuxfoundation.org>
+From: Jiri Slaby <jirislaby@kernel.org>
+In-Reply-To: <20230112135327.373332907@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Mon, Jan 9, 2023 at 9:49 PM Miguel Ojeda <ojeda@kernel.org> wrote:
->
-> At the moment it is possible to perform unsafe operations in
-> the arguments of `pr_*` macros since they are evaluated inside
-> an `unsafe` block:
->
->     let x = &10u32 as *const u32;
->     pr_info!("{}", *x);
->
-> In other words, this is a soundness issue.
->
-> Fix it so that it requires an explicit `unsafe` block.
->
-> Reported-by: Wedson Almeida Filho <wedsonaf@gmail.com>
-> Reported-by: Domen Puncer Kugler <domen.puncerkugler@nccgroup.com>
-> Link: https://github.com/Rust-for-Linux/linux/issues/479
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+On 12. 01. 23, 14:56, Greg Kroah-Hartman wrote:
+> From: Linus Torvalds <torvalds@linux-foundation.org>
+> 
+> commit 5a41237ad1d4b62008f93163af1d9b1da90729d8 upstream.
+> 
+> We had already disabled this warning for gcc-12 due to bugs in the value
+> range analysis, but it turns out we end up having some similar problems
+> with gcc-11.3 too, so let's disable it there too.
+> 
+> Older gcc versions end up being increasingly less relevant, and
+> hopefully clang and newer version of gcc (ie gcc-13) end up working
+> reliably enough that we still get the build coverage even when we
+> disable this for some versions.
 
-Applied to rust-fixes, thanks all!
+No, this did not happen and I sent a patch for gcc 13 long time ago (it 
+was not applied):
+https://lore.kernel.org/all/20221031114212.10266-1-jirislaby@kernel.org/
 
-Cheers,
-Miguel
+So should we simply make it CC_IS_GCC && GCC_VERSION >= 110000 until 
+this gets resolved eventually?
+
+> Link: https://lore.kernel.org/all/20221227002941.GA2691687@roeck-us.net/
+> Link: https://lore.kernel.org/all/D8BDBF66-E44C-45D4-9758-BAAA4F0C1998@kernel.org/
+> Cc: Kees Cook <kees@kernel.org>
+> Cc: Vlastimil Babka <vbabka@suse.cz>
+> Cc: Guenter Roeck <linux@roeck-us.net>
+> Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> ---
+>   init/Kconfig |    6 +++++-
+>   1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> --- a/init/Kconfig
+> +++ b/init/Kconfig
+> @@ -892,13 +892,17 @@ config CC_IMPLICIT_FALLTHROUGH
+>   	default "-Wimplicit-fallthrough=5" if CC_IS_GCC && $(cc-option,-Wimplicit-fallthrough=5)
+>   	default "-Wimplicit-fallthrough" if CC_IS_CLANG && $(cc-option,-Wunreachable-code-fallthrough)
+>   
+> -# Currently, disable gcc-12 array-bounds globally.
+> +# Currently, disable gcc-11,12 array-bounds globally.
+>   # We may want to target only particular configurations some day.
+> +config GCC11_NO_ARRAY_BOUNDS
+> +	def_bool y
+> +
+>   config GCC12_NO_ARRAY_BOUNDS
+>   	def_bool y
+>   
+>   config CC_NO_ARRAY_BOUNDS
+>   	bool
+> +	default y if CC_IS_GCC && GCC_VERSION >= 110000 && GCC_VERSION < 120000 && GCC11_NO_ARRAY_BOUNDS
+>   	default y if CC_IS_GCC && GCC_VERSION >= 120000 && GCC_VERSION < 130000 && GCC12_NO_ARRAY_BOUNDS
+>   
+>   #
+> 
+> 
+
+-- 
+js
+suse labs
+
