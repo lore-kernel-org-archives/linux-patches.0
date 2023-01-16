@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CAD76FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:03:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6756C433D2;
-	Mon, 16 Jan 2023 17:03:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0EC56FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:03:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4735EC433F0;
+	Mon, 16 Jan 2023 17:03:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888609;
-	bh=jb/m2nC2WC8+JiP2lZASJi8wSAv6a843YibRZrMItWs=;
+	s=korg; t=1673888611;
+	bh=dsFG0BbKvjevPgPfJpQlUh0gSK9xoz+DpVGbvU7hmBY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SwnTpZsezZENgKWnd+yUNaV9WSyPPKn9Kc5eo9XRzpnS95bPXLfX6E0ClRUPJsEoR
-	 bQ8HWz4sqHWawupt413+oqNP51Ke/ZMl6wbk8B2rMvi5OVthrjUhIztGzSaR45Ylp5
-	 UV3HhOwtMph4mC29XgzXIE8GwFYptfAxFmezFio4=
+	b=RChOSK2k/wbng5I7R3oxMxToFxLcNBvzqUUBG9JCb07sYFYYSc0H6l5V1UU7V8AGf
+	 sCwWf2GlHpED0TnfoikvHlBosg8UCHgbyg84Zn136KgpVyrOoLfuWS9gJ7UhfndNtq
+	 G0xkWy3qjJVpa/ZhIguje7EC3H5CMAhnLgqfaqOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 070/338] media: vivid: fix compose size exceed boundary
-Date: Mon, 16 Jan 2023 16:49:03 +0100
-Message-Id: <20230116154823.919063562@linuxfoundation.org>
+Subject: [PATCH 4.14 071/338] mtd: Fix device name leak when register device failed in add_mtd_device()
+Date: Mon, 16 Jan 2023 16:49:04 +0100
+Message-Id: <20230116154823.969632617@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,55 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 94a7ad9283464b75b12516c5512541d467cefcf8 ]
+[ Upstream commit 895d68a39481a75c680aa421546931fb11942fa6 ]
 
-syzkaller found a bug:
+There is a kmemleak when register device failed:
+  unreferenced object 0xffff888101aab550 (size 8):
+    comm "insmod", pid 3922, jiffies 4295277753 (age 925.408s)
+    hex dump (first 8 bytes):
+      6d 74 64 30 00 88 ff ff                          mtd0....
+    backtrace:
+      [<00000000bde26724>] __kmalloc_node_track_caller+0x4e/0x150
+      [<000000003c32b416>] kvasprintf+0xb0/0x130
+      [<000000001f7a8f15>] kobject_set_name_vargs+0x2f/0xb0
+      [<000000006e781163>] dev_set_name+0xab/0xe0
+      [<00000000e30d0c78>] add_mtd_device+0x4bb/0x700
+      [<00000000f3d34de7>] mtd_device_parse_register+0x2ac/0x3f0
+      [<00000000c0d88488>] 0xffffffffa0238457
+      [<00000000b40d0922>] 0xffffffffa02a008f
+      [<0000000023d17b9d>] do_one_initcall+0x87/0x2a0
+      [<00000000770f6ca6>] do_init_module+0xdf/0x320
+      [<000000007b6768fe>] load_module+0x2f98/0x3330
+      [<00000000346bed5a>] __do_sys_finit_module+0x113/0x1b0
+      [<00000000674c2290>] do_syscall_64+0x35/0x80
+      [<000000004c6a8d97>] entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
- BUG: unable to handle page fault for address: ffffc9000a3b1000
- #PF: supervisor write access in kernel mode
- #PF: error_code(0x0002) - not-present page
- PGD 100000067 P4D 100000067 PUD 10015f067 PMD 1121ca067 PTE 0
- Oops: 0002 [#1] PREEMPT SMP
- CPU: 0 PID: 23489 Comm: vivid-000-vid-c Not tainted 6.1.0-rc1+ #512
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
- RIP: 0010:memcpy_erms+0x6/0x10
-[...]
- Call Trace:
-  <TASK>
-  ? tpg_fill_plane_buffer+0x856/0x15b0
-  vivid_fillbuff+0x8ac/0x1110
-  vivid_thread_vid_cap_tick+0x361/0xc90
-  vivid_thread_vid_cap+0x21a/0x3a0
-  kthread+0x143/0x180
-  ret_from_fork+0x1f/0x30
-  </TASK>
+If register device failed, should call put_device() to give up the
+reference.
 
-This is because we forget to check boundary after adjust compose->height
-int V4L2_SEL_TGT_CROP case. Add v4l2_rect_map_inside() to fix this problem
-for this case.
-
-Fixes: ef834f7836ec ("[media] vivid: add the video capture and output parts")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: 1f24b5a8ecbb ("[MTD] driver model updates")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20221022121352.2534682-1-zhangxiaoxu5@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/vivid/vivid-vid-cap.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mtd/mtdcore.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/vivid/vivid-vid-cap.c b/drivers/media/platform/vivid/vivid-vid-cap.c
-index 459cff1626a6..bcc2170f2dff 100644
---- a/drivers/media/platform/vivid/vivid-vid-cap.c
-+++ b/drivers/media/platform/vivid/vivid-vid-cap.c
-@@ -938,6 +938,7 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
- 			if (dev->has_compose_cap) {
- 				v4l2_rect_set_min_size(compose, &min_rect);
- 				v4l2_rect_set_max_size(compose, &max_rect);
-+				v4l2_rect_map_inside(compose, &fmt);
- 			}
- 			dev->fmt_cap_rect = fmt;
- 			tpg_s_buf_height(&dev->tpg, fmt.height);
+diff --git a/drivers/mtd/mtdcore.c b/drivers/mtd/mtdcore.c
+index e7ea842ba3db..912b09f5d066 100644
+--- a/drivers/mtd/mtdcore.c
++++ b/drivers/mtd/mtdcore.c
+@@ -552,8 +552,10 @@ int add_mtd_device(struct mtd_info *mtd)
+ 	dev_set_drvdata(&mtd->dev, mtd);
+ 	of_node_get(mtd_get_of_node(mtd));
+ 	error = device_register(&mtd->dev);
+-	if (error)
++	if (error) {
++		put_device(&mtd->dev);
+ 		goto fail_added;
++	}
+ 
+ 	if (!IS_ERR_OR_NULL(dfs_dir_mtd)) {
+ 		mtd->dbg.dfs_dir = debugfs_create_dir(dev_name(&mtd->dev), dfs_dir_mtd);
 -- 
 2.35.1
 
