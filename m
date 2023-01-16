@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6A76FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:02:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155A3C433EF;
-	Mon, 16 Jan 2023 17:02:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AD526FA3
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:02:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4AD2C433D2;
+	Mon, 16 Jan 2023 17:02:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888567;
-	bh=PaLd9uFhVdmkCveI9ysCyumvFGe0J9CvEbfEt36Jp4k=;
+	s=korg; t=1673888570;
+	bh=Fsak9umUxY1d0HmEXoMH68d4N0BCkIIQYrlMXL5eZOw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wK8lEbZWTIamoL8gEVEqiEfrERlsgo8PhkwIFRUgLBWCPQpT8xWYGrYrPkrxmKf6I
-	 jRAugS8M1wIR28MYkbeVDFcTEBtCD75BpENERzMD0VgFl1XXmkRaChgPA57jCnPaEp
-	 +nE5jz6/G4bjCAUopOXMRDhW2GmbfnxCmeS0oHPE=
+	b=AD6lCXzqGB8jSWbAau6VQgBr3yvgYhO4I8BUYyg7mEqdgjSk8VF2gthUlNhndtxjF
+	 aVgm8zFxQIuQKnyaSUaG6LJTbkC8ZnQZ089dmh7XQlAtsdpWUfIGQeDADAEW8Io6Th
+	 FB0ScWgdFudmGyw4muuCDLnHjMF/RxGWnSsTTXz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Li Zetao <lizetao1@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 055/338] rapidio: rio: fix possible name leak in rio_register_mport()
-Date: Mon, 16 Jan 2023 16:48:48 +0100
-Message-Id: <20230116154823.240235525@linuxfoundation.org>
+Subject: [PATCH 4.14 056/338] ACPICA: Fix use-after-free in acpi_ut_copy_ipackage_to_ipackage()
+Date: Mon, 16 Jan 2023 16:48:49 +0100
+Message-Id: <20230116154823.272667094@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -37,49 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit e92a216d16bde65d21a3227e0fb2aa0794576525 ]
+[ Upstream commit 470188b09e92d83c5a997f25f0e8fb8cd2bc3469 ]
 
-If device_register() returns error, the name allocated by dev_set_name()
-need be freed.  It should use put_device() to give up the reference in the
-error path, so that the name can be freed in kobject_cleanup(), and
-list_del() is called to delete the port from rio_mports.
+There is an use-after-free reported by KASAN:
 
-Link: https://lkml.kernel.org/r/20221114152636.2939035-3-yangyingliang@huawei.com
-Fixes: 2aaf308b95b2 ("rapidio: rework device hierarchy and introduce mport class of devices")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+  BUG: KASAN: use-after-free in acpi_ut_remove_reference+0x3b/0x82
+  Read of size 1 at addr ffff888112afc460 by task modprobe/2111
+  CPU: 0 PID: 2111 Comm: modprobe Not tainted 6.1.0-rc7-dirty
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996),
+  Call Trace:
+   <TASK>
+   kasan_report+0xae/0xe0
+   acpi_ut_remove_reference+0x3b/0x82
+   acpi_ut_copy_iobject_to_iobject+0x3be/0x3d5
+   acpi_ds_store_object_to_local+0x15d/0x3a0
+   acpi_ex_store+0x78d/0x7fd
+   acpi_ex_opcode_1A_1T_1R+0xbe4/0xf9b
+   acpi_ps_parse_aml+0x217/0x8d5
+   ...
+   </TASK>
+
+The root cause of the problem is that the acpi_operand_object
+is freed when acpi_ut_walk_package_tree() fails in
+acpi_ut_copy_ipackage_to_ipackage(), lead to repeated release in
+acpi_ut_copy_iobject_to_iobject(). The problem was introduced
+by "8aa5e56eeb61" commit, this commit is to fix memory leak in
+acpi_ut_copy_iobject_to_iobject(), repeatedly adding remove
+operation, lead to "acpi_operand_object" used after free.
+
+Fix it by removing acpi_ut_remove_reference() in
+acpi_ut_copy_ipackage_to_ipackage(). acpi_ut_copy_ipackage_to_ipackage()
+is called to copy an internal package object into another internal
+package object, when it fails, the memory of acpi_operand_object
+should be freed by the caller.
+
+Fixes: 8aa5e56eeb61 ("ACPICA: Utilities: Fix memory leak in acpi_ut_copy_iobject_to_iobject")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rapidio/rio.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/acpi/acpica/utcopy.c | 7 -------
+ 1 file changed, 7 deletions(-)
 
-diff --git a/drivers/rapidio/rio.c b/drivers/rapidio/rio.c
-index 38d949405618..94843c8a687e 100644
---- a/drivers/rapidio/rio.c
-+++ b/drivers/rapidio/rio.c
-@@ -2272,11 +2272,16 @@ int rio_register_mport(struct rio_mport *port)
- 	atomic_set(&port->state, RIO_DEVICE_RUNNING);
- 
- 	res = device_register(&port->dev);
--	if (res)
-+	if (res) {
- 		dev_err(&port->dev, "RIO: mport%d registration failed ERR=%d\n",
- 			port->id, res);
--	else
-+		mutex_lock(&rio_mport_list_lock);
-+		list_del(&port->node);
-+		mutex_unlock(&rio_mport_list_lock);
-+		put_device(&port->dev);
-+	} else {
- 		dev_dbg(&port->dev, "RIO: registered mport%d\n", port->id);
-+	}
- 
- 	return res;
+diff --git a/drivers/acpi/acpica/utcopy.c b/drivers/acpi/acpica/utcopy.c
+index e9382255d6c6..3b88d9c91012 100644
+--- a/drivers/acpi/acpica/utcopy.c
++++ b/drivers/acpi/acpica/utcopy.c
+@@ -950,13 +950,6 @@ acpi_ut_copy_ipackage_to_ipackage(union acpi_operand_object *source_obj,
+ 	status = acpi_ut_walk_package_tree(source_obj, dest_obj,
+ 					   acpi_ut_copy_ielement_to_ielement,
+ 					   walk_state);
+-	if (ACPI_FAILURE(status)) {
+-
+-		/* On failure, delete the destination package object */
+-
+-		acpi_ut_remove_reference(dest_obj);
+-	}
+-
+ 	return_ACPI_STATUS(status);
  }
+ 
 -- 
 2.35.1
 
