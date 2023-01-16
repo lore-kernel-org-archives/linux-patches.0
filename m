@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466C833EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:58:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF29CC433D2;
-	Mon, 16 Jan 2023 15:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4EED33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:58:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FFC2C433D2;
+	Mon, 16 Jan 2023 15:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884707;
-	bh=lxzNxHomlEUEdYUQaAU8xFe+LsaPS04pxvtax4d4GZQ=;
+	s=korg; t=1673884709;
+	bh=zsq3p6s+XnOIxGRfuCJrHApRakwMCUBzCs3MTRyB6pc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t/a1mEO1BSgjLqfuF0tTJzx2trpZjGXchuUAUfZrCtrO0C/F/dL6R/yy7LRpRr3qQ
-	 5L6uWj8aPoNUf0N8p8gj+ZaKItnkW3lOnAny3JkIU0+IIA0pRNFcqOi1IGpHqvw0WT
-	 JZi/rHnr8ivM2Dhe9Uv4kVayrNz6kmv/lxAD0O0A=
+	b=ZGXzQZ0eyoGDHF4YwQcOXmUT9XWv+HEoXWVc357smXGh7up4jhS6VjFZkkP3Qm0Nx
+	 ENx5Lt4Xr7A+XHJRJfEhA6ksi48Tvgq3W4Y92jglEyKb0mOEW3uHVDxWpiVZpdlKfo
+	 bVsjgkrYq+G5TaeU//mxaK7rSeP2j2nqzIIcgvoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Ruud van Asseldonk <ruud@veniogames.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/183] ASoC: Intel: fix sof-nau8825 link failure
-Date: Mon, 16 Jan 2023 16:50:24 +0100
-Message-Id: <20230116154807.663923920@linuxfoundation.org>
+Subject: [PATCH 6.1 110/183] ALSA: usb-audio: Relax hw constraints for implicit fb sync
+Date: Mon, 16 Jan 2023 16:50:33 +0100
+Message-Id: <20230116154808.016540940@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,38 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 63f3d99b7efe4c5404a9388c05780917099cecf4 ]
+[ Upstream commit d463ac1acb454fafed58f695cb3067fbf489f3a0 ]
 
-The snd-soc-sof_nau8825.ko module fails to link unless the
-sof_realtek_common support is also enabled:
+The fix commit the commit e4ea77f8e53f ("ALSA: usb-audio: Always apply
+the hw constraints for implicit fb sync") tried to address the bug
+where an incorrect PCM parameter is chosen when two (implicit fb)
+streams are set up at the same time.  This change had, however, some
+side effect: once when the sync endpoint is chosen and set up, this
+restriction is applied at the next hw params unless it's freed via hw
+free explicitly.
 
-ERROR: modpost: "sof_rt1015p_codec_conf" [sound/soc/intel/boards/snd-soc-sof_nau8825.ko] undefined!
-ERROR: modpost: "sof_rt1015p_dai_link" [sound/soc/intel/boards/snd-soc-sof_nau8825.ko] undefined!
+This patch is a workaround for the problem by relaxing the hw
+constraints a bit for the implicit fb sync.  We still keep applying
+the hw constraints for implicit fb sync, but only when the matching
+sync EP is being used by other streams.
 
-Fixes: 8d0872f6239f ("ASoC: Intel: add sof-nau8825 machine driver")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20221221132559.2402341-1-arnd@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: e4ea77f8e53f ("ALSA: usb-audio: Always apply the hw constraints for implicit fb sync")
+Reported-by: Ruud van Asseldonk <ruud@veniogames.com>
+Link: https://lore.kernel.org/r/4e509aea-e563-e592-e652-ba44af6733fe@veniogames.com
+Link: https://lore.kernel.org/r/20230102170759.29610-3-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ sound/usb/pcm.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
-index aa12d7e3dd2f..ca49cc49c378 100644
---- a/sound/soc/intel/boards/Kconfig
-+++ b/sound/soc/intel/boards/Kconfig
-@@ -558,6 +558,7 @@ config SND_SOC_INTEL_SOF_NAU8825_MACH
- 	select SND_SOC_HDAC_HDMI
- 	select SND_SOC_INTEL_HDA_DSP_COMMON
- 	select SND_SOC_INTEL_SOF_MAXIM_COMMON
-+	select SND_SOC_INTEL_SOF_REALTEK_COMMON
- 	help
- 	   This adds support for ASoC machine driver for SOF platforms
- 	   with nau8825 codec.
+diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
+index 535eb95bc9ee..29838000eee0 100644
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -939,8 +939,13 @@ get_sync_ep_from_substream(struct snd_usb_substream *subs)
+ 			continue;
+ 		/* for the implicit fb, check the sync ep as well */
+ 		ep = snd_usb_get_endpoint(chip, fp->sync_ep);
+-		if (ep && ep->cur_audiofmt)
+-			return ep;
++		if (ep && ep->cur_audiofmt) {
++			/* ditto, if the sync (data) ep is used by others,
++			 * this stream is restricted by the sync ep
++			 */
++			if (ep != subs->sync_endpoint || ep->opened > 1)
++				return ep;
++		}
+ 	}
+ 	return NULL;
+ }
 -- 
 2.35.1
 
