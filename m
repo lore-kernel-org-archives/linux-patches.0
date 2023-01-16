@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 001C246B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:08:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 579A9C433D2;
-	Mon, 16 Jan 2023 16:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7672D46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:08:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE9A1C433D2;
+	Mon, 16 Jan 2023 16:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885306;
-	bh=quWfAdXv10+F+ADqsE8YBcbIC54+sFMQf45uTlZu8q8=;
+	s=korg; t=1673885309;
+	bh=+2Y+HfRVWdsF+SqYc/LjuiA4kuWNNjPNxGPFQT+/Y2k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QHgHw4/er5E4XaHmT81VnCIb96s48Ar2h89oVj0NHZtuzcwVXl23C1gbV74Y6Mstq
-	 4SpciPnK+PaJesjzQTZ8+TGF/cAoK7PhtAezXRbPphyanHTlaI37kFGddW19Y+xjFz
-	 FQ9d87PblHeYvbDHpMqh0k7cue+ghyvaiy2Mdn0M=
+	b=oHruYY9LdLvpga0H9IOQaWcu7KEwxHMiWbydAU3Wy5A3Jd6+/FtzEjhSwH8vy3l5j
+	 6KP+6Ac5ZQ4lTzvks+yBaCEOBh6Yffk6xNsn4tu8O08cZzuBAF7Qq9QrvnGvGCAps7
+	 gtfDPw9y2SAOkjRloqTwvBJyndHULGAGj1UrR94Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gavin Li <gavinl@nvidia.com>,
-	Maor Dickman <maord@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Aaron Thompson <dev@aaront.org>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 49/64] net/mlx5e: Dont support encap rules with gbp option
-Date: Mon, 16 Jan 2023 16:51:56 +0100
-Message-Id: <20230116154745.278418632@linuxfoundation.org>
+Subject: [PATCH 5.10 50/64] mm: Always release pages to the buddy allocator in memblock_free_late().
+Date: Mon, 16 Jan 2023 16:51:57 +0100
+Message-Id: <20230116154745.308157681@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -36,38 +35,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gavin Li <gavinl@nvidia.com>
+From: Aaron Thompson <dev@aaront.org>
 
-[ Upstream commit d515d63cae2cd186acf40deaa8ef33067bb7f637 ]
+[ Upstream commit 115d9d77bb0f9152c60b6e8646369fa7f6167593 ]
 
-Previously, encap rules with gbp option would be offloaded by mistake but
-driver does not support gbp option offload.
+If CONFIG_DEFERRED_STRUCT_PAGE_INIT is enabled, memblock_free_pages()
+only releases pages to the buddy allocator if they are not in the
+deferred range. This is correct for free pages (as defined by
+for_each_free_mem_pfn_range_in_zone()) because free pages in the
+deferred range will be initialized and released as part of the deferred
+init process. memblock_free_pages() is called by memblock_free_late(),
+which is used to free reserved ranges after memblock_free_all() has
+run. All pages in reserved ranges have been initialized at that point,
+and accordingly, those pages are not touched by the deferred init
+process. This means that currently, if the pages that
+memblock_free_late() intends to release are in the deferred range, they
+will never be released to the buddy allocator. They will forever be
+reserved.
 
-To fix this issue, check if the encap rule has gbp option and don't
-offload the rule
+In addition, memblock_free_pages() calls kmsan_memblock_free_pages(),
+which is also correct for free pages but is not correct for reserved
+pages. KMSAN metadata for reserved pages is initialized by
+kmsan_init_shadow(), which runs shortly before memblock_free_all().
 
-Fixes: d8f9dfae49ce ("net: sched: allow flower to match vxlan options")
-Signed-off-by: Gavin Li <gavinl@nvidia.com>
-Reviewed-by: Maor Dickman <maord@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+For both of these reasons, memblock_free_pages() should only be called
+for free pages, and memblock_free_late() should call __free_pages_core()
+directly instead.
+
+One case where this issue can occur in the wild is EFI boot on
+x86_64. The x86 EFI code reserves all EFI boot services memory ranges
+via memblock_reserve() and frees them later via memblock_free_late()
+(efi_reserve_boot_services() and efi_free_boot_services(),
+respectively). If any of those ranges happens to fall within the
+deferred init range, the pages will not be released and that memory will
+be unavailable.
+
+For example, on an Amazon EC2 t3.micro VM (1 GB) booting via EFI:
+
+v6.2-rc2:
+  # grep -E 'Node|spanned|present|managed' /proc/zoneinfo
+  Node 0, zone      DMA
+          spanned  4095
+          present  3999
+          managed  3840
+  Node 0, zone    DMA32
+          spanned  246652
+          present  245868
+          managed  178867
+
+v6.2-rc2 + patch:
+  # grep -E 'Node|spanned|present|managed' /proc/zoneinfo
+  Node 0, zone      DMA
+          spanned  4095
+          present  3999
+          managed  3840
+  Node 0, zone    DMA32
+          spanned  246652
+          present  245868
+          managed  222816   # +43,949 pages
+
+Fixes: 3a80a7fa7989 ("mm: meminit: initialise a subset of struct pages if CONFIG_DEFERRED_STRUCT_PAGE_INIT is set")
+Signed-off-by: Aaron Thompson <dev@aaront.org>
+Link: https://lore.kernel.org/r/01010185892de53e-e379acfb-7044-4b24-b30a-e2657c1ba989-000000@us-west-2.amazonses.com
+Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c | 2 ++
- 1 file changed, 2 insertions(+)
+ mm/memblock.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c
-index 038a0f1cecec..e44281ae570d 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c
-@@ -88,6 +88,8 @@ static int mlx5e_gen_ip_tunnel_header_vxlan(char buf[],
- 	struct udphdr *udp = (struct udphdr *)(buf);
- 	struct vxlanhdr *vxh;
+diff --git a/mm/memblock.c b/mm/memblock.c
+index f72d53957033..f6a4dffb9a88 100644
+--- a/mm/memblock.c
++++ b/mm/memblock.c
+@@ -1597,7 +1597,13 @@ void __init __memblock_free_late(phys_addr_t base, phys_addr_t size)
+ 	end = PFN_DOWN(base + size);
  
-+	if (tun_key->tun_flags & TUNNEL_VXLAN_OPT)
-+		return -EOPNOTSUPP;
- 	vxh = (struct vxlanhdr *)((char *)udp + sizeof(struct udphdr));
- 	*ip_proto = IPPROTO_UDP;
- 
+ 	for (; cursor < end; cursor++) {
+-		memblock_free_pages(pfn_to_page(cursor), cursor, 0);
++		/*
++		 * Reserved pages are always initialized by the end of
++		 * memblock_free_all() (by memmap_init() and, if deferred
++		 * initialization is enabled, memmap_init_reserved_pages()), so
++		 * these pages can be released directly to the buddy allocator.
++		 */
++		__free_pages_core(pfn_to_page(cursor), 0);
+ 		totalram_pages_inc();
+ 	}
+ }
 -- 
 2.35.1
 
