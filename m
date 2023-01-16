@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D27C746B8
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:32:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D9FC433F1;
-	Mon, 16 Jan 2023 16:32:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D12C4C83
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:32:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8C56C433F0;
+	Mon, 16 Jan 2023 16:32:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886730;
-	bh=ti/gOEb0TGYTflAzqk8ORiXtrE8l3RH0js4K/wx68NM=;
+	s=korg; t=1673886733;
+	bh=8R8em8IeRaOv9ve6yuJkKb3IHSwdoEqr3I3gg3gPDSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cjEUb0Z4xUhvHg2S1AxBoV3PWivXdi0FPOAbQPn6gsQcav2B6bXcmFfD8pcVa4xQl
-	 90QZ23Lq9aoaB4bC975ccufOtltBmvVE64zcw2Pp03TTVoxtZoRS6wGoTGFe+oRgxn
-	 I4f3We+xY5DyhbVDgUnJeh5ll6m/5MZMUQuC+54w=
+	b=vACp5kUn34n2DHHR174jDWkf7M7g1psY2bJEsXJkgPL/pNTmAfPtWgvCpmkgvHo5P
+	 9oktkC2idsIYq8IKedXs0blqzQKaoulSdXV37f0BXDh6+O9wTcnKY74xhnTUbbQOZa
+	 yPo6Fe/xZ49yYokBP2J4rrMmvhsw3K5d5JCH5O88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-fsd@tesla.com,
-	Smitha T Murthy <smitha.t@samsung.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 540/658] media: s5p-mfc: Fix to handle reference queue during finishing
-Date: Mon, 16 Jan 2023 16:50:28 +0100
-Message-Id: <20230116154934.234744616@linuxfoundation.org>
+	Wei Gong <gongwei833x@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 5.4 514/658] PCI: Fix pci_device_is_present() for VFs by checking PF
+Date: Mon, 16 Jan 2023 16:50:02 +0100
+Message-Id: <20230116154933.032471751@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,67 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Smitha T Murthy <smitha.t@samsung.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-[ Upstream commit d8a46bc4e1e0446459daa77c4ce14218d32dacf9 ]
+commit 98b04dd0b4577894520493d96bc4623387767445 upstream.
 
-On receiving last buffer driver puts MFC to MFCINST_FINISHING state which
-in turn skips transferring of frame from SRC to REF queue. This causes
-driver to stop MFC encoding and last frame is lost.
+pci_device_is_present() previously didn't work for VFs because it reads the
+Vendor and Device ID, which are 0xffff for VFs, which looks like they
+aren't present.  Check the PF instead.
 
-This patch guarantees safe handling of frames during MFCINST_FINISHING and
-correct clearing of workbit to avoid early stopping of encoding.
+Wei Gong reported that if virtio I/O is in progress when the driver is
+unbound or "0" is written to /sys/.../sriov_numvfs, the virtio I/O
+operation hangs, which may result in output like this:
 
-Fixes: af9357467810 ("[media] MFC: Add MFC 5.1 V4L2 driver")
+  task:bash state:D stack:    0 pid: 1773 ppid:  1241 flags:0x00004002
+  Call Trace:
+   schedule+0x4f/0xc0
+   blk_mq_freeze_queue_wait+0x69/0xa0
+   blk_mq_freeze_queue+0x1b/0x20
+   blk_cleanup_queue+0x3d/0xd0
+   virtblk_remove+0x3c/0xb0 [virtio_blk]
+   virtio_dev_remove+0x4b/0x80
+   ...
+   device_unregister+0x1b/0x60
+   unregister_virtio_device+0x18/0x30
+   virtio_pci_remove+0x41/0x80
+   pci_device_remove+0x3e/0xb0
 
+This happened because pci_device_is_present(VF) returned "false" in
+virtio_pci_remove(), so it called virtio_break_device().  The broken vq
+meant that vring_interrupt() skipped the vq.callback() that would have
+completed the virtio I/O operation via virtblk_done().
+
+[bhelgaas: commit log, simplify to always use pci_physfn(), add stable tag]
+Link: https://lore.kernel.org/r/20221026060912.173250-1-mst@redhat.com
+Reported-by: Wei Gong <gongwei833x@gmail.com>
+Tested-by: Wei Gong <gongwei833x@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Cc: linux-fsd@tesla.com
-Signed-off-by: Smitha T Murthy <smitha.t@samsung.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/s5p-mfc/s5p_mfc_enc.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/pci/pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c b/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c
-index 912fe0c5ab18..6ed3df5ae5bb 100644
---- a/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c
-+++ b/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c
-@@ -1212,6 +1212,7 @@ static int enc_post_frame_start(struct s5p_mfc_ctx *ctx)
- 	unsigned long mb_y_addr, mb_c_addr;
- 	int slice_type;
- 	unsigned int strm_size;
-+	bool src_ready;
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -6093,6 +6093,8 @@ bool pci_device_is_present(struct pci_de
+ {
+ 	u32 v;
  
- 	slice_type = s5p_mfc_hw_call(dev->mfc_ops, get_enc_slice_type, dev);
- 	strm_size = s5p_mfc_hw_call(dev->mfc_ops, get_enc_strm_size, dev);
-@@ -1251,7 +1252,8 @@ static int enc_post_frame_start(struct s5p_mfc_ctx *ctx)
- 			}
- 		}
- 	}
--	if ((ctx->src_queue_cnt > 0) && (ctx->state == MFCINST_RUNNING)) {
-+	if (ctx->src_queue_cnt > 0 && (ctx->state == MFCINST_RUNNING ||
-+				       ctx->state == MFCINST_FINISHING)) {
- 		mb_entry = list_entry(ctx->src_queue.next, struct s5p_mfc_buf,
- 									list);
- 		if (mb_entry->flags & MFC_BUF_FLAG_USED) {
-@@ -1282,7 +1284,13 @@ static int enc_post_frame_start(struct s5p_mfc_ctx *ctx)
- 		vb2_set_plane_payload(&mb_entry->b->vb2_buf, 0, strm_size);
- 		vb2_buffer_done(&mb_entry->b->vb2_buf, VB2_BUF_STATE_DONE);
- 	}
--	if ((ctx->src_queue_cnt == 0) || (ctx->dst_queue_cnt == 0))
-+
-+	src_ready = true;
-+	if (ctx->state == MFCINST_RUNNING && ctx->src_queue_cnt == 0)
-+		src_ready = false;
-+	if (ctx->state == MFCINST_FINISHING && ctx->ref_queue_cnt == 0)
-+		src_ready = false;
-+	if (!src_ready || ctx->dst_queue_cnt == 0)
- 		clear_work_bit(ctx);
- 
- 	return 0;
--- 
-2.35.1
-
++	/* Check PF if pdev is a VF, since VF Vendor/Device IDs are 0xffff */
++	pdev = pci_physfn(pdev);
+ 	if (pci_dev_is_disconnected(pdev))
+ 		return false;
+ 	return pci_bus_read_dev_vendor_id(pdev->bus, pdev->devfn, &v, 0);
 
 
