@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103C433EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:54:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0EAC433D2;
-	Mon, 16 Jan 2023 15:54:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B577433EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:54:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2370DC433EF;
+	Mon, 16 Jan 2023 15:54:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884476;
-	bh=z4iyO4piXfHR860uL1CWtubebOroVttaghFPALSBrj0=;
+	s=korg; t=1673884479;
+	bh=6Euv0hRlUA9F+6G0BURS03utW9dU/cYlLb1MvjMczGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PcRgjF6Gb7qbkpki2T1hV7tNIJPJYDIJecCZD/cdZOlPyRol4G1Kc36Rf412b+meq
-	 M2QBKBb37XU8kVwZEIRK8O4J9Bjfboe/zOjcDEia4/ZoEQWmZem+wPqXdJhqCMxPSf
-	 Y7FquHkcr0Al6foBFTPPiSU4FZ0FDgOUxgddq0Uc=
+	b=yu9KUxJukE5iIkPrzf5TJ1Vk2OO1DzXc+2/z9eqZGPclrjdS+hnwmMJ4bEpPggDpO
+	 /Qz4L9whDK0WcmdOTwJwCuOoPKVjFOi63rLZiY7By8ZNalvdkEC+jLxgx321OWIxlZ
+	 qvAwj4kRls3oX5OKmClMKprIMm2qZwbwD04QkU8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <computersforpeace@gmail.com>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 6.1 021/183] ASoC: qcom: lpass-cpu: Fix fallback SD line index handling
-Date: Mon, 16 Jan 2023 16:49:04 +0100
-Message-Id: <20230116154804.291656162@linuxfoundation.org>
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Seth Jenkins <sethjenkins@google.com>,
+	Will Deacon <will@kernel.org>,
+	Eric Biederman <ebiederm@xmission.com>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.1 022/183] elfcore: Add a cprm parameter to elf_core_extra_{phdrs,data_size}
+Date: Mon, 16 Jan 2023 16:49:05 +0100
+Message-Id: <20230116154804.335882746@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -35,45 +37,162 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Norris <computersforpeace@gmail.com>
+From: Catalin Marinas <catalin.marinas@arm.com>
 
-commit 000bca8d706d1bf7cca01af75787247c5a2fdedf upstream.
+commit 19e183b54528f11fafeca60fc6d0821e29ff281e upstream.
 
-These indices should reference the ID placed within the dai_driver
-array, not the indices of the array itself.
+A subsequent fix for arm64 will use this parameter to parse the vma
+information from the snapshot created by dump_vma_snapshot() rather than
+traversing the vma list without the mmap_lock.
 
-This fixes commit 4ff028f6c108 ("ASoC: qcom: lpass-cpu: Make I2S SD
-lines configurable"), which among others, broke IPQ8064 audio
-(sound/soc/qcom/lpass-ipq806x.c) because it uses ID 4 but we'd stop
-initializing the mi2s_playback_sd_mode and mi2s_capture_sd_mode arrays
-at ID 0.
-
-Fixes: 4ff028f6c108 ("ASoC: qcom: lpass-cpu: Make I2S SD lines configurable")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Brian Norris <computersforpeace@gmail.com>
-Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
-Link: https://lore.kernel.org/r/20221231061545.2110253-1-computersforpeace@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 6dd8b1a0b6cb ("arm64: mte: Dump the MTE tags in the core file")
+Cc: <stable@vger.kernel.org> # 5.18.x
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Reported-by: Seth Jenkins <sethjenkins@google.com>
+Suggested-by: Seth Jenkins <sethjenkins@google.com>
+Cc: Will Deacon <will@kernel.org>
+Cc: Eric Biederman <ebiederm@xmission.com>
+Cc: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221222181251.1345752-3-catalin.marinas@arm.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/lpass-cpu.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/kernel/elfcore.c |    4 ++--
+ arch/ia64/kernel/elfcore.c  |    4 ++--
+ arch/x86/um/elfcore.c       |    4 ++--
+ fs/binfmt_elf.c             |    4 ++--
+ fs/binfmt_elf_fdpic.c       |    4 ++--
+ include/linux/elfcore.h     |    8 ++++----
+ 6 files changed, 14 insertions(+), 14 deletions(-)
 
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -1037,10 +1037,11 @@ static void of_lpass_cpu_parse_dai_data(
- 					struct lpass_data *data)
- {
- 	struct device_node *node;
--	int ret, id;
-+	int ret, i, id;
+--- a/arch/arm64/kernel/elfcore.c
++++ b/arch/arm64/kernel/elfcore.c
+@@ -75,7 +75,7 @@ static int mte_dump_tag_range(struct cor
+ 	return ret;
+ }
  
- 	/* Allow all channels by default for backwards compatibility */
--	for (id = 0; id < data->variant->num_dai; id++) {
-+	for (i = 0; i < data->variant->num_dai; i++) {
-+		id = data->variant->dai_driver[i].id;
- 		data->mi2s_playback_sd_mode[id] = LPAIF_I2SCTL_MODE_8CH;
- 		data->mi2s_capture_sd_mode[id] = LPAIF_I2SCTL_MODE_8CH;
- 	}
+-Elf_Half elf_core_extra_phdrs(void)
++Elf_Half elf_core_extra_phdrs(struct coredump_params *cprm)
+ {
+ 	int i;
+ 	struct core_vma_metadata *m;
+@@ -112,7 +112,7 @@ int elf_core_write_extra_phdrs(struct co
+ 	return 1;
+ }
+ 
+-size_t elf_core_extra_data_size(void)
++size_t elf_core_extra_data_size(struct coredump_params *cprm)
+ {
+ 	int i;
+ 	struct core_vma_metadata *m;
+--- a/arch/ia64/kernel/elfcore.c
++++ b/arch/ia64/kernel/elfcore.c
+@@ -7,7 +7,7 @@
+ #include <asm/elf.h>
+ 
+ 
+-Elf64_Half elf_core_extra_phdrs(void)
++Elf64_Half elf_core_extra_phdrs(struct coredump_params *cprm)
+ {
+ 	return GATE_EHDR->e_phnum;
+ }
+@@ -60,7 +60,7 @@ int elf_core_write_extra_data(struct cor
+ 	return 1;
+ }
+ 
+-size_t elf_core_extra_data_size(void)
++size_t elf_core_extra_data_size(struct coredump_params *cprm)
+ {
+ 	const struct elf_phdr *const gate_phdrs =
+ 		(const struct elf_phdr *) (GATE_ADDR + GATE_EHDR->e_phoff);
+--- a/arch/x86/um/elfcore.c
++++ b/arch/x86/um/elfcore.c
+@@ -7,7 +7,7 @@
+ #include <asm/elf.h>
+ 
+ 
+-Elf32_Half elf_core_extra_phdrs(void)
++Elf32_Half elf_core_extra_phdrs(struct coredump_params *cprm)
+ {
+ 	return vsyscall_ehdr ? (((struct elfhdr *)vsyscall_ehdr)->e_phnum) : 0;
+ }
+@@ -60,7 +60,7 @@ int elf_core_write_extra_data(struct cor
+ 	return 1;
+ }
+ 
+-size_t elf_core_extra_data_size(void)
++size_t elf_core_extra_data_size(struct coredump_params *cprm)
+ {
+ 	if ( vsyscall_ehdr ) {
+ 		const struct elfhdr *const ehdrp =
+--- a/fs/binfmt_elf.c
++++ b/fs/binfmt_elf.c
+@@ -2209,7 +2209,7 @@ static int elf_core_dump(struct coredump
+ 	 * The number of segs are recored into ELF header as 16bit value.
+ 	 * Please check DEFAULT_MAX_MAP_COUNT definition when you modify here.
+ 	 */
+-	segs = cprm->vma_count + elf_core_extra_phdrs();
++	segs = cprm->vma_count + elf_core_extra_phdrs(cprm);
+ 
+ 	/* for notes section */
+ 	segs++;
+@@ -2249,7 +2249,7 @@ static int elf_core_dump(struct coredump
+ 	dataoff = offset = roundup(offset, ELF_EXEC_PAGESIZE);
+ 
+ 	offset += cprm->vma_data_size;
+-	offset += elf_core_extra_data_size();
++	offset += elf_core_extra_data_size(cprm);
+ 	e_shoff = offset;
+ 
+ 	if (e_phnum == PN_XNUM) {
+--- a/fs/binfmt_elf_fdpic.c
++++ b/fs/binfmt_elf_fdpic.c
+@@ -1509,7 +1509,7 @@ static int elf_fdpic_core_dump(struct co
+ 	tmp->next = thread_list;
+ 	thread_list = tmp;
+ 
+-	segs = cprm->vma_count + elf_core_extra_phdrs();
++	segs = cprm->vma_count + elf_core_extra_phdrs(cprm);
+ 
+ 	/* for notes section */
+ 	segs++;
+@@ -1555,7 +1555,7 @@ static int elf_fdpic_core_dump(struct co
+ 	dataoff = offset = roundup(offset, ELF_EXEC_PAGESIZE);
+ 
+ 	offset += cprm->vma_data_size;
+-	offset += elf_core_extra_data_size();
++	offset += elf_core_extra_data_size(cprm);
+ 	e_shoff = offset;
+ 
+ 	if (e_phnum == PN_XNUM) {
+--- a/include/linux/elfcore.h
++++ b/include/linux/elfcore.h
+@@ -114,14 +114,14 @@ static inline int elf_core_copy_task_fpr
+  * Dumping its extra ELF program headers includes all the other information
+  * a debugger needs to easily find how the gate DSO was being used.
+  */
+-extern Elf_Half elf_core_extra_phdrs(void);
++extern Elf_Half elf_core_extra_phdrs(struct coredump_params *cprm);
+ extern int
+ elf_core_write_extra_phdrs(struct coredump_params *cprm, loff_t offset);
+ extern int
+ elf_core_write_extra_data(struct coredump_params *cprm);
+-extern size_t elf_core_extra_data_size(void);
++extern size_t elf_core_extra_data_size(struct coredump_params *cprm);
+ #else
+-static inline Elf_Half elf_core_extra_phdrs(void)
++static inline Elf_Half elf_core_extra_phdrs(struct coredump_params *cprm)
+ {
+ 	return 0;
+ }
+@@ -136,7 +136,7 @@ static inline int elf_core_write_extra_d
+ 	return 1;
+ }
+ 
+-static inline size_t elf_core_extra_data_size(void)
++static inline size_t elf_core_extra_data_size(struct coredump_params *cprm)
+ {
+ 	return 0;
+ }
 
 
