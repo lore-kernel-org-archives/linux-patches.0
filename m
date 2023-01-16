@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13FB846B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:15:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A12FC433D2;
-	Mon, 16 Jan 2023 16:15:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A039746B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:15:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27E1CC433F0;
+	Mon, 16 Jan 2023 16:15:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885753;
-	bh=/p1Z1H0tll+69nBd8ooQKefOgXAlDFKdsfAKZyQeLpc=;
+	s=korg; t=1673885756;
+	bh=KXidTduxiPpQHrqOGKeW6Q3TqaHv3Jftc+hS9SUY/Lo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a5QA5eq8Vv1NerPwXnHJB9bEfvQ0kZ4QzLgKMRkw5g3x7SkLGv/anX9thHyiSSSmG
-	 26DLPLnaDYkdtpo5oEEkNhtn3LG0UVlGf+P3NV0+TzYdUwcuta+H3EY/wkvM+YPes0
-	 27svYy6H1VWEaKrEE1U7hI59v/pP6Z2Fc8q51dIA=
+	b=su/i8Q/mzg5yubDUwsPLIbX4uX0CZitCVAbCF4ADkwfAcE8EoxZkHBbwAscqjR5Zb
+	 cZsEsP8i1bEI0iE/YwlfejPuXQkebRmvoOmlqvSUH39+DN9ogvwvzfWtA6K9XtXugN
+	 kDe7RQ62J2+mdYhqwQhELf0NsuBVA2Qxp6anB3t8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pengcheng Yang <yangpc@wangsu.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Baisong Zhong <zhongbaisong@huawei.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 172/658] bpf, sockmap: Fix data loss caused by using apply_bytes on ingress redirect
-Date: Mon, 16 Jan 2023 16:44:20 +0100
-Message-Id: <20230116154917.341373020@linuxfoundation.org>
+Subject: [PATCH 5.4 155/658] media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()
+Date: Mon, 16 Jan 2023 16:44:03 +0100
+Message-Id: <20230116154916.536002953@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,44 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pengcheng Yang <yangpc@wangsu.com>
+From: Baisong Zhong <zhongbaisong@huawei.com>
 
-[ Upstream commit 9072931f020bfd907d6d89ee21ff1481cd78b407 ]
+[ Upstream commit 0ed554fd769a19ea8464bb83e9ac201002ef74ad ]
 
-Use apply_bytes on ingress redirect, when apply_bytes is less than
-the length of msg data, some data may be skipped and lost in
-bpf_tcp_ingress().
+Wei Chen reports a kernel bug as blew:
 
-If there is still data in the scatterlist that has not been consumed,
-we cannot move the msg iter.
+general protection fault, probably for non-canonical address
+KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
+...
+Call Trace:
+<TASK>
+__i2c_transfer+0x77e/0x1930 drivers/i2c/i2c-core-base.c:2109
+i2c_transfer+0x1d5/0x3d0 drivers/i2c/i2c-core-base.c:2170
+i2cdev_ioctl_rdwr+0x393/0x660 drivers/i2c/i2c-dev.c:297
+i2cdev_ioctl+0x75d/0x9f0 drivers/i2c/i2c-dev.c:458
+vfs_ioctl fs/ioctl.c:51 [inline]
+__do_sys_ioctl fs/ioctl.c:870 [inline]
+__se_sys_ioctl+0xfb/0x170 fs/ioctl.c:856
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x3d/0x90 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7fd834a8bded
 
-Fixes: 604326b41a6f ("bpf, sockmap: convert to generic sk_msg interface")
-Signed-off-by: Pengcheng Yang <yangpc@wangsu.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/bpf/1669718441-2654-4-git-send-email-yangpc@wangsu.com
+In az6027_i2c_xfer(), if msg[i].addr is 0x99,
+a null-ptr-deref will caused when accessing msg[i].buf.
+For msg[i].len is 0 and msg[i].buf is null.
+
+Fix this by checking msg[i].len in az6027_i2c_xfer().
+
+Link: https://lore.kernel.org/lkml/CAO4mrfcPHB5aQJO=mpqV+p8mPLNg-Fok0gw8gZ=zemAfMGTzMg@mail.gmail.com/
+
+Link: https://lore.kernel.org/linux-media/20221120065918.2160782-1-zhongbaisong@huawei.com
+Fixes: 76f9a820c867 ("V4L/DVB: AZ6027: Initial import of the driver")
+Reported-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp_bpf.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/media/usb/dvb-usb/az6027.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 229fa1f2b381..ca49d68a0e04 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -203,8 +203,11 @@ static int bpf_tcp_ingress(struct sock *sk, struct sk_psock *psock,
- 		tmp->sg.end = i;
- 		if (apply) {
- 			apply_bytes -= size;
--			if (!apply_bytes)
-+			if (!apply_bytes) {
-+				if (sge->length)
-+					sk_msg_iter_var_prev(i);
- 				break;
+diff --git a/drivers/media/usb/dvb-usb/az6027.c b/drivers/media/usb/dvb-usb/az6027.c
+index 5aa9c501ed9c..ffc0db67d4d6 100644
+--- a/drivers/media/usb/dvb-usb/az6027.c
++++ b/drivers/media/usb/dvb-usb/az6027.c
+@@ -975,6 +975,10 @@ static int az6027_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int n
+ 		if (msg[i].addr == 0x99) {
+ 			req = 0xBE;
+ 			index = 0;
++			if (msg[i].len < 1) {
++				i = -EOPNOTSUPP;
++				break;
 +			}
- 		}
- 	} while (i != msg->sg.end);
- 
+ 			value = msg[i].buf[0] & 0x00ff;
+ 			length = 1;
+ 			az6027_usb_out_op(d, req, value, index, data, length);
 -- 
 2.35.1
 
