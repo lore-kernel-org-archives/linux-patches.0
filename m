@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8A56FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:42:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D8AC433EF;
-	Mon, 16 Jan 2023 16:42:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BFFF6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:42:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8544C433EF;
+	Mon, 16 Jan 2023 16:42:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887326;
-	bh=XZbEQknCyg1jcKzd9RfraxZOjt78kJ1E9oqPv1n3/h4=;
+	s=korg; t=1673887329;
+	bh=xUXxADh6XT2wAz116OplHBXPSV5CAoAd6WYTZRTwV3Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YS3J/qjTOi0IAIJeSEdT5wk9HYDPm7RPqcJFfadDpjMr2lBFagLhmvUx1mpSHM4vh
-	 V3Du1fnggx+9oZ4a5malhxQkcUqW/Bc5RFLwr8LDffpRuqY8i0ShVtx42pbptuZfoV
-	 fIq8xeKTQ7lsWRxUaUfFi6xuyO8O/GFSZaWrTsUo=
+	b=hlE/TQ1YeL52lknWv8BS4iu/feReb9roYzEbkpu2aWiTUyPGY1hVdARTIFwHCSw+0
+	 mPlLg4YyV5VM+EOmN3NfbjTY2yxQDwyzZA6ChtDewVoDwG7RD7FBguDo44XX6jp/ah
+	 7lfjpx7GT4c64u4shNFnVRvzeIvQ8uix45wq8DPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	syzbot+dc3b1cf9111ab5fe98e7@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 078/521] hfs: Fix OOB Write in hfs_asc2mac
-Date: Mon, 16 Jan 2023 16:45:40 +0100
-Message-Id: <20230116154850.721795543@linuxfoundation.org>
+Subject: [PATCH 4.19 069/521] xen/privcmd: Fix a possible warning in privcmd_ioctl_mmap_resource()
+Date: Mon, 16 Jan 2023 16:45:31 +0100
+Message-Id: <20230116154850.301774983@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,64 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit c53ed55cb275344086e32a7080a6b19cb183650b ]
+[ Upstream commit 8b997b2bb2c53b76a6db6c195930e9ab8e4b0c79 ]
 
-Syzbot reported a OOB Write bug:
+As 'kdata.num' is user-controlled data, if user tries to allocate
+memory larger than(>=) MAX_ORDER, then kcalloc() will fail, it
+creates a stack trace and messes up dmesg with a warning.
 
-loop0: detected capacity change from 0 to 64
-==================================================================
-BUG: KASAN: slab-out-of-bounds in hfs_asc2mac+0x467/0x9a0
-fs/hfs/trans.c:133
-Write of size 1 at addr ffff88801848314e by task syz-executor391/3632
+Call trace:
+-> privcmd_ioctl
+--> privcmd_ioctl_mmap_resource
 
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
- print_address_description+0x74/0x340 mm/kasan/report.c:284
- print_report+0x107/0x1f0 mm/kasan/report.c:395
- kasan_report+0xcd/0x100 mm/kasan/report.c:495
- hfs_asc2mac+0x467/0x9a0 fs/hfs/trans.c:133
- hfs_cat_build_key+0x92/0x170 fs/hfs/catalog.c:28
- hfs_lookup+0x1ab/0x2c0 fs/hfs/dir.c:31
- lookup_open fs/namei.c:3391 [inline]
- open_last_lookups fs/namei.c:3481 [inline]
- path_openat+0x10e6/0x2df0 fs/namei.c:3710
- do_filp_open+0x264/0x4f0 fs/namei.c:3740
+Add __GFP_NOWARN in order to avoid too large allocation warning.
+This is detected by static analysis using smatch.
 
-If in->len is much larger than HFS_NAMELEN(31) which is the maximum
-length of an HFS filename, a OOB write could occur in hfs_asc2mac(). In
-that case, when the dst reaches the boundary, the srclen is still
-greater than 0, which causes a OOB write.
-Fix this by adding a check on dstlen in while() before writing to dst
-address.
-
-Link: https://lkml.kernel.org/r/20221202030038.1391945-1-zhangpeng362@huawei.com
-Fixes: 328b92278650 ("[PATCH] hfs: NLS support")
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Reported-by: <syzbot+dc3b1cf9111ab5fe98e7@syzkaller.appspotmail.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 3ad0876554ca ("xen/privcmd: add IOCTL_PRIVCMD_MMAP_RESOURCE")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Reviewed-by: Juergen Gross <jgross@suse.com>
+Link: https://lore.kernel.org/r/20221126050745.778967-1-harshit.m.mogalapalli@oracle.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfs/trans.c | 2 +-
+ drivers/xen/privcmd.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/hfs/trans.c b/fs/hfs/trans.c
-index 39f5e343bf4d..fdb0edb8a607 100644
---- a/fs/hfs/trans.c
-+++ b/fs/hfs/trans.c
-@@ -109,7 +109,7 @@ void hfs_asc2mac(struct super_block *sb, struct hfs_name *out, const struct qstr
- 	if (nls_io) {
- 		wchar_t ch;
+diff --git a/drivers/xen/privcmd.c b/drivers/xen/privcmd.c
+index 74ff28fda64d..15ece1041d17 100644
+--- a/drivers/xen/privcmd.c
++++ b/drivers/xen/privcmd.c
+@@ -785,7 +785,7 @@ static long privcmd_ioctl_mmap_resource(struct file *file,
+ 		goto out;
+ 	}
  
--		while (srclen > 0) {
-+		while (srclen > 0 && dstlen > 0) {
- 			size = nls_io->char2uni(src, srclen, &ch);
- 			if (size < 0) {
- 				ch = '?';
+-	pfns = kcalloc(kdata.num, sizeof(*pfns), GFP_KERNEL);
++	pfns = kcalloc(kdata.num, sizeof(*pfns), GFP_KERNEL | __GFP_NOWARN);
+ 	if (!pfns) {
+ 		rc = -ENOMEM;
+ 		goto out;
 -- 
 2.35.1
 
