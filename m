@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D5746B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:05:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38FECC433D2;
-	Mon, 16 Jan 2023 16:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BEEE46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:05:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6BE0C433EF;
+	Mon, 16 Jan 2023 16:05:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885139;
-	bh=+vMm84llW0ldy7b0SOEWmyn973X4w9FDka0RM6nxWk0=;
+	s=korg; t=1673885142;
+	bh=7NtsNkiy6I8Bo08AC+C1iUXJg2+S5FRpeyeYohkHdgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nqKmfuO6fy1yib1+Q49Mtjwh8ZVcEYY0lrGxeC1fr1SToFlBPwpLGkjZ5mTe7Q9/A
-	 jeizAdQHqgXNbknSnqs0u16x5XESFUQ7YR44Y2hKvkJzghsfaO8NHIqGPRIhhjsLXq
-	 AwDUOeHvjG87hSEAQaM7N0VhI7yyEFRx7DnzTLkY=
+	b=rFOCg3GHkefj7/164ZFtAj/xKkYyXS7isk8aER6Fz3L/5DSOF4bkZ0JvRL+VLSNiE
+	 fGoHEaPMI6Ov1uAqgV+AJ6zAvMTurzcq5D03uosjVdaEsMgTk9nnp4YI96geEdxUV9
+	 ANqvf9wJE07X6fNcVObm5hXPusfNIN8zU0J+usKo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Willy Tarreau <w@1wt.eu>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 65/86] tools/nolibc: restore mips branch ordering in the _start block
-Date: Mon, 16 Jan 2023 16:51:39 +0100
-Message-Id: <20230116154749.749364999@linuxfoundation.org>
+Subject: [PATCH 5.15 66/86] tools/nolibc: fix the O_* fcntl/open macro definitions for riscv
+Date: Mon, 16 Jan 2023 16:51:40 +0100
+Message-Id: <20230116154749.785473332@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -37,76 +37,45 @@ Content-Transfer-Encoding: 8bit
 
 From: Willy Tarreau <w@1wt.eu>
 
-[ Upstream commit 184177c3d6e023da934761e198c281344d7dd65b ]
+[ Upstream commit 00b18da4089330196906b9fe075c581c17eb726c ]
 
-Depending on the compiler used and the optimization options, the sbrk()
-test was crashing, both on real hardware (mips-24kc) and in qemu. One
-such example is kernel.org toolchain in version 11.3 optimizing at -Os.
+When RISCV port was imported in 5.2, the O_* macros were taken with
+their octal value and written as-is in hex, resulting in the getdents64()
+to fail in nolibc-test.
 
-Inspecting the sys_brk() call shows the following code:
-
-  0040047c <sys_brk>:
-    40047c:       24020fcd        li      v0,4045
-    400480:       27bdffe0        addiu   sp,sp,-32
-    400484:       0000000c        syscall
-    400488:       27bd0020        addiu   sp,sp,32
-    40048c:       10e00001        beqz    a3,400494 <sys_brk+0x18>
-    400490:       00021023        negu    v0,v0
-    400494:       03e00008        jr      ra
-
-It is obviously wrong, the "negu" instruction is placed in beqz's
-delayed slot, and worse, there's no nop nor instruction after the
-return, so the next function's first instruction (addiu sip,sip,-32)
-will also be executed as part of the delayed slot that follows the
-return.
-
-This is caused by the ".set noreorder" directive in the _start block,
-that applies to the whole program. The compiler emits code without the
-delayed slots and relies on the compiler to swap instructions when this
-option is not set. Removing the option would require to change the
-startup code in a way that wouldn't make it look like the resulting
-code, which would not be easy to debug. Instead let's just save the
-default ordering before changing it, and restore it at the end of the
-_start block. Now the code is correct:
-
-  0040047c <sys_brk>:
-    40047c:       24020fcd        li      v0,4045
-    400480:       27bdffe0        addiu   sp,sp,-32
-    400484:       0000000c        syscall
-    400488:       10e00002        beqz    a3,400494 <sys_brk+0x18>
-    40048c:       27bd0020        addiu   sp,sp,32
-    400490:       00021023        negu    v0,v0
-    400494:       03e00008        jr      ra
-    400498:       00000000        nop
-
-Fixes: 66b6f755ad45 ("rcutorture: Import a copy of nolibc") #5.0
+Fixes: 582e84f7b779 ("tool headers nolibc: add RISCV support") #5.2
 Signed-off-by: Willy Tarreau <w@1wt.eu>
 Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/arch-mips.h | 2 ++
- 1 file changed, 2 insertions(+)
+ tools/include/nolibc/arch-riscv.h | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/tools/include/nolibc/arch-mips.h b/tools/include/nolibc/arch-mips.h
-index 1a124790c99f..5d647afa42e6 100644
---- a/tools/include/nolibc/arch-mips.h
-+++ b/tools/include/nolibc/arch-mips.h
-@@ -192,6 +192,7 @@ struct sys_stat_struct {
- asm(".section .text\n"
-     ".weak __start\n"
-     ".set nomips16\n"
-+    ".set push\n"
-     ".set    noreorder\n"
-     ".option pic0\n"
-     ".ent __start\n"
-@@ -210,6 +211,7 @@ asm(".section .text\n"
-     "li $v0, 4001\n"              // NR_exit == 4001
-     "syscall\n"
-     ".end __start\n"
-+    ".set pop\n"
-     "");
+diff --git a/tools/include/nolibc/arch-riscv.h b/tools/include/nolibc/arch-riscv.h
+index 511d67fc534e..8c0cb1abb29f 100644
+--- a/tools/include/nolibc/arch-riscv.h
++++ b/tools/include/nolibc/arch-riscv.h
+@@ -11,13 +11,13 @@
+ #define O_RDONLY            0
+ #define O_WRONLY            1
+ #define O_RDWR              2
+-#define O_CREAT         0x100
+-#define O_EXCL          0x200
+-#define O_NOCTTY        0x400
+-#define O_TRUNC        0x1000
+-#define O_APPEND       0x2000
+-#define O_NONBLOCK     0x4000
+-#define O_DIRECTORY  0x200000
++#define O_CREAT          0x40
++#define O_EXCL           0x80
++#define O_NOCTTY        0x100
++#define O_TRUNC         0x200
++#define O_APPEND        0x400
++#define O_NONBLOCK      0x800
++#define O_DIRECTORY   0x10000
  
- #endif // _NOLIBC_ARCH_MIPS_H
+ struct sys_stat_struct {
+ 	unsigned long	st_dev;		/* Device.  */
 -- 
 2.35.1
 
