@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C10F6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB96C433D2;
-	Mon, 16 Jan 2023 16:56:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F6E46FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8D2FC433D2;
+	Mon, 16 Jan 2023 16:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888176;
-	bh=GxM+O6M4981o/sjVWHk7g4rBDXjxO7yphADpdbIG6aI=;
+	s=korg; t=1673888179;
+	bh=XVGttKS9A4NCunIbTeoK+gQpvjWTgoCvhQan3ZS2N58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RP7ooNd+uVKl1dkx9MowpI4KTFuCi5Clev8aB2isKfOVhY8IpjSA1JQIIt6T+UuBR
-	 N1SuemJGkvyBgoiA/W97eUTklaw0Nj+WKNfi29y3NvrysOC5wUj/+ZqWIViyaPQlte
-	 lb2TR1k2uP2o8v0G5F+SUt5MAW523MC3PoqZ6v0A=
+	b=Xv7K7ZGGg9P6VGXLNPb9iFsMH5gcTphtiM5JWSNO4VKOFEangzhCrgu1SBG8dHgsd
+	 bT5bvFgYcHpbxtYzBHro1dkFRzn6qFiMa6ReYw2FU29wv+S8fZYXFyNhBwwh3ot3vn
+	 0YbfbYZ3VtKhUUYx1V3sN4UkiRanzLvBopkVEOdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 4.19 389/521] tracing: Fix infinite loop in tracing_read_pipe on overflowed print_trace_line
-Date: Mon, 16 Jan 2023 16:50:51 +0100
-Message-Id: <20230116154904.513926923@linuxfoundation.org>
+	linux-fsd@tesla.com,
+	Smitha T Murthy <smitha.t@samsung.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 423/521] media: s5p-mfc: Fix in register read and write for H264
+Date: Mon, 16 Jan 2023 16:51:25 +0100
+Message-Id: <20230116154906.048327074@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,48 +36,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Smitha T Murthy <smitha.t@samsung.com>
 
-commit c1ac03af6ed45d05786c219d102f37eb44880f28 upstream.
+[ Upstream commit 06710cd5d2436135046898d7e4b9408c8bb99446 ]
 
-print_trace_line may overflow seq_file buffer. If the event is not
-consumed, the while loop keeps peeking this event, causing a infinite loop.
+Few of the H264 encoder registers written were not getting reflected
+since the read values were not stored and getting overwritten.
 
-Link: https://lkml.kernel.org/r/20221129113009.182425-1-yangjihong1@huawei.com
+Fixes: 6a9c6f681257 ("[media] s5p-mfc: Add variants to access mfc registers")
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
-Fixes: 088b1e427dbba ("ftrace: pipe fixes")
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: linux-fsd@tesla.com
+Signed-off-by: Smitha T Murthy <smitha.t@samsung.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -5803,7 +5803,20 @@ waitagain:
+diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c b/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c
+index 7c629be43205..1171b76df036 100644
+--- a/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c
++++ b/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c
+@@ -1063,7 +1063,7 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
+ 	}
  
- 		ret = print_trace_line(iter);
- 		if (ret == TRACE_TYPE_PARTIAL_LINE) {
--			/* don't print partial lines */
-+			/*
-+			 * If one print_trace_line() fills entire trace_seq in one shot,
-+			 * trace_seq_to_user() will returns -EBUSY because save_len == 0,
-+			 * In this case, we need to consume it, otherwise, loop will peek
-+			 * this event next time, resulting in an infinite loop.
-+			 */
-+			if (save_len == 0) {
-+				iter->seq.full = 0;
-+				trace_seq_puts(&iter->seq, "[LINE TOO BIG]\n");
-+				trace_consume(iter);
-+				break;
-+			}
-+
-+			/* In other cases, don't print partial lines */
- 			iter->seq.seq.len = save_len;
- 			break;
- 		}
+ 	/* aspect ratio VUI */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 5);
+ 	reg |= ((p_h264->vui_sar & 0x1) << 5);
+ 	writel(reg, mfc_regs->e_h264_options);
+@@ -1086,7 +1086,7 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
+ 
+ 	/* intra picture period for H.264 open GOP */
+ 	/* control */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 4);
+ 	reg |= ((p_h264->open_gop & 0x1) << 4);
+ 	writel(reg, mfc_regs->e_h264_options);
+@@ -1100,23 +1100,23 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
+ 	}
+ 
+ 	/* 'WEIGHTED_BI_PREDICTION' for B is disable */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x3 << 9);
+ 	writel(reg, mfc_regs->e_h264_options);
+ 
+ 	/* 'CONSTRAINED_INTRA_PRED_ENABLE' is disable */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 14);
+ 	writel(reg, mfc_regs->e_h264_options);
+ 
+ 	/* ASO */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 6);
+ 	reg |= ((p_h264->aso & 0x1) << 6);
+ 	writel(reg, mfc_regs->e_h264_options);
+ 
+ 	/* hier qp enable */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 8);
+ 	reg |= ((p_h264->open_gop & 0x1) << 8);
+ 	writel(reg, mfc_regs->e_h264_options);
+@@ -1137,7 +1137,7 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
+ 	writel(reg, mfc_regs->e_h264_num_t_layer);
+ 
+ 	/* frame packing SEI generation */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 25);
+ 	reg |= ((p_h264->sei_frame_packing & 0x1) << 25);
+ 	writel(reg, mfc_regs->e_h264_options);
+-- 
+2.35.1
+
 
 
