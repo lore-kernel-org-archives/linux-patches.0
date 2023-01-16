@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51C966FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:11:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F5AC433EF;
-	Mon, 16 Jan 2023 17:11:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 177516FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:12:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ADCAC433EF;
+	Mon, 16 Jan 2023 17:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889119;
-	bh=cJ3MifBsaIxSaUz+UrZJ4VeQBPgGRgAmhY7z4xrrGoQ=;
+	s=korg; t=1673889121;
+	bh=b3bQ5CJgUJtHUhr9q+CEWH50TGx+T6U62rC8uBea8NQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hvt0m64Ysa76mafbWApnHar3Dan92gUqDgZSxv/z+/uoNW7ho++XDw+8faF239Yt1
-	 2oNmMDIcRshCo+ZFD64pFbpYItxlReawGCEv+JdEwqP51XHoBPWjnGuUQ77t79tvmu
-	 ZdCYUDruPQCNEJYjndTcCd3sep18IaBZFp7xjoYc=
+	b=1Vzl697Zd390emeMjkAlNaS0tsDpPf32IycVMuEONJhOrYjfcjbL6Wim2Zlwiamr4
+	 CyI+LLSq7qUSE6y/l7UdcEl5tVnvEozdI+PJBzdymhID8SkfvNo+5qYcGhFCg+9NPH
+	 OGbL7BSUTKitHnqdVihd+duTtVuNcBL5uNXuH28A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Garg <gargaditya08@live.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 265/338] hfsplus: fix bug causing custom uid and gid being unable to be assigned with mount
-Date: Mon, 16 Jan 2023 16:52:18 +0100
-Message-Id: <20230116154832.636714974@linuxfoundation.org>
+	Artem Egorkine <arteme@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.14 266/338] ALSA: line6: correct midi status byte when receiving data from podxt
+Date: Mon, 16 Jan 2023 16:52:19 +0100
+Message-Id: <20230116154832.687774544@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,71 +34,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aditya Garg <gargaditya08@live.com>
+From: Artem Egorkine <arteme@gmail.com>
 
-commit 9f2b5debc07073e6dfdd774e3594d0224b991927 upstream.
+commit 8508fa2e7472f673edbeedf1b1d2b7a6bb898ecc upstream.
 
-Despite specifying UID and GID in mount command, the specified UID and GID
-were not being assigned. This patch fixes this issue.
+A PODxt device sends 0xb2, 0xc2 or 0xf2 as a status byte for MIDI
+messages over USB that should otherwise have a 0xb0, 0xc0 or 0xf0
+status byte. This is usually corrected by the driver on other OSes.
 
-Link: https://lkml.kernel.org/r/C0264BF5-059C-45CF-B8DA-3A3BD2C803A2@live.com
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+This fixes MIDI sysex messages sent by PODxt.
+
+[ tiwai: fixed white spaces ]
+
+Signed-off-by: Artem Egorkine <arteme@gmail.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Link: https://lore.kernel.org/r/20221225105728.1153989-1-arteme@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfsplus/hfsplus_fs.h |    2 ++
- fs/hfsplus/inode.c      |    4 ++--
- fs/hfsplus/options.c    |    4 ++++
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ sound/usb/line6/driver.c  |    3 ++-
+ sound/usb/line6/midi.c    |    3 ++-
+ sound/usb/line6/midibuf.c |   25 +++++++++++++++++--------
+ sound/usb/line6/midibuf.h |    5 ++++-
+ sound/usb/line6/pod.c     |    3 ++-
+ 5 files changed, 27 insertions(+), 12 deletions(-)
 
---- a/fs/hfsplus/hfsplus_fs.h
-+++ b/fs/hfsplus/hfsplus_fs.h
-@@ -199,6 +199,8 @@ struct hfsplus_sb_info {
- #define HFSPLUS_SB_HFSX		3
- #define HFSPLUS_SB_CASEFOLD	4
- #define HFSPLUS_SB_NOBARRIER	5
-+#define HFSPLUS_SB_UID		6
-+#define HFSPLUS_SB_GID		7
+--- a/sound/usb/line6/driver.c
++++ b/sound/usb/line6/driver.c
+@@ -311,7 +311,8 @@ static void line6_data_received(struct u
+ 		for (;;) {
+ 			done =
+ 				line6_midibuf_read(mb, line6->buffer_message,
+-						LINE6_MIDI_MESSAGE_MAXLEN);
++						   LINE6_MIDI_MESSAGE_MAXLEN,
++						   LINE6_MIDIBUF_READ_RX);
  
- static inline struct hfsplus_sb_info *HFSPLUS_SB(struct super_block *sb)
+ 			if (done <= 0)
+ 				break;
+--- a/sound/usb/line6/midi.c
++++ b/sound/usb/line6/midi.c
+@@ -60,7 +60,8 @@ static void line6_midi_transmit(struct s
+ 
+ 	for (;;) {
+ 		done = line6_midibuf_read(mb, chunk,
+-					  LINE6_FALLBACK_MAXPACKETSIZE);
++					  LINE6_FALLBACK_MAXPACKETSIZE,
++					  LINE6_MIDIBUF_READ_TX);
+ 
+ 		if (done == 0)
+ 			break;
+--- a/sound/usb/line6/midibuf.c
++++ b/sound/usb/line6/midibuf.c
+@@ -13,6 +13,7 @@
+ 
+ #include "midibuf.h"
+ 
++
+ static int midibuf_message_length(unsigned char code)
  {
---- a/fs/hfsplus/inode.c
-+++ b/fs/hfsplus/inode.c
-@@ -188,11 +188,11 @@ static void hfsplus_get_perms(struct ino
- 	mode = be16_to_cpu(perms->mode);
+ 	int message_length;
+@@ -24,12 +25,7 @@ static int midibuf_message_length(unsign
  
- 	i_uid_write(inode, be32_to_cpu(perms->owner));
--	if (!i_uid_read(inode) && !mode)
-+	if ((test_bit(HFSPLUS_SB_UID, &sbi->flags)) || (!i_uid_read(inode) && !mode))
- 		inode->i_uid = sbi->uid;
+ 		message_length = length[(code >> 4) - 8];
+ 	} else {
+-		/*
+-		   Note that according to the MIDI specification 0xf2 is
+-		   the "Song Position Pointer", but this is used by Line 6
+-		   to send sysex messages to the host.
+-		 */
+-		static const int length[] = { -1, 2, -1, 2, -1, -1, 1, 1, 1, 1,
++		static const int length[] = { -1, 2, 2, 2, -1, -1, 1, 1, 1, -1,
+ 			1, 1, 1, -1, 1, 1
+ 		};
+ 		message_length = length[code & 0x0f];
+@@ -129,7 +125,7 @@ int line6_midibuf_write(struct midi_buff
+ }
  
- 	i_gid_write(inode, be32_to_cpu(perms->group));
--	if (!i_gid_read(inode) && !mode)
-+	if ((test_bit(HFSPLUS_SB_GID, &sbi->flags)) || (!i_gid_read(inode) && !mode))
- 		inode->i_gid = sbi->gid;
+ int line6_midibuf_read(struct midi_buffer *this, unsigned char *data,
+-		       int length)
++		       int length, int read_type)
+ {
+ 	int bytes_used;
+ 	int length1, length2;
+@@ -152,9 +148,22 @@ int line6_midibuf_read(struct midi_buffe
  
- 	if (dir) {
---- a/fs/hfsplus/options.c
-+++ b/fs/hfsplus/options.c
-@@ -140,6 +140,8 @@ int hfsplus_parse_options(char *input, s
- 			if (!uid_valid(sbi->uid)) {
- 				pr_err("invalid uid specified\n");
- 				return 0;
-+			} else {
-+				set_bit(HFSPLUS_SB_UID, &sbi->flags);
- 			}
- 			break;
- 		case opt_gid:
-@@ -151,6 +153,8 @@ int hfsplus_parse_options(char *input, s
- 			if (!gid_valid(sbi->gid)) {
- 				pr_err("invalid gid specified\n");
- 				return 0;
-+			} else {
-+				set_bit(HFSPLUS_SB_GID, &sbi->flags);
- 			}
- 			break;
- 		case opt_part:
+ 	length1 = this->size - this->pos_read;
+ 
+-	/* check MIDI command length */
+ 	command = this->buf[this->pos_read];
++	/*
++	   PODxt always has status byte lower nibble set to 0010,
++	   when it means to send 0000, so we correct if here so
++	   that control/program changes come on channel 1 and
++	   sysex message status byte is correct
++	 */
++	if (read_type == LINE6_MIDIBUF_READ_RX) {
++		if (command == 0xb2 || command == 0xc2 || command == 0xf2) {
++			unsigned char fixed = command & 0xf0;
++			this->buf[this->pos_read] = fixed;
++			command = fixed;
++		}
++	}
+ 
++	/* check MIDI command length */
+ 	if (command & 0x80) {
+ 		midi_length = midibuf_message_length(command);
+ 		this->command_prev = command;
+--- a/sound/usb/line6/midibuf.h
++++ b/sound/usb/line6/midibuf.h
+@@ -12,6 +12,9 @@
+ #ifndef MIDIBUF_H
+ #define MIDIBUF_H
+ 
++#define LINE6_MIDIBUF_READ_TX 0
++#define LINE6_MIDIBUF_READ_RX 1
++
+ struct midi_buffer {
+ 	unsigned char *buf;
+ 	int size;
+@@ -27,7 +30,7 @@ extern void line6_midibuf_destroy(struct
+ extern int line6_midibuf_ignore(struct midi_buffer *mb, int length);
+ extern int line6_midibuf_init(struct midi_buffer *mb, int size, int split);
+ extern int line6_midibuf_read(struct midi_buffer *mb, unsigned char *data,
+-			      int length);
++			      int length, int read_type);
+ extern void line6_midibuf_reset(struct midi_buffer *mb);
+ extern int line6_midibuf_write(struct midi_buffer *mb, unsigned char *data,
+ 			       int length);
+--- a/sound/usb/line6/pod.c
++++ b/sound/usb/line6/pod.c
+@@ -169,8 +169,9 @@ static struct line6_pcm_properties pod_p
+ 	.bytes_per_channel = 3 /* SNDRV_PCM_FMTBIT_S24_3LE */
+ };
+ 
++
+ static const char pod_version_header[] = {
+-	0xf2, 0x7e, 0x7f, 0x06, 0x02
++	0xf0, 0x7e, 0x7f, 0x06, 0x02
+ };
+ 
+ /* forward declarations: */
 
 
