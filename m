@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803CF33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6526C433F0;
-	Mon, 16 Jan 2023 16:00:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B9333EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2ACC433EF;
+	Mon, 16 Jan 2023 16:00:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884851;
-	bh=wd3vyY6Ur5ZbB0O6nQQrAH5ir0YUw/++J7X4kYLTGFY=;
+	s=korg; t=1673884853;
+	bh=e2MSWj94IR5+M3v5Wv/qjLDQZ8/vs4jUFWSZe/1Uxvk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xcNwCHNq8KOfHy3HfyIvMI62YE8zqCzWCfQ5rhsq0yvIoyBgAMLTjMHDnKOVdpqvU
-	 /9AKqBP5iltMJWZlzfgRscs4DqrqGsnxm5+m7hebf8V1N3ly9SP5tYmAOHRUcfHA0i
-	 zwbmSWgjsU+BL7Syus78D+Sask0NzkvPQ7CusXqw=
+	b=gUHVhzrlUM+VfBkt3vkpoKlVS9h2+W2Y91l4wfnpgwjzc1fPCzEh/1KdYo71n+AHF
+	 vDWvKdyUIOxwXb/O61NEf7ke5UPCEgANWd2K7yjtcqXCdWS+c6bqm46kR4H7UQAPTe
+	 8O66sIeUnGlOddepZ+mYBZZKkKxkwmXYjaRG/oVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willy Tarreau <w@1wt.eu>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Guillaume Nault <gnault@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 136/183] tools/nolibc: restore mips branch ordering in the _start block
-Date: Mon, 16 Jan 2023 16:50:59 +0100
-Message-Id: <20230116154809.119535980@linuxfoundation.org>
+Subject: [PATCH 6.1 163/183] selftests/net: l2_tos_ttl_inherit.sh: Ensure environment cleanup on failure.
+Date: Mon, 16 Jan 2023 16:51:26 +0100
+Message-Id: <20230116154810.198183048@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -35,78 +36,110 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Willy Tarreau <w@1wt.eu>
+From: Guillaume Nault <gnault@redhat.com>
 
-[ Upstream commit 184177c3d6e023da934761e198c281344d7dd65b ]
+[ Upstream commit d68ff8ad3351b8fc8d6f14b9a4f5cc8ba3e8bd13 ]
 
-Depending on the compiler used and the optimization options, the sbrk()
-test was crashing, both on real hardware (mips-24kc) and in qemu. One
-such example is kernel.org toolchain in version 11.3 optimizing at -Os.
+Use 'set -e' and an exit handler to stop the script if a command fails
+and ensure the test environment is cleaned up in any case. Also, handle
+the case where the script is interrupted by SIGINT.
 
-Inspecting the sys_brk() call shows the following code:
+The only command that's expected to fail is 'wait $ping_pid', since
+it's killed by the script. Handle this case with '|| true' to make it
+play well with 'set -e'.
 
-  0040047c <sys_brk>:
-    40047c:       24020fcd        li      v0,4045
-    400480:       27bdffe0        addiu   sp,sp,-32
-    400484:       0000000c        syscall
-    400488:       27bd0020        addiu   sp,sp,32
-    40048c:       10e00001        beqz    a3,400494 <sys_brk+0x18>
-    400490:       00021023        negu    v0,v0
-    400494:       03e00008        jr      ra
+Finally, return the Kselftest SKIP code (4) when the script breaks
+because of an environment problem or a command line failure. The 0 and
+1 return codes should now reliably indicate that all tests have been
+run (0: all tests run and passed, 1: all tests run but at least one
+failed, 4: test script didn't run completely).
 
-It is obviously wrong, the "negu" instruction is placed in beqz's
-delayed slot, and worse, there's no nop nor instruction after the
-return, so the next function's first instruction (addiu sip,sip,-32)
-will also be executed as part of the delayed slot that follows the
-return.
-
-This is caused by the ".set noreorder" directive in the _start block,
-that applies to the whole program. The compiler emits code without the
-delayed slots and relies on the compiler to swap instructions when this
-option is not set. Removing the option would require to change the
-startup code in a way that wouldn't make it look like the resulting
-code, which would not be easy to debug. Instead let's just save the
-default ordering before changing it, and restore it at the end of the
-_start block. Now the code is correct:
-
-  0040047c <sys_brk>:
-    40047c:       24020fcd        li      v0,4045
-    400480:       27bdffe0        addiu   sp,sp,-32
-    400484:       0000000c        syscall
-    400488:       10e00002        beqz    a3,400494 <sys_brk+0x18>
-    40048c:       27bd0020        addiu   sp,sp,32
-    400490:       00021023        negu    v0,v0
-    400494:       03e00008        jr      ra
-    400498:       00000000        nop
-
-Fixes: 66b6f755ad45 ("rcutorture: Import a copy of nolibc") #5.0
-Signed-off-by: Willy Tarreau <w@1wt.eu>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Fixes: b690842d12fd ("selftests/net: test l2 tunnel TOS/TTL inheriting")
+Reported-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Tested-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/arch-mips.h | 2 ++
- 1 file changed, 2 insertions(+)
+ .../selftests/net/l2_tos_ttl_inherit.sh       | 40 +++++++++++++++++--
+ 1 file changed, 36 insertions(+), 4 deletions(-)
 
-diff --git a/tools/include/nolibc/arch-mips.h b/tools/include/nolibc/arch-mips.h
-index 5fc5b8029bff..7380093ba9e7 100644
---- a/tools/include/nolibc/arch-mips.h
-+++ b/tools/include/nolibc/arch-mips.h
-@@ -192,6 +192,7 @@ struct sys_stat_struct {
- __asm__ (".section .text\n"
-     ".weak __start\n"
-     ".set nomips16\n"
-+    ".set push\n"
-     ".set    noreorder\n"
-     ".option pic0\n"
-     ".ent __start\n"
-@@ -210,6 +211,7 @@ __asm__ (".section .text\n"
-     "li $v0, 4001\n"              // NR_exit == 4001
-     "syscall\n"
-     ".end __start\n"
-+    ".set pop\n"
-     "");
+diff --git a/tools/testing/selftests/net/l2_tos_ttl_inherit.sh b/tools/testing/selftests/net/l2_tos_ttl_inherit.sh
+index cf56680d598f..f11756e7df2f 100755
+--- a/tools/testing/selftests/net/l2_tos_ttl_inherit.sh
++++ b/tools/testing/selftests/net/l2_tos_ttl_inherit.sh
+@@ -12,13 +12,16 @@
+ # In addition this script also checks if forcing a specific field in the
+ # outer header is working.
  
- #endif // _NOLIBC_ARCH_MIPS_H
++# Return 4 by default (Kselftest SKIP code)
++ERR=4
++
+ if [ "$(id -u)" != "0" ]; then
+ 	echo "Please run as root."
+-	exit 0
++	exit $ERR
+ fi
+ if ! which tcpdump > /dev/null 2>&1; then
+ 	echo "No tcpdump found. Required for this test."
+-	exit 0
++	exit $ERR
+ fi
+ 
+ expected_tos="0x00"
+@@ -340,7 +343,7 @@ verify() {
+ 		fi
+ 	fi
+ 	kill -9 $ping_pid
+-	wait $ping_pid 2>/dev/null
++	wait $ping_pid 2>/dev/null || true
+ 	result="FAIL"
+ 	if [ "$outer" = "4" ]; then
+ 		captured_ttl="$(get_field "ttl" "$out")"
+@@ -380,6 +383,31 @@ cleanup() {
+ 	ip netns del "${NS1}" 2>/dev/null
+ }
+ 
++exit_handler() {
++	# Don't exit immediately if one of the intermediate commands fails.
++	# We might be called at the end of the script, when the network
++	# namespaces have already been deleted. So cleanup() may fail, but we
++	# still need to run until 'exit $ERR' or the script won't return the
++	# correct error code.
++	set +e
++
++	cleanup
++
++	exit $ERR
++}
++
++# Restore the default SIGINT handler (just in case) and exit.
++# The exit handler will take care of cleaning everything up.
++interrupted() {
++	trap - INT
++
++	exit $ERR
++}
++
++set -e
++trap exit_handler EXIT
++trap interrupted INT
++
+ printf "┌────────┬───────┬───────┬──────────────┬"
+ printf "──────────────┬───────┬────────┐\n"
+ for type in gre vxlan geneve; do
+@@ -409,6 +437,10 @@ done
+ printf "└────────┴───────┴───────┴──────────────┴"
+ printf "──────────────┴───────┴────────┘\n"
+ 
++# All tests done.
++# Set ERR appropriately: it will be returned by the exit handler.
+ if $failed; then
+-	exit 1
++	ERR=1
++else
++	ERR=0
+ fi
 -- 
 2.35.1
 
