@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67A5333EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E411BC433F0;
-	Mon, 16 Jan 2023 16:02:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C3133EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C006C433D2;
+	Mon, 16 Jan 2023 16:02:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884945;
-	bh=bbJrhWh8Sxuc4CnyUKPfswEdUiISU/BKCU8Skk9sGos=;
+	s=korg; t=1673884947;
+	bh=Y5og50XO90gi2JBQctPAhm7B7LUz9GYibw8m+6ZskUM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CyPFYJDZHubJIV+L5e6BxTKgxhlJmzOVIwfA9Yzvm3bY8h7zNr5WeqJK3HJtQdggz
-	 q3KUOFJ1TA7iaO1MrQCooXCv190LzpJlDI4WUWDcf1g/+F3SeYMIiClGXblJ8KaYE0
-	 wFiFEbYP2+SRCF4Jsialo0hpEliOLyhMF6A6YF0I=
+	b=2dbgXOGR+0+DlFJzWgk/c4skrlttG3WSa3Z8D2lagrytM4vz8yF8tazg+DqC94WHG
+	 lXzDiBJE5zUx0GlZVGVrlOUqYzRzHjjNHd5afmVKMxOqGmkeNAXW4G/RWh16LFTfgY
+	 QtmEfrkNujvinqq1e9aDCM/bJi0V1i2t/BV7uJVw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Chia-I Wu <olvaffe@gmail.com>,
-	Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Subject: [PATCH 5.15 16/86] drm/virtio: Fix GEM handle creation UAF
-Date: Mon, 16 Jan 2023 16:50:50 +0100
-Message-Id: <20230116154747.749149412@linuxfoundation.org>
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Mika Kuoppala <mika.kuoppala@linux.intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 5.15 17/86] drm/i915/gt: Reset twice
+Date: Mon, 16 Jan 2023 16:50:51 +0100
+Message-Id: <20230116154747.798916143@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -35,67 +37,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: Chris Wilson <chris@chris-wilson.co.uk>
 
-commit 52531258318ed59a2dc5a43df2eaf0eb1d65438e upstream.
+commit d3de5616d36462a646f5b360ba82d3b09ff668eb upstream.
 
-Userspace can guess the handle value and try to race GEM object creation
-with handle close, resulting in a use-after-free if we dereference the
-object after dropping the handle's reference.  For that reason, dropping
-the handle's reference must be done *after* we are done dereferencing
-the object.
+After applying an engine reset, on some platforms like Jasperlake, we
+occasionally detect that the engine state is not cleared until shortly
+after the resume. As we try to resume the engine with volatile internal
+state, the first request fails with a spurious CS event (it looks like
+it reports a lite-restore to the hung context, instead of the expected
+idle->active context switch).
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Reviewed-by: Chia-I Wu <olvaffe@gmail.com>
-Fixes: 62fb7a5e1096 ("virtio-gpu: add 3d/virgl support")
+Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
 Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221216233355.542197-2-robdclark@gmail.com
+Cc: Mika Kuoppala <mika.kuoppala@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Reviewed-by: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221212161338.1007659-1-andi.shyti@linux.intel.com
+(cherry picked from commit 3db9d590557da3aa2c952f2fecd3e9b703dad790)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/virtio/virtgpu_ioctl.c |   19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_reset.c |   34 ++++++++++++++++++++++++++++------
+ 1 file changed, 28 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/virtio/virtgpu_ioctl.c
-+++ b/drivers/gpu/drm/virtio/virtgpu_ioctl.c
-@@ -292,10 +292,18 @@ static int virtio_gpu_resource_create_io
- 		drm_gem_object_release(obj);
- 		return ret;
- 	}
--	drm_gem_object_put(obj);
+--- a/drivers/gpu/drm/i915/gt/intel_reset.c
++++ b/drivers/gpu/drm/i915/gt/intel_reset.c
+@@ -271,6 +271,7 @@ out:
+ static int gen6_hw_domain_reset(struct intel_gt *gt, u32 hw_domain_mask)
+ {
+ 	struct intel_uncore *uncore = gt->uncore;
++	int loops = 2;
+ 	int err;
  
- 	rc->res_handle = qobj->hw_res_handle; /* similiar to a VM address */
- 	rc->bo_handle = handle;
-+
+ 	/*
+@@ -278,18 +279,39 @@ static int gen6_hw_domain_reset(struct i
+ 	 * for fifo space for the write or forcewake the chip for
+ 	 * the read
+ 	 */
+-	intel_uncore_write_fw(uncore, GEN6_GDRST, hw_domain_mask);
++	do {
++		intel_uncore_write_fw(uncore, GEN6_GDRST, hw_domain_mask);
+ 
+-	/* Wait for the device to ack the reset requests */
+-	err = __intel_wait_for_register_fw(uncore,
+-					   GEN6_GDRST, hw_domain_mask, 0,
+-					   500, 0,
+-					   NULL);
++		/*
++		 * Wait for the device to ack the reset requests.
++		 *
++		 * On some platforms, e.g. Jasperlake, we see that the
++		 * engine register state is not cleared until shortly after
++		 * GDRST reports completion, causing a failure as we try
++		 * to immediately resume while the internal state is still
++		 * in flux. If we immediately repeat the reset, the second
++		 * reset appears to serialise with the first, and since
++		 * it is a no-op, the registers should retain their reset
++		 * value. However, there is still a concern that upon
++		 * leaving the second reset, the internal engine state
++		 * is still in flux and not ready for resuming.
++		 */
++		err = __intel_wait_for_register_fw(uncore, GEN6_GDRST,
++						   hw_domain_mask, 0,
++						   2000, 0,
++						   NULL);
++	} while (err == 0 && --loops);
+ 	if (err)
+ 		GT_TRACE(gt,
+ 			 "Wait for 0x%08x engines reset failed\n",
+ 			 hw_domain_mask);
+ 
 +	/*
-+	 * The handle owns the reference now.  But we must drop our
-+	 * remaining reference *after* we no longer need to dereference
-+	 * the obj.  Otherwise userspace could guess the handle and
-+	 * race closing it from another thread.
++	 * As we have observed that the engine state is still volatile
++	 * after GDRST is acked, impose a small delay to let everything settle.
 +	 */
-+	drm_gem_object_put(obj);
++	udelay(50);
 +
- 	return 0;
- }
- 
-@@ -656,11 +664,18 @@ static int virtio_gpu_resource_create_bl
- 		drm_gem_object_release(obj);
- 		return ret;
- 	}
--	drm_gem_object_put(obj);
- 
- 	rc_blob->res_handle = bo->hw_res_handle;
- 	rc_blob->bo_handle = handle;
- 
-+	/*
-+	 * The handle owns the reference now.  But we must drop our
-+	 * remaining reference *after* we no longer need to dereference
-+	 * the obj.  Otherwise userspace could guess the handle and
-+	 * race closing it from another thread.
-+	 */
-+	drm_gem_object_put(obj);
-+
- 	return 0;
+ 	return err;
  }
  
 
