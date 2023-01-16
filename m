@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBBD56FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:50:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40B51C433F1;
-	Mon, 16 Jan 2023 16:50:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6358F6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:50:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD754C433F0;
+	Mon, 16 Jan 2023 16:50:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887802;
-	bh=rkxcV86p09gZ/0QYcozZ7sZv55MK94rnaMHa4bNzZ1g=;
+	s=korg; t=1673887805;
+	bh=QLYvJ0WwLCQZxhvKG62aT4C5CL5RyqO7QVN/d//2ExQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HUJdgdtqFjhvZLMQvynT68uU/dzjhcGO+OUJL5zhmrP9NnXwlBQS2japslXk5y0DX
-	 nA6m8+2SgUnRAvbZvyYbVRm++kEXSdXKhd6WRblEdMtdHQUwLX88wOKPYhDNHSA3uh
-	 wU9LO/tppr63pBAXnZysKwJfbDHvKv0fg6cXFZcU=
+	b=xiJm1ZOHA+85uQqmKkuWstm6oIOqdv5uj9dYPQfOisjMySsRHBaR9PNId0N3GvieE
+	 /Z368g7XzdQAwozoTcuJWzHw3nw5cCdwbJ0xbZY1ge8ml7q/QzNf5+TzlBvsu8dGdF
+	 YwVehY9nATRtAHyHXi5cgisvBIvFe2pZh7tmSfO0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rohit kumar <rohitkr@codeaurora.org>,
-	Niklas Cassel <niklas.cassel@linaro.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Yuan Can <yuancan@huawei.com>,
+	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 287/521] remoteproc: qcom: Rename Hexagon v5 PAS driver
-Date: Mon, 16 Jan 2023 16:49:09 +0100
-Message-Id: <20230116154859.980090017@linuxfoundation.org>
+Subject: [PATCH 4.19 288/521] remoteproc: qcom_q6v5_pas: Fix missing of_node_put() in adsp_alloc_memory_region()
+Date: Mon, 16 Jan 2023 16:49:10 +0100
+Message-Id: <20230116154900.028829255@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,114 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bjorn Andersson <bjorn.andersson@linaro.org>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 9e004f97161d637d2dc82299be494bcfd07043bb ]
+[ Upstream commit 38e7d9c19276832ebb0277f415b9214bf7baeb37 ]
 
-The Hexagon v5 ADSP driver is used for more than only the ADSP and
-there's an upcoming non-PAS ADSP PIL for SDM845, so rename the driver to
-qcom_q6v5_pas in order to better suite this.
+The pointer node is returned by of_parse_phandle() with refcount
+incremented. We should use of_node_put() on it when done.
 
-Cc: Rohit kumar <rohitkr@codeaurora.org>
-Reviewed-by: Niklas Cassel <niklas.cassel@linaro.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Stable-dep-of: 38e7d9c19276 ("remoteproc: qcom_q6v5_pas: Fix missing of_node_put() in adsp_alloc_memory_region()")
+Fixes: b9e718e950c3 ("remoteproc: Introduce Qualcomm ADSP PIL")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221203070639.15128-1-yuancan@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/remoteproc/Kconfig                    | 27 ++++++++++---------
- drivers/remoteproc/Makefile                   |  2 +-
- .../{qcom_adsp_pil.c => qcom_q6v5_pas.c}      |  4 +--
- 3 files changed, 17 insertions(+), 16 deletions(-)
- rename drivers/remoteproc/{qcom_adsp_pil.c => qcom_q6v5_pas.c} (98%)
+ drivers/remoteproc/qcom_q6v5_pas.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/remoteproc/Kconfig b/drivers/remoteproc/Kconfig
-index 052d4dd347f9..425e502c6471 100644
---- a/drivers/remoteproc/Kconfig
-+++ b/drivers/remoteproc/Kconfig
-@@ -84,8 +84,16 @@ config KEYSTONE_REMOTEPROC
- 	  It's safe to say N here if you're not interested in the Keystone
- 	  DSPs or just want to use a bare minimum kernel.
- 
--config QCOM_ADSP_PIL
--	tristate "Qualcomm ADSP Peripheral Image Loader"
-+config QCOM_RPROC_COMMON
-+	tristate
-+
-+config QCOM_Q6V5_COMMON
-+	tristate
-+	depends on ARCH_QCOM
-+	depends on QCOM_SMEM
-+
-+config QCOM_Q6V5_PAS
-+	tristate "Qualcomm Hexagon v5 Peripheral Authentication Service support"
- 	depends on OF && ARCH_QCOM
- 	depends on QCOM_SMEM
- 	depends on RPMSG_QCOM_SMD || (COMPILE_TEST && RPMSG_QCOM_SMD=n)
-@@ -98,15 +106,7 @@ config QCOM_ADSP_PIL
- 	select QCOM_SCM
- 	help
- 	  Say y here to support the TrustZone based Peripherial Image Loader
--	  for the Qualcomm ADSP remote processors.
--
--config QCOM_RPROC_COMMON
--	tristate
--
--config QCOM_Q6V5_COMMON
--	tristate
--	depends on ARCH_QCOM
--	depends on QCOM_SMEM
-+	  for the Qualcomm Hexagon v5 based remote processors.
- 
- config QCOM_Q6V5_PIL
- 	tristate "Qualcomm Hexagon V5 Peripherial Image Loader"
-@@ -120,8 +120,9 @@ config QCOM_Q6V5_PIL
- 	select QCOM_RPROC_COMMON
- 	select QCOM_SCM
- 	help
--	  Say y here to support the Qualcomm Peripherial Image Loader for the
--	  Hexagon V5 based remote processors.
-+	  Say y here to support the TrustZone based Peripherial Image Loader
-+	  for the Qualcomm Hexagon v5 based remote processors. This is commonly
-+	  used to control subsystems such as ADSP, Compute and Sensor.
- 
- config QCOM_Q6V5_WCSS
- 	tristate "Qualcomm Hexagon based WCSS Peripheral Image Loader"
-diff --git a/drivers/remoteproc/Makefile b/drivers/remoteproc/Makefile
-index 03332fa7e2ee..eb86c8ba5a87 100644
---- a/drivers/remoteproc/Makefile
-+++ b/drivers/remoteproc/Makefile
-@@ -14,9 +14,9 @@ obj-$(CONFIG_OMAP_REMOTEPROC)		+= omap_remoteproc.o
- obj-$(CONFIG_WKUP_M3_RPROC)		+= wkup_m3_rproc.o
- obj-$(CONFIG_DA8XX_REMOTEPROC)		+= da8xx_remoteproc.o
- obj-$(CONFIG_KEYSTONE_REMOTEPROC)	+= keystone_remoteproc.o
--obj-$(CONFIG_QCOM_ADSP_PIL)		+= qcom_adsp_pil.o
- obj-$(CONFIG_QCOM_RPROC_COMMON)		+= qcom_common.o
- obj-$(CONFIG_QCOM_Q6V5_COMMON)		+= qcom_q6v5.o
-+obj-$(CONFIG_QCOM_Q6V5_PAS)		+= qcom_q6v5_pas.o
- obj-$(CONFIG_QCOM_Q6V5_PIL)		+= qcom_q6v5_pil.o
- obj-$(CONFIG_QCOM_Q6V5_WCSS)		+= qcom_q6v5_wcss.o
- obj-$(CONFIG_QCOM_SYSMON)		+= qcom_sysmon.o
-diff --git a/drivers/remoteproc/qcom_adsp_pil.c b/drivers/remoteproc/qcom_q6v5_pas.c
-similarity index 98%
-rename from drivers/remoteproc/qcom_adsp_pil.c
-rename to drivers/remoteproc/qcom_q6v5_pas.c
-index d4339a6da616..2478ef3cd519 100644
---- a/drivers/remoteproc/qcom_adsp_pil.c
+diff --git a/drivers/remoteproc/qcom_q6v5_pas.c b/drivers/remoteproc/qcom_q6v5_pas.c
+index 2478ef3cd519..d9b0e51ca91f 100644
+--- a/drivers/remoteproc/qcom_q6v5_pas.c
 +++ b/drivers/remoteproc/qcom_q6v5_pas.c
-@@ -364,11 +364,11 @@ static struct platform_driver adsp_driver = {
- 	.probe = adsp_probe,
- 	.remove = adsp_remove,
- 	.driver = {
--		.name = "qcom_adsp_pil",
-+		.name = "qcom_q6v5_pas",
- 		.of_match_table = adsp_of_match,
- 	},
- };
+@@ -238,6 +238,7 @@ static int adsp_alloc_memory_region(struct qcom_adsp *adsp)
+ 	}
  
- module_platform_driver(adsp_driver);
--MODULE_DESCRIPTION("Qualcomm MSM8974/MSM8996 ADSP Peripherial Image Loader");
-+MODULE_DESCRIPTION("Qualcomm Hexagon v5 Peripheral Authentication Service driver");
- MODULE_LICENSE("GPL v2");
+ 	ret = of_address_to_resource(node, 0, &r);
++	of_node_put(node);
+ 	if (ret)
+ 		return ret;
+ 
 -- 
 2.35.1
 
