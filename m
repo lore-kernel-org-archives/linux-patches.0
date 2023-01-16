@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3AF26FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:15:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C190C433D2;
-	Mon, 16 Jan 2023 17:15:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2F86FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:15:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8F18C433EF;
+	Mon, 16 Jan 2023 17:15:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889307;
-	bh=0AEmCcCj/wd3F7GH03MOiuj0OGe1mXXO0IH08JuMGa0=;
+	s=korg; t=1673889310;
+	bh=NG1V1OjiPa8ivM7ZmaAqN/9we+H8Ja4W5HsutwAI8BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c9YMsFRKnuMzmTaDVrBkvK6l7Es1JW9ebmFG0QMZ9t+XVQNuzyEIsGRpLMQpAfcVo
-	 DlIMtkjHGj9QqgjQyvoTAcgsEYXqsOhPs34JnHYI+r2UxZqO7scybuE/Ksm9KI3BMF
-	 sQ0zqhUVGJl2Zqg0wBLixWEODeNq74O0uIwf9hIY=
+	b=bfF35Yc/WTDqlWsf4ekXJfpBLTdr+oQf0HfuA3fzjqZWQfpas1TNjHQ4VLFjU4LS6
+	 qyBM7iQz2sfZcMZr8xdmoldp949mDNNVE1DIYjfsEIDjfkENdzp0yIrXg4BdRxOa6+
+	 lcI2RGvHDZBog+sob1SV5UMkl3QRZRxk6vOMRMhQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
+	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 310/338] nfc: Fix potential resource leaks
-Date: Mon, 16 Jan 2023 16:53:03 +0100
-Message-Id: <20230116154834.648606865@linuxfoundation.org>
+Subject: [PATCH 4.14 337/338] nfc: pn533: Wait for out_urbs completion in pn533_usb_send_frame()
+Date: Mon, 16 Jan 2023 16:53:30 +0100
+Message-Id: <20230116154835.779539923@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,127 +35,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
 
-[ Upstream commit df49908f3c52d211aea5e2a14a93bbe67a2cb3af ]
+[ Upstream commit 9dab880d675b9d0dd56c6428e4e8352a3339371d ]
 
-nfc_get_device() take reference for the device, add missing
-nfc_put_device() to release it when not need anymore.
-Also fix the style warnning by use error EOPNOTSUPP instead of
-ENOTSUPP.
+Fix a use-after-free that occurs in hcd when in_urb sent from
+pn533_usb_send_frame() is completed earlier than out_urb. Its callback
+frees the skb data in pn533_send_async_complete() that is used as a
+transfer buffer of out_urb. Wait before sending in_urb until the
+callback of out_urb is called. To modify the callback of out_urb alone,
+separate the complete function of out_urb and ack_urb.
 
-Fixes: 5ce3f32b5264 ("NFC: netlink: SE API implementation")
-Fixes: 29e76924cf08 ("nfc: netlink: Add capability to reply to vendor_cmd with data")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Found by a modified version of syzkaller.
+
+BUG: KASAN: use-after-free in dummy_timer
+Call Trace:
+ memcpy (mm/kasan/shadow.c:65)
+ dummy_perform_transfer (drivers/usb/gadget/udc/dummy_hcd.c:1352)
+ transfer (drivers/usb/gadget/udc/dummy_hcd.c:1453)
+ dummy_timer (drivers/usb/gadget/udc/dummy_hcd.c:1972)
+ arch_static_branch (arch/x86/include/asm/jump_label.h:27)
+ static_key_false (include/linux/jump_label.h:207)
+ timer_expire_exit (include/trace/events/timer.h:127)
+ call_timer_fn (kernel/time/timer.c:1475)
+ expire_timers (kernel/time/timer.c:1519)
+ __run_timers (kernel/time/timer.c:1790)
+ run_timer_softirq (kernel/time/timer.c:1803)
+
+Fixes: c46ee38620a2 ("NFC: pn533: add NXP pn533 nfc device driver")
+Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/nfc/netlink.c | 52 ++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 38 insertions(+), 14 deletions(-)
+ drivers/nfc/pn533/usb.c |   44 +++++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 41 insertions(+), 3 deletions(-)
 
-diff --git a/net/nfc/netlink.c b/net/nfc/netlink.c
-index 0320ae7560ad..be06f4e37c43 100644
---- a/net/nfc/netlink.c
-+++ b/net/nfc/netlink.c
-@@ -1506,6 +1506,7 @@ static int nfc_genl_se_io(struct sk_buff *skb, struct genl_info *info)
- 	u32 dev_idx, se_idx;
- 	u8 *apdu;
- 	size_t apdu_len;
-+	int rc;
- 
- 	if (!info->attrs[NFC_ATTR_DEVICE_INDEX] ||
- 	    !info->attrs[NFC_ATTR_SE_INDEX] ||
-@@ -1519,25 +1520,37 @@ static int nfc_genl_se_io(struct sk_buff *skb, struct genl_info *info)
- 	if (!dev)
- 		return -ENODEV;
- 
--	if (!dev->ops || !dev->ops->se_io)
--		return -ENOTSUPP;
-+	if (!dev->ops || !dev->ops->se_io) {
-+		rc = -EOPNOTSUPP;
-+		goto put_dev;
-+	}
- 
- 	apdu_len = nla_len(info->attrs[NFC_ATTR_SE_APDU]);
--	if (apdu_len == 0)
--		return -EINVAL;
-+	if (apdu_len == 0) {
-+		rc = -EINVAL;
-+		goto put_dev;
-+	}
- 
- 	apdu = nla_data(info->attrs[NFC_ATTR_SE_APDU]);
--	if (!apdu)
--		return -EINVAL;
-+	if (!apdu) {
-+		rc = -EINVAL;
-+		goto put_dev;
-+	}
- 
- 	ctx = kzalloc(sizeof(struct se_io_ctx), GFP_KERNEL);
--	if (!ctx)
--		return -ENOMEM;
-+	if (!ctx) {
-+		rc = -ENOMEM;
-+		goto put_dev;
-+	}
- 
- 	ctx->dev_idx = dev_idx;
- 	ctx->se_idx = se_idx;
- 
--	return nfc_se_io(dev, se_idx, apdu, apdu_len, se_io_cb, ctx);
-+	rc = nfc_se_io(dev, se_idx, apdu, apdu_len, se_io_cb, ctx);
-+
-+put_dev:
-+	nfc_put_device(dev);
-+	return rc;
+--- a/drivers/nfc/pn533/usb.c
++++ b/drivers/nfc/pn533/usb.c
+@@ -165,10 +165,17 @@ static int pn533_usb_send_ack(struct pn5
+ 	return usb_submit_urb(phy->ack_urb, flags);
  }
  
- static int nfc_genl_vendor_cmd(struct sk_buff *skb,
-@@ -1560,14 +1573,21 @@ static int nfc_genl_vendor_cmd(struct sk_buff *skb,
- 	subcmd = nla_get_u32(info->attrs[NFC_ATTR_VENDOR_SUBCMD]);
- 
- 	dev = nfc_get_device(dev_idx);
--	if (!dev || !dev->vendor_cmds || !dev->n_vendor_cmds)
-+	if (!dev)
- 		return -ENODEV;
- 
-+	if (!dev->vendor_cmds || !dev->n_vendor_cmds) {
-+		err = -ENODEV;
-+		goto put_dev;
-+	}
++struct pn533_out_arg {
++	struct pn533_usb_phy *phy;
++	struct completion done;
++};
 +
- 	if (info->attrs[NFC_ATTR_VENDOR_DATA]) {
- 		data = nla_data(info->attrs[NFC_ATTR_VENDOR_DATA]);
- 		data_len = nla_len(info->attrs[NFC_ATTR_VENDOR_DATA]);
--		if (data_len == 0)
--			return -EINVAL;
-+		if (data_len == 0) {
-+			err = -EINVAL;
-+			goto put_dev;
-+		}
- 	} else {
- 		data = NULL;
- 		data_len = 0;
-@@ -1582,10 +1602,14 @@ static int nfc_genl_vendor_cmd(struct sk_buff *skb,
- 		dev->cur_cmd_info = info;
- 		err = cmd->doit(dev, data, data_len);
- 		dev->cur_cmd_info = NULL;
--		return err;
-+		goto put_dev;
- 	}
+ static int pn533_usb_send_frame(struct pn533 *dev,
+ 				struct sk_buff *out)
+ {
+ 	struct pn533_usb_phy *phy = dev->phy;
++	struct pn533_out_arg arg;
++	void *cntx;
+ 	int rc;
  
--	return -EOPNOTSUPP;
-+	err = -EOPNOTSUPP;
+ 	if (phy->priv == NULL)
+@@ -180,10 +187,17 @@ static int pn533_usb_send_frame(struct p
+ 	print_hex_dump_debug("PN533 TX: ", DUMP_PREFIX_NONE, 16, 1,
+ 			     out->data, out->len, false);
+ 
++	init_completion(&arg.done);
++	cntx = phy->out_urb->context;
++	phy->out_urb->context = &arg;
 +
-+put_dev:
-+	nfc_put_device(dev);
-+	return err;
+ 	rc = usb_submit_urb(phy->out_urb, GFP_KERNEL);
+ 	if (rc)
+ 		return rc;
+ 
++	wait_for_completion(&arg.done);
++	phy->out_urb->context = cntx;
++
+ 	if (dev->protocol_type == PN533_PROTO_REQ_RESP) {
+ 		/* request for response for sent packet directly */
+ 		rc = pn533_submit_urb_for_response(phy, GFP_KERNEL);
+@@ -424,7 +438,31 @@ static int pn533_acr122_poweron_rdr(stru
+ 	return arg.rc;
  }
  
- /* message building helper */
--- 
-2.35.1
-
+-static void pn533_send_complete(struct urb *urb)
++static void pn533_out_complete(struct urb *urb)
++{
++	struct pn533_out_arg *arg = urb->context;
++	struct pn533_usb_phy *phy = arg->phy;
++
++	switch (urb->status) {
++	case 0:
++		break; /* success */
++	case -ECONNRESET:
++	case -ENOENT:
++		dev_dbg(&phy->udev->dev,
++			"The urb has been stopped (status %d)\n",
++			urb->status);
++		break;
++	case -ESHUTDOWN:
++	default:
++		nfc_err(&phy->udev->dev,
++			"Urb failure (status %d)\n",
++			urb->status);
++	}
++
++	complete(&arg->done);
++}
++
++static void pn533_ack_complete(struct urb *urb)
+ {
+ 	struct pn533_usb_phy *phy = urb->context;
+ 
+@@ -512,10 +550,10 @@ static int pn533_usb_probe(struct usb_in
+ 
+ 	usb_fill_bulk_urb(phy->out_urb, phy->udev,
+ 			  usb_sndbulkpipe(phy->udev, out_endpoint),
+-			  NULL, 0, pn533_send_complete, phy);
++			  NULL, 0, pn533_out_complete, phy);
+ 	usb_fill_bulk_urb(phy->ack_urb, phy->udev,
+ 			  usb_sndbulkpipe(phy->udev, out_endpoint),
+-			  NULL, 0, pn533_send_complete, phy);
++			  NULL, 0, pn533_ack_complete, phy);
+ 
+ 	switch (id->driver_info) {
+ 	case PN533_DEVICE_STD:
 
 
