@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F17346B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:13:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9723BC433D2;
-	Mon, 16 Jan 2023 16:13:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4E0046B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:13:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A070C433D2;
+	Mon, 16 Jan 2023 16:13:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885617;
-	bh=JcokrNxzenQXbXJr0diqgJDYzmX58m4naYo4V1Nv5rc=;
+	s=korg; t=1673885619;
+	bh=NmP/rbGp/Sir+QXZv1QlTB2cWld5bpofF5OSeOyOdiQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lzLf8OMn/DhzGAgW0UZOzP7PjBOKfNKbBkrYt7CIYQszJlVRVMYprc0lDGVZb50/e
-	 /pqPtS/ca1GrZiyGAMGtrP0xwP2W97HUTpntBPUY9IIEaxp5qmftKKO43KQDH72fnF
-	 TUT4w+Rw+P61NqzxWMsB0BNYalFbgBzAygsPWXwc=
+	b=0eYLA4hPvf1eTzDLyLjc7uvGD47WurTzDNEYpfAM9vyjZvdaz8+LJAWUmm06V+UHc
+	 7z0zsQtkDUNSI3muUNH1H8M2CaySJf430mysSXgeGuXRER/oc0vT9aL8gngy3ZLMLx
+	 kU4fyLWkGQm+3ZODzfoyr4V6knck4/gSB0nbPDIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ladislav Michl <ladis@linux-mips.org>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	GUO Zihua <guozihua@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 092/658] MIPS: OCTEON: warn only once if deprecated link status is being used
-Date: Mon, 16 Jan 2023 16:43:00 +0100
-Message-Id: <20230116154913.757761574@linuxfoundation.org>
+Subject: [PATCH 5.4 119/658] ima: Handle -ESTALE returned by ima_filter_rule_match()
+Date: Mon, 16 Jan 2023 16:43:27 +0100
+Message-Id: <20230116154914.935891218@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,48 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ladislav Michl <ladis@linux-mips.org>
+From: GUO Zihua <guozihua@huawei.com>
 
-[ Upstream commit 4c587a982603d7e7e751b4925809a1512099a690 ]
+[ Upstream commit c7423dbdbc9ecef7fff5239d144cad4b9887f4de ]
 
-Avoid flooding kernel log with warnings.
+IMA relies on the blocking LSM policy notifier callback to update the
+LSM based IMA policy rules.
 
-Fixes: 2c0756d306c2 ("MIPS: OCTEON: warn if deprecated link status is being used")
-Signed-off-by: Ladislav Michl <ladis@linux-mips.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+When SELinux update its policies, IMA would be notified and starts
+updating all its lsm rules one-by-one. During this time, -ESTALE would
+be returned by ima_filter_rule_match() if it is called with a LSM rule
+that has not yet been updated. In ima_match_rules(), -ESTALE is not
+handled, and the LSM rule is considered a match, causing extra files
+to be measured by IMA.
+
+Fix it by re-initializing a temporary rule if -ESTALE is returned by
+ima_filter_rule_match(). The origin rule in the rule list would be
+updated by the LSM policy notifier callback.
+
+Fixes: b16942455193 ("ima: use the lsm policy update notifier")
+Signed-off-by: GUO Zihua <guozihua@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/cavium-octeon/executive/cvmx-helper-board.c | 2 +-
- arch/mips/cavium-octeon/executive/cvmx-helper.c       | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ security/integrity/ima/ima_policy.c | 41 ++++++++++++++++++++++-------
+ 1 file changed, 32 insertions(+), 9 deletions(-)
 
-diff --git a/arch/mips/cavium-octeon/executive/cvmx-helper-board.c b/arch/mips/cavium-octeon/executive/cvmx-helper-board.c
-index 2e2d45bc850d..601afad60bfe 100644
---- a/arch/mips/cavium-octeon/executive/cvmx-helper-board.c
-+++ b/arch/mips/cavium-octeon/executive/cvmx-helper-board.c
-@@ -211,7 +211,7 @@ cvmx_helper_link_info_t __cvmx_helper_board_link_get(int ipd_port)
+diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
+index 7f352e85ffad..6df0436462ab 100644
+--- a/security/integrity/ima/ima_policy.c
++++ b/security/integrity/ima/ima_policy.c
+@@ -370,6 +370,9 @@ static bool ima_match_rules(struct ima_rule_entry *rule, struct inode *inode,
+ 			    enum ima_hooks func, int mask)
  {
- 	cvmx_helper_link_info_t result;
+ 	int i;
++	bool result = false;
++	struct ima_rule_entry *lsm_rule = rule;
++	bool rule_reinitialized = false;
  
--	WARN(!octeon_is_simulation(),
-+	WARN_ONCE(!octeon_is_simulation(),
- 	     "Using deprecated link status - please update your DT");
+ 	if (func == KEXEC_CMDLINE) {
+ 		if ((rule->flags & IMA_FUNC) && (rule->func == func))
+@@ -413,35 +416,55 @@ static bool ima_match_rules(struct ima_rule_entry *rule, struct inode *inode,
+ 		int rc = 0;
+ 		u32 osid;
  
- 	/* Unless we fix it later, all links are defaulted to down */
-diff --git a/arch/mips/cavium-octeon/executive/cvmx-helper.c b/arch/mips/cavium-octeon/executive/cvmx-helper.c
-index de391541d6f7..89a397c73aa6 100644
---- a/arch/mips/cavium-octeon/executive/cvmx-helper.c
-+++ b/arch/mips/cavium-octeon/executive/cvmx-helper.c
-@@ -1100,7 +1100,7 @@ cvmx_helper_link_info_t cvmx_helper_link_get(int ipd_port)
- 		if (index == 0)
- 			result = __cvmx_helper_rgmii_link_get(ipd_port);
- 		else {
--			WARN(1, "Using deprecated link status - please update your DT");
-+			WARN_ONCE(1, "Using deprecated link status - please update your DT");
- 			result.s.full_duplex = 1;
- 			result.s.link_up = 1;
- 			result.s.speed = 1000;
+-		if (!rule->lsm[i].rule) {
+-			if (!rule->lsm[i].args_p)
++		if (!lsm_rule->lsm[i].rule) {
++			if (!lsm_rule->lsm[i].args_p)
+ 				continue;
+ 			else
+ 				return false;
+ 		}
++
++retry:
+ 		switch (i) {
+ 		case LSM_OBJ_USER:
+ 		case LSM_OBJ_ROLE:
+ 		case LSM_OBJ_TYPE:
+ 			security_inode_getsecid(inode, &osid);
+-			rc = ima_filter_rule_match(osid, rule->lsm[i].type,
++			rc = ima_filter_rule_match(osid, lsm_rule->lsm[i].type,
+ 						   Audit_equal,
+-						   rule->lsm[i].rule);
++						   lsm_rule->lsm[i].rule);
+ 			break;
+ 		case LSM_SUBJ_USER:
+ 		case LSM_SUBJ_ROLE:
+ 		case LSM_SUBJ_TYPE:
+-			rc = ima_filter_rule_match(secid, rule->lsm[i].type,
++			rc = ima_filter_rule_match(secid, lsm_rule->lsm[i].type,
+ 						   Audit_equal,
+-						   rule->lsm[i].rule);
++						   lsm_rule->lsm[i].rule);
+ 			break;
+ 		default:
+ 			break;
+ 		}
+-		if (!rc)
+-			return false;
++
++		if (rc == -ESTALE && !rule_reinitialized) {
++			lsm_rule = ima_lsm_copy_rule(rule);
++			if (lsm_rule) {
++				rule_reinitialized = true;
++				goto retry;
++			}
++		}
++		if (!rc) {
++			result = false;
++			goto out;
++		}
+ 	}
+-	return true;
++	result = true;
++
++out:
++	if (rule_reinitialized) {
++		for (i = 0; i < MAX_LSM_RULES; i++)
++			ima_filter_rule_free(lsm_rule->lsm[i].rule);
++		kfree(lsm_rule);
++	}
++	return result;
+ }
+ 
+ /*
 -- 
 2.35.1
 
