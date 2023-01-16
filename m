@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92DEC46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:13:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15422C433D2;
-	Mon, 16 Jan 2023 16:13:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FEE546B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:13:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA40EC433D2;
+	Mon, 16 Jan 2023 16:13:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885585;
-	bh=a4iI/VgOWJIKP9zXhFhgAyQfVcpt/b3DbPJXIwDOHd4=;
+	s=korg; t=1673885588;
+	bh=MjM81aUBAFOwzo3m9Wb7B2rUEGryCV94JBI1CmLi4oA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eFGQ4Zyu7d+gIbux6KOVQugGTcxQPsqmuGjqQmUSwBZwNDJfz6mhEHZAtrB8ooLKk
-	 /omgpcDEENiLWx/dMFxzX3QB5wZhd+fvNu7/j76kPA4uOMQ3A0QH8EbQ4O7MbYXfPo
-	 EcmW6KASmEgPG/G9Puta77dGq08PlmMFtQKgPgk0=
+	b=aqCt4cH4ZVkTLtOhrv8MCTouwp09jT+lsOtXsqcRX8UmjL1eC1EkgymQZgxrre6rz
+	 lIYXYk/PtRaKT8dzehzRLo4Dsgl9NxlqWp/tgNoT6kRmgqt8j758BfKSw9hGipavpN
+	 UguHVN2s9xubsreTWAfK5u2eO/S06UtgIRBTydRg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Anssi Hannula <anssi.hannula@bitwise.fi>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Anastasia Belova <abelova@astralinux.ru>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 108/658] can: kvaser_usb_leaf: Set Warning state even without bus errors
-Date: Mon, 16 Jan 2023 16:43:16 +0100
-Message-Id: <20230116154914.470518611@linuxfoundation.org>
+Subject: [PATCH 5.4 091/658] MIPS: BCM63xx: Add check for NULL for clk in clk_enable
+Date: Mon, 16 Jan 2023 16:42:59 +0100
+Message-Id: <20230116154913.723854096@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,74 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anssi Hannula <anssi.hannula@bitwise.fi>
+From: Anastasia Belova <abelova@astralinux.ru>
 
-[ Upstream commit df1b7af2761b935f63b4a53e789d41ed859edf61 ]
+[ Upstream commit ee9ef11bd2a59c2fefaa0959e5efcdf040d7c654 ]
 
-kvaser_usb_leaf_rx_error_update_can_state() sets error state according
-to error counters when the hardware does not indicate a specific state
-directly.
+Check clk for NULL before calling clk_enable_unlocked where clk
+is dereferenced. There is such check in other implementations
+of clk_enable.
 
-However, this is currently gated behind a check for
-M16C_STATE_BUS_ERROR which does not always seem to be set when error
-counters are increasing, and may not be set when error counters are
-decreasing.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-This causes the CAN_STATE_ERROR_WARNING state to not be set in some
-cases even when appropriate.
-
-Change the code to set error state from counters even without
-M16C_STATE_BUS_ERROR.
-
-The Error-Passive case seems superfluous as it is already set via
-M16C_STATE_BUS_PASSIVE flag above, but it is kept for now.
-
-Tested with 0bfd:0124 Kvaser Mini PCI Express 2xHS FW 4.18.778.
-
-Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
-Tested-by: Jimmy Assarsson <extja@kvaser.com>
-Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/all/20221010185237.319219-6-extja@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: e7300d04bd08 ("MIPS: BCM63xx: Add support for the Broadcom BCM63xx family of SOCs.")
+Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/can/usb/kvaser_usb/kvaser_usb_leaf.c  | 20 ++++++++-----------
- 1 file changed, 8 insertions(+), 12 deletions(-)
+ arch/mips/bcm63xx/clk.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-index 3c3e78992b55..b43631eaccf1 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-@@ -965,20 +965,16 @@ kvaser_usb_leaf_rx_error_update_can_state(struct kvaser_usb_net_priv *priv,
- 		new_state = CAN_STATE_BUS_OFF;
- 	} else if (es->status & M16C_STATE_BUS_PASSIVE) {
- 		new_state = CAN_STATE_ERROR_PASSIVE;
--	} else if (es->status & M16C_STATE_BUS_ERROR) {
-+	} else if ((es->status & M16C_STATE_BUS_ERROR) &&
-+		   cur_state >= CAN_STATE_BUS_OFF) {
- 		/* Guard against spurious error events after a busoff */
--		if (cur_state < CAN_STATE_BUS_OFF) {
--			if (es->txerr >= 128 || es->rxerr >= 128)
--				new_state = CAN_STATE_ERROR_PASSIVE;
--			else if (es->txerr >= 96 || es->rxerr >= 96)
--				new_state = CAN_STATE_ERROR_WARNING;
--			else if (cur_state > CAN_STATE_ERROR_ACTIVE)
--				new_state = CAN_STATE_ERROR_ACTIVE;
--		}
--	}
--
--	if (!es->status)
-+	} else if (es->txerr >= 128 || es->rxerr >= 128) {
-+		new_state = CAN_STATE_ERROR_PASSIVE;
-+	} else if (es->txerr >= 96 || es->rxerr >= 96) {
-+		new_state = CAN_STATE_ERROR_WARNING;
-+	} else {
- 		new_state = CAN_STATE_ERROR_ACTIVE;
-+	}
- 
- 	if (new_state != cur_state) {
- 		tx_state = (es->txerr >= es->rxerr) ? new_state : 0;
+diff --git a/arch/mips/bcm63xx/clk.c b/arch/mips/bcm63xx/clk.c
+index dcfa0ea912fe..f183c45503ce 100644
+--- a/arch/mips/bcm63xx/clk.c
++++ b/arch/mips/bcm63xx/clk.c
+@@ -361,6 +361,8 @@ static struct clk clk_periph = {
+  */
+ int clk_enable(struct clk *clk)
+ {
++	if (!clk)
++		return 0;
+ 	mutex_lock(&clocks_mutex);
+ 	clk_enable_unlocked(clk);
+ 	mutex_unlock(&clocks_mutex);
 -- 
 2.35.1
 
