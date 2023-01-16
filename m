@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60D1C6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:53:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAC19C433D2;
-	Mon, 16 Jan 2023 16:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CF9F6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:53:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85BE3C433D2;
+	Mon, 16 Jan 2023 16:53:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887987;
-	bh=z6zVC8H7rl06ls4N/RSIvoL7rP95KwkMsUACJ1U2rRs=;
+	s=korg; t=1673887989;
+	bh=oiOX472mnnmwJmFbj2f3WMF3509uMFauEYkBPuIU34Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z/LtKsV9w8ZJGtZGFcCkxWoKEMxtApaPbOUScUpRAgVdclETQBDWSywKUmzt0vL75
-	 jDk0NmGDSxSd5KluOR323WtqXfPTmb/mCL3lGdv+wjA0KVUF9BgipbzLVfLYFsRCKR
-	 yuWOi3dg8TPhmrM4NFwSMIyEDjHgOqsA1VI7Y0+k=
+	b=iFt3BlV1Gt15eTVzjo9IbizYBwqQZvYQOMmmTdurzO4ARmKEy9nNxQc0YRtO3IGTi
+	 z9Hwyeu1Ny4D3Rq+KrwLKoyX8cvYCufQciey74Xv/HqCBMP5aRxhfhwGt/qvXiblwY
+	 1DcfmZzdcNXXdX9Q+i5rzTg5sRRsHAZu7pSUPfb4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Gerecke <jason.gerecke@wacom.com>,
-	Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>,
-	Jiri Kosina <jkosina@suse.cz>
-Subject: [PATCH 4.19 356/521] HID: wacom: Ensure bootloader PID is usable in hidraw mode
-Date: Mon, 16 Jan 2023 16:50:18 +0100
-Message-Id: <20230116154903.034629591@linuxfoundation.org>
+	Alexandra Winter <wintera@linux.ibm.com>,
+	Kees Cook <keescook@chromium.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 329/521] s390/netiucv: Fix return type of netiucv_tx()
+Date: Mon, 16 Jan 2023 16:49:51 +0100
+Message-Id: <20230116154901.886597526@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,89 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Gerecke <killertofu@gmail.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-commit 1db1f392591aff13fd643f0ec7c1d5e27391d700 upstream.
+[ Upstream commit 88d86d18d7cf7e9137c95f9d212bb9fff8a1b4be ]
 
-Some Wacom devices have a special "bootloader" mode that is used for
-firmware flashing. When operating in this mode, the device cannot be
-used for input, and the HID descriptor is not able to be processed by
-the driver. The driver generates an "Unknown device_type" warning and
-then returns an error code from wacom_probe(). This is a problem because
-userspace still needs to be able to interact with the device via hidraw
-to perform the firmware flash.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-This commit adds a non-generic device definition for 056a:0094 which
-is used when devices are in "bootloader" mode. It marks the devices
-with a special BOOTLOADER type that is recognized by wacom_probe() and
-wacom_raw_event(). When we see this type we ensure a hidraw device is
-created and otherwise keep our hands off so that userspace is in full
-control.
+  drivers/s390/net/netiucv.c:1854:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .ndo_start_xmit         = netiucv_tx,
+                                    ^~~~~~~~~~
 
-Signed-off-by: Jason Gerecke <jason.gerecke@wacom.com>
-Tested-by: Tatsunosuke Tobita <tatsunosuke.tobita@wacom.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
+'netdev_tx_t', not 'int'. Adjust the return type of netiucv_tx() to
+match the prototype's to resolve the warning and potential CFI failure,
+should s390 select ARCH_SUPPORTS_CFI_CLANG in the future.
+
+Additionally, while in the area, remove a comment block that is no
+longer relevant.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Reviewed-by: Alexandra Winter <wintera@linux.ibm.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/wacom_sys.c |    8 ++++++++
- drivers/hid/wacom_wac.c |    4 ++++
- drivers/hid/wacom_wac.h |    1 +
- 3 files changed, 13 insertions(+)
+ drivers/s390/net/netiucv.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
---- a/drivers/hid/wacom_sys.c
-+++ b/drivers/hid/wacom_sys.c
-@@ -163,6 +163,9 @@ static int wacom_raw_event(struct hid_de
+diff --git a/drivers/s390/net/netiucv.c b/drivers/s390/net/netiucv.c
+index 5ce2424ca729..e2984b54447b 100644
+--- a/drivers/s390/net/netiucv.c
++++ b/drivers/s390/net/netiucv.c
+@@ -1344,15 +1344,8 @@ static int netiucv_pm_restore_thaw(struct device *dev)
+ /**
+  * Start transmission of a packet.
+  * Called from generic network device layer.
+- *
+- * @param skb Pointer to buffer containing the packet.
+- * @param dev Pointer to interface struct.
+- *
+- * @return 0 if packet consumed, !0 if packet rejected.
+- *         Note: If we return !0, then the packet is free'd by
+- *               the generic network layer.
+  */
+-static int netiucv_tx(struct sk_buff *skb, struct net_device *dev)
++static netdev_tx_t netiucv_tx(struct sk_buff *skb, struct net_device *dev)
  {
- 	struct wacom *wacom = hid_get_drvdata(hdev);
- 
-+	if (wacom->wacom_wac.features.type == BOOTLOADER)
-+		return 0;
-+
- 	if (size > WACOM_PKGLEN_MAX)
- 		return 1;
- 
-@@ -2759,6 +2762,11 @@ static int wacom_probe(struct hid_device
- 		goto fail;
- 	}
- 
-+	if (features->type == BOOTLOADER) {
-+		hid_warn(hdev, "Using device in hidraw-only mode");
-+		return hid_hw_start(hdev, HID_CONNECT_HIDRAW);
-+	}
-+
- 	error = wacom_parse_and_register(wacom, false);
- 	if (error)
- 		goto fail;
---- a/drivers/hid/wacom_wac.c
-+++ b/drivers/hid/wacom_wac.c
-@@ -4680,6 +4680,9 @@ static const struct wacom_features wacom
- static const struct wacom_features wacom_features_HID_ANY_ID =
- 	{ "Wacom HID", .type = HID_GENERIC, .oVid = HID_ANY_ID, .oPid = HID_ANY_ID };
- 
-+static const struct wacom_features wacom_features_0x94 =
-+	{ "Wacom Bootloader", .type = BOOTLOADER };
-+
- #define USB_DEVICE_WACOM(prod)						\
- 	HID_DEVICE(BUS_USB, HID_GROUP_WACOM, USB_VENDOR_ID_WACOM, prod),\
- 	.driver_data = (kernel_ulong_t)&wacom_features_##prod
-@@ -4753,6 +4756,7 @@ const struct hid_device_id wacom_ids[] =
- 	{ USB_DEVICE_WACOM(0x84) },
- 	{ USB_DEVICE_WACOM(0x90) },
- 	{ USB_DEVICE_WACOM(0x93) },
-+	{ USB_DEVICE_WACOM(0x94) },
- 	{ USB_DEVICE_WACOM(0x97) },
- 	{ USB_DEVICE_WACOM(0x9A) },
- 	{ USB_DEVICE_WACOM(0x9F) },
---- a/drivers/hid/wacom_wac.h
-+++ b/drivers/hid/wacom_wac.h
-@@ -244,6 +244,7 @@ enum {
- 	MTTPC,
- 	MTTPC_B,
- 	HID_GENERIC,
-+	BOOTLOADER,
- 	MAX_TYPE
- };
- 
+ 	struct netiucv_priv *privptr = netdev_priv(dev);
+ 	int rc;
+-- 
+2.35.1
+
 
 
