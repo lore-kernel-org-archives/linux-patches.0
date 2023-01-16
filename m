@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B6B06FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:39:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 843ECC433EF;
-	Mon, 16 Jan 2023 16:39:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E546FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:39:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F89C433EF;
+	Mon, 16 Jan 2023 16:39:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887166;
-	bh=HUf9MG2SfcBunpcTtBkx/jnbFRtfDyIu7IDdNiW7qcU=;
+	s=korg; t=1673887169;
+	bh=wgwf/sDU0yM5J0MRN/m0LmvTSs78patBROJJZPxjQHc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=19nW3ntge0QTqpLxJdKOE9X+EqEUxyBqAKQyTt6WeoF2IaqXdf8tOTjHscGW171hp
-	 2sYfmDRP6kX0S/tACG53JDrL7tQIHvkz4rSBWF9GK7ZPIMOMYNY1wkvZ0Nfiea8fa4
-	 6SbxlBkwgzdsvsrkoBiJrqUUAXFazl/zBTVzih3c=
+	b=tam59g9X3CgxVUFEzRqZPrGf0IG6oDDSrLfXeZ58rC9L0HdF/lB59aBjXz+kJN0wE
+	 qDohxDfjd8hGPBgUPRqceUdsVMe+t4OrcDVCRJjcyaNjKAbO/H4ab/1IVS27uW71M0
+	 fsBzixxsLfE/S4+aYS7tEAuUmBY6V13205Dhn5hE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 039/521] ARM: dts: turris-omnia: Add switch port 6 node
-Date: Mon, 16 Jan 2023 16:45:01 +0100
-Message-Id: <20230116154849.038884394@linuxfoundation.org>
+Subject: [PATCH 4.19 048/521] perf: Fix possible memleak in pmu_dev_alloc()
+Date: Mon, 16 Jan 2023 16:45:10 +0100
+Message-Id: <20230116154849.401486290@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,44 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit f87db2005f73876602211af0ee156817019b6bda ]
+[ Upstream commit e8d7a90c08ce963c592fb49845f2ccc606a2ac21 ]
 
-Switch port 6 is connected to eth0, so add appropriate device tree node for it.
+In pmu_dev_alloc(), when dev_set_name() failed, it will goto free_dev
+and call put_device(pmu->dev) to release it.
+However pmu->dev->release is assigned after this, which makes warning
+and memleak.
+Call dev_set_name() after pmu->dev->release = pmu_dev_release to fix it.
 
-Fixes: 26ca8b52d6e1 ("ARM: dts: add support for Turris Omnia")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
+  Device '(null)' does not have a release() function...
+  WARNING: CPU: 2 PID: 441 at drivers/base/core.c:2332 device_release+0x1b9/0x240
+  ...
+  Call Trace:
+    <TASK>
+    kobject_put+0x17f/0x460
+    put_device+0x20/0x30
+    pmu_dev_alloc+0x152/0x400
+    perf_pmu_register+0x96b/0xee0
+    ...
+  kmemleak: 1 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
+  unreferenced object 0xffff888014759000 (size 2048):
+    comm "modprobe", pid 441, jiffies 4294931444 (age 38.332s)
+    backtrace:
+      [<0000000005aed3b4>] kmalloc_trace+0x27/0x110
+      [<000000006b38f9b8>] pmu_dev_alloc+0x50/0x400
+      [<00000000735f17be>] perf_pmu_register+0x96b/0xee0
+      [<00000000e38477f1>] 0xffffffffc0ad8603
+      [<000000004e162216>] do_one_initcall+0xd0/0x4e0
+      ...
+
+Fixes: abe43400579d ("perf: Sysfs enumeration")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20221111103653.91058-1-chenzhongjin@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/armada-385-turris-omnia.dts | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ kernel/events/core.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/armada-385-turris-omnia.dts b/arch/arm/boot/dts/armada-385-turris-omnia.dts
-index c0a026ac7be8..320c759b4090 100644
---- a/arch/arm/boot/dts/armada-385-turris-omnia.dts
-+++ b/arch/arm/boot/dts/armada-385-turris-omnia.dts
-@@ -297,7 +297,17 @@ fixed-link {
- 				};
- 			};
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index ba66ea3ca705..668e5492e4c4 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -9682,13 +9682,15 @@ static int pmu_dev_alloc(struct pmu *pmu)
  
--			/* port 6 is connected to eth0 */
-+			ports@6 {
-+				reg = <6>;
-+				label = "cpu";
-+				ethernet = <&eth0>;
-+				phy-mode = "rgmii-id";
+ 	pmu->dev->groups = pmu->attr_groups;
+ 	device_initialize(pmu->dev);
+-	ret = dev_set_name(pmu->dev, "%s", pmu->name);
+-	if (ret)
+-		goto free_dev;
+ 
+ 	dev_set_drvdata(pmu->dev, pmu);
+ 	pmu->dev->bus = &pmu_bus;
+ 	pmu->dev->release = pmu_dev_release;
 +
-+				fixed-link {
-+					speed = <1000>;
-+					full-duplex;
-+				};
-+			};
- 		};
- 	};
- };
++	ret = dev_set_name(pmu->dev, "%s", pmu->name);
++	if (ret)
++		goto free_dev;
++
+ 	ret = device_add(pmu->dev);
+ 	if (ret)
+ 		goto free_dev;
 -- 
 2.35.1
 
