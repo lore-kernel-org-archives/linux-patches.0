@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F32936FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:57:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76DBFC433EF;
-	Mon, 16 Jan 2023 16:57:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9304C6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:57:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18AE2C433D2;
+	Mon, 16 Jan 2023 16:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888226;
-	bh=4j/nzF9SvzFuuKZtji9I66nKz38hSmtwG/YbXkGaau8=;
+	s=korg; t=1673888229;
+	bh=r+ErnnFDSWRKU1HeNnAJMyBzcmsj89HdihPsua9tMK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pj62wELVW9TH/8Ii9xURcfYz6AnfDq1ctEg0nflKGJv6kr+2DXU0EDmlc0OMi7Ztd
-	 PnnxhGyTc6bFeCsPgdbKVoevKtVfyhHm0b2FGP0CZsaWnvI4+CZ9ozaQlBPFJqASJs
-	 yDWfJQCiNdqOsflgNK3qmMSMLHp6hL80w/XCaZXY=
+	b=Z/w1EwvFH5ax5L/AIWYbbXbNc6iSENU1yXjyY0Ricpdyzl4BX/rOI6UK3pyaTcyb0
+	 uROUOiPEYnF3hijVqyiQhZc3z+hv8zJRs8YpdizVZJJHGyVsAJU5ijcZ+CZk2TDjgv
+	 y/sLSTD2C0g6ssDcOZmPD1GY72XTt+3whVKngJcU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maor Gottlieb <maorg@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 448/521] RDMA/mlx5: Fix validation of max_rd_atomic caps for DC
-Date: Mon, 16 Jan 2023 16:51:50 +0100
-Message-Id: <20230116154907.173408198@linuxfoundation.org>
+Subject: [PATCH 4.19 449/521] net: sched: atm: dont intepret cls results when asked to drop
+Date: Mon, 16 Jan 2023 16:51:51 +0100
+Message-Id: <20230116154907.211242816@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,93 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maor Gottlieb <maorg@nvidia.com>
+From: Jamal Hadi Salim <jhs@mojatatu.com>
 
-[ Upstream commit 8de8482fe5732fbef4f5af82bc0c0362c804cd1f ]
+[ Upstream commit a2965c7be0522eaa18808684b7b82b248515511b ]
 
-Currently, when modifying DC, we validate max_rd_atomic user attribute
-against the RC cap, validate against DC. RC and DC QP types have different
-device limitations.
+If asked to drop a packet via TC_ACT_SHOT it is unsafe to assume
+res.class contains a valid pointer
+Fixes: b0188d4dbe5f ("[NET_SCHED]: sch_atm: Lindent")
 
-This can cause userspace created DC QPs to malfunction.
-
-Fixes: c32a4f296e1d ("IB/mlx5: Add support for DC Initiator QP")
-Link: https://lore.kernel.org/r/0c5aee72cea188c3bb770f4207cce7abc9b6fc74.1672231736.git.leonro@nvidia.com
-Signed-off-by: Maor Gottlieb <maorg@nvidia.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/mlx5/qp.c | 49 +++++++++++++++++++++++----------
- 1 file changed, 35 insertions(+), 14 deletions(-)
+ net/sched/sch_atm.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
-index 361b1b859782..1520a3098f7d 100644
---- a/drivers/infiniband/hw/mlx5/qp.c
-+++ b/drivers/infiniband/hw/mlx5/qp.c
-@@ -3411,6 +3411,40 @@ static int mlx5_ib_modify_dct(struct ib_qp *ibqp, struct ib_qp_attr *attr,
- 	return err;
- }
- 
-+static int validate_rd_atomic(struct mlx5_ib_dev *dev, struct ib_qp_attr *attr,
-+			      int attr_mask, enum ib_qp_type qp_type)
-+{
-+	int log_max_ra_res;
-+	int log_max_ra_req;
+diff --git a/net/sched/sch_atm.c b/net/sched/sch_atm.c
+index 9a1bfa13a6cd..ff825f40ea04 100644
+--- a/net/sched/sch_atm.c
++++ b/net/sched/sch_atm.c
+@@ -394,10 +394,13 @@ static int atm_tc_enqueue(struct sk_buff *skb, struct Qdisc *sch,
+ 				result = tcf_classify(skb, fl, &res, true);
+ 				if (result < 0)
+ 					continue;
++				if (result == TC_ACT_SHOT)
++					goto done;
 +
-+	if (qp_type == MLX5_IB_QPT_DCI) {
-+		log_max_ra_res = 1 << MLX5_CAP_GEN(dev->mdev,
-+						   log_max_ra_res_dc);
-+		log_max_ra_req = 1 << MLX5_CAP_GEN(dev->mdev,
-+						   log_max_ra_req_dc);
-+	} else {
-+		log_max_ra_res = 1 << MLX5_CAP_GEN(dev->mdev,
-+						   log_max_ra_res_qp);
-+		log_max_ra_req = 1 << MLX5_CAP_GEN(dev->mdev,
-+						   log_max_ra_req_qp);
-+	}
-+
-+	if (attr_mask & IB_QP_MAX_QP_RD_ATOMIC &&
-+	    attr->max_rd_atomic > log_max_ra_res) {
-+		mlx5_ib_dbg(dev, "invalid max_rd_atomic value %d\n",
-+			    attr->max_rd_atomic);
-+		return false;
-+	}
-+
-+	if (attr_mask & IB_QP_MAX_DEST_RD_ATOMIC &&
-+	    attr->max_dest_rd_atomic > log_max_ra_req) {
-+		mlx5_ib_dbg(dev, "invalid max_dest_rd_atomic value %d\n",
-+			    attr->max_dest_rd_atomic);
-+		return false;
-+	}
-+	return true;
-+}
-+
- int mlx5_ib_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr,
- 		      int attr_mask, struct ib_udata *udata)
- {
-@@ -3508,21 +3542,8 @@ int mlx5_ib_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr,
+ 				flow = (struct atm_flow_data *)res.class;
+ 				if (!flow)
+ 					flow = lookup_flow(sch, res.classid);
+-				goto done;
++				goto drop;
+ 			}
  		}
- 	}
- 
--	if (attr_mask & IB_QP_MAX_QP_RD_ATOMIC &&
--	    attr->max_rd_atomic >
--	    (1 << MLX5_CAP_GEN(dev->mdev, log_max_ra_res_qp))) {
--		mlx5_ib_dbg(dev, "invalid max_rd_atomic value %d\n",
--			    attr->max_rd_atomic);
--		goto out;
--	}
--
--	if (attr_mask & IB_QP_MAX_DEST_RD_ATOMIC &&
--	    attr->max_dest_rd_atomic >
--	    (1 << MLX5_CAP_GEN(dev->mdev, log_max_ra_req_qp))) {
--		mlx5_ib_dbg(dev, "invalid max_dest_rd_atomic value %d\n",
--			    attr->max_dest_rd_atomic);
-+	if (!validate_rd_atomic(dev, attr, attr_mask, qp_type))
- 		goto out;
--	}
- 
- 	if (cur_state == new_state && cur_state == IB_QPS_RESET) {
- 		err = 0;
+ 		flow = NULL;
 -- 
 2.35.1
 
