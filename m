@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7586FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:07:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D48C433D2;
-	Mon, 16 Jan 2023 17:07:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1680E6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:07:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915BBC433F0;
+	Mon, 16 Jan 2023 17:07:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888854;
-	bh=DD+yJVb5KmefJ2CVQEqxwLgx66nytf9z1SrB33GwoAk=;
+	s=korg; t=1673888856;
+	bh=rIhEumZRG5HRZ/YeNEY2VLMWYpEt89+Q9cowJ5ubhMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B5a2hvKYSOgSAzOlsuVTqwhdZXX3RJmMhzEQ2IPj5tS2/2Tbfp3+YcMqPE4HllqA7
-	 hXR2p1mkjeleEzlp2tDwlL+kjhu/DTXvEuufQ3m3pfknwDRpbtrpkYVpcsM/R3G6CP
-	 0z6bLdFeJNFiAsN/QGJO53lYjoR5VC/pD3EpLenQ=
+	b=syEptfOGQsSI3f9NUHuh5ptMk5Fxw96JsuP4rwusmcbbKxiTIUWwlt8k/riiIoRWC
+	 1C3RZi/znGhYJGtotaLWjGG5Ioj0VjDrzMuk20sd/YTPDWhzfgDzMk+R4kqN/Pp8+o
+	 tpA5nipGzO6h0/yeSWEOurWkZVEFEX3ArEbPywJU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiamei Xie <jiamei.xie@arm.com>,
-	Andre Przywara <andre.przywara@arm.com>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 164/338] serial: amba-pl011: avoid SBSA UART accessing DMACR register
-Date: Mon, 16 Jan 2023 16:50:37 +0100
-Message-Id: <20230116154828.032316989@linuxfoundation.org>
+Subject: [PATCH 4.14 165/338] serial: pch: Fix PCI device refcount leak in pch_request_dma()
+Date: Mon, 16 Jan 2023 16:50:38 +0100
+Message-Id: <20230116154828.080065855@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,91 +34,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiamei Xie <jiamei.xie@arm.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 94cdb9f33698478b0e7062586633c42c6158a786 ]
+[ Upstream commit 8be3a7bf773700534a6e8f87f6ed2ed111254be5 ]
 
-Chapter "B Generic UART" in "ARM Server Base System Architecture" [1]
-documentation describes a generic UART interface. Such generic UART
-does not support DMA. In current code, sbsa_uart_pops and
-amba_pl011_pops share the same stop_rx operation, which will invoke
-pl011_dma_rx_stop, leading to an access of the DMACR register. This
-commit adds a using_rx_dma check in pl011_dma_rx_stop to avoid the
-access to DMACR register for SBSA UARTs which does not support DMA.
+As comment of pci_get_slot() says, it returns a pci_device with its
+refcount increased. The caller must decrement the reference count by
+calling pci_dev_put().
 
-When the kernel enables DMA engine with "CONFIG_DMA_ENGINE=y", Linux
-SBSA PL011 driver will access PL011 DMACR register in some functions.
-For most real SBSA Pl011 hardware implementations, the DMACR write
-behaviour will be ignored. So these DMACR operations will not cause
-obvious problems. But for some virtual SBSA PL011 hardware, like Xen
-virtual SBSA PL011 (vpl011) device, the behaviour might be different.
-Xen vpl011 emulation will inject a data abort to guest, when guest is
-accessing an unimplemented UART register. As Xen VPL011 is SBSA
-compatible, it will not implement DMACR register. So when Linux SBSA
-PL011 driver access DMACR register, it will get an unhandled data abort
-fault and the application will get a segmentation fault:
-Unhandled fault at 0xffffffc00944d048
-Mem abort info:
-  ESR = 0x96000000
-  EC = 0x25: DABT (current EL), IL = 32 bits
-  SET = 0, FnV = 0
-  EA = 0, S1PTW = 0
-  FSC = 0x00: ttbr address size fault
-Data abort info:
-  ISV = 0, ISS = 0x00000000
-  CM = 0, WnR = 0
-swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000020e2e000
-[ffffffc00944d048] pgd=100000003ffff803, p4d=100000003ffff803, pud=100000003ffff803, pmd=100000003fffa803, pte=006800009c090f13
-Internal error: ttbr address size fault: 96000000 [#1] PREEMPT SMP
-...
-Call trace:
- pl011_stop_rx+0x70/0x80
- tty_port_shutdown+0x7c/0xb4
- tty_port_close+0x60/0xcc
- uart_close+0x34/0x8c
- tty_release+0x144/0x4c0
- __fput+0x78/0x220
- ____fput+0x1c/0x30
- task_work_run+0x88/0xc0
- do_notify_resume+0x8d0/0x123c
- el0_svc+0xa8/0xc0
- el0t_64_sync_handler+0xa4/0x130
- el0t_64_sync+0x1a0/0x1a4
-Code: b9000083 b901f001 794038a0 8b000042 (b9000041)
----[ end trace 83dd93df15c3216f ]---
-note: bootlogd[132] exited with preempt_count 1
-/etc/rcS.d/S07bootlogd: line 47: 132 Segmentation fault start-stop-daemon
+Since 'dma_dev' is only used to filter the channel in filter(), we can
+call pci_dev_put() before exiting from pch_request_dma(). Add the
+missing pci_dev_put() for the normal and error path.
 
-This has been discussed in the Xen community, and we think it should fix
-this in Linux. See [2] for more information.
-
-[1] https://developer.arm.com/documentation/den0094/c/?lang=en
-[2] https://lists.xenproject.org/archives/html/xen-devel/2022-11/msg00543.html
-
-Fixes: 0dd1e247fd39 (drivers: PL011: add support for the ARM SBSA generic UART)
-Signed-off-by: Jiamei Xie <jiamei.xie@arm.com>
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Link: https://lore.kernel.org/r/20221117103237.86856-1-jiamei.xie@arm.com
+Fixes: 3c6a483275f4 ("Serial: EG20T: add PCH_UART driver")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Link: https://lore.kernel.org/r/20221122114559.27692-1-wangxiongfeng2@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/amba-pl011.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/tty/serial/pch_uart.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
-index a9aa8cd7f29c..10c7a0bc1698 100644
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -1066,6 +1066,9 @@ static void pl011_dma_rx_callback(void *data)
-  */
- static inline void pl011_dma_rx_stop(struct uart_amba_port *uap)
- {
-+	if (!uap->using_rx_dma)
-+		return;
+diff --git a/drivers/tty/serial/pch_uart.c b/drivers/tty/serial/pch_uart.c
+index 15ddcbd1f9d2..472cbd851188 100644
+--- a/drivers/tty/serial/pch_uart.c
++++ b/drivers/tty/serial/pch_uart.c
+@@ -748,6 +748,7 @@ static void pch_request_dma(struct uart_port *port)
+ 	if (!chan) {
+ 		dev_err(priv->port.dev, "%s:dma_request_channel FAILS(Tx)\n",
+ 			__func__);
++		pci_dev_put(dma_dev);
+ 		return;
+ 	}
+ 	priv->chan_tx = chan;
+@@ -764,6 +765,7 @@ static void pch_request_dma(struct uart_port *port)
+ 			__func__);
+ 		dma_release_channel(priv->chan_tx);
+ 		priv->chan_tx = NULL;
++		pci_dev_put(dma_dev);
+ 		return;
+ 	}
+ 
+@@ -771,6 +773,8 @@ static void pch_request_dma(struct uart_port *port)
+ 	priv->rx_buf_virt = dma_alloc_coherent(port->dev, port->fifosize,
+ 				    &priv->rx_buf_dma, GFP_KERNEL);
+ 	priv->chan_rx = chan;
 +
- 	/* FIXME.  Just disable the DMA enable */
- 	uap->dmacr &= ~UART011_RXDMAE;
- 	pl011_write(uap->dmacr, uap, REG_DMACR);
++	pci_dev_put(dma_dev);
+ }
+ 
+ static void pch_dma_rx_complete(void *arg)
 -- 
 2.35.1
 
