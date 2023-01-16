@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A7416FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:09:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5EB5C433D2;
-	Mon, 16 Jan 2023 17:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 696326FA3
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:09:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E14EBC433EF;
+	Mon, 16 Jan 2023 17:09:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888972;
-	bh=Csv9egRb+sP1m7GZtFMYX5iu2nakUFwIoFRAamIdUBQ=;
+	s=korg; t=1673888977;
+	bh=Ht7cdwsRPXgReCjo2UQWPUSgcd/eywq+EhO/wnh12+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z/LL5ZatjcE3/o+jn8ykOavna8HY4lM4T9MfaUWN+LVtIbb/dYYo0YdTMoLkd9kl8
-	 8mic40bz5pOOJ20xekDWzbzvwlawSxQN/QM2nzKn3vdmx0nTMdl13CR+vqKy1NjURC
-	 +pLIrCk8m5oQU0CQs1rl4UEnxflSgAK/pe/eWE3s=
+	b=pLLKcyEJqorHaQVZX4WXIrzQ9uY3qS6gUtZlWqyuczV1FLiNQ9l9TvJ35TaeqAbu2
+	 cpUllZKagMBA5AHqKHE1oWAfFdCjn+KS1USPrp6XpDAVgPFqxAKlQTOCTERRzSQ6ek
+	 P+SDBtXUkTpNupRh933MCnSQv2o/NgsRHRTuJ5Gc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 208/338] nfc: pn533: Clear nfc_target before being used
-Date: Mon, 16 Jan 2023 16:51:21 +0100
-Message-Id: <20230116154830.065256119@linuxfoundation.org>
+Subject: [PATCH 4.14 181/338] fbdev: ssd1307fb: Drop optional dependency
+Date: Mon, 16 Jan 2023 16:50:54 +0100
+Message-Id: <20230116154828.808461122@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,71 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 9f28157778ede0d4f183f7ab3b46995bb400abbe ]
+[ Upstream commit 025e3b507a3a8e1ee96a3112bb67495c77d6cdb6 ]
 
-Fix a slab-out-of-bounds read that occurs in nla_put() called from
-nfc_genl_send_target() when target->sensb_res_len, which is duplicated
-from an nfc_target in pn533, is too large as the nfc_target is not
-properly initialized and retains garbage values. Clear nfc_targets with
-memset() before they are used.
+Only a single out of three devices need a PWM, so from driver it's
+optional. Moreover it's a single driver in the entire kernel that
+currently selects PWM. Unfortunately this selection is a root cause
+of the circular dependencies when we want to enable optional PWM
+for some other drivers that select GPIOLIB.
 
-Found by a modified version of syzkaller.
-
-BUG: KASAN: slab-out-of-bounds in nla_put
-Call Trace:
- memcpy
- nla_put
- nfc_genl_dump_targets
- genl_lock_dumpit
- netlink_dump
- __netlink_dump_start
- genl_family_rcv_msg_dumpit
- genl_rcv_msg
- netlink_rcv_skb
- genl_rcv
- netlink_unicast
- netlink_sendmsg
- sock_sendmsg
- ____sys_sendmsg
- ___sys_sendmsg
- __sys_sendmsg
- do_syscall_64
-
-Fixes: 673088fb42d0 ("NFC: pn533: Send ATR_REQ directly for active device detection")
-Fixes: 361f3cb7f9cf ("NFC: DEP link hook implementation for pn533")
-Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20221214015139.119673-1-linuxlovemin@yonsei.ac.kr
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: a2ed00da5047 ("drivers/video: add support for the Solomon SSD1307 OLED Controller")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/pn533/pn533.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/video/fbdev/Kconfig | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/nfc/pn533/pn533.c b/drivers/nfc/pn533/pn533.c
-index 52a1a2cae6c7..1d14f5a28266 100644
---- a/drivers/nfc/pn533/pn533.c
-+++ b/drivers/nfc/pn533/pn533.c
-@@ -1305,6 +1305,8 @@ static int pn533_poll_dep_complete(struct pn533 *dev, void *arg,
- 	if (IS_ERR(resp))
- 		return PTR_ERR(resp);
- 
-+	memset(&nfc_target, 0, sizeof(struct nfc_target));
-+
- 	rsp = (struct pn533_cmd_jump_dep_response *)resp->data;
- 
- 	rc = rsp->status & PN533_CMD_RET_MASK;
-@@ -1786,6 +1788,8 @@ static int pn533_in_dep_link_up_complete(struct pn533 *dev, void *arg,
- 
- 		dev_dbg(dev->dev, "Creating new target\n");
- 
-+		memset(&nfc_target, 0, sizeof(struct nfc_target));
-+
- 		nfc_target.supported_protocols = NFC_PROTO_NFC_DEP_MASK;
- 		nfc_target.nfcid1_len = 10;
- 		memcpy(nfc_target.nfcid1, rsp->nfcid3t, nfc_target.nfcid1_len);
+diff --git a/drivers/video/fbdev/Kconfig b/drivers/video/fbdev/Kconfig
+index d00588d9b025..a7e8db955ef6 100644
+--- a/drivers/video/fbdev/Kconfig
++++ b/drivers/video/fbdev/Kconfig
+@@ -2477,7 +2477,6 @@ config FB_SSD1307
+ 	select FB_SYS_COPYAREA
+ 	select FB_SYS_IMAGEBLIT
+ 	select FB_DEFERRED_IO
+-	select PWM
+ 	select FB_BACKLIGHT
+ 	help
+ 	  This driver implements support for the Solomon SSD1307
 -- 
 2.35.1
 
