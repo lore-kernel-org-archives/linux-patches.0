@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC8816FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:12:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72C33C433EF;
-	Mon, 16 Jan 2023 17:12:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C4C6FA3
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:12:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B872C433F0;
+	Mon, 16 Jan 2023 17:12:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889163;
-	bh=JusvWpjWxCAj1UyScJG29hqDYgolKv8PEcvu+z9S7DU=;
+	s=korg; t=1673889166;
+	bh=sDwQr0Wn1l01rcLgMrwtjowdjVfEvBNikKRTBJ+29/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rz3bnz3KmQ2DNzzM5QEhHLccO7u+ohX2RH1Tu309m3ycWqIRfrrLNFK0xed0Mucb9
-	 /pHSxccXsNKVEnq5h4Fks9ORzlljAGkw9P+qJ0cbEjZCHkd4IV4M4H12fVkv3rpGq8
-	 wARDYaQMCTR6NStxf2XHUHIyYjfBbvqeqZdymDjE=
+	b=QjVgUxCvvGfM3c8wZlKV4dBlrzPWgp+XS0nG0tqreV3Lmv6aqvGv1s/xD0cQon98Z
+	 rHcLa349Lpl9S3757rtjrbIa0py4AUyptYH5d7ly8+xP4Wd4vRKvUitYXl2eWKe1Wy
+	 Q++vazf7Mcbjh5Fcy6548zJImM7bBQHHKiiK92P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	kernel test robot <lkp@intel.com>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH 4.14 275/338] ARM: ux500: do not directly dereference __iomem
-Date: Mon, 16 Jan 2023 16:52:28 +0100
-Message-Id: <20230116154833.068094683@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Subject: [PATCH 4.14 284/338] ARM: 9256/1: NWFPE: avoid compiler-generated __aeabi_uldivmod
+Date: Mon, 16 Jan 2023 16:52:37 +0100
+Message-Id: <20230116154833.459641638@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,54 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Nick Desaulniers <ndesaulniers@google.com>
 
-commit 65b0e307a1a9193571db12910f382f84195a3d29 upstream.
+commit 3220022038b9a3845eea762af85f1c5694b9f861 upstream.
 
-Sparse reports that calling add_device_randomness() on `uid` is a
-violation of address spaces. And indeed the next usage uses readl()
-properly, but that was left out when passing it toadd_device_
-randomness(). So instead copy the whole thing to the stack first.
+clang-15's ability to elide loops completely became more aggressive when
+it can deduce how a variable is being updated in a loop. Counting down
+one variable by an increment of another can be replaced by a modulo
+operation.
 
-Fixes: 4040d10a3d44 ("ARM: ux500: add DB serial number to entropy pool")
-Cc: Linus Walleij <linus.walleij@linaro.org>
+For 64b variables on 32b ARM EABI targets, this can result in the
+compiler generating calls to __aeabi_uldivmod, which it does for a do
+while loop in float64_rem().
+
+For the kernel, we'd generally prefer that developers not open code 64b
+division via binary / operators and instead use the more explicit
+helpers from div64.h. On arm-linux-gnuabi targets, failure to do so can
+result in linkage failures due to undefined references to
+__aeabi_uldivmod().
+
+While developers can avoid open coding divisions on 64b variables, the
+compiler doesn't know that the Linux kernel has a partial implementation
+of a compiler runtime (--rtlib) to enforce this convention.
+
+It's also undecidable for the compiler whether the code in question
+would be faster to execute the loop vs elide it and do the 64b division.
+
+While I actively avoid using the internal -mllvm command line flags, I
+think we get better code than using barrier() here, which will force
+reloads+spills in the loop for all toolchains.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1666
+
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/202210230819.loF90KDh-lkp@intel.com/
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Link: https://lore.kernel.org/r/20221108123755.207438-1-Jason@zx2c4.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/ux500/ux500-soc-id.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ arch/arm/nwfpe/Makefile |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/soc/ux500/ux500-soc-id.c
-+++ b/drivers/soc/ux500/ux500-soc-id.c
-@@ -159,20 +159,18 @@ static ssize_t ux500_get_process(struct
- static const char *db8500_read_soc_id(struct device_node *backupram)
- {
- 	void __iomem *base;
--	void __iomem *uid;
- 	const char *retstr;
-+	u32 uid[5];
+--- a/arch/arm/nwfpe/Makefile
++++ b/arch/arm/nwfpe/Makefile
+@@ -11,3 +11,9 @@ nwfpe-y				+= fpa11.o fpa11_cpdo.o fpa11
+ 				   entry.o
  
- 	base = of_iomap(backupram, 0);
- 	if (!base)
- 		return NULL;
--	uid = base + 0x1fc0;
-+	memcpy_fromio(uid, base + 0x1fc0, sizeof(uid));
- 
- 	/* Throw these device-specific numbers into the entropy pool */
--	add_device_randomness(uid, 0x14);
-+	add_device_randomness(uid, sizeof(uid));
- 	retstr = kasprintf(GFP_KERNEL, "%08x%08x%08x%08x%08x",
--			 readl((u32 *)uid+0),
--			 readl((u32 *)uid+1), readl((u32 *)uid+2),
--			 readl((u32 *)uid+3), readl((u32 *)uid+4));
-+			   uid[0], uid[1], uid[2], uid[3], uid[4]);
- 	iounmap(base);
- 	return retstr;
- }
+ nwfpe-$(CONFIG_FPE_NWFPE_XP)	+= extended_cpdo.o
++
++# Try really hard to avoid generating calls to __aeabi_uldivmod() from
++# float64_rem() due to loop elision.
++ifdef CONFIG_CC_IS_CLANG
++CFLAGS_softfloat.o	+= -mllvm -replexitval=never
++endif
 
 
