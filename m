@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC9B33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3579C433EF;
-	Mon, 16 Jan 2023 15:57:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0917733EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80C39C433EF;
+	Mon, 16 Jan 2023 15:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884673;
-	bh=4UBk/jSKwW/pvyDqEF6pjBkVlfZgG2x+acbux2dtkTw=;
+	s=korg; t=1673884675;
+	bh=/tp09Mprw1lIGcAX+snDZSpQYhuyWsel8eUaqvMOAwg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SQlZgj73ZXza0sadc9ttnBNgV5MI4YVtyZb4whx641XBNCOiZefJFp2Yoq11Jb64k
-	 s7JGjHSxHkq0gM7K1J68hrQH+qFklUzJsCC1wf4hnkMSWAEBQUdHFmFN53GqGHLVqr
-	 wKmc3D/snz6fGCNKiHlDfXNFssbhsdsVrT9dfFko=
+	b=OgRFQHvtUpabj/ciYaBC5/Jj3e0218Xbfu6zA8ccvmc3ov4jLckP/siMxyQB4lDvP
+	 mKMuFpTejIBJdgetqLUZip5MM8SaHN39hiKQPQexP+iLOOHiUHY7j/zdOQjAOs+L/l
+	 GwfuxWcD1cVnRZB7ohC5qBQyIhOBq0DLcbu8IODM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,11 +19,10 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Peter Newman <peternewman@google.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Reinette Chatre <reinette.chatre@intel.com>,
-	Babu Moger <babu.moger@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 6.1 095/183] x86/resctrl: Fix task CLOSID/RMID update race
-Date: Mon, 16 Jan 2023 16:50:18 +0100
-Message-Id: <20230116154807.418281760@linuxfoundation.org>
+	Babu Moger <babu.moger@amd.com>
+Subject: [PATCH 6.1 096/183] x86/resctrl: Fix event counts regression in reused RMIDs
+Date: Mon, 16 Jan 2023 16:50:19 +0100
+Message-Id: <20230116154807.457630188@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -39,107 +38,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Newman <peternewman@google.com>
 
-commit fe1f0714385fbcf76b0cbceb02b7277d842014fc upstream.
+commit 2a81160d29d65b5876ab3f824fda99ae0219f05e upstream.
 
-When the user moves a running task to a new rdtgroup using the task's
-file interface or by deleting its rdtgroup, the resulting change in
-CLOSID/RMID must be immediately propagated to the PQR_ASSOC MSR on the
-task(s) CPUs.
+When creating a new monitoring group, the RMID allocated for it may have
+been used by a group which was previously removed. In this case, the
+hardware counters will have non-zero values which should be deducted
+from what is reported in the new group's counts.
 
-x86 allows reordering loads with prior stores, so if the task starts
-running between a task_curr() check that the CPU hoisted before the
-stores in the CLOSID/RMID update then it can start running with the old
-CLOSID/RMID until it is switched again because __rdtgroup_move_task()
-failed to determine that it needs to be interrupted to obtain the new
-CLOSID/RMID.
+resctrl_arch_reset_rmid() initializes the prev_msr value for counters to
+0, causing the initial count to be charged to the new group. Resurrect
+__rmid_read() and use it to initialize prev_msr correctly.
 
-Refer to the diagram below:
+Unlike before, __rmid_read() checks for error bits in the MSR read so
+that callers don't need to.
 
-CPU 0                                   CPU 1
------                                   -----
-__rdtgroup_move_task():
-  curr <- t1->cpu->rq->curr
-                                        __schedule():
-                                          rq->curr <- t1
-                                        resctrl_sched_in():
-                                          t1->{closid,rmid} -> {1,1}
-  t1->{closid,rmid} <- {2,2}
-  if (curr == t1) // false
-   IPI(t1->cpu)
-
-A similar race impacts rdt_move_group_tasks(), which updates tasks in a
-deleted rdtgroup.
-
-In both cases, use smp_mb() to order the task_struct::{closid,rmid}
-stores before the loads in task_curr().  In particular, in the
-rdt_move_group_tasks() case, simply execute an smp_mb() on every
-iteration with a matching task.
-
-It is possible to use a single smp_mb() in rdt_move_group_tasks(), but
-this would require two passes and a means of remembering which
-task_structs were updated in the first loop. However, benchmarking
-results below showed too little performance impact in the simple
-approach to justify implementing the two-pass approach.
-
-Times below were collected using `perf stat` to measure the time to
-remove a group containing a 1600-task, parallel workload.
-
-CPU: Intel(R) Xeon(R) Platinum P-8136 CPU @ 2.00GHz (112 threads)
-
-  # mkdir /sys/fs/resctrl/test
-  # echo $$ > /sys/fs/resctrl/test/tasks
-  # perf bench sched messaging -g 40 -l 100000
-
-task-clock time ranges collected using:
-
-  # perf stat rmdir /sys/fs/resctrl/test
-
-Baseline:                     1.54 - 1.60 ms
-smp_mb() every matching task: 1.57 - 1.67 ms
-
-  [ bp: Massage commit message. ]
-
-Fixes: ae28d1aae48a ("x86/resctrl: Use an IPI instead of task_work_add() to update PQR_ASSOC MSR")
-Fixes: 0efc89be9471 ("x86/intel_rdt: Update task closid immediately on CPU in rmdir and unmount")
+Fixes: 1d81d15db39c ("x86/resctrl: Move mbm_overflow_count() into resctrl_arch_rmid_read()")
 Signed-off-by: Peter Newman <peternewman@google.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
 Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Babu Moger <babu.moger@amd.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20221220161123.432120-1-peternewman@google.com
+Tested-by: Babu Moger <babu.moger@amd.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20221220164132.443083-1-peternewman@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/cpu/resctrl/rdtgroup.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/resctrl/monitor.c | 49 ++++++++++++++++++---------
+ 1 file changed, 33 insertions(+), 16 deletions(-)
 
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -580,8 +580,10 @@ static int __rdtgroup_move_task(struct t
- 	/*
- 	 * Ensure the task's closid and rmid are written before determining if
- 	 * the task is current that will decide if it will be interrupted.
-+	 * This pairs with the full barrier between the rq->curr update and
-+	 * resctrl_sched_in() during context switch.
- 	 */
--	barrier();
-+	smp_mb();
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index efe0c30d3a12..77538abeb72a 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -146,6 +146,30 @@ static inline struct rmid_entry *__rmid_entry(u32 rmid)
+ 	return entry;
+ }
  
- 	/*
- 	 * By now, the task's closid and rmid are set. If the task is current
-@@ -2402,6 +2404,14 @@ static void rdt_move_group_tasks(struct
- 			WRITE_ONCE(t->rmid, to->mon.rmid);
- 
- 			/*
-+			 * Order the closid/rmid stores above before the loads
-+			 * in task_curr(). This pairs with the full barrier
-+			 * between the rq->curr update and resctrl_sched_in()
-+			 * during context switch.
-+			 */
-+			smp_mb();
++static int __rmid_read(u32 rmid, enum resctrl_event_id eventid, u64 *val)
++{
++	u64 msr_val;
 +
-+			/*
- 			 * If the task is on a CPU, set the CPU in the mask.
- 			 * The detection is inaccurate as tasks might move or
- 			 * schedule before the smp function call takes place.
++	/*
++	 * As per the SDM, when IA32_QM_EVTSEL.EvtID (bits 7:0) is configured
++	 * with a valid event code for supported resource type and the bits
++	 * IA32_QM_EVTSEL.RMID (bits 41:32) are configured with valid RMID,
++	 * IA32_QM_CTR.data (bits 61:0) reports the monitored data.
++	 * IA32_QM_CTR.Error (bit 63) and IA32_QM_CTR.Unavailable (bit 62)
++	 * are error bits.
++	 */
++	wrmsr(MSR_IA32_QM_EVTSEL, eventid, rmid);
++	rdmsrl(MSR_IA32_QM_CTR, msr_val);
++
++	if (msr_val & RMID_VAL_ERROR)
++		return -EIO;
++	if (msr_val & RMID_VAL_UNAVAIL)
++		return -EINVAL;
++
++	*val = msr_val;
++	return 0;
++}
++
+ static struct arch_mbm_state *get_arch_mbm_state(struct rdt_hw_domain *hw_dom,
+ 						 u32 rmid,
+ 						 enum resctrl_event_id eventid)
+@@ -172,8 +196,12 @@ void resctrl_arch_reset_rmid(struct rdt_resource *r, struct rdt_domain *d,
+ 	struct arch_mbm_state *am;
+ 
+ 	am = get_arch_mbm_state(hw_dom, rmid, eventid);
+-	if (am)
++	if (am) {
+ 		memset(am, 0, sizeof(*am));
++
++		/* Record any initial, non-zero count value. */
++		__rmid_read(rmid, eventid, &am->prev_msr);
++	}
+ }
+ 
+ static u64 mbm_overflow_count(u64 prev_msr, u64 cur_msr, unsigned int width)
+@@ -191,25 +219,14 @@ int resctrl_arch_rmid_read(struct rdt_resource *r, struct rdt_domain *d,
+ 	struct rdt_hw_domain *hw_dom = resctrl_to_arch_dom(d);
+ 	struct arch_mbm_state *am;
+ 	u64 msr_val, chunks;
++	int ret;
+ 
+ 	if (!cpumask_test_cpu(smp_processor_id(), &d->cpu_mask))
+ 		return -EINVAL;
+ 
+-	/*
+-	 * As per the SDM, when IA32_QM_EVTSEL.EvtID (bits 7:0) is configured
+-	 * with a valid event code for supported resource type and the bits
+-	 * IA32_QM_EVTSEL.RMID (bits 41:32) are configured with valid RMID,
+-	 * IA32_QM_CTR.data (bits 61:0) reports the monitored data.
+-	 * IA32_QM_CTR.Error (bit 63) and IA32_QM_CTR.Unavailable (bit 62)
+-	 * are error bits.
+-	 */
+-	wrmsr(MSR_IA32_QM_EVTSEL, eventid, rmid);
+-	rdmsrl(MSR_IA32_QM_CTR, msr_val);
+-
+-	if (msr_val & RMID_VAL_ERROR)
+-		return -EIO;
+-	if (msr_val & RMID_VAL_UNAVAIL)
+-		return -EINVAL;
++	ret = __rmid_read(rmid, eventid, &msr_val);
++	if (ret)
++		return ret;
+ 
+ 	am = get_arch_mbm_state(hw_dom, rmid, eventid);
+ 	if (am) {
+-- 
+2.39.0
+
 
 
