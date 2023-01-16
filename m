@@ -1,35 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28AA646B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:27:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79964C433D2;
-	Mon, 16 Jan 2023 16:27:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B98846B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:27:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5888C433EF;
+	Mon, 16 Jan 2023 16:27:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886467;
-	bh=zp5V+hBPDE1ddKmb/PSiM2t6XqB8A6P5AfH003LQ1jA=;
+	s=korg; t=1673886472;
+	bh=yQgQV6EQzj5Zc6dCTZCcvKiZmNReBtsja3RbuktkojA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IkDscaHJvDEv4JT9+Prra7NFFVFJdIUH2umOoWQ8K8FFKANHM+EE4NtStrZ1ny/nd
-	 Z69dw+bZz+qOBi6pO0WwVmvC4vImhtULbr7ftcd8cFNUHq9b9EAtulY2/GP+HCnIJx
-	 p2F6YSYfH1y4PPVhcgDjcn8DXrtC4fum55+IIPgs=
+	b=xC995JcMFaCC9DDWe5kfE5GzyYHVjilqK2OT3huYSpwufXRu3JCr5w7zzlLoCp+wC
+	 xa0yN41PzIXNeI6FBtyJYBbxojcomR6Um1wWoN+xIn5q347tcErQUVJJABbRge35kn
+	 Q5jUjEx0VJI/EBmjX/sE4a7bUtPKuF10IZaOgnjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Wang <wvw@google.com>,
-	Midas Chien <midaschieh@google.com>,
-	Connor OBrien <connoro@google.com>,
-	Kees Cook <keescook@chromium.org>,
-	Anton Vorontsov <anton@enomsg.org>,
-	Colin Cross <ccross@android.com>,
-	Tony Luck <tony.luck@intel.com>,
-	kernel test robot <lkp@intel.com>,
-	kernel-team@android.com,
-	John Stultz <jstultz@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 441/658] pstore: Make sure CONFIG_PSTORE_PMSG selects CONFIG_RT_MUTEXES
-Date: Mon, 16 Jan 2023 16:48:49 +0100
-Message-Id: <20230116154929.706776420@linuxfoundation.org>
+	Edward Pacman <edward@edward-p.xyz>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 442/658] ALSA: hda/realtek: Add quirk for Lenovo TianYi510Pro-14IOB
+Date: Mon, 16 Jan 2023 16:48:50 +0100
+Message-Id: <20230116154929.740928446@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -43,53 +34,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Stultz <jstultz@google.com>
+From: Edward Pacman <edward@edward-p.xyz>
 
-[ Upstream commit 2f4fec5943407318b9523f01ce1f5d668c028332 ]
+commit 4bf5bf54476dffe60e6b6d8d539f67309ff599e2 upstream.
 
-In commit 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex
-to avoid priority inversion") I changed a lock to an rt_mutex.
+Lenovo TianYi510Pro-14IOB (17aa:3742)
+require quirk for enabling headset-mic
 
-However, its possible that CONFIG_RT_MUTEXES is not enabled,
-which then results in a build failure, as the 0day bot detected:
-  https://lore.kernel.org/linux-mm/202212211244.TwzWZD3H-lkp@intel.com/
-
-Thus this patch changes CONFIG_PSTORE_PMSG to select
-CONFIG_RT_MUTEXES, which ensures the build will not fail.
-
-Cc: Wei Wang <wvw@google.com>
-Cc: Midas Chien<midaschieh@google.com>
-Cc: Connor O'Brien <connoro@google.com>
-Cc: Kees Cook <keescook@chromium.org>
-Cc: Anton Vorontsov <anton@enomsg.org>
-Cc: Colin Cross <ccross@android.com>
-Cc: Tony Luck <tony.luck@intel.com>
-Cc: kernel test robot <lkp@intel.com>
-Cc: kernel-team@android.com
-Fixes: 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex to avoid priority inversion")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: John Stultz <jstultz@google.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221221051855.15761-1-jstultz@google.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Edward Pacman <edward@edward-p.xyz>
+Cc: <stable@vger.kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216756
+Link: https://lore.kernel.org/r/20221207133218.18989-1-edward@edward-p.xyz
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/pstore/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/patch_realtek.c |   27 +++++++++++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
-diff --git a/fs/pstore/Kconfig b/fs/pstore/Kconfig
-index 8f0369aad22a..9fe46cc26403 100644
---- a/fs/pstore/Kconfig
-+++ b/fs/pstore/Kconfig
-@@ -118,6 +118,7 @@ config PSTORE_CONSOLE
- config PSTORE_PMSG
- 	bool "Log user space messages"
- 	depends on PSTORE
-+	select RT_MUTEXES
- 	help
- 	  When the option is enabled, pstore will export a character
- 	  interface /dev/pmsg0 to log user space messages. On reboot
--- 
-2.35.1
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9777,6 +9777,17 @@ static void alc897_fixup_lenovo_headset_
+ 	}
+ }
+ 
++static void alc897_fixup_lenovo_headset_mode(struct hda_codec *codec,
++				     const struct hda_fixup *fix, int action)
++{
++	struct alc_spec *spec = codec->spec;
++
++	if (action == HDA_FIXUP_ACT_PRE_PROBE) {
++		spec->parse_flags |= HDA_PINCFG_HEADSET_MIC;
++		spec->gen.hp_automute_hook = alc897_hp_automute_hook;
++	}
++}
++
+ static const struct coef_fw alc668_coefs[] = {
+ 	WRITE_COEF(0x01, 0xbebe), WRITE_COEF(0x02, 0xaaaa), WRITE_COEF(0x03,    0x0),
+ 	WRITE_COEF(0x04, 0x0180), WRITE_COEF(0x06,    0x0), WRITE_COEF(0x07, 0x0f80),
+@@ -9860,6 +9871,8 @@ enum {
+ 	ALC897_FIXUP_LENOVO_HEADSET_MIC,
+ 	ALC897_FIXUP_HEADSET_MIC_PIN,
+ 	ALC897_FIXUP_HP_HSMIC_VERB,
++	ALC897_FIXUP_LENOVO_HEADSET_MODE,
++	ALC897_FIXUP_HEADSET_MIC_PIN2,
+ };
+ 
+ static const struct hda_fixup alc662_fixups[] = {
+@@ -10286,6 +10299,19 @@ static const struct hda_fixup alc662_fix
+ 			{ }
+ 		},
+ 	},
++	[ALC897_FIXUP_LENOVO_HEADSET_MODE] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc897_fixup_lenovo_headset_mode,
++	},
++	[ALC897_FIXUP_HEADSET_MIC_PIN2] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x1a, 0x01a11140 }, /* use as headset mic, without its own jack detect */
++			{ }
++		},
++		.chained = true,
++		.chain_id = ALC897_FIXUP_LENOVO_HEADSET_MODE
++	},
+ };
+ 
+ static const struct snd_pci_quirk alc662_fixup_tbl[] = {
+@@ -10338,6 +10364,7 @@ static const struct snd_pci_quirk alc662
+ 	SND_PCI_QUIRK(0x17aa, 0x32cb, "Lenovo ThinkCentre M70", ALC897_FIXUP_HEADSET_MIC_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x32cf, "Lenovo ThinkCentre M950", ALC897_FIXUP_HEADSET_MIC_PIN),
+ 	SND_PCI_QUIRK(0x17aa, 0x32f7, "Lenovo ThinkCentre M90", ALC897_FIXUP_HEADSET_MIC_PIN),
++	SND_PCI_QUIRK(0x17aa, 0x3742, "Lenovo TianYi510Pro-14IOB", ALC897_FIXUP_HEADSET_MIC_PIN2),
+ 	SND_PCI_QUIRK(0x17aa, 0x38af, "Lenovo Ideapad Y550P", ALC662_FIXUP_IDEAPAD),
+ 	SND_PCI_QUIRK(0x17aa, 0x3a0d, "Lenovo Ideapad Y550", ALC662_FIXUP_IDEAPAD),
+ 	SND_PCI_QUIRK(0x1849, 0x5892, "ASRock B150M", ALC892_FIXUP_ASROCK_MOBO),
 
 
