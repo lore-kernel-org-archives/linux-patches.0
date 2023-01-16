@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9182B6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:45:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1039EC433EF;
-	Mon, 16 Jan 2023 16:44:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE8D6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:45:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24FFC433D2;
+	Mon, 16 Jan 2023 16:45:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887500;
-	bh=z95TO89fnLiKLWmb1SFZ5etzvgdvBsEsKBgmJa9QzQo=;
+	s=korg; t=1673887503;
+	bh=F3Ua4Ip+qKPouhiKHR6MWxGPlSxfA+3/XWzm4kbCyUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y58Lb0YFmBj5SkqucySPvBwCtxdTtEsmghY09HGHDIVFxv5XXtOBS0SI3ZiFeAxFJ
-	 BU8NEDX7kLs/RTDiuZ1QcqP30+sKrkL35yJRLpLrnazDZFG72mQVs+03VthmwvJlJM
-	 HSWuIGDxyUOCtnzF9cWljPgKtV6CL2iKVwIAzjOQ=
+	b=rdqlzkR6mtMTJ2Wwj3y+8mTy5aHb4BtBt6mUewKkYCD8/sBVr0PhArJNMkmbGDbyr
+	 m07XiIVeiendSUmnJmKmKMfUM2JEIwW5vGyVGrQvZ1+HByP2MK3cOwcU8qg0Vyjufu
+	 x58Z2CDht2bMiMIkYDkzZXaykHZNdyYXbV3RPgdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 132/521] media: saa7164: fix missing pci_disable_device()
-Date: Mon, 16 Jan 2023 16:46:34 +0100
-Message-Id: <20230116154853.161832006@linuxfoundation.org>
+Subject: [PATCH 4.19 166/521] net: ethernet: dnet: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Mon, 16 Jan 2023 16:47:08 +0100
+Message-Id: <20230116154854.566342880@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,43 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 57fb35d7542384cac8f198cd1c927540ad38b61a ]
+[ Upstream commit f07fadcbee2a5e84caa67c7c445424200bffb60b ]
 
-Add missing pci_disable_device() in the error path in saa7164_initdev().
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-Fixes: 443c1228d505 ("V4L/DVB (12923): SAA7164: Add support for the NXP SAA7164 silicon")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+In this case, the lock is used to protected 'bp', so we can move
+dev_kfree_skb() after the spin_unlock_irqrestore().
+
+Fixes: 4796417417a6 ("dnet: Dave DNET ethernet controller driver (updated)")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/saa7164/saa7164-core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/dnet.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/pci/saa7164/saa7164-core.c b/drivers/media/pci/saa7164/saa7164-core.c
-index 5102519df108..dba9071e8507 100644
---- a/drivers/media/pci/saa7164/saa7164-core.c
-+++ b/drivers/media/pci/saa7164/saa7164-core.c
-@@ -1237,7 +1237,7 @@ static int saa7164_initdev(struct pci_dev *pci_dev,
+diff --git a/drivers/net/ethernet/dnet.c b/drivers/net/ethernet/dnet.c
+index 5a847941c46b..f7d126a2617e 100644
+--- a/drivers/net/ethernet/dnet.c
++++ b/drivers/net/ethernet/dnet.c
+@@ -558,11 +558,11 @@ static netdev_tx_t dnet_start_xmit(struct sk_buff *skb, struct net_device *dev)
  
- 	if (saa7164_dev_setup(dev) < 0) {
- 		err = -EINVAL;
--		goto fail_free;
-+		goto fail_dev;
- 	}
+ 	skb_tx_timestamp(skb);
  
- 	/* print pci info */
-@@ -1405,6 +1405,8 @@ static int saa7164_initdev(struct pci_dev *pci_dev,
++	spin_unlock_irqrestore(&bp->lock, flags);
++
+ 	/* free the buffer */
+ 	dev_kfree_skb(skb);
  
- fail_irq:
- 	saa7164_dev_unregister(dev);
-+fail_dev:
-+	pci_disable_device(pci_dev);
- fail_free:
- 	v4l2_device_unregister(&dev->v4l2_dev);
- 	kfree(dev);
+-	spin_unlock_irqrestore(&bp->lock, flags);
+-
+ 	return NETDEV_TX_OK;
+ }
+ 
 -- 
 2.35.1
 
