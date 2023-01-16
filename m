@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC786FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:52:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAB17C433EF;
-	Mon, 16 Jan 2023 16:52:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF5606FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:52:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 772C7C433F0;
+	Mon, 16 Jan 2023 16:52:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887953;
-	bh=ciWqltye9673vZ2TCbjkc6ke2FXihzxbx3SbSDO+ijM=;
+	s=korg; t=1673887955;
+	bh=YC6NFdZApVFnmBvGmfZ6TnSpwxagnpr1gmbJh/ixmlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G9blwcAZU/mTJKpHDnOpQsHKR9RseBsdetCt3rAw8o5MrzDaj5gCK2HwkXJnL6Tuq
-	 DqQmExXHHAPz0y2t/7g70zwONf1ipBuNvaMdWL3ByseAyOXgPo1TqPNd+YIqK09FKb
-	 Dq5H6oWCFi5otvO0m9vln9v6BvyZ6gjoHa1sgPJE=
+	b=IzTE4HRrgT10HPgdldbzY0hbf5GsY4IFXvg75FPAskixybqGt4ZGAP9bcYF7sCUoV
+	 CmotfR48xLq89lHgRc73osIufCVd3hDZHox79DKuqGKUgR3RrstHiemg8tWTc5A9ia
+	 bxR6vbKbJ7PoYTtXqZOuav/M7mosT3ZGFb92g+Wc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sami Tolvanen <samitolvanen@google.com>,
-	Kees Cook <keescook@chromium.org>,
 	Nathan Chancellor <nathan@kernel.org>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 327/521] drm/amdgpu: Fix type of second parameter in trans_msg() callback
-Date: Mon, 16 Jan 2023 16:49:49 +0100
-Message-Id: <20230116154901.792808854@linuxfoundation.org>
+Subject: [PATCH 4.19 345/521] drm/sti: Fix return type of sti_{dvo,hda,hdmi}_connector_mode_valid()
+Date: Mon, 16 Jan 2023 16:50:07 +0100
+Message-Id: <20230116154902.589430980@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -39,7 +37,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit f0d0f1087333714ee683cc134a95afe331d7ddd9 ]
+[ Upstream commit 0ad811cc08a937d875cbad0149c1bab17f84ba05 ]
 
 With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
 indirect call targets are validated against the expected function
@@ -49,52 +47,81 @@ which manifests as either a kernel panic or thread getting killed. A
 proposed warning in clang aims to catch these at compile time, which
 reveals:
 
-  drivers/gpu/drm/amd/amdgpu/mxgpu_ai.c:412:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
-          .trans_msg = xgpu_ai_mailbox_trans_msg,
-                      ^~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+  drivers/gpu/drm/sti/sti_hda.c:637:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = sti_hda_connector_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/gpu/drm/sti/sti_dvo.c:376:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = sti_dvo_connector_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/gpu/drm/sti/sti_hdmi.c:1035:16: error: incompatible function pointer types initializing 'enum drm_mode_status (*)(struct drm_connector *, struct drm_display_mode *)' with an expression of type 'int (struct drm_connector *, struct drm_display_mode *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .mode_valid = sti_hdmi_connector_mode_valid,
+                        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  drivers/gpu/drm/amd/amdgpu/mxgpu_nv.c:435:15: error: incompatible function pointer types initializing 'void (*)(struct amdgpu_device *, u32, u32, u32, u32)' (aka 'void (*)(struct amdgpu_device *, unsigned int, unsigned int, unsigned int, unsigned int)') with an expression of type 'void (struct amdgpu_device *, enum idh_request, u32, u32, u32)' (aka 'void (struct amdgpu_device *, enum idh_request, unsigned int, unsigned int, unsigned int)') [-Werror,-Wincompatible-function-pointer-types-strict]
-          .trans_msg = xgpu_nv_mailbox_trans_msg,
-                      ^~~~~~~~~~~~~~~~~~~~~~~~~
-  1 error generated.
-
-The type of the second parameter in the prototype should be 'enum
-idh_request' instead of 'u32'. Update it to clear up the warnings.
+->mode_valid() in 'struct drm_connector_helper_funcs' expects a return
+type of 'enum drm_mode_status', not 'int'. Adjust the return type of
+sti_{dvo,hda,hdmi}_connector_mode_valid() to match the prototype's to
+resolve the warning and CFI failure.
 
 Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Reported-by: Sami Tolvanen <samitolvanen@google.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221102155623.3042869-1-nathan@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/sti/sti_dvo.c  | 5 +++--
+ drivers/gpu/drm/sti/sti_hda.c  | 5 +++--
+ drivers/gpu/drm/sti/sti_hdmi.c | 5 +++--
+ 3 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-index 880ac113a3a9..d26b6e36be02 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_virt.h
-@@ -48,6 +48,8 @@ struct amdgpu_vf_error_buffer {
- 	uint64_t data[AMDGPU_VF_ERROR_ENTRY_SIZE];
- };
+diff --git a/drivers/gpu/drm/sti/sti_dvo.c b/drivers/gpu/drm/sti/sti_dvo.c
+index a3f01721c552..794ac057a55c 100644
+--- a/drivers/gpu/drm/sti/sti_dvo.c
++++ b/drivers/gpu/drm/sti/sti_dvo.c
+@@ -346,8 +346,9 @@ static int sti_dvo_connector_get_modes(struct drm_connector *connector)
  
-+enum idh_request;
-+
- /**
-  * struct amdgpu_virt_ops - amdgpu device virt operations
-  */
-@@ -56,7 +58,8 @@ struct amdgpu_virt_ops {
- 	int (*rel_full_gpu)(struct amdgpu_device *adev, bool init);
- 	int (*reset_gpu)(struct amdgpu_device *adev);
- 	int (*wait_reset)(struct amdgpu_device *adev);
--	void (*trans_msg)(struct amdgpu_device *adev, u32 req, u32 data1, u32 data2, u32 data3);
-+	void (*trans_msg)(struct amdgpu_device *adev, enum idh_request req,
-+			  u32 data1, u32 data2, u32 data3);
- };
+ #define CLK_TOLERANCE_HZ 50
  
- /*
+-static int sti_dvo_connector_mode_valid(struct drm_connector *connector,
+-					struct drm_display_mode *mode)
++static enum drm_mode_status
++sti_dvo_connector_mode_valid(struct drm_connector *connector,
++			     struct drm_display_mode *mode)
+ {
+ 	int target = mode->clock * 1000;
+ 	int target_min = target - CLK_TOLERANCE_HZ;
+diff --git a/drivers/gpu/drm/sti/sti_hda.c b/drivers/gpu/drm/sti/sti_hda.c
+index 33c9efa06f68..cf5b6dbe86b0 100644
+--- a/drivers/gpu/drm/sti/sti_hda.c
++++ b/drivers/gpu/drm/sti/sti_hda.c
+@@ -596,8 +596,9 @@ static int sti_hda_connector_get_modes(struct drm_connector *connector)
+ 
+ #define CLK_TOLERANCE_HZ 50
+ 
+-static int sti_hda_connector_mode_valid(struct drm_connector *connector,
+-					struct drm_display_mode *mode)
++static enum drm_mode_status
++sti_hda_connector_mode_valid(struct drm_connector *connector,
++			     struct drm_display_mode *mode)
+ {
+ 	int target = mode->clock * 1000;
+ 	int target_min = target - CLK_TOLERANCE_HZ;
+diff --git a/drivers/gpu/drm/sti/sti_hdmi.c b/drivers/gpu/drm/sti/sti_hdmi.c
+index 3acf044ba366..c4bc09c9d0b5 100644
+--- a/drivers/gpu/drm/sti/sti_hdmi.c
++++ b/drivers/gpu/drm/sti/sti_hdmi.c
+@@ -989,8 +989,9 @@ static int sti_hdmi_connector_get_modes(struct drm_connector *connector)
+ 
+ #define CLK_TOLERANCE_HZ 50
+ 
+-static int sti_hdmi_connector_mode_valid(struct drm_connector *connector,
+-					struct drm_display_mode *mode)
++static enum drm_mode_status
++sti_hdmi_connector_mode_valid(struct drm_connector *connector,
++			      struct drm_display_mode *mode)
+ {
+ 	int target = mode->clock * 1000;
+ 	int target_min = target - CLK_TOLERANCE_HZ;
 -- 
 2.35.1
 
