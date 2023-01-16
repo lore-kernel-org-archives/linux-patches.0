@@ -1,101 +1,163 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F2546B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 18:58:48 +0000 (UTC)
-Received: by mail-pl1-f169.google.com with SMTP id jn22so31166147plb.13
-        for <patches@lists.linux.dev>; Mon, 16 Jan 2023 10:58:48 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EBB6FB7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 20:20:28 +0000 (UTC)
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-15027746720so29922944fac.13
+        for <patches@lists.linux.dev>; Mon, 16 Jan 2023 12:20:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=wMdqQ9WKyEOKQ2nD0q5t9awURcXqCIpB7f7QhoNXh7w=;
-        b=eQxeSlNM8DqlBq2Qx+xzIvO2vXE7sRUAOMnZYL6y9wLHQZ6+3Yt18SkihJVUvYI5hi
-         MONR+Q6Qzo3J2UnVq8YuNZHQkD0H29AwFYbpuuPAPy1j0eSHsdBLiBgnJHKrB4k1SEaV
-         lh4A7l2hwvngf7P2f0Guw5zK91C14nUH5W4DICYKX6IRnQioOKXuuAxQbnImj7cFosgx
-         0bJw87uQhEYEBkeNsbqvsA9As7SPgCHJjYCiVs04Z3i8wfltTN9+Oe9gVh1QtWqQ5cfe
-         htglaIAJa6OlYqo/6b7sXhtRogyD1d9sHFUxUXQQQnU4B8ca8OJq/rEdIaWqN8sUdOIc
-         A7NQ==
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=TBcBFSvQ61KEQ9osa73Zd/UiEV+spUyz2jdoUMqe1u8=;
+        b=Df+S4tG/5cGMPqVzzgKkulDAGVRlKwyrKHWBW99UffceEu0DThZBJfmBPhkMP36bIt
+         ladj895+3rfVRCUVNOBu4QJwRUnlwftLWPCTo9tkfE+RAQ1bXeLlVa6D1rMLTVkaZozp
+         McX+OCHgITdwym2ebFQAP3SqxulH5b8USSDhb0/sCkblPJkq6mHfCb2jCP3loXv1ZMhp
+         BrY9w9r5KEeXjE6UEKYA7+0aF1xL0qgjmNeSSuEkBm4ct1knjzDGgwLf3RdzCT8wwK4Z
+         sHUPFVty5cIHE9gGmdr6tElmgcvDlnic1Gw2clSCw7j/QxAFviEKxNnmX2MOVLjZtqNI
+         lanw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=wMdqQ9WKyEOKQ2nD0q5t9awURcXqCIpB7f7QhoNXh7w=;
-        b=sEqNd2PkS4iiCBl5Coy7ahgGBzjp8ja6YB6Nj6OavF3QorpezixPrRj7w+dymwKqfF
-         tOFEarmUOV1MhJxIuXAmxWkg2kYBSror4pNK3RwWyg3woQ827wx44YiOKRk8Yb7UMK/s
-         2Kt6Y9z4xG3Dp8IYi3MUYg9+XUIyNoKrlGEbdd3kP4vr8mtpou83mHkV3jmSPwoZfd8F
-         S0kv3kHSYhS22F29yU7tnhmd4tR3GTX+434rSvOwXzfHPbTtR3cTyd91dngcwkmfJMt/
-         aiPN2cILV6clVIVpgwXR70XrSrtFVutMkHwYCHNalZvPGuTp5u3UDlAX2S5ElPG6wm59
-         X2zw==
-X-Gm-Message-State: AFqh2kq01I2Qbh/ekA54NAW4Ss+ji2A1kEQk88UoSNjc7q04EWSbhlX8
-	krSo+qkE8+AwBWasISKiv2QWDrr/wV1KP5NlXZudjw==
-X-Google-Smtp-Source: AMrXdXvgQkJvZx20Qrm73O1WBO9QQPkNVWCNRY+MTHZzXqBOArJ7mPlGB32zLAUDQ/LLu4EgwsOEmrr1jY0zaGg48Ew=
-X-Received: by 2002:a17:902:cf0e:b0:189:7441:1ada with SMTP id
- i14-20020a170902cf0e00b0018974411adamr70720plg.13.1673895527893; Mon, 16 Jan
- 2023 10:58:47 -0800 (PST)
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=TBcBFSvQ61KEQ9osa73Zd/UiEV+spUyz2jdoUMqe1u8=;
+        b=yJyazFScP1QJy1KQGrqUAvOJeAKV4x2WnNJnQsoCSBGJBFdvSTU7buyiGsks7wu54h
+         rrLUkSCY4SyqEPZt2QCYxzRpOTHk0+MzvFLuzax4tYhpWnvQQsDwDDLhl/H4zEAEdgY2
+         kJ7nUbeNSZkJd4R0tMJTChXXRck6tHLhPiaiwoEcGWPa8IifXpJtettNOeC6VTNs95IO
+         UCV0E0oredzJS3ecfN8TR/h9G+mY5zdlcwUegpF0Pipkdf71BxypmCd5JoJD8nck38gT
+         ruz5TUCTMphExImMydjTpuKrPJFRVKG+hKfez34GF2vouxdGMStQLVxYF6vin1AitjTA
+         sGRQ==
+X-Gm-Message-State: AFqh2krdgm29GiyZAxbwuCRlUja+Sq3fz2M/H8uu0Ak7q4rLBWEGJ45Q
+	DPQV+ev+2Wv/NjS3L5CyFYU=
+X-Google-Smtp-Source: AMrXdXvr+VZT7oEqXphPaCHajtlq7hKyQuVMckunl+TTGkLZSXdSj14PKUaKL5YyBAinkSVkS+WiwQ==
+X-Received: by 2002:a05:6871:480b:b0:15e:cd80:8dfa with SMTP id qc11-20020a056871480b00b0015ecd808dfamr604193oab.17.1673900427581;
+        Mon, 16 Jan 2023 12:20:27 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id ep41-20020a056870a9a900b001446a45bb49sm15049548oab.23.2023.01.16.12.20.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Jan 2023 12:20:26 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Mon, 16 Jan 2023 12:20:25 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.4 000/658] 5.4.229-rc1 review
+Message-ID: <20230116202025.GA3397667@roeck-us.net>
+References: <20230116154909.645460653@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230116154743.577276578@linuxfoundation.org>
-In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
-From: =?UTF-8?B?RGFuaWVsIETDrWF6?= <daniel.diaz@linaro.org>
-Date: Mon, 16 Jan 2023 12:58:35 -0600
-Message-ID: <CAEUSe786JgSDJOtCU_tB81ddYxJk_sSfgzM33r7iFccsU7O5QA@mail.gmail.com>
-Subject: Re: [PATCH 5.10 00/64] 5.10.164-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 
-Hello!
-
-On Mon, 16 Jan 2023 at 10:06, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.10.164 release.
-> There are 64 patches in this series, all will be posted as a response
+On Mon, Jan 16, 2023 at 04:41:28PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.229 release.
+> There are 658 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Wed, 18 Jan 2023 15:47:28 +0000.
 > Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.10.164-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.10.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+> 
 
-Preliminarily,
+Note: Exactly the same failures are seen in v4.19.269-522-gc75d2b5524ab,
+so I won't bother sending test results for that branch.
 
-| /builds/linux/drivers/gpu/drm/msm/dp/dp_aux.c: In function 'dp_aux_isr':
-| /builds/linux/drivers/gpu/drm/msm/dp/dp_aux.c:427:14: error: 'isr'
-undeclared (first use in this function); did you mean 'idr'?
-|   427 |         if (!isr)
-|       |              ^~~
-|       |              idr
+---
 
-It's currently failing for arm, arm64, (not i386) and x86, with GCC 8,
-10, 11, 12; Clang 15 and nightly. We'll test the extended set of
-architectures and update momentarily.
+Build results:
+	total: 159 pass: 153 fail: 6
+Failed builds:
+	i386:tools/perf
+	riscv:defconfig
+	s390:allnoconfig
+	s390:tinyconfig
+	um:defconfig
+	x86_64:tools/perf
+Qemu test results:
+	total: 449 pass: 413 fail: 36
+Failed tests:
+	<all ppc64:pseries>
+	<all riscv>
 
-Greetings!
+Details follow.
 
-Daniel D=C3=ADaz
-daniel.diaz@linaro.org
+Guenter
+
+========
+
+Building i386:tools/perf ... failed
+Building x86_64:tools/perf ... failed
+--------------
+Error log:
+util/debug.c: In function ‘perf_quiet_option’:
+util/debug.c:237:2: error: ‘debug_peo_args’ undeclared
+
+Building riscv:defconfig ... failed
+--------------
+Error log:
+arch/riscv/kernel/stacktrace.c: In function 'walk_stackframe':
+arch/riscv/kernel/stacktrace.c:58:36: error: 'struct pt_regs' has no member named 'epc'
+
+Building s390:allnoconfig ... failed
+Building s390:tinyconfig ... failed
+--------------
+Error log:
+s390-linux-ld: drivers/base/platform.o: in function `devm_platform_get_and_ioremap_resource':
+platform.c:(.text+0x594): undefined reference to `devm_ioremap_resource'
+s390-linux-ld: platform.c:(.text+0x5c2): undefined reference to `devm_ioremap_resource'
+
+Building um:defconfig ... failed
+--------------
+Error log:
+ld: drivers/base/platform.o: in function `devm_platform_get_and_ioremap_resource':
+drivers/base/platform.c:82: undefined reference to `devm_ioremap_resource'
+
+Runtime:
+
+Building ppc64:pseries:pseries_defconfig:smp2:net,pcnet:initrd ... running ......R... failed (crashed)
+
+BUG: Kernel NULL pointer dereference at 0x00000000
+Faulting instruction address: 0xc000000000046cc8
+Oops: Kernel access of bad area, sig: 11 [#1]
+BE SMP NR_CPUS=2048 NUMA pSeries
+Modules linked in:
+CPU: 1 PID: 1 Comm: swapper/0 Not tainted 4.19.270-rc1-00522-gc75d2b5524ab #1
+NIP:  c000000000046cc8 LR: c000000000046ca4 CTR: 0000000000000000
+REGS: c00000003e6878f0 TRAP: 0380   Not tainted  (4.19.270-rc1-00522-gc75d2b5524ab)
+MSR:  8000000002009032 <SF,VEC,EE,ME,IR,DR,RI>  CR: 84000882  XER: 00000000
+CFAR: c000000000162cf8 IRQMASK: 0
+GPR00: c000000000046ca4 c00000003e687b70 c000000001772000 0000000000000000
+GPR04: 0000000000000001 0000000000000001 c00000003e687990 00000000bc24d52c
+GPR08: 0000000000000000 0000000000000000 0000000000000000 0000000000000003
+GPR12: 0000000024000882 c00000003ffff300 c000000000010e34 0000000000000000
+GPR16: 0000000000000000 0000000000000000 0000000000000000 0000000000000000
+GPR20: 0000000000000000 0000000000000000 c00000000125eea8 0000000000000001
+GPR24: c000000001379cd8 c000000001419f20 c0000000017b7d68 c0000000017b7d68
+GPR28: 0000000000000000 0000000000000002 c00000000160efe8 c00000000168ac60
+NIP [c000000000046cc8] .eeh_init+0x48/0x220
+LR [c000000000046ca4] .eeh_init+0x24/0x220
+Call Trace:
+[c00000003e687b70] [c000000000046ca4] .eeh_init+0x24/0x220 (unreliable)
+[c00000003e687c00] [c00000000001065c] .do_one_initcall+0x7c/0x430
+[c00000003e687ce0] [c000000001394db4] .kernel_init_freeable+0x538/0x62c
+[c00000003e687dc0] [c000000000010e4c] .kernel_init+0x18/0x14c
+[c00000003e687e30] [c00000000000c0d0] .ret_from_kernel_thread+0x58/0x68
+Instruction dump:
+3c62ffd7 38631c10 4811c021 60000000 2c030000 408201c8 3d22000b e92904e0
+2c290000 41820198 f8410028 e9290008 <e9490000> 7d4903a6 e8490008 4e800421
+---[ end trace 8912d02d3e80c4ae ]---
+
+riscv64 images fail to compile (see above)
