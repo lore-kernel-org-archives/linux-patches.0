@@ -1,31 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 941AC6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:39:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185A0C433D2;
-	Mon, 16 Jan 2023 16:39:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2396FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:39:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7434C433EF;
+	Mon, 16 Jan 2023 16:39:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887148;
-	bh=7cJ7N27bnqqPfBAXpBceW1w8azTVBVnOgWjAmX5Gp3c=;
+	s=korg; t=1673887151;
+	bh=8zJ5pzlA+oZpw8XVqbTiysT/8NFeQ4SvSyLDjZ9Q0MA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=H1BQ7nlKELm4sgpxJatBZeUDNYhChvBvqB/NcALJ76pTwCRR/UdmmWl0o9YOaWaUg
-	 wpdqET9vUDzXNAAxDDhEq1CQzW4sn5/DYoBemABsEfC4CFArmWyubVfGWGEvSe6196
-	 c1yt65kDG0PZI993dViq46vtyFjYBDzVixFIsPtU=
+	b=k+ZdeJ0XnhHaqMhg7roi7wwxRSbdKtfnEBsHUZ5DbNoBtELLrQ+Zj2CvOLcm7rXeC
+	 1SetT+xyQzo3SBw+O8frX7J9WeAV+rQECBgNtABPZWvfESfr9wvosMN9o9Ep2sWTCF
+	 HjNop3t/qX+Ih69lsgQUqu5vL+EyaniP7IQ4aWLw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tony Jones <tonyj@suse.de>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Ravi Bangoria <ravi.bangoria@linux.ibm.com>,
-	Seeteena Thoufeek <s1seetee@linux.vnet.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Christophe Leroy <christophe.leroy@csgroup.eu>
-Subject: [PATCH 4.19 010/521] perf script python: Remove explicit shebang from tests/attr.c
-Date: Mon, 16 Jan 2023 16:44:32 +0100
-Message-Id: <20230116154847.726450702@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 4.19 011/521] udf: Discard preallocation before extending file with a hole
+Date: Mon, 16 Jan 2023 16:44:33 +0100
+Message-Id: <20230116154847.776199701@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -39,35 +33,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tony Jones <tonyj@suse.de>
+From: Jan Kara <jack@suse.cz>
 
-commit d72eadbc1d2866fc047edd4535ffb0298fe240be upstream.
+commit 16d0556568148bdcaa45d077cac9f8f7077cf70a upstream.
 
-tests/attr.c invokes attr.py via an explicit invocation of Python
-($PYTHON) so there is therefore no need for an explicit shebang.
+When extending file with a hole, we tried to preserve existing
+preallocation for the file. However that is not very useful and
+complicates code because the previous extent may need to be rounded to
+block boundary as well (which we forgot to do thus causing data
+corruption for sequence like:
 
-Also most distros follow pep-0394 which recommends that /usr/bin/python
-refer only to v2 and so may not exist on the system (if PYTHON=python3).
+xfs_io -f -c "pwrite 0x75e63 11008" -c "truncate 0x7b24b" \
+  -c "truncate 0xabaa3" -c "pwrite 0xac70b 22954" \
+  -c "pwrite 0x93a43 11358" -c "pwrite 0xb8e65 52211" file
 
-Signed-off-by: Tony Jones <tonyj@suse.de>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Ravi Bangoria <ravi.bangoria@linux.ibm.com>
-Cc: Seeteena Thoufeek <s1seetee@linux.vnet.ibm.com>
-Link: http://lkml.kernel.org/r/20190124005229.16146-5-tonyj@suse.de
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+with 512-byte block size. Just discard preallocation before extending
+file to simplify things and also fix this data corruption.
+
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/tests/attr.py |    1 -
- 1 file changed, 1 deletion(-)
+ fs/udf/inode.c |   46 ++++++++++++++++++----------------------------
+ 1 file changed, 18 insertions(+), 28 deletions(-)
 
---- a/tools/perf/tests/attr.py
-+++ b/tools/perf/tests/attr.py
-@@ -1,4 +1,3 @@
--#! /usr/bin/python
- # SPDX-License-Identifier: GPL-2.0
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -434,6 +434,12 @@ static int udf_get_block(struct inode *i
+ 		iinfo->i_next_alloc_goal++;
+ 	}
  
- import os
++	/*
++	 * Block beyond EOF and prealloc extents? Just discard preallocation
++	 * as it is not useful and complicates things.
++	 */
++	if (((loff_t)block) << inode->i_blkbits > iinfo->i_lenExtents)
++		udf_discard_prealloc(inode);
+ 	udf_clear_extent_cache(inode);
+ 	phys = inode_getblk(inode, block, &err, &new);
+ 	if (!phys)
+@@ -483,8 +489,6 @@ static int udf_do_extend_file(struct ino
+ 	uint32_t add;
+ 	int count = 0, fake = !(last_ext->extLength & UDF_EXTENT_LENGTH_MASK);
+ 	struct super_block *sb = inode->i_sb;
+-	struct kernel_lb_addr prealloc_loc = {};
+-	uint32_t prealloc_len = 0;
+ 	struct udf_inode_info *iinfo;
+ 	int err;
+ 
+@@ -505,19 +509,6 @@ static int udf_do_extend_file(struct ino
+ 			~(sb->s_blocksize - 1);
+ 	}
+ 
+-	/* Last extent are just preallocated blocks? */
+-	if ((last_ext->extLength & UDF_EXTENT_FLAG_MASK) ==
+-						EXT_NOT_RECORDED_ALLOCATED) {
+-		/* Save the extent so that we can reattach it to the end */
+-		prealloc_loc = last_ext->extLocation;
+-		prealloc_len = last_ext->extLength;
+-		/* Mark the extent as a hole */
+-		last_ext->extLength = EXT_NOT_RECORDED_NOT_ALLOCATED |
+-			(last_ext->extLength & UDF_EXTENT_LENGTH_MASK);
+-		last_ext->extLocation.logicalBlockNum = 0;
+-		last_ext->extLocation.partitionReferenceNum = 0;
+-	}
+-
+ 	/* Can we merge with the previous extent? */
+ 	if ((last_ext->extLength & UDF_EXTENT_FLAG_MASK) ==
+ 					EXT_NOT_RECORDED_NOT_ALLOCATED) {
+@@ -545,7 +536,7 @@ static int udf_do_extend_file(struct ino
+ 		 * more extents, we may need to enter possible following
+ 		 * empty indirect extent.
+ 		 */
+-		if (new_block_bytes || prealloc_len)
++		if (new_block_bytes)
+ 			udf_next_aext(inode, last_pos, &tmploc, &tmplen, 0);
+ 	}
+ 
+@@ -579,17 +570,6 @@ static int udf_do_extend_file(struct ino
+ 	}
+ 
+ out:
+-	/* Do we have some preallocated blocks saved? */
+-	if (prealloc_len) {
+-		err = udf_add_aext(inode, last_pos, &prealloc_loc,
+-				   prealloc_len, 1);
+-		if (err)
+-			return err;
+-		last_ext->extLocation = prealloc_loc;
+-		last_ext->extLength = prealloc_len;
+-		count++;
+-	}
+-
+ 	/* last_pos should point to the last written extent... */
+ 	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
+ 		last_pos->offset -= sizeof(struct short_ad);
+@@ -642,8 +622,17 @@ static int udf_extend_file(struct inode
+ 	else
+ 		BUG();
+ 
++	/*
++	 * When creating hole in file, just don't bother with preserving
++	 * preallocation. It likely won't be very useful anyway.
++	 */
++	udf_discard_prealloc(inode);
++
+ 	etype = inode_bmap(inode, first_block, &epos, &eloc, &elen, &offset);
+ 	within_final_block = (etype != -1);
++	/* We don't expect extents past EOF... */
++	WARN_ON_ONCE(etype != -1 &&
++		     elen > ((loff_t)offset + 1) << inode->i_blkbits);
+ 
+ 	if ((!epos.bh && epos.offset == udf_file_entry_alloc_offset(inode)) ||
+ 	    (epos.bh && epos.offset == sizeof(struct allocExtDesc))) {
+@@ -772,10 +761,11 @@ static sector_t inode_getblk(struct inod
+ 		goto out_free;
+ 	}
+ 
+-	/* Are we beyond EOF? */
++	/* Are we beyond EOF and preallocated extent? */
+ 	if (etype == -1) {
+ 		int ret;
+ 		loff_t hole_len;
++
+ 		isBeyondEOF = true;
+ 		if (count) {
+ 			if (c)
 
 
