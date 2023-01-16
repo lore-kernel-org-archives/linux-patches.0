@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3E2D33F0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:20:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48306C433F0;
-	Mon, 16 Jan 2023 16:20:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620CA33F0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:20:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC832C433D2;
+	Mon, 16 Jan 2023 16:20:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886048;
-	bh=2Zo+bBtdZclqYSFwqiLR/jw1NEbIAl0yKj+T5NTkel4=;
+	s=korg; t=1673886051;
+	bh=SYgF3rKzZyzmEk2atQfWeHtkER+qJ2fXSg8mfd4dOeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PNSw2JJO8MWSc4GqD3LIeSMNqL+NeQ0M4r5nkNq4W86tfLhloKKJQSwYfP0MH4uoR
-	 Qeefgz66MytlLu9wRjRc2iPlVRDWmgktAxIjH2IwuI7bVr5X1NGdVI+XTj0LVhOhov
-	 ejmRuDXmyWg/IXXJA3q8ZU8kXe+VOdPKkkfYCKXw=
+	b=1zGzOj5f/XHYr33d/gND2HlvgEceDkq3T1LqQPW5+JeMQm7XNif4PYrfGwDas+7NP
+	 zxpKknxMhqswNxWojX02bcHbc7pSUMTyWD1ORgDLj1t3BoIGB63SihiV3X7TyQxDVk
+	 oHUbdJ7w9fnJwCy4dj2w5HEVBrsItbFMC4RKmjsE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 281/658] usb: fotg210-udc: Fix ages old endianness issues
-Date: Mon, 16 Jan 2023 16:46:09 +0100
-Message-Id: <20230116154922.448504450@linuxfoundation.org>
+Subject: [PATCH 5.4 254/658] crypto: ccree - Make cc_debugfs_global_fini() available for module init function
+Date: Mon, 16 Jan 2023 16:45:42 +0100
+Message-Id: <20230116154921.182570533@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,69 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Walleij <linus.walleij@linaro.org>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 46ed6026ca2181c917c8334a82e3eaf40a6234dd ]
+[ Upstream commit 8e96729fc26c8967db45a3fb7a60387619f77a22 ]
 
-The code in the FOTG210 driver isn't entirely endianness-agnostic
-as reported by the kernel robot sparse testing. This came to
-the surface while moving the files around.
+ccree_init() calls cc_debugfs_global_fini(), the former is an init
+function and the latter an exit function though.
 
-The driver is only used on little-endian systems, so this causes
-no real-world regression, but it is nice to be strict and have
-some compile coverage also on big endian machines, so fix it
-up with the right LE accessors.
+A modular build emits:
 
-Fixes: b84a8dee23fd ("usb: gadget: add Faraday fotg210_udc driver")
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/linux-usb/202211110910.0dJ7nZCn-lkp@intel.com/
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Link: https://lore.kernel.org/r/20221111090317.94228-1-linus.walleij@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+	WARNING: modpost: drivers/crypto/ccree/ccree.o: section mismatch in reference: init_module (section: .init.text) -> cc_debugfs_global_fini (section: .exit.text)
+
+(with CONFIG_DEBUG_SECTION_MISMATCH=y).
+
+Fixes: 4f1c596df706 ("crypto: ccree - Remove debugfs when platform_driver_register failed")
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/udc/fotg210-udc.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/crypto/ccree/cc_debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/udc/fotg210-udc.c b/drivers/usb/gadget/udc/fotg210-udc.c
-index c313d07ec16f..30389e966e42 100644
---- a/drivers/usb/gadget/udc/fotg210-udc.c
-+++ b/drivers/usb/gadget/udc/fotg210-udc.c
-@@ -629,10 +629,10 @@ static void fotg210_request_error(struct fotg210_udc *fotg210)
- static void fotg210_set_address(struct fotg210_udc *fotg210,
- 				struct usb_ctrlrequest *ctrl)
- {
--	if (ctrl->wValue >= 0x0100) {
-+	if (le16_to_cpu(ctrl->wValue) >= 0x0100) {
- 		fotg210_request_error(fotg210);
- 	} else {
--		fotg210_set_dev_addr(fotg210, ctrl->wValue);
-+		fotg210_set_dev_addr(fotg210, le16_to_cpu(ctrl->wValue));
- 		fotg210_set_cxdone(fotg210);
- 	}
+diff --git a/drivers/crypto/ccree/cc_debugfs.c b/drivers/crypto/ccree/cc_debugfs.c
+index 566999738698..47077dd77f5d 100644
+--- a/drivers/crypto/ccree/cc_debugfs.c
++++ b/drivers/crypto/ccree/cc_debugfs.c
+@@ -59,7 +59,7 @@ void __init cc_debugfs_global_init(void)
+ 	cc_debugfs_dir = debugfs_create_dir("ccree", NULL);
  }
-@@ -713,17 +713,17 @@ static void fotg210_get_status(struct fotg210_udc *fotg210,
  
- 	switch (ctrl->bRequestType & USB_RECIP_MASK) {
- 	case USB_RECIP_DEVICE:
--		fotg210->ep0_data = 1 << USB_DEVICE_SELF_POWERED;
-+		fotg210->ep0_data = cpu_to_le16(1 << USB_DEVICE_SELF_POWERED);
- 		break;
- 	case USB_RECIP_INTERFACE:
--		fotg210->ep0_data = 0;
-+		fotg210->ep0_data = cpu_to_le16(0);
- 		break;
- 	case USB_RECIP_ENDPOINT:
- 		epnum = ctrl->wIndex & USB_ENDPOINT_NUMBER_MASK;
- 		if (epnum)
- 			fotg210->ep0_data =
--				fotg210_is_epnstall(fotg210->ep[epnum])
--				<< USB_ENDPOINT_HALT;
-+				cpu_to_le16(fotg210_is_epnstall(fotg210->ep[epnum])
-+					    << USB_ENDPOINT_HALT);
- 		else
- 			fotg210_request_error(fotg210);
- 		break;
+-void __exit cc_debugfs_global_fini(void)
++void cc_debugfs_global_fini(void)
+ {
+ 	debugfs_remove(cc_debugfs_dir);
+ }
 -- 
 2.35.1
 
