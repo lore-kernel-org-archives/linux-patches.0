@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E6A33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB938C433D2;
-	Mon, 16 Jan 2023 15:57:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53A433EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A773C433D2;
+	Mon, 16 Jan 2023 15:57:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884652;
-	bh=9n7iOmKjYiUM48hry9NGOKRL0Lz89ppHiWO6NqrgA1E=;
+	s=korg; t=1673884654;
+	bh=JEE2X1uW1c0hu/JNEICMQRHE5RO2ntKZC7PV2IvJrQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zo75LzWrflbA55mOctTSZMuWq0UakiR24FNxgvDsLoL6Bri57KLXudmQI2xOEK9vn
-	 OS8dLNEyu8NnIB/w/JT9pjlOBwkaFLX7f6ORv9APW0GfmQKkD4DKx9oCvFxJZZ6wbK
-	 uASzK2MZIa0aqQ7pBwv9gpGcfNOuYVDxkxk03xaU=
+	b=LJUqY6z+WmDfNsvFCME66xXmcgkwCb26z8Pzmv9Y7EIBzauTLM+pUwpnKcXrfiSUJ
+	 nMlV8pXkZVlxJSz5tSzb9vBDgu2ovl0bybur34cwN6N4HiPkdLYsvCPxduCuGwhWxt
+	 Nym5QbmigTtpC0bnD430y0m6IikG4pzuouYNGiEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?David=20Wang=20=E7=8E=8B=E6=A0=87?= <wangbiao3@xiaomi.com>,
-	Waiman Long <longman@redhat.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>
-Subject: [PATCH 6.1 088/183] sched/core: Fix use-after-free bug in dup_user_cpus_ptr()
-Date: Mon, 16 Jan 2023 16:50:11 +0100
-Message-Id: <20230116154807.145821027@linuxfoundation.org>
+	Kyle Zeng <zengyhkyle@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 071/183] ipv6: raw: Deduct extension header length in rawv6_push_pending_frames
+Date: Mon, 16 Jan 2023 16:49:54 +0100
+Message-Id: <20230116154806.372895612@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,96 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Waiman Long <longman@redhat.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit 87ca4f9efbd7cc649ff43b87970888f2812945b8 upstream.
+commit cb3e9864cdbe35ff6378966660edbcbac955fe17 upstream.
 
-Since commit 07ec77a1d4e8 ("sched: Allow task CPU affinity to be
-restricted on asymmetric systems"), the setting and clearing of
-user_cpus_ptr are done under pi_lock for arm64 architecture. However,
-dup_user_cpus_ptr() accesses user_cpus_ptr without any lock
-protection. Since sched_setaffinity() can be invoked from another
-process, the process being modified may be undergoing fork() at
-the same time.  When racing with the clearing of user_cpus_ptr in
-__set_cpus_allowed_ptr_locked(), it can lead to user-after-free and
-possibly double-free in arm64 kernel.
+The total cork length created by ip6_append_data includes extension
+headers, so we must exclude them when comparing them against the
+IPV6_CHECKSUM offset which does not include extension headers.
 
-Commit 8f9ea86fdf99 ("sched: Always preserve the user requested
-cpumask") fixes this problem as user_cpus_ptr, once set, will never
-be cleared in a task's lifetime. However, this bug was re-introduced
-in commit 851a723e45d1 ("sched: Always clear user_cpus_ptr in
-do_set_cpus_allowed()") which allows the clearing of user_cpus_ptr in
-do_set_cpus_allowed(). This time, it will affect all arches.
-
-Fix this bug by always clearing the user_cpus_ptr of the newly
-cloned/forked task before the copying process starts and check the
-user_cpus_ptr state of the source task under pi_lock.
-
-Note to stable, this patch won't be applicable to stable releases.
-Just copy the new dup_user_cpus_ptr() function over.
-
-Fixes: 07ec77a1d4e8 ("sched: Allow task CPU affinity to be restricted on asymmetric systems")
-Fixes: 851a723e45d1 ("sched: Always clear user_cpus_ptr in do_set_cpus_allowed()")
-Reported-by: David Wang 王标 <wangbiao3@xiaomi.com>
-Signed-off-by: Waiman Long <longman@redhat.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Peter Zijlstra <peterz@infradead.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221231041120.440785-2-longman@redhat.com
+Reported-by: Kyle Zeng <zengyhkyle@gmail.com>
+Fixes: 357b40a18b04 ("[IPV6]: IPV6_CHECKSUM socket option can corrupt kernel memory")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/sched/core.c |   37 +++++++++++++++++++++++++++++++++----
- 1 file changed, 33 insertions(+), 4 deletions(-)
+ net/ipv6/raw.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -2587,14 +2587,43 @@ void do_set_cpus_allowed(struct task_str
- int dup_user_cpus_ptr(struct task_struct *dst, struct task_struct *src,
- 		      int node)
+--- a/net/ipv6/raw.c
++++ b/net/ipv6/raw.c
+@@ -505,6 +505,7 @@ csum_copy_err:
+ static int rawv6_push_pending_frames(struct sock *sk, struct flowi6 *fl6,
+ 				     struct raw6_sock *rp)
  {
--	if (!src->user_cpus_ptr)
-+	cpumask_t *user_mask;
-+	unsigned long flags;
-+
-+	/*
-+	 * Always clear dst->user_cpus_ptr first as their user_cpus_ptr's
-+	 * may differ by now due to racing.
-+	 */
-+	dst->user_cpus_ptr = NULL;
-+
-+	/*
-+	 * This check is racy and losing the race is a valid situation.
-+	 * It is not worth the extra overhead of taking the pi_lock on
-+	 * every fork/clone.
-+	 */
-+	if (data_race(!src->user_cpus_ptr))
- 		return 0;
++	struct ipv6_txoptions *opt;
+ 	struct sk_buff *skb;
+ 	int err = 0;
+ 	int offset;
+@@ -522,6 +523,9 @@ static int rawv6_push_pending_frames(str
  
--	dst->user_cpus_ptr = kmalloc_node(cpumask_size(), GFP_KERNEL, node);
--	if (!dst->user_cpus_ptr)
-+	user_mask = kmalloc_node(cpumask_size(), GFP_KERNEL, node);
-+	if (!user_mask)
- 		return -ENOMEM;
- 
--	cpumask_copy(dst->user_cpus_ptr, src->user_cpus_ptr);
-+	/*
-+	 * Use pi_lock to protect content of user_cpus_ptr
-+	 *
-+	 * Though unlikely, user_cpus_ptr can be reset to NULL by a concurrent
-+	 * do_set_cpus_allowed().
-+	 */
-+	raw_spin_lock_irqsave(&src->pi_lock, flags);
-+	if (src->user_cpus_ptr) {
-+		swap(dst->user_cpus_ptr, user_mask);
-+		cpumask_copy(dst->user_cpus_ptr, src->user_cpus_ptr);
-+	}
-+	raw_spin_unlock_irqrestore(&src->pi_lock, flags);
+ 	offset = rp->offset;
+ 	total_len = inet_sk(sk)->cork.base.length;
++	opt = inet6_sk(sk)->cork.opt;
++	total_len -= opt ? opt->opt_flen : 0;
 +
-+	if (unlikely(user_mask))
-+		kfree(user_mask);
-+
- 	return 0;
- }
- 
+ 	if (offset >= total_len - 1) {
+ 		err = -EINVAL;
+ 		ip6_flush_pending_frames(sk);
 
 
