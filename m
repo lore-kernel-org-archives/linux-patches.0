@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C456FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:35:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD1CC433F0;
-	Mon, 16 Jan 2023 16:35:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70B56FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:35:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48C86C433D2;
+	Mon, 16 Jan 2023 16:35:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886932;
-	bh=8OaY/HseMpgGU4W05F1fpxZqw5gjv4fsDAfVjTOR3QE=;
+	s=korg; t=1673886934;
+	bh=sDvIKzbSqb150C25OgqUQy6/y91r98BM56o+mFKv6p0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qW98AQeT5RM3i1yRSB8ABC2orOQsmqRQh0cf3Y1AafAK/9CsXI/GeOqJMyLE+GPB4
-	 gtxC/dynYVyZNAteuXaXd/3zKDK8t1Gv4X3j0cUQ5Q6p4FCjfH7SYOUXpSfMmUfDfG
-	 T+94nqpqNtGEMz+mnlkDCTpdP1FZxQCnZJpgbHLs=
+	b=0Y+gow8L2u0lWPmcdb44fe29M20iq2PDfB9w6QHzurPLSnavqpEj273+FDh9vdRwo
+	 INUoZZVC8DPvPjMf5IhuPzhAbZ9n6rY8wF4mhErVm+iRk6Igrq3sL3BfeAXt8XeYwy
+	 q2/u/ixHsYNm0M0V/1DXQnffAcYEdrp0p1ZE9ODU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiguang Xiao <jiguang.xiao@windriver.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 576/658] net: amd-xgbe: add missed tasklet_kill
-Date: Mon, 16 Jan 2023 16:51:04 +0100
-Message-Id: <20230116154935.867732911@linuxfoundation.org>
+	Volker Lendecke <vl@samba.org>,
+	Tom Talpey <tom@talpey.com>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.4 610/658] cifs: Fix uninitialized memory read for smb311 posix symlink create
+Date: Mon, 16 Jan 2023 16:51:38 +0100
+Message-Id: <20230116154937.404066525@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,71 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiguang Xiao <jiguang.xiao@windriver.com>
+From: Volker Lendecke <vl@samba.org>
 
-[ Upstream commit d530ece70f16f912e1d1bfeea694246ab78b0a4b ]
+commit a152d05ae4a71d802d50cf9177dba34e8bb09f68 upstream.
 
-The driver does not call tasklet_kill in several places.
-Add the calls to fix it.
+If smb311 posix is enabled, we send the intended mode for file
+creation in the posix create context. Instead of using what's there on
+the stack, create the mfsymlink file with 0644.
 
-Fixes: 85b85c853401 ("amd-xgbe: Re-issue interrupt if interrupt status not cleared")
-Signed-off-by: Jiguang Xiao <jiguang.xiao@windriver.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ce558b0e17f8a ("smb3: Add posix create context for smb3.11 posix mounts")
+Cc: stable@vger.kernel.org
+Signed-off-by: Volker Lendecke <vl@samba.org>
+Reviewed-by: Tom Talpey <tom@talpey.com>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-drv.c  | 3 +++
- drivers/net/ethernet/amd/xgbe/xgbe-i2c.c  | 4 +++-
- drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 4 +++-
- 3 files changed, 9 insertions(+), 2 deletions(-)
+ fs/cifs/link.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-index 0442d7e1cd20..7f705483c1c5 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
-@@ -1139,6 +1139,9 @@ static void xgbe_free_irqs(struct xgbe_prv_data *pdata)
+--- a/fs/cifs/link.c
++++ b/fs/cifs/link.c
+@@ -481,6 +481,7 @@ smb3_create_mf_symlink(unsigned int xid,
+ 	oparms.disposition = FILE_CREATE;
+ 	oparms.fid = &fid;
+ 	oparms.reconnect = false;
++	oparms.mode = 0644;
  
- 	devm_free_irq(pdata->dev, pdata->dev_irq, pdata);
- 
-+	tasklet_kill(&pdata->tasklet_dev);
-+	tasklet_kill(&pdata->tasklet_ecc);
-+
- 	if (pdata->vdata->ecc_support && (pdata->dev_irq != pdata->ecc_irq))
- 		devm_free_irq(pdata->dev, pdata->ecc_irq, pdata);
- 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c b/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c
-index 4d9062d35930..530043742a07 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c
-@@ -447,8 +447,10 @@ static void xgbe_i2c_stop(struct xgbe_prv_data *pdata)
- 	xgbe_i2c_disable(pdata);
- 	xgbe_i2c_clear_all_interrupts(pdata);
- 
--	if (pdata->dev_irq != pdata->i2c_irq)
-+	if (pdata->dev_irq != pdata->i2c_irq) {
- 		devm_free_irq(pdata->dev, pdata->i2c_irq, pdata);
-+		tasklet_kill(&pdata->tasklet_i2c);
-+	}
- }
- 
- static int xgbe_i2c_start(struct xgbe_prv_data *pdata)
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-index 156a0bc8ab01..97167fc9bebe 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-@@ -1390,8 +1390,10 @@ static void xgbe_phy_stop(struct xgbe_prv_data *pdata)
- 	/* Disable auto-negotiation */
- 	xgbe_an_disable_all(pdata);
- 
--	if (pdata->dev_irq != pdata->an_irq)
-+	if (pdata->dev_irq != pdata->an_irq) {
- 		devm_free_irq(pdata->dev, pdata->an_irq, pdata);
-+		tasklet_kill(&pdata->tasklet_an);
-+	}
- 
- 	pdata->phy_if.phy_impl.stop(pdata);
- 
--- 
-2.35.1
-
+ 	rc = SMB2_open(xid, &oparms, utf16_path, &oplock, NULL, NULL,
+ 		       NULL);
 
 
