@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E5446B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:29:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0972C433EF;
-	Mon, 16 Jan 2023 16:29:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE23446B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:29:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4600CC433D2;
+	Mon, 16 Jan 2023 16:29:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886565;
-	bh=TDEAjpv6OXyS2VpgDx29bD+bXXZKdHgohv67L/H87lc=;
+	s=korg; t=1673886567;
+	bh=7SnJQGvgtJRvEgpsEeIL25fx1CggEPI0+icVR9veNTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GraySmRaX32Wx/8bVZYQvvRLC161cF8Ye5kW3VjyNVkpljXHp4pZL63UlCWroE7d1
-	 47+vxSx0/jfVOIBIAuTe+5HJJY8aWPzcYl8OttSeeeG815kXJ9QLrBPtZ/lrpeoHMm
-	 4lmv20oIp2OUHPsIbxVBZdIxTn8BDSHc36mIT7I0=
+	b=g97+YYYx4x9iPDEhu2alB3VKTdbDMhu2oCh0KCIO0egbOEPPQhc+B6C+TbkUwq6Hf
+	 W+YX29hwTsdoeHWGvMzFp3sBG3N6FtPvpx9/rfzhxciK436pYivCjixz2RhJfRwI6M
+	 nw0T0Fd7GRjCkA5aSaEzFR9gMORJ8ZxkIYgnQYgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Willem de Bruijn <willemb@google.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>
-Subject: [PATCH 5.4 477/658] net/af_packet: add VLAN support for AF_PACKET SOCK_RAW GSO
-Date: Mon, 16 Jan 2023 16:49:25 +0100
-Message-Id: <20230116154931.299273580@linuxfoundation.org>
+	Rickard x Andersson <rickaran@axis.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Martin Liska <mliska@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 450/658] gcov: add support for checksum field
+Date: Mon, 16 Jan 2023 16:48:58 +0100
+Message-Id: <20230116154930.078611021@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,90 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Rickard x Andersson <rickaran@axis.com>
 
-commit dfed913e8b55a0c2c4906f1242fd38fd9a116e49 upstream.
+commit e96b95c2b7a63a454b6498e2df67aac14d046d13 upstream.
 
-Currently, the kernel drops GSO VLAN tagged packet if it's created with
-socket(AF_PACKET, SOCK_RAW, 0) plus virtio_net_hdr.
+In GCC version 12.1 a checksum field was added.
 
-The reason is AF_PACKET doesn't adjust the skb network header if there is
-a VLAN tag. Then after virtio_net_hdr_set_proto() called, the skb->protocol
-will be set to ETH_P_IP/IPv6. And in later inet/ipv6_gso_segment() the skb
-is dropped as network header position is invalid.
+This patch fixes a kernel crash occurring during boot when using
+gcov-kernel with GCC version 12.2.  The crash occurred on a system running
+on i.MX6SX.
 
-Let's handle VLAN packets by adjusting network header position in
-packet_parse_headers(). The adjustment is safe and does not affect the
-later xmit as tap device also did that.
-
-In packet_snd(), packet_parse_headers() need to be moved before calling
-virtio_net_hdr_set_proto(), so we can set correct skb->protocol and
-network header first.
-
-There is no need to update tpacket_snd() as it calls packet_parse_headers()
-in tpacket_fill_skb(), which is already before calling virtio_net_hdr_*
-functions.
-
-skb->no_fcs setting is also moved upper to make all skb settings together
-and keep consistency with function packet_sendmsg_spkt().
-
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Acked-by: Willem de Bruijn <willemb@google.com>
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
-Link: https://lore.kernel.org/r/20220425014502.985464-1-liuhangbin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Link: https://lkml.kernel.org/r/20221220102318.3418501-1-rickaran@axis.com
+Fixes: 977ef30a7d88 ("gcov: support GCC 12.1 and newer compilers")
+Signed-off-by: Rickard x Andersson <rickaran@axis.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Tested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reviewed-by: Martin Liska <mliska@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/packet/af_packet.c |   18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ kernel/gcov/gcc_4_7.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/net/packet/af_packet.c
-+++ b/net/packet/af_packet.c
-@@ -1864,12 +1864,20 @@ oom:
- 
- static void packet_parse_headers(struct sk_buff *skb, struct socket *sock)
- {
-+	int depth;
-+
- 	if ((!skb->protocol || skb->protocol == htons(ETH_P_ALL)) &&
- 	    sock->type == SOCK_RAW) {
- 		skb_reset_mac_header(skb);
- 		skb->protocol = dev_parse_header_protocol(skb);
- 	}
- 
-+	/* Move network header to the right position for VLAN tagged packets */
-+	if (likely(skb->dev->type == ARPHRD_ETHER) &&
-+	    eth_type_vlan(skb->protocol) &&
-+	    __vlan_get_protocol(skb, skb->protocol, &depth) != 0)
-+		skb_set_network_header(skb, depth);
-+
- 	skb_probe_transport_header(skb);
- }
- 
-@@ -2979,6 +2987,11 @@ static int packet_snd(struct socket *soc
- 	skb->mark = sockc.mark;
- 	skb->tstamp = sockc.transmit_time;
- 
-+	if (unlikely(extra_len == 4))
-+		skb->no_fcs = 1;
-+
-+	packet_parse_headers(skb, sock);
-+
- 	if (has_vnet_hdr) {
- 		err = virtio_net_hdr_to_skb(skb, &vnet_hdr, vio_le());
- 		if (err)
-@@ -2987,11 +3000,6 @@ static int packet_snd(struct socket *soc
- 		virtio_net_hdr_set_proto(skb, &vnet_hdr);
- 	}
- 
--	packet_parse_headers(skb, sock);
--
--	if (unlikely(extra_len == 4))
--		skb->no_fcs = 1;
--
- 	err = po->xmit(skb);
- 	if (unlikely(err != 0)) {
- 		if (err > 0)
+--- a/kernel/gcov/gcc_4_7.c
++++ b/kernel/gcov/gcc_4_7.c
+@@ -85,6 +85,7 @@ struct gcov_fn_info {
+  * @version: gcov version magic indicating the gcc version used for compilation
+  * @next: list head for a singly-linked list
+  * @stamp: uniquifying time stamp
++ * @checksum: unique object checksum
+  * @filename: name of the associated gcov data file
+  * @merge: merge functions (null for unused counter type)
+  * @n_functions: number of instrumented functions
+@@ -97,6 +98,10 @@ struct gcov_info {
+ 	unsigned int version;
+ 	struct gcov_info *next;
+ 	unsigned int stamp;
++ /* Since GCC 12.1 a checksum field is added. */
++#if (__GNUC__ >= 12)
++	unsigned int checksum;
++#endif
+ 	const char *filename;
+ 	void (*merge[GCOV_COUNTERS])(gcov_type *, unsigned int);
+ 	unsigned int n_functions;
 
 
