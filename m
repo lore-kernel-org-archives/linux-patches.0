@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 499ED46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:08:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C26ABC433D2;
-	Mon, 16 Jan 2023 16:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E373846B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:08:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67160C433D2;
+	Mon, 16 Jan 2023 16:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885317;
-	bh=+ef+bKhlTRPs2GMghyM011F1uCyVlt/bPmD5u5ZBIIk=;
+	s=korg; t=1673885319;
+	bh=+0CqO0b06TengcFvuL6jea2IgCjILIpQ8IDa2MHHT2M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ry/4DsUkcQDVcty7x96uVuj7g2zKha2EzivommuUywda20gZD3281KIFvUdW06htC
-	 GfoIkmVhP5JgRgkI0OzEJAXGrDds3P4fyZd3H94MDEW3bJLZL3WSf5ZAWVmf8xEZ64
-	 bxSKfWOoSJ+/+5iAvvSkZ8zB9Awuu3K3xZIGjC4g=
+	b=i5wMGIxeXYnCZjNzsebVa8fGoCKqUzHGuc3LP1/dYZ0gWj7x6I/yclg2gpPshPIS2
+	 9z7tg2b3PnErtUaprirdluusckaWKLYa3VNP1+xc05I1nZ7W/8058uZt/uCwUwVDgy
+	 tcNtiW3HFYtMNM3TZP5Fzw5tmjRZ5hcUCJ4RcMq4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 53/64] Documentation: KVM: add API issues section
-Date: Mon, 16 Jan 2023 16:52:00 +0100
-Message-Id: <20230116154745.401320092@linuxfoundation.org>
+Subject: [PATCH 5.10 54/64] KVM: x86: Do not return host topology information from KVM_GET_SUPPORTED_CPUID
+Date: Mon, 16 Jan 2023 16:52:01 +0100
+Message-Id: <20230116154745.431127682@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -36,75 +36,118 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Bonzini <pbonzini@redhat.com>
 
-[ Upstream commit cde363ab7ca7aea7a853851cd6a6745a9e1aaf5e ]
+[ Upstream commit 45e966fcca03ecdcccac7cb236e16eea38cc18af ]
 
-Add a section to document all the different ways in which the KVM API sucks.
+Passing the host topology to the guest is almost certainly wrong
+and will confuse the scheduler.  In addition, several fields of
+these CPUID leaves vary on each processor; it is simply impossible to
+return the right values from KVM_GET_SUPPORTED_CPUID in such a way that
+they can be passed to KVM_SET_CPUID2.
 
-I am sure there are way more, give people a place to vent so that userspace
-authors are aware.
+The values that will most likely prevent confusion are all zeroes.
+Userspace will have to override it anyway if it wishes to present a
+specific topology to the guest.
 
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Message-Id: <20220322110712.222449-4-pbonzini@redhat.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/virt/kvm/api.rst | 46 ++++++++++++++++++++++++++++++++++
- 1 file changed, 46 insertions(+)
+ Documentation/virt/kvm/api.rst | 14 ++++++++++++++
+ arch/x86/kvm/cpuid.c           | 32 ++++++++++++++++----------------
+ 2 files changed, 30 insertions(+), 16 deletions(-)
 
 diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
-index cd8a58556804..d807994360d4 100644
+index d807994360d4..2b4b64797191 100644
 --- a/Documentation/virt/kvm/api.rst
 +++ b/Documentation/virt/kvm/api.rst
-@@ -6398,3 +6398,49 @@ When enabled, KVM will disable paravirtual features provided to the
- guest according to the bits in the KVM_CPUID_FEATURES CPUID leaf
- (0x40000001). Otherwise, a guest may use the paravirtual features
- regardless of what has actually been exposed through the CPUID leaf.
+@@ -6433,6 +6433,20 @@ CPU[EAX=1]:ECX[24] (TSC_DEADLINE) is not reported by ``KVM_GET_SUPPORTED_CPUID``
+ It can be enabled if ``KVM_CAP_TSC_DEADLINE_TIMER`` is present and the kernel
+ has enabled in-kernel emulation of the local APIC.
+ 
++CPU topology
++~~~~~~~~~~~~
 +
-+9. Known KVM API problems
-+=========================
++Several CPUID values include topology information for the host CPU:
++0x0b and 0x1f for Intel systems, 0x8000001e for AMD systems.  Different
++versions of KVM return different values for this information and userspace
++should not rely on it.  Currently they return all zeroes.
 +
-+In some cases, KVM's API has some inconsistencies or common pitfalls
-+that userspace need to be aware of.  This section details some of
-+these issues.
++If userspace wishes to set up a guest topology, it should be careful that
++the values of these three leaves differ for each CPU.  In particular,
++the APIC ID is found in EDX for all subleaves of 0x0b and 0x1f, and in EAX
++for 0x8000001e; the latter also encodes the core id and node id in bits
++7:0 of EBX and ECX respectively.
 +
-+Most of them are architecture specific, so the section is split by
-+architecture.
+ Obsolete ioctls and capabilities
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+diff --git a/arch/x86/kvm/cpuid.c b/arch/x86/kvm/cpuid.c
+index 06a776fdb90c..de4b171cb76b 100644
+--- a/arch/x86/kvm/cpuid.c
++++ b/arch/x86/kvm/cpuid.c
+@@ -511,16 +511,22 @@ struct kvm_cpuid_array {
+ 	int nent;
+ };
+ 
++static struct kvm_cpuid_entry2 *get_next_cpuid(struct kvm_cpuid_array *array)
++{
++	if (array->nent >= array->maxnent)
++		return NULL;
 +
-+9.1. x86
-+--------
++	return &array->entries[array->nent++];
++}
 +
-+``KVM_GET_SUPPORTED_CPUID`` issues
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+In general, ``KVM_GET_SUPPORTED_CPUID`` is designed so that it is possible
-+to take its result and pass it directly to ``KVM_SET_CPUID2``.  This section
-+documents some cases in which that requires some care.
-+
-+Local APIC features
-+~~~~~~~~~~~~~~~~~~~
-+
-+CPU[EAX=1]:ECX[21] (X2APIC) is reported by ``KVM_GET_SUPPORTED_CPUID``,
-+but it can only be enabled if ``KVM_CREATE_IRQCHIP`` or
-+``KVM_ENABLE_CAP(KVM_CAP_IRQCHIP_SPLIT)`` are used to enable in-kernel emulation of
-+the local APIC.
-+
-+The same is true for the ``KVM_FEATURE_PV_UNHALT`` paravirtualized feature.
-+
-+CPU[EAX=1]:ECX[24] (TSC_DEADLINE) is not reported by ``KVM_GET_SUPPORTED_CPUID``.
-+It can be enabled if ``KVM_CAP_TSC_DEADLINE_TIMER`` is present and the kernel
-+has enabled in-kernel emulation of the local APIC.
-+
-+Obsolete ioctls and capabilities
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+KVM_CAP_DISABLE_QUIRKS does not let userspace know which quirks are actually
-+available.  Use ``KVM_CHECK_EXTENSION(KVM_CAP_DISABLE_QUIRKS2)`` instead if
-+available.
-+
-+Ordering of KVM_GET_*/KVM_SET_* ioctls
-+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-+
-+TBD
+ static struct kvm_cpuid_entry2 *do_host_cpuid(struct kvm_cpuid_array *array,
+ 					      u32 function, u32 index)
+ {
+-	struct kvm_cpuid_entry2 *entry;
++	struct kvm_cpuid_entry2 *entry = get_next_cpuid(array);
+ 
+-	if (array->nent >= array->maxnent)
++	if (!entry)
+ 		return NULL;
+ 
+-	entry = &array->entries[array->nent++];
+-
+ 	entry->function = function;
+ 	entry->index = index;
+ 	entry->flags = 0;
+@@ -698,22 +704,13 @@ static inline int __do_cpuid_func(struct kvm_cpuid_array *array, u32 function)
+ 		entry->edx = edx.full;
+ 		break;
+ 	}
+-	/*
+-	 * Per Intel's SDM, the 0x1f is a superset of 0xb,
+-	 * thus they can be handled by common code.
+-	 */
+ 	case 0x1f:
+ 	case 0xb:
+ 		/*
+-		 * Populate entries until the level type (ECX[15:8]) of the
+-		 * previous entry is zero.  Note, CPUID EAX.{0x1f,0xb}.0 is
+-		 * the starting entry, filled by the primary do_host_cpuid().
++		 * No topology; a valid topology is indicated by the presence
++		 * of subleaf 1.
+ 		 */
+-		for (i = 1; entry->ecx & 0xff00; ++i) {
+-			entry = do_host_cpuid(array, function, i);
+-			if (!entry)
+-				goto out;
+-		}
++		entry->eax = entry->ebx = entry->ecx = 0;
+ 		break;
+ 	case 0xd:
+ 		entry->eax &= supported_xcr0;
+@@ -866,6 +863,9 @@ static inline int __do_cpuid_func(struct kvm_cpuid_array *array, u32 function)
+ 		entry->ebx = entry->ecx = entry->edx = 0;
+ 		break;
+ 	case 0x8000001e:
++		/* Do not return host topology information.  */
++		entry->eax = entry->ebx = entry->ecx = 0;
++		entry->edx = 0; /* reserved */
+ 		break;
+ 	/* Support memory encryption cpuid if host supports it */
+ 	case 0x8000001F:
 -- 
 2.35.1
 
