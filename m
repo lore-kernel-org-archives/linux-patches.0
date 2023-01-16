@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2863146B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:22:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2E43C433EF;
-	Mon, 16 Jan 2023 16:22:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9A746B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:22:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4832EC433D2;
+	Mon, 16 Jan 2023 16:22:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886133;
-	bh=tEqY31CiC6BxUBwX+KKsxojYWMSSTn79S+TExqjRMWI=;
+	s=korg; t=1673886135;
+	bh=MBu6CtxMxILESpZ9aOISdMboZQllQPiDEDGb5CAHzkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h4bJJfxno3cztc70DwwKktONS7+sSZYiFvOjCko3Lviy809ijNLGrEz5miPJdXV22
-	 C4CwEci2aiezXyLnwfeo9RU9a36aE7/AiF+50T5lhdGHkBlPflrTPa5l3ecmbE8gfX
-	 0ZTxoWAE7WxZBc7vdfoDA0aQ0Q5jNygL1v6hnINo=
+	b=chsq5XciY9NQ4s0oU48A8Sxzz28l+6WcLxHa5c+iJooxEuzHbpnHnuaLUuZ3d1Sc7
+	 vqBqKGWXRbXKCMQMoGhnQNhD/ST410Kl572Y93jVQEpU6kZvpD6R9Fbq1YWU/E6wve
+	 a/Eq5g3uGumNVn4b7E4HP1FbhgFxgi9F/ZMvwRTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	delisun <delisun@pateo.com.cn>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 313/658] usb: storage: Add check for kcalloc
-Date: Mon, 16 Jan 2023 16:46:41 +0100
-Message-Id: <20230116154923.884439871@linuxfoundation.org>
+Subject: [PATCH 5.4 286/658] serial: pl011: Do not clear RX FIFO & RX interrupt in unthrottle.
+Date: Mon, 16 Jan 2023 16:46:14 +0100
+Message-Id: <20230116154922.674423349@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,37 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: delisun <delisun@pateo.com.cn>
 
-[ Upstream commit c35ca10f53c51eeb610d3f8fbc6dd6d511b58a58 ]
+[ Upstream commit 032d5a71ed378ffc6a2d41a187d8488a4f9fe415 ]
 
-As kcalloc may return NULL pointer, the return value should
-be checked and return error if fails as same as the ones in
-alauda_read_map.
+Clearing the RX FIFO will cause data loss.
+Copy the pl011_enabl_interrupts implementation, and remove the clear
+interrupt and FIFO part of the code.
 
-Fixes: e80b0fade09e ("[PATCH] USB Storage: add alauda support")
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Link: https://lore.kernel.org/r/20221208110058.12983-1-jiasheng@iscas.ac.cn
+Fixes: 211565b10099 ("serial: pl011: UPSTAT_AUTORTS requires .throttle/unthrottle")
+Signed-off-by: delisun <delisun@pateo.com.cn>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20221110020108.7700-1-delisun@pateo.com.cn
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/storage/alauda.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/tty/serial/amba-pl011.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/storage/alauda.c b/drivers/usb/storage/alauda.c
-index ddab2cd3d2e7..de62421d9670 100644
---- a/drivers/usb/storage/alauda.c
-+++ b/drivers/usb/storage/alauda.c
-@@ -438,6 +438,8 @@ static int alauda_init_media(struct us_data *us)
- 		+ MEDIA_INFO(us).blockshift + MEDIA_INFO(us).pageshift);
- 	MEDIA_INFO(us).pba_to_lba = kcalloc(num_zones, sizeof(u16*), GFP_NOIO);
- 	MEDIA_INFO(us).lba_to_pba = kcalloc(num_zones, sizeof(u16*), GFP_NOIO);
-+	if (MEDIA_INFO(us).pba_to_lba == NULL || MEDIA_INFO(us).lba_to_pba == NULL)
-+		return USB_STOR_TRANSPORT_ERROR;
+diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
+index 44485689333e..86084090232d 100644
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -1771,8 +1771,17 @@ static void pl011_enable_interrupts(struct uart_amba_port *uap)
+ static void pl011_unthrottle_rx(struct uart_port *port)
+ {
+ 	struct uart_amba_port *uap = container_of(port, struct uart_amba_port, port);
++	unsigned long flags;
  
- 	if (alauda_reset_media(us) != USB_STOR_XFER_GOOD)
- 		return USB_STOR_TRANSPORT_ERROR;
+-	pl011_enable_interrupts(uap);
++	spin_lock_irqsave(&uap->port.lock, flags);
++
++	uap->im = UART011_RTIM;
++	if (!pl011_dma_rx_running(uap))
++		uap->im |= UART011_RXIM;
++
++	pl011_write(uap->im, uap, REG_IMSC);
++
++	spin_unlock_irqrestore(&uap->port.lock, flags);
+ }
+ 
+ static int pl011_startup(struct uart_port *port)
 -- 
 2.35.1
 
