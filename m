@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4B033EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DCDC433D2;
-	Mon, 16 Jan 2023 16:03:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B5433EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5124C433EF;
+	Mon, 16 Jan 2023 16:03:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884984;
-	bh=MkCq7CJNnMxdUr2XX6o0cJG8jVcLCWdAVqqA3TDbf+Q=;
+	s=korg; t=1673884987;
+	bh=A8e5zLPLqxa7YcOIHon/d4PfntYS2PPjo1gGHQprKYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MFF5nRQl0i1hhhabSGCZOq2XhmNtdLU8EwfHsval9fAq6915U5w/H50WAMBzvOqNS
-	 F9+adBXJDvDcncaCzEJWgZYIjvFS7AV7+YFtVSnxXtpaCkjJ+jadJjg9wy0/eCGh8B
-	 EHxvJL9Z5FbMAt2ItGPuhxp1KPXOK1KdHBdu98sc=
+	b=s0XvuAvcweGh85G0JdHpmSXb2PdCLC4e0D7Nvr1ESVRyj6hCQX6z3oLNrHFxLl99S
+	 XY20+L3/1kV/Y9C2qRrBFFQnxLFYv/u79b9t+/NT1vkFw2w5TSK8j78Lu0d6Zlj1EA
+	 AGStHYzQqNDXzWgwRgPcrGaDYHckdnwBB6cie3hQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Upton <oliver.upton@linux.dev>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 5.15 05/86] KVM: arm64: Fix S1PTW handling on RO memslots
-Date: Mon, 16 Jan 2023 16:50:39 +0100
-Message-Id: <20230116154747.282287335@linuxfoundation.org>
+	Denis Nikitin <denik@chromium.org>,
+	Marc Zyngier <maz@kernel.org>,
+	Stephen Boyd <swboyd@chromium.org>
+Subject: [PATCH 5.15 06/86] KVM: arm64: nvhe: Fix build with profile optimization
+Date: Mon, 16 Jan 2023 16:50:40 +0100
+Message-Id: <20230116154747.331758988@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -35,81 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Denis Nikitin <denik@chromium.org>
 
-commit 406504c7b0405d74d74c15a667cd4c4620c3e7a9 upstream.
+commit bde971a83bbff78561458ded236605a365411b87 upstream.
 
-A recent development on the EFI front has resulted in guests having
-their page tables baked in the firmware binary, and mapped into the
-IPA space as part of a read-only memslot. Not only is this legitimate,
-but it also results in added security, so thumbs up.
+Kernel build with clang and KCFLAGS=-fprofile-sample-use=<profile> fails with:
 
-It is possible to take an S1PTW translation fault if the S1 PTs are
-unmapped at stage-2. However, KVM unconditionally treats S1PTW as a
-write to correctly handle hardware AF/DB updates to the S1 PTs.
-Furthermore, KVM injects an exception into the guest for S1PTW writes.
-In the aforementioned case this results in the guest taking an abort
-it won't recover from, as the S1 PTs mapping the vectors suffer from
-the same problem.
+error: arch/arm64/kvm/hyp/nvhe/kvm_nvhe.tmp.o: Unexpected SHT_REL
+section ".rel.llvm.call-graph-profile"
 
-So clearly our handling is... wrong.
+Starting from 13.0.0 llvm can generate SHT_REL section, see
+https://reviews.llvm.org/rGca3bdb57fa1ac98b711a735de048c12b5fdd8086.
+gen-hyprel does not support SHT_REL relocation section.
 
-Instead, switch to a two-pronged approach:
+Filter out profile use flags to fix the build with profile optimization.
 
-- On S1PTW translation fault, handle the fault as a read
-
-- On S1PTW permission fault, handle the fault as a write
-
-This is of no consequence to SW that *writes* to its PTs (the write
-will trigger a non-S1PTW fault), and SW that uses RO PTs will not
-use HW-assisted AF/DB anyway, as that'd be wrong.
-
-Only in the case described in c4ad98e4b72c ("KVM: arm64: Assume write
-fault on S1PTW permission fault on instruction fetch") do we end-up
-with two back-to-back faults (page being evicted and faulted back).
-I don't think this is a case worth optimising for.
-
-Fixes: c4ad98e4b72c ("KVM: arm64: Assume write fault on S1PTW permission fault on instruction fetch")
-Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
-Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
-Regression-tested-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Denis Nikitin <denik@chromium.org>
 Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20221014184532.3153551-1-denik@chromium.org
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/kvm_emulate.h |   22 ++++++++++++++++++++--
- 1 file changed, 20 insertions(+), 2 deletions(-)
+ arch/arm64/kvm/hyp/nvhe/Makefile |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/arch/arm64/include/asm/kvm_emulate.h
-+++ b/arch/arm64/include/asm/kvm_emulate.h
-@@ -366,8 +366,26 @@ static __always_inline int kvm_vcpu_sys_
+--- a/arch/arm64/kvm/hyp/nvhe/Makefile
++++ b/arch/arm64/kvm/hyp/nvhe/Makefile
+@@ -83,6 +83,10 @@ quiet_cmd_hypcopy = HYPCOPY $@
+ # Remove ftrace, Shadow Call Stack, and CFI CFLAGS.
+ # This is equivalent to the 'notrace', '__noscs', and '__nocfi' annotations.
+ KBUILD_CFLAGS := $(filter-out $(CC_FLAGS_FTRACE) $(CC_FLAGS_SCS) $(CC_FLAGS_CFI), $(KBUILD_CFLAGS))
++# Starting from 13.0.0 llvm emits SHT_REL section '.llvm.call-graph-profile'
++# when profile optimization is applied. gen-hyprel does not support SHT_REL and
++# causes a build failure. Remove profile optimization flags.
++KBUILD_CFLAGS := $(filter-out -fprofile-sample-use=% -fprofile-use=%, $(KBUILD_CFLAGS))
  
- static inline bool kvm_is_write_fault(struct kvm_vcpu *vcpu)
- {
--	if (kvm_vcpu_abt_iss1tw(vcpu))
--		return true;
-+	if (kvm_vcpu_abt_iss1tw(vcpu)) {
-+		/*
-+		 * Only a permission fault on a S1PTW should be
-+		 * considered as a write. Otherwise, page tables baked
-+		 * in a read-only memslot will result in an exception
-+		 * being delivered in the guest.
-+		 *
-+		 * The drawback is that we end-up faulting twice if the
-+		 * guest is using any of HW AF/DB: a translation fault
-+		 * to map the page containing the PT (read only at
-+		 * first), then a permission fault to allow the flags
-+		 * to be set.
-+		 */
-+		switch (kvm_vcpu_trap_get_fault_type(vcpu)) {
-+		case ESR_ELx_FSC_PERM:
-+			return true;
-+		default:
-+			return false;
-+		}
-+	}
- 
- 	if (kvm_vcpu_trap_is_iabt(vcpu))
- 		return false;
+ # KVM nVHE code is run at a different exception code with a different map, so
+ # compiler instrumentation that inserts callbacks or checks into the code may
 
 
