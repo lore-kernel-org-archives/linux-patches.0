@@ -1,25 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F097846B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:09:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3A9C433D2;
-	Mon, 16 Jan 2023 16:09:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79AF846B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:09:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32BFC433EF;
+	Mon, 16 Jan 2023 16:09:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885353;
-	bh=fMbWpeQ5kb0Jxaq52MZ8sIxk72RBafFwhNwFuurI69Q=;
+	s=korg; t=1673885356;
+	bh=3PPmK0XukrCIAah+48WUKCeca9Rba7NcTzMPF8tzlQs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vdHAcYeSoeaJBl9irJVwghDL2Z1jJnbSaUacYmwaeH044rCoY3VgC987noKefkyb3
-	 Kk/lyKWDWYow2g/vXjk3XniUzTpcHkwsnyDFViv8eVSYQaHF31P1vDetLQcwr6cIJO
-	 UjwY8rTsbT4jC0+HCnLTPGQdl8fsoU27lPA+ai/I=
+	b=ob1gfQTqx9F4xTudqh1iG0skWc3dkJI/588jNfu6VCECnOdk2SqKt3U1lGPhv1zfY
+	 cj9Awju8lo/GLcHkf84nwW226vg4SZ1pRLxNPshamFw+Vf5VPtPkWmPhx2ejGShzUg
+	 7cApG0gE3+LOHb72xdyn4p9MKrgTUG+Z0W6EOEbE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 5.4 002/658] udf: Discard preallocation before extending file with a hole
-Date: Mon, 16 Jan 2023 16:41:30 +0100
-Message-Id: <20230116154909.770142846@linuxfoundation.org>
+	Luca Weiss <luca@z3ntu.xyz>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Bjorn Andersson <andersson@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 020/658] ARM: dts: qcom: apq8064: fix coresight compatible
+Date: Mon, 16 Jan 2023 16:41:48 +0100
+Message-Id: <20230116154910.572780136@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -33,131 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Luca Weiss <luca@z3ntu.xyz>
 
-commit 16d0556568148bdcaa45d077cac9f8f7077cf70a upstream.
+[ Upstream commit a42b1ee868361f1cb0492f1bdaefb43e0751e468 ]
 
-When extending file with a hole, we tried to preserve existing
-preallocation for the file. However that is not very useful and
-complicates code because the previous extent may need to be rounded to
-block boundary as well (which we forgot to do thus causing data
-corruption for sequence like:
+There's a typo missing the arm, prefix of arm,coresight-etb10. Fix it to
+make devicetree validation happier.
 
-xfs_io -f -c "pwrite 0x75e63 11008" -c "truncate 0x7b24b" \
-  -c "truncate 0xabaa3" -c "pwrite 0xac70b 22954" \
-  -c "pwrite 0x93a43 11358" -c "pwrite 0xb8e65 52211" file
-
-with 512-byte block size. Just discard preallocation before extending
-file to simplify things and also fix this data corruption.
-
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Fixes: 7a5c275fd821 ("ARM: dts: qcom: Add apq8064 CoreSight components")
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221013190657.48499-3-luca@z3ntu.xyz
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/inode.c |   46 ++++++++++++++++++----------------------------
- 1 file changed, 18 insertions(+), 28 deletions(-)
+ arch/arm/boot/dts/qcom-apq8064.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -441,6 +441,12 @@ static int udf_get_block(struct inode *i
- 		iinfo->i_next_alloc_goal++;
- 	}
+diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
+index 764984c95c68..8c8a576ab9c0 100644
+--- a/arch/arm/boot/dts/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
+@@ -1570,7 +1570,7 @@ wifi {
+ 		};
  
-+	/*
-+	 * Block beyond EOF and prealloc extents? Just discard preallocation
-+	 * as it is not useful and complicates things.
-+	 */
-+	if (((loff_t)block) << inode->i_blkbits > iinfo->i_lenExtents)
-+		udf_discard_prealloc(inode);
- 	udf_clear_extent_cache(inode);
- 	phys = inode_getblk(inode, block, &err, &new);
- 	if (!phys)
-@@ -490,8 +496,6 @@ static int udf_do_extend_file(struct ino
- 	uint32_t add;
- 	int count = 0, fake = !(last_ext->extLength & UDF_EXTENT_LENGTH_MASK);
- 	struct super_block *sb = inode->i_sb;
--	struct kernel_lb_addr prealloc_loc = {};
--	uint32_t prealloc_len = 0;
- 	struct udf_inode_info *iinfo;
- 	int err;
+ 		etb@1a01000 {
+-			compatible = "coresight-etb10", "arm,primecell";
++			compatible = "arm,coresight-etb10", "arm,primecell";
+ 			reg = <0x1a01000 0x1000>;
  
-@@ -512,19 +516,6 @@ static int udf_do_extend_file(struct ino
- 			~(sb->s_blocksize - 1);
- 	}
- 
--	/* Last extent are just preallocated blocks? */
--	if ((last_ext->extLength & UDF_EXTENT_FLAG_MASK) ==
--						EXT_NOT_RECORDED_ALLOCATED) {
--		/* Save the extent so that we can reattach it to the end */
--		prealloc_loc = last_ext->extLocation;
--		prealloc_len = last_ext->extLength;
--		/* Mark the extent as a hole */
--		last_ext->extLength = EXT_NOT_RECORDED_NOT_ALLOCATED |
--			(last_ext->extLength & UDF_EXTENT_LENGTH_MASK);
--		last_ext->extLocation.logicalBlockNum = 0;
--		last_ext->extLocation.partitionReferenceNum = 0;
--	}
--
- 	/* Can we merge with the previous extent? */
- 	if ((last_ext->extLength & UDF_EXTENT_FLAG_MASK) ==
- 					EXT_NOT_RECORDED_NOT_ALLOCATED) {
-@@ -552,7 +543,7 @@ static int udf_do_extend_file(struct ino
- 		 * more extents, we may need to enter possible following
- 		 * empty indirect extent.
- 		 */
--		if (new_block_bytes || prealloc_len)
-+		if (new_block_bytes)
- 			udf_next_aext(inode, last_pos, &tmploc, &tmplen, 0);
- 	}
- 
-@@ -586,17 +577,6 @@ static int udf_do_extend_file(struct ino
- 	}
- 
- out:
--	/* Do we have some preallocated blocks saved? */
--	if (prealloc_len) {
--		err = udf_add_aext(inode, last_pos, &prealloc_loc,
--				   prealloc_len, 1);
--		if (err)
--			return err;
--		last_ext->extLocation = prealloc_loc;
--		last_ext->extLength = prealloc_len;
--		count++;
--	}
--
- 	/* last_pos should point to the last written extent... */
- 	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
- 		last_pos->offset -= sizeof(struct short_ad);
-@@ -649,8 +629,17 @@ static int udf_extend_file(struct inode
- 	else
- 		BUG();
- 
-+	/*
-+	 * When creating hole in file, just don't bother with preserving
-+	 * preallocation. It likely won't be very useful anyway.
-+	 */
-+	udf_discard_prealloc(inode);
-+
- 	etype = inode_bmap(inode, first_block, &epos, &eloc, &elen, &offset);
- 	within_final_block = (etype != -1);
-+	/* We don't expect extents past EOF... */
-+	WARN_ON_ONCE(etype != -1 &&
-+		     elen > ((loff_t)offset + 1) << inode->i_blkbits);
- 
- 	if ((!epos.bh && epos.offset == udf_file_entry_alloc_offset(inode)) ||
- 	    (epos.bh && epos.offset == sizeof(struct allocExtDesc))) {
-@@ -779,10 +768,11 @@ static sector_t inode_getblk(struct inod
- 		goto out_free;
- 	}
- 
--	/* Are we beyond EOF? */
-+	/* Are we beyond EOF and preallocated extent? */
- 	if (etype == -1) {
- 		int ret;
- 		loff_t hole_len;
-+
- 		isBeyondEOF = true;
- 		if (count) {
- 			if (c)
+ 			clocks = <&rpmcc RPM_QDSS_CLK>;
+-- 
+2.35.1
+
 
 
