@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F5F46FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:11:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2792FC433EF;
-	Mon, 16 Jan 2023 17:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11BD6FA3
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:11:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441C4C433EF;
+	Mon, 16 Jan 2023 17:11:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889061;
-	bh=OoW8VUbKC52UUtN1Go7s0jgxmsXceXm5aKqYcj9KV3g=;
+	s=korg; t=1673889066;
+	bh=63SC94Ier2TFvKzC6i0Z1YJOo/PKtnMOWVRuPbn9sTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0p15qElaN5M6tis3xecYGnhwQhvPtNXSQFdZOEX7Xl2XQm+MwbUceMEhtCpddaDnD
-	 5hVGMhXSp1f2QnRtf5cEbDhoIq0amJ6Pbcsq+FNP1agB0d4foeQbV6HM5u018KcrwF
-	 HT7E7XenyT+NzxQsVVhRNutkHgoOvoa4PlooS7pc=
+	b=2BSMcAe//GAYFHg5VPeyZA1Q7JS0MqA0EibOr8EvNI1lBDGmu4tAXPO47mxJb9g+p
+	 +JgwrsrKptVuRQRTY5apaB3McSyXh3GIS+LVasjwQ5nELjt0X4DXQ6JyDeRY6Ik8M0
+	 Hfa7BRgLHUBj8VShHnydVQg/NfDifc8BPej91ugw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	"David S. Miller" <davem@davemloft.net>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 213/338] myri10ge: Fix an error handling path in myri10ge_probe()
-Date: Mon, 16 Jan 2023 16:51:26 +0100
-Message-Id: <20230116154830.316911062@linuxfoundation.org>
+Subject: [PATCH 4.14 215/338] binfmt_misc: fix shift-out-of-bounds in check_special_flags
+Date: Mon, 16 Jan 2023 16:51:28 +0100
+Message-Id: <20230116154830.399688559@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,35 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Liu Shixin <liushixin2@huawei.com>
 
-[ Upstream commit d83b950d44d2982c0e62e3d81b0f35ab09431008 ]
+[ Upstream commit 6a46bf558803dd2b959ca7435a5c143efe837217 ]
 
-Some memory allocated in myri10ge_probe_slices() is not released in the
-error handling path of myri10ge_probe().
+UBSAN reported a shift-out-of-bounds warning:
 
-Add the corresponding kfree(), as already done in the remove function.
+ left shift of 1 by 31 places cannot be represented in type 'int'
+ Call Trace:
+  <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x8d/0xcf lib/dump_stack.c:106
+  ubsan_epilogue+0xa/0x44 lib/ubsan.c:151
+  __ubsan_handle_shift_out_of_bounds+0x1e7/0x208 lib/ubsan.c:322
+  check_special_flags fs/binfmt_misc.c:241 [inline]
+  create_entry fs/binfmt_misc.c:456 [inline]
+  bm_register_write+0x9d3/0xa20 fs/binfmt_misc.c:654
+  vfs_write+0x11e/0x580 fs/read_write.c:582
+  ksys_write+0xcf/0x120 fs/read_write.c:637
+  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+  do_syscall_64+0x34/0x80 arch/x86/entry/common.c:80
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ RIP: 0033:0x4194e1
 
-Fixes: 0dcffac1a329 ("myri10ge: add multislices support")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Since the type of Node's flags is unsigned long, we should define these
+macros with same type too.
+
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221102025123.1117184-1-liushixin2@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/myricom/myri10ge/myri10ge.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/binfmt_misc.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
-index 1ac2bc75edb1..1aadfc16a453 100644
---- a/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
-+++ b/drivers/net/ethernet/myricom/myri10ge/myri10ge.c
-@@ -3961,6 +3961,7 @@ static int myri10ge_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	myri10ge_free_slices(mgp);
+diff --git a/fs/binfmt_misc.c b/fs/binfmt_misc.c
+index 566296ce7ea8..c19bf5c2fbec 100644
+--- a/fs/binfmt_misc.c
++++ b/fs/binfmt_misc.c
+@@ -42,10 +42,10 @@ static LIST_HEAD(entries);
+ static int enabled = 1;
  
- abort_with_firmware:
-+	kfree(mgp->msix_vectors);
- 	myri10ge_dummy_rdma(mgp, 0);
+ enum {Enabled, Magic};
+-#define MISC_FMT_PRESERVE_ARGV0 (1 << 31)
+-#define MISC_FMT_OPEN_BINARY (1 << 30)
+-#define MISC_FMT_CREDENTIALS (1 << 29)
+-#define MISC_FMT_OPEN_FILE (1 << 28)
++#define MISC_FMT_PRESERVE_ARGV0 (1UL << 31)
++#define MISC_FMT_OPEN_BINARY (1UL << 30)
++#define MISC_FMT_CREDENTIALS (1UL << 29)
++#define MISC_FMT_OPEN_FILE (1UL << 28)
  
- abort_with_ioremap:
+ typedef struct {
+ 	struct list_head list;
 -- 
 2.35.1
 
