@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C236FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:38:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FE4DC433EF;
-	Mon, 16 Jan 2023 16:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78A06FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:38:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299F9C433D2;
+	Mon, 16 Jan 2023 16:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887095;
-	bh=eiCfIRMdbE8pkOzxRpMs6zkbpeaB+spZT5DgtWEvpyY=;
+	s=korg; t=1673887098;
+	bh=wObvOxVgY81+JnwDbGQdVQsAyZ8ybz3FsHdnVYGLBTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h13EVcz6fBV1rz2FOi/ssXqRGnCOSa9X2pBZ7ZwumRlibEiKRscYuAAJXLE1Wczn0
-	 5698gVHEuqCTlHgDz/2aEponus5jQ1M0C6p8IPtkmZg5Hxpx594CItZqjJQYEDljx6
-	 vV4ffCrIrYf9pmofTkeAQ1k1o4Bm3ai+CzfSY88I=
+	b=fnVleL+VSdWzaU29eU05eSaU7C4sRfrXt7kzJV5E5py1bscfrItFHfWxQaf3Stt9m
+	 hF+XrnST3X49C5bVBIq9D2fRMUcepmTdb6JVHhgvw8Xz/1mhxh7XAi6wT4fpiPB3Bf
+	 g8j/+Rm4KYPtbdWR2D5QiOvTzhHh/LHxJFdzMgAg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 020/521] Bluetooth: L2CAP: Fix u8 overflow
-Date: Mon, 16 Jan 2023 16:44:42 +0100
-Message-Id: <20230116154848.189123555@linuxfoundation.org>
+Subject: [PATCH 4.19 021/521] net: loopback: use NET_NAME_PREDICTABLE for name_assign_type
+Date: Mon, 16 Jan 2023 16:44:43 +0100
+Message-Id: <20230116154848.231063763@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,63 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
 
-[ Upstream commit bcd70260ef56e0aee8a4fc6cd214a419900b0765 ]
+[ Upstream commit 31d929de5a112ee1b977a89c57de74710894bbbf ]
 
-By keep sending L2CAP_CONF_REQ packets, chan->num_conf_rsp increases
-multiple times and eventually it will wrap around the maximum number
-(i.e., 255).
-This patch prevents this by adding a boundary check with
-L2CAP_MAX_CONF_RSP
+When the name_assign_type attribute was introduced (commit
+685343fc3ba6, "net: add name_assign_type netdev attribute"), the
+loopback device was explicitly mentioned as one which would make use
+of NET_NAME_PREDICTABLE:
 
-Btmon log:
-Bluetooth monitor ver 5.64
-= Note: Linux version 6.1.0-rc2 (x86_64)                               0.264594
-= Note: Bluetooth subsystem version 2.22                               0.264636
-@ MGMT Open: btmon (privileged) version 1.22                  {0x0001} 0.272191
-= New Index: 00:00:00:00:00:00 (Primary,Virtual,hci0)          [hci0] 13.877604
-@ RAW Open: 9496 (privileged) version 2.22                   {0x0002} 13.890741
-= Open Index: 00:00:00:00:00:00                                [hci0] 13.900426
-(...)
-> ACL Data RX: Handle 200 flags 0x00 dlen 1033             #32 [hci0] 14.273106
-        invalid packet size (12 != 1033)
-        08 00 01 00 02 01 04 00 01 10 ff ff              ............
-> ACL Data RX: Handle 200 flags 0x00 dlen 1547             #33 [hci0] 14.273561
-        invalid packet size (14 != 1547)
-        0a 00 01 00 04 01 06 00 40 00 00 00 00 00        ........@.....
-> ACL Data RX: Handle 200 flags 0x00 dlen 2061             #34 [hci0] 14.274390
-        invalid packet size (16 != 2061)
-        0c 00 01 00 04 01 08 00 40 00 00 00 00 00 00 04  ........@.......
-> ACL Data RX: Handle 200 flags 0x00 dlen 2061             #35 [hci0] 14.274932
-        invalid packet size (16 != 2061)
-        0c 00 01 00 04 01 08 00 40 00 00 00 07 00 03 00  ........@.......
-= bluetoothd: Bluetooth daemon 5.43                                   14.401828
-> ACL Data RX: Handle 200 flags 0x00 dlen 1033             #36 [hci0] 14.275753
-        invalid packet size (12 != 1033)
-        08 00 01 00 04 01 04 00 40 00 00 00              ........@...
+    The name_assign_type attribute gives hints where the interface name of a
+    given net-device comes from. These values are currently defined:
+...
+      NET_NAME_PREDICTABLE:
+        The ifname has been assigned by the kernel in a predictable way
+        that is guaranteed to avoid reuse and always be the same for a
+        given device. Examples include statically created devices like
+        the loopback device [...]
 
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Switch to that so that reading /sys/class/net/lo/name_assign_type
+produces something sensible instead of returning -EINVAL.
+
+Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/l2cap_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/loopback.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index fd6cd47a6c5a..fd95631205a6 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4193,7 +4193,8 @@ static inline int l2cap_config_req(struct l2cap_conn *conn,
+diff --git a/drivers/net/loopback.c b/drivers/net/loopback.c
+index d192936b76cf..7863918592db 100644
+--- a/drivers/net/loopback.c
++++ b/drivers/net/loopback.c
+@@ -210,7 +210,7 @@ static __net_init int loopback_net_init(struct net *net)
+ 	int err;
  
- 	chan->ident = cmd->ident;
- 	l2cap_send_cmd(conn, cmd->ident, L2CAP_CONF_RSP, len, rsp);
--	chan->num_conf_rsp++;
-+	if (chan->num_conf_rsp < L2CAP_CONF_MAX_CONF_RSP)
-+		chan->num_conf_rsp++;
+ 	err = -ENOMEM;
+-	dev = alloc_netdev(0, "lo", NET_NAME_UNKNOWN, loopback_setup);
++	dev = alloc_netdev(0, "lo", NET_NAME_PREDICTABLE, loopback_setup);
+ 	if (!dev)
+ 		goto out;
  
- 	/* Reset config buffer. */
- 	chan->conf_len = 0;
 -- 
 2.35.1
 
