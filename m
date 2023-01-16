@@ -1,31 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5885D33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:54:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5F3EC433D2;
-	Mon, 16 Jan 2023 15:54:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D11B533EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:54:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E0FC433F0;
+	Mon, 16 Jan 2023 15:54:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884461;
-	bh=cdkr3u/GXDW45slUcu56RdPisO1Gs1/r/m1JDwwU86c=;
+	s=korg; t=1673884463;
+	bh=JHK0/5PQ1LtgKN/mhE//s12DjbXZ0+e5S5tX41GnSSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HGZXVQ7hSATFFt13r2LfkCsMlH4jq0TGYJfEA1Sp22tVIMElNcuQc79zZBjb7wjeu
-	 V85dbojJetQrT7/bPhdBU3xzIIlCZxRnJtxKp3mHXVeQbjwX7BjC9lFflZIkVoeJ8C
-	 DdOak4D5x+H0IJYqBZ3BNEbidvYOJuIqtT0mNAug=
+	b=Winzim4vcGQM0OIJOmvJYsNeBTUhLqji2seQVrxk3MZkhphZeANhdOnY/ARoch7eh
+	 7yfJ8ScVLXP6xuW9QvR/BmVyWxiQTB8X4ELOtsx3ENOFkIgyPVBMzXY9IWjuR3P+yU
+	 qVRnB9u/YMtJbWJmj41l8YHtFcdNZfD4W+BEbVv8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Boqun Feng <boqun.feng@gmail.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Steve Capper <steve.capper@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.1 015/183] arm64: cmpxchg_double*: hazard against entire exchange variable
-Date: Mon, 16 Jan 2023 16:48:58 +0100
-Message-Id: <20230116154804.052464774@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 6.1 016/183] ACPI: Fix selecting wrong ACPI fwnode for the iGPU on some Dell laptops
+Date: Mon, 16 Jan 2023 16:48:59 +0100
+Message-Id: <20230116154804.094560622@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -39,178 +34,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Rutland <mark.rutland@arm.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 031af50045ea97ed4386eb3751ca2c134d0fc911 upstream.
+commit f64e4275ef7407d5c3eca20436519bbd1f796e40 upstream.
 
-The inline assembly for arm64's cmpxchg_double*() implementations use a
-+Q constraint to hazard against other accesses to the memory location
-being exchanged. However, the pointer passed to the constraint is a
-pointer to unsigned long, and thus the hazard only applies to the first
-8 bytes of the location.
+The Dell Latitude E6430 both with and without the optional NVidia dGPU
+has a bug in its ACPI tables which is causing Linux to assign the wrong
+ACPI fwnode / companion to the pci_device for the i915 iGPU.
 
-GCC can take advantage of this, assuming that other portions of the
-location are unchanged, leading to a number of potential problems.
+Specifically under the PCI root bridge there are these 2 ACPI Device()s :
 
-This is similar to what we fixed back in commit:
+ Scope (_SB.PCI0)
+ {
+     Device (GFX0)
+     {
+         Name (_ADR, 0x00020000)  // _ADR: Address
+     }
 
-  fee960bed5e857eb ("arm64: xchg: hazard against entire exchange variable")
+     ...
 
-... but we forgot to adjust cmpxchg_double*() similarly at the same
-time.
+     Device (VID)
+     {
+         Name (_ADR, 0x00020000)  // _ADR: Address
+         ...
 
-The same problem applies, as demonstrated with the following test:
+         Method (_DOS, 1, NotSerialized)  // _DOS: Disable Output Switching
+         {
+             VDP8 = Arg0
+             VDP1 (One, VDP8)
+         }
 
-| struct big {
-|         u64 lo, hi;
-| } __aligned(128);
-|
-| unsigned long foo(struct big *b)
-| {
-|         u64 hi_old, hi_new;
-|
-|         hi_old = b->hi;
-|         cmpxchg_double_local(&b->lo, &b->hi, 0x12, 0x34, 0x56, 0x78);
-|         hi_new = b->hi;
-|
-|         return hi_old ^ hi_new;
-| }
+         Method (_DOD, 0, NotSerialized)  // _DOD: Display Output Devices
+         {
+             ...
+         }
+         ...
+     }
+ }
 
-... which GCC 12.1.0 compiles as:
+The non-functional GFX0 ACPI device is a problem, because this gets
+returned as ACPI companion-device by acpi_find_child_device() for the iGPU.
 
-| 0000000000000000 <foo>:
-|    0:   d503233f        paciasp
-|    4:   aa0003e4        mov     x4, x0
-|    8:   1400000e        b       40 <foo+0x40>
-|    c:   d2800240        mov     x0, #0x12                       // #18
-|   10:   d2800681        mov     x1, #0x34                       // #52
-|   14:   aa0003e5        mov     x5, x0
-|   18:   aa0103e6        mov     x6, x1
-|   1c:   d2800ac2        mov     x2, #0x56                       // #86
-|   20:   d2800f03        mov     x3, #0x78                       // #120
-|   24:   48207c82        casp    x0, x1, x2, x3, [x4]
-|   28:   ca050000        eor     x0, x0, x5
-|   2c:   ca060021        eor     x1, x1, x6
-|   30:   aa010000        orr     x0, x0, x1
-|   34:   d2800000        mov     x0, #0x0                        // #0    <--- BANG
-|   38:   d50323bf        autiasp
-|   3c:   d65f03c0        ret
-|   40:   d2800240        mov     x0, #0x12                       // #18
-|   44:   d2800681        mov     x1, #0x34                       // #52
-|   48:   d2800ac2        mov     x2, #0x56                       // #86
-|   4c:   d2800f03        mov     x3, #0x78                       // #120
-|   50:   f9800091        prfm    pstl1strm, [x4]
-|   54:   c87f1885        ldxp    x5, x6, [x4]
-|   58:   ca0000a5        eor     x5, x5, x0
-|   5c:   ca0100c6        eor     x6, x6, x1
-|   60:   aa0600a6        orr     x6, x5, x6
-|   64:   b5000066        cbnz    x6, 70 <foo+0x70>
-|   68:   c8250c82        stxp    w5, x2, x3, [x4]
-|   6c:   35ffff45        cbnz    w5, 54 <foo+0x54>
-|   70:   d2800000        mov     x0, #0x0                        // #0     <--- BANG
-|   74:   d50323bf        autiasp
-|   78:   d65f03c0        ret
+This is a long standing problem and the i915 driver does use the ACPI
+companion for some things, but works fine without it.
 
-Notice that at the lines with "BANG" comments, GCC has assumed that the
-higher 8 bytes are unchanged by the cmpxchg_double() call, and that
-`hi_old ^ hi_new` can be reduced to a constant zero, for both LSE and
-LL/SC versions of cmpxchg_double().
+However since commit 63f534b8bad9 ("ACPI: PCI: Rework acpi_get_pci_dev()")
+acpi_get_pci_dev() relies on the physical-node pointer in the acpi_device
+and that is set on the wrong acpi_device because of the wrong
+acpi_find_child_device() return. This breaks the ACPI video code,
+leading to non working backlight control in some cases.
 
-This patch fixes the issue by passing a pointer to __uint128_t into the
-+Q constraint, ensuring that the compiler hazards against the entire 16
-bytes being modified.
+Add a type.backlight flag, mark ACPI video bus devices with this and make
+find_child_checks() return a higher score for children with this flag set,
+so that it picks the right companion-device.
 
-With this change, GCC 12.1.0 compiles the above test as:
-
-| 0000000000000000 <foo>:
-|    0:   f9400407        ldr     x7, [x0, #8]
-|    4:   d503233f        paciasp
-|    8:   aa0003e4        mov     x4, x0
-|    c:   1400000f        b       48 <foo+0x48>
-|   10:   d2800240        mov     x0, #0x12                       // #18
-|   14:   d2800681        mov     x1, #0x34                       // #52
-|   18:   aa0003e5        mov     x5, x0
-|   1c:   aa0103e6        mov     x6, x1
-|   20:   d2800ac2        mov     x2, #0x56                       // #86
-|   24:   d2800f03        mov     x3, #0x78                       // #120
-|   28:   48207c82        casp    x0, x1, x2, x3, [x4]
-|   2c:   ca050000        eor     x0, x0, x5
-|   30:   ca060021        eor     x1, x1, x6
-|   34:   aa010000        orr     x0, x0, x1
-|   38:   f9400480        ldr     x0, [x4, #8]
-|   3c:   d50323bf        autiasp
-|   40:   ca0000e0        eor     x0, x7, x0
-|   44:   d65f03c0        ret
-|   48:   d2800240        mov     x0, #0x12                       // #18
-|   4c:   d2800681        mov     x1, #0x34                       // #52
-|   50:   d2800ac2        mov     x2, #0x56                       // #86
-|   54:   d2800f03        mov     x3, #0x78                       // #120
-|   58:   f9800091        prfm    pstl1strm, [x4]
-|   5c:   c87f1885        ldxp    x5, x6, [x4]
-|   60:   ca0000a5        eor     x5, x5, x0
-|   64:   ca0100c6        eor     x6, x6, x1
-|   68:   aa0600a6        orr     x6, x5, x6
-|   6c:   b5000066        cbnz    x6, 78 <foo+0x78>
-|   70:   c8250c82        stxp    w5, x2, x3, [x4]
-|   74:   35ffff45        cbnz    w5, 5c <foo+0x5c>
-|   78:   f9400480        ldr     x0, [x4, #8]
-|   7c:   d50323bf        autiasp
-|   80:   ca0000e0        eor     x0, x7, x0
-|   84:   d65f03c0        ret
-
-... sampling the high 8 bytes before and after the cmpxchg, and
-performing an EOR, as we'd expect.
-
-For backporting, I've tested this atop linux-4.9.y with GCC 5.5.0. Note
-that linux-4.9.y is oldest currently supported stable release, and
-mandates GCC 5.1+. Unfortunately I couldn't get a GCC 5.1 binary to run
-on my machines due to library incompatibilities.
-
-I've also used a standalone test to check that we can use a __uint128_t
-pointer in a +Q constraint at least as far back as GCC 4.8.5 and LLVM
-3.9.1.
-
-Fixes: 5284e1b4bc8a ("arm64: xchg: Implement cmpxchg_double")
-Fixes: e9a4b795652f ("arm64: cmpxchg_dbl: patch in lse instructions when supported by the CPU")
-Reported-by: Boqun Feng <boqun.feng@gmail.com>
-Link: https://lore.kernel.org/lkml/Y6DEfQXymYVgL3oJ@boqun-archlinux/
-Reported-by: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/lkml/Y6GXoO4qmH9OIZ5Q@hirez.programming.kicks-ass.net/
-Signed-off-by: Mark Rutland <mark.rutland@arm.com>
-Cc: stable@vger.kernel.org
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Steve Capper <steve.capper@arm.com>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20230104151626.3262137-1-mark.rutland@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: 63f534b8bad9 ("ACPI: PCI: Rework acpi_get_pci_dev()")
+Co-developed-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Cc: 6.1+ <stable@vger.kernel.org> # 6.1+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/atomic_ll_sc.h |    2 +-
- arch/arm64/include/asm/atomic_lse.h   |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/glue.c     | 14 ++++++++++++--
+ drivers/acpi/scan.c     |  7 +++++--
+ include/acpi/acpi_bus.h |  3 ++-
+ 3 files changed, 19 insertions(+), 5 deletions(-)
 
---- a/arch/arm64/include/asm/atomic_ll_sc.h
-+++ b/arch/arm64/include/asm/atomic_ll_sc.h
-@@ -315,7 +315,7 @@ __ll_sc__cmpxchg_double##name(unsigned l
- 	"	cbnz	%w0, 1b\n"					\
- 	"	" #mb "\n"						\
- 	"2:"								\
--	: "=&r" (tmp), "=&r" (ret), "+Q" (*(unsigned long *)ptr)	\
-+	: "=&r" (tmp), "=&r" (ret), "+Q" (*(__uint128_t *)ptr)		\
- 	: "r" (old1), "r" (old2), "r" (new1), "r" (new2)		\
- 	: cl);								\
- 									\
---- a/arch/arm64/include/asm/atomic_lse.h
-+++ b/arch/arm64/include/asm/atomic_lse.h
-@@ -311,7 +311,7 @@ __lse__cmpxchg_double##name(unsigned lon
- 	"	eor	%[old2], %[old2], %[oldval2]\n"			\
- 	"	orr	%[old1], %[old1], %[old2]"			\
- 	: [old1] "+&r" (x0), [old2] "+&r" (x1),				\
--	  [v] "+Q" (*(unsigned long *)ptr)				\
-+	  [v] "+Q" (*(__uint128_t *)ptr)				\
- 	: [new1] "r" (x2), [new2] "r" (x3), [ptr] "r" (x4),		\
- 	  [oldval1] "r" (oldval1), [oldval2] "r" (oldval2)		\
- 	: cl);								\
+diff --git a/drivers/acpi/glue.c b/drivers/acpi/glue.c
+index 204fe94c7e45..a194f30876c5 100644
+--- a/drivers/acpi/glue.c
++++ b/drivers/acpi/glue.c
+@@ -75,7 +75,8 @@ static struct acpi_bus_type *acpi_get_bus_type(struct device *dev)
+ }
+ 
+ #define FIND_CHILD_MIN_SCORE	1
+-#define FIND_CHILD_MAX_SCORE	2
++#define FIND_CHILD_MID_SCORE	2
++#define FIND_CHILD_MAX_SCORE	3
+ 
+ static int match_any(struct acpi_device *adev, void *not_used)
+ {
+@@ -96,8 +97,17 @@ static int find_child_checks(struct acpi_device *adev, bool check_children)
+ 		return -ENODEV;
+ 
+ 	status = acpi_evaluate_integer(adev->handle, "_STA", NULL, &sta);
+-	if (status == AE_NOT_FOUND)
++	if (status == AE_NOT_FOUND) {
++		/*
++		 * Special case: backlight device objects without _STA are
++		 * preferred to other objects with the same _ADR value, because
++		 * it is more likely that they are actually useful.
++		 */
++		if (adev->pnp.type.backlight)
++			return FIND_CHILD_MID_SCORE;
++
+ 		return FIND_CHILD_MIN_SCORE;
++	}
+ 
+ 	if (ACPI_FAILURE(status) || !(sta & ACPI_STA_DEVICE_ENABLED))
+ 		return -ENODEV;
+diff --git a/drivers/acpi/scan.c b/drivers/acpi/scan.c
+index 274344434282..0c6f06abe3f4 100644
+--- a/drivers/acpi/scan.c
++++ b/drivers/acpi/scan.c
+@@ -1370,9 +1370,12 @@ static void acpi_set_pnp_ids(acpi_handle handle, struct acpi_device_pnp *pnp,
+ 		 * Some devices don't reliably have _HIDs & _CIDs, so add
+ 		 * synthetic HIDs to make sure drivers can find them.
+ 		 */
+-		if (acpi_is_video_device(handle))
++		if (acpi_is_video_device(handle)) {
+ 			acpi_add_id(pnp, ACPI_VIDEO_HID);
+-		else if (acpi_bay_match(handle))
++			pnp->type.backlight = 1;
++			break;
++		}
++		if (acpi_bay_match(handle))
+ 			acpi_add_id(pnp, ACPI_BAY_HID);
+ 		else if (acpi_dock_match(handle))
+ 			acpi_add_id(pnp, ACPI_DOCK_HID);
+diff --git a/include/acpi/acpi_bus.h b/include/acpi/acpi_bus.h
+index cd3b75e08ec3..e44be31115a6 100644
+--- a/include/acpi/acpi_bus.h
++++ b/include/acpi/acpi_bus.h
+@@ -230,7 +230,8 @@ struct acpi_pnp_type {
+ 	u32 hardware_id:1;
+ 	u32 bus_address:1;
+ 	u32 platform_id:1;
+-	u32 reserved:29;
++	u32 backlight:1;
++	u32 reserved:28;
+ };
+ 
+ struct acpi_device_pnp {
+-- 
+2.39.0
+
 
 
