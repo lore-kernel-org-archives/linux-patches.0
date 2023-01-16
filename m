@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F8BB6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:36:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27410C433EF;
-	Mon, 16 Jan 2023 16:36:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CAFB6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:36:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6942C433EF;
+	Mon, 16 Jan 2023 16:36:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886992;
-	bh=a53/eUHxy72XcCYBLtUpnQKgGU2JMxW/qnRZYW/NP7g=;
+	s=korg; t=1673886995;
+	bh=ELLYvq22cr0MtwuauAUhggt7fDKjx2Gu/0IsNWXibLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MbqlkVJ91AMFu/VS5Oul0xqELxTamDwiFUYVTuVxLnbYsJ2MvcVmAhJgwcONwniJe
-	 pPH+h3+s5bCYZnSgEX3o0Jn/yU3Q7epC2F5unciOVGqra4CGAJZIl5yTHSXLFJEbLZ
-	 MAmT3Jh5iuKjzZ0IjORuvrZHYLQYlpT646QnyzGo=
+	b=tJFyQQOSBDkLbIgrjxWRg8DFSDYrnzZOzIGlBWl1OIdW3wzqIDxmlEBhnOGLW5UlC
+	 7Fvg7KmYfmav5PMTbI4Vbr8EsSJAHnFFuSDwD/dgDTPOX7M7FUxqnVCQy2p8T9TRJu
+	 f+gtssxHpzflW+/Vfna+u0U9Dcw3cCVlDAJcl6sY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mattia Dongili <malattia@linux.it>
-Subject: [PATCH 5.4 612/658] platform/x86: sony-laptop: Dont turn off 0x153 keyboard backlight during probe
-Date: Mon, 16 Jan 2023 16:51:40 +0100
-Message-Id: <20230116154937.504549436@linuxfoundation.org>
+	Wei Chen <harperchen1110@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 639/658] net/sched: act_mpls: Fix warning during failed attribute validation
+Date: Mon, 16 Jan 2023 16:52:07 +0100
+Message-Id: <20230116154938.737621418@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -34,58 +37,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-commit ad75bd85b1db69c97eefea07b375567821f6ef58 upstream.
+[ Upstream commit 9e17f99220d111ea031b44153fdfe364b0024ff2 ]
 
-The 0x153 version of the kbd backlight control SNC handle has no separate
-address to probe if the backlight is there.
+The 'TCA_MPLS_LABEL' attribute is of 'NLA_U32' type, but has a
+validation type of 'NLA_VALIDATE_FUNCTION'. This is an invalid
+combination according to the comment above 'struct nla_policy':
 
-This turns the probe call into a set keyboard backlight call with a value
-of 0 turning off the keyboard backlight.
+"
+Meaning of `validate' field, use via NLA_POLICY_VALIDATE_FN:
+   NLA_BINARY           Validation function called for the attribute.
+   All other            Unused - but note that it's a union
+"
 
-Skip probing when there is no separate probe address to avoid this.
+This can trigger the warning [1] in nla_get_range_unsigned() when
+validation of the attribute fails. Despite being of 'NLA_U32' type, the
+associated 'min'/'max' fields in the policy are negative as they are
+aliased by the 'validate' field.
 
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=1583752
-Fixes: 800f20170dcf ("Keyboard backlight control for some Vaio Fit models")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Mattia Dongili <malattia@linux.it>
-Link: https://lore.kernel.org/r/20221213122943.11123-1-hdegoede@redhat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix by changing the attribute type to 'NLA_BINARY' which is consistent
+with the above comment and all other users of NLA_POLICY_VALIDATE_FN().
+As a result, move the length validation to the validation function.
+
+No regressions in MPLS tests:
+
+ # ./tdc.py -f tc-tests/actions/mpls.json
+ [...]
+ # echo $?
+ 0
+
+[1]
+WARNING: CPU: 0 PID: 17743 at lib/nlattr.c:118
+nla_get_range_unsigned+0x1d8/0x1e0 lib/nlattr.c:117
+Modules linked in:
+CPU: 0 PID: 17743 Comm: syz-executor.0 Not tainted 6.1.0-rc8 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+rel-1.13.0-48-gd9c812dda519-prebuilt.qemu.org 04/01/2014
+RIP: 0010:nla_get_range_unsigned+0x1d8/0x1e0 lib/nlattr.c:117
+[...]
+Call Trace:
+ <TASK>
+ __netlink_policy_dump_write_attr+0x23d/0x990 net/netlink/policy.c:310
+ netlink_policy_dump_write_attr+0x22/0x30 net/netlink/policy.c:411
+ netlink_ack_tlv_fill net/netlink/af_netlink.c:2454 [inline]
+ netlink_ack+0x546/0x760 net/netlink/af_netlink.c:2506
+ netlink_rcv_skb+0x1b7/0x240 net/netlink/af_netlink.c:2546
+ rtnetlink_rcv+0x18/0x20 net/core/rtnetlink.c:6109
+ netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
+ netlink_unicast+0x5e9/0x6b0 net/netlink/af_netlink.c:1345
+ netlink_sendmsg+0x739/0x860 net/netlink/af_netlink.c:1921
+ sock_sendmsg_nosec net/socket.c:714 [inline]
+ sock_sendmsg net/socket.c:734 [inline]
+ ____sys_sendmsg+0x38f/0x500 net/socket.c:2482
+ ___sys_sendmsg net/socket.c:2536 [inline]
+ __sys_sendmsg+0x197/0x230 net/socket.c:2565
+ __do_sys_sendmsg net/socket.c:2574 [inline]
+ __se_sys_sendmsg net/socket.c:2572 [inline]
+ __x64_sys_sendmsg+0x42/0x50 net/socket.c:2572
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Link: https://lore.kernel.org/netdev/CAO4mrfdmjvRUNbDyP0R03_DrD_eFCLCguz6OxZ2TYRSv0K9gxA@mail.gmail.com/
+Fixes: 2a2ea50870ba ("net: sched: add mpls manipulation actions to TC")
+Reported-by: Wei Chen <harperchen1110@gmail.com>
+Tested-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Link: https://lore.kernel.org/r/20230107171004.608436-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/sony-laptop.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ net/sched/act_mpls.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/platform/x86/sony-laptop.c
-+++ b/drivers/platform/x86/sony-laptop.c
-@@ -1899,14 +1899,21 @@ static int sony_nc_kbd_backlight_setup(s
- 		break;
- 	}
+diff --git a/net/sched/act_mpls.c b/net/sched/act_mpls.c
+index 0fccae356dc1..197915332b42 100644
+--- a/net/sched/act_mpls.c
++++ b/net/sched/act_mpls.c
+@@ -116,6 +116,11 @@ static int valid_label(const struct nlattr *attr,
+ {
+ 	const u32 *label = nla_data(attr);
  
--	ret = sony_call_snc_handle(handle, probe_base, &result);
--	if (ret)
--		return ret;
-+	/*
-+	 * Only probe if there is a separate probe_base, otherwise the probe call
-+	 * is equivalent to __sony_nc_kbd_backlight_mode_set(0), resulting in
-+	 * the keyboard backlight being turned off.
-+	 */
-+	if (probe_base) {
-+		ret = sony_call_snc_handle(handle, probe_base, &result);
-+		if (ret)
-+			return ret;
- 
--	if ((handle == 0x0137 && !(result & 0x02)) ||
--			!(result & 0x01)) {
--		dprintk("no backlight keyboard found\n");
--		return 0;
-+		if ((handle == 0x0137 && !(result & 0x02)) ||
-+				!(result & 0x01)) {
-+			dprintk("no backlight keyboard found\n");
-+			return 0;
-+		}
- 	}
- 
- 	kbdbl_ctl = kzalloc(sizeof(*kbdbl_ctl), GFP_KERNEL);
++	if (nla_len(attr) != sizeof(*label)) {
++		NL_SET_ERR_MSG_MOD(extack, "Invalid MPLS label length");
++		return -EINVAL;
++	}
++
+ 	if (*label & ~MPLS_LABEL_MASK || *label == MPLS_LABEL_IMPLNULL) {
+ 		NL_SET_ERR_MSG_MOD(extack, "MPLS label out of range");
+ 		return -EINVAL;
+@@ -128,7 +133,8 @@ static const struct nla_policy mpls_policy[TCA_MPLS_MAX + 1] = {
+ 	[TCA_MPLS_UNSPEC]	= { .strict_start_type = TCA_MPLS_UNSPEC + 1 },
+ 	[TCA_MPLS_PARMS]	= NLA_POLICY_EXACT_LEN(sizeof(struct tc_mpls)),
+ 	[TCA_MPLS_PROTO]	= { .type = NLA_U16 },
+-	[TCA_MPLS_LABEL]	= NLA_POLICY_VALIDATE_FN(NLA_U32, valid_label),
++	[TCA_MPLS_LABEL]	= NLA_POLICY_VALIDATE_FN(NLA_BINARY,
++							 valid_label),
+ 	[TCA_MPLS_TC]		= NLA_POLICY_RANGE(NLA_U8, 0, 7),
+ 	[TCA_MPLS_TTL]		= NLA_POLICY_MIN(NLA_U8, 1),
+ 	[TCA_MPLS_BOS]		= NLA_POLICY_RANGE(NLA_U8, 0, 1),
+-- 
+2.35.1
+
 
 
