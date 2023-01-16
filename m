@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701436FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:14:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E641AC433EF;
-	Mon, 16 Jan 2023 17:14:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CA8F6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:14:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84CFEC433F1;
+	Mon, 16 Jan 2023 17:14:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889276;
-	bh=JhJDu4OPqyzDuO/6UUTMkTmNSEiamMsWkFSaQkhAQDM=;
+	s=korg; t=1673889278;
+	bh=6ltIpZ0SM7iJdZqKHkMYTJu+PpOmES4Ko7ul0RlUblw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lrXLtFmXeYy6IHgUf5YdG4SVDikCvd14pnXjaTlR3wr3qOzaDSkf0R2nhtvoCWqv1
-	 Ym7DGosET4M35nyR2IhnSg0dULPfDj/vwaWo5Y0dYUgtsd/eSjw5mpoo13eIJOsABW
-	 5v+TPhNNq6y0A1txOOG0tkV+qqLipdS+uCQk8X1o=
+	b=Bn5uaHFkbwIDvrm2BKXDEnuIglzyHXUoxea1GEsMAsiyLBb3zA9OwbpS1+eP+Bf7E
+	 w/hiCxzAovFU462oo2ILzGKR7fjgs/gYAzuy+4pPB/diKwsO9lxQM18SCqfPRN4Izq
+	 mQ/Jk62RjNHE62EAW5yR/ZC5RxvtWxcZHVwWN/nM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitrii Dolgov <9erthalion6@gmail.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 4.14 326/338] perf auxtrace: Fix address filter duplicate symbol selection
-Date: Mon, 16 Jan 2023 16:53:19 +0100
-Message-Id: <20230116154835.314347026@linuxfoundation.org>
+	Michal Swiatkowski <michal.swiatkowski@linux.intel.com>,
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 309/338] qlcnic: prevent ->dcb use-after-free on qlcnic_dcb_enable() failure
+Date: Mon, 16 Jan 2023 16:53:02 +0100
+Message-Id: <20230116154834.599560570@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -38,104 +36,103 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-commit cf129830ee820f7fc90b98df193cd49d49344d09 upstream.
+[ Upstream commit 13a7c8964afcd8ca43c0b6001ebb0127baa95362 ]
 
-When a match has been made to the nth duplicate symbol, return
-success not error.
+adapter->dcb would get silently freed inside qlcnic_dcb_enable() in
+case qlcnic_dcb_attach() would return an error, which always happens
+under OOM conditions. This would lead to use-after-free because both
+of the existing callers invoke qlcnic_dcb_get_info() on the obtained
+pointer, which is potentially freed at that point.
 
-Example:
+Propagate errors from qlcnic_dcb_enable(), and instead free the dcb
+pointer at callsite using qlcnic_dcb_free(). This also removes the now
+unused qlcnic_clear_dcb_ops() helper, which was a simple wrapper around
+kfree() also causing memory leaks for partially initialized dcb.
 
-  Before:
+Found by Linux Verification Center (linuxtesting.org) with the SVACE
+static analysis tool.
 
-    $ cat file.c
-    cat: file.c: No such file or directory
-    $ cat file1.c
-    #include <stdio.h>
-
-    static void func(void)
-    {
-            printf("First func\n");
-    }
-
-    void other(void);
-
-    int main()
-    {
-            func();
-            other();
-            return 0;
-    }
-    $ cat file2.c
-    #include <stdio.h>
-
-    static void func(void)
-    {
-            printf("Second func\n");
-    }
-
-    void other(void)
-    {
-            func();
-    }
-
-    $ gcc -Wall -Wextra -o test file1.c file2.c
-    $ perf record -e intel_pt//u --filter 'filter func @ ./test' -- ./test
-    Multiple symbols with name 'func'
-    #1      0x1149  l       func
-                    which is near           main
-    #2      0x1179  l       func
-                    which is near           other
-    Disambiguate symbol name by inserting #n after the name e.g. func #2
-    Or select a global symbol by inserting #0 or #g or #G
-    Failed to parse address filter: 'filter func @ ./test'
-    Filter format is: filter|start|stop|tracestop <start symbol or address> [/ <end symbol or size>] [@<file name>]
-    Where multiple filters are separated by space or comma.
-    $ perf record -e intel_pt//u --filter 'filter func #2 @ ./test' -- ./test
-    Failed to parse address filter: 'filter func #2 @ ./test'
-    Filter format is: filter|start|stop|tracestop <start symbol or address> [/ <end symbol or size>] [@<file name>]
-    Where multiple filters are separated by space or comma.
-
-  After:
-
-    $ perf record -e intel_pt//u --filter 'filter func #2 @ ./test' -- ./test
-    First func
-    Second func
-    [ perf record: Woken up 1 times to write data ]
-    [ perf record: Captured and wrote 0.016 MB perf.data ]
-    $ perf script --itrace=b -Ftime,flags,ip,sym,addr --ns
-    1231062.526977619:   tr strt                               0 [unknown] =>     558495708179 func
-    1231062.526977619:   tr end  call               558495708188 func =>     558495708050 _init
-    1231062.526979286:   tr strt                               0 [unknown] =>     55849570818d func
-    1231062.526979286:   tr end  return             55849570818f func =>     55849570819d other
-
-Fixes: 1b36c03e356936d6 ("perf record: Add support for using symbols in address filters")
-Reported-by: Dmitrii Dolgov <9erthalion6@gmail.com>
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Tested-by: Dmitry Dolgov <9erthalion6@gmail.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230110185659.15979-1-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 3c44bba1d270 ("qlcnic: Disable DCB operations from SR-IOV VFs")
+Reviewed-by: Michal Swiatkowski <michal.swiatkowski@linux.intel.com>
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/auxtrace.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_init.c |  8 +++++++-
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_dcb.h       | 10 ++--------
+ drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c      |  8 +++++++-
+ 3 files changed, 16 insertions(+), 10 deletions(-)
 
---- a/tools/perf/util/auxtrace.c
-+++ b/tools/perf/util/auxtrace.c
-@@ -1945,7 +1945,7 @@ static int find_dso_sym(struct dso *dso,
- 				*size = sym->start - *start;
- 			if (idx > 0) {
- 				if (*size)
--					return 1;
-+					return 0;
- 			} else if (dso_sym_match(sym, sym_name, &cnt, idx)) {
- 				print_duplicate_syms(dso, sym_name);
- 				return -EINVAL;
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_init.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_init.c
+index 10286215092f..85419b8258b5 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_init.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_83xx_init.c
+@@ -2525,7 +2525,13 @@ int qlcnic_83xx_init(struct qlcnic_adapter *adapter, int pci_using_dac)
+ 		goto disable_mbx_intr;
+ 
+ 	qlcnic_83xx_clear_function_resources(adapter);
+-	qlcnic_dcb_enable(adapter->dcb);
++
++	err = qlcnic_dcb_enable(adapter->dcb);
++	if (err) {
++		qlcnic_dcb_free(adapter->dcb);
++		goto disable_mbx_intr;
++	}
++
+ 	qlcnic_83xx_initialize_nic(adapter, 1);
+ 	qlcnic_dcb_get_info(adapter->dcb);
+ 
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_dcb.h b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_dcb.h
+index 0a9d24e86715..eb8000d9b6d0 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_dcb.h
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_dcb.h
+@@ -42,11 +42,6 @@ struct qlcnic_dcb {
+ 	unsigned long			state;
+ };
+ 
+-static inline void qlcnic_clear_dcb_ops(struct qlcnic_dcb *dcb)
+-{
+-	kfree(dcb);
+-}
+-
+ static inline int qlcnic_dcb_get_hw_capability(struct qlcnic_dcb *dcb)
+ {
+ 	if (dcb && dcb->ops->get_hw_capability)
+@@ -113,9 +108,8 @@ static inline void qlcnic_dcb_init_dcbnl_ops(struct qlcnic_dcb *dcb)
+ 		dcb->ops->init_dcbnl_ops(dcb);
+ }
+ 
+-static inline void qlcnic_dcb_enable(struct qlcnic_dcb *dcb)
++static inline int qlcnic_dcb_enable(struct qlcnic_dcb *dcb)
+ {
+-	if (dcb && qlcnic_dcb_attach(dcb))
+-		qlcnic_clear_dcb_ops(dcb);
++	return dcb ? qlcnic_dcb_attach(dcb) : 0;
+ }
+ #endif
+diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c
+index 45361310eea0..fe879e212b7a 100644
+--- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c
++++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_main.c
+@@ -2641,7 +2641,13 @@ qlcnic_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 			 "Device does not support MSI interrupts\n");
+ 
+ 	if (qlcnic_82xx_check(adapter)) {
+-		qlcnic_dcb_enable(adapter->dcb);
++		err = qlcnic_dcb_enable(adapter->dcb);
++		if (err) {
++			qlcnic_dcb_free(adapter->dcb);
++			dev_err(&pdev->dev, "Failed to enable DCB\n");
++			goto err_out_free_hw;
++		}
++
+ 		qlcnic_dcb_get_info(adapter->dcb);
+ 		err = qlcnic_setup_intr(adapter);
+ 
+-- 
+2.35.1
+
 
 
