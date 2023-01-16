@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 343BF6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:07:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF2F4C433EF;
-	Mon, 16 Jan 2023 17:07:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAA256FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:07:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51183C433EF;
+	Mon, 16 Jan 2023 17:07:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888836;
-	bh=oJLk9cbBXKXjBAJUMeRsz7SaDq5aFW/xheqel3OsBu8=;
+	s=korg; t=1673888838;
+	bh=EXasZ9ohZIUGq+RQWwZZyfy5QlNatfHyxSE1mu9x0QY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PPxmgLyA/iNrh6esBTVd1ou51Gzq2fXdGbEnkX7JarCitTkl3RxTjTn68bw85bH7j
-	 pjQCFFRdheeVm9lo/mF4jrXnr+moHRuPvvl7viaJejUVdLnLEJHbO52BqcZSchLvXQ
-	 bAoD3TL8DUU7RbGyfkXDZ6vvK9CBkOmX5aUjbwhE=
+	b=zyefbVXeEk65+Kk+umGASJ/vlO4qpLRpV/OMCJE4H3qA9lpONLmqtKXv757+MMFTe
+	 Sprj5BiQCRsDAFP8un1E1wYgLCacjNJVCs3G3POJhvtkltDsn9AoBgfWRqUXtEYU2K
+	 UOWaR5dea3LojlA+qDUBZNIMbQIKeK/p8KYWOvPk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Rafael Mendonca <rafaelmendsr@gmail.com>,
+	Eric Auger <eric.auger@redhat.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 158/338] class: fix possible memory leak in __class_register()
-Date: Mon, 16 Jan 2023 16:50:31 +0100
-Message-Id: <20230116154827.770981827@linuxfoundation.org>
+Subject: [PATCH 4.14 159/338] vfio: platform: Do not pass return buffer to ACPI _RST method
+Date: Mon, 16 Jan 2023 16:50:32 +0100
+Message-Id: <20230116154827.821038616@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -34,69 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Rafael Mendonca <rafaelmendsr@gmail.com>
 
-[ Upstream commit 8c3e8a6bdb5253b97ad532570f8b5db5f7a06407 ]
+[ Upstream commit e67e070632a665c932d534b8b800477bb3111449 ]
 
-If class_add_groups() returns error, the 'cp->subsys' need be
-unregister, and the 'cp' need be freed.
+The ACPI _RST method has no return value, there's no need to pass a return
+buffer to acpi_evaluate_object().
 
-We can not call kset_unregister() here, because the 'cls' will
-be freed in callback function class_release() and it's also
-freed in caller's error path, it will cause double free.
-
-So fix this by calling kobject_del() and kfree_const(name) to
-cleanup kobject. Besides, call kfree() to free the 'cp'.
-
-Fault injection test can trigger this:
-
-unreferenced object 0xffff888102fa8190 (size 8):
-  comm "modprobe", pid 502, jiffies 4294906074 (age 49.296s)
-  hex dump (first 8 bytes):
-    70 6b 74 63 64 76 64 00                          pktcdvd.
-  backtrace:
-    [<00000000e7c7703d>] __kmalloc_track_caller+0x1ae/0x320
-    [<000000005e4d70bc>] kstrdup+0x3a/0x70
-    [<00000000c2e5e85a>] kstrdup_const+0x68/0x80
-    [<000000000049a8c7>] kvasprintf_const+0x10b/0x190
-    [<0000000029123163>] kobject_set_name_vargs+0x56/0x150
-    [<00000000747219c9>] kobject_set_name+0xab/0xe0
-    [<0000000005f1ea4e>] __class_register+0x15c/0x49a
-
-unreferenced object 0xffff888037274000 (size 1024):
-  comm "modprobe", pid 502, jiffies 4294906074 (age 49.296s)
-  hex dump (first 32 bytes):
-    00 40 27 37 80 88 ff ff 00 40 27 37 80 88 ff ff  .@'7.....@'7....
-    00 00 00 00 ad 4e ad de ff ff ff ff 00 00 00 00  .....N..........
-  backtrace:
-    [<00000000151f9600>] kmem_cache_alloc_trace+0x17c/0x2f0
-    [<00000000ecf3dd95>] __class_register+0x86/0x49a
-
-Fixes: ced6473e7486 ("driver core: class: add class_groups support")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221026082803.3458760-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d30daa33ec1d ("vfio: platform: call _RST method when using ACPI")
+Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+Link: https://lore.kernel.org/r/20221018152825.891032-1-rafaelmendsr@gmail.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/class.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/vfio/platform/vfio_platform_common.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/base/class.c b/drivers/base/class.c
-index 52eb8e644acd..93f22fba0d5c 100644
---- a/drivers/base/class.c
-+++ b/drivers/base/class.c
-@@ -187,6 +187,11 @@ int __class_register(struct class *cls, struct lock_class_key *key)
- 	}
- 	error = class_add_groups(class_get(cls), cls->class_groups);
- 	class_put(cls);
-+	if (error) {
-+		kobject_del(&cp->subsys.kobj);
-+		kfree_const(cp->subsys.kobj.name);
-+		kfree(cp);
-+	}
- 	return error;
- }
- EXPORT_SYMBOL_GPL(__class_register);
+diff --git a/drivers/vfio/platform/vfio_platform_common.c b/drivers/vfio/platform/vfio_platform_common.c
+index f42acc830c24..66931f6b14e6 100644
+--- a/drivers/vfio/platform/vfio_platform_common.c
++++ b/drivers/vfio/platform/vfio_platform_common.c
+@@ -77,12 +77,11 @@ static int vfio_platform_acpi_call_reset(struct vfio_platform_device *vdev,
+ 				  const char **extra_dbg)
+ {
+ #ifdef CONFIG_ACPI
+-	struct acpi_buffer buffer = { ACPI_ALLOCATE_BUFFER, NULL };
+ 	struct device *dev = vdev->device;
+ 	acpi_handle handle = ACPI_HANDLE(dev);
+ 	acpi_status acpi_ret;
+ 
+-	acpi_ret = acpi_evaluate_object(handle, "_RST", NULL, &buffer);
++	acpi_ret = acpi_evaluate_object(handle, "_RST", NULL, NULL);
+ 	if (ACPI_FAILURE(acpi_ret)) {
+ 		if (extra_dbg)
+ 			*extra_dbg = acpi_format_exception(acpi_ret);
 -- 
 2.35.1
 
