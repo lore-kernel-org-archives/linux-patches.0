@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBC736FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:43:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EBC9C433EF;
-	Mon, 16 Jan 2023 16:43:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88FCF6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:43:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F835C433EF;
+	Mon, 16 Jan 2023 16:43:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887399;
-	bh=fSyqaEw1VwrPQm3avfoAyGEuqEX7gP0fshT6Y4EaZ4I=;
+	s=korg; t=1673887402;
+	bh=uDAte1RpoAeMEG0xY9DQxh+2+UKfc/K6DU5oMTQm6og=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZFChXrHa6Yr4rYsiqep0WGoH6MWE5FQ7R650pHB5L4d57PEnsgo3USI2xQniJZf1O
-	 yfc01XhJBcwAWwtD8uiXj4Ilk+p2TgXVayk+JXgGjJSBVfLZ3JOSjoK2gdMttjHZYz
-	 Dv9C58eOYgTg5aAO7X0nNvhwj7DZnZx6YT+IMJh0=
+	b=zFrJ9okkNegaMC1p4IX6keyQik73T7uhk57qD65Wyg373o6afDVZqYCQ5Gj85bf2O
+	 SBA5bZauqmgA5szSCpNRQy6sggZi9ZVl0XeuMJ3tvSJ7XFaQmEyC3nEw5wXV/FNyjk
+	 M7m9ErmsfxVTDY0B+EOgQ/V0kofyl7uFHUaHJPgc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	Hui Tang <tanghui20@huawei.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 105/521] wifi: ath10k: Fix return value in ath10k_pci_init()
-Date: Mon, 16 Jan 2023 16:46:07 +0100
-Message-Id: <20230116154851.956258932@linuxfoundation.org>
+Subject: [PATCH 4.19 106/521] mtd: lpddr2_nvm: Fix possible null-ptr-deref
+Date: Mon, 16 Jan 2023 16:46:08 +0100
+Message-Id: <20230116154851.993354397@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,61 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Hui Tang <tanghui20@huawei.com>
 
-[ Upstream commit 2af7749047d8d6ad43feff69f555a13a6a6c2831 ]
+[ Upstream commit 6bdd45d795adf9e73b38ced5e7f750cd199499ff ]
 
-This driver is attempting to register to support two different buses.
-if either of these is successful then ath10k_pci_init() should return 0
-so that hardware attached to the successful bus can be probed and
-supported. only if both of these are unsuccessful should ath10k_pci_init()
-return an errno.
+It will cause null-ptr-deref when resource_size(add_range) invoked,
+if platform_get_resource() returns NULL.
 
-Fixes: 0b523ced9a3c ("ath10k: add basic skeleton to support ahb")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20221110061926.18163-1-xiujianfeng@huawei.com
+Fixes: 96ba9dd65788 ("mtd: lpddr: add driver for LPDDR2-NVM PCM memories")
+Signed-off-by: Hui Tang <tanghui20@huawei.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20221114090240.244172-1-tanghui20@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/pci.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/mtd/lpddr/lpddr2_nvm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
-index caece8339a50..92757495c73b 100644
---- a/drivers/net/wireless/ath/ath10k/pci.c
-+++ b/drivers/net/wireless/ath/ath10k/pci.c
-@@ -3739,18 +3739,22 @@ static struct pci_driver ath10k_pci_driver = {
+diff --git a/drivers/mtd/lpddr/lpddr2_nvm.c b/drivers/mtd/lpddr/lpddr2_nvm.c
+index 90e6cb64db69..b004d3213a66 100644
+--- a/drivers/mtd/lpddr/lpddr2_nvm.c
++++ b/drivers/mtd/lpddr/lpddr2_nvm.c
+@@ -442,6 +442,8 @@ static int lpddr2_nvm_probe(struct platform_device *pdev)
  
- static int __init ath10k_pci_init(void)
- {
--	int ret;
-+	int ret1, ret2;
+ 	/* lpddr2_nvm address range */
+ 	add_range = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	if (!add_range)
++		return -ENODEV;
  
--	ret = pci_register_driver(&ath10k_pci_driver);
--	if (ret)
-+	ret1 = pci_register_driver(&ath10k_pci_driver);
-+	if (ret1)
- 		printk(KERN_ERR "failed to register ath10k pci driver: %d\n",
--		       ret);
-+		       ret1);
- 
--	ret = ath10k_ahb_init();
--	if (ret)
--		printk(KERN_ERR "ahb init failed: %d\n", ret);
-+	ret2 = ath10k_ahb_init();
-+	if (ret2)
-+		printk(KERN_ERR "ahb init failed: %d\n", ret2);
- 
--	return ret;
-+	if (ret1 && ret2)
-+		return ret1;
-+
-+	/* registered to at least one bus */
-+	return 0;
- }
- module_init(ath10k_pci_init);
- 
+ 	/* Populate map_info data structure */
+ 	*map = (struct map_info) {
 -- 
 2.35.1
 
