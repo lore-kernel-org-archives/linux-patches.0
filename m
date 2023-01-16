@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A2A6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:07:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFC95C433EF;
-	Mon, 16 Jan 2023 17:07:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06CCD6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:07:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FCC7C433EF;
+	Mon, 16 Jan 2023 17:07:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888875;
-	bh=Q47DhHufZjz2yw8LsqEMABxE3v4eeNVt/zGIx7XhVF0=;
+	s=korg; t=1673888877;
+	bh=KS9lhq6WNXQJhVuywN4k1cs5OgTQSLWjPpzDgMPcReM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CX4MnP2pG7AWG00PrwVXCSbmDdFp/ylp2L2+4NU5KnNKUbXJ3iXZiscwZhthQ4eAp
-	 gDEfo474y6g8RwA9g1DAMMt1RlggL45r5exjskI70O2VDj0+uLb6lKO/qmTJSxzK/r
-	 FhuIWCyTN08JmBN20KS3HK6nsKFzR6oWM94X4ORQ=
+	b=TyuKS6lnojj0/AXwofYdmML3upR445/oyCnkltct+0I22XI+B7904RG8zbzRWSJ+0
+	 I6TdHk9PcneOKExne3PRGBKMkgiP05GEZ0WnjaRnJYksaPWkNQ/O2i0xWfyfa9QZQj
+	 CDaHBN4ynxj9R15cSr04EljjDSJBf+UhYweBT6Jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Johannes Thumshirn <jth@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 172/338] drivers: mcb: fix resource leak in mcb_probe()
-Date: Mon, 16 Jan 2023 16:50:45 +0100
-Message-Id: <20230116154828.396164819@linuxfoundation.org>
+Subject: [PATCH 4.14 146/338] scsi: hpsa: Fix possible memory leak in hpsa_add_sas_device()
+Date: Mon, 16 Jan 2023 16:50:19 +0100
+Message-Id: <20230116154827.214289686@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,39 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit d7237462561fcd224fa687c56ccb68629f50fc0d ]
+[ Upstream commit fda34a5d304d0b98cc967e8763b52221b66dc202 ]
 
-When probe hook function failed in mcb_probe(), it doesn't put the device.
-Compiled test only.
+If hpsa_sas_port_add_rphy() returns an error, the 'rphy' allocated in
+sas_end_device_alloc() needs to be freed. Address this by calling
+sas_rphy_free() in the error path.
 
-Fixes: 7bc364097a89 ("mcb: Acquire reference to device in probe")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: Johannes Thumshirn <jth@kernel.org>
-Link: https://lore.kernel.org/r/9f87de36bfb85158b506cb78c6fc9db3f6a3bad1.1669624063.git.johannes.thumshirn@wdc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d04e62b9d63a ("hpsa: add in sas transport class")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221111043012.1074466-1-yangyingliang@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mcb/mcb-core.c | 4 +++-
+ drivers/scsi/hpsa.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mcb/mcb-core.c b/drivers/mcb/mcb-core.c
-index 118d27ee31c2..7fd32b0183dc 100644
---- a/drivers/mcb/mcb-core.c
-+++ b/drivers/mcb/mcb-core.c
-@@ -74,8 +74,10 @@ static int mcb_probe(struct device *dev)
+diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
+index a63ff9301a69..6b25c5ce13ed 100644
+--- a/drivers/scsi/hpsa.c
++++ b/drivers/scsi/hpsa.c
+@@ -9489,10 +9489,12 @@ static int hpsa_add_sas_device(struct hpsa_sas_node *hpsa_sas_node,
  
- 	get_device(dev);
- 	ret = mdrv->probe(mdev, found_id);
--	if (ret)
-+	if (ret) {
- 		module_put(carrier_mod);
-+		put_device(dev);
-+	}
+ 	rc = hpsa_sas_port_add_rphy(hpsa_sas_port, rphy);
+ 	if (rc)
+-		goto free_sas_port;
++		goto free_sas_rphy;
  
- 	return ret;
- }
+ 	return 0;
+ 
++free_sas_rphy:
++	sas_rphy_free(rphy);
+ free_sas_port:
+ 	hpsa_free_sas_port(hpsa_sas_port);
+ 	device->sas_port = NULL;
 -- 
 2.35.1
 
