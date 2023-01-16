@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BFE733EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93CC5C433F0;
-	Mon, 16 Jan 2023 16:02:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D495B33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30EF1C433F0;
+	Mon, 16 Jan 2023 16:02:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884927;
-	bh=AGgSgN0KD9wa2C/r3+Sdgg0lBN7PJMU28YJuPhQvwHU=;
+	s=korg; t=1673884929;
+	bh=P/hzr28uawQeyBbXq1mvJhv/2CUN+1H73cNu6Am1AMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fOzRpx7mn/LZ3+DlF2tIv0pMBWD7FqDCswWyW3MrdgPqggTDOchw6R+CmTL1+YJTB
-	 D4YJLgBKCj/PRm68PljFcc5DhN4Mvm5XAxWn7uHmi+9f2ou1Gm0v4ydy2b08PGE0Xa
-	 Jfpph6fOmK3ePrDnqjJLrbgRmgTEEAW8ZulC/VcU=
+	b=ttIjd8xnklZa1rVz3GJuE1J/H+TNnRaVpwDph8ONee5LeJobLzW8zdqXbdmx5ljmL
+	 3BmfR9ZRHi/5GtfV/CS8kWnJ+7RrByC5vgJ43ohQBso1Auo3CErabO3ANe6NszUc7e
+	 PL/6ggRHTqWz6yAH5r0U8oRYlWtNYpvydYwNvFxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Ornaghi <d.ornaghi97@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 5.15 01/86] netfilter: nft_payload: incorrect arithmetics when fetching VLAN header bits
-Date: Mon, 16 Jan 2023 16:50:35 +0100
-Message-Id: <20230116154747.114079478@linuxfoundation.org>
+	Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 10/86] net: stmmac: add aux timestamps fifo clearance wait
+Date: Mon, 16 Jan 2023 16:50:44 +0100
+Message-Id: <20230116154747.487657465@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,37 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>
 
-commit 696e1a48b1a1b01edad542a1ef293665864a4dd0 upstream.
+commit ae9dcb91c6069e20b3b9505d79cbc89fd6e086f5 upstream.
 
-If the offset + length goes over the ethernet + vlan header, then the
-length is adjusted to copy the bytes that are within the boundaries of
-the vlan_ethhdr scratchpad area. The remaining bytes beyond ethernet +
-vlan header are copied directly from the skbuff data area.
+Add timeout polling wait for auxiliary timestamps snapshot FIFO clear bit
+(ATSFC) to clear. This is to ensure no residue fifo value is being read
+erroneously.
 
-Fix incorrect arithmetic operator: subtract, not add, the size of the
-vlan header in case of double-tagged packets to adjust the length
-accordingly to address CVE-2023-0179.
-
-Reported-by: Davide Ornaghi <d.ornaghi97@gmail.com>
-Fixes: f6ae9f120dad ("netfilter: nft_payload: add C-VLAN support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Fixes: f4da56529da6 ("net: stmmac: Add support for external trigger timestamping")
+Cc: <stable@vger.kernel.org> # 5.10.x
+Signed-off-by: Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>
+Link: https://lore.kernel.org/r/20230111050200.2130-1-noor.azura.ahmad.tarmizi@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_payload.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/net/netfilter/nft_payload.c
-+++ b/net/netfilter/nft_payload.c
-@@ -63,7 +63,7 @@ nft_payload_copy_vlan(u32 *d, const stru
- 			return false;
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
+@@ -229,7 +229,10 @@ static int stmmac_enable(struct ptp_cloc
+ 		}
+ 		writel(acr_value, ptpaddr + PTP_ACR);
+ 		mutex_unlock(&priv->aux_ts_lock);
+-		ret = 0;
++		/* wait for auxts fifo clear to finish */
++		ret = readl_poll_timeout(ptpaddr + PTP_ACR, acr_value,
++					 !(acr_value & PTP_ACR_ATSFC),
++					 10, 10000);
+ 		break;
  
- 		if (offset + len > VLAN_ETH_HLEN + vlan_hlen)
--			ethlen -= offset + len - VLAN_ETH_HLEN + vlan_hlen;
-+			ethlen -= offset + len - VLAN_ETH_HLEN - vlan_hlen;
- 
- 		memcpy(dst_u8, vlanh + offset - vlan_hlen, ethlen);
- 
+ 	default:
 
 
