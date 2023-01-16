@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C286FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:55:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 324C9C433D2;
-	Mon, 16 Jan 2023 16:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 486FB6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:55:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C06F4C433EF;
+	Mon, 16 Jan 2023 16:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888126;
-	bh=HvvBlcZA6kc4Z+Ke6dMdTdcIXVSM6lDB70PirEoFp4E=;
+	s=korg; t=1673888129;
+	bh=5nMqm5iBN27AqVCsz8/sg+VHXebfJxb3aMo016ha5wo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgiXN2m7X0Za2wrWMhrZ2FOhPfXcMp3TJuSvqVt8XuSnbKa3lmWH+llVvke/EMzma
-	 6jQTT0qFSmpaXfCrQrqbJFpbkb4AhTyaCdj9RjQcTt+AtLmvBcslK2oBFmYUnL6dxI
-	 xZWgPDATH3UPW4J4aqhLwkbfrfiZX9Y6Vz5Ef8+E=
+	b=NZoV4M9QfCxBVQEicjpVX/bru9a6NHAR0s8dzBg4gjykiN7HHTE0zwfXtLTMzJF7P
+	 nTPGNUtWNjvz98CPRsxFPIE9PYrCLfj3xmlBewVvwHs0jAizphq2V2D4n3RmR5xn+m
+	 TACDxAaqsvPlI79TeCCcseUzSZbViRpu7Je4pUbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+98346927678ac3059c77@syzkaller.appspotmail.com,
-	Ye Bin <yebin10@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
 	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 4.19 410/521] ext4: init quota for old.inode in ext4_rename
-Date: Mon, 16 Jan 2023 16:51:12 +0100
-Message-Id: <20230116154905.434411179@linuxfoundation.org>
+	stable@kernel.org,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 4.19 411/521] ext4: fix corruption when online resizing a 1K bigalloc fs
+Date: Mon, 16 Jan 2023 16:51:13 +0100
+Message-Id: <20230116154905.478192153@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,77 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit fae381a3d79bb94aa2eb752170d47458d778b797 upstream.
+commit 0aeaa2559d6d53358fca3e3fce73807367adca74 upstream.
 
-Syzbot found the following issue:
-ext4_parse_param: s_want_extra_isize=128
-ext4_inode_info_init: s_want_extra_isize=32
-ext4_rename: old.inode=ffff88823869a2c8 old.dir=ffff888238699828 new.inode=ffff88823869d7e8 new.dir=ffff888238699828
-__ext4_mark_inode_dirty: inode=ffff888238699828 ea_isize=32 want_ea_size=128
-__ext4_mark_inode_dirty: inode=ffff88823869a2c8 ea_isize=32 want_ea_size=128
-ext4_xattr_block_set: inode=ffff88823869a2c8
-------------[ cut here ]------------
-WARNING: CPU: 13 PID: 2234 at fs/ext4/xattr.c:2070 ext4_xattr_block_set.cold+0x22/0x980
-Modules linked in:
-RIP: 0010:ext4_xattr_block_set.cold+0x22/0x980
-RSP: 0018:ffff888227d3f3b0 EFLAGS: 00010202
-RAX: 0000000000000001 RBX: ffff88823007a000 RCX: 0000000000000000
-RDX: 0000000000000a03 RSI: 0000000000000040 RDI: ffff888230078178
-RBP: 0000000000000000 R08: 000000000000002c R09: ffffed1075c7df8e
-R10: ffff8883ae3efc6b R11: ffffed1075c7df8d R12: 0000000000000000
-R13: ffff88823869a2c8 R14: ffff8881012e0460 R15: dffffc0000000000
-FS:  00007f350ac1f740(0000) GS:ffff8883ae200000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 00007f350a6ed6a0 CR3: 0000000237456000 CR4: 00000000000006e0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- ? ext4_xattr_set_entry+0x3b7/0x2320
- ? ext4_xattr_block_set+0x0/0x2020
- ? ext4_xattr_set_entry+0x0/0x2320
- ? ext4_xattr_check_entries+0x77/0x310
- ? ext4_xattr_ibody_set+0x23b/0x340
- ext4_xattr_move_to_block+0x594/0x720
- ext4_expand_extra_isize_ea+0x59a/0x10f0
- __ext4_expand_extra_isize+0x278/0x3f0
- __ext4_mark_inode_dirty.cold+0x347/0x410
- ext4_rename+0xed3/0x174f
- vfs_rename+0x13a7/0x2510
- do_renameat2+0x55d/0x920
- __x64_sys_rename+0x7d/0xb0
- do_syscall_64+0x3b/0xa0
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
+When a backup superblock is updated in update_backups(), the primary
+superblock's offset in the group (that is, sbi->s_sbh->b_blocknr) is used
+as the backup superblock's offset in its group. However, when the block
+size is 1K and bigalloc is enabled, the two offsets are not equal. This
+causes the backup group descriptors to be overwritten by the superblock
+in update_backups(). Moreover, if meta_bg is enabled, the file system will
+be corrupted because this feature uses backup group descriptors.
 
-As 'ext4_rename' will modify 'old.inode' ctime and mark inode dirty,
-which may trigger expand 'extra_isize' and allocate block. If inode
-didn't init quota will lead to warning.  To solve above issue, init
-'old.inode' firstly in 'ext4_rename'.
+To solve this issue, we use a more accurate ext4_group_first_block_no() as
+the offset of the backup superblock in its group.
 
-Reported-by: syzbot+98346927678ac3059c77@syzkaller.appspotmail.com
-Signed-off-by: Ye Bin <yebin10@huawei.com>
+Fixes: d77147ff443b ("ext4: add support for online resizing with bigalloc")
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221107015335.2524319-1-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20221117040341.1380702-4-libaokun1@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/namei.c |    3 +++
- 1 file changed, 3 insertions(+)
+ fs/ext4/resize.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/namei.c
-+++ b/fs/ext4/namei.c
-@@ -3870,6 +3870,9 @@ static int ext4_cross_rename(struct inod
- 	retval = dquot_initialize(old.dir);
- 	if (retval)
- 		return retval;
-+	retval = dquot_initialize(old.inode);
-+	if (retval)
-+		return retval;
- 	retval = dquot_initialize(new.dir);
- 	if (retval)
- 		return retval;
+--- a/fs/ext4/resize.c
++++ b/fs/ext4/resize.c
+@@ -1567,8 +1567,8 @@ exit_journal:
+ 		int meta_bg = ext4_has_feature_meta_bg(sb);
+ 		sector_t old_gdb = 0;
+ 
+-		update_backups(sb, sbi->s_sbh->b_blocknr, (char *)es,
+-			       sizeof(struct ext4_super_block), 0);
++		update_backups(sb, ext4_group_first_block_no(sb, 0),
++			       (char *)es, sizeof(struct ext4_super_block), 0);
+ 		for (; gdb_num <= gdb_num_end; gdb_num++) {
+ 			struct buffer_head *gdb_bh;
+ 
+@@ -1775,7 +1775,7 @@ errout:
+ 		if (test_opt(sb, DEBUG))
+ 			printk(KERN_DEBUG "EXT4-fs: extended group to %llu "
+ 			       "blocks\n", ext4_blocks_count(es));
+-		update_backups(sb, EXT4_SB(sb)->s_sbh->b_blocknr,
++		update_backups(sb, ext4_group_first_block_no(sb, 0),
+ 			       (char *)es, sizeof(struct ext4_super_block), 0);
+ 	}
+ 	return err;
 
 
