@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CDF46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0F4C433F2;
-	Mon, 16 Jan 2023 16:17:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CD1146B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 212F7C433D2;
+	Mon, 16 Jan 2023 16:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885842;
-	bh=iJrSFCoscfLs78iBUZ5kGzTPyKriwc2qqI5wV1UNaKI=;
+	s=korg; t=1673885845;
+	bh=tCdDXiEB4f7Rnmk54YUYOQZ5oM6PkV7nDSXefdE5fZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eC5f/AR3Dg8BEui39KeHOkfh87aiau3MtsCFAFV3dCz1SSdZV86ZztCFHOTFL6Ve6
-	 EflyNRKcr1vKsC0jd6zUMtZVjnFe/VGkW82GCm+HmWeom6CawfPWOmkLuIJCDnRzeS
-	 AHZGpUNpLumjqs8TFszyIJKDmMwjxYrRzUnq5ACk=
+	b=xyIMS1uuvJNYeCcHzKZPC8BPGfG7hag2iTf1D/fZsI9Uj2Tz72w61uabiHtKg9tAs
+	 CSa55uL8ketZlUT77zQvRXkhsgtexmwB71s09m3cv2yJcNvrS7N9MoNL5qVE0Negli
+	 b+RnTA0c0hMQaKG9uhZLVeQdVsTKj1LGsFKbQOqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ChenXiaoSong <chenxiaosong2@huawei.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 187/658] NFSv4.x: Fail client initialisation if state manager thread cant run
-Date: Mon, 16 Jan 2023 16:44:35 +0100
-Message-Id: <20230116154918.018088964@linuxfoundation.org>
+Subject: [PATCH 5.4 205/658] clk: samsung: Fix memory leak in _samsung_clk_register_pll()
+Date: Mon, 16 Jan 2023 16:44:53 +0100
+Message-Id: <20230116154918.829618614@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,35 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit b4e4f66901658fae0614dea5bf91062a5387eda7 ]
+[ Upstream commit 5174e5b0d1b669a489524192b6adcbb3c54ebc72 ]
 
-If the state manager thread fails to start, then we should just mark the
-client initialisation as failed so that other processes or threads don't
-get stuck in nfs_wait_client_init_complete().
+If clk_register() fails, @pll->rate_table may have allocated memory by
+kmemdup(), so it needs to be freed, otherwise will cause memory leak
+issue, this patch fixes it.
 
-Reported-by: ChenXiaoSong <chenxiaosong2@huawei.com>
-Fixes: 4697bd5e9419 ("NFSv4: Fix a race in the net namespace mount notification")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: 3ff6e0d8d64d ("clk: samsung: Add support to register rate_table for samsung plls")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Link: https://lore.kernel.org/r/20221123032015.63980-1-xiujianfeng@huawei.com
+Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4state.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/clk/samsung/clk-pll.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
-index c60b3a1f6d2b..2ee30ffeb6b9 100644
---- a/fs/nfs/nfs4state.c
-+++ b/fs/nfs/nfs4state.c
-@@ -1224,6 +1224,8 @@ void nfs4_schedule_state_manager(struct nfs_client *clp)
- 	if (IS_ERR(task)) {
- 		printk(KERN_ERR "%s: kthread_run: %ld\n",
- 			__func__, PTR_ERR(task));
-+		if (!nfs_client_init_is_complete(clp))
-+			nfs_mark_client_ready(clp, PTR_ERR(task));
- 		nfs4_clear_state_manager_bit(clp);
- 		nfs_put_client(clp);
- 		module_put(THIS_MODULE);
+diff --git a/drivers/clk/samsung/clk-pll.c b/drivers/clk/samsung/clk-pll.c
+index ac70ad785d8e..33df20f813d5 100644
+--- a/drivers/clk/samsung/clk-pll.c
++++ b/drivers/clk/samsung/clk-pll.c
+@@ -1390,6 +1390,7 @@ static void __init _samsung_clk_register_pll(struct samsung_clk_provider *ctx,
+ 	if (ret) {
+ 		pr_err("%s: failed to register pll clock %s : %d\n",
+ 			__func__, pll_clk->name, ret);
++		kfree(pll->rate_table);
+ 		kfree(pll);
+ 		return;
+ 	}
 -- 
 2.35.1
 
