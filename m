@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85A7046B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:22:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBCF7C433EF;
-	Mon, 16 Jan 2023 16:22:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 932C346B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:22:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 174C1C433EF;
+	Mon, 16 Jan 2023 16:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886138;
-	bh=YqWG/TIVfrEZQtYahCLWWUdOyyaNoWPp4hbQS9WMgL0=;
+	s=korg; t=1673886143;
+	bh=JgKe15jaV9shHN3aN5fip3zQtjObwCyaBdkTTFakv3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N/xcdh4VXgXqPeedGfejaWR7ofo+TKQ11W7aRT+LZKMdfpf1CKpUPn1J8DIjibQVJ
-	 wToSh7y8kj5u81lfwMLyKWvhHNv6JdHPaEsxWp7kLlc4Z1kNEQEEYhwD/6M9oZ+H8e
-	 QR1MZqyN+Q62EiMAB2SLraabyC2oJxpVAVr4LU8w=
+	b=a80LUHa7LWxtcge1J+Vb6dba39fSjtJS/ieKGOY+uqHzc13LoRL91GWjO08nIGtjE
+	 zSiju4FxcJMpFnshG3rC5aMF2f6rsbNYYEoELll7ZkEW/68Ac0qk8IWlT6TIZtmF1y
+	 P7crwBHL686FMiwyaTRwA46RZBRyQynHdHz4SYAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Tobias Klauser <tklauser@distanz.ch>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jiri Slaby <jslaby@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 287/658] serial: pch: Fix PCI device refcount leak in pch_request_dma()
-Date: Mon, 16 Jan 2023 16:46:15 +0100
-Message-Id: <20230116154922.717465158@linuxfoundation.org>
+Subject: [PATCH 5.4 289/658] tty: serial: altera_uart_{r,t}x_chars() need only uart_port
+Date: Mon, 16 Jan 2023 16:46:17 +0100
+Message-Id: <20230116154922.817477253@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -34,56 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Jiri Slaby <jslaby@suse.cz>
 
-[ Upstream commit 8be3a7bf773700534a6e8f87f6ed2ed111254be5 ]
+[ Upstream commit 3af44d9bb0539d5fa27d6159d696fda5f3747bff ]
 
-As comment of pci_get_slot() says, it returns a pci_device with its
-refcount increased. The caller must decrement the reference count by
-calling pci_dev_put().
+Both altera_uart_{r,t}x_chars() need only uart_port, not altera_uart. So
+pass the former from altera_uart_interrupt() directly.
 
-Since 'dma_dev' is only used to filter the channel in filter(), we can
-call pci_dev_put() before exiting from pch_request_dma(). Add the
-missing pci_dev_put() for the normal and error path.
+Apart it maybe saves a dereference, this makes the transition of
+altera_uart_tx_chars() easier to follow in the next patch.
 
-Fixes: 3c6a483275f4 ("Serial: EG20T: add PCH_UART driver")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Link: https://lore.kernel.org/r/20221122114559.27692-1-wangxiongfeng2@huawei.com
+Cc: Tobias Klauser <tklauser@distanz.ch>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Acked-by: Tobias Klauser <tklauser@distanz.ch>
+Signed-off-by: Jiri Slaby <jslaby@suse.cz>
+Link: https://lore.kernel.org/r/20220920052049.20507-4-jslaby@suse.cz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 1307c5d33cce ("serial: altera_uart: fix locking in polling mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/pch_uart.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/tty/serial/altera_uart.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/tty/serial/pch_uart.c b/drivers/tty/serial/pch_uart.c
-index 77f18445bb98..a8b6759140dd 100644
---- a/drivers/tty/serial/pch_uart.c
-+++ b/drivers/tty/serial/pch_uart.c
-@@ -718,6 +718,7 @@ static void pch_request_dma(struct uart_port *port)
- 	if (!chan) {
- 		dev_err(priv->port.dev, "%s:dma_request_channel FAILS(Tx)\n",
- 			__func__);
-+		pci_dev_put(dma_dev);
- 		return;
- 	}
- 	priv->chan_tx = chan;
-@@ -734,6 +735,7 @@ static void pch_request_dma(struct uart_port *port)
- 			__func__);
- 		dma_release_channel(priv->chan_tx);
- 		priv->chan_tx = NULL;
-+		pci_dev_put(dma_dev);
- 		return;
- 	}
- 
-@@ -741,6 +743,8 @@ static void pch_request_dma(struct uart_port *port)
- 	priv->rx_buf_virt = dma_alloc_coherent(port->dev, port->fifosize,
- 				    &priv->rx_buf_dma, GFP_KERNEL);
- 	priv->chan_rx = chan;
-+
-+	pci_dev_put(dma_dev);
+diff --git a/drivers/tty/serial/altera_uart.c b/drivers/tty/serial/altera_uart.c
+index 508a3c2b7781..20c610440133 100644
+--- a/drivers/tty/serial/altera_uart.c
++++ b/drivers/tty/serial/altera_uart.c
+@@ -199,9 +199,8 @@ static void altera_uart_set_termios(struct uart_port *port,
+ 	 */
  }
  
- static void pch_dma_rx_complete(void *arg)
+-static void altera_uart_rx_chars(struct altera_uart *pp)
++static void altera_uart_rx_chars(struct uart_port *port)
+ {
+-	struct uart_port *port = &pp->port;
+ 	unsigned char ch, flag;
+ 	unsigned short status;
+ 
+@@ -248,9 +247,8 @@ static void altera_uart_rx_chars(struct altera_uart *pp)
+ 	spin_lock(&port->lock);
+ }
+ 
+-static void altera_uart_tx_chars(struct altera_uart *pp)
++static void altera_uart_tx_chars(struct uart_port *port)
+ {
+-	struct uart_port *port = &pp->port;
+ 	struct circ_buf *xmit = &port->state->xmit;
+ 
+ 	if (port->x_char) {
+@@ -288,9 +286,9 @@ static irqreturn_t altera_uart_interrupt(int irq, void *data)
+ 
+ 	spin_lock(&port->lock);
+ 	if (isr & ALTERA_UART_STATUS_RRDY_MSK)
+-		altera_uart_rx_chars(pp);
++		altera_uart_rx_chars(port);
+ 	if (isr & ALTERA_UART_STATUS_TRDY_MSK)
+-		altera_uart_tx_chars(pp);
++		altera_uart_tx_chars(port);
+ 	spin_unlock(&port->lock);
+ 
+ 	return IRQ_RETVAL(isr);
 -- 
 2.35.1
 
