@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C16C46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D46CCC433F0;
-	Mon, 16 Jan 2023 16:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CDF46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A0F4C433F2;
+	Mon, 16 Jan 2023 16:17:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885840;
-	bh=pYmBLVih8lOnWahmwFGPCYDZ2yohEGGqh7oBYOXZIP0=;
+	s=korg; t=1673885842;
+	bh=iJrSFCoscfLs78iBUZ5kGzTPyKriwc2qqI5wV1UNaKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qyDtOSYyMLTMuwD43o+j9DbVKRlWs6yvSKR2xP1WJkx99VoPYq8YnrafKv3oWzggD
-	 TfTAlrhl5EDNprihMGya78wsiGVxN0Kc+1GVkgb7s30/CWjy/yfG2iPQKRjBhtdYEt
-	 IWr5lsPkDo8wxLBWk4vsPqeZDgjZQhmkCPyUdRjo=
+	b=eC5f/AR3Dg8BEui39KeHOkfh87aiau3MtsCFAFV3dCz1SSdZV86ZztCFHOTFL6Ve6
+	 EflyNRKcr1vKsC0jd6zUMtZVjnFe/VGkW82GCm+HmWeom6CawfPWOmkLuIJCDnRzeS
+	 AHZGpUNpLumjqs8TFszyIJKDmMwjxYrRzUnq5ACk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	ChenXiaoSong <chenxiaosong2@huawei.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 204/658] media: coda: Add check for kmalloc
-Date: Mon, 16 Jan 2023 16:44:52 +0100
-Message-Id: <20230116154918.778825813@linuxfoundation.org>
+Subject: [PATCH 5.4 187/658] NFSv4.x: Fail client initialisation if state manager thread cant run
+Date: Mon, 16 Jan 2023 16:44:35 +0100
+Message-Id: <20230116154918.018088964@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,46 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 6e5e5defdb8b0186312c2f855ace175aee6daf9b ]
+[ Upstream commit b4e4f66901658fae0614dea5bf91062a5387eda7 ]
 
-As the kmalloc may return NULL pointer,
-it should be better to check the return value
-in order to avoid NULL poineter dereference,
-same as the others.
+If the state manager thread fails to start, then we should just mark the
+client initialisation as failed so that other processes or threads don't
+get stuck in nfs_wait_client_init_complete().
 
-Fixes: cb1d3a336371 ("[media] coda: add CODA7541 JPEG support")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Reported-by: ChenXiaoSong <chenxiaosong2@huawei.com>
+Fixes: 4697bd5e9419 ("NFSv4: Fix a race in the net namespace mount notification")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/coda/coda-bit.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/nfs/nfs4state.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/coda/coda-bit.c b/drivers/media/platform/coda/coda-bit.c
-index 6dc59d7fe8df..73023d34d920 100644
---- a/drivers/media/platform/coda/coda-bit.c
-+++ b/drivers/media/platform/coda/coda-bit.c
-@@ -1082,10 +1082,16 @@ static int coda_start_encoding(struct coda_ctx *ctx)
- 	}
- 
- 	if (dst_fourcc == V4L2_PIX_FMT_JPEG) {
--		if (!ctx->params.jpeg_qmat_tab[0])
-+		if (!ctx->params.jpeg_qmat_tab[0]) {
- 			ctx->params.jpeg_qmat_tab[0] = kmalloc(64, GFP_KERNEL);
--		if (!ctx->params.jpeg_qmat_tab[1])
-+			if (!ctx->params.jpeg_qmat_tab[0])
-+				return -ENOMEM;
-+		}
-+		if (!ctx->params.jpeg_qmat_tab[1]) {
- 			ctx->params.jpeg_qmat_tab[1] = kmalloc(64, GFP_KERNEL);
-+			if (!ctx->params.jpeg_qmat_tab[1])
-+				return -ENOMEM;
-+		}
- 		coda_set_jpeg_compression_quality(ctx, ctx->params.jpeg_quality);
- 	}
- 
+diff --git a/fs/nfs/nfs4state.c b/fs/nfs/nfs4state.c
+index c60b3a1f6d2b..2ee30ffeb6b9 100644
+--- a/fs/nfs/nfs4state.c
++++ b/fs/nfs/nfs4state.c
+@@ -1224,6 +1224,8 @@ void nfs4_schedule_state_manager(struct nfs_client *clp)
+ 	if (IS_ERR(task)) {
+ 		printk(KERN_ERR "%s: kthread_run: %ld\n",
+ 			__func__, PTR_ERR(task));
++		if (!nfs_client_init_is_complete(clp))
++			nfs_mark_client_ready(clp, PTR_ERR(task));
+ 		nfs4_clear_state_manager_bit(clp);
+ 		nfs_put_client(clp);
+ 		module_put(THIS_MODULE);
 -- 
 2.35.1
 
