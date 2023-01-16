@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1986A46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91750C433F0;
-	Mon, 16 Jan 2023 16:19:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C70E446B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47082C433F0;
+	Mon, 16 Jan 2023 16:19:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885971;
-	bh=2YMaKpV4lNGYNEg3blxCU/8VK1LqwTAwh4VZvDR354Q=;
+	s=korg; t=1673885974;
+	bh=2NnvUskgAJDl2fOu8XG+8dZNcvM/F8W3W2y469KZUek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sbhcGuDXsi8gV3UH7G6DH0uEctB4ueI7WsGGv2ESLxEwmo8w4W2rK3+iILpFW/JvL
-	 ttfgaQX9JMa8m4GL3Pr9upnIXH//m0cfuLSBjNWglfG5k/SR9/jD1XAGSigomp8kss
-	 IPBdl0Z21GWpVca/+f3cbLbsRb9S5w+b3D7/MzV0=
+	b=ZNMcabqo5fAEsn2qodpF3l7OZABlUY/BdKH0zMcmarvvsFWeXPH3NpFc04vGSAr03
+	 dOEEV3xxm4Wo3TnwDRzBfeByqgk5wXmW4fB1R4/AtSkf/6a6vsANaIC+VfXlBgqw+A
+	 a7DML+G1DOmyT6VezxiXAoWTdHzAQ8TabXiH0mrk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yang Yingliang <yangyingliang@huawei.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 223/658] net: emaclite: dont call dev_kfree_skb() under spin_lock_irqsave()
-Date: Mon, 16 Jan 2023 16:45:11 +0100
-Message-Id: <20230116154919.710893806@linuxfoundation.org>
+Subject: [PATCH 5.4 224/658] net: ethernet: dnet: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Mon, 16 Jan 2023 16:45:12 +0100
+Message-Id: <20230116154919.752016560@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,40 +37,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit d1678bf45f21fa5ae4a456f821858679556ea5f8 ]
+[ Upstream commit f07fadcbee2a5e84caa67c7c445424200bffb60b ]
 
 It is not allowed to call kfree_skb() or consume_skb() from hardware
 interrupt context or with hardware interrupts being disabled.
 
-It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
-The difference between them is free reason, dev_kfree_skb_irq() means
-the SKB is dropped in error and dev_consume_skb_irq() means the SKB
-is consumed in normal.
+In this case, the lock is used to protected 'bp', so we can move
+dev_kfree_skb() after the spin_unlock_irqrestore().
 
-In this case, dev_kfree_skb() is called in xemaclite_tx_timeout() to
-drop the SKB, when tx timeout, so replace it with dev_kfree_skb_irq().
-
-Fixes: bb81b2ddfa19 ("net: add Xilinx emac lite device driver")
+Fixes: 4796417417a6 ("dnet: Dave DNET ethernet controller driver (updated)")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/xilinx/xilinx_emaclite.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/dnet.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/xilinx/xilinx_emaclite.c b/drivers/net/ethernet/xilinx/xilinx_emaclite.c
-index 6e5ea68b6a7e..951482d899f9 100644
---- a/drivers/net/ethernet/xilinx/xilinx_emaclite.c
-+++ b/drivers/net/ethernet/xilinx/xilinx_emaclite.c
-@@ -541,7 +541,7 @@ static void xemaclite_tx_timeout(struct net_device *dev)
- 	xemaclite_enable_interrupts(lp);
+diff --git a/drivers/net/ethernet/dnet.c b/drivers/net/ethernet/dnet.c
+index e24979010969..da9f9ec3e123 100644
+--- a/drivers/net/ethernet/dnet.c
++++ b/drivers/net/ethernet/dnet.c
+@@ -553,11 +553,11 @@ static netdev_tx_t dnet_start_xmit(struct sk_buff *skb, struct net_device *dev)
  
- 	if (lp->deferred_skb) {
--		dev_kfree_skb(lp->deferred_skb);
-+		dev_kfree_skb_irq(lp->deferred_skb);
- 		lp->deferred_skb = NULL;
- 		dev->stats.tx_errors++;
- 	}
+ 	skb_tx_timestamp(skb);
+ 
++	spin_unlock_irqrestore(&bp->lock, flags);
++
+ 	/* free the buffer */
+ 	dev_kfree_skb(skb);
+ 
+-	spin_unlock_irqrestore(&bp->lock, flags);
+-
+ 	return NETDEV_TX_OK;
+ }
+ 
 -- 
 2.35.1
 
