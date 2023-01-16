@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D57516FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:07:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A9D0C433D2;
-	Mon, 16 Jan 2023 17:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7586FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:07:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7D48C433D2;
+	Mon, 16 Jan 2023 17:07:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888851;
-	bh=B5cmW82kB/wHHhC92fetUlos7ytIswBOSmFyzhyEhnE=;
+	s=korg; t=1673888854;
+	bh=DD+yJVb5KmefJ2CVQEqxwLgx66nytf9z1SrB33GwoAk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NCTNbVGMzyWXXbHndShWE+aWfCAgo+89AuJjxFbfrfjvqoIGg1Og7jKF85o6oJiF5
-	 ICm8LtNjsUqiDRqdVlahfgn6CvDSqsGZyHhQ1tkO6sCdTe6Yoq23e9B49CFyEm23gJ
-	 ifb9vF2bJ5F9U2FzYffnJIFgJArpzQ8QyJ4214cA=
+	b=B5a2hvKYSOgSAzOlsuVTqwhdZXX3RJmMhzEQ2IPj5tS2/2Tbfp3+YcMqPE4HllqA7
+	 hXR2p1mkjeleEzlp2tDwlL+kjhu/DTXvEuufQ3m3pfknwDRpbtrpkYVpcsM/R3G6CP
+	 0z6bLdFeJNFiAsN/QGJO53lYjoR5VC/pD3EpLenQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Jiamei Xie <jiamei.xie@arm.com>,
+	Andre Przywara <andre.przywara@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 163/338] staging: vme_user: Fix possible UAF in tsi148_dma_list_add
-Date: Mon, 16 Jan 2023 16:50:36 +0100
-Message-Id: <20230116154827.995594631@linuxfoundation.org>
+Subject: [PATCH 4.14 164/338] serial: amba-pl011: avoid SBSA UART accessing DMACR register
+Date: Mon, 16 Jan 2023 16:50:37 +0100
+Message-Id: <20230116154828.032316989@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -34,42 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Jiamei Xie <jiamei.xie@arm.com>
 
-[ Upstream commit 357057ee55d3c99a5de5abe8150f7bca04f8e53b ]
+[ Upstream commit 94cdb9f33698478b0e7062586633c42c6158a786 ]
 
-Smatch report warning as follows:
+Chapter "B Generic UART" in "ARM Server Base System Architecture" [1]
+documentation describes a generic UART interface. Such generic UART
+does not support DMA. In current code, sbsa_uart_pops and
+amba_pl011_pops share the same stop_rx operation, which will invoke
+pl011_dma_rx_stop, leading to an access of the DMACR register. This
+commit adds a using_rx_dma check in pl011_dma_rx_stop to avoid the
+access to DMACR register for SBSA UARTs which does not support DMA.
 
-drivers/staging/vme_user/vme_tsi148.c:1757 tsi148_dma_list_add() warn:
-  '&entry->list' not removed from list
+When the kernel enables DMA engine with "CONFIG_DMA_ENGINE=y", Linux
+SBSA PL011 driver will access PL011 DMACR register in some functions.
+For most real SBSA Pl011 hardware implementations, the DMACR write
+behaviour will be ignored. So these DMACR operations will not cause
+obvious problems. But for some virtual SBSA PL011 hardware, like Xen
+virtual SBSA PL011 (vpl011) device, the behaviour might be different.
+Xen vpl011 emulation will inject a data abort to guest, when guest is
+accessing an unimplemented UART register. As Xen VPL011 is SBSA
+compatible, it will not implement DMACR register. So when Linux SBSA
+PL011 driver access DMACR register, it will get an unhandled data abort
+fault and the application will get a segmentation fault:
+Unhandled fault at 0xffffffc00944d048
+Mem abort info:
+  ESR = 0x96000000
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x00: ttbr address size fault
+Data abort info:
+  ISV = 0, ISS = 0x00000000
+  CM = 0, WnR = 0
+swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000020e2e000
+[ffffffc00944d048] pgd=100000003ffff803, p4d=100000003ffff803, pud=100000003ffff803, pmd=100000003fffa803, pte=006800009c090f13
+Internal error: ttbr address size fault: 96000000 [#1] PREEMPT SMP
+...
+Call trace:
+ pl011_stop_rx+0x70/0x80
+ tty_port_shutdown+0x7c/0xb4
+ tty_port_close+0x60/0xcc
+ uart_close+0x34/0x8c
+ tty_release+0x144/0x4c0
+ __fput+0x78/0x220
+ ____fput+0x1c/0x30
+ task_work_run+0x88/0xc0
+ do_notify_resume+0x8d0/0x123c
+ el0_svc+0xa8/0xc0
+ el0t_64_sync_handler+0xa4/0x130
+ el0t_64_sync+0x1a0/0x1a4
+Code: b9000083 b901f001 794038a0 8b000042 (b9000041)
+---[ end trace 83dd93df15c3216f ]---
+note: bootlogd[132] exited with preempt_count 1
+/etc/rcS.d/S07bootlogd: line 47: 132 Segmentation fault start-stop-daemon
 
-In tsi148_dma_list_add(), the error path "goto err_dma" will not
-remove entry->list from list->entries, but entry will be freed,
-then list traversal may cause UAF.
+This has been discussed in the Xen community, and we think it should fix
+this in Linux. See [2] for more information.
 
-Fix by removeing it from list->entries before free().
+[1] https://developer.arm.com/documentation/den0094/c/?lang=en
+[2] https://lists.xenproject.org/archives/html/xen-devel/2022-11/msg00543.html
 
-Fixes: b2383c90a9d6 ("vme: tsi148: fix first DMA item mapping")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20221117035914.2954454-1-cuigaosheng1@huawei.com
+Fixes: 0dd1e247fd39 (drivers: PL011: add support for the ARM SBSA generic UART)
+Signed-off-by: Jiamei Xie <jiamei.xie@arm.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://lore.kernel.org/r/20221117103237.86856-1-jiamei.xie@arm.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vme/bridges/vme_tsi148.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/tty/serial/amba-pl011.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/vme/bridges/vme_tsi148.c b/drivers/vme/bridges/vme_tsi148.c
-index fc1b634b969a..2058403f8806 100644
---- a/drivers/vme/bridges/vme_tsi148.c
-+++ b/drivers/vme/bridges/vme_tsi148.c
-@@ -1778,6 +1778,7 @@ static int tsi148_dma_list_add(struct vme_dma_list *list,
- 	return 0;
- 
- err_dma:
-+	list_del(&entry->list);
- err_dest:
- err_source:
- err_align:
+diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
+index a9aa8cd7f29c..10c7a0bc1698 100644
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -1066,6 +1066,9 @@ static void pl011_dma_rx_callback(void *data)
+  */
+ static inline void pl011_dma_rx_stop(struct uart_amba_port *uap)
+ {
++	if (!uap->using_rx_dma)
++		return;
++
+ 	/* FIXME.  Just disable the DMA enable */
+ 	uap->dmacr &= ~UART011_RXDMAE;
+ 	pl011_write(uap->dmacr, uap, REG_DMACR);
 -- 
 2.35.1
 
