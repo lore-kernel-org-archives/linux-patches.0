@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE16F46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:27:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FAFC433D2;
-	Mon, 16 Jan 2023 16:27:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7560246B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:27:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE11C433D2;
+	Mon, 16 Jan 2023 16:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886440;
-	bh=84oXrwJEnCUsd+PIiraNI3m7bBVY6KztFZZiNh3iq5E=;
+	s=korg; t=1673886443;
+	bh=hWCqXQOx0Y1dEfOD2pwXnfWN4uxEuKbamFf5/nl1C5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DTy9pz5NtzoMdjF51oQ+WPKv9p7xXmNuESF9mIYavSk3dQLQGrMyXG5mF40oXD3fK
-	 eRQireXax6DNMif3W3rFbTAuE0PuGE9ar9qnGtCbxfxeM3rukI0KHPCBPo/JIQ/LL0
-	 T6AVfJnFQq0a23FmJYL+61l0pir1wLtzxU20+QRc=
+	b=RNWRrb4gupu4VqdoCvnR1onpdscKQW58JBLR0yh791f2LHfdNnAARMiOxITtQop7d
+	 0IwgvTcvX/Kp/NnAfqiKaZpdSn69F7gU6One9UEOL+kAfdyeSLb/ehTfFtRpmOR35U
+	 wMqqonXqnrRFrbqUKy5iOjU643wlUOd+vQ6KYo6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+6fd64001c20aa99e34a4@syzkaller.appspotmail.com,
-	Schspa Shi <schspa@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Lukasz Majczak <lma@semihlaf.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 414/658] mrp: introduce active flags to prevent UAF when applicant uninit
-Date: Mon, 16 Jan 2023 16:48:22 +0100
-Message-Id: <20230116154928.548063059@linuxfoundation.org>
+Subject: [PATCH 5.4 432/658] ASoC: Intel: Skylake: Fix driver hang during shutdown
+Date: Mon, 16 Jan 2023 16:48:40 +0100
+Message-Id: <20230116154929.317965515@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,124 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Schspa Shi <schspa@gmail.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit ab0377803dafc58f1e22296708c1c28e309414d6 ]
+[ Upstream commit 171107237246d66bce04f3769d33648f896b4ce3 ]
 
-The caller of del_timer_sync must prevent restarting of the timer, If
-we have no this synchronization, there is a small probability that the
-cancellation will not be successful.
+AudioDSP cores and HDAudio links need to be turned off on shutdown to
+ensure no communication or data transfer occurs during the procedure.
 
-And syzbot report the fellowing crash:
-==================================================================
-BUG: KASAN: use-after-free in hlist_add_head include/linux/list.h:929 [inline]
-BUG: KASAN: use-after-free in enqueue_timer+0x18/0xa4 kernel/time/timer.c:605
-Write at addr f9ff000024df6058 by task syz-fuzzer/2256
-Pointer tag: [f9], memory tag: [fe]
-
-CPU: 1 PID: 2256 Comm: syz-fuzzer Not tainted 6.1.0-rc5-syzkaller-00008-
-ge01d50cbd6ee #0
-Hardware name: linux,dummy-virt (DT)
-Call trace:
- dump_backtrace.part.0+0xe0/0xf0 arch/arm64/kernel/stacktrace.c:156
- dump_backtrace arch/arm64/kernel/stacktrace.c:162 [inline]
- show_stack+0x18/0x40 arch/arm64/kernel/stacktrace.c:163
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x68/0x84 lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:284 [inline]
- print_report+0x1a8/0x4a0 mm/kasan/report.c:395
- kasan_report+0x94/0xb4 mm/kasan/report.c:495
- __do_kernel_fault+0x164/0x1e0 arch/arm64/mm/fault.c:320
- do_bad_area arch/arm64/mm/fault.c:473 [inline]
- do_tag_check_fault+0x78/0x8c arch/arm64/mm/fault.c:749
- do_mem_abort+0x44/0x94 arch/arm64/mm/fault.c:825
- el1_abort+0x40/0x60 arch/arm64/kernel/entry-common.c:367
- el1h_64_sync_handler+0xd8/0xe4 arch/arm64/kernel/entry-common.c:427
- el1h_64_sync+0x64/0x68 arch/arm64/kernel/entry.S:576
- hlist_add_head include/linux/list.h:929 [inline]
- enqueue_timer+0x18/0xa4 kernel/time/timer.c:605
- mod_timer+0x14/0x20 kernel/time/timer.c:1161
- mrp_periodic_timer_arm net/802/mrp.c:614 [inline]
- mrp_periodic_timer+0xa0/0xc0 net/802/mrp.c:627
- call_timer_fn.constprop.0+0x24/0x80 kernel/time/timer.c:1474
- expire_timers+0x98/0xc4 kernel/time/timer.c:1519
-
-To fix it, we can introduce a new active flags to make sure the timer will
-not restart.
-
-Reported-by: syzbot+6fd64001c20aa99e34a4@syzkaller.appspotmail.com
-
-Signed-off-by: Schspa Shi <schspa@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c5a76a246989 ("ASoC: Intel: Skylake: Add shutdown callback")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Tested-by: Lukasz Majczak <lma@semihlaf.com>
+Link: https://lore.kernel.org/r/20221205085330.857665-6-cezary.rojewski@intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/mrp.h |  1 +
- net/802/mrp.c     | 18 +++++++++++++-----
- 2 files changed, 14 insertions(+), 5 deletions(-)
+ sound/soc/intel/skylake/skl.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/include/net/mrp.h b/include/net/mrp.h
-index ef58b4a07190..c6c53370e390 100644
---- a/include/net/mrp.h
-+++ b/include/net/mrp.h
-@@ -120,6 +120,7 @@ struct mrp_applicant {
- 	struct sk_buff		*pdu;
- 	struct rb_root		mad;
- 	struct rcu_head		rcu;
-+	bool			active;
- };
+diff --git a/sound/soc/intel/skylake/skl.c b/sound/soc/intel/skylake/skl.c
+index dc6937a59443..80cff74c23af 100644
+--- a/sound/soc/intel/skylake/skl.c
++++ b/sound/soc/intel/skylake/skl.c
+@@ -1116,7 +1116,10 @@ static void skl_shutdown(struct pci_dev *pci)
+ 	if (!skl->init_done)
+ 		return;
  
- struct mrp_port {
-diff --git a/net/802/mrp.c b/net/802/mrp.c
-index 5b804dbe2d08..486becf6c78d 100644
---- a/net/802/mrp.c
-+++ b/net/802/mrp.c
-@@ -606,7 +606,10 @@ static void mrp_join_timer(struct timer_list *t)
- 	spin_unlock(&app->lock);
- 
- 	mrp_queue_xmit(app);
--	mrp_join_timer_arm(app);
-+	spin_lock(&app->lock);
-+	if (likely(app->active))
-+		mrp_join_timer_arm(app);
-+	spin_unlock(&app->lock);
- }
- 
- static void mrp_periodic_timer_arm(struct mrp_applicant *app)
-@@ -620,11 +623,12 @@ static void mrp_periodic_timer(struct timer_list *t)
- 	struct mrp_applicant *app = from_timer(app, t, periodic_timer);
- 
- 	spin_lock(&app->lock);
--	mrp_mad_event(app, MRP_EVENT_PERIODIC);
--	mrp_pdu_queue(app);
-+	if (likely(app->active)) {
-+		mrp_mad_event(app, MRP_EVENT_PERIODIC);
-+		mrp_pdu_queue(app);
-+		mrp_periodic_timer_arm(app);
-+	}
- 	spin_unlock(&app->lock);
--
--	mrp_periodic_timer_arm(app);
- }
- 
- static int mrp_pdu_parse_end_mark(struct sk_buff *skb, int *offset)
-@@ -872,6 +876,7 @@ int mrp_init_applicant(struct net_device *dev, struct mrp_application *appl)
- 	app->dev = dev;
- 	app->app = appl;
- 	app->mad = RB_ROOT;
-+	app->active = true;
- 	spin_lock_init(&app->lock);
- 	skb_queue_head_init(&app->queue);
- 	rcu_assign_pointer(dev->mrp_port->applicants[appl->type], app);
-@@ -900,6 +905,9 @@ void mrp_uninit_applicant(struct net_device *dev, struct mrp_application *appl)
- 
- 	RCU_INIT_POINTER(port->applicants[appl->type], NULL);
- 
-+	spin_lock_bh(&app->lock);
-+	app->active = false;
-+	spin_unlock_bh(&app->lock);
- 	/* Delete timer and generate a final TX event to flush out
- 	 * all pending messages before the applicant is gone.
- 	 */
+-	snd_hdac_stop_streams_and_chip(bus);
++	snd_hdac_stop_streams(bus);
++	snd_hdac_ext_bus_link_power_down_all(bus);
++	skl_dsp_sleep(skl->dsp);
++
+ 	list_for_each_entry(s, &bus->stream_list, list) {
+ 		stream = stream_to_hdac_ext_stream(s);
+ 		snd_hdac_ext_stream_decouple(bus, stream, false);
 -- 
 2.35.1
 
