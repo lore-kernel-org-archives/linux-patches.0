@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61E0D6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:47:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8E51C433D2;
-	Mon, 16 Jan 2023 16:47:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3CBF6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:47:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 797EEC433F0;
+	Mon, 16 Jan 2023 16:47:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887642;
-	bh=0br+WWbHhMGAx0SOLiPOUDlzRTN83AnXxODMf80KNTM=;
+	s=korg; t=1673887644;
+	bh=b0Gha/MQA7n2izlWFu7xR759hhbqSz0WTBDVU+Rl/PM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ekbPwM2UvQCOVE46YhzIpBOVc25YhkOHUwjcRDlQoNWKCq4qKGQxOGjnafDTcMq/H
-	 HsOelWnahYnL9q8ubiO9chlnHYKR7gg8geu76JWrchG5A1RsvxLPeuIvYuFuB+60vC
-	 I2ChlnZ39UVgGsixYbUAAcgTLdxp23jxaTqNmS3Q=
+	b=1XgaFcydOHF37yaJuyjaF+9AHANPVepcGRjJRMOMMtjpY8pNNBU3Sid1Fgclvh4w/
+	 3qwykDfnlFMmmJFnL7B2z4WoP0zAXEyJJinTm3IG0SotPxl4hNg3LiDBTqAGyQqWMy
+	 j7EXq+34FNgu/gD+zTCADBvCgoJikOhKNBxEmYS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	delisun <delisun@pateo.com.cn>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 199/521] scsi: ipr: Fix WARNING in ipr_init()
-Date: Mon, 16 Jan 2023 16:47:41 +0100
-Message-Id: <20230116154855.999943738@linuxfoundation.org>
+Subject: [PATCH 4.19 226/521] serial: pl011: Do not clear RX FIFO & RX interrupt in unthrottle.
+Date: Mon, 16 Jan 2023 16:48:08 +0100
+Message-Id: <20230116154857.274280928@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,71 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: delisun <delisun@pateo.com.cn>
 
-[ Upstream commit e6f108bffc3708ddcff72324f7d40dfcd0204894 ]
+[ Upstream commit 032d5a71ed378ffc6a2d41a187d8488a4f9fe415 ]
 
-ipr_init() will not call unregister_reboot_notifier() when
-pci_register_driver() fails, which causes a WARNING. Call
-unregister_reboot_notifier() when pci_register_driver() fails.
+Clearing the RX FIFO will cause data loss.
+Copy the pl011_enabl_interrupts implementation, and remove the clear
+interrupt and FIFO part of the code.
 
-notifier callback ipr_halt [ipr] already registered
-WARNING: CPU: 3 PID: 299 at kernel/notifier.c:29
-notifier_chain_register+0x16d/0x230
-Modules linked in: ipr(+) xhci_pci_renesas xhci_hcd ehci_hcd usbcore
-led_class gpu_sched drm_buddy video wmi drm_ttm_helper ttm
-drm_display_helper drm_kms_helper drm drm_panel_orientation_quirks
-agpgart cfbft
-CPU: 3 PID: 299 Comm: modprobe Tainted: G        W
-6.1.0-rc1-00190-g39508d23b672-dirty #332
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-rel-1.15.0-0-g2dd4b9b3f840-prebuilt.qemu.org 04/01/2014
-RIP: 0010:notifier_chain_register+0x16d/0x230
-Call Trace:
- <TASK>
- __blocking_notifier_chain_register+0x73/0xb0
- ipr_init+0x30/0x1000 [ipr]
- do_one_initcall+0xdb/0x480
- do_init_module+0x1cf/0x680
- load_module+0x6a50/0x70a0
- __do_sys_finit_module+0x12f/0x1c0
- do_syscall_64+0x3f/0x90
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Fixes: f72919ec2bbb ("[SCSI] ipr: implement shutdown changes and remove obsolete write cache parameter")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Link: https://lore.kernel.org/r/20221113064513.14028-1-shangxiaojing@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 211565b10099 ("serial: pl011: UPSTAT_AUTORTS requires .throttle/unthrottle")
+Signed-off-by: delisun <delisun@pateo.com.cn>
+Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20221110020108.7700-1-delisun@pateo.com.cn
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/ipr.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/tty/serial/amba-pl011.c | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/ipr.c b/drivers/scsi/ipr.c
-index c6cde552b995..5989c868bfe0 100644
---- a/drivers/scsi/ipr.c
-+++ b/drivers/scsi/ipr.c
-@@ -10854,11 +10854,19 @@ static struct notifier_block ipr_notifier = {
-  **/
- static int __init ipr_init(void)
+diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
+index 87d9bfafc82e..d1f4882d9f40 100644
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -1771,8 +1771,17 @@ static void pl011_enable_interrupts(struct uart_amba_port *uap)
+ static void pl011_unthrottle_rx(struct uart_port *port)
  {
-+	int rc;
-+
- 	ipr_info("IBM Power RAID SCSI Device Driver version: %s %s\n",
- 		 IPR_DRIVER_VERSION, IPR_DRIVER_DATE);
+ 	struct uart_amba_port *uap = container_of(port, struct uart_amba_port, port);
++	unsigned long flags;
  
- 	register_reboot_notifier(&ipr_notifier);
--	return pci_register_driver(&ipr_driver);
-+	rc = pci_register_driver(&ipr_driver);
-+	if (rc) {
-+		unregister_reboot_notifier(&ipr_notifier);
-+		return rc;
-+	}
+-	pl011_enable_interrupts(uap);
++	spin_lock_irqsave(&uap->port.lock, flags);
 +
-+	return 0;
++	uap->im = UART011_RTIM;
++	if (!pl011_dma_rx_running(uap))
++		uap->im |= UART011_RXIM;
++
++	pl011_write(uap->im, uap, REG_IMSC);
++
++	spin_unlock_irqrestore(&uap->port.lock, flags);
  }
  
- /**
+ static int pl011_startup(struct uart_port *port)
 -- 
 2.35.1
 
