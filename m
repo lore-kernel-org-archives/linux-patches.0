@@ -1,37 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B30C33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A9F2C433EF;
-	Mon, 16 Jan 2023 16:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53C533EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AAD6C433F1;
+	Mon, 16 Jan 2023 16:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884906;
-	bh=7ngtpNpRdyuMIe9jf8cRtnaBAiVtorvis9hHf1pqhiw=;
+	s=korg; t=1673884908;
+	bh=GbCshQzRk2F7C4OSpZo7Q9DQz8fItdGt06u1Bp3nRNs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l/dYQD4jrsa/OldTO84qW1CBBFZeuPn4cdppxwVXixScK8BjkZPaSyRKEIimFDKBA
-	 B+arq/2I1wK27rRoHFaX8cTXHM9aujaCRPAnlPxdrBkxwYFDqXouI/Fs5fDmRtrYQ5
-	 deyXqBbIAP9bcRQhIRU1A0F2Hff+3f2xGfZNccFk=
+	b=JnV/oOQS2jV2keXIJI2/GxNP0tEUPg3uC+X5uRX7tspHCLc6dyRHw2CNPuD3PrFQc
+	 V6QVM/9Jc4Wu32v35QDMOd3+tnkOrj9kxRLoVAfX5Fg0ZJ2RnH6pTtl4de5ZbxmFeE
+	 whg+PUDDojKmPNBRcMLC7hEgWBdRReNYyfdoWkps=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	James Clark <james.clark@arm.com>,
-	Leo Yan <leo.yan@linaro.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Vlastimil Babka <vbabka@suse.cz>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Christopher S Hall <christopher.s.hall@intel.com>,
+	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
+	Sasha Neftin <sasha.neftin@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 167/183] perf kmem: Support field "node" in evsel__process_alloc_event() coping with recent tracepoint restructuring
-Date: Mon, 16 Jan 2023 16:51:30 +0100
-Message-Id: <20230116154810.345729215@linuxfoundation.org>
+Subject: [PATCH 6.1 168/183] igc: Fix PPS delta between two synchronized end-points
+Date: Mon, 16 Jan 2023 16:51:31 +0100
+Message-Id: <20230116154810.397078565@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -45,108 +38,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leo Yan <leo.yan@linaro.org>
+From: Christopher S Hall <christopher.s.hall@intel.com>
 
-[ Upstream commit dce088ab0d51ae3b14fb2bd608e9c649aadfe5dc ]
+[ Upstream commit 5e91c72e560cc85f7163bbe3d14197268de31383 ]
 
-Commit 11e9734bcb6a7361 ("mm/slab_common: unify NUMA and UMA version of
-tracepoints") adds the field "node" into the tracepoints 'kmalloc' and
-'kmem_cache_alloc', so this patch modifies the event process function to
-support the field "node".
+This patch fix the pulse per second output delta between
+two synchronized end-points.
 
-If field "node" is detected by checking function evsel__field(), it
-stats the cross allocation.
+Based on Intel Discrete I225 Software User Manual Section
+4.2.15 TimeSync Auxiliary Control Register, ST0[Bit 4] and
+ST1[Bit 7] must be set to ensure that clock output will be
+toggles based on frequency value defined. This is to ensure
+that output of the PPS is aligned with the clock.
 
-When the "node" value is NUMA_NO_NODE (-1), it means the memory can be
-allocated from any memory node, in this case, we don't account it as a
-cross allocation.
+How to test:
 
-Fixes: 11e9734bcb6a7361 ("mm/slab_common: unify NUMA and UMA version of tracepoints")
-Reported-by: Ravi Bangoria <ravi.bangoria@amd.com>
-Reviewed-by: James Clark <james.clark@arm.com>
-Signed-off-by: Leo Yan <leo.yan@linaro.org>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Vlastimil Babka <vbabka@suse.cz>
-Link: https://lore.kernel.org/r/20230108062400.250690-2-leo.yan@linaro.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+1) Running time synchronization on both end points.
+Ex: ptp4l --step_threshold=1 -m -f gPTP.cfg -i <interface name>
+
+2) Configure PPS output using below command for both end-points
+Ex: SDP0 on I225 REV4 SKU variant
+
+./testptp -d /dev/ptp0 -L 0,2
+./testptp -d /dev/ptp0 -p 1000000000
+
+3) Measure the output using analyzer for both end-points
+
+Fixes: 87938851b6ef ("igc: enable auxiliary PHC functions for the i225")
+Signed-off-by: Christopher S Hall <christopher.s.hall@intel.com>
+Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Acked-by: Sasha Neftin <sasha.neftin@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-kmem.c | 36 ++++++++++++++++++++++++------------
- 1 file changed, 24 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/intel/igc/igc_defines.h |  2 ++
+ drivers/net/ethernet/intel/igc/igc_ptp.c     | 10 ++++++----
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/builtin-kmem.c b/tools/perf/builtin-kmem.c
-index 63c759edb8bc..40dd52acc48a 100644
---- a/tools/perf/builtin-kmem.c
-+++ b/tools/perf/builtin-kmem.c
-@@ -26,6 +26,7 @@
- #include "util/string2.h"
- 
- #include <linux/kernel.h>
-+#include <linux/numa.h>
- #include <linux/rbtree.h>
- #include <linux/string.h>
- #include <linux/zalloc.h>
-@@ -184,22 +185,33 @@ static int evsel__process_alloc_event(struct evsel *evsel, struct perf_sample *s
- 	total_allocated += bytes_alloc;
- 
- 	nr_allocs++;
--	return 0;
--}
- 
--static int evsel__process_alloc_node_event(struct evsel *evsel, struct perf_sample *sample)
--{
--	int ret = evsel__process_alloc_event(evsel, sample);
-+	/*
-+	 * Commit 11e9734bcb6a ("mm/slab_common: unify NUMA and UMA
-+	 * version of tracepoints") adds the field "node" into the
-+	 * tracepoints 'kmalloc' and 'kmem_cache_alloc'.
-+	 *
-+	 * The legacy tracepoints 'kmalloc_node' and 'kmem_cache_alloc_node'
-+	 * also contain the field "node".
-+	 *
-+	 * If the tracepoint contains the field "node" the tool stats the
-+	 * cross allocation.
-+	 */
-+	if (evsel__field(evsel, "node")) {
-+		int node1, node2;
- 
--	if (!ret) {
--		int node1 = cpu__get_node((struct perf_cpu){.cpu = sample->cpu}),
--		    node2 = evsel__intval(evsel, sample, "node");
-+		node1 = cpu__get_node((struct perf_cpu){.cpu = sample->cpu});
-+		node2 = evsel__intval(evsel, sample, "node");
- 
--		if (node1 != node2)
-+		/*
-+		 * If the field "node" is NUMA_NO_NODE (-1), we don't take it
-+		 * as a cross allocation.
-+		 */
-+		if ((node2 != NUMA_NO_NODE) && (node1 != node2))
- 			nr_cross_allocs++;
- 	}
- 
--	return ret;
-+	return 0;
- }
- 
- static int ptr_cmp(void *, void *);
-@@ -1368,8 +1380,8 @@ static int __cmd_kmem(struct perf_session *session)
- 		/* slab allocator */
- 		{ "kmem:kmalloc",		evsel__process_alloc_event, },
- 		{ "kmem:kmem_cache_alloc",	evsel__process_alloc_event, },
--		{ "kmem:kmalloc_node",		evsel__process_alloc_node_event, },
--		{ "kmem:kmem_cache_alloc_node", evsel__process_alloc_node_event, },
-+		{ "kmem:kmalloc_node",		evsel__process_alloc_event, },
-+		{ "kmem:kmem_cache_alloc_node", evsel__process_alloc_event, },
- 		{ "kmem:kfree",			evsel__process_free_event, },
- 		{ "kmem:kmem_cache_free",	evsel__process_free_event, },
- 		/* page allocator */
+diff --git a/drivers/net/ethernet/intel/igc/igc_defines.h b/drivers/net/ethernet/intel/igc/igc_defines.h
+index 4ad35fbdc02e..dbfa4b9dee06 100644
+--- a/drivers/net/ethernet/intel/igc/igc_defines.h
++++ b/drivers/net/ethernet/intel/igc/igc_defines.h
+@@ -466,7 +466,9 @@
+ #define IGC_TSAUXC_EN_TT0	BIT(0)  /* Enable target time 0. */
+ #define IGC_TSAUXC_EN_TT1	BIT(1)  /* Enable target time 1. */
+ #define IGC_TSAUXC_EN_CLK0	BIT(2)  /* Enable Configurable Frequency Clock 0. */
++#define IGC_TSAUXC_ST0		BIT(4)  /* Start Clock 0 Toggle on Target Time 0. */
+ #define IGC_TSAUXC_EN_CLK1	BIT(5)  /* Enable Configurable Frequency Clock 1. */
++#define IGC_TSAUXC_ST1		BIT(7)  /* Start Clock 1 Toggle on Target Time 1. */
+ #define IGC_TSAUXC_EN_TS0	BIT(8)  /* Enable hardware timestamp 0. */
+ #define IGC_TSAUXC_AUTT0	BIT(9)  /* Auxiliary Timestamp Taken. */
+ #define IGC_TSAUXC_EN_TS1	BIT(10) /* Enable hardware timestamp 0. */
+diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
+index 8dbb9f903ca7..c34734d432e0 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ptp.c
++++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
+@@ -322,7 +322,7 @@ static int igc_ptp_feature_enable_i225(struct ptp_clock_info *ptp,
+ 		ts = ns_to_timespec64(ns);
+ 		if (rq->perout.index == 1) {
+ 			if (use_freq) {
+-				tsauxc_mask = IGC_TSAUXC_EN_CLK1;
++				tsauxc_mask = IGC_TSAUXC_EN_CLK1 | IGC_TSAUXC_ST1;
+ 				tsim_mask = 0;
+ 			} else {
+ 				tsauxc_mask = IGC_TSAUXC_EN_TT1;
+@@ -333,7 +333,7 @@ static int igc_ptp_feature_enable_i225(struct ptp_clock_info *ptp,
+ 			freqout = IGC_FREQOUT1;
+ 		} else {
+ 			if (use_freq) {
+-				tsauxc_mask = IGC_TSAUXC_EN_CLK0;
++				tsauxc_mask = IGC_TSAUXC_EN_CLK0 | IGC_TSAUXC_ST0;
+ 				tsim_mask = 0;
+ 			} else {
+ 				tsauxc_mask = IGC_TSAUXC_EN_TT0;
+@@ -347,10 +347,12 @@ static int igc_ptp_feature_enable_i225(struct ptp_clock_info *ptp,
+ 		tsauxc = rd32(IGC_TSAUXC);
+ 		tsim = rd32(IGC_TSIM);
+ 		if (rq->perout.index == 1) {
+-			tsauxc &= ~(IGC_TSAUXC_EN_TT1 | IGC_TSAUXC_EN_CLK1);
++			tsauxc &= ~(IGC_TSAUXC_EN_TT1 | IGC_TSAUXC_EN_CLK1 |
++				    IGC_TSAUXC_ST1);
+ 			tsim &= ~IGC_TSICR_TT1;
+ 		} else {
+-			tsauxc &= ~(IGC_TSAUXC_EN_TT0 | IGC_TSAUXC_EN_CLK0);
++			tsauxc &= ~(IGC_TSAUXC_EN_TT0 | IGC_TSAUXC_EN_CLK0 |
++				    IGC_TSAUXC_ST0);
+ 			tsim &= ~IGC_TSICR_TT0;
+ 		}
+ 		if (on) {
 -- 
 2.35.1
 
