@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B1146B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:06:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DBEEC433F2;
-	Mon, 16 Jan 2023 16:06:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B92CA46B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:06:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42096C433EF;
+	Mon, 16 Jan 2023 16:06:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885163;
-	bh=ZgfTzPXbm436fcG9QldX4WTZEYWUgT3QS1nm35u/LjI=;
+	s=korg; t=1673885165;
+	bh=KWZzOKF6kiJx81B2msFd5oplX8IQ1Kx9F0lzqzUuSPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tWW8yrwuJT+WsV4OSVey6bwN/ILvynbcH4iikop3KcECzIWEx68U7GRuufQan8BNK
-	 C4/t22UfnXUQTGH0+h5PV0NqaDFOI2LCPPwjA5k1FBwePB0z1yDPmi3Fj8Yj3zynDb
-	 MHA1BjNVRdPtW8EMuddJyN1hX3ISLbouQQap5LXU=
+	b=d5Y9frBB2IebLtsy+R0Pfy/A5+I6mFI0HYy8ImoPB01R8fZS7JaEJd73biEqjPUa5
+	 7fZ3uRrfrOEWOEFa3f3c+obLPvYJLXP4SYl8gw/JMNoZj4Ojp9/8e+WToju6lUaVbX
+	 ZQ5jD+TNJNZA8GZ0n1SWtEX/nEMaO0obrjkrhkjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Rob Clark <robdclark@chromium.org>
-Subject: [PATCH 5.10 12/64] drm/msm/adreno: Make adreno quirks not overwrite each other
-Date: Mon, 16 Jan 2023 16:51:19 +0100
-Message-Id: <20230116154744.074374513@linuxfoundation.org>
+	Luka Guzenko <l.guzenko@web.de>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 02/64] ALSA: hda/realtek: Enable mute/micmute LEDs on HP Spectre x360 13-aw0xxx
+Date: Mon, 16 Jan 2023 16:51:09 +0100
+Message-Id: <20230116154743.683851640@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -38,56 +34,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Luka Guzenko <l.guzenko@web.de>
 
-commit 13ef096e342b00e30b95a90c6c13eee1f0bec4c5 upstream.
+commit ca88eeb308a221c2dcd4a64031d2e5fcd3db9eaa upstream.
 
-So far the adreno quirks have all been assigned with an OR operator,
-which is problematic, because they were assigned consecutive integer
-values, which makes checking them with an AND operator kind of no bueno..
+The HP Spectre x360 13-aw0xxx devices use the ALC285 codec with GPIO 0x04
+controlling the micmute LED and COEF 0x0b index 8 controlling the mute LED.
+A quirk was added to make these work as well as a fixup.
 
-Switch to using BIT(n) so that only the quirks that the programmer chose
-are taken into account when evaluating info->quirks & ADRENO_QUIRK_...
-
-Fixes: 370063ee427a ("drm/msm/adreno: Add A540 support")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Rob Clark <robdclark@gmail.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/516456/
-Link: https://lore.kernel.org/r/20230102100201.77286-1-konrad.dybcio@linaro.org
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: Luka Guzenko <l.guzenko@web.de>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230110202514.2792-1-l.guzenko@web.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.h |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ sound/pci/hda/patch_realtek.c |   23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -28,11 +28,9 @@ enum {
- 	ADRENO_FW_MAX,
- };
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -4581,6 +4581,16 @@ static void alc285_fixup_hp_coef_micmute
+ 	}
+ }
  
--enum adreno_quirks {
--	ADRENO_QUIRK_TWO_PASS_USE_WFI = 1,
--	ADRENO_QUIRK_FAULT_DETECT_MASK = 2,
--	ADRENO_QUIRK_LMLOADKILL_DISABLE = 3,
--};
-+#define ADRENO_QUIRK_TWO_PASS_USE_WFI		BIT(0)
-+#define ADRENO_QUIRK_FAULT_DETECT_MASK		BIT(1)
-+#define ADRENO_QUIRK_LMLOADKILL_DISABLE		BIT(2)
++static void alc285_fixup_hp_gpio_micmute_led(struct hda_codec *codec,
++				const struct hda_fixup *fix, int action)
++{
++	struct alc_spec *spec = codec->spec;
++
++	if (action == HDA_FIXUP_ACT_PRE_PROBE)
++		spec->micmute_led_polarity = 1;
++	alc_fixup_hp_gpio_led(codec, action, 0, 0x04);
++}
++
+ static void alc236_fixup_hp_coef_micmute_led(struct hda_codec *codec,
+ 				const struct hda_fixup *fix, int action)
+ {
+@@ -4602,6 +4612,13 @@ static void alc285_fixup_hp_mute_led(str
+ 	alc285_fixup_hp_coef_micmute_led(codec, fix, action);
+ }
  
- struct adreno_rev {
- 	uint8_t  core;
-@@ -62,7 +60,7 @@ struct adreno_info {
- 	const char *name;
- 	const char *fw[ADRENO_FW_MAX];
- 	uint32_t gmem;
--	enum adreno_quirks quirks;
-+	u64 quirks;
- 	struct msm_gpu *(*init)(struct drm_device *dev);
- 	const char *zapfw;
- 	u32 inactive_period;
++static void alc285_fixup_hp_spectre_x360_mute_led(struct hda_codec *codec,
++				const struct hda_fixup *fix, int action)
++{
++	alc285_fixup_hp_mute_led_coefbit(codec, fix, action);
++	alc285_fixup_hp_gpio_micmute_led(codec, fix, action);
++}
++
+ static void alc236_fixup_hp_mute_led(struct hda_codec *codec,
+ 				const struct hda_fixup *fix, int action)
+ {
+@@ -6856,6 +6873,7 @@ enum {
+ 	ALC285_FIXUP_ASUS_G533Z_PINS,
+ 	ALC285_FIXUP_HP_GPIO_LED,
+ 	ALC285_FIXUP_HP_MUTE_LED,
++	ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED,
+ 	ALC236_FIXUP_HP_GPIO_LED,
+ 	ALC236_FIXUP_HP_MUTE_LED,
+ 	ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF,
+@@ -8224,6 +8242,10 @@ static const struct hda_fixup alc269_fix
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc285_fixup_hp_mute_led,
+ 	},
++	[ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc285_fixup_hp_spectre_x360_mute_led,
++	},
+ 	[ALC236_FIXUP_HP_GPIO_LED] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc236_fixup_hp_gpio_led,
+@@ -8936,6 +8958,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x86c7, "HP Envy AiO 32", ALC274_FIXUP_HP_ENVY_GPIO),
+ 	SND_PCI_QUIRK(0x103c, 0x86e7, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
+ 	SND_PCI_QUIRK(0x103c, 0x86e8, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
++	SND_PCI_QUIRK(0x103c, 0x86f9, "HP Spectre x360 13-aw0xxx", ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8716, "HP Elite Dragonfly G2 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8720, "HP EliteBook x360 1040 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
+ 	SND_PCI_QUIRK(0x103c, 0x8724, "HP EliteBook 850 G7", ALC285_FIXUP_HP_GPIO_LED),
 
 
