@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E5033F0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:12:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24DAC433EF;
-	Mon, 16 Jan 2023 16:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F37933F0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:12:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87FB1C433F0;
+	Mon, 16 Jan 2023 16:12:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885538;
-	bh=+rw32T8rEZTycuY27y5wC4HMY8OViQkUvZNihhXeMeg=;
+	s=korg; t=1673885540;
+	bh=E66UfLByuvpiFkZgPsyqOojYpRvUYbgfQf0UxwG0EZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mVp2Ie0Fv3D4UyCIM5nqb04RbY9Rxz/vSgnq5e7/yYxKn4pRepbUp2kRj9PUbefd+
-	 nsUXQ7sZYPJG1H03++quCXT3NqQkbMGzNRrhECYFjT4S5ZvdG+ZEcGwfVNGkAQtwnK
-	 J6atCvoRo/iHQovdLyvZBUg+UBoJ6ZWG0R6tq6Yk=
+	b=dqZR8GZx7BLDS6zdLCE+jzCd5Js4BUVjLrwUsLi9bD4NgyGmI2s0JQ9dLPqgWJYMy
+	 Cnu+XMdn7ckJWsjiIvIz4cjSstRPA4sF+CYBicYz+IMVLmYlDQ3EcEX6rrr2aLNuAN
+	 YJ8DsKb9QSpY3dT8bPBqEV/7wLWPy89RLAcpforU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Alan Stern <stern@rowland.harvard.edu>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 088/658] PM: runtime: Improve path in rpm_idle() when no callback
-Date: Mon, 16 Jan 2023 16:42:56 +0100
-Message-Id: <20230116154913.595353372@linuxfoundation.org>
+Subject: [PATCH 5.4 062/658] MIPS: vpe-mt: fix possible memory leak while module exiting
+Date: Mon, 16 Jan 2023 16:42:30 +0100
+Message-Id: <20230116154912.510831670@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,57 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 5a2bd1b1c64e1ac5627db3767ac465f18606315c ]
+[ Upstream commit 5822e8cc84ee37338ab0bdc3124f6eec04dc232d ]
 
-When pm_runtime_no_callbacks() has been called for a struct device to set
-the dev->power.no_callbacks flag for it, it enables rpm_idle() to take a
-slightly quicker path by assuming that a ->runtime_idle() callback would
-have returned 0 to indicate success.
+Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
+bus_id string array"), the name of device is allocated dynamically,
+it need be freed when module exiting, call put_device() to give up
+reference, so that it can be freed in kobject_cleanup() when the
+refcount hit to 0. The vpe_device is static, so remove kfree() from
+vpe_device_release().
 
-A device that does not have the dev->power.no_callbacks flag set for it,
-may still be missing a corresponding ->runtime_idle() callback, in which
-case the slower path in rpm_idle() is taken. Let's improve the behaviour
-for this case, by aligning code to the quicker path.
-
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: bc80c2e438dc ("PM: runtime: Do not call __rpm_callback() from rpm_idle()")
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/power/runtime.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ arch/mips/kernel/vpe-mt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-index 8fbd376471de..24a3013728c3 100644
---- a/drivers/base/power/runtime.c
-+++ b/drivers/base/power/runtime.c
-@@ -446,7 +446,10 @@ static int rpm_idle(struct device *dev, int rpmflags)
- 	/* Pending requests need to be canceled. */
- 	dev->power.request = RPM_REQ_NONE;
+diff --git a/arch/mips/kernel/vpe-mt.c b/arch/mips/kernel/vpe-mt.c
+index 2e003b11a098..9fd7cd48ea1d 100644
+--- a/arch/mips/kernel/vpe-mt.c
++++ b/arch/mips/kernel/vpe-mt.c
+@@ -313,7 +313,6 @@ ATTRIBUTE_GROUPS(vpe);
  
--	if (dev->power.no_callbacks)
-+	callback = RPM_GET_CALLBACK(dev, runtime_idle);
-+
-+	/* If no callback assume success. */
-+	if (!callback || dev->power.no_callbacks)
- 		goto out;
+ static void vpe_device_release(struct device *cd)
+ {
+-	kfree(cd);
+ }
  
- 	/* Carry out an asynchronous or a synchronous idle notification. */
-@@ -462,10 +465,7 @@ static int rpm_idle(struct device *dev, int rpmflags)
+ static struct class vpe_class = {
+@@ -497,6 +496,7 @@ int __init vpe_module_init(void)
+ 	device_del(&vpe_device);
  
- 	dev->power.idle_notification = true;
+ out_class:
++	put_device(&vpe_device);
+ 	class_unregister(&vpe_class);
  
--	callback = RPM_GET_CALLBACK(dev, runtime_idle);
--
--	if (callback)
--		retval = __rpm_callback(callback, dev);
-+	retval = __rpm_callback(callback, dev);
+ out_chrdev:
+@@ -509,7 +509,7 @@ void __exit vpe_module_exit(void)
+ {
+ 	struct vpe *v, *n;
  
- 	dev->power.idle_notification = false;
- 	wake_up_all(&dev->power.wait_queue);
+-	device_del(&vpe_device);
++	device_unregister(&vpe_device);
+ 	class_unregister(&vpe_class);
+ 	unregister_chrdev(major, VPE_MODULE_NAME);
+ 
 -- 
 2.35.1
 
