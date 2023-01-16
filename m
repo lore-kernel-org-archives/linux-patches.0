@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5455A6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:03:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE0E6C433D2;
-	Mon, 16 Jan 2023 17:03:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E472F6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:03:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D9EC433F0;
+	Mon, 16 Jan 2023 17:03:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888627;
-	bh=dJq01lreG1hWlgvQLtbQ9qGIiIdw9xBElaXv/5HCxYI=;
+	s=korg; t=1673888629;
+	bh=y0RYymWES8yUMcNcK7hAJ9L88eMOJbo1s8jKpVj8TTo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nhuAdKjzIarZJG6LWu+3uVeOYkPfynRQPGmpastm1OIOoxgFJhMJoCRbiWKbkKrnK
-	 TdpKljaXFoUJlKPXPzI3a3/OZUOHHF1nQQluoHDTqVyqeQSbqjEgZN903fc22noL0k
-	 jEIEm+oFaGOoKYH46BGj6zYKvP8EpAOTl5GKvO0w=
+	b=HTJeokV1F8vYIjN+fBGfi6gQyN9zPhd8NFI8ihLqSjG1YYrcUflD4IvsarWROfvXb
+	 eUWOEyfPJHMPdPtUufSBrAHYRmmi0G8/21Gsa2Huph2dGvYEWovF+nsBxUhKtEBr2z
+	 +/5X2hGzU97RVoFQJdLx5OLVp6oqT/QEa0p22gUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Hanjun Guo <guohanjun@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 049/338] MIPS: vpe-cmp: fix possible memory leak while module exiting
-Date: Mon, 16 Jan 2023 16:48:42 +0100
-Message-Id: <20230116154822.943294756@linuxfoundation.org>
+Subject: [PATCH 4.14 050/338] PNP: fix name memory leak in pnp_alloc_dev()
+Date: Mon, 16 Jan 2023 16:48:43 +0100
+Message-Id: <20230116154822.993265806@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -37,50 +38,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit c5ed1fe0801f0c66b0fbce2785239a5664629057 ]
+[ Upstream commit 110d7b0325c55ff3620073ba4201845f59e22ebf ]
 
-dev_set_name() allocates memory for name, it need be freed
-when module exiting, call put_device() to give up reference,
-so that it can be freed in kobject_cleanup() when the refcount
-hit to 0. The vpe_device is static, so remove kfree() from
-vpe_device_release().
+After commit 1fa5ae857bb1 ("driver core: get rid of struct device's
+bus_id string array"), the name of device is allocated dynamically,
+move dev_set_name() after pnp_add_id() to avoid memory leak.
 
-Fixes: 17a1d523aa58 ("MIPS: APRP: Add VPE loader support for CMP platforms.")
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/vpe-cmp.c | 4 ++--
+ drivers/pnp/core.c | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/mips/kernel/vpe-cmp.c b/arch/mips/kernel/vpe-cmp.c
-index 9268ebc0f61e..903c07bdc92d 100644
---- a/arch/mips/kernel/vpe-cmp.c
-+++ b/arch/mips/kernel/vpe-cmp.c
-@@ -75,7 +75,6 @@ ATTRIBUTE_GROUPS(vpe);
+diff --git a/drivers/pnp/core.c b/drivers/pnp/core.c
+index 3bf18d718975..131b925b820d 100644
+--- a/drivers/pnp/core.c
++++ b/drivers/pnp/core.c
+@@ -160,14 +160,14 @@ struct pnp_dev *pnp_alloc_dev(struct pnp_protocol *protocol, int id,
+ 	dev->dev.coherent_dma_mask = dev->dma_mask;
+ 	dev->dev.release = &pnp_release_device;
  
- static void vpe_device_release(struct device *cd)
- {
--	kfree(cd);
+-	dev_set_name(&dev->dev, "%02x:%02x", dev->protocol->number, dev->number);
+-
+ 	dev_id = pnp_add_id(dev, pnpid);
+ 	if (!dev_id) {
+ 		kfree(dev);
+ 		return NULL;
+ 	}
+ 
++	dev_set_name(&dev->dev, "%02x:%02x", dev->protocol->number, dev->number);
++
+ 	return dev;
  }
- 
- static struct class vpe_class = {
-@@ -157,6 +156,7 @@ int __init vpe_module_init(void)
- 	device_del(&vpe_device);
- 
- out_class:
-+	put_device(&vpe_device);
- 	class_unregister(&vpe_class);
- 
- out_chrdev:
-@@ -169,7 +169,7 @@ void __exit vpe_module_exit(void)
- {
- 	struct vpe *v, *n;
- 
--	device_del(&vpe_device);
-+	device_unregister(&vpe_device);
- 	class_unregister(&vpe_class);
- 	unregister_chrdev(major, VPE_MODULE_NAME);
  
 -- 
 2.35.1
