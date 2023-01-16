@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68DAF6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:05:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E36C9C433D2;
-	Mon, 16 Jan 2023 17:04:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BC76FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:05:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83169C433EF;
+	Mon, 16 Jan 2023 17:05:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888700;
-	bh=Xniuir/tKd+JV00tqTOuEZnVi2NpAXYL/qMsRGrgCXs=;
+	s=korg; t=1673888702;
+	bh=a46x8B0ubCXZA5N76u4/j298QGVb0sP9gQ+DXV3tsFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fFo/w/eIkh+YdRECYOW5ef2WS9zBGstFI2kDc21UHRSLHqsxl6jXJuWZmnc/BkPcO
-	 j7IKBN5BT1jQGOzCnbhl8oh1BfwFjStPFK7Zjw5zMKtRlv7qSpfn7YSBW5kKn8LknB
-	 5I6iVPy39ViZOEpOvNDkwOaY676Xxw+FCmPZduiQ=
+	b=pO+Q/Nv4Cb4dXb46yZpxHUUGyDrRmATSMzCQEbPvAPUWgnGS6Dr05hZNGHl1oAq9z
+	 NwQo2eFDSdlsM933cqFcodiQzVXy9RdVX4sKra9c//5N2RnXcmAh1GJBPwJk7X8QKs
+	 09IVEx8YX4V0a5rkj4fjyw61T7s4k+5gU0TfC1mk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Douglas Anderson <dianders@chromium.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 105/338] mmc: rtsx_usb_sdmmc: fix return value check of mmc_add_host()
-Date: Mon, 16 Jan 2023 16:49:38 +0100
-Message-Id: <20230116154825.462381868@linuxfoundation.org>
+Subject: [PATCH 4.14 079/338] Input: elants_i2c - properly handle the reset GPIO when power is off
+Date: Mon, 16 Jan 2023 16:49:12 +0100
+Message-Id: <20230116154824.326739938@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,56 +35,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit fc38a5a10e9e5a75eb9189854abeb8405b214cc9 ]
+[ Upstream commit a85fbd6498441694475716a4d5c65f9d3e073faf ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+As can be seen in elants_i2c_power_off(), we want the reset GPIO
+asserted when power is off. The reset GPIO is active low so we need
+the reset line logic low when power is off to avoid leakage.
 
-So fix this by checking the return value and calling mmc_free_host() in the
-error path, besides, led_classdev_unregister() and pm_runtime_disable() also
-need be called.
+We have a problem, though, at probe time. At probe time we haven't
+powered the regulators on yet but we have:
 
-Fixes: c7f6558d84af ("mmc: Add realtek USB sdmmc host driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-7-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+  devm_gpiod_get(&client->dev, "reset", GPIOD_OUT_LOW);
+
+While that _looks_ right, it turns out that it's not. The
+GPIOD_OUT_LOW doesn't mean to init the GPIO to low. It means init the
+GPIO to "not asserted". Since this is an active low GPIO that inits it
+to be high.
+
+Let's fix this to properly init the GPIO. Now after both probe and
+power off the state of the GPIO is consistent (it's "asserted" or
+level low).
+
+Once we fix this, we can see that at power on time we no longer to
+assert the reset GPIO as the first thing. The reset GPIO is _always_
+asserted before powering on. Let's fix powering on to account for
+this.
+
+Fixes: afe10358e47a ("Input: elants_i2c - wire up regulator support")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Link: https://lore.kernel.org/r/20221117123805.1.I9959ac561dd6e1e8e1ce7085e4de6167b27c574f@changeid
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/rtsx_usb_sdmmc.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/input/touchscreen/elants_i2c.c | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/mmc/host/rtsx_usb_sdmmc.c b/drivers/mmc/host/rtsx_usb_sdmmc.c
-index 76da1687ab37..38fb61313bec 100644
---- a/drivers/mmc/host/rtsx_usb_sdmmc.c
-+++ b/drivers/mmc/host/rtsx_usb_sdmmc.c
-@@ -1355,6 +1355,7 @@ static int rtsx_usb_sdmmc_drv_probe(struct platform_device *pdev)
- #ifdef RTSX_USB_USE_LEDS_CLASS
- 	int err;
- #endif
-+	int ret;
+diff --git a/drivers/input/touchscreen/elants_i2c.c b/drivers/input/touchscreen/elants_i2c.c
+index fd48fb6ef210..dc8eddefe7b0 100644
+--- a/drivers/input/touchscreen/elants_i2c.c
++++ b/drivers/input/touchscreen/elants_i2c.c
+@@ -1089,14 +1089,12 @@ static int elants_i2c_power_on(struct elants_data *ts)
+ 	if (IS_ERR_OR_NULL(ts->reset_gpio))
+ 		return 0;
  
- 	ucr = usb_get_intfdata(to_usb_interface(pdev->dev.parent));
- 	if (!ucr)
-@@ -1393,7 +1394,15 @@ static int rtsx_usb_sdmmc_drv_probe(struct platform_device *pdev)
- 	INIT_WORK(&host->led_work, rtsx_usb_update_led);
+-	gpiod_set_value_cansleep(ts->reset_gpio, 1);
+-
+ 	error = regulator_enable(ts->vcc33);
+ 	if (error) {
+ 		dev_err(&ts->client->dev,
+ 			"failed to enable vcc33 regulator: %d\n",
+ 			error);
+-		goto release_reset_gpio;
++		return error;
+ 	}
  
- #endif
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret) {
-+#ifdef RTSX_USB_USE_LEDS_CLASS
-+		led_classdev_unregister(&host->led);
-+#endif
-+		mmc_free_host(mmc);
-+		pm_runtime_disable(&pdev->dev);
-+		return ret;
-+	}
+ 	error = regulator_enable(ts->vccio);
+@@ -1105,7 +1103,7 @@ static int elants_i2c_power_on(struct elants_data *ts)
+ 			"failed to enable vccio regulator: %d\n",
+ 			error);
+ 		regulator_disable(ts->vcc33);
+-		goto release_reset_gpio;
++		return error;
+ 	}
  
- 	return 0;
- }
+ 	/*
+@@ -1114,7 +1112,6 @@ static int elants_i2c_power_on(struct elants_data *ts)
+ 	 */
+ 	udelay(ELAN_POWERON_DELAY_USEC);
+ 
+-release_reset_gpio:
+ 	gpiod_set_value_cansleep(ts->reset_gpio, 0);
+ 	if (error)
+ 		return error;
+@@ -1222,7 +1219,7 @@ static int elants_i2c_probe(struct i2c_client *client,
+ 		return error;
+ 	}
+ 
+-	ts->reset_gpio = devm_gpiod_get(&client->dev, "reset", GPIOD_OUT_LOW);
++	ts->reset_gpio = devm_gpiod_get(&client->dev, "reset", GPIOD_OUT_HIGH);
+ 	if (IS_ERR(ts->reset_gpio)) {
+ 		error = PTR_ERR(ts->reset_gpio);
+ 
 -- 
 2.35.1
 
