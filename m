@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D98C6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:37:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9455C433EF;
-	Mon, 16 Jan 2023 16:37:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D0D6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:37:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D507C433EF;
+	Mon, 16 Jan 2023 16:37:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887069;
-	bh=ceUhaMuaFt0AaD9At5cl0zzqnfnvIA5TB1n19OkATyQ=;
+	s=korg; t=1673887071;
+	bh=2E3RWci/lU20ifjiB1AZa+VXlM0CQ70US6TXZpf8Fms=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PDFbQ0veAdMXgX8IrPqLn0dFFlEnQchbrc6jrkQMdpXh4qozZh49ZflSE6owHl7B7
-	 vV/Ka5VPPac6f83Q88Sgesju+k+wfvxxTty4z6cFPTsbehfv9GMxVd20d+UIp6e7++
-	 RQ8rAxQeUZk1DngxZg13sm/RC2RN7WCjzX8QnH/A=
+	b=Dpn33HETPhcDpmid5Tzj0PjAyd5qqu2c64rG1LOSvEULHe3snmXkqPJJCz9GaVQiI
+	 OM1c7spxOU8FoCUgGqVqH/2CqCDs27D1R1k42AIryPc+YjhR7XJ4hYUcCj7gmlvlop
+	 TVkv5rZ8hgirEOHT2XBEmreHz6uKcVKUuUXaCcFk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	David Hildenbrand <david@redhat.com>,
-	Yang Shi <shy828301@gmail.com>,
-	John Hubbard <jhubbard@nvidia.com>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 002/521] mm/khugepaged: invoke MMU notifiers in shmem/file collapse paths
-Date: Mon, 16 Jan 2023 16:44:24 +0100
-Message-Id: <20230116154847.353372882@linuxfoundation.org>
+	Shiwei Cui <cuishw@inspur.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Jan Kara <jack@suse.cz>,
+	Ming Lei <ming.lei@redhat.com>
+Subject: [PATCH 4.19 003/521] block: unhash blkdev part inode when the part is deleted
+Date: Mon, 16 Jan 2023 16:44:25 +0100
+Message-Id: <20230116154847.398557956@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -38,67 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jann Horn <jannh@google.com>
+From: Ming Lei <ming.lei@redhat.com>
 
-commit f268f6cf875f3220afc77bdd0bf1bb136eb54db9 upstream.
+v5.11 changes the blkdev lookup mechanism completely since commit
+22ae8ce8b892 ("block: simplify bdev/disk lookup in blkdev_get"),
+and small part of the change is to unhash part bdev inode when
+deleting partition. Turns out this kind of change does fix one
+nasty issue in case of BLOCK_EXT_MAJOR:
 
-Any codepath that zaps page table entries must invoke MMU notifiers to
-ensure that secondary MMUs (like KVM) don't keep accessing pages which
-aren't mapped anymore.  Secondary MMUs don't hold their own references to
-pages that are mirrored over, so failing to notify them can lead to page
-use-after-free.
+1) when one partition is deleted & closed, disk_put_part() is always
+called before bdput(bdev), see blkdev_put(); so the part's devt can
+be freed & re-used before the inode is dropped
 
-I'm marking this as addressing an issue introduced in commit f3f0e1d2150b
-("khugepaged: add support of collapse for tmpfs/shmem pages"), but most of
-the security impact of this only came in commit 27e1f8273113 ("khugepaged:
-enable collapse pmd for pte-mapped THP"), which actually omitted flushes
-for the removal of present PTEs, not just for the removal of empty page
-tables.
+2) then new partition with same devt can be created just before the
+inode in 1) is dropped, then the old inode/bdev structurein 1) is
+re-used for this new partition, this way causes use-after-free and
+kernel panic.
 
-Link: https://lkml.kernel.org/r/20221129154730.2274278-3-jannh@google.com
-Link: https://lkml.kernel.org/r/20221128180252.1684965-3-jannh@google.com
-Link: https://lkml.kernel.org/r/20221125213714.4115729-3-jannh@google.com
-Fixes: f3f0e1d2150b ("khugepaged: add support of collapse for tmpfs/shmem pages")
-Signed-off-by: Jann Horn <jannh@google.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Peter Xu <peterx@redhat.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-[manual backport: this code was refactored from two copies into a common
-helper between 5.15 and 6.0;
-pmd collapse for PTE-mapped THP was only added in 5.4;
-MMU notifier API changed between 4.19 and 5.4]
-Signed-off-by: Jann Horn <jannh@google.com>
+It isn't possible to backport the whole big patchset of "merge struct
+block_device and struct hd_struct v4" for addressing this issue.
+
+https://lore.kernel.org/linux-block/20201128161510.347752-1-hch@lst.de/
+
+So fixes it by unhashing part bdev in delete_partition(), and this way
+is actually aligned with v5.11+'s behavior.
+
+Backported from the following 5.10.y commit:
+
+5f2f77560591 ("block: unhash blkdev part inode when the part is deleted")
+
+Reported-by: Shiwei Cui <cuishw@inspur.com>
+Tested-by: Shiwei Cui <cuishw@inspur.com>
+Cc: Christoph Hellwig <hch@lst.de>
+Cc: Jan Kara <jack@suse.cz>
+Signed-off-by: Ming Lei <ming.lei@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/khugepaged.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ block/partition-generic.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1303,13 +1303,20 @@ static void retract_page_tables(struct a
- 		 */
- 		if (down_write_trylock(&mm->mmap_sem)) {
- 			if (!khugepaged_test_exit(mm)) {
--				spinlock_t *ptl = pmd_lock(mm, pmd);
-+				spinlock_t *ptl;
-+				unsigned long end = addr + HPAGE_PMD_SIZE;
+--- a/block/partition-generic.c
++++ b/block/partition-generic.c
+@@ -276,6 +276,7 @@ void delete_partition(struct gendisk *di
+ 	struct disk_part_tbl *ptbl =
+ 		rcu_dereference_protected(disk->part_tbl, 1);
+ 	struct hd_struct *part;
++	struct block_device *bdev;
+ 
+ 	if (partno >= ptbl->len)
+ 		return;
+@@ -296,6 +297,12 @@ void delete_partition(struct gendisk *di
+ 	 * "in-use" until we really free the gendisk.
+ 	 */
+ 	blk_invalidate_devt(part_devt(part));
 +
-+				mmu_notifier_invalidate_range_start(mm, addr,
-+								    end);
-+				ptl = pmd_lock(mm, pmd);
- 				/* assume page table is clear */
- 				_pmd = pmdp_collapse_flush(vma, addr, pmd);
- 				spin_unlock(ptl);
- 				mm_dec_nr_ptes(mm);
- 				tlb_remove_table_sync_one();
- 				pte_free(mm, pmd_pgtable(_pmd));
-+				mmu_notifier_invalidate_range_end(mm, addr,
-+								  end);
- 			}
- 			up_write(&mm->mmap_sem);
- 		}
++	bdev = bdget(part_devt(part));
++	if (bdev) {
++		remove_inode_hash(bdev->bd_inode);
++		bdput(bdev);
++	}
+ 	hd_struct_kill(part);
+ }
+ 
 
 
