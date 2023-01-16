@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E962A46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:14:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FF81C433D2;
-	Mon, 16 Jan 2023 16:14:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9889946B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:15:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1812DC433EF;
+	Mon, 16 Jan 2023 16:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885698;
-	bh=RScG6qbIiAaJyKMRis498fY8i0Uj2iXn0n9nNBzupp0=;
+	s=korg; t=1673885701;
+	bh=n5fwTiX5VfIRRBP/YTcLGN6FK0b7c1644UnpRNiCTws=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A7ObJ8awjUmux0TQ3lT9M4WvZCeNRtkdnZ2Yw2+jqdb19x2BKQUGtOPAFA/tuNjFY
-	 rzgikrG10R2q+yr5e0LuctF2+uutWpIpVxVDJCeqQy0me5LBmRafEnY6zaUrWcRgam
-	 oH+pfvfDSxOnRXQtIXX/3ZBsCS7RGY/6PeqyCfFc=
+	b=JzexoE4jf6f+PBTFEQXvPIWGzgZb2fWeJAP21AEaxTdhu1uvZGomK0+cCUWF1hMZA
+	 ttgwB8pAZR0R7HAX9Nf+q4ozWSTsbkxlM8NeNfy++7sI61dVZF4iSPU2gcfGDw8AgE
+	 K31xkzI/ZdKLWS1Plm4dHtDnpVtaRcBgRq041IYM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com,
-	Gautam Menghani <gautammenghani201@gmail.com>,
-	Sean Young <sean@mess.org>,
+	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+	Robert Foss <robert.foss@linaro.org>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 150/658] media: imon: fix a race condition in send_packet()
-Date: Mon, 16 Jan 2023 16:43:58 +0100
-Message-Id: <20230116154916.318442102@linuxfoundation.org>
+Subject: [PATCH 5.4 124/658] media: camss: Clean up received buffers on failed start of streaming
+Date: Mon, 16 Jan 2023 16:43:32 +0100
+Message-Id: <20230116154915.131062826@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,77 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gautam Menghani <gautammenghani201@gmail.com>
+From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 
-[ Upstream commit 813ceef062b53d68f296aa3cb944b21a091fabdb ]
+[ Upstream commit c8f3582345e6a69da65ab588f7c4c2d1685b0e80 ]
 
-The function send_packet() has a race condition as follows:
+It is required to return the received buffers, if streaming can not be
+started. For instance media_pipeline_start() may fail with EPIPE, if
+a link validation between entities is not passed, and in such a case
+a user gets a kernel warning:
 
-func send_packet()
-{
-    // do work
-    call usb_submit_urb()
-    mutex_unlock()
-    wait_for_event_interruptible()  <-- lock gone
-    mutex_lock()
-}
+  WARNING: CPU: 1 PID: 520 at drivers/media/common/videobuf2/videobuf2-core.c:1592 vb2_start_streaming+0xec/0x160
+  <snip>
+  Call trace:
+   vb2_start_streaming+0xec/0x160
+   vb2_core_streamon+0x9c/0x1a0
+   vb2_ioctl_streamon+0x68/0xbc
+   v4l_streamon+0x30/0x3c
+   __video_do_ioctl+0x184/0x3e0
+   video_usercopy+0x37c/0x7b0
+   video_ioctl2+0x24/0x40
+   v4l2_ioctl+0x4c/0x70
 
-func vfd_write()
-{
-    mutex_lock()
-    call send_packet()  <- prev call is not completed
-    mutex_unlock()
-}
+The fix is to correct the error path in video_start_streaming() of camss.
 
-When the mutex is unlocked and the function send_packet() waits for the
-call to complete, vfd_write() can start another call, which leads to the
-"URB submitted while active" warning in usb_submit_urb().
-Fix this by removing the mutex_unlock() call in send_packet() and using
-mutex_lock_interruptible().
-
-Link: https://syzkaller.appspot.com/bug?id=e378e6a51fbe6c5cc43e34f131cc9a315ef0337e
-
-Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
-Reported-by: syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com
-Signed-off-by: Gautam Menghani <gautammenghani201@gmail.com>
-Signed-off-by: Sean Young <sean@mess.org>
+Fixes: 0ac2586c410f ("media: camss: Add files which handle the video device nodes")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/imon.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/platform/qcom/camss/camss-video.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
-index c683a244b9fa..d8401ef9b0a7 100644
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -604,15 +604,14 @@ static int send_packet(struct imon_context *ictx)
- 		pr_err_ratelimited("error submitting urb(%d)\n", retval);
- 	} else {
- 		/* Wait for transmission to complete (or abort) */
--		mutex_unlock(&ictx->lock);
- 		retval = wait_for_completion_interruptible(
- 				&ictx->tx.finished);
- 		if (retval) {
- 			usb_kill_urb(ictx->tx_urb);
- 			pr_err_ratelimited("task interrupted\n");
- 		}
--		mutex_lock(&ictx->lock);
+diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
+index 4c2675b43718..6a5ec133a957 100644
+--- a/drivers/media/platform/qcom/camss/camss-video.c
++++ b/drivers/media/platform/qcom/camss/camss-video.c
+@@ -438,7 +438,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
  
-+		ictx->tx.busy = false;
- 		retval = ictx->tx.status;
- 		if (retval)
- 			pr_err_ratelimited("packet tx failed (%d)\n", retval);
-@@ -919,7 +918,8 @@ static ssize_t vfd_write(struct file *file, const char __user *buf,
- 		return -ENODEV;
- 	}
+ 	ret = media_pipeline_start(&vdev->entity, &video->pipe);
+ 	if (ret < 0)
+-		return ret;
++		goto flush_buffers;
  
--	mutex_lock(&ictx->lock);
-+	if (mutex_lock_interruptible(&ictx->lock))
-+		return -ERESTARTSYS;
+ 	ret = video_check_format(video);
+ 	if (ret < 0)
+@@ -467,6 +467,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
+ error:
+ 	media_pipeline_stop(&vdev->entity);
  
- 	if (!ictx->dev_present_intf0) {
- 		pr_err_ratelimited("no iMON device present\n");
++flush_buffers:
+ 	video->ops->flush_buffers(video, VB2_BUF_STATE_QUEUED);
+ 
+ 	return ret;
 -- 
 2.35.1
 
