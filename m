@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E60A33F0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A11C433D2;
-	Mon, 16 Jan 2023 16:01:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 315AC33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABC0AC433F0;
+	Mon, 16 Jan 2023 16:01:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884890;
-	bh=2eWK9Bya3zVxBKeULaiGcl6iyTRxEp7ta9AlV+kxhZg=;
+	s=korg; t=1673884893;
+	bh=EAj5/06oEFDmmIEA1jaaaod16OnjAifokg9IgmuQtZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xOsrYb68bBQ0iRQSLJnI2+IxzHS0YXofttDSg8I2ItFgcchDqYt3O8KNQo6R3Zsek
-	 Nn9KaoB+QPeP6aMtPX1x4xem4bG663JKb+hX07IQRiy1YxqYZC0WIzUcB65AOJgkBN
-	 LkiDvTYX9XqFegyEqtsjgS1krk3dcWB0XHcDPE1U=
+	b=Ni0WLOj18HieXVcbJs+14JNBBapl47YaDKETGjE5bQ/zEkjweeAYlatoRNxywytZG
+	 dEmCH7HuC4ci/LyuxdAktk/L3H6AWtCBB1homqVxBRKh/+Z6wUTvDXb/pga5E7B3jq
+	 /l/AoCugsfh1ZsPOXhbCGIWlMO/usdKl0J4DSpqU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?=EC=A7=84=ED=98=B8?= <wnwlsgh98@gmail.com>,
+	syzbot+d56ec896af3637bdb7e4@syzkaller.appspotmail.com,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 179/183] io_uring/io-wq: free worker if task_work creation is canceled
-Date: Mon, 16 Jan 2023 16:51:42 +0100
-Message-Id: <20230116154810.852514721@linuxfoundation.org>
+Subject: [PATCH 6.1 180/183] io_uring/io-wq: only free worker if it was allocated for creation
+Date: Mon, 16 Jan 2023 16:51:43 +0100
+Message-Id: <20230116154810.900952472@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,27 +36,34 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-commit af82425c6a2d2f347c79b63ce74fca6dc6be157f upstream.
+commit e6db6f9398dadcbc06318a133d4c44a2d3844e61 upstream.
 
-If we cancel the task_work, the worker will never come into existance.
-As this is the last reference to it, ensure that we get it freed
-appropriately.
+We have two types of task_work based creation, one is using an existing
+worker to setup a new one (eg when going to sleep and we have no free
+workers), and the other is allocating a new worker. Only the latter
+should be freed when we cancel task_work creation for a new worker.
 
-Cc: stable@vger.kernel.org
-Reported-by: 진호 <wnwlsgh98@gmail.com>
+Fixes: af82425c6a2d ("io_uring/io-wq: free worker if task_work creation is canceled")
+Reported-by: syzbot+d56ec896af3637bdb7e4@syzkaller.appspotmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |    1 +
- 1 file changed, 1 insertion(+)
+ io_uring/io-wq.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
 --- a/io_uring/io-wq.c
 +++ b/io_uring/io-wq.c
-@@ -1230,6 +1230,7 @@ static void io_wq_cancel_tw_create(struc
+@@ -1230,7 +1230,12 @@ static void io_wq_cancel_tw_create(struc
  
  		worker = container_of(cb, struct io_worker, create_work);
  		io_worker_cancel_cb(worker);
-+		kfree(worker);
+-		kfree(worker);
++		/*
++		 * Only the worker continuation helper has worker allocated and
++		 * hence needs freeing.
++		 */
++		if (cb->func == create_worker_cont)
++			kfree(worker);
  	}
  }
  
