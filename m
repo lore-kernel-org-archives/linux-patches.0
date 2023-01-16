@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 943B26FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:03:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15EC4C433D2;
-	Mon, 16 Jan 2023 17:02:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2863E6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:03:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4009C433D2;
+	Mon, 16 Jan 2023 17:03:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888580;
-	bh=AGZnvZ4MiAc7KYFSmoE1wxmVSfSePJMm2aBS/xWRNsQ=;
+	s=korg; t=1673888583;
+	bh=tCnS0SNyFNg54VFaR5gtUmxdFlKvY03hZ1UMaewY9UM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YyudExqAEFyuLWH4gZtlpLNbAIhv+nDqJQPNfG9iyGW7TAfSSJ8UcYStzFL5Zkk/O
-	 4FHHOk+V66LgfTjmlQqZWfEO4d4pU3xtv7Ns6jeY0MvRxr+jrW+qK61CYAF7eAFBIx
-	 ycYO6mOD0kd57pepybALWk4fR7JV0NxPdy3K1CX8=
+	b=zB0/KUHWM0M8Yu+k8wFq/YLGENVBwCOiEbHJhagLa/yJzTh7BmP7/aWCFSb/nMK/K
+	 hDEZPtvXqJYmp3cqEgYWaIoO+nkI514oaiO98KozxamTm9qR4OJIGM5KE2YR0Qll7c
+	 qrFBRAXHLYsqXQSShStuI3lzJ26xACPoxF1hoOu8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anastasia Belova <abelova@astralinux.ru>,
-	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 060/338] MIPS: BCM63xx: Add check for NULL for clk in clk_enable
-Date: Mon, 16 Jan 2023 16:48:53 +0100
-Message-Id: <20230116154823.428954165@linuxfoundation.org>
+Subject: [PATCH 4.14 061/338] fs: sysv: Fix sysv_nblocks() returns wrong value
+Date: Mon, 16 Jan 2023 16:48:54 +0100
+Message-Id: <20230116154823.481489806@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -37,39 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anastasia Belova <abelova@astralinux.ru>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit ee9ef11bd2a59c2fefaa0959e5efcdf040d7c654 ]
+[ Upstream commit e0c49bd2b4d3cd1751491eb2d940bce968ac65e9 ]
 
-Check clk for NULL before calling clk_enable_unlocked where clk
-is dereferenced. There is such check in other implementations
-of clk_enable.
+sysv_nblocks() returns 'blocks' rather than 'res', which only counting
+the number of triple-indirect blocks and causing sysv_getattr() gets a
+wrong result.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+[AV: this is actually a sysv counterpart of minixfs fix -
+0fcd426de9d0 "[PATCH] minix block usage counting fix" in
+historical tree; mea culpa, should've thought to check
+fs/sysv back then...]
 
-Fixes: e7300d04bd08 ("MIPS: BCM63xx: Add support for the Broadcom BCM63xx family of SOCs.")
-Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/bcm63xx/clk.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/sysv/itree.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/mips/bcm63xx/clk.c b/arch/mips/bcm63xx/clk.c
-index 73f2534b9676..2f4b5978433d 100644
---- a/arch/mips/bcm63xx/clk.c
-+++ b/arch/mips/bcm63xx/clk.c
-@@ -317,6 +317,8 @@ static struct clk clk_periph = {
-  */
- int clk_enable(struct clk *clk)
- {
-+	if (!clk)
-+		return 0;
- 	mutex_lock(&clocks_mutex);
- 	clk_enable_unlocked(clk);
- 	mutex_unlock(&clocks_mutex);
+diff --git a/fs/sysv/itree.c b/fs/sysv/itree.c
+index bcb67b0cabe7..31f66053e239 100644
+--- a/fs/sysv/itree.c
++++ b/fs/sysv/itree.c
+@@ -438,7 +438,7 @@ static unsigned sysv_nblocks(struct super_block *s, loff_t size)
+ 		res += blocks;
+ 		direct = 1;
+ 	}
+-	return blocks;
++	return res;
+ }
+ 
+ int sysv_getattr(const struct path *path, struct kstat *stat,
 -- 
 2.35.1
 
