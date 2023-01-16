@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ABD86FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCDCAC433EF;
-	Mon, 16 Jan 2023 16:56:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED2D6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89989C433D2;
+	Mon, 16 Jan 2023 16:56:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888187;
-	bh=chP6TUlMm+64PZrgQUWMfAzC3KlofEnC0Qf/IZKILT0=;
+	s=korg; t=1673888189;
+	bh=NYJGUI48HmVEox1bjKoxb7G7llrjMujfRYggdsXKVng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ka+q4xLph6oa4FXbHc+SytPCk47sHlERZLBT+1yhcyUburNT9L06NG0uTS1ji0487
-	 NZnkiYNKXMFNVzyoPVTBPLtV9PDTm5pnvIqs6tUJyi4ZywuiOHlL2F9kVDcyIbdNKt
-	 Mjb/2xRxfiAmAIZSZstd4wzbKuETRxjMjFekj34g=
+	b=PuGONg2XpMe7/QxeMubymoylvAeH79T+6p1O23XmMm8pxQxBu0d6T3LfylshGBgWf
+	 Ta7wCo0QWhYMzIM8QWaY0EAEpRSyOfNRAjy0i+YwGgqgMa74nah3SWx6oN0VslkjfZ
+	 wybVZBFGOykQHkQ+Lv4nksKZUl8xK5pj86zzHq94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuqi Zhang <zhangshuqi3@huawei.com>,
-	Ritesh Harjani <ritesh.list@gmail.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 434/521] ext4: use kmemdup() to replace kmalloc + memcpy
-Date: Mon, 16 Jan 2023 16:51:36 +0100
-Message-Id: <20230116154906.557162910@linuxfoundation.org>
+Subject: [PATCH 4.19 435/521] mbcache: dont reclaim used entries
+Date: Mon, 16 Jan 2023 16:51:37 +0100
+Message-Id: <20230116154906.599829443@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,39 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuqi Zhang <zhangshuqi3@huawei.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 4efd9f0d120c55b08852ee5605dbb02a77089a5d ]
+[ Upstream commit 58318914186c157477b978b1739dfe2f1b9dc0fe ]
 
-Replace kmalloc + memcpy with kmemdup()
+Do not reclaim entries that are currently used by somebody from a
+shrinker. Firstly, these entries are likely useful. Secondly, we will
+need to keep such entries to protect pending increment of xattr block
+refcount.
 
-Signed-off-by: Shuqi Zhang <zhangshuqi3@huawei.com>
-Reviewed-by: Ritesh Harjani <ritesh.list@gmail.com>
-Link: https://lore.kernel.org/r/20220525030120.803330-1-zhangshuqi3@huawei.com
+CC: stable@vger.kernel.org
+Fixes: 82939d7999df ("ext4: convert to mbcache2")
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20220712105436.32204-1-jack@suse.cz
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Stable-dep-of: a44e84a9b776 ("ext4: fix deadlock due to mbcache entry corruption")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/xattr.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/mbcache.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
-index 7195a7ff65a6..959fc3328c3a 100644
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -1911,11 +1911,10 @@ ext4_xattr_block_set(handle_t *handle, struct inode *inode,
- 
- 			unlock_buffer(bs->bh);
- 			ea_bdebug(bs->bh, "cloning");
--			s->base = kmalloc(bs->bh->b_size, GFP_NOFS);
-+			s->base = kmemdup(BHDR(bs->bh), bs->bh->b_size, GFP_NOFS);
- 			error = -ENOMEM;
- 			if (s->base == NULL)
- 				goto cleanup;
--			memcpy(s->base, BHDR(bs->bh), bs->bh->b_size);
- 			s->first = ENTRY(header(s->base)+1);
- 			header(s->base)->h_refcount = cpu_to_le32(1);
- 			s->here = ENTRY(s->base + offset);
+diff --git a/fs/mbcache.c b/fs/mbcache.c
+index 081ccf0caee3..12203e5a91e7 100644
+--- a/fs/mbcache.c
++++ b/fs/mbcache.c
+@@ -287,7 +287,7 @@ static unsigned long mb_cache_shrink(struct mb_cache *cache,
+ 	while (nr_to_scan-- && !list_empty(&cache->c_list)) {
+ 		entry = list_first_entry(&cache->c_list,
+ 					 struct mb_cache_entry, e_list);
+-		if (entry->e_referenced) {
++		if (entry->e_referenced || atomic_read(&entry->e_refcnt) > 2) {
+ 			entry->e_referenced = 0;
+ 			list_move_tail(&entry->e_list, &cache->c_list);
+ 			continue;
+@@ -301,6 +301,14 @@ static unsigned long mb_cache_shrink(struct mb_cache *cache,
+ 		spin_unlock(&cache->c_list_lock);
+ 		head = mb_cache_entry_head(cache, entry->e_key);
+ 		hlist_bl_lock(head);
++		/* Now a reliable check if the entry didn't get used... */
++		if (atomic_read(&entry->e_refcnt) > 2) {
++			hlist_bl_unlock(head);
++			spin_lock(&cache->c_list_lock);
++			list_add_tail(&entry->e_list, &cache->c_list);
++			cache->c_entry_count++;
++			continue;
++		}
+ 		if (!hlist_bl_unhashed(&entry->e_hash_list)) {
+ 			hlist_bl_del_init(&entry->e_hash_list);
+ 			atomic_dec(&entry->e_refcnt);
 -- 
 2.35.1
 
