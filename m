@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0D3E46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:29:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27D73C433EF;
-	Mon, 16 Jan 2023 16:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4099746B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:29:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B26D4C433EF;
+	Mon, 16 Jan 2023 16:29:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886554;
-	bh=c3VF0qu2U6pgL0vMGGsUgEruu4nCzsA2Fbd0aMKbZcs=;
+	s=korg; t=1673886557;
+	bh=rR5I3FobV4jxanNDkf+PcZg4d6yiIHdwFwIxHst+Dhc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mezp+oyTGwnLqfy2ckb4SkvGP9RhfD40IEFkuZu6RXqH4QQ0k4dM2lgKbk1klXNlJ
-	 9G+b0mqN4PJOUa9nAc18yym4vmb/r4ouaymY3z0fBuOKNWtbBEyaV48qylL9u6YLY8
-	 ExPayoSLkGUua/6MNOLneQT1bTZ3C64n3RcYdy80=
+	b=uDxnXZN2KUBqSG7FvoVK3d+LuBbK0JLO+Zanwl7Yn+QyN40GFfm78iU/R43JLlZ3F
+	 JHcytBOwwCe4lHEgtyNXupTwDoHowlmlBapQ44Co8SckT/iuB7B7MEiIeHlaFdPv0K
+	 7F02nxjKGassDBXbGb50wic0ns0nIa2Ezj9Mx8uI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Hanjun Guo <guohanjun@huawei.com>,
 	Jarkko Sakkinen <jarkko@kernel.org>
-Subject: [PATCH 5.4 474/658] tpm: tpm_crb: Add the missed acpi_put_table() to fix memory leak
-Date: Mon, 16 Jan 2023 16:49:22 +0100
-Message-Id: <20230116154931.170688968@linuxfoundation.org>
+Subject: [PATCH 5.4 475/658] tpm: tpm_tis: Add the missed acpi_put_table() to fix memory leak
+Date: Mon, 16 Jan 2023 16:49:23 +0100
+Message-Id: <20230116154931.216074660@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,83 +36,53 @@ Content-Transfer-Encoding: 8bit
 
 From: Hanjun Guo <guohanjun@huawei.com>
 
-commit 37e90c374dd11cf4919c51e847c6d6ced0abc555 upstream.
+commit db9622f762104459ff87ecdf885cc42c18053fd9 upstream.
 
-In crb_acpi_add(), we get the TPM2 table to retrieve information
-like start method, and then assign them to the priv data, so the
-TPM2 table is not used after the init, should be freed, call
-acpi_put_table() to fix the memory leak.
+In check_acpi_tpm2(), we get the TPM2 table just to make
+sure the table is there, not used after the init, so the
+acpi_put_table() should be added to release the ACPI memory.
 
-Fixes: 30fc8d138e91 ("tpm: TPM 2.0 CRB Interface")
+Fixes: 4cb586a188d4 ("tpm_tis: Consolidate the platform and acpi probe flow")
 Cc: stable@vger.kernel.org
 Signed-off-by: Hanjun Guo <guohanjun@huawei.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/char/tpm/tpm_crb.c |   29 ++++++++++++++++++++---------
- 1 file changed, 20 insertions(+), 9 deletions(-)
+ drivers/char/tpm/tpm_tis.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
---- a/drivers/char/tpm/tpm_crb.c
-+++ b/drivers/char/tpm/tpm_crb.c
-@@ -676,12 +676,16 @@ static int crb_acpi_add(struct acpi_devi
+--- a/drivers/char/tpm/tpm_tis.c
++++ b/drivers/char/tpm/tpm_tis.c
+@@ -125,6 +125,7 @@ static int check_acpi_tpm2(struct device
+ 	const struct acpi_device_id *aid = acpi_match_device(tpm_acpi_tbl, dev);
+ 	struct acpi_table_tpm2 *tbl;
+ 	acpi_status st;
++	int ret = 0;
  
- 	/* Should the FIFO driver handle this? */
- 	sm = buf->start_method;
--	if (sm == ACPI_TPM2_MEMORY_MAPPED)
+ 	if (!aid || aid->driver_data != DEVICE_IS_TPM2)
+ 		return 0;
+@@ -132,8 +133,7 @@ static int check_acpi_tpm2(struct device
+ 	/* If the ACPI TPM2 signature is matched then a global ACPI_SIG_TPM2
+ 	 * table is mandatory
+ 	 */
+-	st =
+-	    acpi_get_table(ACPI_SIG_TPM2, 1, (struct acpi_table_header **)&tbl);
++	st = acpi_get_table(ACPI_SIG_TPM2, 1, (struct acpi_table_header **)&tbl);
+ 	if (ACPI_FAILURE(st) || tbl->header.length < sizeof(*tbl)) {
+ 		dev_err(dev, FW_BUG "failed to get TPM2 ACPI table\n");
+ 		return -EINVAL;
+@@ -141,9 +141,10 @@ static int check_acpi_tpm2(struct device
+ 
+ 	/* The tpm2_crb driver handles this device */
+ 	if (tbl->start_method != ACPI_TPM2_MEMORY_MAPPED)
 -		return -ENODEV;
-+	if (sm == ACPI_TPM2_MEMORY_MAPPED) {
-+		rc = -ENODEV;
-+		goto out;
-+	}
++		ret = -ENODEV;
  
- 	priv = devm_kzalloc(dev, sizeof(struct crb_priv), GFP_KERNEL);
--	if (!priv)
--		return -ENOMEM;
-+	if (!priv) {
-+		rc = -ENOMEM;
-+		goto out;
-+	}
- 
- 	if (sm == ACPI_TPM2_COMMAND_BUFFER_WITH_ARM_SMC) {
- 		if (buf->header.length < (sizeof(*buf) + sizeof(*crb_smc))) {
-@@ -689,7 +693,8 @@ static int crb_acpi_add(struct acpi_devi
- 				FW_BUG "TPM2 ACPI table has wrong size %u for start method type %d\n",
- 				buf->header.length,
- 				ACPI_TPM2_COMMAND_BUFFER_WITH_ARM_SMC);
--			return -EINVAL;
-+			rc = -EINVAL;
-+			goto out;
- 		}
- 		crb_smc = ACPI_ADD_PTR(struct tpm2_crb_smc, buf, sizeof(*buf));
- 		priv->smc_func_id = crb_smc->smc_func_id;
-@@ -700,17 +705,23 @@ static int crb_acpi_add(struct acpi_devi
- 
- 	rc = crb_map_io(device, priv, buf);
- 	if (rc)
--		return rc;
-+		goto out;
- 
- 	chip = tpmm_chip_alloc(dev, &tpm_crb);
--	if (IS_ERR(chip))
--		return PTR_ERR(chip);
-+	if (IS_ERR(chip)) {
-+		rc = PTR_ERR(chip);
-+		goto out;
-+	}
- 
- 	dev_set_drvdata(&chip->dev, priv);
- 	chip->acpi_dev_handle = device->handle;
- 	chip->flags = TPM_CHIP_FLAG_TPM2;
- 
--	return tpm_chip_register(chip);
-+	rc = tpm_chip_register(chip);
-+
-+out:
-+	acpi_put_table((struct acpi_table_header *)buf);
-+	return rc;
+-	return 0;
++	acpi_put_table((struct acpi_table_header *)tbl);
++	return ret;
  }
- 
- static int crb_acpi_remove(struct acpi_device *device)
+ #else
+ static int check_acpi_tpm2(struct device *dev)
 
 
