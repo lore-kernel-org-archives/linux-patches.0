@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDA5533EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:56:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 626A5C433EF;
-	Mon, 16 Jan 2023 15:56:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D1033EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:56:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC0DAC433F1;
+	Mon, 16 Jan 2023 15:56:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884615;
-	bh=migmPbX3mMGucPDxjTgQlmZXd+HjgSoyDqtEbmZYH8I=;
+	s=korg; t=1673884618;
+	bh=CSjnrmGcOwKxEg3v82J1nM3cCnXwSL8rJzqR53Oq7YQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sTRs3D7U5QEkkjGSqQm5u1RjTb06JOjXLZ5big6+NBNvpAJSIziG+dxAejAZ1zVdw
-	 snk90CFxfHD/BVQEysP/y/Jvbie39AsX6Z/pSUC1Mlh1stzWTgBjoams44jwUVYq0F
-	 LnKkjU8yH9MKVfDyZ4dPoAzg4HWTC9cl5Jp9uvAw=
+	b=I8OPt7CdbIS7cAzflujK8WnStqx5iGOZVnETffqfp2bHotsHNhw2L+u4P72KmG/aV
+	 xE6/tlcPA1qCchjzfyRBqhFiWRUb4utKgM+5p7atOKqDCYiMfsCQNk/bBf25VoaHn0
+	 XF7KceOfdJTtt/we1GWpFzTiqp7Z9gk0RfXS1ac8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 043/183] io_uring/fdinfo: include locked hash table in fdinfo output
-Date: Mon, 16 Jan 2023 16:49:26 +0100
-Message-Id: <20230116154805.202666157@linuxfoundation.org>
+	ChiYuan Huang <cy_huang@richtek.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 044/183] ASoC: rt9120: Make dev PM runtime bind AsoC component PM
+Date: Mon, 16 Jan 2023 16:49:27 +0100
+Message-Id: <20230116154805.239336956@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -33,57 +34,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: ChiYuan Huang <cy_huang@richtek.com>
 
-commit ea97cbebaf861d99c3e892275147e6fca6d2c1ca upstream.
+commit 7161bd540eebebae2bbe8c79de25d8caf12dbf78 upstream.
 
-A previous commit split the hash table for polled requests into two
-parts, but didn't get the fdinfo output updated. This means that it's
-less useful for debugging, as we may think a given request is not pending
-poll.
+RT9120 uses PM runtime autosuspend to decrease the frequently on/off
+spent time. This exists one case, when pcm is closed and dev PM is
+waiting for autosuspend time expired to enter runtime suspend state.
+At the mean time, system is going to enter suspend, dev PM runtime
+suspend won't be called. It makes the rt9120 suspend consumption
+current not as expected.
 
-Fix this up by dumping the locked hash table contents too.
+This patch can fix the rt9120 dev PM issue during runtime autosuspend
+and system suspend by binding dev PM runtime and ASoC component PM.
 
-Fixes: 9ca9fb24d5fe ("io_uring: mutex locked poll hashing")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 80b949f332e3 ("ASoC: rt9120: Use pm_runtime and regcache to optimize 'pwdnn' logic")
+Signed-off-by: ChiYuan Huang <cy_huang@richtek.com>
+Link: https://lore.kernel.org/r/1672301033-3675-1-git-send-email-u0084500@gmail.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/fdinfo.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ sound/soc/codecs/rt9120.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
---- a/io_uring/fdinfo.c
-+++ b/io_uring/fdinfo.c
-@@ -170,12 +170,11 @@ static __cold void __io_uring_show_fdinf
- 		xa_for_each(&ctx->personalities, index, cred)
- 			io_uring_show_cred(m, index, cred);
- 	}
--	if (has_lock)
--		mutex_unlock(&ctx->uring_lock);
+diff --git a/sound/soc/codecs/rt9120.c b/sound/soc/codecs/rt9120.c
+index 644300e88b4c..fcf4fbaed3c7 100644
+--- a/sound/soc/codecs/rt9120.c
++++ b/sound/soc/codecs/rt9120.c
+@@ -177,8 +177,20 @@ static int rt9120_codec_probe(struct snd_soc_component *comp)
+ 	return 0;
+ }
  
- 	seq_puts(m, "PollList:\n");
- 	for (i = 0; i < (1U << ctx->cancel_table.hash_bits); i++) {
- 		struct io_hash_bucket *hb = &ctx->cancel_table.hbs[i];
-+		struct io_hash_bucket *hbl = &ctx->cancel_table_locked.hbs[i];
- 		struct io_kiocb *req;
- 
- 		spin_lock(&hb->lock);
-@@ -183,8 +182,17 @@ static __cold void __io_uring_show_fdinf
- 			seq_printf(m, "  op=%d, task_works=%d\n", req->opcode,
- 					task_work_pending(req->task));
- 		spin_unlock(&hb->lock);
++static int rt9120_codec_suspend(struct snd_soc_component *comp)
++{
++	return pm_runtime_force_suspend(comp->dev);
++}
 +
-+		if (!has_lock)
-+			continue;
-+		hlist_for_each_entry(req, &hbl->list, hash_node)
-+			seq_printf(m, "  op=%d, task_works=%d\n", req->opcode,
-+					task_work_pending(req->task));
- 	}
- 
-+	if (has_lock)
-+		mutex_unlock(&ctx->uring_lock);
++static int rt9120_codec_resume(struct snd_soc_component *comp)
++{
++	return pm_runtime_force_resume(comp->dev);
++}
 +
- 	seq_puts(m, "CqOverflowList:\n");
- 	spin_lock(&ctx->completion_lock);
- 	list_for_each_entry(ocqe, &ctx->cq_overflow_list, list) {
+ static const struct snd_soc_component_driver rt9120_component_driver = {
+ 	.probe = rt9120_codec_probe,
++	.suspend = rt9120_codec_suspend,
++	.resume = rt9120_codec_resume,
+ 	.controls = rt9120_snd_controls,
+ 	.num_controls = ARRAY_SIZE(rt9120_snd_controls),
+ 	.dapm_widgets = rt9120_dapm_widgets,
+-- 
+2.39.0
+
 
 
