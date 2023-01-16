@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F17C46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:14:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 269B8C433EF;
-	Mon, 16 Jan 2023 16:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749B846B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:14:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDA8C433EF;
+	Mon, 16 Jan 2023 16:14:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885669;
-	bh=nduDFTynn5+kV0dyGAArArcLX8kyf/qFN1DWJTvfPbs=;
+	s=korg; t=1673885672;
+	bh=XAzu9VIsgYXn5f3N3smFDVxwYI7Z4FVxM7Ox7KRg7ME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nuPV6FsvQP0AyhX/6mx/JWPAgkWXrAUpq7/g6nAyjWSV0mugLVgHCXpCrxjy+EysS
-	 qHKQcwRQyv9zBU5SlUgRFOKUm+4TDI9RyAGMOE8qmKVq+7Vy3z22Dfojyjmxc02I1t
-	 BYvFo7LIixLPMKQuahMBfUZUISCmD7nUJ+VRAqTQ=
+	b=VAiBN9dfcK06H7abQ7tSpanORFc5A8ZiPD/tgQeIuGxLvmbbKKDjzPfRn1e3RujvH
+	 EcBgFqU132oBzdcRF0Rm8ynVSpebWwrG6U4ap3LLHk2WBlv27g1ziDMuru60P2Qakd
+	 6MB/xpDq2s0oC/ISzmhUgA74I/qWv7OLN9QiJK8Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stanislav Fomichev <sdf@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Marek Vasut <marex@denx.de>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 140/658] bpf: Move skb->len == 0 checks into __bpf_redirect
-Date: Mon, 16 Jan 2023 16:43:48 +0100
-Message-Id: <20230116154915.856153392@linuxfoundation.org>
+Subject: [PATCH 5.4 123/658] wifi: rsi: Fix handling of 802.3 EAPOL frames sent via control port
+Date: Mon, 16 Jan 2023 16:43:31 +0100
+Message-Id: <20230116154915.087838238@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,64 +35,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislav Fomichev <sdf@google.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 114039b342014680911c35bd6b72624180fd669a ]
+[ Upstream commit b8f6efccbb9dc0ff5dee7e20d69a4747298ee603 ]
 
-To avoid potentially breaking existing users.
+When using wpa_supplicant v2.10, this driver is no longer able to
+associate with any AP and fails in the EAPOL 4-way handshake while
+sending the 2/4 message to the AP. The problem is not present in
+wpa_supplicant v2.9 or older. The problem stems from HostAP commit
+144314eaa ("wpa_supplicant: Send EAPOL frames over nl80211 where available")
+which changes the way EAPOL frames are sent, from them being send
+at L2 frames to them being sent via nl80211 control port.
 
-Both mac/no-mac cases have to be amended; mac_header >= network_header
-is not enough (verified with a new test, see next patch).
+An EAPOL frame sent as L2 frame is passed to the WiFi driver with
+skb->protocol ETH_P_PAE, while EAPOL frame sent via nl80211 control
+port has skb->protocol set to ETH_P_802_3 . The later happens in
+ieee80211_tx_control_port(), where the EAPOL frame is encapsulated
+into 802.3 frame.
 
-Fixes: fd1894224407 ("bpf: Don't redirect packets with invalid pkt_len")
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/r/20221121180340.1983627-1-sdf@google.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+The rsi_91x driver handles ETH_P_PAE EAPOL frames as high-priority
+frames and sends them via highest-priority transmit queue, while
+the ETH_P_802_3 frames are sent as regular frames. The EAPOL 4-way
+handshake frames must be sent as highest-priority, otherwise the
+4-way handshake times out.
+
+Therefore, to fix this problem, inspect the skb control flags and
+if flag IEEE80211_TX_CTRL_PORT_CTRL_PROTO is set, assume this is
+an EAPOL frame and transmit the frame via high-priority queue just
+like other ETH_P_PAE frames.
+
+Fixes: 0eb42586cf87 ("rsi: data packet descriptor enhancements")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221104163339.227432-1-marex@denx.de
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bpf/test_run.c | 3 ---
- net/core/filter.c  | 7 ++++++-
- 2 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/net/wireless/rsi/rsi_91x_core.c | 4 +++-
+ drivers/net/wireless/rsi/rsi_91x_hal.c  | 6 +++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/net/bpf/test_run.c b/net/bpf/test_run.c
-index d78c4cc30a28..591d146a5308 100644
---- a/net/bpf/test_run.c
-+++ b/net/bpf/test_run.c
-@@ -201,9 +201,6 @@ static int convert___skb_to_skb(struct sk_buff *skb, struct __sk_buff *__skb)
- {
- 	struct qdisc_skb_cb *cb = (struct qdisc_skb_cb *)skb->cb;
- 
--	if (!skb->len)
--		return -EINVAL;
--
- 	if (!__skb)
- 		return 0;
- 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index e81f7772161a..6fd9173e18b7 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2071,6 +2071,11 @@ static int __bpf_redirect_no_mac(struct sk_buff *skb, struct net_device *dev,
- {
- 	unsigned int mlen = skb_network_offset(skb);
- 
-+	if (unlikely(skb->len <= mlen)) {
-+		kfree_skb(skb);
-+		return -ERANGE;
-+	}
+diff --git a/drivers/net/wireless/rsi/rsi_91x_core.c b/drivers/net/wireless/rsi/rsi_91x_core.c
+index c6c29034b2ea..a939b552a8e4 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_core.c
++++ b/drivers/net/wireless/rsi/rsi_91x_core.c
+@@ -466,7 +466,9 @@ void rsi_core_xmit(struct rsi_common *common, struct sk_buff *skb)
+ 							      tid, 0);
+ 			}
+ 		}
+-		if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
 +
- 	if (mlen) {
- 		__skb_pull(skb, mlen);
++		if (IEEE80211_SKB_CB(skb)->control.flags &
++		    IEEE80211_TX_CTRL_PORT_CTRL_PROTO) {
+ 			q_num = MGMT_SOFT_Q;
+ 			skb->priority = q_num;
+ 		}
+diff --git a/drivers/net/wireless/rsi/rsi_91x_hal.c b/drivers/net/wireless/rsi/rsi_91x_hal.c
+index 7d0b44fd5690..062c5da74104 100644
+--- a/drivers/net/wireless/rsi/rsi_91x_hal.c
++++ b/drivers/net/wireless/rsi/rsi_91x_hal.c
+@@ -162,12 +162,16 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
+ 	u8 header_size;
+ 	u8 vap_id = 0;
+ 	u8 dword_align_bytes;
++	bool tx_eapol;
+ 	u16 seq_num;
  
-@@ -2092,7 +2097,7 @@ static int __bpf_redirect_common(struct sk_buff *skb, struct net_device *dev,
- 				 u32 flags)
- {
- 	/* Verify that a link layer header is carried */
--	if (unlikely(skb->mac_header >= skb->network_header)) {
-+	if (unlikely(skb->mac_header >= skb->network_header || skb->len == 0)) {
- 		kfree_skb(skb);
- 		return -ERANGE;
+ 	info = IEEE80211_SKB_CB(skb);
+ 	vif = info->control.vif;
+ 	tx_params = (struct skb_info *)info->driver_data;
+ 
++	tx_eapol = IEEE80211_SKB_CB(skb)->control.flags &
++		   IEEE80211_TX_CTRL_PORT_CTRL_PROTO;
++
+ 	header_size = FRAME_DESC_SZ + sizeof(struct rsi_xtended_desc);
+ 	if (header_size > skb_headroom(skb)) {
+ 		rsi_dbg(ERR_ZONE, "%s: Unable to send pkt\n", __func__);
+@@ -231,7 +235,7 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
+ 		}
  	}
+ 
+-	if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
++	if (tx_eapol) {
+ 		rsi_dbg(INFO_ZONE, "*** Tx EAPOL ***\n");
+ 
+ 		data_desc->frame_info = cpu_to_le16(RATE_INFO_ENABLE);
 -- 
 2.35.1
 
