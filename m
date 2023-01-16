@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6073933EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61B3C43392;
-	Mon, 16 Jan 2023 16:00:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EBE33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E604C433D2;
+	Mon, 16 Jan 2023 16:00:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884809;
-	bh=/h5fWSuxsqiNTXEEbscCA8wfmUrTlCuDJsa6ZUCAWU0=;
+	s=korg; t=1673884811;
+	bh=0e1cB6rDET+Dt2wIFFoOUdT/rkft9TXI9p7v/mduYO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RsQ5iXGomNf3uvX7iCjUAQTNgAl83gS68o+Jsii3uVu9PVyDiFCjduJx6NjwNslpV
-	 9ektdiwjvVmkc8SyJmpVU+XmByg2edjYxTfGVUhUMF8PKskc8uWeaU0juvoV7XxiWy
-	 Oi2CbU0DiNvI0CdHRzzBkDQPzy/nSx9nMP+rKbJ8=
+	b=WUvS+Unr8NeEf+zf6w5ncUFYMyhNh03Yw7pMqXCr0vUCCeW8K0IXUsw2teaMD1ASf
+	 5Be/NRZwqyyh5qp003H5hVNCQ4l9F8nIlrGiPh0YpDz5GpIOdapJFVzLKm9sIa4mzv
+	 j1lEcDx2y28KjwYGssEFtRGGTQccTfcX/RSH0tJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Ido Schimmel <idosch@nvidia.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 148/183] net/sched: act_mpls: Fix warning during failed attribute validation
-Date: Mon, 16 Jan 2023 16:51:11 +0100
-Message-Id: <20230116154809.597348840@linuxfoundation.org>
+Subject: [PATCH 6.1 149/183] Revert "r8169: disable detection of chip version 36"
+Date: Mon, 16 Jan 2023 16:51:12 +0100
+Message-Id: <20230116154809.628736478@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -37,107 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 9e17f99220d111ea031b44153fdfe364b0024ff2 ]
+[ Upstream commit 2ea26b4de6f42b74a5f1701de41efa6bc9f12666 ]
 
-The 'TCA_MPLS_LABEL' attribute is of 'NLA_U32' type, but has a
-validation type of 'NLA_VALIDATE_FUNCTION'. This is an invalid
-combination according to the comment above 'struct nla_policy':
+This reverts commit 42666b2c452ce87894786aae05e3fad3cfc6cb59.
 
-"
-Meaning of `validate' field, use via NLA_POLICY_VALIDATE_FN:
-   NLA_BINARY           Validation function called for the attribute.
-   All other            Unused - but note that it's a union
-"
+This chip version seems to be very rare, but it exits in consumer
+devices, see linked report.
 
-This can trigger the warning [1] in nla_get_range_unsigned() when
-validation of the attribute fails. Despite being of 'NLA_U32' type, the
-associated 'min'/'max' fields in the policy are negative as they are
-aliased by the 'validate' field.
-
-Fix by changing the attribute type to 'NLA_BINARY' which is consistent
-with the above comment and all other users of NLA_POLICY_VALIDATE_FN().
-As a result, move the length validation to the validation function.
-
-No regressions in MPLS tests:
-
- # ./tdc.py -f tc-tests/actions/mpls.json
- [...]
- # echo $?
- 0
-
-[1]
-WARNING: CPU: 0 PID: 17743 at lib/nlattr.c:118
-nla_get_range_unsigned+0x1d8/0x1e0 lib/nlattr.c:117
-Modules linked in:
-CPU: 0 PID: 17743 Comm: syz-executor.0 Not tainted 6.1.0-rc8 #3
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
-rel-1.13.0-48-gd9c812dda519-prebuilt.qemu.org 04/01/2014
-RIP: 0010:nla_get_range_unsigned+0x1d8/0x1e0 lib/nlattr.c:117
-[...]
-Call Trace:
- <TASK>
- __netlink_policy_dump_write_attr+0x23d/0x990 net/netlink/policy.c:310
- netlink_policy_dump_write_attr+0x22/0x30 net/netlink/policy.c:411
- netlink_ack_tlv_fill net/netlink/af_netlink.c:2454 [inline]
- netlink_ack+0x546/0x760 net/netlink/af_netlink.c:2506
- netlink_rcv_skb+0x1b7/0x240 net/netlink/af_netlink.c:2546
- rtnetlink_rcv+0x18/0x20 net/core/rtnetlink.c:6109
- netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
- netlink_unicast+0x5e9/0x6b0 net/netlink/af_netlink.c:1345
- netlink_sendmsg+0x739/0x860 net/netlink/af_netlink.c:1921
- sock_sendmsg_nosec net/socket.c:714 [inline]
- sock_sendmsg net/socket.c:734 [inline]
- ____sys_sendmsg+0x38f/0x500 net/socket.c:2482
- ___sys_sendmsg net/socket.c:2536 [inline]
- __sys_sendmsg+0x197/0x230 net/socket.c:2565
- __do_sys_sendmsg net/socket.c:2574 [inline]
- __se_sys_sendmsg net/socket.c:2572 [inline]
- __x64_sys_sendmsg+0x42/0x50 net/socket.c:2572
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Link: https://lore.kernel.org/netdev/CAO4mrfdmjvRUNbDyP0R03_DrD_eFCLCguz6OxZ2TYRSv0K9gxA@mail.gmail.com/
-Fixes: 2a2ea50870ba ("net: sched: add mpls manipulation actions to TC")
-Reported-by: Wei Chen <harperchen1110@gmail.com>
-Tested-by: Wei Chen <harperchen1110@gmail.com>
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Link: https://lore.kernel.org/r/20230107171004.608436-1-idosch@nvidia.com
+Link: https://stackoverflow.com/questions/75049473/cant-setup-a-wired-network-in-archlinux-fresh-install
+Fixes: 42666b2c452c ("r8169: disable detection of chip version 36")
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://lore.kernel.org/r/42e9674c-d5d0-a65a-f578-e5c74f244739@gmail.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_mpls.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/realtek/r8169_main.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
-diff --git a/net/sched/act_mpls.c b/net/sched/act_mpls.c
-index 8ad25cc8ccd5..ea5959094adb 100644
---- a/net/sched/act_mpls.c
-+++ b/net/sched/act_mpls.c
-@@ -132,6 +132,11 @@ static int valid_label(const struct nlattr *attr,
- {
- 	const u32 *label = nla_data(attr);
+diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
+index a73d061d9fcb..fe8dc8e0522b 100644
+--- a/drivers/net/ethernet/realtek/r8169_main.c
++++ b/drivers/net/ethernet/realtek/r8169_main.c
+@@ -1996,10 +1996,7 @@ static enum mac_version rtl8169_get_mac_version(u16 xid, bool gmii)
  
-+	if (nla_len(attr) != sizeof(*label)) {
-+		NL_SET_ERR_MSG_MOD(extack, "Invalid MPLS label length");
-+		return -EINVAL;
-+	}
-+
- 	if (*label & ~MPLS_LABEL_MASK || *label == MPLS_LABEL_IMPLNULL) {
- 		NL_SET_ERR_MSG_MOD(extack, "MPLS label out of range");
- 		return -EINVAL;
-@@ -143,7 +148,8 @@ static int valid_label(const struct nlattr *attr,
- static const struct nla_policy mpls_policy[TCA_MPLS_MAX + 1] = {
- 	[TCA_MPLS_PARMS]	= NLA_POLICY_EXACT_LEN(sizeof(struct tc_mpls)),
- 	[TCA_MPLS_PROTO]	= { .type = NLA_U16 },
--	[TCA_MPLS_LABEL]	= NLA_POLICY_VALIDATE_FN(NLA_U32, valid_label),
-+	[TCA_MPLS_LABEL]	= NLA_POLICY_VALIDATE_FN(NLA_BINARY,
-+							 valid_label),
- 	[TCA_MPLS_TC]		= NLA_POLICY_RANGE(NLA_U8, 0, 7),
- 	[TCA_MPLS_TTL]		= NLA_POLICY_MIN(NLA_U8, 1),
- 	[TCA_MPLS_BOS]		= NLA_POLICY_RANGE(NLA_U8, 0, 1),
+ 		/* 8168F family. */
+ 		{ 0x7c8, 0x488,	RTL_GIGA_MAC_VER_38 },
+-		/* It seems this chip version never made it to
+-		 * the wild. Let's disable detection.
+-		 * { 0x7cf, 0x481,	RTL_GIGA_MAC_VER_36 },
+-		 */
++		{ 0x7cf, 0x481,	RTL_GIGA_MAC_VER_36 },
+ 		{ 0x7cf, 0x480,	RTL_GIGA_MAC_VER_35 },
+ 
+ 		/* 8168E family. */
 -- 
 2.35.1
 
