@@ -1,32 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D53E3238
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:54:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5DFEC433EF;
-	Mon, 16 Jan 2023 15:54:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C023533EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:54:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C484C433F0;
+	Mon, 16 Jan 2023 15:54:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884445;
-	bh=ni5T7fZfYL2N8Hz9PTTrAC2eRAsAWVEB9Ghv0+wdLE0=;
+	s=korg; t=1673884447;
+	bh=qoviJeQPkw9s+/+m31yAATR9iBNueS7boa7BdmifG5I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xokhnyKw85M/X28juySMXiMId4Id79J2HNI9SBYtgN/wTrkLcKRvtl84rTy96vfsF
-	 9HJG78pa8GoT/ECH5qAUpaZ0JraDwHNC96a1xADdUjg3s6+cPFMB0uppN5P6jWs9vT
-	 W7xIh43NIjQzRd16vgiuNyyyzn7KJL0VQkpqQQ5w=
+	b=LqtO24i3IHbHdg42GOijpkPP0QlX2fcnhDBHg6/HklBHFEHKZXQ1j1FUztkCaHlRM
+	 i6PW2cEY/4wdnExRVTNZz7uAZcpj0pEjJ3dzN4UNCIV1nkLBLOO3rhntmTPDnkPaMQ
+	 FEuLux+w5rR8CDiRNbw640ZqtK00zl1uKZGTZmGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Davide Ornaghi <d.ornaghi97@gmail.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.1 001/183] netfilter: nft_payload: incorrect arithmetics when fetching VLAN header bits
-Date: Mon, 16 Jan 2023 16:48:44 +0100
-Message-Id: <20230116154803.406241228@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Michael Ralston <michael@ralston.id.au>
+Subject: [PATCH 6.1 002/183] Revert "ALSA: usb-audio: Drop superfluous interface setup at parsing"
+Date: Mon, 16 Jan 2023 16:48:45 +0100
+Message-Id: <20230116154803.444059968@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,37 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 696e1a48b1a1b01edad542a1ef293665864a4dd0 upstream.
+commit 16f1f838442dc6430d32d51ddda347b8421ec34b upstream.
 
-If the offset + length goes over the ethernet + vlan header, then the
-length is adjusted to copy the bytes that are within the boundaries of
-the vlan_ethhdr scratchpad area. The remaining bytes beyond ethernet +
-vlan header are copied directly from the skbuff data area.
+This reverts commit ac5e2fb425e1121ceef2b9d1b3ffccc195d55707.
 
-Fix incorrect arithmetic operator: subtract, not add, the size of the
-vlan header in case of double-tagged packets to adjust the length
-accordingly to address CVE-2023-0179.
+The commit caused a regression on Behringer UMC404HD (and likely
+others).  As the change was meant only as a minor optimization, it's
+better to revert it to address the regression.
 
-Reported-by: Davide Ornaghi <d.ornaghi97@gmail.com>
-Fixes: f6ae9f120dad ("netfilter: nft_payload: add C-VLAN support")
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Reported-and-tested-by: Michael Ralston <michael@ralston.id.au>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/CAC2975JXkS1A5Tj9b02G_sy25ZWN-ys+tc9wmkoS=qPgKCogSg@mail.gmail.com
+Link: https://lore.kernel.org/r/20230104150944.24918-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_payload.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/usb/stream.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/netfilter/nft_payload.c
-+++ b/net/netfilter/nft_payload.c
-@@ -62,7 +62,7 @@ nft_payload_copy_vlan(u32 *d, const stru
- 			return false;
- 
- 		if (offset + len > VLAN_ETH_HLEN + vlan_hlen)
--			ethlen -= offset + len - VLAN_ETH_HLEN + vlan_hlen;
-+			ethlen -= offset + len - VLAN_ETH_HLEN - vlan_hlen;
- 
- 		memcpy(dst_u8, vlanh + offset - vlan_hlen, ethlen);
- 
+--- a/sound/usb/stream.c
++++ b/sound/usb/stream.c
+@@ -1222,6 +1222,12 @@ static int __snd_usb_parse_audio_interfa
+ 			if (err < 0)
+ 				return err;
+ 		}
++
++		/* try to set the interface... */
++		usb_set_interface(chip->dev, iface_no, 0);
++		snd_usb_init_pitch(chip, fp);
++		snd_usb_init_sample_rate(chip, fp, fp->rate_max);
++		usb_set_interface(chip->dev, iface_no, altno);
+ 	}
+ 	return 0;
+ }
 
 
