@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EC733EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73075C433F0;
-	Mon, 16 Jan 2023 16:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93E7033EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1769EC433EF;
+	Mon, 16 Jan 2023 16:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884866;
-	bh=ymIKUcksCwdzcj78heCYpDcfUmvwrtLWGr6lhRR7mv8=;
+	s=korg; t=1673884869;
+	bh=H9NRk+hmLcnJSQrnDya3gSUuFTeBntqcDSXVL8lxbJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=szL1FjKJx7izKFeanswvymvO2DRtDLeCvcDok2GepRvZIJyZz+7Clt+DzmZnQpuRN
-	 CLwo0mWIL25LaUmfGkEUbCbvy/KhKhIoJg1/H6LHNUnCa+pFU7pgc4zXSrwnA+/ULW
-	 Fzj7N78JJOpeGJxXMlZWgWm8ujndMgGTbI3RTNbg=
+	b=fLeqsroOXcP3HxqRTLUVLT75OP0rRWhZwPVRFpYc7oVwPoiaBUGCmElGDbFZwIKVB
+	 CHiaDNcvxgjKgQpte18FCrYDql5W2BqxlPRGyy69msAv7CRdKBpcsi68G9ZiFNu90L
+	 6FVbQfGDJ5Zslm5a5YT3/3S1UybCjux/qt69TgjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Maaz Mombasawala <mombasawalam@vmware.com>,
 	Zack Rusin <zackr@vmware.com>,
 	Martin Krastev <krastevm@vmware.com>,
-	Maaz Mombasawala <mombasawalam@vmware.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 141/183] drm/vmwgfx: Write the driver id registers
-Date: Mon, 16 Jan 2023 16:51:04 +0100
-Message-Id: <20230116154809.321246455@linuxfoundation.org>
+Subject: [PATCH 6.1 142/183] drm/vmwgfx: Refactor resource managers hashtable to use linux/hashtable implementation.
+Date: Mon, 16 Jan 2023 16:51:05 +0100
+Message-Id: <20230116154809.360822191@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,100 +36,200 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zack Rusin <zackr@vmware.com>
+From: Maaz Mombasawala <mombasawalam@vmware.com>
 
-[ Upstream commit 7f4c33778686cc2d34cb4ef65b4265eea874c159 ]
+[ Upstream commit 43531dc661b7fb6be249c023bf25847b38215545 ]
 
-Driver id registers are a new mechanism in the svga device to hint to the
-device which driver is running. This should not change device behavior
-in any way, but might be convenient to work-around specific bugs
-in guest drivers.
+Vmwgfx's hashtab implementation needs to be replaced with linux/hashtable
+to reduce maintenance burden.
+Refactor cmdbuf resource manager to use linux/hashtable.h implementation
+as part of this effort.
 
-Signed-off-by: Zack Rusin <zackr@vmware.com>
+Signed-off-by: Maaz Mombasawala <mombasawalam@vmware.com>
+Reviewed-by: Zack Rusin <zackr@vmware.com>
 Reviewed-by: Martin Krastev <krastevm@vmware.com>
-Reviewed-by: Maaz Mombasawala <mombasawalam@vmware.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221022040236.616490-2-zack@kde.org
+Signed-off-by: Zack Rusin <zackr@vmware.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221022040236.616490-4-zack@kde.org
 Stable-dep-of: a309c7194e8a ("drm/vmwgfx: Remove rcu locks from user resources")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/vmwgfx_drv.c | 43 +++++++++++++++++++++++------
- 1 file changed, 34 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_cmdbuf_res.c | 62 +++++++++-------------
+ 1 file changed, 26 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
-index d7bd5eb1d3ac..45028e25d490 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
-@@ -25,10 +25,13 @@
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_cmdbuf_res.c b/drivers/gpu/drm/vmwgfx/vmwgfx_cmdbuf_res.c
+index 82ef58ccdd42..142aef686fcd 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_cmdbuf_res.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_cmdbuf_res.c
+@@ -1,7 +1,7 @@
+ // SPDX-License-Identifier: GPL-2.0 OR MIT
+ /**************************************************************************
   *
-  **************************************************************************/
+- * Copyright 2014-2015 VMware, Inc., Palo Alto, CA., USA
++ * Copyright 2014-2022 VMware, Inc., Palo Alto, CA., USA
+  *
+  * Permission is hereby granted, free of charge, to any person obtaining a
+  * copy of this software and associated documentation files (the
+@@ -28,6 +28,8 @@
+ #include "vmwgfx_drv.h"
+ #include "vmwgfx_resource_priv.h"
  
--#include <linux/dma-mapping.h>
--#include <linux/module.h>
--#include <linux/pci.h>
--#include <linux/cc_platform.h>
++#include <linux/hashtable.h>
 +
-+#include "vmwgfx_drv.h"
-+
-+#include "vmwgfx_devcaps.h"
-+#include "vmwgfx_mksstat.h"
-+#include "vmwgfx_binding.h"
-+#include "ttm_object.h"
+ #define VMW_CMDBUF_RES_MAN_HT_ORDER 12
  
- #include <drm/drm_aperture.h>
- #include <drm/drm_drv.h>
-@@ -41,11 +44,11 @@
- #include <drm/ttm/ttm_placement.h>
- #include <generated/utsrelease.h>
+ /**
+@@ -59,7 +61,7 @@ struct vmw_cmdbuf_res {
+  * @resources and @list are protected by the cmdbuf mutex for now.
+  */
+ struct vmw_cmdbuf_res_manager {
+-	struct vmwgfx_open_hash resources;
++	DECLARE_HASHTABLE(resources, VMW_CMDBUF_RES_MAN_HT_ORDER);
+ 	struct list_head list;
+ 	struct vmw_private *dev_priv;
+ };
+@@ -82,14 +84,13 @@ vmw_cmdbuf_res_lookup(struct vmw_cmdbuf_res_manager *man,
+ 		      u32 user_key)
+ {
+ 	struct vmwgfx_hash_item *hash;
+-	int ret;
+ 	unsigned long key = user_key | (res_type << 24);
  
--#include "ttm_object.h"
--#include "vmwgfx_binding.h"
--#include "vmwgfx_devcaps.h"
--#include "vmwgfx_drv.h"
--#include "vmwgfx_mksstat.h"
-+#include <linux/cc_platform.h>
-+#include <linux/dma-mapping.h>
-+#include <linux/module.h>
-+#include <linux/pci.h>
-+#include <linux/version.h>
- 
- #define VMWGFX_DRIVER_DESC "Linux drm driver for VMware graphics devices"
- 
-@@ -806,6 +809,27 @@ static int vmw_detect_version(struct vmw_private *dev)
- 	return 0;
+-	ret = vmwgfx_ht_find_item(&man->resources, key, &hash);
+-	if (unlikely(ret != 0))
+-		return ERR_PTR(ret);
+-
+-	return drm_hash_entry(hash, struct vmw_cmdbuf_res, hash)->res;
++	hash_for_each_possible_rcu(man->resources, hash, head, key) {
++		if (hash->key == key)
++			return drm_hash_entry(hash, struct vmw_cmdbuf_res, hash)->res;
++	}
++	return ERR_PTR(-EINVAL);
  }
  
-+static void vmw_write_driver_id(struct vmw_private *dev)
-+{
-+	if ((dev->capabilities2 & SVGA_CAP2_DX2) != 0) {
-+		vmw_write(dev,  SVGA_REG_GUEST_DRIVER_ID,
-+			  SVGA_REG_GUEST_DRIVER_ID_LINUX);
-+
-+		vmw_write(dev, SVGA_REG_GUEST_DRIVER_VERSION1,
-+			  LINUX_VERSION_MAJOR << 24 |
-+			  LINUX_VERSION_PATCHLEVEL << 16 |
-+			  LINUX_VERSION_SUBLEVEL);
-+		vmw_write(dev, SVGA_REG_GUEST_DRIVER_VERSION2,
-+			  VMWGFX_DRIVER_MAJOR << 24 |
-+			  VMWGFX_DRIVER_MINOR << 16 |
-+			  VMWGFX_DRIVER_PATCHLEVEL);
-+		vmw_write(dev, SVGA_REG_GUEST_DRIVER_VERSION3, 0);
-+
-+		vmw_write(dev, SVGA_REG_GUEST_DRIVER_ID,
-+			  SVGA_REG_GUEST_DRIVER_ID_SUBMIT);
-+	}
-+}
-+
- static int vmw_driver_load(struct vmw_private *dev_priv, u32 pci_id)
+ /**
+@@ -105,7 +106,7 @@ static void vmw_cmdbuf_res_free(struct vmw_cmdbuf_res_manager *man,
+ 				struct vmw_cmdbuf_res *entry)
  {
- 	int ret;
-@@ -1091,6 +1115,7 @@ static int vmw_driver_load(struct vmw_private *dev_priv, u32 pci_id)
- 	vmw_host_printf("vmwgfx: Module Version: %d.%d.%d (kernel: %s)",
- 			VMWGFX_DRIVER_MAJOR, VMWGFX_DRIVER_MINOR,
- 			VMWGFX_DRIVER_PATCHLEVEL, UTS_RELEASE);
-+	vmw_write_driver_id(dev_priv);
+ 	list_del(&entry->head);
+-	WARN_ON(vmwgfx_ht_remove_item(&man->resources, &entry->hash));
++	hash_del_rcu(&entry->hash.head);
+ 	vmw_resource_unreference(&entry->res);
+ 	kfree(entry);
+ }
+@@ -159,7 +160,6 @@ void vmw_cmdbuf_res_commit(struct list_head *list)
+ void vmw_cmdbuf_res_revert(struct list_head *list)
+ {
+ 	struct vmw_cmdbuf_res *entry, *next;
+-	int ret;
  
- 	if (dev_priv->enable_fb) {
- 		vmw_fifo_resource_inc(dev_priv);
+ 	list_for_each_entry_safe(entry, next, list, head) {
+ 		switch (entry->state) {
+@@ -167,8 +167,8 @@ void vmw_cmdbuf_res_revert(struct list_head *list)
+ 			vmw_cmdbuf_res_free(entry->man, entry);
+ 			break;
+ 		case VMW_CMDBUF_RES_DEL:
+-			ret = vmwgfx_ht_insert_item(&entry->man->resources, &entry->hash);
+-			BUG_ON(ret);
++			hash_add_rcu(entry->man->resources, &entry->hash.head,
++						entry->hash.key);
+ 			list_move_tail(&entry->head, &entry->man->list);
+ 			entry->state = VMW_CMDBUF_RES_COMMITTED;
+ 			break;
+@@ -199,26 +199,20 @@ int vmw_cmdbuf_res_add(struct vmw_cmdbuf_res_manager *man,
+ 		       struct list_head *list)
+ {
+ 	struct vmw_cmdbuf_res *cres;
+-	int ret;
+ 
+ 	cres = kzalloc(sizeof(*cres), GFP_KERNEL);
+ 	if (unlikely(!cres))
+ 		return -ENOMEM;
+ 
+ 	cres->hash.key = user_key | (res_type << 24);
+-	ret = vmwgfx_ht_insert_item(&man->resources, &cres->hash);
+-	if (unlikely(ret != 0)) {
+-		kfree(cres);
+-		goto out_invalid_key;
+-	}
++	hash_add_rcu(man->resources, &cres->hash.head, cres->hash.key);
+ 
+ 	cres->state = VMW_CMDBUF_RES_ADD;
+ 	cres->res = vmw_resource_reference(res);
+ 	cres->man = man;
+ 	list_add_tail(&cres->head, list);
+ 
+-out_invalid_key:
+-	return ret;
++	return 0;
+ }
+ 
+ /**
+@@ -243,24 +237,26 @@ int vmw_cmdbuf_res_remove(struct vmw_cmdbuf_res_manager *man,
+ 			  struct list_head *list,
+ 			  struct vmw_resource **res_p)
+ {
+-	struct vmw_cmdbuf_res *entry;
++	struct vmw_cmdbuf_res *entry = NULL;
+ 	struct vmwgfx_hash_item *hash;
+-	int ret;
++	unsigned long key = user_key | (res_type << 24);
+ 
+-	ret = vmwgfx_ht_find_item(&man->resources, user_key | (res_type << 24),
+-			       &hash);
+-	if (likely(ret != 0))
++	hash_for_each_possible_rcu(man->resources, hash, head, key) {
++		if (hash->key == key) {
++			entry = drm_hash_entry(hash, struct vmw_cmdbuf_res, hash);
++			break;
++		}
++	}
++	if (unlikely(!entry))
+ 		return -EINVAL;
+ 
+-	entry = drm_hash_entry(hash, struct vmw_cmdbuf_res, hash);
+-
+ 	switch (entry->state) {
+ 	case VMW_CMDBUF_RES_ADD:
+ 		vmw_cmdbuf_res_free(man, entry);
+ 		*res_p = NULL;
+ 		break;
+ 	case VMW_CMDBUF_RES_COMMITTED:
+-		(void) vmwgfx_ht_remove_item(&man->resources, &entry->hash);
++		hash_del_rcu(&entry->hash.head);
+ 		list_del(&entry->head);
+ 		entry->state = VMW_CMDBUF_RES_DEL;
+ 		list_add_tail(&entry->head, list);
+@@ -287,7 +283,6 @@ struct vmw_cmdbuf_res_manager *
+ vmw_cmdbuf_res_man_create(struct vmw_private *dev_priv)
+ {
+ 	struct vmw_cmdbuf_res_manager *man;
+-	int ret;
+ 
+ 	man = kzalloc(sizeof(*man), GFP_KERNEL);
+ 	if (!man)
+@@ -295,12 +290,8 @@ vmw_cmdbuf_res_man_create(struct vmw_private *dev_priv)
+ 
+ 	man->dev_priv = dev_priv;
+ 	INIT_LIST_HEAD(&man->list);
+-	ret = vmwgfx_ht_create(&man->resources, VMW_CMDBUF_RES_MAN_HT_ORDER);
+-	if (ret == 0)
+-		return man;
+-
+-	kfree(man);
+-	return ERR_PTR(ret);
++	hash_init(man->resources);
++	return man;
+ }
+ 
+ /**
+@@ -320,7 +311,6 @@ void vmw_cmdbuf_res_man_destroy(struct vmw_cmdbuf_res_manager *man)
+ 	list_for_each_entry_safe(entry, next, &man->list, head)
+ 		vmw_cmdbuf_res_free(man, entry);
+ 
+-	vmwgfx_ht_remove(&man->resources);
+ 	kfree(man);
+ }
+ 
 -- 
 2.35.1
 
