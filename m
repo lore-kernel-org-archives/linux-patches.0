@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078F06FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:13:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72AAFC433D2;
-	Mon, 16 Jan 2023 17:13:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B3ED6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:13:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E892C433EF;
+	Mon, 16 Jan 2023 17:13:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889218;
-	bh=xok2sdAU3i7VwgYnvaioO08I5E0twWRRpY/s3FeJX+E=;
+	s=korg; t=1673889221;
+	bh=H+eRMSCmyjOdkUPMMlKsBp9N3ycpnFmME5ctnbRSS8A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aw8INQ/URSmc2Iy4swqRsYTgSK2kTMVxQiE+ZPcIgk2cjGIdUfOz+Ps5MRi9EMwGj
-	 42UBBfzu2AIhHunlidCTjrCznUukxC/xR4As3RCF0+J4QUR2rg5YTV8QTkcD3+mrqw
-	 RAo2aamb50QHp1xJNPvq7Zbyw0Eal4HWkMAjC2jk=
+	b=vEKeu6KzqZGoj4T7E9hvXoay5KCVlp+o7B0bsyMxtMaCoc2UAp47J8z7HWJuUC6p7
+	 K/pRFlefqm3J0zRiUAdyk5Tmvjg46qfdZ9HrhAXVAbRitzB1w4vIwCf/UPHgX6OPrd
+	 SDqmazM+O5UzInBiNXUwCWF0HpwacdWn/G+GCTSM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 4.14 303/338] ext4: fix inode leak in ext4_xattr_inode_create() on an error path
-Date: Mon, 16 Jan 2023 16:52:56 +0100
-Message-Id: <20230116154834.324283772@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 4.14 277/338] dm cache: Fix ABBA deadlock between shrink_slab and dm_cache_metadata_abort
+Date: Mon, 16 Jan 2023 16:52:30 +0100
+Message-Id: <20230116154833.154235923@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,53 +34,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Mike Snitzer <snitzer@kernel.org>
 
-commit e4db04f7d3dbbe16680e0ded27ea2a65b10f766a upstream.
+commit 352b837a5541690d4f843819028cf2b8be83d424 upstream.
 
-There is issue as follows when do setxattr with inject fault:
+Same ABBA deadlock pattern fixed in commit 4b60f452ec51 ("dm thin: Fix
+ABBA deadlock between shrink_slab and dm_pool_abort_metadata") to
+DM-cache's metadata.
 
-[localhost]# fsck.ext4  -fn  /dev/sda
-e2fsck 1.46.6-rc1 (12-Sep-2022)
-Pass 1: Checking inodes, blocks, and sizes
-Pass 2: Checking directory structure
-Pass 3: Checking directory connectivity
-Pass 4: Checking reference counts
-Unattached zero-length inode 15.  Clear? no
-
-Unattached inode 15
-Connect to /lost+found? no
-
-Pass 5: Checking group summary information
-
-/dev/sda: ********** WARNING: Filesystem still has errors **********
-
-/dev/sda: 15/655360 files (0.0% non-contiguous), 66755/2621440 blocks
-
-This occurs in 'ext4_xattr_inode_create()'. If 'ext4_mark_inode_dirty()'
-fails, dropping i_nlink of the inode is needed. Or will lead to inode leak.
-
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221208023233.1231330-5-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Reported-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Cc: stable@vger.kernel.org
+Fixes: 028ae9f76f29 ("dm cache: add fail io mode and needs_check flag")
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/md/dm-cache-metadata.c |   54 +++++++++++++++++++++++++++++++++++------
+ 1 file changed, 47 insertions(+), 7 deletions(-)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -1445,6 +1445,9 @@ static struct inode *ext4_xattr_inode_cr
- 		if (!err)
- 			err = ext4_inode_attach_jinode(ea_inode);
- 		if (err) {
-+			if (ext4_xattr_inode_dec_ref(handle, ea_inode))
-+				ext4_warning_inode(ea_inode,
-+					"cleanup dec ref error %d", err);
- 			iput(ea_inode);
- 			return ERR_PTR(err);
+--- a/drivers/md/dm-cache-metadata.c
++++ b/drivers/md/dm-cache-metadata.c
+@@ -550,11 +550,13 @@ static int __create_persistent_data_obje
+ 	return r;
+ }
+ 
+-static void __destroy_persistent_data_objects(struct dm_cache_metadata *cmd)
++static void __destroy_persistent_data_objects(struct dm_cache_metadata *cmd,
++					      bool destroy_bm)
+ {
+ 	dm_sm_destroy(cmd->metadata_sm);
+ 	dm_tm_destroy(cmd->tm);
+-	dm_block_manager_destroy(cmd->bm);
++	if (destroy_bm)
++		dm_block_manager_destroy(cmd->bm);
+ }
+ 
+ typedef unsigned long (*flags_mutator)(unsigned long);
+@@ -825,7 +827,7 @@ static struct dm_cache_metadata *lookup_
+ 		cmd2 = lookup(bdev);
+ 		if (cmd2) {
+ 			mutex_unlock(&table_lock);
+-			__destroy_persistent_data_objects(cmd);
++			__destroy_persistent_data_objects(cmd, true);
+ 			kfree(cmd);
+ 			return cmd2;
  		}
+@@ -873,7 +875,7 @@ void dm_cache_metadata_close(struct dm_c
+ 		mutex_unlock(&table_lock);
+ 
+ 		if (!cmd->fail_io)
+-			__destroy_persistent_data_objects(cmd);
++			__destroy_persistent_data_objects(cmd, true);
+ 		kfree(cmd);
+ 	}
+ }
+@@ -1807,14 +1809,52 @@ int dm_cache_metadata_needs_check(struct
+ 
+ int dm_cache_metadata_abort(struct dm_cache_metadata *cmd)
+ {
+-	int r;
++	int r = -EINVAL;
++	struct dm_block_manager *old_bm = NULL, *new_bm = NULL;
++
++	/* fail_io is double-checked with cmd->root_lock held below */
++	if (unlikely(cmd->fail_io))
++		return r;
++
++	/*
++	 * Replacement block manager (new_bm) is created and old_bm destroyed outside of
++	 * cmd root_lock to avoid ABBA deadlock that would result (due to life-cycle of
++	 * shrinker associated with the block manager's bufio client vs cmd root_lock).
++	 * - must take shrinker_rwsem without holding cmd->root_lock
++	 */
++	new_bm = dm_block_manager_create(cmd->bdev, DM_CACHE_METADATA_BLOCK_SIZE << SECTOR_SHIFT,
++					 CACHE_MAX_CONCURRENT_LOCKS);
+ 
+ 	WRITE_LOCK(cmd);
+-	__destroy_persistent_data_objects(cmd);
+-	r = __create_persistent_data_objects(cmd, false);
++	if (cmd->fail_io) {
++		WRITE_UNLOCK(cmd);
++		goto out;
++	}
++
++	__destroy_persistent_data_objects(cmd, false);
++	old_bm = cmd->bm;
++	if (IS_ERR(new_bm)) {
++		DMERR("could not create block manager during abort");
++		cmd->bm = NULL;
++		r = PTR_ERR(new_bm);
++		goto out_unlock;
++	}
++
++	cmd->bm = new_bm;
++	r = __open_or_format_metadata(cmd, false);
++	if (r) {
++		cmd->bm = NULL;
++		goto out_unlock;
++	}
++	new_bm = NULL;
++out_unlock:
+ 	if (r)
+ 		cmd->fail_io = true;
+ 	WRITE_UNLOCK(cmd);
++	dm_block_manager_destroy(old_bm);
++out:
++	if (new_bm && !IS_ERR(new_bm))
++		dm_block_manager_destroy(new_bm);
+ 
+ 	return r;
+ }
 
 
