@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DD3346B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:30:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7508C433D2;
-	Mon, 16 Jan 2023 16:30:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1003146B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:30:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82198C433D2;
+	Mon, 16 Jan 2023 16:30:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886635;
-	bh=vxs/uePeqY9uEnTL5udaLloHxcY/GXkuhbWxtSbsUG4=;
+	s=korg; t=1673886637;
+	bh=V2+5Utq5rvpIASzoVumuev2HLEK4R4cNo7y/avz5NGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X7hj58rbd0QRyVdqSp/US9zOG8vOBevEnVbZOHApVGsSqTj0OPzDpFHNOJpGDz0ju
-	 BjgHEtrfoy2vcKcF+Ekzf8s1e2dE2MTqTp09mT6yNZXNeH/bqBJdtqDE8VA0Y4iCqj
-	 +NDU/FNjjgu+cmbwVnQ8tkxjcIpFZ8fBCkv3BCyw=
+	b=lV5sKW5u2gJOpvp52l2+NpZpz8A9DNoMjXOBaFCwPttRLpqxbtzZynndxf5KhhALl
+	 OFjrivjurW0z9e/4rw0B9B9hcSdfruu+kEgSU6RE0R/cR8pTTKS8GU8hmIoJ+acd38
+	 0INwFk41rhucSKziWBIhhwIBvAdP9gyE/OL8nnQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenwen Wang <wenwen@cs.uga.edu>,
-	Keita Suzuki <keitasuzuki.park@sslab.ics.keio.ac.jp>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 5.4 504/658] media: dvb-core: Fix double free in dvb_register_device()
-Date: Mon, 16 Jan 2023 16:49:52 +0100
-Message-Id: <20230116154932.559804771@linuxfoundation.org>
+	Hyunwoo Kim <imv4bel@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Subject: [PATCH 5.4 505/658] media: dvb-core: Fix UAF due to refcount races at releasing
+Date: Mon, 16 Jan 2023 16:49:53 +0100
+Message-Id: <20230116154932.609163844@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,42 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Keita Suzuki <keitasuzuki.park@sslab.ics.keio.ac.jp>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit 6b0d0477fce747d4137aa65856318b55fba72198 upstream.
+commit fd3d91ab1c6ab0628fe642dd570b56302c30a792 upstream.
 
-In function dvb_register_device() -> dvb_register_media_device() ->
-dvb_create_media_entity(), dvb->entity is allocated and initialized. If
-the initialization fails, it frees the dvb->entity, and return an error
-code. The caller takes the error code and handles the error by calling
-dvb_media_device_free(), which unregisters the entity and frees the
-field again if it is not NULL. As dvb->entity may not NULLed in
-dvb_create_media_entity() when the allocation of dvbdev->pad fails, a
-double free may occur. This may also cause an Use After free in
-media_device_unregister_entity().
+The dvb-core tries to sync the releases of opened files at
+dvb_dmxdev_release() with two refcounts: dvbdev->users and
+dvr_dvbdev->users.  A problem is present in those two syncs: when yet
+another dvb_demux_open() is called during those sync waits,
+dvb_demux_open() continues to process even if the device is being
+closed.  This includes the increment of the former refcount, resulting
+in the leftover refcount after the sync of the latter refcount at
+dvb_dmxdev_release().  It ends up with use-after-free, since the
+function believes that all usages were gone and releases the
+resources.
 
-Fix this by storing NULL to dvb->entity when it is freed.
+This patch addresses the problem by adding the check of dmxdev->exit
+flag at dvb_demux_open(), just like dvb_dvr_open() already does.  With
+the exit flag check, the second call of dvb_demux_open() fails, hence
+the further corruption can be avoided.
 
-Link: https://lore.kernel.org/linux-media/20220426052921.2088416-1-keitasuzuki.park@sslab.ics.keio.ac.jp
-Fixes: fcd5ce4b3936 ("media: dvb-core: fix a memory leak bug")
-Cc: stable@vger.kernel.org
-Cc: Wenwen Wang <wenwen@cs.uga.edu>
-Signed-off-by: Keita Suzuki <keitasuzuki.park@sslab.ics.keio.ac.jp>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Also for avoiding the races of the dmxdev->exit flag reference, this
+patch serializes the dmxdev->exit set up and the sync waits with the
+dmxdev->mutex lock at dvb_dmxdev_release().  Without the mutex lock,
+dvb_demux_open() (or dvb_dvr_open()) may run concurrently with
+dvb_dmxdev_release(), which allows to skip the exit flag check and
+continue the open process that is being closed.
+
+CVE-2022-41218 is assigned to those bugs above.
+
+Reported-by: Hyunwoo Kim <imv4bel@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/20220908132754.30532-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-core/dvbdev.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/media/dvb-core/dmxdev.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/media/dvb-core/dvbdev.c
-+++ b/drivers/media/dvb-core/dvbdev.c
-@@ -345,6 +345,7 @@ static int dvb_create_media_entity(struc
- 				       GFP_KERNEL);
- 		if (!dvbdev->pads) {
- 			kfree(dvbdev->entity);
-+			dvbdev->entity = NULL;
- 			return -ENOMEM;
- 		}
- 	}
+--- a/drivers/media/dvb-core/dmxdev.c
++++ b/drivers/media/dvb-core/dmxdev.c
+@@ -800,6 +800,11 @@ static int dvb_demux_open(struct inode *
+ 	if (mutex_lock_interruptible(&dmxdev->mutex))
+ 		return -ERESTARTSYS;
+ 
++	if (dmxdev->exit) {
++		mutex_unlock(&dmxdev->mutex);
++		return -ENODEV;
++	}
++
+ 	for (i = 0; i < dmxdev->filternum; i++)
+ 		if (dmxdev->filter[i].state == DMXDEV_STATE_FREE)
+ 			break;
+@@ -1458,7 +1463,10 @@ EXPORT_SYMBOL(dvb_dmxdev_init);
+ 
+ void dvb_dmxdev_release(struct dmxdev *dmxdev)
+ {
++	mutex_lock(&dmxdev->mutex);
+ 	dmxdev->exit = 1;
++	mutex_unlock(&dmxdev->mutex);
++
+ 	if (dmxdev->dvbdev->users > 1) {
+ 		wait_event(dmxdev->dvbdev->wait_queue,
+ 				dmxdev->dvbdev->users == 1);
 
 
