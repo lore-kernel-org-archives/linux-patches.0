@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A3146B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:12:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1796CC433F0;
-	Mon, 16 Jan 2023 16:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8E0846B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:12:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E29FC433D2;
+	Mon, 16 Jan 2023 16:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885572;
-	bh=UFVSMEluSimBVWnAzAFm8/z9GKq6wSrJmfTcgmBljNY=;
+	s=korg; t=1673885569;
+	bh=7RP4bFCmSmxgoTpawRnr5tTohrlim9hfMYdf297KNgw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qSpIpuAIO2nvFrArfpCRBCMrZhdR38hPqyB9V0R04QC8kFQTtkhuPxjxrShaywpPW
-	 eLRN8tP7GS3VX88kZGq5BDLYLvi5dmy8UAfclsHRLAgwwQe1rJubADo0cwqF2P8G5P
-	 ciYt8hK89U8YMKowE7SYjWtzXLNl0sGiri0HYlj0=
+	b=K3kd5k7LZ72Mmu9QfCQ3Y+X55UYZrh9uSlRAvYWMPshyi0k6xRoRDhVvNTNDrG2rr
+	 J5vfkLuguRmMzuhk1rt1qt44l+Yk+xmGxsTwmvm/BuOWBfgalsFCPTMkL41vlCMnB4
+	 VspbZaO8AmXZFcnq81Us68TiSRsy6emZpP0jUj/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
+	Junlin Yang <yangjunlin@yulong.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 103/658] media: i2c: ad5820: Fix error path
-Date: Mon, 16 Jan 2023 16:43:11 +0100
-Message-Id: <20230116154914.243031653@linuxfoundation.org>
+Subject: [PATCH 5.4 102/658] pata_ipx4xx_cf: Fix unsigned comparison with less than zero
+Date: Mon, 16 Jan 2023 16:43:10 +0100
+Message-Id: <20230116154914.203904194@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,49 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Junlin Yang <yangjunlin@yulong.com>
 
-[ Upstream commit 9fce241660f37d9e95e93c0ae6fba8cfefa5797b ]
+[ Upstream commit c38ae56ee034623c59e39c0130ca0dec086c1a39 ]
 
-Error path seems to be swaped. Fix the order and provide some meaningful
-names.
+The return from the call to platform_get_irq() is int, it can be
+a negative error code, however this is being assigned to an unsigned
+int variable 'irq', so making 'irq' an int, and change the position to
+keep the code format.
 
-Fixes: bee3d5115611 ("[media] ad5820: Add driver for auto-focus coil")
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+./drivers/ata/pata_ixp4xx_cf.c:168:5-8:
+WARNING: Unsigned expression compared with zero: irq > 0
+
+Signed-off-by: Junlin Yang <yangjunlin@yulong.com>
+Link: https://lore.kernel.org/r/20210409135426.1773-1-angkery@163.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/i2c/ad5820.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/ata/pata_ixp4xx_cf.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/i2c/ad5820.c b/drivers/media/i2c/ad5820.c
-index 7a49651f4d1f..d7d85edeedd5 100644
---- a/drivers/media/i2c/ad5820.c
-+++ b/drivers/media/i2c/ad5820.c
-@@ -314,18 +314,18 @@ static int ad5820_probe(struct i2c_client *client,
+diff --git a/drivers/ata/pata_ixp4xx_cf.c b/drivers/ata/pata_ixp4xx_cf.c
+index abc0e87ca1a8..43215a4c1e54 100644
+--- a/drivers/ata/pata_ixp4xx_cf.c
++++ b/drivers/ata/pata_ixp4xx_cf.c
+@@ -135,12 +135,12 @@ static void ixp4xx_setup_port(struct ata_port *ap,
  
- 	ret = media_entity_pads_init(&coil->subdev.entity, 0, NULL);
- 	if (ret < 0)
--		goto cleanup2;
-+		goto clean_mutex;
+ static int ixp4xx_pata_probe(struct platform_device *pdev)
+ {
+-	unsigned int irq;
+ 	struct resource *cs0, *cs1;
+ 	struct ata_host *host;
+ 	struct ata_port *ap;
+ 	struct ixp4xx_pata_data *data = dev_get_platdata(&pdev->dev);
+ 	int ret;
++	int irq;
  
- 	ret = v4l2_async_register_subdev(&coil->subdev);
- 	if (ret < 0)
--		goto cleanup;
-+		goto clean_entity;
- 
- 	return ret;
- 
--cleanup2:
--	mutex_destroy(&coil->power_lock);
--cleanup:
-+clean_entity:
- 	media_entity_cleanup(&coil->subdev.entity);
-+clean_mutex:
-+	mutex_destroy(&coil->power_lock);
- 	return ret;
- }
- 
+ 	cs0 = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	cs1 = platform_get_resource(pdev, IORESOURCE_MEM, 1);
 -- 
 2.35.1
 
