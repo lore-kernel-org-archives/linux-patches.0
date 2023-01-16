@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 627FE6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:54:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC52EC433D2;
-	Mon, 16 Jan 2023 16:54:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103E56FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:54:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858A6C433EF;
+	Mon, 16 Jan 2023 16:54:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888087;
-	bh=iej5SzVVe/+7WPmbKdX4DiLDJTi6jsnUCG5+qtbjSEA=;
+	s=korg; t=1673888089;
+	bh=p4kp86KIyUfMP+bB6fcVuZ4QnmRE18fuZ7/pMbiJ3dI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v7y9CkDFfH026eeGfS4WhaNCrf6q5EaoGOkQkcGi3DcFS1Q7FTzIL0Dz5I4Y+UHZ0
-	 9R0TDVBvNv9FEkksQJKNyUuA/0bzh3clc1lUZoPaAcv2EtnXjjonGHDudIzPD4DyUv
-	 j/cl/xqt2pg0OIwru1JtvjdFL2rAB5QfpqfQR3nY=
+	b=hi6Ie+VWXrkz0FybRjCcNhLQRKYJaoOVk4qX53qhOL0m8JEzRE3VCavfkOUq7DLEX
+	 QhYCJhQHIbZsS9nXwiuLQUhS4EL0Vs8GCfWadkGqSe3bOyyywHbGqF83yE1tK9xrAv
+	 CFNnP9onj5iagNFkKkxdszEc+wB4SN/bNrNkscrU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aditya Garg <gargaditya08@live.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 366/521] hfsplus: fix bug causing custom uid and gid being unable to be assigned with mount
-Date: Mon, 16 Jan 2023 16:50:28 +0100
-Message-Id: <20230116154903.463585562@linuxfoundation.org>
+	Jeff Mahoney <jeffm@suse.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Mimi Zohar <zohar@linux.ibm.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 4.19 357/521] reiserfs: Add missing calls to reiserfs_security_free()
+Date: Mon, 16 Jan 2023 16:50:19 +0100
+Message-Id: <20230116154903.066758112@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,71 +37,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aditya Garg <gargaditya08@live.com>
+From: Roberto Sassu <roberto.sassu@huawei.com>
 
-commit 9f2b5debc07073e6dfdd774e3594d0224b991927 upstream.
+commit 572302af1258459e124437b8f3369357447afac7 upstream.
 
-Despite specifying UID and GID in mount command, the specified UID and GID
-were not being assigned. This patch fixes this issue.
+Commit 57fe60df6241 ("reiserfs: add atomic addition of selinux attributes
+during inode creation") defined reiserfs_security_free() to free the name
+and value of a security xattr allocated by the active LSM through
+security_old_inode_init_security(). However, this function is not called
+in the reiserfs code.
 
-Link: https://lkml.kernel.org/r/C0264BF5-059C-45CF-B8DA-3A3BD2C803A2@live.com
-Signed-off-by: Aditya Garg <gargaditya08@live.com>
-Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Thus, add a call to reiserfs_security_free() whenever
+reiserfs_security_init() is called, and initialize value to NULL, to avoid
+to call kfree() on an uninitialized pointer.
+
+Finally, remove the kfree() for the xattr name, as it is not allocated
+anymore.
+
+Fixes: 57fe60df6241 ("reiserfs: add atomic addition of selinux attributes during inode creation")
+Cc: stable@vger.kernel.org
+Cc: Jeff Mahoney <jeffm@suse.com>
+Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Reported-by: Mimi Zohar <zohar@linux.ibm.com>
+Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
+Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfsplus/hfsplus_fs.h |    2 ++
- fs/hfsplus/inode.c      |    4 ++--
- fs/hfsplus/options.c    |    4 ++++
- 3 files changed, 8 insertions(+), 2 deletions(-)
+ fs/reiserfs/namei.c          |    4 ++++
+ fs/reiserfs/xattr_security.c |    2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
---- a/fs/hfsplus/hfsplus_fs.h
-+++ b/fs/hfsplus/hfsplus_fs.h
-@@ -198,6 +198,8 @@ struct hfsplus_sb_info {
- #define HFSPLUS_SB_HFSX		3
- #define HFSPLUS_SB_CASEFOLD	4
- #define HFSPLUS_SB_NOBARRIER	5
-+#define HFSPLUS_SB_UID		6
-+#define HFSPLUS_SB_GID		7
+--- a/fs/reiserfs/namei.c
++++ b/fs/reiserfs/namei.c
+@@ -695,6 +695,7 @@ static int reiserfs_create(struct inode
  
- static inline struct hfsplus_sb_info *HFSPLUS_SB(struct super_block *sb)
+ out_failed:
+ 	reiserfs_write_unlock(dir->i_sb);
++	reiserfs_security_free(&security);
+ 	return retval;
+ }
+ 
+@@ -778,6 +779,7 @@ static int reiserfs_mknod(struct inode *
+ 
+ out_failed:
+ 	reiserfs_write_unlock(dir->i_sb);
++	reiserfs_security_free(&security);
+ 	return retval;
+ }
+ 
+@@ -876,6 +878,7 @@ static int reiserfs_mkdir(struct inode *
+ 	retval = journal_end(&th);
+ out_failed:
+ 	reiserfs_write_unlock(dir->i_sb);
++	reiserfs_security_free(&security);
+ 	return retval;
+ }
+ 
+@@ -1191,6 +1194,7 @@ static int reiserfs_symlink(struct inode
+ 	retval = journal_end(&th);
+ out_failed:
+ 	reiserfs_write_unlock(parent_dir->i_sb);
++	reiserfs_security_free(&security);
+ 	return retval;
+ }
+ 
+--- a/fs/reiserfs/xattr_security.c
++++ b/fs/reiserfs/xattr_security.c
+@@ -49,6 +49,7 @@ int reiserfs_security_init(struct inode
+ 	int error;
+ 
+ 	sec->name = NULL;
++	sec->value = NULL;
+ 
+ 	/* Don't add selinux attributes on xattrs - they'll never get used */
+ 	if (IS_PRIVATE(dir))
+@@ -94,7 +95,6 @@ int reiserfs_security_write(struct reise
+ 
+ void reiserfs_security_free(struct reiserfs_security_handle *sec)
  {
---- a/fs/hfsplus/inode.c
-+++ b/fs/hfsplus/inode.c
-@@ -187,11 +187,11 @@ static void hfsplus_get_perms(struct ino
- 	mode = be16_to_cpu(perms->mode);
- 
- 	i_uid_write(inode, be32_to_cpu(perms->owner));
--	if (!i_uid_read(inode) && !mode)
-+	if ((test_bit(HFSPLUS_SB_UID, &sbi->flags)) || (!i_uid_read(inode) && !mode))
- 		inode->i_uid = sbi->uid;
- 
- 	i_gid_write(inode, be32_to_cpu(perms->group));
--	if (!i_gid_read(inode) && !mode)
-+	if ((test_bit(HFSPLUS_SB_GID, &sbi->flags)) || (!i_gid_read(inode) && !mode))
- 		inode->i_gid = sbi->gid;
- 
- 	if (dir) {
---- a/fs/hfsplus/options.c
-+++ b/fs/hfsplus/options.c
-@@ -140,6 +140,8 @@ int hfsplus_parse_options(char *input, s
- 			if (!uid_valid(sbi->uid)) {
- 				pr_err("invalid uid specified\n");
- 				return 0;
-+			} else {
-+				set_bit(HFSPLUS_SB_UID, &sbi->flags);
- 			}
- 			break;
- 		case opt_gid:
-@@ -151,6 +153,8 @@ int hfsplus_parse_options(char *input, s
- 			if (!gid_valid(sbi->gid)) {
- 				pr_err("invalid gid specified\n");
- 				return 0;
-+			} else {
-+				set_bit(HFSPLUS_SB_GID, &sbi->flags);
- 			}
- 			break;
- 		case opt_part:
+-	kfree(sec->name);
+ 	kfree(sec->value);
+ 	sec->name = NULL;
+ 	sec->value = NULL;
 
 
