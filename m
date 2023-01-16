@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A7C6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:38:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75291C433EF;
-	Mon, 16 Jan 2023 16:38:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983EC6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:38:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19A56C433EF;
+	Mon, 16 Jan 2023 16:38:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887111;
-	bh=4RY5++IcD0G4Qma+OXzjNjqefap97Z6Gkqv25la16BU=;
+	s=korg; t=1673887114;
+	bh=pFNGmJMogUvLnHCE+CYGEmpBsNC3KoU1nBnDkzr2AZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VyZAaaGPW/NZ6UhStXE7RLxorlphJEF9lWISgxjo+bsevWfw9OT0mTooE+1EiJA3i
-	 /fhlSBQ1XbUJq4s1hvtIvv0pDc/fsis7+b+nMxldlbwMOAnVaJAEzxfMUzBdWyCOfq
-	 JPPVXuP1ArHHKSAzxN7QIqH+XoI3oP5yYJqLGtDs=
+	b=r1TVsnkZXYPD+4tTPiW95fjemclAJI7hVMiUKn7Ljf0DLCTI4tiFOlbM5eovHDhVt
+	 MxT6eiVY3cw/bBixZEjiHv9GyMZ3xg01TNiUP3utQ8t0b6GYt57K6uO7sdpLHeqLBu
+	 yCD4f54LLY0Cv6wtVSlfufO6IEm1tG91T6yhQfhc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yasushi SHOJI <yashi@spacecubics.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	Zhang Qilong <zhangqilong3@huawei.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 008/521] can: mcba_usb: Fix termination command argument
-Date: Mon, 16 Jan 2023 16:44:30 +0100
-Message-Id: <20230116154847.636346161@linuxfoundation.org>
+Subject: [PATCH 4.19 026/521] soc: ti: smartreflex: Fix PM disable depth imbalance in omap_sr_probe
+Date: Mon, 16 Jan 2023 16:44:48 +0100
+Message-Id: <20230116154848.470782893@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,80 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yasushi SHOJI <yasushi.shoji@gmail.com>
+From: Zhang Qilong <zhangqilong3@huawei.com>
 
-[ Upstream commit 1a8e3bd25f1e789c8154e11ea24dc3ec5a4c1da0 ]
+[ Upstream commit 69460e68eb662064ab4188d4e129ff31c1f23ed9 ]
 
-Microchip USB Analyzer can activate the internal termination resistors
-by setting the "termination" option ON, or OFF to to deactivate them.
-As I've observed, both with my oscilloscope and captured USB packets
-below, you must send "0" to turn it ON, and "1" to turn it OFF.
+The pm_runtime_enable will increase power disable depth. Thus
+a pairing decrement is needed on the error handling path to
+keep it balanced according to context.
 
->From the schematics in the user's guide, I can confirm that you must
-drive the CAN_RES signal LOW "0" to activate the resistors.
-
-Reverse the argument value of usb_msg.termination to fix this.
-
-These are the two commands sequence, ON then OFF.
-
-> No.     Time           Source                Destination           Protocol Length Info
->       1 0.000000       host                  1.3.1                 USB      46     URB_BULK out
->
-> Frame 1: 46 bytes on wire (368 bits), 46 bytes captured (368 bits)
-> USB URB
-> Leftover Capture Data: a80000000000000000000000000000000000a8
->
-> No.     Time           Source                Destination           Protocol Length Info
->       2 4.372547       host                  1.3.1                 USB      46     URB_BULK out
->
-> Frame 2: 46 bytes on wire (368 bits), 46 bytes captured (368 bits)
-> USB URB
-> Leftover Capture Data: a80100000000000000000000000000000000a9
-
-Signed-off-by: Yasushi SHOJI <yashi@spacecubics.com>
-Link: https://lore.kernel.org/all/20221124152504.125994-1-yashi@spacecubics.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: 984aa6dbf4ca ("OMAP3: PM: Adding smartreflex driver support.")
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Link: https://lore.kernel.org/r/20221108080322.52268-3-zhangqilong3@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/can/usb/mcba_usb.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/power/avs/smartreflex.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/can/usb/mcba_usb.c b/drivers/net/can/usb/mcba_usb.c
-index ea1de06009d6..093458fbde68 100644
---- a/drivers/net/can/usb/mcba_usb.c
-+++ b/drivers/net/can/usb/mcba_usb.c
-@@ -58,6 +58,10 @@
- #define MCBA_VER_REQ_USB 1
- #define MCBA_VER_REQ_CAN 2
+diff --git a/drivers/power/avs/smartreflex.c b/drivers/power/avs/smartreflex.c
+index 8760477d0e8a..5ac122cd25b8 100644
+--- a/drivers/power/avs/smartreflex.c
++++ b/drivers/power/avs/smartreflex.c
+@@ -984,6 +984,7 @@ static int omap_sr_probe(struct platform_device *pdev)
+ err_debugfs:
+ 	debugfs_remove_recursive(sr_info->dbg_dir);
+ err_list_del:
++	pm_runtime_disable(&pdev->dev);
+ 	list_del(&sr_info->node);
  
-+/* Drive the CAN_RES signal LOW "0" to activate R24 and R25 */
-+#define MCBA_VER_TERMINATION_ON 0
-+#define MCBA_VER_TERMINATION_OFF 1
-+
- #define MCBA_SIDL_EXID_MASK 0x8
- #define MCBA_DLC_MASK 0xf
- #define MCBA_DLC_RTR_MASK 0x40
-@@ -480,7 +484,7 @@ static void mcba_usb_process_ka_usb(struct mcba_priv *priv,
- 		priv->usb_ka_first_pass = false;
- 	}
- 
--	if (msg->termination_state)
-+	if (msg->termination_state == MCBA_VER_TERMINATION_ON)
- 		priv->can.termination = MCBA_TERMINATION_ENABLED;
- 	else
- 		priv->can.termination = MCBA_TERMINATION_DISABLED;
-@@ -800,9 +804,9 @@ static int mcba_set_termination(struct net_device *netdev, u16 term)
- 	};
- 
- 	if (term == MCBA_TERMINATION_ENABLED)
--		usb_msg.termination = 1;
-+		usb_msg.termination = MCBA_VER_TERMINATION_ON;
- 	else
--		usb_msg.termination = 0;
-+		usb_msg.termination = MCBA_VER_TERMINATION_OFF;
- 
- 	mcba_usb_xmit_cmd(priv, (struct mcba_usb_msg *)&usb_msg);
- 
+ 	pm_runtime_put_sync(&pdev->dev);
 -- 
 2.35.1
 
