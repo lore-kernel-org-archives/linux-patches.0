@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49ACC6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:45:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCE7C433F0;
-	Mon, 16 Jan 2023 16:45:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661796FA3
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:46:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C26BC433F1;
+	Mon, 16 Jan 2023 16:46:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887555;
-	bh=x1OLKnw77KOXJUEPfeT5NdvA3ainjt9wRTIxK006xiU=;
+	s=korg; t=1673887561;
+	bh=L6t9P+rd3K73ICbRI2YqHcUEc5W7ShzWvnkv6UqhUkc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R733TMEvAIeG7XeXEInNe6SFoa0i0rMzG/OVb3sqskm5FzPzH69FuXHe92eNgo43H
-	 aX/XusFdzEe8WYOjU3SwuCXov86WyQP4usWZVnlKOVihwf+QDR30uJ57AftWy/TOiA
-	 HAgrdfZ8ftZYv1wSqUbjzngw1hQ+9bh4xDzcC5z8=
+	b=p2Nd35Ml4LaX4gbpLhWe06dx7fL26UlNNNFnX440IinLKHvC+chYTq1XbtABHiPUK
+	 yk8zzBPZe1ryJfAqNxZbg5GEYA7RkG/aH5fsxlxdt2CWkBdhFIOLk/oRqNCGmG/RRH
+	 LyhDEW6rmJFri/M5Qj0rK23mgcyXZM4FFwOXRgq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joe Perches <joe@perches.com>,
-	Suganath Prabu <suganath-prabu.subramani@broadcom.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 193/521] scsi: mpt3sas: Add ioc_<level> logging macros
-Date: Mon, 16 Jan 2023 16:47:35 +0100
-Message-Id: <20230116154855.704486053@linuxfoundation.org>
+Subject: [PATCH 4.19 168/521] net: amd: lance: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Mon, 16 Jan 2023 16:47:10 +0100
+Message-Id: <20230116154854.636883667@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,42 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joe Perches <joe@perches.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 645a20c6821cd1ab58af8a1f99659e619c216efd ]
+[ Upstream commit 6151d105dfce8c23edf30eed35e97f3d9b96a35c ]
 
-These macros can help identify specific logging uses and eventually perhaps
-reduce object sizes.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-Signed-off-by: Joe Perches <joe@perches.com>
-Acked-by: Suganath Prabu <suganath-prabu.subramani@broadcom.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 78316e9dfc24 ("scsi: mpt3sas: Fix possible resource leaks in mpt3sas_transport_port_add()")
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
+
+In these two cases, dev_kfree_skb() is called consume the xmited SKB,
+so replace it with dev_consume_skb_irq().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_base.h | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/net/ethernet/amd/atarilance.c | 2 +-
+ drivers/net/ethernet/amd/lance.c      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_base.h b/drivers/scsi/mpt3sas/mpt3sas_base.h
-index 96dc15e90bd8..941a4faf20be 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_base.h
-+++ b/drivers/scsi/mpt3sas/mpt3sas_base.h
-@@ -160,6 +160,15 @@ struct mpt3sas_nvme_cmd {
-  */
- #define MPT3SAS_FMT			"%s: "
- 
-+#define ioc_err(ioc, fmt, ...)						\
-+	pr_err("%s: " fmt, (ioc)->name, ##__VA_ARGS__)
-+#define ioc_notice(ioc, fmt, ...)					\
-+	pr_notice("%s: " fmt, (ioc)->name, ##__VA_ARGS__)
-+#define ioc_warn(ioc, fmt, ...)						\
-+	pr_warn("%s: " fmt, (ioc)->name, ##__VA_ARGS__)
-+#define ioc_info(ioc, fmt, ...)						\
-+	pr_info("%s: " fmt, (ioc)->name, ##__VA_ARGS__)
-+
- /*
-  *  WarpDrive Specific Log codes
-  */
+diff --git a/drivers/net/ethernet/amd/atarilance.c b/drivers/net/ethernet/amd/atarilance.c
+index d3d44e07afbc..414b990827e8 100644
+--- a/drivers/net/ethernet/amd/atarilance.c
++++ b/drivers/net/ethernet/amd/atarilance.c
+@@ -825,7 +825,7 @@ lance_start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	lp->memcpy_f( PKTBUF_ADDR(head), (void *)skb->data, skb->len );
+ 	head->flag = TMD1_OWN_CHIP | TMD1_ENP | TMD1_STP;
+ 	dev->stats.tx_bytes += skb->len;
+-	dev_kfree_skb( skb );
++	dev_consume_skb_irq(skb);
+ 	lp->cur_tx++;
+ 	while( lp->cur_tx >= TX_RING_SIZE && lp->dirty_tx >= TX_RING_SIZE ) {
+ 		lp->cur_tx -= TX_RING_SIZE;
+diff --git a/drivers/net/ethernet/amd/lance.c b/drivers/net/ethernet/amd/lance.c
+index b56d84c7df46..a21f4f82a9c2 100644
+--- a/drivers/net/ethernet/amd/lance.c
++++ b/drivers/net/ethernet/amd/lance.c
+@@ -997,7 +997,7 @@ static netdev_tx_t lance_start_xmit(struct sk_buff *skb,
+ 		skb_copy_from_linear_data(skb, &lp->tx_bounce_buffs[entry], skb->len);
+ 		lp->tx_ring[entry].base =
+ 			((u32)isa_virt_to_bus((lp->tx_bounce_buffs + entry)) & 0xffffff) | 0x83000000;
+-		dev_kfree_skb(skb);
++		dev_consume_skb_irq(skb);
+ 	} else {
+ 		lp->tx_skbuff[entry] = skb;
+ 		lp->tx_ring[entry].base = ((u32)isa_virt_to_bus(skb->data) & 0xffffff) | 0x83000000;
 -- 
 2.35.1
 
