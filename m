@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EA8F46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:08:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 905DBC433D2;
-	Mon, 16 Jan 2023 16:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B01A46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:08:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23C75C433D2;
+	Mon, 16 Jan 2023 16:08:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885311;
-	bh=xi60FueD+t6nKnAtgiEThZmexk2RbBHkjvRnRMIcy3U=;
+	s=korg; t=1673885314;
+	bh=yyENZs1sttpQ8zTkdAdxJPfn4YK8pOxic+dNrBuT0WI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1YfOB+QRXeZR8WgSGRHVikKZZKjQW/dqoMdIs+y5mESw30+YBZePhREOOrVdfjhWm
-	 xDEZgqbaYnXELSfHpxEB7OCwF7ZXTSyqBruUWD6lOsgk2hDF+DiXr+DreUyN9avqwz
-	 SLNbgDT9Mp6J1hfz/BL8I2s41jg+qHrv8u6hg7RE=
+	b=00z8kC/Ez7HXjDh1QiPxL6noTfOGbiiGaYX/7dRjdCS26R5zv6K4YbZ0H6ftKim0k
+	 Dy776UaGwLWvV28CueC3BDr6uoUvDYVk0rrrnPAwnInJ0g/4YmBzOtEdnQWSN80Zs/
+	 DFVq8me0fGseATjutyFRvO2NvVBjfF3+bHBbt4XM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
 	Yong Wu <yong.wu@mediatek.com>,
+	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Matthias Brugger <matthias.bgg@gmail.com>,
 	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 51/64] iommu/mediatek-v1: Add error handle for mtk_iommu_probe
-Date: Mon, 16 Jan 2023 16:51:58 +0100
-Message-Id: <20230116154745.340197684@linuxfoundation.org>
+Subject: [PATCH 5.10 52/64] iommu/mediatek-v1: Fix an error handling path in mtk_iommu_v1_probe()
+Date: Mon, 16 Jan 2023 16:51:59 +0100
+Message-Id: <20230116154745.370138464@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -35,56 +38,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yong Wu <yong.wu@mediatek.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit ac304c070c54413efabf29f9e73c54576d329774 ]
+[ Upstream commit 142e821f68cf5da79ce722cb9c1323afae30e185 ]
 
-In the original code, we lack the error handle. This patch adds them.
+A clk, prepared and enabled in mtk_iommu_v1_hw_init(), is not released in
+the error handling path of mtk_iommu_v1_probe().
 
-Signed-off-by: Yong Wu <yong.wu@mediatek.com>
-Link: https://lore.kernel.org/r/20210412064843.11614-2-yong.wu@mediatek.com
+Add the corresponding clk_disable_unprepare(), as already done in the
+remove function.
+
+Fixes: b17336c55d89 ("iommu/mediatek: add support for mtk iommu generation one HW")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Reviewed-by: Yong Wu <yong.wu@mediatek.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
+Reviewed-by: Matthias Brugger <matthias.bgg@gmail.com>
+Link: https://lore.kernel.org/r/593e7b7d97c6e064b29716b091a9d4fd122241fb.1671473163.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Stable-dep-of: 142e821f68cf ("iommu/mediatek-v1: Fix an error handling path in mtk_iommu_v1_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iommu/mtk_iommu_v1.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/iommu/mtk_iommu_v1.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
-index 82ddfe9170d4..4ed8bc755f5c 100644
+index 4ed8bc755f5c..2abbdd71d8d9 100644
 --- a/drivers/iommu/mtk_iommu_v1.c
 +++ b/drivers/iommu/mtk_iommu_v1.c
-@@ -624,12 +624,26 @@ static int mtk_iommu_probe(struct platform_device *pdev)
- 
- 	ret = iommu_device_register(&data->iommu);
+@@ -618,7 +618,7 @@ static int mtk_iommu_probe(struct platform_device *pdev)
+ 	ret = iommu_device_sysfs_add(&data->iommu, &pdev->dev, NULL,
+ 				     dev_name(&pdev->dev));
  	if (ret)
 -		return ret;
-+		goto out_sysfs_remove;
++		goto out_clk_unprepare;
  
--	if (!iommu_present(&platform_bus_type))
--		bus_set_iommu(&platform_bus_type,  &mtk_iommu_ops);
-+	if (!iommu_present(&platform_bus_type)) {
-+		ret = bus_set_iommu(&platform_bus_type,  &mtk_iommu_ops);
-+		if (ret)
-+			goto out_dev_unreg;
-+	}
+ 	iommu_device_set_ops(&data->iommu, &mtk_iommu_ops);
  
--	return component_master_add_with_match(dev, &mtk_iommu_com_ops, match);
-+	ret = component_master_add_with_match(dev, &mtk_iommu_com_ops, match);
-+	if (ret)
-+		goto out_bus_set_null;
-+	return ret;
-+
-+out_bus_set_null:
-+	bus_set_iommu(&platform_bus_type, NULL);
-+out_dev_unreg:
-+	iommu_device_unregister(&data->iommu);
-+out_sysfs_remove:
-+	iommu_device_sysfs_remove(&data->iommu);
-+	return ret;
+@@ -643,6 +643,8 @@ static int mtk_iommu_probe(struct platform_device *pdev)
+ 	iommu_device_unregister(&data->iommu);
+ out_sysfs_remove:
+ 	iommu_device_sysfs_remove(&data->iommu);
++out_clk_unprepare:
++	clk_disable_unprepare(data->bclk);
+ 	return ret;
  }
  
- static int mtk_iommu_remove(struct platform_device *pdev)
 -- 
 2.35.1
 
