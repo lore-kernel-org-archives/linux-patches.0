@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86456FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:00:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30AA3C433F0;
-	Mon, 16 Jan 2023 17:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12AE26FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:00:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B196C433EF;
+	Mon, 16 Jan 2023 17:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888434;
-	bh=Faf3x/eeUECjRwIHC0HoCzbo23zaaEKmorulEU1/OYA=;
+	s=korg; t=1673888431;
+	bh=cZMWjeBG13jDDc0cGkkRcCBT790/CZR7MfLEOKQVT7Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wn5ZdfewXMVRwXGUvDkCFwH3inrEximThmKSsOdoowQvt740Lc+BRsf28cJ27MCaS
-	 /fF0aJoQV3vSj+ShapBTvu7DRr2fnnKWxIaFoSZj4THVeJZevKcX4qMqqvlwk+J0tJ
-	 w7pvAQGOBXpyijxO2AyFob9EXbcrap1lRIT61EIg=
+	b=teLlNYIodxXL3RsfKk/l1Jptn7uD7ArR0NKjTKZH3PCDX4PhfI6r3rXgrBnW1NcJz
+	 kM1ORPoMDwmuBZy1v8ey7XBT/o8licZe7qcLJn0QRODTA743Lqz6G0lvU44Xf0+idr
+	 3Kqcx/wwlfpOg81a+Cx2X0nLN3t9qQgRu5nXS9ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masayoshi Mizuma <m.mizuma@jp.fujitsu.com>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
+	Eric Whitney <enwlinux@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 487/521] ktest: introduce grub2bls REBOOT_TYPE option
-Date: Mon, 16 Jan 2023 16:52:29 +0100
-Message-Id: <20230116154908.952621696@linuxfoundation.org>
+Subject: [PATCH 4.19 496/521] ext4: generalize extents status tree search functions
+Date: Mon, 16 Jan 2023 16:52:38 +0100
+Message-Id: <20230116154909.373802044@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,113 +35,455 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masayoshi Mizuma <m.mizuma@jp.fujitsu.com>
+From: Eric Whitney <enwlinux@gmail.com>
 
-[ Upstream commit ac2466456eaa0ff9b8cf647c4c52832024bc929f ]
+[ Upstream commit ad431025aecda85d3ebef5e4a3aca5c1c681d0c7 ]
 
-Fedora 30 introduces Boot Loader Specification (BLS),
-it changes around grub entry configuration.
+Ext4 contains a few functions that are used to search for delayed
+extents or blocks in the extents status tree.  Rather than duplicate
+code to add new functions to search for extents with different status
+values, such as written or a combination of delayed and unwritten,
+generalize the existing code to search for caller-specified extents
+status values.  Also, move this code into extents_status.c where it
+is better associated with the data structures it operates upon, and
+where it can be more readily used to implement new extents status tree
+functions that might want a broader scope for i_es_lock.
 
-kernel entries aren't in grub.cfg. We can get the entries
-by "grubby --info=ALL" command.
+Three missing static specifiers in RFC version of patch reported and
+fixed by Fengguang Wu <fengguang.wu@intel.com>.
 
-Introduce grub2bls as REBOOT_TYPE option for BLS.
-
-Link: http://lkml.kernel.org/r/20190509213647.6276-4-msys.mizuma@gmail.com
-
-Signed-off-by: Masayoshi Mizuma <m.mizuma@jp.fujitsu.com>
-Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Stable-dep-of: 26df05a8c142 ("kest.pl: Fix grub2 menu handling for rebooting")
+Signed-off-by: Eric Whitney <enwlinux@gmail.com>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 131294c35ed6 ("ext4: fix delayed allocation bug in ext4_clu_mapped for bigalloc + inline")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/ktest/ktest.pl | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ fs/ext4/ext4.h              |   4 -
+ fs/ext4/extents.c           |  52 +++----------
+ fs/ext4/extents_status.c    | 149 +++++++++++++++++++++++++++++++-----
+ fs/ext4/extents_status.h    |  13 +++-
+ fs/ext4/inode.c             |  17 ++--
+ include/trace/events/ext4.h |   4 +-
+ 6 files changed, 165 insertions(+), 74 deletions(-)
 
-diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
-index a1067469ba0e..76468e2d619f 100755
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -63,6 +63,7 @@ my %default = (
-     "STOP_TEST_AFTER"		=> 600,
-     "MAX_MONITOR_WAIT"		=> 1800,
-     "GRUB_REBOOT"		=> "grub2-reboot",
-+    "GRUB_BLS_GET"		=> "grubby --info=ALL",
-     "SYSLINUX"			=> "extlinux",
-     "SYSLINUX_PATH"		=> "/boot/extlinux",
-     "CONNECT_TIMEOUT"		=> 25,
-@@ -123,6 +124,7 @@ my $last_grub_menu;
- my $grub_file;
- my $grub_number;
- my $grub_reboot;
-+my $grub_bls_get;
- my $syslinux;
- my $syslinux_path;
- my $syslinux_label;
-@@ -292,6 +294,7 @@ my %option_map = (
-     "GRUB_MENU"			=> \$grub_menu,
-     "GRUB_FILE"			=> \$grub_file,
-     "GRUB_REBOOT"		=> \$grub_reboot,
-+    "GRUB_BLS_GET"		=> \$grub_bls_get,
-     "SYSLINUX"			=> \$syslinux,
-     "SYSLINUX_PATH"		=> \$syslinux_path,
-     "SYSLINUX_LABEL"		=> \$syslinux_label,
-@@ -437,7 +440,7 @@ EOF
-     ;
- $config_help{"REBOOT_TYPE"} = << "EOF"
-  Way to reboot the box to the test kernel.
-- Only valid options so far are "grub", "grub2", "syslinux", and "script".
-+ Only valid options so far are "grub", "grub2", "grub2bls", "syslinux", and "script".
+diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
+index e58b162ad5d6..24bbfbf9a5aa 100644
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -3228,10 +3228,6 @@ extern struct ext4_ext_path *ext4_find_extent(struct inode *, ext4_lblk_t,
+ 					      int flags);
+ extern void ext4_ext_drop_refs(struct ext4_ext_path *);
+ extern int ext4_ext_check_inode(struct inode *inode);
+-extern int ext4_find_delalloc_range(struct inode *inode,
+-				    ext4_lblk_t lblk_start,
+-				    ext4_lblk_t lblk_end);
+-extern int ext4_find_delalloc_cluster(struct inode *inode, ext4_lblk_t lblk);
+ extern ext4_lblk_t ext4_ext_next_allocated_block(struct ext4_ext_path *path);
+ extern int ext4_fiemap(struct inode *inode, struct fiemap_extent_info *fieinfo,
+ 			__u64 start, __u64 len);
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index 6c492fca60c4..c5c8326f5c25 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -2381,8 +2381,8 @@ ext4_ext_put_gap_in_cache(struct inode *inode, ext4_lblk_t hole_start,
+ {
+ 	struct extent_status es;
  
-  If you specify grub, it will assume grub version 1
-  and will search in /boot/grub/menu.lst for the title \$GRUB_MENU
-@@ -451,6 +454,8 @@ $config_help{"REBOOT_TYPE"} = << "EOF"
-  If you specify grub2, then you also need to specify both \$GRUB_MENU
-  and \$GRUB_FILE.
+-	ext4_es_find_delayed_extent_range(inode, hole_start,
+-					  hole_start + hole_len - 1, &es);
++	ext4_es_find_extent_range(inode, &ext4_es_is_delayed, hole_start,
++				  hole_start + hole_len - 1, &es);
+ 	if (es.es_len) {
+ 		/* There's delayed extent containing lblock? */
+ 		if (es.es_lblk <= hole_start)
+@@ -3852,39 +3852,6 @@ static int check_eofblocks_fl(handle_t *handle, struct inode *inode,
+ 	return ext4_mark_inode_dirty(handle, inode);
+ }
  
-+ If you specify grub2bls, then you also need to specify \$GRUB_MENU.
-+
-  If you specify syslinux, then you may use SYSLINUX to define the syslinux
-  command (defaults to extlinux), and SYSLINUX_PATH to specify the path to
-  the syslinux install (defaults to /boot/extlinux). But you have to specify
-@@ -476,6 +481,9 @@ $config_help{"GRUB_MENU"} = << "EOF"
-  menu must be a non-nested menu. Add the quotes used in the menu
-  to guarantee your selection, as the first menuentry with the content
-  of \$GRUB_MENU that is found will be used.
-+
-+ For grub2bls, \$GRUB_MENU is searched on the result of \$GRUB_BLS_GET
-+ command for the lines that begin with "title".
- EOF
-     ;
- $config_help{"GRUB_FILE"} = << "EOF"
-@@ -692,7 +700,7 @@ sub get_mandatory_configs {
+-/**
+- * ext4_find_delalloc_range: find delayed allocated block in the given range.
+- *
+- * Return 1 if there is a delalloc block in the range, otherwise 0.
+- */
+-int ext4_find_delalloc_range(struct inode *inode,
+-			     ext4_lblk_t lblk_start,
+-			     ext4_lblk_t lblk_end)
+-{
+-	struct extent_status es;
+-
+-	ext4_es_find_delayed_extent_range(inode, lblk_start, lblk_end, &es);
+-	if (es.es_len == 0)
+-		return 0; /* there is no delay extent in this tree */
+-	else if (es.es_lblk <= lblk_start &&
+-		 lblk_start < es.es_lblk + es.es_len)
+-		return 1;
+-	else if (lblk_start <= es.es_lblk && es.es_lblk <= lblk_end)
+-		return 1;
+-	else
+-		return 0;
+-}
+-
+-int ext4_find_delalloc_cluster(struct inode *inode, ext4_lblk_t lblk)
+-{
+-	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
+-	ext4_lblk_t lblk_start, lblk_end;
+-	lblk_start = EXT4_LBLK_CMASK(sbi, lblk);
+-	lblk_end = lblk_start + sbi->s_cluster_ratio - 1;
+-
+-	return ext4_find_delalloc_range(inode, lblk_start, lblk_end);
+-}
+-
+ /**
+  * Determines how many complete clusters (out of those specified by the 'map')
+  * are under delalloc and were reserved quota for.
+@@ -3943,7 +3910,8 @@ get_reserved_cluster_alloc(struct inode *inode, ext4_lblk_t lblk_start,
+ 		lblk_from = EXT4_LBLK_CMASK(sbi, lblk_start);
+ 		lblk_to = lblk_from + c_offset - 1;
+ 
+-		if (ext4_find_delalloc_range(inode, lblk_from, lblk_to))
++		if (ext4_es_scan_range(inode, &ext4_es_is_delayed, lblk_from,
++				       lblk_to))
+ 			allocated_clusters--;
  	}
-     }
  
--    if ($rtype eq "grub") {
-+    if (($rtype eq "grub") or ($rtype eq "grub2bls")) {
- 	get_mandatory_config("GRUB_MENU");
-     }
+@@ -3953,7 +3921,8 @@ get_reserved_cluster_alloc(struct inode *inode, ext4_lblk_t lblk_start,
+ 		lblk_from = lblk_start + num_blks;
+ 		lblk_to = lblk_from + (sbi->s_cluster_ratio - c_offset) - 1;
  
-@@ -1944,6 +1952,10 @@ sub get_grub_index {
- 	$command = "cat $grub_file";
- 	$target = '^menuentry.*' . $grub_menu_qt;
- 	$skip = '^menuentry\s|^submenu\s';
-+    } elsif ($reboot_type eq "grub2bls") {
-+        $command = $grub_bls_get;
-+        $target = '^title=.*' . $grub_menu_qt;
-+        $skip = '^title=';
-     } else {
- 	return;
-     }
-@@ -4307,7 +4319,7 @@ for (my $i = 1; $i <= $opt{"NUM_TESTS"}; $i++) {
+-		if (ext4_find_delalloc_range(inode, lblk_from, lblk_to))
++		if (ext4_es_scan_range(inode, &ext4_es_is_delayed, lblk_from,
++				       lblk_to))
+ 			allocated_clusters--;
+ 	}
  
-     if (!$buildonly) {
- 	$target = "$ssh_user\@$machine";
--	if ($reboot_type eq "grub") {
-+	if (($reboot_type eq "grub") or ($reboot_type eq "grub2bls")) {
- 	    dodie "GRUB_MENU not defined" if (!defined($grub_menu));
- 	} elsif ($reboot_type eq "grub2") {
- 	    dodie "GRUB_MENU not defined" if (!defined($grub_menu));
+@@ -5108,8 +5077,10 @@ static int ext4_find_delayed_extent(struct inode *inode,
+ 	ext4_lblk_t block, next_del;
+ 
+ 	if (newes->es_pblk == 0) {
+-		ext4_es_find_delayed_extent_range(inode, newes->es_lblk,
+-				newes->es_lblk + newes->es_len - 1, &es);
++		ext4_es_find_extent_range(inode, &ext4_es_is_delayed,
++					  newes->es_lblk,
++					  newes->es_lblk + newes->es_len - 1,
++					  &es);
+ 
+ 		/*
+ 		 * No extent in extent-tree contains block @newes->es_pblk,
+@@ -5130,7 +5101,8 @@ static int ext4_find_delayed_extent(struct inode *inode,
+ 	}
+ 
+ 	block = newes->es_lblk + newes->es_len;
+-	ext4_es_find_delayed_extent_range(inode, block, EXT_MAX_BLOCKS, &es);
++	ext4_es_find_extent_range(inode, &ext4_es_is_delayed, block,
++				  EXT_MAX_BLOCKS, &es);
+ 	if (es.es_len == 0)
+ 		next_del = EXT_MAX_BLOCKS;
+ 	else
+diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
+index 027c3e1b9f61..e7503a3a3299 100644
+--- a/fs/ext4/extents_status.c
++++ b/fs/ext4/extents_status.c
+@@ -233,30 +233,38 @@ static struct extent_status *__es_tree_search(struct rb_root *root,
+ }
+ 
+ /*
+- * ext4_es_find_delayed_extent_range: find the 1st delayed extent covering
+- * @es->lblk if it exists, otherwise, the next extent after @es->lblk.
++ * ext4_es_find_extent_range - find extent with specified status within block
++ *                             range or next extent following block range in
++ *                             extents status tree
+  *
+- * @inode: the inode which owns delayed extents
+- * @lblk: the offset where we start to search
+- * @end: the offset where we stop to search
+- * @es: delayed extent that we found
++ * @inode - file containing the range
++ * @matching_fn - pointer to function that matches extents with desired status
++ * @lblk - logical block defining start of range
++ * @end - logical block defining end of range
++ * @es - extent found, if any
++ *
++ * Find the first extent within the block range specified by @lblk and @end
++ * in the extents status tree that satisfies @matching_fn.  If a match
++ * is found, it's returned in @es.  If not, and a matching extent is found
++ * beyond the block range, it's returned in @es.  If no match is found, an
++ * extent is returned in @es whose es_lblk, es_len, and es_pblk components
++ * are 0.
+  */
+-void ext4_es_find_delayed_extent_range(struct inode *inode,
+-				 ext4_lblk_t lblk, ext4_lblk_t end,
+-				 struct extent_status *es)
++static void __es_find_extent_range(struct inode *inode,
++				   int (*matching_fn)(struct extent_status *es),
++				   ext4_lblk_t lblk, ext4_lblk_t end,
++				   struct extent_status *es)
+ {
+ 	struct ext4_es_tree *tree = NULL;
+ 	struct extent_status *es1 = NULL;
+ 	struct rb_node *node;
+ 
+-	BUG_ON(es == NULL);
+-	BUG_ON(end < lblk);
+-	trace_ext4_es_find_delayed_extent_range_enter(inode, lblk);
++	WARN_ON(es == NULL);
++	WARN_ON(end < lblk);
+ 
+-	read_lock(&EXT4_I(inode)->i_es_lock);
+ 	tree = &EXT4_I(inode)->i_es_tree;
+ 
+-	/* find extent in cache firstly */
++	/* see if the extent has been cached */
+ 	es->es_lblk = es->es_len = es->es_pblk = 0;
+ 	if (tree->cache_es) {
+ 		es1 = tree->cache_es;
+@@ -271,28 +279,133 @@ void ext4_es_find_delayed_extent_range(struct inode *inode,
+ 	es1 = __es_tree_search(&tree->root, lblk);
+ 
+ out:
+-	if (es1 && !ext4_es_is_delayed(es1)) {
++	if (es1 && !matching_fn(es1)) {
+ 		while ((node = rb_next(&es1->rb_node)) != NULL) {
+ 			es1 = rb_entry(node, struct extent_status, rb_node);
+ 			if (es1->es_lblk > end) {
+ 				es1 = NULL;
+ 				break;
+ 			}
+-			if (ext4_es_is_delayed(es1))
++			if (matching_fn(es1))
+ 				break;
+ 		}
+ 	}
+ 
+-	if (es1 && ext4_es_is_delayed(es1)) {
++	if (es1 && matching_fn(es1)) {
+ 		tree->cache_es = es1;
+ 		es->es_lblk = es1->es_lblk;
+ 		es->es_len = es1->es_len;
+ 		es->es_pblk = es1->es_pblk;
+ 	}
+ 
++}
++
++/*
++ * Locking for __es_find_extent_range() for external use
++ */
++void ext4_es_find_extent_range(struct inode *inode,
++			       int (*matching_fn)(struct extent_status *es),
++			       ext4_lblk_t lblk, ext4_lblk_t end,
++			       struct extent_status *es)
++{
++	trace_ext4_es_find_extent_range_enter(inode, lblk);
++
++	read_lock(&EXT4_I(inode)->i_es_lock);
++	__es_find_extent_range(inode, matching_fn, lblk, end, es);
++	read_unlock(&EXT4_I(inode)->i_es_lock);
++
++	trace_ext4_es_find_extent_range_exit(inode, es);
++}
++
++/*
++ * __es_scan_range - search block range for block with specified status
++ *                   in extents status tree
++ *
++ * @inode - file containing the range
++ * @matching_fn - pointer to function that matches extents with desired status
++ * @lblk - logical block defining start of range
++ * @end - logical block defining end of range
++ *
++ * Returns true if at least one block in the specified block range satisfies
++ * the criterion specified by @matching_fn, and false if not.  If at least
++ * one extent has the specified status, then there is at least one block
++ * in the cluster with that status.  Should only be called by code that has
++ * taken i_es_lock.
++ */
++static bool __es_scan_range(struct inode *inode,
++			    int (*matching_fn)(struct extent_status *es),
++			    ext4_lblk_t start, ext4_lblk_t end)
++{
++	struct extent_status es;
++
++	__es_find_extent_range(inode, matching_fn, start, end, &es);
++	if (es.es_len == 0)
++		return false;   /* no matching extent in the tree */
++	else if (es.es_lblk <= start &&
++		 start < es.es_lblk + es.es_len)
++		return true;
++	else if (start <= es.es_lblk && es.es_lblk <= end)
++		return true;
++	else
++		return false;
++}
++/*
++ * Locking for __es_scan_range() for external use
++ */
++bool ext4_es_scan_range(struct inode *inode,
++			int (*matching_fn)(struct extent_status *es),
++			ext4_lblk_t lblk, ext4_lblk_t end)
++{
++	bool ret;
++
++	read_lock(&EXT4_I(inode)->i_es_lock);
++	ret = __es_scan_range(inode, matching_fn, lblk, end);
++	read_unlock(&EXT4_I(inode)->i_es_lock);
++
++	return ret;
++}
++
++/*
++ * __es_scan_clu - search cluster for block with specified status in
++ *                 extents status tree
++ *
++ * @inode - file containing the cluster
++ * @matching_fn - pointer to function that matches extents with desired status
++ * @lblk - logical block in cluster to be searched
++ *
++ * Returns true if at least one extent in the cluster containing @lblk
++ * satisfies the criterion specified by @matching_fn, and false if not.  If at
++ * least one extent has the specified status, then there is at least one block
++ * in the cluster with that status.  Should only be called by code that has
++ * taken i_es_lock.
++ */
++static bool __es_scan_clu(struct inode *inode,
++			  int (*matching_fn)(struct extent_status *es),
++			  ext4_lblk_t lblk)
++{
++	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
++	ext4_lblk_t lblk_start, lblk_end;
++
++	lblk_start = EXT4_LBLK_CMASK(sbi, lblk);
++	lblk_end = lblk_start + sbi->s_cluster_ratio - 1;
++
++	return __es_scan_range(inode, matching_fn, lblk_start, lblk_end);
++}
++
++/*
++ * Locking for __es_scan_clu() for external use
++ */
++bool ext4_es_scan_clu(struct inode *inode,
++		      int (*matching_fn)(struct extent_status *es),
++		      ext4_lblk_t lblk)
++{
++	bool ret;
++
++	read_lock(&EXT4_I(inode)->i_es_lock);
++	ret = __es_scan_clu(inode, matching_fn, lblk);
+ 	read_unlock(&EXT4_I(inode)->i_es_lock);
+ 
+-	trace_ext4_es_find_delayed_extent_range_exit(inode, es);
++	return ret;
+ }
+ 
+ static void ext4_es_list_add(struct inode *inode)
+diff --git a/fs/ext4/extents_status.h b/fs/ext4/extents_status.h
+index 8efdeb903d6b..df9628c3ec3b 100644
+--- a/fs/ext4/extents_status.h
++++ b/fs/ext4/extents_status.h
+@@ -90,11 +90,18 @@ extern void ext4_es_cache_extent(struct inode *inode, ext4_lblk_t lblk,
+ 				 unsigned int status);
+ extern int ext4_es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
+ 				 ext4_lblk_t len);
+-extern void ext4_es_find_delayed_extent_range(struct inode *inode,
+-					ext4_lblk_t lblk, ext4_lblk_t end,
+-					struct extent_status *es);
++extern void ext4_es_find_extent_range(struct inode *inode,
++				      int (*match_fn)(struct extent_status *es),
++				      ext4_lblk_t lblk, ext4_lblk_t end,
++				      struct extent_status *es);
+ extern int ext4_es_lookup_extent(struct inode *inode, ext4_lblk_t lblk,
+ 				 struct extent_status *es);
++extern bool ext4_es_scan_range(struct inode *inode,
++			       int (*matching_fn)(struct extent_status *es),
++			       ext4_lblk_t lblk, ext4_lblk_t end);
++extern bool ext4_es_scan_clu(struct inode *inode,
++			     int (*matching_fn)(struct extent_status *es),
++			     ext4_lblk_t lblk);
+ 
+ static inline unsigned int ext4_es_status(struct extent_status *es)
+ {
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index 3c7bbdaa425a..cba27ba41834 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -600,8 +600,8 @@ int ext4_map_blocks(handle_t *handle, struct inode *inode,
+ 				EXTENT_STATUS_UNWRITTEN : EXTENT_STATUS_WRITTEN;
+ 		if (!(flags & EXT4_GET_BLOCKS_DELALLOC_RESERVE) &&
+ 		    !(status & EXTENT_STATUS_WRITTEN) &&
+-		    ext4_find_delalloc_range(inode, map->m_lblk,
+-					     map->m_lblk + map->m_len - 1))
++		    ext4_es_scan_range(inode, &ext4_es_is_delayed, map->m_lblk,
++				       map->m_lblk + map->m_len - 1))
+ 			status |= EXTENT_STATUS_DELAYED;
+ 		ret = ext4_es_insert_extent(inode, map->m_lblk,
+ 					    map->m_len, map->m_pblk, status);
+@@ -724,8 +724,8 @@ int ext4_map_blocks(handle_t *handle, struct inode *inode,
+ 				EXTENT_STATUS_UNWRITTEN : EXTENT_STATUS_WRITTEN;
+ 		if (!(flags & EXT4_GET_BLOCKS_DELALLOC_RESERVE) &&
+ 		    !(status & EXTENT_STATUS_WRITTEN) &&
+-		    ext4_find_delalloc_range(inode, map->m_lblk,
+-					     map->m_lblk + map->m_len - 1))
++		    ext4_es_scan_range(inode, &ext4_es_is_delayed, map->m_lblk,
++				       map->m_lblk + map->m_len - 1))
+ 			status |= EXTENT_STATUS_DELAYED;
+ 		ret = ext4_es_insert_extent(inode, map->m_lblk, map->m_len,
+ 					    map->m_pblk, status);
+@@ -1717,7 +1717,7 @@ static void ext4_da_page_release_reservation(struct page *page,
+ 		lblk = (page->index << (PAGE_SHIFT - inode->i_blkbits)) +
+ 			((num_clusters - 1) << sbi->s_cluster_bits);
+ 		if (sbi->s_cluster_ratio == 1 ||
+-		    !ext4_find_delalloc_cluster(inode, lblk))
++		    !ext4_es_scan_clu(inode, &ext4_es_is_delayed, lblk))
+ 			ext4_da_release_space(inode, 1);
+ 
+ 		num_clusters--;
+@@ -1902,6 +1902,7 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+ add_delayed:
+ 	if (retval == 0) {
+ 		int ret;
++
+ 		/*
+ 		 * XXX: __block_prepare_write() unmaps passed block,
+ 		 * is it OK?
+@@ -1912,7 +1913,8 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+ 		 * to reserve metadata for every block we're going to write.
+ 		 */
+ 		if (EXT4_SB(inode->i_sb)->s_cluster_ratio == 1 ||
+-		    !ext4_find_delalloc_cluster(inode, map->m_lblk)) {
++		    !ext4_es_scan_clu(inode,
++				      &ext4_es_is_delayed, map->m_lblk)) {
+ 			ret = ext4_da_reserve_space(inode);
+ 			if (ret) {
+ 				/* not enough space to reserve */
+@@ -3519,7 +3521,8 @@ static int ext4_iomap_begin(struct inode *inode, loff_t offset, loff_t length,
+ 			ext4_lblk_t end = map.m_lblk + map.m_len - 1;
+ 			struct extent_status es;
+ 
+-			ext4_es_find_delayed_extent_range(inode, map.m_lblk, end, &es);
++			ext4_es_find_extent_range(inode, &ext4_es_is_delayed,
++						  map.m_lblk, end, &es);
+ 
+ 			if (!es.es_len || es.es_lblk > end) {
+ 				/* entire range is a hole */
+diff --git a/include/trace/events/ext4.h b/include/trace/events/ext4.h
+index 0dfb174f707e..388dc3666cc7 100644
+--- a/include/trace/events/ext4.h
++++ b/include/trace/events/ext4.h
+@@ -2290,7 +2290,7 @@ TRACE_EVENT(ext4_es_remove_extent,
+ 		  __entry->lblk, __entry->len)
+ );
+ 
+-TRACE_EVENT(ext4_es_find_delayed_extent_range_enter,
++TRACE_EVENT(ext4_es_find_extent_range_enter,
+ 	TP_PROTO(struct inode *inode, ext4_lblk_t lblk),
+ 
+ 	TP_ARGS(inode, lblk),
+@@ -2312,7 +2312,7 @@ TRACE_EVENT(ext4_es_find_delayed_extent_range_enter,
+ 		  (unsigned long) __entry->ino, __entry->lblk)
+ );
+ 
+-TRACE_EVENT(ext4_es_find_delayed_extent_range_exit,
++TRACE_EVENT(ext4_es_find_extent_range_exit,
+ 	TP_PROTO(struct inode *inode, struct extent_status *es),
+ 
+ 	TP_ARGS(inode, es),
 -- 
 2.35.1
 
