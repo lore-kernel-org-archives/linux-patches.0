@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3713433EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1494C433D2;
-	Mon, 16 Jan 2023 16:03:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE4B033EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 53DCDC433D2;
+	Mon, 16 Jan 2023 16:03:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884982;
-	bh=hlNP93wm1kovAIyb/pXtNYyIuyoEXnAi4ilJ8AwYbzw=;
+	s=korg; t=1673884984;
+	bh=MkCq7CJNnMxdUr2XX6o0cJG8jVcLCWdAVqqA3TDbf+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xh+yt/UMR1LtU/HGdP7qeMRsNJnoFvMZD3dQqLUGp46vzCxU4Uo0tzYr+FsZs+IkX
-	 IVcW3GPrxQOExmvGnKPy/yI041fzumVO9dGvPTsRp8kCsgvKkfoyJyKWHjlnEk+lf5
-	 OWg+SLmRu+201TuHijt5kw+GOsMYaWvYtXlrqaqg=
+	b=MFF5nRQl0i1hhhabSGCZOq2XhmNtdLU8EwfHsval9fAq6915U5w/H50WAMBzvOqNS
+	 F9+adBXJDvDcncaCzEJWgZYIjvFS7AV7+YFtVSnxXtpaCkjJ+jadJjg9wy0/eCGh8B
+	 EHxvJL9Z5FbMAt2ItGPuhxp1KPXOK1KdHBdu98sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luka Guzenko <l.guzenko@web.de>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 04/86] ALSA: hda/realtek: Enable mute/micmute LEDs on HP Spectre x360 13-aw0xxx
-Date: Mon, 16 Jan 2023 16:50:38 +0100
-Message-Id: <20230116154747.242002823@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 5.15 05/86] KVM: arm64: Fix S1PTW handling on RO memslots
+Date: Mon, 16 Jan 2023 16:50:39 +0100
+Message-Id: <20230116154747.282287335@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -34,82 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luka Guzenko <l.guzenko@web.de>
+From: Marc Zyngier <maz@kernel.org>
 
-commit ca88eeb308a221c2dcd4a64031d2e5fcd3db9eaa upstream.
+commit 406504c7b0405d74d74c15a667cd4c4620c3e7a9 upstream.
 
-The HP Spectre x360 13-aw0xxx devices use the ALC285 codec with GPIO 0x04
-controlling the micmute LED and COEF 0x0b index 8 controlling the mute LED.
-A quirk was added to make these work as well as a fixup.
+A recent development on the EFI front has resulted in guests having
+their page tables baked in the firmware binary, and mapped into the
+IPA space as part of a read-only memslot. Not only is this legitimate,
+but it also results in added security, so thumbs up.
 
-Signed-off-by: Luka Guzenko <l.guzenko@web.de>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230110202514.2792-1-l.guzenko@web.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+It is possible to take an S1PTW translation fault if the S1 PTs are
+unmapped at stage-2. However, KVM unconditionally treats S1PTW as a
+write to correctly handle hardware AF/DB updates to the S1 PTs.
+Furthermore, KVM injects an exception into the guest for S1PTW writes.
+In the aforementioned case this results in the guest taking an abort
+it won't recover from, as the S1 PTs mapping the vectors suffer from
+the same problem.
+
+So clearly our handling is... wrong.
+
+Instead, switch to a two-pronged approach:
+
+- On S1PTW translation fault, handle the fault as a read
+
+- On S1PTW permission fault, handle the fault as a write
+
+This is of no consequence to SW that *writes* to its PTs (the write
+will trigger a non-S1PTW fault), and SW that uses RO PTs will not
+use HW-assisted AF/DB anyway, as that'd be wrong.
+
+Only in the case described in c4ad98e4b72c ("KVM: arm64: Assume write
+fault on S1PTW permission fault on instruction fetch") do we end-up
+with two back-to-back faults (page being evicted and faulted back).
+I don't think this is a case worth optimising for.
+
+Fixes: c4ad98e4b72c ("KVM: arm64: Assume write fault on S1PTW permission fault on instruction fetch")
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Regression-tested-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |   23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ arch/arm64/include/asm/kvm_emulate.h |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -4639,6 +4639,16 @@ static void alc285_fixup_hp_coef_micmute
- 	}
- }
+--- a/arch/arm64/include/asm/kvm_emulate.h
++++ b/arch/arm64/include/asm/kvm_emulate.h
+@@ -366,8 +366,26 @@ static __always_inline int kvm_vcpu_sys_
  
-+static void alc285_fixup_hp_gpio_micmute_led(struct hda_codec *codec,
-+				const struct hda_fixup *fix, int action)
-+{
-+	struct alc_spec *spec = codec->spec;
-+
-+	if (action == HDA_FIXUP_ACT_PRE_PROBE)
-+		spec->micmute_led_polarity = 1;
-+	alc_fixup_hp_gpio_led(codec, action, 0, 0x04);
-+}
-+
- static void alc236_fixup_hp_coef_micmute_led(struct hda_codec *codec,
- 				const struct hda_fixup *fix, int action)
+ static inline bool kvm_is_write_fault(struct kvm_vcpu *vcpu)
  {
-@@ -4660,6 +4670,13 @@ static void alc285_fixup_hp_mute_led(str
- 	alc285_fixup_hp_coef_micmute_led(codec, fix, action);
- }
+-	if (kvm_vcpu_abt_iss1tw(vcpu))
+-		return true;
++	if (kvm_vcpu_abt_iss1tw(vcpu)) {
++		/*
++		 * Only a permission fault on a S1PTW should be
++		 * considered as a write. Otherwise, page tables baked
++		 * in a read-only memslot will result in an exception
++		 * being delivered in the guest.
++		 *
++		 * The drawback is that we end-up faulting twice if the
++		 * guest is using any of HW AF/DB: a translation fault
++		 * to map the page containing the PT (read only at
++		 * first), then a permission fault to allow the flags
++		 * to be set.
++		 */
++		switch (kvm_vcpu_trap_get_fault_type(vcpu)) {
++		case ESR_ELx_FSC_PERM:
++			return true;
++		default:
++			return false;
++		}
++	}
  
-+static void alc285_fixup_hp_spectre_x360_mute_led(struct hda_codec *codec,
-+				const struct hda_fixup *fix, int action)
-+{
-+	alc285_fixup_hp_mute_led_coefbit(codec, fix, action);
-+	alc285_fixup_hp_gpio_micmute_led(codec, fix, action);
-+}
-+
- static void alc236_fixup_hp_mute_led(struct hda_codec *codec,
- 				const struct hda_fixup *fix, int action)
- {
-@@ -6913,6 +6930,7 @@ enum {
- 	ALC285_FIXUP_ASUS_G533Z_PINS,
- 	ALC285_FIXUP_HP_GPIO_LED,
- 	ALC285_FIXUP_HP_MUTE_LED,
-+	ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED,
- 	ALC236_FIXUP_HP_GPIO_LED,
- 	ALC236_FIXUP_HP_MUTE_LED,
- 	ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF,
-@@ -8282,6 +8300,10 @@ static const struct hda_fixup alc269_fix
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc285_fixup_hp_mute_led,
- 	},
-+	[ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc285_fixup_hp_spectre_x360_mute_led,
-+	},
- 	[ALC236_FIXUP_HP_GPIO_LED] = {
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc236_fixup_hp_gpio_led,
-@@ -9000,6 +9022,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x86c7, "HP Envy AiO 32", ALC274_FIXUP_HP_ENVY_GPIO),
- 	SND_PCI_QUIRK(0x103c, 0x86e7, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
- 	SND_PCI_QUIRK(0x103c, 0x86e8, "HP Spectre x360 15-eb0xxx", ALC285_FIXUP_HP_SPECTRE_X360_EB1),
-+	SND_PCI_QUIRK(0x103c, 0x86f9, "HP Spectre x360 13-aw0xxx", ALC285_FIXUP_HP_SPECTRE_X360_MUTE_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8716, "HP Elite Dragonfly G2 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x8720, "HP EliteBook x360 1040 G8 Notebook PC", ALC285_FIXUP_HP_GPIO_AMP_INIT),
- 	SND_PCI_QUIRK(0x103c, 0x8724, "HP EliteBook 850 G7", ALC285_FIXUP_HP_GPIO_LED),
+ 	if (kvm_vcpu_trap_is_iabt(vcpu))
+ 		return false;
 
 
