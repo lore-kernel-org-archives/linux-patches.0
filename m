@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DE946B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5173DC433EF;
-	Mon, 16 Jan 2023 16:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8322546B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:18:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08457C433EF;
+	Mon, 16 Jan 2023 16:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885879;
-	bh=gKLD9ZWWuo/UinEmfFH5+PYIvivA1C8VvjWP41wq1Gs=;
+	s=korg; t=1673885882;
+	bh=IWJF8WuY8wwtdUXF0/JkA+TvXLlCI89lXjWX52CVGj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Un8EImROMIlcH+hLzD26e5IRfaxrnIr7hawBQds7Niw4g7E7nSBvH16QBvI2k7CT
-	 uM4nnVFq5f1OUVbTATbp8sLulaMzn4xFQxvprtb2NtDGEJuBHxrjBNaJK805X9jrTe
-	 uV23FmKIK5KqDAq3f3Na4e1B6MgmQYaUAIvTSnnw=
+	b=ZeYcH9MO7Kx3RMQtYVQNBFtuADtMgoKhvT0/FQ0b1UfXE30hJZZIpR24o0n5XrVHw
+	 cHOKf/lnmGF+e9U/wue0bU8ty8jFx36ndNn10F/hiLYCyhaEwYcVaNd4PA95Zuh2E5
+	 qjFaRvzfBBw/BdQRaExPmPY6s+GhBd+n8wrFJtAw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yang Yingliang <yangyingliang@huawei.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 189/658] mmc: moxart: fix return value check of mmc_add_host()
-Date: Mon, 16 Jan 2023 16:44:37 +0100
-Message-Id: <20230116154918.102472806@linuxfoundation.org>
+Subject: [PATCH 5.4 190/658] mmc: mxcmmc: fix return value check of mmc_add_host()
+Date: Mon, 16 Jan 2023 16:44:38 +0100
+Message-Id: <20230116154918.148718902@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,7 +37,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 0ca18d09c744fb030ae9bc5836c3e357e0237dea ]
+[ Upstream commit cde600af7b413c9fe03e85c58c4279df90e91d13 ]
 
 mmc_add_host() may return error, if we ignore its return value, the memory
 that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
@@ -46,29 +46,29 @@ crash because of deleting not added device in the remove path.
 So fix this by checking the return value and goto error path which will call
 mmc_free_host().
 
-Fixes: 1b66e94e6b99 ("mmc: moxart: Add MOXA ART SD/MMC driver")
+Fixes: d96be879ff46 ("mmc: Add a MX2/MX3 specific SDHC driver")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-3-yangyingliang@huawei.com
+Link: https://lore.kernel.org/r/20221101063023.1664968-4-yangyingliang@huawei.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/moxart-mmc.c | 4 +++-
+ drivers/mmc/host/mxcmmc.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/moxart-mmc.c b/drivers/mmc/host/moxart-mmc.c
-index 1552d1f09c5c..52307dce08ba 100644
---- a/drivers/mmc/host/moxart-mmc.c
-+++ b/drivers/mmc/host/moxart-mmc.c
-@@ -660,7 +660,9 @@ static int moxart_probe(struct platform_device *pdev)
- 		goto out;
+diff --git a/drivers/mmc/host/mxcmmc.c b/drivers/mmc/host/mxcmmc.c
+index 011b59a3602e..9165af4760e3 100644
+--- a/drivers/mmc/host/mxcmmc.c
++++ b/drivers/mmc/host/mxcmmc.c
+@@ -1158,7 +1158,9 @@ static int mxcmci_probe(struct platform_device *pdev)
  
- 	dev_set_drvdata(dev, mmc);
+ 	timer_setup(&host->watchdog, mxcmci_watchdog, 0);
+ 
 -	mmc_add_host(mmc);
 +	ret = mmc_add_host(mmc);
 +	if (ret)
-+		goto out;
++		goto out_free_dma;
  
- 	dev_dbg(dev, "IRQ=%d, FIFO is %d bytes\n", irq, host->fifo_width);
+ 	return 0;
  
 -- 
 2.35.1
