@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 218CA4C83
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:32:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E864C433D2;
-	Mon, 16 Jan 2023 16:32:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C09D34C83
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:32:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 455C6C433EF;
+	Mon, 16 Jan 2023 16:32:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886749;
-	bh=6vRi5zWnUkTOpQroL8nflk3446aqTKa+yyRLY4JqaCU=;
+	s=korg; t=1673886751;
+	bh=AipgWh0lSkZV+fTw1vScQ4PtoBkZ3hoHnYYd+w57pTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZR8cSx0zrfz8Kb0nS20HDeVaK0CMpb9qqc1D/jp4jjBxNEvhgDJgfa8kgd4YD8Abl
-	 V3u9g3sRgU5aXMG3dXfO4h095aELnIIOdg2LNEk4cNgXCWx3fPhjH0pwtjiV2kpOKW
-	 lPhsk2TrXWaYYRn4PFG9vgQUfcY0Ldl7HAKJMfFU=
+	b=So8+JjlNRT6vU2VZt1/vzwZPslP/r5pqskqAh0214zN0gEmD4fxfJQcVGAxGI6Ocx
+	 FNUAx4G59i0sxGySRhKIR2c0z9As9YP+l2SrM1U89oRBVAq1UNyIwZDw2aoxiLmz2s
+	 z9rKk0Mj5+eu3J0A+TWfCJg3vpEwOAuXDAEqVByM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kim Phillips <kim.phillips@amd.com>,
-	Suravee Suthikulpanit <Suravee.Suthikulpanit@amd.com>,
-	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 5.4 517/658] iommu/amd: Fix ivrs_acpihid cmdline parsing code
-Date: Mon, 16 Jan 2023 16:50:05 +0100
-Message-Id: <20230116154933.170621462@linuxfoundation.org>
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.4 518/658] parisc: led: Fix potential null-ptr-deref in start_task()
+Date: Mon, 16 Jan 2023 16:50:06 +0100
+Message-Id: <20230116154933.220619720@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,45 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kim Phillips <kim.phillips@amd.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-commit 5f18e9f8868c6d4eae71678e7ebd4977b7d8c8cf upstream.
+commit 41f563ab3c33698bdfc3403c7c2e6c94e73681e4 upstream.
 
-The second (UID) strcmp in acpi_dev_hid_uid_match considers
-"0" and "00" different, which can prevent device registration.
+start_task() calls create_singlethread_workqueue() and not checked the
+ret value, which may return NULL. And a null-ptr-deref may happen:
 
-Have the AMD IOMMU driver's ivrs_acpihid parsing code remove
-any leading zeroes to make the UID strcmp succeed.  Now users
-can safely specify "AMDxxxxx:00" or "AMDxxxxx:0" and expect
-the same behaviour.
+start_task()
+    create_singlethread_workqueue() # failed, led_wq is NULL
+    queue_delayed_work()
+        queue_delayed_work_on()
+            __queue_delayed_work()  # warning here, but continue
+                __queue_work()      # access wq->flags, null-ptr-deref
 
-Fixes: ca3bf5d47cec ("iommu/amd: Introduces ivrs_acpihid kernel parameter")
-Signed-off-by: Kim Phillips <kim.phillips@amd.com>
-Cc: stable@vger.kernel.org
-Cc: Suravee Suthikulpanit <Suravee.Suthikulpanit@amd.com>
-Cc: Joerg Roedel <jroedel@suse.de>
-Link: https://lore.kernel.org/r/20220919155638.391481-1-kim.phillips@amd.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Check the ret value and return -ENOMEM if it is NULL.
+
+Fixes: 3499495205a6 ("[PARISC] Use work queue in LED/LCD driver instead of tasklet.")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd_iommu_init.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/parisc/led.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iommu/amd_iommu_init.c
-+++ b/drivers/iommu/amd_iommu_init.c
-@@ -3051,6 +3051,13 @@ static int __init parse_ivrs_acpihid(cha
- 		return 1;
- 	}
+--- a/drivers/parisc/led.c
++++ b/drivers/parisc/led.c
+@@ -137,6 +137,9 @@ static int start_task(void)
  
-+	/*
-+	 * Ignore leading zeroes after ':', so e.g., AMDI0095:00
-+	 * will match AMDI0095:0 in the second strcmp in acpi_dev_hid_uid_match
-+	 */
-+	while (*uid == '0' && *(uid + 1))
-+		uid++;
+ 	/* Create the work queue and queue the LED task */
+ 	led_wq = create_singlethread_workqueue("led_wq");	
++	if (!led_wq)
++		return -ENOMEM;
 +
- 	i = early_acpihid_map_size++;
- 	memcpy(early_acpihid_map[i].hid, hid, strlen(hid));
- 	memcpy(early_acpihid_map[i].uid, uid, strlen(uid));
+ 	queue_delayed_work(led_wq, &led_task, 0);
+ 
+ 	return 0;
 
 
