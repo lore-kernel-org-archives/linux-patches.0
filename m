@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B44F33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63F2C433D2;
-	Mon, 16 Jan 2023 15:57:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E217933EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F713C433EF;
+	Mon, 16 Jan 2023 15:57:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884626;
-	bh=p4Sbr1+I9ttFCLR0Tb168e7EZbLr0+yL75HP8U+Uh+8=;
+	s=korg; t=1673884628;
+	bh=JCMRyPwHT6S6S48XZwUaFaFghN65FGeJ6mT8jOCvCm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lAG0a5TMp86EYFee17b2T089iOFOS2JYWYCVxGq052P3RWRJBWIsPyYuqTpGvBkOL
-	 8H+/E5nqURTBbLesLZ5q3YbBVFjll63BqEc42YKcpzaq1wJqfAO/J+HiOKwh6kfleB
-	 KT4blVEzwo2lWuuciapBfCDrCrLjni2K+8cnu45A=
+	b=z54mivxhFxeBFyArGxFo5bOfKFvSTD7GtKP6/nbYygq+l+iXG0VYQmm6+6Po1q6Gx
+	 AofLQdjSZOFlTtScZwJakCpR0H/8F1oloHCF+FHSQRKMX4znQqVTm1cWZH6rH1ySEp
+	 0v6HAXEDRyaWpi9vfhj68ySp7OsP1eCfJwey48vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Gurucharan G <gurucharanx.g@intel.com>
-Subject: [PATCH 6.1 070/183] ixgbe: fix pci device refcount leak
-Date: Mon, 16 Jan 2023 16:49:53 +0100
-Message-Id: <20230116154806.321733141@linuxfoundation.org>
+	Yifan Zhang <yifan1.zhang@amd.com>,
+	Aaron Liu <aaron.liu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 079/183] drm/amdgpu: add soc21 common ip block support for GC 11.0.4
+Date: Mon, 16 Jan 2023 16:50:02 +0100
+Message-Id: <20230116154806.763617188@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -35,70 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Yifan Zhang <yifan1.zhang@amd.com>
 
-commit b93fb4405fcb5112c5739c5349afb52ec7f15c07 upstream.
+[ Upstream commit 311d52367d0a7985ee1132662bad46f09169eed2 ]
 
-As the comment of pci_get_domain_bus_and_slot() says, it
-returns a PCI device with refcount incremented, when finish
-using it, the caller must decrement the reference count by
-calling pci_dev_put().
+Add common soc21 ip block support for GC 11.0.4.
 
-In ixgbe_get_first_secondary_devfn() and ixgbe_x550em_a_has_mii(),
-pci_dev_put() is called to avoid leak.
-
-Fixes: 8fa10ef01260 ("ixgbe: register a mdiobus")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
+Reviewed-by: Aaron Liu <aaron.liu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: e1d900df63ad ("drm/amdgpu: enable VCN DPG for GC IP v11.0.4")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/soc21.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
-@@ -855,9 +855,11 @@ static struct pci_dev *ixgbe_get_first_s
- 	rp_pdev = pci_get_domain_bus_and_slot(0, 0, devfn);
- 	if (rp_pdev && rp_pdev->subordinate) {
- 		bus = rp_pdev->subordinate->number;
-+		pci_dev_put(rp_pdev);
- 		return pci_get_domain_bus_and_slot(0, bus, 0);
- 	}
- 
-+	pci_dev_put(rp_pdev);
- 	return NULL;
- }
- 
-@@ -874,6 +876,7 @@ static bool ixgbe_x550em_a_has_mii(struc
- 	struct ixgbe_adapter *adapter = hw->back;
- 	struct pci_dev *pdev = adapter->pdev;
- 	struct pci_dev *func0_pdev;
-+	bool has_mii = false;
- 
- 	/* For the C3000 family of SoCs (x550em_a) the internal ixgbe devices
- 	 * are always downstream of root ports @ 0000:00:16.0 & 0000:00:17.0
-@@ -884,15 +887,16 @@ static bool ixgbe_x550em_a_has_mii(struc
- 	func0_pdev = ixgbe_get_first_secondary_devfn(PCI_DEVFN(0x16, 0));
- 	if (func0_pdev) {
- 		if (func0_pdev == pdev)
--			return true;
--		else
--			return false;
-+			has_mii = true;
-+		goto out;
- 	}
- 	func0_pdev = ixgbe_get_first_secondary_devfn(PCI_DEVFN(0x17, 0));
- 	if (func0_pdev == pdev)
--		return true;
-+		has_mii = true;
- 
--	return false;
-+out:
-+	pci_dev_put(func0_pdev);
-+	return has_mii;
- }
- 
- /**
+diff --git a/drivers/gpu/drm/amd/amdgpu/soc21.c b/drivers/gpu/drm/amd/amdgpu/soc21.c
+index f1913d879811..26f1e4edb4d5 100644
+--- a/drivers/gpu/drm/amd/amdgpu/soc21.c
++++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
+@@ -653,6 +653,12 @@ static int soc21_common_early_init(void *handle)
+ 		}
+ 		adev->external_rev_id = adev->rev_id + 0x20;
+ 		break;
++	case IP_VERSION(11, 0, 4):
++		adev->cg_flags = 0;
++		adev->pg_flags = 0;
++		adev->external_rev_id = adev->rev_id + 0x1;
++		break;
++
+ 	default:
+ 		/* FIXME: not supported yet */
+ 		return -EINVAL;
+-- 
+2.35.1
+
 
 
