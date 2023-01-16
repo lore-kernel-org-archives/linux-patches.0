@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E25833EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84E06C433EF;
-	Mon, 16 Jan 2023 16:03:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AFF33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27679C433D2;
+	Mon, 16 Jan 2023 16:03:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885015;
-	bh=RjF66h9NKrNQOTEKnpDrWONZv/BlNFaTw71NsevcSMY=;
+	s=korg; t=1673885018;
+	bh=KK5nN9UW82lXnsraynq8u1xi3HMXy5blcDMPXgLg+oA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zGiApBWwF65CytHtGxOC6+zqQL/J1HHSvgAPzefDuVl+Iw/KHFzwEt/RBN9HGKu+y
-	 DjoXGoaTLnKN307bA+FpAVb21EuBSnMYZu6U7+BTEZP2E5BcjOGwSglRC/gawFsKnt
-	 oFsIt7CqJohWsB9qOzYikQDXv9gTS+bskt4IPOCo=
+	b=PkJ2FM/1CnfAeaaitaewO+Ks+8wO0SN6RdJlw1NojEI3eq7U/mnEURlaZTYbg4+/x
+	 IJ5aAvW0tnBL5Z8Akxri9OuDzg2Y09xUKKW9//CuBt+nTlnI7Obijsga/VUvR65jxE
+	 9l8Y9wka1vTpTKHhjdWcB3ex1tiWI8dt4nUryWXA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eliav Farber <farbere@amazon.com>,
+	Peter Newman <peternewman@google.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Babu Moger <babu.moger@amd.com>,
 	stable@kernel.org
-Subject: [PATCH 5.15 43/86] EDAC/device: Fix period calculation in edac_device_reset_delay_period()
-Date: Mon, 16 Jan 2023 16:51:17 +0100
-Message-Id: <20230116154748.856410493@linuxfoundation.org>
+Subject: [PATCH 5.15 44/86] x86/resctrl: Fix task CLOSID/RMID update race
+Date: Mon, 16 Jan 2023 16:51:18 +0100
+Message-Id: <20230116154748.894995908@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -35,65 +37,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eliav Farber <farbere@amazon.com>
+From: Peter Newman <peternewman@google.com>
 
-commit e84077437902ec99eba0a6b516df772653f142c7 upstream.
+commit fe1f0714385fbcf76b0cbceb02b7277d842014fc upstream.
 
-Fix period calculation in case user sets a value of 1000.  The input of
-round_jiffies_relative() should be in jiffies and not in milli-seconds.
+When the user moves a running task to a new rdtgroup using the task's
+file interface or by deleting its rdtgroup, the resulting change in
+CLOSID/RMID must be immediately propagated to the PQR_ASSOC MSR on the
+task(s) CPUs.
 
-  [ bp: Use the same code pattern as in edac_device_workq_setup() for
-    clarity. ]
+x86 allows reordering loads with prior stores, so if the task starts
+running between a task_curr() check that the CPU hoisted before the
+stores in the CLOSID/RMID update then it can start running with the old
+CLOSID/RMID until it is switched again because __rdtgroup_move_task()
+failed to determine that it needs to be interrupted to obtain the new
+CLOSID/RMID.
 
-Fixes: c4cf3b454eca ("EDAC: Rework workqueue handling")
-Signed-off-by: Eliav Farber <farbere@amazon.com>
+Refer to the diagram below:
+
+CPU 0                                   CPU 1
+-----                                   -----
+__rdtgroup_move_task():
+  curr <- t1->cpu->rq->curr
+                                        __schedule():
+                                          rq->curr <- t1
+                                        resctrl_sched_in():
+                                          t1->{closid,rmid} -> {1,1}
+  t1->{closid,rmid} <- {2,2}
+  if (curr == t1) // false
+   IPI(t1->cpu)
+
+A similar race impacts rdt_move_group_tasks(), which updates tasks in a
+deleted rdtgroup.
+
+In both cases, use smp_mb() to order the task_struct::{closid,rmid}
+stores before the loads in task_curr().  In particular, in the
+rdt_move_group_tasks() case, simply execute an smp_mb() on every
+iteration with a matching task.
+
+It is possible to use a single smp_mb() in rdt_move_group_tasks(), but
+this would require two passes and a means of remembering which
+task_structs were updated in the first loop. However, benchmarking
+results below showed too little performance impact in the simple
+approach to justify implementing the two-pass approach.
+
+Times below were collected using `perf stat` to measure the time to
+remove a group containing a 1600-task, parallel workload.
+
+CPU: Intel(R) Xeon(R) Platinum P-8136 CPU @ 2.00GHz (112 threads)
+
+  # mkdir /sys/fs/resctrl/test
+  # echo $$ > /sys/fs/resctrl/test/tasks
+  # perf bench sched messaging -g 40 -l 100000
+
+task-clock time ranges collected using:
+
+  # perf stat rmdir /sys/fs/resctrl/test
+
+Baseline:                     1.54 - 1.60 ms
+smp_mb() every matching task: 1.57 - 1.67 ms
+
+  [ bp: Massage commit message. ]
+
+Fixes: ae28d1aae48a ("x86/resctrl: Use an IPI instead of task_work_add() to update PQR_ASSOC MSR")
+Fixes: 0efc89be9471 ("x86/intel_rdt: Update task closid immediately on CPU in rmdir and unmount")
+Signed-off-by: Peter Newman <peternewman@google.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Babu Moger <babu.moger@amd.com>
 Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20221020124458.22153-1-farbere@amazon.com
+Link: https://lore.kernel.org/r/20221220161123.432120-1-peternewman@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/edac_device.c |   17 ++++++++---------
- drivers/edac/edac_module.h |    2 +-
- 2 files changed, 9 insertions(+), 10 deletions(-)
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/drivers/edac/edac_device.c
-+++ b/drivers/edac/edac_device.c
-@@ -424,17 +424,16 @@ static void edac_device_workq_teardown(s
-  *	Then restart the workq on the new delay
-  */
- void edac_device_reset_delay_period(struct edac_device_ctl_info *edac_dev,
--					unsigned long value)
-+				    unsigned long msec)
- {
--	unsigned long jiffs = msecs_to_jiffies(value);
-+	edac_dev->poll_msec = msec;
-+	edac_dev->delay	    = msecs_to_jiffies(msec);
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -580,8 +580,10 @@ static int __rdtgroup_move_task(struct t
+ 	/*
+ 	 * Ensure the task's closid and rmid are written before determining if
+ 	 * the task is current that will decide if it will be interrupted.
++	 * This pairs with the full barrier between the rq->curr update and
++	 * resctrl_sched_in() during context switch.
+ 	 */
+-	barrier();
++	smp_mb();
  
--	if (value == 1000)
--		jiffs = round_jiffies_relative(value);
--
--	edac_dev->poll_msec = value;
--	edac_dev->delay	    = jiffs;
--
--	edac_mod_work(&edac_dev->work, jiffs);
-+	/* See comment in edac_device_workq_setup() above */
-+	if (edac_dev->poll_msec == 1000)
-+		edac_mod_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
-+	else
-+		edac_mod_work(&edac_dev->work, edac_dev->delay);
- }
+ 	/*
+ 	 * By now, the task's closid and rmid are set. If the task is current
+@@ -2364,6 +2366,14 @@ static void rdt_move_group_tasks(struct
+ 			WRITE_ONCE(t->rmid, to->mon.rmid);
  
- int edac_device_alloc_index(void)
---- a/drivers/edac/edac_module.h
-+++ b/drivers/edac/edac_module.h
-@@ -56,7 +56,7 @@ bool edac_stop_work(struct delayed_work
- bool edac_mod_work(struct delayed_work *work, unsigned long delay);
- 
- extern void edac_device_reset_delay_period(struct edac_device_ctl_info
--					   *edac_dev, unsigned long value);
-+					   *edac_dev, unsigned long msec);
- extern void edac_mc_reset_delay_period(unsigned long value);
- 
- extern void *edac_align_ptr(void **p, unsigned size, int n_elems);
+ 			/*
++			 * Order the closid/rmid stores above before the loads
++			 * in task_curr(). This pairs with the full barrier
++			 * between the rq->curr update and resctrl_sched_in()
++			 * during context switch.
++			 */
++			smp_mb();
++
++			/*
+ 			 * If the task is on a CPU, set the CPU in the mask.
+ 			 * The detection is inaccurate as tasks might move or
+ 			 * schedule before the smp function call takes place.
 
 
