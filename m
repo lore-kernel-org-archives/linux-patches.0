@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E546FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:39:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40F89C433EF;
-	Mon, 16 Jan 2023 16:39:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 616146FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:39:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD15CC433D2;
+	Mon, 16 Jan 2023 16:39:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887169;
-	bh=wgwf/sDU0yM5J0MRN/m0LmvTSs78patBROJJZPxjQHc=;
+	s=korg; t=1673887172;
+	bh=TB4pMOsvkElmztXWLqzpVbRGOtMAmIqxdnvoHCCv+4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tam59g9X3CgxVUFEzRqZPrGf0IG6oDDSrLfXeZ58rC9L0HdF/lB59aBjXz+kJN0wE
-	 qDohxDfjd8hGPBgUPRqceUdsVMe+t4OrcDVCRJjcyaNjKAbO/H4ab/1IVS27uW71M0
-	 fsBzixxsLfE/S4+aYS7tEAuUmBY6V13205Dhn5hE=
+	b=FaLcFALYeAd4vVW8Brw3vvum4h4sjMEA+8rfy7rZlcSx/pVdIQfs1e3bxuzj/WTED
+	 lY7Z1n6MRyqrmiuaQlwnxvgMnalUJO1fNb/I3EVw7/ZUUtKu11Nrblmqx3x40yc7Vv
+	 a2fQK3iBIjxwA1zyTXzV6tZ1oWenthbpcMCReCbw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 048/521] perf: Fix possible memleak in pmu_dev_alloc()
-Date: Mon, 16 Jan 2023 16:45:10 +0100
-Message-Id: <20230116154849.401486290@linuxfoundation.org>
+Subject: [PATCH 4.19 049/521] timerqueue: Use rb_entry_safe() in timerqueue_getnext()
+Date: Mon, 16 Jan 2023 16:45:11 +0100
+Message-Id: <20230116154849.436008643@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,69 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Barnabás Pőcze <pobrn@protonmail.com>
 
-[ Upstream commit e8d7a90c08ce963c592fb49845f2ccc606a2ac21 ]
+[ Upstream commit 2f117484329b233455ee278f2d9b0a4356835060 ]
 
-In pmu_dev_alloc(), when dev_set_name() failed, it will goto free_dev
-and call put_device(pmu->dev) to release it.
-However pmu->dev->release is assigned after this, which makes warning
-and memleak.
-Call dev_set_name() after pmu->dev->release = pmu_dev_release to fix it.
+When `timerqueue_getnext()` is called on an empty timer queue, it will
+use `rb_entry()` on a NULL pointer, which is invalid. Fix that by using
+`rb_entry_safe()` which handles NULL pointers.
 
-  Device '(null)' does not have a release() function...
-  WARNING: CPU: 2 PID: 441 at drivers/base/core.c:2332 device_release+0x1b9/0x240
-  ...
-  Call Trace:
-    <TASK>
-    kobject_put+0x17f/0x460
-    put_device+0x20/0x30
-    pmu_dev_alloc+0x152/0x400
-    perf_pmu_register+0x96b/0xee0
-    ...
-  kmemleak: 1 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
-  unreferenced object 0xffff888014759000 (size 2048):
-    comm "modprobe", pid 441, jiffies 4294931444 (age 38.332s)
-    backtrace:
-      [<0000000005aed3b4>] kmalloc_trace+0x27/0x110
-      [<000000006b38f9b8>] pmu_dev_alloc+0x50/0x400
-      [<00000000735f17be>] perf_pmu_register+0x96b/0xee0
-      [<00000000e38477f1>] 0xffffffffc0ad8603
-      [<000000004e162216>] do_one_initcall+0xd0/0x4e0
-      ...
+This has not caused any issues so far because the offset of the `rb_node`
+member in `timerqueue_node` is 0, so `rb_entry()` is essentially a no-op.
 
-Fixes: abe43400579d ("perf: Sysfs enumeration")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20221111103653.91058-1-chenzhongjin@huawei.com
+Fixes: 511885d7061e ("lib/timerqueue: Rely on rbtree semantics for next timer")
+Signed-off-by: Barnabás Pőcze <pobrn@protonmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20221114195421.342929-1-pobrn@protonmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ include/linux/timerqueue.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index ba66ea3ca705..668e5492e4c4 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -9682,13 +9682,15 @@ static int pmu_dev_alloc(struct pmu *pmu)
+diff --git a/include/linux/timerqueue.h b/include/linux/timerqueue.h
+index aff122f1062a..e1a843cb16d4 100644
+--- a/include/linux/timerqueue.h
++++ b/include/linux/timerqueue.h
+@@ -35,7 +35,7 @@ struct timerqueue_node *timerqueue_getnext(struct timerqueue_head *head)
+ {
+ 	struct rb_node *leftmost = rb_first_cached(&head->rb_root);
  
- 	pmu->dev->groups = pmu->attr_groups;
- 	device_initialize(pmu->dev);
--	ret = dev_set_name(pmu->dev, "%s", pmu->name);
--	if (ret)
--		goto free_dev;
+-	return rb_entry(leftmost, struct timerqueue_node, node);
++	return rb_entry_safe(leftmost, struct timerqueue_node, node);
+ }
  
- 	dev_set_drvdata(pmu->dev, pmu);
- 	pmu->dev->bus = &pmu_bus;
- 	pmu->dev->release = pmu_dev_release;
-+
-+	ret = dev_set_name(pmu->dev, "%s", pmu->name);
-+	if (ret)
-+		goto free_dev;
-+
- 	ret = device_add(pmu->dev);
- 	if (ret)
- 		goto free_dev;
+ static inline void timerqueue_init(struct timerqueue_node *node)
 -- 
 2.35.1
 
