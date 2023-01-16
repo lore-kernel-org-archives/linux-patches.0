@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6957346B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:30:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8925C433A7;
-	Mon, 16 Jan 2023 16:30:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11FF746B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:30:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DE45C433EF;
+	Mon, 16 Jan 2023 16:30:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886646;
-	bh=wOKuDHVECY4NMc8h8q0uuxZf5TFXR29eTmuJOlt4U3g=;
+	s=korg; t=1673886648;
+	bh=aK7oU0FpqzYtShgGkECWTd/qqCjpwycmdX7tVhHAdEI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X4t/kxvthbUCIn8hAu67r0FYvqDIfjYgIpSA87wZAW0bc7N0BOt+K2UoEegbnz2q0
-	 KHK+MqMopDi0RYR/3kwMtXm/jL7baLT8RinrIl4Pp0W8h/Raqh7fu3GbdR6Teebsc/
-	 CxK4+Ya/VoTZzECzZgwLzwTqwIjWh4RQZMEFSmpY=
+	b=a+BqPoVjmyCbKEORX1pRK0qeNksupKab8IXrr8xnFnzXlqHFsZRTUvrMnWuSc8b86
+	 NaFxuipfBaU86O4nHNhIZbJbvYAQFB8wRj6AlGfzWQsz9PiccsJcn/yEQBSHoPI3/l
+	 Oq4PPe0CPxFdeyldDjic026yUbE5J1fnNANKdPlk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"John Warthog9 Hawley (VMware)" <warthog9@eaglescrag.net>,
-	Steven Rostedt <rostedt@goodmis.org>
-Subject: [PATCH 5.4 481/658] kest.pl: Fix grub2 menu handling for rebooting
-Date: Mon, 16 Jan 2023 16:49:29 +0100
-Message-Id: <20230116154931.501078237@linuxfoundation.org>
+	Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>,
+	Jack Wang <jinpu.wang@ionos.com>,
+	Song Liu <song@kernel.org>
+Subject: [PATCH 5.4 508/658] md/bitmap: Fix bitmap chunk size overflow issues
+Date: Mon, 16 Jan 2023 16:49:56 +0100
+Message-Id: <20230116154932.757787507@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -34,123 +35,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>
 
-commit 26df05a8c1420ad3de314fdd407e7fc2058cc7aa upstream.
+commit 4555211190798b6b6fa2c37667d175bf67945c78 upstream.
 
-grub2 has submenus where to use grub-reboot, it requires:
+- limit bitmap chunk size internal u64 variable to values not overflowing
+  the u32 bitmap superblock structure variable stored on persistent media
+- assign bitmap chunk size internal u64 variable from unsigned values to
+  avoid possible sign extension artifacts when assigning from a s32 value
 
-  grub-reboot X>Y
+The bug has been there since at least kernel 4.0.
+Steps to reproduce it:
+1: mdadm -C /dev/mdx -l 1 --bitmap=internal --bitmap-chunk=256M -e 1.2
+-n2 /dev/rnbd1 /dev/rnbd2
+2 resize member device rnbd1 and rnbd2 to 8 TB
+3 mdadm --grow /dev/mdx --size=max
 
-where X is the main index and Y is the submenu. Thus if you have:
-
-menuentry 'Debian GNU/Linux' --class debian --class gnu-linux ...
-	[...]
-}
-submenu 'Advanced options for Debian GNU/Linux' $menuentry_id_option ...
-        menuentry 'Debian GNU/Linux, with Linux 6.0.0-4-amd64' --class debian --class gnu-linux ...
-                [...]
-        }
-        menuentry 'Debian GNU/Linux, with Linux 6.0.0-4-amd64 (recovery mode)' --class debian --class gnu-linux ...
-		[...]
-        }
-        menuentry 'Debian GNU/Linux, with Linux test' --class debian --class gnu-linux ...
-                [...]
-        }
-
-And wanted to boot to the "Linux test" kernel, you need to run:
-
- # grub-reboot 1>2
-
-As 1 is the second top menu (the submenu) and 2 is the third of the sub
-menu entries.
-
-Have the grub.cfg parsing for grub2 handle such cases.
+The bitmap_chunksize will overflow without patch.
 
 Cc: stable@vger.kernel.org
-Fixes: a15ba91361d46 ("ktest: Add support for grub2")
-Reviewed-by: John 'Warthog9' Hawley (VMware) <warthog9@eaglescrag.net>
-Signed-off-by: Steven Rostedt <rostedt@goodmis.org>
+
+Signed-off-by: Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>
+Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
+Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/ktest/ktest.pl |   20 +++++++++++++++-----
- 1 file changed, 15 insertions(+), 5 deletions(-)
+ drivers/md/md-bitmap.c |   20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -1881,7 +1881,7 @@ sub run_scp_mod {
- 
- sub _get_grub_index {
- 
--    my ($command, $target, $skip) = @_;
-+    my ($command, $target, $skip, $submenu) = @_;
- 
-     return if (defined($grub_number) && defined($last_grub_menu) &&
- 	       $last_grub_menu eq $grub_menu && defined($last_machine) &&
-@@ -1898,11 +1898,16 @@ sub _get_grub_index {
- 
-     my $found = 0;
- 
-+    my $submenu_number = 0;
-+
-     while (<IN>) {
- 	if (/$target/) {
- 	    $grub_number++;
- 	    $found = 1;
- 	    last;
-+	} elsif (defined($submenu) && /$submenu/) {
-+		$submenu_number++;
-+		$grub_number = -1;
- 	} elsif (/$skip/) {
- 	    $grub_number++;
- 	}
-@@ -1911,6 +1916,9 @@ sub _get_grub_index {
- 
-     dodie "Could not find '$grub_menu' through $command on $machine"
- 	if (!$found);
-+    if ($submenu_number > 0) {
-+	$grub_number = "$submenu_number>$grub_number";
-+    }
-     doprint "$grub_number\n";
-     $last_grub_menu = $grub_menu;
-     $last_machine = $machine;
-@@ -1921,6 +1929,7 @@ sub get_grub_index {
-     my $command;
-     my $target;
-     my $skip;
-+    my $submenu;
-     my $grub_menu_qt;
- 
-     if ($reboot_type !~ /^grub/) {
-@@ -1935,8 +1944,9 @@ sub get_grub_index {
- 	$skip = '^\s*title\s';
-     } elsif ($reboot_type eq "grub2") {
- 	$command = "cat $grub_file";
--	$target = '^menuentry.*' . $grub_menu_qt;
--	$skip = '^menuentry\s|^submenu\s';
-+	$target = '^\s*menuentry.*' . $grub_menu_qt;
-+	$skip = '^\s*menuentry';
-+	$submenu = '^\s*submenu\s';
-     } elsif ($reboot_type eq "grub2bls") {
-         $command = $grub_bls_get;
-         $target = '^title=.*' . $grub_menu_qt;
-@@ -1945,7 +1955,7 @@ sub get_grub_index {
- 	return;
-     }
- 
--    _get_grub_index($command, $target, $skip);
-+    _get_grub_index($command, $target, $skip, $submenu);
+--- a/drivers/md/md-bitmap.c
++++ b/drivers/md/md-bitmap.c
+@@ -489,7 +489,7 @@ void md_bitmap_print_sb(struct bitmap *b
+ 	sb = kmap_atomic(bitmap->storage.sb_page);
+ 	pr_debug("%s: bitmap file superblock:\n", bmname(bitmap));
+ 	pr_debug("         magic: %08x\n", le32_to_cpu(sb->magic));
+-	pr_debug("       version: %d\n", le32_to_cpu(sb->version));
++	pr_debug("       version: %u\n", le32_to_cpu(sb->version));
+ 	pr_debug("          uuid: %08x.%08x.%08x.%08x\n",
+ 		 le32_to_cpu(*(__le32 *)(sb->uuid+0)),
+ 		 le32_to_cpu(*(__le32 *)(sb->uuid+4)),
+@@ -500,11 +500,11 @@ void md_bitmap_print_sb(struct bitmap *b
+ 	pr_debug("events cleared: %llu\n",
+ 		 (unsigned long long) le64_to_cpu(sb->events_cleared));
+ 	pr_debug("         state: %08x\n", le32_to_cpu(sb->state));
+-	pr_debug("     chunksize: %d B\n", le32_to_cpu(sb->chunksize));
+-	pr_debug("  daemon sleep: %ds\n", le32_to_cpu(sb->daemon_sleep));
++	pr_debug("     chunksize: %u B\n", le32_to_cpu(sb->chunksize));
++	pr_debug("  daemon sleep: %us\n", le32_to_cpu(sb->daemon_sleep));
+ 	pr_debug("     sync size: %llu KB\n",
+ 		 (unsigned long long)le64_to_cpu(sb->sync_size)/2);
+-	pr_debug("max write behind: %d\n", le32_to_cpu(sb->write_behind));
++	pr_debug("max write behind: %u\n", le32_to_cpu(sb->write_behind));
+ 	kunmap_atomic(sb);
  }
  
- sub wait_for_input
-@@ -2009,7 +2019,7 @@ sub reboot_to {
-     if ($reboot_type eq "grub") {
- 	run_ssh "'(echo \"savedefault --default=$grub_number --once\" | grub --batch)'";
-     } elsif (($reboot_type eq "grub2") or ($reboot_type eq "grub2bls")) {
--	run_ssh "$grub_reboot $grub_number";
-+	run_ssh "$grub_reboot \"'$grub_number'\"";
-     } elsif ($reboot_type eq "syslinux") {
- 	run_ssh "$syslinux --once \\\"$syslinux_label\\\" $syslinux_path";
-     } elsif (defined $reboot_script) {
+@@ -2110,7 +2110,8 @@ int md_bitmap_resize(struct bitmap *bitm
+ 			bytes = DIV_ROUND_UP(chunks, 8);
+ 			if (!bitmap->mddev->bitmap_info.external)
+ 				bytes += sizeof(bitmap_super_t);
+-		} while (bytes > (space << 9));
++		} while (bytes > (space << 9) && (chunkshift + BITMAP_BLOCK_SHIFT) <
++			(BITS_PER_BYTE * sizeof(((bitmap_super_t *)0)->chunksize) - 1));
+ 	} else
+ 		chunkshift = ffz(~chunksize) - BITMAP_BLOCK_SHIFT;
+ 
+@@ -2155,7 +2156,7 @@ int md_bitmap_resize(struct bitmap *bitm
+ 	bitmap->counts.missing_pages = pages;
+ 	bitmap->counts.chunkshift = chunkshift;
+ 	bitmap->counts.chunks = chunks;
+-	bitmap->mddev->bitmap_info.chunksize = 1 << (chunkshift +
++	bitmap->mddev->bitmap_info.chunksize = 1UL << (chunkshift +
+ 						     BITMAP_BLOCK_SHIFT);
+ 
+ 	blocks = min(old_counts.chunks << old_counts.chunkshift,
+@@ -2181,8 +2182,8 @@ int md_bitmap_resize(struct bitmap *bitm
+ 				bitmap->counts.missing_pages = old_counts.pages;
+ 				bitmap->counts.chunkshift = old_counts.chunkshift;
+ 				bitmap->counts.chunks = old_counts.chunks;
+-				bitmap->mddev->bitmap_info.chunksize = 1 << (old_counts.chunkshift +
+-									     BITMAP_BLOCK_SHIFT);
++				bitmap->mddev->bitmap_info.chunksize =
++					1UL << (old_counts.chunkshift + BITMAP_BLOCK_SHIFT);
+ 				blocks = old_counts.chunks << old_counts.chunkshift;
+ 				pr_warn("Could not pre-allocate in-memory bitmap for cluster raid\n");
+ 				break;
+@@ -2523,6 +2524,9 @@ chunksize_store(struct mddev *mddev, con
+ 	if (csize < 512 ||
+ 	    !is_power_of_2(csize))
+ 		return -EINVAL;
++	if (BITS_PER_LONG > 32 && csize >= (1ULL << (BITS_PER_BYTE *
++		sizeof(((bitmap_super_t *)0)->chunksize))))
++		return -EOVERFLOW;
+ 	mddev->bitmap_info.chunksize = csize;
+ 	return len;
+ }
 
 
