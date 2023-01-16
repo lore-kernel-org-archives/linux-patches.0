@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D4D33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB472C433D2;
-	Mon, 16 Jan 2023 15:57:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2387533EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 873B3C433D2;
+	Mon, 16 Jan 2023 15:57:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884631;
-	bh=9S49RvK0Myy6KGTNRM2Bz2WXdLcMqxKuDPtAr1jYYAg=;
+	s=korg; t=1673884633;
+	bh=4joK/imQ+y6j0wj6aulpJCsY1PsS+rCCxACUxZ86zAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xaYWXwwi8GyDcjfOXxJMEEs2J8jfjHvn60Hedx7M6zaznKPRmzt9rFDPrxJZys9jN
-	 h744CC4WPg05f0JBI30GqOTugCDKUS/HxCMHPhmcx/wgun52JR7zx8HFgy0dUdf5KN
-	 b1lKFQyra2nJ5X9LpCh4hbiYdiAFraztPtwkEr6w=
+	b=kEXlP+p1jM7FJ8ukjCtEEA5jOjtYCDFkYIBi4hZZ7unAZwUaCk7ytY3tMou7NngLU
+	 A4If+824gM9Il1FMDJK0Aw1bm3JCU3i0s0/7/3HQKdPIcrwqQCLp2Zpm95KS5O9Yad
+	 dTc8LjIlYE32s2GvsGboRwRK/RGqQtCFRTT+PVYg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>,
-	Leo Liu <leo.liu@amd.com>,
-	Yifan Zhang <yifan1.zhang@amd.com>,
-	Aaron Liu <aaron.liu@amd.com>,
+	Veerabadhran Gopalakrishnan <veerabadhran.gopalakrishnan@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 080/183] drm/amdgpu: Enable pg/cg flags on GC11_0_4 for VCN
-Date: Mon, 16 Jan 2023 16:50:03 +0100
-Message-Id: <20230116154806.812464496@linuxfoundation.org>
+Subject: [PATCH 6.1 081/183] drm/amdgpu: enable VCN DPG for GC IP v11.0.4
+Date: Mon, 16 Jan 2023 16:50:04 +0100
+Message-Id: <20230116154806.858002889@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -40,39 +38,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>
 
-[ Upstream commit 2a0fe2ca6e9c9bf9c47a9f9f0d67c13281a13f8c ]
+[ Upstream commit e1d900df63adcb748905131dd6258e570e11aed1 ]
 
-This enable VCN PG, CG and JPEG PG, CG
+Enable VCN Dynamic Power Gating control for GC IP v11.0.4.
 
 Signed-off-by: Saleemkhan Jamadar <saleemkhan.jamadar@amd.com>
-Reviewed-by: Leo Liu <leo.liu@amd.com>
-Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
-Reviewed-by: Aaron Liu <aaron.liu@amd.com>
+Reviewed-by: Veerabadhran Gopalakrishnan <veerabadhran.gopalakrishnan@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Stable-dep-of: e1d900df63ad ("drm/amdgpu: enable VCN DPG for GC IP v11.0.4")
+Cc: stable@vger.kernel.org # 6.0, 6.1
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/soc21.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/soc21.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/gpu/drm/amd/amdgpu/soc21.c b/drivers/gpu/drm/amd/amdgpu/soc21.c
-index 26f1e4edb4d5..599ddc28d8e1 100644
+index 599ddc28d8e1..909cf9f220c1 100644
 --- a/drivers/gpu/drm/amd/amdgpu/soc21.c
 +++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
-@@ -654,8 +654,11 @@ static int soc21_common_early_init(void *handle)
- 		adev->external_rev_id = adev->rev_id + 0x20;
- 		break;
- 	case IP_VERSION(11, 0, 4):
--		adev->cg_flags = 0;
--		adev->pg_flags = 0;
-+		adev->cg_flags = AMD_CG_SUPPORT_VCN_MGCG |
-+			AMD_CG_SUPPORT_JPEG_MGCG;
-+		adev->pg_flags = AMD_PG_SUPPORT_VCN |
-+			AMD_PG_SUPPORT_GFX_PG |
-+			AMD_PG_SUPPORT_JPEG;
+@@ -657,6 +657,7 @@ static int soc21_common_early_init(void *handle)
+ 		adev->cg_flags = AMD_CG_SUPPORT_VCN_MGCG |
+ 			AMD_CG_SUPPORT_JPEG_MGCG;
+ 		adev->pg_flags = AMD_PG_SUPPORT_VCN |
++			AMD_PG_SUPPORT_VCN_DPG |
+ 			AMD_PG_SUPPORT_GFX_PG |
+ 			AMD_PG_SUPPORT_JPEG;
  		adev->external_rev_id = adev->rev_id + 0x1;
- 		break;
- 
 -- 
 2.35.1
 
