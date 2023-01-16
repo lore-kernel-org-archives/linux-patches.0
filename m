@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EA533EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60BEFC433D2;
-	Mon, 16 Jan 2023 15:55:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71D3533EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE2C4C433EF;
+	Mon, 16 Jan 2023 15:55:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884547;
-	bh=Og5l1J0HC6clakpJKy4jhVtz1hPiL5RIlcG0oBCbxqM=;
+	s=korg; t=1673884550;
+	bh=rZwZR5xWEjU3uCO4qal6hEjV02xwZLiT6T+SKI3RKzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ocI3qJXnKDwALZQoVoaeePWbSMZcOU9jF2st+Dpz2k+KmsGj10l2SNM/3wCtdZDak
-	 ETYNc0kboI1hJ1Gk0z6WNscBFtKP3qGSuboJg2vIaMEO958ooAswTtYAyg38qN9RQs
-	 Wc7Of94l2nmkXqZT0JPhxO1QUa63ShRYYDU+Pm4U=
+	b=zZkE98ZHkUX1YLdixlEmzff5We0ITAFzbE1rM9XZTKhB2zie06gr0l5q+IZrtDRPL
+	 nFWHVy3deZ6JGK3usH30cCp4ZB/V2ZkOlQPw9XlBgDXtTWuN3Jn+tz4qi6WQ8u7H3v
+	 ojhW0OvSAWZ0ut72kFHL2B2zZVXfWHx0F2B3Lhz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Andy Shevchenko <andy@kernel.org>,
-	Daniel Scally <djrscally@gmail.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>
-Subject: [PATCH 6.1 048/183] platform/x86: int3472/discrete: Ensure the clk/power enable pins are in output mode
-Date: Mon, 16 Jan 2023 16:49:31 +0100
-Message-Id: <20230116154805.383872985@linuxfoundation.org>
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Mark Pearson <mpearson-lenovo@squebb.ca>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.1 049/183] platform/x86: thinkpad_acpi: Fix profile mode display in AMT mode
+Date: Mon, 16 Jan 2023 16:49:32 +0100
+Message-Id: <20230116154805.433087781@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,66 +35,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Mark Pearson <mpearson-lenovo@squebb.ca>
 
-commit cf5ac2d45f6e4d11ad78e7b10ae9a4121ba5e995 upstream.
+commit fde5f74ccfc771941b018b5415fa9664426e10ad upstream.
 
-acpi_get_and_request_gpiod() does not take a gpio_lookup_flags argument
-specifying that the pins direction should be initialized to a specific
-value.
+Recently AMT mode was enabled (somewhat unexpectedly) on the Lenovo
+Z13 platform. The FW is advertising it is available and the driver tries
+to use it - unfortunately it reports the profile mode incorrectly.
 
-This means that in some cases the pins might be left in input mode, causing
-the gpiod_set() calls made to enable the clk / regulator to not work.
+Note, there is also some extra work needed to enable the dynamic aspect
+of AMT support that I will be following up with; but more testing is
+needed first. This patch just fixes things so the profiles are reported
+correctly.
 
-One example of this problem is the clk-enable GPIO for the ov01a1s sensor
-on a Dell Latitude 9420 being left in input mode causing the clk to
-never get enabled.
+Link: https://gitlab.freedesktop.org/hadess/power-profiles-daemon/-/issues/115
+Fixes: 46dcbc61b739 ("platform/x86: thinkpad-acpi: Add support for automatic mode transitions")
 
-Explicitly set the direction of the pins to output to fix this.
-
-Fixes: 5de691bffe57 ("platform/x86: Add intel_skl_int3472 driver")
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
+Link: https://lore.kernel.org/r/20230112221228.490946-1-mpearson-lenovo@squebb.ca
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Andy Shevchenko <andy@kernel.org>
-Reviewed-by: Daniel Scally <djrscally@gmail.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230111201426.947853-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/intel/int3472/clk_and_regulator.c |    3 +++
- drivers/platform/x86/intel/int3472/discrete.c          |    4 ++++
- 2 files changed, 7 insertions(+)
+ drivers/platform/x86/thinkpad_acpi.c |   23 +++++++++++++++++------
+ 1 file changed, 17 insertions(+), 6 deletions(-)
 
---- a/drivers/platform/x86/intel/int3472/clk_and_regulator.c
-+++ b/drivers/platform/x86/intel/int3472/clk_and_regulator.c
-@@ -181,6 +181,9 @@ int skl_int3472_register_regulator(struc
- 		return PTR_ERR(int3472->regulator.gpio);
+--- a/drivers/platform/x86/thinkpad_acpi.c
++++ b/drivers/platform/x86/thinkpad_acpi.c
+@@ -10315,9 +10315,11 @@ static DEFINE_MUTEX(dytc_mutex);
+ static int dytc_capabilities;
+ static bool dytc_mmc_get_available;
+ 
+-static int convert_dytc_to_profile(int dytcmode, enum platform_profile_option *profile)
++static int convert_dytc_to_profile(int funcmode, int dytcmode,
++		enum platform_profile_option *profile)
+ {
+-	if (dytc_capabilities & BIT(DYTC_FC_MMC)) {
++	switch (funcmode) {
++	case DYTC_FUNCTION_MMC:
+ 		switch (dytcmode) {
+ 		case DYTC_MODE_MMC_LOWPOWER:
+ 			*profile = PLATFORM_PROFILE_LOW_POWER;
+@@ -10333,8 +10335,7 @@ static int convert_dytc_to_profile(int d
+ 			return -EINVAL;
+ 		}
+ 		return 0;
+-	}
+-	if (dytc_capabilities & BIT(DYTC_FC_PSC)) {
++	case DYTC_FUNCTION_PSC:
+ 		switch (dytcmode) {
+ 		case DYTC_MODE_PSC_LOWPOWER:
+ 			*profile = PLATFORM_PROFILE_LOW_POWER;
+@@ -10348,6 +10349,14 @@ static int convert_dytc_to_profile(int d
+ 		default: /* Unknown mode */
+ 			return -EINVAL;
+ 		}
++		return 0;
++	case DYTC_FUNCTION_AMT:
++		/* For now return balanced. It's the closest we have to 'auto' */
++		*profile =  PLATFORM_PROFILE_BALANCED;
++		return 0;
++	default:
++		/* Unknown function */
++		return -EOPNOTSUPP;
  	}
- 
-+	/* Ensure the pin is in output mode and non-active state */
-+	gpiod_direction_output(int3472->regulator.gpio, 0);
+ 	return 0;
+ }
+@@ -10496,6 +10505,7 @@ static int dytc_profile_set(struct platf
+ 		err = dytc_command(DYTC_SET_COMMAND(DYTC_FUNCTION_PSC, perfmode, 1), &output);
+ 		if (err)
+ 			goto unlock;
 +
- 	cfg.dev = &int3472->adev->dev;
- 	cfg.init_data = &init_data;
- 	cfg.ena_gpiod = int3472->regulator.gpio;
---- a/drivers/platform/x86/intel/int3472/discrete.c
-+++ b/drivers/platform/x86/intel/int3472/discrete.c
-@@ -168,6 +168,8 @@ static int skl_int3472_map_gpio_to_clk(s
- 			return (PTR_ERR(gpio));
+ 		/* system supports AMT, activate it when on balanced */
+ 		if (dytc_capabilities & BIT(DYTC_FC_AMT))
+ 			dytc_control_amt(profile == PLATFORM_PROFILE_BALANCED);
+@@ -10511,7 +10521,7 @@ static void dytc_profile_refresh(void)
+ {
+ 	enum platform_profile_option profile;
+ 	int output, err = 0;
+-	int perfmode;
++	int perfmode, funcmode;
  
- 		int3472->clock.ena_gpio = gpio;
-+		/* Ensure the pin is in output mode and non-active state */
-+		gpiod_direction_output(int3472->clock.ena_gpio, 0);
- 		break;
- 	case INT3472_GPIO_TYPE_PRIVACY_LED:
- 		gpio = acpi_get_and_request_gpiod(path, pin, "int3472,privacy-led");
-@@ -175,6 +177,8 @@ static int skl_int3472_map_gpio_to_clk(s
- 			return (PTR_ERR(gpio));
+ 	mutex_lock(&dytc_mutex);
+ 	if (dytc_capabilities & BIT(DYTC_FC_MMC)) {
+@@ -10526,8 +10536,9 @@ static void dytc_profile_refresh(void)
+ 	if (err)
+ 		return;
  
- 		int3472->clock.led_gpio = gpio;
-+		/* Ensure the pin is in output mode and non-active state */
-+		gpiod_direction_output(int3472->clock.led_gpio, 0);
- 		break;
- 	default:
- 		dev_err(int3472->dev, "Invalid GPIO type 0x%02x for clock\n", type);
++	funcmode = (output >> DYTC_GET_FUNCTION_BIT) & 0xF;
+ 	perfmode = (output >> DYTC_GET_MODE_BIT) & 0xF;
+-	convert_dytc_to_profile(perfmode, &profile);
++	convert_dytc_to_profile(funcmode, perfmode, &profile);
+ 	if (profile != dytc_current_profile) {
+ 		dytc_current_profile = profile;
+ 		platform_profile_notify();
 
 
