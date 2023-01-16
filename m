@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 862D046B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDD1C433D2;
-	Mon, 16 Jan 2023 16:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E60746B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5808C433D2;
+	Mon, 16 Jan 2023 16:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885787;
-	bh=5hf4c/PoF32qEn1IWLvif+yx81PtrboBrF/KQOprh3k=;
+	s=korg; t=1673885790;
+	bh=+Xr1Vl/TCGZ4vWfM3tTvUdD07+0yWcJ7bfN2algaO0g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Yj6557a1jqLWJh7J2d5sW9f6ETIsw2mWOHKzwNM/XuFJVu4f3OV0Mb3QKxQ3O2lPZ
-	 i5eTCnDJn5ZvFVaGMWHhAt4feiZ6F9+dSk02Bfu7Pb7Llan220xZ2b8lHaPwUUvFZ1
-	 ZIgDJypBOfLgo3Mf0ecaVsgQnWhV1wmFF9AeWBWI=
+	b=c9/7GZuVypF/uZ7gR5t8WFPX6MbdZU2+UR2eQvRxGH7OrHuF2zDnHEt/0mNhPHj4a
+	 BsYWRwYQg4EVrnfromvNWELwWlSFAhmnpvpYI7sOYi1spWCfDCxIG6/n769FJwJ5wX
+	 BHnkdr0D+2jY0UOwculf73IpfopbKjX6nl211kT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alim Akhtar <alim.akhtar@samsung.com>,
-	Aakarsh Jain <aakarsh.jain@samsung.com>,
+	Liu Shixin <liushixin2@huawei.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 156/658] media: s5p-mfc: Add variant data for MFC v7 hardware for Exynos 3250 SoC
-Date: Mon, 16 Jan 2023 16:44:04 +0100
-Message-Id: <20230116154916.585470155@linuxfoundation.org>
+Subject: [PATCH 5.4 183/658] media: saa7164: fix missing pci_disable_device()
+Date: Mon, 16 Jan 2023 16:44:31 +0100
+Message-Id: <20230116154917.816296156@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,63 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aakarsh Jain <aakarsh.jain@samsung.com>
+From: Liu Shixin <liushixin2@huawei.com>
 
-[ Upstream commit f50ebe10f5d8092c37e2bd430c78e03bf38b1e20 ]
+[ Upstream commit 57fb35d7542384cac8f198cd1c927540ad38b61a ]
 
-Commit 5441e9dafdfc6dc40 ("[media] s5p-mfc: Core support for MFC v7")
-which adds mfc v7 support for Exynos3250 and use the same compatible
-string as used by Exynos5240 but both the IPs are a bit different in
-terms of IP clock.
-Add variant driver data based on the new compatible string
-"samsung,exynos3250-mfc" for Exynos3250 SoC.
+Add missing pci_disable_device() in the error path in saa7164_initdev().
 
-Suggested-by: Alim Akhtar <alim.akhtar@samsung.com>
-Fixes: 5441e9dafdfc ("[media] s5p-mfc: Core support for MFC v7")
-Signed-off-by: Aakarsh Jain <aakarsh.jain@samsung.com>
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+Fixes: 443c1228d505 ("V4L/DVB (12923): SAA7164: Add support for the NXP SAA7164 silicon")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/s5p-mfc/s5p_mfc.c | 17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/media/pci/saa7164/saa7164-core.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc.c b/drivers/media/platform/s5p-mfc/s5p_mfc.c
-index 9faecd049002..d3fd3375ce19 100644
---- a/drivers/media/platform/s5p-mfc/s5p_mfc.c
-+++ b/drivers/media/platform/s5p-mfc/s5p_mfc.c
-@@ -1580,8 +1580,18 @@ static struct s5p_mfc_variant mfc_drvdata_v7 = {
- 	.port_num	= MFC_NUM_PORTS_V7,
- 	.buf_size	= &buf_size_v7,
- 	.fw_name[0]     = "s5p-mfc-v7.fw",
--	.clk_names	= {"mfc", "sclk_mfc"},
--	.num_clocks	= 2,
-+	.clk_names	= {"mfc"},
-+	.num_clocks	= 1,
-+};
-+
-+static struct s5p_mfc_variant mfc_drvdata_v7_3250 = {
-+	.version        = MFC_VERSION_V7,
-+	.version_bit    = MFC_V7_BIT,
-+	.port_num       = MFC_NUM_PORTS_V7,
-+	.buf_size       = &buf_size_v7,
-+	.fw_name[0]     = "s5p-mfc-v7.fw",
-+	.clk_names      = {"mfc", "sclk_mfc"},
-+	.num_clocks     = 2,
- };
+diff --git a/drivers/media/pci/saa7164/saa7164-core.c b/drivers/media/pci/saa7164/saa7164-core.c
+index 9ae04e18e6c6..59b039b953bb 100644
+--- a/drivers/media/pci/saa7164/saa7164-core.c
++++ b/drivers/media/pci/saa7164/saa7164-core.c
+@@ -1227,7 +1227,7 @@ static int saa7164_initdev(struct pci_dev *pci_dev,
  
- static struct s5p_mfc_buf_size_v6 mfc_buf_size_v8 = {
-@@ -1651,6 +1661,9 @@ static const struct of_device_id exynos_mfc_match[] = {
- 	}, {
- 		.compatible = "samsung,mfc-v7",
- 		.data = &mfc_drvdata_v7,
-+	}, {
-+		.compatible = "samsung,exynos3250-mfc",
-+		.data = &mfc_drvdata_v7_3250,
- 	}, {
- 		.compatible = "samsung,mfc-v8",
- 		.data = &mfc_drvdata_v8,
+ 	if (saa7164_dev_setup(dev) < 0) {
+ 		err = -EINVAL;
+-		goto fail_free;
++		goto fail_dev;
+ 	}
+ 
+ 	/* print pci info */
+@@ -1395,6 +1395,8 @@ static int saa7164_initdev(struct pci_dev *pci_dev,
+ 
+ fail_irq:
+ 	saa7164_dev_unregister(dev);
++fail_dev:
++	pci_disable_device(pci_dev);
+ fail_free:
+ 	v4l2_device_unregister(&dev->v4l2_dev);
+ 	kfree(dev);
 -- 
 2.35.1
 
