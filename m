@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05E7F6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:47:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80A42C433D2;
-	Mon, 16 Jan 2023 16:47:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5C96FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:47:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25A4CC433EF;
+	Mon, 16 Jan 2023 16:47:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887657;
-	bh=QNr73EVDlupqc+QMAJTeeJn8dV70QGIzDf9vswfj+Jw=;
+	s=korg; t=1673887660;
+	bh=XlZJNHhtXi5aAm3yDyXYaVpM8t3/hcKIPK5nJ+W4XnM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=podmr29yMl1P6oDwZBKcA7Eh22LlzW04SLba/wNguMoAa/iNbE0jcNI9PmMxPsfsX
-	 s9CLD8f7BK8CBX3m8dA1wVTJ7Bdee0z8b8dy1PwkJipLWTree/WP0uyg+c0nvXDpZm
-	 Q/1ED6/coAnuxQ0jI1njfWc+faozT+nqXFKRp5ro=
+	b=KcsIY9RRmpU1o3grLpencYb3h6hQ7hS412HjrmWT2oJ8BpGNbZ4cCdUXb4FURiBEp
+	 LL8KGgGUMeBudlGrQ0L4u9dLQ2ZNg1upxawbpJLY18rryVf0W1NEYpkmNReHjvUopJ
+	 E579fEOdY9/1yUzHEauG0JN0OzDXyOwdXVhQgA+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Mike Marshall <hubcap@omnibond.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 203/521] orangefs: Fix sysfs not cleanup when dev init failed
-Date: Mon, 16 Jan 2023 16:47:45 +0100
-Message-Id: <20230116154856.202490233@linuxfoundation.org>
+Subject: [PATCH 4.19 204/521] crypto: img-hash - Fix variable dereferenced before check hdev->req
+Date: Mon, 16 Jan 2023 16:47:46 +0100
+Message-Id: <20230116154856.251261370@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,72 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit ea60a4ad0cf88b411cde6888b8c890935686ecd7 ]
+[ Upstream commit 04ba54e5af8f8f0137b08cb51a0b3a2e1ea46c94 ]
 
-When the dev init failed, should cleanup the sysfs, otherwise, the
-module will never be loaded since can not create duplicate sysfs
-directory:
+Smatch report warning as follows:
 
-  sysfs: cannot create duplicate filename '/fs/orangefs'
+drivers/crypto/img-hash.c:366 img_hash_dma_task() warn: variable
+dereferenced before check 'hdev->req'
 
-  CPU: 1 PID: 6549 Comm: insmod Tainted: G        W          6.0.0+ #44
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x34/0x44
-   sysfs_warn_dup.cold+0x17/0x24
-   sysfs_create_dir_ns+0x16d/0x180
-   kobject_add_internal+0x156/0x3a0
-   kobject_init_and_add+0xcf/0x120
-   orangefs_sysfs_init+0x7e/0x3a0 [orangefs]
-   orangefs_init+0xfe/0x1000 [orangefs]
-   do_one_initcall+0x87/0x2a0
-   do_init_module+0xdf/0x320
-   load_module+0x2f98/0x3330
-   __do_sys_finit_module+0x113/0x1b0
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+Variable dereferenced should be done after check 'hdev->req',
+fix it.
 
-  kobject_add_internal failed for orangefs with -EEXIST, don't try to register things with the same name in the same directory.
-
-Fixes: 2f83ace37181 ("orangefs: put register_chrdev immediately before register_filesystem")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Fixes: d358f1abbf71 ("crypto: img-hash - Add Imagination Technologies hw hash accelerator")
+Fixes: 10badea259fa ("crypto: img-hash - Fix null pointer exception")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/orangefs-mod.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/crypto/img-hash.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/fs/orangefs/orangefs-mod.c b/fs/orangefs/orangefs-mod.c
-index 85ef87245a87..c8818163e392 100644
---- a/fs/orangefs/orangefs-mod.c
-+++ b/fs/orangefs/orangefs-mod.c
-@@ -141,7 +141,7 @@ static int __init orangefs_init(void)
- 		gossip_err("%s: could not initialize device subsystem %d!\n",
- 			   __func__,
- 			   ret);
--		goto cleanup_device;
-+		goto cleanup_sysfs;
- 	}
+diff --git a/drivers/crypto/img-hash.c b/drivers/crypto/img-hash.c
+index b87000a0a01c..f70923643a97 100644
+--- a/drivers/crypto/img-hash.c
++++ b/drivers/crypto/img-hash.c
+@@ -359,12 +359,16 @@ static int img_hash_dma_init(struct img_hash_dev *hdev)
+ static void img_hash_dma_task(unsigned long d)
+ {
+ 	struct img_hash_dev *hdev = (struct img_hash_dev *)d;
+-	struct img_hash_request_ctx *ctx = ahash_request_ctx(hdev->req);
++	struct img_hash_request_ctx *ctx;
+ 	u8 *addr;
+ 	size_t nbytes, bleft, wsend, len, tbc;
+ 	struct scatterlist tsg;
  
- 	ret = register_filesystem(&orangefs_fs_type);
-@@ -153,11 +153,11 @@ static int __init orangefs_init(void)
- 		goto out;
- 	}
- 
--	orangefs_sysfs_exit();
--
--cleanup_device:
- 	orangefs_dev_cleanup();
- 
-+cleanup_sysfs:
-+	orangefs_sysfs_exit();
+-	if (!hdev->req || !ctx->sg)
++	if (!hdev->req)
++		return;
 +
- sysfs_init_failed:
++	ctx = ahash_request_ctx(hdev->req);
++	if (!ctx->sg)
+ 		return;
  
- debugfs_init_failed:
+ 	addr = sg_virt(ctx->sg);
 -- 
 2.35.1
 
