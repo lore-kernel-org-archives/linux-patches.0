@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86C4C6FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:12:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B872C433F0;
-	Mon, 16 Jan 2023 17:12:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 246E56FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:12:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6FCC433D2;
+	Mon, 16 Jan 2023 17:12:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889166;
-	bh=sDwQr0Wn1l01rcLgMrwtjowdjVfEvBNikKRTBJ+29/4=;
+	s=korg; t=1673889169;
+	bh=AxedSATZkJm04gJxflfCoBmvQMzY9imaSAUTLzXQ6Ds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QjVgUxCvvGfM3c8wZlKV4dBlrzPWgp+XS0nG0tqreV3Lmv6aqvGv1s/xD0cQon98Z
-	 rHcLa349Lpl9S3757rtjrbIa0py4AUyptYH5d7ly8+xP4Wd4vRKvUitYXl2eWKe1Wy
-	 Q++vazf7Mcbjh5Fcy6548zJImM7bBQHHKiiK92P0=
+	b=brP8YnaO6nz+F1YUwE7AmJ9dl+LiXkuqnen1qrJ7VifJcPmDVXNdw/Dro7eOlB3BR
+	 gk5iWamW20jdn6E6SnW2InkPPDaPeWgmrLdSKdJT3lZb9x0sqdCYJKpuQoLOPOqSJJ
+	 EO1WrsiwsVr8F9Yy5FXcu0TSVxGgiolLA6SssekY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 4.14 284/338] ARM: 9256/1: NWFPE: avoid compiler-generated __aeabi_uldivmod
-Date: Mon, 16 Jan 2023 16:52:37 +0100
-Message-Id: <20230116154833.459641638@linuxfoundation.org>
+	Wenwen Wang <wenwen@cs.uga.edu>,
+	Keita Suzuki <keitasuzuki.park@sslab.ics.keio.ac.jp>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>
+Subject: [PATCH 4.14 285/338] media: dvb-core: Fix double free in dvb_register_device()
+Date: Mon, 16 Jan 2023 16:52:38 +0100
+Message-Id: <20230116154833.500013548@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,60 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nick Desaulniers <ndesaulniers@google.com>
+From: Keita Suzuki <keitasuzuki.park@sslab.ics.keio.ac.jp>
 
-commit 3220022038b9a3845eea762af85f1c5694b9f861 upstream.
+commit 6b0d0477fce747d4137aa65856318b55fba72198 upstream.
 
-clang-15's ability to elide loops completely became more aggressive when
-it can deduce how a variable is being updated in a loop. Counting down
-one variable by an increment of another can be replaced by a modulo
-operation.
+In function dvb_register_device() -> dvb_register_media_device() ->
+dvb_create_media_entity(), dvb->entity is allocated and initialized. If
+the initialization fails, it frees the dvb->entity, and return an error
+code. The caller takes the error code and handles the error by calling
+dvb_media_device_free(), which unregisters the entity and frees the
+field again if it is not NULL. As dvb->entity may not NULLed in
+dvb_create_media_entity() when the allocation of dvbdev->pad fails, a
+double free may occur. This may also cause an Use After free in
+media_device_unregister_entity().
 
-For 64b variables on 32b ARM EABI targets, this can result in the
-compiler generating calls to __aeabi_uldivmod, which it does for a do
-while loop in float64_rem().
+Fix this by storing NULL to dvb->entity when it is freed.
 
-For the kernel, we'd generally prefer that developers not open code 64b
-division via binary / operators and instead use the more explicit
-helpers from div64.h. On arm-linux-gnuabi targets, failure to do so can
-result in linkage failures due to undefined references to
-__aeabi_uldivmod().
-
-While developers can avoid open coding divisions on 64b variables, the
-compiler doesn't know that the Linux kernel has a partial implementation
-of a compiler runtime (--rtlib) to enforce this convention.
-
-It's also undecidable for the compiler whether the code in question
-would be faster to execute the loop vs elide it and do the 64b division.
-
-While I actively avoid using the internal -mllvm command line flags, I
-think we get better code than using barrier() here, which will force
-reloads+spills in the loop for all toolchains.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1666
-
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/linux-media/20220426052921.2088416-1-keitasuzuki.park@sslab.ics.keio.ac.jp
+Fixes: fcd5ce4b3936 ("media: dvb-core: fix a memory leak bug")
 Cc: stable@vger.kernel.org
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Cc: Wenwen Wang <wenwen@cs.uga.edu>
+Signed-off-by: Keita Suzuki <keitasuzuki.park@sslab.ics.keio.ac.jp>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/nwfpe/Makefile |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/media/dvb-core/dvbdev.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm/nwfpe/Makefile
-+++ b/arch/arm/nwfpe/Makefile
-@@ -11,3 +11,9 @@ nwfpe-y				+= fpa11.o fpa11_cpdo.o fpa11
- 				   entry.o
- 
- nwfpe-$(CONFIG_FPE_NWFPE_XP)	+= extended_cpdo.o
-+
-+# Try really hard to avoid generating calls to __aeabi_uldivmod() from
-+# float64_rem() due to loop elision.
-+ifdef CONFIG_CC_IS_CLANG
-+CFLAGS_softfloat.o	+= -mllvm -replexitval=never
-+endif
+--- a/drivers/media/dvb-core/dvbdev.c
++++ b/drivers/media/dvb-core/dvbdev.c
+@@ -322,6 +322,7 @@ static int dvb_create_media_entity(struc
+ 				       GFP_KERNEL);
+ 		if (!dvbdev->pads) {
+ 			kfree(dvbdev->entity);
++			dvbdev->entity = NULL;
+ 			return -ENOMEM;
+ 		}
+ 	}
 
 
