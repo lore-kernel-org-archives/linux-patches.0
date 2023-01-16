@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 801596FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:04:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 047CDC433EF;
-	Mon, 16 Jan 2023 17:04:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209B56FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:04:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A012C433D2;
+	Mon, 16 Jan 2023 17:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888658;
-	bh=Vc4v8h4MbMMysvq5oMdCkdG6Yi5MZQtRJf3f93Qa7G0=;
+	s=korg; t=1673888661;
+	bh=FlFB9+D4OVMAygAtw2B7pplwTaA/Ng/kZBQMxYg58es=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ft7iPYrbqx3LdbceoTgE2u8OzAKZtsfp0XsTKjhX+N8LVdGDa2+EqzLXN/Jqby7eP
-	 YNrrri+6IqjKaXSHQjvFZ1adpctajyYUu6Xgb3nUb5h76MORVRXsQd7GdmMYXCQ8P6
-	 ZzvpqgamVjzBMHkpicNC529iKRwwziFTpAAnJBRc=
+	b=WZnndXRJCTDotwYQFBziL04+AVdqya/s/N57zOpSFbmgZmDVNKDY5RiGezO5fkHGB
+	 p/SFt7RaWSBFwwI4OfKFgh5LaD9JyMmZqBrniaSBPU2cOFGhR6bXGRrwP0D7Lws+5H
+	 Ujfkkc+D7i/LQvMDZtBXK19SkfacTEpl2gl6sXcg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 090/338] NFSv4.2: Fix a memory stomp in decode_attr_security_label
-Date: Mon, 16 Jan 2023 16:49:23 +0100
-Message-Id: <20230116154824.808524246@linuxfoundation.org>
+Subject: [PATCH 4.14 091/338] NFSv4: Fix a deadlock between nfs4_open_recover_helper() and delegreturn
+Date: Mon, 16 Jan 2023 16:49:24 +0100
+Message-Id: <20230116154824.850516135@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,39 +36,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit 43c1031f7110967c240cb6e922adcfc4b8899183 ]
+[ Upstream commit 51069e4aef6257b0454057359faed0ab0c9af083 ]
 
-We must not change the value of label->len if it is zero, since that
-indicates we stored a label.
+If we're asked to recover open state while a delegation return is
+outstanding, then the state manager thread cannot use a cached open, so
+if the server returns a delegation, we can end up deadlocked behind the
+pending delegreturn.
+To avoid this problem, let's just ask the server not to give us a
+delegation unless we're explicitly reclaiming one.
 
-Fixes: b4487b935452 ("nfs: Fix getxattr kernel panic and memory overflow")
+Fixes: be36e185bd26 ("NFSv4: nfs4_open_recover_helper() must set share access")
 Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4xdr.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ fs/nfs/nfs4proc.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/fs/nfs/nfs4xdr.c b/fs/nfs/nfs4xdr.c
-index ccdc0ca699c3..e604c0e02f4d 100644
---- a/fs/nfs/nfs4xdr.c
-+++ b/fs/nfs/nfs4xdr.c
-@@ -4255,12 +4255,10 @@ static int decode_attr_security_label(struct xdr_stream *xdr, uint32_t *bitmap,
- 		if (unlikely(!p))
- 			goto out_overflow;
- 		if (len < NFS4_MAXLABELLEN) {
--			if (label) {
--				if (label->len) {
--					if (label->len < len)
--						return -ERANGE;
--					memcpy(label->label, p, len);
--				}
-+			if (label && label->len) {
-+				if (label->len < len)
-+					return -ERANGE;
-+				memcpy(label->label, p, len);
- 				label->len = len;
- 				label->pi = pi;
- 				label->lfs = lfs;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 11d36763f256..ff41d726f758 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -1832,18 +1832,18 @@ static struct nfs4_opendata *nfs4_open_recoverdata_alloc(struct nfs_open_context
+ }
+ 
+ static int nfs4_open_recover_helper(struct nfs4_opendata *opendata,
+-		fmode_t fmode)
++				    fmode_t fmode)
+ {
+ 	struct nfs4_state *newstate;
++	struct nfs_server *server = NFS_SB(opendata->dentry->d_sb);
++	int openflags = opendata->o_arg.open_flags;
+ 	int ret;
+ 
+ 	if (!nfs4_mode_match_open_stateid(opendata->state, fmode))
+ 		return 0;
+-	opendata->o_arg.open_flags = 0;
+ 	opendata->o_arg.fmode = fmode;
+-	opendata->o_arg.share_access = nfs4_map_atomic_open_share(
+-			NFS_SB(opendata->dentry->d_sb),
+-			fmode, 0);
++	opendata->o_arg.share_access =
++		nfs4_map_atomic_open_share(server, fmode, openflags);
+ 	memset(&opendata->o_res, 0, sizeof(opendata->o_res));
+ 	memset(&opendata->c_res, 0, sizeof(opendata->c_res));
+ 	nfs4_init_opendata_res(opendata);
+@@ -2418,10 +2418,15 @@ static int _nfs4_open_expired(struct nfs_open_context *ctx, struct nfs4_state *s
+ 	struct nfs4_opendata *opendata;
+ 	int ret;
+ 
+-	opendata = nfs4_open_recoverdata_alloc(ctx, state,
+-			NFS4_OPEN_CLAIM_FH);
++	opendata = nfs4_open_recoverdata_alloc(ctx, state, NFS4_OPEN_CLAIM_FH);
+ 	if (IS_ERR(opendata))
+ 		return PTR_ERR(opendata);
++	/*
++	 * We're not recovering a delegation, so ask for no delegation.
++	 * Otherwise the recovery thread could deadlock with an outstanding
++	 * delegation return.
++	 */
++	opendata->o_arg.open_flags = O_DIRECT;
+ 	ret = nfs4_open_recover(opendata, state);
+ 	if (ret == -ESTALE)
+ 		d_drop(ctx->dentry);
 -- 
 2.35.1
 
