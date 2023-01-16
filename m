@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BFE76FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:12:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2AD0C433D2;
-	Mon, 16 Jan 2023 17:12:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174736FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:12:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FC1DC433D2;
+	Mon, 16 Jan 2023 17:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889153;
-	bh=hRsNZU5r6cEvTshNQhjjjsjGKTouZLJtrl4xLGZEeFc=;
+	s=korg; t=1673889155;
+	bh=NJ3egBCaytDsuzH7PX5b8qsmsCf8nLRqStSTw5U1Azc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQFOEL+fzyMiX7OvePDEbAaDTbxTAfBe8nVP14wfdtUroDbkSGvV2xvJAxFtru1hD
-	 N6ekGB92KKEm7wtoC2wrbtmTdD87oKOl3UFdroTtG1ET0wJNH2mfJEib8LdpnG8EGf
-	 +TaS2c28ZCT3a9HMqfhEkvByTfYYgBfvJ+DRxrCQ=
+	b=Jd0S1iLThdPppo2Wqg5us1vhs55t6rB3w5kJ5TvLuSchAU51fT5E0iwAuO1kPj5VA
+	 G2w4dYQ4WfqLF1AmVfiLNo+Q3zZpt1axkH7DEDJQDPGhCYFrZnD2xXc+eZLzey4SQ+
+	 a6pMq/nUejUvoH0M1tkEB8/4sWqTz/or7rpJpj44=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
+	Wang Jingjin <wangjingjin1@huawei.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 249/338] ASoC: mediatek: mt8173-rt5650-rt5514: fix refcount leak in mt8173_rt5650_rt5514_dev_probe()
-Date: Mon, 16 Jan 2023 16:52:02 +0100
-Message-Id: <20230116154831.930501143@linuxfoundation.org>
+Subject: [PATCH 4.14 250/338] ASoC: rockchip: pdm: Add missing clk_disable_unprepare() in rockchip_pdm_runtime_resume()
+Date: Mon, 16 Jan 2023 16:52:03 +0100
+Message-Id: <20230116154831.964136873@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,54 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Wang Jingjin <wangjingjin1@huawei.com>
 
-[ Upstream commit 3327d721114c109ba0575f86f8fda3b525404054 ]
+[ Upstream commit ef0a098efb36660326c133af9b5a04a96a00e3ca ]
 
-The node returned by of_parse_phandle() with refcount incremented,
-of_node_put() needs be called when finish using it. So add it in the
-error path in mt8173_rt5650_rt5514_dev_probe().
+The clk_disable_unprepare() should be called in the error handling of
+rockchip_pdm_runtime_resume().
 
-Fixes: 0d1d7a664288 ("ASoC: mediatek: Refine mt8173 driver and change config option")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Link: https://lore.kernel.org/r/1670234664-24246-1-git-send-email-wangyufen@huawei.com
+Fixes: fc05a5b22253 ("ASoC: rockchip: add support for pdm controller")
+Signed-off-by: Wang Jingjin <wangjingjin1@huawei.com>
+Link: https://lore.kernel.org/r/20221205032802.2422983-1-wangjingjin1@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ sound/soc/rockchip/rockchip_pdm.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c b/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c
-index aa52e2f81760..c58aa649d676 100644
---- a/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c
-+++ b/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c
-@@ -209,14 +209,16 @@ static int mt8173_rt5650_rt5514_dev_probe(struct platform_device *pdev)
- 	if (!mt8173_rt5650_rt5514_codecs[0].of_node) {
- 		dev_err(&pdev->dev,
- 			"Property 'audio-codec' missing or invalid\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto out;
- 	}
- 	mt8173_rt5650_rt5514_codecs[1].of_node =
- 		of_parse_phandle(pdev->dev.of_node, "mediatek,audio-codec", 1);
- 	if (!mt8173_rt5650_rt5514_codecs[1].of_node) {
- 		dev_err(&pdev->dev,
- 			"Property 'audio-codec' missing or invalid\n");
--		return -EINVAL;
-+		ret = -EINVAL;
-+		goto out;
- 	}
- 	mt8173_rt5650_rt5514_codec_conf[0].of_node =
- 		mt8173_rt5650_rt5514_codecs[1].of_node;
-@@ -228,6 +230,7 @@ static int mt8173_rt5650_rt5514_dev_probe(struct platform_device *pdev)
- 		dev_err(&pdev->dev, "%s snd_soc_register_card fail %d\n",
- 			__func__, ret);
+diff --git a/sound/soc/rockchip/rockchip_pdm.c b/sound/soc/rockchip/rockchip_pdm.c
+index ad16c8310dd3..7dfd1e6b2c25 100644
+--- a/sound/soc/rockchip/rockchip_pdm.c
++++ b/sound/soc/rockchip/rockchip_pdm.c
+@@ -303,6 +303,7 @@ static int rockchip_pdm_runtime_resume(struct device *dev)
  
-+out:
- 	of_node_put(platform_node);
- 	return ret;
- }
+ 	ret = clk_prepare_enable(pdm->hclk);
+ 	if (ret) {
++		clk_disable_unprepare(pdm->clk);
+ 		dev_err(pdm->dev, "hclock enable failed %d\n", ret);
+ 		return ret;
+ 	}
 -- 
 2.35.1
 
