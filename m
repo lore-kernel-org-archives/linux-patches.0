@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E62746B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAE61C433F0;
-	Mon, 16 Jan 2023 16:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF7046B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A79C433D2;
+	Mon, 16 Jan 2023 16:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885985;
-	bh=/SommzC+MzCCr7Wuu8teBOrT7fZnRCyG4DGmQ/rucm4=;
+	s=korg; t=1673885987;
+	bh=Wkfrbj/x2gH5ER1wjzgzcLyEJ3eE1jfP9P3WCcgMWu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iLxVNsjJHvGmW71TU8iM0ydCHzwLR5luJ63MhQB+ZvPchUJbxf5VD3qdZnusNGok+
-	 1xk4kueiG4OfWTnKrXPi8B3HjTVtHfXgz2ZRoQ15UfNLpWQyoahRR2YGMBtPKekcm7
-	 pQI3v2OhfvEhaG4sIAxsubtRtD449G8YogvvLSYU=
+	b=1wI6KL1u1WzBx7gawFFW5N+yrZSFvXTfzjhl2yCiu+1WlXeQv7BPwHtH1Hylqo051
+	 SDzYI+fnZVQJSEy8LWRbhsurZdVNeZvRITA2fES55HNXHRGeG9zEXI31/3MIFosChe
+	 wQZwpShdzPxFfnXftFaO7cs7njyUVyJRElOpZWJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 251/658] crypto: ccree - Remove debugfs when platform_driver_register failed
-Date: Mon, 16 Jan 2023 16:45:39 +0100
-Message-Id: <20230116154921.038059198@linuxfoundation.org>
+Subject: [PATCH 5.4 260/658] scsi: hpsa: Fix possible memory leak in hpsa_add_sas_device()
+Date: Mon, 16 Jan 2023 16:45:48 +0100
+Message-Id: <20230116154921.482656950@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,47 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 4f1c596df706c9aca662b6c214fad84047ae2a97 ]
+[ Upstream commit fda34a5d304d0b98cc967e8763b52221b66dc202 ]
 
-When platform_driver_register failed, we need to remove debugfs,
-which will caused a resource leak, fix it.
+If hpsa_sas_port_add_rphy() returns an error, the 'rphy' allocated in
+sas_end_device_alloc() needs to be freed. Address this by calling
+sas_rphy_free() in the error path.
 
-Failed logs as follows:
-[   32.606488] debugfs: Directory 'ccree' with parent '/' already present!
-
-Fixes: 4c3f97276e15 ("crypto: ccree - introduce CryptoCell driver")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: d04e62b9d63a ("hpsa: add in sas transport class")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221111043012.1074466-1-yangyingliang@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccree/cc_driver.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ drivers/scsi/hpsa.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/ccree/cc_driver.c b/drivers/crypto/ccree/cc_driver.c
-index 58ca59af0b2e..3d59fef1fbee 100644
---- a/drivers/crypto/ccree/cc_driver.c
-+++ b/drivers/crypto/ccree/cc_driver.c
-@@ -653,9 +653,17 @@ static struct platform_driver ccree_driver = {
+diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
+index 9d5d0c911130..ba125ed7e06a 100644
+--- a/drivers/scsi/hpsa.c
++++ b/drivers/scsi/hpsa.c
+@@ -9800,10 +9800,12 @@ static int hpsa_add_sas_device(struct hpsa_sas_node *hpsa_sas_node,
  
- static int __init ccree_init(void)
- {
-+	int rc;
-+
- 	cc_debugfs_global_init();
+ 	rc = hpsa_sas_port_add_rphy(hpsa_sas_port, rphy);
+ 	if (rc)
+-		goto free_sas_port;
++		goto free_sas_rphy;
  
--	return platform_driver_register(&ccree_driver);
-+	rc = platform_driver_register(&ccree_driver);
-+	if (rc) {
-+		cc_debugfs_global_fini();
-+		return rc;
-+	}
-+
-+	return 0;
- }
- module_init(ccree_init);
+ 	return 0;
  
++free_sas_rphy:
++	sas_rphy_free(rphy);
+ free_sas_port:
+ 	hpsa_free_sas_port(hpsa_sas_port);
+ 	device->sas_port = NULL;
 -- 
 2.35.1
 
