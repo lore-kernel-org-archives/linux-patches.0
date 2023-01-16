@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE8D6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:45:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A24FFC433D2;
-	Mon, 16 Jan 2023 16:45:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC776FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:45:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41546C433D2;
+	Mon, 16 Jan 2023 16:45:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887503;
-	bh=F3Ua4Ip+qKPouhiKHR6MWxGPlSxfA+3/XWzm4kbCyUc=;
+	s=korg; t=1673887505;
+	bh=9NL8DQOAMgPWBDbmlJLuUOVKpkXxmnqyFmvQ9X4t7RE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rdqlzkR6mtMTJ2Wwj3y+8mTy5aHb4BtBt6mUewKkYCD8/sBVr0PhArJNMkmbGDbyr
-	 m07XiIVeiendSUmnJmKmKMfUM2JEIwW5vGyVGrQvZ1+HByP2MK3cOwcU8qg0Vyjufu
-	 x58Z2CDht2bMiMIkYDkzZXaykHZNdyYXbV3RPgdQ=
+	b=0iaZM3HWbkP5GZRzG9PqEZcTxblSBta9LMhxGxVjNxrIbjT75MMO0mxdv5sTRqtzg
+	 78sqpHu/iALK1+25GH309G365BIT5FUVvXn16UfzAq1oZHQm1tvksq5O6BKim8b5Kz
+	 Bo45M8igXkSywHm2kExUnalh6Bm1nIDDL0ibiIdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 166/521] net: ethernet: dnet: dont call dev_kfree_skb() under spin_lock_irqsave()
-Date: Mon, 16 Jan 2023 16:47:08 +0100
-Message-Id: <20230116154854.566342880@linuxfoundation.org>
+Subject: [PATCH 4.19 175/521] Bluetooth: hci_h5: dont call kfree_skb() under spin_lock_irqsave()
+Date: Mon, 16 Jan 2023 16:47:17 +0100
+Message-Id: <20230116154854.923853184@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,40 +37,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit f07fadcbee2a5e84caa67c7c445424200bffb60b ]
+[ Upstream commit 383630cc6758d619874c2e8bb2f68a61f3f9ef6e ]
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+It is not allowed to call kfree_skb() from hardware interrupt
+context or with interrupts being disabled. So replace kfree_skb()
+with dev_kfree_skb_irq() under spin_lock_irqsave().
 
-In this case, the lock is used to protected 'bp', so we can move
-dev_kfree_skb() after the spin_unlock_irqrestore().
-
-Fixes: 4796417417a6 ("dnet: Dave DNET ethernet controller driver (updated)")
+Fixes: 43eb12d78960 ("Bluetooth: Fix/implement Three-wire reliable packet sending")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/dnet.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/bluetooth/hci_h5.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/dnet.c b/drivers/net/ethernet/dnet.c
-index 5a847941c46b..f7d126a2617e 100644
---- a/drivers/net/ethernet/dnet.c
-+++ b/drivers/net/ethernet/dnet.c
-@@ -558,11 +558,11 @@ static netdev_tx_t dnet_start_xmit(struct sk_buff *skb, struct net_device *dev)
+diff --git a/drivers/bluetooth/hci_h5.c b/drivers/bluetooth/hci_h5.c
+index 79b96251de80..29c80e2acb05 100644
+--- a/drivers/bluetooth/hci_h5.c
++++ b/drivers/bluetooth/hci_h5.c
+@@ -311,7 +311,7 @@ static void h5_pkt_cull(struct h5 *h5)
+ 			break;
  
- 	skb_tx_timestamp(skb);
+ 		__skb_unlink(skb, &h5->unack);
+-		kfree_skb(skb);
++		dev_kfree_skb_irq(skb);
+ 	}
  
-+	spin_unlock_irqrestore(&bp->lock, flags);
-+
- 	/* free the buffer */
- 	dev_kfree_skb(skb);
- 
--	spin_unlock_irqrestore(&bp->lock, flags);
--
- 	return NETDEV_TX_OK;
- }
- 
+ 	if (skb_queue_empty(&h5->unack))
 -- 
 2.35.1
 
