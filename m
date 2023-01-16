@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A32B33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4125C433EF;
-	Mon, 16 Jan 2023 15:55:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0375A33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D002C433D2;
+	Mon, 16 Jan 2023 15:55:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884537;
-	bh=C7D+L/Aswv/ncZBysd07g1s05bMUgtu93GNK/ZXvdww=;
+	s=korg; t=1673884539;
+	bh=Jj6MQ75efzaAgKF++Bh9ywEV5w4ggG4Ie4cDj4Q9DKA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CB0lKLE0z4qZd5EFZa9USrkJuEOPoUKTrYjE6+u7HRQqqnn6KY7sax+iKfgt2VWQ/
-	 n4a3WN9bYaSOqbhVG029O9EKWnhdnyAmLQwezfWWV/PSruqYOBJtoYA5LasdwBZNTX
-	 CF7CTAZ0xUaHT/3r7SO+18I1ZhhKJDcTEXLV++mc=
+	b=KITqnlwrlpsGo34Wf6o30zCpkEYqQ0uGcxVAs3C3JCyTR0o6fQyd+ghjmnJo/KPv0
+	 rw2yfnmIwJPM9RrUMcPl+yOGIsg5gH6fNbk/NC4+aW+o3EKSVKAQL1pYGvuqnBz6kS
+	 50BtRSWsEaoidAbq5HBFIJ4emfHAv0ajIMa2j6CI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 004/183] ALSA: usb-audio: Always initialize fixed_rate in snd_usb_find_implicit_fb_sync_format()
-Date: Mon, 16 Jan 2023 16:48:47 +0100
-Message-Id: <20230116154803.533929683@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Yury Zhuravlev <stalkerg@gmail.com>,
+	Guchun Chen <guchun.chen@amd.com>,
+	Asher Song <Asher.Song@amd.com>
+Subject: [PATCH 6.1 037/183] Revert "drm/amdgpu: Revert "drm/amdgpu: getting fan speed pwm for vega10 properly""
+Date: Mon, 16 Jan 2023 16:49:20 +0100
+Message-Id: <20230116154804.941999148@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -35,54 +37,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaroslav Kysela <perex@perex.cz>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 291e9da91403e0e628d7692b5ed505100e7b7706 upstream.
+This reverts commit 9ccd11718d76b95c69aa773f2abedef560776037
 
-Handle the fallback code path, too.
+The original commit 16fb4dca95daa ("drm/amdgpu: getting fan speed pwm for vega10 properly")
+was reverted in commit 4545ae2ed3f2 ("drm/amdgpu: Revert "drm/amdgpu: getting fan speed pwm for vega10 properly"").
+but the test that resulted in the revert was wrong and was fixed so the
+revert was reverted in commit 30b8e7b8ee3b ("Revert "drm/amdgpu: Revert "drm/amdgpu: getting fan speed pwm for vega10 properly""").
+That should have been the end of it, but then Sasha picked up the
+original revert again and it was committed as 9ccd11718d76.  So drop
+that commit so we get back to where we need to be.
 
-Fixes: fd28941cff1c ("ALSA: usb-audio: Add new quirk FIXED_RATE for JBL Quantum810 Wireless")
-BugLink: https://lore.kernel.org/alsa-devel/Y7frf3N%2FxzvESEsN@kili/
-Reported-by: Dan Carpenter <error27@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jaroslav Kysela <perex@perex.cz>
-Link: https://lore.kernel.org/r/20230109141133.335543-1-perex@perex.cz
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org # 6.1.x
+Cc: Yury Zhuravlev <stalkerg@gmail.com>
+Cc: Guchun Chen <guchun.chen@amd.com>
+Cc: Asher Song <Asher.Song@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/usb/implicit.c |    3 ++-
- sound/usb/pcm.c      |    2 ++
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c |   25 +++++++---------
+ 1 file changed, 12 insertions(+), 13 deletions(-)
 
---- a/sound/usb/implicit.c
-+++ b/sound/usb/implicit.c
-@@ -471,7 +471,7 @@ snd_usb_find_implicit_fb_sync_format(str
- 	subs = find_matching_substream(chip, stream, target->sync_ep,
- 				       target->fmt_type);
- 	if (!subs)
--		return sync_fmt;
-+		goto end;
+--- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c
++++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c
+@@ -67,22 +67,21 @@ int vega10_fan_ctrl_get_fan_speed_info(s
+ int vega10_fan_ctrl_get_fan_speed_pwm(struct pp_hwmgr *hwmgr,
+ 		uint32_t *speed)
+ {
+-	uint32_t current_rpm;
+-	uint32_t percent = 0;
++	struct amdgpu_device *adev = hwmgr->adev;
++	uint32_t duty100, duty;
++	uint64_t tmp64;
  
- 	high_score = 0;
- 	list_for_each_entry(fp, &subs->fmt_list, list) {
-@@ -485,6 +485,7 @@ snd_usb_find_implicit_fb_sync_format(str
- 		}
- 	}
+-	if (hwmgr->thermal_controller.fanInfo.bNoFan)
+-		return 0;
++	duty100 = REG_GET_FIELD(RREG32_SOC15(THM, 0, mmCG_FDO_CTRL1),
++				CG_FDO_CTRL1, FMAX_DUTY100);
++	duty = REG_GET_FIELD(RREG32_SOC15(THM, 0, mmCG_THERMAL_STATUS),
++				CG_THERMAL_STATUS, FDO_PWM_DUTY);
  
-+ end:
- 	if (fixed_rate)
- 		*fixed_rate = snd_usb_pcm_has_fixed_rate(subs);
- 	return sync_fmt;
---- a/sound/usb/pcm.c
-+++ b/sound/usb/pcm.c
-@@ -163,6 +163,8 @@ bool snd_usb_pcm_has_fixed_rate(struct s
- 	struct snd_usb_audio *chip = subs->stream->chip;
- 	int rate = -1;
+-	if (vega10_get_current_rpm(hwmgr, &current_rpm))
+-		return -1;
++	if (!duty100)
++		return -EINVAL;
  
-+	if (!subs)
-+		return false;
- 	if (!(chip->quirk_flags & QUIRK_FLAG_FIXED_RATE))
- 		return false;
- 	list_for_each_entry(fp, &subs->fmt_list, list) {
+-	if (hwmgr->thermal_controller.
+-			advanceFanControlParameters.usMaxFanRPM != 0)
+-		percent = current_rpm * 255 /
+-			hwmgr->thermal_controller.
+-			advanceFanControlParameters.usMaxFanRPM;
+-
+-	*speed = MIN(percent, 255);
++	tmp64 = (uint64_t)duty * 255;
++	do_div(tmp64, duty100);
++	*speed = MIN((uint32_t)tmp64, 255);
+ 
+ 	return 0;
+ }
 
 
