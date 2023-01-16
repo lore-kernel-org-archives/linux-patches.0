@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8034F6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:47:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 028C5C433EF;
-	Mon, 16 Jan 2023 16:47:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DE5C6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:47:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95B21C433D2;
+	Mon, 16 Jan 2023 16:47:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887668;
-	bh=JgKe15jaV9shHN3aN5fip3zQtjObwCyaBdkTTFakv3o=;
+	s=korg; t=1673887670;
+	bh=cu8Tc4ulYpC6xsu1UaAG0/QGhYAdc9Fc6yxXzGH5ILI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ntb3A6XAvkaZgKKDYmg9TUKVrxOq+m3Wny5T14aijiWL53mBepJatx6w2PGt6aLJB
-	 1g2CnJqRb5pIKVdFU0uplKaZfyYvEO40ZS9O45kSSGDoRQJMF++U0MQ0uGrQ9TlcPs
-	 uGWgTIVnH+DowlV43+VQpI1GWKdeimmdIWEHOMks=
+	b=fBWEu8E6+JUpbuGj3n+Nu8khqSJ1Sc5PEzIkKTi6akbIsDLPzkLF8UIbKJCJoOvbw
+	 b63HX15yoz4fZroquTA4sI7QZg+5lanF3qs6+9TS7xZTVaRaH+MRwucz7aFXdNgyEh
+	 N+iaFcRk1YdfQI2gjmWCPDmKkY326NP5PE4gK9lA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tobias Klauser <tklauser@distanz.ch>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
-	Jiri Slaby <jslaby@suse.cz>,
+	Lee Jones <lee@kernel.org>,
+	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
+	John Keeping <john@metanate.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 229/521] tty: serial: altera_uart_{r,t}x_chars() need only uart_port
-Date: Mon, 16 Jan 2023 16:48:11 +0100
-Message-Id: <20230116154857.393129344@linuxfoundation.org>
+Subject: [PATCH 4.19 238/521] usb: gadget: f_hid: fix f_hidg lifetime vs cdev
+Date: Mon, 16 Jan 2023 16:48:20 +0100
+Message-Id: <20230116154857.773901805@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,66 +36,162 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Slaby <jslaby@suse.cz>
+From: John Keeping <john@metanate.com>
 
-[ Upstream commit 3af44d9bb0539d5fa27d6159d696fda5f3747bff ]
+[ Upstream commit 89ff3dfac604614287ad5aad9370c3f984ea3f4b ]
 
-Both altera_uart_{r,t}x_chars() need only uart_port, not altera_uart. So
-pass the former from altera_uart_interrupt() directly.
+The embedded struct cdev does not have its lifetime correctly tied to
+the enclosing struct f_hidg, so there is a use-after-free if /dev/hidgN
+is held open while the gadget is deleted.
 
-Apart it maybe saves a dereference, this makes the transition of
-altera_uart_tx_chars() easier to follow in the next patch.
+This can readily be replicated with libusbgx's example programs (for
+conciseness - operating directly via configfs is equivalent):
 
-Cc: Tobias Klauser <tklauser@distanz.ch>
-Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Acked-by: Tobias Klauser <tklauser@distanz.ch>
-Signed-off-by: Jiri Slaby <jslaby@suse.cz>
-Link: https://lore.kernel.org/r/20220920052049.20507-4-jslaby@suse.cz
+	gadget-hid
+	exec 3<> /dev/hidg0
+	gadget-vid-pid-remove
+	exec 3<&-
+
+Pull the existing device up in to struct f_hidg and make use of the
+cdev_device_{add,del}() helpers.  This changes the lifetime of the
+device object to match struct f_hidg, but note that it is still added
+and deleted at the same time.
+
+Fixes: 71adf1189469 ("USB: gadget: add HID gadget driver")
+Tested-by: Lee Jones <lee@kernel.org>
+Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
+Reviewed-by: Lee Jones <lee@kernel.org>
+Signed-off-by: John Keeping <john@metanate.com>
+Link: https://lore.kernel.org/r/20221122123523.3068034-2-john@metanate.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 1307c5d33cce ("serial: altera_uart: fix locking in polling mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/altera_uart.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/usb/gadget/function/f_hid.c | 52 ++++++++++++++++-------------
+ 1 file changed, 28 insertions(+), 24 deletions(-)
 
-diff --git a/drivers/tty/serial/altera_uart.c b/drivers/tty/serial/altera_uart.c
-index 508a3c2b7781..20c610440133 100644
---- a/drivers/tty/serial/altera_uart.c
-+++ b/drivers/tty/serial/altera_uart.c
-@@ -199,9 +199,8 @@ static void altera_uart_set_termios(struct uart_port *port,
- 	 */
+diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
+index 0c200f152036..2aaa3ea74e5a 100644
+--- a/drivers/usb/gadget/function/f_hid.c
++++ b/drivers/usb/gadget/function/f_hid.c
+@@ -71,7 +71,7 @@ struct f_hidg {
+ 	wait_queue_head_t		write_queue;
+ 	struct usb_request		*req;
+ 
+-	int				minor;
++	struct device			dev;
+ 	struct cdev			cdev;
+ 	struct usb_function		func;
+ 
+@@ -84,6 +84,14 @@ static inline struct f_hidg *func_to_hidg(struct usb_function *f)
+ 	return container_of(f, struct f_hidg, func);
  }
  
--static void altera_uart_rx_chars(struct altera_uart *pp)
-+static void altera_uart_rx_chars(struct uart_port *port)
- {
--	struct uart_port *port = &pp->port;
- 	unsigned char ch, flag;
- 	unsigned short status;
++static void hidg_release(struct device *dev)
++{
++	struct f_hidg *hidg = container_of(dev, struct f_hidg, dev);
++
++	kfree(hidg->set_report_buf);
++	kfree(hidg);
++}
++
+ /*-------------------------------------------------------------------------*/
+ /*                           Static descriptors                            */
  
-@@ -248,9 +247,8 @@ static void altera_uart_rx_chars(struct altera_uart *pp)
- 	spin_lock(&port->lock);
+@@ -910,9 +918,7 @@ static int hidg_bind(struct usb_configuration *c, struct usb_function *f)
+ 	struct usb_ep		*ep;
+ 	struct f_hidg		*hidg = func_to_hidg(f);
+ 	struct usb_string	*us;
+-	struct device		*device;
+ 	int			status;
+-	dev_t			dev;
+ 
+ 	/* maybe allocate device-global string IDs, and patch descriptors */
+ 	us = usb_gstrings_attach(c->cdev, ct_func_strings,
+@@ -1005,21 +1011,11 @@ static int hidg_bind(struct usb_configuration *c, struct usb_function *f)
+ 
+ 	/* create char device */
+ 	cdev_init(&hidg->cdev, &f_hidg_fops);
+-	dev = MKDEV(major, hidg->minor);
+-	status = cdev_add(&hidg->cdev, dev, 1);
++	status = cdev_device_add(&hidg->cdev, &hidg->dev);
+ 	if (status)
+ 		goto fail_free_descs;
+ 
+-	device = device_create(hidg_class, NULL, dev, NULL,
+-			       "%s%d", "hidg", hidg->minor);
+-	if (IS_ERR(device)) {
+-		status = PTR_ERR(device);
+-		goto del;
+-	}
+-
+ 	return 0;
+-del:
+-	cdev_del(&hidg->cdev);
+ fail_free_descs:
+ 	usb_free_all_descriptors(f);
+ fail:
+@@ -1250,9 +1246,7 @@ static void hidg_free(struct usb_function *f)
+ 
+ 	hidg = func_to_hidg(f);
+ 	opts = container_of(f->fi, struct f_hid_opts, func_inst);
+-	kfree(hidg->report_desc);
+-	kfree(hidg->set_report_buf);
+-	kfree(hidg);
++	put_device(&hidg->dev);
+ 	mutex_lock(&opts->lock);
+ 	--opts->refcnt;
+ 	mutex_unlock(&opts->lock);
+@@ -1262,8 +1256,7 @@ static void hidg_unbind(struct usb_configuration *c, struct usb_function *f)
+ {
+ 	struct f_hidg *hidg = func_to_hidg(f);
+ 
+-	device_destroy(hidg_class, MKDEV(major, hidg->minor));
+-	cdev_del(&hidg->cdev);
++	cdev_device_del(&hidg->cdev, &hidg->dev);
+ 
+ 	usb_free_all_descriptors(f);
  }
- 
--static void altera_uart_tx_chars(struct altera_uart *pp)
-+static void altera_uart_tx_chars(struct uart_port *port)
+@@ -1272,6 +1265,7 @@ static struct usb_function *hidg_alloc(struct usb_function_instance *fi)
  {
--	struct uart_port *port = &pp->port;
- 	struct circ_buf *xmit = &port->state->xmit;
+ 	struct f_hidg *hidg;
+ 	struct f_hid_opts *opts;
++	int ret;
  
- 	if (port->x_char) {
-@@ -288,9 +286,9 @@ static irqreturn_t altera_uart_interrupt(int irq, void *data)
+ 	/* allocate and initialize one new instance */
+ 	hidg = kzalloc(sizeof(*hidg), GFP_KERNEL);
+@@ -1283,17 +1277,27 @@ static struct usb_function *hidg_alloc(struct usb_function_instance *fi)
+ 	mutex_lock(&opts->lock);
+ 	++opts->refcnt;
  
- 	spin_lock(&port->lock);
- 	if (isr & ALTERA_UART_STATUS_RRDY_MSK)
--		altera_uart_rx_chars(pp);
-+		altera_uart_rx_chars(port);
- 	if (isr & ALTERA_UART_STATUS_TRDY_MSK)
--		altera_uart_tx_chars(pp);
-+		altera_uart_tx_chars(port);
- 	spin_unlock(&port->lock);
- 
- 	return IRQ_RETVAL(isr);
+-	hidg->minor = opts->minor;
++	device_initialize(&hidg->dev);
++	hidg->dev.release = hidg_release;
++	hidg->dev.class = hidg_class;
++	hidg->dev.devt = MKDEV(major, opts->minor);
++	ret = dev_set_name(&hidg->dev, "hidg%d", opts->minor);
++	if (ret) {
++		--opts->refcnt;
++		mutex_unlock(&opts->lock);
++		return ERR_PTR(ret);
++	}
++
+ 	hidg->bInterfaceSubClass = opts->subclass;
+ 	hidg->bInterfaceProtocol = opts->protocol;
+ 	hidg->report_length = opts->report_length;
+ 	hidg->report_desc_length = opts->report_desc_length;
+ 	if (opts->report_desc) {
+-		hidg->report_desc = kmemdup(opts->report_desc,
+-					    opts->report_desc_length,
+-					    GFP_KERNEL);
++		hidg->report_desc = devm_kmemdup(&hidg->dev, opts->report_desc,
++						 opts->report_desc_length,
++						 GFP_KERNEL);
+ 		if (!hidg->report_desc) {
+-			kfree(hidg);
++			put_device(&hidg->dev);
+ 			mutex_unlock(&opts->lock);
+ 			return ERR_PTR(-ENOMEM);
+ 		}
 -- 
 2.35.1
 
