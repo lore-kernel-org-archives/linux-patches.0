@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 476306FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:07:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41B9C433D2;
-	Mon, 16 Jan 2023 17:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBE7C6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:07:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BDFC433EF;
+	Mon, 16 Jan 2023 17:07:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888862;
-	bh=gl4tJKknsbemXsvsJFKPhl4r00gmBAcGpnTDMPFDXDc=;
+	s=korg; t=1673888864;
+	bh=U0hDkqDvlSWQMSbMce3Rrw5v7j5Whp3Gj6vYDLA2gzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KIsiTSGP76y2EMgxFmSQ+Qu7oAsqkJ1sGhas/evU4k38F3wD46iVez5V35yBiBaHa
-	 xcdy+Fk9hO4yZGAZdiwo09Oj/0+PL/EJrPhWp1ncYIG1ArkJ7khEVL6ChEW5SWbAA1
-	 RjXuqnm71NPQY+VzZHSjsysxuexDxgxXW4I96a2M=
+	b=b21swiINpIsk/0w28EOIZvNfTcFvsp/Ao0mjW/nREH35ArkJipz+EhBcnt5K5Pfno
+	 ZG15awU8HwZ0/ON26MO9+rMQ4IbqhJqU/iuLyJkZzNW48d6KYFkvy0oMV7aC3ocrqE
+	 fjtYn3dmSZ7JXHyq/UUmkJswpKYf/zCBk9owqplU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
+	ruanjinjie <ruanjinjie@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 167/338] test_firmware: fix memory leak in test_firmware_init()
-Date: Mon, 16 Jan 2023 16:50:40 +0100
-Message-Id: <20230116154828.172534279@linuxfoundation.org>
+Subject: [PATCH 4.14 168/338] misc: tifm: fix possible memory leak in tifm_7xx1_switch_media()
+Date: Mon, 16 Jan 2023 16:50:41 +0100
+Message-Id: <20230116154828.219696109@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,52 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: ruanjinjie <ruanjinjie@huawei.com>
 
-[ Upstream commit 7610615e8cdb3f6f5bbd9d8e7a5d8a63e3cabf2e ]
+[ Upstream commit fd2c930cf6a5b9176382c15f9acb1996e76e25ad ]
 
-When misc_register() failed in test_firmware_init(), the memory pointed
-by test_fw_config->name is not released. The memory leak information is
-as follows:
-unreferenced object 0xffff88810a34cb00 (size 32):
-  comm "insmod", pid 7952, jiffies 4294948236 (age 49.060s)
-  hex dump (first 32 bytes):
-    74 65 73 74 2d 66 69 72 6d 77 61 72 65 2e 62 69  test-firmware.bi
-    6e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  n...............
-  backtrace:
-    [<ffffffff81b21fcb>] __kmalloc_node_track_caller+0x4b/0xc0
-    [<ffffffff81affb96>] kstrndup+0x46/0xc0
-    [<ffffffffa0403a49>] __test_firmware_config_init+0x29/0x380 [test_firmware]
-    [<ffffffffa040f068>] 0xffffffffa040f068
-    [<ffffffff81002c41>] do_one_initcall+0x141/0x780
-    [<ffffffff816a72c3>] do_init_module+0x1c3/0x630
-    [<ffffffff816adb9e>] load_module+0x623e/0x76a0
-    [<ffffffff816af471>] __do_sys_finit_module+0x181/0x240
-    [<ffffffff89978f99>] do_syscall_64+0x39/0xb0
-    [<ffffffff89a0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+If device_register() returns error in tifm_7xx1_switch_media(),
+name of kobject which is allocated in dev_set_name() called in device_add()
+is leaked.
 
-Fixes: c92316bf8e94 ("test_firmware: add batched firmware tests")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Acked-by: Luis Chamberlain <mcgrof@kernel.org>
-Link: https://lore.kernel.org/r/20221119035721.18268-1-shaozhengchao@huawei.com
+Never directly free @dev after calling device_register(), even
+if it returned an error! Always use put_device() to give up the
+reference initialized.
+
+Fixes: 2428a8fe2261 ("tifm: move common device management tasks from tifm_7xx1 to tifm_core")
+Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20221117064725.3478402-1-ruanjinjie@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/test_firmware.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/misc/tifm_7xx1.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/lib/test_firmware.c b/lib/test_firmware.c
-index 2e5e18bbfd28..1c5e5246bf10 100644
---- a/lib/test_firmware.c
-+++ b/lib/test_firmware.c
-@@ -903,6 +903,7 @@ static int __init test_firmware_init(void)
- 
- 	rc = misc_register(&test_fw_misc_device);
- 	if (rc) {
-+		__test_firmware_config_free();
- 		kfree(test_fw_config);
- 		pr_err("could not register misc device: %d\n", rc);
- 		return rc;
+diff --git a/drivers/misc/tifm_7xx1.c b/drivers/misc/tifm_7xx1.c
+index e5f108713dd8..2afb96598f61 100644
+--- a/drivers/misc/tifm_7xx1.c
++++ b/drivers/misc/tifm_7xx1.c
+@@ -194,7 +194,7 @@ static void tifm_7xx1_switch_media(struct work_struct *work)
+ 				spin_unlock_irqrestore(&fm->lock, flags);
+ 			}
+ 			if (sock)
+-				tifm_free_device(&sock->dev);
++				put_device(&sock->dev);
+ 		}
+ 		spin_lock_irqsave(&fm->lock, flags);
+ 	}
 -- 
 2.35.1
 
