@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AD5D6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:57:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4849C433EF;
-	Mon, 16 Jan 2023 16:57:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9AB6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:57:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83510C433D2;
+	Mon, 16 Jan 2023 16:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888261;
-	bh=UFfvIsjI55wJSFyx0zgHuvSem6Z3hSP4nlcaN63Jl4c=;
+	s=korg; t=1673888263;
+	bh=UTUGVHfjiZ3kovA1VJU6mV1k7RcLHzT6tAF50x+DI7w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UBeYmi2NOX80myic7ZpeHhr3zWGNLqgs7I1tarzsXnYEEG9k8gtt/HTOVfvN43EjQ
-	 ZGRYW5Sdfyxpd32GVtTryjegQSND3o1swq2WZaEwe7mvziXgdf0b9KTi5OZVp8+Epp
-	 tf3ls4lnY2yxiWMTGI1Pjq8jaeBtE7K8k/HDyOV0=
+	b=Do44243wYXHGq0lVmzTgom23N1RhTZfiZG7sABWNfpyE4k7o05f4RsMSvwVE+pFA4
+	 nbY9p0VG/LK/emQ1PlM7krbwkYQcRcp3rbq7blT1CWLgKWYQqrur18lk3Wk1HUfefJ
+	 F+Je4vobMIDdah5/5Vf7wLrQ4JJbHa9y3wAAYkgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-fsd@tesla.com,
-	Smitha T Murthy <smitha.t@samsung.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 422/521] media: s5p-mfc: Clear workbit to handle error condition
-Date: Mon, 16 Jan 2023 16:51:24 +0100
-Message-Id: <20230116154906.006541845@linuxfoundation.org>
+	Steve Dickson <steved@redhat.com>,
+	JianHong Yin <yin-jianhong@163.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>
+Subject: [PATCH 4.19 455/521] nfsd: fix handling of readdir in v4root vs. mount upcall timeout
+Date: Mon, 16 Jan 2023 16:51:57 +0100
+Message-Id: <20230116154907.470062562@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,43 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Smitha T Murthy <smitha.t@samsung.com>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit d3f3c2fe54e30b0636496d842ffbb5ad3a547f9b ]
+commit cad853374d85fe678d721512cecfabd7636e51f3 upstream.
 
-During error on CLOSE_INSTANCE command, ctx_work_bits was not getting
-cleared. During consequent mfc execution NULL pointer dereferencing of
-this context led to kernel panic. This patch fixes this issue by making
-sure to clear ctx_work_bits always.
+If v4 READDIR operation hits a mountpoint and gets back an error,
+then it will include that entry in the reply and set RDATTR_ERROR for it
+to the error.
 
-Fixes: 818cd91ab8c6 ("[media] s5p-mfc: Extract open/close MFC instance commands")
-Cc: stable@vger.kernel.org
-Cc: linux-fsd@tesla.com
-Signed-off-by: Smitha T Murthy <smitha.t@samsung.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+That's fine for "normal" exported filesystems, but on the v4root, we
+need to be more careful to only expose the existence of dentries that
+lead to exports.
+
+If the mountd upcall times out while checking to see whether a
+mountpoint on the v4root is exported, then we have no recourse other
+than to fail the whole operation.
+
+Cc: Steve Dickson <steved@redhat.com>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216777
+Reported-by: JianHong Yin <yin-jianhong@163.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/s5p-mfc/s5p_mfc_ctrl.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/nfsd/nfs4xdr.c |   11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc_ctrl.c b/drivers/media/platform/s5p-mfc/s5p_mfc_ctrl.c
-index ee7b15b335e0..31bbf1cc5388 100644
---- a/drivers/media/platform/s5p-mfc/s5p_mfc_ctrl.c
-+++ b/drivers/media/platform/s5p-mfc/s5p_mfc_ctrl.c
-@@ -472,8 +472,10 @@ void s5p_mfc_close_mfc_inst(struct s5p_mfc_dev *dev, struct s5p_mfc_ctx *ctx)
- 	s5p_mfc_hw_call(dev->mfc_ops, try_run, dev);
- 	/* Wait until instance is returned or timeout occurred */
- 	if (s5p_mfc_wait_for_done_ctx(ctx,
--				S5P_MFC_R2H_CMD_CLOSE_INSTANCE_RET, 0))
-+				S5P_MFC_R2H_CMD_CLOSE_INSTANCE_RET, 0)){
-+		clear_work_bit_irqsave(ctx);
- 		mfc_err("Err returning instance\n");
-+	}
- 
- 	/* Free resources */
- 	s5p_mfc_hw_call(dev->mfc_ops, release_codec_buffers, ctx);
--- 
-2.35.1
-
+--- a/fs/nfsd/nfs4xdr.c
++++ b/fs/nfsd/nfs4xdr.c
+@@ -3102,6 +3102,17 @@ nfsd4_encode_dirent(void *ccdv, const ch
+ 	case nfserr_noent:
+ 		xdr_truncate_encode(xdr, start_offset);
+ 		goto skip_entry;
++	case nfserr_jukebox:
++		/*
++		 * The pseudoroot should only display dentries that lead to
++		 * exports. If we get EJUKEBOX here, then we can't tell whether
++		 * this entry should be included. Just fail the whole READDIR
++		 * with NFS4ERR_DELAY in that case, and hope that the situation
++		 * will resolve itself by the client's next attempt.
++		 */
++		if (cd->rd_fhp->fh_export->ex_flags & NFSEXP_V4ROOT)
++			goto fail;
++		/* fallthrough */
+ 	default:
+ 		/*
+ 		 * If the client requested the RDATTR_ERROR attribute,
 
 
