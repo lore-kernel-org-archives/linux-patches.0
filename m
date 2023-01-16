@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 887B346B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:13:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 036B3C433D2;
-	Mon, 16 Jan 2023 16:13:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F17346B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:13:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9723BC433D2;
+	Mon, 16 Jan 2023 16:13:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885614;
-	bh=rujehGlLN2LoRPX4wKaFlXd3wmeUrVXY0ayfJnXbyoQ=;
+	s=korg; t=1673885617;
+	bh=JcokrNxzenQXbXJr0diqgJDYzmX58m4naYo4V1Nv5rc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jpLwDBhuNAceNru98JIC+v0Up+3MjSTER64xGP3JXQef1v11nBHStORwuyzjZDCz7
-	 ONNOyjpqZ9vHxWDWVoifZduW0b/rcVOSt3GuYqOdjXy8AgxqvCTPK+9I4Vo/XbCVjo
-	 ZqaqFc/ag8MXZXpE2iJJkdD+zhCeRwQj/nHrL02E=
+	b=lzLf8OMn/DhzGAgW0UZOzP7PjBOKfNKbBkrYt7CIYQszJlVRVMYprc0lDGVZb50/e
+	 /pqPtS/ca1GrZiyGAMGtrP0xwP2W97HUTpntBPUY9IIEaxp5qmftKKO43KQDH72fnF
+	 TUT4w+Rw+P61NqzxWMsB0BNYalFbgBzAygsPWXwc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Ladislav Michl <ladis@linux-mips.org>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 118/658] ima: Fix fall-through warnings for Clang
-Date: Mon, 16 Jan 2023 16:43:26 +0100
-Message-Id: <20230116154914.894938933@linuxfoundation.org>
+Subject: [PATCH 5.4 092/658] MIPS: OCTEON: warn only once if deprecated link status is being used
+Date: Mon, 16 Jan 2023 16:43:00 +0100
+Message-Id: <20230116154913.757761574@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,56 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gustavo A. R. Silva <gustavoars@kernel.org>
+From: Ladislav Michl <ladis@linux-mips.org>
 
-[ Upstream commit 28073eb09c5aa29e879490edb88cfd3e7073821e ]
+[ Upstream commit 4c587a982603d7e7e751b4925809a1512099a690 ]
 
-In preparation to enable -Wimplicit-fallthrough for Clang, fix multiple
-warnings by explicitly adding multiple break statements instead of just
-letting the code fall through to the next case.
+Avoid flooding kernel log with warnings.
 
-Link: https://github.com/KSPP/linux/issues/115
-Signed-off-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
-Stable-dep-of: c7423dbdbc9e ("ima: Handle -ESTALE returned by ima_filter_rule_match()")
+Fixes: 2c0756d306c2 ("MIPS: OCTEON: warn if deprecated link status is being used")
+Signed-off-by: Ladislav Michl <ladis@linux-mips.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/ima_main.c   | 1 +
- security/integrity/ima/ima_policy.c | 2 ++
- 2 files changed, 3 insertions(+)
+ arch/mips/cavium-octeon/executive/cvmx-helper-board.c | 2 +-
+ arch/mips/cavium-octeon/executive/cvmx-helper.c       | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/security/integrity/ima/ima_main.c b/security/integrity/ima/ima_main.c
-index a768f37a0a4d..ce9d594ddbcd 100644
---- a/security/integrity/ima/ima_main.c
-+++ b/security/integrity/ima/ima_main.c
-@@ -615,6 +615,7 @@ int ima_load_data(enum kernel_load_data_id id)
- 			pr_err("impossible to appraise a module without a file descriptor. sig_enforce kernel parameter might help\n");
- 			return -EACCES;	/* INTEGRITY_UNKNOWN */
- 		}
-+		break;
- 	default:
- 		break;
- 	}
-diff --git a/security/integrity/ima/ima_policy.c b/security/integrity/ima/ima_policy.c
-index 6cd2f663643c..7f352e85ffad 100644
---- a/security/integrity/ima/ima_policy.c
-+++ b/security/integrity/ima/ima_policy.c
-@@ -434,6 +434,7 @@ static bool ima_match_rules(struct ima_rule_entry *rule, struct inode *inode,
- 			rc = ima_filter_rule_match(secid, rule->lsm[i].type,
- 						   Audit_equal,
- 						   rule->lsm[i].rule);
-+			break;
- 		default:
- 			break;
- 		}
-@@ -666,6 +667,7 @@ void __init ima_init_policy(void)
- 		add_rules(default_measurement_rules,
- 			  ARRAY_SIZE(default_measurement_rules),
- 			  IMA_DEFAULT_POLICY);
-+		break;
- 	default:
- 		break;
- 	}
+diff --git a/arch/mips/cavium-octeon/executive/cvmx-helper-board.c b/arch/mips/cavium-octeon/executive/cvmx-helper-board.c
+index 2e2d45bc850d..601afad60bfe 100644
+--- a/arch/mips/cavium-octeon/executive/cvmx-helper-board.c
++++ b/arch/mips/cavium-octeon/executive/cvmx-helper-board.c
+@@ -211,7 +211,7 @@ cvmx_helper_link_info_t __cvmx_helper_board_link_get(int ipd_port)
+ {
+ 	cvmx_helper_link_info_t result;
+ 
+-	WARN(!octeon_is_simulation(),
++	WARN_ONCE(!octeon_is_simulation(),
+ 	     "Using deprecated link status - please update your DT");
+ 
+ 	/* Unless we fix it later, all links are defaulted to down */
+diff --git a/arch/mips/cavium-octeon/executive/cvmx-helper.c b/arch/mips/cavium-octeon/executive/cvmx-helper.c
+index de391541d6f7..89a397c73aa6 100644
+--- a/arch/mips/cavium-octeon/executive/cvmx-helper.c
++++ b/arch/mips/cavium-octeon/executive/cvmx-helper.c
+@@ -1100,7 +1100,7 @@ cvmx_helper_link_info_t cvmx_helper_link_get(int ipd_port)
+ 		if (index == 0)
+ 			result = __cvmx_helper_rgmii_link_get(ipd_port);
+ 		else {
+-			WARN(1, "Using deprecated link status - please update your DT");
++			WARN_ONCE(1, "Using deprecated link status - please update your DT");
+ 			result.s.full_duplex = 1;
+ 			result.s.link_up = 1;
+ 			result.s.speed = 1000;
 -- 
 2.35.1
 
