@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD53946B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:15:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6349BC433D2;
-	Mon, 16 Jan 2023 16:15:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 853EB46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:15:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A516C433D2;
+	Mon, 16 Jan 2023 16:15:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885706;
-	bh=kx9VvxgtfAiHTnX9O6gYJCJfy8PBMRni/u2G7iR2lY4=;
+	s=korg; t=1673885709;
+	bh=WqXCNM8e2JOAaSm9hO5sOOrv/C98ZtNtqiUbyI+LPL0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1mkbzqzZjL1DwhWCUrP5JBu+PpdpQCOUh0O8TCGklZvX5NfrMItQavgHORFggcDDE
-	 EalKDjy3jsYWc+asb5+Xcf2wDeugtOuehcta72SblGEAJpJ8aFUvSvoZAaOw7tKm83
-	 l4hwAsFbPxMnj30BnOKyNeWZpi4Ea1Bfr12rr1nk=
+	b=e16vqbLvoLQZWbGWxBwTkO+S4PnZlZjEGyUA5JW/24rfIEM1EKqv4hH1oFZTKFFYj
+	 3frNInuAKlC3jC3wzAdDAd6ydAbuZyVbcBpoT3R0yBQYcruIEwXn7a9lI3NvghMxUr
+	 lYV+QU76nQX6wGLo/SVkaf4JXiPzbz3oIGwC/MrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dario Binacchi <dario.binacchi@amarulasolutions.com>,
-	Marco Felsch <m.felsch@pengutronix.de>,
-	Abel Vesa <abel.vesa@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	David Howells <dhowells@redhat.com>,
+	Marc Dionne <marc.dionne@auristor.com>,
+	linux-afs@lists.infradead.org,
+	netdev@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 152/658] clk: imx: replace osc_hdmi with dummy
-Date: Mon, 16 Jan 2023 16:44:00 +0100
-Message-Id: <20230116154916.402141959@linuxfoundation.org>
+Subject: [PATCH 5.4 125/658] net, proc: Provide PROC_FS=n fallback for proc_create_net_single_write()
+Date: Mon, 16 Jan 2023 16:43:33 +0100
+Message-Id: <20230116154915.183915053@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,68 +38,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dario Binacchi <dario.binacchi@amarulasolutions.com>
+From: David Howells <dhowells@redhat.com>
 
-[ Upstream commit e7fa365ff66f16772dc06b480cd78f858d10856b ]
+[ Upstream commit c3d96f690a790074b508fe183a41e36a00cd7ddd ]
 
-There is no occurrence of the hdmi oscillator in the reference manual
-(document IMX8MNRM Rev 2, 07/2022). Further, if we consider the indexes
-76-81 and 134 of the "Clock Root" table of chapter 5 of the RM, there is
-no entry for the source select bits 101b, which is the setting referenced
-by "osc_hdmi".
-Fix by renaming "osc_hdmi" with "dummy", a clock which has already been
-used for missing source select bits.
+Provide a CONFIG_PROC_FS=n fallback for proc_create_net_single_write().
 
-Tested on the BSH SystemMaster (SMM) S2 board.
+Also provide a fallback for proc_create_net_data_write().
 
-Fixes: 96d6392b54dbb ("clk: imx: Add support for i.MX8MN clock driver")
-Signed-off-by: Dario Binacchi <dario.binacchi@amarulasolutions.com>
-Acked-by: Marco Felsch <m.felsch@pengutronix.de>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Link: https://lore.kernel.org/r/20221117113637.1978703-3-dario.binacchi@amarulasolutions.com
+Fixes: 564def71765c ("proc: Add a way to make network proc files writable")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+cc: Marc Dionne <marc.dionne@auristor.com>
+cc: linux-afs@lists.infradead.org
+cc: netdev@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mn.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ include/linux/proc_fs.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
-index d520a8c5eabb..9d33321c89bd 100644
---- a/drivers/clk/imx/clk-imx8mn.c
-+++ b/drivers/clk/imx/clk-imx8mn.c
-@@ -189,27 +189,27 @@ static const char * const imx8mn_disp_pixel_sels[] = {"osc_24m", "video_pll1_out
- 						      "sys_pll3_out", "clk_ext4", };
+diff --git a/include/linux/proc_fs.h b/include/linux/proc_fs.h
+index 865d02c224ad..b8d41d0e7b46 100644
+--- a/include/linux/proc_fs.h
++++ b/include/linux/proc_fs.h
+@@ -127,8 +127,10 @@ static inline void proc_remove(struct proc_dir_entry *de) {}
+ static inline int remove_proc_subtree(const char *name, struct proc_dir_entry *parent) { return 0; }
  
- static const char * const imx8mn_sai2_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
+ #define proc_create_net_data(name, mode, parent, ops, state_size, data) ({NULL;})
++#define proc_create_net_data_write(name, mode, parent, ops, write, state_size, data) ({NULL;})
+ #define proc_create_net(name, mode, parent, state_size, ops) ({NULL;})
+ #define proc_create_net_single(name, mode, parent, show, data) ({NULL;})
++#define proc_create_net_single_write(name, mode, parent, show, write, data) ({NULL;})
  
- static const char * const imx8mn_sai3_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
- 
- static const char * const imx8mn_sai5_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext2", "clk_ext3", };
- 
- static const char * const imx8mn_sai6_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
- 
- static const char * const imx8mn_sai7_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						"video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						"video_pll1_out", "sys_pll1_133m", "dummy",
- 						"clk_ext3", "clk_ext4", };
- 
- static const char * const imx8mn_spdif1_sels[] = {"osc_24m", "audio_pll1_out", "audio_pll2_out",
--						  "video_pll1_out", "sys_pll1_133m", "osc_hdmi",
-+						  "video_pll1_out", "sys_pll1_133m", "dummy",
- 						  "clk_ext2", "clk_ext3", };
- 
- static const char * const imx8mn_enet_ref_sels[] = {"osc_24m", "sys_pll2_125m", "sys_pll2_50m",
+ static inline struct pid *tgid_pidfd_to_pid(const struct file *file)
+ {
 -- 
 2.35.1
 
