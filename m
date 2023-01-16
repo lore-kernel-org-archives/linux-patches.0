@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFE746B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:21:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63BF6C433D2;
-	Mon, 16 Jan 2023 16:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9919E46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:21:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3209C433EF;
+	Mon, 16 Jan 2023 16:21:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886114;
-	bh=YVCGzrOzSEJipdm3dTxZVy8eDWMdNgLk5+TKjoFfW9Q=;
+	s=korg; t=1673886117;
+	bh=BNE0s1M8yscfMEnF4oX71Vi5QIz2TNC2s65DAsgkgig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i8VK+CXXcODfrpu+dtVi5WcMyWBqKxrO3NkX5lC71hqIRJo2edBorwKnuK9dD3y9K
-	 R19DXSOmetL0mU5WdXXOuqmlQGocIB9Olp1EFVmsDvoRgaPNQD//J16lFIzoexLc+g
-	 ondqZ37SFuXd5IfykUn8YTXStWi+Kq9DM4UVBsnM=
+	b=uwswhyHJ8Zy4Vxt4kf4lEM0Qg6QOGh9UvWEPpcih1BTVJfeMTAA6XM+PkUbM6+jIx
+	 hiYYserinDxnra7mlrKdo2f5wwcpWLXcYNF/PvVxgCJ9bZGOisdF7f/BcfFD4YVsIg
+	 ecKu/fA4BAl9R5KRB+52lK++ynb+5Icx0jYGZzLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
+	YueHaibing <yuehaibing@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 307/658] staging: rtl8192u: Fix use after free in ieee80211_rx()
-Date: Mon, 16 Jan 2023 16:46:35 +0100
-Message-Id: <20230116154923.623408565@linuxfoundation.org>
+Subject: [PATCH 5.4 308/658] staging: rtl8192e: Fix potential use-after-free in rtllib_rx_Monitor()
+Date: Mon, 16 Jan 2023 16:46:36 +0100
+Message-Id: <20230116154923.672696627@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -34,39 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: YueHaibing <yuehaibing@huawei.com>
 
-[ Upstream commit bcc5e2dcf09089b337b76fc1a589f6ff95ca19ac ]
+[ Upstream commit d30f4436f364b4ad915ca2c09be07cd0f93ceb44 ]
 
-We cannot dereference the "skb" pointer after calling
-ieee80211_monitor_rx(), because it is a use after free.
+The skb is delivered to netif_rx() in rtllib_monitor_rx(), which may free it,
+after calling this, dereferencing skb may trigger use-after-free.
+Found by Smatch.
 
-Fixes: 8fc8598e61f6 ("Staging: Added Realtek rtl8192u driver to staging")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/r/Y33BArx3k/aw6yv/@kili
+Fixes: 94a799425eee ("From: wlanfae <wlanfae@realtek.com> [PATCH 1/8] rtl8192e: Import new version of driver from realtek")
+Signed-off-by: YueHaibing <yuehaibing@huawei.com>
+Link: https://lore.kernel.org/r/20221123081253.22296-1-yuehaibing@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8192u/ieee80211/ieee80211_rx.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/staging/rtl8192e/rtllib_rx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/rtl8192u/ieee80211/ieee80211_rx.c b/drivers/staging/rtl8192u/ieee80211/ieee80211_rx.c
-index 00e34c392a38..d51f734aca26 100644
---- a/drivers/staging/rtl8192u/ieee80211/ieee80211_rx.c
-+++ b/drivers/staging/rtl8192u/ieee80211/ieee80211_rx.c
-@@ -943,9 +943,11 @@ int ieee80211_rx(struct ieee80211_device *ieee, struct sk_buff *skb,
- #endif
- 
- 	if (ieee->iw_mode == IW_MODE_MONITOR) {
-+		unsigned int len = skb->len;
-+
- 		ieee80211_monitor_rx(ieee, skb, rx_stats);
- 		stats->rx_packets++;
--		stats->rx_bytes += skb->len;
-+		stats->rx_bytes += len;
- 		return 1;
+diff --git a/drivers/staging/rtl8192e/rtllib_rx.c b/drivers/staging/rtl8192e/rtllib_rx.c
+index 83c30e2d82f5..a78f914082fe 100644
+--- a/drivers/staging/rtl8192e/rtllib_rx.c
++++ b/drivers/staging/rtl8192e/rtllib_rx.c
+@@ -1490,9 +1490,9 @@ static int rtllib_rx_Monitor(struct rtllib_device *ieee, struct sk_buff *skb,
+ 		hdrlen += 4;
  	}
  
+-	rtllib_monitor_rx(ieee, skb, rx_stats, hdrlen);
+ 	ieee->stats.rx_packets++;
+ 	ieee->stats.rx_bytes += skb->len;
++	rtllib_monitor_rx(ieee, skb, rx_stats, hdrlen);
+ 
+ 	return 1;
+ }
 -- 
 2.35.1
 
