@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F236FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:02:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0B2C433EF;
-	Mon, 16 Jan 2023 17:02:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9456FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:02:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73576C433D2;
+	Mon, 16 Jan 2023 17:02:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888562;
-	bh=4w9RSncs8HNkHV2mvtWHSfknXTkPBoZ+KQKrT+W8cXI=;
+	s=korg; t=1673888564;
+	bh=TB4pMOsvkElmztXWLqzpVbRGOtMAmIqxdnvoHCCv+4Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U9iXiIFhu9S2hDgH/jLu/ynE7yoYSjWlop83os2opyojr1DtReRmRgeqfNbKOjW3C
-	 FuLtQltNMSJdzSCjgX6E7gujVTLfXPzO/cYCrzObtX0Kd4xKx6IGvehf+OVTbldTnK
-	 0YEceSvnhMH9qfYDCVwTyg+nyjVtscNJdKka/+VQ=
+	b=igZziAW67CyjxADPqBsujfVx9R/2zUyQTBdjslFh6V5crmLEsrkThE1Ub/rC0l0W0
+	 SUw1NwrTroafHirrbpwgiJ8zc79U1SeEyiULu/W7THF6Wf4roRcmfo0NuiXxyallgF
+	 apdfbnWlrJraGXkgGxS84bYIEYr4C+opaO4UWSS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>
-Subject: [PATCH 4.14 012/338] udf: Discard preallocation before extending file with a hole
-Date: Mon, 16 Jan 2023 16:48:05 +0100
-Message-Id: <20230116154821.260660541@linuxfoundation.org>
+	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 046/338] timerqueue: Use rb_entry_safe() in timerqueue_getnext()
+Date: Mon, 16 Jan 2023 16:48:39 +0100
+Message-Id: <20230116154822.801295509@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -33,131 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Barnabás Pőcze <pobrn@protonmail.com>
 
-commit 16d0556568148bdcaa45d077cac9f8f7077cf70a upstream.
+[ Upstream commit 2f117484329b233455ee278f2d9b0a4356835060 ]
 
-When extending file with a hole, we tried to preserve existing
-preallocation for the file. However that is not very useful and
-complicates code because the previous extent may need to be rounded to
-block boundary as well (which we forgot to do thus causing data
-corruption for sequence like:
+When `timerqueue_getnext()` is called on an empty timer queue, it will
+use `rb_entry()` on a NULL pointer, which is invalid. Fix that by using
+`rb_entry_safe()` which handles NULL pointers.
 
-xfs_io -f -c "pwrite 0x75e63 11008" -c "truncate 0x7b24b" \
-  -c "truncate 0xabaa3" -c "pwrite 0xac70b 22954" \
-  -c "pwrite 0x93a43 11358" -c "pwrite 0xb8e65 52211" file
+This has not caused any issues so far because the offset of the `rb_node`
+member in `timerqueue_node` is 0, so `rb_entry()` is essentially a no-op.
 
-with 512-byte block size. Just discard preallocation before extending
-file to simplify things and also fix this data corruption.
-
-CC: stable@vger.kernel.org
-Signed-off-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 511885d7061e ("lib/timerqueue: Rely on rbtree semantics for next timer")
+Signed-off-by: Barnabás Pőcze <pobrn@protonmail.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Link: https://lore.kernel.org/r/20221114195421.342929-1-pobrn@protonmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/inode.c |   46 ++++++++++++++++++----------------------------
- 1 file changed, 18 insertions(+), 28 deletions(-)
+ include/linux/timerqueue.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/udf/inode.c
-+++ b/fs/udf/inode.c
-@@ -434,6 +434,12 @@ static int udf_get_block(struct inode *i
- 		iinfo->i_next_alloc_goal++;
- 	}
+diff --git a/include/linux/timerqueue.h b/include/linux/timerqueue.h
+index aff122f1062a..e1a843cb16d4 100644
+--- a/include/linux/timerqueue.h
++++ b/include/linux/timerqueue.h
+@@ -35,7 +35,7 @@ struct timerqueue_node *timerqueue_getnext(struct timerqueue_head *head)
+ {
+ 	struct rb_node *leftmost = rb_first_cached(&head->rb_root);
  
-+	/*
-+	 * Block beyond EOF and prealloc extents? Just discard preallocation
-+	 * as it is not useful and complicates things.
-+	 */
-+	if (((loff_t)block) << inode->i_blkbits > iinfo->i_lenExtents)
-+		udf_discard_prealloc(inode);
- 	udf_clear_extent_cache(inode);
- 	phys = inode_getblk(inode, block, &err, &new);
- 	if (!phys)
-@@ -483,8 +489,6 @@ static int udf_do_extend_file(struct ino
- 	uint32_t add;
- 	int count = 0, fake = !(last_ext->extLength & UDF_EXTENT_LENGTH_MASK);
- 	struct super_block *sb = inode->i_sb;
--	struct kernel_lb_addr prealloc_loc = {};
--	int prealloc_len = 0;
- 	struct udf_inode_info *iinfo;
- 	int err;
+-	return rb_entry(leftmost, struct timerqueue_node, node);
++	return rb_entry_safe(leftmost, struct timerqueue_node, node);
+ }
  
-@@ -505,19 +509,6 @@ static int udf_do_extend_file(struct ino
- 			~(sb->s_blocksize - 1);
- 	}
- 
--	/* Last extent are just preallocated blocks? */
--	if ((last_ext->extLength & UDF_EXTENT_FLAG_MASK) ==
--						EXT_NOT_RECORDED_ALLOCATED) {
--		/* Save the extent so that we can reattach it to the end */
--		prealloc_loc = last_ext->extLocation;
--		prealloc_len = last_ext->extLength;
--		/* Mark the extent as a hole */
--		last_ext->extLength = EXT_NOT_RECORDED_NOT_ALLOCATED |
--			(last_ext->extLength & UDF_EXTENT_LENGTH_MASK);
--		last_ext->extLocation.logicalBlockNum = 0;
--		last_ext->extLocation.partitionReferenceNum = 0;
--	}
--
- 	/* Can we merge with the previous extent? */
- 	if ((last_ext->extLength & UDF_EXTENT_FLAG_MASK) ==
- 					EXT_NOT_RECORDED_NOT_ALLOCATED) {
-@@ -545,7 +536,7 @@ static int udf_do_extend_file(struct ino
- 		 * more extents, we may need to enter possible following
- 		 * empty indirect extent.
- 		 */
--		if (new_block_bytes || prealloc_len)
-+		if (new_block_bytes)
- 			udf_next_aext(inode, last_pos, &tmploc, &tmplen, 0);
- 	}
- 
-@@ -579,17 +570,6 @@ static int udf_do_extend_file(struct ino
- 	}
- 
- out:
--	/* Do we have some preallocated blocks saved? */
--	if (prealloc_len) {
--		err = udf_add_aext(inode, last_pos, &prealloc_loc,
--				   prealloc_len, 1);
--		if (err)
--			return err;
--		last_ext->extLocation = prealloc_loc;
--		last_ext->extLength = prealloc_len;
--		count++;
--	}
--
- 	/* last_pos should point to the last written extent... */
- 	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
- 		last_pos->offset -= sizeof(struct short_ad);
-@@ -642,8 +622,17 @@ static int udf_extend_file(struct inode
- 	else
- 		BUG();
- 
-+	/*
-+	 * When creating hole in file, just don't bother with preserving
-+	 * preallocation. It likely won't be very useful anyway.
-+	 */
-+	udf_discard_prealloc(inode);
-+
- 	etype = inode_bmap(inode, first_block, &epos, &eloc, &elen, &offset);
- 	within_final_block = (etype != -1);
-+	/* We don't expect extents past EOF... */
-+	WARN_ON_ONCE(etype != -1 &&
-+		     elen > ((loff_t)offset + 1) << inode->i_blkbits);
- 
- 	if ((!epos.bh && epos.offset == udf_file_entry_alloc_offset(inode)) ||
- 	    (epos.bh && epos.offset == sizeof(struct allocExtDesc))) {
-@@ -772,10 +761,11 @@ static sector_t inode_getblk(struct inod
- 		goto out_free;
- 	}
- 
--	/* Are we beyond EOF? */
-+	/* Are we beyond EOF and preallocated extent? */
- 	if (etype == -1) {
- 		int ret;
- 		loff_t hole_len;
-+
- 		isBeyondEOF = true;
- 		if (count) {
- 			if (c)
+ static inline void timerqueue_init(struct timerqueue_node *node)
+-- 
+2.35.1
+
 
 
