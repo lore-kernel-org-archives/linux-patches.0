@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EABA66FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:12:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D251C433EF;
-	Mon, 16 Jan 2023 17:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 983F96FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:12:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B7E4C433F0;
+	Mon, 16 Jan 2023 17:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889176;
-	bh=MsT/chIFBEO21DWmyipZYl+zbSazjOpQTU+blLdbFfQ=;
+	s=korg; t=1673889179;
+	bh=yCreS0ZPnySeWHvh46zLCnHhD8o6FjUdLwBBCKatnr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xavQzxJkFzeOPR1mezoONWVkK1bjpCEhllDCtsd3rBzLq/XkhM43ZIq4P1X4ar1X5
-	 prJUiKuoHRAolKnz7NdxuTTSjsvQiLNwGqfFChRjcv/WPT2iqYbsZ4gAVBCatMhtgC
-	 1Tg42SUObSNvWhML2Eib2PotYPMAfrt/jH30g4L8=
+	b=EGR6HSYRwJA7xeuY4wvqJXxJnbOZ28zc/duolqyfZjgu1PlQt32V3VAT4YTf+1xro
+	 BX8zp0/7cXvOyTYnqacCmC0qGw3SjNhWqvTlDyhVb10BMY50nrueNqW4RrGuBy38nI
+	 fyUGPSJqpB0KXlIm0ML14uFvtXGprHIYoo36L8Yg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Jiaming Li <lijiaming30@huawei.com>,
-	Huaxin Lu <luhuaxin1@huawei.com>,
-	Stefan Berger <stefanb@linux.ibm.com>,
-	Mimi Zohar <zohar@linux.ibm.com>
-Subject: [PATCH 4.14 288/338] ima: Fix a potential NULL pointer access in ima_restore_measurement_list
-Date: Mon, 16 Jan 2023 16:52:41 +0100
-Message-Id: <20230116154833.620435665@linuxfoundation.org>
+	Wei Gong <gongwei833x@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 4.14 289/338] PCI: Fix pci_device_is_present() for VFs by checking PF
+Date: Mon, 16 Jan 2023 16:52:42 +0100
+Message-Id: <20230116154833.661133592@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -37,39 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Huaxin Lu <luhuaxin1@huawei.com>
+From: Michael S. Tsirkin <mst@redhat.com>
 
-commit 11220db412edae8dba58853238f53258268bdb88 upstream.
+commit 98b04dd0b4577894520493d96bc4623387767445 upstream.
 
-In restore_template_fmt, when kstrdup fails, a non-NULL value will still be
-returned, which causes a NULL pointer access in template_desc_init_fields.
+pci_device_is_present() previously didn't work for VFs because it reads the
+Vendor and Device ID, which are 0xffff for VFs, which looks like they
+aren't present.  Check the PF instead.
 
-Fixes: c7d09367702e ("ima: support restoring multiple template formats")
-Cc: stable@kernel.org
-Co-developed-by: Jiaming Li <lijiaming30@huawei.com>
-Signed-off-by: Jiaming Li <lijiaming30@huawei.com>
-Signed-off-by: Huaxin Lu <luhuaxin1@huawei.com>
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Wei Gong reported that if virtio I/O is in progress when the driver is
+unbound or "0" is written to /sys/.../sriov_numvfs, the virtio I/O
+operation hangs, which may result in output like this:
+
+  task:bash state:D stack:    0 pid: 1773 ppid:  1241 flags:0x00004002
+  Call Trace:
+   schedule+0x4f/0xc0
+   blk_mq_freeze_queue_wait+0x69/0xa0
+   blk_mq_freeze_queue+0x1b/0x20
+   blk_cleanup_queue+0x3d/0xd0
+   virtblk_remove+0x3c/0xb0 [virtio_blk]
+   virtio_dev_remove+0x4b/0x80
+   ...
+   device_unregister+0x1b/0x60
+   unregister_virtio_device+0x18/0x30
+   virtio_pci_remove+0x41/0x80
+   pci_device_remove+0x3e/0xb0
+
+This happened because pci_device_is_present(VF) returned "false" in
+virtio_pci_remove(), so it called virtio_break_device().  The broken vq
+meant that vring_interrupt() skipped the vq.callback() that would have
+completed the virtio I/O operation via virtblk_done().
+
+[bhelgaas: commit log, simplify to always use pci_physfn(), add stable tag]
+Link: https://lore.kernel.org/r/20221026060912.173250-1-mst@redhat.com
+Reported-by: Wei Gong <gongwei833x@gmail.com>
+Tested-by: Wei Gong <gongwei833x@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/integrity/ima/ima_template.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/pci/pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/security/integrity/ima/ima_template.c
-+++ b/security/integrity/ima/ima_template.c
-@@ -266,8 +266,11 @@ static struct ima_template_desc *restore
+--- a/drivers/pci/pci.c
++++ b/drivers/pci/pci.c
+@@ -5166,6 +5166,8 @@ bool pci_device_is_present(struct pci_de
+ {
+ 	u32 v;
  
- 	template_desc->name = "";
- 	template_desc->fmt = kstrdup(template_name, GFP_KERNEL);
--	if (!template_desc->fmt)
-+	if (!template_desc->fmt) {
-+		kfree(template_desc);
-+		template_desc = NULL;
- 		goto out;
-+	}
- 
- 	spin_lock(&template_list);
- 	list_add_tail_rcu(&template_desc->list, &defined_templates);
++	/* Check PF if pdev is a VF, since VF Vendor/Device IDs are 0xffff */
++	pdev = pci_physfn(pdev);
+ 	if (pci_dev_is_disconnected(pdev))
+ 		return false;
+ 	return pci_bus_read_dev_vendor_id(pdev->bus, pdev->devfn, &v, 0);
 
 
