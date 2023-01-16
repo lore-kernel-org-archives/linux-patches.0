@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB7F533EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A747C433D2;
-	Mon, 16 Jan 2023 16:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B26C33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0F0C433EF;
+	Mon, 16 Jan 2023 16:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884874;
-	bh=EXJXN2Xsxu1uilrvCdBrPZtWG02Ak5SJeVBAyKiudeU=;
+	s=korg; t=1673884877;
+	bh=AdGuGlY91n6XhXYPhCqj4AtSSr6BJKNwfdIJhNi92cM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UfQA/CaVznFUa/BOKXq+OCzPyx4lC814+llSJaKS21rCR5IPpKCvmZM+/ENgjFwpv
-	 xa1rvPRoKU8V9V1n7KICEje65q0jXJ2hZqOkXnHp/PIUy4wNJMYx4MRQ3IrkK+ZcCB
-	 1nJNY2yiITOXRa9X4LLo3YnrNlOJiTn3tDG9AWh4=
+	b=miT2HV6jslRVAkmOTI4Xu4Pzlle9J761ynhDmpfgipnM/AWP3Mh78xfDmGcxL0+2F
+	 ybQLu4lMfyGfbHn+W/UPCYwvQiAObzMth5TEXtun4Q6lItxKWd++plB70s8+b2odam
+	 BvbbvaX3gMbFRuhdEzjvIbZyMu/2pAeZDDzEVPrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Leach <mike.leach@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	coverity-bot <keescook@chromium.org>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 165/183] perf build: Properly guard libbpf includes
-Date: Mon, 16 Jan 2023 16:51:28 +0100
-Message-Id: <20230116154810.267038258@linuxfoundation.org>
+Subject: [PATCH 6.1 174/183] ALSA: usb-audio: Fix possible NULL pointer dereference in snd_usb_pcm_has_fixed_rate()
+Date: Mon, 16 Jan 2023 16:51:37 +0100
+Message-Id: <20230116154810.655727238@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -41,78 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Rogers <irogers@google.com>
+From: Jaroslav Kysela <perex@perex.cz>
 
-[ Upstream commit d891f2b724b39a2a41e3ad7b57110193993242ff ]
+[ Upstream commit 92a9c0ad86d47ff4cce899012e355c400f02cfb8 ]
 
-Including libbpf header files should be guarded by HAVE_LIBBPF_SUPPORT.
-In bpf_counter.h, move the skeleton utilities under HAVE_BPF_SKEL.
+The subs function argument may be NULL, so do not use it before the NULL check.
 
-Fixes: d6a735ef3277c45f ("perf bpf_counter: Move common functions to bpf_counter.h")
-Reported-by: Mike Leach <mike.leach@linaro.org>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Tested-by: Jiri Olsa <jolsa@kernel.org>
-Tested-by: Mike Leach <mike.leach@linaro.org>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: http://lore.kernel.org/lkml/20230105172243.7238-1-mike.leach@linaro.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 291e9da91403 ("ALSA: usb-audio: Always initialize fixed_rate in snd_usb_find_implicit_fb_sync_format()")
+Reported-by: coverity-bot <keescook@chromium.org>
+Link: https://lore.kernel.org/alsa-devel/202301121424.4A79A485@keescook/
+Signed-off-by: Jaroslav Kysela <perex@perex.cz>
+Link: https://lore.kernel.org/r/20230113085311.623325-1-perex@perex.cz
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c    | 2 ++
- tools/perf/util/bpf_counter.h | 6 ++++++
- 2 files changed, 8 insertions(+)
+ sound/usb/pcm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 3dcf6aed1ef7..97b17f8941dc 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -17,7 +17,9 @@
- #include "util/record.h"
- #include <traceevent/event-parse.h>
- #include <api/fs/tracing_path.h>
-+#ifdef HAVE_LIBBPF_SUPPORT
- #include <bpf/bpf.h>
-+#endif
- #include "util/bpf_map.h"
- #include "util/rlimit.h"
- #include "builtin.h"
-diff --git a/tools/perf/util/bpf_counter.h b/tools/perf/util/bpf_counter.h
-index 4dbf26408b69..c6d21c07b14c 100644
---- a/tools/perf/util/bpf_counter.h
-+++ b/tools/perf/util/bpf_counter.h
-@@ -4,9 +4,12 @@
- 
- #include <linux/list.h>
- #include <sys/resource.h>
-+
-+#ifdef HAVE_LIBBPF_SUPPORT
- #include <bpf/bpf.h>
- #include <bpf/btf.h>
- #include <bpf/libbpf.h>
-+#endif
- 
- struct evsel;
- struct target;
-@@ -87,6 +90,8 @@ static inline void set_max_rlimit(void)
- 	setrlimit(RLIMIT_MEMLOCK, &rinf);
- }
- 
-+#ifdef HAVE_BPF_SKEL
-+
- static inline __u32 bpf_link_get_id(int fd)
+diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
+index 29838000eee0..2c5765cbed2d 100644
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -160,11 +160,12 @@ find_substream_format(struct snd_usb_substream *subs,
+ bool snd_usb_pcm_has_fixed_rate(struct snd_usb_substream *subs)
  {
- 	struct bpf_link_info link_info = { .id = 0, };
-@@ -127,5 +132,6 @@ static inline int bperf_trigger_reading(int prog_fd, int cpu)
+ 	const struct audioformat *fp;
+-	struct snd_usb_audio *chip = subs->stream->chip;
++	struct snd_usb_audio *chip;
+ 	int rate = -1;
  
- 	return bpf_prog_test_run_opts(prog_fd, &opts);
- }
-+#endif /* HAVE_BPF_SKEL */
- 
- #endif /* __PERF_BPF_COUNTER_H */
+ 	if (!subs)
+ 		return false;
++	chip = subs->stream->chip;
+ 	if (!(chip->quirk_flags & QUIRK_FLAG_FIXED_RATE))
+ 		return false;
+ 	list_for_each_entry(fp, &subs->fmt_list, list) {
 -- 
 2.35.1
 
