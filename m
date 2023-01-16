@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 047066FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:41:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C221C433F0;
-	Mon, 16 Jan 2023 16:41:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 950136FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:41:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17A46C433D2;
+	Mon, 16 Jan 2023 16:41:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887305;
-	bh=ME87X208WEto+PejbuUwKQ/S1/Z6JfzWqiueL35CMgc=;
+	s=korg; t=1673887308;
+	bh=ytKKnx4XPAtSjVNE2t7USirP7OAMY/9mG2bxYP6mZsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hje0utAicSPXJRYzRNt6/suaz+7aI4+2rDFce7bfPJbnEY2+B5YzNmBMgQ1x4xpxR
-	 S+K+rU+ZS2WWTH46WdtoW6cWqIa71oYErJWPlLOTvBXuocuDCg/Gq+MdFiKZBlzrFH
-	 AhBu58uh2EkoEwicXIL6y2zXDOGlD+lj0iTH20Jc=
+	b=R9Pt85BZ6HYJWyCmZuouJwgzlucUG7Df75+dNINGz7fJZtL5z1MsKSGoa6gPa2fdJ
+	 nLen2O/7Z68GuUon/8lXcQVlY3QSZGtTxXpI58q/LuWjHiiYbgVbt7z63kdMmyL5EM
+	 UD50N6d4hEkeu1uCTBIf1J4yfcb9WkrMlvbrBp04=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Kalle Valo <kvalo@kernel.org>,
+	Yu Liao <liaoyu15@huawei.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 098/521] wifi: rsi: Fix handling of 802.3 EAPOL frames sent via control port
-Date: Mon, 16 Jan 2023 16:46:00 +0100
-Message-Id: <20230116154851.619573704@linuxfoundation.org>
+Subject: [PATCH 4.19 072/521] platform/x86: mxm-wmi: fix memleak in mxm_wmi_call_mx[ds|mx]()
+Date: Mon, 16 Jan 2023 16:45:34 +0100
+Message-Id: <20230116154850.444774150@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,90 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Yu Liao <liaoyu15@huawei.com>
 
-[ Upstream commit b8f6efccbb9dc0ff5dee7e20d69a4747298ee603 ]
+[ Upstream commit 727cc0147f5066e359aca65cc6cc5e6d64cc15d8 ]
 
-When using wpa_supplicant v2.10, this driver is no longer able to
-associate with any AP and fails in the EAPOL 4-way handshake while
-sending the 2/4 message to the AP. The problem is not present in
-wpa_supplicant v2.9 or older. The problem stems from HostAP commit
-144314eaa ("wpa_supplicant: Send EAPOL frames over nl80211 where available")
-which changes the way EAPOL frames are sent, from them being send
-at L2 frames to them being sent via nl80211 control port.
+The ACPI buffer memory (out.pointer) returned by wmi_evaluate_method()
+is not freed after the call, so it leads to memory leak.
 
-An EAPOL frame sent as L2 frame is passed to the WiFi driver with
-skb->protocol ETH_P_PAE, while EAPOL frame sent via nl80211 control
-port has skb->protocol set to ETH_P_802_3 . The later happens in
-ieee80211_tx_control_port(), where the EAPOL frame is encapsulated
-into 802.3 frame.
+The method results in ACPI buffer is not used, so just pass NULL to
+wmi_evaluate_method() which fixes the memory leak.
 
-The rsi_91x driver handles ETH_P_PAE EAPOL frames as high-priority
-frames and sends them via highest-priority transmit queue, while
-the ETH_P_802_3 frames are sent as regular frames. The EAPOL 4-way
-handshake frames must be sent as highest-priority, otherwise the
-4-way handshake times out.
-
-Therefore, to fix this problem, inspect the skb control flags and
-if flag IEEE80211_TX_CTRL_PORT_CTRL_PROTO is set, assume this is
-an EAPOL frame and transmit the frame via high-priority queue just
-like other ETH_P_PAE frames.
-
-Fixes: 0eb42586cf87 ("rsi: data packet descriptor enhancements")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221104163339.227432-1-marex@denx.de
+Fixes: 99b38b4acc0d ("platform/x86: add MXM WMI driver.")
+Signed-off-by: Yu Liao <liaoyu15@huawei.com>
+Link: https://lore.kernel.org/r/20221129011101.2042315-1-liaoyu15@huawei.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_core.c | 4 +++-
- drivers/net/wireless/rsi/rsi_91x_hal.c  | 6 +++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/platform/x86/mxm-wmi.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_core.c b/drivers/net/wireless/rsi/rsi_91x_core.c
-index c6c29034b2ea..a939b552a8e4 100644
---- a/drivers/net/wireless/rsi/rsi_91x_core.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_core.c
-@@ -466,7 +466,9 @@ void rsi_core_xmit(struct rsi_common *common, struct sk_buff *skb)
- 							      tid, 0);
- 			}
- 		}
--		if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
-+
-+		if (IEEE80211_SKB_CB(skb)->control.flags &
-+		    IEEE80211_TX_CTRL_PORT_CTRL_PROTO) {
- 			q_num = MGMT_SOFT_Q;
- 			skb->priority = q_num;
- 		}
-diff --git a/drivers/net/wireless/rsi/rsi_91x_hal.c b/drivers/net/wireless/rsi/rsi_91x_hal.c
-index 2cb7cca4ec2d..b445a52fbfbd 100644
---- a/drivers/net/wireless/rsi/rsi_91x_hal.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_hal.c
-@@ -152,12 +152,16 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
- 	u8 header_size;
- 	u8 vap_id = 0;
- 	u8 dword_align_bytes;
-+	bool tx_eapol;
- 	u16 seq_num;
+diff --git a/drivers/platform/x86/mxm-wmi.c b/drivers/platform/x86/mxm-wmi.c
+index 35d8b9a939f9..9c1893a703e6 100644
+--- a/drivers/platform/x86/mxm-wmi.c
++++ b/drivers/platform/x86/mxm-wmi.c
+@@ -48,13 +48,11 @@ int mxm_wmi_call_mxds(int adapter)
+ 		.xarg = 1,
+ 	};
+ 	struct acpi_buffer input = { (acpi_size)sizeof(args), &args };
+-	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER, NULL };
+ 	acpi_status status;
  
- 	info = IEEE80211_SKB_CB(skb);
- 	vif = info->control.vif;
- 	tx_params = (struct skb_info *)info->driver_data;
+ 	printk("calling mux switch %d\n", adapter);
  
-+	tx_eapol = IEEE80211_SKB_CB(skb)->control.flags &
-+		   IEEE80211_TX_CTRL_PORT_CTRL_PROTO;
-+
- 	header_size = FRAME_DESC_SZ + sizeof(struct rsi_xtended_desc);
- 	if (header_size > skb_headroom(skb)) {
- 		rsi_dbg(ERR_ZONE, "%s: Unable to send pkt\n", __func__);
-@@ -221,7 +225,7 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
- 		}
- 	}
+-	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input,
+-				     &output);
++	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input, NULL);
  
--	if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
-+	if (tx_eapol) {
- 		rsi_dbg(INFO_ZONE, "*** Tx EAPOL ***\n");
+ 	if (ACPI_FAILURE(status))
+ 		return status;
+@@ -73,13 +71,11 @@ int mxm_wmi_call_mxmx(int adapter)
+ 		.xarg = 1,
+ 	};
+ 	struct acpi_buffer input = { (acpi_size)sizeof(args), &args };
+-	struct acpi_buffer output = { ACPI_ALLOCATE_BUFFER, NULL };
+ 	acpi_status status;
  
- 		data_desc->frame_info = cpu_to_le16(RATE_INFO_ENABLE);
+ 	printk("calling mux switch %d\n", adapter);
+ 
+-	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input,
+-				     &output);
++	status = wmi_evaluate_method(MXM_WMMX_GUID, 0x0, adapter, &input, NULL);
+ 
+ 	if (ACPI_FAILURE(status))
+ 		return status;
 -- 
 2.35.1
 
