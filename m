@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79A3333EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:58:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F30C7C433EF;
-	Mon, 16 Jan 2023 15:58:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1640033EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:58:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919ABC433D2;
+	Mon, 16 Jan 2023 15:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884712;
-	bh=f+B3hQ8bQlLsA4dwkMueRXp6yg389tA+Vx2uaELslVA=;
+	s=korg; t=1673884714;
+	bh=wDgTdSDYDoEr4cSxVZpF4BI8puZycLQrplwYdLz8DeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XrTgf8a9ouprcjUubNvC+tM2mrDnvdsxNGqWIaZ8ut+kS1W7yM7g8Zr/SQ64KIIM9
-	 69FSs2j4uOwVSNUEclkj2mriWjuI+vDvnrpyxymEpkXpfTAJ4+FPZ7feiD7Z7/97yS
-	 RIMYeoYQK/jWuPsHTiITsh40NinqbSBdUcapynHo=
+	b=xjvEGQ4gEGeYbnBmwPHzdCX1qB27RgH9TAzTJRqD0IrC6YPm4A32fd7f1hyqgAfG/
+	 AC7aJY/K4RAKcb+k2J7S5R5guqv84jbDSKKy8SaQT9Rb/0li5e/CUEHlDNdrKc2AZW
+	 A7Pl/vxNkWVlpFXyYq/g6cB+l18tU242LwfwdpMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrew Lunn <andrew@lunn.ch>,
-	Biao Huang <biao.huang@mediatek.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jon Maloy <jmaloy@redhat.com>,
+	Tung Nguyen <tung.q.nguyen@dektech.com.au>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 111/183] stmmac: dwmac-mediatek: remove the dwmac_fix_mac_speed
-Date: Mon, 16 Jan 2023 16:50:34 +0100
-Message-Id: <20230116154808.056490493@linuxfoundation.org>
+Subject: [PATCH 6.1 112/183] tipc: fix unexpected link reset due to discovery messages
+Date: Mon, 16 Jan 2023 16:50:35 +0100
+Message-Id: <20230116154808.106766801@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,79 +36,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biao Huang <biao.huang@mediatek.com>
+From: Tung Nguyen <tung.q.nguyen@dektech.com.au>
 
-[ Upstream commit c26de7507d1f5ffa5daf6a4980ef7896889691a9 ]
+[ Upstream commit c244c092f1ed2acfb5af3d3da81e22367d3dd733 ]
 
-In current driver, MAC will always enable 2ns delay in RGMII mode,
-but that's not the correct usage.
+This unexpected behavior is observed:
 
-Remove the dwmac_fix_mac_speed() in driver, and recommend "rgmii-id"
-for phy-mode in device tree.
+node 1                    | node 2
+------                    | ------
+link is established       | link is established
+reboot                    | link is reset
+up                        | send discovery message
+receive discovery message |
+link is established       | link is established
+send discovery message    |
+                          | receive discovery message
+                          | link is reset (unexpected)
+                          | send reset message
+link is reset             |
 
-Fixes: f2d356a6ab71 ("stmmac: dwmac-mediatek: add support for mt8195")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Signed-off-by: Biao Huang <biao.huang@mediatek.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+It is due to delayed re-discovery as described in function
+tipc_node_check_dest(): "this link endpoint has already reset
+and re-established contact with the peer, before receiving a
+discovery message from that node."
+
+However, commit 598411d70f85 has changed the condition for calling
+tipc_node_link_down() which was the acceptance of new media address.
+
+This commit fixes this by restoring the old and correct behavior.
+
+Fixes: 598411d70f85 ("tipc: make resetting of links non-atomic")
+Acked-by: Jon Maloy <jmaloy@redhat.com>
+Signed-off-by: Tung Nguyen <tung.q.nguyen@dektech.com.au>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../ethernet/stmicro/stmmac/dwmac-mediatek.c  | 26 -------------------
- 1 file changed, 26 deletions(-)
+ net/tipc/node.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c
-index d42e1afb6521..2f7d8e4561d9 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-mediatek.c
-@@ -90,7 +90,6 @@ struct mediatek_dwmac_plat_data {
- struct mediatek_dwmac_variant {
- 	int (*dwmac_set_phy_interface)(struct mediatek_dwmac_plat_data *plat);
- 	int (*dwmac_set_delay)(struct mediatek_dwmac_plat_data *plat);
--	void (*dwmac_fix_mac_speed)(void *priv, unsigned int speed);
+diff --git a/net/tipc/node.c b/net/tipc/node.c
+index 49ddc484c4fe..5e000fde8067 100644
+--- a/net/tipc/node.c
++++ b/net/tipc/node.c
+@@ -1179,8 +1179,9 @@ void tipc_node_check_dest(struct net *net, u32 addr,
+ 	bool addr_match = false;
+ 	bool sign_match = false;
+ 	bool link_up = false;
++	bool link_is_reset = false;
+ 	bool accept_addr = false;
+-	bool reset = true;
++	bool reset = false;
+ 	char *if_name;
+ 	unsigned long intv;
+ 	u16 session;
+@@ -1200,14 +1201,14 @@ void tipc_node_check_dest(struct net *net, u32 addr,
+ 	/* Prepare to validate requesting node's signature and media address */
+ 	l = le->link;
+ 	link_up = l && tipc_link_is_up(l);
++	link_is_reset = l && tipc_link_is_reset(l);
+ 	addr_match = l && !memcmp(&le->maddr, maddr, sizeof(*maddr));
+ 	sign_match = (signature == n->signature);
  
- 	/* clock ids to be requested */
- 	const char * const *clk_list;
-@@ -443,32 +442,9 @@ static int mt8195_set_delay(struct mediatek_dwmac_plat_data *plat)
- 	return 0;
+ 	/* These three flags give us eight permutations: */
+ 
+ 	if (sign_match && addr_match && link_up) {
+-		/* All is fine. Do nothing. */
+-		reset = false;
++		/* All is fine. Ignore requests. */
+ 		/* Peer node is not a container/local namespace */
+ 		if (!n->peer_hash_mix)
+ 			n->peer_hash_mix = hash_mixes;
+@@ -1232,6 +1233,7 @@ void tipc_node_check_dest(struct net *net, u32 addr,
+ 		 */
+ 		accept_addr = true;
+ 		*respond = true;
++		reset = true;
+ 	} else if (!sign_match && addr_match && link_up) {
+ 		/* Peer node rebooted. Two possibilities:
+ 		 *  - Delayed re-discovery; this link endpoint has already
+@@ -1263,6 +1265,7 @@ void tipc_node_check_dest(struct net *net, u32 addr,
+ 		n->signature = signature;
+ 		accept_addr = true;
+ 		*respond = true;
++		reset = true;
+ 	}
+ 
+ 	if (!accept_addr)
+@@ -1291,6 +1294,7 @@ void tipc_node_check_dest(struct net *net, u32 addr,
+ 		tipc_link_fsm_evt(l, LINK_RESET_EVT);
+ 		if (n->state == NODE_FAILINGOVER)
+ 			tipc_link_fsm_evt(l, LINK_FAILOVER_BEGIN_EVT);
++		link_is_reset = tipc_link_is_reset(l);
+ 		le->link = l;
+ 		n->link_cnt++;
+ 		tipc_node_calculate_timer(n, l);
+@@ -1303,7 +1307,7 @@ void tipc_node_check_dest(struct net *net, u32 addr,
+ 	memcpy(&le->maddr, maddr, sizeof(*maddr));
+ exit:
+ 	tipc_node_write_unlock(n);
+-	if (reset && l && !tipc_link_is_reset(l))
++	if (reset && !link_is_reset)
+ 		tipc_node_link_down(n, b->identity, false);
+ 	tipc_node_put(n);
  }
- 
--static void mt8195_fix_mac_speed(void *priv, unsigned int speed)
--{
--	struct mediatek_dwmac_plat_data *priv_plat = priv;
--
--	if ((phy_interface_mode_is_rgmii(priv_plat->phy_mode))) {
--		/* prefer 2ns fixed delay which is controlled by TXC_PHASE_CTRL,
--		 * when link speed is 1Gbps with RGMII interface,
--		 * Fall back to delay macro circuit for 10/100Mbps link speed.
--		 */
--		if (speed == SPEED_1000)
--			regmap_update_bits(priv_plat->peri_regmap,
--					   MT8195_PERI_ETH_CTRL0,
--					   MT8195_RGMII_TXC_PHASE_CTRL |
--					   MT8195_DLY_GTXC_ENABLE |
--					   MT8195_DLY_GTXC_INV |
--					   MT8195_DLY_GTXC_STAGES,
--					   MT8195_RGMII_TXC_PHASE_CTRL);
--		else
--			mt8195_set_delay(priv_plat);
--	}
--}
--
- static const struct mediatek_dwmac_variant mt8195_gmac_variant = {
- 	.dwmac_set_phy_interface = mt8195_set_interface,
- 	.dwmac_set_delay = mt8195_set_delay,
--	.dwmac_fix_mac_speed = mt8195_fix_mac_speed,
- 	.clk_list = mt8195_dwmac_clk_l,
- 	.num_clks = ARRAY_SIZE(mt8195_dwmac_clk_l),
- 	.dma_bit_mask = 35,
-@@ -619,8 +595,6 @@ static int mediatek_dwmac_common_data(struct platform_device *pdev,
- 	plat->bsp_priv = priv_plat;
- 	plat->init = mediatek_dwmac_init;
- 	plat->clks_config = mediatek_dwmac_clks_config;
--	if (priv_plat->variant->dwmac_fix_mac_speed)
--		plat->fix_mac_speed = priv_plat->variant->dwmac_fix_mac_speed;
- 
- 	plat->safety_feat_cfg = devm_kzalloc(&pdev->dev,
- 					     sizeof(*plat->safety_feat_cfg),
 -- 
 2.35.1
 
