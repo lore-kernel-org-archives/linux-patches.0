@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66CDF6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:00:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DAF9AC433D2;
-	Mon, 16 Jan 2023 17:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A86456FA3
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:00:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30AA3C433F0;
+	Mon, 16 Jan 2023 17:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888428;
-	bh=v02rXWGPq48cR0oVf5ua0kXq8Y1wNOCZABDZCIJl4OU=;
+	s=korg; t=1673888434;
+	bh=Faf3x/eeUECjRwIHC0HoCzbo23zaaEKmorulEU1/OYA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w3Qsb8UDGvoPB1INt+rSSZ8RTFy+PwJwCLRzxnMDOxf+tCIV3IvT9KzFhm7NJvU7z
-	 I7cxQ46xRwdB9E3hGICKGNDr5k7LAyj1SGWDjlYrmSAQXg4AWXey8n6o7rNIr0O2mS
-	 YIMEZ69T6kgtdg0khJe9HzKAKiWwsVfPV92hAAOI=
+	b=wn5ZdfewXMVRwXGUvDkCFwH3inrEximThmKSsOdoowQvt740Lc+BRsf28cJ27MCaS
+	 /fF0aJoQV3vSj+ShapBTvu7DRr2fnnKWxIaFoSZj4THVeJZevKcX4qMqqvlwk+J0tJ
+	 w7pvAQGOBXpyijxO2AyFob9EXbcrap1lRIT61EIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+57b25da729eb0b88177d@syzkaller.appspotmail.com,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Eric Biggers <ebiggers@google.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
+	Masayoshi Mizuma <m.mizuma@jp.fujitsu.com>,
+	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 495/521] ext4: fix uninititialized value in ext4_evict_inode
-Date: Mon, 16 Jan 2023 16:52:37 +0100
-Message-Id: <20230116154909.325504253@linuxfoundation.org>
+Subject: [PATCH 4.19 487/521] ktest: introduce grub2bls REBOOT_TYPE option
+Date: Mon, 16 Jan 2023 16:52:29 +0100
+Message-Id: <20230116154908.952621696@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -39,95 +35,113 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Masayoshi Mizuma <m.mizuma@jp.fujitsu.com>
 
-[ Upstream commit 7ea71af94eaaaf6d9aed24bc94a05b977a741cb9 ]
+[ Upstream commit ac2466456eaa0ff9b8cf647c4c52832024bc929f ]
 
-Syzbot found the following issue:
-=====================================================
-BUG: KMSAN: uninit-value in ext4_evict_inode+0xdd/0x26b0 fs/ext4/inode.c:180
- ext4_evict_inode+0xdd/0x26b0 fs/ext4/inode.c:180
- evict+0x365/0x9a0 fs/inode.c:664
- iput_final fs/inode.c:1747 [inline]
- iput+0x985/0xdd0 fs/inode.c:1773
- __ext4_new_inode+0xe54/0x7ec0 fs/ext4/ialloc.c:1361
- ext4_mknod+0x376/0x840 fs/ext4/namei.c:2844
- vfs_mknod+0x79d/0x830 fs/namei.c:3914
- do_mknodat+0x47d/0xaa0
- __do_sys_mknodat fs/namei.c:3992 [inline]
- __se_sys_mknodat fs/namei.c:3989 [inline]
- __ia32_sys_mknodat+0xeb/0x150 fs/namei.c:3989
- do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
- __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
- do_fast_syscall_32+0x33/0x70 arch/x86/entry/common.c:203
- do_SYSENTER_32+0x1b/0x20 arch/x86/entry/common.c:246
- entry_SYSENTER_compat_after_hwframe+0x70/0x82
+Fedora 30 introduces Boot Loader Specification (BLS),
+it changes around grub entry configuration.
 
-Uninit was created at:
- __alloc_pages+0x9f1/0xe80 mm/page_alloc.c:5578
- alloc_pages+0xaae/0xd80 mm/mempolicy.c:2285
- alloc_slab_page mm/slub.c:1794 [inline]
- allocate_slab+0x1b5/0x1010 mm/slub.c:1939
- new_slab mm/slub.c:1992 [inline]
- ___slab_alloc+0x10c3/0x2d60 mm/slub.c:3180
- __slab_alloc mm/slub.c:3279 [inline]
- slab_alloc_node mm/slub.c:3364 [inline]
- slab_alloc mm/slub.c:3406 [inline]
- __kmem_cache_alloc_lru mm/slub.c:3413 [inline]
- kmem_cache_alloc_lru+0x6f3/0xb30 mm/slub.c:3429
- alloc_inode_sb include/linux/fs.h:3117 [inline]
- ext4_alloc_inode+0x5f/0x860 fs/ext4/super.c:1321
- alloc_inode+0x83/0x440 fs/inode.c:259
- new_inode_pseudo fs/inode.c:1018 [inline]
- new_inode+0x3b/0x430 fs/inode.c:1046
- __ext4_new_inode+0x2a7/0x7ec0 fs/ext4/ialloc.c:959
- ext4_mkdir+0x4d5/0x1560 fs/ext4/namei.c:2992
- vfs_mkdir+0x62a/0x870 fs/namei.c:4035
- do_mkdirat+0x466/0x7b0 fs/namei.c:4060
- __do_sys_mkdirat fs/namei.c:4075 [inline]
- __se_sys_mkdirat fs/namei.c:4073 [inline]
- __ia32_sys_mkdirat+0xc4/0x120 fs/namei.c:4073
- do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
- __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
- do_fast_syscall_32+0x33/0x70 arch/x86/entry/common.c:203
- do_SYSENTER_32+0x1b/0x20 arch/x86/entry/common.c:246
- entry_SYSENTER_compat_after_hwframe+0x70/0x82
+kernel entries aren't in grub.cfg. We can get the entries
+by "grubby --info=ALL" command.
 
-CPU: 1 PID: 4625 Comm: syz-executor.2 Not tainted 6.1.0-rc4-syzkaller-62821-gcb231e2f67ec #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-=====================================================
+Introduce grub2bls as REBOOT_TYPE option for BLS.
 
-Now, 'ext4_alloc_inode()' didn't init 'ei->i_flags'. If new inode failed
-before set 'ei->i_flags' in '__ext4_new_inode()', then do 'iput()'. As after
-6bc0d63dad7f commit will access 'ei->i_flags' in 'ext4_evict_inode()' which
-will lead to access uninit-value.
-To solve above issue just init 'ei->i_flags' in 'ext4_alloc_inode()'.
+Link: http://lkml.kernel.org/r/20190509213647.6276-4-msys.mizuma@gmail.com
 
-Reported-by: syzbot+57b25da729eb0b88177d@syzkaller.appspotmail.com
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Fixes: 6bc0d63dad7f ("ext4: remove EA inode entry from mbcache on inode eviction")
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20221117073603.2598882-1-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Signed-off-by: Masayoshi Mizuma <m.mizuma@jp.fujitsu.com>
+Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Stable-dep-of: 26df05a8c142 ("kest.pl: Fix grub2 menu handling for rebooting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/ktest/ktest.pl | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index 85703a3e69e5..e54a5be15636 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1081,6 +1081,7 @@ static struct inode *ext4_alloc_inode(struct super_block *sb)
- 		return NULL;
+diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
+index a1067469ba0e..76468e2d619f 100755
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -63,6 +63,7 @@ my %default = (
+     "STOP_TEST_AFTER"		=> 600,
+     "MAX_MONITOR_WAIT"		=> 1800,
+     "GRUB_REBOOT"		=> "grub2-reboot",
++    "GRUB_BLS_GET"		=> "grubby --info=ALL",
+     "SYSLINUX"			=> "extlinux",
+     "SYSLINUX_PATH"		=> "/boot/extlinux",
+     "CONNECT_TIMEOUT"		=> 25,
+@@ -123,6 +124,7 @@ my $last_grub_menu;
+ my $grub_file;
+ my $grub_number;
+ my $grub_reboot;
++my $grub_bls_get;
+ my $syslinux;
+ my $syslinux_path;
+ my $syslinux_label;
+@@ -292,6 +294,7 @@ my %option_map = (
+     "GRUB_MENU"			=> \$grub_menu,
+     "GRUB_FILE"			=> \$grub_file,
+     "GRUB_REBOOT"		=> \$grub_reboot,
++    "GRUB_BLS_GET"		=> \$grub_bls_get,
+     "SYSLINUX"			=> \$syslinux,
+     "SYSLINUX_PATH"		=> \$syslinux_path,
+     "SYSLINUX_LABEL"		=> \$syslinux_label,
+@@ -437,7 +440,7 @@ EOF
+     ;
+ $config_help{"REBOOT_TYPE"} = << "EOF"
+  Way to reboot the box to the test kernel.
+- Only valid options so far are "grub", "grub2", "syslinux", and "script".
++ Only valid options so far are "grub", "grub2", "grub2bls", "syslinux", and "script".
  
- 	inode_set_iversion(&ei->vfs_inode, 1);
-+	ei->i_flags = 0;
- 	spin_lock_init(&ei->i_raw_lock);
- 	INIT_LIST_HEAD(&ei->i_prealloc_list);
- 	spin_lock_init(&ei->i_prealloc_lock);
+  If you specify grub, it will assume grub version 1
+  and will search in /boot/grub/menu.lst for the title \$GRUB_MENU
+@@ -451,6 +454,8 @@ $config_help{"REBOOT_TYPE"} = << "EOF"
+  If you specify grub2, then you also need to specify both \$GRUB_MENU
+  and \$GRUB_FILE.
+ 
++ If you specify grub2bls, then you also need to specify \$GRUB_MENU.
++
+  If you specify syslinux, then you may use SYSLINUX to define the syslinux
+  command (defaults to extlinux), and SYSLINUX_PATH to specify the path to
+  the syslinux install (defaults to /boot/extlinux). But you have to specify
+@@ -476,6 +481,9 @@ $config_help{"GRUB_MENU"} = << "EOF"
+  menu must be a non-nested menu. Add the quotes used in the menu
+  to guarantee your selection, as the first menuentry with the content
+  of \$GRUB_MENU that is found will be used.
++
++ For grub2bls, \$GRUB_MENU is searched on the result of \$GRUB_BLS_GET
++ command for the lines that begin with "title".
+ EOF
+     ;
+ $config_help{"GRUB_FILE"} = << "EOF"
+@@ -692,7 +700,7 @@ sub get_mandatory_configs {
+ 	}
+     }
+ 
+-    if ($rtype eq "grub") {
++    if (($rtype eq "grub") or ($rtype eq "grub2bls")) {
+ 	get_mandatory_config("GRUB_MENU");
+     }
+ 
+@@ -1944,6 +1952,10 @@ sub get_grub_index {
+ 	$command = "cat $grub_file";
+ 	$target = '^menuentry.*' . $grub_menu_qt;
+ 	$skip = '^menuentry\s|^submenu\s';
++    } elsif ($reboot_type eq "grub2bls") {
++        $command = $grub_bls_get;
++        $target = '^title=.*' . $grub_menu_qt;
++        $skip = '^title=';
+     } else {
+ 	return;
+     }
+@@ -4307,7 +4319,7 @@ for (my $i = 1; $i <= $opt{"NUM_TESTS"}; $i++) {
+ 
+     if (!$buildonly) {
+ 	$target = "$ssh_user\@$machine";
+-	if ($reboot_type eq "grub") {
++	if (($reboot_type eq "grub") or ($reboot_type eq "grub2bls")) {
+ 	    dodie "GRUB_MENU not defined" if (!defined($grub_menu));
+ 	} elsif ($reboot_type eq "grub2") {
+ 	    dodie "GRUB_MENU not defined" if (!defined($grub_menu));
 -- 
 2.35.1
 
