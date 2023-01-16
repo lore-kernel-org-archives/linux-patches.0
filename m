@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A951333EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26137C433EF;
-	Mon, 16 Jan 2023 15:57:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46E6A33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB938C433D2;
+	Mon, 16 Jan 2023 15:57:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884649;
-	bh=GQU4LNfI1hqYzrH5Ajp80x1VTaSFsryD7BYENTUXjr4=;
+	s=korg; t=1673884652;
+	bh=9n7iOmKjYiUM48hry9NGOKRL0Lz89ppHiWO6NqrgA1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a40RnUstu8dJXbkdnwilzoQfRqdhBwhAaPJJkNI6CD5pIvI4+a/q2kWxVV/SbdWW0
-	 /+IOrO0KZedxxsi3JeOMpIieHTdo+gKx9XWi+OdcmY0VomHjcBujisa3waTpw3jaTQ
-	 4eBPwdFU3BJetgd/LkErxshm3oPNQggCVq5it1bM=
+	b=zo75LzWrflbA55mOctTSZMuWq0UakiR24FNxgvDsLoL6Bri57KLXudmQI2xOEK9vn
+	 OS8dLNEyu8NnIB/w/JT9pjlOBwkaFLX7f6ORv9APW0GfmQKkD4DKx9oCvFxJZZ6wbK
+	 uASzK2MZIa0aqQ7pBwv9gpGcfNOuYVDxkxk03xaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Robin Murphy <robin.murphy@arm.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.1 087/183] iommu/arm-smmu: Report IOMMU_CAP_CACHE_COHERENCY even betterer
-Date: Mon, 16 Jan 2023 16:50:10 +0100
-Message-Id: <20230116154807.102072721@linuxfoundation.org>
+	=?UTF-8?q?David=20Wang=20=E7=8E=8B=E6=A0=87?= <wangbiao3@xiaomi.com>,
+	Waiman Long <longman@redhat.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>
+Subject: [PATCH 6.1 088/183] sched/core: Fix use-after-free bug in dup_user_cpus_ptr()
+Date: Mon, 16 Jan 2023 16:50:11 +0100
+Message-Id: <20230116154807.145821027@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -35,54 +36,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robin Murphy <robin.murphy@arm.com>
+From: Waiman Long <longman@redhat.com>
 
-commit ac9c5e92dd15b9927e7355ccf79df76a58b44344 upstream.
+commit 87ca4f9efbd7cc649ff43b87970888f2812945b8 upstream.
 
-Although it's vanishingly unlikely that anyone would integrate an SMMU
-within a coherent interconnect without also making the pagetable walk
-interface coherent, the same effect happens if a coherent SMMU fails to
-advertise CTTW correctly. This turns out to be the case on some popular
-NXP SoCs, where VFIO started failing the IOMMU_CAP_CACHE_COHERENCY test,
-even though IOMMU_CACHE *was* previously achieving the desired effect
-anyway thanks to the underlying integration.
+Since commit 07ec77a1d4e8 ("sched: Allow task CPU affinity to be
+restricted on asymmetric systems"), the setting and clearing of
+user_cpus_ptr are done under pi_lock for arm64 architecture. However,
+dup_user_cpus_ptr() accesses user_cpus_ptr without any lock
+protection. Since sched_setaffinity() can be invoked from another
+process, the process being modified may be undergoing fork() at
+the same time.  When racing with the clearing of user_cpus_ptr in
+__set_cpus_allowed_ptr_locked(), it can lead to user-after-free and
+possibly double-free in arm64 kernel.
 
-While those SoCs stand to gain some more general benefits from a
-firmware update to override CTTW correctly in DT/ACPI, it's also easy
-to work around this in Linux as well, to avoid imposing too much on
-affected users - since the upstream client devices *are* correctly
-marked as coherent, we can trivially infer their coherent paths through
-the SMMU as well.
+Commit 8f9ea86fdf99 ("sched: Always preserve the user requested
+cpumask") fixes this problem as user_cpus_ptr, once set, will never
+be cleared in a task's lifetime. However, this bug was re-introduced
+in commit 851a723e45d1 ("sched: Always clear user_cpus_ptr in
+do_set_cpus_allowed()") which allows the clearing of user_cpus_ptr in
+do_set_cpus_allowed(). This time, it will affect all arches.
 
-Reported-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Fixes: df198b37e72c ("iommu/arm-smmu: Report IOMMU_CAP_CACHE_COHERENCY better")
-Signed-off-by: Robin Murphy <robin.murphy@arm.com>
-Tested-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Link: https://lore.kernel.org/r/d6dc41952961e5c7b21acac08a8bf1eb0f69e124.1671123115.git.robin.murphy@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fix this bug by always clearing the user_cpus_ptr of the newly
+cloned/forked task before the copying process starts and check the
+user_cpus_ptr state of the source task under pi_lock.
+
+Note to stable, this patch won't be applicable to stable releases.
+Just copy the new dup_user_cpus_ptr() function over.
+
+Fixes: 07ec77a1d4e8 ("sched: Allow task CPU affinity to be restricted on asymmetric systems")
+Fixes: 851a723e45d1 ("sched: Always clear user_cpus_ptr in do_set_cpus_allowed()")
+Reported-by: David Wang 王标 <wangbiao3@xiaomi.com>
+Signed-off-by: Waiman Long <longman@redhat.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Reviewed-by: Peter Zijlstra <peterz@infradead.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20221231041120.440785-2-longman@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ kernel/sched/core.c |   37 +++++++++++++++++++++++++++++++++----
+ 1 file changed, 33 insertions(+), 4 deletions(-)
 
---- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-@@ -1319,8 +1319,14 @@ static bool arm_smmu_capable(struct devi
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -2587,14 +2587,43 @@ void do_set_cpus_allowed(struct task_str
+ int dup_user_cpus_ptr(struct task_struct *dst, struct task_struct *src,
+ 		      int node)
+ {
+-	if (!src->user_cpus_ptr)
++	cpumask_t *user_mask;
++	unsigned long flags;
++
++	/*
++	 * Always clear dst->user_cpus_ptr first as their user_cpus_ptr's
++	 * may differ by now due to racing.
++	 */
++	dst->user_cpus_ptr = NULL;
++
++	/*
++	 * This check is racy and losing the race is a valid situation.
++	 * It is not worth the extra overhead of taking the pi_lock on
++	 * every fork/clone.
++	 */
++	if (data_race(!src->user_cpus_ptr))
+ 		return 0;
  
- 	switch (cap) {
- 	case IOMMU_CAP_CACHE_COHERENCY:
--		/* Assume that a coherent TCU implies coherent TBUs */
--		return cfg->smmu->features & ARM_SMMU_FEAT_COHERENT_WALK;
-+		/*
-+		 * It's overwhelmingly the case in practice that when the pagetable
-+		 * walk interface is connected to a coherent interconnect, all the
-+		 * translation interfaces are too. Furthermore if the device is
-+		 * natively coherent, then its translation interface must also be.
-+		 */
-+		return cfg->smmu->features & ARM_SMMU_FEAT_COHERENT_WALK ||
-+			device_get_dma_attr(dev) == DEV_DMA_COHERENT;
- 	case IOMMU_CAP_NOEXEC:
- 		return true;
- 	default:
+-	dst->user_cpus_ptr = kmalloc_node(cpumask_size(), GFP_KERNEL, node);
+-	if (!dst->user_cpus_ptr)
++	user_mask = kmalloc_node(cpumask_size(), GFP_KERNEL, node);
++	if (!user_mask)
+ 		return -ENOMEM;
+ 
+-	cpumask_copy(dst->user_cpus_ptr, src->user_cpus_ptr);
++	/*
++	 * Use pi_lock to protect content of user_cpus_ptr
++	 *
++	 * Though unlikely, user_cpus_ptr can be reset to NULL by a concurrent
++	 * do_set_cpus_allowed().
++	 */
++	raw_spin_lock_irqsave(&src->pi_lock, flags);
++	if (src->user_cpus_ptr) {
++		swap(dst->user_cpus_ptr, user_mask);
++		cpumask_copy(dst->user_cpus_ptr, src->user_cpus_ptr);
++	}
++	raw_spin_unlock_irqrestore(&src->pi_lock, flags);
++
++	if (unlikely(user_mask))
++		kfree(user_mask);
++
+ 	return 0;
+ }
+ 
 
 
