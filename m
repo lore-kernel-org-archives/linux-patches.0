@@ -1,33 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D045E33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:04:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F85EC433D2;
-	Mon, 16 Jan 2023 16:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 666D033EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:04:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E20A7C433EF;
+	Mon, 16 Jan 2023 16:04:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885086;
-	bh=T9rUR7wQTWIMhYsInV1K6+gbNk29breanyie8t36awY=;
+	s=korg; t=1673885089;
+	bh=rrLrsdszX674Md0sinJm4j8EoHx8+R2PSABKYAthVZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eoz9PT2iXwdrvo+oCh5RhmzKf+sN3cDmESd2gIcTg7gMTEUtgiF8VTnuqUw+AyWDT
-	 ywttTfPW6ujVxks3jXdbxXQw6EZ8hW3AWV/hS2e+7wvDLoxDAztoz5LlitIJ1yODY6
-	 hnERPQLCxwfMHV+ttArcp4Jg+xaFVxl2D5yjF/dw=
+	b=W+l13mTZj9EEJT6drVxI2KvTEy0HugwsFsiqpVObaEYVawij3vnRlL14ukKVcvd+c
+	 hxl3qkEoTwoqYp/D0aGKX8h65ElS4ocXo7vivMw1O6eCDd2gliGFjzLRHRkUO9CQI2
+	 AsmPDmyN40kYKwRfajFn/XU6E83qwf1Y4R9qk8/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Leach <mike.leach@linaro.org>,
-	Ian Rogers <irogers@google.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
+	Christopher S Hall <christopher.s.hall@intel.com>,
+	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
+	Sasha Neftin <sasha.neftin@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 70/86] perf build: Properly guard libbpf includes
-Date: Mon, 16 Jan 2023 16:51:44 +0100
-Message-Id: <20230116154749.979408877@linuxfoundation.org>
+Subject: [PATCH 5.15 71/86] igc: Fix PPS delta between two synchronized end-points
+Date: Mon, 16 Jan 2023 16:51:45 +0100
+Message-Id: <20230116154750.015996027@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -41,78 +38,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Rogers <irogers@google.com>
+From: Christopher S Hall <christopher.s.hall@intel.com>
 
-[ Upstream commit d891f2b724b39a2a41e3ad7b57110193993242ff ]
+[ Upstream commit 5e91c72e560cc85f7163bbe3d14197268de31383 ]
 
-Including libbpf header files should be guarded by HAVE_LIBBPF_SUPPORT.
-In bpf_counter.h, move the skeleton utilities under HAVE_BPF_SKEL.
+This patch fix the pulse per second output delta between
+two synchronized end-points.
 
-Fixes: d6a735ef3277c45f ("perf bpf_counter: Move common functions to bpf_counter.h")
-Reported-by: Mike Leach <mike.leach@linaro.org>
-Signed-off-by: Ian Rogers <irogers@google.com>
-Tested-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Tested-by: Jiri Olsa <jolsa@kernel.org>
-Tested-by: Mike Leach <mike.leach@linaro.org>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Link: http://lore.kernel.org/lkml/20230105172243.7238-1-mike.leach@linaro.org
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Based on Intel Discrete I225 Software User Manual Section
+4.2.15 TimeSync Auxiliary Control Register, ST0[Bit 4] and
+ST1[Bit 7] must be set to ensure that clock output will be
+toggles based on frequency value defined. This is to ensure
+that output of the PPS is aligned with the clock.
+
+How to test:
+
+1) Running time synchronization on both end points.
+Ex: ptp4l --step_threshold=1 -m -f gPTP.cfg -i <interface name>
+
+2) Configure PPS output using below command for both end-points
+Ex: SDP0 on I225 REV4 SKU variant
+
+./testptp -d /dev/ptp0 -L 0,2
+./testptp -d /dev/ptp0 -p 1000000000
+
+3) Measure the output using analyzer for both end-points
+
+Fixes: 87938851b6ef ("igc: enable auxiliary PHC functions for the i225")
+Signed-off-by: Christopher S Hall <christopher.s.hall@intel.com>
+Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
+Acked-by: Sasha Neftin <sasha.neftin@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/builtin-trace.c    | 2 ++
- tools/perf/util/bpf_counter.h | 6 ++++++
- 2 files changed, 8 insertions(+)
+ drivers/net/ethernet/intel/igc/igc_defines.h |  2 ++
+ drivers/net/ethernet/intel/igc/igc_ptp.c     | 10 ++++++----
+ 2 files changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
-index 2fea9952818f..d9ea546850cd 100644
---- a/tools/perf/builtin-trace.c
-+++ b/tools/perf/builtin-trace.c
-@@ -17,7 +17,9 @@
- #include "util/record.h"
- #include <traceevent/event-parse.h>
- #include <api/fs/tracing_path.h>
-+#ifdef HAVE_LIBBPF_SUPPORT
- #include <bpf/bpf.h>
-+#endif
- #include "util/bpf_map.h"
- #include "util/rlimit.h"
- #include "builtin.h"
-diff --git a/tools/perf/util/bpf_counter.h b/tools/perf/util/bpf_counter.h
-index 65ebaa6694fb..4b5dda7530c4 100644
---- a/tools/perf/util/bpf_counter.h
-+++ b/tools/perf/util/bpf_counter.h
-@@ -4,9 +4,12 @@
- 
- #include <linux/list.h>
- #include <sys/resource.h>
-+
-+#ifdef HAVE_LIBBPF_SUPPORT
- #include <bpf/bpf.h>
- #include <bpf/btf.h>
- #include <bpf/libbpf.h>
-+#endif
- 
- struct evsel;
- struct target;
-@@ -87,6 +90,8 @@ static inline void set_max_rlimit(void)
- 	setrlimit(RLIMIT_MEMLOCK, &rinf);
- }
- 
-+#ifdef HAVE_BPF_SKEL
-+
- static inline __u32 bpf_link_get_id(int fd)
- {
- 	struct bpf_link_info link_info = { .id = 0, };
-@@ -127,5 +132,6 @@ static inline int bperf_trigger_reading(int prog_fd, int cpu)
- 
- 	return bpf_prog_test_run_opts(prog_fd, &opts);
- }
-+#endif /* HAVE_BPF_SKEL */
- 
- #endif /* __PERF_BPF_COUNTER_H */
+diff --git a/drivers/net/ethernet/intel/igc/igc_defines.h b/drivers/net/ethernet/intel/igc/igc_defines.h
+index f171bc99e58c..60d0ca69ceca 100644
+--- a/drivers/net/ethernet/intel/igc/igc_defines.h
++++ b/drivers/net/ethernet/intel/igc/igc_defines.h
+@@ -469,7 +469,9 @@
+ #define IGC_TSAUXC_EN_TT0	BIT(0)  /* Enable target time 0. */
+ #define IGC_TSAUXC_EN_TT1	BIT(1)  /* Enable target time 1. */
+ #define IGC_TSAUXC_EN_CLK0	BIT(2)  /* Enable Configurable Frequency Clock 0. */
++#define IGC_TSAUXC_ST0		BIT(4)  /* Start Clock 0 Toggle on Target Time 0. */
+ #define IGC_TSAUXC_EN_CLK1	BIT(5)  /* Enable Configurable Frequency Clock 1. */
++#define IGC_TSAUXC_ST1		BIT(7)  /* Start Clock 1 Toggle on Target Time 1. */
+ #define IGC_TSAUXC_EN_TS0	BIT(8)  /* Enable hardware timestamp 0. */
+ #define IGC_TSAUXC_AUTT0	BIT(9)  /* Auxiliary Timestamp Taken. */
+ #define IGC_TSAUXC_EN_TS1	BIT(10) /* Enable hardware timestamp 0. */
+diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
+index 8e521f99b80a..fbde7826927b 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ptp.c
++++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
+@@ -323,7 +323,7 @@ static int igc_ptp_feature_enable_i225(struct ptp_clock_info *ptp,
+ 		ts = ns_to_timespec64(ns);
+ 		if (rq->perout.index == 1) {
+ 			if (use_freq) {
+-				tsauxc_mask = IGC_TSAUXC_EN_CLK1;
++				tsauxc_mask = IGC_TSAUXC_EN_CLK1 | IGC_TSAUXC_ST1;
+ 				tsim_mask = 0;
+ 			} else {
+ 				tsauxc_mask = IGC_TSAUXC_EN_TT1;
+@@ -334,7 +334,7 @@ static int igc_ptp_feature_enable_i225(struct ptp_clock_info *ptp,
+ 			freqout = IGC_FREQOUT1;
+ 		} else {
+ 			if (use_freq) {
+-				tsauxc_mask = IGC_TSAUXC_EN_CLK0;
++				tsauxc_mask = IGC_TSAUXC_EN_CLK0 | IGC_TSAUXC_ST0;
+ 				tsim_mask = 0;
+ 			} else {
+ 				tsauxc_mask = IGC_TSAUXC_EN_TT0;
+@@ -348,10 +348,12 @@ static int igc_ptp_feature_enable_i225(struct ptp_clock_info *ptp,
+ 		tsauxc = rd32(IGC_TSAUXC);
+ 		tsim = rd32(IGC_TSIM);
+ 		if (rq->perout.index == 1) {
+-			tsauxc &= ~(IGC_TSAUXC_EN_TT1 | IGC_TSAUXC_EN_CLK1);
++			tsauxc &= ~(IGC_TSAUXC_EN_TT1 | IGC_TSAUXC_EN_CLK1 |
++				    IGC_TSAUXC_ST1);
+ 			tsim &= ~IGC_TSICR_TT1;
+ 		} else {
+-			tsauxc &= ~(IGC_TSAUXC_EN_TT0 | IGC_TSAUXC_EN_CLK0);
++			tsauxc &= ~(IGC_TSAUXC_EN_TT0 | IGC_TSAUXC_EN_CLK0 |
++				    IGC_TSAUXC_ST0);
+ 			tsim &= ~IGC_TSICR_TT0;
+ 		}
+ 		if (on) {
 -- 
 2.35.1
 
