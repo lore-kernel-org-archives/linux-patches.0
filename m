@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B3A66FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:40:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF50C433F0;
-	Mon, 16 Jan 2023 16:40:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 410EB6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:40:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BABA2C433EF;
+	Mon, 16 Jan 2023 16:40:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887234;
-	bh=C7bnT0d1f8ySXA0kSUqr7WBxxs5XncSBkdFN6vJYUaQ=;
+	s=korg; t=1673887237;
+	bh=R5m+meuX56lK8qqvJMnFyVFAEiJUbiZ90m0DHPeDlvY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j+y/uB53WRm3Fpz1QqZjLEouKKOZa1K71icT87EX9MGPgJtY6q6SFPmENPoMZnT1E
-	 LMAJMvGOXi3YyhfYZuJF+qyzV+rJp567B/J0oe3c72VREgYmA0qYVXtdXX/YkIIvyq
-	 7r56ZQjtdAig6qxRu5tDjlAxty39VWd19qG5Ndgw=
+	b=YnbzVMvare2ZziJCeuz6K1GNIKRDmE9kCZBtomVykaL1DJxwbAqAV+Cl3GYCo/osi
+	 UF1urslLt2pJ1QnofOrovHiWlQA08MasFYHVv/BFFUpMECf/WzWaRWF+weQDRWarJ6
+	 F/F9am53nUccuSP21Wc7/qD24HwiDxb4umSRG0Ro=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Kelley <mikelley@microsoft.com>,
-	Tomas Winkler <tomas.winkler@intel.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 043/521] tpm/tpm_crb: Fix error message in __crb_relinquish_locality()
-Date: Mon, 16 Jan 2023 16:45:05 +0100
-Message-Id: <20230116154849.193359706@linuxfoundation.org>
+Subject: [PATCH 4.19 044/521] cpuidle: dt: Return the correct numbers of parsed idle states
+Date: Mon, 16 Jan 2023 16:45:06 +0100
+Message-Id: <20230116154849.234259252@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,36 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Kelley <mikelley@microsoft.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit f5264068071964b56dc02c9dab3d11574aaca6ff ]
+[ Upstream commit ee3c2c8ad6ba6785f14a60e4081d7c82e88162a2 ]
 
-The error message in __crb_relinquish_locality() mentions requestAccess
-instead of Relinquish. Fix it.
+While we correctly skips to initialize an idle state from a disabled idle
+state node in DT, the returned value from dt_init_idle_driver() don't get
+adjusted accordingly. Instead the number of found idle state nodes are
+returned, while the callers are expecting the number of successfully
+initialized idle states from DT.
 
-Fixes: 888d867df441 ("tpm: cmd_ready command can be issued only after granting locality")
-Signed-off-by: Michael Kelley <mikelley@microsoft.com>
-Acked-by: Tomas Winkler <tomas.winkler@intel.com>
-Reviewed-by: Jarkko Sakkinen <jarkko@kernel.org>
-Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+This leads to cpuidle drivers unnecessarily continues to initialize their
+idle state specific data. Moreover, in the case when all idle states have
+been disabled in DT, we would end up registering a cpuidle driver, rather
+than relying on the default arch specific idle call.
+
+Fixes: 9f14da345599 ("drivers: cpuidle: implement DT based idle states infrastructure")
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/tpm/tpm_crb.c | 2 +-
+ drivers/cpuidle/dt_idle_states.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/char/tpm/tpm_crb.c b/drivers/char/tpm/tpm_crb.c
-index 20f27100708b..101c71c78e2f 100644
---- a/drivers/char/tpm/tpm_crb.c
-+++ b/drivers/char/tpm/tpm_crb.c
-@@ -256,7 +256,7 @@ static int __crb_relinquish_locality(struct device *dev,
- 	iowrite32(CRB_LOC_CTRL_RELINQUISH, &priv->regs_h->loc_ctrl);
- 	if (!crb_wait_for_reg_32(&priv->regs_h->loc_state, mask, value,
- 				 TPM2_TIMEOUT_C)) {
--		dev_warn(dev, "TPM_LOC_STATE_x.requestAccess timed out\n");
-+		dev_warn(dev, "TPM_LOC_STATE_x.Relinquish timed out\n");
- 		return -ETIME;
- 	}
- 
+diff --git a/drivers/cpuidle/dt_idle_states.c b/drivers/cpuidle/dt_idle_states.c
+index 53342b7f1010..ea3c59d3fdad 100644
+--- a/drivers/cpuidle/dt_idle_states.c
++++ b/drivers/cpuidle/dt_idle_states.c
+@@ -224,6 +224,6 @@ int dt_init_idle_driver(struct cpuidle_driver *drv,
+ 	 * also be 0 on platforms with missing DT idle states or legacy DT
+ 	 * configuration predating the DT idle states bindings.
+ 	 */
+-	return i;
++	return state_idx - start_idx;
+ }
+ EXPORT_SYMBOL_GPL(dt_init_idle_driver);
 -- 
 2.35.1
 
