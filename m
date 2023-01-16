@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 890AD6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:58:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09214C43398;
-	Mon, 16 Jan 2023 16:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 39B2D6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:58:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A07E0C433EF;
+	Mon, 16 Jan 2023 16:58:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888329;
-	bh=gF4UeWqlQiBLetvvdFTEi70FveVwbDGlcCICOqKIc6w=;
+	s=korg; t=1673888332;
+	bh=rExkZZwt2YTxtKK+sofZtNOZY/3tdC5tqD+8sAWJhsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FmufY02+5TnHFfGh67A6a2p4Q1+95sFPdVyp6dlj++HSDXI4baLB0spckv3grja1Q
-	 0TuQlxooermRhSK532Oop4Zu4iO7RKMSWvyboSFcgJmb4+e2SCg8anErIL/CNvWVzH
-	 gXbnyMA9wGZzkS86hvuX3cigy4aScBAvN1ct6NXQ=
+	b=TmtNTL5DHHF/rJb4fyJXtv4e2kUu+I/HOYu9tTMNuaAcwbI4lfAY5a2PB3oQ2wPvy
+	 MYUu0samOM1gB5/9FJD1Vc8XS14ngVgm6eUISlHiMxzWejBT2+ZKHibdCVDR0GcYr8
+	 pqBBLlTpdrwgp+NvGjCKlJNDsS2ro9be6/iUcPX4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masayoshi Mizuma <m.mizuma@jp.fujitsu.com>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 486/521] ktest: cleanup get_grub_index
-Date: Mon, 16 Jan 2023 16:52:28 +0100
-Message-Id: <20230116154908.910971276@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <christian.brauner@ubuntu.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Jan Kara <jack@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 4.19 458/521] hfs/hfsplus: use WARN_ON for sanity check
+Date: Mon, 16 Jan 2023 16:52:00 +0100
+Message-Id: <20230116154907.614251649@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,92 +38,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masayoshi Mizuma <m.mizuma@jp.fujitsu.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 38891392916c42d4ba46f474d553c76d1ed329ca ]
+commit 55d1cbbbb29e6656c662ee8f73ba1fc4777532eb upstream.
 
-Cleanup get_grub_index().
+gcc warns about a couple of instances in which a sanity check exists but
+the author wasn't sure how to react to it failing, which makes it look
+like a possible bug:
 
-Link: http://lkml.kernel.org/r/20190509213647.6276-3-msys.mizuma@gmail.com
+  fs/hfsplus/inode.c: In function 'hfsplus_cat_read_inode':
+  fs/hfsplus/inode.c:503:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
+    503 |                         /* panic? */;
+        |                                     ^
+  fs/hfsplus/inode.c:524:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
+    524 |                         /* panic? */;
+        |                                     ^
+  fs/hfsplus/inode.c: In function 'hfsplus_cat_write_inode':
+  fs/hfsplus/inode.c:582:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
+    582 |                         /* panic? */;
+        |                                     ^
+  fs/hfsplus/inode.c:608:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
+    608 |                         /* panic? */;
+        |                                     ^
+  fs/hfs/inode.c: In function 'hfs_write_inode':
+  fs/hfs/inode.c:464:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
+    464 |                         /* panic? */;
+        |                                     ^
+  fs/hfs/inode.c:485:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
+    485 |                         /* panic? */;
+        |                                     ^
 
-Signed-off-by: Masayoshi Mizuma <m.mizuma@jp.fujitsu.com>
-Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Stable-dep-of: 26df05a8c142 ("kest.pl: Fix grub2 menu handling for rebooting")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+panic() is probably not the correct choice here, but a WARN_ON
+seems appropriate and avoids the compile-time warning.
+
+Link: https://lkml.kernel.org/r/20210927102149.1809384-1-arnd@kernel.org
+Link: https://lore.kernel.org/all/20210322223249.2632268-1-arnd@kernel.org/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Christian Brauner <christian.brauner@ubuntu.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <christian.brauner@ubuntu.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jan Kara <jack@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/ktest/ktest.pl | 50 ++++++++++++------------------------
- 1 file changed, 17 insertions(+), 33 deletions(-)
+ fs/hfs/inode.c     |    6 ++----
+ fs/hfsplus/inode.c |   12 ++++--------
+ 2 files changed, 6 insertions(+), 12 deletions(-)
 
-diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
-index 5fa60b3c564f..a1067469ba0e 100755
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -1925,46 +1925,30 @@ sub get_grub2_index {
+--- a/fs/hfs/inode.c
++++ b/fs/hfs/inode.c
+@@ -461,8 +461,7 @@ int hfs_write_inode(struct inode *inode,
+ 		goto out;
  
- sub get_grub_index {
+ 	if (S_ISDIR(main_inode->i_mode)) {
+-		if (fd.entrylength < sizeof(struct hfs_cat_dir))
+-			/* panic? */;
++		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_dir));
+ 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
+ 			   sizeof(struct hfs_cat_dir));
+ 		if (rec.type != HFS_CDR_DIR ||
+@@ -482,8 +481,7 @@ int hfs_write_inode(struct inode *inode,
+ 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
+ 				sizeof(struct hfs_cat_file));
+ 	} else {
+-		if (fd.entrylength < sizeof(struct hfs_cat_file))
+-			/* panic? */;
++		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_file));
+ 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
+ 			   sizeof(struct hfs_cat_file));
+ 		if (rec.type != HFS_CDR_FIL ||
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -476,8 +476,7 @@ int hfsplus_cat_read_inode(struct inode
+ 	if (type == HFSPLUS_FOLDER) {
+ 		struct hfsplus_cat_folder *folder = &entry.folder;
  
--    if ($reboot_type eq "grub2") {
--	get_grub2_index;
--	return;
--    }
-+    my $command;
-+    my $target;
-+    my $skip;
-+    my $grub_menu_qt;
+-		if (fd->entrylength < sizeof(struct hfsplus_cat_folder))
+-			/* panic? */;
++		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_folder));
+ 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
+ 					sizeof(struct hfsplus_cat_folder));
+ 		hfsplus_get_perms(inode, &folder->permissions, 1);
+@@ -497,8 +496,7 @@ int hfsplus_cat_read_inode(struct inode
+ 	} else if (type == HFSPLUS_FILE) {
+ 		struct hfsplus_cat_file *file = &entry.file;
  
--    if ($reboot_type ne "grub") {
-+    if ($reboot_type !~ /^grub/) {
- 	return;
-     }
--    return if (defined($grub_number) && defined($last_grub_menu) &&
--	       $last_grub_menu eq $grub_menu && defined($last_machine) &&
--	       $last_machine eq $machine);
--
--    doprint "Find grub menu ... ";
--    $grub_number = -1;
+-		if (fd->entrylength < sizeof(struct hfsplus_cat_file))
+-			/* panic? */;
++		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_file));
+ 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
+ 					sizeof(struct hfsplus_cat_file));
  
--    my $ssh_grub = $ssh_exec;
--    $ssh_grub =~ s,\$SSH_COMMAND,cat /boot/grub/menu.lst,g;
--
--    open(IN, "$ssh_grub |")
--	or dodie "unable to get menu.lst";
-+    $grub_menu_qt = quotemeta($grub_menu);
+@@ -555,8 +553,7 @@ int hfsplus_cat_write_inode(struct inode
+ 	if (S_ISDIR(main_inode->i_mode)) {
+ 		struct hfsplus_cat_folder *folder = &entry.folder;
  
--    my $found = 0;
--    my $grub_menu_qt = quotemeta($grub_menu);
--
--    while (<IN>) {
--	if (/^\s*title\s+$grub_menu_qt\s*$/) {
--	    $grub_number++;
--	    $found = 1;
--	    last;
--	} elsif (/^\s*title\s/) {
--	    $grub_number++;
--	}
-+    if ($reboot_type eq "grub") {
-+	$command = "cat /boot/grub/menu.lst";
-+	$target = '^\s*title\s+' . $grub_menu_qt . '\s*$';
-+	$skip = '^\s*title\s';
-+    } elsif ($reboot_type eq "grub2") {
-+	$command = "cat $grub_file";
-+	$target = '^menuentry.*' . $grub_menu_qt;
-+	$skip = '^menuentry\s|^submenu\s';
-+    } else {
-+	return;
-     }
--    close(IN);
+-		if (fd.entrylength < sizeof(struct hfsplus_cat_folder))
+-			/* panic? */;
++		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_folder));
+ 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
+ 					sizeof(struct hfsplus_cat_folder));
+ 		/* simple node checks? */
+@@ -581,8 +578,7 @@ int hfsplus_cat_write_inode(struct inode
+ 	} else {
+ 		struct hfsplus_cat_file *file = &entry.file;
  
--    dodie "Could not find '$grub_menu' in /boot/grub/menu on $machine"
--	if (!$found);
--    doprint "$grub_number\n";
--    $last_grub_menu = $grub_menu;
--    $last_machine = $machine;
-+    _get_grub_index($command, $target, $skip);
- }
- 
- sub wait_for_input
--- 
-2.35.1
-
+-		if (fd.entrylength < sizeof(struct hfsplus_cat_file))
+-			/* panic? */;
++		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_file));
+ 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
+ 					sizeof(struct hfsplus_cat_file));
+ 		hfsplus_inode_write_fork(inode, &file->data_fork);
 
 
