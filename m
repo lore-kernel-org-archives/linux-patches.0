@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FB8646B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:06:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27730C433EF;
-	Mon, 16 Jan 2023 16:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E07946B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:06:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA631C433F1;
+	Mon, 16 Jan 2023 16:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885181;
-	bh=tqTk3jP1YJgZQD46LsfCn0y/LtXwCKSluOQzkblax88=;
+	s=korg; t=1673885184;
+	bh=WROqFAiErdaF3lnHXhz2rUbwxhZYLJvkv4rSyvbVB2o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E9Nwp72x3BrIorq+ebsJjtwGxe8FXwWM29pRV+7UlbsHzABGOtRqEnElhtgCwXKl8
-	 CfZR7T3z2xfvvP9xtyUgUnAru4WCy6vH2hgxq0QmL0K9z39w/RlQpi9Tp+h4YSy+zp
-	 POCq5IHIrV+j8nBMAzlFa/gQ2ONNjEHjEzv3EiHM=
+	b=xgY0IwdDW6/Le7x1Avrq+6QTGAIiRN6zRGmNd+k3q6Gf17L3o/oNQ/9dgZzmSS6Y4
+	 tZyoMBM/MQNPhGEC6q7rY3l8hYngGQIiKcVmZtXjAVwf53YXL8k9K7uuFqCKNBwy8D
+	 twplNfb/i20HzztT2zuIdWzugLPSRmgMZ4ZUP3MY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brian Norris <computersforpeace@gmail.com>,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.10 08/64] ASoC: qcom: lpass-cpu: Fix fallback SD line index handling
-Date: Mon, 16 Jan 2023 16:51:15 +0100
-Message-Id: <20230116154743.954514710@linuxfoundation.org>
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Hendrik Brueckner <brueckner@linux.ibm.com>,
+	Thomas Richter <tmricht@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 5.10 09/64] s390/cpum_sf: add READ_ONCE() semantics to compare and swap loops
+Date: Mon, 16 Jan 2023 16:51:16 +0100
+Message-Id: <20230116154743.984757776@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -35,45 +36,345 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brian Norris <computersforpeace@gmail.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit 000bca8d706d1bf7cca01af75787247c5a2fdedf upstream.
+commit 82d3edb50a11bf3c5ef63294d5358ba230181413 upstream.
 
-These indices should reference the ID placed within the dai_driver
-array, not the indices of the array itself.
+The current cmpxchg_double() loops within the perf hw sampling code do not
+have READ_ONCE() semantics to read the old value from memory. This allows
+the compiler to generate code which reads the "old" value several times
+from memory, which again allows for inconsistencies.
 
-This fixes commit 4ff028f6c108 ("ASoC: qcom: lpass-cpu: Make I2S SD
-lines configurable"), which among others, broke IPQ8064 audio
-(sound/soc/qcom/lpass-ipq806x.c) because it uses ID 4 but we'd stop
-initializing the mi2s_playback_sd_mode and mi2s_capture_sd_mode arrays
-at ID 0.
+For example:
 
-Fixes: 4ff028f6c108 ("ASoC: qcom: lpass-cpu: Make I2S SD lines configurable")
+        /* Reset trailer (using compare-double-and-swap) */
+        do {
+                te_flags = te->flags & ~SDB_TE_BUFFER_FULL_MASK;
+                te_flags |= SDB_TE_ALERT_REQ_MASK;
+        } while (!cmpxchg_double(&te->flags, &te->overflow,
+                 te->flags, te->overflow,
+                 te_flags, 0ULL));
+
+The compiler could generate code where te->flags used within the
+cmpxchg_double() call may be refetched from memory and which is not
+necessarily identical to the previous read version which was used to
+generate te_flags. Which in turn means that an incorrect update could
+happen.
+
+Fix this by adding READ_ONCE() semantics to all cmpxchg_double()
+loops. Given that READ_ONCE() cannot generate code on s390 which atomically
+reads 16 bytes, use a private compare-and-swap-double implementation to
+achieve that.
+
+Also replace cmpxchg_double() with the private implementation to be able to
+re-use the old value within the loops.
+
+As a side effect this converts the whole code to only use bit fields
+to read and modify bits within the hws trailer header.
+
+Reported-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Acked-by: Hendrik Brueckner <brueckner@linux.ibm.com>
+Reviewed-by: Thomas Richter <tmricht@linux.ibm.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Brian Norris <computersforpeace@gmail.com>
-Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
-Link: https://lore.kernel.org/r/20221231061545.2110253-1-computersforpeace@gmail.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://lore.kernel.org/linux-s390/Y71QJBhNTIatvxUT@osiris/T/#ma14e2a5f7aa8ed4b94b6f9576799b3ad9c60f333
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/qcom/lpass-cpu.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/s390/include/asm/cpu_mf.h  |   31 +++++-------
+ arch/s390/kernel/perf_cpum_sf.c |  101 ++++++++++++++++++++++++----------------
+ 2 files changed, 77 insertions(+), 55 deletions(-)
 
---- a/sound/soc/qcom/lpass-cpu.c
-+++ b/sound/soc/qcom/lpass-cpu.c
-@@ -816,10 +816,11 @@ static void of_lpass_cpu_parse_dai_data(
- 					struct lpass_data *data)
- {
- 	struct device_node *node;
--	int ret, id;
-+	int ret, i, id;
+--- a/arch/s390/include/asm/cpu_mf.h
++++ b/arch/s390/include/asm/cpu_mf.h
+@@ -128,19 +128,21 @@ struct hws_combined_entry {
+ 	struct hws_diag_entry	diag;	/* Diagnostic-sampling data entry */
+ } __packed;
  
- 	/* Allow all channels by default for backwards compatibility */
--	for (id = 0; id < data->variant->num_dai; id++) {
-+	for (i = 0; i < data->variant->num_dai; i++) {
-+		id = data->variant->dai_driver[i].id;
- 		data->mi2s_playback_sd_mode[id] = LPAIF_I2SCTL_MODE_8CH;
- 		data->mi2s_capture_sd_mode[id] = LPAIF_I2SCTL_MODE_8CH;
+-struct hws_trailer_entry {
+-	union {
+-		struct {
+-			unsigned int f:1;	/* 0 - Block Full Indicator   */
+-			unsigned int a:1;	/* 1 - Alert request control  */
+-			unsigned int t:1;	/* 2 - Timestamp format	      */
+-			unsigned int :29;	/* 3 - 31: Reserved	      */
+-			unsigned int bsdes:16;	/* 32-47: size of basic SDE   */
+-			unsigned int dsdes:16;	/* 48-63: size of diagnostic SDE */
+-		};
+-		unsigned long long flags;	/* 0 - 63: All indicators     */
++union hws_trailer_header {
++	struct {
++		unsigned int f:1;	/* 0 - Block Full Indicator   */
++		unsigned int a:1;	/* 1 - Alert request control  */
++		unsigned int t:1;	/* 2 - Timestamp format	      */
++		unsigned int :29;	/* 3 - 31: Reserved	      */
++		unsigned int bsdes:16;	/* 32-47: size of basic SDE   */
++		unsigned int dsdes:16;	/* 48-63: size of diagnostic SDE */
++		unsigned long long overflow; /* 64 - Overflow Count   */
+ 	};
+-	unsigned long long overflow;	 /* 64 - sample Overflow count	      */
++	__uint128_t val;
++};
++
++struct hws_trailer_entry {
++	union hws_trailer_header header; /* 0 - 15 Flags + Overflow Count     */
+ 	unsigned char timestamp[16];	 /* 16 - 31 timestamp		      */
+ 	unsigned long long reserved1;	 /* 32 -Reserved		      */
+ 	unsigned long long reserved2;	 /*				      */
+@@ -287,14 +289,11 @@ static inline unsigned long sample_rate_
+ 	return USEC_PER_SEC * qsi->cpu_speed / rate;
+ }
+ 
+-#define SDB_TE_ALERT_REQ_MASK	0x4000000000000000UL
+-#define SDB_TE_BUFFER_FULL_MASK 0x8000000000000000UL
+-
+ /* Return TOD timestamp contained in an trailer entry */
+ static inline unsigned long long trailer_timestamp(struct hws_trailer_entry *te)
+ {
+ 	/* TOD in STCKE format */
+-	if (te->t)
++	if (te->header.t)
+ 		return *((unsigned long long *) &te->timestamp[1]);
+ 
+ 	/* TOD in STCK format */
+--- a/arch/s390/kernel/perf_cpum_sf.c
++++ b/arch/s390/kernel/perf_cpum_sf.c
+@@ -163,14 +163,15 @@ static void free_sampling_buffer(struct
+ 
+ static int alloc_sample_data_block(unsigned long *sdbt, gfp_t gfp_flags)
+ {
+-	unsigned long sdb, *trailer;
++	struct hws_trailer_entry *te;
++	unsigned long sdb;
+ 
+ 	/* Allocate and initialize sample-data-block */
+ 	sdb = get_zeroed_page(gfp_flags);
+ 	if (!sdb)
+ 		return -ENOMEM;
+-	trailer = trailer_entry_ptr(sdb);
+-	*trailer = SDB_TE_ALERT_REQ_MASK;
++	te = (struct hws_trailer_entry *)trailer_entry_ptr(sdb);
++	te->header.a = 1;
+ 
+ 	/* Link SDB into the sample-data-block-table */
+ 	*sdbt = sdb;
+@@ -1206,7 +1207,7 @@ static void hw_collect_samples(struct pe
+ 					    "%s: Found unknown"
+ 					    " sampling data entry: te->f %i"
+ 					    " basic.def %#4x (%p)\n", __func__,
+-					    te->f, sample->def, sample);
++					    te->header.f, sample->def, sample);
+ 			/* Sample slot is not yet written or other record.
+ 			 *
+ 			 * This condition can occur if the buffer was reused
+@@ -1217,7 +1218,7 @@ static void hw_collect_samples(struct pe
+ 			 * that are not full.  Stop processing if the first
+ 			 * invalid format was detected.
+ 			 */
+-			if (!te->f)
++			if (!te->header.f)
+ 				break;
+ 		}
+ 
+@@ -1227,6 +1228,16 @@ static void hw_collect_samples(struct pe
  	}
+ }
+ 
++static inline __uint128_t __cdsg(__uint128_t *ptr, __uint128_t old, __uint128_t new)
++{
++	asm volatile(
++		"	cdsg	%[old],%[new],%[ptr]\n"
++		: [old] "+d" (old), [ptr] "+QS" (*ptr)
++		: [new] "d" (new)
++		: "memory", "cc");
++	return old;
++}
++
+ /* hw_perf_event_update() - Process sampling buffer
+  * @event:	The perf event
+  * @flush_all:	Flag to also flush partially filled sample-data-blocks
+@@ -1243,10 +1254,11 @@ static void hw_collect_samples(struct pe
+  */
+ static void hw_perf_event_update(struct perf_event *event, int flush_all)
+ {
++	unsigned long long event_overflow, sampl_overflow, num_sdb;
++	union hws_trailer_header old, prev, new;
+ 	struct hw_perf_event *hwc = &event->hw;
+ 	struct hws_trailer_entry *te;
+ 	unsigned long *sdbt;
+-	unsigned long long event_overflow, sampl_overflow, num_sdb, te_flags;
+ 	int done;
+ 
+ 	/*
+@@ -1266,25 +1278,25 @@ static void hw_perf_event_update(struct
+ 		te = (struct hws_trailer_entry *) trailer_entry_ptr(*sdbt);
+ 
+ 		/* Leave loop if no more work to do (block full indicator) */
+-		if (!te->f) {
++		if (!te->header.f) {
+ 			done = 1;
+ 			if (!flush_all)
+ 				break;
+ 		}
+ 
+ 		/* Check the sample overflow count */
+-		if (te->overflow)
++		if (te->header.overflow)
+ 			/* Account sample overflows and, if a particular limit
+ 			 * is reached, extend the sampling buffer.
+ 			 * For details, see sfb_account_overflows().
+ 			 */
+-			sampl_overflow += te->overflow;
++			sampl_overflow += te->header.overflow;
+ 
+ 		/* Timestamps are valid for full sample-data-blocks only */
+ 		debug_sprintf_event(sfdbg, 6, "%s: sdbt %#lx "
+ 				    "overflow %llu timestamp %#llx\n",
+-				    __func__, (unsigned long)sdbt, te->overflow,
+-				    (te->f) ? trailer_timestamp(te) : 0ULL);
++				    __func__, (unsigned long)sdbt, te->header.overflow,
++				    (te->header.f) ? trailer_timestamp(te) : 0ULL);
+ 
+ 		/* Collect all samples from a single sample-data-block and
+ 		 * flag if an (perf) event overflow happened.  If so, the PMU
+@@ -1294,12 +1306,16 @@ static void hw_perf_event_update(struct
+ 		num_sdb++;
+ 
+ 		/* Reset trailer (using compare-double-and-swap) */
++		/* READ_ONCE() 16 byte header */
++		prev.val = __cdsg(&te->header.val, 0, 0);
+ 		do {
+-			te_flags = te->flags & ~SDB_TE_BUFFER_FULL_MASK;
+-			te_flags |= SDB_TE_ALERT_REQ_MASK;
+-		} while (!cmpxchg_double(&te->flags, &te->overflow,
+-					 te->flags, te->overflow,
+-					 te_flags, 0ULL));
++			old.val = prev.val;
++			new.val = prev.val;
++			new.f = 0;
++			new.a = 1;
++			new.overflow = 0;
++			prev.val = __cdsg(&te->header.val, old.val, new.val);
++		} while (prev.val != old.val);
+ 
+ 		/* Advance to next sample-data-block */
+ 		sdbt++;
+@@ -1384,7 +1400,7 @@ static void aux_output_end(struct perf_o
+ 	range_scan = AUX_SDB_NUM_ALERT(aux);
+ 	for (i = 0, idx = aux->head; i < range_scan; i++, idx++) {
+ 		te = aux_sdb_trailer(aux, idx);
+-		if (!(te->flags & SDB_TE_BUFFER_FULL_MASK))
++		if (!te->header.f)
+ 			break;
+ 	}
+ 	/* i is num of SDBs which are full */
+@@ -1392,7 +1408,7 @@ static void aux_output_end(struct perf_o
+ 
+ 	/* Remove alert indicators in the buffer */
+ 	te = aux_sdb_trailer(aux, aux->alert_mark);
+-	te->flags &= ~SDB_TE_ALERT_REQ_MASK;
++	te->header.a = 0;
+ 
+ 	debug_sprintf_event(sfdbg, 6, "%s: SDBs %ld range %ld head %ld\n",
+ 			    __func__, i, range_scan, aux->head);
+@@ -1437,9 +1453,9 @@ static int aux_output_begin(struct perf_
+ 		idx = aux->empty_mark + 1;
+ 		for (i = 0; i < range_scan; i++, idx++) {
+ 			te = aux_sdb_trailer(aux, idx);
+-			te->flags &= ~(SDB_TE_BUFFER_FULL_MASK |
+-				       SDB_TE_ALERT_REQ_MASK);
+-			te->overflow = 0;
++			te->header.f = 0;
++			te->header.a = 0;
++			te->header.overflow = 0;
+ 		}
+ 		/* Save the position of empty SDBs */
+ 		aux->empty_mark = aux->head + range - 1;
+@@ -1448,7 +1464,7 @@ static int aux_output_begin(struct perf_
+ 	/* Set alert indicator */
+ 	aux->alert_mark = aux->head + range/2 - 1;
+ 	te = aux_sdb_trailer(aux, aux->alert_mark);
+-	te->flags = te->flags | SDB_TE_ALERT_REQ_MASK;
++	te->header.a = 1;
+ 
+ 	/* Reset hardware buffer head */
+ 	head = AUX_SDB_INDEX(aux, aux->head);
+@@ -1475,14 +1491,17 @@ static int aux_output_begin(struct perf_
+ static bool aux_set_alert(struct aux_buffer *aux, unsigned long alert_index,
+ 			  unsigned long long *overflow)
+ {
+-	unsigned long long orig_overflow, orig_flags, new_flags;
++	union hws_trailer_header old, prev, new;
+ 	struct hws_trailer_entry *te;
+ 
+ 	te = aux_sdb_trailer(aux, alert_index);
++	/* READ_ONCE() 16 byte header */
++	prev.val = __cdsg(&te->header.val, 0, 0);
+ 	do {
+-		orig_flags = te->flags;
+-		*overflow = orig_overflow = te->overflow;
+-		if (orig_flags & SDB_TE_BUFFER_FULL_MASK) {
++		old.val = prev.val;
++		new.val = prev.val;
++		*overflow = old.overflow;
++		if (old.f) {
+ 			/*
+ 			 * SDB is already set by hardware.
+ 			 * Abort and try to set somewhere
+@@ -1490,10 +1509,10 @@ static bool aux_set_alert(struct aux_buf
+ 			 */
+ 			return false;
+ 		}
+-		new_flags = orig_flags | SDB_TE_ALERT_REQ_MASK;
+-	} while (!cmpxchg_double(&te->flags, &te->overflow,
+-				 orig_flags, orig_overflow,
+-				 new_flags, 0ULL));
++		new.a = 1;
++		new.overflow = 0;
++		prev.val = __cdsg(&te->header.val, old.val, new.val);
++	} while (prev.val != old.val);
+ 	return true;
+ }
+ 
+@@ -1522,8 +1541,9 @@ static bool aux_set_alert(struct aux_buf
+ static bool aux_reset_buffer(struct aux_buffer *aux, unsigned long range,
+ 			     unsigned long long *overflow)
+ {
+-	unsigned long long orig_overflow, orig_flags, new_flags;
+ 	unsigned long i, range_scan, idx, idx_old;
++	union hws_trailer_header old, prev, new;
++	unsigned long long orig_overflow;
+ 	struct hws_trailer_entry *te;
+ 
+ 	debug_sprintf_event(sfdbg, 6, "%s: range %ld head %ld alert %ld "
+@@ -1554,17 +1574,20 @@ static bool aux_reset_buffer(struct aux_
+ 	idx_old = idx = aux->empty_mark + 1;
+ 	for (i = 0; i < range_scan; i++, idx++) {
+ 		te = aux_sdb_trailer(aux, idx);
++		/* READ_ONCE() 16 byte header */
++		prev.val = __cdsg(&te->header.val, 0, 0);
+ 		do {
+-			orig_flags = te->flags;
+-			orig_overflow = te->overflow;
+-			new_flags = orig_flags & ~SDB_TE_BUFFER_FULL_MASK;
++			old.val = prev.val;
++			new.val = prev.val;
++			orig_overflow = old.overflow;
++			new.f = 0;
++			new.overflow = 0;
+ 			if (idx == aux->alert_mark)
+-				new_flags |= SDB_TE_ALERT_REQ_MASK;
++				new.a = 1;
+ 			else
+-				new_flags &= ~SDB_TE_ALERT_REQ_MASK;
+-		} while (!cmpxchg_double(&te->flags, &te->overflow,
+-					 orig_flags, orig_overflow,
+-					 new_flags, 0ULL));
++				new.a = 0;
++			prev.val = __cdsg(&te->header.val, old.val, new.val);
++		} while (prev.val != old.val);
+ 		*overflow += orig_overflow;
+ 	}
+ 
 
 
