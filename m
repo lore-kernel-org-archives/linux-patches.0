@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41A4133EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB97EC433EF;
-	Mon, 16 Jan 2023 16:01:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D177B33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A3A0C433EF;
+	Mon, 16 Jan 2023 16:02:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884919;
-	bh=ALzszPqXydxenigTkg+/oyZkuCBW0EGnk6IW4CBJjzY=;
+	s=korg; t=1673884921;
+	bh=2+MFT7diB5sMkEISLd3RnsiPr72cymYaKRU5CfejL48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bRHeVVBvbJGSGQlan8EhYGwJooSAze45Az3w+cSueRjFbQHt/r8tYuQ5VTDK/EcxG
-	 wARBl8MxCNmmmZF/138E3CLOrhrrSG6sfk6WXsyyOFwNjxk3/ds3xUg3ATJG2qo3Jr
-	 kGE80UL1BOIWLnN1J1+nl2U1VVlxryqbgkrDnWok=
+	b=0MVoDxaF6nxwq5ZfMFWVnhvFksZzlcHotSujRR2+R6KVQwv73U8+1zJQpg/YoYQCP
+	 NSkNlkerTXKWVI5ILtVnwyc5HOuvGtMyrG86z0JikyAzPq8b282BO2Y6M3jC1Pb2ct
+	 V6eP8IwMY/J1ExmTt57F9a/yvTwzKFAzWIn3eJ4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Luz <luzmaximilian@gmail.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 172/183] platform/surface: aggregator: Add missing call to ssam_request_sync_free()
-Date: Mon, 16 Jan 2023 16:51:35 +0100
-Message-Id: <20230116154810.565558126@linuxfoundation.org>
+Subject: [PATCH 6.1 173/183] platform/x86/amd: Fix refcount leak in amd_pmc_probe
+Date: Mon, 16 Jan 2023 16:51:36 +0100
+Message-Id: <20230116154810.606736211@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -35,40 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maximilian Luz <luzmaximilian@gmail.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit c965daac370f08a9b71d573a71d13cda76f2a884 ]
+[ Upstream commit ccb32e2be14271a60e9ba89c6d5660cc9998773c ]
 
-Although rare, ssam_request_sync_init() can fail. In that case, the
-request should be freed via ssam_request_sync_free(). Currently it is
-leaked instead. Fix this.
+pci_get_domain_bus_and_slot() takes reference, the caller should release
+the reference by calling pci_dev_put() after use. Call pci_dev_put() in
+the error path to fix this.
 
-Fixes: c167b9c7e3d6 ("platform/surface: Add Surface Aggregator subsystem")
-Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
-Link: https://lore.kernel.org/r/20221220175608.1436273-1-luzmaximilian@gmail.com
+Fixes: 3d7d407dfb05 ("platform/x86: amd-pmc: Add support for AMD Spill to DRAM STB feature")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20221229072534.1381432-1-linmq006@gmail.com
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/surface/aggregator/controller.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/x86/amd/pmc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/platform/surface/aggregator/controller.c b/drivers/platform/surface/aggregator/controller.c
-index 43e765199137..c6537a1b3a2e 100644
---- a/drivers/platform/surface/aggregator/controller.c
-+++ b/drivers/platform/surface/aggregator/controller.c
-@@ -1700,8 +1700,10 @@ int ssam_request_sync(struct ssam_controller *ctrl,
- 		return status;
+diff --git a/drivers/platform/x86/amd/pmc.c b/drivers/platform/x86/amd/pmc.c
+index 439d282aafd1..8d924986381b 100644
+--- a/drivers/platform/x86/amd/pmc.c
++++ b/drivers/platform/x86/amd/pmc.c
+@@ -932,7 +932,7 @@ static int amd_pmc_probe(struct platform_device *pdev)
+ 	if (enable_stb && (dev->cpu_id == AMD_CPU_ID_YC || dev->cpu_id == AMD_CPU_ID_CB)) {
+ 		err = amd_pmc_s2d_init(dev);
+ 		if (err)
+-			return err;
++			goto err_pci_dev_put;
+ 	}
  
- 	status = ssam_request_sync_init(rqst, spec->flags);
--	if (status)
-+	if (status) {
-+		ssam_request_sync_free(rqst);
- 		return status;
-+	}
- 
- 	ssam_request_sync_set_resp(rqst, rsp);
- 
+ 	platform_set_drvdata(pdev, dev);
 -- 
 2.35.1
 
