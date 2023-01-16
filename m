@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 201C746B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:25:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98488C433F1;
-	Mon, 16 Jan 2023 16:25:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D05E46B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:25:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48A5C433EF;
+	Mon, 16 Jan 2023 16:25:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886330;
-	bh=6TcQBBX1CzeR/LzibstlHVzvK58/kuduSl11CldcE7c=;
+	s=korg; t=1673886335;
+	bh=YZgSeHYj5jxf+uya8RhJZ5L4+aUfdAFox38v7ee+lek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qb8LpYTqJCDt0S0dPOb4LBLrVJqO1msSI737f+aqD3qdIAfbH2hdAOSqyOKedzF1h
-	 dzeHHkObZkvU70CQiPaFiMwSh5P00fNb8ILutpQI/8gPAhQfTPX7SNTNh9WAKX5dG7
-	 nS3wZogPINFNaNpt84FaA6Ybu0Y2ROXH7FfYuYqM=
+	b=yXSHyxmGBwRT1h5davweQOOzNzVZxu3nzggXoJxPYzA0mmksehKUMuIDVRzIBeGr6
+	 zQts4SzcBIA0r4qDCTG28wO32gPyLgqlahkR1uBz0Ahm4CjY1qexczxYuKpxAf2+1B
+	 1qcenlfJNdwWovZxMBcFYmXaYU9zyR5RPoXuvCCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hoi Pok Wu <wuhoipok@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+e91619dd4c11c4960706@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 390/658] fs: jfs: fix shift-out-of-bounds in dbDiscardAG
-Date: Mon, 16 Jan 2023 16:47:58 +0100
-Message-Id: <20230116154927.412710463@linuxfoundation.org>
+Subject: [PATCH 5.4 392/658] nilfs2: fix shift-out-of-bounds/overflow in nilfs_sb2_bad_offset()
+Date: Mon, 16 Jan 2023 16:48:00 +0100
+Message-Id: <20230116154927.502603143@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,37 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hoi Pok Wu <wuhoipok@gmail.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 25e70c6162f207828dd405b432d8f2a98dbf7082 ]
+[ Upstream commit 610a2a3d7d8be3537458a378ec69396a76c385b6 ]
 
-This should be applied to most URSAN bugs found recently by syzbot,
-by guarding the dbMount. As syzbot feeding rubbish into the bmap
-descriptor.
+Patch series "nilfs2: fix UBSAN shift-out-of-bounds warnings on mount
+time".
 
-Signed-off-by: Hoi Pok Wu <wuhoipok@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+The first patch fixes a bug reported by syzbot, and the second one fixes
+the remaining bug of the same kind.  Although they are triggered by the
+same super block data anomaly, I divided it into the above two because the
+details of the issues and how to fix it are different.
+
+Both are required to eliminate the shift-out-of-bounds issues at mount
+time.
+
+This patch (of 2):
+
+If the block size exponent information written in an on-disk superblock is
+corrupted, nilfs_sb2_bad_offset helper function can trigger
+shift-out-of-bounds warning followed by a kernel panic (if panic_on_warn
+is set):
+
+ shift exponent 38983 is too large for 64-bit type 'unsigned long long'
+ Call Trace:
+  <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
+  ubsan_epilogue lib/ubsan.c:151 [inline]
+  __ubsan_handle_shift_out_of_bounds+0x33d/0x3b0 lib/ubsan.c:322
+  nilfs_sb2_bad_offset fs/nilfs2/the_nilfs.c:449 [inline]
+  nilfs_load_super_block+0xdf5/0xe00 fs/nilfs2/the_nilfs.c:523
+  init_nilfs+0xb7/0x7d0 fs/nilfs2/the_nilfs.c:577
+  nilfs_fill_super+0xb1/0x5d0 fs/nilfs2/super.c:1047
+  nilfs_mount+0x613/0x9b0 fs/nilfs2/super.c:1317
+  ...
+
+In addition, since nilfs_sb2_bad_offset() performs multiplication without
+considering the upper bound, the computation may overflow if the disk
+layout parameters are not normal.
+
+This fixes these issues by inserting preliminary sanity checks for those
+parameters and by converting the comparison from one involving
+multiplication and left bit-shifting to one using division and right
+bit-shifting.
+
+Link: https://lkml.kernel.org/r/20221027044306.42774-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20221027044306.42774-2-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+e91619dd4c11c4960706@syzkaller.appspotmail.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ fs/nilfs2/the_nilfs.c | 31 +++++++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index 3bcf98d01733..aa4643854f94 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -198,6 +198,11 @@ int dbMount(struct inode *ipbmap)
- 		goto err_release_metapage;
- 	}
+diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
+index fb61c33c6004..74ef3d313686 100644
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -13,6 +13,7 @@
+ #include <linux/blkdev.h>
+ #include <linux/backing-dev.h>
+ #include <linux/random.h>
++#include <linux/log2.h>
+ #include <linux/crc32.h>
+ #include "nilfs.h"
+ #include "segment.h"
+@@ -448,11 +449,33 @@ static int nilfs_valid_sb(struct nilfs_super_block *sbp)
+ 	return crc == le32_to_cpu(sbp->s_sum);
+ }
  
-+	if (((bmp->db_mapsize - 1) >> bmp->db_agl2size) > MAXAG) {
-+		err = -EINVAL;
-+		goto err_release_metapage;
-+	}
+-static int nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
++/**
++ * nilfs_sb2_bad_offset - check the location of the second superblock
++ * @sbp: superblock raw data buffer
++ * @offset: byte offset of second superblock calculated from device size
++ *
++ * nilfs_sb2_bad_offset() checks if the position on the second
++ * superblock is valid or not based on the filesystem parameters
++ * stored in @sbp.  If @offset points to a location within the segment
++ * area, or if the parameters themselves are not normal, it is
++ * determined to be invalid.
++ *
++ * Return Value: true if invalid, false if valid.
++ */
++static bool nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
+ {
+-	return offset < ((le64_to_cpu(sbp->s_nsegments) *
+-			  le32_to_cpu(sbp->s_blocks_per_segment)) <<
+-			 (le32_to_cpu(sbp->s_log_block_size) + 10));
++	unsigned int shift_bits = le32_to_cpu(sbp->s_log_block_size);
++	u32 blocks_per_segment = le32_to_cpu(sbp->s_blocks_per_segment);
++	u64 nsegments = le64_to_cpu(sbp->s_nsegments);
++	u64 index;
 +
- 	for (i = 0; i < MAXAG; i++)
- 		bmp->db_agfree[i] = le64_to_cpu(dbmp_le->dn_agfree[i]);
- 	bmp->db_agsize = le64_to_cpu(dbmp_le->dn_agsize);
++	if (blocks_per_segment < NILFS_SEG_MIN_BLOCKS ||
++	    shift_bits > ilog2(NILFS_MAX_BLOCK_SIZE) - BLOCK_SIZE_BITS)
++		return true;
++
++	index = offset >> (shift_bits + BLOCK_SIZE_BITS);
++	do_div(index, blocks_per_segment);
++	return index < nsegments;
+ }
+ 
+ static void nilfs_release_super_block(struct the_nilfs *nilfs)
 -- 
 2.35.1
 
