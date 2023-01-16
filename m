@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16B8033EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9273EC433D2;
-	Mon, 16 Jan 2023 15:55:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19BD33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E62C433EF;
+	Mon, 16 Jan 2023 15:55:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884526;
-	bh=QdC4cgQODGkKUIbrNESF99GYx8pGTR1ixjbIP1YIP3c=;
+	s=korg; t=1673884529;
+	bh=69t2bdjOS+7RBEE+s/cEdTXDu49Bwlf/my39Dl5z8Wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oesxEViYW8NFD1pImV3Vq3QUVrOon0zRGf2yONEKvxfcDqVP/lTyfNHCmTAMt4WSA
-	 XC0JgKM2fwK5Rc6j6cd7opTqiAFbmoG1m0uw5hvWlsSRYf1MR12kDQ6pCZTXhjHafC
-	 SKnAm4Z8UTIU2DMTr49br1GwHpMhqYyrr+GVcEp0=
+	b=X2C7M/VJTRE+dimHxH8MFBpD9S5W1b2Z2YcnsjTI4QiQsWPpIVH1uSeFHJdkpLom9
+	 djrzj3ocr2dp70NAur3jLummM5vrOaSmSzlI5ZrbE6cP7Fy68HEh+pybQ31VIKeHgg
+	 cwLNpXnUsHkY1MJmaxJCkYSTgEKvn71J3OzK49jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Jones <pjones@redhat.com>,
-	Jarkko Sakkinen <jarkko@kernel.org>,
-	Matthew Garrett <mjg59@srcf.ucam.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.1 010/183] efi: tpm: Avoid READ_ONCE() for accessing the event log
-Date: Mon, 16 Jan 2023 16:48:53 +0100
-Message-Id: <20230116154803.819910275@linuxfoundation.org>
+	=?UTF-8?q?Martin=20Li=C5=A1ka?= <mliska@suse.cz>,
+	Jonathan Corbet <corbet@lwn.net>
+Subject: [PATCH 6.1 011/183] docs: Fix the docs build with Sphinx 6.0
+Date: Mon, 16 Jan 2023 16:48:54 +0100
+Message-Id: <20230116154803.861151571@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -37,51 +34,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Jonathan Corbet <corbet@lwn.net>
 
-commit d3f450533bbcb6dd4d7d59cadc9b61b7321e4ac1 upstream.
+commit 0283189e8f3d0917e2ac399688df85211f48447b upstream.
 
-Nathan reports that recent kernels built with LTO will crash when doing
-EFI boot using Fedora's GRUB and SHIM. The culprit turns out to be a
-misaligned load from the TPM event log, which is annotated with
-READ_ONCE(), and under LTO, this gets translated into a LDAR instruction
-which does not tolerate misaligned accesses.
+Sphinx 6.0 removed the execfile_() function, which we use as part of the
+configuration process.  They *did* warn us...  Just open-code the
+functionality as is done in Sphinx itself.
 
-Interestingly, this does not happen when booting the same kernel
-straight from the UEFI shell, and so the fact that the event log may
-appear misaligned in memory may be caused by a bug in GRUB or SHIM.
+Tested (using SPHINX_CONF, since this code is only executed with an
+alternative config file) on various Sphinx versions from 2.5 through 6.0.
 
-However, using READ_ONCE() to access firmware tables is slightly unusual
-in any case, and here, we only need to ensure that 'event' is not
-dereferenced again after it gets unmapped, but this is already taken
-care of by the implicit barrier() semantics of the early_memunmap()
-call.
-
-Cc: <stable@vger.kernel.org>
-Cc: Peter Jones <pjones@redhat.com>
-Cc: Jarkko Sakkinen <jarkko@kernel.org>
-Cc: Matthew Garrett <mjg59@srcf.ucam.org>
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://github.com/ClangBuiltLinux/linux/issues/1782
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Reported-by: Martin Liška <mliska@suse.cz>
+Cc: stable@vger.kernel.org
+Signed-off-by: Jonathan Corbet <corbet@lwn.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/tpm_eventlog.h |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ Documentation/sphinx/load_config.py |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/include/linux/tpm_eventlog.h
-+++ b/include/linux/tpm_eventlog.h
-@@ -198,8 +198,8 @@ static __always_inline int __calc_tpm2_e
- 	 * The loop below will unmap these fields if the log is larger than
- 	 * one page, so save them here for reference:
- 	 */
--	count = READ_ONCE(event->count);
--	event_type = READ_ONCE(event->event_type);
-+	count = event->count;
-+	event_type = event->event_type;
+--- a/Documentation/sphinx/load_config.py
++++ b/Documentation/sphinx/load_config.py
+@@ -3,7 +3,7 @@
  
- 	/* Verify that it's the log header */
- 	if (event_header->pcr_idx != 0 ||
+ import os
+ import sys
+-from sphinx.util.pycompat import execfile_
++from sphinx.util.osutil import fs_encoding
+ 
+ # ------------------------------------------------------------------------------
+ def loadConfig(namespace):
+@@ -48,7 +48,9 @@ def loadConfig(namespace):
+             sys.stdout.write("load additional sphinx-config: %s\n" % config_file)
+             config = namespace.copy()
+             config['__file__'] = config_file
+-            execfile_(config_file, config)
++            with open(config_file, 'rb') as f:
++                code = compile(f.read(), fs_encoding, 'exec')
++                exec(code, config)
+             del config['__file__']
+             namespace.update(config)
+         else:
 
 
