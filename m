@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7850D4C83
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:33:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E31C433D2;
-	Mon, 16 Jan 2023 16:33:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2700E4C83
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:33:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A062BC433EF;
+	Mon, 16 Jan 2023 16:33:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886812;
-	bh=LkrStC3BvfII31PkvZOr/l71clBRH+OsrCdDiJaLta4=;
+	s=korg; t=1673886815;
+	bh=eBvSJL0O/pQyKCFYDfPLSOneEmvBbIZJomug8uc7d/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nk/RgDyXXAWYILeLcxTn2JAiMhsrxFeN20xm+Chj9zRVLB48Mr4sqyGF1DGpQeK8A
-	 x93qhW3Wpb/YEEIwjhZ3NtMaSZbG9Li5keYqIAOH2KEhY+Njtq9fmtP8zeNtot5GAi
-	 VktBfEMzFnzJiX+78c4QOQFgRxPGvKOfQndME08o=
+	b=eOaqkYySqpAOWWHN0HEDDUBE51cRcxvwnOsbAv+kmXyOu5gm4H6pgH8yWTyXNoPzT
+	 lZmHSkNdPpsZ+JK+GDsmiO/uKBqKQE1YZbRPvbIp6hDw0oybkzxo8SkkVwrTbgyVqS
+	 0DyqmtxtNWWcqUO4ez43w+eDig4mBQvQOPoTBCoc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jie Wang <wangjie125@huawei.com>,
-	Hao Lan <lanhao@huawei.com>,
+	syzbot+232ebdbd36706c965ebf@syzkaller.appspotmail.com,
+	Cong Wang <cong.wang@bytedance.com>,
 	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Hawkins Jiawei <yin31149@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 571/658] net: hns3: add interrupts re-initialization while doing VF FLR
-Date: Mon, 16 Jan 2023 16:50:59 +0100
-Message-Id: <20230116154935.630390009@linuxfoundation.org>
+Subject: [PATCH 5.4 572/658] net: sched: fix memory leak in tcindex_set_parms
+Date: Mon, 16 Jan 2023 16:51:00 +0100
+Message-Id: <20230116154935.670132262@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,41 +40,148 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jie Wang <wangjie125@huawei.com>
+From: Hawkins Jiawei <yin31149@gmail.com>
 
-[ Upstream commit 09e6b30eeb254f1818a008cace3547159e908dfd ]
+[ Upstream commit 399ab7fe0fa0d846881685fd4e57e9a8ef7559f7 ]
 
-Currently keep alive message between PF and VF may be lost and the VF is
-unalive in PF. So the VF will not do reset during PF FLR reset process.
-This would make the allocated interrupt resources of VF invalid and VF
-would't receive or respond to PF any more.
+Syzkaller reports a memory leak as follows:
+====================================
+BUG: memory leak
+unreferenced object 0xffff88810c287f00 (size 256):
+  comm "syz-executor105", pid 3600, jiffies 4294943292 (age 12.990s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<ffffffff814cf9f0>] kmalloc_trace+0x20/0x90 mm/slab_common.c:1046
+    [<ffffffff839c9e07>] kmalloc include/linux/slab.h:576 [inline]
+    [<ffffffff839c9e07>] kmalloc_array include/linux/slab.h:627 [inline]
+    [<ffffffff839c9e07>] kcalloc include/linux/slab.h:659 [inline]
+    [<ffffffff839c9e07>] tcf_exts_init include/net/pkt_cls.h:250 [inline]
+    [<ffffffff839c9e07>] tcindex_set_parms+0xa7/0xbe0 net/sched/cls_tcindex.c:342
+    [<ffffffff839caa1f>] tcindex_change+0xdf/0x120 net/sched/cls_tcindex.c:553
+    [<ffffffff8394db62>] tc_new_tfilter+0x4f2/0x1100 net/sched/cls_api.c:2147
+    [<ffffffff8389e91c>] rtnetlink_rcv_msg+0x4dc/0x5d0 net/core/rtnetlink.c:6082
+    [<ffffffff839eba67>] netlink_rcv_skb+0x87/0x1d0 net/netlink/af_netlink.c:2540
+    [<ffffffff839eab87>] netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
+    [<ffffffff839eab87>] netlink_unicast+0x397/0x4c0 net/netlink/af_netlink.c:1345
+    [<ffffffff839eb046>] netlink_sendmsg+0x396/0x710 net/netlink/af_netlink.c:1921
+    [<ffffffff8383e796>] sock_sendmsg_nosec net/socket.c:714 [inline]
+    [<ffffffff8383e796>] sock_sendmsg+0x56/0x80 net/socket.c:734
+    [<ffffffff8383eb08>] ____sys_sendmsg+0x178/0x410 net/socket.c:2482
+    [<ffffffff83843678>] ___sys_sendmsg+0xa8/0x110 net/socket.c:2536
+    [<ffffffff838439c5>] __sys_sendmmsg+0x105/0x330 net/socket.c:2622
+    [<ffffffff83843c14>] __do_sys_sendmmsg net/socket.c:2651 [inline]
+    [<ffffffff83843c14>] __se_sys_sendmmsg net/socket.c:2648 [inline]
+    [<ffffffff83843c14>] __x64_sys_sendmmsg+0x24/0x30 net/socket.c:2648
+    [<ffffffff84605fd5>] do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+    [<ffffffff84605fd5>] do_syscall_64+0x35/0xb0 arch/x86/entry/common.c:80
+    [<ffffffff84800087>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+====================================
 
-So this patch adds VF interrupts re-initialization during VF FLR for VF
-recovery in above cases.
+Kernel uses tcindex_change() to change an existing
+filter properties.
 
-Fixes: 862d969a3a4d ("net: hns3: do VF's pci re-initialization while PF doing FLR")
-Signed-off-by: Jie Wang <wangjie125@huawei.com>
-Signed-off-by: Hao Lan <lanhao@huawei.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Yet the problem is that, during the process of changing,
+if `old_r` is retrieved from `p->perfect`, then
+kernel uses tcindex_alloc_perfect_hash() to newly
+allocate filter results, uses tcindex_filter_result_init()
+to clear the old filter result, without destroying
+its tcf_exts structure, which triggers the above memory leak.
+
+To be more specific, there are only two source for the `old_r`,
+according to the tcindex_lookup(). `old_r` is retrieved from
+`p->perfect`, or `old_r` is retrieved from `p->h`.
+
+  * If `old_r` is retrieved from `p->perfect`, kernel uses
+tcindex_alloc_perfect_hash() to newly allocate the
+filter results. Then `r` is assigned with `cp->perfect + handle`,
+which is newly allocated. So condition `old_r && old_r != r` is
+true in this situation, and kernel uses tcindex_filter_result_init()
+to clear the old filter result, without destroying
+its tcf_exts structure
+
+  * If `old_r` is retrieved from `p->h`, then `p->perfect` is NULL
+according to the tcindex_lookup(). Considering that `cp->h`
+is directly copied from `p->h` and `p->perfect` is NULL,
+`r` is assigned with `tcindex_lookup(cp, handle)`, whose value
+should be the same as `old_r`, so condition `old_r && old_r != r`
+is false in this situation, kernel ignores using
+tcindex_filter_result_init() to clear the old filter result.
+
+So only when `old_r` is retrieved from `p->perfect` does kernel use
+tcindex_filter_result_init() to clear the old filter result, which
+triggers the above memory leak.
+
+Considering that there already exists a tc_filter_wq workqueue
+to destroy the old tcindex_data by tcindex_partial_destroy_work()
+at the end of tcindex_set_parms(), this patch solves
+this memory leak bug by removing this old filter result
+clearing part and delegating it to the tc_filter_wq workqueue.
+
+Note that this patch doesn't introduce any other issues. If
+`old_r` is retrieved from `p->perfect`, this patch just
+delegates old filter result clearing part to the
+tc_filter_wq workqueue; If `old_r` is retrieved from `p->h`,
+kernel doesn't reach the old filter result clearing part, so
+removing this part has no effect.
+
+[Thanks to the suggestion from Jakub Kicinski, Cong Wang, Paolo Abeni
+and Dmitry Vyukov]
+
+Fixes: b9a24bb76bf6 ("net_sched: properly handle failure case of tcf_exts_init()")
+Link: https://lore.kernel.org/all/0000000000001de5c505ebc9ec59@google.com/
+Reported-by: syzbot+232ebdbd36706c965ebf@syzkaller.appspotmail.com
+Tested-by: syzbot+232ebdbd36706c965ebf@syzkaller.appspotmail.com
+Cc: Cong Wang <cong.wang@bytedance.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Hawkins Jiawei <yin31149@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/sched/cls_tcindex.c | 12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-index 403c1b9cf6ab..48956c30d2ee 100644
---- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-+++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
-@@ -2592,7 +2592,8 @@ static int hclgevf_pci_reset(struct hclgevf_dev *hdev)
- 	struct pci_dev *pdev = hdev->pdev;
- 	int ret = 0;
+diff --git a/net/sched/cls_tcindex.c b/net/sched/cls_tcindex.c
+index 684187a1fdb9..768cf7cf65b4 100644
+--- a/net/sched/cls_tcindex.c
++++ b/net/sched/cls_tcindex.c
+@@ -332,7 +332,7 @@ tcindex_set_parms(struct net *net, struct tcf_proto *tp, unsigned long base,
+ 		  struct tcindex_filter_result *r, struct nlattr **tb,
+ 		  struct nlattr *est, bool ovr, struct netlink_ext_ack *extack)
+ {
+-	struct tcindex_filter_result new_filter_result, *old_r = r;
++	struct tcindex_filter_result new_filter_result;
+ 	struct tcindex_data *cp = NULL, *oldp;
+ 	struct tcindex_filter *f = NULL; /* make gcc behave */
+ 	struct tcf_result cr = {};
+@@ -401,7 +401,7 @@ tcindex_set_parms(struct net *net, struct tcf_proto *tp, unsigned long base,
+ 	err = tcindex_filter_result_init(&new_filter_result, cp, net);
+ 	if (err < 0)
+ 		goto errout_alloc;
+-	if (old_r)
++	if (r)
+ 		cr = r->res;
  
--	if (hdev->reset_type == HNAE3_VF_FULL_RESET &&
-+	if ((hdev->reset_type == HNAE3_VF_FULL_RESET ||
-+	     hdev->reset_type == HNAE3_FLR_RESET) &&
- 	    test_bit(HCLGEVF_STATE_IRQ_INITED, &hdev->state)) {
- 		hclgevf_misc_irq_uninit(hdev);
- 		hclgevf_uninit_msi(hdev);
+ 	err = -EBUSY;
+@@ -478,14 +478,6 @@ tcindex_set_parms(struct net *net, struct tcf_proto *tp, unsigned long base,
+ 		tcf_bind_filter(tp, &cr, base);
+ 	}
+ 
+-	if (old_r && old_r != r) {
+-		err = tcindex_filter_result_init(old_r, cp, net);
+-		if (err < 0) {
+-			kfree(f);
+-			goto errout_alloc;
+-		}
+-	}
+-
+ 	oldp = p;
+ 	r->res = cr;
+ 	tcf_exts_change(&r->exts, &e);
 -- 
 2.35.1
 
