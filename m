@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F096346B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:23:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 798DCC433EF;
-	Mon, 16 Jan 2023 16:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8956646B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:24:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 128CAC433D2;
+	Mon, 16 Jan 2023 16:23:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886237;
-	bh=K/4rIyGmg5jyG3nojvxHyxVP87dJ01irfWI/R7w+UqI=;
+	s=korg; t=1673886240;
+	bh=FW7CGrZV/kvR8I7UMOMeN5n32Ze7WNYky3wgk6AcdBQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NUNSwIrUOOOaV8ufo3uMAzycMmacK4NttU2esC8wW84b/QgXuUt/13RptAo4XT/rB
-	 zITd5oK3167Bs9ZNaZrtaEVgfPFFi9sMyFdT113ALet296Sn3aUa4t83suwYRpwYJ1
-	 kcYmkYA/eL89Od9qTzDcjIfp5X+JRmvp+NbVJBxs=
+	b=mQ3guInovLLC7MDasSjS8ZmBGXQRe0uOlu0iRwmOoYLW8/5jz2hJ3E8+mnRenNkp2
+	 uVvYA228VAMfMoOEST65af4Klb1srG160SQ/kTIv6sXd6IuSApRnS5AfhcbLYWeJH8
+	 L5pRnV0I6oQV4wpI7LREM04uHL0Lk+ZqkqsuYKNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	zanussi@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 314/658] tracing/hist: Fix issue of losting command info in error_log
-Date: Mon, 16 Jan 2023 16:46:42 +0100
-Message-Id: <20230116154923.924485083@linuxfoundation.org>
+Subject: [PATCH 5.4 348/658] rtc: pcf85063: Fix reading alarm
+Date: Mon, 16 Jan 2023 16:47:16 +0100
+Message-Id: <20230116154925.477301463@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,91 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-[ Upstream commit 608c6ed3337850c767ab0dd6c583477922233e29 ]
+[ Upstream commit a6ceee26fd5ed9b5bd37322b1ca88e4548cee4a3 ]
 
-When input some constructed invalid 'trigger' command, command info
-in 'error_log' are lost [1].
+If the alarms are disabled the topmost bit (AEN_*) is set in the alarm
+registers. This is also interpreted in BCD number leading to this warning:
+rtc rtc0: invalid alarm value: 2022-09-21T80:80:80
 
-The root cause is that there is a path that event_hist_trigger_parse()
-is recursely called once and 'last_cmd' which save origin command is
-cleared, then later calling of hist_err() will no longer record origin
-command info:
+Fix this by masking alarm enabling and reserved bits.
 
-  event_hist_trigger_parse() {
-    last_cmd_set()  // <1> 'last_cmd' save origin command here at first
-    create_actions() {
-      onmatch_create() {
-        action_create() {
-          trace_action_create() {
-            trace_action_create_field_var() {
-              create_field_var_hist() {
-                event_hist_trigger_parse() {  // <2> recursely called once
-                  hist_err_clear()  // <3> 'last_cmd' is cleared here
-                }
-                hist_err()  // <4> No longer find origin command!!!
-
-Since 'glob' is empty string while running into the recurse call, we
-can trickly check it and bypass the call of hist_err_clear() to solve it.
-
-[1]
- # cd /sys/kernel/tracing
- # echo "my_synth_event int v1; int v2; int v3;" >> synthetic_events
- # echo 'hist:keys=pid' >> events/sched/sched_waking/trigger
- # echo "hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(\
-pid,pid1)" >> events/sched/sched_switch/trigger
- # cat error_log
-[  8.405018] hist:sched:sched_switch: error: Couldn't find synthetic event
-  Command:
-hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(pid,pid1)
-                                                          ^
-[  8.816902] hist:sched:sched_switch: error: Couldn't find field
-  Command:
-hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(pid,pid1)
-                          ^
-[  8.816902] hist:sched:sched_switch: error: Couldn't parse field variable
-  Command:
-hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(pid,pid1)
-                          ^
-[  8.999880] : error: Couldn't find field
-  Command:
-           ^
-[  8.999880] : error: Couldn't parse field variable
-  Command:
-           ^
-[  8.999880] : error: Couldn't find field
-  Command:
-           ^
-[  8.999880] : error: Couldn't create histogram for field
-  Command:
-           ^
-
-Link: https://lore.kernel.org/linux-trace-kernel/20221207135326.3483216-1-zhengyejian1@huawei.com
-
-Cc: <mhiramat@kernel.org>
-Cc: <zanussi@kernel.org>
-Fixes: f404da6e1d46 ("tracing: Add 'last error' error facility for hist triggers")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 05cb3a56ee8c ("rtc: pcf85063: add alarm support")
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20220921074141.3903104-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-pcf85063.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index b8f1f0eadd2e..96d159af5194 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -6433,7 +6433,7 @@ static int event_hist_trigger_func(struct event_command *cmd_ops,
- 	/* Just return zero, not the number of registered triggers */
- 	ret = 0;
-  out:
--	if (ret == 0)
-+	if (ret == 0 && glob[0])
- 		hist_err_clear();
+diff --git a/drivers/rtc/rtc-pcf85063.c b/drivers/rtc/rtc-pcf85063.c
+index 1afa6d9fa9fb..3e7ea5244562 100644
+--- a/drivers/rtc/rtc-pcf85063.c
++++ b/drivers/rtc/rtc-pcf85063.c
+@@ -159,10 +159,10 @@ static int pcf85063_rtc_read_alarm(struct device *dev, struct rtc_wkalrm *alrm)
+ 	if (ret)
+ 		return ret;
  
- 	return ret;
+-	alrm->time.tm_sec = bcd2bin(buf[0]);
+-	alrm->time.tm_min = bcd2bin(buf[1]);
+-	alrm->time.tm_hour = bcd2bin(buf[2]);
+-	alrm->time.tm_mday = bcd2bin(buf[3]);
++	alrm->time.tm_sec = bcd2bin(buf[0] & 0x7f);
++	alrm->time.tm_min = bcd2bin(buf[1] & 0x7f);
++	alrm->time.tm_hour = bcd2bin(buf[2] & 0x3f);
++	alrm->time.tm_mday = bcd2bin(buf[3] & 0x3f);
+ 
+ 	ret = regmap_read(pcf85063->regmap, PCF85063_REG_CTRL2, &val);
+ 	if (ret)
 -- 
 2.35.1
 
