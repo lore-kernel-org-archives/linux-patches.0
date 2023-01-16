@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7849B6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:04:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00329C433EF;
-	Mon, 16 Jan 2023 17:04:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0BB6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:04:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A73C433D2;
+	Mon, 16 Jan 2023 17:04:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888645;
-	bh=1ul6U5W55GVzZ8B6vDOCdW+Hqw2l8cPmJx2x4F6i2WQ=;
+	s=korg; t=1673888647;
+	bh=fVc7KMpIxNd7JbjOQtWFEyaNeT/naIME+fqUgktTPkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r0BUW+9yxl+OKcQdPNfMWFmSMNlUSszKy5bWta+fa052uHSaemyD6qiKumWlbuXH+
-	 GAGe9rz0uUmfT7Nt+1frUmenZhAqhaxMmUNE+D0BY0zLFWqV/TA7MLGMxAQ+sTWuiN
-	 Zf7YzTZSKl2xnArxOFdTPj9kNFVGD4US0kh/fgPc=
+	b=J+fCdpq5z0HYfZdMXSP1iSW5rWDxTzTar53vcbAHkSUYscr65l8wgAAmRTlwCVCAW
+	 sI+ZssHrX5sqBQqwM2OCvXlwePH4BgXhOzs41T1KK3SKXmW8ZjVl1use/sHw5oY5XH
+	 NTGDShbCh9oyuflqsd5gwjEZa7jmTNhyghQWgVXk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Jeff Johnson <quic_jjohnson@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
+	syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com,
+	Gautam Menghani <gautammenghani201@gmail.com>,
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 077/338] wifi: ath10k: Fix return value in ath10k_pci_init()
-Date: Mon, 16 Jan 2023 16:49:10 +0100
-Message-Id: <20230116154824.244819766@linuxfoundation.org>
+Subject: [PATCH 4.14 086/338] media: imon: fix a race condition in send_packet()
+Date: Mon, 16 Jan 2023 16:49:19 +0100
+Message-Id: <20230116154824.622175039@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,61 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Gautam Menghani <gautammenghani201@gmail.com>
 
-[ Upstream commit 2af7749047d8d6ad43feff69f555a13a6a6c2831 ]
+[ Upstream commit 813ceef062b53d68f296aa3cb944b21a091fabdb ]
 
-This driver is attempting to register to support two different buses.
-if either of these is successful then ath10k_pci_init() should return 0
-so that hardware attached to the successful bus can be probed and
-supported. only if both of these are unsuccessful should ath10k_pci_init()
-return an errno.
+The function send_packet() has a race condition as follows:
 
-Fixes: 0b523ced9a3c ("ath10k: add basic skeleton to support ahb")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20221110061926.18163-1-xiujianfeng@huawei.com
+func send_packet()
+{
+    // do work
+    call usb_submit_urb()
+    mutex_unlock()
+    wait_for_event_interruptible()  <-- lock gone
+    mutex_lock()
+}
+
+func vfd_write()
+{
+    mutex_lock()
+    call send_packet()  <- prev call is not completed
+    mutex_unlock()
+}
+
+When the mutex is unlocked and the function send_packet() waits for the
+call to complete, vfd_write() can start another call, which leads to the
+"URB submitted while active" warning in usb_submit_urb().
+Fix this by removing the mutex_unlock() call in send_packet() and using
+mutex_lock_interruptible().
+
+Link: https://syzkaller.appspot.com/bug?id=e378e6a51fbe6c5cc43e34f131cc9a315ef0337e
+
+Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
+Reported-by: syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com
+Signed-off-by: Gautam Menghani <gautammenghani201@gmail.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/ath/ath10k/pci.c | 20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/media/rc/imon.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
-index f9e409caca68..07457eb9d455 100644
---- a/drivers/net/wireless/ath/ath10k/pci.c
-+++ b/drivers/net/wireless/ath/ath10k/pci.c
-@@ -3443,18 +3443,22 @@ static struct pci_driver ath10k_pci_driver = {
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index edf8a7a76e86..50951c31ff5b 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -637,15 +637,14 @@ static int send_packet(struct imon_context *ictx)
+ 		pr_err_ratelimited("error submitting urb(%d)\n", retval);
+ 	} else {
+ 		/* Wait for transmission to complete (or abort) */
+-		mutex_unlock(&ictx->lock);
+ 		retval = wait_for_completion_interruptible(
+ 				&ictx->tx.finished);
+ 		if (retval) {
+ 			usb_kill_urb(ictx->tx_urb);
+ 			pr_err_ratelimited("task interrupted\n");
+ 		}
+-		mutex_lock(&ictx->lock);
  
- static int __init ath10k_pci_init(void)
- {
--	int ret;
-+	int ret1, ret2;
++		ictx->tx.busy = false;
+ 		retval = ictx->tx.status;
+ 		if (retval)
+ 			pr_err_ratelimited("packet tx failed (%d)\n", retval);
+@@ -952,7 +951,8 @@ static ssize_t vfd_write(struct file *file, const char __user *buf,
+ 		return -ENODEV;
+ 	}
  
--	ret = pci_register_driver(&ath10k_pci_driver);
--	if (ret)
-+	ret1 = pci_register_driver(&ath10k_pci_driver);
-+	if (ret1)
- 		printk(KERN_ERR "failed to register ath10k pci driver: %d\n",
--		       ret);
-+		       ret1);
+-	mutex_lock(&ictx->lock);
++	if (mutex_lock_interruptible(&ictx->lock))
++		return -ERESTARTSYS;
  
--	ret = ath10k_ahb_init();
--	if (ret)
--		printk(KERN_ERR "ahb init failed: %d\n", ret);
-+	ret2 = ath10k_ahb_init();
-+	if (ret2)
-+		printk(KERN_ERR "ahb init failed: %d\n", ret2);
- 
--	return ret;
-+	if (ret1 && ret2)
-+		return ret1;
-+
-+	/* registered to at least one bus */
-+	return 0;
- }
- module_init(ath10k_pci_init);
- 
+ 	if (!ictx->dev_present_intf0) {
+ 		pr_err_ratelimited("no iMON device present\n");
 -- 
 2.35.1
 
