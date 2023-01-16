@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFA6833EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:56:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73165C433D2;
-	Mon, 16 Jan 2023 15:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C51433EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:56:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D76C433F2;
+	Mon, 16 Jan 2023 15:56:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884594;
-	bh=HunJVoJrF7ZlDAtfoBMu3YMO+F3WCy/IKfBjDMahwp0=;
+	s=korg; t=1673884597;
+	bh=UOYZVzsz4sHHWxo/TzPiAXAEMO3oShLbeC5mYHnj0XU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=keJrar1ppJcs2IVLw2uXowWk4Wqh/Apq4Q5le1Mu4bx76ogFcjDWptHWPH9n4dkC0
-	 KG1wTLXmT7/pO50zctBRQ7bw8ueL3yVP+iQDu7MyahZZUeDGp6YQGDtcX4+JnD13b6
-	 00xZxVB7kVSnZZFXHYB1gYFkjtXgzIxEF8nJisiE=
+	b=J0TkM+96I9gtlsMZphaSD29tGIZvlDJKRruqnElpH6Fxo5FT5BXc39HLZWZluONJn
+	 m0g7NatW7Nceq7kY55A7bGSfcVsc1vr93X2Cccno1QVvCwinOi36wSt76ORvGsLGMu
+	 lH1ZrbdAx2Qd+MM4g7HEdf270TPKS3CZP+fhX4RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 065/183] platform/x86: ideapad-laptop: Add Legion 5 15ARH05 DMI id to set_fn_lock_led_list[]
-Date: Mon, 16 Jan 2023 16:49:48 +0100
-Message-Id: <20230116154806.097214103@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 039/183] cifs: fix file info setting in cifs_query_path_info()
+Date: Mon, 16 Jan 2023 16:49:22 +0100
+Message-Id: <20230116154805.027598454@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -33,39 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Paulo Alcantara <pc@cjr.nz>
 
-commit f4b7f8febd4d9b615fbec2a06bf352b9c3729b11 upstream.
+commit 29cf28235e3e57e0af01ae29db57a75f87a2ada8 upstream.
 
-The Lenovo Legion 5 15ARH05 needs ideapad-laptop to call SALS_FNLOCK_ON /
-SALS_FNLOCK_OFF on Fn-lock state change to get the LED in the Fn key to
-correctly reflect the Fn-lock state.
+We missed to set file info when CIFSSMBQPathInfo() returned 0, thus
+leaving cifs_open_info_data::fi unset.
 
-Add a DMI match for the Legion 5 15ARH05 to the set_fn_lock_led_list[]
-table for this.
+Fix this by setting cifs_open_info_data::fi when either
+CIFSSMBQPathInfo() or SMBQueryInformation() succeed.
 
-Fixes: 81a5603a0f50 ("platform/x86: ideapad-laptop: Fix interrupt storm on fn-lock toggle on some Yoga laptops")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20221215154357.123876-1-hdegoede@redhat.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216881
+Fixes: 76894f3e2f71 ("cifs: improve symlink handling for smb2+")
+Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/ideapad-laptop.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/cifs/smb1ops.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/platform/x86/ideapad-laptop.c
-+++ b/drivers/platform/x86/ideapad-laptop.c
-@@ -1615,6 +1615,12 @@ static const struct dmi_system_id set_fn
- 			DMI_MATCH(DMI_PRODUCT_VERSION, "Lenovo Legion R7000P2020H"),
- 		}
- 	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "LENOVO"),
-+			DMI_MATCH(DMI_PRODUCT_VERSION, "Lenovo Legion 5 15ARH05"),
-+		}
-+	},
- 	{}
- };
+diff --git a/fs/cifs/smb1ops.c b/fs/cifs/smb1ops.c
+index 50480751e521..5fe2c2f8ef41 100644
+--- a/fs/cifs/smb1ops.c
++++ b/fs/cifs/smb1ops.c
+@@ -562,17 +562,20 @@ static int cifs_query_path_info(const unsigned int xid, struct cifs_tcon *tcon,
+ 	if ((rc == -EOPNOTSUPP) || (rc == -EINVAL)) {
+ 		rc = SMBQueryInformation(xid, tcon, full_path, &fi, cifs_sb->local_nls,
+ 					 cifs_remap(cifs_sb));
+-		if (!rc)
+-			move_cifs_info_to_smb2(&data->fi, &fi);
+ 		*adjustTZ = true;
+ 	}
  
+-	if (!rc && (le32_to_cpu(fi.Attributes) & ATTR_REPARSE)) {
++	if (!rc) {
+ 		int tmprc;
+ 		int oplock = 0;
+ 		struct cifs_fid fid;
+ 		struct cifs_open_parms oparms;
+ 
++		move_cifs_info_to_smb2(&data->fi, &fi);
++
++		if (!(le32_to_cpu(fi.Attributes) & ATTR_REPARSE))
++			return 0;
++
+ 		oparms.tcon = tcon;
+ 		oparms.cifs_sb = cifs_sb;
+ 		oparms.desired_access = FILE_READ_ATTRIBUTES;
+-- 
+2.39.0
+
 
 
