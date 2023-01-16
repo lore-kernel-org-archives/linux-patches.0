@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 152776FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:48:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C41AC433EF;
-	Mon, 16 Jan 2023 16:48:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA1A6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:48:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 302D6C433F0;
+	Mon, 16 Jan 2023 16:48:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887699;
-	bh=b8SbfTgEmTl8DkZ4JKicSASyVro/9nyCui/U79/opXg=;
+	s=korg; t=1673887702;
+	bh=7v3cmMxCjmgs7gH5N/AHDgReQ6WaIZ98GDLrwbUHyeo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aYsw/18PPgtqGK7fvgVYjCHNQbDL/fAiBAyd/fotxUL/aYMb7ViUGJ93o3z7OLbpf
-	 jhBtdGJPq7S66EKW/wRSqPRHs31GjExtSUCVDmZM/5tEoiYAoeaiAIyZRLFCpDHpy6
-	 yHYe4kgDp+etz5YHgUQVrn6NcF0l39cG7xAOnVTA=
+	b=YXJ7htK5ZiecmbeNBMWvTdioAm/GwSAe5AZCjeFSzi26QZSlncpo/TZNvSopLliBP
+	 77FGbLnYFYNAE5+ZydXGe87jXshAJA9f16IYfalOASx+S7gZkPmIEeSPqSQKsiwgGz
+	 C5hn60YKTcHn3uI3wLR5ej8aYdwoXRNYGgdQgJJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Dejin Zheng <zhengdejin5@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 248/521] drivers: provide devm_platform_get_and_ioremap_resource()
-Date: Mon, 16 Jan 2023 16:48:30 +0100
-Message-Id: <20230116154858.223545424@linuxfoundation.org>
+Subject: [PATCH 4.19 249/521] i2c: mux: reg: check return value after calling platform_get_resource()
+Date: Mon, 16 Jan 2023 16:48:31 +0100
+Message-Id: <20230116154858.276318742@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,78 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dejin Zheng <zhengdejin5@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 890cc39a879906b63912482dfc41944579df2dc6 ]
+[ Upstream commit 2d47b79d2bd39cc6369eccf94a06568d84c906ae ]
 
-Since commit "drivers: provide devm_platform_ioremap_resource()",
-it was wrap platform_get_resource() and devm_ioremap_resource() as
-single helper devm_platform_ioremap_resource(). but now, many drivers
-still used platform_get_resource() and devm_ioremap_resource()
-together in the kernel tree. The reason can not be replaced is they
-still need use the resource variables obtained by platform_get_resource().
-so provide this helper.
+It will cause null-ptr-deref in resource_size(), if platform_get_resource()
+returns NULL, move calling resource_size() after devm_ioremap_resource() that
+will check 'res' to avoid null-ptr-deref.
+And use devm_platform_get_and_ioremap_resource() to simplify code.
 
-Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Suggested-by: Sergei Shtylyov <sergei.shtylyov@cogentembedded.com>
-Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Dejin Zheng <zhengdejin5@gmail.com>
-Link: https://lore.kernel.org/r/20200323160612.17277-2-zhengdejin5@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: 2d47b79d2bd3 ("i2c: mux: reg: check return value after calling platform_get_resource()")
+Fixes: b3fdd32799d8 ("i2c: mux: Add register-based mux i2c-mux-reg")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/platform.c         | 22 ++++++++++++++++++++++
- include/linux/platform_device.h |  3 +++
- 2 files changed, 25 insertions(+)
+ drivers/i2c/muxes/i2c-mux-reg.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/base/platform.c b/drivers/base/platform.c
-index ea83c279b8a3..c4e398f3de50 100644
---- a/drivers/base/platform.c
-+++ b/drivers/base/platform.c
-@@ -80,6 +80,28 @@ struct resource *platform_get_resource(struct platform_device *dev,
- }
- EXPORT_SYMBOL_GPL(platform_get_resource);
+diff --git a/drivers/i2c/muxes/i2c-mux-reg.c b/drivers/i2c/muxes/i2c-mux-reg.c
+index 5653295b01cd..6d5cb40bfc96 100644
+--- a/drivers/i2c/muxes/i2c-mux-reg.c
++++ b/drivers/i2c/muxes/i2c-mux-reg.c
+@@ -191,13 +191,12 @@ static int i2c_mux_reg_probe(struct platform_device *pdev)
+ 	if (!mux->data.reg) {
+ 		dev_info(&pdev->dev,
+ 			"Register not set, using platform resource\n");
+-		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+-		mux->data.reg_size = resource_size(res);
+-		mux->data.reg = devm_ioremap_resource(&pdev->dev, res);
++		mux->data.reg = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
+ 		if (IS_ERR(mux->data.reg)) {
+ 			ret = PTR_ERR(mux->data.reg);
+ 			goto err_put_parent;
+ 		}
++		mux->data.reg_size = resource_size(res);
+ 	}
  
-+/**
-+ * devm_platform_get_and_ioremap_resource - call devm_ioremap_resource() for a
-+ *					    platform device and get resource
-+ *
-+ * @pdev: platform device to use both for memory resource lookup as well as
-+ *        resource management
-+ * @index: resource index
-+ * @res: optional output parameter to store a pointer to the obtained resource.
-+ */
-+void __iomem *
-+devm_platform_get_and_ioremap_resource(struct platform_device *pdev,
-+				unsigned int index, struct resource **res)
-+{
-+	struct resource *r;
-+
-+	r = platform_get_resource(pdev, IORESOURCE_MEM, index);
-+	if (res)
-+		*res = r;
-+	return devm_ioremap_resource(&pdev->dev, r);
-+}
-+EXPORT_SYMBOL_GPL(devm_platform_get_and_ioremap_resource);
-+
- /**
-  * devm_platform_ioremap_resource - call devm_ioremap_resource() for a platform
-  *				    device
-diff --git a/include/linux/platform_device.h b/include/linux/platform_device.h
-index 9e5c98fcea8c..1de7ea6efdc9 100644
---- a/include/linux/platform_device.h
-+++ b/include/linux/platform_device.h
-@@ -52,6 +52,9 @@ extern void arch_setup_pdev_archdata(struct platform_device *);
- extern struct resource *platform_get_resource(struct platform_device *,
- 					      unsigned int, unsigned int);
- extern void __iomem *
-+devm_platform_get_and_ioremap_resource(struct platform_device *pdev,
-+				unsigned int index, struct resource **res);
-+extern void __iomem *
- devm_platform_ioremap_resource(struct platform_device *pdev,
- 			       unsigned int index);
- extern int platform_get_irq(struct platform_device *, unsigned int);
+ 	if (mux->data.reg_size != 4 && mux->data.reg_size != 2 &&
 -- 
 2.35.1
 
