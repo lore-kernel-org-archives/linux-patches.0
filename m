@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A51EC46B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:05:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AB1DC43396;
-	Mon, 16 Jan 2023 16:05:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CCA446B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:05:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C41A6C433EF;
+	Mon, 16 Jan 2023 16:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885131;
-	bh=0ZTGjfGJJGVZANrCTIYSMnxH7e+nyhQhm9wZgo81YrM=;
+	s=korg; t=1673885134;
+	bh=q7TidXVstAgk4U9ExAfdhOOwGbV9ytvncriebcudRTE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mca0h4K7uZb2fycXl+dAiCFg2t7F9o9HntPagkdmGwiDOWib/WAQe4tcqSv3WAC+0
-	 KKmIOtnYJzgbsODBcieKuLfOfY+gQ54v7DLfjAJ8Qo9ZuiOcsDqE8wyipBT3KPBTd0
-	 k/uIJQdGvsJP2nRc2FPhh5cYo2dw/HcRej/nFtQg=
+	b=MrFDMvrwkIEHU7JQwk4km6ocuNQJLZwwub0/wfPVk351rqRu6GNAFgb+j2O6vUO1w
+	 TDb90CIjKAK3a8G7BlsuVikDEDLCZtYCXE3tXImxVuz8i1sr2yLWUh+bK1UlaEwOwL
+	 kE50pj0IsXGWEvdnDQp9Yxo+DJNbriOjDMFNevBg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	Mark Pearson <markpearson@lenovo.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 5.15 86/86] pinctrl: amd: Add dynamic debugging for active GPIOs
-Date: Mon, 16 Jan 2023 16:52:00 +0100
-Message-Id: <20230116154750.587154272@linuxfoundation.org>
+	Willy Tarreau <w@1wt.eu>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 63/86] tools/nolibc/arch: mark the _start symbol as weak
+Date: Mon, 16 Jan 2023 16:51:37 +0100
+Message-Id: <20230116154749.675630224@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -37,84 +35,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Willy Tarreau <w@1wt.eu>
 
-commit 1d66e379731f79ae5039a869c0fde22a4f6a6a91 upstream.
+[ Upstream commit dffeb81af5fe5eedccf5ea4a8a120d8c3accd26e ]
 
-Some laptops have been reported to wake up from s2idle when plugging
-in the AC adapter or by closing the lid.  This is a surprising
-behavior that is further clarified by commit cb3e7d624c3ff ("PM:
-wakeup: Add extra debugging statement for multiple active IRQs").
+By doing so we can link together multiple C files that have been compiled
+with nolibc and which each have a _start symbol.
 
-With that commit in place the following interaction can be seen
-when the lid is closed:
-
-[   28.946038] PM: suspend-to-idle
-[   28.946083] ACPI: EC: ACPI EC GPE status set
-[   28.946101] ACPI: PM: Rearming ACPI SCI for wakeup
-[   28.950152] Timekeeping suspended for 3.320 seconds
-[   28.950152] PM: Triggering wakeup from IRQ 9
-[   28.950152] ACPI: EC: ACPI EC GPE status set
-[   28.950152] ACPI: EC: ACPI EC GPE dispatched
-[   28.995057] ACPI: EC: ACPI EC work flushed
-[   28.995075] ACPI: PM: Rearming ACPI SCI for wakeup
-[   28.995131] PM: Triggering wakeup from IRQ 9
-[   28.995271] ACPI: EC: ACPI EC GPE status set
-[   28.995291] ACPI: EC: ACPI EC GPE dispatched
-[   29.098556] ACPI: EC: ACPI EC work flushed
-[   29.207020] ACPI: EC: ACPI EC work flushed
-[   29.207037] ACPI: PM: Rearming ACPI SCI for wakeup
-[   29.211095] Timekeeping suspended for 0.739 seconds
-[   29.211095] PM: Triggering wakeup from IRQ 9
-[   29.211079] PM: Triggering wakeup from IRQ 7
-[   29.211095] ACPI: PM: ACPI non-EC GPE wakeup
-[   29.211095] PM: resume from suspend-to-idle
-
-* IRQ9 on this laptop is used for the ACPI SCI.
-* IRQ7 on this laptop is used for the GPIO controller.
-
-What has occurred is when the lid was closed the EC woke up the
-SoC from it's deepest sleep state and the kernel's s2idle loop
-processed all EC events.  When it was finished processing EC events,
-it checked for any other reasons to wake (break the s2idle loop).
-
-The IRQ for the GPIO controller was active so the loop broke, and
-then this IRQ was processed.  This is not a kernel bug but it is
-certainly a surprising behavior, and to better debug it we should
-have a dynamic debugging message that we can enact to catch it.
-
-Acked-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Acked-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Acked-by: Mark Pearson <markpearson@lenovo.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20221013134729.5592-2-mario.limonciello@amd.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Willy Tarreau <w@1wt.eu>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
+Stable-dep-of: 184177c3d6e0 ("tools/nolibc: restore mips branch ordering in the _start block")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-amd.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ tools/include/nolibc/arch-aarch64.h | 1 +
+ tools/include/nolibc/arch-arm.h     | 1 +
+ tools/include/nolibc/arch-i386.h    | 1 +
+ tools/include/nolibc/arch-mips.h    | 1 +
+ tools/include/nolibc/arch-riscv.h   | 1 +
+ tools/include/nolibc/arch-x86_64.h  | 1 +
+ 6 files changed, 6 insertions(+)
 
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -627,13 +627,15 @@ static bool do_amd_gpio_irq_handler(int
- 		/* Each status bit covers four pins */
- 		for (i = 0; i < 4; i++) {
- 			regval = readl(regs + i);
--			/* caused wake on resume context for shared IRQ */
--			if (irq < 0 && (regval & BIT(WAKE_STS_OFF))) {
-+
-+			if (regval & PIN_IRQ_PENDING)
- 				dev_dbg(&gpio_dev->pdev->dev,
--					"Waking due to GPIO %d: 0x%x",
-+					"GPIO %d is active: 0x%x",
- 					irqnr + i, regval);
-+
-+			/* caused wake on resume context for shared IRQ */
-+			if (irq < 0 && (regval & BIT(WAKE_STS_OFF)))
- 				return true;
--			}
+diff --git a/tools/include/nolibc/arch-aarch64.h b/tools/include/nolibc/arch-aarch64.h
+index 443de5fb7f54..87d9e434820c 100644
+--- a/tools/include/nolibc/arch-aarch64.h
++++ b/tools/include/nolibc/arch-aarch64.h
+@@ -183,6 +183,7 @@ struct sys_stat_struct {
  
- 			if (!(regval & PIN_IRQ_PENDING) ||
- 			    !(regval & BIT(INTERRUPT_MASK_OFF)))
+ /* startup code */
+ asm(".section .text\n"
++    ".weak _start\n"
+     ".global _start\n"
+     "_start:\n"
+     "ldr x0, [sp]\n"              // argc (x0) was in the stack
+diff --git a/tools/include/nolibc/arch-arm.h b/tools/include/nolibc/arch-arm.h
+index 66f687ad987f..001a3c8c9ad5 100644
+--- a/tools/include/nolibc/arch-arm.h
++++ b/tools/include/nolibc/arch-arm.h
+@@ -176,6 +176,7 @@ struct sys_stat_struct {
+ 
+ /* startup code */
+ asm(".section .text\n"
++    ".weak _start\n"
+     ".global _start\n"
+     "_start:\n"
+ #if defined(__THUMBEB__) || defined(__THUMBEL__)
+diff --git a/tools/include/nolibc/arch-i386.h b/tools/include/nolibc/arch-i386.h
+index 32f42e2cee26..d7e4d53325a3 100644
+--- a/tools/include/nolibc/arch-i386.h
++++ b/tools/include/nolibc/arch-i386.h
+@@ -175,6 +175,7 @@ struct sys_stat_struct {
+  *
+  */
+ asm(".section .text\n"
++    ".weak _start\n"
+     ".global _start\n"
+     "_start:\n"
+     "pop %eax\n"                // argc   (first arg, %eax)
+diff --git a/tools/include/nolibc/arch-mips.h b/tools/include/nolibc/arch-mips.h
+index e330201dde6a..c9a6aac87c6d 100644
+--- a/tools/include/nolibc/arch-mips.h
++++ b/tools/include/nolibc/arch-mips.h
+@@ -190,6 +190,7 @@ struct sys_stat_struct {
+ 
+ /* startup code, note that it's called __start on MIPS */
+ asm(".section .text\n"
++    ".weak __start\n"
+     ".set nomips16\n"
+     ".global __start\n"
+     ".set    noreorder\n"
+diff --git a/tools/include/nolibc/arch-riscv.h b/tools/include/nolibc/arch-riscv.h
+index 9d5ff78f606b..bc10b7b5706d 100644
+--- a/tools/include/nolibc/arch-riscv.h
++++ b/tools/include/nolibc/arch-riscv.h
+@@ -184,6 +184,7 @@ struct sys_stat_struct {
+ 
+ /* startup code */
+ asm(".section .text\n"
++    ".weak _start\n"
+     ".global _start\n"
+     "_start:\n"
+     ".option push\n"
+diff --git a/tools/include/nolibc/arch-x86_64.h b/tools/include/nolibc/arch-x86_64.h
+index 83c4b458ada7..fe517c16cd4d 100644
+--- a/tools/include/nolibc/arch-x86_64.h
++++ b/tools/include/nolibc/arch-x86_64.h
+@@ -198,6 +198,7 @@ struct sys_stat_struct {
+  *
+  */
+ asm(".section .text\n"
++    ".weak _start\n"
+     ".global _start\n"
+     "_start:\n"
+     "pop %rdi\n"                // argc   (first arg, %rdi)
+-- 
+2.35.1
+
 
 
