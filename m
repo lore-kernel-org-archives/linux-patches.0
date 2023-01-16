@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D32F6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0751C433D2;
-	Mon, 16 Jan 2023 16:56:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04D506FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80066C43392;
+	Mon, 16 Jan 2023 16:56:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888163;
-	bh=4ET0kpNVHBbpQ+0r44lPHUyImsApIz/cgWCGaTSX52g=;
+	s=korg; t=1673888165;
+	bh=nOPLihvQ6d/5U4RIcg0Btoph0GScMPaaWQ4yLov8oqk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XErjMLp/4BJ4Uiwx11G8RchcCsuwZj2LCRwU7VPXok5MLfPTnaVp3aSUzh8eELAMR
-	 IkAJvBF0bpIXkB45ViBQ/6wmvqSSS1Of5Ac/OiMHV1K/vGyWmHqn/qAHWQh+jlsB4b
-	 WRi5moFsNfc5ZeytpHLLgS0UBRDbSEH+k7q5Nt4c=
+	b=zvXCHOF3Bvq35HcyG67pnzCC3jwaQA5527wHPQF7Vs8sv/CdMtv/GZbsihM+YMhSC
+	 UFpd5GGI0JnlyAeWK8nVp6dKdN4zMZItuGfWWBwe4UH/NJUFaDRUu+zBfh5UJ6TeXE
+	 ucaYsF9ZlQfAyWD7W64+TOZwLITm4IOBnb16TS2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>,
-	Jack Wang <jinpu.wang@ionos.com>,
-	Song Liu <song@kernel.org>
-Subject: [PATCH 4.19 394/521] md/bitmap: Fix bitmap chunk size overflow issues
-Date: Mon, 16 Jan 2023 16:50:56 +0100
-Message-Id: <20230116154904.721232682@linuxfoundation.org>
+	Zhang Yuchen <zhangyuchen.lcr@bytedance.com>,
+	Corey Minyard <cminyard@mvista.com>
+Subject: [PATCH 4.19 395/521] ipmi: fix long wait in unload when IPMI disconnect
+Date: Mon, 16 Jan 2023 16:50:57 +0100
+Message-Id: <20230116154904.760422150@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,99 +34,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>
+From: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
 
-commit 4555211190798b6b6fa2c37667d175bf67945c78 upstream.
+commit f6f1234d98cce69578bfac79df147a1f6660596c upstream.
 
-- limit bitmap chunk size internal u64 variable to values not overflowing
-  the u32 bitmap superblock structure variable stored on persistent media
-- assign bitmap chunk size internal u64 variable from unsigned values to
-  avoid possible sign extension artifacts when assigning from a s32 value
+When fixing the problem mentioned in PATCH1, we also found
+the following problem:
 
-The bug has been there since at least kernel 4.0.
-Steps to reproduce it:
-1: mdadm -C /dev/mdx -l 1 --bitmap=internal --bitmap-chunk=256M -e 1.2
--n2 /dev/rnbd1 /dev/rnbd2
-2 resize member device rnbd1 and rnbd2 to 8 TB
-3 mdadm --grow /dev/mdx --size=max
+If the IPMI is disconnected and in the sending process, the
+uninstallation driver will be stuck for a long time.
 
-The bitmap_chunksize will overflow without patch.
+The main problem is that uninstalling the driver waits for curr_msg to
+be sent or HOSED. After stopping tasklet, the only place to trigger the
+timeout mechanism is the circular poll in shutdown_smi.
 
+The poll function delays 10us and calls smi_event_handler(smi_info,10).
+Smi_event_handler deducts 10us from kcs->ibf_timeout.
+
+But the poll func is followed by schedule_timeout_uninterruptible(1).
+The time consumed here is not counted in kcs->ibf_timeout.
+
+So when 10us is deducted from kcs->ibf_timeout, at least 1 jiffies has
+actually passed. The waiting time has increased by more than a
+hundredfold.
+
+Now instead of calling poll(). call smi_event_handler() directly and
+calculate the elapsed time.
+
+For verification, you can directly use ebpf to check the kcs->
+ibf_timeout for each call to kcs_event() when IPMI is disconnected.
+Decrement at normal rate before unloading. The decrement rate becomes
+very slow after unloading.
+
+  $ bpftrace -e 'kprobe:kcs_event {printf("kcs->ibftimeout : %d\n",
+      *(arg0+584));}'
+
+Signed-off-by: Zhang Yuchen <zhangyuchen.lcr@bytedance.com>
+Message-Id: <20221007092617.87597-3-zhangyuchen.lcr@bytedance.com>
+Signed-off-by: Corey Minyard <cminyard@mvista.com>
 Cc: stable@vger.kernel.org
-
-Signed-off-by: Florian-Ewald Mueller <florian-ewald.mueller@ionos.com>
-Signed-off-by: Jack Wang <jinpu.wang@ionos.com>
-Signed-off-by: Song Liu <song@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/md-bitmap.c |   20 ++++++++++++--------
- 1 file changed, 12 insertions(+), 8 deletions(-)
+ drivers/char/ipmi/ipmi_si_intf.c |   27 +++++++++++++++++++--------
+ 1 file changed, 19 insertions(+), 8 deletions(-)
 
---- a/drivers/md/md-bitmap.c
-+++ b/drivers/md/md-bitmap.c
-@@ -488,7 +488,7 @@ void md_bitmap_print_sb(struct bitmap *b
- 	sb = kmap_atomic(bitmap->storage.sb_page);
- 	pr_debug("%s: bitmap file superblock:\n", bmname(bitmap));
- 	pr_debug("         magic: %08x\n", le32_to_cpu(sb->magic));
--	pr_debug("       version: %d\n", le32_to_cpu(sb->version));
-+	pr_debug("       version: %u\n", le32_to_cpu(sb->version));
- 	pr_debug("          uuid: %08x.%08x.%08x.%08x\n",
- 		 le32_to_cpu(*(__u32 *)(sb->uuid+0)),
- 		 le32_to_cpu(*(__u32 *)(sb->uuid+4)),
-@@ -499,11 +499,11 @@ void md_bitmap_print_sb(struct bitmap *b
- 	pr_debug("events cleared: %llu\n",
- 		 (unsigned long long) le64_to_cpu(sb->events_cleared));
- 	pr_debug("         state: %08x\n", le32_to_cpu(sb->state));
--	pr_debug("     chunksize: %d B\n", le32_to_cpu(sb->chunksize));
--	pr_debug("  daemon sleep: %ds\n", le32_to_cpu(sb->daemon_sleep));
-+	pr_debug("     chunksize: %u B\n", le32_to_cpu(sb->chunksize));
-+	pr_debug("  daemon sleep: %us\n", le32_to_cpu(sb->daemon_sleep));
- 	pr_debug("     sync size: %llu KB\n",
- 		 (unsigned long long)le64_to_cpu(sb->sync_size)/2);
--	pr_debug("max write behind: %d\n", le32_to_cpu(sb->write_behind));
-+	pr_debug("max write behind: %u\n", le32_to_cpu(sb->write_behind));
- 	kunmap_atomic(sb);
+--- a/drivers/char/ipmi/ipmi_si_intf.c
++++ b/drivers/char/ipmi/ipmi_si_intf.c
+@@ -2187,6 +2187,20 @@ skip_fallback_noirq:
  }
+ module_init(init_ipmi_si);
  
-@@ -2101,7 +2101,8 @@ int md_bitmap_resize(struct bitmap *bitm
- 			bytes = DIV_ROUND_UP(chunks, 8);
- 			if (!bitmap->mddev->bitmap_info.external)
- 				bytes += sizeof(bitmap_super_t);
--		} while (bytes > (space << 9));
-+		} while (bytes > (space << 9) && (chunkshift + BITMAP_BLOCK_SHIFT) <
-+			(BITS_PER_BYTE * sizeof(((bitmap_super_t *)0)->chunksize) - 1));
- 	} else
- 		chunkshift = ffz(~chunksize) - BITMAP_BLOCK_SHIFT;
++static void wait_msg_processed(struct smi_info *smi_info)
++{
++	unsigned long jiffies_now;
++	long time_diff;
++
++	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
++		jiffies_now = jiffies;
++		time_diff = (((long)jiffies_now - (long)smi_info->last_timeout_jiffies)
++		     * SI_USEC_PER_JIFFY);
++		smi_event_handler(smi_info, time_diff);
++		schedule_timeout_uninterruptible(1);
++	}
++}
++
+ static void shutdown_smi(void *send_info)
+ {
+ 	struct smi_info *smi_info = send_info;
+@@ -2221,16 +2235,13 @@ static void shutdown_smi(void *send_info
+ 	 * in the BMC.  Note that timers and CPU interrupts are off,
+ 	 * so no need for locks.
+ 	 */
+-	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
+-		poll(smi_info);
+-		schedule_timeout_uninterruptible(1);
+-	}
++	wait_msg_processed(smi_info);
++
+ 	if (smi_info->handlers)
+ 		disable_si_irq(smi_info);
+-	while (smi_info->curr_msg || (smi_info->si_state != SI_NORMAL)) {
+-		poll(smi_info);
+-		schedule_timeout_uninterruptible(1);
+-	}
++
++	wait_msg_processed(smi_info);
++
+ 	if (smi_info->handlers)
+ 		smi_info->handlers->cleanup(smi_info->si_sm);
  
-@@ -2146,7 +2147,7 @@ int md_bitmap_resize(struct bitmap *bitm
- 	bitmap->counts.missing_pages = pages;
- 	bitmap->counts.chunkshift = chunkshift;
- 	bitmap->counts.chunks = chunks;
--	bitmap->mddev->bitmap_info.chunksize = 1 << (chunkshift +
-+	bitmap->mddev->bitmap_info.chunksize = 1UL << (chunkshift +
- 						     BITMAP_BLOCK_SHIFT);
- 
- 	blocks = min(old_counts.chunks << old_counts.chunkshift,
-@@ -2172,8 +2173,8 @@ int md_bitmap_resize(struct bitmap *bitm
- 				bitmap->counts.missing_pages = old_counts.pages;
- 				bitmap->counts.chunkshift = old_counts.chunkshift;
- 				bitmap->counts.chunks = old_counts.chunks;
--				bitmap->mddev->bitmap_info.chunksize = 1 << (old_counts.chunkshift +
--									     BITMAP_BLOCK_SHIFT);
-+				bitmap->mddev->bitmap_info.chunksize =
-+					1UL << (old_counts.chunkshift + BITMAP_BLOCK_SHIFT);
- 				blocks = old_counts.chunks << old_counts.chunkshift;
- 				pr_warn("Could not pre-allocate in-memory bitmap for cluster raid\n");
- 				break;
-@@ -2499,6 +2500,9 @@ chunksize_store(struct mddev *mddev, con
- 	if (csize < 512 ||
- 	    !is_power_of_2(csize))
- 		return -EINVAL;
-+	if (BITS_PER_LONG > 32 && csize >= (1ULL << (BITS_PER_BYTE *
-+		sizeof(((bitmap_super_t *)0)->chunksize))))
-+		return -EOVERFLOW;
- 	mddev->bitmap_info.chunksize = csize;
- 	return len;
- }
 
 
