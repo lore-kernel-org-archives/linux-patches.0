@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3936FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:54:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D97A8C433EF;
-	Mon, 16 Jan 2023 16:54:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2A116FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:54:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76380C433D2;
+	Mon, 16 Jan 2023 16:54:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888074;
-	bh=L5ZrilAx5jf6RcAS90Y8P9B0ybULVQKJV3TNiqw/meM=;
+	s=korg; t=1673888076;
+	bh=JFv5UQjC1zr43VIevODFp4eM6dUcpoUpWz86JDUU4TM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nar/RfUg9/tusX1PspLCjbNEzEFsodDtLrtN+J4cy3BKgA5j4iVe5kseGCZ6g6ZMQ
-	 qra8NIAKFfW5wc6JK2I5q2hOXZT0hZb6i9wA0zKsk20Fo7gkY3913w7XB1htaZqVm9
-	 vtB0EiycSPfTtBIT+W2vzWfPgZ4cYjIuG+OqPdpo=
+	b=o2fgZWipdJ3uCHfzxeFS4BHqORXntAnu/LZunV4a58GGzu5QaQEBZtFmq3yEWuKVf
+	 2Dr3RYa7GksfW6TIhIwgd25ITQEoCXU9Md6UbjoReNzCy/pMS2mZAWnEfs+AL1YhoC
+	 IcDQR1BcJbMC723G5SuVtTfqURIyFutHlJoYd5RM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+fce48a3dd3368645bd6c@syzkaller.appspotmail.com,
-	Lin Ma <linma@zju.edu.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 4.19 361/521] media: dvbdev: fix refcnt bug
-Date: Mon, 16 Jan 2023 16:50:23 +0100
-Message-Id: <20230116154903.226101897@linuxfoundation.org>
+	Adam Vodopjan <grozzly@protonmail.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 362/521] ata: ahci: Fix PCS quirk application for suspend
+Date: Mon, 16 Jan 2023 16:50:24 +0100
+Message-Id: <20230116154903.275696109@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,63 +35,148 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Adam Vodopjan <grozzly@protonmail.com>
 
-commit 3a664569b71b0a52be5ffb9fb87cc4f83d29bd71 upstream.
+[ Upstream commit 37e14e4f3715428b809e4df9a9958baa64c77d51 ]
 
-Previous commit initialize the dvbdev->ref before the template copy,
-which will overwrite the reference and cause refcnt bug.
+Since kernel 5.3.4 my laptop (ICH8M controller) does not see Kingston
+SV300S37A60G SSD disk connected into a SATA connector on wake from
+suspend.  The problem was introduced in c312ef176399 ("libata/ahci: Drop
+PCS quirk for Denverton and beyond"): the quirk is not applied on wake
+from suspend as it originally was.
 
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 0 PID: 1 at lib/refcount.c:25 refcount_warn_saturate+0x17c/0x1f0 lib/refcount.c:25
-Modules linked in:
-CPU: 0 PID: 1 Comm: swapper/0 Not tainted 6.1.0-rc6-next-20221128-syzkaller #0
-...
-RIP: 0010:refcount_warn_saturate+0x17c/0x1f0 lib/refcount.c:25
-RSP: 0000:ffffc900000678d0 EFLAGS: 00010282
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: ffff88813ff58000 RSI: ffffffff81660e7c RDI: fffff5200000cf0c
-RBP: ffff888022a45010 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000080000000 R11: 0000000000000000 R12: 0000000000000001
-R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000001
-FS:  0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: ffff88823ffff000 CR3: 000000000c48e000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- __refcount_add include/linux/refcount.h:199 [inline]
- __refcount_inc include/linux/refcount.h:250 [inline]
- refcount_inc include/linux/refcount.h:267 [inline]
- kref_get include/linux/kref.h:45 [inline]
- dvb_device_get drivers/media/dvb-core/dvbdev.c:585 [inline]
- dvb_register_device+0xe83/0x16e0 drivers/media/dvb-core/dvbdev.c:517
-...
+It is worth to mention the commit contained another bug: the quirk is
+not applied at all to controllers which require it. The fix commit
+09d6ac8dc51a ("libata/ahci: Fix PCS quirk application") landed in 5.3.8.
+So testing my patch anywhere between commits c312ef176399 and
+09d6ac8dc51a is pointless.
 
-Just place the kref_init at correct position.
+Not all disks trigger the problem. For example nothing bad happens with
+Western Digital WD5000LPCX HDD.
 
-Reported-by: syzbot+fce48a3dd3368645bd6c@syzkaller.appspotmail.com
-Fixes: 0fc044b2b5e2 ("media: dvbdev: adopts refcnt to avoid UAF")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Test hardware:
+- Acer 5920G with ICH8M SATA controller
+- sda: some SATA HDD connnected into the DVD drive IDE port with a
+  SATA-IDE caddy. It is a boot disk
+- sdb: Kingston SV300S37A60G SSD connected into the only SATA port
+
+Sample "dmesg --notime | grep -E '^(sd |ata)'" output on wake:
+
+sd 0:0:0:0: [sda] Starting disk
+sd 2:0:0:0: [sdb] Starting disk
+ata4: SATA link down (SStatus 4 SControl 300)
+ata3: SATA link down (SStatus 4 SControl 300)
+ata1.00: ACPI cmd ef/03:0c:00:00:00:a0 (SET FEATURES) filtered out
+ata1.00: ACPI cmd ef/03:42:00:00:00:a0 (SET FEATURES) filtered out
+ata1: FORCE: cable set to 80c
+ata5: SATA link down (SStatus 0 SControl 300)
+ata3: SATA link down (SStatus 4 SControl 300)
+ata3: SATA link down (SStatus 4 SControl 300)
+ata3.00: disabled
+sd 2:0:0:0: rejecting I/O to offline device
+ata3.00: detaching (SCSI 2:0:0:0)
+sd 2:0:0:0: [sdb] Start/Stop Unit failed: Result: hostbyte=DID_NO_CONNECT
+	driverbyte=DRIVER_OK
+sd 2:0:0:0: [sdb] Synchronizing SCSI cache
+sd 2:0:0:0: [sdb] Synchronize Cache(10) failed: Result:
+	hostbyte=DID_BAD_TARGET driverbyte=DRIVER_OK
+sd 2:0:0:0: [sdb] Stopping disk
+sd 2:0:0:0: [sdb] Start/Stop Unit failed: Result: hostbyte=DID_BAD_TARGET
+	driverbyte=DRIVER_OK
+
+Commit c312ef176399 dropped ahci_pci_reset_controller() which internally
+calls ahci_reset_controller() and applies the PCS quirk if needed after
+that. It was called each time a reset was required instead of just
+ahci_reset_controller(). This patch puts the function back in place.
+
+Fixes: c312ef176399 ("libata/ahci: Drop PCS quirk for Denverton and beyond")
+Signed-off-by: Adam Vodopjan <grozzly@protonmail.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvbdev.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/ahci.c | 32 +++++++++++++++++++++++---------
+ 1 file changed, 23 insertions(+), 9 deletions(-)
 
---- a/drivers/media/dvb-core/dvbdev.c
-+++ b/drivers/media/dvb-core/dvbdev.c
-@@ -490,8 +490,8 @@ int dvb_register_device(struct dvb_adapt
- 		return -ENOMEM;
- 	}
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 505920d4530f..13fb983b3413 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -97,6 +97,7 @@ enum board_ids {
+ static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent);
+ static void ahci_remove_one(struct pci_dev *dev);
+ static void ahci_shutdown_one(struct pci_dev *dev);
++static void ahci_intel_pcs_quirk(struct pci_dev *pdev, struct ahci_host_priv *hpriv);
+ static int ahci_vt8251_hardreset(struct ata_link *link, unsigned int *class,
+ 				 unsigned long deadline);
+ static int ahci_avn_hardreset(struct ata_link *link, unsigned int *class,
+@@ -655,6 +656,25 @@ static void ahci_pci_save_initial_config(struct pci_dev *pdev,
+ 	ahci_save_initial_config(&pdev->dev, hpriv);
+ }
  
--	kref_init(&dvbdev->ref);
- 	memcpy(dvbdev, template, sizeof(struct dvb_device));
-+	kref_init(&dvbdev->ref);
- 	dvbdev->type = type;
- 	dvbdev->id = id;
- 	dvbdev->adapter = adap;
++static int ahci_pci_reset_controller(struct ata_host *host)
++{
++	struct pci_dev *pdev = to_pci_dev(host->dev);
++	struct ahci_host_priv *hpriv = host->private_data;
++	int rc;
++
++	rc = ahci_reset_controller(host);
++	if (rc)
++		return rc;
++
++	/*
++	 * If platform firmware failed to enable ports, try to enable
++	 * them here.
++	 */
++	ahci_intel_pcs_quirk(pdev, hpriv);
++
++	return 0;
++}
++
+ static void ahci_pci_init_controller(struct ata_host *host)
+ {
+ 	struct ahci_host_priv *hpriv = host->private_data;
+@@ -857,7 +877,7 @@ static int ahci_pci_device_runtime_resume(struct device *dev)
+ 	struct ata_host *host = pci_get_drvdata(pdev);
+ 	int rc;
+ 
+-	rc = ahci_reset_controller(host);
++	rc = ahci_pci_reset_controller(host);
+ 	if (rc)
+ 		return rc;
+ 	ahci_pci_init_controller(host);
+@@ -892,7 +912,7 @@ static int ahci_pci_device_resume(struct device *dev)
+ 		ahci_mcp89_apple_enable(pdev);
+ 
+ 	if (pdev->dev.power.power_state.event == PM_EVENT_SUSPEND) {
+-		rc = ahci_reset_controller(host);
++		rc = ahci_pci_reset_controller(host);
+ 		if (rc)
+ 			return rc;
+ 
+@@ -1769,12 +1789,6 @@ static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	/* save initial config */
+ 	ahci_pci_save_initial_config(pdev, hpriv);
+ 
+-	/*
+-	 * If platform firmware failed to enable ports, try to enable
+-	 * them here.
+-	 */
+-	ahci_intel_pcs_quirk(pdev, hpriv);
+-
+ 	/* prepare host */
+ 	if (hpriv->cap & HOST_CAP_NCQ) {
+ 		pi.flags |= ATA_FLAG_NCQ;
+@@ -1884,7 +1898,7 @@ static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	if (rc)
+ 		return rc;
+ 
+-	rc = ahci_reset_controller(host);
++	rc = ahci_pci_reset_controller(host);
+ 	if (rc)
+ 		return rc;
+ 
+-- 
+2.35.1
+
 
 
