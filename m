@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3056F6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:37:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6542C433EF;
-	Mon, 16 Jan 2023 16:37:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9196FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:37:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50E73C433F2;
+	Mon, 16 Jan 2023 16:37:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887040;
-	bh=LUkhsISi78/oVMK7aY/bVdABaTLc3Ba0egGlKjOyXN0=;
+	s=korg; t=1673887042;
+	bh=PNyLoEtsp9Yk9Aokln5PUM6DjkVHmkJTr5YmwbEREzg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VcxZzu3y8KYk9FutznBBFst8Snp2udiEF9PIubYQFXAnbJicjCbwnd8L0zj3arJrj
-	 +fbxJQcG+erYuaYF8v5WUgjIFvSrfyEBzcH0hXV+zg4rzWhLb3lt+ElAZM4HTxort2
-	 okKSrmFrBN+uMWP+Yb52uS0jb5WMZFBPYl1vuMtY=
+	b=CdOvOnhn3fWa6PaxdhofNauijkY8zL3/qSmpSlIqftf9zudFvrCnu+NIYU3nlPCCK
+	 QEFaOoAvOLGrrefoJVlcOvObFBW8VH87jRc+5IWy0Uc/TK+ZWQzHTjxC6bGtEC7JCV
+	 iel3mDqGPvq5aX4hgc/1UiEOjJockkdxq6L3n1HU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shuang Li <shuali@redhat.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>
-Subject: [PATCH 5.4 658/658] tipc: call tipc_lxc_xmit without holding node_read_lock
-Date: Mon, 16 Jan 2023 16:52:26 +0100
-Message-Id: <20230116154939.555214927@linuxfoundation.org>
+	James Morse <james.morse@arm.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Borislav Petkov <bp@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 644/658] x86/resctrl: Use task_curr() instead of task_struct->on_cpu to prevent unnecessary IPI
+Date: Mon, 16 Jan 2023 16:52:12 +0100
+Message-Id: <20230116154938.954992749@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,140 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-commit 88956177db179e4eba7cd590971961857d1565b8 upstream.
+[ Upstream commit e0ad6dc8969f790f14bddcfd7ea284b7e5f88a16 ]
 
-When sending packets between nodes in netns, it calls tipc_lxc_xmit() for
-peer node to receive the packets where tipc_sk_mcast_rcv()/tipc_sk_rcv()
-might be called, and it's pretty much like in tipc_rcv().
+James reported in [1] that there could be two tasks running on the same CPU
+with task_struct->on_cpu set. Using task_struct->on_cpu as a test if a task
+is running on a CPU may thus match the old task for a CPU while the
+scheduler is running and IPI it unnecessarily.
 
-Currently the local 'node rw lock' is held during calling tipc_lxc_xmit()
-to protect the peer_net not being freed by another thread. However, when
-receiving these packets, tipc_node_add_conn() might be called where the
-peer 'node rw lock' is acquired. Then a dead lock warning is triggered by
-lockdep detector, although it is not a real dead lock:
+task_curr() is the correct helper to use. While doing so move the #ifdef
+check of the CONFIG_SMP symbol to be a C conditional used to determine
+if this helper should be used to ensure the code is always checked for
+correctness by the compiler.
 
-    WARNING: possible recursive locking detected
-    --------------------------------------------
-    conn_server/1086 is trying to acquire lock:
-    ffff8880065cb020 (&n->lock#2){++--}-{2:2}, \
-                     at: tipc_node_add_conn.cold.76+0xaa/0x211 [tipc]
+[1] https://lore.kernel.org/lkml/a782d2f3-d2f6-795f-f4b1-9462205fd581@arm.com
 
-    but task is already holding lock:
-    ffff8880065cd020 (&n->lock#2){++--}-{2:2}, \
-                     at: tipc_node_xmit+0x285/0xb30 [tipc]
-
-    other info that might help us debug this:
-     Possible unsafe locking scenario:
-
-           CPU0
-           ----
-      lock(&n->lock#2);
-      lock(&n->lock#2);
-
-     *** DEADLOCK ***
-
-     May be due to missing lock nesting notation
-
-    4 locks held by conn_server/1086:
-     #0: ffff8880036d1e40 (sk_lock-AF_TIPC){+.+.}-{0:0}, \
-                          at: tipc_accept+0x9c0/0x10b0 [tipc]
-     #1: ffff8880036d5f80 (sk_lock-AF_TIPC/1){+.+.}-{0:0}, \
-                          at: tipc_accept+0x363/0x10b0 [tipc]
-     #2: ffff8880065cd020 (&n->lock#2){++--}-{2:2}, \
-                          at: tipc_node_xmit+0x285/0xb30 [tipc]
-     #3: ffff888012e13370 (slock-AF_TIPC){+...}-{2:2}, \
-                          at: tipc_sk_rcv+0x2da/0x1b40 [tipc]
-
-    Call Trace:
-     <TASK>
-     dump_stack_lvl+0x44/0x5b
-     __lock_acquire.cold.77+0x1f2/0x3d7
-     lock_acquire+0x1d2/0x610
-     _raw_write_lock_bh+0x38/0x80
-     tipc_node_add_conn.cold.76+0xaa/0x211 [tipc]
-     tipc_sk_finish_conn+0x21e/0x640 [tipc]
-     tipc_sk_filter_rcv+0x147b/0x3030 [tipc]
-     tipc_sk_rcv+0xbb4/0x1b40 [tipc]
-     tipc_lxc_xmit+0x225/0x26b [tipc]
-     tipc_node_xmit.cold.82+0x4a/0x102 [tipc]
-     __tipc_sendstream+0x879/0xff0 [tipc]
-     tipc_accept+0x966/0x10b0 [tipc]
-     do_accept+0x37d/0x590
-
-This patch avoids this warning by not holding the 'node rw lock' before
-calling tipc_lxc_xmit(). As to protect the 'peer_net', rcu_read_lock()
-should be enough, as in cleanup_net() when freeing the netns, it calls
-synchronize_rcu() before the free is continued.
-
-Also since tipc_lxc_xmit() is like the RX path in tipc_rcv(), it makes
-sense to call it under rcu_read_lock(). Note that the right lock order
-must be:
-
-   rcu_read_lock();
-   tipc_node_read_lock(n);
-   tipc_node_read_unlock(n);
-   tipc_lxc_xmit();
-   rcu_read_unlock();
-
-instead of:
-
-   tipc_node_read_lock(n);
-   rcu_read_lock();
-   tipc_node_read_unlock(n);
-   tipc_lxc_xmit();
-   rcu_read_unlock();
-
-and we have to call tipc_node_read_lock/unlock() twice in
-tipc_node_xmit().
-
-Fixes: f73b12812a3d ("tipc: improve throughput between nodes in netns")
-Reported-by: Shuang Li <shuali@redhat.com>
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/5bdd1f8fee9db695cfff4528a48c9b9d0523fb00.1670110641.git.lucien.xin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: James Morse <james.morse@arm.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Link: https://lkml.kernel.org/r/e9e68ce1441a73401e08b641cc3b9a3cf13fe6d4.1608243147.git.reinette.chatre@intel.com
+Stable-dep-of: fe1f0714385f ("x86/resctrl: Fix task CLOSID/RMID update race")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/node.c |   12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -1546,6 +1546,7 @@ int tipc_node_xmit(struct net *net, stru
- 	struct tipc_node *n;
- 	struct sk_buff_head xmitq;
- 	bool node_up = false;
-+	struct net *peer_net;
- 	int bearer_id;
- 	int rc;
+diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+index 28f786289fce..2c19f2ecfa03 100644
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -2178,19 +2178,15 @@ static void rdt_move_group_tasks(struct rdtgroup *from, struct rdtgroup *to,
+ 			t->closid = to->closid;
+ 			t->rmid = to->mon.rmid;
  
-@@ -1562,18 +1563,23 @@ int tipc_node_xmit(struct net *net, stru
- 		return -EHOSTUNREACH;
- 	}
- 
-+	rcu_read_lock();
- 	tipc_node_read_lock(n);
- 	node_up = node_is_up(n);
--	if (node_up && n->peer_net && check_net(n->peer_net)) {
-+	peer_net = n->peer_net;
-+	tipc_node_read_unlock(n);
-+	if (node_up && peer_net && check_net(peer_net)) {
- 		/* xmit inner linux container */
--		tipc_lxc_xmit(n->peer_net, list);
-+		tipc_lxc_xmit(peer_net, list);
- 		if (likely(skb_queue_empty(list))) {
--			tipc_node_read_unlock(n);
-+			rcu_read_unlock();
- 			tipc_node_put(n);
- 			return 0;
+-#ifdef CONFIG_SMP
+ 			/*
+-			 * This is safe on x86 w/o barriers as the ordering
+-			 * of writing to task_cpu() and t->on_cpu is
+-			 * reverse to the reading here. The detection is
+-			 * inaccurate as tasks might move or schedule
+-			 * before the smp function call takes place. In
+-			 * such a case the function call is pointless, but
++			 * If the task is on a CPU, set the CPU in the mask.
++			 * The detection is inaccurate as tasks might move or
++			 * schedule before the smp function call takes place.
++			 * In such a case the function call is pointless, but
+ 			 * there is no other side effect.
+ 			 */
+-			if (mask && t->on_cpu)
++			if (IS_ENABLED(CONFIG_SMP) && mask && task_curr(t))
+ 				cpumask_set_cpu(task_cpu(t), mask);
+-#endif
  		}
  	}
-+	rcu_read_unlock();
- 
-+	tipc_node_read_lock(n);
- 	bearer_id = n->active_links[selector & 1];
- 	if (unlikely(bearer_id == INVALID_BEARER_ID)) {
- 		tipc_node_read_unlock(n);
+ 	read_unlock(&tasklist_lock);
+-- 
+2.35.1
+
 
 
