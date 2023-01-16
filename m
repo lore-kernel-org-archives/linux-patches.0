@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BE6D4C83
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:34:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3F02C433EF;
-	Mon, 16 Jan 2023 16:34:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF31F6D24
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:34:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6700AC433EF;
+	Mon, 16 Jan 2023 16:34:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886865;
-	bh=1dqAHGRbfaQnDFsQsvdy3d0rpymkmJrWcZC5DZFVBz4=;
+	s=korg; t=1673886867;
+	bh=3JGy0A+qlby1Hi+r8ZLgvdEnwzVyIF/FdvXMhoCXuIU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GRa7dHQxTHqB3yM7K5qoZrRqHEum2eaS6EzzcKZcbr8FblpJlIdnNmmykja83GysO
-	 b3tHr0Lq01U4lVgJw24UDXGEJmTQZmY0IWihkGTeVcPMR0H1sC3iQaZ61bbdzOk3v8
-	 Lnni9mMdag8O+/NBVxl6HbJN2zZysytlhc2mPdt8=
+	b=XXrgFQgQ94/hUn2ySMC3HIB6TyO+UYo2npGUkRCc28IhtQ7U+SWFMzNUm8fEUu98P
+	 H0hd+q/0LUUJ9xEx/sIa4C3wpnlmtaaKx3rnhgWCh/XRMcTb7JQel2Mo6mvCXB93J1
+	 GC6LDuG8Yd8PJU0S9XE/Z6lvbrxNw9mZh/hR6PdQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ba9dac45bc76c490b7c3@syzkaller.appspotmail.com,
-	Eric Biggers <ebiggers@google.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 5.4 592/658] ext4: dont allow journal inode to have encrypt flag
-Date: Mon, 16 Jan 2023 16:51:20 +0100
-Message-Id: <20230116154936.570722114@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Christian Brauner <christian.brauner@ubuntu.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Jan Kara <jack@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.4 593/658] hfs/hfsplus: use WARN_ON for sanity check
+Date: Mon, 16 Jan 2023 16:51:21 +0100
+Message-Id: <20230116154936.614436138@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,58 +38,118 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 105c78e12468413e426625831faa7db4284e1fec upstream.
+commit 55d1cbbbb29e6656c662ee8f73ba1fc4777532eb upstream.
 
-Mounting a filesystem whose journal inode has the encrypt flag causes a
-NULL dereference in fscrypt_limit_io_blocks() when the 'inlinecrypt'
-mount option is used.
+gcc warns about a couple of instances in which a sanity check exists but
+the author wasn't sure how to react to it failing, which makes it look
+like a possible bug:
 
-The problem is that when jbd2_journal_init_inode() calls bmap(), it
-eventually finds its way into ext4_iomap_begin(), which calls
-fscrypt_limit_io_blocks().  fscrypt_limit_io_blocks() requires that if
-the inode is encrypted, then its encryption key must already be set up.
-That's not the case here, since the journal inode is never "opened" like
-a normal file would be.  Hence the crash.
+  fs/hfsplus/inode.c: In function 'hfsplus_cat_read_inode':
+  fs/hfsplus/inode.c:503:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
+    503 |                         /* panic? */;
+        |                                     ^
+  fs/hfsplus/inode.c:524:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
+    524 |                         /* panic? */;
+        |                                     ^
+  fs/hfsplus/inode.c: In function 'hfsplus_cat_write_inode':
+  fs/hfsplus/inode.c:582:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
+    582 |                         /* panic? */;
+        |                                     ^
+  fs/hfsplus/inode.c:608:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
+    608 |                         /* panic? */;
+        |                                     ^
+  fs/hfs/inode.c: In function 'hfs_write_inode':
+  fs/hfs/inode.c:464:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
+    464 |                         /* panic? */;
+        |                                     ^
+  fs/hfs/inode.c:485:37: error: suggest braces around empty body in an 'if' statement [-Werror=empty-body]
+    485 |                         /* panic? */;
+        |                                     ^
 
-A reproducer is:
+panic() is probably not the correct choice here, but a WARN_ON
+seems appropriate and avoids the compile-time warning.
 
-    mkfs.ext4 -F /dev/vdb
-    debugfs -w /dev/vdb -R "set_inode_field <8> flags 0x80808"
-    mount /dev/vdb /mnt -o inlinecrypt
-
-To fix this, make ext4 consider journal inodes with the encrypt flag to
-be invalid.  (Note, maybe other flags should be rejected on the journal
-inode too.  For now, this is just the minimal fix for the above issue.)
-
-I've marked this as fixing the commit that introduced the call to
-fscrypt_limit_io_blocks(), since that's what made an actual crash start
-being possible.  But this fix could be applied to any version of ext4
-that supports the encrypt feature.
-
-Reported-by: syzbot+ba9dac45bc76c490b7c3@syzkaller.appspotmail.com
-Fixes: 38ea50daa7a4 ("ext4: support direct I/O with fscrypt using blk-crypto")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20221102053312.189962-1-ebiggers@kernel.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Link: https://lkml.kernel.org/r/20210927102149.1809384-1-arnd@kernel.org
+Link: https://lore.kernel.org/all/20210322223249.2632268-1-arnd@kernel.org/
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Christian Brauner <christian.brauner@ubuntu.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Christian Brauner <christian.brauner@ubuntu.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Jan Kara <jack@suse.cz>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/hfs/inode.c     |    6 ++----
+ fs/hfsplus/inode.c |   12 ++++--------
+ 2 files changed, 6 insertions(+), 12 deletions(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -4836,7 +4836,7 @@ static struct inode *ext4_get_journal_in
+--- a/fs/hfs/inode.c
++++ b/fs/hfs/inode.c
+@@ -461,8 +461,7 @@ int hfs_write_inode(struct inode *inode,
+ 		goto out;
  
- 	jbd_debug(2, "Journal inode found at %p: %lld bytes\n",
- 		  journal_inode, journal_inode->i_size);
--	if (!S_ISREG(journal_inode->i_mode)) {
-+	if (!S_ISREG(journal_inode->i_mode) || IS_ENCRYPTED(journal_inode)) {
- 		ext4_msg(sb, KERN_ERR, "invalid journal inode");
- 		iput(journal_inode);
- 		return NULL;
+ 	if (S_ISDIR(main_inode->i_mode)) {
+-		if (fd.entrylength < sizeof(struct hfs_cat_dir))
+-			/* panic? */;
++		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_dir));
+ 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
+ 			   sizeof(struct hfs_cat_dir));
+ 		if (rec.type != HFS_CDR_DIR ||
+@@ -482,8 +481,7 @@ int hfs_write_inode(struct inode *inode,
+ 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
+ 				sizeof(struct hfs_cat_file));
+ 	} else {
+-		if (fd.entrylength < sizeof(struct hfs_cat_file))
+-			/* panic? */;
++		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_file));
+ 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
+ 			   sizeof(struct hfs_cat_file));
+ 		if (rec.type != HFS_CDR_FIL ||
+--- a/fs/hfsplus/inode.c
++++ b/fs/hfsplus/inode.c
+@@ -497,8 +497,7 @@ int hfsplus_cat_read_inode(struct inode
+ 	if (type == HFSPLUS_FOLDER) {
+ 		struct hfsplus_cat_folder *folder = &entry.folder;
+ 
+-		if (fd->entrylength < sizeof(struct hfsplus_cat_folder))
+-			/* panic? */;
++		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_folder));
+ 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
+ 					sizeof(struct hfsplus_cat_folder));
+ 		hfsplus_get_perms(inode, &folder->permissions, 1);
+@@ -518,8 +517,7 @@ int hfsplus_cat_read_inode(struct inode
+ 	} else if (type == HFSPLUS_FILE) {
+ 		struct hfsplus_cat_file *file = &entry.file;
+ 
+-		if (fd->entrylength < sizeof(struct hfsplus_cat_file))
+-			/* panic? */;
++		WARN_ON(fd->entrylength < sizeof(struct hfsplus_cat_file));
+ 		hfs_bnode_read(fd->bnode, &entry, fd->entryoffset,
+ 					sizeof(struct hfsplus_cat_file));
+ 
+@@ -576,8 +574,7 @@ int hfsplus_cat_write_inode(struct inode
+ 	if (S_ISDIR(main_inode->i_mode)) {
+ 		struct hfsplus_cat_folder *folder = &entry.folder;
+ 
+-		if (fd.entrylength < sizeof(struct hfsplus_cat_folder))
+-			/* panic? */;
++		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_folder));
+ 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
+ 					sizeof(struct hfsplus_cat_folder));
+ 		/* simple node checks? */
+@@ -602,8 +599,7 @@ int hfsplus_cat_write_inode(struct inode
+ 	} else {
+ 		struct hfsplus_cat_file *file = &entry.file;
+ 
+-		if (fd.entrylength < sizeof(struct hfsplus_cat_file))
+-			/* panic? */;
++		WARN_ON(fd.entrylength < sizeof(struct hfsplus_cat_file));
+ 		hfs_bnode_read(fd.bnode, &entry, fd.entryoffset,
+ 					sizeof(struct hfsplus_cat_file));
+ 		hfsplus_inode_write_fork(inode, &file->data_fork);
 
 
