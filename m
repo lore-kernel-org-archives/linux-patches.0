@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F36666FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:42:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6C5C433EF;
-	Mon, 16 Jan 2023 16:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A4D76FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:42:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E7BFC433D2;
+	Mon, 16 Jan 2023 16:42:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887352;
-	bh=dUSdss3pti2Va4BNnGT2IqtQqkF2cY6tnyn3jpnuL4E=;
+	s=korg; t=1673887355;
+	bh=K+JGQNojVIM/sXm0g6HJdB0AB2YLi0tqCFvWb5muwyk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Py8988Gx5XWcYfQyWMkVIWKO1Df0szC7nXE1Fx7u0srqDDv8dsA3PgBpYVSt3J576
-	 NyEmHLPYEW6wMejYAwvRKs2fE8Bcb59ROrTCSf5tUhfbvZZTfdUWG+22ve1+wGS3gi
-	 bLhrmIMmQR+t7JaPX/RHDMB5HRxcJKKWdRqH1F9s=
+	b=O5ty1Y+r/AE+v8aLjcjM8ApXNpW7opP5Hi4OM0hSXkBnmPk7+8MXO1P3bSwxbx991
+	 QZ76ifKLLfAToRWZKV6tvO0JihlI8A1/ZUwy1HcGT0T76+b6ivnrjDdPXacyJe/nl1
+	 xfYX5NlQ/Izf9L+Jmm3Gew2vWJzEKVovYcBXqYVM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 117/521] pinctrl: pinconf-generic: add missing of_node_put()
-Date: Mon, 16 Jan 2023 16:46:19 +0100
-Message-Id: <20230116154852.474594651@linuxfoundation.org>
+Subject: [PATCH 4.19 118/521] media: dvb-core: Fix ignored return value in dvb_register_frontend()
+Date: Mon, 16 Jan 2023 16:46:20 +0100
+Message-Id: <20230116154852.523896625@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,38 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 5ead93289815a075d43c415e35c8beafafb801c9 ]
+[ Upstream commit a574359e2e71ce16be212df3a082ed60a4bd2c5f ]
 
-of_node_put() needs to be called when jumping out of the loop, since
-for_each_available_child_of_node() will increase the refcount of node.
+In dvb_register_frontend(), dvb_register_device() is possible to fail
+but its return value is ignored.
 
-Fixes: c7289500e29d ("pinctrl: pinconf-generic: scan also referenced phandle node")
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Link: https://lore.kernel.org/r/20221125070156.3535855-1-zhangpeng362@huawei.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+It will cause use-after-free when module is removed, because in
+dvb_unregister_frontend() it tries to unregister a not registered
+device.
+
+BUG: KASAN: use-after-free in dvb_remove_device+0x18b/0x1f0 [dvb_core]
+Read of size 4 at addr ffff88800dff4824 by task rmmod/428
+CPU: 3 PID: 428 Comm: rmmod
+Call Trace:
+ <TASK>
+ ...
+ dvb_remove_device+0x18b/0x1f0 [dvb_core]
+ dvb_unregister_frontend+0x7b/0x130 [dvb_core]
+ vidtv_bridge_remove+0x6e/0x160 [dvb_vidtv_bridge]
+ ...
+
+Fix this by catching return value of dvb_register_device().
+However the fe->refcount can't be put to zero immediately, because
+there are still modules calling dvb_frontend_detach() when
+dvb_register_frontend() fails.
+
+Link: https://lore.kernel.org/linux-media/20221108033005.169095-1-chenzhongjin@huawei.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinconf-generic.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/dvb-core/dvb_frontend.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinconf-generic.c b/drivers/pinctrl/pinconf-generic.c
-index 55b56440a5a8..7e946c54681a 100644
---- a/drivers/pinctrl/pinconf-generic.c
-+++ b/drivers/pinctrl/pinconf-generic.c
-@@ -390,8 +390,10 @@ int pinconf_generic_dt_node_to_map(struct pinctrl_dev *pctldev,
- 	for_each_available_child_of_node(np_config, np) {
- 		ret = pinconf_generic_dt_subnode_to_map(pctldev, np, map,
- 					&reserved_maps, num_maps, type);
--		if (ret < 0)
-+		if (ret < 0) {
-+			of_node_put(np);
- 			goto exit;
-+		}
- 	}
- 	return 0;
+diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
+index 8a61150ee249..1768c1b515b3 100644
+--- a/drivers/media/dvb-core/dvb_frontend.c
++++ b/drivers/media/dvb-core/dvb_frontend.c
+@@ -2956,6 +2956,7 @@ int dvb_register_frontend(struct dvb_adapter *dvb,
+ 		.name = fe->ops.info.name,
+ #endif
+ 	};
++	int ret;
  
+ 	dev_dbg(dvb->device, "%s:\n", __func__);
+ 
+@@ -2989,8 +2990,13 @@ int dvb_register_frontend(struct dvb_adapter *dvb,
+ 		 "DVB: registering adapter %i frontend %i (%s)...\n",
+ 		 fe->dvb->num, fe->id, fe->ops.info.name);
+ 
+-	dvb_register_device(fe->dvb, &fepriv->dvbdev, &dvbdev_template,
++	ret = dvb_register_device(fe->dvb, &fepriv->dvbdev, &dvbdev_template,
+ 			    fe, DVB_DEVICE_FRONTEND, 0);
++	if (ret) {
++		dvb_frontend_put(fe);
++		mutex_unlock(&frontend_mutex);
++		return ret;
++	}
+ 
+ 	/*
+ 	 * Initialize the cache to the proper values according with the
 -- 
 2.35.1
 
