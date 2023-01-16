@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAE5A6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:02:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73E58C433D2;
-	Mon, 16 Jan 2023 17:02:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880496FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:02:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AFCEC433F0;
+	Mon, 16 Jan 2023 17:02:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888522;
-	bh=ZLnyO/TflFe3u2q0nVyOyx6xzsmiikcqfUE9xwC/dGg=;
+	s=korg; t=1673888525;
+	bh=n8Nq0Ty86m0viJpELb5xHmcQRan2ATAjFnHhYodzI3M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kk3FiAN3xAY3wFzePTKf7UH7RUXcYmGMMBdWtwZqSEk1wTXoYENMdbcLfPJPEJHV4
-	 LUzXDYoyOk7kJBFQU/gCP1ycJRA+Z8TKPzroXtTLtBYiaH5a5bVkz1GK3GZSXwIRYd
-	 zFCdcfanoG5u8/sOpS/Db2oNSzSujSYDY4Erv6jQ=
+	b=wMJwIbVv5eYk9dgl54mB8NIFhnty5YfBxaxlBCfwuAhLQMRBM5njJMbLVhivVdKL4
+	 whs2Y3C4o/12mjtexVWo8CaoHzIBPb2mSFThJdhTwHkLF+tKtI2R8sqJihkXVkBmMp
+	 lMiRX8NTTGPep9B/9WOMUtEfd4C+iEqxG2ObAlCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Kees Cook <keescook@chromium.org>,
+	Doug Brown <doug@schmorgal.com>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 037/338] pstore/ram: Fix error return code in ramoops_probe()
-Date: Mon, 16 Jan 2023 16:48:30 +0100
-Message-Id: <20230116154822.387166189@linuxfoundation.org>
+Subject: [PATCH 4.14 038/338] ARM: mmp: fix timer_read delay
+Date: Mon, 16 Jan 2023 16:48:31 +0100
+Message-Id: <20230116154822.439021435@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,43 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Doug Brown <doug@schmorgal.com>
 
-[ Upstream commit e1fce564900f8734edf15b87f028c57e14f6e28d ]
+[ Upstream commit e348b4014c31041e13ff370669ba3348c4d385e3 ]
 
-In the if (dev_of_node(dev) && !pdata) path, the "err" may be assigned a
-value of 0, so the error return code -EINVAL may be incorrectly set
-to 0. To fix set valid return code before calling to goto.
+timer_read() was using an empty 100-iteration loop to wait for the
+TMR_CVWR register to capture the latest timer counter value. The delay
+wasn't long enough. This resulted in CPU idle time being extremely
+underreported on PXA168 with CONFIG_NO_HZ_IDLE=y.
 
-Fixes: 35da60941e44 ("pstore/ram: add Device Tree bindings")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/1669969374-46582-1-git-send-email-wangyufen@huawei.com
+Switch to the approach used in the vendor kernel, which implements the
+capture delay by reading TMR_CVWR a few times instead.
+
+Fixes: 49cbe78637eb ("[ARM] pxa: add base support for Marvell's PXA168 processor line")
+Signed-off-by: Doug Brown <doug@schmorgal.com>
+Link: https://lore.kernel.org/r/20221204005117.53452-3-doug@schmorgal.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/pstore/ram.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/arm/mach-mmp/time.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/fs/pstore/ram.c b/fs/pstore/ram.c
-index 11c7a171c0a1..dc5a40058c2f 100644
---- a/fs/pstore/ram.c
-+++ b/fs/pstore/ram.c
-@@ -749,6 +749,7 @@ static int ramoops_probe(struct platform_device *pdev)
- 	/* Make sure we didn't get bogus platform data pointer. */
- 	if (!pdata) {
- 		pr_err("NULL platform data\n");
-+		err = -EINVAL;
- 		goto fail_out;
- 	}
+diff --git a/arch/arm/mach-mmp/time.c b/arch/arm/mach-mmp/time.c
+index 96ad1db0b04b..edd280e75546 100644
+--- a/arch/arm/mach-mmp/time.c
++++ b/arch/arm/mach-mmp/time.c
+@@ -52,18 +52,21 @@
+ static void __iomem *mmp_timer_base = TIMERS_VIRT_BASE;
  
-@@ -756,6 +757,7 @@ static int ramoops_probe(struct platform_device *pdev)
- 			!pdata->ftrace_size && !pdata->pmsg_size)) {
- 		pr_err("The memory size and the record/console size must be "
- 			"non-zero\n");
-+		err = -EINVAL;
- 		goto fail_out;
- 	}
+ /*
+- * FIXME: the timer needs some delay to stablize the counter capture
++ * Read the timer through the CVWR register. Delay is required after requesting
++ * a read. The CR register cannot be directly read due to metastability issues
++ * documented in the PXA168 software manual.
+  */
+ static inline uint32_t timer_read(void)
+ {
+-	int delay = 100;
++	uint32_t val;
++	int delay = 3;
  
+ 	__raw_writel(1, mmp_timer_base + TMR_CVWR(1));
+ 
+ 	while (delay--)
+-		cpu_relax();
++		val = __raw_readl(mmp_timer_base + TMR_CVWR(1));
+ 
+-	return __raw_readl(mmp_timer_base + TMR_CVWR(1));
++	return val;
+ }
+ 
+ static u64 notrace mmp_read_sched_clock(void)
 -- 
 2.35.1
 
