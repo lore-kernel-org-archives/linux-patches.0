@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA2446B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:06:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CFAC433D2;
-	Mon, 16 Jan 2023 16:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B6446B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:06:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 207FDC433D2;
+	Mon, 16 Jan 2023 16:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885212;
-	bh=zlkjH4ts3jWD6iSMyvDCiB/8sw9lIjDipbO05s0cei4=;
+	s=korg; t=1673885215;
+	bh=ca/884h1XqBxmIeeq7O99mIBfacr4tCARFCwPmw3ebU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F4nQErTI9akzHkdmkhou96Ew/vozeJWPAFEFRsiHlbe6ghNb1KG1dgRqP8s/2/PW2
-	 7yYlFmvThEW9McXHJQ8fR3D+IIMl0Kq95Agf7/rvAbpBat8K5jaRLxAm1HdZnndn52
-	 Kv6nLAu4dNbAmVYulNHSZyra+bfF1erpNqvjaQyA=
+	b=lpKlYF1j1GbKKsY9dmh09LcCVw8qdxsW7jh6MOKPmzInUTnHO6HbftNF1cAqqQTD3
+	 0Gi62C6oJHueAa+O/tGFizynoVf5jjEx/qXMT75O2NRFr48gKh8jEuPmbnB7zQkY2k
+	 rF+AtRAThRb8eWNR/HpkNpEbxNA70IdyDeLXVckw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Ferry Toth <ftoth@exalondelft.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 31/64] xhci: Prevent infinite loop in transaction errors recovery for streams
-Date: Mon, 16 Jan 2023 16:51:38 +0100
-Message-Id: <20230116154744.659381008@linuxfoundation.org>
+Subject: [PATCH 5.10 32/64] usb: ulpi: defer ulpi_register on ulpi_read_id timeout
+Date: Mon, 16 Jan 2023 16:51:39 +0100
+Message-Id: <20230116154744.689460305@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -34,89 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Ferry Toth <ftoth@exalondelft.nl>
 
-[ Upstream commit a1575120972ecd7baa6af6a69e4e7ea9213bde7c ]
+[ Upstream commit 8a7b31d545d3a15f0e6f5984ae16f0ca4fd76aac ]
 
-Make sure to also limit the amount of soft reset retries for transaction
-errors on streams in cases where the transaction error event doesn't point
-to any specific TRB.
+Since commit 0f0101719138 ("usb: dwc3: Don't switch OTG -> peripheral
+if extcon is present") Dual Role support on Intel Merrifield platform
+broke due to rearranging the call to dwc3_get_extcon().
 
-In these cases we don't know the TRB or stream ring, but we do know which
-endpoint had the error.
+It appears to be caused by ulpi_read_id() on the first test write failing
+with -ETIMEDOUT. Currently ulpi_read_id() expects to discover the phy via
+DT when the test write fails and returns 0 in that case, even if DT does not
+provide the phy. As a result usb probe completes without phy.
 
-To keep error counting simple and functional, move the current err_count
-from ring structure to endpoint structure.
+Make ulpi_read_id() return -ETIMEDOUT to its user if the first test write
+fails. The user should then handle it appropriately. A follow up patch
+will make dwc3_core_init() set -EPROBE_DEFER in this case and bail out.
 
+Fixes: ef6a7bcfb01c ("usb: ulpi: Support device discovery via DT")
 Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20221130091944.2171610-6-mathias.nyman@linux.intel.com
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Ferry Toth <ftoth@exalondelft.nl>
+Link: https://lore.kernel.org/r/20221205201527.13525-2-ftoth@exalondelft.nl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 14 ++++++++++----
- drivers/usb/host/xhci.h      |  2 +-
- 2 files changed, 11 insertions(+), 5 deletions(-)
+ drivers/usb/common/ulpi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index edb712081815..ead42fc3e16d 100644
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -2349,7 +2349,7 @@ static int process_bulk_intr_td(struct xhci_hcd *xhci, struct xhci_td *td,
+diff --git a/drivers/usb/common/ulpi.c b/drivers/usb/common/ulpi.c
+index 3c705f1bead8..1f077f2ea40f 100644
+--- a/drivers/usb/common/ulpi.c
++++ b/drivers/usb/common/ulpi.c
+@@ -208,7 +208,7 @@ static int ulpi_read_id(struct ulpi *ulpi)
+ 	/* Test the interface */
+ 	ret = ulpi_write(ulpi, ULPI_SCRATCH, 0xaa);
+ 	if (ret < 0)
+-		goto err;
++		return ret;
  
- 	switch (trb_comp_code) {
- 	case COMP_SUCCESS:
--		ep_ring->err_count = 0;
-+		ep->err_count = 0;
- 		/* handle success with untransferred data as short packet */
- 		if (ep_trb != td->last_trb || remaining) {
- 			xhci_warn(xhci, "WARN Successful completion on short TX\n");
-@@ -2375,7 +2375,7 @@ static int process_bulk_intr_td(struct xhci_hcd *xhci, struct xhci_td *td,
- 		break;
- 	case COMP_USB_TRANSACTION_ERROR:
- 		if (xhci->quirks & XHCI_NO_SOFT_RETRY ||
--		    (ep_ring->err_count++ > MAX_SOFT_RETRY) ||
-+		    (ep->err_count++ > MAX_SOFT_RETRY) ||
- 		    le32_to_cpu(slot_ctx->tt_info) & TT_SLOT)
- 			break;
- 
-@@ -2457,8 +2457,14 @@ static int handle_tx_event(struct xhci_hcd *xhci,
- 		case COMP_USB_TRANSACTION_ERROR:
- 		case COMP_INVALID_STREAM_TYPE_ERROR:
- 		case COMP_INVALID_STREAM_ID_ERROR:
--			xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
--						    EP_SOFT_RESET);
-+			xhci_dbg(xhci, "Stream transaction error ep %u no id\n",
-+				 ep_index);
-+			if (ep->err_count++ > MAX_SOFT_RETRY)
-+				xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
-+							    EP_HARD_RESET);
-+			else
-+				xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
-+							    EP_SOFT_RESET);
- 			goto cleanup;
- 		case COMP_RING_UNDERRUN:
- 		case COMP_RING_OVERRUN:
-diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
-index af3759928a95..ac09b171b783 100644
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -933,6 +933,7 @@ struct xhci_virt_ep {
- 	 * have to restore the device state to the previous state
- 	 */
- 	struct xhci_ring		*new_ring;
-+	unsigned int			err_count;
- 	unsigned int			ep_state;
- #define SET_DEQ_PENDING		(1 << 0)
- #define EP_HALTED		(1 << 1)	/* For stall handling */
-@@ -1616,7 +1617,6 @@ struct xhci_ring {
- 	 * if we own the TRB (if we are the consumer).  See section 4.9.1.
- 	 */
- 	u32			cycle_state;
--	unsigned int            err_count;
- 	unsigned int		stream_id;
- 	unsigned int		num_segs;
- 	unsigned int		num_trbs_free;
+ 	ret = ulpi_read(ulpi, ULPI_SCRATCH);
+ 	if (ret < 0)
 -- 
 2.35.1
 
