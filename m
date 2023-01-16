@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A265946B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:11:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2533C433F2;
-	Mon, 16 Jan 2023 16:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C48446B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:11:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5CEFC433D2;
+	Mon, 16 Jan 2023 16:11:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885475;
-	bh=zzLuUU4rG14XyxJiFO/vJJ7P5Nwc3Mzom4Mh5RRjFyw=;
+	s=korg; t=1673885478;
+	bh=l4mdijT3DXLoB3FEQAQQT3XWHgMtUjdefbiHKLqvrG4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QZKLn2csM4jGf4915DKUtQkaYo9ReEYDTiK4lgIC2aJF0CVKL3E4cDmo/laKTyf/J
-	 rzWiGKgB5nQEjHUcgz8TmD3Los3BObqI+dBSmnbEea6xSvGvM4lsP+wMgtxdYl+SAR
-	 Zcii911xcS3PxctxbBjeuiyhId1gO5+kB2QzbX70=
+	b=mBm87mI6N4i12Br9W4HFrtgS4pRXsRif99O9TJGUpXOVRd6Mxt1H3DeucPr/L3ZIK
+	 LBKan9i0ewuSzvrtgUW/djd7lg/q5/a0w/cd4EGq7ayAv+1O6a8ERQG8GAVArn2ea8
+	 WN7I38ln5HIiBwoH4/7zEDTWWC3mYGjQIklibqr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Alexey Dobriyan <adobriyan@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 026/658] arm: dts: spear600: Fix clcd interrupt
-Date: Mon, 16 Jan 2023 16:41:54 +0100
-Message-Id: <20230116154910.820103346@linuxfoundation.org>
+Subject: [PATCH 5.4 059/658] proc: fixup uptime selftest
+Date: Mon, 16 Jan 2023 16:42:27 +0100
+Message-Id: <20230116154912.378055748@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,35 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kory Maincent <kory.maincent@bootlin.com>
+From: Alexey Dobriyan <adobriyan@gmail.com>
 
-[ Upstream commit 0336e2ce34e7a89832b6c214f924eb7bc58940be ]
+[ Upstream commit 5cc81d5c81af0dee54da9a67a3ebe4be076a13db ]
 
-Interrupt 12 of the Interrupt controller belongs to the SMI controller,
-the right one for the display controller is the interrupt 13.
+syscall(3) returns -1 and sets errno on error, unlike "syscall"
+instruction.
 
-Fixes: 8113ba917dfa ("ARM: SPEAr: DT: Update device nodes")
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Systems which have <= 32/64 CPUs are unaffected. Test won't bounce
+to all CPUs before completing if there are more of them.
+
+Link: https://lkml.kernel.org/r/Y1bUiT7VRXlXPQa1@p183
+Fixes: 1f5bd0547654 ("proc: selftests: test /proc/uptime")
+Signed-off-by: Alexey Dobriyan <adobriyan@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/spear600.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/selftests/proc/proc-uptime-002.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/spear600.dtsi b/arch/arm/boot/dts/spear600.dtsi
-index fd41243a0b2c..9d5a04a46b14 100644
---- a/arch/arm/boot/dts/spear600.dtsi
-+++ b/arch/arm/boot/dts/spear600.dtsi
-@@ -47,7 +47,7 @@ clcd: clcd@fc200000 {
- 			compatible = "arm,pl110", "arm,primecell";
- 			reg = <0xfc200000 0x1000>;
- 			interrupt-parent = <&vic1>;
--			interrupts = <12>;
-+			interrupts = <13>;
- 			status = "disabled";
- 		};
+diff --git a/tools/testing/selftests/proc/proc-uptime-002.c b/tools/testing/selftests/proc/proc-uptime-002.c
+index e7ceabed7f51..7d0aa22bdc12 100644
+--- a/tools/testing/selftests/proc/proc-uptime-002.c
++++ b/tools/testing/selftests/proc/proc-uptime-002.c
+@@ -17,6 +17,7 @@
+ // while shifting across CPUs.
+ #undef NDEBUG
+ #include <assert.h>
++#include <errno.h>
+ #include <unistd.h>
+ #include <sys/syscall.h>
+ #include <stdlib.h>
+@@ -54,7 +55,7 @@ int main(void)
+ 		len += sizeof(unsigned long);
+ 		free(m);
+ 		m = malloc(len);
+-	} while (sys_sched_getaffinity(0, len, m) == -EINVAL);
++	} while (sys_sched_getaffinity(0, len, m) == -1 && errno == EINVAL);
  
+ 	fd = open("/proc/uptime", O_RDONLY);
+ 	assert(fd >= 0);
 -- 
 2.35.1
 
