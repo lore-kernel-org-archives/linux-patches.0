@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB5933EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7BE5C433F0;
-	Mon, 16 Jan 2023 16:01:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13B9133EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9B2C433D2;
+	Mon, 16 Jan 2023 16:01:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884911;
-	bh=LhLcymre40N3ru1qokaMuvrTvAXrEyGWkscN6ZFbY2U=;
+	s=korg; t=1673884913;
+	bh=WBTYunhz8NWBUBkBPvZTdgu/H0Mtpc49kJZrVQI3NPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vhCyzKZisaQUxo5yCHI5SMsi35WymUmFS4U/DC5lZhWL3ZQCEn+ngWwwZjuPnmJ+g
-	 M/64QI2MmxkOipy/uVJ1dMoajj4AvcbQ4P6ZqKDBTb0nRQ04vFB+3GSd4yS4ZVwyAK
-	 cCtHnbdcik7QP06TDzh72nAzag7YrsGTuKN0NU6I=
+	b=Qg+70EmEY4khnNLpFOfmUsge0Bp+ME9wpuV9sBAJ7K8tKSDwFLM58VHiRfToU9ZHy
+	 PaiWp6OQEjRF1YtSMTsGch6aoy9GGJw7DxnAHs7GXFX8VJAL2zoId6NxDCikR9LTik
+	 Letmtaf8rxqixkVqVhwltVyop9RXieRffLaE5k/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <clement.leger@bootlin.com>,
-	Horatiu Vultur <horatiu.vultur@microchip.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Jie Wang <wangjie125@huawei.com>,
+	Hao Lan <lanhao@huawei.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 169/183] net: lan966x: check for ptp to be enabled in lan966x_ptp_deinit()
-Date: Mon, 16 Jan 2023 16:51:32 +0100
-Message-Id: <20230116154810.433968281@linuxfoundation.org>
+Subject: [PATCH 6.1 170/183] net: hns3: fix wrong use of rss size during VF rss config
+Date: Mon, 16 Jan 2023 16:51:33 +0100
+Message-Id: <20230116154810.483036507@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -37,37 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Clément Léger <clement.leger@bootlin.com>
+From: Jie Wang <wangjie125@huawei.com>
 
-[ Upstream commit b0e380b5d4275299adf43e249f18309331b6f54f ]
+[ Upstream commit ae9f29fdfd827ad06c1ae8155c042245a9d00757 ]
 
-If ptp was not enabled due to missing IRQ for instance,
-lan966x_ptp_deinit() will dereference NULL pointers.
+Currently, it used old rss size to get current tc mode. As a result, the
+rss size is updated, but the tc mode is still configured based on the old
+rss size.
 
-Fixes: d096459494a8 ("net: lan966x: Add support for ptp clocks")
-Signed-off-by: Clément Léger <clement.leger@bootlin.com>
-Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+So this patch fixes it by using the new rss size in both process.
+
+Fixes: 93969dc14fcd ("net: hns3: refactor VF rss init APIs with new common rss init APIs")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Signed-off-by: Hao Lan <lanhao@huawei.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Link: https://lore.kernel.org/r/20230110115359.10163-1-lanhao@huawei.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-index e5a2bbe064f8..8e368318558a 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
-@@ -853,6 +853,9 @@ void lan966x_ptp_deinit(struct lan966x *lan966x)
- 	struct lan966x_port *port;
- 	int i;
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+index 081bd2c3f289..e84e5be8e59e 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+@@ -3130,7 +3130,7 @@ static int hclgevf_set_channels(struct hnae3_handle *handle, u32 new_tqps_num,
  
-+	if (!lan966x->ptp)
-+		return;
-+
- 	for (i = 0; i < lan966x->num_phys_ports; i++) {
- 		port = lan966x->ports[i];
- 		if (!port)
+ 	hclgevf_update_rss_size(handle, new_tqps_num);
+ 
+-	hclge_comm_get_rss_tc_info(cur_rss_size, hdev->hw_tc_map,
++	hclge_comm_get_rss_tc_info(kinfo->rss_size, hdev->hw_tc_map,
+ 				   tc_offset, tc_valid, tc_size);
+ 	ret = hclge_comm_set_rss_tc_mode(&hdev->hw.hw, tc_offset,
+ 					 tc_valid, tc_size);
 -- 
 2.35.1
 
