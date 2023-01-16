@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE444C83
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:32:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2F0C433EF;
-	Mon, 16 Jan 2023 16:32:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2ED694C83
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:32:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAD86C433EF;
+	Mon, 16 Jan 2023 16:32:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886738;
-	bh=E197O7xsWe5SHEN6MKBjY0u10uLKWwpkAH016H4KgbM=;
+	s=korg; t=1673886741;
+	bh=0NErp/aYFEwSUYmmBOpuqcHM6PBXRR+UU++iNt35tsc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IM8tCMmc4nFjsvYapO1BVZHDiUHlHm4OX+7wzQvzbJ3vnSRZFnJltFwQYEiGqmLKf
-	 Cvxk2LnbLffSzmH4qWzENVvbANg3A4DJ7uGSuSz5eauRKT8We+uskwRunqLUbhwO0X
-	 Qv1BQuopXKNamYAm2rjMEDlFOMuipgy9L6cmDmmQ=
+	b=SwfBexJdOczT9PsnLsK8mpJ5AP9ndp3zGDgminycDShbL4FJUUj8+BFnQIqrcb65u
+	 z1JDfbPd7pdI/+rLcwQ7FiuNPw6AFBPPrNOnho7lvPqCQDdvP1HsXTD7VZhw1DfSwM
+	 FSaPhLRCKL52ZqpV8n4bbXgOhWBbbiGS1zLb7qLc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-fsd@tesla.com,
-	Smitha T Murthy <smitha.t@samsung.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Luo Meng <luomeng12@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 542/658] media: s5p-mfc: Fix in register read and write for H264
-Date: Mon, 16 Jan 2023 16:50:30 +0100
-Message-Id: <20230116154934.325354551@linuxfoundation.org>
+Subject: [PATCH 5.4 543/658] dm thin: resume even if in FAIL mode
+Date: Mon, 16 Jan 2023 16:50:31 +0100
+Message-Id: <20230116154934.374987861@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,83 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Smitha T Murthy <smitha.t@samsung.com>
+From: Luo Meng <luomeng12@huawei.com>
 
-[ Upstream commit 06710cd5d2436135046898d7e4b9408c8bb99446 ]
+[ Upstream commit 19eb1650afeb1aa86151f61900e9e5f1de5d8d02 ]
 
-Few of the H264 encoder registers written were not getting reflected
-since the read values were not stored and getting overwritten.
+If a thinpool set fail_io while suspending, resume will fail with:
+ device-mapper: resume ioctl on vg-thinpool  failed: Invalid argument
 
-Fixes: 6a9c6f681257 ("[media] s5p-mfc: Add variants to access mfc registers")
+The thin-pool also can't be removed if an in-flight bio is in the
+deferred list.
+
+This can be easily reproduced using:
+
+  echo "offline" > /sys/block/sda/device/state
+  dd if=/dev/zero of=/dev/mapper/thin bs=4K count=1
+  dmsetup suspend /dev/mapper/pool
+  mkfs.ext4 /dev/mapper/thin
+  dmsetup resume /dev/mapper/pool
+
+The root cause is maybe_resize_data_dev() will check fail_io and return
+error before called dm_resume.
+
+Fix this by adding FAIL mode check at the end of pool_preresume().
 
 Cc: stable@vger.kernel.org
-Cc: linux-fsd@tesla.com
-Signed-off-by: Smitha T Murthy <smitha.t@samsung.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Fixes: da105ed5fd7e ("dm thin metadata: introduce dm_pool_abort_metadata")
+Signed-off-by: Luo Meng <luomeng12@huawei.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/md/dm-thin.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c b/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c
-index a1453053e31a..ef8169f6c428 100644
---- a/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c
-+++ b/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c
-@@ -1060,7 +1060,7 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
- 	}
+diff --git a/drivers/md/dm-thin.c b/drivers/md/dm-thin.c
+index 1af5873923e8..4f161725dda0 100644
+--- a/drivers/md/dm-thin.c
++++ b/drivers/md/dm-thin.c
+@@ -3593,23 +3593,31 @@ static int pool_preresume(struct dm_target *ti)
+ 	 */
+ 	r = bind_control_target(pool, ti);
+ 	if (r)
+-		return r;
++		goto out;
  
- 	/* aspect ratio VUI */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 5);
- 	reg |= ((p_h264->vui_sar & 0x1) << 5);
- 	writel(reg, mfc_regs->e_h264_options);
-@@ -1083,7 +1083,7 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
+ 	dm_pool_register_pre_commit_callback(pool->pmd,
+ 					     metadata_pre_commit_callback, pt);
  
- 	/* intra picture period for H.264 open GOP */
- 	/* control */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 4);
- 	reg |= ((p_h264->open_gop & 0x1) << 4);
- 	writel(reg, mfc_regs->e_h264_options);
-@@ -1097,23 +1097,23 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
- 	}
+ 	r = maybe_resize_data_dev(ti, &need_commit1);
+ 	if (r)
+-		return r;
++		goto out;
  
- 	/* 'WEIGHTED_BI_PREDICTION' for B is disable */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x3 << 9);
- 	writel(reg, mfc_regs->e_h264_options);
+ 	r = maybe_resize_metadata_dev(ti, &need_commit2);
+ 	if (r)
+-		return r;
++		goto out;
  
- 	/* 'CONSTRAINED_INTRA_PRED_ENABLE' is disable */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 14);
- 	writel(reg, mfc_regs->e_h264_options);
+ 	if (need_commit1 || need_commit2)
+ 		(void) commit(pool);
++out:
++	/*
++	 * When a thin-pool is PM_FAIL, it cannot be rebuilt if
++	 * bio is in deferred list. Therefore need to return 0
++	 * to allow pool_resume() to flush IO.
++	 */
++	if (r && get_pool_mode(pool) == PM_FAIL)
++		r = 0;
  
- 	/* ASO */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 6);
- 	reg |= ((p_h264->aso & 0x1) << 6);
- 	writel(reg, mfc_regs->e_h264_options);
+-	return 0;
++	return r;
+ }
  
- 	/* hier qp enable */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 8);
- 	reg |= ((p_h264->open_gop & 0x1) << 8);
- 	writel(reg, mfc_regs->e_h264_options);
-@@ -1134,7 +1134,7 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
- 	writel(reg, mfc_regs->e_h264_num_t_layer);
- 
- 	/* frame packing SEI generation */
--	readl(mfc_regs->e_h264_options);
-+	reg = readl(mfc_regs->e_h264_options);
- 	reg &= ~(0x1 << 25);
- 	reg |= ((p_h264->sei_frame_packing & 0x1) << 25);
- 	writel(reg, mfc_regs->e_h264_options);
+ static void pool_suspend_active_thins(struct pool *pool)
 -- 
 2.35.1
 
