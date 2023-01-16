@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5D146B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5457C433D2;
-	Mon, 16 Jan 2023 16:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E69A46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86FA7C433EF;
+	Mon, 16 Jan 2023 16:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885811;
-	bh=tgR7OvLV+g+3+gYNLgvaTK5iiiyqtWCvY4T0Zyk6PPQ=;
+	s=korg; t=1673885813;
+	bh=IyXG2EepHfyo8Fk7TQ9ltHxf8Z7mjl01f2oYFFIjIRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x1tLk9WxgSnzaVYu5fZWq6lk55apMHBwBHolhzKKBys+9ytAmCkkvX6GtFOmsOWp6
-	 aOUZF18Kr2Qb35Iq8/pUdl9CcF2MMXpLfsrggb7n8PIcT0RQqAp1ttyuCbk+KcC3br
-	 AKaccuZBCwm2PWt+9W0Oh8mYWzu/xedBRSNFwk8k=
+	b=bDaDulOm8bobFKLMYZE/WqRXUjBEPfiKWW7opA6UditKTL42LU5ALmK3mbzDQ9BTx
+	 2Bsq1qO0gViRPXr/BASETXSP0htr8j+rG+tF5U+e8gERMvmYr9SsngthH+2s4pZVz0
+	 l7xvnqEIPKFqCpgpv4FkStSon0UXaMXH+8HkMzqM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Wang ShaoBo <bobo.shaobowang@huawei.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 153/658] pinctrl: pinconf-generic: add missing of_node_put()
-Date: Mon, 16 Jan 2023 16:44:01 +0100
-Message-Id: <20230116154916.443807468@linuxfoundation.org>
+Subject: [PATCH 5.4 186/658] SUNRPC: Fix missing release socket in rpc_sockname()
+Date: Mon, 16 Jan 2023 16:44:34 +0100
+Message-Id: <20230116154917.968503763@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,38 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: Wang ShaoBo <bobo.shaobowang@huawei.com>
 
-[ Upstream commit 5ead93289815a075d43c415e35c8beafafb801c9 ]
+[ Upstream commit 50fa355bc0d75911fe9d5072a5ba52cdb803aff7 ]
 
-of_node_put() needs to be called when jumping out of the loop, since
-for_each_available_child_of_node() will increase the refcount of node.
+socket dynamically created is not released when getting an unintended
+address family type in rpc_sockname(), direct to out_release for calling
+sock_release().
 
-Fixes: c7289500e29d ("pinctrl: pinconf-generic: scan also referenced phandle node")
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Link: https://lore.kernel.org/r/20221125070156.3535855-1-zhangpeng362@huawei.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: 2e738fdce22f ("SUNRPC: Add API to acquire source address")
+Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinconf-generic.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/sunrpc/clnt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinconf-generic.c b/drivers/pinctrl/pinconf-generic.c
-index 355bc4c748e2..02c015577cf9 100644
---- a/drivers/pinctrl/pinconf-generic.c
-+++ b/drivers/pinctrl/pinconf-generic.c
-@@ -391,8 +391,10 @@ int pinconf_generic_dt_node_to_map(struct pinctrl_dev *pctldev,
- 	for_each_available_child_of_node(np_config, np) {
- 		ret = pinconf_generic_dt_subnode_to_map(pctldev, np, map,
- 					&reserved_maps, num_maps, type);
--		if (ret < 0)
-+		if (ret < 0) {
-+			of_node_put(np);
- 			goto exit;
-+		}
+diff --git a/net/sunrpc/clnt.c b/net/sunrpc/clnt.c
+index 1893203cc94f..012b0504264d 100644
+--- a/net/sunrpc/clnt.c
++++ b/net/sunrpc/clnt.c
+@@ -1354,7 +1354,7 @@ static int rpc_sockname(struct net *net, struct sockaddr *sap, size_t salen,
+ 		break;
+ 	default:
+ 		err = -EAFNOSUPPORT;
+-		goto out;
++		goto out_release;
  	}
- 	return 0;
- 
+ 	if (err < 0) {
+ 		dprintk("RPC:       can't bind UDP socket (%d)\n", err);
 -- 
 2.35.1
 
