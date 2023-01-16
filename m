@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 842516FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:03:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 098ABC433D2;
-	Mon, 16 Jan 2023 17:03:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2216B6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:03:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996C7C433EF;
+	Mon, 16 Jan 2023 17:03:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888619;
-	bh=RLbFRT4rSWoiQiRKf7EjKZSZkzYA7nMG9LmlB6bnPs8=;
+	s=korg; t=1673888622;
+	bh=E66UfLByuvpiFkZgPsyqOojYpRvUYbgfQf0UxwG0EZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bfh5q7jimSF6RqRNSYydOgqNSJRKIh2vDD18AQ0/tgWWm/V7DTjmr7DNF+O+WBgqI
-	 Qpi7qMJ7rCcFNUXsa9lUeoAt+jIUWnkqW0if4yPgY7t2kop0f4RamUsRLPMvToTQBs
-	 GiC8zRpTUY6tK3Q5R6Qq/gF9jyj0RdNe68hk8sM4=
+	b=lM2Y5xtj9LlgHy3cOonIFlMuL9HYNp8la86PoJTziqu3XtQisr9jUl06zHL0I780o
+	 yr5n5b3lP20BOo7LGI0D6HvX0spBWio0lJyVxawgVR4uswGXiBLgJEtYj9h4CqR/e1
+	 HMnQYH3vhDGkBROKPEmMsv2IVVftMttFSBYoGFEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 074/338] ASoC: pxa: fix null-pointer dereference in filter()
-Date: Mon, 16 Jan 2023 16:49:07 +0100
-Message-Id: <20230116154824.110775740@linuxfoundation.org>
+Subject: [PATCH 4.14 048/338] MIPS: vpe-mt: fix possible memory leak while module exiting
+Date: Mon, 16 Jan 2023 16:48:41 +0100
+Message-Id: <20230116154822.892546103@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,35 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit ec7bf231aaa1bdbcb69d23bc50c753c80fb22429 ]
+[ Upstream commit 5822e8cc84ee37338ab0bdc3124f6eec04dc232d ]
 
-kasprintf() would return NULL pointer when kmalloc() fail to allocate.
-Need to check the return pointer before calling strcmp().
+Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
+bus_id string array"), the name of device is allocated dynamically,
+it need be freed when module exiting, call put_device() to give up
+reference, so that it can be freed in kobject_cleanup() when the
+refcount hit to 0. The vpe_device is static, so remove kfree() from
+vpe_device_release().
 
-Fixes: 7a824e214e25 ("ASoC: mmp: add audio dma support")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Link: https://lore.kernel.org/r/20221114085629.1910435-1-zengheng4@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/pxa/mmp-pcm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/mips/kernel/vpe-mt.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/pxa/mmp-pcm.c b/sound/soc/pxa/mmp-pcm.c
-index 624d9bd5dadd..609843f607a3 100644
---- a/sound/soc/pxa/mmp-pcm.c
-+++ b/sound/soc/pxa/mmp-pcm.c
-@@ -88,7 +88,7 @@ static bool filter(struct dma_chan *chan, void *param)
+diff --git a/arch/mips/kernel/vpe-mt.c b/arch/mips/kernel/vpe-mt.c
+index 2e003b11a098..9fd7cd48ea1d 100644
+--- a/arch/mips/kernel/vpe-mt.c
++++ b/arch/mips/kernel/vpe-mt.c
+@@ -313,7 +313,6 @@ ATTRIBUTE_GROUPS(vpe);
  
- 	devname = kasprintf(GFP_KERNEL, "%s.%d", dma_data->dma_res->name,
- 		dma_data->ssp_id);
--	if ((strcmp(dev_name(chan->device->dev), devname) == 0) &&
-+	if (devname && (strcmp(dev_name(chan->device->dev), devname) == 0) &&
- 		(chan->chan_id == dma_data->dma_res->start)) {
- 		found = true;
- 	}
+ static void vpe_device_release(struct device *cd)
+ {
+-	kfree(cd);
+ }
+ 
+ static struct class vpe_class = {
+@@ -497,6 +496,7 @@ int __init vpe_module_init(void)
+ 	device_del(&vpe_device);
+ 
+ out_class:
++	put_device(&vpe_device);
+ 	class_unregister(&vpe_class);
+ 
+ out_chrdev:
+@@ -509,7 +509,7 @@ void __exit vpe_module_exit(void)
+ {
+ 	struct vpe *v, *n;
+ 
+-	device_del(&vpe_device);
++	device_unregister(&vpe_device);
+ 	class_unregister(&vpe_class);
+ 	unregister_chrdev(major, VPE_MODULE_NAME);
+ 
 -- 
 2.35.1
 
