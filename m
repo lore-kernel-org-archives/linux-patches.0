@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FBE6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:40:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5CE7C433EF;
-	Mon, 16 Jan 2023 16:40:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAD036FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:40:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7239FC433EF;
+	Mon, 16 Jan 2023 16:40:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887229;
-	bh=4yPHua5dzOhHCyWQwmUR1XlV3DlTDENMhvz1bd3OC2o=;
+	s=korg; t=1673887231;
+	bh=v8ldHd8WYIQKDGKCkoLFmd3ARAnSWVNeDL149hNkRYw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uVG9csbs7mfbpcjRjSWHgNRXOojIJoKg0FvrGyrheWOaGQGDIWWMm3Q7jzLnoJCDk
-	 mOGqcB/mD7Y+LselkE5E+ujVQXOsVN4ztgrXoJyKfRcwMyuC4eAeZ8pjBT+HiLSeUI
-	 kKJghDIzFKR40gj+joxAad02LOlnrfUqON2UFBGY=
+	b=k0NXyyiNTzDQx7OjDPEjjrTPgl6eUW7Ma6ngNdWHbHhZZW4W+F9O3qqSMLpRGKmQF
+	 NAly5QYp2TNU731+T2hu6oyR+tTniFatJnUpuKRFL7yTRPEciTKKX4Uqzg5tG0U95z
+	 0uvJjp2lG2gQajUAuF7NXjNFCVdIh5Hzh2+m+41o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Juergen Gross <jgross@suse.com>,
+	Brian Geffon <bgeffon@google.com>,
+	Mike Rapoport <rppt@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 068/521] x86/xen: Fix memory leak in xen_init_lock_cpu()
-Date: Mon, 16 Jan 2023 16:45:30 +0100
-Message-Id: <20230116154850.264113212@linuxfoundation.org>
+Subject: [PATCH 4.19 042/521] pstore: Avoid kcore oops by vmap()ing with VM_IOREMAP
+Date: Mon, 16 Jan 2023 16:45:04 +0100
+Message-Id: <20230116154849.162698824@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,62 +38,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Stephen Boyd <swboyd@chromium.org>
 
-[ Upstream commit ca84ce153d887b1dc8b118029976cc9faf2a9b40 ]
+[ Upstream commit e6b842741b4f39007215fd7e545cb55aa3d358a2 ]
 
-In xen_init_lock_cpu(), the @name has allocated new string by kasprintf(),
-if bind_ipi_to_irqhandler() fails, it should be freed, otherwise may lead
-to a memory leak issue, fix it.
+An oops can be induced by running 'cat /proc/kcore > /dev/null' on
+devices using pstore with the ram backend because kmap_atomic() assumes
+lowmem pages are accessible with __va().
 
-Fixes: 2d9e1e2f58b5 ("xen: implement Xen-specific spinlocks")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Juergen Gross <jgross@suse.com>
-Link: https://lore.kernel.org/r/20221123155858.11382-3-xiujianfeng@huawei.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
+ Unable to handle kernel paging request at virtual address ffffff807ff2b000
+ Mem abort info:
+ ESR = 0x96000006
+ EC = 0x25: DABT (current EL), IL = 32 bits
+ SET = 0, FnV = 0
+ EA = 0, S1PTW = 0
+ FSC = 0x06: level 2 translation fault
+ Data abort info:
+ ISV = 0, ISS = 0x00000006
+ CM = 0, WnR = 0
+ swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000081d87000
+ [ffffff807ff2b000] pgd=180000017fe18003, p4d=180000017fe18003, pud=180000017fe18003, pmd=0000000000000000
+ Internal error: Oops: 96000006 [#1] PREEMPT SMP
+ Modules linked in: dm_integrity
+ CPU: 7 PID: 21179 Comm: perf Not tainted 5.15.67-10882-ge4eb2eb988cd #1 baa443fb8e8477896a370b31a821eb2009f9bfba
+ Hardware name: Google Lazor (rev3 - 8) (DT)
+ pstate: a0400009 (NzCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+ pc : __memcpy+0x110/0x260
+ lr : vread+0x194/0x294
+ sp : ffffffc013ee39d0
+ x29: ffffffc013ee39f0 x28: 0000000000001000 x27: ffffff807ff2b000
+ x26: 0000000000001000 x25: ffffffc0085a2000 x24: ffffff802d4b3000
+ x23: ffffff80f8a60000 x22: ffffff802d4b3000 x21: ffffffc0085a2000
+ x20: ffffff8080b7bc68 x19: 0000000000001000 x18: 0000000000000000
+ x17: 0000000000000000 x16: 0000000000000000 x15: ffffffd3073f2e60
+ x14: ffffffffad588000 x13: 0000000000000000 x12: 0000000000000001
+ x11: 00000000000001a2 x10: 00680000fff2bf0b x9 : 03fffffff807ff2b
+ x8 : 0000000000000001 x7 : 0000000000000000 x6 : 0000000000000000
+ x5 : ffffff802d4b4000 x4 : ffffff807ff2c000 x3 : ffffffc013ee3a78
+ x2 : 0000000000001000 x1 : ffffff807ff2b000 x0 : ffffff802d4b3000
+ Call trace:
+ __memcpy+0x110/0x260
+ read_kcore+0x584/0x778
+ proc_reg_read+0xb4/0xe4
+
+During early boot, memblock reserves the pages for the ramoops reserved
+memory node in DT that would otherwise be part of the direct lowmem
+mapping. Pstore's ram backend reuses those reserved pages to change the
+memory type (writeback or non-cached) by passing the pages to vmap()
+(see pfn_to_page() usage in persistent_ram_vmap() for more details) with
+specific flags. When read_kcore() starts iterating over the vmalloc
+region, it runs over the virtual address that vmap() returned for
+ramoops. In aligned_vread() the virtual address is passed to
+vmalloc_to_page() which returns the page struct for the reserved lowmem
+area. That lowmem page is passed to kmap_atomic(), which effectively
+calls page_to_virt() that assumes a lowmem page struct must be directly
+accessible with __va() and friends. These pages are mapped via vmap()
+though, and the lowmem mapping was never made, so accessing them via the
+lowmem virtual address oopses like above.
+
+Let's side-step this problem by passing VM_IOREMAP to vmap(). This will
+tell vread() to not include the ramoops region in the kcore. Instead the
+area will look like a bunch of zeros. The alternative is to teach kmap()
+about vmalloc areas that intersect with lowmem. Presumably such a change
+isn't a one-liner, and there isn't much interest in inspecting the
+ramoops region in kcore files anyway, so the most expedient route is
+taken for now.
+
+Cc: Brian Geffon <bgeffon@google.com>
+Cc: Mike Rapoport <rppt@kernel.org>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 404a6043385d ("staging: android: persistent_ram: handle reserving and mapping memory")
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221205233136.3420802-1-swboyd@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/xen/spinlock.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/pstore/ram_core.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/arch/x86/xen/spinlock.c b/arch/x86/xen/spinlock.c
-index 6fffb86a32ad..e6cf1b430fd0 100644
---- a/arch/x86/xen/spinlock.c
-+++ b/arch/x86/xen/spinlock.c
-@@ -83,6 +83,7 @@ void xen_init_lock_cpu(int cpu)
- 	     cpu, per_cpu(lock_kicker_irq, cpu));
- 
- 	name = kasprintf(GFP_KERNEL, "spinlock%d", cpu);
-+	per_cpu(irq_name, cpu) = name;
- 	irq = bind_ipi_to_irqhandler(XEN_SPIN_UNLOCK_VECTOR,
- 				     cpu,
- 				     dummy_handler,
-@@ -93,7 +94,6 @@ void xen_init_lock_cpu(int cpu)
- 	if (irq >= 0) {
- 		disable_irq(irq); /* make sure it's never delivered */
- 		per_cpu(lock_kicker_irq, cpu) = irq;
--		per_cpu(irq_name, cpu) = name;
+diff --git a/fs/pstore/ram_core.c b/fs/pstore/ram_core.c
+index 3c777ec80d47..60dff7180412 100644
+--- a/fs/pstore/ram_core.c
++++ b/fs/pstore/ram_core.c
+@@ -426,7 +426,11 @@ static void *persistent_ram_vmap(phys_addr_t start, size_t size,
+ 		phys_addr_t addr = page_start + i * PAGE_SIZE;
+ 		pages[i] = pfn_to_page(addr >> PAGE_SHIFT);
  	}
+-	vaddr = vmap(pages, page_count, VM_MAP, prot);
++	/*
++	 * VM_IOREMAP used here to bypass this region during vread()
++	 * and kmap_atomic() (i.e. kcore) to avoid __va() failures.
++	 */
++	vaddr = vmap(pages, page_count, VM_MAP | VM_IOREMAP, prot);
+ 	kfree(pages);
  
- 	printk("cpu %d spinlock event irq %d\n", cpu, irq);
-@@ -106,6 +106,8 @@ void xen_uninit_lock_cpu(int cpu)
- 	if (!xen_pvspin)
- 		return;
- 
-+	kfree(per_cpu(irq_name, cpu));
-+	per_cpu(irq_name, cpu) = NULL;
  	/*
- 	 * When booting the kernel with 'mitigations=auto,nosmt', the secondary
- 	 * CPUs are not activated, and lock_kicker_irq is not initialized.
-@@ -116,8 +118,6 @@ void xen_uninit_lock_cpu(int cpu)
- 
- 	unbind_from_irqhandler(irq, NULL);
- 	per_cpu(lock_kicker_irq, cpu) = -1;
--	kfree(per_cpu(irq_name, cpu));
--	per_cpu(irq_name, cpu) = NULL;
- }
- 
- PV_CALLEE_SAVE_REGS_THUNK(xen_vcpu_stolen);
 -- 
 2.35.1
 
