@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADAFD46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:14:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30035C433EF;
-	Mon, 16 Jan 2023 16:14:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E80ED46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:14:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72988C433EF;
+	Mon, 16 Jan 2023 16:14:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885685;
-	bh=Zsk4U1iZrDogpGnfwnkIDGVRWqWZzIYn0L8HXhcHe1k=;
+	s=korg; t=1673885690;
+	bh=CPBgmLJheB9lgsGN9WZoGcCsZDHYEFxl19kyQEFvh2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u/Dzwr3CCKjOoUiKUz2jv4BXn/Useq2w76x7I3sMh8gRTuBJhQwkzDGjb0Bzm/E18
-	 qEQBDDTY2UkEp/mLeuq0FB+d1bO3uboIgPgaMgpjAGy5AHpANT3DEQgFzVor+Lhoa8
-	 PKQ174yqNm/rmU6Vv+R6RYJ53P2dRybCO8VywYW0=
+	b=HNK2NmJluw+gZnHcjZ00LFiuOm7TnPYRbCkPgFsYuQ5TXTL0WbigHRj1EdyUkr0Yk
+	 1/UeVQq3dmApWWUJuS1WQ+02t8ojYA3IpzJ5DuZi42eLhlNDlOxAaWTId+lCJdqJlG
+	 x5vttG7yUIykMvxGdtkPWesFLEXCZ6KXEX0T8p2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Maor Gottlieb <maorg@mellanox.com>,
+	Jiri Pirko <jiri@mellanox.com>,
+	Jay Vosburgh <jay.vosburgh@canonical.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Saeed Mahameed <saeedm@mellanox.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 145/658] clk: rockchip: Fix memory leak in rockchip_clk_register_pll()
-Date: Mon, 16 Jan 2023 16:43:53 +0100
-Message-Id: <20230116154916.086877065@linuxfoundation.org>
+Subject: [PATCH 5.4 147/658] bonding: Rename slave_arr to usable_slaves
+Date: Mon, 16 Jan 2023 16:43:55 +0100
+Message-Id: <20230116154916.180353019@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,35 +38,159 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Maor Gottlieb <maorg@mellanox.com>
 
-[ Upstream commit 739a6a6bbdb793bd57938cb24aa5a6df89983546 ]
+[ Upstream commit ed7d4f023b1a9b0578f20d66557c66452ab845ec ]
 
-If clk_register() fails, @pll->rate_table may have allocated memory by
-kmemdup(), so it needs to be freed, otherwise will cause memory leak
-issue, this patch fixes it.
+Rename slave_arr to usable_slaves, since we will have two arrays,
+one for the usable slaves and the other to all slaves.
 
-Fixes: 90c590254051 ("clk: rockchip: add clock type for pll clocks and pll used on rk3066")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Link: https://lore.kernel.org/r/20221123091201.199819-1-xiujianfeng@huawei.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Maor Gottlieb <maorg@mellanox.com>
+Reviewed-by: Jiri Pirko <jiri@mellanox.com>
+Reviewed-by: Jay Vosburgh <jay.vosburgh@canonical.com>
+Acked-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Saeed Mahameed <saeedm@mellanox.com>
+Stable-dep-of: f8a65ab2f3ff ("bonding: fix link recovery in mode 2 when updelay is nonzero")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/rockchip/clk-pll.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/bonding/bond_alb.c  |  4 ++--
+ drivers/net/bonding/bond_main.c | 40 ++++++++++++++++-----------------
+ include/net/bonding.h           |  2 +-
+ 3 files changed, 23 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/clk/rockchip/clk-pll.c b/drivers/clk/rockchip/clk-pll.c
-index 198417d56300..aa8a299ff704 100644
---- a/drivers/clk/rockchip/clk-pll.c
-+++ b/drivers/clk/rockchip/clk-pll.c
-@@ -963,6 +963,7 @@ struct clk *rockchip_clk_register_pll(struct rockchip_clk_provider *ctx,
- 	return mux_clk;
+diff --git a/drivers/net/bonding/bond_alb.c b/drivers/net/bonding/bond_alb.c
+index 8bee935c8f90..20114e1dde77 100644
+--- a/drivers/net/bonding/bond_alb.c
++++ b/drivers/net/bonding/bond_alb.c
+@@ -1360,7 +1360,7 @@ netdev_tx_t bond_tlb_xmit(struct sk_buff *skb, struct net_device *bond_dev)
+ 				struct bond_up_slave *slaves;
+ 				unsigned int count;
  
- err_pll:
-+	kfree(pll->rate_table);
- 	clk_unregister(mux_clk);
- 	mux_clk = pll_clk;
- err_mux:
+-				slaves = rcu_dereference(bond->slave_arr);
++				slaves = rcu_dereference(bond->usable_slaves);
+ 				count = slaves ? READ_ONCE(slaves->count) : 0;
+ 				if (likely(count))
+ 					tx_slave = slaves->arr[hash_index %
+@@ -1494,7 +1494,7 @@ netdev_tx_t bond_alb_xmit(struct sk_buff *skb, struct net_device *bond_dev)
+ 			struct bond_up_slave *slaves;
+ 			unsigned int count;
+ 
+-			slaves = rcu_dereference(bond->slave_arr);
++			slaves = rcu_dereference(bond->usable_slaves);
+ 			count = slaves ? READ_ONCE(slaves->count) : 0;
+ 			if (likely(count))
+ 				tx_slave = slaves->arr[bond_xmit_hash(bond, skb) %
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 0e797730bab3..dc351832b108 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -4073,9 +4073,9 @@ static void bond_skip_slave(struct bond_up_slave *slaves,
+  */
+ int bond_update_slave_arr(struct bonding *bond, struct slave *skipslave)
+ {
++	struct bond_up_slave *usable_slaves, *old_usable_slaves;
+ 	struct slave *slave;
+ 	struct list_head *iter;
+-	struct bond_up_slave *new_arr, *old_arr;
+ 	int agg_id = 0;
+ 	int ret = 0;
+ 
+@@ -4083,11 +4083,10 @@ int bond_update_slave_arr(struct bonding *bond, struct slave *skipslave)
+ 	WARN_ON(lockdep_is_held(&bond->mode_lock));
+ #endif
+ 
+-	new_arr = kzalloc(offsetof(struct bond_up_slave, arr[bond->slave_cnt]),
+-			  GFP_KERNEL);
+-	if (!new_arr) {
++	usable_slaves = kzalloc(struct_size(usable_slaves, arr,
++					    bond->slave_cnt), GFP_KERNEL);
++	if (!usable_slaves) {
+ 		ret = -ENOMEM;
+-		pr_err("Failed to build slave-array.\n");
+ 		goto out;
+ 	}
+ 	if (BOND_MODE(bond) == BOND_MODE_8023AD) {
+@@ -4095,14 +4094,14 @@ int bond_update_slave_arr(struct bonding *bond, struct slave *skipslave)
+ 
+ 		if (bond_3ad_get_active_agg_info(bond, &ad_info)) {
+ 			pr_debug("bond_3ad_get_active_agg_info failed\n");
+-			kfree_rcu(new_arr, rcu);
++			kfree_rcu(usable_slaves, rcu);
+ 			/* No active aggragator means it's not safe to use
+ 			 * the previous array.
+ 			 */
+-			old_arr = rtnl_dereference(bond->slave_arr);
+-			if (old_arr) {
+-				RCU_INIT_POINTER(bond->slave_arr, NULL);
+-				kfree_rcu(old_arr, rcu);
++			old_usable_slaves = rtnl_dereference(bond->usable_slaves);
++			if (old_usable_slaves) {
++				RCU_INIT_POINTER(bond->usable_slaves, NULL);
++				kfree_rcu(old_usable_slaves, rcu);
+ 			}
+ 			goto out;
+ 		}
+@@ -4122,18 +4121,19 @@ int bond_update_slave_arr(struct bonding *bond, struct slave *skipslave)
+ 			continue;
+ 
+ 		slave_dbg(bond->dev, slave->dev, "Adding slave to tx hash array[%d]\n",
+-			  new_arr->count);
++			  usable_slaves->count);
+ 
+-		new_arr->arr[new_arr->count++] = slave;
++		usable_slaves->arr[usable_slaves->count++] = slave;
+ 	}
+ 
+-	old_arr = rtnl_dereference(bond->slave_arr);
+-	rcu_assign_pointer(bond->slave_arr, new_arr);
+-	if (old_arr)
+-		kfree_rcu(old_arr, rcu);
++	old_usable_slaves = rtnl_dereference(bond->usable_slaves);
++	rcu_assign_pointer(bond->usable_slaves, usable_slaves);
++	if (old_usable_slaves)
++		kfree_rcu(old_usable_slaves, rcu);
+ out:
+ 	if (ret != 0 && skipslave)
+-		bond_skip_slave(rtnl_dereference(bond->slave_arr), skipslave);
++		bond_skip_slave(rtnl_dereference(bond->usable_slaves),
++				skipslave);
+ 
+ 	return ret;
+ }
+@@ -4150,7 +4150,7 @@ static netdev_tx_t bond_3ad_xor_xmit(struct sk_buff *skb,
+ 	struct bond_up_slave *slaves;
+ 	unsigned int count;
+ 
+-	slaves = rcu_dereference(bond->slave_arr);
++	slaves = rcu_dereference(bond->usable_slaves);
+ 	count = slaves ? READ_ONCE(slaves->count) : 0;
+ 	if (likely(count)) {
+ 		slave = slaves->arr[bond_xmit_hash(bond, skb) % count];
+@@ -4457,9 +4457,9 @@ static void bond_uninit(struct net_device *bond_dev)
+ 		__bond_release_one(bond_dev, slave->dev, true, true);
+ 	netdev_info(bond_dev, "Released all slaves\n");
+ 
+-	arr = rtnl_dereference(bond->slave_arr);
++	arr = rtnl_dereference(bond->usable_slaves);
+ 	if (arr) {
+-		RCU_INIT_POINTER(bond->slave_arr, NULL);
++		RCU_INIT_POINTER(bond->usable_slaves, NULL);
+ 		kfree_rcu(arr, rcu);
+ 	}
+ 
+diff --git a/include/net/bonding.h b/include/net/bonding.h
+index 1bee8fdff7db..69ceb5b4a8d6 100644
+--- a/include/net/bonding.h
++++ b/include/net/bonding.h
+@@ -205,7 +205,7 @@ struct bonding {
+ 	struct   slave __rcu *curr_active_slave;
+ 	struct   slave __rcu *current_arp_slave;
+ 	struct   slave __rcu *primary_slave;
+-	struct   bond_up_slave __rcu *slave_arr; /* Array of usable slaves */
++	struct   bond_up_slave __rcu *usable_slaves; /* Array of usable slaves */
+ 	bool     force_primary;
+ 	s32      slave_cnt; /* never change this value outside the attach/detach wrappers */
+ 	int     (*recv_probe)(const struct sk_buff *, struct bonding *,
 -- 
 2.35.1
 
