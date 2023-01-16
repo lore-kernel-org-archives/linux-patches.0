@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 055746FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:58:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AE61C433EF;
-	Mon, 16 Jan 2023 16:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99D0D6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:58:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C7F0C433EF;
+	Mon, 16 Jan 2023 16:58:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888300;
-	bh=nZlw1avROC0obsZlrsqqk24gqY/j05lHL6j0QRbY1Jc=;
+	s=korg; t=1673888303;
+	bh=pkc3/pYeap73gdwbwh8uw9wC+prxCa443T0/SP7EDIA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I7vXtIJOvZG5Nt7x5D7fZSukyTKrA+SD8rqerDtRE/pCe+8MktZwzCL3XVUnV01PO
-	 3Uj7Szy49al7HJEszrMRQRSNz13yZJntt4mkMvJAxXx+3rBio1Fa+O/a8dI6tYc3T1
-	 24pkiuzdWU1zkmDKz8THkCIcBF2Kx1Bph279LCuo=
+	b=fHh4EEXbf8nYONFrz4jkr8vWKn4CRf+k4OR4COUmluFDGYaGqkucgmPcm6CNxHgg/
+	 YfsJrjoMAHorTp09BJhanc9kB4NTO0FSCMor9ng/pW/TQVCEFdFKTYqjixHD0KYwA3
+	 Z1A5al/BEAIi9B9XpRDo0ulC5DtkkgKpa+atZPpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
+	Jian-Hong Pan <jian-hong@endlessm.com>,
 	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 476/521] ALSA: hda/realtek - Add Headset Mic supported for HP cPC
-Date: Mon, 16 Jan 2023 16:52:18 +0100
-Message-Id: <20230116154908.475302346@linuxfoundation.org>
+Subject: [PATCH 4.19 477/521] ALSA: hda/realtek - Enable headset mic of Acer X2660G with ALC662
+Date: Mon, 16 Jan 2023 16:52:19 +0100
+Message-Id: <20230116154908.522954302@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,97 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kailang Yang <kailang@realtek.com>
+From: Jian-Hong Pan <jian-hong@endlessm.com>
 
-[ Upstream commit 5af29028fd6db9438b5584ab7179710a0a22569d ]
+[ Upstream commit d858c706bdca97698752bd26b60c21ec07ef04f2 ]
 
-HP ALC671 need to support Headset Mic.
+The Acer desktop X2660G with ALC662 can't detect the headset microphone
+until ALC662_FIXUP_ACER_X2660G_HEADSET_MODE quirk applied.
 
-Signed-off-by: Kailang Yang <kailang@realtek.com>
-Link: https://lore.kernel.org/r/06a9d2b176e14706976d6584cbe2d92a@realtek.com
+Signed-off-by: Jian-Hong Pan <jian-hong@endlessm.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20200317082806.73194-2-jian-hong@endlessm.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Stable-dep-of: 4bf5bf54476d ("ALSA: hda/realtek: Add quirk for Lenovo TianYi510Pro-14IOB")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 44 +++++++++++++++++++++++++++++++++++
- 1 file changed, 44 insertions(+)
+ sound/pci/hda/patch_realtek.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
 diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index 3abe30eec49a..375493d3807f 100644
+index 375493d3807f..024a7e473e11 100644
 --- a/sound/pci/hda/patch_realtek.c
 +++ b/sound/pci/hda/patch_realtek.c
-@@ -8549,6 +8549,29 @@ static void alc662_fixup_aspire_ethos_hp(struct hda_codec *codec,
- 	}
- }
- 
-+static void alc671_fixup_hp_headset_mic2(struct hda_codec *codec,
-+					     const struct hda_fixup *fix, int action)
-+{
-+	struct alc_spec *spec = codec->spec;
-+
-+	static const struct hda_pintbl pincfgs[] = {
-+		{ 0x19, 0x02a11040 }, /* use as headset mic, with its own jack detect */
-+		{ 0x1b, 0x0181304f },
-+		{ }
-+	};
-+
-+	switch (action) {
-+	case HDA_FIXUP_ACT_PRE_PROBE:
-+		spec->gen.mixer_nid = 0;
-+		spec->parse_flags |= HDA_PINCFG_HEADSET_MIC;
-+		snd_hda_apply_pincfgs(codec, pincfgs);
-+		break;
-+	case HDA_FIXUP_ACT_INIT:
-+		alc_write_coef_idx(codec, 0x19, 0xa054);
-+		break;
-+	}
-+}
-+
- static const struct coef_fw alc668_coefs[] = {
- 	WRITE_COEF(0x01, 0xbebe), WRITE_COEF(0x02, 0xaaaa), WRITE_COEF(0x03,    0x0),
- 	WRITE_COEF(0x04, 0x0180), WRITE_COEF(0x06,    0x0), WRITE_COEF(0x07, 0x0f80),
-@@ -8623,6 +8646,7 @@ enum {
- 	ALC669_FIXUP_ACER_ASPIRE_ETHOS,
+@@ -8647,6 +8647,7 @@ enum {
  	ALC669_FIXUP_ACER_ASPIRE_ETHOS_SUBWOOFER,
  	ALC669_FIXUP_ACER_ASPIRE_ETHOS_HEADSET,
-+	ALC671_FIXUP_HP_HEADSET_MIC2,
+ 	ALC671_FIXUP_HP_HEADSET_MIC2,
++	ALC662_FIXUP_ACER_X2660G_HEADSET_MODE,
  };
  
  static const struct hda_fixup alc662_fixups[] = {
-@@ -8976,6 +9000,10 @@ static const struct hda_fixup alc662_fixups[] = {
- 		.chained = true,
- 		.chain_id = ALC669_FIXUP_ACER_ASPIRE_ETHOS_SUBWOOFER
+@@ -9004,6 +9005,15 @@ static const struct hda_fixup alc662_fixups[] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc671_fixup_hp_headset_mic2,
  	},
-+	[ALC671_FIXUP_HP_HEADSET_MIC2] = {
-+		.type = HDA_FIXUP_FUNC,
-+		.v.func = alc671_fixup_hp_headset_mic2,
++	[ALC662_FIXUP_ACER_X2660G_HEADSET_MODE] = {
++		.type = HDA_FIXUP_PINS,
++		.v.pins = (const struct hda_pintbl[]) {
++			{ 0x1a, 0x02a1113c }, /* use as headset mic, without its own jack detect */
++			{ }
++		},
++		.chained = true,
++		.chain_id = ALC662_FIXUP_USI_FUNC
 +	},
  };
  
  static const struct snd_pci_quirk alc662_fixup_tbl[] = {
-@@ -9157,6 +9185,22 @@ static const struct snd_hda_pin_quirk alc662_pin_fixup_tbl[] = {
- 		{0x12, 0x90a60130},
- 		{0x14, 0x90170110},
- 		{0x15, 0x0321101f}),
-+	SND_HDA_PIN_QUIRK(0x10ec0671, 0x103c, "HP cPC", ALC671_FIXUP_HP_HEADSET_MIC2,
-+		{0x14, 0x01014010},
-+		{0x17, 0x90170150},
-+		{0x1b, 0x01813030},
-+		{0x21, 0x02211020}),
-+	SND_HDA_PIN_QUIRK(0x10ec0671, 0x103c, "HP cPC", ALC671_FIXUP_HP_HEADSET_MIC2,
-+		{0x14, 0x01014010},
-+		{0x18, 0x01a19040},
-+		{0x1b, 0x01813030},
-+		{0x21, 0x02211020}),
-+	SND_HDA_PIN_QUIRK(0x10ec0671, 0x103c, "HP cPC", ALC671_FIXUP_HP_HEADSET_MIC2,
-+		{0x14, 0x01014020},
-+		{0x17, 0x90170110},
-+		{0x18, 0x01a19050},
-+		{0x1b, 0x01813040},
-+		{0x21, 0x02211030}),
- 	{}
- };
- 
+@@ -9015,6 +9025,7 @@ static const struct snd_pci_quirk alc662_fixup_tbl[] = {
+ 	SND_PCI_QUIRK(0x1025, 0x0349, "eMachines eM250", ALC662_FIXUP_INV_DMIC),
+ 	SND_PCI_QUIRK(0x1025, 0x034a, "Gateway LT27", ALC662_FIXUP_INV_DMIC),
+ 	SND_PCI_QUIRK(0x1025, 0x038b, "Acer Aspire 8943G", ALC662_FIXUP_ASPIRE),
++	SND_PCI_QUIRK(0x1025, 0x124e, "Acer 2660G", ALC662_FIXUP_ACER_X2660G_HEADSET_MODE),
+ 	SND_PCI_QUIRK(0x1028, 0x05d8, "Dell", ALC668_FIXUP_DELL_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1028, 0x05db, "Dell", ALC668_FIXUP_DELL_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1028, 0x05fe, "Dell XPS 15", ALC668_FIXUP_DELL_XPS13),
 -- 
 2.35.1
 
