@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A19BD33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25E62C433EF;
-	Mon, 16 Jan 2023 15:55:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3551C33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B111DC433EF;
+	Mon, 16 Jan 2023 15:55:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884529;
-	bh=69t2bdjOS+7RBEE+s/cEdTXDu49Bwlf/my39Dl5z8Wg=;
+	s=korg; t=1673884532;
+	bh=V0JfRNaoTLQoPs6LYZBTtab8jAPRvEKnGeBqXGySRwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=X2C7M/VJTRE+dimHxH8MFBpD9S5W1b2Z2YcnsjTI4QiQsWPpIVH1uSeFHJdkpLom9
-	 djrzj3ocr2dp70NAur3jLummM5vrOaSmSzlI5ZrbE6cP7Fy68HEh+pybQ31VIKeHgg
-	 cwLNpXnUsHkY1MJmaxJCkYSTgEKvn71J3OzK49jo=
+	b=GTqAl657DTsBsFZVQIDjwiepeoTA56ogBl25dLgMYv38yzOpW4rgLrJe8TVouUViJ
+	 jHColUyH2oQQtwDLaIchB4feuG+k6PMWXk7UaBv22KCP5fIXZ6XLardRUclRzFxZmr
+	 D9o9DjyEXspwUFzZsrlIBhNk81P/Ktzx2mxJOQl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Martin=20Li=C5=A1ka?= <mliska@suse.cz>,
-	Jonathan Corbet <corbet@lwn.net>
-Subject: [PATCH 6.1 011/183] docs: Fix the docs build with Sphinx 6.0
-Date: Mon, 16 Jan 2023 16:48:54 +0100
-Message-Id: <20230116154803.861151571@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	syzbot+6c95df01470a47fc3af4@syzkaller.appspotmail.com
+Subject: [PATCH 6.1 012/183] io_uring/poll: add hash if ready poll request cant complete inline
+Date: Mon, 16 Jan 2023 16:48:55 +0100
+Message-Id: <20230116154803.911635956@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -34,46 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Corbet <corbet@lwn.net>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 0283189e8f3d0917e2ac399688df85211f48447b upstream.
+commit febb985c06cb6f5fac63598c0bffd4fd823d110d upstream.
 
-Sphinx 6.0 removed the execfile_() function, which we use as part of the
-configuration process.  They *did* warn us...  Just open-code the
-functionality as is done in Sphinx itself.
+If we don't, then we may lose access to it completely, leading to a
+request leak. This will eventually stall the ring exit process as
+well.
 
-Tested (using SPHINX_CONF, since this code is only executed with an
-alternative config file) on various Sphinx versions from 2.5 through 6.0.
-
-Reported-by: Martin Liška <mliska@suse.cz>
 Cc: stable@vger.kernel.org
-Signed-off-by: Jonathan Corbet <corbet@lwn.net>
+Fixes: 49f1c68e048f ("io_uring: optimise submission side poll_refs")
+Reported-and-tested-by: syzbot+6c95df01470a47fc3af4@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/io-uring/0000000000009f829805f1ce87b2@google.com/
+Suggested-by: Pavel Begunkov <asml.silence@gmail.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/sphinx/load_config.py |    6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ io_uring/poll.c |   17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/Documentation/sphinx/load_config.py
-+++ b/Documentation/sphinx/load_config.py
-@@ -3,7 +3,7 @@
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -549,6 +549,14 @@ static bool io_poll_can_finish_inline(st
+ 	return pt->owning || io_poll_get_ownership(req);
+ }
  
- import os
- import sys
--from sphinx.util.pycompat import execfile_
-+from sphinx.util.osutil import fs_encoding
++static void io_poll_add_hash(struct io_kiocb *req)
++{
++	if (req->flags & REQ_F_HASH_LOCKED)
++		io_poll_req_insert_locked(req);
++	else
++		io_poll_req_insert(req);
++}
++
+ /*
+  * Returns 0 when it's handed over for polling. The caller owns the requests if
+  * it returns non-zero, but otherwise should not touch it. Negative values
+@@ -607,18 +615,17 @@ static int __io_arm_poll_handler(struct
  
- # ------------------------------------------------------------------------------
- def loadConfig(namespace):
-@@ -48,7 +48,9 @@ def loadConfig(namespace):
-             sys.stdout.write("load additional sphinx-config: %s\n" % config_file)
-             config = namespace.copy()
-             config['__file__'] = config_file
--            execfile_(config_file, config)
-+            with open(config_file, 'rb') as f:
-+                code = compile(f.read(), fs_encoding, 'exec')
-+                exec(code, config)
-             del config['__file__']
-             namespace.update(config)
-         else:
+ 	if (mask &&
+ 	   ((poll->events & (EPOLLET|EPOLLONESHOT)) == (EPOLLET|EPOLLONESHOT))) {
+-		if (!io_poll_can_finish_inline(req, ipt))
++		if (!io_poll_can_finish_inline(req, ipt)) {
++			io_poll_add_hash(req);
+ 			return 0;
++		}
+ 		io_poll_remove_entries(req);
+ 		ipt->result_mask = mask;
+ 		/* no one else has access to the req, forget about the ref */
+ 		return 1;
+ 	}
+ 
+-	if (req->flags & REQ_F_HASH_LOCKED)
+-		io_poll_req_insert_locked(req);
+-	else
+-		io_poll_req_insert(req);
++	io_poll_add_hash(req);
+ 
+ 	if (mask && (poll->events & EPOLLET) &&
+ 	    io_poll_can_finish_inline(req, ipt)) {
 
 
