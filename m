@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD2C36FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:40:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6364FC433EF;
-	Mon, 16 Jan 2023 16:40:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EDF6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:40:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37B9DC433F1;
+	Mon, 16 Jan 2023 16:40:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887239;
-	bh=OaQnz9XuxODBtfNQ4ankxCXi+CWVJEhXeKBHAKhU+R8=;
+	s=korg; t=1673887242;
+	bh=J0ZzyXlZxdigl9/g8y6215mycZOIitAb4cxa5nztVMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JgQAbN0EyDoiTVdKtr70NFsRt1JKu6cIy0LNAc83x3ccnpoxsY05NrkhK+5U+UluZ
-	 RuQBCc5eYa4Ob899allYC00Wqk3Db6lybxWMBze7fgJTrcz0cTWf9a3nfEH4LCO0ER
-	 AcCQ8RgDdhhLYvRx+Lg3HTnP2hT63jsR8B6AUB0E=
+	b=IRxJo867/4xOHeUasKbxHslzgBF/yBTUeHFVmuBPJRVZV72ERgjubBPbu9SgKlg2A
+	 j22WeY4Q+K2XlLkQnrFOsAdEx+gLBtdPr2yfh+3CdlEcnFl00OdtZ8OlQLfF/rItAd
+	 1RcD9VOrN5eV2Huii7JRwQxr4NFPridMdILDB5Ws=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Martin Pitt <mpitt@redhat.com>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Ondrej Mosnacek <omosnace@redhat.com>,
+	Paul Moore <paul@paul-moore.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 045/521] alpha: fix syscall entry in !AUDUT_SYSCALL case
-Date: Mon, 16 Jan 2023 16:45:07 +0100
-Message-Id: <20230116154849.265135483@linuxfoundation.org>
+Subject: [PATCH 4.19 046/521] fs: dont audit the capability check in simple_xattr_list()
+Date: Mon, 16 Jan 2023 16:45:08 +0100
+Message-Id: <20230116154849.316620930@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -34,38 +37,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Ondrej Mosnacek <omosnace@redhat.com>
 
-[ Upstream commit f7b2431a6d22f7a91c567708e071dfcd6d66db14 ]
+[ Upstream commit e7eda157c4071cd1e69f4b1687b0fbe1ae5e6f46 ]
 
-We only want to take the slow path if SYSCALL_TRACE or SYSCALL_AUDIT is
-set; on !AUDIT_SYSCALL configs the current tree hits it whenever _any_
-thread flag (including NEED_RESCHED, NOTIFY_SIGNAL, etc.) happens to
-be set.
+The check being unconditional may lead to unwanted denials reported by
+LSMs when a process has the capability granted by DAC, but denied by an
+LSM. In the case of SELinux such denials are a problem, since they can't
+be effectively filtered out via the policy and when not silenced, they
+produce noise that may hide a true problem or an attack.
 
-Fixes: a9302e843944 "alpha: Enable system-call auditing support"
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+Checking for the capability only if any trusted xattr is actually
+present wouldn't really address the issue, since calling listxattr(2) on
+such node on its own doesn't indicate an explicit attempt to see the
+trusted xattrs. Additionally, it could potentially leak the presence of
+trusted xattrs to an unprivileged user if they can check for the denials
+(e.g. through dmesg).
+
+Therefore, it's best (and simplest) to keep the check unconditional and
+instead use ns_capable_noaudit() that will silence any associated LSM
+denials.
+
+Fixes: 38f38657444d ("xattr: extract simple_xattr code from tmpfs")
+Reported-by: Martin Pitt <mpitt@redhat.com>
+Suggested-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Signed-off-by: Ondrej Mosnacek <omosnace@redhat.com>
+Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Reviewed-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Christian Brauner (Microsoft) <brauner@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/alpha/kernel/entry.S | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xattr.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/alpha/kernel/entry.S b/arch/alpha/kernel/entry.S
-index c64806a2daf5..ebe52200a9dc 100644
---- a/arch/alpha/kernel/entry.S
-+++ b/arch/alpha/kernel/entry.S
-@@ -469,8 +469,10 @@ entSys:
- #ifdef CONFIG_AUDITSYSCALL
- 	lda     $6, _TIF_SYSCALL_TRACE | _TIF_SYSCALL_AUDIT
- 	and     $3, $6, $3
--#endif
- 	bne     $3, strace
-+#else
-+	blbs    $3, strace		/* check for SYSCALL_TRACE in disguise */
-+#endif
- 	beq	$4, 1f
- 	ldq	$27, 0($5)
- 1:	jsr	$26, ($27), alpha_ni_syscall
+diff --git a/fs/xattr.c b/fs/xattr.c
+index 470ee0af3200..5c3407e18e15 100644
+--- a/fs/xattr.c
++++ b/fs/xattr.c
+@@ -1012,7 +1012,7 @@ static int xattr_list_one(char **buffer, ssize_t *remaining_size,
+ ssize_t simple_xattr_list(struct inode *inode, struct simple_xattrs *xattrs,
+ 			  char *buffer, size_t size)
+ {
+-	bool trusted = capable(CAP_SYS_ADMIN);
++	bool trusted = ns_capable_noaudit(&init_user_ns, CAP_SYS_ADMIN);
+ 	struct simple_xattr *xattr;
+ 	ssize_t remaining_size = size;
+ 	int err = 0;
 -- 
 2.35.1
 
