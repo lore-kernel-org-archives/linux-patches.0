@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7121B46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA5B3C433D2;
-	Mon, 16 Jan 2023 16:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1959D46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA26C433F0;
+	Mon, 16 Jan 2023 16:17:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885869;
-	bh=qMI16NqUCFo4CvrFoXRLiUmoRr86cGc9+xjw0aTitY4=;
+	s=korg; t=1673885871;
+	bh=PMDO9hUbwriCNY3n7r/6S8oszdRH27p/kgm2I35DTOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t9iPpZcfYO+MpdfUXJQakD8szMNZsnHSKWiaePsIbDeD0fgFG1X6ybSGj9wK6uQ3W
-	 Fwhk+x6fiJVmgyLHDioaAF4LrjignjTUmMuDrQVqjCHBWDh0SQ1/kzDs8u/TjRac3q
-	 R+peGLkDkSfbna7i8gWPEECV+amRXu2P4OtQHLfw=
+	b=C3a6ppyZeaKDL46dCCajAALIeJDAREM+Vzo69tYB90FGn82GLFXthC869XmpFj/Rb
+	 Kx3pXV2W7IKq490T83e4VDAyI+z7gy6eCThTlA0JcqZY8U9cEffk2CoPgTiJmGTy2u
+	 hEmcct8SHxTAyTqrEDHYxTuQ3ARAs2XMHseBX2zY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yongqiang Liu <liuyongqiang13@huawei.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 214/658] net: defxx: Fix missing err handling in dfx_init()
-Date: Mon, 16 Jan 2023 16:45:02 +0100
-Message-Id: <20230116154919.250431653@linuxfoundation.org>
+Subject: [PATCH 5.4 188/658] mmc: alcor: fix return value check of mmc_add_host()
+Date: Mon, 16 Jan 2023 16:44:36 +0100
+Message-Id: <20230116154918.059135519@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,59 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yongqiang Liu <liuyongqiang13@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit ae18dcdff0f8d7e84cd3fd9f496518b5e72d185d ]
+[ Upstream commit e93d1468f429475a753d6baa79b853b7ee5ef8c0 ]
 
-When eisa_driver_register() or tc_register_driver() failed,
-the modprobe defxx would fail with some err log as follows:
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
- Error: Driver 'defxx' is already registered, aborting...
+So fix this by checking the return value and calling mmc_free_host() in the
+error path.
 
-Fix this issue by adding err hanling in dfx_init().
-
-Fixes: e89a2cfb7d7b5 ("[TC] defxx: TURBOchannel support")
-Signed-off-by: Yongqiang Liu <liuyongqiang13@huawei.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c5413ad815a6 ("mmc: add new Alcor Micro Cardreader SD/MMC driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-2-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/fddi/defxx.c | 22 ++++++++++++++++++----
- 1 file changed, 18 insertions(+), 4 deletions(-)
+ drivers/mmc/host/alcor.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/fddi/defxx.c b/drivers/net/fddi/defxx.c
-index c866f58dab70..28bf530cb005 100644
---- a/drivers/net/fddi/defxx.c
-+++ b/drivers/net/fddi/defxx.c
-@@ -3844,10 +3844,24 @@ static int dfx_init(void)
- 	int status;
+diff --git a/drivers/mmc/host/alcor.c b/drivers/mmc/host/alcor.c
+index 026ca9194ce5..a8ec2e6fefa8 100644
+--- a/drivers/mmc/host/alcor.c
++++ b/drivers/mmc/host/alcor.c
+@@ -1114,7 +1114,10 @@ static int alcor_pci_sdmmc_drv_probe(struct platform_device *pdev)
+ 	alcor_hw_init(host);
  
- 	status = pci_register_driver(&dfx_pci_driver);
--	if (!status)
--		status = eisa_driver_register(&dfx_eisa_driver);
--	if (!status)
--		status = tc_register_driver(&dfx_tc_driver);
-+	if (status)
-+		goto err_pci_register;
+ 	dev_set_drvdata(&pdev->dev, host);
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret)
++		goto free_host;
 +
-+	status = eisa_driver_register(&dfx_eisa_driver);
-+	if (status)
-+		goto err_eisa_register;
-+
-+	status = tc_register_driver(&dfx_tc_driver);
-+	if (status)
-+		goto err_tc_register;
-+
-+	return 0;
-+
-+err_tc_register:
-+	eisa_driver_unregister(&dfx_eisa_driver);
-+err_eisa_register:
-+	pci_unregister_driver(&dfx_pci_driver);
-+err_pci_register:
- 	return status;
- }
+ 	return 0;
  
+ free_host:
 -- 
 2.35.1
 
