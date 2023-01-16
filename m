@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF7C66FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:49:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E3B6C433EF;
-	Mon, 16 Jan 2023 16:49:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773206FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:49:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0114AC433EF;
+	Mon, 16 Jan 2023 16:49:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887752;
-	bh=+snJ8J5SVyO+evxkIMqCA4IfWMHLG+QWmPt52mRSJKw=;
+	s=korg; t=1673887755;
+	bh=Xx93zkJX5bcg/Jlw5P44O3jeNxWhkqYGUIehFUrLkes=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UuQMFPX8HaNSH8o+UZd9+/MD9NlPQvkCUffq5rIMbO+S5xOuqmayR8NFZN1wR2+VI
-	 hvRWFDijC12CpvWtWQ9NezCa1CmjJJ3S2LyQPSNt8GCDdlmnU0ERJNc2CJqyETOh3b
-	 8D805w6En/zhHgplUefA3m4RsB9t9l28SjtrywQU=
+	b=wqCeNUaIt+eI7NH6MuUxx1ugxg3xtWpg00Tm06CIwaqbBl7ShLpAormUZRzU+2fvu
+	 U+nN+BwaIJp/ZbF91pjrvVOiXc+KfiokIpI52gYTMIxkVpxIK1PbYgtrMmzt340yCM
+	 JgD4XeA5FPXrTi6ehO1QE3TWv3a22Nh2inhGCS+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Zhang Rui <rui.zhang@intel.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 261/521] power: supply: fix residue sysfs file in error handle route of __power_supply_register()
-Date: Mon, 16 Jan 2023 16:48:43 +0100
-Message-Id: <20230116154858.803062236@linuxfoundation.org>
+Subject: [PATCH 4.19 270/521] rtc: cmos: Call cmos_wake_setup() from cmos_do_probe()
+Date: Mon, 16 Jan 2023 16:48:52 +0100
+Message-Id: <20230116154859.227068154@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,47 +37,145 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit 5b79480ce1978864ac3f06f2134dfa3b6691fe74 ]
+[ Upstream commit 508ccdfb86b21da37ad091003a4d4567709d5dfb ]
 
-If device_add() succeeds, we should call device_del() when want to
-get rid of it, so move it into proper jump symbol.
+Notice that cmos_wake_setup() is the only user of acpi_rtc_info and it
+can operate on the cmos_rtc variable directly, so it need not set the
+platform_data pointer before cmos_do_probe() is called.  Instead, it
+can be called by cmos_do_probe() in the case when the platform_data
+pointer is not set to implement the default behavior (which is to use
+the FADT information as long as ACPI support is enabled).
 
-Otherwise, when __power_supply_register() returns fail and goto
-wakeup_init_failed to exit, there is still residue device file in sysfs.
-When attempt to probe device again, sysfs would complain as below:
+Modify the code accordingly.
 
-sysfs: cannot create duplicate filename '/devices/platform/i2c/i2c-0/0-001c/power_supply/adp5061'
-Call Trace:
- dump_stack_lvl+0x68/0x85
- sysfs_warn_dup.cold+0x1c/0x29
- sysfs_create_dir_ns+0x1b1/0x1d0
- kobject_add_internal+0x143/0x390
- kobject_add+0x108/0x170
+While at it, drop a comment that doesn't really match the code it is
+supposed to be describing.
 
-Fixes: 80c6463e2fa3 ("power_supply: Fix Oops from NULL pointer dereference from wakeup_source_activate")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Zhang Rui <rui.zhang@intel.com>
+Tested-by: Zhang Rui <rui.zhang@intel.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Link: https://lore.kernel.org/r/4803444.31r3eYUQgx@kreacher
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/power/supply/power_supply_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-cmos.c | 47 ++++++++++++++++++++----------------------
+ 1 file changed, 22 insertions(+), 25 deletions(-)
 
-diff --git a/drivers/power/supply/power_supply_core.c b/drivers/power/supply/power_supply_core.c
-index e43a7b3b570c..9b98921a3b16 100644
---- a/drivers/power/supply/power_supply_core.c
-+++ b/drivers/power/supply/power_supply_core.c
-@@ -945,8 +945,8 @@ __power_supply_register(struct device *parent,
- register_cooler_failed:
- 	psy_unregister_thermal(psy);
- register_thermal_failed:
--	device_del(dev);
- wakeup_init_failed:
-+	device_del(dev);
- device_add_failed:
- check_supplies_failed:
- dev_set_name_failed:
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index e83b976b9abe..c51f6450daf2 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -702,6 +702,8 @@ static irqreturn_t cmos_interrupt(int irq, void *p)
+ 		return IRQ_NONE;
+ }
+ 
++static void cmos_wake_setup(struct device *dev);
++
+ #ifdef	CONFIG_PNP
+ #define	INITSECTION
+ 
+@@ -785,19 +787,27 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
+ 		if (info->address_space)
+ 			address_space = info->address_space;
+ 
+-		if (info->rtc_day_alarm && info->rtc_day_alarm < 128)
+-			cmos_rtc.day_alrm = info->rtc_day_alarm;
+-		if (info->rtc_mon_alarm && info->rtc_mon_alarm < 128)
+-			cmos_rtc.mon_alrm = info->rtc_mon_alarm;
+-		if (info->rtc_century && info->rtc_century < 128)
+-			cmos_rtc.century = info->rtc_century;
++		cmos_rtc.day_alrm = info->rtc_day_alarm;
++		cmos_rtc.mon_alrm = info->rtc_mon_alarm;
++		cmos_rtc.century = info->rtc_century;
+ 
+ 		if (info->wake_on && info->wake_off) {
+ 			cmos_rtc.wake_on = info->wake_on;
+ 			cmos_rtc.wake_off = info->wake_off;
+ 		}
++	} else {
++		cmos_wake_setup(dev);
+ 	}
+ 
++	if (cmos_rtc.day_alrm >= 128)
++		cmos_rtc.day_alrm = 0;
++
++	if (cmos_rtc.mon_alrm >= 128)
++		cmos_rtc.mon_alrm = 0;
++
++	if (cmos_rtc.century >= 128)
++		cmos_rtc.century = 0;
++
+ 	cmos_rtc.dev = dev;
+ 	dev_set_drvdata(dev, &cmos_rtc);
+ 
+@@ -1222,13 +1232,6 @@ static void use_acpi_alarm_quirks(void)
+ static inline void use_acpi_alarm_quirks(void) { }
+ #endif
+ 
+-/* Every ACPI platform has a mc146818 compatible "cmos rtc".  Here we find
+- * its device node and pass extra config data.  This helps its driver use
+- * capabilities that the now-obsolete mc146818 didn't have, and informs it
+- * that this board's RTC is wakeup-capable (per ACPI spec).
+- */
+-static struct cmos_rtc_board_info acpi_rtc_info;
+-
+ static void cmos_wake_setup(struct device *dev)
+ {
+ 	if (acpi_disabled)
+@@ -1236,26 +1239,23 @@ static void cmos_wake_setup(struct device *dev)
+ 
+ 	use_acpi_alarm_quirks();
+ 
+-	acpi_rtc_info.wake_on = rtc_wake_on;
+-	acpi_rtc_info.wake_off = rtc_wake_off;
++	cmos_rtc.wake_on = rtc_wake_on;
++	cmos_rtc.wake_off = rtc_wake_off;
+ 
+-	/* workaround bug in some ACPI tables */
++	/* ACPI tables bug workaround. */
+ 	if (acpi_gbl_FADT.month_alarm && !acpi_gbl_FADT.day_alarm) {
+ 		dev_dbg(dev, "bogus FADT month_alarm (%d)\n",
+ 			acpi_gbl_FADT.month_alarm);
+ 		acpi_gbl_FADT.month_alarm = 0;
+ 	}
+ 
+-	acpi_rtc_info.rtc_day_alarm = acpi_gbl_FADT.day_alarm;
+-	acpi_rtc_info.rtc_mon_alarm = acpi_gbl_FADT.month_alarm;
+-	acpi_rtc_info.rtc_century = acpi_gbl_FADT.century;
++	cmos_rtc.day_alrm = acpi_gbl_FADT.day_alarm;
++	cmos_rtc.mon_alrm = acpi_gbl_FADT.month_alarm;
++	cmos_rtc.century = acpi_gbl_FADT.century;
+ 
+-	/* NOTE:  S4_RTC_WAKE is NOT currently useful to Linux */
+ 	if (acpi_gbl_FADT.flags & ACPI_FADT_S4_RTC_WAKE)
+ 		dev_info(dev, "RTC can wake from S4\n");
+ 
+-	dev->platform_data = &acpi_rtc_info;
+-
+ 	/* RTC always wakes from S1/S2/S3, and often S4/STD */
+ 	device_init_wakeup(dev, 1);
+ }
+@@ -1306,8 +1306,6 @@ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
+ {
+ 	int irq, ret;
+ 
+-	cmos_wake_setup(&pnp->dev);
+-
+ 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
+ 		irq = 0;
+ #ifdef CONFIG_X86
+@@ -1415,7 +1413,6 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
+ 	int irq, ret;
+ 
+ 	cmos_of_init(pdev);
+-	cmos_wake_setup(&pdev->dev);
+ 
+ 	if (RTC_IOMAPPED)
+ 		resource = platform_get_resource(pdev, IORESOURCE_IO, 0);
 -- 
 2.35.1
 
