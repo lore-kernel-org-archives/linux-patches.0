@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FAD06FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:46:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED6C9C433F1;
-	Mon, 16 Jan 2023 16:46:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5256FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:46:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D357C433F0;
+	Mon, 16 Jan 2023 16:46:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887579;
-	bh=xnsC0OOoMToBZSxjl+r6hR5ELDSrIKCbZvukHA7KU14=;
+	s=korg; t=1673887581;
+	bh=UDRIxe5G2YActpUAIf39pvQ4aggqL36vm9t8RkR8c9s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rgFyr+jbiMvdAcEl9QZiOr57Oqt4AShemJNGfaBGvMiNxv8mYphiixKRInmQAEe9x
-	 LrRNYUFEiHz4wQpM6smm9QzilS8az2Iu1V6sjLdc4XZ/U8B2fpD9FHapihd278tcDg
-	 xTBu+DtfqHDUsQPg5upAI8Xe2c7/BRYb7Qb4sHP8=
+	b=1kB6bPcuz0wdNxo8MJqDRdWJHLEOIbR6fTXrn+PAjjUejUIEGhwFuruBzdmQFjJeb
+	 xi/rbHtfSjf4NGhqUdRTQyVFgiA/wQja/KUFyiD9XMsHHyvnluzp4Hw75zWGH7sSe+
+	 VjArjdzRe5UsDQFhlOWUgsRnQbZ91r61PD1qklwM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 174/521] Bluetooth: hci_qca: dont call kfree_skb() under spin_lock_irqsave()
-Date: Mon, 16 Jan 2023 16:47:16 +0100
-Message-Id: <20230116154854.884536236@linuxfoundation.org>
+Subject: [PATCH 4.19 165/521] net: emaclite: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Mon, 16 Jan 2023 16:47:07 +0100
+Message-Id: <20230116154854.531142152@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,33 +37,40 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit df4cfc91208e0a98f078223793f5871b1a82cc54 ]
+[ Upstream commit d1678bf45f21fa5ae4a456f821858679556ea5f8 ]
 
-It is not allowed to call kfree_skb() from hardware interrupt
-context or with interrupts being disabled. So replace kfree_skb()
-with dev_kfree_skb_irq() under spin_lock_irqsave().
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-Fixes: 0ff252c1976d ("Bluetooth: hciuart: Add support QCA chipset for UART")
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
+
+In this case, dev_kfree_skb() is called in xemaclite_tx_timeout() to
+drop the SKB, when tx timeout, so replace it with dev_kfree_skb_irq().
+
+Fixes: bb81b2ddfa19 ("net: add Xilinx emac lite device driver")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c | 2 +-
+ drivers/net/ethernet/xilinx/xilinx_emaclite.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index f96e58de049b..f8b6823db04a 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -810,7 +810,7 @@ static int qca_enqueue(struct hci_uart *hu, struct sk_buff *skb)
- 	default:
- 		BT_ERR("Illegal tx state: %d (losing packet)",
- 		       qca->tx_ibs_state);
--		kfree_skb(skb);
-+		dev_kfree_skb_irq(skb);
- 		break;
- 	}
+diff --git a/drivers/net/ethernet/xilinx/xilinx_emaclite.c b/drivers/net/ethernet/xilinx/xilinx_emaclite.c
+index 4e1504587895..e3f0beaa7d55 100644
+--- a/drivers/net/ethernet/xilinx/xilinx_emaclite.c
++++ b/drivers/net/ethernet/xilinx/xilinx_emaclite.c
+@@ -543,7 +543,7 @@ static void xemaclite_tx_timeout(struct net_device *dev)
+ 	xemaclite_enable_interrupts(lp);
  
+ 	if (lp->deferred_skb) {
+-		dev_kfree_skb(lp->deferred_skb);
++		dev_kfree_skb_irq(lp->deferred_skb);
+ 		lp->deferred_skb = NULL;
+ 		dev->stats.tx_errors++;
+ 	}
 -- 
 2.35.1
 
