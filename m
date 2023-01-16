@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8542A6FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:35:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059BBC433EF;
-	Mon, 16 Jan 2023 16:35:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23C456FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:35:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BD1CC433F0;
+	Mon, 16 Jan 2023 16:35:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886929;
-	bh=lXac1krLyvWXItOa1usDZ9GlDirmZxdVVgKum/nsJUA=;
+	s=korg; t=1673886932;
+	bh=8OaY/HseMpgGU4W05F1fpxZqw5gjv4fsDAfVjTOR3QE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=alPG0vhb0VSZPdfamtSdw0C98y6pA9XTYGY85oYHEu/Vn24vqpsuiPegUdZuNW2O1
-	 pm0KVc8X0IEeZVeiqKYW595dm+yqG9wobahNnAmMnbqC590d3XwE6UrtMbzDbqF0r+
-	 b4JWkz9yU633+VivRdv9RoYWgNHkITtuB4Y/DbeE=
+	b=qW98AQeT5RM3i1yRSB8ABC2orOQsmqRQh0cf3Y1AafAK/9CsXI/GeOqJMyLE+GPB4
+	 gtxC/dynYVyZNAteuXaXd/3zKDK8t1Gv4X3j0cUQ5Q6p4FCjfH7SYOUXpSfMmUfDfG
+	 T+94nqpqNtGEMz+mnlkDCTpdP1FZxQCnZJpgbHLs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Zhenyu Wang <zhenyuw@linux.intel.com>,
+	Jiguang Xiao <jiguang.xiao@windriver.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 585/658] drm/i915: unpin on error in intel_vgpu_shadow_mm_pin()
-Date: Mon, 16 Jan 2023 16:51:13 +0100
-Message-Id: <20230116154936.254470989@linuxfoundation.org>
+Subject: [PATCH 5.4 576/658] net: amd-xgbe: add missed tasklet_kill
+Date: Mon, 16 Jan 2023 16:51:04 +0100
+Message-Id: <20230116154935.867732911@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,34 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Jiguang Xiao <jiguang.xiao@windriver.com>
 
-[ Upstream commit 3792fc508c095abd84b10ceae12bd773e61fdc36 ]
+[ Upstream commit d530ece70f16f912e1d1bfeea694246ab78b0a4b ]
 
-Call intel_vgpu_unpin_mm() on this error path.
+The driver does not call tasklet_kill in several places.
+Add the calls to fix it.
 
-Fixes: 418741480809 ("drm/i915/gvt: Adding ppgtt to GVT GEM context after shadow pdps settled.")
-Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Zhenyu Wang <zhenyuw@linux.intel.com>
-Link: http://patchwork.freedesktop.org/patch/msgid/Y3OQ5tgZIVxyQ/WV@kili
-Reviewed-by: Zhenyu Wang <zhenyuw@linux.intel.com>
+Fixes: 85b85c853401 ("amd-xgbe: Re-issue interrupt if interrupt status not cleared")
+Signed-off-by: Jiguang Xiao <jiguang.xiao@windriver.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gvt/scheduler.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/amd/xgbe/xgbe-drv.c  | 3 +++
+ drivers/net/ethernet/amd/xgbe/xgbe-i2c.c  | 4 +++-
+ drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 4 +++-
+ 3 files changed, 9 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gvt/scheduler.c b/drivers/gpu/drm/i915/gvt/scheduler.c
-index 058dcd541644..c1dc225d8436 100644
---- a/drivers/gpu/drm/i915/gvt/scheduler.c
-+++ b/drivers/gpu/drm/i915/gvt/scheduler.c
-@@ -632,6 +632,7 @@ static int prepare_workload(struct intel_vgpu_workload *workload)
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
+index 0442d7e1cd20..7f705483c1c5 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-drv.c
+@@ -1139,6 +1139,9 @@ static void xgbe_free_irqs(struct xgbe_prv_data *pdata)
  
- 	if (workload->shadow_mm->type != INTEL_GVT_MM_PPGTT ||
- 	    !workload->shadow_mm->ppgtt_mm.shadowed) {
-+		intel_vgpu_unpin_mm(workload->shadow_mm);
- 		gvt_vgpu_err("workload shadow ppgtt isn't ready\n");
- 		return -EINVAL;
- 	}
+ 	devm_free_irq(pdata->dev, pdata->dev_irq, pdata);
+ 
++	tasklet_kill(&pdata->tasklet_dev);
++	tasklet_kill(&pdata->tasklet_ecc);
++
+ 	if (pdata->vdata->ecc_support && (pdata->dev_irq != pdata->ecc_irq))
+ 		devm_free_irq(pdata->dev, pdata->ecc_irq, pdata);
+ 
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c b/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c
+index 4d9062d35930..530043742a07 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-i2c.c
+@@ -447,8 +447,10 @@ static void xgbe_i2c_stop(struct xgbe_prv_data *pdata)
+ 	xgbe_i2c_disable(pdata);
+ 	xgbe_i2c_clear_all_interrupts(pdata);
+ 
+-	if (pdata->dev_irq != pdata->i2c_irq)
++	if (pdata->dev_irq != pdata->i2c_irq) {
+ 		devm_free_irq(pdata->dev, pdata->i2c_irq, pdata);
++		tasklet_kill(&pdata->tasklet_i2c);
++	}
+ }
+ 
+ static int xgbe_i2c_start(struct xgbe_prv_data *pdata)
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+index 156a0bc8ab01..97167fc9bebe 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+@@ -1390,8 +1390,10 @@ static void xgbe_phy_stop(struct xgbe_prv_data *pdata)
+ 	/* Disable auto-negotiation */
+ 	xgbe_an_disable_all(pdata);
+ 
+-	if (pdata->dev_irq != pdata->an_irq)
++	if (pdata->dev_irq != pdata->an_irq) {
+ 		devm_free_irq(pdata->dev, pdata->an_irq, pdata);
++		tasklet_kill(&pdata->tasklet_an);
++	}
+ 
+ 	pdata->phy_if.phy_impl.stop(pdata);
+ 
 -- 
 2.35.1
 
