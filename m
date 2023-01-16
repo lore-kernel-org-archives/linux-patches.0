@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540F46FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:38:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09BFC433EF;
-	Mon, 16 Jan 2023 16:38:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A7C6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:38:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75291C433EF;
+	Mon, 16 Jan 2023 16:38:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887109;
-	bh=8Thm4Wef5GsAs4d8UwKyyB0p71m5KeMJL6UnTDUvF98=;
+	s=korg; t=1673887111;
+	bh=4RY5++IcD0G4Qma+OXzjNjqefap97Z6Gkqv25la16BU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nqhraKl1CX0wTiqUIX7GyeI3K4KQodF0maOTZlnYcQyblSNqALTLJ0ZkLrkAp7Nio
-	 cJyAXHimazp2lB2mCK1sIRuIMNhMtsFhZjWfVOzmAYkKSl76pgtXrqgvlVSu2G3AWn
-	 U96v7NbKjJCY8hCZaztNulx4iADGmePja7snOMCs=
+	b=VyZAaaGPW/NZ6UhStXE7RLxorlphJEF9lWISgxjo+bsevWfw9OT0mTooE+1EiJA3i
+	 /fhlSBQ1XbUJq4s1hvtIvv0pDc/fsis7+b+nMxldlbwMOAnVaJAEzxfMUzBdWyCOfq
+	 JPPVXuP1ArHHKSAzxN7QIqH+XoI3oP5yYJqLGtDs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kory Maincent <kory.maincent@bootlin.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Yasushi SHOJI <yashi@spacecubics.com>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 025/521] arm: dts: spear600: Fix clcd interrupt
-Date: Mon, 16 Jan 2023 16:44:47 +0100
-Message-Id: <20230116154848.420079459@linuxfoundation.org>
+Subject: [PATCH 4.19 008/521] can: mcba_usb: Fix termination command argument
+Date: Mon, 16 Jan 2023 16:44:30 +0100
+Message-Id: <20230116154847.636346161@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,34 +35,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kory Maincent <kory.maincent@bootlin.com>
+From: Yasushi SHOJI <yasushi.shoji@gmail.com>
 
-[ Upstream commit 0336e2ce34e7a89832b6c214f924eb7bc58940be ]
+[ Upstream commit 1a8e3bd25f1e789c8154e11ea24dc3ec5a4c1da0 ]
 
-Interrupt 12 of the Interrupt controller belongs to the SMI controller,
-the right one for the display controller is the interrupt 13.
+Microchip USB Analyzer can activate the internal termination resistors
+by setting the "termination" option ON, or OFF to to deactivate them.
+As I've observed, both with my oscilloscope and captured USB packets
+below, you must send "0" to turn it ON, and "1" to turn it OFF.
 
-Fixes: 8113ba917dfa ("ARM: SPEAr: DT: Update device nodes")
-Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+>From the schematics in the user's guide, I can confirm that you must
+drive the CAN_RES signal LOW "0" to activate the resistors.
+
+Reverse the argument value of usb_msg.termination to fix this.
+
+These are the two commands sequence, ON then OFF.
+
+> No.     Time           Source                Destination           Protocol Length Info
+>       1 0.000000       host                  1.3.1                 USB      46     URB_BULK out
+>
+> Frame 1: 46 bytes on wire (368 bits), 46 bytes captured (368 bits)
+> USB URB
+> Leftover Capture Data: a80000000000000000000000000000000000a8
+>
+> No.     Time           Source                Destination           Protocol Length Info
+>       2 4.372547       host                  1.3.1                 USB      46     URB_BULK out
+>
+> Frame 2: 46 bytes on wire (368 bits), 46 bytes captured (368 bits)
+> USB URB
+> Leftover Capture Data: a80100000000000000000000000000000000a9
+
+Signed-off-by: Yasushi SHOJI <yashi@spacecubics.com>
+Link: https://lore.kernel.org/all/20221124152504.125994-1-yashi@spacecubics.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/spear600.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/can/usb/mcba_usb.c | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm/boot/dts/spear600.dtsi b/arch/arm/boot/dts/spear600.dtsi
-index 00166eb9be86..ca07e73e1f27 100644
---- a/arch/arm/boot/dts/spear600.dtsi
-+++ b/arch/arm/boot/dts/spear600.dtsi
-@@ -53,7 +53,7 @@ clcd: clcd@fc200000 {
- 			compatible = "arm,pl110", "arm,primecell";
- 			reg = <0xfc200000 0x1000>;
- 			interrupt-parent = <&vic1>;
--			interrupts = <12>;
-+			interrupts = <13>;
- 			status = "disabled";
- 		};
+diff --git a/drivers/net/can/usb/mcba_usb.c b/drivers/net/can/usb/mcba_usb.c
+index ea1de06009d6..093458fbde68 100644
+--- a/drivers/net/can/usb/mcba_usb.c
++++ b/drivers/net/can/usb/mcba_usb.c
+@@ -58,6 +58,10 @@
+ #define MCBA_VER_REQ_USB 1
+ #define MCBA_VER_REQ_CAN 2
+ 
++/* Drive the CAN_RES signal LOW "0" to activate R24 and R25 */
++#define MCBA_VER_TERMINATION_ON 0
++#define MCBA_VER_TERMINATION_OFF 1
++
+ #define MCBA_SIDL_EXID_MASK 0x8
+ #define MCBA_DLC_MASK 0xf
+ #define MCBA_DLC_RTR_MASK 0x40
+@@ -480,7 +484,7 @@ static void mcba_usb_process_ka_usb(struct mcba_priv *priv,
+ 		priv->usb_ka_first_pass = false;
+ 	}
+ 
+-	if (msg->termination_state)
++	if (msg->termination_state == MCBA_VER_TERMINATION_ON)
+ 		priv->can.termination = MCBA_TERMINATION_ENABLED;
+ 	else
+ 		priv->can.termination = MCBA_TERMINATION_DISABLED;
+@@ -800,9 +804,9 @@ static int mcba_set_termination(struct net_device *netdev, u16 term)
+ 	};
+ 
+ 	if (term == MCBA_TERMINATION_ENABLED)
+-		usb_msg.termination = 1;
++		usb_msg.termination = MCBA_VER_TERMINATION_ON;
+ 	else
+-		usb_msg.termination = 0;
++		usb_msg.termination = MCBA_VER_TERMINATION_OFF;
+ 
+ 	mcba_usb_xmit_cmd(priv, (struct mcba_usb_msg *)&usb_msg);
  
 -- 
 2.35.1
