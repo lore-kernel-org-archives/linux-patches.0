@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E60746B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5808C433D2;
-	Mon, 16 Jan 2023 16:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA24A46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471B5C433D2;
+	Mon, 16 Jan 2023 16:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885790;
-	bh=+Xr1Vl/TCGZ4vWfM3tTvUdD07+0yWcJ7bfN2algaO0g=;
+	s=korg; t=1673885792;
+	bh=yGGTM6Br3NHKoPRk9ReQMY7Mrjo4xDfPAi39qCLe+Uw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c9/7GZuVypF/uZ7gR5t8WFPX6MbdZU2+UR2eQvRxGH7OrHuF2zDnHEt/0mNhPHj4a
-	 BsYWRwYQg4EVrnfromvNWELwWlSFAhmnpvpYI7sOYi1spWCfDCxIG6/n769FJwJ5wX
-	 BHnkdr0D+2jY0UOwculf73IpfopbKjX6nl211kT0=
+	b=jiQ3sbhFy3BM7NzGlraqK2Pm1eJSq+Dn5eKHE9AFfwAlho2vV5cJBdOosiZcQP0jq
+	 DbVayTLV1SqFc3I+bH9rvhYnsgLyxVVqyFShJOf/0FZCH8yPcKO4xAOeCn0WNNcX3c
+	 1NegckP10TfbIGJbeC69IBKAj6KbBSLnV2zBwXP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 183/658] media: saa7164: fix missing pci_disable_device()
-Date: Mon, 16 Jan 2023 16:44:31 +0100
-Message-Id: <20230116154917.816296156@linuxfoundation.org>
+Subject: [PATCH 5.4 184/658] ALSA: mts64: fix possible null-ptr-defer in snd_mts64_interrupt
+Date: Mon, 16 Jan 2023 16:44:32 +0100
+Message-Id: <20230116154917.869999446@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,43 +35,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 57fb35d7542384cac8f198cd1c927540ad38b61a ]
+[ Upstream commit cf2ea3c86ad90d63d1c572b43e1ca9276b0357ad ]
 
-Add missing pci_disable_device() in the error path in saa7164_initdev().
+I got a null-ptr-defer error report when I do the following tests
+on the qemu platform:
 
-Fixes: 443c1228d505 ("V4L/DVB (12923): SAA7164: Add support for the NXP SAA7164 silicon")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+make defconfig and CONFIG_PARPORT=m, CONFIG_PARPORT_PC=m,
+CONFIG_SND_MTS64=m
+
+Then making test scripts:
+cat>test_mod1.sh<<EOF
+modprobe snd-mts64
+modprobe snd-mts64
+EOF
+
+Executing the script, perhaps several times, we will get a null-ptr-defer
+report, as follow:
+
+syzkaller:~# ./test_mod.sh
+snd_mts64: probe of snd_mts64.0 failed with error -5
+modprobe: ERROR: could not insert 'snd_mts64': No such device
+ BUG: kernel NULL pointer dereference, address: 0000000000000000
+ #PF: supervisor write access in kernel mode
+ #PF: error_code(0x0002) - not-present page
+ PGD 0 P4D 0
+ Oops: 0002 [#1] PREEMPT SMP PTI
+ CPU: 0 PID: 205 Comm: modprobe Not tainted 6.1.0-rc8-00588-g76dcd734eca2 #6
+ Call Trace:
+  <IRQ>
+  snd_mts64_interrupt+0x24/0xa0 [snd_mts64]
+  parport_irq_handler+0x37/0x50 [parport]
+  __handle_irq_event_percpu+0x39/0x190
+  handle_irq_event_percpu+0xa/0x30
+  handle_irq_event+0x2f/0x50
+  handle_edge_irq+0x99/0x1b0
+  __common_interrupt+0x5d/0x100
+  common_interrupt+0xa0/0xc0
+  </IRQ>
+  <TASK>
+  asm_common_interrupt+0x22/0x40
+ RIP: 0010:_raw_write_unlock_irqrestore+0x11/0x30
+  parport_claim+0xbd/0x230 [parport]
+  snd_mts64_probe+0x14a/0x465 [snd_mts64]
+  platform_probe+0x3f/0xa0
+  really_probe+0x129/0x2c0
+  __driver_probe_device+0x6d/0xc0
+  driver_probe_device+0x1a/0xa0
+  __device_attach_driver+0x7a/0xb0
+  bus_for_each_drv+0x62/0xb0
+  __device_attach+0xe4/0x180
+  bus_probe_device+0x82/0xa0
+  device_add+0x550/0x920
+  platform_device_add+0x106/0x220
+  snd_mts64_attach+0x2e/0x80 [snd_mts64]
+  port_check+0x14/0x20 [parport]
+  bus_for_each_dev+0x6e/0xc0
+  __parport_register_driver+0x7c/0xb0 [parport]
+  snd_mts64_module_init+0x31/0x1000 [snd_mts64]
+  do_one_initcall+0x3c/0x1f0
+  do_init_module+0x46/0x1c6
+  load_module+0x1d8d/0x1e10
+  __do_sys_finit_module+0xa2/0xf0
+  do_syscall_64+0x37/0x90
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  </TASK>
+ Kernel panic - not syncing: Fatal exception in interrupt
+ Rebooting in 1 seconds..
+
+The mts wa not initialized during interrupt,  we add check for
+mts to fix this bug.
+
+Fixes: 68ab801e32bb ("[ALSA] Add snd-mts64 driver for ESI Miditerminal 4140")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221206061004.1222966-1-cuigaosheng1@huawei.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/pci/saa7164/saa7164-core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/drivers/mts64.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/media/pci/saa7164/saa7164-core.c b/drivers/media/pci/saa7164/saa7164-core.c
-index 9ae04e18e6c6..59b039b953bb 100644
---- a/drivers/media/pci/saa7164/saa7164-core.c
-+++ b/drivers/media/pci/saa7164/saa7164-core.c
-@@ -1227,7 +1227,7 @@ static int saa7164_initdev(struct pci_dev *pci_dev,
+diff --git a/sound/drivers/mts64.c b/sound/drivers/mts64.c
+index 44776e1463cb..71d0ab1c99b3 100644
+--- a/sound/drivers/mts64.c
++++ b/sound/drivers/mts64.c
+@@ -816,6 +816,9 @@ static void snd_mts64_interrupt(void *private)
+ 	u8 status, data;
+ 	struct snd_rawmidi_substream *substream;
  
- 	if (saa7164_dev_setup(dev) < 0) {
- 		err = -EINVAL;
--		goto fail_free;
-+		goto fail_dev;
- 	}
- 
- 	/* print pci info */
-@@ -1395,6 +1395,8 @@ static int saa7164_initdev(struct pci_dev *pci_dev,
- 
- fail_irq:
- 	saa7164_dev_unregister(dev);
-+fail_dev:
-+	pci_disable_device(pci_dev);
- fail_free:
- 	v4l2_device_unregister(&dev->v4l2_dev);
- 	kfree(dev);
++	if (!mts)
++		return;
++
+ 	spin_lock(&mts->lock);
+ 	ret = mts64_read(mts->pardev->port);
+ 	data = ret & 0x00ff;
 -- 
 2.35.1
 
