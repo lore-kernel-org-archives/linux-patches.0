@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9A746B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:22:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4832EC433D2;
-	Mon, 16 Jan 2023 16:22:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 018B446B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:22:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C3FEC433F0;
+	Mon, 16 Jan 2023 16:22:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886135;
-	bh=MBu6CtxMxILESpZ9aOISdMboZQllQPiDEDGb5CAHzkc=;
+	s=korg; t=1673886140;
+	bh=oirjHvUm/24DGQLv4pPofWFz6LgNO1j6+Bh8e6KtH1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=chsq5XciY9NQ4s0oU48A8Sxzz28l+6WcLxHa5c+iJooxEuzHbpnHnuaLUuZ3d1Sc7
-	 vqBqKGWXRbXKCMQMoGhnQNhD/ST410Kl572Y93jVQEpU6kZvpD6R9Fbq1YWU/E6wve
-	 a/Eq5g3uGumNVn4b7E4HP1FbhgFxgi9F/ZMvwRTg=
+	b=bZt/dzXapxVP/zuKqHNWjH7/MVDtCQyZXwuBEH0nOdlqNYrAGmU6P2Nkql4+dhkab
+	 wle9U4MeeHCbvfa1XW/LFUppqkfTRtrnwV8SgVBYFwIFYhC456t4yCwbbKQeec8ksv
+	 v1fYg17krDKosIkWiq4FJlO037u9IgTLBQ3ZN4Kk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	delisun <delisun@pateo.com.cn>,
+	Tobias Klauser <tklauser@distanz.ch>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Jiri Slaby <jslaby@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 286/658] serial: pl011: Do not clear RX FIFO & RX interrupt in unthrottle.
-Date: Mon, 16 Jan 2023 16:46:14 +0100
-Message-Id: <20230116154922.674423349@linuxfoundation.org>
+Subject: [PATCH 5.4 288/658] tty: serial: clean up stop-tx part in altera_uart_tx_chars()
+Date: Mon, 16 Jan 2023 16:46:16 +0100
+Message-Id: <20230116154922.767465666@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,47 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: delisun <delisun@pateo.com.cn>
+From: Jiri Slaby <jslaby@suse.cz>
 
-[ Upstream commit 032d5a71ed378ffc6a2d41a187d8488a4f9fe415 ]
+[ Upstream commit d9c128117da41cf4cb0e80ae565b5d3ac79dffac ]
 
-Clearing the RX FIFO will cause data loss.
-Copy the pl011_enabl_interrupts implementation, and remove the clear
-interrupt and FIFO part of the code.
+The "stop TX" path in altera_uart_tx_chars() is open-coded, so:
+* use uart_circ_empty() to check if the buffer is empty, and
+* when true, call altera_uart_stop_tx().
 
-Fixes: 211565b10099 ("serial: pl011: UPSTAT_AUTORTS requires .throttle/unthrottle")
-Signed-off-by: delisun <delisun@pateo.com.cn>
+Cc: Tobias Klauser <tklauser@distanz.ch>
 Reviewed-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20221110020108.7700-1-delisun@pateo.com.cn
+Acked-by: Tobias Klauser <tklauser@distanz.ch>
+Signed-off-by: Jiri Slaby <jslaby@suse.cz>
+Link: https://lore.kernel.org/r/20220920052049.20507-3-jslaby@suse.cz
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: 1307c5d33cce ("serial: altera_uart: fix locking in polling mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/amba-pl011.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/tty/serial/altera_uart.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
-index 44485689333e..86084090232d 100644
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -1771,8 +1771,17 @@ static void pl011_enable_interrupts(struct uart_amba_port *uap)
- static void pl011_unthrottle_rx(struct uart_port *port)
- {
- 	struct uart_amba_port *uap = container_of(port, struct uart_amba_port, port);
-+	unsigned long flags;
+diff --git a/drivers/tty/serial/altera_uart.c b/drivers/tty/serial/altera_uart.c
+index 0e487ce091ac..508a3c2b7781 100644
+--- a/drivers/tty/serial/altera_uart.c
++++ b/drivers/tty/serial/altera_uart.c
+@@ -274,10 +274,8 @@ static void altera_uart_tx_chars(struct altera_uart *pp)
+ 	if (uart_circ_chars_pending(xmit) < WAKEUP_CHARS)
+ 		uart_write_wakeup(port);
  
--	pl011_enable_interrupts(uap);
-+	spin_lock_irqsave(&uap->port.lock, flags);
-+
-+	uap->im = UART011_RTIM;
-+	if (!pl011_dma_rx_running(uap))
-+		uap->im |= UART011_RXIM;
-+
-+	pl011_write(uap->im, uap, REG_IMSC);
-+
-+	spin_unlock_irqrestore(&uap->port.lock, flags);
+-	if (xmit->head == xmit->tail) {
+-		pp->imr &= ~ALTERA_UART_CONTROL_TRDY_MSK;
+-		altera_uart_update_ctrl_reg(pp);
+-	}
++	if (uart_circ_empty(xmit))
++		altera_uart_stop_tx(port);
  }
  
- static int pl011_startup(struct uart_port *port)
+ static irqreturn_t altera_uart_interrupt(int irq, void *data)
 -- 
 2.35.1
 
