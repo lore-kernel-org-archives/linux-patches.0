@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B26C33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C0F0C433EF;
-	Mon, 16 Jan 2023 16:01:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245DD33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A01BAC433D2;
+	Mon, 16 Jan 2023 16:01:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884877;
-	bh=AdGuGlY91n6XhXYPhCqj4AtSSr6BJKNwfdIJhNi92cM=;
+	s=korg; t=1673884880;
+	bh=E01V5XLMeZzO/7m/W6rpRk7DgC939qDkEyYKSOku9lI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=miT2HV6jslRVAkmOTI4Xu4Pzlle9J761ynhDmpfgipnM/AWP3Mh78xfDmGcxL0+2F
-	 ybQLu4lMfyGfbHn+W/UPCYwvQiAObzMth5TEXtun4Q6lItxKWd++plB70s8+b2odam
-	 BvbbvaX3gMbFRuhdEzjvIbZyMu/2pAeZDDzEVPrg=
+	b=KwZAEYCpZayfCVZwsYGMaz09E8aqf/P4Vsr2duTnFBwPScIwtxhhkhb9Z4fvIPU+D
+	 nKrJqgB6vSz3urd+b4qf/pac6vr0QYy7LLGRK9n2/JAVarB1PIDndEyeHhz7X5DEvp
+	 /EjbZ6+2q2f8QiRvYvqQA7idps4Pc4lDtSqV6WBM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	coverity-bot <keescook@chromium.org>,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.de>,
+	Li Heng <liheng40@huawei.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 174/183] ALSA: usb-audio: Fix possible NULL pointer dereference in snd_usb_pcm_has_fixed_rate()
-Date: Mon, 16 Jan 2023 16:51:37 +0100
-Message-Id: <20230116154810.655727238@linuxfoundation.org>
+Subject: [PATCH 6.1 175/183] efi: fix NULL-deref in init error path
+Date: Mon, 16 Jan 2023 16:51:38 +0100
+Message-Id: <20230116154810.686038903@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,41 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaroslav Kysela <perex@perex.cz>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-[ Upstream commit 92a9c0ad86d47ff4cce899012e355c400f02cfb8 ]
+[ Upstream commit 703c13fe3c9af557d312f5895ed6a5fda2711104 ]
 
-The subs function argument may be NULL, so do not use it before the NULL check.
+In cases where runtime services are not supported or have been disabled,
+the runtime services workqueue will never have been allocated.
 
-Fixes: 291e9da91403 ("ALSA: usb-audio: Always initialize fixed_rate in snd_usb_find_implicit_fb_sync_format()")
-Reported-by: coverity-bot <keescook@chromium.org>
-Link: https://lore.kernel.org/alsa-devel/202301121424.4A79A485@keescook/
-Signed-off-by: Jaroslav Kysela <perex@perex.cz>
-Link: https://lore.kernel.org/r/20230113085311.623325-1-perex@perex.cz
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Do not try to destroy the workqueue unconditionally in the unlikely
+event that EFI initialisation fails to avoid dereferencing a NULL
+pointer.
+
+Fixes: 98086df8b70c ("efi: add missed destroy_workqueue when efisubsys_init fails")
+Cc: stable@vger.kernel.org
+Cc: Li Heng <liheng40@huawei.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/pcm.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/firmware/efi/efi.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
-index 29838000eee0..2c5765cbed2d 100644
---- a/sound/usb/pcm.c
-+++ b/sound/usb/pcm.c
-@@ -160,11 +160,12 @@ find_substream_format(struct snd_usb_substream *subs,
- bool snd_usb_pcm_has_fixed_rate(struct snd_usb_substream *subs)
- {
- 	const struct audioformat *fp;
--	struct snd_usb_audio *chip = subs->stream->chip;
-+	struct snd_usb_audio *chip;
- 	int rate = -1;
+diff --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c
+index f12cc29bd4b8..033aac6be7da 100644
+--- a/drivers/firmware/efi/efi.c
++++ b/drivers/firmware/efi/efi.c
+@@ -374,8 +374,8 @@ static int __init efisubsys_init(void)
+ 	efi_kobj = kobject_create_and_add("efi", firmware_kobj);
+ 	if (!efi_kobj) {
+ 		pr_err("efi: Firmware registration failed.\n");
+-		destroy_workqueue(efi_rts_wq);
+-		return -ENOMEM;
++		error = -ENOMEM;
++		goto err_destroy_wq;
+ 	}
  
- 	if (!subs)
- 		return false;
-+	chip = subs->stream->chip;
- 	if (!(chip->quirk_flags & QUIRK_FLAG_FIXED_RATE))
- 		return false;
- 	list_for_each_entry(fp, &subs->fmt_list, list) {
+ 	if (efi_rt_services_supported(EFI_RT_SUPPORTED_GET_VARIABLE |
+@@ -423,7 +423,10 @@ static int __init efisubsys_init(void)
+ 		generic_ops_unregister();
+ err_put:
+ 	kobject_put(efi_kobj);
+-	destroy_workqueue(efi_rts_wq);
++err_destroy_wq:
++	if (efi_rts_wq)
++		destroy_workqueue(efi_rts_wq);
++
+ 	return error;
+ }
+ 
 -- 
 2.35.1
 
