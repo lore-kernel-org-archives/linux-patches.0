@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4A56FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:48:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39FFC433D2;
-	Mon, 16 Jan 2023 16:48:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16EF06FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:48:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D67C433EF;
+	Mon, 16 Jan 2023 16:48:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887710;
-	bh=f2dxRcOgmnfQ++UO3Tcox+sJLQ52gh2PWTbWy1phYdk=;
+	s=korg; t=1673887712;
+	bh=IoBwvQBfnAWsNK+WzDnaiuMJlvW27xC2l5fId9zx01M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NQBKfowKqJlaUAMf0ewPSZBJNip1zCKVAlpy9LUYr8/p+1lEZHbXUguXVaD3GoXTL
-	 /nz2u9Zvn2gIpzCPoguomZQsIUEjU6S0U7GkI+u1mC+i2e2DYSwKVzBDUqVnCxoq+z
-	 iwNXqd0le4mfNTj2oql+LdaYO2g9w8n0UAjesDFA=
+	b=wb3sk+Entn5ewQpJTMbgneyq2QzbojD7MQSSoBY964UdJBfLNX2Q3HvQ+fAvhzbbT
+	 xb6xGSq3zzfAGcJIy9wxVzw9D40AxqCYdbtk8cZQUBncAJIMMzeEPtUleiAKN0kxQ/
+	 i+rvcIjqqHrVUNQgCF6Un58pKjKAnKWUVYfNZ1cc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	zanussi@kernel.org,
-	Zheng Yejian <zhengyejian1@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 252/521] tracing/hist: Fix issue of losting command info in error_log
-Date: Mon, 16 Jan 2023 16:48:34 +0100
-Message-Id: <20230116154858.400198220@linuxfoundation.org>
+Subject: [PATCH 4.19 253/521] samples: vfio-mdev: Fix missing pci_disable_device() in mdpy_fb_probe()
+Date: Mon, 16 Jan 2023 16:48:35 +0100
+Message-Id: <20230116154858.450410487@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,91 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 608c6ed3337850c767ab0dd6c583477922233e29 ]
+[ Upstream commit d1f0f50fbbbbca1e3e8157e51934613bf88f6d44 ]
 
-When input some constructed invalid 'trigger' command, command info
-in 'error_log' are lost [1].
+Add missing pci_disable_device() in fail path of mdpy_fb_probe().
+Besides, fix missing release functions in mdpy_fb_remove().
 
-The root cause is that there is a path that event_hist_trigger_parse()
-is recursely called once and 'last_cmd' which save origin command is
-cleared, then later calling of hist_err() will no longer record origin
-command info:
-
-  event_hist_trigger_parse() {
-    last_cmd_set()  // <1> 'last_cmd' save origin command here at first
-    create_actions() {
-      onmatch_create() {
-        action_create() {
-          trace_action_create() {
-            trace_action_create_field_var() {
-              create_field_var_hist() {
-                event_hist_trigger_parse() {  // <2> recursely called once
-                  hist_err_clear()  // <3> 'last_cmd' is cleared here
-                }
-                hist_err()  // <4> No longer find origin command!!!
-
-Since 'glob' is empty string while running into the recurse call, we
-can trickly check it and bypass the call of hist_err_clear() to solve it.
-
-[1]
- # cd /sys/kernel/tracing
- # echo "my_synth_event int v1; int v2; int v3;" >> synthetic_events
- # echo 'hist:keys=pid' >> events/sched/sched_waking/trigger
- # echo "hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(\
-pid,pid1)" >> events/sched/sched_switch/trigger
- # cat error_log
-[  8.405018] hist:sched:sched_switch: error: Couldn't find synthetic event
-  Command:
-hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(pid,pid1)
-                                                          ^
-[  8.816902] hist:sched:sched_switch: error: Couldn't find field
-  Command:
-hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(pid,pid1)
-                          ^
-[  8.816902] hist:sched:sched_switch: error: Couldn't parse field variable
-  Command:
-hist:keys=next_pid:onmatch(sched.sched_waking).my_synth_event(pid,pid1)
-                          ^
-[  8.999880] : error: Couldn't find field
-  Command:
-           ^
-[  8.999880] : error: Couldn't parse field variable
-  Command:
-           ^
-[  8.999880] : error: Couldn't find field
-  Command:
-           ^
-[  8.999880] : error: Couldn't create histogram for field
-  Command:
-           ^
-
-Link: https://lore.kernel.org/linux-trace-kernel/20221207135326.3483216-1-zhengyejian1@huawei.com
-
-Cc: <mhiramat@kernel.org>
-Cc: <zanussi@kernel.org>
-Fixes: f404da6e1d46 ("tracing: Add 'last error' error facility for hist triggers")
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: cacade1946a4 ("sample: vfio mdev display - guest driver")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Link: https://lore.kernel.org/r/20221208013341.3999-1-shangxiaojing@huawei.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/trace_events_hist.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ samples/vfio-mdev/mdpy-fb.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/trace_events_hist.c b/kernel/trace/trace_events_hist.c
-index 48f85dab9ef1..17b15bd97857 100644
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -5807,7 +5807,7 @@ static int event_hist_trigger_func(struct event_command *cmd_ops,
- 	/* Just return zero, not the number of registered triggers */
- 	ret = 0;
-  out:
--	if (ret == 0)
-+	if (ret == 0 && glob[0])
- 		hist_err_clear();
+diff --git a/samples/vfio-mdev/mdpy-fb.c b/samples/vfio-mdev/mdpy-fb.c
+index a760e130bd0d..8ad1aa13ddd9 100644
+--- a/samples/vfio-mdev/mdpy-fb.c
++++ b/samples/vfio-mdev/mdpy-fb.c
+@@ -109,7 +109,7 @@ static int mdpy_fb_probe(struct pci_dev *pdev,
  
+ 	ret = pci_request_regions(pdev, "mdpy-fb");
+ 	if (ret < 0)
+-		return ret;
++		goto err_disable_dev;
+ 
+ 	pci_read_config_dword(pdev, MDPY_FORMAT_OFFSET, &format);
+ 	pci_read_config_dword(pdev, MDPY_WIDTH_OFFSET,	&width);
+@@ -191,6 +191,9 @@ static int mdpy_fb_probe(struct pci_dev *pdev,
+ err_release_regions:
+ 	pci_release_regions(pdev);
+ 
++err_disable_dev:
++	pci_disable_device(pdev);
++
  	return ret;
+ }
+ 
+@@ -199,7 +202,10 @@ static void mdpy_fb_remove(struct pci_dev *pdev)
+ 	struct fb_info *info = pci_get_drvdata(pdev);
+ 
+ 	unregister_framebuffer(info);
++	iounmap(info->screen_base);
+ 	framebuffer_release(info);
++	pci_release_regions(pdev);
++	pci_disable_device(pdev);
+ }
+ 
+ static struct pci_device_id mdpy_fb_pci_table[] = {
 -- 
 2.35.1
 
