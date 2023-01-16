@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D226FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:00:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0964C433D2;
-	Mon, 16 Jan 2023 17:00:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 21B4C6FA3
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:00:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBE9C433F2;
+	Mon, 16 Jan 2023 17:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888420;
-	bh=+fl8Z7EzskdY1HIa3lv6KLRnddXIIsFM/sU459v1yHM=;
+	s=korg; t=1673888422;
+	bh=eq8Ser823lX6TdBOCAuembbQ6YrZ+BthBxUEArA1Aww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ArQ+G2IT1XA0Hrx0IB261WA2btf02I+zbatujuvD49lKKm4PZrtAYNZnTELDEy10c
-	 jSMIcXzAjLDosXhHKc6X/iUb9c9xajRYmByjbEic5Ng0IIAbbjkTzUchiwYNDaHkth
-	 yIjyAaP//8pIWGNiMdoEVOcMZ92RaBk+pzmz2o5Q=
+	b=pDkkJA65nI2TptSKujWZzkR7KpNTOonRdsCZOsM8vtJa+sjZG/KH+YnbDSKfo0cyb
+	 YDvVqsk8oKOMr3Fn517AJFp0vECwZ/c5/Gn0D9ZcM1lsqCJndnDV60bTonQLDPuzEi
+	 2jJ5GIIGKpVJIgtmNHA+lFEsQhwyXdYb+N4kRVcM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Jason Yan <yanaijie@huawei.com>,
-	Jan Kara <jack@suse.cz>,
+	zhengliang <zhengliang6@huawei.com>,
+	Andreas Dilger <adilger@dilger.ca>,
+	Ritesh Harjani <riteshh@linux.ibm.com>,
 	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 492/521] ext4: fix bug_on in __es_tree_search caused by bad quota inode
-Date: Mon, 16 Jan 2023 16:52:34 +0100
-Message-Id: <20230116154909.198199219@linuxfoundation.org>
+Subject: [PATCH 4.19 493/521] ext4: lost matching-pair of trace in ext4_truncate
+Date: Mon, 16 Jan 2023 16:52:35 +0100
+Message-Id: <20230116154909.245916825@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -39,112 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: zhengliang <zhengliang6@huawei.com>
 
-[ Upstream commit d323877484765aaacbb2769b06e355c2041ed115 ]
+[ Upstream commit 9a5d265fed014115f35e598022c956e5d2fb863e ]
 
-We got a issue as fllows:
-==================================================================
- kernel BUG at fs/ext4/extents_status.c:202!
- invalid opcode: 0000 [#1] PREEMPT SMP
- CPU: 1 PID: 810 Comm: mount Not tainted 6.1.0-rc1-next-g9631525255e3 #352
- RIP: 0010:__es_tree_search.isra.0+0xb8/0xe0
- RSP: 0018:ffffc90001227900 EFLAGS: 00010202
- RAX: 0000000000000000 RBX: 0000000077512a0f RCX: 0000000000000000
- RDX: 0000000000000002 RSI: 0000000000002a10 RDI: ffff8881004cd0c8
- RBP: ffff888177512ac8 R08: 47ffffffffffffff R09: 0000000000000001
- R10: 0000000000000001 R11: 00000000000679af R12: 0000000000002a10
- R13: ffff888177512d88 R14: 0000000077512a10 R15: 0000000000000000
- FS: 00007f4bd76dbc40(0000)GS:ffff88842fd00000(0000)knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00005653bf993cf8 CR3: 000000017bfdf000 CR4: 00000000000006e0
- DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
- Call Trace:
-  <TASK>
-  ext4_es_cache_extent+0xe2/0x210
-  ext4_cache_extents+0xd2/0x110
-  ext4_find_extent+0x5d5/0x8c0
-  ext4_ext_map_blocks+0x9c/0x1d30
-  ext4_map_blocks+0x431/0xa50
-  ext4_getblk+0x82/0x340
-  ext4_bread+0x14/0x110
-  ext4_quota_read+0xf0/0x180
-  v2_read_header+0x24/0x90
-  v2_check_quota_file+0x2f/0xa0
-  dquot_load_quota_sb+0x26c/0x760
-  dquot_load_quota_inode+0xa5/0x190
-  ext4_enable_quotas+0x14c/0x300
-  __ext4_fill_super+0x31cc/0x32c0
-  ext4_fill_super+0x115/0x2d0
-  get_tree_bdev+0x1d2/0x360
-  ext4_get_tree+0x19/0x30
-  vfs_get_tree+0x26/0xe0
-  path_mount+0x81d/0xfc0
-  do_mount+0x8d/0xc0
-  __x64_sys_mount+0xc0/0x160
-  do_syscall_64+0x35/0x80
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  </TASK>
-==================================================================
+It should call trace exit in all return path for ext4_truncate.
 
-Above issue may happen as follows:
--------------------------------------
-ext4_fill_super
- ext4_orphan_cleanup
-  ext4_enable_quotas
-   ext4_quota_enable
-    ext4_iget --> get error inode <5>
-     ext4_ext_check_inode --> Wrong imode makes it escape inspection
-     make_bad_inode(inode) --> EXT4_BOOT_LOADER_INO set imode
-    dquot_load_quota_inode
-     vfs_setup_quota_inode --> check pass
-     dquot_load_quota_sb
-      v2_check_quota_file
-       v2_read_header
-        ext4_quota_read
-         ext4_bread
-          ext4_getblk
-           ext4_map_blocks
-            ext4_ext_map_blocks
-             ext4_find_extent
-              ext4_cache_extents
-               ext4_es_cache_extent
-                __es_tree_search.isra.0
-                 ext4_es_end --> Wrong extents trigger BUG_ON
-
-In the above issue, s_usr_quota_inum is set to 5, but inode<5> contains
-incorrect imode and disordered extents. Because 5 is EXT4_BOOT_LOADER_INO,
-the ext4_ext_check_inode check in the ext4_iget function can be bypassed,
-finally, the extents that are not checked trigger the BUG_ON in the
-__es_tree_search function. To solve this issue, check whether the inode is
-bad_inode in vfs_setup_quota_inode().
-
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Reviewed-by: Jason Yan <yanaijie@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221026042310.3839669-2-libaokun1@huawei.com
+Signed-off-by: zhengliang <zhengliang6@huawei.com>
+Reviewed-by: Andreas Dilger <adilger@dilger.ca>
+Reviewed-by: Ritesh Harjani <riteshh@linux.ibm.com>
+Link: https://lore.kernel.org/r/20200701083027.45996-1-zhengliang6@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+Stable-dep-of: a71248b1accb ("ext4: fix use-after-free in ext4_orphan_cleanup")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/quota/dquot.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/ext4/inode.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
-index a1d2aed0d833..770a2b143485 100644
---- a/fs/quota/dquot.c
-+++ b/fs/quota/dquot.c
-@@ -2303,6 +2303,8 @@ static int vfs_setup_quota_inode(struct inode *inode, int type)
- 	struct super_block *sb = inode->i_sb;
- 	struct quota_info *dqopt = sb_dqopt(sb);
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index b322658ceff1..16d2b88bc66d 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -4551,7 +4551,7 @@ int ext4_truncate(struct inode *inode)
+ 	trace_ext4_truncate_enter(inode);
  
-+	if (is_bad_inode(inode))
-+		return -EUCLEAN;
- 	if (!S_ISREG(inode->i_mode))
- 		return -EACCES;
- 	if (IS_RDONLY(inode))
+ 	if (!ext4_can_truncate(inode))
+-		return 0;
++		goto out_trace;
+ 
+ 	ext4_clear_inode_flag(inode, EXT4_INODE_EOFBLOCKS);
+ 
+@@ -4562,16 +4562,14 @@ int ext4_truncate(struct inode *inode)
+ 		int has_inline = 1;
+ 
+ 		err = ext4_inline_data_truncate(inode, &has_inline);
+-		if (err)
+-			return err;
+-		if (has_inline)
+-			return 0;
++		if (err || has_inline)
++			goto out_trace;
+ 	}
+ 
+ 	/* If we zero-out tail of the page, we have to create jinode for jbd2 */
+ 	if (inode->i_size & (inode->i_sb->s_blocksize - 1)) {
+ 		if (ext4_inode_attach_jinode(inode) < 0)
+-			return 0;
++			goto out_trace;
+ 	}
+ 
+ 	if (ext4_test_inode_flag(inode, EXT4_INODE_EXTENTS))
+@@ -4580,8 +4578,10 @@ int ext4_truncate(struct inode *inode)
+ 		credits = ext4_blocks_for_truncate(inode);
+ 
+ 	handle = ext4_journal_start(inode, EXT4_HT_TRUNCATE, credits);
+-	if (IS_ERR(handle))
+-		return PTR_ERR(handle);
++	if (IS_ERR(handle)) {
++		err = PTR_ERR(handle);
++		goto out_trace;
++	}
+ 
+ 	if (inode->i_size & (inode->i_sb->s_blocksize - 1))
+ 		ext4_block_truncate_page(handle, mapping, inode->i_size);
+@@ -4630,6 +4630,7 @@ int ext4_truncate(struct inode *inode)
+ 	ext4_mark_inode_dirty(handle, inode);
+ 	ext4_journal_stop(handle);
+ 
++out_trace:
+ 	trace_ext4_truncate_exit(inode);
+ 	return err;
+ }
 -- 
 2.35.1
 
