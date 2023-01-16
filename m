@@ -1,37 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A353F6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:49:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00779C433D2;
-	Mon, 16 Jan 2023 16:49:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 485416FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:49:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE6EEC433D2;
+	Mon, 16 Jan 2023 16:49:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887781;
-	bh=pFktinqbTx/s2IX8wEIiqCVY7HookjBOAUUTrymrSro=;
+	s=korg; t=1673887784;
+	bh=TbCpINvWp0CKrrPTkJS/DMyD036gVi7Qg6haYZw8mkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=I0fettUMEMXgRGkmV4C6sMVyauAkIcJN/8I5I7T62WI6zsvV2Mc4vhrowc1U4UMT/
-	 NA12Lm9Ywvw3+MIXl8dESeNI+xow+uALMUGkP1E88iRGfYtY7oj2KhJvDz5Z94fb7h
-	 HsIridXMnQsAFRJsbt7GXJhBPTqtjNXhYztV4xuk=
+	b=HU2etTVao/Iekj92zFF8MQV+7udOirT+8EPtpaPsNhi8bThMQjqwS3LoblN7BbXcq
+	 rq11k9paHEXNodk726+nEzRK0HIfQ2LKmwR/Bxe2vziy8shRI5951XzDMkQVuFx96A
+	 1UG0HXqW7cJSBSkXYX9dCz4EBSrb7N/BvbRkDVxU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajay Kaher <akaher@vmware.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Alexey Makhalov <amakhalov@vmware.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Srivatsa S. Bhat" <srivatsab@vmware.com>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	Vasavi Sirnapalli <vsirnapalli@vmware.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 262/521] perf symbol: correction while adjusting symbol
-Date: Mon, 16 Jan 2023 16:48:44 +0100
-Message-Id: <20230116154858.843179838@linuxfoundation.org>
+Subject: [PATCH 4.19 280/521] powerpc/52xx: Fix a resource leak in an error handling path
+Date: Mon, 16 Jan 2023 16:49:02 +0100
+Message-Id: <20230116154859.683765690@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -45,74 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ajay Kaher <akaher@vmware.com>
+From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
 
-[ Upstream commit 6f520ce17920b3cdfbd2479b3ccf27f9706219d0 ]
+[ Upstream commit 5836947613ef33d311b4eff6a32d019580a214f5 ]
 
-perf doesn't provide proper symbol information for specially crafted
-.debug files.
+The error handling path of mpc52xx_lpbfifo_probe() has a request_irq()
+that is not balanced by a corresponding free_irq().
 
-Sometimes .debug file may not have similar program header as runtime
-ELF file. For example if we generate .debug file using objcopy
---only-keep-debug resulting file will not contain .text, .data and
-other runtime sections. That means corresponding program headers will
-have zero FileSiz and modified Offset.
+Add the missing call, as already done in the remove function.
 
-Example: program header of text section of libxxx.so:
-
-Type           Offset             VirtAddr           PhysAddr
-               FileSiz            MemSiz              Flags  Align
-LOAD        0x00000000003d3000 0x00000000003d3000 0x00000000003d3000
-            0x000000000055ae80 0x000000000055ae80  R E    0x1000
-
-Same program header after executing:
-objcopy --only-keep-debug libxxx.so libxxx.so.debug
-
-LOAD        0x0000000000001000 0x00000000003d3000 0x00000000003d3000
-            0x0000000000000000 0x000000000055ae80  R E    0x1000
-
-Offset and FileSiz have been changed.
-
-Following formula will not provide correct value, if program header
-taken from .debug file (syms_ss):
-
-    sym.st_value -= phdr.p_vaddr - phdr.p_offset;
-
-Correct program header information is located inside runtime ELF
-file (runtime_ss).
-
-Fixes: 2d86612aacb7805f ("perf symbol: Correct address for bss symbols")
-Signed-off-by: Ajay Kaher <akaher@vmware.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Alexey Makhalov <amakhalov@vmware.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Srivatsa S. Bhat <srivatsab@vmware.com>
-Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Cc: Vasavi Sirnapalli <vsirnapalli@vmware.com>
-Link: http://lore.kernel.org/lkml/1669198696-50547-1-git-send-email-akaher@vmware.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Fixes: 3c9059d79f5e ("powerpc/5200: add LocalPlus bus FIFO device driver")
+Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/dec1496d46ccd5311d0f6e9f9ca4238be11bf6a6.1643440531.git.christophe.jaillet@wanadoo.fr
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/symbol-elf.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/powerpc/platforms/52xx/mpc52xx_lpbfifo.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/symbol-elf.c b/tools/perf/util/symbol-elf.c
-index 5fba57c10edd..8dde4369fbcd 100644
---- a/tools/perf/util/symbol-elf.c
-+++ b/tools/perf/util/symbol-elf.c
-@@ -1129,7 +1129,7 @@ int dso__load_sym(struct dso *dso, struct map *map, struct symsrc *syms_ss,
- 			   (!used_opd && syms_ss->adjust_symbols)) {
- 			GElf_Phdr phdr;
- 
--			if (elf_read_program_header(syms_ss->elf,
-+			if (elf_read_program_header(runtime_ss->elf,
- 						    (u64)sym.st_value, &phdr)) {
- 				pr_warning("%s: failed to find program header for "
- 					   "symbol: %s st_value: %#" PRIx64 "\n",
+diff --git a/arch/powerpc/platforms/52xx/mpc52xx_lpbfifo.c b/arch/powerpc/platforms/52xx/mpc52xx_lpbfifo.c
+index 7bb42a0100de..caaaaf2bea52 100644
+--- a/arch/powerpc/platforms/52xx/mpc52xx_lpbfifo.c
++++ b/arch/powerpc/platforms/52xx/mpc52xx_lpbfifo.c
+@@ -531,6 +531,7 @@ static int mpc52xx_lpbfifo_probe(struct platform_device *op)
+  err_bcom_rx_irq:
+ 	bcom_gen_bd_rx_release(lpbfifo.bcom_rx_task);
+  err_bcom_rx:
++	free_irq(lpbfifo.irq, &lpbfifo);
+  err_irq:
+ 	iounmap(lpbfifo.regs);
+ 	lpbfifo.regs = NULL;
 -- 
 2.35.1
 
