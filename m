@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7103246B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:25:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E83D2C433D2;
-	Mon, 16 Jan 2023 16:25:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11B0046B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:25:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A6ADC433F1;
+	Mon, 16 Jan 2023 16:25:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886306;
-	bh=+zPTGdU8FgfMnmWuGHW48tMsRC2H2tfWM3e5VcwsAXw=;
+	s=korg; t=1673886308;
+	bh=pl8/hcTa7gTHcEVObW9zUb3jNJLT1epkIBX2B46Cqys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sGTtuotwsrKYPrwWNL/xVcxpMpgPVrQwQKrseifkfoTttdBh5AsykicFO12XQHtPB
-	 X2+bGaKyPKd4D2W733c7Pnt72BLbOowbKxh1WKF+E+Dw9BVfV9sigkIA4HIINeeM4c
-	 DrDGUkKbVis55bCx35HmzY0Pgwy845IwyLcyZeuY=
+	b=seNatXt40TmgvJZrkFS4PH4nWDOwCIDE1NDcxlC5tJHemFmxj+XmcBdK/CYIBos7t
+	 JvriYJOypf8lI2TMba4SeFwPFSlrN9Gzi9lePEspNar2YqqKvhtYs9Qfv14oLkkD15
+	 FEEYRhe9NJDFnhxEyeqXczZTmCs8tb8IhTYqfX1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Hacash Robot <hacashRobot@santino.com>,
+	Xie Shaowen <studentxswpy@163.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 351/658] macintosh: fix possible memory leak in macio_add_one_device()
-Date: Mon, 16 Jan 2023 16:47:19 +0100
-Message-Id: <20230116154925.628406158@linuxfoundation.org>
+Subject: [PATCH 5.4 352/658] macintosh/macio-adb: check the return value of ioremap()
+Date: Mon, 16 Jan 2023 16:47:20 +0100
+Message-Id: <20230116154925.681724251@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,41 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Xie Shaowen <studentxswpy@163.com>
 
-[ Upstream commit 5ca86eae55a2f006e6c1edd2029b2cacb6979515 ]
+[ Upstream commit dbaa3105736d4d73063ea0a3b01cd7fafce924e6 ]
 
-Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
-bus_id string array"), the name of device is allocated dynamically. It
-needs to be freed when of_device_register() fails. Call put_device() to
-give up the reference that's taken in device_initialize(), so that it
-can be freed in kobject_cleanup() when the refcount hits 0.
+The function ioremap() in macio_init() can fail, so its return value
+should be checked.
 
-macio device is freed in macio_release_dev(), so the kfree() can be
-removed.
-
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Fixes: 36874579dbf4c ("[PATCH] powerpc: macio-adb build fix")
+Reported-by: Hacash Robot <hacashRobot@santino.com>
+Signed-off-by: Xie Shaowen <studentxswpy@163.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221104032551.1075335-1-yangyingliang@huawei.com
+Link: https://lore.kernel.org/r/20220802074148.3213659-1-studentxswpy@163.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/macintosh/macio_asic.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/macintosh/macio-adb.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/macintosh/macio_asic.c b/drivers/macintosh/macio_asic.c
-index 92d142d2b75f..176bbd062617 100644
---- a/drivers/macintosh/macio_asic.c
-+++ b/drivers/macintosh/macio_asic.c
-@@ -425,7 +425,7 @@ static struct macio_dev * macio_add_one_device(struct macio_chip *chip,
- 	if (of_device_register(&dev->ofdev) != 0) {
- 		printk(KERN_DEBUG"macio: device registration error for %s!\n",
- 		       dev_name(&dev->ofdev.dev));
--		kfree(dev);
-+		put_device(&dev->ofdev.dev);
- 		return NULL;
+diff --git a/drivers/macintosh/macio-adb.c b/drivers/macintosh/macio-adb.c
+index eb3adfb7f88d..172a8b18c579 100644
+--- a/drivers/macintosh/macio-adb.c
++++ b/drivers/macintosh/macio-adb.c
+@@ -106,6 +106,10 @@ int macio_init(void)
+ 		return -ENXIO;
  	}
+ 	adb = ioremap(r.start, sizeof(struct adb_regs));
++	if (!adb) {
++		of_node_put(adbs);
++		return -ENOMEM;
++	}
  
+ 	out_8(&adb->ctrl.r, 0);
+ 	out_8(&adb->intr.r, 0);
 -- 
 2.35.1
 
