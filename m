@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E09C6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:13:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E1AC433D2;
-	Mon, 16 Jan 2023 17:13:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED996FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:13:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28C5BC433D2;
+	Mon, 16 Jan 2023 17:13:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889231;
-	bh=vEpmbVZ/PZHJ2C1JJkGIiUDPla5U/sXBxAqdgQl1pMM=;
+	s=korg; t=1673889234;
+	bh=ZfmykpwAoNzEuy5u7TG7Uv8Os7sFrJIRWmMX1RBXSeA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z7iuLbVz5ohxJlZdtirx4VgUeFSL5Onobisf+YNI1ER7wcHdraqGZDT0NJTs5lf8k
-	 RUwqn0VmCPaIcjPD5Dm/NUCjRoXQZJqbKrJTQgHPjDsK2VTZj2ll3ag6QozFzaLyMf
-	 eh5pv1F/gtYfKh/nPMMvjPemguKxWME1YdvpDCsk=
+	b=GloqmfbusMEGEmulQ3Kt5mQD1zUGGSVkgR/2JHqEOLwbMZTxpNr4iW2eWDZUs8Emp
+	 jRdMHVrLQAisoaq3ho951AqNgUTRMpg/DJtUusR+KdjE4GtMkPs43nZgUev0CUP9W6
+	 MpA1oOmUc840SBvMszQkxznI7Owf2SnD/DpIUIpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhihao Cheng <chengzhihao1@huawei.com>,
-	Joe Thornber <ejt@redhat.com>,
+	Luo Meng <luomeng12@huawei.com>,
 	Mike Snitzer <snitzer@kernel.org>
-Subject: [PATCH 4.14 278/338] dm thin: Use last transactions pmd->root when commit failed
-Date: Mon, 16 Jan 2023 16:52:31 +0100
-Message-Id: <20230116154833.202448876@linuxfoundation.org>
+Subject: [PATCH 4.14 279/338] dm thin: Fix UAF in run_timer_softirq()
+Date: Mon, 16 Jan 2023 16:52:32 +0100
+Message-Id: <20230116154833.248985920@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,84 +34,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhihao Cheng <chengzhihao1@huawei.com>
+From: Luo Meng <luomeng12@huawei.com>
 
-commit 7991dbff6849f67e823b7cc0c15e5a90b0549b9f upstream.
+commit 88430ebcbc0ec637b710b947738839848c20feff upstream.
 
-Recently we found a softlock up problem in dm thin pool btree lookup
-code due to corrupted metadata:
+When dm_resume() and dm_destroy() are concurrent, it will
+lead to UAF, as follows:
 
- Kernel panic - not syncing: softlockup: hung tasks
- CPU: 7 PID: 2669225 Comm: kworker/u16:3
- Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
- Workqueue: dm-thin do_worker [dm_thin_pool]
+ BUG: KASAN: use-after-free in __run_timers+0x173/0x710
+ Write of size 8 at addr ffff88816d9490f0 by task swapper/0/0
+<snip>
  Call Trace:
-   <IRQ>
-   dump_stack+0x9c/0xd3
-   panic+0x35d/0x6b9
-   watchdog_timer_fn.cold+0x16/0x25
-   __run_hrtimer+0xa2/0x2d0
-   </IRQ>
-   RIP: 0010:__relink_lru+0x102/0x220 [dm_bufio]
-   __bufio_new+0x11f/0x4f0 [dm_bufio]
-   new_read+0xa3/0x1e0 [dm_bufio]
-   dm_bm_read_lock+0x33/0xd0 [dm_persistent_data]
-   ro_step+0x63/0x100 [dm_persistent_data]
-   btree_lookup_raw.constprop.0+0x44/0x220 [dm_persistent_data]
-   dm_btree_lookup+0x16f/0x210 [dm_persistent_data]
-   dm_thin_find_block+0x12c/0x210 [dm_thin_pool]
-   __process_bio_read_only+0xc5/0x400 [dm_thin_pool]
-   process_thin_deferred_bios+0x1a4/0x4a0 [dm_thin_pool]
-   process_one_work+0x3c5/0x730
+  <IRQ>
+  dump_stack_lvl+0x73/0x9f
+  print_report.cold+0x132/0xaa2
+  _raw_spin_lock_irqsave+0xcd/0x160
+  __run_timers+0x173/0x710
+  kasan_report+0xad/0x110
+  __run_timers+0x173/0x710
+  __asan_store8+0x9c/0x140
+  __run_timers+0x173/0x710
+  call_timer_fn+0x310/0x310
+  pvclock_clocksource_read+0xfa/0x250
+  kvm_clock_read+0x2c/0x70
+  kvm_clock_get_cycles+0xd/0x20
+  ktime_get+0x5c/0x110
+  lapic_next_event+0x38/0x50
+  clockevents_program_event+0xf1/0x1e0
+  run_timer_softirq+0x49/0x90
+  __do_softirq+0x16e/0x62c
+  __irq_exit_rcu+0x1fa/0x270
+  irq_exit_rcu+0x12/0x20
+  sysvec_apic_timer_interrupt+0x8e/0xc0
 
-Following process may generate a broken btree mixed with fresh and
-stale btree nodes, which could get dm thin trapped in an infinite loop
-while looking up data block:
- Transaction 1: pmd->root = A, A->B->C   // One path in btree
-                pmd->root = X, X->Y->Z   // Copy-up
- Transaction 2: X,Z is updated on disk, Y write failed.
-                // Commit failed, dm thin becomes read-only.
-                process_bio_read_only
-		 dm_thin_find_block
-		  __find_block
-		   dm_btree_lookup(pmd->root)
-The pmd->root points to a broken btree, Y may contain stale node
-pointing to any block, for example X, which gets dm thin trapped into
-a dead loop while looking up Z.
+One of the concurrency UAF can be shown as below:
 
-Fix this by setting pmd->root in __open_metadata(), so that dm thin
-will use the last transaction's pmd->root if commit failed.
+        use                                  free
+do_resume                           |
+  __find_device_hash_cell           |
+    dm_get                          |
+      atomic_inc(&md->holders)      |
+                                    | dm_destroy
+                                    |   __dm_destroy
+                                    |     if (!dm_suspended_md(md))
+                                    |     atomic_read(&md->holders)
+                                    |     msleep(1)
+  dm_resume                         |
+    __dm_resume                     |
+      dm_table_resume_targets       |
+        pool_resume                 |
+          do_waker  #add delay work |
+  dm_put                            |
+    atomic_dec(&md->holders)        |
+                                    |     dm_table_destroy
+                                    |       pool_dtr
+                                    |         __pool_dec
+                                    |           __pool_destroy
+                                    |             destroy_workqueue
+                                    |             kfree(pool) # free pool
+        time out
+__do_softirq
+  run_timer_softirq # pool has already been freed
 
-Fetch a reproducer in [Link].
+This can be easily reproduced using:
+  1. create thin-pool
+  2. dmsetup suspend pool
+  3. dmsetup resume pool
+  4. dmsetup remove_all # Concurrent with 3
 
-Linke: https://bugzilla.kernel.org/show_bug.cgi?id=216790
+The root cause of this UAF bug is that dm_resume() adds timer after
+dm_destroy() skips cancelling the timer because of suspend status.
+After timeout, it will call run_timer_softirq(), however pool has
+already been freed. The concurrency UAF bug will happen.
+
+Therefore, cancelling timer again in __pool_destroy().
+
 Cc: stable@vger.kernel.org
-Fixes: 991d9fa02da0 ("dm: add thin provisioning target")
-Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
-Acked-by: Joe Thornber <ejt@redhat.com>
+Fixes: 991d9fa02da0d ("dm: add thin provisioning target")
+Signed-off-by: Luo Meng <luomeng12@huawei.com>
 Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/md/dm-thin-metadata.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/md/dm-thin.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/md/dm-thin-metadata.c
-+++ b/drivers/md/dm-thin-metadata.c
-@@ -660,6 +660,15 @@ static int __open_metadata(struct dm_poo
- 		goto bad_cleanup_data_sm;
- 	}
+--- a/drivers/md/dm-thin.c
++++ b/drivers/md/dm-thin.c
+@@ -2932,6 +2932,8 @@ static void __pool_destroy(struct pool *
+ 	dm_bio_prison_destroy(pool->prison);
+ 	dm_kcopyd_client_destroy(pool->copier);
  
-+	/*
-+	 * For pool metadata opening process, root setting is redundant
-+	 * because it will be set again in __begin_transaction(). But dm
-+	 * pool aborting process really needs to get last transaction's
-+	 * root to avoid accessing broken btree.
-+	 */
-+	pmd->root = le64_to_cpu(disk_super->data_mapping_root);
-+	pmd->details_root = le64_to_cpu(disk_super->device_details_root);
-+
- 	__setup_btree_details(pmd);
- 	dm_bm_unlock(sblock);
++	cancel_delayed_work_sync(&pool->waker);
++	cancel_delayed_work_sync(&pool->no_space_timeout);
+ 	if (pool->wq)
+ 		destroy_workqueue(pool->wq);
  
 
 
