@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCAC76FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:50:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42688C433EF;
-	Mon, 16 Jan 2023 16:50:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 589DD6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:50:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34B8C433D2;
+	Mon, 16 Jan 2023 16:50:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887847;
-	bh=XsbQtOaZ3eU/1ChvimzePTn6jNqCJ9TZVPXd9HThSo4=;
+	s=korg; t=1673887850;
+	bh=lONnZUYdmxL+lS8NCm+zuvasQrksKLDrLsRlogJFoYc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M0jlOULukG5CSxMiaiUiEqEwgZ2PByf6C/4ncWMyXSbQhGhydUXiuVl7H8j8aoNSv
-	 mrklIwbT+h1EdWetfvBWVUHya55ThZ4ZCpIIenkzBohFEZFeTsUhou+4Q1D67XXbRz
-	 hn2e3yEO9MNOCR4yYBJWGy9KlzEDGH9cBZfFSueU=
+	b=lCignZu/R7XkDplLCgMN1ftza6gEIRgkyRP9bV9ssa6o5qvA7i8P91vAhWNm6m25X
+	 aWC6AeiuqhoX1mVME6iX4tXa4cghl0aFAWi9GPagEbiR20hBMM9LihCRAQG+cKlU4p
+	 4F0NDhy2fCJ9XnFrel4ZFc5mOoAVcERJw2eS4VUE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Tranchetti <quic_stranche@quicinc.com>,
-	Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 305/521] skbuff: Account for tail adjustment during pull operations
-Date: Mon, 16 Jan 2023 16:49:27 +0100
-Message-Id: <20230116154900.769087213@linuxfoundation.org>
+	Jun Nie <jun.nie@linaro.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Cong Wang <cong.wang@bytedance.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>,
+	syzbot+4caeae4c7103813598ae@syzkaller.appspotmail.com
+Subject: [PATCH 4.19 306/521] net_sched: reject TCF_EM_SIMPLE case for complex ematch module
+Date: Mon, 16 Jan 2023 16:49:28 +0100
+Message-Id: <20230116154900.811261210@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,64 +39,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
+From: Cong Wang <cong.wang@bytedance.com>
 
-[ Upstream commit 2d7afdcbc9d32423f177ee12b7c93783aea338fb ]
+[ Upstream commit 9cd3fd2054c3b3055163accbf2f31a4426f10317 ]
 
-Extending the tail can have some unexpected side effects if a program uses
-a helper like BPF_FUNC_skb_pull_data to read partial content beyond the
-head skb headlen when all the skbs in the gso frag_list are linear with no
-head_frag -
+When TCF_EM_SIMPLE was introduced, it is supposed to be convenient
+for ematch implementation:
 
-  kernel BUG at net/core/skbuff.c:4219!
-  pc : skb_segment+0xcf4/0xd2c
-  lr : skb_segment+0x63c/0xd2c
-  Call trace:
-   skb_segment+0xcf4/0xd2c
-   __udp_gso_segment+0xa4/0x544
-   udp4_ufo_fragment+0x184/0x1c0
-   inet_gso_segment+0x16c/0x3a4
-   skb_mac_gso_segment+0xd4/0x1b0
-   __skb_gso_segment+0xcc/0x12c
-   udp_rcv_segment+0x54/0x16c
-   udp_queue_rcv_skb+0x78/0x144
-   udp_unicast_rcv_skb+0x8c/0xa4
-   __udp4_lib_rcv+0x490/0x68c
-   udp_rcv+0x20/0x30
-   ip_protocol_deliver_rcu+0x1b0/0x33c
-   ip_local_deliver+0xd8/0x1f0
-   ip_rcv+0x98/0x1a4
-   deliver_ptype_list_skb+0x98/0x1ec
-   __netif_receive_skb_core+0x978/0xc60
+https://lore.kernel.org/all/20050105110048.GO26856@postel.suug.ch/
 
-Fix this by marking these skbs as GSO_DODGY so segmentation can handle
-the tail updates accordingly.
+"You don't have to, providing a 32bit data chunk without TCF_EM_SIMPLE
+set will simply result in allocating & copy. It's an optimization,
+nothing more."
 
-Fixes: 3dcbdb134f32 ("net: gso: Fix skb_segment splat when splitting gso_size mangled skb having linear-headed frag_list")
-Signed-off-by: Sean Tranchetti <quic_stranche@quicinc.com>
-Signed-off-by: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Link: https://lore.kernel.org/r/1671084718-24796-1-git-send-email-quic_subashab@quicinc.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+So if an ematch module provides ops->datalen that means it wants a
+complex data structure (saved in its em->data) instead of a simple u32
+value. We should simply reject such a combination, otherwise this u32
+could be misinterpreted as a pointer.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Reported-and-tested-by: syzbot+4caeae4c7103813598ae@syzkaller.appspotmail.com
+Reported-by: Jun Nie <jun.nie@linaro.org>
+Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Cong Wang <cong.wang@bytedance.com>
+Acked-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/sched/ematch.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 4178fc28c277..7f501dff4501 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -1953,6 +1953,9 @@ void *__pskb_pull_tail(struct sk_buff *skb, int delta)
- 				insp = list;
- 			} else {
- 				/* Eaten partially. */
-+				if (skb_is_gso(skb) && !list->head_frag &&
-+				    skb_headlen(list))
-+					skb_shinfo(skb)->gso_type |= SKB_GSO_DODGY;
- 
- 				if (skb_shared(list)) {
- 					/* Sucks! We need to fork list. :-( */
+diff --git a/net/sched/ematch.c b/net/sched/ematch.c
+index 113a133ee544..5ba3548d2eb7 100644
+--- a/net/sched/ematch.c
++++ b/net/sched/ematch.c
+@@ -259,6 +259,8 @@ static int tcf_em_validate(struct tcf_proto *tp,
+ 			 * the value carried.
+ 			 */
+ 			if (em_hdr->flags & TCF_EM_SIMPLE) {
++				if (em->ops->datalen > 0)
++					goto errout;
+ 				if (data_len < sizeof(u32))
+ 					goto errout;
+ 				em->data = *(u32 *) data;
 -- 
 2.35.1
 
