@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B414C83
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:33:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CAFB0C433EF;
-	Mon, 16 Jan 2023 16:33:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02334C83
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:33:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66935C433EF;
+	Mon, 16 Jan 2023 16:33:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886807;
-	bh=DYELTYjFGZWqOKoFLg/pWsh1tI7xVMG436nzATlN6YM=;
+	s=korg; t=1673886809;
+	bh=T+GN3KzClFQ0pazylmw4yqQ4cszGxeiRLVI7wGusluE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G9Li21d6vQPCRsmQb88tlm1ZbSdG2voeWkWu2WpBCHeVS2TJQF73RbHU5gCiKgX0E
-	 oxHJRIRuMrELRcszb0ZqHNVSWtntBEt4Eg0SeLhEwSDKjHinoQG/VjE2GDRBUIspg/
-	 T+n1Sqdd19NYN01gXSA4UUSWt/NtWgAlUO8j5Wjw=
+	b=iVO7pQl6R0fhrUYZB3bf6QmoCAhITYbSwUR28uP7zLFDgXmaP+FY8iKAkuvvzEjjT
+	 CRLRnUuczuR3oDU65+jUysswpnjXhx707anW5aTRzeOZG80cs33uixaAzghzDf1TIm
+	 jPhOjwE9koN8BOHS+4iqeZuDEmXpcRU1FiW0L4TY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Parthasarathy <anpartha@meta.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Stanislav Fomichev <sdf@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 569/658] bpf: pull before calling skb_postpull_rcsum()
-Date: Mon, 16 Jan 2023 16:50:57 +0100
-Message-Id: <20230116154935.536538538@linuxfoundation.org>
+	Jeff Layton <jlayton@kernel.org>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Wang Yugui <wangyugui@e16-tech.com>
+Subject: [PATCH 5.4 570/658] nfsd: shut down the NFSv4 state objects before the filecache
+Date: Mon, 16 Jan 2023 16:50:58 +0100
+Message-Id: <20230116154935.581452913@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,59 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Jeff Layton <jlayton@kernel.org>
 
-[ Upstream commit 54c3f1a81421f85e60ae2eaae7be3727a09916ee ]
+[ Upstream commit 789e1e10f214c00ca18fc6610824c5b9876ba5f2 ]
 
-Anand hit a BUG() when pulling off headers on egress to a SW tunnel.
-We get to skb_checksum_help() with an invalid checksum offset
-(commit d7ea0d9df2a6 ("net: remove two BUG() from skb_checksum_help()")
-converted those BUGs to WARN_ONs()).
-He points out oddness in how skb_postpull_rcsum() gets used.
-Indeed looks like we should pull before "postpull", otherwise
-the CHECKSUM_PARTIAL fixup from skb_postpull_rcsum() will not
-be able to do its job:
+Currently, we shut down the filecache before trying to clean up the
+stateids that depend on it. This leads to the kernel trying to free an
+nfsd_file twice, and a refcount overput on the nf_mark.
 
-	if (skb->ip_summed == CHECKSUM_PARTIAL &&
-	    skb_checksum_start_offset(skb) < 0)
-		skb->ip_summed = CHECKSUM_NONE;
+Change the shutdown procedure to tear down all of the stateids prior
+to shutting down the filecache.
 
-Reported-by: Anand Parthasarathy <anpartha@meta.com>
-Fixes: 6578171a7ff0 ("bpf: add bpf_skb_change_proto helper")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/r/20221220004701.402165-1-kuba@kernel.org
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Reported-and-tested-by: Wang Yugui <wangyugui@e16-tech.com>
+Signed-off-by: Jeff Layton <jlayton@kernel.org>
+Fixes: 5e113224c17e ("nfsd: nfsd_file cache entries should be per net namespace")
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ fs/nfsd/nfssvc.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index ec4f7e68b21a..71fcb4e7edae 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2795,15 +2795,18 @@ static int bpf_skb_generic_push(struct sk_buff *skb, u32 off, u32 len)
- 
- static int bpf_skb_generic_pop(struct sk_buff *skb, u32 off, u32 len)
+diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
+index d63cdda1782d..70684c7ae94b 100644
+--- a/fs/nfsd/nfssvc.c
++++ b/fs/nfsd/nfssvc.c
+@@ -420,8 +420,8 @@ static void nfsd_shutdown_net(struct net *net)
  {
-+	void *old_data;
-+
- 	/* skb_ensure_writable() is not needed here, as we're
- 	 * already working on an uncloned skb.
- 	 */
- 	if (unlikely(!pskb_may_pull(skb, off + len)))
- 		return -ENOMEM;
+ 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
  
--	skb_postpull_rcsum(skb, skb->data + off, len);
--	memmove(skb->data + len, skb->data, off);
-+	old_data = skb->data;
- 	__skb_pull(skb, len);
-+	skb_postpull_rcsum(skb, old_data + off, len);
-+	memmove(skb->data, old_data, off);
- 
- 	return 0;
- }
+-	nfsd_file_cache_shutdown_net(net);
+ 	nfs4_state_shutdown_net(net);
++	nfsd_file_cache_shutdown_net(net);
+ 	if (nn->lockd_up) {
+ 		lockd_down(net);
+ 		nn->lockd_up = 0;
 -- 
 2.35.1
 
