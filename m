@@ -1,27 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FDB6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:52:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E466C433D2;
-	Mon, 16 Jan 2023 16:52:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E1A26FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:52:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 912F8C433EF;
+	Mon, 16 Jan 2023 16:52:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887921;
-	bh=NJ/FJEQYHJST8jPE9NG67Xf+jbNGQoWczd++8y2sdbo=;
+	s=korg; t=1673887924;
+	bh=iSqDLD6V+EXFHPEBmFJh4zIKI9zQjbomE3YIKznsP8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vpdZX6hk9EMQJVQWnvMVs06q7srQFK9uqJzFcd2cbslEm3BvgSyT8eiiqiCYsvbg6
-	 t+EeQbTPVAOiE7iQA0LHPDXuX2tZ7mHgVE6udzK/4tFGAkhEploIB4gRwyMaMvppN3
-	 SZKsM0NPM6KGtVWLF8DNGzNs9oLSyKtajNRZ6LMM=
+	b=xYEYsn5RcZvwF926sON9mU8NtHH0CSTiIWZkHfkWwGr6s5l4nAxXAH8kqgMQSVT4m
+	 5mm2tUgRmBjjr22VY4XQW4tqkTAlGYdsUAtpsEIuKYAKrAwdlSAmj7S3fDiLcGYMDj
+	 jln7QbJHqcBbVnhCsdo2iZFKjbpDXyeFa+lZp+Gw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver OHalloran <oohall@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 293/521] powerpc/pseries: Stop using eeh_ops->init()
-Date: Mon, 16 Jan 2023 16:49:15 +0100
-Message-Id: <20230116154900.230346628@linuxfoundation.org>
+	Jesse Brandeburg <jesse.brandeburg@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	intel-wired-lan@lists.osuosl.org,
+	netdev@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
+	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Gurucharan <gurucharanx.g@intel.com>
+Subject: [PATCH 4.19 326/521] igb: Do not free q_vector unless new one was allocated
+Date: Mon, 16 Jan 2023 16:49:48 +0100
+Message-Id: <20230116154901.743823137@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,203 +45,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oliver O'Halloran <oohall@gmail.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 1f8fa0cd6a848ff072bffe0ee776554387128f60 ]
+[ Upstream commit 0668716506ca66f90d395f36ccdaebc3e0e84801 ]
 
-Fold pseries_eeh_init() into eeh_pseries_init() rather than having
-eeh_init() call it via eeh_ops->init(). It's simpler and it'll let us
-delete eeh_ops.init.
+Avoid potential use-after-free condition under memory pressure. If the
+kzalloc() fails, q_vector will be freed but left in the original
+adapter->q_vector[v_idx] array position.
 
-Signed-off-by: Oliver O'Halloran <oohall@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20200918093050.37344-3-oohall@gmail.com
-Stable-dep-of: 9aafbfa5f57a ("powerpc/pseries/eeh: use correct API for error log size")
+Cc: Jesse Brandeburg <jesse.brandeburg@intel.com>
+Cc: Tony Nguyen <anthony.l.nguyen@intel.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: intel-wired-lan@lists.osuosl.org
+Cc: netdev@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Gurucharan <gurucharanx.g@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/platforms/pseries/eeh_pseries.c | 155 +++++++++----------
- 1 file changed, 71 insertions(+), 84 deletions(-)
+ drivers/net/ethernet/intel/igb/igb_main.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/platforms/pseries/eeh_pseries.c b/arch/powerpc/platforms/pseries/eeh_pseries.c
-index 560d7401496c..7a0b9aa09d10 100644
---- a/arch/powerpc/platforms/pseries/eeh_pseries.c
-+++ b/arch/powerpc/platforms/pseries/eeh_pseries.c
-@@ -250,88 +250,6 @@ static unsigned char slot_errbuf[RTAS_ERROR_LOG_MAX];
- static DEFINE_SPINLOCK(slot_errbuf_lock);
- static int eeh_error_buf_size;
- 
--/**
-- * pseries_eeh_init - EEH platform dependent initialization
-- *
-- * EEH platform dependent initialization on pseries.
-- */
--static int pseries_eeh_init(void)
--{
--	struct pci_controller *phb;
--	struct pci_dn *pdn;
--	int addr, config_addr;
--
--	/* figure out EEH RTAS function call tokens */
--	ibm_set_eeh_option		= rtas_token("ibm,set-eeh-option");
--	ibm_set_slot_reset		= rtas_token("ibm,set-slot-reset");
--	ibm_read_slot_reset_state2	= rtas_token("ibm,read-slot-reset-state2");
--	ibm_read_slot_reset_state	= rtas_token("ibm,read-slot-reset-state");
--	ibm_slot_error_detail		= rtas_token("ibm,slot-error-detail");
--	ibm_get_config_addr_info2	= rtas_token("ibm,get-config-addr-info2");
--	ibm_get_config_addr_info	= rtas_token("ibm,get-config-addr-info");
--	ibm_configure_pe		= rtas_token("ibm,configure-pe");
--
--	/*
--	 * ibm,configure-pe and ibm,configure-bridge have the same semantics,
--	 * however ibm,configure-pe can be faster.  If we can't find
--	 * ibm,configure-pe then fall back to using ibm,configure-bridge.
--	 */
--	if (ibm_configure_pe == RTAS_UNKNOWN_SERVICE)
--		ibm_configure_pe 	= rtas_token("ibm,configure-bridge");
--
--	/*
--	 * Necessary sanity check. We needn't check "get-config-addr-info"
--	 * and its variant since the old firmware probably support address
--	 * of domain/bus/slot/function for EEH RTAS operations.
--	 */
--	if (ibm_set_eeh_option == RTAS_UNKNOWN_SERVICE		||
--	    ibm_set_slot_reset == RTAS_UNKNOWN_SERVICE		||
--	    (ibm_read_slot_reset_state2 == RTAS_UNKNOWN_SERVICE &&
--	     ibm_read_slot_reset_state == RTAS_UNKNOWN_SERVICE)	||
--	    ibm_slot_error_detail == RTAS_UNKNOWN_SERVICE	||
--	    ibm_configure_pe == RTAS_UNKNOWN_SERVICE) {
--		pr_info("EEH functionality not supported\n");
--		return -EINVAL;
--	}
--
--	/* Initialize error log lock and size */
--	spin_lock_init(&slot_errbuf_lock);
--	eeh_error_buf_size = rtas_token("rtas-error-log-max");
--	if (eeh_error_buf_size == RTAS_UNKNOWN_SERVICE) {
--		pr_info("%s: unknown EEH error log size\n",
--			__func__);
--		eeh_error_buf_size = 1024;
--	} else if (eeh_error_buf_size > RTAS_ERROR_LOG_MAX) {
--		pr_info("%s: EEH error log size %d exceeds the maximal %d\n",
--			__func__, eeh_error_buf_size, RTAS_ERROR_LOG_MAX);
--		eeh_error_buf_size = RTAS_ERROR_LOG_MAX;
--	}
--
--	/* Set EEH probe mode */
--	eeh_add_flag(EEH_PROBE_MODE_DEVTREE | EEH_ENABLE_IO_FOR_LOG);
--
--	/* Set EEH machine dependent code */
--	ppc_md.pcibios_bus_add_device = pseries_pcibios_bus_add_device;
--
--	if (is_kdump_kernel() || reset_devices) {
--		pr_info("Issue PHB reset ...\n");
--		list_for_each_entry(phb, &hose_list, list_node) {
--			pdn = list_first_entry(&PCI_DN(phb->dn)->child_list, struct pci_dn, list);
--			addr = (pdn->busno << 16) | (pdn->devfn << 8);
--			config_addr = pseries_eeh_get_config_addr(phb, addr);
--			/* invalid PE config addr */
--			if (config_addr == 0)
--				continue;
--
--			pseries_eeh_phb_reset(phb, config_addr, EEH_RESET_FUNDAMENTAL);
--			pseries_eeh_phb_reset(phb, config_addr, EEH_RESET_DEACTIVATE);
--			pseries_eeh_phb_configure_bridge(phb, config_addr);
--		}
--	}
--
--	return 0;
--}
--
- static int pseries_eeh_cap_start(struct pci_dn *pdn)
- {
- 	u32 status;
-@@ -964,7 +882,6 @@ static int pseries_notify_resume(struct pci_dn *pdn)
- 
- static struct eeh_ops pseries_eeh_ops = {
- 	.name			= "pseries",
--	.init			= pseries_eeh_init,
- 	.probe			= pseries_eeh_probe,
- 	.set_option		= pseries_eeh_set_option,
- 	.get_pe_addr		= pseries_eeh_get_pe_addr,
-@@ -991,7 +908,77 @@ static struct eeh_ops pseries_eeh_ops = {
-  */
- static int __init eeh_pseries_init(void)
- {
--	int ret;
-+	struct pci_controller *phb;
-+	struct pci_dn *pdn;
-+	int ret, addr, config_addr;
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index 3d2dd15859cb..87f98170ac93 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -1211,8 +1211,12 @@ static int igb_alloc_q_vector(struct igb_adapter *adapter,
+ 	if (!q_vector) {
+ 		q_vector = kzalloc(size, GFP_KERNEL);
+ 	} else if (size > ksize(q_vector)) {
+-		kfree_rcu(q_vector, rcu);
+-		q_vector = kzalloc(size, GFP_KERNEL);
++		struct igb_q_vector *new_q_vector;
 +
-+	/* figure out EEH RTAS function call tokens */
-+	ibm_set_eeh_option		= rtas_token("ibm,set-eeh-option");
-+	ibm_set_slot_reset		= rtas_token("ibm,set-slot-reset");
-+	ibm_read_slot_reset_state2	= rtas_token("ibm,read-slot-reset-state2");
-+	ibm_read_slot_reset_state	= rtas_token("ibm,read-slot-reset-state");
-+	ibm_slot_error_detail		= rtas_token("ibm,slot-error-detail");
-+	ibm_get_config_addr_info2	= rtas_token("ibm,get-config-addr-info2");
-+	ibm_get_config_addr_info	= rtas_token("ibm,get-config-addr-info");
-+	ibm_configure_pe		= rtas_token("ibm,configure-pe");
-+
-+	/*
-+	 * ibm,configure-pe and ibm,configure-bridge have the same semantics,
-+	 * however ibm,configure-pe can be faster.  If we can't find
-+	 * ibm,configure-pe then fall back to using ibm,configure-bridge.
-+	 */
-+	if (ibm_configure_pe == RTAS_UNKNOWN_SERVICE)
-+		ibm_configure_pe	= rtas_token("ibm,configure-bridge");
-+
-+	/*
-+	 * Necessary sanity check. We needn't check "get-config-addr-info"
-+	 * and its variant since the old firmware probably support address
-+	 * of domain/bus/slot/function for EEH RTAS operations.
-+	 */
-+	if (ibm_set_eeh_option == RTAS_UNKNOWN_SERVICE		||
-+	    ibm_set_slot_reset == RTAS_UNKNOWN_SERVICE		||
-+	    (ibm_read_slot_reset_state2 == RTAS_UNKNOWN_SERVICE &&
-+	     ibm_read_slot_reset_state == RTAS_UNKNOWN_SERVICE)	||
-+	    ibm_slot_error_detail == RTAS_UNKNOWN_SERVICE	||
-+	    ibm_configure_pe == RTAS_UNKNOWN_SERVICE) {
-+		pr_info("EEH functionality not supported\n");
-+		return -EINVAL;
-+	}
-+
-+	/* Initialize error log lock and size */
-+	spin_lock_init(&slot_errbuf_lock);
-+	eeh_error_buf_size = rtas_token("rtas-error-log-max");
-+	if (eeh_error_buf_size == RTAS_UNKNOWN_SERVICE) {
-+		pr_info("%s: unknown EEH error log size\n",
-+			__func__);
-+		eeh_error_buf_size = 1024;
-+	} else if (eeh_error_buf_size > RTAS_ERROR_LOG_MAX) {
-+		pr_info("%s: EEH error log size %d exceeds the maximal %d\n",
-+			__func__, eeh_error_buf_size, RTAS_ERROR_LOG_MAX);
-+		eeh_error_buf_size = RTAS_ERROR_LOG_MAX;
-+	}
-+
-+	/* Set EEH probe mode */
-+	eeh_add_flag(EEH_PROBE_MODE_DEVTREE | EEH_ENABLE_IO_FOR_LOG);
-+
-+	/* Set EEH machine dependent code */
-+	ppc_md.pcibios_bus_add_device = pseries_pcibios_bus_add_device;
-+
-+	if (is_kdump_kernel() || reset_devices) {
-+		pr_info("Issue PHB reset ...\n");
-+		list_for_each_entry(phb, &hose_list, list_node) {
-+			pdn = list_first_entry(&PCI_DN(phb->dn)->child_list, struct pci_dn, list);
-+			addr = (pdn->busno << 16) | (pdn->devfn << 8);
-+			config_addr = pseries_eeh_get_config_addr(phb, addr);
-+			/* invalid PE config addr */
-+			if (config_addr == 0)
-+				continue;
-+
-+			pseries_eeh_phb_reset(phb, config_addr, EEH_RESET_FUNDAMENTAL);
-+			pseries_eeh_phb_reset(phb, config_addr, EEH_RESET_DEACTIVATE);
-+			pseries_eeh_phb_configure_bridge(phb, config_addr);
-+		}
-+	}
- 
- 	ret = eeh_ops_register(&pseries_eeh_ops);
- 	if (!ret)
++		new_q_vector = kzalloc(size, GFP_KERNEL);
++		if (new_q_vector)
++			kfree_rcu(q_vector, rcu);
++		q_vector = new_q_vector;
+ 	} else {
+ 		memset(q_vector, 0, size);
+ 	}
 -- 
 2.35.1
 
