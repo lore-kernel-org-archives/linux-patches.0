@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04ED86FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:48:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80160C433EF;
-	Mon, 16 Jan 2023 16:48:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43026FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:48:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28888C433F1;
+	Mon, 16 Jan 2023 16:48:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887691;
-	bh=zDSe1fCpW15JHXVl1zLrWCJragmwvt3ZJ5ExCkqDhlI=;
+	s=korg; t=1673887694;
+	bh=D7iA2627opMSbu8Xw4XUqK+8Ip68gn0a/lZ3XoAN9C0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K2+eZY8x69IwUR0g4dWMgYyt4bUJloCOnJFgKuCvHNm50J1lQ7/TywE/77wrk7VY/
-	 3di7K5QDEehHB2Eg2vQYU+wecYp9wP2O9PIWjm/62r7qHiessntUI780yRZ0lYj2os
-	 DnhRUuq1ktHvVq98vapzCp4TEjDDQL199XXLooT0=
+	b=MVA4Hl8Lq1bGmKWezXQpggh6tEckxOcW8Iu/5SSTMlnRYlNzohc1hWuqfNxu6+sI9
+	 CmGmPl8x3jDALW8EpAlZYoU3DzeW9du75J6RzAqdDjsUpEa6X76NJhFEDqKf1vBtye
+	 go+6iN1u33HIZLaIEb0y3jZgIuesC/MdE4gm9aWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Bartosz Golaszewski <bgolaszewski@baylibre.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 246/521] vme: Fix error not catched in fake_init()
-Date: Mon, 16 Jan 2023 16:48:28 +0100
-Message-Id: <20230116154858.134960121@linuxfoundation.org>
+Subject: [PATCH 4.19 247/521] drivers: provide devm_platform_ioremap_resource()
+Date: Mon, 16 Jan 2023 16:48:29 +0100
+Message-Id: <20230116154858.181417756@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -34,47 +36,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Bartosz Golaszewski <bgolaszewski@baylibre.com>
 
-[ Upstream commit 7bef797d707f1744f71156b21d41e3b8c946631f ]
+[ Upstream commit 7945f929f1a77a1c8887a97ca07f87626858ff42 ]
 
-In fake_init(), __root_device_register() is possible to fail but it's
-ignored, which can cause unregistering vme_root fail when exit.
+There are currently 1200+ instances of using platform_get_resource()
+and devm_ioremap_resource() together in the kernel tree.
 
- general protection fault,
- probably for non-canonical address 0xdffffc000000008c
- KASAN: null-ptr-deref in range [0x0000000000000460-0x0000000000000467]
- RIP: 0010:root_device_unregister+0x26/0x60
- Call Trace:
-  <TASK>
-  __x64_sys_delete_module+0x34f/0x540
-  do_syscall_64+0x38/0x90
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+This patch wraps these two calls in a single helper. Thanks to that
+we don't have to declare a local variable for struct resource * and can
+omit the redundant argument for resource type. We also have one
+function call less.
 
-Return error when __root_device_register() fails.
-
-Fixes: 658bcdae9c67 ("vme: Adding Fake VME driver")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221205084805.147436-1-chenzhongjin@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Bartosz Golaszewski <bgolaszewski@baylibre.com>
+Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Stable-dep-of: 2d47b79d2bd3 ("i2c: mux: reg: check return value after calling platform_get_resource()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vme/bridges/vme_fake.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/base/platform.c         | 18 ++++++++++++++++++
+ include/linux/platform_device.h |  3 +++
+ 2 files changed, 21 insertions(+)
 
-diff --git a/drivers/vme/bridges/vme_fake.c b/drivers/vme/bridges/vme_fake.c
-index 685a43bdc2a1..06bfc7f0e0b6 100644
---- a/drivers/vme/bridges/vme_fake.c
-+++ b/drivers/vme/bridges/vme_fake.c
-@@ -1077,6 +1077,8 @@ static int __init fake_init(void)
+diff --git a/drivers/base/platform.c b/drivers/base/platform.c
+index 349c2754eed7..ea83c279b8a3 100644
+--- a/drivers/base/platform.c
++++ b/drivers/base/platform.c
+@@ -80,6 +80,24 @@ struct resource *platform_get_resource(struct platform_device *dev,
+ }
+ EXPORT_SYMBOL_GPL(platform_get_resource);
  
- 	/* We need a fake parent device */
- 	vme_root = __root_device_register("vme", THIS_MODULE);
-+	if (IS_ERR(vme_root))
-+		return PTR_ERR(vme_root);
- 
- 	/* If we want to support more than one bridge at some point, we need to
- 	 * dynamically allocate this so we get one per device.
++/**
++ * devm_platform_ioremap_resource - call devm_ioremap_resource() for a platform
++ *				    device
++ *
++ * @pdev: platform device to use both for memory resource lookup as well as
++ *        resource managemend
++ * @index: resource index
++ */
++void __iomem *devm_platform_ioremap_resource(struct platform_device *pdev,
++					     unsigned int index)
++{
++	struct resource *res;
++
++	res = platform_get_resource(pdev, IORESOURCE_MEM, index);
++	return devm_ioremap_resource(&pdev->dev, res);
++}
++EXPORT_SYMBOL_GPL(devm_platform_ioremap_resource);
++
+ /**
+  * platform_get_irq - get an IRQ for a device
+  * @dev: platform device
+diff --git a/include/linux/platform_device.h b/include/linux/platform_device.h
+index 1a9f38f27f65..9e5c98fcea8c 100644
+--- a/include/linux/platform_device.h
++++ b/include/linux/platform_device.h
+@@ -51,6 +51,9 @@ extern struct device platform_bus;
+ extern void arch_setup_pdev_archdata(struct platform_device *);
+ extern struct resource *platform_get_resource(struct platform_device *,
+ 					      unsigned int, unsigned int);
++extern void __iomem *
++devm_platform_ioremap_resource(struct platform_device *pdev,
++			       unsigned int index);
+ extern int platform_get_irq(struct platform_device *, unsigned int);
+ extern int platform_irq_count(struct platform_device *);
+ extern struct resource *platform_get_resource_byname(struct platform_device *,
 -- 
 2.35.1
 
