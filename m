@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E472F6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:03:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66D9EC433F0;
-	Mon, 16 Jan 2023 17:03:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E8446FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:03:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D47DC433D2;
+	Mon, 16 Jan 2023 17:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888629;
-	bh=y0RYymWES8yUMcNcK7hAJ9L88eMOJbo1s8jKpVj8TTo=;
+	s=korg; t=1673888632;
+	bh=bloqT0XLlL6pZlvfDkPmdF+ymEdYgihtx++/A0gF1zA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HTJeokV1F8vYIjN+fBGfi6gQyN9zPhd8NFI8ihLqSjG1YYrcUflD4IvsarWROfvXb
-	 eUWOEyfPJHMPdPtUufSBrAHYRmmi0G8/21Gsa2Huph2dGvYEWovF+nsBxUhKtEBr2z
-	 +/5X2hGzU97RVoFQJdLx5OLVp6oqT/QEa0p22gUE=
+	b=TJcU+iYFzP/OV5stpIoqf3sHw9H4PV6eNMa0R2IT0IrxbgohT45Cpq3NAcQACFg+W
+	 4UqqSaP1/9dJg5CNeDjHcEc6sI26EzBCHBtKrjw9lrcxqheF+O9beCW+xFsJUeW1dT
+	 mBvoNz3fXgvygytlIY/jOvB73z2Tbfu9nVxfmqf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Shang XiaoJing <shangxiaojing@huawei.com>,
+	Marc Zyngier <maz@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 050/338] PNP: fix name memory leak in pnp_alloc_dev()
-Date: Mon, 16 Jan 2023 16:48:43 +0100
-Message-Id: <20230116154822.993265806@linuxfoundation.org>
+Subject: [PATCH 4.14 051/338] irqchip: gic-pm: Use pm_runtime_resume_and_get() in gic_probe()
+Date: Mon, 16 Jan 2023 16:48:44 +0100
+Message-Id: <20230116154823.046638801@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,43 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Shang XiaoJing <shangxiaojing@huawei.com>
 
-[ Upstream commit 110d7b0325c55ff3620073ba4201845f59e22ebf ]
+[ Upstream commit f9ee20c85b3a3ba0afd3672630ec4f93d339f015 ]
 
-After commit 1fa5ae857bb1 ("driver core: get rid of struct device's
-bus_id string array"), the name of device is allocated dynamically,
-move dev_set_name() after pnp_add_id() to avoid memory leak.
+gic_probe() calls pm_runtime_get_sync() and added fail path as
+rpm_put to put usage_counter. However, pm_runtime_get_sync()
+will increment usage_counter even it failed. Fix it by replacing it with
+pm_runtime_resume_and_get() to keep usage counter balanced.
 
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 9c8edddfc992 ("irqchip/gic: Add platform driver for non-root GICs that require RPM")
+Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20221124065150.22809-1-shangxiaojing@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pnp/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/irqchip/irq-gic-pm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pnp/core.c b/drivers/pnp/core.c
-index 3bf18d718975..131b925b820d 100644
---- a/drivers/pnp/core.c
-+++ b/drivers/pnp/core.c
-@@ -160,14 +160,14 @@ struct pnp_dev *pnp_alloc_dev(struct pnp_protocol *protocol, int id,
- 	dev->dev.coherent_dma_mask = dev->dma_mask;
- 	dev->dev.release = &pnp_release_device;
+diff --git a/drivers/irqchip/irq-gic-pm.c b/drivers/irqchip/irq-gic-pm.c
+index ecafd295c31c..21c5decfc55b 100644
+--- a/drivers/irqchip/irq-gic-pm.c
++++ b/drivers/irqchip/irq-gic-pm.c
+@@ -112,7 +112,7 @@ static int gic_probe(struct platform_device *pdev)
  
--	dev_set_name(&dev->dev, "%02x:%02x", dev->protocol->number, dev->number);
--
- 	dev_id = pnp_add_id(dev, pnpid);
- 	if (!dev_id) {
- 		kfree(dev);
- 		return NULL;
- 	}
+ 	pm_runtime_enable(dev);
  
-+	dev_set_name(&dev->dev, "%02x:%02x", dev->protocol->number, dev->number);
-+
- 	return dev;
- }
+-	ret = pm_runtime_get_sync(dev);
++	ret = pm_runtime_resume_and_get(dev);
+ 	if (ret < 0)
+ 		goto rpm_disable;
  
 -- 
 2.35.1
