@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454786FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:11:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFBCDC433EF;
-	Mon, 16 Jan 2023 17:11:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBBA6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:11:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC3FC433EF;
+	Mon, 16 Jan 2023 17:11:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889077;
-	bh=BpN3Sva0JSp+Zaq2oTXSZYfT49B4CmHw5QEZv342z4c=;
+	s=korg; t=1673889079;
+	bh=yPl+W0vivCeUr4WZMW40HE08Gc6NkZUO0IEisN3YrCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NFyNnduiyUA8D9hph/IGoxGsLXUG/4eL6SIeJoOf4kXCTNdlUOcAWrRPkANphkv3z
-	 KS/vPEzw9+1ASyA03NdvaMM43KMERdeatqqcVYQmvsnQmJJPJ1Ze81W0hXFHEIYWom
-	 6znHvKlie1VudNwUADUHr4ISWsq8721racaRVowo=
+	b=fnO9x1NBjyi010TUi2nKwIGvkTk4j+lU7Rg0alZRqm5fAixshb5+X+mHRx8MiReXm
+	 1893MDjCktZOjDbz9Xu4pMhA5d2II7ie9bFomZIYZpGj0i+ET4//plcmktfm0r1OUK
+	 9I2rRzGBV+N+VRjHEK4aqGIsI48Qe7AoiDSZj7GM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Jassi Brar <jaswinder.singh@linaro.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 209/338] r6040: Fix kmemleak in probe and remove
-Date: Mon, 16 Jan 2023 16:51:22 +0100
-Message-Id: <20230116154830.115195469@linuxfoundation.org>
+Subject: [PATCH 4.14 243/338] mmc: f-sdh30: Add quirks for broken timeout clock capability
+Date: Mon, 16 Jan 2023 16:51:56 +0100
+Message-Id: <20230116154831.662928567@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,94 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zetao <lizetao1@huawei.com>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-[ Upstream commit 7e43039a49c2da45edc1d9d7c9ede4003ab45a5f ]
+[ Upstream commit aae9d3a440736691b3c1cb09ae2c32c4f1ee2e67 ]
 
-There is a memory leaks reported by kmemleak:
+There is a case where the timeout clock is not supplied to the capability.
+Add a quirk for that.
 
-  unreferenced object 0xffff888116111000 (size 2048):
-    comm "modprobe", pid 817, jiffies 4294759745 (age 76.502s)
-    hex dump (first 32 bytes):
-      00 c4 0a 04 81 88 ff ff 08 10 11 16 81 88 ff ff  ................
-      08 10 11 16 81 88 ff ff 00 00 00 00 00 00 00 00  ................
-    backtrace:
-      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
-      [<ffffffff827e20ee>] phy_device_create+0x4e/0x90
-      [<ffffffff827e6072>] get_phy_device+0xd2/0x220
-      [<ffffffff827e7844>] mdiobus_scan+0xa4/0x2e0
-      [<ffffffff827e8be2>] __mdiobus_register+0x482/0x8b0
-      [<ffffffffa01f5d24>] r6040_init_one+0x714/0xd2c [r6040]
-      ...
-
-The problem occurs in probe process as follows:
-  r6040_init_one:
-    mdiobus_register
-      mdiobus_scan    <- alloc and register phy_device,
-                         the reference count of phy_device is 3
-    r6040_mii_probe
-      phy_connect     <- connect to the first phy_device,
-                         so the reference count of the first
-                         phy_device is 4, others are 3
-    register_netdev   <- fault inject succeeded, goto error handling path
-
-    // error handling path
-    err_out_mdio_unregister:
-      mdiobus_unregister(lp->mii_bus);
-    err_out_mdio:
-      mdiobus_free(lp->mii_bus);    <- the reference count of the first
-                                       phy_device is 1, it is not released
-                                       and other phy_devices are released
-  // similarly, the remove process also has the same problem
-
-The root cause is traced to the phy_device is not disconnected when
-removes one r6040 device in r6040_remove_one() or on error handling path
-after r6040_mii probed successfully. In r6040_mii_probe(), a net ethernet
-device is connected to the first PHY device of mii_bus, in order to
-notify the connected driver when the link status changes, which is the
-default behavior of the PHY infrastructure to handle everything.
-Therefore the phy_device should be disconnected when removes one r6040
-device or on error handling path.
-
-Fix it by adding phy_disconnect() when removes one r6040 device or on
-error handling path after r6040_mii probed successfully.
-
-Fixes: 3831861b4ad8 ("r6040: implement phylib")
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221213125614.927754-1-lizetao1@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Acked-by: Jassi Brar <jaswinder.singh@linaro.org>
+Link: https://lore.kernel.org/r/20221111081033.3813-7-hayashi.kunihiko@socionext.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/rdc/r6040.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/mmc/host/sdhci_f_sdh30.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/rdc/r6040.c b/drivers/net/ethernet/rdc/r6040.c
-index 2199bd08f4d6..e377c1f68777 100644
---- a/drivers/net/ethernet/rdc/r6040.c
-+++ b/drivers/net/ethernet/rdc/r6040.c
-@@ -1184,10 +1184,12 @@ static int r6040_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	err = register_netdev(dev);
- 	if (err) {
- 		dev_err(&pdev->dev, "Failed to register net device\n");
--		goto err_out_mdio_unregister;
-+		goto err_out_phy_disconnect;
- 	}
- 	return 0;
+diff --git a/drivers/mmc/host/sdhci_f_sdh30.c b/drivers/mmc/host/sdhci_f_sdh30.c
+index 111b66f5439b..43e787954293 100644
+--- a/drivers/mmc/host/sdhci_f_sdh30.c
++++ b/drivers/mmc/host/sdhci_f_sdh30.c
+@@ -180,6 +180,9 @@ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
+ 	if (reg & SDHCI_CAN_DO_8BIT)
+ 		priv->vendor_hs200 = F_SDH30_EMMC_HS200;
  
-+err_out_phy_disconnect:
-+	phy_disconnect(dev->phydev);
- err_out_mdio_unregister:
- 	mdiobus_unregister(lp->mii_bus);
- err_out_mdio:
-@@ -1211,6 +1213,7 @@ static void r6040_remove_one(struct pci_dev *pdev)
- 	struct r6040_private *lp = netdev_priv(dev);
- 
- 	unregister_netdev(dev);
-+	phy_disconnect(dev->phydev);
- 	mdiobus_unregister(lp->mii_bus);
- 	mdiobus_free(lp->mii_bus);
- 	netif_napi_del(&lp->napi);
++	if (!(reg & SDHCI_TIMEOUT_CLK_MASK))
++		host->quirks |= SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK;
++
+ 	ret = sdhci_add_host(host);
+ 	if (ret)
+ 		goto err_add_host;
 -- 
 2.35.1
 
