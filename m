@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED2D6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89989C433D2;
-	Mon, 16 Jan 2023 16:56:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A05E06FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2758AC433D2;
+	Mon, 16 Jan 2023 16:56:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888189;
-	bh=NYJGUI48HmVEox1bjKoxb7G7llrjMujfRYggdsXKVng=;
+	s=korg; t=1673888192;
+	bh=mQDpWG2/zKLiIt2rCZhhmOBtAz5WWHJLuf9+NMfhhKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PuGONg2XpMe7/QxeMubymoylvAeH79T+6p1O23XmMm8pxQxBu0d6T3LfylshGBgWf
-	 Ta7wCo0QWhYMzIM8QWaY0EAEpRSyOfNRAjy0i+YwGgqgMa74nah3SWx6oN0VslkjfZ
-	 wybVZBFGOykQHkQ+Lv4nksKZUl8xK5pj86zzHq94=
+	b=UJ5RtW9wsOVB8Efe90ATJfXQrvc9z7Xt1WbUueEJ0EfnvVTtigMlywzFJ3mTSuHEH
+	 CupZfQjfd44indrfiN0PKCHN4Gmwm30xUfgkuKKPzt9bSjFMtD5/3YxlI5IBeSnicI
+	 rexwu1AV5W7UGd4qxZ40/iQTmckgPBcz4/CfeWZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 435/521] mbcache: dont reclaim used entries
-Date: Mon, 16 Jan 2023 16:51:37 +0100
-Message-Id: <20230116154906.599829443@linuxfoundation.org>
+Subject: [PATCH 4.19 436/521] mbcache: add functions to delete entry if unused
+Date: Mon, 16 Jan 2023 16:51:38 +0100
+Message-Id: <20230116154906.652764799@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,52 +37,152 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 58318914186c157477b978b1739dfe2f1b9dc0fe ]
+[ Upstream commit 3dc96bba65f53daa217f0a8f43edad145286a8f5 ]
 
-Do not reclaim entries that are currently used by somebody from a
-shrinker. Firstly, these entries are likely useful. Secondly, we will
-need to keep such entries to protect pending increment of xattr block
-refcount.
+Add function mb_cache_entry_delete_or_get() to delete mbcache entry if
+it is unused and also add a function to wait for entry to become unused
+- mb_cache_entry_wait_unused(). We do not share code between the two
+deleting function as one of them will go away soon.
 
 CC: stable@vger.kernel.org
 Fixes: 82939d7999df ("ext4: convert to mbcache2")
 Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20220712105436.32204-1-jack@suse.cz
+Link: https://lore.kernel.org/r/20220712105436.32204-2-jack@suse.cz
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Stable-dep-of: a44e84a9b776 ("ext4: fix deadlock due to mbcache entry corruption")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/mbcache.c | 10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/mbcache.c            | 66 +++++++++++++++++++++++++++++++++++++++--
+ include/linux/mbcache.h | 10 ++++++-
+ 2 files changed, 73 insertions(+), 3 deletions(-)
 
 diff --git a/fs/mbcache.c b/fs/mbcache.c
-index 081ccf0caee3..12203e5a91e7 100644
+index 12203e5a91e7..c76030e20d92 100644
 --- a/fs/mbcache.c
 +++ b/fs/mbcache.c
-@@ -287,7 +287,7 @@ static unsigned long mb_cache_shrink(struct mb_cache *cache,
- 	while (nr_to_scan-- && !list_empty(&cache->c_list)) {
- 		entry = list_first_entry(&cache->c_list,
- 					 struct mb_cache_entry, e_list);
--		if (entry->e_referenced) {
-+		if (entry->e_referenced || atomic_read(&entry->e_refcnt) > 2) {
- 			entry->e_referenced = 0;
- 			list_move_tail(&entry->e_list, &cache->c_list);
- 			continue;
-@@ -301,6 +301,14 @@ static unsigned long mb_cache_shrink(struct mb_cache *cache,
- 		spin_unlock(&cache->c_list_lock);
- 		head = mb_cache_entry_head(cache, entry->e_key);
- 		hlist_bl_lock(head);
-+		/* Now a reliable check if the entry didn't get used... */
-+		if (atomic_read(&entry->e_refcnt) > 2) {
+@@ -10,7 +10,7 @@
+ /*
+  * Mbcache is a simple key-value store. Keys need not be unique, however
+  * key-value pairs are expected to be unique (we use this fact in
+- * mb_cache_entry_delete()).
++ * mb_cache_entry_delete_or_get()).
+  *
+  * Ext2 and ext4 use this cache for deduplication of extended attribute blocks.
+  * Ext4 also uses it for deduplication of xattr values stored in inodes.
+@@ -124,6 +124,19 @@ void __mb_cache_entry_free(struct mb_cache_entry *entry)
+ }
+ EXPORT_SYMBOL(__mb_cache_entry_free);
+ 
++/*
++ * mb_cache_entry_wait_unused - wait to be the last user of the entry
++ *
++ * @entry - entry to work on
++ *
++ * Wait to be the last user of the entry.
++ */
++void mb_cache_entry_wait_unused(struct mb_cache_entry *entry)
++{
++	wait_var_event(&entry->e_refcnt, atomic_read(&entry->e_refcnt) <= 3);
++}
++EXPORT_SYMBOL(mb_cache_entry_wait_unused);
++
+ static struct mb_cache_entry *__entry_find(struct mb_cache *cache,
+ 					   struct mb_cache_entry *entry,
+ 					   u32 key)
+@@ -216,7 +229,7 @@ struct mb_cache_entry *mb_cache_entry_get(struct mb_cache *cache, u32 key,
+ }
+ EXPORT_SYMBOL(mb_cache_entry_get);
+ 
+-/* mb_cache_entry_delete - remove a cache entry
++/* mb_cache_entry_delete - try to remove a cache entry
+  * @cache - cache we work with
+  * @key - key
+  * @value - value
+@@ -253,6 +266,55 @@ void mb_cache_entry_delete(struct mb_cache *cache, u32 key, u64 value)
+ }
+ EXPORT_SYMBOL(mb_cache_entry_delete);
+ 
++/* mb_cache_entry_delete_or_get - remove a cache entry if it has no users
++ * @cache - cache we work with
++ * @key - key
++ * @value - value
++ *
++ * Remove entry from cache @cache with key @key and value @value. The removal
++ * happens only if the entry is unused. The function returns NULL in case the
++ * entry was successfully removed or there's no entry in cache. Otherwise the
++ * function grabs reference of the entry that we failed to delete because it
++ * still has users and return it.
++ */
++struct mb_cache_entry *mb_cache_entry_delete_or_get(struct mb_cache *cache,
++						    u32 key, u64 value)
++{
++	struct hlist_bl_node *node;
++	struct hlist_bl_head *head;
++	struct mb_cache_entry *entry;
++
++	head = mb_cache_entry_head(cache, key);
++	hlist_bl_lock(head);
++	hlist_bl_for_each_entry(entry, node, head, e_hash_list) {
++		if (entry->e_key == key && entry->e_value == value) {
++			if (atomic_read(&entry->e_refcnt) > 2) {
++				atomic_inc(&entry->e_refcnt);
++				hlist_bl_unlock(head);
++				return entry;
++			}
++			/* We keep hash list reference to keep entry alive */
++			hlist_bl_del_init(&entry->e_hash_list);
 +			hlist_bl_unlock(head);
 +			spin_lock(&cache->c_list_lock);
-+			list_add_tail(&entry->e_list, &cache->c_list);
-+			cache->c_entry_count++;
-+			continue;
++			if (!list_empty(&entry->e_list)) {
++				list_del_init(&entry->e_list);
++				if (!WARN_ONCE(cache->c_entry_count == 0,
++		"mbcache: attempt to decrement c_entry_count past zero"))
++					cache->c_entry_count--;
++				atomic_dec(&entry->e_refcnt);
++			}
++			spin_unlock(&cache->c_list_lock);
++			mb_cache_entry_put(cache, entry);
++			return NULL;
 +		}
- 		if (!hlist_bl_unhashed(&entry->e_hash_list)) {
- 			hlist_bl_del_init(&entry->e_hash_list);
- 			atomic_dec(&entry->e_refcnt);
++	}
++	hlist_bl_unlock(head);
++
++	return NULL;
++}
++EXPORT_SYMBOL(mb_cache_entry_delete_or_get);
++
+ /* mb_cache_entry_touch - cache entry got used
+  * @cache - cache the entry belongs to
+  * @entry - entry that got used
+diff --git a/include/linux/mbcache.h b/include/linux/mbcache.h
+index 20f1e3ff6013..8eca7f25c432 100644
+--- a/include/linux/mbcache.h
++++ b/include/linux/mbcache.h
+@@ -30,15 +30,23 @@ void mb_cache_destroy(struct mb_cache *cache);
+ int mb_cache_entry_create(struct mb_cache *cache, gfp_t mask, u32 key,
+ 			  u64 value, bool reusable);
+ void __mb_cache_entry_free(struct mb_cache_entry *entry);
++void mb_cache_entry_wait_unused(struct mb_cache_entry *entry);
+ static inline int mb_cache_entry_put(struct mb_cache *cache,
+ 				     struct mb_cache_entry *entry)
+ {
+-	if (!atomic_dec_and_test(&entry->e_refcnt))
++	unsigned int cnt = atomic_dec_return(&entry->e_refcnt);
++
++	if (cnt > 0) {
++		if (cnt <= 3)
++			wake_up_var(&entry->e_refcnt);
+ 		return 0;
++	}
+ 	__mb_cache_entry_free(entry);
+ 	return 1;
+ }
+ 
++struct mb_cache_entry *mb_cache_entry_delete_or_get(struct mb_cache *cache,
++						    u32 key, u64 value);
+ void mb_cache_entry_delete(struct mb_cache *cache, u32 key, u64 value);
+ struct mb_cache_entry *mb_cache_entry_get(struct mb_cache *cache, u32 key,
+ 					  u64 value);
 -- 
 2.35.1
 
