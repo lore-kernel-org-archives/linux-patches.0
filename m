@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B456FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:53:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9381AC433EF;
-	Mon, 16 Jan 2023 16:53:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF0436FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:53:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35B80C433EF;
+	Mon, 16 Jan 2023 16:53:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888034;
-	bh=HTV6jjPSwVPA1txeBglso98Z39K0t4Xs2ZOnCMiE7bM=;
+	s=korg; t=1673888037;
+	bh=7SnJQGvgtJRvEgpsEeIL25fx1CggEPI0+icVR9veNTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aZJNv4sLtV0B1IUAnRcGO33YKH2J5bx7XxB7RjsEcKGft+xjSy8X9SFtxq/yMylxu
-	 Z2ThjrhPUerMif4vv85pMnvcfPPyT2aQsphUuroml9BG7bJFSYowFQFy56EF30HpA2
-	 x460EQOg435sDaD1/Y5VIIWV0bNfu9VLrX4iCevM=
+	b=w+m+3chZpFiwFnaVQJK+MC3ZfiFb8Y2mzzbD+vzoO3A/vPLJKiQoBB7W+Lm5bMpOb
+	 o43+G4XKS8ax4eXmpbs5qwtQPwqJoiMfk51z80MuXRNWbgZVAc/tAPBd/7UDjl28yv
+	 c06Om/3hbEbRcGzdd+kOMN8J8tge+KHbaZtcY0fM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	linux-media@vger.kernel.org,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH 4.19 376/521] media: stv0288: use explicitly signed char
-Date: Mon, 16 Jan 2023 16:50:38 +0100
-Message-Id: <20230116154903.926770708@linuxfoundation.org>
+	Rickard x Andersson <rickaran@axis.com>,
+	Peter Oberparleiter <oberpar@linux.ibm.com>,
+	Martin Liska <mliska@suse.cz>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 359/521] gcov: add support for checksum field
+Date: Mon, 16 Jan 2023 16:50:21 +0100
+Message-Id: <20230116154903.138749827@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,40 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Rickard x Andersson <rickaran@axis.com>
 
-commit 7392134428c92a4cb541bd5c8f4f5c8d2e88364d upstream.
+commit e96b95c2b7a63a454b6498e2df67aac14d046d13 upstream.
 
-With char becoming unsigned by default, and with `char` alone being
-ambiguous and based on architecture, signed chars need to be marked
-explicitly as such. Use `s8` and `u8` types here, since that's what
-surrounding code does. This fixes:
+In GCC version 12.1 a checksum field was added.
 
-drivers/media/dvb-frontends/stv0288.c:471 stv0288_set_frontend() warn: assigning (-9) to unsigned variable 'tm'
-drivers/media/dvb-frontends/stv0288.c:471 stv0288_set_frontend() warn: we never enter this loop
+This patch fixes a kernel crash occurring during boot when using
+gcov-kernel with GCC version 12.2.  The crash occurred on a system running
+on i.MX6SX.
 
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://lkml.kernel.org/r/20221220102318.3418501-1-rickaran@axis.com
+Fixes: 977ef30a7d88 ("gcov: support GCC 12.1 and newer compilers")
+Signed-off-by: Rickard x Andersson <rickaran@axis.com>
+Reviewed-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Tested-by: Peter Oberparleiter <oberpar@linux.ibm.com>
+Reviewed-by: Martin Liska <mliska@suse.cz>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/stv0288.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ kernel/gcov/gcc_4_7.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/media/dvb-frontends/stv0288.c
-+++ b/drivers/media/dvb-frontends/stv0288.c
-@@ -452,9 +452,8 @@ static int stv0288_set_frontend(struct d
- 	struct stv0288_state *state = fe->demodulator_priv;
- 	struct dtv_frontend_properties *c = &fe->dtv_property_cache;
- 
--	char tm;
--	unsigned char tda[3];
--	u8 reg, time_out = 0;
-+	u8 tda[3], reg, time_out = 0;
-+	s8 tm;
- 
- 	dprintk("%s : FE_SET_FRONTEND\n", __func__);
- 
+--- a/kernel/gcov/gcc_4_7.c
++++ b/kernel/gcov/gcc_4_7.c
+@@ -85,6 +85,7 @@ struct gcov_fn_info {
+  * @version: gcov version magic indicating the gcc version used for compilation
+  * @next: list head for a singly-linked list
+  * @stamp: uniquifying time stamp
++ * @checksum: unique object checksum
+  * @filename: name of the associated gcov data file
+  * @merge: merge functions (null for unused counter type)
+  * @n_functions: number of instrumented functions
+@@ -97,6 +98,10 @@ struct gcov_info {
+ 	unsigned int version;
+ 	struct gcov_info *next;
+ 	unsigned int stamp;
++ /* Since GCC 12.1 a checksum field is added. */
++#if (__GNUC__ >= 12)
++	unsigned int checksum;
++#endif
+ 	const char *filename;
+ 	void (*merge[GCOV_COUNTERS])(gcov_type *, unsigned int);
+ 	unsigned int n_functions;
 
 
