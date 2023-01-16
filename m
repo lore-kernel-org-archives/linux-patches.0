@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 103E56FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:54:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 858A6C433EF;
-	Mon, 16 Jan 2023 16:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4846FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:54:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238E3C433EF;
+	Mon, 16 Jan 2023 16:54:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888089;
-	bh=p4kp86KIyUfMP+bB6fcVuZ4QnmRE18fuZ7/pMbiJ3dI=;
+	s=korg; t=1673888092;
+	bh=sDwQr0Wn1l01rcLgMrwtjowdjVfEvBNikKRTBJ+29/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hi6Ie+VWXrkz0FybRjCcNhLQRKYJaoOVk4qX53qhOL0m8JEzRE3VCavfkOUq7DLEX
-	 QhYCJhQHIbZsS9nXwiuLQUhS4EL0Vs8GCfWadkGqSe3bOyyywHbGqF83yE1tK9xrAv
-	 CFNnP9onj5iagNFkKkxdszEc+wB4SN/bNrNkscrU=
+	b=sxbnC7k8AKbbG3Ne+dhPAnsA54Jdrx2LxOh45F/6F/12gMlPPbvJG3Rhv9ePDST/N
+	 I1Bq0LM/EAHa2VfXDE91APRz1f+he7Q9u87WJZupnp8Zt9XiXVfpQkVF8Xta5YkIX/
+	 OU3kunFC7P9WWxoWJw9Q5FmoXMhGK6G3E72cSFAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Mahoney <jeffm@suse.com>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Mimi Zohar <zohar@linux.ibm.com>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 4.19 357/521] reiserfs: Add missing calls to reiserfs_security_free()
-Date: Mon, 16 Jan 2023 16:50:19 +0100
-Message-Id: <20230116154903.066758112@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
+Subject: [PATCH 4.19 390/521] ARM: 9256/1: NWFPE: avoid compiler-generated __aeabi_uldivmod
+Date: Mon, 16 Jan 2023 16:50:52 +0100
+Message-Id: <20230116154904.560456487@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,89 +36,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roberto Sassu <roberto.sassu@huawei.com>
+From: Nick Desaulniers <ndesaulniers@google.com>
 
-commit 572302af1258459e124437b8f3369357447afac7 upstream.
+commit 3220022038b9a3845eea762af85f1c5694b9f861 upstream.
 
-Commit 57fe60df6241 ("reiserfs: add atomic addition of selinux attributes
-during inode creation") defined reiserfs_security_free() to free the name
-and value of a security xattr allocated by the active LSM through
-security_old_inode_init_security(). However, this function is not called
-in the reiserfs code.
+clang-15's ability to elide loops completely became more aggressive when
+it can deduce how a variable is being updated in a loop. Counting down
+one variable by an increment of another can be replaced by a modulo
+operation.
 
-Thus, add a call to reiserfs_security_free() whenever
-reiserfs_security_init() is called, and initialize value to NULL, to avoid
-to call kfree() on an uninitialized pointer.
+For 64b variables on 32b ARM EABI targets, this can result in the
+compiler generating calls to __aeabi_uldivmod, which it does for a do
+while loop in float64_rem().
 
-Finally, remove the kfree() for the xattr name, as it is not allocated
-anymore.
+For the kernel, we'd generally prefer that developers not open code 64b
+division via binary / operators and instead use the more explicit
+helpers from div64.h. On arm-linux-gnuabi targets, failure to do so can
+result in linkage failures due to undefined references to
+__aeabi_uldivmod().
 
-Fixes: 57fe60df6241 ("reiserfs: add atomic addition of selinux attributes during inode creation")
+While developers can avoid open coding divisions on 64b variables, the
+compiler doesn't know that the Linux kernel has a partial implementation
+of a compiler runtime (--rtlib) to enforce this convention.
+
+It's also undecidable for the compiler whether the code in question
+would be faster to execute the loop vs elide it and do the 64b division.
+
+While I actively avoid using the internal -mllvm command line flags, I
+think we get better code than using barrier() here, which will force
+reloads+spills in the loop for all toolchains.
+
+Link: https://github.com/ClangBuiltLinux/linux/issues/1666
+
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
 Cc: stable@vger.kernel.org
-Cc: Jeff Mahoney <jeffm@suse.com>
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Reported-by: Mimi Zohar <zohar@linux.ibm.com>
-Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Signed-off-by: Roberto Sassu <roberto.sassu@huawei.com>
-Reviewed-by: Mimi Zohar <zohar@linux.ibm.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/reiserfs/namei.c          |    4 ++++
- fs/reiserfs/xattr_security.c |    2 +-
- 2 files changed, 5 insertions(+), 1 deletion(-)
+ arch/arm/nwfpe/Makefile |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/fs/reiserfs/namei.c
-+++ b/fs/reiserfs/namei.c
-@@ -695,6 +695,7 @@ static int reiserfs_create(struct inode
+--- a/arch/arm/nwfpe/Makefile
++++ b/arch/arm/nwfpe/Makefile
+@@ -11,3 +11,9 @@ nwfpe-y				+= fpa11.o fpa11_cpdo.o fpa11
+ 				   entry.o
  
- out_failed:
- 	reiserfs_write_unlock(dir->i_sb);
-+	reiserfs_security_free(&security);
- 	return retval;
- }
- 
-@@ -778,6 +779,7 @@ static int reiserfs_mknod(struct inode *
- 
- out_failed:
- 	reiserfs_write_unlock(dir->i_sb);
-+	reiserfs_security_free(&security);
- 	return retval;
- }
- 
-@@ -876,6 +878,7 @@ static int reiserfs_mkdir(struct inode *
- 	retval = journal_end(&th);
- out_failed:
- 	reiserfs_write_unlock(dir->i_sb);
-+	reiserfs_security_free(&security);
- 	return retval;
- }
- 
-@@ -1191,6 +1194,7 @@ static int reiserfs_symlink(struct inode
- 	retval = journal_end(&th);
- out_failed:
- 	reiserfs_write_unlock(parent_dir->i_sb);
-+	reiserfs_security_free(&security);
- 	return retval;
- }
- 
---- a/fs/reiserfs/xattr_security.c
-+++ b/fs/reiserfs/xattr_security.c
-@@ -49,6 +49,7 @@ int reiserfs_security_init(struct inode
- 	int error;
- 
- 	sec->name = NULL;
-+	sec->value = NULL;
- 
- 	/* Don't add selinux attributes on xattrs - they'll never get used */
- 	if (IS_PRIVATE(dir))
-@@ -94,7 +95,6 @@ int reiserfs_security_write(struct reise
- 
- void reiserfs_security_free(struct reiserfs_security_handle *sec)
- {
--	kfree(sec->name);
- 	kfree(sec->value);
- 	sec->name = NULL;
- 	sec->value = NULL;
+ nwfpe-$(CONFIG_FPE_NWFPE_XP)	+= extended_cpdo.o
++
++# Try really hard to avoid generating calls to __aeabi_uldivmod() from
++# float64_rem() due to loop elision.
++ifdef CONFIG_CC_IS_CLANG
++CFLAGS_softfloat.o	+= -mllvm -replexitval=never
++endif
 
 
