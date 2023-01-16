@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6D0D6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:37:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D507C433EF;
-	Mon, 16 Jan 2023 16:37:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A38D26FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:37:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2829FC433EF;
+	Mon, 16 Jan 2023 16:37:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887071;
-	bh=2E3RWci/lU20ifjiB1AZa+VXlM0CQ70US6TXZpf8Fms=;
+	s=korg; t=1673887074;
+	bh=EQVw4W6XHpoYTwqKxUANMXO6GShKlmTRNZQPeDq9RPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Dpn33HETPhcDpmid5Tzj0PjAyd5qqu2c64rG1LOSvEULHe3snmXkqPJJCz9GaVQiI
-	 OM1c7spxOU8FoCUgGqVqH/2CqCDs27D1R1k42AIryPc+YjhR7XJ4hYUcCj7gmlvlop
-	 TVkv5rZ8hgirEOHT2XBEmreHz6uKcVKUuUXaCcFk=
+	b=Vj/q1NKl451JMPmgZd2dFFA8EI1nrGVqvRAbWuTX7GgTG1ZgB0ktbaYgxcN7Vz2hM
+	 crKwScIH9ghtTN1tl2XlZ07FvIC84CI0OA32oqyOpzp/AGHvXFEvVZ+fa5H3aH3qlG
+	 dQkbu0IUSCr9/WWqajNpXPCI69pva3TOp3O/yeHw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shiwei Cui <cuishw@inspur.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Jan Kara <jack@suse.cz>,
-	Ming Lei <ming.lei@redhat.com>
-Subject: [PATCH 4.19 003/521] block: unhash blkdev part inode when the part is deleted
-Date: Mon, 16 Jan 2023 16:44:25 +0100
-Message-Id: <20230116154847.398557956@linuxfoundation.org>
+	Jialiang Wang <wangjialiang0806@163.com>,
+	Yinjun Zhang <yinjun.zhang@corigine.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 004/521] nfp: fix use-after-free in area_cache_get()
+Date: Mon, 16 Jan 2023 16:44:26 +0100
+Message-Id: <20230116154847.444518915@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,67 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ming Lei <ming.lei@redhat.com>
+From: Jialiang Wang <wangjialiang0806@163.com>
 
-v5.11 changes the blkdev lookup mechanism completely since commit
-22ae8ce8b892 ("block: simplify bdev/disk lookup in blkdev_get"),
-and small part of the change is to unhash part bdev inode when
-deleting partition. Turns out this kind of change does fix one
-nasty issue in case of BLOCK_EXT_MAJOR:
+commit 02e1a114fdb71e59ee6770294166c30d437bf86a upstream.
 
-1) when one partition is deleted & closed, disk_put_part() is always
-called before bdput(bdev), see blkdev_put(); so the part's devt can
-be freed & re-used before the inode is dropped
+area_cache_get() is used to distribute cache->area and set cache->id,
+ and if cache->id is not 0 and cache->area->kref refcount is 0, it will
+ release the cache->area by nfp_cpp_area_release(). area_cache_get()
+ set cache->id before cpp->op->area_init() and nfp_cpp_area_acquire().
 
-2) then new partition with same devt can be created just before the
-inode in 1) is dropped, then the old inode/bdev structurein 1) is
-re-used for this new partition, this way causes use-after-free and
-kernel panic.
+But if area_init() or nfp_cpp_area_acquire() fails, the cache->id is
+ is already set but the refcount is not increased as expected. At this
+ time, calling the nfp_cpp_area_release() will cause use-after-free.
 
-It isn't possible to backport the whole big patchset of "merge struct
-block_device and struct hd_struct v4" for addressing this issue.
+To avoid the use-after-free, set cache->id after area_init() and
+ nfp_cpp_area_acquire() complete successfully.
 
-https://lore.kernel.org/linux-block/20201128161510.347752-1-hch@lst.de/
+Note: This vulnerability is triggerable by providing emulated device
+ equipped with specified configuration.
 
-So fixes it by unhashing part bdev in delete_partition(), and this way
-is actually aligned with v5.11+'s behavior.
+ BUG: KASAN: use-after-free in nfp6000_area_init (drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c:760)
+  Write of size 4 at addr ffff888005b7f4a0 by task swapper/0/1
 
-Backported from the following 5.10.y commit:
+ Call Trace:
+  <TASK>
+ nfp6000_area_init (drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c:760)
+ area_cache_get.constprop.8 (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:884)
 
-5f2f77560591 ("block: unhash blkdev part inode when the part is deleted")
+ Allocated by task 1:
+ nfp_cpp_area_alloc_with_name (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:303)
+ nfp_cpp_area_cache_add (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:802)
+ nfp6000_init (drivers/net/ethernet/netronome/nfp/nfpcore/nfp6000_pcie.c:1230)
+ nfp_cpp_from_operations (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:1215)
+ nfp_pci_probe (drivers/net/ethernet/netronome/nfp/nfp_main.c:744)
 
-Reported-by: Shiwei Cui <cuishw@inspur.com>
-Tested-by: Shiwei Cui <cuishw@inspur.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Jan Kara <jack@suse.cz>
-Signed-off-by: Ming Lei <ming.lei@redhat.com>
+ Freed by task 1:
+ kfree (mm/slub.c:4562)
+ area_cache_get.constprop.8 (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:873)
+ nfp_cpp_read (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:924 drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c:973)
+ nfp_cpp_readl (drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cpplib.c:48)
+
+Signed-off-by: Jialiang Wang <wangjialiang0806@163.com>
+Reviewed-by: Yinjun Zhang <yinjun.zhang@corigine.com>
+Acked-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20220810073057.4032-1-wangjialiang0806@163.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- block/partition-generic.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/block/partition-generic.c
-+++ b/block/partition-generic.c
-@@ -276,6 +276,7 @@ void delete_partition(struct gendisk *di
- 	struct disk_part_tbl *ptbl =
- 		rcu_dereference_protected(disk->part_tbl, 1);
- 	struct hd_struct *part;
-+	struct block_device *bdev;
+--- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c
++++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_cppcore.c
+@@ -874,7 +874,6 @@ area_cache_get(struct nfp_cpp *cpp, u32
+ 	}
  
- 	if (partno >= ptbl->len)
- 		return;
-@@ -296,6 +297,12 @@ void delete_partition(struct gendisk *di
- 	 * "in-use" until we really free the gendisk.
- 	 */
- 	blk_invalidate_devt(part_devt(part));
+ 	/* Adjust the start address to be cache size aligned */
+-	cache->id = id;
+ 	cache->addr = addr & ~(u64)(cache->size - 1);
+ 
+ 	/* Re-init to the new ID and address */
+@@ -894,6 +893,8 @@ area_cache_get(struct nfp_cpp *cpp, u32
+ 		return NULL;
+ 	}
+ 
++	cache->id = id;
 +
-+	bdev = bdget(part_devt(part));
-+	if (bdev) {
-+		remove_inode_hash(bdev->bd_inode);
-+		bdput(bdev);
-+	}
- 	hd_struct_kill(part);
- }
- 
+ exit:
+ 	/* Adjust offset */
+ 	*offset = addr - cache->addr;
 
 
