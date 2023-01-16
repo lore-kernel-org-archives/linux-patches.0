@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE4A6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:43:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8976DC433EF;
-	Mon, 16 Jan 2023 16:43:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8B126FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:43:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 266FAC433EF;
+	Mon, 16 Jan 2023 16:43:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887391;
-	bh=stfLp0VE0MjbuLvjoOMGI/QFcV5Jj4/z25k0KZeamrs=;
+	s=korg; t=1673887394;
+	bh=g8ISu+6Q6M2A5mBB4vhainaaLT5aZ4DeAYmj052L+eQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MM/zfamPXWJULD4EmCVSA0GJlqOh61INnNab4Nr7PjuKfYUpvAFQTjkdi7HBIiiJs
-	 rLuMmTp9sal7bPpdSuKp+pl245RkvD04FLZpfq/J6SHIlkO5PCWydWrYYs9851vcjt
-	 +NyggBV0mcCwcFQyoTmc1FQuASo0TIMs7fdUkSsI=
+	b=kDTqEUTzc6T+yyYIWtB1LJPyygnlC6Ptog5JXD2aYwVEoZfhIbTtRWVuO4WQOGnrM
+	 /l9c9hdMFxP3qcfmduaU0Y2IjN5UgRveSWXbAuTSq1sM9pi+o2UJwTIOO+zRGc3OFQ
+	 CiAo2BDL5MY2IlmAMXMYkLo5X5CEdFwFYaZVz7Ww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Johannes Berg <johannes.berg@intel.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 130/521] wifi: cfg80211: Fix not unregister reg_pdev when load_builtin_regdb_keys() fails
-Date: Mon, 16 Jan 2023 16:46:32 +0100
-Message-Id: <20230116154853.081504263@linuxfoundation.org>
+Subject: [PATCH 4.19 131/521] regulator: core: fix module refcount leak in set_supply()
+Date: Mon, 16 Jan 2023 16:46:33 +0100
+Message-Id: <20230116154853.120943679@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,54 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 833a9fd28c9b7ccb39a334721379e992dc1c0c89 ]
+[ Upstream commit da46ee19cbd8344d6860816b4827a7ce95764867 ]
 
-In regulatory_init_db(), when it's going to return a error, reg_pdev
-should be unregistered. When load_builtin_regdb_keys() fails it doesn't
-do it and makes cfg80211 can't be reload with report:
+If create_regulator() fails in set_supply(), the module refcount
+needs be put to keep refcount balanced.
 
-sysfs: cannot create duplicate filename '/devices/platform/regulatory.0'
- ...
- <TASK>
- dump_stack_lvl+0x79/0x9b
- sysfs_warn_dup.cold+0x1c/0x29
- sysfs_create_dir_ns+0x22d/0x290
- kobject_add_internal+0x247/0x800
- kobject_add+0x135/0x1b0
- device_add+0x389/0x1be0
- platform_device_add+0x28f/0x790
- platform_device_register_full+0x376/0x4b0
- regulatory_init+0x9a/0x4b2 [cfg80211]
- cfg80211_init+0x84/0x113 [cfg80211]
- ...
-
-Fixes: 90a53e4432b1 ("cfg80211: implement regdb signature checking")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221109090237.214127-1-chenzhongjin@huawei.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Fixes: e2c09ae7a74d ("regulator: core: Increase refcount for regulator supply's module")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221201122706.4055992-2-yangyingliang@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/wireless/reg.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/regulator/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/wireless/reg.c b/net/wireless/reg.c
-index 07d053603e3a..beba41f8a178 100644
---- a/net/wireless/reg.c
-+++ b/net/wireless/reg.c
-@@ -3918,8 +3918,10 @@ static int __init regulatory_init_db(void)
- 		return -EINVAL;
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index 07982143ec18..9cf438a37eeb 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1241,6 +1241,7 @@ static int set_supply(struct regulator_dev *rdev,
  
- 	err = load_builtin_regdb_keys();
--	if (err)
-+	if (err) {
-+		platform_device_unregister(reg_pdev);
+ 	rdev->supply = create_regulator(supply_rdev, &rdev->dev, "SUPPLY");
+ 	if (rdev->supply == NULL) {
++		module_put(supply_rdev->owner);
+ 		err = -ENOMEM;
  		return err;
-+	}
- 
- 	/* We always try to get an update for the static regdomain */
- 	err = regulatory_hint_core(cfg80211_world_regdom->alpha2);
+ 	}
 -- 
 2.35.1
 
