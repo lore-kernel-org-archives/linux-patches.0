@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57F8F6FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:35:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCBCBC433EF;
-	Mon, 16 Jan 2023 16:35:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A1866FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:35:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 749BAC433F0;
+	Mon, 16 Jan 2023 16:35:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886902;
-	bh=sCzp53A8zK1sw9NNzzJz4deyjZC6vOEcgGIg0IQRrVU=;
+	s=korg; t=1673886904;
+	bh=Ur1zzifJ0EdszjHxG57ay8JI+Q+cgtcSUc0EFVQmraY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0HyUOskl7Tz6eZ1mdPJBBgyLgaoGFGFlwNW2dI5R7tFZfWaNFBZo7hZvXJO2zhhCh
-	 pElu6e4buos4t4T4eQT+xS3eKp0bIzui5vdKWu+qXULvnI9l/a10oS3+bGVA5/2byq
-	 lwGD+MdAM/eOPrCY3EZSVj47YzUmCLMTk6ly2rQA=
+	b=YBQTVYZ8Nn/DI1KkR2SQ4ZyTJb174pwIArGbXP8aE4x/zIxgQw8vqB5GkEpIYbQbp
+	 KS8n2RD8AAgklTGj83Ut1oc8mOheqkn3mltMBPXrUvxPJak/+T3ZEEO8lAgeKC7S0Y
+	 lkSvSbiEBtNmmLX1dW+1Aax8vkt2KQVUY21PphoM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Egorenkov <egorenar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 5.4 605/658] s390/kexec: fix ipl report address for kdump
-Date: Mon, 16 Jan 2023 16:51:33 +0100
-Message-Id: <20230116154937.179036531@linuxfoundation.org>
+	Maor Gottlieb <maorg@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 579/658] RDMA/mlx5: Fix validation of max_rd_atomic caps for DC
+Date: Mon, 16 Jan 2023 16:51:07 +0100
+Message-Id: <20230116154935.981041377@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,60 +35,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Egorenkov <egorenar@linux.ibm.com>
+From: Maor Gottlieb <maorg@nvidia.com>
 
-commit c2337a40e04dde1692b5b0a46ecc59f89aaba8a1 upstream.
+[ Upstream commit 8de8482fe5732fbef4f5af82bc0c0362c804cd1f ]
 
-This commit addresses the following erroneous situation with file-based
-kdump executed on a system with a valid IPL report.
+Currently, when modifying DC, we validate max_rd_atomic user attribute
+against the RC cap, validate against DC. RC and DC QP types have different
+device limitations.
 
-On s390, a kdump kernel, its initrd and IPL report if present are loaded
-into a special and reserved on boot memory region - crashkernel. When
-a system crashes and kdump was activated before, the purgatory code
-is entered first which swaps the crashkernel and [0 - crashkernel size]
-memory regions. Only after that the kdump kernel is entered. For this
-reason, the pointer to an IPL report in lowcore must point to the IPL report
-after the swap and not to the address of the IPL report that was located in
-crashkernel memory region before the swap. Failing to do so, makes the
-kdump's decompressor try to read memory from the crashkernel memory region
-which already contains the production's kernel memory.
+This can cause userspace created DC QPs to malfunction.
 
-The situation described above caused spontaneous kdump failures/hangs
-on systems where the Secure IPL is activated because on such systems
-an IPL report is always present. In that case kdump's decompressor tried
-to parse an IPL report which frequently lead to illegal memory accesses
-because an IPL report contains addresses to various data.
-
-Cc: <stable@vger.kernel.org>
-Fixes: 99feaa717e55 ("s390/kexec_file: Create ipl report and pass to next kernel")
-Reviewed-by: Vasily Gorbik <gor@linux.ibm.com>
-Signed-off-by: Alexander Egorenkov <egorenar@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: c32a4f296e1d ("IB/mlx5: Add support for DC Initiator QP")
+Link: https://lore.kernel.org/r/0c5aee72cea188c3bb770f4207cce7abc9b6fc74.1672231736.git.leonro@nvidia.com
+Signed-off-by: Maor Gottlieb <maorg@nvidia.com>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/machine_kexec_file.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/infiniband/hw/mlx5/qp.c | 49 +++++++++++++++++++++++----------
+ 1 file changed, 35 insertions(+), 14 deletions(-)
 
---- a/arch/s390/kernel/machine_kexec_file.c
-+++ b/arch/s390/kernel/machine_kexec_file.c
-@@ -185,8 +185,6 @@ static int kexec_file_add_ipl_report(str
+diff --git a/drivers/infiniband/hw/mlx5/qp.c b/drivers/infiniband/hw/mlx5/qp.c
+index 634f29cb7395..6edd30c92156 100644
+--- a/drivers/infiniband/hw/mlx5/qp.c
++++ b/drivers/infiniband/hw/mlx5/qp.c
+@@ -3890,6 +3890,40 @@ static int mlx5_ib_modify_dct(struct ib_qp *ibqp, struct ib_qp_attr *attr,
+ 	return err;
+ }
  
- 	data->memsz = ALIGN(data->memsz, PAGE_SIZE);
- 	buf.mem = data->memsz;
--	if (image->type == KEXEC_TYPE_CRASH)
--		buf.mem += crashk_res.start;
- 
- 	ptr = (void *)ipl_cert_list_addr;
- 	end = ptr + ipl_cert_list_size;
-@@ -223,6 +221,9 @@ static int kexec_file_add_ipl_report(str
- 		data->kernel_buf + offsetof(struct lowcore, ipl_parmblock_ptr);
- 	*lc_ipl_parmblock_ptr = (__u32)buf.mem;
- 
-+	if (image->type == KEXEC_TYPE_CRASH)
-+		buf.mem += crashk_res.start;
++static int validate_rd_atomic(struct mlx5_ib_dev *dev, struct ib_qp_attr *attr,
++			      int attr_mask, enum ib_qp_type qp_type)
++{
++	int log_max_ra_res;
++	int log_max_ra_req;
 +
- 	ret = kexec_add_buffer(&buf);
- out:
- 	return ret;
++	if (qp_type == MLX5_IB_QPT_DCI) {
++		log_max_ra_res = 1 << MLX5_CAP_GEN(dev->mdev,
++						   log_max_ra_res_dc);
++		log_max_ra_req = 1 << MLX5_CAP_GEN(dev->mdev,
++						   log_max_ra_req_dc);
++	} else {
++		log_max_ra_res = 1 << MLX5_CAP_GEN(dev->mdev,
++						   log_max_ra_res_qp);
++		log_max_ra_req = 1 << MLX5_CAP_GEN(dev->mdev,
++						   log_max_ra_req_qp);
++	}
++
++	if (attr_mask & IB_QP_MAX_QP_RD_ATOMIC &&
++	    attr->max_rd_atomic > log_max_ra_res) {
++		mlx5_ib_dbg(dev, "invalid max_rd_atomic value %d\n",
++			    attr->max_rd_atomic);
++		return false;
++	}
++
++	if (attr_mask & IB_QP_MAX_DEST_RD_ATOMIC &&
++	    attr->max_dest_rd_atomic > log_max_ra_req) {
++		mlx5_ib_dbg(dev, "invalid max_dest_rd_atomic value %d\n",
++			    attr->max_dest_rd_atomic);
++		return false;
++	}
++	return true;
++}
++
+ int mlx5_ib_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr,
+ 		      int attr_mask, struct ib_udata *udata)
+ {
+@@ -3986,21 +4020,8 @@ int mlx5_ib_modify_qp(struct ib_qp *ibqp, struct ib_qp_attr *attr,
+ 		}
+ 	}
+ 
+-	if (attr_mask & IB_QP_MAX_QP_RD_ATOMIC &&
+-	    attr->max_rd_atomic >
+-	    (1 << MLX5_CAP_GEN(dev->mdev, log_max_ra_res_qp))) {
+-		mlx5_ib_dbg(dev, "invalid max_rd_atomic value %d\n",
+-			    attr->max_rd_atomic);
+-		goto out;
+-	}
+-
+-	if (attr_mask & IB_QP_MAX_DEST_RD_ATOMIC &&
+-	    attr->max_dest_rd_atomic >
+-	    (1 << MLX5_CAP_GEN(dev->mdev, log_max_ra_req_qp))) {
+-		mlx5_ib_dbg(dev, "invalid max_dest_rd_atomic value %d\n",
+-			    attr->max_dest_rd_atomic);
++	if (!validate_rd_atomic(dev, attr, attr_mask, qp_type))
+ 		goto out;
+-	}
+ 
+ 	if (cur_state == new_state && cur_state == IB_QPS_RESET) {
+ 		err = 0;
+-- 
+2.35.1
+
 
 
