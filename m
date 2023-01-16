@@ -1,380 +1,334 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E07946B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:06:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA631C433F1;
-	Mon, 16 Jan 2023 16:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D914946B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:06:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34683C433F0;
+	Mon, 16 Jan 2023 16:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885184;
-	bh=WROqFAiErdaF3lnHXhz2rUbwxhZYLJvkv4rSyvbVB2o=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xgY0IwdDW6/Le7x1Avrq+6QTGAIiRN6zRGmNd+k3q6Gf17L3o/oNQ/9dgZzmSS6Y4
-	 tZyoMBM/MQNPhGEC6q7rY3l8hYngGQIiKcVmZtXjAVwf53YXL8k9K7uuFqCKNBwy8D
-	 twplNfb/i20HzztT2zuIdWzugLPSRmgMZ4ZUP3MY=
+	s=korg; t=1673885186;
+	bh=1FMbckGDZKUOmh9B8Qgm6MqJxUC6w9f36GjxU20yXd4=;
+	h=From:To:Cc:Subject:Date:From;
+	b=cdkCS5TQHG2Efk8FuJLrZNaPIUuTDzp07+wIKFSy87SoXKaOI6oUac6RkyrHHy0CD
+	 C09p+WshTyKoRhthUMjqEuTJVtEC+bTbh3ZDqPLEfRFUU8XmJ3Z2oSVrjz4+9SX4k1
+	 kY3Rhqe/Kq7ZVzbvbIyZL1/eoHfx7twPj76YgHc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
-	Hendrik Brueckner <brueckner@linux.ibm.com>,
-	Thomas Richter <tmricht@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 5.10 09/64] s390/cpum_sf: add READ_ONCE() semantics to compare and swap loops
-Date: Mon, 16 Jan 2023 16:51:16 +0100
-Message-Id: <20230116154743.984757776@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 5.10 00/64] 5.10.164-rc1 review
+Date: Mon, 16 Jan 2023 16:51:07 +0100
+Message-Id: <20230116154743.577276578@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
-References: <20230116154743.577276578@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.164-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.10.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.10.164-rc1
+X-KernelTest-Deadline: 2023-01-18T15:47+00:00
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+This is the start of the stable review cycle for the 5.10.164 release.
+There are 64 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit 82d3edb50a11bf3c5ef63294d5358ba230181413 upstream.
+Responses should be made by Wed, 18 Jan 2023 15:47:28 +0000.
+Anything received after that time might be too late.
 
-The current cmpxchg_double() loops within the perf hw sampling code do not
-have READ_ONCE() semantics to read the old value from memory. This allows
-the compiler to generate code which reads the "old" value several times
-from memory, which again allows for inconsistencies.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.164-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+and the diffstat can be found below.
 
-For example:
+thanks,
 
-        /* Reset trailer (using compare-double-and-swap) */
-        do {
-                te_flags = te->flags & ~SDB_TE_BUFFER_FULL_MASK;
-                te_flags |= SDB_TE_ALERT_REQ_MASK;
-        } while (!cmpxchg_double(&te->flags, &te->overflow,
-                 te->flags, te->overflow,
-                 te_flags, 0ULL));
+greg k-h
 
-The compiler could generate code where te->flags used within the
-cmpxchg_double() call may be refetched from memory and which is not
-necessarily identical to the previous read version which was used to
-generate te_flags. Which in turn means that an incorrect update could
-happen.
+-------------
+Pseudo-Shortlog of commits:
 
-Fix this by adding READ_ONCE() semantics to all cmpxchg_double()
-loops. Given that READ_ONCE() cannot generate code on s390 which atomically
-reads 16 bytes, use a private compare-and-swap-double implementation to
-achieve that.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.10.164-rc1
 
-Also replace cmpxchg_double() with the private implementation to be able to
-re-use the old value within the loops.
+Ferry Toth <ftoth@exalondelft.nl>
+    Revert "usb: ulpi: defer ulpi_register on ulpi_read_id timeout"
 
-As a side effect this converts the whole code to only use bit fields
-to read and modify bits within the hws trailer header.
+Jens Axboe <axboe@kernel.dk>
+    io_uring/io-wq: only free worker if it was allocated for creation
 
-Reported-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Acked-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Acked-by: Hendrik Brueckner <brueckner@linux.ibm.com>
-Reviewed-by: Thomas Richter <tmricht@linux.ibm.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/linux-s390/Y71QJBhNTIatvxUT@osiris/T/#ma14e2a5f7aa8ed4b94b6f9576799b3ad9c60f333
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- arch/s390/include/asm/cpu_mf.h  |   31 +++++-------
- arch/s390/kernel/perf_cpum_sf.c |  101 ++++++++++++++++++++++++----------------
- 2 files changed, 77 insertions(+), 55 deletions(-)
+Jens Axboe <axboe@kernel.dk>
+    io_uring/io-wq: free worker if task_work creation is canceled
 
---- a/arch/s390/include/asm/cpu_mf.h
-+++ b/arch/s390/include/asm/cpu_mf.h
-@@ -128,19 +128,21 @@ struct hws_combined_entry {
- 	struct hws_diag_entry	diag;	/* Diagnostic-sampling data entry */
- } __packed;
- 
--struct hws_trailer_entry {
--	union {
--		struct {
--			unsigned int f:1;	/* 0 - Block Full Indicator   */
--			unsigned int a:1;	/* 1 - Alert request control  */
--			unsigned int t:1;	/* 2 - Timestamp format	      */
--			unsigned int :29;	/* 3 - 31: Reserved	      */
--			unsigned int bsdes:16;	/* 32-47: size of basic SDE   */
--			unsigned int dsdes:16;	/* 48-63: size of diagnostic SDE */
--		};
--		unsigned long long flags;	/* 0 - 63: All indicators     */
-+union hws_trailer_header {
-+	struct {
-+		unsigned int f:1;	/* 0 - Block Full Indicator   */
-+		unsigned int a:1;	/* 1 - Alert request control  */
-+		unsigned int t:1;	/* 2 - Timestamp format	      */
-+		unsigned int :29;	/* 3 - 31: Reserved	      */
-+		unsigned int bsdes:16;	/* 32-47: size of basic SDE   */
-+		unsigned int dsdes:16;	/* 48-63: size of diagnostic SDE */
-+		unsigned long long overflow; /* 64 - Overflow Count   */
- 	};
--	unsigned long long overflow;	 /* 64 - sample Overflow count	      */
-+	__uint128_t val;
-+};
-+
-+struct hws_trailer_entry {
-+	union hws_trailer_header header; /* 0 - 15 Flags + Overflow Count     */
- 	unsigned char timestamp[16];	 /* 16 - 31 timestamp		      */
- 	unsigned long long reserved1;	 /* 32 -Reserved		      */
- 	unsigned long long reserved2;	 /*				      */
-@@ -287,14 +289,11 @@ static inline unsigned long sample_rate_
- 	return USEC_PER_SEC * qsi->cpu_speed / rate;
- }
- 
--#define SDB_TE_ALERT_REQ_MASK	0x4000000000000000UL
--#define SDB_TE_BUFFER_FULL_MASK 0x8000000000000000UL
--
- /* Return TOD timestamp contained in an trailer entry */
- static inline unsigned long long trailer_timestamp(struct hws_trailer_entry *te)
- {
- 	/* TOD in STCKE format */
--	if (te->t)
-+	if (te->header.t)
- 		return *((unsigned long long *) &te->timestamp[1]);
- 
- 	/* TOD in STCK format */
---- a/arch/s390/kernel/perf_cpum_sf.c
-+++ b/arch/s390/kernel/perf_cpum_sf.c
-@@ -163,14 +163,15 @@ static void free_sampling_buffer(struct
- 
- static int alloc_sample_data_block(unsigned long *sdbt, gfp_t gfp_flags)
- {
--	unsigned long sdb, *trailer;
-+	struct hws_trailer_entry *te;
-+	unsigned long sdb;
- 
- 	/* Allocate and initialize sample-data-block */
- 	sdb = get_zeroed_page(gfp_flags);
- 	if (!sdb)
- 		return -ENOMEM;
--	trailer = trailer_entry_ptr(sdb);
--	*trailer = SDB_TE_ALERT_REQ_MASK;
-+	te = (struct hws_trailer_entry *)trailer_entry_ptr(sdb);
-+	te->header.a = 1;
- 
- 	/* Link SDB into the sample-data-block-table */
- 	*sdbt = sdb;
-@@ -1206,7 +1207,7 @@ static void hw_collect_samples(struct pe
- 					    "%s: Found unknown"
- 					    " sampling data entry: te->f %i"
- 					    " basic.def %#4x (%p)\n", __func__,
--					    te->f, sample->def, sample);
-+					    te->header.f, sample->def, sample);
- 			/* Sample slot is not yet written or other record.
- 			 *
- 			 * This condition can occur if the buffer was reused
-@@ -1217,7 +1218,7 @@ static void hw_collect_samples(struct pe
- 			 * that are not full.  Stop processing if the first
- 			 * invalid format was detected.
- 			 */
--			if (!te->f)
-+			if (!te->header.f)
- 				break;
- 		}
- 
-@@ -1227,6 +1228,16 @@ static void hw_collect_samples(struct pe
- 	}
- }
- 
-+static inline __uint128_t __cdsg(__uint128_t *ptr, __uint128_t old, __uint128_t new)
-+{
-+	asm volatile(
-+		"	cdsg	%[old],%[new],%[ptr]\n"
-+		: [old] "+d" (old), [ptr] "+QS" (*ptr)
-+		: [new] "d" (new)
-+		: "memory", "cc");
-+	return old;
-+}
-+
- /* hw_perf_event_update() - Process sampling buffer
-  * @event:	The perf event
-  * @flush_all:	Flag to also flush partially filled sample-data-blocks
-@@ -1243,10 +1254,11 @@ static void hw_collect_samples(struct pe
-  */
- static void hw_perf_event_update(struct perf_event *event, int flush_all)
- {
-+	unsigned long long event_overflow, sampl_overflow, num_sdb;
-+	union hws_trailer_header old, prev, new;
- 	struct hw_perf_event *hwc = &event->hw;
- 	struct hws_trailer_entry *te;
- 	unsigned long *sdbt;
--	unsigned long long event_overflow, sampl_overflow, num_sdb, te_flags;
- 	int done;
- 
- 	/*
-@@ -1266,25 +1278,25 @@ static void hw_perf_event_update(struct
- 		te = (struct hws_trailer_entry *) trailer_entry_ptr(*sdbt);
- 
- 		/* Leave loop if no more work to do (block full indicator) */
--		if (!te->f) {
-+		if (!te->header.f) {
- 			done = 1;
- 			if (!flush_all)
- 				break;
- 		}
- 
- 		/* Check the sample overflow count */
--		if (te->overflow)
-+		if (te->header.overflow)
- 			/* Account sample overflows and, if a particular limit
- 			 * is reached, extend the sampling buffer.
- 			 * For details, see sfb_account_overflows().
- 			 */
--			sampl_overflow += te->overflow;
-+			sampl_overflow += te->header.overflow;
- 
- 		/* Timestamps are valid for full sample-data-blocks only */
- 		debug_sprintf_event(sfdbg, 6, "%s: sdbt %#lx "
- 				    "overflow %llu timestamp %#llx\n",
--				    __func__, (unsigned long)sdbt, te->overflow,
--				    (te->f) ? trailer_timestamp(te) : 0ULL);
-+				    __func__, (unsigned long)sdbt, te->header.overflow,
-+				    (te->header.f) ? trailer_timestamp(te) : 0ULL);
- 
- 		/* Collect all samples from a single sample-data-block and
- 		 * flag if an (perf) event overflow happened.  If so, the PMU
-@@ -1294,12 +1306,16 @@ static void hw_perf_event_update(struct
- 		num_sdb++;
- 
- 		/* Reset trailer (using compare-double-and-swap) */
-+		/* READ_ONCE() 16 byte header */
-+		prev.val = __cdsg(&te->header.val, 0, 0);
- 		do {
--			te_flags = te->flags & ~SDB_TE_BUFFER_FULL_MASK;
--			te_flags |= SDB_TE_ALERT_REQ_MASK;
--		} while (!cmpxchg_double(&te->flags, &te->overflow,
--					 te->flags, te->overflow,
--					 te_flags, 0ULL));
-+			old.val = prev.val;
-+			new.val = prev.val;
-+			new.f = 0;
-+			new.a = 1;
-+			new.overflow = 0;
-+			prev.val = __cdsg(&te->header.val, old.val, new.val);
-+		} while (prev.val != old.val);
- 
- 		/* Advance to next sample-data-block */
- 		sdbt++;
-@@ -1384,7 +1400,7 @@ static void aux_output_end(struct perf_o
- 	range_scan = AUX_SDB_NUM_ALERT(aux);
- 	for (i = 0, idx = aux->head; i < range_scan; i++, idx++) {
- 		te = aux_sdb_trailer(aux, idx);
--		if (!(te->flags & SDB_TE_BUFFER_FULL_MASK))
-+		if (!te->header.f)
- 			break;
- 	}
- 	/* i is num of SDBs which are full */
-@@ -1392,7 +1408,7 @@ static void aux_output_end(struct perf_o
- 
- 	/* Remove alert indicators in the buffer */
- 	te = aux_sdb_trailer(aux, aux->alert_mark);
--	te->flags &= ~SDB_TE_ALERT_REQ_MASK;
-+	te->header.a = 0;
- 
- 	debug_sprintf_event(sfdbg, 6, "%s: SDBs %ld range %ld head %ld\n",
- 			    __func__, i, range_scan, aux->head);
-@@ -1437,9 +1453,9 @@ static int aux_output_begin(struct perf_
- 		idx = aux->empty_mark + 1;
- 		for (i = 0; i < range_scan; i++, idx++) {
- 			te = aux_sdb_trailer(aux, idx);
--			te->flags &= ~(SDB_TE_BUFFER_FULL_MASK |
--				       SDB_TE_ALERT_REQ_MASK);
--			te->overflow = 0;
-+			te->header.f = 0;
-+			te->header.a = 0;
-+			te->header.overflow = 0;
- 		}
- 		/* Save the position of empty SDBs */
- 		aux->empty_mark = aux->head + range - 1;
-@@ -1448,7 +1464,7 @@ static int aux_output_begin(struct perf_
- 	/* Set alert indicator */
- 	aux->alert_mark = aux->head + range/2 - 1;
- 	te = aux_sdb_trailer(aux, aux->alert_mark);
--	te->flags = te->flags | SDB_TE_ALERT_REQ_MASK;
-+	te->header.a = 1;
- 
- 	/* Reset hardware buffer head */
- 	head = AUX_SDB_INDEX(aux, aux->head);
-@@ -1475,14 +1491,17 @@ static int aux_output_begin(struct perf_
- static bool aux_set_alert(struct aux_buffer *aux, unsigned long alert_index,
- 			  unsigned long long *overflow)
- {
--	unsigned long long orig_overflow, orig_flags, new_flags;
-+	union hws_trailer_header old, prev, new;
- 	struct hws_trailer_entry *te;
- 
- 	te = aux_sdb_trailer(aux, alert_index);
-+	/* READ_ONCE() 16 byte header */
-+	prev.val = __cdsg(&te->header.val, 0, 0);
- 	do {
--		orig_flags = te->flags;
--		*overflow = orig_overflow = te->overflow;
--		if (orig_flags & SDB_TE_BUFFER_FULL_MASK) {
-+		old.val = prev.val;
-+		new.val = prev.val;
-+		*overflow = old.overflow;
-+		if (old.f) {
- 			/*
- 			 * SDB is already set by hardware.
- 			 * Abort and try to set somewhere
-@@ -1490,10 +1509,10 @@ static bool aux_set_alert(struct aux_buf
- 			 */
- 			return false;
- 		}
--		new_flags = orig_flags | SDB_TE_ALERT_REQ_MASK;
--	} while (!cmpxchg_double(&te->flags, &te->overflow,
--				 orig_flags, orig_overflow,
--				 new_flags, 0ULL));
-+		new.a = 1;
-+		new.overflow = 0;
-+		prev.val = __cdsg(&te->header.val, old.val, new.val);
-+	} while (prev.val != old.val);
- 	return true;
- }
- 
-@@ -1522,8 +1541,9 @@ static bool aux_set_alert(struct aux_buf
- static bool aux_reset_buffer(struct aux_buffer *aux, unsigned long range,
- 			     unsigned long long *overflow)
- {
--	unsigned long long orig_overflow, orig_flags, new_flags;
- 	unsigned long i, range_scan, idx, idx_old;
-+	union hws_trailer_header old, prev, new;
-+	unsigned long long orig_overflow;
- 	struct hws_trailer_entry *te;
- 
- 	debug_sprintf_event(sfdbg, 6, "%s: range %ld head %ld alert %ld "
-@@ -1554,17 +1574,20 @@ static bool aux_reset_buffer(struct aux_
- 	idx_old = idx = aux->empty_mark + 1;
- 	for (i = 0; i < range_scan; i++, idx++) {
- 		te = aux_sdb_trailer(aux, idx);
-+		/* READ_ONCE() 16 byte header */
-+		prev.val = __cdsg(&te->header.val, 0, 0);
- 		do {
--			orig_flags = te->flags;
--			orig_overflow = te->overflow;
--			new_flags = orig_flags & ~SDB_TE_BUFFER_FULL_MASK;
-+			old.val = prev.val;
-+			new.val = prev.val;
-+			orig_overflow = old.overflow;
-+			new.f = 0;
-+			new.overflow = 0;
- 			if (idx == aux->alert_mark)
--				new_flags |= SDB_TE_ALERT_REQ_MASK;
-+				new.a = 1;
- 			else
--				new_flags &= ~SDB_TE_ALERT_REQ_MASK;
--		} while (!cmpxchg_double(&te->flags, &te->overflow,
--					 orig_flags, orig_overflow,
--					 new_flags, 0ULL));
-+				new.a = 0;
-+			prev.val = __cdsg(&te->header.val, old.val, new.val);
-+		} while (prev.val != old.val);
- 		*overflow += orig_overflow;
- 	}
- 
+Rob Clark <robdclark@chromium.org>
+    drm/virtio: Fix GEM handle creation UAF
+
+Johan Hovold <johan+linaro@kernel.org>
+    efi: fix NULL-deref in init error path
+
+Mark Rutland <mark.rutland@arm.com>
+    arm64: cmpxchg_double*: hazard against entire exchange variable
+
+Mark Rutland <mark.rutland@arm.com>
+    arm64: atomics: remove LL/SC trampolines
+
+Mark Rutland <mark.rutland@arm.com>
+    arm64: atomics: format whitespace consistently
+
+Peter Newman <peternewman@google.com>
+    x86/resctrl: Fix task CLOSID/RMID update race
+
+Reinette Chatre <reinette.chatre@intel.com>
+    x86/resctrl: Use task_curr() instead of task_struct->on_cpu to prevent unnecessary IPI
+
+Paolo Bonzini <pbonzini@redhat.com>
+    KVM: x86: Do not return host topology information from KVM_GET_SUPPORTED_CPUID
+
+Paolo Bonzini <pbonzini@redhat.com>
+    Documentation: KVM: add API issues section
+
+Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+    iommu/mediatek-v1: Fix an error handling path in mtk_iommu_v1_probe()
+
+Yong Wu <yong.wu@mediatek.com>
+    iommu/mediatek-v1: Add error handle for mtk_iommu_probe
+
+Aaron Thompson <dev@aaront.org>
+    mm: Always release pages to the buddy allocator in memblock_free_late().
+
+Gavin Li <gavinl@nvidia.com>
+    net/mlx5e: Don't support encap rules with gbp option
+
+Rahul Rameshbabu <rrameshbabu@nvidia.com>
+    net/mlx5: Fix ptp max frequency adjustment range
+
+Ido Schimmel <idosch@nvidia.com>
+    net/sched: act_mpls: Fix warning during failed attribute validation
+
+Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+    nfc: pn533: Wait for out_urb's completion in pn533_usb_send_frame()
+
+Roger Pau Monne <roger.pau@citrix.com>
+    hvc/xen: lock console list traversal
+
+Angela Czubak <aczubak@marvell.com>
+    octeontx2-af: Fix LMAC config in cgx_lmac_rx_tx_enable
+
+Subbaraya Sundeep <sbhatta@marvell.com>
+    octeontx2-af: Map NIX block from CGX connection
+
+Subbaraya Sundeep <sbhatta@marvell.com>
+    octeontx2-af: Update get/set resource count functions
+
+Tung Nguyen <tung.q.nguyen@dektech.com.au>
+    tipc: fix unexpected link reset due to discovery messages
+
+Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+    ASoC: wm8904: fix wrong outputs volume after power reactivation
+
+Ricardo Ribalda <ribalda@chromium.org>
+    regulator: da9211: Use irq handler when ready
+
+Eliav Farber <farbere@amazon.com>
+    EDAC/device: Fix period calculation in edac_device_reset_delay_period()
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/boot: Avoid using Intel mnemonics in AT&T syntax asm
+
+Kajol Jain <kjain@linux.ibm.com>
+    powerpc/imc-pmu: Fix use of mutex in IRQs disabled section
+
+Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
+    netfilter: ipset: Fix overflow before widen in the bitmap_ip_create() function.
+
+Nicolas Dichtel <nicolas.dichtel@6wind.com>
+    xfrm: fix rcu lock in xfrm_notify_userpolicy()
+
+Ye Bin <yebin10@huawei.com>
+    ext4: fix uninititialized value in 'ext4_evict_inode'
+
+Ferry Toth <ftoth@exalondelft.nl>
+    usb: ulpi: defer ulpi_register on ulpi_read_id timeout
+
+Mathias Nyman <mathias.nyman@linux.intel.com>
+    xhci: Prevent infinite loop in transaction errors recovery for streams
+
+Mathias Nyman <mathias.nyman@linux.intel.com>
+    xhci: move and rename xhci_cleanup_halted_endpoint()
+
+Mathias Nyman <mathias.nyman@linux.intel.com>
+    xhci: store TD status in the td struct instead of passing it along
+
+Mathias Nyman <mathias.nyman@linux.intel.com>
+    xhci: move xhci_td_cleanup so it can be called by more functions
+
+Mathias Nyman <mathias.nyman@linux.intel.com>
+    xhci: Add xhci_reset_halted_ep() helper function
+
+Mathias Nyman <mathias.nyman@linux.intel.com>
+    xhci: adjust parameters passed to cleanup_halted_endpoint()
+
+Mathias Nyman <mathias.nyman@linux.intel.com>
+    xhci: get isochronous ring directly from endpoint structure
+
+Mathias Nyman <mathias.nyman@linux.intel.com>
+    xhci: Avoid parsing transfer events several times
+
+Li Jun <jun.li@nxp.com>
+    clk: imx: imx8mp: add shared clk gate for usb suspend clk
+
+Li Jun <jun.li@nxp.com>
+    dt-bindings: clocks: imx8mp: Add ID for usb suspend clock
+
+Lucas Stach <l.stach@pengutronix.de>
+    clk: imx8mp: add clkout1/2 support
+
+Marek Vasut <marex@denx.de>
+    clk: imx8mp: Add DISP2 pixel clock
+
+Kim Phillips <kim.phillips@amd.com>
+    iommu/amd: Fix ill-formed ivrs_ioapic, ivrs_hpet and ivrs_acpihid options
+
+Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
+    iommu/amd: Add PCI segment support for ivrs_[ioapic/hpet/acpihid] commands
+
+Qiang Yu <quic_qianyu@quicinc.com>
+    bus: mhi: host: Fix race between channel preparation and M0 event
+
+Herbert Xu <herbert@gondor.apana.org.au>
+    ipv6: raw: Deduct extension header length in rawv6_push_pending_frames
+
+Yang Yingliang <yangyingliang@huawei.com>
+    ixgbe: fix pci device refcount leak
+
+Hans de Goede <hdegoede@redhat.com>
+    platform/x86: sony-laptop: Don't turn off 0x153 keyboard backlight during probe
+
+Kuogee Hsieh <quic_khsieh@quicinc.com>
+    drm/msm/dp: do not complete dp_aux_cmd_fifo_tx() if irq is not for aux transfer
+
+Konrad Dybcio <konrad.dybcio@linaro.org>
+    drm/msm/adreno: Make adreno quirks not overwrite each other
+
+Volker Lendecke <vl@samba.org>
+    cifs: Fix uninitialized memory read for smb311 posix symlink create
+
+Heiko Carstens <hca@linux.ibm.com>
+    s390/percpu: add READ_ONCE() to arch_this_cpu_to_op_simple()
+
+Heiko Carstens <hca@linux.ibm.com>
+    s390/cpum_sf: add READ_ONCE() semantics to compare and swap loops
+
+Brian Norris <computersforpeace@gmail.com>
+    ASoC: qcom: lpass-cpu: Fix fallback SD line index handling
+
+Alexander Egorenkov <egorenar@linux.ibm.com>
+    s390/kexec: fix ipl report address for kdump
+
+Adrian Hunter <adrian.hunter@intel.com>
+    perf auxtrace: Fix address filter duplicate symbol selection
+
+Jonathan Corbet <corbet@lwn.net>
+    docs: Fix the docs build with Sphinx 6.0
+
+Ard Biesheuvel <ardb@kernel.org>
+    efi: tpm: Avoid READ_ONCE() for accessing the event log
+
+Marc Zyngier <maz@kernel.org>
+    KVM: arm64: Fix S1PTW handling on RO memslots
+
+Luka Guzenko <l.guzenko@web.de>
+    ALSA: hda/realtek: Enable mute/micmute LEDs on HP Spectre x360 13-aw0xxx
+
+Pablo Neira Ayuso <pablo@netfilter.org>
+    netfilter: nft_payload: incorrect arithmetics when fetching VLAN header bits
+
+
+-------------
+
+Diffstat:
+
+ Documentation/admin-guide/kernel-parameters.txt    |  51 +++-
+ Documentation/sphinx/load_config.py                |   6 +-
+ Documentation/virt/kvm/api.rst                     |  60 +++++
+ Makefile                                           |   4 +-
+ arch/arm64/include/asm/atomic_ll_sc.h              | 114 ++++----
+ arch/arm64/include/asm/atomic_lse.h                |  16 +-
+ arch/arm64/include/asm/kvm_emulate.h               |  22 +-
+ arch/powerpc/include/asm/imc-pmu.h                 |   2 +-
+ arch/powerpc/perf/imc-pmu.c                        | 136 +++++-----
+ arch/s390/include/asm/cpu_mf.h                     |  31 ++-
+ arch/s390/include/asm/percpu.h                     |   2 +-
+ arch/s390/kernel/machine_kexec_file.c              |   5 +-
+ arch/s390/kernel/perf_cpum_sf.c                    | 101 ++++---
+ arch/x86/boot/bioscall.S                           |   4 +-
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c             |  26 +-
+ arch/x86/kvm/cpuid.c                               |  32 +--
+ drivers/bus/mhi/core/pm.c                          |   3 +-
+ drivers/clk/imx/clk-imx8mp.c                       |  23 +-
+ drivers/edac/edac_device.c                         |  17 +-
+ drivers/edac/edac_module.h                         |   2 +-
+ drivers/firmware/efi/efi.c                         |   9 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h            |  10 +-
+ drivers/gpu/drm/msm/dp/dp_aux.c                    |   4 +
+ drivers/gpu/drm/virtio/virtgpu_ioctl.c             |  10 +-
+ drivers/iommu/amd/init.c                           |  89 ++++--
+ drivers/iommu/mtk_iommu_v1.c                       |  26 +-
+ drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c       |  14 +-
+ drivers/net/ethernet/marvell/octeontx2/af/cgx.c    |  17 +-
+ drivers/net/ethernet/marvell/octeontx2/af/cgx.h    |   6 +-
+ drivers/net/ethernet/marvell/octeontx2/af/rvu.c    | 134 ++++++++--
+ drivers/net/ethernet/marvell/octeontx2/af/rvu.h    |   4 +
+ .../net/ethernet/marvell/octeontx2/af/rvu_cgx.c    |  15 ++
+ .../net/ethernet/marvell/octeontx2/af/rvu_nix.c    |  21 +-
+ .../ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c  |   2 +
+ .../net/ethernet/mellanox/mlx5/core/lib/clock.c    |   2 +-
+ drivers/nfc/pn533/usb.c                            |  44 ++-
+ drivers/platform/x86/sony-laptop.c                 |  21 +-
+ drivers/regulator/da9211-regulator.c               |  11 +-
+ drivers/tty/hvc/hvc_xen.c                          |  46 ++--
+ drivers/usb/host/xhci-mem.c                        |   4 +
+ drivers/usb/host/xhci-ring.c                       | 297 +++++++++++----------
+ drivers/usb/host/xhci.h                            |   6 +-
+ fs/cifs/link.c                                     |   1 +
+ fs/ext4/super.c                                    |   1 +
+ include/dt-bindings/clock/imx8mp-clock.h           |  10 +-
+ include/linux/tpm_eventlog.h                       |   4 +-
+ io_uring/io-wq.c                                   |   6 +
+ mm/memblock.c                                      |   8 +-
+ net/ipv6/raw.c                                     |   4 +
+ net/netfilter/ipset/ip_set_bitmap_ip.c             |   4 +-
+ net/netfilter/nft_payload.c                        |   2 +-
+ net/sched/act_mpls.c                               |   8 +-
+ net/tipc/node.c                                    |  12 +-
+ net/xfrm/xfrm_user.c                               |   7 +-
+ sound/pci/hda/patch_realtek.c                      |  23 ++
+ sound/soc/codecs/wm8904.c                          |   7 +
+ sound/soc/qcom/lpass-cpu.c                         |   5 +-
+ tools/perf/util/auxtrace.c                         |   2 +-
+ 58 files changed, 1015 insertions(+), 538 deletions(-)
 
 
