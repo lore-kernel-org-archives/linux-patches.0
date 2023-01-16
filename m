@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 703E646B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:31:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95E1C433EF;
-	Mon, 16 Jan 2023 16:31:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1532646B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:31:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BFB9C433EF;
+	Mon, 16 Jan 2023 16:31:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886683;
-	bh=e+6dntqydxkbDthPandAcgIcbmtfAKJlexRRxpiGBTI=;
+	s=korg; t=1673886685;
+	bh=xOvi7aIxPjKXJsKEx5kQQgW2dp3oENq6smwAh6Mly+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MsaCu759p/Z/DyeH2d5zOKU68asWxcqwOv1ZEqQxOLt92cAgJcHVAyx7G+hBekuYR
-	 5aePSeX+c1CLZ+4iaNeU8NT4C1HzaCiPRgUlMMlN9HZIa81RCJ82+i1ZEe1DTLeadN
-	 BKqUbYft5USlExcnzqgt4FoswguZPuX0zntnheW4=
+	b=2DTvesiQVzY/bJdyYAyPpSOAov5icjWjtZ2d1a+CDrdK9bUqto3Z+gnkOoBuCgx90
+	 3Fw2PmwUyYcaDRLMHmOcYt38LOKlLHlGVCI8Uo7WIObIKGHQ8rh700EGZdUI5aZ1Je
+	 hA80eVW6LGZIJ+bjlkGAoCiBa/E0zbwHgP/Fxf5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jason Yan <yanaijie@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 5.4 523/658] ext4: fix undefined behavior in bit shift for ext4_check_flag_values
-Date: Mon, 16 Jan 2023 16:50:11 +0100
-Message-Id: <20230116154933.472813580@linuxfoundation.org>
+Subject: [PATCH 5.4 524/658] ext4: add EXT4_IGET_BAD flag to prevent unexpected bad inode
+Date: Mon, 16 Jan 2023 16:50:12 +0100
+Message-Id: <20230116154933.511427664@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,48 +37,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 3bf678a0f9c017c9ba7c581541dbc8453452a7ae upstream.
+commit 63b1e9bccb71fe7d7e3ddc9877dbdc85e5d2d023 upstream.
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned. The UBSAN warning calltrace like below:
+There are many places that will get unhappy (and crash) when ext4_iget()
+returns a bad inode. However, if iget the boot loader inode, allows a bad
+inode to be returned, because the inode may not be initialized. This
+mechanism can be used to bypass some checks and cause panic. To solve this
+problem, we add a special iget flag EXT4_IGET_BAD. Only with this flag
+we'd be returning bad inode from ext4_iget(), otherwise we always return
+the error code if the inode is bad inode.(suggested by Jan Kara)
 
-UBSAN: shift-out-of-bounds in fs/ext4/ext4.h:591:2
-left shift of 1 by 31 places cannot be represented in type 'int'
-Call Trace:
- <TASK>
- dump_stack_lvl+0x7d/0xa5
- dump_stack+0x15/0x1b
- ubsan_epilogue+0xe/0x4e
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
- ext4_init_fs+0x5a/0x277
- do_one_initcall+0x76/0x430
- kernel_init_freeable+0x3b3/0x422
- kernel_init+0x24/0x1e0
- ret_from_fork+0x1f/0x30
- </TASK>
-
-Fixes: 9a4c80194713 ("ext4: ensure Inode flags consistency are checked at build time")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20221031055833.3966222-1-cuigaosheng1@huawei.com
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221026042310.3839669-4-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/ext4.h  |    3 ++-
+ fs/ext4/inode.c |    8 +++++++-
+ fs/ext4/ioctl.c |    3 ++-
+ 3 files changed, 11 insertions(+), 3 deletions(-)
 
 --- a/fs/ext4/ext4.h
 +++ b/fs/ext4/ext4.h
-@@ -501,7 +501,7 @@ enum {
-  *
-  * It's not paranoia if the Murphy's Law really *is* out to get you.  :-)
-  */
--#define TEST_FLAG_VALUE(FLAG) (EXT4_##FLAG##_FL == (1 << EXT4_INODE_##FLAG))
-+#define TEST_FLAG_VALUE(FLAG) (EXT4_##FLAG##_FL == (1U << EXT4_INODE_##FLAG))
- #define CHECK_FLAG_VALUE(FLAG) BUILD_BUG_ON(!TEST_FLAG_VALUE(FLAG))
+@@ -2608,7 +2608,8 @@ int do_journal_get_write_access(handle_t
+ typedef enum {
+ 	EXT4_IGET_NORMAL =	0,
+ 	EXT4_IGET_SPECIAL =	0x0001, /* OK to iget a system inode */
+-	EXT4_IGET_HANDLE = 	0x0002	/* Inode # is from a handle */
++	EXT4_IGET_HANDLE = 	0x0002,	/* Inode # is from a handle */
++	EXT4_IGET_BAD =		0x0004  /* Allow to iget a bad inode */
+ } ext4_iget_flags;
  
- static inline void ext4_check_flag_values(void)
+ extern struct inode *__ext4_iget(struct super_block *sb, unsigned long ino,
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -5192,8 +5192,14 @@ struct inode *__ext4_iget(struct super_b
+ 	if (IS_CASEFOLDED(inode) && !ext4_has_feature_casefold(inode->i_sb))
+ 		ext4_error_inode(inode, function, line, 0,
+ 				 "casefold flag without casefold feature");
+-	brelse(iloc.bh);
++	if (is_bad_inode(inode) && !(flags & EXT4_IGET_BAD)) {
++		ext4_error_inode(inode, function, line, 0,
++				 "bad inode without EXT4_IGET_BAD flag");
++		ret = -EUCLEAN;
++		goto bad_inode;
++	}
+ 
++	brelse(iloc.bh);
+ 	unlock_new_inode(inode);
+ 	return inode;
+ 
+--- a/fs/ext4/ioctl.c
++++ b/fs/ext4/ioctl.c
+@@ -121,7 +121,8 @@ static long swap_inode_boot_loader(struc
+ 	blkcnt_t blocks;
+ 	unsigned short bytes;
+ 
+-	inode_bl = ext4_iget(sb, EXT4_BOOT_LOADER_INO, EXT4_IGET_SPECIAL);
++	inode_bl = ext4_iget(sb, EXT4_BOOT_LOADER_INO,
++			EXT4_IGET_SPECIAL | EXT4_IGET_BAD);
+ 	if (IS_ERR(inode_bl))
+ 		return PTR_ERR(inode_bl);
+ 	ei_bl = EXT4_I(inode_bl);
 
 
