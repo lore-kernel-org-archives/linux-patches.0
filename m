@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D2B433F1
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:21:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E588FC433EF;
-	Mon, 16 Jan 2023 16:21:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18D7933F0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:21:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92345C433D2;
+	Mon, 16 Jan 2023 16:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886088;
-	bh=jo1sfDpeOL3qf59+8LowlOR+5xRV5Xt2s3fk0H/sSdI=;
+	s=korg; t=1673886090;
+	bh=kWvgevs/lmIRUK7RPSdqN0MhPeNxnd9p0vwN3jDX4GU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HuC6HodtpRABm0rQSUh7ap5wz6Og1TX8TvU45I8AOxnuYGNovIlg9K53vXFX8Mrhp
-	 IGiW9wfT+N2wLMcKZ9ionwqnLXCBzsBKkTNjWkwgaalLrayFmaPMOq4SlFvYPbplIY
-	 0Xc1Cc+OJKjIL0LvHa2tTiqE8K2pZIT2cZth9W+U=
+	b=D9nCOmQmTSNN5dhDF0aLN6LfrkwL14YeoFNsKapoPCNfniIdJaj7QPCbSVPDnHOp9
+	 qitSCPWnahxOlpLOo89y+a4aJEtYwCsDYKwHrOPstlnosaGB9ubuvGw0Yxd5RQCKWj
+	 mdwWo0KQZUY0VhvtI4q06XlCQfBqlo4752FsBM0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabrice Gasnier <fabrice.gasnier@foss.st.com>,
-	William Breathitt Gray <william.gray@linaro.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 298/658] counter: stm32-lptimer-cnt: fix the check on arr and cmp registers update
-Date: Mon, 16 Jan 2023 16:46:26 +0100
-Message-Id: <20230116154923.230823997@linuxfoundation.org>
+Subject: [PATCH 5.4 299/658] usb: roles: fix of node refcount leak in usb_role_switch_is_parent()
+Date: Mon, 16 Jan 2023 16:46:27 +0100
+Message-Id: <20230116154923.282953408@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,39 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit fd5ac974fc25feed084c2d1599d0dddb4e0556bc ]
+[ Upstream commit 1ab30c610630da5391a373cddb8a065bf4c4bc01 ]
 
-The ARR (auto reload register) and CMP (compare) registers are
-successively written. The status bits to check the update of these
-registers are polled together with regmap_read_poll_timeout().
-The condition to end the loop may become true, even if one of the register
-isn't correctly updated.
-So ensure both status bits are set before clearing them.
+I got the following report while doing device(mt6370-tcpc) load
+test with CONFIG_OF_UNITTEST and CONFIG_OF_DYNAMIC enabled:
 
-Fixes: d8958824cf07 ("iio: counter: Add support for STM32 LPTimer")
-Signed-off-by: Fabrice Gasnier <fabrice.gasnier@foss.st.com>
-Link: https://lore.kernel.org/r/20221123133609.465614-1-fabrice.gasnier@foss.st.com/
-Signed-off-by: William Breathitt Gray <william.gray@linaro.org>
+  OF: ERROR: memory leak, expected refcount 1 instead of 2,
+  of_node_get()/of_node_put() unbalanced - destroy cset entry:
+  attach overlay node /i2c/pmic@34
+
+The 'parent' returned by fwnode_get_parent() with refcount incremented.
+it needs be put after using.
+
+Fixes: 6fadd72943b8 ("usb: roles: get usb-role-switch from parent")
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221122111226.251588-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/counter/stm32-lptimer-cnt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/roles/class.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/counter/stm32-lptimer-cnt.c b/drivers/counter/stm32-lptimer-cnt.c
-index bbc930a5962c..95f8f2e217db 100644
---- a/drivers/counter/stm32-lptimer-cnt.c
-+++ b/drivers/counter/stm32-lptimer-cnt.c
-@@ -69,7 +69,7 @@ static int stm32_lptim_set_enable_state(struct stm32_lptim_cnt *priv,
+diff --git a/drivers/usb/roles/class.c b/drivers/usb/roles/class.c
+index 97e3d75b19a3..873d89823f5b 100644
+--- a/drivers/usb/roles/class.c
++++ b/drivers/usb/roles/class.c
+@@ -108,10 +108,13 @@ usb_role_switch_is_parent(struct fwnode_handle *fwnode)
+ 	struct fwnode_handle *parent = fwnode_get_parent(fwnode);
+ 	struct device *dev;
  
- 	/* ensure CMP & ARR registers are properly written */
- 	ret = regmap_read_poll_timeout(priv->regmap, STM32_LPTIM_ISR, val,
--				       (val & STM32_LPTIM_CMPOK_ARROK),
-+				       (val & STM32_LPTIM_CMPOK_ARROK) == STM32_LPTIM_CMPOK_ARROK,
- 				       100, 1000);
- 	if (ret)
- 		return ret;
+-	if (!parent || !fwnode_property_present(parent, "usb-role-switch"))
++	if (!fwnode_property_present(parent, "usb-role-switch")) {
++		fwnode_handle_put(parent);
+ 		return NULL;
++	}
+ 
+ 	dev = class_find_device_by_fwnode(role_class, parent);
++	fwnode_handle_put(parent);
+ 	return dev ? to_role_switch(dev) : ERR_PTR(-EPROBE_DEFER);
+ }
+ 
 -- 
 2.35.1
 
