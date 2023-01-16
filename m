@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53A433EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A773C433D2;
-	Mon, 16 Jan 2023 15:57:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE1A33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8CD9C433D2;
+	Mon, 16 Jan 2023 15:57:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884654;
-	bh=JEE2X1uW1c0hu/JNEICMQRHE5RO2ntKZC7PV2IvJrQc=;
+	s=korg; t=1673884657;
+	bh=hZZYq+zgBp6jnJCJp99jRdvG759Q47Fb0q3E2vpXnsQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LJUqY6z+WmDfNsvFCME66xXmcgkwCb26z8Pzmv9Y7EIBzauTLM+pUwpnKcXrfiSUJ
-	 nMlV8pXkZVlxJSz5tSzb9vBDgu2ovl0bybur34cwN6N4HiPkdLYsvCPxduCuGwhWxt
-	 Nym5QbmigTtpC0bnD430y0m6IikG4pzuouYNGiEI=
+	b=twjAjK9QSeDRVruzO5XMIKqgnO0z8J8w8ntYlFgQgZ4/2ZLftGKpozr14TxMIj7PN
+	 PjMzPVbAeV/I84hqm/YX2XISpGxC6xejJ2CFaJ6PzxrxREgEPT4oK/ejfhdAMrm3Gj
+	 FEwMmohoRjcgjKNSxhyPsQo13kUg/FuMPzorXL0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kyle Zeng <zengyhkyle@gmail.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 071/183] ipv6: raw: Deduct extension header length in rawv6_push_pending_frames
-Date: Mon, 16 Jan 2023 16:49:54 +0100
-Message-Id: <20230116154806.372895612@linuxfoundation.org>
+	"Ilia.Gavrilov" <Ilia.Gavrilov@infotecs.ru>,
+	Simon Horman <simon.horman@corigine.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 6.1 089/183] netfilter: ipset: Fix overflow before widen in the bitmap_ip_create() function.
+Date: Mon, 16 Jan 2023 16:50:12 +0100
+Message-Id: <20230116154807.175983754@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -35,42 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
 
-commit cb3e9864cdbe35ff6378966660edbcbac955fe17 upstream.
+commit 9ea4b476cea1b7d461d16dda25ca3c7e616e2d15 upstream.
 
-The total cork length created by ip6_append_data includes extension
-headers, so we must exclude them when comparing them against the
-IPV6_CHECKSUM offset which does not include extension headers.
+When first_ip is 0, last_ip is 0xFFFFFFFF, and netmask is 31, the value of
+an arithmetic expression 2 << (netmask - mask_bits - 1) is subject
+to overflow due to a failure casting operands to a larger data type
+before performing the arithmetic.
 
-Reported-by: Kyle Zeng <zengyhkyle@gmail.com>
-Fixes: 357b40a18b04 ("[IPV6]: IPV6_CHECKSUM socket option can corrupt kernel memory")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Note that it's harmless since the value will be checked at the next step.
+
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with SVACE.
+
+Fixes: b9fed748185a ("netfilter: ipset: Check and reject crazy /0 input parameters")
+Signed-off-by: Ilia.Gavrilov <Ilia.Gavrilov@infotecs.ru>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/raw.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/netfilter/ipset/ip_set_bitmap_ip.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/net/ipv6/raw.c
-+++ b/net/ipv6/raw.c
-@@ -505,6 +505,7 @@ csum_copy_err:
- static int rawv6_push_pending_frames(struct sock *sk, struct flowi6 *fl6,
- 				     struct raw6_sock *rp)
- {
-+	struct ipv6_txoptions *opt;
- 	struct sk_buff *skb;
- 	int err = 0;
- 	int offset;
-@@ -522,6 +523,9 @@ static int rawv6_push_pending_frames(str
+--- a/net/netfilter/ipset/ip_set_bitmap_ip.c
++++ b/net/netfilter/ipset/ip_set_bitmap_ip.c
+@@ -308,8 +308,8 @@ bitmap_ip_create(struct net *net, struct
+ 			return -IPSET_ERR_BITMAP_RANGE;
  
- 	offset = rp->offset;
- 	total_len = inet_sk(sk)->cork.base.length;
-+	opt = inet6_sk(sk)->cork.opt;
-+	total_len -= opt ? opt->opt_flen : 0;
-+
- 	if (offset >= total_len - 1) {
- 		err = -EINVAL;
- 		ip6_flush_pending_frames(sk);
+ 		pr_debug("mask_bits %u, netmask %u\n", mask_bits, netmask);
+-		hosts = 2 << (32 - netmask - 1);
+-		elements = 2 << (netmask - mask_bits - 1);
++		hosts = 2U << (32 - netmask - 1);
++		elements = 2UL << (netmask - mask_bits - 1);
+ 	}
+ 	if (elements > IPSET_BITMAP_MAX_RANGE + 1)
+ 		return -IPSET_ERR_BITMAP_RANGE_SIZE;
 
 
