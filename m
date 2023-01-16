@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3447C33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE422C433F1;
-	Mon, 16 Jan 2023 15:55:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D25AB33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F80BC433EF;
+	Mon, 16 Jan 2023 15:55:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884506;
-	bh=jaG+zHzcA6RDUPTWM3bKzkaP+3TsmEuIuLc2VeFcI8M=;
+	s=korg; t=1673884508;
+	bh=0liuWZit8huyfLXXRMHCr4ELX+fgnfDFNmx5Rx4BqC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TJJ43Wz6mK1y4VU+Rn0Ux9d0QW0LQX7zgo+dJvBBBIGIPV/WUeWkZ6CqFNQUw4QhD
-	 hXMTrBczGWGTlgxmNP7holKwpMJGNSiGOChMMpgcGUT6CLbGNsCOlI5AYRExXmUhxH
-	 EGeX8NNX2VFe45pV4cFpLLZRI1Hmxmxy0P7wwPBs=
+	b=FTRS4CQbU8ttw4GGpkJrOLL4yHcZXFSzcvXZrYGPaYA9ymPmrCnGfybDq9QGCcI+I
+	 tImQwtyrVeA204CFeqp1fshhNmtHRqpwUdiDvuuIMTPK0olNfIn/YcXDh1uD5+5lUP
+	 X9PgTt/lVTyaEFlfENOo/ybOHWEGW9RrFnfi9U7A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rob Clark <robdclark@chromium.org>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.1 031/183] drm/i915: Fix potential context UAFs
-Date: Mon, 16 Jan 2023 16:49:14 +0100
-Message-Id: <20230116154804.670690616@linuxfoundation.org>
+	Alex Deucher <alexander.deucher@amd.com>,
+	Lijo Lazar <lijo.lazar@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 6.1 032/183] drm/amd: Delay removal of the firmware framebuffer
+Date: Mon, 16 Jan 2023 16:49:15 +0100
+Message-Id: <20230116154804.716975523@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,92 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rob Clark <robdclark@chromium.org>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-commit afce71ff6daa9c0f852df0727fe32c6fb107f0fa upstream.
+commit 1923bc5a56daeeabd7e9093bad2febcd6af2416a upstream.
 
-gem_context_register() makes the context visible to userspace, and which
-point a separate thread can trigger the I915_GEM_CONTEXT_DESTROY ioctl.
-So we need to ensure that nothing uses the ctx ptr after this.  And we
-need to ensure that adding the ctx to the xarray is the *last* thing
-that gem_context_register() does with the ctx pointer.
+Removing the firmware framebuffer from the driver means that even
+if the driver doesn't support the IP blocks in a GPU it will no
+longer be functional after the driver fails to initialize.
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
-Fixes: eb4dedae920a ("drm/i915/gem: Delay tracking the GEM context until it is registered")
-Fixes: a4c1cdd34e2c ("drm/i915/gem: Delay context creation (v3)")
-Fixes: 49bd54b390c2 ("drm/i915: Track all user contexts per client")
-Cc: <stable@vger.kernel.org> # v5.10+
-Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
-[tursulin: Stable and fixes tags add/tidy.]
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230103234948.1218393-1-robdclark@gmail.com
-(cherry picked from commit bed4b455cf5374e68879be56971c1da563bcd90c)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+This change will ensure that unsupported IP blocks at least cause
+the driver to work with the EFI framebuffer.
+
+Cc: stable@vger.kernel.org
+Suggested-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Lijo Lazar <lijo.lazar@amd.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_context.c |   24 ++++++++++++++++++------
- 1 file changed, 18 insertions(+), 6 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    8 ++++++++
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c    |    6 ------
+ 2 files changed, 8 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_context.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_context.c
-@@ -1688,6 +1688,10 @@ void i915_gem_init__contexts(struct drm_
- 	init_contexts(&i915->gem.contexts);
- }
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
+@@ -36,6 +36,7 @@
+ #include <generated/utsrelease.h>
+ #include <linux/pci-p2pdma.h>
  
-+/*
-+ * Note that this implicitly consumes the ctx reference, by placing
-+ * the ctx in the context_xa.
-+ */
- static void gem_context_register(struct i915_gem_context *ctx,
- 				 struct drm_i915_file_private *fpriv,
- 				 u32 id)
-@@ -1703,10 +1707,6 @@ static void gem_context_register(struct
- 	snprintf(ctx->name, sizeof(ctx->name), "%s[%d]",
- 		 current->comm, pid_nr(ctx->pid));
++#include <drm/drm_aperture.h>
+ #include <drm/drm_atomic_helper.h>
+ #include <drm/drm_probe_helper.h>
+ #include <drm/amdgpu_drm.h>
+@@ -89,6 +90,8 @@ MODULE_FIRMWARE("amdgpu/navi12_gpu_info.
+ #define AMDGPU_MAX_RETRY_LIMIT		2
+ #define AMDGPU_RETRY_SRIOV_RESET(r) ((r) == -EBUSY || (r) == -ETIMEDOUT || (r) == -EINVAL)
  
--	/* And finally expose ourselves to userspace via the idr */
--	old = xa_store(&fpriv->context_xa, id, ctx, GFP_KERNEL);
--	WARN_ON(old);
++static const struct drm_driver amdgpu_kms_driver;
++
+ const char *amdgpu_asic_name[] = {
+ 	"TAHITI",
+ 	"PITCAIRN",
+@@ -3677,6 +3680,11 @@ int amdgpu_device_init(struct amdgpu_dev
+ 	if (r)
+ 		return r;
+ 
++	/* Get rid of things like offb */
++	r = drm_aperture_remove_conflicting_pci_framebuffers(adev->pdev, &amdgpu_kms_driver);
++	if (r)
++		return r;
++
+ 	/* Enable TMZ based on IP_VERSION */
+ 	amdgpu_gmc_tmz_set(adev);
+ 
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
+@@ -23,7 +23,6 @@
+  */
+ 
+ #include <drm/amdgpu_drm.h>
+-#include <drm/drm_aperture.h>
+ #include <drm/drm_drv.h>
+ #include <drm/drm_gem.h>
+ #include <drm/drm_vblank.h>
+@@ -2123,11 +2122,6 @@ static int amdgpu_pci_probe(struct pci_d
+ 	}
+ #endif
+ 
+-	/* Get rid of things like offb */
+-	ret = drm_aperture_remove_conflicting_pci_framebuffers(pdev, &amdgpu_kms_driver);
+-	if (ret)
+-		return ret;
 -
- 	spin_lock(&ctx->client->ctx_lock);
- 	list_add_tail_rcu(&ctx->client_link, &ctx->client->ctx_list);
- 	spin_unlock(&ctx->client->ctx_lock);
-@@ -1714,6 +1714,10 @@ static void gem_context_register(struct
- 	spin_lock(&i915->gem.contexts.lock);
- 	list_add_tail(&ctx->link, &i915->gem.contexts.list);
- 	spin_unlock(&i915->gem.contexts.lock);
-+
-+	/* And finally expose ourselves to userspace via the idr */
-+	old = xa_store(&fpriv->context_xa, id, ctx, GFP_KERNEL);
-+	WARN_ON(old);
- }
- 
- int i915_gem_context_open(struct drm_i915_private *i915,
-@@ -2199,14 +2203,22 @@ finalize_create_context_locked(struct dr
- 	if (IS_ERR(ctx))
- 		return ctx;
- 
-+	/*
-+	 * One for the xarray and one for the caller.  We need to grab
-+	 * the reference *prior* to making the ctx visble to userspace
-+	 * in gem_context_register(), as at any point after that
-+	 * userspace can try to race us with another thread destroying
-+	 * the context under our feet.
-+	 */
-+	i915_gem_context_get(ctx);
-+
- 	gem_context_register(ctx, file_priv, id);
- 
- 	old = xa_erase(&file_priv->proto_context_xa, id);
- 	GEM_BUG_ON(old != pc);
- 	proto_context_close(file_priv->dev_priv, pc);
- 
--	/* One for the xarray and one for the caller */
--	return i915_gem_context_get(ctx);
-+	return ctx;
- }
- 
- struct i915_gem_context *
+ 	adev = devm_drm_dev_alloc(&pdev->dev, &amdgpu_kms_driver, typeof(*adev), ddev);
+ 	if (IS_ERR(adev))
+ 		return PTR_ERR(adev);
 
 
