@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDBBA6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:11:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EC3FC433EF;
-	Mon, 16 Jan 2023 17:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83C466FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:11:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C023C433D2;
+	Mon, 16 Jan 2023 17:11:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889079;
-	bh=yPl+W0vivCeUr4WZMW40HE08Gc6NkZUO0IEisN3YrCY=;
+	s=korg; t=1673889082;
+	bh=YC7h7bCh6bS5BFG8Lw4DiRgfHjzk7aADzbEg2mjIktA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fnO9x1NBjyi010TUi2nKwIGvkTk4j+lU7Rg0alZRqm5fAixshb5+X+mHRx8MiReXm
-	 1893MDjCktZOjDbz9Xu4pMhA5d2II7ie9bFomZIYZpGj0i+ET4//plcmktfm0r1OUK
-	 9I2rRzGBV+N+VRjHEK4aqGIsI48Qe7AoiDSZj7GM=
+	b=RxvHyhv+yEgdXd8fvAU1oWl/t8o8NQrpf1eliaXbLATd00dvCbwi1wnPhgNNXZkej
+	 VhArUTFnw8tlXAeaAszGJMiFf9EFcwLaMEkyYMlezSRSOuTev4xiEGznm0Tb3XYnjb
+	 QH3mL+Q1w8CopSDy/85kUdJ2hjUE+3tk81PXEfLI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-	Jassi Brar <jaswinder.singh@linaro.org>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Wang Jingjin <wangjingjin1@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 243/338] mmc: f-sdh30: Add quirks for broken timeout clock capability
-Date: Mon, 16 Jan 2023 16:51:56 +0100
-Message-Id: <20230116154831.662928567@linuxfoundation.org>
+Subject: [PATCH 4.14 252/338] ASoC: rockchip: spdif: Add missing clk_disable_unprepare() in rk_spdif_runtime_resume()
+Date: Mon, 16 Jan 2023 16:52:05 +0100
+Message-Id: <20230116154832.047025638@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,36 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+From: Wang Jingjin <wangjingjin1@huawei.com>
 
-[ Upstream commit aae9d3a440736691b3c1cb09ae2c32c4f1ee2e67 ]
+[ Upstream commit 6d94d0090527b1763872275a7ccd44df7219b31e ]
 
-There is a case where the timeout clock is not supplied to the capability.
-Add a quirk for that.
+rk_spdif_runtime_resume() may have called clk_prepare_enable() before return
+from failed branches, add missing clk_disable_unprepare() in this case.
 
-Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-Acked-by: Jassi Brar <jaswinder.singh@linaro.org>
-Link: https://lore.kernel.org/r/20221111081033.3813-7-hayashi.kunihiko@socionext.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: f874b80e1571 ("ASoC: rockchip: Add rockchip SPDIF transceiver driver")
+Signed-off-by: Wang Jingjin <wangjingjin1@huawei.com>
+Link: https://lore.kernel.org/r/20221208063900.4180790-1-wangjingjin1@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci_f_sdh30.c | 3 +++
- 1 file changed, 3 insertions(+)
+ sound/soc/rockchip/rockchip_spdif.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/mmc/host/sdhci_f_sdh30.c b/drivers/mmc/host/sdhci_f_sdh30.c
-index 111b66f5439b..43e787954293 100644
---- a/drivers/mmc/host/sdhci_f_sdh30.c
-+++ b/drivers/mmc/host/sdhci_f_sdh30.c
-@@ -180,6 +180,9 @@ static int sdhci_f_sdh30_probe(struct platform_device *pdev)
- 	if (reg & SDHCI_CAN_DO_8BIT)
- 		priv->vendor_hs200 = F_SDH30_EMMC_HS200;
+diff --git a/sound/soc/rockchip/rockchip_spdif.c b/sound/soc/rockchip/rockchip_spdif.c
+index a89fe9b6463b..5ac726da6015 100644
+--- a/sound/soc/rockchip/rockchip_spdif.c
++++ b/sound/soc/rockchip/rockchip_spdif.c
+@@ -89,6 +89,7 @@ static int __maybe_unused rk_spdif_runtime_resume(struct device *dev)
  
-+	if (!(reg & SDHCI_TIMEOUT_CLK_MASK))
-+		host->quirks |= SDHCI_QUIRK_DATA_TIMEOUT_USES_SDCLK;
-+
- 	ret = sdhci_add_host(host);
- 	if (ret)
- 		goto err_add_host;
+ 	ret = clk_prepare_enable(spdif->hclk);
+ 	if (ret) {
++		clk_disable_unprepare(spdif->mclk);
+ 		dev_err(spdif->dev, "hclk clock enable failed %d\n", ret);
+ 		return ret;
+ 	}
 -- 
 2.35.1
 
