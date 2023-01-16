@@ -1,42 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C18346B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:27:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD706C433F0;
-	Mon, 16 Jan 2023 16:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C632D46B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:27:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49821C43396;
+	Mon, 16 Jan 2023 16:27:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886464;
-	bh=uRBQp9UHdL4a+3Li7Q3YgbK+cChH3s6kGvjGA+Kap5k=;
+	s=korg; t=1673886469;
+	bh=mZ8UvLfDsKgykeZh6NMW3/QLEABOpBenoQEbhEUsugg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P7qHRRn5XcyzVILw+hiwmYMvTagU6kuU0OYSUhWp8oxCEFk9NQVD1jTLRF96b+4vM
-	 +3oYNAGjuMHcNRmr0G8/iybdLDhodxjB6al4BTbqBLipHO6ir38As1ODEb+sCMOn3J
-	 sWZvsSOul00AuTUCgbxkO2x/o4vyrtnYqv4Z9n8U=
+	b=0ZqQnWQ72lpPChxoWsDJ1NnjA0GOqnT9e8EU9Aq/m+bc6rrKIA+whzcgpURGWKRH8
+	 Y8re9y4lOhotvThaDacJ2Okj39K3EhzWuCwfOZJjN8ukZJndXjlHiGiBn66+Uj7Htk
+	 DIq366AWGA1ZG4uh2Ed7i3FQSV7JsO1Rnq87rSlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Carsten Haitzler <carsten.haitzler@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	martin.lau@kernel.org,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Ravi Bangoria <ravi.bangoria@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Paul Mackerras <paulus@samba.org>,
+	linux-ppp@vger.kernel.org,
+	syzbot+41cab52ab62ee99ed24a@syzkaller.appspotmail.com,
+	Stanislav Fomichev <sdf@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 440/658] perf debug: Set debug_peo_args and redirect_to_stderr variable to correct values in perf_quiet_option()
-Date: Mon, 16 Jan 2023 16:48:48 +0100
-Message-Id: <20230116154929.666181433@linuxfoundation.org>
+Subject: [PATCH 5.4 415/658] ppp: associate skb with a device at tx
+Date: Mon, 16 Jan 2023 16:48:23 +0100
+Message-Id: <20230116154928.587682624@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -50,87 +38,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Stanislav Fomichev <sdf@google.com>
 
-[ Upstream commit 188ac720d364035008a54d249cf47b4cc100f819 ]
+[ Upstream commit 9f225444467b98579cf28d94f4ad053460dfdb84 ]
 
-When perf uses quiet mode, perf_quiet_option() sets the 'debug_peo_args'
-variable to -1, and display_attr() incorrectly determines the value of
-'debug_peo_args'.  As a result, unexpected information is displayed.
+Syzkaller triggered flow dissector warning with the following:
 
-Before:
+r0 = openat$ppp(0xffffffffffffff9c, &(0x7f0000000000), 0xc0802, 0x0)
+ioctl$PPPIOCNEWUNIT(r0, 0xc004743e, &(0x7f00000000c0))
+ioctl$PPPIOCSACTIVE(r0, 0x40107446, &(0x7f0000000240)={0x2, &(0x7f0000000180)=[{0x20, 0x0, 0x0, 0xfffff034}, {0x6}]})
+pwritev(r0, &(0x7f0000000040)=[{&(0x7f0000000140)='\x00!', 0x2}], 0x1, 0x0, 0x0)
 
-  # perf record --quiet -- ls > /dev/null
-  ------------------------------------------------------------
-  perf_event_attr:
-    size                             128
-    { sample_period, sample_freq }   4000
-    sample_type                      IP|TID|TIME|PERIOD
-    read_format                      ID|LOST
-    disabled                         1
-    inherit                          1
-    mmap                             1
-    comm                             1
-    freq                             1
-    enable_on_exec                   1
-    task                             1
-    precise_ip                       3
-    sample_id_all                    1
-    exclude_guest                    1
-    mmap2                            1
-    comm_exec                        1
-    ksymbol                          1
-    bpf_event                        1
-  ------------------------------------------------------------
-  ...
+[    9.485814] WARNING: CPU: 3 PID: 329 at net/core/flow_dissector.c:1016 __skb_flow_dissect+0x1ee0/0x1fa0
+[    9.485929]  skb_get_poff+0x53/0xa0
+[    9.485937]  bpf_skb_get_pay_offset+0xe/0x20
+[    9.485944]  ? ppp_send_frame+0xc2/0x5b0
+[    9.485949]  ? _raw_spin_unlock_irqrestore+0x40/0x60
+[    9.485958]  ? __ppp_xmit_process+0x7a/0xe0
+[    9.485968]  ? ppp_xmit_process+0x5b/0xb0
+[    9.485974]  ? ppp_write+0x12a/0x190
+[    9.485981]  ? do_iter_write+0x18e/0x2d0
+[    9.485987]  ? __import_iovec+0x30/0x130
+[    9.485997]  ? do_pwritev+0x1b6/0x240
+[    9.486016]  ? trace_hardirqs_on+0x47/0x50
+[    9.486023]  ? __x64_sys_pwritev+0x24/0x30
+[    9.486026]  ? do_syscall_64+0x3d/0x80
+[    9.486031]  ? entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-After:
-  # perf record --quiet -- ls > /dev/null
-  #
+Flow dissector tries to find skb net namespace either via device
+or via socket. Neigher is set in ppp_send_frame, so let's manually
+use ppp->dev.
 
-redirect_to_stderr is a similar problem.
-
-Fixes: f78eaef0e0493f60 ("perf tools: Allow to force redirect pr_debug to stderr.")
-Fixes: ccd26741f5e6bdf2 ("perf tool: Provide an option to print perf_event_open args and return value")
-Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Carsten Haitzler <carsten.haitzler@arm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: martin.lau@kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Ravi Bangoria <ravi.bangoria@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221220035702.188413-2-yangjihong1@huawei.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Paul Mackerras <paulus@samba.org>
+Cc: linux-ppp@vger.kernel.org
+Reported-by: syzbot+41cab52ab62ee99ed24a@syzkaller.appspotmail.com
+Signed-off-by: Stanislav Fomichev <sdf@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/debug.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ppp/ppp_generic.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/perf/util/debug.c b/tools/perf/util/debug.c
-index 682146d04379..112cb85f6086 100644
---- a/tools/perf/util/debug.c
-+++ b/tools/perf/util/debug.c
-@@ -232,6 +232,10 @@ int perf_quiet_option(void)
- 		var++;
- 	}
+diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
+index a085213dc2ea..078c0f474f96 100644
+--- a/drivers/net/ppp/ppp_generic.c
++++ b/drivers/net/ppp/ppp_generic.c
+@@ -1522,6 +1522,8 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
+ 	int len;
+ 	unsigned char *cp;
  
-+	/* For debug variables that are used as bool types, set to 0. */
-+	redirect_to_stderr = 0;
-+	debug_peo_args = 0;
++	skb->dev = ppp->dev;
 +
- 	return 0;
- }
- 
+ 	if (proto < 0x8000) {
+ #ifdef CONFIG_PPP_FILTER
+ 		/* check if we should pass this packet */
 -- 
 2.35.1
 
