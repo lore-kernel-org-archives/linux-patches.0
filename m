@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 374556FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:55:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4C73C433D2;
-	Mon, 16 Jan 2023 16:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF6B06FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50C83C433EF;
+	Mon, 16 Jan 2023 16:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888158;
-	bh=0jHOUiJdIe0Sq5pyBbjYoGWy6pB9LpvVbQDgx763K0E=;
+	s=korg; t=1673888160;
+	bh=DuJ9D+rF8qkwZ/Mc4sb0/1NBoYZZ35LxJk8APFlhOJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q8EV4ecf+kyGCJ3yXsM5JPRiGoPBJdpaY5EtHhbn4jL9CEj6240FAUJqSg17mjflB
-	 svw0HlPLo4/fPqpqA6mcD+9tW34VV/YylTuYkCLmuv1BGXYRvSa2stbzCFOTgL+6Eq
-	 ypF6npmf1W5tWLAeXgovwQpqIlDqBjtHNDYeU97g=
+	b=dEVUfC+7q3C+pqRYs3sdSbTewksXhJWEbn5Dj45hrHMgzAHjqLUmiZETCCH+mnHa+
+	 vcviCjwvNopkiLX7xP4cIblDXRf7CwILqqm01F2xUUMdGuvuv4O7caalVG0ajmskCl
+	 +1LpUNDeygQ4+HQwBbPvktJmUP28iGFJXU2XrHKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-fsd@tesla.com,
-	Smitha T Murthy <smitha.t@samsung.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 421/521] media: s5p-mfc: Fix to handle reference queue during finishing
-Date: Mon, 16 Jan 2023 16:51:23 +0100
-Message-Id: <20230116154905.966380154@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 4.19 393/521] cifs: fix confusing debug message
+Date: Mon, 16 Jan 2023 16:50:55 +0100
+Message-Id: <20230116154904.680742183@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,67 +34,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Smitha T Murthy <smitha.t@samsung.com>
+From: Paulo Alcantara <pc@cjr.nz>
 
-[ Upstream commit d8a46bc4e1e0446459daa77c4ce14218d32dacf9 ]
+commit a85ceafd41927e41a4103d228a993df7edd8823b upstream.
 
-On receiving last buffer driver puts MFC to MFCINST_FINISHING state which
-in turn skips transferring of frame from SRC to REF queue. This causes
-driver to stop MFC encoding and last frame is lost.
+Since rc was initialised to -ENOMEM in cifs_get_smb_ses(), when an
+existing smb session was found, free_xid() would be called and then
+print
 
-This patch guarantees safe handling of frames during MFCINST_FINISHING and
-correct clearing of workbit to avoid early stopping of encoding.
+  CIFS: fs/cifs/connect.c: Existing tcp session with server found
+  CIFS: fs/cifs/connect.c: VFS: in cifs_get_smb_ses as Xid: 44 with uid: 0
+  CIFS: fs/cifs/connect.c: Existing smb sess found (status=1)
+  CIFS: fs/cifs/connect.c: VFS: leaving cifs_get_smb_ses (xid = 44) rc = -12
 
-Fixes: af9357467810 ("[media] MFC: Add MFC 5.1 V4L2 driver")
+Fix this by initialising rc to 0 and then let free_xid() print this
+instead
 
+  CIFS: fs/cifs/connect.c: Existing tcp session with server found
+  CIFS: fs/cifs/connect.c: VFS: in cifs_get_smb_ses as Xid: 14 with uid: 0
+  CIFS: fs/cifs/connect.c: Existing smb sess found (status=1)
+  CIFS: fs/cifs/connect.c: VFS: leaving cifs_get_smb_ses (xid = 14) rc = 0
+
+Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
 Cc: stable@vger.kernel.org
-Cc: linux-fsd@tesla.com
-Signed-off-by: Smitha T Murthy <smitha.t@samsung.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/platform/s5p-mfc/s5p_mfc_enc.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/cifs/connect.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c b/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c
-index 3ad4f5073002..cc8d101eb2b0 100644
---- a/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c
-+++ b/drivers/media/platform/s5p-mfc/s5p_mfc_enc.c
-@@ -1224,6 +1224,7 @@ static int enc_post_frame_start(struct s5p_mfc_ctx *ctx)
- 	unsigned long mb_y_addr, mb_c_addr;
- 	int slice_type;
- 	unsigned int strm_size;
-+	bool src_ready;
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -2940,7 +2940,7 @@ cifs_set_cifscreds(struct smb_vol *vol _
+ static struct cifs_ses *
+ cifs_get_smb_ses(struct TCP_Server_Info *server, struct smb_vol *volume_info)
+ {
+-	int rc = -ENOMEM;
++	int rc = 0;
+ 	unsigned int xid;
+ 	struct cifs_ses *ses;
+ 	struct sockaddr_in *addr = (struct sockaddr_in *)&server->dstaddr;
+@@ -2982,6 +2982,8 @@ cifs_get_smb_ses(struct TCP_Server_Info
+ 		return ses;
+ 	}
  
- 	slice_type = s5p_mfc_hw_call(dev->mfc_ops, get_enc_slice_type, dev);
- 	strm_size = s5p_mfc_hw_call(dev->mfc_ops, get_enc_strm_size, dev);
-@@ -1263,7 +1264,8 @@ static int enc_post_frame_start(struct s5p_mfc_ctx *ctx)
- 			}
- 		}
- 	}
--	if ((ctx->src_queue_cnt > 0) && (ctx->state == MFCINST_RUNNING)) {
-+	if (ctx->src_queue_cnt > 0 && (ctx->state == MFCINST_RUNNING ||
-+				       ctx->state == MFCINST_FINISHING)) {
- 		mb_entry = list_entry(ctx->src_queue.next, struct s5p_mfc_buf,
- 									list);
- 		if (mb_entry->flags & MFC_BUF_FLAG_USED) {
-@@ -1294,7 +1296,13 @@ static int enc_post_frame_start(struct s5p_mfc_ctx *ctx)
- 		vb2_set_plane_payload(&mb_entry->b->vb2_buf, 0, strm_size);
- 		vb2_buffer_done(&mb_entry->b->vb2_buf, VB2_BUF_STATE_DONE);
- 	}
--	if ((ctx->src_queue_cnt == 0) || (ctx->dst_queue_cnt == 0))
++	rc = -ENOMEM;
 +
-+	src_ready = true;
-+	if (ctx->state == MFCINST_RUNNING && ctx->src_queue_cnt == 0)
-+		src_ready = false;
-+	if (ctx->state == MFCINST_FINISHING && ctx->ref_queue_cnt == 0)
-+		src_ready = false;
-+	if (!src_ready || ctx->dst_queue_cnt == 0)
- 		clear_work_bit(ctx);
- 
- 	return 0;
--- 
-2.35.1
-
+ 	cifs_dbg(FYI, "Existing smb sess not found\n");
+ 	ses = sesInfoAlloc();
+ 	if (ses == NULL)
 
 
