@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FF8733EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D91E8C433D2;
-	Mon, 16 Jan 2023 16:03:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB46633EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73683C433D2;
+	Mon, 16 Jan 2023 16:03:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885034;
-	bh=GYgbG5xoDHe9eBJ9jinrgt2ZnyOXR0VHDFi0ySDDrkY=;
+	s=korg; t=1673885036;
+	bh=Js6RZH2ecQ+hKtymEZUwQNTYxCqG5fcjjoHM54slJ1s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HL7za7cnIADLYKeKJ0Fw1ByuAUldM/MH9XE+3yNXzS14Lm63s4NLa/nrlkSfxk1rT
-	 PPo9vZnsgGyj15P7RNYXZrJNywTS1nfT88F4CIGDUTnB7oVWnCU9+dCR7di6fc3Jlb
-	 zL6El2x+r0AEJ82BYh19CJPAwhzgbZFsJtCw92QM=
+	b=KX5vb3Zh+HOpAD/VR3mfAn02FFRjx91TqkKqsqXHo43F77Tvm64VsOkY9/MhxHQ/s
+	 DwS9IZiLK3bQ9xGBUmNt20iyG2imhkeEyqbxwxSAvb6MFQxPonH2ETDni10RhqsqFN
+	 D2RZrfKd1mNT7/OqRl12OyqkKqL7heMrMwuEG7qE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Emanuele Ghidoli <emanuele.ghidoli@toradex.com>,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 49/86] ASoC: wm8904: fix wrong outputs volume after power reactivation
-Date: Mon, 16 Jan 2023 16:51:23 +0100
-Message-Id: <20230116154749.112211752@linuxfoundation.org>
+Subject: [PATCH 5.15 50/86] ALSA: usb-audio: Make sure to stop endpoints before closing EPs
+Date: Mon, 16 Jan 2023 16:51:24 +0100
+Message-Id: <20230116154749.151492211@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -37,67 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 472a6309c6467af89dbf660a8310369cc9cb041f ]
+[ Upstream commit 0599313e26666e79f6e7fe1450588431b8cb25d5 ]
 
-Restore volume after charge pump and PGA activation to ensure
-that volume settings are correctly applied when re-enabling codec
-from SND_SOC_BIAS_OFF state.
-CLASS_W, CHARGE_PUMP and POWER_MANAGEMENT_2 register configuration
-affect how the volume register are applied and must be configured first.
+At the PCM hw params, we may re-configure the endpoints and it's done
+by a temporary EP close followed by re-open.  A potential problem
+there is that the EP might be already running internally at the PCM
+prepare stage; it's seen typically in the playback stream with the
+implicit feedback sync.  As this stream start isn't tracked by the
+core PCM layer, we'd need to stop it explicitly, and that's the
+missing piece.
 
-Fixes: a91eb199e4dc ("ASoC: Initial WM8904 CODEC driver")
-Link: https://lore.kernel.org/all/c7864c35-738c-a867-a6a6-ddf9f98df7e7@gmail.com/
-Signed-off-by: Emanuele Ghidoli <emanuele.ghidoli@toradex.com>
-Signed-off-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20221223080247.7258-1-francesco@dolcini.it
-Signed-off-by: Mark Brown <broonie@kernel.org>
+This patch adds the stop_endpoints() call at snd_usb_hw_params() to
+assure the stream stop before closing the EPs.
+
+Fixes: bf6313a0ff76 ("ALSA: usb-audio: Refactor endpoint management")
+Link: https://lore.kernel.org/r/4e509aea-e563-e592-e652-ba44af6733fe@veniogames.com
+Link: https://lore.kernel.org/r/20230102170759.29610-2-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/wm8904.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ sound/usb/pcm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/wm8904.c b/sound/soc/codecs/wm8904.c
-index a02a77fef360..6759ce7e09ff 100644
---- a/sound/soc/codecs/wm8904.c
-+++ b/sound/soc/codecs/wm8904.c
-@@ -697,6 +697,7 @@ static int out_pga_event(struct snd_soc_dapm_widget *w,
- 	int dcs_mask;
- 	int dcs_l, dcs_r;
- 	int dcs_l_reg, dcs_r_reg;
-+	int an_out_reg;
- 	int timeout;
- 	int pwr_reg;
+diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
+index b6cd43c5ea3e..ef0c1baaefde 100644
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -525,6 +525,8 @@ static int snd_usb_hw_params(struct snd_pcm_substream *substream,
+ 		if (snd_usb_endpoint_compatible(chip, subs->data_endpoint,
+ 						fmt, hw_params))
+ 			goto unlock;
++		if (stop_endpoints(subs, false))
++			sync_pending_stops(subs);
+ 		close_endpoints(chip, subs);
+ 	}
  
-@@ -712,6 +713,7 @@ static int out_pga_event(struct snd_soc_dapm_widget *w,
- 		dcs_mask = WM8904_DCS_ENA_CHAN_0 | WM8904_DCS_ENA_CHAN_1;
- 		dcs_r_reg = WM8904_DC_SERVO_8;
- 		dcs_l_reg = WM8904_DC_SERVO_9;
-+		an_out_reg = WM8904_ANALOGUE_OUT1_LEFT;
- 		dcs_l = 0;
- 		dcs_r = 1;
- 		break;
-@@ -720,6 +722,7 @@ static int out_pga_event(struct snd_soc_dapm_widget *w,
- 		dcs_mask = WM8904_DCS_ENA_CHAN_2 | WM8904_DCS_ENA_CHAN_3;
- 		dcs_r_reg = WM8904_DC_SERVO_6;
- 		dcs_l_reg = WM8904_DC_SERVO_7;
-+		an_out_reg = WM8904_ANALOGUE_OUT2_LEFT;
- 		dcs_l = 2;
- 		dcs_r = 3;
- 		break;
-@@ -792,6 +795,10 @@ static int out_pga_event(struct snd_soc_dapm_widget *w,
- 		snd_soc_component_update_bits(component, reg,
- 				    WM8904_HPL_ENA_OUTP | WM8904_HPR_ENA_OUTP,
- 				    WM8904_HPL_ENA_OUTP | WM8904_HPR_ENA_OUTP);
-+
-+		/* Update volume, requires PGA to be powered */
-+		val = snd_soc_component_read(component, an_out_reg);
-+		snd_soc_component_write(component, an_out_reg, val);
- 		break;
- 
- 	case SND_SOC_DAPM_POST_PMU:
 -- 
 2.35.1
 
