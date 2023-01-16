@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF7366FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:08:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B2AC433EF;
-	Mon, 16 Jan 2023 17:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A046FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:08:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA9FC433EF;
+	Mon, 16 Jan 2023 17:08:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888898;
-	bh=bIQA4dkqKJc0tb27tV6y/ZyNWMmQ9Z8x3QuJ+lDPMFA=;
+	s=korg; t=1673888901;
+	bh=QNr73EVDlupqc+QMAJTeeJn8dV70QGIzDf9vswfj+Jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0iq2LzdsmnxY5Mswxbh1UbBUKvhtzrlOY/OTTUHDmco2u4aTu+YbJa5B+OeNKGBpA
-	 ngBGqjgQouu2CzfToVzTtu7o0cn7qQua+baaia2qvWTjBNnrXNZETJZzd+F7zTyZwM
-	 T7qetwfuERKuGUoBgqx1d0NzJaalx86+hnv900tk=
+	b=w/T1vTX2vOsCNfcQ57zTXD2eGuqSTJWqK0sqH6Bb46vtXr2tJisjdzQCJiPhOr+UW
+	 bFEojDkXQAYEQ3WBiRSV3MC4KhDHW5LIjxvn//hv2kzs0RukKcM237hqGTG4ZhytlR
+	 2MhMQ0QcJacxWHKbG/i0U2JQA+RZ6WhLTfrF2tJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Mike Marshall <hubcap@omnibond.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 151/338] RDMA/hfi1: Fix error return code in parse_platform_config()
-Date: Mon, 16 Jan 2023 16:50:24 +0100
-Message-Id: <20230116154827.437175673@linuxfoundation.org>
+Subject: [PATCH 4.14 152/338] orangefs: Fix sysfs not cleanup when dev init failed
+Date: Mon, 16 Jan 2023 16:50:25 +0100
+Message-Id: <20230116154827.471164710@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,76 +35,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 725349f8ba1e78a146c6ff8f3ee5e2712e517106 ]
+[ Upstream commit ea60a4ad0cf88b411cde6888b8c890935686ecd7 ]
 
-In the previous iteration of the while loop, the "ret" may have been
-assigned a value of 0, so the error return code -EINVAL may have been
-incorrectly set to 0. To fix set valid return code before calling to
-goto.
+When the dev init failed, should cleanup the sysfs, otherwise, the
+module will never be loaded since can not create duplicate sysfs
+directory:
 
-Fixes: 97167e813415 ("staging/rdma/hfi1: Tune for unknown channel if configuration file is absent")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Link: https://lore.kernel.org/r/1669953638-11747-1-git-send-email-wangyufen@huawei.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+  sysfs: cannot create duplicate filename '/fs/orangefs'
+
+  CPU: 1 PID: 6549 Comm: insmod Tainted: G        W          6.0.0+ #44
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x34/0x44
+   sysfs_warn_dup.cold+0x17/0x24
+   sysfs_create_dir_ns+0x16d/0x180
+   kobject_add_internal+0x156/0x3a0
+   kobject_init_and_add+0xcf/0x120
+   orangefs_sysfs_init+0x7e/0x3a0 [orangefs]
+   orangefs_init+0xfe/0x1000 [orangefs]
+   do_one_initcall+0x87/0x2a0
+   do_init_module+0xdf/0x320
+   load_module+0x2f98/0x3330
+   __do_sys_finit_module+0x113/0x1b0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+  kobject_add_internal failed for orangefs with -EEXIST, don't try to register things with the same name in the same directory.
+
+Fixes: 2f83ace37181 ("orangefs: put register_chrdev immediately before register_filesystem")
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Mike Marshall <hubcap@omnibond.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/firmware.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/orangefs/orangefs-mod.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/firmware.c b/drivers/infiniband/hw/hfi1/firmware.c
-index c54359376cda..8499f27ca3c0 100644
---- a/drivers/infiniband/hw/hfi1/firmware.c
-+++ b/drivers/infiniband/hw/hfi1/firmware.c
-@@ -1761,6 +1761,7 @@ int parse_platform_config(struct hfi1_devdata *dd)
- 
- 	if (!dd->platform_config.data) {
- 		dd_dev_err(dd, "%s: Missing config file\n", __func__);
-+		ret = -EINVAL;
- 		goto bail;
- 	}
- 	ptr = (u32 *)dd->platform_config.data;
-@@ -1769,6 +1770,7 @@ int parse_platform_config(struct hfi1_devdata *dd)
- 	ptr++;
- 	if (magic_num != PLATFORM_CONFIG_MAGIC_NUM) {
- 		dd_dev_err(dd, "%s: Bad config file\n", __func__);
-+		ret = -EINVAL;
- 		goto bail;
+diff --git a/fs/orangefs/orangefs-mod.c b/fs/orangefs/orangefs-mod.c
+index 85ef87245a87..c8818163e392 100644
+--- a/fs/orangefs/orangefs-mod.c
++++ b/fs/orangefs/orangefs-mod.c
+@@ -141,7 +141,7 @@ static int __init orangefs_init(void)
+ 		gossip_err("%s: could not initialize device subsystem %d!\n",
+ 			   __func__,
+ 			   ret);
+-		goto cleanup_device;
++		goto cleanup_sysfs;
  	}
  
-@@ -1779,6 +1781,7 @@ int parse_platform_config(struct hfi1_devdata *dd)
- 	if (file_length > dd->platform_config.size) {
- 		dd_dev_info(dd, "%s:File claims to be larger than read size\n",
- 			    __func__);
-+		ret = -EINVAL;
- 		goto bail;
- 	} else if (file_length < dd->platform_config.size) {
- 		dd_dev_info(dd,
-@@ -1798,6 +1801,7 @@ int parse_platform_config(struct hfi1_devdata *dd)
- 			dd_dev_err(dd, "%s: Failed validation at offset %ld\n",
- 				   __func__, (ptr - (u32 *)
- 					      dd->platform_config.data));
-+			ret = -EINVAL;
- 			goto bail;
- 		}
+ 	ret = register_filesystem(&orangefs_fs_type);
+@@ -153,11 +153,11 @@ static int __init orangefs_init(void)
+ 		goto out;
+ 	}
  
-@@ -1844,6 +1848,7 @@ int parse_platform_config(struct hfi1_devdata *dd)
- 					   __func__, table_type,
- 					   (ptr - (u32 *)
- 					    dd->platform_config.data));
-+				ret = -EINVAL;
- 				goto bail; /* We don't trust this file now */
- 			}
- 			pcfgcache->config_tables[table_type].table = ptr;
-@@ -1868,6 +1873,7 @@ int parse_platform_config(struct hfi1_devdata *dd)
- 					   __func__, table_type,
- 					   (ptr -
- 					    (u32 *)dd->platform_config.data));
-+				ret = -EINVAL;
- 				goto bail; /* We don't trust this file now */
- 			}
- 			pcfgcache->config_tables[table_type].table_metadata =
+-	orangefs_sysfs_exit();
+-
+-cleanup_device:
+ 	orangefs_dev_cleanup();
+ 
++cleanup_sysfs:
++	orangefs_sysfs_exit();
++
+ sysfs_init_failed:
+ 
+ debugfs_init_failed:
 -- 
 2.35.1
 
