@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B78E16FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:36:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A0F5C433D2;
-	Mon, 16 Jan 2023 16:36:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B276FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:36:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E021BC433F0;
+	Mon, 16 Jan 2023 16:36:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886963;
-	bh=OB5LrUrjmsSfhrns86hwpqaAH4TNSO1lszxIGuEq56Q=;
+	s=korg; t=1673886966;
+	bh=oTVqkeGNDIYKImYbGWjQIcxAd57HLRvvwMXzG3W5Ct4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SGChM7Ar+ihYuEN63/Muk/1cXR/wuuFHnhCiJSr0nj9g29PCvNU6ynYxa5mSTWUVf
-	 Zvmh+ApxKBePU8aC1l4QJSCSptgjS4WlIEtcdQ6GW8N9cQGXGa9EC6ZEc1Skeqcp0j
-	 L2yY4jAMtPen8wsLhipQk4CVA7ObFuLED+fJExuk=
+	b=WBe3OHCrSQ7mbVSvuynSuZ4SjwiMr/nFKjY1V2jGMMQyXTjxMXnIP7JY+CuGIUWZS
+	 mOcJgm7HLnHIAi9UGK2OZv6bhMl6Ifke5B1NyKNJ4NjN+gFq+4Uv3JL5LCGlKaoJIA
+	 2JKX5fXco5kKwAtDHXxDxsIu7iNf/sB370gy3poI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Rob Clark <robdclark@chromium.org>
-Subject: [PATCH 5.4 611/658] drm/msm/adreno: Make adreno quirks not overwrite each other
-Date: Mon, 16 Jan 2023 16:51:39 +0100
-Message-Id: <20230116154937.454780787@linuxfoundation.org>
+	"Ilia.Gavrilov" <Ilia.Gavrilov@infotecs.ru>,
+	Simon Horman <simon.horman@corigine.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 5.4 629/658] netfilter: ipset: Fix overflow before widen in the bitmap_ip_create() function.
+Date: Mon, 16 Jan 2023 16:51:57 +0100
+Message-Id: <20230116154938.271379543@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -38,56 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
 
-commit 13ef096e342b00e30b95a90c6c13eee1f0bec4c5 upstream.
+commit 9ea4b476cea1b7d461d16dda25ca3c7e616e2d15 upstream.
 
-So far the adreno quirks have all been assigned with an OR operator,
-which is problematic, because they were assigned consecutive integer
-values, which makes checking them with an AND operator kind of no bueno..
+When first_ip is 0, last_ip is 0xFFFFFFFF, and netmask is 31, the value of
+an arithmetic expression 2 << (netmask - mask_bits - 1) is subject
+to overflow due to a failure casting operands to a larger data type
+before performing the arithmetic.
 
-Switch to using BIT(n) so that only the quirks that the programmer chose
-are taken into account when evaluating info->quirks & ADRENO_QUIRK_...
+Note that it's harmless since the value will be checked at the next step.
 
-Fixes: 370063ee427a ("drm/msm/adreno: Add A540 support")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Rob Clark <robdclark@gmail.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/516456/
-Link: https://lore.kernel.org/r/20230102100201.77286-1-konrad.dybcio@linaro.org
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with SVACE.
+
+Fixes: b9fed748185a ("netfilter: ipset: Check and reject crazy /0 input parameters")
+Signed-off-by: Ilia.Gavrilov <Ilia.Gavrilov@infotecs.ru>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.h |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ net/netfilter/ipset/ip_set_bitmap_ip.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -47,11 +47,9 @@ enum {
- 	ADRENO_FW_MAX,
- };
+--- a/net/netfilter/ipset/ip_set_bitmap_ip.c
++++ b/net/netfilter/ipset/ip_set_bitmap_ip.c
+@@ -296,8 +296,8 @@ bitmap_ip_create(struct net *net, struct
+ 			return -IPSET_ERR_BITMAP_RANGE;
  
--enum adreno_quirks {
--	ADRENO_QUIRK_TWO_PASS_USE_WFI = 1,
--	ADRENO_QUIRK_FAULT_DETECT_MASK = 2,
--	ADRENO_QUIRK_LMLOADKILL_DISABLE = 3,
--};
-+#define ADRENO_QUIRK_TWO_PASS_USE_WFI		BIT(0)
-+#define ADRENO_QUIRK_FAULT_DETECT_MASK		BIT(1)
-+#define ADRENO_QUIRK_LMLOADKILL_DISABLE		BIT(2)
- 
- struct adreno_rev {
- 	uint8_t  core;
-@@ -74,7 +72,7 @@ struct adreno_info {
- 	const char *name;
- 	const char *fw[ADRENO_FW_MAX];
- 	uint32_t gmem;
--	enum adreno_quirks quirks;
-+	u64 quirks;
- 	struct msm_gpu *(*init)(struct drm_device *dev);
- 	const char *zapfw;
- 	u32 inactive_period;
+ 		pr_debug("mask_bits %u, netmask %u\n", mask_bits, netmask);
+-		hosts = 2 << (32 - netmask - 1);
+-		elements = 2 << (netmask - mask_bits - 1);
++		hosts = 2U << (32 - netmask - 1);
++		elements = 2UL << (netmask - mask_bits - 1);
+ 	}
+ 	if (elements > IPSET_BITMAP_MAX_RANGE + 1)
+ 		return -IPSET_ERR_BITMAP_RANGE_SIZE;
 
 
