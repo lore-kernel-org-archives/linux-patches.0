@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A8526FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:48:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF82C433EF;
-	Mon, 16 Jan 2023 16:48:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04ED86FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:48:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80160C433EF;
+	Mon, 16 Jan 2023 16:48:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887689;
-	bh=IhU3QuRUJo5Mel7fMu0R5pKy7dZqNan7WCWK3154ZS8=;
+	s=korg; t=1673887691;
+	bh=zDSe1fCpW15JHXVl1zLrWCJragmwvt3ZJ5ExCkqDhlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=glOf1QZ9XkrGdmVjemQbCcL+LibBhtxCehyzQey8G+Nh5NqWPgBan07lMt6ubFOMx
-	 Td288qI3ltVfcLb5nm4L8wTR37KZ3ZhgEdE1DgbScf02MrY9tSSJJkVFBryzxv16Cg
-	 vOF4DGM2kLpK71ARNsPAqZD6P0ksphfa4IpyZOVg=
+	b=K2+eZY8x69IwUR0g4dWMgYyt4bUJloCOnJFgKuCvHNm50J1lQ7/TywE/77wrk7VY/
+	 3di7K5QDEehHB2Eg2vQYU+wecYp9wP2O9PIWjm/62r7qHiessntUI780yRZ0lYj2os
+	 DnhRUuq1ktHvVq98vapzCp4TEjDDQL199XXLooT0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YueHaibing <yuehaibing@huawei.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 245/521] staging: rtl8192e: Fix potential use-after-free in rtllib_rx_Monitor()
-Date: Mon, 16 Jan 2023 16:48:27 +0100
-Message-Id: <20230116154858.100508867@linuxfoundation.org>
+Subject: [PATCH 4.19 246/521] vme: Fix error not catched in fake_init()
+Date: Mon, 16 Jan 2023 16:48:28 +0100
+Message-Id: <20230116154858.134960121@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -34,38 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YueHaibing <yuehaibing@huawei.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit d30f4436f364b4ad915ca2c09be07cd0f93ceb44 ]
+[ Upstream commit 7bef797d707f1744f71156b21d41e3b8c946631f ]
 
-The skb is delivered to netif_rx() in rtllib_monitor_rx(), which may free it,
-after calling this, dereferencing skb may trigger use-after-free.
-Found by Smatch.
+In fake_init(), __root_device_register() is possible to fail but it's
+ignored, which can cause unregistering vme_root fail when exit.
 
-Fixes: 94a799425eee ("From: wlanfae <wlanfae@realtek.com> [PATCH 1/8] rtl8192e: Import new version of driver from realtek")
-Signed-off-by: YueHaibing <yuehaibing@huawei.com>
-Link: https://lore.kernel.org/r/20221123081253.22296-1-yuehaibing@huawei.com
+ general protection fault,
+ probably for non-canonical address 0xdffffc000000008c
+ KASAN: null-ptr-deref in range [0x0000000000000460-0x0000000000000467]
+ RIP: 0010:root_device_unregister+0x26/0x60
+ Call Trace:
+  <TASK>
+  __x64_sys_delete_module+0x34f/0x540
+  do_syscall_64+0x38/0x90
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Return error when __root_device_register() fails.
+
+Fixes: 658bcdae9c67 ("vme: Adding Fake VME driver")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Link: https://lore.kernel.org/r/20221205084805.147436-1-chenzhongjin@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/rtl8192e/rtllib_rx.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vme/bridges/vme_fake.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/staging/rtl8192e/rtllib_rx.c b/drivers/staging/rtl8192e/rtllib_rx.c
-index 3bfd63fe4ac1..004d89853a68 100644
---- a/drivers/staging/rtl8192e/rtllib_rx.c
-+++ b/drivers/staging/rtl8192e/rtllib_rx.c
-@@ -1500,9 +1500,9 @@ static int rtllib_rx_Monitor(struct rtllib_device *ieee, struct sk_buff *skb,
- 		hdrlen += 4;
- 	}
+diff --git a/drivers/vme/bridges/vme_fake.c b/drivers/vme/bridges/vme_fake.c
+index 685a43bdc2a1..06bfc7f0e0b6 100644
+--- a/drivers/vme/bridges/vme_fake.c
++++ b/drivers/vme/bridges/vme_fake.c
+@@ -1077,6 +1077,8 @@ static int __init fake_init(void)
  
--	rtllib_monitor_rx(ieee, skb, rx_stats, hdrlen);
- 	ieee->stats.rx_packets++;
- 	ieee->stats.rx_bytes += skb->len;
-+	rtllib_monitor_rx(ieee, skb, rx_stats, hdrlen);
+ 	/* We need a fake parent device */
+ 	vme_root = __root_device_register("vme", THIS_MODULE);
++	if (IS_ERR(vme_root))
++		return PTR_ERR(vme_root);
  
- 	return 1;
- }
+ 	/* If we want to support more than one bridge at some point, we need to
+ 	 * dynamically allocate this so we get one per device.
 -- 
 2.35.1
 
