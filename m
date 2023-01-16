@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D316B46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597FDC433EF;
-	Mon, 16 Jan 2023 16:19:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3FE46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:20:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A9CC433EF;
+	Mon, 16 Jan 2023 16:20:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885998;
-	bh=xOSIsdrlsN8wvIdBL7ojX65T6doiYRzlcIhZ17Gdm40=;
+	s=korg; t=1673886001;
+	bh=9GGRKnD/CkOSOU9UtpSOD7Q6zwkqYi7MVhHVg1XesHM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zlZOQRGoaD/mpnC1odjOZJoJNyIS1W3ya4uxFJV/00ZAJz3c+e/tVW49wRXHZAxXi
-	 Ca2vxcE0Mt5mqtLDydsI0w/ZY5biFiGfuWt73PMpWRq2Ia3KQIWOoFqu5ZBpmdWtEp
-	 Aj1/kSLBrN+piqo0c6RQvlfAwTbrDoHxHNnbxVJ0=
+	b=1XZTrqT2CfchLPUyGvmLlMDataNsXoSDoyfGf8F39xE/NdT/9m5YnDLpwolyAxf7e
+	 s5o5mT5Lvr98NjT6On0TEPnTHQl77OUHyxJabssGVSLZlHe3+g8xrcYBPbHgXhdTtu
+	 2Bg50DM+hinBrlAlV7cxkFFqoErx1dxph1QQ3x1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
-	Narsimhulu Musini <nmusini@cisco.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 264/658] scsi: snic: Fix possible UAF in snic_tgt_create()
-Date: Mon, 16 Jan 2023 16:45:52 +0100
-Message-Id: <20230116154921.665335690@linuxfoundation.org>
+Subject: [PATCH 5.4 265/658] RDMA/nldev: Add checks for nla_nest_start() in fill_stat_counter_qps()
+Date: Mon, 16 Jan 2023 16:45:53 +0100
+Message-Id: <20230116154921.712008623@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,45 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit e118df492320176af94deec000ae034cc92be754 ]
+[ Upstream commit ea5ef136e215fdef35f14010bc51fcd6686e6922 ]
 
-Smatch reports a warning as follows:
+As the nla_nest_start() may fail with NULL returned, the return value needs
+to be checked.
 
-drivers/scsi/snic/snic_disc.c:307 snic_tgt_create() warn:
-  '&tgt->list' not removed from list
-
-If device_add() fails in snic_tgt_create(), tgt will be freed, but
-tgt->list will not be removed from snic->disc.tgt_list, then list traversal
-may cause UAF.
-
-Remove from snic->disc.tgt_list before free().
-
-Fixes: c8806b6c9e82 ("snic: driver for Cisco SCSI HBA")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20221117035100.2944812-1-cuigaosheng1@huawei.com
-Acked-by: Narsimhulu Musini <nmusini@cisco.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: c4ffee7c9bdb ("RDMA/netlink: Implement counter dumpit calback")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Link: https://lore.kernel.org/r/20221126043410.85632-1-yuancan@huawei.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/snic/snic_disc.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/core/nldev.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/scsi/snic/snic_disc.c b/drivers/scsi/snic/snic_disc.c
-index e9ccfb97773f..7cf871323b2c 100644
---- a/drivers/scsi/snic/snic_disc.c
-+++ b/drivers/scsi/snic/snic_disc.c
-@@ -318,6 +318,9 @@ snic_tgt_create(struct snic *snic, struct snic_tgt_id *tgtid)
- 			      ret);
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index 93cc60e92d82..88c68d77e6b1 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -694,6 +694,8 @@ static int fill_stat_counter_qps(struct sk_buff *msg,
+ 	int ret = 0;
  
- 		put_device(&snic->shost->shost_gendev);
-+		spin_lock_irqsave(snic->shost->host_lock, flags);
-+		list_del(&tgt->list);
-+		spin_unlock_irqrestore(snic->shost->host_lock, flags);
- 		kfree(tgt);
- 		tgt = NULL;
+ 	table_attr = nla_nest_start(msg, RDMA_NLDEV_ATTR_RES_QP);
++	if (!table_attr)
++		return -EMSGSIZE;
  
+ 	rt = &counter->device->res[RDMA_RESTRACK_QP];
+ 	xa_lock(&rt->xa);
 -- 
 2.35.1
 
