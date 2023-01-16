@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78A06FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:38:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 299F9C433D2;
-	Mon, 16 Jan 2023 16:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47FE96FA3
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:38:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF404C433EF;
+	Mon, 16 Jan 2023 16:38:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887098;
-	bh=wObvOxVgY81+JnwDbGQdVQsAyZ8ybz3FsHdnVYGLBTc=;
+	s=korg; t=1673887101;
+	bh=HChJHmFT/sOYSM1H3gN7N6r+y+P1rf8cl7zPH+28QfU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fnVleL+VSdWzaU29eU05eSaU7C4sRfrXt7kzJV5E5py1bscfrItFHfWxQaf3Stt9m
-	 hF+XrnST3X49C5bVBIq9D2fRMUcepmTdb6JVHhgvw8Xz/1mhxh7XAi6wT4fpiPB3Bf
-	 g8j/+Rm4KYPtbdWR2D5QiOvTzhHh/LHxJFdzMgAg=
+	b=i2L4VDWLp+SE66M34EPQVTvHTqyFZgdKlY74Xfxu1su8xsg1BoQ7IXpTvoUqMV903
+	 DsZ3THkP4hQaeN6CvOoLvfhz5AW561oDS5EVpydMIZDzyLt/1gBIvXufbU5SxdUpH0
+	 SbVMJ+VLjo3bbcUxiyUbMGq5yEUZaRsi9bUf4scQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	stable <stable@kernel.org>,
+	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 021/521] net: loopback: use NET_NAME_PREDICTABLE for name_assign_type
-Date: Mon, 16 Jan 2023 16:44:43 +0100
-Message-Id: <20230116154848.231063763@linuxfoundation.org>
+Subject: [PATCH 4.19 022/521] usb: musb: remove extra check in musb_gadget_vbus_draw
+Date: Mon, 16 Jan 2023 16:44:44 +0100
+Message-Id: <20230116154848.275099836@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,47 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+From: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
 
-[ Upstream commit 31d929de5a112ee1b977a89c57de74710894bbbf ]
+[ Upstream commit ecec4b20d29c3d6922dafe7d2555254a454272d2 ]
 
-When the name_assign_type attribute was introduced (commit
-685343fc3ba6, "net: add name_assign_type netdev attribute"), the
-loopback device was explicitly mentioned as one which would make use
-of NET_NAME_PREDICTABLE:
+The checks for musb->xceiv and musb->xceiv->set_power duplicate those in
+usb_phy_set_power(), so there is no need of them. Moreover, not calling
+usb_phy_set_power() results in usb_phy_set_charger_current() not being
+called, so current USB config max current is not propagated through USB
+charger framework and charger drivers may try to draw more current than
+allowed or possible.
 
-    The name_assign_type attribute gives hints where the interface name of a
-    given net-device comes from. These values are currently defined:
-...
-      NET_NAME_PREDICTABLE:
-        The ifname has been assigned by the kernel in a predictable way
-        that is guaranteed to avoid reuse and always be the same for a
-        given device. Examples include statically created devices like
-        the loopback device [...]
+Fix that by removing those extra checks and calling usb_phy_set_power()
+directly.
 
-Switch to that so that reading /sys/class/net/lo/name_assign_type
-produces something sensible instead of returning -EINVAL.
+Tested on Motorola Droid4 and Nokia N900
 
-Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: a9081a008f84 ("usb: phy: Add USB charger support")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
+Link: https://lore.kernel.org/r/1669400475-4762-1-git-send-email-ivo.g.dimitrov.75@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/loopback.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/musb/musb_gadget.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/drivers/net/loopback.c b/drivers/net/loopback.c
-index d192936b76cf..7863918592db 100644
---- a/drivers/net/loopback.c
-+++ b/drivers/net/loopback.c
-@@ -210,7 +210,7 @@ static __net_init int loopback_net_init(struct net *net)
- 	int err;
+diff --git a/drivers/usb/musb/musb_gadget.c b/drivers/usb/musb/musb_gadget.c
+index 8e83995fc3bd..b8fc818c154a 100644
+--- a/drivers/usb/musb/musb_gadget.c
++++ b/drivers/usb/musb/musb_gadget.c
+@@ -1629,8 +1629,6 @@ static int musb_gadget_vbus_draw(struct usb_gadget *gadget, unsigned mA)
+ {
+ 	struct musb	*musb = gadget_to_musb(gadget);
  
- 	err = -ENOMEM;
--	dev = alloc_netdev(0, "lo", NET_NAME_UNKNOWN, loopback_setup);
-+	dev = alloc_netdev(0, "lo", NET_NAME_PREDICTABLE, loopback_setup);
- 	if (!dev)
- 		goto out;
+-	if (!musb->xceiv->set_power)
+-		return -EOPNOTSUPP;
+ 	return usb_phy_set_power(musb->xceiv, mA);
+ }
  
 -- 
 2.35.1
