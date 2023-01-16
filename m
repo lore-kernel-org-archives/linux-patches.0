@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CED33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 473FBC433EF;
-	Mon, 16 Jan 2023 16:00:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 803CF33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6526C433F0;
+	Mon, 16 Jan 2023 16:00:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884848;
-	bh=QxfTTK4YAka9/BvrIa5Gwqrzx9bVHYkWX7/D8qvsie0=;
+	s=korg; t=1673884851;
+	bh=wd3vyY6Ur5ZbB0O6nQQrAH5ir0YUw/++J7X4kYLTGFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GKriVWRk+KMa+adN1XcOOot6I7RDVrIhwKTbGQZQtVBPzUNSX/JV7uDrA6PgoLQ3d
-	 +bNf2jZHyWIBNAhOlUllNGDvnDFa0V7Jh5ypgp26xp2Qe2IXE+j4LBFhPBIkzVHZIS
-	 +CFfTK2EF9F3y55wWvSH4cPRlOFqKibEqSfrrN+0=
+	b=xcNwCHNq8KOfHy3HfyIvMI62YE8zqCzWCfQ5rhsq0yvIoyBgAMLTjMHDnKOVdpqvU
+	 /9AKqBP5iltMJWZlzfgRscs4DqrqGsnxm5+m7hebf8V1N3ly9SP5tYmAOHRUcfHA0i
+	 zwbmSWgjsU+BL7Syus78D+Sask0NzkvPQ7CusXqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Guillaume Nault <gnault@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Willy Tarreau <w@1wt.eu>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 162/183] selftests/net: l2_tos_ttl_inherit.sh: Run tests in their own netns.
-Date: Mon, 16 Jan 2023 16:51:25 +0100
-Message-Id: <20230116154810.148243028@linuxfoundation.org>
+Subject: [PATCH 6.1 136/183] tools/nolibc: restore mips branch ordering in the _start block
+Date: Mon, 16 Jan 2023 16:50:59 +0100
+Message-Id: <20230116154809.119535980@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,307 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Willy Tarreau <w@1wt.eu>
 
-[ Upstream commit c53cb00f7983a5474f2d36967f84908b85af9159 ]
+[ Upstream commit 184177c3d6e023da934761e198c281344d7dd65b ]
 
-This selftest currently runs half in the current namespace and half in
-a netns of its own. Therefore, the test can fail if the current
-namespace is already configured with incompatible parameters (for
-example if it already has a veth0 interface).
+Depending on the compiler used and the optimization options, the sbrk()
+test was crashing, both on real hardware (mips-24kc) and in qemu. One
+such example is kernel.org toolchain in version 11.3 optimizing at -Os.
 
-Adapt the script to put both ends of the veth pair in their own netns.
-Now veth0 is created in NS0 instead of the current namespace, while
-veth1 is set up in NS1 (instead of the 'testing' netns).
+Inspecting the sys_brk() call shows the following code:
 
-The user visible netns names are randomised to minimise the risk of
-conflicts with already existing namespaces. The cleanup() function
-doesn't need to remove the virtual interface anymore: deleting NS0 and
-NS1 automatically removes the virtual interfaces they contained.
+  0040047c <sys_brk>:
+    40047c:       24020fcd        li      v0,4045
+    400480:       27bdffe0        addiu   sp,sp,-32
+    400484:       0000000c        syscall
+    400488:       27bd0020        addiu   sp,sp,32
+    40048c:       10e00001        beqz    a3,400494 <sys_brk+0x18>
+    400490:       00021023        negu    v0,v0
+    400494:       03e00008        jr      ra
 
-We can remove $ns, which was only used to run ip commands in the
-'testing' netns (let's use the builtin "-netns" option instead).
-However, we still need a similar functionality as ping and tcpdump
-now need to run in NS0. So we now have $RUN_NS0 for that.
+It is obviously wrong, the "negu" instruction is placed in beqz's
+delayed slot, and worse, there's no nop nor instruction after the
+return, so the next function's first instruction (addiu sip,sip,-32)
+will also be executed as part of the delayed slot that follows the
+return.
 
-Fixes: b690842d12fd ("selftests/net: test l2 tunnel TOS/TTL inheriting")
-Reported-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Tested-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+This is caused by the ".set noreorder" directive in the _start block,
+that applies to the whole program. The compiler emits code without the
+delayed slots and relies on the compiler to swap instructions when this
+option is not set. Removing the option would require to change the
+startup code in a way that wouldn't make it look like the resulting
+code, which would not be easy to debug. Instead let's just save the
+default ordering before changing it, and restore it at the end of the
+_start block. Now the code is correct:
+
+  0040047c <sys_brk>:
+    40047c:       24020fcd        li      v0,4045
+    400480:       27bdffe0        addiu   sp,sp,-32
+    400484:       0000000c        syscall
+    400488:       10e00002        beqz    a3,400494 <sys_brk+0x18>
+    40048c:       27bd0020        addiu   sp,sp,32
+    400490:       00021023        negu    v0,v0
+    400494:       03e00008        jr      ra
+    400498:       00000000        nop
+
+Fixes: 66b6f755ad45 ("rcutorture: Import a copy of nolibc") #5.0
+Signed-off-by: Willy Tarreau <w@1wt.eu>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/net/l2_tos_ttl_inherit.sh       | 162 ++++++++++--------
- 1 file changed, 93 insertions(+), 69 deletions(-)
+ tools/include/nolibc/arch-mips.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/testing/selftests/net/l2_tos_ttl_inherit.sh b/tools/testing/selftests/net/l2_tos_ttl_inherit.sh
-index e2574b08eabc..cf56680d598f 100755
---- a/tools/testing/selftests/net/l2_tos_ttl_inherit.sh
-+++ b/tools/testing/selftests/net/l2_tos_ttl_inherit.sh
-@@ -25,6 +25,11 @@ expected_tos="0x00"
- expected_ttl="0"
- failed=false
+diff --git a/tools/include/nolibc/arch-mips.h b/tools/include/nolibc/arch-mips.h
+index 5fc5b8029bff..7380093ba9e7 100644
+--- a/tools/include/nolibc/arch-mips.h
++++ b/tools/include/nolibc/arch-mips.h
+@@ -192,6 +192,7 @@ struct sys_stat_struct {
+ __asm__ (".section .text\n"
+     ".weak __start\n"
+     ".set nomips16\n"
++    ".set push\n"
+     ".set    noreorder\n"
+     ".option pic0\n"
+     ".ent __start\n"
+@@ -210,6 +211,7 @@ __asm__ (".section .text\n"
+     "li $v0, 4001\n"              // NR_exit == 4001
+     "syscall\n"
+     ".end __start\n"
++    ".set pop\n"
+     "");
  
-+readonly NS0=$(mktemp -u ns0-XXXXXXXX)
-+readonly NS1=$(mktemp -u ns1-XXXXXXXX)
-+
-+RUN_NS0="ip netns exec ${NS0}"
-+
- get_random_tos() {
- 	# Get a random hex tos value between 0x00 and 0xfc, a multiple of 4
- 	echo "0x$(tr -dc '0-9a-f' < /dev/urandom | head -c 1)\
-@@ -61,7 +66,6 @@ setup() {
- 	local vlan="$5"
- 	local test_tos="0x00"
- 	local test_ttl="0"
--	local ns="ip netns exec testing"
- 
- 	# We don't want a test-tos of 0x00,
- 	# because this is the value that we get when no tos is set.
-@@ -94,14 +98,15 @@ setup() {
- 	printf "│%7s │%6s │%6s │%13s │%13s │%6s │" \
- 	"$type" "$outer" "$inner" "$tos" "$ttl" "$vlan"
- 
--	# Create 'testing' netns, veth pair and connect main ns with testing ns
--	ip netns add testing
--	ip link add type veth
--	ip link set veth1 netns testing
--	ip link set veth0 up
--	$ns ip link set veth1 up
--	ip addr flush dev veth0
--	$ns ip addr flush dev veth1
-+	# Create netns NS0 and NS1 and connect them with a veth pair
-+	ip netns add "${NS0}"
-+	ip netns add "${NS1}"
-+	ip link add name veth0 netns "${NS0}" type veth \
-+		peer name veth1 netns "${NS1}"
-+	ip -netns "${NS0}" link set dev veth0 up
-+	ip -netns "${NS1}" link set dev veth1 up
-+	ip -netns "${NS0}" address flush dev veth0
-+	ip -netns "${NS1}" address flush dev veth1
- 
- 	local local_addr1=""
- 	local local_addr2=""
-@@ -127,51 +132,59 @@ setup() {
- 		if [ "$type" = "gre" ]; then
- 			type="gretap"
- 		fi
--		ip addr add 198.18.0.1/24 dev veth0
--		$ns ip addr add 198.18.0.2/24 dev veth1
--		ip link add name tep0 type $type $local_addr1 remote \
--		198.18.0.2 tos $test_tos ttl $test_ttl $vxlan $geneve
--		$ns ip link add name tep1 type $type $local_addr2 remote \
--		198.18.0.1 tos $test_tos ttl $test_ttl $vxlan $geneve
-+		ip -netns "${NS0}" address add 198.18.0.1/24 dev veth0
-+		ip -netns "${NS1}" address add 198.18.0.2/24 dev veth1
-+		ip -netns "${NS0}" link add name tep0 type $type $local_addr1 \
-+			remote 198.18.0.2 tos $test_tos ttl $test_ttl         \
-+			$vxlan $geneve
-+		ip -netns "${NS1}" link add name tep1 type $type $local_addr2 \
-+			remote 198.18.0.1 tos $test_tos ttl $test_ttl         \
-+			$vxlan $geneve
- 	elif [ "$outer" = "6" ]; then
- 		if [ "$type" = "gre" ]; then
- 			type="ip6gretap"
- 		fi
--		ip addr add fdd1:ced0:5d88:3fce::1/64 dev veth0 nodad
--		$ns ip addr add fdd1:ced0:5d88:3fce::2/64 dev veth1 nodad
--		ip link add name tep0 type $type $local_addr1 \
--		remote fdd1:ced0:5d88:3fce::2 tos $test_tos ttl $test_ttl \
--		$vxlan $geneve
--		$ns ip link add name tep1 type $type $local_addr2 \
--		remote fdd1:ced0:5d88:3fce::1 tos $test_tos ttl $test_ttl \
--		$vxlan $geneve
-+		ip -netns "${NS0}" address add fdd1:ced0:5d88:3fce::1/64 \
-+			dev veth0 nodad
-+		ip -netns "${NS1}" address add fdd1:ced0:5d88:3fce::2/64 \
-+			dev veth1 nodad
-+		ip -netns "${NS0}" link add name tep0 type $type $local_addr1 \
-+			remote fdd1:ced0:5d88:3fce::2 tos $test_tos           \
-+			ttl $test_ttl $vxlan $geneve
-+		ip -netns "${NS1}" link add name tep1 type $type $local_addr2 \
-+			remote fdd1:ced0:5d88:3fce::1 tos $test_tos           \
-+			ttl $test_ttl $vxlan $geneve
- 	fi
- 
- 	# Bring L2-tunnel link up and create VLAN on top
--	ip link set tep0 up
--	$ns ip link set tep1 up
--	ip addr flush dev tep0
--	$ns ip addr flush dev tep1
-+	ip -netns "${NS0}" link set tep0 up
-+	ip -netns "${NS1}" link set tep1 up
-+	ip -netns "${NS0}" address flush dev tep0
-+	ip -netns "${NS1}" address flush dev tep1
- 	local parent
- 	if $vlan; then
- 		parent="vlan99-"
--		ip link add link tep0 name ${parent}0 type vlan id 99
--		$ns ip link add link tep1 name ${parent}1 type vlan id 99
--		ip link set ${parent}0 up
--		$ns ip link set ${parent}1 up
--		ip addr flush dev ${parent}0
--		$ns ip addr flush dev ${parent}1
-+		ip -netns "${NS0}" link add link tep0 name ${parent}0 \
-+			type vlan id 99
-+		ip -netns "${NS1}" link add link tep1 name ${parent}1 \
-+			type vlan id 99
-+		ip -netns "${NS0}" link set dev ${parent}0 up
-+		ip -netns "${NS1}" link set dev ${parent}1 up
-+		ip -netns "${NS0}" address flush dev ${parent}0
-+		ip -netns "${NS1}" address flush dev ${parent}1
- 	else
- 		parent="tep"
- 	fi
- 
- 	# Assign inner IPv4/IPv6 addresses
- 	if [ "$inner" = "4" ] || [ "$inner" = "other" ]; then
--		ip addr add 198.19.0.1/24 brd + dev ${parent}0
--		$ns ip addr add 198.19.0.2/24 brd + dev ${parent}1
-+		ip -netns "${NS0}" address add 198.19.0.1/24 brd + dev ${parent}0
-+		ip -netns "${NS1}" address add 198.19.0.2/24 brd + dev ${parent}1
- 	elif [ "$inner" = "6" ]; then
--		ip addr add fdd4:96cf:4eae:443b::1/64 dev ${parent}0 nodad
--		$ns ip addr add fdd4:96cf:4eae:443b::2/64 dev ${parent}1 nodad
-+		ip -netns "${NS0}" address add fdd4:96cf:4eae:443b::1/64 \
-+			dev ${parent}0 nodad
-+		ip -netns "${NS1}" address add fdd4:96cf:4eae:443b::2/64 \
-+			dev ${parent}1 nodad
- 	fi
- }
- 
-@@ -192,10 +205,10 @@ verify() {
- 		ping_dst="198.19.0.3" # Generates ARPs which are not IPv4/IPv6
- 	fi
- 	if [ "$tos_ttl" = "inherit" ]; then
--		ping -i 0.1 $ping_dst -Q "$expected_tos" -t "$expected_ttl" \
--		2>/dev/null 1>&2 & ping_pid="$!"
-+		${RUN_NS0} ping -i 0.1 $ping_dst -Q "$expected_tos"          \
-+			 -t "$expected_ttl" 2>/dev/null 1>&2 & ping_pid="$!"
- 	else
--		ping -i 0.1 $ping_dst 2>/dev/null 1>&2 & ping_pid="$!"
-+		${RUN_NS0} ping -i 0.1 $ping_dst 2>/dev/null 1>&2 & ping_pid="$!"
- 	fi
- 	local tunnel_type_offset tunnel_type_proto req_proto_offset req_offset
- 	if [ "$type" = "gre" ]; then
-@@ -216,10 +229,12 @@ verify() {
- 				req_proto_offset="$((req_proto_offset + 4))"
- 				req_offset="$((req_offset + 4))"
- 			fi
--			out="$(tcpdump --immediate-mode -p -c 1 -v -i veth0 -n \
--			ip[$tunnel_type_offset] = $tunnel_type_proto and \
--			ip[$req_proto_offset] = 0x01 and \
--			ip[$req_offset] = 0x08 2>/dev/null | head -n 1)"
-+			out="$(${RUN_NS0} tcpdump --immediate-mode -p -c 1 -v \
-+				-i veth0 -n                                   \
-+				ip[$tunnel_type_offset] = $tunnel_type_proto and \
-+				ip[$req_proto_offset] = 0x01 and              \
-+				ip[$req_offset] = 0x08 2>/dev/null            \
-+				| head -n 1)"
- 		elif [ "$inner" = "6" ]; then
- 			req_proto_offset="44"
- 			req_offset="78"
-@@ -231,10 +246,12 @@ verify() {
- 				req_proto_offset="$((req_proto_offset + 4))"
- 				req_offset="$((req_offset + 4))"
- 			fi
--			out="$(tcpdump --immediate-mode -p -c 1 -v -i veth0 -n \
--			ip[$tunnel_type_offset] = $tunnel_type_proto and \
--			ip[$req_proto_offset] = 0x3a and \
--			ip[$req_offset] = 0x80 2>/dev/null | head -n 1)"
-+			out="$(${RUN_NS0} tcpdump --immediate-mode -p -c 1 -v \
-+				-i veth0 -n                                   \
-+				ip[$tunnel_type_offset] = $tunnel_type_proto and \
-+				ip[$req_proto_offset] = 0x3a and              \
-+				ip[$req_offset] = 0x80 2>/dev/null            \
-+				| head -n 1)"
- 		elif [ "$inner" = "other" ]; then
- 			req_proto_offset="36"
- 			req_offset="45"
-@@ -250,11 +267,13 @@ verify() {
- 				expected_tos="0x00"
- 				expected_ttl="64"
- 			fi
--			out="$(tcpdump --immediate-mode -p -c 1 -v -i veth0 -n \
--			ip[$tunnel_type_offset] = $tunnel_type_proto and \
--			ip[$req_proto_offset] = 0x08 and \
--			ip[$((req_proto_offset + 1))] = 0x06 and \
--			ip[$req_offset] = 0x01 2>/dev/null | head -n 1)"
-+			out="$(${RUN_NS0} tcpdump --immediate-mode -p -c 1 -v \
-+				-i veth0 -n                                   \
-+				ip[$tunnel_type_offset] = $tunnel_type_proto and \
-+				ip[$req_proto_offset] = 0x08 and              \
-+				ip[$((req_proto_offset + 1))] = 0x06 and      \
-+				ip[$req_offset] = 0x01 2>/dev/null            \
-+				| head -n 1)"
- 		fi
- 	elif [ "$outer" = "6" ]; then
- 		if [ "$type" = "gre" ]; then
-@@ -273,10 +292,12 @@ verify() {
- 				req_proto_offset="$((req_proto_offset + 4))"
- 				req_offset="$((req_offset + 4))"
- 			fi
--			out="$(tcpdump --immediate-mode -p -c 1 -v -i veth0 -n \
--			ip6[$tunnel_type_offset] = $tunnel_type_proto and \
--			ip6[$req_proto_offset] = 0x01 and \
--			ip6[$req_offset] = 0x08 2>/dev/null | head -n 1)"
-+			out="$(${RUN_NS0} tcpdump --immediate-mode -p -c 1 -v \
-+				-i veth0 -n                                   \
-+				ip6[$tunnel_type_offset] = $tunnel_type_proto and \
-+				ip6[$req_proto_offset] = 0x01 and             \
-+				ip6[$req_offset] = 0x08 2>/dev/null           \
-+				| head -n 1)"
- 		elif [ "$inner" = "6" ]; then
- 			local req_proto_offset="72"
- 			local req_offset="106"
-@@ -288,10 +309,12 @@ verify() {
- 				req_proto_offset="$((req_proto_offset + 4))"
- 				req_offset="$((req_offset + 4))"
- 			fi
--			out="$(tcpdump --immediate-mode -p -c 1 -v -i veth0 -n \
--			ip6[$tunnel_type_offset] = $tunnel_type_proto and \
--			ip6[$req_proto_offset] = 0x3a and \
--			ip6[$req_offset] = 0x80 2>/dev/null | head -n 1)"
-+			out="$(${RUN_NS0} tcpdump --immediate-mode -p -c 1 -v \
-+				-i veth0 -n                                   \
-+				ip6[$tunnel_type_offset] = $tunnel_type_proto and \
-+				ip6[$req_proto_offset] = 0x3a and             \
-+				ip6[$req_offset] = 0x80 2>/dev/null           \
-+				| head -n 1)"
- 		elif [ "$inner" = "other" ]; then
- 			local req_proto_offset="64"
- 			local req_offset="73"
-@@ -307,11 +330,13 @@ verify() {
- 				expected_tos="0x00"
- 				expected_ttl="64"
- 			fi
--			out="$(tcpdump --immediate-mode -p -c 1 -v -i veth0 -n \
--			ip6[$tunnel_type_offset] = $tunnel_type_proto and \
--			ip6[$req_proto_offset] = 0x08 and \
--			ip6[$((req_proto_offset + 1))] = 0x06 and \
--			ip6[$req_offset] = 0x01 2>/dev/null | head -n 1)"
-+			out="$(${RUN_NS0} tcpdump --immediate-mode -p -c 1 -v \
-+				-i veth0 -n                                   \
-+				ip6[$tunnel_type_offset] = $tunnel_type_proto and \
-+				ip6[$req_proto_offset] = 0x08 and             \
-+				ip6[$((req_proto_offset + 1))] = 0x06 and     \
-+				ip6[$req_offset] = 0x01 2>/dev/null           \
-+				| head -n 1)"
- 		fi
- 	fi
- 	kill -9 $ping_pid
-@@ -351,9 +376,8 @@ verify() {
- }
- 
- cleanup() {
--	ip link del veth0 2>/dev/null
--	ip netns del testing 2>/dev/null
--	ip link del tep0 2>/dev/null
-+	ip netns del "${NS0}" 2>/dev/null
-+	ip netns del "${NS1}" 2>/dev/null
- }
- 
- printf "┌────────┬───────┬───────┬──────────────┬"
+ #endif // _NOLIBC_ARCH_MIPS_H
 -- 
 2.35.1
 
