@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FE1A33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8CD9C433D2;
-	Mon, 16 Jan 2023 15:57:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA8833EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FF0C433EF;
+	Mon, 16 Jan 2023 15:57:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884657;
-	bh=hZZYq+zgBp6jnJCJp99jRdvG759Q47Fb0q3E2vpXnsQ=;
+	s=korg; t=1673884659;
+	bh=gwXibOn/UarruZHKukZW+4kIqqw6P6zzm9aBHYHxeDY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=twjAjK9QSeDRVruzO5XMIKqgnO0z8J8w8ntYlFgQgZ4/2ZLftGKpozr14TxMIj7PN
-	 PjMzPVbAeV/I84hqm/YX2XISpGxC6xejJ2CFaJ6PzxrxREgEPT4oK/ejfhdAMrm3Gj
-	 FEwMmohoRjcgjKNSxhyPsQo13kUg/FuMPzorXL0Y=
+	b=WXQIh9e9w5FRiB5Dvhpw9FCgZ6f9V1UWreyH+5CojUBGxuXZ1ykciXYX3ZiH+OwTT
+	 drj9/mw4P7zHPwvNuotqdEk05EAFFvzvmcHpVtm9t7vcCNVSu3jupFtgQuSrhG5gYa
+	 f/97BhC3E5CDLM3wORWlwjLuk7u0m3rDfXmMY2PU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Ilia.Gavrilov" <Ilia.Gavrilov@infotecs.ru>,
-	Simon Horman <simon.horman@corigine.com>,
+	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
+	Florian Westphal <fw@strlen.de>,
 	Pablo Neira Ayuso <pablo@netfilter.org>
-Subject: [PATCH 6.1 089/183] netfilter: ipset: Fix overflow before widen in the bitmap_ip_create() function.
-Date: Mon, 16 Jan 2023 16:50:12 +0100
-Message-Id: <20230116154807.175983754@linuxfoundation.org>
+Subject: [PATCH 6.1 090/183] selftests: netfilter: fix transaction test script timeout handling
+Date: Mon, 16 Jan 2023 16:50:13 +0100
+Message-Id: <20230116154807.225847175@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -35,41 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
+From: Florian Westphal <fw@strlen.de>
 
-commit 9ea4b476cea1b7d461d16dda25ca3c7e616e2d15 upstream.
+commit c273289fac370b6488757236cd62cc2cf04830b7 upstream.
 
-When first_ip is 0, last_ip is 0xFFFFFFFF, and netmask is 31, the value of
-an arithmetic expression 2 << (netmask - mask_bits - 1) is subject
-to overflow due to a failure casting operands to a larger data type
-before performing the arithmetic.
+The kselftest framework uses a default timeout of 45 seconds for
+all test scripts.
 
-Note that it's harmless since the value will be checked at the next step.
+Increase the timeout to two minutes for the netfilter tests, this
+should hopefully be enough,
 
-Found by InfoTeCS on behalf of Linux Verification Center
-(linuxtesting.org) with SVACE.
+Make sure that, should the script be canceled, the net namespace and
+the spawned ping instances are removed.
 
-Fixes: b9fed748185a ("netfilter: ipset: Check and reject crazy /0 input parameters")
-Signed-off-by: Ilia.Gavrilov <Ilia.Gavrilov@infotecs.ru>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Fixes: 25d8bcedbf43 ("selftests: add script to stress-test nft packet path vs. control plane")
+Reported-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Tested-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
 Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/ipset/ip_set_bitmap_ip.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/netfilter/nft_trans_stress.sh |   16 +++++++++-------
+ tools/testing/selftests/netfilter/settings            |    1 +
+ 2 files changed, 10 insertions(+), 7 deletions(-)
+ create mode 100644 tools/testing/selftests/netfilter/settings
 
---- a/net/netfilter/ipset/ip_set_bitmap_ip.c
-+++ b/net/netfilter/ipset/ip_set_bitmap_ip.c
-@@ -308,8 +308,8 @@ bitmap_ip_create(struct net *net, struct
- 			return -IPSET_ERR_BITMAP_RANGE;
+--- a/tools/testing/selftests/netfilter/nft_trans_stress.sh
++++ b/tools/testing/selftests/netfilter/nft_trans_stress.sh
+@@ -10,12 +10,20 @@
+ ksft_skip=4
  
- 		pr_debug("mask_bits %u, netmask %u\n", mask_bits, netmask);
--		hosts = 2 << (32 - netmask - 1);
--		elements = 2 << (netmask - mask_bits - 1);
-+		hosts = 2U << (32 - netmask - 1);
-+		elements = 2UL << (netmask - mask_bits - 1);
- 	}
- 	if (elements > IPSET_BITMAP_MAX_RANGE + 1)
- 		return -IPSET_ERR_BITMAP_RANGE_SIZE;
+ testns=testns-$(mktemp -u "XXXXXXXX")
++tmp=""
+ 
+ tables="foo bar baz quux"
+ global_ret=0
+ eret=0
+ lret=0
+ 
++cleanup() {
++	ip netns pids "$testns" | xargs kill 2>/dev/null
++	ip netns del "$testns"
++
++	rm -f "$tmp"
++}
++
+ check_result()
+ {
+ 	local r=$1
+@@ -43,6 +51,7 @@ if [ $? -ne 0 ];then
+ 	exit $ksft_skip
+ fi
+ 
++trap cleanup EXIT
+ tmp=$(mktemp)
+ 
+ for table in $tables; do
+@@ -139,11 +148,4 @@ done
+ 
+ check_result $lret "add/delete with nftrace enabled"
+ 
+-pkill -9 ping
+-
+-wait
+-
+-rm -f "$tmp"
+-ip netns del "$testns"
+-
+ exit $global_ret
+--- /dev/null
++++ b/tools/testing/selftests/netfilter/settings
+@@ -0,0 +1 @@
++timeout=120
 
 
