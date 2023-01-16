@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D627733EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 505A1C433D2;
-	Mon, 16 Jan 2023 16:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6454F33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE0E8C433D2;
+	Mon, 16 Jan 2023 16:02:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884971;
-	bh=ZK1nF/Foc3xxLp9jLW/GdAuUB+MZENCiIKqG7oDrbcM=;
+	s=korg; t=1673884974;
+	bh=+Xg6VNqi33GeaIkwSMykubx4nUmPRrWrWGFxFztmAHA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Er8UjbjWW/nk+8CiSY88FFVv0eDKyjUF3sguKQUUduL2hezz/j5oj00SbC8OiJjzl
-	 48w0msZe3HrSf2xlHvKexnzXB6Apu0gCYGyvAKcZAfQ7PowZ/oPl1iMjtumsXUjM0S
-	 vwO+9DHcnuXXnBNfk1yRe2cC/YJN4AExjTZnKbZY=
+	b=UjhXhm6IEMr86e7TZYhFtfIcMozWV+A9ZjZXXleaxlc5QJ9E2ZgvcFkpLowBFPY4z
+	 cVw0WXvZgs3aFl3MhNbaX9j2qwrutKXdc+O2cDdbIGgvcnqFakMwKU/DuGVf2H/Czj
+	 0EiFKvebMSKaKeBoub1SZ8sMeeQD8oZ6ZvhtPTTg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
 	Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: [PATCH 5.15 25/86] dt-bindings: msm: dsi-controller-main: Fix power-domain constraint
-Date: Mon, 16 Jan 2023 16:50:59 +0100
-Message-Id: <20230116154748.158190757@linuxfoundation.org>
+Subject: [PATCH 5.15 26/86] dt-bindings: msm: dsi-controller-main: Fix description of core clock
+Date: Mon, 16 Jan 2023 16:51:00 +0100
+Message-Id: <20230116154748.190806746@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -38,49 +38,33 @@ Content-Transfer-Encoding: 8bit
 
 From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit a6f033938beb31f893302a93f83ec0b6460c6cac upstream.
+commit 654ffe4b793b42ed6b5909daff0b91809916d94e upstream.
 
-power-domain is required for the sc7180 dispcc GDSC but not every qcom SoC
-has a similar dependency for example the apq8064.
-
-Most Qcom SoC's using mdss-dsi-ctrl seem to have the ability to
-power-collapse the MDP without collapsing DSI.
-
-For example the qcom vendor kernel commit for apq8084, msm8226, msm8916,
-msm8974.
-
-https://review.carbonrom.org/plugins/gitiles/CarbonROM/android_kernel_oneplus_msm8994/+/7b5c011a770daa2811778937ed646237a28a8694
-
-"ARM: dts: msm: add mdss gdsc supply to dsi controller device
-
- It is possible for the DSI controller to be active when MDP is
- power collapsed. DSI controller needs to have it's own vote for
- mdss gdsc to ensure that gdsc remains on in such cases."
-
-This however doesn't appear to be the case for the apq8064 so we shouldn't
-be marking power-domain as required in yaml checks.
+There's a typo in describing the core clock as an 'escape' clock. The
+accurate description is 'core'.
 
 Fixes: 4dbe55c97741 ("dt-bindings: msm: dsi: add yaml schemas for DSI bindings")
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Patchwork: https://patchwork.freedesktop.org/patch/515958/
-Link: https://lore.kernel.org/r/20221223021025.1646636-3-bryan.odonoghue@linaro.org
+Patchwork: https://patchwork.freedesktop.org/patch/515938/
+Link: https://lore.kernel.org/r/20221223021025.1646636-4-bryan.odonoghue@linaro.org
 Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml |    1 -
- 1 file changed, 1 deletion(-)
+ Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
 +++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
-@@ -135,7 +135,6 @@ required:
-   - phy-names
-   - assigned-clocks
-   - assigned-clock-parents
--  - power-domains
-   - ports
+@@ -31,7 +31,7 @@ properties:
+       - description: Display byte clock
+       - description: Display byte interface clock
+       - description: Display pixel clock
+-      - description: Display escape clock
++      - description: Display core clock
+       - description: Display AHB clock
+       - description: Display AXI clock
  
- additionalProperties: false
 
 
