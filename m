@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE1D33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5C47C433D2;
-	Mon, 16 Jan 2023 16:03:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67AA33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD76C433EF;
+	Mon, 16 Jan 2023 16:03:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885029;
-	bh=0UiLsV9C6m32auQbUxtvPghlHgtUDV4tXd7f19RqmtY=;
+	s=korg; t=1673885031;
+	bh=sGJdYjJNPDoRFrHLO5o0S9DTPlxUbg/fa4ZPpgGjrdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u+xGC+yMuQUoV6Ldx4X5QWlVFxDbylLtC7UrvXvXwDBX2dNj/EEKF6NTBsepe42Eu
-	 3pegyrTjEPmt3ix0YcYGl6po/lTjo84eovLsgK/bllyuszd31GEWbGFgAXOt+Vw0tI
-	 jzegob+BfwferianRd6PHjbh+dHLyj1Y96HTmocQ=
+	b=NhCkjR13kWB/aDs6EFIJf90fWO3CMZLNUu7Vazodb5vukOXdWeSxbfKF9KDBRM9gk
+	 BYnWyV89fTe/mwGvzOXmTWgxgAT3qX8w7W1wBKXqesHTf2wsY0mdDsdBSx07Kuz9ID
+	 v0Jkdat9PrXkqP259fHEoZDwqPuYb7YYzEB7SeM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Rob Herring <robh@kernel.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: [PATCH 5.15 30/86] dt-bindings: msm/dsi: Dont require vdds-supply on 10nm PHY
-Date: Mon, 16 Jan 2023 16:51:04 +0100
-Message-Id: <20230116154748.350420285@linuxfoundation.org>
+	Peter Wang <peter.wang@mediatek.com>,
+	Stanley Chu <stanley.chu@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 48/86] scsi: ufs: core: WLUN suspend SSU/enter hibern8 fail recovery
+Date: Mon, 16 Jan 2023 16:51:22 +0100
+Message-Id: <20230116154749.065766175@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -35,35 +38,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Peter Wang <peter.wang@mediatek.com>
 
-commit ef11cb7a29c0e13031c968190ea8f86104e7fb6a upstream.
+[ Upstream commit 1a5665fc8d7a000671ebd3fe69c6f9acf1e0dcd9 ]
 
-On some SoCs (hello SM6350) vdds-supply is not wired to any smd-rpm
-or rpmh regulator, but instead powered by the VDD_MX/mx.lvl line,
-which is voted for in the DSI ctrl node.
+When SSU/enter hibern8 fail in WLUN suspend flow, trigger the error handler
+and return busy to break the suspend.  Otherwise the consumer will get
+stuck in runtime suspend status.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Acked-by: Rob Herring <robh@kernel.org>
-Fixes: 8fc939e72ff8 ("dt-bindings: msm: dsi: add yaml schemas for DSI PHY bindings")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/511889/
-Link: https://lore.kernel.org/r/20221116163218.42449-1-konrad.dybcio@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: b294ff3e3449 ("scsi: ufs: core: Enable power management for wlun")
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://lore.kernel.org/r/20221208072520.26210-1-peter.wang@mediatek.com
+Reviewed-by: Stanley Chu <stanley.chu@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/scsi/ufs/ufshcd.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
---- a/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-10nm.yaml
-@@ -39,7 +39,6 @@ required:
-   - compatible
-   - reg
-   - reg-names
--  - vdds-supply
+diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c
+index 6dd341674110..0b06223f5714 100644
+--- a/drivers/scsi/ufs/ufshcd.c
++++ b/drivers/scsi/ufs/ufshcd.c
+@@ -5909,6 +5909,14 @@ static inline void ufshcd_schedule_eh_work(struct ufs_hba *hba)
+ 	}
+ }
  
- unevaluatedProperties: false
++static void ufshcd_force_error_recovery(struct ufs_hba *hba)
++{
++	spin_lock_irq(hba->host->host_lock);
++	hba->force_reset = true;
++	ufshcd_schedule_eh_work(hba);
++	spin_unlock_irq(hba->host->host_lock);
++}
++
+ static void ufshcd_clk_scaling_allow(struct ufs_hba *hba, bool allow)
+ {
+ 	down_write(&hba->clk_scaling_lock);
+@@ -8775,6 +8783,15 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
  
+ 		if (!hba->dev_info.b_rpm_dev_flush_capable) {
+ 			ret = ufshcd_set_dev_pwr_mode(hba, req_dev_pwr_mode);
++			if (ret && pm_op != UFS_SHUTDOWN_PM) {
++				/*
++				 * If return err in suspend flow, IO will hang.
++				 * Trigger error handler and break suspend for
++				 * error recovery.
++				 */
++				ufshcd_force_error_recovery(hba);
++				ret = -EBUSY;
++			}
+ 			if (ret)
+ 				goto enable_scaling;
+ 		}
+@@ -8786,6 +8803,15 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 	 */
+ 	check_for_bkops = !ufshcd_is_ufs_dev_deepsleep(hba);
+ 	ret = ufshcd_link_state_transition(hba, req_link_state, check_for_bkops);
++	if (ret && pm_op != UFS_SHUTDOWN_PM) {
++		/*
++		 * If return err in suspend flow, IO will hang.
++		 * Trigger error handler and break suspend for
++		 * error recovery.
++		 */
++		ufshcd_force_error_recovery(hba);
++		ret = -EBUSY;
++	}
+ 	if (ret)
+ 		goto set_dev_active;
+ 
+-- 
+2.35.1
+
 
 
