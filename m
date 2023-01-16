@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BD246B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:25:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670C1C433D2;
-	Mon, 16 Jan 2023 16:25:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822E646B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:25:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03CDDC433EF;
+	Mon, 16 Jan 2023 16:25:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886324;
-	bh=6fMeqsBhQlnwJlmrq9V19v3RSk4PDUSbLuh83ZtKhC4=;
+	s=korg; t=1673886327;
+	bh=kyL3NOTBnPWUMpExP0FkiPcIU6gbxoJaxKhe7s5g4Fs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wqCHaPUkub8V/zUQ45WVONtzUlIDV/Kx63o5pFmxjsdUbo6BK3Iko5Ze2H58EbiRo
-	 J3jur4kUm+bE8SbSXEfT5qbxQHTMkPZ7WznZr9J6ocU+/XvMmPA/qEWyvOIfakvhra
-	 GUE3/uSQ+wvGkjcrtweaEfY7erSj0KEt/tWlKqx8=
+	b=NFqfEn+lFZ+CUf2jofEu2a2CKk/WE+8ZRTs1j1HXafL0RFVLzG2VjaL/J9gn2Wdc/
+	 yBPFGHBAPJYGlwxrf5b4aQOOzJOZTI6si02PrY8yEEtYu4MIneE9oTuj9YNnL3yXwg
+	 IdH9jJhPfh2QSkdOyze7EesNjUI83KUBjjSsMI2A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Tranchetti <quic_stranche@quicinc.com>,
-	Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+7902cd7684bc35306224@syzkaller.appspotmail.com,
+	Shigeru Yoshida <syoshida@redhat.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 380/658] skbuff: Account for tail adjustment during pull operations
-Date: Mon, 16 Jan 2023 16:47:48 +0100
-Message-Id: <20230116154926.926608012@linuxfoundation.org>
+Subject: [PATCH 5.4 389/658] udf: Avoid double brelse() in udf_rename()
+Date: Mon, 16 Jan 2023 16:47:57 +0100
+Message-Id: <20230116154927.365372495@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,64 +36,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
+From: Shigeru Yoshida <syoshida@redhat.com>
 
-[ Upstream commit 2d7afdcbc9d32423f177ee12b7c93783aea338fb ]
+[ Upstream commit c791730f2554a9ebb8f18df9368dc27d4ebc38c2 ]
 
-Extending the tail can have some unexpected side effects if a program uses
-a helper like BPF_FUNC_skb_pull_data to read partial content beyond the
-head skb headlen when all the skbs in the gso frag_list are linear with no
-head_frag -
+syzbot reported a warning like below [1]:
 
-  kernel BUG at net/core/skbuff.c:4219!
-  pc : skb_segment+0xcf4/0xd2c
-  lr : skb_segment+0x63c/0xd2c
-  Call trace:
-   skb_segment+0xcf4/0xd2c
-   __udp_gso_segment+0xa4/0x544
-   udp4_ufo_fragment+0x184/0x1c0
-   inet_gso_segment+0x16c/0x3a4
-   skb_mac_gso_segment+0xd4/0x1b0
-   __skb_gso_segment+0xcc/0x12c
-   udp_rcv_segment+0x54/0x16c
-   udp_queue_rcv_skb+0x78/0x144
-   udp_unicast_rcv_skb+0x8c/0xa4
-   __udp4_lib_rcv+0x490/0x68c
-   udp_rcv+0x20/0x30
-   ip_protocol_deliver_rcu+0x1b0/0x33c
-   ip_local_deliver+0xd8/0x1f0
-   ip_rcv+0x98/0x1a4
-   deliver_ptype_list_skb+0x98/0x1ec
-   __netif_receive_skb_core+0x978/0xc60
+VFS: brelse: Trying to free free buffer
+WARNING: CPU: 2 PID: 7301 at fs/buffer.c:1145 __brelse+0x67/0xa0
+...
+Call Trace:
+ <TASK>
+ invalidate_bh_lru+0x99/0x150
+ smp_call_function_many_cond+0xe2a/0x10c0
+ ? generic_remap_file_range_prep+0x50/0x50
+ ? __brelse+0xa0/0xa0
+ ? __mutex_lock+0x21c/0x12d0
+ ? smp_call_on_cpu+0x250/0x250
+ ? rcu_read_lock_sched_held+0xb/0x60
+ ? lock_release+0x587/0x810
+ ? __brelse+0xa0/0xa0
+ ? generic_remap_file_range_prep+0x50/0x50
+ on_each_cpu_cond_mask+0x3c/0x80
+ blkdev_flush_mapping+0x13a/0x2f0
+ blkdev_put_whole+0xd3/0xf0
+ blkdev_put+0x222/0x760
+ deactivate_locked_super+0x96/0x160
+ deactivate_super+0xda/0x100
+ cleanup_mnt+0x222/0x3d0
+ task_work_run+0x149/0x240
+ ? task_work_cancel+0x30/0x30
+ do_exit+0xb29/0x2a40
+ ? reacquire_held_locks+0x4a0/0x4a0
+ ? do_raw_spin_lock+0x12a/0x2b0
+ ? mm_update_next_owner+0x7c0/0x7c0
+ ? rwlock_bug.part.0+0x90/0x90
+ ? zap_other_threads+0x234/0x2d0
+ do_group_exit+0xd0/0x2a0
+ __x64_sys_exit_group+0x3a/0x50
+ do_syscall_64+0x34/0xb0
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fix this by marking these skbs as GSO_DODGY so segmentation can handle
-the tail updates accordingly.
+The cause of the issue is that brelse() is called on both ofibh.sbh
+and ofibh.ebh by udf_find_entry() when it returns NULL.  However,
+brelse() is called by udf_rename(), too.  So, b_count on buffer_head
+becomes unbalanced.
 
-Fixes: 3dcbdb134f32 ("net: gso: Fix skb_segment splat when splitting gso_size mangled skb having linear-headed frag_list")
-Signed-off-by: Sean Tranchetti <quic_stranche@quicinc.com>
-Signed-off-by: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Link: https://lore.kernel.org/r/1671084718-24796-1-git-send-email-quic_subashab@quicinc.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This patch fixes the issue by not calling brelse() by udf_rename()
+when udf_find_entry() returns NULL.
+
+Link: https://syzkaller.appspot.com/bug?id=8297f45698159c6bca8a1f87dc983667c1a1c851 [1]
+Reported-by: syzbot+7902cd7684bc35306224@syzkaller.appspotmail.com
+Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221023095741.271430-1-syoshida@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 3 +++
- 1 file changed, 3 insertions(+)
+ fs/udf/namei.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index e9c796e2944e..0547aa2c8b13 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -2115,6 +2115,9 @@ void *__pskb_pull_tail(struct sk_buff *skb, int delta)
- 				insp = list;
- 			} else {
- 				/* Eaten partially. */
-+				if (skb_is_gso(skb) && !list->head_frag &&
-+				    skb_headlen(list))
-+					skb_shinfo(skb)->gso_type |= SKB_GSO_DODGY;
+diff --git a/fs/udf/namei.c b/fs/udf/namei.c
+index 1f418d68e2ee..c062b41a1e70 100644
+--- a/fs/udf/namei.c
++++ b/fs/udf/namei.c
+@@ -1091,8 +1091,9 @@ static int udf_rename(struct inode *old_dir, struct dentry *old_dentry,
+ 		return -EINVAL;
  
- 				if (skb_shared(list)) {
- 					/* Sucks! We need to fork list. :-( */
+ 	ofi = udf_find_entry(old_dir, &old_dentry->d_name, &ofibh, &ocfi);
+-	if (IS_ERR(ofi)) {
+-		retval = PTR_ERR(ofi);
++	if (!ofi || IS_ERR(ofi)) {
++		if (IS_ERR(ofi))
++			retval = PTR_ERR(ofi);
+ 		goto end_rename;
+ 	}
+ 
+@@ -1101,8 +1102,7 @@ static int udf_rename(struct inode *old_dir, struct dentry *old_dentry,
+ 
+ 	brelse(ofibh.sbh);
+ 	tloc = lelb_to_cpu(ocfi.icb.extLocation);
+-	if (!ofi || udf_get_lb_pblock(old_dir->i_sb, &tloc, 0)
+-	    != old_inode->i_ino)
++	if (udf_get_lb_pblock(old_dir->i_sb, &tloc, 0) != old_inode->i_ino)
+ 		goto end_rename;
+ 
+ 	nfi = udf_find_entry(new_dir, &new_dentry->d_name, &nfibh, &ncfi);
 -- 
 2.35.1
 
