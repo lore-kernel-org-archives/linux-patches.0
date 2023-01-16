@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40466FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:04:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BE99C433EF;
-	Mon, 16 Jan 2023 17:04:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 455586FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:04:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE2ADC433EF;
+	Mon, 16 Jan 2023 17:04:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888671;
-	bh=i+wsdH6MLIKpKS/H86ktb4cMdxhxBkD4ZmdiYTP2vEU=;
+	s=korg; t=1673888674;
+	bh=rmUNwuHkCZK/kL94eohe6D4tak7ZalGMdhKeu+Yj4iY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=td1YpqpGO3IfDMktcs3DEjPrUV0ClXlKGdEXwOafP4JvprijIq1JzQ7yL6rQc4lkq
-	 XWli8mnsIU4gSAIjLVC1io3pIk5nwIiXecmq39ah7WNjMsoe+jHb4hHv3GqokDV3uF
-	 8+58xSD0mQwy5VKdfAjz3t0f9zBYw9fHVtn6wWGo=
+	b=mC8IDZNyqEcscs7ynSLuj5MxUKD735cVRlDUHtrhbYhcvWir78pcg1q+TrS+yGdXj
+	 3a36Y77vacdbdTCjLQbx+8/ByhwmQH6bltoPu+gsJZDj14onmyw+MMpxN731K5kF1n
+	 tnPZgDKr33IrC54mQtkloQyc2sXYMJS2Ns3iFu0c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Qilong <zhangqilong3@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Hui Tang <tanghui20@huawei.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 095/338] ASoC: pcm512x: Fix PM disable depth imbalance in pcm512x_probe
-Date: Mon, 16 Jan 2023 16:49:28 +0100
-Message-Id: <20230116154825.035449784@linuxfoundation.org>
+Subject: [PATCH 4.14 078/338] mtd: lpddr2_nvm: Fix possible null-ptr-deref
+Date: Mon, 16 Jan 2023 16:49:11 +0100
+Message-Id: <20230116154824.281403345@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,62 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Qilong <zhangqilong3@huawei.com>
+From: Hui Tang <tanghui20@huawei.com>
 
-[ Upstream commit 97b801be6f8e53676b9f2b105f54e35c745c1b22 ]
+[ Upstream commit 6bdd45d795adf9e73b38ced5e7f750cd199499ff ]
 
-The pm_runtime_enable will increase power disable depth. Thus
-a pairing decrement is needed on the error handling path to
-keep it balanced according to context. We fix it by going to
-err_pm instead of err_clk.
+It will cause null-ptr-deref when resource_size(add_range) invoked,
+if platform_get_resource() returns NULL.
 
-Fixes:f086ba9d5389c ("ASoC: pcm512x: Support mastering BCLK/LRCLK using the PLL")
-
-Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
-Link: https://lore.kernel.org/r/20220928160402.126140-1-zhangqilong3@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 96ba9dd65788 ("mtd: lpddr: add driver for LPDDR2-NVM PCM memories")
+Signed-off-by: Hui Tang <tanghui20@huawei.com>
+Acked-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20221114090240.244172-1-tanghui20@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/pcm512x.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/mtd/lpddr/lpddr2_nvm.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/sound/soc/codecs/pcm512x.c b/sound/soc/codecs/pcm512x.c
-index 940bdc30753d..166ac1f5f2c1 100644
---- a/sound/soc/codecs/pcm512x.c
-+++ b/sound/soc/codecs/pcm512x.c
-@@ -1472,7 +1472,7 @@ int pcm512x_probe(struct device *dev, struct regmap *regmap)
- 			if (val > 6) {
- 				dev_err(dev, "Invalid pll-in\n");
- 				ret = -EINVAL;
--				goto err_clk;
-+				goto err_pm;
- 			}
- 			pcm512x->pll_in = val;
- 		}
-@@ -1481,7 +1481,7 @@ int pcm512x_probe(struct device *dev, struct regmap *regmap)
- 			if (val > 6) {
- 				dev_err(dev, "Invalid pll-out\n");
- 				ret = -EINVAL;
--				goto err_clk;
-+				goto err_pm;
- 			}
- 			pcm512x->pll_out = val;
- 		}
-@@ -1490,12 +1490,12 @@ int pcm512x_probe(struct device *dev, struct regmap *regmap)
- 			dev_err(dev,
- 				"Error: both pll-in and pll-out, or none\n");
- 			ret = -EINVAL;
--			goto err_clk;
-+			goto err_pm;
- 		}
- 		if (pcm512x->pll_in && pcm512x->pll_in == pcm512x->pll_out) {
- 			dev_err(dev, "Error: pll-in == pll-out\n");
- 			ret = -EINVAL;
--			goto err_clk;
-+			goto err_pm;
- 		}
- 	}
- #endif
+diff --git a/drivers/mtd/lpddr/lpddr2_nvm.c b/drivers/mtd/lpddr/lpddr2_nvm.c
+index 5e36366d9b36..19b00225c7ef 100644
+--- a/drivers/mtd/lpddr/lpddr2_nvm.c
++++ b/drivers/mtd/lpddr/lpddr2_nvm.c
+@@ -448,6 +448,8 @@ static int lpddr2_nvm_probe(struct platform_device *pdev)
+ 
+ 	/* lpddr2_nvm address range */
+ 	add_range = platform_get_resource(pdev, IORESOURCE_MEM, 0);
++	if (!add_range)
++		return -ENODEV;
+ 
+ 	/* Populate map_info data structure */
+ 	*map = (struct map_info) {
 -- 
 2.35.1
 
