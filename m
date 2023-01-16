@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D0966FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:38:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAB38C433F0;
-	Mon, 16 Jan 2023 16:38:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEC456FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:39:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454D1C433D2;
+	Mon, 16 Jan 2023 16:39:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887138;
-	bh=VuC0yy/dhn8sqGM7XgXlJG22HMAkATr5G5cLq4ZBU98=;
+	s=korg; t=1673887140;
+	bh=gu+wLE+8cOeZcvx24suZrXhrTOWykx3Z34Buf3NMmuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A3GiicwX849hEryQzSC9GPb4TnqYwJ2ZocMRFH1jAqyYgtpemhe6QCQoumjI7qXdl
-	 HLK11Tz8n0ZxtDxd+YTgwWnyeeovhDrGjMV5N1r3jya++RxX55Ohe85TZdLFuLEHFj
-	 QoWqmQyxO4Q4ym8I1KMkH3QWFIVygsJZjiynVDoI=
+	b=reK7JF7fic1wVu4L7i/uZzkCwuilta6lgjZudNiXp/1xbvwbgNFGjyNQO4RN0qLB0
+	 dkn7vM9GeAdjZMnFUmW/SqZBPYtlwfhP4SegmiryNZzXixYm9lhug1eXPKsv/Azbvn
+	 go1wsKmkHskN5uLWo00AIXNRwOhgX54lIqDtN4t0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 035/521] ARM: dts: armada-375: Fix assigned-addresses for every PCIe Root Port
-Date: Mon, 16 Jan 2023 16:44:57 +0100
-Message-Id: <20230116154848.893241955@linuxfoundation.org>
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 4.19 009/521] ASoC: ops: Correct bounds check for second channel on SX controls
+Date: Mon, 16 Jan 2023 16:44:31 +0100
+Message-Id: <20230116154847.675088772@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,37 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Charles Keepax <ckeepax@opensource.cirrus.com>
 
-[ Upstream commit 823956d2436f70ced74c0fe8ab99facd8abfc060 ]
+commit f33bcc506050f89433a52a3052054d4ebd37b1c1 upstream.
 
-BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
-(PCI-to-PCI bridge) should match BDF in address part in that DT node name
-as specified resource belongs to Marvell PCIe Root Port itself.
+Currently the check against the max value for the control is being
+applied after the value has had the minimum applied and been masked. But
+the max value simply indicates the number of volume levels on an SX
+control, and as such should just be applied on the raw value.
 
-Fixes: 4de59085091f ("ARM: mvebu: add Device Tree description of the Armada 375 SoC")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 97eea946b939 ("ASoC: ops: Check bounds for second channel in snd_soc_put_volsw_sx()")
+Signed-off-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20221125162348.1288005-1-ckeepax@opensource.cirrus.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/armada-375.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/soc-ops.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/armada-375.dtsi b/arch/arm/boot/dts/armada-375.dtsi
-index 2932a29ae272..230f6dd876a2 100644
---- a/arch/arm/boot/dts/armada-375.dtsi
-+++ b/arch/arm/boot/dts/armada-375.dtsi
-@@ -584,7 +584,7 @@ pcie0: pcie@1,0 {
+--- a/sound/soc/soc-ops.c
++++ b/sound/soc/soc-ops.c
+@@ -458,14 +458,15 @@ int snd_soc_put_volsw_sx(struct snd_kcon
+ 		return err;
  
- 			pcie1: pcie@2,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
-+				assigned-addresses = <0x82001000 0 0x44000 0 0x2000>;
- 				reg = <0x1000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
--- 
-2.35.1
-
+ 	if (snd_soc_volsw_is_stereo(mc)) {
+-		val_mask = mask << rshift;
+-		val2 = (ucontrol->value.integer.value[1] + min) & mask;
++		val2 = ucontrol->value.integer.value[1];
+ 
+ 		if (mc->platform_max && val2 > mc->platform_max)
+ 			return -EINVAL;
+ 		if (val2 > max)
+ 			return -EINVAL;
+ 
++		val_mask = mask << rshift;
++		val2 = (val2 + min) & mask;
+ 		val2 = val2 << rshift;
+ 
+ 		err = snd_soc_component_update_bits(component, reg2, val_mask,
 
 
