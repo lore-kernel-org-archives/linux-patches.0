@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4D926FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:42:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49EB3C433EF;
-	Mon, 16 Jan 2023 16:42:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6716A6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:42:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2EF2C433D2;
+	Mon, 16 Jan 2023 16:42:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887360;
-	bh=OUgQ3YmlL+kC/xj82o2Oh7xprEho4Eb8CVEzeEQBe6k=;
+	s=korg; t=1673887363;
+	bh=O5bDhPbiMwaKbzMcutqHFdwdvo+SgxvfL5EylQrh/Qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tj6Vy7qVvDxhjGpg81V5rusUWIb3bS0URM7Hjm/TSR0DpNcK8Zq+36AZNHiEwx1dQ
-	 U1zD+WN6eN/3LK723i8/BAx+vc/wuHp1UTwFyiwgMPNwiaVmSWfMyyIvgT0Efa8Yy5
-	 uI4wg/gUT2hYUNvMrtJUSEniELLw0BKHx46XLK/Y=
+	b=zp/OdHgOeuYZXeZgwbzBtk99u5wil+KR7tVP20URZO5fS1Iq6acipBSRa8I16Ixvr
+	 zG7r02Gx0I+KZPv2pnAj/EW6oZz9l9tplM2vORojh/hrYAvekRlgLGtVcZL5PdFhgv
+	 7Pwh9W29Z+DE4uVYSHHRwXZTW7To168hYXz2UcJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zeng Heng <zengheng4@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Alim Akhtar <alim.akhtar@samsung.com>,
+	Aakarsh Jain <aakarsh.jain@samsung.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 102/521] ASoC: pxa: fix null-pointer dereference in filter()
-Date: Mon, 16 Jan 2023 16:46:04 +0100
-Message-Id: <20230116154851.820551150@linuxfoundation.org>
+Subject: [PATCH 4.19 120/521] media: s5p-mfc: Add variant data for MFC v7 hardware for Exynos 3250 SoC
+Date: Mon, 16 Jan 2023 16:46:22 +0100
+Message-Id: <20230116154852.624781216@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,35 +37,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zeng Heng <zengheng4@huawei.com>
+From: Aakarsh Jain <aakarsh.jain@samsung.com>
 
-[ Upstream commit ec7bf231aaa1bdbcb69d23bc50c753c80fb22429 ]
+[ Upstream commit f50ebe10f5d8092c37e2bd430c78e03bf38b1e20 ]
 
-kasprintf() would return NULL pointer when kmalloc() fail to allocate.
-Need to check the return pointer before calling strcmp().
+Commit 5441e9dafdfc6dc40 ("[media] s5p-mfc: Core support for MFC v7")
+which adds mfc v7 support for Exynos3250 and use the same compatible
+string as used by Exynos5240 but both the IPs are a bit different in
+terms of IP clock.
+Add variant driver data based on the new compatible string
+"samsung,exynos3250-mfc" for Exynos3250 SoC.
 
-Fixes: 7a824e214e25 ("ASoC: mmp: add audio dma support")
-Signed-off-by: Zeng Heng <zengheng4@huawei.com>
-Link: https://lore.kernel.org/r/20221114085629.1910435-1-zengheng4@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Suggested-by: Alim Akhtar <alim.akhtar@samsung.com>
+Fixes: 5441e9dafdfc ("[media] s5p-mfc: Core support for MFC v7")
+Signed-off-by: Aakarsh Jain <aakarsh.jain@samsung.com>
+Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/pxa/mmp-pcm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/media/platform/s5p-mfc/s5p_mfc.c | 17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/pxa/mmp-pcm.c b/sound/soc/pxa/mmp-pcm.c
-index d2d4652de32c..5969aa66410d 100644
---- a/sound/soc/pxa/mmp-pcm.c
-+++ b/sound/soc/pxa/mmp-pcm.c
-@@ -90,7 +90,7 @@ static bool filter(struct dma_chan *chan, void *param)
+diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc.c b/drivers/media/platform/s5p-mfc/s5p_mfc.c
+index 0fc101bc58d6..684aa8491a38 100644
+--- a/drivers/media/platform/s5p-mfc/s5p_mfc.c
++++ b/drivers/media/platform/s5p-mfc/s5p_mfc.c
+@@ -1574,8 +1574,18 @@ static struct s5p_mfc_variant mfc_drvdata_v7 = {
+ 	.port_num	= MFC_NUM_PORTS_V7,
+ 	.buf_size	= &buf_size_v7,
+ 	.fw_name[0]     = "s5p-mfc-v7.fw",
+-	.clk_names	= {"mfc", "sclk_mfc"},
+-	.num_clocks	= 2,
++	.clk_names	= {"mfc"},
++	.num_clocks	= 1,
++};
++
++static struct s5p_mfc_variant mfc_drvdata_v7_3250 = {
++	.version        = MFC_VERSION_V7,
++	.version_bit    = MFC_V7_BIT,
++	.port_num       = MFC_NUM_PORTS_V7,
++	.buf_size       = &buf_size_v7,
++	.fw_name[0]     = "s5p-mfc-v7.fw",
++	.clk_names      = {"mfc", "sclk_mfc"},
++	.num_clocks     = 2,
+ };
  
- 	devname = kasprintf(GFP_KERNEL, "%s.%d", dma_data->dma_res->name,
- 		dma_data->ssp_id);
--	if ((strcmp(dev_name(chan->device->dev), devname) == 0) &&
-+	if (devname && (strcmp(dev_name(chan->device->dev), devname) == 0) &&
- 		(chan->chan_id == dma_data->dma_res->start)) {
- 		found = true;
- 	}
+ static struct s5p_mfc_buf_size_v6 mfc_buf_size_v8 = {
+@@ -1645,6 +1655,9 @@ static const struct of_device_id exynos_mfc_match[] = {
+ 	}, {
+ 		.compatible = "samsung,mfc-v7",
+ 		.data = &mfc_drvdata_v7,
++	}, {
++		.compatible = "samsung,exynos3250-mfc",
++		.data = &mfc_drvdata_v7_3250,
+ 	}, {
+ 		.compatible = "samsung,mfc-v8",
+ 		.data = &mfc_drvdata_v8,
 -- 
 2.35.1
 
