@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45B1A46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:25:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB51C433D2;
-	Mon, 16 Jan 2023 16:25:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0BD246B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:25:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 670C1C433D2;
+	Mon, 16 Jan 2023 16:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886322;
-	bh=iEIctR8dfbVKcXAJemRCzzwbOMwal0jox4aNhPgUpUI=;
+	s=korg; t=1673886324;
+	bh=6fMeqsBhQlnwJlmrq9V19v3RSk4PDUSbLuh83ZtKhC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZayFOUn2itrfUw6ObLjPJO8oPzPBXkikwVjDnYtpzjY0qZNOChEm8v8yozWabUSD5
-	 LZz+YpW6dMQhXz/NDXR82J6bR01fxIWew7oPDbhwKqxstbTTABxzGeGRYfaV3ZY3r+
-	 kBOCpzM+JSONebEfXuPugBSpXAaTx4yTehySP6Vs=
+	b=wqCHaPUkub8V/zUQ45WVONtzUlIDV/Kx63o5pFmxjsdUbo6BK3Iko5Ze2H58EbiRo
+	 J3jur4kUm+bE8SbSXEfT5qbxQHTMkPZ7WznZr9J6ocU+/XvMmPA/qEWyvOIfakvhra
+	 GUE3/uSQ+wvGkjcrtweaEfY7erSj0KEt/tWlKqx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Francesco Dolcini <francesco.dolcini@toradex.com>,
-	Stefan Eichenberger <stefan.eichenberger@toradex.com>,
-	Francesco Dolcini <francesco@dolcini.it>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Sean Tranchetti <quic_stranche@quicinc.com>,
+	Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 347/658] rtc: snvs: Allow a time difference on clock register read
-Date: Mon, 16 Jan 2023 16:47:15 +0100
-Message-Id: <20230116154925.434717330@linuxfoundation.org>
+Subject: [PATCH 5.4 380/658] skbuff: Account for tail adjustment during pull operations
+Date: Mon, 16 Jan 2023 16:47:48 +0100
+Message-Id: <20230116154926.926608012@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,90 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stefan Eichenberger <stefan.eichenberger@toradex.com>
+From: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
 
-[ Upstream commit 0462681e207ccc44778a77b3297af728b1cf5b9f ]
+[ Upstream commit 2d7afdcbc9d32423f177ee12b7c93783aea338fb ]
 
-On an iMX6ULL the following message appears when a wakealarm is set:
+Extending the tail can have some unexpected side effects if a program uses
+a helper like BPF_FUNC_skb_pull_data to read partial content beyond the
+head skb headlen when all the skbs in the gso frag_list are linear with no
+head_frag -
 
-echo 0 > /sys/class/rtc/rtc1/wakealarm
-rtc rtc1: Timeout trying to get valid LPSRT Counter read
+  kernel BUG at net/core/skbuff.c:4219!
+  pc : skb_segment+0xcf4/0xd2c
+  lr : skb_segment+0x63c/0xd2c
+  Call trace:
+   skb_segment+0xcf4/0xd2c
+   __udp_gso_segment+0xa4/0x544
+   udp4_ufo_fragment+0x184/0x1c0
+   inet_gso_segment+0x16c/0x3a4
+   skb_mac_gso_segment+0xd4/0x1b0
+   __skb_gso_segment+0xcc/0x12c
+   udp_rcv_segment+0x54/0x16c
+   udp_queue_rcv_skb+0x78/0x144
+   udp_unicast_rcv_skb+0x8c/0xa4
+   __udp4_lib_rcv+0x490/0x68c
+   udp_rcv+0x20/0x30
+   ip_protocol_deliver_rcu+0x1b0/0x33c
+   ip_local_deliver+0xd8/0x1f0
+   ip_rcv+0x98/0x1a4
+   deliver_ptype_list_skb+0x98/0x1ec
+   __netif_receive_skb_core+0x978/0xc60
 
-This does not always happen but is reproducible quite often (7 out of 10
-times). The problem appears because the iMX6ULL is not able to read the
-registers within one 32kHz clock cycle which is the base clock of the
-RTC. Therefore, this patch allows a difference of up to 320 cycles
-(10ms). 10ms was chosen to be big enough even on systems with less cpu
-power (e.g. iMX6ULL). According to the reference manual a difference is
-fine:
-- If the two consecutive reads are similar, the value is correct.
-The values have to be similar, not equal.
+Fix this by marking these skbs as GSO_DODGY so segmentation can handle
+the tail updates accordingly.
 
-Fixes: cd7f3a249dbe ("rtc: snvs: Add timeouts to avoid kernel lockups")
-Reviewed-by: Francesco Dolcini <francesco.dolcini@toradex.com>
-Signed-off-by: Stefan Eichenberger <stefan.eichenberger@toradex.com>
-Signed-off-by: Francesco Dolcini <francesco@dolcini.it>
-Link: https://lore.kernel.org/r/20221106115915.7930-1-francesco@dolcini.it
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Fixes: 3dcbdb134f32 ("net: gso: Fix skb_segment splat when splitting gso_size mangled skb having linear-headed frag_list")
+Signed-off-by: Sean Tranchetti <quic_stranche@quicinc.com>
+Signed-off-by: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Link: https://lore.kernel.org/r/1671084718-24796-1-git-send-email-quic_subashab@quicinc.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-snvs.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ net/core/skbuff.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/rtc/rtc-snvs.c b/drivers/rtc/rtc-snvs.c
-index 757f4daa7181..0f1e544ac8db 100644
---- a/drivers/rtc/rtc-snvs.c
-+++ b/drivers/rtc/rtc-snvs.c
-@@ -33,6 +33,14 @@
- #define SNVS_LPPGDR_INIT	0x41736166
- #define CNTR_TO_SECS_SH		15
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index e9c796e2944e..0547aa2c8b13 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -2115,6 +2115,9 @@ void *__pskb_pull_tail(struct sk_buff *skb, int delta)
+ 				insp = list;
+ 			} else {
+ 				/* Eaten partially. */
++				if (skb_is_gso(skb) && !list->head_frag &&
++				    skb_headlen(list))
++					skb_shinfo(skb)->gso_type |= SKB_GSO_DODGY;
  
-+/* The maximum RTC clock cycles that are allowed to pass between two
-+ * consecutive clock counter register reads. If the values are corrupted a
-+ * bigger difference is expected. The RTC frequency is 32kHz. With 320 cycles
-+ * we end at 10ms which should be enough for most cases. If it once takes
-+ * longer than expected we do a retry.
-+ */
-+#define MAX_RTC_READ_DIFF_CYCLES	320
-+
- struct snvs_rtc_data {
- 	struct rtc_device *rtc;
- 	struct regmap *regmap;
-@@ -57,6 +65,7 @@ static u64 rtc_read_lpsrt(struct snvs_rtc_data *data)
- static u32 rtc_read_lp_counter(struct snvs_rtc_data *data)
- {
- 	u64 read1, read2;
-+	s64 diff;
- 	unsigned int timeout = 100;
- 
- 	/* As expected, the registers might update between the read of the LSB
-@@ -67,7 +76,8 @@ static u32 rtc_read_lp_counter(struct snvs_rtc_data *data)
- 	do {
- 		read2 = read1;
- 		read1 = rtc_read_lpsrt(data);
--	} while (read1 != read2 && --timeout);
-+		diff = read1 - read2;
-+	} while (((diff < 0) || (diff > MAX_RTC_READ_DIFF_CYCLES)) && --timeout);
- 	if (!timeout)
- 		dev_err(&data->rtc->dev, "Timeout trying to get valid LPSRT Counter read\n");
- 
-@@ -79,13 +89,15 @@ static u32 rtc_read_lp_counter(struct snvs_rtc_data *data)
- static int rtc_read_lp_counter_lsb(struct snvs_rtc_data *data, u32 *lsb)
- {
- 	u32 count1, count2;
-+	s32 diff;
- 	unsigned int timeout = 100;
- 
- 	regmap_read(data->regmap, data->offset + SNVS_LPSRTCLR, &count1);
- 	do {
- 		count2 = count1;
- 		regmap_read(data->regmap, data->offset + SNVS_LPSRTCLR, &count1);
--	} while (count1 != count2 && --timeout);
-+		diff = count1 - count2;
-+	} while (((diff < 0) || (diff > MAX_RTC_READ_DIFF_CYCLES)) && --timeout);
- 	if (!timeout) {
- 		dev_err(&data->rtc->dev, "Timeout trying to get valid LPSRT Counter read\n");
- 		return -ETIMEDOUT;
+ 				if (skb_shared(list)) {
+ 					/* Sucks! We need to fork list. :-( */
 -- 
 2.35.1
 
