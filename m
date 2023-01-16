@@ -1,29 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0375A33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D002C433D2;
-	Mon, 16 Jan 2023 15:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B49633EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2086EC433EF;
+	Mon, 16 Jan 2023 15:55:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884539;
-	bh=Jj6MQ75efzaAgKF++Bh9ywEV5w4ggG4Ie4cDj4Q9DKA=;
+	s=korg; t=1673884542;
+	bh=tGDKCpBdcqwHeqtLKtrq6/42JSMWZ9Q1z/GMens71e8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KITqnlwrlpsGo34Wf6o30zCpkEYqQ0uGcxVAs3C3JCyTR0o6fQyd+ghjmnJo/KPv0
-	 rw2yfnmIwJPM9RrUMcPl+yOGIsg5gH6fNbk/NC4+aW+o3EKSVKAQL1pYGvuqnBz6kS
-	 50BtRSWsEaoidAbq5HBFIJ4emfHAv0ajIMa2j6CI=
+	b=mr3UViMjQQED79Zz431WnXP8t1bSkO97fktEz3VQNfPkz0vxXTGaaMPPxgpEVBDIn
+	 Cejk3HJxgbAbJ4X5jjLgyIzk24dk3o7MUxU4npadc74a7xm40AqbMSIUa5gVHp9AmS
+	 EAzbJzwQrrg+Q9mz8rztDcdu0Z6TAjDdzRDDcV0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Yury Zhuravlev <stalkerg@gmail.com>,
-	Guchun Chen <guchun.chen@amd.com>,
-	Asher Song <Asher.Song@amd.com>
-Subject: [PATCH 6.1 037/183] Revert "drm/amdgpu: Revert "drm/amdgpu: getting fan speed pwm for vega10 properly""
-Date: Mon, 16 Jan 2023 16:49:20 +0100
-Message-Id: <20230116154804.941999148@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 6.1 046/183] platform/x86: dell-privacy: Only register SW_CAMERA_LENS_COVER if present
+Date: Mon, 16 Jan 2023 16:49:29 +0100
+Message-Id: <20230116154805.318220962@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -37,65 +33,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-This reverts commit 9ccd11718d76b95c69aa773f2abedef560776037
+commit 6dc485f9940df8105ea729cbeb7a7d18d409dde5 upstream.
 
-The original commit 16fb4dca95daa ("drm/amdgpu: getting fan speed pwm for vega10 properly")
-was reverted in commit 4545ae2ed3f2 ("drm/amdgpu: Revert "drm/amdgpu: getting fan speed pwm for vega10 properly"").
-but the test that resulted in the revert was wrong and was fixed so the
-revert was reverted in commit 30b8e7b8ee3b ("Revert "drm/amdgpu: Revert "drm/amdgpu: getting fan speed pwm for vega10 properly""").
-That should have been the end of it, but then Sasha picked up the
-original revert again and it was committed as 9ccd11718d76.  So drop
-that commit so we get back to where we need to be.
+Unlike keys where userspace only reacts to keypresses, userspace may act
+on switches in both (0 and 1) of their positions.
 
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: Sasha Levin <sashal@kernel.org>
-Cc: stable@vger.kernel.org # 6.1.x
-Cc: Yury Zhuravlev <stalkerg@gmail.com>
-Cc: Guchun Chen <guchun.chen@amd.com>
-Cc: Asher Song <Asher.Song@amd.com>
+For example if a SW_TABLET_MODE switch is registered then GNOME will not
+automatically show the onscreen keyboard when a text field gets focus on
+touchscreen devices when SW_TABLET_MODE reports 0 and when SW_TABLET_MODE
+reports 1 libinput will block (filter out) builtin keyboard and touchpad
+events.
+
+So to avoid unwanted side-effects EV_SW type inputs should only be
+registered if they are actually present, only register SW_CAMERA_LENS_COVER
+if it is actually there.
+
+Fixes: 8af9fa37b8a3 ("platform/x86: dell-privacy: Add support for Dell hardware privacy")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20221221220724.119594-2-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c |   25 +++++++---------
- 1 file changed, 12 insertions(+), 13 deletions(-)
+ drivers/platform/x86/dell/dell-wmi-privacy.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c
-+++ b/drivers/gpu/drm/amd/pm/powerplay/hwmgr/vega10_thermal.c
-@@ -67,22 +67,21 @@ int vega10_fan_ctrl_get_fan_speed_info(s
- int vega10_fan_ctrl_get_fan_speed_pwm(struct pp_hwmgr *hwmgr,
- 		uint32_t *speed)
+--- a/drivers/platform/x86/dell/dell-wmi-privacy.c
++++ b/drivers/platform/x86/dell/dell-wmi-privacy.c
+@@ -292,7 +292,7 @@ static int dell_privacy_wmi_probe(struct
  {
--	uint32_t current_rpm;
--	uint32_t percent = 0;
-+	struct amdgpu_device *adev = hwmgr->adev;
-+	uint32_t duty100, duty;
-+	uint64_t tmp64;
+ 	struct privacy_wmi_data *priv;
+ 	struct key_entry *keymap;
+-	int ret, i;
++	int ret, i, j;
  
--	if (hwmgr->thermal_controller.fanInfo.bNoFan)
--		return 0;
-+	duty100 = REG_GET_FIELD(RREG32_SOC15(THM, 0, mmCG_FDO_CTRL1),
-+				CG_FDO_CTRL1, FMAX_DUTY100);
-+	duty = REG_GET_FIELD(RREG32_SOC15(THM, 0, mmCG_THERMAL_STATUS),
-+				CG_THERMAL_STATUS, FDO_PWM_DUTY);
- 
--	if (vega10_get_current_rpm(hwmgr, &current_rpm))
--		return -1;
-+	if (!duty100)
-+		return -EINVAL;
- 
--	if (hwmgr->thermal_controller.
--			advanceFanControlParameters.usMaxFanRPM != 0)
--		percent = current_rpm * 255 /
--			hwmgr->thermal_controller.
--			advanceFanControlParameters.usMaxFanRPM;
--
--	*speed = MIN(percent, 255);
-+	tmp64 = (uint64_t)duty * 255;
-+	do_div(tmp64, duty100);
-+	*speed = MIN((uint32_t)tmp64, 255);
- 
- 	return 0;
- }
+ 	ret = wmi_has_guid(DELL_PRIVACY_GUID);
+ 	if (!ret)
+@@ -318,9 +318,20 @@ static int dell_privacy_wmi_probe(struct
+ 	/* remap the keymap code with Dell privacy key type 0x12 as prefix
+ 	 * KEY_MICMUTE scancode will be reported as 0x120001
+ 	 */
+-	for (i = 0; i < ARRAY_SIZE(dell_wmi_keymap_type_0012); i++) {
+-		keymap[i] = dell_wmi_keymap_type_0012[i];
+-		keymap[i].code |= (0x0012 << 16);
++	for (i = 0, j = 0; i < ARRAY_SIZE(dell_wmi_keymap_type_0012); i++) {
++		/*
++		 * Unlike keys where only presses matter, userspace may act
++		 * on switches in both of their positions. Only register
++		 * SW_CAMERA_LENS_COVER if it is actually there.
++		 */
++		if (dell_wmi_keymap_type_0012[i].type == KE_VSW &&
++		    dell_wmi_keymap_type_0012[i].sw.code == SW_CAMERA_LENS_COVER &&
++		    !(priv->features_present & BIT(DELL_PRIVACY_TYPE_CAMERA)))
++			continue;
++
++		keymap[j] = dell_wmi_keymap_type_0012[i];
++		keymap[j].code |= (0x0012 << 16);
++		j++;
+ 	}
+ 	ret = sparse_keymap_setup(priv->input_dev, keymap, NULL);
+ 	kfree(keymap);
 
 
