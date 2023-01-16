@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 77B136FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:13:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2C63C433EF;
-	Mon, 16 Jan 2023 17:13:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D03376FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:13:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 388A4C433D2;
+	Mon, 16 Jan 2023 17:13:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889195;
-	bh=X+aIeeyOZRTXkdQjBjP7gZxVZxF36QCcdUOwCfvRBdU=;
+	s=korg; t=1673889192;
+	bh=6s2Tb3eHH6LLYT7Fut/hhoaprggUaScGwRqF1wzu1jc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dS5HOZNLUGlRkzqE2C8tQiUvwPI5h2tw6d6rwM4l+RhtWR4nbDc2zZZcv97WEYRaS
-	 mWAccNk52ZNVlpbsVx5KGdVfBFyZAMvHdKCtQKIojtAKEdnLebiAHyUszEm2JZGdaT
-	 j9U/0qsLhmgDNG3GMJN5uycd9hXnxYpdxdgiaUf4=
+	b=wNAicm7W151WRjk4BADUGgHbAnAhsplYnsDarJVP41g1HL1WtICHZX8eGnpgdNp/O
+	 3PoX6Kob04oxWVNYnjO7AviK0MrHCDWS4ngaTfje0IJV9fEyhcS2BjQWEzdd1Yq53l
+	 hceKWzdwrxi4yd+k+Cgec1w/lNNQ+0JE2fWHg08Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Weiyang <wangweiyang2@huawei.com>,
-	Aristeu Rozanski <aris@redhat.com>,
-	Paul Moore <paul@paul-moore.com>
-Subject: [PATCH 4.14 294/338] device_cgroup: Roll back to original exceptions after copy failure
-Date: Mon, 16 Jan 2023 16:52:47 +0100
-Message-Id: <20230116154833.909924056@linuxfoundation.org>
+	Shuah Khan <skhan@linuxfoundation.org>,
+	=?UTF-8?q?Micka=C3=ABl=20Sala=C3=BCn?= <mic@digikod.net>
+Subject: [PATCH 4.14 276/338] selftests: Use optional USERCFLAGS and USERLDFLAGS
+Date: Mon, 16 Jan 2023 16:52:29 +0100
+Message-Id: <20230116154833.111828948@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,95 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Weiyang <wangweiyang2@huawei.com>
+From: Mickaël Salaün <mic@digikod.net>
 
-commit e68bfbd3b3c3a0ec3cf8c230996ad8cabe90322f upstream.
+commit de3ee3f63400a23954e7c1ad1cb8c20f29ab6fe3 upstream.
 
-When add the 'a *:* rwm' entry to devcgroup A's whitelist, at first A's
-exceptions will be cleaned and A's behavior is changed to
-DEVCG_DEFAULT_ALLOW. Then parent's exceptions will be copyed to A's
-whitelist. If copy failure occurs, just return leaving A to grant
-permissions to all devices. And A may grant more permissions than
-parent.
+This change enables to extend CFLAGS and LDFLAGS from command line, e.g.
+to extend compiler checks: make USERCFLAGS=-Werror USERLDFLAGS=-static
 
-Backup A's whitelist and recover original exceptions after copy
-failure.
+USERCFLAGS and USERLDFLAGS are documented in
+Documentation/kbuild/makefiles.rst and Documentation/kbuild/kbuild.rst
 
+This should be backported (down to 5.10) to improve previous kernel
+versions testing as well.
+
+Cc: Shuah Khan <skhan@linuxfoundation.org>
 Cc: stable@vger.kernel.org
-Fixes: 4cef7299b478 ("device_cgroup: add proper checking when changing default behavior")
-Signed-off-by: Wang Weiyang <wangweiyang2@huawei.com>
-Reviewed-by: Aristeu Rozanski <aris@redhat.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
+Signed-off-by: Mickaël Salaün <mic@digikod.net>
+Link: https://lore.kernel.org/r/20220909103901.1503436-1-mic@digikod.net
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- security/device_cgroup.c |   33 +++++++++++++++++++++++++++++----
- 1 file changed, 29 insertions(+), 4 deletions(-)
+ tools/testing/selftests/lib.mk |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/security/device_cgroup.c
-+++ b/security/device_cgroup.c
-@@ -88,6 +88,17 @@ free_and_exit:
- 	return -ENOMEM;
- }
+--- a/tools/testing/selftests/lib.mk
++++ b/tools/testing/selftests/lib.mk
+@@ -103,6 +103,11 @@ endef
+ clean:
+ 	$(CLEAN)
  
-+static void dev_exceptions_move(struct list_head *dest, struct list_head *orig)
-+{
-+	struct dev_exception_item *ex, *tmp;
++# Enables to extend CFLAGS and LDFLAGS from command line, e.g.
++# make USERCFLAGS=-Werror USERLDFLAGS=-static
++CFLAGS += $(USERCFLAGS)
++LDFLAGS += $(USERLDFLAGS)
 +
-+	lockdep_assert_held(&devcgroup_mutex);
-+
-+	list_for_each_entry_safe(ex, tmp, orig, list) {
-+		list_move_tail(&ex->list, dest);
-+	}
-+}
-+
- /*
-  * called under devcgroup_mutex
-  */
-@@ -609,11 +620,13 @@ static int devcgroup_update_access(struc
- 	int count, rc = 0;
- 	struct dev_exception_item ex;
- 	struct dev_cgroup *parent = css_to_devcgroup(devcgroup->css.parent);
-+	struct dev_cgroup tmp_devcgrp;
- 
- 	if (!capable(CAP_SYS_ADMIN))
- 		return -EPERM;
- 
- 	memset(&ex, 0, sizeof(ex));
-+	memset(&tmp_devcgrp, 0, sizeof(tmp_devcgrp));
- 	b = buffer;
- 
- 	switch (*b) {
-@@ -625,15 +638,27 @@ static int devcgroup_update_access(struc
- 
- 			if (!may_allow_all(parent))
- 				return -EPERM;
--			dev_exception_clean(devcgroup);
--			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
--			if (!parent)
-+			if (!parent) {
-+				devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
-+				dev_exception_clean(devcgroup);
- 				break;
-+			}
- 
-+			INIT_LIST_HEAD(&tmp_devcgrp.exceptions);
-+			rc = dev_exceptions_copy(&tmp_devcgrp.exceptions,
-+						 &devcgroup->exceptions);
-+			if (rc)
-+				return rc;
-+			dev_exception_clean(devcgroup);
- 			rc = dev_exceptions_copy(&devcgroup->exceptions,
- 						 &parent->exceptions);
--			if (rc)
-+			if (rc) {
-+				dev_exceptions_move(&devcgroup->exceptions,
-+						    &tmp_devcgrp.exceptions);
- 				return rc;
-+			}
-+			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
-+			dev_exception_clean(&tmp_devcgrp);
- 			break;
- 		case DEVCG_DENY:
- 			if (css_has_online_children(&devcgroup->css))
+ # When make O= with kselftest target from main level
+ # the following aren't defined.
+ #
 
 
