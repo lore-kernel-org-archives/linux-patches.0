@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10FF6FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:46:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A6CC433F1;
-	Mon, 16 Jan 2023 16:46:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6166FA3
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:46:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 086A6C433EF;
+	Mon, 16 Jan 2023 16:46:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887563;
-	bh=Nt5vkuZ3gi2KOUwLRO9WBXBaVyewhFhO6wEnAZ8cMVw=;
+	s=korg; t=1673887566;
+	bh=4IGGj902TF3JlNkbsz7hyck5wWlC8awGwDZobwJUK94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l/N7QDbJ0lExhZicY68e0nJqhRfj4AGx4RBg6HkHekPFtdaRmcALNHXRbGDDNvxh8
-	 t7S4Y6HTujDQ5ulx4+knr2a4tAvZrwv5Eiq8OBFlxQroLbg6Y1EkfaJOn2WV+hrUtN
-	 WlOnJCX2tMbAUxd9XOwkr8BV3fwhTwYRMXJQkK+I=
+	b=pQZbUHOwKjgW1L2wGHfOgZh6HmI+PF+E7Mmya7oAnclwSRAYz9i4vCslOIQDHlScr
+	 8qMWTP/MiachpEMu2ZIbaTyt14frrN9q3OQ5yfIO5pOYF24MMDoCqgSo6HMcJaXZQv
+	 5kQV5wmxV8z6ZyDMMCH4c9DvKaIEROlW4jjWfdX8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 195/521] scsi: mpt3sas: Fix possible resource leaks in mpt3sas_transport_port_add()
-Date: Mon, 16 Jan 2023 16:47:37 +0100
-Message-Id: <20230116154855.801682001@linuxfoundation.org>
+Subject: [PATCH 4.19 169/521] net: amd-xgbe: Fix logic around active and passive cables
+Date: Mon, 16 Jan 2023 16:47:11 +0100
+Message-Id: <20230116154854.676249634@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,64 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Tom Lendacky <thomas.lendacky@amd.com>
 
-[ Upstream commit 78316e9dfc24906dd474630928ed1d3c562b568e ]
+[ Upstream commit 4998006c73afe44e2f639d55bd331c6c26eb039f ]
 
-In mpt3sas_transport_port_add(), if sas_rphy_add() returns error,
-sas_rphy_free() needs be called to free the resource allocated in
-sas_end_device_alloc(). Otherwise a kernel crash will happen:
+SFP+ active and passive cables are copper cables with fixed SFP+ end
+connectors. Due to a misinterpretation of this, SFP+ active cables could
+end up not being recognized, causing the driver to fail to establish a
+connection.
 
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000108
-CPU: 45 PID: 37020 Comm: bash Kdump: loaded Tainted: G        W          6.1.0-rc1+ #189
-pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : device_del+0x54/0x3d0
-lr : device_del+0x37c/0x3d0
-Call trace:
- device_del+0x54/0x3d0
- attribute_container_class_device_del+0x28/0x38
- transport_remove_classdev+0x6c/0x80
- attribute_container_device_trigger+0x108/0x110
- transport_remove_device+0x28/0x38
- sas_rphy_remove+0x50/0x78 [scsi_transport_sas]
- sas_port_delete+0x30/0x148 [scsi_transport_sas]
- do_sas_phy_delete+0x78/0x80 [scsi_transport_sas]
- device_for_each_child+0x68/0xb0
- sas_remove_children+0x30/0x50 [scsi_transport_sas]
- sas_rphy_remove+0x38/0x78 [scsi_transport_sas]
- sas_port_delete+0x30/0x148 [scsi_transport_sas]
- do_sas_phy_delete+0x78/0x80 [scsi_transport_sas]
- device_for_each_child+0x68/0xb0
- sas_remove_children+0x30/0x50 [scsi_transport_sas]
- sas_remove_host+0x20/0x38 [scsi_transport_sas]
- scsih_remove+0xd8/0x420 [mpt3sas]
+Introduce a new enum in SFP+ cable types, XGBE_SFP_CABLE_FIBER, that is
+the default cable type, and handle active and passive cables when they are
+specifically detected.
 
-Because transport_add_device() is not called when sas_rphy_add() fails, the
-device is not added. When sas_rphy_remove() is subsequently called to
-remove the device in the remove() path, a NULL pointer dereference happens.
-
-Fixes: f92363d12359 ("[SCSI] mpt3sas: add new driver supporting 12GB SAS")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221109032403.1636422-1-yangyingliang@huawei.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: abf0a1c2b26a ("amd-xgbe: Add support for SFP+ modules")
+Signed-off-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/mpt3sas/mpt3sas_transport.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/mpt3sas/mpt3sas_transport.c b/drivers/scsi/mpt3sas/mpt3sas_transport.c
-index 9fd89e85227a..f2b072831747 100644
---- a/drivers/scsi/mpt3sas/mpt3sas_transport.c
-+++ b/drivers/scsi/mpt3sas/mpt3sas_transport.c
-@@ -730,6 +730,8 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
- 	if ((sas_rphy_add(rphy))) {
- 		ioc_err(ioc, "failure at %s:%d/%s()!\n",
- 			__FILE__, __LINE__, __func__);
-+		sas_rphy_free(rphy);
-+		rphy = NULL;
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+index d54e6e138aaf..098792eb279c 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-phy-v2.c
+@@ -188,6 +188,7 @@ enum xgbe_sfp_cable {
+ 	XGBE_SFP_CABLE_UNKNOWN = 0,
+ 	XGBE_SFP_CABLE_ACTIVE,
+ 	XGBE_SFP_CABLE_PASSIVE,
++	XGBE_SFP_CABLE_FIBER,
+ };
+ 
+ enum xgbe_sfp_base {
+@@ -1136,16 +1137,18 @@ static void xgbe_phy_sfp_parse_eeprom(struct xgbe_prv_data *pdata)
+ 	phy_data->sfp_tx_fault = xgbe_phy_check_sfp_tx_fault(phy_data);
+ 	phy_data->sfp_rx_los = xgbe_phy_check_sfp_rx_los(phy_data);
+ 
+-	/* Assume ACTIVE cable unless told it is PASSIVE */
++	/* Assume FIBER cable unless told otherwise */
+ 	if (sfp_base[XGBE_SFP_BASE_CABLE] & XGBE_SFP_BASE_CABLE_PASSIVE) {
+ 		phy_data->sfp_cable = XGBE_SFP_CABLE_PASSIVE;
+ 		phy_data->sfp_cable_len = sfp_base[XGBE_SFP_BASE_CU_CABLE_LEN];
+-	} else {
++	} else if (sfp_base[XGBE_SFP_BASE_CABLE] & XGBE_SFP_BASE_CABLE_ACTIVE) {
+ 		phy_data->sfp_cable = XGBE_SFP_CABLE_ACTIVE;
++	} else {
++		phy_data->sfp_cable = XGBE_SFP_CABLE_FIBER;
  	}
  
- 	if (mpt3sas_port->remote_identify.device_type == SAS_END_DEVICE) {
+ 	/* Determine the type of SFP */
+-	if (phy_data->sfp_cable == XGBE_SFP_CABLE_PASSIVE &&
++	if (phy_data->sfp_cable != XGBE_SFP_CABLE_FIBER &&
+ 	    xgbe_phy_sfp_bit_rate(sfp_eeprom, XGBE_SFP_SPEED_10000))
+ 		phy_data->sfp_base = XGBE_SFP_BASE_10000_CR;
+ 	else if (sfp_base[XGBE_SFP_BASE_10GBE_CC] & XGBE_SFP_BASE_10GBE_CC_SR)
 -- 
 2.35.1
 
