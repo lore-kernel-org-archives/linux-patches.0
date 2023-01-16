@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E1733EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E068AC433D2;
-	Mon, 16 Jan 2023 16:03:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB5233EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75473C433D2;
+	Mon, 16 Jan 2023 16:03:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885021;
-	bh=dV3T2K0wm/vcbInio0P0c+0afNHzeJwUEaiboLCpBb8=;
+	s=korg; t=1673885023;
+	bh=cMUV+0rexTPjeMjaEKnfHP+cJEkFgXqd2FS4IWcfO0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=10vUHZxXPGbMnrpNylRbnsYJClMt0/MPi42xwkPW1Aa31tLs/sqrrnUPfKnFaXJE5
-	 a2nPo7JFp8ULoAFjL0N2HwoyaagKXhqKAGrupwaLKRC4sV6/Owxr3HadE5qA6LruR4
-	 Zd3SqZoxef2rv+OZG4jv1YCEf2Fg6JwuVQo77C2w=
+	b=f6C+FQ4wO/5mFGv8Q7c4RzRHLTZIZdod+Fa5JjKoqKzJB4x+q6z+UA1xZXEsThUdv
+	 aPXNT65N9TYDXyku/93m7+EtTvl+TbPcYadxa/ovOSbOAOe/HMiehNN/wlk7AWKDZ8
+	 YvBFjy//31eV4qgS/plrFecxDeO6OfVIBN2dgIIE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Adam Ward <DLG-Adam.Ward.opensource@dm.renesas.com>,
-	Mark Brown <broonie@kernel.org>,
+	Shinichiro Kawasaki <shinichiro.kawasaki@wdc.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 45/86] regulator: da9211: Use irq handler when ready
-Date: Mon, 16 Jan 2023 16:51:19 +0100
-Message-Id: <20230116154748.937736122@linuxfoundation.org>
+Subject: [PATCH 5.15 46/86] scsi: mpi3mr: Refer CONFIG_SCSI_MPI3MR in Makefile
+Date: Mon, 16 Jan 2023 16:51:20 +0100
+Message-Id: <20230116154748.986348913@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -36,64 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
 
-[ Upstream commit 02228f6aa6a64d588bc31e3267d05ff184d772eb ]
+[ Upstream commit f0a43ba6c66cc0688e2748d986a1459fdd3442ef ]
 
-If the system does not come from reset (like when it is kexec()), the
-regulator might have an IRQ waiting for us.
+When Kconfig item CONFIG_SCSI_MPI3MR was introduced for mpi3mr driver, the
+Makefile of the driver was not modified to refer the Kconfig item.
 
-If we enable the IRQ handler before its structures are ready, we crash.
+As a result, mpi3mr.ko is built regardless of the Kconfig item value y or
+m. Also, if 'make localmodconfig' can not find the Kconfig item in the
+Makefile, then it does not generate CONFIG_SCSI_MPI3MR=m even when
+mpi3mr.ko is loaded on the system.
 
-This patch fixes:
+Refer to the Kconfig item to avoid the issues.
 
-[    1.141839] Unable to handle kernel read from unreadable memory at virtual address 0000000000000078
-[    1.316096] Call trace:
-[    1.316101]  blocking_notifier_call_chain+0x20/0xa8
-[    1.322757] cpu cpu0: dummy supplies not allowed for exclusive requests
-[    1.327823]  regulator_notifier_call_chain+0x1c/0x2c
-[    1.327825]  da9211_irq_handler+0x68/0xf8
-[    1.327829]  irq_thread+0x11c/0x234
-[    1.327833]  kthread+0x13c/0x154
-
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Reviewed-by: Adam Ward <DLG-Adam.Ward.opensource@dm.renesas.com>
-Link: https://lore.kernel.org/r/20221124-da9211-v2-0-1779e3c5d491@chromium.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: c4f7ac64616e ("scsi: mpi3mr: Add mpi30 Rev-R headers and Kconfig")
+Signed-off-by: Shin'ichiro Kawasaki <shinichiro.kawasaki@wdc.com>
+Link: https://lore.kernel.org/r/20221207023659.2411785-1-shinichiro.kawasaki@wdc.com
+Reviewed-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Acked-by: Sathya Prakash Veerichetty <sathya.prakash@broadcom.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/da9211-regulator.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ drivers/scsi/mpi3mr/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/da9211-regulator.c b/drivers/regulator/da9211-regulator.c
-index e01b32d1fa17..00828f5baa97 100644
---- a/drivers/regulator/da9211-regulator.c
-+++ b/drivers/regulator/da9211-regulator.c
-@@ -498,6 +498,12 @@ static int da9211_i2c_probe(struct i2c_client *i2c)
- 
- 	chip->chip_irq = i2c->irq;
- 
-+	ret = da9211_regulator_init(chip);
-+	if (ret < 0) {
-+		dev_err(chip->dev, "Failed to initialize regulator: %d\n", ret);
-+		return ret;
-+	}
-+
- 	if (chip->chip_irq != 0) {
- 		ret = devm_request_threaded_irq(chip->dev, chip->chip_irq, NULL,
- 					da9211_irq_handler,
-@@ -512,11 +518,6 @@ static int da9211_i2c_probe(struct i2c_client *i2c)
- 		dev_warn(chip->dev, "No IRQ configured\n");
- 	}
- 
--	ret = da9211_regulator_init(chip);
--
--	if (ret < 0)
--		dev_err(chip->dev, "Failed to initialize regulator: %d\n", ret);
--
- 	return ret;
- }
- 
+diff --git a/drivers/scsi/mpi3mr/Makefile b/drivers/scsi/mpi3mr/Makefile
+index 7c2063e04c81..7ebca0ba538d 100644
+--- a/drivers/scsi/mpi3mr/Makefile
++++ b/drivers/scsi/mpi3mr/Makefile
+@@ -1,4 +1,4 @@
+ # mpi3mr makefile
+-obj-m += mpi3mr.o
++obj-$(CONFIG_SCSI_MPI3MR) += mpi3mr.o
+ mpi3mr-y +=  mpi3mr_os.o     \
+ 		mpi3mr_fw.o \
 -- 
 2.35.1
 
