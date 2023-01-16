@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12C2F46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:18:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E18DC433EF;
-	Mon, 16 Jan 2023 16:18:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B383146B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:18:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36FF4C433D2;
+	Mon, 16 Jan 2023 16:18:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885934;
-	bh=KlJMEBy311PfnmUWDDgqkebyt4AmekAUWT6qUjgGgdU=;
+	s=korg; t=1673885937;
+	bh=pzvvp4SUZ9H05ocdDsuUORES2E3E3ZoGJMTh+XpH5iw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jWO4VnnK4vkYbE5yTfOkLibqHIVctxtEXO6iDbn5PdgMPCpCzt7ZEhHJhOMgI/5+u
-	 9LVQZq0L9vc0u/0VL0msyFOaN3KrmxQ80xWkKZrv4s28Q+9jiK4ZdOP7GBVXcRhGr8
-	 x4ywIgpVJPSI9B+9x0n+oyT03IPao/O+JX4PBeIA=
+	b=WlGMzAWZsqx9YPBpAUtWso7hnpr6zx6XZWjr5O39SHgeRDbKmlLt55u4eAAdfNel+
+	 EJx8QA09ncnchDkVin0ycWtNNjTcJAIqkyxzC5FfBxoOdsH/z2oBP8s1P6yKFZ5VSR
+	 R4MrNomj8MRCZcA5Vdpo147IiWs28UkQcceN0n2M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Piergiorgio Beruto <piergiorgio.beruto@gmail.com>,
-	Andrew Lunn <andrew@lunn.ch>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	John Johansen <john.johansen@canonical.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 239/658] stmmac: fix potential division by 0
-Date: Mon, 16 Jan 2023 16:45:27 +0100
-Message-Id: <20230116154920.489729270@linuxfoundation.org>
+Subject: [PATCH 5.4 240/658] apparmor: fix a memleak in multi_transaction_new()
+Date: Mon, 16 Jan 2023 16:45:28 +0100
+Message-Id: <20230116154920.538790685@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,87 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Piergiorgio Beruto <piergiorgio.beruto@gmail.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit ede5a389852d3640a28e7187fb32b7f204380901 ]
+[ Upstream commit c73275cf6834787ca090317f1d20dbfa3b7f05aa ]
 
-When the MAC is connected to a 10 Mb/s PHY and the PTP clock is derived
-from the MAC reference clock (default), the clk_ptp_rate becomes too
-small and the calculated sub second increment becomes 0 when computed by
-the stmmac_config_sub_second_increment() function within
-stmmac_init_tstamp_counter().
+In multi_transaction_new(), the variable t is not freed or passed out
+on the failure of copy_from_user(t->data, buf, size), which could lead
+to a memleak.
 
-Therefore, the subsequent div_u64 in stmmac_init_tstamp_counter()
-operation triggers a divide by 0 exception as shown below.
+Fix this bug by adding a put_multi_transaction(t) in the error path.
 
-[   95.062067] socfpga-dwmac ff700000.ethernet eth0: Register MEM_TYPE_PAGE_POOL RxQ-0
-[   95.076440] socfpga-dwmac ff700000.ethernet eth0: PHY [stmmac-0:08] driver [NCN26000] (irq=49)
-[   95.095964] dwmac1000: Master AXI performs any burst length
-[   95.101588] socfpga-dwmac ff700000.ethernet eth0: No Safety Features support found
-[   95.109428] Division by zero in kernel.
-[   95.113447] CPU: 0 PID: 239 Comm: ifconfig Not tainted 6.1.0-rc7-centurion3-1.0.3.0-01574-gb624218205b7-dirty #77
-[   95.123686] Hardware name: Altera SOCFPGA
-[   95.127695]  unwind_backtrace from show_stack+0x10/0x14
-[   95.132938]  show_stack from dump_stack_lvl+0x40/0x4c
-[   95.137992]  dump_stack_lvl from Ldiv0+0x8/0x10
-[   95.142527]  Ldiv0 from __aeabi_uidivmod+0x8/0x18
-[   95.147232]  __aeabi_uidivmod from div_u64_rem+0x1c/0x40
-[   95.152552]  div_u64_rem from stmmac_init_tstamp_counter+0xd0/0x164
-[   95.158826]  stmmac_init_tstamp_counter from stmmac_hw_setup+0x430/0xf00
-[   95.165533]  stmmac_hw_setup from __stmmac_open+0x214/0x2d4
-[   95.171117]  __stmmac_open from stmmac_open+0x30/0x44
-[   95.176182]  stmmac_open from __dev_open+0x11c/0x134
-[   95.181172]  __dev_open from __dev_change_flags+0x168/0x17c
-[   95.186750]  __dev_change_flags from dev_change_flags+0x14/0x50
-[   95.192662]  dev_change_flags from devinet_ioctl+0x2b4/0x604
-[   95.198321]  devinet_ioctl from inet_ioctl+0x1ec/0x214
-[   95.203462]  inet_ioctl from sock_ioctl+0x14c/0x3c4
-[   95.208354]  sock_ioctl from vfs_ioctl+0x20/0x38
-[   95.212984]  vfs_ioctl from sys_ioctl+0x250/0x844
-[   95.217691]  sys_ioctl from ret_fast_syscall+0x0/0x4c
-[   95.222743] Exception stack(0xd0ee1fa8 to 0xd0ee1ff0)
-[   95.227790] 1fa0:                   00574c4f be9aeca4 00000003 00008914 be9aeca4 be9aec50
-[   95.235945] 1fc0: 00574c4f be9aeca4 0059f078 00000036 be9aee8c be9aef7a 00000015 00000000
-[   95.244096] 1fe0: 005a01f0 be9aec38 004d7484 b6e67d74
-
-Signed-off-by: Piergiorgio Beruto <piergiorgio.beruto@gmail.com>
-Fixes: 91a2559c1dc5 ("net: stmmac: Fix sub-second increment")
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-Link: https://lore.kernel.org/r/de4c64ccac9084952c56a06a8171d738604c4770.1670678513.git.piergiorgio.beruto@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 1dea3b41e84c5 ("apparmor: speed up transactional queries")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: John Johansen <john.johansen@canonical.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c | 3 ++-
- drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h      | 2 +-
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ security/apparmor/apparmorfs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-index 8c14c9966394..79546810bb3d 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
-@@ -43,7 +43,8 @@ static void config_sub_second_increment(void __iomem *ioaddr,
- 	if (!(value & PTP_TCR_TSCTRLSSR))
- 		data = (data * 1000) / 465;
+diff --git a/security/apparmor/apparmorfs.c b/security/apparmor/apparmorfs.c
+index 84daab8ae062..62736465ac82 100644
+--- a/security/apparmor/apparmorfs.c
++++ b/security/apparmor/apparmorfs.c
+@@ -869,8 +869,10 @@ static struct multi_transaction *multi_transaction_new(struct file *file,
+ 	if (!t)
+ 		return ERR_PTR(-ENOMEM);
+ 	kref_init(&t->count);
+-	if (copy_from_user(t->data, buf, size))
++	if (copy_from_user(t->data, buf, size)) {
++		put_multi_transaction(t);
+ 		return ERR_PTR(-EFAULT);
++	}
  
--	data &= PTP_SSIR_SSINC_MASK;
-+	if (data > PTP_SSIR_SSINC_MAX)
-+		data = PTP_SSIR_SSINC_MAX;
- 
- 	reg_value = data;
- 	if (gmac4)
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
-index 7abb1d47e7da..60e6b085e2f6 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
-@@ -61,7 +61,7 @@
- #define	PTP_TCR_TSENMACADDR	BIT(18)
- 
- /* SSIR defines */
--#define	PTP_SSIR_SSINC_MASK		0xff
-+#define	PTP_SSIR_SSINC_MAX		0xff
- #define	GMAC4_PTP_SSIR_SSINC_SHIFT	16
- 
- #endif	/* __STMMAC_PTP_H__ */
+ 	return t;
+ }
 -- 
 2.35.1
 
