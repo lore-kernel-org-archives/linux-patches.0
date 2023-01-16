@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B10933EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:59:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A62DAC433D2;
-	Mon, 16 Jan 2023 15:59:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0E5433EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:59:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40E82C433EF;
+	Mon, 16 Jan 2023 15:59:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884762;
-	bh=KaKV/VwFmpKCDG21/XCOBCCUIyAsbXXf1yidWqZKlS8=;
+	s=korg; t=1673884764;
+	bh=omcJz3QRipOw9cl59w/Uutkq8YJduFi18nsEbhohGek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=glNbwsJDM9gSZxIcA9EaGZTgQx5N2TbImtfIz+jdq6Aw8z0ac7OtbwBnaPwX91X+P
-	 rptL5k6Aoks5JGXjbPDQNmA0WSp1jBNOyFZca1+Iwk02cu9EVMEIyxxlGHxzkMOR0X
-	 GG5hrVtDVybXRGbVauyyZdYfZNSaj4tOikhuieFc=
+	b=b6YcIKFHWikyPZOFUp86AZO7SRtwQHsBaNbMzTb4OMEOiX6P0Em+YHEES9KOofAXN
+	 gBB7+BMYnFayuRkJryYSFiFbke3MlO9B2MZMIzud6LTREyQH7SXBGx2JSk32ME7LN/
+	 pJ0yTDlA0vw09Vm9vBD4zxEKPwKUp+81sE4HWHfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tejun Heo <tj@kernel.org>,
-	Dan Carpenter <error27@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Jens Axboe <axboe@kernel.dk>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 129/183] block: Drop spurious might_sleep() from blk_put_queue()
-Date: Mon, 16 Jan 2023 16:50:52 +0100
-Message-Id: <20230116154808.823026476@linuxfoundation.org>
+Subject: [PATCH 6.1 103/183] ASoC: Intel: sof-nau8825: fix module alias overflow
+Date: Mon, 16 Jan 2023 16:50:26 +0100
+Message-Id: <20230116154807.740997350@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -38,60 +36,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tejun Heo <tj@kernel.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 49e4d04f0486117ac57a97890eb1db6d52bf82b3 ]
+[ Upstream commit 3e78986a840d59dd27e636eae3f52dc11125c835 ]
 
-Dan reports the following smatch detected the following:
+The maximum name length for a platform_device_id entry is 20 characters
+including the trailing NUL byte. The sof_nau8825.c file exceeds that,
+which causes an obscure error message:
 
-  block/blk-cgroup.c:1863 blkcg_schedule_throttle() warn: sleeping in atomic context
+sound/soc/intel/boards/snd-soc-sof_nau8825.mod.c:35:45: error: illegal character encoding in string literal [-Werror,-Winvalid-source-encoding]
+MODULE_ALIAS("platform:adl_max98373_nau8825<U+0018><AA>");
+                                                   ^~~~
+include/linux/module.h:168:49: note: expanded from macro 'MODULE_ALIAS'
+                                                ^~~~~~
+include/linux/module.h:165:56: note: expanded from macro 'MODULE_INFO'
+                                                       ^~~~
+include/linux/moduleparam.h:26:47: note: expanded from macro '__MODULE_INFO'
+                = __MODULE_INFO_PREFIX __stringify(tag) "=" info
 
-caused by blkcg_schedule_throttle() calling blk_put_queue() in an
-non-sleepable context.
+I could not figure out how to make the module handling robust enough
+to handle this better, but as a quick fix, using slightly shorter
+names that are still unique avoids the build issue.
 
-blk_put_queue() acquired might_sleep() in 63f93fd6fa57 ("block: mark
-blk_put_queue as potentially blocking") which transferred the might_sleep()
-from blk_free_queue().
-
-blk_free_queue() acquired might_sleep() in e8c7d14ac6c3 ("block: revert back
-to synchronous request_queue removal") while turning request_queue removal
-synchronous. However, this isn't necessary as nothing in the free path
-actually requires sleeping.
-
-It's pretty unusual to require a sleeping context in a put operation and
-it's not needed in the first place. Let's drop it.
-
-Signed-off-by: Tejun Heo <tj@kernel.org>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Link: https://lkml.kernel.org/r/Y7g3L6fntnTtOm63@kili
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Fixes: e8c7d14ac6c3 ("block: revert back to synchronous request_queue removal") # v5.9+
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/Y7iFwjN+XzWvLv3y@slm.duckdns.org
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 8d0872f6239f ("ASoC: Intel: add sof-nau8825 machine driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20221221132515.2363276-1-arnd@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-core.c | 3 ---
- 1 file changed, 3 deletions(-)
+ sound/soc/intel/boards/sof_nau8825.c              | 8 ++++----
+ sound/soc/intel/common/soc-acpi-intel-adl-match.c | 8 ++++----
+ 2 files changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/block/blk-core.c b/block/blk-core.c
-index 815ffce6b988..f5ae527fb0c3 100644
---- a/block/blk-core.c
-+++ b/block/blk-core.c
-@@ -282,12 +282,9 @@ static void blk_free_queue(struct request_queue *q)
-  *
-  * Decrements the refcount of the request_queue and free it when the refcount
-  * reaches 0.
-- *
-- * Context: Can sleep.
-  */
- void blk_put_queue(struct request_queue *q)
- {
--	might_sleep();
- 	if (refcount_dec_and_test(&q->refs))
- 		blk_free_queue(q);
- }
+diff --git a/sound/soc/intel/boards/sof_nau8825.c b/sound/soc/intel/boards/sof_nau8825.c
+index 27880224359d..009a41fbefa1 100644
+--- a/sound/soc/intel/boards/sof_nau8825.c
++++ b/sound/soc/intel/boards/sof_nau8825.c
+@@ -618,7 +618,7 @@ static const struct platform_device_id board_ids[] = {
+ 
+ 	},
+ 	{
+-		.name = "adl_rt1019p_nau8825",
++		.name = "adl_rt1019p_8825",
+ 		.driver_data = (kernel_ulong_t)(SOF_NAU8825_SSP_CODEC(0) |
+ 					SOF_SPEAKER_AMP_PRESENT |
+ 					SOF_RT1019P_SPEAKER_AMP_PRESENT |
+@@ -626,7 +626,7 @@ static const struct platform_device_id board_ids[] = {
+ 					SOF_NAU8825_NUM_HDMIDEV(4)),
+ 	},
+ 	{
+-		.name = "adl_max98373_nau8825",
++		.name = "adl_max98373_8825",
+ 		.driver_data = (kernel_ulong_t)(SOF_NAU8825_SSP_CODEC(0) |
+ 					SOF_SPEAKER_AMP_PRESENT |
+ 					SOF_MAX98373_SPEAKER_AMP_PRESENT |
+@@ -637,7 +637,7 @@ static const struct platform_device_id board_ids[] = {
+ 	},
+ 	{
+ 		/* The limitation of length of char array, shorten the name */
+-		.name = "adl_mx98360a_nau8825",
++		.name = "adl_mx98360a_8825",
+ 		.driver_data = (kernel_ulong_t)(SOF_NAU8825_SSP_CODEC(0) |
+ 					SOF_SPEAKER_AMP_PRESENT |
+ 					SOF_MAX98360A_SPEAKER_AMP_PRESENT |
+@@ -648,7 +648,7 @@ static const struct platform_device_id board_ids[] = {
+ 
+ 	},
+ 	{
+-		.name = "adl_rt1015p_nau8825",
++		.name = "adl_rt1015p_8825",
+ 		.driver_data = (kernel_ulong_t)(SOF_NAU8825_SSP_CODEC(0) |
+ 					SOF_SPEAKER_AMP_PRESENT |
+ 					SOF_RT1015P_SPEAKER_AMP_PRESENT |
+diff --git a/sound/soc/intel/common/soc-acpi-intel-adl-match.c b/sound/soc/intel/common/soc-acpi-intel-adl-match.c
+index ce4d8ec86f2c..68b4fa352354 100644
+--- a/sound/soc/intel/common/soc-acpi-intel-adl-match.c
++++ b/sound/soc/intel/common/soc-acpi-intel-adl-match.c
+@@ -474,21 +474,21 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_adl_machines[] = {
+ 	},
+ 	{
+ 		.id = "10508825",
+-		.drv_name = "adl_rt1019p_nau8825",
++		.drv_name = "adl_rt1019p_8825",
+ 		.machine_quirk = snd_soc_acpi_codec_list,
+ 		.quirk_data = &adl_rt1019p_amp,
+ 		.sof_tplg_filename = "sof-adl-rt1019-nau8825.tplg",
+ 	},
+ 	{
+ 		.id = "10508825",
+-		.drv_name = "adl_max98373_nau8825",
++		.drv_name = "adl_max98373_8825",
+ 		.machine_quirk = snd_soc_acpi_codec_list,
+ 		.quirk_data = &adl_max98373_amp,
+ 		.sof_tplg_filename = "sof-adl-max98373-nau8825.tplg",
+ 	},
+ 	{
+ 		.id = "10508825",
+-		.drv_name = "adl_mx98360a_nau8825",
++		.drv_name = "adl_mx98360a_8825",
+ 		.machine_quirk = snd_soc_acpi_codec_list,
+ 		.quirk_data = &adl_max98360a_amp,
+ 		.sof_tplg_filename = "sof-adl-max98360a-nau8825.tplg",
+@@ -502,7 +502,7 @@ struct snd_soc_acpi_mach snd_soc_acpi_intel_adl_machines[] = {
+ 	},
+ 	{
+ 		.id = "10508825",
+-		.drv_name = "adl_rt1015p_nau8825",
++		.drv_name = "adl_rt1015p_8825",
+ 		.machine_quirk = snd_soc_acpi_codec_list,
+ 		.quirk_data = &adl_rt1015p_amp,
+ 		.sof_tplg_filename = "sof-adl-rt1015-nau8825.tplg",
 -- 
 2.35.1
 
