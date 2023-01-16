@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B53A6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:57:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF1FAC433F0;
-	Mon, 16 Jan 2023 16:57:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E19C16FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:57:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68ADFC433D2;
+	Mon, 16 Jan 2023 16:57:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888232;
-	bh=7uvtiZsQiXByGYzrT7Kbuh0ZMO6iIueX7kjfodR6j/E=;
+	s=korg; t=1673888234;
+	bh=vg85DTGXmWW6C93c/1iml8rTOxn9gtzv3sGafFQVNa8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EIzWTBw1ebP9yETHEOoJ8PM0hPQ05xoCTcWdYEJzxTugLqw7go9Mbk/JxRxOt3rC0
-	 1O3rmSKFVA+/tAiRUQAi+LBFSx9yY5oR2NimY3uVNpGsvE2GLupnJYu2d0xJoILGp1
-	 obehUTuToqZHlKzVCBxACIz/W65mzrMntyh3GFjk=
+	b=H9xb3ChRVcEc+UvqJu7xayiO5xlAb3prEZNujK3cjp0anzpUeN6DPzQ83YPowucMG
+	 0GbYD9X41kbXCFOeIYA2jp/BorhxGpFQf+Y2wOHrqaK/ptmG3TLf3OF+C9rM4iOo4y
+	 1qmm8wWFCFVJ2AweUZmoBGYEmjuCgUPxh23b0b4M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Szymon Heidrich <szymon.heidrich@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 450/521] usb: rndis_host: Secure rndis_query check against int overflow
-Date: Mon, 16 Jan 2023 16:51:52 +0100
-Message-Id: <20230116154907.249036885@linuxfoundation.org>
+Subject: [PATCH 4.19 451/521] caif: fix memory leak in cfctrl_linkup_request()
+Date: Mon, 16 Jan 2023 16:51:53 +0100
+Message-Id: <20230116154907.290622706@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,41 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Szymon Heidrich <szymon.heidrich@gmail.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit c7dd13805f8b8fc1ce3b6d40f6aff47e66b72ad2 ]
+[ Upstream commit fe69230f05897b3de758427b574fc98025dfc907 ]
 
-Variables off and len typed as uint32 in rndis_query function
-are controlled by incoming RNDIS response message thus their
-value may be manipulated. Setting off to a unexpectetly large
-value will cause the sum with len and 8 to overflow and pass
-the implemented validation step. Consequently the response
-pointer will be referring to a location past the expected
-buffer boundaries allowing information leakage e.g. via
-RNDIS_OID_802_3_PERMANENT_ADDRESS OID.
+When linktype is unknown or kzalloc failed in cfctrl_linkup_request(),
+pkt is not released. Add release process to error path.
 
-Fixes: ddda08624013 ("USB: rndis_host, various cleanups")
-Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: b482cd2053e3 ("net-caif: add CAIF core protocol stack")
+Fixes: 8d545c8f958f ("caif: Disconnect without waiting for response")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20230104065146.1153009-1-shaozhengchao@huawei.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/rndis_host.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/caif/cfctrl.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/rndis_host.c b/drivers/net/usb/rndis_host.c
-index ab41a63aa4aa..497d6bcdc276 100644
---- a/drivers/net/usb/rndis_host.c
-+++ b/drivers/net/usb/rndis_host.c
-@@ -267,7 +267,8 @@ static int rndis_query(struct usbnet *dev, struct usb_interface *intf,
- 
- 	off = le32_to_cpu(u.get_c->offset);
- 	len = le32_to_cpu(u.get_c->len);
--	if (unlikely((8 + off + len) > CONTROL_BUFFER_SIZE))
-+	if (unlikely((off > CONTROL_BUFFER_SIZE - 8) ||
-+		     (len > CONTROL_BUFFER_SIZE - 8 - off)))
- 		goto response_error;
- 
- 	if (*reply_len != -1 && len != *reply_len)
+diff --git a/net/caif/cfctrl.c b/net/caif/cfctrl.c
+index a1e85f032108..330cb2b087bb 100644
+--- a/net/caif/cfctrl.c
++++ b/net/caif/cfctrl.c
+@@ -269,11 +269,15 @@ int cfctrl_linkup_request(struct cflayer *layer,
+ 	default:
+ 		pr_warn("Request setup of bad link type = %d\n",
+ 			param->linktype);
++		cfpkt_destroy(pkt);
+ 		return -EINVAL;
+ 	}
+ 	req = kzalloc(sizeof(*req), GFP_KERNEL);
+-	if (!req)
++	if (!req) {
++		cfpkt_destroy(pkt);
+ 		return -ENOMEM;
++	}
++
+ 	req->client_layer = user_layer;
+ 	req->cmd = CFCTRL_CMD_LINK_SETUP;
+ 	req->param = *param;
 -- 
 2.35.1
 
