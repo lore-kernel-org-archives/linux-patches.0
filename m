@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E0BA6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:37:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B940FC433EF;
-	Mon, 16 Jan 2023 16:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81A46FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:37:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E94FC433D2;
+	Mon, 16 Jan 2023 16:37:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887061;
-	bh=twL8LXcNmGrUIqc0GqycNhAC9sK5TkTcBS0QKccU2oU=;
+	s=korg; t=1673887063;
+	bh=f40Qx6FKchaYX42ghzGlzVCj2YW0A39wQHXQTeBEu0Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1CpoLzuKWjZGQGgfy4yAR12d9JJ9S8/z1/kLXsoPwo1bcx76CHvhYe4UtcpAHuDfo
-	 pM/ol3+R0y5ArxJs33fsUcoFfKqJEWc+AUz8Ag0VShmj9IQYyN9FlwU70tuVSxm424
-	 kN+VECqefTj3Jhl2apO8djOpPUt7kBQu34SPmXws=
+	b=f9x1Lt1R3XfCbl+FfXJSTFdKftVuwPGDtQnLbt+dhkf7Cf0RIxxeNKYEVXRQSgdYX
+	 hEV1vLAkTuqmae6zKln7YYp9d6uhDFin74EFlxzxtES3FRmmD/9oorNr5cL5c9FF16
+	 bxUxatHCz9eGlii/Dl1QlC+p5Y8W4h6Qjp6yVsCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaron Thompson <dev@aaront.org>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>
-Subject: [PATCH 5.4 651/658] mm: Always release pages to the buddy allocator in memblock_free_late().
-Date: Mon, 16 Jan 2023 16:52:19 +0100
-Message-Id: <20230116154939.268907530@linuxfoundation.org>
+	Yong Wu <yong.wu@mediatek.com>,
+	Joerg Roedel <jroedel@suse.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 642/658] iommu/mediatek-v1: Add error handle for mtk_iommu_probe
+Date: Mon, 16 Jan 2023 16:52:10 +0100
+Message-Id: <20230116154938.855968717@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -34,90 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aaron Thompson <dev@aaront.org>
+From: Yong Wu <yong.wu@mediatek.com>
 
-commit 115d9d77bb0f9152c60b6e8646369fa7f6167593 upstream.
+[ Upstream commit ac304c070c54413efabf29f9e73c54576d329774 ]
 
-If CONFIG_DEFERRED_STRUCT_PAGE_INIT is enabled, memblock_free_pages()
-only releases pages to the buddy allocator if they are not in the
-deferred range. This is correct for free pages (as defined by
-for_each_free_mem_pfn_range_in_zone()) because free pages in the
-deferred range will be initialized and released as part of the deferred
-init process. memblock_free_pages() is called by memblock_free_late(),
-which is used to free reserved ranges after memblock_free_all() has
-run. All pages in reserved ranges have been initialized at that point,
-and accordingly, those pages are not touched by the deferred init
-process. This means that currently, if the pages that
-memblock_free_late() intends to release are in the deferred range, they
-will never be released to the buddy allocator. They will forever be
-reserved.
+In the original code, we lack the error handle. This patch adds them.
 
-In addition, memblock_free_pages() calls kmsan_memblock_free_pages(),
-which is also correct for free pages but is not correct for reserved
-pages. KMSAN metadata for reserved pages is initialized by
-kmsan_init_shadow(), which runs shortly before memblock_free_all().
-
-For both of these reasons, memblock_free_pages() should only be called
-for free pages, and memblock_free_late() should call __free_pages_core()
-directly instead.
-
-One case where this issue can occur in the wild is EFI boot on
-x86_64. The x86 EFI code reserves all EFI boot services memory ranges
-via memblock_reserve() and frees them later via memblock_free_late()
-(efi_reserve_boot_services() and efi_free_boot_services(),
-respectively). If any of those ranges happens to fall within the
-deferred init range, the pages will not be released and that memory will
-be unavailable.
-
-For example, on an Amazon EC2 t3.micro VM (1 GB) booting via EFI:
-
-v6.2-rc2:
-  # grep -E 'Node|spanned|present|managed' /proc/zoneinfo
-  Node 0, zone      DMA
-          spanned  4095
-          present  3999
-          managed  3840
-  Node 0, zone    DMA32
-          spanned  246652
-          present  245868
-          managed  178867
-
-v6.2-rc2 + patch:
-  # grep -E 'Node|spanned|present|managed' /proc/zoneinfo
-  Node 0, zone      DMA
-          spanned  4095
-          present  3999
-          managed  3840
-  Node 0, zone    DMA32
-          spanned  246652
-          present  245868
-          managed  222816   # +43,949 pages
-
-Fixes: 3a80a7fa7989 ("mm: meminit: initialise a subset of struct pages if CONFIG_DEFERRED_STRUCT_PAGE_INIT is set")
-Signed-off-by: Aaron Thompson <dev@aaront.org>
-Link: https://lore.kernel.org/r/01010185892de53e-e379acfb-7044-4b24-b30a-e2657c1ba989-000000@us-west-2.amazonses.com
-Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Yong Wu <yong.wu@mediatek.com>
+Link: https://lore.kernel.org/r/20210412064843.11614-2-yong.wu@mediatek.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: 142e821f68cf ("iommu/mediatek-v1: Fix an error handling path in mtk_iommu_v1_probe()")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/memblock.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/iommu/mtk_iommu_v1.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
---- a/mm/memblock.c
-+++ b/mm/memblock.c
-@@ -1546,7 +1546,13 @@ void __init __memblock_free_late(phys_ad
- 	end = PFN_DOWN(base + size);
+diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
+index b5efd6dac953..7b1833b0f059 100644
+--- a/drivers/iommu/mtk_iommu_v1.c
++++ b/drivers/iommu/mtk_iommu_v1.c
+@@ -632,12 +632,26 @@ static int mtk_iommu_probe(struct platform_device *pdev)
  
- 	for (; cursor < end; cursor++) {
--		memblock_free_pages(pfn_to_page(cursor), cursor, 0);
-+		/*
-+		 * Reserved pages are always initialized by the end of
-+		 * memblock_free_all() (by memmap_init() and, if deferred
-+		 * initialization is enabled, memmap_init_reserved_pages()), so
-+		 * these pages can be released directly to the buddy allocator.
-+		 */
-+		__free_pages_core(pfn_to_page(cursor), 0);
- 		totalram_pages_inc();
- 	}
+ 	ret = iommu_device_register(&data->iommu);
+ 	if (ret)
+-		return ret;
++		goto out_sysfs_remove;
+ 
+-	if (!iommu_present(&platform_bus_type))
+-		bus_set_iommu(&platform_bus_type,  &mtk_iommu_ops);
++	if (!iommu_present(&platform_bus_type)) {
++		ret = bus_set_iommu(&platform_bus_type,  &mtk_iommu_ops);
++		if (ret)
++			goto out_dev_unreg;
++	}
+ 
+-	return component_master_add_with_match(dev, &mtk_iommu_com_ops, match);
++	ret = component_master_add_with_match(dev, &mtk_iommu_com_ops, match);
++	if (ret)
++		goto out_bus_set_null;
++	return ret;
++
++out_bus_set_null:
++	bus_set_iommu(&platform_bus_type, NULL);
++out_dev_unreg:
++	iommu_device_unregister(&data->iommu);
++out_sysfs_remove:
++	iommu_device_sysfs_remove(&data->iommu);
++	return ret;
  }
+ 
+ static int mtk_iommu_remove(struct platform_device *pdev)
+-- 
+2.35.1
+
 
 
