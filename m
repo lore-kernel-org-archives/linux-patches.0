@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CEE33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9141AC433EF;
-	Mon, 16 Jan 2023 15:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A559E33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BC36C433D2;
+	Mon, 16 Jan 2023 15:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884552;
-	bh=LG4frrVJORsNpCZ6nTILE+NzxiZUgNPrZQQkD3/1uo4=;
+	s=korg; t=1673884555;
+	bh=MU8wepNEKBoAoupapCSody0HU15y//59seMrIiAZ70E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nWq6VAGoykAYcLDB9YZN4uEHquVo3vlR7AgSZX8OXr7ZKYRlSD7XpJUKQjC8tPw0V
-	 FWoAmhlOJLoGOw9Vq5Fty8HUJqwj0B853S1VCSZYW5BKQ3L+Hg7YEppW1aXTc8RRDL
-	 fXiLmyatu7V7IoCqLMqM++N3d2LOUX5zJ7T3qfVk=
+	b=0Av2XvtgYEmhBi5XRebMQHYwyMvFsEAoO0Ln2ealg1cs+xBK7ONe4ITJbaCo6kCIN
+	 8tNjNKrfB8yeUd7QgT+38GCjveTSNEow551RLmEOSON7gteTFerGWDFThdVtZ6isTF
+	 VRBvzLZ+VFVeAo6gJuBZJ14mxqBoEsH0hiaRW6mY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 050/183] platform/x86: asus-wmi: Dont load fan curves without fan
-Date: Mon, 16 Jan 2023 16:49:33 +0100
-Message-Id: <20230116154805.481130975@linuxfoundation.org>
+Subject: [PATCH 6.1 051/183] platform/x86: dell-privacy: Fix SW_CAMERA_LENS_COVER reporting
+Date: Mon, 16 Jan 2023 16:49:34 +0100
+Message-Id: <20230116154805.519705490@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -34,37 +33,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 01fd7e7851ba2275662f771ee17d1f80e7bbfa52 upstream.
+commit 1af7fef0d9d3fa075bf4e850f705df1fe97d33ce upstream.
 
-If we do not have a fan it does not make sense to load curves for it.
-This removes the following warnings from the kernel log:
+Use KE_VSW instead of KE_SW for the SW_CAMERA_LENS_COVER key_entry
+and get the value of the switch from the status field when handling
+SW_CAMERA_LENS_COVER events, instead of always reporting 0.
 
-asus_wmi: fan_curve_get_factory_default (0x00110024) failed: -19
-asus_wmi: fan_curve_get_factory_default (0x00110025) failed: -19
+Also correctly set the initial SW_CAMERA_LENS_COVER value.
 
-Fixes: a2bdf10ce96e ("platform/x86: asus-wmi: Increase FAN_CURVE_BUF_LEN to 32")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/r/20221221-asus-fan-v1-3-e07f3949725b@weissschuh.net
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 8af9fa37b8a3 ("platform/x86: dell-privacy: Add support for Dell hardware privacy")
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20221221220724.119594-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/asus-wmi.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/platform/x86/dell/dell-wmi-privacy.c |   22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
---- a/drivers/platform/x86/asus-wmi.c
-+++ b/drivers/platform/x86/asus-wmi.c
-@@ -2436,6 +2436,9 @@ static int fan_curve_check_present(struc
+--- a/drivers/platform/x86/dell/dell-wmi-privacy.c
++++ b/drivers/platform/x86/dell/dell-wmi-privacy.c
+@@ -61,7 +61,7 @@ static const struct key_entry dell_wmi_k
+ 	/* privacy mic mute */
+ 	{ KE_KEY, 0x0001, { KEY_MICMUTE } },
+ 	/* privacy camera mute */
+-	{ KE_SW,  0x0002, { SW_CAMERA_LENS_COVER } },
++	{ KE_VSW, 0x0002, { SW_CAMERA_LENS_COVER } },
+ 	{ KE_END, 0},
+ };
  
- 	*available = false;
+@@ -115,11 +115,15 @@ bool dell_privacy_process_event(int type
  
-+	if (asus->fan_type == FAN_TYPE_NONE)
-+		return 0;
+ 	switch (code) {
+ 	case DELL_PRIVACY_AUDIO_EVENT: /* Mic mute */
+-	case DELL_PRIVACY_CAMERA_EVENT: /* Camera mute */
+ 		priv->last_status = status;
+ 		sparse_keymap_report_entry(priv->input_dev, key, 1, true);
+ 		ret = true;
+ 		break;
++	case DELL_PRIVACY_CAMERA_EVENT: /* Camera mute */
++		priv->last_status = status;
++		sparse_keymap_report_entry(priv->input_dev, key, !(status & CAMERA_STATUS), false);
++		ret = true;
++		break;
+ 	default:
+ 		dev_dbg(&priv->wdev->dev, "unknown event type 0x%04x 0x%04x\n", type, code);
+ 	}
+@@ -304,6 +308,11 @@ static int dell_privacy_wmi_probe(struct
+ 
+ 	dev_set_drvdata(&wdev->dev, priv);
+ 	priv->wdev = wdev;
 +
- 	err = fan_curve_get_factory_default(asus, fan_dev);
- 	if (err) {
- 		return 0;
++	ret = get_current_status(priv->wdev);
++	if (ret)
++		return ret;
++
+ 	/* create evdev passing interface */
+ 	priv->input_dev = devm_input_allocate_device(&wdev->dev);
+ 	if (!priv->input_dev)
+@@ -342,11 +351,12 @@ static int dell_privacy_wmi_probe(struct
+ 	priv->input_dev->name = "Dell Privacy Driver";
+ 	priv->input_dev->id.bustype = BUS_HOST;
+ 
+-	ret = input_register_device(priv->input_dev);
+-	if (ret)
+-		return ret;
++	/* Report initial camera-cover status */
++	if (priv->features_present & BIT(DELL_PRIVACY_TYPE_CAMERA))
++		input_report_switch(priv->input_dev, SW_CAMERA_LENS_COVER,
++				    !(priv->last_status & CAMERA_STATUS));
+ 
+-	ret = get_current_status(priv->wdev);
++	ret = input_register_device(priv->input_dev);
+ 	if (ret)
+ 		return ret;
+ 
 
 
