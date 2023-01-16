@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04F476FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:07:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E863C433D2;
-	Mon, 16 Jan 2023 17:07:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986936FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:07:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D92DC433F0;
+	Mon, 16 Jan 2023 17:07:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888830;
-	bh=81YOOqJxHzXGX46MJjzbKCgw/sduZ2mhvrBXCGkFEGw=;
+	s=korg; t=1673888833;
+	bh=ncA++PhVmVvgfwpBhLeg+GMwR/sWPznU9XmfMY+1/pE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UB9538UaR1+nWS9xmW1Y56mFxqbkYEOsiCJXz6eE1w0Dl+f7ODVQ+OHm0dzYMlA5K
-	 1L9H1n/wpYYa5rFILGhc9yS7ZeTYfiNO+uUTKR0t7tFPl+vVb4QVEd2IcjmVfb7dQU
-	 GLgP0B8PfJUhbO5uDdhS2eHaCzQoiflVJTJrTkAM=
+	b=qeWqLgXHiw08v4+QMjmQH2MSKmZGIegWPRw5J96A8EjDwoTVz9njmwMxJcyL6C8yT
+	 YoG0LXOkMAoeEWnLK3kGXPiHcCixYx3GFG4vJW/YUXzO8E8kc8ONPrQZcl6fmTgEjh
+	 1E0pTbCxj+bVmCyIHXhx8XaHzZ99e56qh3CbT1sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 156/338] IB/IPoIB: Fix queue count inconsistency for PKEY child interfaces
-Date: Mon, 16 Jan 2023 16:50:29 +0100
-Message-Id: <20230116154827.671547035@linuxfoundation.org>
+Subject: [PATCH 4.14 157/338] drivers: dio: fix possible memory leak in dio_init()
+Date: Mon, 16 Jan 2023 16:50:30 +0100
+Message-Id: <20230116154827.722805444@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,59 +34,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit dbc94a0fb81771a38733c0e8f2ea8c4fa6934dc1 ]
+[ Upstream commit e63e99397b2613d50a5f4f02ed07307e67a190f1 ]
 
-There are 2 ways to create IPoIB PKEY child interfaces:
-1) Writing a PKEY to /sys/class/net/<ib parent interface>/create_child.
-2) Using netlink with iproute.
+If device_register() returns error, the 'dev' and name needs be
+freed. Add a release function, and then call put_device() in the
+error path, so the name is freed in kobject_cleanup() and to the
+'dev' is freed in release function.
 
-While with sysfs the child interface has the same number of tx and
-rx queues as the parent, with netlink there will always be 1 tx
-and 1 rx queue for the child interface. That's because the
-get_num_tx/rx_queues() netlink ops are missing and the default value
-of 1 is taken for the number of queues (in rtnl_create_link()).
-
-This change adds the get_num_tx/rx_queues() ops which allows for
-interfaces with multiple queues to be created over netlink. This
-constant only represents the max number of tx and rx queues on that
-net device.
-
-Fixes: 9baa0b036410 ("IB/ipoib: Add rtnl_link_ops support")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Link: https://lore.kernel.org/r/f4a42c8aa43c02d5ae5559a60c3e5e0f18c82531.1670485816.git.leonro@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 2e4c77bea3d8 ("m68k: dio - Kill warn_unused_result warnings")
+Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221109064036.1835346-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/ipoib/ipoib_netlink.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/dio/dio.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_netlink.c b/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
-index 3e44087935ae..5119bb52b469 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_netlink.c
-@@ -42,6 +42,11 @@ static const struct nla_policy ipoib_policy[IFLA_IPOIB_MAX + 1] = {
- 	[IFLA_IPOIB_UMCAST]	= { .type = NLA_U16 },
- };
+diff --git a/drivers/dio/dio.c b/drivers/dio/dio.c
+index 92e78d16b476..fcde602f4902 100644
+--- a/drivers/dio/dio.c
++++ b/drivers/dio/dio.c
+@@ -110,6 +110,12 @@ static char dio_no_name[] = { 0 };
  
-+static unsigned int ipoib_get_max_num_queues(void)
+ #endif /* CONFIG_DIO_CONSTANTS */
+ 
++static void dio_dev_release(struct device *dev)
 +{
-+	return min_t(unsigned int, num_possible_cpus(), 128);
++	struct dio_dev *ddev = container_of(dev, typeof(struct dio_dev), dev);
++	kfree(ddev);
 +}
 +
- static int ipoib_fill_info(struct sk_buff *skb, const struct net_device *dev)
+ int __init dio_find(int deviceid)
  {
- 	struct ipoib_dev_priv *priv = ipoib_priv(dev);
-@@ -170,6 +175,8 @@ static struct rtnl_link_ops ipoib_link_ops __read_mostly = {
- 	.dellink	= ipoib_unregister_child_dev,
- 	.get_size	= ipoib_get_size,
- 	.fill_info	= ipoib_fill_info,
-+	.get_num_rx_queues = ipoib_get_max_num_queues,
-+	.get_num_tx_queues = ipoib_get_max_num_queues,
- };
- 
- int __init ipoib_netlink_init(void)
+ 	/* Called to find a DIO device before the full bus scan has run.
+@@ -222,6 +228,7 @@ static int __init dio_init(void)
+ 		dev->bus = &dio_bus;
+ 		dev->dev.parent = &dio_bus.dev;
+ 		dev->dev.bus = &dio_bus_type;
++		dev->dev.release = dio_dev_release;
+ 		dev->scode = scode;
+ 		dev->resource.start = pa;
+ 		dev->resource.end = pa + DIO_SIZE(scode, va);
+@@ -249,6 +256,7 @@ static int __init dio_init(void)
+ 		if (error) {
+ 			pr_err("DIO: Error registering device %s\n",
+ 			       dev->name);
++			put_device(&dev->dev);
+ 			continue;
+ 		}
+ 		error = dio_create_sysfs_dev_files(dev);
 -- 
 2.35.1
 
