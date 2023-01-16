@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D04886FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:38:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39F8DC433D2;
-	Mon, 16 Jan 2023 16:38:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 540F46FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:38:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D09BFC433EF;
+	Mon, 16 Jan 2023 16:38:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887106;
-	bh=QhGDa074+eae4lXaMeNVRASuFDuDBSoNz3KBTVlGS64=;
+	s=korg; t=1673887109;
+	bh=8Thm4Wef5GsAs4d8UwKyyB0p71m5KeMJL6UnTDUvF98=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=auUhH2iYCTHcDJ2KdaDbdwSLvxOrndObNfgYkgJo49qQn+4WrMKvM1rEfj/ISqGGJ
-	 /UYVm4LDe+gcNzP3qNlYP8Yxwm3ldLFeHbCcE+IrUdMUpLhXNo58yFynhFVL+Am+uO
-	 n6J7v2nEJWUwFjgLc6MnDdI0gEqhTicHS3RBDO+E=
+	b=nqhraKl1CX0wTiqUIX7GyeI3K4KQodF0maOTZlnYcQyblSNqALTLJ0ZkLrkAp7Nio
+	 cJyAXHimazp2lB2mCK1sIRuIMNhMtsFhZjWfVOzmAYkKSl76pgtXrqgvlVSu2G3AWn
+	 U96v7NbKjJCY8hCZaztNulx4iADGmePja7snOMCs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Jiahao <chenjiahao16@huawei.com>,
-	Nishanth Menon <nm@ti.com>,
+	Kory Maincent <kory.maincent@bootlin.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 024/521] drivers: soc: ti: knav_qmss_queue: Mark knav_acc_firmwares as static
-Date: Mon, 16 Jan 2023 16:44:46 +0100
-Message-Id: <20230116154848.370408679@linuxfoundation.org>
+Subject: [PATCH 4.19 025/521] arm: dts: spear600: Fix clcd interrupt
+Date: Mon, 16 Jan 2023 16:44:47 +0100
+Message-Id: <20230116154848.420079459@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,40 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Jiahao <chenjiahao16@huawei.com>
+From: Kory Maincent <kory.maincent@bootlin.com>
 
-[ Upstream commit adf85adc2a7199b41e7a4da083bd17274a3d6969 ]
+[ Upstream commit 0336e2ce34e7a89832b6c214f924eb7bc58940be ]
 
-There is a sparse warning shown below:
+Interrupt 12 of the Interrupt controller belongs to the SMI controller,
+the right one for the display controller is the interrupt 13.
 
-drivers/soc/ti/knav_qmss_queue.c:70:12: warning: symbol
-'knav_acc_firmwares' was not declared. Should it be static?
-
-Since 'knav_acc_firmwares' is only called within knav_qmss_queue.c,
-mark it as static to fix the warning.
-
-Fixes: 96ee19becc3b ("soc: ti: add firmware file name as part of the driver")
-Signed-off-by: Chen Jiahao <chenjiahao16@huawei.com>
-Signed-off-by: Nishanth Menon <nm@ti.com>
-Link: https://lore.kernel.org/r/20221019153212.72350-1-chenjiahao16@huawei.com
+Fixes: 8113ba917dfa ("ARM: SPEAr: DT: Update device nodes")
+Signed-off-by: Kory Maincent <kory.maincent@bootlin.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/ti/knav_qmss_queue.c | 2 +-
+ arch/arm/boot/dts/spear600.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
-index 9f5ce52e6c16..b264c36b2c0e 100644
---- a/drivers/soc/ti/knav_qmss_queue.c
-+++ b/drivers/soc/ti/knav_qmss_queue.c
-@@ -72,7 +72,7 @@ static DEFINE_MUTEX(knav_dev_lock);
-  * Newest followed by older ones. Search is done from start of the array
-  * until a firmware file is found.
-  */
--const char *knav_acc_firmwares[] = {"ks2_qmss_pdsp_acc48.bin"};
-+static const char * const knav_acc_firmwares[] = {"ks2_qmss_pdsp_acc48.bin"};
+diff --git a/arch/arm/boot/dts/spear600.dtsi b/arch/arm/boot/dts/spear600.dtsi
+index 00166eb9be86..ca07e73e1f27 100644
+--- a/arch/arm/boot/dts/spear600.dtsi
++++ b/arch/arm/boot/dts/spear600.dtsi
+@@ -53,7 +53,7 @@ clcd: clcd@fc200000 {
+ 			compatible = "arm,pl110", "arm,primecell";
+ 			reg = <0xfc200000 0x1000>;
+ 			interrupt-parent = <&vic1>;
+-			interrupts = <12>;
++			interrupts = <13>;
+ 			status = "disabled";
+ 		};
  
- static bool device_ready;
- bool knav_qmss_device_ready(void)
 -- 
 2.35.1
 
