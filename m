@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F4846FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:54:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238E3C433EF;
-	Mon, 16 Jan 2023 16:54:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 414266FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:54:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD39BC433D2;
+	Mon, 16 Jan 2023 16:54:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888092;
-	bh=sDwQr0Wn1l01rcLgMrwtjowdjVfEvBNikKRTBJ+29/4=;
+	s=korg; t=1673888095;
+	bh=TcBpWDrQS0qHUx5C+sssYNfST1JLPTq94PZiyxDz20A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sxbnC7k8AKbbG3Ne+dhPAnsA54Jdrx2LxOh45F/6F/12gMlPPbvJG3Rhv9ePDST/N
-	 I1Bq0LM/EAHa2VfXDE91APRz1f+he7Q9u87WJZupnp8Zt9XiXVfpQkVF8Xta5YkIX/
-	 OU3kunFC7P9WWxoWJw9Q5FmoXMhGK6G3E72cSFAc=
+	b=umPKAJ8eNfZ88a1pOdVSrzFnmhyxlfvy8tXxaTV6Zet5wlKmNnt+xBpFC68qe06zn
+	 15Wu6IbO6MOJDAR4SIOfajwXXl+6bC5q1hxO3IHkSIfxq+6P2yU7UP8lIPzI+OLOe4
+	 S8C341dEOXu35/iSpj3F9cVrnnbp5IIKDCP0uXWg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 4.19 390/521] ARM: 9256/1: NWFPE: avoid compiler-generated __aeabi_uldivmod
-Date: Mon, 16 Jan 2023 16:50:52 +0100
-Message-Id: <20230116154904.560456487@linuxfoundation.org>
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Bjorn Helgaas <bhelgaas@google.com>
+Subject: [PATCH 4.19 399/521] PCI/sysfs: Fix double free in error path
+Date: Mon, 16 Jan 2023 16:51:01 +0100
+Message-Id: <20230116154904.920792778@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,60 +34,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nick Desaulniers <ndesaulniers@google.com>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-commit 3220022038b9a3845eea762af85f1c5694b9f861 upstream.
+commit aa382ffa705bea9931ec92b6f3c70e1fdb372195 upstream.
 
-clang-15's ability to elide loops completely became more aggressive when
-it can deduce how a variable is being updated in a loop. Counting down
-one variable by an increment of another can be replaced by a modulo
-operation.
+When pci_create_attr() fails, pci_remove_resource_files() is called which
+will iterate over the res_attr[_wc] arrays and frees every non NULL entry.
+To avoid a double free here set the array entry only after it's clear we
+successfully initialized it.
 
-For 64b variables on 32b ARM EABI targets, this can result in the
-compiler generating calls to __aeabi_uldivmod, which it does for a do
-while loop in float64_rem().
-
-For the kernel, we'd generally prefer that developers not open code 64b
-division via binary / operators and instead use the more explicit
-helpers from div64.h. On arm-linux-gnuabi targets, failure to do so can
-result in linkage failures due to undefined references to
-__aeabi_uldivmod().
-
-While developers can avoid open coding divisions on 64b variables, the
-compiler doesn't know that the Linux kernel has a partial implementation
-of a compiler runtime (--rtlib) to enforce this convention.
-
-It's also undecidable for the compiler whether the code in question
-would be faster to execute the loop vs elide it and do the 64b division.
-
-While I actively avoid using the internal -mllvm command line flags, I
-think we get better code than using barrier() here, which will force
-reloads+spills in the loop for all toolchains.
-
-Link: https://github.com/ClangBuiltLinux/linux/issues/1666
-
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Nick Desaulniers <ndesaulniers@google.com>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
+Fixes: b562ec8f74e4 ("PCI: Don't leak memory if sysfs_create_bin_file() fails")
+Link: https://lore.kernel.org/r/20221007070735.GX986@pengutronix.de/
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/nwfpe/Makefile |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/pci/pci-sysfs.c |   13 +++++++++----
+ 1 file changed, 9 insertions(+), 4 deletions(-)
 
---- a/arch/arm/nwfpe/Makefile
-+++ b/arch/arm/nwfpe/Makefile
-@@ -11,3 +11,9 @@ nwfpe-y				+= fpa11.o fpa11_cpdo.o fpa11
- 				   entry.o
+--- a/drivers/pci/pci-sysfs.c
++++ b/drivers/pci/pci-sysfs.c
+@@ -1289,11 +1289,9 @@ static int pci_create_attr(struct pci_de
  
- nwfpe-$(CONFIG_FPE_NWFPE_XP)	+= extended_cpdo.o
+ 	sysfs_bin_attr_init(res_attr);
+ 	if (write_combine) {
+-		pdev->res_attr_wc[num] = res_attr;
+ 		sprintf(res_attr_name, "resource%d_wc", num);
+ 		res_attr->mmap = pci_mmap_resource_wc;
+ 	} else {
+-		pdev->res_attr[num] = res_attr;
+ 		sprintf(res_attr_name, "resource%d", num);
+ 		if (pci_resource_flags(pdev, num) & IORESOURCE_IO) {
+ 			res_attr->read = pci_read_resource_io;
+@@ -1309,10 +1307,17 @@ static int pci_create_attr(struct pci_de
+ 	res_attr->size = pci_resource_len(pdev, num);
+ 	res_attr->private = (void *)(unsigned long)num;
+ 	retval = sysfs_create_bin_file(&pdev->dev.kobj, res_attr);
+-	if (retval)
++	if (retval) {
+ 		kfree(res_attr);
++		return retval;
++	}
 +
-+# Try really hard to avoid generating calls to __aeabi_uldivmod() from
-+# float64_rem() due to loop elision.
-+ifdef CONFIG_CC_IS_CLANG
-+CFLAGS_softfloat.o	+= -mllvm -replexitval=never
-+endif
++	if (write_combine)
++		pdev->res_attr_wc[num] = res_attr;
++	else
++		pdev->res_attr[num] = res_attr;
+ 
+-	return retval;
++	return 0;
+ }
+ 
+ /**
 
 
