@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14D0A46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:14:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BBD5C433EF;
-	Mon, 16 Jan 2023 16:14:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5028546B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:14:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C991AC433D2;
+	Mon, 16 Jan 2023 16:14:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885682;
-	bh=TIE2sObVWWJA3hlPG4oaNLsrf4hsiGg54YPFUHuWiKQ=;
+	s=korg; t=1673885688;
+	bh=09RjYj8WVkNF8C+5Po1Uw03h90Lrw1lbgeEp+14AyCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z4JEDLMww+qEtdvIU27e7AjP2rgU2OpBY09MkTFYfwNIZqGm7x1lDy9S4+seZmz8K
-	 NildchSkd6uLomQ2r7LDTUMAcc9hQ0p6bR10/fRf54uXOZShlspgxdhG05rlHw8Y6q
-	 FcOkudq+HuzhEcefgLeA2F+f6oT/CcijjCSaWECs=
+	b=UNi30DqNajoUdo3QWIIZfW6+H4bexUarsnhMo4nT/Bg+jD+2EHZrwg91og4W1iGob
+	 xd6vucp70JRhHbX60Yan3g8mYIfDFgfIQOto5CGZWCL1uw5wouakIqDhng/9p23FTc
+	 kbW80NtmO2WEXzv+7pmwgbYbyMppdQS2yGtWzPvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Maor Gottlieb <maorg@mellanox.com>,
+	Jiri Pirko <jiri@mellanox.com>,
+	Jay Vosburgh <jay.vosburgh@canonical.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Saeed Mahameed <saeedm@mellanox.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 144/658] regulator: core: use kfree_const() to free space conditionally
-Date: Mon, 16 Jan 2023 16:43:52 +0100
-Message-Id: <20230116154916.047272279@linuxfoundation.org>
+Subject: [PATCH 5.4 146/658] bonding: Export skip slave logic to function
+Date: Mon, 16 Jan 2023 16:43:54 +0100
+Message-Id: <20230116154916.131290654@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,35 +38,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang ShaoBo <bobo.shaobowang@huawei.com>
+From: Maor Gottlieb <maorg@mellanox.com>
 
-[ Upstream commit dc8d006d15b623c1d80b90b45d6dcb6e890dad09 ]
+[ Upstream commit 119d48fd4298594beccf4f2ecd00627826ce2646 ]
 
-Use kfree_const() to free supply_name conditionally in create_regulator()
-as supply_name may be allocated from kmalloc() or directly from .rodata
-section.
+As a preparation for following change that add array of
+all slaves, extract code that skip slave to function.
 
-Fixes: 87fe29b61f95 ("regulator: push allocations in create_regulator() outside of lock")
-Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
-Link: https://lore.kernel.org/r/20221123034616.3609537-1-bobo.shaobowang@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Maor Gottlieb <maorg@mellanox.com>
+Reviewed-by: Jiri Pirko <jiri@mellanox.com>
+Reviewed-by: Jay Vosburgh <jay.vosburgh@canonical.com>
+Acked-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Saeed Mahameed <saeedm@mellanox.com>
+Stable-dep-of: f8a65ab2f3ff ("bonding: fix link recovery in mode 2 when updelay is nonzero")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/bonding/bond_main.c | 47 ++++++++++++++++++---------------
+ 1 file changed, 26 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index ee71dcb009bf..9b4783bf63f7 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1604,7 +1604,7 @@ static struct regulator *create_regulator(struct regulator_dev *rdev,
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 246bcbd650b4..0e797730bab3 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -4040,6 +4040,29 @@ static void bond_slave_arr_handler(struct work_struct *work)
+ 	bond_slave_arr_work_rearm(bond, 1);
+ }
  
- 	regulator = kzalloc(sizeof(*regulator), GFP_KERNEL);
- 	if (regulator == NULL) {
--		kfree(supply_name);
-+		kfree_const(supply_name);
- 		return NULL;
- 	}
++static void bond_skip_slave(struct bond_up_slave *slaves,
++			    struct slave *skipslave)
++{
++	int idx;
++
++	/* Rare situation where caller has asked to skip a specific
++	 * slave but allocation failed (most likely!). BTW this is
++	 * only possible when the call is initiated from
++	 * __bond_release_one(). In this situation; overwrite the
++	 * skipslave entry in the array with the last entry from the
++	 * array to avoid a situation where the xmit path may choose
++	 * this to-be-skipped slave to send a packet out.
++	 */
++	for (idx = 0; slaves && idx < slaves->count; idx++) {
++		if (skipslave == slaves->arr[idx]) {
++			slaves->arr[idx] =
++				slaves->arr[slaves->count - 1];
++			slaves->count--;
++			break;
++		}
++	}
++}
++
+ /* Build the usable slaves array in control path for modes that use xmit-hash
+  * to determine the slave interface -
+  * (a) BOND_MODE_8023AD
+@@ -4109,27 +4132,9 @@ int bond_update_slave_arr(struct bonding *bond, struct slave *skipslave)
+ 	if (old_arr)
+ 		kfree_rcu(old_arr, rcu);
+ out:
+-	if (ret != 0 && skipslave) {
+-		int idx;
+-
+-		/* Rare situation where caller has asked to skip a specific
+-		 * slave but allocation failed (most likely!). BTW this is
+-		 * only possible when the call is initiated from
+-		 * __bond_release_one(). In this situation; overwrite the
+-		 * skipslave entry in the array with the last entry from the
+-		 * array to avoid a situation where the xmit path may choose
+-		 * this to-be-skipped slave to send a packet out.
+-		 */
+-		old_arr = rtnl_dereference(bond->slave_arr);
+-		for (idx = 0; old_arr != NULL && idx < old_arr->count; idx++) {
+-			if (skipslave == old_arr->arr[idx]) {
+-				old_arr->arr[idx] =
+-				    old_arr->arr[old_arr->count-1];
+-				old_arr->count--;
+-				break;
+-			}
+-		}
+-	}
++	if (ret != 0 && skipslave)
++		bond_skip_slave(rtnl_dereference(bond->slave_arr), skipslave);
++
+ 	return ret;
+ }
  
 -- 
 2.35.1
