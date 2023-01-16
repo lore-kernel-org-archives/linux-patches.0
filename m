@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8206FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:45:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E721C433F1;
-	Mon, 16 Jan 2023 16:45:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91B796FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:45:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13C52C433EF;
+	Mon, 16 Jan 2023 16:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887531;
-	bh=FJNqcM+wi76TPP97htFcSlzVykQK+sTACSdOP6qbBxI=;
+	s=korg; t=1673887534;
+	bh=yfYKLDFR2IdTdgLCIsR/pzu1cmNuilql0g+Fs8bUhXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jd2Qogu21r2lbvCxfk2AH3j9vVOvY20fQFfbw2tnbHTIUdRasXIqgZhcTBJWTdC3e
-	 Uue1p+nU/3V7+OIuBXLbBbFi+Bdgbt+Qr/xeDE1ZwzBzxBTvz3Thh4pw0KH3WMvLUh
-	 dqb4Lqr0R93BubbhC7WN6q/rdQ0IV/CIMGwd2Mc4=
+	b=h6GCejRJkxZG0kmXhNASyEweHbmDzftB1Yx4AXsjhG+hliEBmQ9i7F02IxErVwpoh
+	 GfKeGGqezjkcoSvKR4a/DNQ3ZMtH5Oc27HhBWo3s75+Z6pxHj85wpB0lXyEmCFl/9x
+	 HHRnIQiqkdLul2Gf8fhbZJK77u6n3ATNGQDMU3is=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Douglas Gilbert <dgilbert@interlog.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 167/521] hamradio: dont call dev_kfree_skb() under spin_lock_irqsave()
-Date: Mon, 16 Jan 2023 16:47:09 +0100
-Message-Id: <20230116154854.605914356@linuxfoundation.org>
+Subject: [PATCH 4.19 185/521] scsi: scsi_debug: Fix a warning in resp_write_scat()
+Date: Mon, 16 Jan 2023 16:47:27 +0100
+Message-Id: <20230116154855.338040286@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,60 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit 3727f742915f04f6fc550b80cf406999bd4e90d0 ]
+[ Upstream commit 216e179724c1d9f57a8ababf8bd7aaabef67f01b ]
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+As 'lbdof_blen' is coming from user, if the size in kzalloc() is >=
+MAX_ORDER then we hit a warning.
 
-It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
-The difference between them is free reason, dev_kfree_skb_irq() means
-the SKB is dropped in error and dev_consume_skb_irq() means the SKB
-is consumed in normal.
+Call trace:
 
-In scc_discard_buffers(), dev_kfree_skb() is called to discard the SKBs,
-so replace it with dev_kfree_skb_irq().
+sg_ioctl
+ sg_ioctl_common
+   scsi_ioctl
+    sg_scsi_ioctl
+     blk_execute_rq
+      blk_mq_sched_insert_request
+       blk_mq_run_hw_queue
+        __blk_mq_delay_run_hw_queue
+         __blk_mq_run_hw_queue
+          blk_mq_sched_dispatch_requests
+           __blk_mq_sched_dispatch_requests
+            blk_mq_dispatch_rq_list
+             scsi_queue_rq
+              scsi_dispatch_cmd
+               scsi_debug_queuecommand
+                schedule_resp
+                 resp_write_scat
 
-In scc_net_tx(), dev_kfree_skb() is called to drop the SKB that exceed
-queue length, so replace it with dev_kfree_skb_irq().
+If you try to allocate a memory larger than(>=) MAX_ORDER, then kmalloc()
+will definitely fail.  It creates a stack trace and messes up dmesg.  The
+user controls the size here so if they specify a too large size it will
+fail.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Add __GFP_NOWARN in order to avoid too large allocation warning.  This is
+detected by static analysis using smatch.
+
+Fixes: 481b5e5c7949 ("scsi: scsi_debug: add resp_write_scat function")
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Link: https://lore.kernel.org/r/20221111100526.1790533-1-harshit.m.mogalapalli@oracle.com
+Acked-by: Douglas Gilbert <dgilbert@interlog.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hamradio/scc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/scsi/scsi_debug.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/hamradio/scc.c b/drivers/net/hamradio/scc.c
-index 6c03932d8a6b..3dc4eb841aa1 100644
---- a/drivers/net/hamradio/scc.c
-+++ b/drivers/net/hamradio/scc.c
-@@ -300,12 +300,12 @@ static inline void scc_discard_buffers(struct scc_channel *scc)
- 	spin_lock_irqsave(&scc->lock, flags);	
- 	if (scc->tx_buff != NULL)
- 	{
--		dev_kfree_skb(scc->tx_buff);
-+		dev_kfree_skb_irq(scc->tx_buff);
- 		scc->tx_buff = NULL;
+diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
+index 4d73a7f67dea..0733ecc9f878 100644
+--- a/drivers/scsi/scsi_debug.c
++++ b/drivers/scsi/scsi_debug.c
+@@ -3156,7 +3156,7 @@ static int resp_write_scat(struct scsi_cmnd *scp,
+ 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INVALID_FIELD_IN_CDB, 0);
+ 		return illegal_condition_result;
  	}
- 	
- 	while (!skb_queue_empty(&scc->tx_queue))
--		dev_kfree_skb(skb_dequeue(&scc->tx_queue));
-+		dev_kfree_skb_irq(skb_dequeue(&scc->tx_queue));
- 
- 	spin_unlock_irqrestore(&scc->lock, flags);
- }
-@@ -1667,7 +1667,7 @@ static netdev_tx_t scc_net_tx(struct sk_buff *skb, struct net_device *dev)
- 	if (skb_queue_len(&scc->tx_queue) > scc->dev->tx_queue_len) {
- 		struct sk_buff *skb_del;
- 		skb_del = skb_dequeue(&scc->tx_queue);
--		dev_kfree_skb(skb_del);
-+		dev_kfree_skb_irq(skb_del);
- 	}
- 	skb_queue_tail(&scc->tx_queue, skb);
- 	netif_trans_update(dev);
+-	lrdp = kzalloc(lbdof_blen, GFP_ATOMIC);
++	lrdp = kzalloc(lbdof_blen, GFP_ATOMIC | __GFP_NOWARN);
+ 	if (lrdp == NULL)
+ 		return SCSI_MLQUEUE_HOST_BUSY;
+ 	if (sdebug_verbose)
 -- 
 2.35.1
 
