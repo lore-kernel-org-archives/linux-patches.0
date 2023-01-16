@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C965D6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:09:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52B7AC433EF;
-	Mon, 16 Jan 2023 17:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BA7B6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:09:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4FB1C433D2;
+	Mon, 16 Jan 2023 17:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888987;
-	bh=HLo7MG3Ktut3qX2NhsnLxeVq2ENHynRJhwAX68w5pvo=;
+	s=korg; t=1673888990;
+	bh=JSV+bosdVsEU1JV7xB+48Zt2N8adOG8M7/vALt+El/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2FvGToHrOvNR+gfcVzdm81daoKXYIvGC2AaaY+KYw2GKvhg99OvkE/tLeEfy8Udxb
-	 An6yeRcl2U9ebFyKUgutTk8R4hrwvL/2lkl3C6AGECnLu7tDEJpkFTrzTUr5d4oRMg
-	 cRKuWHpoxJtOgYg5WCJKLgtUFWffCJkhI24x7u60=
+	b=YCXl+/7FrBtr7CsJw+ZPQzKuSRB0citk3pEAZvvKFFMw8Zj1mDNW9RxMq0/D/SVbZ
+	 QNECGG5U6VS/LLuRq+Jn7RNL+x1/H0TfhqUKi3+yu9IMeRbkRVyRWOAcqwFoc0vkRN
+	 Wa4ozSNQQgXR/8aV7Oh6kdsU3GLvdzjtbU9xzEc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Helge Deller <deller@gmx.de>,
+	Dan Carpenter <error27@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 185/338] fbdev: uvesafb: Fixes an error handling path in uvesafb_probe()
-Date: Mon, 16 Jan 2023 16:50:58 +0100
-Message-Id: <20230116154828.999119137@linuxfoundation.org>
+Subject: [PATCH 4.14 176/338] staging: rtl8192u: Fix use after free in ieee80211_rx()
+Date: Mon, 16 Jan 2023 16:50:49 +0100
+Message-Id: <20230116154828.587314052@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,37 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit a94371040712031ba129c7e9d8ff04a06a2f8207 ]
+[ Upstream commit bcc5e2dcf09089b337b76fc1a589f6ff95ca19ac ]
 
-If an error occurs after a successful uvesafb_init_mtrr() call, it must be
-undone by a corresponding arch_phys_wc_del() call, as already done in the
-remove function.
+We cannot dereference the "skb" pointer after calling
+ieee80211_monitor_rx(), because it is a use after free.
 
-This has been added in the remove function in commit 63e28a7a5ffc
-("uvesafb: Clean up MTRR code")
-
-Fixes: 8bdb3a2d7df4 ("uvesafb: the driver core")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 8fc8598e61f6 ("Staging: Added Realtek rtl8192u driver to staging")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Link: https://lore.kernel.org/r/Y33BArx3k/aw6yv/@kili
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/uvesafb.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/staging/rtl8192u/ieee80211/ieee80211_rx.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/video/fbdev/uvesafb.c b/drivers/video/fbdev/uvesafb.c
-index c592ca513115..ee86c62e3672 100644
---- a/drivers/video/fbdev/uvesafb.c
-+++ b/drivers/video/fbdev/uvesafb.c
-@@ -1754,6 +1754,7 @@ static int uvesafb_probe(struct platform_device *dev)
- out_unmap:
- 	iounmap(info->screen_base);
- out_mem:
-+	arch_phys_wc_del(par->mtrr_handle);
- 	release_mem_region(info->fix.smem_start, info->fix.smem_len);
- out_reg:
- 	release_region(0x3c0, 32);
+diff --git a/drivers/staging/rtl8192u/ieee80211/ieee80211_rx.c b/drivers/staging/rtl8192u/ieee80211/ieee80211_rx.c
+index cbf8eb4a049d..6c529f349379 100644
+--- a/drivers/staging/rtl8192u/ieee80211/ieee80211_rx.c
++++ b/drivers/staging/rtl8192u/ieee80211/ieee80211_rx.c
+@@ -961,9 +961,11 @@ int ieee80211_rx(struct ieee80211_device *ieee, struct sk_buff *skb,
+ #endif
+ 
+ 	if (ieee->iw_mode == IW_MODE_MONITOR) {
++		unsigned int len = skb->len;
++
+ 		ieee80211_monitor_rx(ieee, skb, rx_stats);
+ 		stats->rx_packets++;
+-		stats->rx_bytes += skb->len;
++		stats->rx_bytes += len;
+ 		return 1;
+ 	}
+ 
 -- 
 2.35.1
 
