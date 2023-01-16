@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C11BD6FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:11:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 441C4C433EF;
-	Mon, 16 Jan 2023 17:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C2B6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:11:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7E8C433F0;
+	Mon, 16 Jan 2023 17:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889066;
-	bh=63SC94Ier2TFvKzC6i0Z1YJOo/PKtnMOWVRuPbn9sTA=;
+	s=korg; t=1673889064;
+	bh=1CI8S7Nt+M90kAhGGwRJq0j/mgHHFQz0/+V047auClU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2BSMcAe//GAYFHg5VPeyZA1Q7JS0MqA0EibOr8EvNI1lBDGmu4tAXPO47mxJb9g+p
-	 +JgwrsrKptVuRQRTY5apaB3McSyXh3GIS+LVasjwQ5nELjt0X4DXQ6JyDeRY6Ik8M0
-	 Hfa7BRgLHUBj8VShHnydVQg/NfDifc8BPej91ugw=
+	b=dUCeYjE8vBzz6DictuUNpWloIfo+rnD5mEQCmtsBx6Bc7ZxUuqC+Km1MiUDKX9VBa
+	 gd7OToqkAZkZFpajSPB9/bjT75EYiqWSzBVZHhLrvvvmPDRMcmks6HQItkc/I02xyQ
+	 hBKSUDV8ZQAXCq0rlm9dK+fEXpnWtYAM+HWcMRdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Kees Cook <keescook@chromium.org>,
+	Changheon Lee <darklight2357@icloud.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 215/338] binfmt_misc: fix shift-out-of-bounds in check_special_flags
-Date: Mon, 16 Jan 2023 16:51:28 +0100
-Message-Id: <20230116154830.399688559@linuxfoundation.org>
+Subject: [PATCH 4.14 214/338] net: stream: purge sk_error_queue in sk_stream_kill_queues()
+Date: Mon, 16 Jan 2023 16:51:27 +0100
+Message-Id: <20230116154830.358860871@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,59 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 6a46bf558803dd2b959ca7435a5c143efe837217 ]
+[ Upstream commit e0c8bccd40fc1c19e1d246c39bcf79e357e1ada3 ]
 
-UBSAN reported a shift-out-of-bounds warning:
+Changheon Lee reported TCP socket leaks, with a nice repro.
 
- left shift of 1 by 31 places cannot be represented in type 'int'
- Call Trace:
-  <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x8d/0xcf lib/dump_stack.c:106
-  ubsan_epilogue+0xa/0x44 lib/ubsan.c:151
-  __ubsan_handle_shift_out_of_bounds+0x1e7/0x208 lib/ubsan.c:322
-  check_special_flags fs/binfmt_misc.c:241 [inline]
-  create_entry fs/binfmt_misc.c:456 [inline]
-  bm_register_write+0x9d3/0xa20 fs/binfmt_misc.c:654
-  vfs_write+0x11e/0x580 fs/read_write.c:582
-  ksys_write+0xcf/0x120 fs/read_write.c:637
-  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-  do_syscall_64+0x34/0x80 arch/x86/entry/common.c:80
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
- RIP: 0033:0x4194e1
+It seems we leak TCP sockets with the following sequence:
 
-Since the type of Node's flags is unsigned long, we should define these
-macros with same type too.
+1) SOF_TIMESTAMPING_TX_ACK is enabled on the socket.
 
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221102025123.1117184-1-liushixin2@huawei.com
+   Each ACK will cook an skb put in error queue, from __skb_tstamp_tx().
+   __skb_tstamp_tx() is using skb_clone(), unless
+   SOF_TIMESTAMPING_OPT_TSONLY was also requested.
+
+2) If the application is also using MSG_ZEROCOPY, then we put in the
+   error queue cloned skbs that had a struct ubuf_info attached to them.
+
+   Whenever an struct ubuf_info is allocated, sock_zerocopy_alloc()
+   does a sock_hold().
+
+   As long as the cloned skbs are still in sk_error_queue,
+   socket refcount is kept elevated.
+
+3) Application closes the socket, while error queue is not empty.
+
+Since tcp_close() no longer purges the socket error queue,
+we might end up with a TCP socket with at least one skb in
+error queue keeping the socket alive forever.
+
+This bug can be (ab)used to consume all kernel memory
+and freeze the host.
+
+We need to purge the error queue, with proper synchronization
+against concurrent writers.
+
+Fixes: 24bcbe1cc69f ("net: stream: don't purge sk_error_queue in sk_stream_kill_queues()")
+Reported-by: Changheon Lee <darklight2357@icloud.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/binfmt_misc.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/core/stream.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/fs/binfmt_misc.c b/fs/binfmt_misc.c
-index 566296ce7ea8..c19bf5c2fbec 100644
---- a/fs/binfmt_misc.c
-+++ b/fs/binfmt_misc.c
-@@ -42,10 +42,10 @@ static LIST_HEAD(entries);
- static int enabled = 1;
+diff --git a/net/core/stream.c b/net/core/stream.c
+index e5c6c9e5e0aa..448100f51bf4 100644
+--- a/net/core/stream.c
++++ b/net/core/stream.c
+@@ -196,6 +196,12 @@ void sk_stream_kill_queues(struct sock *sk)
+ 	/* First the read buffer. */
+ 	__skb_queue_purge(&sk->sk_receive_queue);
  
- enum {Enabled, Magic};
--#define MISC_FMT_PRESERVE_ARGV0 (1 << 31)
--#define MISC_FMT_OPEN_BINARY (1 << 30)
--#define MISC_FMT_CREDENTIALS (1 << 29)
--#define MISC_FMT_OPEN_FILE (1 << 28)
-+#define MISC_FMT_PRESERVE_ARGV0 (1UL << 31)
-+#define MISC_FMT_OPEN_BINARY (1UL << 30)
-+#define MISC_FMT_CREDENTIALS (1UL << 29)
-+#define MISC_FMT_OPEN_FILE (1UL << 28)
++	/* Next, the error queue.
++	 * We need to use queue lock, because other threads might
++	 * add packets to the queue without socket lock being held.
++	 */
++	skb_queue_purge(&sk->sk_error_queue);
++
+ 	/* Next, the write queue. */
+ 	WARN_ON(!skb_queue_empty(&sk->sk_write_queue));
  
- typedef struct {
- 	struct list_head list;
 -- 
 2.35.1
 
