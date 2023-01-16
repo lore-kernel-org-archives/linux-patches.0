@@ -1,34 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 806F633F0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:11:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4274C433F1;
-	Mon, 16 Jan 2023 16:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B2E033F0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:11:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83D82C433EF;
+	Mon, 16 Jan 2023 16:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885504;
-	bh=GyBSvLiSyxK6VcnYbzJGlHSO98O3h0uC7NSwX+9QAw8=;
+	s=korg; t=1673885506;
+	bh=qW74oFhQ2eYJgxioQ+AylW3SNA9tbf1SCQbNnEHbrDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pvNiyx2MBhQo+ZH210HR3GWImm0z3fyYcvuAHlqYuUQizZfJbK62Y6xXtnEFNOcZN
-	 UXFEFQMYKLKZxMjS2F02EZcf0kFpq3FtP+DqgDP+b+Ik3hHXGcq/UpNrw0BF2q17sB
-	 w2LTL5VTePEFSKqfkSnAVptr9xwKRDf8bP6FaG0Y=
+	b=Yvr6CQS1lX1D5ax2h0Tg8mKmYgAozLSEjZpB0QCFQauFwhVxZNV5Jw1pblr5j0t+3
+	 gFl42Jv5Qo5LRIIwSH4Oh8ZrLiKR3x6gQnTTBFGkH8Ftot8GXHGoSD6hTeRgfhEdhR
+	 D6g7jkiXOovzSnU6YgKgXDn3SXPtfCwkOl9P6Uk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heming Zhao <heming.zhao@suse.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Jun Piao <piaojun@huawei.com>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Mark Fasheh <mark@fasheh.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 077/658] ocfs2: rewrite error handling of ocfs2_fill_super
-Date: Mon, 16 Jan 2023 16:42:45 +0100
-Message-Id: <20230116154913.155810112@linuxfoundation.org>
+Subject: [PATCH 5.4 060/658] lib/fonts: fix undefined behavior in bit shift for get_default_font
+Date: Mon, 16 Jan 2023 16:42:28 +0100
+Message-Id: <20230116154912.420708940@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -42,198 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heming Zhao via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit f1e75d128b46e3b066e7b2e7cfca10491109d44d ]
+[ Upstream commit 6fe888c4d2fb174408e4540bb2d5602b9f507f90 ]
 
-Current ocfs2_fill_super() uses one goto label "read_super_error" to
-handle all error cases.  And with previous serial patches, the error
-handling should fork more branches to handle different error cases.  This
-patch rewrite the error handling of ocfs2_fill_super.
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned.  The UBSAN warning calltrace like below:
 
-Link: https://lkml.kernel.org/r/20220424130952.2436-6-heming.zhao@suse.com
-Signed-off-by: Heming Zhao <heming.zhao@suse.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Jun Piao <piaojun@huawei.com>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Mark Fasheh <mark@fasheh.com>
+UBSAN: shift-out-of-bounds in lib/fonts/fonts.c:139:20
+left shift of 1 by 31 places cannot be represented in type 'int'
+ <TASK>
+ dump_stack_lvl+0x7d/0xa5
+ dump_stack+0x15/0x1b
+ ubsan_epilogue+0xe/0x4e
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
+ get_default_font+0x1c7/0x1f0
+ fbcon_startup+0x347/0x3a0
+ do_take_over_console+0xce/0x270
+ do_fbcon_takeover+0xa1/0x170
+ do_fb_registered+0x2a8/0x340
+ fbcon_fb_registered+0x47/0xe0
+ register_framebuffer+0x294/0x4a0
+ __drm_fb_helper_initial_config_and_unlock+0x43c/0x880 [drm_kms_helper]
+ drm_fb_helper_initial_config+0x52/0x80 [drm_kms_helper]
+ drm_fbdev_client_hotplug+0x156/0x1b0 [drm_kms_helper]
+ drm_fbdev_generic_setup+0xfc/0x290 [drm_kms_helper]
+ bochs_pci_probe+0x6ca/0x772 [bochs]
+ local_pci_probe+0x4d/0xb0
+ pci_device_probe+0x119/0x320
+ really_probe+0x181/0x550
+ __driver_probe_device+0xc6/0x220
+ driver_probe_device+0x32/0x100
+ __driver_attach+0x195/0x200
+ bus_for_each_dev+0xbb/0x120
+ driver_attach+0x27/0x30
+ bus_add_driver+0x22e/0x2f0
+ driver_register+0xa9/0x190
+ __pci_register_driver+0x90/0xa0
+ bochs_pci_driver_init+0x52/0x1000 [bochs]
+ do_one_initcall+0x76/0x430
+ do_init_module+0x61/0x28a
+ load_module+0x1f82/0x2e50
+ __do_sys_finit_module+0xf8/0x190
+ __x64_sys_finit_module+0x23/0x30
+ do_syscall_64+0x58/0x80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ </TASK>
+
+Link: https://lkml.kernel.org/r/20221031113829.4183153-1-cuigaosheng1@huawei.com
+Fixes: c81f717cb9e0 ("fbcon: Fix typo and bogus logic in get_default_font")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: ce2fcf1516d6 ("ocfs2: fix memory leak in ocfs2_mount_volume()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/super.c | 67 +++++++++++++++++++++++-------------------------
- 1 file changed, 32 insertions(+), 35 deletions(-)
+ lib/fonts/fonts.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ocfs2/super.c b/fs/ocfs2/super.c
-index ead43f95bb43..38e51868c2d3 100644
---- a/fs/ocfs2/super.c
-+++ b/fs/ocfs2/super.c
-@@ -984,28 +984,27 @@ static int ocfs2_fill_super(struct super_block *sb, void *data, int silent)
+diff --git a/lib/fonts/fonts.c b/lib/fonts/fonts.c
+index e7258d8c252b..4da9707ad33d 100644
+--- a/lib/fonts/fonts.c
++++ b/lib/fonts/fonts.c
+@@ -132,8 +132,8 @@ const struct font_desc *get_default_font(int xres, int yres, u32 font_w,
+ 		if (res > 20)
+ 			c += 20 - res;
  
- 	if (!ocfs2_parse_options(sb, data, &parsed_options, 0)) {
- 		status = -EINVAL;
--		goto read_super_error;
-+		goto out;
- 	}
+-		if ((font_w & (1 << (f->width - 1))) &&
+-		    (font_h & (1 << (f->height - 1))))
++		if ((font_w & (1U << (f->width - 1))) &&
++		    (font_h & (1U << (f->height - 1))))
+ 			c += 1000;
  
- 	/* probe for superblock */
- 	status = ocfs2_sb_probe(sb, &bh, &sector_size, &stats);
- 	if (status < 0) {
- 		mlog(ML_ERROR, "superblock probe failed!\n");
--		goto read_super_error;
-+		goto out;
- 	}
- 
- 	status = ocfs2_initialize_super(sb, bh, sector_size, &stats);
--	osb = OCFS2_SB(sb);
--	if (status < 0) {
--		mlog_errno(status);
--		goto read_super_error;
--	}
- 	brelse(bh);
- 	bh = NULL;
-+	if (status < 0)
-+		goto out;
-+
-+	osb = OCFS2_SB(sb);
- 
- 	if (!ocfs2_check_set_options(sb, &parsed_options)) {
- 		status = -EINVAL;
--		goto read_super_error;
-+		goto out_super;
- 	}
- 	osb->s_mount_opt = parsed_options.mount_opt;
- 	osb->s_atime_quantum = parsed_options.atime_quantum;
-@@ -1022,7 +1021,7 @@ static int ocfs2_fill_super(struct super_block *sb, void *data, int silent)
- 
- 	status = ocfs2_verify_userspace_stack(osb, &parsed_options);
- 	if (status)
--		goto read_super_error;
-+		goto out_super;
- 
- 	sb->s_magic = OCFS2_SUPER_MAGIC;
- 
-@@ -1036,7 +1035,7 @@ static int ocfs2_fill_super(struct super_block *sb, void *data, int silent)
- 			status = -EACCES;
- 			mlog(ML_ERROR, "Readonly device detected but readonly "
- 			     "mount was not specified.\n");
--			goto read_super_error;
-+			goto out_super;
- 		}
- 
- 		/* You should not be able to start a local heartbeat
-@@ -1045,7 +1044,7 @@ static int ocfs2_fill_super(struct super_block *sb, void *data, int silent)
- 			status = -EROFS;
- 			mlog(ML_ERROR, "Local heartbeat specified on readonly "
- 			     "device.\n");
--			goto read_super_error;
-+			goto out_super;
- 		}
- 
- 		status = ocfs2_check_journals_nolocks(osb);
-@@ -1054,9 +1053,7 @@ static int ocfs2_fill_super(struct super_block *sb, void *data, int silent)
- 				mlog(ML_ERROR, "Recovery required on readonly "
- 				     "file system, but write access is "
- 				     "unavailable.\n");
--			else
--				mlog_errno(status);
--			goto read_super_error;
-+			goto out_super;
- 		}
- 
- 		ocfs2_set_ro_flag(osb, 1);
-@@ -1072,10 +1069,8 @@ static int ocfs2_fill_super(struct super_block *sb, void *data, int silent)
- 	}
- 
- 	status = ocfs2_verify_heartbeat(osb);
--	if (status < 0) {
--		mlog_errno(status);
--		goto read_super_error;
--	}
-+	if (status < 0)
-+		goto out_super;
- 
- 	osb->osb_debug_root = debugfs_create_dir(osb->uuid_str,
- 						 ocfs2_debugfs_root);
-@@ -1089,15 +1084,14 @@ static int ocfs2_fill_super(struct super_block *sb, void *data, int silent)
- 
- 	status = ocfs2_mount_volume(sb);
- 	if (status < 0)
--		goto read_super_error;
-+		goto out_debugfs;
- 
- 	if (osb->root_inode)
- 		inode = igrab(osb->root_inode);
- 
- 	if (!inode) {
- 		status = -EIO;
--		mlog_errno(status);
--		goto read_super_error;
-+		goto out_dismount;
- 	}
- 
- 	osb->osb_dev_kset = kset_create_and_add(sb->s_id, NULL,
-@@ -1105,7 +1099,7 @@ static int ocfs2_fill_super(struct super_block *sb, void *data, int silent)
- 	if (!osb->osb_dev_kset) {
- 		status = -ENOMEM;
- 		mlog(ML_ERROR, "Unable to create device kset %s.\n", sb->s_id);
--		goto read_super_error;
-+		goto out_dismount;
- 	}
- 
- 	/* Create filecheck sysfs related directories/files at
-@@ -1114,14 +1108,13 @@ static int ocfs2_fill_super(struct super_block *sb, void *data, int silent)
- 		status = -ENOMEM;
- 		mlog(ML_ERROR, "Unable to create filecheck sysfs directory at "
- 			"/sys/fs/ocfs2/%s/filecheck.\n", sb->s_id);
--		goto read_super_error;
-+		goto out_dismount;
- 	}
- 
- 	root = d_make_root(inode);
- 	if (!root) {
- 		status = -ENOMEM;
--		mlog_errno(status);
--		goto read_super_error;
-+		goto out_dismount;
- 	}
- 
- 	sb->s_root = root;
-@@ -1168,17 +1161,21 @@ static int ocfs2_fill_super(struct super_block *sb, void *data, int silent)
- 
- 	return status;
- 
--read_super_error:
--	brelse(bh);
--
--	if (status)
--		mlog_errno(status);
-+out_dismount:
-+	atomic_set(&osb->vol_state, VOLUME_DISABLED);
-+	wake_up(&osb->osb_mount_event);
-+	ocfs2_dismount_volume(sb, 1);
-+	goto out;
- 
--	if (osb) {
--		atomic_set(&osb->vol_state, VOLUME_DISABLED);
--		wake_up(&osb->osb_mount_event);
--		ocfs2_dismount_volume(sb, 1);
--	}
-+out_debugfs:
-+	debugfs_remove_recursive(osb->osb_debug_root);
-+out_super:
-+	ocfs2_release_system_inodes(osb);
-+	kfree(osb->recovery_map);
-+	ocfs2_delete_osb(osb);
-+	kfree(osb);
-+out:
-+	mlog_errno(status);
- 
- 	return status;
- }
+ 		if (c > cc) {
 -- 
 2.35.1
 
