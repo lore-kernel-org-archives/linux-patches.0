@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED32E33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:59:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 721C9C433D2;
-	Mon, 16 Jan 2023 15:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C69133EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:59:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11251C433EF;
+	Mon, 16 Jan 2023 15:59:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884782;
-	bh=Kg7o9ILd9umfJqg+NIOsUPFefo2+2Ad+dmy4JUz8HOY=;
+	s=korg; t=1673884785;
+	bh=daq1wiaziEc1oK1N5ovOhOE1ZJUsLuG2cgWXKQ5qKo0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AKrjRHApIzcdZAvEQgQo/ehBdEwohkgCZvOOIVgtkSFUOod8+hkutJm4uuixYLHoy
-	 QW1yNFBxO70wJI+x+an0WJ5TfvWUY97g9cTH+EFmcCI9cutCx0PxtbOH5kFCiuCetJ
-	 jvP+sZLPytIWKerdnLaiSDTEqHtGeRWXDlPZTJkw=
+	b=k5hpNIqo4G3FmAoLPJK/UDB7JRrl3BOQW0mIS6vAQ5jIEcmWZmjCKDObsX6OpTp5O
+	 z4yk9jXxnikf5D5shJ/SZpDKuMzkG0eJOhOgRICa52NBE4y6gXmdTjwaoVaOA34dtI
+	 WJqcHK+eZZTBhhpsVRvoQpwNnbeUt4dVKGT0JM/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
 	Arnd Bergmann <arnd@arndb.de>,
-	Mikhail Zhilkin <csharper2005@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>,
+	Tokunori Ikegami <ikegami.t@gmail.com>,
+	Pratyush Yadav <pratyush@kernel.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>,
 	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 107/183] mtd: parsers: scpart: fix __udivdi3 undefined on mips
-Date: Mon, 16 Jan 2023 16:50:30 +0100
-Message-Id: <20230116154807.888936474@linuxfoundation.org>
+Subject: [PATCH 6.1 108/183] mtd: cfi: allow building spi-intel standalone
+Date: Mon, 16 Jan 2023 16:50:31 +0100
+Message-Id: <20230116154807.934457137@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -37,45 +39,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikhail Zhilkin <csharper2005@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 105c14b84d93168431abba5d55e6c26fa4b65abb ]
+[ Upstream commit d19ab1f785d0b6b9f709799f0938658903821ba1 ]
 
-This fixes the following compile error on mips architecture with clang
-version 16.0.0 reported by the 0-DAY CI Kernel Test Service:
-   ld.lld: error: undefined symbol: __udivdi3
-   referenced by scpart.c
-   mtd/parsers/scpart.o:(scpart_parse) in archive drivers/built-in.a
+When MTD or MTD_CFI_GEOMETRY is disabled, the spi-intel driver
+fails to build, as it includes the shared CFI header:
 
-As a workaround this makes 'offs' a 32-bit type. This is enough, because
-the mtd containing partition table practically does not exceed 1 MB. We
-can revert this when the [Link] has been resolved.
+include/linux/mtd/cfi.h:62:2: error: #warning No CONFIG_MTD_CFI_Ix selected. No NOR chip support can work. [-Werror=cpp]
+   62 | #warning No CONFIG_MTD_CFI_Ix selected. No NOR chip support can work.
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1635
-Fixes: 9b78ef0c7997 ("mtd: parsers: add support for Sercomm partitions")
-Reported-by: kernel test robot <lkp@intel.com>
-Suggested-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Mikhail Zhilkin <csharper2005@gmail.com>
+linux/mtd/spi-nor.h does not actually need to include cfi.h, so
+remove the inclusion here to fix the warning. This uncovers a
+missing #include in spi-nor/core.c so add that there to
+prevent a different build issue.
+
+Fixes: e23e5a05d1fd ("mtd: spi-nor: intel-spi: Convert to SPI MEM")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Reviewed-by: Tokunori Ikegami <ikegami.t@gmail.com>
+Acked-by: Pratyush Yadav <pratyush@kernel.org>
+Reviewed-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/805fe58e-690f-6a3f-5ebf-2f6f6e6e4599@gmail.com
+Link: https://lore.kernel.org/linux-mtd/20221220141352.1486360-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/parsers/scpart.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mtd/spi-nor/core.c  | 1 +
+ include/linux/mtd/spi-nor.h | 1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/mtd/parsers/scpart.c b/drivers/mtd/parsers/scpart.c
-index 02601bb33de4..6e5e11c37078 100644
---- a/drivers/mtd/parsers/scpart.c
-+++ b/drivers/mtd/parsers/scpart.c
-@@ -50,7 +50,7 @@ static int scpart_scan_partmap(struct mtd_info *master, loff_t partmap_offs,
- 	int cnt = 0;
- 	int res = 0;
- 	int res2;
--	loff_t offs;
-+	uint32_t offs;
- 	size_t retlen;
- 	struct sc_part_desc *pdesc = NULL;
- 	struct sc_part_desc *tmpdesc;
+diff --git a/drivers/mtd/spi-nor/core.c b/drivers/mtd/spi-nor/core.c
+index 2e0655c0b606..5dbf52aa0355 100644
+--- a/drivers/mtd/spi-nor/core.c
++++ b/drivers/mtd/spi-nor/core.c
+@@ -10,6 +10,7 @@
+ #include <linux/err.h>
+ #include <linux/errno.h>
+ #include <linux/module.h>
++#include <linux/delay.h>
+ #include <linux/device.h>
+ #include <linux/mutex.h>
+ #include <linux/math64.h>
+diff --git a/include/linux/mtd/spi-nor.h b/include/linux/mtd/spi-nor.h
+index 42218a1164f6..f92bf7f7a754 100644
+--- a/include/linux/mtd/spi-nor.h
++++ b/include/linux/mtd/spi-nor.h
+@@ -7,7 +7,6 @@
+ #define __LINUX_MTD_SPI_NOR_H
+ 
+ #include <linux/bitops.h>
+-#include <linux/mtd/cfi.h>
+ #include <linux/mtd/mtd.h>
+ #include <linux/spi/spi-mem.h>
+ 
 -- 
 2.35.1
 
