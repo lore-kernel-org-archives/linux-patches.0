@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DB56FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:41:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD6F2C433EF;
-	Mon, 16 Jan 2023 16:41:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBDB56FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:41:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4226FC433EF;
+	Mon, 16 Jan 2023 16:41:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887277;
-	bh=kbu1vVHx9t7b1FIZZW/ZmvZBmnndYlTOUDbH3KYCrGo=;
+	s=korg; t=1673887279;
+	bh=CqvN2XiVUKBe4FXQZWQvRqa25ELvyDHPjKfj7hTxNmo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2ctqHSjxoiiwXAAlvz10Jdg1i+A/o2Ee0KheuXVMHwhhTzL9Acxbu3Rbu4xyDiytw
-	 9NKxf05x/OCP0Li0MnUnS3X1yOqAGGQRZuSv74KyHyY0Dfx+YQirbzUCyWNPJug1ov
-	 S7czbxg3xe1ORVhaFYh16DbHGH3HtRcQ8G1GmA5I=
+	b=p/FcI3MmbqCg2PGNcgGW4yCx+k6Teuyn3CzMKUCO76BJjfMNKNKxqx26YeLmo+gw1
+	 IJ2Q+whP8u5jVBYtZcoO2OSJFcjVW0Zu8UtqtBUddyuwmO8+3jZEJ7wODsSJ4zbpzw
+	 9+tmT3FmEJzDWO3dM5jwETwXFvkEkO1A8l4JM9pk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anssi Hannula <anssi.hannula@bitwise.fi>,
-	Jimmy Assarsson <extja@kvaser.com>,
-	Marc Kleine-Budde <mkl@pengutronix.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 088/521] can: kvaser_usb: kvaser_usb_leaf: Handle CMD_ERROR_EVENT
-Date: Mon, 16 Jan 2023 16:45:50 +0100
-Message-Id: <20230116154851.164498124@linuxfoundation.org>
+Subject: [PATCH 4.19 071/521] PM: runtime: Do not call __rpm_callback() from rpm_idle()
+Date: Mon, 16 Jan 2023 16:45:33 +0100
+Message-Id: <20230116154850.394460384@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,184 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jimmy Assarsson <extja@kvaser.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit b24cb2d169e0c9dce664a959e1f2aa9781285dc9 ]
+[ Upstream commit bc80c2e438dcbfcf748452ec0f7ad5b79ff3ad88 ]
 
-The device will send an error event command, to indicate certain errors.
-This indicates a misbehaving driver, and should never occur.
+Calling __rpm_callback() from rpm_idle() after adding device links
+support to the former is a clear mistake.
 
-Fixes: 080f40a6fa28 ("can: kvaser_usb: Add support for Kvaser CAN/USB devices")
-Tested-by: Anssi Hannula <anssi.hannula@bitwise.fi>
-Co-developed-by: Anssi Hannula <anssi.hannula@bitwise.fi>
-Signed-off-by: Anssi Hannula <anssi.hannula@bitwise.fi>
-Signed-off-by: Jimmy Assarsson <extja@kvaser.com>
-Link: https://lore.kernel.org/all/20221010185237.319219-5-extja@kvaser.com
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Not only it causes rpm_idle() to carry out unnecessary actions, but it
+is also against the assumption regarding the stability of PM-runtime
+status across __rpm_callback() invocations, because rpm_suspend() and
+rpm_resume() may run in parallel with __rpm_callback() when it is called
+by rpm_idle() and the device's PM-runtime status can be updated by any
+of them.
+
+Fixes: 21d5c57b3726 ("PM / runtime: Use device links")
+Link: https://lore.kernel.org/linux-pm/36aed941-a73e-d937-2721-4f0decd61ce0@quicinc.com
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/can/usb/kvaser_usb/kvaser_usb_leaf.c  | 99 +++++++++++++++++++
- 1 file changed, 99 insertions(+)
+ drivers/base/power/runtime.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-index 4f3d1150b2b2..3c3e78992b55 100644
---- a/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-+++ b/drivers/net/can/usb/kvaser_usb/kvaser_usb_leaf.c
-@@ -69,6 +69,7 @@
- #define CMD_GET_CARD_INFO_REPLY		35
- #define CMD_GET_SOFTWARE_INFO		38
- #define CMD_GET_SOFTWARE_INFO_REPLY	39
-+#define CMD_ERROR_EVENT			45
- #define CMD_FLUSH_QUEUE			48
- #define CMD_TX_ACKNOWLEDGE		50
- #define CMD_CAN_ERROR_EVENT		51
-@@ -257,6 +258,28 @@ struct usbcan_cmd_can_error_event {
- 	__le16 time;
- } __packed;
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index 8a018e6d7976..911bb8a4bf6d 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -422,7 +422,17 @@ static int rpm_idle(struct device *dev, int rpmflags)
  
-+/* CMD_ERROR_EVENT error codes */
-+#define KVASER_USB_LEAF_ERROR_EVENT_TX_QUEUE_FULL 0x8
-+#define KVASER_USB_LEAF_ERROR_EVENT_PARAM 0x9
-+
-+struct leaf_cmd_error_event {
-+	u8 tid;
-+	u8 error_code;
-+	__le16 timestamp[3];
-+	__le16 padding;
-+	__le16 info1;
-+	__le16 info2;
-+} __packed;
-+
-+struct usbcan_cmd_error_event {
-+	u8 tid;
-+	u8 error_code;
-+	__le16 info1;
-+	__le16 info2;
-+	__le16 timestamp;
-+	__le16 padding;
-+} __packed;
-+
- struct kvaser_cmd_ctrl_mode {
- 	u8 tid;
- 	u8 channel;
-@@ -320,6 +343,7 @@ struct kvaser_cmd {
- 			struct leaf_cmd_chip_state_event chip_state_event;
- 			struct leaf_cmd_can_error_event can_error_event;
- 			struct leaf_cmd_log_message log_message;
-+			struct leaf_cmd_error_event error_event;
- 			struct kvaser_cmd_cap_req cap_req;
- 			struct kvaser_cmd_cap_res cap_res;
- 		} __packed leaf;
-@@ -329,6 +353,7 @@ struct kvaser_cmd {
- 			struct usbcan_cmd_rx_can rx_can;
- 			struct usbcan_cmd_chip_state_event chip_state_event;
- 			struct usbcan_cmd_can_error_event can_error_event;
-+			struct usbcan_cmd_error_event error_event;
- 		} __packed usbcan;
+ 	dev->power.idle_notification = true;
  
- 		struct kvaser_cmd_tx_can tx_can;
-@@ -352,6 +377,7 @@ static const u8 kvaser_usb_leaf_cmd_sizes_leaf[] = {
- 	[CMD_CHIP_STATE_EVENT]		= kvaser_fsize(u.leaf.chip_state_event),
- 	[CMD_CAN_ERROR_EVENT]		= kvaser_fsize(u.leaf.can_error_event),
- 	[CMD_GET_CAPABILITIES_RESP]	= kvaser_fsize(u.leaf.cap_res),
-+	[CMD_ERROR_EVENT]		= kvaser_fsize(u.leaf.error_event),
- 	/* ignored events: */
- 	[CMD_FLUSH_QUEUE_REPLY]		= CMD_SIZE_ANY,
- };
-@@ -366,6 +392,7 @@ static const u8 kvaser_usb_leaf_cmd_sizes_usbcan[] = {
- 	[CMD_RX_EXT_MESSAGE]		= kvaser_fsize(u.usbcan.rx_can),
- 	[CMD_CHIP_STATE_EVENT]		= kvaser_fsize(u.usbcan.chip_state_event),
- 	[CMD_CAN_ERROR_EVENT]		= kvaser_fsize(u.usbcan.can_error_event),
-+	[CMD_ERROR_EVENT]		= kvaser_fsize(u.usbcan.error_event),
- 	/* ignored events: */
- 	[CMD_USBCAN_CLOCK_OVERFLOW_EVENT] = CMD_SIZE_ANY,
- };
-@@ -1308,6 +1335,74 @@ static void kvaser_usb_leaf_rx_can_msg(const struct kvaser_usb *dev,
- 	netif_rx(skb);
- }
+-	retval = __rpm_callback(callback, dev);
++	if (dev->power.irq_safe)
++		spin_unlock(&dev->power.lock);
++	else
++		spin_unlock_irq(&dev->power.lock);
++
++	retval = callback(dev);
++
++	if (dev->power.irq_safe)
++		spin_lock(&dev->power.lock);
++	else
++		spin_lock_irq(&dev->power.lock);
  
-+static void kvaser_usb_leaf_error_event_parameter(const struct kvaser_usb *dev,
-+						  const struct kvaser_cmd *cmd)
-+{
-+	u16 info1 = 0;
-+
-+	switch (dev->driver_info->family) {
-+	case KVASER_LEAF:
-+		info1 = le16_to_cpu(cmd->u.leaf.error_event.info1);
-+		break;
-+	case KVASER_USBCAN:
-+		info1 = le16_to_cpu(cmd->u.usbcan.error_event.info1);
-+		break;
-+	}
-+
-+	/* info1 will contain the offending cmd_no */
-+	switch (info1) {
-+	case CMD_SET_CTRL_MODE:
-+		dev_warn(&dev->intf->dev,
-+			 "CMD_SET_CTRL_MODE error in parameter\n");
-+		break;
-+
-+	case CMD_SET_BUS_PARAMS:
-+		dev_warn(&dev->intf->dev,
-+			 "CMD_SET_BUS_PARAMS error in parameter\n");
-+		break;
-+
-+	default:
-+		dev_warn(&dev->intf->dev,
-+			 "Unhandled parameter error event cmd_no (%u)\n",
-+			 info1);
-+		break;
-+	}
-+}
-+
-+static void kvaser_usb_leaf_error_event(const struct kvaser_usb *dev,
-+					const struct kvaser_cmd *cmd)
-+{
-+	u8 error_code = 0;
-+
-+	switch (dev->driver_info->family) {
-+	case KVASER_LEAF:
-+		error_code = cmd->u.leaf.error_event.error_code;
-+		break;
-+	case KVASER_USBCAN:
-+		error_code = cmd->u.usbcan.error_event.error_code;
-+		break;
-+	}
-+
-+	switch (error_code) {
-+	case KVASER_USB_LEAF_ERROR_EVENT_TX_QUEUE_FULL:
-+		/* Received additional CAN message, when firmware TX queue is
-+		 * already full. Something is wrong with the driver.
-+		 * This should never happen!
-+		 */
-+		dev_err(&dev->intf->dev,
-+			"Received error event TX_QUEUE_FULL\n");
-+		break;
-+	case KVASER_USB_LEAF_ERROR_EVENT_PARAM:
-+		kvaser_usb_leaf_error_event_parameter(dev, cmd);
-+		break;
-+
-+	default:
-+		dev_warn(&dev->intf->dev,
-+			 "Unhandled error event (%d)\n", error_code);
-+		break;
-+	}
-+}
-+
- static void kvaser_usb_leaf_start_chip_reply(const struct kvaser_usb *dev,
- 					     const struct kvaser_cmd *cmd)
- {
-@@ -1386,6 +1481,10 @@ static void kvaser_usb_leaf_handle_command(const struct kvaser_usb *dev,
- 		kvaser_usb_leaf_tx_acknowledge(dev, cmd);
- 		break;
- 
-+	case CMD_ERROR_EVENT:
-+		kvaser_usb_leaf_error_event(dev, cmd);
-+		break;
-+
- 	/* Ignored commands */
- 	case CMD_USBCAN_CLOCK_OVERFLOW_EVENT:
- 		if (dev->driver_info->family != KVASER_USBCAN)
+ 	dev->power.idle_notification = false;
+ 	wake_up_all(&dev->power.wait_queue);
 -- 
 2.35.1
 
