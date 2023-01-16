@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A576FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:51:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E602C433EF;
-	Mon, 16 Jan 2023 16:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6FDB6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:52:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E466C433D2;
+	Mon, 16 Jan 2023 16:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887918;
-	bh=BpN3Sva0JSp+Zaq2oTXSZYfT49B4CmHw5QEZv342z4c=;
+	s=korg; t=1673887921;
+	bh=NJ/FJEQYHJST8jPE9NG67Xf+jbNGQoWczd++8y2sdbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i4eUsY3z8lUb1RI8HR/F1VM51iWD3e5ml2tM2CIOHuKMJ+/LBdybB8ArJVqFrTYxS
-	 PnYWaHdlL6m+Cdzw/fc/0QOLggLEDlggaK8n3JnaHt/kQnMc4Qt4e9iorC552bRr1Y
-	 eRgL4UioYq6mSl4AM1cAyPMJwqbsKA0FszZQR60Y=
+	b=vpdZX6hk9EMQJVQWnvMVs06q7srQFK9uqJzFcd2cbslEm3BvgSyT8eiiqiCYsvbg6
+	 t+EeQbTPVAOiE7iQA0LHPDXuX2tZ7mHgVE6udzK/4tFGAkhEploIB4gRwyMaMvppN3
+	 SZKsM0NPM6KGtVWLF8DNGzNs9oLSyKtajNRZ6LMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Li Zetao <lizetao1@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Oliver OHalloran <oohall@gmail.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 302/521] r6040: Fix kmemleak in probe and remove
-Date: Mon, 16 Jan 2023 16:49:24 +0100
-Message-Id: <20230116154900.618499792@linuxfoundation.org>
+Subject: [PATCH 4.19 293/521] powerpc/pseries: Stop using eeh_ops->init()
+Date: Mon, 16 Jan 2023 16:49:15 +0100
+Message-Id: <20230116154900.230346628@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,94 +35,203 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Zetao <lizetao1@huawei.com>
+From: Oliver O'Halloran <oohall@gmail.com>
 
-[ Upstream commit 7e43039a49c2da45edc1d9d7c9ede4003ab45a5f ]
+[ Upstream commit 1f8fa0cd6a848ff072bffe0ee776554387128f60 ]
 
-There is a memory leaks reported by kmemleak:
+Fold pseries_eeh_init() into eeh_pseries_init() rather than having
+eeh_init() call it via eeh_ops->init(). It's simpler and it'll let us
+delete eeh_ops.init.
 
-  unreferenced object 0xffff888116111000 (size 2048):
-    comm "modprobe", pid 817, jiffies 4294759745 (age 76.502s)
-    hex dump (first 32 bytes):
-      00 c4 0a 04 81 88 ff ff 08 10 11 16 81 88 ff ff  ................
-      08 10 11 16 81 88 ff ff 00 00 00 00 00 00 00 00  ................
-    backtrace:
-      [<ffffffff815bcd82>] kmalloc_trace+0x22/0x60
-      [<ffffffff827e20ee>] phy_device_create+0x4e/0x90
-      [<ffffffff827e6072>] get_phy_device+0xd2/0x220
-      [<ffffffff827e7844>] mdiobus_scan+0xa4/0x2e0
-      [<ffffffff827e8be2>] __mdiobus_register+0x482/0x8b0
-      [<ffffffffa01f5d24>] r6040_init_one+0x714/0xd2c [r6040]
-      ...
-
-The problem occurs in probe process as follows:
-  r6040_init_one:
-    mdiobus_register
-      mdiobus_scan    <- alloc and register phy_device,
-                         the reference count of phy_device is 3
-    r6040_mii_probe
-      phy_connect     <- connect to the first phy_device,
-                         so the reference count of the first
-                         phy_device is 4, others are 3
-    register_netdev   <- fault inject succeeded, goto error handling path
-
-    // error handling path
-    err_out_mdio_unregister:
-      mdiobus_unregister(lp->mii_bus);
-    err_out_mdio:
-      mdiobus_free(lp->mii_bus);    <- the reference count of the first
-                                       phy_device is 1, it is not released
-                                       and other phy_devices are released
-  // similarly, the remove process also has the same problem
-
-The root cause is traced to the phy_device is not disconnected when
-removes one r6040 device in r6040_remove_one() or on error handling path
-after r6040_mii probed successfully. In r6040_mii_probe(), a net ethernet
-device is connected to the first PHY device of mii_bus, in order to
-notify the connected driver when the link status changes, which is the
-default behavior of the PHY infrastructure to handle everything.
-Therefore the phy_device should be disconnected when removes one r6040
-device or on error handling path.
-
-Fix it by adding phy_disconnect() when removes one r6040 device or on
-error handling path after r6040_mii probed successfully.
-
-Fixes: 3831861b4ad8 ("r6040: implement phylib")
-Signed-off-by: Li Zetao <lizetao1@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221213125614.927754-1-lizetao1@huawei.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Oliver O'Halloran <oohall@gmail.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20200918093050.37344-3-oohall@gmail.com
+Stable-dep-of: 9aafbfa5f57a ("powerpc/pseries/eeh: use correct API for error log size")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/rdc/r6040.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/powerpc/platforms/pseries/eeh_pseries.c | 155 +++++++++----------
+ 1 file changed, 71 insertions(+), 84 deletions(-)
 
-diff --git a/drivers/net/ethernet/rdc/r6040.c b/drivers/net/ethernet/rdc/r6040.c
-index 2199bd08f4d6..e377c1f68777 100644
---- a/drivers/net/ethernet/rdc/r6040.c
-+++ b/drivers/net/ethernet/rdc/r6040.c
-@@ -1184,10 +1184,12 @@ static int r6040_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	err = register_netdev(dev);
- 	if (err) {
- 		dev_err(&pdev->dev, "Failed to register net device\n");
--		goto err_out_mdio_unregister;
-+		goto err_out_phy_disconnect;
- 	}
- 	return 0;
+diff --git a/arch/powerpc/platforms/pseries/eeh_pseries.c b/arch/powerpc/platforms/pseries/eeh_pseries.c
+index 560d7401496c..7a0b9aa09d10 100644
+--- a/arch/powerpc/platforms/pseries/eeh_pseries.c
++++ b/arch/powerpc/platforms/pseries/eeh_pseries.c
+@@ -250,88 +250,6 @@ static unsigned char slot_errbuf[RTAS_ERROR_LOG_MAX];
+ static DEFINE_SPINLOCK(slot_errbuf_lock);
+ static int eeh_error_buf_size;
  
-+err_out_phy_disconnect:
-+	phy_disconnect(dev->phydev);
- err_out_mdio_unregister:
- 	mdiobus_unregister(lp->mii_bus);
- err_out_mdio:
-@@ -1211,6 +1213,7 @@ static void r6040_remove_one(struct pci_dev *pdev)
- 	struct r6040_private *lp = netdev_priv(dev);
+-/**
+- * pseries_eeh_init - EEH platform dependent initialization
+- *
+- * EEH platform dependent initialization on pseries.
+- */
+-static int pseries_eeh_init(void)
+-{
+-	struct pci_controller *phb;
+-	struct pci_dn *pdn;
+-	int addr, config_addr;
+-
+-	/* figure out EEH RTAS function call tokens */
+-	ibm_set_eeh_option		= rtas_token("ibm,set-eeh-option");
+-	ibm_set_slot_reset		= rtas_token("ibm,set-slot-reset");
+-	ibm_read_slot_reset_state2	= rtas_token("ibm,read-slot-reset-state2");
+-	ibm_read_slot_reset_state	= rtas_token("ibm,read-slot-reset-state");
+-	ibm_slot_error_detail		= rtas_token("ibm,slot-error-detail");
+-	ibm_get_config_addr_info2	= rtas_token("ibm,get-config-addr-info2");
+-	ibm_get_config_addr_info	= rtas_token("ibm,get-config-addr-info");
+-	ibm_configure_pe		= rtas_token("ibm,configure-pe");
+-
+-	/*
+-	 * ibm,configure-pe and ibm,configure-bridge have the same semantics,
+-	 * however ibm,configure-pe can be faster.  If we can't find
+-	 * ibm,configure-pe then fall back to using ibm,configure-bridge.
+-	 */
+-	if (ibm_configure_pe == RTAS_UNKNOWN_SERVICE)
+-		ibm_configure_pe 	= rtas_token("ibm,configure-bridge");
+-
+-	/*
+-	 * Necessary sanity check. We needn't check "get-config-addr-info"
+-	 * and its variant since the old firmware probably support address
+-	 * of domain/bus/slot/function for EEH RTAS operations.
+-	 */
+-	if (ibm_set_eeh_option == RTAS_UNKNOWN_SERVICE		||
+-	    ibm_set_slot_reset == RTAS_UNKNOWN_SERVICE		||
+-	    (ibm_read_slot_reset_state2 == RTAS_UNKNOWN_SERVICE &&
+-	     ibm_read_slot_reset_state == RTAS_UNKNOWN_SERVICE)	||
+-	    ibm_slot_error_detail == RTAS_UNKNOWN_SERVICE	||
+-	    ibm_configure_pe == RTAS_UNKNOWN_SERVICE) {
+-		pr_info("EEH functionality not supported\n");
+-		return -EINVAL;
+-	}
+-
+-	/* Initialize error log lock and size */
+-	spin_lock_init(&slot_errbuf_lock);
+-	eeh_error_buf_size = rtas_token("rtas-error-log-max");
+-	if (eeh_error_buf_size == RTAS_UNKNOWN_SERVICE) {
+-		pr_info("%s: unknown EEH error log size\n",
+-			__func__);
+-		eeh_error_buf_size = 1024;
+-	} else if (eeh_error_buf_size > RTAS_ERROR_LOG_MAX) {
+-		pr_info("%s: EEH error log size %d exceeds the maximal %d\n",
+-			__func__, eeh_error_buf_size, RTAS_ERROR_LOG_MAX);
+-		eeh_error_buf_size = RTAS_ERROR_LOG_MAX;
+-	}
+-
+-	/* Set EEH probe mode */
+-	eeh_add_flag(EEH_PROBE_MODE_DEVTREE | EEH_ENABLE_IO_FOR_LOG);
+-
+-	/* Set EEH machine dependent code */
+-	ppc_md.pcibios_bus_add_device = pseries_pcibios_bus_add_device;
+-
+-	if (is_kdump_kernel() || reset_devices) {
+-		pr_info("Issue PHB reset ...\n");
+-		list_for_each_entry(phb, &hose_list, list_node) {
+-			pdn = list_first_entry(&PCI_DN(phb->dn)->child_list, struct pci_dn, list);
+-			addr = (pdn->busno << 16) | (pdn->devfn << 8);
+-			config_addr = pseries_eeh_get_config_addr(phb, addr);
+-			/* invalid PE config addr */
+-			if (config_addr == 0)
+-				continue;
+-
+-			pseries_eeh_phb_reset(phb, config_addr, EEH_RESET_FUNDAMENTAL);
+-			pseries_eeh_phb_reset(phb, config_addr, EEH_RESET_DEACTIVATE);
+-			pseries_eeh_phb_configure_bridge(phb, config_addr);
+-		}
+-	}
+-
+-	return 0;
+-}
+-
+ static int pseries_eeh_cap_start(struct pci_dn *pdn)
+ {
+ 	u32 status;
+@@ -964,7 +882,6 @@ static int pseries_notify_resume(struct pci_dn *pdn)
  
- 	unregister_netdev(dev);
-+	phy_disconnect(dev->phydev);
- 	mdiobus_unregister(lp->mii_bus);
- 	mdiobus_free(lp->mii_bus);
- 	netif_napi_del(&lp->napi);
+ static struct eeh_ops pseries_eeh_ops = {
+ 	.name			= "pseries",
+-	.init			= pseries_eeh_init,
+ 	.probe			= pseries_eeh_probe,
+ 	.set_option		= pseries_eeh_set_option,
+ 	.get_pe_addr		= pseries_eeh_get_pe_addr,
+@@ -991,7 +908,77 @@ static struct eeh_ops pseries_eeh_ops = {
+  */
+ static int __init eeh_pseries_init(void)
+ {
+-	int ret;
++	struct pci_controller *phb;
++	struct pci_dn *pdn;
++	int ret, addr, config_addr;
++
++	/* figure out EEH RTAS function call tokens */
++	ibm_set_eeh_option		= rtas_token("ibm,set-eeh-option");
++	ibm_set_slot_reset		= rtas_token("ibm,set-slot-reset");
++	ibm_read_slot_reset_state2	= rtas_token("ibm,read-slot-reset-state2");
++	ibm_read_slot_reset_state	= rtas_token("ibm,read-slot-reset-state");
++	ibm_slot_error_detail		= rtas_token("ibm,slot-error-detail");
++	ibm_get_config_addr_info2	= rtas_token("ibm,get-config-addr-info2");
++	ibm_get_config_addr_info	= rtas_token("ibm,get-config-addr-info");
++	ibm_configure_pe		= rtas_token("ibm,configure-pe");
++
++	/*
++	 * ibm,configure-pe and ibm,configure-bridge have the same semantics,
++	 * however ibm,configure-pe can be faster.  If we can't find
++	 * ibm,configure-pe then fall back to using ibm,configure-bridge.
++	 */
++	if (ibm_configure_pe == RTAS_UNKNOWN_SERVICE)
++		ibm_configure_pe	= rtas_token("ibm,configure-bridge");
++
++	/*
++	 * Necessary sanity check. We needn't check "get-config-addr-info"
++	 * and its variant since the old firmware probably support address
++	 * of domain/bus/slot/function for EEH RTAS operations.
++	 */
++	if (ibm_set_eeh_option == RTAS_UNKNOWN_SERVICE		||
++	    ibm_set_slot_reset == RTAS_UNKNOWN_SERVICE		||
++	    (ibm_read_slot_reset_state2 == RTAS_UNKNOWN_SERVICE &&
++	     ibm_read_slot_reset_state == RTAS_UNKNOWN_SERVICE)	||
++	    ibm_slot_error_detail == RTAS_UNKNOWN_SERVICE	||
++	    ibm_configure_pe == RTAS_UNKNOWN_SERVICE) {
++		pr_info("EEH functionality not supported\n");
++		return -EINVAL;
++	}
++
++	/* Initialize error log lock and size */
++	spin_lock_init(&slot_errbuf_lock);
++	eeh_error_buf_size = rtas_token("rtas-error-log-max");
++	if (eeh_error_buf_size == RTAS_UNKNOWN_SERVICE) {
++		pr_info("%s: unknown EEH error log size\n",
++			__func__);
++		eeh_error_buf_size = 1024;
++	} else if (eeh_error_buf_size > RTAS_ERROR_LOG_MAX) {
++		pr_info("%s: EEH error log size %d exceeds the maximal %d\n",
++			__func__, eeh_error_buf_size, RTAS_ERROR_LOG_MAX);
++		eeh_error_buf_size = RTAS_ERROR_LOG_MAX;
++	}
++
++	/* Set EEH probe mode */
++	eeh_add_flag(EEH_PROBE_MODE_DEVTREE | EEH_ENABLE_IO_FOR_LOG);
++
++	/* Set EEH machine dependent code */
++	ppc_md.pcibios_bus_add_device = pseries_pcibios_bus_add_device;
++
++	if (is_kdump_kernel() || reset_devices) {
++		pr_info("Issue PHB reset ...\n");
++		list_for_each_entry(phb, &hose_list, list_node) {
++			pdn = list_first_entry(&PCI_DN(phb->dn)->child_list, struct pci_dn, list);
++			addr = (pdn->busno << 16) | (pdn->devfn << 8);
++			config_addr = pseries_eeh_get_config_addr(phb, addr);
++			/* invalid PE config addr */
++			if (config_addr == 0)
++				continue;
++
++			pseries_eeh_phb_reset(phb, config_addr, EEH_RESET_FUNDAMENTAL);
++			pseries_eeh_phb_reset(phb, config_addr, EEH_RESET_DEACTIVATE);
++			pseries_eeh_phb_configure_bridge(phb, config_addr);
++		}
++	}
+ 
+ 	ret = eeh_ops_register(&pseries_eeh_ops);
+ 	if (!ret)
 -- 
 2.35.1
 
