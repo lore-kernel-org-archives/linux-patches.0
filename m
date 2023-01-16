@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38E8346B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:29:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4EF1C433D2;
-	Mon, 16 Jan 2023 16:29:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC32946B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:29:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72831C433EF;
+	Mon, 16 Jan 2023 16:29:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886586;
-	bh=5vqMnOjPB/EzvYDjxxL+uagrVqeIhA4cDaoRhifpY2Y=;
+	s=korg; t=1673886588;
+	bh=yN3qZ5K+dSGsDaV7QNWw28OAlNnDQJd0W+KtvC0hbjQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tApKEe+Wq2OlEoCe9VB9BkU9akfvU72/0I4JW0P14JhYWYyxLL9Uc47+inVbLHIvR
-	 9qkecXvKshGKQwoU31SZS3Mp1AcYtbc/m4SAl/0cVBhNMYJ93o+GvGWMFttB2RVoZj
-	 uVRY1H7+KRNWL/BI+Sq/IqDhJ6jnXQAMNdqcU26k=
+	b=V+y1Ky2p+icTEsFaJhGtIz7xtyAf5wXVpIKlkUkv6LVpE3RwQQ/z/mOS32n+3Dh6e
+	 fUiovtZHrOWgONFxlZHa6fEfv1d3dnHXDdAASai6yCgSVW26zvQqYiw/WBRRS8CQ/m
+	 jJntpqoTufq52v2jUArGldBMtPb7Gmkr62/Bqh2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
-	linux-media@vger.kernel.org,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH 5.4 479/658] media: stv0288: use explicitly signed char
-Date: Mon, 16 Jan 2023 16:49:27 +0100
-Message-Id: <20230116154931.397620588@linuxfoundation.org>
+	Yongqiang Liu <liuyongqiang13@huawei.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.4 488/658] cpufreq: Init completion before kobject_init_and_add()
+Date: Mon, 16 Jan 2023 16:49:36 +0100
+Message-Id: <20230116154931.849812480@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,40 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Yongqiang Liu <liuyongqiang13@huawei.com>
 
-commit 7392134428c92a4cb541bd5c8f4f5c8d2e88364d upstream.
+commit 5c51054896bcce1d33d39fead2af73fec24f40b6 upstream.
 
-With char becoming unsigned by default, and with `char` alone being
-ambiguous and based on architecture, signed chars need to be marked
-explicitly as such. Use `s8` and `u8` types here, since that's what
-surrounding code does. This fixes:
+In cpufreq_policy_alloc(), it will call uninitialed completion in
+cpufreq_sysfs_release() when kobject_init_and_add() fails. And
+that will cause a crash such as the following page fault in complete:
 
-drivers/media/dvb-frontends/stv0288.c:471 stv0288_set_frontend() warn: assigning (-9) to unsigned variable 'tm'
-drivers/media/dvb-frontends/stv0288.c:471 stv0288_set_frontend() warn: we never enter this loop
+BUG: unable to handle page fault for address: fffffffffffffff8
+[..]
+RIP: 0010:complete+0x98/0x1f0
+[..]
+Call Trace:
+ kobject_put+0x1be/0x4c0
+ cpufreq_online.cold+0xee/0x1fd
+ cpufreq_add_dev+0x183/0x1e0
+ subsys_interface_register+0x3f5/0x4e0
+ cpufreq_register_driver+0x3b7/0x670
+ acpi_cpufreq_init+0x56c/0x1000 [acpi_cpufreq]
+ do_one_initcall+0x13d/0x780
+ do_init_module+0x1c3/0x630
+ load_module+0x6e67/0x73b0
+ __do_sys_finit_module+0x181/0x240
+ do_syscall_64+0x35/0x80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Cc: Mauro Carvalho Chehab <mchehab@kernel.org>
-Cc: linux-media@vger.kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Fixes: 4ebe36c94aed ("cpufreq: Fix kobject memleak")
+Signed-off-by: Yongqiang Liu <liuyongqiang13@huawei.com>
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Cc: 5.2+ <stable@vger.kernel.org> # 5.2+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/media/dvb-frontends/stv0288.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/cpufreq/cpufreq.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/media/dvb-frontends/stv0288.c
-+++ b/drivers/media/dvb-frontends/stv0288.c
-@@ -440,9 +440,8 @@ static int stv0288_set_frontend(struct d
- 	struct stv0288_state *state = fe->demodulator_priv;
- 	struct dtv_frontend_properties *c = &fe->dtv_property_cache;
+--- a/drivers/cpufreq/cpufreq.c
++++ b/drivers/cpufreq/cpufreq.c
+@@ -1204,6 +1204,7 @@ static struct cpufreq_policy *cpufreq_po
+ 	if (!zalloc_cpumask_var(&policy->real_cpus, GFP_KERNEL))
+ 		goto err_free_rcpumask;
  
--	char tm;
--	unsigned char tda[3];
--	u8 reg, time_out = 0;
-+	u8 tda[3], reg, time_out = 0;
-+	s8 tm;
++	init_completion(&policy->kobj_unregister);
+ 	ret = kobject_init_and_add(&policy->kobj, &ktype_cpufreq,
+ 				   cpufreq_global_kobject, "policy%u", cpu);
+ 	if (ret) {
+@@ -1242,7 +1243,6 @@ static struct cpufreq_policy *cpufreq_po
+ 	init_rwsem(&policy->rwsem);
+ 	spin_lock_init(&policy->transition_lock);
+ 	init_waitqueue_head(&policy->transition_wait);
+-	init_completion(&policy->kobj_unregister);
+ 	INIT_WORK(&policy->update, handle_update);
  
- 	dprintk("%s : FE_SET_FRONTEND\n", __func__);
- 
+ 	policy->cpu = cpu;
 
 
