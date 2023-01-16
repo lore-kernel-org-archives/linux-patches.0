@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025D76FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:10:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A6E9C433D2;
-	Mon, 16 Jan 2023 17:10:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A7306FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:10:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B994C433D2;
+	Mon, 16 Jan 2023 17:10:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889050;
-	bh=aZ0JKpZUSDhGF4muQfj/pOfCpHaLsON8A2w+yYEIG1A=;
+	s=korg; t=1673889053;
+	bh=CuB0pMaf5n0eTWneMwo14eXVHXl3th6l6lN7Qux1r1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HxgL/ByfeaK9D/ar4yf/Ee+JXCit6zufQvYZp1TkXP3eKmAZqfvgoivqUnEuAKhyw
-	 Bod+t3kG/C7DM0Sep3NWFDok132IP57Fdd2/lD+GXRqg9cQqj2Xv1tcExdtNgVk9ZG
-	 kWztaqaPgcNi797Nak+ewGL3JQLisslKtDbNd3WY=
+	b=YUkNL4vGsQ7kQnOeVdE+fwQ66wwrVrAkmGh+JGBLrFz1dxnPnsrERLFzslNLW+4Sk
+	 gQzzGJBTwnCMBUxcNSe2Sic+wBI2DsC0liiGq0jy3DbGUESzkS7d9b1kG+pWlJ9uZn
+	 fnWVlVjuPkxHx269NRpmWDFw6efibjk6yxfT5wN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jun Nie <jun.nie@linaro.org>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Cong Wang <cong.wang@bytedance.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+4caeae4c7103813598ae@syzkaller.appspotmail.com
-Subject: [PATCH 4.14 212/338] net_sched: reject TCF_EM_SIMPLE case for complex ematch module
-Date: Mon, 16 Jan 2023 16:51:25 +0100
-Message-Id: <20230116154830.266662295@linuxfoundation.org>
+	Yan Lei <yan_lei@dahuatech.com>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 239/338] media: dvb-frontends: fix leak of memory fw
+Date: Mon, 16 Jan 2023 16:51:52 +0100
+Message-Id: <20230116154831.469861210@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -39,50 +35,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cong Wang <cong.wang@bytedance.com>
+From: Yan Lei <yan_lei@dahuatech.com>
 
-[ Upstream commit 9cd3fd2054c3b3055163accbf2f31a4426f10317 ]
+[ Upstream commit a15fe8d9f1bf460a804bcf18a890bfd2cf0d5caa ]
 
-When TCF_EM_SIMPLE was introduced, it is supposed to be convenient
-for ematch implementation:
-
-https://lore.kernel.org/all/20050105110048.GO26856@postel.suug.ch/
-
-"You don't have to, providing a 32bit data chunk without TCF_EM_SIMPLE
-set will simply result in allocating & copy. It's an optimization,
-nothing more."
-
-So if an ematch module provides ops->datalen that means it wants a
-complex data structure (saved in its em->data) instead of a simple u32
-value. We should simply reject such a combination, otherwise this u32
-could be misinterpreted as a pointer.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Reported-and-tested-by: syzbot+4caeae4c7103813598ae@syzkaller.appspotmail.com
-Reported-by: Jun Nie <jun.nie@linaro.org>
-Cc: Jamal Hadi Salim <jhs@mojatatu.com>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Cong Wang <cong.wang@bytedance.com>
-Acked-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/linux-media/20220410061925.4107-1-chinayanlei2002@163.com
+Signed-off-by: Yan Lei <yan_lei@dahuatech.com>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/ematch.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/media/dvb-frontends/bcm3510.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/sched/ematch.c b/net/sched/ematch.c
-index a48dca26f178..e6078a3da76a 100644
---- a/net/sched/ematch.c
-+++ b/net/sched/ematch.c
-@@ -259,6 +259,8 @@ static int tcf_em_validate(struct tcf_proto *tp,
- 			 * the value carried.
- 			 */
- 			if (em_hdr->flags & TCF_EM_SIMPLE) {
-+				if (em->ops->datalen > 0)
-+					goto errout;
- 				if (data_len < sizeof(u32))
- 					goto errout;
- 				em->data = *(u32 *) data;
+diff --git a/drivers/media/dvb-frontends/bcm3510.c b/drivers/media/dvb-frontends/bcm3510.c
+index ba63ad170d3c..87684610f59e 100644
+--- a/drivers/media/dvb-frontends/bcm3510.c
++++ b/drivers/media/dvb-frontends/bcm3510.c
+@@ -649,6 +649,7 @@ static int bcm3510_download_firmware(struct dvb_frontend* fe)
+ 		deb_info("firmware chunk, addr: 0x%04x, len: 0x%04x, total length: 0x%04zx\n",addr,len,fw->size);
+ 		if ((ret = bcm3510_write_ram(st,addr,&b[i+4],len)) < 0) {
+ 			err("firmware download failed: %d\n",ret);
++			release_firmware(fw);
+ 			return ret;
+ 		}
+ 		i += 4 + len;
 -- 
 2.35.1
 
