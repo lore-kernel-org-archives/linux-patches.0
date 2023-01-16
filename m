@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A93B46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:06:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1ACFC433F0;
-	Mon, 16 Jan 2023 16:06:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D8346B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:06:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9DE6CC433F0;
+	Mon, 16 Jan 2023 16:06:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885189;
-	bh=44HSyK6uZDz6w8zpJGlM/OacizFb/ohe739n6uWOtP8=;
+	s=korg; t=1673885192;
+	bh=OX3De3K0dnmZshj/eNmoMtnOpR/9vSvZiJHpikNXOrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLN4Rfc2XaiwS5I8uEoUrPMg1WaYaWJusiBK2R4fL06Q0ZIGitTGYOcCZ7C8BBSfL
-	 2tpwwMrb4EKWcdapGNa6T8s+TT5V9EnTl30g8v7akpNZKAy8nCNwE+YysRnk9vN/n8
-	 h/iRiEDGHkovwDS1LIwkhFgv2Tbac9xV/Z+8DJn0=
+	b=yXY+WxhEV4Oo6bHxUkea4pIMyqvG8i9SSDJjvRySxn+TufOF8xgU2S+Gk5DcCgxtJ
+	 D+k7wIqQwEuJJoGhRcWIalTXSjiOJIPOLuRKYcCZVOUJg+IIyTwqaZZbX4mijxEdaV
+	 ljvUjQVOtzyh/u2Q8HEW16y1Bg7d7iTEvWv2NkIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mattia Dongili <malattia@linux.it>
-Subject: [PATCH 5.10 14/64] platform/x86: sony-laptop: Dont turn off 0x153 keyboard backlight during probe
-Date: Mon, 16 Jan 2023 16:51:21 +0100
-Message-Id: <20230116154744.133517576@linuxfoundation.org>
+	Alexander Stein <alexander.stein@ew.tq-group.com>,
+	Li Jun <jun.li@nxp.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 23/64] clk: imx: imx8mp: add shared clk gate for usb suspend clk
+Date: Mon, 16 Jan 2023 16:51:30 +0100
+Message-Id: <20230116154744.410818986@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -34,58 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Li Jun <jun.li@nxp.com>
 
-commit ad75bd85b1db69c97eefea07b375567821f6ef58 upstream.
+[ Upstream commit ed1f4ccfe947a3e1018a3bd7325134574c7ff9b3 ]
 
-The 0x153 version of the kbd backlight control SNC handle has no separate
-address to probe if the backlight is there.
+32K usb suspend clock gate is shared with usb_root_clk, this
+shared clock gate was initially defined only for usb suspend
+clock, usb suspend clk is kept on while system is active or
+system sleep with usb wakeup enabled, so usb root clock is
+fine with this situation; with the commit cf7f3f4fa9e5
+("clk: imx8mp: fix usb_root_clk parent"), this clock gate is
+changed to be for usb root clock, but usb root clock will
+be off while usb is suspended, so usb suspend clock will be
+gated too, this cause some usb functionalities will not work,
+so define this clock to be a shared clock gate to conform with
+the real HW status.
 
-This turns the probe call into a set keyboard backlight call with a value
-of 0 turning off the keyboard backlight.
-
-Skip probing when there is no separate probe address to avoid this.
-
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=1583752
-Fixes: 800f20170dcf ("Keyboard backlight control for some Vaio Fit models")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Mattia Dongili <malattia@linux.it>
-Link: https://lore.kernel.org/r/20221213122943.11123-1-hdegoede@redhat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9c140d9926761 ("clk: imx: Add support for i.MX8MP clock driver")
+Cc: stable@vger.kernel.org # v5.19+
+Tested-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Signed-off-by: Li Jun <jun.li@nxp.com>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Link: https://lore.kernel.org/r/1664549663-20364-2-git-send-email-jun.li@nxp.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/sony-laptop.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/clk/imx/clk-imx8mp.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/platform/x86/sony-laptop.c
-+++ b/drivers/platform/x86/sony-laptop.c
-@@ -1892,14 +1892,21 @@ static int sony_nc_kbd_backlight_setup(s
- 		break;
- 	}
+diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
+index 187044b98bde..72592e35836b 100644
+--- a/drivers/clk/imx/clk-imx8mp.c
++++ b/drivers/clk/imx/clk-imx8mp.c
+@@ -17,6 +17,7 @@
  
--	ret = sony_call_snc_handle(handle, probe_base, &result);
--	if (ret)
--		return ret;
-+	/*
-+	 * Only probe if there is a separate probe_base, otherwise the probe call
-+	 * is equivalent to __sony_nc_kbd_backlight_mode_set(0), resulting in
-+	 * the keyboard backlight being turned off.
-+	 */
-+	if (probe_base) {
-+		ret = sony_call_snc_handle(handle, probe_base, &result);
-+		if (ret)
-+			return ret;
+ static u32 share_count_nand;
+ static u32 share_count_media;
++static u32 share_count_usb;
  
--	if ((handle == 0x0137 && !(result & 0x02)) ||
--			!(result & 0x01)) {
--		dprintk("no backlight keyboard found\n");
--		return 0;
-+		if ((handle == 0x0137 && !(result & 0x02)) ||
-+				!(result & 0x01)) {
-+			dprintk("no backlight keyboard found\n");
-+			return 0;
-+		}
- 	}
- 
- 	kbdbl_ctl = kzalloc(sizeof(*kbdbl_ctl), GFP_KERNEL);
+ static const char * const pll_ref_sels[] = { "osc_24m", "dummy", "dummy", "dummy", };
+ static const char * const audio_pll1_bypass_sels[] = {"audio_pll1", "audio_pll1_ref_sel", };
+@@ -706,7 +707,8 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
+ 	hws[IMX8MP_CLK_UART2_ROOT] = imx_clk_hw_gate4("uart2_root_clk", "uart2", ccm_base + 0x44a0, 0);
+ 	hws[IMX8MP_CLK_UART3_ROOT] = imx_clk_hw_gate4("uart3_root_clk", "uart3", ccm_base + 0x44b0, 0);
+ 	hws[IMX8MP_CLK_UART4_ROOT] = imx_clk_hw_gate4("uart4_root_clk", "uart4", ccm_base + 0x44c0, 0);
+-	hws[IMX8MP_CLK_USB_ROOT] = imx_clk_hw_gate4("usb_root_clk", "hsio_axi", ccm_base + 0x44d0, 0);
++	hws[IMX8MP_CLK_USB_ROOT] = imx_clk_hw_gate2_shared2("usb_root_clk", "hsio_axi", ccm_base + 0x44d0, 0, &share_count_usb);
++	hws[IMX8MP_CLK_USB_SUSP] = imx_clk_hw_gate2_shared2("usb_suspend_clk", "osc_32k", ccm_base + 0x44d0, 0, &share_count_usb);
+ 	hws[IMX8MP_CLK_USB_PHY_ROOT] = imx_clk_hw_gate4("usb_phy_root_clk", "usb_phy_ref", ccm_base + 0x44f0, 0);
+ 	hws[IMX8MP_CLK_USDHC1_ROOT] = imx_clk_hw_gate4("usdhc1_root_clk", "usdhc1", ccm_base + 0x4510, 0);
+ 	hws[IMX8MP_CLK_USDHC2_ROOT] = imx_clk_hw_gate4("usdhc2_root_clk", "usdhc2", ccm_base + 0x4520, 0);
+-- 
+2.35.1
+
 
 
