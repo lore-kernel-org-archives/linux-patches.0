@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7F3246B5;
-	Mon, 16 Jan 2023 16:05:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BDB3C433D2;
-	Mon, 16 Jan 2023 16:05:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0D5746B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:05:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38FECC433D2;
+	Mon, 16 Jan 2023 16:05:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885136;
-	bh=CSrRJ986c/JIm2YrOkIYvHtg6w8N8JFB+1PNV4e3WI8=;
+	s=korg; t=1673885139;
+	bh=+vMm84llW0ldy7b0SOEWmyn973X4w9FDka0RM6nxWk0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n5CwCPtSMMWOAAO0nb90IReqvzU66ULDp2HFjqlZwqS8Sm+NqdSJRsChjazyGl4Vo
-	 oOyQDUX9fE8P9Y2uW7moidI3Rrx8r0u4h6OasWMgvaTdICeOTq/uWydeRe0RtM56wt
-	 KS1WEomp7E+aD+N+GCjExOViKE3an/hgLNKJFNvc=
+	b=nqKmfuO6fy1yib1+Q49Mtjwh8ZVcEYY0lrGxeC1fr1SToFlBPwpLGkjZ5mTe7Q9/A
+	 jeizAdQHqgXNbknSnqs0u16x5XESFUQ7YR44Y2hKvkJzghsfaO8NHIqGPRIhhjsLXq
+	 AwDUOeHvjG87hSEAQaM7N0VhI7yyEFRx7DnzTLkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	llvm@lists.linux.dev,
-	Nick Desaulniers <ndesaulniers@google.com>,
 	Willy Tarreau <w@1wt.eu>,
-	Ammar Faizi <ammarfaizi2@gnuweeb.org>,
 	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 64/86] tools/nolibc: Remove .global _start from the entry point code
-Date: Mon, 16 Jan 2023 16:51:38 +0100
-Message-Id: <20230116154749.706768804@linuxfoundation.org>
+Subject: [PATCH 5.15 65/86] tools/nolibc: restore mips branch ordering in the _start block
+Date: Mon, 16 Jan 2023 16:51:39 +0100
+Message-Id: <20230116154749.749364999@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -38,108 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ammar Faizi <ammarfaizi2@gnuweeb.org>
+From: Willy Tarreau <w@1wt.eu>
 
-[ Upstream commit 1590c59836dace3a20945bad049fe8802c4e6f3f ]
+[ Upstream commit 184177c3d6e023da934761e198c281344d7dd65b ]
 
-Building with clang yields the following error:
-```
-  <inline asm>:3:1: error: _start changed binding to STB_GLOBAL
-  .global _start
-  ^
-  1 error generated.
-```
-Make sure only specify one between `.global _start` and `.weak _start`.
-Remove `.global _start`.
+Depending on the compiler used and the optimization options, the sbrk()
+test was crashing, both on real hardware (mips-24kc) and in qemu. One
+such example is kernel.org toolchain in version 11.3 optimizing at -Os.
 
-Cc: llvm@lists.linux.dev
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Acked-by: Willy Tarreau <w@1wt.eu>
-Signed-off-by: Ammar Faizi <ammarfaizi2@gnuweeb.org>
+Inspecting the sys_brk() call shows the following code:
+
+  0040047c <sys_brk>:
+    40047c:       24020fcd        li      v0,4045
+    400480:       27bdffe0        addiu   sp,sp,-32
+    400484:       0000000c        syscall
+    400488:       27bd0020        addiu   sp,sp,32
+    40048c:       10e00001        beqz    a3,400494 <sys_brk+0x18>
+    400490:       00021023        negu    v0,v0
+    400494:       03e00008        jr      ra
+
+It is obviously wrong, the "negu" instruction is placed in beqz's
+delayed slot, and worse, there's no nop nor instruction after the
+return, so the next function's first instruction (addiu sip,sip,-32)
+will also be executed as part of the delayed slot that follows the
+return.
+
+This is caused by the ".set noreorder" directive in the _start block,
+that applies to the whole program. The compiler emits code without the
+delayed slots and relies on the compiler to swap instructions when this
+option is not set. Removing the option would require to change the
+startup code in a way that wouldn't make it look like the resulting
+code, which would not be easy to debug. Instead let's just save the
+default ordering before changing it, and restore it at the end of the
+_start block. Now the code is correct:
+
+  0040047c <sys_brk>:
+    40047c:       24020fcd        li      v0,4045
+    400480:       27bdffe0        addiu   sp,sp,-32
+    400484:       0000000c        syscall
+    400488:       10e00002        beqz    a3,400494 <sys_brk+0x18>
+    40048c:       27bd0020        addiu   sp,sp,32
+    400490:       00021023        negu    v0,v0
+    400494:       03e00008        jr      ra
+    400498:       00000000        nop
+
+Fixes: 66b6f755ad45 ("rcutorture: Import a copy of nolibc") #5.0
+Signed-off-by: Willy Tarreau <w@1wt.eu>
 Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Stable-dep-of: 184177c3d6e0 ("tools/nolibc: restore mips branch ordering in the _start block")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/include/nolibc/arch-aarch64.h | 1 -
- tools/include/nolibc/arch-arm.h     | 1 -
- tools/include/nolibc/arch-i386.h    | 1 -
- tools/include/nolibc/arch-mips.h    | 1 -
- tools/include/nolibc/arch-riscv.h   | 1 -
- tools/include/nolibc/arch-x86_64.h  | 1 -
- 6 files changed, 6 deletions(-)
+ tools/include/nolibc/arch-mips.h | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/tools/include/nolibc/arch-aarch64.h b/tools/include/nolibc/arch-aarch64.h
-index 87d9e434820c..2dbd80d633cb 100644
---- a/tools/include/nolibc/arch-aarch64.h
-+++ b/tools/include/nolibc/arch-aarch64.h
-@@ -184,7 +184,6 @@ struct sys_stat_struct {
- /* startup code */
- asm(".section .text\n"
-     ".weak _start\n"
--    ".global _start\n"
-     "_start:\n"
-     "ldr x0, [sp]\n"              // argc (x0) was in the stack
-     "add x1, sp, 8\n"             // argv (x1) = sp
-diff --git a/tools/include/nolibc/arch-arm.h b/tools/include/nolibc/arch-arm.h
-index 001a3c8c9ad5..1191395b5acd 100644
---- a/tools/include/nolibc/arch-arm.h
-+++ b/tools/include/nolibc/arch-arm.h
-@@ -177,7 +177,6 @@ struct sys_stat_struct {
- /* startup code */
- asm(".section .text\n"
-     ".weak _start\n"
--    ".global _start\n"
-     "_start:\n"
- #if defined(__THUMBEB__) || defined(__THUMBEL__)
-     /* We enter here in 32-bit mode but if some previous functions were in
-diff --git a/tools/include/nolibc/arch-i386.h b/tools/include/nolibc/arch-i386.h
-index d7e4d53325a3..125a691fc631 100644
---- a/tools/include/nolibc/arch-i386.h
-+++ b/tools/include/nolibc/arch-i386.h
-@@ -176,7 +176,6 @@ struct sys_stat_struct {
-  */
- asm(".section .text\n"
-     ".weak _start\n"
--    ".global _start\n"
-     "_start:\n"
-     "pop %eax\n"                // argc   (first arg, %eax)
-     "mov %esp, %ebx\n"          // argv[] (second arg, %ebx)
 diff --git a/tools/include/nolibc/arch-mips.h b/tools/include/nolibc/arch-mips.h
-index c9a6aac87c6d..1a124790c99f 100644
+index 1a124790c99f..5d647afa42e6 100644
 --- a/tools/include/nolibc/arch-mips.h
 +++ b/tools/include/nolibc/arch-mips.h
-@@ -192,7 +192,6 @@ struct sys_stat_struct {
+@@ -192,6 +192,7 @@ struct sys_stat_struct {
  asm(".section .text\n"
      ".weak __start\n"
      ".set nomips16\n"
--    ".global __start\n"
++    ".set push\n"
      ".set    noreorder\n"
      ".option pic0\n"
      ".ent __start\n"
-diff --git a/tools/include/nolibc/arch-riscv.h b/tools/include/nolibc/arch-riscv.h
-index bc10b7b5706d..511d67fc534e 100644
---- a/tools/include/nolibc/arch-riscv.h
-+++ b/tools/include/nolibc/arch-riscv.h
-@@ -185,7 +185,6 @@ struct sys_stat_struct {
- /* startup code */
- asm(".section .text\n"
-     ".weak _start\n"
--    ".global _start\n"
-     "_start:\n"
-     ".option push\n"
-     ".option norelax\n"
-diff --git a/tools/include/nolibc/arch-x86_64.h b/tools/include/nolibc/arch-x86_64.h
-index fe517c16cd4d..b1af63ce1cb0 100644
---- a/tools/include/nolibc/arch-x86_64.h
-+++ b/tools/include/nolibc/arch-x86_64.h
-@@ -199,7 +199,6 @@ struct sys_stat_struct {
-  */
- asm(".section .text\n"
-     ".weak _start\n"
--    ".global _start\n"
-     "_start:\n"
-     "pop %rdi\n"                // argc   (first arg, %rdi)
-     "mov %rsp, %rsi\n"          // argv[] (second arg, %rsi)
+@@ -210,6 +211,7 @@ asm(".section .text\n"
+     "li $v0, 4001\n"              // NR_exit == 4001
+     "syscall\n"
+     ".end __start\n"
++    ".set pop\n"
+     "");
+ 
+ #endif // _NOLIBC_ARCH_MIPS_H
 -- 
 2.35.1
 
