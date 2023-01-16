@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 930BA46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:28:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BA58C433EF;
-	Mon, 16 Jan 2023 16:28:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 418BB46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:28:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCC9AC433EF;
+	Mon, 16 Jan 2023 16:28:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886530;
-	bh=vpGOJlZnWCJdFYng8MLp/+dOFaVdXuNXoAZVa0P53kI=;
+	s=korg; t=1673886533;
+	bh=boNtlHBnamKwlA/rDGP8wINXhV/vVP1G/MVHWPflkVQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U+LAKyexENorsjaRwJ9fgwjzJuor12VWzOcEEpFVuqGudvpK20iVD9BuR+1+89w23
-	 gL8k4SD42B+J3/JyqpehEZsz1/5WHegsHT1wDkroidcoJXGaDOg/th0lm2gcYZXmE1
-	 NOZleWv/+l9QAhteGd3OX5hInBnvTj3oOaBrntfA=
+	b=qIp9YY78W1g//IFd3EjiKHgYYU0BaYuh3bxYVYv7hegNOeHTNI1AXkrTRb7f1qRXk
+	 U27bQ6nc53ny4cIfA45FpfDmRsIBA6xGGEnPThSiHJ+Yo9t0xYLnoFMu5d35i6YyqS
+	 ogQFic6YwVBL8ivlGWyjqyJ5wHq3pRZymevvRIXg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rasmus Villemoes <linux@rasmusvillemoes.dk>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 448/658] iio: adc128s052: add proper .data members in adc128_of_match table
-Date: Mon, 16 Jan 2023 16:48:56 +0100
-Message-Id: <20230116154929.992545761@linuxfoundation.org>
+	Zhang Tianci <zhangtianci.1997@bytedance.com>,
+	Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 5.4 466/658] ovl: Use ovl mounters fsuid and fsgid in ovl_link()
+Date: Mon, 16 Jan 2023 16:49:14 +0100
+Message-Id: <20230116154930.808897352@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,53 +36,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rasmus Villemoes <linux@rasmusvillemoes.dk>
+From: Zhang Tianci <zhangtianci.1997@bytedance.com>
 
-commit e2af60f5900c6ade53477b494ffb54690eee11f5 upstream.
+commit 5b0db51215e895a361bc63132caa7cca36a53d6a upstream.
 
-Prior to commit bd5d54e4d49d ("iio: adc128s052: add ACPI _HID
-AANT1280"), the driver unconditionally used spi_get_device_id() to get
-the index into the adc128_config array.
+There is a wrong case of link() on overlay:
+  $ mkdir /lower /fuse /merge
+  $ mount -t fuse /fuse
+  $ mkdir /fuse/upper /fuse/work
+  $ mount -t overlay /merge -o lowerdir=/lower,upperdir=/fuse/upper,\
+    workdir=work
+  $ touch /merge/file
+  $ chown bin.bin /merge/file // the file's caller becomes "bin"
+  $ ln /merge/file /merge/lnkfile
 
-However, with that commit, OF-based boards now incorrectly treat all
-supported sensors as if they are an adc128s052, because all the .data
-members of the adc128_of_match table are implicitly 0. Our board,
-which has an adc122s021, thus exposes 8 channels whereas it really
-only has two.
+Then we will get an error(EACCES) because fuse daemon checks the link()'s
+caller is "bin", it denied this request.
 
-Fixes: bd5d54e4d49d ("iio: adc128s052: add ACPI _HID AANT1280")
-Signed-off-by: Rasmus Villemoes <linux@rasmusvillemoes.dk>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20221115132324.1078169-1-linux@rasmusvillemoes.dk
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+In the changing history of ovl_link(), there are two key commits:
+
+The first is commit bb0d2b8ad296 ("ovl: fix sgid on directory") which
+overrides the cred's fsuid/fsgid using the new inode. The new inode's
+owner is initialized by inode_init_owner(), and inode->fsuid is
+assigned to the current user. So the override fsuid becomes the
+current user. We know link() is actually modifying the directory, so
+the caller must have the MAY_WRITE permission on the directory. The
+current caller may should have this permission. This is acceptable
+to use the caller's fsuid.
+
+The second is commit 51f7e52dc943 ("ovl: share inode for hard link")
+which removed the inode creation in ovl_link(). This commit move
+inode_init_owner() into ovl_create_object(), so the ovl_link() just
+give the old inode to ovl_create_or_link(). Then the override fsuid
+becomes the old inode's fsuid, neither the caller nor the overlay's
+mounter! So this is incorrect.
+
+Fix this bug by using ovl mounter's fsuid/fsgid to do underlying
+fs's link().
+
+Link: https://lore.kernel.org/all/20220817102952.xnvesg3a7rbv576x@wittgenstein/T
+Link: https://lore.kernel.org/lkml/20220825130552.29587-1-zhangtianci.1997@bytedance.com/t
+Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
+Signed-off-by: Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>
+Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Fixes: 51f7e52dc943 ("ovl: share inode for hard link")
+Cc: <stable@vger.kernel.org> # v4.8
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ti-adc128s052.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ fs/overlayfs/dir.c |   46 ++++++++++++++++++++++++++++++----------------
+ 1 file changed, 30 insertions(+), 16 deletions(-)
 
---- a/drivers/iio/adc/ti-adc128s052.c
-+++ b/drivers/iio/adc/ti-adc128s052.c
-@@ -194,13 +194,13 @@ static int adc128_remove(struct spi_devi
- }
+--- a/fs/overlayfs/dir.c
++++ b/fs/overlayfs/dir.c
+@@ -557,28 +557,42 @@ static int ovl_create_or_link(struct den
+ 			goto out_revert_creds;
+ 	}
  
- static const struct of_device_id adc128_of_match[] = {
--	{ .compatible = "ti,adc128s052", },
--	{ .compatible = "ti,adc122s021", },
--	{ .compatible = "ti,adc122s051", },
--	{ .compatible = "ti,adc122s101", },
--	{ .compatible = "ti,adc124s021", },
--	{ .compatible = "ti,adc124s051", },
--	{ .compatible = "ti,adc124s101", },
-+	{ .compatible = "ti,adc128s052", .data = (void*)0L, },
-+	{ .compatible = "ti,adc122s021", .data = (void*)1L, },
-+	{ .compatible = "ti,adc122s051", .data = (void*)1L, },
-+	{ .compatible = "ti,adc122s101", .data = (void*)1L, },
-+	{ .compatible = "ti,adc124s021", .data = (void*)2L, },
-+	{ .compatible = "ti,adc124s051", .data = (void*)2L, },
-+	{ .compatible = "ti,adc124s101", .data = (void*)2L, },
- 	{ /* sentinel */ },
- };
- MODULE_DEVICE_TABLE(of, adc128_of_match);
+-	err = -ENOMEM;
+-	override_cred = prepare_creds();
+-	if (override_cred) {
++	if (!attr->hardlink) {
++		err = -ENOMEM;
++		override_cred = prepare_creds();
++		if (!override_cred)
++			goto out_revert_creds;
++		/*
++		 * In the creation cases(create, mkdir, mknod, symlink),
++		 * ovl should transfer current's fs{u,g}id to underlying
++		 * fs. Because underlying fs want to initialize its new
++		 * inode owner using current's fs{u,g}id. And in this
++		 * case, the @inode is a new inode that is initialized
++		 * in inode_init_owner() to current's fs{u,g}id. So use
++		 * the inode's i_{u,g}id to override the cred's fs{u,g}id.
++		 *
++		 * But in the other hardlink case, ovl_link() does not
++		 * create a new inode, so just use the ovl mounter's
++		 * fs{u,g}id.
++		 */
+ 		override_cred->fsuid = inode->i_uid;
+ 		override_cred->fsgid = inode->i_gid;
+-		if (!attr->hardlink) {
+-			err = security_dentry_create_files_as(dentry,
+-					attr->mode, &dentry->d_name, old_cred,
+-					override_cred);
+-			if (err) {
+-				put_cred(override_cred);
+-				goto out_revert_creds;
+-			}
++		err = security_dentry_create_files_as(dentry,
++				attr->mode, &dentry->d_name, old_cred,
++				override_cred);
++		if (err) {
++			put_cred(override_cred);
++			goto out_revert_creds;
+ 		}
+ 		put_cred(override_creds(override_cred));
+ 		put_cred(override_cred);
+-
+-		if (!ovl_dentry_is_whiteout(dentry))
+-			err = ovl_create_upper(dentry, inode, attr);
+-		else
+-			err = ovl_create_over_whiteout(dentry, inode, attr);
+ 	}
++
++	if (!ovl_dentry_is_whiteout(dentry))
++		err = ovl_create_upper(dentry, inode, attr);
++	else
++		err = ovl_create_over_whiteout(dentry, inode, attr);
++
+ out_revert_creds:
+ 	revert_creds(old_cred);
+ 	return err;
 
 
