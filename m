@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EE6533EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:58:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E46B2C433EF;
-	Mon, 16 Jan 2023 15:58:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1331F33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:58:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E1F4C433F0;
+	Mon, 16 Jan 2023 15:58:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884699;
-	bh=mx1Jof/9lH7akl7NSyXKOo6UnZ3bu6yAB3sekxKboPM=;
+	s=korg; t=1673884701;
+	bh=BKwOAFixErNxkmXKHNFXK5ucVZvLV32oQIErh8iJcPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BIjdweLvBURu9+CTlFpfZYo/gIegk2hyW1WBmL/NL7BPc54sykRDAiI8l0mfOiFPM
-	 QabHOXMP4XHdIxqrl76zXJFiWpzFGcXPcChJax0FSImxqPMVjuOGwEeNWZ2IexAEYD
-	 i9yumquPVGCjq7hbRnlqMWQf5ErGlyobomtsyERM=
+	b=Bb37ipmEY3gCmBsTLCZ0S0ZTyN/9jn+0J53+yuW8HV5d2dYk11l5Bo6+an37p3Ud6
+	 SiUt0kQnxxC6hBpKzZCnR5OPtn85Lfd7vsErQbQy+KtwoCgmNDd0uudNISmnk1Vr5s
+	 ITm2nGw7VP++Lat/EV0WRu2cdmGUiBcJu++fg26U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Evan Quan <evan.quan@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 077/183] drm/amd/pm: enable GPO dynamic control support for SMU13.0.0
-Date: Mon, 16 Jan 2023 16:50:00 +0100
-Message-Id: <20230116154806.667719978@linuxfoundation.org>
+Subject: [PATCH 6.1 078/183] drm/amd/pm: enable GPO dynamic control support for SMU13.0.7
+Date: Mon, 16 Jan 2023 16:50:01 +0100
+Message-Id: <20230116154806.719789032@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -37,7 +37,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Evan Quan <evan.quan@amd.com>
 
-[ Upstream commit 1794f6a9535bb5234c2b747d1bc6dad03249245a ]
+[ Upstream commit 62b9f835a6c60171845642afec4ce4b44865f10f ]
 
 To better support UMD pstate profilings, the GPO feature needs
 to be switched on/off accordingly.
@@ -48,86 +48,29 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org # 6.0.x
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/inc/smu_types.h      |  3 ++-
- drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h      |  3 +++
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c    | 15 +++++++++++++++
- .../gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c  |  2 ++
- 4 files changed, 22 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_types.h b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_types.h
-index a4e3425b1027..4180c71d930f 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_types.h
-+++ b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_types.h
-@@ -241,7 +241,8 @@
- 	__SMU_DUMMY_MAP(GetGfxOffEntryCount),		 \
- 	__SMU_DUMMY_MAP(LogGfxOffResidency),			\
- 	__SMU_DUMMY_MAP(SetNumBadMemoryPagesRetired),		\
--	__SMU_DUMMY_MAP(SetBadMemoryPagesRetiredFlagsPerChannel),
-+	__SMU_DUMMY_MAP(SetBadMemoryPagesRetiredFlagsPerChannel), \
-+	__SMU_DUMMY_MAP(AllowGpo),
- 
- #undef __SMU_DUMMY_MAP
- #define __SMU_DUMMY_MAP(type)	SMU_MSG_##type
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
-index a9122b3b1532..e8c6febb8b64 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
-+++ b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
-@@ -273,6 +273,9 @@ int smu_v13_0_init_pptable_microcode(struct smu_context *smu);
- 
- int smu_v13_0_run_btc(struct smu_context *smu);
- 
-+int smu_v13_0_gpo_control(struct smu_context *smu,
-+			  bool enablement);
-+
- int smu_v13_0_deep_sleep_control(struct smu_context *smu,
- 				 bool enablement);
- 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-index cfb7f4475c82..9f9f64c5cdd8 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0.c
-@@ -2148,6 +2148,21 @@ int smu_v13_0_run_btc(struct smu_context *smu)
- 	return res;
- }
- 
-+int smu_v13_0_gpo_control(struct smu_context *smu,
-+			  bool enablement)
-+{
-+	int res;
-+
-+	res = smu_cmn_send_smc_msg_with_param(smu,
-+					      SMU_MSG_AllowGpo,
-+					      enablement ? 1 : 0,
-+					      NULL);
-+	if (res)
-+		dev_err(smu->adev->dev, "SetGpoAllow %d failed!\n", enablement);
-+
-+	return res;
-+}
-+
- int smu_v13_0_deep_sleep_control(struct smu_context *smu,
- 				 bool enablement)
- {
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-index 884d4176b412..4c20d17e7416 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -144,6 +144,7 @@ static struct cmn2asic_msg_mapping smu_v13_0_0_message_map[SMU_MSG_MAX_COUNT] =
- 	MSG_MAP(SetNumBadMemoryPagesRetired,	PPSMC_MSG_SetNumBadMemoryPagesRetired,   0),
- 	MSG_MAP(SetBadMemoryPagesRetiredFlagsPerChannel,
- 			    PPSMC_MSG_SetBadMemoryPagesRetiredFlagsPerChannel,   0),
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+index 31deec2ce4b3..eea06939e7da 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
+@@ -123,6 +123,7 @@ static struct cmn2asic_msg_mapping smu_v13_0_7_message_map[SMU_MSG_MAX_COUNT] =
+ 	MSG_MAP(SetMGpuFanBoostLimitRpm,	PPSMC_MSG_SetMGpuFanBoostLimitRpm,     0),
+ 	MSG_MAP(DFCstateControl,		PPSMC_MSG_SetExternalClientDfCstateAllow, 0),
+ 	MSG_MAP(ArmD3,				PPSMC_MSG_ArmD3,                       0),
 +	MSG_MAP(AllowGpo,			PPSMC_MSG_SetGpoAllow,           0),
  };
  
- static struct cmn2asic_mapping smu_v13_0_0_clk_map[SMU_CLK_COUNT] = {
-@@ -2037,6 +2038,7 @@ static const struct pptable_funcs smu_v13_0_0_ppt_funcs = {
- 	.set_df_cstate = smu_v13_0_0_set_df_cstate,
- 	.send_hbm_bad_pages_num = smu_v13_0_0_smu_send_bad_mem_page_num,
- 	.send_hbm_bad_channel_flag = smu_v13_0_0_send_bad_mem_channel_flag,
+ static struct cmn2asic_mapping smu_v13_0_7_clk_map[SMU_CLK_COUNT] = {
+@@ -1712,6 +1713,7 @@ static const struct pptable_funcs smu_v13_0_7_ppt_funcs = {
+ 	.mode1_reset = smu_v13_0_mode1_reset,
+ 	.set_mp1_state = smu_v13_0_7_set_mp1_state,
+ 	.set_df_cstate = smu_v13_0_7_set_df_cstate,
 +	.gpo_control = smu_v13_0_gpo_control,
  };
  
- void smu_v13_0_0_set_ppt_funcs(struct smu_context *smu)
+ void smu_v13_0_7_set_ppt_funcs(struct smu_context *smu)
 -- 
 2.35.1
 
