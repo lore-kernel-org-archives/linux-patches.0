@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9456FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:02:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73576C433D2;
-	Mon, 16 Jan 2023 17:02:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D6A76FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:02:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 155A3C433EF;
+	Mon, 16 Jan 2023 17:02:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888564;
-	bh=TB4pMOsvkElmztXWLqzpVbRGOtMAmIqxdnvoHCCv+4Y=;
+	s=korg; t=1673888567;
+	bh=PaLd9uFhVdmkCveI9ysCyumvFGe0J9CvEbfEt36Jp4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=igZziAW67CyjxADPqBsujfVx9R/2zUyQTBdjslFh6V5crmLEsrkThE1Ub/rC0l0W0
-	 SUw1NwrTroafHirrbpwgiJ8zc79U1SeEyiULu/W7THF6Wf4roRcmfo0NuiXxyallgF
-	 apdfbnWlrJraGXkgGxS84bYIEYr4C+opaO4UWSS8=
+	b=wK8lEbZWTIamoL8gEVEqiEfrERlsgo8PhkwIFRUgLBWCPQpT8xWYGrYrPkrxmKf6I
+	 jRAugS8M1wIR28MYkbeVDFcTEBtCD75BpENERzMD0VgFl1XXmkRaChgPA57jCnPaEp
+	 +nE5jz6/G4bjCAUopOXMRDhW2GmbfnxCmeS0oHPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Barnab=C3=A1s=20P=C5=91cze?= <pobrn@protonmail.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Alexandre Bounine <alex.bou9@gmail.com>,
+	Matt Porter <mporter@kernel.crashing.org>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 046/338] timerqueue: Use rb_entry_safe() in timerqueue_getnext()
-Date: Mon, 16 Jan 2023 16:48:39 +0100
-Message-Id: <20230116154822.801295509@linuxfoundation.org>
+Subject: [PATCH 4.14 055/338] rapidio: rio: fix possible name leak in rio_register_mport()
+Date: Mon, 16 Jan 2023 16:48:48 +0100
+Message-Id: <20230116154823.240235525@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,39 +37,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Barnabás Pőcze <pobrn@protonmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 2f117484329b233455ee278f2d9b0a4356835060 ]
+[ Upstream commit e92a216d16bde65d21a3227e0fb2aa0794576525 ]
 
-When `timerqueue_getnext()` is called on an empty timer queue, it will
-use `rb_entry()` on a NULL pointer, which is invalid. Fix that by using
-`rb_entry_safe()` which handles NULL pointers.
+If device_register() returns error, the name allocated by dev_set_name()
+need be freed.  It should use put_device() to give up the reference in the
+error path, so that the name can be freed in kobject_cleanup(), and
+list_del() is called to delete the port from rio_mports.
 
-This has not caused any issues so far because the offset of the `rb_node`
-member in `timerqueue_node` is 0, so `rb_entry()` is essentially a no-op.
-
-Fixes: 511885d7061e ("lib/timerqueue: Rely on rbtree semantics for next timer")
-Signed-off-by: Barnabás Pőcze <pobrn@protonmail.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Link: https://lore.kernel.org/r/20221114195421.342929-1-pobrn@protonmail.com
+Link: https://lkml.kernel.org/r/20221114152636.2939035-3-yangyingliang@huawei.com
+Fixes: 2aaf308b95b2 ("rapidio: rework device hierarchy and introduce mport class of devices")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Cc: Alexandre Bounine <alex.bou9@gmail.com>
+Cc: Matt Porter <mporter@kernel.crashing.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/timerqueue.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rapidio/rio.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/timerqueue.h b/include/linux/timerqueue.h
-index aff122f1062a..e1a843cb16d4 100644
---- a/include/linux/timerqueue.h
-+++ b/include/linux/timerqueue.h
-@@ -35,7 +35,7 @@ struct timerqueue_node *timerqueue_getnext(struct timerqueue_head *head)
- {
- 	struct rb_node *leftmost = rb_first_cached(&head->rb_root);
+diff --git a/drivers/rapidio/rio.c b/drivers/rapidio/rio.c
+index 38d949405618..94843c8a687e 100644
+--- a/drivers/rapidio/rio.c
++++ b/drivers/rapidio/rio.c
+@@ -2272,11 +2272,16 @@ int rio_register_mport(struct rio_mport *port)
+ 	atomic_set(&port->state, RIO_DEVICE_RUNNING);
  
--	return rb_entry(leftmost, struct timerqueue_node, node);
-+	return rb_entry_safe(leftmost, struct timerqueue_node, node);
+ 	res = device_register(&port->dev);
+-	if (res)
++	if (res) {
+ 		dev_err(&port->dev, "RIO: mport%d registration failed ERR=%d\n",
+ 			port->id, res);
+-	else
++		mutex_lock(&rio_mport_list_lock);
++		list_del(&port->node);
++		mutex_unlock(&rio_mport_list_lock);
++		put_device(&port->dev);
++	} else {
+ 		dev_dbg(&port->dev, "RIO: registered mport%d\n", port->id);
++	}
+ 
+ 	return res;
  }
- 
- static inline void timerqueue_init(struct timerqueue_node *node)
 -- 
 2.35.1
 
