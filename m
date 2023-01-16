@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A3FE46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:20:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A9CC433EF;
-	Mon, 16 Jan 2023 16:20:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E3046B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:20:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C748C433D2;
+	Mon, 16 Jan 2023 16:20:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886001;
-	bh=9GGRKnD/CkOSOU9UtpSOD7Q6zwkqYi7MVhHVg1XesHM=;
+	s=korg; t=1673886004;
+	bh=8vcFxw7LO674nsA+ycMw7cxUJd8+JfdEUukM2cg7exg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1XZTrqT2CfchLPUyGvmLlMDataNsXoSDoyfGf8F39xE/NdT/9m5YnDLpwolyAxf7e
-	 s5o5mT5Lvr98NjT6On0TEPnTHQl77OUHyxJabssGVSLZlHe3+g8xrcYBPbHgXhdTtu
-	 2Bg50DM+hinBrlAlV7cxkFFqoErx1dxph1QQ3x1A=
+	b=F1tEyz+lBuwq2+7EN1ulJJW6I6NnLpiz4ksAsL822eaDC5EE48aJdOc4Lglxe/Pru
+	 HWFQb8oeNATLDqT4Hu3NRfD4llgr3FYx98PMPxCD4/09fUy9jaUAnMYA1hF7Nyd0Wu
+	 w6UazeX3GZV4h9NV7VyKOOAoB04d3SV5VENOANPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Yonggil Song <yonggil.song@samsung.com>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 265/658] RDMA/nldev: Add checks for nla_nest_start() in fill_stat_counter_qps()
-Date: Mon, 16 Jan 2023 16:45:53 +0100
-Message-Id: <20230116154921.712008623@linuxfoundation.org>
+Subject: [PATCH 5.4 266/658] f2fs: avoid victim selection from previous victim section
+Date: Mon, 16 Jan 2023 16:45:54 +0100
+Message-Id: <20230116154921.763032123@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,35 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Yonggil Song <yonggil.song@samsung.com>
 
-[ Upstream commit ea5ef136e215fdef35f14010bc51fcd6686e6922 ]
+[ Upstream commit e219aecfd4b766c4e878a3769057e9809f7fcadc ]
 
-As the nla_nest_start() may fail with NULL returned, the return value needs
-to be checked.
+When f2fs chooses GC victim in large section & LFS mode,
+next_victim_seg[gc_type] is referenced first. After segment is freed,
+next_victim_seg[gc_type] has the next segment number.
+However, next_victim_seg[gc_type] still has the last segment number
+even after the last segment of section is freed. In this case, when f2fs
+chooses a victim for the next GC round, the last segment of previous victim
+section is chosen as a victim.
 
-Fixes: c4ffee7c9bdb ("RDMA/netlink: Implement counter dumpit calback")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Link: https://lore.kernel.org/r/20221126043410.85632-1-yuancan@huawei.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Initialize next_victim_seg[gc_type] to NULL_SEGNO for the last segment in
+large section.
+
+Fixes: e3080b0120a1 ("f2fs: support subsectional garbage collection")
+Signed-off-by: Yonggil Song <yonggil.song@samsung.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/nldev.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/f2fs/gc.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
-index 93cc60e92d82..88c68d77e6b1 100644
---- a/drivers/infiniband/core/nldev.c
-+++ b/drivers/infiniband/core/nldev.c
-@@ -694,6 +694,8 @@ static int fill_stat_counter_qps(struct sk_buff *msg,
- 	int ret = 0;
+diff --git a/fs/f2fs/gc.c b/fs/f2fs/gc.c
+index 3d3e414e2987..420591654ca0 100644
+--- a/fs/f2fs/gc.c
++++ b/fs/f2fs/gc.c
+@@ -1253,8 +1253,9 @@ static int do_garbage_collect(struct f2fs_sb_info *sbi,
+ 			seg_freed++;
+ 		migrated++;
  
- 	table_attr = nla_nest_start(msg, RDMA_NLDEV_ATTR_RES_QP);
-+	if (!table_attr)
-+		return -EMSGSIZE;
- 
- 	rt = &counter->device->res[RDMA_RESTRACK_QP];
- 	xa_lock(&rt->xa);
+-		if (__is_large_section(sbi) && segno + 1 < end_segno)
+-			sbi->next_victim_seg[gc_type] = segno + 1;
++		if (__is_large_section(sbi))
++			sbi->next_victim_seg[gc_type] =
++				(segno + 1 < end_segno) ? segno + 1 : NULL_SEGNO;
+ skip:
+ 		f2fs_put_page(sum_page, 0);
+ 	}
 -- 
 2.35.1
 
