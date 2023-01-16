@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7560246B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:27:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE11C433D2;
-	Mon, 16 Jan 2023 16:27:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CF846B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:27:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA41C433EF;
+	Mon, 16 Jan 2023 16:27:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886443;
-	bh=hWCqXQOx0Y1dEfOD2pwXnfWN4uxEuKbamFf5/nl1C5A=;
+	s=korg; t=1673886445;
+	bh=h961Bs65ysrepPIyytpb1MkvBjSzySE76mWL/f8d3Ew=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RNWRrb4gupu4VqdoCvnR1onpdscKQW58JBLR0yh791f2LHfdNnAARMiOxITtQop7d
-	 0IwgvTcvX/Kp/NnAfqiKaZpdSn69F7gU6One9UEOL+kAfdyeSLb/ehTfFtRpmOR35U
-	 wMqqonXqnrRFrbqUKy5iOjU643wlUOd+vQ6KYo6w=
+	b=Xw6DxcpfoT2AhcEVcZLNO4B1JCf2ogd5Th2lLdUpE0pLIR7626lcQ9c8hOrDcyfBg
+	 5aDUYBo7QNljEbzKNVs1kwhaOWR+X6IS1CAdCkWHxI7puVhuQ3otgux7u+5HJrxzbs
+	 4wqVOXYHZALVsqBae9bZlpMM+kNfQntYfhL9JBs0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Lukasz Majczak <lma@semihlaf.com>,
+	Wang Yufen <wangyufen@huawei.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 432/658] ASoC: Intel: Skylake: Fix driver hang during shutdown
-Date: Mon, 16 Jan 2023 16:48:40 +0100
-Message-Id: <20230116154929.317965515@linuxfoundation.org>
+Subject: [PATCH 5.4 433/658] ASoC: mediatek: mt8173-rt5650-rt5514: fix refcount leak in mt8173_rt5650_rt5514_dev_probe()
+Date: Mon, 16 Jan 2023 16:48:41 +0100
+Message-Id: <20230116154929.371596696@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,39 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Wang Yufen <wangyufen@huawei.com>
 
-[ Upstream commit 171107237246d66bce04f3769d33648f896b4ce3 ]
+[ Upstream commit 3327d721114c109ba0575f86f8fda3b525404054 ]
 
-AudioDSP cores and HDAudio links need to be turned off on shutdown to
-ensure no communication or data transfer occurs during the procedure.
+The node returned by of_parse_phandle() with refcount incremented,
+of_node_put() needs be called when finish using it. So add it in the
+error path in mt8173_rt5650_rt5514_dev_probe().
 
-Fixes: c5a76a246989 ("ASoC: Intel: Skylake: Add shutdown callback")
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Tested-by: Lukasz Majczak <lma@semihlaf.com>
-Link: https://lore.kernel.org/r/20221205085330.857665-6-cezary.rojewski@intel.com
+Fixes: 0d1d7a664288 ("ASoC: mediatek: Refine mt8173 driver and change config option")
+Signed-off-by: Wang Yufen <wangyufen@huawei.com>
+Link: https://lore.kernel.org/r/1670234664-24246-1-git-send-email-wangyufen@huawei.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/skylake/skl.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/intel/skylake/skl.c b/sound/soc/intel/skylake/skl.c
-index dc6937a59443..80cff74c23af 100644
---- a/sound/soc/intel/skylake/skl.c
-+++ b/sound/soc/intel/skylake/skl.c
-@@ -1116,7 +1116,10 @@ static void skl_shutdown(struct pci_dev *pci)
- 	if (!skl->init_done)
- 		return;
+diff --git a/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c b/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c
+index 6f8542329bab..a21aefe1a4d1 100644
+--- a/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c
++++ b/sound/soc/mediatek/mt8173/mt8173-rt5650-rt5514.c
+@@ -200,14 +200,16 @@ static int mt8173_rt5650_rt5514_dev_probe(struct platform_device *pdev)
+ 	if (!mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[0].of_node) {
+ 		dev_err(&pdev->dev,
+ 			"Property 'audio-codec' missing or invalid\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto out;
+ 	}
+ 	mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[1].of_node =
+ 		of_parse_phandle(pdev->dev.of_node, "mediatek,audio-codec", 1);
+ 	if (!mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[1].of_node) {
+ 		dev_err(&pdev->dev,
+ 			"Property 'audio-codec' missing or invalid\n");
+-		return -EINVAL;
++		ret = -EINVAL;
++		goto out;
+ 	}
+ 	mt8173_rt5650_rt5514_codec_conf[0].of_node =
+ 		mt8173_rt5650_rt5514_dais[DAI_LINK_CODEC_I2S].codecs[1].of_node;
+@@ -219,6 +221,7 @@ static int mt8173_rt5650_rt5514_dev_probe(struct platform_device *pdev)
+ 		dev_err(&pdev->dev, "%s snd_soc_register_card fail %d\n",
+ 			__func__, ret);
  
--	snd_hdac_stop_streams_and_chip(bus);
-+	snd_hdac_stop_streams(bus);
-+	snd_hdac_ext_bus_link_power_down_all(bus);
-+	skl_dsp_sleep(skl->dsp);
-+
- 	list_for_each_entry(s, &bus->stream_list, list) {
- 		stream = stream_to_hdac_ext_stream(s);
- 		snd_hdac_ext_stream_decouple(bus, stream, false);
++out:
+ 	of_node_put(platform_node);
+ 	return ret;
+ }
 -- 
 2.35.1
 
