@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F39A33F0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:20:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C8EEC433D2;
-	Mon, 16 Jan 2023 16:20:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0B6E33F0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:20:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 564ACC433D2;
+	Mon, 16 Jan 2023 16:20:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886012;
-	bh=SdHhpSHCItKRkwlX64ABLk9y9vwwlsDQzsJtpfjzqwE=;
+	s=korg; t=1673886014;
+	bh=ML5vo3j0nkDa20/8EPHhFd0OxAHfSsqFXDntkfnDeQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DH5I0rWufKDsILnU4aBEnRhWvEsHQQkKklPcnWqKAqoLt/GDP2AB2WIvF5HxEqalz
-	 MPSLe6D7lWisT3SCEicXXY39pby423eDuen07zF09zuX7LwpsNXGkOnumFrAnJTdMG
-	 LDXV2tcEZhgzw3mfh8uOxvkffWGNG+3GjRZM4zKE=
+	b=y8nl6S3iJ50wrtireiGltGNICJ8Ktw322zyECDvIB0TktaE7fsy884ZBljK0P0VfE
+	 Z4jIw8YNrPTwUOrIjrl8NhRi+BL5poYIAWZHTUhooVBvPYW/Bq53KOz7wdepidlBTX
+	 5c3cvc2JVfU0fi1ptKLGAHOMHDjOGGX2eb6HD604=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Mike Marshall <hubcap@omnibond.com>,
+	Zeng Heng <zengheng4@huawei.com>,
+	Bjorn Helgaas <bhelgaas@google.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 269/658] orangefs: Fix sysfs not cleanup when dev init failed
-Date: Mon, 16 Jan 2023 16:45:57 +0100
-Message-Id: <20230116154921.883438676@linuxfoundation.org>
+Subject: [PATCH 5.4 252/658] PCI: Check for alloc failure in pci_request_irq()
+Date: Mon, 16 Jan 2023 16:45:40 +0100
+Message-Id: <20230116154921.090608218@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,72 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit ea60a4ad0cf88b411cde6888b8c890935686ecd7 ]
+[ Upstream commit 2d9cd957d40c3ac491b358e7cff0515bb07a3a9c ]
 
-When the dev init failed, should cleanup the sysfs, otherwise, the
-module will never be loaded since can not create duplicate sysfs
-directory:
+When kvasprintf() fails to allocate memory, it returns a NULL pointer.
+Return error from pci_request_irq() so we don't dereference it.
 
-  sysfs: cannot create duplicate filename '/fs/orangefs'
-
-  CPU: 1 PID: 6549 Comm: insmod Tainted: G        W          6.0.0+ #44
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x34/0x44
-   sysfs_warn_dup.cold+0x17/0x24
-   sysfs_create_dir_ns+0x16d/0x180
-   kobject_add_internal+0x156/0x3a0
-   kobject_init_and_add+0xcf/0x120
-   orangefs_sysfs_init+0x7e/0x3a0 [orangefs]
-   orangefs_init+0xfe/0x1000 [orangefs]
-   do_one_initcall+0x87/0x2a0
-   do_init_module+0xdf/0x320
-   load_module+0x2f98/0x3330
-   __do_sys_finit_module+0x113/0x1b0
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-  kobject_add_internal failed for orangefs with -EEXIST, don't try to register things with the same name in the same directory.
-
-Fixes: 2f83ace37181 ("orangefs: put register_chrdev immediately before register_filesystem")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+[bhelgaas: commit log]
+Fixes: 704e8953d3e9 ("PCI/irq: Add pci_request_irq() and pci_free_irq() helpers")
+Link: https://lore.kernel.org/r/20221121020029.3759444-1-zengheng4@huawei.com
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/orangefs-mod.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/pci/irq.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/orangefs/orangefs-mod.c b/fs/orangefs/orangefs-mod.c
-index c010c1fddafc..6aa7a23b04df 100644
---- a/fs/orangefs/orangefs-mod.c
-+++ b/fs/orangefs/orangefs-mod.c
-@@ -141,7 +141,7 @@ static int __init orangefs_init(void)
- 		gossip_err("%s: could not initialize device subsystem %d!\n",
- 			   __func__,
- 			   ret);
--		goto cleanup_device;
-+		goto cleanup_sysfs;
- 	}
+diff --git a/drivers/pci/irq.c b/drivers/pci/irq.c
+index a1de501a2729..3f6a5d520259 100644
+--- a/drivers/pci/irq.c
++++ b/drivers/pci/irq.c
+@@ -94,6 +94,8 @@ int pci_request_irq(struct pci_dev *dev, unsigned int nr, irq_handler_t handler,
+ 	va_start(ap, fmt);
+ 	devname = kvasprintf(GFP_KERNEL, fmt, ap);
+ 	va_end(ap);
++	if (!devname)
++		return -ENOMEM;
  
- 	ret = register_filesystem(&orangefs_fs_type);
-@@ -153,11 +153,11 @@ static int __init orangefs_init(void)
- 		goto out;
- 	}
- 
--	orangefs_sysfs_exit();
--
--cleanup_device:
- 	orangefs_dev_cleanup();
- 
-+cleanup_sysfs:
-+	orangefs_sysfs_exit();
-+
- sysfs_init_failed:
- 	orangefs_debugfs_cleanup();
- 
+ 	ret = request_threaded_irq(pci_irq_vector(dev, nr), handler, thread_fn,
+ 				   irqflags, devname, dev_id);
 -- 
 2.35.1
 
