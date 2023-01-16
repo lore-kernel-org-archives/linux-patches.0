@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D40E33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:56:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E91CAC433D2;
-	Mon, 16 Jan 2023 15:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 131EC33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:56:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D31DC433F0;
+	Mon, 16 Jan 2023 15:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884605;
-	bh=R5Px0Ms81Hov6SKp1U3TOd9+gAyn7JNHe04Ye6AAoTw=;
+	s=korg; t=1673884607;
+	bh=dkdohJDEl1IesWSAYNd0A29hwys0C34LS9RHYFPeMBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uR+e3/Ndfa1zEPJB6BF0DWDM+ya2NOzbyoQduAHSJwrVKXhMYrhu+BMjfUYPgNN9c
-	 7Vi5UcoX+E2p0B2amnAPt9cteflrcU+4/R0Yjdx4PqCq765QhbQZvYw5526vdazl3p
-	 cS9OPMMFgCv0sxondK8kBFiNSephbddZ3weURTnw=
+	b=VJgetxWJDUC6TvG9iMiUJezm+pYqq2gawj2qM/cL87/ixYfV+Vhbl37FvmlfHRR3u
+	 mzNIpzDhaRTYQSyncYhCjRmrsrmH/sSExQQHZiCETGTI0xvO/PxFjZYTjsjLHKDKGg
+	 X84IVcitpBMm+6sA+5v7IZPDuL43yUYvmqpExGnI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Abhinav Kumar <quic_abhinavk@quicinc.com>
-Subject: [PATCH 6.1 068/183] dt-bindings: msm/dsi: Dont require vcca-supply on 14nm PHY
-Date: Mon, 16 Jan 2023 16:49:51 +0100
-Message-Id: <20230116154806.235255241@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 040/183] cifs: fix file info setting in cifs_open_file()
+Date: Mon, 16 Jan 2023 16:49:23 +0100
+Message-Id: <20230116154805.077616563@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,36 +34,153 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Paulo Alcantara <pc@cjr.nz>
 
-commit a2117773c839a8439a3771e0c040b5c505b083a7 upstream.
+commit ba5d4c1596cada37793d405dd18d695cd3508902 upstream.
 
-On some SoCs (hello SM6115) vcca-supply is not wired to any smd-rpm
-or rpmh regulator, but instead powered by the VDD_MX line, which is
-voted for in the DSI ctrl node.
+In cifs_open_file(), @buf must hold a pointer to a cifs_open_info_data
+structure which is passed by cifs_nt_open(), so assigning @buf
+directly to @fi was obviously wrong.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Fixes: 8fc939e72ff8 ("dt-bindings: msm: dsi: add yaml schemas for DSI PHY bindings")
-Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/513555/
-Link: https://lore.kernel.org/r/20221130135807.45028-1-konrad.dybcio@linaro.org
-Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Fix this by passing a valid FILE_ALL_INFO structure to SMBLegacyOpen()
+and CIFS_open(), and then copy the set structure to the corresponding
+cifs_open_info_data::fi field with move_cifs_info_to_smb2() helper.
+
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216889
+Fixes: 76894f3e2f71 ("cifs: improve symlink handling for smb2+")
+Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml |    1 -
- 1 file changed, 1 deletion(-)
+ fs/cifs/smb1ops.c | 54 ++++++++++++++++++++++++-----------------------
+ 1 file changed, 28 insertions(+), 26 deletions(-)
 
---- a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-+++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
-@@ -38,7 +38,6 @@ required:
-   - compatible
-   - reg
-   - reg-names
--  - vcca-supply
+diff --git a/fs/cifs/smb1ops.c b/fs/cifs/smb1ops.c
+index 5fe2c2f8ef41..4cb364454e13 100644
+--- a/fs/cifs/smb1ops.c
++++ b/fs/cifs/smb1ops.c
+@@ -719,17 +719,25 @@ cifs_mkdir_setinfo(struct inode *inode, const char *full_path,
+ static int cifs_open_file(const unsigned int xid, struct cifs_open_parms *oparms, __u32 *oplock,
+ 			  void *buf)
+ {
+-	FILE_ALL_INFO *fi = buf;
++	struct cifs_open_info_data *data = buf;
++	FILE_ALL_INFO fi = {};
++	int rc;
  
- unevaluatedProperties: false
+ 	if (!(oparms->tcon->ses->capabilities & CAP_NT_SMBS))
+-		return SMBLegacyOpen(xid, oparms->tcon, oparms->path,
+-				     oparms->disposition,
+-				     oparms->desired_access,
+-				     oparms->create_options,
+-				     &oparms->fid->netfid, oplock, fi,
+-				     oparms->cifs_sb->local_nls,
+-				     cifs_remap(oparms->cifs_sb));
+-	return CIFS_open(xid, oparms, oplock, fi);
++		rc = SMBLegacyOpen(xid, oparms->tcon, oparms->path,
++				   oparms->disposition,
++				   oparms->desired_access,
++				   oparms->create_options,
++				   &oparms->fid->netfid, oplock, &fi,
++				   oparms->cifs_sb->local_nls,
++				   cifs_remap(oparms->cifs_sb));
++	else
++		rc = CIFS_open(xid, oparms, oplock, &fi);
++
++	if (!rc && data)
++		move_cifs_info_to_smb2(&data->fi, &fi);
++
++	return rc;
+ }
  
+ static void
+@@ -1053,7 +1061,7 @@ cifs_make_node(unsigned int xid, struct inode *inode,
+ 	struct cifs_sb_info *cifs_sb = CIFS_SB(inode->i_sb);
+ 	struct inode *newinode = NULL;
+ 	int rc = -EPERM;
+-	FILE_ALL_INFO *buf = NULL;
++	struct cifs_open_info_data buf = {};
+ 	struct cifs_io_parms io_parms;
+ 	__u32 oplock = 0;
+ 	struct cifs_fid fid;
+@@ -1085,14 +1093,14 @@ cifs_make_node(unsigned int xid, struct inode *inode,
+ 					    cifs_sb->local_nls,
+ 					    cifs_remap(cifs_sb));
+ 		if (rc)
+-			goto out;
++			return rc;
+ 
+ 		rc = cifs_get_inode_info_unix(&newinode, full_path,
+ 					      inode->i_sb, xid);
+ 
+ 		if (rc == 0)
+ 			d_instantiate(dentry, newinode);
+-		goto out;
++		return rc;
+ 	}
+ 
+ 	/*
+@@ -1100,19 +1108,13 @@ cifs_make_node(unsigned int xid, struct inode *inode,
+ 	 * support block and char device (no socket & fifo)
+ 	 */
+ 	if (!(cifs_sb->mnt_cifs_flags & CIFS_MOUNT_UNX_EMUL))
+-		goto out;
++		return rc;
+ 
+ 	if (!S_ISCHR(mode) && !S_ISBLK(mode))
+-		goto out;
++		return rc;
+ 
+ 	cifs_dbg(FYI, "sfu compat create special file\n");
+ 
+-	buf = kmalloc(sizeof(FILE_ALL_INFO), GFP_KERNEL);
+-	if (buf == NULL) {
+-		rc = -ENOMEM;
+-		goto out;
+-	}
+-
+ 	oparms.tcon = tcon;
+ 	oparms.cifs_sb = cifs_sb;
+ 	oparms.desired_access = GENERIC_WRITE;
+@@ -1127,21 +1129,21 @@ cifs_make_node(unsigned int xid, struct inode *inode,
+ 		oplock = REQ_OPLOCK;
+ 	else
+ 		oplock = 0;
+-	rc = tcon->ses->server->ops->open(xid, &oparms, &oplock, buf);
++	rc = tcon->ses->server->ops->open(xid, &oparms, &oplock, &buf);
+ 	if (rc)
+-		goto out;
++		return rc;
+ 
+ 	/*
+ 	 * BB Do not bother to decode buf since no local inode yet to put
+ 	 * timestamps in, but we can reuse it safely.
+ 	 */
+ 
+-	pdev = (struct win_dev *)buf;
++	pdev = (struct win_dev *)&buf.fi;
+ 	io_parms.pid = current->tgid;
+ 	io_parms.tcon = tcon;
+ 	io_parms.offset = 0;
+ 	io_parms.length = sizeof(struct win_dev);
+-	iov[1].iov_base = buf;
++	iov[1].iov_base = &buf.fi;
+ 	iov[1].iov_len = sizeof(struct win_dev);
+ 	if (S_ISCHR(mode)) {
+ 		memcpy(pdev->type, "IntxCHR", 8);
+@@ -1160,8 +1162,8 @@ cifs_make_node(unsigned int xid, struct inode *inode,
+ 	d_drop(dentry);
+ 
+ 	/* FIXME: add code here to set EAs */
+-out:
+-	kfree(buf);
++
++	cifs_free_open_info(&buf);
+ 	return rc;
+ }
+ 
+-- 
+2.39.0
+
 
 
