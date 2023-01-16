@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A914333EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:58:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EA77C433F1;
-	Mon, 16 Jan 2023 15:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 466C833EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:58:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF29CC433D2;
+	Mon, 16 Jan 2023 15:58:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884704;
-	bh=21Z3JeefnVAA+pdXmW2IOI6bQnbL7bINEAW0gbd1WK0=;
+	s=korg; t=1673884707;
+	bh=lxzNxHomlEUEdYUQaAU8xFe+LsaPS04pxvtax4d4GZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=owxFTl8adxD3SJt7TF0Wv4WlGz8A7ktnRDnI2wVpQ2PREebAhAXtQqbw3Fgsez1KA
-	 FEo3DMOn2RvTEUJC0TXNf0JFhcm7AwL5I4FewTabY3pe4xLo92NReWjiuKhn6L81P5
-	 WCmeEFlfdQCx1bnn3I8A1BmizAmloHD5BXQGlnj8=
+	b=t/a1mEO1BSgjLqfuF0tTJzx2trpZjGXchuUAUfZrCtrO0C/F/dL6R/yy7LRpRr3qQ
+	 5L6uWj8aPoNUf0N8p8gj+ZaKItnkW3lOnAny3JkIU0+IIA0pRNFcqOi1IGpHqvw0WT
+	 JZi/rHnr8ivM2Dhe9Uv4kVayrNz6kmv/lxAD0O0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mattia Dongili <malattia@linux.it>
-Subject: [PATCH 6.1 069/183] platform/x86: sony-laptop: Dont turn off 0x153 keyboard backlight during probe
-Date: Mon, 16 Jan 2023 16:49:52 +0100
-Message-Id: <20230116154806.271920769@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 101/183] ASoC: Intel: fix sof-nau8825 link failure
+Date: Mon, 16 Jan 2023 16:50:24 +0100
+Message-Id: <20230116154807.663923920@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -34,58 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit ad75bd85b1db69c97eefea07b375567821f6ef58 upstream.
+[ Upstream commit 63f3d99b7efe4c5404a9388c05780917099cecf4 ]
 
-The 0x153 version of the kbd backlight control SNC handle has no separate
-address to probe if the backlight is there.
+The snd-soc-sof_nau8825.ko module fails to link unless the
+sof_realtek_common support is also enabled:
 
-This turns the probe call into a set keyboard backlight call with a value
-of 0 turning off the keyboard backlight.
+ERROR: modpost: "sof_rt1015p_codec_conf" [sound/soc/intel/boards/snd-soc-sof_nau8825.ko] undefined!
+ERROR: modpost: "sof_rt1015p_dai_link" [sound/soc/intel/boards/snd-soc-sof_nau8825.ko] undefined!
 
-Skip probing when there is no separate probe address to avoid this.
-
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=1583752
-Fixes: 800f20170dcf ("Keyboard backlight control for some Vaio Fit models")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Mattia Dongili <malattia@linux.it>
-Link: https://lore.kernel.org/r/20221213122943.11123-1-hdegoede@redhat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8d0872f6239f ("ASoC: Intel: add sof-nau8825 machine driver")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20221221132559.2402341-1-arnd@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/sony-laptop.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ sound/soc/intel/boards/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/platform/x86/sony-laptop.c
-+++ b/drivers/platform/x86/sony-laptop.c
-@@ -1888,14 +1888,21 @@ static int sony_nc_kbd_backlight_setup(s
- 		break;
- 	}
- 
--	ret = sony_call_snc_handle(handle, probe_base, &result);
--	if (ret)
--		return ret;
-+	/*
-+	 * Only probe if there is a separate probe_base, otherwise the probe call
-+	 * is equivalent to __sony_nc_kbd_backlight_mode_set(0), resulting in
-+	 * the keyboard backlight being turned off.
-+	 */
-+	if (probe_base) {
-+		ret = sony_call_snc_handle(handle, probe_base, &result);
-+		if (ret)
-+			return ret;
- 
--	if ((handle == 0x0137 && !(result & 0x02)) ||
--			!(result & 0x01)) {
--		dprintk("no backlight keyboard found\n");
--		return 0;
-+		if ((handle == 0x0137 && !(result & 0x02)) ||
-+				!(result & 0x01)) {
-+			dprintk("no backlight keyboard found\n");
-+			return 0;
-+		}
- 	}
- 
- 	kbdbl_ctl = kzalloc(sizeof(*kbdbl_ctl), GFP_KERNEL);
+diff --git a/sound/soc/intel/boards/Kconfig b/sound/soc/intel/boards/Kconfig
+index aa12d7e3dd2f..ca49cc49c378 100644
+--- a/sound/soc/intel/boards/Kconfig
++++ b/sound/soc/intel/boards/Kconfig
+@@ -558,6 +558,7 @@ config SND_SOC_INTEL_SOF_NAU8825_MACH
+ 	select SND_SOC_HDAC_HDMI
+ 	select SND_SOC_INTEL_HDA_DSP_COMMON
+ 	select SND_SOC_INTEL_SOF_MAXIM_COMMON
++	select SND_SOC_INTEL_SOF_REALTEK_COMMON
+ 	help
+ 	   This adds support for ASoC machine driver for SOF platforms
+ 	   with nau8825 codec.
+-- 
+2.35.1
+
 
 
