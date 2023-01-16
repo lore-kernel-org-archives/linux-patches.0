@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0174B46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:05:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A82FC433EF;
-	Mon, 16 Jan 2023 16:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 773C246B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:05:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE89C43396;
+	Mon, 16 Jan 2023 16:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885123;
-	bh=pzyQHGEYss7NSj63f8HO/yDtGBGN67sxZjCJb3zZFx4=;
+	s=korg; t=1673885126;
+	bh=Bh4TaeR9DYSWakrVlYQxNOrj3vABI3BLqe4aSI08Kds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FnfG+aalhvV2sIFHOrPu0z3VuNpjt/j0Lqr2+nWfB8QiLETCJoVeh3nIIW9bKwH+i
-	 gCSRkFLkOvWx5GkyTJtpb9r3wnf3InUrUIlHbkSpx14Tmt/pMr4bfvLeerotdxOGJU
-	 QIKPpPy5qddeLq8XKQ7FtXePGfio/qD7VJcDiJ/8=
+	b=IaHXuB0Dq3chHxOQ8s7PE1G8yFvXxpOsjotR8btRQGXaRXzPiGhHPQis/AlNsveth
+	 U4apwKzQE5UTmIImDB4SrkbYVWoZF2DRdtVVpoC9hoN5E2NsE53ADbN6SZ4+uTI7aC
+	 09m/i6Y/cf2PdQemLfm5CiSPOHpAFpVevudvxBVo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d56ec896af3637bdb7e4@syzkaller.appspotmail.com,
 	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 5.15 83/86] io_uring/io-wq: only free worker if it was allocated for creation
-Date: Mon, 16 Jan 2023 16:51:57 +0100
-Message-Id: <20230116154750.480675740@linuxfoundation.org>
+Subject: [PATCH 5.15 84/86] block: handle bio_split_to_limits() NULL return
+Date: Mon, 16 Jan 2023 16:51:58 +0100
+Message-Id: <20230116154750.511578322@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -36,36 +35,130 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-commit e6db6f9398dadcbc06318a133d4c44a2d3844e61 upstream.
+commit 613b14884b8595e20b9fac4126bf627313827fbe upstream.
 
-We have two types of task_work based creation, one is using an existing
-worker to setup a new one (eg when going to sleep and we have no free
-workers), and the other is allocating a new worker. Only the latter
-should be freed when we cancel task_work creation for a new worker.
+This can't happen right now, but in preparation for allowing
+bio_split_to_limits() returning NULL if it ended the bio, check for it
+in all the callers.
 
-Fixes: af82425c6a2d ("io_uring/io-wq: free worker if task_work creation is canceled")
-Reported-by: syzbot+d56ec896af3637bdb7e4@syzkaller.appspotmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io-wq.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ block/blk-merge.c             |    4 +++-
+ block/blk-mq.c                |    2 ++
+ drivers/block/drbd/drbd_req.c |    2 ++
+ drivers/block/pktcdvd.c       |    2 ++
+ drivers/block/ps3vram.c       |    2 ++
+ drivers/block/rsxx/dev.c      |    2 ++
+ drivers/md/md.c               |    2 ++
+ drivers/nvme/host/multipath.c |    2 ++
+ drivers/s390/block/dcssblk.c  |    2 ++
+ 9 files changed, 19 insertions(+), 1 deletion(-)
 
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -1217,7 +1217,12 @@ static void io_wq_cancel_tw_create(struc
- 
- 		worker = container_of(cb, struct io_worker, create_work);
- 		io_worker_cancel_cb(worker);
--		kfree(worker);
-+		/*
-+		 * Only the worker continuation helper has worker allocated and
-+		 * hence needs freeing.
-+		 */
-+		if (cb->func == create_worker_cont)
-+			kfree(worker);
+--- a/block/blk-merge.c
++++ b/block/blk-merge.c
+@@ -348,11 +348,13 @@ void __blk_queue_split(struct bio **bio,
+ 			break;
+ 		}
+ 		split = blk_bio_segment_split(q, *bio, &q->bio_split, nr_segs);
++		if (IS_ERR(split))
++			*bio = split = NULL;
+ 		break;
  	}
- }
  
+ 	if (split) {
+-		/* there isn't chance to merge the splitted bio */
++		/* there isn't chance to merge the split bio */
+ 		split->bi_opf |= REQ_NOMERGE;
+ 
+ 		bio_chain(split, *bio);
+--- a/block/blk-mq.c
++++ b/block/blk-mq.c
+@@ -2193,6 +2193,8 @@ blk_qc_t blk_mq_submit_bio(struct bio *b
+ 
+ 	blk_queue_bounce(q, &bio);
+ 	__blk_queue_split(&bio, &nr_segs);
++	if (!bio)
++		goto queue_exit;
+ 
+ 	if (!bio_integrity_prep(bio))
+ 		goto queue_exit;
+--- a/drivers/block/drbd/drbd_req.c
++++ b/drivers/block/drbd/drbd_req.c
+@@ -1602,6 +1602,8 @@ blk_qc_t drbd_submit_bio(struct bio *bio
+ 	struct drbd_device *device = bio->bi_bdev->bd_disk->private_data;
+ 
+ 	blk_queue_split(&bio);
++	if (!bio)
++		return BLK_QC_T_NONE;
+ 
+ 	/*
+ 	 * what we "blindly" assume:
+--- a/drivers/block/pktcdvd.c
++++ b/drivers/block/pktcdvd.c
+@@ -2407,6 +2407,8 @@ static blk_qc_t pkt_submit_bio(struct bi
+ 	struct bio *split;
+ 
+ 	blk_queue_split(&bio);
++	if (!bio)
++		return BLK_QC_T_NONE;
+ 
+ 	pd = bio->bi_bdev->bd_disk->queue->queuedata;
+ 	if (!pd) {
+--- a/drivers/block/ps3vram.c
++++ b/drivers/block/ps3vram.c
+@@ -587,6 +587,8 @@ static blk_qc_t ps3vram_submit_bio(struc
+ 	dev_dbg(&dev->core, "%s\n", __func__);
+ 
+ 	blk_queue_split(&bio);
++	if (!bio)
++		return BLK_QC_T_NONE;
+ 
+ 	spin_lock_irq(&priv->lock);
+ 	busy = !bio_list_empty(&priv->list);
+--- a/drivers/block/rsxx/dev.c
++++ b/drivers/block/rsxx/dev.c
+@@ -127,6 +127,8 @@ static blk_qc_t rsxx_submit_bio(struct b
+ 	blk_status_t st = BLK_STS_IOERR;
+ 
+ 	blk_queue_split(&bio);
++	if (!bio)
++		return BLK_QC_T_NONE;
+ 
+ 	might_sleep();
+ 
+--- a/drivers/md/md.c
++++ b/drivers/md/md.c
+@@ -458,6 +458,8 @@ static blk_qc_t md_submit_bio(struct bio
+ 	}
+ 
+ 	blk_queue_split(&bio);
++	if (!bio)
++		return BLK_QC_T_NONE;
+ 
+ 	if (mddev->ro == 1 && unlikely(rw == WRITE)) {
+ 		if (bio_sectors(bio) != 0)
+--- a/drivers/nvme/host/multipath.c
++++ b/drivers/nvme/host/multipath.c
+@@ -329,6 +329,8 @@ static blk_qc_t nvme_ns_head_submit_bio(
+ 	 * pool from the original queue to allocate the bvecs from.
+ 	 */
+ 	blk_queue_split(&bio);
++	if (!bio)
++		return BLK_QC_T_NONE;
+ 
+ 	srcu_idx = srcu_read_lock(&head->srcu);
+ 	ns = nvme_find_path(head);
+--- a/drivers/s390/block/dcssblk.c
++++ b/drivers/s390/block/dcssblk.c
+@@ -866,6 +866,8 @@ dcssblk_submit_bio(struct bio *bio)
+ 	unsigned long bytes_done;
+ 
+ 	blk_queue_split(&bio);
++	if (!bio)
++		return BLK_QC_T_NONE;
+ 
+ 	bytes_done = 0;
+ 	dev_info = bio->bi_bdev->bd_disk->private_data;
 
 
