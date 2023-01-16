@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E373846B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:08:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67160C433D2;
-	Mon, 16 Jan 2023 16:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844EB46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:08:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B63AC433EF;
+	Mon, 16 Jan 2023 16:08:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885319;
-	bh=+0CqO0b06TengcFvuL6jea2IgCjILIpQ8IDa2MHHT2M=;
+	s=korg; t=1673885322;
+	bh=jSg1Y/ZL7yxbwhiG7qz4niMNnDyABXYNZuS8Fm87tvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=i5wMGIxeXYnCZjNzsebVa8fGoCKqUzHGuc3LP1/dYZ0gWj7x6I/yclg2gpPshPIS2
-	 9z7tg2b3PnErtUaprirdluusckaWKLYa3VNP1+xc05I1nZ7W/8058uZt/uCwUwVDgy
-	 tcNtiW3HFYtMNM3TZP5Fzw5tmjRZ5hcUCJ4RcMq4=
+	b=YzwMYMI4cjSPibpfbRDt0encVLJwLRj6ivlVNYtMckLPJrIvUqYAt64HErkOfd1SI
+	 p8Q4g4ql7j6duHPEDHvRMFlwnQLVgwOXz5XpSlgDVyT2OKpIzB7ibTwjKn7lsr5TQ4
+	 vCjliydiKsggG57FU5upAFEOJiCxEAhvOrO3+gUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Bonzini <pbonzini@redhat.com>,
+	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
+	Stefano Stabellini <sstabellini@kernel.org>,
+	Juergen Gross <jgross@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 54/64] KVM: x86: Do not return host topology information from KVM_GET_SUPPORTED_CPUID
-Date: Mon, 16 Jan 2023 16:52:01 +0100
-Message-Id: <20230116154745.431127682@linuxfoundation.org>
+Subject: [PATCH 5.10 45/64] hvc/xen: lock console list traversal
+Date: Mon, 16 Jan 2023 16:51:52 +0100
+Message-Id: <20230116154745.123402288@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -34,120 +36,181 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Roger Pau Monne <roger.pau@citrix.com>
 
-[ Upstream commit 45e966fcca03ecdcccac7cb236e16eea38cc18af ]
+[ Upstream commit c0dccad87cf68fc6012aec7567e354353097ec1a ]
 
-Passing the host topology to the guest is almost certainly wrong
-and will confuse the scheduler.  In addition, several fields of
-these CPUID leaves vary on each processor; it is simply impossible to
-return the right values from KVM_GET_SUPPORTED_CPUID in such a way that
-they can be passed to KVM_SET_CPUID2.
+The currently lockless access to the xen console list in
+vtermno_to_xencons() is incorrect, as additions and removals from the
+list can happen anytime, and as such the traversal of the list to get
+the private console data for a given termno needs to happen with the
+lock held.  Note users that modify the list already do so with the
+lock taken.
 
-The values that will most likely prevent confusion are all zeroes.
-Userspace will have to override it anyway if it wishes to present a
-specific topology to the guest.
+Adjust current lock takers to use the _irq{save,restore} helpers,
+since the context in which vtermno_to_xencons() is called can have
+interrupts disabled.  Use the _irq{save,restore} set of helpers to
+switch the current callers to disable interrupts in the locked region.
+I haven't checked if existing users could instead use the _irq
+variant, as I think it's safer to use _irq{save,restore} upfront.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+While there switch from using list_for_each_entry_safe to
+list_for_each_entry: the current entry cursor won't be removed as
+part of the code in the loop body, so using the _safe variant is
+pointless.
+
+Fixes: 02e19f9c7cac ('hvc_xen: implement multiconsole support')
+Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
+Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
+Link: https://lore.kernel.org/r/20221130163611.14686-1-roger.pau@citrix.com
+Signed-off-by: Juergen Gross <jgross@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/virt/kvm/api.rst | 14 ++++++++++++++
- arch/x86/kvm/cpuid.c           | 32 ++++++++++++++++----------------
- 2 files changed, 30 insertions(+), 16 deletions(-)
+ drivers/tty/hvc/hvc_xen.c | 46 ++++++++++++++++++++++++---------------
+ 1 file changed, 29 insertions(+), 17 deletions(-)
 
-diff --git a/Documentation/virt/kvm/api.rst b/Documentation/virt/kvm/api.rst
-index d807994360d4..2b4b64797191 100644
---- a/Documentation/virt/kvm/api.rst
-+++ b/Documentation/virt/kvm/api.rst
-@@ -6433,6 +6433,20 @@ CPU[EAX=1]:ECX[24] (TSC_DEADLINE) is not reported by ``KVM_GET_SUPPORTED_CPUID``
- It can be enabled if ``KVM_CAP_TSC_DEADLINE_TIMER`` is present and the kernel
- has enabled in-kernel emulation of the local APIC.
+diff --git a/drivers/tty/hvc/hvc_xen.c b/drivers/tty/hvc/hvc_xen.c
+index 7948660e042f..6f387a4fd96a 100644
+--- a/drivers/tty/hvc/hvc_xen.c
++++ b/drivers/tty/hvc/hvc_xen.c
+@@ -52,17 +52,22 @@ static DEFINE_SPINLOCK(xencons_lock);
  
-+CPU topology
-+~~~~~~~~~~~~
-+
-+Several CPUID values include topology information for the host CPU:
-+0x0b and 0x1f for Intel systems, 0x8000001e for AMD systems.  Different
-+versions of KVM return different values for this information and userspace
-+should not rely on it.  Currently they return all zeroes.
-+
-+If userspace wishes to set up a guest topology, it should be careful that
-+the values of these three leaves differ for each CPU.  In particular,
-+the APIC ID is found in EDX for all subleaves of 0x0b and 0x1f, and in EAX
-+for 0x8000001e; the latter also encodes the core id and node id in bits
-+7:0 of EBX and ECX respectively.
-+
- Obsolete ioctls and capabilities
- ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- 
-diff --git a/arch/x86/kvm/cpuid.c b/arch/x86/kvm/cpuid.c
-index 06a776fdb90c..de4b171cb76b 100644
---- a/arch/x86/kvm/cpuid.c
-+++ b/arch/x86/kvm/cpuid.c
-@@ -511,16 +511,22 @@ struct kvm_cpuid_array {
- 	int nent;
- };
- 
-+static struct kvm_cpuid_entry2 *get_next_cpuid(struct kvm_cpuid_array *array)
-+{
-+	if (array->nent >= array->maxnent)
-+		return NULL;
-+
-+	return &array->entries[array->nent++];
-+}
-+
- static struct kvm_cpuid_entry2 *do_host_cpuid(struct kvm_cpuid_array *array,
- 					      u32 function, u32 index)
+ static struct xencons_info *vtermno_to_xencons(int vtermno)
  {
--	struct kvm_cpuid_entry2 *entry;
-+	struct kvm_cpuid_entry2 *entry = get_next_cpuid(array);
+-	struct xencons_info *entry, *n, *ret = NULL;
++	struct xencons_info *entry, *ret = NULL;
++	unsigned long flags;
  
--	if (array->nent >= array->maxnent)
-+	if (!entry)
- 		return NULL;
+-	if (list_empty(&xenconsoles))
+-			return NULL;
++	spin_lock_irqsave(&xencons_lock, flags);
++	if (list_empty(&xenconsoles)) {
++		spin_unlock_irqrestore(&xencons_lock, flags);
++		return NULL;
++	}
  
--	entry = &array->entries[array->nent++];
--
- 	entry->function = function;
- 	entry->index = index;
- 	entry->flags = 0;
-@@ -698,22 +704,13 @@ static inline int __do_cpuid_func(struct kvm_cpuid_array *array, u32 function)
- 		entry->edx = edx.full;
- 		break;
+-	list_for_each_entry_safe(entry, n, &xenconsoles, list) {
++	list_for_each_entry(entry, &xenconsoles, list) {
+ 		if (entry->vtermno == vtermno) {
+ 			ret  = entry;
+ 			break;
+ 		}
  	}
--	/*
--	 * Per Intel's SDM, the 0x1f is a superset of 0xb,
--	 * thus they can be handled by common code.
--	 */
- 	case 0x1f:
- 	case 0xb:
- 		/*
--		 * Populate entries until the level type (ECX[15:8]) of the
--		 * previous entry is zero.  Note, CPUID EAX.{0x1f,0xb}.0 is
--		 * the starting entry, filled by the primary do_host_cpuid().
-+		 * No topology; a valid topology is indicated by the presence
-+		 * of subleaf 1.
- 		 */
--		for (i = 1; entry->ecx & 0xff00; ++i) {
--			entry = do_host_cpuid(array, function, i);
--			if (!entry)
--				goto out;
--		}
-+		entry->eax = entry->ebx = entry->ecx = 0;
- 		break;
- 	case 0xd:
- 		entry->eax &= supported_xcr0;
-@@ -866,6 +863,9 @@ static inline int __do_cpuid_func(struct kvm_cpuid_array *array, u32 function)
- 		entry->ebx = entry->ecx = entry->edx = 0;
- 		break;
- 	case 0x8000001e:
-+		/* Do not return host topology information.  */
-+		entry->eax = entry->ebx = entry->ecx = 0;
-+		entry->edx = 0; /* reserved */
- 		break;
- 	/* Support memory encryption cpuid if host supports it */
- 	case 0x8000001F:
++	spin_unlock_irqrestore(&xencons_lock, flags);
+ 
+ 	return ret;
+ }
+@@ -223,7 +228,7 @@ static int xen_hvm_console_init(void)
+ {
+ 	int r;
+ 	uint64_t v = 0;
+-	unsigned long gfn;
++	unsigned long gfn, flags;
+ 	struct xencons_info *info;
+ 
+ 	if (!xen_hvm_domain())
+@@ -258,9 +263,9 @@ static int xen_hvm_console_init(void)
+ 		goto err;
+ 	info->vtermno = HVC_COOKIE;
+ 
+-	spin_lock(&xencons_lock);
++	spin_lock_irqsave(&xencons_lock, flags);
+ 	list_add_tail(&info->list, &xenconsoles);
+-	spin_unlock(&xencons_lock);
++	spin_unlock_irqrestore(&xencons_lock, flags);
+ 
+ 	return 0;
+ err:
+@@ -283,6 +288,7 @@ static int xencons_info_pv_init(struct xencons_info *info, int vtermno)
+ static int xen_pv_console_init(void)
+ {
+ 	struct xencons_info *info;
++	unsigned long flags;
+ 
+ 	if (!xen_pv_domain())
+ 		return -ENODEV;
+@@ -299,9 +305,9 @@ static int xen_pv_console_init(void)
+ 		/* already configured */
+ 		return 0;
+ 	}
+-	spin_lock(&xencons_lock);
++	spin_lock_irqsave(&xencons_lock, flags);
+ 	xencons_info_pv_init(info, HVC_COOKIE);
+-	spin_unlock(&xencons_lock);
++	spin_unlock_irqrestore(&xencons_lock, flags);
+ 
+ 	return 0;
+ }
+@@ -309,6 +315,7 @@ static int xen_pv_console_init(void)
+ static int xen_initial_domain_console_init(void)
+ {
+ 	struct xencons_info *info;
++	unsigned long flags;
+ 
+ 	if (!xen_initial_domain())
+ 		return -ENODEV;
+@@ -323,9 +330,9 @@ static int xen_initial_domain_console_init(void)
+ 	info->irq = bind_virq_to_irq(VIRQ_CONSOLE, 0, false);
+ 	info->vtermno = HVC_COOKIE;
+ 
+-	spin_lock(&xencons_lock);
++	spin_lock_irqsave(&xencons_lock, flags);
+ 	list_add_tail(&info->list, &xenconsoles);
+-	spin_unlock(&xencons_lock);
++	spin_unlock_irqrestore(&xencons_lock, flags);
+ 
+ 	return 0;
+ }
+@@ -380,10 +387,12 @@ static void xencons_free(struct xencons_info *info)
+ 
+ static int xen_console_remove(struct xencons_info *info)
+ {
++	unsigned long flags;
++
+ 	xencons_disconnect_backend(info);
+-	spin_lock(&xencons_lock);
++	spin_lock_irqsave(&xencons_lock, flags);
+ 	list_del(&info->list);
+-	spin_unlock(&xencons_lock);
++	spin_unlock_irqrestore(&xencons_lock, flags);
+ 	if (info->xbdev != NULL)
+ 		xencons_free(info);
+ 	else {
+@@ -464,6 +473,7 @@ static int xencons_probe(struct xenbus_device *dev,
+ {
+ 	int ret, devid;
+ 	struct xencons_info *info;
++	unsigned long flags;
+ 
+ 	devid = dev->nodename[strlen(dev->nodename) - 1] - '0';
+ 	if (devid == 0)
+@@ -482,9 +492,9 @@ static int xencons_probe(struct xenbus_device *dev,
+ 	ret = xencons_connect_backend(dev, info);
+ 	if (ret < 0)
+ 		goto error;
+-	spin_lock(&xencons_lock);
++	spin_lock_irqsave(&xencons_lock, flags);
+ 	list_add_tail(&info->list, &xenconsoles);
+-	spin_unlock(&xencons_lock);
++	spin_unlock_irqrestore(&xencons_lock, flags);
+ 
+ 	return 0;
+ 
+@@ -583,10 +593,12 @@ static int __init xen_hvc_init(void)
+ 
+ 	info->hvc = hvc_alloc(HVC_COOKIE, info->irq, ops, 256);
+ 	if (IS_ERR(info->hvc)) {
++		unsigned long flags;
++
+ 		r = PTR_ERR(info->hvc);
+-		spin_lock(&xencons_lock);
++		spin_lock_irqsave(&xencons_lock, flags);
+ 		list_del(&info->list);
+-		spin_unlock(&xencons_lock);
++		spin_unlock_irqrestore(&xencons_lock, flags);
+ 		if (info->irq)
+ 			unbind_from_irqhandler(info->irq, NULL);
+ 		kfree(info);
 -- 
 2.35.1
 
