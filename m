@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7891B33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:04:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E79EFC433F0;
-	Mon, 16 Jan 2023 16:04:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F394733EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:04:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79D0FC433EF;
+	Mon, 16 Jan 2023 16:04:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885076;
-	bh=rHf8zqIBwqyiKmS59H/he+eCVezaCq2V99Iwwe+gBWk=;
+	s=korg; t=1673885078;
+	bh=V5Na7RThr0Rb0XUgY3epO5DtmYIA6cse1GiLo/TXo3c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O+mPqoMRld6V530He1hW6aZb6ycJf/EMSxLOqjZXSgBiiaHdLzBRWSZ67lwrGsgun
-	 /vdIJH1VwE4n/IvniNVSr6cYydx7nmHkKGNQdxpOGx0p0OaJ4WNBBA5bVwLMIBQW99
-	 qMdC3z2G60wj0GrfWKyMkezbEj5IyN3dQa4GwpmQ=
+	b=h81zdMNNCrgM/rTOCutiPcicNYw0AKajtSLJF1eZGdb7rmEKsrGbM6LNKB8C/Wr2h
+	 gPP7zS1rrWj/yA0ebPXzjbzQGZV2/ZCCvACipXwOy8mwcLL/shqxQ08U80cNnQLV3r
+	 lMSZdAvmVeeZAqwXyBky8Ij8xN/hqma3NMWZiBhk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Ferry Toth <ftoth@exalondelft.nl>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 36/86] usb: ulpi: defer ulpi_register on ulpi_read_id timeout
-Date: Mon, 16 Jan 2023 16:51:10 +0100
-Message-Id: <20230116154748.587594951@linuxfoundation.org>
+	jianjiao zeng <jianjiao.zeng@mediatek.com>,
+	Yunfei Wang <yf.wang@mediatek.com>,
+	Robin Murphy <robin.murphy@arm.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 5.15 37/86] iommu/iova: Fix alloc iova overflows issue
+Date: Mon, 16 Jan 2023 16:51:11 +0100
+Message-Id: <20230116154748.627449646@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -35,49 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ferry Toth <ftoth@exalondelft.nl>
+From: Yunfei Wang <yf.wang@mediatek.com>
 
-[ Upstream commit 8a7b31d545d3a15f0e6f5984ae16f0ca4fd76aac ]
+commit dcdb3ba7e2a8caae7bfefd603bc22fd0ce9a389c upstream.
 
-Since commit 0f0101719138 ("usb: dwc3: Don't switch OTG -> peripheral
-if extcon is present") Dual Role support on Intel Merrifield platform
-broke due to rearranging the call to dwc3_get_extcon().
+In __alloc_and_insert_iova_range, there is an issue that retry_pfn
+overflows. The value of iovad->anchor.pfn_hi is ~0UL, then when
+iovad->cached_node is iovad->anchor, curr_iova->pfn_hi + 1 will
+overflow. As a result, if the retry logic is executed, low_pfn is
+updated to 0, and then new_pfn < low_pfn returns false to make the
+allocation successful.
 
-It appears to be caused by ulpi_read_id() on the first test write failing
-with -ETIMEDOUT. Currently ulpi_read_id() expects to discover the phy via
-DT when the test write fails and returns 0 in that case, even if DT does not
-provide the phy. As a result usb probe completes without phy.
+This issue occurs in the following two situations:
+1. The first iova size exceeds the domain size. When initializing
+iova domain, iovad->cached_node is assigned as iovad->anchor. For
+example, the iova domain size is 10M, start_pfn is 0x1_F000_0000,
+and the iova size allocated for the first time is 11M. The
+following is the log information, new->pfn_lo is smaller than
+iovad->cached_node.
 
-Make ulpi_read_id() return -ETIMEDOUT to its user if the first test write
-fails. The user should then handle it appropriately. A follow up patch
-will make dwc3_core_init() set -EPROBE_DEFER in this case and bail out.
+Example log as follows:
+[  223.798112][T1705487] sh: [name:iova&]__alloc_and_insert_iova_range
+start_pfn:0x1f0000,retry_pfn:0x0,size:0xb00,limit_pfn:0x1f0a00
+[  223.799590][T1705487] sh: [name:iova&]__alloc_and_insert_iova_range
+success start_pfn:0x1f0000,new->pfn_lo:0x1efe00,new->pfn_hi:0x1f08ff
 
-Fixes: ef6a7bcfb01c ("usb: ulpi: Support device discovery via DT")
-Cc: stable@vger.kernel.org
-Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Ferry Toth <ftoth@exalondelft.nl>
-Link: https://lore.kernel.org/r/20221205201527.13525-2-ftoth@exalondelft.nl
+2. The node with the largest iova->pfn_lo value in the iova domain
+is deleted, iovad->cached_node will be updated to iovad->anchor,
+and then the alloc iova size exceeds the maximum iova size that can
+be allocated in the domain.
+
+After judging that retry_pfn is less than limit_pfn, call retry_pfn+1
+to fix the overflow issue.
+
+Signed-off-by: jianjiao zeng <jianjiao.zeng@mediatek.com>
+Signed-off-by: Yunfei Wang <yf.wang@mediatek.com>
+Cc: <stable@vger.kernel.org> # 5.15.*
+Fixes: 4e89dce72521 ("iommu/iova: Retry from last rb tree node if iova search fails")
+Acked-by: Robin Murphy <robin.murphy@arm.com>
+Link: https://lore.kernel.org/r/20230111063801.25107-1-yf.wang@mediatek.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/common/ulpi.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/iova.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/usb/common/ulpi.c b/drivers/usb/common/ulpi.c
-index 5509d3847af4..0e462933d270 100644
---- a/drivers/usb/common/ulpi.c
-+++ b/drivers/usb/common/ulpi.c
-@@ -206,7 +206,7 @@ static int ulpi_read_id(struct ulpi *ulpi)
- 	/* Test the interface */
- 	ret = ulpi_write(ulpi, ULPI_SCRATCH, 0xaa);
- 	if (ret < 0)
--		goto err;
-+		return ret;
+--- a/drivers/iommu/iova.c
++++ b/drivers/iommu/iova.c
+@@ -252,7 +252,7 @@ static int __alloc_and_insert_iova_range
  
- 	ret = ulpi_read(ulpi, ULPI_SCRATCH);
- 	if (ret < 0)
--- 
-2.35.1
-
+ 	curr = __get_cached_rbnode(iovad, limit_pfn);
+ 	curr_iova = to_iova(curr);
+-	retry_pfn = curr_iova->pfn_hi + 1;
++	retry_pfn = curr_iova->pfn_hi;
+ 
+ retry:
+ 	do {
+@@ -266,7 +266,7 @@ retry:
+ 	if (high_pfn < size || new_pfn < low_pfn) {
+ 		if (low_pfn == iovad->start_pfn && retry_pfn < limit_pfn) {
+ 			high_pfn = limit_pfn;
+-			low_pfn = retry_pfn;
++			low_pfn = retry_pfn + 1;
+ 			curr = iova_find_limit(iovad, limit_pfn);
+ 			curr_iova = to_iova(curr);
+ 			goto retry;
 
 
