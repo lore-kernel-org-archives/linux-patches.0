@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1640033EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:58:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 919ABC433D2;
-	Mon, 16 Jan 2023 15:58:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABCE133EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:58:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FB68C433EF;
+	Mon, 16 Jan 2023 15:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884714;
-	bh=wDgTdSDYDoEr4cSxVZpF4BI8puZycLQrplwYdLz8DeI=;
+	s=korg; t=1673884717;
+	bh=Oj74gTAKhW5lNCbAziir7YxcO7AItb/aIDK+b8PKRRc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xjvEGQ4gEGeYbnBmwPHzdCX1qB27RgH9TAzTJRqD0IrC6YPm4A32fd7f1hyqgAfG/
-	 AC7aJY/K4RAKcb+k2J7S5R5guqv84jbDSKKy8SaQT9Rb/0li5e/CUEHlDNdrKc2AZW
-	 A7Pl/vxNkWVlpFXyYq/g6cB+l18tU242LwfwdpMQ=
+	b=oU+gTs23N4bs0GroqwIhks2cF6kRR8PLW3qK2HM7bFHpsqjn3BgXrX6yK6GnjYMB1
+	 zAGE2NoalbyH+qgMsQuqpmhGR+8r+z9bICSxOczK/WKkOwksxd4cjNN84+ovr5lcgx
+	 cALHXUdJ+gHZJav47wzqso/IDJydzeewVa9Do/sc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Maloy <jmaloy@redhat.com>,
-	Tung Nguyen <tung.q.nguyen@dektech.com.au>,
-	"David S. Miller" <davem@davemloft.net>,
+	Chuck Lever <chuck.lever@oracle.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	NeilBrown <neilb@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 112/183] tipc: fix unexpected link reset due to discovery messages
-Date: Mon, 16 Jan 2023 16:50:35 +0100
-Message-Id: <20230116154808.106766801@linuxfoundation.org>
+Subject: [PATCH 6.1 113/183] NFSD: Pass the target nfsd_file to nfsd_commit()
+Date: Mon, 16 Jan 2023 16:50:36 +0100
+Message-Id: <20230116154808.157772753@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,109 +36,151 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tung Nguyen <tung.q.nguyen@dektech.com.au>
+From: Chuck Lever <chuck.lever@oracle.com>
 
-[ Upstream commit c244c092f1ed2acfb5af3d3da81e22367d3dd733 ]
+[ Upstream commit c252849082ff525af18b4f253b3c9ece94e951ed ]
 
-This unexpected behavior is observed:
+In a moment I'm going to introduce separate nfsd_file types, one of
+which is garbage-collected; the other, not. The garbage-collected
+variety is to be used by NFSv2 and v3, and the non-garbage-collected
+variety is to be used by NFSv4.
 
-node 1                    | node 2
-------                    | ------
-link is established       | link is established
-reboot                    | link is reset
-up                        | send discovery message
-receive discovery message |
-link is established       | link is established
-send discovery message    |
-                          | receive discovery message
-                          | link is reset (unexpected)
-                          | send reset message
-link is reset             |
+nfsd_commit() is invoked by both NFSv3 and NFSv4 consumers. We want
+nfsd_commit() to find and use the correct variety of cached
+nfsd_file object for the NFS version that is in use.
 
-It is due to delayed re-discovery as described in function
-tipc_node_check_dest(): "this link endpoint has already reset
-and re-established contact with the peer, before receiving a
-discovery message from that node."
-
-However, commit 598411d70f85 has changed the condition for calling
-tipc_node_link_down() which was the acceptance of new media address.
-
-This commit fixes this by restoring the old and correct behavior.
-
-Fixes: 598411d70f85 ("tipc: make resetting of links non-atomic")
-Acked-by: Jon Maloy <jmaloy@redhat.com>
-Signed-off-by: Tung Nguyen <tung.q.nguyen@dektech.com.au>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Tested-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Reviewed-by: NeilBrown <neilb@suse.de>
+Stable-dep-of: 0b3a551fa58b ("nfsd: fix handling of cached open files in nfsd4_open codepath")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/tipc/node.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs3proc.c | 10 +++++++++-
+ fs/nfsd/nfs4proc.c | 11 ++++++++++-
+ fs/nfsd/vfs.c      | 15 ++++-----------
+ fs/nfsd/vfs.h      |  3 ++-
+ 4 files changed, 25 insertions(+), 14 deletions(-)
 
-diff --git a/net/tipc/node.c b/net/tipc/node.c
-index 49ddc484c4fe..5e000fde8067 100644
---- a/net/tipc/node.c
-+++ b/net/tipc/node.c
-@@ -1179,8 +1179,9 @@ void tipc_node_check_dest(struct net *net, u32 addr,
- 	bool addr_match = false;
- 	bool sign_match = false;
- 	bool link_up = false;
-+	bool link_is_reset = false;
- 	bool accept_addr = false;
--	bool reset = true;
-+	bool reset = false;
- 	char *if_name;
- 	unsigned long intv;
- 	u16 session;
-@@ -1200,14 +1201,14 @@ void tipc_node_check_dest(struct net *net, u32 addr,
- 	/* Prepare to validate requesting node's signature and media address */
- 	l = le->link;
- 	link_up = l && tipc_link_is_up(l);
-+	link_is_reset = l && tipc_link_is_reset(l);
- 	addr_match = l && !memcmp(&le->maddr, maddr, sizeof(*maddr));
- 	sign_match = (signature == n->signature);
+diff --git a/fs/nfsd/nfs3proc.c b/fs/nfsd/nfs3proc.c
+index 923d9a80df92..ff2920546333 100644
+--- a/fs/nfsd/nfs3proc.c
++++ b/fs/nfsd/nfs3proc.c
+@@ -13,6 +13,7 @@
+ #include "cache.h"
+ #include "xdr3.h"
+ #include "vfs.h"
++#include "filecache.h"
  
- 	/* These three flags give us eight permutations: */
+ #define NFSDDBG_FACILITY		NFSDDBG_PROC
  
- 	if (sign_match && addr_match && link_up) {
--		/* All is fine. Do nothing. */
--		reset = false;
-+		/* All is fine. Ignore requests. */
- 		/* Peer node is not a container/local namespace */
- 		if (!n->peer_hash_mix)
- 			n->peer_hash_mix = hash_mixes;
-@@ -1232,6 +1233,7 @@ void tipc_node_check_dest(struct net *net, u32 addr,
- 		 */
- 		accept_addr = true;
- 		*respond = true;
-+		reset = true;
- 	} else if (!sign_match && addr_match && link_up) {
- 		/* Peer node rebooted. Two possibilities:
- 		 *  - Delayed re-discovery; this link endpoint has already
-@@ -1263,6 +1265,7 @@ void tipc_node_check_dest(struct net *net, u32 addr,
- 		n->signature = signature;
- 		accept_addr = true;
- 		*respond = true;
-+		reset = true;
- 	}
+@@ -763,6 +764,7 @@ nfsd3_proc_commit(struct svc_rqst *rqstp)
+ {
+ 	struct nfsd3_commitargs *argp = rqstp->rq_argp;
+ 	struct nfsd3_commitres *resp = rqstp->rq_resp;
++	struct nfsd_file *nf;
  
- 	if (!accept_addr)
-@@ -1291,6 +1294,7 @@ void tipc_node_check_dest(struct net *net, u32 addr,
- 		tipc_link_fsm_evt(l, LINK_RESET_EVT);
- 		if (n->state == NODE_FAILINGOVER)
- 			tipc_link_fsm_evt(l, LINK_FAILOVER_BEGIN_EVT);
-+		link_is_reset = tipc_link_is_reset(l);
- 		le->link = l;
- 		n->link_cnt++;
- 		tipc_node_calculate_timer(n, l);
-@@ -1303,7 +1307,7 @@ void tipc_node_check_dest(struct net *net, u32 addr,
- 	memcpy(&le->maddr, maddr, sizeof(*maddr));
- exit:
- 	tipc_node_write_unlock(n);
--	if (reset && l && !tipc_link_is_reset(l))
-+	if (reset && !link_is_reset)
- 		tipc_node_link_down(n, b->identity, false);
- 	tipc_node_put(n);
+ 	dprintk("nfsd: COMMIT(3)   %s %u@%Lu\n",
+ 				SVCFH_fmt(&argp->fh),
+@@ -770,8 +772,14 @@ nfsd3_proc_commit(struct svc_rqst *rqstp)
+ 				(unsigned long long) argp->offset);
+ 
+ 	fh_copy(&resp->fh, &argp->fh);
+-	resp->status = nfsd_commit(rqstp, &resp->fh, argp->offset,
++	resp->status = nfsd_file_acquire(rqstp, &resp->fh, NFSD_MAY_WRITE |
++					 NFSD_MAY_NOT_BREAK_LEASE, &nf);
++	if (resp->status)
++		goto out;
++	resp->status = nfsd_commit(rqstp, &resp->fh, nf, argp->offset,
+ 				   argp->count, resp->verf);
++	nfsd_file_put(nf);
++out:
+ 	return rpc_success;
  }
+ 
+diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
+index c7329523a10f..30a08ec31a70 100644
+--- a/fs/nfsd/nfs4proc.c
++++ b/fs/nfsd/nfs4proc.c
+@@ -731,10 +731,19 @@ nfsd4_commit(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
+ 	     union nfsd4_op_u *u)
+ {
+ 	struct nfsd4_commit *commit = &u->commit;
++	struct nfsd_file *nf;
++	__be32 status;
+ 
+-	return nfsd_commit(rqstp, &cstate->current_fh, commit->co_offset,
++	status = nfsd_file_acquire(rqstp, &cstate->current_fh, NFSD_MAY_WRITE |
++				   NFSD_MAY_NOT_BREAK_LEASE, &nf);
++	if (status != nfs_ok)
++		return status;
++
++	status = nfsd_commit(rqstp, &cstate->current_fh, nf, commit->co_offset,
+ 			     commit->co_count,
+ 			     (__be32 *)commit->co_verf.data);
++	nfsd_file_put(nf);
++	return status;
+ }
+ 
+ static __be32
+diff --git a/fs/nfsd/vfs.c b/fs/nfsd/vfs.c
+index 849a720ab43f..f1919834a99d 100644
+--- a/fs/nfsd/vfs.c
++++ b/fs/nfsd/vfs.c
+@@ -1133,6 +1133,7 @@ nfsd_write(struct svc_rqst *rqstp, struct svc_fh *fhp, loff_t offset,
+  * nfsd_commit - Commit pending writes to stable storage
+  * @rqstp: RPC request being processed
+  * @fhp: NFS filehandle
++ * @nf: target file
+  * @offset: raw offset from beginning of file
+  * @count: raw count of bytes to sync
+  * @verf: filled in with the server's current write verifier
+@@ -1149,19 +1150,13 @@ nfsd_write(struct svc_rqst *rqstp, struct svc_fh *fhp, loff_t offset,
+  *   An nfsstat value in network byte order.
+  */
+ __be32
+-nfsd_commit(struct svc_rqst *rqstp, struct svc_fh *fhp, u64 offset,
+-	    u32 count, __be32 *verf)
++nfsd_commit(struct svc_rqst *rqstp, struct svc_fh *fhp, struct nfsd_file *nf,
++	    u64 offset, u32 count, __be32 *verf)
+ {
++	__be32			err = nfs_ok;
+ 	u64			maxbytes;
+ 	loff_t			start, end;
+ 	struct nfsd_net		*nn;
+-	struct nfsd_file	*nf;
+-	__be32			err;
+-
+-	err = nfsd_file_acquire(rqstp, fhp,
+-			NFSD_MAY_WRITE|NFSD_MAY_NOT_BREAK_LEASE, &nf);
+-	if (err)
+-		goto out;
+ 
+ 	/*
+ 	 * Convert the client-provided (offset, count) range to a
+@@ -1202,8 +1197,6 @@ nfsd_commit(struct svc_rqst *rqstp, struct svc_fh *fhp, u64 offset,
+ 	} else
+ 		nfsd_copy_write_verifier(verf, nn);
+ 
+-	nfsd_file_put(nf);
+-out:
+ 	return err;
+ }
+ 
+diff --git a/fs/nfsd/vfs.h b/fs/nfsd/vfs.h
+index 120521bc7b24..9744b041105b 100644
+--- a/fs/nfsd/vfs.h
++++ b/fs/nfsd/vfs.h
+@@ -88,7 +88,8 @@ __be32		nfsd_access(struct svc_rqst *, struct svc_fh *, u32 *, u32 *);
+ __be32		nfsd_create_setattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 				struct svc_fh *resfhp, struct nfsd_attrs *iap);
+ __be32		nfsd_commit(struct svc_rqst *rqst, struct svc_fh *fhp,
+-				u64 offset, u32 count, __be32 *verf);
++				struct nfsd_file *nf, u64 offset, u32 count,
++				__be32 *verf);
+ #ifdef CONFIG_NFSD_V4
+ __be32		nfsd_getxattr(struct svc_rqst *rqstp, struct svc_fh *fhp,
+ 			    char *name, void **bufp, int *lenp);
 -- 
 2.35.1
 
