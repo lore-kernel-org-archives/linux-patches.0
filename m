@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326F46FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:55:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7908C433D2;
-	Mon, 16 Jan 2023 16:55:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D49D86FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:55:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 588DEC433D2;
+	Mon, 16 Jan 2023 16:55:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888116;
-	bh=8mH7jVBlNBCx0VfFIxnnhNX1vRJHM4UQKrwqBEhEenM=;
+	s=korg; t=1673888118;
+	bh=vqZxRn4hujHC9sVqnpir2AcfKo6w/7Wjnjtk6Z2mX6E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0d6Kg2bIwwsMW25N+JddRrwHj+aHEpj/ULG4x3+ns40BmhZGkibNjX0S9wvxnK8ND
-	 pgEG90iMvaER42fOI6a2pLBezF1LHLchv9GBOpVIWIKIAliUzqOxuT314IChFnJ4Xm
-	 rdpcuo7zoFkHJajx7/td9gTKkgF+NfXgU1TQDeK8=
+	b=dyGds4TdX2KZmWdyX+tGRK/UQy14SAxrs+7wL8hTD+KXBde+/dbGYYAaj+8s3wNLW
+	 KvhHuO+UlgTBA9gul3kw5gntsiD0VULrSYDyTnfX3upKI08MvBMGLec6lM7zMDWve0
+	 +y5dz4glVLZ1TiJqZJ0WCU206TTwKDTyeaw9W6O8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Baokun Li <libaokun1@huawei.com>,
+	Jason Yan <yanaijie@huawei.com>,
+	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org
-Subject: [PATCH 4.19 407/521] ext4: fix undefined behavior in bit shift for ext4_check_flag_values
-Date: Mon, 16 Jan 2023 16:51:09 +0100
-Message-Id: <20230116154905.298475690@linuxfoundation.org>
+Subject: [PATCH 4.19 408/521] ext4: add helper to check quota inums
+Date: Mon, 16 Jan 2023 16:51:10 +0100
+Message-Id: <20230116154905.345693938@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,48 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gaosheng Cui <cuigaosheng1@huawei.com>
+From: Baokun Li <libaokun1@huawei.com>
 
-commit 3bf678a0f9c017c9ba7c581541dbc8453452a7ae upstream.
+commit 07342ec259df2a35d6a34aebce010567a80a0e15 upstream.
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned. The UBSAN warning calltrace like below:
+Before quota is enabled, a check on the preset quota inums in
+ext4_super_block is added to prevent wrong quota inodes from being loaded.
+In addition, when the quota fails to be enabled, the quota type and quota
+inum are printed to facilitate fault locating.
 
-UBSAN: shift-out-of-bounds in fs/ext4/ext4.h:591:2
-left shift of 1 by 31 places cannot be represented in type 'int'
-Call Trace:
- <TASK>
- dump_stack_lvl+0x7d/0xa5
- dump_stack+0x15/0x1b
- ubsan_epilogue+0xe/0x4e
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
- ext4_init_fs+0x5a/0x277
- do_one_initcall+0x76/0x430
- kernel_init_freeable+0x3b3/0x422
- kernel_init+0x24/0x1e0
- ret_from_fork+0x1f/0x30
- </TASK>
-
-Fixes: 9a4c80194713 ("ext4: ensure Inode flags consistency are checked at build time")
-Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20221031055833.3966222-1-cuigaosheng1@huawei.com
+Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20221026042310.3839669-3-libaokun1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/ext4.h |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/super.c |   28 +++++++++++++++++++++++++---
+ 1 file changed, 25 insertions(+), 3 deletions(-)
 
---- a/fs/ext4/ext4.h
-+++ b/fs/ext4/ext4.h
-@@ -503,7 +503,7 @@ enum {
-  *
-  * It's not paranoia if the Murphy's Law really *is* out to get you.  :-)
-  */
--#define TEST_FLAG_VALUE(FLAG) (EXT4_##FLAG##_FL == (1 << EXT4_INODE_##FLAG))
-+#define TEST_FLAG_VALUE(FLAG) (EXT4_##FLAG##_FL == (1U << EXT4_INODE_##FLAG))
- #define CHECK_FLAG_VALUE(FLAG) BUILD_BUG_ON(!TEST_FLAG_VALUE(FLAG))
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -5839,6 +5839,20 @@ static int ext4_quota_on(struct super_bl
+ 	return err;
+ }
  
- static inline void ext4_check_flag_values(void)
++static inline bool ext4_check_quota_inum(int type, unsigned long qf_inum)
++{
++	switch (type) {
++	case USRQUOTA:
++		return qf_inum == EXT4_USR_QUOTA_INO;
++	case GRPQUOTA:
++		return qf_inum == EXT4_GRP_QUOTA_INO;
++	case PRJQUOTA:
++		return qf_inum >= EXT4_GOOD_OLD_FIRST_INO;
++	default:
++		BUG();
++	}
++}
++
+ static int ext4_quota_enable(struct super_block *sb, int type, int format_id,
+ 			     unsigned int flags)
+ {
+@@ -5855,9 +5869,16 @@ static int ext4_quota_enable(struct supe
+ 	if (!qf_inums[type])
+ 		return -EPERM;
+ 
++	if (!ext4_check_quota_inum(type, qf_inums[type])) {
++		ext4_error(sb, "Bad quota inum: %lu, type: %d",
++				qf_inums[type], type);
++		return -EUCLEAN;
++	}
++
+ 	qf_inode = ext4_iget(sb, qf_inums[type], EXT4_IGET_SPECIAL);
+ 	if (IS_ERR(qf_inode)) {
+-		ext4_error(sb, "Bad quota inode # %lu", qf_inums[type]);
++		ext4_error(sb, "Bad quota inode: %lu, type: %d",
++				qf_inums[type], type);
+ 		return PTR_ERR(qf_inode);
+ 	}
+ 
+@@ -5896,8 +5917,9 @@ static int ext4_enable_quotas(struct sup
+ 			if (err) {
+ 				ext4_warning(sb,
+ 					"Failed to enable quota tracking "
+-					"(type=%d, err=%d). Please run "
+-					"e2fsck to fix.", type, err);
++					"(type=%d, err=%d, ino=%lu). "
++					"Please run e2fsck to fix.", type,
++					err, qf_inums[type]);
+ 				for (type--; type >= 0; type--) {
+ 					struct inode *inode;
+ 
 
 
