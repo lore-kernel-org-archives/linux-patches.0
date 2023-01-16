@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 444576FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD27FC433EF;
-	Mon, 16 Jan 2023 16:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D1A1F6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57FB6C433D2;
+	Mon, 16 Jan 2023 16:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888195;
-	bh=Y8brbIPSGheNAcs4u+o2+2Agc2b0OLdc25UcDGWE6y0=;
+	s=korg; t=1673888197;
+	bh=BBCIdBuFbHZIP3RoVRqj4o3P8ZmEf6kMA0iOGeE+AsA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yLbtXJvNMTfPQ9WbIiEjwTmY6n/XXnLipcRIl77Ih1/F4DER/JJ9xd28F3D+DoD5F
-	 c+nvR/i52ohpKzVQi6riQsD/i69Mk4Zlw4IEQeu9zfsZ+LfoCsALDDV9XBkgey5Vg/
-	 P30cT5O1YtlnoOScEnwIqKiY4wwiQi+YUwC6FSNA=
+	b=QxuRHtFy5HS/3CC65bctUIVVbfuMgZr7cYwok0foz7jo4RK4SBetrxTQDEpvXkBhR
+	 n7v1Im6NAQgLzFiG7AzVxst62uXT1QXGh3GrWbDRalO/BI4/t2jVF0m6zvFer5UHjO
+	 lsMcbc1FP1hfxVekJKkTjAZZJ7cvCQ7ucBE9Uxec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jan Kara <jack@suse.cz>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 437/521] ext4: remove EA inode entry from mbcache on inode eviction
-Date: Mon, 16 Jan 2023 16:51:39 +0100
-Message-Id: <20230116154906.696362096@linuxfoundation.org>
+Subject: [PATCH 4.19 438/521] ext4: unindent codeblock in ext4_xattr_block_set()
+Date: Mon, 16 Jan 2023 16:51:40 +0100
+Message-Id: <20230116154906.741145552@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,113 +37,122 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit 6bc0d63dad7f9f54d381925ee855b402f652fa39 ]
+[ Upstream commit fd48e9acdf26d0cbd80051de07d4a735d05d29b2 ]
 
-Currently we remove EA inode from mbcache as soon as its xattr refcount
-drops to zero. However there can be pending attempts to reuse the inode
-and thus refcount handling code has to handle the situation when
-refcount increases from zero anyway. So save some work and just keep EA
-inode in mbcache until it is getting evicted. At that moment we are sure
-following iget() of EA inode will fail anyway (or wait for eviction to
-finish and load things from the disk again) and so removing mbcache
-entry at that moment is fine and simplifies the code a bit.
+Remove unnecessary else (and thus indentation level) from a code block
+in ext4_xattr_block_set(). It will also make following code changes
+easier. No functional changes.
 
 CC: stable@vger.kernel.org
 Fixes: 82939d7999df ("ext4: convert to mbcache2")
 Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20220712105436.32204-3-jack@suse.cz
+Link: https://lore.kernel.org/r/20220712105436.32204-4-jack@suse.cz
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Stable-dep-of: a44e84a9b776 ("ext4: fix deadlock due to mbcache entry corruption")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c |  2 ++
- fs/ext4/xattr.c | 24 ++++++++----------------
- fs/ext4/xattr.h |  1 +
- 3 files changed, 11 insertions(+), 16 deletions(-)
+ fs/ext4/xattr.c | 77 ++++++++++++++++++++++++-------------------------
+ 1 file changed, 38 insertions(+), 39 deletions(-)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 2ad0a9540481..b322658ceff1 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -207,6 +207,8 @@ void ext4_evict_inode(struct inode *inode)
- 
- 	trace_ext4_evict_inode(inode);
- 
-+	if (EXT4_I(inode)->i_flags & EXT4_EA_INODE_FL)
-+		ext4_evict_ea_inode(inode);
- 	if (inode->i_nlink) {
- 		/*
- 		 * When journalling data dirty buffers are tracked only in the
 diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
-index 959fc3328c3a..648368b02c79 100644
+index 648368b02c79..c23d7d68d7a1 100644
 --- a/fs/ext4/xattr.c
 +++ b/fs/ext4/xattr.c
-@@ -434,6 +434,14 @@ static int ext4_xattr_inode_iget(struct inode *parent, unsigned long ea_ino,
- 	return err;
- }
+@@ -1867,6 +1867,8 @@ ext4_xattr_block_set(handle_t *handle, struct inode *inode,
+ #define header(x) ((struct ext4_xattr_header *)(x))
  
-+/* Remove entry from mbcache when EA inode is getting evicted */
-+void ext4_evict_ea_inode(struct inode *inode)
-+{
-+	if (EA_INODE_CACHE(inode))
-+		mb_cache_entry_delete(EA_INODE_CACHE(inode),
-+			ext4_xattr_inode_get_hash(inode), inode->i_ino);
-+}
+ 	if (s->base) {
++		int offset = (char *)s->here - bs->bh->b_data;
 +
- static int
- ext4_xattr_inode_verify_hashes(struct inode *ea_inode,
- 			       struct ext4_xattr_entry *entry, void *buffer,
-@@ -1019,10 +1027,8 @@ static int ext4_xattr_ensure_credits(handle_t *handle, struct inode *inode,
- static int ext4_xattr_inode_update_ref(handle_t *handle, struct inode *ea_inode,
- 				       int ref_change)
- {
--	struct mb_cache *ea_inode_cache = EA_INODE_CACHE(ea_inode);
- 	struct ext4_iloc iloc;
- 	s64 ref_count;
--	u32 hash;
- 	int ret;
+ 		BUFFER_TRACE(bs->bh, "get_write_access");
+ 		error = ext4_journal_get_write_access(handle, bs->bh);
+ 		if (error)
+@@ -1898,49 +1900,46 @@ ext4_xattr_block_set(handle_t *handle, struct inode *inode,
+ 			if (error)
+ 				goto cleanup;
+ 			goto inserted;
+-		} else {
+-			int offset = (char *)s->here - bs->bh->b_data;
++		}
++		unlock_buffer(bs->bh);
++		ea_bdebug(bs->bh, "cloning");
++		s->base = kmemdup(BHDR(bs->bh), bs->bh->b_size, GFP_NOFS);
++		error = -ENOMEM;
++		if (s->base == NULL)
++			goto cleanup;
++		s->first = ENTRY(header(s->base)+1);
++		header(s->base)->h_refcount = cpu_to_le32(1);
++		s->here = ENTRY(s->base + offset);
++		s->end = s->base + bs->bh->b_size;
  
- 	inode_lock(ea_inode);
-@@ -1047,14 +1053,6 @@ static int ext4_xattr_inode_update_ref(handle_t *handle, struct inode *ea_inode,
+-			unlock_buffer(bs->bh);
+-			ea_bdebug(bs->bh, "cloning");
+-			s->base = kmemdup(BHDR(bs->bh), bs->bh->b_size, GFP_NOFS);
+-			error = -ENOMEM;
+-			if (s->base == NULL)
++		/*
++		 * If existing entry points to an xattr inode, we need
++		 * to prevent ext4_xattr_set_entry() from decrementing
++		 * ref count on it because the reference belongs to the
++		 * original block. In this case, make the entry look
++		 * like it has an empty value.
++		 */
++		if (!s->not_found && s->here->e_value_inum) {
++			ea_ino = le32_to_cpu(s->here->e_value_inum);
++			error = ext4_xattr_inode_iget(inode, ea_ino,
++				      le32_to_cpu(s->here->e_hash),
++				      &tmp_inode);
++			if (error)
+ 				goto cleanup;
+-			s->first = ENTRY(header(s->base)+1);
+-			header(s->base)->h_refcount = cpu_to_le32(1);
+-			s->here = ENTRY(s->base + offset);
+-			s->end = s->base + bs->bh->b_size;
  
- 			set_nlink(ea_inode, 1);
- 			ext4_orphan_del(handle, ea_inode);
+-			/*
+-			 * If existing entry points to an xattr inode, we need
+-			 * to prevent ext4_xattr_set_entry() from decrementing
+-			 * ref count on it because the reference belongs to the
+-			 * original block. In this case, make the entry look
+-			 * like it has an empty value.
+-			 */
+-			if (!s->not_found && s->here->e_value_inum) {
+-				ea_ino = le32_to_cpu(s->here->e_value_inum);
+-				error = ext4_xattr_inode_iget(inode, ea_ino,
+-					      le32_to_cpu(s->here->e_hash),
+-					      &tmp_inode);
+-				if (error)
+-					goto cleanup;
 -
--			if (ea_inode_cache) {
--				hash = ext4_xattr_inode_get_hash(ea_inode);
--				mb_cache_entry_create(ea_inode_cache,
--						      GFP_NOFS, hash,
--						      ea_inode->i_ino,
--						      true /* reusable */);
--			}
+-				if (!ext4_test_inode_state(tmp_inode,
+-						EXT4_STATE_LUSTRE_EA_INODE)) {
+-					/*
+-					 * Defer quota free call for previous
+-					 * inode until success is guaranteed.
+-					 */
+-					old_ea_inode_quota = le32_to_cpu(
+-							s->here->e_value_size);
+-				}
+-				iput(tmp_inode);
+-
+-				s->here->e_value_inum = 0;
+-				s->here->e_value_size = 0;
++			if (!ext4_test_inode_state(tmp_inode,
++					EXT4_STATE_LUSTRE_EA_INODE)) {
++				/*
++				 * Defer quota free call for previous
++				 * inode until success is guaranteed.
++				 */
++				old_ea_inode_quota = le32_to_cpu(
++						s->here->e_value_size);
+ 			}
++			iput(tmp_inode);
++
++			s->here->e_value_inum = 0;
++			s->here->e_value_size = 0;
  		}
  	} else {
- 		WARN_ONCE(ref_count < 0, "EA inode %lu ref_count=%lld",
-@@ -1067,12 +1065,6 @@ static int ext4_xattr_inode_update_ref(handle_t *handle, struct inode *ea_inode,
- 
- 			clear_nlink(ea_inode);
- 			ext4_orphan_add(handle, ea_inode);
--
--			if (ea_inode_cache) {
--				hash = ext4_xattr_inode_get_hash(ea_inode);
--				mb_cache_entry_delete(ea_inode_cache, hash,
--						      ea_inode->i_ino);
--			}
- 		}
- 	}
- 
-diff --git a/fs/ext4/xattr.h b/fs/ext4/xattr.h
-index 990084e00374..231ef308d10c 100644
---- a/fs/ext4/xattr.h
-+++ b/fs/ext4/xattr.h
-@@ -190,6 +190,7 @@ extern void ext4_xattr_inode_array_free(struct ext4_xattr_inode_array *array);
- 
- extern int ext4_expand_extra_isize_ea(struct inode *inode, int new_extra_isize,
- 			    struct ext4_inode *raw_inode, handle_t *handle);
-+extern void ext4_evict_ea_inode(struct inode *inode);
- 
- extern const struct xattr_handler *ext4_xattr_handlers[];
- 
+ 		/* Allocate a buffer where we construct the new block. */
 -- 
 2.35.1
 
