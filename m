@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18E96FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:14:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47B61C433EF;
-	Mon, 16 Jan 2023 17:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FDF46FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:14:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BE5C433EF;
+	Mon, 16 Jan 2023 17:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889247;
-	bh=NTT+qHKewQPt4vngVcPkNp3MBFfOTp95N/UezIrtxy8=;
+	s=korg; t=1673889250;
+	bh=0dwNZdPvfN6M4f0Sss6I53/5SlDrOnLiWpnfHmdZp44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qhOBrpEZifMrMBp747judxfhIejERFx34hOsUtzGhiMCo0MPHZ9jIk7eAoLDSOgWC
-	 j9LArueAC4KB0t4rc+6IFLQfrfvNCmpj0jF0opW7jhRx7YFargYarX5XNht8L5WShl
-	 5Aj9kKYRf+YACcZCO6Ns8MoozurlTOqNDnNT/W3A=
+	b=xOnjubknvrcZUSs4L3aivo1BG1AH5iBnpnhOTzci88gDvFL1DI1nOCzjmGGuxdJph
+	 Hy71raPBpjFm5bTf0P8KY7P3FSDDv2f50J/LERkBnsJ1TySIkq+Pr/aV4DolHcXOgs
+	 TOKpBvG0/S3+gYbNV66pwc/7kwwRLjHCZcI3Nz0M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"John Warthog9 Hawley (VMware)" <warthog9@eaglescrag.net>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 4.14 274/338] ktest.pl minconfig: Unset configs instead of just removing them
-Date: Mon, 16 Jan 2023 16:52:27 +0100
-Message-Id: <20230116154833.035491884@linuxfoundation.org>
+	Anand Parthasarathy <anpartha@meta.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Stanislav Fomichev <sdf@google.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 308/338] bpf: pull before calling skb_postpull_rcsum()
+Date: Mon, 16 Jan 2023 16:53:01 +0100
+Message-Id: <20230116154834.550356485@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -34,45 +37,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Jakub Kicinski <kuba@kernel.org>
 
-commit ef784eebb56425eed6e9b16e7d47e5c00dcf9c38 upstream.
+[ Upstream commit 54c3f1a81421f85e60ae2eaae7be3727a09916ee ]
 
-After a full run of a make_min_config test, I noticed there were a lot of
-CONFIGs still enabled that really should not be. Looking at them, I
-noticed they were all defined as "default y". The issue is that the test
-simple removes the config and re-runs make oldconfig, which enables it
-again because it is set to default 'y'. Instead, explicitly disable the
-config with writing "# CONFIG_FOO is not set" to the file to keep it from
-being set again.
+Anand hit a BUG() when pulling off headers on egress to a SW tunnel.
+We get to skb_checksum_help() with an invalid checksum offset
+(commit d7ea0d9df2a6 ("net: remove two BUG() from skb_checksum_help()")
+converted those BUGs to WARN_ONs()).
+He points out oddness in how skb_postpull_rcsum() gets used.
+Indeed looks like we should pull before "postpull", otherwise
+the CHECKSUM_PARTIAL fixup from skb_postpull_rcsum() will not
+be able to do its job:
 
-With this change, one of my box's minconfigs went from 768 configs set,
-down to 521 configs set.
+	if (skb->ip_summed == CHECKSUM_PARTIAL &&
+	    skb_checksum_start_offset(skb) < 0)
+		skb->ip_summed = CHECKSUM_NONE;
 
-Link: https://lkml.kernel.org/r/20221202115936.016fce23@gandalf.local.home
-
-Cc: stable@vger.kernel.org
-Fixes: 0a05c769a9de5 ("ktest: Added config_bisect test type")
-Reviewed-by: John 'Warthog9' Hawley (VMware) <warthog9@eaglescrag.net>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reported-by: Anand Parthasarathy <anpartha@meta.com>
+Fixes: 6578171a7ff0 ("bpf: add bpf_skb_change_proto helper")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/r/20221220004701.402165-1-kuba@kernel.org
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/ktest/ktest.pl |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/core/filter.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -3797,9 +3797,10 @@ sub test_this_config {
-     # .config to make sure it is missing the config that
-     # we had before
-     my %configs = %min_configs;
--    delete $configs{$config};
-+    $configs{$config} = "# $config is not set";
-     make_new_config ((values %configs), (values %keep_configs));
-     make_oldconfig;
-+    delete $configs{$config};
-     undef %configs;
-     assign_configs \%configs, $output_config;
+diff --git a/net/core/filter.c b/net/core/filter.c
+index 0613aa7b0966..29d85a20f4fc 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2035,15 +2035,18 @@ static int bpf_skb_generic_push(struct sk_buff *skb, u32 off, u32 len)
  
+ static int bpf_skb_generic_pop(struct sk_buff *skb, u32 off, u32 len)
+ {
++	void *old_data;
++
+ 	/* skb_ensure_writable() is not needed here, as we're
+ 	 * already working on an uncloned skb.
+ 	 */
+ 	if (unlikely(!pskb_may_pull(skb, off + len)))
+ 		return -ENOMEM;
+ 
+-	skb_postpull_rcsum(skb, skb->data + off, len);
+-	memmove(skb->data + len, skb->data, off);
++	old_data = skb->data;
+ 	__skb_pull(skb, len);
++	skb_postpull_rcsum(skb, old_data + off, len);
++	memmove(skb->data, old_data, off);
+ 
+ 	return 0;
+ }
+-- 
+2.35.1
+
 
 
