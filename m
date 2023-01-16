@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7174946B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:07:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9C7C433EF;
-	Mon, 16 Jan 2023 16:07:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B60D46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:07:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85D93C433F0;
+	Mon, 16 Jan 2023 16:07:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885262;
-	bh=modqFFpLh/1B9gTcp0eniKm85BE4PYJqQz65XEMxrcA=;
+	s=korg; t=1673885264;
+	bh=ifHpNd3XK8MN5Lz6TtqIToAa6TI82pLX1kn7HNJ7/14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mJBTRcTLDvPyTAqFAomAaazk2d3ddqZltWX/PdpL0gPXJkKG40Bj6XWIZkWeWZP+i
-	 8ptMJ/JBMUsdi2NDts68qDZhwDOpJB+fCBM50OYxw7rmvCoabgnCLH7vnN0N2ZK/DX
-	 pfjyzHiSSm0bnvfrbK93oJWNWCRKkm5u0G1kIknI=
+	b=K2C+n9MX8nw1wKH63aSsGIiO0D5LGpSJPDtvABCuuWhGT18GSeYsn/UKyOlzd/p0q
+	 /bMiiJSi9G3uTpFoO1tip/lhCcDZ6j6FeIWV2oE1VvTlGp6WnlQASskUTveuCceVxV
+	 csRxS4dAyJcLmK0M5YhJmmY/YKhYCM5rXrPhqpEs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
+	Lucas Stach <l.stach@pengutronix.de>,
 	Abel Vesa <abel.vesa@nxp.com>,
-	Fabio Estevam <festevam@gmail.com>,
-	NXP Linux Team <linux-imx@nxp.com>,
-	Peng Fan <peng.fan@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 20/64] clk: imx8mp: Add DISP2 pixel clock
-Date: Mon, 16 Jan 2023 16:51:27 +0100
-Message-Id: <20230116154744.314339139@linuxfoundation.org>
+Subject: [PATCH 5.10 21/64] clk: imx8mp: add clkout1/2 support
+Date: Mon, 16 Jan 2023 16:51:28 +0100
+Message-Id: <20230116154744.344026110@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -39,72 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-[ Upstream commit 39772efd98adecbd5b8c6096d465d2fcbafbde6a ]
+[ Upstream commit 43896f56b59eeaf08687fa976257ae7083d01b41 ]
 
-Add pixel clock for second LCDIFv3 interface. Both LCDIFv3 interfaces use
-the same set of parent clock, so deduplicate imx8mp_media_disp1_pix_sels
-into common imx8mp_media_disp_pix_sels and use it for both.
+clkout1 and clkout2 allow to supply clocks from the SoC to the board,
+which is used by some board designs to provide reference clocks.
 
-Signed-off-by: Marek Vasut <marex@denx.de>
-Cc: Abel Vesa <abel.vesa@nxp.com>
-Cc: Fabio Estevam <festevam@gmail.com>
-Cc: NXP Linux Team <linux-imx@nxp.com>
-Cc: Peng Fan <peng.fan@nxp.com>
-Cc: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
 Reviewed-by: Abel Vesa <abel.vesa@nxp.com>
-Link: https://lore.kernel.org/r/20220313123949.207284-1-marex@denx.de
+Link: https://lore.kernel.org/r/20220427162131.3127303-1-l.stach@pengutronix.de
 Signed-off-by: Abel Vesa <abel.vesa@nxp.com>
 Stable-dep-of: 5c1f7f109094 ("dt-bindings: clocks: imx8mp: Add ID for usb suspend clock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/imx/clk-imx8mp.c             | 5 +++--
- include/dt-bindings/clock/imx8mp-clock.h | 4 +++-
- 2 files changed, 6 insertions(+), 3 deletions(-)
+ drivers/clk/imx/clk-imx8mp.c             | 14 ++++++++++++++
+ include/dt-bindings/clock/imx8mp-clock.h |  9 +++++++--
+ 2 files changed, 21 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
-index 36e8d619e334..2af39c8240fa 100644
+index 2af39c8240fa..187044b98bde 100644
 --- a/drivers/clk/imx/clk-imx8mp.c
 +++ b/drivers/clk/imx/clk-imx8mp.c
-@@ -362,7 +362,7 @@ static const char * const imx8mp_media_mipi_phy1_ref_sels[] = {"osc_24m", "sys_p
- 							       "clk_ext2", "audio_pll2_out",
- 							       "video_pll1_out", };
+@@ -411,6 +411,11 @@ static const char * const imx8mp_sai7_sels[] = {"osc_24m", "audio_pll1_out", "au
  
--static const char * const imx8mp_media_disp1_pix_sels[] = {"osc_24m", "video_pll1_out", "audio_pll2_out",
-+static const char * const imx8mp_media_disp_pix_sels[] = {"osc_24m", "video_pll1_out", "audio_pll2_out",
- 							   "audio_pll1_out", "sys_pll1_800m",
- 							   "sys_pll2_1000m", "sys_pll3_out", "clk_ext4", };
+ static const char * const imx8mp_dram_core_sels[] = {"dram_pll_out", "dram_alt_root", };
  
-@@ -566,6 +566,7 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
- 	hws[IMX8MP_CLK_AHB] = imx8m_clk_hw_composite_bus_critical("ahb_root", imx8mp_ahb_sels, ccm_base + 0x9000);
- 	hws[IMX8MP_CLK_AUDIO_AHB] = imx8m_clk_hw_composite_bus("audio_ahb", imx8mp_audio_ahb_sels, ccm_base + 0x9100);
- 	hws[IMX8MP_CLK_MIPI_DSI_ESC_RX] = imx8m_clk_hw_composite_bus("mipi_dsi_esc_rx", imx8mp_mipi_dsi_esc_rx_sels, ccm_base + 0x9200);
-+	hws[IMX8MP_CLK_MEDIA_DISP2_PIX] = imx8m_clk_hw_composite("media_disp2_pix", imx8mp_media_disp_pix_sels, ccm_base + 0x9300);
++static const char * const imx8mp_clkout_sels[] = {"audio_pll1_out", "audio_pll2_out", "video_pll1_out",
++						  "dummy", "dummy", "gpu_pll_out", "vpu_pll_out",
++						  "arm_pll_out", "sys_pll1", "sys_pll2", "sys_pll3",
++						  "dummy", "dummy", "osc_24m", "dummy", "osc_32k"};
++
+ static struct clk_hw **hws;
+ static struct clk_hw_onecell_data *clk_hw_data;
  
- 	hws[IMX8MP_CLK_IPG_ROOT] = imx_clk_hw_divider2("ipg_root", "ahb_root", ccm_base + 0x9080, 0, 1);
- 	hws[IMX8MP_CLK_IPG_AUDIO_ROOT] = imx_clk_hw_divider2("ipg_audio_root", "audio_ahb", ccm_base + 0x9180, 0, 1);
-@@ -630,7 +631,7 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
- 	hws[IMX8MP_CLK_USDHC3] = imx8m_clk_hw_composite("usdhc3", imx8mp_usdhc3_sels, ccm_base + 0xbc80);
- 	hws[IMX8MP_CLK_MEDIA_CAM1_PIX] = imx8m_clk_hw_composite("media_cam1_pix", imx8mp_media_cam1_pix_sels, ccm_base + 0xbd00);
- 	hws[IMX8MP_CLK_MEDIA_MIPI_PHY1_REF] = imx8m_clk_hw_composite("media_mipi_phy1_ref", imx8mp_media_mipi_phy1_ref_sels, ccm_base + 0xbd80);
--	hws[IMX8MP_CLK_MEDIA_DISP1_PIX] = imx8m_clk_hw_composite("media_disp1_pix", imx8mp_media_disp1_pix_sels, ccm_base + 0xbe00);
-+	hws[IMX8MP_CLK_MEDIA_DISP1_PIX] = imx8m_clk_hw_composite("media_disp1_pix", imx8mp_media_disp_pix_sels, ccm_base + 0xbe00);
- 	hws[IMX8MP_CLK_MEDIA_CAM2_PIX] = imx8m_clk_hw_composite("media_cam2_pix", imx8mp_media_cam2_pix_sels, ccm_base + 0xbe80);
- 	hws[IMX8MP_CLK_MEDIA_LDB] = imx8m_clk_hw_composite("media_ldb", imx8mp_media_ldb_sels, ccm_base + 0xbf00);
- 	hws[IMX8MP_CLK_MEMREPAIR] = imx8m_clk_hw_composite_critical("mem_repair", imx8mp_memrepair_sels, ccm_base + 0xbf80);
+@@ -532,6 +537,15 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
+ 	hws[IMX8MP_SYS_PLL2_500M] = imx_clk_hw_fixed_factor("sys_pll2_500m", "sys_pll2_500m_cg", 1, 2);
+ 	hws[IMX8MP_SYS_PLL2_1000M] = imx_clk_hw_fixed_factor("sys_pll2_1000m", "sys_pll2_out", 1, 1);
+ 
++	hws[IMX8MP_CLK_CLKOUT1_SEL] = imx_clk_hw_mux2("clkout1_sel", anatop_base + 0x128, 4, 4,
++						      imx8mp_clkout_sels, ARRAY_SIZE(imx8mp_clkout_sels));
++	hws[IMX8MP_CLK_CLKOUT1_DIV] = imx_clk_hw_divider("clkout1_div", "clkout1_sel", anatop_base + 0x128, 0, 4);
++	hws[IMX8MP_CLK_CLKOUT1] = imx_clk_hw_gate("clkout1", "clkout1_div", anatop_base + 0x128, 8);
++	hws[IMX8MP_CLK_CLKOUT2_SEL] = imx_clk_hw_mux2("clkout2_sel", anatop_base + 0x128, 20, 4,
++						      imx8mp_clkout_sels, ARRAY_SIZE(imx8mp_clkout_sels));
++	hws[IMX8MP_CLK_CLKOUT2_DIV] = imx_clk_hw_divider("clkout2_div", "clkout2_sel", anatop_base + 0x128, 16, 4);
++	hws[IMX8MP_CLK_CLKOUT2] = imx_clk_hw_gate("clkout2", "clkout2_div", anatop_base + 0x128, 24);
++
+ 	hws[IMX8MP_CLK_A53_DIV] = imx8m_clk_hw_composite_core("arm_a53_div", imx8mp_a53_sels, ccm_base + 0x8000);
+ 	hws[IMX8MP_CLK_A53_SRC] = hws[IMX8MP_CLK_A53_DIV];
+ 	hws[IMX8MP_CLK_A53_CG] = hws[IMX8MP_CLK_A53_DIV];
 diff --git a/include/dt-bindings/clock/imx8mp-clock.h b/include/dt-bindings/clock/imx8mp-clock.h
-index e8d68fbb6e3f..4a621fddfcd3 100644
+index 4a621fddfcd3..0ba16b76eb2f 100644
 --- a/include/dt-bindings/clock/imx8mp-clock.h
 +++ b/include/dt-bindings/clock/imx8mp-clock.h
-@@ -322,7 +322,9 @@
+@@ -321,10 +321,15 @@
+ #define IMX8MP_CLK_AUDIO_AXI			310
  #define IMX8MP_CLK_HSIO_AXI			311
  #define IMX8MP_CLK_MEDIA_ISP			312
+-
+ #define IMX8MP_CLK_MEDIA_DISP2_PIX		313
++#define IMX8MP_CLK_CLKOUT1_SEL			314
++#define IMX8MP_CLK_CLKOUT1_DIV			315
++#define IMX8MP_CLK_CLKOUT1			316
++#define IMX8MP_CLK_CLKOUT2_SEL			317
++#define IMX8MP_CLK_CLKOUT2_DIV			318
++#define IMX8MP_CLK_CLKOUT2			319
  
--#define IMX8MP_CLK_END				313
-+#define IMX8MP_CLK_MEDIA_DISP2_PIX		313
-+
-+#define IMX8MP_CLK_END				314
+-#define IMX8MP_CLK_END				314
++#define IMX8MP_CLK_END				320
  
  #define IMX8MP_CLK_AUDIOMIX_SAI1_IPG		0
  #define IMX8MP_CLK_AUDIOMIX_SAI1_MCLK1		1
