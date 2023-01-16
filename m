@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FDF46FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:14:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7BE5C433EF;
-	Mon, 16 Jan 2023 17:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4B06FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:14:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71EACC433D2;
+	Mon, 16 Jan 2023 17:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889250;
-	bh=0dwNZdPvfN6M4f0Sss6I53/5SlDrOnLiWpnfHmdZp44=;
+	s=korg; t=1673889252;
+	bh=InTjSKoGEbpGuE/sWXK07FY5kAGlwQwvXk+TZH+CvoM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xOnjubknvrcZUSs4L3aivo1BG1AH5iBnpnhOTzci88gDvFL1DI1nOCzjmGGuxdJph
-	 Hy71raPBpjFm5bTf0P8KY7P3FSDDv2f50J/LERkBnsJ1TySIkq+Pr/aV4DolHcXOgs
-	 TOKpBvG0/S3+gYbNV66pwc/7kwwRLjHCZcI3Nz0M=
+	b=kJ3Zuc1zkF3she8tNUCq5X+Kigcn66J0h8/6jbMO/G530tRZSRbcj1/GhW+KTm7aj
+	 VxH+rzbtlSwdn6Z+crHBYpp4eWaMioDCTfjRt+HeJcZ8eKLMGTFgRKaD3zIJBVtpgl
+	 zvM1kuUy8ru7SR/y8hbNZkE3TaUc57SPGs0QQ7po=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Parthasarathy <anpartha@meta.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Stanislav Fomichev <sdf@google.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 308/338] bpf: pull before calling skb_postpull_rcsum()
-Date: Mon, 16 Jan 2023 16:53:01 +0100
-Message-Id: <20230116154834.550356485@linuxfoundation.org>
+	Rodrigo Branco <bsdaemon@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ingo Molnar <mingo@kernel.org>
+Subject: [PATCH 4.14 317/338] x86/bugs: Flush IBP in ib_prctl_set()
+Date: Mon, 16 Jan 2023 16:53:10 +0100
+Message-Id: <20230116154834.942469655@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -37,61 +35,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Rodrigo Branco <bsdaemon@google.com>
 
-[ Upstream commit 54c3f1a81421f85e60ae2eaae7be3727a09916ee ]
+commit a664ec9158eeddd75121d39c9a0758016097fa96 upstream.
 
-Anand hit a BUG() when pulling off headers on egress to a SW tunnel.
-We get to skb_checksum_help() with an invalid checksum offset
-(commit d7ea0d9df2a6 ("net: remove two BUG() from skb_checksum_help()")
-converted those BUGs to WARN_ONs()).
-He points out oddness in how skb_postpull_rcsum() gets used.
-Indeed looks like we should pull before "postpull", otherwise
-the CHECKSUM_PARTIAL fixup from skb_postpull_rcsum() will not
-be able to do its job:
+We missed the window between the TIF flag update and the next reschedule.
 
-	if (skb->ip_summed == CHECKSUM_PARTIAL &&
-	    skb_checksum_start_offset(skb) < 0)
-		skb->ip_summed = CHECKSUM_NONE;
-
-Reported-by: Anand Parthasarathy <anpartha@meta.com>
-Fixes: 6578171a7ff0 ("bpf: add bpf_skb_change_proto helper")
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/r/20221220004701.402165-1-kuba@kernel.org
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Rodrigo Branco <bsdaemon@google.com>
+Reviewed-by: Borislav Petkov (AMD) <bp@alien8.de>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/filter.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/x86/kernel/cpu/bugs.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/core/filter.c b/net/core/filter.c
-index 0613aa7b0966..29d85a20f4fc 100644
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -2035,15 +2035,18 @@ static int bpf_skb_generic_push(struct sk_buff *skb, u32 off, u32 len)
- 
- static int bpf_skb_generic_pop(struct sk_buff *skb, u32 off, u32 len)
- {
-+	void *old_data;
-+
- 	/* skb_ensure_writable() is not needed here, as we're
- 	 * already working on an uncloned skb.
- 	 */
- 	if (unlikely(!pskb_may_pull(skb, off + len)))
- 		return -ENOMEM;
- 
--	skb_postpull_rcsum(skb, skb->data + off, len);
--	memmove(skb->data + len, skb->data, off);
-+	old_data = skb->data;
- 	__skb_pull(skb, len);
-+	skb_postpull_rcsum(skb, old_data + off, len);
-+	memmove(skb->data, old_data, off);
- 
- 	return 0;
- }
--- 
-2.35.1
-
+--- a/arch/x86/kernel/cpu/bugs.c
++++ b/arch/x86/kernel/cpu/bugs.c
+@@ -1776,6 +1776,8 @@ static int ib_prctl_set(struct task_stru
+ 		if (ctrl == PR_SPEC_FORCE_DISABLE)
+ 			task_set_spec_ib_force_disable(task);
+ 		task_update_spec_tif(task);
++		if (task == current)
++			indirect_branch_prediction_barrier();
+ 		break;
+ 	default:
+ 		return -ERANGE;
 
 
