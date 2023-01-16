@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6656E46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:06:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDB9EC433EF;
-	Mon, 16 Jan 2023 16:06:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0339646B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:06:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D28BC433F0;
+	Mon, 16 Jan 2023 16:06:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885197;
-	bh=mmJGH3qKA4XYqplHXT50W9TRgTQvZGNX0DtIqJkaUow=;
+	s=korg; t=1673885199;
+	bh=t3IiQ6/rcszscYvKAaH8qG79If9HNsebBRNb0SZhqQA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fy8smI8+uU/nLV2zIfCAj0FYsYbwm5FEatAeMhzcfj5FdzHwJmVZHSIMGG3fQpFZd
-	 NpaVtk4wGvdff68sZvZp9Qvjm3HzmTC/46zExLkoDuxoLHwdCIFiYgryBcoERQyvaG
-	 Ju7GU9/QTzuEicrtSZHsvL8Hb5bKanOIzrJG0BXA=
+	b=hfxa852Un4PtJdXcFw6oyxaqLwNumAhBHqkkKkpLGFgTZAOmppUH01xurO6nj7Fu/
+	 U/VdEzX8sU1HrEgZMDv+jtgxZnKnxZXRHJd1ctIWoJOIucQTeA2BnRFitrNxOpClYY
+	 /m1H5GdsmYgBwxT7ikmoMI4kRyaxvr02cQUTT9fY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 25/64] xhci: get isochronous ring directly from endpoint structure
-Date: Mon, 16 Jan 2023 16:51:32 +0100
-Message-Id: <20230116154744.471346329@linuxfoundation.org>
+Subject: [PATCH 5.10 26/64] xhci: adjust parameters passed to cleanup_halted_endpoint()
+Date: Mon, 16 Jan 2023 16:51:33 +0100
+Message-Id: <20230116154744.501401626@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -36,93 +36,166 @@ Content-Transfer-Encoding: 8bit
 
 From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit d4dff8043ea5b93a30cb9b19d4407bd506a6877a ]
+[ Upstream commit d70f4231b81eeb6dd78bd913ff42729b524eec51 ]
 
-isochronous endpoints do not support streams, meaning that
-there is only one ring per endpoint.
+Instead of passing slot id and endpoint index to
+cleanup_halted_endpoint() pass the endpoint structure pointer
+as it's already known.
 
-Avoid double-fetching the transfer event DMA to get the
-ring. Also makes passing the event to skip_isoc_td() uncecessary.
+Avoids again digging out the endpoint structure based on
+slot id and endpoint index, and passing them along the
+call chain for this purpose only.
+
+Add slot_id to the virt_dev structure so that it
+can easily be found from a virt_dev, or its child, the
+virt_ep endpoint structure.
 
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20210129130044.206855-3-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/r/20210129130044.206855-4-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: a1575120972e ("xhci: Prevent infinite loop in transaction errors recovery for streams")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ drivers/usb/host/xhci-mem.c  |  2 ++
+ drivers/usb/host/xhci-ring.c | 35 ++++++++++++++---------------------
+ drivers/usb/host/xhci.h      |  1 +
+ 3 files changed, 17 insertions(+), 21 deletions(-)
 
+diff --git a/drivers/usb/host/xhci-mem.c b/drivers/usb/host/xhci-mem.c
+index 002e4948993d..a8a9addb4d25 100644
+--- a/drivers/usb/host/xhci-mem.c
++++ b/drivers/usb/host/xhci-mem.c
+@@ -1003,6 +1003,8 @@ int xhci_alloc_virt_device(struct xhci_hcd *xhci, int slot_id,
+ 	if (!dev)
+ 		return 0;
+ 
++	dev->slot_id = slot_id;
++
+ 	/* Allocate the (output) device context that will be used in the HC. */
+ 	dev->out_ctx = xhci_alloc_container_ctx(xhci, XHCI_CTX_TYPE_DEVICE, flags);
+ 	if (!dev->out_ctx)
 diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 5cee7150376d..6d34c56376e5 100644
+index 6d34c56376e5..a0d210d3a3c6 100644
 --- a/drivers/usb/host/xhci-ring.c
 +++ b/drivers/usb/host/xhci-ring.c
-@@ -2209,7 +2209,6 @@ static int process_isoc_td(struct xhci_hcd *xhci, struct xhci_td *td,
- 	union xhci_trb *ep_trb, struct xhci_transfer_event *event,
- 	struct xhci_virt_ep *ep, int *status)
- {
--	struct xhci_ring *ep_ring;
- 	struct urb_priv *urb_priv;
- 	int idx;
- 	struct usb_iso_packet_descriptor *frame;
-@@ -2218,7 +2217,6 @@ static int process_isoc_td(struct xhci_hcd *xhci, struct xhci_td *td,
- 	u32 remaining, requested, ep_trb_len;
- 	int short_framestatus;
+@@ -1925,13 +1925,12 @@ static void xhci_clear_hub_tt_buffer(struct xhci_hcd *xhci, struct xhci_td *td,
+ }
  
--	ep_ring = xhci_dma_to_transfer_ring(ep, le64_to_cpu(event->buffer));
- 	trb_comp_code = GET_COMP_CODE(le32_to_cpu(event->transfer_len));
- 	urb_priv = td->urb->hcpriv;
- 	idx = urb_priv->num_tds_done;
-@@ -2279,7 +2277,7 @@ static int process_isoc_td(struct xhci_hcd *xhci, struct xhci_td *td,
+ static void xhci_cleanup_halted_endpoint(struct xhci_hcd *xhci,
+-		unsigned int slot_id, unsigned int ep_index,
+-		unsigned int stream_id, struct xhci_td *td,
+-		enum xhci_ep_reset_type reset_type)
++				struct xhci_virt_ep *ep, unsigned int stream_id,
++				struct xhci_td *td,
++				enum xhci_ep_reset_type reset_type)
+ {
+-	struct xhci_virt_ep *ep = &xhci->devs[slot_id]->eps[ep_index];
+ 	struct xhci_command *command;
+-
++	unsigned int slot_id = ep->vdev->slot_id;
+ 	/*
+ 	 * Avoid resetting endpoint if link is inactive. Can cause host hang.
+ 	 * Device will be reset soon to recover the link so don't do anything
+@@ -1945,11 +1944,11 @@ static void xhci_cleanup_halted_endpoint(struct xhci_hcd *xhci,
+ 
+ 	ep->ep_state |= EP_HALTED;
+ 
+-	xhci_queue_reset_ep(xhci, command, slot_id, ep_index, reset_type);
++	xhci_queue_reset_ep(xhci, command, slot_id, ep->ep_index, reset_type);
+ 
+ 	if (reset_type == EP_HARD_RESET) {
+ 		ep->ep_state |= EP_HARD_CLEAR_TOGGLE;
+-		xhci_cleanup_stalled_ring(xhci, slot_id, ep_index, stream_id,
++		xhci_cleanup_stalled_ring(xhci, slot_id, ep->ep_index, stream_id,
+ 					  td);
  	}
- 
- 	if (sum_trbs_for_length)
--		frame->actual_length = sum_trb_lengths(xhci, ep_ring, ep_trb) +
-+		frame->actual_length = sum_trb_lengths(xhci, ep->ring, ep_trb) +
- 			ep_trb_len - remaining;
- 	else
- 		frame->actual_length = requested;
-@@ -2290,15 +2288,12 @@ static int process_isoc_td(struct xhci_hcd *xhci, struct xhci_td *td,
- }
- 
- static int skip_isoc_td(struct xhci_hcd *xhci, struct xhci_td *td,
--			struct xhci_transfer_event *event,
- 			struct xhci_virt_ep *ep, int *status)
+ 	xhci_ring_cmd_db(xhci);
+@@ -2047,10 +2046,8 @@ static int finish_td(struct xhci_hcd *xhci, struct xhci_td *td,
  {
--	struct xhci_ring *ep_ring;
- 	struct urb_priv *urb_priv;
- 	struct usb_iso_packet_descriptor *frame;
- 	int idx;
+ 	struct xhci_ep_ctx *ep_ctx;
+ 	struct xhci_ring *ep_ring;
+-	unsigned int slot_id;
+ 	u32 trb_comp_code;
  
--	ep_ring = xhci_dma_to_transfer_ring(ep, le64_to_cpu(event->buffer));
- 	urb_priv = td->urb->hcpriv;
- 	idx = urb_priv->num_tds_done;
- 	frame = &td->urb->iso_frame_desc[idx];
-@@ -2310,11 +2305,11 @@ static int skip_isoc_td(struct xhci_hcd *xhci, struct xhci_td *td,
- 	frame->actual_length = 0;
+-	slot_id = TRB_TO_SLOT_ID(le32_to_cpu(event->flags));
+ 	ep_ring = xhci_dma_to_transfer_ring(ep, le64_to_cpu(event->buffer));
+ 	ep_ctx = xhci_get_ep_ctx(xhci, ep->vdev->out_ctx, ep->ep_index);
+ 	trb_comp_code = GET_COMP_CODE(le32_to_cpu(event->transfer_len));
+@@ -2079,8 +2076,8 @@ static int finish_td(struct xhci_hcd *xhci, struct xhci_td *td,
+ 		 */
+ 		if ((ep->ep_index != 0) || (trb_comp_code != COMP_STALL_ERROR))
+ 			xhci_clear_hub_tt_buffer(xhci, td, ep);
+-		xhci_cleanup_halted_endpoint(xhci, slot_id, ep->ep_index,
+-					ep_ring->stream_id, td, EP_HARD_RESET);
++		xhci_cleanup_halted_endpoint(xhci, ep, ep_ring->stream_id, td,
++					     EP_HARD_RESET);
+ 	} else {
+ 		/* Update ring dequeue pointer */
+ 		while (ep_ring->dequeue != td->last_trb)
+@@ -2323,9 +2320,7 @@ static int process_bulk_intr_td(struct xhci_hcd *xhci, struct xhci_td *td,
+ 	struct xhci_ring *ep_ring;
+ 	u32 trb_comp_code;
+ 	u32 remaining, requested, ep_trb_len;
+-	unsigned int slot_id;
  
- 	/* Update ring dequeue pointer */
--	while (ep_ring->dequeue != td->last_trb)
--		inc_deq(xhci, ep_ring);
--	inc_deq(xhci, ep_ring);
-+	while (ep->ring->dequeue != td->last_trb)
-+		inc_deq(xhci, ep->ring);
-+	inc_deq(xhci, ep->ring);
- 
--	return xhci_td_cleanup(xhci, td, ep_ring, status);
-+	return xhci_td_cleanup(xhci, td, ep->ring, status);
- }
- 
- /*
-@@ -2693,7 +2688,7 @@ static int handle_tx_event(struct xhci_hcd *xhci,
- 				return -ESHUTDOWN;
- 			}
- 
--			skip_isoc_td(xhci, td, event, ep, &status);
-+			skip_isoc_td(xhci, td, ep, &status);
+-	slot_id = TRB_TO_SLOT_ID(le32_to_cpu(event->flags));
+ 	slot_ctx = xhci_get_slot_ctx(xhci, ep->vdev->out_ctx);
+ 	ep_ring = xhci_dma_to_transfer_ring(ep, le64_to_cpu(event->buffer));
+ 	trb_comp_code = GET_COMP_CODE(le32_to_cpu(event->transfer_len));
+@@ -2365,8 +2360,8 @@ static int process_bulk_intr_td(struct xhci_hcd *xhci, struct xhci_td *td,
+ 		    le32_to_cpu(slot_ctx->tt_info) & TT_SLOT)
+ 			break;
+ 		*status = 0;
+-		xhci_cleanup_halted_endpoint(xhci, slot_id, ep->ep_index,
+-					ep_ring->stream_id, td, EP_SOFT_RESET);
++		xhci_cleanup_halted_endpoint(xhci, ep, ep_ring->stream_id, td,
++					     EP_SOFT_RESET);
+ 		return 0;
+ 	default:
+ 		/* do nothing */
+@@ -2441,8 +2436,8 @@ static int handle_tx_event(struct xhci_hcd *xhci,
+ 		case COMP_USB_TRANSACTION_ERROR:
+ 		case COMP_INVALID_STREAM_TYPE_ERROR:
+ 		case COMP_INVALID_STREAM_ID_ERROR:
+-			xhci_cleanup_halted_endpoint(xhci, slot_id, ep_index, 0,
+-						     NULL, EP_SOFT_RESET);
++			xhci_cleanup_halted_endpoint(xhci, ep, 0, NULL,
++						     EP_SOFT_RESET);
  			goto cleanup;
- 		}
- 		if (trb_comp_code == COMP_SHORT_PACKET)
+ 		case COMP_RING_UNDERRUN:
+ 		case COMP_RING_OVERRUN:
+@@ -2625,8 +2620,7 @@ static int handle_tx_event(struct xhci_hcd *xhci,
+ 			if (trb_comp_code == COMP_STALL_ERROR ||
+ 			    xhci_requires_manual_halt_cleanup(xhci, ep_ctx,
+ 							      trb_comp_code)) {
+-				xhci_cleanup_halted_endpoint(xhci, slot_id,
+-							     ep_index,
++				xhci_cleanup_halted_endpoint(xhci, ep,
+ 							     ep_ring->stream_id,
+ 							     NULL,
+ 							     EP_HARD_RESET);
+@@ -2720,8 +2714,7 @@ static int handle_tx_event(struct xhci_hcd *xhci,
+ 			if (trb_comp_code == COMP_STALL_ERROR ||
+ 			    xhci_requires_manual_halt_cleanup(xhci, ep_ctx,
+ 							      trb_comp_code))
+-				xhci_cleanup_halted_endpoint(xhci, slot_id,
+-							     ep_index,
++				xhci_cleanup_halted_endpoint(xhci, ep,
+ 							     ep_ring->stream_id,
+ 							     td, EP_HARD_RESET);
+ 			goto cleanup;
+diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+index 5fbd159f6fa5..9cbf106fb3ee 100644
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1004,6 +1004,7 @@ struct xhci_interval_bw_table {
+ #define EP_CTX_PER_DEV		31
+ 
+ struct xhci_virt_device {
++	int				slot_id;
+ 	struct usb_device		*udev;
+ 	/*
+ 	 * Commands to the hardware are passed an "input context" that
 -- 
 2.35.1
 
