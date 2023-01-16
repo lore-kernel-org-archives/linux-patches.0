@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E1C6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:50:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B20B2C433F0;
-	Mon, 16 Jan 2023 16:50:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAD286FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:50:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E807C433D2;
+	Mon, 16 Jan 2023 16:50:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887821;
-	bh=iipozZfwKxuvFHMN2/LylZ200fRqCNZUPm8J4aIeik0=;
+	s=korg; t=1673887823;
+	bh=xBqPdu5/M5iYtBpqJgQv8B7ZhGaaB27wTnALzo3SJYM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oMoi9yN/d93Ru5fL6CDAE8SNXHAnaIe0rLerjlwGOvvI0kcipbxAvYstx3ZhXX4KC
-	 kltSKcKTNU9jxa/vsX+eS2Mmj7GQ5XjJkTEBWkDTvLsUPwat3hgQfokkAohEBSUzS6
-	 GTQIrSmOpvGXF8+yOJOhJTNm3l6DWYpemmH7p9dE=
+	b=ZOTKKoNMlj5Iva80WApWmy4mkzPu6qHFFwjRWNYpvVqPu+1wRWeaHk8Tdlp4QnmZ+
+	 Ly9AifAK1qjBHs9nI9Uz/3vr6T4m/TDrHUtxZwe3yuPgcsoiCu3YZSJNaLraz1Jfn6
+	 6oaZfBpFJTwFS9xxzefZDB+wg7OeAZUCc89NFJPM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Redfearn <matt.redfearn@mips.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Nathan Chancellor <nathan@kernel.org>,
-	=?UTF-8?q?Petr=20Van=C4=9Bk?= <arkamar@atlas.cz>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	"Guilherme G. Piccoli" <gpiccoli@canonical.com>,
+	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 264/521] include/uapi/linux/swab: Fix potentially missing __always_inline
-Date: Mon, 16 Jan 2023 16:48:46 +0100
-Message-Id: <20230116154858.944873332@linuxfoundation.org>
+Subject: [PATCH 4.19 265/521] rtc: cmos: Refactor code by using the new dmi_get_bios_year() helper
+Date: Mon, 16 Jan 2023 16:48:47 +0100
+Message-Id: <20230116154858.993984987@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -38,59 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matt Redfearn <matt.redfearn@mips.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit defbab270d45e32b068e7e73c3567232d745c60f ]
+[ Upstream commit 604c521259c8051b7607c000eda7938f7a705d92 ]
 
-Commit bc27fb68aaad ("include/uapi/linux/byteorder, swab: force inlining
-of some byteswap operations") added __always_inline to swab functions
-and commit 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to
-userspace headers") added a definition of __always_inline for use in
-exported headers when the kernel's compiler.h is not available.
+Refactor code by using the new dmi_get_bios_year() helper instead of
+open coding its functionality. This also makes logic slightly clearer.
 
-However, since swab.h does not include stddef.h, if the header soup does
-not indirectly include it, the definition of __always_inline is missing,
-resulting in a compilation failure, which was observed compiling the
-perf tool using exported headers containing this commit:
+No changes intended.
 
-In file included from /usr/include/linux/byteorder/little_endian.h:12:0,
-                 from /usr/include/asm/byteorder.h:14,
-                 from tools/include/uapi/linux/perf_event.h:20,
-                 from perf.h:8,
-                 from builtin-bench.c:18:
-/usr/include/linux/swab.h:160:8: error: unknown type name `__always_inline'
- static __always_inline __u16 __swab16p(const __u16 *p)
-
-Fix this by replacing the inclusion of linux/compiler.h with
-linux/stddef.h to ensure that we pick up that definition if required,
-without relying on it's indirect inclusion. compiler.h is then included
-indirectly, via stddef.h.
-
-Fixes: 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to userspace headers")
-Signed-off-by: Matt Redfearn <matt.redfearn@mips.com>
-Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Petr Vaněk <arkamar@atlas.cz>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Cc: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Tested-by: Guilherme G. Piccoli <gpiccoli@canonical.com>
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20200123131437.28157-3-andriy.shevchenko@linux.intel.com
+Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/swab.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/rtc/rtc-cmos.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/uapi/linux/swab.h b/include/uapi/linux/swab.h
-index 7272f85d6d6a..3736f2fe1541 100644
---- a/include/uapi/linux/swab.h
-+++ b/include/uapi/linux/swab.h
-@@ -3,7 +3,7 @@
- #define _UAPI_LINUX_SWAB_H
+diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
+index 8545f0da57fe..58a3104b8a1c 100644
+--- a/drivers/rtc/rtc-cmos.c
++++ b/drivers/rtc/rtc-cmos.c
+@@ -1204,8 +1204,6 @@ static void rtc_wake_off(struct device *dev)
+ /* Enable use_acpi_alarm mode for Intel platforms no earlier than 2015 */
+ static void use_acpi_alarm_quirks(void)
+ {
+-	int year;
+-
+ 	if (boot_cpu_data.x86_vendor != X86_VENDOR_INTEL)
+ 		return;
  
- #include <linux/types.h>
--#include <linux/compiler.h>
-+#include <linux/stddef.h>
- #include <asm/bitsperlong.h>
- #include <asm/swab.h>
+@@ -1215,8 +1213,10 @@ static void use_acpi_alarm_quirks(void)
+ 	if (!is_hpet_enabled())
+ 		return;
  
+-	if (dmi_get_date(DMI_BIOS_DATE, &year, NULL, NULL) && year >= 2015)
+-		use_acpi_alarm = true;
++	if (dmi_get_bios_year() < 2015)
++		return;
++
++	use_acpi_alarm = true;
+ }
+ #else
+ static inline void use_acpi_alarm_quirks(void) { }
 -- 
 2.35.1
 
