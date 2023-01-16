@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EFCB46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:29:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00ED6C433EF;
-	Mon, 16 Jan 2023 16:29:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29E5446B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:29:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0972C433EF;
+	Mon, 16 Jan 2023 16:29:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886562;
-	bh=RgnXddINoIAuidOKw4DasAjpIMoLfiZXyCvNmPWv48w=;
+	s=korg; t=1673886565;
+	bh=TDEAjpv6OXyS2VpgDx29bD+bXXZKdHgohv67L/H87lc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WDcTRbHjBzAT0KE7/SL1bOWfc+VSi+MvFDuRr+5WcyzrktuGamJTp2bQhZoR5hWUo
-	 XwsDhM2uC/M298buKBxHIt4tEOtD4hQw2X96bF/REDX5en5OvMjz3R6TG1UWl8/mR8
-	 Ad2+Ok80IPYAsrd02LZElk3EkqS6X+RzYDQkTZTI=
+	b=GraySmRaX32Wx/8bVZYQvvRLC161cF8Ye5kW3VjyNVkpljXHp4pZL63UlCWroE7d1
+	 47+vxSx0/jfVOIBIAuTe+5HJJY8aWPzcYl8OttSeeeG815kXJ9QLrBPtZ/lrpeoHMm
+	 4lmv20oIp2OUHPsIbxVBZdIxTn8BDSHc36mIT7I0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Jeff Layton <jlayton@kernel.org>
-Subject: [PATCH 5.4 476/658] SUNRPC: Dont leak netobj memory when gss_read_proxy_verf() fails
-Date: Mon, 16 Jan 2023 16:49:24 +0100
-Message-Id: <20230116154931.257396862@linuxfoundation.org>
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Willem de Bruijn <willemb@google.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>
+Subject: [PATCH 5.4 477/658] net/af_packet: add VLAN support for AF_PACKET SOCK_RAW GSO
+Date: Mon, 16 Jan 2023 16:49:25 +0100
+Message-Id: <20230116154931.299273580@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -34,46 +37,90 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chuck Lever <chuck.lever@oracle.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-commit da522b5fe1a5f8b7c20a0023e87b52a150e53bf5 upstream.
+commit dfed913e8b55a0c2c4906f1242fd38fd9a116e49 upstream.
 
-Fixes: 030d794bf498 ("SUNRPC: Use gssproxy upcall for server RPCGSS authentication.")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
-Cc: <stable@vger.kernel.org>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Currently, the kernel drops GSO VLAN tagged packet if it's created with
+socket(AF_PACKET, SOCK_RAW, 0) plus virtio_net_hdr.
+
+The reason is AF_PACKET doesn't adjust the skb network header if there is
+a VLAN tag. Then after virtio_net_hdr_set_proto() called, the skb->protocol
+will be set to ETH_P_IP/IPv6. And in later inet/ipv6_gso_segment() the skb
+is dropped as network header position is invalid.
+
+Let's handle VLAN packets by adjusting network header position in
+packet_parse_headers(). The adjustment is safe and does not affect the
+later xmit as tap device also did that.
+
+In packet_snd(), packet_parse_headers() need to be moved before calling
+virtio_net_hdr_set_proto(), so we can set correct skb->protocol and
+network header first.
+
+There is no need to update tpacket_snd() as it calls packet_parse_headers()
+in tpacket_fill_skb(), which is already before calling virtio_net_hdr_*
+functions.
+
+skb->no_fcs setting is also moved upper to make all skb settings together
+and keep consistency with function packet_sendmsg_spkt().
+
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Acked-by: Willem de Bruijn <willemb@google.com>
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Link: https://lore.kernel.org/r/20220425014502.985464-1-liuhangbin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sunrpc/auth_gss/svcauth_gss.c |    9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ net/packet/af_packet.c |   18 +++++++++++++-----
+ 1 file changed, 13 insertions(+), 5 deletions(-)
 
---- a/net/sunrpc/auth_gss/svcauth_gss.c
-+++ b/net/sunrpc/auth_gss/svcauth_gss.c
-@@ -1104,18 +1104,23 @@ static int gss_read_proxy_verf(struct sv
- 		return res;
+--- a/net/packet/af_packet.c
++++ b/net/packet/af_packet.c
+@@ -1864,12 +1864,20 @@ oom:
  
- 	inlen = svc_getnl(argv);
--	if (inlen > (argv->iov_len + rqstp->rq_arg.page_len))
-+	if (inlen > (argv->iov_len + rqstp->rq_arg.page_len)) {
-+		kfree(in_handle->data);
- 		return SVC_DENIED;
-+	}
+ static void packet_parse_headers(struct sk_buff *skb, struct socket *sock)
+ {
++	int depth;
++
+ 	if ((!skb->protocol || skb->protocol == htons(ETH_P_ALL)) &&
+ 	    sock->type == SOCK_RAW) {
+ 		skb_reset_mac_header(skb);
+ 		skb->protocol = dev_parse_header_protocol(skb);
+ 	}
  
- 	pages = DIV_ROUND_UP(inlen, PAGE_SIZE);
- 	in_token->pages = kcalloc(pages, sizeof(struct page *), GFP_KERNEL);
--	if (!in_token->pages)
-+	if (!in_token->pages) {
-+		kfree(in_handle->data);
- 		return SVC_DENIED;
-+	}
- 	in_token->page_base = 0;
- 	in_token->page_len = inlen;
- 	for (i = 0; i < pages; i++) {
- 		in_token->pages[i] = alloc_page(GFP_KERNEL);
- 		if (!in_token->pages[i]) {
-+			kfree(in_handle->data);
- 			gss_free_in_token_pages(in_token);
- 			return SVC_DENIED;
- 		}
++	/* Move network header to the right position for VLAN tagged packets */
++	if (likely(skb->dev->type == ARPHRD_ETHER) &&
++	    eth_type_vlan(skb->protocol) &&
++	    __vlan_get_protocol(skb, skb->protocol, &depth) != 0)
++		skb_set_network_header(skb, depth);
++
+ 	skb_probe_transport_header(skb);
+ }
+ 
+@@ -2979,6 +2987,11 @@ static int packet_snd(struct socket *soc
+ 	skb->mark = sockc.mark;
+ 	skb->tstamp = sockc.transmit_time;
+ 
++	if (unlikely(extra_len == 4))
++		skb->no_fcs = 1;
++
++	packet_parse_headers(skb, sock);
++
+ 	if (has_vnet_hdr) {
+ 		err = virtio_net_hdr_to_skb(skb, &vnet_hdr, vio_le());
+ 		if (err)
+@@ -2987,11 +3000,6 @@ static int packet_snd(struct socket *soc
+ 		virtio_net_hdr_set_proto(skb, &vnet_hdr);
+ 	}
+ 
+-	packet_parse_headers(skb, sock);
+-
+-	if (unlikely(extra_len == 4))
+-		skb->no_fcs = 1;
+-
+ 	err = po->xmit(skb);
+ 	if (unlikely(err != 0)) {
+ 		if (err > 0)
 
 
