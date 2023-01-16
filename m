@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B30F446B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:14:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BB69C433D2;
-	Mon, 16 Jan 2023 16:14:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 433A246B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:14:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDD06C433D2;
+	Mon, 16 Jan 2023 16:14:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885693;
-	bh=FvgJ0iFQ3HwhOCleODPanUCbxu7fanq/3CU+dxMyVeU=;
+	s=korg; t=1673885696;
+	bh=S8B+7BUL+uRwVISrw8I+/MgAHOjDqUc4NVsmGQ2/cNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TjWQDGOICw0VimtwYARnm3h6zdgahMaZsgDxR8kdLYvMxpjVM5bSJm/0TlvxrR+nj
-	 GKcnzv/8a086NfCEmSQyf6nGNE8S5rMhKr9Cod/yEJ6mBTCg218/SV3HTo0iJCnvUK
-	 Pl2IKOFL3gRvDJacMOSDO+GgMzWDPXrX92aapL28=
+	b=Mycge1tlPOoas08AXEPt5bdSEPDR01YXkseoPfxPqvOMJ1MeB8MeQdIYm1LQblyWt
+	 sA92itjDnyGNtNGKux1LKZcOKJwMSnR0fb8HNkkTFQRz3mxfIgu6XyvtLiAWOCF4xV
+	 nKJjxtZDvKZOs/39mYYauIMi0WMeDFI1XEeOx8fE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Toppins <jtoppins@redhat.com>,
-	Jay Vosburgh <jay.vosburgh@canonical.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Zheng Yongjun <zhengyongjun3@huawei.com>,
+	Miquel Raynal <miquel.raynal@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 148/658] bonding: fix link recovery in mode 2 when updelay is nonzero
-Date: Mon, 16 Jan 2023 16:43:56 +0100
-Message-Id: <20230116154916.229320055@linuxfoundation.org>
+Subject: [PATCH 5.4 149/658] mtd: maps: pxa2xx-flash: fix memory leak in probe
+Date: Mon, 16 Jan 2023 16:43:57 +0100
+Message-Id: <20230116154916.280372615@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,47 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Toppins <jtoppins@redhat.com>
+From: Zheng Yongjun <zhengyongjun3@huawei.com>
 
-[ Upstream commit f8a65ab2f3ff7410921ebbf0dc55453102c33c56 ]
+[ Upstream commit 2399401feee27c639addc5b7e6ba519d3ca341bf ]
 
-Before this change when a bond in mode 2 lost link, all of its slaves
-lost link, the bonding device would never recover even after the
-expiration of updelay. This change removes the updelay when the bond
-currently has no usable links. Conforming to bonding.txt section 13.1
-paragraph 4.
+Free 'info' upon remapping error to avoid a memory leak.
 
-Fixes: 41f891004063 ("bonding: ignore updelay param when there is no active slave")
-Signed-off-by: Jonathan Toppins <jtoppins@redhat.com>
-Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: e644f7d62894 ("[MTD] MAPS: Merge Lubbock and Mainstone drivers into common PXA2xx driver")
+Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
+[<miquel.raynal@bootlin.com>: Reword the commit log]
+Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
+Link: https://lore.kernel.org/linux-mtd/20221119073307.22929-1-zhengyongjun3@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/bonding/bond_main.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/mtd/maps/pxa2xx-flash.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
-index dc351832b108..0b7994cb9380 100644
---- a/drivers/net/bonding/bond_main.c
-+++ b/drivers/net/bonding/bond_main.c
-@@ -2107,7 +2107,16 @@ static int bond_miimon_inspect(struct bonding *bond)
- 	struct slave *slave;
- 	bool ignore_updelay;
- 
--	ignore_updelay = !rcu_dereference(bond->curr_active_slave);
-+	if (BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP) {
-+		ignore_updelay = !rcu_dereference(bond->curr_active_slave);
-+	} else {
-+		struct bond_up_slave *usable_slaves;
-+
-+		usable_slaves = rcu_dereference(bond->usable_slaves);
-+
-+		if (usable_slaves && usable_slaves->count == 0)
-+			ignore_updelay = true;
-+	}
- 
- 	bond_for_each_slave_rcu(bond, slave, iter) {
- 		bond_propose_link_state(slave, BOND_LINK_NOCHANGE);
+diff --git a/drivers/mtd/maps/pxa2xx-flash.c b/drivers/mtd/maps/pxa2xx-flash.c
+index 7d96758a8f04..6e5e55755970 100644
+--- a/drivers/mtd/maps/pxa2xx-flash.c
++++ b/drivers/mtd/maps/pxa2xx-flash.c
+@@ -66,6 +66,7 @@ static int pxa2xx_flash_probe(struct platform_device *pdev)
+ 	if (!info->map.virt) {
+ 		printk(KERN_WARNING "Failed to ioremap %s\n",
+ 		       info->map.name);
++		kfree(info);
+ 		return -ENOMEM;
+ 	}
+ 	info->map.cached = ioremap_cache(info->map.phys, info->map.size);
+@@ -87,6 +88,7 @@ static int pxa2xx_flash_probe(struct platform_device *pdev)
+ 		iounmap((void *)info->map.virt);
+ 		if (info->map.cached)
+ 			iounmap(info->map.cached);
++		kfree(info);
+ 		return -EIO;
+ 	}
+ 	info->mtd->dev.parent = &pdev->dev;
 -- 
 2.35.1
 
