@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CD96FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE52C4339B;
-	Mon, 16 Jan 2023 16:56:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9F986FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 37C61C433EF;
+	Mon, 16 Jan 2023 16:56:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888210;
-	bh=lWq+UEYPegfGUV+K0842KsNoQN8PXyOJWfkep4/09OE=;
+	s=korg; t=1673888213;
+	bh=WbMpE+0gSzQvijrHMe1ILeN1tMM0zDR9FWTeKEpL6wg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=at5rU7/cTRvoppjxFndAO9ZkxJH12XoJdjkzhQFzKz3EVI7SGKpLcFn3ezCmSIV5I
-	 PBFqpVYB07zi5aZiIgDjpmbwOw+xT16Jux3Qqtj7F/D/PwBwUQ6h3kMg0Pq1TywqKz
-	 eYTCemmrcdQ1H0hToYJSr4yB6YF5PEeXbzwgIUwg=
+	b=YJsh4T02ICexHhOeHpVKHCIeDfL9JwLPmXrQx7wnpdjpLx3PVeMDQ5YdGt0CARfTe
+	 LWwPCdOqfITtdbj/HXw2aEJqONXLSf2MFFaZIfwCARdR4N8dTjAEu2MRSZe56FkRVo
+	 TZirjasHNY61ofqkxeJjfohVFY4wYwT0SmUZG06M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	minoura makoto <minoura@valinux.co.jp>,
-	Hiroshi Shimamoto <h-shimamoto@nec.com>,
-	Trond Myklebust <trondmy@hammerspace.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Anand Parthasarathy <anpartha@meta.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Stanislav Fomichev <sdf@google.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 442/521] SUNRPC: ensure the matching upcall is in-flight upon downcall
-Date: Mon, 16 Jan 2023 16:51:44 +0100
-Message-Id: <20230116154906.918934110@linuxfoundation.org>
+Subject: [PATCH 4.19 443/521] bpf: pull before calling skb_postpull_rcsum()
+Date: Mon, 16 Jan 2023 16:51:45 +0100
+Message-Id: <20230116154906.954022230@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,131 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: minoura makoto <minoura@valinux.co.jp>
+From: Jakub Kicinski <kuba@kernel.org>
 
-[ Upstream commit b18cba09e374637a0a3759d856a6bca94c133952 ]
+[ Upstream commit 54c3f1a81421f85e60ae2eaae7be3727a09916ee ]
 
-Commit 9130b8dbc6ac ("SUNRPC: allow for upcalls for the same uid
-but different gss service") introduced `auth` argument to
-__gss_find_upcall(), but in gss_pipe_downcall() it was left as NULL
-since it (and auth->service) was not (yet) determined.
+Anand hit a BUG() when pulling off headers on egress to a SW tunnel.
+We get to skb_checksum_help() with an invalid checksum offset
+(commit d7ea0d9df2a6 ("net: remove two BUG() from skb_checksum_help()")
+converted those BUGs to WARN_ONs()).
+He points out oddness in how skb_postpull_rcsum() gets used.
+Indeed looks like we should pull before "postpull", otherwise
+the CHECKSUM_PARTIAL fixup from skb_postpull_rcsum() will not
+be able to do its job:
 
-When multiple upcalls with the same uid and different service are
-ongoing, it could happen that __gss_find_upcall(), which returns the
-first match found in the pipe->in_downcall list, could not find the
-correct gss_msg corresponding to the downcall we are looking for.
-Moreover, it might return a msg which is not sent to rpc.gssd yet.
+	if (skb->ip_summed == CHECKSUM_PARTIAL &&
+	    skb_checksum_start_offset(skb) < 0)
+		skb->ip_summed = CHECKSUM_NONE;
 
-We could see mount.nfs process hung in D state with multiple mount.nfs
-are executed in parallel.  The call trace below is of CentOS 7.9
-kernel-3.10.0-1160.24.1.el7.x86_64 but we observed the same hang w/
-elrepo kernel-ml-6.0.7-1.el7.
-
-PID: 71258  TASK: ffff91ebd4be0000  CPU: 36  COMMAND: "mount.nfs"
- #0 [ffff9203ca3234f8] __schedule at ffffffffa3b8899f
- #1 [ffff9203ca323580] schedule at ffffffffa3b88eb9
- #2 [ffff9203ca323590] gss_cred_init at ffffffffc0355818 [auth_rpcgss]
- #3 [ffff9203ca323658] rpcauth_lookup_credcache at ffffffffc0421ebc
-[sunrpc]
- #4 [ffff9203ca3236d8] gss_lookup_cred at ffffffffc0353633 [auth_rpcgss]
- #5 [ffff9203ca3236e8] rpcauth_lookupcred at ffffffffc0421581 [sunrpc]
- #6 [ffff9203ca323740] rpcauth_refreshcred at ffffffffc04223d3 [sunrpc]
- #7 [ffff9203ca3237a0] call_refresh at ffffffffc04103dc [sunrpc]
- #8 [ffff9203ca3237b8] __rpc_execute at ffffffffc041e1c9 [sunrpc]
- #9 [ffff9203ca323820] rpc_execute at ffffffffc0420a48 [sunrpc]
-
-The scenario is like this. Let's say there are two upcalls for
-services A and B, A -> B in pipe->in_downcall, B -> A in pipe->pipe.
-
-When rpc.gssd reads pipe to get the upcall msg corresponding to
-service B from pipe->pipe and then writes the response, in
-gss_pipe_downcall the msg corresponding to service A will be picked
-because only uid is used to find the msg and it is before the one for
-B in pipe->in_downcall.  And the process waiting for the msg
-corresponding to service A will be woken up.
-
-Actual scheduing of that process might be after rpc.gssd processes the
-next msg.  In rpc_pipe_generic_upcall it clears msg->errno (for A).
-The process is scheduled to see gss_msg->ctx == NULL and
-gss_msg->msg.errno == 0, therefore it cannot break the loop in
-gss_create_upcall and is never woken up after that.
-
-This patch adds a simple check to ensure that a msg which is not
-sent to rpc.gssd yet is not chosen as the matching upcall upon
-receiving a downcall.
-
-Signed-off-by: minoura makoto <minoura@valinux.co.jp>
-Signed-off-by: Hiroshi Shimamoto <h-shimamoto@nec.com>
-Tested-by: Hiroshi Shimamoto <h-shimamoto@nec.com>
-Cc: Trond Myklebust <trondmy@hammerspace.com>
-Fixes: 9130b8dbc6ac ("SUNRPC: allow for upcalls for same uid but different gss service")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Reported-by: Anand Parthasarathy <anpartha@meta.com>
+Fixes: 6578171a7ff0 ("bpf: add bpf_skb_change_proto helper")
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/r/20221220004701.402165-1-kuba@kernel.org
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/sunrpc/rpc_pipe_fs.h |  5 +++++
- net/sunrpc/auth_gss/auth_gss.c     | 19 +++++++++++++++++--
- 2 files changed, 22 insertions(+), 2 deletions(-)
+ net/core/filter.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/sunrpc/rpc_pipe_fs.h b/include/linux/sunrpc/rpc_pipe_fs.h
-index e90b9bd99ded..396de2ef8767 100644
---- a/include/linux/sunrpc/rpc_pipe_fs.h
-+++ b/include/linux/sunrpc/rpc_pipe_fs.h
-@@ -94,6 +94,11 @@ extern ssize_t rpc_pipe_generic_upcall(struct file *, struct rpc_pipe_msg *,
- 				       char __user *, size_t);
- extern int rpc_queue_upcall(struct rpc_pipe *, struct rpc_pipe_msg *);
+diff --git a/net/core/filter.c b/net/core/filter.c
+index aa2e7baa13c4..32d0b8f14aab 100644
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -2565,15 +2565,18 @@ static int bpf_skb_generic_push(struct sk_buff *skb, u32 off, u32 len)
  
-+/* returns true if the msg is in-flight, i.e., already eaten by the peer */
-+static inline bool rpc_msg_is_inflight(const struct rpc_pipe_msg *msg) {
-+	return (msg->copied != 0 && list_empty(&msg->list));
-+}
+ static int bpf_skb_generic_pop(struct sk_buff *skb, u32 off, u32 len)
+ {
++	void *old_data;
 +
- struct rpc_clnt;
- extern struct dentry *rpc_create_client_dir(struct dentry *, const char *, struct rpc_clnt *);
- extern int rpc_remove_client_dir(struct rpc_clnt *);
-diff --git a/net/sunrpc/auth_gss/auth_gss.c b/net/sunrpc/auth_gss/auth_gss.c
-index e61c48c1b37d..c11e68539602 100644
---- a/net/sunrpc/auth_gss/auth_gss.c
-+++ b/net/sunrpc/auth_gss/auth_gss.c
-@@ -323,7 +323,7 @@ __gss_find_upcall(struct rpc_pipe *pipe, kuid_t uid, const struct gss_auth *auth
- 	list_for_each_entry(pos, &pipe->in_downcall, list) {
- 		if (!uid_eq(pos->uid, uid))
- 			continue;
--		if (auth && pos->auth->service != auth->service)
-+		if (pos->auth->service != auth->service)
- 			continue;
- 		refcount_inc(&pos->count);
- 		dprintk("RPC:       %s found msg %p\n", __func__, pos);
-@@ -677,6 +677,21 @@ gss_create_upcall(struct gss_auth *gss_auth, struct gss_cred *gss_cred)
- 	return err;
+ 	/* skb_ensure_writable() is not needed here, as we're
+ 	 * already working on an uncloned skb.
+ 	 */
+ 	if (unlikely(!pskb_may_pull(skb, off + len)))
+ 		return -ENOMEM;
+ 
+-	skb_postpull_rcsum(skb, skb->data + off, len);
+-	memmove(skb->data + len, skb->data, off);
++	old_data = skb->data;
+ 	__skb_pull(skb, len);
++	skb_postpull_rcsum(skb, old_data + off, len);
++	memmove(skb->data, old_data, off);
+ 
+ 	return 0;
  }
- 
-+static struct gss_upcall_msg *
-+gss_find_downcall(struct rpc_pipe *pipe, kuid_t uid)
-+{
-+	struct gss_upcall_msg *pos;
-+	list_for_each_entry(pos, &pipe->in_downcall, list) {
-+		if (!uid_eq(pos->uid, uid))
-+			continue;
-+		if (!rpc_msg_is_inflight(&pos->msg))
-+			continue;
-+		refcount_inc(&pos->count);
-+		return pos;
-+	}
-+	return NULL;
-+}
-+
- #define MSG_BUF_MAXSIZE 1024
- 
- static ssize_t
-@@ -723,7 +738,7 @@ gss_pipe_downcall(struct file *filp, const char __user *src, size_t mlen)
- 	err = -ENOENT;
- 	/* Find a matching upcall */
- 	spin_lock(&pipe->lock);
--	gss_msg = __gss_find_upcall(pipe, uid, NULL);
-+	gss_msg = gss_find_downcall(pipe, uid);
- 	if (gss_msg == NULL) {
- 		spin_unlock(&pipe->lock);
- 		goto err_put_ctx;
 -- 
 2.35.1
 
