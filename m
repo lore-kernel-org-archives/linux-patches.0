@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE2176FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:47:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44FFBC433EF;
-	Mon, 16 Jan 2023 16:47:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06C2B6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:47:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81102C433F0;
+	Mon, 16 Jan 2023 16:47:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887673;
-	bh=Bzwnc8OCkWjBLY+z6WS25xi9oj63tmSbP5tzDi7MBYA=;
+	s=korg; t=1673887678;
+	bh=kCSbU/WXbEcN7zzbpxVHttZZYBUzc3PiP6ADFwywilw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p0ZCRfm6KBF7lNHFWEq4uuNMPo24V/H7fQOL9cHdEIywio0PsoKdBkHz0xf3ELbHC
-	 mzg/qrJWi+xLPDvQx9o4Tfnc/AQKyMwtcWC6ZyBFYj3uJqW+SyIbJW8KjO+BuYKfas
-	 HgwCP4FHjti6en/AJxkCm/0X+4o20JElVD3v51Ls=
+	b=PXwB9rpWilcp68PxHp2iuUGvWC38Wv2uGwPtaMzeWczp2vNJX6jsSmzLJm5Z6oV27
+	 WnCDQn5ec5lCWnJhh1nrp4BUicNqtHwS0FV0ML1ItXDdbpgSuT9Nmtm4YuFJfJQuDE
+	 lE45o/qAZSGfIOhZ+r8aBASe/xsf+GaSTSgRSyo8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lee Jones <lee@kernel.org>,
-	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-	John Keeping <john@metanate.com>,
+	Johannes Thumshirn <jth@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 239/521] usb: gadget: f_hid: fix refcount leak on error path
-Date: Mon, 16 Jan 2023 16:48:21 +0100
-Message-Id: <20230116154857.824506089@linuxfoundation.org>
+Subject: [PATCH 4.19 241/521] mcb: mcb-parse: fix error handing in chameleon_parse_gdd()
+Date: Mon, 16 Jan 2023 16:48:23 +0100
+Message-Id: <20230116154857.929341859@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,38 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Keeping <john@metanate.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 70a3288a7586526315105c699b687d78cd32559a ]
+[ Upstream commit 728ac3389296caf68638628c987aeae6c8851e2d ]
 
-When failing to allocate report_desc, opts->refcnt has already been
-incremented so it needs to be decremented to avoid leaving the options
-structure permanently locked.
+If mcb_device_register() returns error in chameleon_parse_gdd(), the refcount
+of bus and device name are leaked. Fix this by calling put_device() to give up
+the reference, so they can be released in mcb_release_dev() and kobject_cleanup().
 
-Fixes: 21a9476a7ba8 ("usb: gadget: hid: add configfs support")
-Tested-by: Lee Jones <lee@kernel.org>
-Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Reviewed-by: Lee Jones <lee@kernel.org>
-Signed-off-by: John Keeping <john@metanate.com>
-Link: https://lore.kernel.org/r/20221122123523.3068034-3-john@metanate.com
+Fixes: 3764e82e5150 ("drivers: Introduce MEN Chameleon Bus")
+Reviewed-by: Johannes Thumshirn <jth@kernel.org>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Johannes Thumshirn <jth@kernel.org>
+Link: https://lore.kernel.org/r/ebfb06e39b19272f0197fa9136b5e4b6f34ad732.1669624063.git.johannes.thumshirn@wdc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_hid.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/mcb/mcb-parse.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/function/f_hid.c b/drivers/usb/gadget/function/f_hid.c
-index 2aaa3ea74e5a..ea877cba0763 100644
---- a/drivers/usb/gadget/function/f_hid.c
-+++ b/drivers/usb/gadget/function/f_hid.c
-@@ -1298,6 +1298,7 @@ static struct usb_function *hidg_alloc(struct usb_function_instance *fi)
- 						 GFP_KERNEL);
- 		if (!hidg->report_desc) {
- 			put_device(&hidg->dev);
-+			--opts->refcnt;
- 			mutex_unlock(&opts->lock);
- 			return ERR_PTR(-ENOMEM);
- 		}
+diff --git a/drivers/mcb/mcb-parse.c b/drivers/mcb/mcb-parse.c
+index 7369bda3442f..3636349648b4 100644
+--- a/drivers/mcb/mcb-parse.c
++++ b/drivers/mcb/mcb-parse.c
+@@ -107,7 +107,7 @@ static int chameleon_parse_gdd(struct mcb_bus *bus,
+ 	return 0;
+ 
+ err:
+-	mcb_free_dev(mdev);
++	put_device(&mdev->dev);
+ 
+ 	return ret;
+ }
 -- 
 2.35.1
 
