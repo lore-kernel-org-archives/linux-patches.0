@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE27D6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:04:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D7EC433EF;
-	Mon, 16 Jan 2023 17:04:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 510EB6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:04:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A55C433D2;
+	Mon, 16 Jan 2023 17:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888663;
-	bh=RQTmtVkq5b0kOBtIq/gl6b/hsWurBm4xlmt+CU9sQ+M=;
+	s=korg; t=1673888666;
+	bh=MYgvvSZ0N+PGJ6CUT7oxo+RlqZtU5FY7vb+oSJIB+n4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YbgkUHVhlgUZoX5Qy8wnPlxNhK4u+aaftJtNjmAq9Sd3Ios4YaQvpIs8y2otBTKrI
-	 WrYNkc4gTXsdiqPxvjZ/mMo7deqaDf7T8klvJzOesS4eAe4MH+Ro414A4M+DaBT4V5
-	 tCpaHJSvf2P6tfDKuUYRYsrmrX+EkmrGiDuMst0E=
+	b=Xsy3Y6umK7Y/RLefYJ7S0jutnztj1dSLPQzyQMdnkatP+OlxcRE8sst9o+T1Q2rEr
+	 pOYazNR+mkiGpA5FDl1Zcqrgka07e0m0RB2gSLvP4nK/iaMwJNmdcxOeMih1Tm7+IQ
+	 t852vo2ySLImRcQNhFD9CliO9hehxuTjQqaebuas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 092/338] ALSA: asihpi: fix missing pci_disable_device()
-Date: Mon, 16 Jan 2023 16:49:25 +0100
-Message-Id: <20230116154824.891921928@linuxfoundation.org>
+Subject: [PATCH 4.14 093/338] drm/radeon: Fix PCI device refcount leak in radeon_atrm_get_bios()
+Date: Mon, 16 Jan 2023 16:49:26 +0100
+Message-Id: <20230116154824.943314836@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,35 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 9d86515c3d4c0564a0c31a2df87d735353a1971e ]
+[ Upstream commit 725a521a18734f65de05b8d353b5bd0d3ca4c37a ]
 
-pci_disable_device() need be called while module exiting, switch to use
-pcim_enable(), pci_disable_device() will be called in pcim_release().
+As comment of pci_get_class() says, it returns a pci_device with its
+refcount increased and decreased the refcount for the input parameter
+@from if it is not NULL.
 
-Fixes: 3285ea10e9b0 ("ALSA: asihpi - Interrelated HPI tidy up.")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Link: https://lore.kernel.org/r/20221126021429.3029562-1-liushixin2@huawei.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+If we break the loop in radeon_atrm_get_bios() with 'pdev' not NULL, we
+need to call pci_dev_put() to decrease the refcount. Add the missing
+pci_dev_put() to avoid refcount leak.
+
+Fixes: d8ade3526b2a ("drm/radeon: handle non-VGA class pci devices with ATRM")
+Fixes: c61e2775873f ("drm/radeon: split ATRM support out from the ATPX handler (v3)")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/asihpi/hpioctl.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/radeon/radeon_bios.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/sound/pci/asihpi/hpioctl.c b/sound/pci/asihpi/hpioctl.c
-index b4ccd9f92400..81f240472943 100644
---- a/sound/pci/asihpi/hpioctl.c
-+++ b/sound/pci/asihpi/hpioctl.c
-@@ -359,7 +359,7 @@ int asihpi_adapter_probe(struct pci_dev *pci_dev,
- 		pci_dev->device, pci_dev->subsystem_vendor,
- 		pci_dev->subsystem_device, pci_dev->devfn);
+diff --git a/drivers/gpu/drm/radeon/radeon_bios.c b/drivers/gpu/drm/radeon/radeon_bios.c
+index 80562aeb8149..92f50b26e4c9 100644
+--- a/drivers/gpu/drm/radeon/radeon_bios.c
++++ b/drivers/gpu/drm/radeon/radeon_bios.c
+@@ -215,6 +215,7 @@ static bool radeon_atrm_get_bios(struct radeon_device *rdev)
  
--	if (pci_enable_device(pci_dev) < 0) {
-+	if (pcim_enable_device(pci_dev) < 0) {
- 		dev_err(&pci_dev->dev,
- 			"pci_enable_device failed, disabling device\n");
- 		return -EIO;
+ 	if (!found)
+ 		return false;
++	pci_dev_put(pdev);
+ 
+ 	rdev->bios = kmalloc(size, GFP_KERNEL);
+ 	if (!rdev->bios) {
 -- 
 2.35.1
 
