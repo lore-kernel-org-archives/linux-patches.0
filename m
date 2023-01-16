@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9AC333EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28710C433D2;
-	Mon, 16 Jan 2023 15:57:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EC9B33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3579C433EF;
+	Mon, 16 Jan 2023 15:57:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884670;
-	bh=CjnIMz9N+uY5Chp//8tl+ws15CXjGBCQlpsCcuRo4jI=;
+	s=korg; t=1673884673;
+	bh=4UBk/jSKwW/pvyDqEF6pjBkVlfZgG2x+acbux2dtkTw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=shbZgAxFibN++GZq/xRxH3guz5ZUTDY4lCPBN98hBeTnY13M3bpDP3cP8Lzl7ZVzP
-	 sKl7lCQLFqU1PBRFOdHamQA9HT4Hz5+Cwzy2WixcCJbrrOTaM290lQqCeQDfHSJL78
-	 d/HIG5wbKat7JHSUsVYBBXsP4cAmU0PfVGFjc4pc=
+	b=SQlZgj73ZXza0sadc9ttnBNgV5MI4YVtyZb4whx641XBNCOiZefJFp2Yoq11Jb64k
+	 s7JGjHSxHkq0gM7K1J68hrQH+qFklUzJsCC1wf4hnkMSWAEBQUdHFmFN53GqGHLVqr
+	 wKmc3D/snz6fGCNKiHlDfXNFssbhsdsVrT9dfFko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Michael Kelley (LINUX)" <mikelley@microsoft.com>,
-	Juergen Gross <jgross@suse.com>,
+	Peter Newman <peternewman@google.com>,
 	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Babu Moger <babu.moger@amd.com>,
 	stable@kernel.org
-Subject: [PATCH 6.1 094/183] x86/pat: Fix pat_x_mtrr_type() for MTRR disabled case
-Date: Mon, 16 Jan 2023 16:50:17 +0100
-Message-Id: <20230116154807.387494178@linuxfoundation.org>
+Subject: [PATCH 6.1 095/183] x86/resctrl: Fix task CLOSID/RMID update race
+Date: Mon, 16 Jan 2023 16:50:18 +0100
+Message-Id: <20230116154807.418281760@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,53 +37,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juergen Gross <jgross@suse.com>
+From: Peter Newman <peternewman@google.com>
 
-commit 90b926e68f500844dff16b5bcea178dc55cf580a upstream.
+commit fe1f0714385fbcf76b0cbceb02b7277d842014fc upstream.
 
-Since
+When the user moves a running task to a new rdtgroup using the task's
+file interface or by deleting its rdtgroup, the resulting change in
+CLOSID/RMID must be immediately propagated to the PQR_ASSOC MSR on the
+task(s) CPUs.
 
-  72cbc8f04fe2 ("x86/PAT: Have pat_enabled() properly reflect state when running on Xen")
+x86 allows reordering loads with prior stores, so if the task starts
+running between a task_curr() check that the CPU hoisted before the
+stores in the CLOSID/RMID update then it can start running with the old
+CLOSID/RMID until it is switched again because __rdtgroup_move_task()
+failed to determine that it needs to be interrupted to obtain the new
+CLOSID/RMID.
 
-PAT can be enabled without MTRR.
+Refer to the diagram below:
 
-This has resulted in problems e.g. for a SEV-SNP guest running under Hyper-V,
-when trying to establish a new mapping via memremap() with WB caching mode, as
-pat_x_mtrr_type() will call mtrr_type_lookup(), which in turn is returning
-MTRR_TYPE_INVALID due to MTRR being disabled in this configuration.
+CPU 0                                   CPU 1
+-----                                   -----
+__rdtgroup_move_task():
+  curr <- t1->cpu->rq->curr
+                                        __schedule():
+                                          rq->curr <- t1
+                                        resctrl_sched_in():
+                                          t1->{closid,rmid} -> {1,1}
+  t1->{closid,rmid} <- {2,2}
+  if (curr == t1) // false
+   IPI(t1->cpu)
 
-The result is a mapping with UC- caching, leading to severe performance
-degradation.
+A similar race impacts rdt_move_group_tasks(), which updates tasks in a
+deleted rdtgroup.
 
-Fix that by handling MTRR_TYPE_INVALID the same way as MTRR_TYPE_WRBACK
-in pat_x_mtrr_type() because MTRR_TYPE_INVALID means MTRRs are disabled.
+In both cases, use smp_mb() to order the task_struct::{closid,rmid}
+stores before the loads in task_curr().  In particular, in the
+rdt_move_group_tasks() case, simply execute an smp_mb() on every
+iteration with a matching task.
+
+It is possible to use a single smp_mb() in rdt_move_group_tasks(), but
+this would require two passes and a means of remembering which
+task_structs were updated in the first loop. However, benchmarking
+results below showed too little performance impact in the simple
+approach to justify implementing the two-pass approach.
+
+Times below were collected using `perf stat` to measure the time to
+remove a group containing a 1600-task, parallel workload.
+
+CPU: Intel(R) Xeon(R) Platinum P-8136 CPU @ 2.00GHz (112 threads)
+
+  # mkdir /sys/fs/resctrl/test
+  # echo $$ > /sys/fs/resctrl/test/tasks
+  # perf bench sched messaging -g 40 -l 100000
+
+task-clock time ranges collected using:
+
+  # perf stat rmdir /sys/fs/resctrl/test
+
+Baseline:                     1.54 - 1.60 ms
+smp_mb() every matching task: 1.57 - 1.67 ms
 
   [ bp: Massage commit message. ]
 
-Fixes: 72cbc8f04fe2 ("x86/PAT: Have pat_enabled() properly reflect state when running on Xen")
-Reported-by: Michael Kelley (LINUX) <mikelley@microsoft.com>
-Signed-off-by: Juergen Gross <jgross@suse.com>
+Fixes: ae28d1aae48a ("x86/resctrl: Use an IPI instead of task_work_add() to update PQR_ASSOC MSR")
+Fixes: 0efc89be9471 ("x86/intel_rdt: Update task closid immediately on CPU in rmdir and unmount")
+Signed-off-by: Peter Newman <peternewman@google.com>
 Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Tested-by: Michael Kelley <mikelley@microsoft.com>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Babu Moger <babu.moger@amd.com>
 Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230110065427.20767-1-jgross@suse.com
+Link: https://lore.kernel.org/r/20221220161123.432120-1-peternewman@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/mm/pat/memtype.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/arch/x86/mm/pat/memtype.c
-+++ b/arch/x86/mm/pat/memtype.c
-@@ -434,7 +434,8 @@ static unsigned long pat_x_mtrr_type(u64
- 		u8 mtrr_type, uniform;
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -580,8 +580,10 @@ static int __rdtgroup_move_task(struct t
+ 	/*
+ 	 * Ensure the task's closid and rmid are written before determining if
+ 	 * the task is current that will decide if it will be interrupted.
++	 * This pairs with the full barrier between the rq->curr update and
++	 * resctrl_sched_in() during context switch.
+ 	 */
+-	barrier();
++	smp_mb();
  
- 		mtrr_type = mtrr_type_lookup(start, end, &uniform);
--		if (mtrr_type != MTRR_TYPE_WRBACK)
-+		if (mtrr_type != MTRR_TYPE_WRBACK &&
-+		    mtrr_type != MTRR_TYPE_INVALID)
- 			return _PAGE_CACHE_MODE_UC_MINUS;
+ 	/*
+ 	 * By now, the task's closid and rmid are set. If the task is current
+@@ -2402,6 +2404,14 @@ static void rdt_move_group_tasks(struct
+ 			WRITE_ONCE(t->rmid, to->mon.rmid);
  
- 		return _PAGE_CACHE_MODE_WB;
+ 			/*
++			 * Order the closid/rmid stores above before the loads
++			 * in task_curr(). This pairs with the full barrier
++			 * between the rq->curr update and resctrl_sched_in()
++			 * during context switch.
++			 */
++			smp_mb();
++
++			/*
+ 			 * If the task is on a CPU, set the CPU in the mask.
+ 			 * The detection is inaccurate as tasks might move or
+ 			 * schedule before the smp function call takes place.
 
 
