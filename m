@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D57F6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:55:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94ECCC433EF;
-	Mon, 16 Jan 2023 16:55:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B301D6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:55:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36DA4C433EF;
+	Mon, 16 Jan 2023 16:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888102;
-	bh=tYIEuLSNTWlXjFmgvDwBaG8GSlNO4i8M05o/zEICOGU=;
+	s=korg; t=1673888105;
+	bh=1P3nnmRHUxThTbJs/gTJ06d8w/VzPM7WxIdUBiGIQ9Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CHGT5ex3Fk+CrNf9N/mIP3A2+k7Q79unSq8AOQDKkkh8F0+/O0UxcuwJ1j41RwsPX
-	 uVzYejcSGbxig0gtvzFPY741igpcZ0P7KQhIMJJjg2EM0e3AoVfCKmNiSNt9abqwAT
-	 xQP/y+hN48HD4iF6SOUQTyX+hzKt3SOht84EYg9E=
+	b=ziULo0YYytpzgRNg0TUQyvUp/GC6yWwcPC8TYMd6KNlC/91wS9Y/xVRtwCLnwqH1U
+	 ItTPbACx/oaPezn2JwvKttG1+QflrSEA4+u/N8hdtfyacziEcGYEf4LTiSGHDDKl3W
+	 u0W1/NAyCqT3UCuCl2d77E/xmF/5QPoOnjTRa+bI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 4.19 402/521] parisc: led: Fix potential null-ptr-deref in start_task()
-Date: Mon, 16 Jan 2023 16:51:04 +0100
-Message-Id: <20230116154905.050739492@linuxfoundation.org>
+	Wang Weiyang <wangweiyang2@huawei.com>,
+	Aristeu Rozanski <aris@redhat.com>,
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 4.19 403/521] device_cgroup: Roll back to original exceptions after copy failure
+Date: Mon, 16 Jan 2023 16:51:05 +0100
+Message-Id: <20230116154905.102328838@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -34,42 +35,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Wang Weiyang <wangweiyang2@huawei.com>
 
-commit 41f563ab3c33698bdfc3403c7c2e6c94e73681e4 upstream.
+commit e68bfbd3b3c3a0ec3cf8c230996ad8cabe90322f upstream.
 
-start_task() calls create_singlethread_workqueue() and not checked the
-ret value, which may return NULL. And a null-ptr-deref may happen:
+When add the 'a *:* rwm' entry to devcgroup A's whitelist, at first A's
+exceptions will be cleaned and A's behavior is changed to
+DEVCG_DEFAULT_ALLOW. Then parent's exceptions will be copyed to A's
+whitelist. If copy failure occurs, just return leaving A to grant
+permissions to all devices. And A may grant more permissions than
+parent.
 
-start_task()
-    create_singlethread_workqueue() # failed, led_wq is NULL
-    queue_delayed_work()
-        queue_delayed_work_on()
-            __queue_delayed_work()  # warning here, but continue
-                __queue_work()      # access wq->flags, null-ptr-deref
+Backup A's whitelist and recover original exceptions after copy
+failure.
 
-Check the ret value and return -ENOMEM if it is NULL.
-
-Fixes: 3499495205a6 ("[PARISC] Use work queue in LED/LCD driver instead of tasklet.")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: <stable@vger.kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 4cef7299b478 ("device_cgroup: add proper checking when changing default behavior")
+Signed-off-by: Wang Weiyang <wangweiyang2@huawei.com>
+Reviewed-by: Aristeu Rozanski <aris@redhat.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/parisc/led.c |    3 +++
- 1 file changed, 3 insertions(+)
+ security/device_cgroup.c |   33 +++++++++++++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 4 deletions(-)
 
---- a/drivers/parisc/led.c
-+++ b/drivers/parisc/led.c
-@@ -141,6 +141,9 @@ static int start_task(void)
+--- a/security/device_cgroup.c
++++ b/security/device_cgroup.c
+@@ -79,6 +79,17 @@ free_and_exit:
+ 	return -ENOMEM;
+ }
  
- 	/* Create the work queue and queue the LED task */
- 	led_wq = create_singlethread_workqueue("led_wq");	
-+	if (!led_wq)
-+		return -ENOMEM;
++static void dev_exceptions_move(struct list_head *dest, struct list_head *orig)
++{
++	struct dev_exception_item *ex, *tmp;
 +
- 	queue_delayed_work(led_wq, &led_task, 0);
++	lockdep_assert_held(&devcgroup_mutex);
++
++	list_for_each_entry_safe(ex, tmp, orig, list) {
++		list_move_tail(&ex->list, dest);
++	}
++}
++
+ /*
+  * called under devcgroup_mutex
+  */
+@@ -600,11 +611,13 @@ static int devcgroup_update_access(struc
+ 	int count, rc = 0;
+ 	struct dev_exception_item ex;
+ 	struct dev_cgroup *parent = css_to_devcgroup(devcgroup->css.parent);
++	struct dev_cgroup tmp_devcgrp;
  
- 	return 0;
+ 	if (!capable(CAP_SYS_ADMIN))
+ 		return -EPERM;
+ 
+ 	memset(&ex, 0, sizeof(ex));
++	memset(&tmp_devcgrp, 0, sizeof(tmp_devcgrp));
+ 	b = buffer;
+ 
+ 	switch (*b) {
+@@ -616,15 +629,27 @@ static int devcgroup_update_access(struc
+ 
+ 			if (!may_allow_all(parent))
+ 				return -EPERM;
+-			dev_exception_clean(devcgroup);
+-			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
+-			if (!parent)
++			if (!parent) {
++				devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
++				dev_exception_clean(devcgroup);
+ 				break;
++			}
+ 
++			INIT_LIST_HEAD(&tmp_devcgrp.exceptions);
++			rc = dev_exceptions_copy(&tmp_devcgrp.exceptions,
++						 &devcgroup->exceptions);
++			if (rc)
++				return rc;
++			dev_exception_clean(devcgroup);
+ 			rc = dev_exceptions_copy(&devcgroup->exceptions,
+ 						 &parent->exceptions);
+-			if (rc)
++			if (rc) {
++				dev_exceptions_move(&devcgroup->exceptions,
++						    &tmp_devcgrp.exceptions);
+ 				return rc;
++			}
++			devcgroup->behavior = DEVCG_DEFAULT_ALLOW;
++			dev_exception_clean(&tmp_devcgrp);
+ 			break;
+ 		case DEVCG_DENY:
+ 			if (css_has_online_children(&devcgroup->css))
 
 
