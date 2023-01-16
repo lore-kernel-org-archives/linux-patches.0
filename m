@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D4E76FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:59:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5E20C433D2;
-	Mon, 16 Jan 2023 16:59:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF96D6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:59:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 599C7C433EF;
+	Mon, 16 Jan 2023 16:59:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888391;
-	bh=lTCxk759y097TWU6AX5P6NF0tamWHgPhBEImCaF1aaY=;
+	s=korg; t=1673888393;
+	bh=/yPHBCgKvE7jBTHJuECjRCM3wpYJJ5IfLHkkPF55u2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RMrY4MNfjQ4M1J8Jign9yJXO8y0qNAj3N6AQJGYEofd0yhr/iHexUK+kq623+3uZn
-	 LlTFXOOpORuwzSVBHLJ3E758PITSnsJRwQ+aiqFdBiekDff+CknnRul0nKNEhdfuiR
-	 fmzmNb3P0nuSrJfu8EzCkS5lqG3beNPCLGfEhrvg=
+	b=1ec7VS7UnqZRzSZ4+3lPjoRdKFuWKXtZZdBTIl2WIc60hHLHRO3w4dPeUG1U19b3l
+	 mt8Bfz4YFNkhErjp2jliRWgbqYSY91dGHGzBpjPyn8a10mIvQv17DwEO4GtooznZb9
+	 jpAk2McEC0CF6+U11sTEO1hvuMsazHq7R/KL1t9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	James Morse <james.morse@arm.com>,
+	Peter Newman <peternewman@google.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
 	Reinette Chatre <reinette.chatre@intel.com>,
-	Borislav Petkov <bp@suse.de>,
+	Babu Moger <babu.moger@amd.com>,
+	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 510/521] x86/resctrl: Use task_curr() instead of task_struct->on_cpu to prevent unnecessary IPI
-Date: Mon, 16 Jan 2023 16:52:52 +0100
-Message-Id: <20230116154910.027388713@linuxfoundation.org>
+Subject: [PATCH 4.19 511/521] x86/resctrl: Fix task CLOSID/RMID update race
+Date: Mon, 16 Jan 2023 16:52:53 +0100
+Message-Id: <20230116154910.069446370@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,61 +38,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+From: Peter Newman <peternewman@google.com>
 
-[ Upstream commit e0ad6dc8969f790f14bddcfd7ea284b7e5f88a16 ]
+[ Upstream commit fe1f0714385fbcf76b0cbceb02b7277d842014fc ]
 
-James reported in [1] that there could be two tasks running on the same CPU
-with task_struct->on_cpu set. Using task_struct->on_cpu as a test if a task
-is running on a CPU may thus match the old task for a CPU while the
-scheduler is running and IPI it unnecessarily.
+When the user moves a running task to a new rdtgroup using the task's
+file interface or by deleting its rdtgroup, the resulting change in
+CLOSID/RMID must be immediately propagated to the PQR_ASSOC MSR on the
+task(s) CPUs.
 
-task_curr() is the correct helper to use. While doing so move the #ifdef
-check of the CONFIG_SMP symbol to be a C conditional used to determine
-if this helper should be used to ensure the code is always checked for
-correctness by the compiler.
+x86 allows reordering loads with prior stores, so if the task starts
+running between a task_curr() check that the CPU hoisted before the
+stores in the CLOSID/RMID update then it can start running with the old
+CLOSID/RMID until it is switched again because __rdtgroup_move_task()
+failed to determine that it needs to be interrupted to obtain the new
+CLOSID/RMID.
 
-[1] https://lore.kernel.org/lkml/a782d2f3-d2f6-795f-f4b1-9462205fd581@arm.com
+Refer to the diagram below:
 
-Reported-by: James Morse <james.morse@arm.com>
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Link: https://lkml.kernel.org/r/e9e68ce1441a73401e08b641cc3b9a3cf13fe6d4.1608243147.git.reinette.chatre@intel.com
-Stable-dep-of: fe1f0714385f ("x86/resctrl: Fix task CLOSID/RMID update race")
+CPU 0                                   CPU 1
+-----                                   -----
+__rdtgroup_move_task():
+  curr <- t1->cpu->rq->curr
+                                        __schedule():
+                                          rq->curr <- t1
+                                        resctrl_sched_in():
+                                          t1->{closid,rmid} -> {1,1}
+  t1->{closid,rmid} <- {2,2}
+  if (curr == t1) // false
+   IPI(t1->cpu)
+
+A similar race impacts rdt_move_group_tasks(), which updates tasks in a
+deleted rdtgroup.
+
+In both cases, use smp_mb() to order the task_struct::{closid,rmid}
+stores before the loads in task_curr().  In particular, in the
+rdt_move_group_tasks() case, simply execute an smp_mb() on every
+iteration with a matching task.
+
+It is possible to use a single smp_mb() in rdt_move_group_tasks(), but
+this would require two passes and a means of remembering which
+task_structs were updated in the first loop. However, benchmarking
+results below showed too little performance impact in the simple
+approach to justify implementing the two-pass approach.
+
+Times below were collected using `perf stat` to measure the time to
+remove a group containing a 1600-task, parallel workload.
+
+CPU: Intel(R) Xeon(R) Platinum P-8136 CPU @ 2.00GHz (112 threads)
+
+  # mkdir /sys/fs/resctrl/test
+  # echo $$ > /sys/fs/resctrl/test/tasks
+  # perf bench sched messaging -g 40 -l 100000
+
+task-clock time ranges collected using:
+
+  # perf stat rmdir /sys/fs/resctrl/test
+
+Baseline:                     1.54 - 1.60 ms
+smp_mb() every matching task: 1.57 - 1.67 ms
+
+  [ bp: Massage commit message. ]
+
+Fixes: ae28d1aae48a ("x86/resctrl: Use an IPI instead of task_work_add() to update PQR_ASSOC MSR")
+Fixes: 0efc89be9471 ("x86/intel_rdt: Update task closid immediately on CPU in rmdir and unmount")
+Signed-off-by: Peter Newman <peternewman@google.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
+Reviewed-by: Babu Moger <babu.moger@amd.com>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20221220161123.432120-1-peternewman@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/intel_rdt_rdtgroup.c | 14 +++++---------
- 1 file changed, 5 insertions(+), 9 deletions(-)
+ arch/x86/kernel/cpu/intel_rdt_rdtgroup.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
 diff --git a/arch/x86/kernel/cpu/intel_rdt_rdtgroup.c b/arch/x86/kernel/cpu/intel_rdt_rdtgroup.c
-index f406e3b85bdb..8c405149c671 100644
+index 8c405149c671..1125f752f126 100644
 --- a/arch/x86/kernel/cpu/intel_rdt_rdtgroup.c
 +++ b/arch/x86/kernel/cpu/intel_rdt_rdtgroup.c
-@@ -2140,19 +2140,15 @@ static void rdt_move_group_tasks(struct rdtgroup *from, struct rdtgroup *to,
+@@ -585,8 +585,10 @@ static int __rdtgroup_move_task(struct task_struct *tsk,
+ 	/*
+ 	 * Ensure the task's closid and rmid are written before determining if
+ 	 * the task is current that will decide if it will be interrupted.
++	 * This pairs with the full barrier between the rq->curr update and
++	 * resctrl_sched_in() during context switch.
+ 	 */
+-	barrier();
++	smp_mb();
+ 
+ 	/*
+ 	 * By now, the task's closid and rmid are set. If the task is current
+@@ -2140,6 +2142,14 @@ static void rdt_move_group_tasks(struct rdtgroup *from, struct rdtgroup *to,
  			t->closid = to->closid;
  			t->rmid = to->mon.rmid;
  
--#ifdef CONFIG_SMP
++			/*
++			 * Order the closid/rmid stores above before the loads
++			 * in task_curr(). This pairs with the full barrier
++			 * between the rq->curr update and resctrl_sched_in()
++			 * during context switch.
++			 */
++			smp_mb();
++
  			/*
--			 * This is safe on x86 w/o barriers as the ordering
--			 * of writing to task_cpu() and t->on_cpu is
--			 * reverse to the reading here. The detection is
--			 * inaccurate as tasks might move or schedule
--			 * before the smp function call takes place. In
--			 * such a case the function call is pointless, but
-+			 * If the task is on a CPU, set the CPU in the mask.
-+			 * The detection is inaccurate as tasks might move or
-+			 * schedule before the smp function call takes place.
-+			 * In such a case the function call is pointless, but
- 			 * there is no other side effect.
- 			 */
--			if (mask && t->on_cpu)
-+			if (IS_ENABLED(CONFIG_SMP) && mask && task_curr(t))
- 				cpumask_set_cpu(task_cpu(t), mask);
--#endif
- 		}
- 	}
- 	read_unlock(&tasklist_lock);
+ 			 * If the task is on a CPU, set the CPU in the mask.
+ 			 * The detection is inaccurate as tasks might move or
 -- 
 2.35.1
 
