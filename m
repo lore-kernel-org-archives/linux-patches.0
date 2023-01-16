@@ -1,30 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C632D46B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:27:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49821C43396;
-	Mon, 16 Jan 2023 16:27:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28AA646B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:27:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79964C433D2;
+	Mon, 16 Jan 2023 16:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886469;
-	bh=mZ8UvLfDsKgykeZh6NMW3/QLEABOpBenoQEbhEUsugg=;
+	s=korg; t=1673886467;
+	bh=zp5V+hBPDE1ddKmb/PSiM2t6XqB8A6P5AfH003LQ1jA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ZqQnWQ72lpPChxoWsDJ1NnjA0GOqnT9e8EU9Aq/m+bc6rrKIA+whzcgpURGWKRH8
-	 Y8re9y4lOhotvThaDacJ2Okj39K3EhzWuCwfOZJjN8ukZJndXjlHiGiBn66+Uj7Htk
-	 DIq366AWGA1ZG4uh2Ed7i3FQSV7JsO1Rnq87rSlE=
+	b=IkDscaHJvDEv4JT9+Prra7NFFVFJdIUH2umOoWQ8K8FFKANHM+EE4NtStrZ1ny/nd
+	 Z69dw+bZz+qOBi6pO0WwVmvC4vImhtULbr7ftcd8cFNUHq9b9EAtulY2/GP+HCnIJx
+	 p2F6YSYfH1y4PPVhcgDjcn8DXrtC4fum55+IIPgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Mackerras <paulus@samba.org>,
-	linux-ppp@vger.kernel.org,
-	syzbot+41cab52ab62ee99ed24a@syzkaller.appspotmail.com,
-	Stanislav Fomichev <sdf@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Wei Wang <wvw@google.com>,
+	Midas Chien <midaschieh@google.com>,
+	Connor OBrien <connoro@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Anton Vorontsov <anton@enomsg.org>,
+	Colin Cross <ccross@android.com>,
+	Tony Luck <tony.luck@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	kernel-team@android.com,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 415/658] ppp: associate skb with a device at tx
-Date: Mon, 16 Jan 2023 16:48:23 +0100
-Message-Id: <20230116154928.587682624@linuxfoundation.org>
+Subject: [PATCH 5.4 441/658] pstore: Make sure CONFIG_PSTORE_PMSG selects CONFIG_RT_MUTEXES
+Date: Mon, 16 Jan 2023 16:48:49 +0100
+Message-Id: <20230116154929.706776420@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -38,60 +43,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stanislav Fomichev <sdf@google.com>
+From: John Stultz <jstultz@google.com>
 
-[ Upstream commit 9f225444467b98579cf28d94f4ad053460dfdb84 ]
+[ Upstream commit 2f4fec5943407318b9523f01ce1f5d668c028332 ]
 
-Syzkaller triggered flow dissector warning with the following:
+In commit 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex
+to avoid priority inversion") I changed a lock to an rt_mutex.
 
-r0 = openat$ppp(0xffffffffffffff9c, &(0x7f0000000000), 0xc0802, 0x0)
-ioctl$PPPIOCNEWUNIT(r0, 0xc004743e, &(0x7f00000000c0))
-ioctl$PPPIOCSACTIVE(r0, 0x40107446, &(0x7f0000000240)={0x2, &(0x7f0000000180)=[{0x20, 0x0, 0x0, 0xfffff034}, {0x6}]})
-pwritev(r0, &(0x7f0000000040)=[{&(0x7f0000000140)='\x00!', 0x2}], 0x1, 0x0, 0x0)
+However, its possible that CONFIG_RT_MUTEXES is not enabled,
+which then results in a build failure, as the 0day bot detected:
+  https://lore.kernel.org/linux-mm/202212211244.TwzWZD3H-lkp@intel.com/
 
-[    9.485814] WARNING: CPU: 3 PID: 329 at net/core/flow_dissector.c:1016 __skb_flow_dissect+0x1ee0/0x1fa0
-[    9.485929]  skb_get_poff+0x53/0xa0
-[    9.485937]  bpf_skb_get_pay_offset+0xe/0x20
-[    9.485944]  ? ppp_send_frame+0xc2/0x5b0
-[    9.485949]  ? _raw_spin_unlock_irqrestore+0x40/0x60
-[    9.485958]  ? __ppp_xmit_process+0x7a/0xe0
-[    9.485968]  ? ppp_xmit_process+0x5b/0xb0
-[    9.485974]  ? ppp_write+0x12a/0x190
-[    9.485981]  ? do_iter_write+0x18e/0x2d0
-[    9.485987]  ? __import_iovec+0x30/0x130
-[    9.485997]  ? do_pwritev+0x1b6/0x240
-[    9.486016]  ? trace_hardirqs_on+0x47/0x50
-[    9.486023]  ? __x64_sys_pwritev+0x24/0x30
-[    9.486026]  ? do_syscall_64+0x3d/0x80
-[    9.486031]  ? entry_SYSCALL_64_after_hwframe+0x63/0xcd
+Thus this patch changes CONFIG_PSTORE_PMSG to select
+CONFIG_RT_MUTEXES, which ensures the build will not fail.
 
-Flow dissector tries to find skb net namespace either via device
-or via socket. Neigher is set in ppp_send_frame, so let's manually
-use ppp->dev.
-
-Cc: Paul Mackerras <paulus@samba.org>
-Cc: linux-ppp@vger.kernel.org
-Reported-by: syzbot+41cab52ab62ee99ed24a@syzkaller.appspotmail.com
-Signed-off-by: Stanislav Fomichev <sdf@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Cc: Wei Wang <wvw@google.com>
+Cc: Midas Chien<midaschieh@google.com>
+Cc: Connor O'Brien <connoro@google.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Anton Vorontsov <anton@enomsg.org>
+Cc: Colin Cross <ccross@android.com>
+Cc: Tony Luck <tony.luck@intel.com>
+Cc: kernel test robot <lkp@intel.com>
+Cc: kernel-team@android.com
+Fixes: 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex to avoid priority inversion")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221221051855.15761-1-jstultz@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ppp/ppp_generic.c | 2 ++
- 1 file changed, 2 insertions(+)
+ fs/pstore/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ppp/ppp_generic.c b/drivers/net/ppp/ppp_generic.c
-index a085213dc2ea..078c0f474f96 100644
---- a/drivers/net/ppp/ppp_generic.c
-+++ b/drivers/net/ppp/ppp_generic.c
-@@ -1522,6 +1522,8 @@ ppp_send_frame(struct ppp *ppp, struct sk_buff *skb)
- 	int len;
- 	unsigned char *cp;
- 
-+	skb->dev = ppp->dev;
-+
- 	if (proto < 0x8000) {
- #ifdef CONFIG_PPP_FILTER
- 		/* check if we should pass this packet */
+diff --git a/fs/pstore/Kconfig b/fs/pstore/Kconfig
+index 8f0369aad22a..9fe46cc26403 100644
+--- a/fs/pstore/Kconfig
++++ b/fs/pstore/Kconfig
+@@ -118,6 +118,7 @@ config PSTORE_CONSOLE
+ config PSTORE_PMSG
+ 	bool "Log user space messages"
+ 	depends on PSTORE
++	select RT_MUTEXES
+ 	help
+ 	  When the option is enabled, pstore will export a character
+ 	  interface /dev/pmsg0 to log user space messages. On reboot
 -- 
 2.35.1
 
