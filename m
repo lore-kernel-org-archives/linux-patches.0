@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE41A46B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:32:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76AB5C433EF;
-	Mon, 16 Jan 2023 16:32:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E2D46B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:32:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15D89C433EF;
+	Mon, 16 Jan 2023 16:32:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886722;
-	bh=vvIC87DJafIbfnHNMCjL7lx+Nu0qAuwB/V/wFewavF4=;
+	s=korg; t=1673886725;
+	bh=Ll8rBaKVoplQ3eCFPjwUmndeM7Z3aZ2wKe/glpQbtJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=imksBxKpUv5rkGRzh8G8qe+hlS//A+E35wHFA1fKhN5MtRqoz73j0F2QmQXtD6kDf
-	 /t6g+5v3j+fSFedYtDknKn5qPQlwnn44n918f51nNpGOgAwxem/9QodPtPZbkKxNk7
-	 Cq/Dnkoia035lOfml++YELX5yHtuy4grfCUZQ9JI=
+	b=fnpx0oRNH9yVW+WZG1oP7mYDgAbIzxTu4EuaQI618EJAbZ1naaHh5j2oQ8nNVWCyg
+	 adBQip0OxXj4ZEbSRZn7gGml+y/KJ38pU+2Osq2kL0eAmjplWVlvqiHcttrN91GrkK
+	 ilXrvzXa3LL78OTDxhkWRvH1SsUXpVaJwwiFJYRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luben Tuikov <luben.tuikov@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.4 537/658] drm/amdgpu: make display pinning more flexible (v2)
-Date: Mon, 16 Jan 2023 16:50:25 +0100
-Message-Id: <20230116154934.097314689@linuxfoundation.org>
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	David Sterba <dsterba@suse.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 538/658] btrfs: replace strncpy() with strscpy()
+Date: Mon, 16 Jan 2023 16:50:26 +0100
+Message-Id: <20230116154934.137948077@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,39 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+[ Upstream commit 63d5429f68a3d4c4aa27e65a05196c17f86c41d6 ]
 
-commit 81d0bcf9900932633d270d5bc4a54ff599c6ebdb upstream.
+Using strncpy() on NUL-terminated strings are deprecated.  To avoid
+possible forming of non-terminated string strscpy() should be used.
 
-Only apply the static threshold for Stoney and Carrizo.
-This hardware has certain requirements that don't allow
-mixing of GTT and VRAM.  Newer asics do not have these
-requirements so we should be able to be more flexible
-with where buffers end up.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2270
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2291
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2255
-Acked-by: Luben Tuikov <luben.tuikov@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: stable@vger.kernel.org # 4.9+
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_object.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/btrfs/ioctl.c      | 9 +++------
+ fs/btrfs/rcu-string.h | 6 +++++-
+ 2 files changed, 8 insertions(+), 7 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_object.c
-@@ -1458,7 +1458,8 @@ u64 amdgpu_bo_gpu_offset(struct amdgpu_b
- uint32_t amdgpu_bo_get_preferred_pin_domain(struct amdgpu_device *adev,
- 					    uint32_t domain)
- {
--	if (domain == (AMDGPU_GEM_DOMAIN_VRAM | AMDGPU_GEM_DOMAIN_GTT)) {
-+	if ((domain == (AMDGPU_GEM_DOMAIN_VRAM | AMDGPU_GEM_DOMAIN_GTT)) &&
-+	    ((adev->asic_type == CHIP_CARRIZO) || (adev->asic_type == CHIP_STONEY))) {
- 		domain = AMDGPU_GEM_DOMAIN_VRAM;
- 		if (adev->gmc.real_vram_size <= AMDGPU_SG_THRESHOLD)
- 			domain = AMDGPU_GEM_DOMAIN_GTT;
+diff --git a/fs/btrfs/ioctl.c b/fs/btrfs/ioctl.c
+index 8553bd4361dd..64b443aa61ca 100644
+--- a/fs/btrfs/ioctl.c
++++ b/fs/btrfs/ioctl.c
+@@ -3299,13 +3299,10 @@ static long btrfs_ioctl_dev_info(struct btrfs_fs_info *fs_info,
+ 	di_args->bytes_used = btrfs_device_get_bytes_used(dev);
+ 	di_args->total_bytes = btrfs_device_get_total_bytes(dev);
+ 	memcpy(di_args->uuid, dev->uuid, sizeof(di_args->uuid));
+-	if (dev->name) {
+-		strncpy(di_args->path, rcu_str_deref(dev->name),
+-				sizeof(di_args->path) - 1);
+-		di_args->path[sizeof(di_args->path) - 1] = 0;
+-	} else {
++	if (dev->name)
++		strscpy(di_args->path, rcu_str_deref(dev->name), sizeof(di_args->path));
++	else
+ 		di_args->path[0] = '\0';
+-	}
+ 
+ out:
+ 	rcu_read_unlock();
+diff --git a/fs/btrfs/rcu-string.h b/fs/btrfs/rcu-string.h
+index a97dc74a4d3d..02f15321cecc 100644
+--- a/fs/btrfs/rcu-string.h
++++ b/fs/btrfs/rcu-string.h
+@@ -18,7 +18,11 @@ static inline struct rcu_string *rcu_string_strdup(const char *src, gfp_t mask)
+ 					 (len * sizeof(char)), mask);
+ 	if (!ret)
+ 		return ret;
+-	strncpy(ret->str, src, len);
++	/* Warn if the source got unexpectedly truncated. */
++	if (WARN_ON(strscpy(ret->str, src, len) < 0)) {
++		kfree(ret);
++		return NULL;
++	}
+ 	return ret;
+ }
+ 
+-- 
+2.35.1
+
 
 
