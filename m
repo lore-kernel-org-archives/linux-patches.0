@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A71C6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:43:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE5DCC433EF;
-	Mon, 16 Jan 2023 16:43:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CE4A6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:43:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8976DC433EF;
+	Mon, 16 Jan 2023 16:43:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887389;
-	bh=3cIPwQhwbu9JN3mpUfg6hlWmLwiCRFsZZwVKxUucJXY=;
+	s=korg; t=1673887391;
+	bh=stfLp0VE0MjbuLvjoOMGI/QFcV5Jj4/z25k0KZeamrs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mpgd6oZD1e3PKH3JHiRWrySSgxXgVqQ+jbmFz5XqZA6haehRcH5Z/f9Kq0hhIr7LI
-	 rrzvkB/OkJM8qQj8ItfJt2z5R70T88F0bkPuaasITsfrNwti54edSV3LA8FQ1LCt24
-	 NFvh9KOgv/FwFlXBXN1yY1lhKyi1xow8cya6qIbE=
+	b=MM/zfamPXWJULD4EmCVSA0GJlqOh61INnNab4Nr7PjuKfYUpvAFQTjkdi7HBIiiJs
+	 rLuMmTp9sal7bPpdSuKp+pl245RkvD04FLZpfq/J6SHIlkO5PCWydWrYYs9851vcjt
+	 +NyggBV0mcCwcFQyoTmc1FQuASo0TIMs7fdUkSsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Mark Brown <broonie@kernel.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 103/521] regulator: core: fix unbalanced of node refcount in regulator_dev_lookup()
-Date: Mon, 16 Jan 2023 16:46:05 +0100
-Message-Id: <20230116154851.862358900@linuxfoundation.org>
+Subject: [PATCH 4.19 130/521] wifi: cfg80211: Fix not unregister reg_pdev when load_builtin_regdb_keys() fails
+Date: Mon, 16 Jan 2023 16:46:32 +0100
+Message-Id: <20230116154853.081504263@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,40 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit f2b41b748c19962b82709d9f23c6b2b0ce9d2f91 ]
+[ Upstream commit 833a9fd28c9b7ccb39a334721379e992dc1c0c89 ]
 
-I got the the following report:
+In regulatory_init_db(), when it's going to return a error, reg_pdev
+should be unregistered. When load_builtin_regdb_keys() fails it doesn't
+do it and makes cfg80211 can't be reload with report:
 
-  OF: ERROR: memory leak, expected refcount 1 instead of 2,
-  of_node_get()/of_node_put() unbalanced - destroy cset entry:
-  attach overlay node /i2c/pmic@62/regulators/exten
+sysfs: cannot create duplicate filename '/devices/platform/regulatory.0'
+ ...
+ <TASK>
+ dump_stack_lvl+0x79/0x9b
+ sysfs_warn_dup.cold+0x1c/0x29
+ sysfs_create_dir_ns+0x22d/0x290
+ kobject_add_internal+0x247/0x800
+ kobject_add+0x135/0x1b0
+ device_add+0x389/0x1be0
+ platform_device_add+0x28f/0x790
+ platform_device_register_full+0x376/0x4b0
+ regulatory_init+0x9a/0x4b2 [cfg80211]
+ cfg80211_init+0x84/0x113 [cfg80211]
+ ...
 
-In of_get_regulator(), the node is returned from of_parse_phandle()
-with refcount incremented, after using it, of_node_put() need be called.
-
-Fixes: 69511a452e6d ("regulator: map consumer regulator based on device tree")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221115091508.900752-1-yangyingliang@huawei.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 90a53e4432b1 ("cfg80211: implement regdb signature checking")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Link: https://lore.kernel.org/r/20221109090237.214127-1-chenzhongjin@huawei.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/regulator/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/reg.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
-index 045075cd256c..07982143ec18 100644
---- a/drivers/regulator/core.c
-+++ b/drivers/regulator/core.c
-@@ -1541,6 +1541,7 @@ static struct regulator_dev *regulator_dev_lookup(struct device *dev,
- 		node = of_get_regulator(dev, supply);
- 		if (node) {
- 			r = of_find_regulator_by_node(node);
-+			of_node_put(node);
- 			if (r)
- 				return r;
+diff --git a/net/wireless/reg.c b/net/wireless/reg.c
+index 07d053603e3a..beba41f8a178 100644
+--- a/net/wireless/reg.c
++++ b/net/wireless/reg.c
+@@ -3918,8 +3918,10 @@ static int __init regulatory_init_db(void)
+ 		return -EINVAL;
  
+ 	err = load_builtin_regdb_keys();
+-	if (err)
++	if (err) {
++		platform_device_unregister(reg_pdev);
+ 		return err;
++	}
+ 
+ 	/* We always try to get an update for the static regdomain */
+ 	err = regulatory_hint_core(cfg80211_world_regdom->alpha2);
 -- 
 2.35.1
 
