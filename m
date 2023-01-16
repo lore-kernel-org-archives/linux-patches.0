@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 583FD6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:59:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D24B1C433D2;
-	Mon, 16 Jan 2023 16:59:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF6F6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:59:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7610BC433EF;
+	Mon, 16 Jan 2023 16:59:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888383;
-	bh=6CECetpFbqMxUD1L8fcYUL2pzUonqPQwfzompTfDDwg=;
+	s=korg; t=1673888385;
+	bh=z9HBeGABdP0W38UW/7W4/Qe/J7MWugFpD+I24T3Ipag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zqJcNthn9xp/l1Q9P3lJLUU0xqhILNtNUmheXjeGftr2Vx5uglobPgg/venI9DKJH
-	 rNZOGlyZVWN4gTmp7J3HBL6s1gnk+knbMh+tnejVrRyk/EAC06UUiNPOfbZXceJExz
-	 dZPkKpvH4UdGV7hA7/IlKPBKFV864L39IvE9XnB8=
+	b=hKc/Q0thG47y2Iac1mdRsoy1EI+z2itU+yTBYRE4LMg81YOPPA3dLUBBNIm05pVeF
+	 Jc1P7ZWdmvP1P5NmRSDiv5kRwi9YuTQcT/0M3CXfm00dKSFlj3Fnki03DfsT1IMjj0
+	 Gka/Pv4x+EQneeBL0cFQ+SECFCv8+oGjBDduIziU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Yong Wu <yong.wu@mediatek.com>,
+	Joerg Roedel <jroedel@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 507/521] net/mlx5: Fix ptp max frequency adjustment range
-Date: Mon, 16 Jan 2023 16:52:49 +0100
-Message-Id: <20230116154909.871906929@linuxfoundation.org>
+Subject: [PATCH 4.19 508/521] iommu/mediatek-v1: Add error handle for mtk_iommu_probe
+Date: Mon, 16 Jan 2023 16:52:50 +0100
+Message-Id: <20230116154909.921496250@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,39 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Yong Wu <yong.wu@mediatek.com>
 
-[ Upstream commit fe91d57277eef8bb4aca05acfa337b4a51d0bba4 ]
+[ Upstream commit ac304c070c54413efabf29f9e73c54576d329774 ]
 
-.max_adj of ptp_clock_info acts as an absolute value for the amount in ppb
-that can be set for a single call of .adjfine. This means that a single
-call to .getfine cannot be greater than .max_adj or less than -(.max_adj).
-Provides correct value for max frequency adjustment value supported by
-devices.
+In the original code, we lack the error handle. This patch adds them.
 
-Fixes: 3d8c38af1493 ("net/mlx5e: Add PTP Hardware Clock (PHC) support")
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Yong Wu <yong.wu@mediatek.com>
+Link: https://lore.kernel.org/r/20210412064843.11614-2-yong.wu@mediatek.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Stable-dep-of: 142e821f68cf ("iommu/mediatek-v1: Fix an error handling path in mtk_iommu_v1_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iommu/mtk_iommu_v1.c | 22 ++++++++++++++++++----
+ 1 file changed, 18 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-index 3ef63103d33f..dee65443d76b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-@@ -396,7 +396,7 @@ static int mlx5_ptp_verify(struct ptp_clock_info *ptp, unsigned int pin,
- static const struct ptp_clock_info mlx5_ptp_clock_info = {
- 	.owner		= THIS_MODULE,
- 	.name		= "mlx5_ptp",
--	.max_adj	= 100000000,
-+	.max_adj	= 50000000,
- 	.n_alarm	= 0,
- 	.n_ext_ts	= 0,
- 	.n_per_out	= 0,
+diff --git a/drivers/iommu/mtk_iommu_v1.c b/drivers/iommu/mtk_iommu_v1.c
+index 676c029494e4..1a1f9a05982f 100644
+--- a/drivers/iommu/mtk_iommu_v1.c
++++ b/drivers/iommu/mtk_iommu_v1.c
+@@ -632,12 +632,26 @@ static int mtk_iommu_probe(struct platform_device *pdev)
+ 
+ 	ret = iommu_device_register(&data->iommu);
+ 	if (ret)
+-		return ret;
++		goto out_sysfs_remove;
+ 
+-	if (!iommu_present(&platform_bus_type))
+-		bus_set_iommu(&platform_bus_type,  &mtk_iommu_ops);
++	if (!iommu_present(&platform_bus_type)) {
++		ret = bus_set_iommu(&platform_bus_type,  &mtk_iommu_ops);
++		if (ret)
++			goto out_dev_unreg;
++	}
+ 
+-	return component_master_add_with_match(dev, &mtk_iommu_com_ops, match);
++	ret = component_master_add_with_match(dev, &mtk_iommu_com_ops, match);
++	if (ret)
++		goto out_bus_set_null;
++	return ret;
++
++out_bus_set_null:
++	bus_set_iommu(&platform_bus_type, NULL);
++out_dev_unreg:
++	iommu_device_unregister(&data->iommu);
++out_sysfs_remove:
++	iommu_device_sysfs_remove(&data->iommu);
++	return ret;
+ }
+ 
+ static int mtk_iommu_remove(struct platform_device *pdev)
 -- 
 2.35.1
 
