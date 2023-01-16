@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4701E6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:08:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BED91C433D2;
-	Mon, 16 Jan 2023 17:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD2F06FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:08:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541C6C433EF;
+	Mon, 16 Jan 2023 17:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888917;
-	bh=MpYlnlvwfUKN3dT5u/JDR3k62p8CeHkdfZ7yiTlcc4Y=;
+	s=korg; t=1673888919;
+	bh=iipozZfwKxuvFHMN2/LylZ200fRqCNZUPm8J4aIeik0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p5R1bm3+KAgfYoKFFtX70HJ+aBOjiFmPd99OPpCZB/r/t/VNt6eGp//1eO3IzN0jb
-	 l4cdGcIwE0CcIhxu7kaJdTKN7b8316O+EH+0Tm3V4jyC2M3bWa6bHfXdZx7VnP9dNi
-	 +4txkp4vW7FSnOn5AvoIwt58yp3Hw94fZfy4h5Z0=
+	b=BAChVNm7L2YvOJQkfz6yqiNz8KgbIy3ZGJsl0fRvXgZZIUDACPOJrkwg3FSPb4kn3
+	 xPdRS1jbqFWnm4PDLdgVmuw83y5rGREltyKvqOMmWMmCYGevStVTg+A2Nm50Reoq6H
+	 EROM1NpNsZSTShaZDnZmZUE2dzx2AavOoY7oQUdU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Matt Redfearn <matt.redfearn@mips.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Nathan Chancellor <nathan@kernel.org>,
+	=?UTF-8?q?Petr=20Van=C4=9Bk?= <arkamar@atlas.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 189/338] HSI: omap_ssi_core: Fix error handling in ssi_init()
-Date: Mon, 16 Jan 2023 16:51:02 +0100
-Message-Id: <20230116154829.181876662@linuxfoundation.org>
+Subject: [PATCH 4.14 190/338] include/uapi/linux/swab: Fix potentially missing __always_inline
+Date: Mon, 16 Jan 2023 16:51:03 +0100
+Message-Id: <20230116154829.222255143@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,42 +38,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Matt Redfearn <matt.redfearn@mips.com>
 
-[ Upstream commit 3ffa9f713c39a213a08d9ff13ab983a8aa5d8b5d ]
+[ Upstream commit defbab270d45e32b068e7e73c3567232d745c60f ]
 
-The ssi_init() returns the platform_driver_register() directly without
-checking its return value, if platform_driver_register() failed, the
-ssi_pdriver is not unregistered.
-Fix by unregister ssi_pdriver when the last platform_driver_register()
-failed.
+Commit bc27fb68aaad ("include/uapi/linux/byteorder, swab: force inlining
+of some byteswap operations") added __always_inline to swab functions
+and commit 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to
+userspace headers") added a definition of __always_inline for use in
+exported headers when the kernel's compiler.h is not available.
 
-Fixes: 0fae198988b8 ("HSI: omap_ssi: built omap_ssi and omap_ssi_port into one module")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+However, since swab.h does not include stddef.h, if the header soup does
+not indirectly include it, the definition of __always_inline is missing,
+resulting in a compilation failure, which was observed compiling the
+perf tool using exported headers containing this commit:
+
+In file included from /usr/include/linux/byteorder/little_endian.h:12:0,
+                 from /usr/include/asm/byteorder.h:14,
+                 from tools/include/uapi/linux/perf_event.h:20,
+                 from perf.h:8,
+                 from builtin-bench.c:18:
+/usr/include/linux/swab.h:160:8: error: unknown type name `__always_inline'
+ static __always_inline __u16 __swab16p(const __u16 *p)
+
+Fix this by replacing the inclusion of linux/compiler.h with
+linux/stddef.h to ensure that we pick up that definition if required,
+without relying on it's indirect inclusion. compiler.h is then included
+indirectly, via stddef.h.
+
+Fixes: 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to userspace headers")
+Signed-off-by: Matt Redfearn <matt.redfearn@mips.com>
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Petr Vaněk <arkamar@atlas.cz>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hsi/controllers/omap_ssi_core.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ include/uapi/linux/swab.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hsi/controllers/omap_ssi_core.c b/drivers/hsi/controllers/omap_ssi_core.c
-index fa3835ec5104..09653b064d93 100644
---- a/drivers/hsi/controllers/omap_ssi_core.c
-+++ b/drivers/hsi/controllers/omap_ssi_core.c
-@@ -667,7 +667,13 @@ static int __init ssi_init(void) {
- 	if (ret)
- 		return ret;
+diff --git a/include/uapi/linux/swab.h b/include/uapi/linux/swab.h
+index 7272f85d6d6a..3736f2fe1541 100644
+--- a/include/uapi/linux/swab.h
++++ b/include/uapi/linux/swab.h
+@@ -3,7 +3,7 @@
+ #define _UAPI_LINUX_SWAB_H
  
--	return platform_driver_register(&ssi_port_pdriver);
-+	ret = platform_driver_register(&ssi_port_pdriver);
-+	if (ret) {
-+		platform_driver_unregister(&ssi_pdriver);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- module_init(ssi_init);
+ #include <linux/types.h>
+-#include <linux/compiler.h>
++#include <linux/stddef.h>
+ #include <asm/bitsperlong.h>
+ #include <asm/swab.h>
  
 -- 
 2.35.1
