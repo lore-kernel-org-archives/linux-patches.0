@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 348026FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:41:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAE8C433EF;
-	Mon, 16 Jan 2023 16:41:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C24586FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:41:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47B12C433EF;
+	Mon, 16 Jan 2023 16:41:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887311;
-	bh=XrgdG2N//PxloW98SHRjXRf9ZfMGygxelCPoGoSw51A=;
+	s=korg; t=1673887313;
+	bh=MjM81aUBAFOwzo3m9Wb7B2rUEGryCV94JBI1CmLi4oA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pX18cxPNLbXwXN2y1aPlGB5paLZ2v3OH5pOqlJV6RJdr6Xi9fJu4X8+btIn+bfR2y
-	 xyShQbqvF+MJWavwhfKRCC8ZP/xjJ4QNde3wLeYr3vPJPCwyLw7nh7ZxWby+qqNL7K
-	 DtUZjBQQ3vjqSR1HEA5AR0MI+AZ9+/earOnKOGPk=
+	b=MiFEiQ2iqN5kjHzww2aivgE+UsQ1CSnpBifjbI8EMAdPxF5Yqsp5BPHJB3ij+QbDo
+	 4YDw4CpkLVnw19LYRkDAfvgaDpa815zC/EAw2iWsW0ttdfTRdcp4tpnPklf/UTKueU
+	 qseXhlGL1kKw+kw8RjXpDrl8hKtcc1OtgBasT2Hc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Robert Foss <robert.foss@linaro.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Anastasia Belova <abelova@astralinux.ru>,
+	=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 099/521] media: camss: Clean up received buffers on failed start of streaming
-Date: Mon, 16 Jan 2023 16:46:01 +0100
-Message-Id: <20230116154851.673085746@linuxfoundation.org>
+Subject: [PATCH 4.19 073/521] MIPS: BCM63xx: Add check for NULL for clk in clk_enable
+Date: Mon, 16 Jan 2023 16:45:35 +0100
+Message-Id: <20230116154850.496231908@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,60 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Anastasia Belova <abelova@astralinux.ru>
 
-[ Upstream commit c8f3582345e6a69da65ab588f7c4c2d1685b0e80 ]
+[ Upstream commit ee9ef11bd2a59c2fefaa0959e5efcdf040d7c654 ]
 
-It is required to return the received buffers, if streaming can not be
-started. For instance media_pipeline_start() may fail with EPIPE, if
-a link validation between entities is not passed, and in such a case
-a user gets a kernel warning:
+Check clk for NULL before calling clk_enable_unlocked where clk
+is dereferenced. There is such check in other implementations
+of clk_enable.
 
-  WARNING: CPU: 1 PID: 520 at drivers/media/common/videobuf2/videobuf2-core.c:1592 vb2_start_streaming+0xec/0x160
-  <snip>
-  Call trace:
-   vb2_start_streaming+0xec/0x160
-   vb2_core_streamon+0x9c/0x1a0
-   vb2_ioctl_streamon+0x68/0xbc
-   v4l_streamon+0x30/0x3c
-   __video_do_ioctl+0x184/0x3e0
-   video_usercopy+0x37c/0x7b0
-   video_ioctl2+0x24/0x40
-   v4l2_ioctl+0x4c/0x70
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-The fix is to correct the error path in video_start_streaming() of camss.
-
-Fixes: 0ac2586c410f ("media: camss: Add files which handle the video device nodes")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: e7300d04bd08 ("MIPS: BCM63xx: Add support for the Broadcom BCM63xx family of SOCs.")
+Signed-off-by: Anastasia Belova <abelova@astralinux.ru>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Acked-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-video.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/mips/bcm63xx/clk.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-index e81ebeb0506e..23701ec8d7de 100644
---- a/drivers/media/platform/qcom/camss/camss-video.c
-+++ b/drivers/media/platform/qcom/camss/camss-video.c
-@@ -438,7 +438,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
- 
- 	ret = media_pipeline_start(&vdev->entity, &video->pipe);
- 	if (ret < 0)
--		return ret;
-+		goto flush_buffers;
- 
- 	ret = video_check_format(video);
- 	if (ret < 0)
-@@ -467,6 +467,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
- error:
- 	media_pipeline_stop(&vdev->entity);
- 
-+flush_buffers:
- 	video->ops->flush_buffers(video, VB2_BUF_STATE_QUEUED);
- 
- 	return ret;
+diff --git a/arch/mips/bcm63xx/clk.c b/arch/mips/bcm63xx/clk.c
+index dcfa0ea912fe..f183c45503ce 100644
+--- a/arch/mips/bcm63xx/clk.c
++++ b/arch/mips/bcm63xx/clk.c
+@@ -361,6 +361,8 @@ static struct clk clk_periph = {
+  */
+ int clk_enable(struct clk *clk)
+ {
++	if (!clk)
++		return 0;
+ 	mutex_lock(&clocks_mutex);
+ 	clk_enable_unlocked(clk);
+ 	mutex_unlock(&clocks_mutex);
 -- 
 2.35.1
 
