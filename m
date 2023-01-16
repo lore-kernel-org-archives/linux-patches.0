@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFB5646B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:10:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78E9BC433D2;
-	Mon, 16 Jan 2023 16:10:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90FF646B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:10:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 137B2C433EF;
+	Mon, 16 Jan 2023 16:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885456;
-	bh=qdreDp/eRVabCX9+GEIUfFO7+Ox3DDa+HnniSye5b6s=;
+	s=korg; t=1673885459;
+	bh=QkZlITzIDz549gDH6sl4RGTB2Ro6GsbvxmfO5PLLg74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CZcnAlc6B4TGgTf3v3qTjNKs+CLgjBeL7KFeEHCxufICKSZV+PIwyG2iw1D1sEhN4
-	 U54f4o+FWlVUTkoBWo+r2j518k4iFLoRlIpz7WMT5v1snmZ3Yd6SImZybAhDRzr3DE
-	 92yDBe0w5KOWlsFsDj8A1foJQwaqtALTchUAeNLc=
+	b=TQfYgQGy0XntDmNEUH4tLVwbmpQs1z2KDc1zwGq3TzF9n2VFqWClBsY4bGGcLhBrf
+	 v4oFI5id8QfKfTxkpK4fZH4bSiARE3aoOLmZ0jVQ1+IumerTUwrQTmsfBhXVmOPH0H
+	 Kn8O3McLZMInN4QUaeI1MrsZPMaUF6Ic1fvVFcjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	wuchi <wuchi.zero@gmail.com>,
-	Waiman Long <longman@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Christoph Hellwig <hch@lst.de>,
-	Kees Cook <keescook@chromium.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Yuan Can <yuancan@huawei.com>,
+	Suzuki K Poulose <suzuki.poulose@arm.com>,
+	Will Deacon <will@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 057/658] lib/debugobjects: fix stat count and optimize debug_objects_mem_init
-Date: Mon, 16 Jan 2023 16:42:25 +0100
-Message-Id: <20230116154912.279710189@linuxfoundation.org>
+Subject: [PATCH 5.4 030/658] perf: arm_dsu: Fix hotplug callback leak in dsu_pmu_init()
+Date: Mon, 16 Jan 2023 16:41:58 +0100
+Message-Id: <20230116154910.993036700@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -39,74 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: wuchi <wuchi.zero@gmail.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit eabb7f1ace53e127309407b2b5e74e8199e85270 ]
+[ Upstream commit facafab7611f7b872c6b9eeaff53461ef11f482e ]
 
-1. Var debug_objects_allocated tracks valid kmem_cache_alloc calls, so
-   track it in debug_objects_replace_static_objects.  Do similar things in
-   object_cpu_offline.
+dsu_pmu_init() won't remove the callback added by cpuhp_setup_state_multi()
+when platform_driver_register() failed. Remove the callback by
+cpuhp_remove_multi_state() in fail path.
 
-2. In debug_objects_mem_init, there is no need to call function
-   cpuhp_setup_state_nocalls when debug_objects_enabled = 0 (out of
-   memory).
+Similar to the handling of arm_ccn_init() in commit 26242b330093 ("bus:
+arm-ccn: Prevent hotplug callback leak")
 
-Link: https://lkml.kernel.org/r/20220611130634.99741-1-wuchi.zero@gmail.com
-Fixes: 634d61f45d6f ("debugobjects: Percpu pool lookahead freeing/allocation")
-Fixes: c4b73aabd098 ("debugobjects: Track number of kmem_cache_alloc/kmem_cache_free done")
-Signed-off-by: wuchi <wuchi.zero@gmail.com>
-Reviewed-by: Waiman Long <longman@redhat.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Kees Cook <keescook@chromium.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 7520fa99246d ("perf: ARM DynamIQ Shared Unit PMU support")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Acked-by: Suzuki K Poulose <suzuki.poulose@arm.com>
+Link: https://lore.kernel.org/r/20221115070207.32634-2-yuancan@huawei.com
+Signed-off-by: Will Deacon <will@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/debugobjects.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/perf/arm_dsu_pmu.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/lib/debugobjects.c b/lib/debugobjects.c
-index 746b632792b5..7ca6459259fa 100644
---- a/lib/debugobjects.c
-+++ b/lib/debugobjects.c
-@@ -440,6 +440,7 @@ static int object_cpu_offline(unsigned int cpu)
- 	struct debug_percpu_free *percpu_pool;
- 	struct hlist_node *tmp;
- 	struct debug_obj *obj;
-+	unsigned long flags;
- 
- 	/* Remote access is safe as the CPU is dead already */
- 	percpu_pool = per_cpu_ptr(&percpu_obj_pool, cpu);
-@@ -447,6 +448,12 @@ static int object_cpu_offline(unsigned int cpu)
- 		hlist_del(&obj->node);
- 		kmem_cache_free(obj_cache, obj);
- 	}
+diff --git a/drivers/perf/arm_dsu_pmu.c b/drivers/perf/arm_dsu_pmu.c
+index 4594e2ed13d5..96e76915da56 100644
+--- a/drivers/perf/arm_dsu_pmu.c
++++ b/drivers/perf/arm_dsu_pmu.c
+@@ -816,7 +816,11 @@ static int __init dsu_pmu_init(void)
+ 	if (ret < 0)
+ 		return ret;
+ 	dsu_pmu_cpuhp_state = ret;
+-	return platform_driver_register(&dsu_pmu_driver);
++	ret = platform_driver_register(&dsu_pmu_driver);
++	if (ret)
++		cpuhp_remove_multi_state(dsu_pmu_cpuhp_state);
 +
-+	raw_spin_lock_irqsave(&pool_lock, flags);
-+	obj_pool_used -= percpu_pool->obj_free;
-+	debug_objects_freed += percpu_pool->obj_free;
-+	raw_spin_unlock_irqrestore(&pool_lock, flags);
-+
- 	percpu_pool->obj_free = 0;
++	return ret;
+ }
  
- 	return 0;
-@@ -1327,6 +1334,8 @@ static int __init debug_objects_replace_static_objects(void)
- 		hlist_add_head(&obj->node, &objects);
- 	}
- 
-+	debug_objects_allocated += i;
-+
- 	/*
- 	 * debug_objects_mem_init() is now called early that only one CPU is up
- 	 * and interrupts have been disabled, so it is safe to replace the
-@@ -1395,6 +1404,7 @@ void __init debug_objects_mem_init(void)
- 		debug_objects_enabled = 0;
- 		kmem_cache_destroy(obj_cache);
- 		pr_warn("out of memory.\n");
-+		return;
- 	} else
- 		debug_objects_selftest();
- 
+ static void __exit dsu_pmu_exit(void)
 -- 
 2.35.1
 
