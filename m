@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC4CB6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:42:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40C61C433EF;
-	Mon, 16 Jan 2023 16:42:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6840A6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:42:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD0C7C433EF;
+	Mon, 16 Jan 2023 16:42:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887347;
-	bh=GWetDyaV9MsbkXIJYuM1k3LAHE6mFz1MD2EPiMZvaxE=;
+	s=korg; t=1673887350;
+	bh=OmsPLRXFDL38AeADP5/X7Hx5DP2QzY4nwszw3tVhIQU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xbdCXuUWQXSfF6JEnlmrBykZWTb0+6IQHC0EEetbBup42ZoA54lUldRqPOtepj+MS
-	 ks1zSvorFMXEQ7jOO8E4S8ubM/b6QtUmrFO+YR6RNyyvrXSCy6lzn1VFC17kZ/UGxI
-	 bqrH2e+373ANnziRLn3Y+xSpWYcY8Bz0Hofxp/JM=
+	b=ADajMvvhERthlBSc5Iha4hquBQ0dYqvze7kqDgmxkQbhwx7tJnwIEAGpMHlikrwKZ
+	 FWdPqBvpzGsUS+pAxDGPiSAJNmjf3uj0mUflIJ5wPf/gaSRmw6Xqhn0ETrZtXN1+dY
+	 Bvcry6gRnQxAMvmbDP9+YcVjf26fgoW5o4nk4DAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang ShaoBo <bobo.shaobowang@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com,
+	Gautam Menghani <gautammenghani201@gmail.com>,
+	Sean Young <sean@mess.org>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 115/521] drbd: remove call to memset before free device/resource/connection
-Date: Mon, 16 Jan 2023 16:46:17 +0100
-Message-Id: <20230116154852.375175560@linuxfoundation.org>
+Subject: [PATCH 4.19 116/521] media: imon: fix a race condition in send_packet()
+Date: Mon, 16 Jan 2023 16:46:18 +0100
+Message-Id: <20230116154852.427317523@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,50 +37,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang ShaoBo <bobo.shaobowang@huawei.com>
+From: Gautam Menghani <gautammenghani201@gmail.com>
 
-[ Upstream commit 6e7b854e4c1b02dba00760dfa79d8dbf6cce561e ]
+[ Upstream commit 813ceef062b53d68f296aa3cb944b21a091fabdb ]
 
-This revert c2258ffc56f2 ("drbd: poison free'd device, resource and
-connection structs"), add memset is odd here for debugging, there are
-some methods to accurately show what happened, such as kdump.
+The function send_packet() has a race condition as follows:
 
-Signed-off-by: Wang ShaoBo <bobo.shaobowang@huawei.com>
-Link: https://lore.kernel.org/r/20221124015817.2729789-2-bobo.shaobowang@huawei.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+func send_packet()
+{
+    // do work
+    call usb_submit_urb()
+    mutex_unlock()
+    wait_for_event_interruptible()  <-- lock gone
+    mutex_lock()
+}
+
+func vfd_write()
+{
+    mutex_lock()
+    call send_packet()  <- prev call is not completed
+    mutex_unlock()
+}
+
+When the mutex is unlocked and the function send_packet() waits for the
+call to complete, vfd_write() can start another call, which leads to the
+"URB submitted while active" warning in usb_submit_urb().
+Fix this by removing the mutex_unlock() call in send_packet() and using
+mutex_lock_interruptible().
+
+Link: https://syzkaller.appspot.com/bug?id=e378e6a51fbe6c5cc43e34f131cc9a315ef0337e
+
+Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
+Reported-by: syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com
+Signed-off-by: Gautam Menghani <gautammenghani201@gmail.com>
+Signed-off-by: Sean Young <sean@mess.org>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/block/drbd/drbd_main.c | 3 ---
- 1 file changed, 3 deletions(-)
+ drivers/media/rc/imon.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/block/drbd/drbd_main.c b/drivers/block/drbd/drbd_main.c
-index 3ae718aa6b39..1ff5af6c4f3f 100644
---- a/drivers/block/drbd/drbd_main.c
-+++ b/drivers/block/drbd/drbd_main.c
-@@ -2258,7 +2258,6 @@ void drbd_destroy_device(struct kref *kref)
- 		kref_put(&peer_device->connection->kref, drbd_destroy_connection);
- 		kfree(peer_device);
- 	}
--	memset(device, 0xfd, sizeof(*device));
- 	kfree(device);
- 	kref_put(&resource->kref, drbd_destroy_resource);
- }
-@@ -2351,7 +2350,6 @@ void drbd_destroy_resource(struct kref *kref)
- 	idr_destroy(&resource->devices);
- 	free_cpumask_var(resource->cpu_mask);
- 	kfree(resource->name);
--	memset(resource, 0xf2, sizeof(*resource));
- 	kfree(resource);
- }
+diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
+index 6b10363fb6f0..99bb7380ee0e 100644
+--- a/drivers/media/rc/imon.c
++++ b/drivers/media/rc/imon.c
+@@ -613,15 +613,14 @@ static int send_packet(struct imon_context *ictx)
+ 		pr_err_ratelimited("error submitting urb(%d)\n", retval);
+ 	} else {
+ 		/* Wait for transmission to complete (or abort) */
+-		mutex_unlock(&ictx->lock);
+ 		retval = wait_for_completion_interruptible(
+ 				&ictx->tx.finished);
+ 		if (retval) {
+ 			usb_kill_urb(ictx->tx_urb);
+ 			pr_err_ratelimited("task interrupted\n");
+ 		}
+-		mutex_lock(&ictx->lock);
  
-@@ -2748,7 +2746,6 @@ void drbd_destroy_connection(struct kref *kref)
- 	drbd_free_socket(&connection->data);
- 	kfree(connection->int_dig_in);
- 	kfree(connection->int_dig_vv);
--	memset(connection, 0xfc, sizeof(*connection));
- 	kfree(connection);
- 	kref_put(&resource->kref, drbd_destroy_resource);
- }
++		ictx->tx.busy = false;
+ 		retval = ictx->tx.status;
+ 		if (retval)
+ 			pr_err_ratelimited("packet tx failed (%d)\n", retval);
+@@ -928,7 +927,8 @@ static ssize_t vfd_write(struct file *file, const char __user *buf,
+ 		return -ENODEV;
+ 	}
+ 
+-	mutex_lock(&ictx->lock);
++	if (mutex_lock_interruptible(&ictx->lock))
++		return -ERESTARTSYS;
+ 
+ 	if (!ictx->dev_present_intf0) {
+ 		pr_err_ratelimited("no iMON device present\n");
 -- 
 2.35.1
 
