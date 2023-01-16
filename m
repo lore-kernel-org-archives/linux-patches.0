@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24E8D6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:43:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A186DC433EF;
-	Mon, 16 Jan 2023 16:43:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA3E46FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:43:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F781C433EF;
+	Mon, 16 Jan 2023 16:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887405;
-	bh=JFCtv1VHdQTfixi8zcX4x+cyUPNiGLH7h8vtAhDlmMo=;
+	s=korg; t=1673887407;
+	bh=0kXwMbSk4TsFadYGIKLEPb7evQzpT9GyIsXDrwmABvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A2Sh3KvCKjO2pNpx7ZPn0YgRwjQQ/j459DX4jyhBGEzNF+xVLJ9G8Iexd2iSN7npg
-	 9FK4n7mr6UurcE/aZ96+vdYR/L+utKvpLPEOsatTeCBxPmZ4NkrJao9cIg1lfL3yAo
-	 G0hz9L6d7oYuxRDuPn4EPIgYjYu8BW7GjuUnkCsA=
+	b=XxshulXlKoVB/nZ3omV12KhHu6jc2yzDk9bBO7dh4p2psh8GYP9zuyHX6XBut4qgx
+	 1qoAoERrhBkyRsl4PaYEdWBonR4M8kvdWdHf5LyVIwwpzE/yLUwau7lLRDCyI4a54x
+	 FvTCXfQdRZu89lsl2Osz1G9QYUrV9gzZW6L3QsS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 107/521] Input: elants_i2c - properly handle the reset GPIO when power is off
-Date: Mon, 16 Jan 2023 16:46:09 +0100
-Message-Id: <20230116154852.041903806@linuxfoundation.org>
+Subject: [PATCH 4.19 108/521] media: solo6x10: fix possible memory leak in solo_sysfs_init()
+Date: Mon, 16 Jan 2023 16:46:10 +0100
+Message-Id: <20230116154852.090471275@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,88 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit a85fbd6498441694475716a4d5c65f9d3e073faf ]
+[ Upstream commit 7f5866dd96d95b74e439f6ee17b8abd8195179fb ]
 
-As can be seen in elants_i2c_power_off(), we want the reset GPIO
-asserted when power is off. The reset GPIO is active low so we need
-the reset line logic low when power is off to avoid leakage.
+If device_register() returns error in solo_sysfs_init(), the
+name allocated by dev_set_name() need be freed. As comment of
+device_register() says, it should use put_device() to give up
+the reference in the error path. So fix this by calling
+put_device(), then the name can be freed in kobject_cleanup().
 
-We have a problem, though, at probe time. At probe time we haven't
-powered the regulators on yet but we have:
-
-  devm_gpiod_get(&client->dev, "reset", GPIOD_OUT_LOW);
-
-While that _looks_ right, it turns out that it's not. The
-GPIOD_OUT_LOW doesn't mean to init the GPIO to low. It means init the
-GPIO to "not asserted". Since this is an active low GPIO that inits it
-to be high.
-
-Let's fix this to properly init the GPIO. Now after both probe and
-power off the state of the GPIO is consistent (it's "asserted" or
-level low).
-
-Once we fix this, we can see that at power on time we no longer to
-assert the reset GPIO as the first thing. The reset GPIO is _always_
-asserted before powering on. Let's fix powering on to account for
-this.
-
-Fixes: afe10358e47a ("Input: elants_i2c - wire up regulator support")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20221117123805.1.I9959ac561dd6e1e8e1ce7085e4de6167b27c574f@changeid
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: dcae5dacbce5 ("[media] solo6x10: sync to latest code from Bluecherry's git repo")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/elants_i2c.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/media/pci/solo6x10/solo6x10-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/input/touchscreen/elants_i2c.c b/drivers/input/touchscreen/elants_i2c.c
-index adfae2d88707..83e9bded87d9 100644
---- a/drivers/input/touchscreen/elants_i2c.c
-+++ b/drivers/input/touchscreen/elants_i2c.c
-@@ -1082,14 +1082,12 @@ static int elants_i2c_power_on(struct elants_data *ts)
- 	if (IS_ERR_OR_NULL(ts->reset_gpio))
- 		return 0;
+diff --git a/drivers/media/pci/solo6x10/solo6x10-core.c b/drivers/media/pci/solo6x10/solo6x10-core.c
+index 19ffd2ed3cc7..d3bca099b78b 100644
+--- a/drivers/media/pci/solo6x10/solo6x10-core.c
++++ b/drivers/media/pci/solo6x10/solo6x10-core.c
+@@ -429,6 +429,7 @@ static int solo_sysfs_init(struct solo_dev *solo_dev)
+ 		     solo_dev->nr_chans);
  
--	gpiod_set_value_cansleep(ts->reset_gpio, 1);
--
- 	error = regulator_enable(ts->vcc33);
- 	if (error) {
- 		dev_err(&ts->client->dev,
- 			"failed to enable vcc33 regulator: %d\n",
- 			error);
--		goto release_reset_gpio;
-+		return error;
+ 	if (device_register(dev)) {
++		put_device(dev);
+ 		dev->parent = NULL;
+ 		return -ENOMEM;
  	}
- 
- 	error = regulator_enable(ts->vccio);
-@@ -1098,7 +1096,7 @@ static int elants_i2c_power_on(struct elants_data *ts)
- 			"failed to enable vccio regulator: %d\n",
- 			error);
- 		regulator_disable(ts->vcc33);
--		goto release_reset_gpio;
-+		return error;
- 	}
- 
- 	/*
-@@ -1107,7 +1105,6 @@ static int elants_i2c_power_on(struct elants_data *ts)
- 	 */
- 	udelay(ELAN_POWERON_DELAY_USEC);
- 
--release_reset_gpio:
- 	gpiod_set_value_cansleep(ts->reset_gpio, 0);
- 	if (error)
- 		return error;
-@@ -1215,7 +1212,7 @@ static int elants_i2c_probe(struct i2c_client *client,
- 		return error;
- 	}
- 
--	ts->reset_gpio = devm_gpiod_get(&client->dev, "reset", GPIOD_OUT_LOW);
-+	ts->reset_gpio = devm_gpiod_get(&client->dev, "reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(ts->reset_gpio)) {
- 		error = PTR_ERR(ts->reset_gpio);
- 
 -- 
 2.35.1
 
