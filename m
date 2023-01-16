@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C418633EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B98DC433EF;
-	Mon, 16 Jan 2023 15:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A32B33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4125C433EF;
+	Mon, 16 Jan 2023 15:55:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884534;
-	bh=G+v7Arj7mrk8/hwC5RJ1tHg1N5wxVNo4pcEpsK2Pm6M=;
+	s=korg; t=1673884537;
+	bh=C7D+L/Aswv/ncZBysd07g1s05bMUgtu93GNK/ZXvdww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=geMkH0cKO0qyI5RdebI0WOBZVWfQop0iXM1wfBGluC4YkRA6wQcviKlA2mSEEPaCT
-	 n1u5gChlrLglxwQccjh0dw+4sY9Sw4gt0bxbRaO6yh+V83BC7rdZ37PSWrt3OQxy64
-	 NUWN7q3i14a6pSGBrRGm5JI/xNVB5arOONj9yfg8=
+	b=CB0lKLE0z4qZd5EFZa9USrkJuEOPoUKTrYjE6+u7HRQqqnn6KY7sax+iKfgt2VWQ/
+	 n4a3WN9bYaSOqbhVG029O9EKWnhdnyAmLQwezfWWV/PSruqYOBJtoYA5LasdwBZNTX
+	 CF7CTAZ0xUaHT/3r7SO+18I1ZhhKJDcTEXLV++mc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Seth Jenkins <sethjenkins@google.com>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.1 013/183] arm64: mte: Fix double-freeing of the temporary tag storage during coredump
-Date: Mon, 16 Jan 2023 16:48:56 +0100
-Message-Id: <20230116154803.962077994@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Jaroslav Kysela <perex@perex.cz>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 004/183] ALSA: usb-audio: Always initialize fixed_rate in snd_usb_find_implicit_fb_sync_format()
+Date: Mon, 16 Jan 2023 16:48:47 +0100
+Message-Id: <20230116154803.533929683@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -35,36 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Jaroslav Kysela <perex@perex.cz>
 
-commit 736eedc974eaafbf4360e0ea85fc892cea72a223 upstream.
+commit 291e9da91403e0e628d7692b5ed505100e7b7706 upstream.
 
-Commit 16decce22efa ("arm64: mte: Fix the stack frame size warning in
-mte_dump_tag_range()") moved the temporary tag storage array from the
-stack to slab but it also introduced an error in double freeing this
-object. Remove the in-loop freeing.
+Handle the fallback code path, too.
 
-Fixes: 16decce22efa ("arm64: mte: Fix the stack frame size warning in mte_dump_tag_range()")
-Cc: <stable@vger.kernel.org> # 5.18.x
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
-Reported-by: Seth Jenkins <sethjenkins@google.com>
-Cc: Will Deacon <will@kernel.org>
-Link: https://lore.kernel.org/r/20221222181251.1345752-2-catalin.marinas@arm.com
-Signed-off-by: Will Deacon <will@kernel.org>
+Fixes: fd28941cff1c ("ALSA: usb-audio: Add new quirk FIXED_RATE for JBL Quantum810 Wireless")
+BugLink: https://lore.kernel.org/alsa-devel/Y7frf3N%2FxzvESEsN@kili/
+Reported-by: Dan Carpenter <error27@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Jaroslav Kysela <perex@perex.cz>
+Link: https://lore.kernel.org/r/20230109141133.335543-1-perex@perex.cz
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/elfcore.c |    1 -
- 1 file changed, 1 deletion(-)
+ sound/usb/implicit.c |    3 ++-
+ sound/usb/pcm.c      |    2 ++
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kernel/elfcore.c
-+++ b/arch/arm64/kernel/elfcore.c
-@@ -65,7 +65,6 @@ static int mte_dump_tag_range(struct cor
- 		mte_save_page_tags(page_address(page), tags);
- 		put_page(page);
- 		if (!dump_emit(cprm, tags, MTE_PAGE_TAG_STORAGE)) {
--			mte_free_tag_storage(tags);
- 			ret = 0;
- 			break;
+--- a/sound/usb/implicit.c
++++ b/sound/usb/implicit.c
+@@ -471,7 +471,7 @@ snd_usb_find_implicit_fb_sync_format(str
+ 	subs = find_matching_substream(chip, stream, target->sync_ep,
+ 				       target->fmt_type);
+ 	if (!subs)
+-		return sync_fmt;
++		goto end;
+ 
+ 	high_score = 0;
+ 	list_for_each_entry(fp, &subs->fmt_list, list) {
+@@ -485,6 +485,7 @@ snd_usb_find_implicit_fb_sync_format(str
  		}
+ 	}
+ 
++ end:
+ 	if (fixed_rate)
+ 		*fixed_rate = snd_usb_pcm_has_fixed_rate(subs);
+ 	return sync_fmt;
+--- a/sound/usb/pcm.c
++++ b/sound/usb/pcm.c
+@@ -163,6 +163,8 @@ bool snd_usb_pcm_has_fixed_rate(struct s
+ 	struct snd_usb_audio *chip = subs->stream->chip;
+ 	int rate = -1;
+ 
++	if (!subs)
++		return false;
+ 	if (!(chip->quirk_flags & QUIRK_FLAG_FIXED_RATE))
+ 		return false;
+ 	list_for_each_entry(fp, &subs->fmt_list, list) {
 
 
