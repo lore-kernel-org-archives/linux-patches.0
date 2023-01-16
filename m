@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28E8C6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:36:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1DE3C433D2;
-	Mon, 16 Jan 2023 16:36:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC5CF6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:36:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EE9EC433EF;
+	Mon, 16 Jan 2023 16:36:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887003;
-	bh=vJsMHeeUtKC2u/GnnPPQpiqI9n/VJUWuh6dJlRjtdn4=;
+	s=korg; t=1673887005;
+	bh=RBiS6fcv0YJXok61UF7LsTRXGo9xtxxD/KWz0I85TBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YMeuI7bQqUSONWoK9j9SjpQtWCZAFxphVA9xGqSmx5w8+HHUoqMOQFxj9Pr3AC3eW
-	 rMSVrNbF8kuVsel7gIFi0STZVm7riteDuzp0cPwxy1WIdHalt/vbt7ewZeFkadlVxF
-	 CGa6/BKJ1EcBT19hqJ0UytOMEmzs8JQZcMieDOoI=
+	b=W9pHed66mXmG4lUGPaB7m8jJp0j33NOPDgDpQQb76otCRxASnMVpahfBVJHYIs4lE
+	 jRhhxxEW4gZ9NRAprbw1eGPlvGLMXhx0hps1zh4/v4aCybT1s+Uz5+cIiWy2Ual7AQ
+	 bYjrefkzfOvZN82nIsUgpliEpxfn0c5fJessEVHo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Gurucharan G <gurucharanx.g@intel.com>
-Subject: [PATCH 5.4 613/658] ixgbe: fix pci device refcount leak
-Date: Mon, 16 Jan 2023 16:51:41 +0100
-Message-Id: <20230116154937.548465819@linuxfoundation.org>
+	Kyle Zeng <zengyhkyle@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.4 614/658] ipv6: raw: Deduct extension header length in rawv6_push_pending_frames
+Date: Mon, 16 Jan 2023 16:51:42 +0100
+Message-Id: <20230116154937.588943328@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,70 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit b93fb4405fcb5112c5739c5349afb52ec7f15c07 upstream.
+commit cb3e9864cdbe35ff6378966660edbcbac955fe17 upstream.
 
-As the comment of pci_get_domain_bus_and_slot() says, it
-returns a PCI device with refcount incremented, when finish
-using it, the caller must decrement the reference count by
-calling pci_dev_put().
+The total cork length created by ip6_append_data includes extension
+headers, so we must exclude them when comparing them against the
+IPV6_CHECKSUM offset which does not include extension headers.
 
-In ixgbe_get_first_secondary_devfn() and ixgbe_x550em_a_has_mii(),
-pci_dev_put() is called to avoid leak.
-
-Fixes: 8fa10ef01260 ("ixgbe: register a mdiobus")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reported-by: Kyle Zeng <zengyhkyle@gmail.com>
+Fixes: 357b40a18b04 ("[IPV6]: IPV6_CHECKSUM socket option can corrupt kernel memory")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c |   14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ net/ipv6/raw.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
-@@ -851,9 +851,11 @@ static struct pci_dev *ixgbe_get_first_s
- 	rp_pdev = pci_get_domain_bus_and_slot(0, 0, devfn);
- 	if (rp_pdev && rp_pdev->subordinate) {
- 		bus = rp_pdev->subordinate->number;
-+		pci_dev_put(rp_pdev);
- 		return pci_get_domain_bus_and_slot(0, bus, 0);
- 	}
+--- a/net/ipv6/raw.c
++++ b/net/ipv6/raw.c
+@@ -539,6 +539,7 @@ csum_copy_err:
+ static int rawv6_push_pending_frames(struct sock *sk, struct flowi6 *fl6,
+ 				     struct raw6_sock *rp)
+ {
++	struct ipv6_txoptions *opt;
+ 	struct sk_buff *skb;
+ 	int err = 0;
+ 	int offset;
+@@ -556,6 +557,9 @@ static int rawv6_push_pending_frames(str
  
-+	pci_dev_put(rp_pdev);
- 	return NULL;
- }
- 
-@@ -870,6 +872,7 @@ static bool ixgbe_x550em_a_has_mii(struc
- 	struct ixgbe_adapter *adapter = hw->back;
- 	struct pci_dev *pdev = adapter->pdev;
- 	struct pci_dev *func0_pdev;
-+	bool has_mii = false;
- 
- 	/* For the C3000 family of SoCs (x550em_a) the internal ixgbe devices
- 	 * are always downstream of root ports @ 0000:00:16.0 & 0000:00:17.0
-@@ -880,15 +883,16 @@ static bool ixgbe_x550em_a_has_mii(struc
- 	func0_pdev = ixgbe_get_first_secondary_devfn(PCI_DEVFN(0x16, 0));
- 	if (func0_pdev) {
- 		if (func0_pdev == pdev)
--			return true;
--		else
--			return false;
-+			has_mii = true;
-+		goto out;
- 	}
- 	func0_pdev = ixgbe_get_first_secondary_devfn(PCI_DEVFN(0x17, 0));
- 	if (func0_pdev == pdev)
--		return true;
-+		has_mii = true;
- 
--	return false;
-+out:
-+	pci_dev_put(func0_pdev);
-+	return has_mii;
- }
- 
- /**
+ 	offset = rp->offset;
+ 	total_len = inet_sk(sk)->cork.base.length;
++	opt = inet6_sk(sk)->cork.opt;
++	total_len -= opt ? opt->opt_flen : 0;
++
+ 	if (offset >= total_len - 1) {
+ 		err = -EINVAL;
+ 		ip6_flush_pending_frames(sk);
 
 
