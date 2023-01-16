@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED0F56FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:06:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72458C433D2;
-	Mon, 16 Jan 2023 17:06:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935A76FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:07:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1376BC433D2;
+	Mon, 16 Jan 2023 17:06:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888817;
-	bh=Nc5/dNcnK6xnlpb22rnwKGlS+2WzYHwjHxt1bg/WPRI=;
+	s=korg; t=1673888820;
+	bh=6Giu9Kvk/Sp9xBAkU8cq2Gg7H3GtVSmSZEvW7p65OfI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OajU+1v/tWtKkAjMpq2XNzTG6rXRAb9WvUD/FZXJq8NqefIx4ffjw5Hzqkh8LCDlA
-	 sKiIKqjirL86VLAcw1aoEuHxLu04LUnOC2PBuz2xipY3eJhdmd8COkn05g/Gergqwa
-	 NenC+Lb4Lv1xeNNvfTbi0xOgFjg/ndInxg0ba1Xw=
+	b=Dw1drM+M4K4XHDNMHCsbjvJ/4h1vK+LfO9YXoxr6sf/BDpZn3nieolu6duCAadl2E
+	 9xEz06QdFPa7ujAY1X6hvqD1NZ9ejfDGf9qT97WGI56JweXNANWLn7ZoEG+XAf6yx6
+	 eyAqcWzze/rD+y+XOFCU8y/OCOodj/KcbY0sMSaA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 110/338] mmc: wbsd: fix return value check of mmc_add_host()
-Date: Mon, 16 Jan 2023 16:49:43 +0100
-Message-Id: <20230116154825.653397101@linuxfoundation.org>
+Subject: [PATCH 4.14 144/338] RDMA/rxe: Fix NULL-ptr-deref in rxe_qp_do_cleanup() when socket create failed
+Date: Mon, 16 Jan 2023 16:50:17 +0100
+Message-Id: <20230116154827.125638813@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,53 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit dc5b9b50fc9d1334407e316e6e29a5097ef833bd ]
+[ Upstream commit f67376d801499f4fa0838c18c1efcad8840e550d ]
 
-mmc_add_host() may return error, if we ignore its return value,
-it will lead two issues:
-1. The memory that allocated in mmc_alloc_host() is leaked.
-2. In the remove() path, mmc_remove_host() will be called to
-   delete device, but it's not added yet, it will lead a kernel
-   crash because of null-ptr-deref in device_del().
+There is a null-ptr-deref when mount.cifs over rdma:
 
-So fix this by checking the return value and goto error path which
-will call mmc_free_host(), besides, other resources also need be
-released.
+  BUG: KASAN: null-ptr-deref in rxe_qp_do_cleanup+0x2f3/0x360 [rdma_rxe]
+  Read of size 8 at addr 0000000000000018 by task mount.cifs/3046
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221109133237.3273558-1-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+  CPU: 2 PID: 3046 Comm: mount.cifs Not tainted 6.1.0-rc5+ #62
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc3
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x34/0x44
+   kasan_report+0xad/0x130
+   rxe_qp_do_cleanup+0x2f3/0x360 [rdma_rxe]
+   execute_in_process_context+0x25/0x90
+   __rxe_cleanup+0x101/0x1d0 [rdma_rxe]
+   rxe_create_qp+0x16a/0x180 [rdma_rxe]
+   create_qp.part.0+0x27d/0x340
+   ib_create_qp_kernel+0x73/0x160
+   rdma_create_qp+0x100/0x230
+   _smbd_get_connection+0x752/0x20f0
+   smbd_get_connection+0x21/0x40
+   cifs_get_tcp_session+0x8ef/0xda0
+   mount_get_conns+0x60/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+The root cause of the issue is the socket create failed in
+rxe_qp_init_req().
+
+So move the reset rxe_qp_do_cleanup() after the NULL ptr check.
+
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Link: https://lore.kernel.org/r/20221122151437.1057671-1-zhangxiaoxu5@huawei.com
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/wbsd.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/infiniband/sw/rxe/rxe_qp.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/mmc/host/wbsd.c b/drivers/mmc/host/wbsd.c
-index 546aaf8d1507..6e0f37f373e0 100644
---- a/drivers/mmc/host/wbsd.c
-+++ b/drivers/mmc/host/wbsd.c
-@@ -1716,7 +1716,17 @@ static int wbsd_init(struct device *dev, int base, int irq, int dma,
- 	 */
- 	wbsd_init_device(host);
+diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
+index 2391b0e698a9..9bd99bd693fd 100644
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -866,12 +866,12 @@ static void rxe_qp_do_cleanup(struct work_struct *work)
+ 		qp->resp.mr = NULL;
+ 	}
  
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret) {
-+		if (!pnp)
-+			wbsd_chip_poweroff(host);
-+
-+		wbsd_release_resources(host);
-+		wbsd_free_mmc(dev);
-+
-+		mmc_free_host(mmc);
-+		return ret;
-+	}
+-	if (qp_type(qp) == IB_QPT_RC)
+-		sk_dst_reset(qp->sk->sk);
+-
+ 	free_rd_atomic_resources(qp);
  
- 	pr_info("%s: W83L51xD", mmc_hostname(mmc));
- 	if (host->chip_id != 0)
+ 	if (qp->sk) {
++		if (qp_type(qp) == IB_QPT_RC)
++			sk_dst_reset(qp->sk->sk);
++
+ 		kernel_sock_shutdown(qp->sk, SHUT_RDWR);
+ 		sock_release(qp->sk);
+ 	}
 -- 
 2.35.1
 
