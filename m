@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37C7146B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:27:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97509C433F0;
-	Mon, 16 Jan 2023 16:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1BC346B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:27:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76654C433F0;
+	Mon, 16 Jan 2023 16:27:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886475;
-	bh=1lFtNkUfgExkNrAfpV7RNJeHL4xlyWEIlA4y8vv6YOY=;
+	s=korg; t=1673886477;
+	bh=wiMRYrwCjihogfOJ8kN8+MjKHhiMLI6OOtGx8lIQc6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bnc2N2nQCBi0c8kNZbGYzVXuxs6iohevC48luMi1ig8UnLwqOeA4jIU89XjivF3m3
-	 Lm1xzjIp66R/C6XfearDsQnlm6Skh2OpHQ30bidLcdk5KRNj6YIRUDTmEBiZJ5XFOZ
-	 QVe4dHKTkTPT61MPRPL0jy0XF+ShIzFDzvwfHdhU=
+	b=U6XhIOsXmVfHE63UQ+dHYRdBdoze0CEvo7BsYbR09OtNq1r/q5nuO9aUPA9SwAima
+	 TAvoJSoRC8yRmj3VTGMguZ04i/kEh9DsL4sgi4S/UqruIle20bxCCqMgFuu48QIH9h
+	 EcqKvon2aoBvZNsM1OyrBHgM0s2YirNHoulgCL/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiao Zhou <jiaozhou@google.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 443/658] ALSA: hda/hdmi: Add HP Device 0x8711 to force connect list
-Date: Mon, 16 Jan 2023 16:48:51 +0100
-Message-Id: <20230116154929.790464767@linuxfoundation.org>
+	Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+	Ferry Toth <ftoth@exalondelft.nl>
+Subject: [PATCH 5.4 444/658] usb: dwc3: core: defer probe on ulpi_read_id timeout
+Date: Mon, 16 Jan 2023 16:48:52 +0100
+Message-Id: <20230116154929.828585892@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -34,32 +34,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiao Zhou <jiaozhou@google.com>
+From: Ferry Toth <ftoth@exalondelft.nl>
 
-commit 31b573946ea55e1ea0e08ae8e83bcf879b30f83a upstream.
+commit 63130462c919ece0ad0d9bb5a1f795ef8d79687e upstream.
 
-HDMI audio is not working on the HP EliteDesk 800 G6 because the pin is
-unconnected. This issue can be resolved by using the 'hdajackretask'
-tool to override the unconnected pin to force it to connect.
+Since commit 0f0101719138 ("usb: dwc3: Don't switch OTG -> peripheral
+if extcon is present"), Dual Role support on Intel Merrifield platform
+broke due to rearranging the call to dwc3_get_extcon().
 
-Signed-off-by: Jiao Zhou <jiaozhou@google.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20221206185311.3669950-1-jiaozhou@google.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+It appears to be caused by ulpi_read_id() masking the timeout on the first
+test write. In the past dwc3 probe continued by calling dwc3_core_soft_reset()
+followed by dwc3_get_extcon() which happend to return -EPROBE_DEFER.
+On deferred probe ulpi_read_id() finally succeeded. Due to above mentioned
+rearranging -EPROBE_DEFER is not returned and probe completes without phy.
+
+On Intel Merrifield the timeout on the first test write issue is reproducible
+but it is difficult to find the root cause. Using a mainline kernel and
+rootfs with buildroot ulpi_read_id() succeeds. As soon as adding
+ftrace / bootconfig to find out why, ulpi_read_id() fails and we can't
+analyze the flow. Using another rootfs ulpi_read_id() fails even without
+adding ftrace. We suspect the issue is some kind of timing / race, but
+merely retrying ulpi_read_id() does not resolve the issue.
+
+As we now changed ulpi_read_id() to return -ETIMEDOUT in this case, we
+need to handle the error by calling dwc3_core_soft_reset() and request
+-EPROBE_DEFER. On deferred probe ulpi_read_id() is retried and succeeds.
+
+Fixes: ef6a7bcfb01c ("usb: ulpi: Support device discovery via DT")
+Cc: stable@vger.kernel.org
+Acked-by: Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Signed-off-by: Ferry Toth <ftoth@exalondelft.nl>
+Link: https://lore.kernel.org/r/20221205201527.13525-3-ftoth@exalondelft.nl
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_hdmi.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/dwc3/core.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_hdmi.c
-+++ b/sound/pci/hda/patch_hdmi.c
-@@ -1820,6 +1820,7 @@ static int hdmi_add_cvt(struct hda_codec
- static const struct snd_pci_quirk force_connect_list[] = {
- 	SND_PCI_QUIRK(0x103c, 0x870f, "HP", 1),
- 	SND_PCI_QUIRK(0x103c, 0x871a, "HP", 1),
-+	SND_PCI_QUIRK(0x103c, 0x8711, "HP", 1),
- 	SND_PCI_QUIRK(0x1462, 0xec94, "MS-7C94", 1),
- 	{}
- };
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -931,8 +931,13 @@ static int dwc3_core_init(struct dwc3 *d
+ 
+ 	if (!dwc->ulpi_ready) {
+ 		ret = dwc3_core_ulpi_init(dwc);
+-		if (ret)
++		if (ret) {
++			if (ret == -ETIMEDOUT) {
++				dwc3_core_soft_reset(dwc);
++				ret = -EPROBE_DEFER;
++			}
+ 			goto err0;
++		}
+ 		dwc->ulpi_ready = true;
+ 	}
+ 
 
 
