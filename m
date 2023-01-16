@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 620CA33F0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:20:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC832C433D2;
-	Mon, 16 Jan 2023 16:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02D0A33F0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:20:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C225C433EF;
+	Mon, 16 Jan 2023 16:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886051;
-	bh=SYgF3rKzZyzmEk2atQfWeHtkER+qJ2fXSg8mfd4dOeA=;
+	s=korg; t=1673886053;
+	bh=96oQnMRI0DTt9qsPe9KbUmap40BDEVS2+mZZlqPVp4U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1zGzOj5f/XHYr33d/gND2HlvgEceDkq3T1LqQPW5+JeMQm7XNif4PYrfGwDas+7NP
-	 zxpKknxMhqswNxWojX02bcHbc7pSUMTyWD1ORgDLj1t3BoIGB63SihiV3X7TyQxDVk
-	 oHUbdJ7w9fnJwCy4dj2w5HEVBrsItbFMC4RKmjsE=
+	b=0qNupDaYQ0QQK1RilMh30G+C7jei+voPLAzoC+iQ0smNPs7XDRH+i2diOcs6M6wNR
+	 q3sWXsjIJh5jnX1H5hTJhHQJENtSWEUx7aweKkChQw2ZIMwGx3WxTOgg+fMWvsZq0a
+	 Bt7pk4euUs1WiJH7sp2kCcIhpgabvJYwFZHimFow=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 254/658] crypto: ccree - Make cc_debugfs_global_fini() available for module init function
-Date: Mon, 16 Jan 2023 16:45:42 +0100
-Message-Id: <20230116154921.182570533@linuxfoundation.org>
+Subject: [PATCH 5.4 255/658] RDMA/rxe: Fix NULL-ptr-deref in rxe_qp_do_cleanup() when socket create failed
+Date: Mon, 16 Jan 2023 16:45:43 +0100
+Message-Id: <20230116154921.232389472@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,40 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 8e96729fc26c8967db45a3fb7a60387619f77a22 ]
+[ Upstream commit f67376d801499f4fa0838c18c1efcad8840e550d ]
 
-ccree_init() calls cc_debugfs_global_fini(), the former is an init
-function and the latter an exit function though.
+There is a null-ptr-deref when mount.cifs over rdma:
 
-A modular build emits:
+  BUG: KASAN: null-ptr-deref in rxe_qp_do_cleanup+0x2f3/0x360 [rdma_rxe]
+  Read of size 8 at addr 0000000000000018 by task mount.cifs/3046
 
-	WARNING: modpost: drivers/crypto/ccree/ccree.o: section mismatch in reference: init_module (section: .init.text) -> cc_debugfs_global_fini (section: .exit.text)
+  CPU: 2 PID: 3046 Comm: mount.cifs Not tainted 6.1.0-rc5+ #62
+  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc3
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x34/0x44
+   kasan_report+0xad/0x130
+   rxe_qp_do_cleanup+0x2f3/0x360 [rdma_rxe]
+   execute_in_process_context+0x25/0x90
+   __rxe_cleanup+0x101/0x1d0 [rdma_rxe]
+   rxe_create_qp+0x16a/0x180 [rdma_rxe]
+   create_qp.part.0+0x27d/0x340
+   ib_create_qp_kernel+0x73/0x160
+   rdma_create_qp+0x100/0x230
+   _smbd_get_connection+0x752/0x20f0
+   smbd_get_connection+0x21/0x40
+   cifs_get_tcp_session+0x8ef/0xda0
+   mount_get_conns+0x60/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-(with CONFIG_DEBUG_SECTION_MISMATCH=y).
+The root cause of the issue is the socket create failed in
+rxe_qp_init_req().
 
-Fixes: 4f1c596df706 ("crypto: ccree - Remove debugfs when platform_driver_register failed")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+So move the reset rxe_qp_do_cleanup() after the NULL ptr check.
+
+Fixes: 8700e3e7c485 ("Soft RoCE driver")
+Link: https://lore.kernel.org/r/20221122151437.1057671-1-zhangxiaoxu5@huawei.com
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/ccree/cc_debugfs.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/sw/rxe/rxe_qp.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/crypto/ccree/cc_debugfs.c b/drivers/crypto/ccree/cc_debugfs.c
-index 566999738698..47077dd77f5d 100644
---- a/drivers/crypto/ccree/cc_debugfs.c
-+++ b/drivers/crypto/ccree/cc_debugfs.c
-@@ -59,7 +59,7 @@ void __init cc_debugfs_global_init(void)
- 	cc_debugfs_dir = debugfs_create_dir("ccree", NULL);
- }
+diff --git a/drivers/infiniband/sw/rxe/rxe_qp.c b/drivers/infiniband/sw/rxe/rxe_qp.c
+index 89f6d54a4312..5dd9bcef5921 100644
+--- a/drivers/infiniband/sw/rxe/rxe_qp.c
++++ b/drivers/infiniband/sw/rxe/rxe_qp.c
+@@ -842,12 +842,12 @@ static void rxe_qp_do_cleanup(struct work_struct *work)
+ 		qp->resp.mr = NULL;
+ 	}
  
--void __exit cc_debugfs_global_fini(void)
-+void cc_debugfs_global_fini(void)
- {
- 	debugfs_remove(cc_debugfs_dir);
- }
+-	if (qp_type(qp) == IB_QPT_RC)
+-		sk_dst_reset(qp->sk->sk);
+-
+ 	free_rd_atomic_resources(qp);
+ 
+ 	if (qp->sk) {
++		if (qp_type(qp) == IB_QPT_RC)
++			sk_dst_reset(qp->sk->sk);
++
+ 		kernel_sock_shutdown(qp->sk, SHUT_RDWR);
+ 		sock_release(qp->sk);
+ 	}
 -- 
 2.35.1
 
