@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C51433EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:56:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D76C433F2;
-	Mon, 16 Jan 2023 15:56:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661C433EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:56:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3197C433EF;
+	Mon, 16 Jan 2023 15:56:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884597;
-	bh=UOYZVzsz4sHHWxo/TzPiAXAEMO3oShLbeC5mYHnj0XU=;
+	s=korg; t=1673884600;
+	bh=il4WES6RfhLkeAmz+y737Yhjarm804HuJpRP4XT7iOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J0TkM+96I9gtlsMZphaSD29tGIZvlDJKRruqnElpH6Fxo5FT5BXc39HLZWZluONJn
-	 m0g7NatW7Nceq7kY55A7bGSfcVsc1vr93X2Cccno1QVvCwinOi36wSt76ORvGsLGMu
-	 lH1ZrbdAx2Qd+MM4g7HEdf270TPKS3CZP+fhX4RM=
+	b=tEIyqviCJm0sZfj2v7DTJWr8HFGGFeRO8g0aDGsw9CNuG22lLMS1PfhzQI+k7snKO
+	 fpDqyRLkV7Oq9kiqkteeIw3awjKqOho6WI/W6VPV8VYoB8SX5lVNxIJ6+r/4hxr1Fb
+	 +Oj/yDv0CcKCAL/thL9f8dgL0j/qnjL0qk7KOMPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 039/183] cifs: fix file info setting in cifs_query_path_info()
-Date: Mon, 16 Jan 2023 16:49:22 +0100
-Message-Id: <20230116154805.027598454@linuxfoundation.org>
+	Kuogee Hsieh <quic_khsieh@quicinc.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: [PATCH 6.1 066/183] drm/msm/dp: do not complete dp_aux_cmd_fifo_tx() if irq is not for aux transfer
+Date: Mon, 16 Jan 2023 16:49:49 +0100
+Message-Id: <20230116154806.142643486@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -34,55 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@cjr.nz>
+From: Kuogee Hsieh <quic_khsieh@quicinc.com>
 
-commit 29cf28235e3e57e0af01ae29db57a75f87a2ada8 upstream.
+commit 1cba0d150fa102439114a91b3e215909efc9f169 upstream.
 
-We missed to set file info when CIFSSMBQPathInfo() returned 0, thus
-leaving cifs_open_info_data::fi unset.
+There are 3 possible interrupt sources are handled by DP controller,
+HPDstatus, Controller state changes and Aux read/write transaction.
+At every irq, DP controller have to check isr status of every interrupt
+sources and service the interrupt if its isr status bits shows interrupts
+are pending. There is potential race condition may happen at current aux
+isr handler implementation since it is always complete dp_aux_cmd_fifo_tx()
+even irq is not for aux read or write transaction. This may cause aux read
+transaction return premature if host aux data read is in the middle of
+waiting for sink to complete transferring data to host while irq happen.
+This will cause host's receiving buffer contains unexpected data. This
+patch fixes this problem by checking aux isr and return immediately at
+aux isr handler if there are no any isr status bits set.
 
-Fix this by setting cifs_open_info_data::fi when either
-CIFSSMBQPathInfo() or SMBQueryInformation() succeed.
+Current there is a bug report regrading eDP edid corruption happen during
+system booting up. After lengthy debugging to found that VIDEO_READY
+interrupt was continuously firing during system booting up which cause
+dp_aux_isr() to complete dp_aux_cmd_fifo_tx() prematurely to retrieve data
+from aux hardware buffer which is not yet contains complete data transfer
+from sink. This cause edid corruption.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216881
-Fixes: 76894f3e2f71 ("cifs: improve symlink handling for smb2+")
-Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Follows are the signature at kernel logs when problem happen,
+EDID has corrupt header
+panel-simple-dp-aux aux-aea0000.edp: Couldn't identify panel via EDID
+
+Changes in v2:
+-- do complete if (ret == IRQ_HANDLED) ay dp-aux_isr()
+-- add more commit text
+
+Changes in v3:
+-- add Stephen suggested
+-- dp_aux_isr() return IRQ_XXX back to caller
+-- dp_ctrl_isr() return IRQ_XXX back to caller
+
+Changes in v4:
+-- split into two patches
+
+Changes in v5:
+-- delete empty line between tags
+
+Changes in v6:
+-- remove extra "that" and fixed line more than 75 char at commit text
+
+Fixes: c943b4948b58 ("drm/msm/dp: add displayPort driver support")
+Signed-off-by: Kuogee Hsieh <quic_khsieh@quicinc.com>
+Tested-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/516121/
+Link: https://lore.kernel.org/r/1672193785-11003-2-git-send-email-quic_khsieh@quicinc.com
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/smb1ops.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_aux.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/cifs/smb1ops.c b/fs/cifs/smb1ops.c
-index 50480751e521..5fe2c2f8ef41 100644
---- a/fs/cifs/smb1ops.c
-+++ b/fs/cifs/smb1ops.c
-@@ -562,17 +562,20 @@ static int cifs_query_path_info(const unsigned int xid, struct cifs_tcon *tcon,
- 	if ((rc == -EOPNOTSUPP) || (rc == -EINVAL)) {
- 		rc = SMBQueryInformation(xid, tcon, full_path, &fi, cifs_sb->local_nls,
- 					 cifs_remap(cifs_sb));
--		if (!rc)
--			move_cifs_info_to_smb2(&data->fi, &fi);
- 		*adjustTZ = true;
- 	}
+--- a/drivers/gpu/drm/msm/dp/dp_aux.c
++++ b/drivers/gpu/drm/msm/dp/dp_aux.c
+@@ -423,6 +423,10 @@ void dp_aux_isr(struct drm_dp_aux *dp_au
  
--	if (!rc && (le32_to_cpu(fi.Attributes) & ATTR_REPARSE)) {
-+	if (!rc) {
- 		int tmprc;
- 		int oplock = 0;
- 		struct cifs_fid fid;
- 		struct cifs_open_parms oparms;
+ 	isr = dp_catalog_aux_get_irq(aux->catalog);
  
-+		move_cifs_info_to_smb2(&data->fi, &fi);
++	/* no interrupts pending, return immediately */
++	if (!isr)
++		return;
 +
-+		if (!(le32_to_cpu(fi.Attributes) & ATTR_REPARSE))
-+			return 0;
-+
- 		oparms.tcon = tcon;
- 		oparms.cifs_sb = cifs_sb;
- 		oparms.desired_access = FILE_READ_ATTRIBUTES;
--- 
-2.39.0
-
+ 	if (!aux->cmd_busy)
+ 		return;
+ 
 
 
