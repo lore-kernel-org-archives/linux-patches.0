@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF5D6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:34:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEA7C433F1;
-	Mon, 16 Jan 2023 16:34:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F1136FA3
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:34:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E97EAC433F0;
+	Mon, 16 Jan 2023 16:34:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886883;
-	bh=txBP2PrgBe3hyFn+LIhA4zMDPNpc4vBoKDCQGrRe8zk=;
+	s=korg; t=1673886886;
+	bh=YnMP6OvuwJCpsnYCtBm5dRk50MPX5M1Vcs6TEM1+fdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cV6Cy2GQLv5dvd/jiY5/GYgdtVhQK3HYbC+pMWVCdeFfFrg84ljzUGsyFJ3RqmcAL
-	 5vaHwh+9n9QwodhjJeWyyXvPkteYgQy3AryouS5h+69iNpTl40VSEJY1Y8AfX2OXXa
-	 Ij2XR1lPDYiqBD00xcemWCZ7QzpPDphe3zj34lyg=
+	b=nXcmsADwvnoGB5B2RtJK/R5YfKaU7HCbCImmSrNQpbD8xH9j8AzMFPYqHTCETFDRe
+	 fH6rZyQFXNf/YyIT4dqvwsrDeXM3IypKp2bajiWZGiBpl0X7YfTUgE5BVjBWnYN3G2
+	 8JWmunLhAL6vUPCByLebSzVabOn9HTu+6rkWSR7s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Usama Anjum <usama.anjum@collabora.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	"Tyler Hicks (Microsoft)" <code@tyhicks.com>
-Subject: [PATCH 5.4 598/658] selftests: set the BUILD variable to absolute path
-Date: Mon, 16 Jan 2023 16:51:26 +0100
-Message-Id: <20230116154936.829811094@linuxfoundation.org>
+	Saravana Kannan <saravanak@google.com>,
+	"Isaac J. Manjarres" <isaacmanjarres@google.com>
+Subject: [PATCH 5.4 599/658] driver core: Fix bus_type.match() error handling in __driver_attach()
+Date: Mon, 16 Jan 2023 16:51:27 +0100
+Message-Id: <20230116154936.882365042@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,70 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Muhammad Usama Anjum <usama.anjum@collabora.com>
+From: Isaac J. Manjarres <isaacmanjarres@google.com>
 
-commit 5ad51ab618de5d05f4e692ebabeb6fe6289aaa57 upstream.
+commit 27c0d217340e47ec995557f61423ef415afba987 upstream.
 
-The build of kselftests fails if relative path is specified through
-KBUILD_OUTPUT or O=<path> method. BUILD variable is used to determine
-the path of the output objects. When make is run from other directories
-with relative paths, the exact path of the build objects is ambiguous
-and build fails.
+When a driver registers with a bus, it will attempt to match with every
+device on the bus through the __driver_attach() function. Currently, if
+the bus_type.match() function encounters an error that is not
+-EPROBE_DEFER, __driver_attach() will return a negative error code, which
+causes the driver registration logic to stop trying to match with the
+remaining devices on the bus.
 
-	make[1]: Entering directory '/home/usama/repos/kernel/linux_mainline2/tools/testing/selftests/alsa'
-	gcc     mixer-test.c -L/usr/lib/x86_64-linux-gnu -lasound  -o build/kselftest/alsa/mixer-test
-	/usr/bin/ld: cannot open output file build/kselftest/alsa/mixer-test
+This behavior is not correct; a failure while matching a driver to a
+device does not mean that the driver won't be able to match and bind
+with other devices on the bus. Update the logic in __driver_attach()
+to reflect this.
 
-Set the BUILD variable to the absolute path of the output directory.
-Make the logic readable and easy to follow. Use spaces instead of tabs
-for indentation as if with tab indentation is considered recipe in make.
-
-Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
-Signed-off-by: Tyler Hicks (Microsoft) <code@tyhicks.com>
+Fixes: 656b8035b0ee ("ARM: 8524/1: driver cohandle -EPROBE_DEFER from bus_type.match()")
+Cc: stable@vger.kernel.org
+Cc: Saravana Kannan <saravanak@google.com>
+Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
+Link: https://lore.kernel.org/r/20220921001414.4046492-1-isaacmanjarres@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/Makefile |   26 +++++++++++++++++---------
- 1 file changed, 17 insertions(+), 9 deletions(-)
+ drivers/base/dd.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/tools/testing/selftests/Makefile
-+++ b/tools/testing/selftests/Makefile
-@@ -85,19 +85,27 @@ ifdef building_out_of_srctree
- override LDFLAGS =
- endif
+--- a/drivers/base/dd.c
++++ b/drivers/base/dd.c
+@@ -1068,8 +1068,12 @@ static int __driver_attach(struct device
+ 		 */
+ 		return 0;
+ 	} else if (ret < 0) {
+-		dev_dbg(dev, "Bus failed to match device: %d", ret);
+-		return ret;
++		dev_dbg(dev, "Bus failed to match device: %d\n", ret);
++		/*
++		 * Driver could not match with device, but may match with
++		 * another device on the bus.
++		 */
++		return 0;
+ 	} /* ret > 0 means positive match */
  
--ifneq ($(O),)
--	BUILD := $(O)/kselftest
-+top_srcdir ?= ../../..
-+
-+ifeq ("$(origin O)", "command line")
-+  KBUILD_OUTPUT := $(O)
-+endif
-+
-+ifneq ($(KBUILD_OUTPUT),)
-+  # Make's built-in functions such as $(abspath ...), $(realpath ...) cannot
-+  # expand a shell special character '~'. We use a somewhat tedious way here.
-+  abs_objtree := $(shell cd $(top_srcdir) && mkdir -p $(KBUILD_OUTPUT) && cd $(KBUILD_OUTPUT) && pwd)
-+  $(if $(abs_objtree),, \
-+    $(error failed to create output directory "$(KBUILD_OUTPUT)"))
-+  # $(realpath ...) resolves symlinks
-+  abs_objtree := $(realpath $(abs_objtree))
-+  BUILD := $(abs_objtree)/kselftest
- else
--	ifneq ($(KBUILD_OUTPUT),)
--		BUILD := $(KBUILD_OUTPUT)/kselftest
--	else
--		BUILD := $(shell pwd)
--		DEFAULT_INSTALL_HDR_PATH := 1
--	endif
-+  BUILD := $(CURDIR)
-+  DEFAULT_INSTALL_HDR_PATH := 1
- endif
- 
- # Prepare for headers install
--top_srcdir ?= ../../..
- include $(top_srcdir)/scripts/subarch.include
- ARCH           ?= $(SUBARCH)
- export KSFT_KHDR_INSTALL_DONE := 1
+ 	if (driver_allows_async_probing(drv)) {
 
 
