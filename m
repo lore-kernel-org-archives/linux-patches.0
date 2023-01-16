@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7298B6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:13:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFE75C433EF;
-	Mon, 16 Jan 2023 17:13:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E09C6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:13:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 86E1AC433D2;
+	Mon, 16 Jan 2023 17:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889229;
-	bh=dH3jTZlUGdBtUoxozGHivgGL08f603BKXWa1Ub0AcqE=;
+	s=korg; t=1673889231;
+	bh=vEpmbVZ/PZHJ2C1JJkGIiUDPla5U/sXBxAqdgQl1pMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BA8yAjJN1W0HW/h8LJyUOyDWHGCKoAb1B5hnI3S+Dxe4Oz9kdlxPjz8+cuXDtVCHo
-	 Q06ebGDC6MHgo1pFamY1dkV7K9hwH8tEzci378tRDio2hxTDDuw1OvoewpyF3MiaWI
-	 4ZOBNUQunNIXaU7yJfFWUyW+0rmFbBXU55ydv6ro=
+	b=z7iuLbVz5ohxJlZdtirx4VgUeFSL5Onobisf+YNI1ER7wcHdraqGZDT0NJTs5lf8k
+	 RUwqn0VmCPaIcjPD5Dm/NUCjRoXQZJqbKrJTQgHPjDsK2VTZj2ll3ag6QozFzaLyMf
+	 eh5pv1F/gtYfKh/nPMMvjPemguKxWME1YdvpDCsk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 4.14 306/338] ext4: allocate extended attribute value in vmalloc area
-Date: Mon, 16 Jan 2023 16:52:59 +0100
-Message-Id: <20230116154834.452452021@linuxfoundation.org>
+	Zhihao Cheng <chengzhihao1@huawei.com>,
+	Joe Thornber <ejt@redhat.com>,
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 4.14 278/338] dm thin: Use last transactions pmd->root when commit failed
+Date: Mon, 16 Jan 2023 16:52:31 +0100
+Message-Id: <20230116154833.202448876@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,45 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Zhihao Cheng <chengzhihao1@huawei.com>
 
-commit cc12a6f25e07ed05d5825a1664b67a970842b2ca upstream.
+commit 7991dbff6849f67e823b7cc0c15e5a90b0549b9f upstream.
 
-Now, extended attribute value maximum length is 64K. The memory
-requested here does not need continuous physical addresses, so it is
-appropriate to use kvmalloc to request memory. At the same time, it
-can also cope with the situation that the extended attribute will
-become longer in the future.
+Recently we found a softlock up problem in dm thin pool btree lookup
+code due to corrupted metadata:
 
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221208023233.1231330-3-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
+ Kernel panic - not syncing: softlockup: hung tasks
+ CPU: 7 PID: 2669225 Comm: kworker/u16:3
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996)
+ Workqueue: dm-thin do_worker [dm_thin_pool]
+ Call Trace:
+   <IRQ>
+   dump_stack+0x9c/0xd3
+   panic+0x35d/0x6b9
+   watchdog_timer_fn.cold+0x16/0x25
+   __run_hrtimer+0xa2/0x2d0
+   </IRQ>
+   RIP: 0010:__relink_lru+0x102/0x220 [dm_bufio]
+   __bufio_new+0x11f/0x4f0 [dm_bufio]
+   new_read+0xa3/0x1e0 [dm_bufio]
+   dm_bm_read_lock+0x33/0xd0 [dm_persistent_data]
+   ro_step+0x63/0x100 [dm_persistent_data]
+   btree_lookup_raw.constprop.0+0x44/0x220 [dm_persistent_data]
+   dm_btree_lookup+0x16f/0x210 [dm_persistent_data]
+   dm_thin_find_block+0x12c/0x210 [dm_thin_pool]
+   __process_bio_read_only+0xc5/0x400 [dm_thin_pool]
+   process_thin_deferred_bios+0x1a4/0x4a0 [dm_thin_pool]
+   process_one_work+0x3c5/0x730
+
+Following process may generate a broken btree mixed with fresh and
+stale btree nodes, which could get dm thin trapped in an infinite loop
+while looking up data block:
+ Transaction 1: pmd->root = A, A->B->C   // One path in btree
+                pmd->root = X, X->Y->Z   // Copy-up
+ Transaction 2: X,Z is updated on disk, Y write failed.
+                // Commit failed, dm thin becomes read-only.
+                process_bio_read_only
+		 dm_thin_find_block
+		  __find_block
+		   dm_btree_lookup(pmd->root)
+The pmd->root points to a broken btree, Y may contain stale node
+pointing to any block, for example X, which gets dm thin trapped into
+a dead loop while looking up Z.
+
+Fix this by setting pmd->root in __open_metadata(), so that dm thin
+will use the last transaction's pmd->root if commit failed.
+
+Fetch a reproducer in [Link].
+
+Linke: https://bugzilla.kernel.org/show_bug.cgi?id=216790
+Cc: stable@vger.kernel.org
+Fixes: 991d9fa02da0 ("dm: add thin provisioning target")
+Signed-off-by: Zhihao Cheng <chengzhihao1@huawei.com>
+Acked-by: Joe Thornber <ejt@redhat.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/xattr.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/md/dm-thin-metadata.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -2569,7 +2569,7 @@ static int ext4_xattr_move_to_block(hand
+--- a/drivers/md/dm-thin-metadata.c
++++ b/drivers/md/dm-thin-metadata.c
+@@ -660,6 +660,15 @@ static int __open_metadata(struct dm_poo
+ 		goto bad_cleanup_data_sm;
+ 	}
  
- 	is = kzalloc(sizeof(struct ext4_xattr_ibody_find), GFP_NOFS);
- 	bs = kzalloc(sizeof(struct ext4_xattr_block_find), GFP_NOFS);
--	buffer = kmalloc(value_size, GFP_NOFS);
-+	buffer = kvmalloc(value_size, GFP_NOFS);
- 	b_entry_name = kmalloc(entry->e_name_len + 1, GFP_NOFS);
- 	if (!is || !bs || !buffer || !b_entry_name) {
- 		error = -ENOMEM;
-@@ -2621,7 +2621,7 @@ static int ext4_xattr_move_to_block(hand
- 	error = 0;
- out:
- 	kfree(b_entry_name);
--	kfree(buffer);
-+	kvfree(buffer);
- 	if (is)
- 		brelse(is->iloc.bh);
- 	if (bs)
++	/*
++	 * For pool metadata opening process, root setting is redundant
++	 * because it will be set again in __begin_transaction(). But dm
++	 * pool aborting process really needs to get last transaction's
++	 * root to avoid accessing broken btree.
++	 */
++	pmd->root = le64_to_cpu(disk_super->data_mapping_root);
++	pmd->details_root = le64_to_cpu(disk_super->device_details_root);
++
+ 	__setup_btree_details(pmd);
+ 	dm_bm_unlock(sblock);
+ 
 
 
