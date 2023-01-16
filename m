@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F2846FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:52:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0712EC433F0;
-	Mon, 16 Jan 2023 16:52:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29C296FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:52:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9765CC433EF;
+	Mon, 16 Jan 2023 16:52:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887945;
-	bh=WuohWH2oL/e1tbedEYaYIWUwyWyjMhdRAcVyWCS1/7o=;
+	s=korg; t=1673887948;
+	bh=JykKPLp5E47Pvk3hvRluPHp4WzY1rFpWUUIEsM5pWQY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gLUk+EofYaTMMdoz6I1VSBvCh/XR9RyFVn+ObXLHt9R5NbHP7LSlDT3brFvuocZa4
-	 CgqXUabMrR1lgD0mqLF3X6GAd4ys+yMT+XLKDnCx/P8cIlpBlXWJ4m/95XdQayFbB4
-	 hjjMXXFbfZR9lM/kCsBKjsTN58cZD88Q3FA/pDJQ=
+	b=rdNoaawkprpeAdPEn0BL1FQpOXgnh/LkEOMghSOgpsKVW5GRgsAi8gBNmcfpZO+W4
+	 bzWPTO26pUD+MNYKMAe2xfNKrVQSjVbCbDdK7i8iiA/70/MprJcvQSFSMeFzZ2nhk+
+	 cetlhy3CqC2fMkvBpd4B98xouE8USaO0MC+zveSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9ca7a12fd736d93e0232@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 342/521] media: si470x: Fix use-after-free in si470x_int_in_callback()
-Date: Mon, 16 Jan 2023 16:50:04 +0100
-Message-Id: <20230116154902.464624859@linuxfoundation.org>
+Subject: [PATCH 4.19 343/521] clk: st: Fix memory leak in st_of_quadfs_setup()
+Date: Mon, 16 Jan 2023 16:50:05 +0100
+Message-Id: <20230116154902.497534504@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,62 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 7d21e0b1b41b21d628bf2afce777727bd4479aa5 ]
+[ Upstream commit cfd3ffb36f0d566846163118651d868e607300ba ]
 
-syzbot reported use-after-free in si470x_int_in_callback() [1].  This
-indicates that urb->context, which contains struct si470x_device
-object, is freed when si470x_int_in_callback() is called.
+If st_clk_register_quadfs_pll() fails, @lock should be freed before goto
+@err_exit, otherwise will cause meory leak issue, fix it.
 
-The cause of this issue is that si470x_int_in_callback() is called for
-freed urb.
-
-si470x_usb_driver_probe() calls si470x_start_usb(), which then calls
-usb_submit_urb() and si470x_start().  If si470x_start_usb() fails,
-si470x_usb_driver_probe() doesn't kill urb, but it just frees struct
-si470x_device object, as depicted below:
-
-si470x_usb_driver_probe()
-  ...
-  si470x_start_usb()
-    ...
-    usb_submit_urb()
-    retval = si470x_start()
-    return retval
-  if (retval < 0)
-    free struct si470x_device object, but don't kill urb
-
-This patch fixes this issue by killing urb when si470x_start_usb()
-fails and urb is submitted.  If si470x_start_usb() fails and urb is
-not submitted, i.e. submitting usb fails, it just frees struct
-si470x_device object.
-
-Reported-by: syzbot+9ca7a12fd736d93e0232@syzkaller.appspotmail.com
-Link: https://syzkaller.appspot.com/bug?id=94ed6dddd5a55e90fd4bab942aa4bb297741d977 [1]
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Link: https://lore.kernel.org/r/20221122133614.184910-1-xiujianfeng@huawei.com
+Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/radio/si470x/radio-si470x-usb.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/clk/st/clkgen-fsyn.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/radio/si470x/radio-si470x-usb.c b/drivers/media/radio/si470x/radio-si470x-usb.c
-index ba43a727c0b9..51b961cfba7c 100644
---- a/drivers/media/radio/si470x/radio-si470x-usb.c
-+++ b/drivers/media/radio/si470x/radio-si470x-usb.c
-@@ -742,8 +742,10 @@ static int si470x_usb_driver_probe(struct usb_interface *intf,
+diff --git a/drivers/clk/st/clkgen-fsyn.c b/drivers/clk/st/clkgen-fsyn.c
+index a79d81985c4e..bbe113159bc6 100644
+--- a/drivers/clk/st/clkgen-fsyn.c
++++ b/drivers/clk/st/clkgen-fsyn.c
+@@ -948,9 +948,10 @@ static void __init st_of_quadfs_setup(struct device_node *np,
  
- 	/* start radio */
- 	retval = si470x_start_usb(radio);
--	if (retval < 0)
-+	if (retval < 0 && !radio->int_in_running)
- 		goto err_buf;
-+	else if (retval < 0)	/* in case of radio->int_in_running == 1 */
-+		goto err_all;
- 
- 	/* set initial frequency */
- 	si470x_set_freq(radio, 87.5 * FREQ_MUL); /* available in all regions */
+ 	clk = st_clk_register_quadfs_pll(pll_name, clk_parent_name, data,
+ 			reg, lock);
+-	if (IS_ERR(clk))
++	if (IS_ERR(clk)) {
++		kfree(lock);
+ 		goto err_exit;
+-	else
++	} else
+ 		pr_debug("%s: parent %s rate %u\n",
+ 			__clk_get_name(clk),
+ 			__clk_get_name(clk_get_parent(clk)),
 -- 
 2.35.1
 
