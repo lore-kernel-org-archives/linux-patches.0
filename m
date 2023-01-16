@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF48E6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:06:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64E4DC433EF;
-	Mon, 16 Jan 2023 17:06:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 780EE6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:06:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3DB2C433EF;
+	Mon, 16 Jan 2023 17:06:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888791;
-	bh=hQ7GpAy/mjpIrjA1bbSg29vpmXbFcFR0yWlUvvVrdII=;
+	s=korg; t=1673888794;
+	bh=+66WApJqfd+acrA5sIN1STwd+hEIpNji0sDmDpFZ35M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v7WAta3Rym/6ff5zt7zwl4xUG7DhtQQzoJmuLlf5Y4HlmiXDnjoJUN/JGs/3EyGR6
-	 X668JQiesDlLJ6s2GaVR3l8RBB8dBnxfYuKkK5ygrAD4x7vBUoO0S+QyP2cfC7YQNm
-	 C46Wr9eZO5ZcpSG/YP6qfSVzn4QAxE0E2NvRL2Qg=
+	b=lpyan23IXPXLdx7GuWe2uO9JYIYmT6Fc3i3nTP4NsMu7s4EFSRgzjTObHbwBMxoNY
+	 2gpdvBtN38QJxmOi5s0zFvWJ8CBPZP/Bn3sy44e13TBg/8jbERFhuDWw/iNxomt2GC
+	 Y9Bj6znfG0FcI5Yddzxx/7woMVsB97o/tgDYS3YA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Piergiorgio Beruto <piergiorgio.beruto@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 113/338] media: coda: Add check for dcoda_iram_alloc
-Date: Mon, 16 Jan 2023 16:49:46 +0100
-Message-Id: <20230116154825.766503483@linuxfoundation.org>
+Subject: [PATCH 4.14 140/338] stmmac: fix potential division by 0
+Date: Mon, 16 Jan 2023 16:50:13 +0100
+Message-Id: <20230116154826.947036198@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,45 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Piergiorgio Beruto <piergiorgio.beruto@gmail.com>
 
-[ Upstream commit 6b8082238fb8bb20f67e46388123e67a5bbc558d ]
+[ Upstream commit ede5a389852d3640a28e7187fb32b7f204380901 ]
 
-As the coda_iram_alloc may return NULL pointer,
-it should be better to check the return value
-in order to avoid NULL poineter dereference,
-same as the others.
+When the MAC is connected to a 10 Mb/s PHY and the PTP clock is derived
+from the MAC reference clock (default), the clk_ptp_rate becomes too
+small and the calculated sub second increment becomes 0 when computed by
+the stmmac_config_sub_second_increment() function within
+stmmac_init_tstamp_counter().
 
-Fixes: b313bcc9a467 ("[media] coda: simplify IRAM setup")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Therefore, the subsequent div_u64 in stmmac_init_tstamp_counter()
+operation triggers a divide by 0 exception as shown below.
+
+[   95.062067] socfpga-dwmac ff700000.ethernet eth0: Register MEM_TYPE_PAGE_POOL RxQ-0
+[   95.076440] socfpga-dwmac ff700000.ethernet eth0: PHY [stmmac-0:08] driver [NCN26000] (irq=49)
+[   95.095964] dwmac1000: Master AXI performs any burst length
+[   95.101588] socfpga-dwmac ff700000.ethernet eth0: No Safety Features support found
+[   95.109428] Division by zero in kernel.
+[   95.113447] CPU: 0 PID: 239 Comm: ifconfig Not tainted 6.1.0-rc7-centurion3-1.0.3.0-01574-gb624218205b7-dirty #77
+[   95.123686] Hardware name: Altera SOCFPGA
+[   95.127695]  unwind_backtrace from show_stack+0x10/0x14
+[   95.132938]  show_stack from dump_stack_lvl+0x40/0x4c
+[   95.137992]  dump_stack_lvl from Ldiv0+0x8/0x10
+[   95.142527]  Ldiv0 from __aeabi_uidivmod+0x8/0x18
+[   95.147232]  __aeabi_uidivmod from div_u64_rem+0x1c/0x40
+[   95.152552]  div_u64_rem from stmmac_init_tstamp_counter+0xd0/0x164
+[   95.158826]  stmmac_init_tstamp_counter from stmmac_hw_setup+0x430/0xf00
+[   95.165533]  stmmac_hw_setup from __stmmac_open+0x214/0x2d4
+[   95.171117]  __stmmac_open from stmmac_open+0x30/0x44
+[   95.176182]  stmmac_open from __dev_open+0x11c/0x134
+[   95.181172]  __dev_open from __dev_change_flags+0x168/0x17c
+[   95.186750]  __dev_change_flags from dev_change_flags+0x14/0x50
+[   95.192662]  dev_change_flags from devinet_ioctl+0x2b4/0x604
+[   95.198321]  devinet_ioctl from inet_ioctl+0x1ec/0x214
+[   95.203462]  inet_ioctl from sock_ioctl+0x14c/0x3c4
+[   95.208354]  sock_ioctl from vfs_ioctl+0x20/0x38
+[   95.212984]  vfs_ioctl from sys_ioctl+0x250/0x844
+[   95.217691]  sys_ioctl from ret_fast_syscall+0x0/0x4c
+[   95.222743] Exception stack(0xd0ee1fa8 to 0xd0ee1ff0)
+[   95.227790] 1fa0:                   00574c4f be9aeca4 00000003 00008914 be9aeca4 be9aec50
+[   95.235945] 1fc0: 00574c4f be9aeca4 0059f078 00000036 be9aee8c be9aef7a 00000015 00000000
+[   95.244096] 1fe0: 005a01f0 be9aec38 004d7484 b6e67d74
+
+Signed-off-by: Piergiorgio Beruto <piergiorgio.beruto@gmail.com>
+Fixes: 91a2559c1dc5 ("net: stmmac: Fix sub-second increment")
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/de4c64ccac9084952c56a06a8171d738604c4770.1670678513.git.piergiorgio.beruto@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/coda/coda-bit.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c | 3 ++-
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h      | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/media/platform/coda/coda-bit.c b/drivers/media/platform/coda/coda-bit.c
-index d538cd49a3ba..7a96b53bcf6b 100644
---- a/drivers/media/platform/coda/coda-bit.c
-+++ b/drivers/media/platform/coda/coda-bit.c
-@@ -637,7 +637,7 @@ static void coda_setup_iram(struct coda_ctx *ctx)
- 		/* Only H.264BP and H.263P3 are considered */
- 		iram_info->buf_dbk_y_use = coda_iram_alloc(iram_info, w64);
- 		iram_info->buf_dbk_c_use = coda_iram_alloc(iram_info, w64);
--		if (!iram_info->buf_dbk_c_use)
-+		if (!iram_info->buf_dbk_y_use || !iram_info->buf_dbk_c_use)
- 			goto out;
- 		iram_info->axi_sram_use |= dbk_bits;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
+index ccf7381c8bae..8f2bbc1e92d8 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_hwtstamp.c
+@@ -53,7 +53,8 @@ static u32 stmmac_config_sub_second_increment(void __iomem *ioaddr,
+ 	if (!(value & PTP_TCR_TSCTRLSSR))
+ 		data = (data * 1000) / 465;
  
-@@ -661,7 +661,7 @@ static void coda_setup_iram(struct coda_ctx *ctx)
+-	data &= PTP_SSIR_SSINC_MASK;
++	if (data > PTP_SSIR_SSINC_MAX)
++		data = PTP_SSIR_SSINC_MAX;
  
- 		iram_info->buf_dbk_y_use = coda_iram_alloc(iram_info, w128);
- 		iram_info->buf_dbk_c_use = coda_iram_alloc(iram_info, w128);
--		if (!iram_info->buf_dbk_c_use)
-+		if (!iram_info->buf_dbk_y_use || !iram_info->buf_dbk_c_use)
- 			goto out;
- 		iram_info->axi_sram_use |= dbk_bits;
+ 	reg_value = data;
+ 	if (gmac4)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
+index f4b31d69f60e..36b58c4866e6 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.h
+@@ -65,7 +65,7 @@
+ #define	PTP_TCR_TSENMACADDR	BIT(18)
  
+ /* SSIR defines */
+-#define	PTP_SSIR_SSINC_MASK		0xff
++#define	PTP_SSIR_SSINC_MAX		0xff
+ #define	GMAC4_PTP_SSIR_SSINC_SHIFT	16
+ 
+ #endif	/* __STMMAC_PTP_H__ */
 -- 
 2.35.1
 
