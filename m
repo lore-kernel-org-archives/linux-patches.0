@@ -1,42 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D6E46FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:52:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45040C433EF;
-	Mon, 16 Jan 2023 16:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84C726FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:52:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D902AC433F1;
+	Mon, 16 Jan 2023 16:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887976;
-	bh=SJwjECAVvFzKFXCH5MH/QDUG3Vn9u+BG0gWjkKBLjCc=;
+	s=korg; t=1673887979;
+	bh=AkFc2J6mt4doswpUHF10WxTuI2n1u4h0JZPf4TOjOg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o3i6NuYIMm+njXJP3tSQnzMYKoRuhO+TwUDEWK4Sa9KRqFydUmV6Ho7jG/sk98TD8
-	 bT4IDY4JI79I/x2zDyZvMPc1kuTcnFMjiSA5E9wk2W8V32mgrGSPihRN7eJ7gWFR9q
-	 gE/xQ97Wl6+BV9ADYC+Vj6evLZwmMViSSvpEidd4=
+	b=fE7iHxVrlsyXi9OQH9X25evvvQChJLAsUK6VRPmL0pY1RUJhVHA9m/owDpNJ9RezW
+	 IhVxo76sYw/3NmJ7eUdFKRr/KKLjeYGdnQgLipT5ZGkitWjvfPCyGdxHK5M30mssyz
+	 oMVFRvUihvFp2D6lqitHpvjpfM1aZsamf+UjRuk0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
-	Carsten Haitzler <carsten.haitzler@arm.com>,
-	Ian Rogers <irogers@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Leo Yan <leo.yan@linaro.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	martin.lau@kernel.org,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Ravi Bangoria <ravi.bangoria@amd.com>,
-	Ravi Bangoria <ravi.bangoria@linux.ibm.com>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Wei Wang <wvw@google.com>,
+	Midas Chien <midaschieh@google.com>,
+	Connor OBrien <connoro@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Anton Vorontsov <anton@enomsg.org>,
+	Colin Cross <ccross@android.com>,
+	Tony Luck <tony.luck@intel.com>,
+	kernel test robot <lkp@intel.com>,
+	kernel-team@android.com,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 353/521] perf debug: Set debug_peo_args and redirect_to_stderr variable to correct values in perf_quiet_option()
-Date: Mon, 16 Jan 2023 16:50:15 +0100
-Message-Id: <20230116154902.910164497@linuxfoundation.org>
+Subject: [PATCH 4.19 354/521] pstore: Make sure CONFIG_PSTORE_PMSG selects CONFIG_RT_MUTEXES
+Date: Mon, 16 Jan 2023 16:50:16 +0100
+Message-Id: <20230116154902.950255999@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -50,87 +43,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: John Stultz <jstultz@google.com>
 
-[ Upstream commit 188ac720d364035008a54d249cf47b4cc100f819 ]
+[ Upstream commit 2f4fec5943407318b9523f01ce1f5d668c028332 ]
 
-When perf uses quiet mode, perf_quiet_option() sets the 'debug_peo_args'
-variable to -1, and display_attr() incorrectly determines the value of
-'debug_peo_args'.  As a result, unexpected information is displayed.
+In commit 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex
+to avoid priority inversion") I changed a lock to an rt_mutex.
 
-Before:
+However, its possible that CONFIG_RT_MUTEXES is not enabled,
+which then results in a build failure, as the 0day bot detected:
+  https://lore.kernel.org/linux-mm/202212211244.TwzWZD3H-lkp@intel.com/
 
-  # perf record --quiet -- ls > /dev/null
-  ------------------------------------------------------------
-  perf_event_attr:
-    size                             128
-    { sample_period, sample_freq }   4000
-    sample_type                      IP|TID|TIME|PERIOD
-    read_format                      ID|LOST
-    disabled                         1
-    inherit                          1
-    mmap                             1
-    comm                             1
-    freq                             1
-    enable_on_exec                   1
-    task                             1
-    precise_ip                       3
-    sample_id_all                    1
-    exclude_guest                    1
-    mmap2                            1
-    comm_exec                        1
-    ksymbol                          1
-    bpf_event                        1
-  ------------------------------------------------------------
-  ...
+Thus this patch changes CONFIG_PSTORE_PMSG to select
+CONFIG_RT_MUTEXES, which ensures the build will not fail.
 
-After:
-  # perf record --quiet -- ls > /dev/null
-  #
-
-redirect_to_stderr is a similar problem.
-
-Fixes: f78eaef0e0493f60 ("perf tools: Allow to force redirect pr_debug to stderr.")
-Fixes: ccd26741f5e6bdf2 ("perf tool: Provide an option to print perf_event_open args and return value")
-Suggested-by: Adrian Hunter <adrian.hunter@intel.com>
-Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Carsten Haitzler <carsten.haitzler@arm.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Leo Yan <leo.yan@linaro.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: martin.lau@kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Ravi Bangoria <ravi.bangoria@amd.com>
-Cc: Ravi Bangoria <ravi.bangoria@linux.ibm.com>
-Link: https://lore.kernel.org/r/20221220035702.188413-2-yangjihong1@huawei.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: Wei Wang <wvw@google.com>
+Cc: Midas Chien<midaschieh@google.com>
+Cc: Connor O'Brien <connoro@google.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Anton Vorontsov <anton@enomsg.org>
+Cc: Colin Cross <ccross@android.com>
+Cc: Tony Luck <tony.luck@intel.com>
+Cc: kernel test robot <lkp@intel.com>
+Cc: kernel-team@android.com
+Fixes: 76d62f24db07 ("pstore: Switch pmsg_lock to an rt_mutex to avoid priority inversion")
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221221051855.15761-1-jstultz@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/debug.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ fs/pstore/Kconfig | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/debug.c b/tools/perf/util/debug.c
-index 3d6459626c2a..9f9875ba2edf 100644
---- a/tools/perf/util/debug.c
-+++ b/tools/perf/util/debug.c
-@@ -232,6 +232,10 @@ int perf_quiet_option(void)
- 		var++;
- 	}
- 
-+	/* For debug variables that are used as bool types, set to 0. */
-+	redirect_to_stderr = 0;
-+	debug_peo_args = 0;
-+
- 	return 0;
- }
- 
+diff --git a/fs/pstore/Kconfig b/fs/pstore/Kconfig
+index 503086f7f7c1..d5fb6d95d4d4 100644
+--- a/fs/pstore/Kconfig
++++ b/fs/pstore/Kconfig
+@@ -117,6 +117,7 @@ config PSTORE_CONSOLE
+ config PSTORE_PMSG
+ 	bool "Log user space messages"
+ 	depends on PSTORE
++	select RT_MUTEXES
+ 	help
+ 	  When the option is enabled, pstore will export a character
+ 	  interface /dev/pmsg0 to log user space messages. On reboot
 -- 
 2.35.1
 
