@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A039746B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:15:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27E1CC433F0;
-	Mon, 16 Jan 2023 16:15:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 473F746B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:15:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC2B5C433EF;
+	Mon, 16 Jan 2023 16:15:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885756;
-	bh=KXidTduxiPpQHrqOGKeW6Q3TqaHv3Jftc+hS9SUY/Lo=;
+	s=korg; t=1673885759;
+	bh=ykiS9gqIOKUeTcu+OBR+7ICt5G8aiKgvRB+1qDg0wAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=su/i8Q/mzg5yubDUwsPLIbX4uX0CZitCVAbCF4ADkwfAcE8EoxZkHBbwAscqjR5Zb
-	 cZsEsP8i1bEI0iE/YwlfejPuXQkebRmvoOmlqvSUH39+DN9ogvwvzfWtA6K9XtXugN
-	 kDe7RQ62J2+mdYhqwQhELf0NsuBVA2Qxp6anB3t8=
+	b=1Gfi3EmZ+PAZdm1Ho359CtUDu3Kx85P7ycrhVO40YOpIHyX2t3bozjD1R9l+07PR6
+	 mdfC7Q0mcnSY/qRt4RMf3rH9U8c+r1S2jd5v1rSDI2Z6M5MipqpvjDC/eRa1k53BkX
+	 o5+17Y+04PmYvBWIK8SkFa4pbs3fbK+pvw5e9S9w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Chen <harperchen1110@gmail.com>,
-	Baisong Zhong <zhongbaisong@huawei.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Dan Carpenter <error27@gmail.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jay Vosburgh <jay.vosburgh@canonical.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 155/658] media: dvb-usb: az6027: fix null-ptr-deref in az6027_i2c_xfer()
-Date: Mon, 16 Jan 2023 16:44:03 +0100
-Message-Id: <20230116154916.536002953@linuxfoundation.org>
+Subject: [PATCH 5.4 173/658] bonding: uninitialized variable in bond_miimon_inspect()
+Date: Mon, 16 Jan 2023 16:44:21 +0100
+Message-Id: <20230116154917.392844817@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,62 +37,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baisong Zhong <zhongbaisong@huawei.com>
+From: Dan Carpenter <error27@gmail.com>
 
-[ Upstream commit 0ed554fd769a19ea8464bb83e9ac201002ef74ad ]
+[ Upstream commit e5214f363dabca240446272dac54d404501ad5e5 ]
 
-Wei Chen reports a kernel bug as blew:
+The "ignore_updelay" variable needs to be initialized to false.
 
-general protection fault, probably for non-canonical address
-KASAN: null-ptr-deref in range [0x0000000000000010-0x0000000000000017]
-...
-Call Trace:
-<TASK>
-__i2c_transfer+0x77e/0x1930 drivers/i2c/i2c-core-base.c:2109
-i2c_transfer+0x1d5/0x3d0 drivers/i2c/i2c-core-base.c:2170
-i2cdev_ioctl_rdwr+0x393/0x660 drivers/i2c/i2c-dev.c:297
-i2cdev_ioctl+0x75d/0x9f0 drivers/i2c/i2c-dev.c:458
-vfs_ioctl fs/ioctl.c:51 [inline]
-__do_sys_ioctl fs/ioctl.c:870 [inline]
-__se_sys_ioctl+0xfb/0x170 fs/ioctl.c:856
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x3d/0x90 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7fd834a8bded
-
-In az6027_i2c_xfer(), if msg[i].addr is 0x99,
-a null-ptr-deref will caused when accessing msg[i].buf.
-For msg[i].len is 0 and msg[i].buf is null.
-
-Fix this by checking msg[i].len in az6027_i2c_xfer().
-
-Link: https://lore.kernel.org/lkml/CAO4mrfcPHB5aQJO=mpqV+p8mPLNg-Fok0gw8gZ=zemAfMGTzMg@mail.gmail.com/
-
-Link: https://lore.kernel.org/linux-media/20221120065918.2160782-1-zhongbaisong@huawei.com
-Fixes: 76f9a820c867 ("V4L/DVB: AZ6027: Initial import of the driver")
-Reported-by: Wei Chen <harperchen1110@gmail.com>
-Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: f8a65ab2f3ff ("bonding: fix link recovery in mode 2 when updelay is nonzero")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
+Link: https://lore.kernel.org/r/Y4SWJlh3ohJ6EPTL@kili
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/usb/dvb-usb/az6027.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/bonding/bond_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/usb/dvb-usb/az6027.c b/drivers/media/usb/dvb-usb/az6027.c
-index 5aa9c501ed9c..ffc0db67d4d6 100644
---- a/drivers/media/usb/dvb-usb/az6027.c
-+++ b/drivers/media/usb/dvb-usb/az6027.c
-@@ -975,6 +975,10 @@ static int az6027_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msg[], int n
- 		if (msg[i].addr == 0x99) {
- 			req = 0xBE;
- 			index = 0;
-+			if (msg[i].len < 1) {
-+				i = -EOPNOTSUPP;
-+				break;
-+			}
- 			value = msg[i].buf[0] & 0x00ff;
- 			length = 1;
- 			az6027_usb_out_op(d, req, value, index, data, length);
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index 0b7994cb9380..0885991347d0 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -2102,10 +2102,10 @@ static int bond_slave_info_query(struct net_device *bond_dev, struct ifslave *in
+ /* called with rcu_read_lock() */
+ static int bond_miimon_inspect(struct bonding *bond)
+ {
++	bool ignore_updelay = false;
+ 	int link_state, commit = 0;
+ 	struct list_head *iter;
+ 	struct slave *slave;
+-	bool ignore_updelay;
+ 
+ 	if (BOND_MODE(bond) == BOND_MODE_ACTIVEBACKUP) {
+ 		ignore_updelay = !rcu_dereference(bond->curr_active_slave);
 -- 
 2.35.1
 
