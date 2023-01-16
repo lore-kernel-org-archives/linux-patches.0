@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1A096FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:54:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62085C433D2;
-	Mon, 16 Jan 2023 16:54:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79F926FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:55:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3CA6C433F0;
+	Mon, 16 Jan 2023 16:54:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888097;
-	bh=BCsjCri5W45/Z+xShuWkpRfYMdS4nvVYMupo6IF8VQ0=;
+	s=korg; t=1673888100;
+	bh=Vwy4BjoQMhksLPN1W/v5hQl8Sae12S9YOg7pjyU6tbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mPGZuKhGON7lGp9dOiuhziFhpKpM5PcZxQdGhjwYFw1wCXN5uuAJOIo6JddAYjk3c
-	 X7WBSH/zkAgw31WoLgO911WQ7Ok24OqjMhwqNcuakGoIxqwTYr1dzXl9zlJhr4TpfG
-	 W7Sl4qgVwU41XTpW5H17KOirkBD+pqA+hlf3HjaM=
+	b=HALWT2fa5GAhCvLhhMglUl6S2HMb7TEdOKXa7WJ5oZlPjdqn6wS2CcwXrW0+HY8lU
+	 46LH8s0f0JtW+MiPZW33MZ/Fa1iwwYy0QCQ9hC3++8I3gESd3vINzhaMQW9KcM7oHL
+	 nlFvy5iUsjmneb43bnMkgd8C9BnDxzbsBWPxEdeQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rolf Eike Beer <eike-kernel@sf-tec.de>,
-	Corentin Labbe <clabbe@baylibre.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	stable@kernel.org
-Subject: [PATCH 4.19 400/521] crypto: n2 - add missing hash statesize
-Date: Mon, 16 Jan 2023 16:51:02 +0100
-Message-Id: <20230116154904.956802330@linuxfoundation.org>
+	Kim Phillips <kim.phillips@amd.com>,
+	Suravee Suthikulpanit <Suravee.Suthikulpanit@amd.com>,
+	Joerg Roedel <jroedel@suse.de>
+Subject: [PATCH 4.19 401/521] iommu/amd: Fix ivrs_acpihid cmdline parsing code
+Date: Mon, 16 Jan 2023 16:51:03 +0100
+Message-Id: <20230116154905.007097157@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,74 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corentin Labbe <clabbe@baylibre.com>
+From: Kim Phillips <kim.phillips@amd.com>
 
-commit 76a4e874593543a2dff91d249c95bac728df2774 upstream.
+commit 5f18e9f8868c6d4eae71678e7ebd4977b7d8c8cf upstream.
 
-Add missing statesize to hash templates.
-This is mandatory otherwise no algorithms can be registered as the core
-requires statesize to be set.
+The second (UID) strcmp in acpi_dev_hid_uid_match considers
+"0" and "00" different, which can prevent device registration.
 
-CC: stable@kernel.org # 4.3+
-Reported-by: Rolf Eike Beer <eike-kernel@sf-tec.de>
-Tested-by: Rolf Eike Beer <eike-kernel@sf-tec.de>
-Fixes: 0a625fd2abaa ("crypto: n2 - Add Niagara2 crypto driver")
-Signed-off-by: Corentin Labbe <clabbe@baylibre.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Have the AMD IOMMU driver's ivrs_acpihid parsing code remove
+any leading zeroes to make the UID strcmp succeed.  Now users
+can safely specify "AMDxxxxx:00" or "AMDxxxxx:0" and expect
+the same behaviour.
+
+Fixes: ca3bf5d47cec ("iommu/amd: Introduces ivrs_acpihid kernel parameter")
+Signed-off-by: Kim Phillips <kim.phillips@amd.com>
+Cc: stable@vger.kernel.org
+Cc: Suravee Suthikulpanit <Suravee.Suthikulpanit@amd.com>
+Cc: Joerg Roedel <jroedel@suse.de>
+Link: https://lore.kernel.org/r/20220919155638.391481-1-kim.phillips@amd.com
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/crypto/n2_core.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/iommu/amd_iommu_init.c |    7 +++++++
+ 1 file changed, 7 insertions(+)
 
---- a/drivers/crypto/n2_core.c
-+++ b/drivers/crypto/n2_core.c
-@@ -1286,6 +1286,7 @@ struct n2_hash_tmpl {
- 	const u32	*hash_init;
- 	u8		hw_op_hashsz;
- 	u8		digest_size;
-+	u8		statesize;
- 	u8		block_size;
- 	u8		auth_type;
- 	u8		hmac_type;
-@@ -1317,6 +1318,7 @@ static const struct n2_hash_tmpl hash_tm
- 	  .hmac_type	= AUTH_TYPE_HMAC_MD5,
- 	  .hw_op_hashsz	= MD5_DIGEST_SIZE,
- 	  .digest_size	= MD5_DIGEST_SIZE,
-+	  .statesize	= sizeof(struct md5_state),
- 	  .block_size	= MD5_HMAC_BLOCK_SIZE },
- 	{ .name		= "sha1",
- 	  .hash_zero	= sha1_zero_message_hash,
-@@ -1325,6 +1327,7 @@ static const struct n2_hash_tmpl hash_tm
- 	  .hmac_type	= AUTH_TYPE_HMAC_SHA1,
- 	  .hw_op_hashsz	= SHA1_DIGEST_SIZE,
- 	  .digest_size	= SHA1_DIGEST_SIZE,
-+	  .statesize	= sizeof(struct sha1_state),
- 	  .block_size	= SHA1_BLOCK_SIZE },
- 	{ .name		= "sha256",
- 	  .hash_zero	= sha256_zero_message_hash,
-@@ -1333,6 +1336,7 @@ static const struct n2_hash_tmpl hash_tm
- 	  .hmac_type	= AUTH_TYPE_HMAC_SHA256,
- 	  .hw_op_hashsz	= SHA256_DIGEST_SIZE,
- 	  .digest_size	= SHA256_DIGEST_SIZE,
-+	  .statesize	= sizeof(struct sha256_state),
- 	  .block_size	= SHA256_BLOCK_SIZE },
- 	{ .name		= "sha224",
- 	  .hash_zero	= sha224_zero_message_hash,
-@@ -1341,6 +1345,7 @@ static const struct n2_hash_tmpl hash_tm
- 	  .hmac_type	= AUTH_TYPE_RESERVED,
- 	  .hw_op_hashsz	= SHA256_DIGEST_SIZE,
- 	  .digest_size	= SHA224_DIGEST_SIZE,
-+	  .statesize	= sizeof(struct sha256_state),
- 	  .block_size	= SHA224_BLOCK_SIZE },
- };
- #define NUM_HASH_TMPLS ARRAY_SIZE(hash_tmpls)
-@@ -1482,6 +1487,7 @@ static int __n2_register_one_ahash(const
+--- a/drivers/iommu/amd_iommu_init.c
++++ b/drivers/iommu/amd_iommu_init.c
+@@ -2946,6 +2946,13 @@ static int __init parse_ivrs_acpihid(cha
+ 		return 1;
+ 	}
  
- 	halg = &ahash->halg;
- 	halg->digestsize = tmpl->digest_size;
-+	halg->statesize = tmpl->statesize;
- 
- 	base = &halg->base;
- 	snprintf(base->cra_name, CRYPTO_MAX_ALG_NAME, "%s", tmpl->name);
++	/*
++	 * Ignore leading zeroes after ':', so e.g., AMDI0095:00
++	 * will match AMDI0095:0 in the second strcmp in acpi_dev_hid_uid_match
++	 */
++	while (*uid == '0' && *(uid + 1))
++		uid++;
++
+ 	i = early_acpihid_map_size++;
+ 	memcpy(early_acpihid_map[i].hid, hid, strlen(hid));
+ 	memcpy(early_acpihid_map[i].uid, uid, strlen(uid));
 
 
