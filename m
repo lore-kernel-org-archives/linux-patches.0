@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A0B06FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:35:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 810E3C433EF;
-	Mon, 16 Jan 2023 16:35:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5EC6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:35:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FE38C433D2;
+	Mon, 16 Jan 2023 16:35:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886939;
-	bh=wHUaAU5fDxLnromnsNEk9BvFIIPsxifoRg80XRDHeI0=;
+	s=korg; t=1673886942;
+	bh=6IqYSJ9PUPBz3rqoM9PaKfR/5UykSsWr3IYZVBWYfPo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PIxqt5q2MMfXrCbXWzTC6T7rQWMwOqqt8s2phhamPGFBbGOHihbY5S9Us0Yv2fYIr
-	 pGEDrrc7ss4G7KDsrTuBEQhO/sayWyakZYu1qcYYKGGWzLDXATGU6LYXrqdk83ZbiW
-	 dsKeIitzQNmVr3bDZqPzKvp54H9YOU7MJm1U3YbA=
+	b=IKVZ/blXhpfpiQ4x/nCGwZQzYnv8Ib1+Ui40tFYtfC2YFo9THGbs75bq89RRSK7hi
+	 smOv985CBFodQhiHgzLbIxZv3w1urwx2pZ9qNTZo4fVgPVXozO4vO3wIp+Rqpw7UGh
+	 9qHDqDANr95a3PoOO24pbzh7fP6+gUsCcm+pbg2U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Theodore Tso <tytso@mit.edu>,
 	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 620/658] jbd2: Reorganize jbd2_journal_stop()
-Date: Mon, 16 Jan 2023 16:51:48 +0100
-Message-Id: <20230116154937.870524899@linuxfoundation.org>
+Subject: [PATCH 5.4 621/658] jbd2: Drop pointless wakeup from jbd2_journal_stop()
+Date: Mon, 16 Jan 2023 16:51:49 +0100
+Message-Id: <20230116154937.916918384@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,100 +37,46 @@ Content-Transfer-Encoding: 8bit
 
 From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit dfaf5ffda227be3e867fee7c0f6a66749392fbd0 ]
+[ Upstream commit 5559b2d81b51de75cb7864bb1fbb82982f7e8fff ]
 
-Move code in jbd2_journal_stop() around a bit. It removes some
-unnecessary code duplication and will make factoring out parts common
-with jbd2__journal_restart() easier.
+When we drop last handle from a transaction and journal->j_barrier_count
+> 0, jbd2_journal_stop() wakes up journal->j_wait_transaction_locked
+wait queue. This looks pointless - wait for outstanding handles always
+happens on journal->j_wait_updates waitqueue.
+journal->j_wait_transaction_locked is used to wait for transaction state
+changes and by start_this_handle() for waiting until
+journal->j_barrier_count drops to 0. The first case is clearly
+irrelevant here since only jbd2 thread changes transaction state. The
+second case looks related but jbd2_journal_unlock_updates() is
+responsible for the wakeup in this case. So just drop the wakeup.
 
 Reviewed-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20191105164437.32602-14-jack@suse.cz
+Link: https://lore.kernel.org/r/20191105164437.32602-16-jack@suse.cz
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Stable-dep-of: d87a7b4c77a9 ("jbd2: use the correct print format")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/transaction.c | 40 ++++++++++++++++------------------------
- 1 file changed, 16 insertions(+), 24 deletions(-)
+ fs/jbd2/transaction.c | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
 
 diff --git a/fs/jbd2/transaction.c b/fs/jbd2/transaction.c
-index 09f4d00fece2..ce66dbbf0f90 100644
+index ce66dbbf0f90..6d78648392f0 100644
 --- a/fs/jbd2/transaction.c
 +++ b/fs/jbd2/transaction.c
-@@ -1722,41 +1722,34 @@ int jbd2_journal_stop(handle_t *handle)
- 	tid_t tid;
- 	pid_t pid;
- 
-+	if (--handle->h_ref > 0) {
-+		jbd_debug(4, "h_ref %d -> %d\n", handle->h_ref + 1,
-+						 handle->h_ref);
-+		if (is_handle_aborted(handle))
-+			return -EIO;
-+		return 0;
-+	}
- 	if (!transaction) {
- 		/*
--		 * Handle is already detached from the transaction so
--		 * there is nothing to do other than decrease a refcount,
--		 * or free the handle if refcount drops to zero
-+		 * Handle is already detached from the transaction so there is
-+		 * nothing to do other than free the handle.
- 		 */
--		if (--handle->h_ref > 0) {
--			jbd_debug(4, "h_ref %d -> %d\n", handle->h_ref + 1,
--							 handle->h_ref);
--			return err;
--		} else {
--			if (handle->h_rsv_handle)
--				jbd2_free_handle(handle->h_rsv_handle);
--			goto free_and_exit;
--		}
-+		if (handle->h_rsv_handle)
-+			jbd2_free_handle(handle->h_rsv_handle);
-+		goto free_and_exit;
- 	}
- 	journal = transaction->t_journal;
-+	tid = transaction->t_tid;
- 
- 	J_ASSERT(journal_current_handle() == handle);
-+	J_ASSERT(atomic_read(&transaction->t_updates) > 0);
- 
- 	if (is_handle_aborted(handle))
- 		err = -EIO;
--	else
--		J_ASSERT(atomic_read(&transaction->t_updates) > 0);
--
--	if (--handle->h_ref > 0) {
--		jbd_debug(4, "h_ref %d -> %d\n", handle->h_ref + 1,
--			  handle->h_ref);
--		return err;
--	}
- 
- 	jbd_debug(4, "Handle %p going down\n", handle);
- 	trace_jbd2_handle_stats(journal->j_fs_dev->bd_dev,
--				transaction->t_tid,
--				handle->h_type, handle->h_line_no,
-+				tid, handle->h_type, handle->h_line_no,
- 				jiffies - handle->h_start_jiffies,
- 				handle->h_sync, handle->h_requested_credits,
- 				(handle->h_requested_credits -
-@@ -1841,7 +1834,7 @@ int jbd2_journal_stop(handle_t *handle)
- 		jbd_debug(2, "transaction too old, requesting commit for "
- 					"handle %p\n", handle);
- 		/* This is non-blocking */
--		jbd2_log_start_commit(journal, transaction->t_tid);
-+		jbd2_log_start_commit(journal, tid);
- 
- 		/*
- 		 * Special case: JBD2_SYNC synchronous updates require us
-@@ -1857,7 +1850,6 @@ int jbd2_journal_stop(handle_t *handle)
+@@ -1850,11 +1850,8 @@ int jbd2_journal_stop(handle_t *handle)
  	 * once we do this, we must not dereference transaction
  	 * pointer again.
  	 */
--	tid = transaction->t_tid;
- 	if (atomic_dec_and_test(&transaction->t_updates)) {
+-	if (atomic_dec_and_test(&transaction->t_updates)) {
++	if (atomic_dec_and_test(&transaction->t_updates))
  		wake_up(&journal->j_wait_updates);
- 		if (journal->j_barrier_count)
+-		if (journal->j_barrier_count)
+-			wake_up(&journal->j_wait_transaction_locked);
+-	}
+ 
+ 	rwsem_release(&journal->j_trans_commit_map, 1, _THIS_IP_);
+ 
 -- 
 2.35.1
 
