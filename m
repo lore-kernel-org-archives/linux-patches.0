@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 173E46FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:07:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8CFCCC433EF;
-	Mon, 16 Jan 2023 17:07:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 435E56FA3
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:07:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC619C433F0;
+	Mon, 16 Jan 2023 17:07:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888843;
-	bh=z3ZCtXUpciX2ZVdgUt2vhDPs4ZMsOvQLQuxD575qTbo=;
+	s=korg; t=1673888849;
+	bh=bO5tYQ00HbPNkruIxx7/DbgIhGGvPWlQYEbagDO2nnQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BVI6xHLe0wiZqhlWMdVSOcyY5Lq1i/Xt/wUEX+nG/CLHeHlY4QY6draCrkWjKYMAG
-	 9kpERE8IWONhTomFRlCoaHHG9judNUz+1h8xhPB9a7KkqA1v9FX5xvoXS5ADy7nf6G
-	 cwoEfgLww12+VXmRF2En0EQa3cqYkZZQvSsPhITc=
+	b=2a09qKq9yjj5AkJP4ZC3aaQHiY5tX4FFqwjdmbExWTdEsVZ9It5vf2QQ9rke0XQ09
+	 9Tp/R5kGswKprJb6Ld04ji7VuYITP5pgdnJP+IfVpIed7sUhha4Pyuonozr7qoN6xH
+	 +AB2WNpWQv38TPTMrLDOWyugnqIWXGeoV5h27oOQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rafael Mendonca <rafaelmendsr@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 161/338] uio: uio_dmem_genirq: Fix deadlock between irq config and handling
-Date: Mon, 16 Jan 2023 16:50:34 +0100
-Message-Id: <20230116154827.911696053@linuxfoundation.org>
+Subject: [PATCH 4.14 145/338] scsi: hpsa: Fix error handling in hpsa_add_sas_host()
+Date: Mon, 16 Jan 2023 16:50:18 +0100
+Message-Id: <20230116154827.172248628@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -34,62 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael Mendonca <rafaelmendsr@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 118b918018175d9fcd8db667f905012e986cc2c9 ]
+[ Upstream commit 4ef174a3ad9b5d73c1b6573e244ebba2b0d86eac ]
 
-This fixes a concurrency issue addressed in commit 34cb27528398 ("UIO: Fix
-concurrency issue"):
+hpsa_sas_port_add_phy() does:
+  ...
+  sas_phy_add()  -> may return error here
+  sas_port_add_phy()
+  ...
 
-  "In a SMP case there was a race condition issue between
-  Uio_pdrv_genirq_irqcontrol() running on one CPU and irq handler on
-  another CPU. Fix it by spin_locking shared resources access inside irq
-  handler."
+Whereas hpsa_free_sas_phy() does:
+  ...
+  sas_port_delete_phy()
+  sas_phy_delete()
+  ...
 
-The implementation of "uio_dmem_genirq" was based on "uio_pdrv_genirq" and
-it is used in a similar manner to the "uio_pdrv_genirq" driver with respect
-to interrupt configuration and handling. At the time "uio_dmem_genirq" was
-merged, both had the same implementation of the 'uio_info' handlers
-irqcontrol() and handler(), thus, both had the same concurrency issue
-mentioned by the above commit. However, the above patch was only applied to
-the "uio_pdrv_genirq" driver.
+If hpsa_sas_port_add_phy() returns an error, hpsa_free_sas_phy() can not be
+called to free the memory because the port and the phy have not been added
+yet.
 
-Split out from commit 34cb27528398 ("UIO: Fix concurrency issue").
+Replace hpsa_free_sas_phy() with sas_phy_free() and kfree() to avoid kernel
+crash in this case.
 
-Fixes: 0a0c3b5a24bd ("Add new uio device for dynamic memory allocation")
-Signed-off-by: Rafael Mendonca <rafaelmendsr@gmail.com>
-Link: https://lore.kernel.org/r/20220930224100.816175-3-rafaelmendsr@gmail.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d04e62b9d63a ("hpsa: add in sas transport class")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221110151129.394389-1-yangyingliang@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/uio/uio_dmem_genirq.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/scsi/hpsa.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/uio/uio_dmem_genirq.c b/drivers/uio/uio_dmem_genirq.c
-index c25a6bcb2d21..b4b7fa05b29b 100644
---- a/drivers/uio/uio_dmem_genirq.c
-+++ b/drivers/uio/uio_dmem_genirq.c
-@@ -113,8 +113,10 @@ static irqreturn_t uio_dmem_genirq_handler(int irq, struct uio_info *dev_info)
- 	 * remember the state so we can allow user space to enable it later.
- 	 */
+diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
+index 9ad9910cc085..a63ff9301a69 100644
+--- a/drivers/scsi/hpsa.c
++++ b/drivers/scsi/hpsa.c
+@@ -9452,7 +9452,8 @@ static int hpsa_add_sas_host(struct ctlr_info *h)
+ 	return 0;
  
-+	spin_lock(&priv->lock);
- 	if (!test_and_set_bit(0, &priv->flags))
- 		disable_irq_nosync(irq);
-+	spin_unlock(&priv->lock);
- 
- 	return IRQ_HANDLED;
- }
-@@ -128,7 +130,8 @@ static int uio_dmem_genirq_irqcontrol(struct uio_info *dev_info, s32 irq_on)
- 	 * in the interrupt controller, but keep track of the
- 	 * state to prevent per-irq depth damage.
- 	 *
--	 * Serialize this operation to support multiple tasks.
-+	 * Serialize this operation to support multiple tasks and concurrency
-+	 * with irq handler on SMP systems.
- 	 */
- 
- 	spin_lock_irqsave(&priv->lock, flags);
+ free_sas_phy:
+-	hpsa_free_sas_phy(hpsa_sas_phy);
++	sas_phy_free(hpsa_sas_phy->phy);
++	kfree(hpsa_sas_phy);
+ free_sas_port:
+ 	hpsa_free_sas_port(hpsa_sas_port);
+ free_sas_node:
 -- 
 2.35.1
 
