@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6660E6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:53:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCE28C433EF;
-	Mon, 16 Jan 2023 16:53:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE6116FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:53:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75BBCC433D2;
+	Mon, 16 Jan 2023 16:53:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888008;
-	bh=FJCBcj41NbfWOae+dftFoaVsClbyqWdAXtAyeaQ6J8A=;
+	s=korg; t=1673888010;
+	bh=Sarnle+rIYOOThD/K7URV38AHeWoQMvY5gvYVfVFM8o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gdZJxLku167nk/JJ0CDt4xl9bvLWmr6tWzpnCUoToHBE2fd1U8Gd9wLf+tF2hda6K
-	 3djjxVQlJcq2X1c1ZJvRmpZHUV/Y3LvsA/hwUCPyNsIVszJ7YEKW6DnmdYD0GOuV3W
-	 l2H8qP0Q/IMvu23OO2bU4lyMU6r7rkdQKF+8rV2k=
+	b=nassFMrP48Z0qJWkE2bsiisxBun3jOVA5QevZ89tSPyUzPH0/EvvO/qJDtj1AXCZC
+	 asEPy2cIQJu/NvlUXMSZ6AQlf6VCEeV5NZ8z60ba4V2znyRqTq8FTSQ/Ip/jAXwjkh
+	 loeweOnYh9/XAu3nB3T0pVGmhmt/Tt8CeQk/Y4n4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Nuno=20S=C3=A1?= <nuno.sa@analog.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Stable@vger.kernel.org
-Subject: [PATCH 4.19 358/521] iio: adc: ad_sigma_delta: do not use internal iio_dev lock
-Date: Mon, 16 Jan 2023 16:50:20 +0100
-Message-Id: <20230116154903.099093042@linuxfoundation.org>
+	Zhang Tianci <zhangtianci.1997@bytedance.com>,
+	Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>,
+	"Christian Brauner (Microsoft)" <brauner@kernel.org>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 4.19 367/521] ovl: Use ovl mounters fsuid and fsgid in ovl_link()
+Date: Mon, 16 Jan 2023 16:50:29 +0100
+Message-Id: <20230116154903.505608020@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,51 +36,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nuno Sá <nuno.sa@analog.com>
+From: Zhang Tianci <zhangtianci.1997@bytedance.com>
 
-commit 20228a1d5a55e7db0c6720840f2c7d2b48c55f69 upstream.
+commit 5b0db51215e895a361bc63132caa7cca36a53d6a upstream.
 
-Drop 'mlock' usage by making use of iio_device_claim_direct_mode().
-This change actually makes sure we cannot do a single conversion while
-buffering is enable. Note there was a potential race in the previous
-code since we were only acquiring the lock after checking if the bus is
-enabled.
+There is a wrong case of link() on overlay:
+  $ mkdir /lower /fuse /merge
+  $ mount -t fuse /fuse
+  $ mkdir /fuse/upper /fuse/work
+  $ mount -t overlay /merge -o lowerdir=/lower,upperdir=/fuse/upper,\
+    workdir=work
+  $ touch /merge/file
+  $ chown bin.bin /merge/file // the file's caller becomes "bin"
+  $ ln /merge/file /merge/lnkfile
 
-Fixes: af3008485ea0 ("iio:adc: Add common code for ADI Sigma Delta devices")
-Signed-off-by: Nuno Sá <nuno.sa@analog.com>
-Reviewed-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Cc: <Stable@vger.kernel.org> #No rush as race is very old.
-Link: https://lore.kernel.org/r/20220920112821.975359-2-nuno.sa@analog.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Then we will get an error(EACCES) because fuse daemon checks the link()'s
+caller is "bin", it denied this request.
+
+In the changing history of ovl_link(), there are two key commits:
+
+The first is commit bb0d2b8ad296 ("ovl: fix sgid on directory") which
+overrides the cred's fsuid/fsgid using the new inode. The new inode's
+owner is initialized by inode_init_owner(), and inode->fsuid is
+assigned to the current user. So the override fsuid becomes the
+current user. We know link() is actually modifying the directory, so
+the caller must have the MAY_WRITE permission on the directory. The
+current caller may should have this permission. This is acceptable
+to use the caller's fsuid.
+
+The second is commit 51f7e52dc943 ("ovl: share inode for hard link")
+which removed the inode creation in ovl_link(). This commit move
+inode_init_owner() into ovl_create_object(), so the ovl_link() just
+give the old inode to ovl_create_or_link(). Then the override fsuid
+becomes the old inode's fsuid, neither the caller nor the overlay's
+mounter! So this is incorrect.
+
+Fix this bug by using ovl mounter's fsuid/fsgid to do underlying
+fs's link().
+
+Link: https://lore.kernel.org/all/20220817102952.xnvesg3a7rbv576x@wittgenstein/T
+Link: https://lore.kernel.org/lkml/20220825130552.29587-1-zhangtianci.1997@bytedance.com/t
+Signed-off-by: Zhang Tianci <zhangtianci.1997@bytedance.com>
+Signed-off-by: Jiachen Zhang <zhangjiachen.jaycee@bytedance.com>
+Reviewed-by: Christian Brauner (Microsoft) <brauner@kernel.org>
+Fixes: 51f7e52dc943 ("ovl: share inode for hard link")
+Cc: <stable@vger.kernel.org> # v4.8
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/ad_sigma_delta.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/overlayfs/dir.c |   46 ++++++++++++++++++++++++++++++----------------
+ 1 file changed, 30 insertions(+), 16 deletions(-)
 
---- a/drivers/iio/adc/ad_sigma_delta.c
-+++ b/drivers/iio/adc/ad_sigma_delta.c
-@@ -283,10 +283,10 @@ int ad_sigma_delta_single_conversion(str
- 	unsigned int sample, raw_sample;
- 	int ret = 0;
+--- a/fs/overlayfs/dir.c
++++ b/fs/overlayfs/dir.c
+@@ -561,28 +561,42 @@ static int ovl_create_or_link(struct den
+ 			goto out_revert_creds;
+ 	}
  
--	if (iio_buffer_enabled(indio_dev))
--		return -EBUSY;
-+	ret = iio_device_claim_direct_mode(indio_dev);
-+	if (ret)
-+		return ret;
- 
--	mutex_lock(&indio_dev->mlock);
- 	ad_sigma_delta_set_channel(sigma_delta, chan->address);
- 
- 	spi_bus_lock(sigma_delta->spi->master);
-@@ -320,7 +320,7 @@ out:
- 	ad_sigma_delta_set_mode(sigma_delta, AD_SD_MODE_IDLE);
- 	sigma_delta->bus_locked = false;
- 	spi_bus_unlock(sigma_delta->spi->master);
--	mutex_unlock(&indio_dev->mlock);
-+	iio_device_release_direct_mode(indio_dev);
- 
- 	if (ret)
- 		return ret;
+-	err = -ENOMEM;
+-	override_cred = prepare_creds();
+-	if (override_cred) {
++	if (!attr->hardlink) {
++		err = -ENOMEM;
++		override_cred = prepare_creds();
++		if (!override_cred)
++			goto out_revert_creds;
++		/*
++		 * In the creation cases(create, mkdir, mknod, symlink),
++		 * ovl should transfer current's fs{u,g}id to underlying
++		 * fs. Because underlying fs want to initialize its new
++		 * inode owner using current's fs{u,g}id. And in this
++		 * case, the @inode is a new inode that is initialized
++		 * in inode_init_owner() to current's fs{u,g}id. So use
++		 * the inode's i_{u,g}id to override the cred's fs{u,g}id.
++		 *
++		 * But in the other hardlink case, ovl_link() does not
++		 * create a new inode, so just use the ovl mounter's
++		 * fs{u,g}id.
++		 */
+ 		override_cred->fsuid = inode->i_uid;
+ 		override_cred->fsgid = inode->i_gid;
+-		if (!attr->hardlink) {
+-			err = security_dentry_create_files_as(dentry,
+-					attr->mode, &dentry->d_name, old_cred,
+-					override_cred);
+-			if (err) {
+-				put_cred(override_cred);
+-				goto out_revert_creds;
+-			}
++		err = security_dentry_create_files_as(dentry,
++				attr->mode, &dentry->d_name, old_cred,
++				override_cred);
++		if (err) {
++			put_cred(override_cred);
++			goto out_revert_creds;
+ 		}
+ 		put_cred(override_creds(override_cred));
+ 		put_cred(override_cred);
+-
+-		if (!ovl_dentry_is_whiteout(dentry))
+-			err = ovl_create_upper(dentry, inode, attr);
+-		else
+-			err = ovl_create_over_whiteout(dentry, inode, attr);
+ 	}
++
++	if (!ovl_dentry_is_whiteout(dentry))
++		err = ovl_create_upper(dentry, inode, attr);
++	else
++		err = ovl_create_over_whiteout(dentry, inode, attr);
++
+ out_revert_creds:
+ 	revert_creds(old_cred);
+ 	return err;
 
 
