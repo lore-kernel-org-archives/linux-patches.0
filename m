@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C954C33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:59:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F17FC433EF;
-	Mon, 16 Jan 2023 15:59:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A01433EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:59:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1938C433D2;
+	Mon, 16 Jan 2023 15:59:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884751;
-	bh=+sFcWTnzXxw2Z/9Yhn9jvTSH4XT80svuIVzg4otibCY=;
+	s=korg; t=1673884754;
+	bh=fBPw6wHm0PkbjDtv7q3sa3E5Z1clejdlt5ASskLGZbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TTyKVCZAq+dW9RVONe/ON0PeuByWb1mDRh/ITodHoQht02JlBmD7Ca3igYPu/tTrk
-	 3RpGlJVBBGlBPOSJCZfI9u9eC0UAE7Lg7Vo6bwCIdDqTD/DfHO3B9LwwHGt9Swhop7
-	 PAOvCqIHlv08M/78zXAuj51mOsV+l67Y162ja3qw=
+	b=RQ2JhR1FuA/hKXvAjZIe1tjmamWHu/pvncn7IAwj3nLcPchQZ3utt14Deoy+yWbls
+	 jXo3/m+5ZbZaZP0QKT2beR43U4ctN1y/sl41qUVTP84JMNqmHB6B4pnBp3nS2zaOTF
+	 0XG8SnK0DJoChU9keJ9puZSC7qEKkkENzFToPKtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Christoph Hellwig <hch@lst.de>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 125/183] block: factor out a blk_debugfs_remove helper
-Date: Mon, 16 Jan 2023 16:50:48 +0100
-Message-Id: <20230116154808.659224860@linuxfoundation.org>
+Subject: [PATCH 6.1 126/183] block: fix error unwinding in blk_register_queue
+Date: Mon, 16 Jan 2023 16:50:49 +0100
+Message-Id: <20230116154808.708477555@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -37,57 +37,97 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 6fc75f309d291d328b4ea2f91bef0ff56e4bc7c2 ]
+[ Upstream commit 40602997be26887bdfa3d58659c3acb4579099e9 ]
 
-Split the debugfs removal from blk_unregister_queue into a helper so that
-the it can be reused for blk_register_queue error handling.
+blk_register_queue fails to handle errors from blk_mq_sysfs_register,
+leaks various resources on errors and accidentally sets queue refs percpu
+refcount to percpu mode on kobject_add failure.  Fix all that by
+properly unwinding on errors.
 
 Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20221114042637.1009333-3-hch@lst.de
+Link: https://lore.kernel.org/r/20221114042637.1009333-4-hch@lst.de
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Stable-dep-of: 49e4d04f0486 ("block: Drop spurious might_sleep() from blk_put_queue()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-sysfs.c | 21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ block/blk-sysfs.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
 diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index 2b1cf0b2a5c7..3d6951a0b4e7 100644
+index 3d6951a0b4e7..1631ba2f7259 100644
 --- a/block/blk-sysfs.c
 +++ b/block/blk-sysfs.c
-@@ -797,6 +797,19 @@ struct kobj_type blk_queue_ktype = {
- 	.release	= blk_release_queue,
- };
+@@ -820,13 +820,15 @@ int blk_register_queue(struct gendisk *disk)
+ 	int ret;
  
-+static void blk_debugfs_remove(struct gendisk *disk)
-+{
-+	struct request_queue *q = disk->queue;
-+
-+	mutex_lock(&q->debugfs_mutex);
-+	blk_trace_shutdown(q);
-+	debugfs_remove_recursive(q->debugfs_dir);
-+	q->debugfs_dir = NULL;
-+	q->sched_debugfs_dir = NULL;
-+	q->rqos_debugfs_dir = NULL;
-+	mutex_unlock(&q->debugfs_mutex);
-+}
-+
- /**
-  * blk_register_queue - register a block layer queue with sysfs
-  * @disk: Disk of which the request queue should be registered with sysfs.
-@@ -922,11 +935,5 @@ void blk_unregister_queue(struct gendisk *disk)
- 	kobject_del(&q->kobj);
+ 	mutex_lock(&q->sysfs_dir_lock);
+-
+ 	ret = kobject_add(&q->kobj, &disk_to_dev(disk)->kobj, "queue");
+ 	if (ret < 0)
+-		goto unlock;
++		goto out_unlock_dir;
+ 
+-	if (queue_is_mq(q))
+-		blk_mq_sysfs_register(disk);
++	if (queue_is_mq(q)) {
++		ret = blk_mq_sysfs_register(disk);
++		if (ret)
++			goto out_del_queue_kobj;
++	}
+ 	mutex_lock(&q->sysfs_lock);
+ 
+ 	mutex_lock(&q->debugfs_mutex);
+@@ -838,17 +840,17 @@ int blk_register_queue(struct gendisk *disk)
+ 
+ 	ret = disk_register_independent_access_ranges(disk);
+ 	if (ret)
+-		goto put_dev;
++		goto out_debugfs_remove;
+ 
+ 	if (q->elevator) {
+ 		ret = elv_register_queue(q, false);
+ 		if (ret)
+-			goto put_dev;
++			goto out_unregister_ia_ranges;
+ 	}
+ 
+ 	ret = blk_crypto_sysfs_register(disk);
+ 	if (ret)
+-		goto put_dev;
++		goto out_elv_unregister;
+ 
+ 	blk_queue_flag_set(QUEUE_FLAG_REGISTERED, q);
+ 	wbt_enable_default(q);
+@@ -859,8 +861,6 @@ int blk_register_queue(struct gendisk *disk)
+ 	if (q->elevator)
+ 		kobject_uevent(&q->elevator->kobj, KOBJ_ADD);
+ 	mutex_unlock(&q->sysfs_lock);
+-
+-unlock:
  	mutex_unlock(&q->sysfs_dir_lock);
  
--	mutex_lock(&q->debugfs_mutex);
--	blk_trace_shutdown(q);
--	debugfs_remove_recursive(q->debugfs_dir);
--	q->debugfs_dir = NULL;
--	q->sched_debugfs_dir = NULL;
--	q->rqos_debugfs_dir = NULL;
--	mutex_unlock(&q->debugfs_mutex);
+ 	/*
+@@ -879,13 +879,17 @@ int blk_register_queue(struct gendisk *disk)
+ 
+ 	return ret;
+ 
+-put_dev:
++out_elv_unregister:
+ 	elv_unregister_queue(q);
++out_unregister_ia_ranges:
+ 	disk_unregister_independent_access_ranges(disk);
++out_debugfs_remove:
 +	blk_debugfs_remove(disk);
+ 	mutex_unlock(&q->sysfs_lock);
+-	mutex_unlock(&q->sysfs_dir_lock);
++out_del_queue_kobj:
+ 	kobject_del(&q->kobj);
+-
++out_unlock_dir:
++	mutex_unlock(&q->sysfs_dir_lock);
+ 	return ret;
  }
+ 
 -- 
 2.35.1
 
