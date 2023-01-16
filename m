@@ -1,34 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4FB333F0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:12:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23D6FC433D2;
-	Mon, 16 Jan 2023 16:12:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64E5033F0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:12:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24DAC433EF;
+	Mon, 16 Jan 2023 16:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885535;
-	bh=mXjnHWVHhG28PjDLbgg85wCY82fxxKGZ0PncxTnan/o=;
+	s=korg; t=1673885538;
+	bh=+rw32T8rEZTycuY27y5wC4HMY8OViQkUvZNihhXeMeg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lyOa9BrGlMLH3EP3l9SbXY1WcSOqq+X9CoZigfgZm5e5BCpNs2AuzWAWqoCmaYJx9
-	 qwguijd2Ju9jBhywq03HoboZ6kTEO+smjzl6QPZ59qjYbCKA2yRuOCqA6Cg9HduJcn
-	 5lu5/xgRPRuYAJpgOYyBUm4v81Mi5anx0nD56qPU=
+	b=mVp2Ie0Fv3D4UyCIM5nqb04RbY9Rxz/vSgnq5e7/yYxKn4pRepbUp2kRj9PUbefd+
+	 nsUXQ7sZYPJG1H03++quCXT3NqQkbMGzNRrhECYFjT4S5ZvdG+ZEcGwfVNGkAQtwnK
+	 J6atCvoRo/iHQovdLyvZBUg+UBoJ6ZWG0R6tq6Yk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 061/658] ocfs2: fix memory leak in ocfs2_stack_glue_init()
-Date: Mon, 16 Jan 2023 16:42:29 +0100
-Message-Id: <20230116154912.467257414@linuxfoundation.org>
+Subject: [PATCH 5.4 088/658] PM: runtime: Improve path in rpm_idle() when no callback
+Date: Mon, 16 Jan 2023 16:42:56 +0100
+Message-Id: <20230116154913.595353372@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -42,71 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Ulf Hansson <ulf.hansson@linaro.org>
 
-[ Upstream commit 13b6269dd022aaa69ca8d1df374ab327504121cf ]
+[ Upstream commit 5a2bd1b1c64e1ac5627db3767ac465f18606315c ]
 
-ocfs2_table_header should be free in ocfs2_stack_glue_init() if
-ocfs2_sysfs_init() failed, otherwise kmemleak will report memleak.
+When pm_runtime_no_callbacks() has been called for a struct device to set
+the dev->power.no_callbacks flag for it, it enables rpm_idle() to take a
+slightly quicker path by assuming that a ->runtime_idle() callback would
+have returned 0 to indicate success.
 
-BUG: memory leak
-unreferenced object 0xffff88810eeb5800 (size 128):
-  comm "modprobe", pid 4507, jiffies 4296182506 (age 55.888s)
-  hex dump (first 32 bytes):
-    c0 40 14 a0 ff ff ff ff 00 00 00 00 01 00 00 00  .@..............
-    01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<000000001e59e1cd>] __register_sysctl_table+0xca/0xef0
-    [<00000000c04f70f7>] 0xffffffffa0050037
-    [<000000001bd12912>] do_one_initcall+0xdb/0x480
-    [<0000000064f766c9>] do_init_module+0x1cf/0x680
-    [<000000002ba52db0>] load_module+0x6441/0x6f20
-    [<000000009772580d>] __do_sys_finit_module+0x12f/0x1c0
-    [<00000000380c1f22>] do_syscall_64+0x3f/0x90
-    [<000000004cf473bc>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+A device that does not have the dev->power.no_callbacks flag set for it,
+may still be missing a corresponding ->runtime_idle() callback, in which
+case the slower path in rpm_idle() is taken. Let's improve the behaviour
+for this case, by aligning code to the quicker path.
 
-Link: https://lkml.kernel.org/r/41651ca1-432a-db34-eb97-d35744559de1@linux.alibaba.com
-Fixes: 3878f110f71a ("ocfs2: Move the hb_ctl_path sysctl into the stack glue.")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Stable-dep-of: bc80c2e438dc ("PM: runtime: Do not call __rpm_callback() from rpm_idle()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/stackglue.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/base/power/runtime.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/fs/ocfs2/stackglue.c b/fs/ocfs2/stackglue.c
-index 188038760136..9f0326672af6 100644
---- a/fs/ocfs2/stackglue.c
-+++ b/fs/ocfs2/stackglue.c
-@@ -707,6 +707,8 @@ static struct ctl_table_header *ocfs2_table_header;
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index 8fbd376471de..24a3013728c3 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -446,7 +446,10 @@ static int rpm_idle(struct device *dev, int rpmflags)
+ 	/* Pending requests need to be canceled. */
+ 	dev->power.request = RPM_REQ_NONE;
  
- static int __init ocfs2_stack_glue_init(void)
- {
-+	int ret;
+-	if (dev->power.no_callbacks)
++	callback = RPM_GET_CALLBACK(dev, runtime_idle);
 +
- 	strcpy(cluster_stack_name, OCFS2_STACK_PLUGIN_O2CB);
++	/* If no callback assume success. */
++	if (!callback || dev->power.no_callbacks)
+ 		goto out;
  
- 	ocfs2_table_header = register_sysctl_table(ocfs2_root_table);
-@@ -716,7 +718,11 @@ static int __init ocfs2_stack_glue_init(void)
- 		return -ENOMEM; /* or something. */
- 	}
+ 	/* Carry out an asynchronous or a synchronous idle notification. */
+@@ -462,10 +465,7 @@ static int rpm_idle(struct device *dev, int rpmflags)
  
--	return ocfs2_sysfs_init();
-+	ret = ocfs2_sysfs_init();
-+	if (ret)
-+		unregister_sysctl_table(ocfs2_table_header);
-+
-+	return ret;
- }
+ 	dev->power.idle_notification = true;
  
- static void __exit ocfs2_stack_glue_exit(void)
+-	callback = RPM_GET_CALLBACK(dev, runtime_idle);
+-
+-	if (callback)
+-		retval = __rpm_callback(callback, dev);
++	retval = __rpm_callback(callback, dev);
+ 
+ 	dev->power.idle_notification = false;
+ 	wake_up_all(&dev->power.wait_queue);
 -- 
 2.35.1
 
