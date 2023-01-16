@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB9B846B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:33:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31AC0C433EF;
-	Mon, 16 Jan 2023 16:33:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EC846B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:34:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDA5C433F1;
+	Mon, 16 Jan 2023 16:34:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886838;
-	bh=n9TA3IJ9yb8oW+tVcp14zCUDX2M2BrmFPZWmjhZCHaQ=;
+	s=korg; t=1673886841;
+	bh=PM38UjOKKpOEm2DbdrMdYf+3cqOvcVm91RTVTgHpOzk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VUbmuRT9q3FSfWOsL2owbiDItntnK0O4gekrWLLYZa/3lV5FZS1pRGPLh8PK07RBT
-	 i3OTdkpltryyWT4J+qnNL00v3P/zXhvXAg1BxV38f/l/OBGo9qxu6EDQG9iw4LWDQW
-	 sL0GHj2flOeBFTS0goHKCNZ6Qe7nsn2hIN3sV0JM=
+	b=0QRRSLKnZIsQ4S4ZbOOtPw1jNOUX+uVKkYXVmMc0roDMeGF/Ll1p4IYM3iL+Pikj4
+	 7ailwSJQEJcM8iCTs0bCykEAkXPNJobOzlEZ2QYxceP/Oey0i45y5nozLwFVGP6Ua6
+	 DwdFmuYw0xKJIB8FJeBAJ4J3OG09FsnqqtkAEVQE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Biju Das <biju.das.jz@bp.renesas.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Chen Huang <chenhuang5@huawei.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Palmer Dabbelt <palmerdabbelt@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 552/658] ravb: Fix "failed to switch device to config mode" message during unbind
-Date: Mon, 16 Jan 2023 16:50:40 +0100
-Message-Id: <20230116154934.772918517@linuxfoundation.org>
+Subject: [PATCH 5.4 553/658] riscv/stacktrace: Fix stack output without ra on the stack top
+Date: Mon, 16 Jan 2023 16:50:41 +0100
+Message-Id: <20230116154934.813121238@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,65 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Biju Das <biju.das.jz@bp.renesas.com>
+From: Chen Huang <chenhuang5@huawei.com>
 
-[ Upstream commit c72a7e42592b2e18d862cf120876070947000d7a ]
+[ Upstream commit f766f77a74f5784d8d4d3c36b1900731f97d08d0 ]
 
-This patch fixes the error "ravb 11c20000.ethernet eth0: failed to switch
-device to config mode" during unbind.
+When a function doesn't have a callee, then it will not
+push ra into the stack, such as lkdtm_BUG() function,
 
-We are doing register access after pm_runtime_put_sync().
+addi	sp,sp,-16
+sd	s0,8(sp)
+addi	s0,sp,16
+ebreak
 
-We usually do cleanup in reverse order of init. Currently in
-remove(), the "pm_runtime_put_sync" is not in reverse order.
+The struct stackframe use {fp,ra} to get information from
+stack, if walk_stackframe() with pr_regs, we will obtain
+wrong value and bad stacktrace,
 
-Probe
-	reset_control_deassert(rstc);
-	pm_runtime_enable(&pdev->dev);
-	pm_runtime_get_sync(&pdev->dev);
+[<ffffffe00066c56c>] lkdtm_BUG+0x6/0x8
+---[ end trace 18da3fbdf08e25d5 ]---
 
-remove
-	pm_runtime_put_sync(&pdev->dev);
-	unregister_netdev(ndev);
-	..
-	ravb_mdio_release(priv);
-	pm_runtime_disable(&pdev->dev);
+Correct the next fp and pc, after that, full stacktrace
+shown as expects,
 
-Consider the call to unregister_netdev()
-unregister_netdev->unregister_netdevice_queue->rollback_registered_many
-that calls the below functions which access the registers after
-pm_runtime_put_sync()
- 1) ravb_get_stats
- 2) ravb_close
+[<ffffffe00066c56c>] lkdtm_BUG+0x6/0x8
+[<ffffffe0008b24a4>] lkdtm_do_action+0x14/0x1c
+[<ffffffe00066c372>] direct_entry+0xc0/0x10a
+[<ffffffe000439f86>] full_proxy_write+0x42/0x6a
+[<ffffffe000309626>] vfs_write+0x7e/0x214
+[<ffffffe00030992a>] ksys_write+0x98/0xc0
+[<ffffffe000309960>] sys_write+0xe/0x16
+[<ffffffe0002014bc>] ret_from_syscall+0x0/0x2
+---[ end trace 61917f3d9a9fadcd ]---
 
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Cc: stable@vger.kernel.org
-Signed-off-by: Biju Das <biju.das.jz@bp.renesas.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20221214105118.2495313-1-biju.das.jz@bp.renesas.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Chen Huang <chenhuang5@huawei.com>
+Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
+Signed-off-by: Palmer Dabbelt <palmerdabbelt@google.com>
+Stable-dep-of: 5c3022e4a616 ("riscv: stacktrace: Fixup ftrace_graph_ret_addr retp argument")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/kernel/stacktrace.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index 95fd1f2d5439..3fd5155bdd5f 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -2216,11 +2216,11 @@ static int ravb_remove(struct platform_device *pdev)
- 			  priv->desc_bat_dma);
- 	/* Set reset mode */
- 	ravb_write(ndev, CCC_OPC_RESET, CCC);
--	pm_runtime_put_sync(&pdev->dev);
- 	unregister_netdev(ndev);
- 	netif_napi_del(&priv->napi[RAVB_NC]);
- 	netif_napi_del(&priv->napi[RAVB_BE]);
- 	ravb_mdio_release(priv);
-+	pm_runtime_put_sync(&pdev->dev);
- 	pm_runtime_disable(&pdev->dev);
- 	free_netdev(ndev);
- 	platform_set_drvdata(pdev, NULL);
+diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
+index 19e46f4160cc..1a512a24879e 100644
+--- a/arch/riscv/kernel/stacktrace.c
++++ b/arch/riscv/kernel/stacktrace.c
+@@ -55,9 +55,15 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
+ 		/* Unwind stack frame */
+ 		frame = (struct stackframe *)fp - 1;
+ 		sp = fp;
+-		fp = frame->fp;
+-		pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
+-					   (unsigned long *)(fp - 8));
++		if (regs && (regs->epc == pc) && (frame->fp & 0x7)) {
++			fp = frame->ra;
++			pc = regs->ra;
++		} else {
++			fp = frame->fp;
++			pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
++						   (unsigned long *)(fp - 8));
++		}
++
+ 	}
+ }
+ 
 -- 
 2.35.1
 
