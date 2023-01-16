@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C2B6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:11:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE7E8C433F0;
-	Mon, 16 Jan 2023 17:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 667116FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:11:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDC87C433D2;
+	Mon, 16 Jan 2023 17:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889064;
-	bh=1CI8S7Nt+M90kAhGGwRJq0j/mgHHFQz0/+V047auClU=;
+	s=korg; t=1673889069;
+	bh=19dcaC59pIbQHWqhUi3haS9j7EAuoZ2tTLFAd/yluDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dUCeYjE8vBzz6DictuUNpWloIfo+rnD5mEQCmtsBx6Bc7ZxUuqC+Km1MiUDKX9VBa
-	 gd7OToqkAZkZFpajSPB9/bjT75EYiqWSzBVZHhLrvvvmPDRMcmks6HQItkc/I02xyQ
-	 hBKSUDV8ZQAXCq0rlm9dK+fEXpnWtYAM+HWcMRdw=
+	b=JS1X7IjtXNObzPVU+Z3+OSpNsIimfJYEb2WgyqCqh498dTRC4r43Al8+3QpdCKjx/
+	 dwjY4xsB+SPHK5SuK/ZRQDU06mB6qV/rfh3aM3WbpJVm1n7jH18Y4d24dO8EXWbPxv
+	 WZWWRK9IVRPTk8UJgTu7nyLv7AzjEpckVGb0ZE5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Changheon Lee <darklight2357@icloud.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	syzbot+15342c1aa6a00fb7a438@syzkaller.appspotmail.com,
+	Dongliang Mu <mudongliangabcd@gmail.com>,
+	Dave Kleikamp <dave.kleikamp@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 214/338] net: stream: purge sk_error_queue in sk_stream_kill_queues()
-Date: Mon, 16 Jan 2023 16:51:27 +0100
-Message-Id: <20230116154830.358860871@linuxfoundation.org>
+Subject: [PATCH 4.14 216/338] fs: jfs: fix shift-out-of-bounds in dbAllocAG
+Date: Mon, 16 Jan 2023 16:51:29 +0100
+Message-Id: <20230116154830.446735300@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,66 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Dongliang Mu <mudongliangabcd@gmail.com>
 
-[ Upstream commit e0c8bccd40fc1c19e1d246c39bcf79e357e1ada3 ]
+[ Upstream commit 898f706695682b9954f280d95e49fa86ffa55d08 ]
 
-Changheon Lee reported TCP socket leaks, with a nice repro.
+Syzbot found a crash : UBSAN: shift-out-of-bounds in dbAllocAG. The
+underlying bug is the missing check of bmp->db_agl2size. The field can
+be greater than 64 and trigger the shift-out-of-bounds.
 
-It seems we leak TCP sockets with the following sequence:
+Fix this bug by adding a check of bmp->db_agl2size in dbMount since this
+field is used in many following functions. The upper bound for this
+field is L2MAXL2SIZE - L2MAXAG, thanks for the help of Dave Kleikamp.
+Note that, for maintenance, I reorganized error handling code of dbMount.
 
-1) SOF_TIMESTAMPING_TX_ACK is enabled on the socket.
-
-   Each ACK will cook an skb put in error queue, from __skb_tstamp_tx().
-   __skb_tstamp_tx() is using skb_clone(), unless
-   SOF_TIMESTAMPING_OPT_TSONLY was also requested.
-
-2) If the application is also using MSG_ZEROCOPY, then we put in the
-   error queue cloned skbs that had a struct ubuf_info attached to them.
-
-   Whenever an struct ubuf_info is allocated, sock_zerocopy_alloc()
-   does a sock_hold().
-
-   As long as the cloned skbs are still in sk_error_queue,
-   socket refcount is kept elevated.
-
-3) Application closes the socket, while error queue is not empty.
-
-Since tcp_close() no longer purges the socket error queue,
-we might end up with a TCP socket with at least one skb in
-error queue keeping the socket alive forever.
-
-This bug can be (ab)used to consume all kernel memory
-and freeze the host.
-
-We need to purge the error queue, with proper synchronization
-against concurrent writers.
-
-Fixes: 24bcbe1cc69f ("net: stream: don't purge sk_error_queue in sk_stream_kill_queues()")
-Reported-by: Changheon Lee <darklight2357@icloud.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: syzbot+15342c1aa6a00fb7a438@syzkaller.appspotmail.com
+Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
+Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/stream.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/jfs/jfs_dmap.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/net/core/stream.c b/net/core/stream.c
-index e5c6c9e5e0aa..448100f51bf4 100644
---- a/net/core/stream.c
-+++ b/net/core/stream.c
-@@ -196,6 +196,12 @@ void sk_stream_kill_queues(struct sock *sk)
- 	/* First the read buffer. */
- 	__skb_queue_purge(&sk->sk_receive_queue);
+diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
+index a07fbb60ac3c..a46fa0f3db57 100644
+--- a/fs/jfs/jfs_dmap.c
++++ b/fs/jfs/jfs_dmap.c
+@@ -168,7 +168,7 @@ int dbMount(struct inode *ipbmap)
+ 	struct bmap *bmp;
+ 	struct dbmap_disk *dbmp_le;
+ 	struct metapage *mp;
+-	int i;
++	int i, err;
  
-+	/* Next, the error queue.
-+	 * We need to use queue lock, because other threads might
-+	 * add packets to the queue without socket lock being held.
-+	 */
-+	skb_queue_purge(&sk->sk_error_queue);
+ 	/*
+ 	 * allocate/initialize the in-memory bmap descriptor
+@@ -183,8 +183,8 @@ int dbMount(struct inode *ipbmap)
+ 			   BMAPBLKNO << JFS_SBI(ipbmap->i_sb)->l2nbperpage,
+ 			   PSIZE, 0);
+ 	if (mp == NULL) {
+-		kfree(bmp);
+-		return -EIO;
++		err = -EIO;
++		goto err_kfree_bmp;
+ 	}
+ 
+ 	/* copy the on-disk bmap descriptor to its in-memory version. */
+@@ -194,9 +194,8 @@ int dbMount(struct inode *ipbmap)
+ 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
+ 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
+ 	if (!bmp->db_numag) {
+-		release_metapage(mp);
+-		kfree(bmp);
+-		return -EINVAL;
++		err = -EINVAL;
++		goto err_release_metapage;
+ 	}
+ 
+ 	bmp->db_maxlevel = le32_to_cpu(dbmp_le->dn_maxlevel);
+@@ -207,6 +206,11 @@ int dbMount(struct inode *ipbmap)
+ 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
+ 	bmp->db_agstart = le32_to_cpu(dbmp_le->dn_agstart);
+ 	bmp->db_agl2size = le32_to_cpu(dbmp_le->dn_agl2size);
++	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG) {
++		err = -EINVAL;
++		goto err_release_metapage;
++	}
 +
- 	/* Next, the write queue. */
- 	WARN_ON(!skb_queue_empty(&sk->sk_write_queue));
+ 	for (i = 0; i < MAXAG; i++)
+ 		bmp->db_agfree[i] = le64_to_cpu(dbmp_le->dn_agfree[i]);
+ 	bmp->db_agsize = le64_to_cpu(dbmp_le->dn_agsize);
+@@ -227,6 +231,12 @@ int dbMount(struct inode *ipbmap)
+ 	BMAP_LOCK_INIT(bmp);
+ 
+ 	return (0);
++
++err_release_metapage:
++	release_metapage(mp);
++err_kfree_bmp:
++	kfree(bmp);
++	return err;
+ }
+ 
  
 -- 
 2.35.1
