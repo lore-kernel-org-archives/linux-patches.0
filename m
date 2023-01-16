@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13D0C6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:05:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D9A8C433EF;
-	Mon, 16 Jan 2023 17:05:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8E96FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:05:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC98C433EF;
+	Mon, 16 Jan 2023 17:05:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888728;
-	bh=joO2+CCVxFkxLe3TsGb1maLTiOpsi1iXRg/tzScuud8=;
+	s=korg; t=1673888731;
+	bh=7PL/U7m48sSDKl73aetmCMW3NnucifAm2enbroza2Us=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UTswQfJBxWdREhhRPec8EEPi2T9l0UaNdzyDoD0XZMpBd8/MphDo4iAXmQHIVUq+I
-	 U0w6vpdPHR7LkSHVgIF95v4nKNbJ2V1uVgCKNDwemUGAVJaU06xAsxBmqWD20O2Ceg
-	 2ImUKYtBCTWHqu7ecsvvzO9wV46HI4e9mwR4BbbA=
+	b=nKD1BL6XX+MPx8k4NzzFttL9F6NfqwJ1Bdp6HuIYT1YnwcVlI9ivGdPu/fozFY2Sv
+	 tUz61OhKEQdZ8AFhrZvupViSOPOe2PkPNwyEMDbJtLjmUM/yKPFtjRpsu6RTVNzYcZ
+	 W+m7gAR8e2XaVf6az2j53g9STPHglXgh2PNNDe9g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zheng Yongjun <zhengyongjun3@huawei.com>,
-	Miquel Raynal <miquel.raynal@bootlin.com>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Roberto Sassu <roberto.sassu@huawei.com>,
+	Mimi Zohar <zohar@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 085/338] mtd: maps: pxa2xx-flash: fix memory leak in probe
-Date: Mon, 16 Jan 2023 16:49:18 +0100
-Message-Id: <20230116154824.576777915@linuxfoundation.org>
+Subject: [PATCH 4.14 076/338] ima: Fix misuse of dereference of pointer in template_desc_init_fields()
+Date: Mon, 16 Jan 2023 16:49:09 +0100
+Message-Id: <20230116154824.199851460@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,42 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yongjun <zhengyongjun3@huawei.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 2399401feee27c639addc5b7e6ba519d3ca341bf ]
+[ Upstream commit 25369175ce84813dd99d6604e710dc2491f68523 ]
 
-Free 'info' upon remapping error to avoid a memory leak.
+The input parameter @fields is type of struct ima_template_field ***, so
+when allocates array memory for @fields, the size of element should be
+sizeof(**field) instead of sizeof(*field).
 
-Fixes: e644f7d62894 ("[MTD] MAPS: Merge Lubbock and Mainstone drivers into common PXA2xx driver")
-Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
-[<miquel.raynal@bootlin.com>: Reword the commit log]
-Signed-off-by: Miquel Raynal <miquel.raynal@bootlin.com>
-Link: https://lore.kernel.org/linux-mtd/20221119073307.22929-1-zhengyongjun3@huawei.com
+Actually the original code would not cause any runtime error, but it's
+better to make it logically right.
+
+Fixes: adf53a778a0a ("ima: new templates management mechanism")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
+Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mtd/maps/pxa2xx-flash.c | 2 ++
- 1 file changed, 2 insertions(+)
+ security/integrity/ima/ima_template.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mtd/maps/pxa2xx-flash.c b/drivers/mtd/maps/pxa2xx-flash.c
-index 2cde28ed95c9..59d2fe1f46e1 100644
---- a/drivers/mtd/maps/pxa2xx-flash.c
-+++ b/drivers/mtd/maps/pxa2xx-flash.c
-@@ -69,6 +69,7 @@ static int pxa2xx_flash_probe(struct platform_device *pdev)
- 	if (!info->map.virt) {
- 		printk(KERN_WARNING "Failed to ioremap %s\n",
- 		       info->map.name);
-+		kfree(info);
- 		return -ENOMEM;
+diff --git a/security/integrity/ima/ima_template.c b/security/integrity/ima/ima_template.c
+index 8687882277a1..ff49f9292931 100644
+--- a/security/integrity/ima/ima_template.c
++++ b/security/integrity/ima/ima_template.c
+@@ -196,11 +196,11 @@ static int template_desc_init_fields(const char *template_fmt,
  	}
- 	info->map.cached =
-@@ -91,6 +92,7 @@ static int pxa2xx_flash_probe(struct platform_device *pdev)
- 		iounmap((void *)info->map.virt);
- 		if (info->map.cached)
- 			iounmap(info->map.cached);
-+		kfree(info);
- 		return -EIO;
+ 
+ 	if (fields && num_fields) {
+-		*fields = kmalloc_array(i, sizeof(*fields), GFP_KERNEL);
++		*fields = kmalloc_array(i, sizeof(**fields), GFP_KERNEL);
+ 		if (*fields == NULL)
+ 			return -ENOMEM;
+ 
+-		memcpy(*fields, found_fields, i * sizeof(*fields));
++		memcpy(*fields, found_fields, i * sizeof(**fields));
+ 		*num_fields = i;
  	}
- 	info->mtd->dev.parent = &pdev->dev;
+ 
 -- 
 2.35.1
 
