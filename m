@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2C346B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:28:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A9AC433D2;
-	Mon, 16 Jan 2023 16:28:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B83A46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:28:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81FA1C433D2;
+	Mon, 16 Jan 2023 16:28:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886504;
-	bh=9uBXOeVzhyTuWKKCov0/HHAz3bCgyXMB/6WXgpzKJRs=;
+	s=korg; t=1673886506;
+	bh=Mhrg3v0lwqLPTxKdO7ns6AG/aZn7Eb9JpOuAWMOEh6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zOTUy1m3OWCNneG3+5YX4GYfasbLkYoj4qraOlbLED1KrDCDlP3PikJ6DiNll5Jao
-	 e0vL9icVF+a8SIo5fGGxSSefZByPzOIXTl7gojpw1PKaM2L7FCJ09GOmPllnGh3KPD
-	 UxpJH9uqtPgU0bpeg0ptgsxWk4aJafM5KsDmwuFY=
+	b=PkbimxxIU1ct71pp+B1w/WKI0Jeq6mtij2b57bZViN6PdxJJyc5UhPxR8D+FoL37T
+	 tO1TawJo8ukJkWda5fJXYqfSMt94CE5281RZ4GcWLhpfznjVEveVqZ2QMhyX4+DSBm
+	 u0+obHt4oPA+UxD8W4nwUBlVouivuHQ++tpXgMFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Adam Vodopjan <grozzly@protonmail.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 456/658] nvme-pci: use the consistent return type of nvme_pci_iod_alloc_size()
-Date: Mon, 16 Jan 2023 16:49:04 +0100
-Message-Id: <20230116154930.357767472@linuxfoundation.org>
+Subject: [PATCH 5.4 457/658] ata: ahci: Fix PCS quirk application for suspend
+Date: Mon, 16 Jan 2023 16:49:05 +0100
+Message-Id: <20230116154930.401674855@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,36 +35,146 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baolin Wang <baolin.wang@linux.alibaba.com>
+From: Adam Vodopjan <grozzly@protonmail.com>
 
-[ Upstream commit 9056fc9fc514ecd2457a59c575863ecb07c4fa5e ]
+[ Upstream commit 37e14e4f3715428b809e4df9a9958baa64c77d51 ]
 
-The nvme_pci_iod_alloc_size() should return 'size_t' type to be
-consistent with the sizeof return value.
+Since kernel 5.3.4 my laptop (ICH8M controller) does not see Kingston
+SV300S37A60G SSD disk connected into a SATA connector on wake from
+suspend.  The problem was introduced in c312ef176399 ("libata/ahci: Drop
+PCS quirk for Denverton and beyond"): the quirk is not applied on wake
+from suspend as it originally was.
 
-Signed-off-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Stable-dep-of: c89a529e823d ("nvme-pci: fix mempool alloc size")
+It is worth to mention the commit contained another bug: the quirk is
+not applied at all to controllers which require it. The fix commit
+09d6ac8dc51a ("libata/ahci: Fix PCS quirk application") landed in 5.3.8.
+So testing my patch anywhere between commits c312ef176399 and
+09d6ac8dc51a is pointless.
+
+Not all disks trigger the problem. For example nothing bad happens with
+Western Digital WD5000LPCX HDD.
+
+Test hardware:
+- Acer 5920G with ICH8M SATA controller
+- sda: some SATA HDD connnected into the DVD drive IDE port with a
+  SATA-IDE caddy. It is a boot disk
+- sdb: Kingston SV300S37A60G SSD connected into the only SATA port
+
+Sample "dmesg --notime | grep -E '^(sd |ata)'" output on wake:
+
+sd 0:0:0:0: [sda] Starting disk
+sd 2:0:0:0: [sdb] Starting disk
+ata4: SATA link down (SStatus 4 SControl 300)
+ata3: SATA link down (SStatus 4 SControl 300)
+ata1.00: ACPI cmd ef/03:0c:00:00:00:a0 (SET FEATURES) filtered out
+ata1.00: ACPI cmd ef/03:42:00:00:00:a0 (SET FEATURES) filtered out
+ata1: FORCE: cable set to 80c
+ata5: SATA link down (SStatus 0 SControl 300)
+ata3: SATA link down (SStatus 4 SControl 300)
+ata3: SATA link down (SStatus 4 SControl 300)
+ata3.00: disabled
+sd 2:0:0:0: rejecting I/O to offline device
+ata3.00: detaching (SCSI 2:0:0:0)
+sd 2:0:0:0: [sdb] Start/Stop Unit failed: Result: hostbyte=DID_NO_CONNECT
+	driverbyte=DRIVER_OK
+sd 2:0:0:0: [sdb] Synchronizing SCSI cache
+sd 2:0:0:0: [sdb] Synchronize Cache(10) failed: Result:
+	hostbyte=DID_BAD_TARGET driverbyte=DRIVER_OK
+sd 2:0:0:0: [sdb] Stopping disk
+sd 2:0:0:0: [sdb] Start/Stop Unit failed: Result: hostbyte=DID_BAD_TARGET
+	driverbyte=DRIVER_OK
+
+Commit c312ef176399 dropped ahci_pci_reset_controller() which internally
+calls ahci_reset_controller() and applies the PCS quirk if needed after
+that. It was called each time a reset was required instead of just
+ahci_reset_controller(). This patch puts the function back in place.
+
+Fixes: c312ef176399 ("libata/ahci: Drop PCS quirk for Denverton and beyond")
+Signed-off-by: Adam Vodopjan <grozzly@protonmail.com>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/ata/ahci.c | 32 +++++++++++++++++++++++---------
+ 1 file changed, 23 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index c31fb6902c71..2b723d113bb3 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -363,7 +363,7 @@ static int nvme_pci_npages_sgl(unsigned int num_seg)
- 	return DIV_ROUND_UP(num_seg * sizeof(struct nvme_sgl_desc), PAGE_SIZE);
+diff --git a/drivers/ata/ahci.c b/drivers/ata/ahci.c
+index 6f572967b555..4069c2a79daa 100644
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -81,6 +81,7 @@ enum board_ids {
+ static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent);
+ static void ahci_remove_one(struct pci_dev *dev);
+ static void ahci_shutdown_one(struct pci_dev *dev);
++static void ahci_intel_pcs_quirk(struct pci_dev *pdev, struct ahci_host_priv *hpriv);
+ static int ahci_vt8251_hardreset(struct ata_link *link, unsigned int *class,
+ 				 unsigned long deadline);
+ static int ahci_avn_hardreset(struct ata_link *link, unsigned int *class,
+@@ -639,6 +640,25 @@ static void ahci_pci_save_initial_config(struct pci_dev *pdev,
+ 	ahci_save_initial_config(&pdev->dev, hpriv);
  }
  
--static unsigned int nvme_pci_iod_alloc_size(struct nvme_dev *dev,
-+static size_t nvme_pci_iod_alloc_size(struct nvme_dev *dev,
- 		unsigned int size, unsigned int nseg, bool use_sgl)
++static int ahci_pci_reset_controller(struct ata_host *host)
++{
++	struct pci_dev *pdev = to_pci_dev(host->dev);
++	struct ahci_host_priv *hpriv = host->private_data;
++	int rc;
++
++	rc = ahci_reset_controller(host);
++	if (rc)
++		return rc;
++
++	/*
++	 * If platform firmware failed to enable ports, try to enable
++	 * them here.
++	 */
++	ahci_intel_pcs_quirk(pdev, hpriv);
++
++	return 0;
++}
++
+ static void ahci_pci_init_controller(struct ata_host *host)
  {
- 	size_t alloc_size;
+ 	struct ahci_host_priv *hpriv = host->private_data;
+@@ -841,7 +861,7 @@ static int ahci_pci_device_runtime_resume(struct device *dev)
+ 	struct ata_host *host = pci_get_drvdata(pdev);
+ 	int rc;
+ 
+-	rc = ahci_reset_controller(host);
++	rc = ahci_pci_reset_controller(host);
+ 	if (rc)
+ 		return rc;
+ 	ahci_pci_init_controller(host);
+@@ -876,7 +896,7 @@ static int ahci_pci_device_resume(struct device *dev)
+ 		ahci_mcp89_apple_enable(pdev);
+ 
+ 	if (pdev->dev.power.power_state.event == PM_EVENT_SUSPEND) {
+-		rc = ahci_reset_controller(host);
++		rc = ahci_pci_reset_controller(host);
+ 		if (rc)
+ 			return rc;
+ 
+@@ -1741,12 +1761,6 @@ static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	/* save initial config */
+ 	ahci_pci_save_initial_config(pdev, hpriv);
+ 
+-	/*
+-	 * If platform firmware failed to enable ports, try to enable
+-	 * them here.
+-	 */
+-	ahci_intel_pcs_quirk(pdev, hpriv);
+-
+ 	/* prepare host */
+ 	if (hpriv->cap & HOST_CAP_NCQ) {
+ 		pi.flags |= ATA_FLAG_NCQ;
+@@ -1856,7 +1870,7 @@ static int ahci_init_one(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	if (rc)
+ 		return rc;
+ 
+-	rc = ahci_reset_controller(host);
++	rc = ahci_pci_reset_controller(host);
+ 	if (rc)
+ 		return rc;
+ 
 -- 
 2.35.1
 
