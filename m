@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 656A546B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1267C433D2;
-	Mon, 16 Jan 2023 16:16:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067C046B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC71C433F0;
+	Mon, 16 Jan 2023 16:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885772;
-	bh=Vi7dUtHrEAaNYM9bMxRmH2PMGgJCsA4wijDta0PzS5s=;
+	s=korg; t=1673885776;
+	bh=0BKBsSGWrcbN2eBqO7h0t6/hqaZfQv4gECFdTpEIVx8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mh7Kt7GOBRmwMr9myR8OmwD9mjy+rmbAVg4c3HggXh2vYFBLSzTAjVgut77qeIxpQ
-	 F+ulfgK+Y+TbrGE8ePJXxgqy3rN2j3ZtK5y2lCBbv6XWFJkTULCQ0bT/9IdJimaUkM
-	 kOgw3Nu2aiXhLH94+ZEPyk7vBmcsixFUaDfLcJqY=
+	b=Mm1ZtfIvomN9NpEdLcey7ZiYS1MK6o1iGHRbWsT/CDoK8QuIjaxdoGi6cTGmRJZvO
+	 Mum48Ovct3b3FMfAi2oQoEJJ72ZgqRlj3oMZAIOxsqDsM8FhR0fJlcPad1tjZt2+Su
+	 ZLBNfseojAEmPcqpHcjrecORTZAGm4ka9Y5Ai1rc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 178/658] clk: qcom: clk-krait: fix wrong div2 functions
-Date: Mon, 16 Jan 2023 16:44:26 +0100
-Message-Id: <20230116154917.589554663@linuxfoundation.org>
+Subject: [PATCH 5.4 179/658] hsr: Avoid double remove of a node.
+Date: Mon, 16 Jan 2023 16:44:27 +0100
+Message-Id: <20230116154917.637737445@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,38 +35,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian Marangi <ansuelsmth@gmail.com>
+From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
 
-[ Upstream commit d676d3a3717cf726d3affedbe5ba98fc4ccad7b3 ]
+[ Upstream commit 0c74d9f79ec4299365bbe803baa736ae0068179e ]
 
-Currently div2 value is applied to the wrong bits. This is caused by a
-bug in the code where the shift is done only for lpl, for anything
-else the mask is not shifted to the correct bits.
+Due to the hashed-MAC optimisation one problem become visible:
+hsr_handle_sup_frame() walks over the list of available nodes and merges
+two node entries into one if based on the information in the supervision
+both MAC addresses belong to one node. The list-walk happens on a RCU
+protected list and delete operation happens under a lock.
 
-Fix this by correctly shift if lpl is not supported.
+If the supervision arrives on both slave interfaces at the same time
+then this delete operation can occur simultaneously on two CPUs. The
+result is the first-CPU deletes the from the list and the second CPUs
+BUGs while attempting to dereference a poisoned list-entry. This happens
+more likely with the optimisation because a new node for the mac_B entry
+is created once a packet has been received and removed (merged) once the
+supervision frame has been received.
 
-Fixes: 4d7dc77babfe ("clk: qcom: Add support for Krait clocks")
-Signed-off-by: Christian Marangi <ansuelsmth@gmail.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221108215625.30186-1-ansuelsmth@gmail.com
+Avoid removing/ cleaning up a hsr_node twice by adding a `removed' field
+which is set to true after the removal and checked before the removal.
+
+Fixes: f266a683a4804 ("net/hsr: Better frame dispatch")
+Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/clk-krait.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/hsr/hsr_framereg.c | 16 +++++++++++-----
+ net/hsr/hsr_framereg.h |  1 +
+ 2 files changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/clk/qcom/clk-krait.c b/drivers/clk/qcom/clk-krait.c
-index 90046428693c..e74fc81a14d0 100644
---- a/drivers/clk/qcom/clk-krait.c
-+++ b/drivers/clk/qcom/clk-krait.c
-@@ -98,6 +98,8 @@ static int krait_div2_set_rate(struct clk_hw *hw, unsigned long rate,
+diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
+index 4a9200729a32..783e741491ec 100644
+--- a/net/hsr/hsr_framereg.c
++++ b/net/hsr/hsr_framereg.c
+@@ -269,9 +269,12 @@ void hsr_handle_sup_frame(struct sk_buff *skb, struct hsr_node *node_curr,
+ 	node_real->addr_B_port = port_rcv->type;
  
- 	if (d->lpl)
- 		mask = mask << (d->shift + LPL_SHIFT) | mask << d->shift;
-+	else
-+		mask <<= d->shift;
+ 	spin_lock_bh(&hsr->list_lock);
+-	list_del_rcu(&node_curr->mac_list);
++	if (!node_curr->removed) {
++		list_del_rcu(&node_curr->mac_list);
++		node_curr->removed = true;
++		kfree_rcu(node_curr, rcu_head);
++	}
+ 	spin_unlock_bh(&hsr->list_lock);
+-	kfree_rcu(node_curr, rcu_head);
  
- 	spin_lock_irqsave(&krait_clock_reg_lock, flags);
- 	val = krait_get_l2_indirect_reg(d->offset);
+ done:
+ 	skb_push(skb, sizeof(struct hsrv1_ethhdr_sp));
+@@ -436,9 +439,12 @@ void hsr_prune_nodes(struct timer_list *t)
+ 		if (time_is_before_jiffies(timestamp +
+ 				msecs_to_jiffies(HSR_NODE_FORGET_TIME))) {
+ 			hsr_nl_nodedown(hsr, node->macaddress_A);
+-			list_del_rcu(&node->mac_list);
+-			/* Note that we need to free this entry later: */
+-			kfree_rcu(node, rcu_head);
++			if (!node->removed) {
++				list_del_rcu(&node->mac_list);
++				node->removed = true;
++				/* Note that we need to free this entry later: */
++				kfree_rcu(node, rcu_head);
++			}
+ 		}
+ 	}
+ 	spin_unlock_bh(&hsr->list_lock);
+diff --git a/net/hsr/hsr_framereg.h b/net/hsr/hsr_framereg.h
+index 0f0fa12b4329..01f4ef4ae494 100644
+--- a/net/hsr/hsr_framereg.h
++++ b/net/hsr/hsr_framereg.h
+@@ -56,6 +56,7 @@ struct hsr_node {
+ 	unsigned long		time_in[HSR_PT_PORTS];
+ 	bool			time_in_stale[HSR_PT_PORTS];
+ 	u16			seq_out[HSR_PT_PORTS];
++	bool			removed;
+ 	struct rcu_head		rcu_head;
+ };
+ 
 -- 
 2.35.1
 
