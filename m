@@ -1,27 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3EF46FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:52:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B40CC433D2;
-	Mon, 16 Jan 2023 16:52:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450F36FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:52:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CA37C433D2;
+	Mon, 16 Jan 2023 16:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887971;
-	bh=BSVmVEcOgHV3Ea3iGeO3NCIIf3O1IrZ0Omux/mn7ygc=;
+	s=korg; t=1673887974;
+	bh=26V1S1kH4evNJIaFICZXesihf6vws02FRB76sceQdWg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sN/ZkgH79oEvTzIC7iIbX+VRktzp+r+5UaJnmeBceQAVc2+OVMq8gtBtnVru8ZW+m
-	 KY4JlLnlm/oRn3+WvjvQ9Ajq0iRXtaQvGxprVsIYPd6pn5e1E2/8j/yy/nFjO5/SUq
-	 I1RjEx7upKml3P4SZZU9QtgPjCvtF1ekgxetgGzA=
+	b=SeTlAEeHHPcLWV4ePKAL/DbJpK6ebYQi9t6YZQrKbIot+wK2p30OsGsTV3TWC2FL0
+	 2oxo+QUXS9IPUtjhf5fpmHftGd3mU3rJM3IlNxJIqaPNXXfNl74aDIowejlsxcB1LR
+	 uYWEbrIWZvnfT7rFbsqJQY4gT91hXzWL9jh+ldNA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mark Brown <broonie@kernel.org>,
+	Wei Wang <wvw@google.com>,
+	Midas Chien <midaschieh@google.com>,
+	Connor OBrien <connoro@google.com>,
+	Kees Cook <keescook@chromium.org>,
+	Anton Vorontsov <anton@enomsg.org>,
+	Colin Cross <ccross@android.com>,
+	Tony Luck <tony.luck@intel.com>,
+	kernel-team@android.com,
+	John Stultz <jstultz@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 351/521] ASoC: rt5670: Remove unbalanced pm_runtime_put()
-Date: Mon, 16 Jan 2023 16:50:13 +0100
-Message-Id: <20230116154902.838567019@linuxfoundation.org>
+Subject: [PATCH 4.19 352/521] pstore: Switch pmsg_lock to an rt_mutex to avoid priority inversion
+Date: Mon, 16 Jan 2023 16:50:14 +0100
+Message-Id: <20230116154902.876924744@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,40 +42,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: John Stultz <jstultz@google.com>
 
-[ Upstream commit 6c900dcc3f7331a67ed29739d74524e428d137fb ]
+[ Upstream commit 76d62f24db07f22ccf9bc18ca793c27d4ebef721 ]
 
-For some reason rt5670_i2c_probe() does a pm_runtime_put() at the end
-of a successful probe. But it has never done a pm_runtime_get() leading
-to the following error being logged into dmesg:
+Wei Wang reported seeing priority inversion caused latencies
+caused by contention on pmsg_lock, and suggested it be switched
+to a rt_mutex.
 
- rt5670 i2c-10EC5640:00: Runtime PM usage count underflow!
+I was initially hesitant this would help, as the tasks in that
+trace all seemed to be SCHED_NORMAL, so the benefit would be
+limited to only nice boosting.
 
-Fix this by removing the unnecessary pm_runtime_put().
+However, another similar issue was raised where the priority
+inversion was seen did involve a blocked RT task so it is clear
+this would be helpful in that case.
 
-Fixes: 64e89e5f5548 ("ASoC: rt5670: Add runtime PM support")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20221213123319.11285-1-hdegoede@redhat.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Wei Wang <wvw@google.com>
+Cc: Midas Chien<midaschieh@google.com>
+Cc: Connor O'Brien <connoro@google.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Anton Vorontsov <anton@enomsg.org>
+Cc: Colin Cross <ccross@android.com>
+Cc: Tony Luck <tony.luck@intel.com>
+Cc: kernel-team@android.com
+Fixes: 9d5438f462ab ("pstore: Add pmsg - user-space accessible pstore object")
+Reported-by: Wei Wang <wvw@google.com>
+Signed-off-by: John Stultz <jstultz@google.com>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221214231834.3711880-1-jstultz@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/rt5670.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/pstore/pmsg.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/sound/soc/codecs/rt5670.c b/sound/soc/codecs/rt5670.c
-index 6a2a58e107e3..9dd99d123e44 100644
---- a/sound/soc/codecs/rt5670.c
-+++ b/sound/soc/codecs/rt5670.c
-@@ -3217,8 +3217,6 @@ static int rt5670_i2c_probe(struct i2c_client *i2c,
- 	if (ret < 0)
- 		goto err;
+diff --git a/fs/pstore/pmsg.c b/fs/pstore/pmsg.c
+index 24db02de1787..ffc13ea196d2 100644
+--- a/fs/pstore/pmsg.c
++++ b/fs/pstore/pmsg.c
+@@ -15,9 +15,10 @@
+ #include <linux/device.h>
+ #include <linux/fs.h>
+ #include <linux/uaccess.h>
++#include <linux/rtmutex.h>
+ #include "internal.h"
  
--	pm_runtime_put(&i2c->dev);
--
- 	return 0;
- err:
- 	pm_runtime_disable(&i2c->dev);
+-static DEFINE_MUTEX(pmsg_lock);
++static DEFINE_RT_MUTEX(pmsg_lock);
+ 
+ static ssize_t write_pmsg(struct file *file, const char __user *buf,
+ 			  size_t count, loff_t *ppos)
+@@ -36,9 +37,9 @@ static ssize_t write_pmsg(struct file *file, const char __user *buf,
+ 	if (!access_ok(VERIFY_READ, buf, count))
+ 		return -EFAULT;
+ 
+-	mutex_lock(&pmsg_lock);
++	rt_mutex_lock(&pmsg_lock);
+ 	ret = psinfo->write_user(&record, buf);
+-	mutex_unlock(&pmsg_lock);
++	rt_mutex_unlock(&pmsg_lock);
+ 	return ret ? ret : count;
+ }
+ 
 -- 
 2.35.1
 
