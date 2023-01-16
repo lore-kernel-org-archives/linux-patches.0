@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E02334C83
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:33:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66935C433EF;
-	Mon, 16 Jan 2023 16:33:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7850D4C83
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:33:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3E31C433D2;
+	Mon, 16 Jan 2023 16:33:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886809;
-	bh=T+GN3KzClFQ0pazylmw4yqQ4cszGxeiRLVI7wGusluE=;
+	s=korg; t=1673886812;
+	bh=LkrStC3BvfII31PkvZOr/l71clBRH+OsrCdDiJaLta4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iVO7pQl6R0fhrUYZB3bf6QmoCAhITYbSwUR28uP7zLFDgXmaP+FY8iKAkuvvzEjjT
-	 CRLRnUuczuR3oDU65+jUysswpnjXhx707anW5aTRzeOZG80cs33uixaAzghzDf1TIm
-	 jPhOjwE9koN8BOHS+4iqeZuDEmXpcRU1FiW0L4TY=
+	b=nk/RgDyXXAWYILeLcxTn2JAiMhsrxFeN20xm+Chj9zRVLB48Mr4sqyGF1DGpQeK8A
+	 x93qhW3Wpb/YEEIwjhZ3NtMaSZbG9Li5keYqIAOH2KEhY+Njtq9fmtP8zeNtot5GAi
+	 VktBfEMzFnzJiX+78c4QOQFgRxPGvKOfQndME08o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Wang Yugui <wangyugui@e16-tech.com>
-Subject: [PATCH 5.4 570/658] nfsd: shut down the NFSv4 state objects before the filecache
-Date: Mon, 16 Jan 2023 16:50:58 +0100
-Message-Id: <20230116154935.581452913@linuxfoundation.org>
+	Jie Wang <wangjie125@huawei.com>,
+	Hao Lan <lanhao@huawei.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 571/658] net: hns3: add interrupts re-initialization while doing VF FLR
+Date: Mon, 16 Jan 2023 16:50:59 +0100
+Message-Id: <20230116154935.630390009@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,40 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeff Layton <jlayton@kernel.org>
+From: Jie Wang <wangjie125@huawei.com>
 
-[ Upstream commit 789e1e10f214c00ca18fc6610824c5b9876ba5f2 ]
+[ Upstream commit 09e6b30eeb254f1818a008cace3547159e908dfd ]
 
-Currently, we shut down the filecache before trying to clean up the
-stateids that depend on it. This leads to the kernel trying to free an
-nfsd_file twice, and a refcount overput on the nf_mark.
+Currently keep alive message between PF and VF may be lost and the VF is
+unalive in PF. So the VF will not do reset during PF FLR reset process.
+This would make the allocated interrupt resources of VF invalid and VF
+would't receive or respond to PF any more.
 
-Change the shutdown procedure to tear down all of the stateids prior
-to shutting down the filecache.
+So this patch adds VF interrupts re-initialization during VF FLR for VF
+recovery in above cases.
 
-Reported-and-tested-by: Wang Yugui <wangyugui@e16-tech.com>
-Signed-off-by: Jeff Layton <jlayton@kernel.org>
-Fixes: 5e113224c17e ("nfsd: nfsd_file cache entries should be per net namespace")
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 862d969a3a4d ("net: hns3: do VF's pci re-initialization while PF doing FLR")
+Signed-off-by: Jie Wang <wangjie125@huawei.com>
+Signed-off-by: Hao Lan <lanhao@huawei.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfssvc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfssvc.c b/fs/nfsd/nfssvc.c
-index d63cdda1782d..70684c7ae94b 100644
---- a/fs/nfsd/nfssvc.c
-+++ b/fs/nfsd/nfssvc.c
-@@ -420,8 +420,8 @@ static void nfsd_shutdown_net(struct net *net)
- {
- 	struct nfsd_net *nn = net_generic(net, nfsd_net_id);
+diff --git a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+index 403c1b9cf6ab..48956c30d2ee 100644
+--- a/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
++++ b/drivers/net/ethernet/hisilicon/hns3/hns3vf/hclgevf_main.c
+@@ -2592,7 +2592,8 @@ static int hclgevf_pci_reset(struct hclgevf_dev *hdev)
+ 	struct pci_dev *pdev = hdev->pdev;
+ 	int ret = 0;
  
--	nfsd_file_cache_shutdown_net(net);
- 	nfs4_state_shutdown_net(net);
-+	nfsd_file_cache_shutdown_net(net);
- 	if (nn->lockd_up) {
- 		lockd_down(net);
- 		nn->lockd_up = 0;
+-	if (hdev->reset_type == HNAE3_VF_FULL_RESET &&
++	if ((hdev->reset_type == HNAE3_VF_FULL_RESET ||
++	     hdev->reset_type == HNAE3_FLR_RESET) &&
+ 	    test_bit(HCLGEVF_STATE_IRQ_INITED, &hdev->state)) {
+ 		hclgevf_misc_irq_uninit(hdev);
+ 		hclgevf_uninit_msi(hdev);
 -- 
 2.35.1
 
