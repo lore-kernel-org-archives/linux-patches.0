@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1571E46B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:07:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D7B1C433EF;
-	Mon, 16 Jan 2023 16:07:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE6E946B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:08:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CE4C433EF;
+	Mon, 16 Jan 2023 16:08:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885277;
-	bh=tvsS9YRoXocBA7Ps6OFhobScpHoRh7AjELgpYeXiXbo=;
+	s=korg; t=1673885280;
+	bh=0hGH4B2VkM+NL14BNPHk5RYrQY+T4BeucIqjS8scYjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vZzwwGox9X03XXKsKkmA1Z8lJNlvkiVMmFH+Sn/7URyvKK+MkhIk8w5JloI1rKmYy
-	 HJlaQKGiI+BoE3Bp52RYRr54SQ0zcMbposIeFCz9dujilHJ2PJ5hyig+7o9901BQQ1
-	 rQ8b3Z1Cr0O+r8VfM/aFsyHl40ZFyMUCL5HfzdUo=
+	b=Vp46RKMGfsb9i3bMulEmC7xqW6JEGy7K4ltL5B8nG+3ywx7w0CB62Upl1MTTX0P2P
+	 GL0suvIls5Ubrf/irWniw/kwFopzz/pv1M371Tw7rnjQ//CwjA1mtU5WbrLQWAbtMM
+	 M2gzlKvi4ytikv7Lq0b7AESnp5QxulPf2ozZtob4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Newman <peternewman@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Babu Moger <babu.moger@amd.com>,
-	stable@kernel.org,
+	Mark Rutland <mark.rutland@arm.com>,
+	Boqun Feng <boqun.feng@gmail.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Will Deacon <will@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 56/64] x86/resctrl: Fix task CLOSID/RMID update race
-Date: Mon, 16 Jan 2023 16:52:03 +0100
-Message-Id: <20230116154745.511604307@linuxfoundation.org>
+Subject: [PATCH 5.10 57/64] arm64: atomics: format whitespace consistently
+Date: Mon, 16 Jan 2023 16:52:04 +0100
+Message-Id: <20230116154745.562438572@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -38,112 +38,274 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Newman <peternewman@google.com>
+From: Mark Rutland <mark.rutland@arm.com>
 
-[ Upstream commit fe1f0714385fbcf76b0cbceb02b7277d842014fc ]
+[ Upstream commit 8e6082e94aac6d0338883b5953631b662a5a9188 ]
 
-When the user moves a running task to a new rdtgroup using the task's
-file interface or by deleting its rdtgroup, the resulting change in
-CLOSID/RMID must be immediately propagated to the PQR_ASSOC MSR on the
-task(s) CPUs.
+The code for the atomic ops is formatted inconsistently, and while this
+is not a functional problem it is rather distracting when working on
+them.
 
-x86 allows reordering loads with prior stores, so if the task starts
-running between a task_curr() check that the CPU hoisted before the
-stores in the CLOSID/RMID update then it can start running with the old
-CLOSID/RMID until it is switched again because __rdtgroup_move_task()
-failed to determine that it needs to be interrupted to obtain the new
-CLOSID/RMID.
+Some have ops have consistent indentation, e.g.
 
-Refer to the diagram below:
+| #define ATOMIC_OP_ADD_RETURN(name, mb, cl...)                           \
+| static inline int __lse_atomic_add_return##name(int i, atomic_t *v)     \
+| {                                                                       \
+|         u32 tmp;                                                        \
+|                                                                         \
+|         asm volatile(                                                   \
+|         __LSE_PREAMBLE                                                  \
+|         "       ldadd" #mb "    %w[i], %w[tmp], %[v]\n"                 \
+|         "       add     %w[i], %w[i], %w[tmp]"                          \
+|         : [i] "+r" (i), [v] "+Q" (v->counter), [tmp] "=&r" (tmp)        \
+|         : "r" (v)                                                       \
+|         : cl);                                                          \
+|                                                                         \
+|         return i;                                                       \
+| }
 
-CPU 0                                   CPU 1
------                                   -----
-__rdtgroup_move_task():
-  curr <- t1->cpu->rq->curr
-                                        __schedule():
-                                          rq->curr <- t1
-                                        resctrl_sched_in():
-                                          t1->{closid,rmid} -> {1,1}
-  t1->{closid,rmid} <- {2,2}
-  if (curr == t1) // false
-   IPI(t1->cpu)
+While others have negative indentation for some lines, and/or have
+misaligned trailing backslashes, e.g.
 
-A similar race impacts rdt_move_group_tasks(), which updates tasks in a
-deleted rdtgroup.
+| static inline void __lse_atomic_##op(int i, atomic_t *v)                        \
+| {                                                                       \
+|         asm volatile(                                                   \
+|         __LSE_PREAMBLE                                                  \
+| "       " #asm_op "     %w[i], %[v]\n"                                  \
+|         : [i] "+r" (i), [v] "+Q" (v->counter)                           \
+|         : "r" (v));                                                     \
+| }
 
-In both cases, use smp_mb() to order the task_struct::{closid,rmid}
-stores before the loads in task_curr().  In particular, in the
-rdt_move_group_tasks() case, simply execute an smp_mb() on every
-iteration with a matching task.
+This patch makes the indentation consistent and also aligns the trailing
+backslashes. This makes the code easier to read for those (like myself)
+who are easily distracted by these inconsistencies.
 
-It is possible to use a single smp_mb() in rdt_move_group_tasks(), but
-this would require two passes and a means of remembering which
-task_structs were updated in the first loop. However, benchmarking
-results below showed too little performance impact in the simple
-approach to justify implementing the two-pass approach.
+This is intended as a cleanup.
+There should be no functional change as a result of this patch.
 
-Times below were collected using `perf stat` to measure the time to
-remove a group containing a 1600-task, parallel workload.
-
-CPU: Intel(R) Xeon(R) Platinum P-8136 CPU @ 2.00GHz (112 threads)
-
-  # mkdir /sys/fs/resctrl/test
-  # echo $$ > /sys/fs/resctrl/test/tasks
-  # perf bench sched messaging -g 40 -l 100000
-
-task-clock time ranges collected using:
-
-  # perf stat rmdir /sys/fs/resctrl/test
-
-Baseline:                     1.54 - 1.60 ms
-smp_mb() every matching task: 1.57 - 1.67 ms
-
-  [ bp: Massage commit message. ]
-
-Fixes: ae28d1aae48a ("x86/resctrl: Use an IPI instead of task_work_add() to update PQR_ASSOC MSR")
-Fixes: 0efc89be9471 ("x86/intel_rdt: Update task closid immediately on CPU in rmdir and unmount")
-Signed-off-by: Peter Newman <peternewman@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Babu Moger <babu.moger@amd.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20221220161123.432120-1-peternewman@google.com
+Signed-off-by: Mark Rutland <mark.rutland@arm.com>
+Cc: Boqun Feng <boqun.feng@gmail.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Will Deacon <will@kernel.org>
+Acked-by: Will Deacon <will@kernel.org>
+Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20211210151410.2782645-2-mark.rutland@arm.com
+Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Stable-dep-of: 031af50045ea ("arm64: cmpxchg_double*: hazard against entire exchange variable")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/resctrl/rdtgroup.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ arch/arm64/include/asm/atomic_ll_sc.h | 86 +++++++++++++--------------
+ arch/arm64/include/asm/atomic_lse.h   | 14 ++---
+ 2 files changed, 50 insertions(+), 50 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-index f2ad3c117426..ff26de11b3f1 100644
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -577,8 +577,10 @@ static int __rdtgroup_move_task(struct task_struct *tsk,
- 	/*
- 	 * Ensure the task's closid and rmid are written before determining if
- 	 * the task is current that will decide if it will be interrupted.
-+	 * This pairs with the full barrier between the rq->curr update and
-+	 * resctrl_sched_in() during context switch.
- 	 */
--	barrier();
-+	smp_mb();
+diff --git a/arch/arm64/include/asm/atomic_ll_sc.h b/arch/arm64/include/asm/atomic_ll_sc.h
+index 13869b76b58c..fe0db8d416fb 100644
+--- a/arch/arm64/include/asm/atomic_ll_sc.h
++++ b/arch/arm64/include/asm/atomic_ll_sc.h
+@@ -44,11 +44,11 @@ __ll_sc_atomic_##op(int i, atomic_t *v)					\
+ 									\
+ 	asm volatile("// atomic_" #op "\n"				\
+ 	__LL_SC_FALLBACK(						\
+-"	prfm	pstl1strm, %2\n"					\
+-"1:	ldxr	%w0, %2\n"						\
+-"	" #asm_op "	%w0, %w0, %w3\n"				\
+-"	stxr	%w1, %w0, %2\n"						\
+-"	cbnz	%w1, 1b\n")						\
++	"	prfm	pstl1strm, %2\n"				\
++	"1:	ldxr	%w0, %2\n"					\
++	"	" #asm_op "	%w0, %w0, %w3\n"			\
++	"	stxr	%w1, %w0, %2\n"					\
++	"	cbnz	%w1, 1b\n")					\
+ 	: "=&r" (result), "=&r" (tmp), "+Q" (v->counter)		\
+ 	: __stringify(constraint) "r" (i));				\
+ }
+@@ -62,12 +62,12 @@ __ll_sc_atomic_##op##_return##name(int i, atomic_t *v)			\
+ 									\
+ 	asm volatile("// atomic_" #op "_return" #name "\n"		\
+ 	__LL_SC_FALLBACK(						\
+-"	prfm	pstl1strm, %2\n"					\
+-"1:	ld" #acq "xr	%w0, %2\n"					\
+-"	" #asm_op "	%w0, %w0, %w3\n"				\
+-"	st" #rel "xr	%w1, %w0, %2\n"					\
+-"	cbnz	%w1, 1b\n"						\
+-"	" #mb )								\
++	"	prfm	pstl1strm, %2\n"				\
++	"1:	ld" #acq "xr	%w0, %2\n"				\
++	"	" #asm_op "	%w0, %w0, %w3\n"			\
++	"	st" #rel "xr	%w1, %w0, %2\n"				\
++	"	cbnz	%w1, 1b\n"					\
++	"	" #mb )							\
+ 	: "=&r" (result), "=&r" (tmp), "+Q" (v->counter)		\
+ 	: __stringify(constraint) "r" (i)				\
+ 	: cl);								\
+@@ -84,12 +84,12 @@ __ll_sc_atomic_fetch_##op##name(int i, atomic_t *v)			\
+ 									\
+ 	asm volatile("// atomic_fetch_" #op #name "\n"			\
+ 	__LL_SC_FALLBACK(						\
+-"	prfm	pstl1strm, %3\n"					\
+-"1:	ld" #acq "xr	%w0, %3\n"					\
+-"	" #asm_op "	%w1, %w0, %w4\n"				\
+-"	st" #rel "xr	%w2, %w1, %3\n"					\
+-"	cbnz	%w2, 1b\n"						\
+-"	" #mb )								\
++	"	prfm	pstl1strm, %3\n"				\
++	"1:	ld" #acq "xr	%w0, %3\n"				\
++	"	" #asm_op "	%w1, %w0, %w4\n"			\
++	"	st" #rel "xr	%w2, %w1, %3\n"				\
++	"	cbnz	%w2, 1b\n"					\
++	"	" #mb )							\
+ 	: "=&r" (result), "=&r" (val), "=&r" (tmp), "+Q" (v->counter)	\
+ 	: __stringify(constraint) "r" (i)				\
+ 	: cl);								\
+@@ -143,11 +143,11 @@ __ll_sc_atomic64_##op(s64 i, atomic64_t *v)				\
+ 									\
+ 	asm volatile("// atomic64_" #op "\n"				\
+ 	__LL_SC_FALLBACK(						\
+-"	prfm	pstl1strm, %2\n"					\
+-"1:	ldxr	%0, %2\n"						\
+-"	" #asm_op "	%0, %0, %3\n"					\
+-"	stxr	%w1, %0, %2\n"						\
+-"	cbnz	%w1, 1b")						\
++	"	prfm	pstl1strm, %2\n"				\
++	"1:	ldxr	%0, %2\n"					\
++	"	" #asm_op "	%0, %0, %3\n"				\
++	"	stxr	%w1, %0, %2\n"					\
++	"	cbnz	%w1, 1b")					\
+ 	: "=&r" (result), "=&r" (tmp), "+Q" (v->counter)		\
+ 	: __stringify(constraint) "r" (i));				\
+ }
+@@ -161,12 +161,12 @@ __ll_sc_atomic64_##op##_return##name(s64 i, atomic64_t *v)		\
+ 									\
+ 	asm volatile("// atomic64_" #op "_return" #name "\n"		\
+ 	__LL_SC_FALLBACK(						\
+-"	prfm	pstl1strm, %2\n"					\
+-"1:	ld" #acq "xr	%0, %2\n"					\
+-"	" #asm_op "	%0, %0, %3\n"					\
+-"	st" #rel "xr	%w1, %0, %2\n"					\
+-"	cbnz	%w1, 1b\n"						\
+-"	" #mb )								\
++	"	prfm	pstl1strm, %2\n"				\
++	"1:	ld" #acq "xr	%0, %2\n"				\
++	"	" #asm_op "	%0, %0, %3\n"				\
++	"	st" #rel "xr	%w1, %0, %2\n"				\
++	"	cbnz	%w1, 1b\n"					\
++	"	" #mb )							\
+ 	: "=&r" (result), "=&r" (tmp), "+Q" (v->counter)		\
+ 	: __stringify(constraint) "r" (i)				\
+ 	: cl);								\
+@@ -176,19 +176,19 @@ __ll_sc_atomic64_##op##_return##name(s64 i, atomic64_t *v)		\
  
- 	/*
- 	 * By now, the task's closid and rmid are set. If the task is current
-@@ -2313,6 +2315,14 @@ static void rdt_move_group_tasks(struct rdtgroup *from, struct rdtgroup *to,
- 			t->closid = to->closid;
- 			t->rmid = to->mon.rmid;
+ #define ATOMIC64_FETCH_OP(name, mb, acq, rel, cl, op, asm_op, constraint)\
+ static inline long							\
+-__ll_sc_atomic64_fetch_##op##name(s64 i, atomic64_t *v)		\
++__ll_sc_atomic64_fetch_##op##name(s64 i, atomic64_t *v)			\
+ {									\
+ 	s64 result, val;						\
+ 	unsigned long tmp;						\
+ 									\
+ 	asm volatile("// atomic64_fetch_" #op #name "\n"		\
+ 	__LL_SC_FALLBACK(						\
+-"	prfm	pstl1strm, %3\n"					\
+-"1:	ld" #acq "xr	%0, %3\n"					\
+-"	" #asm_op "	%1, %0, %4\n"					\
+-"	st" #rel "xr	%w2, %1, %3\n"					\
+-"	cbnz	%w2, 1b\n"						\
+-"	" #mb )								\
++	"	prfm	pstl1strm, %3\n"				\
++	"1:	ld" #acq "xr	%0, %3\n"				\
++	"	" #asm_op "	%1, %0, %4\n"				\
++	"	st" #rel "xr	%w2, %1, %3\n"				\
++	"	cbnz	%w2, 1b\n"					\
++	"	" #mb )							\
+ 	: "=&r" (result), "=&r" (val), "=&r" (tmp), "+Q" (v->counter)	\
+ 	: __stringify(constraint) "r" (i)				\
+ 	: cl);								\
+@@ -241,14 +241,14 @@ __ll_sc_atomic64_dec_if_positive(atomic64_t *v)
  
-+			/*
-+			 * Order the closid/rmid stores above before the loads
-+			 * in task_curr(). This pairs with the full barrier
-+			 * between the rq->curr update and resctrl_sched_in()
-+			 * during context switch.
-+			 */
-+			smp_mb();
-+
- 			/*
- 			 * If the task is on a CPU, set the CPU in the mask.
- 			 * The detection is inaccurate as tasks might move or
+ 	asm volatile("// atomic64_dec_if_positive\n"
+ 	__LL_SC_FALLBACK(
+-"	prfm	pstl1strm, %2\n"
+-"1:	ldxr	%0, %2\n"
+-"	subs	%0, %0, #1\n"
+-"	b.lt	2f\n"
+-"	stlxr	%w1, %0, %2\n"
+-"	cbnz	%w1, 1b\n"
+-"	dmb	ish\n"
+-"2:")
++	"	prfm	pstl1strm, %2\n"
++	"1:	ldxr	%0, %2\n"
++	"	subs	%0, %0, #1\n"
++	"	b.lt	2f\n"
++	"	stlxr	%w1, %0, %2\n"
++	"	cbnz	%w1, 1b\n"
++	"	dmb	ish\n"
++	"2:")
+ 	: "=&r" (result), "=&r" (tmp), "+Q" (v->counter)
+ 	:
+ 	: "cc", "memory");
+diff --git a/arch/arm64/include/asm/atomic_lse.h b/arch/arm64/include/asm/atomic_lse.h
+index da3280f639cd..ab661375835e 100644
+--- a/arch/arm64/include/asm/atomic_lse.h
++++ b/arch/arm64/include/asm/atomic_lse.h
+@@ -11,11 +11,11 @@
+ #define __ASM_ATOMIC_LSE_H
+ 
+ #define ATOMIC_OP(op, asm_op)						\
+-static inline void __lse_atomic_##op(int i, atomic_t *v)			\
++static inline void __lse_atomic_##op(int i, atomic_t *v)		\
+ {									\
+ 	asm volatile(							\
+ 	__LSE_PREAMBLE							\
+-"	" #asm_op "	%w[i], %[v]\n"					\
++	"	" #asm_op "	%w[i], %[v]\n"				\
+ 	: [i] "+r" (i), [v] "+Q" (v->counter)				\
+ 	: "r" (v));							\
+ }
+@@ -32,7 +32,7 @@ static inline int __lse_atomic_fetch_##op##name(int i, atomic_t *v)	\
+ {									\
+ 	asm volatile(							\
+ 	__LSE_PREAMBLE							\
+-"	" #asm_op #mb "	%w[i], %w[i], %[v]"				\
++	"	" #asm_op #mb "	%w[i], %w[i], %[v]"			\
+ 	: [i] "+r" (i), [v] "+Q" (v->counter)				\
+ 	: "r" (v)							\
+ 	: cl);								\
+@@ -130,7 +130,7 @@ static inline int __lse_atomic_sub_return##name(int i, atomic_t *v)	\
+ 	"	add	%w[i], %w[i], %w[tmp]"				\
+ 	: [i] "+&r" (i), [v] "+Q" (v->counter), [tmp] "=&r" (tmp)	\
+ 	: "r" (v)							\
+-	: cl);							\
++	: cl);								\
+ 									\
+ 	return i;							\
+ }
+@@ -168,7 +168,7 @@ static inline void __lse_atomic64_##op(s64 i, atomic64_t *v)		\
+ {									\
+ 	asm volatile(							\
+ 	__LSE_PREAMBLE							\
+-"	" #asm_op "	%[i], %[v]\n"					\
++	"	" #asm_op "	%[i], %[v]\n"				\
+ 	: [i] "+r" (i), [v] "+Q" (v->counter)				\
+ 	: "r" (v));							\
+ }
+@@ -185,7 +185,7 @@ static inline long __lse_atomic64_fetch_##op##name(s64 i, atomic64_t *v)\
+ {									\
+ 	asm volatile(							\
+ 	__LSE_PREAMBLE							\
+-"	" #asm_op #mb "	%[i], %[i], %[v]"				\
++	"	" #asm_op #mb "	%[i], %[i], %[v]"			\
+ 	: [i] "+r" (i), [v] "+Q" (v->counter)				\
+ 	: "r" (v)							\
+ 	: cl);								\
+@@ -272,7 +272,7 @@ static inline void __lse_atomic64_sub(s64 i, atomic64_t *v)
+ }
+ 
+ #define ATOMIC64_OP_SUB_RETURN(name, mb, cl...)				\
+-static inline long __lse_atomic64_sub_return##name(s64 i, atomic64_t *v)	\
++static inline long __lse_atomic64_sub_return##name(s64 i, atomic64_t *v)\
+ {									\
+ 	unsigned long tmp;						\
+ 									\
 -- 
 2.35.1
 
