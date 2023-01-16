@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0AFF33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 27679C433D2;
-	Mon, 16 Jan 2023 16:03:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67E1733EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:03:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E068AC433D2;
+	Mon, 16 Jan 2023 16:03:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885018;
-	bh=KK5nN9UW82lXnsraynq8u1xi3HMXy5blcDMPXgLg+oA=;
+	s=korg; t=1673885021;
+	bh=dV3T2K0wm/vcbInio0P0c+0afNHzeJwUEaiboLCpBb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PkJ2FM/1CnfAeaaitaewO+Ks+8wO0SN6RdJlw1NojEI3eq7U/mnEURlaZTYbg4+/x
-	 IJ5aAvW0tnBL5Z8Akxri9OuDzg2Y09xUKKW9//CuBt+nTlnI7Obijsga/VUvR65jxE
-	 9l8Y9wka1vTpTKHhjdWcB3ex1tiWI8dt4nUryWXA=
+	b=10vUHZxXPGbMnrpNylRbnsYJClMt0/MPi42xwkPW1Aa31tLs/sqrrnUPfKnFaXJE5
+	 a2nPo7JFp8ULoAFjL0N2HwoyaagKXhqKAGrupwaLKRC4sV6/Owxr3HadE5qA6LruR4
+	 Zd3SqZoxef2rv+OZG4jv1YCEf2Fg6JwuVQo77C2w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Newman <peternewman@google.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Babu Moger <babu.moger@amd.com>,
-	stable@kernel.org
-Subject: [PATCH 5.15 44/86] x86/resctrl: Fix task CLOSID/RMID update race
-Date: Mon, 16 Jan 2023 16:51:18 +0100
-Message-Id: <20230116154748.894995908@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Adam Ward <DLG-Adam.Ward.opensource@dm.renesas.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 45/86] regulator: da9211: Use irq handler when ready
+Date: Mon, 16 Jan 2023 16:51:19 +0100
+Message-Id: <20230116154748.937736122@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -37,109 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Newman <peternewman@google.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit fe1f0714385fbcf76b0cbceb02b7277d842014fc upstream.
+[ Upstream commit 02228f6aa6a64d588bc31e3267d05ff184d772eb ]
 
-When the user moves a running task to a new rdtgroup using the task's
-file interface or by deleting its rdtgroup, the resulting change in
-CLOSID/RMID must be immediately propagated to the PQR_ASSOC MSR on the
-task(s) CPUs.
+If the system does not come from reset (like when it is kexec()), the
+regulator might have an IRQ waiting for us.
 
-x86 allows reordering loads with prior stores, so if the task starts
-running between a task_curr() check that the CPU hoisted before the
-stores in the CLOSID/RMID update then it can start running with the old
-CLOSID/RMID until it is switched again because __rdtgroup_move_task()
-failed to determine that it needs to be interrupted to obtain the new
-CLOSID/RMID.
+If we enable the IRQ handler before its structures are ready, we crash.
 
-Refer to the diagram below:
+This patch fixes:
 
-CPU 0                                   CPU 1
------                                   -----
-__rdtgroup_move_task():
-  curr <- t1->cpu->rq->curr
-                                        __schedule():
-                                          rq->curr <- t1
-                                        resctrl_sched_in():
-                                          t1->{closid,rmid} -> {1,1}
-  t1->{closid,rmid} <- {2,2}
-  if (curr == t1) // false
-   IPI(t1->cpu)
+[    1.141839] Unable to handle kernel read from unreadable memory at virtual address 0000000000000078
+[    1.316096] Call trace:
+[    1.316101]  blocking_notifier_call_chain+0x20/0xa8
+[    1.322757] cpu cpu0: dummy supplies not allowed for exclusive requests
+[    1.327823]  regulator_notifier_call_chain+0x1c/0x2c
+[    1.327825]  da9211_irq_handler+0x68/0xf8
+[    1.327829]  irq_thread+0x11c/0x234
+[    1.327833]  kthread+0x13c/0x154
 
-A similar race impacts rdt_move_group_tasks(), which updates tasks in a
-deleted rdtgroup.
-
-In both cases, use smp_mb() to order the task_struct::{closid,rmid}
-stores before the loads in task_curr().  In particular, in the
-rdt_move_group_tasks() case, simply execute an smp_mb() on every
-iteration with a matching task.
-
-It is possible to use a single smp_mb() in rdt_move_group_tasks(), but
-this would require two passes and a means of remembering which
-task_structs were updated in the first loop. However, benchmarking
-results below showed too little performance impact in the simple
-approach to justify implementing the two-pass approach.
-
-Times below were collected using `perf stat` to measure the time to
-remove a group containing a 1600-task, parallel workload.
-
-CPU: Intel(R) Xeon(R) Platinum P-8136 CPU @ 2.00GHz (112 threads)
-
-  # mkdir /sys/fs/resctrl/test
-  # echo $$ > /sys/fs/resctrl/test/tasks
-  # perf bench sched messaging -g 40 -l 100000
-
-task-clock time ranges collected using:
-
-  # perf stat rmdir /sys/fs/resctrl/test
-
-Baseline:                     1.54 - 1.60 ms
-smp_mb() every matching task: 1.57 - 1.67 ms
-
-  [ bp: Massage commit message. ]
-
-Fixes: ae28d1aae48a ("x86/resctrl: Use an IPI instead of task_work_add() to update PQR_ASSOC MSR")
-Fixes: 0efc89be9471 ("x86/intel_rdt: Update task closid immediately on CPU in rmdir and unmount")
-Signed-off-by: Peter Newman <peternewman@google.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Babu Moger <babu.moger@amd.com>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20221220161123.432120-1-peternewman@google.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Adam Ward <DLG-Adam.Ward.opensource@dm.renesas.com>
+Link: https://lore.kernel.org/r/20221124-da9211-v2-0-1779e3c5d491@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/cpu/resctrl/rdtgroup.c |   12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ drivers/regulator/da9211-regulator.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-+++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
-@@ -580,8 +580,10 @@ static int __rdtgroup_move_task(struct t
- 	/*
- 	 * Ensure the task's closid and rmid are written before determining if
- 	 * the task is current that will decide if it will be interrupted.
-+	 * This pairs with the full barrier between the rq->curr update and
-+	 * resctrl_sched_in() during context switch.
- 	 */
--	barrier();
-+	smp_mb();
+diff --git a/drivers/regulator/da9211-regulator.c b/drivers/regulator/da9211-regulator.c
+index e01b32d1fa17..00828f5baa97 100644
+--- a/drivers/regulator/da9211-regulator.c
++++ b/drivers/regulator/da9211-regulator.c
+@@ -498,6 +498,12 @@ static int da9211_i2c_probe(struct i2c_client *i2c)
  
- 	/*
- 	 * By now, the task's closid and rmid are set. If the task is current
-@@ -2364,6 +2366,14 @@ static void rdt_move_group_tasks(struct
- 			WRITE_ONCE(t->rmid, to->mon.rmid);
+ 	chip->chip_irq = i2c->irq;
  
- 			/*
-+			 * Order the closid/rmid stores above before the loads
-+			 * in task_curr(). This pairs with the full barrier
-+			 * between the rq->curr update and resctrl_sched_in()
-+			 * during context switch.
-+			 */
-+			smp_mb();
++	ret = da9211_regulator_init(chip);
++	if (ret < 0) {
++		dev_err(chip->dev, "Failed to initialize regulator: %d\n", ret);
++		return ret;
++	}
 +
-+			/*
- 			 * If the task is on a CPU, set the CPU in the mask.
- 			 * The detection is inaccurate as tasks might move or
- 			 * schedule before the smp function call takes place.
+ 	if (chip->chip_irq != 0) {
+ 		ret = devm_request_threaded_irq(chip->dev, chip->chip_irq, NULL,
+ 					da9211_irq_handler,
+@@ -512,11 +518,6 @@ static int da9211_i2c_probe(struct i2c_client *i2c)
+ 		dev_warn(chip->dev, "No IRQ configured\n");
+ 	}
+ 
+-	ret = da9211_regulator_init(chip);
+-
+-	if (ret < 0)
+-		dev_err(chip->dev, "Failed to initialize regulator: %d\n", ret);
+-
+ 	return ret;
+ }
+ 
+-- 
+2.35.1
+
 
 
