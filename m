@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E596E6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:10:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B3FC433D2;
-	Mon, 16 Jan 2023 17:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 953E56FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:10:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B3FBC433D2;
+	Mon, 16 Jan 2023 17:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889021;
-	bh=CkMj+qZ87eLbSq+NVejB/K9vX7YDEsoNc+ThVKoO/zY=;
+	s=korg; t=1673889024;
+	bh=ONuYGq6oB24d94k2QgN3qhxbPTyBa1Lzwbl6aFqLKAo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wryUuMBgp+AJABmauQHexE36ldOGoMz/voET7/0UN2A9CZ6pBBloIaiWPkXNJ/n71
-	 pZmUq/Vk2cKXjtky7Lv7HR6quxl5sJixF9B59O68bRQclobzZM1UjfN4DfiTjsrjMK
-	 2FRDtWL+pwxVdS5pSbfRtiphd+EI9AkO5OwWZncI=
+	b=Rdmh8/pEjrVyzTgANL4iDWmhNDZ02zLDHVGQsz6LDd01ZtrNxBXenCc9C5grQs90q
+	 sydtzbN5OZMiOAdRibfI4A2GjwrgOFrUmg52bman36Btbu9edaBU2iEOuZt8cEt85W
+	 eXPfY4DNuOGmMxA+nsqI6ox7lqiuyf94uaWp3PXY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Tranchetti <quic_stranche@quicinc.com>,
-	Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 211/338] skbuff: Account for tail adjustment during pull operations
-Date: Mon, 16 Jan 2023 16:51:24 +0100
-Message-Id: <20230116154830.216724516@linuxfoundation.org>
+Subject: [PATCH 4.14 229/338] hamradio: baycom_epp: Fix return type of baycom_send_packet()
+Date: Mon, 16 Jan 2023 16:51:42 +0100
+Message-Id: <20230116154831.019149234@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -37,64 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 2d7afdcbc9d32423f177ee12b7c93783aea338fb ]
+[ Upstream commit c5733e5b15d91ab679646ec3149e192996a27d5d ]
 
-Extending the tail can have some unexpected side effects if a program uses
-a helper like BPF_FUNC_skb_pull_data to read partial content beyond the
-head skb headlen when all the skbs in the gso frag_list are linear with no
-head_frag -
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed. A
+proposed warning in clang aims to catch these at compile time, which
+reveals:
 
-  kernel BUG at net/core/skbuff.c:4219!
-  pc : skb_segment+0xcf4/0xd2c
-  lr : skb_segment+0x63c/0xd2c
-  Call trace:
-   skb_segment+0xcf4/0xd2c
-   __udp_gso_segment+0xa4/0x544
-   udp4_ufo_fragment+0x184/0x1c0
-   inet_gso_segment+0x16c/0x3a4
-   skb_mac_gso_segment+0xd4/0x1b0
-   __skb_gso_segment+0xcc/0x12c
-   udp_rcv_segment+0x54/0x16c
-   udp_queue_rcv_skb+0x78/0x144
-   udp_unicast_rcv_skb+0x8c/0xa4
-   __udp4_lib_rcv+0x490/0x68c
-   udp_rcv+0x20/0x30
-   ip_protocol_deliver_rcu+0x1b0/0x33c
-   ip_local_deliver+0xd8/0x1f0
-   ip_rcv+0x98/0x1a4
-   deliver_ptype_list_skb+0x98/0x1ec
-   __netif_receive_skb_core+0x978/0xc60
+  drivers/net/hamradio/baycom_epp.c:1119:25: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
+          .ndo_start_xmit      = baycom_send_packet,
+                                ^~~~~~~~~~~~~~~~~~
+  1 error generated.
 
-Fix this by marking these skbs as GSO_DODGY so segmentation can handle
-the tail updates accordingly.
+->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
+'netdev_tx_t', not 'int'. Adjust the return type of baycom_send_packet()
+to match the prototype's to resolve the warning and CFI failure.
 
-Fixes: 3dcbdb134f32 ("net: gso: Fix skb_segment splat when splitting gso_size mangled skb having linear-headed frag_list")
-Signed-off-by: Sean Tranchetti <quic_stranche@quicinc.com>
-Signed-off-by: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Link: https://lore.kernel.org/r/1671084718-24796-1-git-send-email-quic_subashab@quicinc.com
+Link: https://github.com/ClangBuiltLinux/linux/issues/1750
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221102160610.1186145-1-nathan@kernel.org
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/hamradio/baycom_epp.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/core/skbuff.c b/net/core/skbuff.c
-index 0b672d71447f..9dae8009b407 100644
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -1951,6 +1951,9 @@ void *__pskb_pull_tail(struct sk_buff *skb, int delta)
- 				insp = list;
- 			} else {
- 				/* Eaten partially. */
-+				if (skb_is_gso(skb) && !list->head_frag &&
-+				    skb_headlen(list))
-+					skb_shinfo(skb)->gso_type |= SKB_GSO_DODGY;
+diff --git a/drivers/net/hamradio/baycom_epp.c b/drivers/net/hamradio/baycom_epp.c
+index 1503f10122f7..a80948d700fe 100644
+--- a/drivers/net/hamradio/baycom_epp.c
++++ b/drivers/net/hamradio/baycom_epp.c
+@@ -772,7 +772,7 @@ static void epp_bh(struct work_struct *work)
+  * ===================== network driver interface =========================
+  */
  
- 				if (skb_shared(list)) {
- 					/* Sucks! We need to fork list. :-( */
+-static int baycom_send_packet(struct sk_buff *skb, struct net_device *dev)
++static netdev_tx_t baycom_send_packet(struct sk_buff *skb, struct net_device *dev)
+ {
+ 	struct baycom_state *bc = netdev_priv(dev);
+ 
 -- 
 2.35.1
 
