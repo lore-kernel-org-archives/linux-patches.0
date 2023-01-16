@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A2E33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:54:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11305C433EF;
-	Mon, 16 Jan 2023 15:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BD5133EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:54:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E30CC433EF;
+	Mon, 16 Jan 2023 15:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884466;
-	bh=YyxkO1pYMvvA13eR4M7qAWrhHZtz4EOrEZKzxH9AmWg=;
+	s=korg; t=1673884469;
+	bh=XjiJ66Bs32M0q+PI3MfloScCWXIyIblEk6B0Va5Mj54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fRT0J2PH1F+5IlmwmfSzBMQcH7K9vjG+OgxmjYa4CVWjxUo6HRDa1X9x7iSLTbs5L
-	 a+nI3vLojA0PFfN7feVT7nJvYrRYlw9qV96K0MQ7eMjN8bKnP/QDLdhM5LQR1hEh9H
-	 d01j3OwtlEwXdGGXNw/FWdJrWTP+6HqX3IShsiAA=
+	b=JJBVR/nwA65UaRAbriY8w6xbGN8kY5ePTnhZ2E4k0XCwlle6MtUUqttHL/dRnpkEe
+	 L3MiJ5etuAvhjxJ5p9e2dHfca4r8AFy03d1zKJpLJN2fHgE9KcgB8TvesoUG1vHzyv
+	 MP6nkLDFqOZy2BM2eKyDLVMwR7siSuD5+OBJOzME=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 017/183] net: stmmac: add aux timestamps fifo clearance wait
-Date: Mon, 16 Jan 2023 16:49:00 +0100
-Message-Id: <20230116154804.134384027@linuxfoundation.org>
+	Dmitrii Dolgov <9erthalion6@gmail.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ian Rogers <irogers@google.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>
+Subject: [PATCH 6.1 018/183] perf auxtrace: Fix address filter duplicate symbol selection
+Date: Mon, 16 Jan 2023 16:49:01 +0100
+Message-Id: <20230116154804.175861780@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -34,37 +38,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>
+From: Adrian Hunter <adrian.hunter@intel.com>
 
-commit ae9dcb91c6069e20b3b9505d79cbc89fd6e086f5 upstream.
+commit cf129830ee820f7fc90b98df193cd49d49344d09 upstream.
 
-Add timeout polling wait for auxiliary timestamps snapshot FIFO clear bit
-(ATSFC) to clear. This is to ensure no residue fifo value is being read
-erroneously.
+When a match has been made to the nth duplicate symbol, return
+success not error.
 
-Fixes: f4da56529da6 ("net: stmmac: Add support for external trigger timestamping")
-Cc: <stable@vger.kernel.org> # 5.10.x
-Signed-off-by: Noor Azura Ahmad Tarmizi <noor.azura.ahmad.tarmizi@intel.com>
-Link: https://lore.kernel.org/r/20230111050200.2130-1-noor.azura.ahmad.tarmizi@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Example:
+
+  Before:
+
+    $ cat file.c
+    cat: file.c: No such file or directory
+    $ cat file1.c
+    #include <stdio.h>
+
+    static void func(void)
+    {
+            printf("First func\n");
+    }
+
+    void other(void);
+
+    int main()
+    {
+            func();
+            other();
+            return 0;
+    }
+    $ cat file2.c
+    #include <stdio.h>
+
+    static void func(void)
+    {
+            printf("Second func\n");
+    }
+
+    void other(void)
+    {
+            func();
+    }
+
+    $ gcc -Wall -Wextra -o test file1.c file2.c
+    $ perf record -e intel_pt//u --filter 'filter func @ ./test' -- ./test
+    Multiple symbols with name 'func'
+    #1      0x1149  l       func
+                    which is near           main
+    #2      0x1179  l       func
+                    which is near           other
+    Disambiguate symbol name by inserting #n after the name e.g. func #2
+    Or select a global symbol by inserting #0 or #g or #G
+    Failed to parse address filter: 'filter func @ ./test'
+    Filter format is: filter|start|stop|tracestop <start symbol or address> [/ <end symbol or size>] [@<file name>]
+    Where multiple filters are separated by space or comma.
+    $ perf record -e intel_pt//u --filter 'filter func #2 @ ./test' -- ./test
+    Failed to parse address filter: 'filter func #2 @ ./test'
+    Filter format is: filter|start|stop|tracestop <start symbol or address> [/ <end symbol or size>] [@<file name>]
+    Where multiple filters are separated by space or comma.
+
+  After:
+
+    $ perf record -e intel_pt//u --filter 'filter func #2 @ ./test' -- ./test
+    First func
+    Second func
+    [ perf record: Woken up 1 times to write data ]
+    [ perf record: Captured and wrote 0.016 MB perf.data ]
+    $ perf script --itrace=b -Ftime,flags,ip,sym,addr --ns
+    1231062.526977619:   tr strt                               0 [unknown] =>     558495708179 func
+    1231062.526977619:   tr end  call               558495708188 func =>     558495708050 _init
+    1231062.526979286:   tr strt                               0 [unknown] =>     55849570818d func
+    1231062.526979286:   tr end  return             55849570818f func =>     55849570819d other
+
+Fixes: 1b36c03e356936d6 ("perf record: Add support for using symbols in address filters")
+Reported-by: Dmitrii Dolgov <9erthalion6@gmail.com>
+Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
+Tested-by: Dmitry Dolgov <9erthalion6@gmail.com>
+Cc: Adrian Hunter <adrian.hunter@intel.com>
+Cc: Ian Rogers <irogers@google.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230110185659.15979-1-adrian.hunter@intel.com
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ tools/perf/util/auxtrace.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ptp.c
-@@ -219,7 +219,10 @@ static int stmmac_enable(struct ptp_cloc
- 		}
- 		writel(acr_value, ptpaddr + PTP_ACR);
- 		mutex_unlock(&priv->aux_ts_lock);
--		ret = 0;
-+		/* wait for auxts fifo clear to finish */
-+		ret = readl_poll_timeout(ptpaddr + PTP_ACR, acr_value,
-+					 !(acr_value & PTP_ACR_ATSFC),
-+					 10, 10000);
- 		break;
- 
- 	default:
+--- a/tools/perf/util/auxtrace.c
++++ b/tools/perf/util/auxtrace.c
+@@ -2610,7 +2610,7 @@ static int find_dso_sym(struct dso *dso,
+ 				*size = sym->start - *start;
+ 			if (idx > 0) {
+ 				if (*size)
+-					return 1;
++					return 0;
+ 			} else if (dso_sym_match(sym, sym_name, &cnt, idx)) {
+ 				print_duplicate_syms(dso, sym_name);
+ 				return -EINVAL;
 
 
