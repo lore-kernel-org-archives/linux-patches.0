@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC64E6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:12:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5242BC433F0;
-	Mon, 16 Jan 2023 17:12:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6D56FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:12:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7782C433EF;
+	Mon, 16 Jan 2023 17:12:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889137;
-	bh=3WqGSj+1m0F3VlMTs7183wM7F30z46aKwTvbELsoDwg=;
+	s=korg; t=1673889140;
+	bh=YcW6EGOuhnnMMLC0NQuNnIn+RmsUiq4Wev7oxqWGiLM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P1AnljOwdUD0XBrDS+9zX/gBfsvStKfExa6NG51kgcYtUmHDnQZt+I17DvnrbX/KM
-	 9g8lmYI+GUIzxTIN+p/IGKKJN740TN1kwTbx+gmvBrerMpZYqqzRUvQQuC9Va2sGZl
-	 ConfS4+bCcRLfLvcvHUCnf1vo8bQp/M/o9fYetls=
+	b=GbeuDpfHaSGXVcYwjmYRP4BtjuXRPjpua7MUguGplHkoTsFLEH3gk/DDUYX9COOxy
+	 Nv7NKUCXe30rIm4c4r9xIa6BLD5YAmHjUf0ksbbTN42TYtNt+bVdDgwu2rFc5CE/RA
+	 uD19cHUErWv+F4gp0TY9cc4Ty72Y/VRI6Y+EiJiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 245/338] clk: st: Fix memory leak in st_of_quadfs_setup()
-Date: Mon, 16 Jan 2023 16:51:58 +0100
-Message-Id: <20230116154831.762841606@linuxfoundation.org>
+	Hanjun Guo <guohanjun@huawei.com>,
+	Jarkko Sakkinen <jarkko@kernel.org>
+Subject: [PATCH 4.14 272/338] tpm: tpm_tis: Add the missed acpi_put_table() to fix memory leak
+Date: Mon, 16 Jan 2023 16:52:25 +0100
+Message-Id: <20230116154832.960108134@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,41 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Hanjun Guo <guohanjun@huawei.com>
 
-[ Upstream commit cfd3ffb36f0d566846163118651d868e607300ba ]
+commit db9622f762104459ff87ecdf885cc42c18053fd9 upstream.
 
-If st_clk_register_quadfs_pll() fails, @lock should be freed before goto
-@err_exit, otherwise will cause meory leak issue, fix it.
+In check_acpi_tpm2(), we get the TPM2 table just to make
+sure the table is there, not used after the init, so the
+acpi_put_table() should be added to release the ACPI memory.
 
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Link: https://lore.kernel.org/r/20221122133614.184910-1-xiujianfeng@huawei.com
-Reviewed-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4cb586a188d4 ("tpm_tis: Consolidate the platform and acpi probe flow")
+Cc: stable@vger.kernel.org
+Signed-off-by: Hanjun Guo <guohanjun@huawei.com>
+Signed-off-by: Jarkko Sakkinen <jarkko@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/st/clkgen-fsyn.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/char/tpm/tpm_tis.c |    9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/st/clkgen-fsyn.c b/drivers/clk/st/clkgen-fsyn.c
-index 14819d919df1..715c5d3a5cde 100644
---- a/drivers/clk/st/clkgen-fsyn.c
-+++ b/drivers/clk/st/clkgen-fsyn.c
-@@ -948,9 +948,10 @@ static void __init st_of_quadfs_setup(struct device_node *np,
+--- a/drivers/char/tpm/tpm_tis.c
++++ b/drivers/char/tpm/tpm_tis.c
+@@ -105,6 +105,7 @@ static int check_acpi_tpm2(struct device
+ 	const struct acpi_device_id *aid = acpi_match_device(tpm_acpi_tbl, dev);
+ 	struct acpi_table_tpm2 *tbl;
+ 	acpi_status st;
++	int ret = 0;
  
- 	clk = st_clk_register_quadfs_pll(pll_name, clk_parent_name, data,
- 			reg, lock);
--	if (IS_ERR(clk))
-+	if (IS_ERR(clk)) {
-+		kfree(lock);
- 		goto err_exit;
--	else
-+	} else
- 		pr_debug("%s: parent %s rate %u\n",
- 			__clk_get_name(clk),
- 			__clk_get_name(clk_get_parent(clk)),
--- 
-2.35.1
-
+ 	if (!aid || aid->driver_data != DEVICE_IS_TPM2)
+ 		return 0;
+@@ -112,8 +113,7 @@ static int check_acpi_tpm2(struct device
+ 	/* If the ACPI TPM2 signature is matched then a global ACPI_SIG_TPM2
+ 	 * table is mandatory
+ 	 */
+-	st =
+-	    acpi_get_table(ACPI_SIG_TPM2, 1, (struct acpi_table_header **)&tbl);
++	st = acpi_get_table(ACPI_SIG_TPM2, 1, (struct acpi_table_header **)&tbl);
+ 	if (ACPI_FAILURE(st) || tbl->header.length < sizeof(*tbl)) {
+ 		dev_err(dev, FW_BUG "failed to get TPM2 ACPI table\n");
+ 		return -EINVAL;
+@@ -121,9 +121,10 @@ static int check_acpi_tpm2(struct device
+ 
+ 	/* The tpm2_crb driver handles this device */
+ 	if (tbl->start_method != ACPI_TPM2_MEMORY_MAPPED)
+-		return -ENODEV;
++		ret = -ENODEV;
+ 
+-	return 0;
++	acpi_put_table((struct acpi_table_header *)tbl);
++	return ret;
+ }
+ #else
+ static int check_acpi_tpm2(struct device *dev)
 
 
