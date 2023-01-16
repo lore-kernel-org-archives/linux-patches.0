@@ -1,34 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4E56FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:57:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3DF3C433D2;
-	Mon, 16 Jan 2023 16:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22D246FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:57:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0582C433EF;
+	Mon, 16 Jan 2023 16:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888237;
-	bh=CWKN4ecTqNUqHsp84U3ofto2zEEfSyClrv6O5eYdfk0=;
+	s=korg; t=1673888240;
+	bh=bQyGDY0+wNNdaQGADLuLWvDY0O+WAI4ihphzlo6DL+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zGBcCNwka3N975nPcIrnz3DW1eIKmgk2iTa6LOWzfjPkcdhLXa+1gGvG8sUTamIRy
-	 lT6Lc/DibsehIpMyVuf6htU29eUo5Hn7MC73lrNbPH2U+7REXAXNW8zoyI+fmTkDOe
-	 Ul6vdxHEZGRMBHmJH54KiKNlFBj1CCzEMhBKdvAo=
+	b=HC6WbLczHBUktsqM7+e4rRwZ0lt4tzjjinhbz3CWVmgJw5J/hv7lhaYAbPY2yHxlk
+	 dthHljUqECTtd6jwStSqyvjefA5syA8O5sxtFcLolztUSmWeK5WOODgHJ3mEcwQURp
+	 gXR53nm1O1G8e/akOZrTqm0RxIuI3GaRkEyJzvzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Jan Kara <jack@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 425/521] perf probe: Use dwarf_attr_integrate as generic DWARF attr accessor
-Date: Mon, 16 Jan 2023 16:51:27 +0100
-Message-Id: <20230116154906.136525028@linuxfoundation.org>
+Subject: [PATCH 4.19 452/521] udf: Fix extension of the last extent in the file
+Date: Mon, 16 Jan 2023 16:51:54 +0100
+Message-Id: <20230116154907.339355534@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -42,51 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit f828929ab7f0dc3353e4a617f94f297fa8f3dec3 ]
+[ Upstream commit 83c7423d1eb6806d13c521d1002cc1a012111719 ]
 
-Use dwarf_attr_integrate() instead of dwarf_attr() for generic attribute
-acccessor functions, so that it can find the specified attribute from
-abstact origin DIE etc.
+When extending the last extent in the file within the last block, we
+wrongly computed the length of the last extent. This is mostly a
+cosmetical problem since the extent does not contain any data and the
+length will be fixed up by following operations but still.
 
-Signed-off-by: Masami Hiramatsu <mhiramat@kernel.org>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/r/166731051988.2100653.13595339994343449770.stgit@devnote3
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: a9dfc46c67b5 ("perf probe: Fix to get the DW_AT_decl_file and DW_AT_call_file as unsinged data")
+Fixes: 1f3868f06855 ("udf: Fix extending file within last block")
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dwarf-aux.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/udf/inode.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
-index 230e94bf7775..3b7386527794 100644
---- a/tools/perf/util/dwarf-aux.c
-+++ b/tools/perf/util/dwarf-aux.c
-@@ -267,7 +267,7 @@ static int die_get_attr_udata(Dwarf_Die *tp_die, unsigned int attr_name,
- {
- 	Dwarf_Attribute attr;
- 
--	if (dwarf_attr(tp_die, attr_name, &attr) == NULL ||
-+	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
- 	    dwarf_formudata(&attr, result) != 0)
- 		return -ENOENT;
- 
-@@ -280,7 +280,7 @@ static int die_get_attr_sdata(Dwarf_Die *tp_die, unsigned int attr_name,
- {
- 	Dwarf_Attribute attr;
- 
--	if (dwarf_attr(tp_die, attr_name, &attr) == NULL ||
-+	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
- 	    dwarf_formsdata(&attr, result) != 0)
- 		return -ENOENT;
+diff --git a/fs/udf/inode.c b/fs/udf/inode.c
+index 8ff8cd0d2801..55a86120e756 100644
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -595,7 +595,7 @@ static void udf_do_extend_final_block(struct inode *inode,
+ 	 */
+ 	if (new_elen <= (last_ext->extLength & UDF_EXTENT_LENGTH_MASK))
+ 		return;
+-	added_bytes = (last_ext->extLength & UDF_EXTENT_LENGTH_MASK) - new_elen;
++	added_bytes = new_elen - (last_ext->extLength & UDF_EXTENT_LENGTH_MASK);
+ 	last_ext->extLength += added_bytes;
+ 	UDF_I(inode)->i_lenExtents += added_bytes;
  
 -- 
 2.35.1
