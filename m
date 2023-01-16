@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7E846B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:05:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00D6BC433EF;
-	Mon, 16 Jan 2023 16:05:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D49646B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:05:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 956EEC433F0;
+	Mon, 16 Jan 2023 16:05:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885147;
-	bh=/327oFEoFfilZ3O6so7YO1PJCdWcU1neTnG5iJjEXxY=;
+	s=korg; t=1673885150;
+	bh=n9TnI0pMKQubFUKIHW73Iy6//zMxNWuK11DbxStatFE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nKNY0KL7nYHunzwj6FDRttz5OdCG3dlWcHwau5yd+P52Wkd2hSUNx45LzYF1xeaYp
-	 3GS+rWpXJcMDDuITKk/NGq/rDH5w42UK1Zew5EiLQPguO018CQZtuZ58OieKWwTDyC
-	 VEd8vNUgamRv21CtceMjG0uraS7asyIF82PZ1t34=
+	b=d59vFPdAlpYV1qW652WNtAZqceEOupLwxxztoxSRJgN607CtGHXatAuU8n9uo5/SD
+	 Jpz7/OBs6t7t5g+Urx+/47N7AF1xylVhxtJAa4mZdUjvC4K6s4QpFHyClqZbO0RRwC
+	 dS9+/0lTxDChsnIeRo1u0cuZTWvw/4wUL20auU7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Gavin Li <gavinl@nvidia.com>,
+	Maor Dickman <maord@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 68/86] net/mlx5: Fix ptp max frequency adjustment range
-Date: Mon, 16 Jan 2023 16:51:42 +0100
-Message-Id: <20230116154749.889935860@linuxfoundation.org>
+Subject: [PATCH 5.15 69/86] net/mlx5e: Dont support encap rules with gbp option
+Date: Mon, 16 Jan 2023 16:51:43 +0100
+Message-Id: <20230116154749.929606526@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -37,39 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+From: Gavin Li <gavinl@nvidia.com>
 
-[ Upstream commit fe91d57277eef8bb4aca05acfa337b4a51d0bba4 ]
+[ Upstream commit d515d63cae2cd186acf40deaa8ef33067bb7f637 ]
 
-.max_adj of ptp_clock_info acts as an absolute value for the amount in ppb
-that can be set for a single call of .adjfine. This means that a single
-call to .getfine cannot be greater than .max_adj or less than -(.max_adj).
-Provides correct value for max frequency adjustment value supported by
-devices.
+Previously, encap rules with gbp option would be offloaded by mistake but
+driver does not support gbp option offload.
 
-Fixes: 3d8c38af1493 ("net/mlx5e: Add PTP Hardware Clock (PHC) support")
-Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+To fix this issue, check if the encap rule has gbp option and don't
+offload the rule
+
+Fixes: d8f9dfae49ce ("net: sched: allow flower to match vxlan options")
+Signed-off-by: Gavin Li <gavinl@nvidia.com>
+Reviewed-by: Maor Dickman <maord@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c b/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-index 91e806c1aa21..8490c0cf80a8 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/lib/clock.c
-@@ -599,7 +599,7 @@ static int mlx5_ptp_verify(struct ptp_clock_info *ptp, unsigned int pin,
- static const struct ptp_clock_info mlx5_ptp_clock_info = {
- 	.owner		= THIS_MODULE,
- 	.name		= "mlx5_ptp",
--	.max_adj	= 100000000,
-+	.max_adj	= 50000000,
- 	.n_alarm	= 0,
- 	.n_ext_ts	= 0,
- 	.n_per_out	= 0,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c
+index 4267f3a1059e..78b1a6ddd967 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/tc_tun_vxlan.c
+@@ -88,6 +88,8 @@ static int mlx5e_gen_ip_tunnel_header_vxlan(char buf[],
+ 	struct udphdr *udp = (struct udphdr *)(buf);
+ 	struct vxlanhdr *vxh;
+ 
++	if (tun_key->tun_flags & TUNNEL_VXLAN_OPT)
++		return -EOPNOTSUPP;
+ 	vxh = (struct vxlanhdr *)((char *)udp + sizeof(struct udphdr));
+ 	*ip_proto = IPPROTO_UDP;
+ 
 -- 
 2.35.1
 
