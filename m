@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DF626FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:06:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E63C3C433D2;
-	Mon, 16 Jan 2023 17:05:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B1586FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:06:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85807C433D2;
+	Mon, 16 Jan 2023 17:06:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888760;
-	bh=iY1G377zcaodaKKRs5m7W+YcfsKTO00UgPL2UoDwmcI=;
+	s=korg; t=1673888762;
+	bh=33gXBh+JjVD+kyVoxuqg68jRIovbDOs4sF6h+LARnpc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BUb84ZJdROnxwZMBD41M/5HpfSd/3ht77ls67ldGebISdtSxnHh9fG1bOe3CX/7SI
-	 W5qBWzr3Rd4epY5T+SnNVphE0TyUbXu2QbWrFOdr9BLTlTVNgwsF7UvT1wu4PaM1r3
-	 7AnxP5IpFhGE2bH81ry5r9fdLV28YaqMMSIvuHjM=
+	b=1VFGCQdk52f/X9Iv74LJxqAka2VT28u3zmdxpiEcGaFA1KSTvahmv6FoG5cWKYNkk
+	 QelW+iJfZSEjhHeD/RYfHnKvruH2KbLArYh2CrtyVdsKHdtNPefUwZnyrpLLgcLJUN
+	 DjYsDkh0K2xdFHPW5Koi+Jb9dl2iybUGSC0RDEis=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Liang He <windhl@126.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 129/338] hamradio: dont call dev_kfree_skb() under spin_lock_irqsave()
-Date: Mon, 16 Jan 2023 16:50:02 +0100
-Message-Id: <20230116154826.465644318@linuxfoundation.org>
+Subject: [PATCH 4.14 112/338] media: c8sectpfe: Add of_node_put() when breaking out of loop
+Date: Mon, 16 Jan 2023 16:49:45 +0100
+Message-Id: <20230116154825.735432053@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,60 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Liang He <windhl@126.com>
 
-[ Upstream commit 3727f742915f04f6fc550b80cf406999bd4e90d0 ]
+[ Upstream commit 63ff05a1ad242a5a0f897921c87b70d601bda59c ]
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+In configure_channels(), we should call of_node_put() when breaking
+out of for_each_child_of_node() which will automatically increase
+and decrease the refcount.
 
-It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
-The difference between them is free reason, dev_kfree_skb_irq() means
-the SKB is dropped in error and dev_consume_skb_irq() means the SKB
-is consumed in normal.
-
-In scc_discard_buffers(), dev_kfree_skb() is called to discard the SKBs,
-so replace it with dev_kfree_skb_irq().
-
-In scc_net_tx(), dev_kfree_skb() is called to drop the SKB that exceed
-queue length, so replace it with dev_kfree_skb_irq().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: c5f5d0f99794 ("[media] c8sectpfe: STiH407/10 Linux DVB demux support")
+Signed-off-by: Liang He <windhl@126.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/hamradio/scc.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/hamradio/scc.c b/drivers/net/hamradio/scc.c
-index 295f267b73ea..dd7b6caee4a7 100644
---- a/drivers/net/hamradio/scc.c
-+++ b/drivers/net/hamradio/scc.c
-@@ -299,12 +299,12 @@ static inline void scc_discard_buffers(struct scc_channel *scc)
- 	spin_lock_irqsave(&scc->lock, flags);	
- 	if (scc->tx_buff != NULL)
- 	{
--		dev_kfree_skb(scc->tx_buff);
-+		dev_kfree_skb_irq(scc->tx_buff);
- 		scc->tx_buff = NULL;
- 	}
- 	
- 	while (!skb_queue_empty(&scc->tx_queue))
--		dev_kfree_skb(skb_dequeue(&scc->tx_queue));
-+		dev_kfree_skb_irq(skb_dequeue(&scc->tx_queue));
- 
- 	spin_unlock_irqrestore(&scc->lock, flags);
- }
-@@ -1666,7 +1666,7 @@ static netdev_tx_t scc_net_tx(struct sk_buff *skb, struct net_device *dev)
- 	if (skb_queue_len(&scc->tx_queue) > scc->dev->tx_queue_len) {
- 		struct sk_buff *skb_del;
- 		skb_del = skb_dequeue(&scc->tx_queue);
--		dev_kfree_skb(skb_del);
-+		dev_kfree_skb_irq(skb_del);
- 	}
- 	skb_queue_tail(&scc->tx_queue, skb);
- 	netif_trans_update(dev);
+diff --git a/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c b/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c
+index 23d0cedf4d9d..f42289f9e8c5 100644
+--- a/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c
++++ b/drivers/media/platform/sti/c8sectpfe/c8sectpfe-core.c
+@@ -947,6 +947,7 @@ static int configure_channels(struct c8sectpfei *fei)
+ 		if (ret) {
+ 			dev_err(fei->dev,
+ 				"configure_memdma_and_inputblock failed\n");
++			of_node_put(child);
+ 			goto err_unmap;
+ 		}
+ 		index++;
 -- 
 2.35.1
 
