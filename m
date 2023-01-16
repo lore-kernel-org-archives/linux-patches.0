@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D53C533EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AAD6C433F1;
-	Mon, 16 Jan 2023 16:01:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CB5933EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7BE5C433F0;
+	Mon, 16 Jan 2023 16:01:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884908;
-	bh=GbCshQzRk2F7C4OSpZo7Q9DQz8fItdGt06u1Bp3nRNs=;
+	s=korg; t=1673884911;
+	bh=LhLcymre40N3ru1qokaMuvrTvAXrEyGWkscN6ZFbY2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JnV/oOQS2jV2keXIJI2/GxNP0tEUPg3uC+X5uRX7tspHCLc6dyRHw2CNPuD3PrFQc
-	 V6QVM/9Jc4Wu32v35QDMOd3+tnkOrj9kxRLoVAfX5Fg0ZJ2RnH6pTtl4de5ZbxmFeE
-	 whg+PUDDojKmPNBRcMLC7hEgWBdRReNYyfdoWkps=
+	b=vhCyzKZisaQUxo5yCHI5SMsi35WymUmFS4U/DC5lZhWL3ZQCEn+ngWwwZjuPnmJ+g
+	 M/64QI2MmxkOipy/uVJ1dMoajj4AvcbQ4P6ZqKDBTb0nRQ04vFB+3GSd4yS4ZVwyAK
+	 cCtHnbdcik7QP06TDzh72nAzag7YrsGTuKN0NU6I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christopher S Hall <christopher.s.hall@intel.com>,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Sasha Neftin <sasha.neftin@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <clement.leger@bootlin.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 168/183] igc: Fix PPS delta between two synchronized end-points
-Date: Mon, 16 Jan 2023 16:51:31 +0100
-Message-Id: <20230116154810.397078565@linuxfoundation.org>
+Subject: [PATCH 6.1 169/183] net: lan966x: check for ptp to be enabled in lan966x_ptp_deinit()
+Date: Mon, 16 Jan 2023 16:51:32 +0100
+Message-Id: <20230116154810.433968281@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -38,95 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christopher S Hall <christopher.s.hall@intel.com>
+From: Clément Léger <clement.leger@bootlin.com>
 
-[ Upstream commit 5e91c72e560cc85f7163bbe3d14197268de31383 ]
+[ Upstream commit b0e380b5d4275299adf43e249f18309331b6f54f ]
 
-This patch fix the pulse per second output delta between
-two synchronized end-points.
+If ptp was not enabled due to missing IRQ for instance,
+lan966x_ptp_deinit() will dereference NULL pointers.
 
-Based on Intel Discrete I225 Software User Manual Section
-4.2.15 TimeSync Auxiliary Control Register, ST0[Bit 4] and
-ST1[Bit 7] must be set to ensure that clock output will be
-toggles based on frequency value defined. This is to ensure
-that output of the PPS is aligned with the clock.
-
-How to test:
-
-1) Running time synchronization on both end points.
-Ex: ptp4l --step_threshold=1 -m -f gPTP.cfg -i <interface name>
-
-2) Configure PPS output using below command for both end-points
-Ex: SDP0 on I225 REV4 SKU variant
-
-./testptp -d /dev/ptp0 -L 0,2
-./testptp -d /dev/ptp0 -p 1000000000
-
-3) Measure the output using analyzer for both end-points
-
-Fixes: 87938851b6ef ("igc: enable auxiliary PHC functions for the i225")
-Signed-off-by: Christopher S Hall <christopher.s.hall@intel.com>
-Signed-off-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Acked-by: Sasha Neftin <sasha.neftin@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Fixes: d096459494a8 ("net: lan966x: Add support for ptp clocks")
+Signed-off-by: Clément Léger <clement.leger@bootlin.com>
+Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_defines.h |  2 ++
- drivers/net/ethernet/intel/igc/igc_ptp.c     | 10 ++++++----
- 2 files changed, 8 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_defines.h b/drivers/net/ethernet/intel/igc/igc_defines.h
-index 4ad35fbdc02e..dbfa4b9dee06 100644
---- a/drivers/net/ethernet/intel/igc/igc_defines.h
-+++ b/drivers/net/ethernet/intel/igc/igc_defines.h
-@@ -466,7 +466,9 @@
- #define IGC_TSAUXC_EN_TT0	BIT(0)  /* Enable target time 0. */
- #define IGC_TSAUXC_EN_TT1	BIT(1)  /* Enable target time 1. */
- #define IGC_TSAUXC_EN_CLK0	BIT(2)  /* Enable Configurable Frequency Clock 0. */
-+#define IGC_TSAUXC_ST0		BIT(4)  /* Start Clock 0 Toggle on Target Time 0. */
- #define IGC_TSAUXC_EN_CLK1	BIT(5)  /* Enable Configurable Frequency Clock 1. */
-+#define IGC_TSAUXC_ST1		BIT(7)  /* Start Clock 1 Toggle on Target Time 1. */
- #define IGC_TSAUXC_EN_TS0	BIT(8)  /* Enable hardware timestamp 0. */
- #define IGC_TSAUXC_AUTT0	BIT(9)  /* Auxiliary Timestamp Taken. */
- #define IGC_TSAUXC_EN_TS1	BIT(10) /* Enable hardware timestamp 0. */
-diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
-index 8dbb9f903ca7..c34734d432e0 100644
---- a/drivers/net/ethernet/intel/igc/igc_ptp.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
-@@ -322,7 +322,7 @@ static int igc_ptp_feature_enable_i225(struct ptp_clock_info *ptp,
- 		ts = ns_to_timespec64(ns);
- 		if (rq->perout.index == 1) {
- 			if (use_freq) {
--				tsauxc_mask = IGC_TSAUXC_EN_CLK1;
-+				tsauxc_mask = IGC_TSAUXC_EN_CLK1 | IGC_TSAUXC_ST1;
- 				tsim_mask = 0;
- 			} else {
- 				tsauxc_mask = IGC_TSAUXC_EN_TT1;
-@@ -333,7 +333,7 @@ static int igc_ptp_feature_enable_i225(struct ptp_clock_info *ptp,
- 			freqout = IGC_FREQOUT1;
- 		} else {
- 			if (use_freq) {
--				tsauxc_mask = IGC_TSAUXC_EN_CLK0;
-+				tsauxc_mask = IGC_TSAUXC_EN_CLK0 | IGC_TSAUXC_ST0;
- 				tsim_mask = 0;
- 			} else {
- 				tsauxc_mask = IGC_TSAUXC_EN_TT0;
-@@ -347,10 +347,12 @@ static int igc_ptp_feature_enable_i225(struct ptp_clock_info *ptp,
- 		tsauxc = rd32(IGC_TSAUXC);
- 		tsim = rd32(IGC_TSIM);
- 		if (rq->perout.index == 1) {
--			tsauxc &= ~(IGC_TSAUXC_EN_TT1 | IGC_TSAUXC_EN_CLK1);
-+			tsauxc &= ~(IGC_TSAUXC_EN_TT1 | IGC_TSAUXC_EN_CLK1 |
-+				    IGC_TSAUXC_ST1);
- 			tsim &= ~IGC_TSICR_TT1;
- 		} else {
--			tsauxc &= ~(IGC_TSAUXC_EN_TT0 | IGC_TSAUXC_EN_CLK0);
-+			tsauxc &= ~(IGC_TSAUXC_EN_TT0 | IGC_TSAUXC_EN_CLK0 |
-+				    IGC_TSAUXC_ST0);
- 			tsim &= ~IGC_TSICR_TT0;
- 		}
- 		if (on) {
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
+index e5a2bbe064f8..8e368318558a 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_ptp.c
+@@ -853,6 +853,9 @@ void lan966x_ptp_deinit(struct lan966x *lan966x)
+ 	struct lan966x_port *port;
+ 	int i;
+ 
++	if (!lan966x->ptp)
++		return;
++
+ 	for (i = 0; i < lan966x->num_phys_ports; i++) {
+ 		port = lan966x->ports[i];
+ 		if (!port)
 -- 
 2.35.1
 
