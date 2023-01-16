@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A3F6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:51:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0E2C433EF;
-	Mon, 16 Jan 2023 16:51:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905976FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:51:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12D91C433D2;
+	Mon, 16 Jan 2023 16:51:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887865;
-	bh=h+H1qseuxVLRhU1Yi6c9mf2Ohw86jTrUKsjmPEc5668=;
+	s=korg; t=1673887868;
+	bh=2znVnBPnMrHx8pSuHlGBxMWHuS+26idcVnJSa3Rouhw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rYAKgTKG9bbQnXldxnqPd6fegxuuINMDAmL4eFF3Ij9YQsyOK7ZV/q30So3hpXydq
-	 OQ2ySOGG1TnjJ4d5b3GRMWdMinL7pHkAS/JNlvXVsk3/VAt67wOE/rmPWWL2mPHttg
-	 0l79HggueSSts8Y6QA+O93vqNL7qwAijT/T+aRjU=
+	b=gCYYVVtkcELjCPYz7+QdjXYFECCyf4yVPxdNpyLA6ocyTXdVzcXiVIbJD4yaeAXPB
+	 ejbEEv3PPUhIS6yne4ZEfuS1RiKhuzCJ3xDnMEeRu3FU8Tp4ue0r4HScoh4aNLm/Yv
+	 32gUFUs7d3KFc3mnJ39NIDpMkgao4q7LfQi4PVgs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7902cd7684bc35306224@syzkaller.appspotmail.com,
-	Shigeru Yoshida <syoshida@redhat.com>,
-	Jan Kara <jack@suse.cz>,
+	Nathan Lynch <nathanl@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 312/521] udf: Avoid double brelse() in udf_rename()
-Date: Mon, 16 Jan 2023 16:49:34 +0100
-Message-Id: <20230116154901.077647340@linuxfoundation.org>
+Subject: [PATCH 4.19 295/521] powerpc/pseries/eeh: use correct API for error log size
+Date: Mon, 16 Jan 2023 16:49:17 +0100
+Message-Id: <20230116154900.321184402@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,91 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shigeru Yoshida <syoshida@redhat.com>
+From: Nathan Lynch <nathanl@linux.ibm.com>
 
-[ Upstream commit c791730f2554a9ebb8f18df9368dc27d4ebc38c2 ]
+[ Upstream commit 9aafbfa5f57a4b75bafd3bed0191e8429c5fa618 ]
 
-syzbot reported a warning like below [1]:
+rtas-error-log-max is not the name of an RTAS function, so rtas_token()
+is not the appropriate API for retrieving its value. We already have
+rtas_get_error_log_max() which returns a sensible value if the property
+is absent for any reason, so use that instead.
 
-VFS: brelse: Trying to free free buffer
-WARNING: CPU: 2 PID: 7301 at fs/buffer.c:1145 __brelse+0x67/0xa0
-...
-Call Trace:
- <TASK>
- invalidate_bh_lru+0x99/0x150
- smp_call_function_many_cond+0xe2a/0x10c0
- ? generic_remap_file_range_prep+0x50/0x50
- ? __brelse+0xa0/0xa0
- ? __mutex_lock+0x21c/0x12d0
- ? smp_call_on_cpu+0x250/0x250
- ? rcu_read_lock_sched_held+0xb/0x60
- ? lock_release+0x587/0x810
- ? __brelse+0xa0/0xa0
- ? generic_remap_file_range_prep+0x50/0x50
- on_each_cpu_cond_mask+0x3c/0x80
- blkdev_flush_mapping+0x13a/0x2f0
- blkdev_put_whole+0xd3/0xf0
- blkdev_put+0x222/0x760
- deactivate_locked_super+0x96/0x160
- deactivate_super+0xda/0x100
- cleanup_mnt+0x222/0x3d0
- task_work_run+0x149/0x240
- ? task_work_cancel+0x30/0x30
- do_exit+0xb29/0x2a40
- ? reacquire_held_locks+0x4a0/0x4a0
- ? do_raw_spin_lock+0x12a/0x2b0
- ? mm_update_next_owner+0x7c0/0x7c0
- ? rwlock_bug.part.0+0x90/0x90
- ? zap_other_threads+0x234/0x2d0
- do_group_exit+0xd0/0x2a0
- __x64_sys_exit_group+0x3a/0x50
- do_syscall_64+0x34/0xb0
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-The cause of the issue is that brelse() is called on both ofibh.sbh
-and ofibh.ebh by udf_find_entry() when it returns NULL.  However,
-brelse() is called by udf_rename(), too.  So, b_count on buffer_head
-becomes unbalanced.
-
-This patch fixes the issue by not calling brelse() by udf_rename()
-when udf_find_entry() returns NULL.
-
-Link: https://syzkaller.appspot.com/bug?id=8297f45698159c6bca8a1f87dc983667c1a1c851 [1]
-Reported-by: syzbot+7902cd7684bc35306224@syzkaller.appspotmail.com
-Signed-off-by: Shigeru Yoshida <syoshida@redhat.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221023095741.271430-1-syoshida@redhat.com
+Fixes: 8d633291b4fc ("powerpc/eeh: pseries platform EEH error log retrieval")
+Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
+[mpe: Drop no-longer possible error handling as noticed by ajd]
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20221118150751.469393-6-nathanl@linux.ibm.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/udf/namei.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ arch/powerpc/platforms/pseries/eeh_pseries.c | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
-diff --git a/fs/udf/namei.c b/fs/udf/namei.c
-index d13ded8e2c30..ef251622da13 100644
---- a/fs/udf/namei.c
-+++ b/fs/udf/namei.c
-@@ -1106,8 +1106,9 @@ static int udf_rename(struct inode *old_dir, struct dentry *old_dentry,
- 		return -EINVAL;
- 
- 	ofi = udf_find_entry(old_dir, &old_dentry->d_name, &ofibh, &ocfi);
--	if (IS_ERR(ofi)) {
--		retval = PTR_ERR(ofi);
-+	if (!ofi || IS_ERR(ofi)) {
-+		if (IS_ERR(ofi))
-+			retval = PTR_ERR(ofi);
- 		goto end_rename;
+diff --git a/arch/powerpc/platforms/pseries/eeh_pseries.c b/arch/powerpc/platforms/pseries/eeh_pseries.c
+index f56248f19ef3..b7160120c0bb 100644
+--- a/arch/powerpc/platforms/pseries/eeh_pseries.c
++++ b/arch/powerpc/platforms/pseries/eeh_pseries.c
+@@ -946,16 +946,7 @@ static int __init eeh_pseries_init(void)
  	}
  
-@@ -1116,8 +1117,7 @@ static int udf_rename(struct inode *old_dir, struct dentry *old_dentry,
+ 	/* Initialize error log size */
+-	eeh_error_buf_size = rtas_token("rtas-error-log-max");
+-	if (eeh_error_buf_size == RTAS_UNKNOWN_SERVICE) {
+-		pr_info("%s: unknown EEH error log size\n",
+-			__func__);
+-		eeh_error_buf_size = 1024;
+-	} else if (eeh_error_buf_size > RTAS_ERROR_LOG_MAX) {
+-		pr_info("%s: EEH error log size %d exceeds the maximal %d\n",
+-			__func__, eeh_error_buf_size, RTAS_ERROR_LOG_MAX);
+-		eeh_error_buf_size = RTAS_ERROR_LOG_MAX;
+-	}
++	eeh_error_buf_size = rtas_get_error_log_max();
  
- 	brelse(ofibh.sbh);
- 	tloc = lelb_to_cpu(ocfi.icb.extLocation);
--	if (!ofi || udf_get_lb_pblock(old_dir->i_sb, &tloc, 0)
--	    != old_inode->i_ino)
-+	if (udf_get_lb_pblock(old_dir->i_sb, &tloc, 0) != old_inode->i_ino)
- 		goto end_rename;
- 
- 	nfi = udf_find_entry(new_dir, &new_dentry->d_name, &nfibh, &ncfi);
+ 	/* Set EEH probe mode */
+ 	eeh_add_flag(EEH_PROBE_MODE_DEVTREE | EEH_ENABLE_IO_FOR_LOG);
 -- 
 2.35.1
 
