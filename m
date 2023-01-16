@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6433A33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2C19C433F0;
-	Mon, 16 Jan 2023 15:55:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02EA533EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60BEFC433D2;
+	Mon, 16 Jan 2023 15:55:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884545;
-	bh=HxKMzrnBDY66TgaxR8FfWS1jCkIPGJDjvdE8uCHtZU8=;
+	s=korg; t=1673884547;
+	bh=Og5l1J0HC6clakpJKy4jhVtz1hPiL5RIlcG0oBCbxqM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UTj1QkcWZ0otNUGxiO7FwnkYTkI2kCewU1oNg4tv3lmQeQNTg8h8Wp7N9HhMCN/0I
-	 jSfPb1t7W2DlW7rSXWz1kdpKIEjkKPM7F5Z2KeFPnW7PgskKNeXG0hWLB1b6/FLKZv
-	 PqiuHAeSuIWg3ju47UVpb9Tp35TA+1ixr6097FqM=
+	b=ocI3qJXnKDwALZQoVoaeePWbSMZcOU9jF2st+Dpz2k+KmsGj10l2SNM/3wCtdZDak
+	 ETYNc0kboI1hJ1Gk0z6WNscBFtKP3qGSuboJg2vIaMEO958ooAswTtYAyg38qN9RQs
+	 Wc7Of94l2nmkXqZT0JPhxO1QUa63ShRYYDU+Pm4U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Luz <luzmaximilian@gmail.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 047/183] platform/surface: aggregator: Ignore command messages not intended for us
-Date: Mon, 16 Jan 2023 16:49:30 +0100
-Message-Id: <20230116154805.353986057@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Andy Shevchenko <andy@kernel.org>,
+	Daniel Scally <djrscally@gmail.com>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>
+Subject: [PATCH 6.1 048/183] platform/x86: int3472/discrete: Ensure the clk/power enable pins are in output mode
+Date: Mon, 16 Jan 2023 16:49:31 +0100
+Message-Id: <20230116154805.383872985@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -34,74 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maximilian Luz <luzmaximilian@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit ae0fa0a3126a86c801c3220fcd8eefe03aa39f3e upstream.
+commit cf5ac2d45f6e4d11ad78e7b10ae9a4121ba5e995 upstream.
 
-It is possible that we (the host/kernel driver) receive command messages
-that are not intended for us. Ignore those for now.
+acpi_get_and_request_gpiod() does not take a gpio_lookup_flags argument
+specifying that the pins direction should be initialized to a specific
+value.
 
-The whole story is a bit more complicated: It is possible to enable
-debug output on SAM, which is sent via SSH command messages. By default
-this output is sent to a debug connector, with its own target ID
-(TID=0x03). It is possible to override the target of the debug output
-and set it to the host/kernel driver. This, however, does not change the
-original target ID of the message. Meaning, we receive messages with
-TID=0x03 (debug) but expect to only receive messages with TID=0x00
-(host).
+This means that in some cases the pins might be left in input mode, causing
+the gpiod_set() calls made to enable the clk / regulator to not work.
 
-The problem is that the different target ID also comes with a different
-scope of request IDs. In particular, these do not follow the standard
-event rules (i.e. do not fall into a set of small reserved values).
-Therefore, current message handling interprets them as responses to
-pending requests and tries to match them up via the request ID. However,
-these debug output messages are not in fact responses, and therefore
-this will at best fail to find the request and at worst pass on the
-wrong data as response for a request.
+One example of this problem is the clk-enable GPIO for the ov01a1s sensor
+on a Dell Latitude 9420 being left in input mode causing the clk to
+never get enabled.
 
-Therefore ignore any command messages not intended for us (host) for
-now. We can implement support for the debug messages once we have a
-better understanding of them.
+Explicitly set the direction of the pins to output to fix this.
 
-Note that this may also provide a bit more stability and avoid some
-driver confusion in case any other targets want to talk to us in the
-future, since we don't yet know what to do with those as well. A warning
-for the dropped messages should suffice for now and also give us a
-chance of discovering new targets if they come along without any
-potential for bugs/instabilities.
-
-Fixes: c167b9c7e3d6 ("platform/surface: Add Surface Aggregator subsystem")
-Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
-Link: https://lore.kernel.org/r/20221202223327.690880-2-luzmaximilian@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 5de691bffe57 ("platform/x86: Add intel_skl_int3472 driver")
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Andy Shevchenko <andy@kernel.org>
+Reviewed-by: Daniel Scally <djrscally@gmail.com>
+Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
+Link: https://lore.kernel.org/r/20230111201426.947853-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/surface/aggregator/ssh_request_layer.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/platform/x86/intel/int3472/clk_and_regulator.c |    3 +++
+ drivers/platform/x86/intel/int3472/discrete.c          |    4 ++++
+ 2 files changed, 7 insertions(+)
 
---- a/drivers/platform/surface/aggregator/ssh_request_layer.c
-+++ b/drivers/platform/surface/aggregator/ssh_request_layer.c
-@@ -916,6 +916,20 @@ static void ssh_rtl_rx_command(struct ss
- 	if (sshp_parse_command(dev, data, &command, &command_data))
- 		return;
+--- a/drivers/platform/x86/intel/int3472/clk_and_regulator.c
++++ b/drivers/platform/x86/intel/int3472/clk_and_regulator.c
+@@ -181,6 +181,9 @@ int skl_int3472_register_regulator(struc
+ 		return PTR_ERR(int3472->regulator.gpio);
+ 	}
  
-+	/*
-+	 * Check if the message was intended for us. If not, drop it.
-+	 *
-+	 * Note: We will need to change this to handle debug messages. On newer
-+	 * generation devices, these seem to be sent to tid_out=0x03. We as
-+	 * host can still receive them as they can be forwarded via an override
-+	 * option on SAM, but doing so does not change tid_out=0x00.
-+	 */
-+	if (command->tid_out != 0x00) {
-+		rtl_warn(rtl, "rtl: dropping message not intended for us (tid = %#04x)\n",
-+			 command->tid_out);
-+		return;
-+	}
++	/* Ensure the pin is in output mode and non-active state */
++	gpiod_direction_output(int3472->regulator.gpio, 0);
 +
- 	if (ssh_rqid_is_event(get_unaligned_le16(&command->rqid)))
- 		ssh_rtl_rx_event(rtl, command, &command_data);
- 	else
+ 	cfg.dev = &int3472->adev->dev;
+ 	cfg.init_data = &init_data;
+ 	cfg.ena_gpiod = int3472->regulator.gpio;
+--- a/drivers/platform/x86/intel/int3472/discrete.c
++++ b/drivers/platform/x86/intel/int3472/discrete.c
+@@ -168,6 +168,8 @@ static int skl_int3472_map_gpio_to_clk(s
+ 			return (PTR_ERR(gpio));
+ 
+ 		int3472->clock.ena_gpio = gpio;
++		/* Ensure the pin is in output mode and non-active state */
++		gpiod_direction_output(int3472->clock.ena_gpio, 0);
+ 		break;
+ 	case INT3472_GPIO_TYPE_PRIVACY_LED:
+ 		gpio = acpi_get_and_request_gpiod(path, pin, "int3472,privacy-led");
+@@ -175,6 +177,8 @@ static int skl_int3472_map_gpio_to_clk(s
+ 			return (PTR_ERR(gpio));
+ 
+ 		int3472->clock.led_gpio = gpio;
++		/* Ensure the pin is in output mode and non-active state */
++		gpiod_direction_output(int3472->clock.led_gpio, 0);
+ 		break;
+ 	default:
+ 		dev_err(int3472->dev, "Invalid GPIO type 0x%02x for clock\n", type);
 
 
