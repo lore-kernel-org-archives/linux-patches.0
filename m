@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62DF56FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:36:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDE73C433EF;
-	Mon, 16 Jan 2023 16:36:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 184736FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:36:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9021DC433D2;
+	Mon, 16 Jan 2023 16:36:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887008;
-	bh=aRgzOab1q0uZC5w5aX+WGocSRGgAkOrzCYkdW2BFEy8=;
+	s=korg; t=1673887010;
+	bh=Wsf48FTnFoc6MfWnMI1l+i377NIbwRaFcVgn8hx4Vtw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w1dZHsILzAEcIkwDqaCtcX4gYJCEEEzRPp5i/7Ea/1BOKhhzbRbHxDv2Js8Ept2Fx
-	 zLtE1YmxbH/BOIW+pNbXjH7PviNmyZNeqJ8+w5AcREsUqHQThw5mfKd9qSzX+1YTWR
-	 H2RKyyN7V8LE1ASCh+diT1BNPdc7VQVPeaZatcY0=
+	b=zqNpDemrFExxbjwrrRFC6/HHhKD+O9q4O0IM3LjXOCEhbO2g1FihQY9/YCcNHz6Bj
+	 yd8Uh7XQPsX7g2m52Sj5p2ScNQrBZAUU6Y7s4VyR3z46ntXu4rdEF7OHEI+LMsv1uz
+	 DEYXN0yVUbFKSUIZDBMp7fOfFxGW7DXupdIlKdMo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Walle <michael@walle.cc>,
-	Kalle Valo <kvalo@kernel.org>,
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Ferry Toth <ftoth@exalondelft.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 615/658] wifi: wilc1000: sdio: fix module autoloading
-Date: Mon, 16 Jan 2023 16:51:43 +0100
-Message-Id: <20230116154937.639195062@linuxfoundation.org>
+Subject: [PATCH 5.4 616/658] usb: ulpi: defer ulpi_register on ulpi_read_id timeout
+Date: Mon, 16 Jan 2023 16:51:44 +0100
+Message-Id: <20230116154937.679540952@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,34 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Walle <michael@walle.cc>
+From: Ferry Toth <ftoth@exalondelft.nl>
 
-[ Upstream commit 57d545b5a3d6ce3a8fb6b093f02bfcbb908973f3 ]
+[ Upstream commit 8a7b31d545d3a15f0e6f5984ae16f0ca4fd76aac ]
 
-There are no SDIO module aliases included in the driver, therefore,
-module autoloading isn't working. Add the proper MODULE_DEVICE_TABLE().
+Since commit 0f0101719138 ("usb: dwc3: Don't switch OTG -> peripheral
+if extcon is present") Dual Role support on Intel Merrifield platform
+broke due to rearranging the call to dwc3_get_extcon().
 
+It appears to be caused by ulpi_read_id() on the first test write failing
+with -ETIMEDOUT. Currently ulpi_read_id() expects to discover the phy via
+DT when the test write fails and returns 0 in that case, even if DT does not
+provide the phy. As a result usb probe completes without phy.
+
+Make ulpi_read_id() return -ETIMEDOUT to its user if the first test write
+fails. The user should then handle it appropriately. A follow up patch
+will make dwc3_core_init() set -EPROBE_DEFER in this case and bail out.
+
+Fixes: ef6a7bcfb01c ("usb: ulpi: Support device discovery via DT")
 Cc: stable@vger.kernel.org
-Signed-off-by: Michael Walle <michael@walle.cc>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221027171221.491937-1-michael@walle.cc
+Acked-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Ferry Toth <ftoth@exalondelft.nl>
+Link: https://lore.kernel.org/r/20221205201527.13525-2-ftoth@exalondelft.nl
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/wilc1000/wilc_sdio.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/common/ulpi.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/staging/wilc1000/wilc_sdio.c b/drivers/staging/wilc1000/wilc_sdio.c
-index c787c5da8f2b..22a30da011e1 100644
---- a/drivers/staging/wilc1000/wilc_sdio.c
-+++ b/drivers/staging/wilc1000/wilc_sdio.c
-@@ -20,6 +20,7 @@ static const struct sdio_device_id wilc_sdio_ids[] = {
- 	{ SDIO_DEVICE(SDIO_VENDOR_ID_WILC, SDIO_DEVICE_ID_WILC) },
- 	{ },
- };
-+MODULE_DEVICE_TABLE(sdio, wilc_sdio_ids);
+diff --git a/drivers/usb/common/ulpi.c b/drivers/usb/common/ulpi.c
+index c42c152bbc33..94700c1d2f6e 100644
+--- a/drivers/usb/common/ulpi.c
++++ b/drivers/usb/common/ulpi.c
+@@ -207,7 +207,7 @@ static int ulpi_read_id(struct ulpi *ulpi)
+ 	/* Test the interface */
+ 	ret = ulpi_write(ulpi, ULPI_SCRATCH, 0xaa);
+ 	if (ret < 0)
+-		goto err;
++		return ret;
  
- #define WILC_SDIO_BLOCK_SIZE 512
- 
+ 	ret = ulpi_read(ulpi, ULPI_SCRATCH);
+ 	if (ret < 0)
 -- 
 2.35.1
 
