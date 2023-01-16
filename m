@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DB656FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:34:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5BA1C433A4;
-	Mon, 16 Jan 2023 16:34:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6C0D6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:34:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CFDC433F0;
+	Mon, 16 Jan 2023 16:34:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886889;
-	bh=J1DcPsN0kZlHotGoYwcVGTQT0DQIMNFMikJ0p/76qT0=;
+	s=korg; t=1673886891;
+	bh=IN41O2u8NXoeA6QCFZqS/m70Mz2F9VCWIIt7SPGU5r0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dp58Ey9LKEXzvOjRKWR1AofjmEBi00pTqX30CyiGocp8SfM9BsAQoXW6ehrRanCE7
-	 6TLbl7TU31bBjLc6WohSlfNbfv1u315yCIUHfVF2kwLxdXaUHxlgmiOmgDuHSqpCRp
-	 hjCbW8IuCU83STRuV4j9zXkgjFYMPjD/8C3NqeJ0=
+	b=Iyd7D7wX/NXAXci4nthNGDwmeuBg17eCXXTlbWvmLBNbYxGks/TX1ymE5vvbK92Ut
+	 BeY7kuS04sXZgTOXIzhQEJESwxfT6tHTHhGQBeZxYLQjSrqQpUrZedA6v/1b53Ft95
+	 fbJqfZso8EhKwD+q8u70y59MATLwR0l7eDKSC65A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frederick Lawler <fred@cloudflare.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 600/658] net: sched: disallow noqueue for qdisc classes
-Date: Mon, 16 Jan 2023 16:51:28 +0100
-Message-Id: <20230116154936.934013127@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 5.4 601/658] KVM: arm64: Fix S1PTW handling on RO memslots
+Date: Mon, 16 Jan 2023 16:51:29 +0100
+Message-Id: <20230116154936.983855105@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,93 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Frederick Lawler <fred@cloudflare.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 96398560f26aa07e8f2969d73c8197e6a6d10407 upstream.
+commit 406504c7b0405d74d74c15a667cd4c4620c3e7a9 upstream.
 
-While experimenting with applying noqueue to a classful queue discipline,
-we discovered a NULL pointer dereference in the __dev_queue_xmit()
-path that generates a kernel OOPS:
+A recent development on the EFI front has resulted in guests having
+their page tables baked in the firmware binary, and mapped into the
+IPA space as part of a read-only memslot. Not only is this legitimate,
+but it also results in added security, so thumbs up.
 
-    # dev=enp0s5
-    # tc qdisc replace dev $dev root handle 1: htb default 1
-    # tc class add dev $dev parent 1: classid 1:1 htb rate 10mbit
-    # tc qdisc add dev $dev parent 1:1 handle 10: noqueue
-    # ping -I $dev -w 1 -c 1 1.1.1.1
+It is possible to take an S1PTW translation fault if the S1 PTs are
+unmapped at stage-2. However, KVM unconditionally treats S1PTW as a
+write to correctly handle hardware AF/DB updates to the S1 PTs.
+Furthermore, KVM injects an exception into the guest for S1PTW writes.
+In the aforementioned case this results in the guest taking an abort
+it won't recover from, as the S1 PTs mapping the vectors suffer from
+the same problem.
 
-[    2.172856] BUG: kernel NULL pointer dereference, address: 0000000000000000
-[    2.173217] #PF: supervisor instruction fetch in kernel mode
-...
-[    2.178451] Call Trace:
-[    2.178577]  <TASK>
-[    2.178686]  htb_enqueue+0x1c8/0x370
-[    2.178880]  dev_qdisc_enqueue+0x15/0x90
-[    2.179093]  __dev_queue_xmit+0x798/0xd00
-[    2.179305]  ? _raw_write_lock_bh+0xe/0x30
-[    2.179522]  ? __local_bh_enable_ip+0x32/0x70
-[    2.179759]  ? ___neigh_create+0x610/0x840
-[    2.179968]  ? eth_header+0x21/0xc0
-[    2.180144]  ip_finish_output2+0x15e/0x4f0
-[    2.180348]  ? dst_output+0x30/0x30
-[    2.180525]  ip_push_pending_frames+0x9d/0xb0
-[    2.180739]  raw_sendmsg+0x601/0xcb0
-[    2.180916]  ? _raw_spin_trylock+0xe/0x50
-[    2.181112]  ? _raw_spin_unlock_irqrestore+0x16/0x30
-[    2.181354]  ? get_page_from_freelist+0xcd6/0xdf0
-[    2.181594]  ? sock_sendmsg+0x56/0x60
-[    2.181781]  sock_sendmsg+0x56/0x60
-[    2.181958]  __sys_sendto+0xf7/0x160
-[    2.182139]  ? handle_mm_fault+0x6e/0x1d0
-[    2.182366]  ? do_user_addr_fault+0x1e1/0x660
-[    2.182627]  __x64_sys_sendto+0x1b/0x30
-[    2.182881]  do_syscall_64+0x38/0x90
-[    2.183085]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-...
-[    2.187402]  </TASK>
+So clearly our handling is... wrong.
 
-Previously in commit d66d6c3152e8 ("net: sched: register noqueue
-qdisc"), NULL was set for the noqueue discipline on noqueue init
-so that __dev_queue_xmit() falls through for the noqueue case. This
-also sets a bypass of the enqueue NULL check in the
-register_qdisc() function for the struct noqueue_disc_ops.
+Instead, switch to a two-pronged approach:
 
-Classful queue disciplines make it past the NULL check in
-__dev_queue_xmit() because the discipline is set to htb (in this case),
-and then in the call to __dev_xmit_skb(), it calls into htb_enqueue()
-which grabs a leaf node for a class and then calls qdisc_enqueue() by
-passing in a queue discipline which assumes ->enqueue() is not set to NULL.
+- On S1PTW translation fault, handle the fault as a read
 
-Fix this by not allowing classes to be assigned to the noqueue
-discipline. Linux TC Notes states that classes cannot be set to
-the noqueue discipline. [1] Let's enforce that here.
+- On S1PTW permission fault, handle the fault as a write
 
-Links:
-1. https://linux-tc-notes.sourceforge.net/tc/doc/sch_noqueue.txt
+This is of no consequence to SW that *writes* to its PTs (the write
+will trigger a non-S1PTW fault), and SW that uses RO PTs will not
+use HW-assisted AF/DB anyway, as that'd be wrong.
 
-Fixes: d66d6c3152e8 ("net: sched: register noqueue qdisc")
+Only in the case described in c4ad98e4b72c ("KVM: arm64: Assume write
+fault on S1PTW permission fault on instruction fetch") do we end-up
+with two back-to-back faults (page being evicted and faulted back).
+I don't think this is a case worth optimising for.
+
+Fixes: c4ad98e4b72c ("KVM: arm64: Assume write fault on S1PTW permission fault on instruction fetch")
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Regression-tested-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
 Cc: stable@vger.kernel.org
-Signed-off-by: Frederick Lawler <fred@cloudflare.com>
-Reviewed-by: Jakub Sitnicki <jakub@cloudflare.com>
-Link: https://lore.kernel.org/r/20230109163906.706000-1-fred@cloudflare.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_api.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/arm64/include/asm/kvm_emulate.h |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/net/sched/sch_api.c
-+++ b/net/sched/sch_api.c
-@@ -1104,6 +1104,11 @@ skip:
- 			return -ENOENT;
- 		}
+--- a/arch/arm64/include/asm/kvm_emulate.h
++++ b/arch/arm64/include/asm/kvm_emulate.h
+@@ -378,8 +378,26 @@ static inline int kvm_vcpu_sys_get_rt(st
  
-+		if (new && new->ops == &noqueue_qdisc_ops) {
-+			NL_SET_ERR_MSG(extack, "Cannot assign noqueue to a class");
-+			return -EINVAL;
+ static inline bool kvm_is_write_fault(struct kvm_vcpu *vcpu)
+ {
+-	if (kvm_vcpu_abt_iss1tw(vcpu))
+-		return true;
++	if (kvm_vcpu_abt_iss1tw(vcpu)) {
++		/*
++		 * Only a permission fault on a S1PTW should be
++		 * considered as a write. Otherwise, page tables baked
++		 * in a read-only memslot will result in an exception
++		 * being delivered in the guest.
++		 *
++		 * The drawback is that we end-up faulting twice if the
++		 * guest is using any of HW AF/DB: a translation fault
++		 * to map the page containing the PT (read only at
++		 * first), then a permission fault to allow the flags
++		 * to be set.
++		 */
++		switch (kvm_vcpu_trap_get_fault_type(vcpu)) {
++		case ESR_ELx_FSC_PERM:
++			return true;
++		default:
++			return false;
 +		}
-+
- 		err = cops->graft(parent, cl, new, &old, extack);
- 		if (err)
- 			return err;
++	}
+ 
+ 	if (kvm_vcpu_trap_is_iabt(vcpu))
+ 		return false;
 
 
