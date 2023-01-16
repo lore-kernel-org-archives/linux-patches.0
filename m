@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 086584C83
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:32:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 838B6C433D2;
-	Mon, 16 Jan 2023 16:32:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BE444C83
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:32:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E2F0C433EF;
+	Mon, 16 Jan 2023 16:32:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886735;
-	bh=qgRQMPUO1Uc+cH74o/UKEo8XOXmapK+SQ9IzDbHibi4=;
+	s=korg; t=1673886738;
+	bh=E197O7xsWe5SHEN6MKBjY0u10uLKWwpkAH016H4KgbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TpMACKXd3QtxFkbrx6kLms235E9QpkKtr5ExwWf5mOeEhEbsvchs/qy2X1/56iMUk
-	 n3tzcArguO2yAdTj0Vgua2p4Cn5WYMwuVvvkC4btF33o3vGNSLUI2KDzg+YN+kZkVX
-	 YpotWnBKmTMmVpnrxHL55mW06w6+8kF7ajV1F94U=
+	b=IM8tCMmc4nFjsvYapO1BVZHDiUHlHm4OX+7wzQvzbJ3vnSRZFnJltFwQYEiGqmLKf
+	 Cvxk2LnbLffSzmH4qWzENVvbANg3A4DJ7uGSuSz5eauRKT8We+uskwRunqLUbhwO0X
+	 Qv1BQuopXKNamYAm2rjMEDlFOMuipgy9L6cmDmmQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Smitha T Murthy <smitha.t@samsung.com>,
 	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 541/658] media: s5p-mfc: Clear workbit to handle error condition
-Date: Mon, 16 Jan 2023 16:50:29 +0100
-Message-Id: <20230116154934.286752047@linuxfoundation.org>
+Subject: [PATCH 5.4 542/658] media: s5p-mfc: Fix in register read and write for H264
+Date: Mon, 16 Jan 2023 16:50:30 +0100
+Message-Id: <20230116154934.325354551@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -38,39 +38,81 @@ Content-Transfer-Encoding: 8bit
 
 From: Smitha T Murthy <smitha.t@samsung.com>
 
-[ Upstream commit d3f3c2fe54e30b0636496d842ffbb5ad3a547f9b ]
+[ Upstream commit 06710cd5d2436135046898d7e4b9408c8bb99446 ]
 
-During error on CLOSE_INSTANCE command, ctx_work_bits was not getting
-cleared. During consequent mfc execution NULL pointer dereferencing of
-this context led to kernel panic. This patch fixes this issue by making
-sure to clear ctx_work_bits always.
+Few of the H264 encoder registers written were not getting reflected
+since the read values were not stored and getting overwritten.
 
-Fixes: 818cd91ab8c6 ("[media] s5p-mfc: Extract open/close MFC instance commands")
+Fixes: 6a9c6f681257 ("[media] s5p-mfc: Add variants to access mfc registers")
+
 Cc: stable@vger.kernel.org
 Cc: linux-fsd@tesla.com
 Signed-off-by: Smitha T Murthy <smitha.t@samsung.com>
 Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/s5p-mfc/s5p_mfc_ctrl.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc_ctrl.c b/drivers/media/platform/s5p-mfc/s5p_mfc_ctrl.c
-index da138c314963..58822ec5370e 100644
---- a/drivers/media/platform/s5p-mfc/s5p_mfc_ctrl.c
-+++ b/drivers/media/platform/s5p-mfc/s5p_mfc_ctrl.c
-@@ -468,8 +468,10 @@ void s5p_mfc_close_mfc_inst(struct s5p_mfc_dev *dev, struct s5p_mfc_ctx *ctx)
- 	s5p_mfc_hw_call(dev->mfc_ops, try_run, dev);
- 	/* Wait until instance is returned or timeout occurred */
- 	if (s5p_mfc_wait_for_done_ctx(ctx,
--				S5P_MFC_R2H_CMD_CLOSE_INSTANCE_RET, 0))
-+				S5P_MFC_R2H_CMD_CLOSE_INSTANCE_RET, 0)){
-+		clear_work_bit_irqsave(ctx);
- 		mfc_err("Err returning instance\n");
-+	}
+diff --git a/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c b/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c
+index a1453053e31a..ef8169f6c428 100644
+--- a/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c
++++ b/drivers/media/platform/s5p-mfc/s5p_mfc_opr_v6.c
+@@ -1060,7 +1060,7 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
+ 	}
  
- 	/* Free resources */
- 	s5p_mfc_hw_call(dev->mfc_ops, release_codec_buffers, ctx);
+ 	/* aspect ratio VUI */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 5);
+ 	reg |= ((p_h264->vui_sar & 0x1) << 5);
+ 	writel(reg, mfc_regs->e_h264_options);
+@@ -1083,7 +1083,7 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
+ 
+ 	/* intra picture period for H.264 open GOP */
+ 	/* control */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 4);
+ 	reg |= ((p_h264->open_gop & 0x1) << 4);
+ 	writel(reg, mfc_regs->e_h264_options);
+@@ -1097,23 +1097,23 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
+ 	}
+ 
+ 	/* 'WEIGHTED_BI_PREDICTION' for B is disable */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x3 << 9);
+ 	writel(reg, mfc_regs->e_h264_options);
+ 
+ 	/* 'CONSTRAINED_INTRA_PRED_ENABLE' is disable */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 14);
+ 	writel(reg, mfc_regs->e_h264_options);
+ 
+ 	/* ASO */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 6);
+ 	reg |= ((p_h264->aso & 0x1) << 6);
+ 	writel(reg, mfc_regs->e_h264_options);
+ 
+ 	/* hier qp enable */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 8);
+ 	reg |= ((p_h264->open_gop & 0x1) << 8);
+ 	writel(reg, mfc_regs->e_h264_options);
+@@ -1134,7 +1134,7 @@ static int s5p_mfc_set_enc_params_h264(struct s5p_mfc_ctx *ctx)
+ 	writel(reg, mfc_regs->e_h264_num_t_layer);
+ 
+ 	/* frame packing SEI generation */
+-	readl(mfc_regs->e_h264_options);
++	reg = readl(mfc_regs->e_h264_options);
+ 	reg &= ~(0x1 << 25);
+ 	reg |= ((p_h264->sei_frame_packing & 0x1) << 25);
+ 	writel(reg, mfc_regs->e_h264_options);
 -- 
 2.35.1
 
