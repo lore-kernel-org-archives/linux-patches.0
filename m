@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC26446B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:07:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F8C0C433D2;
-	Mon, 16 Jan 2023 16:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7174946B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:07:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB9C7C433EF;
+	Mon, 16 Jan 2023 16:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885259;
-	bh=UtzZ7sKrXlpANP1aVLRNhwcdJU0FG67zA3zf8ai7jjs=;
+	s=korg; t=1673885262;
+	bh=modqFFpLh/1B9gTcp0eniKm85BE4PYJqQz65XEMxrcA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=A0MoAe2AXQmr1gtuJ4p/Bwo0k00WdI7G6kamnLxVNtRYN8McXTZwQx/xpxEf35PLe
-	 1f9AIzQ1Y1YkpuFB/q7lgAiE6mWQLUVFYTUUatrR+RmZVJyNaN4SYq1cNMJSsjZR/f
-	 EfSBZCBAYk4UJQXfzHLE2GsnjD0PPjGNEPkcTsFY=
+	b=mJBTRcTLDvPyTAqFAomAaazk2d3ddqZltWX/PdpL0gPXJkKG40Bj6XWIZkWeWZP+i
+	 8ptMJ/JBMUsdi2NDts68qDZhwDOpJB+fCBM50OYxw7rmvCoabgnCLH7vnN0N2ZK/DX
+	 pfjyzHiSSm0bnvfrbK93oJWNWCRKkm5u0G1kIknI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kim Phillips <kim.phillips@amd.com>,
-	Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
+	Marek Vasut <marex@denx.de>,
+	Abel Vesa <abel.vesa@nxp.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	NXP Linux Team <linux-imx@nxp.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 19/64] iommu/amd: Fix ill-formed ivrs_ioapic, ivrs_hpet and ivrs_acpihid options
-Date: Mon, 16 Jan 2023 16:51:26 +0100
-Message-Id: <20230116154744.284423151@linuxfoundation.org>
+Subject: [PATCH 5.10 20/64] clk: imx8mp: Add DISP2 pixel clock
+Date: Mon, 16 Jan 2023 16:51:27 +0100
+Message-Id: <20230116154744.314339139@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -36,213 +39,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kim Phillips <kim.phillips@amd.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 1198d2316dc4265a97d0e8445a22c7a6d17580a4 ]
+[ Upstream commit 39772efd98adecbd5b8c6096d465d2fcbafbde6a ]
 
-Currently, these options cause the following libkmod error:
+Add pixel clock for second LCDIFv3 interface. Both LCDIFv3 interfaces use
+the same set of parent clock, so deduplicate imx8mp_media_disp1_pix_sels
+into common imx8mp_media_disp_pix_sels and use it for both.
 
-libkmod: ERROR ../libkmod/libkmod-config.c:489 kcmdline_parse_result: \
-	Ignoring bad option on kernel command line while parsing module \
-	name: 'ivrs_xxxx[XX:XX'
-
-Fix by introducing a new parameter format for these options and
-throw a warning for the deprecated format.
-
-Users are still allowed to omit the PCI Segment if zero.
-
-Adding a Link: to the reason why we're modding the syntax parsing
-in the driver and not in libkmod.
-
-Fixes: ca3bf5d47cec ("iommu/amd: Introduces ivrs_acpihid kernel parameter")
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/linux-modules/20200310082308.14318-2-lucas.demarchi@intel.com/
-Reported-by: Kim Phillips <kim.phillips@amd.com>
-Co-developed-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>
-Signed-off-by: Kim Phillips <kim.phillips@amd.com>
-Link: https://lore.kernel.org/r/20220919155638.391481-2-kim.phillips@amd.com
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Marek Vasut <marex@denx.de>
+Cc: Abel Vesa <abel.vesa@nxp.com>
+Cc: Fabio Estevam <festevam@gmail.com>
+Cc: NXP Linux Team <linux-imx@nxp.com>
+Cc: Peng Fan <peng.fan@nxp.com>
+Cc: Shawn Guo <shawnguo@kernel.org>
+Reviewed-by: Abel Vesa <abel.vesa@nxp.com>
+Link: https://lore.kernel.org/r/20220313123949.207284-1-marex@denx.de
+Signed-off-by: Abel Vesa <abel.vesa@nxp.com>
+Stable-dep-of: 5c1f7f109094 ("dt-bindings: clocks: imx8mp: Add ID for usb suspend clock")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../admin-guide/kernel-parameters.txt         | 27 +++++--
- drivers/iommu/amd/init.c                      | 79 +++++++++++++------
- 2 files changed, 76 insertions(+), 30 deletions(-)
+ drivers/clk/imx/clk-imx8mp.c             | 5 +++--
+ include/dt-bindings/clock/imx8mp-clock.h | 4 +++-
+ 2 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/admin-guide/kernel-parameters.txt b/Documentation/admin-guide/kernel-parameters.txt
-index ce93bb358bc1..eb437d659f2c 100644
---- a/Documentation/admin-guide/kernel-parameters.txt
-+++ b/Documentation/admin-guide/kernel-parameters.txt
-@@ -2105,7 +2105,13 @@
- 			Provide an override to the IOAPIC-ID<->DEVICE-ID
- 			mapping provided in the IVRS ACPI table.
- 			By default, PCI segment is 0, and can be omitted.
--			For example:
-+
-+			For example, to map IOAPIC-ID decimal 10 to
-+			PCI segment 0x1 and PCI device 00:14.0,
-+			write the parameter as:
-+				ivrs_ioapic=10@0001:00:14.0
-+
-+			Deprecated formats:
- 			* To map IOAPIC-ID decimal 10 to PCI device 00:14.0
- 			  write the parameter as:
- 				ivrs_ioapic[10]=00:14.0
-@@ -2117,7 +2123,13 @@
- 			Provide an override to the HPET-ID<->DEVICE-ID
- 			mapping provided in the IVRS ACPI table.
- 			By default, PCI segment is 0, and can be omitted.
--			For example:
-+
-+			For example, to map HPET-ID decimal 10 to
-+			PCI segment 0x1 and PCI device 00:14.0,
-+			write the parameter as:
-+				ivrs_hpet=10@0001:00:14.0
-+
-+			Deprecated formats:
- 			* To map HPET-ID decimal 0 to PCI device 00:14.0
- 			  write the parameter as:
- 				ivrs_hpet[0]=00:14.0
-@@ -2128,15 +2140,20 @@
- 	ivrs_acpihid	[HW,X86-64]
- 			Provide an override to the ACPI-HID:UID<->DEVICE-ID
- 			mapping provided in the IVRS ACPI table.
-+			By default, PCI segment is 0, and can be omitted.
+diff --git a/drivers/clk/imx/clk-imx8mp.c b/drivers/clk/imx/clk-imx8mp.c
+index 36e8d619e334..2af39c8240fa 100644
+--- a/drivers/clk/imx/clk-imx8mp.c
++++ b/drivers/clk/imx/clk-imx8mp.c
+@@ -362,7 +362,7 @@ static const char * const imx8mp_media_mipi_phy1_ref_sels[] = {"osc_24m", "sys_p
+ 							       "clk_ext2", "audio_pll2_out",
+ 							       "video_pll1_out", };
  
- 			For example, to map UART-HID:UID AMD0020:0 to
- 			PCI segment 0x1 and PCI device ID 00:14.5,
- 			write the parameter as:
--				ivrs_acpihid[0001:00:14.5]=AMD0020:0
-+				ivrs_acpihid=AMD0020:0@0001:00:14.5
+-static const char * const imx8mp_media_disp1_pix_sels[] = {"osc_24m", "video_pll1_out", "audio_pll2_out",
++static const char * const imx8mp_media_disp_pix_sels[] = {"osc_24m", "video_pll1_out", "audio_pll2_out",
+ 							   "audio_pll1_out", "sys_pll1_800m",
+ 							   "sys_pll2_1000m", "sys_pll3_out", "clk_ext4", };
  
--			By default, PCI segment is 0, and can be omitted.
--			For example, PCI device 00:14.5 write the parameter as:
-+			Deprecated formats:
-+			* To map UART-HID:UID AMD0020:0 to PCI segment is 0,
-+			  PCI device ID 00:14.5, write the parameter as:
- 				ivrs_acpihid[00:14.5]=AMD0020:0
-+			* To map UART-HID:UID AMD0020:0 to PCI segment 0x1 and
-+			  PCI device ID 00:14.5, write the parameter as:
-+				ivrs_acpihid[0001:00:14.5]=AMD0020:0
+@@ -566,6 +566,7 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
+ 	hws[IMX8MP_CLK_AHB] = imx8m_clk_hw_composite_bus_critical("ahb_root", imx8mp_ahb_sels, ccm_base + 0x9000);
+ 	hws[IMX8MP_CLK_AUDIO_AHB] = imx8m_clk_hw_composite_bus("audio_ahb", imx8mp_audio_ahb_sels, ccm_base + 0x9100);
+ 	hws[IMX8MP_CLK_MIPI_DSI_ESC_RX] = imx8m_clk_hw_composite_bus("mipi_dsi_esc_rx", imx8mp_mipi_dsi_esc_rx_sels, ccm_base + 0x9200);
++	hws[IMX8MP_CLK_MEDIA_DISP2_PIX] = imx8m_clk_hw_composite("media_disp2_pix", imx8mp_media_disp_pix_sels, ccm_base + 0x9300);
  
- 	js=		[HW,JOY] Analog joystick
- 			See Documentation/input/joydev/joystick.rst.
-diff --git a/drivers/iommu/amd/init.c b/drivers/iommu/amd/init.c
-index 85370f305aa8..ce822347f747 100644
---- a/drivers/iommu/amd/init.c
-+++ b/drivers/iommu/amd/init.c
-@@ -3051,18 +3051,24 @@ static int __init parse_amd_iommu_options(char *str)
- static int __init parse_ivrs_ioapic(char *str)
- {
- 	u32 seg = 0, bus, dev, fn;
--	int ret, id, i;
-+	int id, i;
- 	u32 devid;
+ 	hws[IMX8MP_CLK_IPG_ROOT] = imx_clk_hw_divider2("ipg_root", "ahb_root", ccm_base + 0x9080, 0, 1);
+ 	hws[IMX8MP_CLK_IPG_AUDIO_ROOT] = imx_clk_hw_divider2("ipg_audio_root", "audio_ahb", ccm_base + 0x9180, 0, 1);
+@@ -630,7 +631,7 @@ static int imx8mp_clocks_probe(struct platform_device *pdev)
+ 	hws[IMX8MP_CLK_USDHC3] = imx8m_clk_hw_composite("usdhc3", imx8mp_usdhc3_sels, ccm_base + 0xbc80);
+ 	hws[IMX8MP_CLK_MEDIA_CAM1_PIX] = imx8m_clk_hw_composite("media_cam1_pix", imx8mp_media_cam1_pix_sels, ccm_base + 0xbd00);
+ 	hws[IMX8MP_CLK_MEDIA_MIPI_PHY1_REF] = imx8m_clk_hw_composite("media_mipi_phy1_ref", imx8mp_media_mipi_phy1_ref_sels, ccm_base + 0xbd80);
+-	hws[IMX8MP_CLK_MEDIA_DISP1_PIX] = imx8m_clk_hw_composite("media_disp1_pix", imx8mp_media_disp1_pix_sels, ccm_base + 0xbe00);
++	hws[IMX8MP_CLK_MEDIA_DISP1_PIX] = imx8m_clk_hw_composite("media_disp1_pix", imx8mp_media_disp_pix_sels, ccm_base + 0xbe00);
+ 	hws[IMX8MP_CLK_MEDIA_CAM2_PIX] = imx8m_clk_hw_composite("media_cam2_pix", imx8mp_media_cam2_pix_sels, ccm_base + 0xbe80);
+ 	hws[IMX8MP_CLK_MEDIA_LDB] = imx8m_clk_hw_composite("media_ldb", imx8mp_media_ldb_sels, ccm_base + 0xbf00);
+ 	hws[IMX8MP_CLK_MEMREPAIR] = imx8m_clk_hw_composite_critical("mem_repair", imx8mp_memrepair_sels, ccm_base + 0xbf80);
+diff --git a/include/dt-bindings/clock/imx8mp-clock.h b/include/dt-bindings/clock/imx8mp-clock.h
+index e8d68fbb6e3f..4a621fddfcd3 100644
+--- a/include/dt-bindings/clock/imx8mp-clock.h
++++ b/include/dt-bindings/clock/imx8mp-clock.h
+@@ -322,7 +322,9 @@
+ #define IMX8MP_CLK_HSIO_AXI			311
+ #define IMX8MP_CLK_MEDIA_ISP			312
  
--	ret = sscanf(str, "[%d]=%x:%x.%x", &id, &bus, &dev, &fn);
--	if (ret != 4) {
--		ret = sscanf(str, "[%d]=%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn);
--		if (ret != 5) {
--			pr_err("Invalid command line: ivrs_ioapic%s\n", str);
--			return 1;
--		}
-+	if (sscanf(str, "=%d@%x:%x.%x", &id, &bus, &dev, &fn) == 4 ||
-+	    sscanf(str, "=%d@%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn) == 5)
-+		goto found;
+-#define IMX8MP_CLK_END				313
++#define IMX8MP_CLK_MEDIA_DISP2_PIX		313
 +
-+	if (sscanf(str, "[%d]=%x:%x.%x", &id, &bus, &dev, &fn) == 4 ||
-+	    sscanf(str, "[%d]=%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn) == 5) {
-+		pr_warn("ivrs_ioapic%s option format deprecated; use ivrs_ioapic=%d@%04x:%02x:%02x.%d instead\n",
-+			str, id, seg, bus, dev, fn);
-+		goto found;
- 	}
++#define IMX8MP_CLK_END				314
  
-+	pr_err("Invalid command line: ivrs_ioapic%s\n", str);
-+	return 1;
-+
-+found:
- 	if (early_ioapic_map_size == EARLY_MAP_SIZE) {
- 		pr_err("Early IOAPIC map overflow - ignoring ivrs_ioapic%s\n",
- 			str);
-@@ -3083,18 +3089,24 @@ static int __init parse_ivrs_ioapic(char *str)
- static int __init parse_ivrs_hpet(char *str)
- {
- 	u32 seg = 0, bus, dev, fn;
--	int ret, id, i;
-+	int id, i;
- 	u32 devid;
- 
--	ret = sscanf(str, "[%d]=%x:%x.%x", &id, &bus, &dev, &fn);
--	if (ret != 4) {
--		ret = sscanf(str, "[%d]=%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn);
--		if (ret != 5) {
--			pr_err("Invalid command line: ivrs_hpet%s\n", str);
--			return 1;
--		}
-+	if (sscanf(str, "=%d@%x:%x.%x", &id, &bus, &dev, &fn) == 4 ||
-+	    sscanf(str, "=%d@%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn) == 5)
-+		goto found;
-+
-+	if (sscanf(str, "[%d]=%x:%x.%x", &id, &bus, &dev, &fn) == 4 ||
-+	    sscanf(str, "[%d]=%x:%x:%x.%x", &id, &seg, &bus, &dev, &fn) == 5) {
-+		pr_warn("ivrs_hpet%s option format deprecated; use ivrs_hpet=%d@%04x:%02x:%02x.%d instead\n",
-+			str, id, seg, bus, dev, fn);
-+		goto found;
- 	}
- 
-+	pr_err("Invalid command line: ivrs_hpet%s\n", str);
-+	return 1;
-+
-+found:
- 	if (early_hpet_map_size == EARLY_MAP_SIZE) {
- 		pr_err("Early HPET map overflow - ignoring ivrs_hpet%s\n",
- 			str);
-@@ -3115,19 +3127,36 @@ static int __init parse_ivrs_hpet(char *str)
- static int __init parse_ivrs_acpihid(char *str)
- {
- 	u32 seg = 0, bus, dev, fn;
--	char *hid, *uid, *p;
-+	char *hid, *uid, *p, *addr;
- 	char acpiid[ACPIHID_UID_LEN + ACPIHID_HID_LEN] = {0};
--	int ret, i;
--
--	ret = sscanf(str, "[%x:%x.%x]=%s", &bus, &dev, &fn, acpiid);
--	if (ret != 4) {
--		ret = sscanf(str, "[%x:%x:%x.%x]=%s", &seg, &bus, &dev, &fn, acpiid);
--		if (ret != 5) {
--			pr_err("Invalid command line: ivrs_acpihid(%s)\n", str);
--			return 1;
-+	int i;
-+
-+	addr = strchr(str, '@');
-+	if (!addr) {
-+		if (sscanf(str, "[%x:%x.%x]=%s", &bus, &dev, &fn, acpiid) == 4 ||
-+		    sscanf(str, "[%x:%x:%x.%x]=%s", &seg, &bus, &dev, &fn, acpiid) == 5) {
-+			pr_warn("ivrs_acpihid%s option format deprecated; use ivrs_acpihid=%s@%04x:%02x:%02x.%d instead\n",
-+				str, acpiid, seg, bus, dev, fn);
-+			goto found;
- 		}
-+		goto not_found;
- 	}
- 
-+	/* We have the '@', make it the terminator to get just the acpiid */
-+	*addr++ = 0;
-+
-+	if (sscanf(str, "=%s", acpiid) != 1)
-+		goto not_found;
-+
-+	if (sscanf(addr, "%x:%x.%x", &bus, &dev, &fn) == 3 ||
-+	    sscanf(addr, "%x:%x:%x.%x", &seg, &bus, &dev, &fn) == 4)
-+		goto found;
-+
-+not_found:
-+	pr_err("Invalid command line: ivrs_acpihid%s\n", str);
-+	return 1;
-+
-+found:
- 	p = acpiid;
- 	hid = strsep(&p, ":");
- 	uid = p;
+ #define IMX8MP_CLK_AUDIOMIX_SAI1_IPG		0
+ #define IMX8MP_CLK_AUDIOMIX_SAI1_MCLK1		1
 -- 
 2.35.1
 
