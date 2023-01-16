@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25BCE46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:14:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0658C433EF;
-	Mon, 16 Jan 2023 16:14:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDC1E46B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:14:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE1CC433F0;
+	Mon, 16 Jan 2023 16:14:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885651;
-	bh=TNhOnbUESmf7CRRXT/fo/NtO+s2n1gWqznEInsGLH+M=;
+	s=korg; t=1673885653;
+	bh=DMvURGM4N3eFvPfZhcUjsdUy++11HfosTP8UrN7TDR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tFNLTOZtVKtFs70sSaws+mvkV7GXFtNK61I2P+uLCS8DQ+RDVeAJsWsH5EN0l961P
-	 YRx1wzz0O76E/u9IuphQyY0wVeZZpZbmUnErbvU8HsBIY6j0nP7iQvGZYS8gBxvycS
-	 j5P0+dH0pnCP7cY+EGcy6pML7ujugZbyo61e1jMM=
+	b=fU3pyhJKFRuPy0+W9v5NXYIDwpr4IW9xwaSx7C7qAnxddnn27jP/DOlgXc0eUwdBO
+	 1R5tQUuEsj9g/YL3q/CZckcNEeEaEJf2z4mJNJNRMSDhKFPYt2jLuOqrIaTP5PMaJQ
+	 kIO5u4u1hTsqBwKfnyVWAWotuCVq9Mw3vgcNwCWA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Roberto Sassu <roberto.sassu@huawei.com>,
-	Mimi Zohar <zohar@linux.ibm.com>,
+	Jeff Johnson <quic_jjohnson@quicinc.com>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 133/658] ima: Fix misuse of dereference of pointer in template_desc_init_fields()
-Date: Mon, 16 Jan 2023 16:43:41 +0100
-Message-Id: <20230116154915.525154554@linuxfoundation.org>
+Subject: [PATCH 5.4 134/658] wifi: ath10k: Fix return value in ath10k_pci_init()
+Date: Mon, 16 Jan 2023 16:43:42 +0100
+Message-Id: <20230116154915.575189852@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -38,41 +38,58 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit 25369175ce84813dd99d6604e710dc2491f68523 ]
+[ Upstream commit 2af7749047d8d6ad43feff69f555a13a6a6c2831 ]
 
-The input parameter @fields is type of struct ima_template_field ***, so
-when allocates array memory for @fields, the size of element should be
-sizeof(**field) instead of sizeof(*field).
+This driver is attempting to register to support two different buses.
+if either of these is successful then ath10k_pci_init() should return 0
+so that hardware attached to the successful bus can be probed and
+supported. only if both of these are unsuccessful should ath10k_pci_init()
+return an errno.
 
-Actually the original code would not cause any runtime error, but it's
-better to make it logically right.
-
-Fixes: adf53a778a0a ("ima: new templates management mechanism")
+Fixes: 0b523ced9a3c ("ath10k: add basic skeleton to support ahb")
 Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Reviewed-by: Roberto Sassu <roberto.sassu@huawei.com>
-Signed-off-by: Mimi Zohar <zohar@linux.ibm.com>
+Reviewed-by: Jeff Johnson <quic_jjohnson@quicinc.com>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20221110061926.18163-1-xiujianfeng@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/integrity/ima/ima_template.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/ath/ath10k/pci.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
-diff --git a/security/integrity/ima/ima_template.c b/security/integrity/ima/ima_template.c
-index 2283051d063b..7721909b2615 100644
---- a/security/integrity/ima/ima_template.c
-+++ b/security/integrity/ima/ima_template.c
-@@ -222,11 +222,11 @@ int template_desc_init_fields(const char *template_fmt,
- 	}
+diff --git a/drivers/net/wireless/ath/ath10k/pci.c b/drivers/net/wireless/ath/ath10k/pci.c
+index 0f055e577749..c28328c96307 100644
+--- a/drivers/net/wireless/ath/ath10k/pci.c
++++ b/drivers/net/wireless/ath/ath10k/pci.c
+@@ -3769,18 +3769,22 @@ static struct pci_driver ath10k_pci_driver = {
  
- 	if (fields && num_fields) {
--		*fields = kmalloc_array(i, sizeof(*fields), GFP_KERNEL);
-+		*fields = kmalloc_array(i, sizeof(**fields), GFP_KERNEL);
- 		if (*fields == NULL)
- 			return -ENOMEM;
+ static int __init ath10k_pci_init(void)
+ {
+-	int ret;
++	int ret1, ret2;
  
--		memcpy(*fields, found_fields, i * sizeof(*fields));
-+		memcpy(*fields, found_fields, i * sizeof(**fields));
- 		*num_fields = i;
- 	}
+-	ret = pci_register_driver(&ath10k_pci_driver);
+-	if (ret)
++	ret1 = pci_register_driver(&ath10k_pci_driver);
++	if (ret1)
+ 		printk(KERN_ERR "failed to register ath10k pci driver: %d\n",
+-		       ret);
++		       ret1);
+ 
+-	ret = ath10k_ahb_init();
+-	if (ret)
+-		printk(KERN_ERR "ahb init failed: %d\n", ret);
++	ret2 = ath10k_ahb_init();
++	if (ret2)
++		printk(KERN_ERR "ahb init failed: %d\n", ret2);
+ 
+-	return ret;
++	if (ret1 && ret2)
++		return ret1;
++
++	/* registered to at least one bus */
++	return 0;
+ }
+ module_init(ath10k_pci_init);
  
 -- 
 2.35.1
