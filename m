@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DA156FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:48:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E7792C433EF;
-	Mon, 16 Jan 2023 16:48:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14FDE6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:48:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8335FC433EF;
+	Mon, 16 Jan 2023 16:48:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887731;
-	bh=82MbbYdidBYo1hvF/Exm3EvzXWEpopgEaaldIMzi1Bs=;
+	s=korg; t=1673887733;
+	bh=4egZIMYlZb6BBOSH4JS0tYwXsZtXp2iKIdAmbHPM49w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=auIXhxj2//g4TYnWXoDFOJ5zXzKJNPwRS6uye9k/NMFhlU8jY4rdP0pYG68Bm6I1G
-	 e4TOTtd8GyEk3pVhcV7PloYi9MEAAOlHINb1XLTLit7ECquK+wmc5M3+7rBol0OF68
-	 UfJGh3njbSfHmoQfaiLV1LRlXtmgN3nOGOilKrOY=
+	b=11cLtu+1uCGiRaK1+dSvWKv0emvyAzrITQut3iwrXrIiBxQRlitwOR8w5lTnv42T/
+	 ohheFfaTni9tLvjfEnkgYQagdO/lO/NbjNQShgjSdh3b21A37Y9FQHF4ZgYKJzoPhF
+	 e3uyBziaumyZwc0VNdE4l00/s6ZOkFXuLdkbItrE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Luis Chamberlain <mcgrof@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 259/521] HSI: omap_ssi_core: fix unbalanced pm_runtime_disable()
-Date: Mon, 16 Jan 2023 16:48:41 +0100
-Message-Id: <20230116154858.707819424@linuxfoundation.org>
+Subject: [PATCH 4.19 232/521] test_firmware: fix memory leak in test_firmware_init()
+Date: Mon, 16 Jan 2023 16:48:14 +0100
+Message-Id: <20230116154857.520225941@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,36 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Zhengchao Shao <shaozhengchao@huawei.com>
 
-[ Upstream commit f5181c35ed7ba0ceb6e42872aad1334d994b0175 ]
+[ Upstream commit 7610615e8cdb3f6f5bbd9d8e7a5d8a63e3cabf2e ]
 
-In error label 'out1' path in ssi_probe(), the pm_runtime_enable()
-has not been called yet, so pm_runtime_disable() is not needed.
+When misc_register() failed in test_firmware_init(), the memory pointed
+by test_fw_config->name is not released. The memory leak information is
+as follows:
+unreferenced object 0xffff88810a34cb00 (size 32):
+  comm "insmod", pid 7952, jiffies 4294948236 (age 49.060s)
+  hex dump (first 32 bytes):
+    74 65 73 74 2d 66 69 72 6d 77 61 72 65 2e 62 69  test-firmware.bi
+    6e 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  n...............
+  backtrace:
+    [<ffffffff81b21fcb>] __kmalloc_node_track_caller+0x4b/0xc0
+    [<ffffffff81affb96>] kstrndup+0x46/0xc0
+    [<ffffffffa0403a49>] __test_firmware_config_init+0x29/0x380 [test_firmware]
+    [<ffffffffa040f068>] 0xffffffffa040f068
+    [<ffffffff81002c41>] do_one_initcall+0x141/0x780
+    [<ffffffff816a72c3>] do_init_module+0x1c3/0x630
+    [<ffffffff816adb9e>] load_module+0x623e/0x76a0
+    [<ffffffff816af471>] __do_sys_finit_module+0x181/0x240
+    [<ffffffff89978f99>] do_syscall_64+0x39/0xb0
+    [<ffffffff89a0008b>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Fixes: b209e047bc74 ("HSI: Introduce OMAP SSI driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Fixes: c92316bf8e94 ("test_firmware: add batched firmware tests")
+Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
+Acked-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lore.kernel.org/r/20221119035721.18268-1-shaozhengchao@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hsi/controllers/omap_ssi_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ lib/test_firmware.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/hsi/controllers/omap_ssi_core.c b/drivers/hsi/controllers/omap_ssi_core.c
-index 15ecc4bc8de6..b91a6b6c0d7a 100644
---- a/drivers/hsi/controllers/omap_ssi_core.c
-+++ b/drivers/hsi/controllers/omap_ssi_core.c
-@@ -572,9 +572,9 @@ static int ssi_probe(struct platform_device *pd)
- 	device_for_each_child(&pd->dev, NULL, ssi_remove_ports);
- out2:
- 	ssi_remove_controller(ssi);
-+	pm_runtime_disable(&pd->dev);
- out1:
- 	platform_set_drvdata(pd, NULL);
--	pm_runtime_disable(&pd->dev);
+diff --git a/lib/test_firmware.c b/lib/test_firmware.c
+index a74b1aae7461..f4cc874021da 100644
+--- a/lib/test_firmware.c
++++ b/lib/test_firmware.c
+@@ -902,6 +902,7 @@ static int __init test_firmware_init(void)
  
- 	return err;
- }
+ 	rc = misc_register(&test_fw_misc_device);
+ 	if (rc) {
++		__test_firmware_config_free();
+ 		kfree(test_fw_config);
+ 		pr_err("could not register misc device: %d\n", rc);
+ 		return rc;
 -- 
 2.35.1
 
