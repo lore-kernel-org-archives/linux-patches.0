@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9787646B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:18:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E473C433F0;
-	Mon, 16 Jan 2023 16:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AE0D46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:18:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBF40C433EF;
+	Mon, 16 Jan 2023 16:18:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885895;
-	bh=0EZBU+jOBINJ0C8XPYvrDQPUPrSKxPhyN/rlJQXE8hI=;
+	s=korg; t=1673885898;
+	bh=E9I6p4faWwlAtUJ556ot8cO4m9gCRlf+PNsdP9j8FvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=q8MPkbZ45pMzioNCqLYsf3FE/EoLaniYa4Jz2lEp6rn6Cd9mRMRLM3PcMsS0sEYd3
-	 +yVDoko3PogMQi8+JpmHCaTM1u3VRFNxEXfo5rkB2B7rLCsENhu6ErqhxDfq/C6475
-	 YWCbkHifcPYsgtaiCVoQJHFo5iQodKa9GFXudfDs=
+	b=Rp4MaEzvBVltsPbeCnnTAYt5s6icQfD/3n9Uko7W2plDwBmZcR7uvHaQFR6b8K6sP
+	 BmaEnsTX/NtZdYfiqrJNAc9lescK8gTv+0OuOJct5LZTo1NYIHj5vAMidwcnkpCmtu
+	 wDcs629Fl5sCPEjbKJydwrDx8hHgnrJuu+lmp1PE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 185/658] xprtrdma: Fix regbuf data not freed in rpcrdma_req_create()
-Date: Mon, 16 Jan 2023 16:44:33 +0100
-Message-Id: <20230116154917.918263147@linuxfoundation.org>
+Subject: [PATCH 5.4 218/658] ethernet: s2io: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Mon, 16 Jan 2023 16:45:06 +0100
+Message-Id: <20230116154919.453280793@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,33 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 9181f40fb2952fd59ecb75e7158620c9c669eee3 ]
+[ Upstream commit 6cee96e09df54ae17784c0f38a49e0ed8229b825 ]
 
-If rdma receive buffer allocate failed, should call rpcrdma_regbuf_free()
-to free the send buffer, otherwise, the buffer data will be leaked.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-Fixes: bb93a1ae2bf4 ("xprtrdma: Allocate req's regbufs at xprt create time")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
+
+In this case, dev_kfree_skb() is called in free_tx_buffers() to drop
+the SKBs in tx buffers, when the card is down, so replace it with
+dev_kfree_skb_irq() here.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sunrpc/xprtrdma/verbs.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/neterion/s2io.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
-index 0f4d39fdb48f..e13115bbe719 100644
---- a/net/sunrpc/xprtrdma/verbs.c
-+++ b/net/sunrpc/xprtrdma/verbs.c
-@@ -1037,6 +1037,7 @@ struct rpcrdma_req *rpcrdma_req_create(struct rpcrdma_xprt *r_xprt, size_t size,
- 	kfree(req->rl_sendbuf);
- out3:
- 	kfree(req->rl_rdmabuf);
-+	rpcrdma_regbuf_free(req->rl_sendbuf);
- out2:
- 	kfree(req);
- out1:
+diff --git a/drivers/net/ethernet/neterion/s2io.c b/drivers/net/ethernet/neterion/s2io.c
+index 69316ddcf067..496052a6b9b8 100644
+--- a/drivers/net/ethernet/neterion/s2io.c
++++ b/drivers/net/ethernet/neterion/s2io.c
+@@ -2375,7 +2375,7 @@ static void free_tx_buffers(struct s2io_nic *nic)
+ 			skb = s2io_txdl_getskb(&mac_control->fifos[i], txdp, j);
+ 			if (skb) {
+ 				swstats->mem_freed += skb->truesize;
+-				dev_kfree_skb(skb);
++				dev_kfree_skb_irq(skb);
+ 				cnt++;
+ 			}
+ 		}
 -- 
 2.35.1
 
