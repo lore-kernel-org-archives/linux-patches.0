@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 067C046B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EC71C433F0;
-	Mon, 16 Jan 2023 16:16:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CF6046B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234F7C433D2;
+	Mon, 16 Jan 2023 16:16:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885776;
-	bh=0BKBsSGWrcbN2eBqO7h0t6/hqaZfQv4gECFdTpEIVx8=;
+	s=korg; t=1673885779;
+	bh=7fDL6ifeWM7ucuXChkgoQZqGTDnl1pjDLbz2deqESaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mm1ZtfIvomN9NpEdLcey7ZiYS1MK6o1iGHRbWsT/CDoK8QuIjaxdoGi6cTGmRJZvO
-	 Mum48Ovct3b3FMfAi2oQoEJJ72ZgqRlj3oMZAIOxsqDsM8FhR0fJlcPad1tjZt2+Su
-	 ZLBNfseojAEmPcqpHcjrecORTZAGm4ka9Y5Ai1rc=
+	b=gAQptAFrjK6aR4hTpx7yXG3jVeOUdq+f4H7ipxG9Hs+IgqVMiQqzPaXt0xjZYhHav
+	 Mq0gpxVgNmh1bdg82S55OloOXOhXclJGHWa5/lw3Rbqv+Qb7LRUvOFzoOOxySA9O9u
+	 DgdqVt0JssAuGM4HMfE7s48LgP0jEtbcPqoKvEys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 179/658] hsr: Avoid double remove of a node.
-Date: Mon, 16 Jan 2023 16:44:27 +0100
-Message-Id: <20230116154917.637737445@linuxfoundation.org>
+Subject: [PATCH 5.4 180/658] configfs: fix possible memory leak in configfs_create_dir()
+Date: Mon, 16 Jan 2023 16:44:28 +0100
+Message-Id: <20230116154917.688062360@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,83 +35,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 0c74d9f79ec4299365bbe803baa736ae0068179e ]
+[ Upstream commit c65234b283a65cfbfc94619655e820a5e55199eb ]
 
-Due to the hashed-MAC optimisation one problem become visible:
-hsr_handle_sup_frame() walks over the list of available nodes and merges
-two node entries into one if based on the information in the supervision
-both MAC addresses belong to one node. The list-walk happens on a RCU
-protected list and delete operation happens under a lock.
+kmemleak reported memory leaks in configfs_create_dir():
 
-If the supervision arrives on both slave interfaces at the same time
-then this delete operation can occur simultaneously on two CPUs. The
-result is the first-CPU deletes the from the list and the second CPUs
-BUGs while attempting to dereference a poisoned list-entry. This happens
-more likely with the optimisation because a new node for the mac_B entry
-is created once a packet has been received and removed (merged) once the
-supervision frame has been received.
+unreferenced object 0xffff888009f6af00 (size 192):
+  comm "modprobe", pid 3777, jiffies 4295537735 (age 233.784s)
+  backtrace:
+    kmem_cache_alloc (mm/slub.c:3250 mm/slub.c:3256 mm/slub.c:3263 mm/slub.c:3273)
+    new_fragment (./include/linux/slab.h:600 fs/configfs/dir.c:163)
+    configfs_register_subsystem (fs/configfs/dir.c:1857)
+    basic_write (drivers/hwtracing/stm/p_basic.c:14) stm_p_basic
+    do_one_initcall (init/main.c:1296)
+    do_init_module (kernel/module/main.c:2455)
+    ...
 
-Avoid removing/ cleaning up a hsr_node twice by adding a `removed' field
-which is set to true after the removal and checked before the removal.
+unreferenced object 0xffff888003ba7180 (size 96):
+  comm "modprobe", pid 3777, jiffies 4295537735 (age 233.784s)
+  backtrace:
+    kmem_cache_alloc (mm/slub.c:3250 mm/slub.c:3256 mm/slub.c:3263 mm/slub.c:3273)
+    configfs_new_dirent (./include/linux/slab.h:723 fs/configfs/dir.c:194)
+    configfs_make_dirent (fs/configfs/dir.c:248)
+    configfs_create_dir (fs/configfs/dir.c:296)
+    configfs_attach_group.isra.28 (fs/configfs/dir.c:816 fs/configfs/dir.c:852)
+    configfs_register_subsystem (fs/configfs/dir.c:1881)
+    basic_write (drivers/hwtracing/stm/p_basic.c:14) stm_p_basic
+    do_one_initcall (init/main.c:1296)
+    do_init_module (kernel/module/main.c:2455)
+    ...
 
-Fixes: f266a683a4804 ("net/hsr: Better frame dispatch")
-Signed-off-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This is because the refcount is not correct in configfs_make_dirent().
+For normal stage, the refcount is changing as:
+
+configfs_register_subsystem()
+  configfs_create_dir()
+    configfs_make_dirent()
+      configfs_new_dirent() # set s_count = 1
+      dentry->d_fsdata = configfs_get(sd); # s_count = 2
+...
+configfs_unregister_subsystem()
+  configfs_remove_dir()
+    remove_dir()
+      configfs_remove_dirent() # s_count = 1
+    dput() ...
+      *dentry_unlink_inode()*
+        configfs_d_iput() # s_count = 0, release
+
+However, if we failed in configfs_create():
+
+configfs_register_subsystem()
+  configfs_create_dir()
+    configfs_make_dirent() # s_count = 2
+    ...
+    configfs_create() # fail
+    ->out_remove:
+    configfs_remove_dirent(dentry)
+      configfs_put(sd) # s_count = 1
+      return PTR_ERR(inode);
+
+There is no inode in the error path, so the configfs_d_iput() is lost
+and makes sd and fragment memory leaked.
+
+To fix this, when we failed in configfs_create(), manually call
+configfs_put(sd) to keep the refcount correct.
+
+Fixes: 7063fbf22611 ("[PATCH] configfs: User-driven configuration filesystem")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/hsr/hsr_framereg.c | 16 +++++++++++-----
- net/hsr/hsr_framereg.h |  1 +
- 2 files changed, 12 insertions(+), 5 deletions(-)
+ fs/configfs/dir.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/net/hsr/hsr_framereg.c b/net/hsr/hsr_framereg.c
-index 4a9200729a32..783e741491ec 100644
---- a/net/hsr/hsr_framereg.c
-+++ b/net/hsr/hsr_framereg.c
-@@ -269,9 +269,12 @@ void hsr_handle_sup_frame(struct sk_buff *skb, struct hsr_node *node_curr,
- 	node_real->addr_B_port = port_rcv->type;
+diff --git a/fs/configfs/dir.c b/fs/configfs/dir.c
+index d73d88d9c259..bc27e3ad97ff 100644
+--- a/fs/configfs/dir.c
++++ b/fs/configfs/dir.c
+@@ -317,6 +317,7 @@ static int configfs_create_dir(struct config_item *item, struct dentry *dentry,
+ 	return 0;
  
- 	spin_lock_bh(&hsr->list_lock);
--	list_del_rcu(&node_curr->mac_list);
-+	if (!node_curr->removed) {
-+		list_del_rcu(&node_curr->mac_list);
-+		node_curr->removed = true;
-+		kfree_rcu(node_curr, rcu_head);
-+	}
- 	spin_unlock_bh(&hsr->list_lock);
--	kfree_rcu(node_curr, rcu_head);
+ out_remove:
++	configfs_put(dentry->d_fsdata);
+ 	configfs_remove_dirent(dentry);
+ 	return PTR_ERR(inode);
+ }
+@@ -383,6 +384,7 @@ int configfs_create_link(struct configfs_dirent *target, struct dentry *parent,
+ 	return 0;
  
- done:
- 	skb_push(skb, sizeof(struct hsrv1_ethhdr_sp));
-@@ -436,9 +439,12 @@ void hsr_prune_nodes(struct timer_list *t)
- 		if (time_is_before_jiffies(timestamp +
- 				msecs_to_jiffies(HSR_NODE_FORGET_TIME))) {
- 			hsr_nl_nodedown(hsr, node->macaddress_A);
--			list_del_rcu(&node->mac_list);
--			/* Note that we need to free this entry later: */
--			kfree_rcu(node, rcu_head);
-+			if (!node->removed) {
-+				list_del_rcu(&node->mac_list);
-+				node->removed = true;
-+				/* Note that we need to free this entry later: */
-+				kfree_rcu(node, rcu_head);
-+			}
- 		}
- 	}
- 	spin_unlock_bh(&hsr->list_lock);
-diff --git a/net/hsr/hsr_framereg.h b/net/hsr/hsr_framereg.h
-index 0f0fa12b4329..01f4ef4ae494 100644
---- a/net/hsr/hsr_framereg.h
-+++ b/net/hsr/hsr_framereg.h
-@@ -56,6 +56,7 @@ struct hsr_node {
- 	unsigned long		time_in[HSR_PT_PORTS];
- 	bool			time_in_stale[HSR_PT_PORTS];
- 	u16			seq_out[HSR_PT_PORTS];
-+	bool			removed;
- 	struct rcu_head		rcu_head;
- };
- 
+ out_remove:
++	configfs_put(dentry->d_fsdata);
+ 	configfs_remove_dirent(dentry);
+ 	return PTR_ERR(inode);
+ }
 -- 
 2.35.1
 
