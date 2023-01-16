@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB5BF33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6C5C433F0;
-	Mon, 16 Jan 2023 16:00:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6073933EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D61B3C43392;
+	Mon, 16 Jan 2023 16:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884806;
-	bh=mpCpMyDgDSLbCOWwnoq/YrmGquLxe7mhGXaOuDITfgI=;
+	s=korg; t=1673884809;
+	bh=/h5fWSuxsqiNTXEEbscCA8wfmUrTlCuDJsa6ZUCAWU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ykusRaC+wHMN2umhc5ds1P7KielvnX8KbeCXsPIxUPkZqeeQ3AuW3eR6q1+Z5nul9
-	 0zg739TqkzNuH6SfVOq+Rr7VfKKuYpp7r4gH1kLkOPwbkEfoGeRQCM6m+Y6X3ei24u
-	 qxP2IbZFIj7S9iMNZconejyVZ543xmOe142RNmcs=
+	b=RsQ5iXGomNf3uvX7iCjUAQTNgAl83gS68o+Jsii3uVu9PVyDiFCjduJx6NjwNslpV
+	 9ektdiwjvVmkc8SyJmpVU+XmByg2edjYxTfGVUhUMF8PKskc8uWeaU0juvoV7XxiWy
+	 Oi2CbU0DiNvI0CdHRzzBkDQPzy/nSx9nMP+rKbJ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zack Rusin <zackr@vmware.com>,
-	Martin Krastev <krastevm@vmware.com>,
-	Maaz Mombasawala <mombasawalam@vmware.com>,
+	Wei Chen <harperchen1110@gmail.com>,
+	Ido Schimmel <idosch@nvidia.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 147/183] drm/vmwgfx: Remove rcu locks from user resources
-Date: Mon, 16 Jan 2023 16:51:10 +0100
-Message-Id: <20230116154809.550720265@linuxfoundation.org>
+Subject: [PATCH 6.1 148/183] net/sched: act_mpls: Fix warning during failed attribute validation
+Date: Mon, 16 Jan 2023 16:51:11 +0100
+Message-Id: <20230116154809.597348840@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,590 +37,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zack Rusin <zackr@vmware.com>
+From: Ido Schimmel <idosch@nvidia.com>
 
-[ Upstream commit a309c7194e8a2f8bd4539b9449917913f6c2cd50 ]
+[ Upstream commit 9e17f99220d111ea031b44153fdfe364b0024ff2 ]
 
-User resource lookups used rcu to avoid two extra atomics. Unfortunately
-the rcu paths were buggy and it was easy to make the driver crash by
-submitting command buffers from two different threads. Because the
-lookups never show up in performance profiles replace them with a
-regular spin lock which fixes the races in accesses to those shared
-resources.
+The 'TCA_MPLS_LABEL' attribute is of 'NLA_U32' type, but has a
+validation type of 'NLA_VALIDATE_FUNCTION'. This is an invalid
+combination according to the comment above 'struct nla_policy':
 
-Fixes kernel oops'es in IGT's vmwgfx execution_buffer stress test and
-seen crashes with apps using shared resources.
+"
+Meaning of `validate' field, use via NLA_POLICY_VALIDATE_FN:
+   NLA_BINARY           Validation function called for the attribute.
+   All other            Unused - but note that it's a union
+"
 
-Fixes: e14c02e6b699 ("drm/vmwgfx: Look up objects without taking a reference")
-Signed-off-by: Zack Rusin <zackr@vmware.com>
-Reviewed-by: Martin Krastev <krastevm@vmware.com>
-Reviewed-by: Maaz Mombasawala <mombasawalam@vmware.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221207172907.959037-1-zack@kde.org
+This can trigger the warning [1] in nla_get_range_unsigned() when
+validation of the attribute fails. Despite being of 'NLA_U32' type, the
+associated 'min'/'max' fields in the policy are negative as they are
+aliased by the 'validate' field.
+
+Fix by changing the attribute type to 'NLA_BINARY' which is consistent
+with the above comment and all other users of NLA_POLICY_VALIDATE_FN().
+As a result, move the length validation to the validation function.
+
+No regressions in MPLS tests:
+
+ # ./tdc.py -f tc-tests/actions/mpls.json
+ [...]
+ # echo $?
+ 0
+
+[1]
+WARNING: CPU: 0 PID: 17743 at lib/nlattr.c:118
+nla_get_range_unsigned+0x1d8/0x1e0 lib/nlattr.c:117
+Modules linked in:
+CPU: 0 PID: 17743 Comm: syz-executor.0 Not tainted 6.1.0-rc8 #3
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS
+rel-1.13.0-48-gd9c812dda519-prebuilt.qemu.org 04/01/2014
+RIP: 0010:nla_get_range_unsigned+0x1d8/0x1e0 lib/nlattr.c:117
+[...]
+Call Trace:
+ <TASK>
+ __netlink_policy_dump_write_attr+0x23d/0x990 net/netlink/policy.c:310
+ netlink_policy_dump_write_attr+0x22/0x30 net/netlink/policy.c:411
+ netlink_ack_tlv_fill net/netlink/af_netlink.c:2454 [inline]
+ netlink_ack+0x546/0x760 net/netlink/af_netlink.c:2506
+ netlink_rcv_skb+0x1b7/0x240 net/netlink/af_netlink.c:2546
+ rtnetlink_rcv+0x18/0x20 net/core/rtnetlink.c:6109
+ netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
+ netlink_unicast+0x5e9/0x6b0 net/netlink/af_netlink.c:1345
+ netlink_sendmsg+0x739/0x860 net/netlink/af_netlink.c:1921
+ sock_sendmsg_nosec net/socket.c:714 [inline]
+ sock_sendmsg net/socket.c:734 [inline]
+ ____sys_sendmsg+0x38f/0x500 net/socket.c:2482
+ ___sys_sendmsg net/socket.c:2536 [inline]
+ __sys_sendmsg+0x197/0x230 net/socket.c:2565
+ __do_sys_sendmsg net/socket.c:2574 [inline]
+ __se_sys_sendmsg net/socket.c:2572 [inline]
+ __x64_sys_sendmsg+0x42/0x50 net/socket.c:2572
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Link: https://lore.kernel.org/netdev/CAO4mrfdmjvRUNbDyP0R03_DrD_eFCLCguz6OxZ2TYRSv0K9gxA@mail.gmail.com/
+Fixes: 2a2ea50870ba ("net: sched: add mpls manipulation actions to TC")
+Reported-by: Wei Chen <harperchen1110@gmail.com>
+Tested-by: Wei Chen <harperchen1110@gmail.com>
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Link: https://lore.kernel.org/r/20230107171004.608436-1-idosch@nvidia.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/vmwgfx/ttm_object.c      |  41 +-----
- drivers/gpu/drm/vmwgfx/ttm_object.h      |  14 --
- drivers/gpu/drm/vmwgfx/vmwgfx_bo.c       |  38 -----
- drivers/gpu/drm/vmwgfx/vmwgfx_drv.h      |  18 +--
- drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c  | 176 +++++++++++------------
- drivers/gpu/drm/vmwgfx/vmwgfx_resource.c |  33 -----
- 6 files changed, 87 insertions(+), 233 deletions(-)
+ net/sched/act_mpls.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/vmwgfx/ttm_object.c b/drivers/gpu/drm/vmwgfx/ttm_object.c
-index 932b125ebf3d..ddf8373c1d77 100644
---- a/drivers/gpu/drm/vmwgfx/ttm_object.c
-+++ b/drivers/gpu/drm/vmwgfx/ttm_object.c
-@@ -254,40 +254,6 @@ void ttm_base_object_unref(struct ttm_base_object **p_base)
- 	kref_put(&base->refcount, ttm_release_base);
- }
- 
--/**
-- * ttm_base_object_noref_lookup - look up a base object without reference
-- * @tfile: The struct ttm_object_file the object is registered with.
-- * @key: The object handle.
-- *
-- * This function looks up a ttm base object and returns a pointer to it
-- * without refcounting the pointer. The returned pointer is only valid
-- * until ttm_base_object_noref_release() is called, and the object
-- * pointed to by the returned pointer may be doomed. Any persistent usage
-- * of the object requires a refcount to be taken using kref_get_unless_zero().
-- * Iff this function returns successfully it needs to be paired with
-- * ttm_base_object_noref_release() and no sleeping- or scheduling functions
-- * may be called inbetween these function callse.
-- *
-- * Return: A pointer to the object if successful or NULL otherwise.
-- */
--struct ttm_base_object *
--ttm_base_object_noref_lookup(struct ttm_object_file *tfile, uint64_t key)
--{
--	struct vmwgfx_hash_item *hash;
--	int ret;
--
--	rcu_read_lock();
--	ret = ttm_tfile_find_ref_rcu(tfile, key, &hash);
--	if (ret) {
--		rcu_read_unlock();
--		return NULL;
--	}
--
--	__release(RCU);
--	return hlist_entry(hash, struct ttm_ref_object, hash)->obj;
--}
--EXPORT_SYMBOL(ttm_base_object_noref_lookup);
--
- struct ttm_base_object *ttm_base_object_lookup(struct ttm_object_file *tfile,
- 					       uint64_t key)
+diff --git a/net/sched/act_mpls.c b/net/sched/act_mpls.c
+index 8ad25cc8ccd5..ea5959094adb 100644
+--- a/net/sched/act_mpls.c
++++ b/net/sched/act_mpls.c
+@@ -132,6 +132,11 @@ static int valid_label(const struct nlattr *attr,
  {
-@@ -295,15 +261,16 @@ struct ttm_base_object *ttm_base_object_lookup(struct ttm_object_file *tfile,
- 	struct vmwgfx_hash_item *hash;
- 	int ret;
+ 	const u32 *label = nla_data(attr);
  
--	rcu_read_lock();
--	ret = ttm_tfile_find_ref_rcu(tfile, key, &hash);
-+	spin_lock(&tfile->lock);
-+	ret = ttm_tfile_find_ref(tfile, key, &hash);
- 
- 	if (likely(ret == 0)) {
- 		base = hlist_entry(hash, struct ttm_ref_object, hash)->obj;
- 		if (!kref_get_unless_zero(&base->refcount))
- 			base = NULL;
- 	}
--	rcu_read_unlock();
-+	spin_unlock(&tfile->lock);
-+
- 
- 	return base;
- }
-diff --git a/drivers/gpu/drm/vmwgfx/ttm_object.h b/drivers/gpu/drm/vmwgfx/ttm_object.h
-index f0ebbe340ad6..8098a3846bae 100644
---- a/drivers/gpu/drm/vmwgfx/ttm_object.h
-+++ b/drivers/gpu/drm/vmwgfx/ttm_object.h
-@@ -307,18 +307,4 @@ extern int ttm_prime_handle_to_fd(struct ttm_object_file *tfile,
- #define ttm_prime_object_kfree(__obj, __prime)		\
- 	kfree_rcu(__obj, __prime.base.rhead)
- 
--struct ttm_base_object *
--ttm_base_object_noref_lookup(struct ttm_object_file *tfile, uint64_t key);
--
--/**
-- * ttm_base_object_noref_release - release a base object pointer looked up
-- * without reference
-- *
-- * Releases a base object pointer looked up with ttm_base_object_noref_lookup().
-- */
--static inline void ttm_base_object_noref_release(void)
--{
--	__acquire(RCU);
--	rcu_read_unlock();
--}
- #endif
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
-index 822251aaab0a..973a0a52462e 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
-@@ -715,44 +715,6 @@ int vmw_user_bo_lookup(struct drm_file *filp,
- 	return 0;
- }
- 
--/**
-- * vmw_user_bo_noref_lookup - Look up a vmw user buffer object without reference
-- * @filp: The TTM object file the handle is registered with.
-- * @handle: The user buffer object handle.
-- *
-- * This function looks up a struct vmw_bo and returns a pointer to the
-- * struct vmw_buffer_object it derives from without refcounting the pointer.
-- * The returned pointer is only valid until vmw_user_bo_noref_release() is
-- * called, and the object pointed to by the returned pointer may be doomed.
-- * Any persistent usage of the object requires a refcount to be taken using
-- * ttm_bo_reference_unless_doomed(). Iff this function returns successfully it
-- * needs to be paired with vmw_user_bo_noref_release() and no sleeping-
-- * or scheduling functions may be called in between these function calls.
-- *
-- * Return: A struct vmw_buffer_object pointer if successful or negative
-- * error pointer on failure.
-- */
--struct vmw_buffer_object *
--vmw_user_bo_noref_lookup(struct drm_file *filp, u32 handle)
--{
--	struct vmw_buffer_object *vmw_bo;
--	struct ttm_buffer_object *bo;
--	struct drm_gem_object *gobj = drm_gem_object_lookup(filp, handle);
--
--	if (!gobj) {
--		DRM_ERROR("Invalid buffer object handle 0x%08lx.\n",
--			  (unsigned long)handle);
--		return ERR_PTR(-ESRCH);
--	}
--	vmw_bo = gem_to_vmw_bo(gobj);
--	bo = ttm_bo_get_unless_zero(&vmw_bo->base);
--	vmw_bo = vmw_buffer_object(bo);
--	drm_gem_object_put(gobj);
--
--	return vmw_bo;
--}
--
--
- /**
-  * vmw_bo_fence_single - Utility function to fence a single TTM buffer
-  *                       object without unreserving it.
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-index 7c45c3de0dcf..0bc1ebc43002 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.h
-@@ -826,12 +826,7 @@ extern int vmw_user_resource_lookup_handle(
- 	uint32_t handle,
- 	const struct vmw_user_resource_conv *converter,
- 	struct vmw_resource **p_res);
--extern struct vmw_resource *
--vmw_user_resource_noref_lookup_handle(struct vmw_private *dev_priv,
--				      struct ttm_object_file *tfile,
--				      uint32_t handle,
--				      const struct vmw_user_resource_conv *
--				      converter);
-+
- extern int vmw_stream_claim_ioctl(struct drm_device *dev, void *data,
- 				  struct drm_file *file_priv);
- extern int vmw_stream_unref_ioctl(struct drm_device *dev, void *data,
-@@ -870,15 +865,6 @@ static inline bool vmw_resource_mob_attached(const struct vmw_resource *res)
- 	return !RB_EMPTY_NODE(&res->mob_node);
- }
- 
--/**
-- * vmw_user_resource_noref_release - release a user resource pointer looked up
-- * without reference
-- */
--static inline void vmw_user_resource_noref_release(void)
--{
--	ttm_base_object_noref_release();
--}
--
- /**
-  * Buffer object helper functions - vmwgfx_bo.c
-  */
-@@ -930,8 +916,6 @@ extern void vmw_bo_unmap(struct vmw_buffer_object *vbo);
- extern void vmw_bo_move_notify(struct ttm_buffer_object *bo,
- 			       struct ttm_resource *mem);
- extern void vmw_bo_swap_notify(struct ttm_buffer_object *bo);
--extern struct vmw_buffer_object *
--vmw_user_bo_noref_lookup(struct drm_file *filp, u32 handle);
- 
- /**
-  * vmw_bo_adjust_prio - Adjust the buffer object eviction priority
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-index c943ab801ca7..70cfed4fdba0 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_execbuf.c
-@@ -290,20 +290,26 @@ static void vmw_execbuf_rcache_update(struct vmw_res_cache_entry *rcache,
- 	rcache->valid_handle = 0;
- }
- 
-+enum vmw_val_add_flags {
-+	vmw_val_add_flag_none  =      0,
-+	vmw_val_add_flag_noctx = 1 << 0,
-+};
-+
- /**
-- * vmw_execbuf_res_noref_val_add - Add a resource described by an unreferenced
-- * rcu-protected pointer to the validation list.
-+ * vmw_execbuf_res_val_add - Add a resource to the validation list.
-  *
-  * @sw_context: Pointer to the software context.
-  * @res: Unreferenced rcu-protected pointer to the resource.
-  * @dirty: Whether to change dirty status.
-+ * @flags: specifies whether to use the context or not
-  *
-  * Returns: 0 on success. Negative error code on failure. Typical error codes
-  * are %-EINVAL on inconsistency and %-ESRCH if the resource was doomed.
-  */
--static int vmw_execbuf_res_noref_val_add(struct vmw_sw_context *sw_context,
--					 struct vmw_resource *res,
--					 u32 dirty)
-+static int vmw_execbuf_res_val_add(struct vmw_sw_context *sw_context,
-+				   struct vmw_resource *res,
-+				   u32 dirty,
-+				   u32 flags)
- {
- 	struct vmw_private *dev_priv = res->dev_priv;
- 	int ret;
-@@ -318,24 +324,30 @@ static int vmw_execbuf_res_noref_val_add(struct vmw_sw_context *sw_context,
- 		if (dirty)
- 			vmw_validation_res_set_dirty(sw_context->ctx,
- 						     rcache->private, dirty);
--		vmw_user_resource_noref_release();
- 		return 0;
- 	}
- 
--	priv_size = vmw_execbuf_res_size(dev_priv, res_type);
--	ret = vmw_validation_add_resource(sw_context->ctx, res, priv_size,
--					  dirty, (void **)&ctx_info,
--					  &first_usage);
--	vmw_user_resource_noref_release();
--	if (ret)
--		return ret;
-+	if ((flags & vmw_val_add_flag_noctx) != 0) {
-+		ret = vmw_validation_add_resource(sw_context->ctx, res, 0, dirty,
-+						  (void **)&ctx_info, NULL);
-+		if (ret)
-+			return ret;
- 
--	if (priv_size && first_usage) {
--		ret = vmw_cmd_ctx_first_setup(dev_priv, sw_context, res,
--					      ctx_info);
--		if (ret) {
--			VMW_DEBUG_USER("Failed first usage context setup.\n");
-+	} else {
-+		priv_size = vmw_execbuf_res_size(dev_priv, res_type);
-+		ret = vmw_validation_add_resource(sw_context->ctx, res, priv_size,
-+						  dirty, (void **)&ctx_info,
-+						  &first_usage);
-+		if (ret)
- 			return ret;
-+
-+		if (priv_size && first_usage) {
-+			ret = vmw_cmd_ctx_first_setup(dev_priv, sw_context, res,
-+						      ctx_info);
-+			if (ret) {
-+				VMW_DEBUG_USER("Failed first usage context setup.\n");
-+				return ret;
-+			}
- 		}
- 	}
- 
-@@ -343,43 +355,6 @@ static int vmw_execbuf_res_noref_val_add(struct vmw_sw_context *sw_context,
- 	return 0;
- }
- 
--/**
-- * vmw_execbuf_res_noctx_val_add - Add a non-context resource to the resource
-- * validation list if it's not already on it
-- *
-- * @sw_context: Pointer to the software context.
-- * @res: Pointer to the resource.
-- * @dirty: Whether to change dirty status.
-- *
-- * Returns: Zero on success. Negative error code on failure.
-- */
--static int vmw_execbuf_res_noctx_val_add(struct vmw_sw_context *sw_context,
--					 struct vmw_resource *res,
--					 u32 dirty)
--{
--	struct vmw_res_cache_entry *rcache;
--	enum vmw_res_type res_type = vmw_res_type(res);
--	void *ptr;
--	int ret;
--
--	rcache = &sw_context->res_cache[res_type];
--	if (likely(rcache->valid && rcache->res == res)) {
--		if (dirty)
--			vmw_validation_res_set_dirty(sw_context->ctx,
--						     rcache->private, dirty);
--		return 0;
--	}
--
--	ret = vmw_validation_add_resource(sw_context->ctx, res, 0, dirty,
--					  &ptr, NULL);
--	if (ret)
--		return ret;
--
--	vmw_execbuf_rcache_update(rcache, res, ptr);
--
--	return 0;
--}
--
- /**
-  * vmw_view_res_val_add - Add a view and the surface it's pointing to to the
-  * validation list
-@@ -398,13 +373,13 @@ static int vmw_view_res_val_add(struct vmw_sw_context *sw_context,
- 	 * First add the resource the view is pointing to, otherwise it may be
- 	 * swapped out when the view is validated.
- 	 */
--	ret = vmw_execbuf_res_noctx_val_add(sw_context, vmw_view_srf(view),
--					    vmw_view_dirtying(view));
-+	ret = vmw_execbuf_res_val_add(sw_context, vmw_view_srf(view),
-+				      vmw_view_dirtying(view), vmw_val_add_flag_noctx);
- 	if (ret)
- 		return ret;
- 
--	return vmw_execbuf_res_noctx_val_add(sw_context, view,
--					     VMW_RES_DIRTY_NONE);
-+	return vmw_execbuf_res_val_add(sw_context, view, VMW_RES_DIRTY_NONE,
-+				       vmw_val_add_flag_noctx);
- }
- 
- /**
-@@ -475,8 +450,9 @@ static int vmw_resource_context_res_add(struct vmw_private *dev_priv,
- 			if (IS_ERR(res))
- 				continue;
- 
--			ret = vmw_execbuf_res_noctx_val_add(sw_context, res,
--							    VMW_RES_DIRTY_SET);
-+			ret = vmw_execbuf_res_val_add(sw_context, res,
-+						      VMW_RES_DIRTY_SET,
-+						      vmw_val_add_flag_noctx);
- 			if (unlikely(ret != 0))
- 				return ret;
- 		}
-@@ -490,9 +466,9 @@ static int vmw_resource_context_res_add(struct vmw_private *dev_priv,
- 		if (vmw_res_type(entry->res) == vmw_res_view)
- 			ret = vmw_view_res_val_add(sw_context, entry->res);
- 		else
--			ret = vmw_execbuf_res_noctx_val_add
--				(sw_context, entry->res,
--				 vmw_binding_dirtying(entry->bt));
-+			ret = vmw_execbuf_res_val_add(sw_context, entry->res,
-+						      vmw_binding_dirtying(entry->bt),
-+						      vmw_val_add_flag_noctx);
- 		if (unlikely(ret != 0))
- 			break;
- 	}
-@@ -658,7 +634,8 @@ vmw_cmd_res_check(struct vmw_private *dev_priv,
- {
- 	struct vmw_res_cache_entry *rcache = &sw_context->res_cache[res_type];
- 	struct vmw_resource *res;
--	int ret;
-+	int ret = 0;
-+	bool needs_unref = false;
- 
- 	if (p_res)
- 		*p_res = NULL;
-@@ -683,17 +660,18 @@ vmw_cmd_res_check(struct vmw_private *dev_priv,
- 		if (ret)
- 			return ret;
- 
--		res = vmw_user_resource_noref_lookup_handle
--			(dev_priv, sw_context->fp->tfile, *id_loc, converter);
--		if (IS_ERR(res)) {
-+		ret = vmw_user_resource_lookup_handle
-+			(dev_priv, sw_context->fp->tfile, *id_loc, converter, &res);
-+		if (ret != 0) {
- 			VMW_DEBUG_USER("Could not find/use resource 0x%08x.\n",
- 				       (unsigned int) *id_loc);
--			return PTR_ERR(res);
-+			return ret;
- 		}
-+		needs_unref = true;
- 
--		ret = vmw_execbuf_res_noref_val_add(sw_context, res, dirty);
-+		ret = vmw_execbuf_res_val_add(sw_context, res, dirty, vmw_val_add_flag_none);
- 		if (unlikely(ret != 0))
--			return ret;
-+			goto res_check_done;
- 
- 		if (rcache->valid && rcache->res == res) {
- 			rcache->valid_handle = true;
-@@ -708,7 +686,11 @@ vmw_cmd_res_check(struct vmw_private *dev_priv,
- 	if (p_res)
- 		*p_res = res;
- 
--	return 0;
-+res_check_done:
-+	if (needs_unref)
-+		vmw_resource_unreference(&res);
-+
-+	return ret;
- }
- 
- /**
-@@ -1171,9 +1153,9 @@ static int vmw_translate_mob_ptr(struct vmw_private *dev_priv,
- 	int ret;
- 
- 	vmw_validation_preload_bo(sw_context->ctx);
--	vmw_bo = vmw_user_bo_noref_lookup(sw_context->filp, handle);
--	if (IS_ERR(vmw_bo)) {
--		VMW_DEBUG_USER("Could not find or use MOB buffer.\n");
-+	ret = vmw_user_bo_lookup(sw_context->filp, handle, &vmw_bo);
-+	if (ret != 0) {
-+		drm_dbg(&dev_priv->drm, "Could not find or use MOB buffer.\n");
- 		return PTR_ERR(vmw_bo);
- 	}
- 	ret = vmw_validation_add_bo(sw_context->ctx, vmw_bo, true, false);
-@@ -1225,9 +1207,9 @@ static int vmw_translate_guest_ptr(struct vmw_private *dev_priv,
- 	int ret;
- 
- 	vmw_validation_preload_bo(sw_context->ctx);
--	vmw_bo = vmw_user_bo_noref_lookup(sw_context->filp, handle);
--	if (IS_ERR(vmw_bo)) {
--		VMW_DEBUG_USER("Could not find or use GMR region.\n");
-+	ret = vmw_user_bo_lookup(sw_context->filp, handle, &vmw_bo);
-+	if (ret != 0) {
-+		drm_dbg(&dev_priv->drm, "Could not find or use GMR region.\n");
- 		return PTR_ERR(vmw_bo);
- 	}
- 	ret = vmw_validation_add_bo(sw_context->ctx, vmw_bo, false, false);
-@@ -2025,8 +2007,9 @@ static int vmw_cmd_set_shader(struct vmw_private *dev_priv,
- 		res = vmw_shader_lookup(vmw_context_res_man(ctx),
- 					cmd->body.shid, cmd->body.type);
- 		if (!IS_ERR(res)) {
--			ret = vmw_execbuf_res_noctx_val_add(sw_context, res,
--							    VMW_RES_DIRTY_NONE);
-+			ret = vmw_execbuf_res_val_add(sw_context, res,
-+						      VMW_RES_DIRTY_NONE,
-+						      vmw_val_add_flag_noctx);
- 			if (unlikely(ret != 0))
- 				return ret;
- 
-@@ -2273,8 +2256,9 @@ static int vmw_cmd_dx_set_shader(struct vmw_private *dev_priv,
- 			return PTR_ERR(res);
- 		}
- 
--		ret = vmw_execbuf_res_noctx_val_add(sw_context, res,
--						    VMW_RES_DIRTY_NONE);
-+		ret = vmw_execbuf_res_val_add(sw_context, res,
-+					      VMW_RES_DIRTY_NONE,
-+					      vmw_val_add_flag_noctx);
- 		if (ret)
- 			return ret;
- 	}
-@@ -2777,8 +2761,8 @@ static int vmw_cmd_dx_bind_shader(struct vmw_private *dev_priv,
- 		return PTR_ERR(res);
- 	}
- 
--	ret = vmw_execbuf_res_noctx_val_add(sw_context, res,
--					    VMW_RES_DIRTY_NONE);
-+	ret = vmw_execbuf_res_val_add(sw_context, res, VMW_RES_DIRTY_NONE,
-+				      vmw_val_add_flag_noctx);
- 	if (ret) {
- 		VMW_DEBUG_USER("Error creating resource validation node.\n");
- 		return ret;
-@@ -3098,8 +3082,8 @@ static int vmw_cmd_dx_bind_streamoutput(struct vmw_private *dev_priv,
- 
- 	vmw_dx_streamoutput_set_size(res, cmd->body.sizeInBytes);
- 
--	ret = vmw_execbuf_res_noctx_val_add(sw_context, res,
--					    VMW_RES_DIRTY_NONE);
-+	ret = vmw_execbuf_res_val_add(sw_context, res, VMW_RES_DIRTY_NONE,
-+				      vmw_val_add_flag_noctx);
- 	if (ret) {
- 		DRM_ERROR("Error creating resource validation node.\n");
- 		return ret;
-@@ -3148,8 +3132,8 @@ static int vmw_cmd_dx_set_streamoutput(struct vmw_private *dev_priv,
- 		return 0;
- 	}
- 
--	ret = vmw_execbuf_res_noctx_val_add(sw_context, res,
--					    VMW_RES_DIRTY_NONE);
-+	ret = vmw_execbuf_res_val_add(sw_context, res, VMW_RES_DIRTY_NONE,
-+				      vmw_val_add_flag_noctx);
- 	if (ret) {
- 		DRM_ERROR("Error creating resource validation node.\n");
- 		return ret;
-@@ -4067,22 +4051,26 @@ static int vmw_execbuf_tie_context(struct vmw_private *dev_priv,
- 	if (ret)
- 		return ret;
- 
--	res = vmw_user_resource_noref_lookup_handle
-+	ret = vmw_user_resource_lookup_handle
- 		(dev_priv, sw_context->fp->tfile, handle,
--		 user_context_converter);
--	if (IS_ERR(res)) {
-+		 user_context_converter, &res);
-+	if (ret != 0) {
- 		VMW_DEBUG_USER("Could not find or user DX context 0x%08x.\n",
- 			       (unsigned int) handle);
--		return PTR_ERR(res);
-+		return ret;
- 	}
- 
--	ret = vmw_execbuf_res_noref_val_add(sw_context, res, VMW_RES_DIRTY_SET);
--	if (unlikely(ret != 0))
-+	ret = vmw_execbuf_res_val_add(sw_context, res, VMW_RES_DIRTY_SET,
-+				      vmw_val_add_flag_none);
-+	if (unlikely(ret != 0)) {
-+		vmw_resource_unreference(&res);
- 		return ret;
++	if (nla_len(attr) != sizeof(*label)) {
++		NL_SET_ERR_MSG_MOD(extack, "Invalid MPLS label length");
++		return -EINVAL;
 +	}
- 
- 	sw_context->dx_ctx_node = vmw_execbuf_info_from_res(sw_context, res);
- 	sw_context->man = vmw_context_res_man(res);
- 
-+	vmw_resource_unreference(&res);
- 	return 0;
- }
- 
-diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_resource.c b/drivers/gpu/drm/vmwgfx/vmwgfx_resource.c
-index f66caa540e14..c7d645e5ec7b 100644
---- a/drivers/gpu/drm/vmwgfx/vmwgfx_resource.c
-+++ b/drivers/gpu/drm/vmwgfx/vmwgfx_resource.c
-@@ -281,39 +281,6 @@ int vmw_user_resource_lookup_handle(struct vmw_private *dev_priv,
- 	return ret;
- }
- 
--/**
-- * vmw_user_resource_noref_lookup_handle - lookup a struct resource from a
-- * TTM user-space handle and perform basic type checks
-- *
-- * @dev_priv:     Pointer to a device private struct
-- * @tfile:        Pointer to a struct ttm_object_file identifying the caller
-- * @handle:       The TTM user-space handle
-- * @converter:    Pointer to an object describing the resource type
-- *
-- * If the handle can't be found or is associated with an incorrect resource
-- * type, -EINVAL will be returned.
-- */
--struct vmw_resource *
--vmw_user_resource_noref_lookup_handle(struct vmw_private *dev_priv,
--				      struct ttm_object_file *tfile,
--				      uint32_t handle,
--				      const struct vmw_user_resource_conv
--				      *converter)
--{
--	struct ttm_base_object *base;
--
--	base = ttm_base_object_noref_lookup(tfile, handle);
--	if (!base)
--		return ERR_PTR(-ESRCH);
--
--	if (unlikely(ttm_base_object_type(base) != converter->object_type)) {
--		ttm_base_object_noref_release();
--		return ERR_PTR(-EINVAL);
--	}
--
--	return converter->base_obj_to_res(base);
--}
--
- /*
-  * Helper function that looks either a surface or bo.
-  *
++
+ 	if (*label & ~MPLS_LABEL_MASK || *label == MPLS_LABEL_IMPLNULL) {
+ 		NL_SET_ERR_MSG_MOD(extack, "MPLS label out of range");
+ 		return -EINVAL;
+@@ -143,7 +148,8 @@ static int valid_label(const struct nlattr *attr,
+ static const struct nla_policy mpls_policy[TCA_MPLS_MAX + 1] = {
+ 	[TCA_MPLS_PARMS]	= NLA_POLICY_EXACT_LEN(sizeof(struct tc_mpls)),
+ 	[TCA_MPLS_PROTO]	= { .type = NLA_U16 },
+-	[TCA_MPLS_LABEL]	= NLA_POLICY_VALIDATE_FN(NLA_U32, valid_label),
++	[TCA_MPLS_LABEL]	= NLA_POLICY_VALIDATE_FN(NLA_BINARY,
++							 valid_label),
+ 	[TCA_MPLS_TC]		= NLA_POLICY_RANGE(NLA_U8, 0, 7),
+ 	[TCA_MPLS_TTL]		= NLA_POLICY_MIN(NLA_U8, 1),
+ 	[TCA_MPLS_BOS]		= NLA_POLICY_RANGE(NLA_U8, 0, 1),
 -- 
 2.35.1
 
