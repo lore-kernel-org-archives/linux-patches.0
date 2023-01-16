@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55806D24
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:58:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6D24FC433D2;
-	Mon, 16 Jan 2023 16:58:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81CBE46B8
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:58:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08439C4339B;
+	Mon, 16 Jan 2023 16:58:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888334;
-	bh=Oa+7z2CKRvY4h6VGcWvpZBwJOAxMJleX2mSN3Ph7FP0=;
+	s=korg; t=1673888337;
+	bh=hU4662M6YQX6OR5tBCuRr2EM/H2kuefWhIXMxCZVt0U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KOXVP+UgVUrXEXcxEh7j6qWANF/1w1vvtxg10Qd6UYR0ArYCeaNvrlQeHrJE/86iI
-	 vAKIfod5/NOG4vaUmlUP6kh4TaC/VaSp5tna8+X5grSjZ/pDfOP9ePLl6Ofj+BvTWb
-	 TDSg/dzwGR9TYkow2B8AFkIvjjSr5W3yX/4qDNqo=
+	b=cDqzSewm7sALySmIzc7ytnj3yixV/rDPyo1DoLvcPNqydBFhPUQJFRdTU7fcekEPR
+	 ehhURyyvOfgPJhr5h3iSxTuYlYHbQ920PHyTQgvOQvUrx5dccQxEfvZtquECNRz2cY
+	 E9VomxVIt776qMGQmkvn21tjqiR5xskK6CcMw/1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+7bb7cd3595533513a9e7@syzkaller.appspotmail.com,
-	Michael Schmitz <schmitzmic@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Matthew Wilcox <willy@infradead.org>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 4.19 459/521] hfs/hfsplus: avoid WARN_ON() for sanity check, use proper error handling
-Date: Mon, 16 Jan 2023 16:52:01 +0100
-Message-Id: <20230116154907.660594745@linuxfoundation.org>
+	stable@kernel.org,
+	Mike Galbraith <efault@gmx.de>,
+	Jan Kara <jack@suse.cz>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 4.19 460/521] mbcache: Avoid nesting of cache->c_list_lock under bit locks
+Date: Mon, 16 Jan 2023 16:52:02 +0100
+Message-Id: <20230116154907.708507249@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -38,90 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Jan Kara <jack@suse.cz>
 
-commit cb7a95af78d29442b8294683eca4897544b8ef46 upstream.
+commit 5fc4cbd9fde5d4630494fd6ffc884148fb618087 upstream.
 
-Commit 55d1cbbbb29e ("hfs/hfsplus: use WARN_ON for sanity check") fixed
-a build warning by turning a comment into a WARN_ON(), but it turns out
-that syzbot then complains because it can trigger said warning with a
-corrupted hfs image.
+Commit 307af6c87937 ("mbcache: automatically delete entries from cache
+on freeing") started nesting cache->c_list_lock under the bit locks
+protecting hash buckets of the mbcache hash table in
+mb_cache_entry_create(). This causes problems for real-time kernels
+because there spinlocks are sleeping locks while bitlocks stay atomic.
+Luckily the nesting is easy to avoid by holding entry reference until
+the entry is added to the LRU list. This makes sure we cannot race with
+entry deletion.
 
-The warning actually does warn about a bad situation, but we are much
-better off just handling it as the error it is.  So rather than warn
-about us doing bad things, stop doing the bad things and return -EIO.
-
-While at it, also fix a memory leak that was introduced by an earlier
-fix for a similar syzbot warning situation, and add a check for one case
-that historically wasn't handled at all (ie neither comment nor
-subsequent WARN_ON).
-
-Reported-by: syzbot+7bb7cd3595533513a9e7@syzkaller.appspotmail.com
-Fixes: 55d1cbbbb29e ("hfs/hfsplus: use WARN_ON for sanity check")
-Fixes: 8d824e69d9f3 ("hfs: fix OOB Read in __hfs_brec_find")
-Link: https://lore.kernel.org/lkml/000000000000dbce4e05f170f289@google.com/
-Tested-by: Michael Schmitz <schmitzmic@gmail.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Cc: stable@kernel.org
+Fixes: 307af6c87937 ("mbcache: automatically delete entries from cache on freeing")
+Reported-by: Mike Galbraith <efault@gmx.de>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Link: https://lore.kernel.org/r/20220908091032.10513-1-jack@suse.cz
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfs/inode.c |   15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ fs/mbcache.c |   17 ++++++++++-------
+ 1 file changed, 10 insertions(+), 7 deletions(-)
 
---- a/fs/hfs/inode.c
-+++ b/fs/hfs/inode.c
-@@ -453,15 +453,16 @@ int hfs_write_inode(struct inode *inode,
- 		/* panic? */
- 		return -EIO;
+--- a/fs/mbcache.c
++++ b/fs/mbcache.c
+@@ -89,8 +89,14 @@ int mb_cache_entry_create(struct mb_cach
+ 		return -ENOMEM;
  
-+	res = -EIO;
- 	if (HFS_I(main_inode)->cat_key.CName.len > HFS_NAMELEN)
--		return -EIO;
-+		goto out;
- 	fd.search_key->cat = HFS_I(main_inode)->cat_key;
- 	if (hfs_brec_find(&fd))
--		/* panic? */
- 		goto out;
- 
- 	if (S_ISDIR(main_inode->i_mode)) {
--		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_dir));
-+		if (fd.entrylength < sizeof(struct hfs_cat_dir))
-+			goto out;
- 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
- 			   sizeof(struct hfs_cat_dir));
- 		if (rec.type != HFS_CDR_DIR ||
-@@ -474,6 +475,8 @@ int hfs_write_inode(struct inode *inode,
- 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
- 			    sizeof(struct hfs_cat_dir));
- 	} else if (HFS_IS_RSRC(inode)) {
-+		if (fd.entrylength < sizeof(struct hfs_cat_file))
-+			goto out;
- 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
- 			       sizeof(struct hfs_cat_file));
- 		hfs_inode_write_fork(inode, rec.file.RExtRec,
-@@ -481,7 +484,8 @@ int hfs_write_inode(struct inode *inode,
- 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
- 				sizeof(struct hfs_cat_file));
- 	} else {
--		WARN_ON(fd.entrylength < sizeof(struct hfs_cat_file));
-+		if (fd.entrylength < sizeof(struct hfs_cat_file))
-+			goto out;
- 		hfs_bnode_read(fd.bnode, &rec, fd.entryoffset,
- 			   sizeof(struct hfs_cat_file));
- 		if (rec.type != HFS_CDR_FIL ||
-@@ -498,9 +502,10 @@ int hfs_write_inode(struct inode *inode,
- 		hfs_bnode_write(fd.bnode, &rec, fd.entryoffset,
- 			    sizeof(struct hfs_cat_file));
+ 	INIT_LIST_HEAD(&entry->e_list);
+-	/* Initial hash reference */
+-	atomic_set(&entry->e_refcnt, 1);
++	/*
++	 * We create entry with two references. One reference is kept by the
++	 * hash table, the other reference is used to protect us from
++	 * mb_cache_entry_delete_or_get() until the entry is fully setup. This
++	 * avoids nesting of cache->c_list_lock into hash table bit locks which
++	 * is problematic for RT.
++	 */
++	atomic_set(&entry->e_refcnt, 2);
+ 	entry->e_key = key;
+ 	entry->e_value = value;
+ 	entry->e_flags = 0;
+@@ -106,15 +112,12 @@ int mb_cache_entry_create(struct mb_cach
+ 		}
  	}
-+	res = 0;
- out:
- 	hfs_find_exit(&fd);
--	return 0;
-+	return res;
- }
+ 	hlist_bl_add_head(&entry->e_hash_list, head);
+-	/*
+-	 * Add entry to LRU list before it can be found by
+-	 * mb_cache_entry_delete() to avoid races
+-	 */
++	hlist_bl_unlock(head);
+ 	spin_lock(&cache->c_list_lock);
+ 	list_add_tail(&entry->e_list, &cache->c_list);
+ 	cache->c_entry_count++;
+ 	spin_unlock(&cache->c_list_lock);
+-	hlist_bl_unlock(head);
++	mb_cache_entry_put(cache, entry);
  
- static struct dentry *hfs_file_lookup(struct inode *dir, struct dentry *dentry,
+ 	return 0;
+ }
 
 
