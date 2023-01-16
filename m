@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0C6F46B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:33:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437F8C433EF;
-	Mon, 16 Jan 2023 16:33:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A0A746B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:33:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4636C433D2;
+	Mon, 16 Jan 2023 16:33:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886830;
-	bh=ioj/wcY0L5oR6C5L9dl5nOG2HlnBATpBuUIiZbQ64Tk=;
+	s=korg; t=1673886833;
+	bh=zuleEFNdXrntH7ShTYLOJ+KVEp52bcXNe5ppoMWb214=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G5Fa8vS54MGRvDf3JFwmv3YvjJBI1StXJvDyvc3XzA0/QR34guR7YlBbSzw25/vBE
-	 03E3UWJHxggHVLaxDE9ZIcDDwJMqnG2H3ecpLqhV2qtOpp18RHO4GnaARiZPlQeeK4
-	 03qp5mSdisPLnt3azFMGyF2cAzDAieNYxtAXh9Dw=
+	b=nFFdRqWPZ9GPHqeaFaxrHFehiAJjp9uab8vow4BHkJDcIznPcRgUamFV23jh2BgbE
+	 yAXHAUXPdN8aUKPz0l+OBjIZt/ipXLv/aWrWG9V7ibV+obllFok5Plu56iEOEfzp2Z
+	 aUhclNY2rVXRXsO1iCaQdQ31jbOjPSNpEn3ud+Zg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Xiaoyao Li <xiaoyao.li@intel.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 549/658] KVM: VMX: Rename NMI_PENDING to NMI_WINDOW
-Date: Mon, 16 Jan 2023 16:50:37 +0100
-Message-Id: <20230116154934.646368339@linuxfoundation.org>
+Subject: [PATCH 5.4 550/658] KVM: VMX: Fix the spelling of CPU_BASED_USE_TSC_OFFSETTING
+Date: Mon, 16 Jan 2023 16:50:38 +0100
+Message-Id: <20230116154934.686098703@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,128 +37,132 @@ Content-Transfer-Encoding: 8bit
 
 From: Xiaoyao Li <xiaoyao.li@intel.com>
 
-[ Upstream commit 4e2a0bc56ad197e5ccfab8395649b681067fe8cb ]
+[ Upstream commit 5e3d394fdd9e6b49cd8b28d85adff100a5bddc66 ]
 
-Rename the NMI-window exiting related definitions to match the latest
-Intel SDM. No functional changes.
+The mis-spelling is found by checkpatch.pl, so fix them.
 
 Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Stable-dep-of: 31de69f4eea7 ("KVM: nVMX: Properly expose ENABLE_USR_WAIT_PAUSE control to L1")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/vmx.h                       |  2 +-
- arch/x86/kvm/vmx/nested.c                        | 12 ++++++------
- arch/x86/kvm/vmx/vmx.c                           |  4 ++--
- tools/testing/selftests/kvm/include/x86_64/vmx.h |  2 +-
- 4 files changed, 10 insertions(+), 10 deletions(-)
+ arch/x86/include/asm/vmx.h                               | 2 +-
+ arch/x86/kvm/vmx/nested.c                                | 8 ++++----
+ arch/x86/kvm/vmx/vmx.c                                   | 6 +++---
+ tools/testing/selftests/kvm/include/x86_64/vmx.h         | 2 +-
+ tools/testing/selftests/kvm/x86_64/vmx_tsc_adjust_test.c | 2 +-
+ 5 files changed, 10 insertions(+), 10 deletions(-)
 
 diff --git a/arch/x86/include/asm/vmx.h b/arch/x86/include/asm/vmx.h
-index 5acda8d9b9a7..06d4420508c5 100644
+index 06d4420508c5..d716fe938fc0 100644
 --- a/arch/x86/include/asm/vmx.h
 +++ b/arch/x86/include/asm/vmx.h
-@@ -31,7 +31,7 @@
- #define CPU_BASED_CR8_LOAD_EXITING              0x00080000
- #define CPU_BASED_CR8_STORE_EXITING             0x00100000
- #define CPU_BASED_TPR_SHADOW                    0x00200000
--#define CPU_BASED_VIRTUAL_NMI_PENDING		0x00400000
-+#define CPU_BASED_NMI_WINDOW_EXITING		0x00400000
- #define CPU_BASED_MOV_DR_EXITING                0x00800000
- #define CPU_BASED_UNCOND_IO_EXITING             0x01000000
- #define CPU_BASED_USE_IO_BITMAPS                0x02000000
+@@ -20,7 +20,7 @@
+  * Definitions of Primary Processor-Based VM-Execution Controls.
+  */
+ #define CPU_BASED_INTR_WINDOW_EXITING           0x00000004
+-#define CPU_BASED_USE_TSC_OFFSETING             0x00000008
++#define CPU_BASED_USE_TSC_OFFSETTING            0x00000008
+ #define CPU_BASED_HLT_EXITING                   0x00000080
+ #define CPU_BASED_INVLPG_EXITING                0x00000200
+ #define CPU_BASED_MWAIT_EXITING                 0x00000400
 diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index ee768f977a0a..dca2c78db5d0 100644
+index dca2c78db5d0..1dd693d18395 100644
 --- a/arch/x86/kvm/vmx/nested.c
 +++ b/arch/x86/kvm/vmx/nested.c
-@@ -2074,7 +2074,7 @@ static void prepare_vmcs02_early(struct vcpu_vmx *vmx, struct vmcs12 *vmcs12)
+@@ -3090,7 +3090,7 @@ enum nvmx_vmentry_status nested_vmx_enter_non_root_mode(struct kvm_vcpu *vcpu,
+ 	}
+ 
+ 	enter_guest_mode(vcpu);
+-	if (vmcs12->cpu_based_vm_exec_control & CPU_BASED_USE_TSC_OFFSETING)
++	if (vmcs12->cpu_based_vm_exec_control & CPU_BASED_USE_TSC_OFFSETTING)
+ 		vcpu->arch.tsc_offset += vmcs12->tsc_offset;
+ 
+ 	if (prepare_vmcs02(vcpu, vmcs12, &exit_qual))
+@@ -3154,7 +3154,7 @@ enum nvmx_vmentry_status nested_vmx_enter_non_root_mode(struct kvm_vcpu *vcpu,
+ 	 * 26.7 "VM-entry failures during or after loading guest state".
  	 */
- 	exec_control = vmx_exec_control(vmx); /* L0's desires */
- 	exec_control &= ~CPU_BASED_INTR_WINDOW_EXITING;
--	exec_control &= ~CPU_BASED_VIRTUAL_NMI_PENDING;
-+	exec_control &= ~CPU_BASED_NMI_WINDOW_EXITING;
- 	exec_control &= ~CPU_BASED_TPR_SHADOW;
- 	exec_control |= vmcs12->cpu_based_vm_exec_control;
+ vmentry_fail_vmexit_guest_mode:
+-	if (vmcs12->cpu_based_vm_exec_control & CPU_BASED_USE_TSC_OFFSETING)
++	if (vmcs12->cpu_based_vm_exec_control & CPU_BASED_USE_TSC_OFFSETTING)
+ 		vcpu->arch.tsc_offset -= vmcs12->tsc_offset;
+ 	leave_guest_mode(vcpu);
  
-@@ -2459,7 +2459,7 @@ static int nested_vmx_check_nmi_controls(struct vmcs12 *vmcs12)
- 		return -EINVAL;
+@@ -4073,7 +4073,7 @@ void nested_vmx_vmexit(struct kvm_vcpu *vcpu, u32 exit_reason,
+ 	if (nested_cpu_has_preemption_timer(vmcs12))
+ 		hrtimer_cancel(&to_vmx(vcpu)->nested.preemption_timer);
  
- 	if (CC(!nested_cpu_has_virtual_nmis(vmcs12) &&
--	       nested_cpu_has(vmcs12, CPU_BASED_VIRTUAL_NMI_PENDING)))
-+	       nested_cpu_has(vmcs12, CPU_BASED_NMI_WINDOW_EXITING)))
- 		return -EINVAL;
+-	if (vmcs12->cpu_based_vm_exec_control & CPU_BASED_USE_TSC_OFFSETING)
++	if (vmcs12->cpu_based_vm_exec_control & CPU_BASED_USE_TSC_OFFSETTING)
+ 		vcpu->arch.tsc_offset -= vmcs12->tsc_offset;
  
- 	return 0;
-@@ -3039,7 +3039,7 @@ enum nvmx_vmentry_status nested_vmx_enter_non_root_mode(struct kvm_vcpu *vcpu,
- 	u32 exit_qual;
- 
- 	evaluate_pending_interrupts = exec_controls_get(vmx) &
--		(CPU_BASED_INTR_WINDOW_EXITING | CPU_BASED_VIRTUAL_NMI_PENDING);
-+		(CPU_BASED_INTR_WINDOW_EXITING | CPU_BASED_NMI_WINDOW_EXITING);
- 	if (likely(!evaluate_pending_interrupts) && kvm_vcpu_apicv_active(vcpu))
- 		evaluate_pending_interrupts |= vmx_has_apicv_interrupt(vcpu);
- 
-@@ -3267,7 +3267,7 @@ static int nested_vmx_run(struct kvm_vcpu *vcpu, bool launch)
- 	 */
- 	if ((vmcs12->guest_activity_state == GUEST_ACTIVITY_HLT) &&
- 	    !(vmcs12->vm_entry_intr_info_field & INTR_INFO_VALID_MASK) &&
--	    !(vmcs12->cpu_based_vm_exec_control & CPU_BASED_VIRTUAL_NMI_PENDING) &&
-+	    !(vmcs12->cpu_based_vm_exec_control & CPU_BASED_NMI_WINDOW_EXITING) &&
- 	    !((vmcs12->cpu_based_vm_exec_control & CPU_BASED_INTR_WINDOW_EXITING) &&
- 	      (vmcs12->guest_rflags & X86_EFLAGS_IF))) {
- 		vmx->nested.nested_run_pending = 0;
-@@ -5379,7 +5379,7 @@ bool nested_vmx_exit_reflected(struct kvm_vcpu *vcpu, u32 exit_reason)
- 	case EXIT_REASON_INTERRUPT_WINDOW:
- 		return nested_cpu_has(vmcs12, CPU_BASED_INTR_WINDOW_EXITING);
- 	case EXIT_REASON_NMI_WINDOW:
--		return nested_cpu_has(vmcs12, CPU_BASED_VIRTUAL_NMI_PENDING);
-+		return nested_cpu_has(vmcs12, CPU_BASED_NMI_WINDOW_EXITING);
- 	case EXIT_REASON_TASK_SWITCH:
- 		return true;
- 	case EXIT_REASON_CPUID:
+ 	if (likely(!vmx->fail)) {
 @@ -5870,7 +5870,7 @@ void nested_vmx_setup_ctls_msrs(struct nested_vmx_msrs *msrs, u32 ept_caps)
  		CPU_BASED_ALWAYSON_WITHOUT_TRUE_MSR;
  	msrs->procbased_ctls_high &=
  		CPU_BASED_INTR_WINDOW_EXITING |
--		CPU_BASED_VIRTUAL_NMI_PENDING | CPU_BASED_USE_TSC_OFFSETING |
-+		CPU_BASED_NMI_WINDOW_EXITING | CPU_BASED_USE_TSC_OFFSETING |
+-		CPU_BASED_NMI_WINDOW_EXITING | CPU_BASED_USE_TSC_OFFSETING |
++		CPU_BASED_NMI_WINDOW_EXITING | CPU_BASED_USE_TSC_OFFSETTING |
  		CPU_BASED_HLT_EXITING | CPU_BASED_INVLPG_EXITING |
  		CPU_BASED_MWAIT_EXITING | CPU_BASED_CR3_LOAD_EXITING |
  		CPU_BASED_CR3_STORE_EXITING |
 diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index 51aa5851011c..470a8f9a0046 100644
+index 470a8f9a0046..df77207d93b0 100644
 --- a/arch/x86/kvm/vmx/vmx.c
 +++ b/arch/x86/kvm/vmx/vmx.c
-@@ -4469,7 +4469,7 @@ static void enable_nmi_window(struct kvm_vcpu *vcpu)
- 		return;
- 	}
+@@ -1780,7 +1780,7 @@ static u64 vmx_read_l1_tsc_offset(struct kvm_vcpu *vcpu)
+ 	struct vmcs12 *vmcs12 = get_vmcs12(vcpu);
  
--	exec_controls_setbit(to_vmx(vcpu), CPU_BASED_VIRTUAL_NMI_PENDING);
-+	exec_controls_setbit(to_vmx(vcpu), CPU_BASED_NMI_WINDOW_EXITING);
- }
+ 	if (is_guest_mode(vcpu) &&
+-	    (vmcs12->cpu_based_vm_exec_control & CPU_BASED_USE_TSC_OFFSETING))
++	    (vmcs12->cpu_based_vm_exec_control & CPU_BASED_USE_TSC_OFFSETTING))
+ 		return vcpu->arch.tsc_offset - vmcs12->tsc_offset;
  
- static void vmx_inject_irq(struct kvm_vcpu *vcpu)
-@@ -5295,7 +5295,7 @@ static int handle_ept_misconfig(struct kvm_vcpu *vcpu)
- static int handle_nmi_window(struct kvm_vcpu *vcpu)
- {
- 	WARN_ON_ONCE(!enable_vnmi);
--	exec_controls_clearbit(to_vmx(vcpu), CPU_BASED_VIRTUAL_NMI_PENDING);
-+	exec_controls_clearbit(to_vmx(vcpu), CPU_BASED_NMI_WINDOW_EXITING);
- 	++vcpu->stat.nmi_window_exits;
- 	kvm_make_request(KVM_REQ_EVENT, vcpu);
+ 	return vcpu->arch.tsc_offset;
+@@ -1798,7 +1798,7 @@ static u64 vmx_write_l1_tsc_offset(struct kvm_vcpu *vcpu, u64 offset)
+ 	 * to the newly set TSC to get L2's TSC.
+ 	 */
+ 	if (is_guest_mode(vcpu) &&
+-	    (vmcs12->cpu_based_vm_exec_control & CPU_BASED_USE_TSC_OFFSETING))
++	    (vmcs12->cpu_based_vm_exec_control & CPU_BASED_USE_TSC_OFFSETTING))
+ 		g_tsc_offset = vmcs12->tsc_offset;
  
+ 	trace_kvm_write_tsc_offset(vcpu->vcpu_id,
+@@ -2425,7 +2425,7 @@ static __init int setup_vmcs_config(struct vmcs_config *vmcs_conf,
+ 	      CPU_BASED_CR3_STORE_EXITING |
+ 	      CPU_BASED_UNCOND_IO_EXITING |
+ 	      CPU_BASED_MOV_DR_EXITING |
+-	      CPU_BASED_USE_TSC_OFFSETING |
++	      CPU_BASED_USE_TSC_OFFSETTING |
+ 	      CPU_BASED_MWAIT_EXITING |
+ 	      CPU_BASED_MONITOR_EXITING |
+ 	      CPU_BASED_INVLPG_EXITING |
 diff --git a/tools/testing/selftests/kvm/include/x86_64/vmx.h b/tools/testing/selftests/kvm/include/x86_64/vmx.h
-index c6e442d7a241..7eb38451c359 100644
+index 7eb38451c359..3d27069b9ed9 100644
 --- a/tools/testing/selftests/kvm/include/x86_64/vmx.h
 +++ b/tools/testing/selftests/kvm/include/x86_64/vmx.h
-@@ -30,7 +30,7 @@
- #define CPU_BASED_CR8_LOAD_EXITING		0x00080000
- #define CPU_BASED_CR8_STORE_EXITING		0x00100000
- #define CPU_BASED_TPR_SHADOW			0x00200000
--#define CPU_BASED_VIRTUAL_NMI_PENDING		0x00400000
-+#define CPU_BASED_NMI_WINDOW_EXITING		0x00400000
- #define CPU_BASED_MOV_DR_EXITING		0x00800000
- #define CPU_BASED_UNCOND_IO_EXITING		0x01000000
- #define CPU_BASED_USE_IO_BITMAPS		0x02000000
+@@ -19,7 +19,7 @@
+  * Definitions of Primary Processor-Based VM-Execution Controls.
+  */
+ #define CPU_BASED_INTR_WINDOW_EXITING		0x00000004
+-#define CPU_BASED_USE_TSC_OFFSETING		0x00000008
++#define CPU_BASED_USE_TSC_OFFSETTING		0x00000008
+ #define CPU_BASED_HLT_EXITING			0x00000080
+ #define CPU_BASED_INVLPG_EXITING		0x00000200
+ #define CPU_BASED_MWAIT_EXITING			0x00000400
+diff --git a/tools/testing/selftests/kvm/x86_64/vmx_tsc_adjust_test.c b/tools/testing/selftests/kvm/x86_64/vmx_tsc_adjust_test.c
+index 5590fd2bcf87..69e482a95c47 100644
+--- a/tools/testing/selftests/kvm/x86_64/vmx_tsc_adjust_test.c
++++ b/tools/testing/selftests/kvm/x86_64/vmx_tsc_adjust_test.c
+@@ -98,7 +98,7 @@ static void l1_guest_code(struct vmx_pages *vmx_pages)
+ 	prepare_vmcs(vmx_pages, l2_guest_code,
+ 		     &l2_guest_stack[L2_GUEST_STACK_SIZE]);
+ 	control = vmreadz(CPU_BASED_VM_EXEC_CONTROL);
+-	control |= CPU_BASED_USE_MSR_BITMAPS | CPU_BASED_USE_TSC_OFFSETING;
++	control |= CPU_BASED_USE_MSR_BITMAPS | CPU_BASED_USE_TSC_OFFSETTING;
+ 	vmwrite(CPU_BASED_VM_EXEC_CONTROL, control);
+ 	vmwrite(TSC_OFFSET, TSC_OFFSET_VALUE);
+ 
 -- 
 2.35.1
 
