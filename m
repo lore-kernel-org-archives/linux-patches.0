@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46B46FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:54:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67575C433EF;
-	Mon, 16 Jan 2023 16:54:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C23D6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:54:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03329C433EF;
+	Mon, 16 Jan 2023 16:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888042;
-	bh=7ljI8XXa+5WY5aATGjgL3h+133pgo1lhOuDbPirtP1s=;
+	s=korg; t=1673888045;
+	bh=JusvWpjWxCAj1UyScJG29hqDYgolKv8PEcvu+z9S7DU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tSjhQ1LsKJbTnBOrWyyJx4hrliZrDT0P3lls7YszxFjxVnVNDqumans4egVfkGf4C
-	 pvl6Sgmdqn8ezpnZ7sJd1KaB5+Vda1SmSScTmhipCGcWoMYzhH4zyob/N7CiQmJs9f
-	 ygP4LsR1zFXWknpG6qkClT/lai+BXWvPaTorSE7c=
+	b=eT/uu4l0v7bzbxWgX5xeAAS0z99VBGq9tpmR0SLtL/NuBRAf14GCJY565fwG1KwbN
+	 27d8jnzrrU6ljGBYy3WmHYhz+lSN/SxFI4MkV0vdvRRsmLuCcvbe30ka3AhFUCHD/7
+	 K2957QTdEHcU0XCQAwbqrthCPLFxKpcENBIk4iC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"John Warthog9 Hawley (VMware)" <warthog9@eaglescrag.net>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 4.19 378/521] ktest.pl minconfig: Unset configs instead of just removing them
-Date: Mon, 16 Jan 2023 16:50:40 +0100
-Message-Id: <20230116154904.015086872@linuxfoundation.org>
+	Linus Walleij <linus.walleij@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>
+Subject: [PATCH 4.19 379/521] ARM: ux500: do not directly dereference __iomem
+Date: Mon, 16 Jan 2023 16:50:41 +0100
+Message-Id: <20230116154904.067158645@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -34,45 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt <rostedt@goodmis.org>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-commit ef784eebb56425eed6e9b16e7d47e5c00dcf9c38 upstream.
+commit 65b0e307a1a9193571db12910f382f84195a3d29 upstream.
 
-After a full run of a make_min_config test, I noticed there were a lot of
-CONFIGs still enabled that really should not be. Looking at them, I
-noticed they were all defined as "default y". The issue is that the test
-simple removes the config and re-runs make oldconfig, which enables it
-again because it is set to default 'y'. Instead, explicitly disable the
-config with writing "# CONFIG_FOO is not set" to the file to keep it from
-being set again.
+Sparse reports that calling add_device_randomness() on `uid` is a
+violation of address spaces. And indeed the next usage uses readl()
+properly, but that was left out when passing it toadd_device_
+randomness(). So instead copy the whole thing to the stack first.
 
-With this change, one of my box's minconfigs went from 768 configs set,
-down to 521 configs set.
-
-Link: https://lkml.kernel.org/r/20221202115936.016fce23@gandalf.local.home
-
+Fixes: 4040d10a3d44 ("ARM: ux500: add DB serial number to entropy pool")
+Cc: Linus Walleij <linus.walleij@linaro.org>
 Cc: stable@vger.kernel.org
-Fixes: 0a05c769a9de5 ("ktest: Added config_bisect test type")
-Reviewed-by: John 'Warthog9' Hawley (VMware) <warthog9@eaglescrag.net>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/all/202210230819.loF90KDh-lkp@intel.com/
+Reported-by: kernel test robot <lkp@intel.com>
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+Link: https://lore.kernel.org/r/20221108123755.207438-1-Jason@zx2c4.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/ktest/ktest.pl |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/soc/ux500/ux500-soc-id.c |   10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
---- a/tools/testing/ktest/ktest.pl
-+++ b/tools/testing/ktest/ktest.pl
-@@ -3706,9 +3706,10 @@ sub test_this_config {
-     # .config to make sure it is missing the config that
-     # we had before
-     my %configs = %min_configs;
--    delete $configs{$config};
-+    $configs{$config} = "# $config is not set";
-     make_new_config ((values %configs), (values %keep_configs));
-     make_oldconfig;
-+    delete $configs{$config};
-     undef %configs;
-     assign_configs \%configs, $output_config;
+--- a/drivers/soc/ux500/ux500-soc-id.c
++++ b/drivers/soc/ux500/ux500-soc-id.c
+@@ -159,20 +159,18 @@ static ssize_t ux500_get_process(struct
+ static const char *db8500_read_soc_id(struct device_node *backupram)
+ {
+ 	void __iomem *base;
+-	void __iomem *uid;
+ 	const char *retstr;
++	u32 uid[5];
  
+ 	base = of_iomap(backupram, 0);
+ 	if (!base)
+ 		return NULL;
+-	uid = base + 0x1fc0;
++	memcpy_fromio(uid, base + 0x1fc0, sizeof(uid));
+ 
+ 	/* Throw these device-specific numbers into the entropy pool */
+-	add_device_randomness(uid, 0x14);
++	add_device_randomness(uid, sizeof(uid));
+ 	retstr = kasprintf(GFP_KERNEL, "%08x%08x%08x%08x%08x",
+-			 readl((u32 *)uid+0),
+-			 readl((u32 *)uid+1), readl((u32 *)uid+2),
+-			 readl((u32 *)uid+3), readl((u32 *)uid+4));
++			   uid[0], uid[1], uid[2], uid[3], uid[4]);
+ 	iounmap(base);
+ 	return retstr;
+ }
 
 
