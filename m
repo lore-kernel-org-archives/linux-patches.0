@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77F346B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:15:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A106C433F0;
-	Mon, 16 Jan 2023 16:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DCA146B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:15:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E1C3C433D2;
+	Mon, 16 Jan 2023 16:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885727;
-	bh=O9V/A3y5hwmGQWYNsw0RjnvSz52SmXKjldeXoPyBSUI=;
+	s=korg; t=1673885730;
+	bh=be3ztIYek4JY2cj47i/qh0cPB9DRefWekteKmXOA7iI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SLmoS9MnB0ahBBlXtfRz9n0daeFeWT59nXhg2/9c+rMnYTl3T54sGLYji1tz1nlcR
-	 ND3U+R0BFfwUAZtrBy3vYN4VukOpZROLc9bAPznRQ/MgJLcz7V+W7GJwhzx6n2u/7L
-	 C0HvwXC2JsZYxCPBHOzuehpkYjQjfyTo7q1Q/FXI=
+	b=yL450ouDQN5h0dcW9GO1a/Ccq4x6gDLcRQhbJMHCCBVa+0hO8MzuDHEfSeGw0/5p+
+	 NmxwEqU8hOLc3lBVGtg+EDNFw71J2H6r9CnxjwQn06WI77/s4RzAOWFDtIAOi6zmuY
+	 etN8rOBu/TD3TttrD8zzNpeek6QgfKg8X98cb4Ms=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 154/658] media: dvb-core: Fix ignored return value in dvb_register_frontend()
-Date: Mon, 16 Jan 2023 16:44:02 +0100
-Message-Id: <20230116154916.487816221@linuxfoundation.org>
+Subject: [PATCH 5.4 163/658] NFSv4: Fix a deadlock between nfs4_open_recover_helper() and delegreturn
+Date: Mon, 16 Jan 2023 16:44:11 +0100
+Message-Id: <20230116154916.922921554@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,69 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Trond Myklebust <trond.myklebust@hammerspace.com>
 
-[ Upstream commit a574359e2e71ce16be212df3a082ed60a4bd2c5f ]
+[ Upstream commit 51069e4aef6257b0454057359faed0ab0c9af083 ]
 
-In dvb_register_frontend(), dvb_register_device() is possible to fail
-but its return value is ignored.
+If we're asked to recover open state while a delegation return is
+outstanding, then the state manager thread cannot use a cached open, so
+if the server returns a delegation, we can end up deadlocked behind the
+pending delegreturn.
+To avoid this problem, let's just ask the server not to give us a
+delegation unless we're explicitly reclaiming one.
 
-It will cause use-after-free when module is removed, because in
-dvb_unregister_frontend() it tries to unregister a not registered
-device.
-
-BUG: KASAN: use-after-free in dvb_remove_device+0x18b/0x1f0 [dvb_core]
-Read of size 4 at addr ffff88800dff4824 by task rmmod/428
-CPU: 3 PID: 428 Comm: rmmod
-Call Trace:
- <TASK>
- ...
- dvb_remove_device+0x18b/0x1f0 [dvb_core]
- dvb_unregister_frontend+0x7b/0x130 [dvb_core]
- vidtv_bridge_remove+0x6e/0x160 [dvb_vidtv_bridge]
- ...
-
-Fix this by catching return value of dvb_register_device().
-However the fe->refcount can't be put to zero immediately, because
-there are still modules calling dvb_frontend_detach() when
-dvb_register_frontend() fails.
-
-Link: https://lore.kernel.org/linux-media/20221108033005.169095-1-chenzhongjin@huawei.com
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: be36e185bd26 ("NFSv4: nfs4_open_recover_helper() must set share access")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/dvb-core/dvb_frontend.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/nfs/nfs4proc.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/media/dvb-core/dvb_frontend.c b/drivers/media/dvb-core/dvb_frontend.c
-index 06ea30a689d7..b28ea7204f23 100644
---- a/drivers/media/dvb-core/dvb_frontend.c
-+++ b/drivers/media/dvb-core/dvb_frontend.c
-@@ -2961,6 +2961,7 @@ int dvb_register_frontend(struct dvb_adapter *dvb,
- 		.name = fe->ops.info.name,
- #endif
- 	};
-+	int ret;
+diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
+index 3da48dd67b83..a76550d927e7 100644
+--- a/fs/nfs/nfs4proc.c
++++ b/fs/nfs/nfs4proc.c
+@@ -2085,18 +2085,18 @@ static struct nfs4_opendata *nfs4_open_recoverdata_alloc(struct nfs_open_context
+ }
  
- 	dev_dbg(dvb->device, "%s:\n", __func__);
+ static int nfs4_open_recover_helper(struct nfs4_opendata *opendata,
+-		fmode_t fmode)
++				    fmode_t fmode)
+ {
+ 	struct nfs4_state *newstate;
++	struct nfs_server *server = NFS_SB(opendata->dentry->d_sb);
++	int openflags = opendata->o_arg.open_flags;
+ 	int ret;
  
-@@ -2994,8 +2995,13 @@ int dvb_register_frontend(struct dvb_adapter *dvb,
- 		 "DVB: registering adapter %i frontend %i (%s)...\n",
- 		 fe->dvb->num, fe->id, fe->ops.info.name);
+ 	if (!nfs4_mode_match_open_stateid(opendata->state, fmode))
+ 		return 0;
+-	opendata->o_arg.open_flags = 0;
+ 	opendata->o_arg.fmode = fmode;
+-	opendata->o_arg.share_access = nfs4_map_atomic_open_share(
+-			NFS_SB(opendata->dentry->d_sb),
+-			fmode, 0);
++	opendata->o_arg.share_access =
++		nfs4_map_atomic_open_share(server, fmode, openflags);
+ 	memset(&opendata->o_res, 0, sizeof(opendata->o_res));
+ 	memset(&opendata->c_res, 0, sizeof(opendata->c_res));
+ 	nfs4_init_opendata_res(opendata);
+@@ -2671,10 +2671,15 @@ static int _nfs4_open_expired(struct nfs_open_context *ctx, struct nfs4_state *s
+ 	struct nfs4_opendata *opendata;
+ 	int ret;
  
--	dvb_register_device(fe->dvb, &fepriv->dvbdev, &dvbdev_template,
-+	ret = dvb_register_device(fe->dvb, &fepriv->dvbdev, &dvbdev_template,
- 			    fe, DVB_DEVICE_FRONTEND, 0);
-+	if (ret) {
-+		dvb_frontend_put(fe);
-+		mutex_unlock(&frontend_mutex);
-+		return ret;
-+	}
- 
- 	/*
- 	 * Initialize the cache to the proper values according with the
+-	opendata = nfs4_open_recoverdata_alloc(ctx, state,
+-			NFS4_OPEN_CLAIM_FH);
++	opendata = nfs4_open_recoverdata_alloc(ctx, state, NFS4_OPEN_CLAIM_FH);
+ 	if (IS_ERR(opendata))
+ 		return PTR_ERR(opendata);
++	/*
++	 * We're not recovering a delegation, so ask for no delegation.
++	 * Otherwise the recovery thread could deadlock with an outstanding
++	 * delegation return.
++	 */
++	opendata->o_arg.open_flags = O_DIRECT;
+ 	ret = nfs4_open_recover(opendata, state);
+ 	if (ret == -ESTALE)
+ 		d_drop(ctx->dentry);
 -- 
 2.35.1
 
