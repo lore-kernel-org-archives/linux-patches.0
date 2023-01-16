@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8114E6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:01:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9945DC433D2;
-	Mon, 16 Jan 2023 17:01:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1822D6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:01:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 932ABC433EF;
+	Mon, 16 Jan 2023 17:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888504;
-	bh=Q+ncphvx0RkQz+xGgpjbNuYqOjkAr5B9PBKxO00J4Lk=;
+	s=korg; t=1673888506;
+	bh=hky+L9OqszPzzfyyNFRtDqP5ZOd/0ysZcJ2HNj/l+b4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iCWDoFrW0MRQNW69RJUGeAoqNowPeqALZ/7G6ClkjgpBenepdw7b68S0qRCn/Nqum
-	 bYmkBNZSUGg7BtjS/U3yPKMKqfNTu71SARp3TSwg5HTRsqUQgEYbiV3/rrN1mfhs/R
-	 nx8qN2IqLuoDJlxTrmh27jgEBVIk7wkS+AHxeMik=
+	b=FegazsPt1QdtTrYBoGWPEkSzcsZp0sTpsB48LY/x8UknWUD0WZfh+k1pDw8b0eQFO
+	 0emEVX6Rxs1wW/qVjk7kNCBEMHBew9a+dVfGcPqSoFjGm31uPKAjlc09t1QmTUwM8R
+	 JoBRHVF1kUmidrZTTBqRHyYYAiwgP+p20ij5rlS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
-	Gregory CLEMENT <gregory.clement@bootlin.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 031/338] ARM: dts: armada-xp: Fix assigned-addresses for every PCIe Root Port
-Date: Mon, 16 Jan 2023 16:48:24 +0100
-Message-Id: <20230116154822.128949943@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 4.14 014/338] udf: Fix preallocation discarding at indirect extent boundary
+Date: Mon, 16 Jan 2023 16:48:07 +0100
+Message-Id: <20230116154821.359725427@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,143 +33,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pali Rohár <pali@kernel.org>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit eab276787f456cbea89fabea110fe0728673d308 ]
+commit cfe4c1b25dd6d2f056afc00b7c98bcb3dd0b1fc3 upstream.
 
-BDF of resource in DT assigned-addresses property of Marvell PCIe Root Port
-(PCI-to-PCI bridge) should match BDF in address part in that DT node name
-as specified resource belongs to Marvell PCIe Root Port itself.
+When preallocation extent is the first one in the extent block, the
+code would corrupt extent tree header instead. Fix the problem and use
+udf_delete_aext() for deleting extent to avoid some code duplication.
 
-Fixes: 9d8f44f02d4a ("arm: mvebu: add PCIe Device Tree informations for Armada XP")
-Fixes: 12b69a599745 ("ARM: mvebu: second PCIe unit of Armada XP mv78230 is only x1 capable")
-Fixes: 2163e61c92d9 ("ARM: mvebu: fix second and third PCIe unit of Armada XP mv78260")
-Signed-off-by: Pali Rohár <pali@kernel.org>
-Signed-off-by: Gregory CLEMENT <gregory.clement@bootlin.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/armada-xp-mv78230.dtsi |  8 ++++----
- arch/arm/boot/dts/armada-xp-mv78260.dtsi | 16 ++++++++--------
- 2 files changed, 12 insertions(+), 12 deletions(-)
+ fs/udf/truncate.c |   45 +++++++++++++--------------------------------
+ 1 file changed, 13 insertions(+), 32 deletions(-)
 
-diff --git a/arch/arm/boot/dts/armada-xp-mv78230.dtsi b/arch/arm/boot/dts/armada-xp-mv78230.dtsi
-index 129738f7973d..0511a8204843 100644
---- a/arch/arm/boot/dts/armada-xp-mv78230.dtsi
-+++ b/arch/arm/boot/dts/armada-xp-mv78230.dtsi
-@@ -134,7 +134,7 @@ pcie1: pcie@1,0 {
+--- a/fs/udf/truncate.c
++++ b/fs/udf/truncate.c
+@@ -120,60 +120,41 @@ void udf_truncate_tail_extent(struct ino
  
- 			pcie2: pcie@2,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
-+				assigned-addresses = <0x82001000 0 0x44000 0 0x2000>;
- 				reg = <0x1000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -152,7 +152,7 @@ pcie2: pcie@2,0 {
+ void udf_discard_prealloc(struct inode *inode)
+ {
+-	struct extent_position epos = { NULL, 0, {0, 0} };
++	struct extent_position epos = {};
++	struct extent_position prev_epos = {};
+ 	struct kernel_lb_addr eloc;
+ 	uint32_t elen;
+ 	uint64_t lbcount = 0;
+ 	int8_t etype = -1, netype;
+-	int adsize;
+ 	struct udf_inode_info *iinfo = UDF_I(inode);
  
- 			pcie3: pcie@3,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x48000 0 0x2000>;
-+				assigned-addresses = <0x82001800 0 0x48000 0 0x2000>;
- 				reg = <0x1800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -170,7 +170,7 @@ pcie3: pcie@3,0 {
+ 	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB ||
+ 	    inode->i_size == iinfo->i_lenExtents)
+ 		return;
  
- 			pcie4: pcie@4,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x4c000 0 0x2000>;
-+				assigned-addresses = <0x82002000 0 0x4c000 0 0x2000>;
- 				reg = <0x2000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -188,7 +188,7 @@ pcie4: pcie@4,0 {
+-	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
+-		adsize = sizeof(struct short_ad);
+-	else if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_LONG)
+-		adsize = sizeof(struct long_ad);
+-	else
+-		adsize = 0;
+-
+ 	epos.block = iinfo->i_location;
  
- 			pcie5: pcie@5,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x80000 0 0x2000>;
-+				assigned-addresses = <0x82002800 0 0x80000 0 0x2000>;
- 				reg = <0x2800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-diff --git a/arch/arm/boot/dts/armada-xp-mv78260.dtsi b/arch/arm/boot/dts/armada-xp-mv78260.dtsi
-index e58d597e37b9..78fb45272dba 100644
---- a/arch/arm/boot/dts/armada-xp-mv78260.dtsi
-+++ b/arch/arm/boot/dts/armada-xp-mv78260.dtsi
-@@ -149,7 +149,7 @@ pcie1: pcie@1,0 {
+ 	/* Find the last extent in the file */
+-	while ((netype = udf_next_aext(inode, &epos, &eloc, &elen, 1)) != -1) {
+-		etype = netype;
++	while ((netype = udf_next_aext(inode, &epos, &eloc, &elen, 0)) != -1) {
++		brelse(prev_epos.bh);
++		prev_epos = epos;
++		if (prev_epos.bh)
++			get_bh(prev_epos.bh);
++
++		etype = udf_next_aext(inode, &epos, &eloc, &elen, 1);
+ 		lbcount += elen;
+ 	}
+ 	if (etype == (EXT_NOT_RECORDED_ALLOCATED >> 30)) {
+-		epos.offset -= adsize;
+ 		lbcount -= elen;
+-		extent_trunc(inode, &epos, &eloc, etype, elen, 0);
+-		if (!epos.bh) {
+-			iinfo->i_lenAlloc =
+-				epos.offset -
+-				udf_file_entry_alloc_offset(inode);
+-			mark_inode_dirty(inode);
+-		} else {
+-			struct allocExtDesc *aed =
+-				(struct allocExtDesc *)(epos.bh->b_data);
+-			aed->lengthAllocDescs =
+-				cpu_to_le32(epos.offset -
+-					    sizeof(struct allocExtDesc));
+-			if (!UDF_QUERY_FLAG(inode->i_sb, UDF_FLAG_STRICT) ||
+-			    UDF_SB(inode->i_sb)->s_udfrev >= 0x0201)
+-				udf_update_tag(epos.bh->b_data, epos.offset);
+-			else
+-				udf_update_tag(epos.bh->b_data,
+-					       sizeof(struct allocExtDesc));
+-			mark_buffer_dirty_inode(epos.bh, inode);
+-		}
++		udf_delete_aext(inode, prev_epos);
++		udf_free_blocks(inode->i_sb, inode, &eloc, 0,
++				DIV_ROUND_UP(elen, 1 << inode->i_blkbits));
+ 	}
+ 	/* This inode entry is in-memory only and thus we don't have to mark
+ 	 * the inode dirty */
+ 	iinfo->i_lenExtents = lbcount;
+ 	brelse(epos.bh);
++	brelse(prev_epos.bh);
+ }
  
- 			pcie2: pcie@2,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x44000 0 0x2000>;
-+				assigned-addresses = <0x82001000 0 0x44000 0 0x2000>;
- 				reg = <0x1000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -167,7 +167,7 @@ pcie2: pcie@2,0 {
- 
- 			pcie3: pcie@3,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x48000 0 0x2000>;
-+				assigned-addresses = <0x82001800 0 0x48000 0 0x2000>;
- 				reg = <0x1800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -185,7 +185,7 @@ pcie3: pcie@3,0 {
- 
- 			pcie4: pcie@4,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x4c000 0 0x2000>;
-+				assigned-addresses = <0x82002000 0 0x4c000 0 0x2000>;
- 				reg = <0x2000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -203,7 +203,7 @@ pcie4: pcie@4,0 {
- 
- 			pcie5: pcie@5,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x80000 0 0x2000>;
-+				assigned-addresses = <0x82002800 0 0x80000 0 0x2000>;
- 				reg = <0x2800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -221,7 +221,7 @@ pcie5: pcie@5,0 {
- 
- 			pcie6: pcie@6,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x84000 0 0x2000>;
-+				assigned-addresses = <0x82003000 0 0x84000 0 0x2000>;
- 				reg = <0x3000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -239,7 +239,7 @@ pcie6: pcie@6,0 {
- 
- 			pcie7: pcie@7,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x88000 0 0x2000>;
-+				assigned-addresses = <0x82003800 0 0x88000 0 0x2000>;
- 				reg = <0x3800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -257,7 +257,7 @@ pcie7: pcie@7,0 {
- 
- 			pcie8: pcie@8,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x8c000 0 0x2000>;
-+				assigned-addresses = <0x82004000 0 0x8c000 0 0x2000>;
- 				reg = <0x4000 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
-@@ -275,7 +275,7 @@ pcie8: pcie@8,0 {
- 
- 			pcie9: pcie@9,0 {
- 				device_type = "pci";
--				assigned-addresses = <0x82000800 0 0x42000 0 0x2000>;
-+				assigned-addresses = <0x82004800 0 0x42000 0 0x2000>;
- 				reg = <0x4800 0 0 0 0>;
- 				#address-cells = <3>;
- 				#size-cells = <2>;
--- 
-2.35.1
-
+ static void udf_update_alloc_ext_desc(struct inode *inode,
 
 
