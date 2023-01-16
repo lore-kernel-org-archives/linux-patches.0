@@ -1,35 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9F2D6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:51:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09D2BC433EF;
-	Mon, 16 Jan 2023 16:51:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8B16FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:51:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8200C433F0;
+	Mon, 16 Jan 2023 16:51:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887881;
-	bh=bfN1oduN1+2E8UPQqLRFS7LImw7HIQK0zER4VeQedzY=;
+	s=korg; t=1673887884;
+	bh=yYrgXirR63d1iwbQbUojBmHLqb2EjtbO2PLDwu6Z7P8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dwBdq28d47fgQ3GxMZa/bg50fp35woStZCj4KexeOTmBlaJii9b65nZ6RBZtybStC
-	 lod6vGtz6qC/B01G7vCvfjh6T5UlIX0IVEkIRCCfcBTNwwfZkNYyGdNiMuE1yiPqze
-	 GuJh44zpCZDN0hUYHrnzK8lbxXyvbXmlMJrf+gKk=
+	b=dHQIAx9JSBCaJEvg080Zi+gTSiLRSLCO99hJPVw5ATV+2WUQfqeJUWCuuOhubT3WO
+	 M5WSTbok4tYJk4JRmXz1szb95i9TJZV/P1LM/FqjKQWO8Fbn4mrtz9t3TfwonI4O0A
+	 VwymD0WzmQ2WleeWnc1eRdqoSO/U5PL0habLi6vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhangPeng <zhangpeng362@huawei.com>,
-	syzbot+e836ff7133ac02be825f@syzkaller.appspotmail.com,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Ira Weiny <ira.weiny@intel.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Nanyong Sun <sunnanyong@huawei.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Alan Stern <stern@rowland.harvard.edu>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@toke.dk>,
+	Kalle Valo <quic_kvalo@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 317/521] hfs: fix OOB Read in __hfs_brec_find
-Date: Mon, 16 Jan 2023 16:49:39 +0100
-Message-Id: <20230116154901.323408122@linuxfoundation.org>
+Subject: [PATCH 4.19 318/521] wifi: ath9k: verify the expected usb_endpoints are present
+Date: Mon, 16 Jan 2023 16:49:40 +0100
+Message-Id: <20230116154901.368781155@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -43,79 +38,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhangPeng <zhangpeng362@huawei.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 8d824e69d9f3fa3121b2dda25053bae71e2460d2 ]
+[ Upstream commit 16ef02bad239f11f322df8425d302be62f0443ce ]
 
-Syzbot reported a OOB read bug:
+The bug arises when a USB device claims to be an ATH9K but doesn't
+have the expected endpoints. (In this case there was an interrupt
+endpoint where the driver expected a bulk endpoint.) The kernel
+needs to be able to handle such devices without getting an internal error.
 
-==================================================================
-BUG: KASAN: slab-out-of-bounds in hfs_strcmp+0x117/0x190
-fs/hfs/string.c:84
-Read of size 1 at addr ffff88807eb62c4e by task kworker/u4:1/11
-CPU: 1 PID: 11 Comm: kworker/u4:1 Not tainted
-6.1.0-rc6-syzkaller-00308-g644e9524388a #0
-Workqueue: writeback wb_workfn (flush-7:0)
+usb 1-1: BOGUS urb xfer, pipe 3 != type 1
+WARNING: CPU: 3 PID: 500 at drivers/usb/core/urb.c:493 usb_submit_urb+0xce2/0x1430 drivers/usb/core/urb.c:493
+Modules linked in:
+CPU: 3 PID: 500 Comm: kworker/3:2 Not tainted 5.10.135-syzkaller #0
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.12.0-1 04/01/2014
+Workqueue: events request_firmware_work_func
+RIP: 0010:usb_submit_urb+0xce2/0x1430 drivers/usb/core/urb.c:493
 Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
- print_address_description+0x74/0x340 mm/kasan/report.c:284
- print_report+0x107/0x1f0 mm/kasan/report.c:395
- kasan_report+0xcd/0x100 mm/kasan/report.c:495
- hfs_strcmp+0x117/0x190 fs/hfs/string.c:84
- __hfs_brec_find+0x213/0x5c0 fs/hfs/bfind.c:75
- hfs_brec_find+0x276/0x520 fs/hfs/bfind.c:138
- hfs_write_inode+0x34c/0xb40 fs/hfs/inode.c:462
- write_inode fs/fs-writeback.c:1440 [inline]
+ ath9k_hif_usb_alloc_rx_urbs drivers/net/wireless/ath/ath9k/hif_usb.c:908 [inline]
+ ath9k_hif_usb_alloc_urbs+0x75e/0x1010 drivers/net/wireless/ath/ath9k/hif_usb.c:1019
+ ath9k_hif_usb_dev_init drivers/net/wireless/ath/ath9k/hif_usb.c:1109 [inline]
+ ath9k_hif_usb_firmware_cb+0x142/0x530 drivers/net/wireless/ath/ath9k/hif_usb.c:1242
+ request_firmware_work_func+0x12e/0x240 drivers/base/firmware_loader/main.c:1097
+ process_one_work+0x9af/0x1600 kernel/workqueue.c:2279
+ worker_thread+0x61d/0x12f0 kernel/workqueue.c:2425
+ kthread+0x3b4/0x4a0 kernel/kthread.c:313
+ ret_from_fork+0x22/0x30 arch/x86/entry/entry_64.S:299
 
-If the input inode of hfs_write_inode() is incorrect:
-struct inode
-  struct hfs_inode_info
-    struct hfs_cat_key
-      struct hfs_name
-        u8 len # len is greater than HFS_NAMELEN(31) which is the
-maximum length of an HFS filename
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-OOB read occurred:
-hfs_write_inode()
-  hfs_brec_find()
-    __hfs_brec_find()
-      hfs_cat_keycmp()
-        hfs_strcmp() # OOB read occurred due to len is too large
-
-Fix this by adding a Check on len in hfs_write_inode() before calling
-hfs_brec_find().
-
-Link: https://lkml.kernel.org/r/20221130065959.2168236-1-zhangpeng362@huawei.com
-Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
-Reported-by: <syzbot+e836ff7133ac02be825f@syzkaller.appspotmail.com>
-Cc: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Cc: Ira Weiny <ira.weiny@intel.com>
-Cc: Jeff Layton <jlayton@kernel.org>
-Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Nanyong Sun <sunnanyong@huawei.com>
-Cc: Viacheslav Dubeyko <slava@dubeyko.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Suggested-by: Alan Stern <stern@rowland.harvard.edu>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Acked-by: Toke Høiland-Jørgensen <toke@toke.dk>
+Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
+Link: https://lore.kernel.org/r/20221008211532.74583-1-pchelkin@ispras.ru
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/hfs/inode.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/wireless/ath/ath9k/hif_usb.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/fs/hfs/inode.c b/fs/hfs/inode.c
-index da243c84e93b..9c5badc9db00 100644
---- a/fs/hfs/inode.c
-+++ b/fs/hfs/inode.c
-@@ -453,6 +453,8 @@ int hfs_write_inode(struct inode *inode, struct writeback_control *wbc)
- 		/* panic? */
- 		return -EIO;
+diff --git a/drivers/net/wireless/ath/ath9k/hif_usb.c b/drivers/net/wireless/ath/ath9k/hif_usb.c
+index d872459c51cc..8a18a33b5b59 100644
+--- a/drivers/net/wireless/ath/ath9k/hif_usb.c
++++ b/drivers/net/wireless/ath/ath9k/hif_usb.c
+@@ -1328,10 +1328,24 @@ static int send_eject_command(struct usb_interface *interface)
+ static int ath9k_hif_usb_probe(struct usb_interface *interface,
+ 			       const struct usb_device_id *id)
+ {
++	struct usb_endpoint_descriptor *bulk_in, *bulk_out, *int_in, *int_out;
+ 	struct usb_device *udev = interface_to_usbdev(interface);
++	struct usb_host_interface *alt;
+ 	struct hif_device_usb *hif_dev;
+ 	int ret = 0;
  
-+	if (HFS_I(main_inode)->cat_key.CName.len > HFS_NAMELEN)
-+		return -EIO;
- 	fd.search_key->cat = HFS_I(main_inode)->cat_key;
- 	if (hfs_brec_find(&fd))
- 		/* panic? */
++	/* Verify the expected endpoints are present */
++	alt = interface->cur_altsetting;
++	if (usb_find_common_endpoints(alt, &bulk_in, &bulk_out, &int_in, &int_out) < 0 ||
++	    usb_endpoint_num(bulk_in) != USB_WLAN_RX_PIPE ||
++	    usb_endpoint_num(bulk_out) != USB_WLAN_TX_PIPE ||
++	    usb_endpoint_num(int_in) != USB_REG_IN_PIPE ||
++	    usb_endpoint_num(int_out) != USB_REG_OUT_PIPE) {
++		dev_err(&udev->dev,
++			"ath9k_htc: Device endpoint numbers are not the expected ones\n");
++		return -ENODEV;
++	}
++
+ 	if (id->driver_info == STORAGE_DEVICE)
+ 		return send_eject_command(interface);
+ 
 -- 
 2.35.1
 
