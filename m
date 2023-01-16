@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C83F33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9694C433D2;
-	Mon, 16 Jan 2023 16:02:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D627733EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 505A1C433D2;
+	Mon, 16 Jan 2023 16:02:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884969;
-	bh=ucp5kGMubniwwyJwcy8+QmeOKQ7haDVSoVUi4ovYxs8=;
+	s=korg; t=1673884971;
+	bh=ZK1nF/Foc3xxLp9jLW/GdAuUB+MZENCiIKqG7oDrbcM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u090p+coZQ2jD/uvrT1/eT7AjiQh9ZEOKCmiGi50b0tglTGgOg5rqLG20qVJr4rp6
-	 pUAt+1JtuGPLggqPL2VP7xbCYlTs5tnMohdW0GuHm/TMIu5AONYOhw9+7qHwzo6dza
-	 zSdKZbbw2mW2+QGHJ6Yg1HBFaWkjNYkHTQeqRP7A=
+	b=Er8UjbjWW/nk+8CiSY88FFVv0eDKyjUF3sguKQUUduL2hezz/j5oj00SbC8OiJjzl
+	 48w0msZe3HrSf2xlHvKexnzXB6Apu0gCYGyvAKcZAfQ7PowZ/oPl1iMjtumsXUjM0S
+	 vwO+9DHcnuXXnBNfk1yRe2cC/YJN4AExjTZnKbZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Marijn Suijten <marijn.suijten@somainline.org>,
-	Rob Clark <robdclark@gmail.com>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Akhil P Oommen <quic_akhilpo@quicinc.com>,
-	Rob Clark <robdclark@chromium.org>
-Subject: [PATCH 5.15 24/86] drm/msm/adreno: Make adreno quirks not overwrite each other
-Date: Mon, 16 Jan 2023 16:50:58 +0100
-Message-Id: <20230116154748.108139977@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: [PATCH 5.15 25/86] dt-bindings: msm: dsi-controller-main: Fix power-domain constraint
+Date: Mon, 16 Jan 2023 16:50:59 +0100
+Message-Id: <20230116154748.158190757@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -38,56 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit 13ef096e342b00e30b95a90c6c13eee1f0bec4c5 upstream.
+commit a6f033938beb31f893302a93f83ec0b6460c6cac upstream.
 
-So far the adreno quirks have all been assigned with an OR operator,
-which is problematic, because they were assigned consecutive integer
-values, which makes checking them with an AND operator kind of no bueno..
+power-domain is required for the sc7180 dispcc GDSC but not every qcom SoC
+has a similar dependency for example the apq8064.
 
-Switch to using BIT(n) so that only the quirks that the programmer chose
-are taken into account when evaluating info->quirks & ADRENO_QUIRK_...
+Most Qcom SoC's using mdss-dsi-ctrl seem to have the ability to
+power-collapse the MDP without collapsing DSI.
 
-Fixes: 370063ee427a ("drm/msm/adreno: Add A540 support")
+For example the qcom vendor kernel commit for apq8084, msm8226, msm8916,
+msm8974.
+
+https://review.carbonrom.org/plugins/gitiles/CarbonROM/android_kernel_oneplus_msm8994/+/7b5c011a770daa2811778937ed646237a28a8694
+
+"ARM: dts: msm: add mdss gdsc supply to dsi controller device
+
+ It is possible for the DSI controller to be active when MDP is
+ power collapsed. DSI controller needs to have it's own vote for
+ mdss gdsc to ensure that gdsc remains on in such cases."
+
+This however doesn't appear to be the case for the apq8064 so we shouldn't
+be marking power-domain as required in yaml checks.
+
+Fixes: 4dbe55c97741 ("dt-bindings: msm: dsi: add yaml schemas for DSI bindings")
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Rob Clark <robdclark@gmail.com>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Akhil P Oommen <quic_akhilpo@quicinc.com>
-Patchwork: https://patchwork.freedesktop.org/patch/516456/
-Link: https://lore.kernel.org/r/20230102100201.77286-1-konrad.dybcio@linaro.org
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/515958/
+Link: https://lore.kernel.org/r/20221223021025.1646636-3-bryan.odonoghue@linaro.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/msm/adreno/adreno_gpu.h |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-+++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
-@@ -29,11 +29,9 @@ enum {
- 	ADRENO_FW_MAX,
- };
+--- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+@@ -135,7 +135,6 @@ required:
+   - phy-names
+   - assigned-clocks
+   - assigned-clock-parents
+-  - power-domains
+   - ports
  
--enum adreno_quirks {
--	ADRENO_QUIRK_TWO_PASS_USE_WFI = 1,
--	ADRENO_QUIRK_FAULT_DETECT_MASK = 2,
--	ADRENO_QUIRK_LMLOADKILL_DISABLE = 3,
--};
-+#define ADRENO_QUIRK_TWO_PASS_USE_WFI		BIT(0)
-+#define ADRENO_QUIRK_FAULT_DETECT_MASK		BIT(1)
-+#define ADRENO_QUIRK_LMLOADKILL_DISABLE		BIT(2)
- 
- struct adreno_rev {
- 	uint8_t  core;
-@@ -65,7 +63,7 @@ struct adreno_info {
- 	const char *name;
- 	const char *fw[ADRENO_FW_MAX];
- 	uint32_t gmem;
--	enum adreno_quirks quirks;
-+	u64 quirks;
- 	struct msm_gpu *(*init)(struct drm_device *dev);
- 	const char *zapfw;
- 	u32 inactive_period;
+ additionalProperties: false
 
 
