@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01EBE33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E604C433D2;
-	Mon, 16 Jan 2023 16:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1FB733EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23DDDC433EF;
+	Mon, 16 Jan 2023 16:00:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884811;
-	bh=0e1cB6rDET+Dt2wIFFoOUdT/rkft9TXI9p7v/mduYO4=;
+	s=korg; t=1673884814;
+	bh=t85UF9TupQ/VaXI7mH4PDfmG9rJfJWkOdJVHF8qO2T0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WUvS+Unr8NeEf+zf6w5ncUFYMyhNh03Yw7pMqXCr0vUCCeW8K0IXUsw2teaMD1ASf
-	 5Be/NRZwqyyh5qp003H5hVNCQ4l9F8nIlrGiPh0YpDz5GpIOdapJFVzLKm9sIa4mzv
-	 j1lEcDx2y28KjwYGssEFtRGGTQccTfcX/RSH0tJQ=
+	b=JRVilRExUXNH/XaomvLRUskAZ+Mvo61w3n9Oz6KsL3OrWSKFX1ZbSL38VdWKG4OwA
+	 mkz9o933nx/R/O01peazN3DmqaJfMK8rEyYdDfEHr6BZ8xGBBNIAnhTlQm7baTiD+f
+	 V+mLgUbCGMlUYRyR9YWviNJeuUph0UKWLQyuIo6o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ariel Levkovich <lariel@nvidia.com>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 149/183] Revert "r8169: disable detection of chip version 36"
-Date: Mon, 16 Jan 2023 16:51:12 +0100
-Message-Id: <20230116154809.628736478@linuxfoundation.org>
+Subject: [PATCH 6.1 150/183] net/mlx5: check attr pointer validity before dereferencing it
+Date: Mon, 16 Jan 2023 16:51:13 +0100
+Message-Id: <20230116154809.675932768@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -35,41 +37,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Ariel Levkovich <lariel@nvidia.com>
 
-[ Upstream commit 2ea26b4de6f42b74a5f1701de41efa6bc9f12666 ]
+[ Upstream commit e0bf81bf0d3d4747c146e0bf44774d3d881d7137 ]
 
-This reverts commit 42666b2c452ce87894786aae05e3fad3cfc6cb59.
+Fix attr pointer validity checks after it was already
+dereferenced.
 
-This chip version seems to be very rare, but it exits in consumer
-devices, see linked report.
-
-Link: https://stackoverflow.com/questions/75049473/cant-setup-a-wired-network-in-archlinux-fresh-install
-Fixes: 42666b2c452c ("r8169: disable detection of chip version 36")
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/42e9674c-d5d0-a65a-f578-e5c74f244739@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: cb0d54cbf948 ("net/mlx5e: Fix wrong source vport matching on tunnel rule")
+Signed-off-by: Ariel Levkovich <lariel@nvidia.com>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 5 +----
- 1 file changed, 1 insertion(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index a73d061d9fcb..fe8dc8e0522b 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -1996,10 +1996,7 @@ static enum mac_version rtl8169_get_mac_version(u16 xid, bool gmii)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+index 8c6c9bcb3dc3..b4e263e8cfb8 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/eswitch_offloads.c
+@@ -142,7 +142,7 @@ mlx5_eswitch_set_rule_source_port(struct mlx5_eswitch *esw,
+ 		if (mlx5_esw_indir_table_decap_vport(attr))
+ 			vport = mlx5_esw_indir_table_decap_vport(attr);
  
- 		/* 8168F family. */
- 		{ 0x7c8, 0x488,	RTL_GIGA_MAC_VER_38 },
--		/* It seems this chip version never made it to
--		 * the wild. Let's disable detection.
--		 * { 0x7cf, 0x481,	RTL_GIGA_MAC_VER_36 },
--		 */
-+		{ 0x7cf, 0x481,	RTL_GIGA_MAC_VER_36 },
- 		{ 0x7cf, 0x480,	RTL_GIGA_MAC_VER_35 },
- 
- 		/* 8168E family. */
+-		if (attr && !attr->chain && esw_attr->int_port)
++		if (!attr->chain && esw_attr && esw_attr->int_port)
+ 			metadata =
+ 				mlx5e_tc_int_port_get_metadata_for_match(esw_attr->int_port);
+ 		else
 -- 
 2.35.1
 
