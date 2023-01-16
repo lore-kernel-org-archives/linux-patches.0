@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6C7746B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:07:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B713C433F1;
-	Mon, 16 Jan 2023 16:07:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8780846B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:07:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0316AC433EF;
+	Mon, 16 Jan 2023 16:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885220;
-	bh=OZ9cZjt1/BAdhfm5x8Pdi8D0sHck+hndBwG2k/m1334=;
+	s=korg; t=1673885223;
+	bh=1U4Mkb9V8DyVnckHBecy7fGVq7/rV/QKE9gyYrsz1Pk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fZ3bbR1KPO3EyXYvTzQR5tVP4r/w3AQasJUQx9ReWzaXHGbxwsLRSLd75PSVLsJBt
-	 Xk6evKTfJ12Qeh98juJ/OkIDAaHPqWRf5mZXGgRCFBX/5QZrwtOzLNy34UfPeTqZzv
-	 tQrza8gJbWnS2UqZE2Oxn7b6syecK/MDD8qeOtDI=
+	b=Rd2u/d2zG37bUmGrKBESEvetIQLc+Q1uCczeYijEIX9y5Sw4v/WmDqEo5SUQDoUAa
+	 /i/dqDNACwinpYfR+uXbeMZf1wf18taznXjjqzH26go/WjgjRhrHBapDlXqOf2NWrL
+	 xmL704eIjQiwTCJKfyOLeeG0gpFEfNDWU1INYbwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+57b25da729eb0b88177d@syzkaller.appspotmail.com,
-	Ye Bin <yebin10@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Eric Biggers <ebiggers@google.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 33/64] ext4: fix uninititialized value in ext4_evict_inode
-Date: Mon, 16 Jan 2023 16:51:40 +0100
-Message-Id: <20230116154744.720046420@linuxfoundation.org>
+	syzbot+3d9866419b4aa8f985d6@syzkaller.appspotmail.com,
+	Nicolas Dichtel <nicolas.dichtel@6wind.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>
+Subject: [PATCH 5.10 34/64] xfrm: fix rcu lock in xfrm_notify_userpolicy()
+Date: Mon, 16 Jan 2023 16:51:41 +0100
+Message-Id: <20230116154744.749383933@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -39,97 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ye Bin <yebin10@huawei.com>
+From: Nicolas Dichtel <nicolas.dichtel@6wind.com>
 
-[ Upstream commit 7ea71af94eaaaf6d9aed24bc94a05b977a741cb9 ]
+commit 93ec1320b0170d7a207eda2d119c669b673401ed upstream.
 
-Syzbot found the following issue:
-=====================================================
-BUG: KMSAN: uninit-value in ext4_evict_inode+0xdd/0x26b0 fs/ext4/inode.c:180
- ext4_evict_inode+0xdd/0x26b0 fs/ext4/inode.c:180
- evict+0x365/0x9a0 fs/inode.c:664
- iput_final fs/inode.c:1747 [inline]
- iput+0x985/0xdd0 fs/inode.c:1773
- __ext4_new_inode+0xe54/0x7ec0 fs/ext4/ialloc.c:1361
- ext4_mknod+0x376/0x840 fs/ext4/namei.c:2844
- vfs_mknod+0x79d/0x830 fs/namei.c:3914
- do_mknodat+0x47d/0xaa0
- __do_sys_mknodat fs/namei.c:3992 [inline]
- __se_sys_mknodat fs/namei.c:3989 [inline]
- __ia32_sys_mknodat+0xeb/0x150 fs/namei.c:3989
- do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
- __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
- do_fast_syscall_32+0x33/0x70 arch/x86/entry/common.c:203
- do_SYSENTER_32+0x1b/0x20 arch/x86/entry/common.c:246
- entry_SYSENTER_compat_after_hwframe+0x70/0x82
+As stated in the comment above xfrm_nlmsg_multicast(), rcu read lock must
+be held before calling this function.
 
-Uninit was created at:
- __alloc_pages+0x9f1/0xe80 mm/page_alloc.c:5578
- alloc_pages+0xaae/0xd80 mm/mempolicy.c:2285
- alloc_slab_page mm/slub.c:1794 [inline]
- allocate_slab+0x1b5/0x1010 mm/slub.c:1939
- new_slab mm/slub.c:1992 [inline]
- ___slab_alloc+0x10c3/0x2d60 mm/slub.c:3180
- __slab_alloc mm/slub.c:3279 [inline]
- slab_alloc_node mm/slub.c:3364 [inline]
- slab_alloc mm/slub.c:3406 [inline]
- __kmem_cache_alloc_lru mm/slub.c:3413 [inline]
- kmem_cache_alloc_lru+0x6f3/0xb30 mm/slub.c:3429
- alloc_inode_sb include/linux/fs.h:3117 [inline]
- ext4_alloc_inode+0x5f/0x860 fs/ext4/super.c:1321
- alloc_inode+0x83/0x440 fs/inode.c:259
- new_inode_pseudo fs/inode.c:1018 [inline]
- new_inode+0x3b/0x430 fs/inode.c:1046
- __ext4_new_inode+0x2a7/0x7ec0 fs/ext4/ialloc.c:959
- ext4_mkdir+0x4d5/0x1560 fs/ext4/namei.c:2992
- vfs_mkdir+0x62a/0x870 fs/namei.c:4035
- do_mkdirat+0x466/0x7b0 fs/namei.c:4060
- __do_sys_mkdirat fs/namei.c:4075 [inline]
- __se_sys_mkdirat fs/namei.c:4073 [inline]
- __ia32_sys_mkdirat+0xc4/0x120 fs/namei.c:4073
- do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
- __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
- do_fast_syscall_32+0x33/0x70 arch/x86/entry/common.c:203
- do_SYSENTER_32+0x1b/0x20 arch/x86/entry/common.c:246
- entry_SYSENTER_compat_after_hwframe+0x70/0x82
-
-CPU: 1 PID: 4625 Comm: syz-executor.2 Not tainted 6.1.0-rc4-syzkaller-62821-gcb231e2f67ec #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-=====================================================
-
-Now, 'ext4_alloc_inode()' didn't init 'ei->i_flags'. If new inode failed
-before set 'ei->i_flags' in '__ext4_new_inode()', then do 'iput()'. As after
-6bc0d63dad7f commit will access 'ei->i_flags' in 'ext4_evict_inode()' which
-will lead to access uninit-value.
-To solve above issue just init 'ei->i_flags' in 'ext4_alloc_inode()'.
-
-Reported-by: syzbot+57b25da729eb0b88177d@syzkaller.appspotmail.com
-Signed-off-by: Ye Bin <yebin10@huawei.com>
-Fixes: 6bc0d63dad7f ("ext4: remove EA inode entry from mbcache on inode eviction")
-Reviewed-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20221117073603.2598882-1-yebin@huaweicloud.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: syzbot+3d9866419b4aa8f985d6@syzkaller.appspotmail.com
+Fixes: 703b94b93c19 ("xfrm: notify default policy on update")
+Signed-off-by: Nicolas Dichtel <nicolas.dichtel@6wind.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/super.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/xfrm/xfrm_user.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index 935589579b8f..e940fb07ef2e 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1279,6 +1279,7 @@ static struct inode *ext4_alloc_inode(struct super_block *sb)
- 		return NULL;
+--- a/net/xfrm/xfrm_user.c
++++ b/net/xfrm/xfrm_user.c
+@@ -1920,6 +1920,7 @@ static int xfrm_notify_userpolicy(struct
+ 	int len = NLMSG_ALIGN(sizeof(*up));
+ 	struct nlmsghdr *nlh;
+ 	struct sk_buff *skb;
++	int err;
  
- 	inode_set_iversion(&ei->vfs_inode, 1);
-+	ei->i_flags = 0;
- 	spin_lock_init(&ei->i_raw_lock);
- 	INIT_LIST_HEAD(&ei->i_prealloc_list);
- 	atomic_set(&ei->i_prealloc_active, 0);
--- 
-2.35.1
-
+ 	skb = nlmsg_new(len, GFP_ATOMIC);
+ 	if (skb == NULL)
+@@ -1938,7 +1939,11 @@ static int xfrm_notify_userpolicy(struct
+ 
+ 	nlmsg_end(skb, nlh);
+ 
+-	return xfrm_nlmsg_multicast(net, skb, 0, XFRMNLGRP_POLICY);
++	rcu_read_lock();
++	err = xfrm_nlmsg_multicast(net, skb, 0, XFRMNLGRP_POLICY);
++	rcu_read_unlock();
++
++	return err;
+ }
+ 
+ static bool xfrm_userpolicy_is_valid(__u8 policy)
 
 
