@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E5A46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB018C433D2;
-	Mon, 16 Jan 2023 16:19:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D342846B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59C31C433EF;
+	Mon, 16 Jan 2023 16:19:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885964;
-	bh=UmATE5XzdjunoxpDpj7McMnprvCz2VeSZVP8YmHFV1U=;
+	s=korg; t=1673885966;
+	bh=cORcWrLZyF9I9ldzjoJBNTk5ajBSWpTfwgRvdpKlbMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XNrXYn5YfidGPOugGVTA4s56CvbKgtqOlxnwuvOLEn71nvrckX9ni4dlAm/qBFkWI
-	 2y3grnUkHEJsr/8Ct+x2+CkE6YOJt6FuSD9wQZ3qiVgFEbitIVUedbOd5glhz2O4sj
-	 1FDW+qBH4o8128hW5OmHPOKHbruOWIq1xDomVfZo=
+	b=Ea3WYwwJ+aqUXk7cXSmbHdw19e5Kh/LpKEbW80J+vHDxTP+pqJXZ+CHtsE9jSEc2v
+	 1sINhMTd+Qg8sMzF/gxp9Om9intAj2fDMEqsG4Er+Ki4fV+mJw8ylARQNE4A2OJ+j2
+	 N89o0gSZzrBN9Fdja8pNfLyCyDPXXhdl+VYYst0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
-	Douglas Gilbert <dgilbert@interlog.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 249/658] scsi: scsi_debug: Fix a warning in resp_write_scat()
-Date: Mon, 16 Jan 2023 16:45:37 +0100
-Message-Id: <20230116154920.949936065@linuxfoundation.org>
+Subject: [PATCH 5.4 221/658] net: apple: mace: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Mon, 16 Jan 2023 16:45:09 +0100
+Message-Id: <20230116154919.606068787@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,64 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 216e179724c1d9f57a8ababf8bd7aaabef67f01b ]
+[ Upstream commit 3dfe3486c1cd4f82b466b7d307f23777137b8acc ]
 
-As 'lbdof_blen' is coming from user, if the size in kzalloc() is >=
-MAX_ORDER then we hit a warning.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-Call trace:
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
 
-sg_ioctl
- sg_ioctl_common
-   scsi_ioctl
-    sg_scsi_ioctl
-     blk_execute_rq
-      blk_mq_sched_insert_request
-       blk_mq_run_hw_queue
-        __blk_mq_delay_run_hw_queue
-         __blk_mq_run_hw_queue
-          blk_mq_sched_dispatch_requests
-           __blk_mq_sched_dispatch_requests
-            blk_mq_dispatch_rq_list
-             scsi_queue_rq
-              scsi_dispatch_cmd
-               scsi_debug_queuecommand
-                schedule_resp
-                 resp_write_scat
+In this case, dev_kfree_skb() is called in mace_tx_timeout() to drop
+the SKB, when tx timeout, so replace it with dev_kfree_skb_irq().
 
-If you try to allocate a memory larger than(>=) MAX_ORDER, then kmalloc()
-will definitely fail.  It creates a stack trace and messes up dmesg.  The
-user controls the size here so if they specify a too large size it will
-fail.
-
-Add __GFP_NOWARN in order to avoid too large allocation warning.  This is
-detected by static analysis using smatch.
-
-Fixes: 481b5e5c7949 ("scsi: scsi_debug: add resp_write_scat function")
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Link: https://lore.kernel.org/r/20221111100526.1790533-1-harshit.m.mogalapalli@oracle.com
-Acked-by: Douglas Gilbert <dgilbert@interlog.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_debug.c | 2 +-
+ drivers/net/ethernet/apple/mace.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_debug.c b/drivers/scsi/scsi_debug.c
-index 408166bd20f3..2c86ed1dc4b5 100644
---- a/drivers/scsi/scsi_debug.c
-+++ b/drivers/scsi/scsi_debug.c
-@@ -3139,7 +3139,7 @@ static int resp_write_scat(struct scsi_cmnd *scp,
- 		mk_sense_buffer(scp, ILLEGAL_REQUEST, INVALID_FIELD_IN_CDB, 0);
- 		return illegal_condition_result;
- 	}
--	lrdp = kzalloc(lbdof_blen, GFP_ATOMIC);
-+	lrdp = kzalloc(lbdof_blen, GFP_ATOMIC | __GFP_NOWARN);
- 	if (lrdp == NULL)
- 		return SCSI_MLQUEUE_HOST_BUSY;
- 	if (sdebug_verbose)
+diff --git a/drivers/net/ethernet/apple/mace.c b/drivers/net/ethernet/apple/mace.c
+index b8ba2abf5b3a..65ed373d04f5 100644
+--- a/drivers/net/ethernet/apple/mace.c
++++ b/drivers/net/ethernet/apple/mace.c
+@@ -841,7 +841,7 @@ static void mace_tx_timeout(struct timer_list *t)
+     if (mp->tx_bad_runt) {
+ 	mp->tx_bad_runt = 0;
+     } else if (i != mp->tx_fill) {
+-	dev_kfree_skb(mp->tx_bufs[i]);
++	dev_kfree_skb_irq(mp->tx_bufs[i]);
+ 	if (++i >= N_TX_RING)
+ 	    i = 0;
+ 	mp->tx_empty = i;
 -- 
 2.35.1
 
