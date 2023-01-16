@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2FE336FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:08:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ABAE7C433D2;
-	Mon, 16 Jan 2023 17:08:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2A106FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:08:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49ECEC433EF;
+	Mon, 16 Jan 2023 17:08:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888883;
-	bh=VRoWMdQZptWHz7vDB+Jl4DFHRKCxSYOcznflECbSgnU=;
+	s=korg; t=1673888885;
+	bh=CtCPtv8nZlGKiEm5OonGSaIb5WvtKScuz0l5RWrUT7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=heXse8wvjxpm5EyROI6spuiPCwqBrlVUDGPadczUvhgF2uzYSUETSrH2k+tbjMcim
-	 BHAap9F4g6k0s+ZbyLvMveS2pPGhCvMyZf2yjjEdhlWyC0LAWUGHvZ6NaODmvHeMZJ
-	 CSUi1ojttPNpIt22MQEUPCfoKoMKseS5O4QyZu4Y=
+	b=0uI2zNrD/Lx33ZiduNucXexzxYVbKo9dDUpg9sreuxpNprelME9p3L/dOrEJm9xEO
+	 JCiMsx5dGxh5S4H9UMqiLtcqqB8SPTqVZEZs19TiZqZc/v9iNSddz37a9c56Sh/2Qk
+	 8ef4r2Ud3Lel3aU87okx5wtCAjLIS0ZIt1AADBfs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Hui Tang <tanghui20@huawei.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 174/338] chardev: fix error handling in cdev_device_add()
-Date: Mon, 16 Jan 2023 16:50:47 +0100
-Message-Id: <20230116154828.486829728@linuxfoundation.org>
+Subject: [PATCH 4.14 175/338] i2c: pxa-pci: fix missing pci_disable_device() on error in ce4100_i2c_probe
+Date: Mon, 16 Jan 2023 16:50:48 +0100
+Message-Id: <20230116154828.537938208@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -34,52 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Hui Tang <tanghui20@huawei.com>
 
-[ Upstream commit 11fa7fefe3d8fac7da56bc9aa3dd5fb3081ca797 ]
+[ Upstream commit d78a167332e1ca8113268ed922c1212fd71b73ad ]
 
-While doing fault injection test, I got the following report:
+Using pcim_enable_device() to avoid missing pci_disable_device().
 
-------------[ cut here ]------------
-kobject: '(null)' (0000000039956980): is not initialized, yet kobject_put() is being called.
-WARNING: CPU: 3 PID: 6306 at kobject_put+0x23d/0x4e0
-CPU: 3 PID: 6306 Comm: 283 Tainted: G        W          6.1.0-rc2-00005-g307c1086d7c9 #1253
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
-RIP: 0010:kobject_put+0x23d/0x4e0
-Call Trace:
- <TASK>
- cdev_device_add+0x15e/0x1b0
- __iio_device_register+0x13b4/0x1af0 [industrialio]
- __devm_iio_device_register+0x22/0x90 [industrialio]
- max517_probe+0x3d8/0x6b4 [max517]
- i2c_device_probe+0xa81/0xc00
-
-When device_add() is injected fault and returns error, if dev->devt is not set,
-cdev_add() is not called, cdev_del() is not needed. Fix this by checking dev->devt
-in error path.
-
-Fixes: 233ed09d7fda ("chardev: add helper function to register char devs with a struct device")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221202030237.520280-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 7e94dd154e93 ("i2c-pxa2xx: Add PCI support for PXA I2C controller")
+Signed-off-by: Hui Tang <tanghui20@huawei.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/char_dev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/i2c/busses/i2c-pxa-pci.c | 10 +++-------
+ 1 file changed, 3 insertions(+), 7 deletions(-)
 
-diff --git a/fs/char_dev.c b/fs/char_dev.c
-index 715d76b00108..c7f79f048086 100644
---- a/fs/char_dev.c
-+++ b/fs/char_dev.c
-@@ -553,7 +553,7 @@ int cdev_device_add(struct cdev *cdev, struct device *dev)
+diff --git a/drivers/i2c/busses/i2c-pxa-pci.c b/drivers/i2c/busses/i2c-pxa-pci.c
+index 004deb96afe3..4e81fbdaf90f 100644
+--- a/drivers/i2c/busses/i2c-pxa-pci.c
++++ b/drivers/i2c/busses/i2c-pxa-pci.c
+@@ -105,7 +105,7 @@ static int ce4100_i2c_probe(struct pci_dev *dev,
+ 	int i;
+ 	struct ce4100_devices *sds;
+ 
+-	ret = pci_enable_device_mem(dev);
++	ret = pcim_enable_device(dev);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -114,10 +114,8 @@ static int ce4100_i2c_probe(struct pci_dev *dev,
+ 		return -EINVAL;
  	}
+ 	sds = kzalloc(sizeof(*sds), GFP_KERNEL);
+-	if (!sds) {
+-		ret = -ENOMEM;
+-		goto err_mem;
+-	}
++	if (!sds)
++		return -ENOMEM;
  
- 	rc = device_add(dev);
--	if (rc)
-+	if (rc && dev->devt)
- 		cdev_del(cdev);
+ 	for (i = 0; i < ARRAY_SIZE(sds->pdev); i++) {
+ 		sds->pdev[i] = add_i2c_device(dev, i);
+@@ -133,8 +131,6 @@ static int ce4100_i2c_probe(struct pci_dev *dev,
  
- 	return rc;
+ err_dev_add:
+ 	kfree(sds);
+-err_mem:
+-	pci_disable_device(dev);
+ 	return ret;
+ }
+ 
 -- 
 2.35.1
 
