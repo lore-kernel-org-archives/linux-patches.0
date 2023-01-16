@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A380F46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F27C433F1;
-	Mon, 16 Jan 2023 16:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4293346B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBDDCC433EF;
+	Mon, 16 Jan 2023 16:17:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885824;
-	bh=OKgMLBtalK0k5CakQRomu8g3tXNf8j69gW0svN2QNOk=;
+	s=korg; t=1673885827;
+	bh=upqdbj77C8zkmAvysDKhme4xkAWP/Pqw9jsgamxCcd4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lH0ishxfhfK/cxLNA7Mma7IRfTGNXoW6R8i+XHnK8Hw3f+7AMCDsyp9ED2aBkgaue
-	 +B/DZg5rBs86EF2wkKfyc6Q/LM8iYC4dD24YPbVBtoLLKAoG5AtKWtW6BTqEQ0FBdj
-	 KugX4dCx8kQEiiOs58HRF9TRL6GRmhgslYJ4AfOQ=
+	b=rFvNhagwc+XTQssSSp6CfAHk1K4PzzkJra+a1tZ9Z7iU4H8Riz7iV9EMmRpb3cgLa
+	 6YF8ewPlzEIFqEWZQaszh2YnfLPWlGRaD5kD5feoqdd0J/W/ACgCPZCk/8gsHq2xg1
+	 fXAhWwWcCqGBbNvo4gQvjHNakyLCqj/fT7ETh8jM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
 	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 198/658] mmc: meson-gx: fix return value check of mmc_add_host()
-Date: Mon, 16 Jan 2023 16:44:46 +0100
-Message-Id: <20230116154918.494247111@linuxfoundation.org>
+Subject: [PATCH 5.4 199/658] mmc: via-sdmmc: fix return value check of mmc_add_host()
+Date: Mon, 16 Jan 2023 16:44:47 +0100
+Message-Id: <20230116154918.535335495@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -38,7 +37,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 90935f16f2650ab7416fa2ffbe5c28cb39cf3f1e ]
+[ Upstream commit e4e46fb61e3bb4628170810d3f2b996b709b90d9 ]
 
 mmc_add_host() may return error, if we ignore its return value,
 it will lead two issues:
@@ -50,28 +49,27 @@ it will lead two issues:
 Fix this by checking the return value and goto error path which
 will call mmc_free_host().
 
-Fixes: 51c5d8447bd7 ("MMC: meson: initial support for GX platforms")
+Fixes: f0bf7f61b840 ("mmc: Add new via-sdmmc host controller driver")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20221108123417.479045-1-yangyingliang@huawei.com
+Link: https://lore.kernel.org/r/20221108130949.1067699-1-yangyingliang@huawei.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/meson-gx-mmc.c | 4 +++-
+ drivers/mmc/host/via-sdmmc.c | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mmc/host/meson-gx-mmc.c b/drivers/mmc/host/meson-gx-mmc.c
-index 9044faf0050a..95a8ba4cf3da 100644
---- a/drivers/mmc/host/meson-gx-mmc.c
-+++ b/drivers/mmc/host/meson-gx-mmc.c
-@@ -1289,7 +1289,9 @@ static int meson_mmc_probe(struct platform_device *pdev)
- 	}
+diff --git a/drivers/mmc/host/via-sdmmc.c b/drivers/mmc/host/via-sdmmc.c
+index 721e5dd1eb7d..2c4d390a8acd 100644
+--- a/drivers/mmc/host/via-sdmmc.c
++++ b/drivers/mmc/host/via-sdmmc.c
+@@ -1154,7 +1154,9 @@ static int via_sd_probe(struct pci_dev *pcidev,
+ 	    pcidev->subsystem_device == 0x3891)
+ 		sdhost->quirks = VIA_CRDR_QUIRK_300MS_PWRDELAY;
  
- 	mmc->ops = &meson_mmc_ops;
 -	mmc_add_host(mmc);
 +	ret = mmc_add_host(mmc);
 +	if (ret)
-+		goto err_free_irq;
++		goto unmap;
  
  	return 0;
  
