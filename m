@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7D2F46B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:07:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CDF4C433EF;
-	Mon, 16 Jan 2023 16:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7427346B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:07:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFA93C433D2;
+	Mon, 16 Jan 2023 16:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885272;
-	bh=NlwaFl4fCSE4di+67CjcjEObbgnj08iaMsqqOMThHQY=;
+	s=korg; t=1673885275;
+	bh=2e3TtKEHLZumbbPJsI/G60ugceVJWFM5tfm5WjwQ63s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W+/5mmNQBcjY79KD5AMsAvXsYNy3xlZYwIyzVvObVyAVRCcoxcRVsJ0UGQ25g5Fq+
-	 rUsHVkE13tzAzzXhBhX2D50TZnlwzHheoKZSlOFqJs66S7moSHBrM94U+RXARD9Iiw
-	 f+E/10rBtEef5+475oOQVKuYeCLHGJ1jNBaIQPFI=
+	b=HRomYhf+T+fKIhLDVchPi8mPKdl2sQccToXIIYsH86xn+4N20AgrbRthGkxKxxDYV
+	 XKZZ8B3XilHWJqMQ0TYmy8DQnzFXCezt7aOzhvt5Pw/6NbK17BB+rr6ecKZjXxMYM8
+	 dJTmBi2snBAu+Zv1/Q22Z2+bSIeZ3Tr2iNo63mes=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
-	"David S. Miller" <davem@davemloft.net>,
+	James Morse <james.morse@arm.com>,
+	Reinette Chatre <reinette.chatre@intel.com>,
+	Borislav Petkov <bp@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 46/64] nfc: pn533: Wait for out_urbs completion in pn533_usb_send_frame()
-Date: Mon, 16 Jan 2023 16:51:53 +0100
-Message-Id: <20230116154745.169141969@linuxfoundation.org>
+Subject: [PATCH 5.10 55/64] x86/resctrl: Use task_curr() instead of task_struct->on_cpu to prevent unnecessary IPI
+Date: Mon, 16 Jan 2023 16:52:02 +0100
+Message-Id: <20230116154745.471908431@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -35,127 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+From: Reinette Chatre <reinette.chatre@intel.com>
 
-[ Upstream commit 9dab880d675b9d0dd56c6428e4e8352a3339371d ]
+[ Upstream commit e0ad6dc8969f790f14bddcfd7ea284b7e5f88a16 ]
 
-Fix a use-after-free that occurs in hcd when in_urb sent from
-pn533_usb_send_frame() is completed earlier than out_urb. Its callback
-frees the skb data in pn533_send_async_complete() that is used as a
-transfer buffer of out_urb. Wait before sending in_urb until the
-callback of out_urb is called. To modify the callback of out_urb alone,
-separate the complete function of out_urb and ack_urb.
+James reported in [1] that there could be two tasks running on the same CPU
+with task_struct->on_cpu set. Using task_struct->on_cpu as a test if a task
+is running on a CPU may thus match the old task for a CPU while the
+scheduler is running and IPI it unnecessarily.
 
-Found by a modified version of syzkaller.
+task_curr() is the correct helper to use. While doing so move the #ifdef
+check of the CONFIG_SMP symbol to be a C conditional used to determine
+if this helper should be used to ensure the code is always checked for
+correctness by the compiler.
 
-BUG: KASAN: use-after-free in dummy_timer
-Call Trace:
- memcpy (mm/kasan/shadow.c:65)
- dummy_perform_transfer (drivers/usb/gadget/udc/dummy_hcd.c:1352)
- transfer (drivers/usb/gadget/udc/dummy_hcd.c:1453)
- dummy_timer (drivers/usb/gadget/udc/dummy_hcd.c:1972)
- arch_static_branch (arch/x86/include/asm/jump_label.h:27)
- static_key_false (include/linux/jump_label.h:207)
- timer_expire_exit (include/trace/events/timer.h:127)
- call_timer_fn (kernel/time/timer.c:1475)
- expire_timers (kernel/time/timer.c:1519)
- __run_timers (kernel/time/timer.c:1790)
- run_timer_softirq (kernel/time/timer.c:1803)
+[1] https://lore.kernel.org/lkml/a782d2f3-d2f6-795f-f4b1-9462205fd581@arm.com
 
-Fixes: c46ee38620a2 ("NFC: pn533: add NXP pn533 nfc device driver")
-Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: James Morse <james.morse@arm.com>
+Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Link: https://lkml.kernel.org/r/e9e68ce1441a73401e08b641cc3b9a3cf13fe6d4.1608243147.git.reinette.chatre@intel.com
+Stable-dep-of: fe1f0714385f ("x86/resctrl: Fix task CLOSID/RMID update race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nfc/pn533/usb.c | 44 ++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 41 insertions(+), 3 deletions(-)
+ arch/x86/kernel/cpu/resctrl/rdtgroup.c | 14 +++++---------
+ 1 file changed, 5 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/nfc/pn533/usb.c b/drivers/nfc/pn533/usb.c
-index 84f2983bf384..57b07446bb76 100644
---- a/drivers/nfc/pn533/usb.c
-+++ b/drivers/nfc/pn533/usb.c
-@@ -153,10 +153,17 @@ static int pn533_usb_send_ack(struct pn533 *dev, gfp_t flags)
- 	return usb_submit_urb(phy->ack_urb, flags);
- }
+diff --git a/arch/x86/kernel/cpu/resctrl/rdtgroup.c b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+index 5a59e3315b34..f2ad3c117426 100644
+--- a/arch/x86/kernel/cpu/resctrl/rdtgroup.c
++++ b/arch/x86/kernel/cpu/resctrl/rdtgroup.c
+@@ -2313,19 +2313,15 @@ static void rdt_move_group_tasks(struct rdtgroup *from, struct rdtgroup *to,
+ 			t->closid = to->closid;
+ 			t->rmid = to->mon.rmid;
  
-+struct pn533_out_arg {
-+	struct pn533_usb_phy *phy;
-+	struct completion done;
-+};
-+
- static int pn533_usb_send_frame(struct pn533 *dev,
- 				struct sk_buff *out)
- {
- 	struct pn533_usb_phy *phy = dev->phy;
-+	struct pn533_out_arg arg;
-+	void *cntx;
- 	int rc;
- 
- 	if (phy->priv == NULL)
-@@ -168,10 +175,17 @@ static int pn533_usb_send_frame(struct pn533 *dev,
- 	print_hex_dump_debug("PN533 TX: ", DUMP_PREFIX_NONE, 16, 1,
- 			     out->data, out->len, false);
- 
-+	init_completion(&arg.done);
-+	cntx = phy->out_urb->context;
-+	phy->out_urb->context = &arg;
-+
- 	rc = usb_submit_urb(phy->out_urb, GFP_KERNEL);
- 	if (rc)
- 		return rc;
- 
-+	wait_for_completion(&arg.done);
-+	phy->out_urb->context = cntx;
-+
- 	if (dev->protocol_type == PN533_PROTO_REQ_RESP) {
- 		/* request for response for sent packet directly */
- 		rc = pn533_submit_urb_for_response(phy, GFP_KERNEL);
-@@ -412,7 +426,31 @@ static int pn533_acr122_poweron_rdr(struct pn533_usb_phy *phy)
- 	return arg.rc;
- }
- 
--static void pn533_send_complete(struct urb *urb)
-+static void pn533_out_complete(struct urb *urb)
-+{
-+	struct pn533_out_arg *arg = urb->context;
-+	struct pn533_usb_phy *phy = arg->phy;
-+
-+	switch (urb->status) {
-+	case 0:
-+		break; /* success */
-+	case -ECONNRESET:
-+	case -ENOENT:
-+		dev_dbg(&phy->udev->dev,
-+			"The urb has been stopped (status %d)\n",
-+			urb->status);
-+		break;
-+	case -ESHUTDOWN:
-+	default:
-+		nfc_err(&phy->udev->dev,
-+			"Urb failure (status %d)\n",
-+			urb->status);
-+	}
-+
-+	complete(&arg->done);
-+}
-+
-+static void pn533_ack_complete(struct urb *urb)
- {
- 	struct pn533_usb_phy *phy = urb->context;
- 
-@@ -500,10 +538,10 @@ static int pn533_usb_probe(struct usb_interface *interface,
- 
- 	usb_fill_bulk_urb(phy->out_urb, phy->udev,
- 			  usb_sndbulkpipe(phy->udev, out_endpoint),
--			  NULL, 0, pn533_send_complete, phy);
-+			  NULL, 0, pn533_out_complete, phy);
- 	usb_fill_bulk_urb(phy->ack_urb, phy->udev,
- 			  usb_sndbulkpipe(phy->udev, out_endpoint),
--			  NULL, 0, pn533_send_complete, phy);
-+			  NULL, 0, pn533_ack_complete, phy);
- 
- 	switch (id->driver_info) {
- 	case PN533_DEVICE_STD:
+-#ifdef CONFIG_SMP
+ 			/*
+-			 * This is safe on x86 w/o barriers as the ordering
+-			 * of writing to task_cpu() and t->on_cpu is
+-			 * reverse to the reading here. The detection is
+-			 * inaccurate as tasks might move or schedule
+-			 * before the smp function call takes place. In
+-			 * such a case the function call is pointless, but
++			 * If the task is on a CPU, set the CPU in the mask.
++			 * The detection is inaccurate as tasks might move or
++			 * schedule before the smp function call takes place.
++			 * In such a case the function call is pointless, but
+ 			 * there is no other side effect.
+ 			 */
+-			if (mask && t->on_cpu)
++			if (IS_ENABLED(CONFIG_SMP) && mask && task_curr(t))
+ 				cpumask_set_cpu(task_cpu(t), mask);
+-#endif
+ 		}
+ 	}
+ 	read_unlock(&tasklist_lock);
 -- 
 2.35.1
 
