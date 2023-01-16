@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 365666FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:41:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA3BC433D2;
-	Mon, 16 Jan 2023 16:41:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBBBC6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:41:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DA96C433EF;
+	Mon, 16 Jan 2023 16:41:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887298;
-	bh=4ACBcbDJ6Ctcg/srlEdFd2WrfFh78XgoTZQLLlxPVTQ=;
+	s=korg; t=1673887300;
+	bh=JqfA0O+X2XBZDhZg+p5elc6buO1bmVDwiTEnZHPdLRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CmfK/aTRxbtXaEe6LMEJ3CSKesEK9VQIf39/MvaslHbeZYi2CFIrwp2oUImu7xBAt
-	 Op6nX22jiLvcHlPVVOH+gFf3577RcCebE7qd49qjddFZpIbUhYSnq/A30PLv4naukz
-	 LvZS3C3ePC3cEcIdXQxzN9wft18Twc4pkSjaHYu0=
+	b=zB0eLjFyU2TE5Z1FjlZPiVkeWFSXBqdc3zjqLmvtTygDi8yf4ApwGN0BnQ66Vn6gO
+	 KecGLZiLuEhz0PvN/O59yezrrmHg0aP8Gw013VABDxRL+VmUbj7AurrjYd3LIM8UAf
+	 9Xaiv4fneO5BRP/dX8k9bQYIlSCfyASqNoISIv6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Jonathan=20Neusch=C3=A4fer?= <j.neuschaefer@gmx.net>,
-	Mark Brown <broonie@kernel.org>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 095/521] spi: Update reference to struct spi_controller
-Date: Mon, 16 Jan 2023 16:45:57 +0100
-Message-Id: <20230116154851.488063700@linuxfoundation.org>
+Subject: [PATCH 4.19 096/521] media: vivid: fix compose size exceed boundary
+Date: Mon, 16 Jan 2023 16:45:58 +0100
+Message-Id: <20230116154851.520360080@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,37 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
+From: Liu Shixin <liushixin2@huawei.com>
 
-[ Upstream commit bf585ccee22faf469d82727cf375868105b362f7 ]
+[ Upstream commit 94a7ad9283464b75b12516c5512541d467cefcf8 ]
 
-struct spi_master has been renamed to struct spi_controller. Update the
-reference in spi.rst to make it clickable again.
+syzkaller found a bug:
 
-Fixes: 8caab75fd2c2 ("spi: Generalize SPI "master" to "controller"")
-Signed-off-by: Jonathan Neuschäfer <j.neuschaefer@gmx.net>
-Link: https://lore.kernel.org/r/20221101173252.1069294-1-j.neuschaefer@gmx.net
-Signed-off-by: Mark Brown <broonie@kernel.org>
+ BUG: unable to handle page fault for address: ffffc9000a3b1000
+ #PF: supervisor write access in kernel mode
+ #PF: error_code(0x0002) - not-present page
+ PGD 100000067 P4D 100000067 PUD 10015f067 PMD 1121ca067 PTE 0
+ Oops: 0002 [#1] PREEMPT SMP
+ CPU: 0 PID: 23489 Comm: vivid-000-vid-c Not tainted 6.1.0-rc1+ #512
+ Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1.1 04/01/2014
+ RIP: 0010:memcpy_erms+0x6/0x10
+[...]
+ Call Trace:
+  <TASK>
+  ? tpg_fill_plane_buffer+0x856/0x15b0
+  vivid_fillbuff+0x8ac/0x1110
+  vivid_thread_vid_cap_tick+0x361/0xc90
+  vivid_thread_vid_cap+0x21a/0x3a0
+  kthread+0x143/0x180
+  ret_from_fork+0x1f/0x30
+  </TASK>
+
+This is because we forget to check boundary after adjust compose->height
+int V4L2_SEL_TGT_CROP case. Add v4l2_rect_map_inside() to fix this problem
+for this case.
+
+Fixes: ef834f7836ec ("[media] vivid: add the video capture and output parts")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/driver-api/spi.rst | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/media/platform/vivid/vivid-vid-cap.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/driver-api/spi.rst b/Documentation/driver-api/spi.rst
-index f64cb666498a..f28887045049 100644
---- a/Documentation/driver-api/spi.rst
-+++ b/Documentation/driver-api/spi.rst
-@@ -25,8 +25,8 @@ hardware, which may be as simple as a set of GPIO pins or as complex as
- a pair of FIFOs connected to dual DMA engines on the other side of the
- SPI shift register (maximizing throughput). Such drivers bridge between
- whatever bus they sit on (often the platform bus) and SPI, and expose
--the SPI side of their device as a :c:type:`struct spi_master
--<spi_master>`. SPI devices are children of that master,
-+the SPI side of their device as a :c:type:`struct spi_controller
-+<spi_controller>`. SPI devices are children of that master,
- represented as a :c:type:`struct spi_device <spi_device>` and
- manufactured from :c:type:`struct spi_board_info
- <spi_board_info>` descriptors which are usually provided by
+diff --git a/drivers/media/platform/vivid/vivid-vid-cap.c b/drivers/media/platform/vivid/vivid-vid-cap.c
+index 48f2c9c96fc9..ded48b7ad774 100644
+--- a/drivers/media/platform/vivid/vivid-vid-cap.c
++++ b/drivers/media/platform/vivid/vivid-vid-cap.c
+@@ -923,6 +923,7 @@ int vivid_vid_cap_s_selection(struct file *file, void *fh, struct v4l2_selection
+ 			if (dev->has_compose_cap) {
+ 				v4l2_rect_set_min_size(compose, &min_rect);
+ 				v4l2_rect_set_max_size(compose, &max_rect);
++				v4l2_rect_map_inside(compose, &fmt);
+ 			}
+ 			dev->fmt_cap_rect = fmt;
+ 			tpg_s_buf_height(&dev->tpg, fmt.height);
 -- 
 2.35.1
 
