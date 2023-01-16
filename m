@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40CBB6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:57:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6399C433D2;
-	Mon, 16 Jan 2023 16:57:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E58DF6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:57:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62662C433EF;
+	Mon, 16 Jan 2023 16:57:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888269;
-	bh=CXCPUM7RIeJh22ZNWUJSJEaC+fVTyupdTVGpZoTFxBg=;
+	s=korg; t=1673888271;
+	bh=XalcQgvmaKEiJxgess2rg5blO9B8KGoVgxoeRmUeb4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=djU6JKCAWZ7xky5U301kJXIYuVDsV5iDJb+B2dAjCiMrhpyajvd5s9sFOCm1+TD1c
-	 hKa2GaiwX6ySKohIbksn90KX36+tq0a2tUTjJNgr3tLu70SqR+q6Me2AuOkhYN9Zth
-	 CdSfpwgAHgB3SwH+3vFUBGOQqEoaeSCyBX0SYv9o=
+	b=2XOmO+o4oDJnUFycc7luqRRFUzec9wCRMRxulXlaYRDdfZTs6hFHwSqaMXzzbQE3l
+	 80osQNAr5k5hRmNyaYmPFjSNBmu3JYagOEM4egfD+Nsf39gUirA0qn3lCkZjH86N2c
+	 UzFO6tJ7OGKmleYJiDfHvG/gmRGyzcmlAsXad4oU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitrii Dolgov <9erthalion6@gmail.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ian Rogers <irogers@google.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>
-Subject: [PATCH 4.19 465/521] perf auxtrace: Fix address filter duplicate symbol selection
-Date: Mon, 16 Jan 2023 16:52:07 +0100
-Message-Id: <20230116154907.967090045@linuxfoundation.org>
+	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 4.19 466/521] s390/percpu: add READ_ONCE() to arch_this_cpu_to_op_simple()
+Date: Mon, 16 Jan 2023 16:52:08 +0100
+Message-Id: <20230116154908.018724552@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -38,104 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adrian Hunter <adrian.hunter@intel.com>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-commit cf129830ee820f7fc90b98df193cd49d49344d09 upstream.
+commit e3f360db08d55a14112bd27454e616a24296a8b0 upstream.
 
-When a match has been made to the nth duplicate symbol, return
-success not error.
+Make sure that *ptr__ within arch_this_cpu_to_op_simple() is only
+dereferenced once by using READ_ONCE(). Otherwise the compiler could
+generate incorrect code.
 
-Example:
-
-  Before:
-
-    $ cat file.c
-    cat: file.c: No such file or directory
-    $ cat file1.c
-    #include <stdio.h>
-
-    static void func(void)
-    {
-            printf("First func\n");
-    }
-
-    void other(void);
-
-    int main()
-    {
-            func();
-            other();
-            return 0;
-    }
-    $ cat file2.c
-    #include <stdio.h>
-
-    static void func(void)
-    {
-            printf("Second func\n");
-    }
-
-    void other(void)
-    {
-            func();
-    }
-
-    $ gcc -Wall -Wextra -o test file1.c file2.c
-    $ perf record -e intel_pt//u --filter 'filter func @ ./test' -- ./test
-    Multiple symbols with name 'func'
-    #1      0x1149  l       func
-                    which is near           main
-    #2      0x1179  l       func
-                    which is near           other
-    Disambiguate symbol name by inserting #n after the name e.g. func #2
-    Or select a global symbol by inserting #0 or #g or #G
-    Failed to parse address filter: 'filter func @ ./test'
-    Filter format is: filter|start|stop|tracestop <start symbol or address> [/ <end symbol or size>] [@<file name>]
-    Where multiple filters are separated by space or comma.
-    $ perf record -e intel_pt//u --filter 'filter func #2 @ ./test' -- ./test
-    Failed to parse address filter: 'filter func #2 @ ./test'
-    Filter format is: filter|start|stop|tracestop <start symbol or address> [/ <end symbol or size>] [@<file name>]
-    Where multiple filters are separated by space or comma.
-
-  After:
-
-    $ perf record -e intel_pt//u --filter 'filter func #2 @ ./test' -- ./test
-    First func
-    Second func
-    [ perf record: Woken up 1 times to write data ]
-    [ perf record: Captured and wrote 0.016 MB perf.data ]
-    $ perf script --itrace=b -Ftime,flags,ip,sym,addr --ns
-    1231062.526977619:   tr strt                               0 [unknown] =>     558495708179 func
-    1231062.526977619:   tr end  call               558495708188 func =>     558495708050 _init
-    1231062.526979286:   tr strt                               0 [unknown] =>     55849570818d func
-    1231062.526979286:   tr end  return             55849570818f func =>     55849570819d other
-
-Fixes: 1b36c03e356936d6 ("perf record: Add support for using symbols in address filters")
-Reported-by: Dmitrii Dolgov <9erthalion6@gmail.com>
-Signed-off-by: Adrian Hunter <adrian.hunter@intel.com>
-Tested-by: Dmitry Dolgov <9erthalion6@gmail.com>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Ian Rogers <irogers@google.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230110185659.15979-1-adrian.hunter@intel.com
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Cc: <stable@vger.kernel.org>
+Reviewed-by: Alexander Gordeev <agordeev@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/auxtrace.c |    2 +-
+ arch/s390/include/asm/percpu.h |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/tools/perf/util/auxtrace.c
-+++ b/tools/perf/util/auxtrace.c
-@@ -1962,7 +1962,7 @@ static int find_dso_sym(struct dso *dso,
- 				*size = sym->start - *start;
- 			if (idx > 0) {
- 				if (*size)
--					return 1;
-+					return 0;
- 			} else if (dso_sym_match(sym, sym_name, &cnt, idx)) {
- 				print_duplicate_syms(dso, sym_name);
- 				return -EINVAL;
+--- a/arch/s390/include/asm/percpu.h
++++ b/arch/s390/include/asm/percpu.h
+@@ -31,7 +31,7 @@
+ 	pcp_op_T__ *ptr__;						\
+ 	preempt_disable_notrace();					\
+ 	ptr__ = raw_cpu_ptr(&(pcp));					\
+-	prev__ = *ptr__;						\
++	prev__ = READ_ONCE(*ptr__);					\
+ 	do {								\
+ 		old__ = prev__;						\
+ 		new__ = old__ op (val);					\
 
 
