@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B771A6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:39:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 410C1C43392;
-	Mon, 16 Jan 2023 16:39:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A2056FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:39:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D48A9C433D2;
+	Mon, 16 Jan 2023 16:39:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887185;
-	bh=y0RYymWES8yUMcNcK7hAJ9L88eMOJbo1s8jKpVj8TTo=;
+	s=korg; t=1673887188;
+	bh=mSF9HgdZMm4uM2D8BspleO3nHli7v048Tg8Wkc1ZckU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xQrsgEwaIrz7JefHhW98ph9aH2nNdz12Bv85MypAN1HlOckjjKEHqCEEWoyAxQ9uX
-	 DBf500qHt6IRTHguS6/bgthbnhIS2eJB7n+HZM12MpPpFl71SQvzg23aueLmFse9o8
-	 B6BFL6vPYPCim7S23AtjDyjBfoBJ4bi5SovMyJXE=
+	b=cB1TgVaNjb39D5zmweQ91mN0vBlIJyuif9uNJsq3D1fwBkRo0g0E3wcEnBPPx1Tyf
+	 C2dNw5ibfBGwsBgppnLEt32b0n+4UOXlG48Ewc+COKAUKldp9zvqhYIq2Aw1fNHsDg
+	 nbwN8sgwCjhGSDlWEO51yt65gAUCqTAD9WlffJiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Hanjun Guo <guohanjun@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Kan Liang <kan.liang@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 054/521] PNP: fix name memory leak in pnp_alloc_dev()
-Date: Mon, 16 Jan 2023 16:45:16 +0100
-Message-Id: <20230116154849.668412267@linuxfoundation.org>
+Subject: [PATCH 4.19 055/521] perf/x86/intel/uncore: Fix reference count leak in hswep_has_limit_sbox()
+Date: Mon, 16 Jan 2023 16:45:17 +0100
+Message-Id: <20230116154849.718497195@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,43 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit 110d7b0325c55ff3620073ba4201845f59e22ebf ]
+[ Upstream commit 1ff9dd6e7071a561f803135c1d684b13c7a7d01d ]
 
-After commit 1fa5ae857bb1 ("driver core: get rid of struct device's
-bus_id string array"), the name of device is allocated dynamically,
-move dev_set_name() after pnp_add_id() to avoid memory leak.
+pci_get_device() will increase the reference count for the returned
+'dev'. We need to call pci_dev_put() to decrease the reference count.
+Since 'dev' is only used in pci_read_config_dword(), let's add
+pci_dev_put() right after it.
 
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Hanjun Guo <guohanjun@huawei.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 9d480158ee86 ("perf/x86/intel/uncore: Remove uncore extra PCI dev HSWEP_PCI_PCU_3")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Reviewed-by: Kan Liang <kan.liang@linux.intel.com>
+Link: https://lore.kernel.org/r/20221118063137.121512-3-wangxiongfeng2@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pnp/core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ arch/x86/events/intel/uncore_snbep.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/pnp/core.c b/drivers/pnp/core.c
-index 3bf18d718975..131b925b820d 100644
---- a/drivers/pnp/core.c
-+++ b/drivers/pnp/core.c
-@@ -160,14 +160,14 @@ struct pnp_dev *pnp_alloc_dev(struct pnp_protocol *protocol, int id,
- 	dev->dev.coherent_dma_mask = dev->dma_mask;
- 	dev->dev.release = &pnp_release_device;
+diff --git a/arch/x86/events/intel/uncore_snbep.c b/arch/x86/events/intel/uncore_snbep.c
+index 2bf1170f7afd..34da6d27d839 100644
+--- a/arch/x86/events/intel/uncore_snbep.c
++++ b/arch/x86/events/intel/uncore_snbep.c
+@@ -2699,6 +2699,7 @@ static bool hswep_has_limit_sbox(unsigned int device)
+ 		return false;
  
--	dev_set_name(&dev->dev, "%02x:%02x", dev->protocol->number, dev->number);
--
- 	dev_id = pnp_add_id(dev, pnpid);
- 	if (!dev_id) {
- 		kfree(dev);
- 		return NULL;
- 	}
- 
-+	dev_set_name(&dev->dev, "%02x:%02x", dev->protocol->number, dev->number);
-+
- 	return dev;
- }
+ 	pci_read_config_dword(dev, HSWEP_PCU_CAPID4_OFFET, &capid4);
++	pci_dev_put(dev);
+ 	if (!hswep_get_chop(capid4))
+ 		return true;
  
 -- 
 2.35.1
