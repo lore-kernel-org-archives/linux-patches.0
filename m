@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EE0333EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:56:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A6D4C433D2;
-	Mon, 16 Jan 2023 15:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CEE33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:56:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F5D1C433EF;
+	Mon, 16 Jan 2023 15:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884573;
-	bh=OxfDhpjLL4D/Qn2aX4GOaB17ssJo05peJuHl7MCXS6c=;
+	s=korg; t=1673884576;
+	bh=4yylJ2Egue4JgjwSZ7fp6iS43+VnMOkb5xIS5+LqzHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1z7p387W3go2xKo3ia9+PrDTw23hQzzllHTiON4vpNfSjrl7q7LvcjOrZ8EL/szwn
-	 j74SbnYL/zmCPuvBKqkVno+ugQS94gXhBsqy4j1wpGW7PKAGPWs+/4/W8+jd5YiCzi
-	 DpW6SEVO/26Ns0QKdTPT/JCsHlwhsg5cX6BZ2qjE=
+	b=jzXvtKRcnnooy7djZnqJffl4KtlXt4Elt3eNM64TKShmno92zqSb7Fi8ZoMoUoZKI
+	 YHxOpgxTuomIGbPSGOKRAe07qaruHJv6dZ0pSmKsntJpvUqMBgE4sgL2m5yCoKBXh0
+	 9+wwX5nLijDQCxHu6Ovpj8cH/Egm6rq4selIRb60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Brown <broonie@kernel.org>,
-	Will Deacon <will@kernel.org>
-Subject: [PATCH 6.1 057/183] arm64/signal: Always allocate SVE signal frames on SME only systems
-Date: Mon, 16 Jan 2023 16:49:40 +0100
-Message-Id: <20230116154805.757247441@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Abhinav Kumar <quic_abhinavk@quicinc.com>
+Subject: [PATCH 6.1 058/183] dt-bindings: msm: dsi-controller-main: Fix power-domain constraint
+Date: Mon, 16 Jan 2023 16:49:41 +0100
+Message-Id: <20230116154805.796127493@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -34,34 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
 
-commit f26cd7372160da2eba31061d7943348ab9f2c01d upstream.
+commit a6f033938beb31f893302a93f83ec0b6460c6cac upstream.
 
-Currently we only allocate space for SVE signal frames on systems that
-support SVE, meaning that SME only systems do not allocate a signal frame
-for streaming mode SVE state. Change the check so space is allocated if
-either feature is supported.
+power-domain is required for the sc7180 dispcc GDSC but not every qcom SoC
+has a similar dependency for example the apq8064.
 
-Fixes: 85ed24dad290 ("arm64/sme: Implement streaming SVE signal handling")
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20221223-arm64-fix-sme-only-v1-3-938d663f69e5@kernel.org
-Signed-off-by: Will Deacon <will@kernel.org>
+Most Qcom SoC's using mdss-dsi-ctrl seem to have the ability to
+power-collapse the MDP without collapsing DSI.
+
+For example the qcom vendor kernel commit for apq8084, msm8226, msm8916,
+msm8974.
+
+https://review.carbonrom.org/plugins/gitiles/CarbonROM/android_kernel_oneplus_msm8994/+/7b5c011a770daa2811778937ed646237a28a8694
+
+"ARM: dts: msm: add mdss gdsc supply to dsi controller device
+
+ It is possible for the DSI controller to be active when MDP is
+ power collapsed. DSI controller needs to have it's own vote for
+ mdss gdsc to ensure that gdsc remains on in such cases."
+
+This however doesn't appear to be the case for the apq8064 so we shouldn't
+be marking power-domain as required in yaml checks.
+
+Fixes: 4dbe55c97741 ("dt-bindings: msm: dsi: add yaml schemas for DSI bindings")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Patchwork: https://patchwork.freedesktop.org/patch/515958/
+Link: https://lore.kernel.org/r/20221223021025.1646636-3-bryan.odonoghue@linaro.org
+Signed-off-by: Abhinav Kumar <quic_abhinavk@quicinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/signal.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/arch/arm64/kernel/signal.c
-+++ b/arch/arm64/kernel/signal.c
-@@ -729,7 +729,7 @@ static int setup_sigframe_layout(struct
- 			return err;
- 	}
+--- a/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-controller-main.yaml
+@@ -134,7 +134,6 @@ required:
+   - phy-names
+   - assigned-clocks
+   - assigned-clock-parents
+-  - power-domains
+   - ports
  
--	if (system_supports_sve()) {
-+	if (system_supports_sve() || system_supports_sme()) {
- 		unsigned int vq = 0;
- 
- 		if (add_all || test_thread_flag(TIF_SVE) ||
+ additionalProperties: false
 
 
