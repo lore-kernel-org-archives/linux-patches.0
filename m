@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2216B6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:03:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996C7C433EF;
-	Mon, 16 Jan 2023 17:03:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB4516FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:03:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BE3CC433D2;
+	Mon, 16 Jan 2023 17:03:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888622;
-	bh=E66UfLByuvpiFkZgPsyqOojYpRvUYbgfQf0UxwG0EZY=;
+	s=korg; t=1673888624;
+	bh=vzoHGS+S1Gu/M+dbz91evZO4kuebFM+zJyNIfuuudE4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lM2Y5xtj9LlgHy3cOonIFlMuL9HYNp8la86PoJTziqu3XtQisr9jUl06zHL0I780o
-	 yr5n5b3lP20BOo7LGI0D6HvX0spBWio0lJyVxawgVR4uswGXiBLgJEtYj9h4CqR/e1
-	 HMnQYH3vhDGkBROKPEmMsv2IVVftMttFSBYoGFEI=
+	b=2khVHB7SuMQUmnNN6fgpzz2lqFsI/lHpMnHek7C8qHQpJHOVUburjZ3aTobrg9cMY
+	 vL0X3GbMI/AnbLlZhvaKV3IMqFrJLhema91/MmwPjADp6tJ6hc6LKycb/CSaFEGDx7
+	 VA/Skxm1hHJtjbLmx+Sl24QEsbDcP6n3y+VuLbYU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 048/338] MIPS: vpe-mt: fix possible memory leak while module exiting
-Date: Mon, 16 Jan 2023 16:48:41 +0100
-Message-Id: <20230116154822.892546103@linuxfoundation.org>
+Subject: [PATCH 4.14 075/338] regulator: core: fix unbalanced of node refcount in regulator_dev_lookup()
+Date: Mon, 16 Jan 2023 16:49:08 +0100
+Message-Id: <20230116154824.149293215@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -37,51 +37,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 5822e8cc84ee37338ab0bdc3124f6eec04dc232d ]
+[ Upstream commit f2b41b748c19962b82709d9f23c6b2b0ce9d2f91 ]
 
-Afer commit 1fa5ae857bb1 ("driver core: get rid of struct device's
-bus_id string array"), the name of device is allocated dynamically,
-it need be freed when module exiting, call put_device() to give up
-reference, so that it can be freed in kobject_cleanup() when the
-refcount hit to 0. The vpe_device is static, so remove kfree() from
-vpe_device_release().
+I got the the following report:
 
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
+  OF: ERROR: memory leak, expected refcount 1 instead of 2,
+  of_node_get()/of_node_put() unbalanced - destroy cset entry:
+  attach overlay node /i2c/pmic@62/regulators/exten
+
+In of_get_regulator(), the node is returned from of_parse_phandle()
+with refcount incremented, after using it, of_node_put() need be called.
+
+Fixes: 69511a452e6d ("regulator: map consumer regulator based on device tree")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Thomas Bogendoerfer <tsbogend@alpha.franken.de>
+Link: https://lore.kernel.org/r/20221115091508.900752-1-yangyingliang@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/mips/kernel/vpe-mt.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/regulator/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/mips/kernel/vpe-mt.c b/arch/mips/kernel/vpe-mt.c
-index 2e003b11a098..9fd7cd48ea1d 100644
---- a/arch/mips/kernel/vpe-mt.c
-+++ b/arch/mips/kernel/vpe-mt.c
-@@ -313,7 +313,6 @@ ATTRIBUTE_GROUPS(vpe);
- 
- static void vpe_device_release(struct device *cd)
- {
--	kfree(cd);
- }
- 
- static struct class vpe_class = {
-@@ -497,6 +496,7 @@ int __init vpe_module_init(void)
- 	device_del(&vpe_device);
- 
- out_class:
-+	put_device(&vpe_device);
- 	class_unregister(&vpe_class);
- 
- out_chrdev:
-@@ -509,7 +509,7 @@ void __exit vpe_module_exit(void)
- {
- 	struct vpe *v, *n;
- 
--	device_del(&vpe_device);
-+	device_unregister(&vpe_device);
- 	class_unregister(&vpe_class);
- 	unregister_chrdev(major, VPE_MODULE_NAME);
+diff --git a/drivers/regulator/core.c b/drivers/regulator/core.c
+index ce5162ef9216..d6cd8e6e69cf 100644
+--- a/drivers/regulator/core.c
++++ b/drivers/regulator/core.c
+@@ -1478,6 +1478,7 @@ static struct regulator_dev *regulator_dev_lookup(struct device *dev,
+ 		node = of_get_regulator(dev, supply);
+ 		if (node) {
+ 			r = of_find_regulator_by_node(node);
++			of_node_put(node);
+ 			if (r)
+ 				return r;
  
 -- 
 2.35.1
