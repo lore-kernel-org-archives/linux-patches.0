@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B0E16FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:34:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1B3AC433F0;
-	Mon, 16 Jan 2023 16:34:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCF5D6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:34:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CEA7C433F1;
+	Mon, 16 Jan 2023 16:34:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886881;
-	bh=D8VCu5XfzvY2eONbKg3wH65azwDdtbojeCpGAiI1RVM=;
+	s=korg; t=1673886883;
+	bh=txBP2PrgBe3hyFn+LIhA4zMDPNpc4vBoKDCQGrRe8zk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VFqhVdUonAIFApEWZeAkzav7Ou6GDM5jH56UGrF/RNQ5QJGM9C5w5y4oewjYCmUMn
-	 cc8j8s0SnpW341A+naX7Fa5rEILT8XXuD8sI1hkgqCoowHZz7P41UIb77PwQ+SOrYq
-	 69jKEg2C1f8Av5qETBUTg3BKJk8upYxDfvqJHx4Q=
+	b=cV6Cy2GQLv5dvd/jiY5/GYgdtVhQK3HYbC+pMWVCdeFfFrg84ljzUGsyFJ3RqmcAL
+	 5vaHwh+9n9QwodhjJeWyyXvPkteYgQy3AryouS5h+69iNpTl40VSEJY1Y8AfX2OXXa
+	 Ij2XR1lPDYiqBD00xcemWCZ7QzpPDphe3zj34lyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Muhammad Usama Anjum <usama.anjum@collabora.com>,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	"Tyler Hicks (Microsoft)" <code@tyhicks.com>
-Subject: [PATCH 5.4 597/658] selftests: Fix kselftest O=objdir build from cluttering top level objdir
-Date: Mon, 16 Jan 2023 16:51:25 +0100
-Message-Id: <20230116154936.778261547@linuxfoundation.org>
+Subject: [PATCH 5.4 598/658] selftests: set the BUILD variable to absolute path
+Date: Mon, 16 Jan 2023 16:51:26 +0100
+Message-Id: <20230116154936.829811094@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -34,40 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shuah Khan <skhan@linuxfoundation.org>
+From: Muhammad Usama Anjum <usama.anjum@collabora.com>
 
-commit 29e911ef7b706215caf02a82b0d3076611d6abe8 upstream.
+commit 5ad51ab618de5d05f4e692ebabeb6fe6289aaa57 upstream.
 
-make kselftest-all O=objdir builds create generated objects in objdir.
-This clutters the top level directory with kselftest objects. Fix it
-to create sub-directory under objdir for kselftest objects.
+The build of kselftests fails if relative path is specified through
+KBUILD_OUTPUT or O=<path> method. BUILD variable is used to determine
+the path of the output objects. When make is run from other directories
+with relative paths, the exact path of the build objects is ambiguous
+and build fails.
 
+	make[1]: Entering directory '/home/usama/repos/kernel/linux_mainline2/tools/testing/selftests/alsa'
+	gcc     mixer-test.c -L/usr/lib/x86_64-linux-gnu -lasound  -o build/kselftest/alsa/mixer-test
+	/usr/bin/ld: cannot open output file build/kselftest/alsa/mixer-test
+
+Set the BUILD variable to the absolute path of the output directory.
+Make the logic readable and easy to follow. Use spaces instead of tabs
+for indentation as if with tab indentation is considered recipe in make.
+
+Signed-off-by: Muhammad Usama Anjum <usama.anjum@collabora.com>
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Tyler Hicks (Microsoft) <code@tyhicks.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/Makefile |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ tools/testing/selftests/Makefile |   26 +++++++++++++++++---------
+ 1 file changed, 17 insertions(+), 9 deletions(-)
 
 --- a/tools/testing/selftests/Makefile
 +++ b/tools/testing/selftests/Makefile
-@@ -78,7 +78,7 @@ override LDFLAGS =
- override MAKEFLAGS =
+@@ -85,19 +85,27 @@ ifdef building_out_of_srctree
+ override LDFLAGS =
  endif
  
--# Append kselftest to KBUILD_OUTPUT to avoid cluttering
-+# Append kselftest to KBUILD_OUTPUT and O to avoid cluttering
- # KBUILD_OUTPUT with selftest objects and headers installed
- # by selftests Makefile or lib.mk.
- ifdef building_out_of_srctree
-@@ -86,7 +86,7 @@ override LDFLAGS =
- endif
- 
- ifneq ($(O),)
--	BUILD := $(O)
-+	BUILD := $(O)/kselftest
+-ifneq ($(O),)
+-	BUILD := $(O)/kselftest
++top_srcdir ?= ../../..
++
++ifeq ("$(origin O)", "command line")
++  KBUILD_OUTPUT := $(O)
++endif
++
++ifneq ($(KBUILD_OUTPUT),)
++  # Make's built-in functions such as $(abspath ...), $(realpath ...) cannot
++  # expand a shell special character '~'. We use a somewhat tedious way here.
++  abs_objtree := $(shell cd $(top_srcdir) && mkdir -p $(KBUILD_OUTPUT) && cd $(KBUILD_OUTPUT) && pwd)
++  $(if $(abs_objtree),, \
++    $(error failed to create output directory "$(KBUILD_OUTPUT)"))
++  # $(realpath ...) resolves symlinks
++  abs_objtree := $(realpath $(abs_objtree))
++  BUILD := $(abs_objtree)/kselftest
  else
- 	ifneq ($(KBUILD_OUTPUT),)
- 		BUILD := $(KBUILD_OUTPUT)/kselftest
+-	ifneq ($(KBUILD_OUTPUT),)
+-		BUILD := $(KBUILD_OUTPUT)/kselftest
+-	else
+-		BUILD := $(shell pwd)
+-		DEFAULT_INSTALL_HDR_PATH := 1
+-	endif
++  BUILD := $(CURDIR)
++  DEFAULT_INSTALL_HDR_PATH := 1
+ endif
+ 
+ # Prepare for headers install
+-top_srcdir ?= ../../..
+ include $(top_srcdir)/scripts/subarch.include
+ ARCH           ?= $(SUBARCH)
+ export KSFT_KHDR_INSTALL_DONE := 1
 
 
