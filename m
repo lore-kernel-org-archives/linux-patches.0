@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37ED433EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:59:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC105C433EF;
-	Mon, 16 Jan 2023 15:59:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0501333EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:59:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55541C433F0;
+	Mon, 16 Jan 2023 15:59:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884788;
-	bh=0DOa9EAbWhG+o10onX0D6iLzZuuvud+JPATEwSwKjvc=;
+	s=korg; t=1673884790;
+	bh=56X9bwdEP9PRfQjuMJJnz9nxSnOrk1jknZSh5Kvil/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=txQuTpd6TVE3VavpUlimmC0O/HDlfl0yByOSCRQgzSJv4EFcrWJ+xg/MAv54G8SPT
-	 3KtVXMrq+SxXmfkJYK+mjQbH2uE//5U4YcHp1u0+3aKfLh69ANikYlNEIdohil83B8
-	 M2mFiUz8dXHYte/XOEKujCSXi9rdFJ4QhjTTLgWs=
+	b=GgnNhBp914OK4t9na/NcoBHDD2P6QmauvGPlXcDwW5H3lAz5VN6Lc5d8AKE+hKHJi
+	 qDQuZd3o8NhoKFiZnZb9xWSkn+nn/WgrMiarXCNOtHfBlQINP2NxSOMdBB7QRLmxYy
+	 A/a//w96Vd888YCYmX43uufHkJkKnir98H5zlEII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
+	Peter Wang <peter.wang@mediatek.com>,
+	Stanley Chu <stanley.chu@mediatek.com>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 109/183] ALSA: usb-audio: Make sure to stop endpoints before closing EPs
-Date: Mon, 16 Jan 2023 16:50:32 +0100
-Message-Id: <20230116154807.976753184@linuxfoundation.org>
+Subject: [PATCH 6.1 100/183] scsi: ufs: core: WLUN suspend SSU/enter hibern8 fail recovery
+Date: Mon, 16 Jan 2023 16:50:23 +0100
+Message-Id: <20230116154807.624505893@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -34,42 +38,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Peter Wang <peter.wang@mediatek.com>
 
-[ Upstream commit 0599313e26666e79f6e7fe1450588431b8cb25d5 ]
+[ Upstream commit 1a5665fc8d7a000671ebd3fe69c6f9acf1e0dcd9 ]
 
-At the PCM hw params, we may re-configure the endpoints and it's done
-by a temporary EP close followed by re-open.  A potential problem
-there is that the EP might be already running internally at the PCM
-prepare stage; it's seen typically in the playback stream with the
-implicit feedback sync.  As this stream start isn't tracked by the
-core PCM layer, we'd need to stop it explicitly, and that's the
-missing piece.
+When SSU/enter hibern8 fail in WLUN suspend flow, trigger the error handler
+and return busy to break the suspend.  Otherwise the consumer will get
+stuck in runtime suspend status.
 
-This patch adds the stop_endpoints() call at snd_usb_hw_params() to
-assure the stream stop before closing the EPs.
-
-Fixes: bf6313a0ff76 ("ALSA: usb-audio: Refactor endpoint management")
-Link: https://lore.kernel.org/r/4e509aea-e563-e592-e652-ba44af6733fe@veniogames.com
-Link: https://lore.kernel.org/r/20230102170759.29610-2-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: b294ff3e3449 ("scsi: ufs: core: Enable power management for wlun")
+Signed-off-by: Peter Wang <peter.wang@mediatek.com>
+Link: https://lore.kernel.org/r/20221208072520.26210-1-peter.wang@mediatek.com
+Reviewed-by: Stanley Chu <stanley.chu@mediatek.com>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Reviewed-by: Adrian Hunter <adrian.hunter@intel.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/usb/pcm.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/ufs/core/ufshcd.c | 26 ++++++++++++++++++++++++++
+ 1 file changed, 26 insertions(+)
 
-diff --git a/sound/usb/pcm.c b/sound/usb/pcm.c
-index d2c652aa1385..535eb95bc9ee 100644
---- a/sound/usb/pcm.c
-+++ b/sound/usb/pcm.c
-@@ -527,6 +527,8 @@ static int snd_usb_hw_params(struct snd_pcm_substream *substream,
- 		if (snd_usb_endpoint_compatible(chip, subs->data_endpoint,
- 						fmt, hw_params))
- 			goto unlock;
-+		if (stop_endpoints(subs, false))
-+			sync_pending_stops(subs);
- 		close_endpoints(chip, subs);
+diff --git a/drivers/ufs/core/ufshcd.c b/drivers/ufs/core/ufshcd.c
+index d1db6be80156..b048357d21e3 100644
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -6094,6 +6094,14 @@ void ufshcd_schedule_eh_work(struct ufs_hba *hba)
  	}
+ }
+ 
++static void ufshcd_force_error_recovery(struct ufs_hba *hba)
++{
++	spin_lock_irq(hba->host->host_lock);
++	hba->force_reset = true;
++	ufshcd_schedule_eh_work(hba);
++	spin_unlock_irq(hba->host->host_lock);
++}
++
+ static void ufshcd_clk_scaling_allow(struct ufs_hba *hba, bool allow)
+ {
+ 	down_write(&hba->clk_scaling_lock);
+@@ -9066,6 +9074,15 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 
+ 		if (!hba->dev_info.b_rpm_dev_flush_capable) {
+ 			ret = ufshcd_set_dev_pwr_mode(hba, req_dev_pwr_mode);
++			if (ret && pm_op != UFS_SHUTDOWN_PM) {
++				/*
++				 * If return err in suspend flow, IO will hang.
++				 * Trigger error handler and break suspend for
++				 * error recovery.
++				 */
++				ufshcd_force_error_recovery(hba);
++				ret = -EBUSY;
++			}
+ 			if (ret)
+ 				goto enable_scaling;
+ 		}
+@@ -9077,6 +9094,15 @@ static int __ufshcd_wl_suspend(struct ufs_hba *hba, enum ufs_pm_op pm_op)
+ 	 */
+ 	check_for_bkops = !ufshcd_is_ufs_dev_deepsleep(hba);
+ 	ret = ufshcd_link_state_transition(hba, req_link_state, check_for_bkops);
++	if (ret && pm_op != UFS_SHUTDOWN_PM) {
++		/*
++		 * If return err in suspend flow, IO will hang.
++		 * Trigger error handler and break suspend for
++		 * error recovery.
++		 */
++		ufshcd_force_error_recovery(hba);
++		ret = -EBUSY;
++	}
+ 	if (ret)
+ 		goto set_dev_active;
  
 -- 
 2.35.1
