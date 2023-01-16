@@ -1,103 +1,80 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com [209.85.219.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D2410FB
-	for <patches@lists.linux.dev>; Sun, 15 Jan 2023 10:49:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E31C433F0
-	for <patches@lists.linux.dev>; Sun, 15 Jan 2023 10:49:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1673779775;
-	bh=OgDN7XhvhGQQg/Z/xx44nHHo48uhQDWG853IVpEr0qg=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=jRu03WoQyLf3Q1MTtBJGdW33TWSMSPOrmQhLdT+xnDfJ7YIdIDNScdarn7+g6qq6q
-	 2s7sM4PNPiTXtFeOvgspA5z0XK2i4S8hhvHqvvFmLNZr/0vsSNhba9P+6NlObUvwzU
-	 NzbFpwasTLYnHKK/8rPRVmatK3EaNtVIP8hSTV3dX57bNHclJvCFjmY6L5Q93sKmYl
-	 586BiHqcSpna9tagaXItYJVJ5rnwfr9DqXy5ldCRKiSs2sYTlrHpke7uuv8H/A1w2Q
-	 MnbE6WrXP9GF8is2nuOPD0eH53xqebBa5kd2xQ2upym1nEpftCsZ1ipyOu7TYW24jP
-	 DptK4Q+7G2lhA==
-Received: by mail-oi1-f171.google.com with SMTP id i5so2860640oih.11
-        for <patches@lists.linux.dev>; Sun, 15 Jan 2023 02:49:35 -0800 (PST)
-X-Gm-Message-State: AFqh2kr0rsZMwOjkTnoz5mC25WmfWjIJNw8xaH8s0IRgxnjEWgrbdcfB
-	/pOGFstUykHQeuPBQWifLVbV6NhfWHg7zx5YpAI=
-X-Google-Smtp-Source: AMrXdXsiOdEBrkARrRYgYGuTHYvZmu28Gequ+ROkp35laCJSEQSVS9ZQ8Wg1wGKkiSSWBJGblYa+uOBVMR71pEJznq0=
-X-Received: by 2002:aca:3755:0:b0:35e:7c55:b015 with SMTP id
- e82-20020aca3755000000b0035e7c55b015mr5483293oia.287.1673779774935; Sun, 15
- Jan 2023 02:49:34 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07C0EA28
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 00:03:16 +0000 (UTC)
+Received: by mail-yb1-f178.google.com with SMTP id 188so28514280ybi.9
+        for <patches@lists.linux.dev>; Sun, 15 Jan 2023 16:03:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=utF0T11NIO5fzdSYdTniamVGFsvJmq4s7ZlcItgmdGo=;
+        b=pTclYOItmik5tHCwf8CHR9HEI+jxxHl9DpN6G3hseWDVWz0WKC+e5ZjXrboN34vRfX
+         33Bav9oBN2rl4ifdPBg9mopNU8+OME5/3vb0EGLRy4hpEnZou3TawUjewrn7VrpwfV2J
+         8zmskMMVx/wGqDW8xuV8ZN2/DlU3nNlkcoEtd028kFWatiSJr2nUoPcnzr3dUmbAy7Im
+         LsduvSOzVQJoC0UW413NdmK5a5Y6OVmA6G3B8hX79z0EYEtXIJyhHvuZD2ucjwAPqYH2
+         4mpDd4N8mFQpWipR19rLRubB60j6njQiMVSDDZ4z7WG5TWm1hOYFmKNloonwJK7x8IUY
+         8dIg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=utF0T11NIO5fzdSYdTniamVGFsvJmq4s7ZlcItgmdGo=;
+        b=adIKt0hR5+e/yywqeUbQotrW9fBbZNVn7jsbnwjMPgY579DCh2pxPbgaG44PMIWKhH
+         JrFy+tpjJ3vwYmzdrI03QuB51ci8/EU0mhdFquhsNtCSrHz3J1zndNRw8lGniR+UrDuk
+         Tm23EzIYdXcF/yVOZNDriMf9QsHV4Wi134QSZouekTt1yINdHBJGTK/6H6Ck73V3/O5+
+         KLIrUFo2aB3ZlgouC91tX7FtsfZG+9A1SrBMJPxKOqD7dEU5Z4C2VHiWSrGV4WHMNScb
+         ikm1n/Fxr1EOYlisfKp9KzaPOooW9kwGMpe+Ddvr0h6B6QjZZHoDa+hiQ4cOkTH2BKq8
+         GA7A==
+X-Gm-Message-State: AFqh2koc99euza+gDlW/FQYBgawlhSDnDXs3XgdSI4a0g1oW47SCdGYL
+	w+TyG3nX6Z6GIMwiEVwPP7F2eWjmILB8NK0Lptk=
+X-Google-Smtp-Source: AMrXdXsGXvJ6fgLaVz+5qZXQBdJFCTv3K8NVETV+4FyUgyVMQCuNqGCqmRkc0+hweH28ipKE+hbdONR7DsrMxDekZ6E=
+X-Received: by 2002:a25:7702:0:b0:7b4:bdd7:e631 with SMTP id
+ s2-20020a257702000000b007b4bdd7e631mr4296168ybc.507.1673827395991; Sun, 15
+ Jan 2023 16:03:15 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230109204520.539080-1-ojeda@kernel.org> <20230109204520.539080-6-ojeda@kernel.org>
- <CAK7LNAQYk6s11MASRHW6oxtkqF00EJVqhHOP=5rynWt-QDUsXw@mail.gmail.com>
- <CANiq72kyUr9PGYqHTsNzYn0_cyuYA0vAxHLC08ivxKo5XvOESg@mail.gmail.com> <CAK7LNASawny3wSTvjB8-CZJ2Mw8UnB0C4k5-X8yC8TyrmsM8RQ@mail.gmail.com>
-In-Reply-To: <CAK7LNASawny3wSTvjB8-CZJ2Mw8UnB0C4k5-X8yC8TyrmsM8RQ@mail.gmail.com>
-From: Masahiro Yamada <masahiroy@kernel.org>
-Date: Sun, 15 Jan 2023 19:48:58 +0900
-X-Gmail-Original-Message-ID: <CAK7LNAT0p0N=DtNpUsCuw=rhLNRY5VeozYr-XL4WxJ+0bfszyg@mail.gmail.com>
-Message-ID: <CAK7LNAT0p0N=DtNpUsCuw=rhLNRY5VeozYr-XL4WxJ+0bfszyg@mail.gmail.com>
-Subject: Re: [PATCH 6/6] kbuild: rust_is_available: normalize version matching
-To: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Cc: Miguel Ojeda <ojeda@kernel.org>, linux-kbuild@vger.kernel.org, 
-	Nathan Chancellor <nathan@kernel.org>, Nick Desaulniers <ndesaulniers@google.com>, 
-	Nicolas Schier <nicolas@fjasle.eu>, rust-for-linux@vger.kernel.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
-	Alex Gaynor <alex.gaynor@gmail.com>, Wedson Almeida Filho <wedsonaf@gmail.com>, 
+References: <20230109204912.539790-1-ojeda@kernel.org>
+In-Reply-To: <20230109204912.539790-1-ojeda@kernel.org>
+From: Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
+Date: Mon, 16 Jan 2023 01:03:05 +0100
+Message-ID: <CANiq72k9OP2TTPty2OcC5Od-R3wHsfhnc0BFR_XYjBtC5zf3gA@mail.gmail.com>
+Subject: Re: [PATCH] rust: print: avoid evaluating arguments in `pr_*` macros
+ in `unsafe` blocks
+To: Miguel Ojeda <ojeda@kernel.org>
+Cc: Wedson Almeida Filho <wedsonaf@gmail.com>, Alex Gaynor <alex.gaynor@gmail.com>, 
 	Boqun Feng <boqun.feng@gmail.com>, Gary Guo <gary@garyguo.net>, 
-	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>
+	=?UTF-8?Q?Bj=C3=B6rn_Roy_Baron?= <bjorn3_gh@protonmail.com>, 
+	rust-for-linux@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, 
+	Domen Puncer Kugler <domen.puncerkugler@nccgroup.com>
 Content-Type: text/plain; charset="UTF-8"
 
-On Sun, Jan 15, 2023 at 11:48 AM Masahiro Yamada <masahiroy@kernel.org> wrote:
+On Mon, Jan 9, 2023 at 9:49 PM Miguel Ojeda <ojeda@kernel.org> wrote:
 >
-> On Sat, Jan 14, 2023 at 8:15 AM Miguel Ojeda
-> <miguel.ojeda.sandonis@gmail.com> wrote:
-> >
-> > On Thu, Jan 12, 2023 at 7:23 AM Masahiro Yamada <masahiroy@kernel.org> wrote:
-> > >
-> > > Maybe, your purpose is to use sed consistently, but
-> > > perhaps you can avoid forking sed if you know the
-> > > format of the first line.
-> >
-> > The most unknown format would be the one of the libclang check, where
-> > there may be other lines before the one we are interested in. However,
-> > the pattern expansion would still match newlines, right?
-> >
-> > > BTW, what is missing here is, you do not check if
-> > > ${RUSTC} is really rustc.
-> > >
-> > > I can fool this script to print
-> > > "arithmetic expression: expecting primary: "100000 *  + 100 *  + "
-> >
-> > We can test if nothing was printed by `sed` for that (or do it with
-> > shell builtins).
-> >
-> > Having said that, I would say fooling the script on purpose is an more
-> > of an oddity compared to the case `MAKEFLAGS` attempts to cover
-> > (please see my reply on the other patch). So if we cover this, then I
-> > would say we should really cover the other one.
+> At the moment it is possible to perform unsafe operations in
+> the arguments of `pr_*` macros since they are evaluated inside
+> an `unsafe` block:
 >
+>     let x = &10u32 as *const u32;
+>     pr_info!("{}", *x);
 >
+> In other words, this is a soundness issue.
 >
-> get_canonical_version() in scripts/as-version.sh has
-> a little more trick to avoid
-> "arithmetic expression: expecting primary: "100000 *  + 100 *  + "
-> but it is up to you.
+> Fix it so that it requires an explicit `unsafe` block.
+>
+> Reported-by: Wedson Almeida Filho <wedsonaf@gmail.com>
+> Reported-by: Domen Puncer Kugler <domen.puncerkugler@nccgroup.com>
+> Link: https://github.com/Rust-for-Linux/linux/issues/479
+> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 
+Applied to rust-fixes, thanks all!
 
-
-My code accepts anything that is separated by dots
-(and non-numerical strings are silently turned into zero).
-
-Your code takes exactly the "([0-9]+\.[0-9]+\.[0-9]+)" pattern,
-so it works very safely.
-
-I think using sed is fine.
-
-
-
-
-
--- 
-Best Regards
-Masahiro Yamada
+Cheers,
+Miguel
