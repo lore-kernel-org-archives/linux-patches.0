@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E81046B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05E71C433EF;
-	Mon, 16 Jan 2023 16:17:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3118846B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A846CC433F1;
+	Mon, 16 Jan 2023 16:17:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885853;
-	bh=8iMJL8R2oHDhV6QLJ61wf1+O0OHbIyeHSU4KsqLFi/o=;
+	s=korg; t=1673885856;
+	bh=WQjVpdJ4WFOjzz9gc0FmspoTmoPdllj2TfhUeq1/qho=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0ebk5Ir6Txig4FUE9wqWLHWfQH7io6lGaQiMlOJJMTTuriq4XHjDTbOX+/ZeKEwnH
-	 og1bc/zqRXzVZNDH7omzpN8f6ZqDq7h6Y90usJLYWettDL4nZP2yRLuH+jwRrXVKe5
-	 3qgkhxWh+bvgpEvp8uIbdK1rEBTYSDc6KSIoihOQ=
+	b=XhKn5f6WBxsbuptufENWr7iEN1Aihs4D/1NrPsu25QdYIXsRfr03bCWeCNfTkQXQQ
+	 SgV3DTX5pegUUVi6UO0c17Jiq8yUqUusZUqnnZDh41MhYPme9fRgssiPUcgoSI+B/j
+	 wILwlyr1GRkP430gXyP2bRFpH6Bu+sc/HpbZx9OE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wang Yufen <wangyufen@huawei.com>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 208/658] wifi: brcmfmac: Fix error return code in brcmf_sdio_download_firmware()
-Date: Mon, 16 Jan 2023 16:44:56 +0100
-Message-Id: <20230116154918.953806631@linuxfoundation.org>
+Subject: [PATCH 5.4 209/658] blktrace: Fix output non-blktrace event when blk_classic option enabled
+Date: Mon, 16 Jan 2023 16:44:57 +0100
+Message-Id: <20230116154919.002855255@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,50 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wang Yufen <wangyufen@huawei.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-[ Upstream commit c2f2924bc7f9ea75ef8d95863e710168f8196256 ]
+[ Upstream commit f596da3efaf4130ff61cd029558845808df9bf99 ]
 
-Fix to return a negative error code instead of 0 when
-brcmf_chip_set_active() fails. In addition, change the return
-value for brcmf_pcie_exit_download_state() to keep consistent.
+When the blk_classic option is enabled, non-blktrace events must be
+filtered out. Otherwise, events of other types are output in the blktrace
+classic format, which is unexpected.
 
-Fixes: d380ebc9b6fb ("brcmfmac: rename chip download functions")
-Signed-off-by: Wang Yufen <wangyufen@huawei.com>
-Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/1669959342-27144-1-git-send-email-wangyufen@huawei.com
+The problem can be triggered in the following ways:
+
+  # echo 1 > /sys/kernel/debug/tracing/options/blk_classic
+  # echo 1 > /sys/kernel/debug/tracing/events/enable
+  # echo blk > /sys/kernel/debug/tracing/current_tracer
+  # cat /sys/kernel/debug/tracing/trace_pipe
+
+Fixes: c71a89615411 ("blktrace: add ftrace plugin")
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Link: https://lore.kernel.org/r/20221122040410.85113-1-yangjihong1@huawei.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c | 2 +-
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ kernel/trace/blktrace.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-index b5d2e5b9f67c..c3ea31ca857a 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -616,7 +616,7 @@ static int brcmf_pcie_exit_download_state(struct brcmf_pciedev_info *devinfo,
- 	}
+diff --git a/kernel/trace/blktrace.c b/kernel/trace/blktrace.c
+index 749b27851f45..abf5cbbb743b 100644
+--- a/kernel/trace/blktrace.c
++++ b/kernel/trace/blktrace.c
+@@ -1589,7 +1589,8 @@ blk_trace_event_print_binary(struct trace_iterator *iter, int flags,
  
- 	if (!brcmf_chip_set_active(devinfo->ci, resetintr))
--		return -EINVAL;
-+		return -EIO;
- 	return 0;
- }
+ static enum print_line_t blk_tracer_print_line(struct trace_iterator *iter)
+ {
+-	if (!(blk_tracer_flags.val & TRACE_BLK_OPT_CLASSIC))
++	if ((iter->ent->type != TRACE_BLK) ||
++	    !(blk_tracer_flags.val & TRACE_BLK_OPT_CLASSIC))
+ 		return TRACE_TYPE_UNHANDLED;
  
-diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-index ddc999670484..5874f56c12da 100644
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/sdio.c
-@@ -3367,6 +3367,7 @@ static int brcmf_sdio_download_firmware(struct brcmf_sdio *bus,
- 	/* Take arm out of reset */
- 	if (!brcmf_chip_set_active(bus->ci, rstvec)) {
- 		brcmf_err("error getting out of ARM core reset\n");
-+		bcmerror = -EIO;
- 		goto err;
- 	}
- 
+ 	return print_one_line(iter, true);
 -- 
 2.35.1
 
