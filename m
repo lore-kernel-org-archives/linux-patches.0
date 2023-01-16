@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDF7046B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71A79C433D2;
-	Mon, 16 Jan 2023 16:19:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F89546B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D55C433D2;
+	Mon, 16 Jan 2023 16:19:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885987;
-	bh=Wkfrbj/x2gH5ER1wjzgzcLyEJ3eE1jfP9P3WCcgMWu0=;
+	s=korg; t=1673885990;
+	bh=Ohsm/LtrCsNMIKBGFC5QnOQGakGZQGqyq5n1LD3sbNU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1wI6KL1u1WzBx7gawFFW5N+yrZSFvXTfzjhl2yCiu+1WlXeQv7BPwHtH1Hylqo051
-	 SDzYI+fnZVQJSEy8LWRbhsurZdVNeZvRITA2fES55HNXHRGeG9zEXI31/3MIFosChe
-	 wQZwpShdzPxFfnXftFaO7cs7njyUVyJRElOpZWJQ=
+	b=sjQZqugGr+eU1VNrrR4+oqVhRT5AMf/9zi/v6l16G6o6MgtTJFhnitbsVBDEdbGWg
+	 U5PCWBeZc1KCV/yRRihpvZhJsrjCFERikfWQl2sCg3a0MSvqwDog6DT2yJQfCbkhRG
+	 X7J9lqPJUV94T4mcHobzzINemWCou+51Auf13tnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Yang Yingliang <yangyingliang@huawei.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 260/658] scsi: hpsa: Fix possible memory leak in hpsa_add_sas_device()
-Date: Mon, 16 Jan 2023 16:45:48 +0100
-Message-Id: <20230116154921.482656950@linuxfoundation.org>
+Subject: [PATCH 5.4 261/658] scsi: fcoe: Fix possible name leak when device_register() fails
+Date: Mon, 16 Jan 2023 16:45:49 +0100
+Message-Id: <20230116154921.532089572@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,39 +37,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit fda34a5d304d0b98cc967e8763b52221b66dc202 ]
+[ Upstream commit 47b6a122c7b69a876c7ee2fc064a26b09627de9d ]
 
-If hpsa_sas_port_add_rphy() returns an error, the 'rphy' allocated in
-sas_end_device_alloc() needs to be freed. Address this by calling
-sas_rphy_free() in the error path.
+If device_register() returns an error, the name allocated by dev_set_name()
+needs to be freed. As the comment of device_register() says, one should use
+put_device() to give up the reference in the error path. Fix this by
+calling put_device(), then the name can be freed in kobject_cleanup().
 
-Fixes: d04e62b9d63a ("hpsa: add in sas transport class")
+The 'fcf' is freed in fcoe_fcf_device_release(), so the kfree() in the
+error path can be removed.
+
+The 'ctlr' is freed in fcoe_ctlr_device_release(), so don't use the error
+label, just return NULL after calling put_device().
+
+Fixes: 9a74e884ee71 ("[SCSI] libfcoe: Add fcoe_sysfs")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221111043012.1074466-1-yangyingliang@huawei.com
+Link: https://lore.kernel.org/r/20221112094310.3633291-1-yangyingliang@huawei.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hpsa.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/scsi/fcoe/fcoe_sysfs.c | 19 ++++++++++---------
+ 1 file changed, 10 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
-index 9d5d0c911130..ba125ed7e06a 100644
---- a/drivers/scsi/hpsa.c
-+++ b/drivers/scsi/hpsa.c
-@@ -9800,10 +9800,12 @@ static int hpsa_add_sas_device(struct hpsa_sas_node *hpsa_sas_node,
+diff --git a/drivers/scsi/fcoe/fcoe_sysfs.c b/drivers/scsi/fcoe/fcoe_sysfs.c
+index 2cb7a8c93a15..b3086cf40617 100644
+--- a/drivers/scsi/fcoe/fcoe_sysfs.c
++++ b/drivers/scsi/fcoe/fcoe_sysfs.c
+@@ -830,14 +830,15 @@ struct fcoe_ctlr_device *fcoe_ctlr_device_add(struct device *parent,
  
- 	rc = hpsa_sas_port_add_rphy(hpsa_sas_port, rphy);
- 	if (rc)
--		goto free_sas_port;
-+		goto free_sas_rphy;
+ 	dev_set_name(&ctlr->dev, "ctlr_%d", ctlr->id);
+ 	error = device_register(&ctlr->dev);
+-	if (error)
+-		goto out_del_q2;
++	if (error) {
++		destroy_workqueue(ctlr->devloss_work_q);
++		destroy_workqueue(ctlr->work_q);
++		put_device(&ctlr->dev);
++		return NULL;
++	}
  
- 	return 0;
+ 	return ctlr;
  
-+free_sas_rphy:
-+	sas_rphy_free(rphy);
- free_sas_port:
- 	hpsa_free_sas_port(hpsa_sas_port);
- 	device->sas_port = NULL;
+-out_del_q2:
+-	destroy_workqueue(ctlr->devloss_work_q);
+-	ctlr->devloss_work_q = NULL;
+ out_del_q:
+ 	destroy_workqueue(ctlr->work_q);
+ 	ctlr->work_q = NULL;
+@@ -1036,16 +1037,16 @@ struct fcoe_fcf_device *fcoe_fcf_device_add(struct fcoe_ctlr_device *ctlr,
+ 	fcf->selected = new_fcf->selected;
+ 
+ 	error = device_register(&fcf->dev);
+-	if (error)
+-		goto out_del;
++	if (error) {
++		put_device(&fcf->dev);
++		goto out;
++	}
+ 
+ 	fcf->state = FCOE_FCF_STATE_CONNECTED;
+ 	list_add_tail(&fcf->peers, &ctlr->fcfs);
+ 
+ 	return fcf;
+ 
+-out_del:
+-	kfree(fcf);
+ out:
+ 	return NULL;
+ }
 -- 
 2.35.1
 
