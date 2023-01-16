@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A96B46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83C2CC433D2;
-	Mon, 16 Jan 2023 16:19:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F3246B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C74CC433EF;
+	Mon, 16 Jan 2023 16:19:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885979;
-	bh=zs7Dx3TBQKH/tTYp/jvukk/mAG2ZppkvZevh1wxat24=;
+	s=korg; t=1673885982;
+	bh=y9UkxPXPPh8P9f3F3uHBDDq+AQfA8lEtlOA19LQFTNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o+sLur1n24+ILOj4rYOtlHlHD+bcOHU+CW92C+SB2RONHlQpBvqLgCMOA8Rtuj8Jf
-	 xm/hzFuUBJjtRKnTrJxdK7TVhvclcmY1IPh/QaqgF3KsRO7GehB2lytVNh9tsjc4DX
-	 zQzlK6neBIxi2isSibQDUCSjmK1xDgMCtdWfgDC8=
+	b=JoHFyoI8KBJOTgw5m+n2jNzUaU5v66Mx5YwtV+Sskj+gc8nWcQGj4c5Iz5IN43mR+
+	 2kjuCMl4Isjjsztz95Br5j8p3iOWTi7SNtK7ZHhJ9iWsdg7e/6PlKDmuCa8eLnz9om
+	 LzTt99XtdnmiP2WXglr/APKauGaIutoXPk726NxI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	ruanjinjie <ruanjinjie@huawei.com>,
+	Rob Herring <robh@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 226/658] net: amd: lance: dont call dev_kfree_skb() under spin_lock_irqsave()
-Date: Mon, 16 Jan 2023 16:45:14 +0100
-Message-Id: <20230116154919.849144847@linuxfoundation.org>
+Subject: [PATCH 5.4 217/658] of: overlay: fix null pointer dereferencing in find_dup_cset_node_entry() and find_dup_cset_prop()
+Date: Mon, 16 Jan 2023 16:45:05 +0100
+Message-Id: <20230116154919.404785714@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,56 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: ruanjinjie <ruanjinjie@huawei.com>
 
-[ Upstream commit 6151d105dfce8c23edf30eed35e97f3d9b96a35c ]
+[ Upstream commit ee9d7a0e754568180a2f8ebc4aad226278a9116f ]
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+When kmalloc() fail to allocate memory in kasprintf(), fn_1 or fn_2 will
+be NULL, and strcmp() will cause null pointer dereference.
 
-It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
-The difference between them is free reason, dev_kfree_skb_irq() means
-the SKB is dropped in error and dev_consume_skb_irq() means the SKB
-is consumed in normal.
-
-In these two cases, dev_kfree_skb() is called consume the xmited SKB,
-so replace it with dev_consume_skb_irq().
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 2fe0e8769df9 ("of: overlay: check prevents multiple fragments touching same property")
+Signed-off-by: ruanjinjie <ruanjinjie@huawei.com>
+Link: https://lore.kernel.org/r/20221211023337.592266-1-ruanjinjie@huawei.com
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/atarilance.c | 2 +-
- drivers/net/ethernet/amd/lance.c      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/of/overlay.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/atarilance.c b/drivers/net/ethernet/amd/atarilance.c
-index d3d44e07afbc..414b990827e8 100644
---- a/drivers/net/ethernet/amd/atarilance.c
-+++ b/drivers/net/ethernet/amd/atarilance.c
-@@ -825,7 +825,7 @@ lance_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	lp->memcpy_f( PKTBUF_ADDR(head), (void *)skb->data, skb->len );
- 	head->flag = TMD1_OWN_CHIP | TMD1_ENP | TMD1_STP;
- 	dev->stats.tx_bytes += skb->len;
--	dev_kfree_skb( skb );
-+	dev_consume_skb_irq(skb);
- 	lp->cur_tx++;
- 	while( lp->cur_tx >= TX_RING_SIZE && lp->dirty_tx >= TX_RING_SIZE ) {
- 		lp->cur_tx -= TX_RING_SIZE;
-diff --git a/drivers/net/ethernet/amd/lance.c b/drivers/net/ethernet/amd/lance.c
-index f90b454b1642..7ba3da856105 100644
---- a/drivers/net/ethernet/amd/lance.c
-+++ b/drivers/net/ethernet/amd/lance.c
-@@ -997,7 +997,7 @@ static netdev_tx_t lance_start_xmit(struct sk_buff *skb,
- 		skb_copy_from_linear_data(skb, &lp->tx_bounce_buffs[entry], skb->len);
- 		lp->tx_ring[entry].base =
- 			((u32)isa_virt_to_bus((lp->tx_bounce_buffs + entry)) & 0xffffff) | 0x83000000;
--		dev_kfree_skb(skb);
-+		dev_consume_skb_irq(skb);
- 	} else {
- 		lp->tx_skbuff[entry] = skb;
- 		lp->tx_ring[entry].base = ((u32)isa_virt_to_bus(skb->data) & 0xffffff) | 0x83000000;
+diff --git a/drivers/of/overlay.c b/drivers/of/overlay.c
+index 8420ef42d89e..dc298775f762 100644
+--- a/drivers/of/overlay.c
++++ b/drivers/of/overlay.c
+@@ -547,7 +547,7 @@ static int find_dup_cset_node_entry(struct overlay_changeset *ovcs,
+ 
+ 		fn_1 = kasprintf(GFP_KERNEL, "%pOF", ce_1->np);
+ 		fn_2 = kasprintf(GFP_KERNEL, "%pOF", ce_2->np);
+-		node_path_match = !strcmp(fn_1, fn_2);
++		node_path_match = !fn_1 || !fn_2 || !strcmp(fn_1, fn_2);
+ 		kfree(fn_1);
+ 		kfree(fn_2);
+ 		if (node_path_match) {
+@@ -582,7 +582,7 @@ static int find_dup_cset_prop(struct overlay_changeset *ovcs,
+ 
+ 		fn_1 = kasprintf(GFP_KERNEL, "%pOF", ce_1->np);
+ 		fn_2 = kasprintf(GFP_KERNEL, "%pOF", ce_2->np);
+-		node_path_match = !strcmp(fn_1, fn_2);
++		node_path_match = !fn_1 || !fn_2 || !strcmp(fn_1, fn_2);
+ 		kfree(fn_1);
+ 		kfree(fn_2);
+ 		if (node_path_match &&
 -- 
 2.35.1
 
