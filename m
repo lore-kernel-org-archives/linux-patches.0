@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F04146B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8FB1C433EF;
-	Mon, 16 Jan 2023 16:17:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9DE946B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5173DC433EF;
+	Mon, 16 Jan 2023 16:17:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885877;
-	bh=pypAq4CrNLTQbieLPx4PyAHTld4cElgNejRKKbjhzLc=;
+	s=korg; t=1673885879;
+	bh=gKLD9ZWWuo/UinEmfFH5+PYIvivA1C8VvjWP41wq1Gs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iTb7/ILfkKeNkTyF51KEEeJH2T38PahCRbQiMIEaco1yZxV8IWl6tvUceLCuMPxPi
-	 WWz0Pav7WSREvt2+rBqbKKEhLlHn2+jxZjDMOi3O/RRBeIdKIcIyCXWxpfnUIha15a
-	 5qtMrIl4M5tjElwiAHtCqByLHVru5jPb5pt4y46Y=
+	b=0Un8EImROMIlcH+hLzD26e5IRfaxrnIr7hawBQds7Niw4g7E7nSBvH16QBvI2k7CT
+	 uM4nnVFq5f1OUVbTATbp8sLulaMzn4xFQxvprtb2NtDGEJuBHxrjBNaJK805X9jrTe
+	 uV23FmKIK5KqDAq3f3Na4e1B6MgmQYaUAIvTSnnw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 216/658] drivers: net: qlcnic: Fix potential memory leak in qlcnic_sriov_init()
-Date: Mon, 16 Jan 2023 16:45:04 +0100
-Message-Id: <20230116154919.348344065@linuxfoundation.org>
+Subject: [PATCH 5.4 189/658] mmc: moxart: fix return value check of mmc_add_host()
+Date: Mon, 16 Jan 2023 16:44:37 +0100
+Message-Id: <20230116154918.102472806@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,35 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 01de1123322e4fe1bbd0fcdf0982511b55519c03 ]
+[ Upstream commit 0ca18d09c744fb030ae9bc5836c3e357e0237dea ]
 
-If vp alloc failed in qlcnic_sriov_init(), all previously allocated vp
-needs to be freed.
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
-Fixes: f197a7aa6288 ("qlcnic: VF-PF communication channel implementation")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+So fix this by checking the return value and goto error path which will call
+mmc_free_host().
+
+Fixes: 1b66e94e6b99 ("mmc: moxart: Add MOXA ART SD/MMC driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-3-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/mmc/host/moxart-mmc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-index 400bc2c3f222..7c782df3793d 100644
---- a/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-+++ b/drivers/net/ethernet/qlogic/qlcnic/qlcnic_sriov_common.c
-@@ -222,6 +222,8 @@ int qlcnic_sriov_init(struct qlcnic_adapter *adapter, int num_vfs)
- 	return 0;
+diff --git a/drivers/mmc/host/moxart-mmc.c b/drivers/mmc/host/moxart-mmc.c
+index 1552d1f09c5c..52307dce08ba 100644
+--- a/drivers/mmc/host/moxart-mmc.c
++++ b/drivers/mmc/host/moxart-mmc.c
+@@ -660,7 +660,9 @@ static int moxart_probe(struct platform_device *pdev)
+ 		goto out;
  
- qlcnic_destroy_async_wq:
-+	while (i--)
-+		kfree(sriov->vf_info[i].vp);
- 	destroy_workqueue(bc->bc_async_wq);
+ 	dev_set_drvdata(dev, mmc);
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret)
++		goto out;
  
- qlcnic_destroy_trans_wq:
+ 	dev_dbg(dev, "IRQ=%d, FIFO is %d bytes\n", irq, host->fifo_width);
+ 
 -- 
 2.35.1
 
