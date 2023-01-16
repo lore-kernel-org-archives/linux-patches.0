@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76F2C6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:58:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F19C5C433EF;
-	Mon, 16 Jan 2023 16:58:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 169236FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:58:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90217C433EF;
+	Mon, 16 Jan 2023 16:58:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888282;
-	bh=kwtR4oOMSwyd5y8fp8UsK5pdpXXBWLQglpEn6+MsNm0=;
+	s=korg; t=1673888284;
+	bh=TS1SiHI61BdoJj455kyEoQji7eZO0vqk7zEug9Vdo5o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bHoSg8dV7Nm4xiT6ViC3dCLORsYYSUw8k+eSORw0c2/fZtIMVRI1j0et6sfrNq6ED
-	 EVQGM2OThhyyLEGcXAGb3YaWUn9VkxoKDuxeeoQsmdpdYBi4HHgvhWQ3TqrLpzMX/i
-	 xJbWGU3liwV6zySyK+nbFpyqq40URTmb875/P110=
+	b=RUS1HIwUdMoMbACL3DCz/qcIHgLJE8fr77q88aj9BkRH5aWwRlOIuizqpH6CJ+wYE
+	 e+O2JEuYfk5nf9P8Lne7jvj7y7PVBz9OY3j6WLbOUGh2KUVBuTjaJfoL4ZYPKLah/o
+	 c0qBsS0VsTVs1Yvd2ubb6oorgomxZ2gxrfJ4+pE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mattia Dongili <malattia@linux.it>
-Subject: [PATCH 4.19 470/521] platform/x86: sony-laptop: Dont turn off 0x153 keyboard backlight during probe
-Date: Mon, 16 Jan 2023 16:52:12 +0100
-Message-Id: <20230116154908.195601416@linuxfoundation.org>
+	Kyle Zeng <zengyhkyle@gmail.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 4.19 471/521] ipv6: raw: Deduct extension header length in rawv6_push_pending_frames
+Date: Mon, 16 Jan 2023 16:52:13 +0100
+Message-Id: <20230116154908.248778881@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -34,58 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Herbert Xu <herbert@gondor.apana.org.au>
 
-commit ad75bd85b1db69c97eefea07b375567821f6ef58 upstream.
+commit cb3e9864cdbe35ff6378966660edbcbac955fe17 upstream.
 
-The 0x153 version of the kbd backlight control SNC handle has no separate
-address to probe if the backlight is there.
+The total cork length created by ip6_append_data includes extension
+headers, so we must exclude them when comparing them against the
+IPV6_CHECKSUM offset which does not include extension headers.
 
-This turns the probe call into a set keyboard backlight call with a value
-of 0 turning off the keyboard backlight.
-
-Skip probing when there is no separate probe address to avoid this.
-
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=1583752
-Fixes: 800f20170dcf ("Keyboard backlight control for some Vaio Fit models")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Mattia Dongili <malattia@linux.it>
-Link: https://lore.kernel.org/r/20221213122943.11123-1-hdegoede@redhat.com
+Reported-by: Kyle Zeng <zengyhkyle@gmail.com>
+Fixes: 357b40a18b04 ("[IPV6]: IPV6_CHECKSUM socket option can corrupt kernel memory")
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/sony-laptop.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ net/ipv6/raw.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/platform/x86/sony-laptop.c
-+++ b/drivers/platform/x86/sony-laptop.c
-@@ -1913,14 +1913,21 @@ static int sony_nc_kbd_backlight_setup(s
- 		break;
- 	}
+--- a/net/ipv6/raw.c
++++ b/net/ipv6/raw.c
+@@ -544,6 +544,7 @@ csum_copy_err:
+ static int rawv6_push_pending_frames(struct sock *sk, struct flowi6 *fl6,
+ 				     struct raw6_sock *rp)
+ {
++	struct ipv6_txoptions *opt;
+ 	struct sk_buff *skb;
+ 	int err = 0;
+ 	int offset;
+@@ -561,6 +562,9 @@ static int rawv6_push_pending_frames(str
  
--	ret = sony_call_snc_handle(handle, probe_base, &result);
--	if (ret)
--		return ret;
-+	/*
-+	 * Only probe if there is a separate probe_base, otherwise the probe call
-+	 * is equivalent to __sony_nc_kbd_backlight_mode_set(0), resulting in
-+	 * the keyboard backlight being turned off.
-+	 */
-+	if (probe_base) {
-+		ret = sony_call_snc_handle(handle, probe_base, &result);
-+		if (ret)
-+			return ret;
- 
--	if ((handle == 0x0137 && !(result & 0x02)) ||
--			!(result & 0x01)) {
--		dprintk("no backlight keyboard found\n");
--		return 0;
-+		if ((handle == 0x0137 && !(result & 0x02)) ||
-+				!(result & 0x01)) {
-+			dprintk("no backlight keyboard found\n");
-+			return 0;
-+		}
- 	}
- 
- 	kbdbl_ctl = kzalloc(sizeof(*kbdbl_ctl), GFP_KERNEL);
+ 	offset = rp->offset;
+ 	total_len = inet_sk(sk)->cork.base.length;
++	opt = inet6_sk(sk)->cork.opt;
++	total_len -= opt ? opt->opt_flen : 0;
++
+ 	if (offset >= total_len - 1) {
+ 		err = -EINVAL;
+ 		ip6_flush_pending_frames(sk);
 
 
