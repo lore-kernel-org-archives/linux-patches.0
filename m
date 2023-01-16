@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3AD933EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6FBC433EF;
-	Mon, 16 Jan 2023 16:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E3733EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1735DC433F0;
+	Mon, 16 Jan 2023 16:02:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884955;
-	bh=z0wSYaycW+TsNEC5o6aMzEGAU9pzWzENPsa1/1DLLGw=;
+	s=korg; t=1673884958;
+	bh=9Ze9LIHHY6BwSB7dGnFn+PUCMl0LJ5jbNK/TSTZzAVY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D98Lcz2m2c1fH4TslMQjpUS7C+XvnUXA/VjF8kzlFB8OzC/mnV4k5cFrjlhhzo1xJ
-	 rYInB3m078PzNLTetJAoW0RC7yMCYVwCXQniJWRaJEzCOhULECfaYpNqHsaFktWfRO
-	 SGKUltnnbG7o3SnC3tz6dv/zjdg+dyHbq9i2MF4Y=
+	b=yNhv3p86Cb8HXeksGm/i4NcMf0WgrzfVAsnTH8vodrq0wJPbfoqDNujCwXkUvpVOd
+	 nWNeFezffLGEH5YQikUnhRqqEWD5VVnBh+ePLBi8u1K7Ha4ltrhGQGO6POV+fM8mDF
+	 qA7NCPjSWnBSSLbGqFulb24r4g8IxkFGtqFgpT1w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	yang.yang29@zte.com.cn,
-	Jaroslav Kysela <perex@perex.cz>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 02/86] ALSA: control-led: use strscpy in set_led_id()
-Date: Mon, 16 Jan 2023 16:50:36 +0100
-Message-Id: <20230116154747.162412721@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 5.15 20/86] platform/x86: dell-privacy: Only register SW_CAMERA_LENS_COVER if present
+Date: Mon, 16 Jan 2023 16:50:54 +0100
+Message-Id: <20230116154747.936812983@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -35,43 +33,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaroslav Kysela <perex@perex.cz>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 70051cffb31b5ee09096351c3b41fcae6f89de31 upstream.
+commit 6dc485f9940df8105ea729cbeb7a7d18d409dde5 upstream.
 
-The use of strncpy() in the set_led_id() was incorrect.
-The len variable should use 'min(sizeof(buf2) - 1, count)'
-expression.
+Unlike keys where userspace only reacts to keypresses, userspace may act
+on switches in both (0 and 1) of their positions.
 
-Use strscpy() function to simplify things and handle the error gracefully.
+For example if a SW_TABLET_MODE switch is registered then GNOME will not
+automatically show the onscreen keyboard when a text field gets focus on
+touchscreen devices when SW_TABLET_MODE reports 0 and when SW_TABLET_MODE
+reports 1 libinput will block (filter out) builtin keyboard and touchpad
+events.
 
-Fixes: a135dfb5de15 ("ALSA: led control - add sysfs kcontrol LED marking layer")
-Reported-by: yang.yang29@zte.com.cn
-Link: https://lore.kernel.org/alsa-devel/202301091945513559977@zte.com.cn/
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Jaroslav Kysela <perex@perex.cz>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+So to avoid unwanted side-effects EV_SW type inputs should only be
+registered if they are actually present, only register SW_CAMERA_LENS_COVER
+if it is actually there.
+
+Fixes: 8af9fa37b8a3 ("platform/x86: dell-privacy: Add support for Dell hardware privacy")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20221221220724.119594-2-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/core/control_led.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/platform/x86/dell/dell-wmi-privacy.c |   19 +++++++++++++++----
+ 1 file changed, 15 insertions(+), 4 deletions(-)
 
---- a/sound/core/control_led.c
-+++ b/sound/core/control_led.c
-@@ -530,12 +530,11 @@ static ssize_t set_led_id(struct snd_ctl
- 			  bool attach)
+--- a/drivers/platform/x86/dell/dell-wmi-privacy.c
++++ b/drivers/platform/x86/dell/dell-wmi-privacy.c
+@@ -295,7 +295,7 @@ static int dell_privacy_wmi_probe(struct
  {
- 	char buf2[256], *s, *os;
--	size_t len = max(sizeof(s) - 1, count);
- 	struct snd_ctl_elem_id id;
- 	int err;
+ 	struct privacy_wmi_data *priv;
+ 	struct key_entry *keymap;
+-	int ret, i;
++	int ret, i, j;
  
--	strncpy(buf2, buf, len);
--	buf2[len] = '\0';
-+	if (strscpy(buf2, buf, sizeof(buf2)) < 0)
-+		return -E2BIG;
- 	memset(&id, 0, sizeof(id));
- 	id.iface = SNDRV_CTL_ELEM_IFACE_MIXER;
- 	s = buf2;
+ 	ret = wmi_has_guid(DELL_PRIVACY_GUID);
+ 	if (!ret)
+@@ -321,9 +321,20 @@ static int dell_privacy_wmi_probe(struct
+ 	/* remap the keymap code with Dell privacy key type 0x12 as prefix
+ 	 * KEY_MICMUTE scancode will be reported as 0x120001
+ 	 */
+-	for (i = 0; i < ARRAY_SIZE(dell_wmi_keymap_type_0012); i++) {
+-		keymap[i] = dell_wmi_keymap_type_0012[i];
+-		keymap[i].code |= (0x0012 << 16);
++	for (i = 0, j = 0; i < ARRAY_SIZE(dell_wmi_keymap_type_0012); i++) {
++		/*
++		 * Unlike keys where only presses matter, userspace may act
++		 * on switches in both of their positions. Only register
++		 * SW_CAMERA_LENS_COVER if it is actually there.
++		 */
++		if (dell_wmi_keymap_type_0012[i].type == KE_VSW &&
++		    dell_wmi_keymap_type_0012[i].sw.code == SW_CAMERA_LENS_COVER &&
++		    !(priv->features_present & BIT(DELL_PRIVACY_TYPE_CAMERA)))
++			continue;
++
++		keymap[j] = dell_wmi_keymap_type_0012[i];
++		keymap[j].code |= (0x0012 << 16);
++		j++;
+ 	}
+ 	ret = sparse_keymap_setup(priv->input_dev, keymap, NULL);
+ 	kfree(keymap);
 
 
