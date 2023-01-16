@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C20F6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:49:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D78E7C433D2;
-	Mon, 16 Jan 2023 16:49:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED9E96FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:49:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70641C4339B;
+	Mon, 16 Jan 2023 16:49:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887763;
-	bh=TBbyprcp1iJeN3eqoH5p2XjwuTH/gejq73IdvlNpDA0=;
+	s=korg; t=1673887765;
+	bh=jqHg8aD7g3vhlbaDffaF6JJTgh8z2O11Zvyxl/vGrSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vYjygsI2t8l0hp6qKNZYKFbGvC2LHYTN81o6dXVCBNa1J6+/dFSo5LaY8h8wA9Uvh
-	 nlJQT7xO/Ddb4uIpJZ8eck2Sg4Eboa1sLCb2KXHti26fvAcI0Ye61nPBNCgwXP51Yw
-	 uj36Doj5M57Aa2jlA4rOFmt2AnH/3bslv3KnhrRM=
+	b=UdkmTOXITTp/Xz65YkS2bjOqHqeYe4pi726YaHp7unqypfykiGmYhAMp08Q/e6P49
+	 ReSdiEorY25ehWfMu/zeeqopCOv0RG7DoJcpUrQeFYIcKzxSbgnA07UaA7dmq1cOS+
+	 UiMbVZFTNznDNOUtIYz5ZyyRsel1+O7WvzugVhxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Alexandre Belloni <alexandre.belloni@bootlin.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 273/521] rtc: cmos: Rename ACPI-related functions
-Date: Mon, 16 Jan 2023 16:48:55 +0100
-Message-Id: <20230116154859.363293632@linuxfoundation.org>
+Subject: [PATCH 4.19 274/521] rtc: cmos: Disable ACPI RTC event on removal
+Date: Mon, 16 Jan 2023 16:48:56 +0100
+Message-Id: <20230116154859.408585245@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -39,83 +39,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit d13e9ad9f5146f066a5c5a1cc993d09e4fb21ead ]
+[ Upstream commit 83ebb7b3036d151ee39a4a752018665648fc3bd4 ]
 
-The names of rtc_wake_setup() and cmos_wake_setup() don't indicate
-that these functions are ACPI-related, which is the case, and the
-former doesn't really reflect the role of the function.
+Make cmos_do_remove() drop the ACPI RTC fixed event handler so as to
+prevent it from operating on stale data in case the event triggers
+after driver removal.
 
-Rename them to acpi_rtc_event_setup() and acpi_cmos_wake_setup(),
-respectively, to address this shortcoming.
-
-No intentional functional impact.
-
+Fixes: 311ee9c151ad ("rtc: cmos: allow using ACPI for RTC alarm instead of HPET")
 Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Reviewed-by: Zhang Rui <rui.zhang@intel.com>
 Tested-by: Zhang Rui <rui.zhang@intel.com>
 Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/3225614.44csPzL39Z@kreacher
+Link: https://lore.kernel.org/r/2224609.iZASKD2KPV@kreacher
 Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/rtc/rtc-cmos.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
 diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index 909cb1d4a4d5..0c035c5a5ae6 100644
+index 0c035c5a5ae6..5354c12f6b2a 100644
 --- a/drivers/rtc/rtc-cmos.c
 +++ b/drivers/rtc/rtc-cmos.c
-@@ -742,7 +742,7 @@ static u32 rtc_handler(void *context)
- 	return ACPI_INTERRUPT_HANDLED;
+@@ -756,6 +756,14 @@ static void acpi_rtc_event_setup(struct device *dev)
+ 	acpi_disable_event(ACPI_EVENT_RTC, 0);
  }
  
--static void rtc_wake_setup(struct device *dev)
-+static void acpi_rtc_event_setup(struct device *dev)
++static void acpi_rtc_event_cleanup(void)
++{
++	if (acpi_disabled)
++		return;
++
++	acpi_remove_fixed_event_handler(ACPI_EVENT_RTC, rtc_handler);
++}
++
+ static void rtc_wake_on(struct device *dev)
  {
- 	if (acpi_disabled)
- 		return;
-@@ -786,7 +786,7 @@ static void use_acpi_alarm_quirks(void)
- static inline void use_acpi_alarm_quirks(void) { }
- #endif
- 
--static void cmos_wake_setup(struct device *dev)
-+static void acpi_cmos_wake_setup(struct device *dev)
- {
- 	if (acpi_disabled)
- 		return;
-@@ -838,11 +838,11 @@ static void cmos_check_acpi_rtc_status(struct device *dev,
- 
- #else /* !CONFIG_ACPI */
- 
--static inline void rtc_wake_setup(struct device *dev)
-+static inline void acpi_rtc_event_setup(struct device *dev)
+ 	acpi_clear_event(ACPI_EVENT_RTC);
+@@ -842,6 +850,10 @@ static inline void acpi_rtc_event_setup(struct device *dev)
  {
  }
  
--static inline void cmos_wake_setup(struct device *dev)
-+static inline void acpi_cmos_wake_setup(struct device *dev)
++static inline void acpi_rtc_event_cleanup(void)
++{
++}
++
+ static inline void acpi_cmos_wake_setup(struct device *dev)
  {
  }
- 
-@@ -944,7 +944,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
- 			cmos_rtc.wake_off = info->wake_off;
- 		}
- 	} else {
--		cmos_wake_setup(dev);
-+		acpi_cmos_wake_setup(dev);
+@@ -1089,6 +1101,9 @@ static void cmos_do_remove(struct device *dev)
+ 			hpet_unregister_irq_handler(cmos_interrupt);
  	}
  
- 	if (cmos_rtc.day_alrm >= 128)
-@@ -1042,7 +1042,7 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
- 	 * the ACPI RTC fixed event.
- 	 */
- 	if (!info)
--		rtc_wake_setup(dev);
-+		acpi_rtc_event_setup(dev);
++	if (!dev_get_platdata(dev))
++		acpi_rtc_event_cleanup();
++
+ 	cmos->rtc = NULL;
  
- 	dev_info(dev, "%s%s, %d bytes nvram%s\n",
- 		 !is_valid_irq(rtc_irq) ? "no alarms" :
+ 	ports = cmos->iomem;
 -- 
 2.35.1
 
