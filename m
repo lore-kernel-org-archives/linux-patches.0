@@ -1,27 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A0046B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:22:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8206DC433EF;
-	Mon, 16 Jan 2023 16:22:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B83A46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:22:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECE0C433EF;
+	Mon, 16 Jan 2023 16:22:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886153;
-	bh=IoBwvQBfnAWsNK+WzDnaiuMJlvW27xC2l5fId9zx01M=;
+	s=korg; t=1673886156;
+	bh=g0qKH8gvQygXxaA0XdDhpfr8FrmKiNbx7fVi2ddaDow=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CHi4B3S8lu6oSfXDQmdIAQK4txFARFItfxnfizpvJFh+pGRWMtEF1sWgGP6fyH/FW
-	 FYmpGlLR1Uf1MG1mRPBxN7FXxNMV+yf1gIxtCMSDdpcQiLEXaVr9olLl0gOckF7Wal
-	 9yFIN3ghsUsZyd/BX1Ag/gxsEbVwg6tyVRE/KX10=
+	b=Rn2yyfuKEgmixZCLctwTKEQyNN7k9vSqR5W8pTbFc6+SoBdswRd9HMVyYxODB6amg
+	 JeOXqMu7R7ZrlN05FNlnkpv/8VOyt9OoFldgkrxrQDW7SAxDs0vzCu86iBtE+oCIDO
+	 x8xduqfaaD0qPNXpS0vBmLPCq0WGGDHv/O4wsSVE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	Ian Rogers <irogers@google.com>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	bpf@vger.kernel.org,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 315/658] samples: vfio-mdev: Fix missing pci_disable_device() in mdpy_fb_probe()
-Date: Mon, 16 Jan 2023 16:46:43 +0100
-Message-Id: <20230116154923.972819944@linuxfoundation.org>
+Subject: [PATCH 5.4 324/658] perf trace: Return error if a system call doesnt exist
+Date: Mon, 16 Jan 2023 16:46:52 +0100
+Message-Id: <20230116154924.388367360@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,56 +43,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Leo Yan <leo.yan@linaro.org>
 
-[ Upstream commit d1f0f50fbbbbca1e3e8157e51934613bf88f6d44 ]
+[ Upstream commit d4223e1776c30b2ce8d0e6eaadcbf696e60fca3c ]
 
-Add missing pci_disable_device() in fail path of mdpy_fb_probe().
-Besides, fix missing release functions in mdpy_fb_remove().
+When a system call is not detected, the reason is either because the
+system call ID is out of scope or failure to find the corresponding path
+in the sysfs, trace__read_syscall_info() returns zero.  Finally, without
+returning an error value it introduces confusion for the caller.
 
-Fixes: cacade1946a4 ("sample: vfio mdev display - guest driver")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Link: https://lore.kernel.org/r/20221208013341.3999-1-shangxiaojing@huawei.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+This patch lets the function trace__read_syscall_info() to return
+-EEXIST when a system call doesn't exist.
+
+Fixes: b8b1033fcaa091d8 ("perf trace: Mark syscall ids that are not allocated to avoid unnecessary error messages")
+Signed-off-by: Leo Yan <leo.yan@linaro.org>
+Acked-by: Ian Rogers <irogers@google.com>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: bpf@vger.kernel.org
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/r/20221121075237.127706-3-leo.yan@linaro.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- samples/vfio-mdev/mdpy-fb.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ tools/perf/builtin-trace.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/samples/vfio-mdev/mdpy-fb.c b/samples/vfio-mdev/mdpy-fb.c
-index a760e130bd0d..8ad1aa13ddd9 100644
---- a/samples/vfio-mdev/mdpy-fb.c
-+++ b/samples/vfio-mdev/mdpy-fb.c
-@@ -109,7 +109,7 @@ static int mdpy_fb_probe(struct pci_dev *pdev,
+diff --git a/tools/perf/builtin-trace.c b/tools/perf/builtin-trace.c
+index a5201de1a191..d333f6c86c98 100644
+--- a/tools/perf/builtin-trace.c
++++ b/tools/perf/builtin-trace.c
+@@ -1511,11 +1511,11 @@ static int trace__read_syscall_info(struct trace *trace, int id)
  
- 	ret = pci_request_regions(pdev, "mdpy-fb");
- 	if (ret < 0)
--		return ret;
-+		goto err_disable_dev;
+ 	sc = trace->syscalls.table + id;
+ 	if (sc->nonexistent)
+-		return 0;
++		return -EEXIST;
  
- 	pci_read_config_dword(pdev, MDPY_FORMAT_OFFSET, &format);
- 	pci_read_config_dword(pdev, MDPY_WIDTH_OFFSET,	&width);
-@@ -191,6 +191,9 @@ static int mdpy_fb_probe(struct pci_dev *pdev,
- err_release_regions:
- 	pci_release_regions(pdev);
+ 	if (name == NULL) {
+ 		sc->nonexistent = true;
+-		return 0;
++		return -EEXIST;
+ 	}
  
-+err_disable_dev:
-+	pci_disable_device(pdev);
-+
- 	return ret;
- }
- 
-@@ -199,7 +202,10 @@ static void mdpy_fb_remove(struct pci_dev *pdev)
- 	struct fb_info *info = pci_get_drvdata(pdev);
- 
- 	unregister_framebuffer(info);
-+	iounmap(info->screen_base);
- 	framebuffer_release(info);
-+	pci_release_regions(pdev);
-+	pci_disable_device(pdev);
- }
- 
- static struct pci_device_id mdpy_fb_pci_table[] = {
+ 	sc->name = name;
 -- 
 2.35.1
 
