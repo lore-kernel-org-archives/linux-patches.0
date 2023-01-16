@@ -1,28 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 52EC846B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:34:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBDA5C433F1;
-	Mon, 16 Jan 2023 16:34:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0531446B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:34:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A5FC433EF;
+	Mon, 16 Jan 2023 16:34:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886841;
-	bh=PM38UjOKKpOEm2DbdrMdYf+3cqOvcVm91RTVTgHpOzk=;
+	s=korg; t=1673886843;
+	bh=dhePslZCaGJOEMuH/ftHpWfUhd/m+sn69d633nrZATU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0QRRSLKnZIsQ4S4ZbOOtPw1jNOUX+uVKkYXVmMc0roDMeGF/Ll1p4IYM3iL+Pikj4
-	 7ailwSJQEJcM8iCTs0bCykEAkXPNJobOzlEZ2QYxceP/Oey0i45y5nozLwFVGP6Ua6
-	 DwdFmuYw0xKJIB8FJeBAJ4J3OG09FsnqqtkAEVQE=
+	b=cFldVG0zREFH8ob7KMqsujbmTF4qTjkubvnXuDw1X9yHJ8Gv8aNzY2YgvSi94Ulec
+	 XgsFIlMOwmOuom4oiUPRyfB/yKISCAJBmf9yJXWduLIk5nBc3Ppy8zeeKx+QM7NmU+
+	 maQg1c0kSmb22lRpHriJXJLEW46T348iLEN7702g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Huang <chenhuang5@huawei.com>,
-	Kefeng Wang <wangkefeng.wang@huawei.com>,
-	Palmer Dabbelt <palmerdabbelt@google.com>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 553/658] riscv/stacktrace: Fix stack output without ra on the stack top
-Date: Mon, 16 Jan 2023 16:50:41 +0100
-Message-Id: <20230116154934.813121238@linuxfoundation.org>
+Subject: [PATCH 5.4 544/658] perf probe: Use dwarf_attr_integrate as generic DWARF attr accessor
+Date: Mon, 16 Jan 2023 16:50:32 +0100
+Message-Id: <20230116154934.415570809@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,69 +42,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Huang <chenhuang5@huawei.com>
+From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 
-[ Upstream commit f766f77a74f5784d8d4d3c36b1900731f97d08d0 ]
+[ Upstream commit f828929ab7f0dc3353e4a617f94f297fa8f3dec3 ]
 
-When a function doesn't have a callee, then it will not
-push ra into the stack, such as lkdtm_BUG() function,
+Use dwarf_attr_integrate() instead of dwarf_attr() for generic attribute
+acccessor functions, so that it can find the specified attribute from
+abstact origin DIE etc.
 
-addi	sp,sp,-16
-sd	s0,8(sp)
-addi	s0,sp,16
-ebreak
-
-The struct stackframe use {fp,ra} to get information from
-stack, if walk_stackframe() with pr_regs, we will obtain
-wrong value and bad stacktrace,
-
-[<ffffffe00066c56c>] lkdtm_BUG+0x6/0x8
----[ end trace 18da3fbdf08e25d5 ]---
-
-Correct the next fp and pc, after that, full stacktrace
-shown as expects,
-
-[<ffffffe00066c56c>] lkdtm_BUG+0x6/0x8
-[<ffffffe0008b24a4>] lkdtm_do_action+0x14/0x1c
-[<ffffffe00066c372>] direct_entry+0xc0/0x10a
-[<ffffffe000439f86>] full_proxy_write+0x42/0x6a
-[<ffffffe000309626>] vfs_write+0x7e/0x214
-[<ffffffe00030992a>] ksys_write+0x98/0xc0
-[<ffffffe000309960>] sys_write+0xe/0x16
-[<ffffffe0002014bc>] ret_from_syscall+0x0/0x2
----[ end trace 61917f3d9a9fadcd ]---
-
-Signed-off-by: Chen Huang <chenhuang5@huawei.com>
-Signed-off-by: Kefeng Wang <wangkefeng.wang@huawei.com>
-Signed-off-by: Palmer Dabbelt <palmerdabbelt@google.com>
-Stable-dep-of: 5c3022e4a616 ("riscv: stacktrace: Fixup ftrace_graph_ret_addr retp argument")
+Signed-off-by: Masami Hiramatsu <mhiramat@kernel.org>
+Acked-by: Namhyung Kim <namhyung@kernel.org>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Link: https://lore.kernel.org/r/166731051988.2100653.13595339994343449770.stgit@devnote3
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Stable-dep-of: a9dfc46c67b5 ("perf probe: Fix to get the DW_AT_decl_file and DW_AT_call_file as unsinged data")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/stacktrace.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ tools/perf/util/dwarf-aux.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
-index 19e46f4160cc..1a512a24879e 100644
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -55,9 +55,15 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
- 		/* Unwind stack frame */
- 		frame = (struct stackframe *)fp - 1;
- 		sp = fp;
--		fp = frame->fp;
--		pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
--					   (unsigned long *)(fp - 8));
-+		if (regs && (regs->epc == pc) && (frame->fp & 0x7)) {
-+			fp = frame->ra;
-+			pc = regs->ra;
-+		} else {
-+			fp = frame->fp;
-+			pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
-+						   (unsigned long *)(fp - 8));
-+		}
-+
- 	}
- }
+diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
+index ab34ef2c661f..b51e0ba363b2 100644
+--- a/tools/perf/util/dwarf-aux.c
++++ b/tools/perf/util/dwarf-aux.c
+@@ -254,7 +254,7 @@ static int die_get_attr_udata(Dwarf_Die *tp_die, unsigned int attr_name,
+ {
+ 	Dwarf_Attribute attr;
+ 
+-	if (dwarf_attr(tp_die, attr_name, &attr) == NULL ||
++	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
+ 	    dwarf_formudata(&attr, result) != 0)
+ 		return -ENOENT;
+ 
+@@ -267,7 +267,7 @@ static int die_get_attr_sdata(Dwarf_Die *tp_die, unsigned int attr_name,
+ {
+ 	Dwarf_Attribute attr;
+ 
+-	if (dwarf_attr(tp_die, attr_name, &attr) == NULL ||
++	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
+ 	    dwarf_formsdata(&attr, result) != 0)
+ 		return -ENOENT;
  
 -- 
 2.35.1
