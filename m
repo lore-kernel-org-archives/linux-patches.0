@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED8D046B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:31:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EA6BC433D2;
-	Mon, 16 Jan 2023 16:31:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A016546B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:31:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26808C433D2;
+	Mon, 16 Jan 2023 16:31:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886664;
-	bh=JusvWpjWxCAj1UyScJG29hqDYgolKv8PEcvu+z9S7DU=;
+	s=korg; t=1673886667;
+	bh=95S2qaX0OlxaCTD8FOj8mwDKG8Q73ShQ4ntrm2dKBLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kCJBfNYXVqtrlRkTYsC/LfLv7u8zpypuQZ2ethPmR+I18ExY0VHoj8aXDFWKglKdT
-	 Oi3QU2OWiP8ZSNQU/cmdBmLnEuY5LbUnCt+8uMIIRX5C2shji0hS1z/0G02niPOkSs
-	 gRJkdcKa/Dkgh2KvRtN2F/7WYUAMHTn/qKFJ7iVg=
+	b=0WbsoFFBGnOFO1eplwvs9jwzdGQv6fh0zCQhJxAK1reg9wbeZGphjww1Y44Pj3Lil
+	 Yfp3zJwIIz7LE2Gm51lHYbbnOMwfG64sxp8OlNRPVzpE+4C8jbmf5RmDjA8fQhM9zc
+	 h46K/XsxLeiKIxcdUIkX35WuFdFO/4Rs3rKSRAzw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	kernel test robot <lkp@intel.com>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>
-Subject: [PATCH 5.4 485/658] ARM: ux500: do not directly dereference __iomem
-Date: Mon, 16 Jan 2023 16:49:33 +0100
-Message-Id: <20230116154931.711151073@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Steev Klimaszewski <steev@kali.org>,
+	Konrad Dybcio <konrad.dybcio@somainline.org>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 5.4 486/658] arm64: dts: qcom: sdm850-lenovo-yoga-c630: correct I2C12 pins drive strength
+Date: Mon, 16 Jan 2023 16:49:34 +0100
+Message-Id: <20230116154931.761695926@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,54 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 65b0e307a1a9193571db12910f382f84195a3d29 upstream.
+commit fd49776d8f458bba5499384131eddc0b8bcaf50c upstream.
 
-Sparse reports that calling add_device_randomness() on `uid` is a
-violation of address spaces. And indeed the next usage uses readl()
-properly, but that was left out when passing it toadd_device_
-randomness(). So instead copy the whole thing to the stack first.
+The pin configuration (done with generic pin controller helpers and
+as expressed by bindings) requires children nodes with either:
+1. "pins" property and the actual configuration,
+2. another set of nodes with above point.
 
-Fixes: 4040d10a3d44 ("ARM: ux500: add DB serial number to entropy pool")
-Cc: Linus Walleij <linus.walleij@linaro.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/all/202210230819.loF90KDh-lkp@intel.com/
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
-Link: https://lore.kernel.org/r/20221108123755.207438-1-Jason@zx2c4.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+The qup_i2c12_default pin configuration used second method - with a
+"pinmux" child.
+
+Fixes: 44acee207844 ("arm64: dts: qcom: Add Lenovo Yoga C630")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Tested-by: Steev Klimaszewski <steev@kali.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20220930192039.240486-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/ux500/ux500-soc-id.c |   10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/soc/ux500/ux500-soc-id.c
-+++ b/drivers/soc/ux500/ux500-soc-id.c
-@@ -159,20 +159,18 @@ static ssize_t ux500_get_process(struct
- static const char *db8500_read_soc_id(struct device_node *backupram)
- {
- 	void __iomem *base;
--	void __iomem *uid;
- 	const char *retstr;
-+	u32 uid[5];
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -298,8 +298,10 @@
+ };
  
- 	base = of_iomap(backupram, 0);
- 	if (!base)
- 		return NULL;
--	uid = base + 0x1fc0;
-+	memcpy_fromio(uid, base + 0x1fc0, sizeof(uid));
+ &qup_i2c12_default {
+-	drive-strength = <2>;
+-	bias-disable;
++	pinmux {
++		drive-strength = <2>;
++		bias-disable;
++	};
+ };
  
- 	/* Throw these device-specific numbers into the entropy pool */
--	add_device_randomness(uid, 0x14);
-+	add_device_randomness(uid, sizeof(uid));
- 	retstr = kasprintf(GFP_KERNEL, "%08x%08x%08x%08x%08x",
--			 readl((u32 *)uid+0),
--			 readl((u32 *)uid+1), readl((u32 *)uid+2),
--			 readl((u32 *)uid+3), readl((u32 *)uid+4));
-+			   uid[0], uid[1], uid[2], uid[3], uid[4]);
- 	iounmap(base);
- 	return retstr;
- }
+ &qup_uart6_default {
 
 
