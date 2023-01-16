@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B7F6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:00:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93159C433EF;
-	Mon, 16 Jan 2023 17:00:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B75CA6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:00:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D772C433D2;
+	Mon, 16 Jan 2023 17:00:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888414;
-	bh=yUWQ/c+/o3PIEMThAQSymkSkEeJsyKZHykM4WKNMFiM=;
+	s=korg; t=1673888417;
+	bh=Us/UeLQYB1mOEUwJSijpk0xQBExh6WcJDviFH04YdEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tr7nPJefYRd+JD9LBEq3scIELq0IptHGb0Ljyf/2TaBATWl7c6wWHASJPboQvgwof
-	 KmYciJwt9Ll6iIAqJ/5kZgRhxOFYoM5CfD1sT/53R2lAPtednUTHkNAiaIEkKdN2HR
-	 CpY66i+pI2Q4buWhVMgCrl8K78cJ1sUKMcHns9Ak=
+	b=wS7QpzRFmKmXoSijYZmYOHUICMAYM9YWpYljfCsDOLjTdL7kczNk6o+KlUhvR6eGm
+	 47mo1Yw7ZCPe53W/tLPyg0DKWohkOk5FMe02Tcd7idtolEk26630Ge5r8Kp6JVKqXm
+	 7y0KdSY0W1VTnsAaYwK4pAqZsnyzQHPs1pUf0xlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Sergey 'Jin' Bostandzhyan <jin@mediatomb.cc>
-Subject: [PATCH 4.19 518/521] ALSA: hda/realtek - Fix inverted bass GPIO pin on Acer 8951G
-Date: Mon, 16 Jan 2023 16:53:00 +0100
-Message-Id: <20230116154910.375033757@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 491/521] quota: Factor out setup of quota inode
+Date: Mon, 16 Jan 2023 16:52:33 +0100
+Message-Id: <20230116154909.145768189@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -34,78 +34,192 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Jan Kara <jack@suse.cz>
 
-commit 336820c4374bc065317f247dc2bb37c0e41b64a6 upstream.
+[ Upstream commit c7d3d28360fdb3ed3a5aa0bab19315e0fdc994a1 ]
 
-We've added the bass speaker support on Acer 8951G by the commit
-00066e9733f6 ("Add Acer Aspire Ethos 8951G model quirk"), but it seems
-that the GPIO pin was wrongly set: while the commit turns off the bit
-to power up the amp, the actual hardware reacts other way round,
-i.e. GPIO bit on = amp on.
+Factor out setting up of quota inode and eventual error cleanup from
+vfs_load_quota_inode(). This will simplify situation for filesystems
+that don't have any quota inodes.
 
-So this patch fixes the bug, turning on the GPIO bit 0x02 as default.
-Since turning on the GPIO bit can be more easily managed with
-alc_setup_gpio() call, we simplify the quirk code by integrating the
-GPIO setup into the existing alc662_fixup_aspire_ethos_hp() and
-dropping the whole ALC669_FIXUP_ACER_ASPIRE_ETHOS_SUBWOOFER quirk.
-
-Fixes: 00066e9733f6 ("Add Acer Aspire Ethos 8951G model quirk")
-Reported-and-tested-by: Sergey 'Jin' Bostandzhyan <jin@mediatomb.cc>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20191128202630.6626-1-tiwai@suse.de
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Stable-dep-of: d32387748476 ("ext4: fix bug_on in __es_tree_search caused by bad quota inode")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |   17 +++--------------
- 1 file changed, 3 insertions(+), 14 deletions(-)
+ fs/quota/dquot.c         | 108 ++++++++++++++++++++++++---------------
+ include/linux/quotaops.h |   2 +
+ 2 files changed, 69 insertions(+), 41 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -8539,6 +8539,8 @@ static void alc662_fixup_aspire_ethos_hp
- 	case HDA_FIXUP_ACT_PRE_PROBE:
- 		snd_hda_jack_detect_enable_callback(codec, 0x1b,
- 				alc662_aspire_ethos_mute_speakers);
-+		/* subwoofer needs an extra GPIO setting to become audible */
-+		alc_setup_gpio(codec, 0x02);
- 		break;
- 	case HDA_FIXUP_ACT_INIT:
- 		/* Make sure to start in a correct state, i.e. if
-@@ -8676,7 +8678,6 @@ enum {
- 	ALC662_FIXUP_USI_HEADSET_MODE,
- 	ALC662_FIXUP_LENOVO_MULTI_CODECS,
- 	ALC669_FIXUP_ACER_ASPIRE_ETHOS,
--	ALC669_FIXUP_ACER_ASPIRE_ETHOS_SUBWOOFER,
- 	ALC669_FIXUP_ACER_ASPIRE_ETHOS_HEADSET,
- 	ALC671_FIXUP_HP_HEADSET_MIC2,
- 	ALC662_FIXUP_ACER_X2660G_HEADSET_MODE,
-@@ -9019,18 +9020,6 @@ static const struct hda_fixup alc662_fix
- 		.type = HDA_FIXUP_FUNC,
- 		.v.func = alc662_fixup_aspire_ethos_hp,
- 	},
--	[ALC669_FIXUP_ACER_ASPIRE_ETHOS_SUBWOOFER] = {
--		.type = HDA_FIXUP_VERBS,
--		/* subwoofer needs an extra GPIO setting to become audible */
--		.v.verbs = (const struct hda_verb[]) {
--			{0x01, AC_VERB_SET_GPIO_MASK, 0x02},
--			{0x01, AC_VERB_SET_GPIO_DIRECTION, 0x02},
--			{0x01, AC_VERB_SET_GPIO_DATA, 0x00},
--			{ }
--		},
--		.chained = true,
--		.chain_id = ALC669_FIXUP_ACER_ASPIRE_ETHOS_HEADSET
--	},
- 	[ALC669_FIXUP_ACER_ASPIRE_ETHOS] = {
- 		.type = HDA_FIXUP_PINS,
- 		.v.pins = (const struct hda_pintbl[]) {
-@@ -9040,7 +9029,7 @@ static const struct hda_fixup alc662_fix
- 			{ }
- 		},
- 		.chained = true,
--		.chain_id = ALC669_FIXUP_ACER_ASPIRE_ETHOS_SUBWOOFER
-+		.chain_id = ALC669_FIXUP_ACER_ASPIRE_ETHOS_HEADSET
- 	},
- 	[ALC671_FIXUP_HP_HEADSET_MIC2] = {
- 		.type = HDA_FIXUP_FUNC,
+diff --git a/fs/quota/dquot.c b/fs/quota/dquot.c
+index ddb379abd919..a1d2aed0d833 100644
+--- a/fs/quota/dquot.c
++++ b/fs/quota/dquot.c
+@@ -2298,28 +2298,60 @@ EXPORT_SYMBOL(dquot_quota_off);
+  *	Turn quotas on on a device
+  */
+ 
+-/*
+- * Helper function to turn quotas on when we already have the inode of
+- * quota file and no quota information is loaded.
+- */
+-static int vfs_load_quota_inode(struct inode *inode, int type, int format_id,
++static int vfs_setup_quota_inode(struct inode *inode, int type)
++{
++	struct super_block *sb = inode->i_sb;
++	struct quota_info *dqopt = sb_dqopt(sb);
++
++	if (!S_ISREG(inode->i_mode))
++		return -EACCES;
++	if (IS_RDONLY(inode))
++		return -EROFS;
++	if (sb_has_quota_loaded(sb, type))
++		return -EBUSY;
++
++	dqopt->files[type] = igrab(inode);
++	if (!dqopt->files[type])
++		return -EIO;
++	if (!(dqopt->flags & DQUOT_QUOTA_SYS_FILE)) {
++		/* We don't want quota and atime on quota files (deadlocks
++		 * possible) Also nobody should write to the file - we use
++		 * special IO operations which ignore the immutable bit. */
++		inode_lock(inode);
++		inode->i_flags |= S_NOQUOTA;
++		inode_unlock(inode);
++		/*
++		 * When S_NOQUOTA is set, remove dquot references as no more
++		 * references can be added
++		 */
++		__dquot_drop(inode);
++	}
++	return 0;
++}
++
++static void vfs_cleanup_quota_inode(struct super_block *sb, int type)
++{
++	struct quota_info *dqopt = sb_dqopt(sb);
++	struct inode *inode = dqopt->files[type];
++
++	if (!(dqopt->flags & DQUOT_QUOTA_SYS_FILE)) {
++		inode_lock(inode);
++		inode->i_flags &= ~S_NOQUOTA;
++		inode_unlock(inode);
++	}
++	dqopt->files[type] = NULL;
++	iput(inode);
++}
++
++int dquot_load_quota_sb(struct super_block *sb, int type, int format_id,
+ 	unsigned int flags)
+ {
+ 	struct quota_format_type *fmt = find_quota_format(format_id);
+-	struct super_block *sb = inode->i_sb;
+ 	struct quota_info *dqopt = sb_dqopt(sb);
+ 	int error;
+ 
+ 	if (!fmt)
+ 		return -ESRCH;
+-	if (!S_ISREG(inode->i_mode)) {
+-		error = -EACCES;
+-		goto out_fmt;
+-	}
+-	if (IS_RDONLY(inode)) {
+-		error = -EROFS;
+-		goto out_fmt;
+-	}
+ 	if (!sb->s_op->quota_write || !sb->s_op->quota_read ||
+ 	    (type == PRJQUOTA && sb->dq_op->get_projid == NULL)) {
+ 		error = -EINVAL;
+@@ -2351,27 +2383,9 @@ static int vfs_load_quota_inode(struct inode *inode, int type, int format_id,
+ 		invalidate_bdev(sb->s_bdev);
+ 	}
+ 
+-	if (!(dqopt->flags & DQUOT_QUOTA_SYS_FILE)) {
+-		/* We don't want quota and atime on quota files (deadlocks
+-		 * possible) Also nobody should write to the file - we use
+-		 * special IO operations which ignore the immutable bit. */
+-		inode_lock(inode);
+-		inode->i_flags |= S_NOQUOTA;
+-		inode_unlock(inode);
+-		/*
+-		 * When S_NOQUOTA is set, remove dquot references as no more
+-		 * references can be added
+-		 */
+-		__dquot_drop(inode);
+-	}
+-
+-	error = -EIO;
+-	dqopt->files[type] = igrab(inode);
+-	if (!dqopt->files[type])
+-		goto out_file_flags;
+ 	error = -EINVAL;
+ 	if (!fmt->qf_ops->check_quota_file(sb, type))
+-		goto out_file_init;
++		goto out_fmt;
+ 
+ 	dqopt->ops[type] = fmt->qf_ops;
+ 	dqopt->info[type].dqi_format = fmt;
+@@ -2379,7 +2393,7 @@ static int vfs_load_quota_inode(struct inode *inode, int type, int format_id,
+ 	INIT_LIST_HEAD(&dqopt->info[type].dqi_dirty_list);
+ 	error = dqopt->ops[type]->read_file_info(sb, type);
+ 	if (error < 0)
+-		goto out_file_init;
++		goto out_fmt;
+ 	if (dqopt->flags & DQUOT_QUOTA_SYS_FILE) {
+ 		spin_lock(&dq_data_lock);
+ 		dqopt->info[type].dqi_flags |= DQF_SYS_FILE;
+@@ -2394,18 +2408,30 @@ static int vfs_load_quota_inode(struct inode *inode, int type, int format_id,
+ 		dquot_disable(sb, type, flags);
+ 
+ 	return error;
+-out_file_init:
+-	dqopt->files[type] = NULL;
+-	iput(inode);
+-out_file_flags:
+-	inode_lock(inode);
+-	inode->i_flags &= ~S_NOQUOTA;
+-	inode_unlock(inode);
+ out_fmt:
+ 	put_quota_format(fmt);
+ 
+ 	return error; 
+ }
++EXPORT_SYMBOL(dquot_load_quota_sb);
++
++/*
++ * Helper function to turn quotas on when we already have the inode of
++ * quota file and no quota information is loaded.
++ */
++static int vfs_load_quota_inode(struct inode *inode, int type, int format_id,
++	unsigned int flags)
++{
++	int err;
++
++	err = vfs_setup_quota_inode(inode, type);
++	if (err < 0)
++		return err;
++	err = dquot_load_quota_sb(inode->i_sb, type, format_id, flags);
++	if (err < 0)
++		vfs_cleanup_quota_inode(inode->i_sb, type);
++	return err;
++}
+ 
+ /* Reenable quotas on remount RW */
+ int dquot_resume(struct super_block *sb, int type)
+diff --git a/include/linux/quotaops.h b/include/linux/quotaops.h
+index 91e0b7624053..ec10897f7f60 100644
+--- a/include/linux/quotaops.h
++++ b/include/linux/quotaops.h
+@@ -99,6 +99,8 @@ int dquot_file_open(struct inode *inode, struct file *file);
+ 
+ int dquot_enable(struct inode *inode, int type, int format_id,
+ 	unsigned int flags);
++int dquot_load_quota_sb(struct super_block *sb, int type, int format_id,
++	unsigned int flags);
+ int dquot_quota_on(struct super_block *sb, int type, int format_id,
+ 	const struct path *path);
+ int dquot_quota_on_mount(struct super_block *sb, char *qf_name,
+-- 
+2.35.1
+
 
 
