@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661796FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:46:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C26BC433F1;
-	Mon, 16 Jan 2023 16:46:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E10FF6FA3
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:46:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66A6CC433F1;
+	Mon, 16 Jan 2023 16:46:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887561;
-	bh=L6t9P+rd3K73ICbRI2YqHcUEc5W7ShzWvnkv6UqhUkc=;
+	s=korg; t=1673887563;
+	bh=Nt5vkuZ3gi2KOUwLRO9WBXBaVyewhFhO6wEnAZ8cMVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p2Nd35Ml4LaX4gbpLhWe06dx7fL26UlNNNFnX440IinLKHvC+chYTq1XbtABHiPUK
-	 yk8zzBPZe1ryJfAqNxZbg5GEYA7RkG/aH5fsxlxdt2CWkBdhFIOLk/oRqNCGmG/RRH
-	 LyhDEW6rmJFri/M5Qj0rK23mgcyXZM4FFwOXRgq8=
+	b=l/N7QDbJ0lExhZicY68e0nJqhRfj4AGx4RBg6HkHekPFtdaRmcALNHXRbGDDNvxh8
+	 t7S4Y6HTujDQ5ulx4+knr2a4tAvZrwv5Eiq8OBFlxQroLbg6Y1EkfaJOn2WV+hrUtN
+	 WlOnJCX2tMbAUxd9XOwkr8BV3fwhTwYRMXJQkK+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 168/521] net: amd: lance: dont call dev_kfree_skb() under spin_lock_irqsave()
-Date: Mon, 16 Jan 2023 16:47:10 +0100
-Message-Id: <20230116154854.636883667@linuxfoundation.org>
+Subject: [PATCH 4.19 195/521] scsi: mpt3sas: Fix possible resource leaks in mpt3sas_transport_port_add()
+Date: Mon, 16 Jan 2023 16:47:37 +0100
+Message-Id: <20230116154855.801682001@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,54 +37,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 6151d105dfce8c23edf30eed35e97f3d9b96a35c ]
+[ Upstream commit 78316e9dfc24906dd474630928ed1d3c562b568e ]
 
-It is not allowed to call kfree_skb() or consume_skb() from hardware
-interrupt context or with hardware interrupts being disabled.
+In mpt3sas_transport_port_add(), if sas_rphy_add() returns error,
+sas_rphy_free() needs be called to free the resource allocated in
+sas_end_device_alloc(). Otherwise a kernel crash will happen:
 
-It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
-The difference between them is free reason, dev_kfree_skb_irq() means
-the SKB is dropped in error and dev_consume_skb_irq() means the SKB
-is consumed in normal.
+Unable to handle kernel NULL pointer dereference at virtual address 0000000000000108
+CPU: 45 PID: 37020 Comm: bash Kdump: loaded Tainted: G        W          6.1.0-rc1+ #189
+pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : device_del+0x54/0x3d0
+lr : device_del+0x37c/0x3d0
+Call trace:
+ device_del+0x54/0x3d0
+ attribute_container_class_device_del+0x28/0x38
+ transport_remove_classdev+0x6c/0x80
+ attribute_container_device_trigger+0x108/0x110
+ transport_remove_device+0x28/0x38
+ sas_rphy_remove+0x50/0x78 [scsi_transport_sas]
+ sas_port_delete+0x30/0x148 [scsi_transport_sas]
+ do_sas_phy_delete+0x78/0x80 [scsi_transport_sas]
+ device_for_each_child+0x68/0xb0
+ sas_remove_children+0x30/0x50 [scsi_transport_sas]
+ sas_rphy_remove+0x38/0x78 [scsi_transport_sas]
+ sas_port_delete+0x30/0x148 [scsi_transport_sas]
+ do_sas_phy_delete+0x78/0x80 [scsi_transport_sas]
+ device_for_each_child+0x68/0xb0
+ sas_remove_children+0x30/0x50 [scsi_transport_sas]
+ sas_remove_host+0x20/0x38 [scsi_transport_sas]
+ scsih_remove+0xd8/0x420 [mpt3sas]
 
-In these two cases, dev_kfree_skb() is called consume the xmited SKB,
-so replace it with dev_consume_skb_irq().
+Because transport_add_device() is not called when sas_rphy_add() fails, the
+device is not added. When sas_rphy_remove() is subsequently called to
+remove the device in the remove() path, a NULL pointer dereference happens.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Fixes: f92363d12359 ("[SCSI] mpt3sas: add new driver supporting 12GB SAS")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lore.kernel.org/r/20221109032403.1636422-1-yangyingliang@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/atarilance.c | 2 +-
- drivers/net/ethernet/amd/lance.c      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/mpt3sas/mpt3sas_transport.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/atarilance.c b/drivers/net/ethernet/amd/atarilance.c
-index d3d44e07afbc..414b990827e8 100644
---- a/drivers/net/ethernet/amd/atarilance.c
-+++ b/drivers/net/ethernet/amd/atarilance.c
-@@ -825,7 +825,7 @@ lance_start_xmit(struct sk_buff *skb, struct net_device *dev)
- 	lp->memcpy_f( PKTBUF_ADDR(head), (void *)skb->data, skb->len );
- 	head->flag = TMD1_OWN_CHIP | TMD1_ENP | TMD1_STP;
- 	dev->stats.tx_bytes += skb->len;
--	dev_kfree_skb( skb );
-+	dev_consume_skb_irq(skb);
- 	lp->cur_tx++;
- 	while( lp->cur_tx >= TX_RING_SIZE && lp->dirty_tx >= TX_RING_SIZE ) {
- 		lp->cur_tx -= TX_RING_SIZE;
-diff --git a/drivers/net/ethernet/amd/lance.c b/drivers/net/ethernet/amd/lance.c
-index b56d84c7df46..a21f4f82a9c2 100644
---- a/drivers/net/ethernet/amd/lance.c
-+++ b/drivers/net/ethernet/amd/lance.c
-@@ -997,7 +997,7 @@ static netdev_tx_t lance_start_xmit(struct sk_buff *skb,
- 		skb_copy_from_linear_data(skb, &lp->tx_bounce_buffs[entry], skb->len);
- 		lp->tx_ring[entry].base =
- 			((u32)isa_virt_to_bus((lp->tx_bounce_buffs + entry)) & 0xffffff) | 0x83000000;
--		dev_kfree_skb(skb);
-+		dev_consume_skb_irq(skb);
- 	} else {
- 		lp->tx_skbuff[entry] = skb;
- 		lp->tx_ring[entry].base = ((u32)isa_virt_to_bus(skb->data) & 0xffffff) | 0x83000000;
+diff --git a/drivers/scsi/mpt3sas/mpt3sas_transport.c b/drivers/scsi/mpt3sas/mpt3sas_transport.c
+index 9fd89e85227a..f2b072831747 100644
+--- a/drivers/scsi/mpt3sas/mpt3sas_transport.c
++++ b/drivers/scsi/mpt3sas/mpt3sas_transport.c
+@@ -730,6 +730,8 @@ mpt3sas_transport_port_add(struct MPT3SAS_ADAPTER *ioc, u16 handle,
+ 	if ((sas_rphy_add(rphy))) {
+ 		ioc_err(ioc, "failure at %s:%d/%s()!\n",
+ 			__FILE__, __LINE__, __func__);
++		sas_rphy_free(rphy);
++		rphy = NULL;
+ 	}
+ 
+ 	if (mpt3sas_port->remote_identify.device_type == SAS_END_DEVICE) {
 -- 
 2.35.1
 
