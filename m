@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E3406FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:59:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E805AC433D2;
-	Mon, 16 Jan 2023 16:59:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2026A6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:59:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99011C433F1;
+	Mon, 16 Jan 2023 16:59:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888358;
-	bh=kmD7vkffF1iUKtWOFmiM5KD60R9un9MedEJEjT7PKSk=;
+	s=korg; t=1673888361;
+	bh=QkMRI/SgOyPz9Qyv4ptbzUf5Op7ZhmzVbMHW6MHTXoE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ry7FAaatZMh0UzNdwGNOVoMnAluUXrqfXKy1PQLnp/sbz6If6NKO/j1k/R6TGurWw
-	 64YMXgvfla/+Rfy3QDRMkhuWom8sxkKGD0eiRPruYZUKOy9lA8toSuECeXXZUqywCJ
-	 /zGpJtj2hn/IQtYA6RrYhrXsGCsOwiRHQa7z6jzs=
+	b=i467D0KaS0Z+TdmJZuouLPD7hLz1pBMOmHpOXbTgPnkp3x45rogncdTEAlxRTPOBw
+	 R0xMcb/MsRdCY5TV8FYT8OqQfkVLbpE9q4dPLRixDw7MpHI/500l8aPK8BL9c0zi4F
+	 PriAv6CpiIb1+k/CVSJVfFaubYPkclOY+00Dr/do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Whitney <enwlinux@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 499/521] ext4: fix delayed allocation bug in ext4_clu_mapped for bigalloc + inline
-Date: Mon, 16 Jan 2023 16:52:41 +0100
-Message-Id: <20230116154909.507815847@linuxfoundation.org>
+	"Ilia.Gavrilov" <Ilia.Gavrilov@infotecs.ru>,
+	Simon Horman <simon.horman@corigine.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>
+Subject: [PATCH 4.19 500/521] netfilter: ipset: Fix overflow before widen in the bitmap_ip_create() function.
+Date: Mon, 16 Jan 2023 16:52:42 +0100
+Message-Id: <20230116154909.557185550@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,62 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Whitney <enwlinux@gmail.com>
+From: Gavrilov Ilia <Ilia.Gavrilov@infotecs.ru>
 
-[ Upstream commit 131294c35ed6f777bd4e79d42af13b5c41bf2775 ]
+commit 9ea4b476cea1b7d461d16dda25ca3c7e616e2d15 upstream.
 
-When converting files with inline data to extents, delayed allocations
-made on a file system created with both the bigalloc and inline options
-can result in invalid extent status cache content, incorrect reserved
-cluster counts, kernel memory leaks, and potential kernel panics.
+When first_ip is 0, last_ip is 0xFFFFFFFF, and netmask is 31, the value of
+an arithmetic expression 2 << (netmask - mask_bits - 1) is subject
+to overflow due to a failure casting operands to a larger data type
+before performing the arithmetic.
 
-With bigalloc, the code that determines whether a block must be
-delayed allocated searches the extent tree to see if that block maps
-to a previously allocated cluster.  If not, the block is delayed
-allocated, and otherwise, it isn't.  However, if the inline option is
-also used, and if the file containing the block is marked as able to
-store data inline, there isn't a valid extent tree associated with
-the file.  The current code in ext4_clu_mapped() calls
-ext4_find_extent() to search the non-existent tree for a previously
-allocated cluster anyway, which typically finds nothing, as desired.
-However, a side effect of the search can be to cache invalid content
-from the non-existent tree (garbage) in the extent status tree,
-including bogus entries in the pending reservation tree.
+Note that it's harmless since the value will be checked at the next step.
 
-To fix this, avoid searching the extent tree when allocating blocks
-for bigalloc + inline files that are being converted from inline to
-extent mapped.
+Found by InfoTeCS on behalf of Linux Verification Center
+(linuxtesting.org) with SVACE.
 
-Signed-off-by: Eric Whitney <enwlinux@gmail.com>
-Link: https://lore.kernel.org/r/20221117152207.2424-1-enwlinux@gmail.com
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b9fed748185a ("netfilter: ipset: Check and reject crazy /0 input parameters")
+Signed-off-by: Ilia.Gavrilov <Ilia.Gavrilov@infotecs.ru>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/extents.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/netfilter/ipset/ip_set_bitmap_ip.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
-index 0bb772cd7f88..1ad4c8eb82c1 100644
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -5984,6 +5984,14 @@ int ext4_clu_mapped(struct inode *inode, ext4_lblk_t lclu)
- 	struct ext4_extent *extent;
- 	ext4_lblk_t first_lblk, first_lclu, last_lclu;
+--- a/net/netfilter/ipset/ip_set_bitmap_ip.c
++++ b/net/netfilter/ipset/ip_set_bitmap_ip.c
+@@ -299,8 +299,8 @@ bitmap_ip_create(struct net *net, struct
+ 			return -IPSET_ERR_BITMAP_RANGE;
  
-+	/*
-+	 * if data can be stored inline, the logical cluster isn't
-+	 * mapped - no physical clusters have been allocated, and the
-+	 * file has no extents
-+	 */
-+	if (ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA))
-+		return 0;
-+
- 	/* search for the extent closest to the first block in the cluster */
- 	path = ext4_find_extent(inode, EXT4_C2B(sbi, lclu), NULL, 0);
- 	if (IS_ERR(path)) {
--- 
-2.35.1
-
+ 		pr_debug("mask_bits %u, netmask %u\n", mask_bits, netmask);
+-		hosts = 2 << (32 - netmask - 1);
+-		elements = 2 << (netmask - mask_bits - 1);
++		hosts = 2U << (32 - netmask - 1);
++		elements = 2UL << (netmask - mask_bits - 1);
+ 	}
+ 	if (elements > IPSET_BITMAP_MAX_RANGE + 1)
+ 		return -IPSET_ERR_BITMAP_RANGE_SIZE;
 
 
