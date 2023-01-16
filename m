@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5A046FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:08:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BA9FC433EF;
-	Mon, 16 Jan 2023 17:08:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CC886FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:08:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAA2FC433D2;
+	Mon, 16 Jan 2023 17:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888901;
-	bh=QNr73EVDlupqc+QMAJTeeJn8dV70QGIzDf9vswfj+Jw=;
+	s=korg; t=1673888904;
+	bh=UbKVBFU9Ywr743QmUPda4Sp9iLAyTxKIp9WUp37yn28=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w/T1vTX2vOsCNfcQ57zTXD2eGuqSTJWqK0sqH6Bb46vtXr2tJisjdzQCJiPhOr+UW
-	 bFEojDkXQAYEQ3WBiRSV3MC4KhDHW5LIjxvn//hv2kzs0RukKcM237hqGTG4ZhytlR
-	 2MhMQ0QcJacxWHKbG/i0U2JQA+RZ6WhLTfrF2tJY=
+	b=lJqIbhFTkoQ5POdCVb4Trk96MUCvIRf5QEgM6t6m6ZMXScgaUQ/PegnwnAG9aKsYI
+	 +FgdzcwGP5WLWflat3XdJJAiAgpFQVdwilmhfOsxkYXrD+IxoMEPFlznFNrx1sm6y5
+	 ELwvgTVU9iNNou1tmTVJ2rpqS3N0H8P0B6rXdmp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
-	Mike Marshall <hubcap@omnibond.com>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 152/338] orangefs: Fix sysfs not cleanup when dev init failed
-Date: Mon, 16 Jan 2023 16:50:25 +0100
-Message-Id: <20230116154827.471164710@linuxfoundation.org>
+Subject: [PATCH 4.14 143/338] RDMA/hfi: Decrease PCI device reference count in error path
+Date: Mon, 16 Jan 2023 16:50:16 +0100
+Message-Id: <20230116154827.085493581@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,72 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit ea60a4ad0cf88b411cde6888b8c890935686ecd7 ]
+[ Upstream commit 9b51d072da1d27e1193e84708201c48e385ad912 ]
 
-When the dev init failed, should cleanup the sysfs, otherwise, the
-module will never be loaded since can not create duplicate sysfs
-directory:
+pci_get_device() will increase the reference count for the returned
+pci_dev, and also decrease the reference count for the input parameter
+*from* if it is not NULL.
 
-  sysfs: cannot create duplicate filename '/fs/orangefs'
+If we break out the loop in node_affinity_init() with 'dev' not NULL, we
+need to call pci_dev_put() to decrease the reference count. Add missing
+pci_dev_put() in error path.
 
-  CPU: 1 PID: 6549 Comm: insmod Tainted: G        W          6.0.0+ #44
-  Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.14.0-1.fc33 04/01/2014
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x34/0x44
-   sysfs_warn_dup.cold+0x17/0x24
-   sysfs_create_dir_ns+0x16d/0x180
-   kobject_add_internal+0x156/0x3a0
-   kobject_init_and_add+0xcf/0x120
-   orangefs_sysfs_init+0x7e/0x3a0 [orangefs]
-   orangefs_init+0xfe/0x1000 [orangefs]
-   do_one_initcall+0x87/0x2a0
-   do_init_module+0xdf/0x320
-   load_module+0x2f98/0x3330
-   __do_sys_finit_module+0x113/0x1b0
-   do_syscall_64+0x35/0x80
-   entry_SYSCALL_64_after_hwframe+0x46/0xb0
-
-  kobject_add_internal failed for orangefs with -EEXIST, don't try to register things with the same name in the same directory.
-
-Fixes: 2f83ace37181 ("orangefs: put register_chrdev immediately before register_filesystem")
-Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
-Signed-off-by: Mike Marshall <hubcap@omnibond.com>
+Fixes: c513de490f80 ("IB/hfi1: Invalid NUMA node information can cause a divide by zero")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Link: https://lore.kernel.org/r/20221117131546.113280-1-wangxiongfeng2@huawei.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/orangefs/orangefs-mod.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/infiniband/hw/hfi1/affinity.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/orangefs/orangefs-mod.c b/fs/orangefs/orangefs-mod.c
-index 85ef87245a87..c8818163e392 100644
---- a/fs/orangefs/orangefs-mod.c
-+++ b/fs/orangefs/orangefs-mod.c
-@@ -141,7 +141,7 @@ static int __init orangefs_init(void)
- 		gossip_err("%s: could not initialize device subsystem %d!\n",
- 			   __func__,
- 			   ret);
--		goto cleanup_device;
-+		goto cleanup_sysfs;
- 	}
+diff --git a/drivers/infiniband/hw/hfi1/affinity.c b/drivers/infiniband/hw/hfi1/affinity.c
+index b197e925fe36..4cc7f67ea54c 100644
+--- a/drivers/infiniband/hw/hfi1/affinity.c
++++ b/drivers/infiniband/hw/hfi1/affinity.c
+@@ -165,6 +165,8 @@ int node_affinity_init(void)
+ 	for (node = 0; node < node_affinity.num_possible_nodes; node++)
+ 		hfi1_per_node_cntr[node] = 1;
  
- 	ret = register_filesystem(&orangefs_fs_type);
-@@ -153,11 +153,11 @@ static int __init orangefs_init(void)
- 		goto out;
- 	}
- 
--	orangefs_sysfs_exit();
--
--cleanup_device:
- 	orangefs_dev_cleanup();
- 
-+cleanup_sysfs:
-+	orangefs_sysfs_exit();
++	pci_dev_put(dev);
 +
- sysfs_init_failed:
+ 	return 0;
+ }
  
- debugfs_init_failed:
 -- 
 2.35.1
 
