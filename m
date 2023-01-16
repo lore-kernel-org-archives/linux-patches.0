@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A2D6FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 711DCC43392;
-	Mon, 16 Jan 2023 16:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C10F6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DB96C433D2;
+	Mon, 16 Jan 2023 16:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888173;
-	bh=HFHwWIti4Fdr/KA5lIRDDons+ZSQs/+XfrokyewDYeQ=;
+	s=korg; t=1673888176;
+	bh=GxM+O6M4981o/sjVWHk7g4rBDXjxO7yphADpdbIG6aI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jmzgj6tCXj8t7H3Isa/0gpfoIwo5bDAm8XoD657KB/MelxB3YgnxHIyqUbX8QjqvR
-	 r0GX3aP9UHrBUsRX1NAbT4AmyfIpHfg2hWYsLYKhSVaUtSAIxfm4Q6bDr9Tu6uFXXY
-	 xKehIti52KcfXT075H4ZHl4LsBNuNfcmw0/NMNrw=
+	b=RP7ooNd+uVKl1dkx9MowpI4KTFuCi5Clev8aB2isKfOVhY8IpjSA1JQIIt6T+UuBR
+	 N1SuemJGkvyBgoiA/W97eUTklaw0Nj+WKNfi29y3NvrysOC5wUj/+ZqWIViyaPQlte
+	 lb2TR1k2uP2o8v0G5F+SUt5MAW523MC3PoqZ6v0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Gong <gongwei833x@gmail.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Bjorn Helgaas <bhelgaas@google.com>
-Subject: [PATCH 4.19 398/521] PCI: Fix pci_device_is_present() for VFs by checking PF
-Date: Mon, 16 Jan 2023 16:51:00 +0100
-Message-Id: <20230116154904.872214289@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Yang Jihong <yangjihong1@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 4.19 389/521] tracing: Fix infinite loop in tracing_read_pipe on overflowed print_trace_line
+Date: Mon, 16 Jan 2023 16:50:51 +0100
+Message-Id: <20230116154904.513926923@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,59 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael S. Tsirkin <mst@redhat.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-commit 98b04dd0b4577894520493d96bc4623387767445 upstream.
+commit c1ac03af6ed45d05786c219d102f37eb44880f28 upstream.
 
-pci_device_is_present() previously didn't work for VFs because it reads the
-Vendor and Device ID, which are 0xffff for VFs, which looks like they
-aren't present.  Check the PF instead.
+print_trace_line may overflow seq_file buffer. If the event is not
+consumed, the while loop keeps peeking this event, causing a infinite loop.
 
-Wei Gong reported that if virtio I/O is in progress when the driver is
-unbound or "0" is written to /sys/.../sriov_numvfs, the virtio I/O
-operation hangs, which may result in output like this:
+Link: https://lkml.kernel.org/r/20221129113009.182425-1-yangjihong1@huawei.com
 
-  task:bash state:D stack:    0 pid: 1773 ppid:  1241 flags:0x00004002
-  Call Trace:
-   schedule+0x4f/0xc0
-   blk_mq_freeze_queue_wait+0x69/0xa0
-   blk_mq_freeze_queue+0x1b/0x20
-   blk_cleanup_queue+0x3d/0xd0
-   virtblk_remove+0x3c/0xb0 [virtio_blk]
-   virtio_dev_remove+0x4b/0x80
-   ...
-   device_unregister+0x1b/0x60
-   unregister_virtio_device+0x18/0x30
-   virtio_pci_remove+0x41/0x80
-   pci_device_remove+0x3e/0xb0
-
-This happened because pci_device_is_present(VF) returned "false" in
-virtio_pci_remove(), so it called virtio_break_device().  The broken vq
-meant that vring_interrupt() skipped the vq.callback() that would have
-completed the virtio I/O operation via virtblk_done().
-
-[bhelgaas: commit log, simplify to always use pci_physfn(), add stable tag]
-Link: https://lore.kernel.org/r/20221026060912.173250-1-mst@redhat.com
-Reported-by: Wei Gong <gongwei833x@gmail.com>
-Tested-by: Wei Gong <gongwei833x@gmail.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Bjorn Helgaas <bhelgaas@google.com>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
 Cc: stable@vger.kernel.org
+Fixes: 088b1e427dbba ("ftrace: pipe fixes")
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pci/pci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/trace.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/pci/pci.c
-+++ b/drivers/pci/pci.c
-@@ -5815,6 +5815,8 @@ bool pci_device_is_present(struct pci_de
- {
- 	u32 v;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -5803,7 +5803,20 @@ waitagain:
  
-+	/* Check PF if pdev is a VF, since VF Vendor/Device IDs are 0xffff */
-+	pdev = pci_physfn(pdev);
- 	if (pci_dev_is_disconnected(pdev))
- 		return false;
- 	return pci_bus_read_dev_vendor_id(pdev->bus, pdev->devfn, &v, 0);
+ 		ret = print_trace_line(iter);
+ 		if (ret == TRACE_TYPE_PARTIAL_LINE) {
+-			/* don't print partial lines */
++			/*
++			 * If one print_trace_line() fills entire trace_seq in one shot,
++			 * trace_seq_to_user() will returns -EBUSY because save_len == 0,
++			 * In this case, we need to consume it, otherwise, loop will peek
++			 * this event next time, resulting in an infinite loop.
++			 */
++			if (save_len == 0) {
++				iter->seq.full = 0;
++				trace_seq_puts(&iter->seq, "[LINE TOO BIG]\n");
++				trace_consume(iter);
++				break;
++			}
++
++			/* In other cases, don't print partial lines */
+ 			iter->seq.seq.len = save_len;
+ 			break;
+ 		}
 
 
