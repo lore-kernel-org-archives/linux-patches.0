@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A48176FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 298B1C433EF;
-	Mon, 16 Jan 2023 16:56:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566936FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCACCC433D2;
+	Mon, 16 Jan 2023 16:56:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888205;
-	bh=vRtDYjTYraXj7D5p0RRrL5S5J7Rd6Ftl9OlyywmRkBA=;
+	s=korg; t=1673888208;
+	bh=aDP1JkHuENaxlzZ3YHazEmWGO3RHBiUcGMnhNk42KYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1jJ1AnbifvV/3xDV4QZhY45ggbcy1jcMOr5Uu5xM7959I3XorXszL+iCZ4fdgnRM
-	 4bD1EKyqJ0t7aiulpzeq16m3Od9aR9wjsooWXtNDv1RQIxKNnmZ/JlPps32ZwZMN/z
-	 mvz86XnSd6y5nsFBVLSgck6EWGOAZh1jpXYyOuvs=
+	b=HOIDNYCWs5ZyC+RUqE9pmrnfXVy8ZZcbZCEwqQ3ABjOitNeaxhTJ+inytC54RSf6z
+	 sJnhmbNNWlYkHcKokh0meUTGr1VtsDsd44okP8bLzAoXt/TfJZBT3p6ctlqA0whwdY
+	 REM7ZzPNp2hZoTHj+BFTe+BDyHLkhN/bcJ/eH5wQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thilo Fromm <t-lo@linux.microsoft.com>,
-	Jan Kara <jack@suse.cz>,
-	Andreas Dilger <adilger@dilger.ca>,
-	Theodore Tso <tytso@mit.edu>,
-	Sasha Levin <sashal@kernel.org>,
-	Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-Subject: [PATCH 4.19 441/521] ext4: fix deadlock due to mbcache entry corruption
-Date: Mon, 16 Jan 2023 16:51:43 +0100
-Message-Id: <20230116154906.868578674@linuxfoundation.org>
+	Luo Meng <luomeng12@huawei.com>,
+	Mike Snitzer <snitzer@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 424/521] dm thin: resume even if in FAIL mode
+Date: Mon, 16 Jan 2023 16:51:26 +0100
+Message-Id: <20230116154906.094766608@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -38,141 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Luo Meng <luomeng12@huawei.com>
 
-[ Upstream commit a44e84a9b7764c72896f7241a0ec9ac7e7ef38dd ]
+[ Upstream commit 19eb1650afeb1aa86151f61900e9e5f1de5d8d02 ]
 
-When manipulating xattr blocks, we can deadlock infinitely looping
-inside ext4_xattr_block_set() where we constantly keep finding xattr
-block for reuse in mbcache but we are unable to reuse it because its
-reference count is too big. This happens because cache entry for the
-xattr block is marked as reusable (e_reusable set) although its
-reference count is too big. When this inconsistency happens, this
-inconsistent state is kept indefinitely and so ext4_xattr_block_set()
-keeps retrying indefinitely.
+If a thinpool set fail_io while suspending, resume will fail with:
+ device-mapper: resume ioctl on vg-thinpool  failed: Invalid argument
 
-The inconsistent state is caused by non-atomic update of e_reusable bit.
-e_reusable is part of a bitfield and e_reusable update can race with
-update of e_referenced bit in the same bitfield resulting in loss of one
-of the updates. Fix the problem by using atomic bitops instead.
+The thin-pool also can't be removed if an in-flight bio is in the
+deferred list.
 
-This bug has been around for many years, but it became *much* easier
-to hit after commit 65f8b80053a1 ("ext4: fix race when reusing xattr
-blocks").
+This can be easily reproduced using:
+
+  echo "offline" > /sys/block/sda/device/state
+  dd if=/dev/zero of=/dev/mapper/thin bs=4K count=1
+  dmsetup suspend /dev/mapper/pool
+  mkfs.ext4 /dev/mapper/thin
+  dmsetup resume /dev/mapper/pool
+
+The root cause is maybe_resize_data_dev() will check fail_io and return
+error before called dm_resume.
+
+Fix this by adding FAIL mode check at the end of pool_preresume().
 
 Cc: stable@vger.kernel.org
-Fixes: 6048c64b2609 ("mbcache: add reusable flag to cache entries")
-Fixes: 65f8b80053a1 ("ext4: fix race when reusing xattr blocks")
-Reported-and-tested-by: Jeremi Piotrowski <jpiotrowski@linux.microsoft.com>
-Reported-by: Thilo Fromm <t-lo@linux.microsoft.com>
-Link: https://lore.kernel.org/r/c77bf00f-4618-7149-56f1-b8d1664b9d07@linux.microsoft.com/
-Signed-off-by: Jan Kara <jack@suse.cz>
-Reviewed-by: Andreas Dilger <adilger@dilger.ca>
-Link: https://lore.kernel.org/r/20221123193950.16758-1-jack@suse.cz
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Fixes: da105ed5fd7e ("dm thin metadata: introduce dm_pool_abort_metadata")
+Signed-off-by: Luo Meng <luomeng12@huawei.com>
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/xattr.c         |  4 ++--
- fs/mbcache.c            | 14 ++++++++------
- include/linux/mbcache.h |  9 +++++++--
- 3 files changed, 17 insertions(+), 10 deletions(-)
+ drivers/md/dm-thin.c | 16 ++++++++++++----
+ 1 file changed, 12 insertions(+), 4 deletions(-)
 
-diff --git a/fs/ext4/xattr.c b/fs/ext4/xattr.c
-index f759ab8c1a68..0772941bbe92 100644
---- a/fs/ext4/xattr.c
-+++ b/fs/ext4/xattr.c
-@@ -1297,7 +1297,7 @@ ext4_xattr_release_block(handle_t *handle, struct inode *inode,
- 				ce = mb_cache_entry_get(ea_block_cache, hash,
- 							bh->b_blocknr);
- 				if (ce) {
--					ce->e_reusable = 1;
-+					set_bit(MBE_REUSABLE_B, &ce->e_flags);
- 					mb_cache_entry_put(ea_block_cache, ce);
- 				}
- 			}
-@@ -2058,7 +2058,7 @@ ext4_xattr_block_set(handle_t *handle, struct inode *inode,
- 				}
- 				BHDR(new_bh)->h_refcount = cpu_to_le32(ref);
- 				if (ref == EXT4_XATTR_REFCOUNT_MAX)
--					ce->e_reusable = 0;
-+					clear_bit(MBE_REUSABLE_B, &ce->e_flags);
- 				ea_bdebug(new_bh, "reusing; refcount now=%d",
- 					  ref);
- 				ext4_xattr_block_csum_set(inode, new_bh);
-diff --git a/fs/mbcache.c b/fs/mbcache.c
-index aa564e79891d..8e9e1888e448 100644
---- a/fs/mbcache.c
-+++ b/fs/mbcache.c
-@@ -93,8 +93,9 @@ int mb_cache_entry_create(struct mb_cache *cache, gfp_t mask, u32 key,
- 	atomic_set(&entry->e_refcnt, 1);
- 	entry->e_key = key;
- 	entry->e_value = value;
--	entry->e_reusable = reusable;
--	entry->e_referenced = 0;
-+	entry->e_flags = 0;
-+	if (reusable)
-+		set_bit(MBE_REUSABLE_B, &entry->e_flags);
- 	head = mb_cache_entry_head(cache, key);
- 	hlist_bl_lock(head);
- 	hlist_bl_for_each_entry(dup, dup_node, head, e_hash_list) {
-@@ -161,7 +162,8 @@ static struct mb_cache_entry *__entry_find(struct mb_cache *cache,
- 	while (node) {
- 		entry = hlist_bl_entry(node, struct mb_cache_entry,
- 				       e_hash_list);
--		if (entry->e_key == key && entry->e_reusable &&
-+		if (entry->e_key == key &&
-+		    test_bit(MBE_REUSABLE_B, &entry->e_flags) &&
- 		    atomic_inc_not_zero(&entry->e_refcnt))
- 			goto out;
- 		node = node->next;
-@@ -317,7 +319,7 @@ EXPORT_SYMBOL(mb_cache_entry_delete_or_get);
- void mb_cache_entry_touch(struct mb_cache *cache,
- 			  struct mb_cache_entry *entry)
- {
--	entry->e_referenced = 1;
-+	set_bit(MBE_REFERENCED_B, &entry->e_flags);
+diff --git a/drivers/md/dm-thin.c b/drivers/md/dm-thin.c
+index 1916becc20e0..386cb3395378 100644
+--- a/drivers/md/dm-thin.c
++++ b/drivers/md/dm-thin.c
+@@ -3549,20 +3549,28 @@ static int pool_preresume(struct dm_target *ti)
+ 	 */
+ 	r = bind_control_target(pool, ti);
+ 	if (r)
+-		return r;
++		goto out;
+ 
+ 	r = maybe_resize_data_dev(ti, &need_commit1);
+ 	if (r)
+-		return r;
++		goto out;
+ 
+ 	r = maybe_resize_metadata_dev(ti, &need_commit2);
+ 	if (r)
+-		return r;
++		goto out;
+ 
+ 	if (need_commit1 || need_commit2)
+ 		(void) commit(pool);
++out:
++	/*
++	 * When a thin-pool is PM_FAIL, it cannot be rebuilt if
++	 * bio is in deferred list. Therefore need to return 0
++	 * to allow pool_resume() to flush IO.
++	 */
++	if (r && get_pool_mode(pool) == PM_FAIL)
++		r = 0;
+ 
+-	return 0;
++	return r;
  }
- EXPORT_SYMBOL(mb_cache_entry_touch);
  
-@@ -342,9 +344,9 @@ static unsigned long mb_cache_shrink(struct mb_cache *cache,
- 		entry = list_first_entry(&cache->c_list,
- 					 struct mb_cache_entry, e_list);
- 		/* Drop initial hash reference if there is no user */
--		if (entry->e_referenced ||
-+		if (test_bit(MBE_REFERENCED_B, &entry->e_flags) ||
- 		    atomic_cmpxchg(&entry->e_refcnt, 1, 0) != 1) {
--			entry->e_referenced = 0;
-+			clear_bit(MBE_REFERENCED_B, &entry->e_flags);
- 			list_move_tail(&entry->e_list, &cache->c_list);
- 			continue;
- 		}
-diff --git a/include/linux/mbcache.h b/include/linux/mbcache.h
-index e9d5ece87794..591bc4cefe1d 100644
---- a/include/linux/mbcache.h
-+++ b/include/linux/mbcache.h
-@@ -10,6 +10,12 @@
- 
- struct mb_cache;
- 
-+/* Cache entry flags */
-+enum {
-+	MBE_REFERENCED_B = 0,
-+	MBE_REUSABLE_B
-+};
-+
- struct mb_cache_entry {
- 	/* List of entries in cache - protected by cache->c_list_lock */
- 	struct list_head	e_list;
-@@ -26,8 +32,7 @@ struct mb_cache_entry {
- 	atomic_t		e_refcnt;
- 	/* Key in hash - stable during lifetime of the entry */
- 	u32			e_key;
--	u32			e_referenced:1;
--	u32			e_reusable:1;
-+	unsigned long		e_flags;
- 	/* User provided value - stable during lifetime of the entry */
- 	u64			e_value;
- };
+ static void pool_suspend_active_thins(struct pool *pool)
 -- 
 2.35.1
 
