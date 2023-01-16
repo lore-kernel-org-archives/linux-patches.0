@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C3133EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C006C433D2;
-	Mon, 16 Jan 2023 16:02:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AB8333EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EA0EC433D2;
+	Mon, 16 Jan 2023 16:02:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884947;
-	bh=Y5og50XO90gi2JBQctPAhm7B7LUz9GYibw8m+6ZskUM=;
+	s=korg; t=1673884950;
+	bh=gGYMn6WzGqvBIQ7sOAitNF9QlPAGCIP0H2lLkfa/hcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2dbgXOGR+0+DlFJzWgk/c4skrlttG3WSa3Z8D2lagrytM4vz8yF8tazg+DqC94WHG
-	 lXzDiBJE5zUx0GlZVGVrlOUqYzRzHjjNHd5afmVKMxOqGmkeNAXW4G/RWh16LFTfgY
-	 QtmEfrkNujvinqq1e9aDCM/bJi0V1i2t/BV7uJVw=
+	b=jC7IQEZ7F+8moK+v77xYB4BRTjW0G+3FcABSsyyxyVVwnlGtcli+AoOelajbgrYhi
+	 rIKycZoaBr9d6PzYPHxe/ud4hYEFq5Kv5nU2ly+gAdTu/CIxw1uB2ZS+gal1MIgOZ8
+	 4K9aODTs49WcdBh4Opheegrj6pZON7hqldL9VOj4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Mika Kuoppala <mika.kuoppala@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 5.15 17/86] drm/i915/gt: Reset twice
-Date: Mon, 16 Jan 2023 16:50:51 +0100
-Message-Id: <20230116154747.798916143@linuxfoundation.org>
+	Roi Dayan <roid@nvidia.com>,
+	Maor Dickman <maord@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	dann frazier <dann.frazier@canonical.com>
+Subject: [PATCH 5.15 18/86] net/mlx5e: Set action fwd flag when parsing tc action goto
+Date: Mon, 16 Jan 2023 16:50:52 +0100
+Message-Id: <20230116154747.848412058@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -37,85 +36,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Wilson <chris@chris-wilson.co.uk>
+From: Roi Dayan <roid@nvidia.com>
 
-commit d3de5616d36462a646f5b360ba82d3b09ff668eb upstream.
+commit 7f8770c71646cf93abdf3fea8b7733aaec4c82a3 upstream.
 
-After applying an engine reset, on some platforms like Jasperlake, we
-occasionally detect that the engine state is not cleared until shortly
-after the resume. As we try to resume the engine with volatile internal
-state, the first request fails with a spurious CS event (it looks like
-it reports a lite-restore to the hung context, instead of the expected
-idle->active context switch).
+Do it when parsing like in other actions instead of when
+checking if goto is supported in current scenario.
 
-Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
-Cc: stable@vger.kernel.org
-Cc: Mika Kuoppala <mika.kuoppala@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Reviewed-by: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221212161338.1007659-1-andi.shyti@linux.intel.com
-(cherry picked from commit 3db9d590557da3aa2c952f2fecd3e9b703dad790)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Roi Dayan <roid@nvidia.com>
+Reviewed-by: Maor Dickman <maord@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Cc: dann frazier <dann.frazier@canonical.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_reset.c |   34 ++++++++++++++++++++++++++++------
- 1 file changed, 28 insertions(+), 6 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_tc.c |   43 ++++++++++--------------
+ 1 file changed, 18 insertions(+), 25 deletions(-)
 
---- a/drivers/gpu/drm/i915/gt/intel_reset.c
-+++ b/drivers/gpu/drm/i915/gt/intel_reset.c
-@@ -271,6 +271,7 @@ out:
- static int gen6_hw_domain_reset(struct intel_gt *gt, u32 hw_domain_mask)
- {
- 	struct intel_uncore *uncore = gt->uncore;
-+	int loops = 2;
- 	int err;
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_tc.c
+@@ -3597,7 +3597,8 @@ static int parse_tc_nic_actions(struct m
+ 			if (err)
+ 				return err;
  
- 	/*
-@@ -278,18 +279,39 @@ static int gen6_hw_domain_reset(struct i
- 	 * for fifo space for the write or forcewake the chip for
- 	 * the read
- 	 */
--	intel_uncore_write_fw(uncore, GEN6_GDRST, hw_domain_mask);
-+	do {
-+		intel_uncore_write_fw(uncore, GEN6_GDRST, hw_domain_mask);
+-			action |= MLX5_FLOW_CONTEXT_ACTION_COUNT;
++			action |= MLX5_FLOW_CONTEXT_ACTION_FWD_DEST |
++				  MLX5_FLOW_CONTEXT_ACTION_COUNT;
+ 			attr->dest_chain = act->chain_index;
+ 			break;
+ 		case FLOW_ACTION_CT:
+@@ -3632,12 +3633,9 @@ static int parse_tc_nic_actions(struct m
  
--	/* Wait for the device to ack the reset requests */
--	err = __intel_wait_for_register_fw(uncore,
--					   GEN6_GDRST, hw_domain_mask, 0,
--					   500, 0,
--					   NULL);
-+		/*
-+		 * Wait for the device to ack the reset requests.
+ 	attr->action = action;
+ 
+-	if (attr->dest_chain) {
+-		if (attr->action & MLX5_FLOW_CONTEXT_ACTION_FWD_DEST) {
+-			NL_SET_ERR_MSG(extack, "Mirroring goto chain rules isn't supported");
+-			return -EOPNOTSUPP;
+-		}
+-		attr->action |= MLX5_FLOW_CONTEXT_ACTION_FWD_DEST;
++	if (attr->dest_chain && parse_attr->mirred_ifindex[0]) {
++		NL_SET_ERR_MSG(extack, "Mirroring goto chain rules isn't supported");
++		return -EOPNOTSUPP;
+ 	}
+ 
+ 	if (attr->action & MLX5_FLOW_CONTEXT_ACTION_MOD_HDR)
+@@ -4146,7 +4144,8 @@ static int parse_tc_fdb_actions(struct m
+ 			if (err)
+ 				return err;
+ 
+-			action |= MLX5_FLOW_CONTEXT_ACTION_COUNT;
++			action |= MLX5_FLOW_CONTEXT_ACTION_FWD_DEST |
++				  MLX5_FLOW_CONTEXT_ACTION_COUNT;
+ 			attr->dest_chain = act->chain_index;
+ 			break;
+ 		case FLOW_ACTION_CT:
+@@ -4218,24 +4217,18 @@ static int parse_tc_fdb_actions(struct m
+ 	if (!actions_match_supported(priv, flow_action, parse_attr, flow, extack))
+ 		return -EOPNOTSUPP;
+ 
+-	if (attr->dest_chain) {
+-		if (decap) {
+-			/* It can be supported if we'll create a mapping for
+-			 * the tunnel device only (without tunnel), and set
+-			 * this tunnel id with this decap flow.
+-			 *
+-			 * On restore (miss), we'll just set this saved tunnel
+-			 * device.
+-			 */
+-
+-			NL_SET_ERR_MSG(extack,
+-				       "Decap with goto isn't supported");
+-			netdev_warn(priv->netdev,
+-				    "Decap with goto isn't supported");
+-			return -EOPNOTSUPP;
+-		}
++	if (attr->dest_chain && decap) {
++		/* It can be supported if we'll create a mapping for
++		 * the tunnel device only (without tunnel), and set
++		 * this tunnel id with this decap flow.
 +		 *
-+		 * On some platforms, e.g. Jasperlake, we see that the
-+		 * engine register state is not cleared until shortly after
-+		 * GDRST reports completion, causing a failure as we try
-+		 * to immediately resume while the internal state is still
-+		 * in flux. If we immediately repeat the reset, the second
-+		 * reset appears to serialise with the first, and since
-+		 * it is a no-op, the registers should retain their reset
-+		 * value. However, there is still a concern that upon
-+		 * leaving the second reset, the internal engine state
-+		 * is still in flux and not ready for resuming.
++		 * On restore (miss), we'll just set this saved tunnel
++		 * device.
 +		 */
-+		err = __intel_wait_for_register_fw(uncore, GEN6_GDRST,
-+						   hw_domain_mask, 0,
-+						   2000, 0,
-+						   NULL);
-+	} while (err == 0 && --loops);
- 	if (err)
- 		GT_TRACE(gt,
- 			 "Wait for 0x%08x engines reset failed\n",
- 			 hw_domain_mask);
  
-+	/*
-+	 * As we have observed that the engine state is still volatile
-+	 * after GDRST is acked, impose a small delay to let everything settle.
-+	 */
-+	udelay(50);
-+
- 	return err;
- }
+-		attr->action |= MLX5_FLOW_CONTEXT_ACTION_FWD_DEST;
++		NL_SET_ERR_MSG(extack, "Decap with goto isn't supported");
++		netdev_warn(priv->netdev, "Decap with goto isn't supported");
++		return -EOPNOTSUPP;
+ 	}
  
+ 	if (esw_attr->split_count > 0 && !mlx5_esw_has_fwd_fdb(priv->mdev)) {
 
 
