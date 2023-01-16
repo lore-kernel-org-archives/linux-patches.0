@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B74246B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:23:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C751EC433D2;
-	Mon, 16 Jan 2023 16:23:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8F3E46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:23:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F36EC433EF;
+	Mon, 16 Jan 2023 16:23:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886209;
-	bh=SCqoxRci6v2bRCbqpaYd7JGbv2//+JMt6Q9IyfCuLwA=;
+	s=korg; t=1673886211;
+	bh=ExXX4NPP+/iSRI8flXLqrYMF47wf8fkrtShGuX5ILjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ir3lsdshbDNa+V/+NrvmOeLllrO350SBtXkM3+vQ3cLvqy2SjZTy9jP1Jq4Vb3JKa
-	 dzoDtOJfB5Bv13cBUx3rDP/Zdjrs6ui0E75JoF/SIecMBMhBqmuMRijXpB5I6ggzhJ
-	 8pHuWn+C4C04vbtdE0dFhWsIZN2F/9fBYatup2Tk=
+	b=m4EKQLauejIBC33bY56D4IkM6S3UEXE44xQq4FFH8VzpqXNeY/ZHr5Icj4fugp8E4
+	 2IDnn1VjRJYsA81wXzmYGiOPceD5971xiCkYSDuDGvvqsTXVK6FvRQQqcpDyMaWikt
+	 loWB6CL1sE9Act4kEedrIIWY49AGnBPBCAUz/6O4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Zhang Rui <rui.zhang@intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Helge Deller <deller@gmx.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 343/658] rtc: cmos: Call rtc_wake_setup() from cmos_do_probe()
-Date: Mon, 16 Jan 2023 16:47:11 +0100
-Message-Id: <20230116154925.246075324@linuxfoundation.org>
+Subject: [PATCH 5.4 317/658] fbdev: pm2fb: fix missing pci_disable_device()
+Date: Mon, 16 Jan 2023 16:46:45 +0100
+Message-Id: <20230116154924.064627960@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,101 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 375bbba09692fe4c5218eddee8e312dd733fa846 ]
+[ Upstream commit ed359a464846b48f76ea6cc5cd8257e545ac97f4 ]
 
-To reduce code duplication, move the invocation of rtc_wake_setup()
-into cmos_do_probe() and simplify the callers of the latter.
+Add missing pci_disable_device() in error path of probe() and remove() path.
 
-No intentional functional impact.
-
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Zhang Rui <rui.zhang@intel.com>
-Tested-by: Zhang Rui <rui.zhang@intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/2143522.irdbgypaU6@kreacher
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
-Stable-dep-of: 83ebb7b3036d ("rtc: cmos: Disable ACPI RTC event on removal")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-cmos.c | 28 ++++++++++++----------------
- 1 file changed, 12 insertions(+), 16 deletions(-)
+ drivers/video/fbdev/pm2fb.c | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-cmos.c b/drivers/rtc/rtc-cmos.c
-index fa0098390315..27150d86f5ed 100644
---- a/drivers/rtc/rtc-cmos.c
-+++ b/drivers/rtc/rtc-cmos.c
-@@ -698,6 +698,7 @@ static irqreturn_t cmos_interrupt(int irq, void *p)
- 		return IRQ_NONE;
- }
- 
-+static inline void rtc_wake_setup(struct device *dev);
- static void cmos_wake_setup(struct device *dev);
- 
- #ifdef	CONFIG_PNP
-@@ -885,6 +886,13 @@ cmos_do_probe(struct device *dev, struct resource *ports, int rtc_irq)
- 	if (rtc_nvmem_register(cmos_rtc.rtc, &nvmem_cfg))
- 		dev_err(dev, "nvmem registration failed\n");
- 
-+	/*
-+	 * Everything has gone well so far, so by default register a handler for
-+	 * the ACPI RTC fixed event.
-+	 */
-+	if (!info)
-+		rtc_wake_setup(dev);
-+
- 	dev_info(dev, "%s%s, %d bytes nvram%s\n",
- 		 !is_valid_irq(rtc_irq) ? "no alarms" :
- 		 cmos_rtc.mon_alrm ? "alarms up to one year" :
-@@ -1300,7 +1308,7 @@ static void rtc_wake_setup(struct device *dev)
- 
- static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
- {
--	int irq, ret;
-+	int irq;
- 
- 	if (pnp_port_start(pnp, 0) == 0x70 && !pnp_irq_valid(pnp, 0)) {
- 		irq = 0;
-@@ -1316,13 +1324,7 @@ static int cmos_pnp_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
- 		irq = pnp_irq(pnp, 0);
+diff --git a/drivers/video/fbdev/pm2fb.c b/drivers/video/fbdev/pm2fb.c
+index 8ae010f07d7d..0ec4be2f2e8c 100644
+--- a/drivers/video/fbdev/pm2fb.c
++++ b/drivers/video/fbdev/pm2fb.c
+@@ -1529,8 +1529,10 @@ static int pm2fb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
  	}
  
--	ret = cmos_do_probe(&pnp->dev, pnp_get_resource(pnp, IORESOURCE_IO, 0), irq);
--	if (ret)
--		return ret;
--
--	rtc_wake_setup(&pnp->dev);
--
--	return 0;
-+	return cmos_do_probe(&pnp->dev, pnp_get_resource(pnp, IORESOURCE_IO, 0), irq);
+ 	info = framebuffer_alloc(sizeof(struct pm2fb_par), &pdev->dev);
+-	if (!info)
+-		return -ENOMEM;
++	if (!info) {
++		err = -ENOMEM;
++		goto err_exit_disable;
++	}
+ 	default_par = info->par;
+ 
+ 	switch (pdev->device) {
+@@ -1711,6 +1713,8 @@ static int pm2fb_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	release_mem_region(pm2fb_fix.mmio_start, pm2fb_fix.mmio_len);
+  err_exit_neither:
+ 	framebuffer_release(info);
++ err_exit_disable:
++	pci_disable_device(pdev);
+ 	return retval;
  }
  
- static void cmos_pnp_remove(struct pnp_dev *pnp)
-@@ -1406,7 +1408,7 @@ static inline void cmos_of_init(struct platform_device *pdev) {}
- static int __init cmos_platform_probe(struct platform_device *pdev)
- {
- 	struct resource *resource;
--	int irq, ret;
-+	int irq;
- 
- 	cmos_of_init(pdev);
- 
-@@ -1418,13 +1420,7 @@ static int __init cmos_platform_probe(struct platform_device *pdev)
- 	if (irq < 0)
- 		irq = -1;
- 
--	ret = cmos_do_probe(&pdev->dev, resource, irq);
--	if (ret)
--		return ret;
--
--	rtc_wake_setup(&pdev->dev);
--
--	return 0;
-+	return cmos_do_probe(&pdev->dev, resource, irq);
+@@ -1737,6 +1741,7 @@ static void pm2fb_remove(struct pci_dev *pdev)
+ 	fb_dealloc_cmap(&info->cmap);
+ 	kfree(info->pixmap.addr);
+ 	framebuffer_release(info);
++	pci_disable_device(pdev);
  }
  
- static int cmos_platform_remove(struct platform_device *pdev)
+ static const struct pci_device_id pm2fb_id_table[] = {
 -- 
 2.35.1
 
