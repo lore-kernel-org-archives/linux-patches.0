@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2E9D46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 499EEC433EF;
-	Mon, 16 Jan 2023 16:16:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D5D146B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5457C433D2;
+	Mon, 16 Jan 2023 16:16:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885808;
-	bh=7MU6reeRN23qenEgOAQ6GOmM/thQ4/aZ/GMi6+ynRQM=;
+	s=korg; t=1673885811;
+	bh=tgR7OvLV+g+3+gYNLgvaTK5iiiyqtWCvY4T0Zyk6PPQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dTmA4OcsR1XeONgQKbH4cIQMwHNsN/8qSwlaJ0LEYwcAVIxD8dLQEaJ6/1MaOuFie
-	 LwVvqHWr1tacD/jl7TvjSD9kG6YOqR9vCymivxHU6in81yhxmxz0oxuEyDaf3f25i9
-	 LmexzYByElxbRwBJbTy/v4bu5Knk28yX1p7LLhFw=
+	b=x1tLk9WxgSnzaVYu5fZWq6lk55apMHBwBHolhzKKBys+9ytAmCkkvX6GtFOmsOWp6
+	 aOUZF18Kr2Qb35Iq8/pUdl9CcF2MMXpLfsrggb7n8PIcT0RQqAp1ttyuCbk+KcC3br
+	 AKaccuZBCwm2PWt+9W0Oh8mYWzu/xedBRSNFwk8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	ZhangPeng <zhangpeng362@huawei.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 162/658] NFSv4.2: Fix initialisation of struct nfs4_label
-Date: Mon, 16 Jan 2023 16:44:10 +0100
-Message-Id: <20230116154916.873533762@linuxfoundation.org>
+Subject: [PATCH 5.4 153/658] pinctrl: pinconf-generic: add missing of_node_put()
+Date: Mon, 16 Jan 2023 16:44:01 +0100
+Message-Id: <20230116154916.443807468@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -34,81 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Trond Myklebust <trond.myklebust@hammerspace.com>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit c528f70f504434eaff993a5ddd52203a2010d51f ]
+[ Upstream commit 5ead93289815a075d43c415e35c8beafafb801c9 ]
 
-The call to nfs4_label_init_security() should return a fully initialised
-label.
+of_node_put() needs to be called when jumping out of the loop, since
+for_each_available_child_of_node() will increase the refcount of node.
 
-Fixes: aa9c2669626c ("NFS: Client implementation of Labeled-NFS")
-Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Fixes: c7289500e29d ("pinctrl: pinconf-generic: scan also referenced phandle node")
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
+Link: https://lore.kernel.org/r/20221125070156.3535855-1-zhangpeng362@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfs/nfs4proc.c | 15 ++++++++++-----
- 1 file changed, 10 insertions(+), 5 deletions(-)
+ drivers/pinctrl/pinconf-generic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/fs/nfs/nfs4proc.c b/fs/nfs/nfs4proc.c
-index 77c2c88621be..3da48dd67b83 100644
---- a/fs/nfs/nfs4proc.c
-+++ b/fs/nfs/nfs4proc.c
-@@ -121,6 +121,11 @@ nfs4_label_init_security(struct inode *dir, struct dentry *dentry,
- 	if (nfs_server_capable(dir, NFS_CAP_SECURITY_LABEL) == 0)
- 		return NULL;
+diff --git a/drivers/pinctrl/pinconf-generic.c b/drivers/pinctrl/pinconf-generic.c
+index 355bc4c748e2..02c015577cf9 100644
+--- a/drivers/pinctrl/pinconf-generic.c
++++ b/drivers/pinctrl/pinconf-generic.c
+@@ -391,8 +391,10 @@ int pinconf_generic_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 	for_each_available_child_of_node(np_config, np) {
+ 		ret = pinconf_generic_dt_subnode_to_map(pctldev, np, map,
+ 					&reserved_maps, num_maps, type);
+-		if (ret < 0)
++		if (ret < 0) {
++			of_node_put(np);
+ 			goto exit;
++		}
+ 	}
+ 	return 0;
  
-+	label->lfs = 0;
-+	label->pi = 0;
-+	label->len = 0;
-+	label->label = NULL;
-+
- 	err = security_dentry_init_security(dentry, sattr->ia_mode,
- 				&dentry->d_name, (void **)&label->label, &label->len);
- 	if (err == 0)
-@@ -3742,7 +3747,7 @@ nfs4_atomic_open(struct inode *dir, struct nfs_open_context *ctx,
- 		int open_flags, struct iattr *attr, int *opened)
- {
- 	struct nfs4_state *state;
--	struct nfs4_label l = {0, 0, 0, NULL}, *label = NULL;
-+	struct nfs4_label l, *label;
- 
- 	label = nfs4_label_init_security(dir, ctx->dentry, attr, &l);
- 
-@@ -4497,7 +4502,7 @@ nfs4_proc_create(struct inode *dir, struct dentry *dentry, struct iattr *sattr,
- 		 int flags)
- {
- 	struct nfs_server *server = NFS_SERVER(dir);
--	struct nfs4_label l, *ilabel = NULL;
-+	struct nfs4_label l, *ilabel;
- 	struct nfs_open_context *ctx;
- 	struct nfs4_state *state;
- 	int status = 0;
-@@ -4850,7 +4855,7 @@ static int nfs4_proc_symlink(struct inode *dir, struct dentry *dentry,
- 	struct nfs4_exception exception = {
- 		.interruptible = true,
- 	};
--	struct nfs4_label l, *label = NULL;
-+	struct nfs4_label l, *label;
- 	int err;
- 
- 	label = nfs4_label_init_security(dir, dentry, sattr, &l);
-@@ -4891,7 +4896,7 @@ static int nfs4_proc_mkdir(struct inode *dir, struct dentry *dentry,
- 	struct nfs4_exception exception = {
- 		.interruptible = true,
- 	};
--	struct nfs4_label l, *label = NULL;
-+	struct nfs4_label l, *label;
- 	int err;
- 
- 	label = nfs4_label_init_security(dir, dentry, sattr, &l);
-@@ -5012,7 +5017,7 @@ static int nfs4_proc_mknod(struct inode *dir, struct dentry *dentry,
- 	struct nfs4_exception exception = {
- 		.interruptible = true,
- 	};
--	struct nfs4_label l, *label = NULL;
-+	struct nfs4_label l, *label;
- 	int err;
- 
- 	label = nfs4_label_init_security(dir, dentry, sattr, &l);
 -- 
 2.35.1
 
