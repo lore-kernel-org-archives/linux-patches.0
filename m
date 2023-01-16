@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 933B96FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:02:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A69C433EF;
-	Mon, 16 Jan 2023 17:02:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B9D16FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:02:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3D83C433EF;
+	Mon, 16 Jan 2023 17:02:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888533;
-	bh=R5m+meuX56lK8qqvJMnFyVFAEiJUbiZ90m0DHPeDlvY=;
+	s=korg; t=1673888536;
+	bh=T6ogtEA/k+38oJHMiRWvj7T+7+jE5E9D0h7SCn0qiRo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ggh3bWZXFL6mrqNrrhggTdUYjwmNxH+7/0ymhLU6ivKZWo50rZNkZKTasCdsUABle
-	 Rtzsms4dBGcfrjBgV44cPSdhc3tDunCKZuB1cSPlazLdZ17jUn9j/jMIFzv/MJw8mZ
-	 mQ6IroT8zKi1Hxzbr+kISvI3Il61/l+iH29oBo0M=
+	b=mkUWGfGO491I2fwdgxwjQpnEYGwTyIm6il5h90kXM2wGRbQB4dShZ6GQ4JF6EQhZO
+	 DugrlI2kkk5E4Mnr8ZEP0IyL6L5n9iDAZFHcL3zoy8hoSvRjzM+i4M54mqNBkafFry
+	 uNd3ox6ytmPaMaIZkAzHL7PFGbAEcLqIHCHbtoO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ulf Hansson <ulf.hansson@linaro.org>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 041/338] cpuidle: dt: Return the correct numbers of parsed idle states
-Date: Mon, 16 Jan 2023 16:48:34 +0100
-Message-Id: <20230116154822.575465503@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 4.14 015/338] udf: Do not bother looking for prealloc extents if i_lenExtents matches i_size
+Date: Mon, 16 Jan 2023 16:48:08 +0100
+Message-Id: <20230116154821.412315567@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,44 +33,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ulf Hansson <ulf.hansson@linaro.org>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit ee3c2c8ad6ba6785f14a60e4081d7c82e88162a2 ]
+commit 6ad53f0f71c52871202a7bf096feb2c59db33fc5 upstream.
 
-While we correctly skips to initialize an idle state from a disabled idle
-state node in DT, the returned value from dt_init_idle_driver() don't get
-adjusted accordingly. Instead the number of found idle state nodes are
-returned, while the callers are expecting the number of successfully
-initialized idle states from DT.
+If rounded block-rounded i_lenExtents matches block rounded i_size,
+there are no preallocation extents. Do not bother walking extent linked
+list.
 
-This leads to cpuidle drivers unnecessarily continues to initialize their
-idle state specific data. Moreover, in the case when all idle states have
-been disabled in DT, we would end up registering a cpuidle driver, rather
-than relying on the default arch specific idle call.
-
-Fixes: 9f14da345599 ("drivers: cpuidle: implement DT based idle states infrastructure")
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-Reviewed-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpuidle/dt_idle_states.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/udf/truncate.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/cpuidle/dt_idle_states.c b/drivers/cpuidle/dt_idle_states.c
-index 53342b7f1010..ea3c59d3fdad 100644
---- a/drivers/cpuidle/dt_idle_states.c
-+++ b/drivers/cpuidle/dt_idle_states.c
-@@ -224,6 +224,6 @@ int dt_init_idle_driver(struct cpuidle_driver *drv,
- 	 * also be 0 on platforms with missing DT idle states or legacy DT
- 	 * configuration predating the DT idle states bindings.
- 	 */
--	return i;
-+	return state_idx - start_idx;
- }
- EXPORT_SYMBOL_GPL(dt_init_idle_driver);
--- 
-2.35.1
-
+--- a/fs/udf/truncate.c
++++ b/fs/udf/truncate.c
+@@ -127,9 +127,10 @@ void udf_discard_prealloc(struct inode *
+ 	uint64_t lbcount = 0;
+ 	int8_t etype = -1, netype;
+ 	struct udf_inode_info *iinfo = UDF_I(inode);
++	int bsize = 1 << inode->i_blkbits;
+ 
+ 	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_IN_ICB ||
+-	    inode->i_size == iinfo->i_lenExtents)
++	    ALIGN(inode->i_size, bsize) == ALIGN(iinfo->i_lenExtents, bsize))
+ 		return;
+ 
+ 	epos.block = iinfo->i_location;
 
 
