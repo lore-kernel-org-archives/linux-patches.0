@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F09976FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:39:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7679EC433EF;
-	Mon, 16 Jan 2023 16:39:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B216FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:39:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17136C433EF;
+	Mon, 16 Jan 2023 16:39:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887190;
-	bh=bloqT0XLlL6pZlvfDkPmdF+ymEdYgihtx++/A0gF1zA=;
+	s=korg; t=1673887193;
+	bh=hMYsCiQUGcYmL3Jyxrb5QuX0Lq42ul9xre1vEk+88v4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yKl5Yyn6xkflXyNzyaqw+Vzv7xzfxdunhE3/26NteUwSUAAQF+O1G6k/dojsUKJot
-	 l5On3nqwiMH+dlZG8xWSrdcYn4eZji9PFHrUimJVPD0RlS7FxQYLyyFOPEF+Wgbh+/
-	 bkrB/42cMa9PRnCUwhl8fi1W+vMi8c/L1I9oh3EU=
+	b=R7vqcmCVxMmdOW7ndQEVwqQ149kQ//MTHRKWXKDEVrH+zl4uu7AISY5d8eFV5Otq4
+	 DbIuSznjAZOOSOMUTvoqqyHDGqHzkDAbntqt8tvpb1NdqgetDuJPE567hxJM8uSaTg
+	 8FMPu0eCvW1/t9/jqSnI/pqRsMx9Q0PyJYgfYXgk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Marc Zyngier <maz@kernel.org>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 056/521] irqchip: gic-pm: Use pm_runtime_resume_and_get() in gic_probe()
-Date: Mon, 16 Jan 2023 16:45:18 +0100
-Message-Id: <20230116154849.766128921@linuxfoundation.org>
+Subject: [PATCH 4.19 057/521] cpufreq: amd_freq_sensitivity: Add missing pci_dev_put()
+Date: Mon, 16 Jan 2023 16:45:19 +0100
+Message-Id: <20230116154849.806269453@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,37 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-[ Upstream commit f9ee20c85b3a3ba0afd3672630ec4f93d339f015 ]
+[ Upstream commit 91fda1f88c0968f1491ab150bb01690525af150a ]
 
-gic_probe() calls pm_runtime_get_sync() and added fail path as
-rpm_put to put usage_counter. However, pm_runtime_get_sync()
-will increment usage_counter even it failed. Fix it by replacing it with
-pm_runtime_resume_and_get() to keep usage counter balanced.
+pci_get_device() will increase the reference count for the returned
+pci_dev. We need to use pci_dev_put() to decrease the reference count
+after using pci_get_device(). Let's add it.
 
-Fixes: 9c8edddfc992 ("irqchip/gic: Add platform driver for non-root GICs that require RPM")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20221124065150.22809-1-shangxiaojing@huawei.com
+Fixes: 59a3b3a8db16 ("cpufreq: AMD: Ignore the check for ProcFeedback in ST/CZ")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/irqchip/irq-gic-pm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/cpufreq/amd_freq_sensitivity.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/irqchip/irq-gic-pm.c b/drivers/irqchip/irq-gic-pm.c
-index ecafd295c31c..21c5decfc55b 100644
---- a/drivers/irqchip/irq-gic-pm.c
-+++ b/drivers/irqchip/irq-gic-pm.c
-@@ -112,7 +112,7 @@ static int gic_probe(struct platform_device *pdev)
+diff --git a/drivers/cpufreq/amd_freq_sensitivity.c b/drivers/cpufreq/amd_freq_sensitivity.c
+index 4b4f128c3488..cacd4c67d9be 100644
+--- a/drivers/cpufreq/amd_freq_sensitivity.c
++++ b/drivers/cpufreq/amd_freq_sensitivity.c
+@@ -122,6 +122,8 @@ static int __init amd_freq_sensitivity_init(void)
+ 	if (!pcidev) {
+ 		if (!static_cpu_has(X86_FEATURE_PROC_FEEDBACK))
+ 			return -ENODEV;
++	} else {
++		pci_dev_put(pcidev);
+ 	}
  
- 	pm_runtime_enable(dev);
- 
--	ret = pm_runtime_get_sync(dev);
-+	ret = pm_runtime_resume_and_get(dev);
- 	if (ret < 0)
- 		goto rpm_disable;
- 
+ 	if (rdmsrl_safe(MSR_AMD64_FREQ_SENSITIVITY_ACTUAL, &val))
 -- 
 2.35.1
 
