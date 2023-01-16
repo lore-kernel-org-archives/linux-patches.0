@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B48EF6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:59:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A07EC433EF;
-	Mon, 16 Jan 2023 16:59:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 608086FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:59:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D34E5C433D2;
+	Mon, 16 Jan 2023 16:59:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888363;
-	bh=HVzxMLyn3rcyoX8oN2/qx564qZ+DfW0ZR5/sOHVsmXU=;
+	s=korg; t=1673888366;
+	bh=EOIkK71oPEcYimMfZ+unnaVKkHdMnF3btNm6vMz2ayY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mZZFhb7Qz1JUrbr9vi+kfTuJT4bVryYiHi3U2KAUv1d1H0RUhVdvIzFTQXiEbhXcz
-	 ldfvdempbsXLOxA1TmKH/Yvb8fWwzQSg3D/YfeMoDOhuuYMSdoh9hFwo2ZW7SSOvLq
-	 z6j2gGM89VcG+ZhD4qHFpK8LzuuatGrHSk7XJj4o=
+	b=YgFTZw7peEkMM3MNYlTkN7OxKZP2zkXLIwBiybQULi5QIiVwO1ypWGuLjhAusJM3n
+	 hsQhDzoxPPGokh7RXkcxRSEqFyHB2O2Ig1K2I94m1mjtpUOq3r8RLgdyjeq/TBtNct
+	 +eHYwnPIjv+W7JOvGxPfhD1tFThQj74dWwW2ANGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 4.19 501/521] x86/boot: Avoid using Intel mnemonics in AT&T syntax asm
-Date: Mon, 16 Jan 2023 16:52:43 +0100
-Message-Id: <20230116154909.604392588@linuxfoundation.org>
+	Eliav Farber <farbere@amazon.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	stable@kernel.org
+Subject: [PATCH 4.19 502/521] EDAC/device: Fix period calculation in edac_device_reset_delay_period()
+Date: Mon, 16 Jan 2023 16:52:44 +0100
+Message-Id: <20230116154909.653542693@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,70 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Eliav Farber <farbere@amazon.com>
 
-commit 7c6dd961d0c8e7e8f9fdc65071fb09ece702e18d upstream.
+commit e84077437902ec99eba0a6b516df772653f142c7 upstream.
 
-With 'GNU assembler (GNU Binutils for Debian) 2.39.90.20221231' the
-build now reports:
+Fix period calculation in case user sets a value of 1000.  The input of
+round_jiffies_relative() should be in jiffies and not in milli-seconds.
 
-  arch/x86/realmode/rm/../../boot/bioscall.S: Assembler messages:
-  arch/x86/realmode/rm/../../boot/bioscall.S:35: Warning: found `movsd'; assuming `movsl' was meant
-  arch/x86/realmode/rm/../../boot/bioscall.S:70: Warning: found `movsd'; assuming `movsl' was meant
+  [ bp: Use the same code pattern as in edac_device_workq_setup() for
+    clarity. ]
 
-  arch/x86/boot/bioscall.S: Assembler messages:
-  arch/x86/boot/bioscall.S:35: Warning: found `movsd'; assuming `movsl' was meant
-  arch/x86/boot/bioscall.S:70: Warning: found `movsd'; assuming `movsl' was meant
-
-Which is due to:
-
-  PR gas/29525
-
-  Note that with the dropped CMPSD and MOVSD Intel Syntax string insn
-  templates taking operands, mixed IsString/non-IsString template groups
-  (with memory operands) cannot occur anymore. With that
-  maybe_adjust_templates() becomes unnecessary (and is hence being
-  removed).
-
-More details: https://sourceware.org/bugzilla/show_bug.cgi?id=29525
-
-Borislav Petkov further explains:
-
-  " the particular problem here is is that the 'd' suffix is
-    "conflicting" in the sense that you can have SSE mnemonics like movsD %xmm...
-    and the same thing also for string ops (which is the case here) so apparently
-    the agreement in binutils land is to use the always accepted suffixes 'l' or 'q'
-    and phase out 'd' slowly... "
-
-Fixes: 7a734e7dd93b ("x86, setup: "glove box" BIOS calls -- infrastructure")
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Acked-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/Y71I3Ex2pvIxMpsP@hirez.programming.kicks-ass.net
+Fixes: c4cf3b454eca ("EDAC: Rework workqueue handling")
+Signed-off-by: Eliav Farber <farbere@amazon.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: <stable@kernel.org>
+Link: https://lore.kernel.org/r/20221020124458.22153-1-farbere@amazon.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/boot/bioscall.S |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/edac/edac_device.c |   17 ++++++++---------
+ drivers/edac/edac_module.h |    2 +-
+ 2 files changed, 9 insertions(+), 10 deletions(-)
 
---- a/arch/x86/boot/bioscall.S
-+++ b/arch/x86/boot/bioscall.S
-@@ -35,7 +35,7 @@ intcall:
- 	movw	%dx, %si
- 	movw	%sp, %di
- 	movw	$11, %cx
--	rep; movsd
-+	rep; movsl
+--- a/drivers/edac/edac_device.c
++++ b/drivers/edac/edac_device.c
+@@ -424,17 +424,16 @@ static void edac_device_workq_teardown(s
+  *	Then restart the workq on the new delay
+  */
+ void edac_device_reset_delay_period(struct edac_device_ctl_info *edac_dev,
+-					unsigned long value)
++				    unsigned long msec)
+ {
+-	unsigned long jiffs = msecs_to_jiffies(value);
++	edac_dev->poll_msec = msec;
++	edac_dev->delay	    = msecs_to_jiffies(msec);
  
- 	/* Pop full state from the stack */
- 	popal
-@@ -70,7 +70,7 @@ intcall:
- 	jz	4f
- 	movw	%sp, %si
- 	movw	$11, %cx
--	rep; movsd
-+	rep; movsl
- 4:	addw	$44, %sp
+-	if (value == 1000)
+-		jiffs = round_jiffies_relative(value);
+-
+-	edac_dev->poll_msec = value;
+-	edac_dev->delay	    = jiffs;
+-
+-	edac_mod_work(&edac_dev->work, jiffs);
++	/* See comment in edac_device_workq_setup() above */
++	if (edac_dev->poll_msec == 1000)
++		edac_mod_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
++	else
++		edac_mod_work(&edac_dev->work, edac_dev->delay);
+ }
  
- 	/* Restore state and return */
+ int edac_device_alloc_index(void)
+--- a/drivers/edac/edac_module.h
++++ b/drivers/edac/edac_module.h
+@@ -57,7 +57,7 @@ bool edac_stop_work(struct delayed_work
+ bool edac_mod_work(struct delayed_work *work, unsigned long delay);
+ 
+ extern void edac_device_reset_delay_period(struct edac_device_ctl_info
+-					   *edac_dev, unsigned long value);
++					   *edac_dev, unsigned long msec);
+ extern void edac_mc_reset_delay_period(unsigned long value);
+ 
+ extern void *edac_align_ptr(void **p, unsigned size, int n_elems);
 
 
