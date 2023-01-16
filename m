@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9889946B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:15:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1812DC433EF;
-	Mon, 16 Jan 2023 16:15:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 409AA46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:15:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF79DC433F0;
+	Mon, 16 Jan 2023 16:15:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885701;
-	bh=n5fwTiX5VfIRRBP/YTcLGN6FK0b7c1644UnpRNiCTws=;
+	s=korg; t=1673885704;
+	bh=7hj+My+ZmdmllQE/aQurLvg1UTWjEsw60JBnmJ4fdzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JzexoE4jf6f+PBTFEQXvPIWGzgZb2fWeJAP21AEaxTdhu1uvZGomK0+cCUWF1hMZA
-	 ttgwB8pAZR0R7HAX9Nf+q4ozWSTsbkxlM8NeNfy++7sI61dVZF4iSPU2gcfGDw8AgE
-	 K31xkzI/ZdKLWS1Plm4dHtDnpVtaRcBgRq041IYM=
+	b=wuXnOHQB+50BpdI82tXTjULac7bOg8KJ1wTteUBNESB07RJRRHo0s6sHdhCjDT70F
+	 A8kL0AVhNuReDB2ZS5+hf/LWS0UE48Oe+8iwEkOQzucyFYIOL73vCx5hbTWlkGu0aq
+	 dDD2lnM3Tcz53wJnG8xA7pFZxuSuPoH+SFmOJ0mI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
-	Robert Foss <robert.foss@linaro.org>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	Li Jun <jun.li@nxp.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 124/658] media: camss: Clean up received buffers on failed start of streaming
-Date: Mon, 16 Jan 2023 16:43:32 +0100
-Message-Id: <20230116154915.131062826@linuxfoundation.org>
+Subject: [PATCH 5.4 151/658] clk: imx8mn: correct the usb1_ctrl parent to be usb_bus
+Date: Mon, 16 Jan 2023 16:43:59 +0100
+Message-Id: <20230116154916.355339437@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,60 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+From: Li Jun <jun.li@nxp.com>
 
-[ Upstream commit c8f3582345e6a69da65ab588f7c4c2d1685b0e80 ]
+[ Upstream commit 134d43bb1ff09a696996f16ed8b28d404b770c8a ]
 
-It is required to return the received buffers, if streaming can not be
-started. For instance media_pipeline_start() may fail with EPIPE, if
-a link validation between entities is not passed, and in such a case
-a user gets a kernel warning:
+Per latest imx8mn datasheet of CCM, the parent of usb1_ctrl_root_clk
+should be usb_bus.
 
-  WARNING: CPU: 1 PID: 520 at drivers/media/common/videobuf2/videobuf2-core.c:1592 vb2_start_streaming+0xec/0x160
-  <snip>
-  Call trace:
-   vb2_start_streaming+0xec/0x160
-   vb2_core_streamon+0x9c/0x1a0
-   vb2_ioctl_streamon+0x68/0xbc
-   v4l_streamon+0x30/0x3c
-   __video_do_ioctl+0x184/0x3e0
-   video_usercopy+0x37c/0x7b0
-   video_ioctl2+0x24/0x40
-   v4l2_ioctl+0x4c/0x70
-
-The fix is to correct the error path in video_start_streaming() of camss.
-
-Fixes: 0ac2586c410f ("media: camss: Add files which handle the video device nodes")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Signed-off-by: Li Jun <jun.li@nxp.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/platform/qcom/camss/camss-video.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/imx/clk-imx8mn.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/media/platform/qcom/camss/camss-video.c b/drivers/media/platform/qcom/camss/camss-video.c
-index 4c2675b43718..6a5ec133a957 100644
---- a/drivers/media/platform/qcom/camss/camss-video.c
-+++ b/drivers/media/platform/qcom/camss/camss-video.c
-@@ -438,7 +438,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
- 
- 	ret = media_pipeline_start(&vdev->entity, &video->pipe);
- 	if (ret < 0)
--		return ret;
-+		goto flush_buffers;
- 
- 	ret = video_check_format(video);
- 	if (ret < 0)
-@@ -467,6 +467,7 @@ static int video_start_streaming(struct vb2_queue *q, unsigned int count)
- error:
- 	media_pipeline_stop(&vdev->entity);
- 
-+flush_buffers:
- 	video->ops->flush_buffers(video, VB2_BUF_STATE_QUEUED);
- 
- 	return ret;
+diff --git a/drivers/clk/imx/clk-imx8mn.c b/drivers/clk/imx/clk-imx8mn.c
+index 882b42efd258..d520a8c5eabb 100644
+--- a/drivers/clk/imx/clk-imx8mn.c
++++ b/drivers/clk/imx/clk-imx8mn.c
+@@ -582,7 +582,7 @@ static int imx8mn_clocks_probe(struct platform_device *pdev)
+ 	clks[IMX8MN_CLK_UART2_ROOT] = imx_clk_gate4("uart2_root_clk", "uart2", base + 0x44a0, 0);
+ 	clks[IMX8MN_CLK_UART3_ROOT] = imx_clk_gate4("uart3_root_clk", "uart3", base + 0x44b0, 0);
+ 	clks[IMX8MN_CLK_UART4_ROOT] = imx_clk_gate4("uart4_root_clk", "uart4", base + 0x44c0, 0);
+-	clks[IMX8MN_CLK_USB1_CTRL_ROOT] = imx_clk_gate4("usb1_ctrl_root_clk", "usb_core_ref", base + 0x44d0, 0);
++	clks[IMX8MN_CLK_USB1_CTRL_ROOT] = imx_clk_gate4("usb1_ctrl_root_clk", "usb_bus", base + 0x44d0, 0);
+ 	clks[IMX8MN_CLK_GPU_CORE_ROOT] = imx_clk_gate4("gpu_core_root_clk", "gpu_core_div", base + 0x44f0, 0);
+ 	clks[IMX8MN_CLK_USDHC1_ROOT] = imx_clk_gate4("usdhc1_root_clk", "usdhc1", base + 0x4510, 0);
+ 	clks[IMX8MN_CLK_USDHC2_ROOT] = imx_clk_gate4("usdhc2_root_clk", "usdhc2", base + 0x4520, 0);
 -- 
 2.35.1
 
