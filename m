@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76D266FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:35:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE3CFC433F0;
-	Mon, 16 Jan 2023 16:35:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F4296FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:36:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 945FDC433EF;
+	Mon, 16 Jan 2023 16:36:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886958;
-	bh=hmg7EpuIU6hinpiw6IuetjGpXYWNLVFWWmVfdJsCejY=;
+	s=korg; t=1673886961;
+	bh=27/1W28+Bo5R7XZvSWVxvT9Yi9Gtah4eTjZI1y6lbG0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NLgxM/oW5xAJCw4bweXjUu1OVAa00glB13au0Cg7sPkFaenAGvODwCvMjg77/45gH
-	 xE+yuguhcKvAtdRXeFig6P8JOHOVusSSUAnfqcTlwvKa2Cj1x0WIL91lHZN7qQcr/m
-	 0nkY33ed3/S9o/jBSk5BXU13UIIee/U9jGTMuRiU=
+	b=rad8gacP2Wtmium9e4OOAnwfN68l2o0IsrMJ7o9IpKOszCIljThlokfY7bHqVQxVc
+	 G9tospJD2SYPBdFlSCi04B8Oc6BC0SpYg1caAUyvPXlQIwHEZ7mW2RzQ6tCdX9wlOq
+	 1QGuLRUWnC7PioXa9OfdePaal+qH0tWUJ5P2sT6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baokun Li <libaokun1@huawei.com>,
+	syzbot+57b25da729eb0b88177d@syzkaller.appspotmail.com,
+	Ye Bin <yebin10@huawei.com>,
 	Jan Kara <jack@suse.cz>,
+	Eric Biggers <ebiggers@google.com>,
 	Theodore Tso <tytso@mit.edu>,
 	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 627/658] ext4: fix use-after-free in ext4_orphan_cleanup
-Date: Mon, 16 Jan 2023 16:51:55 +0100
-Message-Id: <20230116154938.191260870@linuxfoundation.org>
+Subject: [PATCH 5.4 628/658] ext4: fix uninititialized value in ext4_evict_inode
+Date: Mon, 16 Jan 2023 16:51:56 +0100
+Message-Id: <20230116154938.230698706@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,78 +39,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Ye Bin <yebin10@huawei.com>
 
-[ Upstream commit a71248b1accb2b42e4980afef4fa4a27fa0e36f5 ]
+[ Upstream commit 7ea71af94eaaaf6d9aed24bc94a05b977a741cb9 ]
 
-I caught a issue as follows:
-==================================================================
- BUG: KASAN: use-after-free in __list_add_valid+0x28/0x1a0
- Read of size 8 at addr ffff88814b13f378 by task mount/710
+Syzbot found the following issue:
+=====================================================
+BUG: KMSAN: uninit-value in ext4_evict_inode+0xdd/0x26b0 fs/ext4/inode.c:180
+ ext4_evict_inode+0xdd/0x26b0 fs/ext4/inode.c:180
+ evict+0x365/0x9a0 fs/inode.c:664
+ iput_final fs/inode.c:1747 [inline]
+ iput+0x985/0xdd0 fs/inode.c:1773
+ __ext4_new_inode+0xe54/0x7ec0 fs/ext4/ialloc.c:1361
+ ext4_mknod+0x376/0x840 fs/ext4/namei.c:2844
+ vfs_mknod+0x79d/0x830 fs/namei.c:3914
+ do_mknodat+0x47d/0xaa0
+ __do_sys_mknodat fs/namei.c:3992 [inline]
+ __se_sys_mknodat fs/namei.c:3989 [inline]
+ __ia32_sys_mknodat+0xeb/0x150 fs/namei.c:3989
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x33/0x70 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1b/0x20 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
 
- CPU: 1 PID: 710 Comm: mount Not tainted 6.1.0-rc3-next #370
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x73/0x9f
-  print_report+0x25d/0x759
-  kasan_report+0xc0/0x120
-  __asan_load8+0x99/0x140
-  __list_add_valid+0x28/0x1a0
-  ext4_orphan_cleanup+0x564/0x9d0 [ext4]
-  __ext4_fill_super+0x48e2/0x5300 [ext4]
-  ext4_fill_super+0x19f/0x3a0 [ext4]
-  get_tree_bdev+0x27b/0x450
-  ext4_get_tree+0x19/0x30 [ext4]
-  vfs_get_tree+0x49/0x150
-  path_mount+0xaae/0x1350
-  do_mount+0xe2/0x110
-  __x64_sys_mount+0xf0/0x190
-  do_syscall_64+0x35/0x80
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-  </TASK>
- [...]
-==================================================================
+Uninit was created at:
+ __alloc_pages+0x9f1/0xe80 mm/page_alloc.c:5578
+ alloc_pages+0xaae/0xd80 mm/mempolicy.c:2285
+ alloc_slab_page mm/slub.c:1794 [inline]
+ allocate_slab+0x1b5/0x1010 mm/slub.c:1939
+ new_slab mm/slub.c:1992 [inline]
+ ___slab_alloc+0x10c3/0x2d60 mm/slub.c:3180
+ __slab_alloc mm/slub.c:3279 [inline]
+ slab_alloc_node mm/slub.c:3364 [inline]
+ slab_alloc mm/slub.c:3406 [inline]
+ __kmem_cache_alloc_lru mm/slub.c:3413 [inline]
+ kmem_cache_alloc_lru+0x6f3/0xb30 mm/slub.c:3429
+ alloc_inode_sb include/linux/fs.h:3117 [inline]
+ ext4_alloc_inode+0x5f/0x860 fs/ext4/super.c:1321
+ alloc_inode+0x83/0x440 fs/inode.c:259
+ new_inode_pseudo fs/inode.c:1018 [inline]
+ new_inode+0x3b/0x430 fs/inode.c:1046
+ __ext4_new_inode+0x2a7/0x7ec0 fs/ext4/ialloc.c:959
+ ext4_mkdir+0x4d5/0x1560 fs/ext4/namei.c:2992
+ vfs_mkdir+0x62a/0x870 fs/namei.c:4035
+ do_mkdirat+0x466/0x7b0 fs/namei.c:4060
+ __do_sys_mkdirat fs/namei.c:4075 [inline]
+ __se_sys_mkdirat fs/namei.c:4073 [inline]
+ __ia32_sys_mkdirat+0xc4/0x120 fs/namei.c:4073
+ do_syscall_32_irqs_on arch/x86/entry/common.c:112 [inline]
+ __do_fast_syscall_32+0xa2/0x100 arch/x86/entry/common.c:178
+ do_fast_syscall_32+0x33/0x70 arch/x86/entry/common.c:203
+ do_SYSENTER_32+0x1b/0x20 arch/x86/entry/common.c:246
+ entry_SYSENTER_compat_after_hwframe+0x70/0x82
 
-Above issue may happen as follows:
--------------------------------------
-ext4_fill_super
-  ext4_orphan_cleanup
-   --- loop1: assume last_orphan is 12 ---
-    list_add(&EXT4_I(inode)->i_orphan, &EXT4_SB(sb)->s_orphan)
-    ext4_truncate --> return 0
-      ext4_inode_attach_jinode --> return -ENOMEM
-    iput(inode) --> free inode<12>
-   --- loop2: last_orphan is still 12 ---
-    list_add(&EXT4_I(inode)->i_orphan, &EXT4_SB(sb)->s_orphan);
-    // use inode<12> and trigger UAF
+CPU: 1 PID: 4625 Comm: syz-executor.2 Not tainted 6.1.0-rc4-syzkaller-62821-gcb231e2f67ec #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+=====================================================
 
-To solve this issue, we need to propagate the return value of
-ext4_inode_attach_jinode() appropriately.
+Now, 'ext4_alloc_inode()' didn't init 'ei->i_flags'. If new inode failed
+before set 'ei->i_flags' in '__ext4_new_inode()', then do 'iput()'. As after
+6bc0d63dad7f commit will access 'ei->i_flags' in 'ext4_evict_inode()' which
+will lead to access uninit-value.
+To solve above issue just init 'ei->i_flags' in 'ext4_alloc_inode()'.
 
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
+Reported-by: syzbot+57b25da729eb0b88177d@syzkaller.appspotmail.com
+Signed-off-by: Ye Bin <yebin10@huawei.com>
+Fixes: 6bc0d63dad7f ("ext4: remove EA inode entry from mbcache on inode eviction")
 Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221102080633.1630225-1-libaokun1@huawei.com
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20221117073603.2598882-1-yebin@huaweicloud.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Cc: stable@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/inode.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/ext4/super.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
-index 5eb1d9ac269c..0830a4de47bc 100644
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4530,7 +4530,8 @@ int ext4_truncate(struct inode *inode)
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 4c014d67dfaf..789a9f6a2ec6 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -1085,6 +1085,7 @@ static struct inode *ext4_alloc_inode(struct super_block *sb)
+ 		return NULL;
  
- 	/* If we zero-out tail of the page, we have to create jinode for jbd2 */
- 	if (inode->i_size & (inode->i_sb->s_blocksize - 1)) {
--		if (ext4_inode_attach_jinode(inode) < 0)
-+		err = ext4_inode_attach_jinode(inode);
-+		if (err)
- 			goto out_trace;
- 	}
- 
+ 	inode_set_iversion(&ei->vfs_inode, 1);
++	ei->i_flags = 0;
+ 	spin_lock_init(&ei->i_raw_lock);
+ 	INIT_LIST_HEAD(&ei->i_prealloc_list);
+ 	spin_lock_init(&ei->i_prealloc_lock);
 -- 
 2.35.1
 
