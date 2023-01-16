@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4AF16FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:51:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C12AC433D2;
-	Mon, 16 Jan 2023 16:51:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718516FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:51:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECA7AC433D2;
+	Mon, 16 Jan 2023 16:51:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887873;
-	bh=oL1VJMfEq5tvAuOLKDNswXJuZ+SFEbwpFCgRvOWeplg=;
+	s=korg; t=1673887876;
+	bh=YZgSeHYj5jxf+uya8RhJZ5L4+aUfdAFox38v7ee+lek=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IyHVhBdb9NoxDXxlwGi4F3GWExwDyEA1J7dYt1mMRWW9fQTfPh5IkmNFCiZO/cOKJ
-	 yVrDJgv0pJj6geUJTvFURiK2U72dij15jeBEYjLBU1CJP13k9R1qVBHR9bA5rIB28g
-	 knpOknQIcWF8Gu9uW+4qyA6s8+J53rQBTihPiCrs=
+	b=0Ey2a9FwBYXbOLEj8SfCThgDQdSH2THFSInKfHULBNckIVuITxBEz730O1D3bAY3S
+	 oeTZc48eky30uuCiByl8xstJErbAyCXhS+fpxQnk3Mb9d4mJf3c0IUJba7uSJcRaxe
+	 0QuYk1RDKc9Mn77U2JDdvY6Rl46iVEFcolOsp5fI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+e91619dd4c11c4960706@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 314/521] ACPICA: Fix error code path in acpi_ds_call_control_method()
-Date: Mon, 16 Jan 2023 16:49:36 +0100
-Message-Id: <20230116154901.182826527@linuxfoundation.org>
+Subject: [PATCH 4.19 315/521] nilfs2: fix shift-out-of-bounds/overflow in nilfs_sb2_bad_offset()
+Date: Mon, 16 Jan 2023 16:49:37 +0100
+Message-Id: <20230116154901.232920395@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,66 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-[ Upstream commit 404ec60438add1afadaffaed34bb5fe4ddcadd40 ]
+[ Upstream commit 610a2a3d7d8be3537458a378ec69396a76c385b6 ]
 
-A use-after-free in acpi_ps_parse_aml() after a failing invocaion of
-acpi_ds_call_control_method() is reported by KASAN [1] and code
-inspection reveals that next_walk_state pushed to the thread by
-acpi_ds_create_walk_state() is freed on errors, but it is not popped
-from the thread beforehand.  Thus acpi_ds_get_current_walk_state()
-called by acpi_ps_parse_aml() subsequently returns it as the new
-walk state which is incorrect.
+Patch series "nilfs2: fix UBSAN shift-out-of-bounds warnings on mount
+time".
 
-To address this, make acpi_ds_call_control_method() call
-acpi_ds_pop_walk_state() to pop next_walk_state from the thread before
-returning an error.
+The first patch fixes a bug reported by syzbot, and the second one fixes
+the remaining bug of the same kind.  Although they are triggered by the
+same super block data anomaly, I divided it into the above two because the
+details of the issues and how to fix it are different.
 
-Link: https://lore.kernel.org/linux-acpi/20221019073443.248215-1-chenzhongjin@huawei.com/ # [1]
-Reported-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Reviewed-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Both are required to eliminate the shift-out-of-bounds issues at mount
+time.
+
+This patch (of 2):
+
+If the block size exponent information written in an on-disk superblock is
+corrupted, nilfs_sb2_bad_offset helper function can trigger
+shift-out-of-bounds warning followed by a kernel panic (if panic_on_warn
+is set):
+
+ shift exponent 38983 is too large for 64-bit type 'unsigned long long'
+ Call Trace:
+  <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
+  ubsan_epilogue lib/ubsan.c:151 [inline]
+  __ubsan_handle_shift_out_of_bounds+0x33d/0x3b0 lib/ubsan.c:322
+  nilfs_sb2_bad_offset fs/nilfs2/the_nilfs.c:449 [inline]
+  nilfs_load_super_block+0xdf5/0xe00 fs/nilfs2/the_nilfs.c:523
+  init_nilfs+0xb7/0x7d0 fs/nilfs2/the_nilfs.c:577
+  nilfs_fill_super+0xb1/0x5d0 fs/nilfs2/super.c:1047
+  nilfs_mount+0x613/0x9b0 fs/nilfs2/super.c:1317
+  ...
+
+In addition, since nilfs_sb2_bad_offset() performs multiplication without
+considering the upper bound, the computation may overflow if the disk
+layout parameters are not normal.
+
+This fixes these issues by inserting preliminary sanity checks for those
+parameters and by converting the comparison from one involving
+multiplication and left bit-shifting to one using division and right
+bit-shifting.
+
+Link: https://lkml.kernel.org/r/20221027044306.42774-1-konishi.ryusuke@gmail.com
+Link: https://lkml.kernel.org/r/20221027044306.42774-2-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+e91619dd4c11c4960706@syzkaller.appspotmail.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/acpica/dsmethod.c | 10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ fs/nilfs2/the_nilfs.c | 31 +++++++++++++++++++++++++++----
+ 1 file changed, 27 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/acpi/acpica/dsmethod.c b/drivers/acpi/acpica/dsmethod.c
-index dd4deb678d13..a00516d9538c 100644
---- a/drivers/acpi/acpica/dsmethod.c
-+++ b/drivers/acpi/acpica/dsmethod.c
-@@ -517,7 +517,7 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
- 	info = ACPI_ALLOCATE_ZEROED(sizeof(struct acpi_evaluate_info));
- 	if (!info) {
- 		status = AE_NO_MEMORY;
--		goto cleanup;
-+		goto pop_walk_state;
- 	}
+diff --git a/fs/nilfs2/the_nilfs.c b/fs/nilfs2/the_nilfs.c
+index fb61c33c6004..74ef3d313686 100644
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -13,6 +13,7 @@
+ #include <linux/blkdev.h>
+ #include <linux/backing-dev.h>
+ #include <linux/random.h>
++#include <linux/log2.h>
+ #include <linux/crc32.h>
+ #include "nilfs.h"
+ #include "segment.h"
+@@ -448,11 +449,33 @@ static int nilfs_valid_sb(struct nilfs_super_block *sbp)
+ 	return crc == le32_to_cpu(sbp->s_sum);
+ }
  
- 	info->parameters = &this_walk_state->operands[0];
-@@ -529,7 +529,7 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
- 
- 	ACPI_FREE(info);
- 	if (ACPI_FAILURE(status)) {
--		goto cleanup;
-+		goto pop_walk_state;
- 	}
- 
- 	/*
-@@ -561,6 +561,12 @@ acpi_ds_call_control_method(struct acpi_thread_state *thread,
- 
- 	return_ACPI_STATUS(status);
- 
-+pop_walk_state:
+-static int nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
++/**
++ * nilfs_sb2_bad_offset - check the location of the second superblock
++ * @sbp: superblock raw data buffer
++ * @offset: byte offset of second superblock calculated from device size
++ *
++ * nilfs_sb2_bad_offset() checks if the position on the second
++ * superblock is valid or not based on the filesystem parameters
++ * stored in @sbp.  If @offset points to a location within the segment
++ * area, or if the parameters themselves are not normal, it is
++ * determined to be invalid.
++ *
++ * Return Value: true if invalid, false if valid.
++ */
++static bool nilfs_sb2_bad_offset(struct nilfs_super_block *sbp, u64 offset)
+ {
+-	return offset < ((le64_to_cpu(sbp->s_nsegments) *
+-			  le32_to_cpu(sbp->s_blocks_per_segment)) <<
+-			 (le32_to_cpu(sbp->s_log_block_size) + 10));
++	unsigned int shift_bits = le32_to_cpu(sbp->s_log_block_size);
++	u32 blocks_per_segment = le32_to_cpu(sbp->s_blocks_per_segment);
++	u64 nsegments = le64_to_cpu(sbp->s_nsegments);
++	u64 index;
 +
-+	/* On error, pop the walk state to be deleted from thread */
++	if (blocks_per_segment < NILFS_SEG_MIN_BLOCKS ||
++	    shift_bits > ilog2(NILFS_MAX_BLOCK_SIZE) - BLOCK_SIZE_BITS)
++		return true;
 +
-+	acpi_ds_pop_walk_state(thread);
-+
- cleanup:
++	index = offset >> (shift_bits + BLOCK_SIZE_BITS);
++	do_div(index, blocks_per_segment);
++	return index < nsegments;
+ }
  
- 	/* On error, we must terminate the method properly */
+ static void nilfs_release_super_block(struct the_nilfs *nilfs)
 -- 
 2.35.1
 
