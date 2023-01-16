@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F2CF6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:36:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5C70C433EF;
-	Mon, 16 Jan 2023 16:36:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5A56FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:36:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F631C43398;
+	Mon, 16 Jan 2023 16:36:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886974;
-	bh=EOIkK71oPEcYimMfZ+unnaVKkHdMnF3btNm6vMz2ayY=;
+	s=korg; t=1673886976;
+	bh=ZBgmSonHaystLGqZqpBv2/aGMLxWjNm4HbPNmNJa6Ls=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ylkxmY8Vf062JUoRYh3HN94y4di6iOy8KX+Oawa01MKIKxUcttnVYTk7SgrHePEo7
-	 X5uB1CCFKGcVmZNuGN1vDqbDUuHB+xZ2wns/F3mLChPIlQH8N6rfXtoMzgwnOA8m7b
-	 i7g3HYbi21q5juEEQvwkCWER54EVCmgkt9H8fd8I=
+	b=KA6PRsPTPV3qXSQ35EYfFX7HKG2jhIF2+B9f1k45ZZuKhuv4dm1D0EccBs1HfZf25
+	 2Bo9MemJmr3Jyg9oFnBBOy2C6eqbcCrVfB7GdqIQAnfuXOij30RzqOVpoaDiJRLKNI
+	 rs2o3RzeU09ZPh2q2etRjeefE4HK3ORG9gfMPCr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eliav Farber <farbere@amazon.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	stable@kernel.org
-Subject: [PATCH 5.4 632/658] EDAC/device: Fix period calculation in edac_device_reset_delay_period()
-Date: Mon, 16 Jan 2023 16:52:00 +0100
-Message-Id: <20230116154938.411236050@linuxfoundation.org>
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Adam Ward <DLG-Adam.Ward.opensource@dm.renesas.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 633/658] regulator: da9211: Use irq handler when ready
+Date: Mon, 16 Jan 2023 16:52:01 +0100
+Message-Id: <20230116154938.446284480@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,65 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eliav Farber <farbere@amazon.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit e84077437902ec99eba0a6b516df772653f142c7 upstream.
+[ Upstream commit 02228f6aa6a64d588bc31e3267d05ff184d772eb ]
 
-Fix period calculation in case user sets a value of 1000.  The input of
-round_jiffies_relative() should be in jiffies and not in milli-seconds.
+If the system does not come from reset (like when it is kexec()), the
+regulator might have an IRQ waiting for us.
 
-  [ bp: Use the same code pattern as in edac_device_workq_setup() for
-    clarity. ]
+If we enable the IRQ handler before its structures are ready, we crash.
 
-Fixes: c4cf3b454eca ("EDAC: Rework workqueue handling")
-Signed-off-by: Eliav Farber <farbere@amazon.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Cc: <stable@kernel.org>
-Link: https://lore.kernel.org/r/20221020124458.22153-1-farbere@amazon.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This patch fixes:
+
+[    1.141839] Unable to handle kernel read from unreadable memory at virtual address 0000000000000078
+[    1.316096] Call trace:
+[    1.316101]  blocking_notifier_call_chain+0x20/0xa8
+[    1.322757] cpu cpu0: dummy supplies not allowed for exclusive requests
+[    1.327823]  regulator_notifier_call_chain+0x1c/0x2c
+[    1.327825]  da9211_irq_handler+0x68/0xf8
+[    1.327829]  irq_thread+0x11c/0x234
+[    1.327833]  kthread+0x13c/0x154
+
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Reviewed-by: Adam Ward <DLG-Adam.Ward.opensource@dm.renesas.com>
+Link: https://lore.kernel.org/r/20221124-da9211-v2-0-1779e3c5d491@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/edac_device.c |   17 ++++++++---------
- drivers/edac/edac_module.h |    2 +-
- 2 files changed, 9 insertions(+), 10 deletions(-)
+ drivers/regulator/da9211-regulator.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/drivers/edac/edac_device.c
-+++ b/drivers/edac/edac_device.c
-@@ -424,17 +424,16 @@ static void edac_device_workq_teardown(s
-  *	Then restart the workq on the new delay
-  */
- void edac_device_reset_delay_period(struct edac_device_ctl_info *edac_dev,
--					unsigned long value)
-+				    unsigned long msec)
- {
--	unsigned long jiffs = msecs_to_jiffies(value);
-+	edac_dev->poll_msec = msec;
-+	edac_dev->delay	    = msecs_to_jiffies(msec);
+diff --git a/drivers/regulator/da9211-regulator.c b/drivers/regulator/da9211-regulator.c
+index bf80748f1ccc..7baa6121cc66 100644
+--- a/drivers/regulator/da9211-regulator.c
++++ b/drivers/regulator/da9211-regulator.c
+@@ -471,6 +471,12 @@ static int da9211_i2c_probe(struct i2c_client *i2c,
  
--	if (value == 1000)
--		jiffs = round_jiffies_relative(value);
+ 	chip->chip_irq = i2c->irq;
+ 
++	ret = da9211_regulator_init(chip);
++	if (ret < 0) {
++		dev_err(chip->dev, "Failed to initialize regulator: %d\n", ret);
++		return ret;
++	}
++
+ 	if (chip->chip_irq != 0) {
+ 		ret = devm_request_threaded_irq(chip->dev, chip->chip_irq, NULL,
+ 					da9211_irq_handler,
+@@ -485,11 +491,6 @@ static int da9211_i2c_probe(struct i2c_client *i2c,
+ 		dev_warn(chip->dev, "No IRQ configured\n");
+ 	}
+ 
+-	ret = da9211_regulator_init(chip);
 -
--	edac_dev->poll_msec = value;
--	edac_dev->delay	    = jiffs;
+-	if (ret < 0)
+-		dev_err(chip->dev, "Failed to initialize regulator: %d\n", ret);
 -
--	edac_mod_work(&edac_dev->work, jiffs);
-+	/* See comment in edac_device_workq_setup() above */
-+	if (edac_dev->poll_msec == 1000)
-+		edac_mod_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
-+	else
-+		edac_mod_work(&edac_dev->work, edac_dev->delay);
+ 	return ret;
  }
  
- int edac_device_alloc_index(void)
---- a/drivers/edac/edac_module.h
-+++ b/drivers/edac/edac_module.h
-@@ -57,7 +57,7 @@ bool edac_stop_work(struct delayed_work
- bool edac_mod_work(struct delayed_work *work, unsigned long delay);
- 
- extern void edac_device_reset_delay_period(struct edac_device_ctl_info
--					   *edac_dev, unsigned long value);
-+					   *edac_dev, unsigned long msec);
- extern void edac_mc_reset_delay_period(unsigned long value);
- 
- extern void *edac_align_ptr(void **p, unsigned size, int n_elems);
+-- 
+2.35.1
+
 
 
