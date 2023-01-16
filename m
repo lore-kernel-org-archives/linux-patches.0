@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B498833EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3911EC433D2;
-	Mon, 16 Jan 2023 16:01:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7956233EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFAF7C433EF;
+	Mon, 16 Jan 2023 16:01:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884882;
-	bh=cMzVHi6y81arKg8yTwml2AJUiL/SRH1fF4NxImU0KTE=;
+	s=korg; t=1673884885;
+	bh=rNqEF/aIXlvFqIWH47pT7l9K18fsuUb+KuesPhDypos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xElkhIHhzqfTwoUuDlWqEiSk3CZQsCZv7wKSSZetuG7E7WdRMfwsyDOCyRNmcIBOl
-	 +XQF4PtdI2XFinT5TrFeWMuuRf3fz0iFR9y2cHcsuDILS6a1khs02M20wg8rphrFcF
-	 DiVzZnAEW5oIl3fMOOpGOWGZZDiKvznTUzhpeW0I=
+	b=led4P3nUb3wS4vSGpZF1adJeuoU/uKTNZ4WhmyR84VzdbvhX/Eee9n0+IQetRBfjM
+	 GVGW2zbD+VGMciWcTVh63vc+83i8Wzmce/9rI0REAHN8kUTfUgLHw3SLAPg1oLup4d
+	 53H4UrxikyJztudkuElyCIa6G42v1JT95CAaZoZY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>,
-	syzbot+6805087452d72929404e@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 176/183] io_uring: lock overflowing for IOPOLL
-Date: Mon, 16 Jan 2023 16:51:39 +0100
-Message-Id: <20230116154810.730325486@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 177/183] io_uring/poll: attempt request issue after racy poll wakeup
+Date: Mon, 16 Jan 2023 16:51:40 +0100
+Message-Id: <20230116154810.771826278@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,60 +34,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 544d163d659d45a206d8929370d5a2984e546cb7 upstream.
+commit 6e5aedb9324aab1c14a23fae3d8eeb64a679c20e upstream.
 
-syzbot reports an issue with overflow filling for IOPOLL:
+If we have multiple requests waiting on the same target poll waitqueue,
+then it's quite possible to get a request triggered and get disappointed
+in not being able to make any progress with it. If we race in doing so,
+we'll potentially leave the poll request on the internal tables, but
+removed from the waitqueue. That means that any subsequent trigger of
+the poll waitqueue will not kick that request into action, causing an
+application to potentially wait for completion of a request that will
+never happen.
 
-WARNING: CPU: 0 PID: 28 at io_uring/io_uring.c:734 io_cqring_event_overflow+0x1c0/0x230 io_uring/io_uring.c:734
-CPU: 0 PID: 28 Comm: kworker/u4:1 Not tainted 6.2.0-rc3-syzkaller-16369-g358a161a6a9e #0
-Workqueue: events_unbound io_ring_exit_work
-Call trace:
- io_cqring_event_overflow+0x1c0/0x230 io_uring/io_uring.c:734
- io_req_cqe_overflow+0x5c/0x70 io_uring/io_uring.c:773
- io_fill_cqe_req io_uring/io_uring.h:168 [inline]
- io_do_iopoll+0x474/0x62c io_uring/rw.c:1065
- io_iopoll_try_reap_events+0x6c/0x108 io_uring/io_uring.c:1513
- io_uring_try_cancel_requests+0x13c/0x258 io_uring/io_uring.c:3056
- io_ring_exit_work+0xec/0x390 io_uring/io_uring.c:2869
- process_one_work+0x2d8/0x504 kernel/workqueue.c:2289
- worker_thread+0x340/0x610 kernel/workqueue.c:2436
- kthread+0x12c/0x158 kernel/kthread.c:376
- ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:863
+Fix this by adding a new poll return state, IOU_POLL_REISSUE. Rather
+than have complicated logic for how to re-arm a given type of request,
+just punt it for a reissue.
 
-There is no real problem for normal IOPOLL as flush is also called with
-uring_lock taken, but it's getting more complicated for IOPOLL|SQPOLL,
-for which __io_cqring_overflow_flush() happens from the CQ waiting path.
+While in there, move the 'ret' variable to the only section where it
+gets used. This avoids confusion the scope of it.
 
-Reported-and-tested-by: syzbot+6805087452d72929404e@syzkaller.appspotmail.com
-Cc: stable@vger.kernel.org # 5.10+
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Cc: stable@vger.kernel.org
+Fixes: eb0089d629ba ("io_uring: single shot poll removal optimisation")
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/rw.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ io_uring/poll.c |   33 ++++++++++++++++++++++-----------
+ 1 file changed, 22 insertions(+), 11 deletions(-)
 
-diff --git a/io_uring/rw.c b/io_uring/rw.c
-index bb47cc4da713..6223472095d2 100644
---- a/io_uring/rw.c
-+++ b/io_uring/rw.c
-@@ -1055,7 +1055,11 @@ int io_do_iopoll(struct io_ring_ctx *ctx, bool force_nonspin)
- 			continue;
+--- a/io_uring/poll.c
++++ b/io_uring/poll.c
+@@ -223,22 +223,23 @@ enum {
+ 	IOU_POLL_DONE = 0,
+ 	IOU_POLL_NO_ACTION = 1,
+ 	IOU_POLL_REMOVE_POLL_USE_RES = 2,
++	IOU_POLL_REISSUE = 3,
+ };
  
- 		req->cqe.flags = io_put_kbuf(req, 0);
--		__io_fill_cqe_req(req->ctx, req);
-+		if (unlikely(!__io_fill_cqe_req(ctx, req))) {
-+			spin_lock(&ctx->completion_lock);
-+			io_req_cqe_overflow(req);
-+			spin_unlock(&ctx->completion_lock);
-+		}
- 	}
+ /*
+  * All poll tw should go through this. Checks for poll events, manages
+  * references, does rewait, etc.
+  *
+- * Returns a negative error on failure. IOU_POLL_NO_ACTION when no action require,
+- * which is either spurious wakeup or multishot CQE is served.
+- * IOU_POLL_DONE when it's done with the request, then the mask is stored in req->cqe.res.
+- * IOU_POLL_REMOVE_POLL_USE_RES indicates to remove multishot poll and that the result
+- * is stored in req->cqe.
++ * Returns a negative error on failure. IOU_POLL_NO_ACTION when no action
++ * require, which is either spurious wakeup or multishot CQE is served.
++ * IOU_POLL_DONE when it's done with the request, then the mask is stored in
++ * req->cqe.res. IOU_POLL_REMOVE_POLL_USE_RES indicates to remove multishot
++ * poll and that the result is stored in req->cqe.
+  */
+ static int io_poll_check_events(struct io_kiocb *req, bool *locked)
+ {
+ 	struct io_ring_ctx *ctx = req->ctx;
+-	int v, ret;
++	int v;
  
- 	if (unlikely(!nr_events))
--- 
-2.35.1
-
+ 	/* req->task == current here, checking PF_EXITING is safe */
+ 	if (unlikely(req->task->flags & PF_EXITING))
+@@ -274,10 +275,15 @@ static int io_poll_check_events(struct i
+ 		if (!req->cqe.res) {
+ 			struct poll_table_struct pt = { ._key = req->apoll_events };
+ 			req->cqe.res = vfs_poll(req->file, &pt) & req->apoll_events;
++			/*
++			 * We got woken with a mask, but someone else got to
++			 * it first. The above vfs_poll() doesn't add us back
++			 * to the waitqueue, so if we get nothing back, we
++			 * should be safe and attempt a reissue.
++			 */
++			if (unlikely(!req->cqe.res))
++				return IOU_POLL_REISSUE;
+ 		}
+-
+-		if ((unlikely(!req->cqe.res)))
+-			continue;
+ 		if (req->apoll_events & EPOLLONESHOT)
+ 			return IOU_POLL_DONE;
+ 		if (io_is_uring_fops(req->file))
+@@ -294,7 +300,7 @@ static int io_poll_check_events(struct i
+ 				return IOU_POLL_REMOVE_POLL_USE_RES;
+ 			}
+ 		} else {
+-			ret = io_poll_issue(req, locked);
++			int ret = io_poll_issue(req, locked);
+ 			if (ret == IOU_STOP_MULTISHOT)
+ 				return IOU_POLL_REMOVE_POLL_USE_RES;
+ 			if (ret < 0)
+@@ -325,6 +331,11 @@ static void io_poll_task_func(struct io_
+ 	if (ret == IOU_POLL_DONE) {
+ 		struct io_poll *poll = io_kiocb_to_cmd(req, struct io_poll);
+ 		req->cqe.res = mangle_poll(req->cqe.res & poll->events);
++	} else if (ret == IOU_POLL_REISSUE) {
++		io_poll_remove_entries(req);
++		io_poll_tw_hash_eject(req, locked);
++		io_req_task_submit(req, locked);
++		return;
+ 	} else if (ret != IOU_POLL_REMOVE_POLL_USE_RES) {
+ 		req->cqe.res = ret;
+ 		req_set_fail(req);
+@@ -350,7 +361,7 @@ static void io_apoll_task_func(struct io
+ 
+ 	if (ret == IOU_POLL_REMOVE_POLL_USE_RES)
+ 		io_req_complete_post(req);
+-	else if (ret == IOU_POLL_DONE)
++	else if (ret == IOU_POLL_DONE || ret == IOU_POLL_REISSUE)
+ 		io_req_task_submit(req, locked);
+ 	else
+ 		io_req_complete_failed(req, ret);
 
 
