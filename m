@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5DD16FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:01:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 635A3C433EF;
-	Mon, 16 Jan 2023 17:01:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9683D6FA3
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:01:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01220C433F0;
+	Mon, 16 Jan 2023 17:01:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888485;
-	bh=9jOCHAgGAvv3LpWUEljtvSZQ21ynLmnXTWrjbqPf078=;
+	s=korg; t=1673888488;
+	bh=qE60Hh0ZvwKLEtlroUbqlPtK7XB5SXDwxaQHmw2cJwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1MlNkioNAbWpr3bLhMHyhzlaoviAryERxdsk4UGSuZngCnNl9sljoYyXwAKsV25Wx
-	 J444c1uDrn7/0PASA42MfIL65nk/RS+daWptQFg8faiP1rEarmOQ7Hu8kWUFQ7eo7r
-	 +xoOWyYvqynt/XmRVgOIQjjm/tPFPa5q+j/3Q2AU=
+	b=AESXAurHZes3FEtgwu/7n8QPOkrbEMdR0g+cXFdmBUcG9ezeUVjDdejSisBq7eK7e
+	 3dOvSyCp90NAcGAdTRMw9GY8o1X3bjSu2qnHbIY58cePo/euc3KMOEutW8n6sF5XML
+	 svpgasxfyKtjQJdDrHLhNYC19h/+VYjaWZuakEYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca@z3ntu.xyz>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Konrad Dybcio <konrad.dybcio@somainline.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Chen Jiahao <chenjiahao16@huawei.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 024/338] ARM: dts: qcom: apq8064: fix coresight compatible
-Date: Mon, 16 Jan 2023 16:48:17 +0100
-Message-Id: <20230116154821.809526461@linuxfoundation.org>
+Subject: [PATCH 4.14 025/338] drivers: soc: ti: knav_qmss_queue: Mark knav_acc_firmwares as static
+Date: Mon, 16 Jan 2023 16:48:18 +0100
+Message-Id: <20230116154821.859427721@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -37,37 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luca Weiss <luca@z3ntu.xyz>
+From: Chen Jiahao <chenjiahao16@huawei.com>
 
-[ Upstream commit a42b1ee868361f1cb0492f1bdaefb43e0751e468 ]
+[ Upstream commit adf85adc2a7199b41e7a4da083bd17274a3d6969 ]
 
-There's a typo missing the arm, prefix of arm,coresight-etb10. Fix it to
-make devicetree validation happier.
+There is a sparse warning shown below:
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-Fixes: 7a5c275fd821 ("ARM: dts: qcom: Add apq8064 CoreSight components")
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221013190657.48499-3-luca@z3ntu.xyz
+drivers/soc/ti/knav_qmss_queue.c:70:12: warning: symbol
+'knav_acc_firmwares' was not declared. Should it be static?
+
+Since 'knav_acc_firmwares' is only called within knav_qmss_queue.c,
+mark it as static to fix the warning.
+
+Fixes: 96ee19becc3b ("soc: ti: add firmware file name as part of the driver")
+Signed-off-by: Chen Jiahao <chenjiahao16@huawei.com>
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Link: https://lore.kernel.org/r/20221019153212.72350-1-chenjiahao16@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/qcom-apq8064.dtsi | 2 +-
+ drivers/soc/ti/knav_qmss_queue.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-index 459358b54ab4..dac14153c7bf 100644
---- a/arch/arm/boot/dts/qcom-apq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-@@ -1534,7 +1534,7 @@ wifi {
- 		};
+diff --git a/drivers/soc/ti/knav_qmss_queue.c b/drivers/soc/ti/knav_qmss_queue.c
+index 25baf13d6dfd..c2307872ed9e 100644
+--- a/drivers/soc/ti/knav_qmss_queue.c
++++ b/drivers/soc/ti/knav_qmss_queue.c
+@@ -63,7 +63,7 @@ static DEFINE_MUTEX(knav_dev_lock);
+  * Newest followed by older ones. Search is done from start of the array
+  * until a firmware file is found.
+  */
+-const char *knav_acc_firmwares[] = {"ks2_qmss_pdsp_acc48.bin"};
++static const char * const knav_acc_firmwares[] = {"ks2_qmss_pdsp_acc48.bin"};
  
- 		etb@1a01000 {
--			compatible = "coresight-etb10", "arm,primecell";
-+			compatible = "arm,coresight-etb10", "arm,primecell";
- 			reg = <0x1a01000 0x1000>;
- 
- 			clocks = <&rpmcc RPM_QDSS_CLK>;
+ /**
+  * knav_queue_notify: qmss queue notfier call
 -- 
 2.35.1
 
