@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C8BF6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:47:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69E6C433EF;
-	Mon, 16 Jan 2023 16:47:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7CF06FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:47:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62E69C433EF;
+	Mon, 16 Jan 2023 16:47:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887663;
-	bh=kF+UJ2+GxPrysisT/BDB8fHKcqKuKNa+EmWQ2Nb8Tuc=;
+	s=korg; t=1673887665;
+	bh=7/ad7jKmIR6gw2k7Ybizj+A3e78iiAKykP+W6kdNHKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jc4iedPktFJoXR2hSZgH8wCrLzRKQH66rwz79hv/Bi6aqaV4omWkRMS391p/hi70z
-	 nrAsa8DdBzdoq0LVoR9kCVOpKgPcq7iYf0nwhZJl/0rnQkXSjDmzl5IvgwnEH720Wv
-	 /pexV8259KvNlBz0wSeNg5zM9G5hV3J4A3t7xX2A=
+	b=xf0i03nK8v4vIck1H6U61J33+lQmTNnThImauk3OARAX/uF/Z2MZhvMCtvh+XcwAy
+	 oXdmYo7L9+/L3fXFNhEcM0kE9C90rCADHhbVxWGHw6DHFZuVOKY9Ijqy2AqJWzAbDr
+	 RnXTr4NIw+CuMQtCs/IJRqVHwk84j+7276YgVdMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 205/521] hwrng: amd - Fix PCI device refcount leak
-Date: Mon, 16 Jan 2023 16:47:47 +0100
-Message-Id: <20230116154856.303372723@linuxfoundation.org>
+Subject: [PATCH 4.19 196/521] scsi: hpsa: Fix error handling in hpsa_add_sas_host()
+Date: Mon, 16 Jan 2023 16:47:38 +0100
+Message-Id: <20230116154855.846244060@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,74 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit ecadb5b0111ea19fc7c240bb25d424a94471eb7d ]
+[ Upstream commit 4ef174a3ad9b5d73c1b6573e244ebba2b0d86eac ]
 
-for_each_pci_dev() is implemented by pci_get_device(). The comment of
-pci_get_device() says that it will increase the reference count for the
-returned pci_dev and also decrease the reference count for the input
-pci_dev @from if it is not NULL.
+hpsa_sas_port_add_phy() does:
+  ...
+  sas_phy_add()  -> may return error here
+  sas_port_add_phy()
+  ...
 
-If we break for_each_pci_dev() loop with pdev not NULL, we need to call
-pci_dev_put() to decrease the reference count. Add the missing
-pci_dev_put() for the normal and error path.
+Whereas hpsa_free_sas_phy() does:
+  ...
+  sas_port_delete_phy()
+  sas_phy_delete()
+  ...
 
-Fixes: 96d63c0297cc ("[PATCH] Add AMD HW RNG driver")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+If hpsa_sas_port_add_phy() returns an error, hpsa_free_sas_phy() can not be
+called to free the memory because the port and the phy have not been added
+yet.
+
+Replace hpsa_free_sas_phy() with sas_phy_free() and kfree() to avoid kernel
+crash in this case.
+
+Fixes: d04e62b9d63a ("hpsa: add in sas transport class")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221110151129.394389-1-yangyingliang@huawei.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/char/hw_random/amd-rng.c | 18 +++++++++++++-----
- 1 file changed, 13 insertions(+), 5 deletions(-)
+ drivers/scsi/hpsa.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/char/hw_random/amd-rng.c b/drivers/char/hw_random/amd-rng.c
-index 9959c762da2f..db3dd467194c 100644
---- a/drivers/char/hw_random/amd-rng.c
-+++ b/drivers/char/hw_random/amd-rng.c
-@@ -143,15 +143,19 @@ static int __init mod_init(void)
- found:
- 	err = pci_read_config_dword(pdev, 0x58, &pmbase);
- 	if (err)
--		return err;
-+		goto put_dev;
+diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
+index 1a4fc8b8a9cd..392dfc8f3cbb 100644
+--- a/drivers/scsi/hpsa.c
++++ b/drivers/scsi/hpsa.c
+@@ -9700,7 +9700,8 @@ static int hpsa_add_sas_host(struct ctlr_info *h)
+ 	return 0;
  
- 	pmbase &= 0x0000FF00;
--	if (pmbase == 0)
--		return -EIO;
-+	if (pmbase == 0) {
-+		err = -EIO;
-+		goto put_dev;
-+	}
- 
- 	priv = kzalloc(sizeof(*priv), GFP_KERNEL);
--	if (!priv)
--		return -ENOMEM;
-+	if (!priv) {
-+		err = -ENOMEM;
-+		goto put_dev;
-+	}
- 
- 	if (!request_region(pmbase + PMBASE_OFFSET, PMBASE_SIZE, DRV_NAME)) {
- 		dev_err(&pdev->dev, DRV_NAME " region 0x%x already in use!\n",
-@@ -185,6 +189,8 @@ static int __init mod_init(void)
- 	release_region(pmbase + PMBASE_OFFSET, PMBASE_SIZE);
- out:
- 	kfree(priv);
-+put_dev:
-+	pci_dev_put(pdev);
- 	return err;
- }
- 
-@@ -200,6 +206,8 @@ static void __exit mod_exit(void)
- 
- 	release_region(priv->pmbase + PMBASE_OFFSET, PMBASE_SIZE);
- 
-+	pci_dev_put(priv->pcidev);
-+
- 	kfree(priv);
- }
- 
+ free_sas_phy:
+-	hpsa_free_sas_phy(hpsa_sas_phy);
++	sas_phy_free(hpsa_sas_phy->phy);
++	kfree(hpsa_sas_phy);
+ free_sas_port:
+ 	hpsa_free_sas_port(hpsa_sas_port);
+ free_sas_node:
 -- 
 2.35.1
 
