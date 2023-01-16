@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C4C86FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:59:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4DF1C433EF;
-	Mon, 16 Jan 2023 16:59:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC396FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:59:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E26BC433F2;
+	Mon, 16 Jan 2023 16:59:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888353;
-	bh=leWpB3c8HCf7NOhJaP3JD7F15OvyfjIR5TVD0Qfx0Yk=;
+	s=korg; t=1673888355;
+	bh=dCtrgXkK5TNVB/6p4u5jaNTUfddW9f8S6nS/SUrJrME=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ObVnGv4JVl7o/TgZCJSLAn2LOpf0TwHQ+qONssucmREwKJeqZ4Wpyc9r5dqUFF6mq
-	 RIzUuBmDVmWD7bpFhrqkznumeXIs4+heniKa1USP+FSh2SmEHbkw4xBZ4e6h2FdSUV
-	 PTEo5QS+79VR91pAvfu5J87lhpcb8Z8uBFByhDh4=
+	b=f8jeO6oyJNoBbZX0iC8Eru4rGT7LLkyluWiR5mDn4pv6AIcRI8W8bAVSuRtwh41iA
+	 BMPeUa4ShECtn/q45fpPnkiNIc3pM7duaTS6FrmFdTB6YdOha5XGK1Vlhlpn6nDJAf
+	 c3Y45QiE8dEIXm+ZF4EMnPGhnMr05OtVyJ7LaxlU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Whitney <enwlinux@gmail.com>,
 	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 497/521] ext4: add new pending reservation mechanism
-Date: Mon, 16 Jan 2023 16:52:39 +0100
-Message-Id: <20230116154909.417097432@linuxfoundation.org>
+Subject: [PATCH 4.19 498/521] ext4: fix reserved cluster accounting at delayed write time
+Date: Mon, 16 Jan 2023 16:52:40 +0100
+Message-Id: <20230116154909.464357930@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,347 +37,363 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Whitney <enwlinux@gmail.com>
 
-[ Upstream commit 1dc0aa46e74a3366e12f426b7caaca477853e9c3 ]
+[ Upstream commit 0b02f4c0d6d9e2c611dfbdd4317193e9dca740e6 ]
 
-Add new pending reservation mechanism to help manage reserved cluster
-accounting.  Its primary function is to avoid the need to read extents
-from the disk when invalidating pages as a result of a truncate, punch
-hole, or collapse range operation.
+The code in ext4_da_map_blocks sometimes reserves space for more
+delayed allocated clusters than it should, resulting in premature
+ENOSPC, exceeded quota, and inaccurate free space reporting.
+
+Fix this by checking for written and unwritten blocks shared in the
+same cluster with the newly delayed allocated block.  A cluster
+reservation should not be made for a cluster for which physical space
+has already been allocated.
 
 Signed-off-by: Eric Whitney <enwlinux@gmail.com>
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Stable-dep-of: 131294c35ed6 ("ext4: fix delayed allocation bug in ext4_clu_mapped for bigalloc + inline")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/ext4.h           |   3 +
- fs/ext4/extents_status.c | 187 +++++++++++++++++++++++++++++++++++++++
- fs/ext4/extents_status.h |  51 +++++++++++
- fs/ext4/super.c          |   8 ++
- 4 files changed, 249 insertions(+)
+ fs/ext4/ext4.h              |  1 +
+ fs/ext4/extents.c           | 79 +++++++++++++++++++++++++++++++++++++
+ fs/ext4/extents_status.c    | 53 +++++++++++++++++++++++++
+ fs/ext4/extents_status.h    | 12 ++++++
+ fs/ext4/inode.c             | 79 ++++++++++++++++++++++++++++---------
+ include/trace/events/ext4.h | 35 ++++++++++++++++
+ 6 files changed, 241 insertions(+), 18 deletions(-)
 
 diff --git a/fs/ext4/ext4.h b/fs/ext4/ext4.h
-index 24bbfbf9a5aa..e914a0df209f 100644
+index e914a0df209f..d8068c0e547d 100644
 --- a/fs/ext4/ext4.h
 +++ b/fs/ext4/ext4.h
-@@ -1041,6 +1041,9 @@ struct ext4_inode_info {
- 	ext4_lblk_t i_da_metadata_calc_last_lblock;
- 	int i_da_metadata_calc_len;
+@@ -3241,6 +3241,7 @@ extern int ext4_swap_extents(handle_t *handle, struct inode *inode1,
+ 				struct inode *inode2, ext4_lblk_t lblk1,
+ 			     ext4_lblk_t lblk2,  ext4_lblk_t count,
+ 			     int mark_unwritten,int *err);
++extern int ext4_clu_mapped(struct inode *inode, ext4_lblk_t lclu);
  
-+	/* pending cluster reservations for bigalloc file systems */
-+	struct ext4_pending_tree i_pending_tree;
-+
- 	/* on-disk additional length */
- 	__u16 i_extra_isize;
- 
-diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
-index e7503a3a3299..90e473084fd4 100644
---- a/fs/ext4/extents_status.c
-+++ b/fs/ext4/extents_status.c
-@@ -142,6 +142,7 @@
-  */
- 
- static struct kmem_cache *ext4_es_cachep;
-+static struct kmem_cache *ext4_pending_cachep;
- 
- static int __es_insert_extent(struct inode *inode, struct extent_status *newes);
- static int __es_remove_extent(struct inode *inode, ext4_lblk_t lblk,
-@@ -1363,3 +1364,189 @@ static int es_reclaim_extents(struct ext4_inode_info *ei, int *nr_to_scan)
- 	ei->i_es_tree.cache_es = NULL;
- 	return nr_shrunk;
+ /* move_extent.c */
+ extern void ext4_double_down_write_data_sem(struct inode *first,
+diff --git a/fs/ext4/extents.c b/fs/ext4/extents.c
+index c5c8326f5c25..0bb772cd7f88 100644
+--- a/fs/ext4/extents.c
++++ b/fs/ext4/extents.c
+@@ -5963,3 +5963,82 @@ ext4_swap_extents(handle_t *handle, struct inode *inode1,
+ 	}
+ 	return replaced_count;
  }
 +
-+#ifdef ES_DEBUG__
-+static void ext4_print_pending_tree(struct inode *inode)
-+{
-+	struct ext4_pending_tree *tree;
-+	struct rb_node *node;
-+	struct pending_reservation *pr;
-+
-+	printk(KERN_DEBUG "pending reservations for inode %lu:", inode->i_ino);
-+	tree = &EXT4_I(inode)->i_pending_tree;
-+	node = rb_first(&tree->root);
-+	while (node) {
-+		pr = rb_entry(node, struct pending_reservation, rb_node);
-+		printk(KERN_DEBUG " %u", pr->lclu);
-+		node = rb_next(node);
-+	}
-+	printk(KERN_DEBUG "\n");
-+}
-+#else
-+#define ext4_print_pending_tree(inode)
-+#endif
-+
-+int __init ext4_init_pending(void)
-+{
-+	ext4_pending_cachep = kmem_cache_create("ext4_pending_reservation",
-+					   sizeof(struct pending_reservation),
-+					   0, (SLAB_RECLAIM_ACCOUNT), NULL);
-+	if (ext4_pending_cachep == NULL)
-+		return -ENOMEM;
-+	return 0;
-+}
-+
-+void ext4_exit_pending(void)
-+{
-+	kmem_cache_destroy(ext4_pending_cachep);
-+}
-+
-+void ext4_init_pending_tree(struct ext4_pending_tree *tree)
-+{
-+	tree->root = RB_ROOT;
-+}
-+
 +/*
-+ * __get_pending - retrieve a pointer to a pending reservation
++ * ext4_clu_mapped - determine whether any block in a logical cluster has
++ *                   been mapped to a physical cluster
 + *
-+ * @inode - file containing the pending cluster reservation
++ * @inode - file containing the logical cluster
 + * @lclu - logical cluster of interest
 + *
-+ * Returns a pointer to a pending reservation if it's a member of
-+ * the set, and NULL if not.  Must be called holding i_es_lock.
++ * Returns 1 if any block in the logical cluster is mapped, signifying
++ * that a physical cluster has been allocated for it.  Otherwise,
++ * returns 0.  Can also return negative error codes.  Derived from
++ * ext4_ext_map_blocks().
 + */
-+static struct pending_reservation *__get_pending(struct inode *inode,
-+						 ext4_lblk_t lclu)
-+{
-+	struct ext4_pending_tree *tree;
-+	struct rb_node *node;
-+	struct pending_reservation *pr = NULL;
-+
-+	tree = &EXT4_I(inode)->i_pending_tree;
-+	node = (&tree->root)->rb_node;
-+
-+	while (node) {
-+		pr = rb_entry(node, struct pending_reservation, rb_node);
-+		if (lclu < pr->lclu)
-+			node = node->rb_left;
-+		else if (lclu > pr->lclu)
-+			node = node->rb_right;
-+		else if (lclu == pr->lclu)
-+			return pr;
-+	}
-+	return NULL;
-+}
-+
-+/*
-+ * __insert_pending - adds a pending cluster reservation to the set of
-+ *                    pending reservations
-+ *
-+ * @inode - file containing the cluster
-+ * @lblk - logical block in the cluster to be added
-+ *
-+ * Returns 0 on successful insertion and -ENOMEM on failure.  If the
-+ * pending reservation is already in the set, returns successfully.
-+ */
-+static int __insert_pending(struct inode *inode, ext4_lblk_t lblk)
++int ext4_clu_mapped(struct inode *inode, ext4_lblk_t lclu)
 +{
 +	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
-+	struct ext4_pending_tree *tree = &EXT4_I(inode)->i_pending_tree;
-+	struct rb_node **p = &tree->root.rb_node;
-+	struct rb_node *parent = NULL;
-+	struct pending_reservation *pr;
-+	ext4_lblk_t lclu;
-+	int ret = 0;
++	struct ext4_ext_path *path;
++	int depth, mapped = 0, err = 0;
++	struct ext4_extent *extent;
++	ext4_lblk_t first_lblk, first_lclu, last_lclu;
 +
-+	lclu = EXT4_B2C(sbi, lblk);
-+	/* search to find parent for insertion */
-+	while (*p) {
-+		parent = *p;
-+		pr = rb_entry(parent, struct pending_reservation, rb_node);
++	/* search for the extent closest to the first block in the cluster */
++	path = ext4_find_extent(inode, EXT4_C2B(sbi, lclu), NULL, 0);
++	if (IS_ERR(path)) {
++		err = PTR_ERR(path);
++		path = NULL;
++		goto out;
++	}
 +
-+		if (lclu < pr->lclu) {
-+			p = &(*p)->rb_left;
-+		} else if (lclu > pr->lclu) {
-+			p = &(*p)->rb_right;
++	depth = ext_depth(inode);
++
++	/*
++	 * A consistent leaf must not be empty.  This situation is possible,
++	 * though, _during_ tree modification, and it's why an assert can't
++	 * be put in ext4_find_extent().
++	 */
++	if (unlikely(path[depth].p_ext == NULL && depth != 0)) {
++		EXT4_ERROR_INODE(inode,
++		    "bad extent address - lblock: %lu, depth: %d, pblock: %lld",
++				 (unsigned long) EXT4_C2B(sbi, lclu),
++				 depth, path[depth].p_block);
++		err = -EFSCORRUPTED;
++		goto out;
++	}
++
++	extent = path[depth].p_ext;
++
++	/* can't be mapped if the extent tree is empty */
++	if (extent == NULL)
++		goto out;
++
++	first_lblk = le32_to_cpu(extent->ee_block);
++	first_lclu = EXT4_B2C(sbi, first_lblk);
++
++	/*
++	 * Three possible outcomes at this point - found extent spanning
++	 * the target cluster, to the left of the target cluster, or to the
++	 * right of the target cluster.  The first two cases are handled here.
++	 * The last case indicates the target cluster is not mapped.
++	 */
++	if (lclu >= first_lclu) {
++		last_lclu = EXT4_B2C(sbi, first_lblk +
++				     ext4_ext_get_actual_len(extent) - 1);
++		if (lclu <= last_lclu) {
++			mapped = 1;
 +		} else {
-+			/* pending reservation already inserted */
-+			goto out;
++			first_lblk = ext4_ext_next_allocated_block(path);
++			first_lclu = EXT4_B2C(sbi, first_lblk);
++			if (lclu == first_lclu)
++				mapped = 1;
 +		}
 +	}
 +
-+	pr = kmem_cache_alloc(ext4_pending_cachep, GFP_ATOMIC);
-+	if (pr == NULL) {
-+		ret = -ENOMEM;
-+		goto out;
-+	}
-+	pr->lclu = lclu;
-+
-+	rb_link_node(&pr->rb_node, parent, p);
-+	rb_insert_color(&pr->rb_node, &tree->root);
-+
 +out:
-+	return ret;
++	ext4_ext_drop_refs(path);
++	kfree(path);
++
++	return err ? err : mapped;
 +}
+diff --git a/fs/ext4/extents_status.c b/fs/ext4/extents_status.c
+index 90e473084fd4..441ee2e747d3 100644
+--- a/fs/ext4/extents_status.c
++++ b/fs/ext4/extents_status.c
+@@ -1550,3 +1550,56 @@ bool ext4_is_pending(struct inode *inode, ext4_lblk_t lblk)
+ 
+ 	return ret;
+ }
 +
 +/*
-+ * __remove_pending - removes a pending cluster reservation from the set
-+ *                    of pending reservations
++ * ext4_es_insert_delayed_block - adds a delayed block to the extents status
++ *                                tree, adding a pending reservation where
++ *                                needed
 + *
-+ * @inode - file containing the cluster
-+ * @lblk - logical block in the pending cluster reservation to be removed
++ * @inode - file containing the newly added block
++ * @lblk - logical block to be added
++ * @allocated - indicates whether a physical cluster has been allocated for
++ *              the logical cluster that contains the block
 + *
-+ * Returns successfully if pending reservation is not a member of the set.
++ * Returns 0 on success, negative error code on failure.
 + */
-+static void __remove_pending(struct inode *inode, ext4_lblk_t lblk)
++int ext4_es_insert_delayed_block(struct inode *inode, ext4_lblk_t lblk,
++				 bool allocated)
 +{
-+	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
-+	struct pending_reservation *pr;
-+	struct ext4_pending_tree *tree;
++	struct extent_status newes;
++	int err = 0;
 +
-+	pr = __get_pending(inode, EXT4_B2C(sbi, lblk));
-+	if (pr != NULL) {
-+		tree = &EXT4_I(inode)->i_pending_tree;
-+		rb_erase(&pr->rb_node, &tree->root);
-+		kmem_cache_free(ext4_pending_cachep, pr);
-+	}
-+}
++	es_debug("add [%u/1) delayed to extent status tree of inode %lu\n",
++		 lblk, inode->i_ino);
 +
-+/*
-+ * ext4_remove_pending - removes a pending cluster reservation from the set
-+ *                       of pending reservations
-+ *
-+ * @inode - file containing the cluster
-+ * @lblk - logical block in the pending cluster reservation to be removed
-+ *
-+ * Locking for external use of __remove_pending.
-+ */
-+void ext4_remove_pending(struct inode *inode, ext4_lblk_t lblk)
-+{
-+	struct ext4_inode_info *ei = EXT4_I(inode);
++	newes.es_lblk = lblk;
++	newes.es_len = 1;
++	ext4_es_store_pblock_status(&newes, ~0, EXTENT_STATUS_DELAYED);
++	trace_ext4_es_insert_delayed_block(inode, &newes, allocated);
 +
-+	write_lock(&ei->i_es_lock);
-+	__remove_pending(inode, lblk);
-+	write_unlock(&ei->i_es_lock);
-+}
++	ext4_es_insert_extent_check(inode, &newes);
 +
-+/*
-+ * ext4_is_pending - determine whether a cluster has a pending reservation
-+ *                   on it
-+ *
-+ * @inode - file containing the cluster
-+ * @lblk - logical block in the cluster
-+ *
-+ * Returns true if there's a pending reservation for the cluster in the
-+ * set of pending reservations, and false if not.
-+ */
-+bool ext4_is_pending(struct inode *inode, ext4_lblk_t lblk)
-+{
-+	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
-+	struct ext4_inode_info *ei = EXT4_I(inode);
-+	bool ret;
++	write_lock(&EXT4_I(inode)->i_es_lock);
 +
-+	read_lock(&ei->i_es_lock);
-+	ret = (bool)(__get_pending(inode, EXT4_B2C(sbi, lblk)) != NULL);
-+	read_unlock(&ei->i_es_lock);
++	err = __es_remove_extent(inode, lblk, lblk);
++	if (err != 0)
++		goto error;
++retry:
++	err = __es_insert_extent(inode, &newes);
++	if (err == -ENOMEM && __es_shrink(EXT4_SB(inode->i_sb),
++					  128, EXT4_I(inode)))
++		goto retry;
++	if (err != 0)
++		goto error;
 +
-+	return ret;
++	if (allocated)
++		__insert_pending(inode, lblk);
++
++error:
++	write_unlock(&EXT4_I(inode)->i_es_lock);
++
++	ext4_es_print_tree(inode);
++	ext4_print_pending_tree(inode);
++
++	return err;
 +}
 diff --git a/fs/ext4/extents_status.h b/fs/ext4/extents_status.h
-index df9628c3ec3b..379b7171c67c 100644
+index 379b7171c67c..9d3c676ec623 100644
 --- a/fs/ext4/extents_status.h
 +++ b/fs/ext4/extents_status.h
-@@ -78,6 +78,51 @@ struct ext4_es_stats {
- 	struct percpu_counter es_stats_shk_cnt;
- };
- 
-+/*
-+ * Pending cluster reservations for bigalloc file systems
-+ *
-+ * A cluster with a pending reservation is a logical cluster shared by at
-+ * least one extent in the extents status tree with delayed and unwritten
-+ * status and at least one other written or unwritten extent.  The
-+ * reservation is said to be pending because a cluster reservation would
-+ * have to be taken in the event all blocks in the cluster shared with
-+ * written or unwritten extents were deleted while the delayed and
-+ * unwritten blocks remained.
-+ *
-+ * The set of pending cluster reservations is an auxiliary data structure
-+ * used with the extents status tree to implement reserved cluster/block
-+ * accounting for bigalloc file systems.  The set is kept in memory and
-+ * records all pending cluster reservations.
-+ *
-+ * Its primary function is to avoid the need to read extents from the
-+ * disk when invalidating pages as a result of a truncate, punch hole, or
-+ * collapse range operation.  Page invalidation requires a decrease in the
-+ * reserved cluster count if it results in the removal of all delayed
-+ * and unwritten extents (blocks) from a cluster that is not shared with a
-+ * written or unwritten extent, and no decrease otherwise.  Determining
-+ * whether the cluster is shared can be done by searching for a pending
-+ * reservation on it.
-+ *
-+ * Secondarily, it provides a potentially faster method for determining
-+ * whether the reserved cluster count should be increased when a physical
-+ * cluster is deallocated as a result of a truncate, punch hole, or
-+ * collapse range operation.  The necessary information is also present
-+ * in the extents status tree, but might be more rapidly accessed in
-+ * the pending reservation set in many cases due to smaller size.
-+ *
-+ * The pending cluster reservation set is implemented as a red-black tree
-+ * with the goal of minimizing per page search time overhead.
-+ */
-+
-+struct pending_reservation {
-+	struct rb_node rb_node;
-+	ext4_lblk_t lclu;
-+};
-+
-+struct ext4_pending_tree {
-+	struct rb_root root;
-+};
-+
- extern int __init ext4_init_es(void);
- extern void ext4_exit_es(void);
- extern void ext4_es_init_tree(struct ext4_es_tree *tree);
-@@ -182,4 +227,10 @@ extern void ext4_es_unregister_shrinker(struct ext4_sb_info *sbi);
- 
- extern int ext4_seq_es_shrinker_info_show(struct seq_file *seq, void *v);
- 
-+extern int __init ext4_init_pending(void);
-+extern void ext4_exit_pending(void);
-+extern void ext4_init_pending_tree(struct ext4_pending_tree *tree);
-+extern void ext4_remove_pending(struct inode *inode, ext4_lblk_t lblk);
-+extern bool ext4_is_pending(struct inode *inode, ext4_lblk_t lblk);
-+
- #endif /* _EXT4_EXTENTS_STATUS_H */
-diff --git a/fs/ext4/super.c b/fs/ext4/super.c
-index e54a5be15636..73a431b6e720 100644
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -1095,6 +1095,7 @@ static struct inode *ext4_alloc_inode(struct super_block *sb)
- 	ei->i_da_metadata_calc_len = 0;
- 	ei->i_da_metadata_calc_last_lblock = 0;
- 	spin_lock_init(&(ei->i_block_reservation_lock));
-+	ext4_init_pending_tree(&ei->i_pending_tree);
- #ifdef CONFIG_QUOTA
- 	ei->i_reserved_quota = 0;
- 	memset(&ei->i_dquot, 0, sizeof(ei->i_dquot));
-@@ -6189,6 +6190,10 @@ static int __init ext4_init_fs(void)
- 	if (err)
- 		return err;
- 
-+	err = ext4_init_pending();
-+	if (err)
-+		goto out6;
-+
- 	err = ext4_init_pageio();
- 	if (err)
- 		goto out5;
-@@ -6227,6 +6232,8 @@ static int __init ext4_init_fs(void)
- out4:
- 	ext4_exit_pageio();
- out5:
-+	ext4_exit_pending();
-+out6:
- 	ext4_exit_es();
- 
- 	return err;
-@@ -6244,6 +6251,7 @@ static void __exit ext4_exit_fs(void)
- 	ext4_exit_system_zone();
- 	ext4_exit_pageio();
- 	ext4_exit_es();
-+	ext4_exit_pending();
+@@ -178,6 +178,16 @@ static inline int ext4_es_is_hole(struct extent_status *es)
+ 	return (ext4_es_type(es) & EXTENT_STATUS_HOLE) != 0;
  }
  
- MODULE_AUTHOR("Remy Card, Stephen Tweedie, Andrew Morton, Andreas Dilger, Theodore Ts'o and others");
++static inline int ext4_es_is_mapped(struct extent_status *es)
++{
++	return (ext4_es_is_written(es) || ext4_es_is_unwritten(es));
++}
++
++static inline int ext4_es_is_delonly(struct extent_status *es)
++{
++	return (ext4_es_is_delayed(es) && !ext4_es_is_unwritten(es));
++}
++
+ static inline void ext4_es_set_referenced(struct extent_status *es)
+ {
+ 	es->es_pblk |= ((ext4_fsblk_t)EXTENT_STATUS_REFERENCED) << ES_SHIFT;
+@@ -232,5 +242,7 @@ extern void ext4_exit_pending(void);
+ extern void ext4_init_pending_tree(struct ext4_pending_tree *tree);
+ extern void ext4_remove_pending(struct inode *inode, ext4_lblk_t lblk);
+ extern bool ext4_is_pending(struct inode *inode, ext4_lblk_t lblk);
++extern int ext4_es_insert_delayed_block(struct inode *inode, ext4_lblk_t lblk,
++					bool allocated);
+ 
+ #endif /* _EXT4_EXTENTS_STATUS_H */
+diff --git a/fs/ext4/inode.c b/fs/ext4/inode.c
+index cba27ba41834..17d120ac2010 100644
+--- a/fs/ext4/inode.c
++++ b/fs/ext4/inode.c
+@@ -1823,6 +1823,65 @@ static int ext4_bh_delay_or_unwritten(handle_t *handle, struct buffer_head *bh)
+ 	return (buffer_delay(bh) || buffer_unwritten(bh)) && buffer_dirty(bh);
+ }
+ 
++/*
++ * ext4_insert_delayed_block - adds a delayed block to the extents status
++ *                             tree, incrementing the reserved cluster/block
++ *                             count or making a pending reservation
++ *                             where needed
++ *
++ * @inode - file containing the newly added block
++ * @lblk - logical block to be added
++ *
++ * Returns 0 on success, negative error code on failure.
++ */
++static int ext4_insert_delayed_block(struct inode *inode, ext4_lblk_t lblk)
++{
++	struct ext4_sb_info *sbi = EXT4_SB(inode->i_sb);
++	int ret;
++	bool allocated = false;
++
++	/*
++	 * If the cluster containing lblk is shared with a delayed,
++	 * written, or unwritten extent in a bigalloc file system, it's
++	 * already been accounted for and does not need to be reserved.
++	 * A pending reservation must be made for the cluster if it's
++	 * shared with a written or unwritten extent and doesn't already
++	 * have one.  Written and unwritten extents can be purged from the
++	 * extents status tree if the system is under memory pressure, so
++	 * it's necessary to examine the extent tree if a search of the
++	 * extents status tree doesn't get a match.
++	 */
++	if (sbi->s_cluster_ratio == 1) {
++		ret = ext4_da_reserve_space(inode);
++		if (ret != 0)   /* ENOSPC */
++			goto errout;
++	} else {   /* bigalloc */
++		if (!ext4_es_scan_clu(inode, &ext4_es_is_delonly, lblk)) {
++			if (!ext4_es_scan_clu(inode,
++					      &ext4_es_is_mapped, lblk)) {
++				ret = ext4_clu_mapped(inode,
++						      EXT4_B2C(sbi, lblk));
++				if (ret < 0)
++					goto errout;
++				if (ret == 0) {
++					ret = ext4_da_reserve_space(inode);
++					if (ret != 0)   /* ENOSPC */
++						goto errout;
++				} else {
++					allocated = true;
++				}
++			} else {
++				allocated = true;
++			}
++		}
++	}
++
++	ret = ext4_es_insert_delayed_block(inode, lblk, allocated);
++
++errout:
++	return ret;
++}
++
+ /*
+  * This function is grabs code from the very beginning of
+  * ext4_map_blocks, but assumes that the caller is from delayed write
+@@ -1907,25 +1966,9 @@ static int ext4_da_map_blocks(struct inode *inode, sector_t iblock,
+ 		 * XXX: __block_prepare_write() unmaps passed block,
+ 		 * is it OK?
+ 		 */
+-		/*
+-		 * If the block was allocated from previously allocated cluster,
+-		 * then we don't need to reserve it again. However we still need
+-		 * to reserve metadata for every block we're going to write.
+-		 */
+-		if (EXT4_SB(inode->i_sb)->s_cluster_ratio == 1 ||
+-		    !ext4_es_scan_clu(inode,
+-				      &ext4_es_is_delayed, map->m_lblk)) {
+-			ret = ext4_da_reserve_space(inode);
+-			if (ret) {
+-				/* not enough space to reserve */
+-				retval = ret;
+-				goto out_unlock;
+-			}
+-		}
+ 
+-		ret = ext4_es_insert_extent(inode, map->m_lblk, map->m_len,
+-					    ~0, EXTENT_STATUS_DELAYED);
+-		if (ret) {
++		ret = ext4_insert_delayed_block(inode, map->m_lblk);
++		if (ret != 0) {
+ 			retval = ret;
+ 			goto out_unlock;
+ 		}
+diff --git a/include/trace/events/ext4.h b/include/trace/events/ext4.h
+index 388dc3666cc7..20c9b8e77a57 100644
+--- a/include/trace/events/ext4.h
++++ b/include/trace/events/ext4.h
+@@ -2532,6 +2532,41 @@ TRACE_EVENT(ext4_es_shrink,
+ 		  __entry->scan_time, __entry->nr_skipped, __entry->retried)
+ );
+ 
++TRACE_EVENT(ext4_es_insert_delayed_block,
++	TP_PROTO(struct inode *inode, struct extent_status *es,
++		 bool allocated),
++
++	TP_ARGS(inode, es, allocated),
++
++	TP_STRUCT__entry(
++		__field(	dev_t,		dev		)
++		__field(	ino_t,		ino		)
++		__field(	ext4_lblk_t,	lblk		)
++		__field(	ext4_lblk_t,	len		)
++		__field(	ext4_fsblk_t,	pblk		)
++		__field(	char,		status		)
++		__field(	bool,		allocated	)
++	),
++
++	TP_fast_assign(
++		__entry->dev		= inode->i_sb->s_dev;
++		__entry->ino		= inode->i_ino;
++		__entry->lblk		= es->es_lblk;
++		__entry->len		= es->es_len;
++		__entry->pblk		= ext4_es_pblock(es);
++		__entry->status		= ext4_es_status(es);
++		__entry->allocated	= allocated;
++	),
++
++	TP_printk("dev %d,%d ino %lu es [%u/%u) mapped %llu status %s "
++		  "allocated %d",
++		  MAJOR(__entry->dev), MINOR(__entry->dev),
++		  (unsigned long) __entry->ino,
++		  __entry->lblk, __entry->len,
++		  __entry->pblk, show_extent_status(__entry->status),
++		  __entry->allocated)
++);
++
+ /* fsmap traces */
+ DECLARE_EVENT_CLASS(ext4_fsmap_class,
+ 	TP_PROTO(struct super_block *sb, u32 keydev, u32 agno, u64 bno, u64 len,
 -- 
 2.35.1
 
