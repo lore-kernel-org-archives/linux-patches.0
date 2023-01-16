@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 508416FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:13:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA84BC433D2;
-	Mon, 16 Jan 2023 17:13:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E05DA6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:13:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65027C433D2;
+	Mon, 16 Jan 2023 17:13:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889203;
-	bh=3YjISPR5sYInftzEzvFIaudIGzW76vWC8b+zfg+deas=;
+	s=korg; t=1673889205;
+	bh=A4pp+r6/V6ky3pUu0YdldaYWodUd5Ty0d+OyLrTHC+o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MQeNgaOped5cxSUywHAOSYz7MOil0xFECVYduJMrLHo2525nigtz0UzfR8EQsqU9C
-	 0jK9BKuYFjFNDp3NKDUrzOUsdtq2B87GmBYfazyShJEVEBt+vF9KeIRdSc+UVEdmUA
-	 TSZVBFdbc2D0bBc94MGv9g06/+rrPA2TCadmkb+U=
+	b=xNgk1YtFqEhiJamck/3H2QZ+SrSMsBYVbxl/Jt8uXsnshvPIMG8Oq+GcyvsuttX7s
+	 Ew/h3KMPkwHLcf7s0xRnWMKi7RulLPLO92uEj2lq3sgBuMEsH3H1cQiCc2QDMmWYq4
+	 p6iZIZoT+tAaltk9mdhzmMZ2+9J7w+U6enehTVeY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable@kernel.org,
-	Baokun Li <libaokun1@huawei.com>,
-	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
-	Theodore Tso <tytso@mit.edu>
-Subject: [PATCH 4.14 297/338] ext4: add inode table check in __ext4_get_inode_loc to aovid possible infinite loop
-Date: Mon, 16 Jan 2023 16:52:50 +0100
-Message-Id: <20230116154834.046086386@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org
+Subject: [PATCH 4.14 298/338] ext4: fix undefined behavior in bit shift for ext4_check_flag_values
+Date: Mon, 16 Jan 2023 16:52:51 +0100
+Message-Id: <20230116154834.096778110@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,83 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baokun Li <libaokun1@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-commit eee22187b53611e173161e38f61de1c7ecbeb876 upstream.
+commit 3bf678a0f9c017c9ba7c581541dbc8453452a7ae upstream.
 
-In do_writepages, if the value returned by ext4_writepages is "-ENOMEM"
-and "wbc->sync_mode == WB_SYNC_ALL", retry until the condition is not met.
+Shifting signed 32-bit value by 31 bits is undefined, so changing
+significant bit to unsigned. The UBSAN warning calltrace like below:
 
-In __ext4_get_inode_loc, if the bh returned by sb_getblk is NULL,
-the function returns -ENOMEM.
+UBSAN: shift-out-of-bounds in fs/ext4/ext4.h:591:2
+left shift of 1 by 31 places cannot be represented in type 'int'
+Call Trace:
+ <TASK>
+ dump_stack_lvl+0x7d/0xa5
+ dump_stack+0x15/0x1b
+ ubsan_epilogue+0xe/0x4e
+ __ubsan_handle_shift_out_of_bounds+0x1e7/0x20c
+ ext4_init_fs+0x5a/0x277
+ do_one_initcall+0x76/0x430
+ kernel_init_freeable+0x3b3/0x422
+ kernel_init+0x24/0x1e0
+ ret_from_fork+0x1f/0x30
+ </TASK>
 
-In __getblk_slow, if the return value of grow_buffers is less than 0,
-the function returns NULL.
-
-When the three processes are connected in series like the following stack,
-an infinite loop may occur:
-
-do_writepages					<--- keep retrying
- ext4_writepages
-  mpage_map_and_submit_extent
-   mpage_map_one_extent
-    ext4_map_blocks
-     ext4_ext_map_blocks
-      ext4_ext_handle_unwritten_extents
-       ext4_ext_convert_to_initialized
-        ext4_split_extent
-         ext4_split_extent_at
-          __ext4_ext_dirty
-           __ext4_mark_inode_dirty
-            ext4_reserve_inode_write
-             ext4_get_inode_loc
-              __ext4_get_inode_loc		<--- return -ENOMEM
-               sb_getblk
-                __getblk_gfp
-                 __getblk_slow			<--- return NULL
-                  grow_buffers
-                   grow_dev_page		<--- return -ENXIO
-                    ret = (block < end_block) ? 1 : -ENXIO;
-
-In this issue, bg_inode_table_hi is overwritten as an incorrect value.
-As a result, `block < end_block` cannot be met in grow_dev_page.
-Therefore, __ext4_get_inode_loc always returns '-ENOMEM' and do_writepages
-keeps retrying. As a result, the writeback process is in the D state due
-to an infinite loop.
-
-Add a check on inode table block in the __ext4_get_inode_loc function by
-referring to ext4_read_inode_bitmap to avoid this infinite loop.
-
-Cc: stable@kernel.org
-Signed-off-by: Baokun Li <libaokun1@huawei.com>
-Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
-Link: https://lore.kernel.org/r/20220817132701.3015912-3-libaokun1@huawei.com
+Fixes: 9a4c80194713 ("ext4: ensure Inode flags consistency are checked at build time")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221031055833.3966222-1-cuigaosheng1@huawei.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Cc: stable@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/inode.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ fs/ext4/ext4.h |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/ext4/inode.c
-+++ b/fs/ext4/inode.c
-@@ -4570,9 +4570,17 @@ static int __ext4_get_inode_loc(struct i
- 	inodes_per_block = EXT4_SB(sb)->s_inodes_per_block;
- 	inode_offset = ((inode->i_ino - 1) %
- 			EXT4_INODES_PER_GROUP(sb));
--	block = ext4_inode_table(sb, gdp) + (inode_offset / inodes_per_block);
- 	iloc->offset = (inode_offset % inodes_per_block) * EXT4_INODE_SIZE(sb);
+--- a/fs/ext4/ext4.h
++++ b/fs/ext4/ext4.h
+@@ -486,7 +486,7 @@ enum {
+  *
+  * It's not paranoia if the Murphy's Law really *is* out to get you.  :-)
+  */
+-#define TEST_FLAG_VALUE(FLAG) (EXT4_##FLAG##_FL == (1 << EXT4_INODE_##FLAG))
++#define TEST_FLAG_VALUE(FLAG) (EXT4_##FLAG##_FL == (1U << EXT4_INODE_##FLAG))
+ #define CHECK_FLAG_VALUE(FLAG) BUILD_BUG_ON(!TEST_FLAG_VALUE(FLAG))
  
-+	block = ext4_inode_table(sb, gdp);
-+	if ((block <= le32_to_cpu(EXT4_SB(sb)->s_es->s_first_data_block)) ||
-+	    (block >= ext4_blocks_count(EXT4_SB(sb)->s_es))) {
-+		ext4_error(sb, "Invalid inode table block %llu in "
-+			   "block_group %u", block, iloc->block_group);
-+		return -EFSCORRUPTED;
-+	}
-+	block += (inode_offset / inodes_per_block);
-+
- 	bh = sb_getblk(sb, block);
- 	if (unlikely(!bh))
- 		return -ENOMEM;
+ static inline void ext4_check_flag_values(void)
 
 
