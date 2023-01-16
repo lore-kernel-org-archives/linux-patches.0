@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10B466FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:11:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BE51C433EF;
-	Mon, 16 Jan 2023 17:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63436FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:11:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CDFDC433D2;
+	Mon, 16 Jan 2023 17:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889113;
-	bh=YcNszxDIHDfNYezIV4KXhECUM/QOS3imZTJXrMuXo14=;
+	s=korg; t=1673889116;
+	bh=8t/8EpsGxLvCk3LYdrGVvw23We83IyO0dJF6FTJfp3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XL6c9t08laYtwg/xTXoNKk44SJ8uULCmAhMdRLulQ0z0G+bkNCF79OcHFcV/aKh6c
-	 ggjwZfZt1/2/o7G8A6AQ7RJ3xlteWvrnAtY3HZ2CnfP8Pe6dmDopIVWZ4dKqqCF84z
-	 Sv7Fo8ShYp4QBnwpXjNp2n9NxAPqurBEBT11A9vU=
+	b=BWVLZq3M90l1l+r4UMIcN5m+94k4PooKMkUk2EqywKSvAbgSb869lx46MrWyg8w6+
+	 a7thjophJFE1axu1az7vh3ZkM3Ei9RW+KW+WbJhh7kY3LyC7fmKJuOUnguVyKukwGK
+	 Thz33z1zlld6Ot057c3gFuiHkZWjd7Akba+efg6A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Lynch <nathanl@linux.ibm.com>,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Andrew Donnellan <ajd@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Terry Junge <linuxhid@cosmicgizmosystems.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 263/338] powerpc/rtas: avoid scheduling in rtas_os_term()
-Date: Mon, 16 Jan 2023 16:52:16 +0100
-Message-Id: <20230116154832.551128228@linuxfoundation.org>
+Subject: [PATCH 4.14 264/338] HID: plantronics: Additional PIDs for double volume key presses quirk
+Date: Mon, 16 Jan 2023 16:52:17 +0100
+Message-Id: <20230116154832.596325992@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -37,65 +35,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Lynch <nathanl@linux.ibm.com>
+From: Terry Junge <linuxhid@cosmicgizmosystems.com>
 
-[ Upstream commit 6c606e57eecc37d6b36d732b1ff7e55b7dc32dd4 ]
+[ Upstream commit 3d57f36c89d8ba32b2c312f397a37fd1a2dc7cfc ]
 
-It's unsafe to use rtas_busy_delay() to handle a busy status from
-the ibm,os-term RTAS function in rtas_os_term():
+I no longer work for Plantronics (aka Poly, aka HP) and do not have
+access to the headsets in order to test. However, as noted by Maxim,
+the other 32xx models that share the same base code set as the 3220
+would need the same quirk. This patch adds the PIDs for the rest of
+the Blackwire 32XX product family that require the quirk.
 
-Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
-BUG: sleeping function called from invalid context at arch/powerpc/kernel/rtas.c:618
-in_atomic(): 1, irqs_disabled(): 1, non_block: 0, pid: 1, name: swapper/0
-preempt_count: 2, expected: 0
-CPU: 7 PID: 1 Comm: swapper/0 Tainted: G      D            6.0.0-rc5-02182-gf8553a572277-dirty #9
-Call Trace:
-[c000000007b8f000] [c000000001337110] dump_stack_lvl+0xb4/0x110 (unreliable)
-[c000000007b8f040] [c0000000002440e4] __might_resched+0x394/0x3c0
-[c000000007b8f0e0] [c00000000004f680] rtas_busy_delay+0x120/0x1b0
-[c000000007b8f100] [c000000000052d04] rtas_os_term+0xb8/0xf4
-[c000000007b8f180] [c0000000001150fc] pseries_panic+0x50/0x68
-[c000000007b8f1f0] [c000000000036354] ppc_panic_platform_handler+0x34/0x50
-[c000000007b8f210] [c0000000002303c4] notifier_call_chain+0xd4/0x1c0
-[c000000007b8f2b0] [c0000000002306cc] atomic_notifier_call_chain+0xac/0x1c0
-[c000000007b8f2f0] [c0000000001d62b8] panic+0x228/0x4d0
-[c000000007b8f390] [c0000000001e573c] do_exit+0x140c/0x1420
-[c000000007b8f480] [c0000000001e586c] make_task_dead+0xdc/0x200
+Plantronics Blackwire 3210 Series (047f:c055)
+Plantronics Blackwire 3215 Series (047f:c057)
+Plantronics Blackwire 3225 Series (047f:c058)
 
-Use rtas_busy_delay_time() instead, which signals without side effects
-whether to attempt the ibm,os-term RTAS call again.
+Quote from previous patch by Maxim Mikityanskiy
+Plantronics Blackwire 3220 Series (047f:c056) sends HID reports twice
+for each volume key press. This patch adds a quirk to hid-plantronics
+for this product ID, which will ignore the second volume key press if
+it happens within 5 ms from the last one that was handled.
 
-Signed-off-by: Nathan Lynch <nathanl@linux.ibm.com>
-Reviewed-by: Nicholas Piggin <npiggin@gmail.com>
-Reviewed-by: Andrew Donnellan <ajd@linux.ibm.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221118150751.469393-5-nathanl@linux.ibm.com
+The patch was tested on the mentioned model only, it shouldn't affect
+other models, however, this quirk might be needed for them too.
+Auto-repeat (when a key is held pressed) is not affected, because the
+rate is about 3 times per second, which is far less frequent than once
+in 5 ms.
+End quote
+
+Signed-off-by: Terry Junge <linuxhid@cosmicgizmosystems.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/kernel/rtas.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/hid/hid-ids.h         | 3 +++
+ drivers/hid/hid-plantronics.c | 9 +++++++++
+ 2 files changed, 12 insertions(+)
 
-diff --git a/arch/powerpc/kernel/rtas.c b/arch/powerpc/kernel/rtas.c
-index 914d71879536..5d84b412b2fd 100644
---- a/arch/powerpc/kernel/rtas.c
-+++ b/arch/powerpc/kernel/rtas.c
-@@ -733,10 +733,15 @@ void rtas_os_term(char *str)
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index e5f2958bc18c..26db838be5a2 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -859,7 +859,10 @@
+ #define USB_DEVICE_ID_ORTEK_IHOME_IMAC_A210S	0x8003
  
- 	snprintf(rtas_os_term_buf, 2048, "OS panic: %s", str);
+ #define USB_VENDOR_ID_PLANTRONICS	0x047f
++#define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3210_SERIES	0xc055
+ #define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3220_SERIES	0xc056
++#define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3215_SERIES	0xc057
++#define USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3225_SERIES	0xc058
  
-+	/*
-+	 * Keep calling as long as RTAS returns a "try again" status,
-+	 * but don't use rtas_busy_delay(), which potentially
-+	 * schedules.
-+	 */
- 	do {
- 		status = rtas_call(ibm_os_term_token, 1, 1, NULL,
- 				   __pa(rtas_os_term_buf));
--	} while (rtas_busy_delay(status));
-+	} while (rtas_busy_delay_time(status));
+ #define USB_VENDOR_ID_PANASONIC		0x04da
+ #define USB_DEVICE_ID_PANABOARD_UBT780	0x1044
+diff --git a/drivers/hid/hid-plantronics.c b/drivers/hid/hid-plantronics.c
+index 460711c1124a..3b75cadd543f 100644
+--- a/drivers/hid/hid-plantronics.c
++++ b/drivers/hid/hid-plantronics.c
+@@ -201,9 +201,18 @@ static int plantronics_probe(struct hid_device *hdev,
+ }
  
- 	if (status != 0)
- 		printk(KERN_EMERG "ibm,os-term call failed %d\n", status);
+ static const struct hid_device_id plantronics_devices[] = {
++	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
++					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3210_SERIES),
++		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
+ 					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3220_SERIES),
+ 		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
++					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3215_SERIES),
++		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS,
++					 USB_DEVICE_ID_PLANTRONICS_BLACKWIRE_3225_SERIES),
++		.driver_data = PLT_QUIRK_DOUBLE_VOLUME_KEYS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_PLANTRONICS, HID_ANY_ID) },
+ 	{ }
+ };
 -- 
 2.35.1
 
