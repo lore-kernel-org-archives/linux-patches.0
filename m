@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AC946FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:14:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3DFAC433D2;
-	Mon, 16 Jan 2023 17:14:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C18E96FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:14:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47B61C433EF;
+	Mon, 16 Jan 2023 17:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889245;
-	bh=EaiBnWsK4yKxCsKoH9R89S6owmkX2CbI+I0HnD46y0w=;
+	s=korg; t=1673889247;
+	bh=NTT+qHKewQPt4vngVcPkNp3MBFfOTp95N/UezIrtxy8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eOuX/UX4A9NKwwysEjhblsCnZTIyQ5p/6CeaO7IilGwITuIcRC5XgmqgY4hgzlFbZ
-	 AyAHYSOSXKeU3KLUhRHPoR66hjWwWdTLqczvkTrPHJzu+oCCrWxwWuJ3NHflursJGE
-	 IxWi9iadAm3zkMThqJvfqAi1kGNonsJr8YMktW0E=
+	b=qhOBrpEZifMrMBp747judxfhIejERFx34hOsUtzGhiMCo0MPHZ9jIk7eAoLDSOgWC
+	 j9LArueAC4KB0t4rc+6IFLQfrfvNCmpj0jF0opW7jhRx7YFargYarX5XNht8L5WShl
+	 5Aj9kKYRf+YACcZCO6Ns8MoozurlTOqNDnNT/W3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Yang Jihong <yangjihong1@huawei.com>,
+	"John Warthog9 Hawley (VMware)" <warthog9@eaglescrag.net>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 4.14 283/338] tracing: Fix infinite loop in tracing_read_pipe on overflowed print_trace_line
-Date: Mon, 16 Jan 2023 16:52:36 +0100
-Message-Id: <20230116154833.411421405@linuxfoundation.org>
+Subject: [PATCH 4.14 274/338] ktest.pl minconfig: Unset configs instead of just removing them
+Date: Mon, 16 Jan 2023 16:52:27 +0100
+Message-Id: <20230116154833.035491884@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,48 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Steven Rostedt <rostedt@goodmis.org>
 
-commit c1ac03af6ed45d05786c219d102f37eb44880f28 upstream.
+commit ef784eebb56425eed6e9b16e7d47e5c00dcf9c38 upstream.
 
-print_trace_line may overflow seq_file buffer. If the event is not
-consumed, the while loop keeps peeking this event, causing a infinite loop.
+After a full run of a make_min_config test, I noticed there were a lot of
+CONFIGs still enabled that really should not be. Looking at them, I
+noticed they were all defined as "default y". The issue is that the test
+simple removes the config and re-runs make oldconfig, which enables it
+again because it is set to default 'y'. Instead, explicitly disable the
+config with writing "# CONFIG_FOO is not set" to the file to keep it from
+being set again.
 
-Link: https://lkml.kernel.org/r/20221129113009.182425-1-yangjihong1@huawei.com
+With this change, one of my box's minconfigs went from 768 configs set,
+down to 521 configs set.
 
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Link: https://lkml.kernel.org/r/20221202115936.016fce23@gandalf.local.home
+
 Cc: stable@vger.kernel.org
-Fixes: 088b1e427dbba ("ftrace: pipe fixes")
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Fixes: 0a05c769a9de5 ("ktest: Added config_bisect test type")
+Reviewed-by: John 'Warthog9' Hawley (VMware) <warthog9@eaglescrag.net>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ tools/testing/ktest/ktest.pl |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -5798,7 +5798,20 @@ waitagain:
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -3797,9 +3797,10 @@ sub test_this_config {
+     # .config to make sure it is missing the config that
+     # we had before
+     my %configs = %min_configs;
+-    delete $configs{$config};
++    $configs{$config} = "# $config is not set";
+     make_new_config ((values %configs), (values %keep_configs));
+     make_oldconfig;
++    delete $configs{$config};
+     undef %configs;
+     assign_configs \%configs, $output_config;
  
- 		ret = print_trace_line(iter);
- 		if (ret == TRACE_TYPE_PARTIAL_LINE) {
--			/* don't print partial lines */
-+			/*
-+			 * If one print_trace_line() fills entire trace_seq in one shot,
-+			 * trace_seq_to_user() will returns -EBUSY because save_len == 0,
-+			 * In this case, we need to consume it, otherwise, loop will peek
-+			 * this event next time, resulting in an infinite loop.
-+			 */
-+			if (save_len == 0) {
-+				iter->seq.full = 0;
-+				trace_seq_puts(&iter->seq, "[LINE TOO BIG]\n");
-+				trace_consume(iter);
-+				break;
-+			}
-+
-+			/* In other cases, don't print partial lines */
- 			iter->seq.seq.len = save_len;
- 			break;
- 		}
 
 
