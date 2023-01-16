@@ -1,34 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86AE76FA3
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:03:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D7EF4C433F0;
-	Mon, 16 Jan 2023 17:03:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B0B6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:03:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71220C433D2;
+	Mon, 16 Jan 2023 17:03:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888593;
-	bh=3m25rgi26y6yv4/IUxIK704nW26sI2cbi7Nsnaz5WKQ=;
+	s=korg; t=1673888590;
+	bh=XZbEQknCyg1jcKzd9RfraxZOjt78kJ1E9oqPv1n3/h4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IVuOFfSLJdU/bH68pJ0Aj3ZspAbOuUFbQCpq+DCC5Capjqa4jAX1gdGlKmwUypteu
-	 KIdoWJU2KYBI+sCErt2fZyG7vN828R4HlPclbEtyGg2tCAcsdv3T6I+pkl2IRvhX/H
-	 N2tuSwBE42D7wSnQyQYw4Xako+7SPoIwyTYBnA4M=
+	b=2OuWjlpAudSVWMMfsdSOvLAtLbh34YdTuwlRw+eaLM7bzqrU5wb346QINSlzkAgle
+	 dUbbCE9rSOLk7zFDzf5kWwKX8b2f+E+yM7W756BeZl1skSz9d5C3XSYlJSXwYWy2sD
+	 6UyU3nyq4nKv2zJkBgHH8OqJrZRWy+0xiCGvCKqo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shang XiaoJing <shangxiaojing@huawei.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Mark Fasheh <mark@fasheh.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Junxiao Bi <junxiao.bi@oracle.com>,
-	Changwei Ge <gechangwei@live.cn>,
-	Gang He <ghe@suse.com>,
-	Jun Piao <piaojun@huawei.com>,
+	ZhangPeng <zhangpeng362@huawei.com>,
+	Viacheslav Dubeyko <slava@dubeyko.com>,
+	syzbot+dc3b1cf9111ab5fe98e7@syzkaller.appspotmail.com,
 	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 047/338] ocfs2: fix memory leak in ocfs2_stack_glue_init()
-Date: Mon, 16 Jan 2023 16:48:40 +0100
-Message-Id: <20230116154822.850801172@linuxfoundation.org>
+Subject: [PATCH 4.14 064/338] hfs: Fix OOB Write in hfs_asc2mac
+Date: Mon, 16 Jan 2023 16:48:57 +0100
+Message-Id: <20230116154823.622539680@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -42,71 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shang XiaoJing <shangxiaojing@huawei.com>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit 13b6269dd022aaa69ca8d1df374ab327504121cf ]
+[ Upstream commit c53ed55cb275344086e32a7080a6b19cb183650b ]
 
-ocfs2_table_header should be free in ocfs2_stack_glue_init() if
-ocfs2_sysfs_init() failed, otherwise kmemleak will report memleak.
+Syzbot reported a OOB Write bug:
 
-BUG: memory leak
-unreferenced object 0xffff88810eeb5800 (size 128):
-  comm "modprobe", pid 4507, jiffies 4296182506 (age 55.888s)
-  hex dump (first 32 bytes):
-    c0 40 14 a0 ff ff ff ff 00 00 00 00 01 00 00 00  .@..............
-    01 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<000000001e59e1cd>] __register_sysctl_table+0xca/0xef0
-    [<00000000c04f70f7>] 0xffffffffa0050037
-    [<000000001bd12912>] do_one_initcall+0xdb/0x480
-    [<0000000064f766c9>] do_init_module+0x1cf/0x680
-    [<000000002ba52db0>] load_module+0x6441/0x6f20
-    [<000000009772580d>] __do_sys_finit_module+0x12f/0x1c0
-    [<00000000380c1f22>] do_syscall_64+0x3f/0x90
-    [<000000004cf473bc>] entry_SYSCALL_64_after_hwframe+0x63/0xcd
+loop0: detected capacity change from 0 to 64
+==================================================================
+BUG: KASAN: slab-out-of-bounds in hfs_asc2mac+0x467/0x9a0
+fs/hfs/trans.c:133
+Write of size 1 at addr ffff88801848314e by task syz-executor391/3632
 
-Link: https://lkml.kernel.org/r/41651ca1-432a-db34-eb97-d35744559de1@linux.alibaba.com
-Fixes: 3878f110f71a ("ocfs2: Move the hb_ctl_path sysctl into the stack glue.")
-Signed-off-by: Shang XiaoJing <shangxiaojing@huawei.com>
-Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Junxiao Bi <junxiao.bi@oracle.com>
-Cc: Changwei Ge <gechangwei@live.cn>
-Cc: Gang He <ghe@suse.com>
-Cc: Jun Piao <piaojun@huawei.com>
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0x1b1/0x28e lib/dump_stack.c:106
+ print_address_description+0x74/0x340 mm/kasan/report.c:284
+ print_report+0x107/0x1f0 mm/kasan/report.c:395
+ kasan_report+0xcd/0x100 mm/kasan/report.c:495
+ hfs_asc2mac+0x467/0x9a0 fs/hfs/trans.c:133
+ hfs_cat_build_key+0x92/0x170 fs/hfs/catalog.c:28
+ hfs_lookup+0x1ab/0x2c0 fs/hfs/dir.c:31
+ lookup_open fs/namei.c:3391 [inline]
+ open_last_lookups fs/namei.c:3481 [inline]
+ path_openat+0x10e6/0x2df0 fs/namei.c:3710
+ do_filp_open+0x264/0x4f0 fs/namei.c:3740
+
+If in->len is much larger than HFS_NAMELEN(31) which is the maximum
+length of an HFS filename, a OOB write could occur in hfs_asc2mac(). In
+that case, when the dst reaches the boundary, the srclen is still
+greater than 0, which causes a OOB write.
+Fix this by adding a check on dstlen in while() before writing to dst
+address.
+
+Link: https://lkml.kernel.org/r/20221202030038.1391945-1-zhangpeng362@huawei.com
+Fixes: 328b92278650 ("[PATCH] hfs: NLS support")
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
+Reviewed-by: Viacheslav Dubeyko <slava@dubeyko.com>
+Reported-by: <syzbot+dc3b1cf9111ab5fe98e7@syzkaller.appspotmail.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ocfs2/stackglue.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ fs/hfs/trans.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/ocfs2/stackglue.c b/fs/ocfs2/stackglue.c
-index e7eb08ac4215..10d691530d83 100644
---- a/fs/ocfs2/stackglue.c
-+++ b/fs/ocfs2/stackglue.c
-@@ -715,6 +715,8 @@ static struct ctl_table_header *ocfs2_table_header;
+diff --git a/fs/hfs/trans.c b/fs/hfs/trans.c
+index 39f5e343bf4d..fdb0edb8a607 100644
+--- a/fs/hfs/trans.c
++++ b/fs/hfs/trans.c
+@@ -109,7 +109,7 @@ void hfs_asc2mac(struct super_block *sb, struct hfs_name *out, const struct qstr
+ 	if (nls_io) {
+ 		wchar_t ch;
  
- static int __init ocfs2_stack_glue_init(void)
- {
-+	int ret;
-+
- 	strcpy(cluster_stack_name, OCFS2_STACK_PLUGIN_O2CB);
- 
- 	ocfs2_table_header = register_sysctl_table(ocfs2_root_table);
-@@ -724,7 +726,11 @@ static int __init ocfs2_stack_glue_init(void)
- 		return -ENOMEM; /* or something. */
- 	}
- 
--	return ocfs2_sysfs_init();
-+	ret = ocfs2_sysfs_init();
-+	if (ret)
-+		unregister_sysctl_table(ocfs2_table_header);
-+
-+	return ret;
- }
- 
- static void __exit ocfs2_stack_glue_exit(void)
+-		while (srclen > 0) {
++		while (srclen > 0 && dstlen > 0) {
+ 			size = nls_io->char2uni(src, srclen, &ch);
+ 			if (size < 0) {
+ 				ch = '?';
 -- 
 2.35.1
 
