@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF4F46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85BDFC433D2;
-	Mon, 16 Jan 2023 16:19:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D316B46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 597FDC433EF;
+	Mon, 16 Jan 2023 16:19:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885995;
-	bh=z+jrDHmKjofKg1Lnfg8xr3pyhiUDQqFFUAePcemAF6U=;
+	s=korg; t=1673885998;
+	bh=xOSIsdrlsN8wvIdBL7ojX65T6doiYRzlcIhZ17Gdm40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qpyElItWIS6UnRq+qmL7YXS6zvx+CfWUqriPx0LfebvviMUFRat620ZAKpiN+SRqT
-	 T95D+qPlbVzR+iEmrSEAAptxuSaD0Cl7f1nBwdUluTy4ou57844bKxr1fSvefv9lVL
-	 ZSIbS+rjwLCyyCx4gLfKKxskq4MgtgmPRnwaztzY=
+	b=zlZOQRGoaD/mpnC1odjOZJoJNyIS1W3ya4uxFJV/00ZAJz3c+e/tVW49wRXHZAxXi
+	 Ca2vxcE0Mt5mqtLDydsI0w/ZY5biFiGfuWt73PMpWRq2Ia3KQIWOoFqu5ZBpmdWtEp
+	 Aj1/kSLBrN+piqo0c6RQvlfAwTbrDoHxHNnbxVJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Narsimhulu Musini <nmusini@cisco.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 263/658] scsi: fcoe: Fix transport not deattached when fcoe_if_init() fails
-Date: Mon, 16 Jan 2023 16:45:51 +0100
-Message-Id: <20230116154921.628589423@linuxfoundation.org>
+Subject: [PATCH 5.4 264/658] scsi: snic: Fix possible UAF in snic_tgt_create()
+Date: Mon, 16 Jan 2023 16:45:52 +0100
+Message-Id: <20230116154921.665335690@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,44 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 4155658cee394b22b24c6d64e49247bf26d95b92 ]
+[ Upstream commit e118df492320176af94deec000ae034cc92be754 ]
 
-fcoe_init() calls fcoe_transport_attach(&fcoe_sw_transport), but when
-fcoe_if_init() fails, &fcoe_sw_transport is not detached and leaves freed
-&fcoe_sw_transport on fcoe_transports list. This causes panic when
-reinserting module.
+Smatch reports a warning as follows:
 
- BUG: unable to handle page fault for address: fffffbfff82e2213
- RIP: 0010:fcoe_transport_attach+0xe1/0x230 [libfcoe]
- Call Trace:
-  <TASK>
-  do_one_initcall+0xd0/0x4e0
-  load_module+0x5eee/0x7210
-  ...
+drivers/scsi/snic/snic_disc.c:307 snic_tgt_create() warn:
+  '&tgt->list' not removed from list
 
-Fixes: 78a582463c1e ("[SCSI] fcoe: convert fcoe.ko to become an fcoe transport provider driver")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221115092442.133088-1-chenzhongjin@huawei.com
+If device_add() fails in snic_tgt_create(), tgt will be freed, but
+tgt->list will not be removed from snic->disc.tgt_list, then list traversal
+may cause UAF.
+
+Remove from snic->disc.tgt_list before free().
+
+Fixes: c8806b6c9e82 ("snic: driver for Cisco SCSI HBA")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221117035100.2944812-1-cuigaosheng1@huawei.com
+Acked-by: Narsimhulu Musini <nmusini@cisco.com>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/fcoe/fcoe.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/scsi/snic/snic_disc.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/scsi/fcoe/fcoe.c b/drivers/scsi/fcoe/fcoe.c
-index 25dae9f0b205..00ddb3fd940f 100644
---- a/drivers/scsi/fcoe/fcoe.c
-+++ b/drivers/scsi/fcoe/fcoe.c
-@@ -2506,6 +2506,7 @@ static int __init fcoe_init(void)
+diff --git a/drivers/scsi/snic/snic_disc.c b/drivers/scsi/snic/snic_disc.c
+index e9ccfb97773f..7cf871323b2c 100644
+--- a/drivers/scsi/snic/snic_disc.c
++++ b/drivers/scsi/snic/snic_disc.c
+@@ -318,6 +318,9 @@ snic_tgt_create(struct snic *snic, struct snic_tgt_id *tgtid)
+ 			      ret);
  
- out_free:
- 	mutex_unlock(&fcoe_config_mutex);
-+	fcoe_transport_detach(&fcoe_sw_transport);
- out_destroy:
- 	destroy_workqueue(fcoe_wq);
- 	return rc;
+ 		put_device(&snic->shost->shost_gendev);
++		spin_lock_irqsave(snic->shost->host_lock, flags);
++		list_del(&tgt->list);
++		spin_unlock_irqrestore(snic->shost->host_lock, flags);
+ 		kfree(tgt);
+ 		tgt = NULL;
+ 
 -- 
 2.35.1
 
