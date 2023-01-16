@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49FD946B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:09:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C28F4C433F0;
-	Mon, 16 Jan 2023 16:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F097846B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:09:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E3A9C433D2;
+	Mon, 16 Jan 2023 16:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885351;
-	bh=HChJHmFT/sOYSM1H3gN7N6r+y+P1rf8cl7zPH+28QfU=;
+	s=korg; t=1673885353;
+	bh=fMbWpeQ5kb0Jxaq52MZ8sIxk72RBafFwhNwFuurI69Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=murorOG8Exw7qdWb0YzBQr7gu75gKM3/bY+D/VPl6VE/w6b40amYap20VBXkSIryf
-	 qDUJwq5pPnrD8Vthrsitrjy6XbtNA3FUFWtikNZvIxZtSBZ6sEhDAoh50Gt+YbCqjg
-	 vAjHmzNxpKi4KDuSZedEZF36OuSV2CTG0U4e/hCU=
+	b=vdHAcYeSoeaJBl9irJVwghDL2Z1jJnbSaUacYmwaeH044rCoY3VgC987noKefkyb3
+	 Kk/lyKWDWYow2g/vXjk3XniUzTpcHkwsnyDFViv8eVSYQaHF31P1vDetLQcwr6cIJO
+	 UjwY8rTsbT4jC0+HCnLTPGQdl8fsoU27lPA+ai/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 019/658] usb: musb: remove extra check in musb_gadget_vbus_draw
-Date: Mon, 16 Jan 2023 16:41:47 +0100
-Message-Id: <20230116154910.525397248@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 5.4 002/658] udf: Discard preallocation before extending file with a hole
+Date: Mon, 16 Jan 2023 16:41:30 +0100
+Message-Id: <20230116154909.770142846@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,47 +33,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit ecec4b20d29c3d6922dafe7d2555254a454272d2 ]
+commit 16d0556568148bdcaa45d077cac9f8f7077cf70a upstream.
 
-The checks for musb->xceiv and musb->xceiv->set_power duplicate those in
-usb_phy_set_power(), so there is no need of them. Moreover, not calling
-usb_phy_set_power() results in usb_phy_set_charger_current() not being
-called, so current USB config max current is not propagated through USB
-charger framework and charger drivers may try to draw more current than
-allowed or possible.
+When extending file with a hole, we tried to preserve existing
+preallocation for the file. However that is not very useful and
+complicates code because the previous extent may need to be rounded to
+block boundary as well (which we forgot to do thus causing data
+corruption for sequence like:
 
-Fix that by removing those extra checks and calling usb_phy_set_power()
-directly.
+xfs_io -f -c "pwrite 0x75e63 11008" -c "truncate 0x7b24b" \
+  -c "truncate 0xabaa3" -c "pwrite 0xac70b 22954" \
+  -c "pwrite 0x93a43 11358" -c "pwrite 0xb8e65 52211" file
 
-Tested on Motorola Droid4 and Nokia N900
+with 512-byte block size. Just discard preallocation before extending
+file to simplify things and also fix this data corruption.
 
-Fixes: a9081a008f84 ("usb: phy: Add USB charger support")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Ivaylo Dimitrov <ivo.g.dimitrov.75@gmail.com>
-Link: https://lore.kernel.org/r/1669400475-4762-1-git-send-email-ivo.g.dimitrov.75@gmail.com
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/musb/musb_gadget.c | 2 --
- 1 file changed, 2 deletions(-)
+ fs/udf/inode.c |   46 ++++++++++++++++++----------------------------
+ 1 file changed, 18 insertions(+), 28 deletions(-)
 
-diff --git a/drivers/usb/musb/musb_gadget.c b/drivers/usb/musb/musb_gadget.c
-index 8e83995fc3bd..b8fc818c154a 100644
---- a/drivers/usb/musb/musb_gadget.c
-+++ b/drivers/usb/musb/musb_gadget.c
-@@ -1629,8 +1629,6 @@ static int musb_gadget_vbus_draw(struct usb_gadget *gadget, unsigned mA)
- {
- 	struct musb	*musb = gadget_to_musb(gadget);
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -441,6 +441,12 @@ static int udf_get_block(struct inode *i
+ 		iinfo->i_next_alloc_goal++;
+ 	}
  
--	if (!musb->xceiv->set_power)
--		return -EOPNOTSUPP;
- 	return usb_phy_set_power(musb->xceiv, mA);
- }
++	/*
++	 * Block beyond EOF and prealloc extents? Just discard preallocation
++	 * as it is not useful and complicates things.
++	 */
++	if (((loff_t)block) << inode->i_blkbits > iinfo->i_lenExtents)
++		udf_discard_prealloc(inode);
+ 	udf_clear_extent_cache(inode);
+ 	phys = inode_getblk(inode, block, &err, &new);
+ 	if (!phys)
+@@ -490,8 +496,6 @@ static int udf_do_extend_file(struct ino
+ 	uint32_t add;
+ 	int count = 0, fake = !(last_ext->extLength & UDF_EXTENT_LENGTH_MASK);
+ 	struct super_block *sb = inode->i_sb;
+-	struct kernel_lb_addr prealloc_loc = {};
+-	uint32_t prealloc_len = 0;
+ 	struct udf_inode_info *iinfo;
+ 	int err;
  
--- 
-2.35.1
-
+@@ -512,19 +516,6 @@ static int udf_do_extend_file(struct ino
+ 			~(sb->s_blocksize - 1);
+ 	}
+ 
+-	/* Last extent are just preallocated blocks? */
+-	if ((last_ext->extLength & UDF_EXTENT_FLAG_MASK) ==
+-						EXT_NOT_RECORDED_ALLOCATED) {
+-		/* Save the extent so that we can reattach it to the end */
+-		prealloc_loc = last_ext->extLocation;
+-		prealloc_len = last_ext->extLength;
+-		/* Mark the extent as a hole */
+-		last_ext->extLength = EXT_NOT_RECORDED_NOT_ALLOCATED |
+-			(last_ext->extLength & UDF_EXTENT_LENGTH_MASK);
+-		last_ext->extLocation.logicalBlockNum = 0;
+-		last_ext->extLocation.partitionReferenceNum = 0;
+-	}
+-
+ 	/* Can we merge with the previous extent? */
+ 	if ((last_ext->extLength & UDF_EXTENT_FLAG_MASK) ==
+ 					EXT_NOT_RECORDED_NOT_ALLOCATED) {
+@@ -552,7 +543,7 @@ static int udf_do_extend_file(struct ino
+ 		 * more extents, we may need to enter possible following
+ 		 * empty indirect extent.
+ 		 */
+-		if (new_block_bytes || prealloc_len)
++		if (new_block_bytes)
+ 			udf_next_aext(inode, last_pos, &tmploc, &tmplen, 0);
+ 	}
+ 
+@@ -586,17 +577,6 @@ static int udf_do_extend_file(struct ino
+ 	}
+ 
+ out:
+-	/* Do we have some preallocated blocks saved? */
+-	if (prealloc_len) {
+-		err = udf_add_aext(inode, last_pos, &prealloc_loc,
+-				   prealloc_len, 1);
+-		if (err)
+-			return err;
+-		last_ext->extLocation = prealloc_loc;
+-		last_ext->extLength = prealloc_len;
+-		count++;
+-	}
+-
+ 	/* last_pos should point to the last written extent... */
+ 	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
+ 		last_pos->offset -= sizeof(struct short_ad);
+@@ -649,8 +629,17 @@ static int udf_extend_file(struct inode
+ 	else
+ 		BUG();
+ 
++	/*
++	 * When creating hole in file, just don't bother with preserving
++	 * preallocation. It likely won't be very useful anyway.
++	 */
++	udf_discard_prealloc(inode);
++
+ 	etype = inode_bmap(inode, first_block, &epos, &eloc, &elen, &offset);
+ 	within_final_block = (etype != -1);
++	/* We don't expect extents past EOF... */
++	WARN_ON_ONCE(etype != -1 &&
++		     elen > ((loff_t)offset + 1) << inode->i_blkbits);
+ 
+ 	if ((!epos.bh && epos.offset == udf_file_entry_alloc_offset(inode)) ||
+ 	    (epos.bh && epos.offset == sizeof(struct allocExtDesc))) {
+@@ -779,10 +768,11 @@ static sector_t inode_getblk(struct inod
+ 		goto out_free;
+ 	}
+ 
+-	/* Are we beyond EOF? */
++	/* Are we beyond EOF and preallocated extent? */
+ 	if (etype == -1) {
+ 		int ret;
+ 		loff_t hole_len;
++
+ 		isBeyondEOF = true;
+ 		if (count) {
+ 			if (c)
 
 
