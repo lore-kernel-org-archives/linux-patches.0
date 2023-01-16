@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCDB246B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:40:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4415CC433EF;
-	Mon, 16 Jan 2023 16:40:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6423B46B8
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:40:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD92AC433F0;
+	Mon, 16 Jan 2023 16:40:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887210;
-	bh=C8x4uVdRHP/lTi04G4B4Q3s5FPy1Zj65zhXZCCwPYfs=;
+	s=korg; t=1673887213;
+	bh=byfGjJcE9TSs+QzPf69ugM7pJQW6DUL4JOTZX5yekpQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jOD+7djN7xBt/Z72rHtgAQdG1xG7lEW/0aoD9Ie7NYfrkwnzt2qlovojijL8S9ce+
-	 H4TYGrApCpUR0kOVG2wChd5mHBnDsZlEPedVSKLQfQ7/ZIlSLN5RsfNBI4eG64X/CI
-	 zzkjGRxhI+iixyN4xkLNHQAtHMkTPyYgmMW5FYOU=
+	b=QsSTYKelH0Tn/VJC8IE2ewJjSAY9xg2O4WDoq8pCLkN2P68AOoGUYXLYDMQPioxXo
+	 u/E7fIKcfkQPfVHjDx84LXnuptU7AYOsWCAnLqNGCYoN2UjF9B5tZmHlPL8TXjnhsw
+	 TGmH6cnnnAyU+jGvE47QOK2xd14enaynphekxgew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	=?UTF-8?q?Niklas=20S=C3=B6derlund?= <niklas.soderlund+renesas@ragnatech.se>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 062/521] rapidio: rio: fix possible name leak in rio_register_mport()
-Date: Mon, 16 Jan 2023 16:45:24 +0100
-Message-Id: <20230116154850.002097168@linuxfoundation.org>
+Subject: [PATCH 4.19 063/521] clocksource/drivers/sh_cmt: Make sure channel clock supply is enabled
+Date: Mon, 16 Jan 2023 16:45:25 +0100
+Message-Id: <20230116154850.052303926@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,49 +36,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit e92a216d16bde65d21a3227e0fb2aa0794576525 ]
+[ Upstream commit 2a97d55333e4299f32c98cca6dc5c4db1c5855fc ]
 
-If device_register() returns error, the name allocated by dev_set_name()
-need be freed.  It should use put_device() to give up the reference in the
-error path, so that the name can be freed in kobject_cleanup(), and
-list_del() is called to delete the port from rio_mports.
+The Renesas Compare Match Timer 0 and 1 (CMT0/1) variants have a
+register to control the clock supply to the individual channels.
+Currently the driver does not touch this register, and relies on the
+documented initial value, which has the clock supply enabled for all
+channels present.
 
-Link: https://lkml.kernel.org/r/20221114152636.2939035-3-yangyingliang@huawei.com
-Fixes: 2aaf308b95b2 ("rapidio: rework device hierarchy and introduce mport class of devices")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+However, when Linux starts on the APE6-EVM development board, only the
+clock supply to the first CMT1 channel is enabled.  Hence the first
+channel (used as a clockevent) works, while the second channel (used as
+a clocksource) does not.  Note that the default system clocksource is
+the Cortex-A15 architectured timer, and the user needs to manually
+switch to the CMT1 clocksource to trigger the broken behavior.
+
+Fix this by removing the fragile dependency on implicit reset and/or
+boot loader state, and by enabling the clock supply explicitly for all
+channels used instead.  This requires postponing the clk_disable() call,
+else the timer's registers cannot be accessed in sh_cmt_setup_channel().
+
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Niklas Söderlund <niklas.soderlund+renesas@ragnatech.se>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Link: https://lore.kernel.org/r/20201210194648.2901899-1-geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rapidio/rio.c | 9 +++++++--
- 1 file changed, 7 insertions(+), 2 deletions(-)
+ drivers/clocksource/sh_cmt.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/rapidio/rio.c b/drivers/rapidio/rio.c
-index 83406696c7aa..4304142d8700 100644
---- a/drivers/rapidio/rio.c
-+++ b/drivers/rapidio/rio.c
-@@ -2271,11 +2271,16 @@ int rio_register_mport(struct rio_mport *port)
- 	atomic_set(&port->state, RIO_DEVICE_RUNNING);
+diff --git a/drivers/clocksource/sh_cmt.c b/drivers/clocksource/sh_cmt.c
+index 7a6d4c4c0feb..0ca8819acc4d 100644
+--- a/drivers/clocksource/sh_cmt.c
++++ b/drivers/clocksource/sh_cmt.c
+@@ -239,6 +239,8 @@ static const struct sh_cmt_info sh_cmt_info[] = {
+ #define CMCNT 1 /* channel register */
+ #define CMCOR 2 /* channel register */
  
- 	res = device_register(&port->dev);
--	if (res)
-+	if (res) {
- 		dev_err(&port->dev, "RIO: mport%d registration failed ERR=%d\n",
- 			port->id, res);
--	else
-+		mutex_lock(&rio_mport_list_lock);
-+		list_del(&port->node);
-+		mutex_unlock(&rio_mport_list_lock);
-+		put_device(&port->dev);
-+	} else {
- 		dev_dbg(&port->dev, "RIO: registered mport%d\n", port->id);
-+	}
++#define CMCLKE	0x1000	/* CLK Enable Register (R-Car Gen2) */
++
+ static inline u32 sh_cmt_read_cmstr(struct sh_cmt_channel *ch)
+ {
+ 	if (ch->iostart)
+@@ -856,6 +858,7 @@ static int sh_cmt_setup_channel(struct sh_cmt_channel *ch, unsigned int index,
+ 				unsigned int hwidx, bool clockevent,
+ 				bool clocksource, struct sh_cmt_device *cmt)
+ {
++	u32 value;
+ 	int ret;
  
- 	return res;
- }
+ 	/* Skip unused channels. */
+@@ -885,6 +888,11 @@ static int sh_cmt_setup_channel(struct sh_cmt_channel *ch, unsigned int index,
+ 		ch->iostart = cmt->mapbase + ch->hwidx * 0x100;
+ 		ch->ioctrl = ch->iostart + 0x10;
+ 		ch->timer_bit = 0;
++
++		/* Enable the clock supply to the channel */
++		value = ioread32(cmt->mapbase + CMCLKE);
++		value |= BIT(hwidx);
++		iowrite32(value, cmt->mapbase + CMCLKE);
+ 		break;
+ 	}
+ 
+@@ -991,12 +999,10 @@ static int sh_cmt_setup(struct sh_cmt_device *cmt, struct platform_device *pdev)
+ 	else
+ 		cmt->rate = clk_get_rate(cmt->clk) / 8;
+ 
+-	clk_disable(cmt->clk);
+-
+ 	/* Map the memory resource(s). */
+ 	ret = sh_cmt_map_memory(cmt);
+ 	if (ret < 0)
+-		goto err_clk_unprepare;
++		goto err_clk_disable;
+ 
+ 	/* Allocate and setup the channels. */
+ 	cmt->num_channels = hweight8(cmt->hw_channels);
+@@ -1024,6 +1030,8 @@ static int sh_cmt_setup(struct sh_cmt_device *cmt, struct platform_device *pdev)
+ 		mask &= ~(1 << hwidx);
+ 	}
+ 
++	clk_disable(cmt->clk);
++
+ 	platform_set_drvdata(pdev, cmt);
+ 
+ 	return 0;
+@@ -1031,6 +1039,8 @@ static int sh_cmt_setup(struct sh_cmt_device *cmt, struct platform_device *pdev)
+ err_unmap:
+ 	kfree(cmt->channels);
+ 	iounmap(cmt->mapbase);
++err_clk_disable:
++	clk_disable(cmt->clk);
+ err_clk_unprepare:
+ 	clk_unprepare(cmt->clk);
+ err_clk_put:
 -- 
 2.35.1
 
