@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADEBC46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:26:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 307FEC433EF;
-	Mon, 16 Jan 2023 16:26:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A9B446B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:26:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2173C433D2;
+	Mon, 16 Jan 2023 16:26:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886406;
-	bh=mGGdj8rVY8LO18yE9X2vWCLtdaXUmMJ9KpL7r1DuAXU=;
+	s=korg; t=1673886409;
+	bh=Hxf2ofDOFkuf3zwfsf9fN5cHTWuI+VZDWO/d7iDRhKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZSFpP/DYfxNHNXsAPbMshWH4YjWGE/8nFmns+5Ek/DQFsn210Pj9IEXZL+oC/CXm
-	 r9dLDn3Ew97BuvELrZxjNtA/io77HZHZp9axhE9ycpe2YO3afbhMBYcdHPx/hUWDl4
-	 2W12R2PoibxR55L4YRUzIVfD4y1MpkI6rx7x5LJw=
+	b=rGOf8QzPjFyWujXpitd7yNthjOhGiJkQ6esq67OPbslPox2B0TAxHEuZZfCDI8fhd
+	 s5uomkEtD9a6ovEWNKLwCm23KX8+Q28rL18IBX0d5RARzqgTPJhD8t7ZX8OSNuOprm
+	 HQpEU0lRuoup3y8VzNmdWpjrDoaf3Ap4M6uMnnGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+15342c1aa6a00fb7a438@syzkaller.appspotmail.com,
-	Dongliang Mu <mudongliangabcd@gmail.com>,
-	Dave Kleikamp <dave.kleikamp@oracle.com>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 388/658] fs: jfs: fix shift-out-of-bounds in dbAllocAG
-Date: Mon, 16 Jan 2023 16:47:56 +0100
-Message-Id: <20230116154927.315843794@linuxfoundation.org>
+Subject: [PATCH 5.4 379/658] openvswitch: Fix flow lookup to use unmasked key
+Date: Mon, 16 Jan 2023 16:47:47 +0100
+Message-Id: <20230116154926.886444081@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,88 +35,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dongliang Mu <mudongliangabcd@gmail.com>
+From: Eelco Chaudron <echaudro@redhat.com>
 
-[ Upstream commit 898f706695682b9954f280d95e49fa86ffa55d08 ]
+[ Upstream commit 68bb10101e6b0a6bb44e9c908ef795fc4af99eae ]
 
-Syzbot found a crash : UBSAN: shift-out-of-bounds in dbAllocAG. The
-underlying bug is the missing check of bmp->db_agl2size. The field can
-be greater than 64 and trigger the shift-out-of-bounds.
+The commit mentioned below causes the ovs_flow_tbl_lookup() function
+to be called with the masked key. However, it's supposed to be called
+with the unmasked key. This due to the fact that the datapath supports
+installing wider flows, and OVS relies on this behavior. For example
+if ipv4(src=1.1.1.1/192.0.0.0, dst=1.1.1.2/192.0.0.0) exists, a wider
+flow (smaller mask) of ipv4(src=192.1.1.1/128.0.0.0,dst=192.1.1.2/
+128.0.0.0) is allowed to be added.
 
-Fix this bug by adding a check of bmp->db_agl2size in dbMount since this
-field is used in many following functions. The upper bound for this
-field is L2MAXL2SIZE - L2MAXAG, thanks for the help of Dave Kleikamp.
-Note that, for maintenance, I reorganized error handling code of dbMount.
+However, if we try to add a wildcard rule, the installation fails:
 
-Reported-by: syzbot+15342c1aa6a00fb7a438@syzkaller.appspotmail.com
-Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
-Signed-off-by: Dave Kleikamp <dave.kleikamp@oracle.com>
+$ ovs-appctl dpctl/add-flow system@myDP "in_port(1),eth_type(0x0800), \
+  ipv4(src=1.1.1.1/192.0.0.0,dst=1.1.1.2/192.0.0.0,frag=no)" 2
+$ ovs-appctl dpctl/add-flow system@myDP "in_port(1),eth_type(0x0800), \
+  ipv4(src=192.1.1.1/0.0.0.0,dst=49.1.1.2/0.0.0.0,frag=no)" 2
+ovs-vswitchd: updating flow table (File exists)
+
+The reason is that the key used to determine if the flow is already
+present in the system uses the original key ANDed with the mask.
+This results in the IP address not being part of the (miniflow) key,
+i.e., being substituted with an all-zero value. When doing the actual
+lookup, this results in the key wrongfully matching the first flow,
+and therefore the flow does not get installed.
+
+This change reverses the commit below, but rather than having the key
+on the stack, it's allocated.
+
+Fixes: 190aa3e77880 ("openvswitch: Fix Frame-size larger than 1024 bytes warning.")
+
+Signed-off-by: Eelco Chaudron <echaudro@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jfs/jfs_dmap.c | 22 ++++++++++++++++------
- 1 file changed, 16 insertions(+), 6 deletions(-)
+ net/openvswitch/datapath.c | 25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
-diff --git a/fs/jfs/jfs_dmap.c b/fs/jfs/jfs_dmap.c
-index d3cb27487c70..3bcf98d01733 100644
---- a/fs/jfs/jfs_dmap.c
-+++ b/fs/jfs/jfs_dmap.c
-@@ -155,7 +155,7 @@ int dbMount(struct inode *ipbmap)
- 	struct bmap *bmp;
- 	struct dbmap_disk *dbmp_le;
- 	struct metapage *mp;
--	int i;
-+	int i, err;
- 
- 	/*
- 	 * allocate/initialize the in-memory bmap descriptor
-@@ -170,8 +170,8 @@ int dbMount(struct inode *ipbmap)
- 			   BMAPBLKNO << JFS_SBI(ipbmap->i_sb)->l2nbperpage,
- 			   PSIZE, 0);
- 	if (mp == NULL) {
--		kfree(bmp);
--		return -EIO;
-+		err = -EIO;
-+		goto err_kfree_bmp;
+diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
+index 5dc517d64965..a8a8396dd983 100644
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -910,6 +910,7 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	struct sw_flow_mask mask;
+ 	struct sk_buff *reply;
+ 	struct datapath *dp;
++	struct sw_flow_key *key;
+ 	struct sw_flow_actions *acts;
+ 	struct sw_flow_match match;
+ 	u32 ufid_flags = ovs_nla_get_ufid_flags(a[OVS_FLOW_ATTR_UFID_FLAGS]);
+@@ -937,24 +938,26 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
  	}
  
- 	/* copy the on-disk bmap descriptor to its in-memory version. */
-@@ -181,9 +181,8 @@ int dbMount(struct inode *ipbmap)
- 	bmp->db_l2nbperpage = le32_to_cpu(dbmp_le->dn_l2nbperpage);
- 	bmp->db_numag = le32_to_cpu(dbmp_le->dn_numag);
- 	if (!bmp->db_numag) {
--		release_metapage(mp);
--		kfree(bmp);
--		return -EINVAL;
-+		err = -EINVAL;
-+		goto err_release_metapage;
- 	}
- 
- 	bmp->db_maxlevel = le32_to_cpu(dbmp_le->dn_maxlevel);
-@@ -194,6 +193,11 @@ int dbMount(struct inode *ipbmap)
- 	bmp->db_agwidth = le32_to_cpu(dbmp_le->dn_agwidth);
- 	bmp->db_agstart = le32_to_cpu(dbmp_le->dn_agstart);
- 	bmp->db_agl2size = le32_to_cpu(dbmp_le->dn_agl2size);
-+	if (bmp->db_agl2size > L2MAXL2SIZE - L2MAXAG) {
-+		err = -EINVAL;
-+		goto err_release_metapage;
+ 	/* Extract key. */
+-	ovs_match_init(&match, &new_flow->key, false, &mask);
++	key = kzalloc(sizeof(*key), GFP_KERNEL);
++	if (!key) {
++		error = -ENOMEM;
++		goto err_kfree_key;
 +	}
 +
- 	for (i = 0; i < MAXAG; i++)
- 		bmp->db_agfree[i] = le64_to_cpu(dbmp_le->dn_agfree[i]);
- 	bmp->db_agsize = le64_to_cpu(dbmp_le->dn_agsize);
-@@ -214,6 +218,12 @@ int dbMount(struct inode *ipbmap)
- 	BMAP_LOCK_INIT(bmp);
++	ovs_match_init(&match, key, false, &mask);
+ 	error = ovs_nla_get_match(net, &match, a[OVS_FLOW_ATTR_KEY],
+ 				  a[OVS_FLOW_ATTR_MASK], log);
+ 	if (error)
+ 		goto err_kfree_flow;
  
- 	return (0);
++	ovs_flow_mask_key(&new_flow->key, key, true, &mask);
 +
-+err_release_metapage:
-+	release_metapage(mp);
-+err_kfree_bmp:
-+	kfree(bmp);
-+	return err;
+ 	/* Extract flow identifier. */
+ 	error = ovs_nla_get_identifier(&new_flow->id, a[OVS_FLOW_ATTR_UFID],
+-				       &new_flow->key, log);
++				       key, log);
+ 	if (error)
+ 		goto err_kfree_flow;
+ 
+-	/* unmasked key is needed to match when ufid is not used. */
+-	if (ovs_identifier_is_key(&new_flow->id))
+-		match.key = new_flow->id.unmasked_key;
+-
+-	ovs_flow_mask_key(&new_flow->key, &new_flow->key, true, &mask);
+-
+ 	/* Validate actions. */
+ 	error = ovs_nla_copy_actions(net, a[OVS_FLOW_ATTR_ACTIONS],
+ 				     &new_flow->key, &acts, log);
+@@ -981,7 +984,7 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	if (ovs_identifier_is_ufid(&new_flow->id))
+ 		flow = ovs_flow_tbl_lookup_ufid(&dp->table, &new_flow->id);
+ 	if (!flow)
+-		flow = ovs_flow_tbl_lookup(&dp->table, &new_flow->key);
++		flow = ovs_flow_tbl_lookup(&dp->table, key);
+ 	if (likely(!flow)) {
+ 		rcu_assign_pointer(new_flow->sf_acts, acts);
+ 
+@@ -1051,6 +1054,8 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 
+ 	if (reply)
+ 		ovs_notify(&dp_flow_genl_family, reply, info);
++
++	kfree(key);
+ 	return 0;
+ 
+ err_unlock_ovs:
+@@ -1060,6 +1065,8 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	ovs_nla_free_flow_actions(acts);
+ err_kfree_flow:
+ 	ovs_flow_free(new_flow, false);
++err_kfree_key:
++	kfree(key);
+ error:
+ 	return error;
  }
- 
- 
 -- 
 2.35.1
 
