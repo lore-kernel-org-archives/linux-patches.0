@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D0D2E4C83
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:32:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 580D2C433EF;
-	Mon, 16 Jan 2023 16:32:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B8174C83
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:32:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5D55C433EF;
+	Mon, 16 Jan 2023 16:32:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886764;
-	bh=sD2m3vyQeMIxfk24pCLtW8bLlWyWK5XhPhZQimMREZ8=;
+	s=korg; t=1673886767;
+	bh=qvqiq8fs8Z7p1DfZCgEGxfgYIbxFYWvxRVCdFOfNaC8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BZ4beBhFriyocZ8tI7wxCFIpR/YfzdkBIZbPkUs4L34CKuMOWNeg33nuozobQZBXA
-	 Q+kR9TjAYMpBLmtS2reLHmD7A5HRtgrwU3921YYYWJG38jly5Kr3hQM2nHNq48oGH0
-	 eSVP9rdui5lAXdkvvKifCAV/By8EwpU65vGDL4YI=
+	b=YUyGJWJ/BBs/0Twk++tDLqiK2qsoOMaQHrOF79fWIbHvs0t/ifxTBYe2U2sL7eEsp
+	 Su2AD0/GJoBmNau+3hotDNiEf3Nla9YQ6R0gMeIKIrUTaXan7227o125onPZ3zFtyx
+	 aDQGusPBfe55lyUrGE6WQjsekcfXta4ivAR4rRyk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@linux.alibaba.com>,
-	Guo Ren <guoren@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Jason Yan <yanaijie@huawei.com>,
+	Jan Kara <jack@suse.cz>,
+	"Ritesh Harjani (IBM)" <ritesh.list@gmail.com>,
+	Theodore Tso <tytso@mit.edu>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 554/658] riscv: stacktrace: Fixup ftrace_graph_ret_addr retp argument
-Date: Mon, 16 Jan 2023 16:50:42 +0100
-Message-Id: <20230116154934.858231691@linuxfoundation.org>
+Subject: [PATCH 5.4 555/658] ext4: goto right label failed_mount3a
+Date: Mon, 16 Jan 2023 16:50:43 +0100
+Message-Id: <20230116154934.892053789@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,39 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guo Ren <guoren@linux.alibaba.com>
+From: Jason Yan <yanaijie@huawei.com>
 
-[ Upstream commit 5c3022e4a616d800cf5f4c3a981d7992179e44a1 ]
+[ Upstream commit 43bd6f1b49b61f43de4d4e33661b8dbe8c911f14 ]
 
-The 'retp' is a pointer to the return address on the stack, so we
-must pass the current return address pointer as the 'retp'
-argument to ftrace_push_return_trace(). Not parent function's
-return address on the stack.
+Before these two branches neither loaded the journal nor created the
+xattr cache. So the right label to goto is 'failed_mount3a'. Although
+this did not cause any issues because the error handler validated if the
+pointer is null. However this still made me confused when reading
+the code. So it's still worth to modify to goto the right label.
 
-Fixes: b785ec129bd9 ("riscv/ftrace: Add HAVE_FUNCTION_GRAPH_RET_ADDR_PTR support")
-Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
-Signed-off-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20221109064937.3643993-2-guoren@kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Jason Yan <yanaijie@huawei.com>
+Reviewed-by: Jan Kara <jack@suse.cz>
+Reviewed-by: Ritesh Harjani (IBM) <ritesh.list@gmail.com>
+Link: https://lore.kernel.org/r/20220916141527.1012715-2-yanaijie@huawei.com
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
+Stable-dep-of: 89481b5fa8c0 ("ext4: correct inconsistent error msg in nojournal mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/stacktrace.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/ext4/super.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
-index 1a512a24879e..a1ee7f33c205 100644
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -61,7 +61,7 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
- 		} else {
- 			fp = frame->fp;
- 			pc = ftrace_graph_ret_addr(current, NULL, frame->ra,
--						   (unsigned long *)(fp - 8));
-+						   &frame->ra);
+diff --git a/fs/ext4/super.c b/fs/ext4/super.c
+index 5fdf584101e6..e3e616c55d0d 100644
+--- a/fs/ext4/super.c
++++ b/fs/ext4/super.c
+@@ -4388,30 +4388,30 @@ static int ext4_fill_super(struct super_block *sb, void *data, int silent)
+ 		   ext4_has_feature_journal_needs_recovery(sb)) {
+ 		ext4_msg(sb, KERN_ERR, "required journal recovery "
+ 		       "suppressed and not mounted read-only");
+-		goto failed_mount_wq;
++		goto failed_mount3a;
+ 	} else {
+ 		/* Nojournal mode, all journal mount options are illegal */
+ 		if (test_opt2(sb, EXPLICIT_JOURNAL_CHECKSUM)) {
+ 			ext4_msg(sb, KERN_ERR, "can't mount with "
+ 				 "journal_checksum, fs mounted w/o journal");
+-			goto failed_mount_wq;
++			goto failed_mount3a;
  		}
- 
- 	}
+ 		if (test_opt(sb, JOURNAL_ASYNC_COMMIT)) {
+ 			ext4_msg(sb, KERN_ERR, "can't mount with "
+ 				 "journal_async_commit, fs mounted w/o journal");
+-			goto failed_mount_wq;
++			goto failed_mount3a;
+ 		}
+ 		if (sbi->s_commit_interval != JBD2_DEFAULT_MAX_COMMIT_AGE*HZ) {
+ 			ext4_msg(sb, KERN_ERR, "can't mount with "
+ 				 "commit=%lu, fs mounted w/o journal",
+ 				 sbi->s_commit_interval / HZ);
+-			goto failed_mount_wq;
++			goto failed_mount3a;
+ 		}
+ 		if (EXT4_MOUNT_DATA_FLAGS &
+ 		    (sbi->s_mount_opt ^ sbi->s_def_mount_opt)) {
+ 			ext4_msg(sb, KERN_ERR, "can't mount with "
+ 				 "data=, fs mounted w/o journal");
+-			goto failed_mount_wq;
++			goto failed_mount3a;
+ 		}
+ 		sbi->s_def_mount_opt &= ~EXT4_MOUNT_JOURNAL_CHECKSUM;
+ 		clear_opt(sb, JOURNAL_CHECKSUM);
 -- 
 2.35.1
 
