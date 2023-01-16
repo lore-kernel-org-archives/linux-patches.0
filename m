@@ -1,29 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C04F33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 823BDC433EF;
-	Mon, 16 Jan 2023 16:01:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D61C33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F260DC433EF;
+	Mon, 16 Jan 2023 16:01:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884900;
-	bh=nRHpCz1qSDLy+lKVEfT3O+Qak/+WHrmKn2uNdYSWR7I=;
+	s=korg; t=1673884903;
+	bh=kudM798/kcei4T9wKUjSprpmfWS0PRt+yng+0kWIehA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NzOwVSW8/ZR5GHALB4JWZfQp0l9jRyHY9gDVjWQQzE9JLJiFA9pk7vqlI6p3Uwxsy
-	 2uf6LYGcPUV8otZkcbfG56R3GCkeocgIoEa1U+3Nzq4YTvECA8E0SqvMOwvIMu5kSA
-	 EtTgCfVtI7mNzJ1H1xRV8kPZO7m0DVfi9Gb0nVWA=
+	b=z9cDcpBEttgOvVrc43PcL3yJlgYh9BCfnV90BPeQi5xt9yJeo+u4PFdEocGCYb/Q3
+	 4ROK1U/YByyhLvCwLFQuyDs+nUagrlrkzcgniqDWO5YpEnA1Vn21w48cgCgfVXNrZq
+	 49EEP34rNuHs5jZX4ZAbMqKYmvlT/tRXpDPdjK8w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Kai-Heng Feng <kai.heng.feng@canonical.com>,
-	Mark Pearson <markpearson@lenovo.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Linus Walleij <linus.walleij@linaro.org>
-Subject: [PATCH 6.1 183/183] pinctrl: amd: Add dynamic debugging for active GPIOs
-Date: Mon, 16 Jan 2023 16:51:46 +0100
-Message-Id: <20230116154811.042081876@linuxfoundation.org>
+	Ravi Bangoria <ravi.bangoria@amd.com>,
+	James Clark <james.clark@arm.com>,
+	Leo Yan <leo.yan@linaro.org>,
+	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+	Hyeonggon Yoo <42.hyeyoo@gmail.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Jiri Olsa <jolsa@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
+	Namhyung Kim <namhyung@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 166/183] perf kmem: Support legacy tracepoints
+Date: Mon, 16 Jan 2023 16:51:29 +0100
+Message-Id: <20230116154810.314865374@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -37,84 +45,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Leo Yan <leo.yan@linaro.org>
 
-commit 1d66e379731f79ae5039a869c0fde22a4f6a6a91 upstream.
+[ Upstream commit b3719108ae60169eda5c941ca5e1be1faa371c57 ]
 
-Some laptops have been reported to wake up from s2idle when plugging
-in the AC adapter or by closing the lid.  This is a surprising
-behavior that is further clarified by commit cb3e7d624c3ff ("PM:
-wakeup: Add extra debugging statement for multiple active IRQs").
+Commit 11e9734bcb6a7361 ("mm/slab_common: unify NUMA and UMA version of
+tracepoints") removed tracepoints 'kmalloc_node' and
+'kmem_cache_alloc_node', we need to consider the tool should be backward
+compatible.
 
-With that commit in place the following interaction can be seen
-when the lid is closed:
+If it detect the tracepoint "kmem:kmalloc_node", this patch enables the
+legacy tracepoints, otherwise, it will ignore them.
 
-[   28.946038] PM: suspend-to-idle
-[   28.946083] ACPI: EC: ACPI EC GPE status set
-[   28.946101] ACPI: PM: Rearming ACPI SCI for wakeup
-[   28.950152] Timekeeping suspended for 3.320 seconds
-[   28.950152] PM: Triggering wakeup from IRQ 9
-[   28.950152] ACPI: EC: ACPI EC GPE status set
-[   28.950152] ACPI: EC: ACPI EC GPE dispatched
-[   28.995057] ACPI: EC: ACPI EC work flushed
-[   28.995075] ACPI: PM: Rearming ACPI SCI for wakeup
-[   28.995131] PM: Triggering wakeup from IRQ 9
-[   28.995271] ACPI: EC: ACPI EC GPE status set
-[   28.995291] ACPI: EC: ACPI EC GPE dispatched
-[   29.098556] ACPI: EC: ACPI EC work flushed
-[   29.207020] ACPI: EC: ACPI EC work flushed
-[   29.207037] ACPI: PM: Rearming ACPI SCI for wakeup
-[   29.211095] Timekeeping suspended for 0.739 seconds
-[   29.211095] PM: Triggering wakeup from IRQ 9
-[   29.211079] PM: Triggering wakeup from IRQ 7
-[   29.211095] ACPI: PM: ACPI non-EC GPE wakeup
-[   29.211095] PM: resume from suspend-to-idle
-
-* IRQ9 on this laptop is used for the ACPI SCI.
-* IRQ7 on this laptop is used for the GPIO controller.
-
-What has occurred is when the lid was closed the EC woke up the
-SoC from it's deepest sleep state and the kernel's s2idle loop
-processed all EC events.  When it was finished processing EC events,
-it checked for any other reasons to wake (break the s2idle loop).
-
-The IRQ for the GPIO controller was active so the loop broke, and
-then this IRQ was processed.  This is not a kernel bug but it is
-certainly a surprising behavior, and to better debug it we should
-have a dynamic debugging message that we can enact to catch it.
-
-Acked-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Acked-by: Kai-Heng Feng <kai.heng.feng@canonical.com>
-Acked-by: Mark Pearson <markpearson@lenovo.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20221013134729.5592-2-mario.limonciello@amd.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 11e9734bcb6a7361 ("mm/slab_common: unify NUMA and UMA version of tracepoints")
+Reported-by: Ravi Bangoria <ravi.bangoria@amd.com>
+Reviewed-by: James Clark <james.clark@arm.com>
+Signed-off-by: Leo Yan <leo.yan@linaro.org>
+Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
+Cc: Hyeonggon Yoo <42.hyeyoo@gmail.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Jiri Olsa <jolsa@kernel.org>
+Cc: Mark Rutland <mark.rutland@arm.com>
+Cc: Namhyung Kim <namhyung@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Vlastimil Babka <vbabka@suse.cz>
+Link: https://lore.kernel.org/r/20230108062400.250690-1-leo.yan@linaro.org
+Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-amd.c |   10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ tools/perf/builtin-kmem.c | 29 ++++++++++++++++++++++++++---
+ 1 file changed, 26 insertions(+), 3 deletions(-)
 
---- a/drivers/pinctrl/pinctrl-amd.c
-+++ b/drivers/pinctrl/pinctrl-amd.c
-@@ -628,13 +628,15 @@ static bool do_amd_gpio_irq_handler(int
- 		/* Each status bit covers four pins */
- 		for (i = 0; i < 4; i++) {
- 			regval = readl(regs + i);
--			/* caused wake on resume context for shared IRQ */
--			if (irq < 0 && (regval & BIT(WAKE_STS_OFF))) {
-+
-+			if (regval & PIN_IRQ_PENDING)
- 				dev_dbg(&gpio_dev->pdev->dev,
--					"Waking due to GPIO %d: 0x%x",
-+					"GPIO %d is active: 0x%x",
- 					irqnr + i, regval);
-+
-+			/* caused wake on resume context for shared IRQ */
-+			if (irq < 0 && (regval & BIT(WAKE_STS_OFF)))
- 				return true;
--			}
+diff --git a/tools/perf/builtin-kmem.c b/tools/perf/builtin-kmem.c
+index ebfab2ca1702..63c759edb8bc 100644
+--- a/tools/perf/builtin-kmem.c
++++ b/tools/perf/builtin-kmem.c
+@@ -1823,6 +1823,19 @@ static int parse_line_opt(const struct option *opt __maybe_unused,
+ 	return 0;
+ }
  
- 			if (!(regval & PIN_IRQ_PENDING) ||
- 			    !(regval & BIT(INTERRUPT_MASK_OFF)))
++static bool slab_legacy_tp_is_exposed(void)
++{
++	/*
++	 * The tracepoints "kmem:kmalloc_node" and
++	 * "kmem:kmem_cache_alloc_node" have been removed on the latest
++	 * kernel, if the tracepoint "kmem:kmalloc_node" is existed it
++	 * means the tool is running on an old kernel, we need to
++	 * rollback to support these legacy tracepoints.
++	 */
++	return IS_ERR(trace_event__tp_format("kmem", "kmalloc_node")) ?
++		false : true;
++}
++
+ static int __cmd_record(int argc, const char **argv)
+ {
+ 	const char * const record_args[] = {
+@@ -1830,22 +1843,28 @@ static int __cmd_record(int argc, const char **argv)
+ 	};
+ 	const char * const slab_events[] = {
+ 	"-e", "kmem:kmalloc",
+-	"-e", "kmem:kmalloc_node",
+ 	"-e", "kmem:kfree",
+ 	"-e", "kmem:kmem_cache_alloc",
+-	"-e", "kmem:kmem_cache_alloc_node",
+ 	"-e", "kmem:kmem_cache_free",
+ 	};
++	const char * const slab_legacy_events[] = {
++	"-e", "kmem:kmalloc_node",
++	"-e", "kmem:kmem_cache_alloc_node",
++	};
+ 	const char * const page_events[] = {
+ 	"-e", "kmem:mm_page_alloc",
+ 	"-e", "kmem:mm_page_free",
+ 	};
+ 	unsigned int rec_argc, i, j;
+ 	const char **rec_argv;
++	unsigned int slab_legacy_tp_exposed = slab_legacy_tp_is_exposed();
+ 
+ 	rec_argc = ARRAY_SIZE(record_args) + argc - 1;
+-	if (kmem_slab)
++	if (kmem_slab) {
+ 		rec_argc += ARRAY_SIZE(slab_events);
++		if (slab_legacy_tp_exposed)
++			rec_argc += ARRAY_SIZE(slab_legacy_events);
++	}
+ 	if (kmem_page)
+ 		rec_argc += ARRAY_SIZE(page_events) + 1; /* for -g */
+ 
+@@ -1860,6 +1879,10 @@ static int __cmd_record(int argc, const char **argv)
+ 	if (kmem_slab) {
+ 		for (j = 0; j < ARRAY_SIZE(slab_events); j++, i++)
+ 			rec_argv[i] = strdup(slab_events[j]);
++		if (slab_legacy_tp_exposed) {
++			for (j = 0; j < ARRAY_SIZE(slab_legacy_events); j++, i++)
++				rec_argv[i] = strdup(slab_legacy_events[j]);
++		}
+ 	}
+ 	if (kmem_page) {
+ 		rec_argv[i++] = strdup("-g");
+-- 
+2.35.1
+
 
 
