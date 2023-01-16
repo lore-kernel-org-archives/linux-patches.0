@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1690B6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:46:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91A44C433D2;
-	Mon, 16 Jan 2023 16:46:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE2026FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:46:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31456C433F0;
+	Mon, 16 Jan 2023 16:46:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887602;
-	bh=ZE3cV21EtLxc+2Uh14AdGrR1FSyKzyLFGkk4Iyl3pvk=;
+	s=korg; t=1673887605;
+	bh=bKSewYUn7IQyc+mYJUie8YvuMUhfTTA+XTe6nKiQlCE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mlBzCuY3qFqEddBc9Lpev77ogOP1qV1UN8xQbwhGEFxodOONARKP3nO22ULcSLpYd
-	 qP3naAoqPfJkIITX/7RrwHvOOFNEE2JEShZwQFKZge/5r+zRFzBDE7LUZrPM8FO33Z
-	 +E+RY2Ao3YOpd81fPFsa2XB/8y1gKuVonctkia/k=
+	b=DzqB9yE4a+gRZTmxjs2ewa+6PKZYbX42j2z/IIiZ0VjYAREsbuTe223Nzw7KDySIp
+	 OiJfl3WhWk6OpUFEG5bN08meHqYJGir7X8KgSfs+z2Qh9OXQPxV9x7VFvMQE9oZHSt
+	 JCoV5XF8fClv4N249HjcymYBYbizXNPNn2hd+Z8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Shardar Shariff Md <smohammed@nvidia.com>,
 	Krishna Yarlagadda <kyarlagadda@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 212/521] serial: tegra: add support to use 8 bytes trigger
-Date: Mon, 16 Jan 2023 16:47:54 +0100
-Message-Id: <20230116154856.650290735@linuxfoundation.org>
+Subject: [PATCH 4.19 213/521] serial: tegra: add support to adjust baud rate
+Date: Mon, 16 Jan 2023 16:47:55 +0100
+Message-Id: <20230116154856.699012693@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,79 +37,141 @@ Content-Transfer-Encoding: 8bit
 
 From: Krishna Yarlagadda <kyarlagadda@nvidia.com>
 
-[ Upstream commit 7799a3aa81279637031abad19e56e4bbf1481d4e ]
+[ Upstream commit f04a3cc8d4550463e0c15be59d91177a5def1ca5 ]
 
-Add support to use 8 bytes trigger for Tegra186 SOC.
+Add support to adjust baud rates to fall under supported tolerance
+range through DT.
+
+Tegra186 chip has a hardware issue resulting in frame errors when
+tolerance level for baud rate is negative. Provided entries to adjust
+baud rate to be within acceptable range and work with devices that
+can send negative baud rate. Also report error when baud rate set is
+out of tolerance range of controller updated in device tree.
 
 Signed-off-by: Shardar Shariff Md <smohammed@nvidia.com>
 Signed-off-by: Krishna Yarlagadda <kyarlagadda@nvidia.com>
-Link: https://lore.kernel.org/r/1567572187-29820-9-git-send-email-kyarlagadda@nvidia.com
+Link: https://lore.kernel.org/r/1567572187-29820-11-git-send-email-kyarlagadda@nvidia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: 109a951a9f1f ("serial: tegra: Read DMA status before terminating")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/serial-tegra.c | 13 +++++++++++--
- 1 file changed, 11 insertions(+), 2 deletions(-)
+ drivers/tty/serial/serial-tegra.c | 68 +++++++++++++++++++++++++++++++
+ 1 file changed, 68 insertions(+)
 
 diff --git a/drivers/tty/serial/serial-tegra.c b/drivers/tty/serial/serial-tegra.c
-index 55415a12d3cc..6a3c6bf5b964 100644
+index 6a3c6bf5b964..aae4c167f529 100644
 --- a/drivers/tty/serial/serial-tegra.c
 +++ b/drivers/tty/serial/serial-tegra.c
-@@ -88,6 +88,7 @@ struct tegra_uart_chip_data {
- 	bool	support_clk_src_div;
- 	bool	fifo_mode_enable_status;
- 	int	uart_max_port;
-+	int	max_dma_burst_bytes;
+@@ -91,6 +91,12 @@ struct tegra_uart_chip_data {
+ 	int	max_dma_burst_bytes;
  };
  
++struct tegra_baud_tolerance {
++	u32 lower_range_baud;
++	u32 upper_range_baud;
++	s32 tolerance;
++};
++
  struct tegra_uart_port {
-@@ -877,7 +878,12 @@ static int tegra_uart_hw_init(struct tegra_uart_port *tup)
- 	 * programmed in the DMA registers.
- 	 */
- 	tup->fcr_shadow = UART_FCR_ENABLE_FIFO;
--	tup->fcr_shadow |= UART_FCR_R_TRIG_01;
+ 	struct uart_port			uport;
+ 	const struct tegra_uart_chip_data	*cdata;
+@@ -127,6 +133,8 @@ struct tegra_uart_port {
+ 	dma_cookie_t				rx_cookie;
+ 	unsigned int				tx_bytes_requested;
+ 	unsigned int				rx_bytes_requested;
++	struct tegra_baud_tolerance		*baud_tolerance;
++	int					n_adjustable_baud_rates;
+ };
+ 
+ static void tegra_uart_start_next_tx(struct tegra_uart_port *tup);
+@@ -295,6 +303,21 @@ static void tegra_uart_fifo_reset(struct tegra_uart_port *tup, u8 fcr_bits)
+ 	tegra_uart_wait_cycle_time(tup, 32);
+ }
+ 
++static long tegra_get_tolerance_rate(struct tegra_uart_port *tup,
++				     unsigned int baud, long rate)
++{
++	int i;
 +
-+	if (tup->cdata->max_dma_burst_bytes == 8)
-+		tup->fcr_shadow |= UART_FCR_R_TRIG_10;
-+	else
-+		tup->fcr_shadow |= UART_FCR_R_TRIG_01;
++	for (i = 0; i < tup->n_adjustable_baud_rates; ++i) {
++		if (baud >= tup->baud_tolerance[i].lower_range_baud &&
++		    baud <= tup->baud_tolerance[i].upper_range_baud)
++			return (rate + (rate *
++				tup->baud_tolerance[i].tolerance) / 10000);
++	}
 +
- 	tup->fcr_shadow |= TEGRA_UART_TX_TRIG_16B;
- 	tegra_uart_write(tup, tup->fcr_shadow, UART_FCR);
++	return rate;
++}
++
+ static int tegra_set_baudrate(struct tegra_uart_port *tup, unsigned int baud)
+ {
+ 	unsigned long rate;
+@@ -307,6 +330,9 @@ static int tegra_set_baudrate(struct tegra_uart_port *tup, unsigned int baud)
  
-@@ -991,7 +997,7 @@ static int tegra_uart_dma_channel_allocate(struct tegra_uart_port *tup,
- 		}
- 		dma_sconfig.src_addr = tup->uport.mapbase;
- 		dma_sconfig.src_addr_width = DMA_SLAVE_BUSWIDTH_1_BYTE;
--		dma_sconfig.src_maxburst = 4;
-+		dma_sconfig.src_maxburst = tup->cdata->max_dma_burst_bytes;
- 		tup->rx_dma_chan = dma_chan;
- 		tup->rx_dma_buf_virt = dma_buf;
- 		tup->rx_dma_buf_phys = dma_phys;
-@@ -1263,6 +1269,7 @@ static struct tegra_uart_chip_data tegra20_uart_chip_data = {
- 	.support_clk_src_div		= false,
- 	.fifo_mode_enable_status	= false,
- 	.uart_max_port			= 5,
-+	.max_dma_burst_bytes		= 4,
- };
+ 	if (tup->cdata->support_clk_src_div) {
+ 		rate = baud * 16;
++		if (tup->n_adjustable_baud_rates)
++			rate = tegra_get_tolerance_rate(tup, baud, rate);
++
+ 		ret = clk_set_rate(tup->uart_clk, rate);
+ 		if (ret < 0) {
+ 			dev_err(tup->uport.dev,
+@@ -1250,6 +1276,12 @@ static int tegra_uart_parse_dt(struct platform_device *pdev,
+ {
+ 	struct device_node *np = pdev->dev.of_node;
+ 	int port;
++	int ret;
++	int index;
++	u32 pval;
++	int count;
++	int n_entries;
++
  
- static struct tegra_uart_chip_data tegra30_uart_chip_data = {
-@@ -1271,6 +1278,7 @@ static struct tegra_uart_chip_data tegra30_uart_chip_data = {
- 	.support_clk_src_div		= true,
- 	.fifo_mode_enable_status	= false,
- 	.uart_max_port			= 5,
-+	.max_dma_burst_bytes		= 4,
- };
+ 	port = of_alias_get_id(np, "serial");
+ 	if (port < 0) {
+@@ -1260,6 +1292,42 @@ static int tegra_uart_parse_dt(struct platform_device *pdev,
  
- static struct tegra_uart_chip_data tegra186_uart_chip_data = {
-@@ -1279,6 +1287,7 @@ static struct tegra_uart_chip_data tegra186_uart_chip_data = {
- 	.support_clk_src_div		= true,
- 	.fifo_mode_enable_status	= true,
- 	.uart_max_port			= 8,
-+	.max_dma_burst_bytes		= 8,
- };
+ 	tup->enable_modem_interrupt = of_property_read_bool(np,
+ 					"nvidia,enable-modem-interrupt");
++	n_entries = of_property_count_u32_elems(np, "nvidia,adjust-baud-rates");
++	if (n_entries > 0) {
++		tup->n_adjustable_baud_rates = n_entries / 3;
++		tup->baud_tolerance =
++		devm_kzalloc(&pdev->dev, (tup->n_adjustable_baud_rates) *
++			     sizeof(*tup->baud_tolerance), GFP_KERNEL);
++		if (!tup->baud_tolerance)
++			return -ENOMEM;
++		for (count = 0, index = 0; count < n_entries; count += 3,
++		     index++) {
++			ret =
++			of_property_read_u32_index(np,
++						   "nvidia,adjust-baud-rates",
++						   count, &pval);
++			if (!ret)
++				tup->baud_tolerance[index].lower_range_baud =
++				pval;
++			ret =
++			of_property_read_u32_index(np,
++						   "nvidia,adjust-baud-rates",
++						   count + 1, &pval);
++			if (!ret)
++				tup->baud_tolerance[index].upper_range_baud =
++				pval;
++			ret =
++			of_property_read_u32_index(np,
++						   "nvidia,adjust-baud-rates",
++						   count + 2, &pval);
++			if (!ret)
++				tup->baud_tolerance[index].tolerance =
++				(s32)pval;
++		}
++	} else {
++		tup->n_adjustable_baud_rates = 0;
++	}
++
+ 	return 0;
+ }
  
- static const struct of_device_id tegra_uart_of_match[] = {
 -- 
 2.35.1
 
