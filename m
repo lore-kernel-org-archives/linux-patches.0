@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08BC76FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:05:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83169C433EF;
-	Mon, 16 Jan 2023 17:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1A86FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:05:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C6EC433EF;
+	Mon, 16 Jan 2023 17:05:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888702;
-	bh=a46x8B0ubCXZA5N76u4/j298QGVb0sP9gQ+DXV3tsFs=;
+	s=korg; t=1673888705;
+	bh=P1h2GVKEp5GZq/jne3zz82VUrZTf0ekaOnjBrwvNxSM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pO+Q/Nv4Cb4dXb46yZpxHUUGyDrRmATSMzCQEbPvAPUWgnGS6Dr05hZNGHl1oAq9z
-	 NwQo2eFDSdlsM933cqFcodiQzVXy9RdVX4sKra9c//5N2RnXcmAh1GJBPwJk7X8QKs
-	 09IVEx8YX4V0a5rkj4fjyw61T7s4k+5gU0TfC1mk=
+	b=UQurFek+wBUL/kEcQWSCnn/fLokzy0MM4N7foOpEKbd4R61z4seOa/BPzuZUWuv7B
+	 Pw9vB+zhCsSmNAqXRRikC3HAbd9wet44YbvH1vwDMw8nkZNe/BDnYUOxtQZkgYGZpV
+	 teaGp2vD6QXNohPdl0jQ5LtK89yJ8zC+Ex0HvgHU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 079/338] Input: elants_i2c - properly handle the reset GPIO when power is off
-Date: Mon, 16 Jan 2023 16:49:12 +0100
-Message-Id: <20230116154824.326739938@linuxfoundation.org>
+Subject: [PATCH 4.14 106/338] mmc: toshsd: fix return value check of mmc_add_host()
+Date: Mon, 16 Jan 2023 16:49:39 +0100
+Message-Id: <20230116154825.492802762@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,88 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit a85fbd6498441694475716a4d5c65f9d3e073faf ]
+[ Upstream commit f670744a316ea983113a65313dcd387b5a992444 ]
 
-As can be seen in elants_i2c_power_off(), we want the reset GPIO
-asserted when power is off. The reset GPIO is active low so we need
-the reset line logic low when power is off to avoid leakage.
+mmc_add_host() may return error, if we ignore its return value, the memory
+that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
+crash because of deleting not added device in the remove path.
 
-We have a problem, though, at probe time. At probe time we haven't
-powered the regulators on yet but we have:
+So fix this by checking the return value and goto error path which will call
+mmc_free_host(), besides, free_irq() also needs be called.
 
-  devm_gpiod_get(&client->dev, "reset", GPIOD_OUT_LOW);
-
-While that _looks_ right, it turns out that it's not. The
-GPIOD_OUT_LOW doesn't mean to init the GPIO to low. It means init the
-GPIO to "not asserted". Since this is an active low GPIO that inits it
-to be high.
-
-Let's fix this to properly init the GPIO. Now after both probe and
-power off the state of the GPIO is consistent (it's "asserted" or
-level low).
-
-Once we fix this, we can see that at power on time we no longer to
-assert the reset GPIO as the first thing. The reset GPIO is _always_
-asserted before powering on. Let's fix powering on to account for
-this.
-
-Fixes: afe10358e47a ("Input: elants_i2c - wire up regulator support")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Link: https://lore.kernel.org/r/20221117123805.1.I9959ac561dd6e1e8e1ce7085e4de6167b27c574f@changeid
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Fixes: a5eb8bbd66cc ("mmc: add Toshiba PCI SD controller driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221101063023.1664968-8-yangyingliang@huawei.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/touchscreen/elants_i2c.c | 9 +++------
- 1 file changed, 3 insertions(+), 6 deletions(-)
+ drivers/mmc/host/toshsd.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/input/touchscreen/elants_i2c.c b/drivers/input/touchscreen/elants_i2c.c
-index fd48fb6ef210..dc8eddefe7b0 100644
---- a/drivers/input/touchscreen/elants_i2c.c
-+++ b/drivers/input/touchscreen/elants_i2c.c
-@@ -1089,14 +1089,12 @@ static int elants_i2c_power_on(struct elants_data *ts)
- 	if (IS_ERR_OR_NULL(ts->reset_gpio))
- 		return 0;
+diff --git a/drivers/mmc/host/toshsd.c b/drivers/mmc/host/toshsd.c
+index dd961c54a6a9..9236965b00fd 100644
+--- a/drivers/mmc/host/toshsd.c
++++ b/drivers/mmc/host/toshsd.c
+@@ -655,7 +655,9 @@ static int toshsd_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 	if (ret)
+ 		goto unmap;
  
--	gpiod_set_value_cansleep(ts->reset_gpio, 1);
--
- 	error = regulator_enable(ts->vcc33);
- 	if (error) {
- 		dev_err(&ts->client->dev,
- 			"failed to enable vcc33 regulator: %d\n",
- 			error);
--		goto release_reset_gpio;
-+		return error;
- 	}
+-	mmc_add_host(mmc);
++	ret = mmc_add_host(mmc);
++	if (ret)
++		goto free_irq;
  
- 	error = regulator_enable(ts->vccio);
-@@ -1105,7 +1103,7 @@ static int elants_i2c_power_on(struct elants_data *ts)
- 			"failed to enable vccio regulator: %d\n",
- 			error);
- 		regulator_disable(ts->vcc33);
--		goto release_reset_gpio;
-+		return error;
- 	}
+ 	base = pci_resource_start(pdev, 0);
+ 	dev_dbg(&pdev->dev, "MMIO %pa, IRQ %d\n", &base, pdev->irq);
+@@ -664,6 +666,8 @@ static int toshsd_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
  
- 	/*
-@@ -1114,7 +1112,6 @@ static int elants_i2c_power_on(struct elants_data *ts)
- 	 */
- 	udelay(ELAN_POWERON_DELAY_USEC);
+ 	return 0;
  
--release_reset_gpio:
- 	gpiod_set_value_cansleep(ts->reset_gpio, 0);
- 	if (error)
- 		return error;
-@@ -1222,7 +1219,7 @@ static int elants_i2c_probe(struct i2c_client *client,
- 		return error;
- 	}
- 
--	ts->reset_gpio = devm_gpiod_get(&client->dev, "reset", GPIOD_OUT_LOW);
-+	ts->reset_gpio = devm_gpiod_get(&client->dev, "reset", GPIOD_OUT_HIGH);
- 	if (IS_ERR(ts->reset_gpio)) {
- 		error = PTR_ERR(ts->reset_gpio);
- 
++free_irq:
++	free_irq(pdev->irq, host);
+ unmap:
+ 	pci_iounmap(pdev, host->ioaddr);
+ release:
 -- 
 2.35.1
 
