@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9344F33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 194B8C433D2;
-	Mon, 16 Jan 2023 16:00:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 291D933EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3A5FC433EF;
+	Mon, 16 Jan 2023 16:00:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884827;
-	bh=HvaAO4+8WvwqrfKrCekjGW5CXI5W62awKG4zrILwWpA=;
+	s=korg; t=1673884830;
+	bh=4vM6BypZ49ftx98geRyPD1Xs680hffCNQX8OSli5Ba4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XAdaIXJGd6o6frahZYnIDW3IhQzIebhnpRBVNai53K61v+HzSsLmVmGJx0nyPjCNr
-	 41rcAT17lj15LSOEjQocXwTthFF0x93nRnwiW9QyFOnJTWat1v6wZYmqt7qvO4VP+M
-	 NK4i2ZcyPBIPpizb3oFSrDWWndSbdRBV/pkF3ITk=
+	b=YsqXFWoDdvWe8Qm6c+CguX+yFowzSHKMq6sigCzwHbWVRYDpy+clTEvy3eYgqIqxx
+	 c4VvNPuPkKMENaoC1jeCbo69/Cw7uxwcejeC2sB5Nf97GbZHfD8EvngplXJim97i5M
+	 fhtfd+9TC/RbCttLTEQnqezCQUAzfWm1XDpCVXFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 154/183] net/mlx5e: IPoIB, Block queue count configuration when sub interfaces are present
-Date: Mon, 16 Jan 2023 16:51:17 +0100
-Message-Id: <20230116154809.825792238@linuxfoundation.org>
+Subject: [PATCH 6.1 155/183] net/mlx5e: IPoIB, Block PKEY interfaces with less rx queues than parent
+Date: Mon, 16 Jan 2023 16:51:18 +0100
+Message-Id: <20230116154809.866244978@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -38,26 +38,20 @@ Content-Transfer-Encoding: 8bit
 
 From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 806a8df7126a8c05d60411eeb81057c2a8bbe7a7 ]
+[ Upstream commit 31c70bfe58ef09fe36327ddcced9143a16e9e83d ]
 
-PKEY sub interfaces share the receive queues with the parent interface.
-While setting the sub interface queue count is not supported, it is
-currently possible to change the number of queues of the parent interface.
-Thus we can end up with inconsistent queue sizes between the parent and its
-sub interfaces.
+A user is able to configure an arbitrary number of rx queues when
+creating an interface via netlink. This doesn't work for child PKEY
+interfaces because the child interface uses the parent receive channels.
 
-This change disallows setting the queue count on the parent interface when
-sub interfaces are present.
+Although the child shares the parent's receive channels, the number of
+rx queues is important for the channel_stats array: the parent's rx
+channel index is used to access the child's channel_stats. So the array
+has to be at least as large as the parent's rx queue size for the
+counting to work correctly and to prevent out of bound accesses.
 
-This is achieved by introducing an explicit reference to the parent netdev
-in the mlx5i_priv of the child interface. An additional counter is also
-required on the parent side to detect when sub interfaces are attached and
-for proper cleanup.
-
-The rtnl lock is taken during the ethtool op and the sub interface
-ndo_init/uninit ops. There is no race here around counting the sub
-interfaces, reading the sub interfaces and setting the number of
-channels. The ASSERT_RTNL was added to document that.
+This patch checks for the mentioned scenario and returns an error when
+trying to create the interface. The error is propagated to the user.
 
 Fixes: be98737a4faa ("net/mlx5e: Use dynamic per-channel allocations in stats")
 Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
@@ -65,152 +59,29 @@ Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../mellanox/mlx5/core/ipoib/ethtool.c        | 16 +++++++-
- .../ethernet/mellanox/mlx5/core/ipoib/ipoib.c | 38 +++++++++++++++++++
- .../ethernet/mellanox/mlx5/core/ipoib/ipoib.h |  6 +++
- .../mellanox/mlx5/core/ipoib/ipoib_vlan.c     |  9 ++---
- 4 files changed, 62 insertions(+), 7 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c   | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ethtool.c
-index c247cca154e9..eff92dc0927c 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ethtool.c
-@@ -90,9 +90,21 @@ static void mlx5i_get_ringparam(struct net_device *dev,
- static int mlx5i_set_channels(struct net_device *dev,
- 			      struct ethtool_channels *ch)
- {
--	struct mlx5e_priv *priv = mlx5i_epriv(dev);
-+	struct mlx5i_priv *ipriv = netdev_priv(dev);
-+	struct mlx5e_priv *epriv = mlx5i_epriv(dev);
-+
-+	/* rtnl lock protects from race between this ethtool op and sub
-+	 * interface ndo_init/uninit.
-+	 */
-+	ASSERT_RTNL();
-+	if (ipriv->num_sub_interfaces > 0) {
-+		mlx5_core_warn(epriv->mdev,
-+			       "can't change number of channels for interfaces with sub interfaces (%u)\n",
-+			       ipriv->num_sub_interfaces);
-+		return -EINVAL;
-+	}
- 
--	return mlx5e_ethtool_set_channels(priv, ch);
-+	return mlx5e_ethtool_set_channels(epriv, ch);
- }
- 
- static void mlx5i_get_channels(struct net_device *dev,
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
-index 84f5352b0ce1..038ae0fcf9d4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.c
-@@ -160,6 +160,44 @@ void mlx5i_get_stats(struct net_device *dev, struct rtnl_link_stats64 *stats)
- 	stats->tx_dropped = sstats->tx_queue_dropped;
- }
- 
-+struct net_device *mlx5i_parent_get(struct net_device *netdev)
-+{
-+	struct mlx5e_priv *priv = mlx5i_epriv(netdev);
-+	struct mlx5i_priv *ipriv, *parent_ipriv;
-+	struct net_device *parent_dev;
-+	int parent_ifindex;
-+
-+	ipriv = priv->ppriv;
-+
-+	parent_ifindex = netdev->netdev_ops->ndo_get_iflink(netdev);
-+	parent_dev = dev_get_by_index(dev_net(netdev), parent_ifindex);
-+	if (!parent_dev)
-+		return NULL;
-+
-+	parent_ipriv = netdev_priv(parent_dev);
-+
-+	ASSERT_RTNL();
-+	parent_ipriv->num_sub_interfaces++;
-+
-+	ipriv->parent_dev = parent_dev;
-+
-+	return parent_dev;
-+}
-+
-+void mlx5i_parent_put(struct net_device *netdev)
-+{
-+	struct mlx5e_priv *priv = mlx5i_epriv(netdev);
-+	struct mlx5i_priv *ipriv, *parent_ipriv;
-+
-+	ipriv = priv->ppriv;
-+	parent_ipriv = netdev_priv(ipriv->parent_dev);
-+
-+	ASSERT_RTNL();
-+	parent_ipriv->num_sub_interfaces--;
-+
-+	dev_put(ipriv->parent_dev);
-+}
-+
- int mlx5i_init_underlay_qp(struct mlx5e_priv *priv)
- {
- 	struct mlx5_core_dev *mdev = priv->mdev;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
-index 99d46fda9f82..f3f2af972020 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib.h
-@@ -54,9 +54,11 @@ struct mlx5i_priv {
- 	struct rdma_netdev rn; /* keep this first */
- 	u32 qpn;
- 	bool   sub_interface;
-+	u32    num_sub_interfaces;
- 	u32    qkey;
- 	u16    pkey_index;
- 	struct mlx5i_pkey_qpn_ht *qpn_htbl;
-+	struct net_device *parent_dev;
- 	char  *mlx5e_priv[];
- };
- 
-@@ -117,5 +119,9 @@ void mlx5i_sq_xmit(struct mlx5e_txqsq *sq, struct sk_buff *skb,
- 		   struct mlx5_av *av, u32 dqpn, u32 dqkey, bool xmit_more);
- void mlx5i_get_stats(struct net_device *dev, struct rtnl_link_stats64 *stats);
- 
-+/* Reference management for child to parent interfaces. */
-+struct net_device *mlx5i_parent_get(struct net_device *netdev);
-+void mlx5i_parent_put(struct net_device *netdev);
-+
- #endif /* CONFIG_MLX5_CORE_IPOIB */
- #endif /* __MLX5E_IPOB_H__ */
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
-index 0227a521d301..3d31c59e69d4 100644
+index 3d31c59e69d4..0cf4eaf852d2 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ipoib_vlan.c
-@@ -158,21 +158,19 @@ static int mlx5i_pkey_dev_init(struct net_device *dev)
- 	struct mlx5e_priv *priv = mlx5i_epriv(dev);
- 	struct mlx5i_priv *ipriv, *parent_ipriv;
- 	struct net_device *parent_dev;
--	int parent_ifindex;
- 
- 	ipriv = priv->ppriv;
- 
--	/* Get QPN to netdevice hash table from parent */
--	parent_ifindex = dev->netdev_ops->ndo_get_iflink(dev);
--	parent_dev = dev_get_by_index(dev_net(dev), parent_ifindex);
-+	/* Link to parent */
-+	parent_dev = mlx5i_parent_get(dev);
- 	if (!parent_dev) {
- 		mlx5_core_warn(priv->mdev, "failed to get parent device\n");
+@@ -168,6 +168,15 @@ static int mlx5i_pkey_dev_init(struct net_device *dev)
  		return -EINVAL;
  	}
  
-+	/* Get QPN to netdevice hash table from parent */
++	if (dev->num_rx_queues < parent_dev->real_num_rx_queues) {
++		mlx5_core_warn(priv->mdev,
++			       "failed to create child device with rx queues [%d] less than parent's [%d]\n",
++			       dev->num_rx_queues,
++			       parent_dev->real_num_rx_queues);
++		mlx5i_parent_put(dev);
++		return -EINVAL;
++	}
++
+ 	/* Get QPN to netdevice hash table from parent */
  	parent_ipriv = netdev_priv(parent_dev);
  	ipriv->qpn_htbl = parent_ipriv->qpn_htbl;
--	dev_put(parent_dev);
- 
- 	return mlx5i_dev_init(dev);
- }
-@@ -184,6 +182,7 @@ static int mlx5i_pkey_ioctl(struct net_device *dev, struct ifreq *ifr, int cmd)
- 
- static void mlx5i_pkey_dev_cleanup(struct net_device *netdev)
- {
-+	mlx5i_parent_put(netdev);
- 	return mlx5i_dev_cleanup(netdev);
- }
- 
 -- 
 2.35.1
 
