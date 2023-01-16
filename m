@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B536FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:58:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34EB5C433EF;
-	Mon, 16 Jan 2023 16:58:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F94C6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:58:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A64C433D2;
+	Mon, 16 Jan 2023 16:58:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888321;
-	bh=7P2074OPNO66o2es9jd2wdakK7de6oDW7kj8MRZfzU8=;
+	s=korg; t=1673888324;
+	bh=YAaj60acJgjzz9buMAgiCaEPsopzcQz9asq4E4GL4MU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YtyOwH4ipTMJmCZTcYoFLf/r8mP5pT0Q0ZeapdJQebubwle+bUkIr8EV6ufmrVlg3
-	 v6m0OYWSrLWzyU4lw/5NE0PLq2vBXjk5fU+d3vsGzjbvZnUlGjXHpPwrtQoRp/Bi3y
-	 0LWYqksVCG22Qh3Vf5Bg4K8GG8odtPjJKKI+zRKo=
+	b=QzXd0RU6WW7WQ3sNDP+GXrSHsQ85ikYqHz1PollykMJ2SV8WAK7D2gPHToGPcBCnS
+	 3EY7nYRQ9ddUbrbyJWZOxCNZ8KSyFJXb0QL6dQu0Z0jALjhktmjD7GoeOp8vUBNpkM
+	 YxEkTdM89a8J0JTFhSHfLW3F6JQ9y8gZuM8tDpFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+ba9dac45bc76c490b7c3@syzkaller.appspotmail.com,
-	Eric Biggers <ebiggers@google.com>,
-	Theodore Tso <tytso@mit.edu>,
-	stable@kernel.org
-Subject: [PATCH 4.19 457/521] ext4: dont allow journal inode to have encrypt flag
-Date: Mon, 16 Jan 2023 16:51:59 +0100
-Message-Id: <20230116154907.561741449@linuxfoundation.org>
+	Masayoshi Mizuma <m.mizuma@jp.fujitsu.com>,
+	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 484/521] ktest: Add support for meta characters in GRUB_MENU
+Date: Mon, 16 Jan 2023 16:52:26 +0100
+Message-Id: <20230116154908.831292268@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,58 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Biggers <ebiggers@google.com>
+From: Masayoshi Mizuma <m.mizuma@jp.fujitsu.com>
 
-commit 105c78e12468413e426625831faa7db4284e1fec upstream.
+[ Upstream commit 68911069f509ba3bf0f513d9af00309e07932906 ]
 
-Mounting a filesystem whose journal inode has the encrypt flag causes a
-NULL dereference in fscrypt_limit_io_blocks() when the 'inlinecrypt'
-mount option is used.
+ktest fails if meta characters are in GRUB_MENU, for example
+GRUB_MENU = 'Fedora (test)'
 
-The problem is that when jbd2_journal_init_inode() calls bmap(), it
-eventually finds its way into ext4_iomap_begin(), which calls
-fscrypt_limit_io_blocks().  fscrypt_limit_io_blocks() requires that if
-the inode is encrypted, then its encryption key must already be set up.
-That's not the case here, since the journal inode is never "opened" like
-a normal file would be.  Hence the crash.
+The failure happens because the meta characters are not escaped,
+so the menu doesn't match in any entries in GRUB_FILE.
 
-A reproducer is:
+Use quotemeta() to escape the meta characters.
 
-    mkfs.ext4 -F /dev/vdb
-    debugfs -w /dev/vdb -R "set_inode_field <8> flags 0x80808"
-    mount /dev/vdb /mnt -o inlinecrypt
+Link: http://lkml.kernel.org/r/20190417235823.18176-1-msys.mizuma@gmail.com
 
-To fix this, make ext4 consider journal inodes with the encrypt flag to
-be invalid.  (Note, maybe other flags should be rejected on the journal
-inode too.  For now, this is just the minimal fix for the above issue.)
-
-I've marked this as fixing the commit that introduced the call to
-fscrypt_limit_io_blocks(), since that's what made an actual crash start
-being possible.  But this fix could be applied to any version of ext4
-that supports the encrypt feature.
-
-Reported-by: syzbot+ba9dac45bc76c490b7c3@syzkaller.appspotmail.com
-Fixes: 38ea50daa7a4 ("ext4: support direct I/O with fscrypt using blk-crypto")
-Cc: stable@vger.kernel.org
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20221102053312.189962-1-ebiggers@kernel.org
-Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Cc: stable@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Masayoshi Mizuma <m.mizuma@jp.fujitsu.com>
+Signed-off-by: Steven Rostedt (VMware) <rostedt@goodmis.org>
+Stable-dep-of: 26df05a8c142 ("kest.pl: Fix grub2 menu handling for rebooting")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/super.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tools/testing/ktest/ktest.pl | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/fs/ext4/super.c
-+++ b/fs/ext4/super.c
-@@ -4732,7 +4732,7 @@ static struct inode *ext4_get_journal_in
+diff --git a/tools/testing/ktest/ktest.pl b/tools/testing/ktest/ktest.pl
+index 92663d123be1..635121ecf543 100755
+--- a/tools/testing/ktest/ktest.pl
++++ b/tools/testing/ktest/ktest.pl
+@@ -1866,9 +1866,10 @@ sub get_grub2_index {
+ 	or dodie "unable to get $grub_file";
  
- 	jbd_debug(2, "Journal inode found at %p: %lld bytes\n",
- 		  journal_inode, journal_inode->i_size);
--	if (!S_ISREG(journal_inode->i_mode)) {
-+	if (!S_ISREG(journal_inode->i_mode) || IS_ENCRYPTED(journal_inode)) {
- 		ext4_msg(sb, KERN_ERR, "invalid journal inode");
- 		iput(journal_inode);
- 		return NULL;
+     my $found = 0;
++    my $grub_menu_qt = quotemeta($grub_menu);
+ 
+     while (<IN>) {
+-	if (/^menuentry.*$grub_menu/) {
++	if (/^menuentry.*$grub_menu_qt/) {
+ 	    $grub_number++;
+ 	    $found = 1;
+ 	    last;
+@@ -1909,9 +1910,10 @@ sub get_grub_index {
+ 	or dodie "unable to get menu.lst";
+ 
+     my $found = 0;
++    my $grub_menu_qt = quotemeta($grub_menu);
+ 
+     while (<IN>) {
+-	if (/^\s*title\s+$grub_menu\s*$/) {
++	if (/^\s*title\s+$grub_menu_qt\s*$/) {
+ 	    $grub_number++;
+ 	    $found = 1;
+ 	    last;
+-- 
+2.35.1
+
 
 
