@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F184133EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:04:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77428C433D2;
-	Mon, 16 Jan 2023 16:04:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9693033EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:04:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C6ABC433EF;
+	Mon, 16 Jan 2023 16:04:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885065;
-	bh=44HSyK6uZDz6w8zpJGlM/OacizFb/ohe739n6uWOtP8=;
+	s=korg; t=1673885068;
+	bh=p4Sbr1+I9ttFCLR0Tb168e7EZbLr0+yL75HP8U+Uh+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fuS9z3tPwZ6TKvYnWUh4HU8686wcy4h0bsb75G/PEyuIDa9AjEV/pHzfyD0YfWj1D
-	 eil2UpSTIveHMhQdBKIOktShawJMJSFBElNgj74h5EJapn+tUj8Df5Ux30KXQfhXVr
-	 M2jpQ7OiwWmA3InSe9b4Id5pxU+Wodw+yyVj5bf0=
+	b=GTdncutvbh5WMK3DXIcZvKKho/Ygk9TDaUkstBHpmZ+PYSC3eYZKHHyAZX2uiDLOn
+	 H5LkKTkMNBawtSyGMHkB/UBQue2w2bV4P9MvbJfuMDy66Dcr2m3pUqCU4YCj3Kv0z1
+	 d8bfAYZPOGTgH/lCpTh37GbtyJMSl3ahQHrqR67s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mattia Dongili <malattia@linux.it>
-Subject: [PATCH 5.15 32/86] platform/x86: sony-laptop: Dont turn off 0x153 keyboard backlight during probe
-Date: Mon, 16 Jan 2023 16:51:06 +0100
-Message-Id: <20230116154748.420456677@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Gurucharan G <gurucharanx.g@intel.com>
+Subject: [PATCH 5.15 33/86] ixgbe: fix pci device refcount leak
+Date: Mon, 16 Jan 2023 16:51:07 +0100
+Message-Id: <20230116154748.471110633@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -34,58 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit ad75bd85b1db69c97eefea07b375567821f6ef58 upstream.
+commit b93fb4405fcb5112c5739c5349afb52ec7f15c07 upstream.
 
-The 0x153 version of the kbd backlight control SNC handle has no separate
-address to probe if the backlight is there.
+As the comment of pci_get_domain_bus_and_slot() says, it
+returns a PCI device with refcount incremented, when finish
+using it, the caller must decrement the reference count by
+calling pci_dev_put().
 
-This turns the probe call into a set keyboard backlight call with a value
-of 0 turning off the keyboard backlight.
+In ixgbe_get_first_secondary_devfn() and ixgbe_x550em_a_has_mii(),
+pci_dev_put() is called to avoid leak.
 
-Skip probing when there is no separate probe address to avoid this.
-
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=1583752
-Fixes: 800f20170dcf ("Keyboard backlight control for some Vaio Fit models")
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Mattia Dongili <malattia@linux.it>
-Link: https://lore.kernel.org/r/20221213122943.11123-1-hdegoede@redhat.com
+Fixes: 8fa10ef01260 ("ixgbe: register a mdiobus")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/sony-laptop.c |   21 ++++++++++++++-------
- 1 file changed, 14 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/platform/x86/sony-laptop.c
-+++ b/drivers/platform/x86/sony-laptop.c
-@@ -1892,14 +1892,21 @@ static int sony_nc_kbd_backlight_setup(s
- 		break;
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
+@@ -855,9 +855,11 @@ static struct pci_dev *ixgbe_get_first_s
+ 	rp_pdev = pci_get_domain_bus_and_slot(0, 0, devfn);
+ 	if (rp_pdev && rp_pdev->subordinate) {
+ 		bus = rp_pdev->subordinate->number;
++		pci_dev_put(rp_pdev);
+ 		return pci_get_domain_bus_and_slot(0, bus, 0);
  	}
  
--	ret = sony_call_snc_handle(handle, probe_base, &result);
--	if (ret)
--		return ret;
-+	/*
-+	 * Only probe if there is a separate probe_base, otherwise the probe call
-+	 * is equivalent to __sony_nc_kbd_backlight_mode_set(0), resulting in
-+	 * the keyboard backlight being turned off.
-+	 */
-+	if (probe_base) {
-+		ret = sony_call_snc_handle(handle, probe_base, &result);
-+		if (ret)
-+			return ret;
++	pci_dev_put(rp_pdev);
+ 	return NULL;
+ }
  
--	if ((handle == 0x0137 && !(result & 0x02)) ||
--			!(result & 0x01)) {
--		dprintk("no backlight keyboard found\n");
--		return 0;
-+		if ((handle == 0x0137 && !(result & 0x02)) ||
-+				!(result & 0x01)) {
-+			dprintk("no backlight keyboard found\n");
-+			return 0;
-+		}
+@@ -874,6 +876,7 @@ static bool ixgbe_x550em_a_has_mii(struc
+ 	struct ixgbe_adapter *adapter = hw->back;
+ 	struct pci_dev *pdev = adapter->pdev;
+ 	struct pci_dev *func0_pdev;
++	bool has_mii = false;
+ 
+ 	/* For the C3000 family of SoCs (x550em_a) the internal ixgbe devices
+ 	 * are always downstream of root ports @ 0000:00:16.0 & 0000:00:17.0
+@@ -884,15 +887,16 @@ static bool ixgbe_x550em_a_has_mii(struc
+ 	func0_pdev = ixgbe_get_first_secondary_devfn(PCI_DEVFN(0x16, 0));
+ 	if (func0_pdev) {
+ 		if (func0_pdev == pdev)
+-			return true;
+-		else
+-			return false;
++			has_mii = true;
++		goto out;
  	}
+ 	func0_pdev = ixgbe_get_first_secondary_devfn(PCI_DEVFN(0x17, 0));
+ 	if (func0_pdev == pdev)
+-		return true;
++		has_mii = true;
  
- 	kbdbl_ctl = kzalloc(sizeof(*kbdbl_ctl), GFP_KERNEL);
+-	return false;
++out:
++	pci_dev_put(func0_pdev);
++	return has_mii;
+ }
+ 
+ /**
 
 
