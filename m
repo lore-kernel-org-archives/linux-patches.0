@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B9333EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F2ACC433EF;
-	Mon, 16 Jan 2023 16:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F6633EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:00:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09779C433D2;
+	Mon, 16 Jan 2023 16:00:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884853;
-	bh=e2MSWj94IR5+M3v5Wv/qjLDQZ8/vs4jUFWSZe/1Uxvk=;
+	s=korg; t=1673884856;
+	bh=GmVn22y5D5EsLoTfof5OwaI8LWFCX3AmTqFAizkNnSw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gUHVhzrlUM+VfBkt3vkpoKlVS9h2+W2Y91l4wfnpgwjzc1fPCzEh/1KdYo71n+AHF
-	 vDWvKdyUIOxwXb/O61NEf7ke5UPCEgANWd2K7yjtcqXCdWS+c6bqm46kR4H7UQAPTe
-	 8O66sIeUnGlOddepZ+mYBZZKkKxkwmXYjaRG/oVU=
+	b=wmH0xYgNlinHa3z33h86+qgjxD8FYwZ65cVCfoJ+v9Rp9QTL+Fi5mTEinu8y+eF64
+	 7iJ89HdR+E0A83SaNigcNGoQQ8Fxp1ap9xr54D+npwYgw+RMpI1MsrygsVIuLrDkY4
+	 76DD6xtxXBsVy2Jx5bicDQdRDBcwXqTek9VhQ/TM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Guillaume Nault <gnault@redhat.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Willy Tarreau <w@1wt.eu>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 163/183] selftests/net: l2_tos_ttl_inherit.sh: Ensure environment cleanup on failure.
-Date: Mon, 16 Jan 2023 16:51:26 +0100
-Message-Id: <20230116154810.198183048@linuxfoundation.org>
+Subject: [PATCH 6.1 137/183] tools/nolibc: fix the O_* fcntl/open macro definitions for riscv
+Date: Mon, 16 Jan 2023 16:51:00 +0100
+Message-Id: <20230116154809.168434338@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -36,110 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Willy Tarreau <w@1wt.eu>
 
-[ Upstream commit d68ff8ad3351b8fc8d6f14b9a4f5cc8ba3e8bd13 ]
+[ Upstream commit 00b18da4089330196906b9fe075c581c17eb726c ]
 
-Use 'set -e' and an exit handler to stop the script if a command fails
-and ensure the test environment is cleaned up in any case. Also, handle
-the case where the script is interrupted by SIGINT.
+When RISCV port was imported in 5.2, the O_* macros were taken with
+their octal value and written as-is in hex, resulting in the getdents64()
+to fail in nolibc-test.
 
-The only command that's expected to fail is 'wait $ping_pid', since
-it's killed by the script. Handle this case with '|| true' to make it
-play well with 'set -e'.
-
-Finally, return the Kselftest SKIP code (4) when the script breaks
-because of an environment problem or a command line failure. The 0 and
-1 return codes should now reliably indicate that all tests have been
-run (0: all tests run and passed, 1: all tests run but at least one
-failed, 4: test script didn't run completely).
-
-Fixes: b690842d12fd ("selftests/net: test l2 tunnel TOS/TTL inheriting")
-Reported-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Tested-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 582e84f7b779 ("tool headers nolibc: add RISCV support") #5.2
+Signed-off-by: Willy Tarreau <w@1wt.eu>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/net/l2_tos_ttl_inherit.sh       | 40 +++++++++++++++++--
- 1 file changed, 36 insertions(+), 4 deletions(-)
+ tools/include/nolibc/arch-riscv.h | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/tools/testing/selftests/net/l2_tos_ttl_inherit.sh b/tools/testing/selftests/net/l2_tos_ttl_inherit.sh
-index cf56680d598f..f11756e7df2f 100755
---- a/tools/testing/selftests/net/l2_tos_ttl_inherit.sh
-+++ b/tools/testing/selftests/net/l2_tos_ttl_inherit.sh
-@@ -12,13 +12,16 @@
- # In addition this script also checks if forcing a specific field in the
- # outer header is working.
+diff --git a/tools/include/nolibc/arch-riscv.h b/tools/include/nolibc/arch-riscv.h
+index ba04771cb3a3..a3bdd9803f8c 100644
+--- a/tools/include/nolibc/arch-riscv.h
++++ b/tools/include/nolibc/arch-riscv.h
+@@ -11,13 +11,13 @@
+ #define O_RDONLY            0
+ #define O_WRONLY            1
+ #define O_RDWR              2
+-#define O_CREAT         0x100
+-#define O_EXCL          0x200
+-#define O_NOCTTY        0x400
+-#define O_TRUNC        0x1000
+-#define O_APPEND       0x2000
+-#define O_NONBLOCK     0x4000
+-#define O_DIRECTORY  0x200000
++#define O_CREAT          0x40
++#define O_EXCL           0x80
++#define O_NOCTTY        0x100
++#define O_TRUNC         0x200
++#define O_APPEND        0x400
++#define O_NONBLOCK      0x800
++#define O_DIRECTORY   0x10000
  
-+# Return 4 by default (Kselftest SKIP code)
-+ERR=4
-+
- if [ "$(id -u)" != "0" ]; then
- 	echo "Please run as root."
--	exit 0
-+	exit $ERR
- fi
- if ! which tcpdump > /dev/null 2>&1; then
- 	echo "No tcpdump found. Required for this test."
--	exit 0
-+	exit $ERR
- fi
- 
- expected_tos="0x00"
-@@ -340,7 +343,7 @@ verify() {
- 		fi
- 	fi
- 	kill -9 $ping_pid
--	wait $ping_pid 2>/dev/null
-+	wait $ping_pid 2>/dev/null || true
- 	result="FAIL"
- 	if [ "$outer" = "4" ]; then
- 		captured_ttl="$(get_field "ttl" "$out")"
-@@ -380,6 +383,31 @@ cleanup() {
- 	ip netns del "${NS1}" 2>/dev/null
- }
- 
-+exit_handler() {
-+	# Don't exit immediately if one of the intermediate commands fails.
-+	# We might be called at the end of the script, when the network
-+	# namespaces have already been deleted. So cleanup() may fail, but we
-+	# still need to run until 'exit $ERR' or the script won't return the
-+	# correct error code.
-+	set +e
-+
-+	cleanup
-+
-+	exit $ERR
-+}
-+
-+# Restore the default SIGINT handler (just in case) and exit.
-+# The exit handler will take care of cleaning everything up.
-+interrupted() {
-+	trap - INT
-+
-+	exit $ERR
-+}
-+
-+set -e
-+trap exit_handler EXIT
-+trap interrupted INT
-+
- printf "┌────────┬───────┬───────┬──────────────┬"
- printf "──────────────┬───────┬────────┐\n"
- for type in gre vxlan geneve; do
-@@ -409,6 +437,10 @@ done
- printf "└────────┴───────┴───────┴──────────────┴"
- printf "──────────────┴───────┴────────┘\n"
- 
-+# All tests done.
-+# Set ERR appropriately: it will be returned by the exit handler.
- if $failed; then
--	exit 1
-+	ERR=1
-+else
-+	ERR=0
- fi
+ struct sys_stat_struct {
+ 	unsigned long	st_dev;		/* Device.  */
 -- 
 2.35.1
 
