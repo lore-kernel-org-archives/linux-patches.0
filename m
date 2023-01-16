@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 727616FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:00:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE665C433D2;
-	Mon, 16 Jan 2023 17:00:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17B7F6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:00:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93159C433EF;
+	Mon, 16 Jan 2023 17:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888412;
-	bh=WadvrxBh0Mgo+NVjzOxnuuu0fEO/OhVa6YQhUAVMWcQ=;
+	s=korg; t=1673888414;
+	bh=yUWQ/c+/o3PIEMThAQSymkSkEeJsyKZHykM4WKNMFiM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1v0OxmP2hD0qN0iwWEEVPqySNrPYiBWtQKG6oxfCGNUasL3T904wlzXzBrgR+0lwL
-	 Fe4vR8mN1f7GpjJmfASeEOmYsSCBhUl/14YQ5N690jNtEACO5d4pFNLr+Z4/L72ymk
-	 EzeLLZu6K07rHstGG16cd6XAd5Rf1XfPONw2biuQ=
+	b=Tr7nPJefYRd+JD9LBEq3scIELq0IptHGb0Ljyf/2TaBATWl7c6wWHASJPboQvgwof
+	 KmYciJwt9Ll6iIAqJ/5kZgRhxOFYoM5CfD1sT/53R2lAPtednUTHkNAiaIEkKdN2HR
+	 CpY66i+pI2Q4buWhVMgCrl8K78cJ1sUKMcHns9Ak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mahesh Salgaonkar <mahesh@linux.ibm.com>,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 4.19 517/521] pseries/eeh: Fix the kdump kernel crash during eeh_pseries_init
-Date: Mon, 16 Jan 2023 16:52:59 +0100
-Message-Id: <20230116154910.338035731@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Sergey 'Jin' Bostandzhyan <jin@mediatomb.cc>
+Subject: [PATCH 4.19 518/521] ALSA: hda/realtek - Fix inverted bass GPIO pin on Acer 8951G
+Date: Mon, 16 Jan 2023 16:53:00 +0100
+Message-Id: <20230116154910.375033757@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -34,73 +34,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mahesh Salgaonkar <mahesh@linux.ibm.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit eb8257a12192f43ffd41bd90932c39dade958042 upstream.
+commit 336820c4374bc065317f247dc2bb37c0e41b64a6 upstream.
 
-On pseries LPAR when an empty slot is assigned to partition OR in single
-LPAR mode, kdump kernel crashes during issuing PHB reset.
+We've added the bass speaker support on Acer 8951G by the commit
+00066e9733f6 ("Add Acer Aspire Ethos 8951G model quirk"), but it seems
+that the GPIO pin was wrongly set: while the commit turns off the bit
+to power up the amp, the actual hardware reacts other way round,
+i.e. GPIO bit on = amp on.
 
-In the kdump scenario, we traverse all PHBs and issue reset using the
-pe_config_addr of the first child device present under each PHB. However
-the code assumes that none of the PHB slots can be empty and uses
-list_first_entry() to get the first child device under the PHB. Since
-list_first_entry() expects the list to be non-empty, it returns an
-invalid pci_dn entry and ends up accessing NULL phb pointer under
-pci_dn->phb causing kdump kernel crash.
+So this patch fixes the bug, turning on the GPIO bit 0x02 as default.
+Since turning on the GPIO bit can be more easily managed with
+alc_setup_gpio() call, we simplify the quirk code by integrating the
+GPIO setup into the existing alc662_fixup_aspire_ethos_hp() and
+dropping the whole ALC669_FIXUP_ACER_ASPIRE_ETHOS_SUBWOOFER quirk.
 
-This patch fixes the below kdump kernel crash by skipping empty slots:
-
-  audit: initializing netlink subsys (disabled)
-  thermal_sys: Registered thermal governor 'fair_share'
-  thermal_sys: Registered thermal governor 'step_wise'
-  cpuidle: using governor menu
-  pstore: Registered nvram as persistent store backend
-  Issue PHB reset ...
-  audit: type=2000 audit(1631267818.000:1): state=initialized audit_enabled=0 res=1
-  BUG: Kernel NULL pointer dereference on read at 0x00000268
-  Faulting instruction address: 0xc000000008101fb0
-  Oops: Kernel access of bad area, sig: 7 [#1]
-  LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA pSeries
-  Modules linked in:
-  CPU: 7 PID: 1 Comm: swapper/7 Not tainted 5.14.0 #1
-  NIP:  c000000008101fb0 LR: c000000009284ccc CTR: c000000008029d70
-  REGS: c00000001161b840 TRAP: 0300   Not tainted  (5.14.0)
-  MSR:  8000000002009033 <SF,VEC,EE,ME,IR,DR,RI,LE>  CR: 28000224  XER: 20040002
-  CFAR: c000000008101f0c DAR: 0000000000000268 DSISR: 00080000 IRQMASK: 0
-  ...
-  NIP pseries_eeh_get_pe_config_addr+0x100/0x1b0
-  LR  __machine_initcall_pseries_eeh_pseries_init+0x2cc/0x350
-  Call Trace:
-    0xc00000001161bb80 (unreliable)
-    __machine_initcall_pseries_eeh_pseries_init+0x2cc/0x350
-    do_one_initcall+0x60/0x2d0
-    kernel_init_freeable+0x350/0x3f8
-    kernel_init+0x3c/0x17c
-    ret_from_kernel_thread+0x5c/0x64
-
-Fixes: 5a090f7c363fd ("powerpc/pseries: PCIE PHB reset")
-Signed-off-by: Mahesh Salgaonkar <mahesh@linux.ibm.com>
-[mpe: Tweak wording and trim oops]
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/163215558252.413351.8600189949820258982.stgit@jupiter
+Fixes: 00066e9733f6 ("Add Acer Aspire Ethos 8951G model quirk")
+Reported-and-tested-by: Sergey 'Jin' Bostandzhyan <jin@mediatomb.cc>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20191128202630.6626-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/platforms/pseries/eeh_pseries.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ sound/pci/hda/patch_realtek.c |   17 +++--------------
+ 1 file changed, 3 insertions(+), 14 deletions(-)
 
---- a/arch/powerpc/platforms/pseries/eeh_pseries.c
-+++ b/arch/powerpc/platforms/pseries/eeh_pseries.c
-@@ -957,6 +957,10 @@ static int __init eeh_pseries_init(void)
- 	if (is_kdump_kernel() || reset_devices) {
- 		pr_info("Issue PHB reset ...\n");
- 		list_for_each_entry(phb, &hose_list, list_node) {
-+			// Skip if the slot is empty
-+			if (list_empty(&PCI_DN(phb->dn)->child_list))
-+				continue;
-+
- 			pdn = list_first_entry(&PCI_DN(phb->dn)->child_list, struct pci_dn, list);
- 			addr = (pdn->busno << 16) | (pdn->devfn << 8);
- 			config_addr = pseries_eeh_get_config_addr(phb, addr);
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -8539,6 +8539,8 @@ static void alc662_fixup_aspire_ethos_hp
+ 	case HDA_FIXUP_ACT_PRE_PROBE:
+ 		snd_hda_jack_detect_enable_callback(codec, 0x1b,
+ 				alc662_aspire_ethos_mute_speakers);
++		/* subwoofer needs an extra GPIO setting to become audible */
++		alc_setup_gpio(codec, 0x02);
+ 		break;
+ 	case HDA_FIXUP_ACT_INIT:
+ 		/* Make sure to start in a correct state, i.e. if
+@@ -8676,7 +8678,6 @@ enum {
+ 	ALC662_FIXUP_USI_HEADSET_MODE,
+ 	ALC662_FIXUP_LENOVO_MULTI_CODECS,
+ 	ALC669_FIXUP_ACER_ASPIRE_ETHOS,
+-	ALC669_FIXUP_ACER_ASPIRE_ETHOS_SUBWOOFER,
+ 	ALC669_FIXUP_ACER_ASPIRE_ETHOS_HEADSET,
+ 	ALC671_FIXUP_HP_HEADSET_MIC2,
+ 	ALC662_FIXUP_ACER_X2660G_HEADSET_MODE,
+@@ -9019,18 +9020,6 @@ static const struct hda_fixup alc662_fix
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc662_fixup_aspire_ethos_hp,
+ 	},
+-	[ALC669_FIXUP_ACER_ASPIRE_ETHOS_SUBWOOFER] = {
+-		.type = HDA_FIXUP_VERBS,
+-		/* subwoofer needs an extra GPIO setting to become audible */
+-		.v.verbs = (const struct hda_verb[]) {
+-			{0x01, AC_VERB_SET_GPIO_MASK, 0x02},
+-			{0x01, AC_VERB_SET_GPIO_DIRECTION, 0x02},
+-			{0x01, AC_VERB_SET_GPIO_DATA, 0x00},
+-			{ }
+-		},
+-		.chained = true,
+-		.chain_id = ALC669_FIXUP_ACER_ASPIRE_ETHOS_HEADSET
+-	},
+ 	[ALC669_FIXUP_ACER_ASPIRE_ETHOS] = {
+ 		.type = HDA_FIXUP_PINS,
+ 		.v.pins = (const struct hda_pintbl[]) {
+@@ -9040,7 +9029,7 @@ static const struct hda_fixup alc662_fix
+ 			{ }
+ 		},
+ 		.chained = true,
+-		.chain_id = ALC669_FIXUP_ACER_ASPIRE_ETHOS_SUBWOOFER
++		.chain_id = ALC669_FIXUP_ACER_ASPIRE_ETHOS_HEADSET
+ 	},
+ 	[ALC671_FIXUP_HP_HEADSET_MIC2] = {
+ 		.type = HDA_FIXUP_FUNC,
 
 
