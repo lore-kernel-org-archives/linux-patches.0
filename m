@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 566936FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCACCC433D2;
-	Mon, 16 Jan 2023 16:56:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12CD96FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:56:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE52C4339B;
+	Mon, 16 Jan 2023 16:56:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888208;
-	bh=aDP1JkHuENaxlzZ3YHazEmWGO3RHBiUcGMnhNk42KYE=;
+	s=korg; t=1673888210;
+	bh=lWq+UEYPegfGUV+K0842KsNoQN8PXyOJWfkep4/09OE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HOIDNYCWs5ZyC+RUqE9pmrnfXVy8ZZcbZCEwqQ3ABjOitNeaxhTJ+inytC54RSf6z
-	 sJnhmbNNWlYkHcKokh0meUTGr1VtsDsd44okP8bLzAoXt/TfJZBT3p6ctlqA0whwdY
-	 REM7ZzPNp2hZoTHj+BFTe+BDyHLkhN/bcJ/eH5wQ=
+	b=at5rU7/cTRvoppjxFndAO9ZkxJH12XoJdjkzhQFzKz3EVI7SGKpLcFn3ezCmSIV5I
+	 PBFqpVYB07zi5aZiIgDjpmbwOw+xT16Jux3Qqtj7F/D/PwBwUQ6h3kMg0Pq1TywqKz
+	 eYTCemmrcdQ1H0hToYJSr4yB6YF5PEeXbzwgIUwg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luo Meng <luomeng12@huawei.com>,
-	Mike Snitzer <snitzer@kernel.org>,
+	minoura makoto <minoura@valinux.co.jp>,
+	Hiroshi Shimamoto <h-shimamoto@nec.com>,
+	Trond Myklebust <trondmy@hammerspace.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 424/521] dm thin: resume even if in FAIL mode
-Date: Mon, 16 Jan 2023 16:51:26 +0100
-Message-Id: <20230116154906.094766608@linuxfoundation.org>
+Subject: [PATCH 4.19 442/521] SUNRPC: ensure the matching upcall is in-flight upon downcall
+Date: Mon, 16 Jan 2023 16:51:44 +0100
+Message-Id: <20230116154906.918934110@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,75 +37,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luo Meng <luomeng12@huawei.com>
+From: minoura makoto <minoura@valinux.co.jp>
 
-[ Upstream commit 19eb1650afeb1aa86151f61900e9e5f1de5d8d02 ]
+[ Upstream commit b18cba09e374637a0a3759d856a6bca94c133952 ]
 
-If a thinpool set fail_io while suspending, resume will fail with:
- device-mapper: resume ioctl on vg-thinpool  failed: Invalid argument
+Commit 9130b8dbc6ac ("SUNRPC: allow for upcalls for the same uid
+but different gss service") introduced `auth` argument to
+__gss_find_upcall(), but in gss_pipe_downcall() it was left as NULL
+since it (and auth->service) was not (yet) determined.
 
-The thin-pool also can't be removed if an in-flight bio is in the
-deferred list.
+When multiple upcalls with the same uid and different service are
+ongoing, it could happen that __gss_find_upcall(), which returns the
+first match found in the pipe->in_downcall list, could not find the
+correct gss_msg corresponding to the downcall we are looking for.
+Moreover, it might return a msg which is not sent to rpc.gssd yet.
 
-This can be easily reproduced using:
+We could see mount.nfs process hung in D state with multiple mount.nfs
+are executed in parallel.  The call trace below is of CentOS 7.9
+kernel-3.10.0-1160.24.1.el7.x86_64 but we observed the same hang w/
+elrepo kernel-ml-6.0.7-1.el7.
 
-  echo "offline" > /sys/block/sda/device/state
-  dd if=/dev/zero of=/dev/mapper/thin bs=4K count=1
-  dmsetup suspend /dev/mapper/pool
-  mkfs.ext4 /dev/mapper/thin
-  dmsetup resume /dev/mapper/pool
+PID: 71258  TASK: ffff91ebd4be0000  CPU: 36  COMMAND: "mount.nfs"
+ #0 [ffff9203ca3234f8] __schedule at ffffffffa3b8899f
+ #1 [ffff9203ca323580] schedule at ffffffffa3b88eb9
+ #2 [ffff9203ca323590] gss_cred_init at ffffffffc0355818 [auth_rpcgss]
+ #3 [ffff9203ca323658] rpcauth_lookup_credcache at ffffffffc0421ebc
+[sunrpc]
+ #4 [ffff9203ca3236d8] gss_lookup_cred at ffffffffc0353633 [auth_rpcgss]
+ #5 [ffff9203ca3236e8] rpcauth_lookupcred at ffffffffc0421581 [sunrpc]
+ #6 [ffff9203ca323740] rpcauth_refreshcred at ffffffffc04223d3 [sunrpc]
+ #7 [ffff9203ca3237a0] call_refresh at ffffffffc04103dc [sunrpc]
+ #8 [ffff9203ca3237b8] __rpc_execute at ffffffffc041e1c9 [sunrpc]
+ #9 [ffff9203ca323820] rpc_execute at ffffffffc0420a48 [sunrpc]
 
-The root cause is maybe_resize_data_dev() will check fail_io and return
-error before called dm_resume.
+The scenario is like this. Let's say there are two upcalls for
+services A and B, A -> B in pipe->in_downcall, B -> A in pipe->pipe.
 
-Fix this by adding FAIL mode check at the end of pool_preresume().
+When rpc.gssd reads pipe to get the upcall msg corresponding to
+service B from pipe->pipe and then writes the response, in
+gss_pipe_downcall the msg corresponding to service A will be picked
+because only uid is used to find the msg and it is before the one for
+B in pipe->in_downcall.  And the process waiting for the msg
+corresponding to service A will be woken up.
 
-Cc: stable@vger.kernel.org
-Fixes: da105ed5fd7e ("dm thin metadata: introduce dm_pool_abort_metadata")
-Signed-off-by: Luo Meng <luomeng12@huawei.com>
-Signed-off-by: Mike Snitzer <snitzer@kernel.org>
+Actual scheduing of that process might be after rpc.gssd processes the
+next msg.  In rpc_pipe_generic_upcall it clears msg->errno (for A).
+The process is scheduled to see gss_msg->ctx == NULL and
+gss_msg->msg.errno == 0, therefore it cannot break the loop in
+gss_create_upcall and is never woken up after that.
+
+This patch adds a simple check to ensure that a msg which is not
+sent to rpc.gssd yet is not chosen as the matching upcall upon
+receiving a downcall.
+
+Signed-off-by: minoura makoto <minoura@valinux.co.jp>
+Signed-off-by: Hiroshi Shimamoto <h-shimamoto@nec.com>
+Tested-by: Hiroshi Shimamoto <h-shimamoto@nec.com>
+Cc: Trond Myklebust <trondmy@hammerspace.com>
+Fixes: 9130b8dbc6ac ("SUNRPC: allow for upcalls for same uid but different gss service")
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/md/dm-thin.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ include/linux/sunrpc/rpc_pipe_fs.h |  5 +++++
+ net/sunrpc/auth_gss/auth_gss.c     | 19 +++++++++++++++++--
+ 2 files changed, 22 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/md/dm-thin.c b/drivers/md/dm-thin.c
-index 1916becc20e0..386cb3395378 100644
---- a/drivers/md/dm-thin.c
-+++ b/drivers/md/dm-thin.c
-@@ -3549,20 +3549,28 @@ static int pool_preresume(struct dm_target *ti)
- 	 */
- 	r = bind_control_target(pool, ti);
- 	if (r)
--		return r;
-+		goto out;
+diff --git a/include/linux/sunrpc/rpc_pipe_fs.h b/include/linux/sunrpc/rpc_pipe_fs.h
+index e90b9bd99ded..396de2ef8767 100644
+--- a/include/linux/sunrpc/rpc_pipe_fs.h
++++ b/include/linux/sunrpc/rpc_pipe_fs.h
+@@ -94,6 +94,11 @@ extern ssize_t rpc_pipe_generic_upcall(struct file *, struct rpc_pipe_msg *,
+ 				       char __user *, size_t);
+ extern int rpc_queue_upcall(struct rpc_pipe *, struct rpc_pipe_msg *);
  
- 	r = maybe_resize_data_dev(ti, &need_commit1);
- 	if (r)
--		return r;
-+		goto out;
- 
- 	r = maybe_resize_metadata_dev(ti, &need_commit2);
- 	if (r)
--		return r;
-+		goto out;
- 
- 	if (need_commit1 || need_commit2)
- 		(void) commit(pool);
-+out:
-+	/*
-+	 * When a thin-pool is PM_FAIL, it cannot be rebuilt if
-+	 * bio is in deferred list. Therefore need to return 0
-+	 * to allow pool_resume() to flush IO.
-+	 */
-+	if (r && get_pool_mode(pool) == PM_FAIL)
-+		r = 0;
- 
--	return 0;
-+	return r;
++/* returns true if the msg is in-flight, i.e., already eaten by the peer */
++static inline bool rpc_msg_is_inflight(const struct rpc_pipe_msg *msg) {
++	return (msg->copied != 0 && list_empty(&msg->list));
++}
++
+ struct rpc_clnt;
+ extern struct dentry *rpc_create_client_dir(struct dentry *, const char *, struct rpc_clnt *);
+ extern int rpc_remove_client_dir(struct rpc_clnt *);
+diff --git a/net/sunrpc/auth_gss/auth_gss.c b/net/sunrpc/auth_gss/auth_gss.c
+index e61c48c1b37d..c11e68539602 100644
+--- a/net/sunrpc/auth_gss/auth_gss.c
++++ b/net/sunrpc/auth_gss/auth_gss.c
+@@ -323,7 +323,7 @@ __gss_find_upcall(struct rpc_pipe *pipe, kuid_t uid, const struct gss_auth *auth
+ 	list_for_each_entry(pos, &pipe->in_downcall, list) {
+ 		if (!uid_eq(pos->uid, uid))
+ 			continue;
+-		if (auth && pos->auth->service != auth->service)
++		if (pos->auth->service != auth->service)
+ 			continue;
+ 		refcount_inc(&pos->count);
+ 		dprintk("RPC:       %s found msg %p\n", __func__, pos);
+@@ -677,6 +677,21 @@ gss_create_upcall(struct gss_auth *gss_auth, struct gss_cred *gss_cred)
+ 	return err;
  }
  
- static void pool_suspend_active_thins(struct pool *pool)
++static struct gss_upcall_msg *
++gss_find_downcall(struct rpc_pipe *pipe, kuid_t uid)
++{
++	struct gss_upcall_msg *pos;
++	list_for_each_entry(pos, &pipe->in_downcall, list) {
++		if (!uid_eq(pos->uid, uid))
++			continue;
++		if (!rpc_msg_is_inflight(&pos->msg))
++			continue;
++		refcount_inc(&pos->count);
++		return pos;
++	}
++	return NULL;
++}
++
+ #define MSG_BUF_MAXSIZE 1024
+ 
+ static ssize_t
+@@ -723,7 +738,7 @@ gss_pipe_downcall(struct file *filp, const char __user *src, size_t mlen)
+ 	err = -ENOENT;
+ 	/* Find a matching upcall */
+ 	spin_lock(&pipe->lock);
+-	gss_msg = __gss_find_upcall(pipe, uid, NULL);
++	gss_msg = gss_find_downcall(pipe, uid);
+ 	if (gss_msg == NULL) {
+ 		spin_unlock(&pipe->lock);
+ 		goto err_put_ctx;
 -- 
 2.35.1
 
