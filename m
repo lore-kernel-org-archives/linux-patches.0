@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FB1546B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:22:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCF0DC433D2;
-	Mon, 16 Jan 2023 16:22:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECCA346B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:22:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71100C433EF;
+	Mon, 16 Jan 2023 16:22:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886125;
-	bh=YddT8CkmL8sYD/JOVbIJ6UtMDZwVmFhNFBCyMs+C5fQ=;
+	s=korg; t=1673886127;
+	bh=GVrdr39D4QbdFMVmxmYYRto/lqst8kNG9Q9uqSFQvHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GSJOwibXVtr4hzs0TfixuH3eJ98XwaW/G2UCo8QnIPzsonSfhGlstCz1JYI7wChmf
-	 4CRZjrwo1tRAkKPb/SPGaYgxIy9c2ZiCtg/PxNHtT/YLzIGgYT0D9/H7/Lsbm4MPqZ
-	 JFV18kmVdYgrVNAwmokCVpAwN0JXQ6NHubRtIXJQ=
+	b=Swc5gM/lpfsbhrpFn9H3ONIWQetXlRAbSaoBIStnQCpxK65BMMn5FguK633A9e4CK
+	 cOVkDL7kUINWZmSRS5XT/0b3v7tK9wNsvbuN/TUdBqIgZWs1j4OU2Cr97ognkFHjJD
+	 uS3gntiFEtszOewvB6C10vU2G36R0jq44hG6ZvXs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Jiamei Xie <jiamei.xie@arm.com>,
+	Andre Przywara <andre.przywara@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 311/658] i2c: mux: reg: check return value after calling platform_get_resource()
-Date: Mon, 16 Jan 2023 16:46:39 +0100
-Message-Id: <20230116154923.810751509@linuxfoundation.org>
+Subject: [PATCH 5.4 285/658] serial: amba-pl011: avoid SBSA UART accessing DMACR register
+Date: Mon, 16 Jan 2023 16:46:13 +0100
+Message-Id: <20230116154922.624275342@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,43 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Jiamei Xie <jiamei.xie@arm.com>
 
-[ Upstream commit 2d47b79d2bd39cc6369eccf94a06568d84c906ae ]
+[ Upstream commit 94cdb9f33698478b0e7062586633c42c6158a786 ]
 
-It will cause null-ptr-deref in resource_size(), if platform_get_resource()
-returns NULL, move calling resource_size() after devm_ioremap_resource() that
-will check 'res' to avoid null-ptr-deref.
-And use devm_platform_get_and_ioremap_resource() to simplify code.
+Chapter "B Generic UART" in "ARM Server Base System Architecture" [1]
+documentation describes a generic UART interface. Such generic UART
+does not support DMA. In current code, sbsa_uart_pops and
+amba_pl011_pops share the same stop_rx operation, which will invoke
+pl011_dma_rx_stop, leading to an access of the DMACR register. This
+commit adds a using_rx_dma check in pl011_dma_rx_stop to avoid the
+access to DMACR register for SBSA UARTs which does not support DMA.
 
-Fixes: b3fdd32799d8 ("i2c: mux: Add register-based mux i2c-mux-reg")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+When the kernel enables DMA engine with "CONFIG_DMA_ENGINE=y", Linux
+SBSA PL011 driver will access PL011 DMACR register in some functions.
+For most real SBSA Pl011 hardware implementations, the DMACR write
+behaviour will be ignored. So these DMACR operations will not cause
+obvious problems. But for some virtual SBSA PL011 hardware, like Xen
+virtual SBSA PL011 (vpl011) device, the behaviour might be different.
+Xen vpl011 emulation will inject a data abort to guest, when guest is
+accessing an unimplemented UART register. As Xen VPL011 is SBSA
+compatible, it will not implement DMACR register. So when Linux SBSA
+PL011 driver access DMACR register, it will get an unhandled data abort
+fault and the application will get a segmentation fault:
+Unhandled fault at 0xffffffc00944d048
+Mem abort info:
+  ESR = 0x96000000
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x00: ttbr address size fault
+Data abort info:
+  ISV = 0, ISS = 0x00000000
+  CM = 0, WnR = 0
+swapper pgtable: 4k pages, 39-bit VAs, pgdp=0000000020e2e000
+[ffffffc00944d048] pgd=100000003ffff803, p4d=100000003ffff803, pud=100000003ffff803, pmd=100000003fffa803, pte=006800009c090f13
+Internal error: ttbr address size fault: 96000000 [#1] PREEMPT SMP
+...
+Call trace:
+ pl011_stop_rx+0x70/0x80
+ tty_port_shutdown+0x7c/0xb4
+ tty_port_close+0x60/0xcc
+ uart_close+0x34/0x8c
+ tty_release+0x144/0x4c0
+ __fput+0x78/0x220
+ ____fput+0x1c/0x30
+ task_work_run+0x88/0xc0
+ do_notify_resume+0x8d0/0x123c
+ el0_svc+0xa8/0xc0
+ el0t_64_sync_handler+0xa4/0x130
+ el0t_64_sync+0x1a0/0x1a4
+Code: b9000083 b901f001 794038a0 8b000042 (b9000041)
+---[ end trace 83dd93df15c3216f ]---
+note: bootlogd[132] exited with preempt_count 1
+/etc/rcS.d/S07bootlogd: line 47: 132 Segmentation fault start-stop-daemon
+
+This has been discussed in the Xen community, and we think it should fix
+this in Linux. See [2] for more information.
+
+[1] https://developer.arm.com/documentation/den0094/c/?lang=en
+[2] https://lists.xenproject.org/archives/html/xen-devel/2022-11/msg00543.html
+
+Fixes: 0dd1e247fd39 (drivers: PL011: add support for the ARM SBSA generic UART)
+Signed-off-by: Jiamei Xie <jiamei.xie@arm.com>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://lore.kernel.org/r/20221117103237.86856-1-jiamei.xie@arm.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/muxes/i2c-mux-reg.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ drivers/tty/serial/amba-pl011.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/i2c/muxes/i2c-mux-reg.c b/drivers/i2c/muxes/i2c-mux-reg.c
-index b59a62f8d7a6..ac7971c776fa 100644
---- a/drivers/i2c/muxes/i2c-mux-reg.c
-+++ b/drivers/i2c/muxes/i2c-mux-reg.c
-@@ -187,13 +187,12 @@ static int i2c_mux_reg_probe(struct platform_device *pdev)
- 	if (!mux->data.reg) {
- 		dev_info(&pdev->dev,
- 			"Register not set, using platform resource\n");
--		res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
--		mux->data.reg_size = resource_size(res);
--		mux->data.reg = devm_ioremap_resource(&pdev->dev, res);
-+		mux->data.reg = devm_platform_get_and_ioremap_resource(pdev, 0, &res);
- 		if (IS_ERR(mux->data.reg)) {
- 			ret = PTR_ERR(mux->data.reg);
- 			goto err_put_parent;
- 		}
-+		mux->data.reg_size = resource_size(res);
- 	}
- 
- 	if (mux->data.reg_size != 4 && mux->data.reg_size != 2 &&
+diff --git a/drivers/tty/serial/amba-pl011.c b/drivers/tty/serial/amba-pl011.c
+index 52b7d559b44b..44485689333e 100644
+--- a/drivers/tty/serial/amba-pl011.c
++++ b/drivers/tty/serial/amba-pl011.c
+@@ -1053,6 +1053,9 @@ static void pl011_dma_rx_callback(void *data)
+  */
+ static inline void pl011_dma_rx_stop(struct uart_amba_port *uap)
+ {
++	if (!uap->using_rx_dma)
++		return;
++
+ 	/* FIXME.  Just disable the DMA enable */
+ 	uap->dmacr &= ~UART011_RXDMAE;
+ 	pl011_write(uap->dmacr, uap, REG_DMACR);
 -- 
 2.35.1
 
