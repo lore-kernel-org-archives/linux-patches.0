@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5694246B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:23:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D12F4C433D2;
-	Mon, 16 Jan 2023 16:23:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2F6146B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:23:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A85C433EF;
+	Mon, 16 Jan 2023 16:23:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886188;
-	bh=kdntkws/2XrFuxrq/6iXF688a9kdbwat3yYhXjTFV7A=;
+	s=korg; t=1673886190;
+	bh=iipozZfwKxuvFHMN2/LylZ200fRqCNZUPm8J4aIeik0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zkeh8FSuurGi+CICXQcP8ddUQ7wiK1fljMXpChNk+0NtgKey1axbBEHbEcGqjIN/M
-	 4cPzEM0aZka+Wbul2atl8zUFEjCUDs84pgnafhfTJUoOWpHZgq55k1NBklXN01e5sD
-	 Mc+xdqUumi19aaHwfHdy59t5X9Vbitx6plahAUWM=
+	b=dl1WHYJRFx1622knSKHMf6IqpZT2LjQJSp7o0bBu2abTTA6JBM2edbrCpvb4kp+sl
+	 BsJ56djt7cGok8iIn5d+5cIxFu3U2VqjEljbAiXykK0G38Fm/Ewb97L6J/ve6k4M8/
+	 ciqTrqKPO9+VCvDUw17nS/0PeExTCQUA7cM7q3aA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Matt Redfearn <matt.redfearn@mips.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	Arnd Bergmann <arnd@arndb.de>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Jason Gunthorpe <jgg@nvidia.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	=?UTF-8?q?Petr=20Van=C4=9Bk?= <arkamar@atlas.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 335/658] RDMA/siw: Fix pointer cast warning
-Date: Mon, 16 Jan 2023 16:47:03 +0100
-Message-Id: <20230116154924.868336436@linuxfoundation.org>
+Subject: [PATCH 5.4 336/658] include/uapi/linux/swab: Fix potentially missing __always_inline
+Date: Mon, 16 Jan 2023 16:47:04 +0100
+Message-Id: <20230116154924.908346399@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,45 +38,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Matt Redfearn <matt.redfearn@mips.com>
 
-[ Upstream commit 5244ca88671a1981ceec09c5c8809f003e6a62aa ]
+[ Upstream commit defbab270d45e32b068e7e73c3567232d745c60f ]
 
-The previous build fix left a remaining issue in configurations with
-64-bit dma_addr_t on 32-bit architectures:
+Commit bc27fb68aaad ("include/uapi/linux/byteorder, swab: force inlining
+of some byteswap operations") added __always_inline to swab functions
+and commit 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to
+userspace headers") added a definition of __always_inline for use in
+exported headers when the kernel's compiler.h is not available.
 
-drivers/infiniband/sw/siw/siw_qp_tx.c: In function 'siw_get_pblpage':
-drivers/infiniband/sw/siw/siw_qp_tx.c:32:37: error: cast to pointer from integer of different size [-Werror=int-to-pointer-cast]
-   32 |                 return virt_to_page((void *)paddr);
-      |                                     ^
+However, since swab.h does not include stddef.h, if the header soup does
+not indirectly include it, the definition of __always_inline is missing,
+resulting in a compilation failure, which was observed compiling the
+perf tool using exported headers containing this commit:
 
-Use the same double cast here that the driver uses elsewhere to convert
-between dma_addr_t and void*.
+In file included from /usr/include/linux/byteorder/little_endian.h:12:0,
+                 from /usr/include/asm/byteorder.h:14,
+                 from tools/include/uapi/linux/perf_event.h:20,
+                 from perf.h:8,
+                 from builtin-bench.c:18:
+/usr/include/linux/swab.h:160:8: error: unknown type name `__always_inline'
+ static __always_inline __u16 __swab16p(const __u16 *p)
 
-Fixes: 0d1b756acf60 ("RDMA/siw: Pass a pointer to virt_to_page()")
-Link: https://lore.kernel.org/r/20221215170347.2612403-1-arnd@kernel.org
+Fix this by replacing the inclusion of linux/compiler.h with
+linux/stddef.h to ensure that we pick up that definition if required,
+without relying on it's indirect inclusion. compiler.h is then included
+indirectly, via stddef.h.
+
+Fixes: 283d75737837 ("uapi/linux/stddef.h: Provide __always_inline to userspace headers")
+Signed-off-by: Matt Redfearn <matt.redfearn@mips.com>
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Bernard Metzler <bmt@zurich.ibm.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
+Tested-by: Nathan Chancellor <nathan@kernel.org>
+Reviewed-by: Petr Vaněk <arkamar@atlas.cz>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_qp_tx.c | 2 +-
+ include/uapi/linux/swab.h | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/sw/siw/siw_qp_tx.c b/drivers/infiniband/sw/siw/siw_qp_tx.c
-index 5e6d96bd2eb1..2b5120a13e37 100644
---- a/drivers/infiniband/sw/siw/siw_qp_tx.c
-+++ b/drivers/infiniband/sw/siw/siw_qp_tx.c
-@@ -29,7 +29,7 @@ static struct page *siw_get_pblpage(struct siw_mem *mem, u64 addr, int *idx)
- 	dma_addr_t paddr = siw_pbl_get_buffer(pbl, offset, NULL, idx);
+diff --git a/include/uapi/linux/swab.h b/include/uapi/linux/swab.h
+index 7272f85d6d6a..3736f2fe1541 100644
+--- a/include/uapi/linux/swab.h
++++ b/include/uapi/linux/swab.h
+@@ -3,7 +3,7 @@
+ #define _UAPI_LINUX_SWAB_H
  
- 	if (paddr)
--		return virt_to_page((void *)paddr);
-+		return virt_to_page((void *)(uintptr_t)paddr);
+ #include <linux/types.h>
+-#include <linux/compiler.h>
++#include <linux/stddef.h>
+ #include <asm/bitsperlong.h>
+ #include <asm/swab.h>
  
- 	return NULL;
- }
 -- 
 2.35.1
 
