@@ -1,34 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0531446B7
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:34:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55A5FC433EF;
-	Mon, 16 Jan 2023 16:34:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F5E046B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:34:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14375C433EF;
+	Mon, 16 Jan 2023 16:34:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886843;
-	bh=dhePslZCaGJOEMuH/ftHpWfUhd/m+sn69d633nrZATU=;
+	s=korg; t=1673886846;
+	bh=ELknwW91AvAoAA8leIEPR/jnP6NKrkXbJ8KkjSWqRLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cFldVG0zREFH8ob7KMqsujbmTF4qTjkubvnXuDw1X9yHJ8Gv8aNzY2YgvSi94Ulec
-	 XgsFIlMOwmOuom4oiUPRyfB/yKISCAJBmf9yJXWduLIk5nBc3Ppy8zeeKx+QM7NmU+
-	 maQg1c0kSmb22lRpHriJXJLEW46T348iLEN7702g=
+	b=Y39HFofiLnbGG5SNq9N/PBH21IUAuDZMBaB6uY6ahlCrNB4e8FpIV80l1Q10cpqCP
+	 XT7S1AQPMS48EaMcH8T1v89O4OM0mBOZKnqoAgs8Oioq806cyzKME4+hXIGcKBUNMJ
+	 A8RBS/9lyM+gqmcHGORQ65TrXCysEVsU9yQ3ZkyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Alexander Shishkin <alexander.shishkin@linux.intel.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 544/658] perf probe: Use dwarf_attr_integrate as generic DWARF attr accessor
-Date: Mon, 16 Jan 2023 16:50:32 +0100
-Message-Id: <20230116154934.415570809@linuxfoundation.org>
+Subject: [PATCH 5.4 577/658] net: phy: xgmiitorgmii: Fix refcount leak in xgmiitorgmii_probe
+Date: Mon, 16 Jan 2023 16:51:05 +0100
+Message-Id: <20230116154935.906821449@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -42,51 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit f828929ab7f0dc3353e4a617f94f297fa8f3dec3 ]
+[ Upstream commit d039535850ee47079d59527e96be18d8e0daa84b ]
 
-Use dwarf_attr_integrate() instead of dwarf_attr() for generic attribute
-acccessor functions, so that it can find the specified attribute from
-abstact origin DIE etc.
+of_phy_find_device() return device node with refcount incremented.
+Call put_device() to relese it when not needed anymore.
 
-Signed-off-by: Masami Hiramatsu <mhiramat@kernel.org>
-Acked-by: Namhyung Kim <namhyung@kernel.org>
-Cc: Alexander Shishkin <alexander.shishkin@linux.intel.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Jiri Olsa <jolsa@kernel.org>
-Cc: Mark Rutland <mark.rutland@arm.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Link: https://lore.kernel.org/r/166731051988.2100653.13595339994343449770.stgit@devnote3
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Stable-dep-of: a9dfc46c67b5 ("perf probe: Fix to get the DW_AT_decl_file and DW_AT_call_file as unsinged data")
+Fixes: ab4e6ee578e8 ("net: phy: xgmiitorgmii: Check phy_driver ready before accessing")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/perf/util/dwarf-aux.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/phy/xilinx_gmii2rgmii.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/tools/perf/util/dwarf-aux.c b/tools/perf/util/dwarf-aux.c
-index ab34ef2c661f..b51e0ba363b2 100644
---- a/tools/perf/util/dwarf-aux.c
-+++ b/tools/perf/util/dwarf-aux.c
-@@ -254,7 +254,7 @@ static int die_get_attr_udata(Dwarf_Die *tp_die, unsigned int attr_name,
- {
- 	Dwarf_Attribute attr;
+diff --git a/drivers/net/phy/xilinx_gmii2rgmii.c b/drivers/net/phy/xilinx_gmii2rgmii.c
+index 151c2a3f0b3a..7a78dfdfa5bd 100644
+--- a/drivers/net/phy/xilinx_gmii2rgmii.c
++++ b/drivers/net/phy/xilinx_gmii2rgmii.c
+@@ -82,6 +82,7 @@ static int xgmiitorgmii_probe(struct mdio_device *mdiodev)
  
--	if (dwarf_attr(tp_die, attr_name, &attr) == NULL ||
-+	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
- 	    dwarf_formudata(&attr, result) != 0)
- 		return -ENOENT;
- 
-@@ -267,7 +267,7 @@ static int die_get_attr_sdata(Dwarf_Die *tp_die, unsigned int attr_name,
- {
- 	Dwarf_Attribute attr;
- 
--	if (dwarf_attr(tp_die, attr_name, &attr) == NULL ||
-+	if (dwarf_attr_integrate(tp_die, attr_name, &attr) == NULL ||
- 	    dwarf_formsdata(&attr, result) != 0)
- 		return -ENOENT;
+ 	if (!priv->phy_dev->drv) {
+ 		dev_info(dev, "Attached phy not ready\n");
++		put_device(&priv->phy_dev->mdio.dev);
+ 		return -EPROBE_DEFER;
+ 	}
  
 -- 
 2.35.1
