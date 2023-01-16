@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A64EC33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BE50C433EF;
-	Mon, 16 Jan 2023 15:57:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B44F33EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:57:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63F2C433D2;
+	Mon, 16 Jan 2023 15:57:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884623;
-	bh=rHBu8Dj6Z3tNqDguWD72F/yqqFaZkK23yTDZVV5DM9E=;
+	s=korg; t=1673884626;
+	bh=p4Sbr1+I9ttFCLR0Tb168e7EZbLr0+yL75HP8U+Uh+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0eQm4XQcaLZ6o+KztYgUiXtsmukH7MZBhQarHEP5Y+Y+okXmhfqPQb5stFbO+3EO3
-	 ahSK1Yo60dffZdpsMyUuuGvqOtDO+3HeYTsPoYz9V+/L5cOJhABKkPIh5OyN/65Ec+
-	 Qh0xDkGF/+uEP9j17OsGmbH91b8AfRHts6WYs7uA=
+	b=lAG0a5TMp86EYFee17b2T089iOFOS2JYWYCVxGq052P3RWRJBWIsPyYuqTpGvBkOL
+	 8H+/E5nqURTBbLesLZ5q3YbBVFjll63BqEc42YKcpzaq1wJqfAO/J+HiOKwh6kfleB
+	 KT4blVEzwo2lWuuciapBfCDrCrLjni2K+8cnu45A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	Ao Zhong <hacc1225@gmail.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 036/183] drm/amd/display: move remaining FPU code to dml folder
-Date: Mon, 16 Jan 2023 16:49:19 +0100
-Message-Id: <20230116154804.903390554@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Gurucharan G <gurucharanx.g@intel.com>
+Subject: [PATCH 6.1 070/183] ixgbe: fix pci device refcount leak
+Date: Mon, 16 Jan 2023 16:49:53 +0100
+Message-Id: <20230116154806.321733141@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -35,67 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ao Zhong <hacc1225@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 58ddbecb14c792b7fe0d92ae5e25c9179d62ff25 upstream.
+commit b93fb4405fcb5112c5739c5349afb52ec7f15c07 upstream.
 
-pipes[pipe_cnt].pipe.src.dcc_fraction_of_zs_req_luma = 0;
-pipes[pipe_cnt].pipe.src.dcc_fraction_of_zs_req_chroma = 0;
-these two operations in dcn32/dcn32_resource.c still need to use FPU,
-This will cause compilation to fail on ARM64 platforms because
--mgeneral-regs-only is enabled by default to disable the hardware FPU.
-Therefore, imitate the dcn31_zero_pipe_dcc_fraction function in
-dml/dcn31/dcn31_fpu.c, declare the dcn32_zero_pipe_dcc_fraction function
-in dcn32_fpu.c, and move above two operations into this function.
+As the comment of pci_get_domain_bus_and_slot() says, it
+returns a PCI device with refcount incremented, when finish
+using it, the caller must decrement the reference count by
+calling pci_dev_put().
 
-Reviewed-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Ao Zhong <hacc1225@gmail.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+In ixgbe_get_first_secondary_devfn() and ixgbe_x550em_a_has_mii(),
+pci_dev_put() is called to avoid leak.
+
+Fixes: 8fa10ef01260 ("ixgbe: register a mdiobus")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c |    5 +++--
- drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c  |    8 ++++++++
- drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.h  |    3 +++
- 3 files changed, 14 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c |   14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_resource.c
-@@ -1919,8 +1919,9 @@ int dcn32_populate_dml_pipes_from_contex
- 		timing = &pipe->stream->timing;
- 
- 		pipes[pipe_cnt].pipe.src.gpuvm = true;
--		pipes[pipe_cnt].pipe.src.dcc_fraction_of_zs_req_luma = 0;
--		pipes[pipe_cnt].pipe.src.dcc_fraction_of_zs_req_chroma = 0;
-+		DC_FP_START();
-+		dcn32_zero_pipe_dcc_fraction(pipes, pipe_cnt);
-+		DC_FP_END();
- 		pipes[pipe_cnt].pipe.dest.vfront_porch = timing->v_front_porch;
- 		pipes[pipe_cnt].pipe.src.gpuvm_min_page_size_kbytes = 256; // according to spreadsheet
- 		pipes[pipe_cnt].pipe.src.unbounded_req_mode = false;
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
-@@ -2546,3 +2546,11 @@ void dcn32_update_bw_bounding_box_fpu(st
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_phy.c
+@@ -855,9 +855,11 @@ static struct pci_dev *ixgbe_get_first_s
+ 	rp_pdev = pci_get_domain_bus_and_slot(0, 0, devfn);
+ 	if (rp_pdev && rp_pdev->subordinate) {
+ 		bus = rp_pdev->subordinate->number;
++		pci_dev_put(rp_pdev);
+ 		return pci_get_domain_bus_and_slot(0, bus, 0);
  	}
+ 
++	pci_dev_put(rp_pdev);
+ 	return NULL;
  }
  
-+void dcn32_zero_pipe_dcc_fraction(display_e2e_pipe_params_st *pipes,
-+				  int pipe_cnt)
-+{
-+	dc_assert_fp_enabled();
-+
-+	pipes[pipe_cnt].pipe.src.dcc_fraction_of_zs_req_luma = 0;
-+	pipes[pipe_cnt].pipe.src.dcc_fraction_of_zs_req_chroma = 0;
-+}
---- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.h
-+++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.h
-@@ -73,4 +73,7 @@ int dcn32_find_dummy_latency_index_for_f
+@@ -874,6 +876,7 @@ static bool ixgbe_x550em_a_has_mii(struc
+ 	struct ixgbe_adapter *adapter = hw->back;
+ 	struct pci_dev *pdev = adapter->pdev;
+ 	struct pci_dev *func0_pdev;
++	bool has_mii = false;
  
- void dcn32_patch_dpm_table(struct clk_bw_params *bw_params);
+ 	/* For the C3000 family of SoCs (x550em_a) the internal ixgbe devices
+ 	 * are always downstream of root ports @ 0000:00:16.0 & 0000:00:17.0
+@@ -884,15 +887,16 @@ static bool ixgbe_x550em_a_has_mii(struc
+ 	func0_pdev = ixgbe_get_first_secondary_devfn(PCI_DEVFN(0x16, 0));
+ 	if (func0_pdev) {
+ 		if (func0_pdev == pdev)
+-			return true;
+-		else
+-			return false;
++			has_mii = true;
++		goto out;
+ 	}
+ 	func0_pdev = ixgbe_get_first_secondary_devfn(PCI_DEVFN(0x17, 0));
+ 	if (func0_pdev == pdev)
+-		return true;
++		has_mii = true;
  
-+void dcn32_zero_pipe_dcc_fraction(display_e2e_pipe_params_st *pipes,
-+				  int pipe_cnt);
-+
- #endif
+-	return false;
++out:
++	pci_dev_put(func0_pdev);
++	return has_mii;
+ }
+ 
+ /**
 
 
