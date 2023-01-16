@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4C8AD6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:45:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8B79C433EF;
-	Mon, 16 Jan 2023 16:45:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8206FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:45:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E721C433F1;
+	Mon, 16 Jan 2023 16:45:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887529;
-	bh=xG26N1aBVjEv0hzWxwCnEQr2GTiXWTZEFPNtGu28cjc=;
+	s=korg; t=1673887531;
+	bh=FJNqcM+wi76TPP97htFcSlzVykQK+sTACSdOP6qbBxI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q7UwGIVxPQU+XkemzMTfIRDWDLLPrAsbBO9s1w6pO03STXun1P+2hcqrWI+TihM1R
-	 DGk2UpteqZNq4QAiMHmfkbSuIpI/waCyXQOJNaa/zPKA0uuvCCmh+rMSd/owcaEO6Z
-	 YqWMDalymcCB9eO+eKGts0uVOhvjID6EzEdHOKvQ=
+	b=jd2Qogu21r2lbvCxfk2AH3j9vVOvY20fQFfbw2tnbHTIUdRasXIqgZhcTBJWTdC3e
+	 Uue1p+nU/3V7+OIuBXLbBbFi+Bdgbt+Qr/xeDE1ZwzBzxBTvz3Thh4pw0KH3WMvLUh
+	 dqb4Lqr0R93BubbhC7WN6q/rdQ0IV/CIMGwd2Mc4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Zhang <markzhang@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 184/521] RDMA/nldev: Return "-EAGAIN" if the cm_id isnt from expected port
-Date: Mon, 16 Jan 2023 16:47:26 +0100
-Message-Id: <20230116154855.299118475@linuxfoundation.org>
+Subject: [PATCH 4.19 167/521] hamradio: dont call dev_kfree_skb() under spin_lock_irqsave()
+Date: Mon, 16 Jan 2023 16:47:09 +0100
+Message-Id: <20230116154854.605914356@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,49 +35,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Zhang <markzhang@nvidia.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit ecacb3751f254572af0009b9501e2cdc83a30b6a ]
+[ Upstream commit 3727f742915f04f6fc550b80cf406999bd4e90d0 ]
 
-When filling a cm_id entry, return "-EAGAIN" instead of 0 if the cm_id
-doesn'the have the same port as requested, otherwise an incomplete entry
-may be returned, which causes "rdam res show cm_id" to return an error.
+It is not allowed to call kfree_skb() or consume_skb() from hardware
+interrupt context or with hardware interrupts being disabled.
 
-For example on a machine with two rdma devices with "rping -C 1 -v -s"
-running background, the "rdma" command fails:
-  $ rdma -V
-  rdma utility, iproute2-5.19.0
-  $ rdma res show cm_id
-  link mlx5_0/- cm-idn 0 state LISTEN ps TCP pid 28056 comm rping src-addr 0.0.0.0:7174
-  error: Protocol not available
+It should use dev_kfree_skb_irq() or dev_consume_skb_irq() instead.
+The difference between them is free reason, dev_kfree_skb_irq() means
+the SKB is dropped in error and dev_consume_skb_irq() means the SKB
+is consumed in normal.
 
-While with this fix it succeeds:
-  $ rdma res show cm_id
-  link mlx5_0/- cm-idn 0 state LISTEN ps TCP pid 26395 comm rping src-addr 0.0.0.0:7174
-  link mlx5_1/- cm-idn 0 state LISTEN ps TCP pid 26395 comm rping src-addr 0.0.0.0:7174
+In scc_discard_buffers(), dev_kfree_skb() is called to discard the SKBs,
+so replace it with dev_kfree_skb_irq().
 
-Fixes: 00313983cda6 ("RDMA/nldev: provide detailed CM_ID information")
-Signed-off-by: Mark Zhang <markzhang@nvidia.com>
-Link: https://lore.kernel.org/r/a08e898cdac5e28428eb749a99d9d981571b8ea7.1667810736.git.leonro@nvidia.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+In scc_net_tx(), dev_kfree_skb() is called to drop the SKB that exceed
+queue length, so replace it with dev_kfree_skb_irq().
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/core/nldev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/hamradio/scc.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
-index f6fa9b115fda..798bc810b234 100644
---- a/drivers/infiniband/core/nldev.c
-+++ b/drivers/infiniband/core/nldev.c
-@@ -433,7 +433,7 @@ static int fill_res_cm_id_entry(struct sk_buff *msg,
- 	struct nlattr *entry_attr;
+diff --git a/drivers/net/hamradio/scc.c b/drivers/net/hamradio/scc.c
+index 6c03932d8a6b..3dc4eb841aa1 100644
+--- a/drivers/net/hamradio/scc.c
++++ b/drivers/net/hamradio/scc.c
+@@ -300,12 +300,12 @@ static inline void scc_discard_buffers(struct scc_channel *scc)
+ 	spin_lock_irqsave(&scc->lock, flags);	
+ 	if (scc->tx_buff != NULL)
+ 	{
+-		dev_kfree_skb(scc->tx_buff);
++		dev_kfree_skb_irq(scc->tx_buff);
+ 		scc->tx_buff = NULL;
+ 	}
+ 	
+ 	while (!skb_queue_empty(&scc->tx_queue))
+-		dev_kfree_skb(skb_dequeue(&scc->tx_queue));
++		dev_kfree_skb_irq(skb_dequeue(&scc->tx_queue));
  
- 	if (port && port != cm_id->port_num)
--		return 0;
-+		return -EAGAIN;
- 
- 	entry_attr = nla_nest_start(msg, RDMA_NLDEV_ATTR_RES_CM_ID_ENTRY);
- 	if (!entry_attr)
+ 	spin_unlock_irqrestore(&scc->lock, flags);
+ }
+@@ -1667,7 +1667,7 @@ static netdev_tx_t scc_net_tx(struct sk_buff *skb, struct net_device *dev)
+ 	if (skb_queue_len(&scc->tx_queue) > scc->dev->tx_queue_len) {
+ 		struct sk_buff *skb_del;
+ 		skb_del = skb_dequeue(&scc->tx_queue);
+-		dev_kfree_skb(skb_del);
++		dev_kfree_skb_irq(skb_del);
+ 	}
+ 	skb_queue_tail(&scc->tx_queue, skb);
+ 	netif_trans_update(dev);
 -- 
 2.35.1
 
