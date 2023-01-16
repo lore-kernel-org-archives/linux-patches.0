@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53BAB6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:10:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD28AC433EF;
-	Mon, 16 Jan 2023 17:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E596E6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:10:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B3FC433D2;
+	Mon, 16 Jan 2023 17:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673889019;
-	bh=4OcEmr7LNw5JhWwNkW0lssKkXyeGSeMB4pbfvhi0gV4=;
+	s=korg; t=1673889021;
+	bh=CkMj+qZ87eLbSq+NVejB/K9vX7YDEsoNc+ThVKoO/zY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XG2jLArp0FKq+A6A0OzszCC8AQlR+WqoQuj5+HPbDSqsR0eTEChEhM/td44Ekh2rm
-	 fbH1iaFdodQhcKNsLkwzFB1Q3hyeMS3U8bLwZxqVmS/2c5hr/bCj7ZZXOB4KATZIiT
-	 Trndg81D4Pv6THmz8Dz2Vd4sLCSqMpV2ZyhM+0YE=
+	b=wryUuMBgp+AJABmauQHexE36ldOGoMz/voET7/0UN2A9CZ6pBBloIaiWPkXNJ/n71
+	 pZmUq/Vk2cKXjtky7Lv7HR6quxl5sJixF9B59O68bRQclobzZM1UjfN4DfiTjsrjMK
+	 2FRDtWL+pwxVdS5pSbfRtiphd+EI9AkO5OwWZncI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
+	Sean Tranchetti <quic_stranche@quicinc.com>,
+	Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 228/338] net: ethernet: ti: Fix return type of netcp_ndo_start_xmit()
-Date: Mon, 16 Jan 2023 16:51:41 +0100
-Message-Id: <20230116154830.975346908@linuxfoundation.org>
+Subject: [PATCH 4.14 211/338] skbuff: Account for tail adjustment during pull operations
+Date: Mon, 16 Jan 2023 16:51:24 +0100
+Message-Id: <20230116154830.216724516@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -36,51 +37,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
 
-[ Upstream commit 63fe6ff674a96cfcfc0fa8df1051a27aa31c70b4 ]
+[ Upstream commit 2d7afdcbc9d32423f177ee12b7c93783aea338fb ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed. A
-proposed warning in clang aims to catch these at compile time, which
-reveals:
+Extending the tail can have some unexpected side effects if a program uses
+a helper like BPF_FUNC_skb_pull_data to read partial content beyond the
+head skb headlen when all the skbs in the gso frag_list are linear with no
+head_frag -
 
-  drivers/net/ethernet/ti/netcp_core.c:1944:21: error: incompatible function pointer types initializing 'netdev_tx_t (*)(struct sk_buff *, struct net_device *)' (aka 'enum netdev_tx (*)(struct sk_buff *, struct net_device *)') with an expression of type 'int (struct sk_buff *, struct net_device *)' [-Werror,-Wincompatible-function-pointer-types-strict]
-          .ndo_start_xmit         = netcp_ndo_start_xmit,
-                                    ^~~~~~~~~~~~~~~~~~~~
-  1 error generated.
+  kernel BUG at net/core/skbuff.c:4219!
+  pc : skb_segment+0xcf4/0xd2c
+  lr : skb_segment+0x63c/0xd2c
+  Call trace:
+   skb_segment+0xcf4/0xd2c
+   __udp_gso_segment+0xa4/0x544
+   udp4_ufo_fragment+0x184/0x1c0
+   inet_gso_segment+0x16c/0x3a4
+   skb_mac_gso_segment+0xd4/0x1b0
+   __skb_gso_segment+0xcc/0x12c
+   udp_rcv_segment+0x54/0x16c
+   udp_queue_rcv_skb+0x78/0x144
+   udp_unicast_rcv_skb+0x8c/0xa4
+   __udp4_lib_rcv+0x490/0x68c
+   udp_rcv+0x20/0x30
+   ip_protocol_deliver_rcu+0x1b0/0x33c
+   ip_local_deliver+0xd8/0x1f0
+   ip_rcv+0x98/0x1a4
+   deliver_ptype_list_skb+0x98/0x1ec
+   __netif_receive_skb_core+0x978/0xc60
 
-->ndo_start_xmit() in 'struct net_device_ops' expects a return type of
-'netdev_tx_t', not 'int'. Adjust the return type of
-netcp_ndo_start_xmit() to match the prototype's to resolve the warning
-and CFI failure.
+Fix this by marking these skbs as GSO_DODGY so segmentation can handle
+the tail updates accordingly.
 
-Link: https://github.com/ClangBuiltLinux/linux/issues/1750
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221102160933.1601260-1-nathan@kernel.org
+Fixes: 3dcbdb134f32 ("net: gso: Fix skb_segment splat when splitting gso_size mangled skb having linear-headed frag_list")
+Signed-off-by: Sean Tranchetti <quic_stranche@quicinc.com>
+Signed-off-by: Subash Abhinov Kasiviswanathan <quic_subashab@quicinc.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Link: https://lore.kernel.org/r/1671084718-24796-1-git-send-email-quic_subashab@quicinc.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/netcp_core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/core/skbuff.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/ti/netcp_core.c b/drivers/net/ethernet/ti/netcp_core.c
-index 452cf6cfd179..90770a2755b6 100644
---- a/drivers/net/ethernet/ti/netcp_core.c
-+++ b/drivers/net/ethernet/ti/netcp_core.c
-@@ -1276,7 +1276,7 @@ static int netcp_tx_submit_skb(struct netcp_intf *netcp,
- }
+diff --git a/net/core/skbuff.c b/net/core/skbuff.c
+index 0b672d71447f..9dae8009b407 100644
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -1951,6 +1951,9 @@ void *__pskb_pull_tail(struct sk_buff *skb, int delta)
+ 				insp = list;
+ 			} else {
+ 				/* Eaten partially. */
++				if (skb_is_gso(skb) && !list->head_frag &&
++				    skb_headlen(list))
++					skb_shinfo(skb)->gso_type |= SKB_GSO_DODGY;
  
- /* Submit the packet */
--static int netcp_ndo_start_xmit(struct sk_buff *skb, struct net_device *ndev)
-+static netdev_tx_t netcp_ndo_start_xmit(struct sk_buff *skb, struct net_device *ndev)
- {
- 	struct netcp_intf *netcp = netdev_priv(ndev);
- 	struct netcp_stats *tx_stats = &netcp->stats;
+ 				if (skb_shared(list)) {
+ 					/* Sucks! We need to fork list. :-( */
 -- 
 2.35.1
 
