@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 331CE33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAACBC433EF;
-	Mon, 16 Jan 2023 16:02:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEE8C33F0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:02:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 518B3C433EF;
+	Mon, 16 Jan 2023 16:02:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884961;
-	bh=Kenpv//yVaC1hbbREjbg7AMEnjzXeo3nc95/vmj5snw=;
+	s=korg; t=1673884963;
+	bh=yKveCU/hW6W4nNgauuF28gfEZ5f+yCW/4SfgMmD6XkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0c8KF+OfBHgILipmEWrBj6MSQrfYXQl0ruEcOHeBIgrXofyWt8rcNGDTGEQWYPKZK
-	 t1zYp5uBqaIlwZxRV+bZe17KsyTBgCuAKrkt6yRo6vX71DeOUxuukf1gkr7MLJCFdS
-	 Fq77gFEQ7mxow4PeLAR0tEOdgbzijQpd3MP9cTfk=
+	b=Pejw3G+rcXUE5tQp1BwXeHmWLAou6mpR5EoGu/zpmTavojB+OHC+tfxzelFR3Xczy
+	 xWT7z+PooppYANcyAvpzo6Ph2ttD04TJiGcAwR8sI1PH9Vr14wZpl71Cy3ttGW4g2f
+	 8m76NqyrvMveqyAz0ZxRyWSeOCpuxLYE25XFTwyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maximilian Luz <luzmaximilian@gmail.com>,
 	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 5.15 21/86] platform/surface: aggregator: Ignore command messages not intended for us
-Date: Mon, 16 Jan 2023 16:50:55 +0100
-Message-Id: <20230116154747.988496322@linuxfoundation.org>
+Subject: [PATCH 5.15 22/86] platform/x86: dell-privacy: Fix SW_CAMERA_LENS_COVER reporting
+Date: Mon, 16 Jan 2023 16:50:56 +0100
+Message-Id: <20230116154748.030498251@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
 References: <20230116154747.036911298@linuxfoundation.org>
@@ -34,79 +33,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maximilian Luz <luzmaximilian@gmail.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit ae0fa0a3126a86c801c3220fcd8eefe03aa39f3e upstream.
+commit 1af7fef0d9d3fa075bf4e850f705df1fe97d33ce upstream.
 
-It is possible that we (the host/kernel driver) receive command messages
-that are not intended for us. Ignore those for now.
+Use KE_VSW instead of KE_SW for the SW_CAMERA_LENS_COVER key_entry
+and get the value of the switch from the status field when handling
+SW_CAMERA_LENS_COVER events, instead of always reporting 0.
 
-The whole story is a bit more complicated: It is possible to enable
-debug output on SAM, which is sent via SSH command messages. By default
-this output is sent to a debug connector, with its own target ID
-(TID=0x03). It is possible to override the target of the debug output
-and set it to the host/kernel driver. This, however, does not change the
-original target ID of the message. Meaning, we receive messages with
-TID=0x03 (debug) but expect to only receive messages with TID=0x00
-(host).
+Also correctly set the initial SW_CAMERA_LENS_COVER value.
 
-The problem is that the different target ID also comes with a different
-scope of request IDs. In particular, these do not follow the standard
-event rules (i.e. do not fall into a set of small reserved values).
-Therefore, current message handling interprets them as responses to
-pending requests and tries to match them up via the request ID. However,
-these debug output messages are not in fact responses, and therefore
-this will at best fail to find the request and at worst pass on the
-wrong data as response for a request.
-
-Therefore ignore any command messages not intended for us (host) for
-now. We can implement support for the debug messages once we have a
-better understanding of them.
-
-Note that this may also provide a bit more stability and avoid some
-driver confusion in case any other targets want to talk to us in the
-future, since we don't yet know what to do with those as well. A warning
-for the dropped messages should suffice for now and also give us a
-chance of discovering new targets if they come along without any
-potential for bugs/instabilities.
-
-Fixes: c167b9c7e3d6 ("platform/surface: Add Surface Aggregator subsystem")
-Signed-off-by: Maximilian Luz <luzmaximilian@gmail.com>
-Link: https://lore.kernel.org/r/20221202223327.690880-2-luzmaximilian@gmail.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: 8af9fa37b8a3 ("platform/x86: dell-privacy: Add support for Dell hardware privacy")
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20221221220724.119594-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../surface/aggregator/ssh_request_layer.c         | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/platform/x86/dell/dell-wmi-privacy.c |   22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/platform/surface/aggregator/ssh_request_layer.c b/drivers/platform/surface/aggregator/ssh_request_layer.c
-index f5565570f16c..69132976d297 100644
---- a/drivers/platform/surface/aggregator/ssh_request_layer.c
-+++ b/drivers/platform/surface/aggregator/ssh_request_layer.c
-@@ -916,6 +916,20 @@ static void ssh_rtl_rx_command(struct ssh_ptl *p, const struct ssam_span *data)
- 	if (sshp_parse_command(dev, data, &command, &command_data))
- 		return;
+--- a/drivers/platform/x86/dell/dell-wmi-privacy.c
++++ b/drivers/platform/x86/dell/dell-wmi-privacy.c
+@@ -61,7 +61,7 @@ static const struct key_entry dell_wmi_k
+ 	/* privacy mic mute */
+ 	{ KE_KEY, 0x0001, { KEY_MICMUTE } },
+ 	/* privacy camera mute */
+-	{ KE_SW,  0x0002, { SW_CAMERA_LENS_COVER } },
++	{ KE_VSW, 0x0002, { SW_CAMERA_LENS_COVER } },
+ 	{ KE_END, 0},
+ };
  
-+	/*
-+	 * Check if the message was intended for us. If not, drop it.
-+	 *
-+	 * Note: We will need to change this to handle debug messages. On newer
-+	 * generation devices, these seem to be sent to tid_out=0x03. We as
-+	 * host can still receive them as they can be forwarded via an override
-+	 * option on SAM, but doing so does not change tid_out=0x00.
-+	 */
-+	if (command->tid_out != 0x00) {
-+		rtl_warn(rtl, "rtl: dropping message not intended for us (tid = %#04x)\n",
-+			 command->tid_out);
-+		return;
-+	}
+@@ -115,11 +115,15 @@ bool dell_privacy_process_event(int type
+ 
+ 	switch (code) {
+ 	case DELL_PRIVACY_AUDIO_EVENT: /* Mic mute */
+-	case DELL_PRIVACY_CAMERA_EVENT: /* Camera mute */
+ 		priv->last_status = status;
+ 		sparse_keymap_report_entry(priv->input_dev, key, 1, true);
+ 		ret = true;
+ 		break;
++	case DELL_PRIVACY_CAMERA_EVENT: /* Camera mute */
++		priv->last_status = status;
++		sparse_keymap_report_entry(priv->input_dev, key, !(status & CAMERA_STATUS), false);
++		ret = true;
++		break;
+ 	default:
+ 		dev_dbg(&priv->wdev->dev, "unknown event type 0x%04x 0x%04x\n", type, code);
+ 	}
+@@ -307,6 +311,11 @@ static int dell_privacy_wmi_probe(struct
+ 
+ 	dev_set_drvdata(&wdev->dev, priv);
+ 	priv->wdev = wdev;
 +
- 	if (ssh_rqid_is_event(get_unaligned_le16(&command->rqid)))
- 		ssh_rtl_rx_event(rtl, command, &command_data);
- 	else
--- 
-2.39.0
-
++	ret = get_current_status(priv->wdev);
++	if (ret)
++		return ret;
++
+ 	/* create evdev passing interface */
+ 	priv->input_dev = devm_input_allocate_device(&wdev->dev);
+ 	if (!priv->input_dev)
+@@ -345,11 +354,12 @@ static int dell_privacy_wmi_probe(struct
+ 	priv->input_dev->name = "Dell Privacy Driver";
+ 	priv->input_dev->id.bustype = BUS_HOST;
+ 
+-	ret = input_register_device(priv->input_dev);
+-	if (ret)
+-		return ret;
++	/* Report initial camera-cover status */
++	if (priv->features_present & BIT(DELL_PRIVACY_TYPE_CAMERA))
++		input_report_switch(priv->input_dev, SW_CAMERA_LENS_COVER,
++				    !(priv->last_status & CAMERA_STATUS));
+ 
+-	ret = get_current_status(priv->wdev);
++	ret = input_register_device(priv->input_dev);
+ 	if (ret)
+ 		return ret;
+ 
 
 
