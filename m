@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2454746B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:10:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0847C433D2;
-	Mon, 16 Jan 2023 16:10:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBCF646B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:10:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42A58C433F1;
+	Mon, 16 Jan 2023 16:10:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885449;
-	bh=pbr4YQbDOx2OnTSbt+QSJgL6Z8hJbA0q+TEd1BnVZHg=;
+	s=korg; t=1673885451;
+	bh=1ev8rXNtWGu2KpbGav/gHC5f3N/4xwsQPFGYzi7DUzc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uA+LmLJ8ouEyRsa8lOJYAImr0cjxKU8hQczxZy4bWfOY0fS3VX+oQUtxraWrsxFaf
-	 IWzLVjFpRYKwvOtvFLu6bGoeanNjZk+XshP9fMnn0RvjO8030s53rhkMOmpf74DUT5
-	 uFqNemVqnWAwEPvrfM/i3Ny/MESH8OV1keaMIZOg=
+	b=V+xQK8jY8MWMSnPbwJdcMrnz/a4wBaQW5hU91/pMVDtEBGH2TOaynO1K25RRCvToZ
+	 0+Ke/fKIXjwaeK79s1xJ449a0ys/ZuPsQGGe/r8Fa9PrGGeSxJDVxDOjSJx5sULPFP
+	 8XfQBXKm9hHOF8mG0hxWUdXR5d6rWI0dJ/7bCMTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Zhang Qilong <zhangqilong3@huawei.com>,
+	Nishanth Menon <nm@ti.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 055/658] perf: Fix possible memleak in pmu_dev_alloc()
-Date: Mon, 16 Jan 2023 16:42:23 +0100
-Message-Id: <20230116154912.178942898@linuxfoundation.org>
+Subject: [PATCH 5.4 029/658] soc: ti: smartreflex: Fix PM disable depth imbalance in omap_sr_probe
+Date: Mon, 16 Jan 2023 16:41:57 +0100
+Message-Id: <20230116154910.946182108@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,69 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Zhang Qilong <zhangqilong3@huawei.com>
 
-[ Upstream commit e8d7a90c08ce963c592fb49845f2ccc606a2ac21 ]
+[ Upstream commit 69460e68eb662064ab4188d4e129ff31c1f23ed9 ]
 
-In pmu_dev_alloc(), when dev_set_name() failed, it will goto free_dev
-and call put_device(pmu->dev) to release it.
-However pmu->dev->release is assigned after this, which makes warning
-and memleak.
-Call dev_set_name() after pmu->dev->release = pmu_dev_release to fix it.
+The pm_runtime_enable will increase power disable depth. Thus
+a pairing decrement is needed on the error handling path to
+keep it balanced according to context.
 
-  Device '(null)' does not have a release() function...
-  WARNING: CPU: 2 PID: 441 at drivers/base/core.c:2332 device_release+0x1b9/0x240
-  ...
-  Call Trace:
-    <TASK>
-    kobject_put+0x17f/0x460
-    put_device+0x20/0x30
-    pmu_dev_alloc+0x152/0x400
-    perf_pmu_register+0x96b/0xee0
-    ...
-  kmemleak: 1 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
-  unreferenced object 0xffff888014759000 (size 2048):
-    comm "modprobe", pid 441, jiffies 4294931444 (age 38.332s)
-    backtrace:
-      [<0000000005aed3b4>] kmalloc_trace+0x27/0x110
-      [<000000006b38f9b8>] pmu_dev_alloc+0x50/0x400
-      [<00000000735f17be>] perf_pmu_register+0x96b/0xee0
-      [<00000000e38477f1>] 0xffffffffc0ad8603
-      [<000000004e162216>] do_one_initcall+0xd0/0x4e0
-      ...
-
-Fixes: abe43400579d ("perf: Sysfs enumeration")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://lkml.kernel.org/r/20221111103653.91058-1-chenzhongjin@huawei.com
+Fixes: 984aa6dbf4ca ("OMAP3: PM: Adding smartreflex driver support.")
+Signed-off-by: Zhang Qilong <zhangqilong3@huawei.com>
+Signed-off-by: Nishanth Menon <nm@ti.com>
+Link: https://lore.kernel.org/r/20221108080322.52268-3-zhangqilong3@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/events/core.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/power/avs/smartreflex.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/kernel/events/core.c b/kernel/events/core.c
-index 0a54780e0942..a1c89b675b0b 100644
---- a/kernel/events/core.c
-+++ b/kernel/events/core.c
-@@ -10035,13 +10035,15 @@ static int pmu_dev_alloc(struct pmu *pmu)
+diff --git a/drivers/power/avs/smartreflex.c b/drivers/power/avs/smartreflex.c
+index 4684e7df833a..2365efe2dae1 100644
+--- a/drivers/power/avs/smartreflex.c
++++ b/drivers/power/avs/smartreflex.c
+@@ -942,6 +942,7 @@ static int omap_sr_probe(struct platform_device *pdev)
+ err_debugfs:
+ 	debugfs_remove_recursive(sr_info->dbg_dir);
+ err_list_del:
++	pm_runtime_disable(&pdev->dev);
+ 	list_del(&sr_info->node);
  
- 	pmu->dev->groups = pmu->attr_groups;
- 	device_initialize(pmu->dev);
--	ret = dev_set_name(pmu->dev, "%s", pmu->name);
--	if (ret)
--		goto free_dev;
- 
- 	dev_set_drvdata(pmu->dev, pmu);
- 	pmu->dev->bus = &pmu_bus;
- 	pmu->dev->release = pmu_dev_release;
-+
-+	ret = dev_set_name(pmu->dev, "%s", pmu->name);
-+	if (ret)
-+		goto free_dev;
-+
- 	ret = device_add(pmu->dev);
- 	if (ret)
- 		goto free_dev;
+ 	pm_runtime_put_sync(&pdev->dev);
 -- 
 2.35.1
 
