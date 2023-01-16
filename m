@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1E6F6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:06:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3648BC433EF;
-	Mon, 16 Jan 2023 17:06:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FE6C6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:06:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB6ACC433EF;
+	Mon, 16 Jan 2023 17:06:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888812;
-	bh=44DZnacQx50QzZWxqPKnviw3/8G91FlK+0O+2kX1CvE=;
+	s=korg; t=1673888815;
+	bh=ukihnZczW+ImpiuJlAqLtc7JU3W2WJrVZRxV0L63ZZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=euH+xfwHVI0P2udgASuZWIido4SFx6zlbBvrd19w+o/7oWcscprer4DvVERVjVWJj
-	 mEJoXWjMvpBxXrTAK4RlDlzSnBAcnhTzxAsWlMZLPXBGILibaZOsYlWpIyjIjOpekv
-	 m1GvT/jv5TahJ39SvHPtd/0hgt8EoUiQAzqZxVqI=
+	b=Gr0gNpb0PUfCg3efXoMhO9FK3CoxIa+9PhY08AKstbIWz43KF26b4cZEgY2STP14o
+	 Zk+/PeKOw0ULQ+FIt5roeHB4BuYu8ubz4hJNtdjRfuiMab6BQdj9MUOK97PFK+klri
+	 lh+59zN6O1LQMJqdCyH0taDmqagKNKcB3FpZcfFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Jihong <yangjihong1@huawei.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Artem Chernyshev <artem.chernyshev@red-soft.ru>,
+	Stefano Garzarella <sgarzare@redhat.com>,
+	Vishnu Dasa <vdasa@vmware.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 118/338] blktrace: Fix output non-blktrace event when blk_classic option enabled
-Date: Mon, 16 Jan 2023 16:49:51 +0100
-Message-Id: <20230116154825.986291712@linuxfoundation.org>
+Subject: [PATCH 4.14 119/338] net: vmw_vsock: vmci: Check memcpy_from_msg()
+Date: Mon, 16 Jan 2023 16:49:52 +0100
+Message-Id: <20230116154826.031566567@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,44 +37,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Jihong <yangjihong1@huawei.com>
+From: Artem Chernyshev <artem.chernyshev@red-soft.ru>
 
-[ Upstream commit f596da3efaf4130ff61cd029558845808df9bf99 ]
+[ Upstream commit 44aa5a6dba8283bfda28b1517af4de711c5652a4 ]
 
-When the blk_classic option is enabled, non-blktrace events must be
-filtered out. Otherwise, events of other types are output in the blktrace
-classic format, which is unexpected.
+vmci_transport_dgram_enqueue() does not check the return value
+of memcpy_from_msg().  If memcpy_from_msg() fails, it is possible that
+uninitialized memory contents are sent unintentionally instead of user's
+message in the datagram to the destination.  Return with an error if
+memcpy_from_msg() fails.
 
-The problem can be triggered in the following ways:
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-  # echo 1 > /sys/kernel/debug/tracing/options/blk_classic
-  # echo 1 > /sys/kernel/debug/tracing/events/enable
-  # echo blk > /sys/kernel/debug/tracing/current_tracer
-  # cat /sys/kernel/debug/tracing/trace_pipe
-
-Fixes: c71a89615411 ("blktrace: add ftrace plugin")
-Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
-Link: https://lore.kernel.org/r/20221122040410.85113-1-yangjihong1@huawei.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Fixes: 0f7db23a07af ("vmci_transport: switch ->enqeue_dgram, ->enqueue_stream and ->dequeue_stream to msghdr")
+Signed-off-by: Artem Chernyshev <artem.chernyshev@red-soft.ru>
+Reviewed-by: Stefano Garzarella <sgarzare@redhat.com>
+Reviewed-by: Vishnu Dasa <vdasa@vmware.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/blktrace.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/vmw_vsock/vmci_transport.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/blktrace.c b/kernel/trace/blktrace.c
-index 0b22bf622397..30e3af538039 100644
---- a/kernel/trace/blktrace.c
-+++ b/kernel/trace/blktrace.c
-@@ -1612,7 +1612,8 @@ blk_trace_event_print_binary(struct trace_iterator *iter, int flags,
+diff --git a/net/vmw_vsock/vmci_transport.c b/net/vmw_vsock/vmci_transport.c
+index c1da1ce3d36e..da17b4c153b1 100644
+--- a/net/vmw_vsock/vmci_transport.c
++++ b/net/vmw_vsock/vmci_transport.c
+@@ -1730,7 +1730,11 @@ static int vmci_transport_dgram_enqueue(
+ 	if (!dg)
+ 		return -ENOMEM;
  
- static enum print_line_t blk_tracer_print_line(struct trace_iterator *iter)
- {
--	if (!(blk_tracer_flags.val & TRACE_BLK_OPT_CLASSIC))
-+	if ((iter->ent->type != TRACE_BLK) ||
-+	    !(blk_tracer_flags.val & TRACE_BLK_OPT_CLASSIC))
- 		return TRACE_TYPE_UNHANDLED;
+-	memcpy_from_msg(VMCI_DG_PAYLOAD(dg), msg, len);
++	err = memcpy_from_msg(VMCI_DG_PAYLOAD(dg), msg, len);
++	if (err) {
++		kfree(dg);
++		return err;
++	}
  
- 	return print_one_line(iter, true);
+ 	dg->dst = vmci_make_handle(remote_addr->svm_cid,
+ 				   remote_addr->svm_port);
 -- 
 2.35.1
 
