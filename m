@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5032A6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:35:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8021C433EF;
-	Mon, 16 Jan 2023 16:35:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC25C6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:35:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 725C7C433D2;
+	Mon, 16 Jan 2023 16:35:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886945;
-	bh=oTfFiWOuLAUCJTsQhKZfXAbrQzLjFJLMwn3Ou6mKLHU=;
+	s=korg; t=1673886947;
+	bh=Pbir8vl/RLwXHarvuo9OOB/LtcPSiVtcdLDDndWzy54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U/ZJv4V2/G+syU8ZFG/ghqTDeL17dnx++/u3zrX035/LzuWwZAisGj6utBeOIXlMp
-	 jrExoQfQsKyVC2++MqA2usqM2B54Ph+SBRo8zADKulWABlmfXubzwhiHCKir92Qbxx
-	 c9dOEJvLRyzEPB2G4kfQUcIiHLhMsHP+se6iRO5I=
+	b=twvy4/Ec67UG922+XsBJId01/xTOQQ1m6/iVMUdrmMBBQN+dL79r524Wc4kE7RJi/
+	 ABxUjCAw939ocB3HlA4uMST82T83udFr+ZRA/6mF9+i3vZb/MoEbHugqV8WJRP6U63
+	 8zm+yTBV8UImtLArB34PvuL3wy3kza0B7bgiL4I4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jan Kara <jack@suse.cz>,
+	Bixuan Cui <cuibixuan@linux.alibaba.com>,
+	Jason Yan <yanaijie@huawei.com>,
 	Theodore Tso <tytso@mit.edu>,
+	stable@kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 622/658] jbd2: Factor out common parts of stopping and restarting a handle
-Date: Mon, 16 Jan 2023 16:51:50 +0100
-Message-Id: <20230116154937.955221888@linuxfoundation.org>
+Subject: [PATCH 5.4 623/658] jbd2: use the correct print format
+Date: Mon, 16 Jan 2023 16:51:51 +0100
+Message-Id: <20230116154937.991514558@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,203 +37,200 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jan Kara <jack@suse.cz>
+From: Bixuan Cui <cuibixuan@linux.alibaba.com>
 
-[ Upstream commit ec8b6f600e49dc87a8564807fec4193bf93ee2b5 ]
+[ Upstream commit d87a7b4c77a997d5388566dd511ca8e6b8e8a0a8 ]
 
-jbd2__journal_restart() has quite some code that is common with
-jbd2_journal_stop(). Factor this functionality into stop_this_handle()
-helper and use it from both functions. Note that this also drops
-t_handle_lock protection from jbd2__journal_restart() as
-jbd2_journal_stop() does the same thing without it.
+The print format error was found when using ftrace event:
+    <...>-1406 [000] .... 23599442.895823: jbd2_end_commit: dev 252,8 transaction -1866216965 sync 0 head -1866217368
+    <...>-1406 [000] .... 23599442.896299: jbd2_start_commit: dev 252,8 transaction -1866216964 sync 0
 
-Signed-off-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20191105164437.32602-17-jack@suse.cz
+Use the correct print format for transaction, head and tid.
+
+Fixes: 879c5e6b7cb4 ('jbd2: convert instrumentation from markers to tracepoints')
+Signed-off-by: Bixuan Cui <cuibixuan@linux.alibaba.com>
+Reviewed-by: Jason Yan <yanaijie@huawei.com>
+Link: https://lore.kernel.org/r/1665488024-95172-1-git-send-email-cuibixuan@linux.alibaba.com
 Signed-off-by: Theodore Ts'o <tytso@mit.edu>
-Stable-dep-of: d87a7b4c77a9 ("jbd2: use the correct print format")
+Cc: stable@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/jbd2/transaction.c | 98 ++++++++++++++++++++-----------------------
- 1 file changed, 46 insertions(+), 52 deletions(-)
+ include/trace/events/jbd2.h | 40 ++++++++++++++++++-------------------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
 
-diff --git a/fs/jbd2/transaction.c b/fs/jbd2/transaction.c
-index 6d78648392f0..ee9a778c8fbe 100644
---- a/fs/jbd2/transaction.c
-+++ b/fs/jbd2/transaction.c
-@@ -514,12 +514,17 @@ handle_t *jbd2_journal_start(journal_t *journal, int nblocks)
- }
- EXPORT_SYMBOL(jbd2_journal_start);
+diff --git a/include/trace/events/jbd2.h b/include/trace/events/jbd2.h
+index 2310b259329f..c9fb7b987a3a 100644
+--- a/include/trace/events/jbd2.h
++++ b/include/trace/events/jbd2.h
+@@ -40,7 +40,7 @@ DECLARE_EVENT_CLASS(jbd2_commit,
+ 	TP_STRUCT__entry(
+ 		__field(	dev_t,	dev			)
+ 		__field(	char,	sync_commit		  )
+-		__field(	int,	transaction		  )
++		__field(	tid_t,	transaction		  )
+ 	),
  
--void jbd2_journal_free_reserved(handle_t *handle)
-+static void __jbd2_journal_unreserve_handle(handle_t *handle)
- {
- 	journal_t *journal = handle->h_journal;
+ 	TP_fast_assign(
+@@ -49,7 +49,7 @@ DECLARE_EVENT_CLASS(jbd2_commit,
+ 		__entry->transaction	= commit_transaction->t_tid;
+ 	),
  
- 	WARN_ON(!handle->h_reserved);
- 	sub_reserved_credits(journal, handle->h_buffer_credits);
-+}
-+
-+void jbd2_journal_free_reserved(handle_t *handle)
-+{
-+	__jbd2_journal_unreserve_handle(handle);
- 	jbd2_free_handle(handle);
- }
- EXPORT_SYMBOL(jbd2_journal_free_reserved);
-@@ -657,6 +662,28 @@ int jbd2_journal_extend(handle_t *handle, int nblocks)
- 	return result;
- }
+-	TP_printk("dev %d,%d transaction %d sync %d",
++	TP_printk("dev %d,%d transaction %u sync %d",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev),
+ 		  __entry->transaction, __entry->sync_commit)
+ );
+@@ -97,8 +97,8 @@ TRACE_EVENT(jbd2_end_commit,
+ 	TP_STRUCT__entry(
+ 		__field(	dev_t,	dev			)
+ 		__field(	char,	sync_commit		  )
+-		__field(	int,	transaction		  )
+-		__field(	int,	head		  	  )
++		__field(	tid_t,	transaction		  )
++		__field(	tid_t,	head		  	  )
+ 	),
  
-+static void stop_this_handle(handle_t *handle)
-+{
-+	transaction_t *transaction = handle->h_transaction;
-+	journal_t *journal = transaction->t_journal;
-+
-+	J_ASSERT(journal_current_handle() == handle);
-+	J_ASSERT(atomic_read(&transaction->t_updates) > 0);
-+	current->journal_info = NULL;
-+	atomic_sub(handle->h_buffer_credits,
-+		   &transaction->t_outstanding_credits);
-+	if (handle->h_rsv_handle)
-+		__jbd2_journal_unreserve_handle(handle->h_rsv_handle);
-+	if (atomic_dec_and_test(&transaction->t_updates))
-+		wake_up(&journal->j_wait_updates);
-+
-+	rwsem_release(&journal->j_trans_commit_map, 1, _THIS_IP_);
-+	/*
-+	 * Scope of the GFP_NOFS context is over here and so we can restore the
-+	 * original alloc context.
-+	 */
-+	memalloc_nofs_restore(handle->saved_alloc_context);
-+}
+ 	TP_fast_assign(
+@@ -108,7 +108,7 @@ TRACE_EVENT(jbd2_end_commit,
+ 		__entry->head		= journal->j_tail_sequence;
+ 	),
  
- /**
-  * int jbd2_journal_restart() - restart a handle .
-@@ -679,52 +706,34 @@ int jbd2__journal_restart(handle_t *handle, int nblocks, gfp_t gfp_mask)
- 	transaction_t *transaction = handle->h_transaction;
- 	journal_t *journal;
- 	tid_t		tid;
--	int		need_to_start, ret;
-+	int		need_to_start;
+-	TP_printk("dev %d,%d transaction %d sync %d head %d",
++	TP_printk("dev %d,%d transaction %u sync %d head %u",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev),
+ 		  __entry->transaction, __entry->sync_commit, __entry->head)
+ );
+@@ -134,14 +134,14 @@ TRACE_EVENT(jbd2_submit_inode_data,
+ );
  
- 	/* If we've had an abort of any type, don't even think about
- 	 * actually doing the restart! */
- 	if (is_handle_aborted(handle))
- 		return 0;
- 	journal = transaction->t_journal;
-+	tid = transaction->t_tid;
+ TRACE_EVENT(jbd2_handle_start,
+-	TP_PROTO(dev_t dev, unsigned long tid, unsigned int type,
++	TP_PROTO(dev_t dev, tid_t tid, unsigned int type,
+ 		 unsigned int line_no, int requested_blocks),
  
- 	/*
- 	 * First unlink the handle from its current transaction, and start the
- 	 * commit on that.
- 	 */
--	J_ASSERT(atomic_read(&transaction->t_updates) > 0);
--	J_ASSERT(journal_current_handle() == handle);
--
--	read_lock(&journal->j_state_lock);
--	spin_lock(&transaction->t_handle_lock);
--	atomic_sub(handle->h_buffer_credits,
--		   &transaction->t_outstanding_credits);
--	if (handle->h_rsv_handle) {
--		sub_reserved_credits(journal,
--				     handle->h_rsv_handle->h_buffer_credits);
--	}
--	if (atomic_dec_and_test(&transaction->t_updates))
--		wake_up(&journal->j_wait_updates);
--	tid = transaction->t_tid;
--	spin_unlock(&transaction->t_handle_lock);
-+	jbd_debug(2, "restarting handle %p\n", handle);
-+	stop_this_handle(handle);
- 	handle->h_transaction = NULL;
--	current->journal_info = NULL;
+ 	TP_ARGS(dev, tid, type, line_no, requested_blocks),
  
--	jbd_debug(2, "restarting handle %p\n", handle);
-+	/*
-+	 * TODO: If we use READ_ONCE / WRITE_ONCE for j_commit_request we can
-+ 	 * get rid of pointless j_state_lock traffic like this.
-+	 */
-+	read_lock(&journal->j_state_lock);
- 	need_to_start = !tid_geq(journal->j_commit_request, tid);
- 	read_unlock(&journal->j_state_lock);
- 	if (need_to_start)
- 		jbd2_log_start_commit(journal, tid);
--
--	rwsem_release(&journal->j_trans_commit_map, 1, _THIS_IP_);
- 	handle->h_buffer_credits = nblocks;
--	/*
--	 * Restore the original nofs context because the journal restart
--	 * is basically the same thing as journal stop and start.
--	 * start_this_handle will start a new nofs context.
--	 */
--	memalloc_nofs_restore(handle->saved_alloc_context);
--	ret = start_this_handle(journal, handle, gfp_mask);
--	return ret;
-+	return start_this_handle(journal, handle, gfp_mask);
- }
- EXPORT_SYMBOL(jbd2__journal_restart);
+ 	TP_STRUCT__entry(
+ 		__field(		dev_t,	dev		)
+-		__field(	unsigned long,	tid		)
++		__field(		tid_t,	tid		)
+ 		__field(	 unsigned int,	type		)
+ 		__field(	 unsigned int,	line_no		)
+ 		__field(		  int,	requested_blocks)
+@@ -155,14 +155,14 @@ TRACE_EVENT(jbd2_handle_start,
+ 		__entry->requested_blocks = requested_blocks;
+ 	),
  
-@@ -1734,16 +1743,12 @@ int jbd2_journal_stop(handle_t *handle)
- 		 * Handle is already detached from the transaction so there is
- 		 * nothing to do other than free the handle.
- 		 */
--		if (handle->h_rsv_handle)
--			jbd2_free_handle(handle->h_rsv_handle);
-+		memalloc_nofs_restore(handle->saved_alloc_context);
- 		goto free_and_exit;
- 	}
- 	journal = transaction->t_journal;
- 	tid = transaction->t_tid;
+-	TP_printk("dev %d,%d tid %lu type %u line_no %u "
++	TP_printk("dev %d,%d tid %u type %u line_no %u "
+ 		  "requested_blocks %d",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev), __entry->tid,
+ 		  __entry->type, __entry->line_no, __entry->requested_blocks)
+ );
  
--	J_ASSERT(journal_current_handle() == handle);
--	J_ASSERT(atomic_read(&transaction->t_updates) > 0);
--
- 	if (is_handle_aborted(handle))
- 		err = -EIO;
+ TRACE_EVENT(jbd2_handle_extend,
+-	TP_PROTO(dev_t dev, unsigned long tid, unsigned int type,
++	TP_PROTO(dev_t dev, tid_t tid, unsigned int type,
+ 		 unsigned int line_no, int buffer_credits,
+ 		 int requested_blocks),
  
-@@ -1813,9 +1818,6 @@ int jbd2_journal_stop(handle_t *handle)
+@@ -170,7 +170,7 @@ TRACE_EVENT(jbd2_handle_extend,
  
- 	if (handle->h_sync)
- 		transaction->t_synchronous_commit = 1;
--	current->journal_info = NULL;
--	atomic_sub(handle->h_buffer_credits,
--		   &transaction->t_outstanding_credits);
+ 	TP_STRUCT__entry(
+ 		__field(		dev_t,	dev		)
+-		__field(	unsigned long,	tid		)
++		__field(		tid_t,	tid		)
+ 		__field(	 unsigned int,	type		)
+ 		__field(	 unsigned int,	line_no		)
+ 		__field(		  int,	buffer_credits  )
+@@ -186,7 +186,7 @@ TRACE_EVENT(jbd2_handle_extend,
+ 		__entry->requested_blocks = requested_blocks;
+ 	),
  
- 	/*
- 	 * If the handle is marked SYNC, we need to set another commit
-@@ -1845,27 +1847,19 @@ int jbd2_journal_stop(handle_t *handle)
- 	}
+-	TP_printk("dev %d,%d tid %lu type %u line_no %u "
++	TP_printk("dev %d,%d tid %u type %u line_no %u "
+ 		  "buffer_credits %d requested_blocks %d",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev), __entry->tid,
+ 		  __entry->type, __entry->line_no, __entry->buffer_credits,
+@@ -194,7 +194,7 @@ TRACE_EVENT(jbd2_handle_extend,
+ );
  
- 	/*
--	 * Once we drop t_updates, if it goes to zero the transaction
--	 * could start committing on us and eventually disappear.  So
--	 * once we do this, we must not dereference transaction
--	 * pointer again.
-+	 * Once stop_this_handle() drops t_updates, the transaction could start
-+	 * committing on us and eventually disappear.  So we must not
-+	 * dereference transaction pointer again after calling
-+	 * stop_this_handle().
- 	 */
--	if (atomic_dec_and_test(&transaction->t_updates))
--		wake_up(&journal->j_wait_updates);
--
--	rwsem_release(&journal->j_trans_commit_map, 1, _THIS_IP_);
-+	stop_this_handle(handle);
+ TRACE_EVENT(jbd2_handle_stats,
+-	TP_PROTO(dev_t dev, unsigned long tid, unsigned int type,
++	TP_PROTO(dev_t dev, tid_t tid, unsigned int type,
+ 		 unsigned int line_no, int interval, int sync,
+ 		 int requested_blocks, int dirtied_blocks),
  
- 	if (wait_for_commit)
- 		err = jbd2_log_wait_commit(journal, tid);
+@@ -203,7 +203,7 @@ TRACE_EVENT(jbd2_handle_stats,
  
--	if (handle->h_rsv_handle)
--		jbd2_journal_free_reserved(handle->h_rsv_handle);
- free_and_exit:
--	/*
--	 * Scope of the GFP_NOFS context is over here and so we can restore the
--	 * original alloc context.
--	 */
--	memalloc_nofs_restore(handle->saved_alloc_context);
-+	if (handle->h_rsv_handle)
-+		jbd2_free_handle(handle->h_rsv_handle);
- 	jbd2_free_handle(handle);
- 	return err;
- }
+ 	TP_STRUCT__entry(
+ 		__field(		dev_t,	dev		)
+-		__field(	unsigned long,	tid		)
++		__field(		tid_t,	tid		)
+ 		__field(	 unsigned int,	type		)
+ 		__field(	 unsigned int,	line_no		)
+ 		__field(		  int,	interval	)
+@@ -223,7 +223,7 @@ TRACE_EVENT(jbd2_handle_stats,
+ 		__entry->dirtied_blocks	  = dirtied_blocks;
+ 	),
+ 
+-	TP_printk("dev %d,%d tid %lu type %u line_no %u interval %d "
++	TP_printk("dev %d,%d tid %u type %u line_no %u interval %d "
+ 		  "sync %d requested_blocks %d dirtied_blocks %d",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev), __entry->tid,
+ 		  __entry->type, __entry->line_no, __entry->interval,
+@@ -232,14 +232,14 @@ TRACE_EVENT(jbd2_handle_stats,
+ );
+ 
+ TRACE_EVENT(jbd2_run_stats,
+-	TP_PROTO(dev_t dev, unsigned long tid,
++	TP_PROTO(dev_t dev, tid_t tid,
+ 		 struct transaction_run_stats_s *stats),
+ 
+ 	TP_ARGS(dev, tid, stats),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(		dev_t,	dev		)
+-		__field(	unsigned long,	tid		)
++		__field(		tid_t,	tid		)
+ 		__field(	unsigned long,	wait		)
+ 		__field(	unsigned long,	request_delay	)
+ 		__field(	unsigned long,	running		)
+@@ -265,7 +265,7 @@ TRACE_EVENT(jbd2_run_stats,
+ 		__entry->blocks_logged	= stats->rs_blocks_logged;
+ 	),
+ 
+-	TP_printk("dev %d,%d tid %lu wait %u request_delay %u running %u "
++	TP_printk("dev %d,%d tid %u wait %u request_delay %u running %u "
+ 		  "locked %u flushing %u logging %u handle_count %u "
+ 		  "blocks %u blocks_logged %u",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev), __entry->tid,
+@@ -280,14 +280,14 @@ TRACE_EVENT(jbd2_run_stats,
+ );
+ 
+ TRACE_EVENT(jbd2_checkpoint_stats,
+-	TP_PROTO(dev_t dev, unsigned long tid,
++	TP_PROTO(dev_t dev, tid_t tid,
+ 		 struct transaction_chp_stats_s *stats),
+ 
+ 	TP_ARGS(dev, tid, stats),
+ 
+ 	TP_STRUCT__entry(
+ 		__field(		dev_t,	dev		)
+-		__field(	unsigned long,	tid		)
++		__field(		tid_t,	tid		)
+ 		__field(	unsigned long,	chp_time	)
+ 		__field(		__u32,	forced_to_close	)
+ 		__field(		__u32,	written		)
+@@ -303,7 +303,7 @@ TRACE_EVENT(jbd2_checkpoint_stats,
+ 		__entry->dropped	= stats->cs_dropped;
+ 	),
+ 
+-	TP_printk("dev %d,%d tid %lu chp_time %u forced_to_close %u "
++	TP_printk("dev %d,%d tid %u chp_time %u forced_to_close %u "
+ 		  "written %u dropped %u",
+ 		  MAJOR(__entry->dev), MINOR(__entry->dev), __entry->tid,
+ 		  jiffies_to_msecs(__entry->chp_time),
 -- 
 2.35.1
 
