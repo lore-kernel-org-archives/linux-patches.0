@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5709A46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:12:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9B0BC433EF;
-	Mon, 16 Jan 2023 16:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93A3146B7
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:12:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1796CC433F0;
+	Mon, 16 Jan 2023 16:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885567;
-	bh=bo6XE/YdRJaQNeYc9BDV036GtXFwChRa8OJ+V2WwGDc=;
+	s=korg; t=1673885572;
+	bh=UFVSMEluSimBVWnAzAFm8/z9GKq6wSrJmfTcgmBljNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pCUAFLg5dEkX/c/aNQWrO414Ycn83Vlj3x9Q1VE8xSTTvCyJDpMeVx7JTtFcPC8xe
-	 OBYTZA7gTXIMxCXOhz3efTxGIS4Ck5LepGQAnm/sY6f3rPOZJeKNWKjIN6ObcDbUSh
-	 pKYr1jczCBWophBlPJP1L4SM8XGFearndeokcy/I=
+	b=qSpIpuAIO2nvFrArfpCRBCMrZhdR38hPqyB9V0R04QC8kFQTtkhuPxjxrShaywpPW
+	 eLRN8tP7GS3VX88kZGq5BDLYLvi5dmy8UAfclsHRLAgwwQe1rJubADo0cwqF2P8G5P
+	 ciYt8hK89U8YMKowE7SYjWtzXLNl0sGiri0HYlj0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Sakari Ailus <sakari.ailus@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 101/658] wifi: rtl8xxxu: Fix reading the vendor of combo chips
-Date: Mon, 16 Jan 2023 16:43:09 +0100
-Message-Id: <20230116154914.170061316@linuxfoundation.org>
+Subject: [PATCH 5.4 103/658] media: i2c: ad5820: Fix error path
+Date: Mon, 16 Jan 2023 16:43:11 +0100
+Message-Id: <20230116154914.243031653@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,81 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 6f103aeb5e985ac08f3a4a049a2c17294f40cff9 ]
+[ Upstream commit 9fce241660f37d9e95e93c0ae6fba8cfefa5797b ]
 
-The wifi + bluetooth combo chips (RTL8723AU and RTL8723BU) read the
-chip vendor from the wrong register because the val32 variable gets
-overwritten. Add one more variable to avoid this.
+Error path seems to be swaped. Fix the order and provide some meaningful
+names.
 
-This had no real effect on RTL8723BU. It may have had an effect on
-RTL8723AU.
-
-Fixes: 26f1fad29ad9 ("New driver: rtl8xxxu (mac80211)")
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/24af8024-2f07-552b-93d8-38823d8e3cb0@gmail.com
+Fixes: bee3d5115611 ("[media] ad5820: Add driver for auto-focus coil")
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Sakari Ailus <sakari.ailus@linux.intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../wireless/realtek/rtl8xxxu/rtl8xxxu_core.c    | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ drivers/media/i2c/ad5820.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-index b472dc4c551e..4a81e810a0ce 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -1608,18 +1608,18 @@ static void rtl8xxxu_print_chipinfo(struct rtl8xxxu_priv *priv)
- static int rtl8xxxu_identify_chip(struct rtl8xxxu_priv *priv)
- {
- 	struct device *dev = &priv->udev->dev;
--	u32 val32, bonding;
-+	u32 val32, bonding, sys_cfg;
- 	u16 val16;
+diff --git a/drivers/media/i2c/ad5820.c b/drivers/media/i2c/ad5820.c
+index 7a49651f4d1f..d7d85edeedd5 100644
+--- a/drivers/media/i2c/ad5820.c
++++ b/drivers/media/i2c/ad5820.c
+@@ -314,18 +314,18 @@ static int ad5820_probe(struct i2c_client *client,
  
--	val32 = rtl8xxxu_read32(priv, REG_SYS_CFG);
--	priv->chip_cut = (val32 & SYS_CFG_CHIP_VERSION_MASK) >>
-+	sys_cfg = rtl8xxxu_read32(priv, REG_SYS_CFG);
-+	priv->chip_cut = (sys_cfg & SYS_CFG_CHIP_VERSION_MASK) >>
- 		SYS_CFG_CHIP_VERSION_SHIFT;
--	if (val32 & SYS_CFG_TRP_VAUX_EN) {
-+	if (sys_cfg & SYS_CFG_TRP_VAUX_EN) {
- 		dev_info(dev, "Unsupported test chip\n");
- 		return -ENOTSUPP;
- 	}
+ 	ret = media_entity_pads_init(&coil->subdev.entity, 0, NULL);
+ 	if (ret < 0)
+-		goto cleanup2;
++		goto clean_mutex;
  
--	if (val32 & SYS_CFG_BT_FUNC) {
-+	if (sys_cfg & SYS_CFG_BT_FUNC) {
- 		if (priv->chip_cut >= 3) {
- 			sprintf(priv->chip_name, "8723BU");
- 			priv->rtl_chip = RTL8723B;
-@@ -1641,7 +1641,7 @@ static int rtl8xxxu_identify_chip(struct rtl8xxxu_priv *priv)
- 		if (val32 & MULTI_GPS_FUNC_EN)
- 			priv->has_gps = 1;
- 		priv->is_multi_func = 1;
--	} else if (val32 & SYS_CFG_TYPE_ID) {
-+	} else if (sys_cfg & SYS_CFG_TYPE_ID) {
- 		bonding = rtl8xxxu_read32(priv, REG_HPON_FSM);
- 		bonding &= HPON_FSM_BONDING_MASK;
- 		if (priv->fops->tx_desc_size ==
-@@ -1689,7 +1689,7 @@ static int rtl8xxxu_identify_chip(struct rtl8xxxu_priv *priv)
- 	case RTL8188E:
- 	case RTL8192E:
- 	case RTL8723B:
--		switch (val32 & SYS_CFG_VENDOR_EXT_MASK) {
-+		switch (sys_cfg & SYS_CFG_VENDOR_EXT_MASK) {
- 		case SYS_CFG_VENDOR_ID_TSMC:
- 			sprintf(priv->chip_vendor, "TSMC");
- 			break;
-@@ -1706,7 +1706,7 @@ static int rtl8xxxu_identify_chip(struct rtl8xxxu_priv *priv)
- 		}
- 		break;
- 	default:
--		if (val32 & SYS_CFG_VENDOR_ID) {
-+		if (sys_cfg & SYS_CFG_VENDOR_ID) {
- 			sprintf(priv->chip_vendor, "UMC");
- 			priv->vendor_umc = 1;
- 		} else {
+ 	ret = v4l2_async_register_subdev(&coil->subdev);
+ 	if (ret < 0)
+-		goto cleanup;
++		goto clean_entity;
+ 
+ 	return ret;
+ 
+-cleanup2:
+-	mutex_destroy(&coil->power_lock);
+-cleanup:
++clean_entity:
+ 	media_entity_cleanup(&coil->subdev.entity);
++clean_mutex:
++	mutex_destroy(&coil->power_lock);
+ 	return ret;
+ }
+ 
 -- 
 2.35.1
 
