@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58EA56FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:04:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4940C433EF;
-	Mon, 16 Jan 2023 17:03:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E356C6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:04:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A556C433EF;
+	Mon, 16 Jan 2023 17:04:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888640;
-	bh=Cib16DsQQ0IUYfQ1kuaBXfwgwm6Le9uegRZ1RU3H2vU=;
+	s=korg; t=1673888642;
+	bh=+cSfEyRhlmEnP4Zli75QPHccPLPUg1Z6ii7+mUegCt4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PaE4RoN+W45lpXAQBo4jU83rRyJ7zZtAlWhOICjgr4SFogAlqqiiOapiFFgFL8AV/
-	 /op7Jnt6P9+2z+4ww1haqCPpp9WU7UPB03J4db/xpfOOhEA1TMwMgKuiKo70QNwHvh
-	 8VicAbC54hyDPdqreNzqg27V+mtaTbbVlRggxJvk=
+	b=ldxvy5e6F4FaZg5cAMoa3gHm6XXTaEBgCzZYnuEDmBl6ECCeRlmc23iySomaI0L7r
+	 U/m6q7vU/CLNHvQeCq4Uz6vVp6k91mUKwZPyGw/gRIG/znWDpTMGNmAbPEA8o8pp8g
+	 kdlMAgV52+cfCXMmL9P51UN5Gmp2K2A1X70sw3l4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Alexandre Bounine <alex.bou9@gmail.com>,
-	Matt Porter <mporter@kernel.crashing.org>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 054/338] rapidio: fix possible name leaks when rio_add_device() fails
-Date: Mon, 16 Jan 2023 16:48:47 +0100
-Message-Id: <20230116154823.190469304@linuxfoundation.org>
+Subject: [PATCH 4.14 045/338] perf: Fix possible memleak in pmu_dev_alloc()
+Date: Mon, 16 Jan 2023 16:48:38 +0100
+Message-Id: <20230116154822.751768516@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -37,74 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit f9574cd48679926e2a569e1957a5a1bcc8a719ac ]
+[ Upstream commit e8d7a90c08ce963c592fb49845f2ccc606a2ac21 ]
 
-Patch series "rapidio: fix three possible memory leaks".
+In pmu_dev_alloc(), when dev_set_name() failed, it will goto free_dev
+and call put_device(pmu->dev) to release it.
+However pmu->dev->release is assigned after this, which makes warning
+and memleak.
+Call dev_set_name() after pmu->dev->release = pmu_dev_release to fix it.
 
-This patchset fixes three name leaks in error handling.
- - patch #1 fixes two name leaks while rio_add_device() fails.
- - patch #2 fixes a name leak while  rio_register_mport() fails.
+  Device '(null)' does not have a release() function...
+  WARNING: CPU: 2 PID: 441 at drivers/base/core.c:2332 device_release+0x1b9/0x240
+  ...
+  Call Trace:
+    <TASK>
+    kobject_put+0x17f/0x460
+    put_device+0x20/0x30
+    pmu_dev_alloc+0x152/0x400
+    perf_pmu_register+0x96b/0xee0
+    ...
+  kmemleak: 1 new suspected memory leaks (see /sys/kernel/debug/kmemleak)
+  unreferenced object 0xffff888014759000 (size 2048):
+    comm "modprobe", pid 441, jiffies 4294931444 (age 38.332s)
+    backtrace:
+      [<0000000005aed3b4>] kmalloc_trace+0x27/0x110
+      [<000000006b38f9b8>] pmu_dev_alloc+0x50/0x400
+      [<00000000735f17be>] perf_pmu_register+0x96b/0xee0
+      [<00000000e38477f1>] 0xffffffffc0ad8603
+      [<000000004e162216>] do_one_initcall+0xd0/0x4e0
+      ...
 
-This patch (of 2):
-
-If rio_add_device() returns error, the name allocated by dev_set_name()
-need be freed.  It should use put_device() to give up the reference in the
-error path, so that the name can be freed in kobject_cleanup(), and the
-'rdev' can be freed in rio_release_dev().
-
-Link: https://lkml.kernel.org/r/20221114152636.2939035-1-yangyingliang@huawei.com
-Link: https://lkml.kernel.org/r/20221114152636.2939035-2-yangyingliang@huawei.com
-Fixes: e8de370188d0 ("rapidio: add mport char device driver")
-Fixes: 1fa5ae857bb1 ("driver core: get rid of struct device's bus_id string array")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Cc: Alexandre Bounine <alex.bou9@gmail.com>
-Cc: Matt Porter <mporter@kernel.crashing.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: abe43400579d ("perf: Sysfs enumeration")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/20221111103653.91058-1-chenzhongjin@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rapidio/devices/rio_mport_cdev.c | 7 +++++--
- drivers/rapidio/rio-scan.c               | 8 ++++++--
- 2 files changed, 11 insertions(+), 4 deletions(-)
+ kernel/events/core.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/rapidio/devices/rio_mport_cdev.c b/drivers/rapidio/devices/rio_mport_cdev.c
-index a87c024d5670..ce12b5c25b8c 100644
---- a/drivers/rapidio/devices/rio_mport_cdev.c
-+++ b/drivers/rapidio/devices/rio_mport_cdev.c
-@@ -1863,8 +1863,11 @@ static int rio_mport_add_riodev(struct mport_cdev_priv *priv,
- 		rio_init_dbell_res(&rdev->riores[RIO_DOORBELL_RESOURCE],
- 				   0, 0xffff);
- 	err = rio_add_device(rdev);
--	if (err)
--		goto cleanup;
-+	if (err) {
-+		put_device(&rdev->dev);
-+		return err;
-+	}
-+
- 	rio_dev_get(rdev);
+diff --git a/kernel/events/core.c b/kernel/events/core.c
+index 7ad142a5327e..eb67ef450615 100644
+--- a/kernel/events/core.c
++++ b/kernel/events/core.c
+@@ -9180,13 +9180,15 @@ static int pmu_dev_alloc(struct pmu *pmu)
  
- 	return 0;
-diff --git a/drivers/rapidio/rio-scan.c b/drivers/rapidio/rio-scan.c
-index 23429bdaca84..26ab8c463dae 100644
---- a/drivers/rapidio/rio-scan.c
-+++ b/drivers/rapidio/rio-scan.c
-@@ -460,8 +460,12 @@ static struct rio_dev *rio_setup_device(struct rio_net *net,
- 				   0, 0xffff);
- 
- 	ret = rio_add_device(rdev);
+ 	pmu->dev->groups = pmu->attr_groups;
+ 	device_initialize(pmu->dev);
+-	ret = dev_set_name(pmu->dev, "%s", pmu->name);
 -	if (ret)
--		goto cleanup;
-+	if (ret) {
-+		if (rswitch)
-+			kfree(rswitch->route_table);
-+		put_device(&rdev->dev);
-+		return NULL;
-+	}
+-		goto free_dev;
  
- 	rio_dev_get(rdev);
- 
+ 	dev_set_drvdata(pmu->dev, pmu);
+ 	pmu->dev->bus = &pmu_bus;
+ 	pmu->dev->release = pmu_dev_release;
++
++	ret = dev_set_name(pmu->dev, "%s", pmu->name);
++	if (ret)
++		goto free_dev;
++
+ 	ret = device_add(pmu->dev);
+ 	if (ret)
+ 		goto free_dev;
 -- 
 2.35.1
 
