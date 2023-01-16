@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 986956FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:54:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1531EC433D2;
-	Mon, 16 Jan 2023 16:54:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C7AD6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:54:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A778CC433EF;
+	Mon, 16 Jan 2023 16:54:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888066;
-	bh=RasDkXRFi84a4c6TvGJDhFvdAMwpujcclByER8bQ844=;
+	s=korg; t=1673888069;
+	bh=FLYHP4h2jbNAfMMW0jtLHY3ilKtxDgEnGDPOCS4ZCsU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nQsu59+kpLS9R/QZrOJ1Q7nnvpGmuuDGhEPcMHBrlJEVEs+Q+AJtyaEdXC5FeeByr
-	 7WB9BVmBVAxexx9MsS2m8mAlRrMUcDXXLmjL1bGL2EiXlxip+lo4NfcDvHGQZutb3e
-	 hebzs7kFBqfOUDWgB4XiTzYSyjhIqy50GV6cuKWI=
+	b=pcIqMQW2zuuXJhb/G8RSEwYjenUWPJlLcTWOFee11alJO3TeES53XGdGe2dIuBLM+
+	 wp8EWthNzw+h0Rg/6Blibon2kjslujGfHEn4f4l1muH1MSfPpNW1NcgZ4emIccs5Hf
+	 KisZMLYDfO0Be5x1d1E+eOFCvzaImpEL4NKBZS5o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Stephen Rothwell" <sfr@canb.auug.org.au>,
-	Lin Ma <linma@zju.edu.cn>,
-	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>
-Subject: [PATCH 4.19 360/521] media: dvbdev: fix build warning due to comments
-Date: Mon, 16 Jan 2023 16:50:22 +0100
-Message-Id: <20230116154903.184314948@linuxfoundation.org>
+	Mike Snitzer <snitzer@kernel.org>
+Subject: [PATCH 4.19 387/521] dm cache: set needs_check flag after aborting metadata
+Date: Mon, 16 Jan 2023 16:50:49 +0100
+Message-Id: <20230116154904.432327270@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -36,41 +33,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lin Ma <linma@zju.edu.cn>
+From: Mike Snitzer <snitzer@kernel.org>
 
-commit 3edfd14bb50fa6f94ed1a37bbb17d9f1c2793b57 upstream.
+commit 6b9973861cb2e96dcd0bb0f1baddc5c034207c5c upstream.
 
-Previous commit that introduces reference counter does not add proper
-comments, which will lead to warning when building htmldocs. Fix them.
+Otherwise the commit that will be aborted will be associated with the
+metadata objects that will be torn down.  Must write needs_check flag
+to metadata with a reset block manager.
 
-Reported-by: "Stephen Rothwell" <sfr@canb.auug.org.au>
-Fixes: 0fc044b2b5e2 ("media: dvbdev: adopts refcnt to avoid UAF")
-Signed-off-by: Lin Ma <linma@zju.edu.cn>
-Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Found through code-inspection (and compared against dm-thin.c).
+
+Cc: stable@vger.kernel.org
+Fixes: 028ae9f76f29 ("dm cache: add fail io mode and needs_check flag")
+Signed-off-by: Mike Snitzer <snitzer@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/media/dvbdev.h |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/md/dm-cache-target.c |   10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/include/media/dvbdev.h
-+++ b/include/media/dvbdev.h
-@@ -126,6 +126,7 @@ struct dvb_adapter {
-  * struct dvb_device - represents a DVB device node
-  *
-  * @list_head:	List head with all DVB devices
-+ * @ref:	reference counter
-  * @fops:	pointer to struct file_operations
-  * @adapter:	pointer to the adapter that holds this device node
-  * @type:	type of the device, as defined by &enum dvb_device_type.
-@@ -196,7 +197,7 @@ struct dvb_device {
- struct dvb_device *dvb_device_get(struct dvb_device *dvbdev);
+--- a/drivers/md/dm-cache-target.c
++++ b/drivers/md/dm-cache-target.c
+@@ -1010,16 +1010,16 @@ static void abort_transaction(struct cac
+ 	if (get_cache_mode(cache) >= CM_READ_ONLY)
+ 		return;
  
- /**
-- * dvb_device_get - Decrease dvb_device reference
-+ * dvb_device_put - Decrease dvb_device reference
-  *
-  * @dvbdev:	pointer to struct dvb_device
-  */
+-	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
+-		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
+-		set_cache_mode(cache, CM_FAIL);
+-	}
+-
+ 	DMERR_LIMIT("%s: aborting current metadata transaction", dev_name);
+ 	if (dm_cache_metadata_abort(cache->cmd)) {
+ 		DMERR("%s: failed to abort metadata transaction", dev_name);
+ 		set_cache_mode(cache, CM_FAIL);
+ 	}
++
++	if (dm_cache_metadata_set_needs_check(cache->cmd)) {
++		DMERR("%s: failed to set 'needs_check' flag in metadata", dev_name);
++		set_cache_mode(cache, CM_FAIL);
++	}
+ }
+ 
+ static void metadata_operation_failed(struct cache *cache, const char *op, int r)
 
 
