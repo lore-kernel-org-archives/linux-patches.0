@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844EB46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:08:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B63AC433EF;
-	Mon, 16 Jan 2023 16:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3933046B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:08:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADA5EC433D2;
+	Mon, 16 Jan 2023 16:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885322;
-	bh=jSg1Y/ZL7yxbwhiG7qz4niMNnDyABXYNZuS8Fm87tvM=;
+	s=korg; t=1673885325;
+	bh=Xf0YJG6TZjlXGp1BWyASytylEJyAh8Ulj6sycuKFSmA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YzwMYMI4cjSPibpfbRDt0encVLJwLRj6ivlVNYtMckLPJrIvUqYAt64HErkOfd1SI
-	 p8Q4g4ql7j6duHPEDHvRMFlwnQLVgwOXz5XpSlgDVyT2OKpIzB7ibTwjKn7lsr5TQ4
-	 vCjliydiKsggG57FU5upAFEOJiCxEAhvOrO3+gUU=
+	b=AzrAUdChXFMXPFwo1YSOGIw8R7+Ra8RJ9YNY9sOJtvFJy2c5OVzWO8wJUrw0Mm0MC
+	 zmW2OiugE9eXUyLvnDOdhm8CRb8zTLzchRgizR9kvrKlH8eOCQjzKZ+7cOt3ilmOI1
+	 DSY2WRm1GVooRwDHW2KME0e+KD3uuLfTwA7ZURsA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Roger=20Pau=20Monn=C3=A9?= <roger.pau@citrix.com>,
-	Stefano Stabellini <sstabellini@kernel.org>,
-	Juergen Gross <jgross@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 45/64] hvc/xen: lock console list traversal
-Date: Mon, 16 Jan 2023 16:51:52 +0100
-Message-Id: <20230116154745.123402288@linuxfoundation.org>
+	Pratyush Yadav <ptyadav@amazon.de>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.4 001/658] tracing/ring-buffer: Only do full wait when cpu != RING_BUFFER_ALL_CPUS
+Date: Mon, 16 Jan 2023 16:41:29 +0100
+Message-Id: <20230116154909.722935987@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
-In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
-References: <20230116154743.577276578@linuxfoundation.org>
+In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
+References: <20230116154909.645460653@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,183 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roger Pau Monne <roger.pau@citrix.com>
+From: Pratyush Yadav <ptyadav@amazon.de>
 
-[ Upstream commit c0dccad87cf68fc6012aec7567e354353097ec1a ]
+full_hit() directly uses cpu as an array index. Since
+RING_BUFFER_ALL_CPUS == -1, calling full_hit() with cpu ==
+RING_BUFFER_ALL_CPUS will cause an invalid memory access.
 
-The currently lockless access to the xen console list in
-vtermno_to_xencons() is incorrect, as additions and removals from the
-list can happen anytime, and as such the traversal of the list to get
-the private console data for a given termno needs to happen with the
-lock held.  Note users that modify the list already do so with the
-lock taken.
+The upstream commit 42fb0a1e84ff ("tracing/ring-buffer: Have polling
+block on watermark") already does this. This was missed when backporting
+to v5.4.y.
 
-Adjust current lock takers to use the _irq{save,restore} helpers,
-since the context in which vtermno_to_xencons() is called can have
-interrupts disabled.  Use the _irq{save,restore} set of helpers to
-switch the current callers to disable interrupts in the locked region.
-I haven't checked if existing users could instead use the _irq
-variant, as I think it's safer to use _irq{save,restore} upfront.
+This bug was discovered and resolved using Coverity Static Analysis
+Security Testing (SAST) by Synopsys, Inc.
 
-While there switch from using list_for_each_entry_safe to
-list_for_each_entry: the current entry cursor won't be removed as
-part of the code in the loop body, so using the _safe variant is
-pointless.
-
-Fixes: 02e19f9c7cac ('hvc_xen: implement multiconsole support')
-Signed-off-by: Roger Pau Monné <roger.pau@citrix.com>
-Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
-Link: https://lore.kernel.org/r/20221130163611.14686-1-roger.pau@citrix.com
-Signed-off-by: Juergen Gross <jgross@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e65ac2bdda54 ("tracing/ring-buffer: Have polling block on watermark")
+Signed-off-by: Pratyush Yadav <ptyadav@amazon.de>
+Acked-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/hvc/hvc_xen.c | 46 ++++++++++++++++++++++++---------------
- 1 file changed, 29 insertions(+), 17 deletions(-)
+ kernel/trace/ring_buffer.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/tty/hvc/hvc_xen.c b/drivers/tty/hvc/hvc_xen.c
-index 7948660e042f..6f387a4fd96a 100644
---- a/drivers/tty/hvc/hvc_xen.c
-+++ b/drivers/tty/hvc/hvc_xen.c
-@@ -52,17 +52,22 @@ static DEFINE_SPINLOCK(xencons_lock);
+--- a/kernel/trace/ring_buffer.c
++++ b/kernel/trace/ring_buffer.c
+@@ -727,6 +727,7 @@ __poll_t ring_buffer_poll_wait(struct ri
  
- static struct xencons_info *vtermno_to_xencons(int vtermno)
- {
--	struct xencons_info *entry, *n, *ret = NULL;
-+	struct xencons_info *entry, *ret = NULL;
-+	unsigned long flags;
- 
--	if (list_empty(&xenconsoles))
--			return NULL;
-+	spin_lock_irqsave(&xencons_lock, flags);
-+	if (list_empty(&xenconsoles)) {
-+		spin_unlock_irqrestore(&xencons_lock, flags);
-+		return NULL;
-+	}
- 
--	list_for_each_entry_safe(entry, n, &xenconsoles, list) {
-+	list_for_each_entry(entry, &xenconsoles, list) {
- 		if (entry->vtermno == vtermno) {
- 			ret  = entry;
- 			break;
- 		}
- 	}
-+	spin_unlock_irqrestore(&xencons_lock, flags);
- 
- 	return ret;
- }
-@@ -223,7 +228,7 @@ static int xen_hvm_console_init(void)
- {
- 	int r;
- 	uint64_t v = 0;
--	unsigned long gfn;
-+	unsigned long gfn, flags;
- 	struct xencons_info *info;
- 
- 	if (!xen_hvm_domain())
-@@ -258,9 +263,9 @@ static int xen_hvm_console_init(void)
- 		goto err;
- 	info->vtermno = HVC_COOKIE;
- 
--	spin_lock(&xencons_lock);
-+	spin_lock_irqsave(&xencons_lock, flags);
- 	list_add_tail(&info->list, &xenconsoles);
--	spin_unlock(&xencons_lock);
-+	spin_unlock_irqrestore(&xencons_lock, flags);
- 
- 	return 0;
- err:
-@@ -283,6 +288,7 @@ static int xencons_info_pv_init(struct xencons_info *info, int vtermno)
- static int xen_pv_console_init(void)
- {
- 	struct xencons_info *info;
-+	unsigned long flags;
- 
- 	if (!xen_pv_domain())
- 		return -ENODEV;
-@@ -299,9 +305,9 @@ static int xen_pv_console_init(void)
- 		/* already configured */
- 		return 0;
- 	}
--	spin_lock(&xencons_lock);
-+	spin_lock_irqsave(&xencons_lock, flags);
- 	xencons_info_pv_init(info, HVC_COOKIE);
--	spin_unlock(&xencons_lock);
-+	spin_unlock_irqrestore(&xencons_lock, flags);
- 
- 	return 0;
- }
-@@ -309,6 +315,7 @@ static int xen_pv_console_init(void)
- static int xen_initial_domain_console_init(void)
- {
- 	struct xencons_info *info;
-+	unsigned long flags;
- 
- 	if (!xen_initial_domain())
- 		return -ENODEV;
-@@ -323,9 +330,9 @@ static int xen_initial_domain_console_init(void)
- 	info->irq = bind_virq_to_irq(VIRQ_CONSOLE, 0, false);
- 	info->vtermno = HVC_COOKIE;
- 
--	spin_lock(&xencons_lock);
-+	spin_lock_irqsave(&xencons_lock, flags);
- 	list_add_tail(&info->list, &xenconsoles);
--	spin_unlock(&xencons_lock);
-+	spin_unlock_irqrestore(&xencons_lock, flags);
- 
- 	return 0;
- }
-@@ -380,10 +387,12 @@ static void xencons_free(struct xencons_info *info)
- 
- static int xen_console_remove(struct xencons_info *info)
- {
-+	unsigned long flags;
-+
- 	xencons_disconnect_backend(info);
--	spin_lock(&xencons_lock);
-+	spin_lock_irqsave(&xencons_lock, flags);
- 	list_del(&info->list);
--	spin_unlock(&xencons_lock);
-+	spin_unlock_irqrestore(&xencons_lock, flags);
- 	if (info->xbdev != NULL)
- 		xencons_free(info);
- 	else {
-@@ -464,6 +473,7 @@ static int xencons_probe(struct xenbus_device *dev,
- {
- 	int ret, devid;
- 	struct xencons_info *info;
-+	unsigned long flags;
- 
- 	devid = dev->nodename[strlen(dev->nodename) - 1] - '0';
- 	if (devid == 0)
-@@ -482,9 +492,9 @@ static int xencons_probe(struct xenbus_device *dev,
- 	ret = xencons_connect_backend(dev, info);
- 	if (ret < 0)
- 		goto error;
--	spin_lock(&xencons_lock);
-+	spin_lock_irqsave(&xencons_lock, flags);
- 	list_add_tail(&info->list, &xenconsoles);
--	spin_unlock(&xencons_lock);
-+	spin_unlock_irqrestore(&xencons_lock, flags);
- 
- 	return 0;
- 
-@@ -583,10 +593,12 @@ static int __init xen_hvc_init(void)
- 
- 	info->hvc = hvc_alloc(HVC_COOKIE, info->irq, ops, 256);
- 	if (IS_ERR(info->hvc)) {
-+		unsigned long flags;
-+
- 		r = PTR_ERR(info->hvc);
--		spin_lock(&xencons_lock);
-+		spin_lock_irqsave(&xencons_lock, flags);
- 		list_del(&info->list);
--		spin_unlock(&xencons_lock);
-+		spin_unlock_irqrestore(&xencons_lock, flags);
- 		if (info->irq)
- 			unbind_from_irqhandler(info->irq, NULL);
- 		kfree(info);
--- 
-2.35.1
-
+ 	if (cpu == RING_BUFFER_ALL_CPUS) {
+ 		work = &buffer->irq_work;
++		full = 0;
+ 	} else {
+ 		if (!cpumask_test_cpu(cpu, buffer->cpumask))
+ 			return -EINVAL;
 
 
