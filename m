@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B0BB6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:04:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94A73C433D2;
-	Mon, 16 Jan 2023 17:04:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D5026FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:04:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B92C433D2;
+	Mon, 16 Jan 2023 17:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888647;
-	bh=fVc7KMpIxNd7JbjOQtWFEyaNeT/naIME+fqUgktTPkY=;
+	s=korg; t=1673888650;
+	bh=mQmaaTw8qMiR0+ulFu1I+B7EMG0NIIazNUF1xEP0tMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J+fCdpq5z0HYfZdMXSP1iSW5rWDxTzTar53vcbAHkSUYscr65l8wgAAmRTlwCVCAW
-	 sI+ZssHrX5sqBQqwM2OCvXlwePH4BgXhOzs41T1KK3SKXmW8ZjVl1use/sHw5oY5XH
-	 NTGDShbCh9oyuflqsd5gwjEZa7jmTNhyghQWgVXk=
+	b=Vk3lLJbidj8tdQdpTPUpVCbgyXnuxz9vZzAy+OSiFZGBIjPa3PJASOrTz5q/zv/Nk
+	 gxqmSLb9Qs4/9KFy5MYEdqRRLynYHNTR6WRGzZ8qp9rnZOTvJFxbPr53oF0jPX+PRj
+	 WXEDlKN2/UtgEDhvWVofNtLrcZk1Ngh+aAYQ9g38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com,
-	Gautam Menghani <gautammenghani201@gmail.com>,
-	Sean Young <sean@mess.org>,
-	Mauro Carvalho Chehab <mchehab@kernel.org>,
+	ZhangPeng <zhangpeng362@huawei.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 086/338] media: imon: fix a race condition in send_packet()
-Date: Mon, 16 Jan 2023 16:49:19 +0100
-Message-Id: <20230116154824.622175039@linuxfoundation.org>
+Subject: [PATCH 4.14 087/338] pinctrl: pinconf-generic: add missing of_node_put()
+Date: Mon, 16 Jan 2023 16:49:20 +0100
+Message-Id: <20230116154824.670738828@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -37,77 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gautam Menghani <gautammenghani201@gmail.com>
+From: ZhangPeng <zhangpeng362@huawei.com>
 
-[ Upstream commit 813ceef062b53d68f296aa3cb944b21a091fabdb ]
+[ Upstream commit 5ead93289815a075d43c415e35c8beafafb801c9 ]
 
-The function send_packet() has a race condition as follows:
+of_node_put() needs to be called when jumping out of the loop, since
+for_each_available_child_of_node() will increase the refcount of node.
 
-func send_packet()
-{
-    // do work
-    call usb_submit_urb()
-    mutex_unlock()
-    wait_for_event_interruptible()  <-- lock gone
-    mutex_lock()
-}
-
-func vfd_write()
-{
-    mutex_lock()
-    call send_packet()  <- prev call is not completed
-    mutex_unlock()
-}
-
-When the mutex is unlocked and the function send_packet() waits for the
-call to complete, vfd_write() can start another call, which leads to the
-"URB submitted while active" warning in usb_submit_urb().
-Fix this by removing the mutex_unlock() call in send_packet() and using
-mutex_lock_interruptible().
-
-Link: https://syzkaller.appspot.com/bug?id=e378e6a51fbe6c5cc43e34f131cc9a315ef0337e
-
-Fixes: 21677cfc562a ("V4L/DVB: ir-core: add imon driver")
-Reported-by: syzbot+0c3cb6dc05fbbdc3ad66@syzkaller.appspotmail.com
-Signed-off-by: Gautam Menghani <gautammenghani201@gmail.com>
-Signed-off-by: Sean Young <sean@mess.org>
-Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
+Fixes: c7289500e29d ("pinctrl: pinconf-generic: scan also referenced phandle node")
+Signed-off-by: ZhangPeng <zhangpeng362@huawei.com>
+Link: https://lore.kernel.org/r/20221125070156.3535855-1-zhangpeng362@huawei.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/media/rc/imon.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/pinctrl/pinconf-generic.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/media/rc/imon.c b/drivers/media/rc/imon.c
-index edf8a7a76e86..50951c31ff5b 100644
---- a/drivers/media/rc/imon.c
-+++ b/drivers/media/rc/imon.c
-@@ -637,15 +637,14 @@ static int send_packet(struct imon_context *ictx)
- 		pr_err_ratelimited("error submitting urb(%d)\n", retval);
- 	} else {
- 		/* Wait for transmission to complete (or abort) */
--		mutex_unlock(&ictx->lock);
- 		retval = wait_for_completion_interruptible(
- 				&ictx->tx.finished);
- 		if (retval) {
- 			usb_kill_urb(ictx->tx_urb);
- 			pr_err_ratelimited("task interrupted\n");
- 		}
--		mutex_lock(&ictx->lock);
- 
-+		ictx->tx.busy = false;
- 		retval = ictx->tx.status;
- 		if (retval)
- 			pr_err_ratelimited("packet tx failed (%d)\n", retval);
-@@ -952,7 +951,8 @@ static ssize_t vfd_write(struct file *file, const char __user *buf,
- 		return -ENODEV;
+diff --git a/drivers/pinctrl/pinconf-generic.c b/drivers/pinctrl/pinconf-generic.c
+index 6f6fd5e6b68c..07e29fc7443d 100644
+--- a/drivers/pinctrl/pinconf-generic.c
++++ b/drivers/pinctrl/pinconf-generic.c
+@@ -388,8 +388,10 @@ int pinconf_generic_dt_node_to_map(struct pinctrl_dev *pctldev,
+ 	for_each_available_child_of_node(np_config, np) {
+ 		ret = pinconf_generic_dt_subnode_to_map(pctldev, np, map,
+ 					&reserved_maps, num_maps, type);
+-		if (ret < 0)
++		if (ret < 0) {
++			of_node_put(np);
+ 			goto exit;
++		}
  	}
+ 	return 0;
  
--	mutex_lock(&ictx->lock);
-+	if (mutex_lock_interruptible(&ictx->lock))
-+		return -ERESTARTSYS;
- 
- 	if (!ictx->dev_present_intf0) {
- 		pr_err_ratelimited("no iMON device present\n");
 -- 
 2.35.1
 
