@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500BF33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB0BEC433EF;
-	Mon, 16 Jan 2023 16:01:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0EC733EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:01:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73075C433F0;
+	Mon, 16 Jan 2023 16:01:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884864;
-	bh=tERfO+X1TmGGJzheN449LOiZD0zmm86ixLFy675uRmA=;
+	s=korg; t=1673884866;
+	bh=ymIKUcksCwdzcj78heCYpDcfUmvwrtLWGr6lhRR7mv8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dIPUAsJROlbcg7wtN/f9aOEXFGrX/e+erJ06tASujl5vgM9/R06eUjZx75eiv0SNb
-	 uL5cFjMZOiraZRSYPuaK3ZgvIicn3G3JFajwmYiCCzeiPUkW3w+tHm7KpisFqbzey2
-	 tl9S0Isb2NRouUYNIN+gog39+6Dy1XYONtTeXQAI=
+	b=szL1FjKJx7izKFeanswvymvO2DRtDLeCvcDok2GepRvZIJyZz+7Clt+DzmZnQpuRN
+	 CLwo0mWIL25LaUmfGkEUbCbvy/KhKhIoJg1/H6LHNUnCa+pFU7pgc4zXSrwnA+/ULW
+	 Fzj7N78JJOpeGJxXMlZWgWm8ujndMgGTbI3RTNbg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Gurucharan G <gurucharanx.g@intel.com>
-Subject: [PATCH 6.1 140/183] ice: Add check for kzalloc
-Date: Mon, 16 Jan 2023 16:51:03 +0100
-Message-Id: <20230116154809.280722285@linuxfoundation.org>
+	Zack Rusin <zackr@vmware.com>,
+	Martin Krastev <krastevm@vmware.com>,
+	Maaz Mombasawala <mombasawalam@vmware.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 141/183] drm/vmwgfx: Write the driver id registers
+Date: Mon, 16 Jan 2023 16:51:04 +0100
+Message-Id: <20230116154809.321246455@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -37,71 +36,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Zack Rusin <zackr@vmware.com>
 
-[ Upstream commit 40543b3d9d2c13227ecd3aa90a713c201d1d7f09 ]
+[ Upstream commit 7f4c33778686cc2d34cb4ef65b4265eea874c159 ]
 
-Add the check for the return value of kzalloc in order to avoid
-NULL pointer dereference.
-Moreover, use the goto-label to share the clean code.
+Driver id registers are a new mechanism in the svga device to hint to the
+device which driver is running. This should not change device behavior
+in any way, but might be convenient to work-around specific bugs
+in guest drivers.
 
-Fixes: d6b98c8d242a ("ice: add write functionality for GNSS TTY")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Zack Rusin <zackr@vmware.com>
+Reviewed-by: Martin Krastev <krastevm@vmware.com>
+Reviewed-by: Maaz Mombasawala <mombasawalam@vmware.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221022040236.616490-2-zack@kde.org
+Stable-dep-of: a309c7194e8a ("drm/vmwgfx: Remove rcu locks from user resources")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_gnss.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_drv.c | 43 +++++++++++++++++++++++------
+ 1 file changed, 34 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_gnss.c b/drivers/net/ethernet/intel/ice/ice_gnss.c
-index a1915551c69a..43e199b5b513 100644
---- a/drivers/net/ethernet/intel/ice/ice_gnss.c
-+++ b/drivers/net/ethernet/intel/ice/ice_gnss.c
-@@ -461,6 +461,9 @@ static struct tty_driver *ice_gnss_create_tty_driver(struct ice_pf *pf)
- 	for (i = 0; i < ICE_GNSS_TTY_MINOR_DEVICES; i++) {
- 		pf->gnss_tty_port[i] = kzalloc(sizeof(*pf->gnss_tty_port[i]),
- 					       GFP_KERNEL);
-+		if (!pf->gnss_tty_port[i])
-+			goto err_out;
-+
- 		pf->gnss_serial[i] = NULL;
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
+index d7bd5eb1d3ac..45028e25d490 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_drv.c
+@@ -25,10 +25,13 @@
+  *
+  **************************************************************************/
  
- 		tty_port_init(pf->gnss_tty_port[i]);
-@@ -470,21 +473,23 @@ static struct tty_driver *ice_gnss_create_tty_driver(struct ice_pf *pf)
- 	err = tty_register_driver(tty_driver);
- 	if (err) {
- 		dev_err(dev, "Failed to register TTY driver err=%d\n", err);
--
--		for (i = 0; i < ICE_GNSS_TTY_MINOR_DEVICES; i++) {
--			tty_port_destroy(pf->gnss_tty_port[i]);
--			kfree(pf->gnss_tty_port[i]);
--		}
--		kfree(ttydrv_name);
--		tty_driver_kref_put(pf->ice_gnss_tty_driver);
--
--		return NULL;
-+		goto err_out;
- 	}
- 
- 	for (i = 0; i < ICE_GNSS_TTY_MINOR_DEVICES; i++)
- 		dev_info(dev, "%s%d registered\n", ttydrv_name, i);
- 
- 	return tty_driver;
+-#include <linux/dma-mapping.h>
+-#include <linux/module.h>
+-#include <linux/pci.h>
+-#include <linux/cc_platform.h>
 +
-+err_out:
-+	while (i--) {
-+		tty_port_destroy(pf->gnss_tty_port[i]);
-+		kfree(pf->gnss_tty_port[i]);
-+	}
-+	kfree(ttydrv_name);
-+	tty_driver_kref_put(pf->ice_gnss_tty_driver);
++#include "vmwgfx_drv.h"
 +
-+	return NULL;
++#include "vmwgfx_devcaps.h"
++#include "vmwgfx_mksstat.h"
++#include "vmwgfx_binding.h"
++#include "ttm_object.h"
+ 
+ #include <drm/drm_aperture.h>
+ #include <drm/drm_drv.h>
+@@ -41,11 +44,11 @@
+ #include <drm/ttm/ttm_placement.h>
+ #include <generated/utsrelease.h>
+ 
+-#include "ttm_object.h"
+-#include "vmwgfx_binding.h"
+-#include "vmwgfx_devcaps.h"
+-#include "vmwgfx_drv.h"
+-#include "vmwgfx_mksstat.h"
++#include <linux/cc_platform.h>
++#include <linux/dma-mapping.h>
++#include <linux/module.h>
++#include <linux/pci.h>
++#include <linux/version.h>
+ 
+ #define VMWGFX_DRIVER_DESC "Linux drm driver for VMware graphics devices"
+ 
+@@ -806,6 +809,27 @@ static int vmw_detect_version(struct vmw_private *dev)
+ 	return 0;
  }
  
- /**
++static void vmw_write_driver_id(struct vmw_private *dev)
++{
++	if ((dev->capabilities2 & SVGA_CAP2_DX2) != 0) {
++		vmw_write(dev,  SVGA_REG_GUEST_DRIVER_ID,
++			  SVGA_REG_GUEST_DRIVER_ID_LINUX);
++
++		vmw_write(dev, SVGA_REG_GUEST_DRIVER_VERSION1,
++			  LINUX_VERSION_MAJOR << 24 |
++			  LINUX_VERSION_PATCHLEVEL << 16 |
++			  LINUX_VERSION_SUBLEVEL);
++		vmw_write(dev, SVGA_REG_GUEST_DRIVER_VERSION2,
++			  VMWGFX_DRIVER_MAJOR << 24 |
++			  VMWGFX_DRIVER_MINOR << 16 |
++			  VMWGFX_DRIVER_PATCHLEVEL);
++		vmw_write(dev, SVGA_REG_GUEST_DRIVER_VERSION3, 0);
++
++		vmw_write(dev, SVGA_REG_GUEST_DRIVER_ID,
++			  SVGA_REG_GUEST_DRIVER_ID_SUBMIT);
++	}
++}
++
+ static int vmw_driver_load(struct vmw_private *dev_priv, u32 pci_id)
+ {
+ 	int ret;
+@@ -1091,6 +1115,7 @@ static int vmw_driver_load(struct vmw_private *dev_priv, u32 pci_id)
+ 	vmw_host_printf("vmwgfx: Module Version: %d.%d.%d (kernel: %s)",
+ 			VMWGFX_DRIVER_MAJOR, VMWGFX_DRIVER_MINOR,
+ 			VMWGFX_DRIVER_PATCHLEVEL, UTS_RELEASE);
++	vmw_write_driver_id(dev_priv);
+ 
+ 	if (dev_priv->enable_fb) {
+ 		vmw_fifo_resource_inc(dev_priv);
 -- 
 2.35.1
 
