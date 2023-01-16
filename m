@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0208E4C83
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:32:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD32C433D2;
-	Mon, 16 Jan 2023 16:32:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 987644C83
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:32:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B5BEC433D2;
+	Mon, 16 Jan 2023 16:32:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673886756;
-	bh=mfN5r+JxwasUEI9WRofd/S3oGzT3yxL1/sDsOtRFc2Q=;
+	s=korg; t=1673886759;
+	bh=NDTr4nBqwST0C3QwmYbozkIXgqtEPuxqeFNRzjEbTpM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UwAWnfa0beGxXvvz76vELX70FsoAPCplBE0IuEHmUL8dOgxx0oPkgz7CeThD1lpiK
-	 8FNIsPO1gfM1JI3YC0JlAteQ9IcjrWegUujlR15wM1c+NE6V1VtFY7xSauK5CMdpw1
-	 hOLICnbxFjnL7ZZI5p/r7hyN3W/BVd4jjx22Sfq0=
+	b=sqy+G4MeSptWyRw/fBsiWHsDswYEsMdWAak+6n+VYqrdxAoVvTnCYyouNhof9MVAF
+	 Xcv0QQKWO5j4A4gwUTp4spAvhX0maNXw/nZPu2XObw6jf6lc5CEKTKValD3b7YsuKc
+	 rhNRrUHwQwOXOvNym2aEdGhe86Ctdg2qbLmzFqrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Simon Ser <contact@emersion.fr>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Lyude Paul <lyude@redhat.com>,
-	=?UTF-8?q?Jonas=20=C3=85dahl?= <jadahl@redhat.com>
-Subject: [PATCH 5.4 520/658] drm/connector: send hotplug uevent on connector cleanup
-Date: Mon, 16 Jan 2023 16:50:08 +0100
-Message-Id: <20230116154933.318716679@linuxfoundation.org>
+	Alexander Sverdlin <alexander.sverdlin@nokia.com>,
+	Tudor Ambarus <tudor.ambarus@microchip.com>
+Subject: [PATCH 5.4 511/658] mtd: spi-nor: Check for zero erase size in spi_nor_find_best_erase_type()
+Date: Mon, 16 Jan 2023 16:49:59 +0100
+Message-Id: <20230116154932.881253417@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -36,56 +34,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Simon Ser <contact@emersion.fr>
+From: Alexander Sverdlin <alexander.sverdlin@nokia.com>
 
-commit 6fdc2d490ea1369d17afd7e6eb66fecc5b7209bc upstream.
+commit 2ebc336be08160debfe27f87660cf550d710f3e9 upstream.
 
-A typical DP-MST unplug removes a KMS connector. However care must
-be taken to properly synchronize with user-space. The expected
-sequence of events is the following:
+Erase can be zeroed in spi_nor_parse_4bait() or
+spi_nor_init_non_uniform_erase_map(). In practice it happened with
+mt25qu256a, which supports 4K, 32K, 64K erases with 3b address commands,
+but only 4K and 64K erase with 4b address commands.
 
-1. The kernel notices that the DP-MST port is gone.
-2. The kernel marks the connector as disconnected, then sends a
-   uevent to make user-space re-scan the connector list.
-3. User-space notices the connector goes from connected to disconnected,
-   disables it.
-4. Kernel handles the IOCTL disabling the connector. On success,
-   the very last reference to the struct drm_connector is dropped and
-   drm_connector_cleanup() is called.
-5. The connector is removed from the list, and a uevent is sent to tell
-   user-space that the connector disappeared.
-
-The very last step was missing. As a result, user-space thought the
-connector still existed and could try to disable it again. Since the
-kernel no longer knows about the connector, that would end up with
-EINVAL and confused user-space.
-
-Fix this by sending a hotplug uevent from drm_connector_cleanup().
-
-Signed-off-by: Simon Ser <contact@emersion.fr>
+Fixes: dc92843159a7 ("mtd: spi-nor: fix erase_type array to indicate current map conf")
+Signed-off-by: Alexander Sverdlin <alexander.sverdlin@nokia.com>
+Signed-off-by: Tudor Ambarus <tudor.ambarus@microchip.com>
 Cc: stable@vger.kernel.org
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Lyude Paul <lyude@redhat.com>
-Cc: Jonas Ådahl <jadahl@redhat.com>
-Tested-by: Jonas Ådahl <jadahl@redhat.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221017153150.60675-2-contact@emersion.fr
+Link: https://lore.kernel.org/r/20211119081412.29732-1-alexander.sverdlin@nokia.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/drm_connector.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/mtd/spi-nor/spi-nor.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/gpu/drm/drm_connector.c
-+++ b/drivers/gpu/drm/drm_connector.c
-@@ -474,6 +474,9 @@ void drm_connector_cleanup(struct drm_co
- 	mutex_destroy(&connector->mutex);
+--- a/drivers/mtd/spi-nor/spi-nor.c
++++ b/drivers/mtd/spi-nor/spi-nor.c
+@@ -1010,6 +1010,8 @@ spi_nor_find_best_erase_type(const struc
+ 			continue;
  
- 	memset(connector, 0, sizeof(*connector));
-+
-+	if (dev->registered)
-+		drm_sysfs_hotplug_event(dev);
- }
- EXPORT_SYMBOL(drm_connector_cleanup);
+ 		erase = &map->erase_type[i];
++		if (!erase->size)
++			continue;
  
+ 		/* Alignment is not mandatory for overlaid regions */
+ 		if (region->offset & SNOR_OVERLAID_REGION &&
 
 
