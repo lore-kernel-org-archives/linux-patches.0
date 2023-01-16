@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1959D46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BA26C433F0;
-	Mon, 16 Jan 2023 16:17:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B972946B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:17:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29D62C433EF;
+	Mon, 16 Jan 2023 16:17:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885871;
-	bh=PMDO9hUbwriCNY3n7r/6S8oszdRH27p/kgm2I35DTOE=;
+	s=korg; t=1673885874;
+	bh=rdddXxFhLkjA0k7kHGBqXgaOotGVWezcNMj/RA0RRzU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3a6ppyZeaKDL46dCCajAALIeJDAREM+Vzo69tYB90FGn82GLFXthC869XmpFj/Rb
-	 Kx3pXV2W7IKq490T83e4VDAyI+z7gy6eCThTlA0JcqZY8U9cEffk2CoPgTiJmGTy2u
-	 hEmcct8SHxTAyTqrEDHYxTuQ3ARAs2XMHseBX2zY=
+	b=o4NmSQUayodpmhUtrlIPJd6/7RqMM1R4ZpTL9Qnm2ZrWpfJ7FImGyt2KMlDhK3nEo
+	 /xCFwDeoZF1Vvr9elMbaUHdPS8rzui1lWAuZiu17SlP4EvBbLnJg/P8rYzUpS+gWmr
+	 G4IFqS2kid7vkjgkx6c3kiPnNXtvaecNqb7dZ/lE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 188/658] mmc: alcor: fix return value check of mmc_add_host()
-Date: Mon, 16 Jan 2023 16:44:36 +0100
-Message-Id: <20230116154918.059135519@linuxfoundation.org>
+Subject: [PATCH 5.4 215/658] net: stmmac: selftests: fix potential memleak in stmmac_test_arpoffload()
+Date: Mon, 16 Jan 2023 16:45:03 +0100
+Message-Id: <20230116154919.298951572@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,42 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit e93d1468f429475a753d6baa79b853b7ee5ef8c0 ]
+[ Upstream commit f150b63f3fa5fdd81e0dd6151e8850268e29438c ]
 
-mmc_add_host() may return error, if we ignore its return value, the memory
-that allocated in mmc_alloc_host() will be leaked and it will lead a kernel
-crash because of deleting not added device in the remove path.
+The skb allocated by stmmac_test_get_arp_skb() hasn't been released in
+some error handling case, which will lead to a memory leak. Fix this up
+by adding kfree_skb() to release skb.
 
-So fix this by checking the return value and calling mmc_free_host() in the
-error path.
+Compile tested only.
 
-Fixes: c5413ad815a6 ("mmc: add new Alcor Micro Cardreader SD/MMC driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221101063023.1664968-2-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 5e3fb0a6e2b3 ("net: stmmac: selftests: Implement the ARP Offload test")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/alcor.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/mmc/host/alcor.c b/drivers/mmc/host/alcor.c
-index 026ca9194ce5..a8ec2e6fefa8 100644
---- a/drivers/mmc/host/alcor.c
-+++ b/drivers/mmc/host/alcor.c
-@@ -1114,7 +1114,10 @@ static int alcor_pci_sdmmc_drv_probe(struct platform_device *pdev)
- 	alcor_hw_init(host);
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+index ba03a2d77434..e65577f1da54 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_selftests.c
+@@ -1614,12 +1614,16 @@ static int stmmac_test_arpoffload(struct stmmac_priv *priv)
+ 	}
  
- 	dev_set_drvdata(&pdev->dev, host);
--	mmc_add_host(mmc);
-+	ret = mmc_add_host(mmc);
-+	if (ret)
-+		goto free_host;
-+
- 	return 0;
+ 	ret = stmmac_set_arp_offload(priv, priv->hw, true, ip_addr);
+-	if (ret)
++	if (ret) {
++		kfree_skb(skb);
+ 		goto cleanup;
++	}
  
- free_host:
+ 	ret = dev_set_promiscuity(priv->dev, 1);
+-	if (ret)
++	if (ret) {
++		kfree_skb(skb);
+ 		goto cleanup;
++	}
+ 
+ 	skb_set_queue_mapping(skb, 0);
+ 	ret = dev_queue_xmit(skb);
 -- 
 2.35.1
 
