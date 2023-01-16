@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 609D946B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:06:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC937C433F1;
-	Mon, 16 Jan 2023 16:06:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA2446B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:06:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CFAC433D2;
+	Mon, 16 Jan 2023 16:06:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885210;
-	bh=bDcatN90bVcVFprsN3lbVFuFnSkUmu134nJwshdttxU=;
+	s=korg; t=1673885212;
+	bh=zlkjH4ts3jWD6iSMyvDCiB/8sw9lIjDipbO05s0cei4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eWZHwdhHWjjRrW4cT9axoN/uaj7YH9dW8DZj5NsRLbNLsDkUxh+x/HdTorf3Mi8Ny
-	 77tBmoee9iWolYV7H3nMOTaPD4Cn8nKYu6Y1ILrDZxwa811tXwNfiFk2ws8HKB8Whk
-	 KLqgj77YiIqi3AX6zMw0TlAgNRCjJ/8prvwQ2wUU=
+	b=F4nQErTI9akzHkdmkhou96Ew/vozeJWPAFEFRsiHlbe6ghNb1KG1dgRqP8s/2/PW2
+	 7yYlFmvThEW9McXHJQ8fR3D+IIMl0Kq95Agf7/rvAbpBat8K5jaRLxAm1HdZnndn52
+	 Kv6nLAu4dNbAmVYulNHSZyra+bfF1erpNqvjaQyA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mathias Nyman <mathias.nyman@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 30/64] xhci: move and rename xhci_cleanup_halted_endpoint()
-Date: Mon, 16 Jan 2023 16:51:37 +0100
-Message-Id: <20230116154744.629882826@linuxfoundation.org>
+Subject: [PATCH 5.10 31/64] xhci: Prevent infinite loop in transaction errors recovery for streams
+Date: Mon, 16 Jan 2023 16:51:38 +0100
+Message-Id: <20230116154744.659381008@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154743.577276578@linuxfoundation.org>
 References: <20230116154743.577276578@linuxfoundation.org>
@@ -36,164 +36,87 @@ Content-Transfer-Encoding: 8bit
 
 From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-[ Upstream commit 7c6c334e6fc8cd99e780fd74cd29687886a81862 ]
+[ Upstream commit a1575120972ecd7baa6af6a69e4e7ea9213bde7c ]
 
-Halted endpoints can be discoverd both when handling transfer events and
-command completion events. Move code that handles halted endpoints before
-both of those event handlers.
+Make sure to also limit the amount of soft reset retries for transaction
+errors on streams in cases where the transaction error event doesn't point
+to any specific TRB.
 
-Rename the function to xhci_handle_halted_ep() to better describe
-what it does. Try to reserve "cleanup" word in function names for last
-stage cleanup activities.
+In these cases we don't know the TRB or stream ring, but we do know which
+endpoint had the error.
 
-No functional changes
+To keep error counting simple and functional, move the current err_count
+from ring structure to endpoint structure.
 
+Cc: stable@vger.kernel.org
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20210129130044.206855-21-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/r/20221130091944.2171610-6-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: a1575120972e ("xhci: Prevent infinite loop in transaction errors recovery for streams")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci-ring.c | 84 ++++++++++++++++++------------------
- 1 file changed, 43 insertions(+), 41 deletions(-)
+ drivers/usb/host/xhci-ring.c | 14 ++++++++++----
+ drivers/usb/host/xhci.h      |  2 +-
+ 2 files changed, 11 insertions(+), 5 deletions(-)
 
 diff --git a/drivers/usb/host/xhci-ring.c b/drivers/usb/host/xhci-ring.c
-index 2bd407ff9f0b..edb712081815 100644
+index edb712081815..ead42fc3e16d 100644
 --- a/drivers/usb/host/xhci-ring.c
 +++ b/drivers/usb/host/xhci-ring.c
-@@ -839,6 +839,35 @@ static int xhci_reset_halted_ep(struct xhci_hcd *xhci, unsigned int slot_id,
- 	return ret;
- }
+@@ -2349,7 +2349,7 @@ static int process_bulk_intr_td(struct xhci_hcd *xhci, struct xhci_td *td,
  
-+static void xhci_handle_halted_endpoint(struct xhci_hcd *xhci,
-+				struct xhci_virt_ep *ep, unsigned int stream_id,
-+				struct xhci_td *td,
-+				enum xhci_ep_reset_type reset_type)
-+{
-+	unsigned int slot_id = ep->vdev->slot_id;
-+	int err;
-+
-+	/*
-+	 * Avoid resetting endpoint if link is inactive. Can cause host hang.
-+	 * Device will be reset soon to recover the link so don't do anything
-+	 */
-+	if (ep->vdev->flags & VDEV_PORT_ERROR)
-+		return;
-+
-+	ep->ep_state |= EP_HALTED;
-+
-+	err = xhci_reset_halted_ep(xhci, slot_id, ep->ep_index, reset_type);
-+	if (err)
-+		return;
-+
-+	if (reset_type == EP_HARD_RESET) {
-+		ep->ep_state |= EP_HARD_CLEAR_TOGGLE;
-+		xhci_cleanup_stalled_ring(xhci, slot_id, ep->ep_index, stream_id,
-+					  td);
-+	}
-+	xhci_ring_cmd_db(xhci);
-+}
-+
- /*
-  * When we get a command completion for a Stop Endpoint Command, we need to
-  * unlink any cancelled TDs from the ring.  There are two ways to do that:
-@@ -1990,35 +2019,6 @@ static void xhci_clear_hub_tt_buffer(struct xhci_hcd *xhci, struct xhci_td *td,
- 	}
- }
- 
--static void xhci_cleanup_halted_endpoint(struct xhci_hcd *xhci,
--				struct xhci_virt_ep *ep, unsigned int stream_id,
--				struct xhci_td *td,
--				enum xhci_ep_reset_type reset_type)
--{
--	unsigned int slot_id = ep->vdev->slot_id;
--	int err;
--
--	/*
--	 * Avoid resetting endpoint if link is inactive. Can cause host hang.
--	 * Device will be reset soon to recover the link so don't do anything
--	 */
--	if (ep->vdev->flags & VDEV_PORT_ERROR)
--		return;
--
--	ep->ep_state |= EP_HALTED;
--
--	err = xhci_reset_halted_ep(xhci, slot_id, ep->ep_index, reset_type);
--	if (err)
--		return;
--
--	if (reset_type == EP_HARD_RESET) {
--		ep->ep_state |= EP_HARD_CLEAR_TOGGLE;
--		xhci_cleanup_stalled_ring(xhci, slot_id, ep->ep_index, stream_id,
--					  td);
--	}
--	xhci_ring_cmd_db(xhci);
--}
--
- /* Check if an error has halted the endpoint ring.  The class driver will
-  * cleanup the halt for a non-default control endpoint if we indicate a stall.
-  * However, a babble and other errors also halt the endpoint ring, and the class
-@@ -2094,7 +2094,8 @@ static int finish_td(struct xhci_hcd *xhci, struct xhci_td *td,
- 		 */
- 		if ((ep->ep_index != 0) || (trb_comp_code != COMP_STALL_ERROR))
- 			xhci_clear_hub_tt_buffer(xhci, td, ep);
--		xhci_cleanup_halted_endpoint(xhci, ep, ep_ring->stream_id, td,
-+
-+		xhci_handle_halted_endpoint(xhci, ep, ep_ring->stream_id, td,
- 					     EP_HARD_RESET);
- 	} else {
- 		/* Update ring dequeue pointer */
-@@ -2379,8 +2380,9 @@ static int process_bulk_intr_td(struct xhci_hcd *xhci, struct xhci_td *td,
+ 	switch (trb_comp_code) {
+ 	case COMP_SUCCESS:
+-		ep_ring->err_count = 0;
++		ep->err_count = 0;
+ 		/* handle success with untransferred data as short packet */
+ 		if (ep_trb != td->last_trb || remaining) {
+ 			xhci_warn(xhci, "WARN Successful completion on short TX\n");
+@@ -2375,7 +2375,7 @@ static int process_bulk_intr_td(struct xhci_hcd *xhci, struct xhci_td *td,
+ 		break;
+ 	case COMP_USB_TRANSACTION_ERROR:
+ 		if (xhci->quirks & XHCI_NO_SOFT_RETRY ||
+-		    (ep_ring->err_count++ > MAX_SOFT_RETRY) ||
++		    (ep->err_count++ > MAX_SOFT_RETRY) ||
+ 		    le32_to_cpu(slot_ctx->tt_info) & TT_SLOT)
  			break;
  
- 		td->status = 0;
--		xhci_cleanup_halted_endpoint(xhci, ep, ep_ring->stream_id, td,
--					     EP_SOFT_RESET);
-+
-+		xhci_handle_halted_endpoint(xhci, ep, ep_ring->stream_id, td,
-+					    EP_SOFT_RESET);
- 		return 0;
- 	default:
- 		/* do nothing */
-@@ -2455,8 +2457,8 @@ static int handle_tx_event(struct xhci_hcd *xhci,
+@@ -2457,8 +2457,14 @@ static int handle_tx_event(struct xhci_hcd *xhci,
  		case COMP_USB_TRANSACTION_ERROR:
  		case COMP_INVALID_STREAM_TYPE_ERROR:
  		case COMP_INVALID_STREAM_ID_ERROR:
--			xhci_cleanup_halted_endpoint(xhci, ep, 0, NULL,
--						     EP_SOFT_RESET);
-+			xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
-+						    EP_SOFT_RESET);
+-			xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
+-						    EP_SOFT_RESET);
++			xhci_dbg(xhci, "Stream transaction error ep %u no id\n",
++				 ep_index);
++			if (ep->err_count++ > MAX_SOFT_RETRY)
++				xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
++							    EP_HARD_RESET);
++			else
++				xhci_handle_halted_endpoint(xhci, ep, 0, NULL,
++							    EP_SOFT_RESET);
  			goto cleanup;
  		case COMP_RING_UNDERRUN:
  		case COMP_RING_OVERRUN:
-@@ -2639,10 +2641,10 @@ static int handle_tx_event(struct xhci_hcd *xhci,
- 			if (trb_comp_code == COMP_STALL_ERROR ||
- 			    xhci_requires_manual_halt_cleanup(xhci, ep_ctx,
- 							      trb_comp_code)) {
--				xhci_cleanup_halted_endpoint(xhci, ep,
--							     ep_ring->stream_id,
--							     NULL,
--							     EP_HARD_RESET);
-+				xhci_handle_halted_endpoint(xhci, ep,
-+							    ep_ring->stream_id,
-+							    NULL,
-+							    EP_HARD_RESET);
- 			}
- 			goto cleanup;
- 		}
-@@ -2734,9 +2736,9 @@ static int handle_tx_event(struct xhci_hcd *xhci,
- 			if (trb_comp_code == COMP_STALL_ERROR ||
- 			    xhci_requires_manual_halt_cleanup(xhci, ep_ctx,
- 							      trb_comp_code))
--				xhci_cleanup_halted_endpoint(xhci, ep,
--							     ep_ring->stream_id,
--							     td, EP_HARD_RESET);
-+				xhci_handle_halted_endpoint(xhci, ep,
-+							    ep_ring->stream_id,
-+							    td, EP_HARD_RESET);
- 			goto cleanup;
- 		}
- 
+diff --git a/drivers/usb/host/xhci.h b/drivers/usb/host/xhci.h
+index af3759928a95..ac09b171b783 100644
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -933,6 +933,7 @@ struct xhci_virt_ep {
+ 	 * have to restore the device state to the previous state
+ 	 */
+ 	struct xhci_ring		*new_ring;
++	unsigned int			err_count;
+ 	unsigned int			ep_state;
+ #define SET_DEQ_PENDING		(1 << 0)
+ #define EP_HALTED		(1 << 1)	/* For stall handling */
+@@ -1616,7 +1617,6 @@ struct xhci_ring {
+ 	 * if we own the TRB (if we are the consumer).  See section 4.9.1.
+ 	 */
+ 	u32			cycle_state;
+-	unsigned int            err_count;
+ 	unsigned int		stream_id;
+ 	unsigned int		num_segs;
+ 	unsigned int		num_trbs_free;
 -- 
 2.35.1
 
