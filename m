@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25D6C33EC
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1961C433F2;
-	Mon, 16 Jan 2023 15:55:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B996133EC
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 15:55:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D434C433EF;
+	Mon, 16 Jan 2023 15:55:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673884519;
-	bh=1n05J/7+M/4ELp6j5x3U+at4NYvESuZwoJowQTNZcUc=;
+	s=korg; t=1673884521;
+	bh=8gmOXsZb7oZX3nG6DPNGFrNcpXg6mIOCjCtCLzFLO30=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z7hgLBsyXMjE5ek5z5DQSw5Iq/724rI0B92mkLnc+gZLhSDipqV1cKDnTEydLG0CF
-	 j/CYtghQdABtQet/Y6AYJ76+THcvnMgrP73qWRnbnWofTf6P/tqemvsXR8sivVAvHd
-	 UyQUO4+dVqg3uTSbPFZ4NP9ryYdTjksGpwusJ3ak=
+	b=jyLDjOtNOorg/aT0DiZZpIroGUSW9GvUhIK/ioOwN1h2hvO86VLhaKA411K17RLL2
+	 KSpRhhXbk+muQjXTiPY6Hz34lifDWDIxgNpE+Hi+nFurRO6zO8FShlLCBgrtpotwdy
+	 yYm4g61plE7Zi/Vo84anpif/otVjTCIEC3VJ455g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 035/183] drm/amd/pm: add the missing mapping for PPT feature on SMU13.0.0 and 13.0.7
-Date: Mon, 16 Jan 2023 16:49:18 +0100
-Message-Id: <20230116154804.859114131@linuxfoundation.org>
+	Oliver Upton <oliver.upton@linux.dev>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.1 008/183] KVM: arm64: Fix S1PTW handling on RO memslots
+Date: Mon, 16 Jan 2023 16:48:51 +0100
+Message-Id: <20230116154803.729431636@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
 References: <20230116154803.321528435@linuxfoundation.org>
@@ -34,41 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Evan Quan <evan.quan@amd.com>
+From: Marc Zyngier <maz@kernel.org>
 
-commit 318ca20893c19ead02845a08204c3f9249bb74cd upstream.
+commit 406504c7b0405d74d74c15a667cd4c4620c3e7a9 upstream.
 
-Then we are able to set a new ppt limit via the hwmon interface(power1_cap).
+A recent development on the EFI front has resulted in guests having
+their page tables baked in the firmware binary, and mapped into the
+IPA space as part of a read-only memslot. Not only is this legitimate,
+but it also results in added security, so thumbs up.
 
-Signed-off-by: Evan Quan <evan.quan@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.0.x, 6.1.x
+It is possible to take an S1PTW translation fault if the S1 PTs are
+unmapped at stage-2. However, KVM unconditionally treats S1PTW as a
+write to correctly handle hardware AF/DB updates to the S1 PTs.
+Furthermore, KVM injects an exception into the guest for S1PTW writes.
+In the aforementioned case this results in the guest taking an abort
+it won't recover from, as the S1 PTs mapping the vectors suffer from
+the same problem.
+
+So clearly our handling is... wrong.
+
+Instead, switch to a two-pronged approach:
+
+- On S1PTW translation fault, handle the fault as a read
+
+- On S1PTW permission fault, handle the fault as a write
+
+This is of no consequence to SW that *writes* to its PTs (the write
+will trigger a non-S1PTW fault), and SW that uses RO PTs will not
+use HW-assisted AF/DB anyway, as that'd be wrong.
+
+Only in the case described in c4ad98e4b72c ("KVM: arm64: Assume write
+fault on S1PTW permission fault on instruction fetch") do we end-up
+with two back-to-back faults (page being evicted and faulted back).
+I don't think this is a case worth optimising for.
+
+Fixes: c4ad98e4b72c ("KVM: arm64: Assume write fault on S1PTW permission fault on instruction fetch")
+Reviewed-by: Oliver Upton <oliver.upton@linux.dev>
+Reviewed-by: Ard Biesheuvel <ardb@kernel.org>
+Regression-tested-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c |    1 +
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c |    1 +
- 2 files changed, 2 insertions(+)
+ arch/arm64/include/asm/kvm_emulate.h |   22 ++++++++++++++++++++--
+ 1 file changed, 20 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -189,6 +189,7 @@ static struct cmn2asic_mapping smu_v13_0
- 	FEA_MAP(SOC_PCC),
- 	[SMU_FEATURE_DPM_VCLK_BIT] = {1, FEATURE_MM_DPM_BIT},
- 	[SMU_FEATURE_DPM_DCLK_BIT] = {1, FEATURE_MM_DPM_BIT},
-+	[SMU_FEATURE_PPT_BIT] = {1, FEATURE_THROTTLERS_BIT},
- };
+--- a/arch/arm64/include/asm/kvm_emulate.h
++++ b/arch/arm64/include/asm/kvm_emulate.h
+@@ -373,8 +373,26 @@ static __always_inline int kvm_vcpu_sys_
  
- static struct cmn2asic_mapping smu_v13_0_0_table_map[SMU_TABLE_COUNT] = {
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_7_ppt.c
-@@ -191,6 +191,7 @@ static struct cmn2asic_mapping smu_v13_0
- 	FEA_MAP(SOC_PCC),
- 	[SMU_FEATURE_DPM_VCLK_BIT] = {1, FEATURE_MM_DPM_BIT},
- 	[SMU_FEATURE_DPM_DCLK_BIT] = {1, FEATURE_MM_DPM_BIT},
-+	[SMU_FEATURE_PPT_BIT] = {1, FEATURE_THROTTLERS_BIT},
- };
+ static inline bool kvm_is_write_fault(struct kvm_vcpu *vcpu)
+ {
+-	if (kvm_vcpu_abt_iss1tw(vcpu))
+-		return true;
++	if (kvm_vcpu_abt_iss1tw(vcpu)) {
++		/*
++		 * Only a permission fault on a S1PTW should be
++		 * considered as a write. Otherwise, page tables baked
++		 * in a read-only memslot will result in an exception
++		 * being delivered in the guest.
++		 *
++		 * The drawback is that we end-up faulting twice if the
++		 * guest is using any of HW AF/DB: a translation fault
++		 * to map the page containing the PT (read only at
++		 * first), then a permission fault to allow the flags
++		 * to be set.
++		 */
++		switch (kvm_vcpu_trap_get_fault_type(vcpu)) {
++		case ESR_ELx_FSC_PERM:
++			return true;
++		default:
++			return false;
++		}
++	}
  
- static struct cmn2asic_mapping smu_v13_0_7_table_map[SMU_TABLE_COUNT] = {
+ 	if (kvm_vcpu_trap_is_iabt(vcpu))
+ 		return false;
 
 
