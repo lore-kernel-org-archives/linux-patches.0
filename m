@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDEB66FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:42:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6366CC433D2;
-	Mon, 16 Jan 2023 16:42:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EC086FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:42:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 059C5C433D2;
+	Mon, 16 Jan 2023 16:42:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887339;
-	bh=iIDSwKoqkIS4gT/auVBq1kLT031HYfYCGENsZJRVJPA=;
+	s=korg; t=1673887342;
+	bh=LJs8LQQduOOsZdQL/NNKOGZqKepKg7XFudip+AiDgdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O91cNDIq1wlWTk58tLuhcBcX6j9k/nKXx8tv8fJkafXWAylb8jT1jqtxj/+D/8mS0
-	 YNqsTZTmmzpRdB84j8/Ig8t2CUuskxvzlw7Je726aCuw+WYOJZYQ29tkXBF5gjVntf
-	 DD44BRAWlcnLYyqiB96W+o7ebrsf6Y5FHhPMrFnE=
+	b=QgbggMJsS66COZcVh7HwrxThScZrUTU9DL/hnddcAjeTBMpPASMVUkIZ/BHABrBkE
+	 kEVz0chi4fp1FA2cl+LQNVRRiaJkNS7f7UbUenDats0eeTFs2877VukWMSKZFQSPqB
+	 2lRckaWcmOeVqSDsprY8w6T/ixov5JZsZ5/w6xpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiu Jianfeng <xiujianfeng@huawei.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Maor Gottlieb <maorg@mellanox.com>,
+	Jiri Pirko <jiri@mellanox.com>,
+	Jay Vosburgh <jay.vosburgh@canonical.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Saeed Mahameed <saeedm@mellanox.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 112/521] clk: rockchip: Fix memory leak in rockchip_clk_register_pll()
-Date: Mon, 16 Jan 2023 16:46:14 +0100
-Message-Id: <20230116154852.254502387@linuxfoundation.org>
+Subject: [PATCH 4.19 113/521] bonding: Export skip slave logic to function
+Date: Mon, 16 Jan 2023 16:46:15 +0100
+Message-Id: <20230116154852.295755980@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -35,35 +38,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiu Jianfeng <xiujianfeng@huawei.com>
+From: Maor Gottlieb <maorg@mellanox.com>
 
-[ Upstream commit 739a6a6bbdb793bd57938cb24aa5a6df89983546 ]
+[ Upstream commit 119d48fd4298594beccf4f2ecd00627826ce2646 ]
 
-If clk_register() fails, @pll->rate_table may have allocated memory by
-kmemdup(), so it needs to be freed, otherwise will cause memory leak
-issue, this patch fixes it.
+As a preparation for following change that add array of
+all slaves, extract code that skip slave to function.
 
-Fixes: 90c590254051 ("clk: rockchip: add clock type for pll clocks and pll used on rk3066")
-Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
-Link: https://lore.kernel.org/r/20221123091201.199819-1-xiujianfeng@huawei.com
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Maor Gottlieb <maorg@mellanox.com>
+Reviewed-by: Jiri Pirko <jiri@mellanox.com>
+Reviewed-by: Jay Vosburgh <jay.vosburgh@canonical.com>
+Acked-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Saeed Mahameed <saeedm@mellanox.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/rockchip/clk-pll.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/bonding/bond_main.c | 47 ++++++++++++++++++---------------
+ 1 file changed, 26 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/clk/rockchip/clk-pll.c b/drivers/clk/rockchip/clk-pll.c
-index dd0433d4753e..77aff5defac6 100644
---- a/drivers/clk/rockchip/clk-pll.c
-+++ b/drivers/clk/rockchip/clk-pll.c
-@@ -972,6 +972,7 @@ struct clk *rockchip_clk_register_pll(struct rockchip_clk_provider *ctx,
- 	return mux_clk;
+diff --git a/drivers/net/bonding/bond_main.c b/drivers/net/bonding/bond_main.c
+index cab5c1cc9fe9..85efa0e0ee2c 100644
+--- a/drivers/net/bonding/bond_main.c
++++ b/drivers/net/bonding/bond_main.c
+@@ -3993,6 +3993,29 @@ static void bond_slave_arr_handler(struct work_struct *work)
+ 	bond_slave_arr_work_rearm(bond, 1);
+ }
  
- err_pll:
-+	kfree(pll->rate_table);
- 	clk_unregister(mux_clk);
- 	mux_clk = pll_clk;
- err_mux:
++static void bond_skip_slave(struct bond_up_slave *slaves,
++			    struct slave *skipslave)
++{
++	int idx;
++
++	/* Rare situation where caller has asked to skip a specific
++	 * slave but allocation failed (most likely!). BTW this is
++	 * only possible when the call is initiated from
++	 * __bond_release_one(). In this situation; overwrite the
++	 * skipslave entry in the array with the last entry from the
++	 * array to avoid a situation where the xmit path may choose
++	 * this to-be-skipped slave to send a packet out.
++	 */
++	for (idx = 0; slaves && idx < slaves->count; idx++) {
++		if (skipslave == slaves->arr[idx]) {
++			slaves->arr[idx] =
++				slaves->arr[slaves->count - 1];
++			slaves->count--;
++			break;
++		}
++	}
++}
++
+ /* Build the usable slaves array in control path for modes that use xmit-hash
+  * to determine the slave interface -
+  * (a) BOND_MODE_8023AD
+@@ -4063,27 +4086,9 @@ int bond_update_slave_arr(struct bonding *bond, struct slave *skipslave)
+ 	if (old_arr)
+ 		kfree_rcu(old_arr, rcu);
+ out:
+-	if (ret != 0 && skipslave) {
+-		int idx;
+-
+-		/* Rare situation where caller has asked to skip a specific
+-		 * slave but allocation failed (most likely!). BTW this is
+-		 * only possible when the call is initiated from
+-		 * __bond_release_one(). In this situation; overwrite the
+-		 * skipslave entry in the array with the last entry from the
+-		 * array to avoid a situation where the xmit path may choose
+-		 * this to-be-skipped slave to send a packet out.
+-		 */
+-		old_arr = rtnl_dereference(bond->slave_arr);
+-		for (idx = 0; old_arr != NULL && idx < old_arr->count; idx++) {
+-			if (skipslave == old_arr->arr[idx]) {
+-				old_arr->arr[idx] =
+-				    old_arr->arr[old_arr->count-1];
+-				old_arr->count--;
+-				break;
+-			}
+-		}
+-	}
++	if (ret != 0 && skipslave)
++		bond_skip_slave(rtnl_dereference(bond->slave_arr), skipslave);
++
+ 	return ret;
+ }
+ 
 -- 
 2.35.1
 
