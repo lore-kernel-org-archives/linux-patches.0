@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEBD66FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:02:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4438FC433F1;
-	Mon, 16 Jan 2023 17:02:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F236FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:02:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA0B2C433EF;
+	Mon, 16 Jan 2023 17:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888559;
-	bh=zCWgfGEKB53D+rsTM6YQqAirDWNCbJ91GkCecbug6ao=;
+	s=korg; t=1673888562;
+	bh=4w9RSncs8HNkHV2mvtWHSfknXTkPBoZ+KQKrT+W8cXI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XS+3sJ+1Bf8i58akipD8y0iJ+5zDVU4YBJW0IeRZvmjEqV9EojBU7w0nN0UoKM7Gx
-	 QXFmTI96oxkx7+QgrcFrT2EDrdSO/mmfgj+b4dwS+DfTDCWBIYwgeR2MFtquxriI4Z
-	 UbHDqbMkLGj/YJ0vLNKVPL0xDgfGPBPKLuQUJ24I=
+	b=U9iXiIFhu9S2hDgH/jLu/ynE7yoYSjWlop83os2opyojr1DtReRmRgeqfNbKOjW3C
+	 FuLtQltNMSJdzSCjgX6E7gujVTLfXPzO/cYCrzObtX0Kd4xKx6IGvehf+OVTbldTnK
+	 0YEceSvnhMH9qfYDCVwTyg+nyjVtscNJdKka/+VQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sungwoo Kim <iam@sung-woo.kim>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 021/338] Bluetooth: L2CAP: Fix u8 overflow
-Date: Mon, 16 Jan 2023 16:48:14 +0100
-Message-Id: <20230116154821.683124589@linuxfoundation.org>
+	Jan Kara <jack@suse.cz>
+Subject: [PATCH 4.14 012/338] udf: Discard preallocation before extending file with a hole
+Date: Mon, 16 Jan 2023 16:48:05 +0100
+Message-Id: <20230116154821.260660541@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,65 +33,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sungwoo Kim <iam@sung-woo.kim>
+From: Jan Kara <jack@suse.cz>
 
-[ Upstream commit bcd70260ef56e0aee8a4fc6cd214a419900b0765 ]
+commit 16d0556568148bdcaa45d077cac9f8f7077cf70a upstream.
 
-By keep sending L2CAP_CONF_REQ packets, chan->num_conf_rsp increases
-multiple times and eventually it will wrap around the maximum number
-(i.e., 255).
-This patch prevents this by adding a boundary check with
-L2CAP_MAX_CONF_RSP
+When extending file with a hole, we tried to preserve existing
+preallocation for the file. However that is not very useful and
+complicates code because the previous extent may need to be rounded to
+block boundary as well (which we forgot to do thus causing data
+corruption for sequence like:
 
-Btmon log:
-Bluetooth monitor ver 5.64
-= Note: Linux version 6.1.0-rc2 (x86_64)                               0.264594
-= Note: Bluetooth subsystem version 2.22                               0.264636
-@ MGMT Open: btmon (privileged) version 1.22                  {0x0001} 0.272191
-= New Index: 00:00:00:00:00:00 (Primary,Virtual,hci0)          [hci0] 13.877604
-@ RAW Open: 9496 (privileged) version 2.22                   {0x0002} 13.890741
-= Open Index: 00:00:00:00:00:00                                [hci0] 13.900426
-(...)
-> ACL Data RX: Handle 200 flags 0x00 dlen 1033             #32 [hci0] 14.273106
-        invalid packet size (12 != 1033)
-        08 00 01 00 02 01 04 00 01 10 ff ff              ............
-> ACL Data RX: Handle 200 flags 0x00 dlen 1547             #33 [hci0] 14.273561
-        invalid packet size (14 != 1547)
-        0a 00 01 00 04 01 06 00 40 00 00 00 00 00        ........@.....
-> ACL Data RX: Handle 200 flags 0x00 dlen 2061             #34 [hci0] 14.274390
-        invalid packet size (16 != 2061)
-        0c 00 01 00 04 01 08 00 40 00 00 00 00 00 00 04  ........@.......
-> ACL Data RX: Handle 200 flags 0x00 dlen 2061             #35 [hci0] 14.274932
-        invalid packet size (16 != 2061)
-        0c 00 01 00 04 01 08 00 40 00 00 00 07 00 03 00  ........@.......
-= bluetoothd: Bluetooth daemon 5.43                                   14.401828
-> ACL Data RX: Handle 200 flags 0x00 dlen 1033             #36 [hci0] 14.275753
-        invalid packet size (12 != 1033)
-        08 00 01 00 04 01 04 00 40 00 00 00              ........@...
+xfs_io -f -c "pwrite 0x75e63 11008" -c "truncate 0x7b24b" \
+  -c "truncate 0xabaa3" -c "pwrite 0xac70b 22954" \
+  -c "pwrite 0x93a43 11358" -c "pwrite 0xb8e65 52211" file
 
-Signed-off-by: Sungwoo Kim <iam@sung-woo.kim>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+with 512-byte block size. Just discard preallocation before extending
+file to simplify things and also fix this data corruption.
+
+CC: stable@vger.kernel.org
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/l2cap_core.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/udf/inode.c |   46 ++++++++++++++++++----------------------------
+ 1 file changed, 18 insertions(+), 28 deletions(-)
 
-diff --git a/net/bluetooth/l2cap_core.c b/net/bluetooth/l2cap_core.c
-index 494f3a7b9cf8..a5a19be51aff 100644
---- a/net/bluetooth/l2cap_core.c
-+++ b/net/bluetooth/l2cap_core.c
-@@ -4193,7 +4193,8 @@ static inline int l2cap_config_req(struct l2cap_conn *conn,
+--- a/fs/udf/inode.c
++++ b/fs/udf/inode.c
+@@ -434,6 +434,12 @@ static int udf_get_block(struct inode *i
+ 		iinfo->i_next_alloc_goal++;
+ 	}
  
- 	chan->ident = cmd->ident;
- 	l2cap_send_cmd(conn, cmd->ident, L2CAP_CONF_RSP, len, rsp);
--	chan->num_conf_rsp++;
-+	if (chan->num_conf_rsp < L2CAP_CONF_MAX_CONF_RSP)
-+		chan->num_conf_rsp++;
++	/*
++	 * Block beyond EOF and prealloc extents? Just discard preallocation
++	 * as it is not useful and complicates things.
++	 */
++	if (((loff_t)block) << inode->i_blkbits > iinfo->i_lenExtents)
++		udf_discard_prealloc(inode);
+ 	udf_clear_extent_cache(inode);
+ 	phys = inode_getblk(inode, block, &err, &new);
+ 	if (!phys)
+@@ -483,8 +489,6 @@ static int udf_do_extend_file(struct ino
+ 	uint32_t add;
+ 	int count = 0, fake = !(last_ext->extLength & UDF_EXTENT_LENGTH_MASK);
+ 	struct super_block *sb = inode->i_sb;
+-	struct kernel_lb_addr prealloc_loc = {};
+-	int prealloc_len = 0;
+ 	struct udf_inode_info *iinfo;
+ 	int err;
  
- 	/* Reset config buffer. */
- 	chan->conf_len = 0;
--- 
-2.35.1
-
+@@ -505,19 +509,6 @@ static int udf_do_extend_file(struct ino
+ 			~(sb->s_blocksize - 1);
+ 	}
+ 
+-	/* Last extent are just preallocated blocks? */
+-	if ((last_ext->extLength & UDF_EXTENT_FLAG_MASK) ==
+-						EXT_NOT_RECORDED_ALLOCATED) {
+-		/* Save the extent so that we can reattach it to the end */
+-		prealloc_loc = last_ext->extLocation;
+-		prealloc_len = last_ext->extLength;
+-		/* Mark the extent as a hole */
+-		last_ext->extLength = EXT_NOT_RECORDED_NOT_ALLOCATED |
+-			(last_ext->extLength & UDF_EXTENT_LENGTH_MASK);
+-		last_ext->extLocation.logicalBlockNum = 0;
+-		last_ext->extLocation.partitionReferenceNum = 0;
+-	}
+-
+ 	/* Can we merge with the previous extent? */
+ 	if ((last_ext->extLength & UDF_EXTENT_FLAG_MASK) ==
+ 					EXT_NOT_RECORDED_NOT_ALLOCATED) {
+@@ -545,7 +536,7 @@ static int udf_do_extend_file(struct ino
+ 		 * more extents, we may need to enter possible following
+ 		 * empty indirect extent.
+ 		 */
+-		if (new_block_bytes || prealloc_len)
++		if (new_block_bytes)
+ 			udf_next_aext(inode, last_pos, &tmploc, &tmplen, 0);
+ 	}
+ 
+@@ -579,17 +570,6 @@ static int udf_do_extend_file(struct ino
+ 	}
+ 
+ out:
+-	/* Do we have some preallocated blocks saved? */
+-	if (prealloc_len) {
+-		err = udf_add_aext(inode, last_pos, &prealloc_loc,
+-				   prealloc_len, 1);
+-		if (err)
+-			return err;
+-		last_ext->extLocation = prealloc_loc;
+-		last_ext->extLength = prealloc_len;
+-		count++;
+-	}
+-
+ 	/* last_pos should point to the last written extent... */
+ 	if (iinfo->i_alloc_type == ICBTAG_FLAG_AD_SHORT)
+ 		last_pos->offset -= sizeof(struct short_ad);
+@@ -642,8 +622,17 @@ static int udf_extend_file(struct inode
+ 	else
+ 		BUG();
+ 
++	/*
++	 * When creating hole in file, just don't bother with preserving
++	 * preallocation. It likely won't be very useful anyway.
++	 */
++	udf_discard_prealloc(inode);
++
+ 	etype = inode_bmap(inode, first_block, &epos, &eloc, &elen, &offset);
+ 	within_final_block = (etype != -1);
++	/* We don't expect extents past EOF... */
++	WARN_ON_ONCE(etype != -1 &&
++		     elen > ((loff_t)offset + 1) << inode->i_blkbits);
+ 
+ 	if ((!epos.bh && epos.offset == udf_file_entry_alloc_offset(inode)) ||
+ 	    (epos.bh && epos.offset == sizeof(struct allocExtDesc))) {
+@@ -772,10 +761,11 @@ static sector_t inode_getblk(struct inod
+ 		goto out_free;
+ 	}
+ 
+-	/* Are we beyond EOF? */
++	/* Are we beyond EOF and preallocated extent? */
+ 	if (etype == -1) {
+ 		int ret;
+ 		loff_t hole_len;
++
+ 		isBeyondEOF = true;
+ 		if (count) {
+ 			if (c)
 
 
