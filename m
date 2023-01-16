@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7791A46B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F39A8C433D2;
-	Mon, 16 Jan 2023 16:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D61E46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:16:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 970C1C433F0;
+	Mon, 16 Jan 2023 16:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885764;
-	bh=gjNUSRhg0iJJIx7nPHtwAej4XhdLjfUNsg8yyPt0Sh4=;
+	s=korg; t=1673885766;
+	bh=YgClZTfl4Wboi/WRdN7yb4EF+gyzh1/BJmTYcfn3xJ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W59xl/fMEeLnqtCx55bJo/yijHAc82SLtHD503eMoiNSqfP5CmdXRKcpZoesdnIW5
-	 w7JF2KPARwlXHc6Jpvh6BTnTZPYmqlMDF70xK9BRL+JOc7HBtw2XmWWVdbOaCXo1yU
-	 4e8bPVZnhwpf7BtI06mFQaYMK7K3sDt9CquyK3kU=
+	b=kg0EXxgmcARmZau/h8Lo/dGV1pEe995df8M6gsUmz41QVFAsTjSNCcPliUCjx2B00
+	 jNVFuTEjMVGMlr3XmajX3NMFQjEUh4sNWazkch6K15h0YknyIgFn408QnOivvavl0M
+	 0+5Q2aRFu+a9w68mIhJP73SXRX+HZiGo5uQH3pAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
 	Johannes Berg <johannes.berg@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 175/658] wifi: mac80211: fix memory leak in ieee80211_if_add()
-Date: Mon, 16 Jan 2023 16:44:23 +0100
-Message-Id: <20230116154917.473134649@linuxfoundation.org>
+Subject: [PATCH 5.4 176/658] wifi: cfg80211: Fix not unregister reg_pdev when load_builtin_regdb_keys() fails
+Date: Mon, 16 Jan 2023 16:44:24 +0100
+Message-Id: <20230116154917.513287341@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,34 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 13e5afd3d773c6fc6ca2b89027befaaaa1ea7293 ]
+[ Upstream commit 833a9fd28c9b7ccb39a334721379e992dc1c0c89 ]
 
-When register_netdevice() failed in ieee80211_if_add(), ndev->tstats
-isn't released. Fix it.
+In regulatory_init_db(), when it's going to return a error, reg_pdev
+should be unregistered. When load_builtin_regdb_keys() fails it doesn't
+do it and makes cfg80211 can't be reload with report:
 
-Fixes: 5a490510ba5f ("mac80211: use per-CPU TX/RX statistics")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Link: https://lore.kernel.org/r/20221117064500.319983-1-shaozhengchao@huawei.com
+sysfs: cannot create duplicate filename '/devices/platform/regulatory.0'
+ ...
+ <TASK>
+ dump_stack_lvl+0x79/0x9b
+ sysfs_warn_dup.cold+0x1c/0x29
+ sysfs_create_dir_ns+0x22d/0x290
+ kobject_add_internal+0x247/0x800
+ kobject_add+0x135/0x1b0
+ device_add+0x389/0x1be0
+ platform_device_add+0x28f/0x790
+ platform_device_register_full+0x376/0x4b0
+ regulatory_init+0x9a/0x4b2 [cfg80211]
+ cfg80211_init+0x84/0x113 [cfg80211]
+ ...
+
+Fixes: 90a53e4432b1 ("cfg80211: implement regdb signature checking")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Link: https://lore.kernel.org/r/20221109090237.214127-1-chenzhongjin@huawei.com
 Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mac80211/iface.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/wireless/reg.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index ddc001ad9055..cb06439e087c 100644
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -1888,6 +1888,7 @@ int ieee80211_if_add(struct ieee80211_local *local, const char *name,
+diff --git a/net/wireless/reg.c b/net/wireless/reg.c
+index 4db397db2fb4..1f5ea82b58bf 100644
+--- a/net/wireless/reg.c
++++ b/net/wireless/reg.c
+@@ -3970,8 +3970,10 @@ static int __init regulatory_init_db(void)
+ 		return -EINVAL;
  
- 		ret = register_netdevice(ndev);
- 		if (ret) {
-+			ieee80211_if_free(ndev);
- 			free_netdev(ndev);
- 			return ret;
- 		}
+ 	err = load_builtin_regdb_keys();
+-	if (err)
++	if (err) {
++		platform_device_unregister(reg_pdev);
+ 		return err;
++	}
+ 
+ 	/* We always try to get an update for the static regdomain */
+ 	err = regulatory_hint_core(cfg80211_world_regdom->alpha2);
 -- 
 2.35.1
 
