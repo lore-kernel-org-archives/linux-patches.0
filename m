@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 749B846B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:14:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDDA8C433EF;
-	Mon, 16 Jan 2023 16:14:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1779B46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:14:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91411C433EF;
+	Mon, 16 Jan 2023 16:14:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885672;
-	bh=XAzu9VIsgYXn5f3N3smFDVxwYI7Z4FVxM7Ox7KRg7ME=;
+	s=korg; t=1673885674;
+	bh=wXNbjCANlu0OpwRc4Idjx8uT76UtnDfyKTSrKFP7QjI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VAiBN9dfcK06H7abQ7tSpanORFc5A8ZiPD/tgQeIuGxLvmbbKKDjzPfRn1e3RujvH
-	 EcBgFqU132oBzdcRF0Rm8ynVSpebWwrG6U4ap3LLHk2WBlv27g1ziDMuru60P2Qakd
-	 6MB/xpDq2s0oC/ISzmhUgA74I/qWv7OLN9QiJK8Q=
+	b=tp43fpcDDr1+KeDn97JKzQvLQ7QVNwXnQrizONg8TGG1CqmXywXYqu2CUMyMgRiNu
+	 RxFOfDntVB1uePQr463IznUQia3CA8BXlqz2TpIMNB87tRxT/OiHa9PlpFyxZsJUar
+	 uz7dhI1bXfiu29nqCDBJTBu1JfmhBJObavirYS+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Vasut <marex@denx.de>,
-	Kalle Valo <kvalo@kernel.org>,
+	Marcus Folkesson <marcus.folkesson@gmail.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 123/658] wifi: rsi: Fix handling of 802.3 EAPOL frames sent via control port
-Date: Mon, 16 Jan 2023 16:43:31 +0100
-Message-Id: <20230116154915.087838238@linuxfoundation.org>
+Subject: [PATCH 5.4 141/658] HID: hid-sensor-custom: set fixed size for custom attributes
+Date: Mon, 16 Jan 2023 16:43:49 +0100
+Message-Id: <20230116154915.906791145@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,90 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Marcus Folkesson <marcus.folkesson@gmail.com>
 
-[ Upstream commit b8f6efccbb9dc0ff5dee7e20d69a4747298ee603 ]
+[ Upstream commit 9d013910df22de91333a0acc81d1dbb115bd76f6 ]
 
-When using wpa_supplicant v2.10, this driver is no longer able to
-associate with any AP and fails in the EAPOL 4-way handshake while
-sending the 2/4 message to the AP. The problem is not present in
-wpa_supplicant v2.9 or older. The problem stems from HostAP commit
-144314eaa ("wpa_supplicant: Send EAPOL frames over nl80211 where available")
-which changes the way EAPOL frames are sent, from them being send
-at L2 frames to them being sent via nl80211 control port.
+This is no bugfix (so no Fixes: tag is necessary) as it is
+taken care of in hid_sensor_custom_add_attributes().
 
-An EAPOL frame sent as L2 frame is passed to the WiFi driver with
-skb->protocol ETH_P_PAE, while EAPOL frame sent via nl80211 control
-port has skb->protocol set to ETH_P_802_3 . The later happens in
-ieee80211_tx_control_port(), where the EAPOL frame is encapsulated
-into 802.3 frame.
+The motivation for this patch is that:
+hid_sensor_custom_field.attr_name and
+hid_sensor_custom_field.attrs
+has the size of HID_CUSTOM_TOTAL_ATTRS and used in same context.
 
-The rsi_91x driver handles ETH_P_PAE EAPOL frames as high-priority
-frames and sends them via highest-priority transmit queue, while
-the ETH_P_802_3 frames are sent as regular frames. The EAPOL 4-way
-handshake frames must be sent as highest-priority, otherwise the
-4-way handshake times out.
+We compare against HID_CUSTOM_TOTAL_ATTRS when
+looping through hid_custom_attrs.
 
-Therefore, to fix this problem, inspect the skb control flags and
-if flag IEEE80211_TX_CTRL_PORT_CTRL_PROTO is set, assume this is
-an EAPOL frame and transmit the frame via high-priority queue just
-like other ETH_P_PAE frames.
+We will silent the smatch error:
+hid_sensor_custom_add_attributes() error: buffer overflow
+'hid_custom_attrs' 8 <= 10
 
-Fixes: 0eb42586cf87 ("rsi: data packet descriptor enhancements")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221104163339.227432-1-marex@denx.de
+Signed-off-by: Marcus Folkesson <marcus.folkesson@gmail.com>
+Acked-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/rsi/rsi_91x_core.c | 4 +++-
- drivers/net/wireless/rsi/rsi_91x_hal.c  | 6 +++++-
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ drivers/hid/hid-sensor-custom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/rsi/rsi_91x_core.c b/drivers/net/wireless/rsi/rsi_91x_core.c
-index c6c29034b2ea..a939b552a8e4 100644
---- a/drivers/net/wireless/rsi/rsi_91x_core.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_core.c
-@@ -466,7 +466,9 @@ void rsi_core_xmit(struct rsi_common *common, struct sk_buff *skb)
- 							      tid, 0);
- 			}
- 		}
--		if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
-+
-+		if (IEEE80211_SKB_CB(skb)->control.flags &
-+		    IEEE80211_TX_CTRL_PORT_CTRL_PROTO) {
- 			q_num = MGMT_SOFT_Q;
- 			skb->priority = q_num;
- 		}
-diff --git a/drivers/net/wireless/rsi/rsi_91x_hal.c b/drivers/net/wireless/rsi/rsi_91x_hal.c
-index 7d0b44fd5690..062c5da74104 100644
---- a/drivers/net/wireless/rsi/rsi_91x_hal.c
-+++ b/drivers/net/wireless/rsi/rsi_91x_hal.c
-@@ -162,12 +162,16 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
- 	u8 header_size;
- 	u8 vap_id = 0;
- 	u8 dword_align_bytes;
-+	bool tx_eapol;
- 	u16 seq_num;
+diff --git a/drivers/hid/hid-sensor-custom.c b/drivers/hid/hid-sensor-custom.c
+index fb827c295842..825f011c7901 100644
+--- a/drivers/hid/hid-sensor-custom.c
++++ b/drivers/hid/hid-sensor-custom.c
+@@ -59,7 +59,7 @@ struct hid_sensor_sample {
+ 	u32 raw_len;
+ } __packed;
  
- 	info = IEEE80211_SKB_CB(skb);
- 	vif = info->control.vif;
- 	tx_params = (struct skb_info *)info->driver_data;
- 
-+	tx_eapol = IEEE80211_SKB_CB(skb)->control.flags &
-+		   IEEE80211_TX_CTRL_PORT_CTRL_PROTO;
-+
- 	header_size = FRAME_DESC_SZ + sizeof(struct rsi_xtended_desc);
- 	if (header_size > skb_headroom(skb)) {
- 		rsi_dbg(ERR_ZONE, "%s: Unable to send pkt\n", __func__);
-@@ -231,7 +235,7 @@ int rsi_prepare_data_desc(struct rsi_common *common, struct sk_buff *skb)
- 		}
- 	}
- 
--	if (skb->protocol == cpu_to_be16(ETH_P_PAE)) {
-+	if (tx_eapol) {
- 		rsi_dbg(INFO_ZONE, "*** Tx EAPOL ***\n");
- 
- 		data_desc->frame_info = cpu_to_le16(RATE_INFO_ENABLE);
+-static struct attribute hid_custom_attrs[] = {
++static struct attribute hid_custom_attrs[HID_CUSTOM_TOTAL_ATTRS] = {
+ 	{.name = "name", .mode = S_IRUGO},
+ 	{.name = "units", .mode = S_IRUGO},
+ 	{.name = "unit-expo", .mode = S_IRUGO},
 -- 
 2.35.1
 
