@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BD8046B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:15:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E76D8C433F0;
-	Mon, 16 Jan 2023 16:15:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 122EA46B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:15:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A188C433F0;
+	Mon, 16 Jan 2023 16:15:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885717;
-	bh=mB74XMYZ8+OI77BAuONesXFQxd236HB4y3rstC24vaA=;
+	s=korg; t=1673885719;
+	bh=8lcQi/iPSv5BkOhSZG82WAsVCKXDl4z/yD+45Dp+tBU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uY6i6UTz6hcmgvwfZMXVC/SiR0163mBDdWXCrudvK19xmNE3Vjai65pL5+Rj5ozTD
-	 GGGJagXEgFTBquVb4mcahG+1qgZz0riNCbdep2sT97ksQy8UsIUo281B4CsC0IYQuT
-	 JiVvPb+Sdyku1rwAokMO5e4uWoKriy0JX859RU94=
+	b=rGLSskGFOOSQcUc8Xd8viVPQxaLk1sAn5ldD0812clSb3G0BWVwdD6G8iSY40fli9
+	 fS4xE/RcQb1Lu58L55uQeufhgMIFN1nbvBFOkkbFMqUiigQzHjDpfEsIyzX2UAknge
+	 33FLXYbY0vGNYk0S3RSwqRbGpCuEhj4BF1sahdyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xinlei Lee <xinlei.lee@mediatek.com>,
-	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+	Zeng Heng <zengheng4@huawei.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 128/658] drm/mediatek: Modify dpi power on/off sequence.
-Date: Mon, 16 Jan 2023 16:43:36 +0100
-Message-Id: <20230116154915.305997965@linuxfoundation.org>
+Subject: [PATCH 5.4 129/658] ASoC: pxa: fix null-pointer dereference in filter()
+Date: Mon, 16 Jan 2023 16:43:37 +0100
+Message-Id: <20230116154915.350192776@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -35,64 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xinlei Lee <xinlei.lee@mediatek.com>
+From: Zeng Heng <zengheng4@huawei.com>
 
-[ Upstream commit ff446c0f6290185cefafe3b376bb86063a3a9f6a ]
+[ Upstream commit ec7bf231aaa1bdbcb69d23bc50c753c80fb22429 ]
 
-Modify dpi power on/off sequence so that the first gpio operation will
-take effect.
+kasprintf() would return NULL pointer when kmalloc() fail to allocate.
+Need to check the return pointer before calling strcmp().
 
-Fixes: 6bd4763fd532 ("drm/mediatek: set dpi pin mode to gpio low to avoid leakage current")
-Signed-off-by: Xinlei Lee <xinlei.lee@mediatek.com>
-Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
+Fixes: 7a824e214e25 ("ASoC: mmp: add audio dma support")
+Signed-off-by: Zeng Heng <zengheng4@huawei.com>
+Link: https://lore.kernel.org/r/20221114085629.1910435-1-zengheng4@huawei.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_dpi.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ sound/soc/pxa/mmp-pcm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/mediatek/mtk_dpi.c b/drivers/gpu/drm/mediatek/mtk_dpi.c
-index 4a64d8aed9da..7c68a3933915 100644
---- a/drivers/gpu/drm/mediatek/mtk_dpi.c
-+++ b/drivers/gpu/drm/mediatek/mtk_dpi.c
-@@ -364,9 +364,6 @@ static void mtk_dpi_power_off(struct mtk_dpi *dpi)
- 	if (--dpi->refcount != 0)
- 		return;
+diff --git a/sound/soc/pxa/mmp-pcm.c b/sound/soc/pxa/mmp-pcm.c
+index 7096b5263e25..e9f9642e988f 100644
+--- a/sound/soc/pxa/mmp-pcm.c
++++ b/sound/soc/pxa/mmp-pcm.c
+@@ -85,7 +85,7 @@ static bool filter(struct dma_chan *chan, void *param)
  
--	if (dpi->pinctrl && dpi->pins_gpio)
--		pinctrl_select_state(dpi->pinctrl, dpi->pins_gpio);
--
- 	mtk_dpi_disable(dpi);
- 	clk_disable_unprepare(dpi->pixel_clk);
- 	clk_disable_unprepare(dpi->engine_clk);
-@@ -391,9 +388,6 @@ static int mtk_dpi_power_on(struct mtk_dpi *dpi)
- 		goto err_pixel;
+ 	devname = kasprintf(GFP_KERNEL, "%s.%d", dma_data->dma_res->name,
+ 		dma_data->ssp_id);
+-	if ((strcmp(dev_name(chan->device->dev), devname) == 0) &&
++	if (devname && (strcmp(dev_name(chan->device->dev), devname) == 0) &&
+ 		(chan->chan_id == dma_data->dma_res->start)) {
+ 		found = true;
  	}
- 
--	if (dpi->pinctrl && dpi->pins_dpi)
--		pinctrl_select_state(dpi->pinctrl, dpi->pins_dpi);
--
- 	return 0;
- 
- err_pixel:
-@@ -529,12 +523,18 @@ static void mtk_dpi_encoder_disable(struct drm_encoder *encoder)
- 	struct mtk_dpi *dpi = mtk_dpi_from_encoder(encoder);
- 
- 	mtk_dpi_power_off(dpi);
-+
-+	if (dpi->pinctrl && dpi->pins_gpio)
-+		pinctrl_select_state(dpi->pinctrl, dpi->pins_gpio);
- }
- 
- static void mtk_dpi_encoder_enable(struct drm_encoder *encoder)
- {
- 	struct mtk_dpi *dpi = mtk_dpi_from_encoder(encoder);
- 
-+	if (dpi->pinctrl && dpi->pins_dpi)
-+		pinctrl_select_state(dpi->pinctrl, dpi->pins_dpi);
-+
- 	mtk_dpi_power_on(dpi);
- 	mtk_dpi_set_display_mode(dpi, &dpi->mode);
- 	mtk_dpi_enable(dpi);
 -- 
 2.35.1
 
