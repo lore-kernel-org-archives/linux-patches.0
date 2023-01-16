@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3238246B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5444C433EF;
-	Mon, 16 Jan 2023 16:19:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECAE046B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70A45C433D2;
+	Mon, 16 Jan 2023 16:19:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885956;
-	bh=eT6qukH3RYXinvs7Tv/ZQd+VA9e+uFog0mKPeavvl3g=;
+	s=korg; t=1673885958;
+	bh=0Yr58MYAO0RI2azqo6Cg/to+E5ijHvhSytqLan9RiVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GkZNOBtQYIykwp3CqYQ8jSkrlUyh6tj40mgCUOgzMqD5cTtHVzZ/KMtrGo8hrWv9P
-	 qD54gSXfU+pr1JrlJ8khMf1cCxjoOVthad4AsDlpKSb92oXqU+4Yg0mePoBydCuWVj
-	 c5nlibcuO08kb6eiWSUc9fVppvTxChDM3fzCk92I=
+	b=ge532UHuTw1lNA15kuHJq2+kPogRjfAinLHFDBWV9mBhj7ohv2lHDl3eDr7KeVwqk
+	 ShDnhSND2KhgY3Ul8EvdiOVAl9Q2tw3mHCqKV8OG45h79fY/ZroJy9drJbgi5APsNI
+	 4T/HyDqAwjYxpeo6SWeaIlpDW3a2GB54rD1EAYtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianlin Shi <jishi@redhat.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Mark Zhang <markzhang@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 220/658] net/tunnel: wait until all sk_user_data reader finish before releasing the sock
-Date: Mon, 16 Jan 2023 16:45:08 +0100
-Message-Id: <20230116154919.555663762@linuxfoundation.org>
+Subject: [PATCH 5.4 247/658] RDMA/nldev: Return "-EAGAIN" if the cm_id isnt from expected port
+Date: Mon, 16 Jan 2023 16:45:35 +0100
+Message-Id: <20230116154920.857663551@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -38,72 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Mark Zhang <markzhang@nvidia.com>
 
-[ Upstream commit 3cf7203ca620682165706f70a1b12b5194607dce ]
+[ Upstream commit ecacb3751f254572af0009b9501e2cdc83a30b6a ]
 
-There is a race condition in vxlan that when deleting a vxlan device
-during receiving packets, there is a possibility that the sock is
-released after getting vxlan_sock vs from sk_user_data. Then in
-later vxlan_ecn_decapsulate(), vxlan_get_sk_family() we will got
-NULL pointer dereference. e.g.
+When filling a cm_id entry, return "-EAGAIN" instead of 0 if the cm_id
+doesn'the have the same port as requested, otherwise an incomplete entry
+may be returned, which causes "rdam res show cm_id" to return an error.
 
-   #0 [ffffa25ec6978a38] machine_kexec at ffffffff8c669757
-   #1 [ffffa25ec6978a90] __crash_kexec at ffffffff8c7c0a4d
-   #2 [ffffa25ec6978b58] crash_kexec at ffffffff8c7c1c48
-   #3 [ffffa25ec6978b60] oops_end at ffffffff8c627f2b
-   #4 [ffffa25ec6978b80] page_fault_oops at ffffffff8c678fcb
-   #5 [ffffa25ec6978bd8] exc_page_fault at ffffffff8d109542
-   #6 [ffffa25ec6978c00] asm_exc_page_fault at ffffffff8d200b62
-      [exception RIP: vxlan_ecn_decapsulate+0x3b]
-      RIP: ffffffffc1014e7b  RSP: ffffa25ec6978cb0  RFLAGS: 00010246
-      RAX: 0000000000000008  RBX: ffff8aa000888000  RCX: 0000000000000000
-      RDX: 000000000000000e  RSI: ffff8a9fc7ab803e  RDI: ffff8a9fd1168700
-      RBP: ffff8a9fc7ab803e   R8: 0000000000700000   R9: 00000000000010ae
-      R10: ffff8a9fcb748980  R11: 0000000000000000  R12: ffff8a9fd1168700
-      R13: ffff8aa000888000  R14: 00000000002a0000  R15: 00000000000010ae
-      ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
-   #7 [ffffa25ec6978ce8] vxlan_rcv at ffffffffc10189cd [vxlan]
-   #8 [ffffa25ec6978d90] udp_queue_rcv_one_skb at ffffffff8cfb6507
-   #9 [ffffa25ec6978dc0] udp_unicast_rcv_skb at ffffffff8cfb6e45
-  #10 [ffffa25ec6978dc8] __udp4_lib_rcv at ffffffff8cfb8807
-  #11 [ffffa25ec6978e20] ip_protocol_deliver_rcu at ffffffff8cf76951
-  #12 [ffffa25ec6978e48] ip_local_deliver at ffffffff8cf76bde
-  #13 [ffffa25ec6978ea0] __netif_receive_skb_one_core at ffffffff8cecde9b
-  #14 [ffffa25ec6978ec8] process_backlog at ffffffff8cece139
-  #15 [ffffa25ec6978f00] __napi_poll at ffffffff8ceced1a
-  #16 [ffffa25ec6978f28] net_rx_action at ffffffff8cecf1f3
-  #17 [ffffa25ec6978fa0] __softirqentry_text_start at ffffffff8d4000ca
-  #18 [ffffa25ec6978ff0] do_softirq at ffffffff8c6fbdc3
+For example on a machine with two rdma devices with "rping -C 1 -v -s"
+running background, the "rdma" command fails:
+  $ rdma -V
+  rdma utility, iproute2-5.19.0
+  $ rdma res show cm_id
+  link mlx5_0/- cm-idn 0 state LISTEN ps TCP pid 28056 comm rping src-addr 0.0.0.0:7174
+  error: Protocol not available
 
-Reproducer: https://github.com/Mellanox/ovs-tests/blob/master/test-ovs-vxlan-remove-tunnel-during-traffic.sh
+While with this fix it succeeds:
+  $ rdma res show cm_id
+  link mlx5_0/- cm-idn 0 state LISTEN ps TCP pid 26395 comm rping src-addr 0.0.0.0:7174
+  link mlx5_1/- cm-idn 0 state LISTEN ps TCP pid 26395 comm rping src-addr 0.0.0.0:7174
 
-Fix this by waiting for all sk_user_data reader to finish before
-releasing the sock.
-
-Reported-by: Jianlin Shi <jishi@redhat.com>
-Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
-Fixes: 6a93cc905274 ("udp-tunnel: Add a few more UDP tunnel APIs")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 00313983cda6 ("RDMA/nldev: provide detailed CM_ID information")
+Signed-off-by: Mark Zhang <markzhang@nvidia.com>
+Link: https://lore.kernel.org/r/a08e898cdac5e28428eb749a99d9d981571b8ea7.1667810736.git.leonro@nvidia.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/udp_tunnel.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/infiniband/core/nldev.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/ipv4/udp_tunnel.c b/net/ipv4/udp_tunnel.c
-index 150e6f0fdbf5..bbe4eca42d36 100644
---- a/net/ipv4/udp_tunnel.c
-+++ b/net/ipv4/udp_tunnel.c
-@@ -196,6 +196,7 @@ EXPORT_SYMBOL_GPL(udp_tunnel_xmit_skb);
- void udp_tunnel_sock_release(struct socket *sock)
- {
- 	rcu_assign_sk_user_data(sock->sk, NULL);
-+	synchronize_rcu();
- 	kernel_sock_shutdown(sock, SHUT_RDWR);
- 	sock_release(sock);
- }
+diff --git a/drivers/infiniband/core/nldev.c b/drivers/infiniband/core/nldev.c
+index 81b70f1f1290..93cc60e92d82 100644
+--- a/drivers/infiniband/core/nldev.c
++++ b/drivers/infiniband/core/nldev.c
+@@ -493,7 +493,7 @@ static int fill_res_cm_id_entry(struct sk_buff *msg, bool has_cap_net_admin,
+ 	struct rdma_cm_id *cm_id = &id_priv->id;
+ 
+ 	if (port && port != cm_id->port_num)
+-		return 0;
++		return -EAGAIN;
+ 
+ 	if (cm_id->port_num &&
+ 	    nla_put_u32(msg, RDMA_NLDEV_ATTR_PORT_INDEX, cm_id->port_num))
 -- 
 2.35.1
 
