@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F6706FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:38:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8F6FC433EF;
-	Mon, 16 Jan 2023 16:38:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BCFB6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:38:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 83681C433EF;
+	Mon, 16 Jan 2023 16:38:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673887122;
-	bh=3NHnb2CT3WOz/M8P8oI4/h8HKsN22qt1lpXi27gKQGg=;
+	s=korg; t=1673887124;
+	bh=rFYQliizlLXtqt3cIQPTJO+HoY1bHgfJWRUU5MHFMl8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fvpI2qRO+V4eQr7IP4OfXABpLntPyfTqeZSlLQI6nVPGH4EROjA4dS0dQPHSdjLuz
-	 CHpVYMEseB4pX14gRZqsv2hXimVzt5aHtCDPpEDiwz6s+T5yrb0MX+R1aTzFJDLMTk
-	 B5SK/3oQctsewKJI0TK/4CMxKvehnWANjt9zEPR8=
+	b=Csmd/LIq5oMQnhDng1ZK5INsomd2EN1lb6cYRdK5KE9AZCClYFnUchVBd5RiVitxe
+	 X1kiWGpW3QwW6NMAolilqepwb4i+P94wtW2pCZGdg0zp3r7R5nxiqXTu5SZf5qrZWl
+	 dLSaMrF3p4pO1XdkfYFYIMDSM0fbeMmFQ+U7Zz9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
 	Matthias Brugger <matthias.bgg@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 029/521] arm64: dts: mt2712e: Fix unit address for pinctrl node
-Date: Mon, 16 Jan 2023 16:44:51 +0100
-Message-Id: <20230116154848.620891968@linuxfoundation.org>
+Subject: [PATCH 4.19 030/521] arm64: dts: mt2712-evb: Fix vproc fixed regulators unit names
+Date: Mon, 16 Jan 2023 16:44:52 +0100
+Message-Id: <20230116154848.660287655@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154847.246743274@linuxfoundation.org>
 References: <20230116154847.246743274@linuxfoundation.org>
@@ -37,38 +37,41 @@ Content-Transfer-Encoding: 8bit
 
 From: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
 
-[ Upstream commit 1d4516f53a611b362db7ba7a8889923d469f57e1 ]
+[ Upstream commit 377063156893bf6c088309ac799fe5c6dce2822d ]
 
-The unit address for the pinctrl node is (0x)1000b000 and not
-(0x)10005000, which is the syscfg_pctl_a address instead.
+Update the names to regulator-vproc-buck{0,1} to fix unit_addres_vs_reg
+warnings for those.
 
-This fixes the following warning:
-arch/arm64/boot/dts/mediatek/mt2712e.dtsi:264.40-267.4: Warning
-(unique_unit_address): /syscfg_pctl_a@10005000: duplicate
-unit-address (also used in node /pinctrl@10005000)
-
-Fixes: f0c64340b748 ("arm64: dts: mt2712: add pintcrl device node.")
+Fixes: f75dd8bdd344 ("arm64: dts: mediatek: add mt2712 cpufreq related device nodes")
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://lore.kernel.org/r/20221013152212.416661-5-angelogioacchino.delregno@collabora.com
+Link: https://lore.kernel.org/r/20221013152212.416661-6-angelogioacchino.delregno@collabora.com
 Signed-off-by: Matthias Brugger <matthias.bgg@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt2712e.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/mediatek/mt2712-evb.dts | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
-index b002bfd85be0..9acbd82fb44b 100644
---- a/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt2712e.dtsi
-@@ -264,7 +264,7 @@ syscfg_pctl_a: syscfg_pctl_a@10005000 {
- 		reg = <0 0x10005000 0 0x1000>;
+diff --git a/arch/arm64/boot/dts/mediatek/mt2712-evb.dts b/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
+index 4ce9d6ca0bf7..424c22a266c4 100644
+--- a/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
++++ b/arch/arm64/boot/dts/mediatek/mt2712-evb.dts
+@@ -25,14 +25,14 @@ chosen {
+ 		stdout-path = "serial0:921600n8";
  	};
  
--	pio: pinctrl@10005000 {
-+	pio: pinctrl@1000b000 {
- 		compatible = "mediatek,mt2712-pinctrl";
- 		reg = <0 0x1000b000 0 0x1000>;
- 		mediatek,pctl-regmap = <&syscfg_pctl_a>;
+-	cpus_fixed_vproc0: fixedregulator@0 {
++	cpus_fixed_vproc0: regulator-vproc-buck0 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vproc_buck0";
+ 		regulator-min-microvolt = <1000000>;
+ 		regulator-max-microvolt = <1000000>;
+ 	};
+ 
+-	cpus_fixed_vproc1: fixedregulator@1 {
++	cpus_fixed_vproc1: regulator-vproc-buck1 {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "vproc_buck1";
+ 		regulator-min-microvolt = <1000000>;
 -- 
 2.35.1
 
