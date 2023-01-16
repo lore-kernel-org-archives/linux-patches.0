@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26DBF6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:09:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2D0CC433D2;
-	Mon, 16 Jan 2023 17:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA8E66FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:09:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EFC0C433D2;
+	Mon, 16 Jan 2023 17:09:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888946;
-	bh=WJUcanwjyblsc1ntcBylx4M4TKLiAvggkHBKzf8gpc0=;
+	s=korg; t=1673888948;
+	bh=n0i4OezDK09m76Qt5hrIJuhFITq6GFI+5wUf5rKirdE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y30wazzpqx0u4/zBlZUKaz2uvvzh1dGsqYBqehbUhtu5YEfZWrpYGhtcbh/sklstf
-	 SmJkkMsWVWAt171QOFBsx2g0vcPznK2d4WsKBdp6LgPxdthjX+W+fYY25yx2f/VKvw
-	 c6ferq3IDFJ1d/NnFvDR4n2ukBHySXv6RbYqnwi0=
+	b=UREJXEcdWc5J6zgep0mbOGUSt57zwIBR2zFJ8uZ+TQ3SEnhIMf3iMVk/qbLEj4XYh
+	 jNIl8G0MjikK653GK16OGKAHlby/XFKIpHBHm9K3pK/b5JF5dcAjoByHfhauaMXHAB
+	 yG+Uv9ErIAPolhm+PS+FMmT5IIsBOUEniZ54YQJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Piggin <npiggin@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Michael Ellerman <mpe@ellerman.id.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 199/338] powerpc/perf: callchain validate kernel stack pointer bounds
-Date: Mon, 16 Jan 2023 16:51:12 +0100
-Message-Id: <20230116154829.636045983@linuxfoundation.org>
+Subject: [PATCH 4.14 200/338] powerpc/83xx/mpc832x_rdb: call platform_device_put() in error case in of_fsl_spi_probe()
+Date: Mon, 16 Jan 2023 16:51:13 +0100
+Message-Id: <20230116154829.687607120@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,44 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 32c5209214bd8d4f8c4e9d9b630ef4c671f58e79 ]
+[ Upstream commit 4d0eea415216fe3791da2f65eb41399e70c7bedf ]
 
-The interrupt frame detection and loads from the hypothetical pt_regs
-are not bounds-checked. The next-frame validation only bounds-checks
-STACK_FRAME_OVERHEAD, which does not include the pt_regs. Add another
-test for this.
+If platform_device_add() is not called or failed, it can not call
+platform_device_del() to clean up memory, it should call
+platform_device_put() in error case.
 
-The user could set r1 to be equal to the address matching the first
-interrupt frame - STACK_INT_FRAME_SIZE, which is in the previous page
-due to the kernel redzone, and induce the kernel to load the marker from
-there. Possibly this could cause a crash at least. If the user could
-induce the previous page to contain a valid marker, then it might be
-able to direct perf to read specific memory addresses in a way that
-could be transmitted back to the user in the perf data.
-
-Fixes: 20002ded4d93 ("perf_counter: powerpc: Add callchain support")
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
+Fixes: 26f6cb999366 ("[POWERPC] fsl_soc: add support for fsl_spi")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20221127124942.1665522-4-npiggin@gmail.com
+Link: https://lore.kernel.org/r/20221029111626.429971-1-yangyingliang@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/perf/callchain.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/powerpc/platforms/83xx/mpc832x_rdb.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/perf/callchain.c b/arch/powerpc/perf/callchain.c
-index 0af051a1974e..26a31a3b661e 100644
---- a/arch/powerpc/perf/callchain.c
-+++ b/arch/powerpc/perf/callchain.c
-@@ -68,6 +68,7 @@ perf_callchain_kernel(struct perf_callchain_entry_ctx *entry, struct pt_regs *re
- 		next_sp = fp[0];
+diff --git a/arch/powerpc/platforms/83xx/mpc832x_rdb.c b/arch/powerpc/platforms/83xx/mpc832x_rdb.c
+index a4539c5accb0..8c31c3275b66 100644
+--- a/arch/powerpc/platforms/83xx/mpc832x_rdb.c
++++ b/arch/powerpc/platforms/83xx/mpc832x_rdb.c
+@@ -111,7 +111,7 @@ static int __init of_fsl_spi_probe(char *type, char *compatible, u32 sysclk,
  
- 		if (next_sp == sp + STACK_INT_FRAME_SIZE &&
-+		    validate_sp(sp, current, STACK_INT_FRAME_SIZE) &&
- 		    fp[STACK_FRAME_MARKER] == STACK_FRAME_REGS_MARKER) {
- 			/*
- 			 * This looks like an interrupt frame for an
+ 		goto next;
+ unreg:
+-		platform_device_del(pdev);
++		platform_device_put(pdev);
+ err:
+ 		pr_err("%pOF: registration failed\n", np);
+ next:
 -- 
 2.35.1
 
