@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB1BD6FA0
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:05:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A4AC433EF;
-	Mon, 16 Jan 2023 17:05:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7314D6FA0
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 17:05:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0303C433EF;
+	Mon, 16 Jan 2023 17:05:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673888723;
-	bh=KHzEcZE2k1pRm8RztkLsclhbLBR1oLAIU4UFuSVxwr4=;
+	s=korg; t=1673888726;
+	bh=iIDSwKoqkIS4gT/auVBq1kLT031HYfYCGENsZJRVJPA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bXycWjzcC8fIJtNDFKdNSUNMphdSVmogOXw8xAcZdFwbu5Jl/+5A18hBzBPwEt2Ll
-	 yh+XOtme0lszKtEHwDmNhZ6sYP/xy4HG98+RhZ2VPV7GPfp9gu7iL8vavCRRoq2Usg
-	 K9YAvDjAvxSnLDJw7BZFx2BIpPDV9sV0wpJapB9Y=
+	b=eDTnYtBchcjIV3tFaMnAwWwL78RE4+EzrW4Lmm8US7EE+6eUatLODoO8QB/VjNlVk
+	 Lhris9auVh0aHFtidEL6hvIKQagihGo7D+MEAqf4mpDARkrbT5yLyjL7P/aDukz7uD
+	 fNhbQiH2SCDJoJSUNQSiYEL3LVGor4mvOgzsxcEE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baisong Zhong <zhongbaisong@huawei.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Xiu Jianfeng <xiujianfeng@huawei.com>,
+	Heiko Stuebner <heiko@sntech.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 083/338] ALSA: seq: fix undefined behavior in bit shift for SNDRV_SEQ_FILTER_USE_EVENT
-Date: Mon, 16 Jan 2023 16:49:16 +0100
-Message-Id: <20230116154824.507200181@linuxfoundation.org>
+Subject: [PATCH 4.14 084/338] clk: rockchip: Fix memory leak in rockchip_clk_register_pll()
+Date: Mon, 16 Jan 2023 16:49:17 +0100
+Message-Id: <20230116154824.545861794@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154820.689115727@linuxfoundation.org>
 References: <20230116154820.689115727@linuxfoundation.org>
@@ -35,63 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baisong Zhong <zhongbaisong@huawei.com>
+From: Xiu Jianfeng <xiujianfeng@huawei.com>
 
-[ Upstream commit cf59e1e4c79bf741905484cdb13c130b53576a16 ]
+[ Upstream commit 739a6a6bbdb793bd57938cb24aa5a6df89983546 ]
 
-Shifting signed 32-bit value by 31 bits is undefined, so changing
-significant bit to unsigned. The UBSAN warning calltrace like below:
+If clk_register() fails, @pll->rate_table may have allocated memory by
+kmemdup(), so it needs to be freed, otherwise will cause memory leak
+issue, this patch fixes it.
 
-UBSAN: shift-out-of-bounds in sound/core/seq/seq_clientmgr.c:509:22
-left shift of 1 by 31 places cannot be represented in type 'int'
-...
-Call Trace:
- <TASK>
- dump_stack_lvl+0x8d/0xcf
- ubsan_epilogue+0xa/0x44
- __ubsan_handle_shift_out_of_bounds+0x1e7/0x208
- snd_seq_deliver_single_event.constprop.21+0x191/0x2f0
- snd_seq_deliver_event+0x1a2/0x350
- snd_seq_kernel_client_dispatch+0x8b/0xb0
- snd_seq_client_notify_subscription+0x72/0xa0
- snd_seq_ioctl_subscribe_port+0x128/0x160
- snd_seq_kernel_client_ctl+0xce/0xf0
- snd_seq_oss_create_client+0x109/0x15b
- alsa_seq_oss_init+0x11c/0x1aa
- do_one_initcall+0x80/0x440
- kernel_init_freeable+0x370/0x3c3
- kernel_init+0x1b/0x190
- ret_from_fork+0x1f/0x30
- </TASK>
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Baisong Zhong <zhongbaisong@huawei.com>
-Link: https://lore.kernel.org/r/20221121111630.3119259-1-zhongbaisong@huawei.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 90c590254051 ("clk: rockchip: add clock type for pll clocks and pll used on rk3066")
+Signed-off-by: Xiu Jianfeng <xiujianfeng@huawei.com>
+Link: https://lore.kernel.org/r/20221123091201.199819-1-xiujianfeng@huawei.com
+Signed-off-by: Heiko Stuebner <heiko@sntech.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/sound/asequencer.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/clk/rockchip/clk-pll.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/include/uapi/sound/asequencer.h b/include/uapi/sound/asequencer.h
-index a75e14edc957..dbd60f48b4b0 100644
---- a/include/uapi/sound/asequencer.h
-+++ b/include/uapi/sound/asequencer.h
-@@ -344,10 +344,10 @@ typedef int __bitwise snd_seq_client_type_t;
- #define	KERNEL_CLIENT	((__force snd_seq_client_type_t) 2)
-                         
- 	/* event filter flags */
--#define SNDRV_SEQ_FILTER_BROADCAST	(1<<0)	/* accept broadcast messages */
--#define SNDRV_SEQ_FILTER_MULTICAST	(1<<1)	/* accept multicast messages */
--#define SNDRV_SEQ_FILTER_BOUNCE		(1<<2)	/* accept bounce event in error */
--#define SNDRV_SEQ_FILTER_USE_EVENT	(1<<31)	/* use event filter */
-+#define SNDRV_SEQ_FILTER_BROADCAST	(1U<<0)	/* accept broadcast messages */
-+#define SNDRV_SEQ_FILTER_MULTICAST	(1U<<1)	/* accept multicast messages */
-+#define SNDRV_SEQ_FILTER_BOUNCE		(1U<<2)	/* accept bounce event in error */
-+#define SNDRV_SEQ_FILTER_USE_EVENT	(1U<<31)	/* use event filter */
+diff --git a/drivers/clk/rockchip/clk-pll.c b/drivers/clk/rockchip/clk-pll.c
+index dd0433d4753e..77aff5defac6 100644
+--- a/drivers/clk/rockchip/clk-pll.c
++++ b/drivers/clk/rockchip/clk-pll.c
+@@ -972,6 +972,7 @@ struct clk *rockchip_clk_register_pll(struct rockchip_clk_provider *ctx,
+ 	return mux_clk;
  
- struct snd_seq_client_info {
- 	int client;			/* client number to inquire */
+ err_pll:
++	kfree(pll->rate_table);
+ 	clk_unregister(mux_clk);
+ 	mux_clk = pll_clk;
+ err_mux:
 -- 
 2.35.1
 
