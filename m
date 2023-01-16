@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE3246B5
-	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 104B9C433EF;
-	Mon, 16 Jan 2023 16:19:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3238246B5
+	for <patches@lists.linux.dev>; Mon, 16 Jan 2023 16:19:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5444C433EF;
+	Mon, 16 Jan 2023 16:19:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673885953;
-	bh=EJC5HNZNHnFh0V6nQIv3a8AaOQNYju+rMX01tYc+DuU=;
+	s=korg; t=1673885956;
+	bh=eT6qukH3RYXinvs7Tv/ZQd+VA9e+uFog0mKPeavvl3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JJ1JGZrrnIGJSkuSBWdhXgD/qsIaKtwljWU00qBsWRLsRFU5kjRjYMvO8o0ypMFRB
-	 b+mV+RRQDpB3MXu3Lzo4mVbakF/6NPN5Q26BDJodmzKksCZTBUkVAvXXcI64eSS3uT
-	 yCRJiRexnuHJUC9a7e94nGiM/4/2p4TCKX6EXuqw=
+	b=GkZNOBtQYIykwp3CqYQ8jSkrlUyh6tj40mgCUOgzMqD5cTtHVzZ/KMtrGo8hrWv9P
+	 qD54gSXfU+pr1JrlJ8khMf1cCxjoOVthad4AsDlpKSb92oXqU+4Yg0mePoBydCuWVj
+	 c5nlibcuO08kb6eiWSUc9fVppvTxChDM3fzCk92I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olga Kornievskaia <kolga@netapp.com>,
-	Tom Talpey <tom@talpey.com>,
-	Bernard Metzler <bmt@zurich.ibm.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jianlin Shi <jishi@redhat.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 246/658] RDMA/siw: Fix immediate work request flush to completion queue
-Date: Mon, 16 Jan 2023 16:45:34 +0100
-Message-Id: <20230116154920.815645834@linuxfoundation.org>
+Subject: [PATCH 5.4 220/658] net/tunnel: wait until all sk_user_data reader finish before releasing the sock
+Date: Mon, 16 Jan 2023 16:45:08 +0100
+Message-Id: <20230116154919.555663762@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.0
 In-Reply-To: <20230116154909.645460653@linuxfoundation.org>
 References: <20230116154909.645460653@linuxfoundation.org>
@@ -37,135 +38,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bernard Metzler <bmt@zurich.ibm.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit bdf1da5df9da680589a7f74448dd0a94dd3e1446 ]
+[ Upstream commit 3cf7203ca620682165706f70a1b12b5194607dce ]
 
-Correctly set send queue element opcode during immediate work request
-flushing in post sendqueue operation, if the QP is in ERROR state.
-An undefined ocode value results in out-of-bounds access to an array
-for mapping the opcode between siw internal and RDMA core representation
-in work completion generation. It resulted in a KASAN BUG report
-of type 'global-out-of-bounds' during NFSoRDMA testing.
+There is a race condition in vxlan that when deleting a vxlan device
+during receiving packets, there is a possibility that the sock is
+released after getting vxlan_sock vs from sk_user_data. Then in
+later vxlan_ecn_decapsulate(), vxlan_get_sk_family() we will got
+NULL pointer dereference. e.g.
 
-This patch further fixes a potential case of a malicious user which may
-write undefined values for completion queue elements status or opcode,
-if the CQ is memory mapped to user land. It avoids the same out-of-bounds
-access to arrays for status and opcode mapping as described above.
+   #0 [ffffa25ec6978a38] machine_kexec at ffffffff8c669757
+   #1 [ffffa25ec6978a90] __crash_kexec at ffffffff8c7c0a4d
+   #2 [ffffa25ec6978b58] crash_kexec at ffffffff8c7c1c48
+   #3 [ffffa25ec6978b60] oops_end at ffffffff8c627f2b
+   #4 [ffffa25ec6978b80] page_fault_oops at ffffffff8c678fcb
+   #5 [ffffa25ec6978bd8] exc_page_fault at ffffffff8d109542
+   #6 [ffffa25ec6978c00] asm_exc_page_fault at ffffffff8d200b62
+      [exception RIP: vxlan_ecn_decapsulate+0x3b]
+      RIP: ffffffffc1014e7b  RSP: ffffa25ec6978cb0  RFLAGS: 00010246
+      RAX: 0000000000000008  RBX: ffff8aa000888000  RCX: 0000000000000000
+      RDX: 000000000000000e  RSI: ffff8a9fc7ab803e  RDI: ffff8a9fd1168700
+      RBP: ffff8a9fc7ab803e   R8: 0000000000700000   R9: 00000000000010ae
+      R10: ffff8a9fcb748980  R11: 0000000000000000  R12: ffff8a9fd1168700
+      R13: ffff8aa000888000  R14: 00000000002a0000  R15: 00000000000010ae
+      ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
+   #7 [ffffa25ec6978ce8] vxlan_rcv at ffffffffc10189cd [vxlan]
+   #8 [ffffa25ec6978d90] udp_queue_rcv_one_skb at ffffffff8cfb6507
+   #9 [ffffa25ec6978dc0] udp_unicast_rcv_skb at ffffffff8cfb6e45
+  #10 [ffffa25ec6978dc8] __udp4_lib_rcv at ffffffff8cfb8807
+  #11 [ffffa25ec6978e20] ip_protocol_deliver_rcu at ffffffff8cf76951
+  #12 [ffffa25ec6978e48] ip_local_deliver at ffffffff8cf76bde
+  #13 [ffffa25ec6978ea0] __netif_receive_skb_one_core at ffffffff8cecde9b
+  #14 [ffffa25ec6978ec8] process_backlog at ffffffff8cece139
+  #15 [ffffa25ec6978f00] __napi_poll at ffffffff8ceced1a
+  #16 [ffffa25ec6978f28] net_rx_action at ffffffff8cecf1f3
+  #17 [ffffa25ec6978fa0] __softirqentry_text_start at ffffffff8d4000ca
+  #18 [ffffa25ec6978ff0] do_softirq at ffffffff8c6fbdc3
 
-Fixes: 303ae1cdfdf7 ("rdma/siw: application interface")
-Fixes: b0fff7317bb4 ("rdma/siw: completion queue methods")
-Reported-by: Olga Kornievskaia <kolga@netapp.com>
-Reviewed-by: Tom Talpey <tom@talpey.com>
-Signed-off-by: Bernard Metzler <bmt@zurich.ibm.com>
-Link: https://lore.kernel.org/r/20221107145057.895747-1-bmt@zurich.ibm.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reproducer: https://github.com/Mellanox/ovs-tests/blob/master/test-ovs-vxlan-remove-tunnel-during-traffic.sh
+
+Fix this by waiting for all sk_user_data reader to finish before
+releasing the sock.
+
+Reported-by: Jianlin Shi <jishi@redhat.com>
+Suggested-by: Jakub Sitnicki <jakub@cloudflare.com>
+Fixes: 6a93cc905274 ("udp-tunnel: Add a few more UDP tunnel APIs")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/siw/siw_cq.c    | 24 ++++++++++++++--
- drivers/infiniband/sw/siw/siw_verbs.c | 40 ++++++++++++++++++++++++---
- 2 files changed, 58 insertions(+), 6 deletions(-)
+ net/ipv4/udp_tunnel.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/infiniband/sw/siw/siw_cq.c b/drivers/infiniband/sw/siw/siw_cq.c
-index d8db3bee9da7..26d4eb44a9d0 100644
---- a/drivers/infiniband/sw/siw/siw_cq.c
-+++ b/drivers/infiniband/sw/siw/siw_cq.c
-@@ -56,8 +56,6 @@ int siw_reap_cqe(struct siw_cq *cq, struct ib_wc *wc)
- 	if (READ_ONCE(cqe->flags) & SIW_WQE_VALID) {
- 		memset(wc, 0, sizeof(*wc));
- 		wc->wr_id = cqe->id;
--		wc->status = map_cqe_status[cqe->status].ib;
--		wc->opcode = map_wc_opcode[cqe->opcode];
- 		wc->byte_len = cqe->bytes;
- 
- 		/*
-@@ -71,10 +69,32 @@ int siw_reap_cqe(struct siw_cq *cq, struct ib_wc *wc)
- 				wc->wc_flags = IB_WC_WITH_INVALIDATE;
- 			}
- 			wc->qp = cqe->base_qp;
-+			wc->opcode = map_wc_opcode[cqe->opcode];
-+			wc->status = map_cqe_status[cqe->status].ib;
- 			siw_dbg_cq(cq,
- 				   "idx %u, type %d, flags %2x, id 0x%pK\n",
- 				   cq->cq_get % cq->num_cqe, cqe->opcode,
- 				   cqe->flags, (void *)(uintptr_t)cqe->id);
-+		} else {
-+			/*
-+			 * A malicious user may set invalid opcode or
-+			 * status in the user mmapped CQE array.
-+			 * Sanity check and correct values in that case
-+			 * to avoid out-of-bounds access to global arrays
-+			 * for opcode and status mapping.
-+			 */
-+			u8 opcode = cqe->opcode;
-+			u16 status = cqe->status;
-+
-+			if (opcode >= SIW_NUM_OPCODES) {
-+				opcode = 0;
-+				status = IB_WC_GENERAL_ERR;
-+			} else if (status >= SIW_NUM_WC_STATUS) {
-+				status = IB_WC_GENERAL_ERR;
-+			}
-+			wc->opcode = map_wc_opcode[opcode];
-+			wc->status = map_cqe_status[status].ib;
-+
- 		}
- 		WRITE_ONCE(cqe->flags, 0);
- 		cq->cq_get++;
-diff --git a/drivers/infiniband/sw/siw/siw_verbs.c b/drivers/infiniband/sw/siw/siw_verbs.c
-index b9ca54e372b4..c8c2014b79d2 100644
---- a/drivers/infiniband/sw/siw/siw_verbs.c
-+++ b/drivers/infiniband/sw/siw/siw_verbs.c
-@@ -694,13 +694,45 @@ static int siw_copy_inline_sgl(const struct ib_send_wr *core_wr,
- static int siw_sq_flush_wr(struct siw_qp *qp, const struct ib_send_wr *wr,
- 			   const struct ib_send_wr **bad_wr)
+diff --git a/net/ipv4/udp_tunnel.c b/net/ipv4/udp_tunnel.c
+index 150e6f0fdbf5..bbe4eca42d36 100644
+--- a/net/ipv4/udp_tunnel.c
++++ b/net/ipv4/udp_tunnel.c
+@@ -196,6 +196,7 @@ EXPORT_SYMBOL_GPL(udp_tunnel_xmit_skb);
+ void udp_tunnel_sock_release(struct socket *sock)
  {
--	struct siw_sqe sqe = {};
- 	int rv = 0;
- 
- 	while (wr) {
--		sqe.id = wr->wr_id;
--		sqe.opcode = wr->opcode;
--		rv = siw_sqe_complete(qp, &sqe, 0, SIW_WC_WR_FLUSH_ERR);
-+		struct siw_sqe sqe = {};
-+
-+		switch (wr->opcode) {
-+		case IB_WR_RDMA_WRITE:
-+			sqe.opcode = SIW_OP_WRITE;
-+			break;
-+		case IB_WR_RDMA_READ:
-+			sqe.opcode = SIW_OP_READ;
-+			break;
-+		case IB_WR_RDMA_READ_WITH_INV:
-+			sqe.opcode = SIW_OP_READ_LOCAL_INV;
-+			break;
-+		case IB_WR_SEND:
-+			sqe.opcode = SIW_OP_SEND;
-+			break;
-+		case IB_WR_SEND_WITH_IMM:
-+			sqe.opcode = SIW_OP_SEND_WITH_IMM;
-+			break;
-+		case IB_WR_SEND_WITH_INV:
-+			sqe.opcode = SIW_OP_SEND_REMOTE_INV;
-+			break;
-+		case IB_WR_LOCAL_INV:
-+			sqe.opcode = SIW_OP_INVAL_STAG;
-+			break;
-+		case IB_WR_REG_MR:
-+			sqe.opcode = SIW_OP_REG_MR;
-+			break;
-+		default:
-+			rv = -EINVAL;
-+			break;
-+		}
-+		if (!rv) {
-+			sqe.id = wr->wr_id;
-+			rv = siw_sqe_complete(qp, &sqe, 0,
-+					      SIW_WC_WR_FLUSH_ERR);
-+		}
- 		if (rv) {
- 			if (bad_wr)
- 				*bad_wr = wr;
+ 	rcu_assign_sk_user_data(sock->sk, NULL);
++	synchronize_rcu();
+ 	kernel_sock_shutdown(sock, SHUT_RDWR);
+ 	sock_release(sock);
+ }
 -- 
 2.35.1
 
