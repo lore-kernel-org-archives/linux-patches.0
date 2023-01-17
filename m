@@ -1,152 +1,102 @@
-Received: from mail-vs1-f42.google.com (mail-vs1-f42.google.com [209.85.217.42])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from gproxy4-pub.mail.unifiedlayer.com (gproxy4-pub.mail.unifiedlayer.com [69.89.23.142])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A8C21FC2
-	for <patches@lists.linux.dev>; Tue, 17 Jan 2023 09:29:20 +0000 (UTC)
-Received: by mail-vs1-f42.google.com with SMTP id v127so27187381vsb.12
-        for <patches@lists.linux.dev>; Tue, 17 Jan 2023 01:29:20 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dlEPnwSHAjZr4NXcVpqzSG2AW1hG4W7rPTERaEZE/P8=;
-        b=rJFfuSn8QWqsY1C/Cs3RGIp1ElNdVoXaCEe7apJpvEsCvzA0o2G6fa7bSRiX3cy9Em
-         RAoiy1jQxGKKcOimAavu29f7AiPA94DEp/fehPo16O6fpJs56NDpf5RfcvgvTl3aYezw
-         T5dARuIzB+7iCPpcBE9AfrYRhxHKoOPk8CHMPb9Ix7RbqamsnLPU+H94l/ufz1pVC2He
-         abCWUJR7F8puA2qhoSseFXcLUV5ZrSJ0esF0rtLOXosHvnfQcOyiY/dDfrh681S0dX0t
-         Vl9egqV0jQgnFDJ5OF0XH6sxdHJKWtB3e7yHdPG1xptDYWOTuNaI1RuEONlluwcvCKX+
-         7GCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dlEPnwSHAjZr4NXcVpqzSG2AW1hG4W7rPTERaEZE/P8=;
-        b=7sL6Oz5HTnGSsjZeZfTVJ/ZM9zmWwOMXQ5UR/MLW3HqEKCiin+JG6Qq+KBIdzcW4gU
-         1cRM0euDLNd88YXZSbxF4Jm9Yc2zdLUpYyRV1hix9+D1alRDx7N9B/mas1j5+Vs+ttwx
-         aydF3QQHn1BVaAmsLWpcakLaqmNC9CrPWuSo9LV08lk70MFxDBEuwd/AOE9oURZGJhT5
-         hfKXH2hyiQwA+tkWX1FW0YuEsESLqb5hednPJZO/mBFdGxQAJ7HuGbBVd/1NFNLFp+cN
-         YZJbfaXB9enm/aIhsvzDLkAPJ0CBeoHmA8cg/0C9YTtsmsrb94SU1JUzBOubgNK+zXHm
-         gKYg==
-X-Gm-Message-State: AFqh2kpakbePIiD49kUqilpHTRx/2iYhbloBn5gBYawCLG2GDhOEQP/u
-	ajzYUXEp5NE/cDjUAOowYZgcNwvjWkBbb8qQLhRLgg==
-X-Google-Smtp-Source: AMrXdXuD/vWSIHrO86e7jvneaPF9xijTE2czSJFhJSQIV8crGRsjdhOyrbDG9UHVrxcGQotByo5ZQNweJ3w6ywDP/Cw=
-X-Received: by 2002:a05:6102:5587:b0:3b5:32d0:edcc with SMTP id
- dc7-20020a056102558700b003b532d0edccmr267127vsb.24.1673947758901; Tue, 17 Jan
- 2023 01:29:18 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A80751FC2
+	for <patches@lists.linux.dev>; Tue, 17 Jan 2023 09:32:27 +0000 (UTC)
+Received: from cmgw13.mail.unifiedlayer.com (unknown [10.0.90.128])
+	by progateway6.mail.pro1.eigbox.com (Postfix) with ESMTP id 0E6BA10048FAA
+	for <patches@lists.linux.dev>; Tue, 17 Jan 2023 09:32:19 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id HiKIplaAjNX2aHiKIpZTzJ; Tue, 17 Jan 2023 09:32:19 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=NMAQR22g c=1 sm=1 tr=0 ts=63c66b23
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=RvmDmJFTN0MA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=kyuvB4YusYuVSm784QK25swaDidkcev0b/UYPUrYN68=; b=1s/YotftP/WiAFmp98SP7Z+Iiu
+	VzKDSC6wgZCuvSnVtNQKJiu6/y0TC2Uf1QeYySsBDRZeQPPho5ZzdCrT9KRfkYPmwLBSRLawcW82E
+	C1zUr7PY7yWOb463/ccRoGNMyyg8TELuzXFzHkGK4d1Ih/6gOnJGNqY3oy3l7L6baz2rvte60KvkW
+	TR0LgS1I50nbx6nUYQu5Vvf6AMNpKpQnXiZzLpbEV7NOSZ/jZGdFxYgDiG8pi3COPQuYMfIO/uTAT
+	4FhTkRh1uVQ9OjGCtsYvChMWQ0mew0qfiMJunx6bNOzd/E80g/B8QBCvYwWDUiryB/jqzybJHxTrp
+	8NM7BMlw==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:51612 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1pHiKH-004IVk-LI;
+	Tue, 17 Jan 2023 02:32:17 -0700
+Subject: Re: [PATCH 6.1 000/183] 6.1.7-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230116154803.321528435@linuxfoundation.org>
+In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <cca9c5b7-7ab7-d166-c1af-fb3827f924e5@w6rz.net>
+Date: Tue, 17 Jan 2023 01:32:11 -0800
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230116154909.645460653@linuxfoundation.org> <20230116202025.GA3397667@roeck-us.net>
-In-Reply-To: <20230116202025.GA3397667@roeck-us.net>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 17 Jan 2023 14:59:08 +0530
-Message-ID: <CA+G9fYswDKDVtmSNw7VhYCYynY3m8+taBcKN3-XRBa+BKDuMnQ@mail.gmail.com>
-Subject: Re: [PATCH 5.4 000/658] 5.4.229-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Guenter Roeck <linux@roeck-us.net>, Chen Huang <chenhuang5@huawei.com>, stable@vger.kernel.org, 
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
-	torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, llvm@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1pHiKH-004IVk-LI
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:51612
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-On Tue, 17 Jan 2023 at 01:50, Guenter Roeck <linux@roeck-us.net> wrote:
+On 1/16/23 7:48 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.7 release.
+> There are 183 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> On Mon, Jan 16, 2023 at 04:41:28PM +0100, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 5.4.229 release.
-> > There are 658 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Wed, 18 Jan 2023 15:47:28 +0000.
-> > Anything received after that time might be too late.
-> >
+> Responses should be made by Wed, 18 Jan 2023 15:47:28 +0000.
+> Anything received after that time might be too late.
 >
-> Note: Exactly the same failures are seen in v4.19.269-522-gc75d2b5524ab,
-> so I won't bother sending test results for that branch.
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.7-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
 >
-> ---
+> thanks,
 >
-> Build results:
->         total: 159 pass: 153 fail: 6
-> Failed builds:
->         i386:tools/perf
->         riscv:defconfig
->         s390:allnoconfig
->         s390:tinyconfig
->         um:defconfig
->         x86_64:tools/perf
-> Qemu test results:
->         total: 449 pass: 413 fail: 36
-> Failed tests:
->         <all ppc64:pseries>
->         <all riscv>
->
-> Details follow.
->
-> Guenter
->
-> =3D=3D=3D=3D=3D=3D=3D=3D
->
-> Building i386:tools/perf ... failed
-> Building x86_64:tools/perf ... failed
-> --------------
-> Error log:
-> util/debug.c: In function =E2=80=98perf_quiet_option=E2=80=99:
-> util/debug.c:237:2: error: =E2=80=98debug_peo_args=E2=80=99 undeclared
->
-> Building riscv:defconfig ... failed
-> --------------
-> Error log:
-> arch/riscv/kernel/stacktrace.c: In function 'walk_stackframe':
-> arch/riscv/kernel/stacktrace.c:58:36: error: 'struct pt_regs' has no memb=
-er named 'epc'
+> greg k-h
 
-The above build error is caused due to,
-riscv/stacktrace: Fix stack output without ra on the stack top
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
+Tested-by: Ron Economos <re@w6rz.net>
 
->
-> Building s390:allnoconfig ... failed
-> Building s390:tinyconfig ... failed
-> --------------
-> Error log:
-> s390-linux-ld: drivers/base/platform.o: in function `devm_platform_get_an=
-d_ioremap_resource':
-> platform.c:(.text+0x594): undefined reference to `devm_ioremap_resource'
-> s390-linux-ld: platform.c:(.text+0x5c2): undefined reference to `devm_ior=
-emap_resource'
->
-> Building um:defconfig ... failed
-> --------------
-> Error log:
-> ld: drivers/base/platform.o: in function `devm_platform_get_and_ioremap_r=
-esource':
-> drivers/base/platform.c:82: undefined reference to `devm_ioremap_resource=
-'
-
-Linaro test farm also noticed above listed build errors
-+ x86_64 clang-nightly deconfig, allnoconfig and tinyconfig.
-
-arch/x86/kernel/fpu/init.c:181:2: error: 'struct (unnamed at
-arch/x86/kernel/fpu/init.c:181:2)' cannot be defined in
-'__builtin_offsetof'
-        CHECK_MEMBER_AT_END_OF(struct fpu, state);
-        ^
-
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5.4.2=
-28-659-gb3b34c474ec7/testrun/14188759/suite/build/test/clang-nightly-x86_64=
-_defconfig/log
-
---
-Linaro LKFT
-https://lkft.linaro.org
