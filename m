@@ -1,92 +1,91 @@
-Received: from mail-lf1-f44.google.com (mail-lf1-f44.google.com [209.85.167.44])
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0C53D53F
-	for <patches@lists.linux.dev>; Tue, 17 Jan 2023 20:09:32 +0000 (UTC)
-Received: by mail-lf1-f44.google.com with SMTP id b3so48699381lfv.2
-        for <patches@lists.linux.dev>; Tue, 17 Jan 2023 12:09:32 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC2C1D53F
+	for <patches@lists.linux.dev>; Tue, 17 Jan 2023 20:12:02 +0000 (UTC)
+Received: by mail-pl1-f177.google.com with SMTP id k13so2105293plg.0
+        for <patches@lists.linux.dev>; Tue, 17 Jan 2023 12:12:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=4f5NEd6eZ6l988KDif7fnrmwveNTDaM7DpJUpoJA7DU=;
-        b=YGfKF+dZTPvOJehm7OvLo3emCrC3GwjMJ17aaE0Ac6GWvy12D9AosaDFsOYSeI/3qI
-         eVuShmBFm8DXWfpFPZk/0ekTq4ANCTdfJhXPpIbaBe7WXji2NFnUI9gNboDyzvIhgfHv
-         JU6aKh5GDzct+7j9xr2HXoCvnRCpxVXOZz314=
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=eUVREAeuxi0yYQ0P2vbR9fitxXN9smQF7SNOFKwNoSM=;
+        b=cMYFMH8GXe3w9/s8TthwcET4E/yGDk6e9TCH9M/cZzIY0nl0cevHVq9dmclhbdFZJg
+         riP708G5VdFkPgdSJbKeRsEf5kuLphuGICN9KIWUoQ4EyNmF5XVHAp9cjO1XA9gpMyIf
+         2nOjPihV7Sz9S/SoE18NQceO+KCDHHPTxfTzqJsN3gIq3imPOMTvWqKEcoPrAlNRYfQw
+         jWboUf8nRmXwTW+qDClvxJlHUetoalQeCh6FQGpR/SUdOs+aVxHvBx05ygTXxffJb6EB
+         +PyptjY77DHrsTwJOkfceh0AKeHYjzC+PP+LInvJ6jMMwA8/ZBGaqmgFZvGZObYg+G1n
+         0tww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=4f5NEd6eZ6l988KDif7fnrmwveNTDaM7DpJUpoJA7DU=;
-        b=B8ceGO5B4XL6QxukmvgZWkBVJ1zjsw/Li4fR48QJcaFy98aV9jn1hKFeJxg6MiQt18
-         s5yAn62D4eNeSS1lUs1+FERetx9OC9QcGsxgP33Mhuef1B7C8iWukDYtqq2nprQPqodh
-         5DSZBhLXNulxTDGei3+0gDU76BXFx0VzmfAss7IMHc03apNOtl+JzXMANnLCf/b43OY7
-         nZqHbQ6szDNO12wS4l4ZQOWMeOVJlBSLgoeNaK/8mDAbffyewLhazEtGBGZt54KLh7dE
-         fN9g2r3uPxZ9f0QPib6DO7v5ftO2dRJy5I7NYOrzj3G4jX4oEPYaK80eqk/EYAbzhHtc
-         fxzg==
-X-Gm-Message-State: AFqh2kp8O6FIB/8+I66trre2My8A18y2lpkXplYS50h0P4bV4+0ruPzn
-	uGaX+M49dr+AQERzt96hR6ZaEoluV/Ye8w2Xp6yw+q1Yo1hAqg==
-X-Google-Smtp-Source: AMrXdXsohAUXpxdWFb4vlqMteXqM/doqJncGnB7aUa7q4EaVDecaR4yZ61+WHk2Qdgo1aJFB1Ci4ua6U2Iq5fA4PjMA=
-X-Received: by 2002:a05:6512:2114:b0:4bd:35fd:65b5 with SMTP id
- q20-20020a056512211400b004bd35fd65b5mr418821lfr.297.1673986170632; Tue, 17
- Jan 2023 12:09:30 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 17 Jan 2023 12:09:29 -0800
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=eUVREAeuxi0yYQ0P2vbR9fitxXN9smQF7SNOFKwNoSM=;
+        b=sR6ZYxA91/gONaPlqkKeEn0FuSJbkpLyXokuV05UEJyCLn63nc8kLOnlw2cRLvAJg9
+         XThyTx5G2G47jw7Kw7k7tERPW1TywS02Y6LvSd25oxJB6AfjZlYtmXNah2nMPYHBUal4
+         4E39P0z3GWXxflfxVqYChC8eLX/f5Juc55pgTrOCnobdOXtFy6JgJsJ3sDGg6DgZRiDi
+         6qmDBnKnMeNcypa82/8wrULiWMLMM4sgLkizP4xlRnLpWQWuPxLyBEBgDeXOSJlN9S31
+         MK210yWWUoJfj/gLUXl1LKgLd41qh5Vio2a18JgmALo/mG6XRbI4pIt+3X37e2lH0Nwh
+         5XhA==
+X-Gm-Message-State: AFqh2krDYCCA4oVxJ5qVqwGt7tEOIA7m6E0C6liLQT5i8GPT/8WqY61V
+	XXETQB9tqYeHo5MseZLuRo0=
+X-Google-Smtp-Source: AMrXdXuJWsG5EbhUVDSXvJVtmwFi5ddTzDmkbmib3gPrkId1EwHxnBH76KIciaxn81Mil/yTa//s5A==
+X-Received: by 2002:a17:90a:a402:b0:229:5e73:78ec with SMTP id y2-20020a17090aa40200b002295e7378ecmr4830694pjp.34.1673986322059;
+        Tue, 17 Jan 2023 12:12:02 -0800 (PST)
+Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
+        by smtp.gmail.com with ESMTPSA id 4-20020a631844000000b00497c1399b38sm17636994pgy.78.2023.01.17.12.12.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Jan 2023 12:12:01 -0800 (PST)
+Message-ID: <3584ba9e-9c15-977f-7e00-ec89ddf2a0f4@gmail.com>
+Date: Tue, 17 Jan 2023 12:11:59 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <Y8Ky1UgT2yxFB2EB@kroah.com>
-References: <20230113002149.3984494-1-swboyd@chromium.org> <Y8Ky1UgT2yxFB2EB@kroah.com>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Tue, 17 Jan 2023 12:09:29 -0800
-Message-ID: <CAE-0n52wiAiHACFXeki6w7hfn3swuUp6jK6gpFvPxfrnmcV0TQ@mail.gmail.com>
-Subject: Re: [PATCH 5.15.y] kbuild: Allow kernel installation packaging to
- override pkg-config
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, Chun-Tse Shao <ctshao@google.com>, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Nick Desaulniers <ndesaulniers@google.com>, 
-	Masahiro Yamada <masahiroy@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 5.10 00/64] 5.10.164-rc2 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230117124526.766388541@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230117124526.766388541@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-Quoting Greg KH (2023-01-14 05:49:09)
-> On Thu, Jan 12, 2023 at 04:21:49PM -0800, Stephen Boyd wrote:
-> > From: Chun-Tse Shao <ctshao@google.com>
-> >
-> > commit d5ea4fece4508bf8e72b659cd22fa4840d8d61e5 upstream.
-> >
-> > Add HOSTPKG_CONFIG to allow tooling that builds the kernel to override
-> > what pkg-config and parameters are used.
-> >
-> > Signed-off-by: Chun-Tse Shao <ctshao@google.com>
-> > Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-> > Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-> > [swboyd@chromium.org: Drop certs/Makefile hunk that doesn't
-> > apply because pkg-config isn't used there, add dtc/Makefile hunk to
-> > fix dtb builds]
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > ---
-> >
-> > I need this to properly compile 5.15.y stable kernels in the chromeos
-> > build system.
->
-> Is this a new issue?  A regression?  This feels odd to add a new build
-> feature to an old kernel when nothing changed to require it other than
-> an external tool suddenly requiring something new?
->
 
-The chromeos build system checks for pkg-config being called directly
-and fails the build if the proper wrapper isn't used. We set
-HOSTPKG_CONFIG in the environment when building the kernel so that it
-doesn't fail.
 
-It's not exactly a new issue, but a self-inflicted one that makes
-building the stable kernel annoying. I figured it was similar to fixing
-problems with compiling stable kernels with newer toolchains, but if it
-feels odd then I'll just have to remember to pick this patch whenever
-bisecting stable trees. No worries.
+On 1/17/2023 4:48 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.164 release.
+> There are 64 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 19 Jan 2023 12:45:11 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.164-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
+
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
