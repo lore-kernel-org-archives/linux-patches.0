@@ -1,97 +1,93 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
+Received: from mail-ej1-f41.google.com (mail-ej1-f41.google.com [209.85.218.41])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DF4D1851
-	for <patches@lists.linux.dev>; Tue, 17 Jan 2023 03:59:07 +0000 (UTC)
-Received: by mail-pj1-f53.google.com with SMTP id 7-20020a17090a098700b002298931e366so3048840pjo.2
-        for <patches@lists.linux.dev>; Mon, 16 Jan 2023 19:59:07 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3D11851
+	for <patches@lists.linux.dev>; Tue, 17 Jan 2023 04:14:38 +0000 (UTC)
+Received: by mail-ej1-f41.google.com with SMTP id u19so72422596ejm.8
+        for <patches@lists.linux.dev>; Mon, 16 Jan 2023 20:14:38 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=WLeCTKLOjsvJHGKffA44iOpzJOsW8nOqwiD1dGMipgc=;
-        b=i5ewKIi6NmayJpWmf1uhY2f9ADFWtqN8MjCV1G9YcYOzB1aC6pvH4k0za0mVE2KXoc
-         fKgrxF8nEua2tMY4yevTFGJ5/Dw8h5kzNkn8P7/HU9xDoIaT8X4dN4ubqQUSciTPrP6N
-         ySOUwE3wYWWANlD+AWKMtUYyiCU7BC/YR33IGDo+M+sbIuRM2iw4RfTfK0181CkEZYJl
-         mg2lbH1GGaHz83cBxByUxXsiKby4t3aaKYfIBJHiYSqXtV+NK3eznVQz17K/8hnaqOcZ
-         DjifQ0A9NPkO2b5HsCxGzgzn3i/yvxkSK0YnzOPnwpTppOS0dUB4qv6O8/zhJ5R2Fdad
-         IyTw==
+        d=futuring-girl-com.20210112.gappssmtp.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=zDKtcvtIFf+y3VGztWmfwnQISP0yBigN3Ccwm/hiUK0=;
+        b=54pwdyFuQao0yiFXoRpb3zxlQhCUMcKCmJ2/n3bCVvo8cyajV60H6C5hcnRhJCIDzJ
+         2td93sZbOnSa28pLgqAw0/PoCjHhZ4xtPpfUd89yOpY7VySpIlXbVyfQnlpUpGnS03lL
+         9nv0rbf0WJJW443a1eZ5EOJ3Zx6S5bjRpQHoZCQ2lA1JPVCITvnlDDsLgmt3wkM6hByF
+         scj8fCB+NUWKtsn8cHLKekKJZlSX6FLPkoD7BAX61xYnPheKGaCe7Q3r8Z7Ug6C5UqPC
+         ObzUisWGAA97Wr6Fsxt7JgL26PPMtgEpsTN25KkJrjgNGpuL7BDzn4VmGtrOyu6Ihun0
+         n0mQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WLeCTKLOjsvJHGKffA44iOpzJOsW8nOqwiD1dGMipgc=;
-        b=WbIMXpun0ZKgVuays3pZn6KX10BppcezqCLKavEXmQp66xA65RhSf68/JY9Nc8fRV7
-         oVAdNWCKUZoJDBVOG5eggnYBNKYybkawPlam6cX17qKFMvA9xM2Z2TapDssi1kLdiulR
-         axSvXX407XmxcVhY5Md+HcG5PT30d/Zt5homsIMADBLP8yygkpovodLqkbtRGSui+ZlH
-         mEEvAnvwjsJ/k0UpSmppjxJFWoFti3+siYgj3VjyD9TUfx73U1kclY33Apb9lnJ30Cpi
-         YQZGMceXoh6yPzBuV1oklAK11KnmRyQhmrPzuHfEgDEG3xBf3v5yh4qxncUGJLGpFwyI
-         nyuw==
-X-Gm-Message-State: AFqh2kpXljpXd7TleuTAZ5Um38raVxPG+Rbtn2f0Qe/TaZFSyMjvA9n4
-	Evi+LcJF8dmJpbnMT6quWDM=
-X-Google-Smtp-Source: AMrXdXtAdF94FlVNkhaTxEB6Edd39GQT/6YNBQtDvnkZJj9WIYyVV4ZBTiiz2e1r9Audfm89OUNsTg==
-X-Received: by 2002:a17:903:2014:b0:194:a7b2:4329 with SMTP id s20-20020a170903201400b00194a7b24329mr1140920pla.28.1673927946592;
-        Mon, 16 Jan 2023 19:59:06 -0800 (PST)
-Received: from debian.me (subs03-180-214-233-20.three.co.id. [180.214.233.20])
-        by smtp.gmail.com with ESMTPSA id h2-20020a170902f7c200b0019327f40bfasm17265428plw.119.2023.01.16.19.59.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Jan 2023 19:59:05 -0800 (PST)
-Received: by debian.me (Postfix, from userid 1000)
-	id 061E1103EEA; Tue, 17 Jan 2023 10:59:02 +0700 (WIB)
-Date: Tue, 17 Jan 2023 10:59:02 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.15 00/86] 5.15.89-rc1 review
-Message-ID: <Y8YdBuxEbU4G0PQe@debian.me>
-References: <20230116154747.036911298@linuxfoundation.org>
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zDKtcvtIFf+y3VGztWmfwnQISP0yBigN3Ccwm/hiUK0=;
+        b=KzyhBtR2Iyd1zHNcQ9g9jsV2d+hVDGBRe8eHaAECteJ5RS3t8AdCdselgiyLo1EfNY
+         j5tK6if049kzbCDkDgfq2Dl/kcy15zRwCLfjGvgzd13szWo6/bEaAk3hQ3/0I2Pui2qu
+         AGOPk7icoS2D6JDK2RwKDScdkDFMdFRkmOhrgeveRCW32zJ7OE0COjaB/PuXMWiU2Fv8
+         tAxVfIYlqb9/72WH5cjtVdrTzogt+1sGGBP4DqhO+UZk925+8U4AiX5wRSRaYhk7nP0n
+         i/TwKAsU17zdy5pbC9ws8W5bSvFbQF8akNwX3tMXjKNUKYu7BXKu/1zlTVwryE7zWoiZ
+         8OcA==
+X-Gm-Message-State: AFqh2krAjMph9Ll5YbELQO1SuJy+s6VRLEGp/rgnvH3WENdGAMTPREBv
+	5hLpYeEszkQcKDOuw1oHHCoQaWxkuShcY740bE4dGA==
+X-Google-Smtp-Source: AMrXdXtJPZDPoMdGM+6WhpO0nIkoLS5sWjW5h+CYpA1K2txuLO3Ta6YC6FkoDbzeDHsMWYHGV1a7f87eAVCI7B8FbmU=
+X-Received: by 2002:a17:907:78d6:b0:872:5a3e:3be4 with SMTP id
+ kv22-20020a17090778d600b008725a3e3be4mr72348ejc.649.1673928877030; Mon, 16
+ Jan 2023 20:14:37 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="DvcbpAMx1RoohX50"
-Content-Disposition: inline
-In-Reply-To: <20230116154747.036911298@linuxfoundation.org>
+References: <20230116154803.321528435@linuxfoundation.org>
+In-Reply-To: <20230116154803.321528435@linuxfoundation.org>
+From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
+Date: Tue, 17 Jan 2023 13:14:25 +0900
+Message-ID: <CAKL4bV7=cY5qWxtKpuLfKUkXEWd6tgSL2oeWVXPmiwNkrKZdHw@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/183] 6.1.7-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 
+Hi Greg
 
---DvcbpAMx1RoohX50
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Mon, Jan 16, 2023 at 04:50:34PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.89 release.
-> There are 86 patches in this series, all will be posted as a response
+On Tue, Jan 17, 2023 at 12:54 AM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.7 release.
+> There are 183 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
-=20
-Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
-powerpc (ps3_defconfig, GCC 12.2.0).
+>
+> Responses should be made by Wed, 18 Jan 2023 15:47:28 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.7-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+6.1.7-rc1 tested.
 
---=20
-An old man doll... just what I always wanted! - Clara
+x86_64
 
---DvcbpAMx1RoohX50
-Content-Type: application/pgp-signature; name="signature.asc"
+build successfully completed
+boot successfully completed
 
------BEGIN PGP SIGNATURE-----
+Lenovo ThinkPad X1 Nano Gen1(Intel i5-1130G7, arch linux)
 
-iHUEARYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY8Yc/gAKCRD2uYlJVVFO
-o+wIAQCm6LCIEDiRLBDdPRnkc4ubppdvhaGdUdIDnut/0mco1wEA6vE1WnwkqqT4
-AGkzFsk1A6a3ZGzpxUn6jHVTMw+hZwc=
-=OLbD
------END PGP SIGNATURE-----
+Thanks
 
---DvcbpAMx1RoohX50--
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
