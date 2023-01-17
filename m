@@ -1,98 +1,91 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pg1-f178.google.com (mail-pg1-f178.google.com [209.85.215.178])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BC0C1FB2;
-	Tue, 17 Jan 2023 14:31:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 598B5C433F1;
-	Tue, 17 Jan 2023 14:31:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1673965902;
-	bh=cZUwr8wft3TGwdwisT4Mb2q2UbVcMvi+LPIhyGVXIVA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=B7L+KVerOooJWA9T61GYurpIqVos0ufrXXwT5rSr6kuLSBSAk4uHw5ha7y/GgyO7S
-	 UNCd6IILGdzMAQ3zhh1syb81pnxXtTnvkGzLK1eRmg1V/VzeUND1m+FkAOtzXT7HQE
-	 k8m7wCC+r0+YHZ6+vBwJLoGehUtuJVUUS8E2BGOY=
-Date: Tue, 17 Jan 2023 15:31:40 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, llvm@lists.linux.dev
-Subject: Re: [PATCH 5.15 00/86] 5.15.89-rc1 review
-Message-ID: <Y8axTFlEA8Cv2NPT@kroah.com>
-References: <20230116154747.036911298@linuxfoundation.org>
- <CA+G9fYtpsFtS=1gECq97PWPK8uA6-3B-NY0Vkk8Vgd04BskONQ@mail.gmail.com>
- <Y8avdat8Jk+CaE8D@dev-arch.thelio-3990X>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79CA6D532
+	for <patches@lists.linux.dev>; Tue, 17 Jan 2023 19:32:16 +0000 (UTC)
+Received: by mail-pg1-f178.google.com with SMTP id 36so22775210pgp.10
+        for <patches@lists.linux.dev>; Tue, 17 Jan 2023 11:32:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=DlLQTdoKsOZVDNxk9NL/UbvvDxhujJxGzQgZNmNgx0U=;
+        b=JXBX8KVj4Ffl+KJEJrfPsUrsxZRLXQkhl1iFB291/nmaQpGG1GOlYLFoGiRJIhDaeR
+         qq8s1vRb486jdTWKcvdRaKpDZy9w1PPqEHiXITMCeNqDPpV6CLycsms2aVn4ec6E5epu
+         2RTR5zNLfSikRyLyWBTv4OktwynBGLLlZhyoUoZNuV2oS7P4e7bheeAP9F7nHzqaDXfk
+         nHbjiLVn08yOEn37yKdX0LkTtcUJHgBxbjca9aoFUnfrWjX4q1feq6x35Xx4pUUUXYbU
+         xj7LmyCuyyKTWE9VXiAWKVCz/r5Ecc6dvpXGyP89Ts4gxj1Hndm5TMQDEz/tuFtHteO4
+         rEeQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=DlLQTdoKsOZVDNxk9NL/UbvvDxhujJxGzQgZNmNgx0U=;
+        b=zHtyvNi8A1uTresSwv2r1uAhxKHLBe1hF7NoEQxW34c9cadPnoMn5QS3+cUoiTrBd5
+         xRw3z03eR/Ep6GRh48vjB7D1cytH6NF/7hj4S8p8ezBhe9mxFdKCze2uK1jIAnn7jZKA
+         Wi7dvh7rGeT0X5Ch8maKYZpbdRn21qMtFDRc10LEaX0YBgI36zVWfzkDLGioUlV1hTaZ
+         6MXXA3GO9DM5rInmXqrziiXN9AAq86QQMCi4i04m3albXD6WfNTiNfw101TXs2N/Ayzz
+         EVpzXUZkYAcc2EZQ3i1WL5Ntgi9z7ZXoSuUC6qjB0psLY6ZcrRgKMidW+5Yr62ZURz+O
+         l/Bw==
+X-Gm-Message-State: AFqh2koMPTvltGXX3i6ku3NPmvKqz5yZBQBkXm1I6ssX7+En+F5/vzjT
+	n84h5KoTCjCj+gz/eaDiE+Q=
+X-Google-Smtp-Source: AMrXdXtNKpWN7uz3qBQ+i7AEsePVao3aNrWvFpHQCQ0As59xfpRQeXFe0p6yqjitcWqnqXzVGe45hQ==
+X-Received: by 2002:a62:7b11:0:b0:586:e399:9cd4 with SMTP id w17-20020a627b11000000b00586e3999cd4mr25691538pfc.25.1673983935820;
+        Tue, 17 Jan 2023 11:32:15 -0800 (PST)
+Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
+        by smtp.gmail.com with ESMTPSA id h18-20020aa796d2000000b0058dbb5c5038sm3124010pfq.182.2023.01.17.11.32.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Jan 2023 11:32:15 -0800 (PST)
+Message-ID: <b19210c0-bfc7-f601-c8b3-4b4e263c9cd0@gmail.com>
+Date: Tue, 17 Jan 2023 11:32:12 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <Y8avdat8Jk+CaE8D@dev-arch.thelio-3990X>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 5.4 000/622] 5.4.229-rc2 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230117124648.308618956@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230117124648.308618956@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Jan 17, 2023 at 07:23:49AM -0700, Nathan Chancellor wrote:
-> Hi Naresh,
-> 
-> On Tue, Jan 17, 2023 at 04:57:52PM +0530, Naresh Kamboju wrote:
-> > On Mon, 16 Jan 2023 at 21:33, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
-> > >
-> > > This is the start of the stable review cycle for the 5.15.89 release.
-> > > There are 86 patches in this series, all will be posted as a response
-> > > to this one.  If anyone has any issues with these being applied, please
-> > > let me know.
-> > >
-> > > Responses should be made by Wed, 18 Jan 2023 15:47:28 +0000.
-> > > Anything received after that time might be too late.
-> > >
-> > > The whole patch series can be found in one patch at:
-> > >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.89-rc1.gz
-> > > or in the git tree and branch at:
-> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> > > and the diffstat can be found below.
-> > >
-> > > thanks,
-> > >
-> > > greg k-h
-> > 
-> > Results from Linaro’s test farm.
-> > No regressions on arm64, arm, x86_64, and i386.
-> > 
-> > Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > 
-> > NOTE:
-> > clang-nightly build errors noticed on defconfig of arm64. arm. x86_64,
-> > i386, riscv, s390 and powerpc.
-> > 
-> > include/trace/events/initcall.h:38:3: error: 'struct (unnamed at
-> > include/trace/events/initcall.h:27:1)' cannot be defined in
-> > '__builtin_offsetof'
-> >                 __field_struct(initcall_t, func)
-> >                 ^
-> > include/trace/events/initcall.h:38:3: error: initializer element is
-> > not a compile-time constant
-> >                 __field_struct(initcall_t, func)
-> >                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-> 
-> Thanks for the report! I sent backports to avoid this issue and the one
-> reported on the 5.4 review but it appears they did not make this round
-> of stable updates.
-> 
-> https://lore.kernel.org/Y8TWrJpb6Vn6E4+v@dev-arch.thelio-3990X/
-> 
-> Hopefully it will be cleared up next round.
 
-Yes, I will get to them after these are released, I figured it wasn't
-that big of a rush...
 
-thanks,
+On 1/17/2023 4:48 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.229 release.
+> There are 622 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 19 Jan 2023 12:45:11 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.229-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-greg k-h
+On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
+BMIPS_GENERIC:
+
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
