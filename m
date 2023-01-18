@@ -1,81 +1,69 @@
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from out198-157.us.a.mail.aliyun.com (out198-157.us.a.mail.aliyun.com [47.90.198.157])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C81077B
-	for <patches@lists.linux.dev>; Wed, 18 Jan 2023 01:40:04 +0000 (UTC)
-Received: by mail-oi1-f178.google.com with SMTP id r205so27503180oib.9
-        for <patches@lists.linux.dev>; Tue, 17 Jan 2023 17:40:04 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=Kxxd3xqe9c7nfQjsQfb2u+lISPgW9CFdGJBHNXsa12I=;
-        b=lhrPFZ+V7iW7YE5t9PVcYLfGAYbd4HlJC6RK4v5DwsEVjKldo2M6wZF1Kj07hRl/Il
-         dzQDvfIcBpCihnxGnrSYVDeigAKFHM4jA3NYx7ZKMbA2+QV45aEUVFCOyPaY0ast/J3y
-         zKKL5ZQsZ1qrl2pabTYSxRR/u2KB3biuoKxwRa8r5U72bubq0ddmCyvuG6sKwrlRkY6Y
-         cmPfmaL8qkTYnbqPhNG8ZHkM3Feug6IM/SV/4KqucOMxYBq1jSUtImQcnxN9O4oapKTD
-         U/AdBVYgr7qjsQ5gLn5dSCb8tstqjY/UQ6Px2YUha/i/W3eDTtvy3WtmHSnTm1rtuQ1M
-         xP4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=Kxxd3xqe9c7nfQjsQfb2u+lISPgW9CFdGJBHNXsa12I=;
-        b=goqsmbyye1sHr8M/5xiXJVDgv8Ycf24NZnobMI7p0MaPXDFjr/j23HdPWfP/Xf4U3T
-         AgVZleljU4l5z43xGr3BhjwSYBxdj24+xc+26O1xRB1wSvxgyCFnW1F68BKLg+DroqWh
-         31iWfZ/mo29+9bG5H5IIZyHNqnN/A4rOe3VKDNO53NXxYAGdOtzAsK39vaa+Yw7CTqAY
-         3xtyGc+OfVUIUAezsRzzWklc1GxcStdfuPUjTPC4Ajv1UOuc7Z8gq9qAhpj9SLfUgivV
-         hoBclkdgDkNAI3uZtdb7pfYZ4e3oIxedMIiysdcuwwDq1e1N6VhPhpPaiobW6saRL/Of
-         jenQ==
-X-Gm-Message-State: AFqh2krKHlSXI/UOsxVtLaKgWFtMw2GU0LdwMa6Om9rpvqbez+/oQ9Yf
-	IJ/EPycAm6gj/COnTR4Nl9A=
-X-Google-Smtp-Source: AMrXdXv4dCHXlEiFmxGcr2aZsuMqf9K2MlzBM9YjNQEgyRzmhETdhQGuVjBWFv/jm+ZJiFRl74sFwQ==
-X-Received: by 2002:a05:6808:8db:b0:364:e248:1d70 with SMTP id k27-20020a05680808db00b00364e2481d70mr5564435oij.1.1674006003968;
-        Tue, 17 Jan 2023 17:40:03 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id bk33-20020a0568081a2100b0035a2f3e423esm15351850oib.32.2023.01.17.17.40.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Jan 2023 17:40:03 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Tue, 17 Jan 2023 17:40:02 -0800
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 000/176] 6.1.7-rc2 review
-Message-ID: <20230118014002.GF1727121@roeck-us.net>
-References: <20230117124546.116438951@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C25215A9
+	for <patches@lists.linux.dev>; Wed, 18 Jan 2023 02:45:47 +0000 (UTC)
+X-Alimail-AntiSpam:AC=CONTINUE;BC=0.1684025|-1;CH=green;DM=|CONTINUE|false|;DS=CONTINUE|ham_enroll_verification|0.0108859-0.000814038-0.9883;FP=0|0|0|0|0|-1|-1|-1;HT=ay29a033018047201;MF=wangyugui@e16-tech.com;NM=1;PH=DS;RN=17;RT=17;SR=0;TI=SMTPD_---.Qvn4t1z_1674008073;
+Received: from 192.168.2.112(mailfrom:wangyugui@e16-tech.com fp:SMTPD_---.Qvn4t1z_1674008073)
+          by smtp.aliyun-inc.com;
+          Wed, 18 Jan 2023 10:14:34 +0800
+Date: Wed, 18 Jan 2023 10:14:35 +0800
+From: Wang Yugui <wangyugui@e16-tech.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+ hch@lst.de
+Subject: Re: [PATCH 6.1 000/183] 6.1.7-rc1 review
+Cc: stable@vger.kernel.org,
+ patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org,
+ akpm@linux-foundation.org,
+ linux@roeck-us.net,
+ shuah@kernel.org,
+ patches@kernelci.org,
+ lkft-triage@lists.linaro.org,
+ pavel@denx.de,
+ jonathanh@nvidia.com,
+ f.fainelli@gmail.com,
+ sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net,
+ rwarsow@gmx.de
+In-Reply-To: <Y8Znr6CAFi8ikhdH@kroah.com>
+References: <20230117151136.CB79.409509F4@e16-tech.com> <Y8Znr6CAFi8ikhdH@kroah.com>
+Message-Id: <20230118101433.734D.409509F4@e16-tech.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230117124546.116438951@linuxfoundation.org>
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Becky! ver. 2.81.04 [en]
 
-On Tue, Jan 17, 2023 at 01:48:13PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.7 release.
-> There are 176 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+Hi,
+
+> On Tue, Jan 17, 2023 at 03:11:37PM +0800, Wang Yugui wrote:
+> > Hi,
+> > 
+> > fstests(generic/034, xfs) panic when 6.1.7-rc1, but not panic when 6.1.6.
+> > 
+> > It seems patch *1 related.
+> > *1 Subject: blk-mq: move the srcu_struct used for quiescing to the tagset
+> > From: Christoph Hellwig <hch@lst.de>
+> > 
+> > This patch has been drop from 6.1.2-rc1. and it now added in 6.1.7-rc1 again.
+> > 
+> > the panic in 6.1.7-rc1 is almost same as that in 6.1.2-rc1.
 > 
-> Responses should be made by Thu, 19 Jan 2023 12:45:11 +0000.
-> Anything received after that time might be too late.
+> Argh, yes, let me go drop these again.
 > 
+> Sasha, can you blacklist these from your tools so they don't get picked
+> up again?
 
-Build results:
-	total: 155 pass: 155 fail: 0
-Qemu test results:
-	total: 502 pass: 502 fail: 0
+this panic does not happen on  upstream 6.2.0-rc4.
+or maybe we need a bigger patch set?
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+Best Regards
+Wang Yugui (wangyugui@e16-tech.com)
+2023/01/18
 
-Guenter
