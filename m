@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C4C7E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:09:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FADEC433EF;
-	Sun, 22 Jan 2023 15:09:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2057E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:09:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7554C4339B;
+	Sun, 22 Jan 2023 15:09:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400178;
-	bh=o+y11JrNaAMZQidWV4+amDUkAeaWTOxNQPbCDToBqQ8=;
+	s=korg; t=1674400181;
+	bh=NUdP9PTMsA/Vaj0UhvJsNljCS5B81Vi8XZZYCso9a8s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1FQ3Ms34ufU3mj4haEeZIlH8QuablG8FXeefuFgFHDTg+FRYTAFpnOrj9OGfXyi7f
-	 /UKwT+mszoeocoH9GyZxx4ZgbESfPAYbw0ot+aJXwN7q3PTP4hP2cONfh6c35Y4t9P
-	 lmGq3v7nN34IxpjNAjLU4KOU6Y/EVI2vzqYAYrK8=
+	b=Hj3CDYCwkPeCUMEp1fDBBc3lKg02AANvS2LjmoZ+5HGDpErsnkNgAw7lCkmeYJir9
+	 ZVpxTZ7FhfAkhDKQzgTJrflg0t0agBzws5CdIUU6lAn3JrTGxOCoDWF38MHCQL/5xJ
+	 Qt7h8kCzmKqjtkiflOFTDwOZumFBr/+Q1L7R53OI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel@sholland.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 31/55] mmc: sunxi-mmc: Fix clock refcount imbalance during unbind
-Date: Sun, 22 Jan 2023 16:04:18 +0100
-Message-Id: <20230122150223.516150238@linuxfoundation.org>
+	syzbot+96977faa68092ad382c4@syzkaller.appspotmail.com,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.4 32/55] btrfs: fix race between quota rescan and disable leading to NULL pointer deref
+Date: Sun, 22 Jan 2023 16:04:19 +0100
+Message-Id: <20230122150223.546678122@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150222.210885219@linuxfoundation.org>
 References: <20230122150222.210885219@linuxfoundation.org>
@@ -35,41 +35,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samuel Holland <samuel@sholland.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit 8509419758f2cc28dd05370385af0d91573b76b4 upstream.
+commit b7adbf9ada3513d2092362c8eac5cddc5b651f5c upstream.
 
-If the controller is suspended by runtime PM, the clock is already
-disabled, so do not try to disable it again during removal. Use
-pm_runtime_disable() to flush any pending runtime PM transitions.
+If we have one task trying to start the quota rescan worker while another
+one is trying to disable quotas, we can end up hitting a race that results
+in the quota rescan worker doing a NULL pointer dereference. The steps for
+this are the following:
 
-Fixes: 9a8e1e8cc2c0 ("mmc: sunxi: Add runtime_pm support")
-Signed-off-by: Samuel Holland <samuel@sholland.org>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20220810022509.43743-1-samuel@sholland.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+1) Quotas are enabled;
+
+2) Task A calls the quota rescan ioctl and enters btrfs_qgroup_rescan().
+   It calls qgroup_rescan_init() which returns 0 (success) and then joins a
+   transaction and commits it;
+
+3) Task B calls the quota disable ioctl and enters btrfs_quota_disable().
+   It clears the bit BTRFS_FS_QUOTA_ENABLED from fs_info->flags and calls
+   btrfs_qgroup_wait_for_completion(), which returns immediately since the
+   rescan worker is not yet running.
+   Then it starts a transaction and locks fs_info->qgroup_ioctl_lock;
+
+4) Task A queues the rescan worker, by calling btrfs_queue_work();
+
+5) The rescan worker starts, and calls rescan_should_stop() at the start
+   of its while loop, which results in 0 iterations of the loop, since
+   the flag BTRFS_FS_QUOTA_ENABLED was cleared from fs_info->flags by
+   task B at step 3);
+
+6) Task B sets fs_info->quota_root to NULL;
+
+7) The rescan worker tries to start a transaction and uses
+   fs_info->quota_root as the root argument for btrfs_start_transaction().
+   This results in a NULL pointer dereference down the call chain of
+   btrfs_start_transaction(). The stack trace is something like the one
+   reported in Link tag below:
+
+   general protection fault, probably for non-canonical address 0xdffffc0000000041: 0000 [#1] PREEMPT SMP KASAN
+   KASAN: null-ptr-deref in range [0x0000000000000208-0x000000000000020f]
+   CPU: 1 PID: 34 Comm: kworker/u4:2 Not tainted 6.1.0-syzkaller-13872-gb6bb9676f216 #0
+   Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+   Workqueue: btrfs-qgroup-rescan btrfs_work_helper
+   RIP: 0010:start_transaction+0x48/0x10f0 fs/btrfs/transaction.c:564
+   Code: 48 89 fb 48 (...)
+   RSP: 0018:ffffc90000ab7ab0 EFLAGS: 00010206
+   RAX: 0000000000000041 RBX: 0000000000000208 RCX: ffff88801779ba80
+   RDX: 0000000000000000 RSI: 0000000000000001 RDI: 0000000000000000
+   RBP: dffffc0000000000 R08: 0000000000000001 R09: fffff52000156f5d
+   R10: fffff52000156f5d R11: 1ffff92000156f5c R12: 0000000000000000
+   R13: 0000000000000001 R14: 0000000000000001 R15: 0000000000000003
+   FS:  0000000000000000(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
+   CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+   CR2: 00007f2bea75b718 CR3: 000000001d0cc000 CR4: 00000000003506e0
+   DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+   DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+   Call Trace:
+    <TASK>
+    btrfs_qgroup_rescan_worker+0x3bb/0x6a0 fs/btrfs/qgroup.c:3402
+    btrfs_work_helper+0x312/0x850 fs/btrfs/async-thread.c:280
+    process_one_work+0x877/0xdb0 kernel/workqueue.c:2289
+    worker_thread+0xb14/0x1330 kernel/workqueue.c:2436
+    kthread+0x266/0x300 kernel/kthread.c:376
+    ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
+    </TASK>
+   Modules linked in:
+
+So fix this by having the rescan worker function not attempt to start a
+transaction if it didn't do any rescan work.
+
+Reported-by: syzbot+96977faa68092ad382c4@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/000000000000e5454b05f065a803@google.com/
+Fixes: e804861bd4e6 ("btrfs: fix deadlock between quota disable and qgroup rescan worker")
+CC: stable@vger.kernel.org # 5.4+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sunxi-mmc.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/btrfs/qgroup.c |   25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
---- a/drivers/mmc/host/sunxi-mmc.c
-+++ b/drivers/mmc/host/sunxi-mmc.c
-@@ -1456,9 +1456,11 @@ static int sunxi_mmc_remove(struct platf
- 	struct sunxi_mmc_host *host = mmc_priv(mmc);
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -3209,6 +3209,7 @@ static void btrfs_qgroup_rescan_worker(s
+ 	int err = -ENOMEM;
+ 	int ret = 0;
+ 	bool stopped = false;
++	bool did_leaf_rescans = false;
  
- 	mmc_remove_host(mmc);
--	pm_runtime_force_suspend(&pdev->dev);
--	disable_irq(host->irq);
--	sunxi_mmc_disable(host);
-+	pm_runtime_disable(&pdev->dev);
-+	if (!pm_runtime_status_suspended(&pdev->dev)) {
-+		disable_irq(host->irq);
-+		sunxi_mmc_disable(host);
-+	}
- 	dma_free_coherent(&pdev->dev, PAGE_SIZE, host->sg_cpu, host->sg_dma);
- 	mmc_free_host(mmc);
+ 	path = btrfs_alloc_path();
+ 	if (!path)
+@@ -3229,6 +3230,7 @@ static void btrfs_qgroup_rescan_worker(s
+ 		}
  
+ 		err = qgroup_rescan_leaf(trans, path);
++		did_leaf_rescans = true;
+ 
+ 		if (err > 0)
+ 			btrfs_commit_transaction(trans);
+@@ -3249,16 +3251,23 @@ out:
+ 	mutex_unlock(&fs_info->qgroup_rescan_lock);
+ 
+ 	/*
+-	 * only update status, since the previous part has already updated the
+-	 * qgroup info.
++	 * Only update status, since the previous part has already updated the
++	 * qgroup info, and only if we did any actual work. This also prevents
++	 * race with a concurrent quota disable, which has already set
++	 * fs_info->quota_root to NULL and cleared BTRFS_FS_QUOTA_ENABLED at
++	 * btrfs_quota_disable().
+ 	 */
+-	trans = btrfs_start_transaction(fs_info->quota_root, 1);
+-	if (IS_ERR(trans)) {
+-		err = PTR_ERR(trans);
++	if (did_leaf_rescans) {
++		trans = btrfs_start_transaction(fs_info->quota_root, 1);
++		if (IS_ERR(trans)) {
++			err = PTR_ERR(trans);
++			trans = NULL;
++			btrfs_err(fs_info,
++				  "fail to start transaction for status update: %d",
++				  err);
++		}
++	} else {
+ 		trans = NULL;
+-		btrfs_err(fs_info,
+-			  "fail to start transaction for status update: %d",
+-			  err);
+ 	}
+ 
+ 	mutex_lock(&fs_info->qgroup_rescan_lock);
 
 
