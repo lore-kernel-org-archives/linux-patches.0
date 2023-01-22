@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB32D2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:28:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31BEFC433EF;
-	Sun, 22 Jan 2023 15:28:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1392590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:28:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD066C433D2;
+	Sun, 22 Jan 2023 15:28:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401319;
-	bh=LBke1HruBG+/WHdArF96ew+buhXlNxs5cAIENF5RsLc=;
+	s=korg; t=1674401322;
+	bh=85kQ0T4gD/QejF0oASW15FZVXbt2jPFPzQ8XZIW3dcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vO49MyauqqaibGpTlxOpguxeq1G9AyiLStVOiDnKinLFZ61r0GIgsAAXLLbr8tVky
-	 /He1cGNiIJmkkeIAM/78965gPzZQpXd38ljjYl9k6Fp2zy7mvbyYM/LJ0WVaNucqYX
-	 P0SuSOiffTS9Kh9wlCVK3wc5wTCFvuHOy2jmBZUk=
+	b=Rpj6zwdpA3OS3u9H7f7id534/fvufhL1zb1s2QMWwcYnaEvJrhEYZiyJ659d/aPIF
+	 Wipa4OHqOdP+X9Hn8ht2mRzMz3WX1im3w342jpJYUnYCG+7cG6LU2pW94MQip3mFT0
+	 0XzDq8UtgmLnzVTQfCnoxxgSqq89HpaUj1k4WJGA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aaron Liu <aaron.liu@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	"Limonciello, Mario" <Mario.Limonciello@amd.com>
-Subject: [PATCH 6.1 165/193] drm/amdgpu: set GC 11.0.4 family
-Date: Sun, 22 Jan 2023 16:04:54 +0100
-Message-Id: <20230122150253.945335841@linuxfoundation.org>
+Subject: [PATCH 6.1 166/193] drm/amdgpu/discovery: set the APU flag for GC 11.0.4
+Date: Sun, 22 Jan 2023 16:04:55 +0100
+Message-Id: <20230122150253.995420918@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -38,9 +38,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Yifan Zhang <yifan1.zhang@amd.com>
 
-commit 94ab70685844227b5c9cb9027a5c4acd3b0e4564 upstream.
+commit dd2d9c7fd7716838d477e257f43facd68c53d3a9 upstream.
 
-this patch is to set GC 11.0.4 family.
+Set the APU flag appropriately for GC 11.0.4.
 
 Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
 Reviewed-by: Aaron Liu <aaron.liu@amd.com>
@@ -53,12 +53,12 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
 +++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-@@ -2181,6 +2181,7 @@ int amdgpu_discovery_set_ip_blocks(struc
- 		adev->family = AMDGPU_FAMILY_GC_11_0_0;
- 		break;
+@@ -2199,6 +2199,7 @@ int amdgpu_discovery_set_ip_blocks(struc
+ 	case IP_VERSION(10, 3, 6):
+ 	case IP_VERSION(10, 3, 7):
  	case IP_VERSION(11, 0, 1):
 +	case IP_VERSION(11, 0, 4):
- 		adev->family = AMDGPU_FAMILY_GC_11_0_1;
+ 		adev->flags |= AMD_IS_APU;
  		break;
  	default:
 
