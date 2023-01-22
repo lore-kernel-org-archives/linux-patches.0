@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DD202590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16FCAC433D2;
-	Sun, 22 Jan 2023 15:25:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E102590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5DEC4339C;
+	Sun, 22 Jan 2023 15:25:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401117;
-	bh=zrw4gvJxZUcXgyLe7QzFTvXZhIDKTkg54A6elqKID4c=;
+	s=korg; t=1674401120;
+	bh=m77qKFXT/8M69a4TSIEm41rDIJOJw78i/IdZkIaw2KA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bB7GyEhhYrhe7M5XontJrGLnLUR4sWpSHoaUZ1zuxtixv7xwq2Jfke1Rlcr649sUQ
-	 hi9v2vsp6dwvnOg3pr9TaSrCXOswNe16qwlmSeH2jJSQrpQU0Bf+/E893C6C7RNnqU
-	 17yfazh4kLEM8G0Th1LvwencaSNYmoYuTDWnKzQc=
+	b=KlI6LiCnsNM3mJUy6oSE0oT1k01YmLC18VzxEq8tmiJovNmT6BRRUvdGU3r0L/gwf
+	 iA2ZufxB6MXl633ebRm3It7Z7heIBICyqo5nhIU6T9M+CCUWibCNkFVVwU/56GKhq3
+	 KEuLym5nbL6598d/IZtofhPL8oXqss7UNvoJYxAs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peng Fan <peng.fan@nxp.com>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>,
-	Li Jun <jun.li@nxp.com>,
-	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.1 116/193] arm64: dts: imx8mp: correct usb clocks
-Date: Sun, 22 Jan 2023 16:04:05 +0100
-Message-Id: <20230122150251.636547230@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.1 117/193] dt-bindings: phy: g12a-usb2-phy: fix compatible string documentation
+Date: Sun, 22 Jan 2023 16:04:06 +0100
+Message-Id: <20230122150251.679253112@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -36,69 +36,188 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li Jun <jun.li@nxp.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit 8a1ed98fe0f2e7669f0409de0f46f317b275f8be upstream.
+commit c63835bf1c750c9b3aec1d5c23d811d6375fc23d upstream.
 
-After commit cf7f3f4fa9e5 ("clk: imx8mp: fix usb_root_clk parent"),
-usb_root_clk is no longer for suspend clock so update dts accordingly
-to use right bus clock and suspend clock.
+The compatible strings in the driver don't have the meson prefix.
+Fix this in the documentation and rename the file accordingly.
 
-Fixes: fb8587a2c165 ("arm64: dtsi: imx8mp: add usb nodes")
-Cc: stable@vger.kernel.org # ed1f4ccfe947: clk: imx: imx8mp: add shared clk gate for usb suspend clk
-Cc: stable@vger.kernel.org # v5.19+
-Reviewed-by: Peng Fan <peng.fan@nxp.com>
-Tested-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Signed-off-by: Li Jun <jun.li@nxp.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: da86d286cce8 ("dt-bindings: phy: meson-g12a-usb2-phy: convert to yaml")
+Cc: stable@vger.kernel.org
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/8d960029-e94d-224b-911f-03e5deb47ebc@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mp.dtsi |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml       |   78 ++++++++++
+ Documentation/devicetree/bindings/phy/amlogic,meson-g12a-usb2-phy.yaml |   78 ----------
+ 2 files changed, 78 insertions(+), 78 deletions(-)
+ rename Documentation/devicetree/bindings/phy/{amlogic,meson-g12a-usb2-phy.yaml => amlogic,g12a-usb2-phy.yaml} (85%)
 
---- a/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-+++ b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
-@@ -1279,7 +1279,7 @@
- 			reg = <0x32f10100 0x8>,
- 			      <0x381f0000 0x20>;
- 			clocks = <&clk IMX8MP_CLK_HSIO_ROOT>,
--				 <&clk IMX8MP_CLK_USB_ROOT>;
-+				 <&clk IMX8MP_CLK_USB_SUSP>;
- 			clock-names = "hsio", "suspend";
- 			interrupts = <GIC_SPI 148 IRQ_TYPE_LEVEL_HIGH>;
- 			power-domains = <&hsio_blk_ctrl IMX8MP_HSIOBLK_PD_USB>;
-@@ -1292,9 +1292,9 @@
- 			usb_dwc3_0: usb@38100000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x38100000 0x10000>;
--				clocks = <&clk IMX8MP_CLK_HSIO_AXI>,
-+				clocks = <&clk IMX8MP_CLK_USB_ROOT>,
- 					 <&clk IMX8MP_CLK_USB_CORE_REF>,
--					 <&clk IMX8MP_CLK_USB_ROOT>;
-+					 <&clk IMX8MP_CLK_USB_SUSP>;
- 				clock-names = "bus_early", "ref", "suspend";
- 				interrupts = <GIC_SPI 40 IRQ_TYPE_LEVEL_HIGH>;
- 				phys = <&usb3_phy0>, <&usb3_phy0>;
-@@ -1321,7 +1321,7 @@
- 			reg = <0x32f10108 0x8>,
- 			      <0x382f0000 0x20>;
- 			clocks = <&clk IMX8MP_CLK_HSIO_ROOT>,
--				 <&clk IMX8MP_CLK_USB_ROOT>;
-+				 <&clk IMX8MP_CLK_USB_SUSP>;
- 			clock-names = "hsio", "suspend";
- 			interrupts = <GIC_SPI 149 IRQ_TYPE_LEVEL_HIGH>;
- 			power-domains = <&hsio_blk_ctrl IMX8MP_HSIOBLK_PD_USB>;
-@@ -1334,9 +1334,9 @@
- 			usb_dwc3_1: usb@38200000 {
- 				compatible = "snps,dwc3";
- 				reg = <0x38200000 0x10000>;
--				clocks = <&clk IMX8MP_CLK_HSIO_AXI>,
-+				clocks = <&clk IMX8MP_CLK_USB_ROOT>,
- 					 <&clk IMX8MP_CLK_USB_CORE_REF>,
--					 <&clk IMX8MP_CLK_USB_ROOT>;
-+					 <&clk IMX8MP_CLK_USB_SUSP>;
- 				clock-names = "bus_early", "ref", "suspend";
- 				interrupts = <GIC_SPI 41 IRQ_TYPE_LEVEL_HIGH>;
- 				phys = <&usb3_phy1>, <&usb3_phy1>;
+--- /dev/null
++++ b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
+@@ -0,0 +1,78 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++# Copyright 2019 BayLibre, SAS
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/phy/amlogic,g12a-usb2-phy.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++
++title: Amlogic G12A USB2 PHY
++
++maintainers:
++  - Neil Armstrong <neil.armstrong@linaro.org>
++
++properties:
++  compatible:
++    enum:
++      - amlogic,g12a-usb2-phy
++      - amlogic,a1-usb2-phy
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    maxItems: 1
++
++  clock-names:
++    items:
++      - const: xtal
++
++  resets:
++    maxItems: 1
++
++  reset-names:
++    items:
++      - const: phy
++
++  "#phy-cells":
++    const: 0
++
++  phy-supply:
++    description:
++      Phandle to a regulator that provides power to the PHY. This
++      regulator will be managed during the PHY power on/off sequence.
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - resets
++  - reset-names
++  - "#phy-cells"
++
++if:
++  properties:
++    compatible:
++      enum:
++        - amlogic,meson-a1-usb-ctrl
++
++then:
++  properties:
++    power-domains:
++      maxItems: 1
++  required:
++    - power-domains
++
++additionalProperties: false
++
++examples:
++  - |
++    phy@36000 {
++          compatible = "amlogic,g12a-usb2-phy";
++          reg = <0x36000 0x2000>;
++          clocks = <&xtal>;
++          clock-names = "xtal";
++          resets = <&phy_reset>;
++          reset-names = "phy";
++          #phy-cells = <0>;
++    };
+--- a/Documentation/devicetree/bindings/phy/amlogic,meson-g12a-usb2-phy.yaml
++++ /dev/null
+@@ -1,78 +0,0 @@
+-# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+-# Copyright 2019 BayLibre, SAS
+-%YAML 1.2
+----
+-$id: "http://devicetree.org/schemas/phy/amlogic,meson-g12a-usb2-phy.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+-
+-title: Amlogic G12A USB2 PHY
+-
+-maintainers:
+-  - Neil Armstrong <neil.armstrong@linaro.org>
+-
+-properties:
+-  compatible:
+-    enum:
+-      - amlogic,meson-g12a-usb2-phy
+-      - amlogic,meson-a1-usb2-phy
+-
+-  reg:
+-    maxItems: 1
+-
+-  clocks:
+-    maxItems: 1
+-
+-  clock-names:
+-    items:
+-      - const: xtal
+-
+-  resets:
+-    maxItems: 1
+-
+-  reset-names:
+-    items:
+-      - const: phy
+-
+-  "#phy-cells":
+-    const: 0
+-
+-  phy-supply:
+-    description:
+-      Phandle to a regulator that provides power to the PHY. This
+-      regulator will be managed during the PHY power on/off sequence.
+-
+-required:
+-  - compatible
+-  - reg
+-  - clocks
+-  - clock-names
+-  - resets
+-  - reset-names
+-  - "#phy-cells"
+-
+-if:
+-  properties:
+-    compatible:
+-      enum:
+-        - amlogic,meson-a1-usb-ctrl
+-
+-then:
+-  properties:
+-    power-domains:
+-      maxItems: 1
+-  required:
+-    - power-domains
+-
+-additionalProperties: false
+-
+-examples:
+-  - |
+-    phy@36000 {
+-          compatible = "amlogic,meson-g12a-usb2-phy";
+-          reg = <0x36000 0x2000>;
+-          clocks = <&xtal>;
+-          clock-names = "xtal";
+-          resets = <&phy_reset>;
+-          reset-names = "phy";
+-          #phy-cells = <0>;
+-    };
 
 
