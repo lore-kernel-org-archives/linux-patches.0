@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3CA982590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6195C433EF;
-	Sun, 22 Jan 2023 15:16:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2AE32590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57C3EC433D2;
+	Sun, 22 Jan 2023 15:16:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400606;
-	bh=18DmUBkfpAST8cLTNjiiH0jC1UoGKBxwGmfIYGGsf1c=;
+	s=korg; t=1674400608;
+	bh=dMTokeTOP2fapzDhFYG23HyhkHv2Z/ZXzA2nfBtP9yY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ISHiJF7R83/ZljQk0pgVWtJhUDuLhw2W8BX2iS2haqYHJT98Ru79+FRhPK1KkFgbi
-	 AQZWQZzNlFLWPOiQAyITT/3m5kv8d1YUgdUnnMqjfp6qNhLM9kT0R/LwBhCk4yqhrI
-	 R0fZBfX9t4ZMGg5JGxnt+vV6oNd83Ji3/pqIzzuE=
+	b=XknXS0kajsiB4MDuPDyIJNg9dZOw2yC7DkIYuvaSIxL0MFCnQRQljjBGIGeUJdzt5
+	 KpTgVjq0uNDKcTH+0t0atYBorCc8yeg5mUu6LUcEfnYhr8OeIVvtb/jqaY/2NAiyMk
+	 Piuw4FqmKJKGwAoWsYzOdmdcL8ntEpvaadOSnyf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Constantine Gavrilov <constantine.gavrilov@gmail.com>,
+	syzbot+dfcc5f4da15868df7d4d@syzkaller.appspotmail.com,
+	Jan Kara <jack@suse.cz>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 032/117] io_uring: ensure recv and recvmsg handle MSG_WAITALL correctly
-Date: Sun, 22 Jan 2023 16:03:42 +0100
-Message-Id: <20230122150234.059931638@linuxfoundation.org>
+Subject: [PATCH 5.15 041/117] io_uring/rw: defer fsnotify calls to task context
+Date: Sun, 22 Jan 2023 16:03:51 +0100
+Message-Id: <20230122150234.449314518@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -37,103 +38,118 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-commit 7ba89d2af17aa879dda30f5d5d3f152e587fc551 upstream.
+commit b000145e9907809406d8164c3b2b8861d95aecd1 upstream.
 
-We currently don't attempt to get the full asked for length even if
-MSG_WAITALL is set, if we get a partial receive. If we do see a partial
-receive, then just note how many bytes we did and return -EAGAIN to
-get it retried.
+We can't call these off the kiocb completion as that might be off
+soft/hard irq context. Defer the calls to when we process the
+task_work for this request. That avoids valid complaints like:
 
-The iov is advanced appropriately for the vector based case, and we
-manually bump the buffer and remainder for the non-vector case.
+stack backtrace:
+CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.0.0-rc6-syzkaller-00321-g105a36f3694e #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/26/2022
+Call Trace:
+ <IRQ>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
+ print_usage_bug kernel/locking/lockdep.c:3961 [inline]
+ valid_state kernel/locking/lockdep.c:3973 [inline]
+ mark_lock_irq kernel/locking/lockdep.c:4176 [inline]
+ mark_lock.part.0.cold+0x18/0xd8 kernel/locking/lockdep.c:4632
+ mark_lock kernel/locking/lockdep.c:4596 [inline]
+ mark_usage kernel/locking/lockdep.c:4527 [inline]
+ __lock_acquire+0x11d9/0x56d0 kernel/locking/lockdep.c:5007
+ lock_acquire kernel/locking/lockdep.c:5666 [inline]
+ lock_acquire+0x1ab/0x570 kernel/locking/lockdep.c:5631
+ __fs_reclaim_acquire mm/page_alloc.c:4674 [inline]
+ fs_reclaim_acquire+0x115/0x160 mm/page_alloc.c:4688
+ might_alloc include/linux/sched/mm.h:271 [inline]
+ slab_pre_alloc_hook mm/slab.h:700 [inline]
+ slab_alloc mm/slab.c:3278 [inline]
+ __kmem_cache_alloc_lru mm/slab.c:3471 [inline]
+ kmem_cache_alloc+0x39/0x520 mm/slab.c:3491
+ fanotify_alloc_fid_event fs/notify/fanotify/fanotify.c:580 [inline]
+ fanotify_alloc_event fs/notify/fanotify/fanotify.c:813 [inline]
+ fanotify_handle_event+0x1130/0x3f40 fs/notify/fanotify/fanotify.c:948
+ send_to_group fs/notify/fsnotify.c:360 [inline]
+ fsnotify+0xafb/0x1680 fs/notify/fsnotify.c:570
+ __fsnotify_parent+0x62f/0xa60 fs/notify/fsnotify.c:230
+ fsnotify_parent include/linux/fsnotify.h:77 [inline]
+ fsnotify_file include/linux/fsnotify.h:99 [inline]
+ fsnotify_access include/linux/fsnotify.h:309 [inline]
+ __io_complete_rw_common+0x485/0x720 io_uring/rw.c:195
+ io_complete_rw+0x1a/0x1f0 io_uring/rw.c:228
+ iomap_dio_complete_work fs/iomap/direct-io.c:144 [inline]
+ iomap_dio_bio_end_io+0x438/0x5e0 fs/iomap/direct-io.c:178
+ bio_endio+0x5f9/0x780 block/bio.c:1564
+ req_bio_endio block/blk-mq.c:695 [inline]
+ blk_update_request+0x3fc/0x1300 block/blk-mq.c:825
+ scsi_end_request+0x7a/0x9a0 drivers/scsi/scsi_lib.c:541
+ scsi_io_completion+0x173/0x1f70 drivers/scsi/scsi_lib.c:971
+ scsi_complete+0x122/0x3b0 drivers/scsi/scsi_lib.c:1438
+ blk_complete_reqs+0xad/0xe0 block/blk-mq.c:1022
+ __do_softirq+0x1d3/0x9c6 kernel/softirq.c:571
+ invoke_softirq kernel/softirq.c:445 [inline]
+ __irq_exit_rcu+0x123/0x180 kernel/softirq.c:650
+ irq_exit_rcu+0x5/0x20 kernel/softirq.c:662
+ common_interrupt+0xa9/0xc0 arch/x86/kernel/irq.c:240
 
-Cc: stable@vger.kernel.org
-Reported-by: Constantine Gavrilov <constantine.gavrilov@gmail.com>
+Fixes: f63cf5192fe3 ("io_uring: ensure that fsnotify is always called")
+Link: https://lore.kernel.org/all/20220929135627.ykivmdks2w5vzrwg@quack3/
+Reported-by: syzbot+dfcc5f4da15868df7d4d@syzkaller.appspotmail.com
+Reported-by: Jan Kara <jack@suse.cz>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ io_uring/io_uring.c | 22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
 diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 93023562d548..04441e981624 100644
+index 73d261004c4a..78ed38d778f8 100644
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -578,6 +578,7 @@ struct io_sr_msg {
- 	int				msg_flags;
- 	int				bgid;
- 	size_t				len;
-+	size_t				done_io;
- 	struct io_buffer		*kbuf;
- };
+@@ -2705,12 +2705,6 @@ static bool io_rw_should_reissue(struct io_kiocb *req)
  
-@@ -5063,12 +5064,21 @@ static int io_recvmsg_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
- 	if (req->ctx->compat)
- 		sr->msg_flags |= MSG_CMSG_COMPAT;
- #endif
-+	sr->done_io = 0;
- 	return 0;
+ static bool __io_complete_rw_common(struct io_kiocb *req, long res)
+ {
+-	if (req->rw.kiocb.ki_flags & IOCB_WRITE) {
+-		kiocb_end_write(req);
+-		fsnotify_modify(req->file);
+-	} else {
+-		fsnotify_access(req->file);
+-	}
+ 	if (res != req->result) {
+ 		if ((res == -EAGAIN || res == -EOPNOTSUPP) &&
+ 		    io_rw_should_reissue(req)) {
+@@ -2763,6 +2757,20 @@ static void __io_complete_rw(struct io_kiocb *req, long res, long res2,
+ 	__io_req_complete(req, issue_flags, io_fixup_rw_res(req, res), io_put_rw_kbuf(req));
  }
  
-+static bool io_net_retry(struct socket *sock, int flags)
++static void io_req_rw_complete(struct io_kiocb *req, bool *locked)
 +{
-+	if (!(flags & MSG_WAITALL))
-+		return false;
-+	return sock->type == SOCK_STREAM || sock->type == SOCK_SEQPACKET;
++	struct io_rw *rw = &req->rw;
++
++	if (rw->kiocb.ki_flags & IOCB_WRITE) {
++		kiocb_end_write(req);
++		fsnotify_modify(req->file);
++	} else {
++		fsnotify_access(req->file);
++	}
++
++	io_req_task_complete(req, locked);
 +}
 +
- static int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
+ static void io_complete_rw(struct kiocb *kiocb, long res, long res2)
  {
- 	struct io_async_msghdr iomsg, *kmsg;
-+	struct io_sr_msg *sr = &req->sr_msg;
- 	struct socket *sock;
- 	struct io_buffer *kbuf;
- 	unsigned flags;
-@@ -5111,6 +5121,10 @@ static int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
- 			return io_setup_async_msg(req, kmsg);
- 		if (ret == -ERESTARTSYS)
- 			ret = -EINTR;
-+		if (ret > 0 && io_net_retry(sock, flags)) {
-+			sr->done_io += ret;
-+			return io_setup_async_msg(req, kmsg);
-+		}
- 		req_set_fail(req);
- 	} else if ((flags & MSG_WAITALL) && (kmsg->msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))) {
- 		req_set_fail(req);
-@@ -5122,6 +5136,10 @@ static int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
- 	if (kmsg->free_iov)
- 		kfree(kmsg->free_iov);
- 	req->flags &= ~REQ_F_NEED_CLEANUP;
-+	if (ret >= 0)
-+		ret += sr->done_io;
-+	else if (sr->done_io)
-+		ret = sr->done_io;
- 	__io_req_complete(req, issue_flags, ret, cflags);
- 	return 0;
+ 	struct io_kiocb *req = container_of(kiocb, struct io_kiocb, rw.kiocb);
+@@ -2770,7 +2778,7 @@ static void io_complete_rw(struct kiocb *kiocb, long res, long res2)
+ 	if (__io_complete_rw_common(req, res))
+ 		return;
+ 	req->result = io_fixup_rw_res(req, res);
+-	req->io_task_work.func = io_req_task_complete;
++	req->io_task_work.func = io_req_rw_complete;
+ 	io_req_task_work_add(req);
  }
-@@ -5174,12 +5192,22 @@ static int io_recv(struct io_kiocb *req, unsigned int issue_flags)
- 			return -EAGAIN;
- 		if (ret == -ERESTARTSYS)
- 			ret = -EINTR;
-+		if (ret > 0 && io_net_retry(sock, flags)) {
-+			sr->len -= ret;
-+			sr->buf += ret;
-+			sr->done_io += ret;
-+			return -EAGAIN;
-+		}
- 		req_set_fail(req);
- 	} else if ((flags & MSG_WAITALL) && (msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))) {
- 		req_set_fail(req);
- 	}
- 	if (req->flags & REQ_F_BUFFER_SELECTED)
- 		cflags = io_put_recv_kbuf(req);
-+	if (ret >= 0)
-+		ret += sr->done_io;
-+	else if (sr->done_io)
-+		ret = sr->done_io;
- 	__io_req_complete(req, issue_flags, ret, cflags);
- 	return 0;
- }
+ 
 -- 
 2.39.0
 
