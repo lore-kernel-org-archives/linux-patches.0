@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A6652590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A67E7C43442;
-	Sun, 22 Jan 2023 15:25:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB852590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A97C433D2;
+	Sun, 22 Jan 2023 15:25:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401107;
-	bh=y4jJji662PE8zmGj937GBvQ7RrN/fKIOqDq476udJ7Q=;
+	s=korg; t=1674401109;
+	bh=QWCDJGeSuUhItXpy6atRhtbdBh6Co6DYu7nr+j6obvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ii6BHh+lBY3Tkw82F8A3EZ6x2GrlxN7TVf38rlx1dQP06bO9lrBywQaXrBwIZ4lVT
-	 PoTBhulhuRhQGsQ34dHzGK6M3SbJSGeSl022i0JrwRd5n3lDDM/dh3B9LQBR2xpYJR
-	 iox61kdttUNiKE8grQX5TWG1zrgooRsK5oDB9Xhg=
+	b=zFmVIqqCP8pYInJnPXYiILa3FHrZXUdOi6T16h4AUzuW/In49Ubpyr4HH78Eo09FI
+	 sRB4b4x7Kz/lm0OkvWzZ+KiP5zCOcgMo1yTUVpmOQ4kJsQHFb0eM1rkNq7fExnUnGA
+	 xgLErD0fm38RzW7sz6pIk4u1Y0McAQs4DhPK445g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Chanh Nguyen <chanh@os.amperecomputing.com>,
-	Andrzej Pietrasiewicz <andrzej.p@collabora.com>,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Frank Li <frank.li@nxp.com>
-Subject: [PATCH 6.1 113/193] USB: gadget: Add ID numbers to configfs-gadget driver names
-Date: Sun, 22 Jan 2023 16:04:02 +0100
-Message-Id: <20230122150251.490579974@linuxfoundation.org>
+	Burn Alting <burn.alting@iinet.net.au>,
+	Jiri Olsa <olsajiri@gmail.com>,
+	Stanislav Fomichev <sdf@google.com>,
+	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 6.1 096/193] bpf: restore the ebpf program ID for BPF_AUDIT_UNLOAD and PERF_BPF_EVENT_PROG_UNLOAD
+Date: Sun, 22 Jan 2023 16:03:45 +0100
+Message-Id: <20230122150250.725207078@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -37,73 +38,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chanh Nguyen <chanh@os.amperecomputing.com>
+From: Paul Moore <paul@paul-moore.com>
 
-commit 7c07553807c5125c89de242d35c10c206fd8e6bb upstream.
+commit ef01f4e25c1760920e2c94f1c232350277ace69b upstream.
 
-It is unable to use configfs to attach more than one gadget. When
-attaching the second gadget, it always fails and the kernel message
-prints out:
+When changing the ebpf program put() routines to support being called
+from within IRQ context the program ID was reset to zero prior to
+calling the perf event and audit UNLOAD record generators, which
+resulted in problems as the ebpf program ID was bogus (always zero).
+This patch addresses this problem by removing an unnecessary call to
+bpf_prog_free_id() in __bpf_prog_offload_destroy() and adjusting
+__bpf_prog_put() to only call bpf_prog_free_id() after audit and perf
+have finished their bpf program unload tasks in
+bpf_prog_put_deferred().  For the record, no one can determine, or
+remember, why it was necessary to free the program ID, and remove it
+from the IDR, prior to executing bpf_prog_put_deferred();
+regardless, both Stanislav and Alexei agree that the approach in this
+patch should be safe.
 
-Error: Driver 'configfs-gadget' is already registered, aborting...
-UDC core: g1: driver registration failed: -16
+It is worth noting that when moving the bpf_prog_free_id() call, the
+do_idr_lock parameter was forced to true as the ebpf devs determined
+this was the correct as the do_idr_lock should always be true.  The
+do_idr_lock parameter will be removed in a follow-up patch, but it
+was kept here to keep the patch small in an effort to ease any stable
+backports.
 
-This commit fixes the problem by using the gadget name as a suffix
-to each configfs_gadget's driver name, thus making the names
-distinct.
+I also modified the bpf_audit_prog() logic used to associate the
+AUDIT_BPF record with other associated records, e.g. @ctx != NULL.
+Instead of keying off the operation, it now keys off the execution
+context, e.g. '!in_irg && !irqs_disabled()', which is much more
+appropriate and should help better connect the UNLOAD operations with
+the associated audit state (other audit records).
 
-Fixes: fc274c1e9973 ("USB: gadget: Add a new bus for gadgets")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Chanh Nguyen <chanh@os.amperecomputing.com>
-Reviewed-by: Andrzej Pietrasiewicz <andrzej.p@collabora.com>
-Tested-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Reviewed-by: Frank Li <frank.li@nxp.com>
-Link: https://lore.kernel.org/r/20230111065105.29205-1-chanh@os.amperecomputing.com
+Cc: stable@vger.kernel.org
+Fixes: d809e134be7a ("bpf: Prepare bpf_prog_put() to be called from irq context.")
+Reported-by: Burn Alting <burn.alting@iinet.net.au>
+Reported-by: Jiri Olsa <olsajiri@gmail.com>
+Suggested-by: Stanislav Fomichev <sdf@google.com>
+Suggested-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/r/20230106154400.74211-1-paul@paul-moore.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/configfs.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ kernel/bpf/offload.c |    3 ---
+ kernel/bpf/syscall.c |    6 ++----
+ 2 files changed, 2 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/gadget/configfs.c
-+++ b/drivers/usb/gadget/configfs.c
-@@ -392,6 +392,7 @@ static void gadget_info_attr_release(str
- 	WARN_ON(!list_empty(&gi->string_list));
- 	WARN_ON(!list_empty(&gi->available_func));
- 	kfree(gi->composite.gadget_driver.function);
-+	kfree(gi->composite.gadget_driver.driver.name);
- 	kfree(gi);
+--- a/kernel/bpf/offload.c
++++ b/kernel/bpf/offload.c
+@@ -216,9 +216,6 @@ static void __bpf_prog_offload_destroy(s
+ 	if (offload->dev_state)
+ 		offload->offdev->ops->destroy(prog);
+ 
+-	/* Make sure BPF_PROG_GET_NEXT_ID can't find this dead program */
+-	bpf_prog_free_id(prog, true);
+-
+ 	list_del_init(&offload->offloads);
+ 	kfree(offload);
+ 	prog->aux->offload = NULL;
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -1958,7 +1958,7 @@ static void bpf_audit_prog(const struct
+ 		return;
+ 	if (audit_enabled == AUDIT_OFF)
+ 		return;
+-	if (op == BPF_AUDIT_LOAD)
++	if (!in_irq() && !irqs_disabled())
+ 		ctx = audit_context();
+ 	ab = audit_log_start(ctx, GFP_ATOMIC, AUDIT_BPF);
+ 	if (unlikely(!ab))
+@@ -2053,6 +2053,7 @@ static void bpf_prog_put_deferred(struct
+ 	prog = aux->prog;
+ 	perf_event_bpf_event(prog, PERF_BPF_EVENT_PROG_UNLOAD, 0);
+ 	bpf_audit_prog(prog, BPF_AUDIT_UNLOAD);
++	bpf_prog_free_id(prog, true);
+ 	__bpf_prog_put_noref(prog, true);
  }
  
-@@ -1571,7 +1572,6 @@ static const struct usb_gadget_driver co
- 	.max_speed	= USB_SPEED_SUPER_PLUS,
- 	.driver = {
- 		.owner          = THIS_MODULE,
--		.name		= "configfs-gadget",
- 	},
- 	.match_existing_only = 1,
- };
-@@ -1622,13 +1622,21 @@ static struct config_group *gadgets_make
+@@ -2061,9 +2062,6 @@ static void __bpf_prog_put(struct bpf_pr
+ 	struct bpf_prog_aux *aux = prog->aux;
  
- 	gi->composite.gadget_driver = configfs_driver_template;
- 
-+	gi->composite.gadget_driver.driver.name = kasprintf(GFP_KERNEL,
-+							    "configfs-gadget.%s", name);
-+	if (!gi->composite.gadget_driver.driver.name)
-+		goto err;
-+
- 	gi->composite.gadget_driver.function = kstrdup(name, GFP_KERNEL);
- 	gi->composite.name = gi->composite.gadget_driver.function;
- 
- 	if (!gi->composite.gadget_driver.function)
--		goto err;
-+		goto out_free_driver_name;
- 
- 	return &gi->group;
-+
-+out_free_driver_name:
-+	kfree(gi->composite.gadget_driver.driver.name);
- err:
- 	kfree(gi);
- 	return ERR_PTR(-ENOMEM);
+ 	if (atomic64_dec_and_test(&aux->refcnt)) {
+-		/* bpf_prog_free_id() must be called first */
+-		bpf_prog_free_id(prog, do_idr_lock);
+-
+ 		if (in_irq() || irqs_disabled()) {
+ 			INIT_WORK(&aux->work, bpf_prog_put_deferred);
+ 			schedule_work(&aux->work);
 
 
