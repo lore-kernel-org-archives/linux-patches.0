@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5232590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:27:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD743C433EF;
-	Sun, 22 Jan 2023 15:27:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D3B2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:27:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63B50C433EF;
+	Sun, 22 Jan 2023 15:27:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401238;
-	bh=waqv/JE53Q4veFAuP51d+GBwpCZJNESb8/kh4tNwexA=;
+	s=korg; t=1674401240;
+	bh=bQnoNS0XjH1O/2AQytDihP+jVtkDXpNk+sC5q6JxebY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MYyX/zOHFNLqZ822R4GJl0u5okDq9TdI5nurBFjQMfDOcS6xJjRDiMI9VkxlIrjxu
-	 tyrcdIPhD0QRwXAihK+O1gdNFTvXXpz8ld0CT79Yx4Zsc6oTCpqbDqRBNQS4i17B97
-	 BOybz189bR89UtRA3HK1Yec2A41j8eC73t+ioA7E=
+	b=cJX8/McQuhHJr8WizZge13UM0py0DcMxJ/6xXrJN8greT53prH6nWJvNUf56FRcsA
+	 7HXKPJ8rgv+nMfKO+uiQSeVyX2/rPolvZmtgfQjgGuV2XpVkNx1ryFD7mlcbyRfGHL
+	 lBny5fsGvwluXDxCaaTVAHmr/W2B5xV7naOPiC84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Lang Yu <Lang.Yu@amd.com>,
+	Aaron Liu <aaron.liu@amd.com>,
+	Yifan Zhang <yifan1.zhang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 134/193] drm/amdgpu: fix amdgpu_job_free_resources v2
-Date: Sun, 22 Jan 2023 16:04:23 +0100
-Message-Id: <20230122150252.471317340@linuxfoundation.org>
+Subject: [PATCH 6.1 135/193] drm/amdgpu: allow multipipe policy on ASICs with one MEC
+Date: Sun, 22 Jan 2023 16:04:24 +0100
+Message-Id: <20230122150252.519689870@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -34,43 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian König <christian.koenig@amd.com>
+From: Lang Yu <Lang.Yu@amd.com>
 
-commit 74ea8e78ab349514c9f4df0be1189d91267d750d upstream.
+commit dc88063b87775971be564d79dc1b05f7b8b5c135 upstream.
 
-It can be that neither fence were initialized when we run out of UVD
-streams for example.
+Always enable multipipe policy on ASICs with GC VERSION > 9.0.0
+instead of MEC number > 1.
 
-v2: fix typo breaking compile
+This will allow multipipe policy on ASICs with one MEC,
+e.g., gfx11 APUs.
 
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2324
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Lang Yu <Lang.Yu@amd.com>
+Reviewed-by: Aaron Liu <aaron.liu@amd.com>
+Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_job.c |   10 ++++++++--
- 1 file changed, 8 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
-@@ -154,8 +154,14 @@ void amdgpu_job_free_resources(struct am
- 	struct dma_fence *f;
- 	unsigned i;
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_gfx.c
+@@ -156,6 +156,9 @@ static bool amdgpu_gfx_is_compute_multip
+ 		return amdgpu_compute_multipipe == 1;
+ 	}
  
--	/* use sched fence if available */
--	f = job->base.s_fence ? &job->base.s_fence->finished :  &job->hw_fence;
-+	/* Check if any fences where initialized */
-+	if (job->base.s_fence && job->base.s_fence->finished.ops)
-+		f = &job->base.s_fence->finished;
-+	else if (job->hw_fence.ops)
-+		f = &job->hw_fence;
-+	else
-+		f = NULL;
++	if (adev->ip_versions[GC_HWIP][0] > IP_VERSION(9, 0, 0))
++		return true;
 +
- 	for (i = 0; i < job->num_ibs; ++i)
- 		amdgpu_ib_free(ring->adev, &job->ibs[i], f);
- }
+ 	/* FIXME: spreading the queues across pipes causes perf regressions
+ 	 * on POLARIS11 compute workloads */
+ 	if (adev->asic_type == CHIP_POLARIS11)
 
 
