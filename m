@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63862590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:27:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A229C433EF;
-	Sun, 22 Jan 2023 15:27:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43E1D2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:28:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBAB7C433D2;
+	Sun, 22 Jan 2023 15:27:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401277;
-	bh=2awkV/Mup82aTVUp+wDSA8RjQGb/SKRWMP/nnLhK6bk=;
+	s=korg; t=1674401280;
+	bh=ReBOtPZ5fpUjOsWwyJ/QczdIT5b+B2+bozn5z18Wc0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gHV2gpYzx1hwj5zpOCX5oRn9xeNFc8LiozFZDKJ3jfE1QfksO1t9UnLEHNwwC/s4z
-	 Izz2hWunoccD/oKMkyS0ZLCkEYbKihfcC+2rwa/36FpbwqA3LoKlUlE1Xz5Cg+muBS
-	 zaL01ZuvjhbERgDXSNSWG9de/axyQ9vWgv4eF+MI=
+	b=DNam/46ttol6ii+3KzG/RRXDhayrZs7gwxPhz0u0DOgkTYjcJQST0/05uv4E8bCQI
+	 akb2uST6dI8bsZ39VktltR4MzIvb2yOXjFT6ChMfq9jvm5rp3vdX1WJfw3MyzW5Oz0
+	 QmBCpsIevIdmjHUFwMb+jnBzoe6IS7/VBRDHlUfc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dennis Gilmore <dennis@ausil.us>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 6.1 160/193] arch: fix broken BuildID for arm64 and riscv
-Date: Sun, 22 Jan 2023 16:04:49 +0100
-Message-Id: <20230122150253.715751257@linuxfoundation.org>
+	Tim Huang <tim.huang@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	"Limonciello, Mario" <Mario.Limonciello@amd.com>
+Subject: [PATCH 6.1 178/193] drm/amdgpu: enable GFX Power Gating for GC IP v11.0.4
+Date: Sun, 22 Jan 2023 16:05:07 +0100
+Message-Id: <20230122150254.565994981@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -36,55 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Tim Huang <tim.huang@amd.com>
 
-commit 99cb0d917ffa1ab628bb67364ca9b162c07699b1 upstream.
+commit a89e2965da6e644729a8ee9c318b7fa9a2990353 upstream.
 
-Dennis Gilmore reports that the BuildID is missing in the arm64 vmlinux
-since commit 994b7ac1697b ("arm64: remove special treatment for the
-link order of head.o").
+Enable GFX Power Gating control for GC IP v11.0.4.
 
-The issue is that the type of .notes section, which contains the BuildID,
-changed from NOTES to PROGBITS.
-
-Ard Biesheuvel figured out that whichever object gets linked first gets
-to decide the type of a section. The PROGBITS type is the result of the
-compiler emitting .note.GNU-stack as PROGBITS rather than NOTE.
-
-While Ard provided a fix for arm64, I want to fix this globally because
-the same issue is happening on riscv since commit 2348e6bf4421 ("riscv:
-remove special treatment for the link order of head.o"). This problem
-will happen in general for other architectures if they start to drop
-unneeded entries from scripts/head-object-list.txt.
-
-Discard .note.GNU-stack in include/asm-generic/vmlinux.lds.h.
-
-Link: https://lore.kernel.org/lkml/CAABkxwuQoz1CTbyb57n0ZX65eSYiTonFCU8-LCQc=74D=xE=rA@mail.gmail.com/
-Fixes: 994b7ac1697b ("arm64: remove special treatment for the link order of head.o")
-Fixes: 2348e6bf4421 ("riscv: remove special treatment for the link order of head.o")
-Reported-by: Dennis Gilmore <dennis@ausil.us>
-Suggested-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Tim Huang <tim.huang@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: "Limonciello, Mario" <Mario.Limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/asm-generic/vmlinux.lds.h |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -929,7 +929,12 @@
- #define PRINTK_INDEX
- #endif
- 
-+/*
-+ * Discard .note.GNU-stack, which is emitted as PROGBITS by the compiler.
-+ * Otherwise, the type of .notes section would become PROGBITS instead of NOTES.
-+ */
- #define NOTES								\
-+	/DISCARD/ : { *(.note.GNU-stack) }				\
- 	.notes : AT(ADDR(.notes) - LOAD_OFFSET) {			\
- 		__start_notes = .;					\
- 		KEEP(*(.note.*))					\
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -5030,6 +5030,7 @@ static void gfx_v11_cntl_power_gating(st
+ 	if (enable && (adev->pg_flags & AMD_PG_SUPPORT_GFX_PG)) {
+ 		switch (adev->ip_versions[GC_HWIP][0]) {
+ 		case IP_VERSION(11, 0, 1):
++		case IP_VERSION(11, 0, 4):
+ 			WREG32_SOC15(GC, 0, regRLC_PG_DELAY_3, RLC_PG_DELAY_3_DEFAULT_GC_11_0_1);
+ 			break;
+ 		default:
+@@ -5063,6 +5064,7 @@ static int gfx_v11_0_set_powergating_sta
+ 		amdgpu_gfx_off_ctrl(adev, enable);
+ 		break;
+ 	case IP_VERSION(11, 0, 1):
++	case IP_VERSION(11, 0, 4):
+ 		gfx_v11_cntl_pg(adev, enable);
+ 		amdgpu_gfx_off_ctrl(adev, enable);
+ 		break;
 
 
