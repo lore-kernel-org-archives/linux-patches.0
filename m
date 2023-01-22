@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269682590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:28:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859ECC433EF;
-	Sun, 22 Jan 2023 15:28:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 999BA2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:29:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EF8BC433EF;
+	Sun, 22 Jan 2023 15:28:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401337;
-	bh=dYMdwDmZrPtr5kQ3fz9qp6YbHiWGqbv1qidVqsEqXZA=;
+	s=korg; t=1674401340;
+	bh=6I7Oq48Mak5SoRsHevIRnva2vdF4yNKMhbgq3e4r0vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=d3PCiW0YoSRal5KVkHAQTvcVY78IMVPp/aRE+4I7KfCzub90UdNBU0qTiUO13CRee
-	 rhroO7A4kVrPv+Vk8V6WBhmqBoy6lz06UtxkgQ6s83FsE8PluCLVGGnUiRzXBEPDUu
-	 5YlonO4fWfM6OFHZOXFUT0E5SMWWdtNMmfL95IF0=
+	b=LfpQUkBG1yHkCQc8maqzJ1WlfV2Om3Nrj1UKCQRFpxtr7bRX3mnD16d81mrtV2AmO
+	 cLHOFVbqabS4c8gvFnt27nBaisKfnxA8cvDrO040AFS3UMWiKWRVrRepleizEKW/An
+	 bIZwykBx9UJiBeXmwHdY1A4AIMG3YRE4KVBI/HC0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 6.1 193/193] soc: qcom: apr: Make qcom,protection-domain optional again
-Date: Sun, 22 Jan 2023 16:05:22 +0100
-Message-Id: <20230122150255.248263752@linuxfoundation.org>
+	Kevin Hao <haokexin@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 6.1 189/193] octeontx2-pf: Fix the use of GFP_KERNEL in atomic context on rt
+Date: Sun, 22 Jan 2023 16:05:18 +0100
+Message-Id: <20230122150255.055203807@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -34,45 +34,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephan Gerhold <stephan@gerhold.net>
+From: Kevin Hao <haokexin@gmail.com>
 
-commit 599d41fb8ea8bd2a99ca9525dd69405020e43dda upstream.
+commit 55ba18dc62deff5910c0fa64486dea1ff20832ff upstream.
 
-APR should not fail if the service device tree node does not have
-the qcom,protection-domain property, since this functionality does
-not exist on older platforms such as MSM8916 and MSM8996.
+The commit 4af1b64f80fb ("octeontx2-pf: Fix lmtst ID used in aura
+free") uses the get/put_cpu() to protect the usage of percpu pointer
+in ->aura_freeptr() callback, but it also unnecessarily disable the
+preemption for the blockable memory allocation. The commit 87b93b678e95
+("octeontx2-pf: Avoid use of GFP_KERNEL in atomic context") tried to
+fix these sleep inside atomic warnings. But it only fix the one for
+the non-rt kernel. For the rt kernel, we still get the similar warnings
+like below.
+  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:46
+  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 1, name: swapper/0
+  preempt_count: 1, expected: 0
+  RCU nest depth: 0, expected: 0
+  3 locks held by swapper/0/1:
+   #0: ffff800009fc5fe8 (rtnl_mutex){+.+.}-{3:3}, at: rtnl_lock+0x24/0x30
+   #1: ffff000100c276c0 (&mbox->lock){+.+.}-{3:3}, at: otx2_init_hw_resources+0x8c/0x3a4
+   #2: ffffffbfef6537e0 (&cpu_rcache->lock){+.+.}-{2:2}, at: alloc_iova_fast+0x1ac/0x2ac
+  Preemption disabled at:
+  [<ffff800008b1908c>] otx2_rq_aura_pool_init+0x14c/0x284
+  CPU: 20 PID: 1 Comm: swapper/0 Tainted: G        W          6.2.0-rc3-rt1-yocto-preempt-rt #1
+  Hardware name: Marvell OcteonTX CN96XX board (DT)
+  Call trace:
+   dump_backtrace.part.0+0xe8/0xf4
+   show_stack+0x20/0x30
+   dump_stack_lvl+0x9c/0xd8
+   dump_stack+0x18/0x34
+   __might_resched+0x188/0x224
+   rt_spin_lock+0x64/0x110
+   alloc_iova_fast+0x1ac/0x2ac
+   iommu_dma_alloc_iova+0xd4/0x110
+   __iommu_dma_map+0x80/0x144
+   iommu_dma_map_page+0xe8/0x260
+   dma_map_page_attrs+0xb4/0xc0
+   __otx2_alloc_rbuf+0x90/0x150
+   otx2_rq_aura_pool_init+0x1c8/0x284
+   otx2_init_hw_resources+0xe4/0x3a4
+   otx2_open+0xf0/0x610
+   __dev_open+0x104/0x224
+   __dev_change_flags+0x1e4/0x274
+   dev_change_flags+0x2c/0x7c
+   ic_open_devs+0x124/0x2f8
+   ip_auto_config+0x180/0x42c
+   do_one_initcall+0x90/0x4dc
+   do_basic_setup+0x10c/0x14c
+   kernel_init_freeable+0x10c/0x13c
+   kernel_init+0x2c/0x140
+   ret_from_fork+0x10/0x20
 
-Ignore -EINVAL (returned when the property does not exist) to fix
-a regression on 6.2-rc1 that prevents audio from working:
+Of course, we can shuffle the get/put_cpu() to only wrap the invocation
+of ->aura_freeptr() as what commit 87b93b678e95 does. But there are only
+two ->aura_freeptr() callbacks, otx2_aura_freeptr() and
+cn10k_aura_freeptr(). There is no usage of perpcu variable in the
+otx2_aura_freeptr() at all, so the get/put_cpu() seems redundant to it.
+We can move the get/put_cpu() into the corresponding callback which
+really has the percpu variable usage and avoid the sprinkling of
+get/put_cpu() in several places.
 
-  qcom,apr remoteproc0:smd-edge.apr_audio_svc.-1.-1:
-    Failed to read second value of qcom,protection-domain
-  qcom,apr remoteproc0:smd-edge.apr_audio_svc.-1.-1:
-    Failed to add apr 3 svc
-
-Fixes: 6d7860f5750d ("soc: qcom: apr: Add check for idr_alloc and of_property_read_string_index")
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221229151648.19839-3-stephan@gerhold.net
+Fixes: 4af1b64f80fb ("octeontx2-pf: Fix lmtst ID used in aura free")
+Signed-off-by: Kevin Hao <haokexin@gmail.com>
+Link: https://lore.kernel.org/r/20230118071300.3271125-1-haokexin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/apr.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c |   11 ++---------
+ drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h |    2 ++
+ 2 files changed, 4 insertions(+), 9 deletions(-)
 
---- a/drivers/soc/qcom/apr.c
-+++ b/drivers/soc/qcom/apr.c
-@@ -461,9 +461,10 @@ static int apr_add_device(struct device
- 		goto out;
- 	}
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
+@@ -1012,7 +1012,6 @@ static void otx2_pool_refill_task(struct
+ 	rbpool = cq->rbpool;
+ 	free_ptrs = cq->pool_ptrs;
  
-+	/* Protection domain is optional, it does not exist on older platforms */
- 	ret = of_property_read_string_index(np, "qcom,protection-domain",
- 					    1, &adev->service_path);
--	if (ret < 0) {
-+	if (ret < 0 && ret != -EINVAL) {
- 		dev_err(dev, "Failed to read second value of qcom,protection-domain\n");
- 		goto out;
+-	get_cpu();
+ 	while (cq->pool_ptrs) {
+ 		if (otx2_alloc_rbuf(pfvf, rbpool, &bufptr)) {
+ 			/* Schedule a WQ if we fails to free atleast half of the
+@@ -1032,7 +1031,6 @@ static void otx2_pool_refill_task(struct
+ 		pfvf->hw_ops->aura_freeptr(pfvf, qidx, bufptr + OTX2_HEAD_ROOM);
+ 		cq->pool_ptrs--;
  	}
+-	put_cpu();
+ 	cq->refill_task_sched = false;
+ }
+ 
+@@ -1387,9 +1385,7 @@ int otx2_sq_aura_pool_init(struct otx2_n
+ 			err = otx2_alloc_rbuf(pfvf, pool, &bufptr);
+ 			if (err)
+ 				goto err_mem;
+-			get_cpu();
+ 			pfvf->hw_ops->aura_freeptr(pfvf, pool_id, bufptr);
+-			put_cpu();
+ 			sq->sqb_ptrs[sq->sqb_count++] = (u64)bufptr;
+ 		}
+ 	}
+@@ -1435,21 +1431,18 @@ int otx2_rq_aura_pool_init(struct otx2_n
+ 	if (err)
+ 		goto fail;
+ 
+-	get_cpu();
+ 	/* Allocate pointers and free them to aura/pool */
+ 	for (pool_id = 0; pool_id < hw->rqpool_cnt; pool_id++) {
+ 		pool = &pfvf->qset.pool[pool_id];
+ 		for (ptr = 0; ptr < num_ptrs; ptr++) {
+ 			err = otx2_alloc_rbuf(pfvf, pool, &bufptr);
+ 			if (err)
+-				goto err_mem;
++				return -ENOMEM;
+ 			pfvf->hw_ops->aura_freeptr(pfvf, pool_id,
+ 						   bufptr + OTX2_HEAD_ROOM);
+ 		}
+ 	}
+-err_mem:
+-	put_cpu();
+-	return err ? -ENOMEM : 0;
++	return 0;
+ fail:
+ 	otx2_mbox_reset(&pfvf->mbox.mbox, 0);
+ 	otx2_aura_pool_free(pfvf);
+--- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
++++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
+@@ -733,8 +733,10 @@ static inline void cn10k_aura_freeptr(vo
+ 	u64 ptrs[2];
+ 
+ 	ptrs[1] = buf;
++	get_cpu();
+ 	/* Free only one buffer at time during init and teardown */
+ 	__cn10k_aura_freeptr(pfvf, aura, ptrs, 2);
++	put_cpu();
+ }
+ 
+ /* Alloc pointer from pool/aura */
 
 
