@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DC22590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:24:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0973C433EF;
-	Sun, 22 Jan 2023 15:24:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF6902590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:24:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6808EC433EF;
+	Sun, 22 Jan 2023 15:24:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401073;
-	bh=KQ5GQIL1DC1sLisJy6HmV8sa7ZEdN7UgQ/O9M1tRQ6A=;
+	s=korg; t=1674401075;
+	bh=eJkAD9E/AHvGzlzEcMElffb/fY1pQr/d7nEzUs30diY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HoS+LPbjSDxSImCZe6CaKJ6EZGjyMdpUMV0weu/P2aAhFGk94+KcihMiZaybMKkYI
-	 HsLUy8Ec2yL2tgtBQWycuxYKF/PbOCwWyB3ObPxmTiQ2PP5S/TcoHusD//wGLVGSgV
-	 91GBk17rhSZnlQTlg+TYaT47qJtJ5RM/6GJbz3fY=
+	b=fL8C20E6J1IkOq+PSFz/7DVDoRv4Ql37GSL6dv59hDA3QJOiUjj7aaKzVQpPz1jdV
+	 673xqNVAjzLV0ehpTYYYcvrmuT8Q7tueOnhPe+p9u0knK63UWrZZ8d+CxqNs8Za0sL
+	 HEugfMy9xMpy6UY4JGpnIuskSHifeBi2XgfdnS3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Flavio Suligoi <f.suligoi@asem.it>,
-	stable <stable@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.1 071/193] usb: core: hub: disable autosuspend for TI TUSB8041
-Date: Sun, 22 Jan 2023 16:03:20 +0100
-Message-Id: <20230122150249.595102311@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 6.1 072/193] comedi: adv_pci1760: Fix PWM instruction handling
+Date: Sun, 22 Jan 2023 16:03:21 +0100
+Message-Id: <20230122150249.636683363@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -35,61 +33,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Flavio Suligoi <f.suligoi@asem.it>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-commit 7171b0e261b17de96490adf053b8bb4b00061bcf upstream.
+commit 2efb6edd52dc50273f5e68ad863dd1b1fb2f2d1c upstream.
 
-The Texas Instruments TUSB8041 has an autosuspend problem at high
-temperature.
+(Actually, this is fixing the "Read the Current Status" command sent to
+the device's outgoing mailbox, but it is only currently used for the PWM
+instructions.)
 
-If there is not USB traffic, after a couple of ms, the device enters in
-autosuspend mode. In this condition the external clock stops working, to
-save energy. When the USB activity turns on, ther hub exits the
-autosuspend state, the clock starts running again and all works fine.
+The PCI-1760 is operated mostly by sending commands to a set of Outgoing
+Mailbox registers, waiting for the command to complete, and reading the
+result from the Incoming Mailbox registers.  One of these commands is
+the "Read the Current Status" command.  The number of this command is
+0x07 (see the User's Manual for the PCI-1760 at
+<https://advdownload.advantech.com/productfile/Downloadfile2/1-11P6653/PCI-1760.pdf>.
+The `PCI1760_CMD_GET_STATUS` macro defined in the driver should expand
+to this command number 0x07, but unfortunately it currently expands to
+0x03.  (Command number 0x03 is not defined in the User's Manual.)
+Correct the definition of the `PCI1760_CMD_GET_STATUS` macro to fix it.
 
-At ambient temperature all works correctly, but at high temperature,
-when the USB activity turns on, the external clock doesn't restart and
-the hub disappears from the USB bus.
+This is used by all the PWM subdevice related instructions handled by
+`pci1760_pwm_insn_config()` which are probably all broken.  The effect
+of sending the undefined command number 0x03 is not known.
 
-Disabling the autosuspend mode for this hub solves the issue.
-
-Signed-off-by: Flavio Suligoi <f.suligoi@asem.it>
-Cc: stable <stable@kernel.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20221219124759.3207032-1-f.suligoi@asem.it
+Fixes: 14b93bb6bbf0 ("staging: comedi: adv_pci_dio: separate out PCI-1760 support")
+Cc: <stable@vger.kernel.org> # v4.5+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20230103143754.17564-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/comedi/drivers/adv_pci1760.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -44,6 +44,9 @@
- #define USB_PRODUCT_USB5534B			0x5534
- #define USB_VENDOR_CYPRESS			0x04b4
- #define USB_PRODUCT_CY7C65632			0x6570
-+#define USB_VENDOR_TEXAS_INSTRUMENTS		0x0451
-+#define USB_PRODUCT_TUSB8041_USB3		0x8140
-+#define USB_PRODUCT_TUSB8041_USB2		0x8142
- #define HUB_QUIRK_CHECK_PORT_AUTOSUSPEND	0x01
- #define HUB_QUIRK_DISABLE_AUTOSUSPEND		0x02
- 
-@@ -5798,6 +5801,16 @@ static const struct usb_device_id hub_id
-       .idVendor = USB_VENDOR_GENESYS_LOGIC,
-       .bInterfaceClass = USB_CLASS_HUB,
-       .driver_info = HUB_QUIRK_CHECK_PORT_AUTOSUSPEND},
-+    { .match_flags = USB_DEVICE_ID_MATCH_VENDOR
-+			| USB_DEVICE_ID_MATCH_PRODUCT,
-+      .idVendor = USB_VENDOR_TEXAS_INSTRUMENTS,
-+      .idProduct = USB_PRODUCT_TUSB8041_USB2,
-+      .driver_info = HUB_QUIRK_DISABLE_AUTOSUSPEND},
-+    { .match_flags = USB_DEVICE_ID_MATCH_VENDOR
-+			| USB_DEVICE_ID_MATCH_PRODUCT,
-+      .idVendor = USB_VENDOR_TEXAS_INSTRUMENTS,
-+      .idProduct = USB_PRODUCT_TUSB8041_USB3,
-+      .driver_info = HUB_QUIRK_DISABLE_AUTOSUSPEND},
-     { .match_flags = USB_DEVICE_ID_MATCH_DEV_CLASS,
-       .bDeviceClass = USB_CLASS_HUB},
-     { .match_flags = USB_DEVICE_ID_MATCH_INT_CLASS,
+--- a/drivers/comedi/drivers/adv_pci1760.c
++++ b/drivers/comedi/drivers/adv_pci1760.c
+@@ -58,7 +58,7 @@
+ #define PCI1760_CMD_CLR_IMB2		0x00	/* Clears IMB2 */
+ #define PCI1760_CMD_SET_DO		0x01	/* Set output state */
+ #define PCI1760_CMD_GET_DO		0x02	/* Read output status */
+-#define PCI1760_CMD_GET_STATUS		0x03	/* Read current status */
++#define PCI1760_CMD_GET_STATUS		0x07	/* Read current status */
+ #define PCI1760_CMD_GET_FW_VER		0x0e	/* Read firmware version */
+ #define PCI1760_CMD_GET_HW_VER		0x0f	/* Read hardware version */
+ #define PCI1760_CMD_SET_PWM_HI(x)	(0x10 + (x) * 2) /* Set "hi" period */
 
 
