@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6437E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:10:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9155C433D2;
-	Sun, 22 Jan 2023 15:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D70737E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:10:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E104C433EF;
+	Sun, 22 Jan 2023 15:10:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400230;
-	bh=6zjwDKG6vs7OyWvvmLD5RZLCDU8NcJkF1bb0y7naNXk=;
+	s=korg; t=1674400232;
+	bh=XFEYd+vbVQnBuV8mIRXbPSvThINcc8XYPdJCRsWvVB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SBFoeVHAMNrikV9sd4iAf+srYbUotRid/mPOVNHoPF79DWFTZBzO5BcV62l4e2vCt
-	 +i8ClGDhiL4yilDyAGC4jHcX2KUXeOSqqzRL0sMxksQgWtW8BTrpde/3Z1kIBqqqPG
-	 g/tUFDF0beFSnBdO2bY34/WW55eayxwakHHwgv9M=
+	b=Gr1fIsz4cDVL6DW2CMwPQSeV+ZlDmoS9nX1jBX04Z9BBxYA/mYqVQQ4ajI8qpvAcy
+	 aveWuyAg6NmmN/cIZtejHQvz4W3LO+MXmUfmyJz7K5vAb0ptj7e4D3JBkdShz+nV3e
+	 IWnhybxJxiOr5FFwQiew3IZaKbXCzcR8gATA7D/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 5.4 52/55] s390: define RUNTIME_DISCARD_EXIT to fix link error with GNU ld < 2.36
-Date: Sun, 22 Jan 2023 16:04:39 +0100
-Message-Id: <20230122150224.346405730@linuxfoundation.org>
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.4 53/55] powerpc/vmlinux.lds: Define RUNTIME_DISCARD_EXIT
+Date: Sun, 22 Jan 2023 16:04:40 +0100
+Message-Id: <20230122150224.398022088@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150222.210885219@linuxfoundation.org>
 References: <20230122150222.210885219@linuxfoundation.org>
@@ -35,69 +33,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit a494398bde273143c2352dd373cad8211f7d94b2 upstream.
+commit 4b9880dbf3bdba3a7c56445137c3d0e30aaa0a40 upstream.
 
-Nathan Chancellor reports that the s390 vmlinux fails to link with
-GNU ld < 2.36 since commit 99cb0d917ffa ("arch: fix broken BuildID
-for arm64 and riscv").
+The powerpc linker script explicitly includes .exit.text, because
+otherwise the link fails due to references from __bug_table and
+__ex_table. The code is freed (discarded) at runtime along with
+.init.text and data.
 
-It happens for defconfig, or more specifically for CONFIG_EXPOLINE=y.
+That has worked in the past despite powerpc not defining
+RUNTIME_DISCARD_EXIT because DISCARDS appears late in the powerpc linker
+script (line 410), and the explicit inclusion of .exit.text
+earlier (line 280) supersedes the discard.
 
-  $ s390x-linux-gnu-ld --version | head -n1
-  GNU ld (GNU Binutils for Debian) 2.35.2
-  $ make -s ARCH=s390 CROSS_COMPILE=s390x-linux-gnu- allnoconfig
-  $ ./scripts/config -e CONFIG_EXPOLINE
-  $ make -s ARCH=s390 CROSS_COMPILE=s390x-linux-gnu- olddefconfig
-  $ make -s ARCH=s390 CROSS_COMPILE=s390x-linux-gnu-
-  `.exit.text' referenced in section `.s390_return_reg' of drivers/base/dd.o: defined in discarded section `.exit.text' of drivers/base/dd.o
-  make[1]: *** [scripts/Makefile.vmlinux:34: vmlinux] Error 1
-  make: *** [Makefile:1252: vmlinux] Error 2
+However commit 99cb0d917ffa ("arch: fix broken BuildID for arm64 and
+riscv") introduced an earlier use of DISCARD as part of the RO_DATA
+macro (line 136). With binutils < 2.36 that causes the DISCARD
+directives later in the script to be applied earlier [1], causing
+.exit.text to actually be discarded at link time, leading to build
+errors:
 
-arch/s390/kernel/vmlinux.lds.S wants to keep EXIT_TEXT:
+  '.exit.text' referenced in section '__bug_table' of crypto/algboss.o: defined in
+  discarded section '.exit.text' of crypto/algboss.o
+  '.exit.text' referenced in section '__ex_table' of drivers/nvdimm/core.o: defined in
+  discarded section '.exit.text' of drivers/nvdimm/core.o
 
-        .exit.text : {
-                EXIT_TEXT
-        }
+Fix it by defining RUNTIME_DISCARD_EXIT, which causes the generic
+DISCARDS macro to not include .exit.text at all.
 
-But, at the same time, EXIT_TEXT is thrown away by DISCARD because
-s390 does not define RUNTIME_DISCARD_EXIT.
-
-I still do not understand why the latter wins after 99cb0d917ffa,
-but defining RUNTIME_DISCARD_EXIT seems correct because the comment
-line in arch/s390/kernel/vmlinux.lds.S says:
-
-        /*
-         * .exit.text is discarded at runtime, not link time,
-         * to deal with references from __bug_table
-         */
-
-Nathan also found that binutils commit 21401fc7bf67 ("Duplicate output
-sections in scripts") cured this issue, so we cannot reproduce it with
-binutils 2.36+, but it is better to not rely on it.
+1: https://lore.kernel.org/lkml/87fscp2v7k.fsf@igel.home/
 
 Fixes: 99cb0d917ffa ("arch: fix broken BuildID for arm64 and riscv")
-Link: https://lore.kernel.org/all/Y7Jal56f6UBh1abE@dev-arch.thelio-3990X/
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Link: https://lore.kernel.org/r/20230105031306.1455409-1-masahiroy@kernel.org
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20230105132349.384666-1-mpe@ellerman.id.au
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/vmlinux.lds.S |    2 ++
- 1 file changed, 2 insertions(+)
+ arch/powerpc/kernel/vmlinux.lds.S |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/s390/kernel/vmlinux.lds.S
-+++ b/arch/s390/kernel/vmlinux.lds.S
-@@ -15,6 +15,8 @@
- /* Handle ro_after_init data on our own. */
- #define RO_AFTER_INIT_DATA
+--- a/arch/powerpc/kernel/vmlinux.lds.S
++++ b/arch/powerpc/kernel/vmlinux.lds.S
+@@ -6,6 +6,7 @@
+ #endif
  
+ #define BSS_FIRST_SECTIONS *(.bss.prominit)
 +#define RUNTIME_DISCARD_EXIT
-+
- #include <asm-generic/vmlinux.lds.h>
- #include <asm/vmlinux.lds.h>
  
+ #include <asm/page.h>
+ #include <asm-generic/vmlinux.lds.h>
 
 
