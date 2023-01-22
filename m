@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DB27E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:10:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75EA0C4339B;
-	Sun, 22 Jan 2023 15:10:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8759F7E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:10:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B033C433EF;
+	Sun, 22 Jan 2023 15:10:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400201;
-	bh=ug1rfvJhHBMIBHm/kDFORvtLY3Fr6ccx2iPnA1reSr4=;
+	s=korg; t=1674400204;
+	bh=nQlivLKt2/oeXz3ftIZsPhfBjv/pS8PGIbqDqIk+SUc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LAVPJZiy3KUF0lmkA4LVreYVoxDp+SFoIeb4m3r51Sr7QF4xMoCCm3WTA0mNB+5cW
-	 22HiXOaW7zve4y1YdY1nN3quFOArZimje3oEIU7Ime/SjUI2FdFG/CJdh/XKWoVgHm
-	 vaV7I5dr+xJJuzgA0lFwDLvQvaut2WxKg16LOqd4=
+	b=rLJxrqhsOH4ag8KomdIqeQgeuPmOSCtJs+VBL/2kDdHFHjX1je/Bw/jm9Hqh9BoHS
+	 y4jnPmFMB2+eCjawzqO79sELczeu88iiO7CDFlXlw7kDmqXo0osrGd2mH/GR39NE8W
+	 u13N30aA6WEAyX5cW9VXBz6a1t30pH8sgXqlDuuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Daniel Scally <dan.scally@ideasonboard.com>,
-	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-	Kieran Bingham <kieran.bingham@ideasonboard.com>
-Subject: [PATCH 5.4 39/55] usb: gadget: g_webcam: Send color matching descriptor per frame
-Date: Sun, 22 Jan 2023 16:04:26 +0100
-Message-Id: <20230122150223.790223545@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.4 12/55] xhci-pci: set the dma max_seg_size
+Date: Sun, 22 Jan 2023 16:03:59 +0100
+Message-Id: <20230122150222.755190441@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150222.210885219@linuxfoundation.org>
 References: <20230122150222.210885219@linuxfoundation.org>
@@ -36,59 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Scally <dan.scally@ideasonboard.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit e95765e97d9cb93258a4840440d410fa6ff7e819 upstream.
+commit 93915a4170e9defd56a767a18e6c4076f3d18609 upstream.
 
-Currently the color matching descriptor is only sent across the wire
-a single time, following the descriptors for each format and frame.
-According to the UVC 1.5 Specification 3.9.2.6 ("Color Matching
-Descriptors"):
+Allow devices to have dma operations beyond 64K, and avoid warnings such
+as:
 
-"Only one instance is allowed for a given format and if present,
-the Color Matching descriptor shall be placed following the Video
-and Still Image Frame descriptors for that format".
+xhci_hcd 0000:00:14.0: mapping sg segment longer than device claims to support [len=98304] [max=65536]
 
-Add another reference to the color matching descriptor after the
-yuyv frames so that it's correctly transmitted for that format
-too.
-
-Fixes: a9914127e834 ("USB gadget: Webcam device")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Daniel Scally <dan.scally@ideasonboard.com>
-Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
-Link: https://lore.kernel.org/r/20221216160528.479094-1-dan.scally@ideasonboard.com
+Cc: stable@vger.kernel.org
+Cc: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20230116142216.1141605-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/legacy/webcam.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/host/xhci-pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/gadget/legacy/webcam.c
-+++ b/drivers/usb/gadget/legacy/webcam.c
-@@ -293,6 +293,7 @@ static const struct uvc_descriptor_heade
- 	(const struct uvc_descriptor_header *) &uvc_format_yuv,
- 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_360p,
- 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_720p,
-+	(const struct uvc_descriptor_header *) &uvc_color_matching,
- 	(const struct uvc_descriptor_header *) &uvc_format_mjpg,
- 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_360p,
- 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_720p,
-@@ -305,6 +306,7 @@ static const struct uvc_descriptor_heade
- 	(const struct uvc_descriptor_header *) &uvc_format_yuv,
- 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_360p,
- 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_720p,
-+	(const struct uvc_descriptor_header *) &uvc_color_matching,
- 	(const struct uvc_descriptor_header *) &uvc_format_mjpg,
- 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_360p,
- 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_720p,
-@@ -317,6 +319,7 @@ static const struct uvc_descriptor_heade
- 	(const struct uvc_descriptor_header *) &uvc_format_yuv,
- 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_360p,
- 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_720p,
-+	(const struct uvc_descriptor_header *) &uvc_color_matching,
- 	(const struct uvc_descriptor_header *) &uvc_format_mjpg,
- 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_360p,
- 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_720p,
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -427,6 +427,8 @@ static int xhci_pci_probe(struct pci_dev
+ 	if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
+ 		pm_runtime_allow(&dev->dev);
+ 
++	dma_set_max_seg_size(&dev->dev, UINT_MAX);
++
+ 	return 0;
+ 
+ put_usb3_hcd:
 
 
