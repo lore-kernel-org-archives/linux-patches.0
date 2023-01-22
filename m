@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 613C22590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:13:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9189C433EF;
-	Sun, 22 Jan 2023 15:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03D0F2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:13:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80BCCC433D2;
+	Sun, 22 Jan 2023 15:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400398;
-	bh=cDGOtOnTPc2fcO0EgdzwJuUFGYATm3KNt4OPnT/BURc=;
+	s=korg; t=1674400400;
+	bh=0oOyihol/P3+CFwWUpexwtDbUvuVTKXYI3/RNed4uZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JpGOJ03wdaQbm8H4HEjNDSVz2Bt1iHv4O7endQbGd6QDxmpdSnFl6jgxRcY/ffQl3
-	 RSW1j5h0WMvmc3XUmhg1Tz5Mj0YuDtFeEW+e0EG4+2GoPjmEvfb5Hg5XwN0sPZOmTS
-	 kf+cEcHkdXGGk26xSwDAp0Qy8hAncz3hoJ5mVYmA=
+	b=vv/UHTCWqRo6yCmFUmDc7Mw9fohExex+YHHIciznH1HWk8fzjhFOqkmTx9/Q6hXEi
+	 9N+y8BIJZzyA7FqgAS+9h+2Bl90oWoVggev5gzBULbHmAARhLP4SV1SDbLCp1J0q0E
+	 ywsrcPY1jT3FHLmqu3pmusE4dFXCLQw77juHJs1Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Jiri Slaby <jirislaby@kernel.org>
-Subject: [PATCH 5.10 60/98] tty: serial: qcom-geni-serial: fix slab-out-of-bounds on RX FIFO buffer
-Date: Sun, 22 Jan 2023 16:04:16 +0100
-Message-Id: <20230122150232.004967626@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+33d7ad66d65044b93f16@syzkaller.appspotmail.com,
+	Gerald Lee <sundaywind2004@gmail.com>
+Subject: [PATCH 5.10 61/98] USB: gadgetfs: Fix race between mounting and unmounting
+Date: Sun, 22 Jan 2023 16:04:17 +0100
+Message-Id: <20230122150232.037183858@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -34,111 +35,130 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit b8caf69a6946e18ffebad49847e258f5b6d52ac2 upstream.
+commit d18dcfe9860e842f394e37ba01ca9440ab2178f4 upstream.
 
-Driver's probe allocates memory for RX FIFO (port->rx_fifo) based on
-default RX FIFO depth, e.g. 16.  Later during serial startup the
-qcom_geni_serial_port_setup() updates the RX FIFO depth
-(port->rx_fifo_depth) to match real device capabilities, e.g. to 32.
+The syzbot fuzzer and Gerald Lee have identified a use-after-free bug
+in the gadgetfs driver, involving processes concurrently mounting and
+unmounting the gadgetfs filesystem.  In particular, gadgetfs_fill_super()
+can race with gadgetfs_kill_sb(), causing the latter to deallocate
+the_device while the former is using it.  The output from KASAN says,
+in part:
 
-The RX UART handle code will read "port->rx_fifo_depth" number of words
-into "port->rx_fifo" buffer, thus exceeding the bounds.  This can be
-observed in certain configurations with Qualcomm Bluetooth HCI UART
-device and KASAN:
+BUG: KASAN: use-after-free in instrument_atomic_read_write include/linux/instrumented.h:102 [inline]
+BUG: KASAN: use-after-free in atomic_fetch_sub_release include/linux/atomic/atomic-instrumented.h:176 [inline]
+BUG: KASAN: use-after-free in __refcount_sub_and_test include/linux/refcount.h:272 [inline]
+BUG: KASAN: use-after-free in __refcount_dec_and_test include/linux/refcount.h:315 [inline]
+BUG: KASAN: use-after-free in refcount_dec_and_test include/linux/refcount.h:333 [inline]
+BUG: KASAN: use-after-free in put_dev drivers/usb/gadget/legacy/inode.c:159 [inline]
+BUG: KASAN: use-after-free in gadgetfs_kill_sb+0x33/0x100 drivers/usb/gadget/legacy/inode.c:2086
+Write of size 4 at addr ffff8880276d7840 by task syz-executor126/18689
 
-  Bluetooth: hci0: QCA Product ID   :0x00000010
-  Bluetooth: hci0: QCA SOC Version  :0x400a0200
-  Bluetooth: hci0: QCA ROM Version  :0x00000200
-  Bluetooth: hci0: QCA Patch Version:0x00000d2b
-  Bluetooth: hci0: QCA controller version 0x02000200
-  Bluetooth: hci0: QCA Downloading qca/htbtfw20.tlv
-  bluetooth hci0: Direct firmware load for qca/htbtfw20.tlv failed with error -2
-  Bluetooth: hci0: QCA Failed to request file: qca/htbtfw20.tlv (-2)
-  Bluetooth: hci0: QCA Failed to download patch (-2)
-  ==================================================================
-  BUG: KASAN: slab-out-of-bounds in handle_rx_uart+0xa8/0x18c
-  Write of size 4 at addr ffff279347d578c0 by task swapper/0/0
+CPU: 0 PID: 18689 Comm: syz-executor126 Not tainted 6.1.0-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+Call Trace:
+ <TASK>
+...
+ atomic_fetch_sub_release include/linux/atomic/atomic-instrumented.h:176 [inline]
+ __refcount_sub_and_test include/linux/refcount.h:272 [inline]
+ __refcount_dec_and_test include/linux/refcount.h:315 [inline]
+ refcount_dec_and_test include/linux/refcount.h:333 [inline]
+ put_dev drivers/usb/gadget/legacy/inode.c:159 [inline]
+ gadgetfs_kill_sb+0x33/0x100 drivers/usb/gadget/legacy/inode.c:2086
+ deactivate_locked_super+0xa7/0xf0 fs/super.c:332
+ vfs_get_super fs/super.c:1190 [inline]
+ get_tree_single+0xd0/0x160 fs/super.c:1207
+ vfs_get_tree+0x88/0x270 fs/super.c:1531
+ vfs_fsconfig_locked fs/fsopen.c:232 [inline]
 
-  CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.1.0-rt5-00350-gb2450b7e00be-dirty #26
-  Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
-  Call trace:
-   dump_backtrace.part.0+0xe0/0xf0
-   show_stack+0x18/0x40
-   dump_stack_lvl+0x8c/0xb8
-   print_report+0x188/0x488
-   kasan_report+0xb4/0x100
-   __asan_store4+0x80/0xa4
-   handle_rx_uart+0xa8/0x18c
-   qcom_geni_serial_handle_rx+0x84/0x9c
-   qcom_geni_serial_isr+0x24c/0x760
-   __handle_irq_event_percpu+0x108/0x500
-   handle_irq_event+0x6c/0x110
-   handle_fasteoi_irq+0x138/0x2cc
-   generic_handle_domain_irq+0x48/0x64
+The simplest solution is to ensure that gadgetfs_fill_super() and
+gadgetfs_kill_sb() are serialized by making them both acquire a new
+mutex.
 
-If the RX FIFO depth changes after probe, be sure to resize the buffer.
-
-Fixes: f9d690b6ece7 ("tty: serial: qcom_geni_serial: Allocate port->rx_fifo buffer in probe")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/20221221164022.1087814-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Reported-and-tested-by: syzbot+33d7ad66d65044b93f16@syzkaller.appspotmail.com
+Reported-and-tested-by: Gerald Lee <sundaywind2004@gmail.com>
+Link: https://lore.kernel.org/linux-usb/CAO3qeMVzXDP-JU6v1u5Ags6Q-bb35kg3=C6d04DjzA9ffa5x1g@mail.gmail.com/
+Fixes: e5d82a7360d1 ("vfs: Convert gadgetfs to use the new mount API")
+CC: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/Y6XCPXBpn3tmjdCC@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/qcom_geni_serial.c |   18 ++++++++++++++++--
- 1 file changed, 16 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/legacy/inode.c |   28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
---- a/drivers/tty/serial/qcom_geni_serial.c
-+++ b/drivers/tty/serial/qcom_geni_serial.c
-@@ -866,9 +866,10 @@ out_unlock:
- 	return IRQ_HANDLED;
- }
+--- a/drivers/usb/gadget/legacy/inode.c
++++ b/drivers/usb/gadget/legacy/inode.c
+@@ -229,6 +229,7 @@ static void put_ep (struct ep_data *data
+  */
  
--static void get_tx_fifo_size(struct qcom_geni_serial_port *port)
-+static int setup_fifos(struct qcom_geni_serial_port *port)
+ static const char *CHIP;
++static DEFINE_MUTEX(sb_mutex);		/* Serialize superblock operations */
+ 
+ /*----------------------------------------------------------------------*/
+ 
+@@ -2012,13 +2013,20 @@ gadgetfs_fill_super (struct super_block
  {
- 	struct uart_port *uport;
-+	u32 old_rx_fifo_depth = port->rx_fifo_depth;
+ 	struct inode	*inode;
+ 	struct dev_data	*dev;
++	int		rc;
  
- 	uport = &port->uport;
- 	port->tx_fifo_depth = geni_se_get_tx_fifo_depth(&port->se);
-@@ -876,6 +877,16 @@ static void get_tx_fifo_size(struct qcom
- 	port->rx_fifo_depth = geni_se_get_rx_fifo_depth(&port->se);
- 	uport->fifosize =
- 		(port->tx_fifo_depth * port->tx_fifo_width) / BITS_PER_BYTE;
+-	if (the_device)
+-		return -ESRCH;
++	mutex_lock(&sb_mutex);
 +
-+	if (port->rx_fifo && (old_rx_fifo_depth != port->rx_fifo_depth) && port->rx_fifo_depth) {
-+		port->rx_fifo = devm_krealloc(uport->dev, port->rx_fifo,
-+					      port->rx_fifo_depth * sizeof(u32),
-+					      GFP_KERNEL);
-+		if (!port->rx_fifo)
-+			return -ENOMEM;
++	if (the_device) {
++		rc = -ESRCH;
++		goto Done;
 +	}
-+
-+	return 0;
+ 
+ 	CHIP = usb_get_gadget_udc_name();
+-	if (!CHIP)
+-		return -ENODEV;
++	if (!CHIP) {
++		rc = -ENODEV;
++		goto Done;
++	}
+ 
+ 	/* superblock */
+ 	sb->s_blocksize = PAGE_SIZE;
+@@ -2055,13 +2063,17 @@ gadgetfs_fill_super (struct super_block
+ 	 * from binding to a controller.
+ 	 */
+ 	the_device = dev;
+-	return 0;
++	rc = 0;
++	goto Done;
+ 
+-Enomem:
++ Enomem:
+ 	kfree(CHIP);
+ 	CHIP = NULL;
++	rc = -ENOMEM;
+ 
+-	return -ENOMEM;
++ Done:
++	mutex_unlock(&sb_mutex);
++	return rc;
  }
  
+ /* "mount -t gadgetfs path /dev/gadget" ends up here */
+@@ -2083,6 +2095,7 @@ static int gadgetfs_init_fs_context(stru
+ static void
+ gadgetfs_kill_sb (struct super_block *sb)
+ {
++	mutex_lock(&sb_mutex);
+ 	kill_litter_super (sb);
+ 	if (the_device) {
+ 		put_dev (the_device);
+@@ -2090,6 +2103,7 @@ gadgetfs_kill_sb (struct super_block *sb
+ 	}
+ 	kfree(CHIP);
+ 	CHIP = NULL;
++	mutex_unlock(&sb_mutex);
+ }
  
-@@ -890,6 +901,7 @@ static int qcom_geni_serial_port_setup(s
- 	u32 rxstale = DEFAULT_BITS_PER_CHAR * STALE_TIMEOUT;
- 	u32 proto;
- 	u32 pin_swap;
-+	int ret;
- 
- 	proto = geni_se_read_proto(&port->se);
- 	if (proto != GENI_SE_UART) {
-@@ -899,7 +911,9 @@ static int qcom_geni_serial_port_setup(s
- 
- 	qcom_geni_serial_stop_rx(uport);
- 
--	get_tx_fifo_size(port);
-+	ret = setup_fifos(port);
-+	if (ret)
-+		return ret;
- 
- 	writel(rxstale, uport->membase + SE_UART_RX_STALE_CNT);
- 
+ /*----------------------------------------------------------------------*/
 
 
