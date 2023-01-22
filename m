@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7F032590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:13:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FAB5C433D2;
-	Sun, 22 Jan 2023 15:13:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7296A2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:14:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD6AC433EF;
+	Sun, 22 Jan 2023 15:13:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400437;
-	bh=YG7qcHRhl++ITV939dfh4QIjA1y2QN1o9/k6DRHDcwo=;
+	s=korg; t=1674400440;
+	bh=oqR1VhxSwlrU/vPXp+4PAuGjZcXPYVrAzMFOqDcPPh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YOhko1zGAFiWbCSo8afjM4fxnabPNDlQfEYJ6itVq9tFRREB1Jnnwu2ZfJG657FVD
-	 YAjD1DMc/ARCUMKI/suouONtpgUOgcQalJt7LFHGDpPOQTudW5kloNm8H+6Plfh0Nk
-	 c8aaztcueKi31aoV6Gb+6EzmKfF5n6vZS82/bABw=
+	b=D1N2pGqCs/kD7MBKsi8cEHcQLZgE41DkijIP6Cqh0IiaovhsUtautxY+FCbuwqY3C
+	 6KVcnHuuuu6gnwT08BE+NE6XKqLEHCHtKaCn70aMc2m02myG20UeTqmTmVLllxwYU9
+	 sTPW2LhAkEQ/g9El+cJLyBgIxMz7ZnvVbGWeEjgU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Khazhismel Kumykov <khazhy@google.com>
-Subject: [PATCH 5.10 74/98] gsmi: fix null-deref in gsmi_get_variable
-Date: Sun, 22 Jan 2023 16:04:30 +0100
-Message-Id: <20230122150232.561536777@linuxfoundation.org>
+	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Tomas Winkler <tomas.winkler@intel.com>
+Subject: [PATCH 5.10 75/98] mei: me: add meteor lake point M DID
+Date: Sun, 22 Jan 2023 16:04:31 +0100
+Message-Id: <20230122150232.602815061@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -34,41 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Khazhismel Kumykov <khazhy@chromium.org>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit a769b05eeed7accc4019a1ed9799dd72067f1ce8 upstream.
+commit 0c4d68261717f89fa8c4f98a6967c3832fcb3ad0 upstream.
 
-We can get EFI variables without fetching the attribute, so we must
-allow for that in gsmi.
+Add Meteor Lake Point M device id.
 
-commit 859748255b43 ("efi: pstore: Omit efivars caching EFI varstore
-access layer") added a new get_variable call with attr=NULL, which
-triggers panic in gsmi.
-
-Fixes: 74c5b31c6618 ("driver: Google EFI SMI")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Khazhismel Kumykov <khazhy@google.com>
-Link: https://lore.kernel.org/r/20230118010212.1268474-1-khazhy@google.com
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
+Link: https://lore.kernel.org/r/20221212220247.286019-2-tomas.winkler@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/google/gsmi.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/misc/mei/hw-me-regs.h |    2 ++
+ drivers/misc/mei/pci-me.c     |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- a/drivers/firmware/google/gsmi.c
-+++ b/drivers/firmware/google/gsmi.c
-@@ -360,9 +360,10 @@ static efi_status_t gsmi_get_variable(ef
- 		memcpy(data, gsmi_dev.data_buf->start, *data_size);
+--- a/drivers/misc/mei/hw-me-regs.h
++++ b/drivers/misc/mei/hw-me-regs.h
+@@ -111,6 +111,8 @@
  
- 		/* All variables are have the following attributes */
--		*attr = EFI_VARIABLE_NON_VOLATILE |
--			EFI_VARIABLE_BOOTSERVICE_ACCESS |
--			EFI_VARIABLE_RUNTIME_ACCESS;
-+		if (attr)
-+			*attr = EFI_VARIABLE_NON_VOLATILE |
-+				EFI_VARIABLE_BOOTSERVICE_ACCESS |
-+				EFI_VARIABLE_RUNTIME_ACCESS;
- 	}
+ #define MEI_DEV_ID_RPL_S      0x7A68  /* Raptor Lake Point S */
  
- 	spin_unlock_irqrestore(&gsmi_dev.lock, flags);
++#define MEI_DEV_ID_MTL_M      0x7E70  /* Meteor Lake Point M */
++
+ /*
+  * MEI HW Section
+  */
+--- a/drivers/misc/mei/pci-me.c
++++ b/drivers/misc/mei/pci-me.c
+@@ -117,6 +117,8 @@ static const struct pci_device_id mei_me
+ 
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_RPL_S, MEI_ME_PCH15_CFG)},
+ 
++	{MEI_PCI_DEVICE(MEI_DEV_ID_MTL_M, MEI_ME_PCH15_CFG)},
++
+ 	/* required last entry */
+ 	{0, }
+ };
 
 
