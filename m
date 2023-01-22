@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CB22590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB03C433D2;
-	Sun, 22 Jan 2023 15:12:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5469A2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB25EC433D2;
+	Sun, 22 Jan 2023 15:12:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400327;
-	bh=YrWJgo0YPlaC/qKjEkOZYd8xwQpg9FrVFHm3xrntbKI=;
+	s=korg; t=1674400330;
+	bh=OoSHXnWVXxpS/e/Xov4iQE6cQyldepGGk2iCcbj9oCA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Sfjrdeyrd4jtnj139ZX5oY3suHqXSa7qIRChqioyWA2tZN6ded8W7ZxlYYQpi4WEG
-	 PS9kyD2gCY4y2ONJ3LGrdLtBbKLP6qWNqO2Mf2LJkuIjZ9mDbH5FbciLlrrx3wbIrO
-	 vupRhdXP6aAdN+HOph6RxQ67mDjNLmSV++tDFXT8=
+	b=wRTM1qVqqlxrFFtJ6sPORhmhBdhgyh77/6+cQSfKlKFL+X7Pgz5jo1toPmESDTahi
+	 GB3R6cO9HvYekmOSm2h5k+nMthGWId0RH+6jgo6ZevhFB0Exi8s53Kijd4W6LjxTbX
+	 c1qfQMq/cJmRquZ+y2PbWj5ClghaRbvMwV3g8WJA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dylan Yudaken <dylany@fb.com>,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Yuchi Yang <yangyuchi66@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 33/98] io_uring: do not recalculate ppos unnecessarily
-Date: Sun, 22 Jan 2023 16:03:49 +0100
-Message-Id: <20230122150230.889116156@linuxfoundation.org>
+Subject: [PATCH 5.10 16/98] ALSA: hda/realtek - Turn on power early
+Date: Sun, 22 Jan 2023 16:03:32 +0100
+Message-Id: <20230122150230.113726199@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -36,98 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dylan Yudaken <dylany@fb.com>
+From: Yuchi Yang <yangyuchi66@gmail.com>
 
-commit b4aec40015953b65f2f114641e7fd7714c8df8e6 upstream.
+[ Upstream commit 1f680609bf1beac20e2a31ddcb1b88874123c39f ]
 
-There is a slight optimisation to be had by calculating the correct pos
-pointer inside io_kiocb_update_pos and then using that later.
+Turn on power early to avoid wrong state for power relation register.
+This can earlier update JD state when resume back.
 
-It seems code size drops by a bit:
-000000000000a1b0 0000000000000400 t io_read
-000000000000a5b0 0000000000000319 t io_write
-
-vs
-000000000000a1b0 00000000000003f6 t io_read
-000000000000a5b0 0000000000000310 t io_write
-
-Signed-off-by: Dylan Yudaken <dylany@fb.com>
-Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Yuchi Yang <yangyuchi66@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/e35d8f4fa18f4448a2315cc7d4a3715f@realtek.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ sound/pci/hda/patch_realtek.c | 30 ++++++++++++++++--------------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index eaf8463c9b14..d4e017b07371 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -3000,18 +3000,22 @@ static inline void io_rw_done(struct kiocb *kiocb, ssize_t ret)
- 	}
- }
+diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
+index eb7dd457ef5a..cfd86389d37f 100644
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -3561,6 +3561,15 @@ static void alc256_init(struct hda_codec *codec)
+ 	hda_nid_t hp_pin = alc_get_hp_pin(spec);
+ 	bool hp_pin_sense;
  
--static inline void io_kiocb_update_pos(struct io_kiocb *req)
-+static inline loff_t *io_kiocb_update_pos(struct io_kiocb *req)
- {
- 	struct kiocb *kiocb = &req->rw.kiocb;
-+	bool is_stream = req->file->f_mode & FMODE_STREAM;
++	if (spec->ultra_low_power) {
++		alc_update_coef_idx(codec, 0x03, 1<<1, 1<<1);
++		alc_update_coef_idx(codec, 0x08, 3<<2, 3<<2);
++		alc_update_coef_idx(codec, 0x08, 7<<4, 0);
++		alc_update_coef_idx(codec, 0x3b, 1<<15, 0);
++		alc_update_coef_idx(codec, 0x0e, 7<<6, 7<<6);
++		msleep(30);
++	}
++
+ 	if (!hp_pin)
+ 		hp_pin = 0x21;
  
- 	if (kiocb->ki_pos == -1) {
--		if (!(req->file->f_mode & FMODE_STREAM)) {
-+		if (!is_stream) {
- 			req->flags |= REQ_F_CUR_POS;
- 			kiocb->ki_pos = req->file->f_pos;
-+			return &kiocb->ki_pos;
- 		} else {
- 			kiocb->ki_pos = 0;
-+			return NULL;
- 		}
- 	}
-+	return is_stream ? NULL : &kiocb->ki_pos;
- }
+@@ -3572,14 +3581,6 @@ static void alc256_init(struct hda_codec *codec)
+ 		msleep(2);
  
- static void kiocb_done(struct kiocb *kiocb, ssize_t ret,
-@@ -3537,6 +3541,7 @@ static int io_read(struct io_kiocb *req, unsigned int issue_flags)
- 	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
- 	struct iov_iter_state __state, *state;
- 	ssize_t ret, ret2;
-+	loff_t *ppos;
+ 	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
+-	if (spec->ultra_low_power) {
+-		alc_update_coef_idx(codec, 0x03, 1<<1, 1<<1);
+-		alc_update_coef_idx(codec, 0x08, 3<<2, 3<<2);
+-		alc_update_coef_idx(codec, 0x08, 7<<4, 0);
+-		alc_update_coef_idx(codec, 0x3b, 1<<15, 0);
+-		alc_update_coef_idx(codec, 0x0e, 7<<6, 7<<6);
+-		msleep(30);
+-	}
  
- 	if (rw) {
- 		iter = &rw->iter;
-@@ -3569,9 +3574,9 @@ static int io_read(struct io_kiocb *req, unsigned int issue_flags)
- 		return ret ?: -EAGAIN;
- 	}
+ 	snd_hda_codec_write(codec, hp_pin, 0,
+ 			    AC_VERB_SET_AMP_GAIN_MUTE, AMP_OUT_MUTE);
+@@ -3661,6 +3662,13 @@ static void alc225_init(struct hda_codec *codec)
+ 	hda_nid_t hp_pin = alc_get_hp_pin(spec);
+ 	bool hp1_pin_sense, hp2_pin_sense;
  
--	io_kiocb_update_pos(req);
-+	ppos = io_kiocb_update_pos(req);
++	if (spec->ultra_low_power) {
++		alc_update_coef_idx(codec, 0x08, 0x0f << 2, 3<<2);
++		alc_update_coef_idx(codec, 0x0e, 7<<6, 7<<6);
++		alc_update_coef_idx(codec, 0x33, 1<<11, 0);
++		msleep(30);
++	}
++
+ 	if (!hp_pin)
+ 		hp_pin = 0x21;
+ 	msleep(30);
+@@ -3672,12 +3680,6 @@ static void alc225_init(struct hda_codec *codec)
+ 		msleep(2);
  
--	ret = rw_verify_area(READ, req->file, io_kiocb_ppos(kiocb), req->result);
-+	ret = rw_verify_area(READ, req->file, ppos, req->result);
- 	if (unlikely(ret)) {
- 		kfree(iovec);
- 		return ret;
-@@ -3675,6 +3680,7 @@ static int io_write(struct io_kiocb *req, unsigned int issue_flags)
- 	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
- 	struct iov_iter_state __state, *state;
- 	ssize_t ret, ret2;
-+	loff_t *ppos;
+ 	alc_update_coefex_idx(codec, 0x57, 0x04, 0x0007, 0x1); /* Low power */
+-	if (spec->ultra_low_power) {
+-		alc_update_coef_idx(codec, 0x08, 0x0f << 2, 3<<2);
+-		alc_update_coef_idx(codec, 0x0e, 7<<6, 7<<6);
+-		alc_update_coef_idx(codec, 0x33, 1<<11, 0);
+-		msleep(30);
+-	}
  
- 	if (rw) {
- 		iter = &rw->iter;
-@@ -3705,9 +3711,9 @@ static int io_write(struct io_kiocb *req, unsigned int issue_flags)
- 	    (req->flags & REQ_F_ISREG))
- 		goto copy_iov;
- 
--	io_kiocb_update_pos(req);
-+	ppos = io_kiocb_update_pos(req);
- 
--	ret = rw_verify_area(WRITE, req->file, io_kiocb_ppos(kiocb), req->result);
-+	ret = rw_verify_area(WRITE, req->file, ppos, req->result);
- 	if (unlikely(ret))
- 		goto out_free;
- 
+ 	if (hp1_pin_sense || spec->ultra_low_power)
+ 		snd_hda_codec_write(codec, hp_pin, 0,
 -- 
 2.39.0
 
