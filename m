@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD6687E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:08:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C34C433D2;
-	Sun, 22 Jan 2023 15:08:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA217E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:08:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D677CC433EF;
+	Sun, 22 Jan 2023 15:08:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400097;
-	bh=wP4DLHxHqc0cM3X8kir7aCk0YWIDzAV+6pwOJZDoyhU=;
+	s=korg; t=1674400100;
+	bh=gRtKnG0O3XYXJ6+BPD6ZWazRVPFMgbtx/pYlTydbf68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b9EgJiMGf/0BzkQPqTA3dT1LiXHBYVJqJK+ZT7TfdTUJ8DpkWIhVncBwpfg8/YUQY
-	 AezjpL7m7QhxWN/ZaWDiEEyU2c7bfcGuZZhBZSq/1KXjKp+3/EufqpFCnb60pXQNqk
-	 6H6dd+ul+bTBDBe02bFRyglTqV1hA3+ShFkQ4y7c=
+	b=NwBfV1TntexQfDNxHTqVMrfOBLQJHamoVAI+G+3dMKrPy1daeflUSTkF3AAeC1gxu
+	 LzpJr+2OoaiIEOXKUA9Bbxxqa27/L4cCqFDpKnKLXVqTqKaHa18yP1z7pX6aUJ5T8H
+	 pQZ3QHKC8R6BCHbqVGLsArJIq66h6Ne/ng+FjA+A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 4.19 09/37] xhci: Fix null pointer dereference when host dies
-Date: Sun, 22 Jan 2023 16:04:06 +0100
-Message-Id: <20230122150219.971826703@linuxfoundation.org>
+Subject: [PATCH 4.19 10/37] xhci: Add a flag to disable USB3 lpm on a xhci root port level.
+Date: Sun, 22 Jan 2023 16:04:07 +0100
+Message-Id: <20230122150220.011031462@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150219.557984692@linuxfoundation.org>
 References: <20230122150219.557984692@linuxfoundation.org>
@@ -35,47 +35,61 @@ Content-Transfer-Encoding: 8bit
 
 From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit a2bc47c43e70cf904b1af49f76d572326c08bca7 upstream.
+commit 0522b9a1653048440da5f21747f21e498b9220d1 upstream.
 
-Make sure xhci_free_dev() and xhci_kill_endpoint_urbs() do not race
-and cause null pointer dereference when host suddenly dies.
+One USB3 roothub port may support link power management, while another
+root port on the same xHC can't due to different retimers used for
+the ports.
 
-Usb core may call xhci_free_dev() which frees the xhci->devs[slot_id]
-virt device at the same time that xhci_kill_endpoint_urbs() tries to
-loop through all the device's endpoints, checking if there are any
-cancelled urbs left to give back.
+This is the case with Intel Alder Lake, and possible future platforms
+where retimers used for USB4 ports cause too long exit latecy to
+enable native USB3 lpm U1 and U2 states.
 
-hold the xhci spinlock while freeing the virt device
+Add a flag in the xhci port structure to indicate if the port is
+lpm_incapable, and check it while calculating exit latency.
 
 Cc: stable@vger.kernel.org
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230116142216.1141605-4-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/r/20230116142216.1141605-6-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci.c |    5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/host/xhci.c |    8 ++++++++
+ drivers/usb/host/xhci.h |    1 +
+ 2 files changed, 9 insertions(+)
 
 --- a/drivers/usb/host/xhci.c
 +++ b/drivers/usb/host/xhci.c
-@@ -3830,6 +3830,7 @@ static void xhci_free_dev(struct usb_hcd
- 	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
- 	struct xhci_virt_device *virt_dev;
- 	struct xhci_slot_ctx *slot_ctx;
-+	unsigned long flags;
- 	int i, ret;
+@@ -4917,6 +4917,7 @@ static int xhci_enable_usb3_lpm_timeout(
+ 			struct usb_device *udev, enum usb3_link_state state)
+ {
+ 	struct xhci_hcd	*xhci;
++	struct xhci_port *port;
+ 	u16 hub_encoded_timeout;
+ 	int mel;
+ 	int ret;
+@@ -4930,6 +4931,13 @@ static int xhci_enable_usb3_lpm_timeout(
+ 			!xhci->devs[udev->slot_id])
+ 		return USB3_LPM_DISABLED;
  
- 	/*
-@@ -3859,7 +3860,11 @@ static void xhci_free_dev(struct usb_hcd
- 	xhci_debugfs_remove_slot(xhci, udev->slot_id);
- 	virt_dev->udev = NULL;
- 	xhci_disable_slot(xhci, udev->slot_id);
++	/* If connected to root port then check port can handle lpm */
++	if (udev->parent && !udev->parent->parent) {
++		port = xhci->usb3_rhub.ports[udev->portnum - 1];
++		if (port->lpm_incapable)
++			return USB3_LPM_DISABLED;
++	}
 +
-+	spin_lock_irqsave(&xhci->lock, flags);
- 	xhci_free_virt_device(xhci, udev->slot_id);
-+	spin_unlock_irqrestore(&xhci->lock, flags);
-+
- }
+ 	hub_encoded_timeout = xhci_calculate_lpm_timeout(hcd, udev, state);
+ 	mel = calculate_max_exit_latency(udev, state, hub_encoded_timeout);
+ 	if (mel < 0) {
+--- a/drivers/usb/host/xhci.h
++++ b/drivers/usb/host/xhci.h
+@@ -1723,6 +1723,7 @@ struct xhci_port {
+ 	int			hcd_portnum;
+ 	struct xhci_hub		*rhub;
+ 	struct xhci_port_cap	*port_cap;
++	unsigned int		lpm_incapable:1;
+ };
  
- int xhci_disable_slot(struct xhci_hcd *xhci, u32 slot_id)
+ struct xhci_hub {
 
 
