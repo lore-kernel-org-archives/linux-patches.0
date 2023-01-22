@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B172590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E729C433EF;
-	Sun, 22 Jan 2023 15:16:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534AB2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE504C433D2;
+	Sun, 22 Jan 2023 15:16:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400582;
-	bh=kMTd/QWEVaMMbGGHko64wkREQRIpQtKXX9E8vNP5Ciw=;
+	s=korg; t=1674400585;
+	bh=oxmIX+wYx65dCAJKFpht8+jm7v0UdElEvcPNyhSmffI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GQbGqGjsvWhqYKsQRc0UkQ4d8DvFxVaEkmqIpR5LoSOZrhAnI2Tw/bE1AVaNHK77P
-	 VS37GJFpjCXVDcT5gEQeYw1KLb7cnCQb5huQ1O508puvEEZxG8QG1nM23j58ejX6W0
-	 WEucSUhdIALIYDXUao62ck0UX28RZPp2j5FWbwe4=
+	b=o5gSDAI5w9Rsza8gvKzHkHWGkegZFYjd7l803mYE2AG/sSzfI/kMH+tGWPWP/Fynw
+	 EYHmFb43FNkdE2fHW70O0lI/sBqmnxbKgKon/vlKn7yBVJ31hZ3/vPmov9Wv+osNtM
+	 bOW6soO3MQHWFWkEeqVxEOApTQ1/IA0jryi0Xxhg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Sun <sunhao.th@gmail.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 003/117] selftests/bpf: check null propagation only neither reg is PTR_TO_BTF_ID
-Date: Sun, 22 Jan 2023 16:03:13 +0100
-Message-Id: <20230122150232.884959837@linuxfoundation.org>
+Subject: [PATCH 5.15 030/117] io_uring: pass in EPOLL_URING_WAKE for eventfd signaling and wakeups
+Date: Sun, 22 Jan 2023 16:03:40 +0100
+Message-Id: <20230122150233.967754153@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -35,91 +34,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hao Sun <sunhao.th@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit cedebd74cf3883f0384af9ec26b4e6f8f1964dd4 ]
+[ Upstream commit 4464853277d0ccdb9914608dd1332f0fa2f9846f ]
 
-Verify that nullness information is not porpagated in the branches
-of register to register JEQ and JNE operations if one of them is
-PTR_TO_BTF_ID. Implement this in C level so we can use CO-RE.
+Pass in EPOLL_URING_WAKE when signaling eventfd or doing poll related
+wakups, so that we can check for a circular event dependency between
+eventfd and epoll. If this flag is set when our wakeup handlers are
+called, then we know we have a dependency that needs to terminate
+multishot requests.
 
-Signed-off-by: Hao Sun <sunhao.th@gmail.com>
-Suggested-by: Martin KaFai Lau <martin.lau@kernel.org>
-Link: https://lore.kernel.org/r/20221222024414.29539-2-sunhao.th@gmail.com
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+eventfd and epoll are the only such possible dependencies.
+
+Cc: stable@vger.kernel.org # 6.0
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../bpf/prog_tests/jeq_infer_not_null.c       |  9 ++++
- .../bpf/progs/jeq_infer_not_null_fail.c       | 42 +++++++++++++++++++
- 2 files changed, 51 insertions(+)
- create mode 100644 tools/testing/selftests/bpf/prog_tests/jeq_infer_not_null.c
- create mode 100644 tools/testing/selftests/bpf/progs/jeq_infer_not_null_fail.c
+ io_uring/io_uring.c | 27 ++++++++++++++++++++-------
+ 1 file changed, 20 insertions(+), 7 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/prog_tests/jeq_infer_not_null.c b/tools/testing/selftests/bpf/prog_tests/jeq_infer_not_null.c
-new file mode 100644
-index 000000000000..3add34df5767
---- /dev/null
-+++ b/tools/testing/selftests/bpf/prog_tests/jeq_infer_not_null.c
-@@ -0,0 +1,9 @@
-+// SPDX-License-Identifier: GPL-2.0
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 9a01188ff45a..d855e668f37c 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1629,13 +1629,15 @@ static void io_cqring_ev_posted(struct io_ring_ctx *ctx)
+ 	 * wake as many waiters as we need to.
+ 	 */
+ 	if (wq_has_sleeper(&ctx->cq_wait))
+-		wake_up_all(&ctx->cq_wait);
++		__wake_up(&ctx->cq_wait, TASK_NORMAL, 0,
++				poll_to_key(EPOLL_URING_WAKE | EPOLLIN));
+ 	if (ctx->sq_data && waitqueue_active(&ctx->sq_data->wait))
+ 		wake_up(&ctx->sq_data->wait);
+ 	if (io_should_trigger_evfd(ctx))
+-		eventfd_signal(ctx->cq_ev_fd, 1);
++		eventfd_signal_mask(ctx->cq_ev_fd, 1, EPOLL_URING_WAKE);
+ 	if (waitqueue_active(&ctx->poll_wait))
+-		wake_up_interruptible(&ctx->poll_wait);
++		__wake_up(&ctx->poll_wait, TASK_INTERRUPTIBLE, 0,
++				poll_to_key(EPOLL_URING_WAKE | EPOLLIN));
+ }
+ 
+ static void io_cqring_ev_posted_iopoll(struct io_ring_ctx *ctx)
+@@ -1645,12 +1647,14 @@ static void io_cqring_ev_posted_iopoll(struct io_ring_ctx *ctx)
+ 
+ 	if (ctx->flags & IORING_SETUP_SQPOLL) {
+ 		if (waitqueue_active(&ctx->cq_wait))
+-			wake_up_all(&ctx->cq_wait);
++			__wake_up(&ctx->cq_wait, TASK_NORMAL, 0,
++				  poll_to_key(EPOLL_URING_WAKE | EPOLLIN));
+ 	}
+ 	if (io_should_trigger_evfd(ctx))
+-		eventfd_signal(ctx->cq_ev_fd, 1);
++		eventfd_signal_mask(ctx->cq_ev_fd, 1, EPOLL_URING_WAKE);
+ 	if (waitqueue_active(&ctx->poll_wait))
+-		wake_up_interruptible(&ctx->poll_wait);
++		__wake_up(&ctx->poll_wait, TASK_INTERRUPTIBLE, 0,
++				poll_to_key(EPOLL_URING_WAKE | EPOLLIN));
+ }
+ 
+ /* Returns true if there are no backlogged entries after the flush */
+@@ -5636,8 +5640,17 @@ static int io_poll_wake(struct wait_queue_entry *wait, unsigned mode, int sync,
+ 	if (mask && !(mask & poll->events))
+ 		return 0;
+ 
+-	if (io_poll_get_ownership(req))
++	if (io_poll_get_ownership(req)) {
++		/*
++		 * If we trigger a multishot poll off our own wakeup path,
++		 * disable multishot as there is a circular dependency between
++		 * CQ posting and triggering the event.
++		 */
++		if (mask & EPOLL_URING_WAKE)
++			poll->events |= EPOLLONESHOT;
 +
-+#include <test_progs.h>
-+#include "jeq_infer_not_null_fail.skel.h"
-+
-+void test_jeq_infer_not_null(void)
-+{
-+	RUN_TESTS(jeq_infer_not_null_fail);
-+}
-diff --git a/tools/testing/selftests/bpf/progs/jeq_infer_not_null_fail.c b/tools/testing/selftests/bpf/progs/jeq_infer_not_null_fail.c
-new file mode 100644
-index 000000000000..f46965053acb
---- /dev/null
-+++ b/tools/testing/selftests/bpf/progs/jeq_infer_not_null_fail.c
-@@ -0,0 +1,42 @@
-+// SPDX-License-Identifier: GPL-2.0
-+
-+#include "vmlinux.h"
-+#include <bpf/bpf_helpers.h>
-+#include "bpf_misc.h"
-+
-+char _license[] SEC("license") = "GPL";
-+
-+struct {
-+	__uint(type, BPF_MAP_TYPE_HASH);
-+	__uint(max_entries, 1);
-+	__type(key, u64);
-+	__type(value, u64);
-+} m_hash SEC(".maps");
-+
-+SEC("?raw_tp")
-+__failure __msg("R8 invalid mem access 'map_value_or_null")
-+int jeq_infer_not_null_ptr_to_btfid(void *ctx)
-+{
-+	struct bpf_map *map = (struct bpf_map *)&m_hash;
-+	struct bpf_map *inner_map = map->inner_map_meta;
-+	u64 key = 0, ret = 0, *val;
-+
-+	val = bpf_map_lookup_elem(map, &key);
-+	/* Do not mark ptr as non-null if one of them is
-+	 * PTR_TO_BTF_ID (R9), reject because of invalid
-+	 * access to map value (R8).
-+	 *
-+	 * Here, we need to inline those insns to access
-+	 * R8 directly, since compiler may use other reg
-+	 * once it figures out val==inner_map.
-+	 */
-+	asm volatile("r8 = %[val];\n"
-+		     "r9 = %[inner_map];\n"
-+		     "if r8 != r9 goto +1;\n"
-+		     "%[ret] = *(u64 *)(r8 +0);\n"
-+		     : [ret] "+r"(ret)
-+		     : [inner_map] "r"(inner_map), [val] "r"(val)
-+		     : "r8", "r9");
-+
-+	return ret;
-+}
+ 		__io_poll_execute(req, mask);
++	}
+ 	return 1;
+ }
+ 
 -- 
-2.35.1
+2.39.0
 
 
 
