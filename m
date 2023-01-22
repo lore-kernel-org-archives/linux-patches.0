@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBD362590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:22:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 452B7C433EF;
-	Sun, 22 Jan 2023 15:22:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621952590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:23:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8B98C433EF;
+	Sun, 22 Jan 2023 15:23:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400978;
-	bh=RAqpPxM+jxFVGp3Bh249PS/8WBPbe/rrYOmtc6sL/xs=;
+	s=korg; t=1674400981;
+	bh=Hf2xK+5NIgrNH7GU69OGU/qnHq72dJYShPTvS7Q8jMQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mHhlJn885PlSSi9JquYhRAlnKnkPcF9wtpCHA5iFWvC3wWR/UfXtKDVmb2COEGXlK
-	 pixFj5pJuBv0cQUAejmFbfhTojrAFTagKiGJvHy68Yhm639MXj4epVEiW6I5F70beo
-	 hpdVEta7xtHgMsUBV/5FJN0D4B7uU4ZtcKC5/524=
+	b=GF8nor30hVQ8dLPjxIyo87KdAduiYKlhgvWiH9rTQ4CAg1Q1s62yM3IGhpewXG5Wj
+	 FhXWT5AsarPKs3lFgeKu/w9TJDsz/ji/oJlVdMF8Ohedr2rvPyXp07XV9TvgTrlH8Q
+	 UzRB//K9JZr5X/MMSahRgTfn4D+95Z0E2V6QEnNg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Duke=20Xin ?= <duke_xinanwen@163.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.1 062/193] USB: serial: option: add Quectel EM05CN (SG) modem
-Date: Sun, 22 Jan 2023 16:03:11 +0100
-Message-Id: <20230122150249.177164055@linuxfoundation.org>
+	Alexander Wetzel <alexander@wetzel-home.de>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 035/193] wifi: mac80211: sdata can be NULL during AMPDU start
+Date: Sun, 22 Jan 2023 16:02:44 +0100
+Message-Id: <20230122150248.012448415@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -34,104 +34,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duke Xin(辛安文) <duke_xinanwen@163.com>
+From: Alexander Wetzel <alexander@wetzel-home.de>
 
-commit 1541dd0097c0f8f470e76eddf5120fc55a7e3101 upstream.
+commit 69403bad97aa0162e3d7911b27e25abe774093df upstream.
 
-The EM05CN (SG) modem has 2 USB configurations that are configurable via the AT
-command AT+QCFG="usbnet",[ 0 | 2 ] which make the modem enumerate with
-the following interfaces, respectively:
+ieee80211_tx_ba_session_handle_start() may get NULL for sdata when a
+deauthentication is ongoing.
 
-"MBIM"  : AT + MBIM + DIAG + NMEA  + MODEM
-"RMNET" : AT + DIAG + NMEA + Modem + QMI
+Here a trace triggering the race with the hostapd test
+multi_ap_fronthaul_on_ap:
 
-The detailed description of the USB configuration for each mode as follows:
+(gdb) list *drv_ampdu_action+0x46
+0x8b16 is in drv_ampdu_action (net/mac80211/driver-ops.c:396).
+391             int ret = -EOPNOTSUPP;
+392
+393             might_sleep();
+394
+395             sdata = get_bss_sdata(sdata);
+396             if (!check_sdata_in_driver(sdata))
+397                     return -EIO;
+398
+399             trace_drv_ampdu_action(local, sdata, params);
+400
 
-MBIM Mode
---------------
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0310 Rev= 3.18
-S:  Manufacturer=Quectel
-S:  Product=Quectel EM05-CN
-C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-A:  FirstIf#= 1 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 1 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=89(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 2 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 2 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+wlan0: moving STA 02:00:00:00:03:00 to state 3
+wlan0: associated
+wlan0: deauthenticating from 02:00:00:00:03:00 by local choice (Reason: 3=DEAUTH_LEAVING)
+wlan3.sta1: Open BA session requested for 02:00:00:00:00:00 tid 0
+wlan3.sta1: dropped frame to 02:00:00:00:00:00 (unauthorized port)
+wlan0: moving STA 02:00:00:00:03:00 to state 2
+wlan0: moving STA 02:00:00:00:03:00 to state 1
+wlan0: Removed STA 02:00:00:00:03:00
+wlan0: Destroyed STA 02:00:00:00:03:00
+BUG: unable to handle page fault for address: fffffffffffffb48
+PGD 11814067 P4D 11814067 PUD 11816067 PMD 0
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 2 PID: 133397 Comm: kworker/u16:1 Tainted: G        W          6.1.0-rc8-wt+ #59
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.0-20220807_005459-localhost 04/01/2014
+Workqueue: phy3 ieee80211_ba_session_work [mac80211]
+RIP: 0010:drv_ampdu_action+0x46/0x280 [mac80211]
+Code: 53 48 89 f3 be 89 01 00 00 e8 d6 43 bf ef e8 21 46 81 f0 83 bb a0 1b 00 00 04 75 0e 48 8b 9b 28 0d 00 00 48 81 eb 10 0e 00 00 <8b> 93 58 09 00 00 f6 c2 20 0f 84 3b 01 00 00 8b 05 dd 1c 0f 00 85
+RSP: 0018:ffffc900025ebd20 EFLAGS: 00010287
+RAX: 0000000000000000 RBX: fffffffffffff1f0 RCX: ffff888102228240
+RDX: 0000000080000000 RSI: ffffffff918c5de0 RDI: ffff888102228b40
+RBP: ffffc900025ebd40 R08: 0000000000000001 R09: 0000000000000001
+R10: 0000000000000001 R11: 0000000000000000 R12: ffff888118c18ec0
+R13: 0000000000000000 R14: ffffc900025ebd60 R15: ffff888018b7efb8
+FS:  0000000000000000(0000) GS:ffff88817a600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: fffffffffffffb48 CR3: 0000000105228006 CR4: 0000000000170ee0
+Call Trace:
+ <TASK>
+ ieee80211_tx_ba_session_handle_start+0xd0/0x190 [mac80211]
+ ieee80211_ba_session_work+0xff/0x2e0 [mac80211]
+ process_one_work+0x29f/0x620
+ worker_thread+0x4d/0x3d0
+ ? process_one_work+0x620/0x620
+ kthread+0xfb/0x120
+ ? kthread_complete_and_exit+0x20/0x20
+ ret_from_fork+0x22/0x30
+ </TASK>
 
-RMNET Mode
---------------
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0310 Rev= 3.18
-S:  Manufacturer=Quectel
-S:  Product=Quectel EM05-CN
-C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 0 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 6 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Duke Xin(辛安文) <duke_xinanwen@163.com>
+Signed-off-by: Alexander Wetzel <alexander@wetzel-home.de>
+Link: https://lore.kernel.org/r/20221230121850.218810-2-alexander@wetzel-home.de
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/mac80211/agg-tx.c     |    6 +++++-
+ net/mac80211/driver-ops.c |    3 +++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -256,6 +256,7 @@ static void option_instat_callback(struc
- #define QUECTEL_PRODUCT_EM05G			0x030a
- #define QUECTEL_PRODUCT_EM060K			0x030b
- #define QUECTEL_PRODUCT_EM05G_CS		0x030c
-+#define QUECTEL_PRODUCT_EM05CN_SG		0x0310
- #define QUECTEL_PRODUCT_EM05G_SG		0x0311
- #define QUECTEL_PRODUCT_EM05G_GR		0x0313
- #define QUECTEL_PRODUCT_EM05G_RS		0x0314
-@@ -1163,6 +1164,8 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EP06, 0xff, 0xff, 0xff),
- 	  .driver_info = RSVD(1) | RSVD(2) | RSVD(3) | RSVD(4) | NUMEP2 },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EP06, 0xff, 0, 0) },
-+	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05CN_SG, 0xff),
-+	  .driver_info = RSVD(6) | ZLP },
- 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G, 0xff),
- 	  .driver_info = RSVD(6) | ZLP },
- 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_GR, 0xff),
+--- a/net/mac80211/agg-tx.c
++++ b/net/mac80211/agg-tx.c
+@@ -491,7 +491,7 @@ void ieee80211_tx_ba_session_handle_star
+ {
+ 	struct tid_ampdu_tx *tid_tx;
+ 	struct ieee80211_local *local = sta->local;
+-	struct ieee80211_sub_if_data *sdata = sta->sdata;
++	struct ieee80211_sub_if_data *sdata;
+ 	struct ieee80211_ampdu_params params = {
+ 		.sta = &sta->sta,
+ 		.action = IEEE80211_AMPDU_TX_START,
+@@ -521,6 +521,7 @@ void ieee80211_tx_ba_session_handle_star
+ 	 */
+ 	synchronize_net();
+ 
++	sdata = sta->sdata;
+ 	params.ssn = sta->tid_seq[tid] >> 4;
+ 	ret = drv_ampdu_action(local, sdata, &params);
+ 	tid_tx->ssn = params.ssn;
+@@ -534,6 +535,9 @@ void ieee80211_tx_ba_session_handle_star
+ 		 */
+ 		set_bit(HT_AGG_STATE_DRV_READY, &tid_tx->state);
+ 	} else if (ret) {
++		if (!sdata)
++			return;
++
+ 		ht_dbg(sdata,
+ 		       "BA request denied - HW unavailable for %pM tid %d\n",
+ 		       sta->sta.addr, tid);
+--- a/net/mac80211/driver-ops.c
++++ b/net/mac80211/driver-ops.c
+@@ -391,6 +391,9 @@ int drv_ampdu_action(struct ieee80211_lo
+ 
+ 	might_sleep();
+ 
++	if (!sdata)
++		return -EIO;
++
+ 	sdata = get_bss_sdata(sdata);
+ 	if (!check_sdata_in_driver(sdata))
+ 		return -EIO;
 
 
