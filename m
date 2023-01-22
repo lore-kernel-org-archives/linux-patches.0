@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C137C2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48CB7C433EF;
-	Sun, 22 Jan 2023 15:25:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A8972590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D307DC433EF;
+	Sun, 22 Jan 2023 15:25:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401135;
-	bh=OcWXXBoI5i3Npsz3WUGmM4zn+4nitJ+kLf9q/IMjQFo=;
+	s=korg; t=1674401138;
+	bh=qQ1RV7l1mrwUbBTh93hLRk9y/ZLSfwu3gD5+ghR5iA0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HFzukF9jtf2Yo14+wDitk7/xfL4lIlkpbH9UJPwDQLMsP5awOnhrvpm8j3f1Jrn1H
-	 f268hZKYJsFNWtR7mgSvSnpwnrPDSUezJ+pGdAPOkt8E6YhPxNvY8+Xq9tCDL2KMlB
-	 vRKEZBdWGfD94A/7e6jwQfnJKu3Dww7hITI3yYFc=
+	b=jsc3cWbK3t++6xLmHEac9P0svuo7DJO6DlJx+NSQMrEwjZM5rQ6KCZHRaI5bMSoo4
+	 g/CtVXyo4FKRvf1fud72rNFsEvZeuOCRsU/VtX7PsKht0ImPDntFcbjIe30/ce7Aey
+	 c7nZg0bNLwwzkPCRdXiASSnK7CQwGydlSC54Jsf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Fenghua Yu <fenghua.yu@intel.com>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 123/193] dmaengine: idxd: Prevent use after free on completion memory
-Date: Sun, 22 Jan 2023 16:04:12 +0100
-Message-Id: <20230122150251.946125840@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Jiri Slaby <jirislaby@kernel.org>
+Subject: [PATCH 6.1 097/193] tty: serial: qcom-geni-serial: fix slab-out-of-bounds on RX FIFO buffer
+Date: Sun, 22 Jan 2023 16:03:46 +0100
+Message-Id: <20230122150250.764707724@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -36,59 +34,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Reinette Chatre <reinette.chatre@intel.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 1beeec45f9ac31eba52478379f70a5fa9c2ad005 upstream.
+commit b8caf69a6946e18ffebad49847e258f5b6d52ac2 upstream.
 
-On driver unload any pending descriptors are flushed at the
-time the interrupt is freed:
-idxd_dmaengine_drv_remove() ->
-	drv_disable_wq() ->
-		idxd_wq_free_irq() ->
-			idxd_flush_pending_descs().
+Driver's probe allocates memory for RX FIFO (port->rx_fifo) based on
+default RX FIFO depth, e.g. 16.  Later during serial startup the
+qcom_geni_serial_port_setup() updates the RX FIFO depth
+(port->rx_fifo_depth) to match real device capabilities, e.g. to 32.
 
-If there are any descriptors present that need to be flushed this
-flow triggers a "not present" page fault as below:
+The RX UART handle code will read "port->rx_fifo_depth" number of words
+into "port->rx_fifo" buffer, thus exceeding the bounds.  This can be
+observed in certain configurations with Qualcomm Bluetooth HCI UART
+device and KASAN:
 
- BUG: unable to handle page fault for address: ff391c97c70c9040
- #PF: supervisor read access in kernel mode
- #PF: error_code(0x0000) - not-present page
+  Bluetooth: hci0: QCA Product ID   :0x00000010
+  Bluetooth: hci0: QCA SOC Version  :0x400a0200
+  Bluetooth: hci0: QCA ROM Version  :0x00000200
+  Bluetooth: hci0: QCA Patch Version:0x00000d2b
+  Bluetooth: hci0: QCA controller version 0x02000200
+  Bluetooth: hci0: QCA Downloading qca/htbtfw20.tlv
+  bluetooth hci0: Direct firmware load for qca/htbtfw20.tlv failed with error -2
+  Bluetooth: hci0: QCA Failed to request file: qca/htbtfw20.tlv (-2)
+  Bluetooth: hci0: QCA Failed to download patch (-2)
+  ==================================================================
+  BUG: KASAN: slab-out-of-bounds in handle_rx_uart+0xa8/0x18c
+  Write of size 4 at addr ffff279347d578c0 by task swapper/0/0
 
-The address that triggers the fault is the address of the
-descriptor that was freed moments earlier via:
-drv_disable_wq()->idxd_wq_free_resources()
+  CPU: 0 PID: 0 Comm: swapper/0 Not tainted 6.1.0-rt5-00350-gb2450b7e00be-dirty #26
+  Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
+  Call trace:
+   dump_backtrace.part.0+0xe0/0xf0
+   show_stack+0x18/0x40
+   dump_stack_lvl+0x8c/0xb8
+   print_report+0x188/0x488
+   kasan_report+0xb4/0x100
+   __asan_store4+0x80/0xa4
+   handle_rx_uart+0xa8/0x18c
+   qcom_geni_serial_handle_rx+0x84/0x9c
+   qcom_geni_serial_isr+0x24c/0x760
+   __handle_irq_event_percpu+0x108/0x500
+   handle_irq_event+0x6c/0x110
+   handle_fasteoi_irq+0x138/0x2cc
+   generic_handle_domain_irq+0x48/0x64
 
-Fix the use after free by freeing the descriptors after any possible
-usage. This is done after idxd_wq_reset() to ensure that the memory
-remains accessible during possible completion writes by the device.
+If the RX FIFO depth changes after probe, be sure to resize the buffer.
 
-Fixes: 63c14ae6c161 ("dmaengine: idxd: refactor wq driver enable/disable operations")
-Suggested-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Reinette Chatre <reinette.chatre@intel.com>
-Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Fenghua Yu <fenghua.yu@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/6c4657d9cff0a0a00501a7b928297ac966e9ec9d.1670452419.git.reinette.chatre@intel.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: f9d690b6ece7 ("tty: serial: qcom_geni_serial: Allocate port->rx_fifo buffer in probe")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Reviewed-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/20221221164022.1087814-1-krzysztof.kozlowski@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/idxd/device.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/qcom_geni_serial.c |   18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
 
---- a/drivers/dma/idxd/device.c
-+++ b/drivers/dma/idxd/device.c
-@@ -1408,11 +1408,11 @@ void drv_disable_wq(struct idxd_wq *wq)
- 		dev_warn(dev, "Clients has claim on wq %d: %d\n",
- 			 wq->id, idxd_wq_refcount(wq));
+--- a/drivers/tty/serial/qcom_geni_serial.c
++++ b/drivers/tty/serial/qcom_geni_serial.c
+@@ -864,9 +864,10 @@ out_unlock:
+ 	return IRQ_HANDLED;
+ }
  
--	idxd_wq_free_resources(wq);
- 	idxd_wq_unmap_portal(wq);
- 	idxd_wq_drain(wq);
- 	idxd_wq_free_irq(wq);
- 	idxd_wq_reset(wq);
-+	idxd_wq_free_resources(wq);
- 	percpu_ref_exit(&wq->wq_active);
- 	wq->type = IDXD_WQT_NONE;
- 	wq->client_count = 0;
+-static void get_tx_fifo_size(struct qcom_geni_serial_port *port)
++static int setup_fifos(struct qcom_geni_serial_port *port)
+ {
+ 	struct uart_port *uport;
++	u32 old_rx_fifo_depth = port->rx_fifo_depth;
+ 
+ 	uport = &port->uport;
+ 	port->tx_fifo_depth = geni_se_get_tx_fifo_depth(&port->se);
+@@ -874,6 +875,16 @@ static void get_tx_fifo_size(struct qcom
+ 	port->rx_fifo_depth = geni_se_get_rx_fifo_depth(&port->se);
+ 	uport->fifosize =
+ 		(port->tx_fifo_depth * port->tx_fifo_width) / BITS_PER_BYTE;
++
++	if (port->rx_fifo && (old_rx_fifo_depth != port->rx_fifo_depth) && port->rx_fifo_depth) {
++		port->rx_fifo = devm_krealloc(uport->dev, port->rx_fifo,
++					      port->rx_fifo_depth * sizeof(u32),
++					      GFP_KERNEL);
++		if (!port->rx_fifo)
++			return -ENOMEM;
++	}
++
++	return 0;
+ }
+ 
+ 
+@@ -888,6 +899,7 @@ static int qcom_geni_serial_port_setup(s
+ 	u32 rxstale = DEFAULT_BITS_PER_CHAR * STALE_TIMEOUT;
+ 	u32 proto;
+ 	u32 pin_swap;
++	int ret;
+ 
+ 	proto = geni_se_read_proto(&port->se);
+ 	if (proto != GENI_SE_UART) {
+@@ -897,7 +909,9 @@ static int qcom_geni_serial_port_setup(s
+ 
+ 	qcom_geni_serial_stop_rx(uport);
+ 
+-	get_tx_fifo_size(port);
++	ret = setup_fifos(port);
++	if (ret)
++		return ret;
+ 
+ 	writel(rxstale, uport->membase + SE_UART_RX_STALE_CNT);
+ 
 
 
