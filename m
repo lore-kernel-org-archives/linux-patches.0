@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0FAE7E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:07:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13104C433EF;
-	Sun, 22 Jan 2023 15:07:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9B67E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:07:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4648FC433D2;
+	Sun, 22 Jan 2023 15:07:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400053;
-	bh=yBFlBlRv7098clVsprTs//qaNM14YQ+sRNjZ9XLxRv0=;
+	s=korg; t=1674400058;
+	bh=sdqiE0l1v+wHgaarZoHz16Kb3ppFCCJzhb5n6NH/B5c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=giORIsc4yjuyJmBdmWIpB0tnMGFsEpOKAceO5b6kMh0YqA2oR6ViVxmfiV9MDRRDt
-	 MsNsSFpDmNd9v2VtdDQaLdW0xme9OXySbsxx/rh3BcyqZYOkRbFGyflF/ilP067Rg6
-	 duvlnYYJSCsqDe/E+st77NQFI2uKqxGIKkS4Asdk=
+	b=IKVDi88ElmNT7Qd3A9HpeNDoqQdMvyeKscVJe2+Edgtx5gGxLG/iJEdTSzcH1iTHw
+	 IBnoaN0pUg8t7jHpF4zoHtRG8SHaXkXm4D9IrzPazOvg1lZ/JnAc+pKCbzhHQyvNzA
+	 0ateG923Rs3HsdB7tOgv+x1YpYzsXuSqXP5e6ics=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Samuel Holland <samuel@sholland.org>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 4.19 21/37] mmc: sunxi-mmc: Fix clock refcount imbalance during unbind
-Date: Sun, 22 Jan 2023 16:04:18 +0100
-Message-Id: <20230122150220.445830257@linuxfoundation.org>
+	Michael Adler <michael.adler@siemens.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 4.19 23/37] USB: serial: cp210x: add SCALANCE LPE-9000 device id
+Date: Sun, 22 Jan 2023 16:04:20 +0100
+Message-Id: <20230122150220.516953780@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150219.557984692@linuxfoundation.org>
 References: <20230122150219.557984692@linuxfoundation.org>
@@ -35,41 +34,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samuel Holland <samuel@sholland.org>
+From: Michael Adler <michael.adler@siemens.com>
 
-commit 8509419758f2cc28dd05370385af0d91573b76b4 upstream.
+commit 3f9e76e31704a325170e5aec2243c8d084d74854 upstream.
 
-If the controller is suspended by runtime PM, the clock is already
-disabled, so do not try to disable it again during removal. Use
-pm_runtime_disable() to flush any pending runtime PM transitions.
+Add the USB serial console device ID for Siemens SCALANCE LPE-9000
+which have a USB port for their serial console.
 
-Fixes: 9a8e1e8cc2c0 ("mmc: sunxi: Add runtime_pm support")
-Signed-off-by: Samuel Holland <samuel@sholland.org>
-Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Signed-off-by: Michael Adler <michael.adler@siemens.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20220810022509.43743-1-samuel@sholland.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sunxi-mmc.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/usb/serial/cp210x.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mmc/host/sunxi-mmc.c
-+++ b/drivers/mmc/host/sunxi-mmc.c
-@@ -1441,9 +1441,11 @@ static int sunxi_mmc_remove(struct platf
- 	struct sunxi_mmc_host *host = mmc_priv(mmc);
- 
- 	mmc_remove_host(mmc);
--	pm_runtime_force_suspend(&pdev->dev);
--	disable_irq(host->irq);
--	sunxi_mmc_disable(host);
-+	pm_runtime_disable(&pdev->dev);
-+	if (!pm_runtime_status_suspended(&pdev->dev)) {
-+		disable_irq(host->irq);
-+		sunxi_mmc_disable(host);
-+	}
- 	dma_free_coherent(&pdev->dev, PAGE_SIZE, host->sg_cpu, host->sg_dma);
- 	mmc_free_host(mmc);
- 
+--- a/drivers/usb/serial/cp210x.c
++++ b/drivers/usb/serial/cp210x.c
+@@ -61,6 +61,7 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE(0x0846, 0x1100) }, /* NetGear Managed Switch M4100 series, M5300 series, M7100 series */
+ 	{ USB_DEVICE(0x08e6, 0x5501) }, /* Gemalto Prox-PU/CU contactless smartcard reader */
+ 	{ USB_DEVICE(0x08FD, 0x000A) }, /* Digianswer A/S , ZigBee/802.15.4 MAC Device */
++	{ USB_DEVICE(0x0908, 0x0070) }, /* Siemens SCALANCE LPE-9000 USB Serial Console */
+ 	{ USB_DEVICE(0x0908, 0x01FF) }, /* Siemens RUGGEDCOM USB Serial Console */
+ 	{ USB_DEVICE(0x0988, 0x0578) }, /* Teraoka AD2000 */
+ 	{ USB_DEVICE(0x0B00, 0x3070) }, /* Ingenico 3070 */
 
 
