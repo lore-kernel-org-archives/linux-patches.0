@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83F32590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E51AC433EF;
-	Sun, 22 Jan 2023 15:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 709C82590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED13DC433EF;
+	Sun, 22 Jan 2023 15:17:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400673;
-	bh=3cRGBHDByLnAZeCjvn7v97G2SNm9CO8kgin0q7ZsY00=;
+	s=korg; t=1674400676;
+	bh=U6FkxAcl8x49jL4znVy9TmsxhfuD7Zz9b+xOFatmGYU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2Nw0StOBVEkXdXtl326g4niHVJ6xIfVUdnyTVGz76Q3p3DyE/Sj/riuEB/Wzq8Zrr
-	 S7kwoiIGfxvYi8bwVmxkcXpn2/8d9ALyOw8scP8dcgYym4uhjXW1klBDOfs8mFPNMq
-	 vSEIUYR+K7MquNyhPKAL/mf0GXvJXg2LWNzv2NNc=
+	b=FMwdBPFf2skMgb1ICPGENPkkbWo17hvnl0BY9PDxD8N4AYBKbtLAhYamk8p5jlbmO
+	 Y9F+YxckFDVNIl+a5n+Cdo3/188RUKIFscI1/isv8WXEypuvQhMfaCmgcWWthMQWTS
+	 xUd4xh8RD99PEj1W126QlXQp8LqFbwSif3Q3BOqc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dylan Yudaken <dylany@fb.com>,
+	Homin Rhee <hominlab@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 036/117] io_uring: fix async accept on O_NONBLOCK sockets
-Date: Sun, 22 Jan 2023 16:03:46 +0100
-Message-Id: <20230122150234.230902259@linuxfoundation.org>
+Subject: [PATCH 5.15 037/117] io_uring: ensure that cached task references are always put on exit
+Date: Sun, 22 Jan 2023 16:03:47 +0100
+Message-Id: <20230122150234.269384904@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -35,48 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dylan Yudaken <dylany@meta.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit a73825ba70c93e1eb39a845bb3d9885a787f8ffe upstream.
+commit e775f93f2ab976a2cdb4a7b53063cbe890904f73 upstream.
 
-Do not set REQ_F_NOWAIT if the socket is non blocking. When enabled this
-causes the accept to immediately post a CQE with EAGAIN, which means you
-cannot perform an accept SQE on a NONBLOCK socket asynchronously.
+io_uring caches task references to avoid doing atomics for each of them
+per request. If a request is put from the same task that allocated it,
+then we can maintain a per-ctx cache of them. This obviously relies
+on io_uring always pruning caches in a reliable way, and there's
+currently a case off io_uring fd release where we can miss that.
 
-By removing the flag if there is no pending accept then poll is armed as
-usual and when a connection comes in the CQE is posted.
+One example is a ring setup with IOPOLL, which relies on the task
+polling for completions, which will free them. However, if such a task
+submits a request and then exits or closes the ring without reaping
+the completion, then ring release will reap and put. If release happens
+from that very same task, the completed request task refs will get
+put back into the cache pool. This is problematic, as we're now beyond
+the point of pruning caches.
 
-Signed-off-by: Dylan Yudaken <dylany@fb.com>
-Link: https://lore.kernel.org/r/20220324143435.2875844-1-dylany@fb.com
+Manually drop these caches after doing an IOPOLL reap. This releases
+references from the current task, which is enough. If another task
+happens to be doing the release, then the caching will not be
+triggered and there's no issue.
+
+Cc: stable@vger.kernel.org
+Fixes: e98e49b2bbf7 ("io_uring: extend task put optimisations")
+Reported-by: Homin Rhee <hominlab@gmail.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ io_uring/io_uring.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 997a7264e1d4..e1e15d40d758 100644
+index e1e15d40d758..2caef6417260 100644
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -5272,9 +5272,6 @@ static int io_accept(struct io_kiocb *req, unsigned int issue_flags)
- 	struct file *file;
- 	int ret, fd;
+@@ -9684,6 +9684,10 @@ static void io_ring_ctx_wait_and_kill(struct io_ring_ctx *ctx)
+ 	/* if we failed setting up the ctx, we might not have any rings */
+ 	io_iopoll_try_reap_events(ctx);
  
--	if (req->file->f_flags & O_NONBLOCK)
--		req->flags |= REQ_F_NOWAIT;
--
- 	if (!fixed) {
- 		fd = __get_unused_fd_flags(accept->flags, accept->nofile);
- 		if (unlikely(fd < 0))
-@@ -5286,6 +5283,8 @@ static int io_accept(struct io_kiocb *req, unsigned int issue_flags)
- 		if (!fixed)
- 			put_unused_fd(fd);
- 		ret = PTR_ERR(file);
-+		/* safe to retry */
-+		req->flags |= REQ_F_PARTIAL_IO;
- 		if (ret == -EAGAIN && force_nonblock)
- 			return -EAGAIN;
- 		if (ret == -ERESTARTSYS)
++	/* drop cached put refs after potentially doing completions */
++	if (current->io_uring)
++		io_uring_drop_tctx_refs(current);
++
+ 	INIT_WORK(&ctx->exit_work, io_ring_exit_work);
+ 	/*
+ 	 * Use system_unbound_wq to avoid spawning tons of event kworkers
 -- 
 2.39.0
 
