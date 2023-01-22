@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711AB2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:26:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8728C433D2;
-	Sun, 22 Jan 2023 15:26:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 156A82590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:26:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D4EAC433D2;
+	Sun, 22 Jan 2023 15:26:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401190;
-	bh=6MY5F5zQj32kZeL7MD+7F0ZV5Z7rFtN12G5hwntKWhM=;
+	s=korg; t=1674401192;
+	bh=CzZ5c+8wNhX09Nh3I/fGNS4V66detL5nl3Rg3TqYx+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SRNf/r4j/WxEG5G5AuQuZJTrSu34yBVcH5yzeWJ7tkeksXAYpe4Vv6swTK6kjV0WS
-	 NmCazs3Yo44dwN7Tjt5vBCZgRuae+fRSH98E2Tc0VJIHe/tuJxHXqAO+qHzaJHwZXh
-	 mlh3f/NFrYFMXeyeGitbRHyCOIW1J9uKB0+rEfZ8=
+	b=S8jhbUsqS68TDT7wasDv+cI7JTQW8bzZuo/Auo8F2gKxobZELGgv6SZ6EpdU0Wayf
+	 58LU7SLt9NZWFcnN9TD+Z4xchScXIbIhsSpalC3P6KS0zxxjVrOQGv9+qVHs7YR7RY
+	 +qfey035BFA8HZvayHhvHBRnuzk1Svfy5f1Fxxkk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	roman.li@amd.com,
-	yifan1.zhang@amd.com,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Roman Li <Roman.Li@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 145/193] drm/amd/display: disable S/G display on DCN 3.1.4
-Date: Sun, 22 Jan 2023 16:04:34 +0100
-Message-Id: <20230122150253.015575527@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 6.1 146/193] cifs: reduce roundtrips on create/qinfo requests
+Date: Sun, 22 Jan 2023 16:04:35 +0100
+Message-Id: <20230122150253.067388762@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -37,34 +34,256 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Paulo Alcantara <pc@cjr.nz>
 
-commit a52287d66dfa1cca32e6273623b63ba39d87f126 upstream.
+commit c877ce47e1378dbafa6f1bf84c0c83a05ca8972a upstream.
 
-Causes flickering or white screens in some configurations.
-Disable it for now until we can fix the issue.
+To work around some Window servers that return
+STATUS_OBJECT_NAME_INVALID on query infos under DFS namespaces that
+contain non-ASCII characters, we started checking for -ENOENT on every
+file open, and if so, then send additional requests to figure out
+whether it is a DFS link or not.  It means that all those requests
+will be sent to every non-existing file.
 
-Cc: roman.li@amd.com
-Cc: yifan1.zhang@amd.com
-Acked-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Roman Li <Roman.Li@amd.com>
-Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.x
+So, in order to reduce the number of roundtrips, check earlier whether
+status code is STATUS_OBJECT_NAME_INVALID and tcon supports dfs, and
+if so, then map -ENOENT to -EREMOTE so mount or automount will take
+care of chasing the DFS link -- if it isn't an DFS link, then -ENOENT
+will be returned appropriately.
+
+Before patch
+
+  SMB2 438 Create Request File: ada.test\dfs\foo;GetInfo Request...
+  SMB2 310 Create Response, Error: STATUS_OBJECT_NAME_NOT_FOUND;...
+  SMB2 228 Ioctl Request FSCTL_DFS_GET_REFERRALS, File: \ada.test\dfs\foo
+  SMB2 143 Ioctl Response, Error: STATUS_OBJECT_PATH_NOT_FOUND
+  SMB2 438 Create Request File: ada.test\dfs\foo;GetInfo Request...
+  SMB2 310 Create Response, Error: STATUS_OBJECT_NAME_NOT_FOUND;...
+  SMB2 228 Ioctl Request FSCTL_DFS_GET_REFERRALS, File: \ada.test\dfs\foo
+  SMB2 143 Ioctl Response, Error: STATUS_OBJECT_PATH_NOT_FOUND
+
+After patch
+
+  SMB2 438 Create Request File: ada.test\dfs\foo;GetInfo Request...
+  SMB2 310 Create Response, Error: STATUS_OBJECT_NAME_NOT_FOUND;...
+  SMB2 438 Create Request File: ada.test\dfs\foo;GetInfo Request...
+  SMB2 310 Create Response, Error: STATUS_OBJECT_NAME_NOT_FOUND;...
+
+Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    1 -
- 1 file changed, 1 deletion(-)
+ fs/cifs/connect.c   |   16 ----------------
+ fs/cifs/inode.c     |    6 ------
+ fs/cifs/misc.c      |   45 ---------------------------------------------
+ fs/cifs/smb2inode.c |   45 ++++++++++++++++++++++++++++++++-------------
+ fs/cifs/smb2ops.c   |   28 ++++++++++++++++++++++++----
+ 5 files changed, 56 insertions(+), 84 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -1512,7 +1512,6 @@ static int amdgpu_dm_init(struct amdgpu_
- 		case IP_VERSION(3, 0, 1):
- 		case IP_VERSION(3, 1, 2):
- 		case IP_VERSION(3, 1, 3):
--		case IP_VERSION(3, 1, 4):
- 		case IP_VERSION(3, 1, 6):
- 			init_data.flags.gpu_vm_support = true;
- 			break;
+--- a/fs/cifs/connect.c
++++ b/fs/cifs/connect.c
+@@ -3554,9 +3554,6 @@ static int is_path_remote(struct mount_c
+ 	struct cifs_tcon *tcon = mnt_ctx->tcon;
+ 	struct smb3_fs_context *ctx = mnt_ctx->fs_ctx;
+ 	char *full_path;
+-#ifdef CONFIG_CIFS_DFS_UPCALL
+-	bool nodfs = cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NO_DFS;
+-#endif
+ 
+ 	if (!server->ops->is_path_accessible)
+ 		return -EOPNOTSUPP;
+@@ -3573,19 +3570,6 @@ static int is_path_remote(struct mount_c
+ 
+ 	rc = server->ops->is_path_accessible(xid, tcon, cifs_sb,
+ 					     full_path);
+-#ifdef CONFIG_CIFS_DFS_UPCALL
+-	if (nodfs) {
+-		if (rc == -EREMOTE)
+-			rc = -EOPNOTSUPP;
+-		goto out;
+-	}
+-
+-	/* path *might* exist with non-ASCII characters in DFS root
+-	 * try again with full path (only if nodfs is not set) */
+-	if (rc == -ENOENT && is_tcon_dfs(tcon))
+-		rc = cifs_dfs_query_info_nonascii_quirk(xid, tcon, cifs_sb,
+-							full_path);
+-#endif
+ 	if (rc != 0 && rc != -EREMOTE)
+ 		goto out;
+ 
+--- a/fs/cifs/inode.c
++++ b/fs/cifs/inode.c
+@@ -991,12 +991,6 @@ int cifs_get_inode_info(struct inode **i
+ 		}
+ 		rc = server->ops->query_path_info(xid, tcon, cifs_sb, full_path, &tmp_data,
+ 						  &adjust_tz, &is_reparse_point);
+-#ifdef CONFIG_CIFS_DFS_UPCALL
+-		if (rc == -ENOENT && is_tcon_dfs(tcon))
+-			rc = cifs_dfs_query_info_nonascii_quirk(xid, tcon,
+-								cifs_sb,
+-								full_path);
+-#endif
+ 		data = &tmp_data;
+ 	}
+ 
+--- a/fs/cifs/misc.c
++++ b/fs/cifs/misc.c
+@@ -1314,49 +1314,4 @@ int cifs_update_super_prepath(struct cif
+ 	cifs_sb->mnt_cifs_flags |= CIFS_MOUNT_USE_PREFIX_PATH;
+ 	return 0;
+ }
+-
+-/** cifs_dfs_query_info_nonascii_quirk
+- * Handle weird Windows SMB server behaviour. It responds with
+- * STATUS_OBJECT_NAME_INVALID code to SMB2 QUERY_INFO request
+- * for "\<server>\<dfsname>\<linkpath>" DFS reference,
+- * where <dfsname> contains non-ASCII unicode symbols.
+- *
+- * Check such DFS reference.
+- */
+-int cifs_dfs_query_info_nonascii_quirk(const unsigned int xid,
+-				       struct cifs_tcon *tcon,
+-				       struct cifs_sb_info *cifs_sb,
+-				       const char *linkpath)
+-{
+-	char *treename, *dfspath, sep;
+-	int treenamelen, linkpathlen, rc;
+-
+-	treename = tcon->tree_name;
+-	/* MS-DFSC: All paths in REQ_GET_DFS_REFERRAL and RESP_GET_DFS_REFERRAL
+-	 * messages MUST be encoded with exactly one leading backslash, not two
+-	 * leading backslashes.
+-	 */
+-	sep = CIFS_DIR_SEP(cifs_sb);
+-	if (treename[0] == sep && treename[1] == sep)
+-		treename++;
+-	linkpathlen = strlen(linkpath);
+-	treenamelen = strnlen(treename, MAX_TREE_SIZE + 1);
+-	dfspath = kzalloc(treenamelen + linkpathlen + 1, GFP_KERNEL);
+-	if (!dfspath)
+-		return -ENOMEM;
+-	if (treenamelen)
+-		memcpy(dfspath, treename, treenamelen);
+-	memcpy(dfspath + treenamelen, linkpath, linkpathlen);
+-	rc = dfs_cache_find(xid, tcon->ses, cifs_sb->local_nls,
+-			    cifs_remap(cifs_sb), dfspath, NULL, NULL);
+-	if (rc == 0) {
+-		cifs_dbg(FYI, "DFS ref '%s' is found, emulate -EREMOTE\n",
+-			 dfspath);
+-		rc = -EREMOTE;
+-	} else {
+-		cifs_dbg(FYI, "%s: dfs_cache_find returned %d\n", __func__, rc);
+-	}
+-	kfree(dfspath);
+-	return rc;
+-}
+ #endif
+--- a/fs/cifs/smb2inode.c
++++ b/fs/cifs/smb2inode.c
+@@ -540,22 +540,41 @@ int smb2_query_path_info(const unsigned
+ 	rc = smb2_compound_op(xid, tcon, cifs_sb, full_path, FILE_READ_ATTRIBUTES, FILE_OPEN,
+ 			      create_options, ACL_NO_MODE, data, SMB2_OP_QUERY_INFO, cfile,
+ 			      err_iov, err_buftype);
+-	if (rc == -EOPNOTSUPP) {
+-		if (err_iov[0].iov_base && err_buftype[0] != CIFS_NO_BUFFER &&
+-		    ((struct smb2_hdr *)err_iov[0].iov_base)->Command == SMB2_CREATE &&
+-		    ((struct smb2_hdr *)err_iov[0].iov_base)->Status == STATUS_STOPPED_ON_SYMLINK) {
+-			rc = smb2_parse_symlink_response(cifs_sb, err_iov, &data->symlink_target);
++	if (rc) {
++		struct smb2_hdr *hdr = err_iov[0].iov_base;
++
++		if (unlikely(!hdr || err_buftype[0] == CIFS_NO_BUFFER))
++			goto out;
++		if (rc == -EOPNOTSUPP && hdr->Command == SMB2_CREATE &&
++		    hdr->Status == STATUS_STOPPED_ON_SYMLINK) {
++			rc = smb2_parse_symlink_response(cifs_sb, err_iov,
++							 &data->symlink_target);
+ 			if (rc)
+ 				goto out;
+-		}
+-		*reparse = true;
+-		create_options |= OPEN_REPARSE_POINT;
+ 
+-		/* Failed on a symbolic link - query a reparse point info */
+-		cifs_get_readable_path(tcon, full_path, &cfile);
+-		rc = smb2_compound_op(xid, tcon, cifs_sb, full_path, FILE_READ_ATTRIBUTES,
+-				      FILE_OPEN, create_options, ACL_NO_MODE, data,
+-				      SMB2_OP_QUERY_INFO, cfile, NULL, NULL);
++			*reparse = true;
++			create_options |= OPEN_REPARSE_POINT;
++
++			/* Failed on a symbolic link - query a reparse point info */
++			cifs_get_readable_path(tcon, full_path, &cfile);
++			rc = smb2_compound_op(xid, tcon, cifs_sb, full_path,
++					      FILE_READ_ATTRIBUTES, FILE_OPEN,
++					      create_options, ACL_NO_MODE, data,
++					      SMB2_OP_QUERY_INFO, cfile, NULL, NULL);
++			goto out;
++		} else if (rc != -EREMOTE && IS_ENABLED(CONFIG_CIFS_DFS_UPCALL) &&
++			   hdr->Status == STATUS_OBJECT_NAME_INVALID) {
++			/*
++			 * Handle weird Windows SMB server behaviour. It responds with
++			 * STATUS_OBJECT_NAME_INVALID code to SMB2 QUERY_INFO request
++			 * for "\<server>\<dfsname>\<linkpath>" DFS reference,
++			 * where <dfsname> contains non-ASCII unicode symbols.
++			 */
++			rc = -EREMOTE;
++		}
++		if (rc == -EREMOTE && IS_ENABLED(CONFIG_CIFS_DFS_UPCALL) && cifs_sb &&
++		    (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NO_DFS))
++			rc = -EOPNOTSUPP;
+ 	}
+ 
+ out:
+--- a/fs/cifs/smb2ops.c
++++ b/fs/cifs/smb2ops.c
+@@ -797,7 +797,9 @@ smb2_is_path_accessible(const unsigned i
+ 	int rc;
+ 	__le16 *utf16_path;
+ 	__u8 oplock = SMB2_OPLOCK_LEVEL_NONE;
++	int err_buftype = CIFS_NO_BUFFER;
+ 	struct cifs_open_parms oparms;
++	struct kvec err_iov = {};
+ 	struct cifs_fid fid;
+ 	struct cached_fid *cfid;
+ 
+@@ -821,14 +823,32 @@ smb2_is_path_accessible(const unsigned i
+ 	oparms.fid = &fid;
+ 	oparms.reconnect = false;
+ 
+-	rc = SMB2_open(xid, &oparms, utf16_path, &oplock, NULL, NULL, NULL,
+-		       NULL);
++	rc = SMB2_open(xid, &oparms, utf16_path, &oplock, NULL, NULL,
++		       &err_iov, &err_buftype);
+ 	if (rc) {
+-		kfree(utf16_path);
+-		return rc;
++		struct smb2_hdr *hdr = err_iov.iov_base;
++
++		if (unlikely(!hdr || err_buftype == CIFS_NO_BUFFER))
++			goto out;
++		/*
++		 * Handle weird Windows SMB server behaviour. It responds with
++		 * STATUS_OBJECT_NAME_INVALID code to SMB2 QUERY_INFO request
++		 * for "\<server>\<dfsname>\<linkpath>" DFS reference,
++		 * where <dfsname> contains non-ASCII unicode symbols.
++		 */
++		if (rc != -EREMOTE && IS_ENABLED(CONFIG_CIFS_DFS_UPCALL) &&
++		    hdr->Status == STATUS_OBJECT_NAME_INVALID)
++			rc = -EREMOTE;
++		if (rc == -EREMOTE && IS_ENABLED(CONFIG_CIFS_DFS_UPCALL) && cifs_sb &&
++		    (cifs_sb->mnt_cifs_flags & CIFS_MOUNT_NO_DFS))
++			rc = -EOPNOTSUPP;
++		goto out;
+ 	}
+ 
+ 	rc = SMB2_close(xid, tcon, fid.persistent_fid, fid.volatile_fid);
++
++out:
++	free_rsp_buf(err_buftype, err_iov.iov_base);
+ 	kfree(utf16_path);
+ 	return rc;
+ }
 
 
