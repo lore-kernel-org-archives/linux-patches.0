@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592B72590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:23:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2939C4339B;
-	Sun, 22 Jan 2023 15:23:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF38B2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:23:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7385FC4339C;
+	Sun, 22 Jan 2023 15:23:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400997;
-	bh=KYl2aU6Oil9Urwyni56n/0Dh6cXzt51vTYvkEEMxoYY=;
+	s=korg; t=1674400999;
+	bh=uiX3x6NTwijFDt7jKKVMjNAfNDsZMop0oaVFnPU+Eiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qaRiciZ3L074iWX3tHcNG8W+ChyWZt8foBiawyPQdj2RgXQzysrSnl/8tcsenohbl
-	 vVMAgtGi55z3epJVNxdnPO8NVKk4t73OkkcaA9eC8B4V2AkjE05gR4j+QthKZmecW9
-	 V2TORuNdYB6mh+jQVDg8kw5xXoVOCnu29gOvuVvU=
+	b=mKjZFAKp+cWKLo2P7HhDwLP+CQfWlb6VNXg1We5Fdoz61lxxoKV9id3TfIYfhSEO3
+	 XgbHrKFnfC/eVY33voTYnaCGtYg+l1PvyskaDEur0cRvHEdlAzqgLU+nqjQ58f+f8p
+	 IoBZCwuBmqcVfP/epVpEE3ON+LEWJTTna9wDZQHY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Subject: [PATCH 6.1 031/193] Bluetooth: hci_qca: Fix driver shutdown on closed serdev
-Date: Sun, 22 Jan 2023 16:02:40 +0100
-Message-Id: <20230122150247.830702584@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.1 064/193] staging: vchiq_arm: fix enum vchiq_status return types
+Date: Sun, 22 Jan 2023 16:03:13 +0100
+Message-Id: <20230122150249.278639331@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -34,90 +34,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 272970be3dabd24cbe50e393ffee8f04aec3b9a8 upstream.
+commit 7d83299351fe7c812c529f5e39fe63b5312e4233 upstream.
 
-The driver shutdown callback (which sends EDL_SOC_RESET to the device
-over serdev) should not be invoked when HCI device is not open (e.g. if
-hci_dev_open_sync() failed), because the serdev and its TTY are not open
-either.  Also skip this step if device is powered off
-(qca_power_shutdown()).
+gcc-13 notices a type mismatch between function declaration
+and definition for a few functions that have been converted
+from returning vchiq specific status values to regular error
+codes:
 
-The shutdown callback causes use-after-free during system reboot with
-Qualcomm Atheros Bluetooth:
+drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c:662:5: error: conflicting types for 'vchiq_initialise' due to enum/integer mismatch; have 'int(struct vchiq_instance **)' [-Werror=enum-int-mismatch]
+drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c:1411:1: error: conflicting types for 'vchiq_use_internal' due to enum/integer mismatch; have 'int(struct vchiq_state *, struct vchiq_service *, enum USE_TYPE_E)' [-Werror=enum-int-mismatch]
+drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c:1468:1: error: conflicting types for 'vchiq_release_internal' due to enum/integer mismatch; have 'int(struct vchiq_state *, struct vchiq_service *)' [-Werror=enum-int-mismatch]
 
-  Unable to handle kernel paging request at virtual address
-  0072662f67726fd7
-  ...
-  CPU: 6 PID: 1 Comm: systemd-shutdow Tainted: G        W
-  6.1.0-rt5-00325-g8a5f56bcfcca #8
-  Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
-  Call trace:
-   tty_driver_flush_buffer+0x4/0x30
-   serdev_device_write_flush+0x24/0x34
-   qca_serdev_shutdown+0x80/0x130 [hci_uart]
-   device_shutdown+0x15c/0x260
-   kernel_restart+0x48/0xac
+Change the declarations to match the actual function definition.
 
-KASAN report:
-
-  BUG: KASAN: use-after-free in tty_driver_flush_buffer+0x1c/0x50
-  Read of size 8 at addr ffff16270c2e0018 by task systemd-shutdow/1
-
-  CPU: 7 PID: 1 Comm: systemd-shutdow Not tainted
-  6.1.0-next-20221220-00014-gb85aaf97fb01-dirty #28
-  Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
-  Call trace:
-   dump_backtrace.part.0+0xdc/0xf0
-   show_stack+0x18/0x30
-   dump_stack_lvl+0x68/0x84
-   print_report+0x188/0x488
-   kasan_report+0xa4/0xf0
-   __asan_load8+0x80/0xac
-   tty_driver_flush_buffer+0x1c/0x50
-   ttyport_write_flush+0x34/0x44
-   serdev_device_write_flush+0x48/0x60
-   qca_serdev_shutdown+0x124/0x274
-   device_shutdown+0x1e8/0x350
-   kernel_restart+0x48/0xb0
-   __do_sys_reboot+0x244/0x2d0
-   __arm64_sys_reboot+0x54/0x70
-   invoke_syscall+0x60/0x190
-   el0_svc_common.constprop.0+0x7c/0x160
-   do_el0_svc+0x44/0xf0
-   el0_svc+0x2c/0x6c
-   el0t_64_sync_handler+0xbc/0x140
-   el0t_64_sync+0x190/0x194
-
-Fixes: 7e7bbddd029b ("Bluetooth: hci_qca: Fix qca6390 enable failure after warm reboot")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: a9fbd828be7f ("staging: vchiq_arm: drop enum vchiq_status from vchiq_*_internal")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230117163957.1109872-1-arnd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bluetooth/hci_qca.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ drivers/staging/vc04_services/include/linux/raspberrypi/vchiq.h |    2 +-
+ drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.h   |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -2157,10 +2157,17 @@ static void qca_serdev_shutdown(struct d
- 	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
- 	struct serdev_device *serdev = to_serdev_device(dev);
- 	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
-+	struct hci_uart *hu = &qcadev->serdev_hu;
-+	struct hci_dev *hdev = hu->hdev;
-+	struct qca_data *qca = hu->priv;
- 	const u8 ibs_wake_cmd[] = { 0xFD };
- 	const u8 edl_reset_soc_cmd[] = { 0x01, 0x00, 0xFC, 0x01, 0x05 };
+--- a/drivers/staging/vc04_services/include/linux/raspberrypi/vchiq.h
++++ b/drivers/staging/vc04_services/include/linux/raspberrypi/vchiq.h
+@@ -86,7 +86,7 @@ struct vchiq_service_params_kernel {
  
- 	if (qcadev->btsoc_type == QCA_QCA6390) {
-+		if (test_bit(QCA_BT_OFF, &qca->flags) ||
-+		    !test_bit(HCI_RUNNING, &hdev->flags))
-+			return;
-+
- 		serdev_device_write_flush(serdev);
- 		ret = serdev_device_write_buf(serdev, ibs_wake_cmd,
- 					      sizeof(ibs_wake_cmd));
+ struct vchiq_instance;
+ 
+-extern enum vchiq_status vchiq_initialise(struct vchiq_instance **pinstance);
++extern int vchiq_initialise(struct vchiq_instance **pinstance);
+ extern enum vchiq_status vchiq_shutdown(struct vchiq_instance *instance);
+ extern enum vchiq_status vchiq_connect(struct vchiq_instance *instance);
+ extern enum vchiq_status vchiq_open_service(struct vchiq_instance *instance,
+--- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.h
++++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.h
+@@ -100,10 +100,10 @@ vchiq_dump_platform_use_state(struct vch
+ extern void
+ vchiq_dump_service_use_state(struct vchiq_state *state);
+ 
+-extern enum vchiq_status
++extern int
+ vchiq_use_internal(struct vchiq_state *state, struct vchiq_service *service,
+ 		   enum USE_TYPE_E use_type);
+-extern enum vchiq_status
++extern int
+ vchiq_release_internal(struct vchiq_state *state,
+ 		       struct vchiq_service *service);
+ 
 
 
