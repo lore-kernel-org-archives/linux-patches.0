@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93BCC7E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:08:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17579C433EF;
-	Sun, 22 Jan 2023 15:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C6C57E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:08:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7933C433D2;
+	Sun, 22 Jan 2023 15:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400092;
-	bh=BycfUCkr70YMcdcGzwP9H86Hq+WAaqFDIhXf6Nx2CDo=;
+	s=korg; t=1674400095;
+	bh=ZB54wvvph9eNv02Nn4gdG5VD24tR1pqzeIydd7xqud0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Erc/kS5c3gSkVNWC5cVW28tE8EDRBV3/lL+TTh69Mjc78URlFQRaL1GPkMIjpQ/Mj
-	 il4FotJNWJ2DkhXA10qKjAeMXvHk7iDXHZFxkJdiIYMXQAUt6WNV4nkuHDxPb9CSKN
-	 1RTvoT4LysswSe+v16MXBJEhUucfh3I52DTBQboM=
+	b=Uige84glsBvJoB3hVmfAwz3yy0kg01OD30HZSN2tD2xoh+mMELZ5dqevD02DRNOxP
+	 3nTjerimfat+3lTLbXjD1IdtAG/RrLy+SpGG3yg+cP2nVVe1zFerL3/beww7uiuoYq
+	 kuT0WW/sZOoAmSd3loDpwUqZSo6UkSRjZ2eW/0fk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Ricardo Ribalda <ribalda@chromium.org>,
+	Jimmy Hu <hhhuuu@google.com>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 4.19 07/37] xhci-pci: set the dma max_seg_size
-Date: Sun, 22 Jan 2023 16:04:04 +0100
-Message-Id: <20230122150219.888877618@linuxfoundation.org>
+Subject: [PATCH 4.19 08/37] usb: xhci: Check endpoint is valid before dereferencing it
+Date: Sun, 22 Jan 2023 16:04:05 +0100
+Message-Id: <20230122150219.918656887@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150219.557984692@linuxfoundation.org>
 References: <20230122150219.557984692@linuxfoundation.org>
@@ -35,35 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Jimmy Hu <hhhuuu@google.com>
 
-commit 93915a4170e9defd56a767a18e6c4076f3d18609 upstream.
+commit e8fb5bc76eb86437ab87002d4a36d6da02165654 upstream.
 
-Allow devices to have dma operations beyond 64K, and avoid warnings such
-as:
+When the host controller is not responding, all URBs queued to all
+endpoints need to be killed. This can cause a kernel panic if we
+dereference an invalid endpoint.
 
-xhci_hcd 0000:00:14.0: mapping sg segment longer than device claims to support [len=98304] [max=65536]
+Fix this by using xhci_get_virt_ep() helper to find the endpoint and
+checking if the endpoint is valid before dereferencing it.
 
+[233311.853271] xhci-hcd xhci-hcd.1.auto: xHCI host controller not responding, assume dead
+[233311.853393] Unable to handle kernel NULL pointer dereference at virtual address 00000000000000e8
+
+[233311.853964] pc : xhci_hc_died+0x10c/0x270
+[233311.853971] lr : xhci_hc_died+0x1ac/0x270
+
+[233311.854077] Call trace:
+[233311.854085]  xhci_hc_died+0x10c/0x270
+[233311.854093]  xhci_stop_endpoint_command_watchdog+0x100/0x1a4
+[233311.854105]  call_timer_fn+0x50/0x2d4
+[233311.854112]  expire_timers+0xac/0x2e4
+[233311.854118]  run_timer_softirq+0x300/0xabc
+[233311.854127]  __do_softirq+0x148/0x528
+[233311.854135]  irq_exit+0x194/0x1a8
+[233311.854143]  __handle_domain_irq+0x164/0x1d0
+[233311.854149]  gic_handle_irq.22273+0x10c/0x188
+[233311.854156]  el1_irq+0xfc/0x1a8
+[233311.854175]  lpm_cpuidle_enter+0x25c/0x418 [msm_pm]
+[233311.854185]  cpuidle_enter_state+0x1f0/0x764
+[233311.854194]  do_idle+0x594/0x6ac
+[233311.854201]  cpu_startup_entry+0x7c/0x80
+[233311.854209]  secondary_start_kernel+0x170/0x198
+
+Fixes: 50e8725e7c42 ("xhci: Refactor command watchdog and fix split string.")
 Cc: stable@vger.kernel.org
-Cc: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Jimmy Hu <hhhuuu@google.com>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230116142216.1141605-2-mathias.nyman@linux.intel.com
+Message-ID: <0fe978ed-8269-9774-1c40-f8a98c17e838@linux.intel.com>
+Link: https://lore.kernel.org/r/20230116142216.1141605-3-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/usb/host/xhci-ring.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -378,6 +378,8 @@ static int xhci_pci_probe(struct pci_dev
- 	/* USB-2 and USB-3 roothubs initialized, allow runtime pm suspend */
- 	pm_runtime_put_noidle(&dev->dev);
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -896,7 +896,10 @@ static void xhci_kill_endpoint_urbs(stru
+ 	struct xhci_virt_ep *ep;
+ 	struct xhci_ring *ring;
  
-+	dma_set_max_seg_size(&dev->dev, UINT_MAX);
+-	ep = &xhci->devs[slot_id]->eps[ep_index];
++	ep = xhci_get_virt_ep(xhci, slot_id, ep_index);
++	if (!ep)
++		return;
 +
- 	return 0;
- 
- put_usb3_hcd:
+ 	if ((ep->ep_state & EP_HAS_STREAMS) ||
+ 			(ep->ep_state & EP_GETTING_NO_STREAMS)) {
+ 		int stream_id;
 
 
