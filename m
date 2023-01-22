@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B588A7E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:08:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A992C433EF;
-	Sun, 22 Jan 2023 15:08:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C6127E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:08:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D6FE8C433D2;
+	Sun, 22 Jan 2023 15:08:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400084;
-	bh=W4H5iCI00DHQOLwrnJn3FXXrWKVrlLr07QWu1EKUeM0=;
+	s=korg; t=1674400087;
+	bh=x3zuXH2FBxcWrid4yJnZf43UQqQClid62ottuSmy138=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C085e9Ag6tDNzfKM1Atybk+R6EifLgQ7gvQz+Hx94kR1A/PgdWL0/mrTUc26dDD4E
-	 5s/KW+h2ZpXti5Ui6CEu5kgHSXrWHIuP9rlbXrbLma3iC5Mg5FECk+ICzNJcIshY3X
-	 hKcUgiX/X3vQRYHUa0AmNk3ns4/LMDtm4Aa4qyuo=
+	b=nHdqL4LKrVCDB8WzEVhw+gTyO4j9Fv/G0+/Oy4+ZOgv+GRf6mNw1BRX61U+oUfCJ0
+	 QA+DHoyXOY804PhtUYxmCCVgJtqO/m2C/QXv0NIJAUzYVZrL7TqanGN063xHKZCTm6
+	 Nf8E7wV3ir8O03907PzaGSilwXz/xoF7z7GApym8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Khazhismel Kumykov <khazhy@google.com>
-Subject: [PATCH 4.19 32/37] gsmi: fix null-deref in gsmi_get_variable
-Date: Sun, 22 Jan 2023 16:04:29 +0100
-Message-Id: <20230122150220.896842263@linuxfoundation.org>
+	"Shawn.Shao" <shawn.shao@jaguarmicro.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 4.19 05/37] Add exception protection processing for vd in axi_chan_handle_err function
+Date: Sun, 22 Jan 2023 16:04:02 +0100
+Message-Id: <20230122150219.804139316@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150219.557984692@linuxfoundation.org>
 References: <20230122150219.557984692@linuxfoundation.org>
@@ -34,41 +34,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Khazhismel Kumykov <khazhy@chromium.org>
+From: Shawn.Shao <shawn.shao@jaguarmicro.com>
 
-commit a769b05eeed7accc4019a1ed9799dd72067f1ce8 upstream.
+commit 57054fe516d59d03a7bcf1888e82479ccc244f87 upstream.
 
-We can get EFI variables without fetching the attribute, so we must
-allow for that in gsmi.
+Since there is no protection for vd, a kernel panic will be
+triggered here in exceptional cases.
 
-commit 859748255b43 ("efi: pstore: Omit efivars caching EFI varstore
-access layer") added a new get_variable call with attr=NULL, which
-triggers panic in gsmi.
+You can refer to the processing of axi_chan_block_xfer_complete function
 
-Fixes: 74c5b31c6618 ("driver: Google EFI SMI")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Khazhismel Kumykov <khazhy@google.com>
-Link: https://lore.kernel.org/r/20230118010212.1268474-1-khazhy@google.com
+The triggered kernel panic is as follows:
+
+[   67.848444] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000060
+[   67.848447] Mem abort info:
+[   67.848449]   ESR = 0x96000004
+[   67.848451]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   67.848454]   SET = 0, FnV = 0
+[   67.848456]   EA = 0, S1PTW = 0
+[   67.848458] Data abort info:
+[   67.848460]   ISV = 0, ISS = 0x00000004
+[   67.848462]   CM = 0, WnR = 0
+[   67.848465] user pgtable: 4k pages, 48-bit VAs, pgdp=00000800c4c0b000
+[   67.848468] [0000000000000060] pgd=0000000000000000, p4d=0000000000000000
+[   67.848472] Internal error: Oops: 96000004 [#1] SMP
+[   67.848475] Modules linked in: dmatest
+[   67.848479] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 5.10.100-emu_x2rc+ #11
+[   67.848483] pstate: 62000085 (nZCv daIf -PAN -UAO +TCO BTYPE=--)
+[   67.848487] pc : axi_chan_handle_err+0xc4/0x230
+[   67.848491] lr : axi_chan_handle_err+0x30/0x230
+[   67.848493] sp : ffff0803fe55ae50
+[   67.848495] x29: ffff0803fe55ae50 x28: ffff800011212200
+[   67.848500] x27: ffff0800c42c0080 x26: ffff0800c097c080
+[   67.848504] x25: ffff800010d33880 x24: ffff80001139d850
+[   67.848508] x23: ffff0800c097c168 x22: 0000000000000000
+[   67.848512] x21: 0000000000000080 x20: 0000000000002000
+[   67.848517] x19: ffff0800c097c080 x18: 0000000000000000
+[   67.848521] x17: 0000000000000000 x16: 0000000000000000
+[   67.848525] x15: 0000000000000000 x14: 0000000000000000
+[   67.848529] x13: 0000000000000000 x12: 0000000000000040
+[   67.848533] x11: ffff0800c0400248 x10: ffff0800c040024a
+[   67.848538] x9 : ffff800010576cd4 x8 : ffff0800c0400270
+[   67.848542] x7 : 0000000000000000 x6 : ffff0800c04003e0
+[   67.848546] x5 : ffff0800c0400248 x4 : ffff0800c4294480
+[   67.848550] x3 : dead000000000100 x2 : dead000000000122
+[   67.848555] x1 : 0000000000000100 x0 : ffff0800c097c168
+[   67.848559] Call trace:
+[   67.848562]  axi_chan_handle_err+0xc4/0x230
+[   67.848566]  dw_axi_dma_interrupt+0xf4/0x590
+[   67.848569]  __handle_irq_event_percpu+0x60/0x220
+[   67.848573]  handle_irq_event+0x64/0x120
+[   67.848576]  handle_fasteoi_irq+0xc4/0x220
+[   67.848580]  __handle_domain_irq+0x80/0xe0
+[   67.848583]  gic_handle_irq+0xc0/0x138
+[   67.848585]  el1_irq+0xc8/0x180
+[   67.848588]  arch_cpu_idle+0x14/0x2c
+[   67.848591]  default_idle_call+0x40/0x16c
+[   67.848594]  do_idle+0x1f0/0x250
+[   67.848597]  cpu_startup_entry+0x2c/0x60
+[   67.848600]  rest_init+0xc0/0xcc
+[   67.848603]  arch_call_rest_init+0x14/0x1c
+[   67.848606]  start_kernel+0x4cc/0x500
+[   67.848610] Code: eb0002ff 9a9f12d6 f2fbd5a2 f2fbd5a3 (a94602c1)
+[   67.848613] ---[ end trace 585a97036f88203a ]---
+
+Signed-off-by: Shawn.Shao <shawn.shao@jaguarmicro.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230112055802.1764-1-shawn.shao@jaguarmicro.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/google/gsmi.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/firmware/google/gsmi.c
-+++ b/drivers/firmware/google/gsmi.c
-@@ -343,9 +343,10 @@ static efi_status_t gsmi_get_variable(ef
- 		memcpy(data, gsmi_dev.data_buf->start, *data_size);
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -551,6 +551,11 @@ static noinline void axi_chan_handle_err
  
- 		/* All variables are have the following attributes */
--		*attr = EFI_VARIABLE_NON_VOLATILE |
--			EFI_VARIABLE_BOOTSERVICE_ACCESS |
--			EFI_VARIABLE_RUNTIME_ACCESS;
-+		if (attr)
-+			*attr = EFI_VARIABLE_NON_VOLATILE |
-+				EFI_VARIABLE_BOOTSERVICE_ACCESS |
-+				EFI_VARIABLE_RUNTIME_ACCESS;
- 	}
+ 	/* The bad descriptor currently is in the head of vc list */
+ 	vd = vchan_next_desc(&chan->vc);
++	if (!vd) {
++		dev_err(chan2dev(chan), "BUG: %s, IRQ with no descriptors\n",
++			axi_chan_name(chan));
++		goto out;
++	}
+ 	/* Remove the completed descriptor from issued list */
+ 	list_del(&vd->node);
  
- 	spin_unlock_irqrestore(&gsmi_dev.lock, flags);
+@@ -565,6 +570,7 @@ static noinline void axi_chan_handle_err
+ 	/* Try to restart the controller */
+ 	axi_chan_start_first_queued(chan);
+ 
++out:
+ 	spin_unlock_irqrestore(&chan->vc.lock, flags);
+ }
+ 
 
 
