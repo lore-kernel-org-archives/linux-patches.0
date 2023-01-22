@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F3D37E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:11:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A1B3C433D2;
-	Sun, 22 Jan 2023 15:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6B0D7E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:11:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38F21C433D2;
+	Sun, 22 Jan 2023 15:11:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400288;
-	bh=EZ3BUobsby/MOPiHnmeAU9CQ6rU4BMV9oA+8+70P4tE=;
+	s=korg; t=1674400290;
+	bh=7Hss4MSbzA2fhZiUvKGEaOQeNLYcUKzBZ5eYzi3NEkY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JqJkRsLnz31FN3LCBbaWaqPQGY7CK5naMtxj6EKlWtEEZVVutodepE769k/Og6ETc
-	 /u0i7WKFscL8YCOLDXUl+l8x0ni8S3kYTtlKTw+uDPPfr4CyB49c+MgGYmc2Pyrqi7
-	 WQsWA3k3Fviu8vCRWmsntqy6C8TIz7qrIVcJnZ4w=
+	b=VQQMVWmibJ/9Y3QqEuSE+wnBMy3xDZ7xyxZWF74Gsa8rZ5TpvI/nR7rONu91ohrny
+	 E7XzbGppcd6Mn+J0pTdv7EdIBcGNMjDhbuWNOYSn43yN25DbtV0vV4O1X0SB1pSvL1
+	 4cDVx0Bxtc/aK9rfC1AayWoGMVuqJ3RPzv8b4UD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>,
+	Anand Jain <anand.jain@oracle.com>,
+	Qu Wenruo <wqu@suse.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 06/98] RDMA/srp: Move large values to a new enum for gcc13
-Date: Sun, 22 Jan 2023 16:03:22 +0100
-Message-Id: <20230122150229.674135320@linuxfoundation.org>
+Subject: [PATCH 5.10 07/98] btrfs: always report error in run_one_delayed_ref()
+Date: Sun, 22 Jan 2023 16:03:23 +0100
+Message-Id: <20230122150229.728073059@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -36,64 +36,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Qu Wenruo <wqu@suse.com>
 
-[ Upstream commit 56c5dab20a6391604df9521f812c01d1e3fe1bd0 ]
+[ Upstream commit 39f501d68ec1ed5cd5c66ac6ec2a7131c517bb92 ]
 
-Since gcc13, each member of an enum has the same type as the enum [1]. And
-that is inherited from its members. Provided these two:
-  SRP_TAG_NO_REQ        = ~0U,
-  SRP_TAG_TSK_MGMT	= 1U << 31
-all other members are unsigned ints.
+Currently we have a btrfs_debug() for run_one_delayed_ref() failure, but
+if end users hit such problem, there will be no chance that
+btrfs_debug() is enabled.  This can lead to very little useful info for
+debugging.
 
-Esp. with SRP_MAX_SGE and SRP_TSK_MGMT_SQ_SIZE and their use in min(),
-this results in the following warnings:
-  include/linux/minmax.h:20:35: error: comparison of distinct pointer types lacks a cast
-  drivers/infiniband/ulp/srp/ib_srp.c:563:42: note: in expansion of macro 'min'
+This patch will:
 
-  include/linux/minmax.h:20:35: error: comparison of distinct pointer types lacks a cast
-  drivers/infiniband/ulp/srp/ib_srp.c:2369:27: note: in expansion of macro 'min'
+- Add extra info for error reporting
+  Including:
+  * logical bytenr
+  * num_bytes
+  * type
+  * action
+  * ref_mod
 
-So move the large values away to a separate enum, so that they don't
-affect other members.
+- Replace the btrfs_debug() with btrfs_err()
 
-[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=36113
+- Move the error reporting into run_one_delayed_ref()
+  This is to avoid use-after-free, the @node can be freed in the caller.
 
-Link: https://lore.kernel.org/r/20221212120411.13750-1-jirislaby@kernel.org
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+This error should only be triggered at most once.
+
+As if run_one_delayed_ref() failed, we trigger the error message, then
+causing the call chain to error out:
+
+btrfs_run_delayed_refs()
+`- btrfs_run_delayed_refs()
+   `- btrfs_run_delayed_refs_for_head()
+      `- run_one_delayed_ref()
+
+And we will abort the current transaction in btrfs_run_delayed_refs().
+If we have to run delayed refs for the abort transaction,
+run_one_delayed_ref() will just cleanup the refs and do nothing, thus no
+new error messages would be output.
+
+Reviewed-by: Anand Jain <anand.jain@oracle.com>
+Signed-off-by: Qu Wenruo <wqu@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/ulp/srp/ib_srp.h | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/btrfs/extent-tree.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/srp/ib_srp.h b/drivers/infiniband/ulp/srp/ib_srp.h
-index 6818cac0a3b7..85bac20d9007 100644
---- a/drivers/infiniband/ulp/srp/ib_srp.h
-+++ b/drivers/infiniband/ulp/srp/ib_srp.h
-@@ -62,9 +62,6 @@ enum {
- 	SRP_DEFAULT_CMD_SQ_SIZE = SRP_DEFAULT_QUEUE_SIZE - SRP_RSP_SQ_SIZE -
- 				  SRP_TSK_MGMT_SQ_SIZE,
+diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
+index 284294620e9f..7d9b8050b09c 100644
+--- a/fs/btrfs/extent-tree.c
++++ b/fs/btrfs/extent-tree.c
+@@ -1684,6 +1684,11 @@ static int run_one_delayed_ref(struct btrfs_trans_handle *trans,
+ 		BUG();
+ 	if (ret && insert_reserved)
+ 		btrfs_pin_extent(trans, node->bytenr, node->num_bytes, 1);
++	if (ret < 0)
++		btrfs_err(trans->fs_info,
++"failed to run delayed ref for logical %llu num_bytes %llu type %u action %u ref_mod %d: %d",
++			  node->bytenr, node->num_bytes, node->type,
++			  node->action, node->ref_mod, ret);
+ 	return ret;
+ }
  
--	SRP_TAG_NO_REQ		= ~0U,
--	SRP_TAG_TSK_MGMT	= 1U << 31,
--
- 	SRP_MAX_PAGES_PER_MR	= 512,
+@@ -1935,8 +1940,6 @@ static int btrfs_run_delayed_refs_for_head(struct btrfs_trans_handle *trans,
+ 		if (ret) {
+ 			unselect_delayed_ref_head(delayed_refs, locked_ref);
+ 			btrfs_put_delayed_ref(ref);
+-			btrfs_debug(fs_info, "run_one_delayed_ref returned %d",
+-				    ret);
+ 			return ret;
+ 		}
  
- 	SRP_MAX_ADD_CDB_LEN	= 16,
-@@ -79,6 +76,11 @@ enum {
- 				  sizeof(struct srp_imm_buf),
- };
- 
-+enum {
-+	SRP_TAG_NO_REQ		= ~0U,
-+	SRP_TAG_TSK_MGMT	= BIT(31),
-+};
-+
- enum srp_target_state {
- 	SRP_TARGET_SCANNING,
- 	SRP_TARGET_LIVE,
 -- 
 2.35.1
 
