@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A422590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4032EC433EF;
-	Sun, 22 Jan 2023 15:18:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6FA2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58F2C433EF;
+	Sun, 22 Jan 2023 15:18:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400728;
-	bh=0auEmggSszm597jfb0hoF/g5OAcQY9k4FGPx+4fagtY=;
+	s=korg; t=1674400731;
+	bh=CFquInsX83ihdkED640eDZhbLj7tnZCIomswIgXKaa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kimCqTsRvVht/cMT4Lk0P4N6RJySKgxqjk16B9DoW2WLutFzB/Lj6RUKE1bu4De4D
-	 bSxM29W2UEQl841n+lbbUmRoFl+wsFuBcapXI6UiAfLlqZ70XZnHTt6IiMGpF4Xlr/
-	 ALpSd6zMJJtisLdyN16bWLdC79ZhdTkDEMtddywQ=
+	b=0uV+mlnQmaocHg/P6zQ28g6dSd8rWXT/FnmUxqtQpx0QFid3YH6HA5Oy1IVWfcA9J
+	 CFAjJKOxKpOIWD60aQWQRjy0Hir1vPy1+9lXgJ+YvdKL+xd+tdZbmQRXwnOdpAbbSM
+	 e6INN6quYM1ZilxjEDlwNhw81/6tRW2lwml7Jsrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 5.15 086/117] serial: pch_uart: Pass correct sg to dma_unmap_sg()
-Date: Sun, 22 Jan 2023 16:04:36 +0100
-Message-Id: <20230122150236.364991812@linuxfoundation.org>
+	Peter Harliman Liem <pliem@maxlinear.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.15 087/117] dmaengine: lgm: Move DT parsing after initialization
+Date: Sun, 22 Jan 2023 16:04:37 +0100
+Message-Id: <20230122150236.406138196@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -33,38 +34,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Peter Harliman Liem <pliem@maxlinear.com>
 
-commit e8914b52e5b024e4af3d810a935fe0805eee8a36 upstream.
+commit 96b3bb18f6cbe259ef4e0bed3135911b7e8d2af5 upstream.
 
-A local variable sg is used to store scatterlist pointer in
-pch_dma_tx_complete(). The for loop doing Tx byte accounting before
-dma_unmap_sg() alters sg in its increment statement. Therefore, the
-pointer passed into dma_unmap_sg() won't match to the one given to
-dma_map_sg().
+ldma_cfg_init() will parse DT to retrieve certain configs.
+However, that is called before ldma_dma_init_vXX(), which
+will make some initialization to channel configs. It will
+thus incorrectly overwrite certain configs that are declared
+in DT.
 
-To fix the problem, use priv->sg_tx_p directly in dma_unmap_sg()
-instead of the local variable.
+To fix that, we move DT parsing after initialization.
+Function name is renamed to better represent what it does.
 
-Fixes: da3564ee027e ("pch_uart: add multi-scatter processing")
+Fixes: 32d31c79a1a4 ("dmaengine: Add Intel LGM SoC DMA support.")
+Signed-off-by: Peter Harliman Liem <pliem@maxlinear.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230103093435.4396-1-ilpo.jarvinen@linux.intel.com
+Link: https://lore.kernel.org/r/afef6fc1ed20098b684e0d53737d69faf63c125f.1672887183.git.pliem@maxlinear.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/pch_uart.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/lgm/lgm-dma.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
---- a/drivers/tty/serial/pch_uart.c
-+++ b/drivers/tty/serial/pch_uart.c
-@@ -765,7 +765,7 @@ static void pch_dma_tx_complete(void *ar
+diff --git a/drivers/dma/lgm/lgm-dma.c b/drivers/dma/lgm/lgm-dma.c
+index 9b9184f964be..1709d159af7e 100644
+--- a/drivers/dma/lgm/lgm-dma.c
++++ b/drivers/dma/lgm/lgm-dma.c
+@@ -914,7 +914,7 @@ static void ldma_dev_init(struct ldma_dev *d)
  	}
- 	xmit->tail &= UART_XMIT_SIZE - 1;
- 	async_tx_ack(priv->desc_tx);
--	dma_unmap_sg(port->dev, sg, priv->orig_nent, DMA_TO_DEVICE);
-+	dma_unmap_sg(port->dev, priv->sg_tx_p, priv->orig_nent, DMA_TO_DEVICE);
- 	priv->tx_dma_use = 0;
- 	priv->nent = 0;
- 	priv->orig_nent = 0;
+ }
+ 
+-static int ldma_cfg_init(struct ldma_dev *d)
++static int ldma_parse_dt(struct ldma_dev *d)
+ {
+ 	struct fwnode_handle *fwnode = dev_fwnode(d->dev);
+ 	struct ldma_port *p;
+@@ -1661,10 +1661,6 @@ static int intel_ldma_probe(struct platform_device *pdev)
+ 		p->ldev = d;
+ 	}
+ 
+-	ret = ldma_cfg_init(d);
+-	if (ret)
+-		return ret;
+-
+ 	dma_dev->dev = &pdev->dev;
+ 
+ 	ch_mask = (unsigned long)d->channels_mask;
+@@ -1675,6 +1671,10 @@ static int intel_ldma_probe(struct platform_device *pdev)
+ 			ldma_dma_init_v3X(j, d);
+ 	}
+ 
++	ret = ldma_parse_dt(d);
++	if (ret)
++		return ret;
++
+ 	dma_dev->device_alloc_chan_resources = ldma_alloc_chan_resources;
+ 	dma_dev->device_free_chan_resources = ldma_free_chan_resources;
+ 	dma_dev->device_terminate_all = ldma_terminate_all;
+-- 
+2.39.1
+
 
 
