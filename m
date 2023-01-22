@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C902590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:15:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C11AC433EF;
-	Sun, 22 Jan 2023 15:15:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75C702590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:15:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C05C433EF;
+	Sun, 22 Jan 2023 15:15:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400527;
-	bh=3gQfJid2aWfbnc/lTaC+ne5dZRJiKd8t3N7n3/1zhY0=;
+	s=korg; t=1674400530;
+	bh=U36B0Gnx9VcWVoAFSaweXf9NMujQ6bmiBQAB5Y/K/ZQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xEtiRKjQ/tVA0dJG/jnXlGxU1twYqn0u4dwrlGU97mP3CSRBIR3lC0/goL21Wixeq
-	 qyy4IPn0ALLBFhtUKa+CLJ1AGGUYhN+nd5j3PZ79rgpNPIdKY5rjMmPArTOw+Of5be
-	 5XCUtv7kjkymYrPsi96z7Y6wGdT6Yx1Q+arKmCSs=
+	b=OuUJuKEO/9HaH36M7HQ2n76a4hkmItYZCoAwVw074lVQoMCD+nqh6ElCcq1USBguj
+	 mBrkY8EBgkEQ3oG05Y5DXD25Boe8GrceHk1WOdDW3qq+/SwBQ1r71wvaF2tHi8FSYz
+	 GFUcOv7v1SPTtZWurB0yLPohAviigbHfLg2IydD0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anand Jain <anand.jain@oracle.com>,
-	Qu Wenruo <wqu@suse.com>,
-	David Sterba <dsterba@suse.com>,
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	linux-kernel@vger.kernel.org,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 010/117] btrfs: always report error in run_one_delayed_ref()
-Date: Sun, 22 Jan 2023 16:03:20 +0100
-Message-Id: <20230122150233.151349070@linuxfoundation.org>
+Subject: [PATCH 5.15 011/117] x86/asm: Fix an assembler warning with current binutils
+Date: Sun, 22 Jan 2023 16:03:21 +0100
+Message-Id: <20230122150233.192826703@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -36,78 +36,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qu Wenruo <wqu@suse.com>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-[ Upstream commit 39f501d68ec1ed5cd5c66ac6ec2a7131c517bb92 ]
+[ Upstream commit 55d235361fccef573990dfa5724ab453866e7816 ]
 
-Currently we have a btrfs_debug() for run_one_delayed_ref() failure, but
-if end users hit such problem, there will be no chance that
-btrfs_debug() is enabled.  This can lead to very little useful info for
-debugging.
+Fix a warning: "found `movsd'; assuming `movsl' was meant"
 
-This patch will:
-
-- Add extra info for error reporting
-  Including:
-  * logical bytenr
-  * num_bytes
-  * type
-  * action
-  * ref_mod
-
-- Replace the btrfs_debug() with btrfs_err()
-
-- Move the error reporting into run_one_delayed_ref()
-  This is to avoid use-after-free, the @node can be freed in the caller.
-
-This error should only be triggered at most once.
-
-As if run_one_delayed_ref() failed, we trigger the error message, then
-causing the call chain to error out:
-
-btrfs_run_delayed_refs()
-`- btrfs_run_delayed_refs()
-   `- btrfs_run_delayed_refs_for_head()
-      `- run_one_delayed_ref()
-
-And we will abort the current transaction in btrfs_run_delayed_refs().
-If we have to run delayed refs for the abort transaction,
-run_one_delayed_ref() will just cleanup the refs and do nothing, thus no
-new error messages would be output.
-
-Reviewed-by: Anand Jain <anand.jain@oracle.com>
-Signed-off-by: Qu Wenruo <wqu@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: linux-kernel@vger.kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/btrfs/extent-tree.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ arch/x86/lib/iomap_copy_64.S | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/btrfs/extent-tree.c b/fs/btrfs/extent-tree.c
-index e72973f7c2cd..750c1ff9947d 100644
---- a/fs/btrfs/extent-tree.c
-+++ b/fs/btrfs/extent-tree.c
-@@ -1717,6 +1717,11 @@ static int run_one_delayed_ref(struct btrfs_trans_handle *trans,
- 		BUG();
- 	if (ret && insert_reserved)
- 		btrfs_pin_extent(trans, node->bytenr, node->num_bytes, 1);
-+	if (ret < 0)
-+		btrfs_err(trans->fs_info,
-+"failed to run delayed ref for logical %llu num_bytes %llu type %u action %u ref_mod %d: %d",
-+			  node->bytenr, node->num_bytes, node->type,
-+			  node->action, node->ref_mod, ret);
- 	return ret;
- }
- 
-@@ -1955,8 +1960,6 @@ static int btrfs_run_delayed_refs_for_head(struct btrfs_trans_handle *trans,
- 		if (ret) {
- 			unselect_delayed_ref_head(delayed_refs, locked_ref);
- 			btrfs_put_delayed_ref(ref);
--			btrfs_debug(fs_info, "run_one_delayed_ref returned %d",
--				    ret);
- 			return ret;
- 		}
- 
+diff --git a/arch/x86/lib/iomap_copy_64.S b/arch/x86/lib/iomap_copy_64.S
+index a1f9416bf67a..6ff2f56cb0f7 100644
+--- a/arch/x86/lib/iomap_copy_64.S
++++ b/arch/x86/lib/iomap_copy_64.S
+@@ -10,6 +10,6 @@
+  */
+ SYM_FUNC_START(__iowrite32_copy)
+ 	movl %edx,%ecx
+-	rep movsd
++	rep movsl
+ 	RET
+ SYM_FUNC_END(__iowrite32_copy)
 -- 
 2.35.1
 
