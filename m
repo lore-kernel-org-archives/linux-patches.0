@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CA217E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:08:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D677CC433EF;
-	Sun, 22 Jan 2023 15:08:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6B597E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:08:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F05FC433D2;
+	Sun, 22 Jan 2023 15:08:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400100;
-	bh=gRtKnG0O3XYXJ6+BPD6ZWazRVPFMgbtx/pYlTydbf68=;
+	s=korg; t=1674400102;
+	bh=gkdDlIqVtB+arxvu2drDuPw+bpSMsUuv8uQgDM5h/fY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NwBfV1TntexQfDNxHTqVMrfOBLQJHamoVAI+G+3dMKrPy1daeflUSTkF3AAeC1gxu
-	 LzpJr+2OoaiIEOXKUA9Bbxxqa27/L4cCqFDpKnKLXVqTqKaHa18yP1z7pX6aUJ5T8H
-	 pQZ3QHKC8R6BCHbqVGLsArJIq66h6Ne/ng+FjA+A=
+	b=cNGSXpkQciwR8m6XmpBRHIiAu2BDzrZ6wXPs+VkQ9gG0M7r65Bqq0E0PvnQ6nc947
+	 XmC6li4LEzDptBIFukBHzH+kvAmwbUrCZs4oOHB3bzO9WkGJbGfNPBmSasiKHYfJzT
+	 BthmNXqztyO0XH0GtCwq14N+jrqMbvGIpZbQnM78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 4.19 10/37] xhci: Add a flag to disable USB3 lpm on a xhci root port level.
-Date: Sun, 22 Jan 2023 16:04:07 +0100
-Message-Id: <20230122150220.011031462@linuxfoundation.org>
+	Olga Kornievskaia <kolga@netapp.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 01/37] pNFS/filelayout: Fix coalescing test for single DS
+Date: Sun, 22 Jan 2023 16:03:58 +0100
+Message-Id: <20230122150219.618306203@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150219.557984692@linuxfoundation.org>
 References: <20230122150219.557984692@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -33,63 +37,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Olga Kornievskaia <olga.kornievskaia@gmail.com>
 
-commit 0522b9a1653048440da5f21747f21e498b9220d1 upstream.
+[ Upstream commit a6b9d2fa0024e7e399c26facd0fb466b7396e2b9 ]
 
-One USB3 roothub port may support link power management, while another
-root port on the same xHC can't due to different retimers used for
-the ports.
+When there is a single DS no striping constraints need to be placed on
+the IO. When such constraint is applied then buffered reads don't
+coalesce to the DS's rsize.
 
-This is the case with Intel Alder Lake, and possible future platforms
-where retimers used for USB4 ports cause too long exit latecy to
-enable native USB3 lpm U1 and U2 states.
-
-Add a flag in the xhci port structure to indicate if the port is
-lpm_incapable, and check it while calculating exit latency.
-
-Cc: stable@vger.kernel.org
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230116142216.1141605-6-mathias.nyman@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/host/xhci.c |    8 ++++++++
- drivers/usb/host/xhci.h |    1 +
- 2 files changed, 9 insertions(+)
+ fs/nfs/filelayout/filelayout.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/drivers/usb/host/xhci.c
-+++ b/drivers/usb/host/xhci.c
-@@ -4917,6 +4917,7 @@ static int xhci_enable_usb3_lpm_timeout(
- 			struct usb_device *udev, enum usb3_link_state state)
- {
- 	struct xhci_hcd	*xhci;
-+	struct xhci_port *port;
- 	u16 hub_encoded_timeout;
- 	int mel;
- 	int ret;
-@@ -4930,6 +4931,13 @@ static int xhci_enable_usb3_lpm_timeout(
- 			!xhci->devs[udev->slot_id])
- 		return USB3_LPM_DISABLED;
+diff --git a/fs/nfs/filelayout/filelayout.c b/fs/nfs/filelayout/filelayout.c
+index e8e825497cbd..015d39ac2c8f 100644
+--- a/fs/nfs/filelayout/filelayout.c
++++ b/fs/nfs/filelayout/filelayout.c
+@@ -837,6 +837,12 @@ filelayout_alloc_lseg(struct pnfs_layout_hdr *layoutid,
+ 	return &fl->generic_hdr;
+ }
  
-+	/* If connected to root port then check port can handle lpm */
-+	if (udev->parent && !udev->parent->parent) {
-+		port = xhci->usb3_rhub.ports[udev->portnum - 1];
-+		if (port->lpm_incapable)
-+			return USB3_LPM_DISABLED;
-+	}
++static bool
++filelayout_lseg_is_striped(const struct nfs4_filelayout_segment *flseg)
++{
++	return flseg->num_fh > 1;
++}
 +
- 	hub_encoded_timeout = xhci_calculate_lpm_timeout(hcd, udev, state);
- 	mel = calculate_max_exit_latency(udev, state, hub_encoded_timeout);
- 	if (mel < 0) {
---- a/drivers/usb/host/xhci.h
-+++ b/drivers/usb/host/xhci.h
-@@ -1723,6 +1723,7 @@ struct xhci_port {
- 	int			hcd_portnum;
- 	struct xhci_hub		*rhub;
- 	struct xhci_port_cap	*port_cap;
-+	unsigned int		lpm_incapable:1;
- };
+ /*
+  * filelayout_pg_test(). Called by nfs_can_coalesce_requests()
+  *
+@@ -857,6 +863,8 @@ filelayout_pg_test(struct nfs_pageio_descriptor *pgio, struct nfs_page *prev,
+ 	size = pnfs_generic_pg_test(pgio, prev, req);
+ 	if (!size)
+ 		return 0;
++	else if (!filelayout_lseg_is_striped(FILELAYOUT_LSEG(pgio->pg_lseg)))
++		return size;
  
- struct xhci_hub {
+ 	/* see if req and prev are in the same stripe */
+ 	if (prev) {
+-- 
+2.35.1
+
 
 
