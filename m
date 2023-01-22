@@ -1,26 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D24E72590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:26:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 054C3C433EF;
-	Sun, 22 Jan 2023 15:26:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B9882590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:26:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97F53C433EF;
+	Sun, 22 Jan 2023 15:26:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401203;
-	bh=BEG/IMQo3ViR1MKiqcXqv6YmJl0zKDvag+6myi/QtHA=;
+	s=korg; t=1674401205;
+	bh=5o5XjW9OJdUJKscP4r/9DctIvPsDLx+8uX85Iv96pfE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1vKtFTUkCH+Q56PkiIiBss0yPeJ6Jz3IKvNwuOoCoi65DUN8Vo0FES504Gs1Ol39p
-	 LoMLCm0uw5XylultTBHFWVznYgs1rPiI+0hbTw+m1+NpXrl3EJrS1fP3MM8XZ8jJld
-	 rvZDL/U24+aug8/j7jeBq5Iynrl4BGdXRxxdbdhQ=
+	b=d947L5Huprpvm/NV7x89daQyizGlrDM0uyy5o8zVewL5JZ2kplCBe0I0Q4jYwNr0D
+	 XgvK24zVrzBSj+0CdhcbKJ8VnqSmDve4yiYcJePlHlyXLPvfl1VSP8cFqZ/3w1OHAg
+	 FsbuD4JdAP0O38lh/wMXDAdbC3rRyEXrgPUX0uA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 6.1 149/193] efi: rt-wrapper: Add missing include
-Date: Sun, 22 Jan 2023 16:04:38 +0100
-Message-Id: <20230122150253.196179756@linuxfoundation.org>
+	Petr Mladek <pmladek@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	tangmeng <tangmeng@uniontech.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.1 150/193] panic: Separate sysctl logic from CONFIG_SMP
+Date: Sun, 22 Jan 2023 16:04:39 +0100
+Message-Id: <20230122150253.244731824@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -34,30 +40,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Kees Cook <keescook@chromium.org>
 
-commit 18bba1843fc7f264f58c9345d00827d082f9c558 upstream.
+commit 9360d035a579d95d1e76c471061b9065b18a0eb1 upstream.
 
-Add the missing #include of asm/assembler.h, which is where the ldr_l
-macro is defined.
+In preparation for adding more sysctls directly in kernel/panic.c, split
+CONFIG_SMP from the logic that adds sysctls.
 
-Fixes: ff7a167961d1b97e ("arm64: efi: Execute runtime services from a dedicated stack")
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Cc: Lee Jones <lee@kernel.org>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: tangmeng <tangmeng@uniontech.com>
+Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221117234328.594699-1-keescook@chromium.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kernel/efi-rt-wrapper.S |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/panic.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/kernel/efi-rt-wrapper.S
-+++ b/arch/arm64/kernel/efi-rt-wrapper.S
-@@ -4,6 +4,7 @@
-  */
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -75,8 +75,9 @@ ATOMIC_NOTIFIER_HEAD(panic_notifier_list
  
- #include <linux/linkage.h>
-+#include <asm/assembler.h>
+ EXPORT_SYMBOL(panic_notifier_list);
  
- SYM_FUNC_START(__efi_rt_asm_wrapper)
- 	stp	x29, x30, [sp, #-32]!
+-#if defined(CONFIG_SMP) && defined(CONFIG_SYSCTL)
++#ifdef CONFIG_SYSCTL
+ static struct ctl_table kern_panic_table[] = {
++#ifdef CONFIG_SMP
+ 	{
+ 		.procname       = "oops_all_cpu_backtrace",
+ 		.data           = &sysctl_oops_all_cpu_backtrace,
+@@ -86,6 +87,7 @@ static struct ctl_table kern_panic_table
+ 		.extra1         = SYSCTL_ZERO,
+ 		.extra2         = SYSCTL_ONE,
+ 	},
++#endif
+ 	{ }
+ };
+ 
 
 
