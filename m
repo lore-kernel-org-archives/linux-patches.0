@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1CBC2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:20:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A76DC433EF;
-	Sun, 22 Jan 2023 15:20:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51B472590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:20:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCD67C433EF;
+	Sun, 22 Jan 2023 15:20:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400841;
-	bh=whKp7gij3QHZddFec7Q4FIopMBHXFDZYc0l6+QGN8jw=;
+	s=korg; t=1674400844;
+	bh=PgIHuTYor0qdqilMWA4mt/hYSEJrpxTfS2+yy3S8CU0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=De8//jgRHU10FU5/IqrUvyvvCYzMGBR5Jr1SqF/yg7aW9v7G0F+jVefBqo5HGMrCs
-	 6SFobRd87tNPOz2UJleZJHpz9RP9YSaY9AMulgrCAVvpp++a04zKs2wgfPjyz6+MKw
-	 /6zXiQSo5llPCIxXlgG+I1PciHtoupdFYc2BDaiI=
+	b=iUt1O/ncwgOD5pqFPMwMn8/Y8QdS1tpNUe46IOHs4INNzWnAt/kVA3wO/VJf03HvM
+	 1zzPEpVC4lGYBTxixsLj5+WPP1kX7ohf5mQuAJKr3X9yaT40uSp+J1WXpdxWrNoSO4
+	 4JKNfxP51aKPhXX3W89XocrnKQXCYYDvI/sEvgZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Cindy Lu <lulu@redhat.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
-	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
 	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 012/193] vduse: Validate vq_num in vduse_validate_config()
-Date: Sun, 22 Jan 2023 16:02:21 +0100
-Message-Id: <20230122150246.928949190@linuxfoundation.org>
+Subject: [PATCH 6.1 013/193] vdpa_sim_net: should not drop the multicast/broadcast packet
+Date: Sun, 22 Jan 2023 16:02:22 +0100
+Message-Id: <20230122150246.979549435@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -36,45 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+From: Cindy Lu <lulu@redhat.com>
 
-[ Upstream commit 937c783aa3d8d77963ec91918d3298edb45b9161 ]
+[ Upstream commit 72455a1142527e607e1d69439f3ffa2ef6d09e26 ]
 
-Add a limit to 'config->vq_num' which is user controlled data which
-comes from an vduse_ioctl to prevent large memory allocations.
+In the receive_filter(), should not drop the packet with the
+broadcast/multicast address. Add the check for this
 
-Micheal says  - This limit is somewhat arbitrary.
-However, currently virtio pci and ccw are limited to a 16 bit vq number.
-While MMIO isn't it is also isn't used with lots of VQs due to
-current lack of support for per-vq interrupts.
-Thus, the 0xffff limit on number of VQs corresponding
-to a 16-bit VQ number seems sufficient for now.
-
-This is found using static analysis with smatch.
-
-Suggested-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
-Message-Id: <20221128155717.2579992-1-harshit.m.mogalapalli@oracle.com>
+Signed-off-by: Cindy Lu <lulu@redhat.com>
+Message-Id: <20221214054306.24145-1-lulu@redhat.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vdpa/vdpa_user/vduse_dev.c | 3 +++
+ drivers/vdpa/vdpa_sim/vdpa_sim_net.c | 3 +++
  1 file changed, 3 insertions(+)
 
-diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
-index 35dceee3ed56..31017ebc4d7c 100644
---- a/drivers/vdpa/vdpa_user/vduse_dev.c
-+++ b/drivers/vdpa/vdpa_user/vduse_dev.c
-@@ -1440,6 +1440,9 @@ static bool vduse_validate_config(struct vduse_dev_config *config)
- 	if (config->config_size > PAGE_SIZE)
+diff --git a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
+index 11f5a121df24..584b975a98a7 100644
+--- a/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
++++ b/drivers/vdpa/vdpa_sim/vdpa_sim_net.c
+@@ -62,6 +62,9 @@ static bool receive_filter(struct vdpasim *vdpasim, size_t len)
+ 	if (len < ETH_ALEN + hdr_len)
  		return false;
  
-+	if (config->vq_num > 0xffff)
-+		return false;
-+
- 	if (!device_is_allowed(config->device_id))
- 		return false;
++	if (is_broadcast_ether_addr(vdpasim->buffer + hdr_len) ||
++	    is_multicast_ether_addr(vdpasim->buffer + hdr_len))
++		return true;
+ 	if (!strncmp(vdpasim->buffer + hdr_len, vio_config->mac, ETH_ALEN))
+ 		return true;
  
 -- 
 2.35.1
