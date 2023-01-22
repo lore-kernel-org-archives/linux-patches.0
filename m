@@ -1,35 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE0EF2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:20:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64A40C433D2;
-	Sun, 22 Jan 2023 15:20:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856EE2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:20:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09587C433D2;
+	Sun, 22 Jan 2023 15:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400833;
-	bh=MIsdpiXvayYb998WGQaW1Vl6GMCoCEBjOauRJRIIJpw=;
+	s=korg; t=1674400836;
+	bh=UqXp53oU3zQWgoQ910DrFsF/0ayLrNVzM54tgD6afJM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0dLdswvpulc+qbfkuIEECXZCBi0EY5nKLHCMQ4uoNrNZijMJFy/DnGP5v5wigH3Hq
-	 JDqkOLY9KqMWPdqQZaarphKRdoerqOvgC8LuNf7B/iWj1nbt1sjpfTsy5Rgmwep3O2
-	 dxT1u356NcdbBN1BDLzU6MXz8scklT33qkJEDR/M=
+	b=rL+xG2h4KyQ2ewU/DIq4lF6c3LEtFBb7DSXv0Hih2Ql37nOow4MeQcpJJe6H/NHsl
+	 LxiJf04cLLaB1ni2x4uWnMbohy403C+MqTzInhnu+HN37CN6M4z2E2K6w/RRi9Ma1Z
+	 QCnjSkL0AAttX1NU2NacJ9OCSgQDHIzQnC1QVJS0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	"Michael J. Ruhl" <michael.j.ruhl@intel.com>,
-	"T.J. Mercier" <tjmercier@google.com>,
-	Sumit Semwal <sumit.semwal@linaro.org>,
+	=?UTF-8?q?Eugenio=20P=C3=A9rez?= <eperezma@redhat.com>,
+	Eli Cohen <elic@nvidia.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 001/193] dma-buf: fix dma_buf_export init order v2
-Date: Sun, 22 Jan 2023 16:02:10 +0100
-Message-Id: <20230122150246.388831681@linuxfoundation.org>
+Subject: [PATCH 6.1 010/193] vdpa/mlx5: Avoid overwriting CVQ iotlb
+Date: Sun, 22 Jan 2023 16:02:19 +0100
+Message-Id: <20230122150246.835409914@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -39,250 +37,240 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christian König <christian.koenig@amd.com>
+From: Eli Cohen <elic@nvidia.com>
 
-[ Upstream commit f728a5ea27c92133893590e731ce10f6561ced87 ]
+[ Upstream commit 38fc462f57ef4e5dc722bab6824854b105de8aa2 ]
 
-The init order and resulting error handling in dma_buf_export
-was pretty messy.
+When qemu uses different address spaces for data and control virtqueues,
+the current code would overwrite the control virtqueue iotlb through the
+dup_iotlb call. Fix this by referring to the address space identifier
+and the group to asid mapping to determine which mapping needs to be
+updated. We also move the address space logic from mlx5 net to core
+directory.
 
-Subordinate objects like the file and the sysfs kernel objects
-were initializing and wiring itself up with the object in the
-wrong order resulting not only in complicating and partially
-incorrect error handling, but also in publishing only halve
-initialized DMA-buf objects.
-
-Clean this up thoughtfully by allocating the file independent
-of the DMA-buf object. Then allocate and initialize the DMA-buf
-object itself, before publishing it through sysfs. If everything
-works as expected the file is then connected with the DMA-buf
-object and publish it through debugfs.
-
-Also adds the missing dma_resv_fini() into the error handling.
-
-v2: add some missing changes to dma_bug_getfile() and a missing NULL
-    check in dma_buf_file_release()
-
-Signed-off-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Michael J. Ruhl <michael.j.ruhl@intel.com>
-Reviewed-by: T.J. Mercier <tjmercier@google.com>
-Acked-by: Sumit Semwal <sumit.semwal@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221209071535.933698-1-christian.koenig@amd.com
+Reported-by: Eugenio Pérez <eperezma@redhat.com>
+Signed-off-by: Eli Cohen <elic@nvidia.com>
+Message-Id: <20221114131759.57883-6-elic@nvidia.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Eugenio Pérez <eperezma@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma-buf/dma-buf-sysfs-stats.c |  7 +--
- drivers/dma-buf/dma-buf-sysfs-stats.h |  4 +-
- drivers/dma-buf/dma-buf.c             | 84 +++++++++++++--------------
- 3 files changed, 43 insertions(+), 52 deletions(-)
+ drivers/vdpa/mlx5/core/mlx5_vdpa.h |  5 +--
+ drivers/vdpa/mlx5/core/mr.c        | 44 ++++++++++++++++-----------
+ drivers/vdpa/mlx5/net/mlx5_vnet.c  | 49 ++++++------------------------
+ 3 files changed, 39 insertions(+), 59 deletions(-)
 
-diff --git a/drivers/dma-buf/dma-buf-sysfs-stats.c b/drivers/dma-buf/dma-buf-sysfs-stats.c
-index 2bba0babcb62..4b680e10c15a 100644
---- a/drivers/dma-buf/dma-buf-sysfs-stats.c
-+++ b/drivers/dma-buf/dma-buf-sysfs-stats.c
-@@ -168,14 +168,11 @@ void dma_buf_uninit_sysfs_statistics(void)
- 	kset_unregister(dma_buf_stats_kset);
+diff --git a/drivers/vdpa/mlx5/core/mlx5_vdpa.h b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
+index 6af9fdbb86b7..058fbe28107e 100644
+--- a/drivers/vdpa/mlx5/core/mlx5_vdpa.h
++++ b/drivers/vdpa/mlx5/core/mlx5_vdpa.h
+@@ -116,8 +116,9 @@ int mlx5_vdpa_create_mkey(struct mlx5_vdpa_dev *mvdev, u32 *mkey, u32 *in,
+ 			  int inlen);
+ int mlx5_vdpa_destroy_mkey(struct mlx5_vdpa_dev *mvdev, u32 mkey);
+ int mlx5_vdpa_handle_set_map(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb,
+-			     bool *change_map);
+-int mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb);
++			     bool *change_map, unsigned int asid);
++int mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb,
++			unsigned int asid);
+ void mlx5_vdpa_destroy_mr(struct mlx5_vdpa_dev *mvdev);
+ 
+ #define mlx5_vdpa_warn(__dev, format, ...)                                                         \
+diff --git a/drivers/vdpa/mlx5/core/mr.c b/drivers/vdpa/mlx5/core/mr.c
+index a639b9208d41..a4d7ee2339fa 100644
+--- a/drivers/vdpa/mlx5/core/mr.c
++++ b/drivers/vdpa/mlx5/core/mr.c
+@@ -511,7 +511,8 @@ void mlx5_vdpa_destroy_mr(struct mlx5_vdpa_dev *mvdev)
+ 	mutex_unlock(&mr->mkey_mtx);
  }
  
--int dma_buf_stats_setup(struct dma_buf *dmabuf)
-+int dma_buf_stats_setup(struct dma_buf *dmabuf, struct file *file)
+-static int _mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb)
++static int _mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev,
++				struct vhost_iotlb *iotlb, unsigned int asid)
  {
- 	struct dma_buf_sysfs_entry *sysfs_entry;
- 	int ret;
+ 	struct mlx5_vdpa_mr *mr = &mvdev->mr;
+ 	int err;
+@@ -519,42 +520,49 @@ static int _mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb
+ 	if (mr->initialized)
+ 		return 0;
  
--	if (!dmabuf || !dmabuf->file)
--		return -EINVAL;
--
- 	if (!dmabuf->exp_name) {
- 		pr_err("exporter name must not be empty if stats needed\n");
- 		return -EINVAL;
-@@ -192,7 +189,7 @@ int dma_buf_stats_setup(struct dma_buf *dmabuf)
- 
- 	/* create the directory for buffer stats */
- 	ret = kobject_init_and_add(&sysfs_entry->kobj, &dma_buf_ktype, NULL,
--				   "%lu", file_inode(dmabuf->file)->i_ino);
-+				   "%lu", file_inode(file)->i_ino);
- 	if (ret)
- 		goto err_sysfs_dmabuf;
- 
-diff --git a/drivers/dma-buf/dma-buf-sysfs-stats.h b/drivers/dma-buf/dma-buf-sysfs-stats.h
-index a49c6e2650cc..7a8a995b75ba 100644
---- a/drivers/dma-buf/dma-buf-sysfs-stats.h
-+++ b/drivers/dma-buf/dma-buf-sysfs-stats.h
-@@ -13,7 +13,7 @@
- int dma_buf_init_sysfs_statistics(void);
- void dma_buf_uninit_sysfs_statistics(void);
- 
--int dma_buf_stats_setup(struct dma_buf *dmabuf);
-+int dma_buf_stats_setup(struct dma_buf *dmabuf, struct file *file);
- 
- void dma_buf_stats_teardown(struct dma_buf *dmabuf);
- #else
-@@ -25,7 +25,7 @@ static inline int dma_buf_init_sysfs_statistics(void)
- 
- static inline void dma_buf_uninit_sysfs_statistics(void) {}
- 
--static inline int dma_buf_stats_setup(struct dma_buf *dmabuf)
-+static inline int dma_buf_stats_setup(struct dma_buf *dmabuf, struct file *file)
- {
- 	return 0;
- }
-diff --git a/drivers/dma-buf/dma-buf.c b/drivers/dma-buf/dma-buf.c
-index e6f36c014c4c..eb6b59363c4f 100644
---- a/drivers/dma-buf/dma-buf.c
-+++ b/drivers/dma-buf/dma-buf.c
-@@ -95,10 +95,11 @@ static int dma_buf_file_release(struct inode *inode, struct file *file)
- 		return -EINVAL;
- 
- 	dmabuf = file->private_data;
--
--	mutex_lock(&db_list.lock);
--	list_del(&dmabuf->list_node);
--	mutex_unlock(&db_list.lock);
-+	if (dmabuf) {
-+		mutex_lock(&db_list.lock);
-+		list_del(&dmabuf->list_node);
-+		mutex_unlock(&db_list.lock);
-+	}
- 
- 	return 0;
- }
-@@ -523,17 +524,17 @@ static inline int is_dma_buf_file(struct file *file)
- 	return file->f_op == &dma_buf_fops;
- }
- 
--static struct file *dma_buf_getfile(struct dma_buf *dmabuf, int flags)
-+static struct file *dma_buf_getfile(size_t size, int flags)
- {
- 	static atomic64_t dmabuf_inode = ATOMIC64_INIT(0);
--	struct file *file;
- 	struct inode *inode = alloc_anon_inode(dma_buf_mnt->mnt_sb);
-+	struct file *file;
- 
- 	if (IS_ERR(inode))
- 		return ERR_CAST(inode);
- 
--	inode->i_size = dmabuf->size;
--	inode_set_bytes(inode, dmabuf->size);
-+	inode->i_size = size;
-+	inode_set_bytes(inode, size);
- 
- 	/*
- 	 * The ->i_ino acquired from get_next_ino() is not unique thus
-@@ -547,8 +548,6 @@ static struct file *dma_buf_getfile(struct dma_buf *dmabuf, int flags)
- 				 flags, &dma_buf_fops);
- 	if (IS_ERR(file))
- 		goto err_alloc_file;
--	file->private_data = dmabuf;
--	file->f_path.dentry->d_fsdata = dmabuf;
- 
- 	return file;
- 
-@@ -614,19 +613,11 @@ struct dma_buf *dma_buf_export(const struct dma_buf_export_info *exp_info)
- 	size_t alloc_size = sizeof(struct dma_buf);
- 	int ret;
- 
--	if (!exp_info->resv)
--		alloc_size += sizeof(struct dma_resv);
+-	if (iotlb)
+-		err = create_user_mr(mvdev, iotlb);
 -	else
--		/* prevent &dma_buf[1] == dma_buf->resv */
--		alloc_size += 1;
--
--	if (WARN_ON(!exp_info->priv
--			  || !exp_info->ops
--			  || !exp_info->ops->map_dma_buf
--			  || !exp_info->ops->unmap_dma_buf
--			  || !exp_info->ops->release)) {
-+	if (WARN_ON(!exp_info->priv || !exp_info->ops
-+		    || !exp_info->ops->map_dma_buf
-+		    || !exp_info->ops->unmap_dma_buf
-+		    || !exp_info->ops->release))
- 		return ERR_PTR(-EINVAL);
--	}
+-		err = create_dma_mr(mvdev, mr);
++	if (mvdev->group2asid[MLX5_VDPA_DATAVQ_GROUP] == asid) {
++		if (iotlb)
++			err = create_user_mr(mvdev, iotlb);
++		else
++			err = create_dma_mr(mvdev, mr);
  
- 	if (WARN_ON(exp_info->ops->cache_sgt_mapping &&
- 		    (exp_info->ops->pin || exp_info->ops->unpin)))
-@@ -638,10 +629,21 @@ struct dma_buf *dma_buf_export(const struct dma_buf_export_info *exp_info)
- 	if (!try_module_get(exp_info->owner))
- 		return ERR_PTR(-ENOENT);
- 
-+	file = dma_buf_getfile(exp_info->size, exp_info->flags);
-+	if (IS_ERR(file)) {
-+		ret = PTR_ERR(file);
-+		goto err_module;
+-	if (err)
+-		return err;
++		if (err)
++			return err;
 +	}
-+
-+	if (!exp_info->resv)
-+		alloc_size += sizeof(struct dma_resv);
-+	else
-+		/* prevent &dma_buf[1] == dma_buf->resv */
-+		alloc_size += 1;
- 	dmabuf = kzalloc(alloc_size, GFP_KERNEL);
- 	if (!dmabuf) {
- 		ret = -ENOMEM;
--		goto err_module;
-+		goto err_file;
+ 
+-	err = dup_iotlb(mvdev, iotlb);
+-	if (err)
+-		goto out_err;
++	if (mvdev->group2asid[MLX5_VDPA_CVQ_GROUP] == asid) {
++		err = dup_iotlb(mvdev, iotlb);
++		if (err)
++			goto out_err;
++	}
+ 
+ 	mr->initialized = true;
+ 	return 0;
+ 
+ out_err:
+-	if (iotlb)
+-		destroy_user_mr(mvdev, mr);
+-	else
+-		destroy_dma_mr(mvdev, mr);
++	if (mvdev->group2asid[MLX5_VDPA_DATAVQ_GROUP] == asid) {
++		if (iotlb)
++			destroy_user_mr(mvdev, mr);
++		else
++			destroy_dma_mr(mvdev, mr);
++	}
+ 
+ 	return err;
+ }
+ 
+-int mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb)
++int mlx5_vdpa_create_mr(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb,
++			unsigned int asid)
+ {
+ 	int err;
+ 
+ 	mutex_lock(&mvdev->mr.mkey_mtx);
+-	err = _mlx5_vdpa_create_mr(mvdev, iotlb);
++	err = _mlx5_vdpa_create_mr(mvdev, iotlb, asid);
+ 	mutex_unlock(&mvdev->mr.mkey_mtx);
+ 	return err;
+ }
+ 
+ int mlx5_vdpa_handle_set_map(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb,
+-			     bool *change_map)
++			     bool *change_map, unsigned int asid)
+ {
+ 	struct mlx5_vdpa_mr *mr = &mvdev->mr;
+ 	int err = 0;
+@@ -566,7 +574,7 @@ int mlx5_vdpa_handle_set_map(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *io
+ 		*change_map = true;
  	}
+ 	if (!*change_map)
+-		err = _mlx5_vdpa_create_mr(mvdev, iotlb);
++		err = _mlx5_vdpa_create_mr(mvdev, iotlb, asid);
+ 	mutex_unlock(&mr->mkey_mtx);
  
- 	dmabuf->priv = exp_info->priv;
-@@ -653,44 +655,36 @@ struct dma_buf *dma_buf_export(const struct dma_buf_export_info *exp_info)
- 	init_waitqueue_head(&dmabuf->poll);
- 	dmabuf->cb_in.poll = dmabuf->cb_out.poll = &dmabuf->poll;
- 	dmabuf->cb_in.active = dmabuf->cb_out.active = 0;
-+	mutex_init(&dmabuf->lock);
-+	INIT_LIST_HEAD(&dmabuf->attachments);
- 
- 	if (!resv) {
--		resv = (struct dma_resv *)&dmabuf[1];
--		dma_resv_init(resv);
-+		dmabuf->resv = (struct dma_resv *)&dmabuf[1];
-+		dma_resv_init(dmabuf->resv);
-+	} else {
-+		dmabuf->resv = resv;
+ 	return err;
+diff --git a/drivers/vdpa/mlx5/net/mlx5_vnet.c b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+index 98dd8ce8af26..3a6dbbc6440d 100644
+--- a/drivers/vdpa/mlx5/net/mlx5_vnet.c
++++ b/drivers/vdpa/mlx5/net/mlx5_vnet.c
+@@ -2394,7 +2394,8 @@ static void restore_channels_info(struct mlx5_vdpa_net *ndev)
  	}
--	dmabuf->resv = resv;
+ }
  
--	file = dma_buf_getfile(dmabuf, exp_info->flags);
--	if (IS_ERR(file)) {
--		ret = PTR_ERR(file);
-+	ret = dma_buf_stats_setup(dmabuf, file);
-+	if (ret)
- 		goto err_dmabuf;
+-static int mlx5_vdpa_change_map(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb)
++static int mlx5_vdpa_change_map(struct mlx5_vdpa_dev *mvdev,
++				struct vhost_iotlb *iotlb, unsigned int asid)
+ {
+ 	struct mlx5_vdpa_net *ndev = to_mlx5_vdpa_ndev(mvdev);
+ 	int err;
+@@ -2406,7 +2407,7 @@ static int mlx5_vdpa_change_map(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb
+ 
+ 	teardown_driver(ndev);
+ 	mlx5_vdpa_destroy_mr(mvdev);
+-	err = mlx5_vdpa_create_mr(mvdev, iotlb);
++	err = mlx5_vdpa_create_mr(mvdev, iotlb, asid);
+ 	if (err)
+ 		goto err_mr;
+ 
+@@ -2587,7 +2588,7 @@ static int mlx5_vdpa_reset(struct vdpa_device *vdev)
+ 	++mvdev->generation;
+ 
+ 	if (MLX5_CAP_GEN(mvdev->mdev, umem_uid_0)) {
+-		if (mlx5_vdpa_create_mr(mvdev, NULL))
++		if (mlx5_vdpa_create_mr(mvdev, NULL, 0))
+ 			mlx5_vdpa_warn(mvdev, "create MR failed\n");
+ 	}
+ 	up_write(&ndev->reslock);
+@@ -2623,41 +2624,20 @@ static u32 mlx5_vdpa_get_generation(struct vdpa_device *vdev)
+ 	return mvdev->generation;
+ }
+ 
+-static int set_map_control(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb)
+-{
+-	u64 start = 0ULL, last = 0ULL - 1;
+-	struct vhost_iotlb_map *map;
+-	int err = 0;
+-
+-	spin_lock(&mvdev->cvq.iommu_lock);
+-	vhost_iotlb_reset(mvdev->cvq.iotlb);
+-
+-	for (map = vhost_iotlb_itree_first(iotlb, start, last); map;
+-	     map = vhost_iotlb_itree_next(map, start, last)) {
+-		err = vhost_iotlb_add_range(mvdev->cvq.iotlb, map->start,
+-					    map->last, map->addr, map->perm);
+-		if (err)
+-			goto out;
 -	}
- 
-+	file->private_data = dmabuf;
-+	file->f_path.dentry->d_fsdata = dmabuf;
- 	dmabuf->file = file;
- 
--	mutex_init(&dmabuf->lock);
--	INIT_LIST_HEAD(&dmabuf->attachments);
 -
- 	mutex_lock(&db_list.lock);
- 	list_add(&dmabuf->list_node, &db_list.head);
- 	mutex_unlock(&db_list.lock);
- 
--	ret = dma_buf_stats_setup(dmabuf);
--	if (ret)
--		goto err_sysfs;
+-out:
+-	spin_unlock(&mvdev->cvq.iommu_lock);
+-	return err;
+-}
 -
- 	return dmabuf;
+-static int set_map_data(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb)
++static int set_map_data(struct mlx5_vdpa_dev *mvdev, struct vhost_iotlb *iotlb,
++			unsigned int asid)
+ {
+ 	bool change_map;
+ 	int err;
  
--err_sysfs:
--	/*
--	 * Set file->f_path.dentry->d_fsdata to NULL so that when
--	 * dma_buf_release() gets invoked by dentry_ops, it exits
--	 * early before calling the release() dma_buf op.
--	 */
--	file->f_path.dentry->d_fsdata = NULL;
--	fput(file);
- err_dmabuf:
-+	if (!resv)
-+		dma_resv_fini(dmabuf->resv);
- 	kfree(dmabuf);
-+err_file:
-+	fput(file);
- err_module:
- 	module_put(exp_info->owner);
- 	return ERR_PTR(ret);
+-	err = mlx5_vdpa_handle_set_map(mvdev, iotlb, &change_map);
++	err = mlx5_vdpa_handle_set_map(mvdev, iotlb, &change_map, asid);
+ 	if (err) {
+ 		mlx5_vdpa_warn(mvdev, "set map failed(%d)\n", err);
+ 		return err;
+ 	}
+ 
+ 	if (change_map)
+-		err = mlx5_vdpa_change_map(mvdev, iotlb);
++		err = mlx5_vdpa_change_map(mvdev, iotlb, asid);
+ 
+ 	return err;
+ }
+@@ -2670,16 +2650,7 @@ static int mlx5_vdpa_set_map(struct vdpa_device *vdev, unsigned int asid,
+ 	int err = -EINVAL;
+ 
+ 	down_write(&ndev->reslock);
+-	if (mvdev->group2asid[MLX5_VDPA_DATAVQ_GROUP] == asid) {
+-		err = set_map_data(mvdev, iotlb);
+-		if (err)
+-			goto out;
+-	}
+-
+-	if (mvdev->group2asid[MLX5_VDPA_CVQ_GROUP] == asid)
+-		err = set_map_control(mvdev, iotlb);
+-
+-out:
++	err = set_map_data(mvdev, iotlb, asid);
+ 	up_write(&ndev->reslock);
+ 	return err;
+ }
+@@ -3182,7 +3153,7 @@ static int mlx5_vdpa_dev_add(struct vdpa_mgmt_dev *v_mdev, const char *name,
+ 		goto err_mpfs;
+ 
+ 	if (MLX5_CAP_GEN(mvdev->mdev, umem_uid_0)) {
+-		err = mlx5_vdpa_create_mr(mvdev, NULL);
++		err = mlx5_vdpa_create_mr(mvdev, NULL, 0);
+ 		if (err)
+ 			goto err_res;
+ 	}
 -- 
 2.35.1
 
