@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29CE47E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:06:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3AE6C433D2;
-	Sun, 22 Jan 2023 15:06:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66FB7E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:06:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BDBDC433EF;
+	Sun, 22 Jan 2023 15:06:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674399988;
-	bh=9gF9vq5/yBodzUloZfD0SmyxzquXjwoBuye0A2kDwyk=;
+	s=korg; t=1674399990;
+	bh=T/EK2oqHJh7ELDeQr0ZKvEkS9pha38ZCa4l3Tu5WyQQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w4CR3z/QOAXYrE0ZJM1NsFIHIOK59nBekkrmESH/gMtt0UT642m9y0S1OzPDHRFvS
-	 cV8kBlyXdSWD0KVfNRO8J3cE2jYb6BPgq9hy3UeKg4pE1nJyY+I8PwxxZRlYclWDee
-	 pt+v+qNKwo4vqkxVLTtJnfZoQ/x4C/M0Y4xgqN4E=
+	b=sI7bqPOUJ9COblE1N0Z+gMn4p24Ooh/uPd9WEIwOtKOKVOXTL2IKr48AR+5pmQKL3
+	 vt1uAiq5pohZOPaNbs0ArK6o7EQ21FAqs+oOubKrAQp2A/GK/z3m1PMlbOwSLYRxyT
+	 DIUSpd0lV3AdoD/EXsx/+YXYA30Mqlof6ICloI5I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 4.14 22/25] serial: pch_uart: Pass correct sg to dma_unmap_sg()
-Date: Sun, 22 Jan 2023 16:04:22 +0100
-Message-Id: <20230122150218.724993878@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Tobias Schramm <t.schramm@manjaro.org>,
+	Richard Genoud <richard.genoud@gmail.com>
+Subject: [PATCH 4.14 23/25] serial: atmel: fix incorrect baudrate setup
+Date: Sun, 22 Jan 2023 16:04:23 +0100
+Message-Id: <20230122150218.758420350@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150217.788215473@linuxfoundation.org>
 References: <20230122150217.788215473@linuxfoundation.org>
@@ -33,38 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Tobias Schramm <t.schramm@manjaro.org>
 
-commit e8914b52e5b024e4af3d810a935fe0805eee8a36 upstream.
+commit 5bfdd3c654bd879bff50c2e85e42f85ae698b42f upstream.
 
-A local variable sg is used to store scatterlist pointer in
-pch_dma_tx_complete(). The for loop doing Tx byte accounting before
-dma_unmap_sg() alters sg in its increment statement. Therefore, the
-pointer passed into dma_unmap_sg() won't match to the one given to
-dma_map_sg().
+Commit ba47f97a18f2 ("serial: core: remove baud_rates when serial console
+setup") changed uart_set_options to select the correct baudrate
+configuration based on the absolute error between requested baudrate and
+available standard baudrate settings.
+Prior to that commit the baudrate was selected based on which predefined
+standard baudrate did not exceed the requested baudrate.
+This change of selection logic was never reflected in the atmel serial
+driver. Thus the comment left in the atmel serial driver is no longer
+accurate.
+Additionally the manual rounding up described in that comment and applied
+via (quot - 1) requests an incorrect baudrate. Since uart_set_options uses
+tty_termios_encode_baud_rate to determine the appropriate baudrate flags
+this can cause baudrate selection to fail entirely because
+tty_termios_encode_baud_rate will only select a baudrate if relative error
+between requested and selected baudrate does not exceed +/-2%.
+Fix that by requesting actual, exact baudrate used by the serial.
 
-To fix the problem, use priv->sg_tx_p directly in dma_unmap_sg()
-instead of the local variable.
-
-Fixes: da3564ee027e ("pch_uart: add multi-scatter processing")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230103093435.4396-1-ilpo.jarvinen@linux.intel.com
+Fixes: ba47f97a18f2 ("serial: core: remove baud_rates when serial console setup")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Tobias Schramm <t.schramm@manjaro.org>
+Acked-by: Richard Genoud <richard.genoud@gmail.com>
+Link: https://lore.kernel.org/r/20230109072940.202936-1-t.schramm@manjaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/pch_uart.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/tty/serial/atmel_serial.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/drivers/tty/serial/pch_uart.c
-+++ b/drivers/tty/serial/pch_uart.c
-@@ -806,7 +806,7 @@ static void pch_dma_tx_complete(void *ar
- 	}
- 	xmit->tail &= UART_XMIT_SIZE - 1;
- 	async_tx_ack(priv->desc_tx);
--	dma_unmap_sg(port->dev, sg, priv->orig_nent, DMA_TO_DEVICE);
-+	dma_unmap_sg(port->dev, priv->sg_tx_p, priv->orig_nent, DMA_TO_DEVICE);
- 	priv->tx_dma_use = 0;
- 	priv->nent = 0;
- 	priv->orig_nent = 0;
+--- a/drivers/tty/serial/atmel_serial.c
++++ b/drivers/tty/serial/atmel_serial.c
+@@ -2538,13 +2538,7 @@ static void __init atmel_console_get_opt
+ 	else if (mr == ATMEL_US_PAR_ODD)
+ 		*parity = 'o';
+ 
+-	/*
+-	 * The serial core only rounds down when matching this to a
+-	 * supported baud rate. Make sure we don't end up slightly
+-	 * lower than one of those, as it would make us fall through
+-	 * to a much lower baud rate than we really want.
+-	 */
+-	*baud = port->uartclk / (16 * (quot - 1));
++	*baud = port->uartclk / (16 * quot);
+ }
+ 
+ static int __init atmel_console_setup(struct console *co, char *options)
 
 
