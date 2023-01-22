@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BEA82590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8CB1C433D2;
-	Sun, 22 Jan 2023 15:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D09552590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A6FC433D2;
+	Sun, 22 Jan 2023 15:25:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401146;
-	bh=rgdRuNkcl4NgTTOImA+CLAzwMr6q00s0WLkHV23YWpg=;
+	s=korg; t=1674401148;
+	bh=qVWf0RJkRGfrQTd+FUM4b4Swu6f7nlndQ+Oa8K42xCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t/6cCR4PSA2C9jDfehedcCVcy3zxp5wqwMtYVONCqRNIZgfa8GHCgxhM7V8/Szval
-	 r2tep44/v6JN9JK20cc2TaxZ7Jts242IceKVa++zGJrjDOCvxnXxCFPKBWaQ3ZY7OK
-	 +clFBuN/B6p637RGcNQRIIPdl3c+Rdy5zbG0gZbE=
+	b=LQqBb6o39qyPpbcvnsbI+77Z3yvya6SJuU9ZE660naGQP3eT5XR10gan6e0k/qw3R
+	 TRSXighaa0E9H4Yv57glZqEcO5I0Rl0jz4kf4OHSEZrkBiP49e7X6Wi+PWjuzrNAex
+	 fc8ZVew3vxdTi7JmZigPgGZhI/sThYaJy88wNvFc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Tobias Schramm <t.schramm@manjaro.org>,
-	Richard Genoud <richard.genoud@gmail.com>
-Subject: [PATCH 6.1 126/193] serial: atmel: fix incorrect baudrate setup
-Date: Sun, 22 Jan 2023 16:04:15 +0100
-Message-Id: <20230122150252.069496864@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Samuel Thibault <samuel.thibault@ens-lyon.org>
+Subject: [PATCH 6.1 098/193] tty: fix possible null-ptr-defer in spk_ttyio_release
+Date: Sun, 22 Jan 2023 16:03:47 +0100
+Message-Id: <20230122150250.803355768@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -35,53 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tobias Schramm <t.schramm@manjaro.org>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-commit 5bfdd3c654bd879bff50c2e85e42f85ae698b42f upstream.
+commit 5abbeebd8296c2301023b8dc4b5a6c0d5229b4f5 upstream.
 
-Commit ba47f97a18f2 ("serial: core: remove baud_rates when serial console
-setup") changed uart_set_options to select the correct baudrate
-configuration based on the absolute error between requested baudrate and
-available standard baudrate settings.
-Prior to that commit the baudrate was selected based on which predefined
-standard baudrate did not exceed the requested baudrate.
-This change of selection logic was never reflected in the atmel serial
-driver. Thus the comment left in the atmel serial driver is no longer
-accurate.
-Additionally the manual rounding up described in that comment and applied
-via (quot - 1) requests an incorrect baudrate. Since uart_set_options uses
-tty_termios_encode_baud_rate to determine the appropriate baudrate flags
-this can cause baudrate selection to fail entirely because
-tty_termios_encode_baud_rate will only select a baudrate if relative error
-between requested and selected baudrate does not exceed +/-2%.
-Fix that by requesting actual, exact baudrate used by the serial.
+Run the following tests on the qemu platform:
 
-Fixes: ba47f97a18f2 ("serial: core: remove baud_rates when serial console setup")
+syzkaller:~# modprobe speakup_audptr
+ input: Speakup as /devices/virtual/input/input4
+ initialized device: /dev/synth, node (MAJOR 10, MINOR 125)
+ speakup 3.1.6: initialized
+ synth name on entry is: (null)
+ synth probe
+
+spk_ttyio_initialise_ldisc failed because tty_kopen_exclusive returned
+failed (errno -16), then remove the module, we will get a null-ptr-defer
+problem, as follow:
+
+syzkaller:~# modprobe -r speakup_audptr
+ releasing synth audptr
+ BUG: kernel NULL pointer dereference, address: 0000000000000080
+ #PF: supervisor write access in kernel mode
+ #PF: error_code(0x0002) - not-present page
+ PGD 0 P4D 0
+ Oops: 0002 [#1] PREEMPT SMP PTI
+ CPU: 2 PID: 204 Comm: modprobe Not tainted 6.1.0-rc6-dirty #1
+ RIP: 0010:mutex_lock+0x14/0x30
+ Call Trace:
+ <TASK>
+  spk_ttyio_release+0x19/0x70 [speakup]
+  synth_release.part.6+0xac/0xc0 [speakup]
+  synth_remove+0x56/0x60 [speakup]
+  __x64_sys_delete_module+0x156/0x250
+  ? fpregs_assert_state_consistent+0x1d/0x50
+  do_syscall_64+0x37/0x90
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ </TASK>
+ Modules linked in: speakup_audptr(-) speakup
+ Dumping ftrace buffer:
+
+in_synth->dev was not initialized during modprobe, so we add check
+for in_synth->dev to fix this bug.
+
+Fixes: 4f2a81f3a882 ("speakup: Reference synth from tty and tty from synth")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Tobias Schramm <t.schramm@manjaro.org>
-Acked-by: Richard Genoud <richard.genoud@gmail.com>
-Link: https://lore.kernel.org/r/20230109072940.202936-1-t.schramm@manjaro.org
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221202060633.217364-1-cuigaosheng1@huawei.com
+Reviewed-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/atmel_serial.c |    8 +-------
- 1 file changed, 1 insertion(+), 7 deletions(-)
+ drivers/accessibility/speakup/spk_ttyio.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/tty/serial/atmel_serial.c
-+++ b/drivers/tty/serial/atmel_serial.c
-@@ -2673,13 +2673,7 @@ static void __init atmel_console_get_opt
- 	else if (mr == ATMEL_US_PAR_ODD)
- 		*parity = 'o';
+--- a/drivers/accessibility/speakup/spk_ttyio.c
++++ b/drivers/accessibility/speakup/spk_ttyio.c
+@@ -354,6 +354,9 @@ void spk_ttyio_release(struct spk_synth
+ {
+ 	struct tty_struct *tty = in_synth->dev;
  
--	/*
--	 * The serial core only rounds down when matching this to a
--	 * supported baud rate. Make sure we don't end up slightly
--	 * lower than one of those, as it would make us fall through
--	 * to a much lower baud rate than we really want.
--	 */
--	*baud = port->uartclk / (16 * (quot - 1));
-+	*baud = port->uartclk / (16 * quot);
- }
++	if (tty == NULL)
++		return;
++
+ 	tty_lock(tty);
  
- static int __init atmel_console_setup(struct console *co, char *options)
+ 	if (tty->ops->close)
 
 
