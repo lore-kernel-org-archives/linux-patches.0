@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284C62590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:19:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56C7C433D2;
-	Sun, 22 Jan 2023 15:19:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74B22590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:19:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F75AC433D2;
+	Sun, 22 Jan 2023 15:19:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400747;
-	bh=skLOHTLm+m5m3VrQ2/H49ma+gAyHqwdzBIQQMh4QChU=;
+	s=korg; t=1674400749;
+	bh=oqR1VhxSwlrU/vPXp+4PAuGjZcXPYVrAzMFOqDcPPh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DUo56oAbW6R2rkzLIdOF4T3JHUbHO9Uv6KPOcO8yKpsjHisV/fSS3xYmPJJg0lphU
-	 mbc4HemY2qV+gqxEsSA/wFV8jNmYYpj2GQpW+Q0oJ7eVQAdSIZCuq5mIcVAXXohahC
-	 Fc7O5SDnrYLscWwwP1UDQujcFz8DFlAbMN+2sncY=
+	b=TZwsSzRMqv3Dw8TiFm1jH1r0oKS0FWCRXh8VcUHKjmOnZl+Y1yxYO1pS/0LzzsD0t
+	 lL9gRZ1KhlCYqQlPuV/+xcixJ6VUX+zzdlIhBp0C+rwz9SE5v0shIVJ+KCSQtYYfuz
+	 QnIm0a4THNG/DTyIrsUIZGueziAkK63RVNxkNeAc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+96977faa68092ad382c4@syzkaller.appspotmail.com,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 066/117] btrfs: fix race between quota rescan and disable leading to NULL pointer deref
-Date: Sun, 22 Jan 2023 16:04:16 +0100
-Message-Id: <20230122150235.524449461@linuxfoundation.org>
+	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Tomas Winkler <tomas.winkler@intel.com>
+Subject: [PATCH 5.15 093/117] mei: me: add meteor lake point M DID
+Date: Sun, 22 Jan 2023 16:04:43 +0100
+Message-Id: <20230122150236.666004828@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -35,134 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit b7adbf9ada3513d2092362c8eac5cddc5b651f5c upstream.
+commit 0c4d68261717f89fa8c4f98a6967c3832fcb3ad0 upstream.
 
-If we have one task trying to start the quota rescan worker while another
-one is trying to disable quotas, we can end up hitting a race that results
-in the quota rescan worker doing a NULL pointer dereference. The steps for
-this are the following:
+Add Meteor Lake Point M device id.
 
-1) Quotas are enabled;
-
-2) Task A calls the quota rescan ioctl and enters btrfs_qgroup_rescan().
-   It calls qgroup_rescan_init() which returns 0 (success) and then joins a
-   transaction and commits it;
-
-3) Task B calls the quota disable ioctl and enters btrfs_quota_disable().
-   It clears the bit BTRFS_FS_QUOTA_ENABLED from fs_info->flags and calls
-   btrfs_qgroup_wait_for_completion(), which returns immediately since the
-   rescan worker is not yet running.
-   Then it starts a transaction and locks fs_info->qgroup_ioctl_lock;
-
-4) Task A queues the rescan worker, by calling btrfs_queue_work();
-
-5) The rescan worker starts, and calls rescan_should_stop() at the start
-   of its while loop, which results in 0 iterations of the loop, since
-   the flag BTRFS_FS_QUOTA_ENABLED was cleared from fs_info->flags by
-   task B at step 3);
-
-6) Task B sets fs_info->quota_root to NULL;
-
-7) The rescan worker tries to start a transaction and uses
-   fs_info->quota_root as the root argument for btrfs_start_transaction().
-   This results in a NULL pointer dereference down the call chain of
-   btrfs_start_transaction(). The stack trace is something like the one
-   reported in Link tag below:
-
-   general protection fault, probably for non-canonical address 0xdffffc0000000041: 0000 [#1] PREEMPT SMP KASAN
-   KASAN: null-ptr-deref in range [0x0000000000000208-0x000000000000020f]
-   CPU: 1 PID: 34 Comm: kworker/u4:2 Not tainted 6.1.0-syzkaller-13872-gb6bb9676f216 #0
-   Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-   Workqueue: btrfs-qgroup-rescan btrfs_work_helper
-   RIP: 0010:start_transaction+0x48/0x10f0 fs/btrfs/transaction.c:564
-   Code: 48 89 fb 48 (...)
-   RSP: 0018:ffffc90000ab7ab0 EFLAGS: 00010206
-   RAX: 0000000000000041 RBX: 0000000000000208 RCX: ffff88801779ba80
-   RDX: 0000000000000000 RSI: 0000000000000001 RDI: 0000000000000000
-   RBP: dffffc0000000000 R08: 0000000000000001 R09: fffff52000156f5d
-   R10: fffff52000156f5d R11: 1ffff92000156f5c R12: 0000000000000000
-   R13: 0000000000000001 R14: 0000000000000001 R15: 0000000000000003
-   FS:  0000000000000000(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
-   CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-   CR2: 00007f2bea75b718 CR3: 000000001d0cc000 CR4: 00000000003506e0
-   DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-   DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-   Call Trace:
-    <TASK>
-    btrfs_qgroup_rescan_worker+0x3bb/0x6a0 fs/btrfs/qgroup.c:3402
-    btrfs_work_helper+0x312/0x850 fs/btrfs/async-thread.c:280
-    process_one_work+0x877/0xdb0 kernel/workqueue.c:2289
-    worker_thread+0xb14/0x1330 kernel/workqueue.c:2436
-    kthread+0x266/0x300 kernel/kthread.c:376
-    ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
-    </TASK>
-   Modules linked in:
-
-So fix this by having the rescan worker function not attempt to start a
-transaction if it didn't do any rescan work.
-
-Reported-by: syzbot+96977faa68092ad382c4@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-btrfs/000000000000e5454b05f065a803@google.com/
-Fixes: e804861bd4e6 ("btrfs: fix deadlock between quota disable and qgroup rescan worker")
-CC: stable@vger.kernel.org # 5.4+
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
+Link: https://lore.kernel.org/r/20221212220247.286019-2-tomas.winkler@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/qgroup.c |   25 +++++++++++++++++--------
- 1 file changed, 17 insertions(+), 8 deletions(-)
+ drivers/misc/mei/hw-me-regs.h |    2 ++
+ drivers/misc/mei/pci-me.c     |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- a/fs/btrfs/qgroup.c
-+++ b/fs/btrfs/qgroup.c
-@@ -3286,6 +3286,7 @@ static void btrfs_qgroup_rescan_worker(s
- 	int err = -ENOMEM;
- 	int ret = 0;
- 	bool stopped = false;
-+	bool did_leaf_rescans = false;
+--- a/drivers/misc/mei/hw-me-regs.h
++++ b/drivers/misc/mei/hw-me-regs.h
+@@ -111,6 +111,8 @@
  
- 	path = btrfs_alloc_path();
- 	if (!path)
-@@ -3306,6 +3307,7 @@ static void btrfs_qgroup_rescan_worker(s
- 		}
+ #define MEI_DEV_ID_RPL_S      0x7A68  /* Raptor Lake Point S */
  
- 		err = qgroup_rescan_leaf(trans, path);
-+		did_leaf_rescans = true;
++#define MEI_DEV_ID_MTL_M      0x7E70  /* Meteor Lake Point M */
++
+ /*
+  * MEI HW Section
+  */
+--- a/drivers/misc/mei/pci-me.c
++++ b/drivers/misc/mei/pci-me.c
+@@ -117,6 +117,8 @@ static const struct pci_device_id mei_me
  
- 		if (err > 0)
- 			btrfs_commit_transaction(trans);
-@@ -3326,16 +3328,23 @@ out:
- 	mutex_unlock(&fs_info->qgroup_rescan_lock);
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_RPL_S, MEI_ME_PCH15_CFG)},
  
- 	/*
--	 * only update status, since the previous part has already updated the
--	 * qgroup info.
-+	 * Only update status, since the previous part has already updated the
-+	 * qgroup info, and only if we did any actual work. This also prevents
-+	 * race with a concurrent quota disable, which has already set
-+	 * fs_info->quota_root to NULL and cleared BTRFS_FS_QUOTA_ENABLED at
-+	 * btrfs_quota_disable().
- 	 */
--	trans = btrfs_start_transaction(fs_info->quota_root, 1);
--	if (IS_ERR(trans)) {
--		err = PTR_ERR(trans);
-+	if (did_leaf_rescans) {
-+		trans = btrfs_start_transaction(fs_info->quota_root, 1);
-+		if (IS_ERR(trans)) {
-+			err = PTR_ERR(trans);
-+			trans = NULL;
-+			btrfs_err(fs_info,
-+				  "fail to start transaction for status update: %d",
-+				  err);
-+		}
-+	} else {
- 		trans = NULL;
--		btrfs_err(fs_info,
--			  "fail to start transaction for status update: %d",
--			  err);
- 	}
- 
- 	mutex_lock(&fs_info->qgroup_rescan_lock);
++	{MEI_PCI_DEVICE(MEI_DEV_ID_MTL_M, MEI_ME_PCH15_CFG)},
++
+ 	/* required last entry */
+ 	{0, }
+ };
 
 
