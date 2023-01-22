@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98D47E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:11:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE97C433EF;
-	Sun, 22 Jan 2023 15:11:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0497E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D002DC433EF;
+	Sun, 22 Jan 2023 15:12:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400319;
-	bh=LRp9/HvJhqNRzsDfyAIVIb42UnLc2RXTLgWhD5XWebo=;
+	s=korg; t=1674400322;
+	bh=JY7RlvUuSBa7vXxNRF4kS44FVonT+skifB8K5hRcP+w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cNpbVKloEz+o3LRx+Lk36dTKiZye32JeQwH0pbs+HWg7U1+ya0zn2MrjPHBPlDkJx
-	 P1tSh6XuF0qo52STAJMJgGD+NkeUUb6YPDEX/8xYMoGdf7X1yR56f9lAqxmpV48SE6
-	 ZemoTAHF5yNquBMzLw0wPttbkUfF1wPoLav7E8+g=
+	b=DfXfi0UolwhMRW+YLeAfeQuVynQkFq9xX2ll+ugjfne2WPX7MJ1NpghlT5dFH1dlR
+	 YjuQE5Zv2RZ3GqYxK/yOT9SE+X70fSdiIrU70DiokNtxhay6zl2/93RLPoEHhdNDuM
+	 amgPGjGxYNQzwBCPFeBxCuFBeS2sbJELp2RaK8dA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Homin Rhee <hominlab@gmail.com>,
+	Dylan Yudaken <dylany@fb.com>,
+	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 30/98] io_uring: ensure that cached task references are always put on exit
-Date: Sun, 22 Jan 2023 16:03:46 +0100
-Message-Id: <20230122150230.744584618@linuxfoundation.org>
+Subject: [PATCH 5.10 31/98] io_uring: remove duplicated calls to io_kiocb_ppos
+Date: Sun, 22 Jan 2023 16:03:47 +0100
+Message-Id: <20230122150230.799354842@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -35,53 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Dylan Yudaken <dylany@fb.com>
 
-commit e775f93f2ab976a2cdb4a7b53063cbe890904f73 upstream.
+commit af9c45ecebaf1b428306f41421f4bcffe439f735 upstream.
 
-io_uring caches task references to avoid doing atomics for each of them
-per request. If a request is put from the same task that allocated it,
-then we can maintain a per-ctx cache of them. This obviously relies
-on io_uring always pruning caches in a reliable way, and there's
-currently a case off io_uring fd release where we can miss that.
+io_kiocb_ppos is called in both branches, and it seems that the compiler
+does not fuse this. Fusing removes a few bytes from loop_rw_iter.
 
-One example is a ring setup with IOPOLL, which relies on the task
-polling for completions, which will free them. However, if such a task
-submits a request and then exits or closes the ring without reaping
-the completion, then ring release will reap and put. If release happens
-from that very same task, the completed request task refs will get
-put back into the cache pool. This is problematic, as we're now beyond
-the point of pruning caches.
+Before:
+$ nm -S fs/io_uring.o | grep loop_rw_iter
+0000000000002430 0000000000000124 t loop_rw_iter
 
-Manually drop these caches after doing an IOPOLL reap. This releases
-references from the current task, which is enough. If another task
-happens to be doing the release, then the caching will not be
-triggered and there's no issue.
+After:
+$ nm -S fs/io_uring.o | grep loop_rw_iter
+0000000000002430 000000000000010d t loop_rw_iter
 
-Cc: stable@vger.kernel.org
-Fixes: e98e49b2bbf7 ("io_uring: extend task put optimisations")
-Reported-by: Homin Rhee <hominlab@gmail.com>
+Signed-off-by: Dylan Yudaken <dylany@fb.com>
+Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 4 ++++
- 1 file changed, 4 insertions(+)
+ io_uring/io_uring.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index e8852d56b1ec..f8a0d228d799 100644
+index f8a0d228d799..d8926475cd88 100644
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -9513,6 +9513,10 @@ static void io_ring_ctx_wait_and_kill(struct io_ring_ctx *ctx)
- 	/* if we failed setting up the ctx, we might not have any rings */
- 	io_iopoll_try_reap_events(ctx);
+@@ -3300,6 +3300,7 @@ static ssize_t loop_rw_iter(int rw, struct io_kiocb *req, struct iov_iter *iter)
+ 	struct kiocb *kiocb = &req->rw.kiocb;
+ 	struct file *file = req->file;
+ 	ssize_t ret = 0;
++	loff_t *ppos;
  
-+	/* drop cached put refs after potentially doing completions */
-+	if (current->io_uring)
-+		io_uring_drop_tctx_refs(current);
-+
- 	INIT_WORK(&ctx->exit_work, io_ring_exit_work);
  	/*
- 	 * Use system_unbound_wq to avoid spawning tons of event kworkers
+ 	 * Don't support polled IO through this interface, and we can't
+@@ -3311,6 +3312,8 @@ static ssize_t loop_rw_iter(int rw, struct io_kiocb *req, struct iov_iter *iter)
+ 	if (kiocb->ki_flags & IOCB_NOWAIT)
+ 		return -EAGAIN;
+ 
++	ppos = io_kiocb_ppos(kiocb);
++
+ 	while (iov_iter_count(iter)) {
+ 		struct iovec iovec;
+ 		ssize_t nr;
+@@ -3324,10 +3327,10 @@ static ssize_t loop_rw_iter(int rw, struct io_kiocb *req, struct iov_iter *iter)
+ 
+ 		if (rw == READ) {
+ 			nr = file->f_op->read(file, iovec.iov_base,
+-					      iovec.iov_len, io_kiocb_ppos(kiocb));
++					      iovec.iov_len, ppos);
+ 		} else {
+ 			nr = file->f_op->write(file, iovec.iov_base,
+-					       iovec.iov_len, io_kiocb_ppos(kiocb));
++					       iovec.iov_len, ppos);
+ 		}
+ 
+ 		if (nr < 0) {
 -- 
 2.39.0
 
