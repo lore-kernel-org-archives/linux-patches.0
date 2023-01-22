@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB667E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:07:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD43DC433D2;
-	Sun, 22 Jan 2023 15:07:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F379B7E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:07:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51556C433EF;
+	Sun, 22 Jan 2023 15:07:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400048;
-	bh=te1nCUPu63PocwcPVugQ1cpMs4HS6EUQ059GbbOLVeQ=;
+	s=korg; t=1674400050;
+	bh=z7sd/zBcJPwnXK+tps+gw2fBUS2Mn+EYBsn6Pe2lun0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gv/zOg9+PIRjtVBdCMZgP2thGFAsdv6u4NF4mrWBZQGMyz7XUxOzyfOQtHrw4XIjv
-	 +tN30fV2T4NOToDsQGQRkLq3krIYUH5FhxruUtHmWTOK68jmIebZEI9Gkc9rnMFDQx
-	 /amP3+wpsHl11as1fc4Xf+XEdnjTxgol78zu7ztM=
+	b=n/yVDjBMMlXsrDPYcj2cquF+Y6fLhbyxyDsuQ/kOlFksiOC7hB9KLuq3t3m9xxH2n
+	 ix2+ODOH80VkkjEtc7a3ZNKHuGNafPtNTgRJmbBOg7Dv3bxeV9Ym2vn3nXnesPRVe8
+	 gzRYC/TgY2kv+j9GSEZilIravS5Z+pImnrJD8ZTM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 4.19 20/37] comedi: adv_pci1760: Fix PWM instruction handling
-Date: Sun, 22 Jan 2023 16:04:17 +0100
-Message-Id: <20230122150220.403258363@linuxfoundation.org>
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 03/37] RDMA/srp: Move large values to a new enum for gcc13
+Date: Sun, 22 Jan 2023 16:04:00 +0100
+Message-Id: <20230122150219.711991340@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150219.557984692@linuxfoundation.org>
 References: <20230122150219.557984692@linuxfoundation.org>
@@ -33,48 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-commit 2efb6edd52dc50273f5e68ad863dd1b1fb2f2d1c upstream.
+[ Upstream commit 56c5dab20a6391604df9521f812c01d1e3fe1bd0 ]
 
-(Actually, this is fixing the "Read the Current Status" command sent to
-the device's outgoing mailbox, but it is only currently used for the PWM
-instructions.)
+Since gcc13, each member of an enum has the same type as the enum [1]. And
+that is inherited from its members. Provided these two:
+  SRP_TAG_NO_REQ        = ~0U,
+  SRP_TAG_TSK_MGMT	= 1U << 31
+all other members are unsigned ints.
 
-The PCI-1760 is operated mostly by sending commands to a set of Outgoing
-Mailbox registers, waiting for the command to complete, and reading the
-result from the Incoming Mailbox registers.  One of these commands is
-the "Read the Current Status" command.  The number of this command is
-0x07 (see the User's Manual for the PCI-1760 at
-<https://advdownload.advantech.com/productfile/Downloadfile2/1-11P6653/PCI-1760.pdf>.
-The `PCI1760_CMD_GET_STATUS` macro defined in the driver should expand
-to this command number 0x07, but unfortunately it currently expands to
-0x03.  (Command number 0x03 is not defined in the User's Manual.)
-Correct the definition of the `PCI1760_CMD_GET_STATUS` macro to fix it.
+Esp. with SRP_MAX_SGE and SRP_TSK_MGMT_SQ_SIZE and their use in min(),
+this results in the following warnings:
+  include/linux/minmax.h:20:35: error: comparison of distinct pointer types lacks a cast
+  drivers/infiniband/ulp/srp/ib_srp.c:563:42: note: in expansion of macro 'min'
 
-This is used by all the PWM subdevice related instructions handled by
-`pci1760_pwm_insn_config()` which are probably all broken.  The effect
-of sending the undefined command number 0x03 is not known.
+  include/linux/minmax.h:20:35: error: comparison of distinct pointer types lacks a cast
+  drivers/infiniband/ulp/srp/ib_srp.c:2369:27: note: in expansion of macro 'min'
 
-Fixes: 14b93bb6bbf0 ("staging: comedi: adv_pci_dio: separate out PCI-1760 support")
-Cc: <stable@vger.kernel.org> # v4.5+
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20230103143754.17564-1-abbotti@mev.co.uk
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+So move the large values away to a separate enum, so that they don't
+affect other members.
+
+[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=36113
+
+Link: https://lore.kernel.org/r/20221212120411.13750-1-jirislaby@kernel.org
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/staging/comedi/drivers/adv_pci1760.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/ulp/srp/ib_srp.h | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/staging/comedi/drivers/adv_pci1760.c
-+++ b/drivers/staging/comedi/drivers/adv_pci1760.c
-@@ -59,7 +59,7 @@
- #define PCI1760_CMD_CLR_IMB2		0x00	/* Clears IMB2 */
- #define PCI1760_CMD_SET_DO		0x01	/* Set output state */
- #define PCI1760_CMD_GET_DO		0x02	/* Read output status */
--#define PCI1760_CMD_GET_STATUS		0x03	/* Read current status */
-+#define PCI1760_CMD_GET_STATUS		0x07	/* Read current status */
- #define PCI1760_CMD_GET_FW_VER		0x0e	/* Read firmware version */
- #define PCI1760_CMD_GET_HW_VER		0x0f	/* Read hardware version */
- #define PCI1760_CMD_SET_PWM_HI(x)	(0x10 + (x) * 2) /* Set "hi" period */
+diff --git a/drivers/infiniband/ulp/srp/ib_srp.h b/drivers/infiniband/ulp/srp/ib_srp.h
+index a2706086b9c7..10cb50b90d7f 100644
+--- a/drivers/infiniband/ulp/srp/ib_srp.h
++++ b/drivers/infiniband/ulp/srp/ib_srp.h
+@@ -63,12 +63,14 @@ enum {
+ 	SRP_DEFAULT_CMD_SQ_SIZE = SRP_DEFAULT_QUEUE_SIZE - SRP_RSP_SQ_SIZE -
+ 				  SRP_TSK_MGMT_SQ_SIZE,
+ 
+-	SRP_TAG_NO_REQ		= ~0U,
+-	SRP_TAG_TSK_MGMT	= 1U << 31,
+-
+ 	SRP_MAX_PAGES_PER_MR	= 512,
+ };
+ 
++enum {
++	SRP_TAG_NO_REQ		= ~0U,
++	SRP_TAG_TSK_MGMT	= BIT(31),
++};
++
+ enum srp_target_state {
+ 	SRP_TARGET_SCANNING,
+ 	SRP_TARGET_LIVE,
+-- 
+2.35.1
+
 
 
