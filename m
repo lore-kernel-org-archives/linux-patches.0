@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07537E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:10:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 411D3C433D2;
-	Sun, 22 Jan 2023 15:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 822042590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:11:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCC9AC4339B;
+	Sun, 22 Jan 2023 15:11:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400258;
-	bh=arP/9gihXpo5gmdhMOHxh359EdvmMQ7uXXaUS6JZqHY=;
+	s=korg; t=1674400261;
+	bh=UGCmD1afNBFw7cwDmRI8c+AoM6prAfAD8ZHz4n7gQbY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jmXVtcluCRSeTvSSgBUOLIeKhccCZFua+mVEyzp9zMARaJKvw/R7Hix/MmllgJjuq
-	 xRUTvL1GQBLPv++5lCE352HJ6/ErrxkMi4etISzJEiT8LNlKSjsoUXc3eEQ4e7vDmp
-	 x2G48sdsAF+NN4RIOliAvcAuegK36oq/KUEPRHoY=
+	b=PFDG2V1FfTJHFLS0wWlzDs+pSpZTBS0wTE70PCz9zmBfmiUWa4h8GxrJ73csx3mHe
+	 BU6SqHNkLrXSRU6+Cr7kGqxMXTSp9vJbgB9JVPmcs64JFV+SSt/+ybSTiQHmWVVOT5
+	 vDQiSH6uZ8Cm/dbQw9OdoAyl8PEWPDKGjLyaBcw0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
-	Joshua Ashton <joshua@froggi.es>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.4 49/55] drm/amd/display: Fix COLOR_SPACE_YCBCR2020_TYPE matrix
-Date: Sun, 22 Jan 2023 16:04:36 +0100
-Message-Id: <20230122150224.199791148@linuxfoundation.org>
+	Felipe Balbi <balbi@kernel.org>,
+	Lorenzo Colitti <lorenzo@google.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 5.4 40/55] usb: gadget: f_ncm: fix potential NULL ptr deref in ncm_bitrate()
+Date: Sun, 22 Jan 2023 16:04:27 +0100
+Message-Id: <20230122150223.832040336@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150222.210885219@linuxfoundation.org>
 References: <20230122150222.210885219@linuxfoundation.org>
@@ -35,43 +37,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joshua Ashton <joshua@froggi.es>
+From: Maciej Żenczykowski <maze@google.com>
 
-commit 973a9c810c785ac270a6d50d8cf862b0c1643a10 upstream.
+commit c6ec929595c7443250b2a4faea988c62019d5cd2 upstream.
 
-The YCC conversion matrix for RGB -> COLOR_SPACE_YCBCR2020_TYPE is
-missing the values for the fourth column of the matrix.
+In Google internal bug 265639009 we've received an (as yet) unreproducible
+crash report from an aarch64 GKI 5.10.149-android13 running device.
 
-The fourth column of the matrix is essentially just a value that is
-added given that the color is 3 components in size.
-These values are needed to bias the chroma from the [-1, 1] -> [0, 1]
-range.
+AFAICT the source code is at:
+  https://android.googlesource.com/kernel/common/+/refs/tags/ASB-2022-12-05_13-5.10
 
-This fixes color being very green when using Gamescope HDR on HDMI
-output which prefers YCC 4:4:4.
+The call stack is:
+  ncm_close() -> ncm_notify() -> ncm_do_notify()
+with the crash at:
+  ncm_do_notify+0x98/0x270
+Code: 79000d0b b9000a6c f940012a f9400269 (b9405d4b)
 
-Fixes: 40df2f809e8f ("drm/amd/display: color space ycbcr709 support")
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Signed-off-by: Joshua Ashton <joshua@froggi.es>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Which I believe disassembles to (I don't know ARM assembly, but it looks sane enough to me...):
+
+  // halfword (16-bit) store presumably to event->wLength (at offset 6 of struct usb_cdc_notification)
+  0B 0D 00 79    strh w11, [x8, #6]
+
+  // word (32-bit) store presumably to req->Length (at offset 8 of struct usb_request)
+  6C 0A 00 B9    str  w12, [x19, #8]
+
+  // x10 (NULL) was read here from offset 0 of valid pointer x9
+  // IMHO we're reading 'cdev->gadget' and getting NULL
+  // gadget is indeed at offset 0 of struct usb_composite_dev
+  2A 01 40 F9    ldr  x10, [x9]
+
+  // loading req->buf pointer, which is at offset 0 of struct usb_request
+  69 02 40 F9    ldr  x9, [x19]
+
+  // x10 is null, crash, appears to be attempt to read cdev->gadget->max_speed
+  4B 5D 40 B9    ldr  w11, [x10, #0x5c]
+
+which seems to line up with ncm_do_notify() case NCM_NOTIFY_SPEED code fragment:
+
+  event->wLength = cpu_to_le16(8);
+  req->length = NCM_STATUS_BYTECOUNT;
+
+  /* SPEED_CHANGE data is up/down speeds in bits/sec */
+  data = req->buf + sizeof *event;
+  data[0] = cpu_to_le32(ncm_bitrate(cdev->gadget));
+
+My analysis of registers and NULL ptr deref crash offset
+  (Unable to handle kernel NULL pointer dereference at virtual address 000000000000005c)
+heavily suggests that the crash is due to 'cdev->gadget' being NULL when executing:
+  data[0] = cpu_to_le32(ncm_bitrate(cdev->gadget));
+which calls:
+  ncm_bitrate(NULL)
+which then calls:
+  gadget_is_superspeed(NULL)
+which reads
+  ((struct usb_gadget *)NULL)->max_speed
+and hits a panic.
+
+AFAICT, if I'm counting right, the offset of max_speed is indeed 0x5C.
+(remember there's a GKI KABI reservation of 16 bytes in struct work_struct)
+
+It's not at all clear to me how this is all supposed to work...
+but returning 0 seems much better than panic-ing...
+
+Cc: Felipe Balbi <balbi@kernel.org>
+Cc: Lorenzo Colitti <lorenzo@google.com>
+Cc: Carlos Llamas <cmllamas@google.com>
 Cc: stable@vger.kernel.org
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230117131839.1138208-1-maze@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/f_ncm.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
-@@ -92,8 +92,8 @@ static const struct out_csc_color_matrix
- 		{ 0xE00, 0xF349, 0xFEB7, 0x1000, 0x6CE, 0x16E3,
- 				0x24F, 0x200, 0xFCCB, 0xF535, 0xE00, 0x1000} },
- 	{ COLOR_SPACE_YCBCR2020_TYPE,
--		{ 0x1000, 0xF149, 0xFEB7, 0x0000, 0x0868, 0x15B2,
--				0x01E6, 0x0000, 0xFB88, 0xF478, 0x1000, 0x0000} },
-+		{ 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868, 0x15B2,
-+				0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} },
- 	{ COLOR_SPACE_YCBCR709_BLACK_TYPE,
- 		{ 0x0000, 0x0000, 0x0000, 0x1000, 0x0000, 0x0000,
- 				0x0000, 0x0200, 0x0000, 0x0000, 0x0000, 0x1000} },
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -85,7 +85,9 @@ static inline struct f_ncm *func_to_ncm(
+ /* peak (theoretical) bulk transfer rate in bits-per-second */
+ static inline unsigned ncm_bitrate(struct usb_gadget *g)
+ {
+-	if (gadget_is_superspeed(g) && g->speed >= USB_SPEED_SUPER_PLUS)
++	if (!g)
++		return 0;
++	else if (gadget_is_superspeed(g) && g->speed >= USB_SPEED_SUPER_PLUS)
+ 		return 4250000000U;
+ 	else if (gadget_is_superspeed(g) && g->speed == USB_SPEED_SUPER)
+ 		return 3750000000U;
 
 
