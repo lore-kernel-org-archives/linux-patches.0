@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37BE2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:24:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AD8FC433D2;
-	Sun, 22 Jan 2023 15:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DC22590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:24:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0973C433EF;
+	Sun, 22 Jan 2023 15:24:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401070;
-	bh=p9I1Wbtf3yzRNUEkZUL0Kkltv7APwr7ywL+PJ8Conng=;
+	s=korg; t=1674401073;
+	bh=KQ5GQIL1DC1sLisJy6HmV8sa7ZEdN7UgQ/O9M1tRQ6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=E7IWq+Pv3cAhapWpsTHF1IlIdq8h6sYJOJVdcOhlnTLoNd1yQpC72n1GEtzo22Yo9
-	 HFL34+yO/HrNQLW+ZkAMAi6VksDDphXw/Aa+ns5hWIUeRBYc6f/gJT0x2ZNX7ODyTC
-	 ZLPtt+3MPKmCY+rz2XT06LMO8vbGmPKWhvPWOiJ0=
+	b=HoS+LPbjSDxSImCZe6CaKJ6EZGjyMdpUMV0weu/P2aAhFGk94+KcihMiZaybMKkYI
+	 HsLUy8Ec2yL2tgtBQWycuxYKF/PbOCwWyB3ObPxmTiQ2PP5S/TcoHusD//wGLVGSgV
+	 91GBk17rhSZnlQTlg+TYaT47qJtJ5RM/6GJbz3fY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Flavio Suligoi <f.suligoi@asem.it>,
 	stable <stable@kernel.org>,
-	Ola Jeppsson <ola@snap.com>,
-	Abel Vesa <abel.vesa@linaro.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.1 070/193] misc: fastrpc: Fix use-after-free race condition for maps
-Date: Sun, 22 Jan 2023 16:03:19 +0100
-Message-Id: <20230122150249.550849949@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.1 071/193] usb: core: hub: disable autosuspend for TI TUSB8041
+Date: Sun, 22 Jan 2023 16:03:20 +0100
+Message-Id: <20230122150249.595102311@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -36,61 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ola Jeppsson <ola@snap.com>
+From: Flavio Suligoi <f.suligoi@asem.it>
 
-commit 96b328d119eca7563c1edcc4e1039a62e6370ecb upstream.
+commit 7171b0e261b17de96490adf053b8bb4b00061bcf upstream.
 
-It is possible that in between calling fastrpc_map_get() until
-map->fl->lock is taken in fastrpc_free_map(), another thread can call
-fastrpc_map_lookup() and get a reference to a map that is about to be
-deleted.
+The Texas Instruments TUSB8041 has an autosuspend problem at high
+temperature.
 
-Rewrite fastrpc_map_get() to only increase the reference count of a map
-if it's non-zero. Propagate this to callers so they can know if a map is
-about to be deleted.
+If there is not USB traffic, after a couple of ms, the device enters in
+autosuspend mode. In this condition the external clock stops working, to
+save energy. When the USB activity turns on, ther hub exits the
+autosuspend state, the clock starts running again and all works fine.
 
-Fixes this warning:
-refcount_t: addition on 0; use-after-free.
-WARNING: CPU: 5 PID: 10100 at lib/refcount.c:25 refcount_warn_saturate
-...
-Call trace:
- refcount_warn_saturate
- [fastrpc_map_get inlined]
- [fastrpc_map_lookup inlined]
- fastrpc_map_create
- fastrpc_internal_invoke
- fastrpc_device_ioctl
- __arm64_sys_ioctl
- invoke_syscall
+At ambient temperature all works correctly, but at high temperature,
+when the USB activity turns on, the external clock doesn't restart and
+the hub disappears from the USB bus.
 
-Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
+Disabling the autosuspend mode for this hub solves the issue.
+
+Signed-off-by: Flavio Suligoi <f.suligoi@asem.it>
 Cc: stable <stable@kernel.org>
-Signed-off-by: Ola Jeppsson <ola@snap.com>
-Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20221124174941.418450-4-srinivas.kandagatla@linaro.org
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20221219124759.3207032-1-f.suligoi@asem.it
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |    8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/usb/core/hub.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -332,10 +332,12 @@ static void fastrpc_map_put(struct fastr
- 		kref_put(&map->refcount, fastrpc_free_map);
- }
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -44,6 +44,9 @@
+ #define USB_PRODUCT_USB5534B			0x5534
+ #define USB_VENDOR_CYPRESS			0x04b4
+ #define USB_PRODUCT_CY7C65632			0x6570
++#define USB_VENDOR_TEXAS_INSTRUMENTS		0x0451
++#define USB_PRODUCT_TUSB8041_USB3		0x8140
++#define USB_PRODUCT_TUSB8041_USB2		0x8142
+ #define HUB_QUIRK_CHECK_PORT_AUTOSUSPEND	0x01
+ #define HUB_QUIRK_DISABLE_AUTOSUSPEND		0x02
  
--static void fastrpc_map_get(struct fastrpc_map *map)
-+static int fastrpc_map_get(struct fastrpc_map *map)
- {
--	if (map)
--		kref_get(&map->refcount);
-+	if (!map)
-+		return -ENOENT;
-+
-+	return kref_get_unless_zero(&map->refcount) ? 0 : -ENOENT;
- }
- 
- 
+@@ -5798,6 +5801,16 @@ static const struct usb_device_id hub_id
+       .idVendor = USB_VENDOR_GENESYS_LOGIC,
+       .bInterfaceClass = USB_CLASS_HUB,
+       .driver_info = HUB_QUIRK_CHECK_PORT_AUTOSUSPEND},
++    { .match_flags = USB_DEVICE_ID_MATCH_VENDOR
++			| USB_DEVICE_ID_MATCH_PRODUCT,
++      .idVendor = USB_VENDOR_TEXAS_INSTRUMENTS,
++      .idProduct = USB_PRODUCT_TUSB8041_USB2,
++      .driver_info = HUB_QUIRK_DISABLE_AUTOSUSPEND},
++    { .match_flags = USB_DEVICE_ID_MATCH_VENDOR
++			| USB_DEVICE_ID_MATCH_PRODUCT,
++      .idVendor = USB_VENDOR_TEXAS_INSTRUMENTS,
++      .idProduct = USB_PRODUCT_TUSB8041_USB3,
++      .driver_info = HUB_QUIRK_DISABLE_AUTOSUSPEND},
+     { .match_flags = USB_DEVICE_ID_MATCH_DEV_CLASS,
+       .bDeviceClass = USB_CLASS_HUB},
+     { .match_flags = USB_DEVICE_ID_MATCH_INT_CLASS,
 
 
