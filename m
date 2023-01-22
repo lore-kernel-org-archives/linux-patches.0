@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22FA32590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:22:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9D4C4339B;
-	Sun, 22 Jan 2023 15:22:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC3C2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:22:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6A0C433D2;
+	Sun, 22 Jan 2023 15:22:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400942;
-	bh=2/VxAlbDBkwroZULXPCKWS/TCjOshSK7oQu0RH2N018=;
+	s=korg; t=1674400944;
+	bh=5vSivSHnBolDV0CgLtjfNu+TYQnqQIgFnPIWLKEGrlI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CXvD/raGVtKGrM58HWdq2hwjv+g2SsIi9SuxetzUX4RgMOFP/7zXaWtE8pq8MWf5C
-	 gRyNoAd9vhv+BpC1jjbGcRZvwUy2iD0UE5AHalGqbOhnjQ3JFWxj0sfvWlRcaAayV4
-	 aCEIpiOE15OXWUZJainVmc3ZUCovP2MHtuwI6lfQ=
+	b=u529/aN+edmrnx8YBhe6RFnV6Rtaaq/vgaTnzq/j/CS6H5pJFq2sLHFL4uPwNFM0T
+	 DvBLFm+AOq9VBdloIehfz2UrlVXdZquFC4JFhqpvAZC/QhjFqo54acsSVxVxrYT2fb
+	 c5AsSLeCjRmeissMXqPip7v6339bMSqL57odXmCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.de>,
-	Ricardo Ribalda <ribalda@chromium.org>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 6.1 050/193] xhci-pci: set the dma max_seg_size
-Date: Sun, 22 Jan 2023 16:02:59 +0100
-Message-Id: <20230122150248.640386551@linuxfoundation.org>
+	Felix Fietkau <nbd@nbd.name>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 033/193] wifi: mac80211: fix MLO + AP_VLAN check
+Date: Sun, 22 Jan 2023 16:02:42 +0100
+Message-Id: <20230122150247.923156118@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -35,35 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Ribalda <ribalda@chromium.org>
+From: Felix Fietkau <nbd@nbd.name>
 
-commit 93915a4170e9defd56a767a18e6c4076f3d18609 upstream.
+commit f216033d770f7ca0eda491fe01a9f02e7af59576 upstream.
 
-Allow devices to have dma operations beyond 64K, and avoid warnings such
-as:
+Instead of preventing adding AP_VLAN to MLO enabled APs, this check was
+preventing adding more than one 4-addr AP_VLAN regardless of the MLO status.
+Fix this by adding missing extra checks.
 
-xhci_hcd 0000:00:14.0: mapping sg segment longer than device claims to support [len=98304] [max=65536]
-
+Fixes: ae960ee90bb1 ("wifi: mac80211: prevent VLANs on MLDs")
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
+Link: https://lore.kernel.org/r/20221214130326.37756-1-nbd@nbd.name
 Cc: stable@vger.kernel.org
-Cc: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230116142216.1141605-2-mathias.nyman@linux.intel.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-pci.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/mac80211/iface.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/usb/host/xhci-pci.c
-+++ b/drivers/usb/host/xhci-pci.c
-@@ -455,6 +455,8 @@ static int xhci_pci_probe(struct pci_dev
- 	if (xhci->quirks & XHCI_DEFAULT_PM_RUNTIME_ALLOW)
- 		pm_runtime_allow(&dev->dev);
+diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
+index d49a5906a943..e20c3fe9a0b1 100644
+--- a/net/mac80211/iface.c
++++ b/net/mac80211/iface.c
+@@ -364,7 +364,9 @@ static int ieee80211_check_concurrent_iface(struct ieee80211_sub_if_data *sdata,
  
-+	dma_set_max_seg_size(&dev->dev, UINT_MAX);
-+
- 	return 0;
+ 			/* No support for VLAN with MLO yet */
+ 			if (iftype == NL80211_IFTYPE_AP_VLAN &&
+-			    nsdata->wdev.use_4addr)
++			    sdata->wdev.use_4addr &&
++			    nsdata->vif.type == NL80211_IFTYPE_AP &&
++			    nsdata->vif.valid_links)
+ 				return -EOPNOTSUPP;
  
- put_usb3_hcd:
+ 			/*
+-- 
+2.39.1
+
 
 
