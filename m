@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F379B7E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:07:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51556C433EF;
-	Sun, 22 Jan 2023 15:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27A13258E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:07:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5FB3C433A1;
+	Sun, 22 Jan 2023 15:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400050;
-	bh=z7sd/zBcJPwnXK+tps+gw2fBUS2Mn+EYBsn6Pe2lun0=;
+	s=korg; t=1674400056;
+	bh=f2u83EsvPg42baYLAzi0Gz24LpEYaVpGufCX1odiarU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n/yVDjBMMlXsrDPYcj2cquF+Y6fLhbyxyDsuQ/kOlFksiOC7hB9KLuq3t3m9xxH2n
-	 ix2+ODOH80VkkjEtc7a3ZNKHuGNafPtNTgRJmbBOg7Dv3bxeV9Ym2vn3nXnesPRVe8
-	 gzRYC/TgY2kv+j9GSEZilIravS5Z+pImnrJD8ZTM=
+	b=umwbLwUc/o0zIvbEBFWhcKV7XOnRfTWUktInY6svwyTaTBd+7/Ba5fYlX8F1be0Wv
+	 1+gxLWIf8ozmXyPtZ+kyHC7ijgVmdhlwdkQZyICx3qm1KlQTPKZHvpg6yOcjRcD5P1
+	 sb4Jj3kZG11p5MAfFQaOT0XZEnAh7tl+FYc/i5GY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
-	Bart Van Assche <bvanassche@acm.org>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 03/37] RDMA/srp: Move large values to a new enum for gcc13
-Date: Sun, 22 Jan 2023 16:04:00 +0100
-Message-Id: <20230122150219.711991340@linuxfoundation.org>
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 4.19 22/37] cifs: do not include page data when checking signature
+Date: Sun, 22 Jan 2023 16:04:19 +0100
+Message-Id: <20230122150220.477296605@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150219.557984692@linuxfoundation.org>
 References: <20230122150219.557984692@linuxfoundation.org>
@@ -36,62 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+From: Enzo Matsumiya <ematsumiya@suse.de>
 
-[ Upstream commit 56c5dab20a6391604df9521f812c01d1e3fe1bd0 ]
+commit 30b2b2196d6e4cc24cbec633535a2404f258ce69 upstream.
 
-Since gcc13, each member of an enum has the same type as the enum [1]. And
-that is inherited from its members. Provided these two:
-  SRP_TAG_NO_REQ        = ~0U,
-  SRP_TAG_TSK_MGMT	= 1U << 31
-all other members are unsigned ints.
+On async reads, page data is allocated before sending.  When the
+response is received but it has no data to fill (e.g.
+STATUS_END_OF_FILE), __calc_signature() will still include the pages in
+its computation, leading to an invalid signature check.
 
-Esp. with SRP_MAX_SGE and SRP_TSK_MGMT_SQ_SIZE and their use in min(),
-this results in the following warnings:
-  include/linux/minmax.h:20:35: error: comparison of distinct pointer types lacks a cast
-  drivers/infiniband/ulp/srp/ib_srp.c:563:42: note: in expansion of macro 'min'
+This patch fixes this by not setting the async read smb_rqst page data
+(zeroed by default) if its got_bytes is 0.
 
-  include/linux/minmax.h:20:35: error: comparison of distinct pointer types lacks a cast
-  drivers/infiniband/ulp/srp/ib_srp.c:2369:27: note: in expansion of macro 'min'
+This can be reproduced/verified with xfstests generic/465.
 
-So move the large values away to a separate enum, so that they don't
-affect other members.
-
-[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=36113
-
-Link: https://lore.kernel.org/r/20221212120411.13750-1-jirislaby@kernel.org
-Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
-Reviewed-by: Bart Van Assche <bvanassche@acm.org>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/ulp/srp/ib_srp.h | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ fs/cifs/smb2pdu.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/infiniband/ulp/srp/ib_srp.h b/drivers/infiniband/ulp/srp/ib_srp.h
-index a2706086b9c7..10cb50b90d7f 100644
---- a/drivers/infiniband/ulp/srp/ib_srp.h
-+++ b/drivers/infiniband/ulp/srp/ib_srp.h
-@@ -63,12 +63,14 @@ enum {
- 	SRP_DEFAULT_CMD_SQ_SIZE = SRP_DEFAULT_QUEUE_SIZE - SRP_RSP_SQ_SIZE -
- 				  SRP_TSK_MGMT_SQ_SIZE,
- 
--	SRP_TAG_NO_REQ		= ~0U,
--	SRP_TAG_TSK_MGMT	= 1U << 31,
--
- 	SRP_MAX_PAGES_PER_MR	= 512,
- };
- 
-+enum {
-+	SRP_TAG_NO_REQ		= ~0U,
-+	SRP_TAG_TSK_MGMT	= BIT(31),
-+};
+--- a/fs/cifs/smb2pdu.c
++++ b/fs/cifs/smb2pdu.c
+@@ -3152,12 +3152,15 @@ smb2_readv_callback(struct mid_q_entry *
+ 				(struct smb2_sync_hdr *)rdata->iov[0].iov_base;
+ 	unsigned int credits_received = 0;
+ 	struct smb_rqst rqst = { .rq_iov = &rdata->iov[1],
+-				 .rq_nvec = 1,
+-				 .rq_pages = rdata->pages,
+-				 .rq_offset = rdata->page_offset,
+-				 .rq_npages = rdata->nr_pages,
+-				 .rq_pagesz = rdata->pagesz,
+-				 .rq_tailsz = rdata->tailsz };
++				 .rq_nvec = 1, };
 +
- enum srp_target_state {
- 	SRP_TARGET_SCANNING,
- 	SRP_TARGET_LIVE,
--- 
-2.35.1
-
++	if (rdata->got_bytes) {
++		rqst.rq_pages = rdata->pages;
++		rqst.rq_offset = rdata->page_offset;
++		rqst.rq_npages = rdata->nr_pages;
++		rqst.rq_pagesz = rdata->pagesz;
++		rqst.rq_tailsz = rdata->tailsz;
++	}
+ 
+ 	cifs_dbg(FYI, "%s: mid=%llu state=%d result=%d bytes=%u\n",
+ 		 __func__, mid->mid, mid->mid_state, rdata->result,
 
 
