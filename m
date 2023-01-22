@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A2B72590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2B6DC433D2;
-	Sun, 22 Jan 2023 15:16:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5FD32590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A873C433EF;
+	Sun, 22 Jan 2023 15:16:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400598;
-	bh=qhO/p2w/IKmeKVRl9AlShYHUMWWgR/lfX3+QdtrbZvo=;
+	s=korg; t=1674400600;
+	bh=LgQKBohOj4eszVgIDhbm0EHRjX1ZQY+sa5bLbtFP/nY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NR+6pHmO8N0e4kBN5vxgLy6vYjBiYr2E5d7gI89WUoruEKoulJB+6VMuikTK/KpZO
-	 b1w3JFPfH75dFwdQ7ViDCdOQnWbjtlqw2TrRWMfOAa8GiH6TPbVlDTM1kFXEX4Fo+I
-	 3WvPVOz1KL7mBc/gJi0VP/OKxRbBMCRquN/p3I+Y=
+	b=htH2qJ50+k7m1ci4KR4E6hIHy96f4xAfp++8qShVSA2ZiLI+n2Lwu0ztvM69JKPNs
+	 DBnV4l74lDmMMWsnLtismGI++htyDXZp9UPJkHMDlkaRa4+i98LPg+NO3Nz+ACVsME
+	 8Rsr2s9s8UDhXUrhXRWhmVkrLZt37qZmTmQRrPqE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chunhao Lin <hau@realtek.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	"Jiri Slaby (SUSE)" <jirislaby@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 008/117] r8169: move rtl_wol_enable_rx() and rtl_prepare_power_down()
-Date: Sun, 22 Jan 2023 16:03:18 +0100
-Message-Id: <20230122150233.077980155@linuxfoundation.org>
+Subject: [PATCH 5.15 009/117] RDMA/srp: Move large values to a new enum for gcc13
+Date: Sun, 22 Jan 2023 16:03:19 +0100
+Message-Id: <20230122150233.109430031@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -36,83 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chunhao Lin <hau@realtek.com>
+From: Jiri Slaby (SUSE) <jirislaby@kernel.org>
 
-[ Upstream commit ad425666a1f05d9b215a84cf010c3789b2ea8206 ]
+[ Upstream commit 56c5dab20a6391604df9521f812c01d1e3fe1bd0 ]
 
-There is no functional change. Moving these two functions for following
-patch "r8169: fix dmar pte write access is not set error".
+Since gcc13, each member of an enum has the same type as the enum [1]. And
+that is inherited from its members. Provided these two:
+  SRP_TAG_NO_REQ        = ~0U,
+  SRP_TAG_TSK_MGMT	= 1U << 31
+all other members are unsigned ints.
 
-Signed-off-by: Chunhao Lin <hau@realtek.com>
-Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Esp. with SRP_MAX_SGE and SRP_TSK_MGMT_SQ_SIZE and their use in min(),
+this results in the following warnings:
+  include/linux/minmax.h:20:35: error: comparison of distinct pointer types lacks a cast
+  drivers/infiniband/ulp/srp/ib_srp.c:563:42: note: in expansion of macro 'min'
+
+  include/linux/minmax.h:20:35: error: comparison of distinct pointer types lacks a cast
+  drivers/infiniband/ulp/srp/ib_srp.c:2369:27: note: in expansion of macro 'min'
+
+So move the large values away to a separate enum, so that they don't
+affect other members.
+
+[1] https://gcc.gnu.org/bugzilla/show_bug.cgi?id=36113
+
+Link: https://lore.kernel.org/r/20221212120411.13750-1-jirislaby@kernel.org
+Signed-off-by: Jiri Slaby (SUSE) <jirislaby@kernel.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/realtek/r8169_main.c | 44 +++++++++++------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ drivers/infiniband/ulp/srp/ib_srp.h | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/realtek/r8169_main.c b/drivers/net/ethernet/realtek/r8169_main.c
-index 2af4c76bcf02..264bb3ec44a5 100644
---- a/drivers/net/ethernet/realtek/r8169_main.c
-+++ b/drivers/net/ethernet/realtek/r8169_main.c
-@@ -2251,28 +2251,6 @@ static int rtl_set_mac_address(struct net_device *dev, void *p)
- 	return 0;
- }
+diff --git a/drivers/infiniband/ulp/srp/ib_srp.h b/drivers/infiniband/ulp/srp/ib_srp.h
+index abccddeea1e3..152242e8f733 100644
+--- a/drivers/infiniband/ulp/srp/ib_srp.h
++++ b/drivers/infiniband/ulp/srp/ib_srp.h
+@@ -62,9 +62,6 @@ enum {
+ 	SRP_DEFAULT_CMD_SQ_SIZE = SRP_DEFAULT_QUEUE_SIZE - SRP_RSP_SQ_SIZE -
+ 				  SRP_TSK_MGMT_SQ_SIZE,
  
--static void rtl_wol_enable_rx(struct rtl8169_private *tp)
--{
--	if (tp->mac_version >= RTL_GIGA_MAC_VER_25)
--		RTL_W32(tp, RxConfig, RTL_R32(tp, RxConfig) |
--			AcceptBroadcast | AcceptMulticast | AcceptMyPhys);
--}
+-	SRP_TAG_NO_REQ		= ~0U,
+-	SRP_TAG_TSK_MGMT	= 1U << 31,
 -
--static void rtl_prepare_power_down(struct rtl8169_private *tp)
--{
--	if (tp->dash_type != RTL_DASH_NONE)
--		return;
--
--	if (tp->mac_version == RTL_GIGA_MAC_VER_32 ||
--	    tp->mac_version == RTL_GIGA_MAC_VER_33)
--		rtl_ephy_write(tp, 0x19, 0xff64);
--
--	if (device_may_wakeup(tp_to_dev(tp))) {
--		phy_speed_down(tp->phydev, false);
--		rtl_wol_enable_rx(tp);
--	}
--}
--
- static void rtl_init_rxcfg(struct rtl8169_private *tp)
- {
- 	switch (tp->mac_version) {
-@@ -2492,6 +2470,28 @@ static void rtl_enable_rxdvgate(struct rtl8169_private *tp)
- 	rtl_wait_txrx_fifo_empty(tp);
- }
+ 	SRP_MAX_PAGES_PER_MR	= 512,
  
-+static void rtl_wol_enable_rx(struct rtl8169_private *tp)
-+{
-+	if (tp->mac_version >= RTL_GIGA_MAC_VER_25)
-+		RTL_W32(tp, RxConfig, RTL_R32(tp, RxConfig) |
-+			AcceptBroadcast | AcceptMulticast | AcceptMyPhys);
-+}
+ 	SRP_MAX_ADD_CDB_LEN	= 16,
+@@ -79,6 +76,11 @@ enum {
+ 				  sizeof(struct srp_imm_buf),
+ };
+ 
++enum {
++	SRP_TAG_NO_REQ		= ~0U,
++	SRP_TAG_TSK_MGMT	= BIT(31),
++};
 +
-+static void rtl_prepare_power_down(struct rtl8169_private *tp)
-+{
-+	if (tp->dash_type != RTL_DASH_NONE)
-+		return;
-+
-+	if (tp->mac_version == RTL_GIGA_MAC_VER_32 ||
-+	    tp->mac_version == RTL_GIGA_MAC_VER_33)
-+		rtl_ephy_write(tp, 0x19, 0xff64);
-+
-+	if (device_may_wakeup(tp_to_dev(tp))) {
-+		phy_speed_down(tp->phydev, false);
-+		rtl_wol_enable_rx(tp);
-+	}
-+}
-+
- static void rtl_set_tx_config_registers(struct rtl8169_private *tp)
- {
- 	u32 val = TX_DMA_BURST << TxDMAShift |
+ enum srp_target_state {
+ 	SRP_TARGET_SCANNING,
+ 	SRP_TARGET_LIVE,
 -- 
 2.35.1
 
