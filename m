@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426172596
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:26:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0B0C433D2;
-	Sun, 22 Jan 2023 15:26:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D226C2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:26:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58636C433D2;
+	Sun, 22 Jan 2023 15:26:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401185;
-	bh=FB4KCU5GV+C2KFU1OZ9OPHHkE7B56aHwxhF55RSkCTc=;
+	s=korg; t=1674401187;
+	bh=7iYNBw+UoGsVUwdthnKw5/xH26yi0/Y0uhcIv7WOqZg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2i4XSknj/IbtQrnLOtYSb6fZekBitUWil3B6xPSTZ6GrgxtMFmGmaYK02j6Xj6CEM
-	 mmxXuS0NzAicnfJX4qZS8JeIPpUpAFGedeMkWLhqR0flYxJxwURaeYtHISiOSGxFZx
-	 7QTadnjvG7ZMak6a1LhmJ/GZVFD90EgU4K+lAwNU=
+	b=UR5lCE841xUC0f6X9bjV7U0qId9uGb4NpcZkNw1xFCtyVp6dzOQZDVLpj+LDY4GFP
+	 qBHutdeL57sZfKKMSSbBEv/Sh1yHJNBX2QceYUBitjmKlSC00IGc5cxr+4ZNJ4jC14
+	 S+EO5sLD4tbltzInO6S1NgEOIJtx6c0QLAcXtz6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
-	Joshua Ashton <joshua@froggi.es>,
+	roman.li@amd.com,
+	yifan1.zhang@amd.com,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 143/193] drm/amd/display: Fix COLOR_SPACE_YCBCR2020_TYPE matrix
-Date: Sun, 22 Jan 2023 16:04:32 +0100
-Message-Id: <20230122150252.922640897@linuxfoundation.org>
+Subject: [PATCH 6.1 144/193] drm/amd/display: disable S/G display on DCN 3.1.5
+Date: Sun, 22 Jan 2023 16:04:33 +0100
+Message-Id: <20230122150252.963432735@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -35,43 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joshua Ashton <joshua@froggi.es>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-commit 973a9c810c785ac270a6d50d8cf862b0c1643a10 upstream.
+commit e78cc6a4c7486f50c2786d91dd7d9649a87d1dcb upstream.
 
-The YCC conversion matrix for RGB -> COLOR_SPACE_YCBCR2020_TYPE is
-missing the values for the fourth column of the matrix.
+Causes flickering or white screens in some configurations.
+Disable it for now until we can fix the issue.
 
-The fourth column of the matrix is essentially just a value that is
-added given that the color is 3 components in size.
-These values are needed to bias the chroma from the [-1, 1] -> [0, 1]
-range.
-
-This fixes color being very green when using Gamescope HDR on HDMI
-output which prefers YCC 4:4:4.
-
-Fixes: 40df2f809e8f ("drm/amd/display: color space ycbcr709 support")
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Signed-off-by: Joshua Ashton <joshua@froggi.es>
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2354
+Cc: roman.li@amd.com
+Cc: yifan1.zhang@amd.com
+Acked-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    1 -
+ 1 file changed, 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
-@@ -90,8 +90,8 @@ static const struct out_csc_color_matrix
- 		{ 0xE00, 0xF349, 0xFEB7, 0x1000, 0x6CE, 0x16E3,
- 				0x24F, 0x200, 0xFCCB, 0xF535, 0xE00, 0x1000} },
- 	{ COLOR_SPACE_YCBCR2020_TYPE,
--		{ 0x1000, 0xF149, 0xFEB7, 0x0000, 0x0868, 0x15B2,
--				0x01E6, 0x0000, 0xFB88, 0xF478, 0x1000, 0x0000} },
-+		{ 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868, 0x15B2,
-+				0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} },
- 	{ COLOR_SPACE_YCBCR709_BLACK_TYPE,
- 		{ 0x0000, 0x0000, 0x0000, 0x1000, 0x0000, 0x0000,
- 				0x0000, 0x0200, 0x0000, 0x0000, 0x0000, 0x1000} },
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -1513,7 +1513,6 @@ static int amdgpu_dm_init(struct amdgpu_
+ 		case IP_VERSION(3, 1, 2):
+ 		case IP_VERSION(3, 1, 3):
+ 		case IP_VERSION(3, 1, 4):
+-		case IP_VERSION(3, 1, 5):
+ 		case IP_VERSION(3, 1, 6):
+ 			init_data.flags.gpu_vm_support = true;
+ 			break;
 
 
