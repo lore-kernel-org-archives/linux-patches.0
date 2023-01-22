@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1392590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:28:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD066C433D2;
-	Sun, 22 Jan 2023 15:28:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5D092590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:28:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C6E4C433D2;
+	Sun, 22 Jan 2023 15:28:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401322;
-	bh=85kQ0T4gD/QejF0oASW15FZVXbt2jPFPzQ8XZIW3dcY=;
+	s=korg; t=1674401324;
+	bh=q8RxaKkZa3z1jD5IgvM8AuYwwoNN7WtEjrjvuHUlLYI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rpj6zwdpA3OS3u9H7f7id534/fvufhL1zb1s2QMWwcYnaEvJrhEYZiyJ659d/aPIF
-	 Wipa4OHqOdP+X9Hn8ht2mRzMz3WX1im3w342jpJYUnYCG+7cG6LU2pW94MQip3mFT0
-	 0XzDq8UtgmLnzVTQfCnoxxgSqq89HpaUj1k4WJGA=
+	b=un9fK4jbbFfJGDRJv0lsc1yu3g9jtJpLDRlBdJ3DTMYdzrHC+xZAGj96HWJLj+dA9
+	 wmOqHxq4Ep2yi9e28YWWrxzC2Esug+ZM6B4sNMl9nC4Db5EIvXI+BY3GgVjhQGQ4D3
+	 F2RgJUYw62ITu3WMCgynbalQ9IjOxsbrZOhu5njw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aaron Liu <aaron.liu@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	"Limonciello, Mario" <Mario.Limonciello@amd.com>
-Subject: [PATCH 6.1 166/193] drm/amdgpu/discovery: set the APU flag for GC 11.0.4
-Date: Sun, 22 Jan 2023 16:04:55 +0100
-Message-Id: <20230122150253.995420918@linuxfoundation.org>
+Subject: [PATCH 6.1 167/193] drm/amdgpu: add gfx support for GC 11.0.4
+Date: Sun, 22 Jan 2023 16:04:56 +0100
+Message-Id: <20230122150254.041225679@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -38,9 +38,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Yifan Zhang <yifan1.zhang@amd.com>
 
-commit dd2d9c7fd7716838d477e257f43facd68c53d3a9 upstream.
+commit 1763cb65e870e783e26d2dc9def4edbeadcb1050 upstream.
 
-Set the APU flag appropriately for GC 11.0.4.
+this patch to add GC 11.0.4 gfx support to gfx11 implementation.
 
 Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
 Reviewed-by: Aaron Liu <aaron.liu@amd.com>
@@ -48,18 +48,55 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: "Limonciello, Mario" <Mario.Limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_discovery.c
-@@ -2199,6 +2199,7 @@ int amdgpu_discovery_set_ip_blocks(struc
- 	case IP_VERSION(10, 3, 6):
- 	case IP_VERSION(10, 3, 7):
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -77,6 +77,10 @@ MODULE_FIRMWARE("amdgpu/gc_11_0_3_pfp.bi
+ MODULE_FIRMWARE("amdgpu/gc_11_0_3_me.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_3_mec.bin");
+ MODULE_FIRMWARE("amdgpu/gc_11_0_3_rlc.bin");
++MODULE_FIRMWARE("amdgpu/gc_11_0_4_pfp.bin");
++MODULE_FIRMWARE("amdgpu/gc_11_0_4_me.bin");
++MODULE_FIRMWARE("amdgpu/gc_11_0_4_mec.bin");
++MODULE_FIRMWARE("amdgpu/gc_11_0_4_rlc.bin");
+ 
+ static const struct soc15_reg_golden golden_settings_gc_11_0_1[] =
+ {
+@@ -262,6 +266,7 @@ static void gfx_v11_0_init_golden_regist
+ {
+ 	switch (adev->ip_versions[GC_HWIP][0]) {
  	case IP_VERSION(11, 0, 1):
 +	case IP_VERSION(11, 0, 4):
- 		adev->flags |= AMD_IS_APU;
+ 		soc15_program_register_sequence(adev,
+ 						golden_settings_gc_11_0_1,
+ 						(const u32)ARRAY_SIZE(golden_settings_gc_11_0_1));
+@@ -856,6 +861,7 @@ static int gfx_v11_0_gpu_early_init(stru
+ 		adev->gfx.config.sc_earlyz_tile_fifo_size = 0x4C0;
  		break;
- 	default:
+ 	case IP_VERSION(11, 0, 1):
++	case IP_VERSION(11, 0, 4):
+ 		adev->gfx.config.max_hw_contexts = 8;
+ 		adev->gfx.config.sc_prim_fifo_size_frontend = 0x20;
+ 		adev->gfx.config.sc_prim_fifo_size_backend = 0x100;
+@@ -1285,6 +1291,7 @@ static int gfx_v11_0_sw_init(void *handl
+ 	case IP_VERSION(11, 0, 1):
+ 	case IP_VERSION(11, 0, 2):
+ 	case IP_VERSION(11, 0, 3):
++	case IP_VERSION(11, 0, 4):
+ 		adev->gfx.me.num_me = 1;
+ 		adev->gfx.me.num_pipe_per_me = 1;
+ 		adev->gfx.me.num_queue_per_pipe = 1;
+@@ -2486,7 +2493,8 @@ static int gfx_v11_0_wait_for_rlc_autolo
+ 	for (i = 0; i < adev->usec_timeout; i++) {
+ 		cp_status = RREG32_SOC15(GC, 0, regCP_STAT);
+ 
+-		if (adev->ip_versions[GC_HWIP][0] == IP_VERSION(11, 0, 1))
++		if (adev->ip_versions[GC_HWIP][0] == IP_VERSION(11, 0, 1) ||
++				adev->ip_versions[GC_HWIP][0] == IP_VERSION(11, 0, 4))
+ 			bootload_status = RREG32_SOC15(GC, 0,
+ 					regRLC_RLCS_BOOTLOAD_STATUS_gc_11_0_1);
+ 		else
 
 
