@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 786097E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:10:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F32FBC433D2;
-	Sun, 22 Jan 2023 15:10:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129657E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:10:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EEF1C433D2;
+	Sun, 22 Jan 2023 15:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400217;
-	bh=q3NP+mnrXO3nEqOy/TDN40dQ5YBeMheO/YC5EhcPflM=;
+	s=korg; t=1674400219;
+	bh=ofh4Uir+K1O9vvUAmB+PkljF2Xcrf5crGV/g2Np60IA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MZ9nIxktNEu3r6uv3Nzt4y8LbM2FpG5rVIyTeiXxxIiBI4bFFIeb/eToTaQCfBVAy
-	 62ceuVpZiqGKWmeUJad+5WGMFKmzK8eY2zGM9vQL6URZnKznaXpZsd9D5t9n6pbQdj
-	 V/ynH3KVoWwWhY7MDNJEhMETx7oW1Ch7xvfv3LcU=
+	b=RJYfxkx4dYgVL23nmC/OAefV98WZcWXlDXOhJw9bdzyOuk2zmNajcE7JQ3k6dxC8p
+	 RsefpHRQdx8R+2my7DemvXQwP/SMDqL/WOGVK/zXioQYi5oKQriU+liyNHbarHPgbh
+	 ARoH/zOalBnvkhVAWzZeyG2uVGgAt1y9M6+A5wCg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ron Lee <ron.lee@intel.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.4 17/55] usb: acpi: add helper to check port lpm capability using acpi _DSM
-Date: Sun, 22 Jan 2023 16:04:04 +0100
-Message-Id: <20230122150222.957088164@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+ede796cecd5296353515@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 08/55] nilfs2: fix general protection fault in nilfs_btree_insert()
+Date: Sun, 22 Jan 2023 16:03:55 +0100
+Message-Id: <20230122150222.579601494@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150222.210885219@linuxfoundation.org>
 References: <20230122150222.210885219@linuxfoundation.org>
@@ -34,122 +35,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathias Nyman <mathias.nyman@linux.intel.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit cd702d18c882d5a4ea44bbdb38edd5d5577ef640 upstream.
+commit 7633355e5c7f29c049a9048e461427d1d8ed3051 upstream.
 
-Add a helper to evaluate ACPI usb device specific method (_DSM) provided
-in case the USB3 port shouldn't enter U1 and U2 link states.
+If nilfs2 reads a corrupted disk image and tries to reads a b-tree node
+block by calling __nilfs_btree_get_block() against an invalid virtual
+block address, it returns -ENOENT because conversion of the virtual block
+address to a disk block address fails.  However, this return value is the
+same as the internal code that b-tree lookup routines return to indicate
+that the block being searched does not exist, so functions that operate on
+that b-tree may misbehave.
 
-This _DSM was added as port specific retimer configuration may lead to
-exit latencies growing beyond U1/U2 exit limits, and OS needs a way to
-find which ports can't support U1/U2 link power management states.
+When nilfs_btree_insert() receives this spurious 'not found' code from
+nilfs_btree_do_lookup(), it misunderstands that the 'not found' check was
+successful and continues the insert operation using incomplete lookup path
+data, causing the following crash:
 
-This _DSM is also used by windows:
-Link: https://docs.microsoft.com/en-us/windows-hardware/drivers/bringup/usb-device-specific-method---dsm-
+ general protection fault, probably for non-canonical address
+ 0xdffffc0000000005: 0000 [#1] PREEMPT SMP KASAN
+ KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
+ ...
+ RIP: 0010:nilfs_btree_get_nonroot_node fs/nilfs2/btree.c:418 [inline]
+ RIP: 0010:nilfs_btree_prepare_insert fs/nilfs2/btree.c:1077 [inline]
+ RIP: 0010:nilfs_btree_insert+0x6d3/0x1c10 fs/nilfs2/btree.c:1238
+ Code: bc 24 80 00 00 00 4c 89 f8 48 c1 e8 03 42 80 3c 28 00 74 08 4c 89
+ ff e8 4b 02 92 fe 4d 8b 3f 49 83 c7 28 4c 89 f8 48 c1 e8 03 <42> 80 3c
+ 28 00 74 08 4c 89 ff e8 2e 02 92 fe 4d 8b 3f 49 83 c7 02
+ ...
+ Call Trace:
+ <TASK>
+  nilfs_bmap_do_insert fs/nilfs2/bmap.c:121 [inline]
+  nilfs_bmap_insert+0x20d/0x360 fs/nilfs2/bmap.c:147
+  nilfs_get_block+0x414/0x8d0 fs/nilfs2/inode.c:101
+  __block_write_begin_int+0x54c/0x1a80 fs/buffer.c:1991
+  __block_write_begin fs/buffer.c:2041 [inline]
+  block_write_begin+0x93/0x1e0 fs/buffer.c:2102
+  nilfs_write_begin+0x9c/0x110 fs/nilfs2/inode.c:261
+  generic_perform_write+0x2e4/0x5e0 mm/filemap.c:3772
+  __generic_file_write_iter+0x176/0x400 mm/filemap.c:3900
+  generic_file_write_iter+0xab/0x310 mm/filemap.c:3932
+  call_write_iter include/linux/fs.h:2186 [inline]
+  new_sync_write fs/read_write.c:491 [inline]
+  vfs_write+0x7dc/0xc50 fs/read_write.c:584
+  ksys_write+0x177/0x2a0 fs/read_write.c:637
+  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+  do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ ...
+ </TASK>
 
-Some patch issues found in testing resolved by Ron Lee
+This patch fixes the root cause of this problem by replacing the error
+code that __nilfs_btree_get_block() returns on block address conversion
+failure from -ENOENT to another internal code -EINVAL which means that the
+b-tree metadata is corrupted.
 
-Cc: stable@vger.kernel.org
-Tested-by: Ron Lee <ron.lee@intel.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Link: https://lore.kernel.org/r/20230116142216.1141605-7-mathias.nyman@linux.intel.com
+By returning -EINVAL, it propagates without glitches, and for all relevant
+b-tree operations, functions in the upper bmap layer output an error
+message indicating corrupted b-tree metadata via
+nilfs_bmap_convert_error(), and code -EIO will be eventually returned as
+it should be.
+
+Link: https://lkml.kernel.org/r/000000000000bd89e205f0e38355@google.com
+Link: https://lkml.kernel.org/r/20230105055356.8811-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: syzbot+ede796cecd5296353515@syzkaller.appspotmail.com
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/usb-acpi.c |   65 ++++++++++++++++++++++++++++++++++++++++++++
- include/linux/usb.h         |    3 ++
- 2 files changed, 68 insertions(+)
+ fs/nilfs2/btree.c |   15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/core/usb-acpi.c
-+++ b/drivers/usb/core/usb-acpi.c
-@@ -37,6 +37,71 @@ bool usb_acpi_power_manageable(struct us
- }
- EXPORT_SYMBOL_GPL(usb_acpi_power_manageable);
- 
-+#define UUID_USB_CONTROLLER_DSM "ce2ee385-00e6-48cb-9f05-2edb927c4899"
-+#define USB_DSM_DISABLE_U1_U2_FOR_PORT	5
-+
-+/**
-+ * usb_acpi_port_lpm_incapable - check if lpm should be disabled for a port.
-+ * @hdev: USB device belonging to the usb hub
-+ * @index: zero based port index
-+ *
-+ * Some USB3 ports may not support USB3 link power management U1/U2 states
-+ * due to different retimer setup. ACPI provides _DSM method which returns 0x01
-+ * if U1 and U2 states should be disabled. Evaluate _DSM with:
-+ * Arg0: UUID = ce2ee385-00e6-48cb-9f05-2edb927c4899
-+ * Arg1: Revision ID = 0
-+ * Arg2: Function Index = 5
-+ * Arg3: (empty)
-+ *
-+ * Return 1 if USB3 port is LPM incapable, negative on error, otherwise 0
-+ */
-+
-+int usb_acpi_port_lpm_incapable(struct usb_device *hdev, int index)
-+{
-+	union acpi_object *obj;
-+	acpi_handle port_handle;
-+	int port1 = index + 1;
-+	guid_t guid;
-+	int ret;
-+
-+	ret = guid_parse(UUID_USB_CONTROLLER_DSM, &guid);
-+	if (ret)
+--- a/fs/nilfs2/btree.c
++++ b/fs/nilfs2/btree.c
+@@ -480,9 +480,18 @@ static int __nilfs_btree_get_block(const
+ 	ret = nilfs_btnode_submit_block(btnc, ptr, 0, REQ_OP_READ, 0, &bh,
+ 					&submit_ptr);
+ 	if (ret) {
+-		if (ret != -EEXIST)
+-			return ret;
+-		goto out_check;
++		if (likely(ret == -EEXIST))
++			goto out_check;
++		if (ret == -ENOENT) {
++			/*
++			 * Block address translation failed due to invalid
++			 * value of 'ptr'.  In this case, return internal code
++			 * -EINVAL (broken bmap) to notify bmap layer of fatal
++			 * metadata corruption.
++			 */
++			ret = -EINVAL;
++		}
 +		return ret;
-+
-+	port_handle = usb_get_hub_port_acpi_handle(hdev, port1);
-+	if (!port_handle) {
-+		dev_dbg(&hdev->dev, "port-%d no acpi handle\n", port1);
-+		return -ENODEV;
-+	}
-+
-+	if (!acpi_check_dsm(port_handle, &guid, 0,
-+			    BIT(USB_DSM_DISABLE_U1_U2_FOR_PORT))) {
-+		dev_dbg(&hdev->dev, "port-%d no _DSM function %d\n",
-+			port1, USB_DSM_DISABLE_U1_U2_FOR_PORT);
-+		return -ENODEV;
-+	}
-+
-+	obj = acpi_evaluate_dsm(port_handle, &guid, 0,
-+				USB_DSM_DISABLE_U1_U2_FOR_PORT, NULL);
-+
-+	if (!obj)
-+		return -ENODEV;
-+
-+	if (obj->type != ACPI_TYPE_INTEGER) {
-+		dev_dbg(&hdev->dev, "evaluate port-%d _DSM failed\n", port1);
-+		ACPI_FREE(obj);
-+		return -EINVAL;
-+	}
-+
-+	if (obj->integer.value == 0x01)
-+		ret = 1;
-+
-+	ACPI_FREE(obj);
-+
-+	return ret;
-+}
-+EXPORT_SYMBOL_GPL(usb_acpi_port_lpm_incapable);
-+
- /**
-  * usb_acpi_set_power_state - control usb port's power via acpi power
-  * resource
---- a/include/linux/usb.h
-+++ b/include/linux/usb.h
-@@ -751,11 +751,14 @@ extern void usb_queue_reset_device(struc
- extern int usb_acpi_set_power_state(struct usb_device *hdev, int index,
- 	bool enable);
- extern bool usb_acpi_power_manageable(struct usb_device *hdev, int index);
-+extern int usb_acpi_port_lpm_incapable(struct usb_device *hdev, int index);
- #else
- static inline int usb_acpi_set_power_state(struct usb_device *hdev, int index,
- 	bool enable) { return 0; }
- static inline bool usb_acpi_power_manageable(struct usb_device *hdev, int index)
- 	{ return true; }
-+static inline int usb_acpi_port_lpm_incapable(struct usb_device *hdev, int index)
-+	{ return 0; }
- #endif
+ 	}
  
- /* USB autosuspend and autoresume */
+ 	if (ra) {
 
 
