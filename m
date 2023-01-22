@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B2072590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A363BC433D2;
-	Sun, 22 Jan 2023 15:17:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2F0B2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B7D8C433D2;
+	Sun, 22 Jan 2023 15:17:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400645;
-	bh=RAqpPxM+jxFVGp3Bh249PS/8WBPbe/rrYOmtc6sL/xs=;
+	s=korg; t=1674400647;
+	bh=haiox6iLeBPtUWjH4aIZTnntV82qgkwc5s0Av5uv0iU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YmXe+LVKRhATmh9sFDLNcZQRHNUt4tjKhHM8luBzVFiDCOwizhrujf+SPW+kMjTZe
-	 6IscFXHdSc3aOuxPf04aX4V7qrFPz+yJGSmQXhG0Oy3MP/NYUBd/8DmwWKoAfqoIfX
-	 9ajrBcefh8B3e0O1S1BlO4cYJqArhFrOoxfkvahs=
+	b=j+Up1UgyF+sJ2DQTGSdAMVNj7RO0l0/N8zr0Z8yYzrW1EAVrQcPV7X7Q+pifkvPrI
+	 f1u4aSN6LqCkX6w3fMw9wy+LRirlGJRacBkhxM1TdxgVIWDzQQn0GtLdrtcVdyO/1C
+	 Xuhva3YOXN4H8q+lRvopQ8s/pVseAdS/uh9sLZM8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Duke=20Xin ?= <duke_xinanwen@163.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 054/117] USB: serial: option: add Quectel EM05CN (SG) modem
-Date: Sun, 22 Jan 2023 16:04:04 +0100
-Message-Id: <20230122150235.022811593@linuxfoundation.org>
+Subject: [PATCH 5.15 055/117] USB: serial: option: add Quectel EM05CN modem
+Date: Sun, 22 Jan 2023 16:04:05 +0100
+Message-Id: <20230122150235.066633308@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -36,9 +36,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Duke Xin(辛安文) <duke_xinanwen@163.com>
 
-commit 1541dd0097c0f8f470e76eddf5120fc55a7e3101 upstream.
+commit 71dfd381a7c051f16a61f82fbd38a4cca563bdca upstream.
 
-The EM05CN (SG) modem has 2 USB configurations that are configurable via the AT
+The EM05CN modem has 2 USB configurations that are configurable via the AT
 command AT+QCFG="usbnet",[ 0 | 2 ] which make the modem enumerate with
 the following interfaces, respectively:
 
@@ -51,7 +51,7 @@ MBIM Mode
 --------------
 T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  2 Spd=480  MxCh= 0
 D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0310 Rev= 3.18
+P:  Vendor=2c7c ProdID=0312 Rev= 3.18
 S:  Manufacturer=Quectel
 S:  Product=Quectel EM05-CN
 C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
@@ -82,7 +82,7 @@ RMNET Mode
 --------------
 T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#=  3 Spd=480  MxCh= 0
 D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0310 Rev= 3.18
+P:  Vendor=2c7c ProdID=0312 Rev= 3.18
 S:  Manufacturer=Quectel
 S:  Product=Quectel EM05-CN
 C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
@@ -116,22 +116,22 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
-@@ -256,6 +256,7 @@ static void option_instat_callback(struc
- #define QUECTEL_PRODUCT_EM05G			0x030a
- #define QUECTEL_PRODUCT_EM060K			0x030b
+@@ -258,6 +258,7 @@ static void option_instat_callback(struc
  #define QUECTEL_PRODUCT_EM05G_CS		0x030c
-+#define QUECTEL_PRODUCT_EM05CN_SG		0x0310
+ #define QUECTEL_PRODUCT_EM05CN_SG		0x0310
  #define QUECTEL_PRODUCT_EM05G_SG		0x0311
++#define QUECTEL_PRODUCT_EM05CN			0x0312
  #define QUECTEL_PRODUCT_EM05G_GR		0x0313
  #define QUECTEL_PRODUCT_EM05G_RS		0x0314
-@@ -1163,6 +1164,8 @@ static const struct usb_device_id option
+ #define QUECTEL_PRODUCT_EM12			0x0512
+@@ -1164,6 +1165,8 @@ static const struct usb_device_id option
  	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EP06, 0xff, 0xff, 0xff),
  	  .driver_info = RSVD(1) | RSVD(2) | RSVD(3) | RSVD(4) | NUMEP2 },
  	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EP06, 0xff, 0, 0) },
-+	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05CN_SG, 0xff),
++	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05CN, 0xff),
 +	  .driver_info = RSVD(6) | ZLP },
- 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G, 0xff),
+ 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05CN_SG, 0xff),
  	  .driver_info = RSVD(6) | ZLP },
- 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_GR, 0xff),
+ 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G, 0xff),
 
 
