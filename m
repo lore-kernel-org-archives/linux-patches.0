@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10E52590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:14:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8A3C433D2;
-	Sun, 22 Jan 2023 15:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496142590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:14:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5DE0C433EF;
+	Sun, 22 Jan 2023 15:14:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400445;
-	bh=1XfQfRY1VpYCYiuda3VkKisYUvi5S/tWe5Rwxsh5fB8=;
+	s=korg; t=1674400448;
+	bh=gMl4Y3T65w18VlVhPj7/Z/5YdYj4ezZrbxOGRT3pfa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xh4vgW4VB5OhB9RfWVtRP1tZaakfxrWzzS/fPPKmTCHbQNJDd8HGAQ+bjqnjAgrgf
-	 kIxzDhFTCRiXe9Y/bmbj8LaxocrGmIoB1aLWA6Z3QYZ6xjaUoXOQn7IvGomGN9Y8Ez
-	 ZqXjlhnVt2k9QEoupY8p3KwL2LuS09S533+Ieiyg=
+	b=pv6CCmrHKUaanbE6GD9aAgvvXS6bqCJiZUj5kJYDrSmikuaU6W5n4DO2/MuHptY2r
+	 ZkjjBX+bgvo1vQzt5sBhBjN7P0QVNzE7+vh1EQnope+mK4x1o51yeQYL9cCnsWOt/6
+	 MqztRyP5XVW745L1i5TK700/+aZ0VeFaZEa3udGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasa Dragic <sasa.dragic@gmail.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 5.10 76/98] drm/i915: re-disable RC6p on Sandy Bridge
-Date: Sun, 22 Jan 2023 16:04:32 +0100
-Message-Id: <20230122150232.653865531@linuxfoundation.org>
+	Harry Wentland <harry.wentland@amd.com>,
+	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
+	hongao <hongao@uniontech.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 77/98] drm/amd/display: Fix set scaling doesns work
+Date: Sun, 22 Jan 2023 16:04:33 +0100
+Message-Id: <20230122150232.696961282@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -35,41 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sasa Dragic <sasa.dragic@gmail.com>
+From: hongao <hongao@uniontech.com>
 
-commit 67b0b4ed259e425b7eed09da75b42c80682ca003 upstream.
+commit 040625ab82ce6dca7772cb3867fe5c9eb279a344 upstream.
 
-RC6p on Sandy Bridge got re-enabled over time, causing visual glitches
-and GPU hangs.
+[Why]
+Setting scaling does not correctly update CRTC state. As a result
+dc stream state's src (composition area) && dest (addressable area)
+was not calculated as expected. This causes set scaling doesn's work.
 
-Disabled originally in commit 1c8ecf80fdee ("drm/i915: do not enable
-RC6p on Sandy Bridge").
+[How]
+Correctly update CRTC state when setting scaling property.
 
-Signed-off-by: Sasa Dragic <sasa.dragic@gmail.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221219172927.9603-2-sasa.dragic@gmail.com
-Fixes: fb6db0f5bf1d ("drm/i915: Remove unsafe i915.enable_rc6")
-Fixes: 13c5a577b342 ("drm/i915/gt: Select the deepest available parking mode for rc6")
+Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Tested-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: hongao <hongao@uniontech.com>
+Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 0c8a6e9ea232c221976a0670256bd861408d9917)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_pci.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/i915/i915_pci.c
-+++ b/drivers/gpu/drm/i915/i915_pci.c
-@@ -403,7 +403,8 @@ static const struct intel_device_info il
- 	.has_coherent_ggtt = true, \
- 	.has_llc = 1, \
- 	.has_rc6 = 1, \
--	.has_rc6p = 1, \
-+	/* snb does support rc6p, but enabling it causes various issues */ \
-+	.has_rc6p = 0, \
- 	.has_rps = true, \
- 	.dma_mask_size = 40, \
- 	.ppgtt_type = INTEL_PPGTT_ALIASING, \
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -8783,8 +8783,8 @@ static int amdgpu_dm_atomic_check(struct
+ 			goto fail;
+ 		}
+ 
+-		if (dm_old_con_state->abm_level !=
+-		    dm_new_con_state->abm_level)
++		if (dm_old_con_state->abm_level != dm_new_con_state->abm_level ||
++		    dm_old_con_state->scaling != dm_new_con_state->scaling)
+ 			new_crtc_state->connectors_changed = true;
+ 	}
+ 
 
 
