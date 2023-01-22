@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8632590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:27:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95BDC4339B;
-	Sun, 22 Jan 2023 15:27:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A431B2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:27:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28767C433EF;
+	Sun, 22 Jan 2023 15:27:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401224;
-	bh=qQz0KuB65ZRzVqmm/w75kLrUY4EeZ9OA//teTkQoRVk=;
+	s=korg; t=1674401227;
+	bh=FIQV6KcGo55iSo1Y2cyFRHBj1zkF04Y/eXgXyMIcN4A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iKjlCK7Pp2BMkb/y+7nF+M6IvtMa4FUsC36ccI/H1BZOF0UAoKS7AMjLhiJ+hdj1a
-	 zW8tzOKmF/1Y7xAfwaVRI5TZuyeSnzUUx1KiZhIVBf+4p62dCkNqaI3LtXn8kCUDPi
-	 7uXxhH/o3MnPGZk5r8LrptpU5C4e9JcV/qUYt8g8=
+	b=N1WIbWZv1Pm7L6OQ1VEUoQKUhfbTcAnn0g1rQrhJ93F0XnGgj8b2niP98umceebqZ
+	 Vk7umbI0Xn9Z+sd8jcusCxQkqEjarBxozQFv4y+Oy/VCTtVt1FVDLKMPSsE8h3GrsY
+	 uirD6JHVDVXLvj3IKaJM0G48V7cTmzRxL2WFkyQk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Tomas Winkler <tomas.winkler@intel.com>
-Subject: [PATCH 6.1 130/193] mei: me: add meteor lake point M DID
-Date: Sun, 22 Jan 2023 16:04:19 +0100
-Message-Id: <20230122150252.265957705@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	linux-hardening@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.1 157/193] docs: Fix path paste-o for /sys/kernel/warn_count
+Date: Sun, 22 Jan 2023 16:04:46 +0100
+Message-Id: <20230122150253.573644442@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -34,43 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Kees Cook <keescook@chromium.org>
 
-commit 0c4d68261717f89fa8c4f98a6967c3832fcb3ad0 upstream.
+commit 00dd027f721e0458418f7750d8a5a664ed3e5994 upstream.
 
-Add Meteor Lake Point M device id.
+Running "make htmldocs" shows that "/sys/kernel/oops_count" was
+duplicated. This should have been "warn_count":
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20221212220247.286019-2-tomas.winkler@intel.com
+  Warning: /sys/kernel/oops_count is defined 2 times:
+  ./Documentation/ABI/testing/sysfs-kernel-warn_count:0
+  ./Documentation/ABI/testing/sysfs-kernel-oops_count:0
+
+Fix the typo.
+
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/linux-doc/202212110529.A3Qav8aR-lkp@intel.com
+Fixes: 8b05aa263361 ("panic: Expose "warn_count" to sysfs")
+Cc: linux-hardening@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    2 ++
- drivers/misc/mei/pci-me.c     |    2 ++
- 2 files changed, 4 insertions(+)
+ Documentation/ABI/testing/sysfs-kernel-warn_count |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -111,6 +111,8 @@
- 
- #define MEI_DEV_ID_RPL_S      0x7A68  /* Raptor Lake Point S */
- 
-+#define MEI_DEV_ID_MTL_M      0x7E70  /* Meteor Lake Point M */
-+
- /*
-  * MEI HW Section
-  */
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -118,6 +118,8 @@ static const struct pci_device_id mei_me
- 
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_RPL_S, MEI_ME_PCH15_CFG)},
- 
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_MTL_M, MEI_ME_PCH15_CFG)},
-+
- 	/* required last entry */
- 	{0, }
- };
+--- a/Documentation/ABI/testing/sysfs-kernel-warn_count
++++ b/Documentation/ABI/testing/sysfs-kernel-warn_count
+@@ -1,4 +1,4 @@
+-What:		/sys/kernel/oops_count
++What:		/sys/kernel/warn_count
+ Date:		November 2022
+ KernelVersion:	6.2.0
+ Contact:	Linux Kernel Hardening List <linux-hardening@vger.kernel.org>
 
 
