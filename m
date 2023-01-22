@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 733932590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:28:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8632C433EF;
-	Sun, 22 Jan 2023 15:28:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 269682590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:28:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 859ECC433EF;
+	Sun, 22 Jan 2023 15:28:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401335;
-	bh=BEudnnFPlb6+Si0suDa1aopHe5LCCP+bJ3NlVnDBJVc=;
+	s=korg; t=1674401337;
+	bh=dYMdwDmZrPtr5kQ3fz9qp6YbHiWGqbv1qidVqsEqXZA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RPrnpx7JiG1my2hehArOfDydA2SEKlvq6f7XfTjCbQxpdVQDcBq+WbC6j8k2uM5oh
-	 NRfDptrz01zqZqvOvMcztV7CTdU1R8S7RUGoFlOhwAZzqnWfC6NRDWIiPU3t0eJZxt
-	 oCSOdiC5FBELawPoxz/uBWaz1WVmoPErhjNJQvqc=
+	b=d3PCiW0YoSRal5KVkHAQTvcVY78IMVPp/aRE+4I7KfCzub90UdNBU0qTiUO13CRee
+	 rhroO7A4kVrPv+Vk8V6WBhmqBoy6lz06UtxkgQ6s83FsE8PluCLVGGnUiRzXBEPDUu
+	 5YlonO4fWfM6OFHZOXFUT0E5SMWWdtNMmfL95IF0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.1 192/193] Revert "wifi: mac80211: fix memory leak in ieee80211_if_add()"
-Date: Sun, 22 Jan 2023 16:05:21 +0100
-Message-Id: <20230122150255.198695551@linuxfoundation.org>
+	Stephan Gerhold <stephan@gerhold.net>,
+	Bjorn Andersson <andersson@kernel.org>
+Subject: [PATCH 6.1 193/193] soc: qcom: apr: Make qcom,protection-domain optional again
+Date: Sun, 22 Jan 2023 16:05:22 +0100
+Message-Id: <20230122150255.248263752@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -37,81 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Stephan Gerhold <stephan@gerhold.net>
 
-commit 80f8a66dede0a4b4e9e846765a97809c6fe49ce5 upstream.
+commit 599d41fb8ea8bd2a99ca9525dd69405020e43dda upstream.
 
-This reverts commit 13e5afd3d773c6fc6ca2b89027befaaaa1ea7293.
+APR should not fail if the service device tree node does not have
+the qcom,protection-domain property, since this functionality does
+not exist on older platforms such as MSM8916 and MSM8996.
 
-ieee80211_if_free() is already called from free_netdev(ndev)
-because ndev->priv_destructor == ieee80211_if_free
+Ignore -EINVAL (returned when the property does not exist) to fix
+a regression on 6.2-rc1 that prevents audio from working:
 
-syzbot reported:
+  qcom,apr remoteproc0:smd-edge.apr_audio_svc.-1.-1:
+    Failed to read second value of qcom,protection-domain
+  qcom,apr remoteproc0:smd-edge.apr_audio_svc.-1.-1:
+    Failed to add apr 3 svc
 
-general protection fault, probably for non-canonical address 0xdffffc0000000004: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x0000000000000020-0x0000000000000027]
-CPU: 0 PID: 10041 Comm: syz-executor.0 Not tainted 6.2.0-rc2-syzkaller-00388-g55b98837e37d #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-RIP: 0010:pcpu_get_page_chunk mm/percpu.c:262 [inline]
-RIP: 0010:pcpu_chunk_addr_search mm/percpu.c:1619 [inline]
-RIP: 0010:free_percpu mm/percpu.c:2271 [inline]
-RIP: 0010:free_percpu+0x186/0x10f0 mm/percpu.c:2254
-Code: 80 3c 02 00 0f 85 f5 0e 00 00 48 8b 3b 48 01 ef e8 cf b3 0b 00 48 ba 00 00 00 00 00 fc ff df 48 8d 78 20 48 89 f9 48 c1 e9 03 <80> 3c 11 00 0f 85 3b 0e 00 00 48 8b 58 20 48 b8 00 00 00 00 00 fc
-RSP: 0018:ffffc90004ba7068 EFLAGS: 00010002
-RAX: 0000000000000000 RBX: ffff88823ffe2b80 RCX: 0000000000000004
-RDX: dffffc0000000000 RSI: ffffffff81c1f4e7 RDI: 0000000000000020
-RBP: ffffe8fffe8fc220 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000000000000 R11: 1ffffffff2179ab2 R12: ffff8880b983d000
-R13: 0000000000000003 R14: 0000607f450fc220 R15: ffff88823ffe2988
-FS: 00007fcb349de700(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000001b32220000 CR3: 000000004914f000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
-netdev_run_todo+0x6bf/0x1100 net/core/dev.c:10352
-ieee80211_register_hw+0x2663/0x4040 net/mac80211/main.c:1411
-mac80211_hwsim_new_radio+0x2537/0x4d80 drivers/net/wireless/mac80211_hwsim.c:4583
-hwsim_new_radio_nl+0xa09/0x10f0 drivers/net/wireless/mac80211_hwsim.c:5176
-genl_family_rcv_msg_doit.isra.0+0x1e6/0x2d0 net/netlink/genetlink.c:968
-genl_family_rcv_msg net/netlink/genetlink.c:1048 [inline]
-genl_rcv_msg+0x4ff/0x7e0 net/netlink/genetlink.c:1065
-netlink_rcv_skb+0x165/0x440 net/netlink/af_netlink.c:2564
-genl_rcv+0x28/0x40 net/netlink/genetlink.c:1076
-netlink_unicast_kernel net/netlink/af_netlink.c:1330 [inline]
-netlink_unicast+0x547/0x7f0 net/netlink/af_netlink.c:1356
-netlink_sendmsg+0x91b/0xe10 net/netlink/af_netlink.c:1932
-sock_sendmsg_nosec net/socket.c:714 [inline]
-sock_sendmsg+0xd3/0x120 net/socket.c:734
-____sys_sendmsg+0x712/0x8c0 net/socket.c:2476
-___sys_sendmsg+0x110/0x1b0 net/socket.c:2530
-__sys_sendmsg+0xf7/0x1c0 net/socket.c:2559
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Fixes: 13e5afd3d773 ("wifi: mac80211: fix memory leak in ieee80211_if_add()")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Zhengchao Shao <shaozhengchao@huawei.com>
-Cc: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230113124326.3533978-1-edumazet@google.com
+Fixes: 6d7860f5750d ("soc: qcom: apr: Add check for idr_alloc and of_property_read_string_index")
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Bjorn Andersson <andersson@kernel.org>
+Link: https://lore.kernel.org/r/20221229151648.19839-3-stephan@gerhold.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/iface.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/soc/qcom/apr.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -2260,7 +2260,6 @@ int ieee80211_if_add(struct ieee80211_lo
+--- a/drivers/soc/qcom/apr.c
++++ b/drivers/soc/qcom/apr.c
+@@ -461,9 +461,10 @@ static int apr_add_device(struct device
+ 		goto out;
+ 	}
  
- 		ret = cfg80211_register_netdevice(ndev);
- 		if (ret) {
--			ieee80211_if_free(ndev);
- 			free_netdev(ndev);
- 			return ret;
- 		}
++	/* Protection domain is optional, it does not exist on older platforms */
+ 	ret = of_property_read_string_index(np, "qcom,protection-domain",
+ 					    1, &adev->service_path);
+-	if (ret < 0) {
++	if (ret < 0 && ret != -EINVAL) {
+ 		dev_err(dev, "Failed to read second value of qcom,protection-domain\n");
+ 		goto out;
+ 	}
 
 
