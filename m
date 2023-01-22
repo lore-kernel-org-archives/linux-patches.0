@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0CF92590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:21:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35BBAC433D2;
-	Sun, 22 Jan 2023 15:21:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F86D2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:21:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9A0AC433D2;
+	Sun, 22 Jan 2023 15:21:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400888;
-	bh=oZuBzO6ZT434qBqCT7tN8/CmV+R8TK0qntjD5ogcrXk=;
+	s=korg; t=1674400891;
+	bh=C8ElHUjdQeC2kVcCng3Vh2rLwiEFgfow98/Cq5Fhtcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0IVz9r7CHEgKU3hJ4MDMkwSOO62NhsQk8NfM9dhJJKRKGSlBz9uaud+ZgxBUoMn9Q
-	 Ij6uTVXNnGtNQ2Y72VBxrx4uszdArDPQAx6qn9Epy+o/CsZ9PinCIwNnYRzSLllJJ9
-	 2OItYXtRXtro8T0Oll9BLSeMDZfIJkwinq2sGrYw=
+	b=dZrxmSh3fPw6sfeyH8zTZeKARGgl5txp3ZJ53t9cdi41RRqfgQ9DSqsinujH3Rb2k
+	 YO4UrKEp5ESpIkspmJlPpy23rZY5x0R3EQFQDJC61Z8p+B1uMh6AA/XWVGTIn2coVg
+	 gqFAMt4ISjlFU3UrIhmKvIVnzh++wguqv/nv7XUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Helge Deller <deller@gmx.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/193] fbdev: omapfb: avoid stack overflow warning
-Date: Sun, 22 Jan 2023 16:02:38 +0100
-Message-Id: <20230122150247.728975360@linuxfoundation.org>
+	Johannes Berg <johannes.berg@intel.com>,
+	Gregory Greenman <gregory.greenman@intel.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>,
+	=?UTF-8?q?=C3=8D=C3=B1igo=20Huguet?= <ihuguet@redhat.com>
+Subject: [PATCH 6.1 003/193] wifi: iwlwifi: fw: skip PPAG for JF
+Date: Sun, 22 Jan 2023 16:02:12 +0100
+Message-Id: <20230122150246.492734419@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -35,98 +37,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Johannes Berg <johannes.berg@intel.com>
 
-[ Upstream commit 634cf6ead93988b0da9ac054521ab63a3ba189db ]
+[ Upstream commit 1c4c0b28b517d778d37900deedfe91088839f07a ]
 
-The dsi_irq_stats structure is a little too big to fit on the
-stack of a 32-bit task, depending on the specific gcc options:
+For JF RFs we don't support PPAG, but many firmware
+images lie about it. Always skip support for JF to
+avoid firmware errors when sending the command.
 
-fbdev/omap2/omapfb/dss/dsi.c: In function 'dsi_dump_dsidev_irqs':
-fbdev/omap2/omapfb/dss/dsi.c:1621:1: error: the frame size of 1064 bytes is larger than 1024 bytes [-Werror=frame-larger-than=]
-
-Since this is only a debugfs file, performance is not critical,
-so just dynamically allocate it, and print an error message
-in there in place of a failure code when the allocation fails.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Reported-and-tested-by: Íñigo Huguet <ihuguet@redhat.com>
+Link: https://lore.kernel.org/linux-wireless/CACT4oufQsqHGp6bah2c4+jPn2wG1oZqY=UKa_TmPx=F6Lxng8Q@mail.gmail.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Gregory Greenman <gregory.greenman@intel.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221213225723.2a43415d8990.I9ac210740a45b41f1b2e15274e1daf4284f2808a@changeid
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/omap2/omapfb/dss/dsi.c | 28 ++++++++++++++--------
- 1 file changed, 18 insertions(+), 10 deletions(-)
+ drivers/net/wireless/intel/iwlwifi/fw/acpi.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/video/fbdev/omap2/omapfb/dss/dsi.c b/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
-index 54b0f034c2ed..7cddb7b8ae34 100644
---- a/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
-+++ b/drivers/video/fbdev/omap2/omapfb/dss/dsi.c
-@@ -1536,22 +1536,28 @@ static void dsi_dump_dsidev_irqs(struct platform_device *dsidev,
- {
- 	struct dsi_data *dsi = dsi_get_dsidrv_data(dsidev);
- 	unsigned long flags;
--	struct dsi_irq_stats stats;
-+	struct dsi_irq_stats *stats;
+diff --git a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+index e6d64152c81a..a02e5a67b706 100644
+--- a/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
++++ b/drivers/net/wireless/intel/iwlwifi/fw/acpi.c
+@@ -1106,6 +1106,11 @@ int iwl_read_ppag_table(struct iwl_fw_runtime *fwrt, union iwl_ppag_table_cmd *c
+         int i, j, num_sub_bands;
+         s8 *gain;
+ 
++	/* many firmware images for JF lie about this */
++	if (CSR_HW_RFID_TYPE(fwrt->trans->hw_rf_id) ==
++	    CSR_HW_RFID_TYPE(CSR_HW_RF_ID_TYPE_JF))
++		return -EOPNOTSUPP;
 +
-+	stats = kzalloc(sizeof(*stats), GFP_KERNEL);
-+	if (!stats) {
-+		seq_printf(s, "out of memory\n");
-+		return;
-+	}
- 
- 	spin_lock_irqsave(&dsi->irq_stats_lock, flags);
- 
--	stats = dsi->irq_stats;
-+	*stats = dsi->irq_stats;
- 	memset(&dsi->irq_stats, 0, sizeof(dsi->irq_stats));
- 	dsi->irq_stats.last_reset = jiffies;
- 
- 	spin_unlock_irqrestore(&dsi->irq_stats_lock, flags);
- 
- 	seq_printf(s, "period %u ms\n",
--			jiffies_to_msecs(jiffies - stats.last_reset));
-+			jiffies_to_msecs(jiffies - stats->last_reset));
- 
--	seq_printf(s, "irqs %d\n", stats.irq_count);
-+	seq_printf(s, "irqs %d\n", stats->irq_count);
- #define PIS(x) \
--	seq_printf(s, "%-20s %10d\n", #x, stats.dsi_irqs[ffs(DSI_IRQ_##x)-1])
-+	seq_printf(s, "%-20s %10d\n", #x, stats->dsi_irqs[ffs(DSI_IRQ_##x)-1])
- 
- 	seq_printf(s, "-- DSI%d interrupts --\n", dsi->module_id + 1);
- 	PIS(VC0);
-@@ -1575,10 +1581,10 @@ static void dsi_dump_dsidev_irqs(struct platform_device *dsidev,
- 
- #define PIS(x) \
- 	seq_printf(s, "%-20s %10d %10d %10d %10d\n", #x, \
--			stats.vc_irqs[0][ffs(DSI_VC_IRQ_##x)-1], \
--			stats.vc_irqs[1][ffs(DSI_VC_IRQ_##x)-1], \
--			stats.vc_irqs[2][ffs(DSI_VC_IRQ_##x)-1], \
--			stats.vc_irqs[3][ffs(DSI_VC_IRQ_##x)-1]);
-+			stats->vc_irqs[0][ffs(DSI_VC_IRQ_##x)-1], \
-+			stats->vc_irqs[1][ffs(DSI_VC_IRQ_##x)-1], \
-+			stats->vc_irqs[2][ffs(DSI_VC_IRQ_##x)-1], \
-+			stats->vc_irqs[3][ffs(DSI_VC_IRQ_##x)-1]);
- 
- 	seq_printf(s, "-- VC interrupts --\n");
- 	PIS(CS);
-@@ -1594,7 +1600,7 @@ static void dsi_dump_dsidev_irqs(struct platform_device *dsidev,
- 
- #define PIS(x) \
- 	seq_printf(s, "%-20s %10d\n", #x, \
--			stats.cio_irqs[ffs(DSI_CIO_IRQ_##x)-1]);
-+			stats->cio_irqs[ffs(DSI_CIO_IRQ_##x)-1]);
- 
- 	seq_printf(s, "-- CIO interrupts --\n");
- 	PIS(ERRSYNCESC1);
-@@ -1618,6 +1624,8 @@ static void dsi_dump_dsidev_irqs(struct platform_device *dsidev,
- 	PIS(ULPSACTIVENOT_ALL0);
- 	PIS(ULPSACTIVENOT_ALL1);
- #undef PIS
-+
-+	kfree(stats);
- }
- 
- static void dsi1_dump_irqs(struct seq_file *s)
+         if (!fw_has_capa(&fwrt->fw->ucode_capa, IWL_UCODE_TLV_CAPA_SET_PPAG)) {
+                 IWL_DEBUG_RADIO(fwrt,
+                                 "PPAG capability not supported by FW, command not sent.\n");
 -- 
 2.35.1
 
