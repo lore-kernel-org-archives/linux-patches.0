@@ -1,25 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EAD22590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:19:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B876BC433EF;
-	Sun, 22 Jan 2023 15:19:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D51A92590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:19:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D30FC4339B;
+	Sun, 22 Jan 2023 15:19:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400789;
-	bh=Qjkq3ludEGLpc1IacEC2qWHairMaWlYWb+tUxTvba0U=;
+	s=korg; t=1674400791;
+	bh=zU1HSal7EaHw8fouZuaPheWcRuLdH5CtUGCPeDcY6uU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=byn/P4Oa19hgVciwYklCdLNaqbjZEx+Wj5jg5avvrhz7Ckz/8EhK29sEfRVYix2ur
-	 qTEsMv30DzFRJjTTsglfRT85SDHE40+kjab69ME1jBgCbrPk55LTfXgTo0F4oGsh+W
-	 29pPgGz5QtYNnjIunGPLunyPnptpCFHJIu6JdmAM=
+	b=EHavLl6ReMpRAEA7lGtb5PBfBmL+OlpnN3Dpct6gyexCeD3RtI5Anw7soZHZAZLjK
+	 014Am2gU2AUctHdavaupOfBJdscFtue/Qr7B/HDY2V5j5bpXkEhek5rNzVMR9nQ3fw
+	 89vzNmcs/Q7xfDHB70U9hk8cr6dQb/viEQDbDRIM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 5.15 110/117] powerpc/vmlinux.lds: Dont discard .comment
-Date: Sun, 22 Jan 2023 16:05:00 +0100
-Message-Id: <20230122150237.403853092@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 111/117] io_uring: io_kiocb_update_pos() should not touch file for non -1 offset
+Date: Sun, 22 Jan 2023 16:05:01 +0100
+Message-Id: <20230122150237.443116471@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -33,43 +33,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit be5f95c8779e19779dd81927c8574fec5aaba36c upstream.
+commit 6f83ab22adcb77a5824d2c274dace0d99e21319f upstream.
 
-Although the powerpc linker script mentions .comment in the DISCARD
-section, that has never actually caused it to be discarded, because the
-earlier ELF_DETAILS macro (previously STABS_DEBUG) explicitly includes
-.comment.
+-1 tells use to use the current position, but we check if the file is
+a stream regardless of that. Fix up io_kiocb_update_pos() to only
+dip into file if we need to. This is both more efficient and also drops
+12 bytes of text on aarch64 and 64 bytes on x86-64.
 
-However commit 99cb0d917ffa ("arch: fix broken BuildID for arm64 and
-riscv") introduced an earlier use of DISCARD as part of the RO_DATA
-macro. With binutils < 2.36 that causes the DISCARD directives later in
-the script to be applied earlier, causing .comment to actually be
-discarded.
-
-It's confusing to explicitly include and discard .comment, and even more
-so if the behaviour depends on the toolchain version. So don't discard
-.comment in order to maintain the existing behaviour in all cases.
-
-Fixes: 83a092cf95f2 ("powerpc: Link warning for orphan sections")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230105132349.384666-3-mpe@ellerman.id.au
+Fixes: b4aec4001595 ("io_uring: do not recalculate ppos unnecessarily")
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/vmlinux.lds.S |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/io_uring.c |   21 ++++++++++-----------
+ 1 file changed, 10 insertions(+), 11 deletions(-)
 
---- a/arch/powerpc/kernel/vmlinux.lds.S
-+++ b/arch/powerpc/kernel/vmlinux.lds.S
-@@ -400,7 +400,7 @@ SECTIONS
- 	DISCARDS
- 	/DISCARD/ : {
- 		*(*.EMB.apuinfo)
--		*(.glink .iplt .plt .comment)
-+		*(.glink .iplt .plt)
- 		*(.gnu.version*)
- 		*(.gnu.attributes)
- 		*(.eh_frame)
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -3014,19 +3014,18 @@ static inline void io_rw_done(struct kio
+ static inline loff_t *io_kiocb_update_pos(struct io_kiocb *req)
+ {
+ 	struct kiocb *kiocb = &req->rw.kiocb;
+-	bool is_stream = req->file->f_mode & FMODE_STREAM;
+ 
+-	if (kiocb->ki_pos == -1) {
+-		if (!is_stream) {
+-			req->flags |= REQ_F_CUR_POS;
+-			kiocb->ki_pos = req->file->f_pos;
+-			return &kiocb->ki_pos;
+-		} else {
+-			kiocb->ki_pos = 0;
+-			return NULL;
+-		}
++	if (kiocb->ki_pos != -1)
++		return &kiocb->ki_pos;
++
++	if (!(req->file->f_mode & FMODE_STREAM)) {
++		req->flags |= REQ_F_CUR_POS;
++		kiocb->ki_pos = req->file->f_pos;
++		return &kiocb->ki_pos;
+ 	}
+-	return is_stream ? NULL : &kiocb->ki_pos;
++
++	kiocb->ki_pos = 0;
++	return NULL;
+ }
+ 
+ static void kiocb_done(struct kiocb *kiocb, ssize_t ret,
 
 
