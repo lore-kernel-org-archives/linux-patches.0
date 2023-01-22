@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6CA72590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3AF95C433D2;
-	Sun, 22 Jan 2023 15:17:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 500E72590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9C62C433EF;
+	Sun, 22 Jan 2023 15:17:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400634;
-	bh=/XcWDfGyJ7HEHVSwb5TC44LLxAPz1Dtuz55cm6EQcOY=;
+	s=korg; t=1674400637;
+	bh=1aIvzK+EU7DR7G+9R8eTtb+4/FTp/dQ61YryiRUOARo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ierbr9Fe+ZlNaq0zjzHFZfE4AQHFmWhRuMnXKhtwz5q+lM1h6+/UUtxZxoY5yG7dB
-	 jtx9eXyWIr6vlB+SL6glB6rkJIjVPlUCuGK25t7qZPenUBBLpfPK4J9jFZSIYBfqCh
-	 woOWPJ89sBu8584xppzhZIXZOQAdAnEc2aNjEYsA=
+	b=hxd3caKfVEiNIz1+KFCxcQxZjynGp0X680fZVdaB/qFD97JhQkQ/XlYVYeF01Ay/9
+	 bMTOyDc+V+sh7xweP6kQp78wPm69TnQAtWbi1uBCtaz3MriMYwoRaf1851L/0GrJmU
+	 JQ73yK5Kspw0l7UFGftFOJ0YQN7SWmoMbhQWZQmM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 033/117] io_uring: add flag for disabling provided buffer recycling
-Date: Sun, 22 Jan 2023 16:03:43 +0100
-Message-Id: <20230122150234.099736283@linuxfoundation.org>
+	=?UTF-8?q?Duke=20Xin ?= <duke_xinanwen@163.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 051/117] USB: serial: option: add Quectel EM05-G (CS) modem
+Date: Sun, 22 Jan 2023 16:04:01 +0100
+Message-Id: <20230122150234.870929029@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -34,60 +34,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Duke Xin(辛安文) <duke_xinanwen@163.com>
 
-commit 8a3e8ee56417f5e0e66580d93941ed9d6f4c8274 upstream.
+commit bb78654b0b46316dac687fd4b7dc7cce636f46cd upstream.
 
-If we need to continue doing this IO, then we don't want a potentially
-selected buffer recycled. Add a flag for that.
+The EM05-G (CS) modem has 2 USB configurations that are configurable via
+the AT command AT+QCFG="usbnet",[ 0 | 2 ] which make the modem enumerate
+with the following interfaces, respectively:
 
-Set this for recv/recvmsg if they do partial IO.
+"RMNET" : AT + DIAG + NMEA + Modem + QMI
+"MBIM"  : MBIM + AT + DIAG + NMEA + Modem
 
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The detailed description of the USB configuration for each mode as follows:
+
+RMNET Mode
+--------------
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 21 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=030C Rev= 3.18
+S:  Manufacturer=Quectel
+S:  Product=Quectel EM05-G
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+MBIM Mode
+--------------
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 16 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=030C Rev= 3.18
+S:  Manufacturer=Quectel
+S:  Product=Quectel EM05-G
+C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=89(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Duke Xin(辛安文) <duke_xinanwen@163.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/serial/option.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 04441e981624..2350d43aa782 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -740,6 +740,7 @@ enum {
- 	REQ_F_CREDS_BIT,
- 	REQ_F_REFCOUNT_BIT,
- 	REQ_F_ARM_LTIMEOUT_BIT,
-+	REQ_F_PARTIAL_IO_BIT,
- 	/* keep async read/write and isreg together and in order */
- 	REQ_F_NOWAIT_READ_BIT,
- 	REQ_F_NOWAIT_WRITE_BIT,
-@@ -795,6 +796,8 @@ enum {
- 	REQ_F_REFCOUNT		= BIT(REQ_F_REFCOUNT_BIT),
- 	/* there is a linked timeout that has to be armed */
- 	REQ_F_ARM_LTIMEOUT	= BIT(REQ_F_ARM_LTIMEOUT_BIT),
-+	/* request has already done partial IO */
-+	REQ_F_PARTIAL_IO	= BIT(REQ_F_PARTIAL_IO_BIT),
- };
- 
- struct async_poll {
-@@ -5123,6 +5126,7 @@ static int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
- 			ret = -EINTR;
- 		if (ret > 0 && io_net_retry(sock, flags)) {
- 			sr->done_io += ret;
-+			req->flags |= REQ_F_PARTIAL_IO;
- 			return io_setup_async_msg(req, kmsg);
- 		}
- 		req_set_fail(req);
-@@ -5196,6 +5200,7 @@ static int io_recv(struct io_kiocb *req, unsigned int issue_flags)
- 			sr->len -= ret;
- 			sr->buf += ret;
- 			sr->done_io += ret;
-+			req->flags |= REQ_F_PARTIAL_IO;
- 			return -EAGAIN;
- 		}
- 		req_set_fail(req);
--- 
-2.39.0
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -255,6 +255,7 @@ static void option_instat_callback(struc
+ #define QUECTEL_PRODUCT_EP06			0x0306
+ #define QUECTEL_PRODUCT_EM05G			0x030a
+ #define QUECTEL_PRODUCT_EM060K			0x030b
++#define QUECTEL_PRODUCT_EM05G_CS		0x030c
+ #define QUECTEL_PRODUCT_EM05G_SG		0x0311
+ #define QUECTEL_PRODUCT_EM05G_GR		0x0313
+ #define QUECTEL_PRODUCT_EM12			0x0512
+@@ -1164,6 +1165,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(6) | ZLP },
+ 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_GR, 0xff),
+ 	  .driver_info = RSVD(6) | ZLP },
++	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_CS, 0xff),
++	  .driver_info = RSVD(6) | ZLP },
+ 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_SG, 0xff),
+ 	  .driver_info = RSVD(6) | ZLP },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0x00, 0x40) },
 
 
