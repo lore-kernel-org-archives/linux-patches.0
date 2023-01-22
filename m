@@ -1,25 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68B232590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E66C433EF;
-	Sun, 22 Jan 2023 15:25:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B89E72596
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 259BEC4339B;
+	Sun, 22 Jan 2023 15:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401151;
-	bh=2tIXl+r78TxBro8H69vzKfdMt3V0RHfnwM1ExV95BgU=;
+	s=korg; t=1674401156;
+	bh=43xr4FgWKFFquChX0jKpvibNYUbsckHPDl1XFC8dU8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FjSi/9SQMWF4TLyTK2BjbMoOIIvPb/fFIqzi1ZMpT3U1OOMFGHqIPQyevFwBfiOIQ
-	 Hz9CYDyI40UMR6hH8+CLCO/M+HWtF4wEFyNvYFrg2Z+6IAD87Ppw0Z1P2zZ5judl8U
-	 RKnwoNvNNRouFu/qBBn1ey2k68QWyP6WmmC9O1y0=
+	b=Z2tozyR7TD3HB84GB+pBtaU/PgR8K3iIrQex0B4nDUtvst9hs2sSXJ/usNOoJysJM
+	 Twl8MQXdVpr8PAy5PNgSS8NciY/XvmHLcADCZlJIj6tXWQkqRxsETqR5nzaGdZ8Cjv
+	 o5JiVtnFhj6POC4Pg3v/sHSN+74wsim1a2EcErR4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>
-Subject: [PATCH 6.1 099/193] pktcdvd: check for NULL returna fter calling bio_split_to_limits()
-Date: Sun, 22 Jan 2023 16:03:48 +0100
-Message-Id: <20230122150250.854855315@linuxfoundation.org>
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 101/193] mptcp: explicitly specify sock family at subflow creation time
+Date: Sun, 22 Jan 2023 16:03:50 +0100
+Message-Id: <20230122150250.941466903@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -33,36 +36,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 3e9900f3bd7ba30d60f82b162b70a1dffe4e8e24 upstream.
+commit 6bc1fe7dd748ba5e76e7917d110837cafe7b931c upstream.
 
-The revert of the removal of this driver happened after we fixed up
-the split limits for NOWAIT issue, hence it got missed. Ensure that
-we check for a NULL bio after splitting, in case it should be retried.
+Let the caller specify the to-be-created subflow family.
 
-Marking this as fixing both commits, so that stable backport will do
-this correctly.
+For a given MPTCP socket created with the AF_INET6 family, the current
+userspace PM can already ask the kernel to create subflows in v4 and v6.
+If "plain" IPv4 addresses are passed to the kernel, they are
+automatically mapped in v6 addresses "by accident". This can be
+problematic because the userspace will need to pass different addresses,
+now the v4-mapped-v6 addresses to destroy this new subflow.
 
+On the other hand, if the MPTCP socket has been created with the AF_INET
+family, the command to create a subflow in v6 will be accepted but the
+result will not be the one as expected as new subflow will be created in
+IPv4 using part of the v6 addresses passed to the kernel: not creating
+the expected subflow then.
+
+No functional change intended for the in-kernel PM where an explicit
+enforcement is currently in place. This arbitrary enforcement will be
+leveraged by other patches in a future version.
+
+Fixes: 702c2f646d42 ("mptcp: netlink: allow userspace-driven subflow establishment")
 Cc: stable@vger.kernel.org
-Fixes: 9cea62b2cbab ("block: don't allow splitting of a REQ_NOWAIT bio")
-Fixes: 4b83e99ee709 ("Revert "pktcdvd: remove driver."")
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Co-developed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/pktcdvd.c |    2 ++
- 1 file changed, 2 insertions(+)
+ net/mptcp/protocol.c |    2 +-
+ net/mptcp/protocol.h |    3 ++-
+ net/mptcp/subflow.c  |    9 +++++----
+ 3 files changed, 8 insertions(+), 6 deletions(-)
 
---- a/drivers/block/pktcdvd.c
-+++ b/drivers/block/pktcdvd.c
-@@ -2400,6 +2400,8 @@ static void pkt_submit_bio(struct bio *b
- 	struct bio *split;
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -107,7 +107,7 @@ static int __mptcp_socket_create(struct
+ 	struct socket *ssock;
+ 	int err;
  
- 	bio = bio_split_to_limits(bio);
-+	if (!bio)
-+		return;
+-	err = mptcp_subflow_create_socket(sk, &ssock);
++	err = mptcp_subflow_create_socket(sk, sk->sk_family, &ssock);
+ 	if (err)
+ 		return err;
  
- 	pkt_dbg(2, pd, "start = %6llx stop = %6llx\n",
- 		(unsigned long long)bio->bi_iter.bi_sector,
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -626,7 +626,8 @@ bool mptcp_addresses_equal(const struct
+ /* called with sk socket lock held */
+ int __mptcp_subflow_connect(struct sock *sk, const struct mptcp_addr_info *loc,
+ 			    const struct mptcp_addr_info *remote);
+-int mptcp_subflow_create_socket(struct sock *sk, struct socket **new_sock);
++int mptcp_subflow_create_socket(struct sock *sk, unsigned short family,
++				struct socket **new_sock);
+ void mptcp_info2sockaddr(const struct mptcp_addr_info *info,
+ 			 struct sockaddr_storage *addr,
+ 			 unsigned short family);
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1492,7 +1492,7 @@ int __mptcp_subflow_connect(struct sock
+ 	if (!mptcp_is_fully_established(sk))
+ 		goto err_out;
+ 
+-	err = mptcp_subflow_create_socket(sk, &sf);
++	err = mptcp_subflow_create_socket(sk, loc->family, &sf);
+ 	if (err)
+ 		goto err_out;
+ 
+@@ -1604,7 +1604,9 @@ static void mptcp_subflow_ops_undo_overr
+ #endif
+ 		ssk->sk_prot = &tcp_prot;
+ }
+-int mptcp_subflow_create_socket(struct sock *sk, struct socket **new_sock)
++
++int mptcp_subflow_create_socket(struct sock *sk, unsigned short family,
++				struct socket **new_sock)
+ {
+ 	struct mptcp_subflow_context *subflow;
+ 	struct net *net = sock_net(sk);
+@@ -1617,8 +1619,7 @@ int mptcp_subflow_create_socket(struct s
+ 	if (unlikely(!sk->sk_socket))
+ 		return -EINVAL;
+ 
+-	err = sock_create_kern(net, sk->sk_family, SOCK_STREAM, IPPROTO_TCP,
+-			       &sf);
++	err = sock_create_kern(net, family, SOCK_STREAM, IPPROTO_TCP, &sf);
+ 	if (err)
+ 		return err;
+ 
 
 
