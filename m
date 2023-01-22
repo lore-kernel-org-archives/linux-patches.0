@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00EA72590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:15:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77977C433D2;
-	Sun, 22 Jan 2023 15:15:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A07FB2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:15:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26919C4339C;
+	Sun, 22 Jan 2023 15:15:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400532;
-	bh=cR9uvjcfjcZ0TOmHOJPLGOf8Q+xdVUOZ+X1wf+ZxTI0=;
+	s=korg; t=1674400535;
+	bh=gOZx1U7G2dNUy43vEvs+n3Lgqe5rlGPuiQPvSqMAmvQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rUCypZj9gx+Fq5l19YQlLepjAYMgO2zX9//fxg/CEIxxVjIX22cc4+aZWWumvbxu8
-	 sLgLg541V9/3kWdYiFFdEI7lyTkxy/OPWlIxOe/MOmF4h4WMa0ftpNM0zA/f5Gt7cf
-	 1tkne2LXWzIlhHR64jgL0F69bSb4GYJ9f8A1kYVU=
+	b=QQ2psOGR3J3LiD0NNwmIVF4lCZ4BzKUS0eWB+7wjAjoxMqbXt5iyfqSl7eNYM0u1w
+	 2C+9Lm3gn8Yiu0Hp2KzV7FpRTRJJ6LuEinNfWmPsPFuX5rQZay9n2p9RCyiKTImafS
+	 f5ffAFyc0crlEzLZQKEz0TUWKMD8iQJb1/nvyRkI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Chris Wilson <chris@chris-wilson.co.uk>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Stephane Eranian <eranian@google.com>,
+	Zhang Rui <rui.zhang@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 012/117] f2fs: lets avoid panic if extent_tree is not created
-Date: Sun, 22 Jan 2023 16:03:22 +0100
-Message-Id: <20230122150233.229099193@linuxfoundation.org>
+Subject: [PATCH 5.15 013/117] perf/x86/rapl: Treat Tigerlake like Icelake
+Date: Sun, 22 Jan 2023 16:03:23 +0100
+Message-Id: <20230122150233.259577557@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -34,68 +39,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jaegeuk Kim <jaegeuk@kernel.org>
+From: Chris Wilson <chris@chris-wilson.co.uk>
 
-[ Upstream commit df9d44b645b83fffccfb4e28c1f93376585fdec8 ]
+[ Upstream commit c07311b5509f6035f1dd828db3e90ff4859cf3b9 ]
 
-This patch avoids the below panic.
+Since Tigerlake seems to have inherited its cstates and other RAPL power
+caps from Icelake, assume it also follows Icelake for its RAPL events.
 
-pc : __lookup_extent_tree+0xd8/0x760
-lr : f2fs_do_write_data_page+0x104/0x87c
-sp : ffffffc010cbb3c0
-x29: ffffffc010cbb3e0 x28: 0000000000000000
-x27: ffffff8803e7f020 x26: ffffff8803e7ed40
-x25: ffffff8803e7f020 x24: ffffffc010cbb460
-x23: ffffffc010cbb480 x22: 0000000000000000
-x21: 0000000000000000 x20: ffffffff22e90900
-x19: 0000000000000000 x18: ffffffc010c5d080
-x17: 0000000000000000 x16: 0000000000000020
-x15: ffffffdb1acdbb88 x14: ffffff888759e2b0
-x13: 0000000000000000 x12: ffffff802da49000
-x11: 000000000a001200 x10: ffffff8803e7ed40
-x9 : ffffff8023195800 x8 : ffffff802da49078
-x7 : 0000000000000001 x6 : 0000000000000000
-x5 : 0000000000000006 x4 : ffffffc010cbba28
-x3 : 0000000000000000 x2 : ffffffc010cbb480
-x1 : 0000000000000000 x0 : ffffff8803e7ed40
-Call trace:
- __lookup_extent_tree+0xd8/0x760
- f2fs_do_write_data_page+0x104/0x87c
- f2fs_write_single_data_page+0x420/0xb60
- f2fs_write_cache_pages+0x418/0xb1c
- __f2fs_write_data_pages+0x428/0x58c
- f2fs_write_data_pages+0x30/0x40
- do_writepages+0x88/0x190
- __writeback_single_inode+0x48/0x448
- writeback_sb_inodes+0x468/0x9e8
- __writeback_inodes_wb+0xb8/0x2a4
- wb_writeback+0x33c/0x740
- wb_do_writeback+0x2b4/0x400
- wb_workfn+0xe4/0x34c
- process_one_work+0x24c/0x5bc
- worker_thread+0x3e8/0xa50
- kthread+0x150/0x1b4
-
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Stephane Eranian <eranian@google.com>
+Cc: Zhang Rui <rui.zhang@intel.com>
+Link: https://lore.kernel.org/r/20221228113454.1199118-1-rodrigo.vivi@intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/f2fs/extent_cache.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/x86/events/rapl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/f2fs/extent_cache.c b/fs/f2fs/extent_cache.c
-index 761fd42c93f2..6a9ab5c11939 100644
---- a/fs/f2fs/extent_cache.c
-+++ b/fs/f2fs/extent_cache.c
-@@ -415,7 +415,8 @@ static bool f2fs_lookup_extent_tree(struct inode *inode, pgoff_t pgofs,
- 	struct extent_node *en;
- 	bool ret = false;
- 
--	f2fs_bug_on(sbi, !et);
-+	if (!et)
-+		return false;
- 
- 	trace_f2fs_lookup_extent_tree_start(inode, pgofs);
- 
+diff --git a/arch/x86/events/rapl.c b/arch/x86/events/rapl.c
+index 77e3a47af5ad..840ee43e3e46 100644
+--- a/arch/x86/events/rapl.c
++++ b/arch/x86/events/rapl.c
+@@ -804,6 +804,8 @@ static const struct x86_cpu_id rapl_model_match[] __initconst = {
+ 	X86_MATCH_INTEL_FAM6_MODEL(ICELAKE_X,		&model_hsx),
+ 	X86_MATCH_INTEL_FAM6_MODEL(COMETLAKE_L,		&model_skl),
+ 	X86_MATCH_INTEL_FAM6_MODEL(COMETLAKE,		&model_skl),
++	X86_MATCH_INTEL_FAM6_MODEL(TIGERLAKE_L,		&model_skl),
++	X86_MATCH_INTEL_FAM6_MODEL(TIGERLAKE,		&model_skl),
+ 	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE,		&model_skl),
+ 	X86_MATCH_INTEL_FAM6_MODEL(ALDERLAKE_L,		&model_skl),
+ 	X86_MATCH_INTEL_FAM6_MODEL(SAPPHIRERAPIDS_X,	&model_spr),
 -- 
 2.35.1
 
