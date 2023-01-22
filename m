@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE6D2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 872AEC433EF;
-	Sun, 22 Jan 2023 15:17:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81952590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 308D8C433D2;
+	Sun, 22 Jan 2023 15:17:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400665;
-	bh=IFrkoaFhUcTQrlZeSH4lEOg0VLcehCtOYW7yANN6c9c=;
+	s=korg; t=1674400668;
+	bh=pwlfrExc1ZGFcmpgEfHh/BxZ7h3fcqCAgX1468Hklsg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YHEEB2xHKXjs6PepkE3qO6zOlE9noEFzii3xp1Y6yKaW0KAKqQM6gcOcir99UTUvh
-	 TKGcfeEx+t3BIZGjF4yQOqF2dLaVt+MrBp8HDBz6/V7SjFBhNtsqpkt1dCZFrTgDsT
-	 /fzMpta5ED3olBrlLX3Zw9bJ+7Gq7U1muhsMsrZc=
+	b=dRN+8lp/I8wEsQ13zIeEAHZVU2Nq1mBVDfojWhZ1uTrSLYWZr+bkQOPFYS8ywYTQy
+	 uSi8RwoFcUkYGE6bKLp9QpHf3wOlisPa0HdnE8x31OhFjZvrWZkYZXJnEIHCZiRI3n
+	 +RRetQdvOPYbZuuBNQHY8ds0E+YL96UID5cmHfC4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 5.15 061/117] comedi: adv_pci1760: Fix PWM instruction handling
-Date: Sun, 22 Jan 2023 16:04:11 +0100
-Message-Id: <20230122150235.323201724@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.15 062/117] ACPI: PRM: Check whether EFI runtime is available
+Date: Sun, 22 Jan 2023 16:04:12 +0100
+Message-Id: <20230122150235.365664658@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -33,48 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 2efb6edd52dc50273f5e68ad863dd1b1fb2f2d1c upstream.
+commit 182da6f2b81a78709c58021542fb694f8ed80774 upstream.
 
-(Actually, this is fixing the "Read the Current Status" command sent to
-the device's outgoing mailbox, but it is only currently used for the PWM
-instructions.)
+The ACPI PRM address space handler calls efi_call_virt_pointer() to
+execute PRM firmware code, but doing so is only permitted when the EFI
+runtime environment is available. Otherwise, such calls are guaranteed
+to result in a crash, and must therefore be avoided.
 
-The PCI-1760 is operated mostly by sending commands to a set of Outgoing
-Mailbox registers, waiting for the command to complete, and reading the
-result from the Incoming Mailbox registers.  One of these commands is
-the "Read the Current Status" command.  The number of this command is
-0x07 (see the User's Manual for the PCI-1760 at
-<https://advdownload.advantech.com/productfile/Downloadfile2/1-11P6653/PCI-1760.pdf>.
-The `PCI1760_CMD_GET_STATUS` macro defined in the driver should expand
-to this command number 0x07, but unfortunately it currently expands to
-0x03.  (Command number 0x03 is not defined in the User's Manual.)
-Correct the definition of the `PCI1760_CMD_GET_STATUS` macro to fix it.
+Given that the EFI runtime services may become unavailable after a crash
+occurring in the firmware, we need to check this each time the PRM
+address space handler is invoked. If the EFI runtime services were not
+available at registration time to being with, don't install the address
+space handler at all.
 
-This is used by all the PWM subdevice related instructions handled by
-`pci1760_pwm_insn_config()` which are probably all broken.  The effect
-of sending the undefined command number 0x03 is not known.
-
-Fixes: 14b93bb6bbf0 ("staging: comedi: adv_pci_dio: separate out PCI-1760 support")
-Cc: <stable@vger.kernel.org> # v4.5+
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20230103143754.17564-1-abbotti@mev.co.uk
+Fixes: cefc7ca46235 ("ACPI: PRM: implement OperationRegion handler for the PlatformRtMechanism subtype")
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Cc: All applicable <stable@vger.kernel.org>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/comedi/drivers/adv_pci1760.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/acpi/prmt.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/comedi/drivers/adv_pci1760.c
-+++ b/drivers/comedi/drivers/adv_pci1760.c
-@@ -59,7 +59,7 @@
- #define PCI1760_CMD_CLR_IMB2		0x00	/* Clears IMB2 */
- #define PCI1760_CMD_SET_DO		0x01	/* Set output state */
- #define PCI1760_CMD_GET_DO		0x02	/* Read output status */
--#define PCI1760_CMD_GET_STATUS		0x03	/* Read current status */
-+#define PCI1760_CMD_GET_STATUS		0x07	/* Read current status */
- #define PCI1760_CMD_GET_FW_VER		0x0e	/* Read firmware version */
- #define PCI1760_CMD_GET_HW_VER		0x0f	/* Read hardware version */
- #define PCI1760_CMD_SET_PWM_HI(x)	(0x10 + (x) * 2) /* Set "hi" period */
+--- a/drivers/acpi/prmt.c
++++ b/drivers/acpi/prmt.c
+@@ -219,6 +219,11 @@ static acpi_status acpi_platformrt_space
+ 	efi_status_t status;
+ 	struct prm_context_buffer context;
+ 
++	if (!efi_enabled(EFI_RUNTIME_SERVICES)) {
++		pr_err_ratelimited("PRM: EFI runtime services no longer available\n");
++		return AE_NO_HANDLER;
++	}
++
+ 	/*
+ 	 * The returned acpi_status will always be AE_OK. Error values will be
+ 	 * saved in the first byte of the PRM message buffer to be used by ASL.
+@@ -308,6 +313,11 @@ void __init init_prmt(void)
+ 
+ 	pr_info("PRM: found %u modules\n", mc);
+ 
++	if (!efi_enabled(EFI_RUNTIME_SERVICES)) {
++		pr_err("PRM: EFI runtime services unavailable\n");
++		return;
++	}
++
+ 	status = acpi_install_address_space_handler(ACPI_ROOT_OBJECT,
+ 						    ACPI_ADR_SPACE_PLATFORM_RT,
+ 						    &acpi_platformrt_space_handler,
 
 
