@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88832590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F79FC433EF;
-	Sun, 22 Jan 2023 15:17:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D3A72590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13D67C433EF;
+	Sun, 22 Jan 2023 15:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400639;
-	bh=5uhx895GL7fXMg+/hz5wzEgMZZEtruPx8FLH+waOEnk=;
+	s=korg; t=1674400642;
+	bh=202fxFKgzmoLH52aPHp+YYTOdMIjs95TbGiORmjDutk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BpLXO2d696nNYGvxx94WKbWoM5O6jtXoWNuO7QhHlpdI62qqO/gom59gdeQH3SwX0
-	 99LREOhxy/ri1AFC6bapo1I2m+GYrwTw4URRFf7aWz3l7hxoEGuVo/LOzw2IoDrkHj
-	 l2Aj7Pr6gTHtG//19e5/kv4fHV+i6jspU6ppFvhU=
+	b=BJxt5wy8LODvmdjap29lfJ3AP5ohThjPk1D7bn/CNTbIwn2Jt5ngGCaH2bgbN4mkL
+	 15FAq+8Qi7/3yOsI2FG+YvoTSvElvFj2u2Jgi/FzGSqZlvQDSU7PsWMY91whrqX3fy
+	 BoP4XgRd/nHj00i+xbV3YUEMiB4zx2zfymKnQhko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Duke=20Xin ?= <duke_xinanwen@163.com>,
+	Ali Mirghasemi <ali.mirghasemi1376@gmail.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.15 052/117] USB: serial: option: add Quectel EM05-G (RS) modem
-Date: Sun, 22 Jan 2023 16:04:02 +0100
-Message-Id: <20230122150234.919586569@linuxfoundation.org>
+Subject: [PATCH 5.15 053/117] USB: serial: option: add Quectel EC200U modem
+Date: Sun, 22 Jan 2023 16:04:03 +0100
+Message-Id: <20230122150234.971801801@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -34,104 +34,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Duke Xin(辛安文) <duke_xinanwen@163.com>
+From: Ali Mirghasemi <ali.mirghasemi1376@gmail.com>
 
-commit b72d13977689f0c717444010e108c4f20658dfee upstream.
+commit d9bbb15881046bd76f8710c76e26a740eee997ef upstream.
 
-The EM05-G (RS) modem has 2 USB configurations that are configurable via
-the AT command AT+QCFG="usbnet",[ 0 | 2 ] which make the modem enumerate
-with the following interfaces, respectively:
+Add support for EC200U modem
 
-"RMNET" : AT + DIAG + NMEA + Modem + QMI
-"MBIM"  : MBIM + AT + DIAG + NMEA + Modem
+0x0901: EC200U - AT + AP + CP + NMEA + DIAG + MOS
 
-The detailed description of the USB configuration for each mode as follows:
-
-RMNET Mode
---------------
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 21 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0314 Rev= 3.18
-S:  Manufacturer=Quectel
-S:  Product=Quectel EM05-G
-C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+usb-device output:
+T: Bus=01 Lev=02 Prnt=02 Port=02 Cnt=01 Dev#= 4 Spd=480 MxCh= 0
+D: Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs= 1
+P: Vendor=2c7c ProdID=0901 Rev= 3.18
+S: Manufacturer=Android
+S: Product=Android
+C:* #Ifs= 9 Cfg#= 1 Atr=e0 MxPwr=400mA
+A: FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=06 Prot=00
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
+E: Ad=81(I) Atr=03(Int.) MxPS= 16 Ivl=32ms
+I: If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
+E: Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 6 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
-E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=83(I) Atr=03(Int.) MxPS= 512 Ivl=4096ms
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 7 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=89(I) Atr=03(Int.) MxPS= 512 Ivl=4096ms
+I:* If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E: Ad=8b(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E: Ad=08(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
 
-MBIM Mode
---------------
-T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 16 Spd=480  MxCh= 0
-D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=0314 Rev= 3.18
-S:  Manufacturer=Quectel
-S:  Product=Quectel EM05-G
-C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
-A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
-E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
-E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
-E:  Ad=89(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
-I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
-E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-
-Signed-off-by: Duke Xin(辛安文) <duke_xinanwen@163.com>
+Signed-off-by: Ali Mirghasemi <ali.mirghasemi1376@gmail.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/usb/serial/option.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
-@@ -258,6 +258,7 @@ static void option_instat_callback(struc
- #define QUECTEL_PRODUCT_EM05G_CS		0x030c
- #define QUECTEL_PRODUCT_EM05G_SG		0x0311
- #define QUECTEL_PRODUCT_EM05G_GR		0x0313
-+#define QUECTEL_PRODUCT_EM05G_RS		0x0314
+@@ -262,6 +262,7 @@ static void option_instat_callback(struc
  #define QUECTEL_PRODUCT_EM12			0x0512
  #define QUECTEL_PRODUCT_RM500Q			0x0800
  #define QUECTEL_PRODUCT_RM520N			0x0801
-@@ -1167,6 +1168,8 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(6) | ZLP },
- 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_CS, 0xff),
- 	  .driver_info = RSVD(6) | ZLP },
-+	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_RS, 0xff),
-+	  .driver_info = RSVD(6) | ZLP },
- 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_SG, 0xff),
- 	  .driver_info = RSVD(6) | ZLP },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0x00, 0x40) },
++#define QUECTEL_PRODUCT_EC200U			0x0901
+ #define QUECTEL_PRODUCT_EC200S_CN		0x6002
+ #define QUECTEL_PRODUCT_EC200T			0x6026
+ #define QUECTEL_PRODUCT_RM500K			0x7001
+@@ -1189,6 +1190,7 @@ static const struct usb_device_id option
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM520N, 0xff, 0xff, 0x30) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM520N, 0xff, 0, 0x40) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM520N, 0xff, 0, 0) },
++	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200U, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200S_CN, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200T, 0xff, 0, 0) },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
 
 
