@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75EC92590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:20:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D29C9C433D2;
-	Sun, 22 Jan 2023 15:20:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F08362596
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:20:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7459AC433EF;
+	Sun, 22 Jan 2023 15:20:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400802;
-	bh=ICVkj3mEfWpJ905MfHl3h2x+idY6wwkIXMcQob2u9BA=;
+	s=korg; t=1674400804;
+	bh=LjJuK/tkDFUQaJ3L4JDTNnroWDZsql2pY7GXQzrX0VQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XEU+UHyB71+p68+Eg+XTl42V6blMSWMcD1r0+21GnircZDNMThF6pWABCW4kcw270
-	 +I+IKzg3I3vsMS2YHyb5F1DjHxerHDE7CabzpDZgjqjFoOOVNJy/RmT0XnC2kM/t1y
-	 SJzE+7U9JFEBUKUrA1IqFNjgAuRocwmeFfTTRqQE=
+	b=JZo+RYmdJ9X6E5ngN+i70A5g1hkliJ7AL+XQUH0ZJXJZdKaIkG5fF/5umICBWZPf+
+	 oiswVRNONlEFf/6/VyAwT+P9WUzi0JOO4D3mvhItsGZJA1IQEoYt8jJH44OxyBKCvN
+	 TL3bNQb9IumiucgOz07I24AlxThy8DRx8POyh4O4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Melissa Wen <mwen@igalia.com>,
-	Joshua Ashton <joshua@froggi.es>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 097/117] drm/amd/display: Calculate output_color_space after pixel encoding adjustment
-Date: Sun, 22 Jan 2023 16:04:47 +0100
-Message-Id: <20230122150236.865084441@linuxfoundation.org>
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 5.15 115/117] block: mq-deadline: Rename deadline_is_seq_writes()
+Date: Sun, 22 Jan 2023 16:05:05 +0100
+Message-Id: <20230122150237.595780837@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -35,45 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joshua Ashton <joshua@froggi.es>
+From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 
-commit 79601b894849cb6f6d6122e6590f1887ac4a66b3 upstream.
+commit 3692fec8bb476e8583e559ff5783a6adef306cf2 upstream.
 
-Code in get_output_color_space depends on knowing the pixel encoding to
-determine whether to pick between eg. COLOR_SPACE_SRGB or
-COLOR_SPACE_YCBCR709 for transparent RGB -> YCbCr 4:4:4 in the driver.
+Rename deadline_is_seq_writes() to deadline_is_seq_write() (remove the
+"s" plural) to more correctly reflect the fact that this function tests
+a single request, not multiple requests.
 
-v2: Fixed patch being accidentally based on a personal feature branch, oops!
-
-Fixes: ea117312ea9f ("drm/amd/display: Reduce HDMI pixel encoding if max clock is exceeded")
-Reviewed-by: Melissa Wen <mwen@igalia.com>
-Signed-off-by: Joshua Ashton <joshua@froggi.es>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Fixes: 015d02f48537 ("block: mq-deadline: Do not break sequential write streams to zoned HDDs")
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Link: https://lore.kernel.org/r/20221126025550.967914-2-damien.lemoal@opensource.wdc.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    4 ++--
+ block/mq-deadline.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -5855,8 +5855,6 @@ static void fill_stream_properties_from_
+--- a/block/mq-deadline.c
++++ b/block/mq-deadline.c
+@@ -305,7 +305,7 @@ static inline int deadline_check_fifo(st
+ /*
+  * Check if rq has a sequential request preceding it.
+  */
+-static bool deadline_is_seq_writes(struct deadline_data *dd, struct request *rq)
++static bool deadline_is_seq_write(struct deadline_data *dd, struct request *rq)
+ {
+ 	struct request *prev = deadline_earlier_request(rq);
  
- 	timing_out->aspect_ratio = get_aspect_ratio(mode_in);
- 
--	stream->output_color_space = get_output_color_space(timing_out);
--
- 	stream->out_transfer_func->type = TF_TYPE_PREDEFINED;
- 	stream->out_transfer_func->tf = TRANSFER_FUNCTION_SRGB;
- 	if (stream->signal == SIGNAL_TYPE_HDMI_TYPE_A) {
-@@ -5867,6 +5865,8 @@ static void fill_stream_properties_from_
- 			adjust_colour_depth_from_display_info(timing_out, info);
- 		}
+@@ -364,7 +364,7 @@ deadline_fifo_request(struct deadline_da
+ 	list_for_each_entry(rq, &per_prio->fifo_list[DD_WRITE], queuelist) {
+ 		if (blk_req_can_dispatch_to_zone(rq) &&
+ 		    (blk_queue_nonrot(rq->q) ||
+-		     !deadline_is_seq_writes(dd, rq)))
++		     !deadline_is_seq_write(dd, rq)))
+ 			goto out;
  	}
-+
-+	stream->output_color_space = get_output_color_space(timing_out);
- }
- 
- static void fill_audio_info(struct audio_info *audio_info,
+ 	rq = NULL;
 
 
