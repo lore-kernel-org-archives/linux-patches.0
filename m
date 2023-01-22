@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E9B2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4EEC433EF;
-	Sun, 22 Jan 2023 15:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D83F32590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E51AC433EF;
+	Sun, 22 Jan 2023 15:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400671;
-	bh=FOFP9nrlG86RrL5GkBjkrl0jdbHYhWrjUxaYw/cbLHs=;
+	s=korg; t=1674400673;
+	bh=3cRGBHDByLnAZeCjvn7v97G2SNm9CO8kgin0q7ZsY00=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+YW+v+LmZGu1Em2BvSakqfjgIZMLz57zHCu1MWy49arxpicv7F6o2xQ3Bqv/L/kZ
-	 h+sKbzp6wJpGnZ+PpW1W6dKvn67Fw4rE7oxKNl6dYWcg7YYs2e0laTOTHrv4moK4e0
-	 ZgWGrJZIRXkHGyg5HpzX1GGfPSy+mpmagFjGzPeg=
+	b=2Nw0StOBVEkXdXtl326g4niHVJ6xIfVUdnyTVGz76Q3p3DyE/Sj/riuEB/Wzq8Zrr
+	 S7kwoiIGfxvYi8bwVmxkcXpn2/8d9ALyOw8scP8dcgYym4uhjXW1klBDOfs8mFPNMq
+	 vSEIUYR+K7MquNyhPKAL/mf0GXvJXg2LWNzv2NNc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Dylan Yudaken <dylany@fb.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/117] io_uring: allow re-poll if we made progress
-Date: Sun, 22 Jan 2023 16:03:45 +0100
-Message-Id: <20230122150234.187195033@linuxfoundation.org>
+Subject: [PATCH 5.15 036/117] io_uring: fix async accept on O_NONBLOCK sockets
+Date: Sun, 22 Jan 2023 16:03:46 +0100
+Message-Id: <20230122150234.230902259@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -34,51 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Dylan Yudaken <dylany@meta.com>
 
-commit 10c873334febaeea9aa0c25c10b5ac0951b77a5f upstream.
+commit a73825ba70c93e1eb39a845bb3d9885a787f8ffe upstream.
 
-We currently check REQ_F_POLLED before arming async poll for a
-notification to retry. If it's set, then we don't allow poll and will
-punt to io-wq instead. This is done to prevent a situation where a buggy
-driver will repeatedly return that there's space/data available yet we
-get -EAGAIN.
+Do not set REQ_F_NOWAIT if the socket is non blocking. When enabled this
+causes the accept to immediately post a CQE with EAGAIN, which means you
+cannot perform an accept SQE on a NONBLOCK socket asynchronously.
 
-However, if we already transferred data, then it should be safe to rely
-on poll again. Gate the check on whether or not REQ_F_PARTIAL_IO is
-also set.
+By removing the flag if there is no pending accept then poll is armed as
+usual and when a connection comes in the CQE is posted.
 
+Signed-off-by: Dylan Yudaken <dylany@fb.com>
+Link: https://lore.kernel.org/r/20220324143435.2875844-1-dylany@fb.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
 diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 3fb76863fed4..997a7264e1d4 100644
+index 997a7264e1d4..e1e15d40d758 100644
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -5853,7 +5853,7 @@ static int io_arm_poll_handler(struct io_kiocb *req)
+@@ -5272,9 +5272,6 @@ static int io_accept(struct io_kiocb *req, unsigned int issue_flags)
+ 	struct file *file;
+ 	int ret, fd;
  
- 	if (!req->file || !file_can_poll(req->file))
- 		return IO_APOLL_ABORTED;
--	if (req->flags & REQ_F_POLLED)
-+	if ((req->flags & (REQ_F_POLLED|REQ_F_PARTIAL_IO)) == REQ_F_POLLED)
- 		return IO_APOLL_ABORTED;
- 	if (!def->pollin && !def->pollout)
- 		return IO_APOLL_ABORTED;
-@@ -5869,7 +5869,10 @@ static int io_arm_poll_handler(struct io_kiocb *req)
- 		mask |= POLLOUT | POLLWRNORM;
- 	}
- 
--	apoll = kmalloc(sizeof(*apoll), GFP_ATOMIC);
-+	if (req->flags & REQ_F_POLLED)
-+		apoll = req->apoll;
-+	else
-+		apoll = kmalloc(sizeof(*apoll), GFP_ATOMIC);
- 	if (unlikely(!apoll))
- 		return IO_APOLL_ABORTED;
- 	apoll->double_poll = NULL;
+-	if (req->file->f_flags & O_NONBLOCK)
+-		req->flags |= REQ_F_NOWAIT;
+-
+ 	if (!fixed) {
+ 		fd = __get_unused_fd_flags(accept->flags, accept->nofile);
+ 		if (unlikely(fd < 0))
+@@ -5286,6 +5283,8 @@ static int io_accept(struct io_kiocb *req, unsigned int issue_flags)
+ 		if (!fixed)
+ 			put_unused_fd(fd);
+ 		ret = PTR_ERR(file);
++		/* safe to retry */
++		req->flags |= REQ_F_PARTIAL_IO;
+ 		if (ret == -EAGAIN && force_nonblock)
+ 			return -EAGAIN;
+ 		if (ret == -ERESTARTSYS)
 -- 
 2.39.0
 
