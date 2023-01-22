@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB9057E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:11:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51A18C433D2;
-	Sun, 22 Jan 2023 15:11:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724BE7E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:11:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB0A6C433D2;
+	Sun, 22 Jan 2023 15:11:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400274;
-	bh=KQ9GSFi/gBXixh07AHwXO7MLP5yFAfUeT/rlCUjb86E=;
+	s=korg; t=1674400277;
+	bh=be1rpJOWMEUbQjXMKnoS5KnZj9qWs18U9u5Ne05rBI8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JsMOhlxY96Pjys+4660MAOAfQe8bCpq+u91K6mj4T7EVzAMmIpomQj1cn6p3OInQ1
-	 i0ft4kiT19nx+5LkyXXhV1JfRSbzNO8ilJkSjpBiPmHq4lN5ARJ9TpU8K0YW+OXlgk
-	 lK4UUQkw71rvEIBWXp3+4Jc4N4kfJ8Qyepti9anY=
+	b=rZN0ji9xZ1yCHPEVjPnX/EEhaDaxN20Ry7DFe3CVhcWq5fRP2siwjrGyEAKBd8wrk
+	 ZAMqmncsjTC/jNfPDUdKkK0MoPqrod9cLPtRdhuwdv5g9CWkQ0ikrqrxQimH5/5+XP
+	 RkgiBquPYQNCnAEAE0JLEdbkpQcItU+EoRpJuQlQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Subject: [PATCH 5.10 13/98] zonefs: Detect append writes at invalid locations
-Date: Sun, 22 Jan 2023 16:03:29 +0100
-Message-Id: <20230122150229.993477181@linuxfoundation.org>
+	Olga Kornievskaia <kolga@netapp.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 02/98] pNFS/filelayout: Fix coalescing test for single DS
+Date: Sun, 22 Jan 2023 16:03:18 +0100
+Message-Id: <20230122150229.473799436@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -34,72 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Olga Kornievskaia <olga.kornievskaia@gmail.com>
 
-commit a608da3bd730d718f2d3ebec1c26f9865f8f17ce upstream.
+[ Upstream commit a6b9d2fa0024e7e399c26facd0fb466b7396e2b9 ]
 
-Using REQ_OP_ZONE_APPEND operations for synchronous writes to sequential
-files succeeds regardless of the zone write pointer position, as long as
-the target zone is not full. This means that if an external (buggy)
-application writes to the zone of a sequential file underneath the file
-system, subsequent file write() operation will succeed but the file size
-will not be correct and the file will contain invalid data written by
-another application.
+When there is a single DS no striping constraints need to be placed on
+the IO. When such constraint is applied then buffered reads don't
+coalesce to the DS's rsize.
 
-Modify zonefs_file_dio_append() to check the written sector of an append
-write (returned in bio->bi_iter.bi_sector) and return -EIO if there is a
-mismatch with the file zone wp offset field. This change triggers a call
-to zonefs_io_error() and a zone check. Modify zonefs_io_error_cb() to
-not expose the unexpected data after the current inode size when the
-errors=remount-ro mode is used. Other error modes are correctly handled
-already.
-
-Fixes: 02ef12a663c7 ("zonefs: use REQ_OP_ZONE_APPEND for sync DIO")
-Cc: stable@vger.kernel.org
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/zonefs/super.c |   22 ++++++++++++++++++++++
- 1 file changed, 22 insertions(+)
+ fs/nfs/filelayout/filelayout.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/zonefs/super.c
-+++ b/fs/zonefs/super.c
-@@ -394,6 +394,10 @@ static int zonefs_io_error_cb(struct blk
- 			data_size = zonefs_check_zone_condition(inode, zone,
- 								false, false);
- 		}
-+	} else if (sbi->s_mount_opts & ZONEFS_MNTOPT_ERRORS_RO &&
-+		   data_size > isize) {
-+		/* Do not expose garbage data */
-+		data_size = isize;
- 	}
+diff --git a/fs/nfs/filelayout/filelayout.c b/fs/nfs/filelayout/filelayout.c
+index ae5ed3a07494..deecfb50dd7e 100644
+--- a/fs/nfs/filelayout/filelayout.c
++++ b/fs/nfs/filelayout/filelayout.c
+@@ -783,6 +783,12 @@ filelayout_alloc_lseg(struct pnfs_layout_hdr *layoutid,
+ 	return &fl->generic_hdr;
+ }
  
- 	/*
-@@ -772,6 +776,24 @@ static ssize_t zonefs_file_dio_append(st
- 
- 	ret = submit_bio_wait(bio);
- 
-+	/*
-+	 * If the file zone was written underneath the file system, the zone
-+	 * write pointer may not be where we expect it to be, but the zone
-+	 * append write can still succeed. So check manually that we wrote where
-+	 * we intended to, that is, at zi->i_wpoffset.
-+	 */
-+	if (!ret) {
-+		sector_t wpsector =
-+			zi->i_zsector + (zi->i_wpoffset >> SECTOR_SHIFT);
++static bool
++filelayout_lseg_is_striped(const struct nfs4_filelayout_segment *flseg)
++{
++	return flseg->num_fh > 1;
++}
 +
-+		if (bio->bi_iter.bi_sector != wpsector) {
-+			zonefs_warn(inode->i_sb,
-+				"Corrupted write pointer %llu for zone at %llu\n",
-+				wpsector, zi->i_zsector);
-+			ret = -EIO;
-+		}
-+	}
-+
- 	zonefs_file_write_dio_end_io(iocb, size, ret, 0);
+ /*
+  * filelayout_pg_test(). Called by nfs_can_coalesce_requests()
+  *
+@@ -803,6 +809,8 @@ filelayout_pg_test(struct nfs_pageio_descriptor *pgio, struct nfs_page *prev,
+ 	size = pnfs_generic_pg_test(pgio, prev, req);
+ 	if (!size)
+ 		return 0;
++	else if (!filelayout_lseg_is_striped(FILELAYOUT_LSEG(pgio->pg_lseg)))
++		return size;
  
- out_release:
+ 	/* see if req and prev are in the same stripe */
+ 	if (prev) {
+-- 
+2.35.1
+
 
 
