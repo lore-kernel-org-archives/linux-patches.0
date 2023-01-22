@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3952590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:13:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4002DC433EF;
-	Sun, 22 Jan 2023 15:13:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF9302596
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:13:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7445DC433EF;
+	Sun, 22 Jan 2023 15:13:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400424;
-	bh=1gPbY/mnjbiEWaDYrFB2NlAa80InPf/V3rowh74uoe8=;
+	s=korg; t=1674400429;
+	bh=0KAmPp0KnZxWX4uPI6TiN52TewChr6TWlZBRkhz/p1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MGfrznR0gBYHf7UCFwi9FFyP+BrYPX89c4GsQSZCSHp9Zof0RhF2vbAwcF+ZZC65t
-	 K8fb4G8lthgu+neHJaAzDKPISyjchvFtJY2K9l6MHafpS4ES60LGkt6lOBrO77eR8j
-	 njl9hyrKPJ6sVlulv6lQ0+3ke1Bk48RX2cwnEER8=
+	b=cIiLbEkmVLo+7Gi9B/PtggH+NpzGaQ34s5a+IkC9DjnU+8nxzSYAk2ZclpqKGa4Be
+	 J5dG0iCFzhWwk+FgFEh4HXuzrUNql2zuoUebTabxv9M7EHR1fT+INsT6ArEWQjn2AS
+	 yIzvjD9S6JE3plvxS+zvypCAzg3XV5C0A2KIk5vw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.10 69/98] dt-bindings: phy: g12a-usb2-phy: fix compatible string documentation
-Date: Sun, 22 Jan 2023 16:04:25 +0100
-Message-Id: <20230122150232.358617712@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 5.10 71/98] serial: pch_uart: Pass correct sg to dma_unmap_sg()
+Date: Sun, 22 Jan 2023 16:04:27 +0100
+Message-Id: <20230122150232.442893287@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -36,188 +33,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit c63835bf1c750c9b3aec1d5c23d811d6375fc23d upstream.
+commit e8914b52e5b024e4af3d810a935fe0805eee8a36 upstream.
 
-The compatible strings in the driver don't have the meson prefix.
-Fix this in the documentation and rename the file accordingly.
+A local variable sg is used to store scatterlist pointer in
+pch_dma_tx_complete(). The for loop doing Tx byte accounting before
+dma_unmap_sg() alters sg in its increment statement. Therefore, the
+pointer passed into dma_unmap_sg() won't match to the one given to
+dma_map_sg().
 
-Fixes: da86d286cce8 ("dt-bindings: phy: meson-g12a-usb2-phy: convert to yaml")
+To fix the problem, use priv->sg_tx_p directly in dma_unmap_sg()
+instead of the local variable.
+
+Fixes: da3564ee027e ("pch_uart: add multi-scatter processing")
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/8d960029-e94d-224b-911f-03e5deb47ebc@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20230103093435.4396-1-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml       |   78 ++++++++++
- Documentation/devicetree/bindings/phy/amlogic,meson-g12a-usb2-phy.yaml |   78 ----------
- 2 files changed, 78 insertions(+), 78 deletions(-)
- rename Documentation/devicetree/bindings/phy/{amlogic,meson-g12a-usb2-phy.yaml => amlogic,g12a-usb2-phy.yaml} (85%)
+ drivers/tty/serial/pch_uart.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- /dev/null
-+++ b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
-@@ -0,0 +1,78 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+# Copyright 2019 BayLibre, SAS
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/phy/amlogic,g12a-usb2-phy.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: Amlogic G12A USB2 PHY
-+
-+maintainers:
-+  - Neil Armstrong <narmstrong@baylibre.com>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - amlogic,g12a-usb2-phy
-+      - amlogic,a1-usb2-phy
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    maxItems: 1
-+
-+  clock-names:
-+    items:
-+      - const: xtal
-+
-+  resets:
-+    maxItems: 1
-+
-+  reset-names:
-+    items:
-+      - const: phy
-+
-+  "#phy-cells":
-+    const: 0
-+
-+  phy-supply:
-+    description:
-+      Phandle to a regulator that provides power to the PHY. This
-+      regulator will be managed during the PHY power on/off sequence.
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - resets
-+  - reset-names
-+  - "#phy-cells"
-+
-+if:
-+  properties:
-+    compatible:
-+      enum:
-+        - amlogic,meson-a1-usb-ctrl
-+
-+then:
-+  properties:
-+    power-domains:
-+      maxItems: 1
-+  required:
-+    - power-domains
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    phy@36000 {
-+          compatible = "amlogic,g12a-usb2-phy";
-+          reg = <0x36000 0x2000>;
-+          clocks = <&xtal>;
-+          clock-names = "xtal";
-+          resets = <&phy_reset>;
-+          reset-names = "phy";
-+          #phy-cells = <0>;
-+    };
---- a/Documentation/devicetree/bindings/phy/amlogic,meson-g12a-usb2-phy.yaml
-+++ /dev/null
-@@ -1,78 +0,0 @@
--# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
--# Copyright 2019 BayLibre, SAS
--%YAML 1.2
-----
--$id: "http://devicetree.org/schemas/phy/amlogic,meson-g12a-usb2-phy.yaml#"
--$schema: "http://devicetree.org/meta-schemas/core.yaml#"
--
--title: Amlogic G12A USB2 PHY
--
--maintainers:
--  - Neil Armstrong <narmstrong@baylibre.com>
--
--properties:
--  compatible:
--    enum:
--      - amlogic,meson-g12a-usb2-phy
--      - amlogic,meson-a1-usb2-phy
--
--  reg:
--    maxItems: 1
--
--  clocks:
--    maxItems: 1
--
--  clock-names:
--    items:
--      - const: xtal
--
--  resets:
--    maxItems: 1
--
--  reset-names:
--    items:
--      - const: phy
--
--  "#phy-cells":
--    const: 0
--
--  phy-supply:
--    description:
--      Phandle to a regulator that provides power to the PHY. This
--      regulator will be managed during the PHY power on/off sequence.
--
--required:
--  - compatible
--  - reg
--  - clocks
--  - clock-names
--  - resets
--  - reset-names
--  - "#phy-cells"
--
--if:
--  properties:
--    compatible:
--      enum:
--        - amlogic,meson-a1-usb-ctrl
--
--then:
--  properties:
--    power-domains:
--      maxItems: 1
--  required:
--    - power-domains
--
--additionalProperties: false
--
--examples:
--  - |
--    phy@36000 {
--          compatible = "amlogic,meson-g12a-usb2-phy";
--          reg = <0x36000 0x2000>;
--          clocks = <&xtal>;
--          clock-names = "xtal";
--          resets = <&phy_reset>;
--          reset-names = "phy";
--          #phy-cells = <0>;
--    };
+--- a/drivers/tty/serial/pch_uart.c
++++ b/drivers/tty/serial/pch_uart.c
+@@ -769,7 +769,7 @@ static void pch_dma_tx_complete(void *ar
+ 	}
+ 	xmit->tail &= UART_XMIT_SIZE - 1;
+ 	async_tx_ack(priv->desc_tx);
+-	dma_unmap_sg(port->dev, sg, priv->orig_nent, DMA_TO_DEVICE);
++	dma_unmap_sg(port->dev, priv->sg_tx_p, priv->orig_nent, DMA_TO_DEVICE);
+ 	priv->tx_dma_use = 0;
+ 	priv->nent = 0;
+ 	priv->orig_nent = 0;
 
 
