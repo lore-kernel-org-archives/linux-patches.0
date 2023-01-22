@@ -1,202 +1,94 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ej1-f49.google.com (mail-ej1-f49.google.com [209.85.218.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E77332590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:29:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 562C4C433D2;
-	Sun, 22 Jan 2023 15:29:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401345;
-	bh=ogqao7vrD0FB132jtaO2lwBFciMwG2oaXoz9NBVjVZA=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=Fl1pT9f340TAasXcq+7h5+ADynOa8jHPmz6G6hqq6gTWPHybS9Dq0mRnbL08bmtPr
-	 BcUExYmfXanKviZlOsLqq9dPKUdFmJmjSh1z0pA+kVUX4mafnj14sIFVKROmFeMMRM
-	 wERsvizlq/jZXdADgSno1XBpj4HsxUZWZvR4woqA=
-Date: Sun, 22 Jan 2023 16:07:38 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Dokyung Song <dokyungs@yonsei.ac.kr>,
-	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
-	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
-	Kalle Valo <kvalo@kernel.org>, Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 4.14 230/338] wifi: brcmfmac: Fix potential
- shift-out-of-bounds in brcmf_fw_alloc_request()
-Message-ID: <Y81ROjTsMGs++M3J@kroah.com>
-References: <20230116154820.689115727@linuxfoundation.org>
- <20230116154831.072581217@linuxfoundation.org>
- <Y8gccXXyE30sbPSg@dev-arch.thelio-3990X>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5F7E138B
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 22:54:33 +0000 (UTC)
+Received: by mail-ej1-f49.google.com with SMTP id az20so26394046ejc.1
+        for <patches@lists.linux.dev>; Sun, 22 Jan 2023 14:54:33 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=futuring-girl-com.20210112.gappssmtp.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=bMkGNYI/fHgvu0vw4xYIcVeU8+WBV4ArAcWUlG7Zc2o=;
+        b=PhbxiQNidA1tVM9zIsUxDzkyQt3k2tOeIFAwnqAZCHMBaURy8ctAh7ILXXj/0yVKri
+         Wnkgyj0CH3noCfHnCIbGqpwuR1rGov1STqItytgKUxnmeyoc/CJsm7BSugtzTo87ps6A
+         pRPvtIg/W3GWpJaqcdqCFDjxJ/+AyDHBcgalCQbkiAMuGykgKZk61PtZKiktPANY4nYI
+         pVF04va2QHggKOzLDmsSloSXOA4Z5y06Cs63FaNZIwGf3OxH57V0PosDCHquEuais7OO
+         pQ4kK5HVyY/4cq6mx9qyzuYpb+sB4cKgx/acsyK60rnxy8jZ1ZTYULwj026kUauUijNT
+         aUyg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=bMkGNYI/fHgvu0vw4xYIcVeU8+WBV4ArAcWUlG7Zc2o=;
+        b=AHL1FGWPwXIXuqPW0MwYHY1roeP9QZJqyKkYQLQBLpgu72OYUj0N1uUcXt00bJ31xk
+         7mfUmH4VP41iKCCjvFgwe9WM8KJvYJd+UXilGL/64lbsIlDUxTXX1+00KSSaEFBzX9/z
+         Bps09JX6DI7xYh+Q30NrnylUDi2UCeZQtWLtHfB5j+0SJAWZ08dZvhYSYqxo6eKKjyOQ
+         RSAn8VS64t1OP0TYaXO7vjeV9P/J92SNeAobLMx+jRBIXDv19wsfVr4euRIdIizmj1F5
+         16j381T7QQri4EJE4uRXL47Tjs8YHkXU8ACsV4GNrhCDGGYybbEt/5npvdE9LtpUI8Hy
+         gMKA==
+X-Gm-Message-State: AFqh2kpD+YS5QNo4ditBsR+gNl9xc/3qRtuSEy2DEPjCaqqYIGa40w4/
+	PqPQ3RUjKqBkR2IOLXjL7Je9ul/Gj8/XvQWgNNYsCw==
+X-Google-Smtp-Source: AMrXdXtuKaI+bneEJSDWwLYwvpPi/J8MILQ3ySzWME8Ff5KKH//OwvdRHAbh7G4hAX7a5pt/RGPao3aXP7XV8QBdi+g=
+X-Received: by 2002:a17:906:df49:b0:7c1:908e:709e with SMTP id
+ if9-20020a170906df4900b007c1908e709emr1860050ejc.414.1674428071778; Sun, 22
+ Jan 2023 14:54:31 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y8gccXXyE30sbPSg@dev-arch.thelio-3990X>
+References: <20230122150246.321043584@linuxfoundation.org>
+In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
+From: ogasawara takeshi <takeshi.ogasawara@futuring-girl.com>
+Date: Mon, 23 Jan 2023 07:54:20 +0900
+Message-ID: <CAKL4bV4D+woPBzYXRhTws0S3zqgzuracc52bNT3EyHLV5zLkwQ@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/193] 6.1.8-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 
-On Wed, Jan 18, 2023 at 09:21:05AM -0700, Nathan Chancellor wrote:
-> On Mon, Jan 16, 2023 at 04:51:43PM +0100, Greg Kroah-Hartman wrote:
-> > From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-> > 
-> > [ Upstream commit 81d17f6f3331f03c8eafdacea68ab773426c1e3c ]
-> > 
-> > This patch fixes a shift-out-of-bounds in brcmfmac that occurs in
-> > BIT(chiprev) when a 'chiprev' provided by the device is too large.
-> > It should also not be equal to or greater than BITS_PER_TYPE(u32)
-> > as we do bitwise AND with a u32 variable and BIT(chiprev). The patch
-> > adds a check that makes the function return NULL if that is the case.
-> > Note that the NULL case is later handled by the bus-specific caller,
-> > brcmf_usb_probe_cb() or brcmf_usb_reset_resume(), for example.
-> > 
-> > Found by a modified version of syzkaller.
-> > 
-> > UBSAN: shift-out-of-bounds in drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-> > shift exponent 151055786 is too large for 64-bit type 'long unsigned int'
-> > CPU: 0 PID: 1885 Comm: kworker/0:2 Tainted: G           O      5.14.0+ #132
-> > Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
-> > Workqueue: usb_hub_wq hub_event
-> > Call Trace:
-> >  dump_stack_lvl+0x57/0x7d
-> >  ubsan_epilogue+0x5/0x40
-> >  __ubsan_handle_shift_out_of_bounds.cold+0x53/0xdb
-> >  ? lock_chain_count+0x20/0x20
-> >  brcmf_fw_alloc_request.cold+0x19/0x3ea
-> >  ? brcmf_fw_get_firmwares+0x250/0x250
-> >  ? brcmf_usb_ioctl_resp_wait+0x1a7/0x1f0
-> >  brcmf_usb_get_fwname+0x114/0x1a0
-> >  ? brcmf_usb_reset_resume+0x120/0x120
-> >  ? number+0x6c4/0x9a0
-> >  brcmf_c_process_clm_blob+0x168/0x590
-> >  ? put_dec+0x90/0x90
-> >  ? enable_ptr_key_workfn+0x20/0x20
-> >  ? brcmf_common_pd_remove+0x50/0x50
-> >  ? rcu_read_lock_sched_held+0xa1/0xd0
-> >  brcmf_c_preinit_dcmds+0x673/0xc40
-> >  ? brcmf_c_set_joinpref_default+0x100/0x100
-> >  ? rcu_read_lock_sched_held+0xa1/0xd0
-> >  ? rcu_read_lock_bh_held+0xb0/0xb0
-> >  ? lock_acquire+0x19d/0x4e0
-> >  ? find_held_lock+0x2d/0x110
-> >  ? brcmf_usb_deq+0x1cc/0x260
-> >  ? mark_held_locks+0x9f/0xe0
-> >  ? lockdep_hardirqs_on_prepare+0x273/0x3e0
-> >  ? _raw_spin_unlock_irqrestore+0x47/0x50
-> >  ? trace_hardirqs_on+0x1c/0x120
-> >  ? brcmf_usb_deq+0x1a7/0x260
-> >  ? brcmf_usb_rx_fill_all+0x5a/0xf0
-> >  brcmf_attach+0x246/0xd40
-> >  ? wiphy_new_nm+0x1476/0x1d50
-> >  ? kmemdup+0x30/0x40
-> >  brcmf_usb_probe+0x12de/0x1690
-> >  ? brcmf_usbdev_qinit.constprop.0+0x470/0x470
-> >  usb_probe_interface+0x25f/0x710
-> >  really_probe+0x1be/0xa90
-> >  __driver_probe_device+0x2ab/0x460
-> >  ? usb_match_id.part.0+0x88/0xc0
-> >  driver_probe_device+0x49/0x120
-> >  __device_attach_driver+0x18a/0x250
-> >  ? driver_allows_async_probing+0x120/0x120
-> >  bus_for_each_drv+0x123/0x1a0
-> >  ? bus_rescan_devices+0x20/0x20
-> >  ? lockdep_hardirqs_on_prepare+0x273/0x3e0
-> >  ? trace_hardirqs_on+0x1c/0x120
-> >  __device_attach+0x207/0x330
-> >  ? device_bind_driver+0xb0/0xb0
-> >  ? kobject_uevent_env+0x230/0x12c0
-> >  bus_probe_device+0x1a2/0x260
-> >  device_add+0xa61/0x1ce0
-> >  ? __mutex_unlock_slowpath+0xe7/0x660
-> >  ? __fw_devlink_link_to_suppliers+0x550/0x550
-> >  usb_set_configuration+0x984/0x1770
-> >  ? kernfs_create_link+0x175/0x230
-> >  usb_generic_driver_probe+0x69/0x90
-> >  usb_probe_device+0x9c/0x220
-> >  really_probe+0x1be/0xa90
-> >  __driver_probe_device+0x2ab/0x460
-> >  driver_probe_device+0x49/0x120
-> >  __device_attach_driver+0x18a/0x250
-> >  ? driver_allows_async_probing+0x120/0x120
-> >  bus_for_each_drv+0x123/0x1a0
-> >  ? bus_rescan_devices+0x20/0x20
-> >  ? lockdep_hardirqs_on_prepare+0x273/0x3e0
-> >  ? trace_hardirqs_on+0x1c/0x120
-> >  __device_attach+0x207/0x330
-> >  ? device_bind_driver+0xb0/0xb0
-> >  ? kobject_uevent_env+0x230/0x12c0
-> >  bus_probe_device+0x1a2/0x260
-> >  device_add+0xa61/0x1ce0
-> >  ? __fw_devlink_link_to_suppliers+0x550/0x550
-> >  usb_new_device.cold+0x463/0xf66
-> >  ? hub_disconnect+0x400/0x400
-> >  ? _raw_spin_unlock_irq+0x24/0x30
-> >  hub_event+0x10d5/0x3330
-> >  ? hub_port_debounce+0x280/0x280
-> >  ? __lock_acquire+0x1671/0x5790
-> >  ? wq_calc_node_cpumask+0x170/0x2a0
-> >  ? lock_release+0x640/0x640
-> >  ? rcu_read_lock_sched_held+0xa1/0xd0
-> >  ? rcu_read_lock_bh_held+0xb0/0xb0
-> >  ? lockdep_hardirqs_on_prepare+0x273/0x3e0
-> >  process_one_work+0x873/0x13e0
-> >  ? lock_release+0x640/0x640
-> >  ? pwq_dec_nr_in_flight+0x320/0x320
-> >  ? rwlock_bug.part.0+0x90/0x90
-> >  worker_thread+0x8b/0xd10
-> >  ? __kthread_parkme+0xd9/0x1d0
-> >  ? process_one_work+0x13e0/0x13e0
-> >  kthread+0x379/0x450
-> >  ? _raw_spin_unlock_irq+0x24/0x30
-> >  ? set_kthread_struct+0x100/0x100
-> >  ret_from_fork+0x1f/0x30
-> > 
-> > Reported-by: Dokyung Song <dokyungs@yonsei.ac.kr>
-> > Reported-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
-> > Reported-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-> > Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
-> > Signed-off-by: Kalle Valo <kvalo@kernel.org>
-> > Link: https://lore.kernel.org/r/20221024071329.504277-1-linuxlovemin@yonsei.ac.kr
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > ---
-> >  drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c | 5 +++++
-> >  1 file changed, 5 insertions(+)
-> > 
-> > diff --git a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-> > index 13c25798f39a..6d868b8b441a 100644
-> > --- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-> > +++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
-> > @@ -572,6 +572,11 @@ int brcmf_fw_map_chip_to_name(u32 chip, u32 chiprev,
-> >  	u32 i;
-> >  	char end;
-> >  
-> > +	if (chiprev >= BITS_PER_TYPE(u32)) {
-> > +		brcmf_err("Invalid chip revision %u\n", chiprev);
-> > +		return NULL;
-> > +	}
-> > +
-> >  	for (i = 0; i < table_size; i++) {
-> >  		if (mapping_table[i].chipid == chip &&
-> >  		    mapping_table[i].revmask & BIT(chiprev))
-> > -- 
-> > 2.35.1
-> 
-> Clang points out that this backport is incorrect:
-> 
->   drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c:577:10: error: incompatible pointer to integer conversion returning 'void *' from a function with result type 'int' [-Wint-conversion]
->                   return NULL;
->                          ^~~~
->   include/linux/stddef.h:8:14: note: expanded from macro 'NULL'
->   #define NULL ((void *)0)
->                ^~~~~~~~~~~
->   1 error generated.
-> 
-> That should probably be something like -EINVAL for 4.14 but I am not
-> sure, hence just the report. This code path was reworked in commit
-> 2baa3aaee27f ("brcmfmac: introduce brcmf_fw_alloc_request() function").
-> Returning NULL would be treated as an error in the callers, which would
-> require a negative return code here.
+Hi Greg
 
-Good catch, I'll fix this up on Monday, thanks for reporting it!
+On Mon, Jan 23, 2023 at 12:22 AM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 6.1.8 release.
+> There are 193 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Tue, 24 Jan 2023 15:02:08 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.8-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-greg k-h
+6.1.8-rc1 tested.
+
+x86_64
+
+build successfully completed.
+boot successfully completed.
+No dmesg regressions.
+
+Lenovo ThinkPad X1 Nano Gen1(Intel i5-1130G7, arch linux)
+
+Thanks
+
+Tested-by: Takeshi Ogasawara <takeshi.ogasawara@futuring-girl.com>
