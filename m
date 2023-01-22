@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C28152590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4ABA7C433EF;
-	Sun, 22 Jan 2023 15:18:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CE82590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2CBC433D2;
+	Sun, 22 Jan 2023 15:18:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400686;
-	bh=I3VvozVOk174ToxaJzgTxXXT7/kASduEadql8ijUbPE=;
+	s=korg; t=1674400689;
+	bh=cyhTFg3RsVGXpSI3qHB+0LTUSJRlFHoCN8iAqTXjCYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LZLH/sua+iriXODOxEoxlQMKtv03UuoqdyUbR/28uRhnt/6zDDuGIzQgmwNODA08T
-	 oPl1ofPO5hMloMrqx898LTJZNCMxPsKwl22H7jFXwFmyU7+Tb+IBLNcXy0bsmdlVBa
-	 ZdJ2oqIJbxNvfEXmXggrO2maVThzgT66q1Ql5BBI=
+	b=xLcmLQEovQRQ8d5AOVQ+v98AmwEbdbPjy/A91OOjxLOXF17OrWnn0psJpshtfoLYP
+	 x90Q3Cu8V+v/yWz+FZPY9OZR8UoPNNwkKHL+ZAYX7QgaK3hl8uKrhU2aynIYDhZRWC
+	 u1Bt3y5z+3s4VZWABVvivWBMIVgXqu0vWC+7dYR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 031/117] io_uring: improve send/recv error handling
-Date: Sun, 22 Jan 2023 16:03:41 +0100
-Message-Id: <20230122150234.009475742@linuxfoundation.org>
+	Haibo Chen <haibo.chen@nxp.com>,
+	Adrian Hunter <adrian.hunter@intel.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 064/117] mmc: sdhci-esdhc-imx: correct the tuning start tap and step setting
+Date: Sun, 22 Jan 2023 16:04:14 +0100
+Message-Id: <20230122150235.448348164@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -35,126 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-commit 7297ce3d59449de49d3c9e1f64ae25488750a1fc upstream.
+commit 1e336aa0c0250ec84c6f16efac40c9f0138e367d upstream.
 
-Hide all error handling under common if block, removes two extra ifs on
-the success path and keeps the handling more condensed.
+Current code logic may be impacted by the setting of ROM/Bootloader,
+so unmask these bits first, then setting these bits accordingly.
 
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/5761545158a12968f3caf30f747eea65ed75dfc1.1637524285.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2b16cf326b70 ("mmc: sdhci-esdhc-imx: move tuning static configuration into hwinit function")
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20221207112315.1812222-1-haibo.chen@nxp.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c | 55 +++++++++++++++++++++++++--------------------
- 1 file changed, 31 insertions(+), 24 deletions(-)
+ drivers/mmc/host/sdhci-esdhc-imx.c |   22 +++++++++++++++-------
+ 1 file changed, 15 insertions(+), 7 deletions(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index d855e668f37c..93023562d548 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -4866,17 +4866,18 @@ static int io_sendmsg(struct io_kiocb *req, unsigned int issue_flags)
- 		min_ret = iov_iter_count(&kmsg->msg.msg_iter);
+--- a/drivers/mmc/host/sdhci-esdhc-imx.c
++++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+@@ -107,6 +107,7 @@
+ #define ESDHC_TUNING_START_TAP_DEFAULT	0x1
+ #define ESDHC_TUNING_START_TAP_MASK	0x7f
+ #define ESDHC_TUNING_CMD_CRC_CHECK_DISABLE	(1 << 7)
++#define ESDHC_TUNING_STEP_DEFAULT	0x1
+ #define ESDHC_TUNING_STEP_MASK		0x00070000
+ #define ESDHC_TUNING_STEP_SHIFT		16
  
- 	ret = __sys_sendmsg_sock(sock, &kmsg->msg, flags);
--	if ((issue_flags & IO_URING_F_NONBLOCK) && ret == -EAGAIN)
--		return io_setup_async_msg(req, kmsg);
--	if (ret == -ERESTARTSYS)
--		ret = -EINTR;
+@@ -1346,7 +1347,7 @@ static void sdhci_esdhc_imx_hwinit(struc
+ 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
+ 	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
+ 	struct cqhci_host *cq_host = host->mmc->cqe_private;
+-	int tmp;
++	u32 tmp;
  
-+	if (ret < min_ret) {
-+		if (ret == -EAGAIN && (issue_flags & IO_URING_F_NONBLOCK))
-+			return io_setup_async_msg(req, kmsg);
-+		if (ret == -ERESTARTSYS)
-+			ret = -EINTR;
-+		req_set_fail(req);
-+	}
- 	/* fast path, check for non-NULL to avoid function call */
- 	if (kmsg->free_iov)
- 		kfree(kmsg->free_iov);
- 	req->flags &= ~REQ_F_NEED_CLEANUP;
--	if (ret < min_ret)
--		req_set_fail(req);
- 	__io_req_complete(req, issue_flags, ret, 0);
- 	return 0;
- }
-@@ -4912,13 +4913,13 @@ static int io_send(struct io_kiocb *req, unsigned int issue_flags)
+ 	if (esdhc_is_usdhc(imx_data)) {
+ 		/*
+@@ -1399,17 +1400,24 @@ static void sdhci_esdhc_imx_hwinit(struc
  
- 	msg.msg_flags = flags;
- 	ret = sock_sendmsg(sock, &msg);
--	if ((issue_flags & IO_URING_F_NONBLOCK) && ret == -EAGAIN)
--		return -EAGAIN;
--	if (ret == -ERESTARTSYS)
--		ret = -EINTR;
--
--	if (ret < min_ret)
-+	if (ret < min_ret) {
-+		if (ret == -EAGAIN && (issue_flags & IO_URING_F_NONBLOCK))
-+			return -EAGAIN;
-+		if (ret == -ERESTARTSYS)
-+			ret = -EINTR;
- 		req_set_fail(req);
-+	}
- 	__io_req_complete(req, issue_flags, ret, 0);
- 	return 0;
- }
-@@ -5105,10 +5106,15 @@ static int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
+ 		if (imx_data->socdata->flags & ESDHC_FLAG_STD_TUNING) {
+ 			tmp = readl(host->ioaddr + ESDHC_TUNING_CTRL);
+-			tmp |= ESDHC_STD_TUNING_EN |
+-				ESDHC_TUNING_START_TAP_DEFAULT;
+-			if (imx_data->boarddata.tuning_start_tap) {
+-				tmp &= ~ESDHC_TUNING_START_TAP_MASK;
++			tmp |= ESDHC_STD_TUNING_EN;
++
++			/*
++			 * ROM code or bootloader may config the start tap
++			 * and step, unmask them first.
++			 */
++			tmp &= ~(ESDHC_TUNING_START_TAP_MASK | ESDHC_TUNING_STEP_MASK);
++			if (imx_data->boarddata.tuning_start_tap)
+ 				tmp |= imx_data->boarddata.tuning_start_tap;
+-			}
++			else
++				tmp |= ESDHC_TUNING_START_TAP_DEFAULT;
  
- 	ret = __sys_recvmsg_sock(sock, &kmsg->msg, req->sr_msg.umsg,
- 					kmsg->uaddr, flags);
--	if (force_nonblock && ret == -EAGAIN)
--		return io_setup_async_msg(req, kmsg);
--	if (ret == -ERESTARTSYS)
--		ret = -EINTR;
-+	if (ret < min_ret) {
-+		if (ret == -EAGAIN && force_nonblock)
-+			return io_setup_async_msg(req, kmsg);
-+		if (ret == -ERESTARTSYS)
-+			ret = -EINTR;
-+		req_set_fail(req);
-+	} else if ((flags & MSG_WAITALL) && (kmsg->msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))) {
-+		req_set_fail(req);
-+	}
+ 			if (imx_data->boarddata.tuning_step) {
+-				tmp &= ~ESDHC_TUNING_STEP_MASK;
+ 				tmp |= imx_data->boarddata.tuning_step
+ 					<< ESDHC_TUNING_STEP_SHIFT;
++			} else {
++				tmp |= ESDHC_TUNING_STEP_DEFAULT
++					<< ESDHC_TUNING_STEP_SHIFT;
+ 			}
  
- 	if (req->flags & REQ_F_BUFFER_SELECTED)
- 		cflags = io_put_recv_kbuf(req);
-@@ -5116,8 +5122,6 @@ static int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
- 	if (kmsg->free_iov)
- 		kfree(kmsg->free_iov);
- 	req->flags &= ~REQ_F_NEED_CLEANUP;
--	if (ret < min_ret || ((flags & MSG_WAITALL) && (kmsg->msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))))
--		req_set_fail(req);
- 	__io_req_complete(req, issue_flags, ret, cflags);
- 	return 0;
- }
-@@ -5164,15 +5168,18 @@ static int io_recv(struct io_kiocb *req, unsigned int issue_flags)
- 		min_ret = iov_iter_count(&msg.msg_iter);
- 
- 	ret = sock_recvmsg(sock, &msg, flags);
--	if (force_nonblock && ret == -EAGAIN)
--		return -EAGAIN;
--	if (ret == -ERESTARTSYS)
--		ret = -EINTR;
- out_free:
-+	if (ret < min_ret) {
-+		if (ret == -EAGAIN && force_nonblock)
-+			return -EAGAIN;
-+		if (ret == -ERESTARTSYS)
-+			ret = -EINTR;
-+		req_set_fail(req);
-+	} else if ((flags & MSG_WAITALL) && (msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))) {
-+		req_set_fail(req);
-+	}
- 	if (req->flags & REQ_F_BUFFER_SELECTED)
- 		cflags = io_put_recv_kbuf(req);
--	if (ret < min_ret || ((flags & MSG_WAITALL) && (msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))))
--		req_set_fail(req);
- 	__io_req_complete(req, issue_flags, ret, cflags);
- 	return 0;
- }
--- 
-2.39.0
-
+ 			/* Disable the CMD CRC check for tuning, if not, need to
 
 
