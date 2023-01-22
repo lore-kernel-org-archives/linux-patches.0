@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C07732590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A2EBC433D2;
-	Sun, 22 Jan 2023 15:18:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 439CA2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD55CC433EF;
+	Sun, 22 Jan 2023 15:18:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400694;
-	bh=Kl283M88HY0vQVzJg7vRDZGkxlRCFoUto9UddNnaXQ8=;
+	s=korg; t=1674400697;
+	bh=fQA7eDfceYmFIOTvN/gbYSXqhpGvmXgYZyJpDkV92Fk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lyObbUE1DI8rOkLQsfWe31w/jdxZGP2BFnrN5FKNuCHvDQwgh3v2gPKBDkRF8TV9l
-	 Vo6ktpqbqiy6kye77/2XwUO18PEZPIGS67kqueuM43JJYBS7bOL1qtfjqK+RhrlOjE
-	 LhXisIfMe9+UEn0xxW4cceII/H5iadqHR48w0/4I=
+	b=BK99/Xl1F4RjVZH6eMcp8evlmq6AUDVvEVI/Czn9fzr2COY9CfprGiJDrwvyTbWCR
+	 Zd6CFWku2KzTEOoobL9daiWeVkdK3iPjnnB7Rd4dSeyc9wMwcVhSN7MhEzU4ow+W+W
+	 YxvwdHkuc0d3+l/oeXV3wfV6Fvb1Fx+CBxMtQI7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	syzbot+33d7ad66d65044b93f16@syzkaller.appspotmail.com,
-	Gerald Lee <sundaywind2004@gmail.com>
-Subject: [PATCH 5.15 074/117] USB: gadgetfs: Fix race between mounting and unmounting
-Date: Sun, 22 Jan 2023 16:04:24 +0100
-Message-Id: <20230122150235.866130234@linuxfoundation.org>
+	Michael Adler <michael.adler@siemens.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.15 075/117] USB: serial: cp210x: add SCALANCE LPE-9000 device id
+Date: Sun, 22 Jan 2023 16:04:25 +0100
+Message-Id: <20230122150235.914790273@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -35,130 +34,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Michael Adler <michael.adler@siemens.com>
 
-commit d18dcfe9860e842f394e37ba01ca9440ab2178f4 upstream.
+commit 3f9e76e31704a325170e5aec2243c8d084d74854 upstream.
 
-The syzbot fuzzer and Gerald Lee have identified a use-after-free bug
-in the gadgetfs driver, involving processes concurrently mounting and
-unmounting the gadgetfs filesystem.  In particular, gadgetfs_fill_super()
-can race with gadgetfs_kill_sb(), causing the latter to deallocate
-the_device while the former is using it.  The output from KASAN says,
-in part:
+Add the USB serial console device ID for Siemens SCALANCE LPE-9000
+which have a USB port for their serial console.
 
-BUG: KASAN: use-after-free in instrument_atomic_read_write include/linux/instrumented.h:102 [inline]
-BUG: KASAN: use-after-free in atomic_fetch_sub_release include/linux/atomic/atomic-instrumented.h:176 [inline]
-BUG: KASAN: use-after-free in __refcount_sub_and_test include/linux/refcount.h:272 [inline]
-BUG: KASAN: use-after-free in __refcount_dec_and_test include/linux/refcount.h:315 [inline]
-BUG: KASAN: use-after-free in refcount_dec_and_test include/linux/refcount.h:333 [inline]
-BUG: KASAN: use-after-free in put_dev drivers/usb/gadget/legacy/inode.c:159 [inline]
-BUG: KASAN: use-after-free in gadgetfs_kill_sb+0x33/0x100 drivers/usb/gadget/legacy/inode.c:2086
-Write of size 4 at addr ffff8880276d7840 by task syz-executor126/18689
-
-CPU: 0 PID: 18689 Comm: syz-executor126 Not tainted 6.1.0-syzkaller #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-Call Trace:
- <TASK>
-...
- atomic_fetch_sub_release include/linux/atomic/atomic-instrumented.h:176 [inline]
- __refcount_sub_and_test include/linux/refcount.h:272 [inline]
- __refcount_dec_and_test include/linux/refcount.h:315 [inline]
- refcount_dec_and_test include/linux/refcount.h:333 [inline]
- put_dev drivers/usb/gadget/legacy/inode.c:159 [inline]
- gadgetfs_kill_sb+0x33/0x100 drivers/usb/gadget/legacy/inode.c:2086
- deactivate_locked_super+0xa7/0xf0 fs/super.c:332
- vfs_get_super fs/super.c:1190 [inline]
- get_tree_single+0xd0/0x160 fs/super.c:1207
- vfs_get_tree+0x88/0x270 fs/super.c:1531
- vfs_fsconfig_locked fs/fsopen.c:232 [inline]
-
-The simplest solution is to ensure that gadgetfs_fill_super() and
-gadgetfs_kill_sb() are serialized by making them both acquire a new
-mutex.
-
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Reported-and-tested-by: syzbot+33d7ad66d65044b93f16@syzkaller.appspotmail.com
-Reported-and-tested-by: Gerald Lee <sundaywind2004@gmail.com>
-Link: https://lore.kernel.org/linux-usb/CAO3qeMVzXDP-JU6v1u5Ags6Q-bb35kg3=C6d04DjzA9ffa5x1g@mail.gmail.com/
-Fixes: e5d82a7360d1 ("vfs: Convert gadgetfs to use the new mount API")
-CC: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/Y6XCPXBpn3tmjdCC@rowland.harvard.edu
+Signed-off-by: Michael Adler <michael.adler@siemens.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/legacy/inode.c |   28 +++++++++++++++++++++-------
- 1 file changed, 21 insertions(+), 7 deletions(-)
+ drivers/usb/serial/cp210x.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/gadget/legacy/inode.c
-+++ b/drivers/usb/gadget/legacy/inode.c
-@@ -229,6 +229,7 @@ static void put_ep (struct ep_data *data
-  */
- 
- static const char *CHIP;
-+static DEFINE_MUTEX(sb_mutex);		/* Serialize superblock operations */
- 
- /*----------------------------------------------------------------------*/
- 
-@@ -2013,13 +2014,20 @@ gadgetfs_fill_super (struct super_block
- {
- 	struct inode	*inode;
- 	struct dev_data	*dev;
-+	int		rc;
- 
--	if (the_device)
--		return -ESRCH;
-+	mutex_lock(&sb_mutex);
-+
-+	if (the_device) {
-+		rc = -ESRCH;
-+		goto Done;
-+	}
- 
- 	CHIP = usb_get_gadget_udc_name();
--	if (!CHIP)
--		return -ENODEV;
-+	if (!CHIP) {
-+		rc = -ENODEV;
-+		goto Done;
-+	}
- 
- 	/* superblock */
- 	sb->s_blocksize = PAGE_SIZE;
-@@ -2056,13 +2064,17 @@ gadgetfs_fill_super (struct super_block
- 	 * from binding to a controller.
- 	 */
- 	the_device = dev;
--	return 0;
-+	rc = 0;
-+	goto Done;
- 
--Enomem:
-+ Enomem:
- 	kfree(CHIP);
- 	CHIP = NULL;
-+	rc = -ENOMEM;
- 
--	return -ENOMEM;
-+ Done:
-+	mutex_unlock(&sb_mutex);
-+	return rc;
- }
- 
- /* "mount -t gadgetfs path /dev/gadget" ends up here */
-@@ -2084,6 +2096,7 @@ static int gadgetfs_init_fs_context(stru
- static void
- gadgetfs_kill_sb (struct super_block *sb)
- {
-+	mutex_lock(&sb_mutex);
- 	kill_litter_super (sb);
- 	if (the_device) {
- 		put_dev (the_device);
-@@ -2091,6 +2104,7 @@ gadgetfs_kill_sb (struct super_block *sb
- 	}
- 	kfree(CHIP);
- 	CHIP = NULL;
-+	mutex_unlock(&sb_mutex);
- }
- 
- /*----------------------------------------------------------------------*/
+--- a/drivers/usb/serial/cp210x.c
++++ b/drivers/usb/serial/cp210x.c
+@@ -60,6 +60,7 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE(0x0846, 0x1100) }, /* NetGear Managed Switch M4100 series, M5300 series, M7100 series */
+ 	{ USB_DEVICE(0x08e6, 0x5501) }, /* Gemalto Prox-PU/CU contactless smartcard reader */
+ 	{ USB_DEVICE(0x08FD, 0x000A) }, /* Digianswer A/S , ZigBee/802.15.4 MAC Device */
++	{ USB_DEVICE(0x0908, 0x0070) }, /* Siemens SCALANCE LPE-9000 USB Serial Console */
+ 	{ USB_DEVICE(0x0908, 0x01FF) }, /* Siemens RUGGEDCOM USB Serial Console */
+ 	{ USB_DEVICE(0x0988, 0x0578) }, /* Teraoka AD2000 */
+ 	{ USB_DEVICE(0x0B00, 0x3070) }, /* Ingenico 3070 */
 
 
