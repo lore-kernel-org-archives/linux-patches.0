@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272632590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04FBC433D2;
-	Sun, 22 Jan 2023 15:12:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAD32590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE44C433EF;
+	Sun, 22 Jan 2023 15:12:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400372;
-	bh=cFzX04RxTb6QRGOAKulgwA+ApTRYhAo9lxPFayh2TjM=;
+	s=korg; t=1674400374;
+	bh=RXF1lnGIL+k0Nej5e4MKpNe7tZknygygAHVNp0enycc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wNsA08Zdc55qgXAR7kK0EomD3pzi5lNVo5hMAkDY4YBOygWFDDksr6qGIsVliGrGW
-	 YViCs7ZIR4MiGqdi0Qd/r3ECXWRIjA1RUZPePcTuUTw8gt9gPIMfxsfbvbghf4Jdx5
-	 nSeWcBym5fimHEaMOierEy6vA5E4qwG+FjNkhnjY=
+	b=xkOLjC1LXo48M+a3ykdETaZT84klHy+K5tG2XHOfE8lOwqaM1WBujtGsm9bPNgiFn
+	 AcyHc7koxO1LBa7hvG75TwEeYvYbqokNj7K6d9t9IcO+PFe0Zvg+M2f/zlfu5le+F4
+	 5N9LLrr6p8l01qKTA8DoKBBLhvAGq4JyOgL8JqEo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christiano Haesbaert <haesbaert@haesbaert.org>,
+	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 20/98] io_uring: dont gate task_work run on TIF_NOTIFY_SIGNAL
-Date: Sun, 22 Jan 2023 16:03:36 +0100
-Message-Id: <20230122150230.302962175@linuxfoundation.org>
+Subject: [PATCH 5.10 21/98] io_uring: improve send/recv error handling
+Date: Sun, 22 Jan 2023 16:03:37 +0100
+Message-Id: <20230122150230.344144048@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -35,45 +35,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit 46a525e199e4037516f7e498c18f065b09df32ac upstream.
+commit 7297ce3d59449de49d3c9e1f64ae25488750a1fc upstream.
 
-This isn't a reliable mechanism to tell if we have task_work pending, we
-really should be looking at whether we have any items queued. This is
-problematic if forward progress is gated on running said task_work. One
-such example is reading from a pipe, where the write side has been closed
-right before the read is started. The fput() of the file queues TWA_RESUME
-task_work, and we need that task_work to be run before ->release() is
-called for the pipe. If ->release() isn't called, then the read will sit
-forever waiting on data that will never arise.
+Hide all error handling under common if block, removes two extra ifs on
+the success path and keeps the handling more condensed.
 
-Fix this by io_run_task_work() so it checks if we have task_work pending
-rather than rely on TIF_NOTIFY_SIGNAL for that. The latter obviously
-doesn't work for task_work that is queued without TWA_SIGNAL.
-
-Reported-by: Christiano Haesbaert <haesbaert@haesbaert.org>
-Cc: stable@vger.kernel.org
-Link: https://github.com/axboe/liburing/issues/665
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/5761545158a12968f3caf30f747eea65ed75dfc1.1637524285.git.asml.silence@gmail.com
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io-wq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ io_uring/io_uring.c | 55 +++++++++++++++++++++++++--------------------
+ 1 file changed, 31 insertions(+), 24 deletions(-)
 
-diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
-index 87bc38b47103..81485c1a9879 100644
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -513,7 +513,7 @@ static struct io_wq_work *io_get_next_work(struct io_wqe_acct *acct,
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 0c4d16afb9ef..34dd6267679a 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -4706,17 +4706,18 @@ static int io_sendmsg(struct io_kiocb *req, unsigned int issue_flags)
+ 		min_ret = iov_iter_count(&kmsg->msg.msg_iter);
  
- static bool io_flush_signals(void)
- {
--	if (unlikely(test_thread_flag(TIF_NOTIFY_SIGNAL))) {
-+	if (test_thread_flag(TIF_NOTIFY_SIGNAL) || current->task_works) {
- 		__set_current_state(TASK_RUNNING);
- 		tracehook_notify_signal();
- 		return true;
+ 	ret = __sys_sendmsg_sock(sock, &kmsg->msg, flags);
+-	if ((issue_flags & IO_URING_F_NONBLOCK) && ret == -EAGAIN)
+-		return io_setup_async_msg(req, kmsg);
+-	if (ret == -ERESTARTSYS)
+-		ret = -EINTR;
+ 
++	if (ret < min_ret) {
++		if (ret == -EAGAIN && (issue_flags & IO_URING_F_NONBLOCK))
++			return io_setup_async_msg(req, kmsg);
++		if (ret == -ERESTARTSYS)
++			ret = -EINTR;
++		req_set_fail(req);
++	}
+ 	/* fast path, check for non-NULL to avoid function call */
+ 	if (kmsg->free_iov)
+ 		kfree(kmsg->free_iov);
+ 	req->flags &= ~REQ_F_NEED_CLEANUP;
+-	if (ret < min_ret)
+-		req_set_fail(req);
+ 	__io_req_complete(req, issue_flags, ret, 0);
+ 	return 0;
+ }
+@@ -4752,13 +4753,13 @@ static int io_send(struct io_kiocb *req, unsigned int issue_flags)
+ 
+ 	msg.msg_flags = flags;
+ 	ret = sock_sendmsg(sock, &msg);
+-	if ((issue_flags & IO_URING_F_NONBLOCK) && ret == -EAGAIN)
+-		return -EAGAIN;
+-	if (ret == -ERESTARTSYS)
+-		ret = -EINTR;
+-
+-	if (ret < min_ret)
++	if (ret < min_ret) {
++		if (ret == -EAGAIN && (issue_flags & IO_URING_F_NONBLOCK))
++			return -EAGAIN;
++		if (ret == -ERESTARTSYS)
++			ret = -EINTR;
+ 		req_set_fail(req);
++	}
+ 	__io_req_complete(req, issue_flags, ret, 0);
+ 	return 0;
+ }
+@@ -4945,10 +4946,15 @@ static int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
+ 
+ 	ret = __sys_recvmsg_sock(sock, &kmsg->msg, req->sr_msg.umsg,
+ 					kmsg->uaddr, flags);
+-	if (force_nonblock && ret == -EAGAIN)
+-		return io_setup_async_msg(req, kmsg);
+-	if (ret == -ERESTARTSYS)
+-		ret = -EINTR;
++	if (ret < min_ret) {
++		if (ret == -EAGAIN && force_nonblock)
++			return io_setup_async_msg(req, kmsg);
++		if (ret == -ERESTARTSYS)
++			ret = -EINTR;
++		req_set_fail(req);
++	} else if ((flags & MSG_WAITALL) && (kmsg->msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))) {
++		req_set_fail(req);
++	}
+ 
+ 	if (req->flags & REQ_F_BUFFER_SELECTED)
+ 		cflags = io_put_recv_kbuf(req);
+@@ -4956,8 +4962,6 @@ static int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
+ 	if (kmsg->free_iov)
+ 		kfree(kmsg->free_iov);
+ 	req->flags &= ~REQ_F_NEED_CLEANUP;
+-	if (ret < min_ret || ((flags & MSG_WAITALL) && (kmsg->msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))))
+-		req_set_fail(req);
+ 	__io_req_complete(req, issue_flags, ret, cflags);
+ 	return 0;
+ }
+@@ -5004,15 +5008,18 @@ static int io_recv(struct io_kiocb *req, unsigned int issue_flags)
+ 		min_ret = iov_iter_count(&msg.msg_iter);
+ 
+ 	ret = sock_recvmsg(sock, &msg, flags);
+-	if (force_nonblock && ret == -EAGAIN)
+-		return -EAGAIN;
+-	if (ret == -ERESTARTSYS)
+-		ret = -EINTR;
+ out_free:
++	if (ret < min_ret) {
++		if (ret == -EAGAIN && force_nonblock)
++			return -EAGAIN;
++		if (ret == -ERESTARTSYS)
++			ret = -EINTR;
++		req_set_fail(req);
++	} else if ((flags & MSG_WAITALL) && (msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))) {
++		req_set_fail(req);
++	}
+ 	if (req->flags & REQ_F_BUFFER_SELECTED)
+ 		cflags = io_put_recv_kbuf(req);
+-	if (ret < min_ret || ((flags & MSG_WAITALL) && (msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))))
+-		req_set_fail(req);
+ 	__io_req_complete(req, issue_flags, ret, cflags);
+ 	return 0;
+ }
 -- 
 2.39.0
 
