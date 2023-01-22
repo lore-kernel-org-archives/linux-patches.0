@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2723B2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:14:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A116CC433EF;
-	Sun, 22 Jan 2023 15:14:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B10E52590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:14:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A8A3C433D2;
+	Sun, 22 Jan 2023 15:14:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400443;
-	bh=6kfUddokXe9k4JyRKetemu7/auF5F14ceLtun0snTy4=;
+	s=korg; t=1674400445;
+	bh=1XfQfRY1VpYCYiuda3VkKisYUvi5S/tWe5Rwxsh5fB8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m9kRY+hk6PNJZWq5NfqPShrUEL1NyKuXWcQ7NSgWURlcGo4pedAM4YyA4wgt9mljZ
-	 CFJyShEtcm9XBHauuIFkN4FtqkV+6FdZwUBj2wv5myYWXs7r8Uz4BoFbY+sL+cQTtw
-	 0nIHC7XwgDo8iKWbP9aQFUu2rXW9TEGkH1wELz8U=
+	b=xh4vgW4VB5OhB9RfWVtRP1tZaakfxrWzzS/fPPKmTCHbQNJDd8HGAQ+bjqnjAgrgf
+	 kIxzDhFTCRiXe9Y/bmbj8LaxocrGmIoB1aLWA6Z3QYZ6xjaUoXOQn7IvGomGN9Y8Ez
+	 ZqXjlhnVt2k9QEoupY8p3KwL2LuS09S533+Ieiyg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 5.10 49/98] staging: vchiq_arm: fix enum vchiq_status return types
-Date: Sun, 22 Jan 2023 16:04:05 +0100
-Message-Id: <20230122150231.582784889@linuxfoundation.org>
+	Sasa Dragic <sasa.dragic@gmail.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 5.10 76/98] drm/i915: re-disable RC6p on Sandy Bridge
+Date: Sun, 22 Jan 2023 16:04:32 +0100
+Message-Id: <20230122150232.653865531@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -34,56 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Sasa Dragic <sasa.dragic@gmail.com>
 
-commit 7d83299351fe7c812c529f5e39fe63b5312e4233 upstream.
+commit 67b0b4ed259e425b7eed09da75b42c80682ca003 upstream.
 
-gcc-13 notices a type mismatch between function declaration
-and definition for a few functions that have been converted
-from returning vchiq specific status values to regular error
-codes:
+RC6p on Sandy Bridge got re-enabled over time, causing visual glitches
+and GPU hangs.
 
-drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c:662:5: error: conflicting types for 'vchiq_initialise' due to enum/integer mismatch; have 'int(struct vchiq_instance **)' [-Werror=enum-int-mismatch]
-drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c:1411:1: error: conflicting types for 'vchiq_use_internal' due to enum/integer mismatch; have 'int(struct vchiq_state *, struct vchiq_service *, enum USE_TYPE_E)' [-Werror=enum-int-mismatch]
-drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c:1468:1: error: conflicting types for 'vchiq_release_internal' due to enum/integer mismatch; have 'int(struct vchiq_state *, struct vchiq_service *)' [-Werror=enum-int-mismatch]
+Disabled originally in commit 1c8ecf80fdee ("drm/i915: do not enable
+RC6p on Sandy Bridge").
 
-Change the declarations to match the actual function definition.
-
-Fixes: a9fbd828be7f ("staging: vchiq_arm: drop enum vchiq_status from vchiq_*_internal")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230117163957.1109872-1-arnd@kernel.org
+Signed-off-by: Sasa Dragic <sasa.dragic@gmail.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221219172927.9603-2-sasa.dragic@gmail.com
+Fixes: fb6db0f5bf1d ("drm/i915: Remove unsafe i915.enable_rc6")
+Fixes: 13c5a577b342 ("drm/i915/gt: Select the deepest available parking mode for rc6")
+Cc: stable@vger.kernel.org
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 0c8a6e9ea232c221976a0670256bd861408d9917)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/vc04_services/include/linux/raspberrypi/vchiq.h |    2 +-
- drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.h   |    4 ++--
- 2 files changed, 3 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/i915/i915_pci.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/staging/vc04_services/include/linux/raspberrypi/vchiq.h
-+++ b/drivers/staging/vc04_services/include/linux/raspberrypi/vchiq.h
-@@ -82,7 +82,7 @@ struct vchiq_service_params_kernel {
- 
- struct vchiq_instance;
- 
--extern enum vchiq_status vchiq_initialise(struct vchiq_instance **pinstance);
-+extern int vchiq_initialise(struct vchiq_instance **pinstance);
- extern enum vchiq_status vchiq_shutdown(struct vchiq_instance *instance);
- extern enum vchiq_status vchiq_connect(struct vchiq_instance *instance);
- extern enum vchiq_status vchiq_open_service(struct vchiq_instance *instance,
---- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.h
-+++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.h
-@@ -89,10 +89,10 @@ extern struct vchiq_arm_state*
- vchiq_platform_get_arm_state(struct vchiq_state *state);
- 
- 
--extern enum vchiq_status
-+extern int
- vchiq_use_internal(struct vchiq_state *state, struct vchiq_service *service,
- 		   enum USE_TYPE_E use_type);
--extern enum vchiq_status
-+extern int
- vchiq_release_internal(struct vchiq_state *state,
- 		       struct vchiq_service *service);
- 
+--- a/drivers/gpu/drm/i915/i915_pci.c
++++ b/drivers/gpu/drm/i915/i915_pci.c
+@@ -403,7 +403,8 @@ static const struct intel_device_info il
+ 	.has_coherent_ggtt = true, \
+ 	.has_llc = 1, \
+ 	.has_rc6 = 1, \
+-	.has_rc6p = 1, \
++	/* snb does support rc6p, but enabling it causes various issues */ \
++	.has_rc6p = 0, \
+ 	.has_rps = true, \
+ 	.dma_mask_size = 40, \
+ 	.ppgtt_type = INTEL_PPGTT_ALIASING, \
 
 
