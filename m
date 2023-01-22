@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F0497E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D002DC433EF;
-	Sun, 22 Jan 2023 15:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95DE7E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719B0C433D2;
+	Sun, 22 Jan 2023 15:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400322;
-	bh=JY7RlvUuSBa7vXxNRF4kS44FVonT+skifB8K5hRcP+w=;
+	s=korg; t=1674400324;
+	bh=BFvU+Y+GhSRBBqrSsPuAGqrNZ0IA8GjdbOXu4thJeyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DfXfi0UolwhMRW+YLeAfeQuVynQkFq9xX2ll+ugjfne2WPX7MJ1NpghlT5dFH1dlR
-	 YjuQE5Zv2RZ3GqYxK/yOT9SE+X70fSdiIrU70DiokNtxhay6zl2/93RLPoEHhdNDuM
-	 amgPGjGxYNQzwBCPFeBxCuFBeS2sbJELp2RaK8dA=
+	b=oDCoI7ABVmFXVAXBEqVPYkGe/r5AGxR6ugB+/ajVwLTIgun6P6rLqjHwwV0PeR5C3
+	 xcNN+jQHW2nEjuXovh7Xa+v2YWRCEjN4BTkF7Hs9HQiTOgzkbT710o+lxxicDVDi9q
+	 72a7opN0jLr+InkFBoQFJS5CR2P9c1nGCmNTpRuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 31/98] io_uring: remove duplicated calls to io_kiocb_ppos
-Date: Sun, 22 Jan 2023 16:03:47 +0100
-Message-Id: <20230122150230.799354842@linuxfoundation.org>
+Subject: [PATCH 5.10 32/98] io_uring: update kiocb->ki_pos at execution time
+Date: Sun, 22 Jan 2023 16:03:48 +0100
+Message-Id: <20230122150230.842319602@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -38,61 +38,82 @@ Content-Transfer-Encoding: 8bit
 
 From: Dylan Yudaken <dylany@fb.com>
 
-commit af9c45ecebaf1b428306f41421f4bcffe439f735 upstream.
+commit d34e1e5b396a0dbaa4a29b7138df662cfb9d8e8e upstream.
 
-io_kiocb_ppos is called in both branches, and it seems that the compiler
-does not fuse this. Fusing removes a few bytes from loop_rw_iter.
+Update kiocb->ki_pos at execution time rather than in io_prep_rw().
+io_prep_rw() happens before the job is enqueued to a worker and so the
+offset might be read multiple times before being executed once.
 
-Before:
-$ nm -S fs/io_uring.o | grep loop_rw_iter
-0000000000002430 0000000000000124 t loop_rw_iter
-
-After:
-$ nm -S fs/io_uring.o | grep loop_rw_iter
-0000000000002430 000000000000010d t loop_rw_iter
+Ensures that the file position in a set of _linked_ SQEs will be only
+obtained after earlier SQEs have completed, and so will include their
+incremented file position.
 
 Signed-off-by: Dylan Yudaken <dylany@fb.com>
 Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c | 26 ++++++++++++++++++--------
+ 1 file changed, 18 insertions(+), 8 deletions(-)
 
 diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index f8a0d228d799..d8926475cd88 100644
+index d8926475cd88..eaf8463c9b14 100644
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -3300,6 +3300,7 @@ static ssize_t loop_rw_iter(int rw, struct io_kiocb *req, struct iov_iter *iter)
- 	struct kiocb *kiocb = &req->rw.kiocb;
- 	struct file *file = req->file;
- 	ssize_t ret = 0;
-+	loff_t *ppos;
+@@ -2919,14 +2919,6 @@ static int io_prep_rw(struct io_kiocb *req, const struct io_uring_sqe *sqe,
+ 		req->flags |= REQ_F_ISREG;
  
- 	/*
- 	 * Don't support polled IO through this interface, and we can't
-@@ -3311,6 +3312,8 @@ static ssize_t loop_rw_iter(int rw, struct io_kiocb *req, struct iov_iter *iter)
- 	if (kiocb->ki_flags & IOCB_NOWAIT)
- 		return -EAGAIN;
+ 	kiocb->ki_pos = READ_ONCE(sqe->off);
+-	if (kiocb->ki_pos == -1) {
+-		if (!(file->f_mode & FMODE_STREAM)) {
+-			req->flags |= REQ_F_CUR_POS;
+-			kiocb->ki_pos = file->f_pos;
+-		} else {
+-			kiocb->ki_pos = 0;
+-		}
+-	}
+ 	kiocb->ki_hint = ki_hint_validate(file_write_hint(kiocb->ki_filp));
+ 	kiocb->ki_flags = iocb_flags(kiocb->ki_filp);
+ 	ret = kiocb_set_rw_flags(kiocb, READ_ONCE(sqe->rw_flags));
+@@ -3008,6 +3000,20 @@ static inline void io_rw_done(struct kiocb *kiocb, ssize_t ret)
+ 	}
+ }
  
-+	ppos = io_kiocb_ppos(kiocb);
++static inline void io_kiocb_update_pos(struct io_kiocb *req)
++{
++	struct kiocb *kiocb = &req->rw.kiocb;
 +
- 	while (iov_iter_count(iter)) {
- 		struct iovec iovec;
- 		ssize_t nr;
-@@ -3324,10 +3327,10 @@ static ssize_t loop_rw_iter(int rw, struct io_kiocb *req, struct iov_iter *iter)
++	if (kiocb->ki_pos == -1) {
++		if (!(req->file->f_mode & FMODE_STREAM)) {
++			req->flags |= REQ_F_CUR_POS;
++			kiocb->ki_pos = req->file->f_pos;
++		} else {
++			kiocb->ki_pos = 0;
++		}
++	}
++}
++
+ static void kiocb_done(struct kiocb *kiocb, ssize_t ret,
+ 		       unsigned int issue_flags)
+ {
+@@ -3563,6 +3569,8 @@ static int io_read(struct io_kiocb *req, unsigned int issue_flags)
+ 		return ret ?: -EAGAIN;
+ 	}
  
- 		if (rw == READ) {
- 			nr = file->f_op->read(file, iovec.iov_base,
--					      iovec.iov_len, io_kiocb_ppos(kiocb));
-+					      iovec.iov_len, ppos);
- 		} else {
- 			nr = file->f_op->write(file, iovec.iov_base,
--					       iovec.iov_len, io_kiocb_ppos(kiocb));
-+					       iovec.iov_len, ppos);
- 		}
++	io_kiocb_update_pos(req);
++
+ 	ret = rw_verify_area(READ, req->file, io_kiocb_ppos(kiocb), req->result);
+ 	if (unlikely(ret)) {
+ 		kfree(iovec);
+@@ -3697,6 +3705,8 @@ static int io_write(struct io_kiocb *req, unsigned int issue_flags)
+ 	    (req->flags & REQ_F_ISREG))
+ 		goto copy_iov;
  
- 		if (nr < 0) {
++	io_kiocb_update_pos(req);
++
+ 	ret = rw_verify_area(WRITE, req->file, io_kiocb_ppos(kiocb), req->result);
+ 	if (unlikely(ret))
+ 		goto out_free;
 -- 
 2.39.0
 
