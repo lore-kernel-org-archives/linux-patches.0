@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF9B67E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:07:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4648FC433D2;
-	Sun, 22 Jan 2023 15:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BBA37E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:07:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D504DC433EF;
+	Sun, 22 Jan 2023 15:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400058;
-	bh=sdqiE0l1v+wHgaarZoHz16Kb3ppFCCJzhb5n6NH/B5c=;
+	s=korg; t=1674400061;
+	bh=2y6Dm44ZSjdQPytX1yZbk0Yjcy8Wxi3Dpk4mw/CFdNY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IKVDi88ElmNT7Qd3A9HpeNDoqQdMvyeKscVJe2+Edgtx5gGxLG/iJEdTSzcH1iTHw
-	 IBnoaN0pUg8t7jHpF4zoHtRG8SHaXkXm4D9IrzPazOvg1lZ/JnAc+pKCbzhHQyvNzA
-	 0ateG923Rs3HsdB7tOgv+x1YpYzsXuSqXP5e6ics=
+	b=g8iaOzaS6PWmSNW0HtUc2psafpY1Aox2VCVPWvSs8XXYvK/TGvfokh58uxX46Va79
+	 jWhayEC22TOFle+KUJSFZ80olRGyO2u7rBo+mZ0e2XNf1OUp1C6Qm49GBrYXmorDuA
+	 mdp/33WNHpfOZqsh3aNN8af0mkRG1VEABzc44CoU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Adler <michael.adler@siemens.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.19 23/37] USB: serial: cp210x: add SCALANCE LPE-9000 device id
-Date: Sun, 22 Jan 2023 16:04:20 +0100
-Message-Id: <20230122150220.516953780@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Alexander Stein <alexander.stein@ew.tq-group.com>
+Subject: [PATCH 4.19 24/37] usb: host: ehci-fsl: Fix module alias
+Date: Sun, 22 Jan 2023 16:04:21 +0100
+Message-Id: <20230122150220.557426891@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150219.557984692@linuxfoundation.org>
 References: <20230122150219.557984692@linuxfoundation.org>
@@ -34,30 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Adler <michael.adler@siemens.com>
+From: Alexander Stein <alexander.stein@ew.tq-group.com>
 
-commit 3f9e76e31704a325170e5aec2243c8d084d74854 upstream.
+commit 5d3d01ae15d2f37ed0325c99ab47ef0ae5d05f3c upstream.
 
-Add the USB serial console device ID for Siemens SCALANCE LPE-9000
-which have a USB port for their serial console.
+Commit ca07e1c1e4a6 ("drivers:usb:fsl:Make fsl ehci drv an independent
+driver module") changed DRV_NAME which was used for MODULE_ALIAS as well.
+Starting from this the module alias didn't match the platform device
+name created in fsl-mph-dr-of.c
+Change DRV_NAME to match the driver name for host mode in fsl-mph-dr-of.
+This is needed for module autoloading on ls1021a.
 
-Signed-off-by: Michael Adler <michael.adler@siemens.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: ca07e1c1e4a6 ("drivers:usb:fsl:Make fsl ehci drv an independent driver module")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
+Link: https://lore.kernel.org/r/20230120122714.3848784-1-alexander.stein@ew.tq-group.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/cp210x.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/host/ehci-fsl.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/usb/serial/cp210x.c
-+++ b/drivers/usb/serial/cp210x.c
-@@ -61,6 +61,7 @@ static const struct usb_device_id id_tab
- 	{ USB_DEVICE(0x0846, 0x1100) }, /* NetGear Managed Switch M4100 series, M5300 series, M7100 series */
- 	{ USB_DEVICE(0x08e6, 0x5501) }, /* Gemalto Prox-PU/CU contactless smartcard reader */
- 	{ USB_DEVICE(0x08FD, 0x000A) }, /* Digianswer A/S , ZigBee/802.15.4 MAC Device */
-+	{ USB_DEVICE(0x0908, 0x0070) }, /* Siemens SCALANCE LPE-9000 USB Serial Console */
- 	{ USB_DEVICE(0x0908, 0x01FF) }, /* Siemens RUGGEDCOM USB Serial Console */
- 	{ USB_DEVICE(0x0988, 0x0578) }, /* Teraoka AD2000 */
- 	{ USB_DEVICE(0x0B00, 0x3070) }, /* Ingenico 3070 */
+--- a/drivers/usb/host/ehci-fsl.c
++++ b/drivers/usb/host/ehci-fsl.c
+@@ -28,7 +28,7 @@
+ #include "ehci-fsl.h"
+ 
+ #define DRIVER_DESC "Freescale EHCI Host controller driver"
+-#define DRV_NAME "ehci-fsl"
++#define DRV_NAME "fsl-ehci"
+ 
+ static struct hc_driver __read_mostly fsl_ehci_hc_driver;
+ 
 
 
