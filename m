@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5477E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:06:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98880C433D2;
-	Sun, 22 Jan 2023 15:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A97FC7E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:06:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31039C433D2;
+	Sun, 22 Jan 2023 15:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674399974;
-	bh=sraj/R9T0L5lkBn4o8YI8QB2nJIGZa0svr/c/RCOddc=;
+	s=korg; t=1674399977;
+	bh=FMkgT8OdcVvt7jFajzAnUqop5+FkP9Bi1uf66Mbfaao=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h+07fUI5m4zxW2rZGaeQpDbEV+QVJALaPB1aVhLiYPn40tzqgqL8cO67ff8TFuWVV
-	 abezgnWRijJRG9SP/po00JuR70XZns7BSHwZ0eEiUNODUMIjbxiS667dImg7d+OYbk
-	 Td1OovdS0/vgnbbnyffJluZABQiUFgtFTHdLQ8Qw=
+	b=u2kb9+QnXQWTy+y+sEGluAtG7WmNoYrdXqAT/b43w0y6wR9SyCcRLcsrAdBmUrjGp
+	 Xfv9h/AocZjh4jM8lLmRzvmnCa6BCDRhQ6LEBWYwEi4huhZxJvqVkJSqXFo2LQPxYL
+	 d1Mi04c19phZ5j8y01QjVYFmrKe4FpTjZPnbbJ80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	stable <stable@kernel.org>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>
-Subject: [PATCH 4.14 18/25] usb: host: ehci-fsl: Fix module alias
-Date: Sun, 22 Jan 2023 16:04:18 +0100
-Message-Id: <20230122150218.584203112@linuxfoundation.org>
+	Daniel Scally <dan.scally@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>
+Subject: [PATCH 4.14 19/25] usb: gadget: g_webcam: Send color matching descriptor per frame
+Date: Sun, 22 Jan 2023 16:04:19 +0100
+Message-Id: <20230122150218.615893727@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150217.788215473@linuxfoundation.org>
 References: <20230122150217.788215473@linuxfoundation.org>
@@ -34,36 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Daniel Scally <dan.scally@ideasonboard.com>
 
-commit 5d3d01ae15d2f37ed0325c99ab47ef0ae5d05f3c upstream.
+commit e95765e97d9cb93258a4840440d410fa6ff7e819 upstream.
 
-Commit ca07e1c1e4a6 ("drivers:usb:fsl:Make fsl ehci drv an independent
-driver module") changed DRV_NAME which was used for MODULE_ALIAS as well.
-Starting from this the module alias didn't match the platform device
-name created in fsl-mph-dr-of.c
-Change DRV_NAME to match the driver name for host mode in fsl-mph-dr-of.
-This is needed for module autoloading on ls1021a.
+Currently the color matching descriptor is only sent across the wire
+a single time, following the descriptors for each format and frame.
+According to the UVC 1.5 Specification 3.9.2.6 ("Color Matching
+Descriptors"):
 
-Fixes: ca07e1c1e4a6 ("drivers:usb:fsl:Make fsl ehci drv an independent driver module")
+"Only one instance is allowed for a given format and if present,
+the Color Matching descriptor shall be placed following the Video
+and Still Image Frame descriptors for that format".
+
+Add another reference to the color matching descriptor after the
+yuyv frames so that it's correctly transmitted for that format
+too.
+
+Fixes: a9914127e834 ("USB gadget: Webcam device")
 Cc: stable <stable@kernel.org>
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20230120122714.3848784-1-alexander.stein@ew.tq-group.com
+Signed-off-by: Daniel Scally <dan.scally@ideasonboard.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
+Link: https://lore.kernel.org/r/20221216160528.479094-1-dan.scally@ideasonboard.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ehci-fsl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/legacy/webcam.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/host/ehci-fsl.c
-+++ b/drivers/usb/host/ehci-fsl.c
-@@ -41,7 +41,7 @@
- #include "ehci-fsl.h"
- 
- #define DRIVER_DESC "Freescale EHCI Host controller driver"
--#define DRV_NAME "ehci-fsl"
-+#define DRV_NAME "fsl-ehci"
- 
- static struct hc_driver __read_mostly fsl_ehci_hc_driver;
- 
+--- a/drivers/usb/gadget/legacy/webcam.c
++++ b/drivers/usb/gadget/legacy/webcam.c
+@@ -299,6 +299,7 @@ static const struct uvc_descriptor_heade
+ 	(const struct uvc_descriptor_header *) &uvc_format_yuv,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_360p,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_720p,
++	(const struct uvc_descriptor_header *) &uvc_color_matching,
+ 	(const struct uvc_descriptor_header *) &uvc_format_mjpg,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_360p,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_720p,
+@@ -311,6 +312,7 @@ static const struct uvc_descriptor_heade
+ 	(const struct uvc_descriptor_header *) &uvc_format_yuv,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_360p,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_720p,
++	(const struct uvc_descriptor_header *) &uvc_color_matching,
+ 	(const struct uvc_descriptor_header *) &uvc_format_mjpg,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_360p,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_720p,
+@@ -323,6 +325,7 @@ static const struct uvc_descriptor_heade
+ 	(const struct uvc_descriptor_header *) &uvc_format_yuv,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_360p,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_720p,
++	(const struct uvc_descriptor_header *) &uvc_color_matching,
+ 	(const struct uvc_descriptor_header *) &uvc_format_mjpg,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_360p,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_720p,
 
 
