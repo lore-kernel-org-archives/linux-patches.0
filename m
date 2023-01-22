@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A4C7E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:07:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EE88C433EF;
-	Sun, 22 Jan 2023 15:07:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DD917E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:07:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 232CCC433D2;
+	Sun, 22 Jan 2023 15:07:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400042;
-	bh=14cn/NlF5MWK9KYQH14Rd2ZbJ657MG0mzFh629Cckc0=;
+	s=korg; t=1674400045;
+	bh=ORQNzhdwivNxFMc6OmWqFlRf99WF0efNnYgmpcHwObk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LzmarzLNQwBy/wvrX2gv819319+fb5izUji49yF+ynWFjeQ3ajoKgq4RrlD+GMHgN
-	 3H/OTZmzDsvqmzMbwFdLgRGyFNrJFq2llLHBHpoGJONxRAkyQ5yrZVMfABWhcYSUhj
-	 bqXPvcJYYAAMXF3Z1pgkCuBK3/NJbzpoE7AaPUDU=
+	b=NO35OtMJu/hJWcRbj0Q9EjujR6BMq0GhARk4fcpRJRAYPwkLXTbvb9WXf8IEIiGu5
+	 4CPeY0AZyVU8jY2xMhDLB2E1d7rcMZMP/BM0mU9ErLvKqIKB8ekHemETL8eDr0vr+a
+	 D235/0y/wkLTnyj+qsAYPNC39woiBznWnydPvjlE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Flavio Suligoi <f.suligoi@asem.it>,
 	stable <stable@kernel.org>,
-	Christoph Jung <jung@codemercs.com>
-Subject: [PATCH 4.19 18/37] USB: misc: iowarrior: fix up header size for USB_DEVICE_ID_CODEMERCS_IOW100
-Date: Sun, 22 Jan 2023 16:04:15 +0100
-Message-Id: <20230122150220.321860427@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 4.19 19/37] usb: core: hub: disable autosuspend for TI TUSB8041
+Date: Sun, 22 Jan 2023 16:04:16 +0100
+Message-Id: <20230122150220.372091214@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150219.557984692@linuxfoundation.org>
 References: <20230122150219.557984692@linuxfoundation.org>
@@ -34,32 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Flavio Suligoi <f.suligoi@asem.it>
 
-commit 14ff7460bb58662d86aa50298943cc7d25532e28 upstream.
+commit 7171b0e261b17de96490adf053b8bb4b00061bcf upstream.
 
-The USB_DEVICE_ID_CODEMERCS_IOW100 header size was incorrect, it should
-be 12, not 13.
+The Texas Instruments TUSB8041 has an autosuspend problem at high
+temperature.
 
+If there is not USB traffic, after a couple of ms, the device enters in
+autosuspend mode. In this condition the external clock stops working, to
+save energy. When the USB activity turns on, ther hub exits the
+autosuspend state, the clock starts running again and all works fine.
+
+At ambient temperature all works correctly, but at high temperature,
+when the USB activity turns on, the external clock doesn't restart and
+the hub disappears from the USB bus.
+
+Disabling the autosuspend mode for this hub solves the issue.
+
+Signed-off-by: Flavio Suligoi <f.suligoi@asem.it>
 Cc: stable <stable@kernel.org>
-Fixes: 17a82716587e ("USB: iowarrior: fix up report size handling for some devices")
-Reported-by: Christoph Jung <jung@codemercs.com>
-Link: https://lore.kernel.org/r/20230120135330.3842518-1-gregkh@linuxfoundation.org
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20221219124759.3207032-1-f.suligoi@asem.it
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/iowarrior.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/core/hub.c |   13 +++++++++++++
+ 1 file changed, 13 insertions(+)
 
---- a/drivers/usb/misc/iowarrior.c
-+++ b/drivers/usb/misc/iowarrior.c
-@@ -832,7 +832,7 @@ static int iowarrior_probe(struct usb_in
- 			break;
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -40,6 +40,9 @@
+ #define USB_PRODUCT_USB5534B			0x5534
+ #define USB_VENDOR_CYPRESS			0x04b4
+ #define USB_PRODUCT_CY7C65632			0x6570
++#define USB_VENDOR_TEXAS_INSTRUMENTS		0x0451
++#define USB_PRODUCT_TUSB8041_USB3		0x8140
++#define USB_PRODUCT_TUSB8041_USB2		0x8142
+ #define HUB_QUIRK_CHECK_PORT_AUTOSUSPEND	0x01
+ #define HUB_QUIRK_DISABLE_AUTOSUSPEND		0x02
  
- 		case USB_DEVICE_ID_CODEMERCS_IOW100:
--			dev->report_size = 13;
-+			dev->report_size = 12;
- 			break;
- 		}
- 	}
+@@ -5515,6 +5518,16 @@ static const struct usb_device_id hub_id
+       .idVendor = USB_VENDOR_GENESYS_LOGIC,
+       .bInterfaceClass = USB_CLASS_HUB,
+       .driver_info = HUB_QUIRK_CHECK_PORT_AUTOSUSPEND},
++    { .match_flags = USB_DEVICE_ID_MATCH_VENDOR
++			| USB_DEVICE_ID_MATCH_PRODUCT,
++      .idVendor = USB_VENDOR_TEXAS_INSTRUMENTS,
++      .idProduct = USB_PRODUCT_TUSB8041_USB2,
++      .driver_info = HUB_QUIRK_DISABLE_AUTOSUSPEND},
++    { .match_flags = USB_DEVICE_ID_MATCH_VENDOR
++			| USB_DEVICE_ID_MATCH_PRODUCT,
++      .idVendor = USB_VENDOR_TEXAS_INSTRUMENTS,
++      .idProduct = USB_PRODUCT_TUSB8041_USB3,
++      .driver_info = HUB_QUIRK_DISABLE_AUTOSUSPEND},
+     { .match_flags = USB_DEVICE_ID_MATCH_DEV_CLASS,
+       .bDeviceClass = USB_CLASS_HUB},
+     { .match_flags = USB_DEVICE_ID_MATCH_INT_CLASS,
 
 
