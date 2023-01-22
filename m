@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBB852590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41A97C433D2;
-	Sun, 22 Jan 2023 15:25:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3A22590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD30FC433D2;
+	Sun, 22 Jan 2023 15:25:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401109;
-	bh=QWCDJGeSuUhItXpy6atRhtbdBh6Co6DYu7nr+j6obvI=;
+	s=korg; t=1674401112;
+	bh=bHn+98W+LRqJXZsz4t28zbYdG3ANip8pqUSeTp+aJaA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zFmVIqqCP8pYInJnPXYiILa3FHrZXUdOi6T16h4AUzuW/In49Ubpyr4HH78Eo09FI
-	 sRB4b4x7Kz/lm0OkvWzZ+KiP5zCOcgMo1yTUVpmOQ4kJsQHFb0eM1rkNq7fExnUnGA
-	 xgLErD0fm38RzW7sz6pIk4u1Y0McAQs4DhPK445g=
+	b=uYd6BWivnCP2Iz7Q0mqSi9490nMmlwTNoKS1+PGvcrCPugyroP7EnLFcCTmuVUoqu
+	 B/HSg2Jd94TkECQk/AY4REISkpqoCCuTh/lFfPKKaCJNj4z3N9WzD9/g5dc07aO9YJ
+	 D3yYPZdQxpbedl6BxbBcqARU2zMu20LymJe/ifAY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Burn Alting <burn.alting@iinet.net.au>,
-	Jiri Olsa <olsajiri@gmail.com>,
-	Stanislav Fomichev <sdf@google.com>,
-	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
-	Paul Moore <paul@paul-moore.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 6.1 096/193] bpf: restore the ebpf program ID for BPF_AUDIT_UNLOAD and PERF_BPF_EVENT_PROG_UNLOAD
-Date: Sun, 22 Jan 2023 16:03:45 +0100
-Message-Id: <20230122150250.725207078@linuxfoundation.org>
+	Felipe Balbi <balbi@kernel.org>,
+	Lorenzo Colitti <lorenzo@google.com>,
+	Carlos Llamas <cmllamas@google.com>,
+	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
+	stable <stable@kernel.org>
+Subject: [PATCH 6.1 114/193] usb: gadget: f_ncm: fix potential NULL ptr deref in ncm_bitrate()
+Date: Sun, 22 Jan 2023 16:04:03 +0100
+Message-Id: <20230122150251.542054172@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -38,94 +37,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Moore <paul@paul-moore.com>
+From: Maciej Żenczykowski <maze@google.com>
 
-commit ef01f4e25c1760920e2c94f1c232350277ace69b upstream.
+commit c6ec929595c7443250b2a4faea988c62019d5cd2 upstream.
 
-When changing the ebpf program put() routines to support being called
-from within IRQ context the program ID was reset to zero prior to
-calling the perf event and audit UNLOAD record generators, which
-resulted in problems as the ebpf program ID was bogus (always zero).
-This patch addresses this problem by removing an unnecessary call to
-bpf_prog_free_id() in __bpf_prog_offload_destroy() and adjusting
-__bpf_prog_put() to only call bpf_prog_free_id() after audit and perf
-have finished their bpf program unload tasks in
-bpf_prog_put_deferred().  For the record, no one can determine, or
-remember, why it was necessary to free the program ID, and remove it
-from the IDR, prior to executing bpf_prog_put_deferred();
-regardless, both Stanislav and Alexei agree that the approach in this
-patch should be safe.
+In Google internal bug 265639009 we've received an (as yet) unreproducible
+crash report from an aarch64 GKI 5.10.149-android13 running device.
 
-It is worth noting that when moving the bpf_prog_free_id() call, the
-do_idr_lock parameter was forced to true as the ebpf devs determined
-this was the correct as the do_idr_lock should always be true.  The
-do_idr_lock parameter will be removed in a follow-up patch, but it
-was kept here to keep the patch small in an effort to ease any stable
-backports.
+AFAICT the source code is at:
+  https://android.googlesource.com/kernel/common/+/refs/tags/ASB-2022-12-05_13-5.10
 
-I also modified the bpf_audit_prog() logic used to associate the
-AUDIT_BPF record with other associated records, e.g. @ctx != NULL.
-Instead of keying off the operation, it now keys off the execution
-context, e.g. '!in_irg && !irqs_disabled()', which is much more
-appropriate and should help better connect the UNLOAD operations with
-the associated audit state (other audit records).
+The call stack is:
+  ncm_close() -> ncm_notify() -> ncm_do_notify()
+with the crash at:
+  ncm_do_notify+0x98/0x270
+Code: 79000d0b b9000a6c f940012a f9400269 (b9405d4b)
 
+Which I believe disassembles to (I don't know ARM assembly, but it looks sane enough to me...):
+
+  // halfword (16-bit) store presumably to event->wLength (at offset 6 of struct usb_cdc_notification)
+  0B 0D 00 79    strh w11, [x8, #6]
+
+  // word (32-bit) store presumably to req->Length (at offset 8 of struct usb_request)
+  6C 0A 00 B9    str  w12, [x19, #8]
+
+  // x10 (NULL) was read here from offset 0 of valid pointer x9
+  // IMHO we're reading 'cdev->gadget' and getting NULL
+  // gadget is indeed at offset 0 of struct usb_composite_dev
+  2A 01 40 F9    ldr  x10, [x9]
+
+  // loading req->buf pointer, which is at offset 0 of struct usb_request
+  69 02 40 F9    ldr  x9, [x19]
+
+  // x10 is null, crash, appears to be attempt to read cdev->gadget->max_speed
+  4B 5D 40 B9    ldr  w11, [x10, #0x5c]
+
+which seems to line up with ncm_do_notify() case NCM_NOTIFY_SPEED code fragment:
+
+  event->wLength = cpu_to_le16(8);
+  req->length = NCM_STATUS_BYTECOUNT;
+
+  /* SPEED_CHANGE data is up/down speeds in bits/sec */
+  data = req->buf + sizeof *event;
+  data[0] = cpu_to_le32(ncm_bitrate(cdev->gadget));
+
+My analysis of registers and NULL ptr deref crash offset
+  (Unable to handle kernel NULL pointer dereference at virtual address 000000000000005c)
+heavily suggests that the crash is due to 'cdev->gadget' being NULL when executing:
+  data[0] = cpu_to_le32(ncm_bitrate(cdev->gadget));
+which calls:
+  ncm_bitrate(NULL)
+which then calls:
+  gadget_is_superspeed(NULL)
+which reads
+  ((struct usb_gadget *)NULL)->max_speed
+and hits a panic.
+
+AFAICT, if I'm counting right, the offset of max_speed is indeed 0x5C.
+(remember there's a GKI KABI reservation of 16 bytes in struct work_struct)
+
+It's not at all clear to me how this is all supposed to work...
+but returning 0 seems much better than panic-ing...
+
+Cc: Felipe Balbi <balbi@kernel.org>
+Cc: Lorenzo Colitti <lorenzo@google.com>
+Cc: Carlos Llamas <cmllamas@google.com>
 Cc: stable@vger.kernel.org
-Fixes: d809e134be7a ("bpf: Prepare bpf_prog_put() to be called from irq context.")
-Reported-by: Burn Alting <burn.alting@iinet.net.au>
-Reported-by: Jiri Olsa <olsajiri@gmail.com>
-Suggested-by: Stanislav Fomichev <sdf@google.com>
-Suggested-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
-Signed-off-by: Paul Moore <paul@paul-moore.com>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/r/20230106154400.74211-1-paul@paul-moore.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Maciej Żenczykowski <maze@google.com>
+Cc: stable <stable@kernel.org>
+Link: https://lore.kernel.org/r/20230117131839.1138208-1-maze@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/offload.c |    3 ---
- kernel/bpf/syscall.c |    6 ++----
- 2 files changed, 2 insertions(+), 7 deletions(-)
+ drivers/usb/gadget/function/f_ncm.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/kernel/bpf/offload.c
-+++ b/kernel/bpf/offload.c
-@@ -216,9 +216,6 @@ static void __bpf_prog_offload_destroy(s
- 	if (offload->dev_state)
- 		offload->offdev->ops->destroy(prog);
- 
--	/* Make sure BPF_PROG_GET_NEXT_ID can't find this dead program */
--	bpf_prog_free_id(prog, true);
--
- 	list_del_init(&offload->offloads);
- 	kfree(offload);
- 	prog->aux->offload = NULL;
---- a/kernel/bpf/syscall.c
-+++ b/kernel/bpf/syscall.c
-@@ -1958,7 +1958,7 @@ static void bpf_audit_prog(const struct
- 		return;
- 	if (audit_enabled == AUDIT_OFF)
- 		return;
--	if (op == BPF_AUDIT_LOAD)
-+	if (!in_irq() && !irqs_disabled())
- 		ctx = audit_context();
- 	ab = audit_log_start(ctx, GFP_ATOMIC, AUDIT_BPF);
- 	if (unlikely(!ab))
-@@ -2053,6 +2053,7 @@ static void bpf_prog_put_deferred(struct
- 	prog = aux->prog;
- 	perf_event_bpf_event(prog, PERF_BPF_EVENT_PROG_UNLOAD, 0);
- 	bpf_audit_prog(prog, BPF_AUDIT_UNLOAD);
-+	bpf_prog_free_id(prog, true);
- 	__bpf_prog_put_noref(prog, true);
- }
- 
-@@ -2061,9 +2062,6 @@ static void __bpf_prog_put(struct bpf_pr
- 	struct bpf_prog_aux *aux = prog->aux;
- 
- 	if (atomic64_dec_and_test(&aux->refcnt)) {
--		/* bpf_prog_free_id() must be called first */
--		bpf_prog_free_id(prog, do_idr_lock);
--
- 		if (in_irq() || irqs_disabled()) {
- 			INIT_WORK(&aux->work, bpf_prog_put_deferred);
- 			schedule_work(&aux->work);
+--- a/drivers/usb/gadget/function/f_ncm.c
++++ b/drivers/usb/gadget/function/f_ncm.c
+@@ -83,7 +83,9 @@ static inline struct f_ncm *func_to_ncm(
+ /* peak (theoretical) bulk transfer rate in bits-per-second */
+ static inline unsigned ncm_bitrate(struct usb_gadget *g)
+ {
+-	if (gadget_is_superspeed(g) && g->speed >= USB_SPEED_SUPER_PLUS)
++	if (!g)
++		return 0;
++	else if (gadget_is_superspeed(g) && g->speed >= USB_SPEED_SUPER_PLUS)
+ 		return 4250000000U;
+ 	else if (gadget_is_superspeed(g) && g->speed == USB_SPEED_SUPER)
+ 		return 3750000000U;
 
 
