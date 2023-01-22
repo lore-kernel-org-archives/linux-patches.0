@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4492590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B5B5C433D2;
-	Sun, 22 Jan 2023 15:25:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378F42590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B269FC433EF;
+	Sun, 22 Jan 2023 15:25:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401153;
-	bh=PdUoBRzklo3agrs2oOBjncZKyQKJk5C3zdryrEw3sHw=;
+	s=korg; t=1674401159;
+	bh=x5CQZ72c0QMtBcqBBi7lqLcouV43Yc+o46B25Mp1V7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cU7/1SNfcOsBXbGxAttqZPuweGAysQTTYijovSqSogYTv/VccvI7+ZQVK1xGMFPLS
-	 xduP2bfDbWrvJN7nSj31wzm6jGP6M/y9zNvLeyCIxV969mlZXCkHZS2MuEsCWg+ivt
-	 usrV05Y3o+0v9nHXSonpayrLdMB8MIsxDpSM2d80=
+	b=O3vnbHiISjPKzjwaHRLBXxDajqb9Vy6PEBE3MMTCSnMdDXc0PhAi89zCDjiGQpyvN
+	 4lz8x37eAr96w1UcInmNa+E+6gdE5wzj6Esj4UFLN7pSelBGXnu+0fXl7qxfGpCBo6
+	 R2+wCPk8wT9ey8ETNTdgn5gwaovXWm07awyDj/Zs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
-	Olivier Langlois <olivier@trillion01.com>
-Subject: [PATCH 6.1 100/193] io_uring/poll: dont reissue in case of poll race on multishot request
-Date: Sun, 22 Jan 2023 16:03:49 +0100
-Message-Id: <20230122150250.899030527@linuxfoundation.org>
+	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 102/193] mptcp: netlink: respect v4/v6-only sockets
+Date: Sun, 22 Jan 2023 16:03:51 +0100
+Message-Id: <20230122150250.975766338@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -34,45 +35,105 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 8caa03f10bf92cb8657408a6ece6a8a73f96ce13 upstream.
+commit fb00ee4f3343acb2b9222ca9b73b47dd1e1a8efc upstream.
 
-A previous commit fixed a poll race that can occur, but it's only
-applicable for multishot requests. For a multishot request, we can safely
-ignore a spurious wakeup, as we never leave the waitqueue to begin with.
+If an MPTCP socket has been created with AF_INET6 and the IPV6_V6ONLY
+option has been set, the userspace PM would allow creating subflows
+using IPv4 addresses, e.g. mapped in v6.
 
-A blunt reissue of a multishot armed request can cause us to leak a
-buffer, if they are ring provided. While this seems like a bug in itself,
-it's not really defined behavior to reissue a multishot request directly.
-It's less efficient to do so as well, and not required to rearm anything
-like it is for singleshot poll requests.
+The kernel side of userspace PM will also accept creating subflows with
+local and remote addresses having different families. Depending on the
+subflow socket's family, different behaviours are expected:
+ - If AF_INET is forced with a v6 address, the kernel will take the last
+   byte of the IP and try to connect to that: a new subflow is created
+   but to a non expected address.
+ - If AF_INET6 is forced with a v4 address, the kernel will try to
+   connect to a v4 address (v4-mapped-v6). A -EBADF error from the
+   connect() part is then expected.
 
+It is then required to check the given families can be accepted. This is
+done by using a new helper for addresses family matching, taking care of
+IPv4 vs IPv4-mapped-IPv6 addresses. This helper will be re-used later by
+the in-kernel path-manager to use mixed IPv4 and IPv6 addresses.
+
+While at it, a clear error message is now reported if there are some
+conflicts with the families that have been passed by the userspace.
+
+Fixes: 702c2f646d42 ("mptcp: netlink: allow userspace-driven subflow establishment")
 Cc: stable@vger.kernel.org
-Fixes: 6e5aedb9324a ("io_uring/poll: attempt request issue after racy poll wakeup")
-Reported-and-tested-by: Olivier Langlois <olivier@trillion01.com>
-Link: https://github.com/axboe/liburing/issues/778
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Reviewed-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/poll.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ net/mptcp/pm.c           |   25 +++++++++++++++++++++++++
+ net/mptcp/pm_userspace.c |    7 +++++++
+ net/mptcp/protocol.h     |    3 +++
+ 3 files changed, 35 insertions(+)
 
---- a/io_uring/poll.c
-+++ b/io_uring/poll.c
-@@ -281,8 +281,12 @@ static int io_poll_check_events(struct i
- 			 * to the waitqueue, so if we get nothing back, we
- 			 * should be safe and attempt a reissue.
- 			 */
--			if (unlikely(!req->cqe.res))
-+			if (unlikely(!req->cqe.res)) {
-+				/* Multishot armed need not reissue */
-+				if (!(req->apoll_events & EPOLLONESHOT))
-+					continue;
- 				return IOU_POLL_REISSUE;
-+			}
- 		}
- 		if (req->apoll_events & EPOLLONESHOT)
- 			return IOU_POLL_DONE;
+--- a/net/mptcp/pm.c
++++ b/net/mptcp/pm.c
+@@ -420,6 +420,31 @@ void mptcp_pm_subflow_chk_stale(const st
+ 	}
+ }
+ 
++/* if sk is ipv4 or ipv6_only allows only same-family local and remote addresses,
++ * otherwise allow any matching local/remote pair
++ */
++bool mptcp_pm_addr_families_match(const struct sock *sk,
++				  const struct mptcp_addr_info *loc,
++				  const struct mptcp_addr_info *rem)
++{
++	bool mptcp_is_v4 = sk->sk_family == AF_INET;
++
++#if IS_ENABLED(CONFIG_MPTCP_IPV6)
++	bool loc_is_v4 = loc->family == AF_INET || ipv6_addr_v4mapped(&loc->addr6);
++	bool rem_is_v4 = rem->family == AF_INET || ipv6_addr_v4mapped(&rem->addr6);
++
++	if (mptcp_is_v4)
++		return loc_is_v4 && rem_is_v4;
++
++	if (ipv6_only_sock(sk))
++		return !loc_is_v4 && !rem_is_v4;
++
++	return loc_is_v4 == rem_is_v4;
++#else
++	return mptcp_is_v4 && loc->family == AF_INET && rem->family == AF_INET;
++#endif
++}
++
+ void mptcp_pm_data_reset(struct mptcp_sock *msk)
+ {
+ 	u8 pm_type = mptcp_get_pm_type(sock_net((struct sock *)msk));
+--- a/net/mptcp/pm_userspace.c
++++ b/net/mptcp/pm_userspace.c
+@@ -294,6 +294,13 @@ int mptcp_nl_cmd_sf_create(struct sk_buf
+ 	}
+ 
+ 	sk = &msk->sk.icsk_inet.sk;
++
++	if (!mptcp_pm_addr_families_match(sk, &addr_l, &addr_r)) {
++		GENL_SET_ERR_MSG(info, "families mismatch");
++		err = -EINVAL;
++		goto create_err;
++	}
++
+ 	lock_sock(sk);
+ 
+ 	err = __mptcp_subflow_connect(sk, &addr_l, &addr_r);
+--- a/net/mptcp/protocol.h
++++ b/net/mptcp/protocol.h
+@@ -762,6 +762,9 @@ int mptcp_pm_parse_addr(struct nlattr *a
+ int mptcp_pm_parse_entry(struct nlattr *attr, struct genl_info *info,
+ 			 bool require_family,
+ 			 struct mptcp_pm_addr_entry *entry);
++bool mptcp_pm_addr_families_match(const struct sock *sk,
++				  const struct mptcp_addr_info *loc,
++				  const struct mptcp_addr_info *rem);
+ void mptcp_pm_subflow_chk_stale(const struct mptcp_sock *msk, struct sock *ssk);
+ void mptcp_pm_nl_subflow_chk_stale(const struct mptcp_sock *msk, struct sock *ssk);
+ void mptcp_pm_new_connection(struct mptcp_sock *msk, const struct sock *ssk, int server_side);
 
 
