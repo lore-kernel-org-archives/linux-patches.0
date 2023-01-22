@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD692590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:15:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A578C433D2;
-	Sun, 22 Jan 2023 15:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B13DC2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:15:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35D45C433EF;
+	Sun, 22 Jan 2023 15:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400546;
-	bh=ZM4+om5S2CjW0KuiXcj1YlSIFey+/gI/e0OVi3sF1rI=;
+	s=korg; t=1674400548;
+	bh=QAQssnu91n57wUCsf9Rt3u9HIRbVMIgt0CtjMPne0Os=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T+EY7xkJRCw3hSpwlLEEu+xdIKYKzbxr6l+6A74+C8GWGtSYHJJG0Okc/+9W+4wFI
-	 z5/j6fOmMDMkgYaSVFxEAzDNE41vX1zGpM6Mk0LVOisNfeOnPTnyswA8/mOi52Xf9h
-	 SLPN5BVroX0EC7eocDSegEADe1Xyo8qzVWn6cbtA=
+	b=z2NC6FAJsdt3YtoI9oqbZrdnj4EziiXgPr9KHgGjm+5IavmNtheJis3A1kCoAABc+
+	 xdQZxqfWbOQCN+G5qUADSF8k2PCJP5tu11NCai2Oewo9vhv+KIn8lyn9+nlYF/SnY+
+	 07jtdCBymKEwAfq5aB5n7edqfiBb4xFBLFlL6XdE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Wetzel <alexander@wetzel-home.de>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 5.15 017/117] wifi: mac80211: sdata can be NULL during AMPDU start
-Date: Sun, 22 Jan 2023 16:03:27 +0100
-Message-Id: <20230122150233.397578813@linuxfoundation.org>
+	"Shawn.Shao" <shawn.shao@jaguarmicro.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.15 018/117] Add exception protection processing for vd in axi_chan_handle_err function
+Date: Sun, 22 Jan 2023 16:03:28 +0100
+Message-Id: <20230122150233.437717456@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -34,117 +34,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Wetzel <alexander@wetzel-home.de>
+From: Shawn.Shao <shawn.shao@jaguarmicro.com>
 
-commit 69403bad97aa0162e3d7911b27e25abe774093df upstream.
+commit 57054fe516d59d03a7bcf1888e82479ccc244f87 upstream.
 
-ieee80211_tx_ba_session_handle_start() may get NULL for sdata when a
-deauthentication is ongoing.
+Since there is no protection for vd, a kernel panic will be
+triggered here in exceptional cases.
 
-Here a trace triggering the race with the hostapd test
-multi_ap_fronthaul_on_ap:
+You can refer to the processing of axi_chan_block_xfer_complete function
 
-(gdb) list *drv_ampdu_action+0x46
-0x8b16 is in drv_ampdu_action (net/mac80211/driver-ops.c:396).
-391             int ret = -EOPNOTSUPP;
-392
-393             might_sleep();
-394
-395             sdata = get_bss_sdata(sdata);
-396             if (!check_sdata_in_driver(sdata))
-397                     return -EIO;
-398
-399             trace_drv_ampdu_action(local, sdata, params);
-400
+The triggered kernel panic is as follows:
 
-wlan0: moving STA 02:00:00:00:03:00 to state 3
-wlan0: associated
-wlan0: deauthenticating from 02:00:00:00:03:00 by local choice (Reason: 3=DEAUTH_LEAVING)
-wlan3.sta1: Open BA session requested for 02:00:00:00:00:00 tid 0
-wlan3.sta1: dropped frame to 02:00:00:00:00:00 (unauthorized port)
-wlan0: moving STA 02:00:00:00:03:00 to state 2
-wlan0: moving STA 02:00:00:00:03:00 to state 1
-wlan0: Removed STA 02:00:00:00:03:00
-wlan0: Destroyed STA 02:00:00:00:03:00
-BUG: unable to handle page fault for address: fffffffffffffb48
-PGD 11814067 P4D 11814067 PUD 11816067 PMD 0
-Oops: 0000 [#1] PREEMPT SMP PTI
-CPU: 2 PID: 133397 Comm: kworker/u16:1 Tainted: G        W          6.1.0-rc8-wt+ #59
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.0-20220807_005459-localhost 04/01/2014
-Workqueue: phy3 ieee80211_ba_session_work [mac80211]
-RIP: 0010:drv_ampdu_action+0x46/0x280 [mac80211]
-Code: 53 48 89 f3 be 89 01 00 00 e8 d6 43 bf ef e8 21 46 81 f0 83 bb a0 1b 00 00 04 75 0e 48 8b 9b 28 0d 00 00 48 81 eb 10 0e 00 00 <8b> 93 58 09 00 00 f6 c2 20 0f 84 3b 01 00 00 8b 05 dd 1c 0f 00 85
-RSP: 0018:ffffc900025ebd20 EFLAGS: 00010287
-RAX: 0000000000000000 RBX: fffffffffffff1f0 RCX: ffff888102228240
-RDX: 0000000080000000 RSI: ffffffff918c5de0 RDI: ffff888102228b40
-RBP: ffffc900025ebd40 R08: 0000000000000001 R09: 0000000000000001
-R10: 0000000000000001 R11: 0000000000000000 R12: ffff888118c18ec0
-R13: 0000000000000000 R14: ffffc900025ebd60 R15: ffff888018b7efb8
-FS:  0000000000000000(0000) GS:ffff88817a600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: fffffffffffffb48 CR3: 0000000105228006 CR4: 0000000000170ee0
-Call Trace:
- <TASK>
- ieee80211_tx_ba_session_handle_start+0xd0/0x190 [mac80211]
- ieee80211_ba_session_work+0xff/0x2e0 [mac80211]
- process_one_work+0x29f/0x620
- worker_thread+0x4d/0x3d0
- ? process_one_work+0x620/0x620
- kthread+0xfb/0x120
- ? kthread_complete_and_exit+0x20/0x20
- ret_from_fork+0x22/0x30
- </TASK>
+[   67.848444] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000060
+[   67.848447] Mem abort info:
+[   67.848449]   ESR = 0x96000004
+[   67.848451]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   67.848454]   SET = 0, FnV = 0
+[   67.848456]   EA = 0, S1PTW = 0
+[   67.848458] Data abort info:
+[   67.848460]   ISV = 0, ISS = 0x00000004
+[   67.848462]   CM = 0, WnR = 0
+[   67.848465] user pgtable: 4k pages, 48-bit VAs, pgdp=00000800c4c0b000
+[   67.848468] [0000000000000060] pgd=0000000000000000, p4d=0000000000000000
+[   67.848472] Internal error: Oops: 96000004 [#1] SMP
+[   67.848475] Modules linked in: dmatest
+[   67.848479] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 5.10.100-emu_x2rc+ #11
+[   67.848483] pstate: 62000085 (nZCv daIf -PAN -UAO +TCO BTYPE=--)
+[   67.848487] pc : axi_chan_handle_err+0xc4/0x230
+[   67.848491] lr : axi_chan_handle_err+0x30/0x230
+[   67.848493] sp : ffff0803fe55ae50
+[   67.848495] x29: ffff0803fe55ae50 x28: ffff800011212200
+[   67.848500] x27: ffff0800c42c0080 x26: ffff0800c097c080
+[   67.848504] x25: ffff800010d33880 x24: ffff80001139d850
+[   67.848508] x23: ffff0800c097c168 x22: 0000000000000000
+[   67.848512] x21: 0000000000000080 x20: 0000000000002000
+[   67.848517] x19: ffff0800c097c080 x18: 0000000000000000
+[   67.848521] x17: 0000000000000000 x16: 0000000000000000
+[   67.848525] x15: 0000000000000000 x14: 0000000000000000
+[   67.848529] x13: 0000000000000000 x12: 0000000000000040
+[   67.848533] x11: ffff0800c0400248 x10: ffff0800c040024a
+[   67.848538] x9 : ffff800010576cd4 x8 : ffff0800c0400270
+[   67.848542] x7 : 0000000000000000 x6 : ffff0800c04003e0
+[   67.848546] x5 : ffff0800c0400248 x4 : ffff0800c4294480
+[   67.848550] x3 : dead000000000100 x2 : dead000000000122
+[   67.848555] x1 : 0000000000000100 x0 : ffff0800c097c168
+[   67.848559] Call trace:
+[   67.848562]  axi_chan_handle_err+0xc4/0x230
+[   67.848566]  dw_axi_dma_interrupt+0xf4/0x590
+[   67.848569]  __handle_irq_event_percpu+0x60/0x220
+[   67.848573]  handle_irq_event+0x64/0x120
+[   67.848576]  handle_fasteoi_irq+0xc4/0x220
+[   67.848580]  __handle_domain_irq+0x80/0xe0
+[   67.848583]  gic_handle_irq+0xc0/0x138
+[   67.848585]  el1_irq+0xc8/0x180
+[   67.848588]  arch_cpu_idle+0x14/0x2c
+[   67.848591]  default_idle_call+0x40/0x16c
+[   67.848594]  do_idle+0x1f0/0x250
+[   67.848597]  cpu_startup_entry+0x2c/0x60
+[   67.848600]  rest_init+0xc0/0xcc
+[   67.848603]  arch_call_rest_init+0x14/0x1c
+[   67.848606]  start_kernel+0x4cc/0x500
+[   67.848610] Code: eb0002ff 9a9f12d6 f2fbd5a2 f2fbd5a3 (a94602c1)
+[   67.848613] ---[ end trace 585a97036f88203a ]---
 
-Signed-off-by: Alexander Wetzel <alexander@wetzel-home.de>
-Link: https://lore.kernel.org/r/20221230121850.218810-2-alexander@wetzel-home.de
+Signed-off-by: Shawn.Shao <shawn.shao@jaguarmicro.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Link: https://lore.kernel.org/r/20230112055802.1764-1-shawn.shao@jaguarmicro.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/agg-tx.c     |    6 +++++-
- net/mac80211/driver-ops.c |    3 +++
- 2 files changed, 8 insertions(+), 1 deletion(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/net/mac80211/agg-tx.c
-+++ b/net/mac80211/agg-tx.c
-@@ -491,7 +491,7 @@ void ieee80211_tx_ba_session_handle_star
- {
- 	struct tid_ampdu_tx *tid_tx;
- 	struct ieee80211_local *local = sta->local;
--	struct ieee80211_sub_if_data *sdata = sta->sdata;
-+	struct ieee80211_sub_if_data *sdata;
- 	struct ieee80211_ampdu_params params = {
- 		.sta = &sta->sta,
- 		.action = IEEE80211_AMPDU_TX_START,
-@@ -521,6 +521,7 @@ void ieee80211_tx_ba_session_handle_star
- 	 */
- 	synchronize_net();
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -980,6 +980,11 @@ static noinline void axi_chan_handle_err
  
-+	sdata = sta->sdata;
- 	params.ssn = sta->tid_seq[tid] >> 4;
- 	ret = drv_ampdu_action(local, sdata, &params);
- 	tid_tx->ssn = params.ssn;
-@@ -534,6 +535,9 @@ void ieee80211_tx_ba_session_handle_star
- 		 */
- 		set_bit(HT_AGG_STATE_DRV_READY, &tid_tx->state);
- 	} else if (ret) {
-+		if (!sdata)
-+			return;
-+
- 		ht_dbg(sdata,
- 		       "BA request denied - HW unavailable for %pM tid %d\n",
- 		       sta->sta.addr, tid);
---- a/net/mac80211/driver-ops.c
-+++ b/net/mac80211/driver-ops.c
-@@ -331,6 +331,9 @@ int drv_ampdu_action(struct ieee80211_lo
+ 	/* The bad descriptor currently is in the head of vc list */
+ 	vd = vchan_next_desc(&chan->vc);
++	if (!vd) {
++		dev_err(chan2dev(chan), "BUG: %s, IRQ with no descriptors\n",
++			axi_chan_name(chan));
++		goto out;
++	}
+ 	/* Remove the completed descriptor from issued list */
+ 	list_del(&vd->node);
  
- 	might_sleep();
+@@ -994,6 +999,7 @@ static noinline void axi_chan_handle_err
+ 	/* Try to restart the controller */
+ 	axi_chan_start_first_queued(chan);
  
-+	if (!sdata)
-+		return -EIO;
-+
- 	sdata = get_bss_sdata(sdata);
- 	if (!check_sdata_in_driver(sdata))
- 		return -EIO;
++out:
+ 	spin_unlock_irqrestore(&chan->vc.lock, flags);
+ }
+ 
 
 
