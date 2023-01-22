@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8262590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:27:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57D4DC433D2;
-	Sun, 22 Jan 2023 15:27:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B63862590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:27:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A229C433EF;
+	Sun, 22 Jan 2023 15:27:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401274;
-	bh=iVM56Pf8EQzMS6ipvV9uDIR2Kn87IVzazDkCb5Bb6bw=;
+	s=korg; t=1674401277;
+	bh=2awkV/Mup82aTVUp+wDSA8RjQGb/SKRWMP/nnLhK6bk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PlNzJlST/QUDHekSEyNeevHXWwDtxwitgdMH0j2Kb2ywCnbmCMZzxJMz8JQamGGyo
-	 SSqXybYPjsGsh+HbBkFtM4/6e6TW0RZT7jNCv2uVPgWVbLeP4d44YfrtBYHK/dUtZH
-	 J3R6wmCT1d6fJY8QOKJMTSlYzXfioFvap8KDe1Fw=
+	b=gHV2gpYzx1hwj5zpOCX5oRn9xeNFc8LiozFZDKJ3jfE1QfksO1t9UnLEHNwwC/s4z
+	 Izz2hWunoccD/oKMkyS0ZLCkEYbKihfcC+2rwa/36FpbwqA3LoKlUlE1Xz5Cg+muBS
+	 zaL01ZuvjhbERgDXSNSWG9de/axyQ9vWgv4eF+MI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <tim.huang@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	"Limonciello, Mario" <Mario.Limonciello@amd.com>
-Subject: [PATCH 6.1 177/193] drm/amdgpu: enable GFX IP v11.0.4 CG support
-Date: Sun, 22 Jan 2023 16:05:06 +0100
-Message-Id: <20230122150254.516799465@linuxfoundation.org>
+	Dennis Gilmore <dennis@ausil.us>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.1 160/193] arch: fix broken BuildID for arm64 and riscv
+Date: Sun, 22 Jan 2023 16:04:49 +0100
+Message-Id: <20230122150253.715751257@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -35,47 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tim Huang <tim.huang@amd.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit f2b91e5a7cc0368709964994ca253781b51a486a upstream.
+commit 99cb0d917ffa1ab628bb67364ca9b162c07699b1 upstream.
 
-Add CG support for GFX/MC/HDP/ATHUB/IH/BIF.
+Dennis Gilmore reports that the BuildID is missing in the arm64 vmlinux
+since commit 994b7ac1697b ("arm64: remove special treatment for the
+link order of head.o").
 
-Signed-off-by: Tim Huang <tim.huang@amd.com>
-Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Limonciello, Mario" <Mario.Limonciello@amd.com>
+The issue is that the type of .notes section, which contains the BuildID,
+changed from NOTES to PROGBITS.
+
+Ard Biesheuvel figured out that whichever object gets linked first gets
+to decide the type of a section. The PROGBITS type is the result of the
+compiler emitting .note.GNU-stack as PROGBITS rather than NOTE.
+
+While Ard provided a fix for arm64, I want to fix this globally because
+the same issue is happening on riscv since commit 2348e6bf4421 ("riscv:
+remove special treatment for the link order of head.o"). This problem
+will happen in general for other architectures if they start to drop
+unneeded entries from scripts/head-object-list.txt.
+
+Discard .note.GNU-stack in include/asm-generic/vmlinux.lds.h.
+
+Link: https://lore.kernel.org/lkml/CAABkxwuQoz1CTbyb57n0ZX65eSYiTonFCU8-LCQc=74D=xE=rA@mail.gmail.com/
+Fixes: 994b7ac1697b ("arm64: remove special treatment for the link order of head.o")
+Fixes: 2348e6bf4421 ("riscv: remove special treatment for the link order of head.o")
+Reported-by: Dennis Gilmore <dennis@ausil.us>
+Suggested-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/soc21.c |   18 +++++++++++++++++-
- 1 file changed, 17 insertions(+), 1 deletion(-)
+ include/asm-generic/vmlinux.lds.h |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/gpu/drm/amd/amdgpu/soc21.c
-+++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
-@@ -655,7 +655,23 @@ static int soc21_common_early_init(void
- 		adev->external_rev_id = adev->rev_id + 0x20;
- 		break;
- 	case IP_VERSION(11, 0, 4):
--		adev->cg_flags = AMD_CG_SUPPORT_VCN_MGCG |
-+		adev->cg_flags =
-+			AMD_CG_SUPPORT_GFX_CGCG |
-+			AMD_CG_SUPPORT_GFX_CGLS |
-+			AMD_CG_SUPPORT_GFX_MGCG |
-+			AMD_CG_SUPPORT_GFX_FGCG |
-+			AMD_CG_SUPPORT_REPEATER_FGCG |
-+			AMD_CG_SUPPORT_GFX_PERF_CLK |
-+			AMD_CG_SUPPORT_MC_MGCG |
-+			AMD_CG_SUPPORT_MC_LS |
-+			AMD_CG_SUPPORT_HDP_MGCG |
-+			AMD_CG_SUPPORT_HDP_LS |
-+			AMD_CG_SUPPORT_ATHUB_MGCG |
-+			AMD_CG_SUPPORT_ATHUB_LS |
-+			AMD_CG_SUPPORT_IH_CG |
-+			AMD_CG_SUPPORT_BIF_MGCG |
-+			AMD_CG_SUPPORT_BIF_LS |
-+			AMD_CG_SUPPORT_VCN_MGCG |
- 			AMD_CG_SUPPORT_JPEG_MGCG;
- 		adev->pg_flags = AMD_PG_SUPPORT_VCN |
- 			AMD_PG_SUPPORT_VCN_DPG |
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -929,7 +929,12 @@
+ #define PRINTK_INDEX
+ #endif
+ 
++/*
++ * Discard .note.GNU-stack, which is emitted as PROGBITS by the compiler.
++ * Otherwise, the type of .notes section would become PROGBITS instead of NOTES.
++ */
+ #define NOTES								\
++	/DISCARD/ : { *(.note.GNU-stack) }				\
+ 	.notes : AT(ADDR(.notes) - LOAD_OFFSET) {			\
+ 		__start_notes = .;					\
+ 		KEEP(*(.note.*))					\
 
 
