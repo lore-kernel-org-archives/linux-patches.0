@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBC5E2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:27:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DAEAC433D2;
-	Sun, 22 Jan 2023 15:27:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E5232590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:27:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD743C433EF;
+	Sun, 22 Jan 2023 15:27:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401235;
-	bh=Q01oQxd2F9DPmKvB/jEKJEPqj3JSYr+7LQCmsz6vdf0=;
+	s=korg; t=1674401238;
+	bh=waqv/JE53Q4veFAuP51d+GBwpCZJNESb8/kh4tNwexA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZIxg67fZi1oZbEzTBujs7SWkzwIAet2dPU7D5LXOSK4FHnjjg0QWzfCUlL2y9rmN+
-	 z1z5E1R4BzmCu9qHuBaBiS4vpGcL1EmzdVnTJyowXmZS7o+nCeGWu9KaHdXnPpZ+IL
-	 B/SBosk1z13NDSPDH0bFLXlNZa2fie3PGmzQubHw=
+	b=MYyX/zOHFNLqZ822R4GJl0u5okDq9TdI5nurBFjQMfDOcS6xJjRDiMI9VkxlIrjxu
+	 tyrcdIPhD0QRwXAihK+O1gdNFTvXXpz8ld0CT79Yx4Zsc6oTCpqbDqRBNQS4i17B97
+	 BOybz189bR89UtRA3HK1Yec2A41j8eC73t+ioA7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaro Koskinen <aaro.koskinen@iki.fi>,
-	Arnd Bergmann <arnd@arndb.de>
-Subject: [PATCH 6.1 133/193] ARM: omap1: fix !ARCH_OMAP1_ANY link failures
-Date: Sun, 22 Jan 2023 16:04:22 +0100
-Message-Id: <20230122150252.420280639@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 134/193] drm/amdgpu: fix amdgpu_job_free_resources v2
+Date: Sun, 22 Jan 2023 16:04:23 +0100
+Message-Id: <20230122150252.471317340@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -34,261 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Christian König <christian.koenig@amd.com>
 
-commit 980a637d11fe8dfc734f508a422185c2de55e669 upstream.
+commit 74ea8e78ab349514c9f4df0be1189d91267d750d upstream.
 
-While compile-testing randconfig builds for the upcoming boardfile
-removal, I noticed that an earlier patch of mine was completely
-broken, and the introduction of CONFIG_ARCH_OMAP1_ANY only replaced
-one set of build failures with another one, now resulting in
-link failures like
+It can be that neither fence were initialized when we run out of UVD
+streams for example.
 
-ld: drivers/video/fbdev/omap/omapfb_main.o: in function `omapfb_do_probe':
-drivers/video/fbdev/omap/omapfb_main.c:1703: undefined reference to `omap_set_dma_priority'
-ld: drivers/dma/ti/omap-dma.o: in function `omap_dma_free_chan_resources':
-drivers/dma/ti/omap-dma.c:777: undefined reference to `omap_free_dma'
-drivers/dma/ti/omap-dma.c:1685: undefined reference to `omap_get_plat_info'
-ld: drivers/usb/gadget/udc/omap_udc.o: in function `next_in_dma':
-drivers/usb/gadget/udc/omap_udc.c:820: undefined reference to `omap_get_dma_active_status'
+v2: fix typo breaking compile
 
-I tried reworking it, but the resulting patch ended up much bigger than
-simply avoiding the original problem of unused-function warnings like
-
-arch/arm/mach-omap1/mcbsp.c:76:30: error: unused variable 'omap1_mcbsp_ops' [-Werror,-Wunused-variable]
-
-As a result, revert the previous fix, and rearrange the code that
-produces warnings to hide them. For mcbsp, the #ifdef check can
-simply be removed as the cpu_is_omapxxx() checks already achieve
-the same result, while in the io.c the easiest solution appears to
-be to merge the common map bits into each soc specific portion.
-This gets cleaned in a nicer way after omap7xx support gets dropped,
-as the remaining SoCs all have the exact same I/O map.
-
-Fixes: 615dce5bf736 ("ARM: omap1: fix build with no SoC selected")
-Cc: stable@vger.kernel.org
-Acked-by: Aaro Koskinen <aaro.koskinen@iki.fi>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2324
+Signed-off-by: Christian König <christian.koenig@amd.com>
+Reviewed-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/mach-omap1/Kconfig     |    5 +----
- arch/arm/mach-omap1/Makefile    |    4 ----
- arch/arm/mach-omap1/io.c        |   32 +++++++++++++++-----------------
- arch/arm/mach-omap1/mcbsp.c     |   21 ---------------------
- arch/arm/mach-omap1/pm.h        |    7 -------
- include/linux/soc/ti/omap1-io.h |    4 ++--
- 6 files changed, 18 insertions(+), 55 deletions(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_job.c |   10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
---- a/arch/arm/mach-omap1/Kconfig
-+++ b/arch/arm/mach-omap1/Kconfig
-@@ -4,6 +4,7 @@ menuconfig ARCH_OMAP1
- 	depends on ARCH_MULTI_V4T || ARCH_MULTI_V5
- 	depends on CPU_LITTLE_ENDIAN
- 	depends on ATAGS
-+	select ARCH_OMAP
- 	select ARCH_HAS_HOLES_MEMORYMODEL
- 	select ARCH_OMAP
- 	select CLKSRC_MMIO
-@@ -45,10 +46,6 @@ config ARCH_OMAP16XX
- 	select CPU_ARM926T
- 	select OMAP_DM_TIMER
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_job.c
+@@ -154,8 +154,14 @@ void amdgpu_job_free_resources(struct am
+ 	struct dma_fence *f;
+ 	unsigned i;
  
--config ARCH_OMAP1_ANY
--	select ARCH_OMAP
--	def_bool ARCH_OMAP730 || ARCH_OMAP850 || ARCH_OMAP15XX || ARCH_OMAP16XX
--
- config ARCH_OMAP
- 	bool
- 
---- a/arch/arm/mach-omap1/Makefile
-+++ b/arch/arm/mach-omap1/Makefile
-@@ -3,8 +3,6 @@
- # Makefile for the linux kernel.
- #
- 
--ifdef CONFIG_ARCH_OMAP1_ANY
--
- # Common support
- obj-y := io.o id.o sram-init.o sram.o time.o irq.o mux.o flash.o \
- 	 serial.o devices.o dma.o omap-dma.o fb.o
-@@ -59,5 +57,3 @@ obj-$(CONFIG_ARCH_OMAP730)		+= gpio7xx.o
- obj-$(CONFIG_ARCH_OMAP850)		+= gpio7xx.o
- obj-$(CONFIG_ARCH_OMAP15XX)		+= gpio15xx.o
- obj-$(CONFIG_ARCH_OMAP16XX)		+= gpio16xx.o
--
--endif
---- a/arch/arm/mach-omap1/io.c
-+++ b/arch/arm/mach-omap1/io.c
-@@ -22,17 +22,14 @@
-  * The machine specific code may provide the extra mapping besides the
-  * default mapping provided here.
-  */
--static struct map_desc omap_io_desc[] __initdata = {
-+#if defined (CONFIG_ARCH_OMAP730) || defined (CONFIG_ARCH_OMAP850)
-+static struct map_desc omap7xx_io_desc[] __initdata = {
- 	{
- 		.virtual	= OMAP1_IO_VIRT,
- 		.pfn		= __phys_to_pfn(OMAP1_IO_PHYS),
- 		.length		= OMAP1_IO_SIZE,
- 		.type		= MT_DEVICE
--	}
--};
--
--#if defined (CONFIG_ARCH_OMAP730) || defined (CONFIG_ARCH_OMAP850)
--static struct map_desc omap7xx_io_desc[] __initdata = {
-+	},
- 	{
- 		.virtual	= OMAP7XX_DSP_BASE,
- 		.pfn		= __phys_to_pfn(OMAP7XX_DSP_START),
-@@ -50,6 +47,12 @@ static struct map_desc omap7xx_io_desc[]
- #ifdef CONFIG_ARCH_OMAP15XX
- static struct map_desc omap1510_io_desc[] __initdata = {
- 	{
-+		.virtual	= OMAP1_IO_VIRT,
-+		.pfn		= __phys_to_pfn(OMAP1_IO_PHYS),
-+		.length		= OMAP1_IO_SIZE,
-+		.type		= MT_DEVICE
-+	},
-+	{
- 		.virtual	= OMAP1510_DSP_BASE,
- 		.pfn		= __phys_to_pfn(OMAP1510_DSP_START),
- 		.length		= OMAP1510_DSP_SIZE,
-@@ -66,6 +69,12 @@ static struct map_desc omap1510_io_desc[
- #if defined(CONFIG_ARCH_OMAP16XX)
- static struct map_desc omap16xx_io_desc[] __initdata = {
- 	{
-+		.virtual	= OMAP1_IO_VIRT,
-+		.pfn		= __phys_to_pfn(OMAP1_IO_PHYS),
-+		.length		= OMAP1_IO_SIZE,
-+		.type		= MT_DEVICE
-+	},
-+	{
- 		.virtual	= OMAP16XX_DSP_BASE,
- 		.pfn		= __phys_to_pfn(OMAP16XX_DSP_START),
- 		.length		= OMAP16XX_DSP_SIZE,
-@@ -79,18 +88,9 @@ static struct map_desc omap16xx_io_desc[
- };
- #endif
- 
--/*
-- * Maps common IO regions for omap1
-- */
--static void __init omap1_map_common_io(void)
--{
--	iotable_init(omap_io_desc, ARRAY_SIZE(omap_io_desc));
--}
--
- #if defined (CONFIG_ARCH_OMAP730) || defined (CONFIG_ARCH_OMAP850)
- void __init omap7xx_map_io(void)
- {
--	omap1_map_common_io();
- 	iotable_init(omap7xx_io_desc, ARRAY_SIZE(omap7xx_io_desc));
+-	/* use sched fence if available */
+-	f = job->base.s_fence ? &job->base.s_fence->finished :  &job->hw_fence;
++	/* Check if any fences where initialized */
++	if (job->base.s_fence && job->base.s_fence->finished.ops)
++		f = &job->base.s_fence->finished;
++	else if (job->hw_fence.ops)
++		f = &job->hw_fence;
++	else
++		f = NULL;
++
+ 	for (i = 0; i < job->num_ibs; ++i)
+ 		amdgpu_ib_free(ring->adev, &job->ibs[i], f);
  }
- #endif
-@@ -98,7 +98,6 @@ void __init omap7xx_map_io(void)
- #ifdef CONFIG_ARCH_OMAP15XX
- void __init omap15xx_map_io(void)
- {
--	omap1_map_common_io();
- 	iotable_init(omap1510_io_desc, ARRAY_SIZE(omap1510_io_desc));
- }
- #endif
-@@ -106,7 +105,6 @@ void __init omap15xx_map_io(void)
- #if defined(CONFIG_ARCH_OMAP16XX)
- void __init omap16xx_map_io(void)
- {
--	omap1_map_common_io();
- 	iotable_init(omap16xx_io_desc, ARRAY_SIZE(omap16xx_io_desc));
- }
- #endif
---- a/arch/arm/mach-omap1/mcbsp.c
-+++ b/arch/arm/mach-omap1/mcbsp.c
-@@ -89,7 +89,6 @@ static struct omap_mcbsp_ops omap1_mcbsp
- #define OMAP1610_MCBSP2_BASE	0xfffb1000
- #define OMAP1610_MCBSP3_BASE	0xe1017000
- 
--#if defined(CONFIG_ARCH_OMAP730) || defined(CONFIG_ARCH_OMAP850)
- struct resource omap7xx_mcbsp_res[][6] = {
- 	{
- 		{
-@@ -159,14 +158,7 @@ static struct omap_mcbsp_platform_data o
- };
- #define OMAP7XX_MCBSP_RES_SZ		ARRAY_SIZE(omap7xx_mcbsp_res[1])
- #define OMAP7XX_MCBSP_COUNT		ARRAY_SIZE(omap7xx_mcbsp_res)
--#else
--#define omap7xx_mcbsp_res_0		NULL
--#define omap7xx_mcbsp_pdata		NULL
--#define OMAP7XX_MCBSP_RES_SZ		0
--#define OMAP7XX_MCBSP_COUNT		0
--#endif
- 
--#ifdef CONFIG_ARCH_OMAP15XX
- struct resource omap15xx_mcbsp_res[][6] = {
- 	{
- 		{
-@@ -266,14 +258,7 @@ static struct omap_mcbsp_platform_data o
- };
- #define OMAP15XX_MCBSP_RES_SZ		ARRAY_SIZE(omap15xx_mcbsp_res[1])
- #define OMAP15XX_MCBSP_COUNT		ARRAY_SIZE(omap15xx_mcbsp_res)
--#else
--#define omap15xx_mcbsp_res_0		NULL
--#define omap15xx_mcbsp_pdata		NULL
--#define OMAP15XX_MCBSP_RES_SZ		0
--#define OMAP15XX_MCBSP_COUNT		0
--#endif
- 
--#ifdef CONFIG_ARCH_OMAP16XX
- struct resource omap16xx_mcbsp_res[][6] = {
- 	{
- 		{
-@@ -373,12 +358,6 @@ static struct omap_mcbsp_platform_data o
- };
- #define OMAP16XX_MCBSP_RES_SZ		ARRAY_SIZE(omap16xx_mcbsp_res[1])
- #define OMAP16XX_MCBSP_COUNT		ARRAY_SIZE(omap16xx_mcbsp_res)
--#else
--#define omap16xx_mcbsp_res_0		NULL
--#define omap16xx_mcbsp_pdata		NULL
--#define OMAP16XX_MCBSP_RES_SZ		0
--#define OMAP16XX_MCBSP_COUNT		0
--#endif
- 
- static void omap_mcbsp_register_board_cfg(struct resource *res, int res_count,
- 			struct omap_mcbsp_platform_data *config, int size)
---- a/arch/arm/mach-omap1/pm.h
-+++ b/arch/arm/mach-omap1/pm.h
-@@ -106,13 +106,6 @@
- #define OMAP7XX_IDLECT3		0xfffece24
- #define OMAP7XX_IDLE_LOOP_REQUEST	0x0C00
- 
--#if     !defined(CONFIG_ARCH_OMAP730) && \
--	!defined(CONFIG_ARCH_OMAP850) && \
--	!defined(CONFIG_ARCH_OMAP15XX) && \
--	!defined(CONFIG_ARCH_OMAP16XX)
--#warning "Power management for this processor not implemented yet"
--#endif
--
- #ifndef __ASSEMBLER__
- 
- #include <linux/clk.h>
---- a/include/linux/soc/ti/omap1-io.h
-+++ b/include/linux/soc/ti/omap1-io.h
-@@ -5,7 +5,7 @@
- #ifndef __ASSEMBLER__
- #include <linux/types.h>
- 
--#ifdef CONFIG_ARCH_OMAP1_ANY
-+#ifdef CONFIG_ARCH_OMAP1
- /*
-  * NOTE: Please use ioremap + __raw_read/write where possible instead of these
-  */
-@@ -15,7 +15,7 @@ extern u32 omap_readl(u32 pa);
- extern void omap_writeb(u8 v, u32 pa);
- extern void omap_writew(u16 v, u32 pa);
- extern void omap_writel(u32 v, u32 pa);
--#else
-+#elif defined(CONFIG_COMPILE_TEST)
- static inline u8 omap_readb(u32 pa)  { return 0; }
- static inline u16 omap_readw(u32 pa) { return 0; }
- static inline u32 omap_readl(u32 pa) { return 0; }
 
 
