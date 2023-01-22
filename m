@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF07B7E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:09:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 616BEC433EF;
-	Sun, 22 Jan 2023 15:09:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97C4C7E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:09:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FADEC433EF;
+	Sun, 22 Jan 2023 15:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400175;
-	bh=te1nCUPu63PocwcPVugQ1cpMs4HS6EUQ059GbbOLVeQ=;
+	s=korg; t=1674400178;
+	bh=o+y11JrNaAMZQidWV4+amDUkAeaWTOxNQPbCDToBqQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=f3wuxcVvDRLgNuiwi9GtIZS5R54oh7caBYMYv3hm+BrV5dVxVaoSgyKScvWMV87Ya
-	 1OJ8o6/0WJ8EdxDT5aDs6xg0BkKQoCO0EhF+IvhX6B2MEFqPHaJDaQoGKAdl/c5ehe
-	 WPwnQt8o5gGXVvfk9EeusTo21EWCpJXh+NLy9BGk=
+	b=1FQ3Ms34ufU3mj4haEeZIlH8QuablG8FXeefuFgFHDTg+FRYTAFpnOrj9OGfXyi7f
+	 /UKwT+mszoeocoH9GyZxx4ZgbESfPAYbw0ot+aJXwN7q3PTP4hP2cONfh6c35Y4t9P
+	 lmGq3v7nN34IxpjNAjLU4KOU6Y/EVI2vzqYAYrK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 5.4 30/55] comedi: adv_pci1760: Fix PWM instruction handling
-Date: Sun, 22 Jan 2023 16:04:17 +0100
-Message-Id: <20230122150223.475620828@linuxfoundation.org>
+	Samuel Holland <samuel@sholland.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.4 31/55] mmc: sunxi-mmc: Fix clock refcount imbalance during unbind
+Date: Sun, 22 Jan 2023 16:04:18 +0100
+Message-Id: <20230122150223.516150238@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150222.210885219@linuxfoundation.org>
 References: <20230122150222.210885219@linuxfoundation.org>
@@ -33,48 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Samuel Holland <samuel@sholland.org>
 
-commit 2efb6edd52dc50273f5e68ad863dd1b1fb2f2d1c upstream.
+commit 8509419758f2cc28dd05370385af0d91573b76b4 upstream.
 
-(Actually, this is fixing the "Read the Current Status" command sent to
-the device's outgoing mailbox, but it is only currently used for the PWM
-instructions.)
+If the controller is suspended by runtime PM, the clock is already
+disabled, so do not try to disable it again during removal. Use
+pm_runtime_disable() to flush any pending runtime PM transitions.
 
-The PCI-1760 is operated mostly by sending commands to a set of Outgoing
-Mailbox registers, waiting for the command to complete, and reading the
-result from the Incoming Mailbox registers.  One of these commands is
-the "Read the Current Status" command.  The number of this command is
-0x07 (see the User's Manual for the PCI-1760 at
-<https://advdownload.advantech.com/productfile/Downloadfile2/1-11P6653/PCI-1760.pdf>.
-The `PCI1760_CMD_GET_STATUS` macro defined in the driver should expand
-to this command number 0x07, but unfortunately it currently expands to
-0x03.  (Command number 0x03 is not defined in the User's Manual.)
-Correct the definition of the `PCI1760_CMD_GET_STATUS` macro to fix it.
-
-This is used by all the PWM subdevice related instructions handled by
-`pci1760_pwm_insn_config()` which are probably all broken.  The effect
-of sending the undefined command number 0x03 is not known.
-
-Fixes: 14b93bb6bbf0 ("staging: comedi: adv_pci_dio: separate out PCI-1760 support")
-Cc: <stable@vger.kernel.org> # v4.5+
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20230103143754.17564-1-abbotti@mev.co.uk
+Fixes: 9a8e1e8cc2c0 ("mmc: sunxi: Add runtime_pm support")
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20220810022509.43743-1-samuel@sholland.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/comedi/drivers/adv_pci1760.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/mmc/host/sunxi-mmc.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/staging/comedi/drivers/adv_pci1760.c
-+++ b/drivers/staging/comedi/drivers/adv_pci1760.c
-@@ -59,7 +59,7 @@
- #define PCI1760_CMD_CLR_IMB2		0x00	/* Clears IMB2 */
- #define PCI1760_CMD_SET_DO		0x01	/* Set output state */
- #define PCI1760_CMD_GET_DO		0x02	/* Read output status */
--#define PCI1760_CMD_GET_STATUS		0x03	/* Read current status */
-+#define PCI1760_CMD_GET_STATUS		0x07	/* Read current status */
- #define PCI1760_CMD_GET_FW_VER		0x0e	/* Read firmware version */
- #define PCI1760_CMD_GET_HW_VER		0x0f	/* Read hardware version */
- #define PCI1760_CMD_SET_PWM_HI(x)	(0x10 + (x) * 2) /* Set "hi" period */
+--- a/drivers/mmc/host/sunxi-mmc.c
++++ b/drivers/mmc/host/sunxi-mmc.c
+@@ -1456,9 +1456,11 @@ static int sunxi_mmc_remove(struct platf
+ 	struct sunxi_mmc_host *host = mmc_priv(mmc);
+ 
+ 	mmc_remove_host(mmc);
+-	pm_runtime_force_suspend(&pdev->dev);
+-	disable_irq(host->irq);
+-	sunxi_mmc_disable(host);
++	pm_runtime_disable(&pdev->dev);
++	if (!pm_runtime_status_suspended(&pdev->dev)) {
++		disable_irq(host->irq);
++		sunxi_mmc_disable(host);
++	}
+ 	dma_free_coherent(&pdev->dev, PAGE_SIZE, host->sg_cpu, host->sg_dma);
+ 	mmc_free_host(mmc);
+ 
 
 
