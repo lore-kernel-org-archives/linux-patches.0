@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F4E12590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:20:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1093C433EF;
-	Sun, 22 Jan 2023 15:20:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029242590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:20:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CBB2C433D2;
+	Sun, 22 Jan 2023 15:20:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400810;
-	bh=ARtUTEYeEcVa1SzE6l1zpfZXyO+7TnKvetts8Ouv/s8=;
+	s=korg; t=1674400812;
+	bh=arP/9gihXpo5gmdhMOHxh359EdvmMQ7uXXaUS6JZqHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ujPpXydfAtN/wqP0ay3FaIWkIbeNcw6d97UJRomM0Gt3nE14KGl40IsytEk04mQR9
-	 +2082swYU13+GAwEMwccwrS+dNVaCrha5wWLL7XmBTDsYdVUv6tDjCWN8M55vv97IM
-	 B/VCHI1PFCmPlxGkG9hg0tXcRXZPzvnDF1utuGao=
+	b=e8QOca860vKnJ/4a8QdvNVtlPKZ1yulDb6PF3oHB6XTM6MjI5AhL9ahtjSUFZFkrm
+	 +WEbzwVySOFdpX40Q2idiKom/nLodIuo+EFLXNYcDA9mzOWWrMrOMDBdL1X+/65SoS
+	 f+Fn+kQJF1hhgxtDoiA1bmTlC9ChSiu0vscdlO1U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stephan Gerhold <stephan@gerhold.net>,
-	Bjorn Andersson <andersson@kernel.org>
-Subject: [PATCH 5.15 117/117] soc: qcom: apr: Make qcom,protection-domain optional again
-Date: Sun, 22 Jan 2023 16:05:07 +0100
-Message-Id: <20230122150237.697046756@linuxfoundation.org>
+	Melissa Wen <mwen@igalia.com>,
+	Joshua Ashton <joshua@froggi.es>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.15 098/117] drm/amd/display: Fix COLOR_SPACE_YCBCR2020_TYPE matrix
+Date: Sun, 22 Jan 2023 16:04:48 +0100
+Message-Id: <20230122150236.905397381@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -34,45 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stephan Gerhold <stephan@gerhold.net>
+From: Joshua Ashton <joshua@froggi.es>
 
-commit 599d41fb8ea8bd2a99ca9525dd69405020e43dda upstream.
+commit 973a9c810c785ac270a6d50d8cf862b0c1643a10 upstream.
 
-APR should not fail if the service device tree node does not have
-the qcom,protection-domain property, since this functionality does
-not exist on older platforms such as MSM8916 and MSM8996.
+The YCC conversion matrix for RGB -> COLOR_SPACE_YCBCR2020_TYPE is
+missing the values for the fourth column of the matrix.
 
-Ignore -EINVAL (returned when the property does not exist) to fix
-a regression on 6.2-rc1 that prevents audio from working:
+The fourth column of the matrix is essentially just a value that is
+added given that the color is 3 components in size.
+These values are needed to bias the chroma from the [-1, 1] -> [0, 1]
+range.
 
-  qcom,apr remoteproc0:smd-edge.apr_audio_svc.-1.-1:
-    Failed to read second value of qcom,protection-domain
-  qcom,apr remoteproc0:smd-edge.apr_audio_svc.-1.-1:
-    Failed to add apr 3 svc
+This fixes color being very green when using Gamescope HDR on HDMI
+output which prefers YCC 4:4:4.
 
-Fixes: 6d7860f5750d ("soc: qcom: apr: Add check for idr_alloc and of_property_read_string_index")
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221229151648.19839-3-stephan@gerhold.net
+Fixes: 40df2f809e8f ("drm/amd/display: color space ycbcr709 support")
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Signed-off-by: Joshua Ashton <joshua@froggi.es>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/soc/qcom/apr.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/soc/qcom/apr.c
-+++ b/drivers/soc/qcom/apr.c
-@@ -317,9 +317,10 @@ static int apr_add_device(struct device
- 		goto out;
- 	}
- 
-+	/* Protection domain is optional, it does not exist on older platforms */
- 	ret = of_property_read_string_index(np, "qcom,protection-domain",
- 					    1, &adev->service_path);
--	if (ret < 0) {
-+	if (ret < 0 && ret != -EINVAL) {
- 		dev_err(dev, "Failed to read second value of qcom,protection-domain\n");
- 		goto out;
- 	}
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+@@ -92,8 +92,8 @@ static const struct out_csc_color_matrix
+ 		{ 0xE00, 0xF349, 0xFEB7, 0x1000, 0x6CE, 0x16E3,
+ 				0x24F, 0x200, 0xFCCB, 0xF535, 0xE00, 0x1000} },
+ 	{ COLOR_SPACE_YCBCR2020_TYPE,
+-		{ 0x1000, 0xF149, 0xFEB7, 0x0000, 0x0868, 0x15B2,
+-				0x01E6, 0x0000, 0xFB88, 0xF478, 0x1000, 0x0000} },
++		{ 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868, 0x15B2,
++				0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} },
+ 	{ COLOR_SPACE_YCBCR709_BLACK_TYPE,
+ 		{ 0x0000, 0x0000, 0x0000, 0x1000, 0x0000, 0x0000,
+ 				0x0000, 0x0200, 0x0000, 0x0000, 0x0000, 0x1000} },
 
 
