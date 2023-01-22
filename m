@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E95DE7E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 719B0C433D2;
-	Sun, 22 Jan 2023 15:12:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CB22590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2EB03C433D2;
+	Sun, 22 Jan 2023 15:12:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400324;
-	bh=BFvU+Y+GhSRBBqrSsPuAGqrNZ0IA8GjdbOXu4thJeyc=;
+	s=korg; t=1674400327;
+	bh=YrWJgo0YPlaC/qKjEkOZYd8xwQpg9FrVFHm3xrntbKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oDCoI7ABVmFXVAXBEqVPYkGe/r5AGxR6ugB+/ajVwLTIgun6P6rLqjHwwV0PeR5C3
-	 xcNN+jQHW2nEjuXovh7Xa+v2YWRCEjN4BTkF7Hs9HQiTOgzkbT710o+lxxicDVDi9q
-	 72a7opN0jLr+InkFBoQFJS5CR2P9c1nGCmNTpRuY=
+	b=Sfjrdeyrd4jtnj139ZX5oY3suHqXSa7qIRChqioyWA2tZN6ded8W7ZxlYYQpi4WEG
+	 PS9kyD2gCY4y2ONJ3LGrdLtBbKLP6qWNqO2Mf2LJkuIjZ9mDbH5FbciLlrrx3wbIrO
+	 vupRhdXP6aAdN+HOph6RxQ67mDjNLmSV++tDFXT8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pavel Begunkov <asml.silence@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 32/98] io_uring: update kiocb->ki_pos at execution time
-Date: Sun, 22 Jan 2023 16:03:48 +0100
-Message-Id: <20230122150230.842319602@linuxfoundation.org>
+Subject: [PATCH 5.10 33/98] io_uring: do not recalculate ppos unnecessarily
+Date: Sun, 22 Jan 2023 16:03:49 +0100
+Message-Id: <20230122150230.889116156@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -38,82 +38,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Dylan Yudaken <dylany@fb.com>
 
-commit d34e1e5b396a0dbaa4a29b7138df662cfb9d8e8e upstream.
+commit b4aec40015953b65f2f114641e7fd7714c8df8e6 upstream.
 
-Update kiocb->ki_pos at execution time rather than in io_prep_rw().
-io_prep_rw() happens before the job is enqueued to a worker and so the
-offset might be read multiple times before being executed once.
+There is a slight optimisation to be had by calculating the correct pos
+pointer inside io_kiocb_update_pos and then using that later.
 
-Ensures that the file position in a set of _linked_ SQEs will be only
-obtained after earlier SQEs have completed, and so will include their
-incremented file position.
+It seems code size drops by a bit:
+000000000000a1b0 0000000000000400 t io_read
+000000000000a5b0 0000000000000319 t io_write
+
+vs
+000000000000a1b0 00000000000003f6 t io_read
+000000000000a5b0 0000000000000310 t io_write
 
 Signed-off-by: Dylan Yudaken <dylany@fb.com>
 Reviewed-by: Pavel Begunkov <asml.silence@gmail.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 26 ++++++++++++++++++--------
- 1 file changed, 18 insertions(+), 8 deletions(-)
+ io_uring/io_uring.c | 18 ++++++++++++------
+ 1 file changed, 12 insertions(+), 6 deletions(-)
 
 diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index d8926475cd88..eaf8463c9b14 100644
+index eaf8463c9b14..d4e017b07371 100644
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -2919,14 +2919,6 @@ static int io_prep_rw(struct io_kiocb *req, const struct io_uring_sqe *sqe,
- 		req->flags |= REQ_F_ISREG;
- 
- 	kiocb->ki_pos = READ_ONCE(sqe->off);
--	if (kiocb->ki_pos == -1) {
--		if (!(file->f_mode & FMODE_STREAM)) {
--			req->flags |= REQ_F_CUR_POS;
--			kiocb->ki_pos = file->f_pos;
--		} else {
--			kiocb->ki_pos = 0;
--		}
--	}
- 	kiocb->ki_hint = ki_hint_validate(file_write_hint(kiocb->ki_filp));
- 	kiocb->ki_flags = iocb_flags(kiocb->ki_filp);
- 	ret = kiocb_set_rw_flags(kiocb, READ_ONCE(sqe->rw_flags));
-@@ -3008,6 +3000,20 @@ static inline void io_rw_done(struct kiocb *kiocb, ssize_t ret)
+@@ -3000,18 +3000,22 @@ static inline void io_rw_done(struct kiocb *kiocb, ssize_t ret)
  	}
  }
  
-+static inline void io_kiocb_update_pos(struct io_kiocb *req)
-+{
-+	struct kiocb *kiocb = &req->rw.kiocb;
-+
-+	if (kiocb->ki_pos == -1) {
-+		if (!(req->file->f_mode & FMODE_STREAM)) {
-+			req->flags |= REQ_F_CUR_POS;
-+			kiocb->ki_pos = req->file->f_pos;
-+		} else {
-+			kiocb->ki_pos = 0;
-+		}
-+	}
-+}
-+
- static void kiocb_done(struct kiocb *kiocb, ssize_t ret,
- 		       unsigned int issue_flags)
+-static inline void io_kiocb_update_pos(struct io_kiocb *req)
++static inline loff_t *io_kiocb_update_pos(struct io_kiocb *req)
  {
-@@ -3563,6 +3569,8 @@ static int io_read(struct io_kiocb *req, unsigned int issue_flags)
+ 	struct kiocb *kiocb = &req->rw.kiocb;
++	bool is_stream = req->file->f_mode & FMODE_STREAM;
+ 
+ 	if (kiocb->ki_pos == -1) {
+-		if (!(req->file->f_mode & FMODE_STREAM)) {
++		if (!is_stream) {
+ 			req->flags |= REQ_F_CUR_POS;
+ 			kiocb->ki_pos = req->file->f_pos;
++			return &kiocb->ki_pos;
+ 		} else {
+ 			kiocb->ki_pos = 0;
++			return NULL;
+ 		}
+ 	}
++	return is_stream ? NULL : &kiocb->ki_pos;
+ }
+ 
+ static void kiocb_done(struct kiocb *kiocb, ssize_t ret,
+@@ -3537,6 +3541,7 @@ static int io_read(struct io_kiocb *req, unsigned int issue_flags)
+ 	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
+ 	struct iov_iter_state __state, *state;
+ 	ssize_t ret, ret2;
++	loff_t *ppos;
+ 
+ 	if (rw) {
+ 		iter = &rw->iter;
+@@ -3569,9 +3574,9 @@ static int io_read(struct io_kiocb *req, unsigned int issue_flags)
  		return ret ?: -EAGAIN;
  	}
  
-+	io_kiocb_update_pos(req);
-+
- 	ret = rw_verify_area(READ, req->file, io_kiocb_ppos(kiocb), req->result);
+-	io_kiocb_update_pos(req);
++	ppos = io_kiocb_update_pos(req);
+ 
+-	ret = rw_verify_area(READ, req->file, io_kiocb_ppos(kiocb), req->result);
++	ret = rw_verify_area(READ, req->file, ppos, req->result);
  	if (unlikely(ret)) {
  		kfree(iovec);
-@@ -3697,6 +3705,8 @@ static int io_write(struct io_kiocb *req, unsigned int issue_flags)
+ 		return ret;
+@@ -3675,6 +3680,7 @@ static int io_write(struct io_kiocb *req, unsigned int issue_flags)
+ 	bool force_nonblock = issue_flags & IO_URING_F_NONBLOCK;
+ 	struct iov_iter_state __state, *state;
+ 	ssize_t ret, ret2;
++	loff_t *ppos;
+ 
+ 	if (rw) {
+ 		iter = &rw->iter;
+@@ -3705,9 +3711,9 @@ static int io_write(struct io_kiocb *req, unsigned int issue_flags)
  	    (req->flags & REQ_F_ISREG))
  		goto copy_iov;
  
-+	io_kiocb_update_pos(req);
-+
- 	ret = rw_verify_area(WRITE, req->file, io_kiocb_ppos(kiocb), req->result);
+-	io_kiocb_update_pos(req);
++	ppos = io_kiocb_update_pos(req);
+ 
+-	ret = rw_verify_area(WRITE, req->file, io_kiocb_ppos(kiocb), req->result);
++	ret = rw_verify_area(WRITE, req->file, ppos, req->result);
  	if (unlikely(ret))
  		goto out_free;
+ 
 -- 
 2.39.0
 
