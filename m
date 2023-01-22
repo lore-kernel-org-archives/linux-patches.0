@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E74B22590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:19:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F75AC433D2;
-	Sun, 22 Jan 2023 15:19:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF8B2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:19:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05ED3C4339B;
+	Sun, 22 Jan 2023 15:19:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400749;
-	bh=oqR1VhxSwlrU/vPXp+4PAuGjZcXPYVrAzMFOqDcPPh0=;
+	s=korg; t=1674400752;
+	bh=hDyQ6jL9C0Vo6/QLN8iUmNKMDaDpkuk2crett0tUP8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TZwsSzRMqv3Dw8TiFm1jH1r0oKS0FWCRXh8VcUHKjmOnZl+Y1yxYO1pS/0LzzsD0t
-	 lL9gRZ1KhlCYqQlPuV/+xcixJ6VUX+zzdlIhBp0C+rwz9SE5v0shIVJ+KCSQtYYfuz
-	 QnIm0a4THNG/DTyIrsUIZGueziAkK63RVNxkNeAc=
+	b=IoZqoqSEeffYgdxOJ+qjfIF+v3LPVCCorTWfMfzaNjCnkoUmBGuz+ejL0KIq9Du69
+	 iPC2q4el+WxO4UwZ/gZhEbjotFOAJpj3TKqkGcam24W7EjfsQjztPEG7vfzeWU4R68
+	 kPGuz0VPi1kEwJq5DgdBbLr7yDtKjBB7JYXPvUeI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Tomas Winkler <tomas.winkler@intel.com>
-Subject: [PATCH 5.15 093/117] mei: me: add meteor lake point M DID
-Date: Sun, 22 Jan 2023 16:04:43 +0100
-Message-Id: <20230122150236.666004828@linuxfoundation.org>
+	Sasa Dragic <sasa.dragic@gmail.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 5.15 094/117] drm/i915: re-disable RC6p on Sandy Bridge
+Date: Sun, 22 Jan 2023 16:04:44 +0100
+Message-Id: <20230122150236.716572413@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -34,43 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Sasa Dragic <sasa.dragic@gmail.com>
 
-commit 0c4d68261717f89fa8c4f98a6967c3832fcb3ad0 upstream.
+commit 67b0b4ed259e425b7eed09da75b42c80682ca003 upstream.
 
-Add Meteor Lake Point M device id.
+RC6p on Sandy Bridge got re-enabled over time, causing visual glitches
+and GPU hangs.
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20221212220247.286019-2-tomas.winkler@intel.com
+Disabled originally in commit 1c8ecf80fdee ("drm/i915: do not enable
+RC6p on Sandy Bridge").
+
+Signed-off-by: Sasa Dragic <sasa.dragic@gmail.com>
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221219172927.9603-2-sasa.dragic@gmail.com
+Fixes: fb6db0f5bf1d ("drm/i915: Remove unsafe i915.enable_rc6")
+Fixes: 13c5a577b342 ("drm/i915/gt: Select the deepest available parking mode for rc6")
+Cc: stable@vger.kernel.org
+Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+(cherry picked from commit 0c8a6e9ea232c221976a0670256bd861408d9917)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    2 ++
- drivers/misc/mei/pci-me.c     |    2 ++
- 2 files changed, 4 insertions(+)
+ drivers/gpu/drm/i915/i915_pci.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -111,6 +111,8 @@
- 
- #define MEI_DEV_ID_RPL_S      0x7A68  /* Raptor Lake Point S */
- 
-+#define MEI_DEV_ID_MTL_M      0x7E70  /* Meteor Lake Point M */
-+
- /*
-  * MEI HW Section
-  */
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -117,6 +117,8 @@ static const struct pci_device_id mei_me
- 
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_RPL_S, MEI_ME_PCH15_CFG)},
- 
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_MTL_M, MEI_ME_PCH15_CFG)},
-+
- 	/* required last entry */
- 	{0, }
- };
+--- a/drivers/gpu/drm/i915/i915_pci.c
++++ b/drivers/gpu/drm/i915/i915_pci.c
+@@ -401,7 +401,8 @@ static const struct intel_device_info il
+ 	.has_coherent_ggtt = true, \
+ 	.has_llc = 1, \
+ 	.has_rc6 = 1, \
+-	.has_rc6p = 1, \
++	/* snb does support rc6p, but enabling it causes various issues */ \
++	.has_rc6p = 0, \
+ 	.has_rps = true, \
+ 	.dma_mask_size = 40, \
+ 	.ppgtt_type = INTEL_PPGTT_ALIASING, \
 
 
