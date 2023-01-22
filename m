@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CD62590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:19:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B33C433D2;
-	Sun, 22 Jan 2023 15:19:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 267002590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:19:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F551C433D2;
+	Sun, 22 Jan 2023 15:19:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400760;
-	bh=xPLwRDrW5IACGkyyuSEBErLQWEoxo9XPIYN11dxvzMs=;
+	s=korg; t=1674400763;
+	bh=8ymtiD/WttM4af9U/UFTVDG5c91f5FOTuReGhFZh6+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gEFf+xJhER/18qlYg+I9lyqb8ukA12j1zKrk3AOrHlc6wMDA4bkQCrdH599baLbev
-	 xf/ml72BOXLuLDUBsJrvZjNnRIJy2e7wrbg2XkFwp2HmLVUsbs7TyQgeYcfU+R1Qen
-	 mvoViN3zunG4COpx6rVxesDS8mnXdJgyu2JOSTHM=
+	b=uti5f6sEQftfOWLK6KkVjhonGu/jB2C1mGwEWhq5rGK9nwM05UguWwVEOknzcv/f4
+	 9LKUYfwKopqIHmhn9lXHUssImEsS6oXN2dHPnbm2BCxloF2GoA/2SJsaUI24ehS71H
+	 QgSOcIN5C5aWgsWoIlUfz4W9TmV09uGj4HJYDY3Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Greentime Hu <greentime.hu@sifive.com>,
-	Ben Dooks <ben.dooks@codethink.co.uk>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Ron Economos <re@w6rz.net>
-Subject: [PATCH 5.15 069/117] riscv: dts: sifive: fu740: fix size of pcie 32bit memory
-Date: Sun, 22 Jan 2023 16:04:19 +0100
-Message-Id: <20230122150235.656756818@linuxfoundation.org>
+	Burn Alting <burn.alting@iinet.net.au>,
+	Jiri Olsa <olsajiri@gmail.com>,
+	Stanislav Fomichev <sdf@google.com>,
+	Alexei Starovoitov <alexei.starovoitov@gmail.com>,
+	Paul Moore <paul@paul-moore.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 5.15 070/117] bpf: restore the ebpf program ID for BPF_AUDIT_UNLOAD and PERF_BPF_EVENT_PROG_UNLOAD
+Date: Sun, 22 Jan 2023 16:04:20 +0100
+Message-Id: <20230122150235.699429001@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -37,44 +38,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ben Dooks <ben.dooks@codethink.co.uk>
+From: Paul Moore <paul@paul-moore.com>
 
-commit 43d5f5d63699724d47f0d9e0eae516a260d232b4 upstream.
+commit ef01f4e25c1760920e2c94f1c232350277ace69b upstream.
 
-The 32-bit memory resource is needed for non-prefetchable memory
-allocations on the PCIe bus, however with some cards (such as the
-SM768) the system fails to allocate memory from this.
+When changing the ebpf program put() routines to support being called
+from within IRQ context the program ID was reset to zero prior to
+calling the perf event and audit UNLOAD record generators, which
+resulted in problems as the ebpf program ID was bogus (always zero).
+This patch addresses this problem by removing an unnecessary call to
+bpf_prog_free_id() in __bpf_prog_offload_destroy() and adjusting
+__bpf_prog_put() to only call bpf_prog_free_id() after audit and perf
+have finished their bpf program unload tasks in
+bpf_prog_put_deferred().  For the record, no one can determine, or
+remember, why it was necessary to free the program ID, and remove it
+from the IDR, prior to executing bpf_prog_put_deferred();
+regardless, both Stanislav and Alexei agree that the approach in this
+patch should be safe.
 
-Checking the allocation against the datasheet, it looks like there
-has been a mis-calcualation of the resource for the first memory
-region (0x0060090000..0x0070ffffff) which in the data-sheet for
-the fu740 (v1p2) is from 0x0060000000..0x007fffffff. Changing
-this to allocate from 0x0060090000..0x007fffffff fixes the probing
-issues.
+It is worth noting that when moving the bpf_prog_free_id() call, the
+do_idr_lock parameter was forced to true as the ebpf devs determined
+this was the correct as the do_idr_lock should always be true.  The
+do_idr_lock parameter will be removed in a follow-up patch, but it
+was kept here to keep the patch small in an effort to ease any stable
+backports.
 
-Fixes: ae80d5148085 ("riscv: dts: Add PCIe support for the SiFive FU740-C000 SoC")
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: Greentime Hu <greentime.hu@sifive.com>
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
+I also modified the bpf_audit_prog() logic used to associate the
+AUDIT_BPF record with other associated records, e.g. @ctx != NULL.
+Instead of keying off the operation, it now keys off the execution
+context, e.g. '!in_irg && !irqs_disabled()', which is much more
+appropriate and should help better connect the UNLOAD operations with
+the associated audit state (other audit records).
+
 Cc: stable@vger.kernel.org
-Tested-by: Ron Economos <re@w6rz.net> # from IRC
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: d809e134be7a ("bpf: Prepare bpf_prog_put() to be called from irq context.")
+Reported-by: Burn Alting <burn.alting@iinet.net.au>
+Reported-by: Jiri Olsa <olsajiri@gmail.com>
+Suggested-by: Stanislav Fomichev <sdf@google.com>
+Suggested-by: Alexei Starovoitov <alexei.starovoitov@gmail.com>
+Signed-off-by: Paul Moore <paul@paul-moore.com>
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/r/20230106154400.74211-1-paul@paul-moore.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/boot/dts/sifive/fu740-c000.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/bpf/offload.c |    3 ---
+ kernel/bpf/syscall.c |    6 ++----
+ 2 files changed, 2 insertions(+), 7 deletions(-)
 
---- a/arch/riscv/boot/dts/sifive/fu740-c000.dtsi
-+++ b/arch/riscv/boot/dts/sifive/fu740-c000.dtsi
-@@ -328,7 +328,7 @@
- 			bus-range = <0x0 0xff>;
- 			ranges = <0x81000000  0x0 0x60080000  0x0 0x60080000 0x0 0x10000>,      /* I/O */
- 				 <0x82000000  0x0 0x60090000  0x0 0x60090000 0x0 0xff70000>,    /* mem */
--				 <0x82000000  0x0 0x70000000  0x0 0x70000000 0x0 0x1000000>,    /* mem */
-+				 <0x82000000  0x0 0x70000000  0x0 0x70000000 0x0 0x10000000>,    /* mem */
- 				 <0xc3000000 0x20 0x00000000 0x20 0x00000000 0x20 0x00000000>;  /* mem prefetchable */
- 			num-lanes = <0x8>;
- 			interrupts = <56>, <57>, <58>, <59>, <60>, <61>, <62>, <63>, <64>;
+--- a/kernel/bpf/offload.c
++++ b/kernel/bpf/offload.c
+@@ -216,9 +216,6 @@ static void __bpf_prog_offload_destroy(s
+ 	if (offload->dev_state)
+ 		offload->offdev->ops->destroy(prog);
+ 
+-	/* Make sure BPF_PROG_GET_NEXT_ID can't find this dead program */
+-	bpf_prog_free_id(prog, true);
+-
+ 	list_del_init(&offload->offloads);
+ 	kfree(offload);
+ 	prog->aux->offload = NULL;
+--- a/kernel/bpf/syscall.c
++++ b/kernel/bpf/syscall.c
+@@ -1695,7 +1695,7 @@ static void bpf_audit_prog(const struct
+ 		return;
+ 	if (audit_enabled == AUDIT_OFF)
+ 		return;
+-	if (op == BPF_AUDIT_LOAD)
++	if (!in_irq() && !irqs_disabled())
+ 		ctx = audit_context();
+ 	ab = audit_log_start(ctx, GFP_ATOMIC, AUDIT_BPF);
+ 	if (unlikely(!ab))
+@@ -1790,6 +1790,7 @@ static void bpf_prog_put_deferred(struct
+ 	prog = aux->prog;
+ 	perf_event_bpf_event(prog, PERF_BPF_EVENT_PROG_UNLOAD, 0);
+ 	bpf_audit_prog(prog, BPF_AUDIT_UNLOAD);
++	bpf_prog_free_id(prog, true);
+ 	__bpf_prog_put_noref(prog, true);
+ }
+ 
+@@ -1798,9 +1799,6 @@ static void __bpf_prog_put(struct bpf_pr
+ 	struct bpf_prog_aux *aux = prog->aux;
+ 
+ 	if (atomic64_dec_and_test(&aux->refcnt)) {
+-		/* bpf_prog_free_id() must be called first */
+-		bpf_prog_free_id(prog, do_idr_lock);
+-
+ 		if (in_irq() || irqs_disabled()) {
+ 			INIT_WORK(&aux->work, bpf_prog_put_deferred);
+ 			schedule_work(&aux->work);
 
 
