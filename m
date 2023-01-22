@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC8A7E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:11:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 457B5C433EF;
-	Sun, 22 Jan 2023 15:11:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 761957E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:11:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB865C433EF;
+	Sun, 22 Jan 2023 15:11:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400282;
-	bh=FPLbrvIr0sJlCYZ/5az/WTaLEeHg/wZDDnYcNICvEGU=;
+	s=korg; t=1674400285;
+	bh=Ml9/XpIrujd9fA8j46izKKPpTquPXiz4Gq+WV7YeRPg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mc9kZMeUw0vNRRYNCa8smmYQETziOxDvNWRpIg2krh4hUHAXNArqCUxwUmsfSINA4
-	 c/UfaxMXDaqipvZBV/krEROb7ziuSs5xN5lUbPBeh+2rP9hliGNROwjt61Q4qK1pCr
-	 Wf51CZtG+e9GSRIu/HULgQoiMGdPrwqWLI4Pa69c=
+	b=kNn6dRe8HCaJbXAjysi14G15YwIzLCh1zaiFwKKk/EeeuM8PnczAXRxJl7PT9sBos
+	 JBtgHlsId5rzHuycKGuyoGywpTLQYlz7Is1RpSSVNaw/3rljkWNtjc1kPVquAzm5LB
+	 zXRrRRoiPs0CAPwObo6iZIuGpkk+6Ac4tAz6dmpg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
+	Daniil Tatianin <d-tatianin@yandex-team.ru>,
+	Andrew Lunn <andrew@lunn.ch>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 04/98] tools/virtio: initialize spinlocks in vring_test.c
-Date: Sun, 22 Jan 2023 16:03:20 +0100
-Message-Id: <20230122150229.565008149@linuxfoundation.org>
+Subject: [PATCH 5.10 05/98] net/ethtool/ioctl: return -EOPNOTSUPP if we have no phy stats
+Date: Sun, 22 Jan 2023 16:03:21 +0100
+Message-Id: <20230122150229.620565267@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -36,43 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+From: Daniil Tatianin <d-tatianin@yandex-team.ru>
 
-[ Upstream commit c262f75cb6bb5a63828e72ce3b8fe808e5029479 ]
+[ Upstream commit 9deb1e9fb88b1120a908676fa33bdf9e2eeaefce ]
 
-The virtio_device vqs_list spinlocks must be initialized before use to
-prevent functions that manipulate the device virtualqueues, such as
-vring_new_virtqueue(), from blocking indefinitely.
+It's not very useful to copy back an empty ethtool_stats struct and
+return 0 if we didn't actually have any stats. This also allows for
+further simplification of this function in the future commits.
 
-Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
-Message-Id: <20221012062949.1526176-1-ricardo.canuelo@collabora.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
+Signed-off-by: Daniil Tatianin <d-tatianin@yandex-team.ru>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/virtio/vringh_test.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/ethtool/ioctl.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/virtio/vringh_test.c b/tools/virtio/vringh_test.c
-index fa87b58bd5fa..98ff808d6f0c 100644
---- a/tools/virtio/vringh_test.c
-+++ b/tools/virtio/vringh_test.c
-@@ -308,6 +308,7 @@ static int parallel_test(u64 features,
+diff --git a/net/ethtool/ioctl.c b/net/ethtool/ioctl.c
+index 47c2dd4a9b9f..12bf740e2fb3 100644
+--- a/net/ethtool/ioctl.c
++++ b/net/ethtool/ioctl.c
+@@ -2052,7 +2052,8 @@ static int ethtool_get_phy_stats(struct net_device *dev, void __user *useraddr)
+ 		return n_stats;
+ 	if (n_stats > S32_MAX / sizeof(u64))
+ 		return -ENOMEM;
+-	WARN_ON_ONCE(!n_stats);
++	if (WARN_ON_ONCE(!n_stats))
++		return -EOPNOTSUPP;
  
- 		gvdev.vdev.features = features;
- 		INIT_LIST_HEAD(&gvdev.vdev.vqs);
-+		spin_lock_init(&gvdev.vdev.vqs_list_lock);
- 		gvdev.to_host_fd = to_host[1];
- 		gvdev.notifies = 0;
- 
-@@ -455,6 +456,7 @@ int main(int argc, char *argv[])
- 	getrange = getrange_iov;
- 	vdev.features = 0;
- 	INIT_LIST_HEAD(&vdev.vqs);
-+	spin_lock_init(&vdev.vqs_list_lock);
- 
- 	while (argv[1]) {
- 		if (strcmp(argv[1], "--indirect") == 0)
+ 	if (copy_from_user(&stats, useraddr, sizeof(stats)))
+ 		return -EFAULT;
 -- 
 2.35.1
 
