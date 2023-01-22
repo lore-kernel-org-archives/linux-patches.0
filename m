@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F2D62596
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:21:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1C85C4339B;
-	Sun, 22 Jan 2023 15:21:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38392590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:21:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AD32C433D2;
+	Sun, 22 Jan 2023 15:21:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400915;
-	bh=gZAOi5w39ILJ5P1BOpw8MHAnotnXHxNyIkjC/Iz0OrA=;
+	s=korg; t=1674400917;
+	bh=1GI76wHoArtGQ+DMneAxfXYjqULs40z6d0ImClpyZuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sCqPqenEiCpgmxcCNxS80YK7fTpUttcVjKB+qtTpt7ScbxLVuOeE7jji3TnroK34c
-	 BU0Ybdf/1sAwM+xbIl4BU63pnJnHKv4ZaNPUgXFP6beroe2xIrZUEOT28sgF6TeVNf
-	 pPyH47vARISA0K6/Xzal5ORRnwp2lcW6OAI6/Pns=
+	b=liwHeTjGxN4G9AcSFzS5oQM+7B9IF+lxMpElwy5/Xl+4Nu/AbCMSRzHPpyP1GDGgD
+	 prkJBcjsU6P56F541yHZbiFy1Fm6u4f0oyTQ9E9v5xL5P42QzJuGQB6EB7eIlL5dyE
+	 ls0RNXF67opTbcHNs8KT5LK18d/TFX4+eTDXTzG8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	chainofflowers <chainofflowers@posteo.net>,
-	Christian Marillat <marillat@debian.org>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.1 032/193] wifi: brcmfmac: fix regression for Broadcom PCIe wifi devices
-Date: Sun, 22 Jan 2023 16:02:41 +0100
-Message-Id: <20230122150247.883253484@linuxfoundation.org>
+	"Shawn.Shao" <shawn.shao@jaguarmicro.com>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 6.1 041/193] Add exception protection processing for vd in axi_chan_handle_err function
+Date: Sun, 22 Jan 2023 16:02:50 +0100
+Message-Id: <20230122150248.282523139@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -36,39 +34,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
+From: Shawn.Shao <shawn.shao@jaguarmicro.com>
 
-commit ed05cb177ae5cd7f02f1d6e7706ba627d30f1696 upstream.
+commit 57054fe516d59d03a7bcf1888e82479ccc244f87 upstream.
 
-A sanity check was introduced considering maximum flowrings above
-256 as insane and effectively aborting the device probe. This
-resulted in regression for number of users as the value turns out
-to be sane after all.
+Since there is no protection for vd, a kernel panic will be
+triggered here in exceptional cases.
 
-Fixes: 2aca4f3734bd ("brcmfmac: return error when getting invalid max_flowrings from dongle")
-Reported-by: chainofflowers <chainofflowers@posteo.net>
-Link: https://lore.kernel.org/all/4781984.GXAFRqVoOG@luna/
-Reported-by: Christian Marillat <marillat@debian.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216894
+You can refer to the processing of axi_chan_block_xfer_complete function
+
+The triggered kernel panic is as follows:
+
+[   67.848444] Unable to handle kernel NULL pointer dereference at virtual address 0000000000000060
+[   67.848447] Mem abort info:
+[   67.848449]   ESR = 0x96000004
+[   67.848451]   EC = 0x25: DABT (current EL), IL = 32 bits
+[   67.848454]   SET = 0, FnV = 0
+[   67.848456]   EA = 0, S1PTW = 0
+[   67.848458] Data abort info:
+[   67.848460]   ISV = 0, ISS = 0x00000004
+[   67.848462]   CM = 0, WnR = 0
+[   67.848465] user pgtable: 4k pages, 48-bit VAs, pgdp=00000800c4c0b000
+[   67.848468] [0000000000000060] pgd=0000000000000000, p4d=0000000000000000
+[   67.848472] Internal error: Oops: 96000004 [#1] SMP
+[   67.848475] Modules linked in: dmatest
+[   67.848479] CPU: 0 PID: 0 Comm: swapper/0 Not tainted 5.10.100-emu_x2rc+ #11
+[   67.848483] pstate: 62000085 (nZCv daIf -PAN -UAO +TCO BTYPE=--)
+[   67.848487] pc : axi_chan_handle_err+0xc4/0x230
+[   67.848491] lr : axi_chan_handle_err+0x30/0x230
+[   67.848493] sp : ffff0803fe55ae50
+[   67.848495] x29: ffff0803fe55ae50 x28: ffff800011212200
+[   67.848500] x27: ffff0800c42c0080 x26: ffff0800c097c080
+[   67.848504] x25: ffff800010d33880 x24: ffff80001139d850
+[   67.848508] x23: ffff0800c097c168 x22: 0000000000000000
+[   67.848512] x21: 0000000000000080 x20: 0000000000002000
+[   67.848517] x19: ffff0800c097c080 x18: 0000000000000000
+[   67.848521] x17: 0000000000000000 x16: 0000000000000000
+[   67.848525] x15: 0000000000000000 x14: 0000000000000000
+[   67.848529] x13: 0000000000000000 x12: 0000000000000040
+[   67.848533] x11: ffff0800c0400248 x10: ffff0800c040024a
+[   67.848538] x9 : ffff800010576cd4 x8 : ffff0800c0400270
+[   67.848542] x7 : 0000000000000000 x6 : ffff0800c04003e0
+[   67.848546] x5 : ffff0800c0400248 x4 : ffff0800c4294480
+[   67.848550] x3 : dead000000000100 x2 : dead000000000122
+[   67.848555] x1 : 0000000000000100 x0 : ffff0800c097c168
+[   67.848559] Call trace:
+[   67.848562]  axi_chan_handle_err+0xc4/0x230
+[   67.848566]  dw_axi_dma_interrupt+0xf4/0x590
+[   67.848569]  __handle_irq_event_percpu+0x60/0x220
+[   67.848573]  handle_irq_event+0x64/0x120
+[   67.848576]  handle_fasteoi_irq+0xc4/0x220
+[   67.848580]  __handle_domain_irq+0x80/0xe0
+[   67.848583]  gic_handle_irq+0xc0/0x138
+[   67.848585]  el1_irq+0xc8/0x180
+[   67.848588]  arch_cpu_idle+0x14/0x2c
+[   67.848591]  default_idle_call+0x40/0x16c
+[   67.848594]  do_idle+0x1f0/0x250
+[   67.848597]  cpu_startup_entry+0x2c/0x60
+[   67.848600]  rest_init+0xc0/0xcc
+[   67.848603]  arch_call_rest_init+0x14/0x1c
+[   67.848606]  start_kernel+0x4cc/0x500
+[   67.848610] Code: eb0002ff 9a9f12d6 f2fbd5a2 f2fbd5a3 (a94602c1)
+[   67.848613] ---[ end trace 585a97036f88203a ]---
+
+Signed-off-by: Shawn.Shao <shawn.shao@jaguarmicro.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230111112419.24185-1-arend.vanspriel@broadcom.com
+Link: https://lore.kernel.org/r/20230112055802.1764-1-shawn.shao@jaguarmicro.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -1218,7 +1218,7 @@ static int brcmf_pcie_init_ringbuffers(s
- 				BRCMF_NROF_H2D_COMMON_MSGRINGS;
- 		max_completionrings = BRCMF_NROF_D2H_COMMON_MSGRINGS;
- 	}
--	if (max_flowrings > 256) {
-+	if (max_flowrings > 512) {
- 		brcmf_err(bus, "invalid max_flowrings(%d)\n", max_flowrings);
- 		return -EIO;
- 	}
+--- a/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
++++ b/drivers/dma/dw-axi-dmac/dw-axi-dmac-platform.c
+@@ -1018,6 +1018,11 @@ static noinline void axi_chan_handle_err
+ 
+ 	/* The bad descriptor currently is in the head of vc list */
+ 	vd = vchan_next_desc(&chan->vc);
++	if (!vd) {
++		dev_err(chan2dev(chan), "BUG: %s, IRQ with no descriptors\n",
++			axi_chan_name(chan));
++		goto out;
++	}
+ 	/* Remove the completed descriptor from issued list */
+ 	list_del(&vd->node);
+ 
+@@ -1032,6 +1037,7 @@ static noinline void axi_chan_handle_err
+ 	/* Try to restart the controller */
+ 	axi_chan_start_first_queued(chan);
+ 
++out:
+ 	spin_unlock_irqrestore(&chan->vc.lock, flags);
+ }
+ 
 
 
