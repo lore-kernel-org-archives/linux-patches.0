@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 378F42590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B269FC433EF;
-	Sun, 22 Jan 2023 15:25:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00EA2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:26:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57136C433D2;
+	Sun, 22 Jan 2023 15:26:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401159;
-	bh=x5CQZ72c0QMtBcqBBi7lqLcouV43Yc+o46B25Mp1V7I=;
+	s=korg; t=1674401161;
+	bh=BhDGkwxQzdNvzq5VpNgkUeeA3BsO7nklF61/N73tTrI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O3vnbHiISjPKzjwaHRLBXxDajqb9Vy6PEBE3MMTCSnMdDXc0PhAi89zCDjiGQpyvN
-	 4lz8x37eAr96w1UcInmNa+E+6gdE5wzj6Esj4UFLN7pSelBGXnu+0fXl7qxfGpCBo6
-	 R2+wCPk8wT9ey8ETNTdgn5gwaovXWm07awyDj/Zs=
+	b=dkQtWxiqxKStrQ2xZl3sdyooqmz1ZyDQk9ebzRoIp0P9o0dSx0H/H7PUmdJ3rZ4n3
+	 mKGUpQ5aPo9N9puYg1yTON3bxVCgpxG+O1Ht5t8gfGbVMx6CGyVUvnAXzm0l32FAk4
+	 ODzCu3UKAN5/P7tAJOY0eTUp2utiYYwSS7wh4A2g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Mat Martineau <mathew.j.martineau@linux.intel.com>,
 	Matthieu Baerts <matthieu.baerts@tessares.net>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 102/193] mptcp: netlink: respect v4/v6-only sockets
-Date: Sun, 22 Jan 2023 16:03:51 +0100
-Message-Id: <20230122150250.975766338@linuxfoundation.org>
+Subject: [PATCH 6.1 103/193] selftests: mptcp: userspace: validate v4-v6 subflows mix
+Date: Sun, 22 Jan 2023 16:03:52 +0100
+Message-Id: <20230122150251.026914247@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -37,103 +37,86 @@ Content-Transfer-Encoding: 8bit
 
 From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit fb00ee4f3343acb2b9222ca9b73b47dd1e1a8efc upstream.
+commit 4656d72c1efa495a58ad6d8b073a60907073e4e6 upstream.
 
-If an MPTCP socket has been created with AF_INET6 and the IPV6_V6ONLY
-option has been set, the userspace PM would allow creating subflows
-using IPv4 addresses, e.g. mapped in v6.
+MPTCP protocol supports having subflows in both IPv4 and IPv6. In Linux,
+it is possible to have that if the MPTCP socket has been created with
+AF_INET6 family without the IPV6_V6ONLY option.
 
-The kernel side of userspace PM will also accept creating subflows with
-local and remote addresses having different families. Depending on the
-subflow socket's family, different behaviours are expected:
- - If AF_INET is forced with a v6 address, the kernel will take the last
-   byte of the IP and try to connect to that: a new subflow is created
-   but to a non expected address.
- - If AF_INET6 is forced with a v4 address, the kernel will try to
-   connect to a v4 address (v4-mapped-v6). A -EBADF error from the
-   connect() part is then expected.
+Here, a new IPv4 subflow is being added to the initial IPv6 connection,
+then being removed using Netlink commands.
 
-It is then required to check the given families can be accepted. This is
-done by using a new helper for addresses family matching, taking care of
-IPv4 vs IPv4-mapped-IPv6 addresses. This helper will be re-used later by
-the in-kernel path-manager to use mixed IPv4 and IPv6 addresses.
-
-While at it, a clear error message is now reported if there are some
-conflicts with the families that have been passed by the userspace.
-
-Fixes: 702c2f646d42 ("mptcp: netlink: allow userspace-driven subflow establishment")
-Cc: stable@vger.kernel.org
+Cc: stable@vger.kernel.org # v5.19+
 Reviewed-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
 Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/pm.c           |   25 +++++++++++++++++++++++++
- net/mptcp/pm_userspace.c |    7 +++++++
- net/mptcp/protocol.h     |    3 +++
- 3 files changed, 35 insertions(+)
+ tools/testing/selftests/net/mptcp/userspace_pm.sh |   47 ++++++++++++++++++++++
+ 1 file changed, 47 insertions(+)
 
---- a/net/mptcp/pm.c
-+++ b/net/mptcp/pm.c
-@@ -420,6 +420,31 @@ void mptcp_pm_subflow_chk_stale(const st
- 	}
+--- a/tools/testing/selftests/net/mptcp/userspace_pm.sh
++++ b/tools/testing/selftests/net/mptcp/userspace_pm.sh
+@@ -776,6 +776,52 @@ test_subflows()
+ 	rm -f "$evts"
  }
  
-+/* if sk is ipv4 or ipv6_only allows only same-family local and remote addresses,
-+ * otherwise allow any matching local/remote pair
-+ */
-+bool mptcp_pm_addr_families_match(const struct sock *sk,
-+				  const struct mptcp_addr_info *loc,
-+				  const struct mptcp_addr_info *rem)
++test_subflows_v4_v6_mix()
 +{
-+	bool mptcp_is_v4 = sk->sk_family == AF_INET;
++	# Attempt to add a listener at 10.0.2.1:<subflow-port>
++	ip netns exec "$ns1" ./pm_nl_ctl listen 10.0.2.1\
++	   $app6_port > /dev/null 2>&1 &
++	local listener_pid=$!
 +
-+#if IS_ENABLED(CONFIG_MPTCP_IPV6)
-+	bool loc_is_v4 = loc->family == AF_INET || ipv6_addr_v4mapped(&loc->addr6);
-+	bool rem_is_v4 = rem->family == AF_INET || ipv6_addr_v4mapped(&rem->addr6);
++	# ADD_ADDR4 from server to client machine reusing the subflow port on
++	# the established v6 connection
++	:>"$client_evts"
++	ip netns exec "$ns1" ./pm_nl_ctl ann 10.0.2.1 token "$server6_token" id\
++	   $server_addr_id dev ns1eth2 > /dev/null 2>&1
++	stdbuf -o0 -e0 printf "ADD_ADDR4 id:%d 10.0.2.1 (ns1) => ns2, reuse port\t\t" $server_addr_id
++	sleep 0.5
++	verify_announce_event "$client_evts" "$ANNOUNCED" "$client6_token" "10.0.2.1"\
++			      "$server_addr_id" "$app6_port"
 +
-+	if (mptcp_is_v4)
-+		return loc_is_v4 && rem_is_v4;
++	# CREATE_SUBFLOW from client to server machine
++	:>"$client_evts"
++	ip netns exec "$ns2" ./pm_nl_ctl csf lip 10.0.2.2 lid 23 rip 10.0.2.1 rport\
++	   $app6_port token "$client6_token" > /dev/null 2>&1
++	sleep 0.5
++	verify_subflow_events "$client_evts" "$SUB_ESTABLISHED" "$client6_token"\
++			      "$AF_INET" "10.0.2.2" "10.0.2.1" "$app6_port" "23"\
++			      "$server_addr_id" "ns2" "ns1"
 +
-+	if (ipv6_only_sock(sk))
-+		return !loc_is_v4 && !rem_is_v4;
++	# Delete the listener from the server ns, if one was created
++	kill_wait $listener_pid
 +
-+	return loc_is_v4 == rem_is_v4;
-+#else
-+	return mptcp_is_v4 && loc->family == AF_INET && rem->family == AF_INET;
-+#endif
++	sport=$(sed --unbuffered -n 's/.*\(sport:\)\([[:digit:]]*\).*$/\2/p;q' "$client_evts")
++
++	# DESTROY_SUBFLOW from client to server machine
++	:>"$client_evts"
++	ip netns exec "$ns2" ./pm_nl_ctl dsf lip 10.0.2.2 lport "$sport" rip 10.0.2.1 rport\
++	   $app6_port token "$client6_token" > /dev/null 2>&1
++	sleep 0.5
++	verify_subflow_events "$client_evts" "$SUB_CLOSED" "$client6_token" \
++			      "$AF_INET" "10.0.2.2" "10.0.2.1" "$app6_port" "23"\
++			      "$server_addr_id" "ns2" "ns1"
++
++	# RM_ADDR from server to client machine
++	ip netns exec "$ns1" ./pm_nl_ctl rem id $server_addr_id token\
++	   "$server6_token" > /dev/null 2>&1
++	sleep 0.5
 +}
 +
- void mptcp_pm_data_reset(struct mptcp_sock *msk)
+ test_prio()
  {
- 	u8 pm_type = mptcp_get_pm_type(sock_net((struct sock *)msk));
---- a/net/mptcp/pm_userspace.c
-+++ b/net/mptcp/pm_userspace.c
-@@ -294,6 +294,13 @@ int mptcp_nl_cmd_sf_create(struct sk_buf
- 	}
+ 	local count
+@@ -812,6 +858,7 @@ make_connection "v6"
+ test_announce
+ test_remove
+ test_subflows
++test_subflows_v4_v6_mix
+ test_prio
  
- 	sk = &msk->sk.icsk_inet.sk;
-+
-+	if (!mptcp_pm_addr_families_match(sk, &addr_l, &addr_r)) {
-+		GENL_SET_ERR_MSG(info, "families mismatch");
-+		err = -EINVAL;
-+		goto create_err;
-+	}
-+
- 	lock_sock(sk);
- 
- 	err = __mptcp_subflow_connect(sk, &addr_l, &addr_r);
---- a/net/mptcp/protocol.h
-+++ b/net/mptcp/protocol.h
-@@ -762,6 +762,9 @@ int mptcp_pm_parse_addr(struct nlattr *a
- int mptcp_pm_parse_entry(struct nlattr *attr, struct genl_info *info,
- 			 bool require_family,
- 			 struct mptcp_pm_addr_entry *entry);
-+bool mptcp_pm_addr_families_match(const struct sock *sk,
-+				  const struct mptcp_addr_info *loc,
-+				  const struct mptcp_addr_info *rem);
- void mptcp_pm_subflow_chk_stale(const struct mptcp_sock *msk, struct sock *ssk);
- void mptcp_pm_nl_subflow_chk_stale(const struct mptcp_sock *msk, struct sock *ssk);
- void mptcp_pm_new_connection(struct mptcp_sock *msk, const struct sock *ssk, int server_side);
+ exit 0
 
 
