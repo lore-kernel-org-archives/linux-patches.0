@@ -1,76 +1,85 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87072115
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 14:23:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 368C6C433D2;
-	Sun, 22 Jan 2023 14:23:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC2EF7E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:05:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E78C0C433EF;
+	Sun, 22 Jan 2023 15:05:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674397407;
-	bh=Qf25wTJ+EJ8usb7D3ZpuO5rbutf7nRD4cjHfe+7+Wlg=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=GQwY7PYqSXJvr1pCF6M08rLLbmfXo0bEtSWwMbvwOPl3ju09/k5w86otIfbqQtCOB
-	 Hvv/i1ZhC8++tm9m4YZWKH9dfp1OJQ+nS+HcHWyWgN4ZoVJcBFF5+6V4CoLr27C8Iw
-	 7rY34sBRFJSkHoeiKfYGjWezZ57PZVrXQznxbXmY=
-Date: Sun, 22 Jan 2023 15:23:25 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: stable@vger.kernel.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, Johan Hovold <johan+linaro@kernel.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH 5.15.y v2 0/5] phy: qcom-qmp-combo: Backport some stable
- fixes
-Message-ID: <Y81G3X7TSNk57hqc@kroah.com>
-References: <20230113204548.578798-1-swboyd@chromium.org>
+	s=korg; t=1674399951;
+	bh=YsCrWtH/1N798Wb3XRPPg5p6VnTf5LBKFgotFCGwepM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ok6OhYniBKzb+nXQqTwZMGncWJQrYqOYoL+NgblDykJP9TK35I0gS2uS0KkU9Zbh6
+	 IKgcxnQDZrZvKv8etsLRYtyhxdKumq4j5vDK2JBTPCbZILPvwvwrLQ7n7kQljHiGfM
+	 XJHZ78Sd3z0H49pHtuJV614Qe9YiJbnKJbnkVXsk=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Olga Kornievskaia <kolga@netapp.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 01/25] pNFS/filelayout: Fix coalescing test for single DS
+Date: Sun, 22 Jan 2023 16:04:01 +0100
+Message-Id: <20230122150217.856099840@linuxfoundation.org>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20230122150217.788215473@linuxfoundation.org>
+References: <20230122150217.788215473@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230113204548.578798-1-swboyd@chromium.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Fri, Jan 13, 2023 at 12:45:43PM -0800, Stephen Boyd wrote:
-> After the qmp phy driver was split it looks like 5.15.y stable kernels
-> aren't getting fixes like commit 7a7d86d14d07 ("phy: qcom-qmp-combo: fix
-> broken power on") which is tagged for stable 5.10. Trogdor boards use
-> the qmp phy on 5.15.y kernels, so I backported the fixes I could find
-> that looked like we may possibly trip over at some point.
-> 
-> USB and DP work on my Trogdor.Lazor board with this set.
-> 
-> Changes from v1 (https://lore.kernel.org/r/20230113005405.3992011-1-swboyd@chromium.org):
->  * New patch for memleak on probe deferal to avoid compat issues
->  * Update "fix broken power on" patch for pcie/ufs phy
-> 
-> Johan Hovold (5):
->   phy: qcom-qmp-combo: disable runtime PM on unbind
->   phy: qcom-qmp-combo: fix memleak on probe deferral
->   phy: qcom-qmp-usb: fix memleak on probe deferral
->   phy: qcom-qmp-combo: fix broken power on
->   phy: qcom-qmp-combo: fix runtime suspend
-> 
->  drivers/phy/qualcomm/phy-qcom-qmp.c | 97 ++++++++++++++++++-----------
->  1 file changed, 61 insertions(+), 36 deletions(-)
-> 
-> Cc: Johan Hovold <johan+linaro@kernel.org>
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> 
-> base-commit: d57287729e229188e7d07ef0117fe927664e08cb
-> -- 
-> https://chromeos.dev
-> 
+From: Olga Kornievskaia <olga.kornievskaia@gmail.com>
 
-For obvious reasons, I can't take this series if newer kernel releases
-do not also contain all of these (no would you want me to.)
+[ Upstream commit a6b9d2fa0024e7e399c26facd0fb466b7396e2b9 ]
 
-So can you please also provide a backported series for 6.1.y so that
-these can be considered?
+When there is a single DS no striping constraints need to be placed on
+the IO. When such constraint is applied then buffered reads don't
+coalesce to the DS's rsize.
 
-thanks,
+Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ fs/nfs/filelayout/filelayout.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-greg k-h
+diff --git a/fs/nfs/filelayout/filelayout.c b/fs/nfs/filelayout/filelayout.c
+index 38179e5a6a00..9b24d0bc9b39 100644
+--- a/fs/nfs/filelayout/filelayout.c
++++ b/fs/nfs/filelayout/filelayout.c
+@@ -837,6 +837,12 @@ filelayout_alloc_lseg(struct pnfs_layout_hdr *layoutid,
+ 	return &fl->generic_hdr;
+ }
+ 
++static bool
++filelayout_lseg_is_striped(const struct nfs4_filelayout_segment *flseg)
++{
++	return flseg->num_fh > 1;
++}
++
+ /*
+  * filelayout_pg_test(). Called by nfs_can_coalesce_requests()
+  *
+@@ -857,6 +863,8 @@ filelayout_pg_test(struct nfs_pageio_descriptor *pgio, struct nfs_page *prev,
+ 	size = pnfs_generic_pg_test(pgio, prev, req);
+ 	if (!size)
+ 		return 0;
++	else if (!filelayout_lseg_is_striped(FILELAYOUT_LSEG(pgio->pg_lseg)))
++		return size;
+ 
+ 	/* see if req and prev are in the same stripe */
+ 	if (prev) {
+-- 
+2.35.1
+
+
+
