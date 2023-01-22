@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DB12590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:14:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22B17C433EF;
-	Sun, 22 Jan 2023 15:14:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A77E2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:14:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B28AEC433EF;
+	Sun, 22 Jan 2023 15:14:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400466;
-	bh=202fxFKgzmoLH52aPHp+YYTOdMIjs95TbGiORmjDutk=;
+	s=korg; t=1674400469;
+	bh=arP/9gihXpo5gmdhMOHxh359EdvmMQ7uXXaUS6JZqHY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GABbQn6w88foqQ2FChzHNJiNegnwgcDG4Tsk87jGPxueZeuP4wcBePVKGNqMS6vVy
-	 llbts1FwL8c6YDI+34wNHtQ5bWz/wdKTnwwiQ2PoRZNVG3YqWPiR5lduXTTAwmfFDl
-	 zuw/RlG1ubJ7XJ7T95muWAncTmmomlNuCZ/a71Hw=
+	b=WuZLup54/3N2odBUBM5sgaPu99KCm1s6LKPWIe+rDoTtU9Q1JVl6bz2Z7BevKFcg1
+	 FcsLNyC5z7FRK1CDit6AgYXnWebJMG76y5DoA1AB47cQtjd2+c/SeiXptr/s8Qvx1H
+	 tWp/h1Tvlo0wuLYF8z7HabmU3Edgkj3s4FzfahpI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ali Mirghasemi <ali.mirghasemi1376@gmail.com>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 5.10 46/98] USB: serial: option: add Quectel EC200U modem
-Date: Sun, 22 Jan 2023 16:04:02 +0100
-Message-Id: <20230122150231.462476702@linuxfoundation.org>
+	Melissa Wen <mwen@igalia.com>,
+	Joshua Ashton <joshua@froggi.es>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 79/98] drm/amd/display: Fix COLOR_SPACE_YCBCR2020_TYPE matrix
+Date: Sun, 22 Jan 2023 16:04:35 +0100
+Message-Id: <20230122150232.775854527@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -34,77 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ali Mirghasemi <ali.mirghasemi1376@gmail.com>
+From: Joshua Ashton <joshua@froggi.es>
 
-commit d9bbb15881046bd76f8710c76e26a740eee997ef upstream.
+commit 973a9c810c785ac270a6d50d8cf862b0c1643a10 upstream.
 
-Add support for EC200U modem
+The YCC conversion matrix for RGB -> COLOR_SPACE_YCBCR2020_TYPE is
+missing the values for the fourth column of the matrix.
 
-0x0901: EC200U - AT + AP + CP + NMEA + DIAG + MOS
+The fourth column of the matrix is essentially just a value that is
+added given that the color is 3 components in size.
+These values are needed to bias the chroma from the [-1, 1] -> [0, 1]
+range.
 
-usb-device output:
-T: Bus=01 Lev=02 Prnt=02 Port=02 Cnt=01 Dev#= 4 Spd=480 MxCh= 0
-D: Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs= 1
-P: Vendor=2c7c ProdID=0901 Rev= 3.18
-S: Manufacturer=Android
-S: Product=Android
-C:* #Ifs= 9 Cfg#= 1 Atr=e0 MxPwr=400mA
-A: FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=06 Prot=00
-I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=06 Prot=00 Driver=cdc_ether
-E: Ad=81(I) Atr=03(Int.) MxPS= 16 Ivl=32ms
-I: If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=00 Driver=cdc_ether
-E: Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=83(I) Atr=03(Int.) MxPS= 512 Ivl=4096ms
-I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=85(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 4 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 5 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=87(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 6 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=06(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-I:* If#= 7 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=8a(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=07(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=89(I) Atr=03(Int.) MxPS= 512 Ivl=4096ms
-I:* If#= 8 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
-E: Ad=8b(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
-E: Ad=08(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+This fixes color being very green when using Gamescope HDR on HDMI
+output which prefers YCC 4:4:4.
 
-Signed-off-by: Ali Mirghasemi <ali.mirghasemi1376@gmail.com>
+Fixes: 40df2f809e8f ("drm/amd/display: color space ycbcr709 support")
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Signed-off-by: Joshua Ashton <joshua@froggi.es>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    2 ++
- 1 file changed, 2 insertions(+)
+ drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -262,6 +262,7 @@ static void option_instat_callback(struc
- #define QUECTEL_PRODUCT_EM12			0x0512
- #define QUECTEL_PRODUCT_RM500Q			0x0800
- #define QUECTEL_PRODUCT_RM520N			0x0801
-+#define QUECTEL_PRODUCT_EC200U			0x0901
- #define QUECTEL_PRODUCT_EC200S_CN		0x6002
- #define QUECTEL_PRODUCT_EC200T			0x6026
- #define QUECTEL_PRODUCT_RM500K			0x7001
-@@ -1189,6 +1190,7 @@ static const struct usb_device_id option
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM520N, 0xff, 0xff, 0x30) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM520N, 0xff, 0, 0x40) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM520N, 0xff, 0, 0) },
-+	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200U, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200S_CN, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EC200T, 0xff, 0, 0) },
- 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_RM500K, 0xff, 0x00, 0x00) },
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+@@ -92,8 +92,8 @@ static const struct out_csc_color_matrix
+ 		{ 0xE00, 0xF349, 0xFEB7, 0x1000, 0x6CE, 0x16E3,
+ 				0x24F, 0x200, 0xFCCB, 0xF535, 0xE00, 0x1000} },
+ 	{ COLOR_SPACE_YCBCR2020_TYPE,
+-		{ 0x1000, 0xF149, 0xFEB7, 0x0000, 0x0868, 0x15B2,
+-				0x01E6, 0x0000, 0xFB88, 0xF478, 0x1000, 0x0000} },
++		{ 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868, 0x15B2,
++				0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} },
+ 	{ COLOR_SPACE_YCBCR709_BLACK_TYPE,
+ 		{ 0x0000, 0x0000, 0x0000, 0x1000, 0x0000, 0x0000,
+ 				0x0000, 0x0200, 0x0000, 0x0000, 0x0000, 0x1000} },
 
 
