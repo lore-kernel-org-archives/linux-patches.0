@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36DE2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:26:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28E13C433EF;
-	Sun, 22 Jan 2023 15:26:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 426172596
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:26:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB0B0C433D2;
+	Sun, 22 Jan 2023 15:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401182;
-	bh=RsFhKmSx4NtNsJFXvyUKeLnH+a0rqW3XUGkuti6viD4=;
+	s=korg; t=1674401185;
+	bh=FB4KCU5GV+C2KFU1OZ9OPHHkE7B56aHwxhF55RSkCTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QfmnCTDxmR751RVfL/pLAKNU73SlDSJuu/YolEjqvloLoKvL3RAXGopsGbpMJrThR
-	 0pioE1GepJtC2J0Mqjdt1TB6x0JH30t/lvuRckMGC9YcQn5R+WDNVxwjxJ6mYOaBCV
-	 VCdByJbZhT4LPSlPSYKN6RsKw+VLERKtKTzf7DZk=
+	b=2i4XSknj/IbtQrnLOtYSb6fZekBitUWil3B6xPSTZ6GrgxtMFmGmaYK02j6Xj6CEM
+	 mmxXuS0NzAicnfJX4qZS8JeIPpUpAFGedeMkWLhqR0flYxJxwURaeYtHISiOSGxFZx
+	 7QTadnjvG7ZMak6a1LhmJ/GZVFD90EgU4K+lAwNU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Melissa Wen <mwen@igalia.com>,
 	Joshua Ashton <joshua@froggi.es>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 142/193] drm/amd/display: Calculate output_color_space after pixel encoding adjustment
-Date: Sun, 22 Jan 2023 16:04:31 +0100
-Message-Id: <20230122150252.881335134@linuxfoundation.org>
+Subject: [PATCH 6.1 143/193] drm/amd/display: Fix COLOR_SPACE_YCBCR2020_TYPE matrix
+Date: Sun, 22 Jan 2023 16:04:32 +0100
+Message-Id: <20230122150252.922640897@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -37,43 +37,41 @@ Content-Transfer-Encoding: 8bit
 
 From: Joshua Ashton <joshua@froggi.es>
 
-commit 79601b894849cb6f6d6122e6590f1887ac4a66b3 upstream.
+commit 973a9c810c785ac270a6d50d8cf862b0c1643a10 upstream.
 
-Code in get_output_color_space depends on knowing the pixel encoding to
-determine whether to pick between eg. COLOR_SPACE_SRGB or
-COLOR_SPACE_YCBCR709 for transparent RGB -> YCbCr 4:4:4 in the driver.
+The YCC conversion matrix for RGB -> COLOR_SPACE_YCBCR2020_TYPE is
+missing the values for the fourth column of the matrix.
 
-v2: Fixed patch being accidentally based on a personal feature branch, oops!
+The fourth column of the matrix is essentially just a value that is
+added given that the color is 3 components in size.
+These values are needed to bias the chroma from the [-1, 1] -> [0, 1]
+range.
 
-Fixes: ea117312ea9f ("drm/amd/display: Reduce HDMI pixel encoding if max clock is exceeded")
+This fixes color being very green when using Gamescope HDR on HDMI
+output which prefers YCC 4:4:4.
+
+Fixes: 40df2f809e8f ("drm/amd/display: color space ycbcr709 support")
 Reviewed-by: Melissa Wen <mwen@igalia.com>
 Signed-off-by: Joshua Ashton <joshua@froggi.es>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    4 ++--
+ drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -5283,8 +5283,6 @@ static void fill_stream_properties_from_
- 
- 	timing_out->aspect_ratio = get_aspect_ratio(mode_in);
- 
--	stream->output_color_space = get_output_color_space(timing_out);
--
- 	stream->out_transfer_func->type = TF_TYPE_PREDEFINED;
- 	stream->out_transfer_func->tf = TRANSFER_FUNCTION_SRGB;
- 	if (stream->signal == SIGNAL_TYPE_HDMI_TYPE_A) {
-@@ -5295,6 +5293,8 @@ static void fill_stream_properties_from_
- 			adjust_colour_depth_from_display_info(timing_out, info);
- 		}
- 	}
-+
-+	stream->output_color_space = get_output_color_space(timing_out);
- }
- 
- static void fill_audio_info(struct audio_info *audio_info,
+--- a/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
++++ b/drivers/gpu/drm/amd/display/dc/core/dc_hw_sequencer.c
+@@ -90,8 +90,8 @@ static const struct out_csc_color_matrix
+ 		{ 0xE00, 0xF349, 0xFEB7, 0x1000, 0x6CE, 0x16E3,
+ 				0x24F, 0x200, 0xFCCB, 0xF535, 0xE00, 0x1000} },
+ 	{ COLOR_SPACE_YCBCR2020_TYPE,
+-		{ 0x1000, 0xF149, 0xFEB7, 0x0000, 0x0868, 0x15B2,
+-				0x01E6, 0x0000, 0xFB88, 0xF478, 0x1000, 0x0000} },
++		{ 0x1000, 0xF149, 0xFEB7, 0x1004, 0x0868, 0x15B2,
++				0x01E6, 0x201, 0xFB88, 0xF478, 0x1000, 0x1004} },
+ 	{ COLOR_SPACE_YCBCR709_BLACK_TYPE,
+ 		{ 0x0000, 0x0000, 0x0000, 0x1000, 0x0000, 0x0000,
+ 				0x0000, 0x0200, 0x0000, 0x0000, 0x0000, 0x1000} },
 
 
