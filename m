@@ -1,25 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F15F97E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:07:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A680C433D2;
-	Sun, 22 Jan 2023 15:07:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B8CF7E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:07:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 127EAC433D2;
+	Sun, 22 Jan 2023 15:07:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400076;
-	bh=chzBENqgieb9Qj4TaMoOkUkuMlfujWT0VeSzHm95+QI=;
+	s=korg; t=1674400079;
+	bh=+ZMONBLCc2q9sAmeUhiR/8dufee+L9ipeouP7x9PI/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fq8NRXEjRS2gV58vVLdmBzQAXC89T19z9Jp72bKBtf9EIfRcUUbaLblFYrfL6NmIy
-	 ZnvlEjYyt9hK+kvDwrdixtVvOwwEfgz9hrTUob506aMXU1nMkTACA24apddJl6CXsC
-	 zP55ShAqzhz69nFdW7t2cGutjf8ZYzWQnDGxFSg4=
+	b=w1Csqo/NlP3TzflYLRnl2I5U3LKyfgGEuAeIQaexAOeIrKGRLslStjuYLXmJ8wDvK
+	 sUmpN77cFTzf/2JD4EUSpTayM2+qWccQj7bjMfxGallvH76nozrr7GY1KQutpjzR0X
+	 qKC9txzUiAoEn8HR23X0o6aVd/NL/ZvzGAdtvKf8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 4.19 30/37] serial: pch_uart: Pass correct sg to dma_unmap_sg()
-Date: Sun, 22 Jan 2023 16:04:27 +0100
-Message-Id: <20230122150220.806300125@linuxfoundation.org>
+	Jaegeuk Kim <jaegeuk@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 04/37] f2fs: lets avoid panic if extent_tree is not created
+Date: Sun, 22 Jan 2023 16:04:01 +0100
+Message-Id: <20230122150219.762157308@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150219.557984692@linuxfoundation.org>
 References: <20230122150219.557984692@linuxfoundation.org>
@@ -33,38 +34,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Jaegeuk Kim <jaegeuk@kernel.org>
 
-commit e8914b52e5b024e4af3d810a935fe0805eee8a36 upstream.
+[ Upstream commit df9d44b645b83fffccfb4e28c1f93376585fdec8 ]
 
-A local variable sg is used to store scatterlist pointer in
-pch_dma_tx_complete(). The for loop doing Tx byte accounting before
-dma_unmap_sg() alters sg in its increment statement. Therefore, the
-pointer passed into dma_unmap_sg() won't match to the one given to
-dma_map_sg().
+This patch avoids the below panic.
 
-To fix the problem, use priv->sg_tx_p directly in dma_unmap_sg()
-instead of the local variable.
+pc : __lookup_extent_tree+0xd8/0x760
+lr : f2fs_do_write_data_page+0x104/0x87c
+sp : ffffffc010cbb3c0
+x29: ffffffc010cbb3e0 x28: 0000000000000000
+x27: ffffff8803e7f020 x26: ffffff8803e7ed40
+x25: ffffff8803e7f020 x24: ffffffc010cbb460
+x23: ffffffc010cbb480 x22: 0000000000000000
+x21: 0000000000000000 x20: ffffffff22e90900
+x19: 0000000000000000 x18: ffffffc010c5d080
+x17: 0000000000000000 x16: 0000000000000020
+x15: ffffffdb1acdbb88 x14: ffffff888759e2b0
+x13: 0000000000000000 x12: ffffff802da49000
+x11: 000000000a001200 x10: ffffff8803e7ed40
+x9 : ffffff8023195800 x8 : ffffff802da49078
+x7 : 0000000000000001 x6 : 0000000000000000
+x5 : 0000000000000006 x4 : ffffffc010cbba28
+x3 : 0000000000000000 x2 : ffffffc010cbb480
+x1 : 0000000000000000 x0 : ffffff8803e7ed40
+Call trace:
+ __lookup_extent_tree+0xd8/0x760
+ f2fs_do_write_data_page+0x104/0x87c
+ f2fs_write_single_data_page+0x420/0xb60
+ f2fs_write_cache_pages+0x418/0xb1c
+ __f2fs_write_data_pages+0x428/0x58c
+ f2fs_write_data_pages+0x30/0x40
+ do_writepages+0x88/0x190
+ __writeback_single_inode+0x48/0x448
+ writeback_sb_inodes+0x468/0x9e8
+ __writeback_inodes_wb+0xb8/0x2a4
+ wb_writeback+0x33c/0x740
+ wb_do_writeback+0x2b4/0x400
+ wb_workfn+0xe4/0x34c
+ process_one_work+0x24c/0x5bc
+ worker_thread+0x3e8/0xa50
+ kthread+0x150/0x1b4
 
-Fixes: da3564ee027e ("pch_uart: add multi-scatter processing")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230103093435.4396-1-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/tty/serial/pch_uart.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/f2fs/extent_cache.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/pch_uart.c
-+++ b/drivers/tty/serial/pch_uart.c
-@@ -792,7 +792,7 @@ static void pch_dma_tx_complete(void *ar
- 	}
- 	xmit->tail &= UART_XMIT_SIZE - 1;
- 	async_tx_ack(priv->desc_tx);
--	dma_unmap_sg(port->dev, sg, priv->orig_nent, DMA_TO_DEVICE);
-+	dma_unmap_sg(port->dev, priv->sg_tx_p, priv->orig_nent, DMA_TO_DEVICE);
- 	priv->tx_dma_use = 0;
- 	priv->nent = 0;
- 	priv->orig_nent = 0;
+diff --git a/fs/f2fs/extent_cache.c b/fs/f2fs/extent_cache.c
+index 36d6b561b524..e85ed4aa9d46 100644
+--- a/fs/f2fs/extent_cache.c
++++ b/fs/f2fs/extent_cache.c
+@@ -375,7 +375,8 @@ static bool f2fs_lookup_extent_tree(struct inode *inode, pgoff_t pgofs,
+ 	struct extent_node *en;
+ 	bool ret = false;
+ 
+-	f2fs_bug_on(sbi, !et);
++	if (!et)
++		return false;
+ 
+ 	trace_f2fs_lookup_extent_tree_start(inode, pgofs);
+ 
+-- 
+2.35.1
+
 
 
