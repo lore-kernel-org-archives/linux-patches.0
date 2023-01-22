@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6E27E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:09:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5201C433D2;
-	Sun, 22 Jan 2023 15:09:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DB27E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:10:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75EA0C4339B;
+	Sun, 22 Jan 2023 15:10:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400199;
-	bh=5MX3o62En2B+Goiw/vVWGqvguUarf+3plTUX1AJcfdk=;
+	s=korg; t=1674400201;
+	bh=ug1rfvJhHBMIBHm/kDFORvtLY3Fr6ccx2iPnA1reSr4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZCZ0qMAOEc2tSVawYc/aLn5zWE27thtE3sIOtekPx4xGreQBihEkDy8UqWZMczvJD
-	 6VKz00mCWTQSVz58/KhHRNyBZTFN3h9z1t/cObsgVNfZLK9s0xZtBX/DOI6Ht9aG6+
-	 GKVgY5Qe+fwlUvBh9rtN6geg5ESBWRwt9Cx00IE0=
+	b=LAVPJZiy3KUF0lmkA4LVreYVoxDp+SFoIeb4m3r51Sr7QF4xMoCCm3WTA0mNB+5cW
+	 22HiXOaW7zve4y1YdY1nN3quFOArZimje3oEIU7Ime/SjUI2FdFG/CJdh/XKWoVgHm
+	 vaV7I5dr+xJJuzgA0lFwDLvQvaut2WxKg16LOqd4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-	Prashant Malani <pmalani@chromium.org>,
-	Benson Leung <bleung@chromium.org>
-Subject: [PATCH 5.4 38/55] usb: typec: altmodes/displayport: Fix pin assignment calculation
-Date: Sun, 22 Jan 2023 16:04:25 +0100
-Message-Id: <20230122150223.758951368@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Daniel Scally <dan.scally@ideasonboard.com>,
+	Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+	Kieran Bingham <kieran.bingham@ideasonboard.com>
+Subject: [PATCH 5.4 39/55] usb: gadget: g_webcam: Send color matching descriptor per frame
+Date: Sun, 22 Jan 2023 16:04:26 +0100
+Message-Id: <20230122150223.790223545@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150222.210885219@linuxfoundation.org>
 References: <20230122150222.210885219@linuxfoundation.org>
@@ -35,43 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prashant Malani <pmalani@chromium.org>
+From: Daniel Scally <dan.scally@ideasonboard.com>
 
-commit 9682b41e52cc9f42f5c33caf410464392adaef04 upstream.
+commit e95765e97d9cb93258a4840440d410fa6ff7e819 upstream.
 
-Commit c1e5c2f0cb8a ("usb: typec: altmodes/displayport: correct pin
-assignment for UFP receptacles") fixed the pin assignment calculation
-to take into account whether the peripheral was a plug or a receptacle.
+Currently the color matching descriptor is only sent across the wire
+a single time, following the descriptors for each format and frame.
+According to the UVC 1.5 Specification 3.9.2.6 ("Color Matching
+Descriptors"):
 
-But the "pin_assignments" sysfs logic was not updated. Address this by
-using the macros introduced in the aforementioned commit in the sysfs
-logic too.
+"Only one instance is allowed for a given format and if present,
+the Color Matching descriptor shall be placed following the Video
+and Still Image Frame descriptors for that format".
 
-Fixes: c1e5c2f0cb8a ("usb: typec: altmodes/displayport: correct pin assignment for UFP receptacles")
-Cc: stable@vger.kernel.org
-Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Signed-off-by: Prashant Malani <pmalani@chromium.org>
-Reviewed-by: Benson Leung <bleung@chromium.org>
-Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230111020546.3384569-2-pmalani@chromium.org
+Add another reference to the color matching descriptor after the
+yuyv frames so that it's correctly transmitted for that format
+too.
+
+Fixes: a9914127e834 ("USB gadget: Webcam device")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Daniel Scally <dan.scally@ideasonboard.com>
+Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+Reviewed-by: Kieran Bingham <kieran.bingham@ideasonboard.com>
+Link: https://lore.kernel.org/r/20221216160528.479094-1-dan.scally@ideasonboard.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/altmodes/displayport.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/legacy/webcam.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/usb/typec/altmodes/displayport.c
-+++ b/drivers/usb/typec/altmodes/displayport.c
-@@ -414,9 +414,9 @@ static const char * const pin_assignment
- static u8 get_current_pin_assignments(struct dp_altmode *dp)
- {
- 	if (DP_CONF_CURRENTLY(dp->data.conf) == DP_CONF_DFP_D)
--		return DP_CAP_UFP_D_PIN_ASSIGN(dp->alt->vdo);
-+		return DP_CAP_PIN_ASSIGN_DFP_D(dp->alt->vdo);
- 	else
--		return DP_CAP_DFP_D_PIN_ASSIGN(dp->alt->vdo);
-+		return DP_CAP_PIN_ASSIGN_UFP_D(dp->alt->vdo);
- }
- 
- static ssize_t
+--- a/drivers/usb/gadget/legacy/webcam.c
++++ b/drivers/usb/gadget/legacy/webcam.c
+@@ -293,6 +293,7 @@ static const struct uvc_descriptor_heade
+ 	(const struct uvc_descriptor_header *) &uvc_format_yuv,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_360p,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_720p,
++	(const struct uvc_descriptor_header *) &uvc_color_matching,
+ 	(const struct uvc_descriptor_header *) &uvc_format_mjpg,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_360p,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_720p,
+@@ -305,6 +306,7 @@ static const struct uvc_descriptor_heade
+ 	(const struct uvc_descriptor_header *) &uvc_format_yuv,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_360p,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_720p,
++	(const struct uvc_descriptor_header *) &uvc_color_matching,
+ 	(const struct uvc_descriptor_header *) &uvc_format_mjpg,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_360p,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_720p,
+@@ -317,6 +319,7 @@ static const struct uvc_descriptor_heade
+ 	(const struct uvc_descriptor_header *) &uvc_format_yuv,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_360p,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_yuv_720p,
++	(const struct uvc_descriptor_header *) &uvc_color_matching,
+ 	(const struct uvc_descriptor_header *) &uvc_format_mjpg,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_360p,
+ 	(const struct uvc_descriptor_header *) &uvc_frame_mjpg_720p,
 
 
