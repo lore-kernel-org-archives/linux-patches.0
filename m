@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 534AB2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE504C433D2;
-	Sun, 22 Jan 2023 15:16:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87682590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67327C433D2;
+	Sun, 22 Jan 2023 15:16:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400585;
-	bh=oxmIX+wYx65dCAJKFpht8+jm7v0UdElEvcPNyhSmffI=;
+	s=korg; t=1674400587;
+	bh=FPLbrvIr0sJlCYZ/5az/WTaLEeHg/wZDDnYcNICvEGU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o5gSDAI5w9Rsza8gvKzHkHWGkegZFYjd7l803mYE2AG/sSzfI/kMH+tGWPWP/Fynw
-	 EYHmFb43FNkdE2fHW70O0lI/sBqmnxbKgKon/vlKn7yBVJ31hZ3/vPmov9Wv+osNtM
-	 bOW6soO3MQHWFWkEeqVxEOApTQ1/IA0jryi0Xxhg=
+	b=izAJE7DS2bfXSj0q+kS3kX6Qy/cHa63tJqVXuDf1Xfys/H0Avyy01I4SU+xMRNKj9
+	 V+YiotBlWT2dCkbLW3uIgrplXOrnztaHeA+WEEREl8IMpI3FgdjhViFBRvvOg0Y0Vi
+	 ghw+o0F4Cwju9PPDadjzebCz2CAZqR4sAxs3d4Ls=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 030/117] io_uring: pass in EPOLL_URING_WAKE for eventfd signaling and wakeups
-Date: Sun, 22 Jan 2023 16:03:40 +0100
-Message-Id: <20230122150233.967754153@linuxfoundation.org>
+Subject: [PATCH 5.15 004/117] tools/virtio: initialize spinlocks in vring_test.c
+Date: Sun, 22 Jan 2023 16:03:14 +0100
+Message-Id: <20230122150232.921690825@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -34,87 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
 
-[ Upstream commit 4464853277d0ccdb9914608dd1332f0fa2f9846f ]
+[ Upstream commit c262f75cb6bb5a63828e72ce3b8fe808e5029479 ]
 
-Pass in EPOLL_URING_WAKE when signaling eventfd or doing poll related
-wakups, so that we can check for a circular event dependency between
-eventfd and epoll. If this flag is set when our wakeup handlers are
-called, then we know we have a dependency that needs to terminate
-multishot requests.
+The virtio_device vqs_list spinlocks must be initialized before use to
+prevent functions that manipulate the device virtualqueues, such as
+vring_new_virtqueue(), from blocking indefinitely.
 
-eventfd and epoll are the only such possible dependencies.
-
-Cc: stable@vger.kernel.org # 6.0
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+Message-Id: <20221012062949.1526176-1-ricardo.canuelo@collabora.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 27 ++++++++++++++++++++-------
- 1 file changed, 20 insertions(+), 7 deletions(-)
+ tools/virtio/vringh_test.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 9a01188ff45a..d855e668f37c 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -1629,13 +1629,15 @@ static void io_cqring_ev_posted(struct io_ring_ctx *ctx)
- 	 * wake as many waiters as we need to.
- 	 */
- 	if (wq_has_sleeper(&ctx->cq_wait))
--		wake_up_all(&ctx->cq_wait);
-+		__wake_up(&ctx->cq_wait, TASK_NORMAL, 0,
-+				poll_to_key(EPOLL_URING_WAKE | EPOLLIN));
- 	if (ctx->sq_data && waitqueue_active(&ctx->sq_data->wait))
- 		wake_up(&ctx->sq_data->wait);
- 	if (io_should_trigger_evfd(ctx))
--		eventfd_signal(ctx->cq_ev_fd, 1);
-+		eventfd_signal_mask(ctx->cq_ev_fd, 1, EPOLL_URING_WAKE);
- 	if (waitqueue_active(&ctx->poll_wait))
--		wake_up_interruptible(&ctx->poll_wait);
-+		__wake_up(&ctx->poll_wait, TASK_INTERRUPTIBLE, 0,
-+				poll_to_key(EPOLL_URING_WAKE | EPOLLIN));
- }
+diff --git a/tools/virtio/vringh_test.c b/tools/virtio/vringh_test.c
+index fa87b58bd5fa..98ff808d6f0c 100644
+--- a/tools/virtio/vringh_test.c
++++ b/tools/virtio/vringh_test.c
+@@ -308,6 +308,7 @@ static int parallel_test(u64 features,
  
- static void io_cqring_ev_posted_iopoll(struct io_ring_ctx *ctx)
-@@ -1645,12 +1647,14 @@ static void io_cqring_ev_posted_iopoll(struct io_ring_ctx *ctx)
+ 		gvdev.vdev.features = features;
+ 		INIT_LIST_HEAD(&gvdev.vdev.vqs);
++		spin_lock_init(&gvdev.vdev.vqs_list_lock);
+ 		gvdev.to_host_fd = to_host[1];
+ 		gvdev.notifies = 0;
  
- 	if (ctx->flags & IORING_SETUP_SQPOLL) {
- 		if (waitqueue_active(&ctx->cq_wait))
--			wake_up_all(&ctx->cq_wait);
-+			__wake_up(&ctx->cq_wait, TASK_NORMAL, 0,
-+				  poll_to_key(EPOLL_URING_WAKE | EPOLLIN));
- 	}
- 	if (io_should_trigger_evfd(ctx))
--		eventfd_signal(ctx->cq_ev_fd, 1);
-+		eventfd_signal_mask(ctx->cq_ev_fd, 1, EPOLL_URING_WAKE);
- 	if (waitqueue_active(&ctx->poll_wait))
--		wake_up_interruptible(&ctx->poll_wait);
-+		__wake_up(&ctx->poll_wait, TASK_INTERRUPTIBLE, 0,
-+				poll_to_key(EPOLL_URING_WAKE | EPOLLIN));
- }
+@@ -455,6 +456,7 @@ int main(int argc, char *argv[])
+ 	getrange = getrange_iov;
+ 	vdev.features = 0;
+ 	INIT_LIST_HEAD(&vdev.vqs);
++	spin_lock_init(&vdev.vqs_list_lock);
  
- /* Returns true if there are no backlogged entries after the flush */
-@@ -5636,8 +5640,17 @@ static int io_poll_wake(struct wait_queue_entry *wait, unsigned mode, int sync,
- 	if (mask && !(mask & poll->events))
- 		return 0;
- 
--	if (io_poll_get_ownership(req))
-+	if (io_poll_get_ownership(req)) {
-+		/*
-+		 * If we trigger a multishot poll off our own wakeup path,
-+		 * disable multishot as there is a circular dependency between
-+		 * CQ posting and triggering the event.
-+		 */
-+		if (mask & EPOLL_URING_WAKE)
-+			poll->events |= EPOLLONESHOT;
-+
- 		__io_poll_execute(req, mask);
-+	}
- 	return 1;
- }
- 
+ 	while (argv[1]) {
+ 		if (strcmp(argv[1], "--indirect") == 0)
 -- 
-2.39.0
+2.35.1
 
 
 
