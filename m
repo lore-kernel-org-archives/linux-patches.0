@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D952590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFDFC433EF;
-	Sun, 22 Jan 2023 15:18:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7989A2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F410FC433EF;
+	Sun, 22 Jan 2023 15:18:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400720;
-	bh=8/pCthJrNJrVyJX/tgThM8NDME8TgLNris9k8uM+b/U=;
+	s=korg; t=1674400723;
+	bh=1gPbY/mnjbiEWaDYrFB2NlAa80InPf/V3rowh74uoe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cSR86S/BfkIg9RmktnsbiFZqKpRh9mCS2cfkPZCIBOCkT0/z7o4kp5VpxVmSC2TG7
-	 CQGEL5xgiPzR4VHZNzlf5RUQmv972VtiEMV8JV/tNlWfCSLoH0W7j2GpXNd0PlutP9
-	 jIFW0UGmlIPCbIhrpL2V6ExVTat3DtAxTs1hfv5M=
+	b=hcLWGs9dH8hZyGRG5VBT/SWdKwoby8D9mLGPZml/Q3YPMT36lR7NtNSbXPzNVja+v
+	 gDLcOm21GjZbzfT6GXxPHq1pmxfS0bs1XNZt0KDCb5Oa9Hrt7zXiWG2+jcH4HlIguG
+	 iAEIJte3yuSPMDgFgnRbGV7/No0oZStU06MjjT9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Hongling Zeng <zenghongling@kylinos.cn>,
-	Juhyung Park <qkrwngud825@gmail.com>,
-	Oliver Neukum <oneukum@suse.com>
-Subject: [PATCH 5.15 083/117] usb-storage: apply IGNORE_UAS only for HIKSEMI MD202 on RTL9210
-Date: Sun, 22 Jan 2023 16:04:33 +0100
-Message-Id: <20230122150236.232801593@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.15 084/117] dt-bindings: phy: g12a-usb2-phy: fix compatible string documentation
+Date: Sun, 22 Jan 2023 16:04:34 +0100
+Message-Id: <20230122150236.272134031@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -36,77 +36,188 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Juhyung Park <qkrwngud825@gmail.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit dbd24ec17b85b45f4e823d1aa5607721920f2b05 upstream.
+commit c63835bf1c750c9b3aec1d5c23d811d6375fc23d upstream.
 
-The commit e00b488e813f ("usb-storage: Add Hiksemi USB3-FW to IGNORE_UAS")
-blacklists UAS for all of RTL9210 enclosures.
+The compatible strings in the driver don't have the meson prefix.
+Fix this in the documentation and rename the file accordingly.
 
-The RTL9210 controller was advertised with UAS since its release back in
-2019 and was shipped with a lot of enclosure products with different
-firmware combinations.
-
-Blacklist UAS only for HIKSEMI MD202.
-
-This should hopefully be replaced with more robust method than just
-comparing strings.  But with limited information [1] provided thus far
-(dmesg when the device is plugged in, which includes manufacturer and
-product, but no lsusb -v to compare against), this is the best we can do
-for now.
-
-[1] https://lore.kernel.org/all/20230109115550.71688-1-qkrwngud825@gmail.com
-
-Fixes: e00b488e813f ("usb-storage: Add Hiksemi USB3-FW to IGNORE_UAS")
-Cc: Alan Stern <stern@rowland.harvard.edu>
-Cc: Hongling Zeng <zenghongling@kylinos.cn>
+Fixes: da86d286cce8 ("dt-bindings: phy: meson-g12a-usb2-phy: convert to yaml")
 Cc: stable@vger.kernel.org
-Signed-off-by: Juhyung Park <qkrwngud825@gmail.com>
-Acked-by: Oliver Neukum <oneukum@suse.com>
-Link: https://lore.kernel.org/r/20230117085154.123301-1-qkrwngud825@gmail.com
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/8d960029-e94d-224b-911f-03e5deb47ebc@gmail.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/storage/uas-detect.h  |   13 +++++++++++++
- drivers/usb/storage/unusual_uas.h |    7 -------
- 2 files changed, 13 insertions(+), 7 deletions(-)
+ Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml       |   78 ++++++++++
+ Documentation/devicetree/bindings/phy/amlogic,meson-g12a-usb2-phy.yaml |   78 ----------
+ 2 files changed, 78 insertions(+), 78 deletions(-)
+ rename Documentation/devicetree/bindings/phy/{amlogic,meson-g12a-usb2-phy.yaml => amlogic,g12a-usb2-phy.yaml} (85%)
 
---- a/drivers/usb/storage/uas-detect.h
-+++ b/drivers/usb/storage/uas-detect.h
-@@ -116,6 +116,19 @@ static int uas_use_uas_driver(struct usb
- 	if (le16_to_cpu(udev->descriptor.idVendor) == 0x0bc2)
- 		flags |= US_FL_NO_ATA_1X;
- 
-+	/*
-+	 * RTL9210-based enclosure from HIKSEMI, MD202 reportedly have issues
-+	 * with UAS.  This isn't distinguishable with just idVendor and
-+	 * idProduct, use manufacturer and product too.
-+	 *
-+	 * Reported-by: Hongling Zeng <zenghongling@kylinos.cn>
-+	 */
-+	if (le16_to_cpu(udev->descriptor.idVendor) == 0x0bda &&
-+			le16_to_cpu(udev->descriptor.idProduct) == 0x9210 &&
-+			(udev->manufacturer && !strcmp(udev->manufacturer, "HIKSEMI")) &&
-+			(udev->product && !strcmp(udev->product, "MD202")))
-+		flags |= US_FL_IGNORE_UAS;
+--- /dev/null
++++ b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
+@@ -0,0 +1,78 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++# Copyright 2019 BayLibre, SAS
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/phy/amlogic,g12a-usb2-phy.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
 +
- 	usb_stor_adjust_quirks(udev, &flags);
- 
- 	if (flags & US_FL_IGNORE_UAS) {
---- a/drivers/usb/storage/unusual_uas.h
-+++ b/drivers/usb/storage/unusual_uas.h
-@@ -83,13 +83,6 @@ UNUSUAL_DEV(0x0bc2, 0x331a, 0x0000, 0x99
- 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
- 		US_FL_NO_REPORT_LUNS),
- 
--/* Reported-by: Hongling Zeng <zenghongling@kylinos.cn> */
--UNUSUAL_DEV(0x0bda, 0x9210, 0x0000, 0x9999,
--		"Hiksemi",
--		"External HDD",
--		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
--		US_FL_IGNORE_UAS),
++title: Amlogic G12A USB2 PHY
++
++maintainers:
++  - Neil Armstrong <narmstrong@baylibre.com>
++
++properties:
++  compatible:
++    enum:
++      - amlogic,g12a-usb2-phy
++      - amlogic,a1-usb2-phy
++
++  reg:
++    maxItems: 1
++
++  clocks:
++    maxItems: 1
++
++  clock-names:
++    items:
++      - const: xtal
++
++  resets:
++    maxItems: 1
++
++  reset-names:
++    items:
++      - const: phy
++
++  "#phy-cells":
++    const: 0
++
++  phy-supply:
++    description:
++      Phandle to a regulator that provides power to the PHY. This
++      regulator will be managed during the PHY power on/off sequence.
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - resets
++  - reset-names
++  - "#phy-cells"
++
++if:
++  properties:
++    compatible:
++      enum:
++        - amlogic,meson-a1-usb-ctrl
++
++then:
++  properties:
++    power-domains:
++      maxItems: 1
++  required:
++    - power-domains
++
++additionalProperties: false
++
++examples:
++  - |
++    phy@36000 {
++          compatible = "amlogic,g12a-usb2-phy";
++          reg = <0x36000 0x2000>;
++          clocks = <&xtal>;
++          clock-names = "xtal";
++          resets = <&phy_reset>;
++          reset-names = "phy";
++          #phy-cells = <0>;
++    };
+--- a/Documentation/devicetree/bindings/phy/amlogic,meson-g12a-usb2-phy.yaml
++++ /dev/null
+@@ -1,78 +0,0 @@
+-# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+-# Copyright 2019 BayLibre, SAS
+-%YAML 1.2
+----
+-$id: "http://devicetree.org/schemas/phy/amlogic,meson-g12a-usb2-phy.yaml#"
+-$schema: "http://devicetree.org/meta-schemas/core.yaml#"
 -
- /* Reported-by: Benjamin Tissoires <benjamin.tissoires@redhat.com> */
- UNUSUAL_DEV(0x13fd, 0x3940, 0x0000, 0x9999,
- 		"Initio Corporation",
+-title: Amlogic G12A USB2 PHY
+-
+-maintainers:
+-  - Neil Armstrong <narmstrong@baylibre.com>
+-
+-properties:
+-  compatible:
+-    enum:
+-      - amlogic,meson-g12a-usb2-phy
+-      - amlogic,meson-a1-usb2-phy
+-
+-  reg:
+-    maxItems: 1
+-
+-  clocks:
+-    maxItems: 1
+-
+-  clock-names:
+-    items:
+-      - const: xtal
+-
+-  resets:
+-    maxItems: 1
+-
+-  reset-names:
+-    items:
+-      - const: phy
+-
+-  "#phy-cells":
+-    const: 0
+-
+-  phy-supply:
+-    description:
+-      Phandle to a regulator that provides power to the PHY. This
+-      regulator will be managed during the PHY power on/off sequence.
+-
+-required:
+-  - compatible
+-  - reg
+-  - clocks
+-  - clock-names
+-  - resets
+-  - reset-names
+-  - "#phy-cells"
+-
+-if:
+-  properties:
+-    compatible:
+-      enum:
+-        - amlogic,meson-a1-usb-ctrl
+-
+-then:
+-  properties:
+-    power-domains:
+-      maxItems: 1
+-  required:
+-    - power-domains
+-
+-additionalProperties: false
+-
+-examples:
+-  - |
+-    phy@36000 {
+-          compatible = "amlogic,meson-g12a-usb2-phy";
+-          reg = <0x36000 0x2000>;
+-          clocks = <&xtal>;
+-          clock-names = "xtal";
+-          resets = <&phy_reset>;
+-          reset-names = "phy";
+-          #phy-cells = <0>;
+-    };
 
 
