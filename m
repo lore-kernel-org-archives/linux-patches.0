@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E0C2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E0B6C433EF;
-	Sun, 22 Jan 2023 15:12:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 272632590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A04FBC433D2;
+	Sun, 22 Jan 2023 15:12:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400369;
-	bh=I8oOSimr4+ysP6xybRG9DsYdNbQ2RtTorlznGM111Z4=;
+	s=korg; t=1674400372;
+	bh=cFzX04RxTb6QRGOAKulgwA+ApTRYhAo9lxPFayh2TjM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zmq563O94K6w900VETh0cRVXLCMrYLKJAtH2XFcUSXLH+rVue4ujB/jO/D7salUU1
-	 Np7iOILoGqMvLyWwbwUxnMwpq7fNnSZZVHIG56CmJM22No5wAY7OuKmN2OCt4N8Bpn
-	 Obyg4xr8pAAxzSdHcAi+EnazaokQKQ/6puv2SHOU=
+	b=wNsA08Zdc55qgXAR7kK0EomD3pzi5lNVo5hMAkDY4YBOygWFDDksr6qGIsVliGrGW
+	 YViCs7ZIR4MiGqdi0Qd/r3ECXWRIjA1RUZPePcTuUTw8gt9gPIMfxsfbvbghf4Jdx5
+	 nSeWcBym5fimHEaMOierEy6vA5E4qwG+FjNkhnjY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Christiano Haesbaert <haesbaert@haesbaert.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 19/98] Bluetooth: hci_qca: Fix driver shutdown on closed serdev
-Date: Sun, 22 Jan 2023 16:03:35 +0100
-Message-Id: <20230122150230.263081391@linuxfoundation.org>
+Subject: [PATCH 5.10 20/98] io_uring: dont gate task_work run on TIF_NOTIFY_SIGNAL
+Date: Sun, 22 Jan 2023 16:03:36 +0100
+Message-Id: <20230122150230.302962175@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -35,93 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit 272970be3dabd24cbe50e393ffee8f04aec3b9a8 ]
+commit 46a525e199e4037516f7e498c18f065b09df32ac upstream.
 
-The driver shutdown callback (which sends EDL_SOC_RESET to the device
-over serdev) should not be invoked when HCI device is not open (e.g. if
-hci_dev_open_sync() failed), because the serdev and its TTY are not open
-either.  Also skip this step if device is powered off
-(qca_power_shutdown()).
+This isn't a reliable mechanism to tell if we have task_work pending, we
+really should be looking at whether we have any items queued. This is
+problematic if forward progress is gated on running said task_work. One
+such example is reading from a pipe, where the write side has been closed
+right before the read is started. The fput() of the file queues TWA_RESUME
+task_work, and we need that task_work to be run before ->release() is
+called for the pipe. If ->release() isn't called, then the read will sit
+forever waiting on data that will never arise.
 
-The shutdown callback causes use-after-free during system reboot with
-Qualcomm Atheros Bluetooth:
+Fix this by io_run_task_work() so it checks if we have task_work pending
+rather than rely on TIF_NOTIFY_SIGNAL for that. The latter obviously
+doesn't work for task_work that is queued without TWA_SIGNAL.
 
-  Unable to handle kernel paging request at virtual address
-  0072662f67726fd7
-  ...
-  CPU: 6 PID: 1 Comm: systemd-shutdow Tainted: G        W
-  6.1.0-rt5-00325-g8a5f56bcfcca #8
-  Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
-  Call trace:
-   tty_driver_flush_buffer+0x4/0x30
-   serdev_device_write_flush+0x24/0x34
-   qca_serdev_shutdown+0x80/0x130 [hci_uart]
-   device_shutdown+0x15c/0x260
-   kernel_restart+0x48/0xac
-
-KASAN report:
-
-  BUG: KASAN: use-after-free in tty_driver_flush_buffer+0x1c/0x50
-  Read of size 8 at addr ffff16270c2e0018 by task systemd-shutdow/1
-
-  CPU: 7 PID: 1 Comm: systemd-shutdow Not tainted
-  6.1.0-next-20221220-00014-gb85aaf97fb01-dirty #28
-  Hardware name: Qualcomm Technologies, Inc. Robotics RB5 (DT)
-  Call trace:
-   dump_backtrace.part.0+0xdc/0xf0
-   show_stack+0x18/0x30
-   dump_stack_lvl+0x68/0x84
-   print_report+0x188/0x488
-   kasan_report+0xa4/0xf0
-   __asan_load8+0x80/0xac
-   tty_driver_flush_buffer+0x1c/0x50
-   ttyport_write_flush+0x34/0x44
-   serdev_device_write_flush+0x48/0x60
-   qca_serdev_shutdown+0x124/0x274
-   device_shutdown+0x1e8/0x350
-   kernel_restart+0x48/0xb0
-   __do_sys_reboot+0x244/0x2d0
-   __arm64_sys_reboot+0x54/0x70
-   invoke_syscall+0x60/0x190
-   el0_svc_common.constprop.0+0x7c/0x160
-   do_el0_svc+0x44/0xf0
-   el0_svc+0x2c/0x6c
-   el0t_64_sync_handler+0xbc/0x140
-   el0t_64_sync+0x190/0x194
-
-Fixes: 7e7bbddd029b ("Bluetooth: hci_qca: Fix qca6390 enable failure after warm reboot")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Reported-by: Christiano Haesbaert <haesbaert@haesbaert.org>
+Cc: stable@vger.kernel.org
+Link: https://github.com/axboe/liburing/issues/665
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/bluetooth/hci_qca.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ io_uring/io-wq.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
-index 652290425028..096a604ef47f 100644
---- a/drivers/bluetooth/hci_qca.c
-+++ b/drivers/bluetooth/hci_qca.c
-@@ -2064,10 +2064,17 @@ static void qca_serdev_shutdown(struct device *dev)
- 	int timeout = msecs_to_jiffies(CMD_TRANS_TIMEOUT_MS);
- 	struct serdev_device *serdev = to_serdev_device(dev);
- 	struct qca_serdev *qcadev = serdev_device_get_drvdata(serdev);
-+	struct hci_uart *hu = &qcadev->serdev_hu;
-+	struct hci_dev *hdev = hu->hdev;
-+	struct qca_data *qca = hu->priv;
- 	const u8 ibs_wake_cmd[] = { 0xFD };
- 	const u8 edl_reset_soc_cmd[] = { 0x01, 0x00, 0xFC, 0x01, 0x05 };
+diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
+index 87bc38b47103..81485c1a9879 100644
+--- a/io_uring/io-wq.c
++++ b/io_uring/io-wq.c
+@@ -513,7 +513,7 @@ static struct io_wq_work *io_get_next_work(struct io_wqe_acct *acct,
  
- 	if (qcadev->btsoc_type == QCA_QCA6390) {
-+		if (test_bit(QCA_BT_OFF, &qca->flags) ||
-+		    !test_bit(HCI_RUNNING, &hdev->flags))
-+			return;
-+
- 		serdev_device_write_flush(serdev);
- 		ret = serdev_device_write_buf(serdev, ibs_wake_cmd,
- 					      sizeof(ibs_wake_cmd));
+ static bool io_flush_signals(void)
+ {
+-	if (unlikely(test_thread_flag(TIF_NOTIFY_SIGNAL))) {
++	if (test_thread_flag(TIF_NOTIFY_SIGNAL) || current->task_works) {
+ 		__set_current_state(TASK_RUNNING);
+ 		tracehook_notify_signal();
+ 		return true;
 -- 
 2.39.0
 
