@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701B32590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:26:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90F6C433EF;
-	Sun, 22 Jan 2023 15:26:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09D172590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:26:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8345EC433D2;
+	Sun, 22 Jan 2023 15:26:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401164;
-	bh=3NSeHrnmVWXlDkqw2hec1nL838PVPfh73vHfnWMnFFA=;
+	s=korg; t=1674401166;
+	bh=OjhUCj+cDgnJrUFzW7fHqCeqHv+FYOQt9muNO0rKAKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ga0TuTsTVtu3rCFAanPH6ysZQc4dqrad/OONP0pe8vBzk76Ge6gkjPuxXq9Ae/g4f
-	 ppwXPDrnJ6uf5lDMdlhky1tAZAh0D1HrZxyWhDYFQnReuUbM8eH1HObL2+6zsEV5d2
-	 xgc/8NJZgEnCO99EEFex88Y3WY7jrarg/KnUqr6U=
+	b=ApXM+pjho0t+pbRzUqyU96RaLDFm61MsqpoEr9v2cApg1RiOVLJ+RAUocnmyNpI0Q
+	 GmR4lp3BlpINVnEvt07gb0gCENTnGHqbXEnyWLabVP30hxV043wMjUbA+TLA4nLzao
+	 v0QisMQhCDcVjNi5+VaEByTCm4Z9ULVe/TBLzTnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Utkarsh Patel <utkarsh.h.patel@intel.com>,
-	Yehezkel Bernat <YehezkelShB@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.1 094/193] thunderbolt: Do not call PM runtime functions in tb_retimer_scan()
-Date: Sun, 22 Jan 2023 16:03:43 +0100
-Message-Id: <20230122150250.641991086@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Khazhismel Kumykov <khazhy@google.com>
+Subject: [PATCH 6.1 128/193] gsmi: fix null-deref in gsmi_get_variable
+Date: Sun, 22 Jan 2023 16:04:17 +0100
+Message-Id: <20230122150252.165497591@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -35,137 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Khazhismel Kumykov <khazhy@chromium.org>
 
-commit 23257cfc1cb7202fd0065e9f4a6a0aac1c04c4a9 upstream.
+commit a769b05eeed7accc4019a1ed9799dd72067f1ce8 upstream.
 
-We cannot call PM runtime functions in tb_retimer_scan() because it will
-also be called when retimers are scanned from userspace (happens when
-there is no device connected on ChromeOS for instance) and at the same
-USB4 port runtime resume hook. This leads to hang because neither can
-proceed.
+We can get EFI variables without fetching the attribute, so we must
+allow for that in gsmi.
 
-Fix this by runtime resuming USB4 ports in tb_scan_port() instead. This
-makes sure the ports are runtime PM active when retimers are added under
-it while avoiding the reported hang as well.
+commit 859748255b43 ("efi: pstore: Omit efivars caching EFI varstore
+access layer") added a new get_variable call with attr=NULL, which
+triggers panic in gsmi.
 
-Reported-by: Utkarsh Patel <utkarsh.h.patel@intel.com>
-Fixes: 1e56c88adecc ("thunderbolt: Runtime resume USB4 port when retimers are scanned")
-Cc: stable@vger.kernel.org
-Acked-by: Yehezkel Bernat <YehezkelShB@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Fixes: 74c5b31c6618 ("driver: Google EFI SMI")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Khazhismel Kumykov <khazhy@google.com>
+Link: https://lore.kernel.org/r/20230118010212.1268474-1-khazhy@google.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/retimer.c |   17 +++--------------
- drivers/thunderbolt/tb.c      |   20 +++++++++++++++-----
- 2 files changed, 18 insertions(+), 19 deletions(-)
+ drivers/firmware/google/gsmi.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/thunderbolt/retimer.c
-+++ b/drivers/thunderbolt/retimer.c
-@@ -427,13 +427,6 @@ int tb_retimer_scan(struct tb_port *port
- {
- 	u32 status[TB_MAX_RETIMER_INDEX + 1] = {};
- 	int ret, i, last_idx = 0;
--	struct usb4_port *usb4;
--
--	usb4 = port->usb4;
--	if (!usb4)
--		return 0;
--
--	pm_runtime_get_sync(&usb4->dev);
+--- a/drivers/firmware/google/gsmi.c
++++ b/drivers/firmware/google/gsmi.c
+@@ -361,9 +361,10 @@ static efi_status_t gsmi_get_variable(ef
+ 		memcpy(data, gsmi_dev.data_buf->start, *data_size);
  
- 	/*
- 	 * Send broadcast RT to make sure retimer indices facing this
-@@ -441,7 +434,7 @@ int tb_retimer_scan(struct tb_port *port
- 	 */
- 	ret = usb4_port_enumerate_retimers(port);
- 	if (ret)
--		goto out;
-+		return ret;
- 
- 	/*
- 	 * Enable sideband channel for each retimer. We can do this
-@@ -471,11 +464,11 @@ int tb_retimer_scan(struct tb_port *port
- 			break;
+ 		/* All variables are have the following attributes */
+-		*attr = EFI_VARIABLE_NON_VOLATILE |
+-			EFI_VARIABLE_BOOTSERVICE_ACCESS |
+-			EFI_VARIABLE_RUNTIME_ACCESS;
++		if (attr)
++			*attr = EFI_VARIABLE_NON_VOLATILE |
++				EFI_VARIABLE_BOOTSERVICE_ACCESS |
++				EFI_VARIABLE_RUNTIME_ACCESS;
  	}
  
--	ret = 0;
- 	if (!last_idx)
--		goto out;
-+		return 0;
- 
- 	/* Add on-board retimers if they do not exist already */
-+	ret = 0;
- 	for (i = 1; i <= last_idx; i++) {
- 		struct tb_retimer *rt;
- 
-@@ -489,10 +482,6 @@ int tb_retimer_scan(struct tb_port *port
- 		}
- 	}
- 
--out:
--	pm_runtime_mark_last_busy(&usb4->dev);
--	pm_runtime_put_autosuspend(&usb4->dev);
--
- 	return ret;
- }
- 
---- a/drivers/thunderbolt/tb.c
-+++ b/drivers/thunderbolt/tb.c
-@@ -628,11 +628,15 @@ static void tb_scan_port(struct tb_port
- 			 * Downstream switch is reachable through two ports.
- 			 * Only scan on the primary port (link_nr == 0).
- 			 */
-+
-+	if (port->usb4)
-+		pm_runtime_get_sync(&port->usb4->dev);
-+
- 	if (tb_wait_for_port(port, false) <= 0)
--		return;
-+		goto out_rpm_put;
- 	if (port->remote) {
- 		tb_port_dbg(port, "port already has a remote\n");
--		return;
-+		goto out_rpm_put;
- 	}
- 
- 	tb_retimer_scan(port, true);
-@@ -647,12 +651,12 @@ static void tb_scan_port(struct tb_port
- 		 */
- 		if (PTR_ERR(sw) == -EIO || PTR_ERR(sw) == -EADDRNOTAVAIL)
- 			tb_scan_xdomain(port);
--		return;
-+		goto out_rpm_put;
- 	}
- 
- 	if (tb_switch_configure(sw)) {
- 		tb_switch_put(sw);
--		return;
-+		goto out_rpm_put;
- 	}
- 
- 	/*
-@@ -681,7 +685,7 @@ static void tb_scan_port(struct tb_port
- 
- 	if (tb_switch_add(sw)) {
- 		tb_switch_put(sw);
--		return;
-+		goto out_rpm_put;
- 	}
- 
- 	/* Link the switches using both links if available */
-@@ -733,6 +737,12 @@ static void tb_scan_port(struct tb_port
- 
- 	tb_add_dp_resources(sw);
- 	tb_scan_switch(sw);
-+
-+out_rpm_put:
-+	if (port->usb4) {
-+		pm_runtime_mark_last_busy(&port->usb4->dev);
-+		pm_runtime_put_autosuspend(&port->usb4->dev);
-+	}
- }
- 
- static void tb_deactivate_and_free_tunnel(struct tb_tunnel *tunnel)
+ 	spin_unlock_irqrestore(&gsmi_dev.lock, flags);
 
 
