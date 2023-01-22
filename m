@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A81952590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 308D8C433D2;
-	Sun, 22 Jan 2023 15:17:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E9B2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4EEC433EF;
+	Sun, 22 Jan 2023 15:17:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400668;
-	bh=pwlfrExc1ZGFcmpgEfHh/BxZ7h3fcqCAgX1468Hklsg=;
+	s=korg; t=1674400671;
+	bh=FOFP9nrlG86RrL5GkBjkrl0jdbHYhWrjUxaYw/cbLHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dRN+8lp/I8wEsQ13zIeEAHZVU2Nq1mBVDfojWhZ1uTrSLYWZr+bkQOPFYS8ywYTQy
-	 uSi8RwoFcUkYGE6bKLp9QpHf3wOlisPa0HdnE8x31OhFjZvrWZkYZXJnEIHCZiRI3n
-	 +RRetQdvOPYbZuuBNQHY8ds0E+YL96UID5cmHfC4=
+	b=x+YW+v+LmZGu1Em2BvSakqfjgIZMLz57zHCu1MWy49arxpicv7F6o2xQ3Bqv/L/kZ
+	 h+sKbzp6wJpGnZ+PpW1W6dKvn67Fw4rE7oxKNl6dYWcg7YYs2e0laTOTHrv4moK4e0
+	 ZgWGrJZIRXkHGyg5HpzX1GGfPSy+mpmagFjGzPeg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.15 062/117] ACPI: PRM: Check whether EFI runtime is available
-Date: Sun, 22 Jan 2023 16:04:12 +0100
-Message-Id: <20230122150235.365664658@linuxfoundation.org>
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 035/117] io_uring: allow re-poll if we made progress
+Date: Sun, 22 Jan 2023 16:03:45 +0100
+Message-Id: <20230122150234.187195033@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -34,55 +34,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 182da6f2b81a78709c58021542fb694f8ed80774 upstream.
+commit 10c873334febaeea9aa0c25c10b5ac0951b77a5f upstream.
 
-The ACPI PRM address space handler calls efi_call_virt_pointer() to
-execute PRM firmware code, but doing so is only permitted when the EFI
-runtime environment is available. Otherwise, such calls are guaranteed
-to result in a crash, and must therefore be avoided.
+We currently check REQ_F_POLLED before arming async poll for a
+notification to retry. If it's set, then we don't allow poll and will
+punt to io-wq instead. This is done to prevent a situation where a buggy
+driver will repeatedly return that there's space/data available yet we
+get -EAGAIN.
 
-Given that the EFI runtime services may become unavailable after a crash
-occurring in the firmware, we need to check this each time the PRM
-address space handler is invoked. If the EFI runtime services were not
-available at registration time to being with, don't install the address
-space handler at all.
+However, if we already transferred data, then it should be safe to rely
+on poll again. Gate the check on whether or not REQ_F_PARTIAL_IO is
+also set.
 
-Fixes: cefc7ca46235 ("ACPI: PRM: implement OperationRegion handler for the PlatformRtMechanism subtype")
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/prmt.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ io_uring/io_uring.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/acpi/prmt.c
-+++ b/drivers/acpi/prmt.c
-@@ -219,6 +219,11 @@ static acpi_status acpi_platformrt_space
- 	efi_status_t status;
- 	struct prm_context_buffer context;
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 3fb76863fed4..997a7264e1d4 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -5853,7 +5853,7 @@ static int io_arm_poll_handler(struct io_kiocb *req)
  
-+	if (!efi_enabled(EFI_RUNTIME_SERVICES)) {
-+		pr_err_ratelimited("PRM: EFI runtime services no longer available\n");
-+		return AE_NO_HANDLER;
-+	}
-+
- 	/*
- 	 * The returned acpi_status will always be AE_OK. Error values will be
- 	 * saved in the first byte of the PRM message buffer to be used by ASL.
-@@ -308,6 +313,11 @@ void __init init_prmt(void)
+ 	if (!req->file || !file_can_poll(req->file))
+ 		return IO_APOLL_ABORTED;
+-	if (req->flags & REQ_F_POLLED)
++	if ((req->flags & (REQ_F_POLLED|REQ_F_PARTIAL_IO)) == REQ_F_POLLED)
+ 		return IO_APOLL_ABORTED;
+ 	if (!def->pollin && !def->pollout)
+ 		return IO_APOLL_ABORTED;
+@@ -5869,7 +5869,10 @@ static int io_arm_poll_handler(struct io_kiocb *req)
+ 		mask |= POLLOUT | POLLWRNORM;
+ 	}
  
- 	pr_info("PRM: found %u modules\n", mc);
- 
-+	if (!efi_enabled(EFI_RUNTIME_SERVICES)) {
-+		pr_err("PRM: EFI runtime services unavailable\n");
-+		return;
-+	}
-+
- 	status = acpi_install_address_space_handler(ACPI_ROOT_OBJECT,
- 						    ACPI_ADR_SPACE_PLATFORM_RT,
- 						    &acpi_platformrt_space_handler,
+-	apoll = kmalloc(sizeof(*apoll), GFP_ATOMIC);
++	if (req->flags & REQ_F_POLLED)
++		apoll = req->apoll;
++	else
++		apoll = kmalloc(sizeof(*apoll), GFP_ATOMIC);
+ 	if (unlikely(!apoll))
+ 		return IO_APOLL_ABORTED;
+ 	apoll->double_poll = NULL;
+-- 
+2.39.0
+
 
 
