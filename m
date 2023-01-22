@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 016EC2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5B798C433D2;
-	Sun, 22 Jan 2023 15:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F80E2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01DDBC433EF;
+	Sun, 22 Jan 2023 15:16:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400574;
-	bh=cFzX04RxTb6QRGOAKulgwA+ApTRYhAo9lxPFayh2TjM=;
+	s=korg; t=1674400577;
+	bh=AeCHHQjwEnJ406A9haBiXqp0zCwTpMkEvbCGhoH5fu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KOLry5ul2Ox31YXPdiDczp+DbEg8QSMIUjX2YfkGQf3gfJeqOi5eB9ncz3ZQ2xVQz
-	 edCNFR1T+ISVa51pOpTMZi5P9aIRMhVzqxist1FaGcIMIjdvY5RM0nU7BQjfoMov2a
-	 Y9xjVjkq0M6nqjUufNMXKmCD8G73iyQLlacZIzNg=
+	b=D3kan2a1OqwfQ/r23R2ZKVJsZhn7VsDb+aefhBXydWH7lGJci4F5bRxJks7wK+8O8
+	 cP7J9qitWclGkp0PlAPp2b9X7qKE+5GdSFQhe8+PuL3gig2mjKT+SCsru47x1cgeR3
+	 FV1dL+UHcdgHZtD0mBqnQLHMW4zMnFkrEMyWqp9U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christiano Haesbaert <haesbaert@haesbaert.org>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 027/117] io_uring: dont gate task_work run on TIF_NOTIFY_SIGNAL
-Date: Sun, 22 Jan 2023 16:03:37 +0100
-Message-Id: <20230122150233.826521340@linuxfoundation.org>
+Subject: [PATCH 5.15 028/117] eventpoll: add EPOLL_URING_WAKE poll wakeup flag
+Date: Sun, 22 Jan 2023 16:03:38 +0100
+Message-Id: <20230122150233.875098720@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -37,43 +36,115 @@ Content-Transfer-Encoding: 8bit
 
 From: Jens Axboe <axboe@kernel.dk>
 
-commit 46a525e199e4037516f7e498c18f065b09df32ac upstream.
+[ Upstream commit caf1aeaffc3b09649a56769e559333ae2c4f1802 ]
 
-This isn't a reliable mechanism to tell if we have task_work pending, we
-really should be looking at whether we have any items queued. This is
-problematic if forward progress is gated on running said task_work. One
-such example is reading from a pipe, where the write side has been closed
-right before the read is started. The fput() of the file queues TWA_RESUME
-task_work, and we need that task_work to be run before ->release() is
-called for the pipe. If ->release() isn't called, then the read will sit
-forever waiting on data that will never arise.
+We can have dependencies between epoll and io_uring. Consider an epoll
+context, identified by the epfd file descriptor, and an io_uring file
+descriptor identified by iofd. If we add iofd to the epfd context, and
+arm a multishot poll request for epfd with iofd, then the multishot
+poll request will repeatedly trigger and generate events until terminated
+by CQ ring overflow. This isn't a desired behavior.
 
-Fix this by io_run_task_work() so it checks if we have task_work pending
-rather than rely on TIF_NOTIFY_SIGNAL for that. The latter obviously
-doesn't work for task_work that is queued without TWA_SIGNAL.
+Add EPOLL_URING so that io_uring can pass it in as part of the poll wakeup
+key, and io_uring can check for that to detect a potential recursive
+invocation.
 
-Reported-by: Christiano Haesbaert <haesbaert@haesbaert.org>
-Cc: stable@vger.kernel.org
-Link: https://github.com/axboe/liburing/issues/665
+Cc: stable@vger.kernel.org # 6.0
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io-wq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/eventpoll.c                 | 18 ++++++++++--------
+ include/uapi/linux/eventpoll.h |  6 ++++++
+ 2 files changed, 16 insertions(+), 8 deletions(-)
 
-diff --git a/io_uring/io-wq.c b/io_uring/io-wq.c
-index 87bc38b47103..81485c1a9879 100644
---- a/io_uring/io-wq.c
-+++ b/io_uring/io-wq.c
-@@ -513,7 +513,7 @@ static struct io_wq_work *io_get_next_work(struct io_wqe_acct *acct,
+diff --git a/fs/eventpoll.c b/fs/eventpoll.c
+index cf326c53db0f..1ec197825544 100644
+--- a/fs/eventpoll.c
++++ b/fs/eventpoll.c
+@@ -484,7 +484,8 @@ static inline void ep_set_busy_poll_napi_id(struct epitem *epi)
+  */
+ #ifdef CONFIG_DEBUG_LOCK_ALLOC
  
- static bool io_flush_signals(void)
+-static void ep_poll_safewake(struct eventpoll *ep, struct epitem *epi)
++static void ep_poll_safewake(struct eventpoll *ep, struct epitem *epi,
++			     unsigned pollflags)
  {
--	if (unlikely(test_thread_flag(TIF_NOTIFY_SIGNAL))) {
-+	if (test_thread_flag(TIF_NOTIFY_SIGNAL) || current->task_works) {
- 		__set_current_state(TASK_RUNNING);
- 		tracehook_notify_signal();
- 		return true;
+ 	struct eventpoll *ep_src;
+ 	unsigned long flags;
+@@ -515,16 +516,17 @@ static void ep_poll_safewake(struct eventpoll *ep, struct epitem *epi)
+ 	}
+ 	spin_lock_irqsave_nested(&ep->poll_wait.lock, flags, nests);
+ 	ep->nests = nests + 1;
+-	wake_up_locked_poll(&ep->poll_wait, EPOLLIN);
++	wake_up_locked_poll(&ep->poll_wait, EPOLLIN | pollflags);
+ 	ep->nests = 0;
+ 	spin_unlock_irqrestore(&ep->poll_wait.lock, flags);
+ }
+ 
+ #else
+ 
+-static void ep_poll_safewake(struct eventpoll *ep, struct epitem *epi)
++static void ep_poll_safewake(struct eventpoll *ep, struct epitem *epi,
++			     unsigned pollflags)
+ {
+-	wake_up_poll(&ep->poll_wait, EPOLLIN);
++	wake_up_poll(&ep->poll_wait, EPOLLIN | pollflags);
+ }
+ 
+ #endif
+@@ -735,7 +737,7 @@ static void ep_free(struct eventpoll *ep)
+ 
+ 	/* We need to release all tasks waiting for these file */
+ 	if (waitqueue_active(&ep->poll_wait))
+-		ep_poll_safewake(ep, NULL);
++		ep_poll_safewake(ep, NULL, 0);
+ 
+ 	/*
+ 	 * We need to lock this because we could be hit by
+@@ -1201,7 +1203,7 @@ static int ep_poll_callback(wait_queue_entry_t *wait, unsigned mode, int sync, v
+ 
+ 	/* We have to call this outside the lock */
+ 	if (pwake)
+-		ep_poll_safewake(ep, epi);
++		ep_poll_safewake(ep, epi, pollflags & EPOLL_URING_WAKE);
+ 
+ 	if (!(epi->event.events & EPOLLEXCLUSIVE))
+ 		ewake = 1;
+@@ -1546,7 +1548,7 @@ static int ep_insert(struct eventpoll *ep, const struct epoll_event *event,
+ 
+ 	/* We have to call this outside the lock */
+ 	if (pwake)
+-		ep_poll_safewake(ep, NULL);
++		ep_poll_safewake(ep, NULL, 0);
+ 
+ 	return 0;
+ }
+@@ -1622,7 +1624,7 @@ static int ep_modify(struct eventpoll *ep, struct epitem *epi,
+ 
+ 	/* We have to call this outside the lock */
+ 	if (pwake)
+-		ep_poll_safewake(ep, NULL);
++		ep_poll_safewake(ep, NULL, 0);
+ 
+ 	return 0;
+ }
+diff --git a/include/uapi/linux/eventpoll.h b/include/uapi/linux/eventpoll.h
+index 8a3432d0f0dc..e687658843b1 100644
+--- a/include/uapi/linux/eventpoll.h
++++ b/include/uapi/linux/eventpoll.h
+@@ -41,6 +41,12 @@
+ #define EPOLLMSG	(__force __poll_t)0x00000400
+ #define EPOLLRDHUP	(__force __poll_t)0x00002000
+ 
++/*
++ * Internal flag - wakeup generated by io_uring, used to detect recursion back
++ * into the io_uring poll handler.
++ */
++#define EPOLL_URING_WAKE	((__force __poll_t)(1U << 27))
++
+ /* Set exclusive wakeup mode for the target file descriptor */
+ #define EPOLLEXCLUSIVE	((__force __poll_t)(1U << 28))
+ 
 -- 
 2.39.0
 
