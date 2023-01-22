@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6742590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10DE3C433EF;
-	Sun, 22 Jan 2023 15:17:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3335F2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:17:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1430C433D2;
+	Sun, 22 Jan 2023 15:17:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400655;
-	bh=ttcbCHj+9i9OjN4MzOVhdpioGbPewybYb92gOBcn1NI=;
+	s=korg; t=1674400658;
+	bh=irmckzeQbsuB/pYcPM06W/3YkbMDqLGOIJHCh1AzCxM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FeR8oMLoNUgoMOse2tetrnjlGzdHgLHbrF5g6iAhx/Ys69E+fscMMo+lpNzj41DN1
-	 2UsyvNqdVNSqmRuvr+7RCi4Ve37kA1DEGo/u7Rt18YhVw58eWqdumPtpJMdi4w8d+I
-	 hixZWCoAebUb6x88gusck+B7Y+wKhYxsi/59couM=
+	b=Dn6Rwzd04GGw7XyRU9gBw2DGaPaV5fhI1F2YkjVenzFrcLpDyO/tfvuik/uCVi+aD
+	 wQW28jEOVUzJRxSbM7CBQL16Ql6vvNcqjq9WaU+Klbk+aJPhrsPrO4l3Y8iu1Yy2uI
+	 Y7oN2222OzX4yr2TrQgPF49qVNGCcXe3z+JXQk7M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Ola Jeppsson <ola@snap.com>,
 	Abel Vesa <abel.vesa@linaro.org>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 5.15 058/117] misc: fastrpc: Dont remove map on creater_process and device_release
-Date: Sun, 22 Jan 2023 16:04:08 +0100
-Message-Id: <20230122150235.192710392@linuxfoundation.org>
+Subject: [PATCH 5.15 059/117] misc: fastrpc: Fix use-after-free race condition for maps
+Date: Sun, 22 Jan 2023 16:04:09 +0100
+Message-Id: <20230122150235.243839852@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -36,71 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Abel Vesa <abel.vesa@linaro.org>
+From: Ola Jeppsson <ola@snap.com>
 
-commit 5bb96c8f9268e2fdb0e5321cbc358ee5941efc15 upstream.
+commit 96b328d119eca7563c1edcc4e1039a62e6370ecb upstream.
 
-Do not remove the map from the list on error path in
-fastrpc_init_create_process, instead call fastrpc_map_put, to avoid
-use-after-free. Do not remove it on fastrpc_device_release either,
-call fastrpc_map_put instead.
+It is possible that in between calling fastrpc_map_get() until
+map->fl->lock is taken in fastrpc_free_map(), another thread can call
+fastrpc_map_lookup() and get a reference to a map that is about to be
+deleted.
 
-The fastrpc_free_map is the only proper place to remove the map.
-This is called only after the reference count is 0.
+Rewrite fastrpc_map_get() to only increase the reference count of a map
+if it's non-zero. Propagate this to callers so they can know if a map is
+about to be deleted.
 
-Fixes: b49f6d83e290 ("misc: fastrpc: Fix a possible double free")
+Fixes this warning:
+refcount_t: addition on 0; use-after-free.
+WARNING: CPU: 5 PID: 10100 at lib/refcount.c:25 refcount_warn_saturate
+...
+Call trace:
+ refcount_warn_saturate
+ [fastrpc_map_get inlined]
+ [fastrpc_map_lookup inlined]
+ fastrpc_map_create
+ fastrpc_internal_invoke
+ fastrpc_device_ioctl
+ __arm64_sys_ioctl
+ invoke_syscall
+
+Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
 Cc: stable <stable@kernel.org>
-Co-developed-by: Ola Jeppsson <ola@snap.com>
 Signed-off-by: Ola Jeppsson <ola@snap.com>
 Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20221124174941.418450-3-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20221124174941.418450-4-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/fastrpc.c |   18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ drivers/misc/fastrpc.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 --- a/drivers/misc/fastrpc.c
 +++ b/drivers/misc/fastrpc.c
-@@ -247,6 +247,13 @@ static void fastrpc_free_map(struct kref
- 		dma_buf_put(map->buf);
- 	}
- 
-+	if (map->fl) {
-+		spin_lock(&map->fl->lock);
-+		list_del(&map->node);
-+		spin_unlock(&map->fl->lock);
-+		map->fl = NULL;
-+	}
-+
- 	kfree(map);
+@@ -263,10 +263,12 @@ static void fastrpc_map_put(struct fastr
+ 		kref_put(&map->refcount, fastrpc_free_map);
  }
  
-@@ -1114,12 +1121,7 @@ err_invoke:
- 	fl->init_mem = NULL;
- 	fastrpc_buf_free(imem);
- err_alloc:
--	if (map) {
--		spin_lock(&fl->lock);
--		list_del(&map->node);
--		spin_unlock(&fl->lock);
--		fastrpc_map_put(map);
--	}
-+	fastrpc_map_put(map);
- err:
- 	kfree(args);
+-static void fastrpc_map_get(struct fastrpc_map *map)
++static int fastrpc_map_get(struct fastrpc_map *map)
+ {
+-	if (map)
+-		kref_get(&map->refcount);
++	if (!map)
++		return -ENOENT;
++
++	return kref_get_unless_zero(&map->refcount) ? 0 : -ENOENT;
+ }
  
-@@ -1196,10 +1198,8 @@ static int fastrpc_device_release(struct
- 		fastrpc_context_put(ctx);
- 	}
- 
--	list_for_each_entry_safe(map, m, &fl->maps, node) {
--		list_del(&map->node);
-+	list_for_each_entry_safe(map, m, &fl->maps, node)
- 		fastrpc_map_put(map);
--	}
- 
- 	list_for_each_entry_safe(buf, b, &fl->mmaps, node) {
- 		list_del(&buf->node);
+ static int fastrpc_map_find(struct fastrpc_user *fl, int fd,
 
 
