@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 403872590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9305FC433D2;
-	Sun, 22 Jan 2023 15:16:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0DCC2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C01C4339B;
+	Sun, 22 Jan 2023 15:16:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400613;
-	bh=+xx3vfJGSUMuFDStogkqzlm9pE3IDVUtWnGaKiZQ0cg=;
+	s=korg; t=1674400616;
+	bh=ZU2CzIa1Z6i9krREWfu/jHBVqtH8xoJW+ncIsXa/iWk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1BBh6qSP++c8bCSVEiZJEq6ao9GTlUqyZaBOjL4a3aybSBBLp+0dz69v+9knv2Km/
-	 kaDl3t8OLers3a2nvhG1o2SYrxmhyoUoCvIzDqjcwpvuEf/t3dDuohydDzynVT+37U
-	 e3LfPjL+qAglT0VrOxP4mJFDY6ngO/w/SKlrhTJU=
+	b=ga4ES8xdCb9Gy5Pflc2MTyiL4CHzzXM6QJpvlGaS1BKHjx1VPtUfrTHNgO9Sopzks
+	 rfu3QA1GNRCtJpPNGCvO2YYdQmlRqNz5yC1QQWxK3FgLt53Cxa+cYuj8xlKNrbIiUH
+	 5xZhPuwDCajT9+yK+/UNw9urd1nhABP2ltOciApA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Hu <hhhuuu@google.com>,
 	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 5.15 043/117] usb: xhci: Check endpoint is valid before dereferencing it
-Date: Sun, 22 Jan 2023 16:03:53 +0100
-Message-Id: <20230122150234.534332467@linuxfoundation.org>
+Subject: [PATCH 5.15 044/117] xhci: Fix null pointer dereference when host dies
+Date: Sun, 22 Jan 2023 16:03:54 +0100
+Message-Id: <20230122150234.575040276@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -34,64 +33,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jimmy Hu <hhhuuu@google.com>
+From: Mathias Nyman <mathias.nyman@linux.intel.com>
 
-commit e8fb5bc76eb86437ab87002d4a36d6da02165654 upstream.
+commit a2bc47c43e70cf904b1af49f76d572326c08bca7 upstream.
 
-When the host controller is not responding, all URBs queued to all
-endpoints need to be killed. This can cause a kernel panic if we
-dereference an invalid endpoint.
+Make sure xhci_free_dev() and xhci_kill_endpoint_urbs() do not race
+and cause null pointer dereference when host suddenly dies.
 
-Fix this by using xhci_get_virt_ep() helper to find the endpoint and
-checking if the endpoint is valid before dereferencing it.
+Usb core may call xhci_free_dev() which frees the xhci->devs[slot_id]
+virt device at the same time that xhci_kill_endpoint_urbs() tries to
+loop through all the device's endpoints, checking if there are any
+cancelled urbs left to give back.
 
-[233311.853271] xhci-hcd xhci-hcd.1.auto: xHCI host controller not responding, assume dead
-[233311.853393] Unable to handle kernel NULL pointer dereference at virtual address 00000000000000e8
+hold the xhci spinlock while freeing the virt device
 
-[233311.853964] pc : xhci_hc_died+0x10c/0x270
-[233311.853971] lr : xhci_hc_died+0x1ac/0x270
-
-[233311.854077] Call trace:
-[233311.854085]  xhci_hc_died+0x10c/0x270
-[233311.854093]  xhci_stop_endpoint_command_watchdog+0x100/0x1a4
-[233311.854105]  call_timer_fn+0x50/0x2d4
-[233311.854112]  expire_timers+0xac/0x2e4
-[233311.854118]  run_timer_softirq+0x300/0xabc
-[233311.854127]  __do_softirq+0x148/0x528
-[233311.854135]  irq_exit+0x194/0x1a8
-[233311.854143]  __handle_domain_irq+0x164/0x1d0
-[233311.854149]  gic_handle_irq.22273+0x10c/0x188
-[233311.854156]  el1_irq+0xfc/0x1a8
-[233311.854175]  lpm_cpuidle_enter+0x25c/0x418 [msm_pm]
-[233311.854185]  cpuidle_enter_state+0x1f0/0x764
-[233311.854194]  do_idle+0x594/0x6ac
-[233311.854201]  cpu_startup_entry+0x7c/0x80
-[233311.854209]  secondary_start_kernel+0x170/0x198
-
-Fixes: 50e8725e7c42 ("xhci: Refactor command watchdog and fix split string.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Jimmy Hu <hhhuuu@google.com>
 Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Message-ID: <0fe978ed-8269-9774-1c40-f8a98c17e838@linux.intel.com>
-Link: https://lore.kernel.org/r/20230116142216.1141605-3-mathias.nyman@linux.intel.com
+Link: https://lore.kernel.org/r/20230116142216.1141605-4-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci.c |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -1178,7 +1178,10 @@ static void xhci_kill_endpoint_urbs(stru
- 	struct xhci_virt_ep *ep;
- 	struct xhci_ring *ring;
+--- a/drivers/usb/host/xhci.c
++++ b/drivers/usb/host/xhci.c
+@@ -3962,6 +3962,7 @@ static void xhci_free_dev(struct usb_hcd
+ 	struct xhci_hcd *xhci = hcd_to_xhci(hcd);
+ 	struct xhci_virt_device *virt_dev;
+ 	struct xhci_slot_ctx *slot_ctx;
++	unsigned long flags;
+ 	int i, ret;
  
--	ep = &xhci->devs[slot_id]->eps[ep_index];
-+	ep = xhci_get_virt_ep(xhci, slot_id, ep_index);
-+	if (!ep)
-+		return;
+ 	/*
+@@ -3990,7 +3991,11 @@ static void xhci_free_dev(struct usb_hcd
+ 	}
+ 	virt_dev->udev = NULL;
+ 	xhci_disable_slot(xhci, udev->slot_id);
 +
- 	if ((ep->ep_state & EP_HAS_STREAMS) ||
- 			(ep->ep_state & EP_GETTING_NO_STREAMS)) {
- 		int stream_id;
++	spin_lock_irqsave(&xhci->lock, flags);
+ 	xhci_free_virt_device(xhci, udev->slot_id);
++	spin_unlock_irqrestore(&xhci->lock, flags);
++
+ }
+ 
+ int xhci_disable_slot(struct xhci_hcd *xhci, u32 slot_id)
 
 
