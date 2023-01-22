@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174E72590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A36FC433D2;
-	Sun, 22 Jan 2023 15:12:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C8DF42590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E04FC433EF;
+	Sun, 22 Jan 2023 15:12:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400358;
-	bh=B4s9uwImILaQ6EjcmPAlruq7pr4JCMzoMVwMi++7/LM=;
+	s=korg; t=1674400361;
+	bh=1aIvzK+EU7DR7G+9R8eTtb+4/FTp/dQ61YryiRUOARo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jvdtwPEEPDGHVNtRV0f0lPfcVrmqwQ1b2CcWanYGAvEAalgy6OlVTJIQ/vnbraziI
-	 CcAnb89Yq5OA2eeGm9eDpNJZRt83fwiflV+5B2kb5dIJ2yvzL2JIp7Ql8ycunOaQUs
-	 7EUiiegbiIM0/hBNBbFKXe3HfCJ7dcw+nP3J0l2E=
+	b=xZ359wTV8ZwCz/Hv5gGgX0RbK3XQNmzkiRwSwD65jzaNCHRUklZagdN0p9POnFeyT
+	 H65fQoX1+YEKGjRQn8XMpO23Qe+pkZTyc6w4z/WLAzdLXAgkbFyECIy7wnZiNkvxwV
+	 3bNmolieK/VI97rW0Q6JHjM5mhHhcHlEHPxp2lR8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chris Wilson <chris@chris-wilson.co.uk>,
-	Mika Kuoppala <mika.kuoppala@linux.intel.com>,
-	Andi Shyti <andi.shyti@linux.intel.com>,
-	Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 17/98] drm/i915/gt: Reset twice
-Date: Sun, 22 Jan 2023 16:03:33 +0100
-Message-Id: <20230122150230.165232767@linuxfoundation.org>
+	=?UTF-8?q?Duke=20Xin ?= <duke_xinanwen@163.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 5.10 44/98] USB: serial: option: add Quectel EM05-G (CS) modem
+Date: Sun, 22 Jan 2023 16:04:00 +0100
+Message-Id: <20230122150231.376893457@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -38,90 +34,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chris Wilson <chris@chris-wilson.co.uk>
+From: Duke Xin(辛安文) <duke_xinanwen@163.com>
 
-[ Upstream commit d3de5616d36462a646f5b360ba82d3b09ff668eb ]
+commit bb78654b0b46316dac687fd4b7dc7cce636f46cd upstream.
 
-After applying an engine reset, on some platforms like Jasperlake, we
-occasionally detect that the engine state is not cleared until shortly
-after the resume. As we try to resume the engine with volatile internal
-state, the first request fails with a spurious CS event (it looks like
-it reports a lite-restore to the hung context, instead of the expected
-idle->active context switch).
+The EM05-G (CS) modem has 2 USB configurations that are configurable via
+the AT command AT+QCFG="usbnet",[ 0 | 2 ] which make the modem enumerate
+with the following interfaces, respectively:
 
-Signed-off-by: Chris Wilson <chris@chris-wilson.co.uk>
+"RMNET" : AT + DIAG + NMEA + Modem + QMI
+"MBIM"  : MBIM + AT + DIAG + NMEA + Modem
+
+The detailed description of the USB configuration for each mode as follows:
+
+RMNET Mode
+--------------
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 21 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=030C Rev= 3.18
+S:  Manufacturer=Quectel
+S:  Product=Quectel EM05-G
+C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 6 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+E:  Ad=89(I) Atr=03(Int.) MxPS=   8 Ivl=32ms
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+MBIM Mode
+--------------
+T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 16 Spd=480  MxCh= 0
+D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
+P:  Vendor=2c7c ProdID=030C Rev= 3.18
+S:  Manufacturer=Quectel
+S:  Product=Quectel EM05-G
+C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
+A:  FirstIf#= 0 IfCount= 2 Cls=02(comm.) Sub=0e Prot=00
+I:* If#= 3 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=option
+E:  Ad=81(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=01(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 4 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=83(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=82(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=02(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=85(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=84(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=03(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 5 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=00 Prot=00 Driver=option
+E:  Ad=87(I) Atr=03(Int.) MxPS=  10 Ivl=32ms
+E:  Ad=86(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=04(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+I:* If#= 0 Alt= 0 #EPs= 1 Cls=02(comm.) Sub=0e Prot=00 Driver=cdc_mbim
+E:  Ad=89(I) Atr=03(Int.) MxPS=  64 Ivl=32ms
+I:  If#= 1 Alt= 0 #EPs= 0 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+I:* If#= 1 Alt= 1 #EPs= 2 Cls=0a(data ) Sub=00 Prot=02 Driver=cdc_mbim
+E:  Ad=88(I) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+E:  Ad=05(O) Atr=02(Bulk) MxPS= 512 Ivl=0ms
+
+Signed-off-by: Duke Xin(辛安文) <duke_xinanwen@163.com>
 Cc: stable@vger.kernel.org
-Cc: Mika Kuoppala <mika.kuoppala@linux.intel.com>
-Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
-Reviewed-by: Gwan-gyeong Mun <gwan-gyeong.mun@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221212161338.1007659-1-andi.shyti@linux.intel.com
-(cherry picked from commit 3db9d590557da3aa2c952f2fecd3e9b703dad790)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Johan Hovold <johan@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_reset.c | 34 ++++++++++++++++++++++-----
- 1 file changed, 28 insertions(+), 6 deletions(-)
+ drivers/usb/serial/option.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_reset.c b/drivers/gpu/drm/i915/gt/intel_reset.c
-index ac36b67fb46b..00b5912a88b8 100644
---- a/drivers/gpu/drm/i915/gt/intel_reset.c
-+++ b/drivers/gpu/drm/i915/gt/intel_reset.c
-@@ -289,6 +289,7 @@ static int ilk_do_reset(struct intel_gt *gt, intel_engine_mask_t engine_mask,
- static int gen6_hw_domain_reset(struct intel_gt *gt, u32 hw_domain_mask)
- {
- 	struct intel_uncore *uncore = gt->uncore;
-+	int loops = 2;
- 	int err;
- 
- 	/*
-@@ -296,18 +297,39 @@ static int gen6_hw_domain_reset(struct intel_gt *gt, u32 hw_domain_mask)
- 	 * for fifo space for the write or forcewake the chip for
- 	 * the read
- 	 */
--	intel_uncore_write_fw(uncore, GEN6_GDRST, hw_domain_mask);
-+	do {
-+		intel_uncore_write_fw(uncore, GEN6_GDRST, hw_domain_mask);
- 
--	/* Wait for the device to ack the reset requests */
--	err = __intel_wait_for_register_fw(uncore,
--					   GEN6_GDRST, hw_domain_mask, 0,
--					   500, 0,
--					   NULL);
-+		/*
-+		 * Wait for the device to ack the reset requests.
-+		 *
-+		 * On some platforms, e.g. Jasperlake, we see that the
-+		 * engine register state is not cleared until shortly after
-+		 * GDRST reports completion, causing a failure as we try
-+		 * to immediately resume while the internal state is still
-+		 * in flux. If we immediately repeat the reset, the second
-+		 * reset appears to serialise with the first, and since
-+		 * it is a no-op, the registers should retain their reset
-+		 * value. However, there is still a concern that upon
-+		 * leaving the second reset, the internal engine state
-+		 * is still in flux and not ready for resuming.
-+		 */
-+		err = __intel_wait_for_register_fw(uncore, GEN6_GDRST,
-+						   hw_domain_mask, 0,
-+						   2000, 0,
-+						   NULL);
-+	} while (err == 0 && --loops);
- 	if (err)
- 		drm_dbg(&gt->i915->drm,
- 			"Wait for 0x%08x engines reset failed\n",
- 			hw_domain_mask);
- 
-+	/*
-+	 * As we have observed that the engine state is still volatile
-+	 * after GDRST is acked, impose a small delay to let everything settle.
-+	 */
-+	udelay(50);
-+
- 	return err;
- }
- 
--- 
-2.39.0
-
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -255,6 +255,7 @@ static void option_instat_callback(struc
+ #define QUECTEL_PRODUCT_EP06			0x0306
+ #define QUECTEL_PRODUCT_EM05G			0x030a
+ #define QUECTEL_PRODUCT_EM060K			0x030b
++#define QUECTEL_PRODUCT_EM05G_CS		0x030c
+ #define QUECTEL_PRODUCT_EM05G_SG		0x0311
+ #define QUECTEL_PRODUCT_EM05G_GR		0x0313
+ #define QUECTEL_PRODUCT_EM12			0x0512
+@@ -1164,6 +1165,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(6) | ZLP },
+ 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_GR, 0xff),
+ 	  .driver_info = RSVD(6) | ZLP },
++	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_CS, 0xff),
++	  .driver_info = RSVD(6) | ZLP },
+ 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_SG, 0xff),
+ 	  .driver_info = RSVD(6) | ZLP },
+ 	{ USB_DEVICE_AND_INTERFACE_INFO(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM060K, 0xff, 0x00, 0x40) },
 
 
