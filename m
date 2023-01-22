@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 880252590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:19:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FBB8C433EF;
-	Sun, 22 Jan 2023 15:19:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 284C62590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:19:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56C7C433D2;
+	Sun, 22 Jan 2023 15:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400744;
-	bh=OjhUCj+cDgnJrUFzW7fHqCeqHv+FYOQt9muNO0rKAKc=;
+	s=korg; t=1674400747;
+	bh=skLOHTLm+m5m3VrQ2/H49ma+gAyHqwdzBIQQMh4QChU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yy+AkA88RKv10eNOl1inQVhmxSpetFU2pL9vfoy+UFgNx3AQKsoOOJ5L68tvOGTSH
-	 Vy9AS11dxX6A2feNYwVyOD5RlAL2OMy7m/7ONU/PzWzRSRVpcq81UssArCbtp6j1ja
-	 WqROicrDi5L8wC6hxtgCPEnYOBeuskc48Cqpuw5I=
+	b=DUo56oAbW6R2rkzLIdOF4T3JHUbHO9Uv6KPOcO8yKpsjHisV/fSS3xYmPJJg0lphU
+	 mbc4HemY2qV+gqxEsSA/wFV8jNmYYpj2GQpW+Q0oJ7eVQAdSIZCuq5mIcVAXXohahC
+	 Fc7O5SDnrYLscWwwP1UDQujcFz8DFlAbMN+2sncY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Khazhismel Kumykov <khazhy@google.com>
-Subject: [PATCH 5.15 092/117] gsmi: fix null-deref in gsmi_get_variable
-Date: Sun, 22 Jan 2023 16:04:42 +0100
-Message-Id: <20230122150236.627178027@linuxfoundation.org>
+	syzbot+96977faa68092ad382c4@syzkaller.appspotmail.com,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 066/117] btrfs: fix race between quota rescan and disable leading to NULL pointer deref
+Date: Sun, 22 Jan 2023 16:04:16 +0100
+Message-Id: <20230122150235.524449461@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -34,41 +35,134 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Khazhismel Kumykov <khazhy@chromium.org>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit a769b05eeed7accc4019a1ed9799dd72067f1ce8 upstream.
+commit b7adbf9ada3513d2092362c8eac5cddc5b651f5c upstream.
 
-We can get EFI variables without fetching the attribute, so we must
-allow for that in gsmi.
+If we have one task trying to start the quota rescan worker while another
+one is trying to disable quotas, we can end up hitting a race that results
+in the quota rescan worker doing a NULL pointer dereference. The steps for
+this are the following:
 
-commit 859748255b43 ("efi: pstore: Omit efivars caching EFI varstore
-access layer") added a new get_variable call with attr=NULL, which
-triggers panic in gsmi.
+1) Quotas are enabled;
 
-Fixes: 74c5b31c6618 ("driver: Google EFI SMI")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Khazhismel Kumykov <khazhy@google.com>
-Link: https://lore.kernel.org/r/20230118010212.1268474-1-khazhy@google.com
+2) Task A calls the quota rescan ioctl and enters btrfs_qgroup_rescan().
+   It calls qgroup_rescan_init() which returns 0 (success) and then joins a
+   transaction and commits it;
+
+3) Task B calls the quota disable ioctl and enters btrfs_quota_disable().
+   It clears the bit BTRFS_FS_QUOTA_ENABLED from fs_info->flags and calls
+   btrfs_qgroup_wait_for_completion(), which returns immediately since the
+   rescan worker is not yet running.
+   Then it starts a transaction and locks fs_info->qgroup_ioctl_lock;
+
+4) Task A queues the rescan worker, by calling btrfs_queue_work();
+
+5) The rescan worker starts, and calls rescan_should_stop() at the start
+   of its while loop, which results in 0 iterations of the loop, since
+   the flag BTRFS_FS_QUOTA_ENABLED was cleared from fs_info->flags by
+   task B at step 3);
+
+6) Task B sets fs_info->quota_root to NULL;
+
+7) The rescan worker tries to start a transaction and uses
+   fs_info->quota_root as the root argument for btrfs_start_transaction().
+   This results in a NULL pointer dereference down the call chain of
+   btrfs_start_transaction(). The stack trace is something like the one
+   reported in Link tag below:
+
+   general protection fault, probably for non-canonical address 0xdffffc0000000041: 0000 [#1] PREEMPT SMP KASAN
+   KASAN: null-ptr-deref in range [0x0000000000000208-0x000000000000020f]
+   CPU: 1 PID: 34 Comm: kworker/u4:2 Not tainted 6.1.0-syzkaller-13872-gb6bb9676f216 #0
+   Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+   Workqueue: btrfs-qgroup-rescan btrfs_work_helper
+   RIP: 0010:start_transaction+0x48/0x10f0 fs/btrfs/transaction.c:564
+   Code: 48 89 fb 48 (...)
+   RSP: 0018:ffffc90000ab7ab0 EFLAGS: 00010206
+   RAX: 0000000000000041 RBX: 0000000000000208 RCX: ffff88801779ba80
+   RDX: 0000000000000000 RSI: 0000000000000001 RDI: 0000000000000000
+   RBP: dffffc0000000000 R08: 0000000000000001 R09: fffff52000156f5d
+   R10: fffff52000156f5d R11: 1ffff92000156f5c R12: 0000000000000000
+   R13: 0000000000000001 R14: 0000000000000001 R15: 0000000000000003
+   FS:  0000000000000000(0000) GS:ffff8880b9900000(0000) knlGS:0000000000000000
+   CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+   CR2: 00007f2bea75b718 CR3: 000000001d0cc000 CR4: 00000000003506e0
+   DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
+   DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
+   Call Trace:
+    <TASK>
+    btrfs_qgroup_rescan_worker+0x3bb/0x6a0 fs/btrfs/qgroup.c:3402
+    btrfs_work_helper+0x312/0x850 fs/btrfs/async-thread.c:280
+    process_one_work+0x877/0xdb0 kernel/workqueue.c:2289
+    worker_thread+0xb14/0x1330 kernel/workqueue.c:2436
+    kthread+0x266/0x300 kernel/kthread.c:376
+    ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
+    </TASK>
+   Modules linked in:
+
+So fix this by having the rescan worker function not attempt to start a
+transaction if it didn't do any rescan work.
+
+Reported-by: syzbot+96977faa68092ad382c4@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/linux-btrfs/000000000000e5454b05f065a803@google.com/
+Fixes: e804861bd4e6 ("btrfs: fix deadlock between quota disable and qgroup rescan worker")
+CC: stable@vger.kernel.org # 5.4+
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/google/gsmi.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ fs/btrfs/qgroup.c |   25 +++++++++++++++++--------
+ 1 file changed, 17 insertions(+), 8 deletions(-)
 
---- a/drivers/firmware/google/gsmi.c
-+++ b/drivers/firmware/google/gsmi.c
-@@ -361,9 +361,10 @@ static efi_status_t gsmi_get_variable(ef
- 		memcpy(data, gsmi_dev.data_buf->start, *data_size);
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -3286,6 +3286,7 @@ static void btrfs_qgroup_rescan_worker(s
+ 	int err = -ENOMEM;
+ 	int ret = 0;
+ 	bool stopped = false;
++	bool did_leaf_rescans = false;
  
- 		/* All variables are have the following attributes */
--		*attr = EFI_VARIABLE_NON_VOLATILE |
--			EFI_VARIABLE_BOOTSERVICE_ACCESS |
--			EFI_VARIABLE_RUNTIME_ACCESS;
-+		if (attr)
-+			*attr = EFI_VARIABLE_NON_VOLATILE |
-+				EFI_VARIABLE_BOOTSERVICE_ACCESS |
-+				EFI_VARIABLE_RUNTIME_ACCESS;
+ 	path = btrfs_alloc_path();
+ 	if (!path)
+@@ -3306,6 +3307,7 @@ static void btrfs_qgroup_rescan_worker(s
+ 		}
+ 
+ 		err = qgroup_rescan_leaf(trans, path);
++		did_leaf_rescans = true;
+ 
+ 		if (err > 0)
+ 			btrfs_commit_transaction(trans);
+@@ -3326,16 +3328,23 @@ out:
+ 	mutex_unlock(&fs_info->qgroup_rescan_lock);
+ 
+ 	/*
+-	 * only update status, since the previous part has already updated the
+-	 * qgroup info.
++	 * Only update status, since the previous part has already updated the
++	 * qgroup info, and only if we did any actual work. This also prevents
++	 * race with a concurrent quota disable, which has already set
++	 * fs_info->quota_root to NULL and cleared BTRFS_FS_QUOTA_ENABLED at
++	 * btrfs_quota_disable().
+ 	 */
+-	trans = btrfs_start_transaction(fs_info->quota_root, 1);
+-	if (IS_ERR(trans)) {
+-		err = PTR_ERR(trans);
++	if (did_leaf_rescans) {
++		trans = btrfs_start_transaction(fs_info->quota_root, 1);
++		if (IS_ERR(trans)) {
++			err = PTR_ERR(trans);
++			trans = NULL;
++			btrfs_err(fs_info,
++				  "fail to start transaction for status update: %d",
++				  err);
++		}
++	} else {
+ 		trans = NULL;
+-		btrfs_err(fs_info,
+-			  "fail to start transaction for status update: %d",
+-			  err);
  	}
  
- 	spin_unlock_irqrestore(&gsmi_dev.lock, flags);
+ 	mutex_lock(&fs_info->qgroup_rescan_lock);
 
 
