@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C71452590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:23:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FBB0C433D2;
-	Sun, 22 Jan 2023 15:23:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B422590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:23:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC406C433D2;
+	Sun, 22 Jan 2023 15:23:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401033;
-	bh=Z3v8u28F2/rDFaLHq5E8JDJeqSMGVvL1mmRi8hKsLNQ=;
+	s=korg; t=1674401036;
+	bh=Hb2CeQYYKhm0/0h/O+GTpyoSJ5AjoXU65uFx7yUbww4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wKsLPmafW/Xw8PhwElmcBb9n/Xcj6Mu7POnYuzqhX0NgfUXzGpVUFkILuWBtgcuQ4
-	 G5+3j7SXmXSwTUJlHLlW8Ju21pXdmMw9EHnkqrT+7IQ6rny6GMcNQ6rG/RgX3RnQXI
-	 r50t4C8Snop0UEgRJpEwtxA7jVfTDntm83y6WYpg=
+	b=x+05fdhfiSdm8VHdq38fXrzvTTGkriShK6tJMftR7966671xJJVoG52EBDMbhp7Uj
+	 pE0RlCg1RKYAjrYVEkHUalz3zWyo7yvBbWGUX2COcmAfBXPzPQANVnb1M/6Um5vWHK
+	 WgWvy4fl5Xrq99HKgENZKvR/Sv/lOo8LkLx6pflc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 084/193] btrfs: add missing setup of log for full commit at add_conflicting_inode()
-Date: Sun, 22 Jan 2023 16:03:33 +0100
-Message-Id: <20230122150250.226938729@linuxfoundation.org>
+Subject: [PATCH 6.1 085/193] btrfs: do not abort transaction on failure to write log tree when syncing log
+Date: Sun, 22 Jan 2023 16:03:34 +0100
+Message-Id: <20230122150250.272618529@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -37,41 +37,68 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-commit 94cd63ae679973edeb5ea95ec25a54467c3e54c8 upstream.
+commit 16199ad9eb6db60a6b10794a09fc1ac6d09312ff upstream.
 
-When logging conflicting inodes, if we reach the maximum limit of inodes,
-we return BTRFS_LOG_FORCE_COMMIT to force a transaction commit. However
-we don't mark the log for full commit (with btrfs_set_log_full_commit()),
-which means that once we leave the log transaction and before we commit
-the transaction, some other task may sync the log, which is incomplete
-as we have not logged all conflicting inodes, leading to some inconsistent
-in case that log ends up being replayed.
+When syncing the log, if we fail to write log tree extent buffers, we mark
+the log for a full commit and abort the transaction. However we don't need
+to abort the transaction, all we really need to do is to make sure no one
+can commit a superblock pointing to new log tree roots. Just because we
+got a failure writing extent buffers for a log tree, it does not mean we
+will also fail to do a transaction commit.
 
-So also call btrfs_set_log_full_commit() at add_conflicting_inode().
+One particular case is if due to a bug somewhere, when writing log tree
+extent buffers, the tree checker detects some corruption and the writeout
+fails because of that. Aborting the transaction can be very disruptive for
+a user, specially if the issue happened on a root filesystem. One example
+is the scenario in the Link tag below, where an isolated corruption on log
+tree leaves was causing transaction aborts when syncing the log.
 
-Fixes: e09d94c9e448 ("btrfs: log conflicting inodes without holding log mutex of the initial inode")
-CC: stable@vger.kernel.org # 6.1
+Link: https://lore.kernel.org/linux-btrfs/ae169fc6-f504-28f0-a098-6fa6a4dfb612@leemhuis.info/
+CC: stable@vger.kernel.org # 5.15+
 Reviewed-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-log.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/btrfs/disk-io.c  |    9 ++++++++-
+ fs/btrfs/tree-log.c |    2 --
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -344,7 +344,14 @@ error:
+ 	btrfs_print_tree(eb, 0);
+ 	btrfs_err(fs_info, "block=%llu write time tree block corruption detected",
+ 		  eb->start);
+-	WARN_ON(IS_ENABLED(CONFIG_BTRFS_DEBUG));
++	/*
++	 * Be noisy if this is an extent buffer from a log tree. We don't abort
++	 * a transaction in case there's a bad log tree extent buffer, we just
++	 * fallback to a transaction commit. Still we want to know when there is
++	 * a bad log tree extent buffer, as that may signal a bug somewhere.
++	 */
++	WARN_ON(IS_ENABLED(CONFIG_BTRFS_DEBUG) ||
++		btrfs_header_owner(eb) == BTRFS_TREE_LOG_OBJECTID);
+ 	return ret;
+ }
+ 
 --- a/fs/btrfs/tree-log.c
 +++ b/fs/btrfs/tree-log.c
-@@ -5626,8 +5626,10 @@ static int add_conflicting_inode(struct
- 	 * LOG_INODE_EXISTS mode) and slow down other fsyncs or transaction
- 	 * commits.
- 	 */
--	if (ctx->num_conflict_inodes >= MAX_CONFLICT_INODES)
-+	if (ctx->num_conflict_inodes >= MAX_CONFLICT_INODES) {
-+		btrfs_set_log_full_commit(trans);
- 		return BTRFS_LOG_FORCE_COMMIT;
-+	}
- 
- 	inode = btrfs_iget(root->fs_info->sb, ino, root);
- 	/*
+@@ -3011,7 +3011,6 @@ int btrfs_sync_log(struct btrfs_trans_ha
+ 		ret = 0;
+ 	if (ret) {
+ 		blk_finish_plug(&plug);
+-		btrfs_abort_transaction(trans, ret);
+ 		btrfs_set_log_full_commit(trans);
+ 		mutex_unlock(&root->log_mutex);
+ 		goto out;
+@@ -3143,7 +3142,6 @@ int btrfs_sync_log(struct btrfs_trans_ha
+ 		goto out_wake_log_root;
+ 	} else if (ret) {
+ 		btrfs_set_log_full_commit(trans);
+-		btrfs_abort_transaction(trans, ret);
+ 		mutex_unlock(&log_root_tree->log_mutex);
+ 		goto out_wake_log_root;
+ 	}
 
 
