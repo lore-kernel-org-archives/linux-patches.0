@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC3C2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:22:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F6A0C433D2;
-	Sun, 22 Jan 2023 15:22:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E5712590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:22:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8972C433EF;
+	Sun, 22 Jan 2023 15:22:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400944;
-	bh=5vSivSHnBolDV0CgLtjfNu+TYQnqQIgFnPIWLKEGrlI=;
+	s=korg; t=1674400947;
+	bh=l2UcoVigfPP/tUHmAoqXQ/CgDZjGgQgOOQ+v3Iai0nM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u529/aN+edmrnx8YBhe6RFnV6Rtaaq/vgaTnzq/j/CS6H5pJFq2sLHFL4uPwNFM0T
-	 DvBLFm+AOq9VBdloIehfz2UrlVXdZquFC4JFhqpvAZC/QhjFqo54acsSVxVxrYT2fb
-	 c5AsSLeCjRmeissMXqPip7v6339bMSqL57odXmCg=
+	b=RzFAW/KBEL1sA7QUOiitiEMeknWZSTg+PjEi89GyYp2V60J2NPDJnUrqzyNBsL2Ne
+	 040kJp+soi1Y1Tgwhc1hBuukL7CkU4ieCN9wCMgahVfb1Mjdp/j6FM7uApewxf8SUK
+	 MAWXFbVe8ftwB4eKt9puAr93G6fl0qWI9qAMsLMM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Fietkau <nbd@nbd.name>,
-	Johannes Berg <johannes.berg@intel.com>
-Subject: [PATCH 6.1 033/193] wifi: mac80211: fix MLO + AP_VLAN check
-Date: Sun, 22 Jan 2023 16:02:42 +0100
-Message-Id: <20230122150247.923156118@linuxfoundation.org>
+	Jimmy Hu <hhhuuu@google.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 6.1 051/193] usb: xhci: Check endpoint is valid before dereferencing it
+Date: Sun, 22 Jan 2023 16:03:00 +0100
+Message-Id: <20230122150248.682332820@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -34,41 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Felix Fietkau <nbd@nbd.name>
+From: Jimmy Hu <hhhuuu@google.com>
 
-commit f216033d770f7ca0eda491fe01a9f02e7af59576 upstream.
+commit e8fb5bc76eb86437ab87002d4a36d6da02165654 upstream.
 
-Instead of preventing adding AP_VLAN to MLO enabled APs, this check was
-preventing adding more than one 4-addr AP_VLAN regardless of the MLO status.
-Fix this by adding missing extra checks.
+When the host controller is not responding, all URBs queued to all
+endpoints need to be killed. This can cause a kernel panic if we
+dereference an invalid endpoint.
 
-Fixes: ae960ee90bb1 ("wifi: mac80211: prevent VLANs on MLDs")
-Signed-off-by: Felix Fietkau <nbd@nbd.name>
-Link: https://lore.kernel.org/r/20221214130326.37756-1-nbd@nbd.name
+Fix this by using xhci_get_virt_ep() helper to find the endpoint and
+checking if the endpoint is valid before dereferencing it.
+
+[233311.853271] xhci-hcd xhci-hcd.1.auto: xHCI host controller not responding, assume dead
+[233311.853393] Unable to handle kernel NULL pointer dereference at virtual address 00000000000000e8
+
+[233311.853964] pc : xhci_hc_died+0x10c/0x270
+[233311.853971] lr : xhci_hc_died+0x1ac/0x270
+
+[233311.854077] Call trace:
+[233311.854085]  xhci_hc_died+0x10c/0x270
+[233311.854093]  xhci_stop_endpoint_command_watchdog+0x100/0x1a4
+[233311.854105]  call_timer_fn+0x50/0x2d4
+[233311.854112]  expire_timers+0xac/0x2e4
+[233311.854118]  run_timer_softirq+0x300/0xabc
+[233311.854127]  __do_softirq+0x148/0x528
+[233311.854135]  irq_exit+0x194/0x1a8
+[233311.854143]  __handle_domain_irq+0x164/0x1d0
+[233311.854149]  gic_handle_irq.22273+0x10c/0x188
+[233311.854156]  el1_irq+0xfc/0x1a8
+[233311.854175]  lpm_cpuidle_enter+0x25c/0x418 [msm_pm]
+[233311.854185]  cpuidle_enter_state+0x1f0/0x764
+[233311.854194]  do_idle+0x594/0x6ac
+[233311.854201]  cpu_startup_entry+0x7c/0x80
+[233311.854209]  secondary_start_kernel+0x170/0x198
+
+Fixes: 50e8725e7c42 ("xhci: Refactor command watchdog and fix split string.")
 Cc: stable@vger.kernel.org
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
+Signed-off-by: Jimmy Hu <hhhuuu@google.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Message-ID: <0fe978ed-8269-9774-1c40-f8a98c17e838@linux.intel.com>
+Link: https://lore.kernel.org/r/20230116142216.1141605-3-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/iface.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/host/xhci-ring.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/net/mac80211/iface.c b/net/mac80211/iface.c
-index d49a5906a943..e20c3fe9a0b1 100644
---- a/net/mac80211/iface.c
-+++ b/net/mac80211/iface.c
-@@ -364,7 +364,9 @@ static int ieee80211_check_concurrent_iface(struct ieee80211_sub_if_data *sdata,
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -1170,7 +1170,10 @@ static void xhci_kill_endpoint_urbs(stru
+ 	struct xhci_virt_ep *ep;
+ 	struct xhci_ring *ring;
  
- 			/* No support for VLAN with MLO yet */
- 			if (iftype == NL80211_IFTYPE_AP_VLAN &&
--			    nsdata->wdev.use_4addr)
-+			    sdata->wdev.use_4addr &&
-+			    nsdata->vif.type == NL80211_IFTYPE_AP &&
-+			    nsdata->vif.valid_links)
- 				return -EOPNOTSUPP;
- 
- 			/*
--- 
-2.39.1
-
+-	ep = &xhci->devs[slot_id]->eps[ep_index];
++	ep = xhci_get_virt_ep(xhci, slot_id, ep_index);
++	if (!ep)
++		return;
++
+ 	if ((ep->ep_state & EP_HAS_STREAMS) ||
+ 			(ep->ep_state & EP_GETTING_NO_STREAMS)) {
+ 		int stream_id;
 
 
