@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E02C2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:23:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FEABC433EF;
-	Sun, 22 Jan 2023 15:23:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC63B2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:23:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4134FC433EF;
+	Sun, 22 Jan 2023 15:23:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401018;
-	bh=ygbZxrIl4h1lfsOpwuNg4+wa6qh5FOs800MIauU6D7g=;
+	s=korg; t=1674401020;
+	bh=1KtQN+MgJAvaFzVqinQwmmmEZxWYgFL40cvB5Mu8f3U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MtS2om9Wt7WTlTcOpkkqjGWtt3BQ3/pSOgiOmaVTfWqGDHHzceEham073sTZkdzDO
-	 NzUG5Tu9Y4WmecInMwmJ2OSE3nlGQr68pP0f/uU/6JaOMuRc9/HBjknOPP3uhP/nUe
-	 NgC0uqu69OJGGzaaCDWvW9H3X8cUxKBCYFKSltQ8=
+	b=v3PhlrexscdcRI+lqU1MdP8hyLo8YozsRRb6YBB/XlJzxNpPjyrk/SA6ddPUukMzM
+	 PBUh/KoutQhFG93a2MyXUgg5XX1G51E3pZdjxvVU1o8o5+cIy32h5Ww6p+v9ZqKKhd
+	 0AHf+FrrRTJ0T2fo/GbMEQM3DSym09Op0BiKZlA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Hildenbrand <david@redhat.com>,
-	Ives van Hoorne <ives@codesandbox.io>,
-	Peter Xu <peterx@redhat.com>,
+	Zach OKeefe <zokeefe@google.com>,
 	Hugh Dickins <hughd@google.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Mike Rapoport <rppt@linux.vnet.ibm.com>,
-	Nadav Amit <nadav.amit@gmail.com>,
-	Andrea Arcangeli <aarcange@redhat.com>,
+	Yang Shi <shy828301@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 079/193] mm/userfaultfd: enable writenotify while userfaultfd-wp is enabled for a VMA
-Date: Sun, 22 Jan 2023 16:03:28 +0100
-Message-Id: <20230122150249.971390067@linuxfoundation.org>
+Subject: [PATCH 6.1 080/193] mm/MADV_COLLAPSE: dont expand collapse when vm_end is past requested end
+Date: Sun, 22 Jan 2023 16:03:29 +0100
+Message-Id: <20230122150250.021789003@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -41,169 +36,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Hildenbrand <david@redhat.com>
+From: Zach O'Keefe <zokeefe@google.com>
 
-commit 51d3d5eb74ff53b92dcff48b30ae2ed8edd85a32 upstream.
+commit 52dc031088f00e323140ece4004e70c33153c6dd upstream.
 
-Currently, we don't enable writenotify when enabling userfaultfd-wp on a
-shared writable mapping (for now only shmem and hugetlb).  The consequence
-is that vma->vm_page_prot will still include write permissions, to be set
-as default for all PTEs that get remapped (e.g., mprotect(), NUMA hinting,
-page migration, ...).
+MADV_COLLAPSE acts on one hugepage-aligned/sized region at a time, until
+it has collapsed all eligible memory contained within the bounds supplied
+by the user.
 
-So far, vma->vm_page_prot is assumed to be a safe default, meaning that we
-only add permissions (e.g., mkwrite) but not remove permissions (e.g.,
-wrprotect).  For example, when enabling softdirty tracking, we enable
-writenotify.  With uffd-wp on shared mappings, that changed.  More details
-on vma->vm_page_prot semantics were summarized in [1].
+At the top of each hugepage iteration we (re)lock mmap_lock and
+(re)validate the VMA for eligibility and update variables that might have
+changed while mmap_lock was dropped.  One thing that might occur is that
+the VMA could be resized, and as such, we refetch vma->vm_end to make sure
+we don't collapse past the end of the VMA's new end.
 
-This is problematic for uffd-wp: we'd have to manually check for a uffd-wp
-PTEs/PMDs and manually write-protect PTEs/PMDs, which is error prone.
-Prone to such issues is any code that uses vma->vm_page_prot to set PTE
-permissions: primarily pte_modify() and mk_pte().
+However, it's possible that when refetching vma->vm_end that we expand the
+region acted on by MADV_COLLAPSE if vma->vm_end is greater than size+len
+supplied by the user.
 
-Instead, let's enable writenotify such that PTEs/PMDs/...  will be mapped
-write-protected as default and we will only allow selected PTEs that are
-definitely safe to be mapped without write-protection (see
-can_change_pte_writable()) to be writable.  In the future, we might want
-to enable write-bit recovery -- e.g., can_change_pte_writable() -- at more
-locations, for example, also when removing uffd-wp protection.
+The consequence here is that we may attempt to collapse more memory than
+requested, possibly yielding either "too much success" or "false failure"
+user-visible results.  An example of the former is if we MADV_COLLAPSE the
+first 4MiB of a 2TiB mmap()'d file, the incorrect refetch would cause the
+operation to block for much longer than anticipated as we attempt to
+collapse the entire TiB region.  An example of the latter is that applying
+MADV_COLLPSE to a 4MiB file mapped to the start of a 6MiB VMA will
+successfully collapse the first 4MiB, then incorrectly attempt to collapse
+the last hugepage-aligned/sized region -- fail (since readahead/page cache
+lookup will fail) -- and report a failure to the user.
 
-This fixes two known cases:
+I don't believe there is a kernel stability concern here as we always
+(re)validate the VMA / region accordingly.  Also as Hugh mentions, the
+user-visible effects are: we try to collapse more memory than requested
+by the user, and/or failing an operation that should have otherwise
+succeeded.  An example is trying to collapse a 4MiB file contained
+within a 12MiB VMA.
 
-(a) remove_migration_pte() mapping uffd-wp'ed PTEs writable, resulting
-    in uffd-wp not triggering on write access.
-(b) do_numa_page() / do_huge_pmd_numa_page() mapping uffd-wp'ed PTEs/PMDs
-    writable, resulting in uffd-wp not triggering on write access.
+Don't expand the acted-on region when refetching vma->vm_end.
 
-Note that do_numa_page() / do_huge_pmd_numa_page() can be reached even
-without NUMA hinting (which currently doesn't seem to be applicable to
-shmem), for example, by using uffd-wp with a PROT_WRITE shmem VMA.  On
-such a VMA, userfaultfd-wp is currently non-functional.
-
-Note that when enabling userfaultfd-wp, there is no need to walk page
-tables to enforce the new default protection for the PTEs: we know that
-they cannot be uffd-wp'ed yet, because that can only happen after enabling
-uffd-wp for the VMA in general.
-
-Also note that this makes mprotect() on ranges with uffd-wp'ed PTEs not
-accidentally set the write bit -- which would result in uffd-wp not
-triggering on later write access.  This commit makes uffd-wp on shmem
-behave just like uffd-wp on anonymous memory in that regard, even though,
-mixing mprotect with uffd-wp is controversial.
-
-[1] https://lkml.kernel.org/r/92173bad-caa3-6b43-9d1e-9a471fdbc184@redhat.com
-
-Link: https://lkml.kernel.org/r/20221209080912.7968-1-david@redhat.com
-Fixes: b1f9e876862d ("mm/uffd: enable write protection for shmem & hugetlbfs")
-Signed-off-by: David Hildenbrand <david@redhat.com>
-Reported-by: Ives van Hoorne <ives@codesandbox.io>
-Debugged-by: Peter Xu <peterx@redhat.com>
-Acked-by: Peter Xu <peterx@redhat.com>
-Cc: Hugh Dickins <hughd@google.com>
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Mike Rapoport <rppt@linux.vnet.ibm.com>
-Cc: Nadav Amit <nadav.amit@gmail.com>
-Cc: Andrea Arcangeli <aarcange@redhat.com>
+Link: https://lkml.kernel.org/r/20221224082035.3197140-1-zokeefe@google.com
+Fixes: 4d24de9425f7 ("mm: MADV_COLLAPSE: refetch vm_end after reacquiring mmap_lock")
+Signed-off-by: Zach O'Keefe <zokeefe@google.com>
+Reported-by: Hugh Dickins <hughd@google.com>
+Cc: Yang Shi <shy828301@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/userfaultfd.c |   28 ++++++++++++++++++++++------
- mm/mmap.c        |    4 ++++
- 2 files changed, 26 insertions(+), 6 deletions(-)
+ mm/khugepaged.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/userfaultfd.c
-+++ b/fs/userfaultfd.c
-@@ -108,6 +108,21 @@ static bool userfaultfd_is_initialized(s
- 	return ctx->features & UFFD_FEATURE_INITIALIZED;
- }
- 
-+static void userfaultfd_set_vm_flags(struct vm_area_struct *vma,
-+				     vm_flags_t flags)
-+{
-+	const bool uffd_wp_changed = (vma->vm_flags ^ flags) & VM_UFFD_WP;
-+
-+	vma->vm_flags = flags;
-+	/*
-+	 * For shared mappings, we want to enable writenotify while
-+	 * userfaultfd-wp is enabled (see vma_wants_writenotify()). We'll simply
-+	 * recalculate vma->vm_page_prot whenever userfaultfd-wp changes.
-+	 */
-+	if ((vma->vm_flags & VM_SHARED) && uffd_wp_changed)
-+		vma_set_page_prot(vma);
-+}
-+
- static int userfaultfd_wake_function(wait_queue_entry_t *wq, unsigned mode,
- 				     int wake_flags, void *key)
- {
-@@ -618,7 +633,8 @@ static void userfaultfd_event_wait_compl
- 		for_each_vma(vmi, vma) {
- 			if (vma->vm_userfaultfd_ctx.ctx == release_new_ctx) {
- 				vma->vm_userfaultfd_ctx = NULL_VM_UFFD_CTX;
--				vma->vm_flags &= ~__VM_UFFD_FLAGS;
-+				userfaultfd_set_vm_flags(vma,
-+							 vma->vm_flags & ~__VM_UFFD_FLAGS);
+--- a/mm/khugepaged.c
++++ b/mm/khugepaged.c
+@@ -2644,7 +2644,7 @@ int madvise_collapse(struct vm_area_stru
+ 				goto out_nolock;
  			}
+ 
+-			hend = vma->vm_end & HPAGE_PMD_MASK;
++			hend = min(hend, vma->vm_end & HPAGE_PMD_MASK);
  		}
- 		mmap_write_unlock(mm);
-@@ -652,7 +668,7 @@ int dup_userfaultfd(struct vm_area_struc
- 	octx = vma->vm_userfaultfd_ctx.ctx;
- 	if (!octx || !(octx->features & UFFD_FEATURE_EVENT_FORK)) {
- 		vma->vm_userfaultfd_ctx = NULL_VM_UFFD_CTX;
--		vma->vm_flags &= ~__VM_UFFD_FLAGS;
-+		userfaultfd_set_vm_flags(vma, vma->vm_flags & ~__VM_UFFD_FLAGS);
- 		return 0;
- 	}
- 
-@@ -733,7 +749,7 @@ void mremap_userfaultfd_prep(struct vm_a
- 	} else {
- 		/* Drop uffd context if remap feature not enabled */
- 		vma->vm_userfaultfd_ctx = NULL_VM_UFFD_CTX;
--		vma->vm_flags &= ~__VM_UFFD_FLAGS;
-+		userfaultfd_set_vm_flags(vma, vma->vm_flags & ~__VM_UFFD_FLAGS);
- 	}
- }
- 
-@@ -895,7 +911,7 @@ static int userfaultfd_release(struct in
- 			prev = vma;
- 		}
- 
--		vma->vm_flags = new_flags;
-+		userfaultfd_set_vm_flags(vma, new_flags);
- 		vma->vm_userfaultfd_ctx = NULL_VM_UFFD_CTX;
- 	}
- 	mmap_write_unlock(mm);
-@@ -1463,7 +1479,7 @@ static int userfaultfd_register(struct u
- 		 * the next vma was merged into the current one and
- 		 * the current one has not been updated yet.
- 		 */
--		vma->vm_flags = new_flags;
-+		userfaultfd_set_vm_flags(vma, new_flags);
- 		vma->vm_userfaultfd_ctx.ctx = ctx;
- 
- 		if (is_vm_hugetlb_page(vma) && uffd_disable_huge_pmd_share(vma))
-@@ -1651,7 +1667,7 @@ static int userfaultfd_unregister(struct
- 		 * the next vma was merged into the current one and
- 		 * the current one has not been updated yet.
- 		 */
--		vma->vm_flags = new_flags;
-+		userfaultfd_set_vm_flags(vma, new_flags);
- 		vma->vm_userfaultfd_ctx = NULL_VM_UFFD_CTX;
- 
- 	skip:
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -1524,6 +1524,10 @@ int vma_wants_writenotify(struct vm_area
- 	if (vma_soft_dirty_enabled(vma) && !is_vm_hugetlb_page(vma))
- 		return 1;
- 
-+	/* Do we need write faults for uffd-wp tracking? */
-+	if (userfaultfd_wp(vma))
-+		return 1;
-+
- 	/* Specialty mapping? */
- 	if (vm_flags & VM_PFNMAP)
- 		return 0;
+ 		mmap_assert_locked(mm);
+ 		memset(cc->node_load, 0, sizeof(cc->node_load));
 
 
