@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425522590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDABAC433EF;
-	Sun, 22 Jan 2023 15:18:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4D952590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CFDFC433EF;
+	Sun, 22 Jan 2023 15:18:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400718;
-	bh=WtOi+GKrBpcaTb9BScpbcahkz8cl3xyoDzQI8bmA7Mg=;
+	s=korg; t=1674400720;
+	bh=8/pCthJrNJrVyJX/tgThM8NDME8TgLNris9k8uM+b/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UNCCez86BPfbJtNNy/V40FX6SabgWTh+bl7WiGvejW4tSQ1dlhRNZ6bgUppiD+T41
-	 QGUf3fwTzZs9Eau1zUjr5pHPKGUgkzhduOM0s4BE3iapyzYJ8KpYo8r3R9KQV5UxdC
-	 PFM1k1/kHfxqIdPRKs+A3DNE8oUXcFEUxoOJhgJc=
+	b=cSR86S/BfkIg9RmktnsbiFZqKpRh9mCS2cfkPZCIBOCkT0/z7o4kp5VpxVmSC2TG7
+	 CQGEL5xgiPzR4VHZNzlf5RUQmv972VtiEMV8JV/tNlWfCSLoH0W7j2GpXNd0PlutP9
+	 jIFW0UGmlIPCbIhrpL2V6ExVTat3DtAxTs1hfv5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Filipe Manana <fdmanana@suse.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.15 065/117] btrfs: do not abort transaction on failure to write log tree when syncing log
-Date: Sun, 22 Jan 2023 16:04:15 +0100
-Message-Id: <20230122150235.480484816@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Juhyung Park <qkrwngud825@gmail.com>,
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 5.15 083/117] usb-storage: apply IGNORE_UAS only for HIKSEMI MD202 on RTL9210
+Date: Sun, 22 Jan 2023 16:04:33 +0100
+Message-Id: <20230122150236.232801593@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -35,70 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Juhyung Park <qkrwngud825@gmail.com>
 
-commit 16199ad9eb6db60a6b10794a09fc1ac6d09312ff upstream.
+commit dbd24ec17b85b45f4e823d1aa5607721920f2b05 upstream.
 
-When syncing the log, if we fail to write log tree extent buffers, we mark
-the log for a full commit and abort the transaction. However we don't need
-to abort the transaction, all we really need to do is to make sure no one
-can commit a superblock pointing to new log tree roots. Just because we
-got a failure writing extent buffers for a log tree, it does not mean we
-will also fail to do a transaction commit.
+The commit e00b488e813f ("usb-storage: Add Hiksemi USB3-FW to IGNORE_UAS")
+blacklists UAS for all of RTL9210 enclosures.
 
-One particular case is if due to a bug somewhere, when writing log tree
-extent buffers, the tree checker detects some corruption and the writeout
-fails because of that. Aborting the transaction can be very disruptive for
-a user, specially if the issue happened on a root filesystem. One example
-is the scenario in the Link tag below, where an isolated corruption on log
-tree leaves was causing transaction aborts when syncing the log.
+The RTL9210 controller was advertised with UAS since its release back in
+2019 and was shipped with a lot of enclosure products with different
+firmware combinations.
 
-Link: https://lore.kernel.org/linux-btrfs/ae169fc6-f504-28f0-a098-6fa6a4dfb612@leemhuis.info/
-CC: stable@vger.kernel.org # 5.15+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Blacklist UAS only for HIKSEMI MD202.
+
+This should hopefully be replaced with more robust method than just
+comparing strings.  But with limited information [1] provided thus far
+(dmesg when the device is plugged in, which includes manufacturer and
+product, but no lsusb -v to compare against), this is the best we can do
+for now.
+
+[1] https://lore.kernel.org/all/20230109115550.71688-1-qkrwngud825@gmail.com
+
+Fixes: e00b488e813f ("usb-storage: Add Hiksemi USB3-FW to IGNORE_UAS")
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Cc: Hongling Zeng <zenghongling@kylinos.cn>
+Cc: stable@vger.kernel.org
+Signed-off-by: Juhyung Park <qkrwngud825@gmail.com>
+Acked-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20230117085154.123301-1-qkrwngud825@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c  |    9 ++++++++-
- fs/btrfs/tree-log.c |    2 --
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ drivers/usb/storage/uas-detect.h  |   13 +++++++++++++
+ drivers/usb/storage/unusual_uas.h |    7 -------
+ 2 files changed, 13 insertions(+), 7 deletions(-)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -380,7 +380,14 @@ error:
- 	btrfs_print_tree(eb, 0);
- 	btrfs_err(fs_info, "block=%llu write time tree block corruption detected",
- 		  eb->start);
--	WARN_ON(IS_ENABLED(CONFIG_BTRFS_DEBUG));
-+	/*
-+	 * Be noisy if this is an extent buffer from a log tree. We don't abort
-+	 * a transaction in case there's a bad log tree extent buffer, we just
-+	 * fallback to a transaction commit. Still we want to know when there is
-+	 * a bad log tree extent buffer, as that may signal a bug somewhere.
-+	 */
-+	WARN_ON(IS_ENABLED(CONFIG_BTRFS_DEBUG) ||
-+		btrfs_header_owner(eb) == BTRFS_TREE_LOG_OBJECTID);
- 	return ret;
- }
+--- a/drivers/usb/storage/uas-detect.h
++++ b/drivers/usb/storage/uas-detect.h
+@@ -116,6 +116,19 @@ static int uas_use_uas_driver(struct usb
+ 	if (le16_to_cpu(udev->descriptor.idVendor) == 0x0bc2)
+ 		flags |= US_FL_NO_ATA_1X;
  
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -3141,7 +3141,6 @@ int btrfs_sync_log(struct btrfs_trans_ha
- 		ret = 0;
- 	if (ret) {
- 		blk_finish_plug(&plug);
--		btrfs_abort_transaction(trans, ret);
- 		btrfs_set_log_full_commit(trans);
- 		mutex_unlock(&root->log_mutex);
- 		goto out;
-@@ -3273,7 +3272,6 @@ int btrfs_sync_log(struct btrfs_trans_ha
- 		goto out_wake_log_root;
- 	} else if (ret) {
- 		btrfs_set_log_full_commit(trans);
--		btrfs_abort_transaction(trans, ret);
- 		mutex_unlock(&log_root_tree->log_mutex);
- 		goto out_wake_log_root;
- 	}
++	/*
++	 * RTL9210-based enclosure from HIKSEMI, MD202 reportedly have issues
++	 * with UAS.  This isn't distinguishable with just idVendor and
++	 * idProduct, use manufacturer and product too.
++	 *
++	 * Reported-by: Hongling Zeng <zenghongling@kylinos.cn>
++	 */
++	if (le16_to_cpu(udev->descriptor.idVendor) == 0x0bda &&
++			le16_to_cpu(udev->descriptor.idProduct) == 0x9210 &&
++			(udev->manufacturer && !strcmp(udev->manufacturer, "HIKSEMI")) &&
++			(udev->product && !strcmp(udev->product, "MD202")))
++		flags |= US_FL_IGNORE_UAS;
++
+ 	usb_stor_adjust_quirks(udev, &flags);
+ 
+ 	if (flags & US_FL_IGNORE_UAS) {
+--- a/drivers/usb/storage/unusual_uas.h
++++ b/drivers/usb/storage/unusual_uas.h
+@@ -83,13 +83,6 @@ UNUSUAL_DEV(0x0bc2, 0x331a, 0x0000, 0x99
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_NO_REPORT_LUNS),
+ 
+-/* Reported-by: Hongling Zeng <zenghongling@kylinos.cn> */
+-UNUSUAL_DEV(0x0bda, 0x9210, 0x0000, 0x9999,
+-		"Hiksemi",
+-		"External HDD",
+-		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+-		US_FL_IGNORE_UAS),
+-
+ /* Reported-by: Benjamin Tissoires <benjamin.tissoires@redhat.com> */
+ UNUSUAL_DEV(0x13fd, 0x3940, 0x0000, 0x9999,
+ 		"Initio Corporation",
 
 
