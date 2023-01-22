@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2ED87E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:10:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D98C433EF;
-	Sun, 22 Jan 2023 15:10:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D6437E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:10:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9155C433D2;
+	Sun, 22 Jan 2023 15:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400227;
-	bh=miA55B19ju0OKx3G1ZACraw4D8LIV/I615dMSTfi5qI=;
+	s=korg; t=1674400230;
+	bh=6zjwDKG6vs7OyWvvmLD5RZLCDU8NcJkF1bb0y7naNXk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fBHrLCB4MjybP2+TD2/JDa9lCJUo2WeHWHOfSK2TggzjtB5bJ/QzMP4v3MX+jY06M
-	 Wr2lX1J2ynPl3l7UWL/Tqbv0dNvLOn0ZvDR28BYZpMJyZrNqGjAvycb60lxORH6oKR
-	 NOLfi4xsaVPbeOE5I/G7m+Ixw5GoxEvdefkDcdT4=
+	b=SBFoeVHAMNrikV9sd4iAf+srYbUotRid/mPOVNHoPF79DWFTZBzO5BcV62l4e2vCt
+	 +i8ClGDhiL4yilDyAGC4jHcX2KUXeOSqqzRL0sMxksQgWtW8BTrpde/3Z1kIBqqqPG
+	 g/tUFDF0beFSnBdO2bY34/WW55eayxwakHHwgv9M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Saeger <tom.saeger@oracle.com>,
-	Dennis Gilmore <dennis@ausil.us>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
 	Masahiro Yamada <masahiroy@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>
-Subject: [PATCH 5.4 51/55] arch: fix broken BuildID for arm64 and riscv
-Date: Sun, 22 Jan 2023 16:04:38 +0100
-Message-Id: <20230122150224.300021074@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 5.4 52/55] s390: define RUNTIME_DISCARD_EXIT to fix link error with GNU ld < 2.36
+Date: Sun, 22 Jan 2023 16:04:39 +0100
+Message-Id: <20230122150224.346405730@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150222.210885219@linuxfoundation.org>
 References: <20230122150222.210885219@linuxfoundation.org>
@@ -39,54 +37,67 @@ Content-Transfer-Encoding: 8bit
 
 From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit 99cb0d917ffa1ab628bb67364ca9b162c07699b1 upstream.
+commit a494398bde273143c2352dd373cad8211f7d94b2 upstream.
 
-Dennis Gilmore reports that the BuildID is missing in the arm64 vmlinux
-since commit 994b7ac1697b ("arm64: remove special treatment for the
-link order of head.o").
+Nathan Chancellor reports that the s390 vmlinux fails to link with
+GNU ld < 2.36 since commit 99cb0d917ffa ("arch: fix broken BuildID
+for arm64 and riscv").
 
-The issue is that the type of .notes section, which contains the BuildID,
-changed from NOTES to PROGBITS.
+It happens for defconfig, or more specifically for CONFIG_EXPOLINE=y.
 
-Ard Biesheuvel figured out that whichever object gets linked first gets
-to decide the type of a section. The PROGBITS type is the result of the
-compiler emitting .note.GNU-stack as PROGBITS rather than NOTE.
+  $ s390x-linux-gnu-ld --version | head -n1
+  GNU ld (GNU Binutils for Debian) 2.35.2
+  $ make -s ARCH=s390 CROSS_COMPILE=s390x-linux-gnu- allnoconfig
+  $ ./scripts/config -e CONFIG_EXPOLINE
+  $ make -s ARCH=s390 CROSS_COMPILE=s390x-linux-gnu- olddefconfig
+  $ make -s ARCH=s390 CROSS_COMPILE=s390x-linux-gnu-
+  `.exit.text' referenced in section `.s390_return_reg' of drivers/base/dd.o: defined in discarded section `.exit.text' of drivers/base/dd.o
+  make[1]: *** [scripts/Makefile.vmlinux:34: vmlinux] Error 1
+  make: *** [Makefile:1252: vmlinux] Error 2
 
-While Ard provided a fix for arm64, I want to fix this globally because
-the same issue is happening on riscv since commit 2348e6bf4421 ("riscv:
-remove special treatment for the link order of head.o"). This problem
-will happen in general for other architectures if they start to drop
-unneeded entries from scripts/head-object-list.txt.
+arch/s390/kernel/vmlinux.lds.S wants to keep EXIT_TEXT:
 
-Discard .note.GNU-stack in include/asm-generic/vmlinux.lds.h.
+        .exit.text : {
+                EXIT_TEXT
+        }
 
-Link: https://lore.kernel.org/lkml/CAABkxwuQoz1CTbyb57n0ZX65eSYiTonFCU8-LCQc=74D=xE=rA@mail.gmail.com/
-Fixes: 994b7ac1697b ("arm64: remove special treatment for the link order of head.o")
-Fixes: 2348e6bf4421 ("riscv: remove special treatment for the link order of head.o")
-Cc: Tom Saeger <tom.saeger@oracle.com>
-Reported-by: Dennis Gilmore <dennis@ausil.us>
-Suggested-by: Ard Biesheuvel <ardb@kernel.org>
+But, at the same time, EXIT_TEXT is thrown away by DISCARD because
+s390 does not define RUNTIME_DISCARD_EXIT.
+
+I still do not understand why the latter wins after 99cb0d917ffa,
+but defining RUNTIME_DISCARD_EXIT seems correct because the comment
+line in arch/s390/kernel/vmlinux.lds.S says:
+
+        /*
+         * .exit.text is discarded at runtime, not link time,
+         * to deal with references from __bug_table
+         */
+
+Nathan also found that binutils commit 21401fc7bf67 ("Duplicate output
+sections in scripts") cured this issue, so we cannot reproduce it with
+binutils 2.36+, but it is better to not rely on it.
+
+Fixes: 99cb0d917ffa ("arch: fix broken BuildID for arm64 and riscv")
+Link: https://lore.kernel.org/all/Y7Jal56f6UBh1abE@dev-arch.thelio-3990X/
+Reported-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+Link: https://lore.kernel.org/r/20230105031306.1455409-1-masahiroy@kernel.org
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/asm-generic/vmlinux.lds.h |    5 +++++
- 1 file changed, 5 insertions(+)
+ arch/s390/kernel/vmlinux.lds.S |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/include/asm-generic/vmlinux.lds.h
-+++ b/include/asm-generic/vmlinux.lds.h
-@@ -825,7 +825,12 @@
- #define TRACEDATA
- #endif
+--- a/arch/s390/kernel/vmlinux.lds.S
++++ b/arch/s390/kernel/vmlinux.lds.S
+@@ -15,6 +15,8 @@
+ /* Handle ro_after_init data on our own. */
+ #define RO_AFTER_INIT_DATA
  
-+/*
-+ * Discard .note.GNU-stack, which is emitted as PROGBITS by the compiler.
-+ * Otherwise, the type of .notes section would become PROGBITS instead of NOTES.
-+ */
- #define NOTES								\
-+	/DISCARD/ : { *(.note.GNU-stack) }				\
- 	.notes : AT(ADDR(.notes) - LOAD_OFFSET) {			\
- 		__start_notes = .;					\
- 		KEEP(*(.note.*))					\
++#define RUNTIME_DISCARD_EXIT
++
+ #include <asm-generic/vmlinux.lds.h>
+ #include <asm/vmlinux.lds.h>
+ 
 
 
