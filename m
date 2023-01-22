@@ -1,34 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AD977E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:11:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85882C433EF;
-	Sun, 22 Jan 2023 15:11:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97B627E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:11:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20859C433D2;
+	Sun, 22 Jan 2023 15:11:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400263;
-	bh=5c8/GMPq2Iq/8xfCjfik5lKn0OEwVXGpQUzqRN3RAzk=;
+	s=korg; t=1674400266;
+	bh=c751CSjymc7u2PLUjoaS+DAek80QM1vKmXfQCgGr6XE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lBDgxsJF76w/SXx8QW/c4rbLNvsBww86Ikf0Zgf+7nqnzy0iSCsIXG4OE2sV/a9UI
-	 vFnn2cUxX3Q2Ama11eZeclDMsFNHzN4jrqvYg8eNcaR79ZTcg1VH601UqV/RtKpUUy
-	 mrVJBXRWDcHVN/U2vM5CI7CUyGBYZJsz5ZdOjF2w=
+	b=xmADt9LoB5s4YL1EPM+dVIa2+hlTk3o2uM/LU6n/d1DRisa4WRQDSdfrXTZSQqKjy
+	 qBJgxtaN0962ci1hfKW9WGdjdagxORDmMj7N5uuzm5StyxXFzNW90FvKthG2u9w4R5
+	 GJZNI3xjYUDbV0ImpBJF+X3+fAZzS/Kpo6wkE6bM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
-	Naohiro Aota <naohiro.aota@wdc.com>,
-	David Sterba <dsterba@suse.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 01/98] btrfs: fix trace event name typo for FLUSH_DELAYED_REFS
-Date: Sun, 22 Jan 2023 16:03:17 +0100
-Message-Id: <20230122150229.431793158@linuxfoundation.org>
+	chainofflowers <chainofflowers@posteo.net>,
+	Christian Marillat <marillat@debian.org>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 5.10 10/98] wifi: brcmfmac: fix regression for Broadcom PCIe wifi devices
+Date: Sun, 22 Jan 2023 16:03:26 +0100
+Message-Id: <20230122150229.864584167@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,37 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Naohiro Aota <naohiro.aota@wdc.com>
+From: Arend van Spriel <arend.vanspriel@broadcom.com>
 
-[ Upstream commit 0a3212de8ab3e2ce5808c6265855e528d4a6767b ]
+commit ed05cb177ae5cd7f02f1d6e7706ba627d30f1696 upstream.
 
-Fix a typo of printing FLUSH_DELAYED_REFS event in flush_space() as
-FLUSH_ELAYED_REFS.
+A sanity check was introduced considering maximum flowrings above
+256 as insane and effectively aborting the device probe. This
+resulted in regression for number of users as the value turns out
+to be sane after all.
 
-Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
-Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 2aca4f3734bd ("brcmfmac: return error when getting invalid max_flowrings from dongle")
+Reported-by: chainofflowers <chainofflowers@posteo.net>
+Link: https://lore.kernel.org/all/4781984.GXAFRqVoOG@luna/
+Reported-by: Christian Marillat <marillat@debian.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216894
+Cc: stable@vger.kernel.org
+Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230111112419.24185-1-arend.vanspriel@broadcom.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/trace/events/btrfs.h | 2 +-
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/trace/events/btrfs.h b/include/trace/events/btrfs.h
-index ecd24c719de4..041be3ce1071 100644
---- a/include/trace/events/btrfs.h
-+++ b/include/trace/events/btrfs.h
-@@ -95,7 +95,7 @@ struct btrfs_space_info;
- 	EM( FLUSH_DELALLOC,		"FLUSH_DELALLOC")		\
- 	EM( FLUSH_DELALLOC_WAIT,	"FLUSH_DELALLOC_WAIT")		\
- 	EM( FLUSH_DELAYED_REFS_NR,	"FLUSH_DELAYED_REFS_NR")	\
--	EM( FLUSH_DELAYED_REFS,		"FLUSH_ELAYED_REFS")		\
-+	EM( FLUSH_DELAYED_REFS,		"FLUSH_DELAYED_REFS")		\
- 	EM( ALLOC_CHUNK,		"ALLOC_CHUNK")			\
- 	EM( ALLOC_CHUNK_FORCE,		"ALLOC_CHUNK_FORCE")		\
- 	EM( RUN_DELAYED_IPUTS,		"RUN_DELAYED_IPUTS")		\
--- 
-2.35.1
-
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
+@@ -1109,7 +1109,7 @@ static int brcmf_pcie_init_ringbuffers(s
+ 				BRCMF_NROF_H2D_COMMON_MSGRINGS;
+ 		max_completionrings = BRCMF_NROF_D2H_COMMON_MSGRINGS;
+ 	}
+-	if (max_flowrings > 256) {
++	if (max_flowrings > 512) {
+ 		brcmf_err(bus, "invalid max_flowrings(%d)\n", max_flowrings);
+ 		return -EIO;
+ 	}
 
 
