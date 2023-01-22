@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864832590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDE9C433EF;
-	Sun, 22 Jan 2023 15:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 176612590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90C72C433D2;
+	Sun, 22 Jan 2023 15:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400590;
-	bh=3JwqRMZc5tfGC22WlGKEdb+e+9/N6D74RINrzqMZUKw=;
+	s=korg; t=1674400592;
+	bh=i7YgZEHNOEfdxOZfcvuStYdxdD/pZxpw9HpgcfKCc/0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yCoBdrEaTQg7C+M7xKyAzVlmDJEiRtbuEZR/59ZeEgJUHhFDoBijurAd+e5G2TyWU
-	 WOJzUQ7CxeoSeBIvTM4ulSE1okQgvQnisHjYfebbuLKxKVk5tGjh+3dgacDbI1GG0s
-	 VQan0tENUSdmd5b+vOGNfrKWPlbYQpqhrM8miQ30=
+	b=TKA406w1vhE3tGYDY/SFCNZLW44K6tJoj7mzaOSyZoFa6fc3dh25eD5iGzeAi1A3r
+	 3ZdNJArJTOscZSCFoJn57MSHuP8ovPkSqko4K4fE5YhUo+Orbh/IfJo+ZhDfnGzGLd
+	 Wq8oPvF9GPBtdGll+eeVIDDrfT0V4rYubFzkBSYw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Angus Chen <angus.chen@jaguarmicro.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
+	Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+	Jason Wang <jasowang@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 005/117] virtio_pci: modify ENOENT to EINVAL
-Date: Sun, 22 Jan 2023 16:03:15 +0100
-Message-Id: <20230122150232.961523979@linuxfoundation.org>
+Subject: [PATCH 5.15 006/117] vduse: Validate vq_num in vduse_validate_config()
+Date: Sun, 22 Jan 2023 16:03:16 +0100
+Message-Id: <20230122150232.999018300@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -35,37 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Angus Chen <angus.chen@jaguarmicro.com>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
 
-[ Upstream commit b66ead2d0ecac00c3a06a6218af5411cb5fcb5d5 ]
+[ Upstream commit 937c783aa3d8d77963ec91918d3298edb45b9161 ]
 
-Virtio_crypto use max_data_queues+1 to setup vqs,
-we use vp_modern_get_num_queues to protect the vq range in setup_vq.
-We could enter index >= vp_modern_get_num_queues(mdev) in setup_vq
-if common->num_queues is not set well,and it return -ENOENT.
-It is better to use -EINVAL instead.
+Add a limit to 'config->vq_num' which is user controlled data which
+comes from an vduse_ioctl to prevent large memory allocations.
 
-Signed-off-by: Angus Chen <angus.chen@jaguarmicro.com>
-Message-Id: <20221101111655.1947-1-angus.chen@jaguarmicro.com>
+Micheal says  - This limit is somewhat arbitrary.
+However, currently virtio pci and ccw are limited to a 16 bit vq number.
+While MMIO isn't it is also isn't used with lots of VQs due to
+current lack of support for per-vq interrupts.
+Thus, the 0xffff limit on number of VQs corresponding
+to a 16-bit VQ number seems sufficient for now.
+
+This is found using static analysis with smatch.
+
+Suggested-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Message-Id: <20221128155717.2579992-1-harshit.m.mogalapalli@oracle.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/virtio/virtio_pci_modern.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/vdpa/vdpa_user/vduse_dev.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/virtio/virtio_pci_modern.c b/drivers/virtio/virtio_pci_modern.c
-index 30654d3a0b41..a274261f36d6 100644
---- a/drivers/virtio/virtio_pci_modern.c
-+++ b/drivers/virtio/virtio_pci_modern.c
-@@ -196,7 +196,7 @@ static struct virtqueue *setup_vq(struct virtio_pci_device *vp_dev,
- 	int err;
+diff --git a/drivers/vdpa/vdpa_user/vduse_dev.c b/drivers/vdpa/vdpa_user/vduse_dev.c
+index e7d2d5b7e125..3467c75f310a 100644
+--- a/drivers/vdpa/vdpa_user/vduse_dev.c
++++ b/drivers/vdpa/vdpa_user/vduse_dev.c
+@@ -1251,6 +1251,9 @@ static bool vduse_validate_config(struct vduse_dev_config *config)
+ 	if (config->config_size > PAGE_SIZE)
+ 		return false;
  
- 	if (index >= vp_modern_get_num_queues(mdev))
--		return ERR_PTR(-ENOENT);
-+		return ERR_PTR(-EINVAL);
++	if (config->vq_num > 0xffff)
++		return false;
++
+ 	if (!device_is_allowed(config->device_id))
+ 		return false;
  
- 	/* Check if queue is either not available or already active. */
- 	num = vp_modern_get_queue_size(mdev, index);
 -- 
 2.35.1
 
