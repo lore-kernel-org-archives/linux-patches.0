@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73B422590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:23:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC406C433D2;
-	Sun, 22 Jan 2023 15:23:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F212590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:23:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C28C433D2;
+	Sun, 22 Jan 2023 15:23:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401036;
-	bh=Hb2CeQYYKhm0/0h/O+GTpyoSJ5AjoXU65uFx7yUbww4=;
+	s=korg; t=1674401038;
+	bh=1s7zHPXd5oRvyw4A38we3ufP+2PUKcqxaNe0KiMTC+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+05fdhfiSdm8VHdq38fXrzvTTGkriShK6tJMftR7966671xJJVoG52EBDMbhp7Uj
-	 pE0RlCg1RKYAjrYVEkHUalz3zWyo7yvBbWGUX2COcmAfBXPzPQANVnb1M/6Um5vWHK
-	 WgWvy4fl5Xrq99HKgENZKvR/Sv/lOo8LkLx6pflc=
+	b=unNmOqd/q13sBxtJMroKDMZUb6afaW1l1fRjXHasH6yV5AimhEpYqMcAhBvEj9Q0/
+	 hzWFlu0gtZKiP1ey62k0/3Asz38CSTHNscQQKy0iHLYkJHKxsRICKMD2Q5LlUJt3jA
+	 tAZVJ/1CSlfMrbBLhCHNMdbc6aEQaWUACwu0Sh4E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Josef Bacik <josef@toxicpanda.com>,
 	Filipe Manana <fdmanana@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 085/193] btrfs: do not abort transaction on failure to write log tree when syncing log
-Date: Sun, 22 Jan 2023 16:03:34 +0100
-Message-Id: <20230122150250.272618529@linuxfoundation.org>
+Subject: [PATCH 6.1 086/193] btrfs: do not abort transaction on failure to update log root
+Date: Sun, 22 Jan 2023 16:03:35 +0100
+Message-Id: <20230122150250.322613248@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -37,68 +37,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Filipe Manana <fdmanana@suse.com>
 
-commit 16199ad9eb6db60a6b10794a09fc1ac6d09312ff upstream.
+commit 09e44868f1e03c7825ca4283256abedc95e249a3 upstream.
 
-When syncing the log, if we fail to write log tree extent buffers, we mark
-the log for a full commit and abort the transaction. However we don't need
-to abort the transaction, all we really need to do is to make sure no one
-can commit a superblock pointing to new log tree roots. Just because we
-got a failure writing extent buffers for a log tree, it does not mean we
-will also fail to do a transaction commit.
+When syncing a log, if we fail to update a log root in the log root tree,
+we are aborting the transaction if the failure was not -ENOSPC. This is
+excessive because there is a chance that a transaction commit can succeed,
+and therefore avoid to turn the filesystem into RO mode. All we need to be
+careful about is to mark the log for a full commit, which we already do,
+to make sure no one commits a super block pointing to an outdated log root
+tree.
 
-One particular case is if due to a bug somewhere, when writing log tree
-extent buffers, the tree checker detects some corruption and the writeout
-fails because of that. Aborting the transaction can be very disruptive for
-a user, specially if the issue happened on a root filesystem. One example
-is the scenario in the Link tag below, where an isolated corruption on log
-tree leaves was causing transaction aborts when syncing the log.
+So don't abort the transaction if we fail to update a log root in the log
+root tree, and log an error if the failure is not -ENOSPC, so that it does
+not go completely unnoticed.
 
-Link: https://lore.kernel.org/linux-btrfs/ae169fc6-f504-28f0-a098-6fa6a4dfb612@leemhuis.info/
-CC: stable@vger.kernel.org # 5.15+
+CC: stable@vger.kernel.org # 6.0+
 Reviewed-by: Josef Bacik <josef@toxicpanda.com>
 Signed-off-by: Filipe Manana <fdmanana@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/disk-io.c  |    9 ++++++++-
- fs/btrfs/tree-log.c |    2 --
- 2 files changed, 8 insertions(+), 3 deletions(-)
+ fs/btrfs/tree-log.c |   11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
 
---- a/fs/btrfs/disk-io.c
-+++ b/fs/btrfs/disk-io.c
-@@ -344,7 +344,14 @@ error:
- 	btrfs_print_tree(eb, 0);
- 	btrfs_err(fs_info, "block=%llu write time tree block corruption detected",
- 		  eb->start);
--	WARN_ON(IS_ENABLED(CONFIG_BTRFS_DEBUG));
-+	/*
-+	 * Be noisy if this is an extent buffer from a log tree. We don't abort
-+	 * a transaction in case there's a bad log tree extent buffer, we just
-+	 * fallback to a transaction commit. Still we want to know when there is
-+	 * a bad log tree extent buffer, as that may signal a bug somewhere.
-+	 */
-+	WARN_ON(IS_ENABLED(CONFIG_BTRFS_DEBUG) ||
-+		btrfs_header_owner(eb) == BTRFS_TREE_LOG_OBJECTID);
- 	return ret;
- }
- 
 --- a/fs/btrfs/tree-log.c
 +++ b/fs/btrfs/tree-log.c
-@@ -3011,7 +3011,6 @@ int btrfs_sync_log(struct btrfs_trans_ha
- 		ret = 0;
- 	if (ret) {
+@@ -3075,15 +3075,12 @@ int btrfs_sync_log(struct btrfs_trans_ha
+ 
  		blk_finish_plug(&plug);
--		btrfs_abort_transaction(trans, ret);
  		btrfs_set_log_full_commit(trans);
- 		mutex_unlock(&root->log_mutex);
- 		goto out;
-@@ -3143,7 +3142,6 @@ int btrfs_sync_log(struct btrfs_trans_ha
- 		goto out_wake_log_root;
- 	} else if (ret) {
- 		btrfs_set_log_full_commit(trans);
--		btrfs_abort_transaction(trans, ret);
+-
+-		if (ret != -ENOSPC) {
+-			btrfs_abort_transaction(trans, ret);
+-			mutex_unlock(&log_root_tree->log_mutex);
+-			goto out;
+-		}
++		if (ret != -ENOSPC)
++			btrfs_err(fs_info,
++				  "failed to update log for root %llu ret %d",
++				  root->root_key.objectid, ret);
+ 		btrfs_wait_tree_log_extents(log, mark);
  		mutex_unlock(&log_root_tree->log_mutex);
- 		goto out_wake_log_root;
+-		ret = BTRFS_LOG_FORCE_COMMIT;
+ 		goto out;
  	}
+ 
 
 
