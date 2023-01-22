@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74FCE2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:13:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED298C433D2;
-	Sun, 22 Jan 2023 15:13:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 125642590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:13:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DA89C4339C;
+	Sun, 22 Jan 2023 15:13:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400406;
-	bh=RB5461b5Ysqa7Gf70x+9pUy40oBsumD3xjaFjQaQyZ0=;
+	s=korg; t=1674400408;
+	bh=EeGHwz5gDwkSHVvLVgOvQDPOh+nFG5LwK6xQ7yZ1ajg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=08gGwzyDlGltmIzB/lW5P8RhM0gy/Q+tt1lDsXKlW1osO39WVq2PcHn+mqyZdxpN9
-	 SNwEx2McwI8/loW1GWpriMM+rZxQ+QVavxcP6rHvVdhGmVFPJGWlyl52IA3yRJAbPK
-	 ghPiV9yG0JlvCpT60l73Bc6gFRKZxPpQDgyn7hSg=
+	b=STmpas7jZo1nzC+yEuwANpMntEN+5vZV1gAi3fknMs2onWhgSMpiqKxqTg2AmnB/f
+	 4y7PVDUGo7G88u4m+wgKjiufGFFV3U14QN5LOhdHRxlMKcPYudEnaPi0Cf8gmlOU9g
+	 7Fzc3jh+h6iDLg2XT8n+mknUKWAx6POymJsYgUzg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Alexander Stein <alexander.stein@ew.tq-group.com>
-Subject: [PATCH 5.10 63/98] usb: host: ehci-fsl: Fix module alias
-Date: Sun, 22 Jan 2023 16:04:19 +0100
-Message-Id: <20230122150232.134641824@linuxfoundation.org>
+	Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+	Prashant Malani <pmalani@chromium.org>,
+	Benson Leung <bleung@chromium.org>
+Subject: [PATCH 5.10 64/98] usb: typec: altmodes/displayport: Add pin assignment helper
+Date: Sun, 22 Jan 2023 16:04:20 +0100
+Message-Id: <20230122150232.170920675@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -34,36 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Stein <alexander.stein@ew.tq-group.com>
+From: Prashant Malani <pmalani@chromium.org>
 
-commit 5d3d01ae15d2f37ed0325c99ab47ef0ae5d05f3c upstream.
+commit 582836e3cfab4faafbdc93bbec96fce036a08ee1 upstream.
 
-Commit ca07e1c1e4a6 ("drivers:usb:fsl:Make fsl ehci drv an independent
-driver module") changed DRV_NAME which was used for MODULE_ALIAS as well.
-Starting from this the module alias didn't match the platform device
-name created in fsl-mph-dr-of.c
-Change DRV_NAME to match the driver name for host mode in fsl-mph-dr-of.
-This is needed for module autoloading on ls1021a.
+The code to extract a peripheral's currently supported Pin Assignments
+is repeated in a couple of locations. Factor it out into a separate
+function.
 
-Fixes: ca07e1c1e4a6 ("drivers:usb:fsl:Make fsl ehci drv an independent driver module")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Alexander Stein <alexander.stein@ew.tq-group.com>
-Link: https://lore.kernel.org/r/20230120122714.3848784-1-alexander.stein@ew.tq-group.com
+This will also make it easier to add fixes (we only need to update 1
+location instead of 2).
+
+Fixes: c1e5c2f0cb8a ("usb: typec: altmodes/displayport: correct pin assignment for UFP receptacles")
+Cc: stable@vger.kernel.org
+Cc: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Signed-off-by: Prashant Malani <pmalani@chromium.org>
+Reviewed-by: Benson Leung <bleung@chromium.org>
+Reviewed-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Link: https://lore.kernel.org/r/20230111020546.3384569-1-pmalani@chromium.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/ehci-fsl.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/typec/altmodes/displayport.c |   22 ++++++++++++++--------
+ 1 file changed, 14 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/host/ehci-fsl.c
-+++ b/drivers/usb/host/ehci-fsl.c
-@@ -29,7 +29,7 @@
- #include "ehci-fsl.h"
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -409,6 +409,18 @@ static const char * const pin_assignment
+ 	[DP_PIN_ASSIGN_F] = "F",
+ };
  
- #define DRIVER_DESC "Freescale EHCI Host controller driver"
--#define DRV_NAME "ehci-fsl"
-+#define DRV_NAME "fsl-ehci"
++/*
++ * Helper function to extract a peripheral's currently supported
++ * Pin Assignments from its DisplayPort alternate mode state.
++ */
++static u8 get_current_pin_assignments(struct dp_altmode *dp)
++{
++	if (DP_CONF_CURRENTLY(dp->data.conf) == DP_CONF_DFP_D)
++		return DP_CAP_UFP_D_PIN_ASSIGN(dp->alt->vdo);
++	else
++		return DP_CAP_DFP_D_PIN_ASSIGN(dp->alt->vdo);
++}
++
+ static ssize_t
+ pin_assignment_store(struct device *dev, struct device_attribute *attr,
+ 		     const char *buf, size_t size)
+@@ -435,10 +447,7 @@ pin_assignment_store(struct device *dev,
+ 		goto out_unlock;
+ 	}
  
- static struct hc_driver __read_mostly fsl_ehci_hc_driver;
+-	if (DP_CONF_CURRENTLY(dp->data.conf) == DP_CONF_DFP_D)
+-		assignments = DP_CAP_UFP_D_PIN_ASSIGN(dp->alt->vdo);
+-	else
+-		assignments = DP_CAP_DFP_D_PIN_ASSIGN(dp->alt->vdo);
++	assignments = get_current_pin_assignments(dp);
  
+ 	if (!(DP_CONF_GET_PIN_ASSIGN(conf) & assignments)) {
+ 		ret = -EINVAL;
+@@ -475,10 +484,7 @@ static ssize_t pin_assignment_show(struc
+ 
+ 	cur = get_count_order(DP_CONF_GET_PIN_ASSIGN(dp->data.conf));
+ 
+-	if (DP_CONF_CURRENTLY(dp->data.conf) == DP_CONF_DFP_D)
+-		assignments = DP_CAP_UFP_D_PIN_ASSIGN(dp->alt->vdo);
+-	else
+-		assignments = DP_CAP_DFP_D_PIN_ASSIGN(dp->alt->vdo);
++	assignments = get_current_pin_assignments(dp);
+ 
+ 	for (i = 0; assignments; assignments >>= 1, i++) {
+ 		if (assignments & 1) {
 
 
