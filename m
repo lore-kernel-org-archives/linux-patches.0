@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B0F2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:24:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD32C433EF;
-	Sun, 22 Jan 2023 15:24:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79BAB2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:24:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED287C433D2;
+	Sun, 22 Jan 2023 15:24:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401062;
-	bh=MlQYjp4QBINGF+h3nPJyzdLvWl6RcXFS8j9Tlxlv3ak=;
+	s=korg; t=1674401065;
+	bh=Cs0kR9ym3aFap91K8EOWnZ+TEw7El+zLbkemAYeRP8k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2bG6uQdRCOKL6fVNuAf2/kcC2Mp4FbS9ejEQiVXm848AF4dnH0RDRu/kzz70nrGuP
-	 fLPydfo9Fgoh8xz6z70dkGwob2GrctnAt3W4XpiUcLmgLmhfJSd+tmVLy07Hq4KAP9
-	 2xmWP8Mn0Yn38mVhneacQxOUH1uiKrAtbjojPOpI=
+	b=zm6WQEVU7nVTbweMqKYAW2zGQTphqU1lLExTHBbt9ePEZ7jlao/ErJk4LbvZ2x9kf
+	 LnH5vgYggY5dJv7PsJIbSA541vCsOainW/5Nbno0LAxbZ9reWBjWtWt8dtlhAXpypF
+	 +CLG5e7D7Pnb6CNeK3cADfJxHmbbueuUB0NHsIsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefan Wahren <stefan.wahren@i2se.com>,
-	Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH 6.1 067/193] usb: misc: onboard_hub: Move attach work to the driver
-Date: Sun, 22 Jan 2023 16:03:16 +0100
-Message-Id: <20230122150249.423977392@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Ola Jeppsson <ola@snap.com>,
+	Abel Vesa <abel.vesa@linaro.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.1 068/193] misc: fastrpc: Fix use-after-free and race in fastrpc_map_find
+Date: Sun, 22 Jan 2023 16:03:17 +0100
+Message-Id: <20230122150249.455763757@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -34,113 +36,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthias Kaehlcke <mka@chromium.org>
+From: Abel Vesa <abel.vesa@linaro.org>
 
-commit cde37881e2e14590675d0acdfbad408300d9ca95 upstream.
+commit 9446fa1683a7e3937d9970248ced427c1983a1c5 upstream.
 
-Currently each onboard_hub platform device owns an 'attach' work,
-which is scheduled when the device probes. With this deadlocks
-have been reported on a Raspberry Pi 3 B+ [1], which has nested
-onboard hubs.
+Currently, there is a race window between the point when the mutex is
+unlocked in fastrpc_map_lookup and the reference count increasing
+(fastrpc_map_get) in fastrpc_map_find, which can also lead to
+use-after-free.
 
-The flow of the deadlock is something like this (with the onboard_hub
-driver built as a module) [2]:
+So lets merge fastrpc_map_find into fastrpc_map_lookup which allows us
+to both protect the maps list by also taking the &fl->lock spinlock and
+the reference count, since the spinlock will be released only after.
+Add take_ref argument to make this suitable for all callers.
 
-- USB root hub is instantiated
-- core hub driver calls onboard_hub_create_pdevs(), which creates the
-  'raw' platform device for the 1st level hub
-- 1st level hub is probed by the core hub driver
-- core hub driver calls onboard_hub_create_pdevs(), which creates
-  the 'raw' platform device for the 2nd level hub
-
-- onboard_hub platform driver is registered
-- platform device for 1st level hub is probed
-  - schedules 'attach' work
-- platform device for 2nd level hub is probed
-  - schedules 'attach' work
-
-- onboard_hub USB driver is registered
-- device (and parent) lock of hub is held while the device is
-  re-probed with the onboard_hub driver
-
-- 'attach' work (running in another thread) calls driver_attach(), which
-   blocks on one of the hub device locks
-
-- onboard_hub_destroy_pdevs() is called by the core hub driver when one
-  of the hubs is detached
-- destroying the pdevs invokes onboard_hub_remove(), which waits for the
-  'attach' work to complete
-  - waits forever, since the 'attach' work can't acquire the device lock
-
-Use a single work struct for the driver instead of having a work struct
-per onboard hub platform driver instance. With that it isn't necessary
-to cancel the work in onboard_hub_remove(), which fixes the deadlock.
-The work is only cancelled when the driver is unloaded.
-
-[1] https://lore.kernel.org/r/d04bcc45-3471-4417-b30b-5cf9880d785d@i2se.com/
-[2] https://lore.kernel.org/all/Y6OrGbqaMy2iVDWB@google.com/
-
-Cc: stable@vger.kernel.org
-Fixes: 8bc063641ceb ("usb: misc: Add onboard_usb_hub driver")
-Link: https://lore.kernel.org/r/d04bcc45-3471-4417-b30b-5cf9880d785d@i2se.com/
-Link: https://lore.kernel.org/all/Y6OrGbqaMy2iVDWB@google.com/
-Reported-by: Stefan Wahren <stefan.wahren@i2se.com>
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-Link: https://lore.kernel.org/r/20230110172954.v2.2.I16b51f32db0c32f8a8532900bfe1c70c8572881a@changeid
+Fixes: 8f6c1d8c4f0c ("misc: fastrpc: Add fdlist implementation")
+Cc: stable <stable@kernel.org>
+Co-developed-by: Ola Jeppsson <ola@snap.com>
+Signed-off-by: Ola Jeppsson <ola@snap.com>
+Signed-off-by: Abel Vesa <abel.vesa@linaro.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20221124174941.418450-2-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/misc/onboard_usb_hub.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ drivers/misc/fastrpc.c |   41 +++++++++++++++++++++--------------------
+ 1 file changed, 21 insertions(+), 20 deletions(-)
 
---- a/drivers/usb/misc/onboard_usb_hub.c
-+++ b/drivers/usb/misc/onboard_usb_hub.c
-@@ -27,7 +27,10 @@
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -333,30 +333,31 @@ static void fastrpc_map_get(struct fastr
  
- #include "onboard_usb_hub.h"
  
-+static void onboard_hub_attach_usb_driver(struct work_struct *work);
-+
- static struct usb_device_driver onboard_hub_usbdev_driver;
-+static DECLARE_WORK(attach_usb_driver_work, onboard_hub_attach_usb_driver);
- 
- /************************** Platform driver **************************/
- 
-@@ -45,7 +48,6 @@ struct onboard_hub {
- 	bool is_powered_on;
- 	bool going_away;
- 	struct list_head udev_list;
--	struct work_struct attach_usb_driver_work;
- 	struct mutex lock;
- };
- 
-@@ -271,8 +273,7 @@ static int onboard_hub_probe(struct plat
- 	 * This needs to be done deferred to avoid self-deadlocks on systems
- 	 * with nested onboard hubs.
- 	 */
--	INIT_WORK(&hub->attach_usb_driver_work, onboard_hub_attach_usb_driver);
--	schedule_work(&hub->attach_usb_driver_work);
-+	schedule_work(&attach_usb_driver_work);
- 
- 	return 0;
- }
-@@ -285,9 +286,6 @@ static int onboard_hub_remove(struct pla
- 
- 	hub->going_away = true;
- 
--	if (&hub->attach_usb_driver_work != current_work())
--		cancel_work_sync(&hub->attach_usb_driver_work);
--
- 	mutex_lock(&hub->lock);
- 
- 	/* unbind the USB devices to avoid dangling references to this device */
-@@ -447,6 +445,8 @@ static void __exit onboard_hub_exit(void
+ static int fastrpc_map_lookup(struct fastrpc_user *fl, int fd,
+-			    struct fastrpc_map **ppmap)
++			    struct fastrpc_map **ppmap, bool take_ref)
  {
- 	usb_deregister_device_driver(&onboard_hub_usbdev_driver);
- 	platform_driver_unregister(&onboard_hub_driver);
-+
-+	cancel_work_sync(&attach_usb_driver_work);
++	struct fastrpc_session_ctx *sess = fl->sctx;
+ 	struct fastrpc_map *map = NULL;
++	int ret = -ENOENT;
+ 
+-	mutex_lock(&fl->mutex);
++	spin_lock(&fl->lock);
+ 	list_for_each_entry(map, &fl->maps, node) {
+-		if (map->fd == fd) {
+-			*ppmap = map;
+-			mutex_unlock(&fl->mutex);
+-			return 0;
+-		}
+-	}
+-	mutex_unlock(&fl->mutex);
+-
+-	return -ENOENT;
+-}
++		if (map->fd != fd)
++			continue;
+ 
+-static int fastrpc_map_find(struct fastrpc_user *fl, int fd,
+-			    struct fastrpc_map **ppmap)
+-{
+-	int ret = fastrpc_map_lookup(fl, fd, ppmap);
++		if (take_ref) {
++			ret = fastrpc_map_get(map);
++			if (ret) {
++				dev_dbg(sess->dev, "%s: Failed to get map fd=%d ret=%d\n",
++					__func__, fd, ret);
++				break;
++			}
++		}
+ 
+-	if (!ret)
+-		fastrpc_map_get(*ppmap);
++		*ppmap = map;
++		ret = 0;
++		break;
++	}
++	spin_unlock(&fl->lock);
+ 
+ 	return ret;
  }
- module_exit(onboard_hub_exit);
+@@ -703,7 +704,7 @@ static int fastrpc_map_create(struct fas
+ 	struct fastrpc_map *map = NULL;
+ 	int err = 0;
+ 
+-	if (!fastrpc_map_find(fl, fd, ppmap))
++	if (!fastrpc_map_lookup(fl, fd, ppmap, true))
+ 		return 0;
+ 
+ 	map = kzalloc(sizeof(*map), GFP_KERNEL);
+@@ -1026,7 +1027,7 @@ static int fastrpc_put_args(struct fastr
+ 	for (i = 0; i < FASTRPC_MAX_FDLIST; i++) {
+ 		if (!fdlist[i])
+ 			break;
+-		if (!fastrpc_map_lookup(fl, (int)fdlist[i], &mmap))
++		if (!fastrpc_map_lookup(fl, (int)fdlist[i], &mmap, false))
+ 			fastrpc_map_put(mmap);
+ 	}
  
 
 
