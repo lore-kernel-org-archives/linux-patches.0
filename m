@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD46A2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 31A14C433D2;
-	Sun, 22 Jan 2023 15:18:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 425522590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDABAC433EF;
+	Sun, 22 Jan 2023 15:18:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400715;
-	bh=bHn+98W+LRqJXZsz4t28zbYdG3ANip8pqUSeTp+aJaA=;
+	s=korg; t=1674400718;
+	bh=WtOi+GKrBpcaTb9BScpbcahkz8cl3xyoDzQI8bmA7Mg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BWFak+ZGYXIB9a9TsenHBLkCInCyyoc3OdkpDabJ+zukMkOdxqlcoeOlOV9vyRwE6
-	 t5nq136SLzD7uVeh52ZOUROd0sQiAHZgof+hWEU7hu9JyxOVc6NQtKDdbBzn6FcXZ6
-	 QKMn9Wl6wyiGs/ksaRLPUVrSBvNGCQ4SNVP0NqXk=
+	b=UNCCez86BPfbJtNNy/V40FX6SabgWTh+bl7WiGvejW4tSQ1dlhRNZ6bgUppiD+T41
+	 QGUf3fwTzZs9Eau1zUjr5pHPKGUgkzhduOM0s4BE3iapyzYJ8KpYo8r3R9KQV5UxdC
+	 PFM1k1/kHfxqIdPRKs+A3DNE8oUXcFEUxoOJhgJc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felipe Balbi <balbi@kernel.org>,
-	Lorenzo Colitti <lorenzo@google.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 5.15 082/117] usb: gadget: f_ncm: fix potential NULL ptr deref in ncm_bitrate()
-Date: Sun, 22 Jan 2023 16:04:32 +0100
-Message-Id: <20230122150236.194166179@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	Filipe Manana <fdmanana@suse.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 065/117] btrfs: do not abort transaction on failure to write log tree when syncing log
+Date: Sun, 22 Jan 2023 16:04:15 +0100
+Message-Id: <20230122150235.480484816@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -37,92 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maciej Żenczykowski <maze@google.com>
+From: Filipe Manana <fdmanana@suse.com>
 
-commit c6ec929595c7443250b2a4faea988c62019d5cd2 upstream.
+commit 16199ad9eb6db60a6b10794a09fc1ac6d09312ff upstream.
 
-In Google internal bug 265639009 we've received an (as yet) unreproducible
-crash report from an aarch64 GKI 5.10.149-android13 running device.
+When syncing the log, if we fail to write log tree extent buffers, we mark
+the log for a full commit and abort the transaction. However we don't need
+to abort the transaction, all we really need to do is to make sure no one
+can commit a superblock pointing to new log tree roots. Just because we
+got a failure writing extent buffers for a log tree, it does not mean we
+will also fail to do a transaction commit.
 
-AFAICT the source code is at:
-  https://android.googlesource.com/kernel/common/+/refs/tags/ASB-2022-12-05_13-5.10
+One particular case is if due to a bug somewhere, when writing log tree
+extent buffers, the tree checker detects some corruption and the writeout
+fails because of that. Aborting the transaction can be very disruptive for
+a user, specially if the issue happened on a root filesystem. One example
+is the scenario in the Link tag below, where an isolated corruption on log
+tree leaves was causing transaction aborts when syncing the log.
 
-The call stack is:
-  ncm_close() -> ncm_notify() -> ncm_do_notify()
-with the crash at:
-  ncm_do_notify+0x98/0x270
-Code: 79000d0b b9000a6c f940012a f9400269 (b9405d4b)
-
-Which I believe disassembles to (I don't know ARM assembly, but it looks sane enough to me...):
-
-  // halfword (16-bit) store presumably to event->wLength (at offset 6 of struct usb_cdc_notification)
-  0B 0D 00 79    strh w11, [x8, #6]
-
-  // word (32-bit) store presumably to req->Length (at offset 8 of struct usb_request)
-  6C 0A 00 B9    str  w12, [x19, #8]
-
-  // x10 (NULL) was read here from offset 0 of valid pointer x9
-  // IMHO we're reading 'cdev->gadget' and getting NULL
-  // gadget is indeed at offset 0 of struct usb_composite_dev
-  2A 01 40 F9    ldr  x10, [x9]
-
-  // loading req->buf pointer, which is at offset 0 of struct usb_request
-  69 02 40 F9    ldr  x9, [x19]
-
-  // x10 is null, crash, appears to be attempt to read cdev->gadget->max_speed
-  4B 5D 40 B9    ldr  w11, [x10, #0x5c]
-
-which seems to line up with ncm_do_notify() case NCM_NOTIFY_SPEED code fragment:
-
-  event->wLength = cpu_to_le16(8);
-  req->length = NCM_STATUS_BYTECOUNT;
-
-  /* SPEED_CHANGE data is up/down speeds in bits/sec */
-  data = req->buf + sizeof *event;
-  data[0] = cpu_to_le32(ncm_bitrate(cdev->gadget));
-
-My analysis of registers and NULL ptr deref crash offset
-  (Unable to handle kernel NULL pointer dereference at virtual address 000000000000005c)
-heavily suggests that the crash is due to 'cdev->gadget' being NULL when executing:
-  data[0] = cpu_to_le32(ncm_bitrate(cdev->gadget));
-which calls:
-  ncm_bitrate(NULL)
-which then calls:
-  gadget_is_superspeed(NULL)
-which reads
-  ((struct usb_gadget *)NULL)->max_speed
-and hits a panic.
-
-AFAICT, if I'm counting right, the offset of max_speed is indeed 0x5C.
-(remember there's a GKI KABI reservation of 16 bytes in struct work_struct)
-
-It's not at all clear to me how this is all supposed to work...
-but returning 0 seems much better than panic-ing...
-
-Cc: Felipe Balbi <balbi@kernel.org>
-Cc: Lorenzo Colitti <lorenzo@google.com>
-Cc: Carlos Llamas <cmllamas@google.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Maciej Żenczykowski <maze@google.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230117131839.1138208-1-maze@google.com
+Link: https://lore.kernel.org/linux-btrfs/ae169fc6-f504-28f0-a098-6fa6a4dfb612@leemhuis.info/
+CC: stable@vger.kernel.org # 5.15+
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Filipe Manana <fdmanana@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/btrfs/disk-io.c  |    9 ++++++++-
+ fs/btrfs/tree-log.c |    2 --
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -83,7 +83,9 @@ static inline struct f_ncm *func_to_ncm(
- /* peak (theoretical) bulk transfer rate in bits-per-second */
- static inline unsigned ncm_bitrate(struct usb_gadget *g)
- {
--	if (gadget_is_superspeed(g) && g->speed >= USB_SPEED_SUPER_PLUS)
-+	if (!g)
-+		return 0;
-+	else if (gadget_is_superspeed(g) && g->speed >= USB_SPEED_SUPER_PLUS)
- 		return 4250000000U;
- 	else if (gadget_is_superspeed(g) && g->speed == USB_SPEED_SUPER)
- 		return 3750000000U;
+--- a/fs/btrfs/disk-io.c
++++ b/fs/btrfs/disk-io.c
+@@ -380,7 +380,14 @@ error:
+ 	btrfs_print_tree(eb, 0);
+ 	btrfs_err(fs_info, "block=%llu write time tree block corruption detected",
+ 		  eb->start);
+-	WARN_ON(IS_ENABLED(CONFIG_BTRFS_DEBUG));
++	/*
++	 * Be noisy if this is an extent buffer from a log tree. We don't abort
++	 * a transaction in case there's a bad log tree extent buffer, we just
++	 * fallback to a transaction commit. Still we want to know when there is
++	 * a bad log tree extent buffer, as that may signal a bug somewhere.
++	 */
++	WARN_ON(IS_ENABLED(CONFIG_BTRFS_DEBUG) ||
++		btrfs_header_owner(eb) == BTRFS_TREE_LOG_OBJECTID);
+ 	return ret;
+ }
+ 
+--- a/fs/btrfs/tree-log.c
++++ b/fs/btrfs/tree-log.c
+@@ -3141,7 +3141,6 @@ int btrfs_sync_log(struct btrfs_trans_ha
+ 		ret = 0;
+ 	if (ret) {
+ 		blk_finish_plug(&plug);
+-		btrfs_abort_transaction(trans, ret);
+ 		btrfs_set_log_full_commit(trans);
+ 		mutex_unlock(&root->log_mutex);
+ 		goto out;
+@@ -3273,7 +3272,6 @@ int btrfs_sync_log(struct btrfs_trans_ha
+ 		goto out_wake_log_root;
+ 	} else if (ret) {
+ 		btrfs_set_log_full_commit(trans);
+-		btrfs_abort_transaction(trans, ret);
+ 		mutex_unlock(&log_root_tree->log_mutex);
+ 		goto out_wake_log_root;
+ 	}
 
 
