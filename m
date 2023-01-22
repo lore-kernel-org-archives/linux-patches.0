@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7296A2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:14:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFD6AC433EF;
-	Sun, 22 Jan 2023 15:13:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2723B2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:14:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A116CC433EF;
+	Sun, 22 Jan 2023 15:14:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400440;
-	bh=oqR1VhxSwlrU/vPXp+4PAuGjZcXPYVrAzMFOqDcPPh0=;
+	s=korg; t=1674400443;
+	bh=6kfUddokXe9k4JyRKetemu7/auF5F14ceLtun0snTy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D1N2pGqCs/kD7MBKsi8cEHcQLZgE41DkijIP6Cqh0IiaovhsUtautxY+FCbuwqY3C
-	 6KVcnHuuuu6gnwT08BE+NE6XKqLEHCHtKaCn70aMc2m02myG20UeTqmTmVLllxwYU9
-	 sTPW2LhAkEQ/g9El+cJLyBgIxMz7ZnvVbGWeEjgU=
+	b=m9kRY+hk6PNJZWq5NfqPShrUEL1NyKuXWcQ7NSgWURlcGo4pedAM4YyA4wgt9mljZ
+	 CFJyShEtcm9XBHauuIFkN4FtqkV+6FdZwUBj2wv5myYWXs7r8Uz4BoFbY+sL+cQTtw
+	 0nIHC7XwgDo8iKWbP9aQFUu2rXW9TEGkH1wELz8U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Usyskin <alexander.usyskin@intel.com>,
-	Tomas Winkler <tomas.winkler@intel.com>
-Subject: [PATCH 5.10 75/98] mei: me: add meteor lake point M DID
-Date: Sun, 22 Jan 2023 16:04:31 +0100
-Message-Id: <20230122150232.602815061@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 5.10 49/98] staging: vchiq_arm: fix enum vchiq_status return types
+Date: Sun, 22 Jan 2023 16:04:05 +0100
+Message-Id: <20230122150231.582784889@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -34,43 +34,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Usyskin <alexander.usyskin@intel.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 0c4d68261717f89fa8c4f98a6967c3832fcb3ad0 upstream.
+commit 7d83299351fe7c812c529f5e39fe63b5312e4233 upstream.
 
-Add Meteor Lake Point M device id.
+gcc-13 notices a type mismatch between function declaration
+and definition for a few functions that have been converted
+from returning vchiq specific status values to regular error
+codes:
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
-Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
-Link: https://lore.kernel.org/r/20221212220247.286019-2-tomas.winkler@intel.com
+drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c:662:5: error: conflicting types for 'vchiq_initialise' due to enum/integer mismatch; have 'int(struct vchiq_instance **)' [-Werror=enum-int-mismatch]
+drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c:1411:1: error: conflicting types for 'vchiq_use_internal' due to enum/integer mismatch; have 'int(struct vchiq_state *, struct vchiq_service *, enum USE_TYPE_E)' [-Werror=enum-int-mismatch]
+drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.c:1468:1: error: conflicting types for 'vchiq_release_internal' due to enum/integer mismatch; have 'int(struct vchiq_state *, struct vchiq_service *)' [-Werror=enum-int-mismatch]
+
+Change the declarations to match the actual function definition.
+
+Fixes: a9fbd828be7f ("staging: vchiq_arm: drop enum vchiq_status from vchiq_*_internal")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230117163957.1109872-1-arnd@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/misc/mei/hw-me-regs.h |    2 ++
- drivers/misc/mei/pci-me.c     |    2 ++
- 2 files changed, 4 insertions(+)
+ drivers/staging/vc04_services/include/linux/raspberrypi/vchiq.h |    2 +-
+ drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.h   |    4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/misc/mei/hw-me-regs.h
-+++ b/drivers/misc/mei/hw-me-regs.h
-@@ -111,6 +111,8 @@
+--- a/drivers/staging/vc04_services/include/linux/raspberrypi/vchiq.h
++++ b/drivers/staging/vc04_services/include/linux/raspberrypi/vchiq.h
+@@ -82,7 +82,7 @@ struct vchiq_service_params_kernel {
  
- #define MEI_DEV_ID_RPL_S      0x7A68  /* Raptor Lake Point S */
+ struct vchiq_instance;
  
-+#define MEI_DEV_ID_MTL_M      0x7E70  /* Meteor Lake Point M */
-+
- /*
-  * MEI HW Section
-  */
---- a/drivers/misc/mei/pci-me.c
-+++ b/drivers/misc/mei/pci-me.c
-@@ -117,6 +117,8 @@ static const struct pci_device_id mei_me
+-extern enum vchiq_status vchiq_initialise(struct vchiq_instance **pinstance);
++extern int vchiq_initialise(struct vchiq_instance **pinstance);
+ extern enum vchiq_status vchiq_shutdown(struct vchiq_instance *instance);
+ extern enum vchiq_status vchiq_connect(struct vchiq_instance *instance);
+ extern enum vchiq_status vchiq_open_service(struct vchiq_instance *instance,
+--- a/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.h
++++ b/drivers/staging/vc04_services/interface/vchiq_arm/vchiq_arm.h
+@@ -89,10 +89,10 @@ extern struct vchiq_arm_state*
+ vchiq_platform_get_arm_state(struct vchiq_state *state);
  
- 	{MEI_PCI_DEVICE(MEI_DEV_ID_RPL_S, MEI_ME_PCH15_CFG)},
  
-+	{MEI_PCI_DEVICE(MEI_DEV_ID_MTL_M, MEI_ME_PCH15_CFG)},
-+
- 	/* required last entry */
- 	{0, }
- };
+-extern enum vchiq_status
++extern int
+ vchiq_use_internal(struct vchiq_state *state, struct vchiq_service *service,
+ 		   enum USE_TYPE_E use_type);
+-extern enum vchiq_status
++extern int
+ vchiq_release_internal(struct vchiq_state *state,
+ 		       struct vchiq_service *service);
+ 
 
 
