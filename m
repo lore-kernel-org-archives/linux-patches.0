@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8772590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF24C433EF;
-	Sun, 22 Jan 2023 15:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 301202590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9FDAC433EF;
+	Sun, 22 Jan 2023 15:12:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400332;
-	bh=xD3AYwBmm7PKmBNsYHmtr8QyoJvhojUloP4cPovuszo=;
+	s=korg; t=1674400338;
+	bh=UB5k2/kq5yrnaowXYFK17WeIPk9j8HG+OisOdzdbC48=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CTeE5+8qEnKqytNgc5zh6tflQE9smuEJ8iKZnHvsMYxtT5vqS1sA/gB/AiGloxsR1
-	 hzhMX/qWQsqtjZ6tjkajcacSGRQzSEMqP9BxBEnRlW/R5GnTm83MdfXKiOjY2AK6Iz
-	 RS6NpvYv/vCIp2Do9yfGaL9CXrF8zJkmRTbFaSec=
+	b=zmtTexu30kIkg9SYaD7Q0oIemkJQ9ww/8hCkulOyCkpRpcoSmA5OFinbmnWoZ4OGZ
+	 3q0MrbFWbBxqX9TwQ7ow/z+AfY4+N887iirLWSrzS3V15kkYL1jTDs0/KCwdUQTCFS
+	 nlTNn+yebGS1s4lWQeraxQPe1tMte8u8ejbnXdm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+dfcc5f4da15868df7d4d@syzkaller.appspotmail.com,
-	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 34/98] io_uring/rw: defer fsnotify calls to task context
-Date: Sun, 22 Jan 2023 16:03:50 +0100
-Message-Id: <20230122150230.933049060@linuxfoundation.org>
+	Jimmy Hu <hhhuuu@google.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 5.10 36/98] usb: xhci: Check endpoint is valid before dereferencing it
+Date: Sun, 22 Jan 2023 16:03:52 +0100
+Message-Id: <20230122150231.009770561@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -36,122 +34,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Jimmy Hu <hhhuuu@google.com>
 
-commit b000145e9907809406d8164c3b2b8861d95aecd1 upstream.
+commit e8fb5bc76eb86437ab87002d4a36d6da02165654 upstream.
 
-We can't call these off the kiocb completion as that might be off
-soft/hard irq context. Defer the calls to when we process the
-task_work for this request. That avoids valid complaints like:
+When the host controller is not responding, all URBs queued to all
+endpoints need to be killed. This can cause a kernel panic if we
+dereference an invalid endpoint.
 
-stack backtrace:
-CPU: 1 PID: 0 Comm: swapper/1 Not tainted 6.0.0-rc6-syzkaller-00321-g105a36f3694e #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 08/26/2022
-Call Trace:
- <IRQ>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
- print_usage_bug kernel/locking/lockdep.c:3961 [inline]
- valid_state kernel/locking/lockdep.c:3973 [inline]
- mark_lock_irq kernel/locking/lockdep.c:4176 [inline]
- mark_lock.part.0.cold+0x18/0xd8 kernel/locking/lockdep.c:4632
- mark_lock kernel/locking/lockdep.c:4596 [inline]
- mark_usage kernel/locking/lockdep.c:4527 [inline]
- __lock_acquire+0x11d9/0x56d0 kernel/locking/lockdep.c:5007
- lock_acquire kernel/locking/lockdep.c:5666 [inline]
- lock_acquire+0x1ab/0x570 kernel/locking/lockdep.c:5631
- __fs_reclaim_acquire mm/page_alloc.c:4674 [inline]
- fs_reclaim_acquire+0x115/0x160 mm/page_alloc.c:4688
- might_alloc include/linux/sched/mm.h:271 [inline]
- slab_pre_alloc_hook mm/slab.h:700 [inline]
- slab_alloc mm/slab.c:3278 [inline]
- __kmem_cache_alloc_lru mm/slab.c:3471 [inline]
- kmem_cache_alloc+0x39/0x520 mm/slab.c:3491
- fanotify_alloc_fid_event fs/notify/fanotify/fanotify.c:580 [inline]
- fanotify_alloc_event fs/notify/fanotify/fanotify.c:813 [inline]
- fanotify_handle_event+0x1130/0x3f40 fs/notify/fanotify/fanotify.c:948
- send_to_group fs/notify/fsnotify.c:360 [inline]
- fsnotify+0xafb/0x1680 fs/notify/fsnotify.c:570
- __fsnotify_parent+0x62f/0xa60 fs/notify/fsnotify.c:230
- fsnotify_parent include/linux/fsnotify.h:77 [inline]
- fsnotify_file include/linux/fsnotify.h:99 [inline]
- fsnotify_access include/linux/fsnotify.h:309 [inline]
- __io_complete_rw_common+0x485/0x720 io_uring/rw.c:195
- io_complete_rw+0x1a/0x1f0 io_uring/rw.c:228
- iomap_dio_complete_work fs/iomap/direct-io.c:144 [inline]
- iomap_dio_bio_end_io+0x438/0x5e0 fs/iomap/direct-io.c:178
- bio_endio+0x5f9/0x780 block/bio.c:1564
- req_bio_endio block/blk-mq.c:695 [inline]
- blk_update_request+0x3fc/0x1300 block/blk-mq.c:825
- scsi_end_request+0x7a/0x9a0 drivers/scsi/scsi_lib.c:541
- scsi_io_completion+0x173/0x1f70 drivers/scsi/scsi_lib.c:971
- scsi_complete+0x122/0x3b0 drivers/scsi/scsi_lib.c:1438
- blk_complete_reqs+0xad/0xe0 block/blk-mq.c:1022
- __do_softirq+0x1d3/0x9c6 kernel/softirq.c:571
- invoke_softirq kernel/softirq.c:445 [inline]
- __irq_exit_rcu+0x123/0x180 kernel/softirq.c:650
- irq_exit_rcu+0x5/0x20 kernel/softirq.c:662
- common_interrupt+0xa9/0xc0 arch/x86/kernel/irq.c:240
+Fix this by using xhci_get_virt_ep() helper to find the endpoint and
+checking if the endpoint is valid before dereferencing it.
 
-Fixes: f63cf5192fe3 ("io_uring: ensure that fsnotify is always called")
-Link: https://lore.kernel.org/all/20220929135627.ykivmdks2w5vzrwg@quack3/
-Reported-by: syzbot+dfcc5f4da15868df7d4d@syzkaller.appspotmail.com
-Reported-by: Jan Kara <jack@suse.cz>
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[233311.853271] xhci-hcd xhci-hcd.1.auto: xHCI host controller not responding, assume dead
+[233311.853393] Unable to handle kernel NULL pointer dereference at virtual address 00000000000000e8
+
+[233311.853964] pc : xhci_hc_died+0x10c/0x270
+[233311.853971] lr : xhci_hc_died+0x1ac/0x270
+
+[233311.854077] Call trace:
+[233311.854085]  xhci_hc_died+0x10c/0x270
+[233311.854093]  xhci_stop_endpoint_command_watchdog+0x100/0x1a4
+[233311.854105]  call_timer_fn+0x50/0x2d4
+[233311.854112]  expire_timers+0xac/0x2e4
+[233311.854118]  run_timer_softirq+0x300/0xabc
+[233311.854127]  __do_softirq+0x148/0x528
+[233311.854135]  irq_exit+0x194/0x1a8
+[233311.854143]  __handle_domain_irq+0x164/0x1d0
+[233311.854149]  gic_handle_irq.22273+0x10c/0x188
+[233311.854156]  el1_irq+0xfc/0x1a8
+[233311.854175]  lpm_cpuidle_enter+0x25c/0x418 [msm_pm]
+[233311.854185]  cpuidle_enter_state+0x1f0/0x764
+[233311.854194]  do_idle+0x594/0x6ac
+[233311.854201]  cpu_startup_entry+0x7c/0x80
+[233311.854209]  secondary_start_kernel+0x170/0x198
+
+Fixes: 50e8725e7c42 ("xhci: Refactor command watchdog and fix split string.")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jimmy Hu <hhhuuu@google.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Message-ID: <0fe978ed-8269-9774-1c40-f8a98c17e838@linux.intel.com>
+Link: https://lore.kernel.org/r/20230116142216.1141605-3-mathias.nyman@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ drivers/usb/host/xhci-ring.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index d4e017b07371..33e6e1011105 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -2702,12 +2702,6 @@ static bool io_rw_should_reissue(struct io_kiocb *req)
+--- a/drivers/usb/host/xhci-ring.c
++++ b/drivers/usb/host/xhci-ring.c
+@@ -1044,7 +1044,10 @@ static void xhci_kill_endpoint_urbs(stru
+ 	struct xhci_virt_ep *ep;
+ 	struct xhci_ring *ring;
  
- static bool __io_complete_rw_common(struct io_kiocb *req, long res)
- {
--	if (req->rw.kiocb.ki_flags & IOCB_WRITE) {
--		kiocb_end_write(req);
--		fsnotify_modify(req->file);
--	} else {
--		fsnotify_access(req->file);
--	}
- 	if (res != req->result) {
- 		if ((res == -EAGAIN || res == -EOPNOTSUPP) &&
- 		    io_rw_should_reissue(req)) {
-@@ -2760,6 +2754,20 @@ static void __io_complete_rw(struct io_kiocb *req, long res, long res2,
- 	__io_req_complete(req, issue_flags, io_fixup_rw_res(req, res), io_put_rw_kbuf(req));
- }
- 
-+static void io_req_rw_complete(struct io_kiocb *req, bool *locked)
-+{
-+	struct io_rw *rw = &req->rw;
+-	ep = &xhci->devs[slot_id]->eps[ep_index];
++	ep = xhci_get_virt_ep(xhci, slot_id, ep_index);
++	if (!ep)
++		return;
 +
-+	if (rw->kiocb.ki_flags & IOCB_WRITE) {
-+		kiocb_end_write(req);
-+		fsnotify_modify(req->file);
-+	} else {
-+		fsnotify_access(req->file);
-+	}
-+
-+	io_req_task_complete(req, locked);
-+}
-+
- static void io_complete_rw(struct kiocb *kiocb, long res, long res2)
- {
- 	struct io_kiocb *req = container_of(kiocb, struct io_kiocb, rw.kiocb);
-@@ -2767,7 +2775,7 @@ static void io_complete_rw(struct kiocb *kiocb, long res, long res2)
- 	if (__io_complete_rw_common(req, res))
- 		return;
- 	req->result = io_fixup_rw_res(req, res);
--	req->io_task_work.func = io_req_task_complete;
-+	req->io_task_work.func = io_req_rw_complete;
- 	io_req_task_work_add(req);
- }
- 
--- 
-2.39.0
-
+ 	if ((ep->ep_state & EP_HAS_STREAMS) ||
+ 			(ep->ep_state & EP_GETTING_NO_STREAMS)) {
+ 		int stream_id;
 
 
