@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E6FA2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D58F2C433EF;
-	Sun, 22 Jan 2023 15:18:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C8A92590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC6EEC433EF;
+	Sun, 22 Jan 2023 15:18:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400731;
-	bh=CFquInsX83ihdkED640eDZhbLj7tnZCIomswIgXKaa4=;
+	s=korg; t=1674400734;
+	bh=AGgRiUxW2WyNCtHhWR74Vkmi6U0/r3HGGNQR/DzksRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0uV+mlnQmaocHg/P6zQ28g6dSd8rWXT/FnmUxqtQpx0QFid3YH6HA5Oy1IVWfcA9J
-	 CFAjJKOxKpOIWD60aQWQRjy0Hir1vPy1+9lXgJ+YvdKL+xd+tdZbmQRXwnOdpAbbSM
-	 e6INN6quYM1ZilxjEDlwNhw81/6tRW2lwml7Jsrw=
+	b=XfGCxSFsNX9NxDRqGvPSQHJK5t6L8wcDc0/3kAFS0Mu47j47F2kVmdewIMDtlKDhb
+	 w9KYw7iWv5LaIM+T/NYlrh+0KKtG3ryv9r/1i+VLBae8H+btDtNldilmlbJU9Qt5I+
+	 BLPOe/s56XAAX9O0qIlVjv5Nh33FD1ki7bv0qzpc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Harliman Liem <pliem@maxlinear.com>,
+	Mohan Kumar <mkumard@nvidia.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.15 087/117] dmaengine: lgm: Move DT parsing after initialization
-Date: Sun, 22 Jan 2023 16:04:37 +0100
-Message-Id: <20230122150236.406138196@linuxfoundation.org>
+Subject: [PATCH 5.15 088/117] dmaengine: tegra210-adma: fix global intr clear
+Date: Sun, 22 Jan 2023 16:04:38 +0100
+Message-Id: <20230122150236.453966941@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -34,66 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Harliman Liem <pliem@maxlinear.com>
+From: Mohan Kumar <mkumard@nvidia.com>
 
-commit 96b3bb18f6cbe259ef4e0bed3135911b7e8d2af5 upstream.
+commit 9c7e355ccbb33d239360c876dbe49ad5ade65b47 upstream.
 
-ldma_cfg_init() will parse DT to retrieve certain configs.
-However, that is called before ldma_dma_init_vXX(), which
-will make some initialization to channel configs. It will
-thus incorrectly overwrite certain configs that are declared
-in DT.
+The current global interrupt clear programming register offset
+was not correct. Fix the programming with right offset
 
-To fix that, we move DT parsing after initialization.
-Function name is renamed to better represent what it does.
-
-Fixes: 32d31c79a1a4 ("dmaengine: Add Intel LGM SoC DMA support.")
-Signed-off-by: Peter Harliman Liem <pliem@maxlinear.com>
+Fixes: ded1f3db4cd6 ("dmaengine: tegra210-adma: prepare for supporting newer Tegra chips")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/afef6fc1ed20098b684e0d53737d69faf63c125f.1672887183.git.pliem@maxlinear.com
+Signed-off-by: Mohan Kumar <mkumard@nvidia.com>
+Link: https://lore.kernel.org/r/20230102064844.31306-1-mkumard@nvidia.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/dma/lgm/lgm-dma.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/dma/tegra210-adma.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/dma/lgm/lgm-dma.c b/drivers/dma/lgm/lgm-dma.c
-index 9b9184f964be..1709d159af7e 100644
---- a/drivers/dma/lgm/lgm-dma.c
-+++ b/drivers/dma/lgm/lgm-dma.c
-@@ -914,7 +914,7 @@ static void ldma_dev_init(struct ldma_dev *d)
- 	}
- }
+--- a/drivers/dma/tegra210-adma.c
++++ b/drivers/dma/tegra210-adma.c
+@@ -224,7 +224,7 @@ static int tegra_adma_init(struct tegra_
+ 	int ret;
  
--static int ldma_cfg_init(struct ldma_dev *d)
-+static int ldma_parse_dt(struct ldma_dev *d)
- {
- 	struct fwnode_handle *fwnode = dev_fwnode(d->dev);
- 	struct ldma_port *p;
-@@ -1661,10 +1661,6 @@ static int intel_ldma_probe(struct platform_device *pdev)
- 		p->ldev = d;
- 	}
+ 	/* Clear any interrupts */
+-	tdma_write(tdma, tdma->cdata->global_int_clear, 0x1);
++	tdma_write(tdma, tdma->cdata->ch_base_offset + tdma->cdata->global_int_clear, 0x1);
  
--	ret = ldma_cfg_init(d);
--	if (ret)
--		return ret;
--
- 	dma_dev->dev = &pdev->dev;
- 
- 	ch_mask = (unsigned long)d->channels_mask;
-@@ -1675,6 +1671,10 @@ static int intel_ldma_probe(struct platform_device *pdev)
- 			ldma_dma_init_v3X(j, d);
- 	}
- 
-+	ret = ldma_parse_dt(d);
-+	if (ret)
-+		return ret;
-+
- 	dma_dev->device_alloc_chan_resources = ldma_alloc_chan_resources;
- 	dma_dev->device_free_chan_resources = ldma_free_chan_resources;
- 	dma_dev->device_terminate_all = ldma_terminate_all;
--- 
-2.39.1
-
+ 	/* Assert soft reset */
+ 	tdma_write(tdma, ADMA_GLOBAL_SOFT_RESET, 0x1);
 
 
