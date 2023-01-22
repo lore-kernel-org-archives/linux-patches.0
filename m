@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 875ED2596
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:14:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B5EFC4339C;
-	Sun, 22 Jan 2023 15:14:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1927F2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:15:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94DA9C433EF;
+	Sun, 22 Jan 2023 15:15:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400498;
-	bh=PKLzyRTEFfu4qePmyvOt1v2G+8iIRIM8Q8iJJHhHDOU=;
+	s=korg; t=1674400500;
+	bh=XcfdUFug/89buGjRJN0eFELeTVgSoPfqkRkmMRXLhTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BOWhEsRl8sYuHiukreueXmtVs45l8zJd/YNE438fK04KvBSkayiuqYvzrGCuFURZ3
-	 xeIu4CIo2xIVc4oPNW0RORWPiEOZhljgrizetPPbcIu4Pajl8/KIDRtckzzp9dKt7g
-	 I8bmhYU0nxXGq8NbhSSPCCyClexteFXars7/BRmw=
+	b=PUV+BiyUOJg9ZIQGJ8QOxmZ3lQz83Poufl0r8hRRSThPYI143HoNrE7Q4C+310dEZ
+	 g6DcOz+VlHfxec6vGAze479Tbgwutq23O6Cn97G4VPOu94XRJj9mznb8y8pjBCagVK
+	 z4dVRnVBhWJC6Wwg051oVEtGVheGPtY4f/9V4tx8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Lee Jones <lee@kernel.org>
-Subject: [PATCH 5.10 80/98] arm64: efi: Execute runtime services from a dedicated stack
-Date: Sun, 22 Jan 2023 16:04:36 +0100
-Message-Id: <20230122150232.812272676@linuxfoundation.org>
+	Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>,
+	Marcel Holtmann <marcel@holtmann.org>
+Subject: [PATCH 5.10 98/98] Bluetooth: hci_qca: Fixed issue during suspend
+Date: Sun, 22 Jan 2023 16:04:54 +0100
+Message-Id: <20230122150233.521199526@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -34,126 +34,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
 
-commit ff7a167961d1b97e0e205f245f806e564d3505e7 upstream.
+commit 55c0bd77479b60ea29fd390faf4545cfb3a1d79e upstream.
 
-With the introduction of PRMT in the ACPI subsystem, the EFI rts
-workqueue is no longer the only caller of efi_call_virt_pointer() in the
-kernel. This means the EFI runtime services lock is no longer sufficient
-to manage concurrent calls into firmware, but also that firmware calls
-may occur that are not marshalled via the workqueue mechanism, but
-originate directly from the caller context.
+If BT SoC is running with ROM FW then just return in
+qca_suspend function as ROM FW does not support
+in-band sleep.
 
-For added robustness, and to ensure that the runtime services have 8 KiB
-of stack space available as per the EFI spec, introduce a spinlock
-protected EFI runtime stack of 8 KiB, where the spinlock also ensures
-serialization between the EFI rts workqueue (which itself serializes EFI
-runtime calls) and other callers of efi_call_virt_pointer().
-
-While at it, use the stack pivot to avoid reloading the shadow call
-stack pointer from the ordinary stack, as doing so could produce a
-gadget to defeat it.
-
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Cc: Lee Jones <lee@kernel.org>
+Fixes: 2be43abac5a8 ("Bluetooth: hci_qca: Wait for timeout during suspend")
+Signed-off-by: Venkata Lakshmi Narayana Gubba <gubbaven@codeaurora.org>
+Signed-off-by: Marcel Holtmann <marcel@holtmann.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/include/asm/efi.h       |    3 +++
- arch/arm64/kernel/efi-rt-wrapper.S |   13 ++++++++++++-
- arch/arm64/kernel/efi.c            |   27 +++++++++++++++++++++++++++
- 3 files changed, 42 insertions(+), 1 deletion(-)
+ drivers/bluetooth/hci_qca.c |   12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/include/asm/efi.h
-+++ b/arch/arm64/include/asm/efi.h
-@@ -25,6 +25,7 @@ int efi_set_mapping_permissions(struct m
- ({									\
- 	efi_virtmap_load();						\
- 	__efi_fpsimd_begin();						\
-+	spin_lock(&efi_rt_lock);					\
- })
+--- a/drivers/bluetooth/hci_qca.c
++++ b/drivers/bluetooth/hci_qca.c
+@@ -77,7 +77,8 @@ enum qca_flags {
+ 	QCA_MEMDUMP_COLLECTION,
+ 	QCA_HW_ERROR_EVENT,
+ 	QCA_SSR_TRIGGERED,
+-	QCA_BT_OFF
++	QCA_BT_OFF,
++	QCA_ROM_FW
+ };
  
- #define arch_efi_call_virt(p, f, args...)				\
-@@ -36,10 +37,12 @@ int efi_set_mapping_permissions(struct m
+ enum qca_capabilities {
+@@ -1664,6 +1665,7 @@ static int qca_setup(struct hci_uart *hu
+ 	if (ret)
+ 		return ret;
  
- #define arch_efi_call_virt_teardown()					\
- ({									\
-+	spin_unlock(&efi_rt_lock);					\
- 	__efi_fpsimd_end();						\
- 	efi_virtmap_unload();						\
- })
++	clear_bit(QCA_ROM_FW, &qca->flags);
+ 	/* Patch downloading has to be done without IBS mode */
+ 	set_bit(QCA_IBS_DISABLED, &qca->flags);
  
-+extern spinlock_t efi_rt_lock;
- efi_status_t __efi_rt_asm_wrapper(void *, const char *, ...);
+@@ -1722,12 +1724,14 @@ retry:
+ 		hu->hdev->cmd_timeout = qca_cmd_timeout;
+ 	} else if (ret == -ENOENT) {
+ 		/* No patch/nvm-config found, run with original fw/config */
++		set_bit(QCA_ROM_FW, &qca->flags);
+ 		ret = 0;
+ 	} else if (ret == -EAGAIN) {
+ 		/*
+ 		 * Userspace firmware loader will return -EAGAIN in case no
+ 		 * patch/nvm-config is found, so run with original fw/config.
+ 		 */
++		set_bit(QCA_ROM_FW, &qca->flags);
+ 		ret = 0;
+ 	} else {
+ 		if (retries < MAX_INIT_RETRIES) {
+@@ -2112,6 +2116,12 @@ static int __maybe_unused qca_suspend(st
  
- #define ARCH_EFI_IRQ_FLAGS_MASK (PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT)
---- a/arch/arm64/kernel/efi-rt-wrapper.S
-+++ b/arch/arm64/kernel/efi-rt-wrapper.S
-@@ -16,6 +16,12 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
- 	 */
- 	stp	x1, x18, [sp, #16]
+ 	set_bit(QCA_SUSPENDING, &qca->flags);
  
-+	ldr_l	x16, efi_rt_stack_top
-+	mov	sp, x16
-+#ifdef CONFIG_SHADOW_CALL_STACK
-+	str	x18, [sp, #-16]!
-+#endif
-+
- 	/*
- 	 * We are lucky enough that no EFI runtime services take more than
- 	 * 5 arguments, so all are passed in registers rather than via the
-@@ -29,6 +35,7 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
- 	mov	x4, x6
- 	blr	x8
- 
-+	mov	sp, x29
- 	ldp	x1, x2, [sp, #16]
- 	cmp	x2, x18
- 	ldp	x29, x30, [sp], #32
-@@ -42,6 +49,10 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
- 	 * called with preemption disabled and a separate shadow stack is used
- 	 * for interrupts.
- 	 */
--	mov	x18, x2
-+#ifdef CONFIG_SHADOW_CALL_STACK
-+	ldr_l	x18, efi_rt_stack_top
-+	ldr	x18, [x18, #-16]
-+#endif
-+
- 	b	efi_handle_corrupted_x18	// tail call
- SYM_FUNC_END(__efi_rt_asm_wrapper)
---- a/arch/arm64/kernel/efi.c
-+++ b/arch/arm64/kernel/efi.c
-@@ -143,3 +143,30 @@ asmlinkage efi_status_t efi_handle_corru
- 	pr_err_ratelimited(FW_BUG "register x18 corrupted by EFI %s\n", f);
- 	return s;
- }
-+
-+DEFINE_SPINLOCK(efi_rt_lock);
-+
-+asmlinkage u64 *efi_rt_stack_top __ro_after_init;
-+
-+/* EFI requires 8 KiB of stack space for runtime services */
-+static_assert(THREAD_SIZE >= SZ_8K);
-+
-+static int __init arm64_efi_rt_init(void)
-+{
-+	void *p;
-+
-+	if (!efi_enabled(EFI_RUNTIME_SERVICES))
++	/* if BT SoC is running with default firmware then it does not
++	 * support in-band sleep
++	 */
++	if (test_bit(QCA_ROM_FW, &qca->flags))
 +		return 0;
 +
-+	p = __vmalloc_node(THREAD_SIZE, THREAD_ALIGN, GFP_KERNEL,
-+			   NUMA_NO_NODE, &&l);
-+l:	if (!p) {
-+		pr_warn("Failed to allocate EFI runtime stack\n");
-+		clear_bit(EFI_RUNTIME_SERVICES, &efi.flags);
-+		return -ENOMEM;
-+	}
-+
-+	efi_rt_stack_top = p + THREAD_SIZE;
-+	return 0;
-+}
-+core_initcall(arm64_efi_rt_init);
+ 	/* During SSR after memory dump collection, controller will be
+ 	 * powered off and then powered on.If controller is powered off
+ 	 * during SSR then we should wait until SSR is completed.
 
 
