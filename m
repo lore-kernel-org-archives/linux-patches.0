@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 288337E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:05:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84043C433D2;
-	Sun, 22 Jan 2023 15:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB6B27E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:05:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3947DC4339C;
+	Sun, 22 Jan 2023 15:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674399953;
-	bh=8F+5jIWZkWncUP7QenbCUxSk1gKbk2d8IJoFHsuKv+M=;
+	s=korg; t=1674399956;
+	bh=bTF9K5tpWKhRyLSGzbQGyh0lp1dPNwVsSnTFzScKnC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x5mdYtHVIirh85DkFrQtPyDUZvlxhTVVqasRkWMRpIqtnnDqa0t853k/fI1LT9dm7
-	 qOVic9P/yE3BYE6FJ0yQ3GCnPW3rYo0b2LGKVSdHY8rLHa2tIWNWvhq/NhFcZKeQnD
-	 rx1NluVScph5/UfBIo2rNAVrmTD9kk8Tg3Ghj6Mw=
+	b=nCxoylTkB9xEGriHWq2uOn18RViCgeAg/PHJDFEYWSQHHUdzfg6fPIQXDt7T0TvLB
+	 odcG+3m7gRuoPUXUTqGL+lddaHdNlItwOQ4shrM7iUkbkHHIbALRAARgdnpDJVc21M
+	 kDYmqiTn9DGA2sWfeMaiZ/VqFSaJSI76nwgr22Jo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	=?UTF-8?q?Duke=20Xin ?= <duke_xinanwen@163.com>,
 	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.14 10/25] USB: serial: option: add Quectel EM05-G (CS) modem
-Date: Sun, 22 Jan 2023 16:04:10 +0100
-Message-Id: <20230122150218.229312123@linuxfoundation.org>
+Subject: [PATCH 4.14 11/25] USB: serial: option: add Quectel EM05-G (RS) modem
+Date: Sun, 22 Jan 2023 16:04:11 +0100
+Message-Id: <20230122150218.280612113@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150217.788215473@linuxfoundation.org>
 References: <20230122150217.788215473@linuxfoundation.org>
@@ -36,9 +36,9 @@ Content-Transfer-Encoding: 8bit
 
 From: Duke Xin(辛安文) <duke_xinanwen@163.com>
 
-commit bb78654b0b46316dac687fd4b7dc7cce636f46cd upstream.
+commit b72d13977689f0c717444010e108c4f20658dfee upstream.
 
-The EM05-G (CS) modem has 2 USB configurations that are configurable via
+The EM05-G (RS) modem has 2 USB configurations that are configurable via
 the AT command AT+QCFG="usbnet",[ 0 | 2 ] which make the modem enumerate
 with the following interfaces, respectively:
 
@@ -51,7 +51,7 @@ RMNET Mode
 --------------
 T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 21 Spd=480  MxCh= 0
 D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=030C Rev= 3.18
+P:  Vendor=2c7c ProdID=0314 Rev= 3.18
 S:  Manufacturer=Quectel
 S:  Product=Quectel EM05-G
 C:* #Ifs= 5 Cfg#= 1 Atr=a0 MxPwr=500mA
@@ -79,7 +79,7 @@ MBIM Mode
 --------------
 T:  Bus=01 Lev=01 Prnt=01 Port=00 Cnt=01 Dev#= 16 Spd=480  MxCh= 0
 D:  Ver= 2.00 Cls=ef(misc ) Sub=02 Prot=01 MxPS=64 #Cfgs=  1
-P:  Vendor=2c7c ProdID=030C Rev= 3.18
+P:  Vendor=2c7c ProdID=0314 Rev= 3.18
 S:  Manufacturer=Quectel
 S:  Product=Quectel EM05-G
 C:* #Ifs= 6 Cfg#= 1 Atr=a0 MxPwr=500mA
@@ -116,19 +116,19 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
 --- a/drivers/usb/serial/option.c
 +++ b/drivers/usb/serial/option.c
-@@ -258,6 +258,7 @@ static void option_instat_callback(struc
- #define QUECTEL_PRODUCT_EP06			0x0306
- #define QUECTEL_PRODUCT_EM05G			0x030a
- #define QUECTEL_PRODUCT_EM060K			0x030b
-+#define QUECTEL_PRODUCT_EM05G_CS		0x030c
+@@ -261,6 +261,7 @@ static void option_instat_callback(struc
+ #define QUECTEL_PRODUCT_EM05G_CS		0x030c
  #define QUECTEL_PRODUCT_EM05G_SG		0x0311
  #define QUECTEL_PRODUCT_EM05G_GR		0x0313
++#define QUECTEL_PRODUCT_EM05G_RS		0x0314
  #define QUECTEL_PRODUCT_EM12			0x0512
-@@ -1167,6 +1168,8 @@ static const struct usb_device_id option
+ #define QUECTEL_PRODUCT_RM500Q			0x0800
+ #define QUECTEL_PRODUCT_RM520N			0x0801
+@@ -1170,6 +1171,8 @@ static const struct usb_device_id option
  	  .driver_info = RSVD(6) | ZLP },
- 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_GR, 0xff),
+ 	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_CS, 0xff),
  	  .driver_info = RSVD(6) | ZLP },
-+	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_CS, 0xff),
++	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_RS, 0xff),
 +	  .driver_info = RSVD(6) | ZLP },
  	{ USB_DEVICE_INTERFACE_CLASS(QUECTEL_VENDOR_ID, QUECTEL_PRODUCT_EM05G_SG, 0xff),
  	  .driver_info = RSVD(6) | ZLP },
