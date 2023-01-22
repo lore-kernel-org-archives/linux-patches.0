@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 511562590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C891AC433D2;
-	Sun, 22 Jan 2023 15:16:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B242590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D2AFC433EF;
+	Sun, 22 Jan 2023 15:16:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400564;
-	bh=snat58ocbkcwQxlHxZpbVy3p3lO8cxJCj78cJth6dBs=;
+	s=korg; t=1674400566;
+	bh=+o9TrdFs0uxcjCT/J2TzT5yMhSpV5kReMsHWVvRW6kI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ifIAOtuIwEbyht0iSxPLRQ+j67sDtk3NIxoN/et8kXHZPBACGi/6Xm5pqT68AILwA
-	 NI3IX+ZQBrtR+EA8WgcE9rZEqVvhjBkvaCwW1qCCU0BBOkSFX+wThbeJADJic8aKE8
-	 izht4dLa3L5erBv8uRz3gtvdXOzhItBHreV8hjps=
+	b=W2tGJ3haVYu/rCHIXQzMMelCxTTN0TB9uLoz8XQ4x0fzMOELp2iGCXDrYU1lFdoRU
+	 mjfdY3PWmsuwhXRnArIZ1nid+j6mZ5VIImiP8q8S5qcZnv69edJhYOCccRz8lsIB1n
+	 kfDgRHXXewYAFdtOk/1UDQkBIW+0AJD5M29u62Ec=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Szu <jeremy.szu@canonical.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Guchun Chen <guchun.chen@amd.com>,
+	Evan Quan <evan.quan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 023/117] ALSA: hda/realtek: fix mute/micmute LEDs dont work for a HP platform
-Date: Sun, 22 Jan 2023 16:03:33 +0100
-Message-Id: <20230122150233.665164908@linuxfoundation.org>
+Subject: [PATCH 5.15 024/117] drm/amdgpu: disable runtime pm on several sienna cichlid cards(v2)
+Date: Sun, 22 Jan 2023 16:03:34 +0100
+Message-Id: <20230122150233.700445185@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -35,35 +36,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Szu <jeremy.szu@canonical.com>
+From: Guchun Chen <guchun.chen@amd.com>
 
-[ Upstream commit 9c694fbfe6f36017b060ad74c7565cb379852e40 ]
+[ Upstream commit d1acd68b2b8924c804e1e3cc1bc5fa4d6b76176c ]
 
-There is a HP platform uses ALC236 codec which using GPIO2 to control
-mute LED and GPIO1 to control micmute LED.
-Thus, add a quirk to make them work.
+Disable runtime power management on several sienna cichlid
+cards, otherwise SMU will possibly fail to be resumed from
+runtime suspend. Will drop this after a clean solution between
+kernel driver and SMU FW is available.
 
-Signed-off-by: Jeremy Szu <jeremy.szu@canonical.com>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230105044154.8242-1-jeremy.szu@canonical.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+amdgpu 0000:63:00.0: amdgpu: GECC is enabled
+amdgpu 0000:63:00.0: amdgpu: SECUREDISPLAY: securedisplay ta ucode is not available
+amdgpu 0000:63:00.0: amdgpu: SMU is resuming...
+amdgpu 0000:63:00.0: amdgpu: SMU: I'm not done with your command: SMN_C2PMSG_66:0x0000000E SMN_C2PMSG_82:0x00000080
+amdgpu 0000:63:00.0: amdgpu: Failed to SetDriverDramAddr!
+amdgpu 0000:63:00.0: amdgpu: Failed to setup smc hw!
+[drm:amdgpu_device_ip_resume_phase2 [amdgpu]] *ERROR* resume of IP block <smu> failed -62
+amdgpu 0000:63:00.0: amdgpu: amdgpu_device_ip_resume failed (-62)
+
+v2: seperate to a function.
+
+Signed-off-by: Guchun Chen <guchun.chen@amd.com>
+Reviewed-by: Evan Quan <evan.quan@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Stable-dep-of: 1923bc5a56da ("drm/amd: Delay removal of the firmware framebuffer")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/sound/pci/hda/patch_realtek.c b/sound/pci/hda/patch_realtek.c
-index feb337083573..74fe0fe85834 100644
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9078,6 +9078,7 @@ static const struct snd_pci_quirk alc269_fixup_tbl[] = {
- 	SND_PCI_QUIRK(0x103c, 0x8aab, "HP EliteBook 650 G9 (MB 8AA9)", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b5d, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b5e, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
-+	SND_PCI_QUIRK(0x103c, 0x8bf0, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
- 	SND_PCI_QUIRK(0x1043, 0x106d, "Asus K53BE", ALC269_FIXUP_LIMIT_INT_MIC_BOOST),
+diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+index 6744427577b3..43e30b9a2e02 100644
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_kms.c
+@@ -43,6 +43,17 @@
+ #include "amdgpu_display.h"
+ #include "amdgpu_ras.h"
+ 
++static void amdgpu_runtime_pm_quirk(struct amdgpu_device *adev)
++{
++	/*
++	 * Add below quirk on several sienna_cichlid cards to disable
++	 * runtime pm to fix EMI failures.
++	 */
++	if (((adev->pdev->device == 0x73A1) && (adev->pdev->revision == 0x00)) ||
++	    ((adev->pdev->device == 0x73BF) && (adev->pdev->revision == 0xCF)))
++		adev->runpm = false;
++}
++
+ void amdgpu_unregister_gpu_instance(struct amdgpu_device *adev)
+ {
+ 	struct amdgpu_gpu_instance *gpu_instance;
+@@ -201,6 +212,9 @@ int amdgpu_driver_load_kms(struct amdgpu_device *adev, unsigned long flags)
+ 		 */
+ 		if (adev->is_fw_fb)
+ 			adev->runpm = false;
++
++		amdgpu_runtime_pm_quirk(adev);
++
+ 		if (adev->runpm)
+ 			dev_info(adev->dev, "Using BACO for runtime pm\n");
+ 	}
 -- 
 2.39.0
 
