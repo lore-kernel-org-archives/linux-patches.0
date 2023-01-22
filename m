@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 302E22590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:24:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A637AC433D2;
-	Sun, 22 Jan 2023 15:24:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB0912590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:24:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4340BC433EF;
+	Sun, 22 Jan 2023 15:24:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401052;
-	bh=ifJdVjY2AeBVZZjiUewJRXO3f4S6b7YHtavXXbHeXtE=;
+	s=korg; t=1674401054;
+	bh=/YyYo0fyOydi99bqr+l/KZxlzSDBGV1LFRkX/WC8Phw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XwkAPHFcbtjjxWEsrmZb4f64NcWe3FtS/KvAkgeCuj9yIbaiExuiU7ZawiqFz6Kol
-	 EhigeKFOM3zQlKohgTjB5G8e2P946P/yvKPOrkeg7fBJxZbK/Zon6tRv/K3p2VKnSv
-	 8q9FL09JmE5Gt07w5sZOAT/vNCXO9+/ezMfHG9HU=
+	b=jzaBNZiHfryKtP6RtrB9Lv0HtUQkOKuu6uqPToMDg8BjefFQ9LGdCZAjbxhqHXuNj
+	 XxJYM584Bhsyj4dEmnnZCqnTF+Uo4EPfvkrJDYuPPdzh/s430z3ATrkhOeTR7TBz7i
+	 +4Vof1WxKPFGXqjtmRr2REN+OajAVqkk1bMV4Ca0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yehezkel Bernat <YehezkelShB@gmail.com>,
 	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 6.1 091/193] thunderbolt: Disable XDomain lane 1 only in software connection manager
-Date: Sun, 22 Jan 2023 16:03:40 +0100
-Message-Id: <20230122150250.527038630@linuxfoundation.org>
+Subject: [PATCH 6.1 092/193] thunderbolt: Use correct function to calculate maximum USB3 link rate
+Date: Sun, 22 Jan 2023 16:03:41 +0100
+Message-Id: <20230122150250.569512945@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -36,52 +36,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit 84ee211c83212f4d35b56e0603acdcc41f860f1b upstream.
+commit e8ff07fb33026c5c1bb5b81293496faba5d68059 upstream.
 
-When firmware connection manager is in use we should not touch the lane
-adapter (well or any) configuration space so do this only when we know
-that the software connection manager is active.
+We need to take minimum of both sides of the USB3 link into consideration,
+not just the downstream port. Fix this by calling tb_usb3_max_link_rate()
+instead.
 
-Fixes: 8e1de7042596 ("thunderbolt: Add support for XDomain lane bonding")
+Fixes: 0bd680cd900c ("thunderbolt: Add USB3 bandwidth management")
 Cc: stable@vger.kernel.org
 Acked-by: Yehezkel Bernat <YehezkelShB@gmail.com>
 Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/xdomain.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/thunderbolt/tunnel.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/thunderbolt/xdomain.c b/drivers/thunderbolt/xdomain.c
-index cfa83486c9da..3c51e47dd86b 100644
---- a/drivers/thunderbolt/xdomain.c
-+++ b/drivers/thunderbolt/xdomain.c
-@@ -1419,12 +1419,19 @@ static int tb_xdomain_get_properties(struct tb_xdomain *xd)
- 	 * registered, we notify the userspace that it has changed.
- 	 */
- 	if (!update) {
--		struct tb_port *port;
-+		/*
-+		 * Now disable lane 1 if bonding was not enabled. Do
-+		 * this only if bonding was possible at the beginning
-+		 * (that is we are the connection manager and there are
-+		 * two lanes).
-+		 */
-+		if (xd->bonding_possible) {
-+			struct tb_port *port;
- 
--		/* Now disable lane 1 if bonding was not enabled */
--		port = tb_port_at(xd->route, tb_xdomain_parent(xd));
--		if (!port->bonded)
--			tb_port_disable(port->dual_link_port);
-+			port = tb_port_at(xd->route, tb_xdomain_parent(xd));
-+			if (!port->bonded)
-+				tb_port_disable(port->dual_link_port);
-+		}
- 
- 		if (device_add(&xd->dev)) {
- 			dev_err(&xd->dev, "failed to add XDomain device\n");
--- 
-2.39.1
-
+--- a/drivers/thunderbolt/tunnel.c
++++ b/drivers/thunderbolt/tunnel.c
+@@ -1275,7 +1275,7 @@ static void tb_usb3_reclaim_available_ba
+ 		return;
+ 	} else if (!ret) {
+ 		/* Use maximum link rate if the link valid is not set */
+-		ret = usb4_usb3_port_max_link_rate(tunnel->src_port);
++		ret = tb_usb3_max_link_rate(tunnel->dst_port, tunnel->src_port);
+ 		if (ret < 0) {
+ 			tb_tunnel_warn(tunnel, "failed to read maximum link rate\n");
+ 			return;
 
 
