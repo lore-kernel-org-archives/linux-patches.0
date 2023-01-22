@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0013D7E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:08:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AD30C433D2;
-	Sun, 22 Jan 2023 15:08:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F90D7E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:08:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 171E4C4339B;
+	Sun, 22 Jan 2023 15:08:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400115;
-	bh=wZzHjUoDUl7JxU7U7wO8gkbbtJfJzQPuQE4U2xUGOxA=;
+	s=korg; t=1674400118;
+	bh=ZScHmzXs66LuZGKXVd1a8q72Y/SOvksiAKKE1tFmPsk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZjEyeWNcCWQ4yCTJwTq2tNNu27+Tma2pdsKQLE1+BXTpIRsvys01udTB92rUqOZp1
-	 z2OnTzea98jqxN8Vs5TjkDrkTdZb7z4/DJT0mjYN+GlxHqWbgyvAlEcbGNtXVufBZW
-	 9rWlfWSPJL0PlllyeRIj7XGwXeynz32m3soXaD54=
+	b=sFtX8i9Zy4gFL66zHKw3PfYMH8Q05NSEDZT5fuV8KA9IcC5Dxy5BJsmUoU1Jc26EP
+	 yvz8jGVg2hLg8vftPVy7mGIQxWUyjboyct3lUSixgCS/8CMNnNPIz+hsEKTYCV3g05
+	 p7+23XYbZS0qr+Ki/PQkqEUBfvtY1FyTf4Qj2L8I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Whitney <enwlinux@gmail.com>,
-	Theodore Tso <tytso@mit.edu>,
+	Olga Kornievskaia <kolga@netapp.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 33/37] Revert "ext4: fix delayed allocation bug in ext4_clu_mapped for bigalloc + inline"
-Date: Sun, 22 Jan 2023 16:04:30 +0100
-Message-Id: <20230122150220.936968056@linuxfoundation.org>
+Subject: [PATCH 5.4 01/55] pNFS/filelayout: Fix coalescing test for single DS
+Date: Sun, 22 Jan 2023 16:03:48 +0100
+Message-Id: <20230122150222.280393813@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230122150219.557984692@linuxfoundation.org>
-References: <20230122150219.557984692@linuxfoundation.org>
+In-Reply-To: <20230122150222.210885219@linuxfoundation.org>
+References: <20230122150222.210885219@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,49 +37,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Olga Kornievskaia <olga.kornievskaia@gmail.com>
 
-This reverts commit 1ed1eef0551bebee8e56973ccd0900e3578edfb7 which is
-commit 131294c35ed6f777bd4e79d42af13b5c41bf2775 upstream.
+[ Upstream commit a6b9d2fa0024e7e399c26facd0fb466b7396e2b9 ]
 
-Eric writes:
-	I recommend not backporting this patch or the other three
-	patches apparently intended to support it to 4.19 stable.  All
-	these patches are related to ext4's bigalloc feature, which was
-	experimental as of 4.19 (expressly noted by contemporary
-	versions of e2fsprogs) and also suffered from a number of bugs.
-	A significant number of additional patches that were applied to
-	5.X kernels over time would have to be backported to 4.19 for
-	the patch below to function correctly. It's really not worth
-	doing that given bigalloc's experimental status as of 4.19 and
-	the very rare combination of the bigalloc and inline features.
+When there is a single DS no striping constraints need to be placed on
+the IO. When such constraint is applied then buffered reads don't
+coalesce to the DS's rsize.
 
-Link: https://lore.kernel.org/r/Y8mAe1SlcLD5fykg@debian-BULLSEYE-live-builder-AMD64
-Cc: Eric Whitney <enwlinux@gmail.com>
-Cc: Theodore Ts'o <tytso@mit.edu>
-Cc: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Olga Kornievskaia <kolga@netapp.com>
+Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/extents.c |    8 --------
- 1 file changed, 8 deletions(-)
+ fs/nfs/filelayout/filelayout.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
---- a/fs/ext4/extents.c
-+++ b/fs/ext4/extents.c
-@@ -5984,14 +5984,6 @@ int ext4_clu_mapped(struct inode *inode,
- 	struct ext4_extent *extent;
- 	ext4_lblk_t first_lblk, first_lclu, last_lclu;
+diff --git a/fs/nfs/filelayout/filelayout.c b/fs/nfs/filelayout/filelayout.c
+index 98b74cdabb99..8c72718d9fe0 100644
+--- a/fs/nfs/filelayout/filelayout.c
++++ b/fs/nfs/filelayout/filelayout.c
+@@ -837,6 +837,12 @@ filelayout_alloc_lseg(struct pnfs_layout_hdr *layoutid,
+ 	return &fl->generic_hdr;
+ }
  
--	/*
--	 * if data can be stored inline, the logical cluster isn't
--	 * mapped - no physical clusters have been allocated, and the
--	 * file has no extents
--	 */
--	if (ext4_test_inode_state(inode, EXT4_STATE_MAY_INLINE_DATA))
--		return 0;
--
- 	/* search for the extent closest to the first block in the cluster */
- 	path = ext4_find_extent(inode, EXT4_C2B(sbi, lclu), NULL, 0);
- 	if (IS_ERR(path)) {
++static bool
++filelayout_lseg_is_striped(const struct nfs4_filelayout_segment *flseg)
++{
++	return flseg->num_fh > 1;
++}
++
+ /*
+  * filelayout_pg_test(). Called by nfs_can_coalesce_requests()
+  *
+@@ -857,6 +863,8 @@ filelayout_pg_test(struct nfs_pageio_descriptor *pgio, struct nfs_page *prev,
+ 	size = pnfs_generic_pg_test(pgio, prev, req);
+ 	if (!size)
+ 		return 0;
++	else if (!filelayout_lseg_is_striped(FILELAYOUT_LSEG(pgio->pg_lseg)))
++		return size;
+ 
+ 	/* see if req and prev are in the same stripe */
+ 	if (prev) {
+-- 
+2.35.1
+
 
 
