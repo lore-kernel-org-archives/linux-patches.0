@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6093E2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBB3AC4339B;
-	Sun, 22 Jan 2023 15:18:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED6542590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:19:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 741E7C433D2;
+	Sun, 22 Jan 2023 15:19:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400739;
-	bh=ACUv1GCDZl5dqgNypOm45KYCeJ8uXIUPJlFxYQhnpHk=;
+	s=korg; t=1674400741;
+	bh=bosIJdD5zsoy0xeEIrgMLrS3i3JniE4zWZ8mBsrvfNw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k5enB4weqc/iZ2DBbJk1dF4jOScojxOKM1YhxRsGghwmbYeY3PIkEsFy3I7x/jpev
-	 8dLlRTytW795mb4x6sxGKZE5J4bFfQC2n+0AHZ7EKwLgYZOlBgH4DhX3TPknP5EnGE
-	 qiuSxNyrrxQ7TCnRZiz0O8GU6ftvpDSlkLqi7/Y0=
+	b=CYo6bzQ8CI6ticnhZYjiNUlg9YlLHCG/V5RTjRrhIJfuJimv4eNo96GrPFglVMpAP
+	 3xmlCWGw172XOxQ+fDEJBq1fht07Hbj7tYotsdM9n9QUXxq10DO7/oMe8jfrHt1Xy3
+	 lKlyN7QnhWeNphUShkqAysmYpBDWQRVP+TIyaF38=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Subject: [PATCH 5.15 090/117] serial: amba-pl011: fix high priority character transmission in rs486 mode
-Date: Sun, 22 Jan 2023 16:04:40 +0100
-Message-Id: <20230122150236.542409845@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Tobias Schramm <t.schramm@manjaro.org>,
+	Richard Genoud <richard.genoud@gmail.com>
+Subject: [PATCH 5.15 091/117] serial: atmel: fix incorrect baudrate setup
+Date: Sun, 22 Jan 2023 16:04:41 +0100
+Message-Id: <20230122150236.581696923@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -33,47 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lino Sanfilippo <l.sanfilippo@kunbus.com>
+From: Tobias Schramm <t.schramm@manjaro.org>
 
-commit 4f39aca2360c82dccd2f5179d77e94aab665bea6 upstream.
+commit 5bfdd3c654bd879bff50c2e85e42f85ae698b42f upstream.
 
-In RS485 mode the transmission of a high priority character fails since it
-is written to the data register before the transmitter is enabled. Fix this
-in pl011_tx_chars() by enabling RS485 transmission before writing the
-character.
+Commit ba47f97a18f2 ("serial: core: remove baud_rates when serial console
+setup") changed uart_set_options to select the correct baudrate
+configuration based on the absolute error between requested baudrate and
+available standard baudrate settings.
+Prior to that commit the baudrate was selected based on which predefined
+standard baudrate did not exceed the requested baudrate.
+This change of selection logic was never reflected in the atmel serial
+driver. Thus the comment left in the atmel serial driver is no longer
+accurate.
+Additionally the manual rounding up described in that comment and applied
+via (quot - 1) requests an incorrect baudrate. Since uart_set_options uses
+tty_termios_encode_baud_rate to determine the appropriate baudrate flags
+this can cause baudrate selection to fail entirely because
+tty_termios_encode_baud_rate will only select a baudrate if relative error
+between requested and selected baudrate does not exceed +/-2%.
+Fix that by requesting actual, exact baudrate used by the serial.
 
-Fixes: 8d479237727c ("serial: amba-pl011: add RS485 support")
-Cc: stable@vger.kernel.org
-Signed-off-by: Lino Sanfilippo <l.sanfilippo@kunbus.com>
-Link: https://lore.kernel.org/r/20230108181735.10937-1-LinoSanfilippo@gmx.de
+Fixes: ba47f97a18f2 ("serial: core: remove baud_rates when serial console setup")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Tobias Schramm <t.schramm@manjaro.org>
+Acked-by: Richard Genoud <richard.genoud@gmail.com>
+Link: https://lore.kernel.org/r/20230109072940.202936-1-t.schramm@manjaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/amba-pl011.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/tty/serial/atmel_serial.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/drivers/tty/serial/amba-pl011.c
-+++ b/drivers/tty/serial/amba-pl011.c
-@@ -1472,6 +1472,10 @@ static bool pl011_tx_chars(struct uart_a
- 	struct circ_buf *xmit = &uap->port.state->xmit;
- 	int count = uap->fifosize >> 1;
+--- a/drivers/tty/serial/atmel_serial.c
++++ b/drivers/tty/serial/atmel_serial.c
+@@ -2615,13 +2615,7 @@ static void __init atmel_console_get_opt
+ 	else if (mr == ATMEL_US_PAR_ODD)
+ 		*parity = 'o';
  
-+	if ((uap->port.rs485.flags & SER_RS485_ENABLED) &&
-+	    !uap->rs485_tx_started)
-+		pl011_rs485_tx_start(uap);
-+
- 	if (uap->port.x_char) {
- 		if (!pl011_tx_char(uap, uap->port.x_char, from_irq))
- 			return true;
-@@ -1483,10 +1487,6 @@ static bool pl011_tx_chars(struct uart_a
- 		return false;
- 	}
+-	/*
+-	 * The serial core only rounds down when matching this to a
+-	 * supported baud rate. Make sure we don't end up slightly
+-	 * lower than one of those, as it would make us fall through
+-	 * to a much lower baud rate than we really want.
+-	 */
+-	*baud = port->uartclk / (16 * (quot - 1));
++	*baud = port->uartclk / (16 * quot);
+ }
  
--	if ((uap->port.rs485.flags & SER_RS485_ENABLED) &&
--	    !uap->rs485_tx_started)
--		pl011_rs485_tx_start(uap);
--
- 	/* If we are using DMA mode, try to send some characters. */
- 	if (pl011_dma_tx_irq(uap))
- 		return true;
+ static int __init atmel_console_setup(struct console *co, char *options)
 
 
