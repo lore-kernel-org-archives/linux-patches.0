@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60CE82590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD2CBC433D2;
-	Sun, 22 Jan 2023 15:18:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B352590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:18:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E1C5C433D2;
+	Sun, 22 Jan 2023 15:18:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400689;
-	bh=cyhTFg3RsVGXpSI3qHB+0LTUSJRlFHoCN8iAqTXjCYs=;
+	s=korg; t=1674400691;
+	bh=qVWf0RJkRGfrQTd+FUM4b4Swu6f7nlndQ+Oa8K42xCw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xLcmLQEovQRQ8d5AOVQ+v98AmwEbdbPjy/A91OOjxLOXF17OrWnn0psJpshtfoLYP
-	 x90Q3Cu8V+v/yWz+FZPY9OZR8UoPNNwkKHL+ZAYX7QgaK3hl8uKrhU2aynIYDhZRWC
-	 u1Bt3y5z+3s4VZWABVvivWBMIVgXqu0vWC+7dYR8=
+	b=sH/L936GIU73lefpfCebgzKRePcR83JrDStC4DusRY1+NLV1NFsfIf65vHt7Mz7LQ
+	 UcRMCzzl1FDqtTFyJaq+ndjuOCnLsweYk6dm7L+gv0tZG6yoMf09fi5YEP932s6374
+	 UkV5GXFH11Rba+Lub53llBu/v6y8Rn+adfHQqnFQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.15 064/117] mmc: sdhci-esdhc-imx: correct the tuning start tap and step setting
-Date: Sun, 22 Jan 2023 16:04:14 +0100
-Message-Id: <20230122150235.448348164@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Samuel Thibault <samuel.thibault@ens-lyon.org>
+Subject: [PATCH 5.15 073/117] tty: fix possible null-ptr-defer in spk_ttyio_release
+Date: Sun, 22 Jan 2023 16:04:23 +0100
+Message-Id: <20230122150235.832235416@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -35,73 +35,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haibo Chen <haibo.chen@nxp.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-commit 1e336aa0c0250ec84c6f16efac40c9f0138e367d upstream.
+commit 5abbeebd8296c2301023b8dc4b5a6c0d5229b4f5 upstream.
 
-Current code logic may be impacted by the setting of ROM/Bootloader,
-so unmask these bits first, then setting these bits accordingly.
+Run the following tests on the qemu platform:
 
-Fixes: 2b16cf326b70 ("mmc: sdhci-esdhc-imx: move tuning static configuration into hwinit function")
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221207112315.1812222-1-haibo.chen@nxp.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+syzkaller:~# modprobe speakup_audptr
+ input: Speakup as /devices/virtual/input/input4
+ initialized device: /dev/synth, node (MAJOR 10, MINOR 125)
+ speakup 3.1.6: initialized
+ synth name on entry is: (null)
+ synth probe
+
+spk_ttyio_initialise_ldisc failed because tty_kopen_exclusive returned
+failed (errno -16), then remove the module, we will get a null-ptr-defer
+problem, as follow:
+
+syzkaller:~# modprobe -r speakup_audptr
+ releasing synth audptr
+ BUG: kernel NULL pointer dereference, address: 0000000000000080
+ #PF: supervisor write access in kernel mode
+ #PF: error_code(0x0002) - not-present page
+ PGD 0 P4D 0
+ Oops: 0002 [#1] PREEMPT SMP PTI
+ CPU: 2 PID: 204 Comm: modprobe Not tainted 6.1.0-rc6-dirty #1
+ RIP: 0010:mutex_lock+0x14/0x30
+ Call Trace:
+ <TASK>
+  spk_ttyio_release+0x19/0x70 [speakup]
+  synth_release.part.6+0xac/0xc0 [speakup]
+  synth_remove+0x56/0x60 [speakup]
+  __x64_sys_delete_module+0x156/0x250
+  ? fpregs_assert_state_consistent+0x1d/0x50
+  do_syscall_64+0x37/0x90
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+ </TASK>
+ Modules linked in: speakup_audptr(-) speakup
+ Dumping ftrace buffer:
+
+in_synth->dev was not initialized during modprobe, so we add check
+for in_synth->dev to fix this bug.
+
+Fixes: 4f2a81f3a882 ("speakup: Reference synth from tty and tty from synth")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221202060633.217364-1-cuigaosheng1@huawei.com
+Reviewed-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c |   22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ drivers/accessibility/speakup/spk_ttyio.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -107,6 +107,7 @@
- #define ESDHC_TUNING_START_TAP_DEFAULT	0x1
- #define ESDHC_TUNING_START_TAP_MASK	0x7f
- #define ESDHC_TUNING_CMD_CRC_CHECK_DISABLE	(1 << 7)
-+#define ESDHC_TUNING_STEP_DEFAULT	0x1
- #define ESDHC_TUNING_STEP_MASK		0x00070000
- #define ESDHC_TUNING_STEP_SHIFT		16
+--- a/drivers/accessibility/speakup/spk_ttyio.c
++++ b/drivers/accessibility/speakup/spk_ttyio.c
+@@ -354,6 +354,9 @@ void spk_ttyio_release(struct spk_synth
+ {
+ 	struct tty_struct *tty = in_synth->dev;
  
-@@ -1346,7 +1347,7 @@ static void sdhci_esdhc_imx_hwinit(struc
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
- 	struct cqhci_host *cq_host = host->mmc->cqe_private;
--	int tmp;
-+	u32 tmp;
- 
- 	if (esdhc_is_usdhc(imx_data)) {
- 		/*
-@@ -1399,17 +1400,24 @@ static void sdhci_esdhc_imx_hwinit(struc
- 
- 		if (imx_data->socdata->flags & ESDHC_FLAG_STD_TUNING) {
- 			tmp = readl(host->ioaddr + ESDHC_TUNING_CTRL);
--			tmp |= ESDHC_STD_TUNING_EN |
--				ESDHC_TUNING_START_TAP_DEFAULT;
--			if (imx_data->boarddata.tuning_start_tap) {
--				tmp &= ~ESDHC_TUNING_START_TAP_MASK;
-+			tmp |= ESDHC_STD_TUNING_EN;
++	if (tty == NULL)
++		return;
 +
-+			/*
-+			 * ROM code or bootloader may config the start tap
-+			 * and step, unmask them first.
-+			 */
-+			tmp &= ~(ESDHC_TUNING_START_TAP_MASK | ESDHC_TUNING_STEP_MASK);
-+			if (imx_data->boarddata.tuning_start_tap)
- 				tmp |= imx_data->boarddata.tuning_start_tap;
--			}
-+			else
-+				tmp |= ESDHC_TUNING_START_TAP_DEFAULT;
+ 	tty_lock(tty);
  
- 			if (imx_data->boarddata.tuning_step) {
--				tmp &= ~ESDHC_TUNING_STEP_MASK;
- 				tmp |= imx_data->boarddata.tuning_step
- 					<< ESDHC_TUNING_STEP_SHIFT;
-+			} else {
-+				tmp |= ESDHC_TUNING_STEP_DEFAULT
-+					<< ESDHC_TUNING_STEP_SHIFT;
- 			}
- 
- 			/* Disable the CMD CRC check for tuning, if not, need to
+ 	if (tty->ops->close)
 
 
