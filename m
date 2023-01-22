@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 496142590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:14:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5DE0C433EF;
-	Sun, 22 Jan 2023 15:14:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85482590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:14:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E0CEC433EF;
+	Sun, 22 Jan 2023 15:14:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400448;
-	bh=gMl4Y3T65w18VlVhPj7/Z/5YdYj4ezZrbxOGRT3pfa4=;
+	s=korg; t=1674400450;
+	bh=Abx/xixK3TRoFNk9y2qH71j+LuCtxV2AOJFGdA40zuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pv6CCmrHKUaanbE6GD9aAgvvXS6bqCJiZUj5kJYDrSmikuaU6W5n4DO2/MuHptY2r
-	 ZkjjBX+bgvo1vQzt5sBhBjN7P0QVNzE7+vh1EQnope+mK4x1o51yeQYL9cCnsWOt/6
-	 MqztRyP5XVW745L1i5TK700/+aZ0VeFaZEa3udGg=
+	b=yBt2CqnceLW/kITKKWaq49C5AUSi3baZQBzGm8jW6txaDSQGUf7x1KZycl2zbyj2a
+	 ECjAPK4I+9H9OM6O/5gzT9OgIzq0uTs9gAre+YkEVNvNcQLoAwzC4fZrDFtF9C7W7t
+	 lHIP9WwNfhaFpakle/9/gfbEeFV9LYNU8M0RmYRM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Harry Wentland <harry.wentland@amd.com>,
-	Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>,
-	hongao <hongao@uniontech.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.10 77/98] drm/amd/display: Fix set scaling doesns work
-Date: Sun, 22 Jan 2023 16:04:33 +0100
-Message-Id: <20230122150232.696961282@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Christoph Jung <jung@codemercs.com>
+Subject: [PATCH 5.10 50/98] USB: misc: iowarrior: fix up header size for USB_DEVICE_ID_CODEMERCS_IOW100
+Date: Sun, 22 Jan 2023 16:04:06 +0100
+Message-Id: <20230122150231.622657563@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -36,41 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: hongao <hongao@uniontech.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 040625ab82ce6dca7772cb3867fe5c9eb279a344 upstream.
+commit 14ff7460bb58662d86aa50298943cc7d25532e28 upstream.
 
-[Why]
-Setting scaling does not correctly update CRTC state. As a result
-dc stream state's src (composition area) && dest (addressable area)
-was not calculated as expected. This causes set scaling doesn's work.
+The USB_DEVICE_ID_CODEMERCS_IOW100 header size was incorrect, it should
+be 12, not 13.
 
-[How]
-Correctly update CRTC state when setting scaling property.
-
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
-Tested-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: hongao <hongao@uniontech.com>
-Signed-off-by: Rodrigo Siqueira <Rodrigo.Siqueira@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Cc: stable <stable@kernel.org>
+Fixes: 17a82716587e ("USB: iowarrior: fix up report size handling for some devices")
+Reported-by: Christoph Jung <jung@codemercs.com>
+Link: https://lore.kernel.org/r/20230120135330.3842518-1-gregkh@linuxfoundation.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/misc/iowarrior.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -8783,8 +8783,8 @@ static int amdgpu_dm_atomic_check(struct
- 			goto fail;
+--- a/drivers/usb/misc/iowarrior.c
++++ b/drivers/usb/misc/iowarrior.c
+@@ -817,7 +817,7 @@ static int iowarrior_probe(struct usb_in
+ 			break;
+ 
+ 		case USB_DEVICE_ID_CODEMERCS_IOW100:
+-			dev->report_size = 13;
++			dev->report_size = 12;
+ 			break;
  		}
- 
--		if (dm_old_con_state->abm_level !=
--		    dm_new_con_state->abm_level)
-+		if (dm_old_con_state->abm_level != dm_new_con_state->abm_level ||
-+		    dm_old_con_state->scaling != dm_new_con_state->scaling)
- 			new_crtc_state->connectors_changed = true;
  	}
- 
 
 
