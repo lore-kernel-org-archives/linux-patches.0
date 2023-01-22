@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 181152590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:24:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94E4CC433EF;
-	Sun, 22 Jan 2023 15:24:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA9B2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:24:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 303B1C433D2;
+	Sun, 22 Jan 2023 15:24:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401080;
-	bh=xPLwRDrW5IACGkyyuSEBErLQWEoxo9XPIYN11dxvzMs=;
+	s=korg; t=1674401083;
+	bh=36VC45yWBlHgCVVtBlxXMVUJpUbHQgJ2EdXDE8T2Yag=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AiYwURVGTrD5rE6bmZbfd0HIb9GLu1rW0hCQjMzZWs6RJrYsuUvs2kfCszGICJCuY
-	 LM3bY6+TOskSaDidYtGAJhggnsCpLF5Rtz2Na66GFDJDK40u3pkfMEGTmXJBcyHNuI
-	 onLVWcMr9WyUlnxpoJwCeeVgMoAunZOfsEAa5x98=
+	b=2XWFbut3kVhaZvO4wNzkgX/drLaWE2fpNxsoW1zQOxTVRK61Slz4jv39SK6Aw/MIw
+	 QI2FMaYF07jhW1pAolkpfUOKyoeTme7AYv2z3OyO9HIIFe/EZhtqCP2/nqefKc/9bY
+	 YytewOaayMZB8uXK8JUQam2gdwrr/HZ47xyj5nIc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Walmsley <paul.walmsley@sifive.com>,
-	Greentime Hu <greentime.hu@sifive.com>,
-	Ben Dooks <ben.dooks@codethink.co.uk>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Ron Economos <re@w6rz.net>
-Subject: [PATCH 6.1 095/193] riscv: dts: sifive: fu740: fix size of pcie 32bit memory
-Date: Sun, 22 Jan 2023 16:03:44 +0100
-Message-Id: <20230122150250.680555960@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	syzbot+33d7ad66d65044b93f16@syzkaller.appspotmail.com,
+	Gerald Lee <sundaywind2004@gmail.com>
+Subject: [PATCH 6.1 104/193] USB: gadgetfs: Fix race between mounting and unmounting
+Date: Sun, 22 Jan 2023 16:03:53 +0100
+Message-Id: <20230122150251.077931039@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -37,44 +35,130 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ben Dooks <ben.dooks@codethink.co.uk>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 43d5f5d63699724d47f0d9e0eae516a260d232b4 upstream.
+commit d18dcfe9860e842f394e37ba01ca9440ab2178f4 upstream.
 
-The 32-bit memory resource is needed for non-prefetchable memory
-allocations on the PCIe bus, however with some cards (such as the
-SM768) the system fails to allocate memory from this.
+The syzbot fuzzer and Gerald Lee have identified a use-after-free bug
+in the gadgetfs driver, involving processes concurrently mounting and
+unmounting the gadgetfs filesystem.  In particular, gadgetfs_fill_super()
+can race with gadgetfs_kill_sb(), causing the latter to deallocate
+the_device while the former is using it.  The output from KASAN says,
+in part:
 
-Checking the allocation against the datasheet, it looks like there
-has been a mis-calcualation of the resource for the first memory
-region (0x0060090000..0x0070ffffff) which in the data-sheet for
-the fu740 (v1p2) is from 0x0060000000..0x007fffffff. Changing
-this to allocate from 0x0060090000..0x007fffffff fixes the probing
-issues.
+BUG: KASAN: use-after-free in instrument_atomic_read_write include/linux/instrumented.h:102 [inline]
+BUG: KASAN: use-after-free in atomic_fetch_sub_release include/linux/atomic/atomic-instrumented.h:176 [inline]
+BUG: KASAN: use-after-free in __refcount_sub_and_test include/linux/refcount.h:272 [inline]
+BUG: KASAN: use-after-free in __refcount_dec_and_test include/linux/refcount.h:315 [inline]
+BUG: KASAN: use-after-free in refcount_dec_and_test include/linux/refcount.h:333 [inline]
+BUG: KASAN: use-after-free in put_dev drivers/usb/gadget/legacy/inode.c:159 [inline]
+BUG: KASAN: use-after-free in gadgetfs_kill_sb+0x33/0x100 drivers/usb/gadget/legacy/inode.c:2086
+Write of size 4 at addr ffff8880276d7840 by task syz-executor126/18689
 
-Fixes: ae80d5148085 ("riscv: dts: Add PCIe support for the SiFive FU740-C000 SoC")
-Cc: Paul Walmsley <paul.walmsley@sifive.com>
-Cc: Greentime Hu <greentime.hu@sifive.com>
-Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
-Cc: stable@vger.kernel.org
-Tested-by: Ron Economos <re@w6rz.net> # from IRC
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+CPU: 0 PID: 18689 Comm: syz-executor126 Not tainted 6.1.0-syzkaller #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+Call Trace:
+ <TASK>
+...
+ atomic_fetch_sub_release include/linux/atomic/atomic-instrumented.h:176 [inline]
+ __refcount_sub_and_test include/linux/refcount.h:272 [inline]
+ __refcount_dec_and_test include/linux/refcount.h:315 [inline]
+ refcount_dec_and_test include/linux/refcount.h:333 [inline]
+ put_dev drivers/usb/gadget/legacy/inode.c:159 [inline]
+ gadgetfs_kill_sb+0x33/0x100 drivers/usb/gadget/legacy/inode.c:2086
+ deactivate_locked_super+0xa7/0xf0 fs/super.c:332
+ vfs_get_super fs/super.c:1190 [inline]
+ get_tree_single+0xd0/0x160 fs/super.c:1207
+ vfs_get_tree+0x88/0x270 fs/super.c:1531
+ vfs_fsconfig_locked fs/fsopen.c:232 [inline]
+
+The simplest solution is to ensure that gadgetfs_fill_super() and
+gadgetfs_kill_sb() are serialized by making them both acquire a new
+mutex.
+
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Reported-and-tested-by: syzbot+33d7ad66d65044b93f16@syzkaller.appspotmail.com
+Reported-and-tested-by: Gerald Lee <sundaywind2004@gmail.com>
+Link: https://lore.kernel.org/linux-usb/CAO3qeMVzXDP-JU6v1u5Ags6Q-bb35kg3=C6d04DjzA9ffa5x1g@mail.gmail.com/
+Fixes: e5d82a7360d1 ("vfs: Convert gadgetfs to use the new mount API")
+CC: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/Y6XCPXBpn3tmjdCC@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/riscv/boot/dts/sifive/fu740-c000.dtsi |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/legacy/inode.c |   28 +++++++++++++++++++++-------
+ 1 file changed, 21 insertions(+), 7 deletions(-)
 
---- a/arch/riscv/boot/dts/sifive/fu740-c000.dtsi
-+++ b/arch/riscv/boot/dts/sifive/fu740-c000.dtsi
-@@ -328,7 +328,7 @@
- 			bus-range = <0x0 0xff>;
- 			ranges = <0x81000000  0x0 0x60080000  0x0 0x60080000 0x0 0x10000>,      /* I/O */
- 				 <0x82000000  0x0 0x60090000  0x0 0x60090000 0x0 0xff70000>,    /* mem */
--				 <0x82000000  0x0 0x70000000  0x0 0x70000000 0x0 0x1000000>,    /* mem */
-+				 <0x82000000  0x0 0x70000000  0x0 0x70000000 0x0 0x10000000>,    /* mem */
- 				 <0xc3000000 0x20 0x00000000 0x20 0x00000000 0x20 0x00000000>;  /* mem prefetchable */
- 			num-lanes = <0x8>;
- 			interrupts = <56>, <57>, <58>, <59>, <60>, <61>, <62>, <63>, <64>;
+--- a/drivers/usb/gadget/legacy/inode.c
++++ b/drivers/usb/gadget/legacy/inode.c
+@@ -229,6 +229,7 @@ static void put_ep (struct ep_data *data
+  */
+ 
+ static const char *CHIP;
++static DEFINE_MUTEX(sb_mutex);		/* Serialize superblock operations */
+ 
+ /*----------------------------------------------------------------------*/
+ 
+@@ -2010,13 +2011,20 @@ gadgetfs_fill_super (struct super_block
+ {
+ 	struct inode	*inode;
+ 	struct dev_data	*dev;
++	int		rc;
+ 
+-	if (the_device)
+-		return -ESRCH;
++	mutex_lock(&sb_mutex);
++
++	if (the_device) {
++		rc = -ESRCH;
++		goto Done;
++	}
+ 
+ 	CHIP = usb_get_gadget_udc_name();
+-	if (!CHIP)
+-		return -ENODEV;
++	if (!CHIP) {
++		rc = -ENODEV;
++		goto Done;
++	}
+ 
+ 	/* superblock */
+ 	sb->s_blocksize = PAGE_SIZE;
+@@ -2053,13 +2061,17 @@ gadgetfs_fill_super (struct super_block
+ 	 * from binding to a controller.
+ 	 */
+ 	the_device = dev;
+-	return 0;
++	rc = 0;
++	goto Done;
+ 
+-Enomem:
++ Enomem:
+ 	kfree(CHIP);
+ 	CHIP = NULL;
++	rc = -ENOMEM;
+ 
+-	return -ENOMEM;
++ Done:
++	mutex_unlock(&sb_mutex);
++	return rc;
+ }
+ 
+ /* "mount -t gadgetfs path /dev/gadget" ends up here */
+@@ -2081,6 +2093,7 @@ static int gadgetfs_init_fs_context(stru
+ static void
+ gadgetfs_kill_sb (struct super_block *sb)
+ {
++	mutex_lock(&sb_mutex);
+ 	kill_litter_super (sb);
+ 	if (the_device) {
+ 		put_dev (the_device);
+@@ -2088,6 +2101,7 @@ gadgetfs_kill_sb (struct super_block *sb
+ 	}
+ 	kfree(CHIP);
+ 	CHIP = NULL;
++	mutex_unlock(&sb_mutex);
+ }
+ 
+ /*----------------------------------------------------------------------*/
 
 
