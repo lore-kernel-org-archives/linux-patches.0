@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFBCB2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:19:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43E9BC433EF;
-	Sun, 22 Jan 2023 15:19:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 76CD62590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:19:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2B33C433D2;
+	Sun, 22 Jan 2023 15:19:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400757;
-	bh=FX485JoELyltwI6CBgeMkqmSIouASLh9ZMnJCq/TH1I=;
+	s=korg; t=1674400760;
+	bh=xPLwRDrW5IACGkyyuSEBErLQWEoxo9XPIYN11dxvzMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ty9Q0zkEvHQD2G0qEWrGuFIHQa7UNofwrBP/PEdYzKdBJOxco0tAZh36ApPEUzB9y
-	 x9aMOAjmrkf0Og6kDNwoJEV5u90ZuxTLIXYxr4ArmwCb5V/FOGMbfQqlkq8oAtFUKW
-	 RvjX/5kyLm7+tgHSdeic9FU43WBlykAm0TLSLs+k=
+	b=gEFf+xJhER/18qlYg+I9lyqb8ukA12j1zKrk3AOrHlc6wMDA4bkQCrdH599baLbev
+	 xf/ml72BOXLuLDUBsJrvZjNnRIJy2e7wrbg2XkFwp2HmLVUsbs7TyQgeYcfU+R1Qen
+	 mvoViN3zunG4COpx6rVxesDS8mnXdJgyu2JOSTHM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yehezkel Bernat <YehezkelShB@gmail.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>
-Subject: [PATCH 5.15 068/117] thunderbolt: Use correct function to calculate maximum USB3 link rate
-Date: Sun, 22 Jan 2023 16:04:18 +0100
-Message-Id: <20230122150235.617270111@linuxfoundation.org>
+	Paul Walmsley <paul.walmsley@sifive.com>,
+	Greentime Hu <greentime.hu@sifive.com>,
+	Ben Dooks <ben.dooks@codethink.co.uk>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Ron Economos <re@w6rz.net>
+Subject: [PATCH 5.15 069/117] riscv: dts: sifive: fu740: fix size of pcie 32bit memory
+Date: Sun, 22 Jan 2023 16:04:19 +0100
+Message-Id: <20230122150235.656756818@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -34,33 +37,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mika Westerberg <mika.westerberg@linux.intel.com>
+From: Ben Dooks <ben.dooks@codethink.co.uk>
 
-commit e8ff07fb33026c5c1bb5b81293496faba5d68059 upstream.
+commit 43d5f5d63699724d47f0d9e0eae516a260d232b4 upstream.
 
-We need to take minimum of both sides of the USB3 link into consideration,
-not just the downstream port. Fix this by calling tb_usb3_max_link_rate()
-instead.
+The 32-bit memory resource is needed for non-prefetchable memory
+allocations on the PCIe bus, however with some cards (such as the
+SM768) the system fails to allocate memory from this.
 
-Fixes: 0bd680cd900c ("thunderbolt: Add USB3 bandwidth management")
+Checking the allocation against the datasheet, it looks like there
+has been a mis-calcualation of the resource for the first memory
+region (0x0060090000..0x0070ffffff) which in the data-sheet for
+the fu740 (v1p2) is from 0x0060000000..0x007fffffff. Changing
+this to allocate from 0x0060090000..0x007fffffff fixes the probing
+issues.
+
+Fixes: ae80d5148085 ("riscv: dts: Add PCIe support for the SiFive FU740-C000 SoC")
+Cc: Paul Walmsley <paul.walmsley@sifive.com>
+Cc: Greentime Hu <greentime.hu@sifive.com>
+Signed-off-by: Ben Dooks <ben.dooks@codethink.co.uk>
 Cc: stable@vger.kernel.org
-Acked-by: Yehezkel Bernat <YehezkelShB@gmail.com>
-Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
+Tested-by: Ron Economos <re@w6rz.net> # from IRC
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thunderbolt/tunnel.c |    2 +-
+ arch/riscv/boot/dts/sifive/fu740-c000.dtsi |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/thunderbolt/tunnel.c
-+++ b/drivers/thunderbolt/tunnel.c
-@@ -1262,7 +1262,7 @@ static void tb_usb3_reclaim_available_ba
- 		return;
- 	} else if (!ret) {
- 		/* Use maximum link rate if the link valid is not set */
--		ret = usb4_usb3_port_max_link_rate(tunnel->src_port);
-+		ret = tb_usb3_max_link_rate(tunnel->dst_port, tunnel->src_port);
- 		if (ret < 0) {
- 			tb_tunnel_warn(tunnel, "failed to read maximum link rate\n");
- 			return;
+--- a/arch/riscv/boot/dts/sifive/fu740-c000.dtsi
++++ b/arch/riscv/boot/dts/sifive/fu740-c000.dtsi
+@@ -328,7 +328,7 @@
+ 			bus-range = <0x0 0xff>;
+ 			ranges = <0x81000000  0x0 0x60080000  0x0 0x60080000 0x0 0x10000>,      /* I/O */
+ 				 <0x82000000  0x0 0x60090000  0x0 0x60090000 0x0 0xff70000>,    /* mem */
+-				 <0x82000000  0x0 0x70000000  0x0 0x70000000 0x0 0x1000000>,    /* mem */
++				 <0x82000000  0x0 0x70000000  0x0 0x70000000 0x0 0x10000000>,    /* mem */
+ 				 <0xc3000000 0x20 0x00000000 0x20 0x00000000 0x20 0x00000000>;  /* mem prefetchable */
+ 			num-lanes = <0x8>;
+ 			interrupts = <56>, <57>, <58>, <59>, <60>, <61>, <62>, <63>, <64>;
 
 
