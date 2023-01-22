@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7BE582590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:15:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05294C433EF;
-	Sun, 22 Jan 2023 15:15:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DD692590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:15:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A578C433D2;
+	Sun, 22 Jan 2023 15:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400543;
-	bh=LIp+kEeNGeFWxeEwbd2zgiB1QxOvV2HMfm+a9ybaaUI=;
+	s=korg; t=1674400546;
+	bh=ZM4+om5S2CjW0KuiXcj1YlSIFey+/gI/e0OVi3sF1rI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WzHrqED5OE5YXv71pnqU/ONIpoUFTc8h9teq3KajhfM5xFktVBitn2YB15auAKvIg
-	 NF96dcNrOk3LspbkEJupH7MFdEQnxPRBDFcZbocwzzcAouHvSV8vkNWdReiBJErSmY
-	 YV0xT0JGvECwYpWh/rEmble0igGv46e2KtZztp8U=
+	b=T+EY7xkJRCw3hSpwlLEEu+xdIKYKzbxr6l+6A74+C8GWGtSYHJJG0Okc/+9W+4wFI
+	 z5/j6fOmMDMkgYaSVFxEAzDNE41vX1zGpM6Mk0LVOisNfeOnPTnyswA8/mOi52Xf9h
+	 SLPN5BVroX0EC7eocDSegEADe1Xyo8qzVWn6cbtA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	chainofflowers <chainofflowers@posteo.net>,
-	Christian Marillat <marillat@debian.org>,
-	Arend van Spriel <arend.vanspriel@broadcom.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 5.15 016/117] wifi: brcmfmac: fix regression for Broadcom PCIe wifi devices
-Date: Sun, 22 Jan 2023 16:03:26 +0100
-Message-Id: <20230122150233.361288213@linuxfoundation.org>
+	Alexander Wetzel <alexander@wetzel-home.de>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 5.15 017/117] wifi: mac80211: sdata can be NULL during AMPDU start
+Date: Sun, 22 Jan 2023 16:03:27 +0100
+Message-Id: <20230122150233.397578813@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -36,39 +34,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arend van Spriel <arend.vanspriel@broadcom.com>
+From: Alexander Wetzel <alexander@wetzel-home.de>
 
-commit ed05cb177ae5cd7f02f1d6e7706ba627d30f1696 upstream.
+commit 69403bad97aa0162e3d7911b27e25abe774093df upstream.
 
-A sanity check was introduced considering maximum flowrings above
-256 as insane and effectively aborting the device probe. This
-resulted in regression for number of users as the value turns out
-to be sane after all.
+ieee80211_tx_ba_session_handle_start() may get NULL for sdata when a
+deauthentication is ongoing.
 
-Fixes: 2aca4f3734bd ("brcmfmac: return error when getting invalid max_flowrings from dongle")
-Reported-by: chainofflowers <chainofflowers@posteo.net>
-Link: https://lore.kernel.org/all/4781984.GXAFRqVoOG@luna/
-Reported-by: Christian Marillat <marillat@debian.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216894
+Here a trace triggering the race with the hostapd test
+multi_ap_fronthaul_on_ap:
+
+(gdb) list *drv_ampdu_action+0x46
+0x8b16 is in drv_ampdu_action (net/mac80211/driver-ops.c:396).
+391             int ret = -EOPNOTSUPP;
+392
+393             might_sleep();
+394
+395             sdata = get_bss_sdata(sdata);
+396             if (!check_sdata_in_driver(sdata))
+397                     return -EIO;
+398
+399             trace_drv_ampdu_action(local, sdata, params);
+400
+
+wlan0: moving STA 02:00:00:00:03:00 to state 3
+wlan0: associated
+wlan0: deauthenticating from 02:00:00:00:03:00 by local choice (Reason: 3=DEAUTH_LEAVING)
+wlan3.sta1: Open BA session requested for 02:00:00:00:00:00 tid 0
+wlan3.sta1: dropped frame to 02:00:00:00:00:00 (unauthorized port)
+wlan0: moving STA 02:00:00:00:03:00 to state 2
+wlan0: moving STA 02:00:00:00:03:00 to state 1
+wlan0: Removed STA 02:00:00:00:03:00
+wlan0: Destroyed STA 02:00:00:00:03:00
+BUG: unable to handle page fault for address: fffffffffffffb48
+PGD 11814067 P4D 11814067 PUD 11816067 PMD 0
+Oops: 0000 [#1] PREEMPT SMP PTI
+CPU: 2 PID: 133397 Comm: kworker/u16:1 Tainted: G        W          6.1.0-rc8-wt+ #59
+Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 1.16.0-20220807_005459-localhost 04/01/2014
+Workqueue: phy3 ieee80211_ba_session_work [mac80211]
+RIP: 0010:drv_ampdu_action+0x46/0x280 [mac80211]
+Code: 53 48 89 f3 be 89 01 00 00 e8 d6 43 bf ef e8 21 46 81 f0 83 bb a0 1b 00 00 04 75 0e 48 8b 9b 28 0d 00 00 48 81 eb 10 0e 00 00 <8b> 93 58 09 00 00 f6 c2 20 0f 84 3b 01 00 00 8b 05 dd 1c 0f 00 85
+RSP: 0018:ffffc900025ebd20 EFLAGS: 00010287
+RAX: 0000000000000000 RBX: fffffffffffff1f0 RCX: ffff888102228240
+RDX: 0000000080000000 RSI: ffffffff918c5de0 RDI: ffff888102228b40
+RBP: ffffc900025ebd40 R08: 0000000000000001 R09: 0000000000000001
+R10: 0000000000000001 R11: 0000000000000000 R12: ffff888118c18ec0
+R13: 0000000000000000 R14: ffffc900025ebd60 R15: ffff888018b7efb8
+FS:  0000000000000000(0000) GS:ffff88817a600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: fffffffffffffb48 CR3: 0000000105228006 CR4: 0000000000170ee0
+Call Trace:
+ <TASK>
+ ieee80211_tx_ba_session_handle_start+0xd0/0x190 [mac80211]
+ ieee80211_ba_session_work+0xff/0x2e0 [mac80211]
+ process_one_work+0x29f/0x620
+ worker_thread+0x4d/0x3d0
+ ? process_one_work+0x620/0x620
+ kthread+0xfb/0x120
+ ? kthread_complete_and_exit+0x20/0x20
+ ret_from_fork+0x22/0x30
+ </TASK>
+
+Signed-off-by: Alexander Wetzel <alexander@wetzel-home.de>
+Link: https://lore.kernel.org/r/20221230121850.218810-2-alexander@wetzel-home.de
 Cc: stable@vger.kernel.org
-Signed-off-by: Arend van Spriel <arend.vanspriel@broadcom.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230111112419.24185-1-arend.vanspriel@broadcom.com
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mac80211/agg-tx.c     |    6 +++++-
+ net/mac80211/driver-ops.c |    3 +++
+ 2 files changed, 8 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-+++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/pcie.c
-@@ -1118,7 +1118,7 @@ static int brcmf_pcie_init_ringbuffers(s
- 				BRCMF_NROF_H2D_COMMON_MSGRINGS;
- 		max_completionrings = BRCMF_NROF_D2H_COMMON_MSGRINGS;
- 	}
--	if (max_flowrings > 256) {
-+	if (max_flowrings > 512) {
- 		brcmf_err(bus, "invalid max_flowrings(%d)\n", max_flowrings);
+--- a/net/mac80211/agg-tx.c
++++ b/net/mac80211/agg-tx.c
+@@ -491,7 +491,7 @@ void ieee80211_tx_ba_session_handle_star
+ {
+ 	struct tid_ampdu_tx *tid_tx;
+ 	struct ieee80211_local *local = sta->local;
+-	struct ieee80211_sub_if_data *sdata = sta->sdata;
++	struct ieee80211_sub_if_data *sdata;
+ 	struct ieee80211_ampdu_params params = {
+ 		.sta = &sta->sta,
+ 		.action = IEEE80211_AMPDU_TX_START,
+@@ -521,6 +521,7 @@ void ieee80211_tx_ba_session_handle_star
+ 	 */
+ 	synchronize_net();
+ 
++	sdata = sta->sdata;
+ 	params.ssn = sta->tid_seq[tid] >> 4;
+ 	ret = drv_ampdu_action(local, sdata, &params);
+ 	tid_tx->ssn = params.ssn;
+@@ -534,6 +535,9 @@ void ieee80211_tx_ba_session_handle_star
+ 		 */
+ 		set_bit(HT_AGG_STATE_DRV_READY, &tid_tx->state);
+ 	} else if (ret) {
++		if (!sdata)
++			return;
++
+ 		ht_dbg(sdata,
+ 		       "BA request denied - HW unavailable for %pM tid %d\n",
+ 		       sta->sta.addr, tid);
+--- a/net/mac80211/driver-ops.c
++++ b/net/mac80211/driver-ops.c
+@@ -331,6 +331,9 @@ int drv_ampdu_action(struct ieee80211_lo
+ 
+ 	might_sleep();
+ 
++	if (!sdata)
++		return -EIO;
++
+ 	sdata = get_bss_sdata(sdata);
+ 	if (!check_sdata_in_driver(sdata))
  		return -EIO;
- 	}
 
 
