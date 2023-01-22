@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E87682590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67327C433D2;
-	Sun, 22 Jan 2023 15:16:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 864832590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BDE9C433EF;
+	Sun, 22 Jan 2023 15:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400587;
-	bh=FPLbrvIr0sJlCYZ/5az/WTaLEeHg/wZDDnYcNICvEGU=;
+	s=korg; t=1674400590;
+	bh=3JwqRMZc5tfGC22WlGKEdb+e+9/N6D74RINrzqMZUKw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=izAJE7DS2bfXSj0q+kS3kX6Qy/cHa63tJqVXuDf1Xfys/H0Avyy01I4SU+xMRNKj9
-	 V+YiotBlWT2dCkbLW3uIgrplXOrnztaHeA+WEEREl8IMpI3FgdjhViFBRvvOg0Y0Vi
-	 ghw+o0F4Cwju9PPDadjzebCz2CAZqR4sAxs3d4Ls=
+	b=yCoBdrEaTQg7C+M7xKyAzVlmDJEiRtbuEZR/59ZeEgJUHhFDoBijurAd+e5G2TyWU
+	 WOJzUQ7CxeoSeBIvTM4ulSE1okQgvQnisHjYfebbuLKxKVk5tGjh+3dgacDbI1GG0s
+	 VQan0tENUSdmd5b+vOGNfrKWPlbYQpqhrM8miQ30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ricardo=20Ca=C3=B1uelo?= <ricardo.canuelo@collabora.com>,
+	Angus Chen <angus.chen@jaguarmicro.com>,
 	"Michael S. Tsirkin" <mst@redhat.com>,
-	Xuan Zhuo <xuanzhuo@linux.alibaba.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 004/117] tools/virtio: initialize spinlocks in vring_test.c
-Date: Sun, 22 Jan 2023 16:03:14 +0100
-Message-Id: <20230122150232.921690825@linuxfoundation.org>
+Subject: [PATCH 5.15 005/117] virtio_pci: modify ENOENT to EINVAL
+Date: Sun, 22 Jan 2023 16:03:15 +0100
+Message-Id: <20230122150232.961523979@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -36,43 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
+From: Angus Chen <angus.chen@jaguarmicro.com>
 
-[ Upstream commit c262f75cb6bb5a63828e72ce3b8fe808e5029479 ]
+[ Upstream commit b66ead2d0ecac00c3a06a6218af5411cb5fcb5d5 ]
 
-The virtio_device vqs_list spinlocks must be initialized before use to
-prevent functions that manipulate the device virtualqueues, such as
-vring_new_virtqueue(), from blocking indefinitely.
+Virtio_crypto use max_data_queues+1 to setup vqs,
+we use vp_modern_get_num_queues to protect the vq range in setup_vq.
+We could enter index >= vp_modern_get_num_queues(mdev) in setup_vq
+if common->num_queues is not set well,and it return -ENOENT.
+It is better to use -EINVAL instead.
 
-Signed-off-by: Ricardo Cañuelo <ricardo.canuelo@collabora.com>
-Message-Id: <20221012062949.1526176-1-ricardo.canuelo@collabora.com>
+Signed-off-by: Angus Chen <angus.chen@jaguarmicro.com>
+Message-Id: <20221101111655.1947-1-angus.chen@jaguarmicro.com>
 Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Reviewed-by: Xuan Zhuo <xuanzhuo@linux.alibaba.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/virtio/vringh_test.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/virtio/virtio_pci_modern.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/tools/virtio/vringh_test.c b/tools/virtio/vringh_test.c
-index fa87b58bd5fa..98ff808d6f0c 100644
---- a/tools/virtio/vringh_test.c
-+++ b/tools/virtio/vringh_test.c
-@@ -308,6 +308,7 @@ static int parallel_test(u64 features,
+diff --git a/drivers/virtio/virtio_pci_modern.c b/drivers/virtio/virtio_pci_modern.c
+index 30654d3a0b41..a274261f36d6 100644
+--- a/drivers/virtio/virtio_pci_modern.c
++++ b/drivers/virtio/virtio_pci_modern.c
+@@ -196,7 +196,7 @@ static struct virtqueue *setup_vq(struct virtio_pci_device *vp_dev,
+ 	int err;
  
- 		gvdev.vdev.features = features;
- 		INIT_LIST_HEAD(&gvdev.vdev.vqs);
-+		spin_lock_init(&gvdev.vdev.vqs_list_lock);
- 		gvdev.to_host_fd = to_host[1];
- 		gvdev.notifies = 0;
+ 	if (index >= vp_modern_get_num_queues(mdev))
+-		return ERR_PTR(-ENOENT);
++		return ERR_PTR(-EINVAL);
  
-@@ -455,6 +456,7 @@ int main(int argc, char *argv[])
- 	getrange = getrange_iov;
- 	vdev.features = 0;
- 	INIT_LIST_HEAD(&vdev.vqs);
-+	spin_lock_init(&vdev.vqs_list_lock);
- 
- 	while (argv[1]) {
- 		if (strcmp(argv[1], "--indirect") == 0)
+ 	/* Check if queue is either not available or already active. */
+ 	num = vp_modern_get_queue_size(mdev, index);
 -- 
 2.35.1
 
