@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59CB92590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:27:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D415CC433EF;
-	Sun, 22 Jan 2023 15:27:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF43D2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:27:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 73D8AC433EF;
+	Sun, 22 Jan 2023 15:27:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401264;
-	bh=ac0kwI25XGuwsXPun+cGqGasSHTdxqyTANL/TF9nn0o=;
+	s=korg; t=1674401266;
+	bh=VBzj1nwD08Igz9KIq9CTrmauazBFDdPE2zOcpgmLVJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2PQtAQGg7/xc5NU5vwLErOX318os3E/5dLVUY9ShxA9VKsfkaUdoKd1R0my8niotR
-	 9fZ4qvlT4EE7sC183pDp9hx4KeuOTo0rOyUbcD6DDH950aaXlgGWqoj/T2BvI7PrGe
-	 wLsuCx3V78CO2vwvTCctL37ePbGvJRMrHCnXJN6E=
+	b=UKD+c4N74ErqFiGzgkYmX73uC3lwzve86Fsa+jpmoOaKsyky21gcFOWBeO7iS7ubS
+	 P4zfUCEFLw+QpcGqWy9FXzNcaPbSsTPxDDqsmk9jnTWP0sCMCTpoVE3Qe4lpvykyik
+	 S+DjVhi5tKqH4gcZqKZ6hitvMUE6CfSyNrotBHdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Aaron Liu <aaron.liu@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	"Limonciello, Mario" <Mario.Limonciello@amd.com>
-Subject: [PATCH 6.1 173/193] drm/amdgpu/soc21: add mode2 asic reset for SMU IP v13.0.11
-Date: Sun, 22 Jan 2023 16:05:02 +0100
-Message-Id: <20230122150254.327582511@linuxfoundation.org>
+Subject: [PATCH 6.1 174/193] drm/amdgpu/pm: use the specific mailbox registers only for SMU IP v13.0.4
+Date: Sun, 22 Jan 2023 16:05:03 +0100
+Message-Id: <20230122150254.372285039@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -39,9 +39,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Tim Huang <tim.huang@amd.com>
 
-commit 18ad18853cf2d8b94cef0112ba94f7a7535a9e89 upstream.
+commit 069a5af97ce3a1448a3566ce8b63b60e51e19958 upstream.
 
-Set the default reset method to mode2 for SMU IP v13.0.11
+The SMU IP v13.0.4 ppt interface is shared by IP v13.0.11, they use
+the different mailbox register offset. So use the specific mailbox
+registers offset for v13.0.4.
 
 Signed-off-by: Tim Huang <tim.huang@amd.com>
 Signed-off-by: Yifan Zhang <yifan1.zhang@amd.com>
@@ -50,18 +52,39 @@ Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: "Limonciello, Mario" <Mario.Limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/soc21.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c |   17 ++++++++++++++---
+ 1 file changed, 14 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/soc21.c
-+++ b/drivers/gpu/drm/amd/amdgpu/soc21.c
-@@ -325,6 +325,7 @@ soc21_asic_reset_method(struct amdgpu_de
- 	case IP_VERSION(13, 0, 10):
- 		return AMD_RESET_METHOD_MODE1;
- 	case IP_VERSION(13, 0, 4):
-+	case IP_VERSION(13, 0, 11):
- 		return AMD_RESET_METHOD_MODE2;
- 	default:
- 		if (amdgpu_dpm_is_baco_supported(adev))
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_4_ppt.c
+@@ -1026,6 +1026,15 @@ static const struct pptable_funcs smu_v1
+ 	.set_gfx_power_up_by_imu = smu_v13_0_set_gfx_power_up_by_imu,
+ };
+ 
++static void smu_v13_0_4_set_smu_mailbox_registers(struct smu_context *smu)
++{
++	struct amdgpu_device *adev = smu->adev;
++
++	smu->param_reg = SOC15_REG_OFFSET(MP1, 0, mmMP1_SMN_C2PMSG_82);
++	smu->msg_reg = SOC15_REG_OFFSET(MP1, 0, mmMP1_SMN_C2PMSG_66);
++	smu->resp_reg = SOC15_REG_OFFSET(MP1, 0, mmMP1_SMN_C2PMSG_90);
++}
++
+ void smu_v13_0_4_set_ppt_funcs(struct smu_context *smu)
+ {
+ 	struct amdgpu_device *adev = smu->adev;
+@@ -1035,7 +1044,9 @@ void smu_v13_0_4_set_ppt_funcs(struct sm
+ 	smu->feature_map = smu_v13_0_4_feature_mask_map;
+ 	smu->table_map = smu_v13_0_4_table_map;
+ 	smu->is_apu = true;
+-	smu->param_reg = SOC15_REG_OFFSET(MP1, 0, mmMP1_SMN_C2PMSG_82);
+-	smu->msg_reg = SOC15_REG_OFFSET(MP1, 0, mmMP1_SMN_C2PMSG_66);
+-	smu->resp_reg = SOC15_REG_OFFSET(MP1, 0, mmMP1_SMN_C2PMSG_90);
++
++	if (adev->ip_versions[MP1_HWIP][0] == IP_VERSION(13, 0, 4))
++		smu_v13_0_4_set_smu_mailbox_registers(smu);
++	else
++		smu_v13_0_set_smu_mailbox_registers(smu);
+ }
 
 
