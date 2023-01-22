@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19F212590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:23:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C28C433D2;
-	Sun, 22 Jan 2023 15:23:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC04C2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:24:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 32E69C433D2;
+	Sun, 22 Jan 2023 15:24:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401038;
-	bh=1s7zHPXd5oRvyw4A38we3ufP+2PUKcqxaNe0KiMTC+Y=;
+	s=korg; t=1674401041;
+	bh=4R7EWBfTbCU1BF2aKnFQ4VzWy8st9aEc8I9SL60lcAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=unNmOqd/q13sBxtJMroKDMZUb6afaW1l1fRjXHasH6yV5AimhEpYqMcAhBvEj9Q0/
-	 hzWFlu0gtZKiP1ey62k0/3Asz38CSTHNscQQKy0iHLYkJHKxsRICKMD2Q5LlUJt3jA
-	 tAZVJ/1CSlfMrbBLhCHNMdbc6aEQaWUACwu0Sh4E=
+	b=cIl/5xR+loYCYoVqShofuEDPlDW/8r3DzSunu04l4t6KSGlYB/phzLaUmeUbQS3ll
+	 nUtowqiONuww4GP9E7prK6m8k0pBr8ZHV92uoB4WMHqAAnBqmLc09P/mh4ysCX8fl8
+	 4jB8RFb3pER57g8Y9cuhcmoSLjG0UbbCkWmu4uEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Josef Bacik <josef@toxicpanda.com>,
-	Filipe Manana <fdmanana@suse.com>,
+	Lukas Straub <lukasstraub2@web.de>,
+	HanatoK <summersnow9403@gmail.com>,
+	Qu Wenruo <wqu@suse.com>,
 	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 086/193] btrfs: do not abort transaction on failure to update log root
-Date: Sun, 22 Jan 2023 16:03:35 +0100
-Message-Id: <20230122150250.322613248@linuxfoundation.org>
+Subject: [PATCH 6.1 087/193] btrfs: qgroup: do not warn on record without old_roots populated
+Date: Sun, 22 Jan 2023 16:03:36 +0100
+Message-Id: <20230122150250.366577372@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -35,52 +36,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Filipe Manana <fdmanana@suse.com>
+From: Qu Wenruo <wqu@suse.com>
 
-commit 09e44868f1e03c7825ca4283256abedc95e249a3 upstream.
+commit 75181406b4eafacc531ff2ee5fb032bd93317e2b upstream.
 
-When syncing a log, if we fail to update a log root in the log root tree,
-we are aborting the transaction if the failure was not -ENOSPC. This is
-excessive because there is a chance that a transaction commit can succeed,
-and therefore avoid to turn the filesystem into RO mode. All we need to be
-careful about is to mark the log for a full commit, which we already do,
-to make sure no one commits a super block pointing to an outdated log root
-tree.
+[BUG]
+There are some reports from the mailing list that since v6.1 kernel, the
+WARN_ON() inside btrfs_qgroup_account_extent() gets triggered during
+rescan:
 
-So don't abort the transaction if we fail to update a log root in the log
-root tree, and log an error if the failure is not -ENOSPC, so that it does
-not go completely unnoticed.
+  WARNING: CPU: 3 PID: 6424 at fs/btrfs/qgroup.c:2756 btrfs_qgroup_account_extents+0x1ae/0x260 [btrfs]
+  CPU: 3 PID: 6424 Comm: snapperd Tainted: P           OE      6.1.2-1-default #1 openSUSE Tumbleweed 05c7a1b1b61d5627475528f71f50444637b5aad7
+  RIP: 0010:btrfs_qgroup_account_extents+0x1ae/0x260 [btrfs]
+  Call Trace:
+   <TASK>
+  btrfs_commit_transaction+0x30c/0xb40 [btrfs c39c9c546c241c593f03bd6d5f39ea1b676250f6]
+   ? start_transaction+0xc3/0x5b0 [btrfs c39c9c546c241c593f03bd6d5f39ea1b676250f6]
+  btrfs_qgroup_rescan+0x42/0xc0 [btrfs c39c9c546c241c593f03bd6d5f39ea1b676250f6]
+   btrfs_ioctl+0x1ab9/0x25c0 [btrfs c39c9c546c241c593f03bd6d5f39ea1b676250f6]
+   ? __rseq_handle_notify_resume+0xa9/0x4a0
+   ? mntput_no_expire+0x4a/0x240
+   ? __seccomp_filter+0x319/0x4d0
+   __x64_sys_ioctl+0x90/0xd0
+   do_syscall_64+0x5b/0x80
+   ? syscall_exit_to_user_mode+0x17/0x40
+   ? do_syscall_64+0x67/0x80
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  RIP: 0033:0x7fd9b790d9bf
+   </TASK>
 
-CC: stable@vger.kernel.org # 6.0+
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Filipe Manana <fdmanana@suse.com>
+[CAUSE]
+Since commit e15e9f43c7ca ("btrfs: introduce
+BTRFS_QGROUP_RUNTIME_FLAG_NO_ACCOUNTING to skip qgroup accounting"), if
+our qgroup is already in inconsistent state, we will no longer do the
+time-consuming backref walk.
+
+This can leave some qgroup records without a valid old_roots ulist.
+Normally this is fine, as btrfs_qgroup_account_extents() would also skip
+those records if we have NO_ACCOUNTING flag set.
+
+But there is a small window, if we have NO_ACCOUNTING flag set, and
+inserted some qgroup_record without a old_roots ulist, but then the user
+triggered a qgroup rescan.
+
+During btrfs_qgroup_rescan(), we firstly clear NO_ACCOUNTING flag, then
+commit current transaction.
+
+And since we have a qgroup_record with old_roots = NULL, we trigger the
+WARN_ON() during btrfs_qgroup_account_extents().
+
+[FIX]
+Unfortunately due to the introduction of NO_ACCOUNTING flag, the
+assumption that every qgroup_record would have its old_roots populated
+is no longer correct.
+
+Fix the false alerts and drop the WARN_ON().
+
+Reported-by: Lukas Straub <lukasstraub2@web.de>
+Reported-by: HanatoK <summersnow9403@gmail.com>
+Fixes: e15e9f43c7ca ("btrfs: introduce BTRFS_QGROUP_RUNTIME_FLAG_NO_ACCOUNTING to skip qgroup accounting")
+CC: stable@vger.kernel.org # 6.1
+Link: https://lore.kernel.org/linux-btrfs/2403c697-ddaf-58ad-3829-0335fc89df09@gmail.com/
+Signed-off-by: Qu Wenruo <wqu@suse.com>
 Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/tree-log.c |   11 ++++-------
- 1 file changed, 4 insertions(+), 7 deletions(-)
+ fs/btrfs/qgroup.c |   14 ++++++++++++--
+ 1 file changed, 12 insertions(+), 2 deletions(-)
 
---- a/fs/btrfs/tree-log.c
-+++ b/fs/btrfs/tree-log.c
-@@ -3075,15 +3075,12 @@ int btrfs_sync_log(struct btrfs_trans_ha
- 
- 		blk_finish_plug(&plug);
- 		btrfs_set_log_full_commit(trans);
--
--		if (ret != -ENOSPC) {
--			btrfs_abort_transaction(trans, ret);
--			mutex_unlock(&log_root_tree->log_mutex);
--			goto out;
--		}
-+		if (ret != -ENOSPC)
-+			btrfs_err(fs_info,
-+				  "failed to update log for root %llu ret %d",
-+				  root->root_key.objectid, ret);
- 		btrfs_wait_tree_log_extents(log, mark);
- 		mutex_unlock(&log_root_tree->log_mutex);
--		ret = BTRFS_LOG_FORCE_COMMIT;
- 		goto out;
- 	}
- 
+--- a/fs/btrfs/qgroup.c
++++ b/fs/btrfs/qgroup.c
+@@ -2751,9 +2751,19 @@ int btrfs_qgroup_account_extents(struct
+ 			      BTRFS_QGROUP_RUNTIME_FLAG_NO_ACCOUNTING)) {
+ 			/*
+ 			 * Old roots should be searched when inserting qgroup
+-			 * extent record
++			 * extent record.
++			 *
++			 * But for INCONSISTENT (NO_ACCOUNTING) -> rescan case,
++			 * we may have some record inserted during
++			 * NO_ACCOUNTING (thus no old_roots populated), but
++			 * later we start rescan, which clears NO_ACCOUNTING,
++			 * leaving some inserted records without old_roots
++			 * populated.
++			 *
++			 * Those cases are rare and should not cause too much
++			 * time spent during commit_transaction().
+ 			 */
+-			if (WARN_ON(!record->old_roots)) {
++			if (!record->old_roots) {
+ 				/* Search commit root to find old_roots */
+ 				ret = btrfs_find_all_roots(NULL, fs_info,
+ 						record->bytenr, 0,
 
 
