@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26E042590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:20:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2DB6C433D2;
-	Sun, 22 Jan 2023 15:20:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3A872590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:20:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B9D4C433EF;
+	Sun, 22 Jan 2023 15:20:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400818;
-	bh=cR1yh4W0VK12+VUdagv+r1ltDmlYyXmS4h/0RKbsJMc=;
+	s=korg; t=1674400820;
+	bh=qA9onKkVxcbY9AuOri5WJkbJdaiRKjzEA906afbIvuM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yaw/njan9tYZyOON8s6rjQQ+8rs8gV2VCXkMP5orWZL6IEa2q7t3SrXH8/xGYfz2i
-	 O89qQ3aHb5IOJH/zae/qmm7oXNjfWQeWEeezzrZi8k3jdF0eq7JWarRZEt4/fsd/ZR
-	 PS9XctrfGJ10zriNFxeWd8Pv6muoi9lt8q0g86W8=
+	b=qw5BTyz0+imA238rfAHnwc1MFTYTCPQCpj2T8P2zZOc+3KzOBj06QjhwEHc/jTo/o
+	 sQ3neU+5YNkd9sVRNulddC0NIKbO4LnJXwSx2PITtCp3xJlddc9mbVKZ7iyUKfQ+oO
+	 m+Q0iUcd6aslox/aCW04c2Jifz1c1lzXQc6regd0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alon Zahavi <zahavi.alon@gmail.com>,
-	Tal Lossos <tallossos@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
-Subject: [PATCH 5.15 100/117] fs/ntfs3: Fix attr_punch_hole() null pointer derenference
-Date: Sun, 22 Jan 2023 16:04:50 +0100
-Message-Id: <20230122150236.986137292@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>,
+	Lee Jones <lee@kernel.org>
+Subject: [PATCH 5.15 101/117] arm64: efi: Execute runtime services from a dedicated stack
+Date: Sun, 22 Jan 2023 16:04:51 +0100
+Message-Id: <20230122150237.036084992@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -35,36 +34,126 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alon Zahavi <zahavi.alon@gmail.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit 6d5c9e79b726cc473d40e9cb60976dbe8e669624 upstream.
+commit ff7a167961d1b97e0e205f245f806e564d3505e7 upstream.
 
-The bug occours due to a misuse of `attr` variable instead of `attr_b`.
-`attr` is being initialized as NULL, then being derenfernced
-as `attr->res.data_size`.
+With the introduction of PRMT in the ACPI subsystem, the EFI rts
+workqueue is no longer the only caller of efi_call_virt_pointer() in the
+kernel. This means the EFI runtime services lock is no longer sufficient
+to manage concurrent calls into firmware, but also that firmware calls
+may occur that are not marshalled via the workqueue mechanism, but
+originate directly from the caller context.
 
-This bug causes a crash of the ntfs3 driver itself,
-If compiled directly to the kernel, it crashes the whole system.
+For added robustness, and to ensure that the runtime services have 8 KiB
+of stack space available as per the EFI spec, introduce a spinlock
+protected EFI runtime stack of 8 KiB, where the spinlock also ensures
+serialization between the EFI rts workqueue (which itself serializes EFI
+runtime calls) and other callers of efi_call_virt_pointer().
 
-Signed-off-by: Alon Zahavi <zahavi.alon@gmail.com>
-Co-developed-by: Tal Lossos <tallossos@gmail.com>
-Signed-off-by: Tal Lossos <tallossos@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+While at it, use the stack pivot to avoid reloading the shadow call
+stack pointer from the ordinary stack, as doing so could produce a
+gadget to defeat it.
+
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Cc: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/attrib.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/include/asm/efi.h       |    3 +++
+ arch/arm64/kernel/efi-rt-wrapper.S |   13 ++++++++++++-
+ arch/arm64/kernel/efi.c            |   27 +++++++++++++++++++++++++++
+ 3 files changed, 42 insertions(+), 1 deletion(-)
 
---- a/fs/ntfs3/attrib.c
-+++ b/fs/ntfs3/attrib.c
-@@ -1967,7 +1967,7 @@ int attr_punch_hole(struct ntfs_inode *n
- 		return -ENOENT;
+--- a/arch/arm64/include/asm/efi.h
++++ b/arch/arm64/include/asm/efi.h
+@@ -25,6 +25,7 @@ int efi_set_mapping_permissions(struct m
+ ({									\
+ 	efi_virtmap_load();						\
+ 	__efi_fpsimd_begin();						\
++	spin_lock(&efi_rt_lock);					\
+ })
  
- 	if (!attr_b->non_res) {
--		u32 data_size = le32_to_cpu(attr->res.data_size);
-+		u32 data_size = le32_to_cpu(attr_b->res.data_size);
- 		u32 from, to;
+ #define arch_efi_call_virt(p, f, args...)				\
+@@ -36,10 +37,12 @@ int efi_set_mapping_permissions(struct m
  
- 		if (vbo > data_size)
+ #define arch_efi_call_virt_teardown()					\
+ ({									\
++	spin_unlock(&efi_rt_lock);					\
+ 	__efi_fpsimd_end();						\
+ 	efi_virtmap_unload();						\
+ })
+ 
++extern spinlock_t efi_rt_lock;
+ efi_status_t __efi_rt_asm_wrapper(void *, const char *, ...);
+ 
+ #define ARCH_EFI_IRQ_FLAGS_MASK (PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT)
+--- a/arch/arm64/kernel/efi-rt-wrapper.S
++++ b/arch/arm64/kernel/efi-rt-wrapper.S
+@@ -16,6 +16,12 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
+ 	 */
+ 	stp	x1, x18, [sp, #16]
+ 
++	ldr_l	x16, efi_rt_stack_top
++	mov	sp, x16
++#ifdef CONFIG_SHADOW_CALL_STACK
++	str	x18, [sp, #-16]!
++#endif
++
+ 	/*
+ 	 * We are lucky enough that no EFI runtime services take more than
+ 	 * 5 arguments, so all are passed in registers rather than via the
+@@ -29,6 +35,7 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
+ 	mov	x4, x6
+ 	blr	x8
+ 
++	mov	sp, x29
+ 	ldp	x1, x2, [sp, #16]
+ 	cmp	x2, x18
+ 	ldp	x29, x30, [sp], #32
+@@ -42,6 +49,10 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
+ 	 * called with preemption disabled and a separate shadow stack is used
+ 	 * for interrupts.
+ 	 */
+-	mov	x18, x2
++#ifdef CONFIG_SHADOW_CALL_STACK
++	ldr_l	x18, efi_rt_stack_top
++	ldr	x18, [x18, #-16]
++#endif
++
+ 	b	efi_handle_corrupted_x18	// tail call
+ SYM_FUNC_END(__efi_rt_asm_wrapper)
+--- a/arch/arm64/kernel/efi.c
++++ b/arch/arm64/kernel/efi.c
+@@ -144,3 +144,30 @@ asmlinkage efi_status_t efi_handle_corru
+ 	pr_err_ratelimited(FW_BUG "register x18 corrupted by EFI %s\n", f);
+ 	return s;
+ }
++
++DEFINE_SPINLOCK(efi_rt_lock);
++
++asmlinkage u64 *efi_rt_stack_top __ro_after_init;
++
++/* EFI requires 8 KiB of stack space for runtime services */
++static_assert(THREAD_SIZE >= SZ_8K);
++
++static int __init arm64_efi_rt_init(void)
++{
++	void *p;
++
++	if (!efi_enabled(EFI_RUNTIME_SERVICES))
++		return 0;
++
++	p = __vmalloc_node(THREAD_SIZE, THREAD_ALIGN, GFP_KERNEL,
++			   NUMA_NO_NODE, &&l);
++l:	if (!p) {
++		pr_warn("Failed to allocate EFI runtime stack\n");
++		clear_bit(EFI_RUNTIME_SERVICES, &efi.flags);
++		return -ENOMEM;
++	}
++
++	efi_rt_stack_top = p + THREAD_SIZE;
++	return 0;
++}
++core_initcall(arm64_efi_rt_init);
 
 
