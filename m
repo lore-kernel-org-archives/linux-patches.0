@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 885152590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:23:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E3D4C433EF;
-	Sun, 22 Jan 2023 15:23:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 282522590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:23:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FD8DC433EF;
+	Sun, 22 Jan 2023 15:23:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401002;
-	bh=MMLQJfFS906vnkmV6Gkv21a7ciy0a+UNYJfIlroL2Ao=;
+	s=korg; t=1674401005;
+	bh=v4wf6v1OVEQhMY6/URBtuef21DVKOl2wfHNyXkfcw44=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bSy88qIJ65bCImXXX8s6oy1zDk7YpuofpBBmz8VLvwHJ5Cp0qgdWnPLdUlCa4RCrI
-	 LITn/QwEfIzNfXzV8J9be9l+tUT8qGK00pq2u5jb1tiCcXqNGmXHWEYZXFVXNkUpR8
-	 CY9us5JOI/Ow8c4qgelkWynkpYODG/OsKivCCvsA=
+	b=zYZpeRxUWIl/o/xu6VkSdxqDXWml0nuFZdfB6oZjN9F9QRGfIqkDQm/j1aetlqF8K
+	 fbeRVJCWpgYij6EclAd/UBMwdpXVS70UvwIlrl/ZrJePMHcmrOpPztOtiGaHBYc5Nu
+	 NPZmXhtVg5YBxmSVnP3Y62dXJdL/pxZ7d7kYLDh0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 6.1 073/193] ACPI: PRM: Check whether EFI runtime is available
-Date: Sun, 22 Jan 2023 16:03:22 +0100
-Message-Id: <20230122150249.678795320@linuxfoundation.org>
+	Samuel Holland <samuel@sholland.org>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 6.1 074/193] mmc: sunxi-mmc: Fix clock refcount imbalance during unbind
+Date: Sun, 22 Jan 2023 16:03:23 +0100
+Message-Id: <20230122150249.727892316@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -34,55 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Samuel Holland <samuel@sholland.org>
 
-commit 182da6f2b81a78709c58021542fb694f8ed80774 upstream.
+commit 8509419758f2cc28dd05370385af0d91573b76b4 upstream.
 
-The ACPI PRM address space handler calls efi_call_virt_pointer() to
-execute PRM firmware code, but doing so is only permitted when the EFI
-runtime environment is available. Otherwise, such calls are guaranteed
-to result in a crash, and must therefore be avoided.
+If the controller is suspended by runtime PM, the clock is already
+disabled, so do not try to disable it again during removal. Use
+pm_runtime_disable() to flush any pending runtime PM transitions.
 
-Given that the EFI runtime services may become unavailable after a crash
-occurring in the firmware, we need to check this each time the PRM
-address space handler is invoked. If the EFI runtime services were not
-available at registration time to being with, don't install the address
-space handler at all.
-
-Fixes: cefc7ca46235 ("ACPI: PRM: implement OperationRegion handler for the PlatformRtMechanism subtype")
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Cc: All applicable <stable@vger.kernel.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: 9a8e1e8cc2c0 ("mmc: sunxi: Add runtime_pm support")
+Signed-off-by: Samuel Holland <samuel@sholland.org>
+Acked-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20220810022509.43743-1-samuel@sholland.org
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/prmt.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/mmc/host/sunxi-mmc.c |    8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/acpi/prmt.c
-+++ b/drivers/acpi/prmt.c
-@@ -236,6 +236,11 @@ static acpi_status acpi_platformrt_space
- 	efi_status_t status;
- 	struct prm_context_buffer context;
+--- a/drivers/mmc/host/sunxi-mmc.c
++++ b/drivers/mmc/host/sunxi-mmc.c
+@@ -1492,9 +1492,11 @@ static int sunxi_mmc_remove(struct platf
+ 	struct sunxi_mmc_host *host = mmc_priv(mmc);
  
-+	if (!efi_enabled(EFI_RUNTIME_SERVICES)) {
-+		pr_err_ratelimited("PRM: EFI runtime services no longer available\n");
-+		return AE_NO_HANDLER;
+ 	mmc_remove_host(mmc);
+-	pm_runtime_force_suspend(&pdev->dev);
+-	disable_irq(host->irq);
+-	sunxi_mmc_disable(host);
++	pm_runtime_disable(&pdev->dev);
++	if (!pm_runtime_status_suspended(&pdev->dev)) {
++		disable_irq(host->irq);
++		sunxi_mmc_disable(host);
 +	}
-+
- 	/*
- 	 * The returned acpi_status will always be AE_OK. Error values will be
- 	 * saved in the first byte of the PRM message buffer to be used by ASL.
-@@ -325,6 +330,11 @@ void __init init_prmt(void)
+ 	dma_free_coherent(&pdev->dev, PAGE_SIZE, host->sg_cpu, host->sg_dma);
+ 	mmc_free_host(mmc);
  
- 	pr_info("PRM: found %u modules\n", mc);
- 
-+	if (!efi_enabled(EFI_RUNTIME_SERVICES)) {
-+		pr_err("PRM: EFI runtime services unavailable\n");
-+		return;
-+	}
-+
- 	status = acpi_install_address_space_handler(ACPI_ROOT_OBJECT,
- 						    ACPI_ADR_SPACE_PLATFORM_RT,
- 						    &acpi_platformrt_space_handler,
 
 
