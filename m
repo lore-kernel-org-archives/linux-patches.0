@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFF2D7E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:06:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66B71C433D2;
-	Sun, 22 Jan 2023 15:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BB267E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:06:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12908C433EF;
+	Sun, 22 Jan 2023 15:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674399982;
-	bh=kFpPWxvwMV/J90Vk46cv4c8nowOT2u9DT+kuLxtpccw=;
+	s=korg; t=1674399985;
+	bh=5TTZ1KNWGW9LQ34W31BSaesLllP/HTRXxvRhj0OKl2Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uh4fSco1Z6jXMvSfudSXiFcikPUwleiP/J+sNQSOfZh5oDuQCrbTQB85ePh3TLRUl
-	 RshIhJeqpLGdiCJe/wXOtZq0Tt06WrFFOpg+Z6irZQaU+k0N1wCSqtmfFD2UJY3tny
-	 jemFhb5QDXuqfBS/JcxQvA9AVYs/yqVQatlqxxH4=
+	b=NblYsRoMmySvLXC72bqsgu3hPsqYKlmKLySMozoc97n+P/TM+jKJvjpl7NsrbUNsV
+	 8hFfAlkE/4TaehLMI8ZJ3l+weWej7n0Tl23vup+cSM22gi/OS9jwFG0s09CaQZQNyF
+	 LOPF/kb8kp6hf/zj67pMEc9QnT0LQM3VNn8SV1zc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felipe Balbi <balbi@kernel.org>,
-	Lorenzo Colitti <lorenzo@google.com>,
-	Carlos Llamas <cmllamas@google.com>,
-	=?UTF-8?q?Maciej=20=C5=BBenczykowski?= <maze@google.com>,
-	stable <stable@kernel.org>
-Subject: [PATCH 4.14 20/25] usb: gadget: f_ncm: fix potential NULL ptr deref in ncm_bitrate()
-Date: Sun, 22 Jan 2023 16:04:20 +0100
-Message-Id: <20230122150218.656696144@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Hongling Zeng <zenghongling@kylinos.cn>,
+	Juhyung Park <qkrwngud825@gmail.com>,
+	Oliver Neukum <oneukum@suse.com>
+Subject: [PATCH 4.14 21/25] usb-storage: apply IGNORE_UAS only for HIKSEMI MD202 on RTL9210
+Date: Sun, 22 Jan 2023 16:04:21 +0100
+Message-Id: <20230122150218.689207363@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150217.788215473@linuxfoundation.org>
 References: <20230122150217.788215473@linuxfoundation.org>
@@ -37,92 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maciej Żenczykowski <maze@google.com>
+From: Juhyung Park <qkrwngud825@gmail.com>
 
-commit c6ec929595c7443250b2a4faea988c62019d5cd2 upstream.
+commit dbd24ec17b85b45f4e823d1aa5607721920f2b05 upstream.
 
-In Google internal bug 265639009 we've received an (as yet) unreproducible
-crash report from an aarch64 GKI 5.10.149-android13 running device.
+The commit e00b488e813f ("usb-storage: Add Hiksemi USB3-FW to IGNORE_UAS")
+blacklists UAS for all of RTL9210 enclosures.
 
-AFAICT the source code is at:
-  https://android.googlesource.com/kernel/common/+/refs/tags/ASB-2022-12-05_13-5.10
+The RTL9210 controller was advertised with UAS since its release back in
+2019 and was shipped with a lot of enclosure products with different
+firmware combinations.
 
-The call stack is:
-  ncm_close() -> ncm_notify() -> ncm_do_notify()
-with the crash at:
-  ncm_do_notify+0x98/0x270
-Code: 79000d0b b9000a6c f940012a f9400269 (b9405d4b)
+Blacklist UAS only for HIKSEMI MD202.
 
-Which I believe disassembles to (I don't know ARM assembly, but it looks sane enough to me...):
+This should hopefully be replaced with more robust method than just
+comparing strings.  But with limited information [1] provided thus far
+(dmesg when the device is plugged in, which includes manufacturer and
+product, but no lsusb -v to compare against), this is the best we can do
+for now.
 
-  // halfword (16-bit) store presumably to event->wLength (at offset 6 of struct usb_cdc_notification)
-  0B 0D 00 79    strh w11, [x8, #6]
+[1] https://lore.kernel.org/all/20230109115550.71688-1-qkrwngud825@gmail.com
 
-  // word (32-bit) store presumably to req->Length (at offset 8 of struct usb_request)
-  6C 0A 00 B9    str  w12, [x19, #8]
-
-  // x10 (NULL) was read here from offset 0 of valid pointer x9
-  // IMHO we're reading 'cdev->gadget' and getting NULL
-  // gadget is indeed at offset 0 of struct usb_composite_dev
-  2A 01 40 F9    ldr  x10, [x9]
-
-  // loading req->buf pointer, which is at offset 0 of struct usb_request
-  69 02 40 F9    ldr  x9, [x19]
-
-  // x10 is null, crash, appears to be attempt to read cdev->gadget->max_speed
-  4B 5D 40 B9    ldr  w11, [x10, #0x5c]
-
-which seems to line up with ncm_do_notify() case NCM_NOTIFY_SPEED code fragment:
-
-  event->wLength = cpu_to_le16(8);
-  req->length = NCM_STATUS_BYTECOUNT;
-
-  /* SPEED_CHANGE data is up/down speeds in bits/sec */
-  data = req->buf + sizeof *event;
-  data[0] = cpu_to_le32(ncm_bitrate(cdev->gadget));
-
-My analysis of registers and NULL ptr deref crash offset
-  (Unable to handle kernel NULL pointer dereference at virtual address 000000000000005c)
-heavily suggests that the crash is due to 'cdev->gadget' being NULL when executing:
-  data[0] = cpu_to_le32(ncm_bitrate(cdev->gadget));
-which calls:
-  ncm_bitrate(NULL)
-which then calls:
-  gadget_is_superspeed(NULL)
-which reads
-  ((struct usb_gadget *)NULL)->max_speed
-and hits a panic.
-
-AFAICT, if I'm counting right, the offset of max_speed is indeed 0x5C.
-(remember there's a GKI KABI reservation of 16 bytes in struct work_struct)
-
-It's not at all clear to me how this is all supposed to work...
-but returning 0 seems much better than panic-ing...
-
-Cc: Felipe Balbi <balbi@kernel.org>
-Cc: Lorenzo Colitti <lorenzo@google.com>
-Cc: Carlos Llamas <cmllamas@google.com>
+Fixes: e00b488e813f ("usb-storage: Add Hiksemi USB3-FW to IGNORE_UAS")
+Cc: Alan Stern <stern@rowland.harvard.edu>
+Cc: Hongling Zeng <zenghongling@kylinos.cn>
 Cc: stable@vger.kernel.org
-Signed-off-by: Maciej Żenczykowski <maze@google.com>
-Cc: stable <stable@kernel.org>
-Link: https://lore.kernel.org/r/20230117131839.1138208-1-maze@google.com
+Signed-off-by: Juhyung Park <qkrwngud825@gmail.com>
+Acked-by: Oliver Neukum <oneukum@suse.com>
+Link: https://lore.kernel.org/r/20230117085154.123301-1-qkrwngud825@gmail.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_ncm.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/usb/storage/uas-detect.h  |   13 +++++++++++++
+ drivers/usb/storage/unusual_uas.h |    7 -------
+ 2 files changed, 13 insertions(+), 7 deletions(-)
 
---- a/drivers/usb/gadget/function/f_ncm.c
-+++ b/drivers/usb/gadget/function/f_ncm.c
-@@ -92,7 +92,9 @@ static inline struct f_ncm *func_to_ncm(
- /* peak (theoretical) bulk transfer rate in bits-per-second */
- static inline unsigned ncm_bitrate(struct usb_gadget *g)
- {
--	if (gadget_is_superspeed(g) && g->speed >= USB_SPEED_SUPER_PLUS)
-+	if (!g)
-+		return 0;
-+	else if (gadget_is_superspeed(g) && g->speed >= USB_SPEED_SUPER_PLUS)
- 		return 4250000000U;
- 	else if (gadget_is_superspeed(g) && g->speed == USB_SPEED_SUPER)
- 		return 3750000000U;
+--- a/drivers/usb/storage/uas-detect.h
++++ b/drivers/usb/storage/uas-detect.h
+@@ -116,6 +116,19 @@ static int uas_use_uas_driver(struct usb
+ 	if (le16_to_cpu(udev->descriptor.idVendor) == 0x0bc2)
+ 		flags |= US_FL_NO_ATA_1X;
+ 
++	/*
++	 * RTL9210-based enclosure from HIKSEMI, MD202 reportedly have issues
++	 * with UAS.  This isn't distinguishable with just idVendor and
++	 * idProduct, use manufacturer and product too.
++	 *
++	 * Reported-by: Hongling Zeng <zenghongling@kylinos.cn>
++	 */
++	if (le16_to_cpu(udev->descriptor.idVendor) == 0x0bda &&
++			le16_to_cpu(udev->descriptor.idProduct) == 0x9210 &&
++			(udev->manufacturer && !strcmp(udev->manufacturer, "HIKSEMI")) &&
++			(udev->product && !strcmp(udev->product, "MD202")))
++		flags |= US_FL_IGNORE_UAS;
++
+ 	usb_stor_adjust_quirks(udev, &flags);
+ 
+ 	if (flags & US_FL_IGNORE_UAS) {
+--- a/drivers/usb/storage/unusual_uas.h
++++ b/drivers/usb/storage/unusual_uas.h
+@@ -152,13 +152,6 @@ UNUSUAL_DEV(0x0bc2, 0xab2a, 0x0000, 0x99
+ 		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+ 		US_FL_NO_ATA_1X),
+ 
+-/* Reported-by: Hongling Zeng <zenghongling@kylinos.cn> */
+-UNUSUAL_DEV(0x0bda, 0x9210, 0x0000, 0x9999,
+-		"Hiksemi",
+-		"External HDD",
+-		USB_SC_DEVICE, USB_PR_DEVICE, NULL,
+-		US_FL_IGNORE_UAS),
+-
+ /* Reported-by: Benjamin Tissoires <benjamin.tissoires@redhat.com> */
+ UNUSUAL_DEV(0x13fd, 0x3940, 0x0000, 0x9999,
+ 		"Initio Corporation",
 
 
