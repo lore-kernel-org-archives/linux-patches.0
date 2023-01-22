@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34E102590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC5DEC4339C;
-	Sun, 22 Jan 2023 15:25:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C15092590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F7AC433D2;
+	Sun, 22 Jan 2023 15:25:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401120;
-	bh=m77qKFXT/8M69a4TSIEm41rDIJOJw78i/IdZkIaw2KA=;
+	s=korg; t=1674401122;
+	bh=p47uHTLJqf60mTy1ytQS36knUJExLD4t0YWvnOhUhP8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KlI6LiCnsNM3mJUy6oSE0oT1k01YmLC18VzxEq8tmiJovNmT6BRRUvdGU3r0L/gwf
-	 iA2ZufxB6MXl633ebRm3It7Z7heIBICyqo5nhIU6T9M+CCUWibCNkFVVwU/56GKhq3
-	 KEuLym5nbL6598d/IZtofhPL8oXqss7UNvoJYxAs=
+	b=cQ513Bdh+qOSwj6T+Hbai6tPIAYhVMO7JAexzlwvh1ReCs9/O085GGKK4r3NOzXIs
+	 vUTbNzL8OkeK7I10BJC9S3NLGNlGSxc+lpLzdVBVIiR5Uxgp55bpDyXue/0jpnlYoi
+	 IqlHjLrm+4v8YkGSSH3OrY7MzdlxrDZhJFBxBC5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 117/193] dt-bindings: phy: g12a-usb2-phy: fix compatible string documentation
-Date: Sun, 22 Jan 2023 16:04:06 +0100
-Message-Id: <20230122150251.679253112@linuxfoundation.org>
+Subject: [PATCH 6.1 118/193] dt-bindings: phy: g12a-usb3-pcie-phy: fix compatible string documentation
+Date: Sun, 22 Jan 2023 16:04:07 +0100
+Message-Id: <20230122150251.721117892@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -38,36 +38,36 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit c63835bf1c750c9b3aec1d5c23d811d6375fc23d upstream.
+commit e181119046a0ec16126b682163040e8e33f310c1 upstream.
 
-The compatible strings in the driver don't have the meson prefix.
+The compatible string in the driver doesn't have the meson prefix.
 Fix this in the documentation and rename the file accordingly.
 
-Fixes: da86d286cce8 ("dt-bindings: phy: meson-g12a-usb2-phy: convert to yaml")
+Fixes: 87a55485f2fc ("dt-bindings: phy: meson-g12a-usb3-pcie-phy: convert to yaml")
 Cc: stable@vger.kernel.org
 Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
 Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/8d960029-e94d-224b-911f-03e5deb47ebc@gmail.com
+Link: https://lore.kernel.org/r/0a82be92-ce85-da34-9d6f-4b33034473e5@gmail.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml       |   78 ++++++++++
- Documentation/devicetree/bindings/phy/amlogic,meson-g12a-usb2-phy.yaml |   78 ----------
- 2 files changed, 78 insertions(+), 78 deletions(-)
- rename Documentation/devicetree/bindings/phy/{amlogic,meson-g12a-usb2-phy.yaml => amlogic,g12a-usb2-phy.yaml} (85%)
+ Documentation/devicetree/bindings/phy/amlogic,g12a-usb3-pcie-phy.yaml       |   59 ++++++++++
+ Documentation/devicetree/bindings/phy/amlogic,meson-g12a-usb3-pcie-phy.yaml |   59 ----------
+ 2 files changed, 59 insertions(+), 59 deletions(-)
+ rename Documentation/devicetree/bindings/phy/{amlogic,meson-g12a-usb3-pcie-phy.yaml => amlogic,g12a-usb3-pcie-phy.yaml} (82%)
 
 --- /dev/null
-+++ b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb2-phy.yaml
-@@ -0,0 +1,78 @@
++++ b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb3-pcie-phy.yaml
+@@ -0,0 +1,59 @@
 +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
 +# Copyright 2019 BayLibre, SAS
 +%YAML 1.2
 +---
-+$id: "http://devicetree.org/schemas/phy/amlogic,g12a-usb2-phy.yaml#"
++$id: "http://devicetree.org/schemas/phy/amlogic,g12a-usb3-pcie-phy.yaml#"
 +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
 +
-+title: Amlogic G12A USB2 PHY
++title: Amlogic G12A USB3 + PCIE Combo PHY
 +
 +maintainers:
 +  - Neil Armstrong <neil.armstrong@linaro.org>
@@ -75,8 +75,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +properties:
 +  compatible:
 +    enum:
-+      - amlogic,g12a-usb2-phy
-+      - amlogic,a1-usb2-phy
++      - amlogic,g12a-usb3-pcie-phy
 +
 +  reg:
 +    maxItems: 1
@@ -86,7 +85,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +
 +  clock-names:
 +    items:
-+      - const: xtal
++      - const: ref_clk
 +
 +  resets:
 +    maxItems: 1
@@ -96,12 +95,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +      - const: phy
 +
 +  "#phy-cells":
-+    const: 0
-+
-+  phy-supply:
-+    description:
-+      Phandle to a regulator that provides power to the PHY. This
-+      regulator will be managed during the PHY power on/off sequence.
++    const: 1
 +
 +required:
 +  - compatible
@@ -112,43 +106,30 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +  - reset-names
 +  - "#phy-cells"
 +
-+if:
-+  properties:
-+    compatible:
-+      enum:
-+        - amlogic,meson-a1-usb-ctrl
-+
-+then:
-+  properties:
-+    power-domains:
-+      maxItems: 1
-+  required:
-+    - power-domains
-+
 +additionalProperties: false
 +
 +examples:
 +  - |
-+    phy@36000 {
-+          compatible = "amlogic,g12a-usb2-phy";
-+          reg = <0x36000 0x2000>;
-+          clocks = <&xtal>;
-+          clock-names = "xtal";
++    phy@46000 {
++          compatible = "amlogic,g12a-usb3-pcie-phy";
++          reg = <0x46000 0x2000>;
++          clocks = <&ref_clk>;
++          clock-names = "ref_clk";
 +          resets = <&phy_reset>;
 +          reset-names = "phy";
-+          #phy-cells = <0>;
++          #phy-cells = <1>;
 +    };
---- a/Documentation/devicetree/bindings/phy/amlogic,meson-g12a-usb2-phy.yaml
+--- a/Documentation/devicetree/bindings/phy/amlogic,meson-g12a-usb3-pcie-phy.yaml
 +++ /dev/null
-@@ -1,78 +0,0 @@
+@@ -1,59 +0,0 @@
 -# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
 -# Copyright 2019 BayLibre, SAS
 -%YAML 1.2
 ----
--$id: "http://devicetree.org/schemas/phy/amlogic,meson-g12a-usb2-phy.yaml#"
+-$id: "http://devicetree.org/schemas/phy/amlogic,meson-g12a-usb3-pcie-phy.yaml#"
 -$schema: "http://devicetree.org/meta-schemas/core.yaml#"
 -
--title: Amlogic G12A USB2 PHY
+-title: Amlogic G12A USB3 + PCIE Combo PHY
 -
 -maintainers:
 -  - Neil Armstrong <neil.armstrong@linaro.org>
@@ -156,8 +137,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 -properties:
 -  compatible:
 -    enum:
--      - amlogic,meson-g12a-usb2-phy
--      - amlogic,meson-a1-usb2-phy
+-      - amlogic,meson-g12a-usb3-pcie-phy
 -
 -  reg:
 -    maxItems: 1
@@ -167,7 +147,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 -
 -  clock-names:
 -    items:
--      - const: xtal
+-      - const: ref_clk
 -
 -  resets:
 -    maxItems: 1
@@ -177,12 +157,7 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 -      - const: phy
 -
 -  "#phy-cells":
--    const: 0
--
--  phy-supply:
--    description:
--      Phandle to a regulator that provides power to the PHY. This
--      regulator will be managed during the PHY power on/off sequence.
+-    const: 1
 -
 -required:
 -  - compatible
@@ -193,31 +168,18 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 -  - reset-names
 -  - "#phy-cells"
 -
--if:
--  properties:
--    compatible:
--      enum:
--        - amlogic,meson-a1-usb-ctrl
--
--then:
--  properties:
--    power-domains:
--      maxItems: 1
--  required:
--    - power-domains
--
 -additionalProperties: false
 -
 -examples:
 -  - |
--    phy@36000 {
--          compatible = "amlogic,meson-g12a-usb2-phy";
--          reg = <0x36000 0x2000>;
--          clocks = <&xtal>;
--          clock-names = "xtal";
+-    phy@46000 {
+-          compatible = "amlogic,meson-g12a-usb3-pcie-phy";
+-          reg = <0x46000 0x2000>;
+-          clocks = <&ref_clk>;
+-          clock-names = "ref_clk";
 -          resets = <&phy_reset>;
 -          reset-names = "phy";
--          #phy-cells = <0>;
+-          #phy-cells = <1>;
 -    };
 
 
