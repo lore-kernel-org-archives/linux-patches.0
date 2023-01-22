@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2039E7E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:11:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98A96C4339C;
-	Sun, 22 Jan 2023 15:11:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B607A7E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:11:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34FA6C433D2;
+	Sun, 22 Jan 2023 15:11:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400301;
-	bh=Qj/x9nL42oBnVzM5mFOhNfHivTU8x7Kd4DHXOCWwFdg=;
+	s=korg; t=1674400303;
+	bh=KIRVCNwkm4uVvvs4/8bun2K+AC1WNH01S1yFz5dsbFI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2r5kSev3lsaqsuh6NtsZW1evycq0acGz4YkVTOFqmiWwXmQSuHCqR5tCZAAFkBzGr
-	 blsbaU6ohCXwSVOztc0HekL/k65VJuo47/YpbeIPNxurDCUcsFT4t5Ubsm41YdQzNE
-	 I7jARntI6OR+W+nT/99LoHRBIz148N8vfXEIUqXw=
+	b=XGqUO0uO5CFg1olLgU/kmG1RfnsSGk38oZIxAPqvcQsjsD1OuANfLegMFkO5lq221
+	 GVfJ++6gzKEdRBIa7dEU60oAPiwXHs44L768vjPAWUvlyDFtynSB5d1Z8hqcgPTxU0
+	 J7ZYdJi4lGPCBEjn+eaTX7AYmspROPlMFjHaNR6k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ding Hui <dinghui@sangfor.com.cn>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 15/98] efi: fix userspace infinite retry read efivars after EFI runtime services page fault
-Date: Sun, 22 Jan 2023 16:03:31 +0100
-Message-Id: <20230122150230.073547026@linuxfoundation.org>
+Subject: [PATCH 5.10 24/98] io_uring: support MSG_WAITALL for IORING_OP_SEND(MSG)
+Date: Sun, 22 Jan 2023 16:03:40 +0100
+Message-Id: <20230122150230.480545827@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -35,43 +34,109 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ding Hui <dinghui@sangfor.com.cn>
+From: Jens Axboe <axboe@kernel.dk>
 
-[ Upstream commit e006ac3003080177cf0b673441a4241f77aaecce ]
+commit 4c3c09439c08b03d9503df0ca4c7619c5842892e upstream.
 
-After [1][2], if we catch exceptions due to EFI runtime service, we will
-clear EFI_RUNTIME_SERVICES bit to disable EFI runtime service, then the
-subsequent routine which invoke the EFI runtime service should fail.
+Like commit 7ba89d2af17a for recv/recvmsg, support MSG_WAITALL for the
+send side. If this flag is set and we do a short send, retry for a
+stream of seqpacket socket.
 
-But the userspace cat efivars through /sys/firmware/efi/efivars/ will stuck
-and infinite loop calling read() due to efivarfs_file_read() return -EINTR.
-
-The -EINTR is converted from EFI_ABORTED by efi_status_to_err(), and is
-an improper return value in this situation, so let virt_efi_xxx() return
-EFI_DEVICE_ERROR and converted to -EIO to invoker.
-
-Cc: <stable@vger.kernel.org>
-Fixes: 3425d934fc03 ("efi/x86: Handle page faults occurring while running EFI runtime services")
-Fixes: 23715a26c8d8 ("arm64: efi: Recover from synchronous exceptions occurring in firmware")
-Signed-off-by: Ding Hui <dinghui@sangfor.com.cn>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/runtime-wrappers.c | 1 +
- 1 file changed, 1 insertion(+)
+ io_uring/io_uring.c | 36 +++++++++++++++++++++++++++++-------
+ 1 file changed, 29 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/firmware/efi/runtime-wrappers.c b/drivers/firmware/efi/runtime-wrappers.c
-index f3e54f6616f0..60075e0e4943 100644
---- a/drivers/firmware/efi/runtime-wrappers.c
-+++ b/drivers/firmware/efi/runtime-wrappers.c
-@@ -62,6 +62,7 @@ struct efi_runtime_work efi_rts_work;
- 									\
- 	if (!efi_enabled(EFI_RUNTIME_SERVICES)) {			\
- 		pr_warn_once("EFI Runtime Services are disabled!\n");	\
-+		efi_rts_work.status = EFI_DEVICE_ERROR;			\
- 		goto exit;						\
- 	}								\
- 									\
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index 7f9fb0cb9230..75d833269751 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -4617,6 +4617,13 @@ static int io_sync_file_range(struct io_kiocb *req, unsigned int issue_flags)
+ }
+ 
+ #if defined(CONFIG_NET)
++static bool io_net_retry(struct socket *sock, int flags)
++{
++	if (!(flags & MSG_WAITALL))
++		return false;
++	return sock->type == SOCK_STREAM || sock->type == SOCK_SEQPACKET;
++}
++
+ static int io_setup_async_msg(struct io_kiocb *req,
+ 			      struct io_async_msghdr *kmsg)
+ {
+@@ -4680,12 +4687,14 @@ static int io_sendmsg_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	if (req->ctx->compat)
+ 		sr->msg_flags |= MSG_CMSG_COMPAT;
+ #endif
++	sr->done_io = 0;
+ 	return 0;
+ }
+ 
+ static int io_sendmsg(struct io_kiocb *req, unsigned int issue_flags)
+ {
+ 	struct io_async_msghdr iomsg, *kmsg;
++	struct io_sr_msg *sr = &req->sr_msg;
+ 	struct socket *sock;
+ 	unsigned flags;
+ 	int min_ret = 0;
+@@ -4716,12 +4725,21 @@ static int io_sendmsg(struct io_kiocb *req, unsigned int issue_flags)
+ 			return io_setup_async_msg(req, kmsg);
+ 		if (ret == -ERESTARTSYS)
+ 			ret = -EINTR;
++		if (ret > 0 && io_net_retry(sock, flags)) {
++			sr->done_io += ret;
++			req->flags |= REQ_F_PARTIAL_IO;
++			return io_setup_async_msg(req, kmsg);
++		}
+ 		req_set_fail(req);
+ 	}
+ 	/* fast path, check for non-NULL to avoid function call */
+ 	if (kmsg->free_iov)
+ 		kfree(kmsg->free_iov);
+ 	req->flags &= ~REQ_F_NEED_CLEANUP;
++	if (ret >= 0)
++		ret += sr->done_io;
++	else if (sr->done_io)
++		ret = sr->done_io;
+ 	__io_req_complete(req, issue_flags, ret, 0);
+ 	return 0;
+ }
+@@ -4762,8 +4780,19 @@ static int io_send(struct io_kiocb *req, unsigned int issue_flags)
+ 			return -EAGAIN;
+ 		if (ret == -ERESTARTSYS)
+ 			ret = -EINTR;
++		if (ret > 0 && io_net_retry(sock, flags)) {
++			sr->len -= ret;
++			sr->buf += ret;
++			sr->done_io += ret;
++			req->flags |= REQ_F_PARTIAL_IO;
++			return -EAGAIN;
++		}
+ 		req_set_fail(req);
+ 	}
++	if (ret >= 0)
++		ret += sr->done_io;
++	else if (sr->done_io)
++		ret = sr->done_io;
+ 	__io_req_complete(req, issue_flags, ret, 0);
+ 	return 0;
+ }
+@@ -4911,13 +4940,6 @@ static int io_recvmsg_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	return 0;
+ }
+ 
+-static bool io_net_retry(struct socket *sock, int flags)
+-{
+-	if (!(flags & MSG_WAITALL))
+-		return false;
+-	return sock->type == SOCK_STREAM || sock->type == SOCK_SEQPACKET;
+-}
+-
+ static int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
+ {
+ 	struct io_async_msghdr iomsg, *kmsg;
 -- 
 2.39.0
 
