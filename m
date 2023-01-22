@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F55A2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:13:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA2D6C433D2;
-	Sun, 22 Jan 2023 15:13:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AEF42590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:13:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E9D8C433EF;
+	Sun, 22 Jan 2023 15:13:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400427;
-	bh=+AYGyBIbtAS1HpP9NxQtDqVE48DKKftcqKXoURVf9nA=;
+	s=korg; t=1674400432;
+	bh=AGgRiUxW2WyNCtHhWR74Vkmi6U0/r3HGGNQR/DzksRw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B4AOUMpnODJzcPxIEKFNz1fDH1ZPf6Zmy/ve4PbDsGRck4bNUiU6z17zl99x+UI4I
-	 FBhZS3Dnyz2BwrlZ539L6ceXCu80qTZRu2L+Wxev9dXHnkI3DAFRNvNlGPBv3N0GTd
-	 bXRe7NzPi0w+F8wkXqwK1etk29jEy1/dy7Y1UykE=
+	b=aaJQYAd90NHtgQci4tTFrOBFKHB72UgXWjdgryVs/A71a9lKSPu0XfQgTACFjbvPP
+	 qbrFvLm/NAxPyejv0u7IpRKYdC0JCypyJ63eBx5w0dqK41LdAWpfZZaIWiEISW6SVh
+	 AB7knYjnGz/vWYTGkHdELxdWNZoj92a6ZRrvZ2PY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mohan Kumar <mkumard@nvidia.com>,
 	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 5.10 70/98] dt-bindings: phy: g12a-usb3-pcie-phy: fix compatible string documentation
-Date: Sun, 22 Jan 2023 16:04:26 +0100
-Message-Id: <20230122150232.391145981@linuxfoundation.org>
+Subject: [PATCH 5.10 72/98] dmaengine: tegra210-adma: fix global intr clear
+Date: Sun, 22 Jan 2023 16:04:28 +0100
+Message-Id: <20230122150232.492532019@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -36,150 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Mohan Kumar <mkumard@nvidia.com>
 
-commit e181119046a0ec16126b682163040e8e33f310c1 upstream.
+commit 9c7e355ccbb33d239360c876dbe49ad5ade65b47 upstream.
 
-The compatible string in the driver doesn't have the meson prefix.
-Fix this in the documentation and rename the file accordingly.
+The current global interrupt clear programming register offset
+was not correct. Fix the programming with right offset
 
-Fixes: 87a55485f2fc ("dt-bindings: phy: meson-g12a-usb3-pcie-phy: convert to yaml")
+Fixes: ded1f3db4cd6 ("dmaengine: tegra210-adma: prepare for supporting newer Tegra chips")
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/0a82be92-ce85-da34-9d6f-4b33034473e5@gmail.com
+Signed-off-by: Mohan Kumar <mkumard@nvidia.com>
+Link: https://lore.kernel.org/r/20230102064844.31306-1-mkumard@nvidia.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/phy/amlogic,g12a-usb3-pcie-phy.yaml       |   59 ++++++++++
- Documentation/devicetree/bindings/phy/amlogic,meson-g12a-usb3-pcie-phy.yaml |   59 ----------
- 2 files changed, 59 insertions(+), 59 deletions(-)
- rename Documentation/devicetree/bindings/phy/{amlogic,meson-g12a-usb3-pcie-phy.yaml => amlogic,g12a-usb3-pcie-phy.yaml} (82%)
+ drivers/dma/tegra210-adma.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- /dev/null
-+++ b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb3-pcie-phy.yaml
-@@ -0,0 +1,59 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+# Copyright 2019 BayLibre, SAS
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/phy/amlogic,g12a-usb3-pcie-phy.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: Amlogic G12A USB3 + PCIE Combo PHY
-+
-+maintainers:
-+  - Neil Armstrong <narmstrong@baylibre.com>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - amlogic,g12a-usb3-pcie-phy
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    maxItems: 1
-+
-+  clock-names:
-+    items:
-+      - const: ref_clk
-+
-+  resets:
-+    maxItems: 1
-+
-+  reset-names:
-+    items:
-+      - const: phy
-+
-+  "#phy-cells":
-+    const: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - resets
-+  - reset-names
-+  - "#phy-cells"
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    phy@46000 {
-+          compatible = "amlogic,g12a-usb3-pcie-phy";
-+          reg = <0x46000 0x2000>;
-+          clocks = <&ref_clk>;
-+          clock-names = "ref_clk";
-+          resets = <&phy_reset>;
-+          reset-names = "phy";
-+          #phy-cells = <1>;
-+    };
---- a/Documentation/devicetree/bindings/phy/amlogic,meson-g12a-usb3-pcie-phy.yaml
-+++ /dev/null
-@@ -1,59 +0,0 @@
--# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
--# Copyright 2019 BayLibre, SAS
--%YAML 1.2
-----
--$id: "http://devicetree.org/schemas/phy/amlogic,meson-g12a-usb3-pcie-phy.yaml#"
--$schema: "http://devicetree.org/meta-schemas/core.yaml#"
--
--title: Amlogic G12A USB3 + PCIE Combo PHY
--
--maintainers:
--  - Neil Armstrong <narmstrong@baylibre.com>
--
--properties:
--  compatible:
--    enum:
--      - amlogic,meson-g12a-usb3-pcie-phy
--
--  reg:
--    maxItems: 1
--
--  clocks:
--    maxItems: 1
--
--  clock-names:
--    items:
--      - const: ref_clk
--
--  resets:
--    maxItems: 1
--
--  reset-names:
--    items:
--      - const: phy
--
--  "#phy-cells":
--    const: 1
--
--required:
--  - compatible
--  - reg
--  - clocks
--  - clock-names
--  - resets
--  - reset-names
--  - "#phy-cells"
--
--additionalProperties: false
--
--examples:
--  - |
--    phy@46000 {
--          compatible = "amlogic,meson-g12a-usb3-pcie-phy";
--          reg = <0x46000 0x2000>;
--          clocks = <&ref_clk>;
--          clock-names = "ref_clk";
--          resets = <&phy_reset>;
--          reset-names = "phy";
--          #phy-cells = <1>;
--    };
+--- a/drivers/dma/tegra210-adma.c
++++ b/drivers/dma/tegra210-adma.c
+@@ -224,7 +224,7 @@ static int tegra_adma_init(struct tegra_
+ 	int ret;
+ 
+ 	/* Clear any interrupts */
+-	tdma_write(tdma, tdma->cdata->global_int_clear, 0x1);
++	tdma_write(tdma, tdma->cdata->ch_base_offset + tdma->cdata->global_int_clear, 0x1);
+ 
+ 	/* Assert soft reset */
+ 	tdma_write(tdma, ADMA_GLOBAL_SOFT_RESET, 0x1);
 
 
