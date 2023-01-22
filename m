@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6FD47E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:06:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6761FC433EF;
-	Sun, 22 Jan 2023 15:06:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E5727E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:06:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06966C433D2;
+	Sun, 22 Jan 2023 15:06:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400003;
-	bh=sjSCmu/DYQwSGe1fmKJBFkBs46+3MFsJ0Xwlrplu+Lc=;
+	s=korg; t=1674400006;
+	bh=omGGgFwcYtq1KtxQgIbHFrf1cPk+OP9dOtiFrky4guc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=z3xlOG1L3j0LNeZtkeUKmO4zwFJsQsgi2hg3cHtHT22VJBMH/+7Rh1Y1IICenuRHt
-	 dKF1up2773oVUg7MDtCyYOKx2cY6xIloUNN4KrBqr4cu8Yl8jLVv5Pn3oZODJ0C93d
-	 DKl3cs1+ggIwjO+fIJdVsSZW39IRU71zgZ9KZwvY=
+	b=wiupiJMAXJPwmbvBcp58k4lqot/0tQ44GiSL/TizD4Wh4eX9Lw9Skd3ET2StDsZK0
+	 p/DDwzI9iHAg+8S+BawITGCGCw0EiuLTQpyOrq+euEjIjuiZ4so7Q9u+GBOqWgPgw/
+	 Q26HdeQ+FNiASFMMQhIAk5sKES+wEWOeIV22GbnY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+ede796cecd5296353515@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 05/25] nilfs2: fix general protection fault in nilfs_btree_insert()
-Date: Sun, 22 Jan 2023 16:04:05 +0100
-Message-Id: <20230122150218.034798906@linuxfoundation.org>
+	Takashi Iwai <tiwai@suse.de>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>
+Subject: [PATCH 4.14 06/25] xhci-pci: set the dma max_seg_size
+Date: Sun, 22 Jan 2023 16:04:06 +0100
+Message-Id: <20230122150218.076064369@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150217.788215473@linuxfoundation.org>
 References: <20230122150217.788215473@linuxfoundation.org>
@@ -35,102 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-commit 7633355e5c7f29c049a9048e461427d1d8ed3051 upstream.
+commit 93915a4170e9defd56a767a18e6c4076f3d18609 upstream.
 
-If nilfs2 reads a corrupted disk image and tries to reads a b-tree node
-block by calling __nilfs_btree_get_block() against an invalid virtual
-block address, it returns -ENOENT because conversion of the virtual block
-address to a disk block address fails.  However, this return value is the
-same as the internal code that b-tree lookup routines return to indicate
-that the block being searched does not exist, so functions that operate on
-that b-tree may misbehave.
+Allow devices to have dma operations beyond 64K, and avoid warnings such
+as:
 
-When nilfs_btree_insert() receives this spurious 'not found' code from
-nilfs_btree_do_lookup(), it misunderstands that the 'not found' check was
-successful and continues the insert operation using incomplete lookup path
-data, causing the following crash:
+xhci_hcd 0000:00:14.0: mapping sg segment longer than device claims to support [len=98304] [max=65536]
 
- general protection fault, probably for non-canonical address
- 0xdffffc0000000005: 0000 [#1] PREEMPT SMP KASAN
- KASAN: null-ptr-deref in range [0x0000000000000028-0x000000000000002f]
- ...
- RIP: 0010:nilfs_btree_get_nonroot_node fs/nilfs2/btree.c:418 [inline]
- RIP: 0010:nilfs_btree_prepare_insert fs/nilfs2/btree.c:1077 [inline]
- RIP: 0010:nilfs_btree_insert+0x6d3/0x1c10 fs/nilfs2/btree.c:1238
- Code: bc 24 80 00 00 00 4c 89 f8 48 c1 e8 03 42 80 3c 28 00 74 08 4c 89
- ff e8 4b 02 92 fe 4d 8b 3f 49 83 c7 28 4c 89 f8 48 c1 e8 03 <42> 80 3c
- 28 00 74 08 4c 89 ff e8 2e 02 92 fe 4d 8b 3f 49 83 c7 02
- ...
- Call Trace:
- <TASK>
-  nilfs_bmap_do_insert fs/nilfs2/bmap.c:121 [inline]
-  nilfs_bmap_insert+0x20d/0x360 fs/nilfs2/bmap.c:147
-  nilfs_get_block+0x414/0x8d0 fs/nilfs2/inode.c:101
-  __block_write_begin_int+0x54c/0x1a80 fs/buffer.c:1991
-  __block_write_begin fs/buffer.c:2041 [inline]
-  block_write_begin+0x93/0x1e0 fs/buffer.c:2102
-  nilfs_write_begin+0x9c/0x110 fs/nilfs2/inode.c:261
-  generic_perform_write+0x2e4/0x5e0 mm/filemap.c:3772
-  __generic_file_write_iter+0x176/0x400 mm/filemap.c:3900
-  generic_file_write_iter+0xab/0x310 mm/filemap.c:3932
-  call_write_iter include/linux/fs.h:2186 [inline]
-  new_sync_write fs/read_write.c:491 [inline]
-  vfs_write+0x7dc/0xc50 fs/read_write.c:584
-  ksys_write+0x177/0x2a0 fs/read_write.c:637
-  do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-  do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
- ...
- </TASK>
-
-This patch fixes the root cause of this problem by replacing the error
-code that __nilfs_btree_get_block() returns on block address conversion
-failure from -ENOENT to another internal code -EINVAL which means that the
-b-tree metadata is corrupted.
-
-By returning -EINVAL, it propagates without glitches, and for all relevant
-b-tree operations, functions in the upper bmap layer output an error
-message indicating corrupted b-tree metadata via
-nilfs_bmap_convert_error(), and code -EIO will be eventually returned as
-it should be.
-
-Link: https://lkml.kernel.org/r/000000000000bd89e205f0e38355@google.com
-Link: https://lkml.kernel.org/r/20230105055356.8811-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: syzbot+ede796cecd5296353515@syzkaller.appspotmail.com
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Cc: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20230116142216.1141605-2-mathias.nyman@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/nilfs2/btree.c |   15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ drivers/usb/host/xhci-pci.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/fs/nilfs2/btree.c
-+++ b/fs/nilfs2/btree.c
-@@ -489,9 +489,18 @@ static int __nilfs_btree_get_block(const
- 	ret = nilfs_btnode_submit_block(btnc, ptr, 0, REQ_OP_READ, 0, &bh,
- 					&submit_ptr);
- 	if (ret) {
--		if (ret != -EEXIST)
--			return ret;
--		goto out_check;
-+		if (likely(ret == -EEXIST))
-+			goto out_check;
-+		if (ret == -ENOENT) {
-+			/*
-+			 * Block address translation failed due to invalid
-+			 * value of 'ptr'.  In this case, return internal code
-+			 * -EINVAL (broken bmap) to notify bmap layer of fatal
-+			 * metadata corruption.
-+			 */
-+			ret = -EINVAL;
-+		}
-+		return ret;
- 	}
+--- a/drivers/usb/host/xhci-pci.c
++++ b/drivers/usb/host/xhci-pci.c
+@@ -375,6 +375,8 @@ static int xhci_pci_probe(struct pci_dev
+ 	/* USB-2 and USB-3 roothubs initialized, allow runtime pm suspend */
+ 	pm_runtime_put_noidle(&dev->dev);
  
- 	if (ra) {
++	dma_set_max_seg_size(&dev->dev, UINT_MAX);
++
+ 	return 0;
+ 
+ put_usb3_hcd:
 
 
