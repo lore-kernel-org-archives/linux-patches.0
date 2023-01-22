@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 275237E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:11:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A20E9C433EF;
-	Sun, 22 Jan 2023 15:11:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B98D47E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:11:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DE97C433EF;
+	Sun, 22 Jan 2023 15:11:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400317;
-	bh=1J6zcKmkvTqzOEAutl5JAnQEd63U87REeovC5W2BIjY=;
+	s=korg; t=1674400319;
+	bh=LRp9/HvJhqNRzsDfyAIVIb42UnLc2RXTLgWhD5XWebo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ux+7kbEuwOEFDetc2YIjjDhUtAz+7CKWzARRuTKJdokN2vhNEMAMgNMHfnEma5pAy
-	 d4BSIrlNI4HwQIY6tEOuPEsKuPRESgKOOhrfqDEVKpuLtN6LiE0z6nAUKHYVrXkPII
-	 TNyijakE5ur+BSt/3d80KpQsJqU6k9WElTFnaV6c=
+	b=cNpbVKloEz+o3LRx+Lk36dTKiZye32JeQwH0pbs+HWg7U1+ya0zn2MrjPHBPlDkJx
+	 P1tSh6XuF0qo52STAJMJgGD+NkeUUb6YPDEX/8xYMoGdf7X1yR56f9lAqxmpV48SE6
+	 ZemoTAHF5yNquBMzLw0wPttbkUfF1wPoLav7E8+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
+	Homin Rhee <hominlab@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 29/98] io_uring: fix CQ waiting timeout handling
-Date: Sun, 22 Jan 2023 16:03:45 +0100
-Message-Id: <20230122150230.711294235@linuxfoundation.org>
+Subject: [PATCH 5.10 30/98] io_uring: ensure that cached task references are always put on exit
+Date: Sun, 22 Jan 2023 16:03:46 +0100
+Message-Id: <20230122150230.744584618@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -35,58 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 12521a5d5cb7ff0ad43eadfc9c135d86e1131fa8 upstream.
+commit e775f93f2ab976a2cdb4a7b53063cbe890904f73 upstream.
 
-Jiffy to ktime CQ waiting conversion broke how we treat timeouts, in
-particular we rearm it anew every time we get into
-io_cqring_wait_schedule() without adjusting the timeout. Waiting for 2
-CQEs and getting a task_work in the middle may double the timeout value,
-or even worse in some cases task may wait indefinitely.
+io_uring caches task references to avoid doing atomics for each of them
+per request. If a request is put from the same task that allocated it,
+then we can maintain a per-ctx cache of them. This obviously relies
+on io_uring always pruning caches in a reliable way, and there's
+currently a case off io_uring fd release where we can miss that.
+
+One example is a ring setup with IOPOLL, which relies on the task
+polling for completions, which will free them. However, if such a task
+submits a request and then exits or closes the ring without reaping
+the completion, then ring release will reap and put. If release happens
+from that very same task, the completed request task refs will get
+put back into the cache pool. This is problematic, as we're now beyond
+the point of pruning caches.
+
+Manually drop these caches after doing an IOPOLL reap. This releases
+references from the current task, which is enough. If another task
+happens to be doing the release, then the caching will not be
+triggered and there's no issue.
 
 Cc: stable@vger.kernel.org
-Fixes: 228339662b398 ("io_uring: don't convert to jiffies for waiting on timeouts")
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/f7bffddd71b08f28a877d44d37ac953ddb01590d.1672915663.git.asml.silence@gmail.com
+Fixes: e98e49b2bbf7 ("io_uring: extend task put optimisations")
+Reported-by: Homin Rhee <hominlab@gmail.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ io_uring/io_uring.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
 diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index b7bd5138bdaf..e8852d56b1ec 100644
+index e8852d56b1ec..f8a0d228d799 100644
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -7518,7 +7518,7 @@ static int io_run_task_work_sig(void)
- /* when returns >0, the caller should retry */
- static inline int io_cqring_wait_schedule(struct io_ring_ctx *ctx,
- 					  struct io_wait_queue *iowq,
--					  ktime_t timeout)
-+					  ktime_t *timeout)
- {
- 	int ret;
+@@ -9513,6 +9513,10 @@ static void io_ring_ctx_wait_and_kill(struct io_ring_ctx *ctx)
+ 	/* if we failed setting up the ctx, we might not have any rings */
+ 	io_iopoll_try_reap_events(ctx);
  
-@@ -7530,7 +7530,7 @@ static inline int io_cqring_wait_schedule(struct io_ring_ctx *ctx,
- 	if (test_bit(0, &ctx->check_cq_overflow))
- 		return 1;
- 
--	if (!schedule_hrtimeout(&timeout, HRTIMER_MODE_ABS))
-+	if (!schedule_hrtimeout(timeout, HRTIMER_MODE_ABS))
- 		return -ETIME;
- 	return 1;
- }
-@@ -7593,7 +7593,7 @@ static int io_cqring_wait(struct io_ring_ctx *ctx, int min_events,
- 		}
- 		prepare_to_wait_exclusive(&ctx->cq_wait, &iowq.wq,
- 						TASK_INTERRUPTIBLE);
--		ret = io_cqring_wait_schedule(ctx, &iowq, timeout);
-+		ret = io_cqring_wait_schedule(ctx, &iowq, &timeout);
- 		finish_wait(&ctx->cq_wait, &iowq.wq);
- 		cond_resched();
- 	} while (ret > 0);
++	/* drop cached put refs after potentially doing completions */
++	if (current->io_uring)
++		io_uring_drop_tctx_refs(current);
++
+ 	INIT_WORK(&ctx->exit_work, io_ring_exit_work);
+ 	/*
+ 	 * Use system_unbound_wq to avoid spawning tons of event kworkers
 -- 
 2.39.0
 
