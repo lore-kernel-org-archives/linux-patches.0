@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7EF8B2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:19:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05ED3C4339B;
-	Sun, 22 Jan 2023 15:19:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27F292590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:19:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ADA8C433D2;
+	Sun, 22 Jan 2023 15:19:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400752;
-	bh=hDyQ6jL9C0Vo6/QLN8iUmNKMDaDpkuk2crett0tUP8E=;
+	s=korg; t=1674400755;
+	bh=AgAeoDIRkrViumwFCf5hYMbJYksxHuu283QcEKrU1R4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IoZqoqSEeffYgdxOJ+qjfIF+v3LPVCCorTWfMfzaNjCnkoUmBGuz+ejL0KIq9Du69
-	 iPC2q4el+WxO4UwZ/gZhEbjotFOAJpj3TKqkGcam24W7EjfsQjztPEG7vfzeWU4R68
-	 kPGuz0VPi1kEwJq5DgdBbLr7yDtKjBB7JYXPvUeI=
+	b=RTqN2tdwTeHqotI7C62LYWQ0whsC5yJ8w5pDCeg1swMauHqqVXqKWESIBRkjxnM1J
+	 SAb5zBAALFtZqTFGdsko73F/IGHhwASdrKxA6i7vGJeDB5zJaSm/tnDeDmDZbd4ki/
+	 5dOTirZXLArqmmkk1DJQE0cERpesRQqCa0NBMVho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sasa Dragic <sasa.dragic@gmail.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 5.15 094/117] drm/i915: re-disable RC6p on Sandy Bridge
-Date: Sun, 22 Jan 2023 16:04:44 +0100
-Message-Id: <20230122150236.716572413@linuxfoundation.org>
+	Enzo Matsumiya <ematsumiya@suse.de>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.15 067/117] cifs: do not include page data when checking signature
+Date: Sun, 22 Jan 2023 16:04:17 +0100
+Message-Id: <20230122150235.566041591@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -35,41 +35,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sasa Dragic <sasa.dragic@gmail.com>
+From: Enzo Matsumiya <ematsumiya@suse.de>
 
-commit 67b0b4ed259e425b7eed09da75b42c80682ca003 upstream.
+commit 30b2b2196d6e4cc24cbec633535a2404f258ce69 upstream.
 
-RC6p on Sandy Bridge got re-enabled over time, causing visual glitches
-and GPU hangs.
+On async reads, page data is allocated before sending.  When the
+response is received but it has no data to fill (e.g.
+STATUS_END_OF_FILE), __calc_signature() will still include the pages in
+its computation, leading to an invalid signature check.
 
-Disabled originally in commit 1c8ecf80fdee ("drm/i915: do not enable
-RC6p on Sandy Bridge").
+This patch fixes this by not setting the async read smb_rqst page data
+(zeroed by default) if its got_bytes is 0.
 
-Signed-off-by: Sasa Dragic <sasa.dragic@gmail.com>
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20221219172927.9603-2-sasa.dragic@gmail.com
-Fixes: fb6db0f5bf1d ("drm/i915: Remove unsafe i915.enable_rc6")
-Fixes: 13c5a577b342 ("drm/i915/gt: Select the deepest available parking mode for rc6")
-Cc: stable@vger.kernel.org
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-(cherry picked from commit 0c8a6e9ea232c221976a0670256bd861408d9917)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+This can be reproduced/verified with xfstests generic/465.
+
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Enzo Matsumiya <ematsumiya@suse.de>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_pci.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ fs/cifs/smb2pdu.c |   15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
---- a/drivers/gpu/drm/i915/i915_pci.c
-+++ b/drivers/gpu/drm/i915/i915_pci.c
-@@ -401,7 +401,8 @@ static const struct intel_device_info il
- 	.has_coherent_ggtt = true, \
- 	.has_llc = 1, \
- 	.has_rc6 = 1, \
--	.has_rc6p = 1, \
-+	/* snb does support rc6p, but enabling it causes various issues */ \
-+	.has_rc6p = 0, \
- 	.has_rps = true, \
- 	.dma_mask_size = 40, \
- 	.ppgtt_type = INTEL_PPGTT_ALIASING, \
+--- a/fs/cifs/smb2pdu.c
++++ b/fs/cifs/smb2pdu.c
+@@ -3999,12 +3999,15 @@ smb2_readv_callback(struct mid_q_entry *
+ 				(struct smb2_sync_hdr *)rdata->iov[0].iov_base;
+ 	struct cifs_credits credits = { .value = 0, .instance = 0 };
+ 	struct smb_rqst rqst = { .rq_iov = &rdata->iov[1],
+-				 .rq_nvec = 1,
+-				 .rq_pages = rdata->pages,
+-				 .rq_offset = rdata->page_offset,
+-				 .rq_npages = rdata->nr_pages,
+-				 .rq_pagesz = rdata->pagesz,
+-				 .rq_tailsz = rdata->tailsz };
++				 .rq_nvec = 1, };
++
++	if (rdata->got_bytes) {
++		rqst.rq_pages = rdata->pages;
++		rqst.rq_offset = rdata->page_offset;
++		rqst.rq_npages = rdata->nr_pages;
++		rqst.rq_pagesz = rdata->pagesz;
++		rqst.rq_tailsz = rdata->tailsz;
++	}
+ 
+ 	WARN_ONCE(rdata->server != mid->server,
+ 		  "rdata server %p != mid server %p",
 
 
