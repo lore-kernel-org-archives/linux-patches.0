@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B90EA7E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:06:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F6BC4339B;
-	Sun, 22 Jan 2023 15:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A6C67E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:06:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3834C433EF;
+	Sun, 22 Jan 2023 15:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674399969;
-	bh=/mbDlrNT4zqXev6bCHRzSFRz3AvaG3/wM/K4d5Y5JN4=;
+	s=korg; t=1674399972;
+	bh=GvcJkUCVzsApAy+NAUxylUDIkoHP5i43pkfkZ5bO/Ro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TyJb7XwEbU+X8D23cZiUAM0wHuzzu3YA4oDNrq2g0E1Rc0sKkKYbsf2lCSmhkwzHO
-	 TVL74B/G5E3H4r5Ku8o3s+SI6nbhlJH3E+NoCly/4QBgQLOrsNhEJlofuDxqMcysvn
-	 vd7VO0Pwlx0qAMCUrN8psXiL7nA/abrSdi+Zo5U0=
+	b=c0iksD2e3ENBNDfFoDiAlzuNIqwz7wCW5qiqToIZTllP9pbQYRlHc9mP9hkv1Xut6
+	 cmJkdzkONgI8DyGYR8ufluVnnKo68tctha1cXCG3ASyjf7ZmaVAebGeA+Am26oVt74
+	 APSHNOR85uDofyG97gUmtIB97YEqJkn1+BjWUX0A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Flavio Suligoi <f.suligoi@asem.it>,
-	stable <stable@kernel.org>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 4.14 16/25] usb: core: hub: disable autosuspend for TI TUSB8041
-Date: Sun, 22 Jan 2023 16:04:16 +0100
-Message-Id: <20230122150218.516272506@linuxfoundation.org>
+	Michael Adler <michael.adler@siemens.com>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 4.14 17/25] USB: serial: cp210x: add SCALANCE LPE-9000 device id
+Date: Sun, 22 Jan 2023 16:04:17 +0100
+Message-Id: <20230122150218.553863676@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150217.788215473@linuxfoundation.org>
 References: <20230122150217.788215473@linuxfoundation.org>
@@ -35,61 +34,30 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Flavio Suligoi <f.suligoi@asem.it>
+From: Michael Adler <michael.adler@siemens.com>
 
-commit 7171b0e261b17de96490adf053b8bb4b00061bcf upstream.
+commit 3f9e76e31704a325170e5aec2243c8d084d74854 upstream.
 
-The Texas Instruments TUSB8041 has an autosuspend problem at high
-temperature.
+Add the USB serial console device ID for Siemens SCALANCE LPE-9000
+which have a USB port for their serial console.
 
-If there is not USB traffic, after a couple of ms, the device enters in
-autosuspend mode. In this condition the external clock stops working, to
-save energy. When the USB activity turns on, ther hub exits the
-autosuspend state, the clock starts running again and all works fine.
-
-At ambient temperature all works correctly, but at high temperature,
-when the USB activity turns on, the external clock doesn't restart and
-the hub disappears from the USB bus.
-
-Disabling the autosuspend mode for this hub solves the issue.
-
-Signed-off-by: Flavio Suligoi <f.suligoi@asem.it>
-Cc: stable <stable@kernel.org>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/20221219124759.3207032-1-f.suligoi@asem.it
+Signed-off-by: Michael Adler <michael.adler@siemens.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ drivers/usb/serial/cp210x.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -40,6 +40,9 @@
- #define USB_PRODUCT_USB5534B			0x5534
- #define USB_VENDOR_CYPRESS			0x04b4
- #define USB_PRODUCT_CY7C65632			0x6570
-+#define USB_VENDOR_TEXAS_INSTRUMENTS		0x0451
-+#define USB_PRODUCT_TUSB8041_USB3		0x8140
-+#define USB_PRODUCT_TUSB8041_USB2		0x8142
- #define HUB_QUIRK_CHECK_PORT_AUTOSUSPEND	0x01
- #define HUB_QUIRK_DISABLE_AUTOSUSPEND		0x02
- 
-@@ -5394,6 +5397,16 @@ static const struct usb_device_id hub_id
-       .idVendor = USB_VENDOR_GENESYS_LOGIC,
-       .bInterfaceClass = USB_CLASS_HUB,
-       .driver_info = HUB_QUIRK_CHECK_PORT_AUTOSUSPEND},
-+    { .match_flags = USB_DEVICE_ID_MATCH_VENDOR
-+			| USB_DEVICE_ID_MATCH_PRODUCT,
-+      .idVendor = USB_VENDOR_TEXAS_INSTRUMENTS,
-+      .idProduct = USB_PRODUCT_TUSB8041_USB2,
-+      .driver_info = HUB_QUIRK_DISABLE_AUTOSUSPEND},
-+    { .match_flags = USB_DEVICE_ID_MATCH_VENDOR
-+			| USB_DEVICE_ID_MATCH_PRODUCT,
-+      .idVendor = USB_VENDOR_TEXAS_INSTRUMENTS,
-+      .idProduct = USB_PRODUCT_TUSB8041_USB3,
-+      .driver_info = HUB_QUIRK_DISABLE_AUTOSUSPEND},
-     { .match_flags = USB_DEVICE_ID_MATCH_DEV_CLASS,
-       .bDeviceClass = USB_CLASS_HUB},
-     { .match_flags = USB_DEVICE_ID_MATCH_INT_CLASS,
+--- a/drivers/usb/serial/cp210x.c
++++ b/drivers/usb/serial/cp210x.c
+@@ -64,6 +64,7 @@ static const struct usb_device_id id_tab
+ 	{ USB_DEVICE(0x0846, 0x1100) }, /* NetGear Managed Switch M4100 series, M5300 series, M7100 series */
+ 	{ USB_DEVICE(0x08e6, 0x5501) }, /* Gemalto Prox-PU/CU contactless smartcard reader */
+ 	{ USB_DEVICE(0x08FD, 0x000A) }, /* Digianswer A/S , ZigBee/802.15.4 MAC Device */
++	{ USB_DEVICE(0x0908, 0x0070) }, /* Siemens SCALANCE LPE-9000 USB Serial Console */
+ 	{ USB_DEVICE(0x0908, 0x01FF) }, /* Siemens RUGGEDCOM USB Serial Console */
+ 	{ USB_DEVICE(0x0988, 0x0578) }, /* Teraoka AD2000 */
+ 	{ USB_DEVICE(0x0B00, 0x3070) }, /* Ingenico 3070 */
 
 
