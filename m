@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E00EA2590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:26:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57136C433D2;
-	Sun, 22 Jan 2023 15:26:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701B32590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:26:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E90F6C433EF;
+	Sun, 22 Jan 2023 15:26:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401161;
-	bh=BhDGkwxQzdNvzq5VpNgkUeeA3BsO7nklF61/N73tTrI=;
+	s=korg; t=1674401164;
+	bh=3NSeHrnmVWXlDkqw2hec1nL838PVPfh73vHfnWMnFFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dkQtWxiqxKStrQ2xZl3sdyooqmz1ZyDQk9ebzRoIp0P9o0dSx0H/H7PUmdJ3rZ4n3
-	 mKGUpQ5aPo9N9puYg1yTON3bxVCgpxG+O1Ht5t8gfGbVMx6CGyVUvnAXzm0l32FAk4
-	 ODzCu3UKAN5/P7tAJOY0eTUp2utiYYwSS7wh4A2g=
+	b=ga0TuTsTVtu3rCFAanPH6ysZQc4dqrad/OONP0pe8vBzk76Ge6gkjPuxXq9Ae/g4f
+	 ppwXPDrnJ6uf5lDMdlhky1tAZAh0D1HrZxyWhDYFQnReuUbM8eH1HObL2+6zsEV5d2
+	 xgc/8NJZgEnCO99EEFex88Y3WY7jrarg/KnUqr6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <mathew.j.martineau@linux.intel.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 103/193] selftests: mptcp: userspace: validate v4-v6 subflows mix
-Date: Sun, 22 Jan 2023 16:03:52 +0100
-Message-Id: <20230122150251.026914247@linuxfoundation.org>
+	Utkarsh Patel <utkarsh.h.patel@intel.com>,
+	Yehezkel Bernat <YehezkelShB@gmail.com>,
+	Mika Westerberg <mika.westerberg@linux.intel.com>
+Subject: [PATCH 6.1 094/193] thunderbolt: Do not call PM runtime functions in tb_retimer_scan()
+Date: Sun, 22 Jan 2023 16:03:43 +0100
+Message-Id: <20230122150250.641991086@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -35,88 +35,137 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Mika Westerberg <mika.westerberg@linux.intel.com>
 
-commit 4656d72c1efa495a58ad6d8b073a60907073e4e6 upstream.
+commit 23257cfc1cb7202fd0065e9f4a6a0aac1c04c4a9 upstream.
 
-MPTCP protocol supports having subflows in both IPv4 and IPv6. In Linux,
-it is possible to have that if the MPTCP socket has been created with
-AF_INET6 family without the IPV6_V6ONLY option.
+We cannot call PM runtime functions in tb_retimer_scan() because it will
+also be called when retimers are scanned from userspace (happens when
+there is no device connected on ChromeOS for instance) and at the same
+USB4 port runtime resume hook. This leads to hang because neither can
+proceed.
 
-Here, a new IPv4 subflow is being added to the initial IPv6 connection,
-then being removed using Netlink commands.
+Fix this by runtime resuming USB4 ports in tb_scan_port() instead. This
+makes sure the ports are runtime PM active when retimers are added under
+it while avoiding the reported hang as well.
 
-Cc: stable@vger.kernel.org # v5.19+
-Reviewed-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reported-by: Utkarsh Patel <utkarsh.h.patel@intel.com>
+Fixes: 1e56c88adecc ("thunderbolt: Runtime resume USB4 port when retimers are scanned")
+Cc: stable@vger.kernel.org
+Acked-by: Yehezkel Bernat <YehezkelShB@gmail.com>
+Signed-off-by: Mika Westerberg <mika.westerberg@linux.intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/userspace_pm.sh |   47 ++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+ drivers/thunderbolt/retimer.c |   17 +++--------------
+ drivers/thunderbolt/tb.c      |   20 +++++++++++++++-----
+ 2 files changed, 18 insertions(+), 19 deletions(-)
 
---- a/tools/testing/selftests/net/mptcp/userspace_pm.sh
-+++ b/tools/testing/selftests/net/mptcp/userspace_pm.sh
-@@ -776,6 +776,52 @@ test_subflows()
- 	rm -f "$evts"
+--- a/drivers/thunderbolt/retimer.c
++++ b/drivers/thunderbolt/retimer.c
+@@ -427,13 +427,6 @@ int tb_retimer_scan(struct tb_port *port
+ {
+ 	u32 status[TB_MAX_RETIMER_INDEX + 1] = {};
+ 	int ret, i, last_idx = 0;
+-	struct usb4_port *usb4;
+-
+-	usb4 = port->usb4;
+-	if (!usb4)
+-		return 0;
+-
+-	pm_runtime_get_sync(&usb4->dev);
+ 
+ 	/*
+ 	 * Send broadcast RT to make sure retimer indices facing this
+@@ -441,7 +434,7 @@ int tb_retimer_scan(struct tb_port *port
+ 	 */
+ 	ret = usb4_port_enumerate_retimers(port);
+ 	if (ret)
+-		goto out;
++		return ret;
+ 
+ 	/*
+ 	 * Enable sideband channel for each retimer. We can do this
+@@ -471,11 +464,11 @@ int tb_retimer_scan(struct tb_port *port
+ 			break;
+ 	}
+ 
+-	ret = 0;
+ 	if (!last_idx)
+-		goto out;
++		return 0;
+ 
+ 	/* Add on-board retimers if they do not exist already */
++	ret = 0;
+ 	for (i = 1; i <= last_idx; i++) {
+ 		struct tb_retimer *rt;
+ 
+@@ -489,10 +482,6 @@ int tb_retimer_scan(struct tb_port *port
+ 		}
+ 	}
+ 
+-out:
+-	pm_runtime_mark_last_busy(&usb4->dev);
+-	pm_runtime_put_autosuspend(&usb4->dev);
+-
+ 	return ret;
  }
  
-+test_subflows_v4_v6_mix()
-+{
-+	# Attempt to add a listener at 10.0.2.1:<subflow-port>
-+	ip netns exec "$ns1" ./pm_nl_ctl listen 10.0.2.1\
-+	   $app6_port > /dev/null 2>&1 &
-+	local listener_pid=$!
+--- a/drivers/thunderbolt/tb.c
++++ b/drivers/thunderbolt/tb.c
+@@ -628,11 +628,15 @@ static void tb_scan_port(struct tb_port
+ 			 * Downstream switch is reachable through two ports.
+ 			 * Only scan on the primary port (link_nr == 0).
+ 			 */
 +
-+	# ADD_ADDR4 from server to client machine reusing the subflow port on
-+	# the established v6 connection
-+	:>"$client_evts"
-+	ip netns exec "$ns1" ./pm_nl_ctl ann 10.0.2.1 token "$server6_token" id\
-+	   $server_addr_id dev ns1eth2 > /dev/null 2>&1
-+	stdbuf -o0 -e0 printf "ADD_ADDR4 id:%d 10.0.2.1 (ns1) => ns2, reuse port\t\t" $server_addr_id
-+	sleep 0.5
-+	verify_announce_event "$client_evts" "$ANNOUNCED" "$client6_token" "10.0.2.1"\
-+			      "$server_addr_id" "$app6_port"
++	if (port->usb4)
++		pm_runtime_get_sync(&port->usb4->dev);
 +
-+	# CREATE_SUBFLOW from client to server machine
-+	:>"$client_evts"
-+	ip netns exec "$ns2" ./pm_nl_ctl csf lip 10.0.2.2 lid 23 rip 10.0.2.1 rport\
-+	   $app6_port token "$client6_token" > /dev/null 2>&1
-+	sleep 0.5
-+	verify_subflow_events "$client_evts" "$SUB_ESTABLISHED" "$client6_token"\
-+			      "$AF_INET" "10.0.2.2" "10.0.2.1" "$app6_port" "23"\
-+			      "$server_addr_id" "ns2" "ns1"
-+
-+	# Delete the listener from the server ns, if one was created
-+	kill_wait $listener_pid
-+
-+	sport=$(sed --unbuffered -n 's/.*\(sport:\)\([[:digit:]]*\).*$/\2/p;q' "$client_evts")
-+
-+	# DESTROY_SUBFLOW from client to server machine
-+	:>"$client_evts"
-+	ip netns exec "$ns2" ./pm_nl_ctl dsf lip 10.0.2.2 lport "$sport" rip 10.0.2.1 rport\
-+	   $app6_port token "$client6_token" > /dev/null 2>&1
-+	sleep 0.5
-+	verify_subflow_events "$client_evts" "$SUB_CLOSED" "$client6_token" \
-+			      "$AF_INET" "10.0.2.2" "10.0.2.1" "$app6_port" "23"\
-+			      "$server_addr_id" "ns2" "ns1"
-+
-+	# RM_ADDR from server to client machine
-+	ip netns exec "$ns1" ./pm_nl_ctl rem id $server_addr_id token\
-+	   "$server6_token" > /dev/null 2>&1
-+	sleep 0.5
-+}
-+
- test_prio()
- {
- 	local count
-@@ -812,6 +858,7 @@ make_connection "v6"
- test_announce
- test_remove
- test_subflows
-+test_subflows_v4_v6_mix
- test_prio
+ 	if (tb_wait_for_port(port, false) <= 0)
+-		return;
++		goto out_rpm_put;
+ 	if (port->remote) {
+ 		tb_port_dbg(port, "port already has a remote\n");
+-		return;
++		goto out_rpm_put;
+ 	}
  
- exit 0
+ 	tb_retimer_scan(port, true);
+@@ -647,12 +651,12 @@ static void tb_scan_port(struct tb_port
+ 		 */
+ 		if (PTR_ERR(sw) == -EIO || PTR_ERR(sw) == -EADDRNOTAVAIL)
+ 			tb_scan_xdomain(port);
+-		return;
++		goto out_rpm_put;
+ 	}
+ 
+ 	if (tb_switch_configure(sw)) {
+ 		tb_switch_put(sw);
+-		return;
++		goto out_rpm_put;
+ 	}
+ 
+ 	/*
+@@ -681,7 +685,7 @@ static void tb_scan_port(struct tb_port
+ 
+ 	if (tb_switch_add(sw)) {
+ 		tb_switch_put(sw);
+-		return;
++		goto out_rpm_put;
+ 	}
+ 
+ 	/* Link the switches using both links if available */
+@@ -733,6 +737,12 @@ static void tb_scan_port(struct tb_port
+ 
+ 	tb_add_dp_resources(sw);
+ 	tb_scan_switch(sw);
++
++out_rpm_put:
++	if (port->usb4) {
++		pm_runtime_mark_last_busy(&port->usb4->dev);
++		pm_runtime_put_autosuspend(&port->usb4->dev);
++	}
+ }
+ 
+ static void tb_deactivate_and_free_tunnel(struct tb_tunnel *tunnel)
 
 
