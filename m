@@ -1,36 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 926282590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:28:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2771C433EF;
-	Sun, 22 Jan 2023 15:28:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32E542590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:28:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E95C433EF;
+	Sun, 22 Jan 2023 15:28:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401327;
-	bh=0ckRte5Nao2cE5WTe/ddPUkpwhmm5bMYu91x0Dst6Do=;
+	s=korg; t=1674401330;
+	bh=9LcJTYZi/AcWsA4gzinWjoOzlxrR98QQqPTYJ8P9Eco=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dzyGxL+lSj9irfKHftUvkeD/FaEmGr6W1x41j32623Exw+9I46zQWdY/E1ZvmlR2s
-	 OAj7QB1Kx7l3AjsZUiWzgh0pA2j8Eiiu58vHr4WvDwcZ6M30PNDZne11HDx1HcyHHx
-	 dU3z8+0Cdy5gzzio6hrc/dPXTDLIE54TiK/GU8xU=
+	b=v6pFc3iBsjKVmH6QMDOa9/kmdi4CYj1uEn/7GZlFevd2/xK5npXT+crcfCv4uvJxA
+	 CiFezKwas9RV7jrZp4myRJ79SW2cYxpLOr6RQJPa9FpwnWvGcUbjx0L/HIikJz4dpm
+	 gSvqFVTxgJKPIJb9xK2UAh4NzrTELu/DdlulV5/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Zijlstra <peterz@infradead.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Jann Horn <jannh@google.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Petr Mladek <pmladek@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Marco Elver <elver@google.com>,
-	tangmeng <tangmeng@uniontech.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.1 158/193] exit: Use READ_ONCE() for all oops/warn limit reads
-Date: Sun, 22 Jan 2023 16:04:47 +0100
-Message-Id: <20230122150253.624898301@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>
+Subject: [PATCH 6.1 190/193] net/mlx5: fix missing mutex_unlock in mlx5_fw_fatal_reporter_err_work()
+Date: Sun, 22 Jan 2023 16:05:19 +0100
+Message-Id: <20230122150255.097162155@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -44,76 +37,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 7535b832c6399b5ebfc5b53af5c51dd915ee2538 upstream.
+commit 90e7cb78b81543998217b0eb446c067ce2191a79 upstream.
 
-Use a temporary variable to take full advantage of READ_ONCE() behavior.
-Without this, the report (and even the test) might be out of sync with
-the initial test.
+Add missing mutex_unlock() before returning from
+mlx5_fw_fatal_reporter_err_work().
 
-Reported-by: Peter Zijlstra <peterz@infradead.org>
-Link: https://lore.kernel.org/lkml/Y5x7GXeluFmZ8E0E@hirez.programming.kicks-ass.net
-Fixes: 9fc9e278a5c0 ("panic: Introduce warn_limit")
-Fixes: d4ccd54d28d3 ("exit: Put an upper limit on how often we can oops")
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Luis Chamberlain <mcgrof@kernel.org>
-Cc: Marco Elver <elver@google.com>
-Cc: tangmeng <tangmeng@uniontech.com>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
-Signed-off-by: Kees Cook <keescook@chromium.org>
+Fixes: 9078e843efec ("net/mlx5: Avoid recovery in probe flows")
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/exit.c  |    6 ++++--
- kernel/panic.c |    7 +++++--
- 2 files changed, 9 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/health.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -931,6 +931,7 @@ void __noreturn make_task_dead(int signr
- 	 * Then do everything else.
- 	 */
- 	struct task_struct *tsk = current;
-+	unsigned int limit;
- 
- 	if (unlikely(in_interrupt()))
- 		panic("Aiee, killing interrupt handler!");
-@@ -954,8 +955,9 @@ void __noreturn make_task_dead(int signr
- 	 * To make sure this can't happen, place an upper bound on how often the
- 	 * kernel may oops without panic().
- 	 */
--	if (atomic_inc_return(&oops_count) >= READ_ONCE(oops_limit) && oops_limit)
--		panic("Oopsed too often (kernel.oops_limit is %d)", oops_limit);
-+	limit = READ_ONCE(oops_limit);
-+	if (atomic_inc_return(&oops_count) >= limit && limit)
-+		panic("Oopsed too often (kernel.oops_limit is %d)", limit);
- 
- 	/*
- 	 * We're taking recursive faults here in make_task_dead. Safest is to just
---- a/kernel/panic.c
-+++ b/kernel/panic.c
-@@ -231,12 +231,15 @@ static void panic_print_sys_info(bool co
- 
- void check_panic_on_warn(const char *origin)
- {
-+	unsigned int limit;
-+
- 	if (panic_on_warn)
- 		panic("%s: panic_on_warn set ...\n", origin);
- 
--	if (atomic_inc_return(&warn_count) >= READ_ONCE(warn_limit) && warn_limit)
-+	limit = READ_ONCE(warn_limit);
-+	if (atomic_inc_return(&warn_count) >= limit && limit)
- 		panic("%s: system warned too often (kernel.warn_limit is %d)",
--		      origin, warn_limit);
-+		      origin, limit);
- }
- 
- /**
+--- a/drivers/net/ethernet/mellanox/mlx5/core/health.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/health.c
+@@ -677,6 +677,7 @@ static void mlx5_fw_fatal_reporter_err_w
+ 	mutex_lock(&dev->intf_state_mutex);
+ 	if (test_bit(MLX5_DROP_NEW_HEALTH_WORK, &health->flags)) {
+ 		mlx5_core_err(dev, "health works are not permitted at this stage\n");
++		mutex_unlock(&dev->intf_state_mutex);
+ 		return;
+ 	}
+ 	mutex_unlock(&dev->intf_state_mutex);
 
 
