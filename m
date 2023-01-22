@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2D37E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:06:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6F57C433EF;
-	Sun, 22 Jan 2023 15:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03E4B7E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:06:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7CFFFC433EF;
+	Sun, 22 Jan 2023 15:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674399993;
-	bh=W4H5iCI00DHQOLwrnJn3FXXrWKVrlLr07QWu1EKUeM0=;
+	s=korg; t=1674399995;
+	bh=OqxWEtiTOn4kTu3mdysvMJoqky85DyyHjpgSTRcjVfQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dGd28C10wVtEpS6Erahs6nmzt3ulEfOjiAWAnAVBuaYRsWgnx+VOkybD1jnOM0KJ+
-	 ENmozzgxFhQDJFu1FNJ6hnr9G938kVsjPotMpQObTrwvACDg8vcAsJ3ZySEjLPyoj9
-	 EbYZvwHiCeW/jeVDSNQVNI6hrOBlH6tLan4GWOHU=
+	b=0QBXOM8n5M/6jb5W0DoyHBkMtrAX1Guf7Z+8quzPn/f8ibDAURKxFlWHdA9AGT/Ja
+	 Iu9xJro7d2fS7je5UhtWQ9ciHOf7Q5AnQmBr/p6z+aIIpvCgmyUTWgt93t0JwIKshK
+	 Kqq2cFE8rPPL/hhsPgIvHnsci3BGV8TYXd8lhx88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Khazhismel Kumykov <khazhy@google.com>
-Subject: [PATCH 4.14 24/25] gsmi: fix null-deref in gsmi_get_variable
-Date: Sun, 22 Jan 2023 16:04:24 +0100
-Message-Id: <20230122150218.800208190@linuxfoundation.org>
+	YingChi Long <me@inclyc.cn>,
+	Borislav Petkov <bp@suse.de>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 4.14 25/25] x86/fpu: Use _Alignof to avoid undefined behavior in TYPE_ALIGN
+Date: Sun, 22 Jan 2023 16:04:25 +0100
+Message-Id: <20230122150218.841731223@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150217.788215473@linuxfoundation.org>
 References: <20230122150217.788215473@linuxfoundation.org>
@@ -34,41 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Khazhismel Kumykov <khazhy@chromium.org>
+From: YingChi Long <me@inclyc.cn>
 
-commit a769b05eeed7accc4019a1ed9799dd72067f1ce8 upstream.
+commit 55228db2697c09abddcb9487c3d9fa5854a932cd upstream.
 
-We can get EFI variables without fetching the attribute, so we must
-allow for that in gsmi.
+WG14 N2350 specifies that it is an undefined behavior to have type
+definitions within offsetof", see
 
-commit 859748255b43 ("efi: pstore: Omit efivars caching EFI varstore
-access layer") added a new get_variable call with attr=NULL, which
-triggers panic in gsmi.
+  https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2350.htm
 
-Fixes: 74c5b31c6618 ("driver: Google EFI SMI")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Khazhismel Kumykov <khazhy@google.com>
-Link: https://lore.kernel.org/r/20230118010212.1268474-1-khazhy@google.com
+This specification is also part of C23.
+
+Therefore, replace the TYPE_ALIGN macro with the _Alignof builtin to
+avoid undefined behavior. (_Alignof itself is C11 and the kernel is
+built with -gnu11).
+
+ISO C11 _Alignof is subtly different from the GNU C extension
+__alignof__. Latter is the preferred alignment and _Alignof the
+minimal alignment. For long long on x86 these are 8 and 4
+respectively.
+
+The macro TYPE_ALIGN's behavior matches _Alignof rather than
+__alignof__.
+
+  [ bp: Massage commit message. ]
+
+Signed-off-by: YingChi Long <me@inclyc.cn>
+Signed-off-by: Borislav Petkov <bp@suse.de>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Link: https://lore.kernel.org/r/20220925153151.2467884-1-me@inclyc.cn
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/google/gsmi.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ arch/x86/kernel/fpu/init.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
---- a/drivers/firmware/google/gsmi.c
-+++ b/drivers/firmware/google/gsmi.c
-@@ -343,9 +343,10 @@ static efi_status_t gsmi_get_variable(ef
- 		memcpy(data, gsmi_dev.data_buf->start, *data_size);
+--- a/arch/x86/kernel/fpu/init.c
++++ b/arch/x86/kernel/fpu/init.c
+@@ -138,9 +138,6 @@ static void __init fpu__init_system_gene
+ unsigned int fpu_kernel_xstate_size;
+ EXPORT_SYMBOL_GPL(fpu_kernel_xstate_size);
  
- 		/* All variables are have the following attributes */
--		*attr = EFI_VARIABLE_NON_VOLATILE |
--			EFI_VARIABLE_BOOTSERVICE_ACCESS |
--			EFI_VARIABLE_RUNTIME_ACCESS;
-+		if (attr)
-+			*attr = EFI_VARIABLE_NON_VOLATILE |
-+				EFI_VARIABLE_BOOTSERVICE_ACCESS |
-+				EFI_VARIABLE_RUNTIME_ACCESS;
- 	}
+-/* Get alignment of the TYPE. */
+-#define TYPE_ALIGN(TYPE) offsetof(struct { char x; TYPE test; }, test)
+-
+ /*
+  * Enforce that 'MEMBER' is the last field of 'TYPE'.
+  *
+@@ -148,8 +145,8 @@ EXPORT_SYMBOL_GPL(fpu_kernel_xstate_size
+  * because that's how C aligns structs.
+  */
+ #define CHECK_MEMBER_AT_END_OF(TYPE, MEMBER) \
+-	BUILD_BUG_ON(sizeof(TYPE) != ALIGN(offsetofend(TYPE, MEMBER), \
+-					   TYPE_ALIGN(TYPE)))
++	BUILD_BUG_ON(sizeof(TYPE) !=         \
++		     ALIGN(offsetofend(TYPE, MEMBER), _Alignof(TYPE)))
  
- 	spin_unlock_irqrestore(&gsmi_dev.lock, flags);
+ /*
+  * We append the 'struct fpu' to the task_struct:
 
 
