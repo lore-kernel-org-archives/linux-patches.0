@@ -1,32 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA2472596
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:27:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A583C4339B;
-	Sun, 22 Jan 2023 15:27:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E8632590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:27:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E95BDC4339B;
+	Sun, 22 Jan 2023 15:27:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401221;
-	bh=FhSm22ALd7xSvbMu2upM9FhPRvCCtWcSIk+QClqEOek=;
+	s=korg; t=1674401224;
+	bh=qQz0KuB65ZRzVqmm/w75kLrUY4EeZ9OA//teTkQoRVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DrRVLtuHzXYmgfCz4HvO4cZu+RzaCPFwWTH7zFV/5jRETasNi9x/DNeGL9cvCNTb4
-	 KgjXOC4rRhCYKqAaEXwDbun6J2iW0MyLdMNWI/RlshN4iIBBNBoq0A76CQn802+54r
-	 E6iYo0/JJWzGFcAYs4C3iYgZYSAt2hvPVnD5WfTw=
+	b=iKjlCK7Pp2BMkb/y+7nF+M6IvtMa4FUsC36ccI/H1BZOF0UAoKS7AMjLhiJ+hdj1a
+	 zW8tzOKmF/1Y7xAfwaVRI5TZuyeSnzUUx1KiZhIVBf+4p62dCkNqaI3LtXn8kCUDPi
+	 7uXxhH/o3MnPGZk5r8LrptpU5C4e9JcV/qUYt8g8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Mladek <pmladek@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	tangmeng <tangmeng@uniontech.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 6.1 156/193] panic: Expose "warn_count" to sysfs
-Date: Sun, 22 Jan 2023 16:04:45 +0100
-Message-Id: <20230122150253.522916418@linuxfoundation.org>
+	Alexander Usyskin <alexander.usyskin@intel.com>,
+	Tomas Winkler <tomas.winkler@intel.com>
+Subject: [PATCH 6.1 130/193] mei: me: add meteor lake point M DID
+Date: Sun, 22 Jan 2023 16:04:19 +0100
+Message-Id: <20230122150252.265957705@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -40,93 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Alexander Usyskin <alexander.usyskin@intel.com>
 
-commit 8b05aa26336113c4cea25f1c333ee8cd4fc212a6 upstream.
+commit 0c4d68261717f89fa8c4f98a6967c3832fcb3ad0 upstream.
 
-Since Warn count is now tracked and is a fairly interesting signal, add
-the entry /sys/kernel/warn_count to expose it to userspace.
+Add Meteor Lake Point M device id.
 
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: tangmeng <tangmeng@uniontech.com>
-Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221117234328.594699-6-keescook@chromium.org
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Alexander Usyskin <alexander.usyskin@intel.com>
+Signed-off-by: Tomas Winkler <tomas.winkler@intel.com>
+Link: https://lore.kernel.org/r/20221212220247.286019-2-tomas.winkler@intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/ABI/testing/sysfs-kernel-warn_count |    6 ++++++
- MAINTAINERS                                       |    1 +
- kernel/panic.c                                    |   22 ++++++++++++++++++++--
- 3 files changed, 27 insertions(+), 2 deletions(-)
- create mode 100644 Documentation/ABI/testing/sysfs-kernel-warn_count
+ drivers/misc/mei/hw-me-regs.h |    2 ++
+ drivers/misc/mei/pci-me.c     |    2 ++
+ 2 files changed, 4 insertions(+)
 
---- /dev/null
-+++ b/Documentation/ABI/testing/sysfs-kernel-warn_count
-@@ -0,0 +1,6 @@
-+What:		/sys/kernel/oops_count
-+Date:		November 2022
-+KernelVersion:	6.2.0
-+Contact:	Linux Kernel Hardening List <linux-hardening@vger.kernel.org>
-+Description:
-+		Shows how many times the system has Warned since last boot.
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -11113,6 +11113,7 @@ L:	linux-hardening@vger.kernel.org
- S:	Supported
- T:	git git://git.kernel.org/pub/scm/linux/kernel/git/kees/linux.git for-next/hardening
- F:	Documentation/ABI/testing/sysfs-kernel-oops_count
-+F:	Documentation/ABI/testing/sysfs-kernel-warn_count
- F:	include/linux/overflow.h
- F:	include/linux/randomize_kstack.h
- F:	mm/usercopy.c
---- a/kernel/panic.c
-+++ b/kernel/panic.c
-@@ -32,6 +32,7 @@
- #include <linux/bug.h>
- #include <linux/ratelimit.h>
- #include <linux/debugfs.h>
-+#include <linux/sysfs.h>
- #include <trace/events/error_report.h>
- #include <asm/sections.h>
+--- a/drivers/misc/mei/hw-me-regs.h
++++ b/drivers/misc/mei/hw-me-regs.h
+@@ -111,6 +111,8 @@
  
-@@ -107,6 +108,25 @@ static __init int kernel_panic_sysctls_i
- late_initcall(kernel_panic_sysctls_init);
- #endif
+ #define MEI_DEV_ID_RPL_S      0x7A68  /* Raptor Lake Point S */
  
-+static atomic_t warn_count = ATOMIC_INIT(0);
++#define MEI_DEV_ID_MTL_M      0x7E70  /* Meteor Lake Point M */
 +
-+#ifdef CONFIG_SYSFS
-+static ssize_t warn_count_show(struct kobject *kobj, struct kobj_attribute *attr,
-+			       char *page)
-+{
-+	return sysfs_emit(page, "%d\n", atomic_read(&warn_count));
-+}
-+
-+static struct kobj_attribute warn_count_attr = __ATTR_RO(warn_count);
-+
-+static __init int kernel_panic_sysfs_init(void)
-+{
-+	sysfs_add_file_to_group(kernel_kobj, &warn_count_attr.attr, NULL);
-+	return 0;
-+}
-+late_initcall(kernel_panic_sysfs_init);
-+#endif
-+
- static long no_blink(int state)
- {
- 	return 0;
-@@ -211,8 +231,6 @@ static void panic_print_sys_info(bool co
+ /*
+  * MEI HW Section
+  */
+--- a/drivers/misc/mei/pci-me.c
++++ b/drivers/misc/mei/pci-me.c
+@@ -118,6 +118,8 @@ static const struct pci_device_id mei_me
  
- void check_panic_on_warn(const char *origin)
- {
--	static atomic_t warn_count = ATOMIC_INIT(0);
--
- 	if (panic_on_warn)
- 		panic("%s: panic_on_warn set ...\n", origin);
+ 	{MEI_PCI_DEVICE(MEI_DEV_ID_RPL_S, MEI_ME_PCH15_CFG)},
  
++	{MEI_PCI_DEVICE(MEI_DEV_ID_MTL_M, MEI_ME_PCH15_CFG)},
++
+ 	/* required last entry */
+ 	{0, }
+ };
 
 
