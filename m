@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 209212590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C349C433D2;
-	Sun, 22 Jan 2023 15:16:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8B172590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:16:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E729C433EF;
+	Sun, 22 Jan 2023 15:16:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400580;
-	bh=x9dZW/ZwuQVE5ySC8vKzWO5/Om8JMw97XqFBPZYQ5qI=;
+	s=korg; t=1674400582;
+	bh=kMTd/QWEVaMMbGGHko64wkREQRIpQtKXX9E8vNP5Ciw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FYNtL+BiwwM4LpOmaCxyUNp2uiqkFzi76Al5CaVflsnZCQccmQtx0pnsI/Qnnk/U5
-	 CoNsyMJHExeznookmB+Sel1tfSAHNnQFkoq1HS4PrO8q0uZwuhJuqy5T/JWQ39L7Ep
-	 IccQVU4RUuqpGmmtutX8pZ0Ox4Mw9DX+YEtHuegw=
+	b=GQbGqGjsvWhqYKsQRc0UkQ4d8DvFxVaEkmqIpR5LoSOZrhAnI2Tw/bE1AVaNHK77P
+	 VS37GJFpjCXVDcT5gEQeYw1KLb7cnCQb5huQ1O508puvEEZxG8QG1nM23j58ejX6W0
+	 WEucSUhdIALIYDXUao62ck0UX28RZPp2j5FWbwe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jens Axboe <axboe@kernel.dk>,
+	Hao Sun <sunhao.th@gmail.com>,
+	Martin KaFai Lau <martin.lau@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 029/117] eventfd: provide a eventfd_signal_mask() helper
-Date: Sun, 22 Jan 2023 16:03:39 +0100
-Message-Id: <20230122150233.920259685@linuxfoundation.org>
+Subject: [PATCH 5.15 003/117] selftests/bpf: check null propagation only neither reg is PTR_TO_BTF_ID
+Date: Sun, 22 Jan 2023 16:03:13 +0100
+Message-Id: <20230122150232.884959837@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 References: <20230122150232.736358800@linuxfoundation.org>
@@ -34,120 +35,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jens Axboe <axboe@kernel.dk>
+From: Hao Sun <sunhao.th@gmail.com>
 
-[ Upstream commit 03e02acda8e267a8183e1e0ed289ff1ef9cd7ed8 ]
+[ Upstream commit cedebd74cf3883f0384af9ec26b4e6f8f1964dd4 ]
 
-This is identical to eventfd_signal(), but it allows the caller to pass
-in a mask to be used for the poll wakeup key. The use case is avoiding
-repeated multishot triggers if we have a dependency between eventfd and
-io_uring.
+Verify that nullness information is not porpagated in the branches
+of register to register JEQ and JNE operations if one of them is
+PTR_TO_BTF_ID. Implement this in C level so we can use CO-RE.
 
-If we setup an eventfd context and register that as the io_uring eventfd,
-and at the same time queue a multishot poll request for the eventfd
-context, then any CQE posted will repeatedly trigger the multishot request
-until it terminates when the CQ ring overflows.
-
-In preparation for io_uring detecting this circular dependency, add the
-mentioned helper so that io_uring can pass in EPOLL_URING as part of the
-poll wakeup key.
-
-Cc: stable@vger.kernel.org # 6.0
-[axboe: fold in !CONFIG_EVENTFD fix from Zhang Qilong]
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Hao Sun <sunhao.th@gmail.com>
+Suggested-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://lore.kernel.org/r/20221222024414.29539-2-sunhao.th@gmail.com
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/eventfd.c            | 37 +++++++++++++++++++++----------------
- include/linux/eventfd.h |  7 +++++++
- 2 files changed, 28 insertions(+), 16 deletions(-)
+ .../bpf/prog_tests/jeq_infer_not_null.c       |  9 ++++
+ .../bpf/progs/jeq_infer_not_null_fail.c       | 42 +++++++++++++++++++
+ 2 files changed, 51 insertions(+)
+ create mode 100644 tools/testing/selftests/bpf/prog_tests/jeq_infer_not_null.c
+ create mode 100644 tools/testing/selftests/bpf/progs/jeq_infer_not_null_fail.c
 
-diff --git a/fs/eventfd.c b/fs/eventfd.c
-index c0ffee99ad23..249ca6c0b784 100644
---- a/fs/eventfd.c
-+++ b/fs/eventfd.c
-@@ -43,21 +43,7 @@ struct eventfd_ctx {
- 	int id;
- };
- 
--/**
-- * eventfd_signal - Adds @n to the eventfd counter.
-- * @ctx: [in] Pointer to the eventfd context.
-- * @n: [in] Value of the counter to be added to the eventfd internal counter.
-- *          The value cannot be negative.
-- *
-- * This function is supposed to be called by the kernel in paths that do not
-- * allow sleeping. In this function we allow the counter to reach the ULLONG_MAX
-- * value, and we signal this as overflow condition by returning a EPOLLERR
-- * to poll(2).
-- *
-- * Returns the amount by which the counter was incremented.  This will be less
-- * than @n if the counter has overflowed.
-- */
--__u64 eventfd_signal(struct eventfd_ctx *ctx, __u64 n)
-+__u64 eventfd_signal_mask(struct eventfd_ctx *ctx, __u64 n, unsigned mask)
- {
- 	unsigned long flags;
- 
-@@ -78,12 +64,31 @@ __u64 eventfd_signal(struct eventfd_ctx *ctx, __u64 n)
- 		n = ULLONG_MAX - ctx->count;
- 	ctx->count += n;
- 	if (waitqueue_active(&ctx->wqh))
--		wake_up_locked_poll(&ctx->wqh, EPOLLIN);
-+		wake_up_locked_poll(&ctx->wqh, EPOLLIN | mask);
- 	current->in_eventfd = 0;
- 	spin_unlock_irqrestore(&ctx->wqh.lock, flags);
- 
- 	return n;
- }
+diff --git a/tools/testing/selftests/bpf/prog_tests/jeq_infer_not_null.c b/tools/testing/selftests/bpf/prog_tests/jeq_infer_not_null.c
+new file mode 100644
+index 000000000000..3add34df5767
+--- /dev/null
++++ b/tools/testing/selftests/bpf/prog_tests/jeq_infer_not_null.c
+@@ -0,0 +1,9 @@
++// SPDX-License-Identifier: GPL-2.0
 +
-+/**
-+ * eventfd_signal - Adds @n to the eventfd counter.
-+ * @ctx: [in] Pointer to the eventfd context.
-+ * @n: [in] Value of the counter to be added to the eventfd internal counter.
-+ *          The value cannot be negative.
-+ *
-+ * This function is supposed to be called by the kernel in paths that do not
-+ * allow sleeping. In this function we allow the counter to reach the ULLONG_MAX
-+ * value, and we signal this as overflow condition by returning a EPOLLERR
-+ * to poll(2).
-+ *
-+ * Returns the amount by which the counter was incremented.  This will be less
-+ * than @n if the counter has overflowed.
-+ */
-+__u64 eventfd_signal(struct eventfd_ctx *ctx, __u64 n)
-+{
-+	return eventfd_signal_mask(ctx, n, 0);
-+}
- EXPORT_SYMBOL_GPL(eventfd_signal);
- 
- static void eventfd_free_ctx(struct eventfd_ctx *ctx)
-diff --git a/include/linux/eventfd.h b/include/linux/eventfd.h
-index 3cd202d3eefb..36a486505b08 100644
---- a/include/linux/eventfd.h
-+++ b/include/linux/eventfd.h
-@@ -40,6 +40,7 @@ struct file *eventfd_fget(int fd);
- struct eventfd_ctx *eventfd_ctx_fdget(int fd);
- struct eventfd_ctx *eventfd_ctx_fileget(struct file *file);
- __u64 eventfd_signal(struct eventfd_ctx *ctx, __u64 n);
-+__u64 eventfd_signal_mask(struct eventfd_ctx *ctx, __u64 n, unsigned mask);
- int eventfd_ctx_remove_wait_queue(struct eventfd_ctx *ctx, wait_queue_entry_t *wait,
- 				  __u64 *cnt);
- void eventfd_ctx_do_read(struct eventfd_ctx *ctx, __u64 *cnt);
-@@ -66,6 +67,12 @@ static inline int eventfd_signal(struct eventfd_ctx *ctx, __u64 n)
- 	return -ENOSYS;
- }
- 
-+static inline int eventfd_signal_mask(struct eventfd_ctx *ctx, __u64 n,
-+				      unsigned mask)
-+{
-+	return -ENOSYS;
-+}
++#include <test_progs.h>
++#include "jeq_infer_not_null_fail.skel.h"
 +
- static inline void eventfd_ctx_put(struct eventfd_ctx *ctx)
- {
- 
++void test_jeq_infer_not_null(void)
++{
++	RUN_TESTS(jeq_infer_not_null_fail);
++}
+diff --git a/tools/testing/selftests/bpf/progs/jeq_infer_not_null_fail.c b/tools/testing/selftests/bpf/progs/jeq_infer_not_null_fail.c
+new file mode 100644
+index 000000000000..f46965053acb
+--- /dev/null
++++ b/tools/testing/selftests/bpf/progs/jeq_infer_not_null_fail.c
+@@ -0,0 +1,42 @@
++// SPDX-License-Identifier: GPL-2.0
++
++#include "vmlinux.h"
++#include <bpf/bpf_helpers.h>
++#include "bpf_misc.h"
++
++char _license[] SEC("license") = "GPL";
++
++struct {
++	__uint(type, BPF_MAP_TYPE_HASH);
++	__uint(max_entries, 1);
++	__type(key, u64);
++	__type(value, u64);
++} m_hash SEC(".maps");
++
++SEC("?raw_tp")
++__failure __msg("R8 invalid mem access 'map_value_or_null")
++int jeq_infer_not_null_ptr_to_btfid(void *ctx)
++{
++	struct bpf_map *map = (struct bpf_map *)&m_hash;
++	struct bpf_map *inner_map = map->inner_map_meta;
++	u64 key = 0, ret = 0, *val;
++
++	val = bpf_map_lookup_elem(map, &key);
++	/* Do not mark ptr as non-null if one of them is
++	 * PTR_TO_BTF_ID (R9), reject because of invalid
++	 * access to map value (R8).
++	 *
++	 * Here, we need to inline those insns to access
++	 * R8 directly, since compiler may use other reg
++	 * once it figures out val==inner_map.
++	 */
++	asm volatile("r8 = %[val];\n"
++		     "r9 = %[inner_map];\n"
++		     "if r8 != r9 goto +1;\n"
++		     "%[ret] = *(u64 *)(r8 +0);\n"
++		     : [ret] "+r"(ret)
++		     : [inner_map] "r"(inner_map), [val] "r"(val)
++		     : "r8", "r9");
++
++	return ret;
++}
 -- 
-2.39.0
+2.35.1
 
 
 
