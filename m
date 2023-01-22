@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C15092590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49F7AC433D2;
-	Sun, 22 Jan 2023 15:25:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B99C2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:25:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5609C433EF;
+	Sun, 22 Jan 2023 15:25:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674401122;
-	bh=p47uHTLJqf60mTy1ytQS36knUJExLD4t0YWvnOhUhP8=;
+	s=korg; t=1674401125;
+	bh=pZa5Lia4fT2ecOqduEhx1osACvyo1IHkyH55mwLXrIk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cQ513Bdh+qOSwj6T+Hbai6tPIAYhVMO7JAexzlwvh1ReCs9/O085GGKK4r3NOzXIs
-	 vUTbNzL8OkeK7I10BJC9S3NLGNlGSxc+lpLzdVBVIiR5Uxgp55bpDyXue/0jpnlYoi
-	 IqlHjLrm+4v8YkGSSH3OrY7MzdlxrDZhJFBxBC5w=
+	b=k10iFlJz4hYQPKjCuExOlWxM5/4XY8zFE8SNL0HW/Ody7Zn8/LrH1JGxM0VZipjkN
+	 qo656xhl/vQ0RPbZK7FlI1puJAuB6qjYbrobDHz98O7lG3Lb0aJGu1+CqQypizwxW7
+	 MXTu7ZNo8BnuU6jbQ2u3T9rbf9nWreCP1yLfrbFo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1 118/193] dt-bindings: phy: g12a-usb3-pcie-phy: fix compatible string documentation
-Date: Sun, 22 Jan 2023 16:04:07 +0100
-Message-Id: <20230122150251.721117892@linuxfoundation.org>
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.1 119/193] serial: pch_uart: Pass correct sg to dma_unmap_sg()
+Date: Sun, 22 Jan 2023 16:04:08 +0100
+Message-Id: <20230122150251.773054586@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 References: <20230122150246.321043584@linuxfoundation.org>
@@ -36,150 +33,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit e181119046a0ec16126b682163040e8e33f310c1 upstream.
+commit e8914b52e5b024e4af3d810a935fe0805eee8a36 upstream.
 
-The compatible string in the driver doesn't have the meson prefix.
-Fix this in the documentation and rename the file accordingly.
+A local variable sg is used to store scatterlist pointer in
+pch_dma_tx_complete(). The for loop doing Tx byte accounting before
+dma_unmap_sg() alters sg in its increment statement. Therefore, the
+pointer passed into dma_unmap_sg() won't match to the one given to
+dma_map_sg().
 
-Fixes: 87a55485f2fc ("dt-bindings: phy: meson-g12a-usb3-pcie-phy: convert to yaml")
+To fix the problem, use priv->sg_tx_p directly in dma_unmap_sg()
+instead of the local variable.
+
+Fixes: da3564ee027e ("pch_uart: add multi-scatter processing")
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Reviewed-by: Martin Blumenstingl <martin.blumenstingl@googlemail.com>
-Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/0a82be92-ce85-da34-9d6f-4b33034473e5@gmail.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20230103093435.4396-1-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/phy/amlogic,g12a-usb3-pcie-phy.yaml       |   59 ++++++++++
- Documentation/devicetree/bindings/phy/amlogic,meson-g12a-usb3-pcie-phy.yaml |   59 ----------
- 2 files changed, 59 insertions(+), 59 deletions(-)
- rename Documentation/devicetree/bindings/phy/{amlogic,meson-g12a-usb3-pcie-phy.yaml => amlogic,g12a-usb3-pcie-phy.yaml} (82%)
+ drivers/tty/serial/pch_uart.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- /dev/null
-+++ b/Documentation/devicetree/bindings/phy/amlogic,g12a-usb3-pcie-phy.yaml
-@@ -0,0 +1,59 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+# Copyright 2019 BayLibre, SAS
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/phy/amlogic,g12a-usb3-pcie-phy.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: Amlogic G12A USB3 + PCIE Combo PHY
-+
-+maintainers:
-+  - Neil Armstrong <neil.armstrong@linaro.org>
-+
-+properties:
-+  compatible:
-+    enum:
-+      - amlogic,g12a-usb3-pcie-phy
-+
-+  reg:
-+    maxItems: 1
-+
-+  clocks:
-+    maxItems: 1
-+
-+  clock-names:
-+    items:
-+      - const: ref_clk
-+
-+  resets:
-+    maxItems: 1
-+
-+  reset-names:
-+    items:
-+      - const: phy
-+
-+  "#phy-cells":
-+    const: 1
-+
-+required:
-+  - compatible
-+  - reg
-+  - clocks
-+  - clock-names
-+  - resets
-+  - reset-names
-+  - "#phy-cells"
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    phy@46000 {
-+          compatible = "amlogic,g12a-usb3-pcie-phy";
-+          reg = <0x46000 0x2000>;
-+          clocks = <&ref_clk>;
-+          clock-names = "ref_clk";
-+          resets = <&phy_reset>;
-+          reset-names = "phy";
-+          #phy-cells = <1>;
-+    };
---- a/Documentation/devicetree/bindings/phy/amlogic,meson-g12a-usb3-pcie-phy.yaml
-+++ /dev/null
-@@ -1,59 +0,0 @@
--# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
--# Copyright 2019 BayLibre, SAS
--%YAML 1.2
-----
--$id: "http://devicetree.org/schemas/phy/amlogic,meson-g12a-usb3-pcie-phy.yaml#"
--$schema: "http://devicetree.org/meta-schemas/core.yaml#"
--
--title: Amlogic G12A USB3 + PCIE Combo PHY
--
--maintainers:
--  - Neil Armstrong <neil.armstrong@linaro.org>
--
--properties:
--  compatible:
--    enum:
--      - amlogic,meson-g12a-usb3-pcie-phy
--
--  reg:
--    maxItems: 1
--
--  clocks:
--    maxItems: 1
--
--  clock-names:
--    items:
--      - const: ref_clk
--
--  resets:
--    maxItems: 1
--
--  reset-names:
--    items:
--      - const: phy
--
--  "#phy-cells":
--    const: 1
--
--required:
--  - compatible
--  - reg
--  - clocks
--  - clock-names
--  - resets
--  - reset-names
--  - "#phy-cells"
--
--additionalProperties: false
--
--examples:
--  - |
--    phy@46000 {
--          compatible = "amlogic,meson-g12a-usb3-pcie-phy";
--          reg = <0x46000 0x2000>;
--          clocks = <&ref_clk>;
--          clock-names = "ref_clk";
--          resets = <&phy_reset>;
--          reset-names = "phy";
--          #phy-cells = <1>;
--    };
+--- a/drivers/tty/serial/pch_uart.c
++++ b/drivers/tty/serial/pch_uart.c
+@@ -752,7 +752,7 @@ static void pch_dma_tx_complete(void *ar
+ 	}
+ 	xmit->tail &= UART_XMIT_SIZE - 1;
+ 	async_tx_ack(priv->desc_tx);
+-	dma_unmap_sg(port->dev, sg, priv->orig_nent, DMA_TO_DEVICE);
++	dma_unmap_sg(port->dev, priv->sg_tx_p, priv->orig_nent, DMA_TO_DEVICE);
+ 	priv->tx_dma_use = 0;
+ 	priv->nent = 0;
+ 	priv->orig_nent = 0;
 
 
