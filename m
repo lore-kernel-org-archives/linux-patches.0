@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15EE27E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:06:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F4E2C433D2;
-	Sun, 22 Jan 2023 15:06:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B09E97E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:06:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 393C1C433D2;
+	Sun, 22 Jan 2023 15:06:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400008;
-	bh=CtcFkHhelnCqD63aN8jxRGm3mfr9mqmZn1btkvLlIsw=;
+	s=korg; t=1674400011;
+	bh=bUmI9+Y6UTIoszobnSkRjDlTI95vA/LfTmBQlFUeabs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=F09CpXHx6LjILQW94SJGvPgV/+Ph0czgHVMhIzqKKXjZh9RkaGeC7SNn49ePjXeju
-	 2WE6mkNsyDOqwvSJGm+2cBeyN1FN51NuJe3kQRv5fhkgwWoybaJh52ZxUL5SFpt1CY
-	 wUwM7SpPJ91cvz4vS2ZpPtgNnv2blG4zMLCYR7Ms=
+	b=HeSUM9Ixy5YaF6l2yhur96B/h4mIkPhPW3f8i1AqlBpdneOkJ4F82LVw2OwxewLRt
+	 tH0/EHff0jY3KQhQ5ejmJJB+vaEdGLlaZ3OSepQI467JYuJX6d2lBUk3vQgHZ9JDqK
+	 ybGKjJfjUDWFYJG3N9Awq8sSPAp5O8GZfmuhZzqA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jimmy Hu <hhhuuu@google.com>,
-	Mathias Nyman <mathias.nyman@linux.intel.com>
-Subject: [PATCH 4.14 07/25] usb: xhci: Check endpoint is valid before dereferencing it
-Date: Sun, 22 Jan 2023 16:04:07 +0100
-Message-Id: <20230122150218.112794427@linuxfoundation.org>
+	Jordy Zomer <jordyzomer@google.com>,
+	Linus Torvalds <torvalds@linuxfoundation.org>
+Subject: [PATCH 4.14 08/25] prlimit: do_prlimit needs to have a speculation check
+Date: Sun, 22 Jan 2023 16:04:08 +0100
+Message-Id: <20230122150218.150123151@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150217.788215473@linuxfoundation.org>
 References: <20230122150217.788215473@linuxfoundation.org>
@@ -34,64 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jimmy Hu <hhhuuu@google.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit e8fb5bc76eb86437ab87002d4a36d6da02165654 upstream.
+commit 739790605705ddcf18f21782b9c99ad7d53a8c11 upstream.
 
-When the host controller is not responding, all URBs queued to all
-endpoints need to be killed. This can cause a kernel panic if we
-dereference an invalid endpoint.
+do_prlimit() adds the user-controlled resource value to a pointer that
+will subsequently be dereferenced.  In order to help prevent this
+codepath from being used as a spectre "gadget" a barrier needs to be
+added after checking the range.
 
-Fix this by using xhci_get_virt_ep() helper to find the endpoint and
-checking if the endpoint is valid before dereferencing it.
-
-[233311.853271] xhci-hcd xhci-hcd.1.auto: xHCI host controller not responding, assume dead
-[233311.853393] Unable to handle kernel NULL pointer dereference at virtual address 00000000000000e8
-
-[233311.853964] pc : xhci_hc_died+0x10c/0x270
-[233311.853971] lr : xhci_hc_died+0x1ac/0x270
-
-[233311.854077] Call trace:
-[233311.854085]  xhci_hc_died+0x10c/0x270
-[233311.854093]  xhci_stop_endpoint_command_watchdog+0x100/0x1a4
-[233311.854105]  call_timer_fn+0x50/0x2d4
-[233311.854112]  expire_timers+0xac/0x2e4
-[233311.854118]  run_timer_softirq+0x300/0xabc
-[233311.854127]  __do_softirq+0x148/0x528
-[233311.854135]  irq_exit+0x194/0x1a8
-[233311.854143]  __handle_domain_irq+0x164/0x1d0
-[233311.854149]  gic_handle_irq.22273+0x10c/0x188
-[233311.854156]  el1_irq+0xfc/0x1a8
-[233311.854175]  lpm_cpuidle_enter+0x25c/0x418 [msm_pm]
-[233311.854185]  cpuidle_enter_state+0x1f0/0x764
-[233311.854194]  do_idle+0x594/0x6ac
-[233311.854201]  cpu_startup_entry+0x7c/0x80
-[233311.854209]  secondary_start_kernel+0x170/0x198
-
-Fixes: 50e8725e7c42 ("xhci: Refactor command watchdog and fix split string.")
-Cc: stable@vger.kernel.org
-Signed-off-by: Jimmy Hu <hhhuuu@google.com>
-Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
-Message-ID: <0fe978ed-8269-9774-1c40-f8a98c17e838@linux.intel.com>
-Link: https://lore.kernel.org/r/20230116142216.1141605-3-mathias.nyman@linux.intel.com
+Reported-by: Jordy Zomer <jordyzomer@google.com>
+Tested-by: Jordy Zomer <jordyzomer@google.com>
+Suggested-by: Linus Torvalds <torvalds@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/host/xhci-ring.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ kernel/sys.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/usb/host/xhci-ring.c
-+++ b/drivers/usb/host/xhci-ring.c
-@@ -907,7 +907,10 @@ static void xhci_kill_endpoint_urbs(stru
- 	struct xhci_virt_ep *ep;
- 	struct xhci_ring *ring;
+--- a/kernel/sys.c
++++ b/kernel/sys.c
+@@ -1472,6 +1472,8 @@ int do_prlimit(struct task_struct *tsk,
  
--	ep = &xhci->devs[slot_id]->eps[ep_index];
-+	ep = xhci_get_virt_ep(xhci, slot_id, ep_index);
-+	if (!ep)
-+		return;
+ 	if (resource >= RLIM_NLIMITS)
+ 		return -EINVAL;
++	resource = array_index_nospec(resource, RLIM_NLIMITS);
 +
- 	if ((ep->ep_state & EP_HAS_STREAMS) ||
- 			(ep->ep_state & EP_GETTING_NO_STREAMS)) {
- 		int stream_id;
+ 	if (new_rlim) {
+ 		if (new_rlim->rlim_cur > new_rlim->rlim_max)
+ 			return -EINVAL;
 
 
