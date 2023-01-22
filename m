@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2D87E
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:10:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6F64C433D2;
-	Sun, 22 Jan 2023 15:10:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B2ED87E
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:10:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39D98C433EF;
+	Sun, 22 Jan 2023 15:10:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400225;
-	bh=VBItf0BVoIqFJCVDG/J3cxr/q4AQ74/Ft/5P4TGHYRw=;
+	s=korg; t=1674400227;
+	bh=miA55B19ju0OKx3G1ZACraw4D8LIV/I615dMSTfi5qI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K/9solLDoajR0I2QPkPOIQHzf3jzwHvN5EvubJfVcQpD6pIdgJtzIKzw3Lo1MKjBl
-	 Jo3h0Eex1Dpuwm7sXLgm3gp+sNe4oE3ffZ8anT6pvouN7ONhyuTMUEI6b50LupNluQ
-	 LJHK7FF54VdPfqGMcZnTm2jnVTofwTYPPJp0AuUM=
+	b=fBHrLCB4MjybP2+TD2/JDa9lCJUo2WeHWHOfSK2TggzjtB5bJ/QzMP4v3MX+jY06M
+	 Wr2lX1J2ynPl3l7UWL/Tqbv0dNvLOn0ZvDR28BYZpMJyZrNqGjAvycb60lxORH6oKR
+	 NOLfi4xsaVPbeOE5I/G7m+Ixw5GoxEvdefkDcdT4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	YingChi Long <me@inclyc.cn>,
-	Borislav Petkov <bp@suse.de>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 5.4 50/55] x86/fpu: Use _Alignof to avoid undefined behavior in TYPE_ALIGN
-Date: Sun, 22 Jan 2023 16:04:37 +0100
-Message-Id: <20230122150224.248841324@linuxfoundation.org>
+	Tom Saeger <tom.saeger@oracle.com>,
+	Dennis Gilmore <dennis@ausil.us>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.4 51/55] arch: fix broken BuildID for arm64 and riscv
+Date: Sun, 22 Jan 2023 16:04:38 +0100
+Message-Id: <20230122150224.300021074@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150222.210885219@linuxfoundation.org>
 References: <20230122150222.210885219@linuxfoundation.org>
@@ -36,63 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: YingChi Long <me@inclyc.cn>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-commit 55228db2697c09abddcb9487c3d9fa5854a932cd upstream.
+commit 99cb0d917ffa1ab628bb67364ca9b162c07699b1 upstream.
 
-WG14 N2350 specifies that it is an undefined behavior to have type
-definitions within offsetof", see
+Dennis Gilmore reports that the BuildID is missing in the arm64 vmlinux
+since commit 994b7ac1697b ("arm64: remove special treatment for the
+link order of head.o").
 
-  https://www.open-std.org/jtc1/sc22/wg14/www/docs/n2350.htm
+The issue is that the type of .notes section, which contains the BuildID,
+changed from NOTES to PROGBITS.
 
-This specification is also part of C23.
+Ard Biesheuvel figured out that whichever object gets linked first gets
+to decide the type of a section. The PROGBITS type is the result of the
+compiler emitting .note.GNU-stack as PROGBITS rather than NOTE.
 
-Therefore, replace the TYPE_ALIGN macro with the _Alignof builtin to
-avoid undefined behavior. (_Alignof itself is C11 and the kernel is
-built with -gnu11).
+While Ard provided a fix for arm64, I want to fix this globally because
+the same issue is happening on riscv since commit 2348e6bf4421 ("riscv:
+remove special treatment for the link order of head.o"). This problem
+will happen in general for other architectures if they start to drop
+unneeded entries from scripts/head-object-list.txt.
 
-ISO C11 _Alignof is subtly different from the GNU C extension
-__alignof__. Latter is the preferred alignment and _Alignof the
-minimal alignment. For long long on x86 these are 8 and 4
-respectively.
+Discard .note.GNU-stack in include/asm-generic/vmlinux.lds.h.
 
-The macro TYPE_ALIGN's behavior matches _Alignof rather than
-__alignof__.
-
-  [ bp: Massage commit message. ]
-
-Signed-off-by: YingChi Long <me@inclyc.cn>
-Signed-off-by: Borislav Petkov <bp@suse.de>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Link: https://lore.kernel.org/r/20220925153151.2467884-1-me@inclyc.cn
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/lkml/CAABkxwuQoz1CTbyb57n0ZX65eSYiTonFCU8-LCQc=74D=xE=rA@mail.gmail.com/
+Fixes: 994b7ac1697b ("arm64: remove special treatment for the link order of head.o")
+Fixes: 2348e6bf4421 ("riscv: remove special treatment for the link order of head.o")
+Cc: Tom Saeger <tom.saeger@oracle.com>
+Reported-by: Dennis Gilmore <dennis@ausil.us>
+Suggested-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/fpu/init.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ include/asm-generic/vmlinux.lds.h |    5 +++++
+ 1 file changed, 5 insertions(+)
 
---- a/arch/x86/kernel/fpu/init.c
-+++ b/arch/x86/kernel/fpu/init.c
-@@ -139,9 +139,6 @@ static void __init fpu__init_system_gene
- unsigned int fpu_kernel_xstate_size;
- EXPORT_SYMBOL_GPL(fpu_kernel_xstate_size);
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -825,7 +825,12 @@
+ #define TRACEDATA
+ #endif
  
--/* Get alignment of the TYPE. */
--#define TYPE_ALIGN(TYPE) offsetof(struct { char x; TYPE test; }, test)
--
- /*
-  * Enforce that 'MEMBER' is the last field of 'TYPE'.
-  *
-@@ -149,8 +146,8 @@ EXPORT_SYMBOL_GPL(fpu_kernel_xstate_size
-  * because that's how C aligns structs.
-  */
- #define CHECK_MEMBER_AT_END_OF(TYPE, MEMBER) \
--	BUILD_BUG_ON(sizeof(TYPE) != ALIGN(offsetofend(TYPE, MEMBER), \
--					   TYPE_ALIGN(TYPE)))
-+	BUILD_BUG_ON(sizeof(TYPE) !=         \
-+		     ALIGN(offsetofend(TYPE, MEMBER), _Alignof(TYPE)))
- 
- /*
-  * We append the 'struct fpu' to the task_struct:
++/*
++ * Discard .note.GNU-stack, which is emitted as PROGBITS by the compiler.
++ * Otherwise, the type of .notes section would become PROGBITS instead of NOTES.
++ */
+ #define NOTES								\
++	/DISCARD/ : { *(.note.GNU-stack) }				\
+ 	.notes : AT(ADDR(.notes) - LOAD_OFFSET) {			\
+ 		__start_notes = .;					\
+ 		KEEP(*(.note.*))					\
 
 
