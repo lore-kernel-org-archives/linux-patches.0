@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAAD32590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3EE44C433EF;
-	Sun, 22 Jan 2023 15:12:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62F5D2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:12:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD9F6C4339B;
+	Sun, 22 Jan 2023 15:12:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400374;
-	bh=RXF1lnGIL+k0Nej5e4MKpNe7tZknygygAHVNp0enycc=;
+	s=korg; t=1674400377;
+	bh=+3qOEKCMrHHyGxdPYxyFar+d8HhfZErXCs9JeIo4dzY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xkOLjC1LXo48M+a3ykdETaZT84klHy+K5tG2XHOfE8lOwqaM1WBujtGsm9bPNgiFn
-	 AcyHc7koxO1LBa7hvG75TwEeYvYbqokNj7K6d9t9IcO+PFe0Zvg+M2f/zlfu5le+F4
-	 5N9LLrr6p8l01qKTA8DoKBBLhvAGq4JyOgL8JqEo=
+	b=VyraNznf7nkn7Xpr2QZ8EWLAwiI5X6SYKQuD6zxwWNovfbyeww0W/DnIPxaW/7qvi
+	 VJDqFmRjhu9nISzLevS5ogv38tAdOkFhNejqAKUZjYI5GFMQDzDvYlIKROVjno9Mq7
+	 LljE5cVggRuERPURHyoWFTgfJZcTfvTdtcbBNjrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
+	Constantine Gavrilov <constantine.gavrilov@gmail.com>,
 	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 21/98] io_uring: improve send/recv error handling
-Date: Sun, 22 Jan 2023 16:03:37 +0100
-Message-Id: <20230122150230.344144048@linuxfoundation.org>
+Subject: [PATCH 5.10 22/98] io_uring: ensure recv and recvmsg handle MSG_WAITALL correctly
+Date: Sun, 22 Jan 2023 16:03:38 +0100
+Message-Id: <20230122150230.384680209@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -35,121 +35,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-commit 7297ce3d59449de49d3c9e1f64ae25488750a1fc upstream.
+commit 7ba89d2af17aa879dda30f5d5d3f152e587fc551 upstream.
 
-Hide all error handling under common if block, removes two extra ifs on
-the success path and keeps the handling more condensed.
+We currently don't attempt to get the full asked for length even if
+MSG_WAITALL is set, if we get a partial receive. If we do see a partial
+receive, then just note how many bytes we did and return -EAGAIN to
+get it retried.
 
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/5761545158a12968f3caf30f747eea65ed75dfc1.1637524285.git.asml.silence@gmail.com
+The iov is advanced appropriately for the vector based case, and we
+manually bump the buffer and remainder for the non-vector case.
+
+Cc: stable@vger.kernel.org
+Reported-by: Constantine Gavrilov <constantine.gavrilov@gmail.com>
 Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- io_uring/io_uring.c | 55 +++++++++++++++++++++++++--------------------
- 1 file changed, 31 insertions(+), 24 deletions(-)
+ io_uring/io_uring.c | 28 ++++++++++++++++++++++++++++
+ 1 file changed, 28 insertions(+)
 
 diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index 0c4d16afb9ef..34dd6267679a 100644
+index 34dd6267679a..3d67b9b4100f 100644
 --- a/io_uring/io_uring.c
 +++ b/io_uring/io_uring.c
-@@ -4706,17 +4706,18 @@ static int io_sendmsg(struct io_kiocb *req, unsigned int issue_flags)
- 		min_ret = iov_iter_count(&kmsg->msg.msg_iter);
+@@ -578,6 +578,7 @@ struct io_sr_msg {
+ 	int				msg_flags;
+ 	int				bgid;
+ 	size_t				len;
++	size_t				done_io;
+ 	struct io_buffer		*kbuf;
+ };
  
- 	ret = __sys_sendmsg_sock(sock, &kmsg->msg, flags);
--	if ((issue_flags & IO_URING_F_NONBLOCK) && ret == -EAGAIN)
--		return io_setup_async_msg(req, kmsg);
--	if (ret == -ERESTARTSYS)
--		ret = -EINTR;
- 
-+	if (ret < min_ret) {
-+		if (ret == -EAGAIN && (issue_flags & IO_URING_F_NONBLOCK))
-+			return io_setup_async_msg(req, kmsg);
-+		if (ret == -ERESTARTSYS)
-+			ret = -EINTR;
-+		req_set_fail(req);
-+	}
- 	/* fast path, check for non-NULL to avoid function call */
- 	if (kmsg->free_iov)
- 		kfree(kmsg->free_iov);
- 	req->flags &= ~REQ_F_NEED_CLEANUP;
--	if (ret < min_ret)
--		req_set_fail(req);
- 	__io_req_complete(req, issue_flags, ret, 0);
+@@ -4903,12 +4904,21 @@ static int io_recvmsg_prep(struct io_kiocb *req, const struct io_uring_sqe *sqe)
+ 	if (req->ctx->compat)
+ 		sr->msg_flags |= MSG_CMSG_COMPAT;
+ #endif
++	sr->done_io = 0;
  	return 0;
  }
-@@ -4752,13 +4753,13 @@ static int io_send(struct io_kiocb *req, unsigned int issue_flags)
  
- 	msg.msg_flags = flags;
- 	ret = sock_sendmsg(sock, &msg);
--	if ((issue_flags & IO_URING_F_NONBLOCK) && ret == -EAGAIN)
--		return -EAGAIN;
--	if (ret == -ERESTARTSYS)
--		ret = -EINTR;
--
--	if (ret < min_ret)
-+	if (ret < min_ret) {
-+		if (ret == -EAGAIN && (issue_flags & IO_URING_F_NONBLOCK))
-+			return -EAGAIN;
-+		if (ret == -ERESTARTSYS)
-+			ret = -EINTR;
++static bool io_net_retry(struct socket *sock, int flags)
++{
++	if (!(flags & MSG_WAITALL))
++		return false;
++	return sock->type == SOCK_STREAM || sock->type == SOCK_SEQPACKET;
++}
++
+ static int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
+ {
+ 	struct io_async_msghdr iomsg, *kmsg;
++	struct io_sr_msg *sr = &req->sr_msg;
+ 	struct socket *sock;
+ 	struct io_buffer *kbuf;
+ 	unsigned flags;
+@@ -4951,6 +4961,10 @@ static int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
+ 			return io_setup_async_msg(req, kmsg);
+ 		if (ret == -ERESTARTSYS)
+ 			ret = -EINTR;
++		if (ret > 0 && io_net_retry(sock, flags)) {
++			sr->done_io += ret;
++			return io_setup_async_msg(req, kmsg);
++		}
  		req_set_fail(req);
-+	}
- 	__io_req_complete(req, issue_flags, ret, 0);
- 	return 0;
- }
-@@ -4945,10 +4946,15 @@ static int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
- 
- 	ret = __sys_recvmsg_sock(sock, &kmsg->msg, req->sr_msg.umsg,
- 					kmsg->uaddr, flags);
--	if (force_nonblock && ret == -EAGAIN)
--		return io_setup_async_msg(req, kmsg);
--	if (ret == -ERESTARTSYS)
--		ret = -EINTR;
-+	if (ret < min_ret) {
-+		if (ret == -EAGAIN && force_nonblock)
-+			return io_setup_async_msg(req, kmsg);
-+		if (ret == -ERESTARTSYS)
-+			ret = -EINTR;
-+		req_set_fail(req);
-+	} else if ((flags & MSG_WAITALL) && (kmsg->msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))) {
-+		req_set_fail(req);
-+	}
- 
- 	if (req->flags & REQ_F_BUFFER_SELECTED)
- 		cflags = io_put_recv_kbuf(req);
-@@ -4956,8 +4962,6 @@ static int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
+ 	} else if ((flags & MSG_WAITALL) && (kmsg->msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))) {
+ 		req_set_fail(req);
+@@ -4962,6 +4976,10 @@ static int io_recvmsg(struct io_kiocb *req, unsigned int issue_flags)
  	if (kmsg->free_iov)
  		kfree(kmsg->free_iov);
  	req->flags &= ~REQ_F_NEED_CLEANUP;
--	if (ret < min_ret || ((flags & MSG_WAITALL) && (kmsg->msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))))
--		req_set_fail(req);
++	if (ret >= 0)
++		ret += sr->done_io;
++	else if (sr->done_io)
++		ret = sr->done_io;
  	__io_req_complete(req, issue_flags, ret, cflags);
  	return 0;
  }
-@@ -5004,15 +5008,18 @@ static int io_recv(struct io_kiocb *req, unsigned int issue_flags)
- 		min_ret = iov_iter_count(&msg.msg_iter);
- 
- 	ret = sock_recvmsg(sock, &msg, flags);
--	if (force_nonblock && ret == -EAGAIN)
--		return -EAGAIN;
--	if (ret == -ERESTARTSYS)
--		ret = -EINTR;
- out_free:
-+	if (ret < min_ret) {
-+		if (ret == -EAGAIN && force_nonblock)
+@@ -5014,12 +5032,22 @@ static int io_recv(struct io_kiocb *req, unsigned int issue_flags)
+ 			return -EAGAIN;
+ 		if (ret == -ERESTARTSYS)
+ 			ret = -EINTR;
++		if (ret > 0 && io_net_retry(sock, flags)) {
++			sr->len -= ret;
++			sr->buf += ret;
++			sr->done_io += ret;
 +			return -EAGAIN;
-+		if (ret == -ERESTARTSYS)
-+			ret = -EINTR;
-+		req_set_fail(req);
-+	} else if ((flags & MSG_WAITALL) && (msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))) {
-+		req_set_fail(req);
-+	}
++		}
+ 		req_set_fail(req);
+ 	} else if ((flags & MSG_WAITALL) && (msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))) {
+ 		req_set_fail(req);
+ 	}
  	if (req->flags & REQ_F_BUFFER_SELECTED)
  		cflags = io_put_recv_kbuf(req);
--	if (ret < min_ret || ((flags & MSG_WAITALL) && (msg.msg_flags & (MSG_TRUNC | MSG_CTRUNC))))
--		req_set_fail(req);
++	if (ret >= 0)
++		ret += sr->done_io;
++	else if (sr->done_io)
++		ret = sr->done_io;
  	__io_req_complete(req, issue_flags, ret, cflags);
  	return 0;
  }
