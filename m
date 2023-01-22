@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA8E42590
-	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:15:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0480C433D2;
-	Sun, 22 Jan 2023 15:15:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78E2F2590
+	for <patches@lists.linux.dev>; Sun, 22 Jan 2023 15:15:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1737C433EF;
+	Sun, 22 Jan 2023 15:15:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1674400519;
-	bh=pUg5MHxRbaPIcDJkbgJPkOVzYYrN41qPt7BNGcOsx2Q=;
+	s=korg; t=1674400522;
+	bh=eem0Bdn4KFz79WGXzpuQsalDJq5a9GQ82AjgP/GbNEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/uSXoYFl+cAUdh5V6SNKW4J9L+cjCFgB+EKvL83qLidFEe6MeWH64NMuBFrNUjAi
-	 bYxZxqpAE953CC2BdLl9q8APC7fDL2CO+rkAltDfhdMQfzpEBdekbLfuFZmPcOvVRW
-	 xN4UxS5lrYU8ZEr500VVINJNcOXOs/XkFwSruzqw=
+	b=yW7j1pBfodcM3zqu3V9opubl0q8fo7S01hKzsxg0UN5NBlhB+XbQTIdeuVYqz82w3
+	 Tvkv7a5HvbUd6NuPR0H2RYoGh9EaEC+H7Bixw3cornLvo7rgy3Ue4aqsQz72vcQLea
+	 y9PVEkwCExrEpvcBqSK1VYgjpV3Z2JcENmE2p1PM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>
-Subject: [PATCH 5.10 87/98] powerpc/vmlinux.lds: Define RUNTIME_DISCARD_EXIT
-Date: Sun, 22 Jan 2023 16:04:43 +0100
-Message-Id: <20230122150233.103302297@linuxfoundation.org>
+	Melissa Wen <mwen@igalia.com>,
+	Joshua Ashton <joshua@froggi.es>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 5.10 78/98] drm/amd/display: Calculate output_color_space after pixel encoding adjustment
+Date: Sun, 22 Jan 2023 16:04:34 +0100
+Message-Id: <20230122150232.738845971@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230122150229.351631432@linuxfoundation.org>
 References: <20230122150229.351631432@linuxfoundation.org>
@@ -33,54 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Joshua Ashton <joshua@froggi.es>
 
-commit 4b9880dbf3bdba3a7c56445137c3d0e30aaa0a40 upstream.
+commit 79601b894849cb6f6d6122e6590f1887ac4a66b3 upstream.
 
-The powerpc linker script explicitly includes .exit.text, because
-otherwise the link fails due to references from __bug_table and
-__ex_table. The code is freed (discarded) at runtime along with
-.init.text and data.
+Code in get_output_color_space depends on knowing the pixel encoding to
+determine whether to pick between eg. COLOR_SPACE_SRGB or
+COLOR_SPACE_YCBCR709 for transparent RGB -> YCbCr 4:4:4 in the driver.
 
-That has worked in the past despite powerpc not defining
-RUNTIME_DISCARD_EXIT because DISCARDS appears late in the powerpc linker
-script (line 410), and the explicit inclusion of .exit.text
-earlier (line 280) supersedes the discard.
+v2: Fixed patch being accidentally based on a personal feature branch, oops!
 
-However commit 99cb0d917ffa ("arch: fix broken BuildID for arm64 and
-riscv") introduced an earlier use of DISCARD as part of the RO_DATA
-macro (line 136). With binutils < 2.36 that causes the DISCARD
-directives later in the script to be applied earlier [1], causing
-.exit.text to actually be discarded at link time, leading to build
-errors:
-
-  '.exit.text' referenced in section '__bug_table' of crypto/algboss.o: defined in
-  discarded section '.exit.text' of crypto/algboss.o
-  '.exit.text' referenced in section '__ex_table' of drivers/nvdimm/core.o: defined in
-  discarded section '.exit.text' of drivers/nvdimm/core.o
-
-Fix it by defining RUNTIME_DISCARD_EXIT, which causes the generic
-DISCARDS macro to not include .exit.text at all.
-
-1: https://lore.kernel.org/lkml/87fscp2v7k.fsf@igel.home/
-
-Fixes: 99cb0d917ffa ("arch: fix broken BuildID for arm64 and riscv")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230105132349.384666-1-mpe@ellerman.id.au
+Fixes: ea117312ea9f ("drm/amd/display: Reduce HDMI pixel encoding if max clock is exceeded")
+Reviewed-by: Melissa Wen <mwen@igalia.com>
+Signed-off-by: Joshua Ashton <joshua@froggi.es>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/powerpc/kernel/vmlinux.lds.S |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/powerpc/kernel/vmlinux.lds.S
-+++ b/arch/powerpc/kernel/vmlinux.lds.S
-@@ -8,6 +8,7 @@
- #define BSS_FIRST_SECTIONS *(.bss.prominit)
- #define EMITS_PT_NOTE
- #define RO_EXCEPTION_TABLE_ALIGN	0
-+#define RUNTIME_DISCARD_EXIT
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -4567,8 +4567,6 @@ static void fill_stream_properties_from_
+ 	timing_out->pix_clk_100hz = mode_in->crtc_clock * 10;
+ 	timing_out->aspect_ratio = get_aspect_ratio(mode_in);
  
- #include <asm/page.h>
- #include <asm-generic/vmlinux.lds.h>
+-	stream->output_color_space = get_output_color_space(timing_out);
+-
+ 	stream->out_transfer_func->type = TF_TYPE_PREDEFINED;
+ 	stream->out_transfer_func->tf = TRANSFER_FUNCTION_SRGB;
+ 	if (stream->signal == SIGNAL_TYPE_HDMI_TYPE_A) {
+@@ -4579,6 +4577,8 @@ static void fill_stream_properties_from_
+ 			adjust_colour_depth_from_display_info(timing_out, info);
+ 		}
+ 	}
++
++	stream->output_color_space = get_output_color_space(timing_out);
+ }
+ 
+ static void fill_audio_info(struct audio_info *audio_info,
 
 
