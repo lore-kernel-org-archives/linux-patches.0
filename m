@@ -1,87 +1,128 @@
-Received: from mail-pg1-f171.google.com (mail-pg1-f171.google.com [209.85.215.171])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D7EFA21
-	for <patches@lists.linux.dev>; Mon, 23 Jan 2023 07:42:27 +0000 (UTC)
-Received: by mail-pg1-f171.google.com with SMTP id q9so8324021pgq.5
-        for <patches@lists.linux.dev>; Sun, 22 Jan 2023 23:42:27 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=heitbaum.com; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=IptttD0zrwJVBHp5bq7+qjBs5ITPKtnNpW0l4jsQDD8=;
-        b=Y/Y3FQZLk+38WgNCmQ2OEds8uRmKp8aAxAXLlryFng7Rd1c0zkOatiPk9MVWHg1BSj
-         hIdSrzm7kOd4b7Zhy/dL1Wow5ZGv8JYLa6ixF/PUcbb89KtIPMW5d7tsvUkW7g8JnCLU
-         hzi2Ot7NA4GUrDD41EutU3IfEywqwovLxNahs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=IptttD0zrwJVBHp5bq7+qjBs5ITPKtnNpW0l4jsQDD8=;
-        b=tSyfnPU33KM0gHB/YXpKz/8Ay3kGUzl0Rdlm1ufmbeFVblvu8YrkxJMxCTUxG94qsw
-         Wz2twDBgNZU208HrwlDWWklUI+L7hyieFcBMMAVnhtltMB4oniu2b0fvBQSTl56kSoJm
-         pGjyxVsq0mQ/rb0eZONdlQ1x4RNXBJNxQBxxiGuA1K/2LRkOyf2LXxJHrwQUut7oZbRU
-         4V1cx2wkTJEa75dnlJyYRzdAPRZ8PL+tHCmS0TDrM3nqIPwMaEGcoXgnJlnabamxbwcI
-         gLj3RK0GIkPnFsyfU+REOSULsSwAO1oz6bfmGmlPl7W7QLtyGUmYCnISuUW+wEuju8nR
-         OKGw==
-X-Gm-Message-State: AFqh2koHSGq52uSZALWgxx8lpi6DEP5FOoeObe2HibyxVMRRepco2C4T
-	lwaGrlDWIr8J9D3d5Wva3wi4mg==
-X-Google-Smtp-Source: AMrXdXs/81TXfWznGLnO9cWhRlZliwMffE/3OQvySFgG0JWO27eatGQvjwmpdBdxcRxyDX+HKcQTOg==
-X-Received: by 2002:a62:1488:0:b0:586:b33c:be2 with SMTP id 130-20020a621488000000b00586b33c0be2mr25117581pfu.26.1674459746487;
-        Sun, 22 Jan 2023 23:42:26 -0800 (PST)
-Received: from 939e86c225aa (124-148-239-102.tpgi.com.au. [124.148.239.102])
-        by smtp.gmail.com with ESMTPSA id a10-20020a62bd0a000000b0058837da69edsm397042pff.128.2023.01.22.23.42.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Jan 2023 23:42:25 -0800 (PST)
-Date: Mon, 23 Jan 2023 07:42:18 +0000
-From: Rudi Heitbaum <rudi@heitbaum.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 000/193] 6.1.8-rc1 review
-Message-ID: <20230123074218.GA219043@939e86c225aa>
-References: <20230122150246.321043584@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A0EAA21
+	for <patches@lists.linux.dev>; Mon, 23 Jan 2023 07:51:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4542DC433D2;
+	Mon, 23 Jan 2023 07:51:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1674460285;
+	bh=SCRkbL2iZB4zfdB9i/1Vjh4wRgvV6Z0WSXYrcWlXYfk=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=U6ofSfpBt+Rhu0Af/PWGzFsmfqIFrWPo/60I6owTQURlrL882sZQ8pXTvb+IGXnZk
+	 ol4AbYRGm/b/MHyQQBgmmIRPPu2HmW0I//5I1HzOhXEwNM66eTv06Uu4aeS1MQib1S
+	 +T0+ip9XezImC+PlZMmS4Zkr9qVbyVHakVEHSJwE=
+Date: Mon, 23 Jan 2023 08:51:23 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Ard Biesheuvel <ardb@kernel.org>, Tom Saeger <tom.saeger@oracle.com>
+Cc: Naresh Kamboju <naresh.kamboju@linaro.org>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de,
+	Nathan Chancellor <nathan@kernel.org>,
+	Dennis Gilmore <dennis@ausil.us>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: Re: [PATCH 5.15 000/117] 5.15.90-rc1 review
+Message-ID: <Y848ey9hzyHf3t8d@kroah.com>
+References: <20230122150232.736358800@linuxfoundation.org>
+ <CA+G9fYsEvpCj_vSFLxkKA6tzdNOhimqZYF+WCLKYAiNLtrMvsA@mail.gmail.com>
+ <Y842R2KIhUL9XMUi@kroah.com>
+ <CAMj1kXF02H87N4NsPWCdjdkGz-D_EQVMxbN3=btgzr5F=P0eRQ@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMj1kXF02H87N4NsPWCdjdkGz-D_EQVMxbN3=btgzr5F=P0eRQ@mail.gmail.com>
 
-On Sun, Jan 22, 2023 at 04:02:09PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.8 release.
-> There are 193 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Mon, Jan 23, 2023 at 08:28:18AM +0100, Ard Biesheuvel wrote:
+> On Mon, 23 Jan 2023 at 08:24, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > On Mon, Jan 23, 2023 at 12:39:55PM +0530, Naresh Kamboju wrote:
+> > > On Sun, 22 Jan 2023 at 20:46, Greg Kroah-Hartman
+> > > <gregkh@linuxfoundation.org> wrote:
+> > > >
+> > > > This is the start of the stable review cycle for the 5.15.90 release.
+> > > > There are 117 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > >
+> > > > Responses should be made by Tue, 24 Jan 2023 15:02:08 +0000.
+> > > > Anything received after that time might be too late.
+> > > >
+> > > > The whole patch series can be found in one patch at:
+> > > >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.90-rc1.gz
+> > > > or in the git tree and branch at:
+> > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > > > and the diffstat can be found below.
+> > > >
+> > > > thanks,
+> > > >
+> > > > greg k-h
+> > >
+> > > Results from Linaro’s test farm.
+> > >
+> > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > >
+> > > Build regressions found on sh:
+> > >    - build/gcc-8-dreamcast_defconfig
+> > >    - build/gcc-8-microdev_defconfig
+> > >
+> > >
+> > > Build error logs:
+> > >
+> > > `.exit.text' referenced in section `__bug_table' of crypto/algboss.o:
+> > > defined in discarded section `.exit.text' of crypto/algboss.o
+> > > `.exit.text' referenced in section `__bug_table' of
+> > > drivers/char/hw_random/core.o: defined in discarded section
+> > > `.exit.text' of drivers/char/hw_random/core.o
+> > > make[1]: *** [/builds/linux/Makefile:1218: vmlinux] Error 1
+> > >
+> > > Bisection points to this commit,
+> > >     arch: fix broken BuildID for arm64 and riscv
+> > >     commit 99cb0d917ffa1ab628bb67364ca9b162c07699b1 upstream.
+> > >
+> > > Ref:
+> > > upstream discussion thread,
+> > > https://lore.kernel.org/all/Y7Jal56f6UBh1abE@dev-arch.thelio-3990X/
+> >
+> > Argh, what a mess.  Ok, let me rip out that commit (and the "fixes up
+> > that commit") series from the trees and push out a -rc2 in a few hours
+> > after I wake up.  I was worried about that one, and I should have
+> > trusted my first instinct...
+> >
+> 
+> The patch in question has
+> 
+>     Fixes: 994b7ac1697b ("arm64: remove special treatment for the link
+> order of head.o")
+>     Fixes: 2348e6bf4421 ("riscv: remove special treatment for the link
+> order of head.o")
+> 
+> both of which were introduced in the current v6.2 cycle.
+> 
+> Neither of those are marked for stable, are obviously non-stable
+> material, and were not queued up themselves.
+> 
+> So how did we end up queuing these in the first place?
 
-Hi Greg,
+Because of this long thread:
+	https://lore.kernel.org/r/Y842qsBn37yi9OuR@kroah.com
+it was requested by Tom to add it (to: him as well.)
 
-6.1.8-rc1 tested.
+I'm dropping the whole series now, and will wait for a working set of
+backports to be submitted by Tom before reconsidering them.
 
-Run tested on:
-- Allwinner H6 (Tanix TX6)
-- Intel Alder Lake x86_64 (nuc12 i7-1260P)
+thanks,
 
-In addition - build tested for:
-- Allwinner A64
-- Allwinner H3
-- Allwinner H5
-- NXP iMX6
-- NXP iMX8
-- Qualcomm Dragonboard
-- Rockchip RK3288
-- Rockchip RK3328
-- Rockchip RK3399pro
-- Samsung Exynos
-
-Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
---
-Rudi
+greg k-h
