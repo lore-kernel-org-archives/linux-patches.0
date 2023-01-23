@@ -1,43 +1,43 @@
-Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
+Received: from mail-wm1-f45.google.com (mail-wm1-f45.google.com [209.85.128.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B4E7C
-	for <patches@lists.linux.dev>; Mon, 23 Jan 2023 11:16:02 +0000 (UTC)
-Received: by mail-wm1-f51.google.com with SMTP id l8so8697214wms.3
-        for <patches@lists.linux.dev>; Mon, 23 Jan 2023 03:16:01 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 791D37C
+	for <patches@lists.linux.dev>; Mon, 23 Jan 2023 11:17:24 +0000 (UTC)
+Received: by mail-wm1-f45.google.com with SMTP id q10-20020a1cf30a000000b003db0edfdb74so4147230wmq.1
+        for <patches@lists.linux.dev>; Mon, 23 Jan 2023 03:17:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=LVFdM5WgBVSap0quv3MdtxapkYDhzJb23/YwiZONLaw=;
-        b=cJcFhfva7fRhhbX3pPyubTH6B/sSVDJIvYzU+8US4pGpmWPIHBfEiVzzpY6abZPAg4
-         QrjTz22qBNIhAgyJTH8nLJzfyi5MrFvTvNKFSnXnQF67/dc3JFUCp8ChkvyY5AOeMAYi
-         sxbEEVRjFCX2yj8TBCUrhHqFh2/PBuPE7Im01CdbsE/R3qU14a+/OtsMBrfE9Ihe5jq5
-         qSO0BOrBvJPBoV+th8u0rZ0xiZ/9uK3UKoXAeGzTBwTGI87aX1KznC8Zy0IqvShUQ/I9
-         9X4LNo2cFfdNC0bH9NkKeKtKl3A7vqVq7RxSMIzOJAcyestfMDYaCRPNWajJ2F5cI+ih
-         KSkQ==
+        bh=I8RXJKIpZAzsImUbnBlvk5rvp70BYcaKy5ZQ6jEsvD4=;
+        b=eUK0LougOfbiaHnGbcLlkrz5wPfXRYEySvHvSFGeWQnCGq39xT3/khprk8GhhXGXrn
+         kn7rtvfzf0NUhMTZmPyREGuJ7LtEoZLx0VJbk9Oyspf554j7TtKtNYe2ZCrACSvAiwxE
+         nTDlNDOSfHSkH3kMtizM+H+27K0Q5lv4jJcwf/HHN2oO+32/3VkgZ7T9ThULvbkGfFXa
+         1HL0HshWPIyIsdTfjLmPMJPKS+YkIYi8HY/L8LW/6iCWxLYs4dVzuTNa3HGaSdKKpe1X
+         mXAo5GZfeTQsGGMOcif+fDZv0NbxOJ6ScYgnJBy+4OPFsHZGV9JUt801qTGK10aZuAjR
+         PRKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=LVFdM5WgBVSap0quv3MdtxapkYDhzJb23/YwiZONLaw=;
-        b=ZnCtJxb9Qc4yVDyiNqchjoBpX6nfuYULpoDM3ErA6waweVsuol8IN+R6yg3amX2Rh5
-         fRY8Ryr8qST65/DlRsYx1eZoi8/i4u5oeAfOiRgbM4X3tT8kXsLhvYGKIxXefqp4WtSH
-         btJTPnnwfU27H5g5Lf0iqL49f4CStLw5GtFGSRDqdgCocJCCXXOQimuXKN2KNMEAgGNe
-         k18osJ+y2CF6d8yQDK7CMrF+bfpgZ7JV42qH8tiqDprHnVoatSESW7NN1qz9MmwQwijJ
-         wTFu+K/tLMNXoqNlU1i3roY44nE5bs7biwDd1hrsfRGTR0U0tce20GZbj0epXP9iwIHG
-         X/Gg==
-X-Gm-Message-State: AFqh2korO8nFHwok+YjLLf5/0Ocz8I7PmdTYMr6HQH8VwdMy/miw8phR
-	KdTtZ1+kPEsevJg/EjziAqI=
-X-Google-Smtp-Source: AMrXdXsnDYueLRl2gA8QhpByjLAWXPeMRC1E+XltFU1wbF+xIpZHVi2daGvYFPWI+rDeKpSOMEvGJg==
-X-Received: by 2002:a05:600c:1c9c:b0:3d3:49db:9b25 with SMTP id k28-20020a05600c1c9c00b003d349db9b25mr20457530wms.26.1674472560233;
-        Mon, 23 Jan 2023 03:16:00 -0800 (PST)
+        bh=I8RXJKIpZAzsImUbnBlvk5rvp70BYcaKy5ZQ6jEsvD4=;
+        b=REPgIfQ+LRZrRhSLyzpE/NhYX69qc1kISC7OdMkdTL9MKQHB9WADpFOtQZcUb25AFy
+         ZmYSIbEFWw1+HRIddl7bQlQMvjGd/pQSfpO+3l4UQ++JMFzbTxeiu4NL5Zg/XC6ZAtiI
+         KueNLiuRqkWVK60Iydnn/lfsBjpwjRJB9gB9c6CYDLStLVmvh5AmprwokbeS2biteZLu
+         Uwz+7XjYhZKMqc9nmFkTjWOqQiqswrldDzbh5iBKrvNT9ehZxpzGC0mBlB8iLA2I6WN2
+         7MR34tQFXXRZCnP7p/Bv3vt4uhWRj0MwTFPig9EibVcPGf5CV9Ft9CBZkIK8WC/uHKDH
+         TIkQ==
+X-Gm-Message-State: AFqh2koLtLqZdcLrcFoa/r+gTbT1bXtl+NLX1jcospoCy4R/9bliRst0
+	It+VgbHQmAEjSMy6HBkw+ME=
+X-Google-Smtp-Source: AMrXdXsahbcKmGCEM+1XFhaWI84GK5PfbdpvjTupPmlH0P6XjBqopMsJSGNYRRJ8/6DPf4HpS9Oldw==
+X-Received: by 2002:a05:600c:214f:b0:3cf:7197:e67c with SMTP id v15-20020a05600c214f00b003cf7197e67cmr23612873wml.25.1674472642640;
+        Mon, 23 Jan 2023 03:17:22 -0800 (PST)
 Received: from debian ([167.98.27.226])
-        by smtp.gmail.com with ESMTPSA id c2-20020a05600c0a4200b003daf6e3bc2fsm21865968wmq.1.2023.01.23.03.15.59
+        by smtp.gmail.com with ESMTPSA id p7-20020a05600c468700b003db0bb81b6asm10969686wmo.1.2023.01.23.03.17.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 03:15:59 -0800 (PST)
-Date: Mon, 23 Jan 2023 11:15:58 +0000
+        Mon, 23 Jan 2023 03:17:22 -0800 (PST)
+Date: Mon, 23 Jan 2023 11:17:20 +0000
 From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -46,9 +46,9 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
 	rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 000/193] 6.1.8-rc1 review
-Message-ID: <Y85sbu82fM3fsrBa@debian>
-References: <20230122150246.321043584@linuxfoundation.org>
+Subject: Re: [PATCH 5.15 000/117] 5.15.90-rc1 review
+Message-ID: <Y85swG8b0cYmALky@debian>
+References: <20230122150232.736358800@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -57,13 +57,13 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
+In-Reply-To: <20230122150232.736358800@linuxfoundation.org>
 
 Hi Greg,
 
-On Sun, Jan 22, 2023 at 04:02:09PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.8 release.
-> There are 193 patches in this series, all will be posted as a response
+On Sun, Jan 22, 2023 at 04:03:10PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.90 release.
+> There are 117 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -71,8 +71,8 @@ On Sun, Jan 22, 2023 at 04:02:09PM +0100, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 
 Build test (gcc version 12.2.1 20230113):
-mips: 52 configs -> no failure
-arm: 100 configs -> no failure
+mips: 62 configs -> no failure
+arm: 99 configs -> no failure
 arm64: 3 configs -> no failure
 x86_64: 4 configs -> no failure
 alpha allmodconfig -> no failure
@@ -88,9 +88,9 @@ x86_64: Booted on qemu. No regression. [1]
 arm64: Booted on rpi4b (4GB model). No regression. [2]
 mips: Booted on ci20 board. No regression. [3]
 
-[1]. https://openqa.qa.codethink.co.uk/tests/2705
-[2]. https://openqa.qa.codethink.co.uk/tests/2700
-[3]. https://openqa.qa.codethink.co.uk/tests/2706
+[1]. https://openqa.qa.codethink.co.uk/tests/2697
+[2]. https://openqa.qa.codethink.co.uk/tests/2702
+[3]. https://openqa.qa.codethink.co.uk/tests/2707
 
 Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
 
