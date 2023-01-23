@@ -1,90 +1,99 @@
-Received: from mail-lf1-f46.google.com (mail-lf1-f46.google.com [209.85.167.46])
+Received: from mail-wm1-f51.google.com (mail-wm1-f51.google.com [209.85.128.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 057C07C
-	for <patches@lists.linux.dev>; Mon, 23 Jan 2023 11:07:59 +0000 (UTC)
-Received: by mail-lf1-f46.google.com with SMTP id h24so13333467lfv.6
-        for <patches@lists.linux.dev>; Mon, 23 Jan 2023 03:07:59 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23B4E7C
+	for <patches@lists.linux.dev>; Mon, 23 Jan 2023 11:16:02 +0000 (UTC)
+Received: by mail-wm1-f51.google.com with SMTP id l8so8697214wms.3
+        for <patches@lists.linux.dev>; Mon, 23 Jan 2023 03:16:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=DWWvq/P2rQvC944dHoFoJoaCJsFP0QQ/YpqQ85XOpVk=;
-        b=xlVmUlnce8mcOV95i8iMua1zPcCngTN5MWrfnKG5ipN0/e9uX4fQQJd+C/GHFpF9vi
-         aF48PdvD3Wo2vYrsOtnJ82LZMEnCR7PhDDmGFuKPlcflSiy9ayRYfliLQo7i4y3ik8TE
-         diobAqRXGznqiYzol4m3/N+4Hs00blHCip1VQgRs1UWB07rMrPKR1GkTtGcoh+2mp2z6
-         gra3qm0b2xaCiGIh0Cs/Fw4t8qTMBXJ+gQBIf0tVSYriUO0rr3EGwOv67RlxXUshKgmk
-         uLz9EO+bwnhl4a2a8vcYE1ul0ucBIVJx6ua2sLC+1TPLryoIuvxFWcwTyN2NRfcrZhb8
-         45tA==
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=LVFdM5WgBVSap0quv3MdtxapkYDhzJb23/YwiZONLaw=;
+        b=cJcFhfva7fRhhbX3pPyubTH6B/sSVDJIvYzU+8US4pGpmWPIHBfEiVzzpY6abZPAg4
+         QrjTz22qBNIhAgyJTH8nLJzfyi5MrFvTvNKFSnXnQF67/dc3JFUCp8ChkvyY5AOeMAYi
+         sxbEEVRjFCX2yj8TBCUrhHqFh2/PBuPE7Im01CdbsE/R3qU14a+/OtsMBrfE9Ihe5jq5
+         qSO0BOrBvJPBoV+th8u0rZ0xiZ/9uK3UKoXAeGzTBwTGI87aX1KznC8Zy0IqvShUQ/I9
+         9X4LNo2cFfdNC0bH9NkKeKtKl3A7vqVq7RxSMIzOJAcyestfMDYaCRPNWajJ2F5cI+ih
+         KSkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=DWWvq/P2rQvC944dHoFoJoaCJsFP0QQ/YpqQ85XOpVk=;
-        b=HciiHsOkZ4wGtpnIf4pbc2ddZdJEwwdHLzN/upolub9ay0YJ9epkA/DU72JENX6m4G
-         zNwxiB0iraXoFEmQud+ZCt5pGXdHNnsprtnHr6p6V6P+BY1+Spz/qqg2lTof4iAZsXV1
-         VvUap/YS+5A3ClHkNJ6ZL9FrkAktHJV2A0y8nLW/eQUhh+ZgwoSl6WCFwjG9bjRiOz6T
-         v3gxWB2Dv/+5n99lV6NI8UPQFrOXeQvt5GlkbOmOYu61Y2aTogBbwEKW/+zg5Y+OYfcz
-         Au3GzEKkxPIgaBJ6fxABbMZzX3S5TWpxohgXdSOcvTzWZS3PQ6Zst1w24oVCD9z2REnV
-         uuPw==
-X-Gm-Message-State: AFqh2kqe+90WmxxZJ5Iw9jjvSqRoHmf4W+/8AQL3vLmE3oZPA7E9o7L6
-	slHeLzKs3y0NheDHNAC4DU53Qw==
-X-Google-Smtp-Source: AMrXdXss9WKzPKtAzjxDfNCYuw33PRC7qMBIXqzr3PPEyoU775UKFXrJ60jxxXh+Iaq6da7YeygnKw==
-X-Received: by 2002:a05:6512:b99:b0:4d5:95c9:4eb9 with SMTP id b25-20020a0565120b9900b004d595c94eb9mr6473785lfv.44.1674472078039;
-        Mon, 23 Jan 2023 03:07:58 -0800 (PST)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id c19-20020a056512325300b004cb3d77a936sm6494240lfr.46.2023.01.23.03.07.57
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 03:07:57 -0800 (PST)
-Message-ID: <a8d0a067-f5ff-6bd8-0552-99554b52ace6@linaro.org>
-Date: Mon, 23 Jan 2023 13:07:56 +0200
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=LVFdM5WgBVSap0quv3MdtxapkYDhzJb23/YwiZONLaw=;
+        b=ZnCtJxb9Qc4yVDyiNqchjoBpX6nfuYULpoDM3ErA6waweVsuol8IN+R6yg3amX2Rh5
+         fRY8Ryr8qST65/DlRsYx1eZoi8/i4u5oeAfOiRgbM4X3tT8kXsLhvYGKIxXefqp4WtSH
+         btJTPnnwfU27H5g5Lf0iqL49f4CStLw5GtFGSRDqdgCocJCCXXOQimuXKN2KNMEAgGNe
+         k18osJ+y2CF6d8yQDK7CMrF+bfpgZ7JV42qH8tiqDprHnVoatSESW7NN1qz9MmwQwijJ
+         wTFu+K/tLMNXoqNlU1i3roY44nE5bs7biwDd1hrsfRGTR0U0tce20GZbj0epXP9iwIHG
+         X/Gg==
+X-Gm-Message-State: AFqh2korO8nFHwok+YjLLf5/0Ocz8I7PmdTYMr6HQH8VwdMy/miw8phR
+	KdTtZ1+kPEsevJg/EjziAqI=
+X-Google-Smtp-Source: AMrXdXsnDYueLRl2gA8QhpByjLAWXPeMRC1E+XltFU1wbF+xIpZHVi2daGvYFPWI+rDeKpSOMEvGJg==
+X-Received: by 2002:a05:600c:1c9c:b0:3d3:49db:9b25 with SMTP id k28-20020a05600c1c9c00b003d349db9b25mr20457530wms.26.1674472560233;
+        Mon, 23 Jan 2023 03:16:00 -0800 (PST)
+Received: from debian ([167.98.27.226])
+        by smtp.gmail.com with ESMTPSA id c2-20020a05600c0a4200b003daf6e3bc2fsm21865968wmq.1.2023.01.23.03.15.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jan 2023 03:15:59 -0800 (PST)
+Date: Mon, 23 Jan 2023 11:15:58 +0000
+From: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/193] 6.1.8-rc1 review
+Message-ID: <Y85sbu82fM3fsrBa@debian>
+References: <20230122150246.321043584@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.0
-Subject: Re: [PATCH] phy: qcom-qmp: Introduce Kconfig symbols for discrete
- drivers
-Content-Language: en-GB
-To: Stephen Boyd <swboyd@chromium.org>, Vinod Koul <vkoul@kernel.org>,
- Kishon Vijay Abraham I <kishon@ti.com>
-Cc: linux-kernel@vger.kernel.org, patches@lists.linux.dev,
- linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
- Johan Hovold <johan+linaro@kernel.org>
-References: <20230114000910.1256462-1-swboyd@chromium.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-In-Reply-To: <20230114000910.1256462-1-swboyd@chromium.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230122150246.321043584@linuxfoundation.org>
 
-On 14/01/2023 02:09, Stephen Boyd wrote:
-> Introduce a config option for each QMP PHY driver now that the QMP PHY
-> mega-driver has been split up into different modules. This allows kernel
-> configurators to limit the binary size of the kernel by only compiling
-> in the QMP PHY driver that they need, or to split the module up into one
-> per PHY driver instead of one module for all the QMP PHY drivers.
-> 
-> Leave the old config QCOM_QMP in place and make it into a menuconfig so
-> that 'make olddefconfig' continues to work. Furthermore, set the default
-> of the new Kconfig symbols to be QCOM_QMP so that the transition is
-> smooth.
-> 
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Cc: Johan Hovold <johan+linaro@kernel.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->   drivers/phy/qualcomm/Kconfig  | 50 ++++++++++++++++++++++++++++++++---
->   drivers/phy/qualcomm/Makefile | 12 ++++-----
->   2 files changed, 52 insertions(+), 10 deletions(-)
+Hi Greg,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Sun, Jan 22, 2023 at 04:02:09PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.8 release.
+> There are 193 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Tue, 24 Jan 2023 15:02:08 +0000.
+> Anything received after that time might be too late.
+
+Build test (gcc version 12.2.1 20230113):
+mips: 52 configs -> no failure
+arm: 100 configs -> no failure
+arm64: 3 configs -> no failure
+x86_64: 4 configs -> no failure
+alpha allmodconfig -> no failure
+csky allmodconfig -> no failure
+powerpc allmodconfig -> no failure
+riscv allmodconfig -> no failure
+s390 allmodconfig -> no failure
+xtensa allmodconfig -> no failure
+
+Boot test:
+x86_64: Booted on my test laptop. No regression.
+x86_64: Booted on qemu. No regression. [1]
+arm64: Booted on rpi4b (4GB model). No regression. [2]
+mips: Booted on ci20 board. No regression. [3]
+
+[1]. https://openqa.qa.codethink.co.uk/tests/2705
+[2]. https://openqa.qa.codethink.co.uk/tests/2700
+[3]. https://openqa.qa.codethink.co.uk/tests/2706
+
+Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
 
 -- 
-With best wishes
-Dmitry
-
+Regards
+Sudip
