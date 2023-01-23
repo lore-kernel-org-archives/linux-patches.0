@@ -1,218 +1,68 @@
-Received: from mail-ua1-f47.google.com (mail-ua1-f47.google.com [209.85.222.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 567D6EA5
-	for <patches@lists.linux.dev>; Mon, 23 Jan 2023 10:20:51 +0000 (UTC)
-Received: by mail-ua1-f47.google.com with SMTP id m17so2742556uap.7
-        for <patches@lists.linux.dev>; Mon, 23 Jan 2023 02:20:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=TI723EaFJjCdeoH4wD1/6ZdZyl2LVs0sMMO9i4WaGY4=;
-        b=wLbR1B1AiDQfW+6n+hB/BJT+8xqP3s2dFpN77KkfgbpMkmwMLSDKXNe8yd+/sMECuV
-         HPsBjAAd78teRFAHuVxSHzhjWgJ3MtwAAL9HUcQw6G27XoWp1afLMIWlQpRvhQLb0qK4
-         E5ec6rRUKu+cqK+07iiq5XxxkwzWKXZyoKHZBbisCMiF2kez4tQCf8KAC7xoizmnKejZ
-         xDK6Y6OEgWMkOLaH/PL8VPcW9yPqFHL4aTfa03aj/y/Kh93T59dy+DwJcwIzqRsKbqYQ
-         bfA96JI6Y19+n1BojeliZa2mFegQzRu5JkcTEw8FH2TDc2fkxZCU6sbbMyKUiseTd+Fe
-         iFXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=TI723EaFJjCdeoH4wD1/6ZdZyl2LVs0sMMO9i4WaGY4=;
-        b=zcnS0T70P8QI+VixCOgryH8qcLVE9H02skm9aaSnh6magCv4hjl425eWlAldULbatD
-         fJ2ERW4+vgb0/vbLgMfaYhFVqSgwyUtdhOXKx77YMjrjmyWGID6bK5SafleN0Ny4gx3V
-         BDmZEe7SHLvs1lD2cF2dyYHpvNeO2BcDTn+sVS+z/1baYUTCWjr5ckjs4pMUYPPEwfW2
-         OVQfSFOdkfXEswMZwXpIW069t3j9Q6jqYXcg7pLlsi03WxZFQM32bdrzElBgAlNU/pxJ
-         eLnUBDQpWjf8AqsO5HWe9kR3f1TvynMz95g9q5Oy32A6tbcegs3wlfTQvwfFit/y0sji
-         Vn0w==
-X-Gm-Message-State: AFqh2kpYIVvMiV1w8F7MTh3/4RGwyDmpDpysIs+xIf5fnTzJj/hUpAym
-	hf9bYeXaXoVMArtpGa2dcB9lFCwHsekT7VWLR12xZw==
-X-Google-Smtp-Source: AMrXdXvPpBqOZ6ZrU75vkHJR7YvKofdAVwP0hqGp6qmq6ZD/vpJtf0AiHrYN4kxiTnsWuS5maEPnOh4kM7ILh5qEF7A=
-X-Received: by 2002:ab0:60a7:0:b0:628:73c6:a79a with SMTP id
- f7-20020ab060a7000000b0062873c6a79amr1442179uam.92.1674469250002; Mon, 23 Jan
- 2023 02:20:50 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF8F77C
+	for <patches@lists.linux.dev>; Mon, 23 Jan 2023 10:35:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75F17C433D2;
+	Mon, 23 Jan 2023 10:35:36 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1674470136;
+	bh=cwgjiZMHeWlRTUJMa1Sto/LlD87GW58nOIMtlWblOws=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=dVWOVXpxFMYdsKAMVDj2Nt7LFfqN1qd4uABeSArl2kw5YRXNKpzb3MMFZKplSPlqA
+	 VpYQVrFyFWqjbj9JT6aTTmO4m+1e8zvJwlCZy0F6d0WaeTDxE7FERRHK5kB1ReeOcz
+	 3hQe8Fya2d3/Tj4PuUR2rPC+iOFPigExWkQ366YAdmMZ4DZ8nH7KfNSaMXvMNB5Cvw
+	 0w8GBhCPnDPInyOwh3k6zp5B/u6Fqx/cW/rZdM8J2Dq3EuNkCRmkQkO549xb8JOCwb
+	 hG+7tqZrLG2vVFBparVGXPU19ICkwlz54vxJz5fjn62Fq6uFbC8+TsRgiY4JkTnuDC
+	 MGff9eEy2Jk+g==
+Received: from johan by xi.lan with local (Exim 4.94.2)
+	(envelope-from <johan@kernel.org>)
+	id 1pJuAn-0000oI-65; Mon, 23 Jan 2023 11:35:33 +0100
+Date: Mon, 23 Jan 2023 11:35:33 +0100
+From: Johan Hovold <johan@kernel.org>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Vinod Koul <vkoul@kernel.org>, Kishon Vijay Abraham I <kishon@ti.com>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>
+Subject: Re: [PATCH] phy: qcom-qmp: Introduce Kconfig symbols for discrete
+ drivers
+Message-ID: <Y85i9aZm7F7poXda@hovoldconsulting.com>
+References: <20230114000910.1256462-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230122150217.788215473@linuxfoundation.org>
-In-Reply-To: <20230122150217.788215473@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Mon, 23 Jan 2023 15:50:38 +0530
-Message-ID: <CA+G9fYtS6JFVBVz9ajtf9-6NmaTgR5LqsjD93BqSPkuEKSkLxA@mail.gmail.com>
-Subject: Re: [PATCH 4.14 00/25] 4.14.304-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230114000910.1256462-1-swboyd@chromium.org>
 
-On Sun, 22 Jan 2023 at 20:37, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 4.14.304 release.
-> There are 25 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Tue, 24 Jan 2023 15:02:08 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-=
-4.14.304-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-4.14.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Fri, Jan 13, 2023 at 04:09:10PM -0800, Stephen Boyd wrote:
+> Introduce a config option for each QMP PHY driver now that the QMP PHY
+> mega-driver has been split up into different modules. This allows kernel
+> configurators to limit the binary size of the kernel by only compiling
+> in the QMP PHY driver that they need, or to split the module up into one
+> per PHY driver instead of one module for all the QMP PHY drivers.
 
+Nit: The drivers are already built as separate modules even if they can
+currently only be enabled together.
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+> Leave the old config QCOM_QMP in place and make it into a menuconfig so
+> that 'make olddefconfig' continues to work. Furthermore, set the default
+> of the new Kconfig symbols to be QCOM_QMP so that the transition is
+> smooth.
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Perhaps this should go eventually.
+ 
+> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Cc: Johan Hovold <johan+linaro@kernel.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-## Build
-* kernel: 4.14.304-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-4.14.y
-* git commit: a6d71d85fd0f5c89a0e3aa52de437d22485dfa61
-* git describe: v4.14.302-364-ga6d71d85fd0f
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.14.y/build/v4.14=
-.302-364-ga6d71d85fd0f
+Looks good otherwise:
 
-## Test Regressions (compared to v4.14.302-338-g558d1df6006f)
+Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
 
-## Metric Regressions (compared to v4.14.302-338-g558d1df6006f)
-
-## Test Fixes (compared to v4.14.302-338-g558d1df6006f)
-
-## Metric Fixes (compared to v4.14.302-338-g558d1df6006f)
-
-## Test result summary
-total: 93929, pass: 80837, fail: 3353, skip: 9633, xfail: 106
-
-## Build Summary
-* arc: 10 total, 10 passed, 0 failed
-* arm: 313 total, 304 passed, 9 failed
-* arm64: 53 total, 48 passed, 5 failed
-* i386: 29 total, 28 passed, 1 failed
-* mips: 41 total, 41 passed, 0 failed
-* parisc: 12 total, 12 passed, 0 failed
-* powerpc: 20 total, 19 passed, 1 failed
-* s390: 15 total, 11 passed, 4 failed
-* sh: 24 total, 24 passed, 0 failed
-* sparc: 12 total, 12 passed, 0 failed
-* x86_64: 51 total, 50 passed, 1 failed
-
-## Test suites summary
-* boot
-* fwts
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-vm
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-open-posix-tests
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* rcutorture
-* v4l2-compliance
-* vdso
-
---
-Linaro LKFT
-https://lkft.linaro.org
+Johan
