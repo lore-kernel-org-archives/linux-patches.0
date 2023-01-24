@@ -1,67 +1,68 @@
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
+Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D075C7C
-	for <patches@lists.linux.dev>; Tue, 24 Jan 2023 07:05:16 +0000 (UTC)
-Received: by mail-vk1-f181.google.com with SMTP id q141so7143810vkb.13
-        for <patches@lists.linux.dev>; Mon, 23 Jan 2023 23:05:16 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC4C10E9
+	for <patches@lists.linux.dev>; Tue, 24 Jan 2023 09:52:28 +0000 (UTC)
+Received: by mail-vk1-f177.google.com with SMTP id 22so6559328vkn.2
+        for <patches@lists.linux.dev>; Tue, 24 Jan 2023 01:52:28 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=1U4Pd427NqFBAd4E6jn2FpNNrvScaOsOwCr5qsdbrMA=;
-        b=kvHOzhqirUJEY2zobjxTgetF/Qh1dC+pyKnnRLtbiiKDrDupEU7yxKOb9NUJ5yIvms
-         oddk2vtm41noduVp/uuHUhhvrxuEXgAL9E9GBUKr0zkllRl+xgor1ZO4wq205U30LTpm
-         HIJYNMJD62KsG51CpmBZPqfy2PyUQUCyZrhP5Ipv84yFdjtw5YnWQ7KYZ+ZKctxFIXRN
-         gQkl56lHLgt8alC0rPWRlThWl4J57vK8+LDplVFup3cadzWckLymTtctJv0Gfu/1mX6J
-         yanLGTRxVAQJF1oA3/8Fmxj0awYagsXrbtBPQQ62ZMdxm51cloTfVo7Gs3LSqd/BsN8/
-         LSUQ==
+        bh=rUnO5OKgozAy5X6l5i6B7toBQVUiHuETYBImO6P1cR0=;
+        b=GWIP0r/LpbICnhOVkC6C6ilC5acuMD6p39p8Arl5yGEI21bun8UtqaN5EB1WSSlfnr
+         gFJCaYKSYFKEZnxuWNaoeXw+SxH4r/TxECE1SNgG4Y+klS8ub3lFXyiuAwIKs9niBwR3
+         sr3EM92nCp3YYqcgZaf2J6k94ezHhlT+YSoe7pY9K4b3z1/8xlgUiQG77MElt4tXRlsM
+         boqB6p6FEWGBJHAHMFpwm/wauSfrm/gU+JShEfiDbFBH7+1xb4rthBLVUidxoNayMphf
+         hSMmh4+vr1bWxmSDZSg6reeEtTkpR7y99Oqkyjl3HiFMp20NDHYfqtaFhnkWJug+wm/q
+         ODVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=1U4Pd427NqFBAd4E6jn2FpNNrvScaOsOwCr5qsdbrMA=;
-        b=Ywlzs1DDGAo5wSpRIAhxkyfQhp9Ays2rwlpqke1nH/p7st/NApzqWU/QNbPt8fwcG7
-         Zryn/dIkN7REEzHD7oem1lEe31FIJEf5p4hUO9aHbLGVYK+oRHvCPOzU27GS0Dy9KZI3
-         BCEwbbuIg5GKVUF3tv6RjhNSqXCw9fzhmvaDrMj9bfIdELIpTbA+f3hdZH56asAfl1mC
-         N4wffhI1H/mWvekdeW6goBJNIdrtRxX9WbkquYriLA+nt7kyKmXvEMGh2kyN4SD6hbvf
-         CwTKQvoPJyorOx5+L2n6LQn8McQ9bZIY6eWeWr0JGaZqryHseT3KYcSnnpY4ZJbSCDR7
-         tUDA==
-X-Gm-Message-State: AFqh2krCWypXI4gdPKoerkXmgF7+nkq78+mK2MWbejql17zCWI1LFpU1
-	JRFI5vstfyr0GMigFUj0xOyez035aALlwAN4ZUdjIA==
-X-Google-Smtp-Source: AMrXdXtQRD0ag5IX+4z8ewSXMdgE1Q8WqAXhO3JGK03CZsrsbY6K3xZD9vhpqSCUEMJvaVcCu820VJkqpa8rUB6V04E=
-X-Received: by 2002:a1f:2e58:0:b0:3e1:5761:fdbb with SMTP id
- u85-20020a1f2e58000000b003e15761fdbbmr3442036vku.7.1674543915467; Mon, 23 Jan
- 2023 23:05:15 -0800 (PST)
+        bh=rUnO5OKgozAy5X6l5i6B7toBQVUiHuETYBImO6P1cR0=;
+        b=WYlbBBcT2h2NpkgUGKFgkGeSCaVmUAn5+a83/Or+807/NidoegnygAf/K6bSiMgGkU
+         61uOh5sPHBrBdG/pa/9LF4c9865ru9J/vs1egjrmZzNXLmNBZ0pWhbV/g2HuQBco4nYs
+         B6cnI4ZwqSgLPWgaPconitsWbCK3E/WdlkCNzC35oWLS/+sO3lRr3qcUJ5zV/4c90z6L
+         51Ru8RyEVmwj2J+16Gh4Q06dvnhfSwYxnivVHsDuS6IMz2tJZNH6HZuToMi8nmJZeX3I
+         0vZVqfNOKc/ot7D6mjBW8B9mhKo9HtrqcH5QXlKJhY4kGLq0/vYXbfH/+BkmL3YJ+eU0
+         XOtQ==
+X-Gm-Message-State: AFqh2kr59a7HancZjypy09+6PNs0EakTvRYDh8iU9mE1n59I2tyC5wrS
+	HRRSjmavWeCw9UQekAXE6+h92eqKkLJTcR0aPeq+tw==
+X-Google-Smtp-Source: AMrXdXtFQ2MkrzXbgoItDsdaklNfubkbqRXTcX1E9AsP9u4MIaQkpEM4KRFY1Ts1EH2WqOxZl+Hxkeyp+lOQU3nolwk=
+X-Received: by 2002:ac5:c76d:0:b0:3d9:98d3:3902 with SMTP id
+ c13-20020ac5c76d000000b003d998d33902mr3460713vkn.39.1674553947319; Tue, 24
+ Jan 2023 01:52:27 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230123094931.568794202@linuxfoundation.org>
-In-Reply-To: <20230123094931.568794202@linuxfoundation.org>
+References: <20230123094914.748265495@linuxfoundation.org>
+In-Reply-To: <20230123094914.748265495@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 24 Jan 2023 12:35:04 +0530
-Message-ID: <CA+G9fYtdM197crFZrfkJJkx6iufV058h6Xq3Egu5DqPOc58yng@mail.gmail.com>
-Subject: Re: [PATCH 6.1 000/188] 6.1.8-rc2 review
+Date: Tue, 24 Jan 2023 15:22:16 +0530
+Message-ID: <CA+G9fYvgEEOkatUJB1p_DQuL1BcDyk9mq-3d-iUjgxhP+pONTw@mail.gmail.com>
+Subject: Re: [PATCH 5.10 00/98] 5.10.165-rc2 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
+	srw@sladewatkins.net, rwarsow@gmx.de, Mark Brown <broonie@kernel.org>, 
+	Catalin Marinas <catalin.marinas@arm.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 On Mon, 23 Jan 2023 at 15:22, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 6.1.8 release.
-> There are 188 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.10.165 release.
+> There are 98 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -69,158 +70,182 @@ On Mon, 23 Jan 2023 at 15:22, Greg Kroah-Hartman
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
-6.1.8-rc2.gz
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.10.165-rc2.gz
 > or in the git tree and branch at:
 >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-6.1.y
+-rc.git linux-5.10.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
+
 Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+Regressions found on arm64 for both 5.15.90-rc2 and 5.10.165-rc2.
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+* qemu-arm64-mte, kselftest-arm64
+  - arm64_check_buffer_fill
+  - arm64_check_child_memory
+  - arm64_check_ksm_options
+  - arm64_check_mmap_options
+  - arm64_check_tags_inclusion
 
-## Build
-* kernel: 6.1.8-rc2
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-6.1.y
-* git commit: fca9634405d4b2a7d5d0ce11dd3b2f11517de944
-* git describe: v6.1.5-383-gfca9634405d4
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.5=
--383-gfca9634405d4
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-## Test Regressions (compared to v6.1.5-194-g507f83506c2b)
+We are in a process to bisect this problem and there are updates coming
+from kselftest rootfs.
 
-## Metric Regressions (compared to v6.1.5-194-g507f83506c2b)
+Test logs,
+# selftests: arm64: check_buffer_fill
+# 1..20
+# ok 1 Check buffer correctness by byte with sync err mode and mmap memory
+# ok 2 Check buffer correctness by byte with async err mode and mmap memory
+# ok 3 Check buffer correctness by byte with sync err mode and
+mmap/mprotect memory
+# ok 4 Check buffer correctness by byte with async err mode and
+mmap/mprotect memory
+# not ok 5 Check buffer write underflow by byte with sync mode and mmap mem=
+ory
+# not ok 6 Check buffer write underflow by byte with async mode and mmap me=
+mory
+# ok 7 Check buffer write underflow by byte with tag check fault
+ignore and mmap memory
+# ok 8 Check buffer write underflow by byte with sync mode and mmap memory
+# ok 9 Check buffer write underflow by byte with async mode and mmap memory
+# ok 10 Check buffer write underflow by byte with tag check fault
+ignore and mmap memory
+# not ok 11 Check buffer write overflow by byte with sync mode and mmap mem=
+ory
+# not ok 12 Check buffer write overflow by byte with async mode and mmap me=
+mory
+# ok 13 Check buffer write overflow by byte with tag fault ignore mode
+and mmap memory
+# not ok 14 Check buffer write correctness by block with sync mode and
+mmap memory
+# not ok 15 Check buffer write correctness by block with async mode
+and mmap memory
+# ok 16 Check buffer write correctness by block with tag fault ignore
+and mmap memory
+# ok 17 Check initial tags with private mapping, sync error mode and mmap m=
+emory
+# ok 18 Check initial tags with private mapping, sync error mode and
+mmap/mprotect memory
+# ok 19 Check initial tags with shared mapping, sync error mode and mmap me=
+mory
+# ok 20 Check initial tags with shared mapping, sync error mode and
+mmap/mprotect memory
+# # Totals: pass:14 fail:6 xfail:0 xpass:0 skip:0 error:0
+not ok 34 selftests: arm64: check_buffer_fill # exit=3D1
 
-## Test Fixes (compared to v6.1.5-194-g507f83506c2b)
 
-## Metric Fixes (compared to v6.1.5-194-g507f83506c2b)
+# selftests: arm64: check_child_memory
+# 1..12
+# not ok 1 Check child anonymous memory with private mapping, precise
+mode and mmap memory
+# not ok 2 Check child anonymous memory with shared mapping, precise
+mode and mmap memory
+# not ok 3 Check child anonymous memory with private mapping,
+imprecise mode and mmap memory
+# not ok 4 Check child anonymous memory with shared mapping, imprecise
+mode and mmap memory
+# not ok 5 Check child anonymous memory with private mapping, precise
+mode and mmap/mprotect memory
+# not ok 6 Check child anonymous memory with shared mapping, precise
+mode and mmap/mprotect memory
+# not ok 7 Check child file memory with private mapping, precise mode
+and mmap memory
+# not ok 8 Check child file memory with shared mapping, precise mode
+and mmap memory
+# not ok 9 Check child file memory with private mapping, imprecise
+mode and mmap memory
+# not ok 10 Check child file memory with shared mapping, imprecise
+mode and mmap memory
+# not ok 11 Check child file memory with private mapping, precise mode
+and mmap/mprotect memory
+# not ok 12 Check child file memory with shared mapping, precise mode
+and mmap/mprotect memory
+# # Totals: pass:0 fail:12 xfail:0 xpass:0 skip:0 error:0
+not ok 35 selftests: arm64: check_child_memory # exit=3D1
 
-## Test result summary
-total: 156405, pass: 139374, fail: 4023, skip: 12987, xfail: 21
+# selftests: arm64: check_ksm_options
+# 1..4
+# # Invalid MTE synchronous exception caught!
+not ok 37 selftests: arm64: check_ksm_options # exit=3D1
 
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 151 total, 148 passed, 3 failed
-* arm64: 51 total, 50 passed, 1 failed
-* i386: 39 total, 36 passed, 3 failed
-* mips: 30 total, 28 passed, 2 failed
-* parisc: 8 total, 8 passed, 0 failed
-* powerpc: 38 total, 32 passed, 6 failed
-* riscv: 16 total, 15 passed, 1 failed
-* s390: 16 total, 14 passed, 2 failed
-* sh: 14 total, 12 passed, 2 failed
-* sparc: 8 total, 8 passed, 0 failed
-* x86_64: 44 total, 44 passed, 0 failed
 
-## Test suites summary
-* boot
-* fwts
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-vm
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* lt
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-open-posix-tests
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* perf
-* rcutorture
-* v4l2-compliance
-* vdso
+# selftests: arm64: check_mmap_options
+# 1..22
+# ok 1 Check anonymous memory with private mapping, sync error mode,
+mmap memory and tag check off
+# ok 2 Check file memory with private mapping, sync error mode,
+mmap/mprotect memory and tag check off
+# ok 3 Check anonymous memory with private mapping, no error mode,
+mmap memory and tag check off
+# ok 4 Check file memory with private mapping, no error mode,
+mmap/mprotect memory and tag check off
+# not ok 5 Check anonymous memory with private mapping, sync error
+mode, mmap memory and tag check on
+# not ok 6 Check anonymous memory with private mapping, sync error
+mode, mmap/mprotect memory and tag check on
+# not ok 7 Check anonymous memory with shared mapping, sync error
+mode, mmap memory and tag check on
+# not ok 8 Check anonymous memory with shared mapping, sync error
+mode, mmap/mprotect memory and tag check on
+# not ok 9 Check anonymous memory with private mapping, async error
+mode, mmap memory and tag check on
+# not ok 10 Check anonymous memory with private mapping, async error
+mode, mmap/mprotect memory and tag check on
+# not ok 11 Check anonymous memory with shared mapping, async error
+mode, mmap memory and tag check on
+# not ok 12 Check anonymous memory with shared mapping, async error
+mode, mmap/mprotect memory and tag check on
+# not ok 13 Check file memory with private mapping, sync error mode,
+mmap memory and tag check on
+# not ok 14 Check file memory with private mapping, sync error mode,
+mmap/mprotect memory and tag check on
+# not ok 15 Check file memory with shared mapping, sync error mode,
+mmap memory and tag check on
+# not ok 16 Check file memory with shared mapping, sync error mode,
+mmap/mprotect memory and tag check on
+# not ok 17 Check file memory with private mapping, async error mode,
+mmap memory and tag check on
+# not ok 18 Check file memory with private mapping, async error mode,
+mmap/mprotect memory and tag check on
+# not ok 19 Check file memory with shared mapping, async error mode,
+mmap memory and tag check on
+# not ok 20 Check file memory with shared mapping, async error mode,
+mmap/mprotect memory and tag check on
+# not ok 21 Check clear PROT_MTE flags with private mapping, sync
+error mode and mmap memory
+# not ok 22 Check clear PROT_MTE flags with private mapping and sync
+error mode and mmap/mprotect memory
+# # Totals: pass:4 fail:18 xfail:0 xpass:0 skip:0 error:0
+not ok 38 selftests: arm64: check_mmap_options # exit=3D1
+
+
+# selftests: arm64: check_tags_inclusion
+# 1..4
+# # No valid fault recorded for 0x500ffffb8b27000 in mode 1
+# not ok 1 Check an included tag value with sync mode
+# # No valid fault recorded for 0x400ffffb8b27000 in mode 1
+# not ok 2 Check different included tags value with sync mode
+# ok 3 Check none included tags value with sync mode
+# # No valid fault recorded for 0xa00ffffb8b27000 in mode 1
+# not ok 4 Check all included tags value with sync mode
+# # Totals: pass:1 fail:3 xfail:0 xpass:0 skip:0 error:0
+not ok 40 selftests: arm64: check_tags_inclusion # exit=3D1
+
+Test logs,
+https://lkft.validation.linaro.org/scheduler/job/6087664#L4865
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
+.162-951-g9096aabfe9e0/testrun/14329777/suite/kselftest-arm64/test/arm64_ch=
+eck_tags_inclusion/log
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
+.162-951-g9096aabfe9e0/testrun/14329777/suite/kselftest-arm64/tests/
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
+.87-219-g60931c95bb6d/testrun/14329656/suite/kselftest-arm64/tests/
 
 --
 Linaro LKFT
