@@ -1,256 +1,67 @@
-Received: from mail-oa1-f47.google.com (mail-oa1-f47.google.com [209.85.160.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABE37C
-	for <patches@lists.linux.dev>; Tue, 24 Jan 2023 12:58:23 +0000 (UTC)
-Received: by mail-oa1-f47.google.com with SMTP id 586e51a60fabf-15f64f2791dso17540676fac.7
-        for <patches@lists.linux.dev>; Tue, 24 Jan 2023 04:58:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=19Cl6GiHai15EHKqqL5MJsrC0SAK4DYngi9P4S3JRXk=;
-        b=U8Usm78auw113UmivYoQMM23I5glJEnLHLoyduEbqXMuiAdiladsOszSiC6Q68AmoB
-         B/jRT5Tyfu/lYYb9s7glroJ73a8073nbEF20HQAWm0IR5warkOsJN4eQT/qBmorQuvkS
-         NdoQVaIhwt5SCX0FOwFWtFyQflzKclZrV0aCtvsm9WDsj6YDaWm6Ff3qlpX8M32cuYOg
-         1GXkN1TuaBiKpTvziwYKp9oXLadDF6AxFfeWnuj9VNrH1ly5mffP1JsSDjA9ilev8INc
-         8yWuvGuFwPceTpKV2a5216841n5WzwthIeax787dp5wPRhqTSX9yLvCDoqBBsQuoJQbg
-         BOhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=19Cl6GiHai15EHKqqL5MJsrC0SAK4DYngi9P4S3JRXk=;
-        b=OnuCmar/0iD/a5B3XCnBARdwBwifWou172MbMG6X2ZAkYbR1VgzLbVayYNTyuE+d0F
-         bV9w6Sg9dgi2Tk+dMu2j1FeZn7UFAMCtGJAAj5L9FCPm5Xs4WJSuSrhff/eQSJ/X2sJ6
-         1ax7aU6GcF+IskCyVPq4rqT91qQ4obZkG2LWV5qLhyINqzPe2wuKCbva+Gpm/9zizVrZ
-         bI+pbtoCp/i0x8kA1w7n37s3IV/2aHQFssgd2XT1B2GGWN74FRYrqDYf1A11s/t7Qx6W
-         6AmUM7jHwWq/VDTVlzCyJE3Q38r0S/R2dIRuYih+nvEixjG6RPYMSGvOoSC43CQIH3OF
-         Zczw==
-X-Gm-Message-State: AFqh2kp8TS6d5cIfEclLHGqfaDAOoVQG/ejaWyubp0Ggw2HbitC5Kd4p
-	UAjcqo4op1KpC6Oaf8icuZw=
-X-Google-Smtp-Source: AMrXdXvliegj7O+rvgOxjzAKA6LY4l9+aBGRXYocBkO1ydo/NIqQ4VpDYKVyc/0VpI/uGueGLbXvTg==
-X-Received: by 2002:a05:6870:289a:b0:15e:9b5b:e2c9 with SMTP id gy26-20020a056870289a00b0015e9b5be2c9mr14560866oab.3.1674565102219;
-        Tue, 24 Jan 2023 04:58:22 -0800 (PST)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id j24-20020a056870051800b0013b9ee734dcsm679971oao.35.2023.01.24.04.58.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 24 Jan 2023 04:58:21 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <433e41da-5965-ccf0-c3de-79bd696806f7@roeck-us.net>
-Date: Tue, 24 Jan 2023 04:58:17 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F997C
+	for <patches@lists.linux.dev>; Tue, 24 Jan 2023 13:01:04 +0000 (UTC)
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 973DC1C0A1B; Tue, 24 Jan 2023 14:00:55 +0100 (CET)
+Date: Tue, 24 Jan 2023 14:00:55 +0100
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 00/98] 5.10.165-rc2 review
+Message-ID: <Y8/Wh3wpiGwHkvIA@duo.ucw.cz>
+References: <20230123094914.748265495@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 5.15 000/117] 5.15.90-rc2 review
-Content-Language: en-US
-To: Naresh Kamboju <naresh.kamboju@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230123094918.977276664@linuxfoundation.org>
- <CA+G9fYuH9vUTHjtByq184N2dNuquT1Z02JDRh2GYFR96weZcFA@mail.gmail.com>
-From: Guenter Roeck <linux@roeck-us.net>
-In-Reply-To: <CA+G9fYuH9vUTHjtByq184N2dNuquT1Z02JDRh2GYFR96weZcFA@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="gPb280Golx2pCTz9"
+Content-Disposition: inline
+In-Reply-To: <20230123094914.748265495@linuxfoundation.org>
 
-On 1/24/23 01:52, Naresh Kamboju wrote:
-> On Mon, 23 Jan 2023 at 15:22, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
->>
->> This is the start of the stable review cycle for the 5.15.90 release.
->> There are 117 patches in this series, all will be posted as a response
->> to this one.  If anyone has any issues with these being applied, please
->> let me know.
->>
->> Responses should be made by Wed, 25 Jan 2023 09:48:53 +0000.
->> Anything received after that time might be too late.
->>
->> The whole patch series can be found in one patch at:
->>          https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.90-rc2.gz
->> or in the git tree and branch at:
->>          git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
->> and the diffstat can be found below.
->>
->> thanks,
->>
->> greg k-h
-> 
-> 
-> Results from Linaro’s test farm.
-> Regressions found on arm64 for both 5.15.90-rc2 and 5.10.165-rc2.
-> 
 
-Didn't you send an earlier e-mail suggesting no regressions ?
+--gPb280Golx2pCTz9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Guenter
+Hi!
 
-> * qemu-arm64-mte, kselftest-arm64
->    - arm64_check_buffer_fill
->    - arm64_check_child_memory
->    - arm64_check_ksm_options
->    - arm64_check_mmap_options
->    - arm64_check_tags_inclusion
-> 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> 
-> We are in a process to bisecting this problem and there are updates coming
-> from kselftest rootfs.
-> 
-> Test logs,
-> # selftests: arm64: check_buffer_fill
-> # 1..20
-> # ok 1 Check buffer correctness by byte with sync err mode and mmap memory
-> # ok 2 Check buffer correctness by byte with async err mode and mmap memory
-> # ok 3 Check buffer correctness by byte with sync err mode and
-> mmap/mprotect memory
-> # ok 4 Check buffer correctness by byte with async err mode and
-> mmap/mprotect memory
-> # not ok 5 Check buffer write underflow by byte with sync mode and mmap memory
-> # not ok 6 Check buffer write underflow by byte with async mode and mmap memory
-> # ok 7 Check buffer write underflow by byte with tag check fault
-> ignore and mmap memory
-> # ok 8 Check buffer write underflow by byte with sync mode and mmap memory
-> # ok 9 Check buffer write underflow by byte with async mode and mmap memory
-> # ok 10 Check buffer write underflow by byte with tag check fault
-> ignore and mmap memory
-> # not ok 11 Check buffer write overflow by byte with sync mode and mmap memory
-> # not ok 12 Check buffer write overflow by byte with async mode and mmap memory
-> # ok 13 Check buffer write overflow by byte with tag fault ignore mode
-> and mmap memory
-> # not ok 14 Check buffer write correctness by block with sync mode and
-> mmap memory
-> # not ok 15 Check buffer write correctness by block with async mode
-> and mmap memory
-> # ok 16 Check buffer write correctness by block with tag fault ignore
-> and mmap memory
-> # ok 17 Check initial tags with private mapping, sync error mode and mmap memory
-> # ok 18 Check initial tags with private mapping, sync error mode and
-> mmap/mprotect memory
-> # ok 19 Check initial tags with shared mapping, sync error mode and mmap memory
-> # ok 20 Check initial tags with shared mapping, sync error mode and
-> mmap/mprotect memory
-> # # Totals: pass:14 fail:6 xfail:0 xpass:0 skip:0 error:0
-> not ok 34 selftests: arm64: check_buffer_fill # exit=1
-> 
-> 
-> # selftests: arm64: check_child_memory
-> # 1..12
-> # not ok 1 Check child anonymous memory with private mapping, precise
-> mode and mmap memory
-> # not ok 2 Check child anonymous memory with shared mapping, precise
-> mode and mmap memory
-> # not ok 3 Check child anonymous memory with private mapping,
-> imprecise mode and mmap memory
-> # not ok 4 Check child anonymous memory with shared mapping, imprecise
-> mode and mmap memory
-> # not ok 5 Check child anonymous memory with private mapping, precise
-> mode and mmap/mprotect memory
-> # not ok 6 Check child anonymous memory with shared mapping, precise
-> mode and mmap/mprotect memory
-> # not ok 7 Check child file memory with private mapping, precise mode
-> and mmap memory
-> # not ok 8 Check child file memory with shared mapping, precise mode
-> and mmap memory
-> # not ok 9 Check child file memory with private mapping, imprecise
-> mode and mmap memory
-> # not ok 10 Check child file memory with shared mapping, imprecise
-> mode and mmap memory
-> # not ok 11 Check child file memory with private mapping, precise mode
-> and mmap/mprotect memory
-> # not ok 12 Check child file memory with shared mapping, precise mode
-> and mmap/mprotect memory
-> # # Totals: pass:0 fail:12 xfail:0 xpass:0 skip:0 error:0
-> not ok 35 selftests: arm64: check_child_memory # exit=1
-> 
-> # selftests: arm64: check_ksm_options
-> # 1..4
-> # # Invalid MTE synchronous exception caught!
-> not ok 37 selftests: arm64: check_ksm_options # exit=1
-> 
-> 
-> # selftests: arm64: check_mmap_options
-> # 1..22
-> # ok 1 Check anonymous memory with private mapping, sync error mode,
-> mmap memory and tag check off
-> # ok 2 Check file memory with private mapping, sync error mode,
-> mmap/mprotect memory and tag check off
-> # ok 3 Check anonymous memory with private mapping, no error mode,
-> mmap memory and tag check off
-> # ok 4 Check file memory with private mapping, no error mode,
-> mmap/mprotect memory and tag check off
-> # not ok 5 Check anonymous memory with private mapping, sync error
-> mode, mmap memory and tag check on
-> # not ok 6 Check anonymous memory with private mapping, sync error
-> mode, mmap/mprotect memory and tag check on
-> # not ok 7 Check anonymous memory with shared mapping, sync error
-> mode, mmap memory and tag check on
-> # not ok 8 Check anonymous memory with shared mapping, sync error
-> mode, mmap/mprotect memory and tag check on
-> # not ok 9 Check anonymous memory with private mapping, async error
-> mode, mmap memory and tag check on
-> # not ok 10 Check anonymous memory with private mapping, async error
-> mode, mmap/mprotect memory and tag check on
-> # not ok 11 Check anonymous memory with shared mapping, async error
-> mode, mmap memory and tag check on
-> # not ok 12 Check anonymous memory with shared mapping, async error
-> mode, mmap/mprotect memory and tag check on
-> # not ok 13 Check file memory with private mapping, sync error mode,
-> mmap memory and tag check on
-> # not ok 14 Check file memory with private mapping, sync error mode,
-> mmap/mprotect memory and tag check on
-> # not ok 15 Check file memory with shared mapping, sync error mode,
-> mmap memory and tag check on
-> # not ok 16 Check file memory with shared mapping, sync error mode,
-> mmap/mprotect memory and tag check on
-> # not ok 17 Check file memory with private mapping, async error mode,
-> mmap memory and tag check on
-> # not ok 18 Check file memory with private mapping, async error mode,
-> mmap/mprotect memory and tag check on
-> # not ok 19 Check file memory with shared mapping, async error mode,
-> mmap memory and tag check on
-> # not ok 20 Check file memory with shared mapping, async error mode,
-> mmap/mprotect memory and tag check on
-> # not ok 21 Check clear PROT_MTE flags with private mapping, sync
-> error mode and mmap memory
-> # not ok 22 Check clear PROT_MTE flags with private mapping and sync
-> error mode and mmap/mprotect memory
-> # # Totals: pass:4 fail:18 xfail:0 xpass:0 skip:0 error:0
-> not ok 38 selftests: arm64: check_mmap_options # exit=1
-> 
-> 
-> # selftests: arm64: check_tags_inclusion
-> # 1..4
-> # # No valid fault recorded for 0x500ffffb8b27000 in mode 1
-> # not ok 1 Check an included tag value with sync mode
-> # # No valid fault recorded for 0x400ffffb8b27000 in mode 1
-> # not ok 2 Check different included tags value with sync mode
-> # ok 3 Check none included tags value with sync mode
-> # # No valid fault recorded for 0xa00ffffb8b27000 in mode 1
-> # not ok 4 Check all included tags value with sync mode
-> # # Totals: pass:1 fail:3 xfail:0 xpass:0 skip:0 error:0
-> not ok 40 selftests: arm64: check_tags_inclusion # exit=1
-> 
-> Test logs,
-> https://lkft.validation.linaro.org/scheduler/job/6087664#L4865
-> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10.162-951-g9096aabfe9e0/testrun/14329777/suite/kselftest-arm64/test/arm64_check_tags_inclusion/log
-> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10.162-951-g9096aabfe9e0/testrun/14329777/suite/kselftest-arm64/tests/
-> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15.87-219-g60931c95bb6d/testrun/14329656/suite/kselftest-arm64/tests/
-> 
-> --
-> Linaro LKFT
-> https://lkft.linaro.org
+> This is the start of the stable review cycle for the 5.10.165 release.
+> There are 98 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
+CIP testing did not find any problems here:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+5.10.y
+
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+
+Best regards,
+                                                                Pavel
+--=20
+DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--gPb280Golx2pCTz9
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY8/WhwAKCRAw5/Bqldv6
+8kFSAJ46Nk4hg0EmwxEktdj8X3h4kSRfvgCeMNQPfLCMRL6u0LLewDXHhDbKsgs=
+=aSGJ
+-----END PGP SIGNATURE-----
+
+--gPb280Golx2pCTz9--
