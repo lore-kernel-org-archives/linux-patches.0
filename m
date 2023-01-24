@@ -1,68 +1,67 @@
-Received: from mail-vk1-f177.google.com (mail-vk1-f177.google.com [209.85.221.177])
+Received: from mail-vs1-f44.google.com (mail-vs1-f44.google.com [209.85.217.44])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADC4C10E9
-	for <patches@lists.linux.dev>; Tue, 24 Jan 2023 09:52:28 +0000 (UTC)
-Received: by mail-vk1-f177.google.com with SMTP id 22so6559328vkn.2
-        for <patches@lists.linux.dev>; Tue, 24 Jan 2023 01:52:28 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DC410E9
+	for <patches@lists.linux.dev>; Tue, 24 Jan 2023 09:52:48 +0000 (UTC)
+Received: by mail-vs1-f44.google.com with SMTP id 3so15857060vsq.7
+        for <patches@lists.linux.dev>; Tue, 24 Jan 2023 01:52:48 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=rUnO5OKgozAy5X6l5i6B7toBQVUiHuETYBImO6P1cR0=;
-        b=GWIP0r/LpbICnhOVkC6C6ilC5acuMD6p39p8Arl5yGEI21bun8UtqaN5EB1WSSlfnr
-         gFJCaYKSYFKEZnxuWNaoeXw+SxH4r/TxECE1SNgG4Y+klS8ub3lFXyiuAwIKs9niBwR3
-         sr3EM92nCp3YYqcgZaf2J6k94ezHhlT+YSoe7pY9K4b3z1/8xlgUiQG77MElt4tXRlsM
-         boqB6p6FEWGBJHAHMFpwm/wauSfrm/gU+JShEfiDbFBH7+1xb4rthBLVUidxoNayMphf
-         hSMmh4+vr1bWxmSDZSg6reeEtTkpR7y99Oqkyjl3HiFMp20NDHYfqtaFhnkWJug+wm/q
-         ODVw==
+        bh=a8BB+Mr1YyupdL/5z3B/lkYmn99GXR1QXWMQn3D/xn4=;
+        b=iWZvxL5ps2NPyyh2UuYMy8zM59kuLd7mqLCJc9Z3GGMNkaMHevffve3dzn2Ab/gO5K
+         /JgKsux/mPVYIbnKGHAzRcU+JW/CSwoRFc+jcealKFZgBm9WZfy9sOk1AK1Qk+PEm1JL
+         QQxpIGHKzbp3k+tWxUp4T/YR7fK30h39d1MNKD4Wfj8CpbZU7sGSsRe3q5YJN+r2C0r6
+         9Nd1koBNEdmQUjXm+QkBW/qf7C57O3AnKDWZYEBJtfDqdV2nsTKo971jzjgAcX/Hnb+X
+         a9EnLhNhdIv+pREjn4I0iPh9h3+JAE0aKemr1+O2g361TSjQAgksnWKAsy0iXxh/72zU
+         nCvA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=rUnO5OKgozAy5X6l5i6B7toBQVUiHuETYBImO6P1cR0=;
-        b=WYlbBBcT2h2NpkgUGKFgkGeSCaVmUAn5+a83/Or+807/NidoegnygAf/K6bSiMgGkU
-         61uOh5sPHBrBdG/pa/9LF4c9865ru9J/vs1egjrmZzNXLmNBZ0pWhbV/g2HuQBco4nYs
-         B6cnI4ZwqSgLPWgaPconitsWbCK3E/WdlkCNzC35oWLS/+sO3lRr3qcUJ5zV/4c90z6L
-         51Ru8RyEVmwj2J+16Gh4Q06dvnhfSwYxnivVHsDuS6IMz2tJZNH6HZuToMi8nmJZeX3I
-         0vZVqfNOKc/ot7D6mjBW8B9mhKo9HtrqcH5QXlKJhY4kGLq0/vYXbfH/+BkmL3YJ+eU0
-         XOtQ==
-X-Gm-Message-State: AFqh2kr59a7HancZjypy09+6PNs0EakTvRYDh8iU9mE1n59I2tyC5wrS
-	HRRSjmavWeCw9UQekAXE6+h92eqKkLJTcR0aPeq+tw==
-X-Google-Smtp-Source: AMrXdXtFQ2MkrzXbgoItDsdaklNfubkbqRXTcX1E9AsP9u4MIaQkpEM4KRFY1Ts1EH2WqOxZl+Hxkeyp+lOQU3nolwk=
-X-Received: by 2002:ac5:c76d:0:b0:3d9:98d3:3902 with SMTP id
- c13-20020ac5c76d000000b003d998d33902mr3460713vkn.39.1674553947319; Tue, 24
- Jan 2023 01:52:27 -0800 (PST)
+        bh=a8BB+Mr1YyupdL/5z3B/lkYmn99GXR1QXWMQn3D/xn4=;
+        b=qEfr218r2S9lcLoFrl1SGuCw76tn2PtiVpMesuXtUuXkqkhn8BdAl2wSIvy92th1D+
+         0Hw5Y3JRs7CW6ls++4Z1LGQUhcCVtwYmFA/rl2EBZA7GrDem5v8XcV5CULugD0GnEneZ
+         0fLyTgmlCXAMTj8gnTox8yAUTE2tO2CDZn+qB13fMUVVNghaGn5xvn/YH635ecIPX9E/
+         qlRMQUfdMtmwKUycwXb3eQSfdDT8ejFNoJ4dYtg3IzWlqZV51WbdW2VMeE70o7X4Zck0
+         I0WBmengCRjuZuHNykwT8cuaoxuoHLPDd818w+aPGSs3TNFa93F86dmU2KOBeNaoTtVk
+         3OGw==
+X-Gm-Message-State: AFqh2kpe3HAYz3xE+rswBEVbLmKvvBTyFcbSbMnfzQamMfZ73MsIw9oW
+	wsMT6CYgwgdDwnmMgchWTZvIfe5yRg2XnSqXbawo1Q==
+X-Google-Smtp-Source: AMrXdXs1Dt3Y8mDPY1t3AKO/K/9NNQwbFr4c9mRLc8barvrc1wy2swCK1MeUTrQfCXWOwHrdPPMpW/WBscKT0RCrhxQ=
+X-Received: by 2002:a67:b102:0:b0:3d3:dd2d:88d1 with SMTP id
+ w2-20020a67b102000000b003d3dd2d88d1mr3487254vsl.83.1674553966972; Tue, 24 Jan
+ 2023 01:52:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230123094914.748265495@linuxfoundation.org>
-In-Reply-To: <20230123094914.748265495@linuxfoundation.org>
+References: <20230123094918.977276664@linuxfoundation.org>
+In-Reply-To: <20230123094918.977276664@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 24 Jan 2023 15:22:16 +0530
-Message-ID: <CA+G9fYvgEEOkatUJB1p_DQuL1BcDyk9mq-3d-iUjgxhP+pONTw@mail.gmail.com>
-Subject: Re: [PATCH 5.10 00/98] 5.10.165-rc2 review
+Date: Tue, 24 Jan 2023 15:22:35 +0530
+Message-ID: <CA+G9fYuH9vUTHjtByq184N2dNuquT1Z02JDRh2GYFR96weZcFA@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/117] 5.15.90-rc2 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, Mark Brown <broonie@kernel.org>, 
-	Catalin Marinas <catalin.marinas@arm.com>
+	srw@sladewatkins.net, rwarsow@gmx.de
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 On Mon, 23 Jan 2023 at 15:22, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 5.10.165 release.
-> There are 98 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.15.90 release.
+> There are 117 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -71,10 +70,10 @@ On Mon, 23 Jan 2023 at 15:22, Greg Kroah-Hartman
 >
 > The whole patch series can be found in one patch at:
 >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.10.165-rc2.gz
+5.15.90-rc2.gz
 > or in the git tree and branch at:
 >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.10.y
+-rc.git linux-5.15.y
 > and the diffstat can be found below.
 >
 > thanks,
@@ -94,7 +93,7 @@ Regressions found on arm64 for both 5.15.90-rc2 and 5.10.165-rc2.
 
 Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-We are in a process to bisect this problem and there are updates coming
+We are in a process to bisecting this problem and there are updates coming
 from kselftest rootfs.
 
 Test logs,
