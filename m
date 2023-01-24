@@ -1,40 +1,40 @@
-Received: from mail-vs1-f50.google.com (mail-vs1-f50.google.com [209.85.217.50])
+Received: from mail-vk1-f176.google.com (mail-vk1-f176.google.com [209.85.221.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C94D110F9
-	for <patches@lists.linux.dev>; Tue, 24 Jan 2023 11:48:29 +0000 (UTC)
-Received: by mail-vs1-f50.google.com with SMTP id k6so16186362vsk.1
-        for <patches@lists.linux.dev>; Tue, 24 Jan 2023 03:48:29 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE3021380
+	for <patches@lists.linux.dev>; Tue, 24 Jan 2023 12:11:34 +0000 (UTC)
+Received: by mail-vk1-f176.google.com with SMTP id v81so7489825vkv.5
+        for <patches@lists.linux.dev>; Tue, 24 Jan 2023 04:11:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=yQNMnRtLnVXUsYbjugmcT/zel0k+030c3Lta9eylBxc=;
-        b=dAryDTkfsGIYVUyiFQAQg6UcImbZOES0pg/JxW3sjdY3pY1vjHKvJOqwfFi2azRp7t
-         0XRzf1m5bxQUym7GyOV1kCTZ9dHiOIErOkUOux6UIOhLtMhlyqht4ccXzXPh29xJq0zF
-         gNXXJECUOefPPI29qKU76tNj/s2F4AEW8HANkfVBjO0NImMJHoJ9odTIDzfm3z/A2nNH
-         gO60UKQXtyFVQCn8qlkS+UcE90eXRWjEXB6sD7UdrRAYW147cFZy3JJrKqQA8dB+jY8z
-         QASUCs5yHKBGDmDplR/JE/53ks1P4kCgLPQ/rgb6bNu10byxDe+WkbWWSObibzEF5lSf
-         brIg==
+        bh=dISAn78vCWS4e6xdAYVii8dXCJmdFpiXIP1pmSRbb/8=;
+        b=ZLjWXwX3EYWpqYpHXvt912h/2ETFWRj0hqQqB9cwIGQR9I1ti6KmgBoCv5JV0E6NH+
+         Ao2ZJYcXe2AOfsuXLtgZ9tSvuZztJ4nLvMRv0L+m7l5dtscd4wNcR8b+evAdvi6YSwBm
+         J74A/HUMs3P+Q5V0OxK2IHgJ/pzRL9XZlIz6pcGiwjFElBvOmELb5dZ42o1ycTXMfB3j
+         IcSsFeRx0f4jjxajJOXa2wb+ojQggPAr2lXXo/ZhkorUHf6Mrf2DfpAeaYTihBvQooDu
+         FnIedSqwFO6bEEos2h+7Ra1xfBbLcZLVLI3OV68Gs/aDRTk9YZVUx46j3RGigz5EbpYJ
+         361g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=yQNMnRtLnVXUsYbjugmcT/zel0k+030c3Lta9eylBxc=;
-        b=bN7OutHNPozjT6gmH6p+AiYdCQ1/dd0XjcYUHjzYzI3jgStybk61vREL3JAsxUwgR5
-         4TrbvrykKujdrTMEgDMeuH7ZtRImoxt9asAZHKY6Zo+HpioSmykHXHX6r59VIAZrOnsd
-         bzfztpHMPw5xmjDJ436h6x342ox9dJ0Xykw8tyjrFLrvccH5nEz9wAxww4nD30vySFpa
-         BhViKCAmwTmtqIg4GtyxBZQujzn27cdW5ppLExCzxcPSqhVFGVkWn4px7lp7SdJO+v8i
-         y3/lJCqhZ0BeKYRsP7/U5TUPdO2HHkGtGovoYGqdUeHJkEiVoaOn2Db5d91dHsZm/T13
-         GzIQ==
-X-Gm-Message-State: AFqh2kqJnIrWIJzPNtVDIc+LyFVNaU6b73ChunAl3JEwt6+hp6YRUDkJ
-	qyX9grswLEan0Y6oxcYBpMu9cZB5YzIWgT2emVei6w==
-X-Google-Smtp-Source: AMrXdXtV11k6d6YefYEGLMcYkYjCLfS2e05CjSs8zizNKh6ibTvHrymxvK6XaoOWU//ZuW76eTprlP1a5kKpxbzunzI=
-X-Received: by 2002:a67:f2c2:0:b0:3d3:fdf4:9d30 with SMTP id
- a2-20020a67f2c2000000b003d3fdf49d30mr3269571vsn.34.1674560908400; Tue, 24 Jan
- 2023 03:48:28 -0800 (PST)
+        bh=dISAn78vCWS4e6xdAYVii8dXCJmdFpiXIP1pmSRbb/8=;
+        b=Vjc7rVp9aiJXDQZ8ndQ9QHt9bJQpfy94mkrRRJNjmk0luVGwNtD2yP+Ia4L1QyI2Kh
+         4uscLZFCSU0nUYHbeK/O1pZ8pKl5Tv2KN20afUJS0pPu8lKzfoso5V69N6uC0DgOQRUS
+         Q+jdi5sOwDYlOwwWAIpAs1wH6KoJKdyiS8eBnVDGmXILyx/0zDXugjRx3LLZhZb/C11Y
+         p2lsW3ytuRpBz389lONHAXFUDOMzlEPsiweK8AskeY1xYpbazT+WpaFck2fyJ+LbT7hJ
+         v+OJejIVSuui5odV+D6JCsSzBNn00/51DGcBcDonnQx29KJ2t+DvhBN6nmfA+WmuR2aM
+         DCZA==
+X-Gm-Message-State: AFqh2krmdyLRqpzHTe3sfAUObcLhqnF9tiU+lIsZM8yerMm45PkDPsW6
+	jJqJwACSs0pbMp2GcAKZ0V+i4N5yWcWHltqi7eBC2w==
+X-Google-Smtp-Source: AMrXdXsEU8BFfIKrVdZYAVyNpNnFgFf89N+fSD9CVwbqX8GRUTMFkEfGPe87YRNQbrX7xxpbwpitSYIX8RT97AbGxdA=
+X-Received: by 2002:a1f:45cb:0:b0:3e2:3d0:929c with SMTP id
+ s194-20020a1f45cb000000b003e203d0929cmr1944766vka.30.1674562293562; Tue, 24
+ Jan 2023 04:11:33 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,14 +42,14 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20230122150246.321043584@linuxfoundation.org> <CA+G9fYsS1GLzMoeh-jz8eOMbomJ=XBg_3FjQ+4w_=Dw1Mwr3rQ@mail.gmail.com>
- <20230123191128.ewfyc5cdbbdx5gtl@oracle.com>
-In-Reply-To: <20230123191128.ewfyc5cdbbdx5gtl@oracle.com>
+ <20230123191128.ewfyc5cdbbdx5gtl@oracle.com> <20230123194218.47ssfzhrpnv3xfez@oracle.com>
+In-Reply-To: <20230123194218.47ssfzhrpnv3xfez@oracle.com>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 24 Jan 2023 17:18:17 +0530
-Message-ID: <CA+G9fYuP+S_teUt1dHtEY11-1k2i=hewTEM2PfDonucQ=6Lb8g@mail.gmail.com>
+Date: Tue, 24 Jan 2023 17:41:22 +0530
+Message-ID: <CA+G9fYvLh=epzy_KEZObfFn1kVCugKvuVWF08X9eEiPe4ehe3g@mail.gmail.com>
 Subject: Re: [PATCH 6.1 000/193] 6.1.8-rc1 review
 To: Tom Saeger <tom.saeger@oracle.com>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+Cc: Rich Felker <dalias@libc.org>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
 	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
 	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
 	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
@@ -57,83 +57,153 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
 	Masahiro Yamada <masahiroy@kernel.org>, Ard Biesheuvel <ardb@kernel.org>, 
 	Nathan Chancellor <nathan@kernel.org>, Dennis Gilmore <dennis@ausil.us>, 
-	Palmer Dabbelt <palmer@rivosinc.com>, Arnd Bergmann <arnd@arndb.de>
+	Palmer Dabbelt <palmer@rivosinc.com>, Arnd Bergmann <arnd@arndb.de>, linux-sh@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Tue, 24 Jan 2023 at 00:41, Tom Saeger <tom.saeger@oracle.com> wrote:
+Hi Tom,
+
+On Tue, 24 Jan 2023 at 01:12, Tom Saeger <tom.saeger@oracle.com> wrote:
 >
-> On Mon, Jan 23, 2023 at 01:39:11PM +0530, Naresh Kamboju wrote:
-> > On Sun, 22 Jan 2023 at 20:51, Greg Kroah-Hartman
-> > <gregkh@linuxfoundation.org> wrote:
+> On Mon, Jan 23, 2023 at 01:11:32PM -0600, Tom Saeger wrote:
+> > On Mon, Jan 23, 2023 at 01:39:11PM +0530, Naresh Kamboju wrote:
+> > > On Sun, 22 Jan 2023 at 20:51, Greg Kroah-Hartman
 > > >
-> > > This is the start of the stable review cycle for the 6.1.8 release.
-> > > There are 193 patches in this series, all will be posted as a respons=
-e
-> > > to this one.  If anyone has any issues with these being applied, plea=
-se
-> > > let me know.
+> > > Results from Linaro=E2=80=99s test farm.
 > > >
-> > > Responses should be made by Tue, 24 Jan 2023 15:02:08 +0000.
-> > > Anything received after that time might be too late.
+> > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 > > >
-> > > The whole patch series can be found in one patch at:
-> > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/pa=
-tch-6.1.8-rc1.gz
-> > > or in the git tree and branch at:
-> > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-st=
-able-rc.git linux-6.1.y
-> > > and the diffstat can be found below.
-> > >
-> > > thanks,
-> > >
-> > > greg k-h
+> > > * sh, build
+> > >   - gcc-8-dreamcast_defconfig
+> > >   - gcc-8-microdev_defconfig
+> >
+> > Naresh, any chance you could test again adding the following:
+> >
+> > diff --git a/arch/sh/kernel/vmlinux.lds.S b/arch/sh/kernel/vmlinux.lds.=
+S
+> > index 3161b9ccd2a5..b6276a3521d7 100644
+> > --- a/arch/sh/kernel/vmlinux.lds.S
+> > +++ b/arch/sh/kernel/vmlinux.lds.S
+> > @@ -4,6 +4,7 @@
+> >   * Written by Niibe Yutaka and Paul Mundt
+> >   */
+> >  OUTPUT_ARCH(sh)
+> > +#define RUNTIME_DISCARD_EXIT
+> >  #include <asm/thread_info.h>
+> >  #include <asm/cache.h>
+> >  #include <asm/vmlinux.lds.h>
 > >
 > >
-> > Results from Linaro=E2=80=99s test farm.
+> > My guess is build environment is using ld < 2.36??
+> > and this is probably similar to:
+> > a494398bde27 ("s390: define RUNTIME_DISCARD_EXIT to fix link error with=
+ GNU ld < 2.36")
+> > 4b9880dbf3bd ("powerpc/vmlinux.lds: Define RUNTIME_DISCARD_EXIT")
 > >
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 > >
-> > * sh, build
-> >   - gcc-8-dreamcast_defconfig
-> >   - gcc-8-microdev_defconfig
->
-> Naresh, any chance you could test again adding the following:
->
-> diff --git a/arch/sh/kernel/vmlinux.lds.S b/arch/sh/kernel/vmlinux.lds.S
-> index 3161b9ccd2a5..b6276a3521d7 100644
-> --- a/arch/sh/kernel/vmlinux.lds.S
-> +++ b/arch/sh/kernel/vmlinux.lds.S
-> @@ -4,6 +4,7 @@
->   * Written by Niibe Yutaka and Paul Mundt
->   */
->  OUTPUT_ARCH(sh)
-> +#define RUNTIME_DISCARD_EXIT
->  #include <asm/thread_info.h>
->  #include <asm/cache.h>
->  #include <asm/vmlinux.lds.h>
-
-Above patch fixes the reported problem.
-
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-
->
-> My guess is build environment is using ld < 2.36??
-
-"ld": "GNU ld (GNU Binutils for Debian) 2.31.1",
-
-However, we have been building with gcc-8, gcc-10, gcc-11 and gcc-10.
-
-> and this is probably similar to:
-> a494398bde27 ("s390: define RUNTIME_DISCARD_EXIT to fix link error with G=
-NU ld < 2.36")
-> 4b9880dbf3bd ("powerpc/vmlinux.lds: Define RUNTIME_DISCARD_EXIT")
+> > Regards,
+> >
+> > --Tom
+> >
+> > >
+> > >
+> > > Build error logs:
+> > > `.exit.text' referenced in section `__bug_table' of crypto/algboss.o:
+> > > defined in discarded section `.exit.text' of crypto/algboss.o
+> > > `.exit.text' referenced in section `__bug_table' of
+> > > drivers/char/hw_random/core.o: defined in discarded section
+> > > `.exit.text' of drivers/char/hw_random/core.o
+> > > make[2]: *** [/builds/linux/scripts/Makefile.vmlinux:34: vmlinux] Err=
+or 1
 >
 >
-> Regards,
+> This is also occurring in latest upstream:
+
+Right !
+build/gcc-8-dreamcast_defconfig
+build/gcc-8-microdev_defconfig
+
+These build errors started from v6.2-rc2 on the mainline [1] & [2].
+
 >
-> --Tom
+> =E2=9D=AF git describe HEAD
+> v6.2-rc5-13-g2475bf0250de
+>
+> =E2=9D=AF tuxmake --runtime podman --target-arch sh --toolchain gcc-8 --k=
+config microdev_defconfig
+>
+> `.exit.text' referenced in section `__bug_table' of crypto/algboss.o: def=
+ined in discarded section `.exit.text' of crypto/algboss.o
+> `.exit.text' referenced in section `__bug_table' of drivers/char/hw_rando=
+m/core.o: defined in discarded section `.exit.text' of drivers/char/hw_rand=
+om/core.o
+> make[2]: *** [/home2/tsaeger/linux/linux-upstream/scripts/Makefile.vmlinu=
+x:35: vmlinux] Error 1
+> make[2]: Target '__default' not remade because of errors.
+> make[1]: *** [/home2/tsaeger/linux/linux-upstream/Makefile:1264: vmlinux]=
+ Error 2
+> make[1]: Target '__all' not remade because of errors.
+> make: *** [Makefile:242: __sub-make] Error 2
+> make: Target '__all' not remade because of errors.
+>
+>
+> FWIW, the above patch resolves this.
+Yes. Tested and confirmed it fixes the reported problem.
+
+> How many more architectures need something similar?
+Now I see it on sh with gcc-8 only on the mainline.
+
+OTOH,
+It was noticed on earlier stable-rc 5.4 for x86, i386, powerpc, sh and s390=
+.
+
+git_describe : v5.4.228-679-g79cbaf4448f3
+kernel_version: 5.4.230-rc1
+
+Regressions found on sh: [1] & [2] mainline and below
+    - build/gcc-8-dreamcast_defconfig
+    - build/gcc-8-microdev_defconfig
+
+Regressions found on i386: [3]
+    - build/gcc-8-i386_defconfig
+
+Regressions found on powerpc:  [4]
+    - build/gcc-8-mpc83xx_defconfig
+    - build/gcc-8-ppc64e_defconfig
+    - build/gcc-8-maple_defconfig
+    - build/gcc-8-ppc6xx_defconfig
+    - build/gcc-8-defconfig
+    - build/gcc-8-tqm8xx_defconfig
+    - build/gcc-8-cell_defconfig
+
+Regressions found on s390: [5]
+    - build/gcc-8-defconfig-fe40093d
+
+Regressions found on x86_64: [6]
+    - build/gcc-8-x86_64_defconfig
+
+
+[1] https://qa-reports.linaro.org/lkft/linux-mainline-master/build/v6.2-rc5=
+-20-g7bf70dbb1882/testrun/14340424/suite/build/test/gcc-8-microdev_defconfi=
+g/history/?page=3D3
+[2] https://qa-reports.linaro.org/lkft/linux-mainline-master/build/v6.2-rc5=
+-20-g7bf70dbb1882/testrun/14340393/suite/build/test/gcc-8-dreamcast_defconf=
+ig/history/?page=3D3
+
+[3] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5=
+.4.228-679-g79cbaf4448f3/testrun/14304065/suite/build/test/gcc-8-i386_defco=
+nfig/history/
+[4] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5=
+.4.228-679-g79cbaf4448f3/testrun/14304362/suite/build/tests/
+[5] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5=
+.4.228-679-g79cbaf4448f3/testrun/14304530/suite/build/tests/
+[6] https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.4.y/build/v5=
+.4.228-679-g79cbaf4448f3/testrun/14304610/suite/build/test/gcc-8-x86_64_def=
+config/history/
+
+stable-rc report on 5.4:
+https://lore.kernel.org/stable/Y85tO%2FmJOxIaWH4c@debian/T/#m6b1fdc9bcfc159=
+44e26e3cdd6b1310c878251999
 
 Best regards
 Naresh Kamboju
