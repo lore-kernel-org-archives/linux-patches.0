@@ -1,45 +1,45 @@
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
+Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B86F7E3
-	for <patches@lists.linux.dev>; Tue, 24 Jan 2023 02:43:18 +0000 (UTC)
-Received: by mail-oi1-f178.google.com with SMTP id r9so12128409oig.12
-        for <patches@lists.linux.dev>; Mon, 23 Jan 2023 18:43:18 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA049A31
+	for <patches@lists.linux.dev>; Tue, 24 Jan 2023 02:47:36 +0000 (UTC)
+Received: by mail-ot1-f45.google.com with SMTP id a1-20020a056830008100b006864df3b1f8so8479225oto.3
+        for <patches@lists.linux.dev>; Mon, 23 Jan 2023 18:47:36 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=prNWvFmWXRi6ZhVqb1pnv+VdehJYPKDnuFpbCwdm3Fg=;
-        b=exmCtIQT0XNLjQO4ubQOKmKTku9yjVAB1bj5cRrQbBxxx2kCeVQrSasR7x/A25R67t
-         o51/R8DY5BehfubUcYkKlAg4DpeBorn9mraemmm/ulVNIMNEwap0TUSqcvrGC7ZNCCCE
-         XIPABupThdl32FFUjuY8DOW+u5B7IS5jotO0hIhmDLjAn9U0dWkbuTJq/wU3VxUVnr4L
-         EMlVVg34PAQ3snEMwVyIxVHRP9XhEzxX6OZK38xDtVPlyvMDZ+o2qj/Ao3VcroGAis/K
-         Aa7jshki0ufLP+EmegLTgQl1kupoH/nzaX7sZxaPD1OWYrIDlqDSf39xs7JQNrReiKl/
-         QAHQ==
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:sender
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=YqexzIVMo40KP8hIDZ4Shizea2o4Dbmk1MKMn4wNOtQ=;
+        b=UDKZR+Go9AIqlZ4sWp2iWsmkDb5CBx29aKwvioHxza+4UnQK29g+4zpcO87nTwopdj
+         sSqa+ekMs9nNtjGYZFoCzQLK7DsMRsuKMMidQgRQ3uCNmxgfyBwVp1iTIo1As7N4fhoV
+         /BQEyY6blqChslzEKOfJZU4XPvvHxT9kf47pWBRyl3P9jgenCroGOxIYGndg2d5VR1To
+         YNc9A3a/B8rdRpmP0sOaiy9KqJq9H2cKmacYl8+rkQ0C2+R5kAxXDNMlczDzRjh33ChT
+         Ru1yfYPJnWlPjbIRy1xYV4cOsJYVEywGolW/d4BJQ3bFmfyJNroExu9tE8i/udMSxTRK
+         h4wA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=prNWvFmWXRi6ZhVqb1pnv+VdehJYPKDnuFpbCwdm3Fg=;
-        b=nO3KPHVe7lHJ//gKIMr0+L2B53te2zsd0luTR0EnJ3Nqvj0dIhL4O0E9J48jo/QmHJ
-         7YYS/8LXulF8Re2xwllsfiBPiWrwAmZHhweU/7Dt9VkglbXH4XhSea3fWVxVgIZ/fKq/
-         OxjeyJ0dMY1ZB3T6AlM4bu5XFbxICco2znYBB59aAJwKWVCOdS7VafT/ymqF6BZs2/lJ
-         wSuZEtBU+2fMQLlvXBvjyamPkqZHwtJaobNvppgJGkIi1HN+QoS5GSrzZwoWsRYhBQ2W
-         nirEgB6Xuoje10yw4bHmXUqFU4nThWitLfl9Rb+MzLBrco8b6f5LQkzXKLZPWe7WXPhf
-         zMdQ==
-X-Gm-Message-State: AFqh2koUfYyakSuoFaXRHsXabDMFbnoZtmnuNCZtfdigxV8BY5geeFnQ
-	ppY/s9XFZjjgM6NvQNy9/eo=
-X-Google-Smtp-Source: AMrXdXsBc0R+9NiGGckODiUzlLhgOLrCz7/ykSllbw3Y+hHF4JzY2zqYshE2bEQ5xDyBM1Z+ytiAXw==
-X-Received: by 2002:a54:450e:0:b0:36d:460:40fe with SMTP id l14-20020a54450e000000b0036d046040femr11081026oil.48.1674528197188;
-        Mon, 23 Jan 2023 18:43:17 -0800 (PST)
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:sender
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=YqexzIVMo40KP8hIDZ4Shizea2o4Dbmk1MKMn4wNOtQ=;
+        b=ftUjIekph4T3kRby4XrfKz+jWhOdjfcl95cZwCiUj/37DrqIJXjEFjoiZHYPoXQ0Nj
+         m260MUaDjPq66tXXOZlCwOFzenCDncF6MJFjOj0FLHFznuXZ/nqYU2ocoAxe3GTuHgvA
+         oF2dMc6caXUgasu7/wZGN1S1yPDTA6D+J6w8cFBpifRvQEOwwCd94a3CldRq61wT35gJ
+         DDHO/POgr3JWw85f1xGLuIXWqvOK65fXy8LHWmgckNFuvKoS6ZGlpQHr01JqLMyIfP0H
+         KWOt1ihqsQIH9EnXz1RsX01dolIxUzcH51xf+LsxL31bqPh+m1q+5Vl8HJMz6b+sX5Bn
+         tviQ==
+X-Gm-Message-State: AFqh2kqBk5IlwY1qy5CNJKfyWlywBCJKrB3eEBBxyKlxaN+NFkut5cJj
+	mE72MyUugczT7QXi1ueRbKM=
+X-Google-Smtp-Source: AMrXdXsiCbgg7HVN6mXN7b30bstYk+4L2gna7rlOHKvcnJ4xcDLaSqhzHprZxFED6URZlv57ZqLidQ==
+X-Received: by 2002:a05:6830:61c:b0:684:c128:5495 with SMTP id w28-20020a056830061c00b00684c1285495mr12704506oti.10.1674528455878;
+        Mon, 23 Jan 2023 18:47:35 -0800 (PST)
 Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id bd36-20020a056808222400b00364ebf27363sm548528oib.0.2023.01.23.18.43.15
+        by smtp.gmail.com with ESMTPSA id h22-20020a9d6016000000b00670461b8be4sm414495otj.33.2023.01.23.18.47.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Jan 2023 18:43:16 -0800 (PST)
+        Mon, 23 Jan 2023 18:47:35 -0800 (PST)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Mon, 23 Jan 2023 18:43:14 -0800
+Date: Mon, 23 Jan 2023 18:47:34 -0800
 From: Guenter Roeck <linux@roeck-us.net>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
@@ -48,22 +48,23 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 4.14 00/25] 4.14.304-rc1 review
-Message-ID: <20230124024314.GA1495310@roeck-us.net>
-References: <20230122150217.788215473@linuxfoundation.org>
+Subject: Re: [PATCH 4.19 00/37] 4.19.271-rc1 review
+Message-ID: <20230124024734.GB1495310@roeck-us.net>
+References: <20230122150219.557984692@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20230122150217.788215473@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20230122150219.557984692@linuxfoundation.org>
 
-On Sun, Jan 22, 2023 at 04:04:00PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.14.304 release.
-> There are 25 patches in this series, all will be posted as a response
+On Sun, Jan 22, 2023 at 04:03:57PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.19.271 release.
+> There are 37 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -72,10 +73,31 @@ On Sun, Jan 22, 2023 at 04:04:00PM +0100, Greg Kroah-Hartman wrote:
 > 
 
 Build results:
-	total: 168 pass: 168 fail: 0
+	total: 155 pass: 154 fail: 1
+Failed builds:
+	i386:tools/perf
 Qemu test results:
-	total: 424 pass: 424 fail: 0
+	total: 426 pass: 426 fail: 0
+
+perf build failure:
+
+util/env.c: In function ‘perf_env__arch’:
+cc1: error: function may return address of local variable [-Werror=return-local-addr]
+util/env.c:166:17: note: declared here
+  166 |  struct utsname uts;
+      |                 ^~~
+
+No one to blame but me, for switching the gcc version used to build perf
+to gcc 10.3.0 (from 9.4.0). The problem is fixed in the upstream kernel
+with commit ebcb9464a2ae3 ("perf env: Do not return pointers to local
+variables"). This patch applies to v5.4.y and earlier kernels.
+
+I'll leave it up to you if you want to apply the fix or not; I'll be
+happy to work around the problem in my tests otherwise. Either case,
 
 Tested-by: Guenter Roeck <linux@roeck-us.net>
 
+since this is not a new problem.
+
+Thanks,
 Guenter
