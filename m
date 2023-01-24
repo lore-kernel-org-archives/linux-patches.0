@@ -1,88 +1,81 @@
-Received: from mail-io1-f43.google.com (mail-io1-f43.google.com [209.85.166.43])
+Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 981A17C
-	for <patches@lists.linux.dev>; Tue, 24 Jan 2023 01:16:22 +0000 (UTC)
-Received: by mail-io1-f43.google.com with SMTP id e204so6452841iof.1
-        for <patches@lists.linux.dev>; Mon, 23 Jan 2023 17:16:22 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B86F7E3
+	for <patches@lists.linux.dev>; Tue, 24 Jan 2023 02:43:18 +0000 (UTC)
+Received: by mail-oi1-f178.google.com with SMTP id r9so12128409oig.12
+        for <patches@lists.linux.dev>; Mon, 23 Jan 2023 18:43:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=FlP1Icr443ARU66WHZYKa6EnbCHhRztF1yDkYHAN5ho=;
-        b=aHx4hxvMpYlfOapQzoBDSKute05xDQx7HptuDJP/r1WwgWNfwvMiziSqNesxbnbFpX
-         KutzBUKs5jFgoBYUEZnImcrFABnSxiu0yRiTNZlUIPEbCS3inQl5CM2gOBJXKq23fedy
-         QCPRHYhABuF+qmYC9UX2TgYafaNL5mg9Vtp/k=
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=prNWvFmWXRi6ZhVqb1pnv+VdehJYPKDnuFpbCwdm3Fg=;
+        b=exmCtIQT0XNLjQO4ubQOKmKTku9yjVAB1bj5cRrQbBxxx2kCeVQrSasR7x/A25R67t
+         o51/R8DY5BehfubUcYkKlAg4DpeBorn9mraemmm/ulVNIMNEwap0TUSqcvrGC7ZNCCCE
+         XIPABupThdl32FFUjuY8DOW+u5B7IS5jotO0hIhmDLjAn9U0dWkbuTJq/wU3VxUVnr4L
+         EMlVVg34PAQ3snEMwVyIxVHRP9XhEzxX6OZK38xDtVPlyvMDZ+o2qj/Ao3VcroGAis/K
+         Aa7jshki0ufLP+EmegLTgQl1kupoH/nzaX7sZxaPD1OWYrIDlqDSf39xs7JQNrReiKl/
+         QAHQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=FlP1Icr443ARU66WHZYKa6EnbCHhRztF1yDkYHAN5ho=;
-        b=qKmfq1Wv8s9W0/kI1IJIHI2opmPlun+96jlO7o2dpcezRcjbHFF9Zfk6GWs989+sNI
-         EHOqNnFSyI3jO090/G+m6GFIHFSDNC+3kocyfLMh6huHYhJm6AJ3ZsIxk9UaiCxrDFyl
-         pslDGqTB9fOrGaN/wUpRjIMjjrHBcdWDcvB2IR2pOk8gmeM+ezEzLJ2ZSs0AbZNNqG2V
-         LQf6hcP8g9ip0NGKS+bFa2F4fxVIw7+ooWXBgwdY+oTZHj/gZHplzldG2oYWu8i4YrDs
-         00//N1dH+WQKHIZScGhakBMN61JnNuO7z57/WolERqQH/nkQs17znjj2irDWIIADOl4S
-         gb3g==
-X-Gm-Message-State: AFqh2kqg3gCYUDDRtPaYKQp/1LBri7rzVJGfP2XLXi71U6U6MdZBqbiR
-	OFDcfgESZ7Fm8bTTeGq7SCg/UQ==
-X-Google-Smtp-Source: AMrXdXvT9jkBefDTD0v8eXxzRc77DwIqHSKbNR6Au0zExGJ2TS6TH7tBS2kTICcEQjehHDO/DUGQvA==
-X-Received: by 2002:a5d:9482:0:b0:6cc:8b29:9a73 with SMTP id v2-20020a5d9482000000b006cc8b299a73mr3423444ioj.1.1674522981496;
-        Mon, 23 Jan 2023 17:16:21 -0800 (PST)
-Received: from [192.168.1.128] ([38.15.45.1])
-        by smtp.gmail.com with ESMTPSA id h24-20020a02c4d8000000b003a432de0547sm217517jaj.163.2023.01.23.17.16.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Jan 2023 17:16:20 -0800 (PST)
-Message-ID: <17e7c853-c851-8f90-6ba0-e913c447c5de@linuxfoundation.org>
-Date: Mon, 23 Jan 2023 18:16:19 -0700
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=prNWvFmWXRi6ZhVqb1pnv+VdehJYPKDnuFpbCwdm3Fg=;
+        b=nO3KPHVe7lHJ//gKIMr0+L2B53te2zsd0luTR0EnJ3Nqvj0dIhL4O0E9J48jo/QmHJ
+         7YYS/8LXulF8Re2xwllsfiBPiWrwAmZHhweU/7Dt9VkglbXH4XhSea3fWVxVgIZ/fKq/
+         OxjeyJ0dMY1ZB3T6AlM4bu5XFbxICco2znYBB59aAJwKWVCOdS7VafT/ymqF6BZs2/lJ
+         wSuZEtBU+2fMQLlvXBvjyamPkqZHwtJaobNvppgJGkIi1HN+QoS5GSrzZwoWsRYhBQ2W
+         nirEgB6Xuoje10yw4bHmXUqFU4nThWitLfl9Rb+MzLBrco8b6f5LQkzXKLZPWe7WXPhf
+         zMdQ==
+X-Gm-Message-State: AFqh2koUfYyakSuoFaXRHsXabDMFbnoZtmnuNCZtfdigxV8BY5geeFnQ
+	ppY/s9XFZjjgM6NvQNy9/eo=
+X-Google-Smtp-Source: AMrXdXsBc0R+9NiGGckODiUzlLhgOLrCz7/ykSllbw3Y+hHF4JzY2zqYshE2bEQ5xDyBM1Z+ytiAXw==
+X-Received: by 2002:a54:450e:0:b0:36d:460:40fe with SMTP id l14-20020a54450e000000b0036d046040femr11081026oil.48.1674528197188;
+        Mon, 23 Jan 2023 18:43:17 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id bd36-20020a056808222400b00364ebf27363sm548528oib.0.2023.01.23.18.43.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Jan 2023 18:43:16 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Mon, 23 Jan 2023 18:43:14 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 4.14 00/25] 4.14.304-rc1 review
+Message-ID: <20230124024314.GA1495310@roeck-us.net>
+References: <20230122150217.788215473@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 4.19 00/37] 4.19.271-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
-References: <20230122150219.557984692@linuxfoundation.org>
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20230122150219.557984692@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230122150217.788215473@linuxfoundation.org>
 
-On 1/22/23 08:03, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.271 release.
-> There are 37 patches in this series, all will be posted as a response
+On Sun, Jan 22, 2023 at 04:04:00PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.14.304 release.
+> There are 25 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
 > Responses should be made by Tue, 24 Jan 2023 15:02:08 +0000.
 > Anything received after that time might be too late.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.271-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
 
-Compiled and booted on my test system. No dmesg regressions.
+Build results:
+	total: 168 pass: 168 fail: 0
+Qemu test results:
+	total: 424 pass: 424 fail: 0
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
-thanks,
--- Shuah
+Guenter
