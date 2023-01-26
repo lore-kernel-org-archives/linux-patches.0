@@ -1,31 +1,31 @@
 Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAEE24C93
-	for <patches@lists.linux.dev>; Thu, 26 Jan 2023 18:42:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DEF4C94
+	for <patches@lists.linux.dev>; Thu, 26 Jan 2023 18:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1674758553; x=1706294553;
+  t=1674758555; x=1706294555;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=sfw55e9pOISjtn87W0zcDQDfivg/FZE8hQOsm+yl2hY=;
-  b=CKl9IuXDRd4D8dGvvL8E1JZqnTrpitmzLV859YDgf0stN9Z0yqG8TRJk
-   LWJml0fZk8gHEiSBHbx3URuG5L6avywXS3VCxUQJ8izpw3X7Cuhok01nK
-   2uf4DUFV5v9AjMza8pjMtQ+oYch137pynUUikRikRwV8BO/LP+1WobVfB
-   nmlJaSGMBmrK8wJKvNGqmgG7B5OsPGUi9X1Dm2e46yxmfm5cg6tA73ado
-   MfEaUCpCv84IJZU1UF5a8sTA3vddmcgM1E0NK973XdNA1qP+3KVEFErGw
-   PIAbW7AASZkDcor86kuOGkA3VoUtY0cjVS7ofehSc9omJEBazW20opl1C
+  bh=ivyLAdBKqYQLl3lR+fj5FZ2eFkx8GG4TgMFpd25I12Y=;
+  b=F3rM1pQkV0DgwVlJNCeIsIAYOD9baLIhrCjk3cjhyLvaA1TA1JZWn4Pf
+   DMRZQPZXZw3OCs4Jfv9B+LNRnHLOcc8ov+LlGLKTbfa/JTq+Qw85l21Lu
+   1aEXseRPqQ9U/4SHtgg9KllBfY7FQT/d1/6dGROufV4ZpZOnvz24hn+UL
+   3EY0cuzt4twwo4ZORnOJe5vNJjQIMWr0lRzAgVWIiqxVd0VsB+hjWNqB5
+   VjPdw0XeUC5ouSnnyI+pf8MGftJgskLCJqq5kE9lTjdIW4FvEDxFK9Ds4
+   hTR3UWLOBcZ+94xmsdxYGWfZJEwZeZZajy8mOMCMidR6z/OK9UNRW68+z
    g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10602"; a="354203342"
+X-IronPort-AV: E=McAfee;i="6500,9779,10602"; a="354203372"
 X-IronPort-AV: E=Sophos;i="5.97,249,1669104000"; 
-   d="scan'208";a="354203342"
+   d="scan'208";a="354203372"
 Received: from fmsmga005.fm.intel.com ([10.253.24.32])
   by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2023 10:42:06 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10602"; a="991745445"
+X-IronPort-AV: E=McAfee;i="6500,9779,10602"; a="991745455"
 X-IronPort-AV: E=Sophos;i="5.97,249,1669104000"; 
-   d="scan'208";a="991745445"
+   d="scan'208";a="991745455"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2023 10:42:05 -0800
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2023 10:42:06 -0800
 From: Tony Luck <tony.luck@intel.com>
 To: Fenghua Yu <fenghua.yu@intel.com>,
 	Reinette Chatre <reinette.chatre@intel.com>,
@@ -40,9 +40,9 @@ Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
 	linux-doc@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH 3/7] x86/resctrl: Add a new node-scoped resource to rdt_resources_all[]
-Date: Thu, 26 Jan 2023 10:41:53 -0800
-Message-Id: <20230126184157.27626-4-tony.luck@intel.com>
+Subject: [PATCH 6/7] x86/resctrl: Update documentation with Sub-NUMA cluster changes
+Date: Thu, 26 Jan 2023 10:41:56 -0800
+Message-Id: <20230126184157.27626-7-tony.luck@intel.com>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230126184157.27626-1-tony.luck@intel.com>
 References: <20230126184157.27626-1-tony.luck@intel.com>
@@ -54,66 +54,48 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-Add a placeholder in the array of struct rdt_hw_resource to be used
-for event monitoring of systems with Sub-NUMA Cluster enabled.
-
-Update get_domain_id() to handle SCOPE_NODE.
+With Sub-NUMA Cluster mode enabled the scope of monitoring resources is
+per-NODE instead of per-L3 cache. Suffices of directories with "L3" in
+their name refer to Sun-NUMA nodes instead of L3 cache ids.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- arch/x86/kernel/cpu/resctrl/internal.h |  2 ++
- arch/x86/kernel/cpu/resctrl/core.c     | 12 ++++++++++++
- 2 files changed, 14 insertions(+)
+ Documentation/x86/resctrl.rst | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/arch/x86/kernel/cpu/resctrl/internal.h b/arch/x86/kernel/cpu/resctrl/internal.h
-index 15cea517efaa..39a62babd60b 100644
---- a/arch/x86/kernel/cpu/resctrl/internal.h
-+++ b/arch/x86/kernel/cpu/resctrl/internal.h
-@@ -409,12 +409,14 @@ enum resctrl_res_level {
- 	RDT_RESOURCE_L3,
- 	RDT_RESOURCE_L2,
- 	RDT_RESOURCE_MBA,
-+	RDT_RESOURCE_NODE,
+diff --git a/Documentation/x86/resctrl.rst b/Documentation/x86/resctrl.rst
+index 71a531061e4e..9043a2d2f2d3 100644
+--- a/Documentation/x86/resctrl.rst
++++ b/Documentation/x86/resctrl.rst
+@@ -167,6 +167,11 @@ with the following files:
+ 		bytes) at which a previously used LLC_occupancy
+ 		counter can be considered for re-use.
  
- 	/* Must be the last */
- 	RDT_NUM_RESOURCES,
- };
++"snc_ways":
++                A value of "1" marks that SNC mode is disabled.
++                Values of "2" or "4" indicate how many NUMA
++                nodes share an L3 cache.
++
+ Finally, in the top level of the "info" directory there is a file
+ named "last_cmd_status". This is reset with every "command" issued
+ via the file system (making new directories or writing to any of the
+@@ -254,9 +259,13 @@ When control is enabled all CTRL_MON groups will also contain:
+ When monitoring is enabled all MON groups will also contain:
  
- enum resctrl_scope {
-+	SCOPE_NODE,
- 	SCOPE_L2_CACHE = 2,
- 	SCOPE_L3_CACHE = 3
- };
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 6914232acf84..19be6fe42ef3 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -100,6 +100,16 @@ struct rdt_hw_resource rdt_resources_all[] = {
- 			.fflags			= RFTYPE_RES_MB,
- 		},
- 	},
-+	[RDT_RESOURCE_NODE] =
-+	{
-+		.r_resctrl = {
-+			.rid			= RDT_RESOURCE_NODE,
-+			.name			= "L3",
-+			.scope			= SCOPE_NODE,
-+			.domains		= domain_init(RDT_RESOURCE_NODE),
-+			.fflags			= RFTYPE_RES_MB,
-+		},
-+	},
- };
- 
- /*
-@@ -464,6 +474,8 @@ static int arch_domain_mbm_alloc(u32 num_rmid, struct rdt_hw_domain *hw_dom)
- 
- static int get_domain_id(int cpu, enum resctrl_scope scope)
- {
-+	if (scope == SCOPE_NODE)
-+		return cpu_to_node(cpu);
- 	return get_cpu_cacheinfo_id(cpu, scope);
- }
- 
+ "mon_data":
+-	This contains a set of files organized by L3 domain and by
+-	RDT event. E.g. on a system with two L3 domains there will
+-	be subdirectories "mon_L3_00" and "mon_L3_01".	Each of these
++	This contains a set of files organized by L3 domain or by NUMA
++	node (depending on whether SNC mode is disabled or enabled
++	respectively) and by RDT event. E.g. on a system with SNC
++	mode disabled with two L3 domains there will be subdirectories
++	"mon_L3_00" and "mon_L3_01" the numerical suffix refers to the
++        L3 cache id.  With SNC enabled the directory names are the same,
++        but the numerical suffix refers to the node id.  Each of these
+ 	directories have one file per event (e.g. "llc_occupancy",
+ 	"mbm_total_bytes", and "mbm_local_bytes"). In a MON group these
+ 	files provide a read out of the current value of the event for
 -- 
 2.39.1
 
