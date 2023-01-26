@@ -1,29 +1,29 @@
 Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66DEF4C94
-	for <patches@lists.linux.dev>; Thu, 26 Jan 2023 18:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270E34C92
+	for <patches@lists.linux.dev>; Thu, 26 Jan 2023 18:42:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1674758555; x=1706294555;
+  t=1674758556; x=1706294556;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=ivyLAdBKqYQLl3lR+fj5FZ2eFkx8GG4TgMFpd25I12Y=;
-  b=F3rM1pQkV0DgwVlJNCeIsIAYOD9baLIhrCjk3cjhyLvaA1TA1JZWn4Pf
-   DMRZQPZXZw3OCs4Jfv9B+LNRnHLOcc8ov+LlGLKTbfa/JTq+Qw85l21Lu
-   1aEXseRPqQ9U/4SHtgg9KllBfY7FQT/d1/6dGROufV4ZpZOnvz24hn+UL
-   3EY0cuzt4twwo4ZORnOJe5vNJjQIMWr0lRzAgVWIiqxVd0VsB+hjWNqB5
-   VjPdw0XeUC5ouSnnyI+pf8MGftJgskLCJqq5kE9lTjdIW4FvEDxFK9Ds4
-   hTR3UWLOBcZ+94xmsdxYGWfZJEwZeZZajy8mOMCMidR6z/OK9UNRW68+z
+  bh=OeIpfTz2aSbcARPCLzsdspXDjxwH3ccCC0KuAuykCuc=;
+  b=e4pE2IFRN8Jk1THCjtlPdzMtqZQUgQ1B+OzD7+vkvvG8bqW/i7tHLixB
+   AJ9AVMEdYsH191RxEVgn4sbe0Ci2XU0YuyHqOD4b3q5titJJHjJZ9Hhbg
+   NUmM99xeV4DA6LHGprT0HVUZq5vubLnUWZFQsj00d3ZXWoAxc8XI2VC+p
+   lpnlycI8vQNd01gGDt3UGyN51HcH0e14wD3yyo6P0871CwUzHZBZh/0P9
+   r2WO8FJkzQHyI9qqMC2Fp0t2tsxNT9uEkfnb28qlo5FBP2ClZm/bTGrsv
+   Ht+NuU8qC4eM+8M9IhT99zm2xhnum5TNgGTEf9ycQ2ouSjhaSwDTSuRx7
    g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10602"; a="354203372"
+X-IronPort-AV: E=McAfee;i="6500,9779,10602"; a="354203382"
 X-IronPort-AV: E=Sophos;i="5.97,249,1669104000"; 
-   d="scan'208";a="354203372"
+   d="scan'208";a="354203382"
 Received: from fmsmga005.fm.intel.com ([10.253.24.32])
   by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2023 10:42:06 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10602"; a="991745455"
+X-IronPort-AV: E=McAfee;i="6500,9779,10602"; a="991745458"
 X-IronPort-AV: E=Sophos;i="5.97,249,1669104000"; 
-   d="scan'208";a="991745455"
+   d="scan'208";a="991745458"
 Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
   by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2023 10:42:06 -0800
 From: Tony Luck <tony.luck@intel.com>
@@ -40,9 +40,9 @@ Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
 	linux-doc@vger.kernel.org,
 	patches@lists.linux.dev,
 	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH 6/7] x86/resctrl: Update documentation with Sub-NUMA cluster changes
-Date: Thu, 26 Jan 2023 10:41:56 -0800
-Message-Id: <20230126184157.27626-7-tony.luck@intel.com>
+Subject: [PATCH 7/7] x86/resctrl: Determine if Sub-NUMA Cluster is enabled and initialize.
+Date: Thu, 26 Jan 2023 10:41:57 -0800
+Message-Id: <20230126184157.27626-8-tony.luck@intel.com>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230126184157.27626-1-tony.luck@intel.com>
 References: <20230126184157.27626-1-tony.luck@intel.com>
@@ -54,48 +54,161 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-With Sub-NUMA Cluster mode enabled the scope of monitoring resources is
-per-NODE instead of per-L3 cache. Suffices of directories with "L3" in
-their name refer to Sun-NUMA nodes instead of L3 cache ids.
+There isn't a simple hardware enumeration to indicate to software that
+a system is running with Sub-NUMA Cluster enabled.
+
+Compare the number of NUMA nodes with the number of L3 caches to calculate
+the number of Sub-NUMA nodes per L3 cache.
+
+When Sub-NUMA cluster mode is enabled in BIOS setup the RMID counters
+are distributed equally between the SNC nodes within each socket.
+
+E.g. if there are 400 RMID counters, and the system is configured with
+two SNC nodes per socket, then RMID counter 0..199 are used on SNC node
+0 on the socket, and RMID counter 200..399 on SNC node 1.
+
+Handle this by initializing a per-cpu RMID offset value. Use this
+to calculate the value to write to the RMID field of the IA32_PQR_ASSOC
+MSR during context switch, and also to the IA32_QM_EVTSEL MSR when
+reading RMID event values.
+
+N.B. this works well for well-behaved NUMA applications that access
+memory predominantly from the local memory node. For applications that
+access memory across multiple nodes it may be necessary for the user
+to read counters for all SNC nodes on a socket and add the values to
+get the actual LLC occupancy or memory bandwidth. Perhaps this isn't
+all that different from applications that span across multiple sockets
+in a legacy system.
 
 Signed-off-by: Tony Luck <tony.luck@intel.com>
 ---
- Documentation/x86/resctrl.rst | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ arch/x86/include/asm/resctrl.h        |  4 ++-
+ arch/x86/kernel/cpu/resctrl/core.c    | 43 +++++++++++++++++++++++++--
+ arch/x86/kernel/cpu/resctrl/monitor.c |  2 +-
+ 3 files changed, 44 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/x86/resctrl.rst b/Documentation/x86/resctrl.rst
-index 71a531061e4e..9043a2d2f2d3 100644
---- a/Documentation/x86/resctrl.rst
-+++ b/Documentation/x86/resctrl.rst
-@@ -167,6 +167,11 @@ with the following files:
- 		bytes) at which a previously used LLC_occupancy
- 		counter can be considered for re-use.
+diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
+index 52788f79786f..59b8afd8c53c 100644
+--- a/arch/x86/include/asm/resctrl.h
++++ b/arch/x86/include/asm/resctrl.h
+@@ -35,6 +35,8 @@ DECLARE_STATIC_KEY_FALSE(rdt_enable_key);
+ DECLARE_STATIC_KEY_FALSE(rdt_alloc_enable_key);
+ DECLARE_STATIC_KEY_FALSE(rdt_mon_enable_key);
  
-+"snc_ways":
-+                A value of "1" marks that SNC mode is disabled.
-+                Values of "2" or "4" indicate how many NUMA
-+                nodes share an L3 cache.
++DECLARE_PER_CPU(int, rmid_offset);
 +
- Finally, in the top level of the "info" directory there is a file
- named "last_cmd_status". This is reset with every "command" issued
- via the file system (making new directories or writing to any of the
-@@ -254,9 +259,13 @@ When control is enabled all CTRL_MON groups will also contain:
- When monitoring is enabled all MON groups will also contain:
+ /*
+  * __resctrl_sched_in() - Writes the task's CLOSid/RMID to IA32_PQR_MSR
+  *
+@@ -69,7 +71,7 @@ static void __resctrl_sched_in(void)
+ 	if (static_branch_likely(&rdt_mon_enable_key)) {
+ 		tmp = READ_ONCE(current->rmid);
+ 		if (tmp)
+-			rmid = tmp;
++			rmid = tmp + this_cpu_read(rmid_offset);
+ 	}
  
- "mon_data":
--	This contains a set of files organized by L3 domain and by
--	RDT event. E.g. on a system with two L3 domains there will
--	be subdirectories "mon_L3_00" and "mon_L3_01".	Each of these
-+	This contains a set of files organized by L3 domain or by NUMA
-+	node (depending on whether SNC mode is disabled or enabled
-+	respectively) and by RDT event. E.g. on a system with SNC
-+	mode disabled with two L3 domains there will be subdirectories
-+	"mon_L3_00" and "mon_L3_01" the numerical suffix refers to the
-+        L3 cache id.  With SNC enabled the directory names are the same,
-+        but the numerical suffix refers to the node id.  Each of these
- 	directories have one file per event (e.g. "llc_occupancy",
- 	"mbm_total_bytes", and "mbm_local_bytes"). In a MON group these
- 	files provide a read out of the current value of the event for
+ 	if (closid != state->cur_closid || rmid != state->cur_rmid) {
+diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
+index 53b2ab37af2f..0ff739375e3b 100644
+--- a/arch/x86/kernel/cpu/resctrl/core.c
++++ b/arch/x86/kernel/cpu/resctrl/core.c
+@@ -16,6 +16,7 @@
+ 
+ #define pr_fmt(fmt)	"resctrl: " fmt
+ 
++#include <linux/cpu.h>
+ #include <linux/slab.h>
+ #include <linux/err.h>
+ #include <linux/cacheinfo.h>
+@@ -484,6 +485,13 @@ static int get_domain_id(int cpu, enum resctrl_scope scope)
+ 	return get_cpu_cacheinfo_id(cpu, scope);
+ }
+ 
++DEFINE_PER_CPU(int, rmid_offset);
++
++static void set_per_cpu_rmid_offset(int cpu, struct rdt_resource *r)
++{
++	this_cpu_write(rmid_offset, (cpu_to_node(cpu) % snc_ways) * r->num_rmid);
++}
++
+ /*
+  * domain_add_cpu - Add a cpu to a resource's domain list.
+  *
+@@ -515,6 +523,8 @@ static void domain_add_cpu(int cpu, struct rdt_resource *r)
+ 		cpumask_set_cpu(cpu, &d->cpu_mask);
+ 		if (r->cache.arch_has_per_cpu_cfg)
+ 			rdt_domain_reconfigure_cdp(r);
++		if (r->mon_capable)
++			set_per_cpu_rmid_offset(cpu, r);
+ 		return;
+ 	}
+ 
+@@ -533,9 +543,12 @@ static void domain_add_cpu(int cpu, struct rdt_resource *r)
+ 		return;
+ 	}
+ 
+-	if (r->mon_capable && arch_domain_mbm_alloc(r->num_rmid, hw_dom)) {
+-		domain_free(hw_dom);
+-		return;
++	if (r->mon_capable) {
++		if (arch_domain_mbm_alloc(r->num_rmid, hw_dom)) {
++			domain_free(hw_dom);
++			return;
++		}
++		set_per_cpu_rmid_offset(cpu, r);
+ 	}
+ 
+ 	list_add_tail(&d->list, add_pos);
+@@ -845,11 +858,35 @@ static __init bool get_rdt_resources(void)
+ 	return (rdt_mon_capable || rdt_alloc_capable);
+ }
+ 
++static __init int find_snc_ways(void)
++{
++	unsigned long *node_caches;
++	int cpu, node, ret;
++
++	node_caches = kcalloc(BITS_TO_LONGS(nr_node_ids), sizeof(*node_caches), GFP_KERNEL);
++	if (!node_caches)
++		return 1;
++
++	cpus_read_lock();
++	for_each_node(node) {
++		cpu = cpumask_first(cpumask_of_node(node));
++		set_bit(get_cpu_cacheinfo_id(cpu, 3), node_caches);
++	}
++	cpus_read_unlock();
++
++	ret = nr_node_ids / bitmap_weight(node_caches, nr_node_ids);
++	kfree(node_caches);
++
++	return ret;
++}
++
+ static __init void rdt_init_res_defs_intel(void)
+ {
+ 	struct rdt_hw_resource *hw_res;
+ 	struct rdt_resource *r;
+ 
++	snc_ways = find_snc_ways();
++
+ 	for_each_rdt_resource(r) {
+ 		hw_res = resctrl_to_arch_res(r);
+ 
+diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
+index 3fc63aa68130..bd5ec348d925 100644
+--- a/arch/x86/kernel/cpu/resctrl/monitor.c
++++ b/arch/x86/kernel/cpu/resctrl/monitor.c
+@@ -160,7 +160,7 @@ static int __rmid_read(u32 rmid, enum resctrl_event_id eventid, u64 *val)
+ 	 * IA32_QM_CTR.Error (bit 63) and IA32_QM_CTR.Unavailable (bit 62)
+ 	 * are error bits.
+ 	 */
+-	wrmsr(MSR_IA32_QM_EVTSEL, eventid, rmid);
++	wrmsr(MSR_IA32_QM_EVTSEL, eventid, rmid + this_cpu_read(rmid_offset));
+ 	rdmsrl(MSR_IA32_QM_CTR, msr_val);
+ 
+ 	if (msr_val & RMID_VAL_ERROR)
 -- 
 2.39.1
 
