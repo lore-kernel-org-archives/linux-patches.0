@@ -1,214 +1,190 @@
-Received: from mga01.intel.com (mga01.intel.com [192.55.52.88])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 270E34C92
-	for <patches@lists.linux.dev>; Thu, 26 Jan 2023 18:42:36 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1674758556; x=1706294556;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=OeIpfTz2aSbcARPCLzsdspXDjxwH3ccCC0KuAuykCuc=;
-  b=e4pE2IFRN8Jk1THCjtlPdzMtqZQUgQ1B+OzD7+vkvvG8bqW/i7tHLixB
-   AJ9AVMEdYsH191RxEVgn4sbe0Ci2XU0YuyHqOD4b3q5titJJHjJZ9Hhbg
-   NUmM99xeV4DA6LHGprT0HVUZq5vubLnUWZFQsj00d3ZXWoAxc8XI2VC+p
-   lpnlycI8vQNd01gGDt3UGyN51HcH0e14wD3yyo6P0871CwUzHZBZh/0P9
-   r2WO8FJkzQHyI9qqMC2Fp0t2tsxNT9uEkfnb28qlo5FBP2ClZm/bTGrsv
-   Ht+NuU8qC4eM+8M9IhT99zm2xhnum5TNgGTEf9ycQ2ouSjhaSwDTSuRx7
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10602"; a="354203382"
-X-IronPort-AV: E=Sophos;i="5.97,249,1669104000"; 
-   d="scan'208";a="354203382"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga101.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2023 10:42:06 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10602"; a="991745458"
-X-IronPort-AV: E=Sophos;i="5.97,249,1669104000"; 
-   d="scan'208";a="991745458"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Jan 2023 10:42:06 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Fenghua Yu <fenghua.yu@intel.com>,
-	Reinette Chatre <reinette.chatre@intel.com>,
-	Peter Newman <peternewman@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	x86@kernel.org
-Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
-	James Morse <james.morse@arm.com>,
-	Jamie Iles <quic_jiles@quicinc.com>,
-	Babu Moger <babu.moger@amd.com>,
-	linux-kernel@vger.kernel.org,
-	linux-doc@vger.kernel.org,
-	patches@lists.linux.dev,
-	Tony Luck <tony.luck@intel.com>
-Subject: [PATCH 7/7] x86/resctrl: Determine if Sub-NUMA Cluster is enabled and initialize.
-Date: Thu, 26 Jan 2023 10:41:57 -0800
-Message-Id: <20230126184157.27626-8-tony.luck@intel.com>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230126184157.27626-1-tony.luck@intel.com>
-References: <20230126184157.27626-1-tony.luck@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A711815A8
+	for <patches@lists.linux.dev>; Fri, 27 Jan 2023 00:52:26 +0000 (UTC)
+Received: by mail-ed1-f53.google.com with SMTP id u21so3464395edv.3
+        for <patches@lists.linux.dev>; Thu, 26 Jan 2023 16:52:26 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=dJOlXvxt/36mhDoKKtTcHi3UscUgi/2yAxB/faYJnd8=;
+        b=LkPFurpLYoghBa1anakoas3K/Xd+PMO4YCNxlwlFkjlHpZoCrVo2DNlQtVX0C7DK/l
+         ft/CJnbtQE9CLr++LczeysWQqWviHeRu0HRnzdj6fOdekOWhu+CyXaHhiip/8vcR/5Cx
+         /XRfyTqJf/TVOMsIWwkfmXXRNZjBQHXTxab4I=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=dJOlXvxt/36mhDoKKtTcHi3UscUgi/2yAxB/faYJnd8=;
+        b=udLF32J0l4CwxoZcALmUAzzfoPi8PL8qlmRS0YS8cz93JYxBB8ACxYhpPXuWFJwOty
+         L6uTE+0L+Jfl1q34+Dq8LVTm+p6PQsLxNd2TnZU3XjIw32okMj3HZcefDS2BYXJXEd6z
+         Ce3XFtDFHP1K9rxB7kFpFVjY4U2t7K3i9UYRAzhjriPTzQM364obZwCSNfJBpJlwduUl
+         JlrjSo6pJvxnu2JhdzqrJj3Fh5g3MxzGzD6EHRXTN9Gdgl6s+zrxR6mZdI4fEGjOmArv
+         gCUgNRo0U+J6IS9eXX1sRfmulKtsvBzmXY57aPuvT6qGIGTQSL3rlH88nIdHOLL5sKwO
+         XJUw==
+X-Gm-Message-State: AO0yUKWLO8Bbujo1M+At/vIP/AP4vmV9zTq2lfwP+tRvw5J22DP/3o/c
+	Kid1iiwahtP1e4lJBx6JsEdl8RYjyy6dL8NMfY4=
+X-Google-Smtp-Source: AK7set/w3gHAcPpkflNh4Y+F26HY6PB6DfjDjKpz5FuTjn5AiD1knJytxNcDc/ieWzLBOWpEXj4gsA==
+X-Received: by 2002:aa7:c910:0:b0:4a0:de4d:cd65 with SMTP id b16-20020aa7c910000000b004a0de4dcd65mr4788263edt.9.1674780744725;
+        Thu, 26 Jan 2023 16:52:24 -0800 (PST)
+Received: from mail-wm1-f43.google.com (mail-wm1-f43.google.com. [209.85.128.43])
+        by smtp.gmail.com with ESMTPSA id l19-20020a056402255300b00488abbbadb3sm1474963edb.63.2023.01.26.16.52.22
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 26 Jan 2023 16:52:23 -0800 (PST)
+Received: by mail-wm1-f43.google.com with SMTP id fl11-20020a05600c0b8b00b003daf72fc844so4425497wmb.0
+        for <patches@lists.linux.dev>; Thu, 26 Jan 2023 16:52:22 -0800 (PST)
+X-Received: by 2002:a7b:c38d:0:b0:3da:fd7c:98c2 with SMTP id
+ s13-20020a7bc38d000000b003dafd7c98c2mr1635847wmj.93.1674780742639; Thu, 26
+ Jan 2023 16:52:22 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20230106030108.2542081-1-swboyd@chromium.org> <CAD=FV=U0Bwx4HzCSL8EE-+ngGLZ-NqpbC+J9jby84FKBOB_ddQ@mail.gmail.com>
+In-Reply-To: <CAD=FV=U0Bwx4HzCSL8EE-+ngGLZ-NqpbC+J9jby84FKBOB_ddQ@mail.gmail.com>
+From: Doug Anderson <dianders@chromium.org>
+Date: Thu, 26 Jan 2023 16:52:09 -0800
+X-Gmail-Original-Message-ID: <CAD=FV=VMebqPd2ozLzY65Kba9snLKQ-KKd684O0cGQzyP0kcwQ@mail.gmail.com>
+Message-ID: <CAD=FV=VMebqPd2ozLzY65Kba9snLKQ-KKd684O0cGQzyP0kcwQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/panel: boe-tv101wum-nl6: Ensure DSI writes succeed
+ during disable
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: Thierry Reding <thierry.reding@gmail.com>, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, dri-devel@lists.freedesktop.org, 
+	linux-arm-kernel@lists.infradead.org, linux-mediatek@lists.infradead.org, 
+	yangcong <yangcong5@huaqin.corp-partner.google.com>, 
+	Jitao Shi <jitao.shi@mediatek.com>, Sam Ravnborg <sam@ravnborg.org>, 
+	Rob Clark <robdclark@chromium.org>, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-There isn't a simple hardware enumeration to indicate to software that
-a system is running with Sub-NUMA Cluster enabled.
+Hi,
 
-Compare the number of NUMA nodes with the number of L3 caches to calculate
-the number of Sub-NUMA nodes per L3 cache.
+On Wed, Jan 18, 2023 at 1:34 PM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Thu, Jan 5, 2023 at 7:01 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > The unprepare sequence has started to fail after moving to panel bridge
+> > code in the msm drm driver (commit 007ac0262b0d ("drm/msm/dsi: switch to
+> > DRM_PANEL_BRIDGE")). You'll see messages like this in the kernel logs:
+> >
+> >    panel-boe-tv101wum-nl6 ae94000.dsi.0: failed to set panel off: -22
+> >
+> > This is because boe_panel_enter_sleep_mode() needs an operating DSI link
+> > to set the panel into sleep mode. Performing those writes in the
+> > unprepare phase of bridge ops is too late, because the link has already
+> > been torn down by the DSI controller in post_disable, i.e. the PHY has
+> > been disabled, etc. See dsi_mgr_bridge_post_disable() for more details
+> > on the DSI .
+> >
+> > Split the unprepare function into a disable part and an unprepare part.
+> > For now, just the DSI writes to enter sleep mode are put in the disable
+> > function. This fixes the panel off routine and keeps the panel happy.
+> >
+> > My Wormdingler has an integrated touchscreen that stops responding to
+> > touch if the panel is only half disabled too. This patch fixes it. And
+> > finally, this saves power when the screen is off because without this
+> > fix the regulators for the panel are left enabled when nothing is being
+> > displayed on the screen.
+> >
+> > Fixes: 007ac0262b0d ("drm/msm/dsi: switch to DRM_PANEL_BRIDGE")
+> > Fixes: a869b9db7adf ("drm/panel: support for boe tv101wum-nl6 wuxga dsi video mode panel")
+> > Cc: yangcong <yangcong5@huaqin.corp-partner.google.com>
+> > Cc: Douglas Anderson <dianders@chromium.org>
+> > Cc: Jitao Shi <jitao.shi@mediatek.com>
+> > Cc: Sam Ravnborg <sam@ravnborg.org>
+> > Cc: Rob Clark <robdclark@chromium.org>
+> > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > ---
+> >  drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c | 16 ++++++++++++----
+> >  1 file changed, 12 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+> > index 857a2f0420d7..c924f1124ebc 100644
+> > --- a/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+> > +++ b/drivers/gpu/drm/panel/panel-boe-tv101wum-nl6.c
+> > @@ -1193,14 +1193,11 @@ static int boe_panel_enter_sleep_mode(struct boe_panel *boe)
+> >         return 0;
+> >  }
+> >
+> > -static int boe_panel_unprepare(struct drm_panel *panel)
+> > +static int boe_panel_disable(struct drm_panel *panel)
+> >  {
+> >         struct boe_panel *boe = to_boe_panel(panel);
+> >         int ret;
+> >
+> > -       if (!boe->prepared)
+> > -               return 0;
+> > -
+> >         ret = boe_panel_enter_sleep_mode(boe);
+> >         if (ret < 0) {
+> >                 dev_err(panel->dev, "failed to set panel off: %d\n", ret);
+> > @@ -1209,6 +1206,16 @@ static int boe_panel_unprepare(struct drm_panel *panel)
+> >
+> >         msleep(150);
+> >
+> > +       return 0;
+> > +}
+> > +
+> > +static int boe_panel_unprepare(struct drm_panel *panel)
+> > +{
+> > +       struct boe_panel *boe = to_boe_panel(panel);
+> > +
+> > +       if (!boe->prepared)
+> > +               return 0;
+> > +
+> >         if (boe->desc->discharge_on_disable) {
+> >                 regulator_disable(boe->avee);
+> >                 regulator_disable(boe->avdd);
+> > @@ -1528,6 +1535,7 @@ static enum drm_panel_orientation boe_panel_get_orientation(struct drm_panel *pa
+> >  }
+> >
+> >  static const struct drm_panel_funcs boe_panel_funcs = {
+> > +       .disable = boe_panel_disable,
+> >         .unprepare = boe_panel_unprepare,
+> >         .prepare = boe_panel_prepare,
+> >         .enable = boe_panel_enable,
+>
+> As mentioned by Stephen, my initial reaction was that this felt
+> asymmetric. We were moving some stuff from unprepare() to disable()
+> and it felt like that would mean we would also need to move something
+> from prepare() to enable. Initially I thought maybe that "something"
+> was all of boe_panel_init_dcs_cmd() but I guess that didn't work.
+>
+> I don't truly have a reason that this _has_ to be symmetric. I was
+> initially worried that there might be some place where we call
+> pre_enable(), then never call enable() / disable(), and then call
+> post_disable(). That could have us in a bad state because we'd never
+> enter sleep mode / turn the display off. However (as I think I've
+> discovered before and just forgot), I don't think this is possible
+> because we always call pre-enable() and enable() together. Also, as
+> mentioned by Sam, we're about to fully shut the panel's power off so
+> (unless it's on a shared rail) it probably doesn't really matter.
+>
+> Thus, I'd be OK with:
+>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+>
+> I'm also happy to land this (adding Cc: stable) to drm-misc-fixes if
+> nobody has any objections (also happy if someone else wants to land
+> it). I guess the one worry I have is that somehow this could break
+> something for one of the other 8 panels that this driver supports (or
+> it could have bad interactions with the display controller used on a
+> board with one of these panels?). Maybe we should have "Cc: stable"
+> off just to give it extra bake time? ...and maybe even push to
+> drm-misc-next instead of -fixes again to give extra bake time?
 
-When Sub-NUMA cluster mode is enabled in BIOS setup the RMID counters
-are distributed equally between the SNC nodes within each socket.
+This thread has gone silent. I'll plan to land the patch in
+drm-misc-next early next week, maybe Monday, _without_ Ccing stable,
+so we have the longest possible bake time. If anyone has objections,
+please yell.
 
-E.g. if there are 400 RMID counters, and the system is configured with
-two SNC nodes per socket, then RMID counter 0..199 are used on SNC node
-0 on the socket, and RMID counter 200..399 on SNC node 1.
-
-Handle this by initializing a per-cpu RMID offset value. Use this
-to calculate the value to write to the RMID field of the IA32_PQR_ASSOC
-MSR during context switch, and also to the IA32_QM_EVTSEL MSR when
-reading RMID event values.
-
-N.B. this works well for well-behaved NUMA applications that access
-memory predominantly from the local memory node. For applications that
-access memory across multiple nodes it may be necessary for the user
-to read counters for all SNC nodes on a socket and add the values to
-get the actual LLC occupancy or memory bandwidth. Perhaps this isn't
-all that different from applications that span across multiple sockets
-in a legacy system.
-
-Signed-off-by: Tony Luck <tony.luck@intel.com>
----
- arch/x86/include/asm/resctrl.h        |  4 ++-
- arch/x86/kernel/cpu/resctrl/core.c    | 43 +++++++++++++++++++++++++--
- arch/x86/kernel/cpu/resctrl/monitor.c |  2 +-
- 3 files changed, 44 insertions(+), 5 deletions(-)
-
-diff --git a/arch/x86/include/asm/resctrl.h b/arch/x86/include/asm/resctrl.h
-index 52788f79786f..59b8afd8c53c 100644
---- a/arch/x86/include/asm/resctrl.h
-+++ b/arch/x86/include/asm/resctrl.h
-@@ -35,6 +35,8 @@ DECLARE_STATIC_KEY_FALSE(rdt_enable_key);
- DECLARE_STATIC_KEY_FALSE(rdt_alloc_enable_key);
- DECLARE_STATIC_KEY_FALSE(rdt_mon_enable_key);
- 
-+DECLARE_PER_CPU(int, rmid_offset);
-+
- /*
-  * __resctrl_sched_in() - Writes the task's CLOSid/RMID to IA32_PQR_MSR
-  *
-@@ -69,7 +71,7 @@ static void __resctrl_sched_in(void)
- 	if (static_branch_likely(&rdt_mon_enable_key)) {
- 		tmp = READ_ONCE(current->rmid);
- 		if (tmp)
--			rmid = tmp;
-+			rmid = tmp + this_cpu_read(rmid_offset);
- 	}
- 
- 	if (closid != state->cur_closid || rmid != state->cur_rmid) {
-diff --git a/arch/x86/kernel/cpu/resctrl/core.c b/arch/x86/kernel/cpu/resctrl/core.c
-index 53b2ab37af2f..0ff739375e3b 100644
---- a/arch/x86/kernel/cpu/resctrl/core.c
-+++ b/arch/x86/kernel/cpu/resctrl/core.c
-@@ -16,6 +16,7 @@
- 
- #define pr_fmt(fmt)	"resctrl: " fmt
- 
-+#include <linux/cpu.h>
- #include <linux/slab.h>
- #include <linux/err.h>
- #include <linux/cacheinfo.h>
-@@ -484,6 +485,13 @@ static int get_domain_id(int cpu, enum resctrl_scope scope)
- 	return get_cpu_cacheinfo_id(cpu, scope);
- }
- 
-+DEFINE_PER_CPU(int, rmid_offset);
-+
-+static void set_per_cpu_rmid_offset(int cpu, struct rdt_resource *r)
-+{
-+	this_cpu_write(rmid_offset, (cpu_to_node(cpu) % snc_ways) * r->num_rmid);
-+}
-+
- /*
-  * domain_add_cpu - Add a cpu to a resource's domain list.
-  *
-@@ -515,6 +523,8 @@ static void domain_add_cpu(int cpu, struct rdt_resource *r)
- 		cpumask_set_cpu(cpu, &d->cpu_mask);
- 		if (r->cache.arch_has_per_cpu_cfg)
- 			rdt_domain_reconfigure_cdp(r);
-+		if (r->mon_capable)
-+			set_per_cpu_rmid_offset(cpu, r);
- 		return;
- 	}
- 
-@@ -533,9 +543,12 @@ static void domain_add_cpu(int cpu, struct rdt_resource *r)
- 		return;
- 	}
- 
--	if (r->mon_capable && arch_domain_mbm_alloc(r->num_rmid, hw_dom)) {
--		domain_free(hw_dom);
--		return;
-+	if (r->mon_capable) {
-+		if (arch_domain_mbm_alloc(r->num_rmid, hw_dom)) {
-+			domain_free(hw_dom);
-+			return;
-+		}
-+		set_per_cpu_rmid_offset(cpu, r);
- 	}
- 
- 	list_add_tail(&d->list, add_pos);
-@@ -845,11 +858,35 @@ static __init bool get_rdt_resources(void)
- 	return (rdt_mon_capable || rdt_alloc_capable);
- }
- 
-+static __init int find_snc_ways(void)
-+{
-+	unsigned long *node_caches;
-+	int cpu, node, ret;
-+
-+	node_caches = kcalloc(BITS_TO_LONGS(nr_node_ids), sizeof(*node_caches), GFP_KERNEL);
-+	if (!node_caches)
-+		return 1;
-+
-+	cpus_read_lock();
-+	for_each_node(node) {
-+		cpu = cpumask_first(cpumask_of_node(node));
-+		set_bit(get_cpu_cacheinfo_id(cpu, 3), node_caches);
-+	}
-+	cpus_read_unlock();
-+
-+	ret = nr_node_ids / bitmap_weight(node_caches, nr_node_ids);
-+	kfree(node_caches);
-+
-+	return ret;
-+}
-+
- static __init void rdt_init_res_defs_intel(void)
- {
- 	struct rdt_hw_resource *hw_res;
- 	struct rdt_resource *r;
- 
-+	snc_ways = find_snc_ways();
-+
- 	for_each_rdt_resource(r) {
- 		hw_res = resctrl_to_arch_res(r);
- 
-diff --git a/arch/x86/kernel/cpu/resctrl/monitor.c b/arch/x86/kernel/cpu/resctrl/monitor.c
-index 3fc63aa68130..bd5ec348d925 100644
---- a/arch/x86/kernel/cpu/resctrl/monitor.c
-+++ b/arch/x86/kernel/cpu/resctrl/monitor.c
-@@ -160,7 +160,7 @@ static int __rmid_read(u32 rmid, enum resctrl_event_id eventid, u64 *val)
- 	 * IA32_QM_CTR.Error (bit 63) and IA32_QM_CTR.Unavailable (bit 62)
- 	 * are error bits.
- 	 */
--	wrmsr(MSR_IA32_QM_EVTSEL, eventid, rmid);
-+	wrmsr(MSR_IA32_QM_EVTSEL, eventid, rmid + this_cpu_read(rmid_offset));
- 	rdmsrl(MSR_IA32_QM_CTR, msr_val);
- 
- 	if (msr_val & RMID_VAL_ERROR)
--- 
-2.39.1
-
+-Doug
