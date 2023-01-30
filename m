@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 945F73229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:22:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED8EFC433EF;
-	Mon, 30 Jan 2023 14:22:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D30F29B4
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:22:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6924C433A0;
+	Mon, 30 Jan 2023 14:22:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088552;
-	bh=E2TA4K6Tou73jUdfWMJpr+seil/s12NByKZyBtXxGB4=;
+	s=korg; t=1675088555;
+	bh=N/ZEUfMEHi/7Ti8SnwWQXS17rCalQc//wZIl1EmhCqI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aNI/Zz6/7+///If7YET/d6P0q/8dUNU8tDtrresTVd1cLuZYmYrUkNZzbefR16s7S
-	 Dw2YZ177RedDgs/fT1K0nzcn+1G3XFxz1lkOmiYLC7MJ1Jq1WT1y0WmB6AyRZ5Ot8/
-	 oteRkUj247T2o5zDr/bPwejGQdOOlqzMU5UbI9Wo=
+	b=pHn/mFWDu2HKy6y8Z0Lgz+JqKmXt4ddj/xRDcm3NbXyFIHf6HTUW+hqgRB1L57GH0
+	 CLQ5CbsPJpLR3xtOsrer6dLFcsStsa2pJ7sHQ5w02jjEabudeibsKny5Hq8c8uX0KE
+	 /z8NTcrA2KUiKX4y2Fci73/eDWnZvX5h6+BimPUU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dean Luick <dean.luick@cornelisnetworks.com>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 019/143] IB/hfi1: Immediately remove invalid memory from hardware
-Date: Mon, 30 Jan 2023 14:51:16 +0100
-Message-Id: <20230130134307.675499522@linuxfoundation.org>
+Subject: [PATCH 5.10 051/143] HID: betop: check shape of output reports
+Date: Mon, 30 Jan 2023 14:51:48 +0100
+Message-Id: <20230130134308.983352733@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -36,148 +35,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dean Luick <dean.luick@cornelisnetworks.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit 1c7edde1b5720ddb0aff5ca8c7f605a0f92526eb ]
+[ Upstream commit 3782c0d6edf658b71354a64d60aa7a296188fc90 ]
 
-When a user expected receive page is unmapped, it should be
-immediately removed from hardware rather than depend on a
-reaction from user space.
+betopff_init() only checks the total sum of the report counts for each
+report field to be at least 4, but hid_betopff_play() expects 4 report
+fields.
+A device advertising an output report with one field and 4 report counts
+would pass the check but crash the kernel with a NULL pointer dereference
+in hid_betopff_play().
 
-Fixes: 2677a7680e77 ("IB/hfi1: Fix memory leak during unexpected shutdown")
-Signed-off-by: Dean Luick <dean.luick@cornelisnetworks.com>
-Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-Link: https://lore.kernel.org/r/167328548663.1472310.7871808081861622659.stgit@awfm-02.cornelisnetworks.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 52cd7785f3cd ("HID: betop: add drivers/hid/hid-betopff.c")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/user_exp_rcv.c | 43 +++++++++++++++--------
- drivers/infiniband/hw/hfi1/user_exp_rcv.h |  1 +
- 2 files changed, 30 insertions(+), 14 deletions(-)
+ drivers/hid/hid-betopff.c | 17 +++++++++--------
+ 1 file changed, 9 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/user_exp_rcv.c b/drivers/infiniband/hw/hfi1/user_exp_rcv.c
-index ba61d327a85d..b70d1b135ee4 100644
---- a/drivers/infiniband/hw/hfi1/user_exp_rcv.c
-+++ b/drivers/infiniband/hw/hfi1/user_exp_rcv.c
-@@ -70,8 +70,9 @@ static int program_rcvarray(struct hfi1_filedata *fd, struct tid_user_buf *,
- 			    unsigned int start, u16 count,
- 			    u32 *tidlist, unsigned int *tididx,
- 			    unsigned int *pmapped);
--static int unprogram_rcvarray(struct hfi1_filedata *fd, u32 tidinfo,
--			      struct tid_group **grp);
-+static int unprogram_rcvarray(struct hfi1_filedata *fd, u32 tidinfo);
-+static void __clear_tid_node(struct hfi1_filedata *fd,
-+			     struct tid_rb_node *node);
- static void clear_tid_node(struct hfi1_filedata *fd, struct tid_rb_node *node);
+diff --git a/drivers/hid/hid-betopff.c b/drivers/hid/hid-betopff.c
+index 467d789f9bc2..25ed7b9a917e 100644
+--- a/drivers/hid/hid-betopff.c
++++ b/drivers/hid/hid-betopff.c
+@@ -60,7 +60,6 @@ static int betopff_init(struct hid_device *hid)
+ 	struct list_head *report_list =
+ 			&hid->report_enum[HID_OUTPUT_REPORT].report_list;
+ 	struct input_dev *dev;
+-	int field_count = 0;
+ 	int error;
+ 	int i, j;
  
- static const struct mmu_interval_notifier_ops tid_mn_ops = {
-@@ -511,7 +512,7 @@ int hfi1_user_exp_rcv_clear(struct hfi1_filedata *fd,
- 
- 	mutex_lock(&uctxt->exp_mutex);
- 	for (tididx = 0; tididx < tinfo->tidcnt; tididx++) {
--		ret = unprogram_rcvarray(fd, tidinfo[tididx], NULL);
-+		ret = unprogram_rcvarray(fd, tidinfo[tididx]);
- 		if (ret) {
- 			hfi1_cdbg(TID, "Failed to unprogram rcv array %d",
- 				  ret);
-@@ -767,6 +768,7 @@ static int set_rcvarray_entry(struct hfi1_filedata *fd,
+@@ -86,19 +85,21 @@ static int betopff_init(struct hid_device *hid)
+ 	 * -----------------------------------------
+ 	 * Do init them with default value.
+ 	 */
++	if (report->maxfield < 4) {
++		hid_err(hid, "not enough fields in the report: %d\n",
++				report->maxfield);
++		return -ENODEV;
++	}
+ 	for (i = 0; i < report->maxfield; i++) {
++		if (report->field[i]->report_count < 1) {
++			hid_err(hid, "no values in the field\n");
++			return -ENODEV;
++		}
+ 		for (j = 0; j < report->field[i]->report_count; j++) {
+ 			report->field[i]->value[j] = 0x00;
+-			field_count++;
+ 		}
  	}
  
- 	node->fdata = fd;
-+	mutex_init(&node->invalidate_mutex);
- 	node->phys = page_to_phys(pages[0]);
- 	node->npages = npages;
- 	node->rcventry = rcventry;
-@@ -806,8 +808,7 @@ static int set_rcvarray_entry(struct hfi1_filedata *fd,
- 	return -EFAULT;
- }
- 
--static int unprogram_rcvarray(struct hfi1_filedata *fd, u32 tidinfo,
--			      struct tid_group **grp)
-+static int unprogram_rcvarray(struct hfi1_filedata *fd, u32 tidinfo)
- {
- 	struct hfi1_ctxtdata *uctxt = fd->uctxt;
- 	struct hfi1_devdata *dd = uctxt->dd;
-@@ -830,9 +831,6 @@ static int unprogram_rcvarray(struct hfi1_filedata *fd, u32 tidinfo,
- 	if (!node || node->rcventry != (uctxt->expected_base + rcventry))
- 		return -EBADF;
- 
--	if (grp)
--		*grp = node->grp;
+-	if (field_count < 4) {
+-		hid_err(hid, "not enough fields in the report: %d\n",
+-				field_count);
+-		return -ENODEV;
+-	}
 -
- 	if (fd->use_mn)
- 		mmu_interval_notifier_remove(&node->notifier);
- 	cacheless_tid_rb_remove(fd, node);
-@@ -840,23 +838,34 @@ static int unprogram_rcvarray(struct hfi1_filedata *fd, u32 tidinfo,
- 	return 0;
- }
- 
--static void clear_tid_node(struct hfi1_filedata *fd, struct tid_rb_node *node)
-+static void __clear_tid_node(struct hfi1_filedata *fd, struct tid_rb_node *node)
- {
- 	struct hfi1_ctxtdata *uctxt = fd->uctxt;
- 	struct hfi1_devdata *dd = uctxt->dd;
- 
-+	mutex_lock(&node->invalidate_mutex);
-+	if (node->freed)
-+		goto done;
-+	node->freed = true;
-+
- 	trace_hfi1_exp_tid_unreg(uctxt->ctxt, fd->subctxt, node->rcventry,
- 				 node->npages,
- 				 node->notifier.interval_tree.start, node->phys,
- 				 node->dma_addr);
- 
--	/*
--	 * Make sure device has seen the write before we unpin the
--	 * pages.
--	 */
-+	/* Make sure device has seen the write before pages are unpinned */
- 	hfi1_put_tid(dd, node->rcventry, PT_INVALID_FLUSH, 0, 0);
- 
- 	unpin_rcv_pages(fd, NULL, node, 0, node->npages, true);
-+done:
-+	mutex_unlock(&node->invalidate_mutex);
-+}
-+
-+static void clear_tid_node(struct hfi1_filedata *fd, struct tid_rb_node *node)
-+{
-+	struct hfi1_ctxtdata *uctxt = fd->uctxt;
-+
-+	__clear_tid_node(fd, node);
- 
- 	node->grp->used--;
- 	node->grp->map &= ~(1 << (node->rcventry - node->grp->base));
-@@ -915,10 +924,16 @@ static bool tid_rb_invalidate(struct mmu_interval_notifier *mni,
- 	if (node->freed)
- 		return true;
- 
-+	/* take action only if unmapping */
-+	if (range->event != MMU_NOTIFY_UNMAP)
-+		return true;
-+
- 	trace_hfi1_exp_tid_inval(uctxt->ctxt, fdata->subctxt,
- 				 node->notifier.interval_tree.start,
- 				 node->rcventry, node->npages, node->dma_addr);
--	node->freed = true;
-+
-+	/* clear the hardware rcvarray entry */
-+	__clear_tid_node(fdata, node);
- 
- 	spin_lock(&fdata->invalid_lock);
- 	if (fdata->invalid_tid_idx < uctxt->expected_count) {
-diff --git a/drivers/infiniband/hw/hfi1/user_exp_rcv.h b/drivers/infiniband/hw/hfi1/user_exp_rcv.h
-index d45c7b6988d4..ba06ab3b4769 100644
---- a/drivers/infiniband/hw/hfi1/user_exp_rcv.h
-+++ b/drivers/infiniband/hw/hfi1/user_exp_rcv.h
-@@ -68,6 +68,7 @@ struct tid_user_buf {
- struct tid_rb_node {
- 	struct mmu_interval_notifier notifier;
- 	struct hfi1_filedata *fdata;
-+	struct mutex invalidate_mutex; /* covers hw removal */
- 	unsigned long phys;
- 	struct tid_group *grp;
- 	u32 rcventry;
+ 	betopff = kzalloc(sizeof(*betopff), GFP_KERNEL);
+ 	if (!betopff)
+ 		return -ENOMEM;
 -- 
 2.39.0
 
