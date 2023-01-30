@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFD328EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F033EC433EF;
-	Mon, 30 Jan 2023 14:14:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA6728EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD22AC4339B;
+	Mon, 30 Jan 2023 14:14:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088060;
-	bh=bk05yq3BLEKKoF6Scw2iMs1+O3oVJJo3UqnqA1aZfro=;
+	s=korg; t=1675088063;
+	bh=0EuLXYuxEWebrmQefUnlrv6VUCC5Mlgtief/YgrjEi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XWoD+9xZl/Eyn6ArfpWPvNFXjgC/WAzNJMiOsZZZURYVXPC2rRRGW6meI4Em5YN2N
-	 JJLkGj0+KTbP+gt7CPt8bBIVyO2s7MO+EGGQb04kHUJiK57B8Khtf7/UL/py4GsgG1
-	 doZE8MJblL9yCYI+4IBgB9bm6v/hiXpcc6Ys7USc=
+	b=g4J0wRhfao6JIDY36QtyhS3hEELQxGSHK5nYgWi5HyYb1+dUa77fGlcx22MWM/2Kg
+	 fxbLIfY8UBrz99d2ofLm8AtXm3b5u62/ZmsF4DVRlRYgr7xr5Nf0u0LPsZ/PESMeet
+	 H+EXUE5qkXZV65UE/Y+UnL0MjczRIs4t2IFGRzLU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Hancock <robert.hancock@calian.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Laurent Vivier <lvivier@redhat.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 071/204] net: macb: fix PTP TX timestamp failure due to packet padding
-Date: Mon, 30 Jan 2023 14:50:36 +0100
-Message-Id: <20230130134319.453290883@linuxfoundation.org>
+Subject: [PATCH 5.15 072/204] virtio-net: correctly enable callback during start_xmit
+Date: Mon, 30 Jan 2023 14:50:37 +0100
+Message-Id: <20230130134319.505065116@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -37,75 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Hancock <robert.hancock@calian.com>
+From: Jason Wang <jasowang@redhat.com>
 
-[ Upstream commit 7b90f5a665acd46efbbfa677a3a3a18d01ad6487 ]
+[ Upstream commit d71ebe8114b4bf622804b810f5e274069060a174 ]
 
-PTP TX timestamp handling was observed to be broken with this driver
-when using the raw Layer 2 PTP encapsulation. ptp4l was not receiving
-the expected TX timestamp after transmitting a packet, causing it to
-enter a failure state.
+Commit a7766ef18b33("virtio_net: disable cb aggressively") enables
+virtqueue callback via the following statement:
 
-The problem appears to be due to the way that the driver pads packets
-which are smaller than the Ethernet minimum of 60 bytes. If headroom
-space was available in the SKB, this caused the driver to move the data
-back to utilize it. However, this appears to cause other data references
-in the SKB to become inconsistent. In particular, this caused the
-ptp_one_step_sync function to later (in the TX completion path) falsely
-detect the packet as a one-step SYNC packet, even when it was not, which
-caused the TX timestamp to not be processed when it should be.
+        do {
+		if (use_napi)
+			virtqueue_disable_cb(sq->vq);
 
-Using the headroom for this purpose seems like an unnecessary complexity
-as this is not a hot path in the driver, and in most cases it appears
-that there is sufficient tailroom to not require using the headroom
-anyway. Remove this usage of headroom to prevent this inconsistency from
-occurring and causing other problems.
+		free_old_xmit_skbs(sq, false);
 
-Fixes: 653e92a9175e ("net: macb: add support for padding and fcs computation")
-Signed-off-by: Robert Hancock <robert.hancock@calian.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Claudiu Beznea <claudiu.beznea@microchip.com> # on SAMA7G5
-Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+	} while (use_napi && kick &&
+               unlikely(!virtqueue_enable_cb_delayed(sq->vq)));
+
+When NAPI is used and kick is false, the callback won't be enabled
+here. And when the virtqueue is about to be full, the tx will be
+disabled, but we still don't enable tx interrupt which will cause a TX
+hang. This could be observed when using pktgen with burst enabled.
+
+TO be consistent with the logic that tries to disable cb only for
+NAPI, fixing this by trying to enable delayed callback only when NAPI
+is enabled when the queue is about to be full.
+
+Fixes: a7766ef18b33 ("virtio_net: disable cb aggressively")
+Signed-off-by: Jason Wang <jasowang@redhat.com>
+Tested-by: Laurent Vivier <lvivier@redhat.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/net/virtio_net.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 61efb2350412..906c5bbefaac 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -2154,7 +2154,6 @@ static int macb_pad_and_fcs(struct sk_buff **skb, struct net_device *ndev)
- 	bool cloned = skb_cloned(*skb) || skb_header_cloned(*skb) ||
- 		      skb_is_nonlinear(*skb);
- 	int padlen = ETH_ZLEN - (*skb)->len;
--	int headroom = skb_headroom(*skb);
- 	int tailroom = skb_tailroom(*skb);
- 	struct sk_buff *nskb;
- 	u32 fcs;
-@@ -2168,9 +2167,6 @@ static int macb_pad_and_fcs(struct sk_buff **skb, struct net_device *ndev)
- 		/* FCS could be appeded to tailroom. */
- 		if (tailroom >= ETH_FCS_LEN)
- 			goto add_fcs;
--		/* FCS could be appeded by moving data to headroom. */
--		else if (!cloned && headroom + tailroom >= ETH_FCS_LEN)
--			padlen = 0;
- 		/* No room for FCS, need to reallocate skb. */
- 		else
- 			padlen = ETH_FCS_LEN;
-@@ -2179,10 +2175,7 @@ static int macb_pad_and_fcs(struct sk_buff **skb, struct net_device *ndev)
- 		padlen += ETH_FCS_LEN;
- 	}
- 
--	if (!cloned && headroom + tailroom >= padlen) {
--		(*skb)->data = memmove((*skb)->head, (*skb)->data, (*skb)->len);
--		skb_set_tail_pointer(*skb, (*skb)->len);
--	} else {
-+	if (cloned || tailroom < padlen) {
- 		nskb = skb_copy_expand(*skb, 0, padlen, GFP_ATOMIC);
- 		if (!nskb)
- 			return -ENOMEM;
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 48fb7bdc0f0b..9222be208aba 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -1780,8 +1780,10 @@ static netdev_tx_t start_xmit(struct sk_buff *skb, struct net_device *dev)
+ 	 */
+ 	if (sq->vq->num_free < 2+MAX_SKB_FRAGS) {
+ 		netif_stop_subqueue(dev, qnum);
+-		if (!use_napi &&
+-		    unlikely(!virtqueue_enable_cb_delayed(sq->vq))) {
++		if (use_napi) {
++			if (unlikely(!virtqueue_enable_cb_delayed(sq->vq)))
++				virtqueue_napi_schedule(&sq->napi, sq->vq);
++		} else if (unlikely(!virtqueue_enable_cb_delayed(sq->vq))) {
+ 			/* More just got used, free them then recheck. */
+ 			free_old_xmit_skbs(sq, false);
+ 			if (sq->vq->num_free >= 2+MAX_SKB_FRAGS) {
 -- 
 2.39.0
 
