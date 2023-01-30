@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D47C33CE
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:20:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDF7DC433EF;
-	Mon, 30 Jan 2023 14:20:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF1733CE
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:20:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC7FC433EF;
+	Mon, 30 Jan 2023 14:20:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088433;
-	bh=OfUvxWib2k4uUPoMpkRcfQNA0be/TsmcL7rrXMzVl0k=;
+	s=korg; t=1675088436;
+	bh=l10x31TQ9CAAC5b/LbnTOMWsY15oL/k8LwCXSBioPeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zB0vlNGISxRysUbcTedVeYxnh5mBXy+dnlPIuGYJ39qy30y49yOwXU/llqCAO8Gtl
-	 QKvrSKI4w2rO+R/p6sHcfYvO4k9WnvCvV8lu2hrdWlPMxfpkYLvaWqgZLTv2+ZtEYj
-	 ExRRzZeeZPQ++rVBzJHRW9PFyyHNcHqfEnUMMmyQ=
+	b=Vk57tlCxRdvL1Z1pHhxMoz18D7MN1dtEKrf4UCF0j2OBR1+8IuwfRb+LDjBhSHPfm
+	 rfrRoEnD2jSbx8IX0FYYqkc5AUrhiPthSiKrAPyRBkkXnBZThlTUMYk5ZPy9qOt+0/
+	 h7kDxz+9MM4qCJ5jMU9Yo18M9pBsubVwxFBz5GDY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dean Luick <dean.luick@cornelisnetworks.com>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Alexandru Ardelean <aardelean@deviqon.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 018/143] IB/hfi1: Fix expected receive setup error exit issues
-Date: Mon, 30 Jan 2023 14:51:15 +0100
-Message-Id: <20230130134307.635996421@linuxfoundation.org>
+Subject: [PATCH 5.10 002/143] clk: Provide new devm_clk helpers for prepared and enabled clocks
+Date: Mon, 30 Jan 2023 14:50:59 +0100
+Message-Id: <20230130134306.974714836@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -36,168 +37,209 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dean Luick <dean.luick@cornelisnetworks.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit e0c4a422f5246abefbf7c178ef99a1f2dc3c5f62 ]
+[ Upstream commit 7ef9651e9792b08eb310c6beb202cbc947f43cab ]
 
-Fix three error exit issues in expected receive setup.
-Re-arrange error exits to increase readability.
+When a driver keeps a clock prepared (or enabled) during the whole
+lifetime of the driver, these helpers allow to simplify the drivers.
 
-Issues and fixes:
-1. Possible missed page unpin if tidlist copyout fails and
-   not all pinned pages where made part of a TID.
-   Fix: Unpin the unused pages.
-
-2. Return success with unset return values tidcnt and length
-   when no pages were pinned.
-   Fix: Return -ENOSPC if no pages were pinned.
-
-3. Return success with unset return values tidcnt and length when
-   no rcvarray entries available.
-   Fix: Return -ENOSPC if no rcvarray entries are available.
-
-Fixes: 7e7a436ecb6e ("staging/hfi1: Add TID entry program function body")
-Fixes: 97736f36dbeb ("IB/hfi1: Validate page aligned for a given virtual addres")
-Fixes: f404ca4c7ea8 ("IB/hfi1: Refactor hfi_user_exp_rcv_setup() IOCTL")
-Signed-off-by: Dean Luick <dean.luick@cornelisnetworks.com>
-Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-Link: https://lore.kernel.org/r/167328548150.1472310.1492305874804187634.stgit@awfm-02.cornelisnetworks.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Alexandru Ardelean <aardelean@deviqon.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20220520075737.758761-4-u.kleine-koenig@pengutronix.de
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: 340cb392a038 ("memory: atmel-sdramc: Fix missing clk_disable_unprepare in atmel_ramc_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/user_exp_rcv.c | 83 ++++++++++++++---------
- 1 file changed, 50 insertions(+), 33 deletions(-)
+ drivers/clk/clk-devres.c |  27 ++++++++++
+ include/linux/clk.h      | 109 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 136 insertions(+)
 
-diff --git a/drivers/infiniband/hw/hfi1/user_exp_rcv.c b/drivers/infiniband/hw/hfi1/user_exp_rcv.c
-index 1278cd55a480..ba61d327a85d 100644
---- a/drivers/infiniband/hw/hfi1/user_exp_rcv.c
-+++ b/drivers/infiniband/hw/hfi1/user_exp_rcv.c
-@@ -310,15 +310,14 @@ int hfi1_user_exp_rcv_setup(struct hfi1_filedata *fd,
- 	tidbuf->psets = kcalloc(uctxt->expected_count, sizeof(*tidbuf->psets),
- 				GFP_KERNEL);
- 	if (!tidbuf->psets) {
--		kfree(tidbuf);
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto fail_release_mem;
- 	}
+diff --git a/drivers/clk/clk-devres.c b/drivers/clk/clk-devres.c
+index c822f4ef1584..43ccd20e0298 100644
+--- a/drivers/clk/clk-devres.c
++++ b/drivers/clk/clk-devres.c
+@@ -66,12 +66,39 @@ struct clk *devm_clk_get(struct device *dev, const char *id)
+ }
+ EXPORT_SYMBOL(devm_clk_get);
  
- 	pinned = pin_rcv_pages(fd, tidbuf);
- 	if (pinned <= 0) {
--		kfree(tidbuf->psets);
--		kfree(tidbuf);
--		return pinned;
-+		ret = (pinned < 0) ? pinned : -ENOSPC;
-+		goto fail_unpin;
- 	}
- 
- 	/* Find sets of physically contiguous pages */
-@@ -333,14 +332,16 @@ int hfi1_user_exp_rcv_setup(struct hfi1_filedata *fd,
- 	fd->tid_used += pageset_count;
- 	spin_unlock(&fd->tid_lock);
- 
--	if (!pageset_count)
--		goto bail;
-+	if (!pageset_count) {
-+		ret = -ENOSPC;
-+		goto fail_unreserve;
-+	}
- 
- 	ngroups = pageset_count / dd->rcv_entries.group_size;
- 	tidlist = kcalloc(pageset_count, sizeof(*tidlist), GFP_KERNEL);
- 	if (!tidlist) {
- 		ret = -ENOMEM;
--		goto nomem;
-+		goto fail_unreserve;
- 	}
- 
- 	tididx = 0;
-@@ -436,44 +437,60 @@ int hfi1_user_exp_rcv_setup(struct hfi1_filedata *fd,
- 	}
- unlock:
- 	mutex_unlock(&uctxt->exp_mutex);
--nomem:
- 	hfi1_cdbg(TID, "total mapped: tidpairs:%u pages:%u (%d)", tididx,
- 		  mapped_pages, ret);
++struct clk *devm_clk_get_prepared(struct device *dev, const char *id)
++{
++	return __devm_clk_get(dev, id, clk_get, clk_prepare, clk_unprepare);
++}
++EXPORT_SYMBOL_GPL(devm_clk_get_prepared);
 +
-+	/* fail if nothing was programmed, set error if none provided */
-+	if (tididx == 0) {
-+		if (ret >= 0)
-+			ret = -ENOSPC;
-+		goto fail_unreserve;
-+	}
++struct clk *devm_clk_get_enabled(struct device *dev, const char *id)
++{
++	return __devm_clk_get(dev, id, clk_get,
++			      clk_prepare_enable, clk_disable_unprepare);
++}
++EXPORT_SYMBOL_GPL(devm_clk_get_enabled);
 +
- 	/* adjust reserved tid_used to actual count */
- 	spin_lock(&fd->tid_lock);
- 	fd->tid_used -= pageset_count - tididx;
- 	spin_unlock(&fd->tid_lock);
--	if (tididx) {
--		tinfo->tidcnt = tididx;
--		tinfo->length = mapped_pages * PAGE_SIZE;
+ struct clk *devm_clk_get_optional(struct device *dev, const char *id)
+ {
+ 	return __devm_clk_get(dev, id, clk_get_optional, NULL, NULL);
+ }
+ EXPORT_SYMBOL(devm_clk_get_optional);
  
--		if (copy_to_user(u64_to_user_ptr(tinfo->tidlist),
--				 tidlist, sizeof(tidlist[0]) * tididx)) {
--			/*
--			 * On failure to copy to the user level, we need to undo
--			 * everything done so far so we don't leak resources.
--			 */
--			tinfo->tidlist = (unsigned long)&tidlist;
--			hfi1_user_exp_rcv_clear(fd, tinfo);
--			tinfo->tidlist = 0;
--			ret = -EFAULT;
--			goto bail;
--		}
-+	/* unpin all pages not covered by a TID */
-+	unpin_rcv_pages(fd, tidbuf, NULL, mapped_pages, pinned - mapped_pages,
-+			false);
++struct clk *devm_clk_get_optional_prepared(struct device *dev, const char *id)
++{
++	return __devm_clk_get(dev, id, clk_get_optional,
++			      clk_prepare, clk_unprepare);
++}
++EXPORT_SYMBOL_GPL(devm_clk_get_optional_prepared);
 +
-+	tinfo->tidcnt = tididx;
-+	tinfo->length = mapped_pages * PAGE_SIZE;
++struct clk *devm_clk_get_optional_enabled(struct device *dev, const char *id)
++{
++	return __devm_clk_get(dev, id, clk_get_optional,
++			      clk_prepare_enable, clk_disable_unprepare);
++}
++EXPORT_SYMBOL_GPL(devm_clk_get_optional_enabled);
 +
-+	if (copy_to_user(u64_to_user_ptr(tinfo->tidlist),
-+			 tidlist, sizeof(tidlist[0]) * tididx)) {
-+		ret = -EFAULT;
-+		goto fail_unprogram;
- 	}
+ struct clk_bulk_devres {
+ 	struct clk_bulk_data *clks;
+ 	int num_clks;
+diff --git a/include/linux/clk.h b/include/linux/clk.h
+index 7fd6a1febcf4..1814eabb7c20 100644
+--- a/include/linux/clk.h
++++ b/include/linux/clk.h
+@@ -418,6 +418,47 @@ int __must_check devm_clk_bulk_get_all(struct device *dev,
+  */
+ struct clk *devm_clk_get(struct device *dev, const char *id);
  
--	/*
--	 * If not everything was mapped (due to insufficient RcvArray entries,
--	 * for example), unpin all unmapped pages so we can pin them nex time.
--	 */
--	if (mapped_pages != pinned)
--		unpin_rcv_pages(fd, tidbuf, NULL, mapped_pages,
--				(pinned - mapped_pages), false);
--bail:
-+	kfree(tidbuf->pages);
- 	kfree(tidbuf->psets);
-+	kfree(tidbuf);
- 	kfree(tidlist);
-+	return 0;
++/**
++ * devm_clk_get_prepared - devm_clk_get() + clk_prepare()
++ * @dev: device for clock "consumer"
++ * @id: clock consumer ID
++ *
++ * Context: May sleep.
++ *
++ * Return: a struct clk corresponding to the clock producer, or
++ * valid IS_ERR() condition containing errno.  The implementation
++ * uses @dev and @id to determine the clock consumer, and thereby
++ * the clock producer.  (IOW, @id may be identical strings, but
++ * clk_get may return different clock producers depending on @dev.)
++ *
++ * The returned clk (if valid) is prepared. Drivers must however assume
++ * that the clock is not enabled.
++ *
++ * The clock will automatically be unprepared and freed when the device
++ * is unbound from the bus.
++ */
++struct clk *devm_clk_get_prepared(struct device *dev, const char *id);
 +
-+fail_unprogram:
-+	/* unprogram, unmap, and unpin all allocated TIDs */
-+	tinfo->tidlist = (unsigned long)tidlist;
-+	hfi1_user_exp_rcv_clear(fd, tinfo);
-+	tinfo->tidlist = 0;
-+	pinned = 0;		/* nothing left to unpin */
-+	pageset_count = 0;	/* nothing left reserved */
-+fail_unreserve:
-+	spin_lock(&fd->tid_lock);
-+	fd->tid_used -= pageset_count;
-+	spin_unlock(&fd->tid_lock);
-+fail_unpin:
-+	if (pinned > 0)
-+		unpin_rcv_pages(fd, tidbuf, NULL, 0, pinned, false);
-+fail_release_mem:
- 	kfree(tidbuf->pages);
-+	kfree(tidbuf->psets);
- 	kfree(tidbuf);
--	return ret > 0 ? 0 : ret;
-+	kfree(tidlist);
-+	return ret;
++/**
++ * devm_clk_get_enabled - devm_clk_get() + clk_prepare_enable()
++ * @dev: device for clock "consumer"
++ * @id: clock consumer ID
++ *
++ * Context: May sleep.
++ *
++ * Return: a struct clk corresponding to the clock producer, or
++ * valid IS_ERR() condition containing errno.  The implementation
++ * uses @dev and @id to determine the clock consumer, and thereby
++ * the clock producer.  (IOW, @id may be identical strings, but
++ * clk_get may return different clock producers depending on @dev.)
++ *
++ * The returned clk (if valid) is prepared and enabled.
++ *
++ * The clock will automatically be disabled, unprepared and freed
++ * when the device is unbound from the bus.
++ */
++struct clk *devm_clk_get_enabled(struct device *dev, const char *id);
++
+ /**
+  * devm_clk_get_optional - lookup and obtain a managed reference to an optional
+  *			   clock producer.
+@@ -429,6 +470,50 @@ struct clk *devm_clk_get(struct device *dev, const char *id);
+  */
+ struct clk *devm_clk_get_optional(struct device *dev, const char *id);
+ 
++/**
++ * devm_clk_get_optional_prepared - devm_clk_get_optional() + clk_prepare()
++ * @dev: device for clock "consumer"
++ * @id: clock consumer ID
++ *
++ * Context: May sleep.
++ *
++ * Return: a struct clk corresponding to the clock producer, or
++ * valid IS_ERR() condition containing errno.  The implementation
++ * uses @dev and @id to determine the clock consumer, and thereby
++ * the clock producer.  If no such clk is found, it returns NULL
++ * which serves as a dummy clk.  That's the only difference compared
++ * to devm_clk_get_prepared().
++ *
++ * The returned clk (if valid) is prepared. Drivers must however
++ * assume that the clock is not enabled.
++ *
++ * The clock will automatically be unprepared and freed when the
++ * device is unbound from the bus.
++ */
++struct clk *devm_clk_get_optional_prepared(struct device *dev, const char *id);
++
++/**
++ * devm_clk_get_optional_enabled - devm_clk_get_optional() +
++ *                                 clk_prepare_enable()
++ * @dev: device for clock "consumer"
++ * @id: clock consumer ID
++ *
++ * Context: May sleep.
++ *
++ * Return: a struct clk corresponding to the clock producer, or
++ * valid IS_ERR() condition containing errno.  The implementation
++ * uses @dev and @id to determine the clock consumer, and thereby
++ * the clock producer.  If no such clk is found, it returns NULL
++ * which serves as a dummy clk.  That's the only difference compared
++ * to devm_clk_get_enabled().
++ *
++ * The returned clk (if valid) is prepared and enabled.
++ *
++ * The clock will automatically be disabled, unprepared and freed
++ * when the device is unbound from the bus.
++ */
++struct clk *devm_clk_get_optional_enabled(struct device *dev, const char *id);
++
+ /**
+  * devm_get_clk_from_child - lookup and obtain a managed reference to a
+  *			     clock producer from child node.
+@@ -773,12 +858,36 @@ static inline struct clk *devm_clk_get(struct device *dev, const char *id)
+ 	return NULL;
  }
  
- int hfi1_user_exp_rcv_clear(struct hfi1_filedata *fd,
++static inline struct clk *devm_clk_get_prepared(struct device *dev,
++						const char *id)
++{
++	return NULL;
++}
++
++static inline struct clk *devm_clk_get_enabled(struct device *dev,
++					       const char *id)
++{
++	return NULL;
++}
++
+ static inline struct clk *devm_clk_get_optional(struct device *dev,
+ 						const char *id)
+ {
+ 	return NULL;
+ }
+ 
++static inline struct clk *devm_clk_get_optional_prepared(struct device *dev,
++							 const char *id)
++{
++	return NULL;
++}
++
++static inline struct clk *devm_clk_get_optional_enabled(struct device *dev,
++							const char *id)
++{
++	return NULL;
++}
++
+ static inline int __must_check devm_clk_bulk_get(struct device *dev, int num_clks,
+ 						 struct clk_bulk_data *clks)
+ {
 -- 
 2.39.0
 
