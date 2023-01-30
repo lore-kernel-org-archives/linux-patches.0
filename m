@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FCC928EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:57:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 046C3C433D2;
-	Mon, 30 Jan 2023 13:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB70328EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:57:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 237FDC4339C;
+	Mon, 30 Jan 2023 13:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087071;
-	bh=4HY3mxBLrKhK4xF7LmMadNcI7hQNXnUjtPSFLpNT1VY=;
+	s=korg; t=1675087074;
+	bh=6yS6fNW8Jxu+oB/VWrxWiGiK7fSGXIMdM5q2rf6Ie6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hg31Ouoh/mNJuv+Z6SMa1OXR4ZS5wzRblUUdDPLXDfqYQ8YchhgMpXAFV+ka8EVvI
-	 JfQ499WFJJCq+s0raOj0qaKRM7dsIZplgbZqMwJI0VtnW2utMACE+yZW8sR7hn7+A2
-	 I0fD/ZSaDnGBbSneRAasIKteE255pH2UJOSlxr5w=
+	b=YGHOc5UfsBTA1e9etNgDGQTrHHfNlLUSjw1ox3B9VAjm/5DtSVjbwsCRgHiqvUdMd
+	 fqO/x8TpwYX/GbekTo0DNXKFMKVF6/vTQC4CjFvm/djD1KxjVGqysHnpaKpCQjeKSL
+	 iZR4m4FnzOBI/PBJ1DkXjquhW12uq2y7vjIUZsTA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Esina Ekaterina <eesina@astralinux.ru>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Patrice Chotard <patrice.chotard@foss.st.com>,
+	Marek Vasut <marex@denx.de>,
+	Alexandre Torgue <alexandre.torgue@st.com>,
+	linux-stm32@st-md-mailman.stormreply.com,
+	linux-arm-kernel@lists.infradead.org,
+	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 070/313] net: wan: Add checks for NULL for utdm in undo_uhdlc_init and unmap_si_regs
-Date: Mon, 30 Jan 2023 14:48:25 +0100
-Message-Id: <20230130134339.945679741@linuxfoundation.org>
+Subject: [PATCH 6.1 088/313] ARM: dts: stm32: Fix qspi pinctrl phandle for stm32mp15xx-dhcor-som
+Date: Mon, 30 Jan 2023 14:48:43 +0100
+Message-Id: <20230130134340.742022119@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,44 +39,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Esina Ekaterina <eesina@astralinux.ru>
+From: Patrice Chotard <patrice.chotard@foss.st.com>
 
-[ Upstream commit 488e0bf7f34af3d42d1d5e56f7a5a7beaff188a3 ]
+[ Upstream commit 7ffd2266bd32d9f31a4e918443c733906cff0d19 ]
 
-If uhdlc_priv_tsa != 1 then utdm is not initialized.
-And if ret != NULL then goto undo_uhdlc_init, where
-utdm is dereferenced. Same if dev == NULL.
+Chip select pinctrl phandle was missing in several stm32mp15x based boards.
 
-Found by Astra Linux on behalf of Linux Verification Center
-(linuxtesting.org) with SVACE.
+Fixes: ea99a5a02ebc ("ARM: dts: stm32: Create separate pinmux for qspi cs pin in stm32mp15-pinctrl.dtsi")
 
-Fixes: 8d68100ab4ad ("soc/fsl/qe: fix err handling of ucc_of_parse_tdm")
-Signed-off-by: Esina Ekaterina <eesina@astralinux.ru>
-Link: https://lore.kernel.org/r/20230112074703.13558-1-eesina@astralinux.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Patrice Chotard <patrice.chotard@foss.st.com>
+Cc: Marek Vasut <marex@denx.de>
+Cc: Alexandre Torgue <alexandre.torgue@st.com>
+Cc: linux-stm32@st-md-mailman.stormreply.com
+Cc: linux-arm-kernel@lists.infradead.org
+Reviewed-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wan/fsl_ucc_hdlc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/wan/fsl_ucc_hdlc.c b/drivers/net/wan/fsl_ucc_hdlc.c
-index 22edea6ca4b8..1c53b5546927 100644
---- a/drivers/net/wan/fsl_ucc_hdlc.c
-+++ b/drivers/net/wan/fsl_ucc_hdlc.c
-@@ -1243,9 +1243,11 @@ static int ucc_hdlc_probe(struct platform_device *pdev)
- free_dev:
- 	free_netdev(dev);
- undo_uhdlc_init:
--	iounmap(utdm->siram);
-+	if (utdm)
-+		iounmap(utdm->siram);
- unmap_si_regs:
--	iounmap(utdm->si_regs);
-+	if (utdm)
-+		iounmap(utdm->si_regs);
- free_utdm:
- 	if (uhdlc_priv->tsa)
- 		kfree(utdm);
+diff --git a/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi b/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi
+index 134a798ad3f2..bb40fb46da81 100644
+--- a/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi
++++ b/arch/arm/boot/dts/stm32mp15xx-dhcor-som.dtsi
+@@ -247,8 +247,12 @@ &pwr_regulators {
+ 
+ &qspi {
+ 	pinctrl-names = "default", "sleep";
+-	pinctrl-0 = <&qspi_clk_pins_a &qspi_bk1_pins_a>;
+-	pinctrl-1 = <&qspi_clk_sleep_pins_a &qspi_bk1_sleep_pins_a>;
++	pinctrl-0 = <&qspi_clk_pins_a
++		     &qspi_bk1_pins_a
++		     &qspi_cs1_pins_a>;
++	pinctrl-1 = <&qspi_clk_sleep_pins_a
++		     &qspi_bk1_sleep_pins_a
++		     &qspi_cs1_sleep_pins_a>;
+ 	reg = <0x58003000 0x1000>, <0x70000000 0x200000>;
+ 	#address-cells = <1>;
+ 	#size-cells = <0>;
 -- 
 2.39.0
 
