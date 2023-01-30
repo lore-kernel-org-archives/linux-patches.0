@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A63FF28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:00:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 295E5C433EF;
-	Mon, 30 Jan 2023 14:00:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EA228EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:00:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17C70C433D2;
+	Mon, 30 Jan 2023 14:00:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087232;
-	bh=/AtZ171hcy3lK77hjSXHT4ByeUuFjW0My9FptyVAOio=;
+	s=korg; t=1675087235;
+	bh=C7GgloiIFQmAR6+aRZZITATpNSeQgm91hCd/foFrF+c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cjVNYSVcg9Rj7WGOohG14D5PGvHnL713SjjhtZ205ch1DC57dKzLTqyCyZ3wEn1Up
-	 hFj0bcJeq3urgZwMZuCUzpCHnFiXr/uHfSCuZwPygBFoZkrawNj5o3Vjli2KRuN5sw
-	 IM6lSRIbVViGA+MNh7wBUb7j3tXtIX/SsZeAvLOU=
+	b=MpapfS7S616O+vsSTGxMCxO0VFVJ8w1GP58LWrPcLrebUT05Gy/aFhyTsumQJ88mx
+	 X6hCck5ChfIdyQ09yyNjmoFpBsRJl4qafD9UgEmHP+Yp5hLyfMuskTlJ0/WfGetpYY
+	 iyY2wJUre6NKVkrFXzX4uZ2Q7ievUO0S+D3H+eGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Rakesh Sankaranarayanan <rakesh.sankaranarayanan@microchip.com>,
+	Vladimir Oltean <olteanv@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 101/313] Bluetooth: ISO: Avoid circular locking dependency
-Date: Mon, 30 Jan 2023 14:48:56 +0100
-Message-Id: <20230130134341.344126113@linuxfoundation.org>
+Subject: [PATCH 6.1 134/313] net: dsa: microchip: ksz9477: port map correction in ALU table entry register
+Date: Mon, 30 Jan 2023 14:49:29 +0100
+Message-Id: <20230130134342.897581515@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -34,273 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Rakesh Sankaranarayanan <rakesh.sankaranarayanan@microchip.com>
 
-[ Upstream commit 241f51931c35085449502c10f64fb3ecd6e02171 ]
+[ Upstream commit 6c977c5c2e4c5d8ad1b604724cc344e38f96fe9b ]
 
-This attempts to avoid circular locking dependency between sock_lock
-and hdev_lock:
+ALU table entry 2 register in KSZ9477 have bit positions reserved for
+forwarding port map. This field is referred in ksz9477_fdb_del() for
+clearing forward port map and alu table.
 
-WARNING: possible circular locking dependency detected
-6.0.0-rc7-03728-g18dd8ab0a783 #3 Not tainted
-------------------------------------------------------
-kworker/u3:2/53 is trying to acquire lock:
-ffff888000254130 (sk_lock-AF_BLUETOOTH-BTPROTO_ISO){+.+.}-{0:0}, at:
-iso_conn_del+0xbd/0x1d0
-but task is already holding lock:
-ffffffff9f39a080 (hci_cb_list_lock){+.+.}-{3:3}, at:
-hci_le_cis_estabilished_evt+0x1b5/0x500
-which lock already depends on the new lock.
-the existing dependency chain (in reverse order) is:
--> #2 (hci_cb_list_lock){+.+.}-{3:3}:
-       __mutex_lock+0x10e/0xfe0
-       hci_le_remote_feat_complete_evt+0x17f/0x320
-       hci_event_packet+0x39c/0x7d0
-       hci_rx_work+0x2bf/0x950
-       process_one_work+0x569/0x980
-       worker_thread+0x2a3/0x6f0
-       kthread+0x153/0x180
-       ret_from_fork+0x22/0x30
--> #1 (&hdev->lock){+.+.}-{3:3}:
-       __mutex_lock+0x10e/0xfe0
-       iso_connect_cis+0x6f/0x5a0
-       iso_sock_connect+0x1af/0x710
-       __sys_connect+0x17e/0x1b0
-       __x64_sys_connect+0x37/0x50
-       do_syscall_64+0x43/0x90
-       entry_SYSCALL_64_after_hwframe+0x62/0xcc
--> #0 (sk_lock-AF_BLUETOOTH-BTPROTO_ISO){+.+.}-{0:0}:
-       __lock_acquire+0x1b51/0x33d0
-       lock_acquire+0x16f/0x3b0
-       lock_sock_nested+0x32/0x80
-       iso_conn_del+0xbd/0x1d0
-       iso_connect_cfm+0x226/0x680
-       hci_le_cis_estabilished_evt+0x1ed/0x500
-       hci_event_packet+0x39c/0x7d0
-       hci_rx_work+0x2bf/0x950
-       process_one_work+0x569/0x980
-       worker_thread+0x2a3/0x6f0
-       kthread+0x153/0x180
-       ret_from_fork+0x22/0x30
-other info that might help us debug this:
-Chain exists of:
-  sk_lock-AF_BLUETOOTH-BTPROTO_ISO --> &hdev->lock --> hci_cb_list_lock
- Possible unsafe locking scenario:
-       CPU0                    CPU1
-       ----                    ----
-  lock(hci_cb_list_lock);
-                               lock(&hdev->lock);
-                               lock(hci_cb_list_lock);
-  lock(sk_lock-AF_BLUETOOTH-BTPROTO_ISO);
- *** DEADLOCK ***
-4 locks held by kworker/u3:2/53:
- #0: ffff8880021d9130 ((wq_completion)hci0#2){+.+.}-{0:0}, at:
- process_one_work+0x4ad/0x980
- #1: ffff888002387de0 ((work_completion)(&hdev->rx_work)){+.+.}-{0:0},
- at: process_one_work+0x4ad/0x980
- #2: ffff888001ac0070 (&hdev->lock){+.+.}-{3:3}, at:
- hci_le_cis_estabilished_evt+0xc3/0x500
- #3: ffffffff9f39a080 (hci_cb_list_lock){+.+.}-{3:3}, at:
- hci_le_cis_estabilished_evt+0x1b5/0x500
+But current fdb_del refer ALU table entry 3 register for accessing forward
+port map. Update ksz9477_fdb_del() to get forward port map from correct
+alu table entry register.
 
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Stable-dep-of: 6a5ad251b7cd ("Bluetooth: ISO: Fix possible circular locking dependency")
+With this bug, issue can be observed while deleting static MAC entries.
+Delete any specific MAC entry using "bridge fdb del" command. This should
+clear all the specified MAC entries. But it is observed that entries with
+self static alone are retained.
+
+Tested on LAN9370 EVB since ksz9477_fdb_del() is used common across
+LAN937x and KSZ series.
+
+Fixes: b987e98e50ab ("dsa: add DSA switch driver for Microchip KSZ9477")
+Signed-off-by: Rakesh Sankaranarayanan <rakesh.sankaranarayanan@microchip.com>
+Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
+Link: https://lore.kernel.org/r/20230118174735.702377-1-rakesh.sankaranarayanan@microchip.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 61 ++++++++++++++++++++++++++++-----------------
- 1 file changed, 38 insertions(+), 23 deletions(-)
+ drivers/net/dsa/microchip/ksz9477.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index 26db929b97c4..df57cbe27b3d 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -261,13 +261,13 @@ static int iso_connect_bis(struct sock *sk)
+diff --git a/drivers/net/dsa/microchip/ksz9477.c b/drivers/net/dsa/microchip/ksz9477.c
+index a6a0321a8931..a73697147053 100644
+--- a/drivers/net/dsa/microchip/ksz9477.c
++++ b/drivers/net/dsa/microchip/ksz9477.c
+@@ -548,10 +548,10 @@ int ksz9477_fdb_del(struct ksz_device *dev, int port,
+ 		ksz_read32(dev, REG_SW_ALU_VAL_D, &alu_table[3]);
  
- 	if (!bis_capable(hdev)) {
- 		err = -EOPNOTSUPP;
--		goto done;
-+		goto unlock;
- 	}
+ 		/* clear forwarding port */
+-		alu_table[2] &= ~BIT(port);
++		alu_table[1] &= ~BIT(port);
  
- 	/* Fail if out PHYs are marked as disabled */
- 	if (!iso_pi(sk)->qos.out.phy) {
- 		err = -EINVAL;
--		goto done;
-+		goto unlock;
- 	}
- 
- 	hcon = hci_connect_bis(hdev, &iso_pi(sk)->dst, iso_pi(sk)->dst_type,
-@@ -275,22 +275,27 @@ static int iso_connect_bis(struct sock *sk)
- 			       iso_pi(sk)->base);
- 	if (IS_ERR(hcon)) {
- 		err = PTR_ERR(hcon);
--		goto done;
-+		goto unlock;
- 	}
- 
- 	conn = iso_conn_add(hcon);
- 	if (!conn) {
- 		hci_conn_drop(hcon);
- 		err = -ENOMEM;
--		goto done;
-+		goto unlock;
- 	}
- 
-+	hci_dev_unlock(hdev);
-+	hci_dev_put(hdev);
-+
-+	lock_sock(sk);
-+
- 	/* Update source addr of the socket */
- 	bacpy(&iso_pi(sk)->src, &hcon->src);
- 
- 	err = iso_chan_add(conn, sk, NULL);
- 	if (err)
--		goto done;
-+		goto release;
- 
- 	if (hcon->state == BT_CONNECTED) {
- 		iso_sock_clear_timer(sk);
-@@ -300,7 +305,11 @@ static int iso_connect_bis(struct sock *sk)
- 		iso_sock_set_timer(sk, sk->sk_sndtimeo);
- 	}
- 
--done:
-+release:
-+	release_sock(sk);
-+	return err;
-+
-+unlock:
- 	hci_dev_unlock(hdev);
- 	hci_dev_put(hdev);
- 	return err;
-@@ -324,13 +333,13 @@ static int iso_connect_cis(struct sock *sk)
- 
- 	if (!cis_central_capable(hdev)) {
- 		err = -EOPNOTSUPP;
--		goto done;
-+		goto unlock;
- 	}
- 
- 	/* Fail if either PHYs are marked as disabled */
- 	if (!iso_pi(sk)->qos.in.phy && !iso_pi(sk)->qos.out.phy) {
- 		err = -EINVAL;
--		goto done;
-+		goto unlock;
- 	}
- 
- 	/* Just bind if DEFER_SETUP has been set */
-@@ -340,7 +349,7 @@ static int iso_connect_cis(struct sock *sk)
- 				    &iso_pi(sk)->qos);
- 		if (IS_ERR(hcon)) {
- 			err = PTR_ERR(hcon);
--			goto done;
-+			goto unlock;
- 		}
- 	} else {
- 		hcon = hci_connect_cis(hdev, &iso_pi(sk)->dst,
-@@ -348,7 +357,7 @@ static int iso_connect_cis(struct sock *sk)
- 				       &iso_pi(sk)->qos);
- 		if (IS_ERR(hcon)) {
- 			err = PTR_ERR(hcon);
--			goto done;
-+			goto unlock;
- 		}
- 	}
- 
-@@ -356,15 +365,20 @@ static int iso_connect_cis(struct sock *sk)
- 	if (!conn) {
- 		hci_conn_drop(hcon);
- 		err = -ENOMEM;
--		goto done;
-+		goto unlock;
- 	}
- 
-+	hci_dev_unlock(hdev);
-+	hci_dev_put(hdev);
-+
-+	lock_sock(sk);
-+
- 	/* Update source addr of the socket */
- 	bacpy(&iso_pi(sk)->src, &hcon->src);
- 
- 	err = iso_chan_add(conn, sk, NULL);
- 	if (err)
--		goto done;
-+		goto release;
- 
- 	if (hcon->state == BT_CONNECTED) {
- 		iso_sock_clear_timer(sk);
-@@ -377,7 +391,11 @@ static int iso_connect_cis(struct sock *sk)
- 		iso_sock_set_timer(sk, sk->sk_sndtimeo);
- 	}
- 
--done:
-+release:
-+	release_sock(sk);
-+	return err;
-+
-+unlock:
- 	hci_dev_unlock(hdev);
- 	hci_dev_put(hdev);
- 	return err;
-@@ -831,20 +849,23 @@ static int iso_sock_connect(struct socket *sock, struct sockaddr *addr,
- 	bacpy(&iso_pi(sk)->dst, &sa->iso_bdaddr);
- 	iso_pi(sk)->dst_type = sa->iso_bdaddr_type;
- 
-+	release_sock(sk);
-+
- 	if (bacmp(&iso_pi(sk)->dst, BDADDR_ANY))
- 		err = iso_connect_cis(sk);
- 	else
- 		err = iso_connect_bis(sk);
- 
- 	if (err)
--		goto done;
-+		return err;
-+
-+	lock_sock(sk);
- 
- 	if (!test_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags)) {
- 		err = bt_sock_wait_state(sk, BT_CONNECTED,
- 					 sock_sndtimeo(sk, flags & O_NONBLOCK));
- 	}
- 
--done:
- 	release_sock(sk);
- 	return err;
- }
-@@ -1099,28 +1120,22 @@ static int iso_sock_recvmsg(struct socket *sock, struct msghdr *msg,
- {
- 	struct sock *sk = sock->sk;
- 	struct iso_pinfo *pi = iso_pi(sk);
--	int err;
- 
- 	BT_DBG("sk %p", sk);
- 
--	lock_sock(sk);
--
- 	if (test_and_clear_bit(BT_SK_DEFER_SETUP, &bt_sk(sk)->flags)) {
- 		switch (sk->sk_state) {
- 		case BT_CONNECT2:
-+			lock_sock(sk);
- 			iso_conn_defer_accept(pi->conn->hcon);
- 			sk->sk_state = BT_CONFIG;
- 			release_sock(sk);
- 			return 0;
- 		case BT_CONNECT:
--			err = iso_connect_cis(sk);
--			release_sock(sk);
--			return err;
-+			return iso_connect_cis(sk);
- 		}
- 	}
- 
--	release_sock(sk);
--
- 	return bt_sock_recvmsg(sock, msg, len, flags);
- }
- 
+ 		/* if there is no port to forward, clear table */
+-		if ((alu_table[2] & ALU_V_PORT_MAP) == 0) {
++		if ((alu_table[1] & ALU_V_PORT_MAP) == 0) {
+ 			alu_table[0] = 0;
+ 			alu_table[1] = 0;
+ 			alu_table[2] = 0;
 -- 
 2.39.0
 
