@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BF1733CE
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:20:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AAC7FC433EF;
-	Mon, 30 Jan 2023 14:20:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37BB033CE
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:20:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF58CC433EF;
+	Mon, 30 Jan 2023 14:20:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088436;
-	bh=l10x31TQ9CAAC5b/LbnTOMWsY15oL/k8LwCXSBioPeQ=;
+	s=korg; t=1675088439;
+	bh=HdwkosLvFl4Eg2pq4SB31AaUfIR9aVUGypswrbgFuUs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vk57tlCxRdvL1Z1pHhxMoz18D7MN1dtEKrf4UCF0j2OBR1+8IuwfRb+LDjBhSHPfm
-	 rfrRoEnD2jSbx8IX0FYYqkc5AUrhiPthSiKrAPyRBkkXnBZThlTUMYk5ZPy9qOt+0/
-	 h7kDxz+9MM4qCJ5jMU9Yo18M9pBsubVwxFBz5GDY=
+	b=rkLP6JT1jSugnnCYhBueowCb4dWJUj8sZr7/9p2V8wTH7cj0AoOilDsgomeG4F84P
+	 JqqbCHz1oDh1I4iJ/Ey9p9ZYWxx5ngpuSQINfXa2iMCBBPeJ+cqXupaM/swm35xYiZ
+	 D3nxj/mv272B29wmF0gpRvVNAoCnfAGnN7lviRPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Alexandru Ardelean <aardelean@deviqon.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 002/143] clk: Provide new devm_clk helpers for prepared and enabled clocks
-Date: Mon, 30 Jan 2023 14:50:59 +0100
-Message-Id: <20230130134306.974714836@linuxfoundation.org>
+Subject: [PATCH 5.10 003/143] memory: atmel-sdramc: Fix missing clk_disable_unprepare in atmel_ramc_probe()
+Date: Mon, 30 Jan 2023 14:51:00 +0100
+Message-Id: <20230130134307.016848728@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -37,209 +35,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 7ef9651e9792b08eb310c6beb202cbc947f43cab ]
+[ Upstream commit 340cb392a038cf70540a4cdf2e98a247c66b6df4 ]
 
-When a driver keeps a clock prepared (or enabled) during the whole
-lifetime of the driver, these helpers allow to simplify the drivers.
+The clk_disable_unprepare() should be called in the error handling
+of caps->has_mpddr_clk, fix it by replacing devm_clk_get and
+clk_prepare_enable by devm_clk_get_enabled.
 
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Reviewed-by: Alexandru Ardelean <aardelean@deviqon.com>
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20220520075737.758761-4-u.kleine-koenig@pengutronix.de
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: 340cb392a038 ("memory: atmel-sdramc: Fix missing clk_disable_unprepare in atmel_ramc_probe()")
+Fixes: e81b6abebc87 ("memory: add a driver for atmel ram controllers")
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Link: https://lore.kernel.org/r/20221125073757.3535219-1-cuigaosheng1@huawei.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-devres.c |  27 ++++++++++
- include/linux/clk.h      | 109 +++++++++++++++++++++++++++++++++++++++
- 2 files changed, 136 insertions(+)
+ drivers/memory/atmel-sdramc.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/clk-devres.c b/drivers/clk/clk-devres.c
-index c822f4ef1584..43ccd20e0298 100644
---- a/drivers/clk/clk-devres.c
-+++ b/drivers/clk/clk-devres.c
-@@ -66,12 +66,39 @@ struct clk *devm_clk_get(struct device *dev, const char *id)
- }
- EXPORT_SYMBOL(devm_clk_get);
+diff --git a/drivers/memory/atmel-sdramc.c b/drivers/memory/atmel-sdramc.c
+index 9c49d00c2a96..ea6e9e1eaf04 100644
+--- a/drivers/memory/atmel-sdramc.c
++++ b/drivers/memory/atmel-sdramc.c
+@@ -47,19 +47,17 @@ static int atmel_ramc_probe(struct platform_device *pdev)
+ 	caps = of_device_get_match_data(&pdev->dev);
  
-+struct clk *devm_clk_get_prepared(struct device *dev, const char *id)
-+{
-+	return __devm_clk_get(dev, id, clk_get, clk_prepare, clk_unprepare);
-+}
-+EXPORT_SYMBOL_GPL(devm_clk_get_prepared);
-+
-+struct clk *devm_clk_get_enabled(struct device *dev, const char *id)
-+{
-+	return __devm_clk_get(dev, id, clk_get,
-+			      clk_prepare_enable, clk_disable_unprepare);
-+}
-+EXPORT_SYMBOL_GPL(devm_clk_get_enabled);
-+
- struct clk *devm_clk_get_optional(struct device *dev, const char *id)
- {
- 	return __devm_clk_get(dev, id, clk_get_optional, NULL, NULL);
- }
- EXPORT_SYMBOL(devm_clk_get_optional);
+ 	if (caps->has_ddrck) {
+-		clk = devm_clk_get(&pdev->dev, "ddrck");
++		clk = devm_clk_get_enabled(&pdev->dev, "ddrck");
+ 		if (IS_ERR(clk))
+ 			return PTR_ERR(clk);
+-		clk_prepare_enable(clk);
+ 	}
  
-+struct clk *devm_clk_get_optional_prepared(struct device *dev, const char *id)
-+{
-+	return __devm_clk_get(dev, id, clk_get_optional,
-+			      clk_prepare, clk_unprepare);
-+}
-+EXPORT_SYMBOL_GPL(devm_clk_get_optional_prepared);
-+
-+struct clk *devm_clk_get_optional_enabled(struct device *dev, const char *id)
-+{
-+	return __devm_clk_get(dev, id, clk_get_optional,
-+			      clk_prepare_enable, clk_disable_unprepare);
-+}
-+EXPORT_SYMBOL_GPL(devm_clk_get_optional_enabled);
-+
- struct clk_bulk_devres {
- 	struct clk_bulk_data *clks;
- 	int num_clks;
-diff --git a/include/linux/clk.h b/include/linux/clk.h
-index 7fd6a1febcf4..1814eabb7c20 100644
---- a/include/linux/clk.h
-+++ b/include/linux/clk.h
-@@ -418,6 +418,47 @@ int __must_check devm_clk_bulk_get_all(struct device *dev,
-  */
- struct clk *devm_clk_get(struct device *dev, const char *id);
+ 	if (caps->has_mpddr_clk) {
+-		clk = devm_clk_get(&pdev->dev, "mpddr");
++		clk = devm_clk_get_enabled(&pdev->dev, "mpddr");
+ 		if (IS_ERR(clk)) {
+ 			pr_err("AT91 RAMC: couldn't get mpddr clock\n");
+ 			return PTR_ERR(clk);
+ 		}
+-		clk_prepare_enable(clk);
+ 	}
  
-+/**
-+ * devm_clk_get_prepared - devm_clk_get() + clk_prepare()
-+ * @dev: device for clock "consumer"
-+ * @id: clock consumer ID
-+ *
-+ * Context: May sleep.
-+ *
-+ * Return: a struct clk corresponding to the clock producer, or
-+ * valid IS_ERR() condition containing errno.  The implementation
-+ * uses @dev and @id to determine the clock consumer, and thereby
-+ * the clock producer.  (IOW, @id may be identical strings, but
-+ * clk_get may return different clock producers depending on @dev.)
-+ *
-+ * The returned clk (if valid) is prepared. Drivers must however assume
-+ * that the clock is not enabled.
-+ *
-+ * The clock will automatically be unprepared and freed when the device
-+ * is unbound from the bus.
-+ */
-+struct clk *devm_clk_get_prepared(struct device *dev, const char *id);
-+
-+/**
-+ * devm_clk_get_enabled - devm_clk_get() + clk_prepare_enable()
-+ * @dev: device for clock "consumer"
-+ * @id: clock consumer ID
-+ *
-+ * Context: May sleep.
-+ *
-+ * Return: a struct clk corresponding to the clock producer, or
-+ * valid IS_ERR() condition containing errno.  The implementation
-+ * uses @dev and @id to determine the clock consumer, and thereby
-+ * the clock producer.  (IOW, @id may be identical strings, but
-+ * clk_get may return different clock producers depending on @dev.)
-+ *
-+ * The returned clk (if valid) is prepared and enabled.
-+ *
-+ * The clock will automatically be disabled, unprepared and freed
-+ * when the device is unbound from the bus.
-+ */
-+struct clk *devm_clk_get_enabled(struct device *dev, const char *id);
-+
- /**
-  * devm_clk_get_optional - lookup and obtain a managed reference to an optional
-  *			   clock producer.
-@@ -429,6 +470,50 @@ struct clk *devm_clk_get(struct device *dev, const char *id);
-  */
- struct clk *devm_clk_get_optional(struct device *dev, const char *id);
- 
-+/**
-+ * devm_clk_get_optional_prepared - devm_clk_get_optional() + clk_prepare()
-+ * @dev: device for clock "consumer"
-+ * @id: clock consumer ID
-+ *
-+ * Context: May sleep.
-+ *
-+ * Return: a struct clk corresponding to the clock producer, or
-+ * valid IS_ERR() condition containing errno.  The implementation
-+ * uses @dev and @id to determine the clock consumer, and thereby
-+ * the clock producer.  If no such clk is found, it returns NULL
-+ * which serves as a dummy clk.  That's the only difference compared
-+ * to devm_clk_get_prepared().
-+ *
-+ * The returned clk (if valid) is prepared. Drivers must however
-+ * assume that the clock is not enabled.
-+ *
-+ * The clock will automatically be unprepared and freed when the
-+ * device is unbound from the bus.
-+ */
-+struct clk *devm_clk_get_optional_prepared(struct device *dev, const char *id);
-+
-+/**
-+ * devm_clk_get_optional_enabled - devm_clk_get_optional() +
-+ *                                 clk_prepare_enable()
-+ * @dev: device for clock "consumer"
-+ * @id: clock consumer ID
-+ *
-+ * Context: May sleep.
-+ *
-+ * Return: a struct clk corresponding to the clock producer, or
-+ * valid IS_ERR() condition containing errno.  The implementation
-+ * uses @dev and @id to determine the clock consumer, and thereby
-+ * the clock producer.  If no such clk is found, it returns NULL
-+ * which serves as a dummy clk.  That's the only difference compared
-+ * to devm_clk_get_enabled().
-+ *
-+ * The returned clk (if valid) is prepared and enabled.
-+ *
-+ * The clock will automatically be disabled, unprepared and freed
-+ * when the device is unbound from the bus.
-+ */
-+struct clk *devm_clk_get_optional_enabled(struct device *dev, const char *id);
-+
- /**
-  * devm_get_clk_from_child - lookup and obtain a managed reference to a
-  *			     clock producer from child node.
-@@ -773,12 +858,36 @@ static inline struct clk *devm_clk_get(struct device *dev, const char *id)
- 	return NULL;
- }
- 
-+static inline struct clk *devm_clk_get_prepared(struct device *dev,
-+						const char *id)
-+{
-+	return NULL;
-+}
-+
-+static inline struct clk *devm_clk_get_enabled(struct device *dev,
-+					       const char *id)
-+{
-+	return NULL;
-+}
-+
- static inline struct clk *devm_clk_get_optional(struct device *dev,
- 						const char *id)
- {
- 	return NULL;
- }
- 
-+static inline struct clk *devm_clk_get_optional_prepared(struct device *dev,
-+							 const char *id)
-+{
-+	return NULL;
-+}
-+
-+static inline struct clk *devm_clk_get_optional_enabled(struct device *dev,
-+							const char *id)
-+{
-+	return NULL;
-+}
-+
- static inline int __must_check devm_clk_bulk_get(struct device *dev, int num_clks,
- 						 struct clk_bulk_data *clks)
- {
+ 	return 0;
 -- 
 2.39.0
 
