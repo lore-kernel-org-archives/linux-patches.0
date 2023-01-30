@@ -1,34 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B18F28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:02:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF4DC433D2;
-	Mon, 30 Jan 2023 14:02:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F234628EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:02:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76CA4C433EF;
+	Mon, 30 Jan 2023 14:02:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087321;
-	bh=aUHe/ku59CJyZQYm3tJm3BPQl1OqQXpECyjv8TUP338=;
+	s=korg; t=1675087323;
+	bh=YX4RugcpItiVM8A7NG6e5fEYq5hgkGcvBR9y9xKIkjc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LIbnsMlyR/6YDlxxmjI5FfUDPNV+gmD/SfSs+li+gj+2lSfQk78RwFlyOCRNwu2Jo
-	 DqtSaJM4KfHdrNwBFClJnBcQBwWOZWqqra4ClYPDCjvUJBMJDdF145CkEkCfsbcz3m
-	 ClTvwDbxQHbHcmEsEu6mgJXDiuCvh0s9FBYKSxtQ=
+	b=a4FMsrDHVjtn5O+wz0iRtDHzxG9N6izejiuxyYNZ3bpuAkYYjsYwHRrkl9Q+I2vMZ
+	 lNcODFbWkXawdpeM71mWEXF7k0o3pAfY34pe8zYLcxvbxOWNM22Br0U9oTdlKo+mny
+	 r9lfaT+LwMSTYebUwRcwPf/b/yMBHG9bTJc/M7SY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Cassel <Niklas.Cassel@wdc.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Yuchung Cheng <ycheng@google.com>,
+	David Morley <morleyd@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
 	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Paolo Abeni <pabeni@redhat.com>,
-	netdev@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>,
-	Niklas Cassel <niklas.cassel@wdc.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 139/313] bnxt: Do not read past the end of test names
-Date: Mon, 30 Jan 2023 14:49:34 +0100
-Message-Id: <20230130134343.125552398@linuxfoundation.org>
+Subject: [PATCH 6.1 140/313] tcp: fix rate_app_limited to default to 1
+Date: Mon, 30 Jan 2023 14:49:35 +0100
+Message-Id: <20230130134343.174504672@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -42,93 +38,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: David Morley <morleyd@google.com>
 
-[ Upstream commit d3e599c090fc6977331150c5f0a69ab8ce87da21 ]
+[ Upstream commit 300b655db1b5152d6101bcb6801d50899b20c2d6 ]
 
-Test names were being concatenated based on a offset beyond the end of
-the first name, which tripped the buffer overflow detection logic:
+The initial default value of 0 for tp->rate_app_limited was incorrect,
+since a flow is indeed application-limited until it first sends
+data. Fixing the default to be 1 is generally correct but also
+specifically will help user-space applications avoid using the initial
+tcpi_delivery_rate value of 0 that persists until the connection has
+some non-zero bandwidth sample.
 
- detected buffer overflow in strnlen
- [...]
- Call Trace:
- bnxt_ethtool_init.cold+0x18/0x18
-
-Refactor struct hwrm_selftest_qlist_output to use an actual array,
-and adjust the concatenation to use snprintf() rather than a series of
-strncat() calls.
-
-Reported-by: Niklas Cassel <Niklas.Cassel@wdc.com>
-Link: https://lore.kernel.org/lkml/Y8F%2F1w1AZTvLglFX@x1-carbon/
-Tested-by: Niklas Cassel <Niklas.Cassel@wdc.com>
-Fixes: eb51365846bc ("bnxt_en: Add basic ethtool -t selftest support.")
-Cc: Michael Chan <michael.chan@broadcom.com>
-Cc: "David S. Miller" <davem@davemloft.net>
-Cc: Eric Dumazet <edumazet@google.com>
-Cc: Jakub Kicinski <kuba@kernel.org>
-Cc: Paolo Abeni <pabeni@redhat.com>
-Cc: netdev@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Michael Chan <michael.chan@broadcom.com>
-Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
+Fixes: eb8329e0a04d ("tcp: export data delivery rate")
+Suggested-by: Yuchung Cheng <ycheng@google.com>
+Signed-off-by: David Morley <morleyd@google.com>
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Tested-by: David Morley <morleyd@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 13 ++++---------
- drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h     |  9 +--------
- 2 files changed, 5 insertions(+), 17 deletions(-)
+ net/ipv4/tcp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-index 8cad15c458b3..703fc163235f 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
-@@ -3865,7 +3865,7 @@ void bnxt_ethtool_init(struct bnxt *bp)
- 		test_info->timeout = HWRM_CMD_TIMEOUT;
- 	for (i = 0; i < bp->num_tests; i++) {
- 		char *str = test_info->string[i];
--		char *fw_str = resp->test0_name + i * 32;
-+		char *fw_str = resp->test_name[i];
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 4f2205756cfe..ec19ed722453 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -435,6 +435,7 @@ void tcp_init_sock(struct sock *sk)
  
- 		if (i == BNXT_MACLPBK_TEST_IDX) {
- 			strcpy(str, "Mac loopback test (offline)");
-@@ -3876,14 +3876,9 @@ void bnxt_ethtool_init(struct bnxt *bp)
- 		} else if (i == BNXT_IRQ_TEST_IDX) {
- 			strcpy(str, "Interrupt_test (offline)");
- 		} else {
--			strscpy(str, fw_str, ETH_GSTRING_LEN);
--			strncat(str, " test", ETH_GSTRING_LEN - strlen(str));
--			if (test_info->offline_mask & (1 << i))
--				strncat(str, " (offline)",
--					ETH_GSTRING_LEN - strlen(str));
--			else
--				strncat(str, " (online)",
--					ETH_GSTRING_LEN - strlen(str));
-+			snprintf(str, ETH_GSTRING_LEN, "%s test (%s)",
-+				 fw_str, test_info->offline_mask & (1 << i) ?
-+					"offline" : "online");
- 		}
- 	}
+ 	/* There's a bubble in the pipe until at least the first ACK. */
+ 	tp->app_limited = ~0U;
++	tp->rate_app_limited = 1;
  
-diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h
-index b753032a1047..fb78fc38530d 100644
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h
-@@ -10099,14 +10099,7 @@ struct hwrm_selftest_qlist_output {
- 	u8	unused_0;
- 	__le16	test_timeout;
- 	u8	unused_1[2];
--	char	test0_name[32];
--	char	test1_name[32];
--	char	test2_name[32];
--	char	test3_name[32];
--	char	test4_name[32];
--	char	test5_name[32];
--	char	test6_name[32];
--	char	test7_name[32];
-+	char	test_name[8][32];
- 	u8	eyescope_target_BER_support;
- 	#define SELFTEST_QLIST_RESP_EYESCOPE_TARGET_BER_SUPPORT_BER_1E8_SUPPORTED  0x0UL
- 	#define SELFTEST_QLIST_RESP_EYESCOPE_TARGET_BER_SUPPORT_BER_1E9_SUPPORTED  0x1UL
+ 	/* See draft-stevens-tcpca-spec-01 for discussion of the
+ 	 * initialization of these values.
+@@ -3177,6 +3178,7 @@ int tcp_disconnect(struct sock *sk, int flags)
+ 	tp->last_oow_ack_time = 0;
+ 	/* There's a bubble in the pipe until at least the first ACK. */
+ 	tp->app_limited = ~0U;
++	tp->rate_app_limited = 1;
+ 	tp->rack.mstamp = 0;
+ 	tp->rack.advanced = 0;
+ 	tp->rack.reo_wnd_steps = 1;
 -- 
 2.39.0
 
