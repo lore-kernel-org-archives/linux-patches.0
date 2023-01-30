@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F5CD3229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:23:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 781EAC433EF;
-	Mon, 30 Jan 2023 14:23:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60E10323C
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:23:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BACEBC433EF;
+	Mon, 30 Jan 2023 14:23:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088583;
-	bh=j5Kz3K4+JOm/ft/pKabc8hj2q7h0FbmpBPDhhufJ4Z0=;
+	s=korg; t=1675088586;
+	bh=zL+jDpKgNJoatZKiw2piRhNuUv0oWA6TVS438OSXSAc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wfIESlQiqrUMJNstxIl4cXfvJ6ViOIbqdgJmvHicnfaJJGhf6EuYqapREJUpM8hXi
-	 c5ccpf1Bb+XzfdaxDj/p5froFPc2h2NojIpDZMEWb0oFKbERuXMWE/AyLHsCBTO29m
-	 ERgqxJp/P4B9OrWsSnvSZAQHdOY0BJ125g85vKds=
+	b=WDFlozGVE6r6t+Wv0ad70CLmaQ0P6AUus9HH/PxgBZiotu27y6dEb3Sdbe2NtedmY
+	 ebuq0IzE61jPQ5B53xGZg9IBcQ7XUqLzaWu57lVQWQDZZHkFqs9Ztoi3jpK83NHZYn
+	 w+pdQg2iHp70JDKcV7n+0N/JsuyaeBziQpBzP/Jk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 068/143] ASoC: fsl-asoc-card: Fix naming of AC97 CODEC widgets
-Date: Mon, 30 Jan 2023 14:52:05 +0100
-Message-Id: <20230130134309.653493804@linuxfoundation.org>
+Subject: [PATCH 5.10 069/143] spi: spidev: remove debug messages that access spidev->spi without locking
+Date: Mon, 30 Jan 2023 14:52:06 +0100
+Message-Id: <20230130134309.700025726@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -35,40 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 242fc66ae6e1e2b8519daacc7590a73cd0e8a6e4 ]
+[ Upstream commit 6b35b173dbc1711f8d272e3f322d2ad697015919 ]
 
-The fsl-asoc-card AC'97 support currently tries to route to Playback and
-Capture widgets provided by the AC'97 CODEC. This doesn't work since the
-generic AC'97 driver registers with an "AC97" at the front of the stream
-and hence widget names, update to reflect reality. It's not clear to me
-if or how this ever worked.
+The two debug messages in spidev_open() dereference spidev->spi without
+taking the lock and without checking if it's not null. This can lead to
+a crash. Drop the messages as they're not needed - the user-space will
+get informed about ENOMEM with the syscall return value.
 
-Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20230106-asoc-udoo-probe-v1-2-a5d7469d4f67@kernel.org
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/r/20230106100719.196243-2-brgl@bgdev.pl
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl-asoc-card.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/spi/spidev.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
-index 8c976fde44f0..9a756d0a6032 100644
---- a/sound/soc/fsl/fsl-asoc-card.c
-+++ b/sound/soc/fsl/fsl-asoc-card.c
-@@ -117,8 +117,8 @@ static const struct snd_soc_dapm_route audio_map[] = {
- 
- static const struct snd_soc_dapm_route audio_map_ac97[] = {
- 	/* 1st half -- Normal DAPM routes */
--	{"Playback",  NULL, "CPU AC97 Playback"},
--	{"CPU AC97 Capture",  NULL, "Capture"},
-+	{"AC97 Playback",  NULL, "CPU AC97 Playback"},
-+	{"CPU AC97 Capture",  NULL, "AC97 Capture"},
- 	/* 2nd half -- ASRC DAPM routes */
- 	{"CPU AC97 Playback",  NULL, "ASRC-Playback"},
- 	{"ASRC-Capture",  NULL, "CPU AC97 Capture"},
+diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
+index 9c5ec99431d2..aee960a7d7f9 100644
+--- a/drivers/spi/spidev.c
++++ b/drivers/spi/spidev.c
+@@ -592,7 +592,6 @@ static int spidev_open(struct inode *inode, struct file *filp)
+ 	if (!spidev->tx_buffer) {
+ 		spidev->tx_buffer = kmalloc(bufsiz, GFP_KERNEL);
+ 		if (!spidev->tx_buffer) {
+-			dev_dbg(&spidev->spi->dev, "open/ENOMEM\n");
+ 			status = -ENOMEM;
+ 			goto err_find_dev;
+ 		}
+@@ -601,7 +600,6 @@ static int spidev_open(struct inode *inode, struct file *filp)
+ 	if (!spidev->rx_buffer) {
+ 		spidev->rx_buffer = kmalloc(bufsiz, GFP_KERNEL);
+ 		if (!spidev->rx_buffer) {
+-			dev_dbg(&spidev->spi->dev, "open/ENOMEM\n");
+ 			status = -ENOMEM;
+ 			goto err_alloc_rx_buf;
+ 		}
 -- 
 2.39.0
 
