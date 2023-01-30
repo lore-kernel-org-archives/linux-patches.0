@@ -1,75 +1,88 @@
-Received: from mail.netfilter.org (mail.netfilter.org [217.70.188.207])
-	by smtp.subspace.kernel.org (Postfix) with ESMTP id ECF223229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:23:56 +0000 (UTC)
-Date: Mon, 30 Jan 2023 15:16:51 +0100
-From: Pablo Neira Ayuso <pablo@netfilter.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+	(No client certificate requested)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916D0323C
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:23:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE5AC433EF;
+	Mon, 30 Jan 2023 14:23:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1675088637;
+	bh=0Ff1wA/jsyyzrcmDhgicIlBx8qhymYYf+T9UwvZxt8o=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ZOOQD0uQNAkhEhRcOIcljHd2KaAjpBmNHAh79zrlml85pnbG1K8oOReUpiwwDkU3z
+	 kdmgkRNXwdXi7Y+z6Uyxq1j/Rt3dwulr7DHZjZtaREKmyjPwV2xgw66bcPK8JRrsgv
+	 s88oFxWq2FUQfZUJv6z0ATRaZ+1jYu5FRVLL2pjg=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: Re: [PATCH 6.1 274/313] netfilter: conntrack: fix bug in
- for_each_sctp_chunk
-Message-ID: <Y9fRU/vV0oCYv7+u@salvia>
-References: <20230130134336.532886729@linuxfoundation.org>
- <20230130134349.500119625@linuxfoundation.org>
+Subject: [PATCH 5.10 056/143] w1: fix WARNING after calling w1_process()
+Date: Mon, 30 Jan 2023 14:51:53 +0100
+Message-Id: <20230130134309.185051367@linuxfoundation.org>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
+References: <20230130134306.862721518@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20230130134349.500119625@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi,
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-On Mon, Jan 30, 2023 at 02:51:49PM +0100, Greg Kroah-Hartman wrote:
-> From: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
-> 
-> [ Upstream commit 98ee0077452527f971567db01386de3c3d97ce13 ]
-> 
-> skb_header_pointer() will return NULL if offset + sizeof(_sch) exceeds
-> skb->len, so this offset < skb->len test is redundant.
-> 
-> if sch->length == 0, this will end up in an infinite loop, add a check
-> for sch->length > 0
+[ Upstream commit 36225a7c72e9e3e1ce4001b6ce72849f5c9a2d3b ]
 
-Please, keep back this patch. for_each_sctp_chunk() is fine because
-do_basic_checks() already make sure what sch->length is sane.
+I got the following WARNING message while removing driver(ds2482):
 
-A revert is scheduled for the net.git tree, the revert should show up
-in the next 6.2-rc release.
+------------[ cut here ]------------
+do not call blocking ops when !TASK_RUNNING; state=1 set at [<000000002d50bfb6>] w1_process+0x9e/0x1d0 [wire]
+WARNING: CPU: 0 PID: 262 at kernel/sched/core.c:9817 __might_sleep+0x98/0xa0
+CPU: 0 PID: 262 Comm: w1_bus_master1 Tainted: G                 N 6.1.0-rc3+ #307
+RIP: 0010:__might_sleep+0x98/0xa0
+Call Trace:
+ exit_signals+0x6c/0x550
+ do_exit+0x2b4/0x17e0
+ kthread_exit+0x52/0x60
+ kthread+0x16d/0x1e0
+ ret_from_fork+0x1f/0x30
 
-Sorry for the inconvenience.
+The state of task is set to TASK_INTERRUPTIBLE in loop in w1_process(),
+set it to TASK_RUNNING when it breaks out of the loop to avoid the
+warning.
 
-> Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
-> Suggested-by: Florian Westphal <fw@strlen.de>
-> Signed-off-by: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
-> Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  net/netfilter/nf_conntrack_proto_sctp.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
-> index 3704d1c7d3c2..ee317f9a22e5 100644
-> --- a/net/netfilter/nf_conntrack_proto_sctp.c
-> +++ b/net/netfilter/nf_conntrack_proto_sctp.c
-> @@ -155,8 +155,8 @@ static void sctp_print_conntrack(struct seq_file *s, struct nf_conn *ct)
->  
->  #define for_each_sctp_chunk(skb, sch, _sch, offset, dataoff, count)	\
->  for ((offset) = (dataoff) + sizeof(struct sctphdr), (count) = 0;	\
-> -	(offset) < (skb)->len &&					\
-> -	((sch) = skb_header_pointer((skb), (offset), sizeof(_sch), &(_sch)));	\
-> +	((sch) = skb_header_pointer((skb), (offset), sizeof(_sch), &(_sch))) &&	\
-> +	(sch)->length;	\
->  	(offset) += (ntohs((sch)->length) + 3) & ~3, (count)++)
->  
->  /* Some validity checks to make sure the chunks are fine */
-> -- 
-> 2.39.0
-> 
-> 
-> 
+Fixes: 3c52e4e62789 ("W1: w1_process, block or sleep")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221205101558.3599162-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/w1/w1.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/w1/w1.c b/drivers/w1/w1.c
+index 6e9f3569971d..15842377c8d2 100644
+--- a/drivers/w1/w1.c
++++ b/drivers/w1/w1.c
+@@ -1160,8 +1160,10 @@ int w1_process(void *data)
+ 		 */
+ 		mutex_unlock(&dev->list_mutex);
+ 
+-		if (kthread_should_stop())
++		if (kthread_should_stop()) {
++			__set_current_state(TASK_RUNNING);
+ 			break;
++		}
+ 
+ 		/* Only sleep when the search is active. */
+ 		if (dev->search_count) {
+-- 
+2.39.0
+
+
+
