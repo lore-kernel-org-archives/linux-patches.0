@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59B528EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:08:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45FB0C433EF;
-	Mon, 30 Jan 2023 14:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E668528EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:08:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B8C8C433EF;
+	Mon, 30 Jan 2023 14:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087706;
-	bh=RF+eZ5QPDwfrxVrFaV5K/BFJwCf2699qjYjEo4z5ggk=;
+	s=korg; t=1675087709;
+	bh=IF909m9jF6pdyQlq+PDiqLPD0ZJ1ETp4gTpC3/O2tx4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YEQtM+mqoZGTZ+bi+T6qEVsWIBB7LRgaPzn+W8SLLjfIiN/1uZRxWDuncrHyXfiNr
-	 dkumvGb7E3Uenikzvr8nH+9i857OmphcUG0R/wpuWdC6JpSWZcqExlUKOmkSBBC7LU
-	 nkHoukESicZAoKSTFlWWDFMIR7srCy0K74e7MrXo=
+	b=QlQCKDGIT0DBrjIDM0kBtvZIPEMH1MsY45eg2gEIkvNaLv065Kf+44SzVajyf2eSB
+	 afzeP8fak72zdNN8XVW19sOjQdefTX7tk/5725i3VkUSaLYID4/sT4Lz+o08wetToK
+	 lcrZBJqY5AZA44MTYsot7ybVC22IwB/WaVoHs5B4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gerhard Engleder <gerhard@engleder-embedded.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 296/313] tsnep: Fix TX queue stop/wake for multiple queues
-Date: Mon, 30 Jan 2023 14:52:11 +0100
-Message-Id: <20230130134350.527364792@linuxfoundation.org>
+Subject: [PATCH 6.1 268/313] netlink: annotate data races around sk_state
+Date: Mon, 30 Jan 2023 14:51:43 +0100
+Message-Id: <20230130134349.225784699@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,77 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gerhard Engleder <gerhard@engleder-embedded.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 3d53aaef4332245044b2f3688ac0ea10436c719c ]
+[ Upstream commit 9b663b5cbb15b494ef132a3c937641c90646eb73 ]
 
-netif_stop_queue() and netif_wake_queue() act on TX queue 0. This is ok
-as long as only a single TX queue is supported. But support for multiple
-TX queues was introduced with 762031375d5c and I missed to adapt stop
-and wake of TX queues.
+netlink_getsockbyportid() reads sk_state while a concurrent
+netlink_connect() can change its value.
 
-Use netif_stop_subqueue() and netif_tx_wake_queue() to act on specific
-TX queue.
-
-Fixes: 762031375d5c ("tsnep: Support multiple TX/RX queue pairs")
-Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
-Link: https://lore.kernel.org/r/20230124191440.56887-1-gerhard@engleder-embedded.com
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/engleder/tsnep_main.c | 15 +++++++++------
- 1 file changed, 9 insertions(+), 6 deletions(-)
+ net/netlink/af_netlink.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/engleder/tsnep_main.c b/drivers/net/ethernet/engleder/tsnep_main.c
-index 13d5ff4e0e02..6bf3cc11d212 100644
---- a/drivers/net/ethernet/engleder/tsnep_main.c
-+++ b/drivers/net/ethernet/engleder/tsnep_main.c
-@@ -419,7 +419,7 @@ static netdev_tx_t tsnep_xmit_frame_ring(struct sk_buff *skb,
- 		/* ring full, shall not happen because queue is stopped if full
- 		 * below
- 		 */
--		netif_stop_queue(tx->adapter->netdev);
-+		netif_stop_subqueue(tx->adapter->netdev, tx->queue_index);
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index a597e4dac7fd..e50671296791 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -1087,7 +1087,8 @@ static int netlink_connect(struct socket *sock, struct sockaddr *addr,
+ 		return -EINVAL;
  
- 		spin_unlock_irqrestore(&tx->lock, flags);
+ 	if (addr->sa_family == AF_UNSPEC) {
+-		sk->sk_state	= NETLINK_UNCONNECTED;
++		/* paired with READ_ONCE() in netlink_getsockbyportid() */
++		WRITE_ONCE(sk->sk_state, NETLINK_UNCONNECTED);
+ 		/* dst_portid and dst_group can be read locklessly */
+ 		WRITE_ONCE(nlk->dst_portid, 0);
+ 		WRITE_ONCE(nlk->dst_group, 0);
+@@ -1111,7 +1112,8 @@ static int netlink_connect(struct socket *sock, struct sockaddr *addr,
+ 		err = netlink_autobind(sock);
  
-@@ -462,7 +462,7 @@ static netdev_tx_t tsnep_xmit_frame_ring(struct sk_buff *skb,
+ 	if (err == 0) {
+-		sk->sk_state	= NETLINK_CONNECTED;
++		/* paired with READ_ONCE() in netlink_getsockbyportid() */
++		WRITE_ONCE(sk->sk_state, NETLINK_CONNECTED);
+ 		/* dst_portid and dst_group can be read locklessly */
+ 		WRITE_ONCE(nlk->dst_portid, nladdr->nl_pid);
+ 		WRITE_ONCE(nlk->dst_group, ffs(nladdr->nl_groups));
+@@ -1163,8 +1165,8 @@ static struct sock *netlink_getsockbyportid(struct sock *ssk, u32 portid)
  
- 	if (tsnep_tx_desc_available(tx) < (MAX_SKB_FRAGS + 1)) {
- 		/* ring can get full with next frame */
--		netif_stop_queue(tx->adapter->netdev);
-+		netif_stop_subqueue(tx->adapter->netdev, tx->queue_index);
- 	}
- 
- 	spin_unlock_irqrestore(&tx->lock, flags);
-@@ -472,11 +472,14 @@ static netdev_tx_t tsnep_xmit_frame_ring(struct sk_buff *skb,
- 
- static bool tsnep_tx_poll(struct tsnep_tx *tx, int napi_budget)
- {
-+	struct tsnep_tx_entry *entry;
-+	struct netdev_queue *nq;
- 	unsigned long flags;
- 	int budget = 128;
--	struct tsnep_tx_entry *entry;
--	int count;
- 	int length;
-+	int count;
-+
-+	nq = netdev_get_tx_queue(tx->adapter->netdev, tx->queue_index);
- 
- 	spin_lock_irqsave(&tx->lock, flags);
- 
-@@ -533,8 +536,8 @@ static bool tsnep_tx_poll(struct tsnep_tx *tx, int napi_budget)
- 	} while (likely(budget));
- 
- 	if ((tsnep_tx_desc_available(tx) >= ((MAX_SKB_FRAGS + 1) * 2)) &&
--	    netif_queue_stopped(tx->adapter->netdev)) {
--		netif_wake_queue(tx->adapter->netdev);
-+	    netif_tx_queue_stopped(nq)) {
-+		netif_tx_wake_queue(nq);
- 	}
- 
- 	spin_unlock_irqrestore(&tx->lock, flags);
+ 	/* Don't bother queuing skb if kernel socket has no input function */
+ 	nlk = nlk_sk(sock);
+-	/* dst_portid can be changed in netlink_connect() */
+-	if (sock->sk_state == NETLINK_CONNECTED &&
++	/* dst_portid and sk_state can be changed in netlink_connect() */
++	if (READ_ONCE(sock->sk_state) == NETLINK_CONNECTED &&
+ 	    READ_ONCE(nlk->dst_portid) != nlk_sk(ssk)->portid) {
+ 		sock_put(sock);
+ 		return ERR_PTR(-ECONNREFUSED);
 -- 
 2.39.0
 
