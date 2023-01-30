@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7BA93229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:23:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30AC5C433EF;
-	Mon, 30 Jan 2023 14:23:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAB3C3229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:23:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1BED6C433D2;
+	Mon, 30 Jan 2023 14:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088610;
-	bh=xn0tX10HHtiHaK7JF2asy5N+UhPNlImdQWd8e6Ip+88=;
+	s=korg; t=1675088613;
+	bh=erl/GSgzJcCR3Xzy6LAAt9P6QF9rBuS+rCSKlStHteU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1HlPAt1fX3m5Y9uhV/4lc2Tr16cofLHb1VYnKrokmyjSUpgdM8rOSGdun290JhX4
-	 7oDGjnv6tOrDyl7WJo12bYQpwn+8JFKAp+DmKQWb+vnPSzcGJcPgU9XFqMBtEoaiNT
-	 IxkhSXQF4MULeVIw35hXZ4hb4yeJ/q6Ad8169QYA=
+	b=qqIn/sU9F+qJZnPmNLhQJkCjuUn+g++pH3h+GMr1UAxtwCPPlOHwEGsLq3QahxEBd
+	 fFy8Kk/3BonpA+Kmpo8GkDipSHGuJiEGTVGItmHvcBRBnLUd6o58cstdY2fohfw44N
+	 tl7mhaoY+incuhAhkDE2aPef8V368kZtSgOQUIdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 076/143] netfilter: conntrack: do not renew entry stuck in tcp SYN_SENT state
-Date: Mon, 30 Jan 2023 14:52:13 +0100
-Message-Id: <20230130134310.016886445@linuxfoundation.org>
+	Deepak Sharma <deepak.sharma@amd.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Subject: [PATCH 5.10 077/143] x86: ACPI: cstate: Optimize C3 entry on AMD CPUs
+Date: Mon, 30 Jan 2023 14:52:14 +0100
+Message-Id: <20230130134310.069963449@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -35,60 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Deepak Sharma <deepak.sharma@amd.com>
 
-[ Upstream commit e15d4cdf27cb0c1e977270270b2cea12e0955edd ]
+commit a8fb40966f19ff81520d9ccf8f7e2b95201368b8 upstream.
 
-Consider:
-  client -----> conntrack ---> Host
+All Zen or newer CPU which support C3 shares cache. Its not necessary to
+flush the caches in software before entering C3. This will cause drop in
+performance for the cores which share some caches. ARB_DIS is not used
+with current AMD C state implementation. So set related flags correctly.
 
-client sends a SYN, but $Host is unreachable/silent.
-Client eventually gives up and the conntrack entry will time out.
-
-However, if the client is restarted with same addr/port pair, it
-may prevent the conntrack entry from timing out.
-
-This is noticeable when the existing conntrack entry has no NAT
-transformation or an outdated one and port reuse happens either
-on client or due to a NAT middlebox.
-
-This change prevents refresh of the timeout for SYN retransmits,
-so entry is going away after nf_conntrack_tcp_timeout_syn_sent
-seconds (default: 60).
-
-Entry will be re-created on next connection attempt, but then
-nat rules will be evaluated again.
-
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Deepak Sharma <deepak.sharma@amd.com>
+Acked-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_proto_tcp.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ arch/x86/kernel/acpi/cstate.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/net/netfilter/nf_conntrack_proto_tcp.c b/net/netfilter/nf_conntrack_proto_tcp.c
-index 3f785bdfa942..c1d02c0b4f00 100644
---- a/net/netfilter/nf_conntrack_proto_tcp.c
-+++ b/net/netfilter/nf_conntrack_proto_tcp.c
-@@ -1158,6 +1158,16 @@ int nf_conntrack_tcp_packet(struct nf_conn *ct,
- 			nf_ct_kill_acct(ct, ctinfo, skb);
- 			return NF_ACCEPT;
- 		}
-+
-+		if (index == TCP_SYN_SET && old_state == TCP_CONNTRACK_SYN_SENT) {
-+			/* do not renew timeout on SYN retransmit.
-+			 *
-+			 * Else port reuse by client or NAT middlebox can keep
-+			 * entry alive indefinitely (including nat info).
-+			 */
-+			return NF_ACCEPT;
-+		}
-+
- 		/* ESTABLISHED without SEEN_REPLY, i.e. mid-connection
- 		 * pickup with loose=1. Avoid large ESTABLISHED timeout.
+--- a/arch/x86/kernel/acpi/cstate.c
++++ b/arch/x86/kernel/acpi/cstate.c
+@@ -79,6 +79,21 @@ void acpi_processor_power_init_bm_check(
  		 */
--- 
-2.39.0
-
+ 		flags->bm_control = 0;
+ 	}
++	if (c->x86_vendor == X86_VENDOR_AMD && c->x86 >= 0x17) {
++		/*
++		 * For all AMD Zen or newer CPUs that support C3, caches
++		 * should not be flushed by software while entering C3
++		 * type state. Set bm->check to 1 so that kernel doesn't
++		 * need to execute cache flush operation.
++		 */
++		flags->bm_check = 1;
++		/*
++		 * In current AMD C state implementation ARB_DIS is no longer
++		 * used. So set bm_control to zero to indicate ARB_DIS is not
++		 * required while entering C3 type state.
++		 */
++		flags->bm_control = 0;
++	}
+ }
+ EXPORT_SYMBOL(acpi_processor_power_init_bm_check);
+ 
 
 
