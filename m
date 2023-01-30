@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8E74C28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:56:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE5FAC433EF;
-	Mon, 30 Jan 2023 13:56:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73F728EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:56:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6EAC433D2;
+	Mon, 30 Jan 2023 13:56:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675086970;
-	bh=JM45I2fdT6mOTmZK1pKVbXIFfVWOizKcUivhoEtHPEI=;
+	s=korg; t=1675086973;
+	bh=UeGqHrvCWKj5EAXMF8Sn6n5DCLBy4MFpPvC5d4V2EpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IllxO/LTrQbKV9rRFPRcxPJGNvyOlDkAUU9GDSlEol5ZHE79wvMqljvgrjfNKFdTX
-	 OBvyp7PQJlSWr8/xp83hCPKe+SV3Wqn+saoYgspKgt5ql1SYeXbktbg7Qw2SnflT07
-	 P5vpvkkCAdOSpBBcz6oJoG65GnE6+UYNFFP4RZDU=
+	b=HGU6jLjkgx5I3tPU8yki/ASbFDFWTpdSD0iqzkIR30xqBAy/ruF8pCpyZoa8Mo3NA
+	 +3iqqOYN+/296FBqZztQPbloVDBQ9KWxtscCCOkb1DUeVOhrEtLW9/MK3YFu50IsDU
+	 DBM/oEKRhZfvb6VhYJtqO8iyGe7V7aLoyR9aChM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	linux-phy@lists.infradead.org,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 056/313] kbuild: fix make modules error when CONFIG_DEBUG_INFO_BTF_MODULES=y
-Date: Mon, 30 Jan 2023 14:48:11 +0100
-Message-Id: <20230130134339.295051171@linuxfoundation.org>
+Subject: [PATCH 6.1 057/313] phy: ti: fix Kconfig warning and operator precedence
+Date: Mon, 30 Jan 2023 14:48:12 +0100
+Message-Id: <20230130134339.344522391@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -34,45 +38,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 74d3320f6f7cf72de88a7e8df573821f6db90239 ]
+[ Upstream commit 7124c93887cc4e6c5b48920f83115e4a5892e870 ]
 
-When CONFIG_DEBUG_INFO_BTF_MODULES=y, running 'make modules'
-in the clean kernel tree will get the following error.
+Fix Kconfig depends operator precedence to prevent a Kconfig warning:
 
-  $ grep CONFIG_DEBUG_INFO_BTF_MODULES .config
-  CONFIG_DEBUG_INFO_BTF_MODULES=y
-  $ make -s clean
-  $ make modules
-    [snip]
-    AR      vmlinux.a
-  ar: ./built-in.a: No such file or directory
-  make: *** [Makefile:1241: vmlinux.a] Error 1
+WARNING: unmet direct dependencies detected for MUX_MMIO
+  Depends on [n]: MULTIPLEXER [=m] && OF [=n]
+  Selected by [m]:
+  - PHY_AM654_SERDES [=m] && (OF [=n] && ARCH_K3 || COMPILE_TEST [=y]) && COMMON_CLK [=y]
 
-'modules' depends on 'vmlinux', but builtin objects are not built.
-
-Define KBUILD_BUILTIN.
-
-Fixes: f73edc8951b2 ("kbuild: unify two modpost invocations")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Fixes: 71e2f5c5c224 ("phy: ti: Add a new SERDES driver for TI's AM654x SoC")
+Fixes: 091876cc355d ("phy: ti: j721e-wiz: Add support for WIZ module present in TI J721E SoC")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: linux-phy@lists.infradead.org
+Cc: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230110062529.22668-1-rdunlap@infradead.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Makefile | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/phy/ti/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 770e509d4da4..0904b82905d9 100644
---- a/Makefile
-+++ b/Makefile
-@@ -1529,6 +1529,7 @@ endif
- # *.ko are usually independent of vmlinux, but CONFIG_DEBUG_INFOBTF_MODULES
- # is an exception.
- ifdef CONFIG_DEBUG_INFO_BTF_MODULES
-+KBUILD_BUILTIN := 1
- modules: vmlinux
- endif
+diff --git a/drivers/phy/ti/Kconfig b/drivers/phy/ti/Kconfig
+index 15a3bcf32308..b905902d5750 100644
+--- a/drivers/phy/ti/Kconfig
++++ b/drivers/phy/ti/Kconfig
+@@ -23,7 +23,7 @@ config PHY_DM816X_USB
  
+ config PHY_AM654_SERDES
+ 	tristate "TI AM654 SERDES support"
+-	depends on OF && ARCH_K3 || COMPILE_TEST
++	depends on OF && (ARCH_K3 || COMPILE_TEST)
+ 	depends on COMMON_CLK
+ 	select GENERIC_PHY
+ 	select MULTIPLEXER
+@@ -35,7 +35,7 @@ config PHY_AM654_SERDES
+ 
+ config PHY_J721E_WIZ
+ 	tristate "TI J721E WIZ (SERDES Wrapper) support"
+-	depends on OF && ARCH_K3 || COMPILE_TEST
++	depends on OF && (ARCH_K3 || COMPILE_TEST)
+ 	depends on HAS_IOMEM && OF_ADDRESS
+ 	depends on COMMON_CLK
+ 	select GENERIC_PHY
 -- 
 2.39.0
 
