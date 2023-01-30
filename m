@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5590A28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:09:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF13AC433D2;
-	Mon, 30 Jan 2023 14:09:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37F1328EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:09:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99545C433EF;
+	Mon, 30 Jan 2023 14:09:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087795;
-	bh=QLX6WgW1wIuVM837j38lDg2WUtVYMLuCnvNM1srsRJk=;
+	s=korg; t=1675087798;
+	bh=YfOqNJE3zTnMBXhCwcZu+FEL09OpJJqkJOQhP+BX/x4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UPINpBPIbJJUzsQJUhwlKcgjSvqFvXHOIfiYimFLG7lOShrwgg6E210nItf9so0wY
-	 9Fg2jmbbtIsuwMooJiFSlDwfUolwuU3btKmcYZqLQ+xhWXWJonAX14xZbiHoZYGcIJ
-	 JRWtBZjZdbkM7gUm652pvjRRLS+/aAcXiQrAj82M=
+	b=C8+pIXDV3LbJNxD1H+GszEueMj6zyYSriGusHZt/ubkx6gz+zh/o/7KfwoieTxKwJ
+	 EIbTQrS+XDfqlFO27K69RS95WlWYwIuBZJB4nGBYBBhmQe39MXfB2YnEsfm7m93twe
+	 p26arXrzon5TURpmPgHtWhLCWqMRtckr2d/yyWEw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 013/204] soc: imx8m: Fix incorrect check for of_clk_get_by_name()
-Date: Mon, 30 Jan 2023 14:49:38 +0100
-Message-Id: <20230130134316.887623406@linuxfoundation.org>
+Subject: [PATCH 5.15 014/204] reset: uniphier-glue: Use reset_control_bulk API
+Date: Mon, 30 Jan 2023 14:49:39 +0100
+Message-Id: <20230130134316.922412599@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,35 +35,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Philipp Zabel <p.zabel@pengutronix.de>
 
-[ Upstream commit 490748874ebf1875420fc29b335bba2075dd1b5e ]
+[ Upstream commit 176cae38719196a43cd8ae08377413a3884a9f15 ]
 
-of_clk_get_by_name() returns error pointers instead of NULL.
-Use IS_ERR() checks the return value to catch errors.
+This driver already uses the clk_bulk API. Simplify the driver by using
+the reset_control_bulk API as well.
 
-Fixes: 836fb30949d9 ("soc: imx8m: Enable OCOTP clock before reading the register")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Reviewed-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Link: https://lore.kernel.org/r/20211215093829.3209416-1-p.zabel@pengutronix.de
+Signed-off-by: Philipp Zabel <p.zabel@pengutronix.de>
+Stable-dep-of: 3a2390c6777e ("reset: uniphier-glue: Fix possible null-ptr-deref")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/imx/soc-imx8m.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/reset/reset-uniphier-glue.c | 33 ++++++++++++-----------------
+ 1 file changed, 14 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
-index 28144c699b0c..32ed9dc88e45 100644
---- a/drivers/soc/imx/soc-imx8m.c
-+++ b/drivers/soc/imx/soc-imx8m.c
-@@ -66,8 +66,8 @@ static u32 __init imx8mq_soc_revision(void)
- 	ocotp_base = of_iomap(np, 0);
- 	WARN_ON(!ocotp_base);
- 	clk = of_clk_get_by_name(np, NULL);
--	if (!clk) {
--		WARN_ON(!clk);
-+	if (IS_ERR(clk)) {
-+		WARN_ON(IS_ERR(clk));
- 		return 0;
- 	}
+diff --git a/drivers/reset/reset-uniphier-glue.c b/drivers/reset/reset-uniphier-glue.c
+index 027990b79f61..6d422c69532c 100644
+--- a/drivers/reset/reset-uniphier-glue.c
++++ b/drivers/reset/reset-uniphier-glue.c
+@@ -23,7 +23,7 @@ struct uniphier_glue_reset_soc_data {
+ 
+ struct uniphier_glue_reset_priv {
+ 	struct clk_bulk_data clk[MAX_CLKS];
+-	struct reset_control *rst[MAX_RSTS];
++	struct reset_control_bulk_data rst[MAX_RSTS];
+ 	struct reset_simple_data rdata;
+ 	const struct uniphier_glue_reset_soc_data *data;
+ };
+@@ -34,8 +34,7 @@ static int uniphier_glue_reset_probe(struct platform_device *pdev)
+ 	struct uniphier_glue_reset_priv *priv;
+ 	struct resource *res;
+ 	resource_size_t size;
+-	const char *name;
+-	int i, ret, nr;
++	int i, ret;
+ 
+ 	priv = devm_kzalloc(dev, sizeof(*priv), GFP_KERNEL);
+ 	if (!priv)
+@@ -58,22 +57,20 @@ static int uniphier_glue_reset_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		return ret;
+ 
+-	for (i = 0; i < priv->data->nrsts; i++) {
+-		name = priv->data->reset_names[i];
+-		priv->rst[i] = devm_reset_control_get_shared(dev, name);
+-		if (IS_ERR(priv->rst[i]))
+-			return PTR_ERR(priv->rst[i]);
+-	}
++	for (i = 0; i < priv->data->nrsts; i++)
++		priv->rst[i].id = priv->data->reset_names[i];
++	ret = devm_reset_control_bulk_get_shared(dev, priv->data->nrsts,
++						 priv->rst);
++	if (ret)
++		return ret;
+ 
+ 	ret = clk_bulk_prepare_enable(priv->data->nclks, priv->clk);
+ 	if (ret)
+ 		return ret;
+ 
+-	for (nr = 0; nr < priv->data->nrsts; nr++) {
+-		ret = reset_control_deassert(priv->rst[nr]);
+-		if (ret)
+-			goto out_rst_assert;
+-	}
++	ret = reset_control_bulk_deassert(priv->data->nrsts, priv->rst);
++	if (ret)
++		goto out_clk_disable;
+ 
+ 	spin_lock_init(&priv->rdata.lock);
+ 	priv->rdata.rcdev.owner = THIS_MODULE;
+@@ -91,9 +88,9 @@ static int uniphier_glue_reset_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ out_rst_assert:
+-	while (nr--)
+-		reset_control_assert(priv->rst[nr]);
++	reset_control_bulk_assert(priv->data->nrsts, priv->rst);
+ 
++out_clk_disable:
+ 	clk_bulk_disable_unprepare(priv->data->nclks, priv->clk);
+ 
+ 	return ret;
+@@ -102,10 +99,8 @@ static int uniphier_glue_reset_probe(struct platform_device *pdev)
+ static int uniphier_glue_reset_remove(struct platform_device *pdev)
+ {
+ 	struct uniphier_glue_reset_priv *priv = platform_get_drvdata(pdev);
+-	int i;
+ 
+-	for (i = 0; i < priv->data->nrsts; i++)
+-		reset_control_assert(priv->rst[i]);
++	reset_control_bulk_assert(priv->data->nrsts, priv->rst);
+ 
+ 	clk_bulk_disable_unprepare(priv->data->nclks, priv->clk);
  
 -- 
 2.39.0
