@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28A828EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:58:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A37CC433D2;
-	Mon, 30 Jan 2023 13:58:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E53AF28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:58:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B8B2C4339B;
+	Mon, 30 Jan 2023 13:58:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087083;
-	bh=SyhV1wXk19Z1wuhlY9/I4zbKoyKhQ5G+hOCxeoj3U2U=;
+	s=korg; t=1675087086;
+	bh=S+m/rYRSgOq5SzvLQugKUBZDvVBCJcidAOytyFWQjNc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MD8PKvjldfjrP76bcc42OCQVf2/sk1+071Sg4zrGB8X2J0HAMpK9dJsueo/0DOp/9
-	 PFl0WCJKdulZ4JtF5ZxztANKIO3+AFunZSpDlNjXZQ6kej8ZZTCya/USFirtTIfclz
-	 0YUY7veHAjbkBjTYIjl0jxTHUEAabxDm4rz4LbaU=
+	b=pY6kMvSsJvhIKe8I5RCdlSMXH0Q+yR8OcAAoqnm1iZ7vW2LR0j9VhqHzdiBmtAsCc
+	 hksLuHERrQPkkIL1uZ9XBkl1C9NeEFM/utdiSeiX+Q5RiTfvLOzPVmEHQLNLXCH44u
+	 1jxBXtgP7i3YO+laYPTz9RUkSRat6hA1uAFQA7vk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Oleksij Rempel <o.rempel@pengutronix.de>,
-	Alexandre Torgue <alexandre.torgue@st.com>,
-	linux-stm32@st-md-mailman.stormreply.com,
-	linux-arm-kernel@lists.infradead.org,
-	Alexandre Torgue <alexandre.torgue@foss.st.com>,
+	Christian Zigotzky <chzigotzky@xenosoft.de>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 091/313] ARM: dts: stm32: Fix qspi pinctrl phandle for stm32mp151a-prtt1l
-Date: Mon, 30 Jan 2023 14:48:46 +0100
-Message-Id: <20230130134340.885423222@linuxfoundation.org>
+Subject: [PATCH 6.1 092/313] HID: revert CHERRY_MOUSE_000C quirk
+Date: Mon, 30 Jan 2023 14:48:47 +0100
+Message-Id: <20230130134340.930286115@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -39,44 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Patrice Chotard <patrice.chotard@foss.st.com>
+From: Jiri Kosina <jkosina@suse.cz>
 
-[ Upstream commit 175281f80695569c7f9cf062e5d0ddc4addc109f ]
+[ Upstream commit cbf44580ce6b310272a73e3e794233fd064330bd ]
 
-Chip select pinctrl phandle was missing in several stm32mp15x based boards.
+This partially reverts commit f6d910a89a2391 ("HID: usbhid: Add ALWAYS_POLL quirk
+for some mice"), as it turns out to break reboot on some platforms for reason
+yet to be understood.
 
-Fixes: ea99a5a02ebc ("ARM: dts: stm32: Create separate pinmux for qspi cs pin in stm32mp15-pinctrl.dtsi")
-
-Signed-off-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Cc: Oleksij Rempel <o.rempel@pengutronix.de>
-Cc: Alexandre Torgue <alexandre.torgue@st.com>
-Cc: linux-stm32@st-md-mailman.stormreply.com
-Cc: linux-arm-kernel@lists.infradead.org
-Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
+Fixes: f6d910a89a2391 ("HID: usbhid: Add ALWAYS_POLL quirk for some mice")
+Reported-by: Christian Zigotzky <chzigotzky@xenosoft.de>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/stm32mp151a-prtt1l.dtsi | 8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/hid/hid-ids.h    | 1 -
+ drivers/hid/hid-quirks.c | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/stm32mp151a-prtt1l.dtsi b/arch/arm/boot/dts/stm32mp151a-prtt1l.dtsi
-index d865ab5d866b..dd23de85100c 100644
---- a/arch/arm/boot/dts/stm32mp151a-prtt1l.dtsi
-+++ b/arch/arm/boot/dts/stm32mp151a-prtt1l.dtsi
-@@ -101,8 +101,12 @@ &iwdg2 {
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 82713ef3aaa6..c3735848ed5d 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -274,7 +274,6 @@
+ #define USB_DEVICE_ID_CH_AXIS_295	0x001c
  
- &qspi {
- 	pinctrl-names = "default", "sleep";
--	pinctrl-0 = <&qspi_clk_pins_a &qspi_bk1_pins_a>;
--	pinctrl-1 = <&qspi_clk_sleep_pins_a &qspi_bk1_sleep_pins_a>;
-+	pinctrl-0 = <&qspi_clk_pins_a
-+		     &qspi_bk1_pins_a
-+		     &qspi_cs1_pins_a>;
-+	pinctrl-1 = <&qspi_clk_sleep_pins_a
-+		     &qspi_bk1_sleep_pins_a
-+		     &qspi_cs1_sleep_pins_a>;
- 	reg = <0x58003000 0x1000>, <0x70000000 0x4000000>;
- 	#address-cells = <1>;
- 	#size-cells = <0>;
+ #define USB_VENDOR_ID_CHERRY		0x046a
+-#define USB_DEVICE_ID_CHERRY_MOUSE_000C	0x000c
+ #define USB_DEVICE_ID_CHERRY_CYMOTION	0x0023
+ #define USB_DEVICE_ID_CHERRY_CYMOTION_SOLAR	0x0027
+ 
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 0e9702c7f7d6..be3ad02573de 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -54,7 +54,6 @@ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CH, USB_DEVICE_ID_CH_FLIGHT_SIM_YOKE), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CH, USB_DEVICE_ID_CH_PRO_PEDALS), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CH, USB_DEVICE_ID_CH_PRO_THROTTLE), HID_QUIRK_NOGET },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_CHERRY, USB_DEVICE_ID_CHERRY_MOUSE_000C), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_K65RGB), HID_QUIRK_NO_INIT_REPORTS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_K65RGB_RAPIDFIRE), HID_QUIRK_NO_INIT_REPORTS | HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_K70RGB), HID_QUIRK_NO_INIT_REPORTS },
 -- 
 2.39.0
 
