@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2103229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:21:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88E65C433D2;
-	Mon, 30 Jan 2023 14:21:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208F23229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:21:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81BC1C433EF;
+	Mon, 30 Jan 2023 14:21:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088505;
-	bh=5Ql//xyiGJLl8Ga0Js8lkb5AZkXI24aaadvwxvQXQwc=;
+	s=korg; t=1675088508;
+	bh=F2yG3WWNJLD6l8ZwPi0fb543XMI9dhiFCKhXETUNQ+k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nuEEjgpAB9u9rnWBXlNMvRhmnxim90ho8118nSEFVNMobOxrfzLuBvEgEvgMjjq4c
-	 9X0BCTOZqmZM5lfqp/43ppehAC4F7hPOGJEXoSdZ43rBuEDt9t/sm/XsPv7TE0/48F
-	 xhdrqyhnNY1RDMtrc/1l/1jDRkHLQn9+kWlcNyoo=
+	b=IFnG5balqdN6be/o6Jiotg51F9vqoJeGTAO3IU8X+LUmrbe7YrLURQNmRqcvpxt6N
+	 0dnFKBIHS//k3/uoVLuhsQDFfNfvPAF5/LRlxEk51M3uiq3aFdYlcI/XZVQqWqWlnX
+	 48PYMhk6gPb3iptwPWTsjZ/SdiNA9DP96ovdwRCI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 041/143] HID: check empty report_list in bigben_probe()
-Date: Mon, 30 Jan 2023 14:51:38 +0100
-Message-Id: <20230130134308.551259539@linuxfoundation.org>
+Subject: [PATCH 5.10 042/143] net: stmmac: fix invalid call to mdiobus_get_phy()
+Date: Mon, 30 Jan 2023 14:51:39 +0100
+Message-Id: <20230130134308.584227856@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -35,41 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit c7bf714f875531f227f2ef1fdcc8f4d44e7c7d9d ]
+[ Upstream commit 1f3bd64ad921f051254591fbed04fd30b306cde6 ]
 
-Add a check for empty report_list in bigben_probe().
-The missing check causes a type confusion when issuing a list_entry()
-on an empty report_list.
-The problem is caused by the assumption that the device must
-have valid report_list. While this will be true for all normal HID
-devices, a suitably malicious device can violate the assumption.
+In a number of cases the driver assigns a default value of -1 to
+priv->plat->phy_addr. This may result in calling mdiobus_get_phy()
+with addr parameter being -1. Therefore check for this scenario and
+bail out before calling mdiobus_get_phy().
 
-Fixes: 256a90ed9e46 ("HID: hid-bigbenff: driver for BigBen Interactive PS3OFMINIPAD gamepad")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Fixes: 42e87024f727 ("net: stmmac: Fix case when PHY handle is not present")
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://lore.kernel.org/r/669f9671-ecd1-a41b-2727-7b73e3003985@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-bigbenff.c | 5 +++++
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 5 +++++
  1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hid/hid-bigbenff.c b/drivers/hid/hid-bigbenff.c
-index e8c5e3ac9fff..e8b16665860d 100644
---- a/drivers/hid/hid-bigbenff.c
-+++ b/drivers/hid/hid-bigbenff.c
-@@ -344,6 +344,11 @@ static int bigben_probe(struct hid_device *hid,
- 	}
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 14ea0168b548..b52ca2fe04d8 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1125,6 +1125,11 @@ static int stmmac_init_phy(struct net_device *dev)
+ 		int addr = priv->plat->phy_addr;
+ 		struct phy_device *phydev;
  
- 	report_list = &hid->report_enum[HID_OUTPUT_REPORT].report_list;
-+	if (list_empty(report_list)) {
-+		hid_err(hid, "no output report found\n");
-+		error = -ENODEV;
-+		goto error_hw_stop;
-+	}
- 	bigben->report = list_entry(report_list->next,
- 		struct hid_report, list);
- 
++		if (addr < 0) {
++			netdev_err(priv->dev, "no phy found\n");
++			return -ENODEV;
++		}
++
+ 		phydev = mdiobus_get_phy(priv->mii, addr);
+ 		if (!phydev) {
+ 			netdev_err(priv->dev, "no phy at addr %d\n", addr);
 -- 
 2.39.0
 
