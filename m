@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31E1728EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:13:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB936C433D2;
-	Mon, 30 Jan 2023 14:13:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2579B28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:13:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0916C433A0;
+	Mon, 30 Jan 2023 14:13:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088022;
-	bh=ps18Zd3wCBOuDn8FiObSAS7S3BfyvVMvklDAr41AKyc=;
+	s=korg; t=1675088025;
+	bh=cBwvHLpe2y41XMZIQ1TvA88hDz1rADICAW+eEYIbZOE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KhYU9UeAz8Zt03hCx3gBGIaIXjyKybGSFLfpUzCTtcOAgN32u+u/9k2+Y6jO5wOFI
-	 VYA1NwnJDQ7CncP0zdxrvmMCqzhOX02N3Av0Y4GZlCcFB/0lmCL5rrfYBiPpJ9MGYc
-	 spYQCm7NOgukqSlABPIHXiNwvM6s5Kp3ju6neRyQ=
+	b=HHcS9kkq4rkVqwGhwnNpFWxOCJzWAnavZYF3t8iAqA5Rs+KGeYA+G/cs+KbP0hElH
+	 WtrfLkLykfmfZl11EdJpMcz1uV/FRX3kqFnFGor6TWILS+VQnUnkfBUfdLaevvt2ep
+	 cegCsNJxhV5fQnmXnE2+96hxoMxfUT5pTjnybqLQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rakesh Sankaranarayanan <rakesh.sankaranarayanan@microchip.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Alexandre Bailon <abailon@baylibre.com>,
+	Kevin Hilman <khilman@baylibre.com>,
+	Daniel Lezcano <daniel.lezcano@linexp.org>,
+	Lukasz Luba <lukasz.luba@arm.com>,
+	Daniel Lezcano <daniel.lezcano@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 088/204] net: dsa: microchip: ksz9477: port map correction in ALU table entry register
-Date: Mon, 30 Jan 2023 14:50:53 +0100
-Message-Id: <20230130134320.210451815@linuxfoundation.org>
+Subject: [PATCH 5.15 089/204] thermal/core: Remove duplicate information when an error occurs
+Date: Mon, 30 Jan 2023 14:50:54 +0100
+Message-Id: <20230130134320.260897318@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -36,53 +38,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rakesh Sankaranarayanan <rakesh.sankaranarayanan@microchip.com>
+From: Daniel Lezcano <daniel.lezcano@linexp.org>
 
-[ Upstream commit 6c977c5c2e4c5d8ad1b604724cc344e38f96fe9b ]
+[ Upstream commit 3f95ac324535eafafd436d35bf58f0319dd4a70b ]
 
-ALU table entry 2 register in KSZ9477 have bit positions reserved for
-forwarding port map. This field is referred in ksz9477_fdb_del() for
-clearing forward port map and alu table.
+The pr_err already tells it is an error, it is pointless to add the
+'Error:' string in the messages. Remove them.
 
-But current fdb_del refer ALU table entry 3 register for accessing forward
-port map. Update ksz9477_fdb_del() to get forward port map from correct
-alu table entry register.
-
-With this bug, issue can be observed while deleting static MAC entries.
-Delete any specific MAC entry using "bridge fdb del" command. This should
-clear all the specified MAC entries. But it is observed that entries with
-self static alone are retained.
-
-Tested on LAN9370 EVB since ksz9477_fdb_del() is used common across
-LAN937x and KSZ series.
-
-Fixes: b987e98e50ab ("dsa: add DSA switch driver for Microchip KSZ9477")
-Signed-off-by: Rakesh Sankaranarayanan <rakesh.sankaranarayanan@microchip.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://lore.kernel.org/r/20230118174735.702377-1-rakesh.sankaranarayanan@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Cc: Alexandre Bailon <abailon@baylibre.com>
+Cc: Kevin Hilman <khilman@baylibre.com>
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linexp.org>
+Reviewed-by: Lukasz Luba <lukasz.luba@arm.com>
+Link: https://lore.kernel.org/r/20220722200007.1839356-2-daniel.lezcano@linexp.org
+Signed-off-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+Stable-dep-of: 6c54b7bc8a31 ("thermal: core: call put_device() only after device_register() fails")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/microchip/ksz9477.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/thermal/thermal_core.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/dsa/microchip/ksz9477.c b/drivers/net/dsa/microchip/ksz9477.c
-index 379b38c5844f..bf788e17f408 100644
---- a/drivers/net/dsa/microchip/ksz9477.c
-+++ b/drivers/net/dsa/microchip/ksz9477.c
-@@ -675,10 +675,10 @@ static int ksz9477_port_fdb_del(struct dsa_switch *ds, int port,
- 		ksz_read32(dev, REG_SW_ALU_VAL_D, &alu_table[3]);
+diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
+index 38082fdc4fde..9ec7a8e04fa6 100644
+--- a/drivers/thermal/thermal_core.c
++++ b/drivers/thermal/thermal_core.c
+@@ -1197,23 +1197,23 @@ thermal_zone_device_register(const char *type, int trips, int mask,
+ 	struct thermal_governor *governor;
  
- 		/* clear forwarding port */
--		alu_table[2] &= ~BIT(port);
-+		alu_table[1] &= ~BIT(port);
+ 	if (!type || strlen(type) == 0) {
+-		pr_err("Error: No thermal zone type defined\n");
++		pr_err("No thermal zone type defined\n");
+ 		return ERR_PTR(-EINVAL);
+ 	}
  
- 		/* if there is no port to forward, clear table */
--		if ((alu_table[2] & ALU_V_PORT_MAP) == 0) {
-+		if ((alu_table[1] & ALU_V_PORT_MAP) == 0) {
- 			alu_table[0] = 0;
- 			alu_table[1] = 0;
- 			alu_table[2] = 0;
+ 	if (type && strlen(type) >= THERMAL_NAME_LENGTH) {
+-		pr_err("Error: Thermal zone name (%s) too long, should be under %d chars\n",
++		pr_err("Thermal zone name (%s) too long, should be under %d chars\n",
+ 		       type, THERMAL_NAME_LENGTH);
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
+ 	if (trips > THERMAL_MAX_TRIPS || trips < 0 || mask >> trips) {
+-		pr_err("Error: Incorrect number of thermal trips\n");
++		pr_err("Incorrect number of thermal trips\n");
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
+ 	if (!ops) {
+-		pr_err("Error: Thermal zone device ops not defined\n");
++		pr_err("Thermal zone device ops not defined\n");
+ 		return ERR_PTR(-EINVAL);
+ 	}
+ 
 -- 
 2.39.0
 
