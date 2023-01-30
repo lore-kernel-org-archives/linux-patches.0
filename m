@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB7C28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:00:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E80C433D2;
-	Mon, 30 Jan 2023 14:00:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0E128EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:00:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BEF3C433EF;
+	Mon, 30 Jan 2023 14:00:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087241;
-	bh=x+gOVXtRDYV5uej9F6oIqNv17uN1ek1roduVasw9TaU=;
+	s=korg; t=1675087245;
+	bh=6uAxm5KEIl3IcxH80/PrBEBFQrOTSh5clf3i1F9u3mQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Vz1DCEuFUSPmd3W0l8Zl5IfomHE5SqKE8sVpEouDQLDLT/PHs+FhndFiWVJOB23HM
-	 useSxtkRSdw87AfA5F6OS3dZ/FhAPtv1ZX1KtAcgvxDlYGxoSf4ujiReeZ5ScCreOY
-	 oavysqhgZVsc5G4uwF7TmbO5MiEn7SB+3ZSTvEiI=
+	b=XFqhbOcuijJyrzqjEu5UOukGcsQCtLZSUv8CzG346xbxCeVpQNB4cTlJz4KxE9txd
+	 iJ7GQUy2GmjrtSerxmXl0SBCMz+2LZ4EjbhWqelVCIq9K7Y93vrIl5wd4Q/dbBQBwd
+	 jhUPXow/TgE5IChOVw0SdR8ww/Nu2aAjBnE8oP3I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Curtis Malainey <cujomalainey@chromium.org>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Wim Van Boven <wimvanboven@gmail.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 144/313] ASoC: SOF: Add FW state to debugfs
-Date: Mon, 30 Jan 2023 14:49:39 +0100
-Message-Id: <20230130134343.368975414@linuxfoundation.org>
+Subject: [PATCH 6.1 145/313] ASoC: amd: yc: Add Razer Blade 14 2022 into DMI table
+Date: Mon, 30 Jan 2023 14:49:40 +0100
+Message-Id: <20230130134343.410031123@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -38,40 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Curtis Malainey <cujomalainey@chromium.org>
+From: Wim Van Boven <wimvanboven@gmail.com>
 
-[ Upstream commit 9a9134fd56f6ba614ff7b2b3b0bac0bf1d0dc0c9 ]
+[ Upstream commit 68506a173dd700c2bd794dcc3489edcdb8ee35c6 ]
 
-Allow system health detection mechanisms to check the FW state, this
-will allow them to check if the FW is in its "crashed" state going
-forward to help automatically diagnose driver state.
+Razer Blade 14 (2022) - RZ09-0427 needs the quirk to enable the built in microphone
 
-Signed-off-by: Curtis Malainey <cujomalainey@chromium.org>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20221220125629.8469-4-peter.ujfalusi@linux.intel.com
+Signed-off-by: Wim Van Boven <wimvanboven@gmail.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20221216081828.12382-1-wimvanboven@gmail.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/debug.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/amd/yc/acp6x-mach.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/soc/sof/debug.c b/sound/soc/sof/debug.c
-index d9a3ce7b69e1..ade0507328af 100644
---- a/sound/soc/sof/debug.c
-+++ b/sound/soc/sof/debug.c
-@@ -353,7 +353,9 @@ int snd_sof_dbg_init(struct snd_sof_dev *sdev)
- 			return err;
- 	}
- 
--	return 0;
-+	return snd_sof_debugfs_buf_item(sdev, &sdev->fw_state,
-+					sizeof(sdev->fw_state),
-+					"fw_state", 0444);
- }
- EXPORT_SYMBOL_GPL(snd_sof_dbg_init);
+diff --git a/sound/soc/amd/yc/acp6x-mach.c b/sound/soc/amd/yc/acp6x-mach.c
+index 1f0b5527c594..469c5e79e0ea 100644
+--- a/sound/soc/amd/yc/acp6x-mach.c
++++ b/sound/soc/amd/yc/acp6x-mach.c
+@@ -220,6 +220,13 @@ static const struct dmi_system_id yc_acp_quirk_table[] = {
+ 			DMI_MATCH(DMI_PRODUCT_NAME, "Redmi Book Pro 14 2022"),
+ 		}
+ 	},
++	{
++		.driver_data = &acp6x_card,
++		.matches = {
++			DMI_MATCH(DMI_BOARD_VENDOR, "Razer"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "Blade 14 (2022) - RZ09-0427"),
++		}
++	},
+ 	{}
+ };
  
 -- 
 2.39.0
