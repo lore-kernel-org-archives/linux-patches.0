@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ADDC28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:03:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42DFC433EF;
-	Mon, 30 Jan 2023 14:03:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 661EE28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:03:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD908C433D2;
+	Mon, 30 Jan 2023 14:03:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087436;
-	bh=kPGzsg3iak9bUhKpj7DoiBI4rzmGDwMtLp3JfFiEzvM=;
+	s=korg; t=1675087439;
+	bh=8ZSKvPOum3MLw1r1dtetFSXC3ZryVls5EoDCTJNmMVs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ycwKo0Mbd83eqiRvdnURM04gruB1pfrpJZ6gg5OpDDt5uGo7185An2b7Mc8GNwt77
-	 rwM5HM3fTRPCw4wiAsN0VvS8IBdphW+716GqPWsACvhOEgixikgb1Jyssrqjh8aPb+
-	 0peIs5mVxnJzz3hXTdHnRQjl5epxSEpUzJjPtkB4=
+	b=Svewyk/Y0bFqjbcJfmsKzb018mbIFwVm9fqBufL7Fs6vltwCRFb2vYIS7/+ECFqZp
+	 JL3HCTAdYjzajuueyydhuQ4yOyYopuGEOp5RcbeeDvcvdS96rzSJNyr+ElyEGDow2/
+	 Lpo7PIKsZy6lC4weQK5A6NLVpmhbsSWTihFFlkGI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Willy Tarreau <w@1wt.eu>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 166/313] nolibc: fix fd_set type
-Date: Mon, 30 Jan 2023 14:50:01 +0100
-Message-Id: <20230130134344.396762979@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>
+Subject: [PATCH 6.1 201/313] io_uring/msg_ring: fix remote queue to disabled ring
+Date: Mon, 30 Jan 2023 14:50:36 +0100
+Message-Id: <20230130134346.078425111@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,99 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sven Schnelle <svens@linux.ibm.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-[ Upstream commit feaf75658783a919410f8c2039dbc24b6a29603d ]
+commit 8579538c89e33ce78be2feb41e07489c8cbf8f31 upstream.
 
-The kernel uses unsigned long for the fd_set bitmap,
-but nolibc use u32. This works fine on little endian
-machines, but fails on big endian. Convert to unsigned
-long to fix this.
+IORING_SETUP_R_DISABLED rings don't have the submitter task set, so
+it's not always safe to use ->submitter_task. Disallow posting msg_ring
+messaged to disabled rings. Also add task NULL check for loosy sync
+around testing for IORING_SETUP_R_DISABLED.
 
-Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Willy Tarreau <w@1wt.eu>
-Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 6d043ee1164ca ("io_uring: do msg_ring in target task via tw")
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/include/nolibc/types.h | 53 ++++++++++++++++++++----------------
- 1 file changed, 30 insertions(+), 23 deletions(-)
+ io_uring/msg_ring.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/tools/include/nolibc/types.h b/tools/include/nolibc/types.h
-index 959997034e55..300e0ff1cd58 100644
---- a/tools/include/nolibc/types.h
-+++ b/tools/include/nolibc/types.h
-@@ -89,39 +89,46 @@
- #define EXIT_SUCCESS 0
- #define EXIT_FAILURE 1
+--- a/io_uring/msg_ring.c
++++ b/io_uring/msg_ring.c
+@@ -30,6 +30,8 @@ static int io_msg_ring_data(struct io_ki
  
-+#define FD_SETIDXMASK (8 * sizeof(unsigned long))
-+#define FD_SETBITMASK (8 * sizeof(unsigned long)-1)
-+
- /* for select() */
- typedef struct {
--	uint32_t fd32[(FD_SETSIZE + 31) / 32];
-+	unsigned long fds[(FD_SETSIZE + FD_SETBITMASK) / FD_SETIDXMASK];
- } fd_set;
+ 	if (msg->src_fd || msg->dst_fd || msg->flags)
+ 		return -EINVAL;
++	if (target_ctx->flags & IORING_SETUP_R_DISABLED)
++		return -EBADFD;
  
--#define FD_CLR(fd, set) do {                                            \
--		fd_set *__set = (set);                                  \
--		int __fd = (fd);                                        \
--		if (__fd >= 0)                                          \
--			__set->fd32[__fd / 32] &= ~(1U << (__fd & 31)); \
-+#define FD_CLR(fd, set) do {						\
-+		fd_set *__set = (set);					\
-+		int __fd = (fd);					\
-+		if (__fd >= 0)						\
-+			__set->fds[__fd / FD_SETIDXMASK] &=		\
-+				~(1U << (__fd & FX_SETBITMASK));	\
- 	} while (0)
+ 	if (io_post_aux_cqe(target_ctx, msg->user_data, msg->len, 0, true))
+ 		return 0;
+@@ -84,6 +86,8 @@ static int io_msg_send_fd(struct io_kioc
  
--#define FD_SET(fd, set) do {                                            \
--		fd_set *__set = (set);                                  \
--		int __fd = (fd);                                        \
--		if (__fd >= 0)                                          \
--			__set->fd32[__fd / 32] |= 1U << (__fd & 31);    \
-+#define FD_SET(fd, set) do {						\
-+		fd_set *__set = (set);					\
-+		int __fd = (fd);					\
-+		if (__fd >= 0)						\
-+			__set->fds[__fd / FD_SETIDXMASK] |=		\
-+				1 << (__fd & FD_SETBITMASK);		\
- 	} while (0)
+ 	if (target_ctx == ctx)
+ 		return -EINVAL;
++	if (target_ctx->flags & IORING_SETUP_R_DISABLED)
++		return -EBADFD;
  
--#define FD_ISSET(fd, set) ({                                                  \
--		fd_set *__set = (set);                                        \
--		int __fd = (fd);                                              \
--		int __r = 0;                                                  \
--		if (__fd >= 0)                                                \
--			__r = !!(__set->fd32[__fd / 32] & 1U << (__fd & 31)); \
--		__r;                                                          \
-+#define FD_ISSET(fd, set) ({						\
-+			fd_set *__set = (set);				\
-+			int __fd = (fd);				\
-+		int __r = 0;						\
-+		if (__fd >= 0)						\
-+			__r = !!(__set->fds[__fd / FD_SETIDXMASK] &	\
-+1U << (__fd & FD_SET_BITMASK));						\
-+		__r;							\
- 	})
- 
--#define FD_ZERO(set) do {                                               \
--		fd_set *__set = (set);                                  \
--		int __idx;                                              \
--		for (__idx = 0; __idx < (FD_SETSIZE+31) / 32; __idx ++) \
--			__set->fd32[__idx] = 0;                         \
-+#define FD_ZERO(set) do {						\
-+		fd_set *__set = (set);					\
-+		int __idx;						\
-+		int __size = (FD_SETSIZE+FD_SETBITMASK) / FD_SETIDXMASK;\
-+		for (__idx = 0; __idx < __size; __idx++)		\
-+			__set->fds[__idx] = 0;				\
- 	} while (0)
- 
- /* for poll() */
--- 
-2.39.0
-
+ 	ret = io_double_lock_ctx(ctx, target_ctx, issue_flags);
+ 	if (unlikely(ret))
 
 
