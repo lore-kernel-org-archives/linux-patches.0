@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564E728EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:09:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C9922C433D2;
-	Mon, 30 Jan 2023 14:09:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5223F28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:09:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A89B3C4339E;
+	Mon, 30 Jan 2023 14:09:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087761;
-	bh=7gtm6lm53EhHvkGOqfHy53kYOgwPO6yyJEY0evVUdb8=;
+	s=korg; t=1675087764;
+	bh=iTiHWzZjjov1MJUgNFVsnjmAtZHuTtM1HQuWaMRhgK8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WvJmX3OyR9ka4fhwP4lkOUg+JM9OLoAdeVV1tTrZ2AdG224jt5U8Hn5x3NtXpFNFe
-	 eM91S2rlK7NR0SszdAP0/u8PIHWB8DIQFXevXoRmnudwmkV9HvpINHyuIvXGvGvTiL
-	 Rg/vS4ghruQf8QiNvEhXKmvlZbKaAm43i3HHUjhU=
+	b=EcYfptEnc2GDBx33s7FfQD5MkuXwu2pfiUt99PoDUfVv8tpW6k7Zr75FBT9WP6q9N
+	 7tR0NSuKk0D+NerNw/SUgAEJdW5so2D9ahsD/Ge9Y31HI4MlH2AxjDzRNZVw+44MEo
+	 ZJuakuXKOwR7OhL87jSOW+uU2NiRSi5MkoXaka5w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivo Borisov Shopov <ivoshopov@gmail.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Joe Perches <joe@perches.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 301/313] tools: gpio: fix -c option of gpio-event-mon
-Date: Mon, 30 Jan 2023 14:52:16 +0100
-Message-Id: <20230130134350.757780538@linuxfoundation.org>
+Subject: [PATCH 6.1 302/313] Fix up more non-executable files marked executable
+Date: Mon, 30 Jan 2023 14:52:17 +0100
+Message-Id: <20230130134350.804990874@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,56 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivo Borisov Shopov <ivoshopov@gmail.com>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-[ Upstream commit 677d85e1a1ee69fa05ccea83847309484be3781c ]
+[ Upstream commit c96618275234ad03d44eafe9f8844305bb44fda4 ]
 
-Following line should listen for a rising edge and exit after the first
-one since '-c 1' is provided.
+Joe found another DT file that shouldn't be executable, and that
+frustrated me enough that I went hunting with this script:
 
-    # gpio-event-mon -n gpiochip1 -o 0 -r -c 1
+    git ls-files -s |
+        grep '^100755' |
+        cut -f2 |
+        xargs grep -L '^#!'
 
-It works with kernel 4.19 but it doesn't work with 5.10. In 5.10 the
-above command doesn't exit after the first rising edge it keep listening
-for an event forever. The '-c 1' is not taken into an account.
-The problem is in commit 62757c32d5db ("tools: gpio: add multi-line
-monitoring to gpio-event-mon").
-Before this commit the iterator 'i' in monitor_device() is used for
-counting of the events (loops). In the case of the above command (-c 1)
-we should start from 0 and increment 'i' only ones and hit the 'break'
-statement and exit the process. But after the above commit counting
-doesn't start from 0, it start from 1 when we listen on one line.
-It is because 'i' is used from one more purpose, counting of lines
-(num_lines) and it isn't restore to 0 after following code
+and that found another file that shouldn't have been marked executable
+either, despite being in the scripts directory.
 
-    for (i = 0; i < num_lines; i++)
-        gpiotools_set_bit(&values.mask, i);
+Maybe these two are the last ones at least for now.  But I'm sure we'll
+be back in a few years, fixing things up again.
 
-Restore the initial value of the iterator to 0 in order to allow counting
-of loops to work for any cases.
-
-Fixes: 62757c32d5db ("tools: gpio: add multi-line monitoring to gpio-event-mon")
-Signed-off-by: Ivo Borisov Shopov <ivoshopov@gmail.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-[Bartosz: tweak the commit message]
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: 8c6789f4e2d4 ("ASoC: dt-bindings: Add Everest ES8326 audio CODEC")
+Fixes: 4d8e5cd233db ("locking/atomics: Fix scripts/atomic/ script permissions")
+Reported-by: Joe Perches <joe@perches.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/gpio/gpio-event-mon.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/sound/everest,es8326.yaml | 0
+ scripts/atomic/atomics.tbl                                  | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+ mode change 100755 => 100644 Documentation/devicetree/bindings/sound/everest,es8326.yaml
+ mode change 100755 => 100644 scripts/atomic/atomics.tbl
 
-diff --git a/tools/gpio/gpio-event-mon.c b/tools/gpio/gpio-event-mon.c
-index 6c122952c589..5dee2b98ab60 100644
---- a/tools/gpio/gpio-event-mon.c
-+++ b/tools/gpio/gpio-event-mon.c
-@@ -86,6 +86,7 @@ int monitor_device(const char *device_name,
- 			gpiotools_test_bit(values.bits, i));
- 	}
- 
-+	i = 0;
- 	while (1) {
- 		struct gpio_v2_line_event event;
- 
+diff --git a/Documentation/devicetree/bindings/sound/everest,es8326.yaml b/Documentation/devicetree/bindings/sound/everest,es8326.yaml
+old mode 100755
+new mode 100644
+diff --git a/scripts/atomic/atomics.tbl b/scripts/atomic/atomics.tbl
+old mode 100755
+new mode 100644
 -- 
 2.39.0
 
