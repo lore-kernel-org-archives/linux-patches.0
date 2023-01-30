@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CAB6F28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:16:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FDFCC4339B;
-	Mon, 30 Jan 2023 14:16:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB69328F3
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:16:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10C70C433A0;
+	Mon, 30 Jan 2023 14:16:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088216;
-	bh=txMnUCQ+1YLXG3R0Lu4/Puj1zEYCp6oQYtx1+RuYkeY=;
+	s=korg; t=1675088219;
+	bh=Cd9u7iemeVCpzGVYRK/8IQscA86uTCz6/Yrp3VAHPEE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LpY+LdqLA5QX90yRC0hel13n6rr6kFalE6ddFW4a0phr1RiORdUolKDJUK9/EAykf
-	 q3QsDmQ+8DpM2b6nKjJiNdjPI4bV3AP0MrQLKfbszto2q35T2SV0x+bbozeLOYko/b
-	 Mtr03xHY1udsBdgCPYcfcWelHerQwDouws4pJvh0=
+	b=VzngQ3nz1muPZLlR3yUe/0UUypkaYigoTvx182Hlp5cALWHc+V0GCKBV+I7+fMSuR
+	 +PN+z9dfFwLA/JTm5UYBPTq+z99kxHOP7+VAOPxccNRSlammTN4IXNaclV212efMh+
+	 a4RmsF3YiJSvEx9tvYv5H+JzecfzrmMfdlQGxn4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Sergey Senozhatsky <senozhatsky@chromium.org>,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Hyunchul Lee <hyc.lee@gmail.com>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 154/204] ksmbd: add smbd max io size parameter
-Date: Mon, 30 Jan 2023 14:51:59 +0100
-Message-Id: <20230130134323.316893210@linuxfoundation.org>
+Subject: [PATCH 5.15 155/204] ksmbd: add max connections parameter
+Date: Mon, 30 Jan 2023 14:52:00 +0100
+Message-Id: <20230130134323.358328687@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -37,102 +37,105 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 65bb45b97b578c8eed1ffa80caec84708df49729 upstream.
+commit 0d0d4680db22eda1eea785c47bbf66a9b33a8b16 upstream.
 
-Add 'smbd max io size' parameter to adjust smbd-direct max read/write
-size.
+Add max connections parameter to limit number of maximum simultaneous
+connections.
 
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Cc: stable@vger.kernel.org
+Reviewed-by: Sergey Senozhatsky <senozhatsky@chromium.org>
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Reviewed-by: Hyunchul Lee <hyc.lee@gmail.com>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/ksmbd_netlink.h  |    3 ++-
- fs/ksmbd/transport_ipc.c  |    3 +++
- fs/ksmbd/transport_rdma.c |    8 +++++++-
- fs/ksmbd/transport_rdma.h |    6 ++++++
- 4 files changed, 18 insertions(+), 2 deletions(-)
+ fs/ksmbd/ksmbd_netlink.h |    3 ++-
+ fs/ksmbd/server.h        |    1 +
+ fs/ksmbd/transport_ipc.c |    3 +++
+ fs/ksmbd/transport_tcp.c |   17 ++++++++++++++++-
+ 4 files changed, 22 insertions(+), 2 deletions(-)
 
 --- a/fs/ksmbd/ksmbd_netlink.h
 +++ b/fs/ksmbd/ksmbd_netlink.h
-@@ -104,7 +104,8 @@ struct ksmbd_startup_request {
- 					 */
+@@ -105,7 +105,8 @@ struct ksmbd_startup_request {
  	__u32	sub_auth[3];		/* Subauth value for Security ID */
  	__u32	smb2_max_credits;	/* MAX credits */
--	__u32	reserved[128];		/* Reserved room */
-+	__u32	smbd_max_io_size;	/* smbd read write size */
-+	__u32	reserved[127];		/* Reserved room */
+ 	__u32	smbd_max_io_size;	/* smbd read write size */
+-	__u32	reserved[127];		/* Reserved room */
++	__u32	max_connections;	/* Number of maximum simultaneous connections */
++	__u32	reserved[126];		/* Reserved room */
  	__u32	ifc_list_sz;		/* interfaces list size */
  	__s8	____payload[];
  };
+--- a/fs/ksmbd/server.h
++++ b/fs/ksmbd/server.h
+@@ -41,6 +41,7 @@ struct ksmbd_server_config {
+ 	unsigned int		share_fake_fscaps;
+ 	struct smb_sid		domain_sid;
+ 	unsigned int		auth_mechs;
++	unsigned int		max_connections;
+ 
+ 	char			*conf[SERVER_CONF_WORK_GROUP + 1];
+ };
 --- a/fs/ksmbd/transport_ipc.c
 +++ b/fs/ksmbd/transport_ipc.c
-@@ -26,6 +26,7 @@
- #include "mgmt/ksmbd_ida.h"
- #include "connection.h"
- #include "transport_tcp.h"
-+#include "transport_rdma.h"
+@@ -307,6 +307,9 @@ static int ipc_server_config_on_startup(
+ 	if (req->smbd_max_io_size)
+ 		init_smbd_max_io_size(req->smbd_max_io_size);
  
- #define IPC_WAIT_TIMEOUT	(2 * HZ)
- 
-@@ -303,6 +304,8 @@ static int ipc_server_config_on_startup(
- 		init_smb2_max_trans_size(req->smb2_max_trans);
- 	if (req->smb2_max_credits)
- 		init_smb2_max_credits(req->smb2_max_credits);
-+	if (req->smbd_max_io_size)
-+		init_smbd_max_io_size(req->smbd_max_io_size);
- 
++	if (req->max_connections)
++		server_conf.max_connections = req->max_connections;
++
  	ret = ksmbd_set_netbios_name(req->netbios_name);
  	ret |= ksmbd_set_server_string(req->server_string);
---- a/fs/ksmbd/transport_rdma.c
-+++ b/fs/ksmbd/transport_rdma.c
-@@ -75,7 +75,7 @@ static int smb_direct_max_fragmented_rec
- /*  The maximum single-message size which can be received */
- static int smb_direct_max_receive_size = 8192;
+ 	ret |= ksmbd_set_work_group(req->work_group);
+--- a/fs/ksmbd/transport_tcp.c
++++ b/fs/ksmbd/transport_tcp.c
+@@ -15,6 +15,8 @@
+ #define IFACE_STATE_DOWN		BIT(0)
+ #define IFACE_STATE_CONFIGURED		BIT(1)
  
--static int smb_direct_max_read_write_size = 1024 * 1024;
-+static int smb_direct_max_read_write_size = SMBD_DEFAULT_IOSIZE;
- 
- static int smb_direct_max_outstanding_rw_ops = 8;
- 
-@@ -201,6 +201,12 @@ struct smb_direct_rdma_rw_msg {
- 	struct scatterlist	sg_list[0];
- };
- 
-+void init_smbd_max_io_size(unsigned int sz)
-+{
-+	sz = clamp_val(sz, SMBD_MIN_IOSIZE, SMBD_MAX_IOSIZE);
-+	smb_direct_max_read_write_size = sz;
-+}
++static atomic_t active_num_conn;
 +
- static inline int get_buf_page_count(void *buf, int size)
+ struct interface {
+ 	struct task_struct	*ksmbd_kthread;
+ 	struct socket		*ksmbd_socket;
+@@ -185,8 +187,10 @@ static int ksmbd_tcp_new_connection(stru
+ 	struct tcp_transport *t;
+ 
+ 	t = alloc_transport(client_sk);
+-	if (!t)
++	if (!t) {
++		sock_release(client_sk);
+ 		return -ENOMEM;
++	}
+ 
+ 	csin = KSMBD_TCP_PEER_SOCKADDR(KSMBD_TRANS(t)->conn);
+ 	if (kernel_getpeername(client_sk, csin) < 0) {
+@@ -239,6 +243,15 @@ static int ksmbd_kthread_fn(void *p)
+ 			continue;
+ 		}
+ 
++		if (server_conf.max_connections &&
++		    atomic_inc_return(&active_num_conn) >= server_conf.max_connections) {
++			pr_info_ratelimited("Limit the maximum number of connections(%u)\n",
++					    atomic_read(&active_num_conn));
++			atomic_dec(&active_num_conn);
++			sock_release(client_sk);
++			continue;
++		}
++
+ 		ksmbd_debug(CONN, "connect success: accepted new connection\n");
+ 		client_sk->sk->sk_rcvtimeo = KSMBD_TCP_RECV_TIMEOUT;
+ 		client_sk->sk->sk_sndtimeo = KSMBD_TCP_SEND_TIMEOUT;
+@@ -368,6 +381,8 @@ static int ksmbd_tcp_writev(struct ksmbd
+ static void ksmbd_tcp_disconnect(struct ksmbd_transport *t)
  {
- 	return DIV_ROUND_UP((uintptr_t)buf + size, PAGE_SIZE) -
---- a/fs/ksmbd/transport_rdma.h
-+++ b/fs/ksmbd/transport_rdma.h
-@@ -9,6 +9,10 @@
+ 	free_transport(TCP_TRANS(t));
++	if (server_conf.max_connections)
++		atomic_dec(&active_num_conn);
+ }
  
- #define SMB_DIRECT_PORT	5445
- 
-+#define SMBD_DEFAULT_IOSIZE (8 * 1024 * 1024)
-+#define SMBD_MIN_IOSIZE (512 * 1024)
-+#define SMBD_MAX_IOSIZE (16 * 1024 * 1024)
-+
- /* SMB DIRECT negotiation request packet [MS-SMBD] 2.2.1 */
- struct smb_direct_negotiate_req {
- 	__le16 min_version;
-@@ -54,10 +58,12 @@ struct smb_direct_data_transfer {
- int ksmbd_rdma_init(void);
- int ksmbd_rdma_destroy(void);
- bool ksmbd_rdma_capable_netdev(struct net_device *netdev);
-+void init_smbd_max_io_size(unsigned int sz);
- #else
- static inline int ksmbd_rdma_init(void) { return 0; }
- static inline int ksmbd_rdma_destroy(void) { return 0; }
- static inline bool ksmbd_rdma_capable_netdev(struct net_device *netdev) { return false; }
-+static inline void init_smbd_max_io_size(unsigned int sz) { }
- #endif
- 
- #endif /* __KSMBD_TRANSPORT_RDMA_H__ */
+ static void tcp_destroy_socket(struct socket *ksmbd_socket)
 
 
