@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7CB1128EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:11:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00F90C433D2;
-	Mon, 30 Jan 2023 14:11:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65C8D28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:11:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E003AC433D2;
+	Mon, 30 Jan 2023 14:11:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087900;
-	bh=U64EoKVpmvEQobbr79DDdvThN2VYoD1Z4QThGPOOWYU=;
+	s=korg; t=1675087903;
+	bh=/r1LgOhluFdjuWRaxZm+M0GIqbrzfIL4wSBOR8/wNMM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g3TLBDfUq5YpejT9EvIoaxuYA9WfxMzF0ssluPF9RWNazZH7+2fu2PfShNX2mN6Ws
-	 8dR0Yujvx9u0hRpqmf8js6L6zVLtjVPFADUfDAtCiezZrqTc6kgHLU8Yq7yUrXrizA
-	 VqZTXV8vzIK/qhjRk6N7VUQAgtV+nlykjpCcRLrQ=
+	b=F+nNxOuYcWYfPCgYfRlP9ekgwpFf3QXmotDmpGsTncixmuf8bn+duyuiKyzp39IHD
+	 pLrcphwRp64TfhgBEKYpVcb/DSOWkH0n7OpPQdeg65sTDzf8DJkmfBtzxcUjGwa85S
+	 AKMrGBfUYdrDvgr+RzcFrY7p1dkk2SC+XaJIz4Yw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonas Karlman <jonas@kwiboo.se>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Jianqun Xu <jay.xu@rock-chips.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Kurt Kanzenbach <kurt@linutronix.de>,
+	Vijayakannan Ayyathurai <vijayakannan.ayyathurai@intel.com>,
+	Wong Vee Khee <vee.khee.wong@linux.intel.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 048/204] pinctrl: rockchip: fix reading pull type on rk3568
-Date: Mon, 30 Jan 2023 14:50:13 +0100
-Message-Id: <20230130134318.439496196@linuxfoundation.org>
+Subject: [PATCH 5.15 049/204] net: stmmac: Fix queue statistics reading
+Date: Mon, 30 Jan 2023 14:50:14 +0100
+Message-Id: <20230130134318.472744881@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -37,61 +37,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jonas Karlman <jonas@kwiboo.se>
+From: Kurt Kanzenbach <kurt@linutronix.de>
 
-[ Upstream commit 31b62a98de42cf65d76e4dcfb571af067d27d83a ]
+[ Upstream commit c296c77efb66994d94d9f706446a115581226550 ]
 
-When reading pinconf-pins from debugfs it fails to get the configured pull
-type on RK3568, "unsupported pinctrl type" error messages is also reported.
+Correct queue statistics reading. All queue statistics are stored as unsigned
+long values. The retrieval for ethtool fetches these values as u64. However, on
+some systems the size of the counters are 32 bit. That yields wrong queue
+statistic counters e.g., on arm32 systems such as the stm32mp157. Fix it by
+using the correct data type.
 
-Fix this by adding support for RK3568 in rockchip_get_pull, including a
-reverse of the pull-up value swap applied in rockchip_set_pull so that
-pull-up is correctly reported in pinconf-pins.
-Also update the workaround comment to reflect affected pins, GPIO0_D3-D6.
+Tested on Olimex STMP157-OLinuXino-LIME2 by simple running linuxptp for a short
+period of time:
 
-Fixes: c0dadc0e47a8 ("pinctrl: rockchip: add support for rk3568")
-Signed-off-by: Jonas Karlman <jonas@kwiboo.se>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Reviewed-by: Jianqun Xu <jay.xu@rock-chips.com>
-Link: https://lore.kernel.org/r/20230110172955.1258840-1-jonas@kwiboo.se
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Non-patched kernel:
+|root@st1:~# ethtool -S eth0 | grep q0
+|     q0_tx_pkt_n: 3775276254951 # ???
+|     q0_tx_irq_n: 879
+|     q0_rx_pkt_n: 1194000908909 # ???
+|     q0_rx_irq_n: 278
+
+Patched kernel:
+|root@st1:~# ethtool -S eth0 | grep q0
+|     q0_tx_pkt_n: 2434
+|     q0_tx_irq_n: 1274
+|     q0_rx_pkt_n: 1604
+|     q0_rx_irq_n: 846
+
+Fixes: 68e9c5dee1cf ("net: stmmac: add ethtool per-queue statistic framework")
+Signed-off-by: Kurt Kanzenbach <kurt@linutronix.de>
+Cc: Vijayakannan Ayyathurai <vijayakannan.ayyathurai@intel.com>
+Cc: Wong Vee Khee <vee.khee.wong@linux.intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-rockchip.c | 11 ++++++++++-
- 1 file changed, 10 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
-index 4888840dfc33..0ca830fcf371 100644
---- a/drivers/pinctrl/pinctrl-rockchip.c
-+++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -1893,9 +1893,18 @@ static int rockchip_get_pull(struct rockchip_pin_bank *bank, int pin_num)
- 	case RK3308:
- 	case RK3368:
- 	case RK3399:
-+	case RK3568:
- 		pull_type = bank->pull_type[pin_num / 8];
- 		data >>= bit;
- 		data &= (1 << RK3188_PULL_BITS_PER_PIN) - 1;
-+		/*
-+		 * In the TRM, pull-up being 1 for everything except the GPIO0_D3-D6,
-+		 * where that pull up value becomes 3.
-+		 */
-+		if (ctrl->type == RK3568 && bank->bank_num == 0 && pin_num >= 27 && pin_num <= 30) {
-+			if (data == 3)
-+				data = 1;
-+		}
- 
- 		return rockchip_pull_list[pull_type][data];
- 	default:
-@@ -1951,7 +1960,7 @@ static int rockchip_set_pull(struct rockchip_pin_bank *bank,
- 			}
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+index dc31501fec8f..9e8ae4384e4f 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
+@@ -548,16 +548,16 @@ static void stmmac_get_per_qstats(struct stmmac_priv *priv, u64 *data)
+ 		p = (char *)priv + offsetof(struct stmmac_priv,
+ 					    xstats.txq_stats[q].tx_pkt_n);
+ 		for (stat = 0; stat < STMMAC_TXQ_STATS; stat++) {
+-			*data++ = (*(u64 *)p);
+-			p += sizeof(u64 *);
++			*data++ = (*(unsigned long *)p);
++			p += sizeof(unsigned long);
  		}
- 		/*
--		 * In the TRM, pull-up being 1 for everything except the GPIO0_D0-D6,
-+		 * In the TRM, pull-up being 1 for everything except the GPIO0_D3-D6,
- 		 * where that pull up value becomes 3.
- 		 */
- 		if (ctrl->type == RK3568 && bank->bank_num == 0 && pin_num >= 27 && pin_num <= 30) {
+ 	}
+ 	for (q = 0; q < rx_cnt; q++) {
+ 		p = (char *)priv + offsetof(struct stmmac_priv,
+ 					    xstats.rxq_stats[q].rx_pkt_n);
+ 		for (stat = 0; stat < STMMAC_RXQ_STATS; stat++) {
+-			*data++ = (*(u64 *)p);
+-			p += sizeof(u64 *);
++			*data++ = (*(unsigned long *)p);
++			p += sizeof(unsigned long);
+ 		}
+ 	}
+ }
 -- 
 2.39.0
 
