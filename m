@@ -1,34 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BA03229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:25:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4BA3C433EF;
-	Mon, 30 Jan 2023 14:25:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46C73229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:25:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64189C4339B;
+	Mon, 30 Jan 2023 14:25:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088742;
-	bh=iGXR7+C5GplkKLcKhMRxsxgtn9qEudSI371K+qCAJuI=;
+	s=korg; t=1675088745;
+	bh=0Bv6vF6sdxPMc4hXnPyUAGmxZuAmKITuj/ilcO9wjUE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ox/8Xr2JpvRh+DMP0Wpoi+tFINX40vpaHq17ujs99TPKjdR5M95E9WUX1/QCylrij
-	 kZ//MODcGG6aDcB+SAqllDzaVyKV+7CIfdxalIa8f+zQGhr8Ir/KoVzdCEeMzENzqW
-	 eFQuA+FXqrnKhwjC+OcJHJL0y+njass6HrHjgYm8=
+	b=mvYOysnurQ22pvT+TiiOz/6Hnyn17XMJQIJorc5fTjgKeQoh75Hh7pLhjMBgoptUG
+	 +Mj6aXL5d1LDYa3dv+r9G2Y6wKRizoGvINDHBmZjw399eI/c4nXm6cHqZI68F+Ec15
+	 pR3j3Ix6JGIjV5KO5arIWqM8rAtdm6/URXBbk2K0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Marco Elver <elver@google.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Baoquan He <bhe@redhat.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Xuefeng Li <lixuefeng@loongson.cn>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Eric Biggers <ebiggers@google.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 082/143] ubsan: no need to unset panic_on_warn in ubsan_epilogue()
-Date: Mon, 30 Jan 2023 14:52:19 +0100
-Message-Id: <20230130134310.266824177@linuxfoundation.org>
+Subject: [PATCH 5.10 114/143] i2c: designware: Use DIV_ROUND_CLOSEST() macro
+Date: Mon, 30 Jan 2023 14:52:51 +0100
+Message-Id: <20230130134311.552546765@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -42,50 +35,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit d83ce027a54068fabb70d2c252e1ce2da86784a4 upstream.
+[ Upstream commit c045214a0f31dd5d6be716ed2f119b57b6c5d3a2 ]
 
-panic_on_warn is unset inside panic(), so no need to unset it before
-calling panic() in ubsan_epilogue().
+Instead of open-coding DIV_ROUND_CLOSEST() and similar use the macros directly.
+While at it, replace numbers with predefined SI metric prefixes.
 
-Link: https://lkml.kernel.org/r/1644324666-15947-5-git-send-email-yangtiezhu@loongson.cn
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Reviewed-by: Marco Elver <elver@google.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Xuefeng Li <lixuefeng@loongson.cn>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
+No functional change intended.
+
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: c8c37bc51451 ("i2c: designware: use casting of u64 in clock multiplication to avoid overflow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/ubsan.c | 10 +---------
- 1 file changed, 1 insertion(+), 9 deletions(-)
+ drivers/i2c/busses/i2c-designware-common.c  | 8 ++++----
+ drivers/i2c/busses/i2c-designware-platdrv.c | 5 +++--
+ 2 files changed, 7 insertions(+), 6 deletions(-)
 
-diff --git a/lib/ubsan.c b/lib/ubsan.c
-index adf8dcf3c84e..d81d107f64f4 100644
---- a/lib/ubsan.c
-+++ b/lib/ubsan.c
-@@ -151,16 +151,8 @@ static void ubsan_epilogue(void)
+diff --git a/drivers/i2c/busses/i2c-designware-common.c b/drivers/i2c/busses/i2c-designware-common.c
+index 9468c6c89b3f..73a4ef8130e6 100644
+--- a/drivers/i2c/busses/i2c-designware-common.c
++++ b/drivers/i2c/busses/i2c-designware-common.c
+@@ -24,6 +24,7 @@
+ #include <linux/regmap.h>
+ #include <linux/swab.h>
+ #include <linux/types.h>
++#include <linux/units.h>
  
- 	current->in_ubsan--;
+ #include "i2c-designware-core.h"
  
--	if (panic_on_warn) {
--		/*
--		 * This thread may hit another WARN() in the panic path.
--		 * Resetting this prevents additional WARN() from panicking the
--		 * system on this thread.  Other threads are blocked by the
--		 * panic_mutex in panic().
--		 */
--		panic_on_warn = 0;
-+	if (panic_on_warn)
- 		panic("panic_on_warn set ...\n");
--	}
+@@ -347,7 +348,7 @@ u32 i2c_dw_scl_hcnt(u32 ic_clk, u32 tSYMBOL, u32 tf, int cond, int offset)
+ 		 *
+ 		 * If your hardware is free from tHD;STA issue, try this one.
+ 		 */
+-		return (ic_clk * tSYMBOL + 500000) / 1000000 - 8 + offset;
++		return DIV_ROUND_CLOSEST(ic_clk * tSYMBOL, MICRO) - 8 + offset;
+ 	else
+ 		/*
+ 		 * Conditional expression:
+@@ -363,8 +364,7 @@ u32 i2c_dw_scl_hcnt(u32 ic_clk, u32 tSYMBOL, u32 tf, int cond, int offset)
+ 		 * The reason why we need to take into account "tf" here,
+ 		 * is the same as described in i2c_dw_scl_lcnt().
+ 		 */
+-		return (ic_clk * (tSYMBOL + tf) + 500000) / 1000000
+-			- 3 + offset;
++		return DIV_ROUND_CLOSEST(ic_clk * (tSYMBOL + tf), MICRO) - 3 + offset;
  }
  
- static void handle_overflow(struct overflow_data *data, void *lhs,
+ u32 i2c_dw_scl_lcnt(u32 ic_clk, u32 tLOW, u32 tf, int offset)
+@@ -380,7 +380,7 @@ u32 i2c_dw_scl_lcnt(u32 ic_clk, u32 tLOW, u32 tf, int offset)
+ 	 * account the fall time of SCL signal (tf).  Default tf value
+ 	 * should be 0.3 us, for safety.
+ 	 */
+-	return ((ic_clk * (tLOW + tf) + 500000) / 1000000) - 1 + offset;
++	return DIV_ROUND_CLOSEST(ic_clk * (tLOW + tf), MICRO) - 1 + offset;
+ }
+ 
+ int i2c_dw_set_sda_hold(struct dw_i2c_dev *dev)
+diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
+index ad91c7c0faa5..474754151725 100644
+--- a/drivers/i2c/busses/i2c-designware-platdrv.c
++++ b/drivers/i2c/busses/i2c-designware-platdrv.c
+@@ -32,12 +32,13 @@
+ #include <linux/sched.h>
+ #include <linux/slab.h>
+ #include <linux/suspend.h>
++#include <linux/units.h>
+ 
+ #include "i2c-designware-core.h"
+ 
+ static u32 i2c_dw_get_clk_rate_khz(struct dw_i2c_dev *dev)
+ {
+-	return clk_get_rate(dev->clk)/1000;
++	return clk_get_rate(dev->clk) / KILO;
+ }
+ 
+ #ifdef CONFIG_ACPI
+@@ -284,7 +285,7 @@ static int dw_i2c_plat_probe(struct platform_device *pdev)
+ 
+ 		if (!dev->sda_hold_time && t->sda_hold_ns)
+ 			dev->sda_hold_time =
+-				div_u64(clk_khz * t->sda_hold_ns + 500000, 1000000);
++				DIV_S64_ROUND_CLOSEST(clk_khz * t->sda_hold_ns, MICRO);
+ 	}
+ 
+ 	adap = &dev->adapter;
 -- 
 2.39.0
 
