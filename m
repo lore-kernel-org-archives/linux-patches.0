@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC3473229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:18:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 420F4C433EF;
-	Mon, 30 Jan 2023 14:18:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA0FD3229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:18:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 529AAC433EF;
+	Mon, 30 Jan 2023 14:18:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088321;
-	bh=fpReE+b5+GjmPdd6xk2PqV/Ar4GK3VsfGhgIRkBBu68=;
+	s=korg; t=1675088324;
+	bh=0VKJTp5RT3h6IWHZ3a3T2WODZOkZiz8q+RrclSHmv14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ejmBtTW9Gd6uQ1yJyIcC+WFLG3sWgxB2kmd/bBk7qIzQzDh0xdlPbvAEbqKu1LD9W
-	 +c6VSSO5w0p72QkcfcGbCU1icc6r4xojv1hyF4TGKEdAtg7mRhrP8gwAGEBrklq+kv
-	 JmO8zqu3c2Cyc26fS3hzeQorAxDr0+bNHRB1Wy3k=
+	b=PIY0z+iymC8sPeN7R+GxsPudjhOyHGZbUjfUUb4tYIEjm9s+p9J7ufcQFW9PTX7w8
+	 cmpifh+3mdiP11PHaxuNo7ptGyItXJz18FjOle9qZLua4tPgvpkAxDXNl9CpnySccA
+	 nhXTZl8G1wZXF1koeG5g28nxKSAMmlJd3JBWBGtU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liao Chang <liaochang1@huawei.com>,
-	Guo Ren <guoren@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 185/204] riscv/kprobe: Fix instruction simulation of JALR
-Date: Mon, 30 Jan 2023 14:52:30 +0100
-Message-Id: <20230130134324.686085518@linuxfoundation.org>
+Subject: [PATCH 5.15 186/204] nvme: fix passthrough csi check
+Date: Mon, 30 Jan 2023 14:52:31 +0100
+Message-Id: <20230130134324.728016532@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -36,69 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liao Chang <liaochang1@huawei.com>
+From: Keith Busch <kbusch@kernel.org>
 
-[ Upstream commit ca0254998be4d74cf6add70ccfab0d2dbd362a10 ]
+[ Upstream commit 85eee6341abb81ac6a35062ffd5c3029eb53be6b ]
 
-Set kprobe at 'jalr 1140(ra)' of vfs_write results in the following
-crash:
+The namespace head saves the Command Set Indicator enum, so use that
+instead of the Command Set Selected. The two values are not the same.
 
-[   32.092235] Unable to handle kernel access to user memory without uaccess routines at virtual address 00aaaaaad77b1170
-[   32.093115] Oops [#1]
-[   32.093251] Modules linked in:
-[   32.093626] CPU: 0 PID: 135 Comm: ftracetest Not tainted 6.2.0-rc2-00013-gb0aa5e5df0cb-dirty #16
-[   32.093985] Hardware name: riscv-virtio,qemu (DT)
-[   32.094280] epc : ksys_read+0x88/0xd6
-[   32.094855]  ra : ksys_read+0xc0/0xd6
-[   32.095016] epc : ffffffff801cda80 ra : ffffffff801cdab8 sp : ff20000000d7bdc0
-[   32.095227]  gp : ffffffff80f14000 tp : ff60000080f9cb40 t0 : ffffffff80f13e80
-[   32.095500]  t1 : ffffffff8000c29c t2 : ffffffff800dbc54 s0 : ff20000000d7be60
-[   32.095716]  s1 : 0000000000000000 a0 : ffffffff805a64ae a1 : ffffffff80a83708
-[   32.095921]  a2 : ffffffff80f160a0 a3 : 0000000000000000 a4 : f229b0afdb165300
-[   32.096171]  a5 : f229b0afdb165300 a6 : ffffffff80eeebd0 a7 : 00000000000003ff
-[   32.096411]  s2 : ff6000007ff76800 s3 : fffffffffffffff7 s4 : 00aaaaaad77b1170
-[   32.096638]  s5 : ffffffff80f160a0 s6 : ff6000007ff76800 s7 : 0000000000000030
-[   32.096865]  s8 : 00ffffffc3d97be0 s9 : 0000000000000007 s10: 00aaaaaad77c9410
-[   32.097092]  s11: 0000000000000000 t3 : ffffffff80f13e48 t4 : ffffffff8000c29c
-[   32.097317]  t5 : ffffffff8000c29c t6 : ffffffff800dbc54
-[   32.097505] status: 0000000200000120 badaddr: 00aaaaaad77b1170 cause: 000000000000000d
-[   32.098011] [<ffffffff801cdb72>] ksys_write+0x6c/0xd6
-[   32.098222] [<ffffffff801cdc06>] sys_write+0x2a/0x38
-[   32.098405] [<ffffffff80003c76>] ret_from_syscall+0x0/0x2
-
-Since the rs1 and rd might be the same one, such as 'jalr 1140(ra)',
-hence it requires obtaining the target address from rs1 followed by
-updating rd.
-
-Fixes: c22b0bcb1dd0 ("riscv: Add kprobes supported")
-Signed-off-by: Liao Chang <liaochang1@huawei.com>
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/r/20230116064342.2092136-1-liaochang1@huawei.com
-[Palmer: Pick Guo's cleanup]
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 831ed60c2aca2d ("nvme: also return I/O command effects from nvme_command_effects")
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/probes/simulate-insn.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvme/host/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/probes/simulate-insn.c b/arch/riscv/kernel/probes/simulate-insn.c
-index d73e96f6ed7c..a20568bd1f1a 100644
---- a/arch/riscv/kernel/probes/simulate-insn.c
-+++ b/arch/riscv/kernel/probes/simulate-insn.c
-@@ -71,11 +71,11 @@ bool __kprobes simulate_jalr(u32 opcode, unsigned long addr, struct pt_regs *reg
- 	u32 rd_index = (opcode >> 7) & 0x1f;
- 	u32 rs1_index = (opcode >> 15) & 0x1f;
- 
--	ret = rv_insn_reg_set_val(regs, rd_index, addr + 4);
-+	ret = rv_insn_reg_get_val(regs, rs1_index, &base_addr);
- 	if (!ret)
- 		return ret;
- 
--	ret = rv_insn_reg_get_val(regs, rs1_index, &base_addr);
-+	ret = rv_insn_reg_set_val(regs, rd_index, addr + 4);
- 	if (!ret)
- 		return ret;
- 
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 672f53d5651a..06750f3d5274 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -1132,7 +1132,7 @@ u32 nvme_command_effects(struct nvme_ctrl *ctrl, struct nvme_ns *ns, u8 opcode)
+ 	if (ns) {
+ 		if (ns->head->effects)
+ 			effects = le32_to_cpu(ns->head->effects->iocs[opcode]);
+-		if (ns->head->ids.csi == NVME_CAP_CSS_NVM)
++		if (ns->head->ids.csi == NVME_CSI_NVM)
+ 			effects |= nvme_known_nvm_effects(opcode);
+ 		if (effects & ~(NVME_CMD_EFFECTS_CSUPP | NVME_CMD_EFFECTS_LBCC))
+ 			dev_warn_once(ctrl->device,
 -- 
 2.39.0
 
