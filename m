@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5753A28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:02:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A231C4339B;
-	Mon, 30 Jan 2023 14:02:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B815728EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:02:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F8E4C433D2;
+	Mon, 30 Jan 2023 14:02:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087346;
-	bh=zAbCm+/Akl7jOP3ol34dKu3M0qYJGSNDBxcKSSIMZJo=;
+	s=korg; t=1675087349;
+	bh=U3azTgYrE328S2huq7Sl8qLwkjNklnwVXuDkI9kvEic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wBCpE81FAeIDr2kauNGFqdmy94MY35JSboO/mhSn0cHR7pmVfFF1AU3TOCR/l7azt
-	 +v9BNG2AdaIyh+jeWDef5z/cE8tILzUCXW02dpCHMBrKEJ6ePX1o+f6nCyuZBx7CDo
-	 k9NWz50pOF9AeK0LAULdsWiEFLkcnUb8MetDLkrU=
+	b=pIl8Tf/wB63YiL9z287AjXojTV8EO/JqgDgSbyghfAkcDw6v6r9kP4bmFi4lErT+g
+	 nJGVbvuGBlMeB1Phez7CAKWtJ7qI/N3U7zlgPnZfzhFjCwQvfe5gmCwwKoRl//668O
+	 AQ76VLIRWFDA8gBVsunpXLMkvnJoDfB3n5m8CAz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christian Borntraeger <borntraeger@linux.ibm.com>,
-	Claudio Imbrenda <imbrenda@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Xingui Yang <yangxingui@huawei.com>,
+	Xiang Chen <chenxiang66@hisilicon.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 178/313] KVM: s390: interrupt: use READ_ONCE() before cmpxchg()
-Date: Mon, 30 Jan 2023 14:50:13 +0100
-Message-Id: <20230130134344.976961148@linuxfoundation.org>
+Subject: [PATCH 6.1 179/313] scsi: hisi_sas: Use abort task set to reset SAS disks when discovered
+Date: Mon, 30 Jan 2023 14:50:14 +0100
+Message-Id: <20230130134345.025453464@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,70 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: Xingui Yang <yangxingui@huawei.com>
 
-[ Upstream commit 42400d99e9f0728c17240edb9645637ead40f6b9 ]
+[ Upstream commit 037b48057e8b485a8d72f808122796aeadbbee32 ]
 
-Use READ_ONCE() before cmpxchg() to prevent that the compiler generates
-code that fetches the to be compared old value several times from memory.
+Currently clear task set is used to abort all commands remaining in the
+disk when the SAS disk is discovered, and if the disk is discovered by two
+initiators, other I_T nexuses are also affected. So use abort task set
+instead and take effect only on the specified I_T nexus.
 
-Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
-Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
-Link: https://lore.kernel.org/r/20230109145456.2895385-1-hca@linux.ibm.com
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Xingui Yang <yangxingui@huawei.com>
+Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
+Link: https://lore.kernel.org/r/1672805000-141102-2-git-send-email-chenxiang66@hisilicon.com
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kvm/interrupt.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/kvm/interrupt.c b/arch/s390/kvm/interrupt.c
-index ab569faf0df2..6d74acea5e85 100644
---- a/arch/s390/kvm/interrupt.c
-+++ b/arch/s390/kvm/interrupt.c
-@@ -83,8 +83,9 @@ static int sca_inject_ext_call(struct kvm_vcpu *vcpu, int src_id)
- 		struct esca_block *sca = vcpu->kvm->arch.sca;
- 		union esca_sigp_ctrl *sigp_ctrl =
- 			&(sca->cpu[vcpu->vcpu_id].sigp_ctrl);
--		union esca_sigp_ctrl new_val = {0}, old_val = *sigp_ctrl;
-+		union esca_sigp_ctrl new_val = {0}, old_val;
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index 699b07abb6b0..34870b3286ab 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -714,7 +714,7 @@ static int hisi_sas_init_device(struct domain_device *device)
+ 		int_to_scsilun(0, &lun);
  
-+		old_val = READ_ONCE(*sigp_ctrl);
- 		new_val.scn = src_id;
- 		new_val.c = 1;
- 		old_val.c = 0;
-@@ -95,8 +96,9 @@ static int sca_inject_ext_call(struct kvm_vcpu *vcpu, int src_id)
- 		struct bsca_block *sca = vcpu->kvm->arch.sca;
- 		union bsca_sigp_ctrl *sigp_ctrl =
- 			&(sca->cpu[vcpu->vcpu_id].sigp_ctrl);
--		union bsca_sigp_ctrl new_val = {0}, old_val = *sigp_ctrl;
-+		union bsca_sigp_ctrl new_val = {0}, old_val;
- 
-+		old_val = READ_ONCE(*sigp_ctrl);
- 		new_val.scn = src_id;
- 		new_val.c = 1;
- 		old_val.c = 0;
-@@ -126,16 +128,18 @@ static void sca_clear_ext_call(struct kvm_vcpu *vcpu)
- 		struct esca_block *sca = vcpu->kvm->arch.sca;
- 		union esca_sigp_ctrl *sigp_ctrl =
- 			&(sca->cpu[vcpu->vcpu_id].sigp_ctrl);
--		union esca_sigp_ctrl old = *sigp_ctrl;
-+		union esca_sigp_ctrl old;
- 
-+		old = READ_ONCE(*sigp_ctrl);
- 		expect = old.value;
- 		rc = cmpxchg(&sigp_ctrl->value, old.value, 0);
- 	} else {
- 		struct bsca_block *sca = vcpu->kvm->arch.sca;
- 		union bsca_sigp_ctrl *sigp_ctrl =
- 			&(sca->cpu[vcpu->vcpu_id].sigp_ctrl);
--		union bsca_sigp_ctrl old = *sigp_ctrl;
-+		union bsca_sigp_ctrl old;
- 
-+		old = READ_ONCE(*sigp_ctrl);
- 		expect = old.value;
- 		rc = cmpxchg(&sigp_ctrl->value, old.value, 0);
- 	}
+ 		while (retry-- > 0) {
+-			rc = sas_clear_task_set(device, lun.scsi_lun);
++			rc = sas_abort_task_set(device, lun.scsi_lun);
+ 			if (rc == TMF_RESP_FUNC_COMPLETE) {
+ 				hisi_sas_release_task(hisi_hba, device);
+ 				break;
 -- 
 2.39.0
 
