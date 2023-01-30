@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F47D28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:58:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9708EC4339B;
-	Mon, 30 Jan 2023 13:58:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5389028EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:58:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8307C4339C;
+	Mon, 30 Jan 2023 13:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087117;
-	bh=mJ/RL0qJmJLL0dPQ/Z/L34KkcnDdhTzNokLYOPsLSDI=;
+	s=korg; t=1675087120;
+	bh=6WHQDc8uigQEnEIpjhMNOOk/exoAJWKCJDBgrhIhimM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BsOiMcbSFWnd4zsZnmdMx6ZgMYcshEov8fhTerYikk4HwNXk15vy4TPUu2sKoxvkN
-	 B2QV1niOz4AHfuOUTGV99Cs0eTk9Sp2DvmpkgYCNiN7Y/MVRXK6jwPq2DsnG7eU2ge
-	 uthmak9ITN9y9HIotPiptwqvpDxQcPgpUh4yS/BI=
+	b=Q2KrUKp5kTaIPVKViJ1lkWKkdbyWCWMknaaARTo/9+FXiA3a7hMKafrxDf3oxiaAL
+	 fhECFVA0cZTU4vLy+RzO141AIdiZ8WUbej7wpp6G2RY4olpUyPdYdKqASajH1ZxX07
+	 1eIIelz2cKQtEH31M6AhTyw5V1P8/NNJjsD5IptU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <clement.leger@bootlin.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
+	Rahul Rameshbabu <rrameshbabu@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Maxim Mikityanskiy <maxtram95@gmail.com>,
+	Jiri Pirko <jiri@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 072/313] net: lan966x: add missing fwnode_handle_put() for ports node
-Date: Mon, 30 Jan 2023 14:48:27 +0100
-Message-Id: <20230130134340.016220112@linuxfoundation.org>
+Subject: [PATCH 6.1 073/313] sch_htb: Avoid grafting on htb_destroy_class_offload when destroying htb
+Date: Mon, 30 Jan 2023 14:48:28 +0100
+Message-Id: <20230130134340.058333253@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,70 +38,91 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Clément Léger <clement.leger@bootlin.com>
+From: Rahul Rameshbabu <rrameshbabu@nvidia.com>
 
-[ Upstream commit 925f3deb45df73173a33e1e81db77575f4ffde39 ]
+[ Upstream commit a22b7388d658ecfcd226600c8c34ce4481e88655 ]
 
-Since the "ethernet-ports" node is retrieved using
-device_get_named_child_node(), it should be release after using it. Add
-missing fwnode_handle_put() and move the code that retrieved the node
-from device-tree to avoid complicated handling in case of error.
+Peek at old qdisc and graft only when deleting a leaf class in the htb,
+rather than when deleting the htb itself. Do not peek at the qdisc of the
+netdev queue when destroying the htb. The caller may already have grafted a
+new qdisc that is not part of the htb structure being destroyed.
 
-Fixes: db8bcaad5393 ("net: lan966x: add the basic lan966x driver")
-Signed-off-by: Clément Léger <clement.leger@bootlin.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Link: https://lore.kernel.org/r/20230112161311.495124-1-clement.leger@bootlin.com
+This fix resolves two use cases.
+
+  1. Using tc to destroy the htb.
+    - Netdev was being prematurely activated before the htb was fully
+      destroyed.
+  2. Using tc to replace the htb with another qdisc (which also leads to
+     the htb being destroyed).
+    - Premature netdev activation like previous case. Newly grafted qdisc
+      was also getting accidentally overwritten when destroying the htb.
+
+Fixes: d03b195b5aa0 ("sch_htb: Hierarchical QoS hardware offload")
+Signed-off-by: Rahul Rameshbabu <rrameshbabu@nvidia.com>
+Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
+Reviewed-by: Maxim Mikityanskiy <maxtram95@gmail.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20230113005528.302625-1-rrameshbabu@nvidia.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/microchip/lan966x/lan966x_main.c   | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ net/sched/sch_htb.c | 27 ++++++++++++++++-----------
+ 1 file changed, 16 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-index 20ee5b28f70a..569108c49cbc 100644
---- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-+++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
-@@ -1022,11 +1022,6 @@ static int lan966x_probe(struct platform_device *pdev)
- 		lan966x->base_mac[5] &= 0xf0;
- 	}
+diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
+index e5b4bbf3ce3d..3afac9c21a76 100644
+--- a/net/sched/sch_htb.c
++++ b/net/sched/sch_htb.c
+@@ -1545,7 +1545,7 @@ static int htb_destroy_class_offload(struct Qdisc *sch, struct htb_class *cl,
+ 	struct tc_htb_qopt_offload offload_opt;
+ 	struct netdev_queue *dev_queue;
+ 	struct Qdisc *q = cl->leaf.q;
+-	struct Qdisc *old = NULL;
++	struct Qdisc *old;
+ 	int err;
  
--	ports = device_get_named_child_node(&pdev->dev, "ethernet-ports");
--	if (!ports)
--		return dev_err_probe(&pdev->dev, -ENODEV,
--				     "no ethernet-ports child found\n");
--
- 	err = lan966x_create_targets(pdev, lan966x);
- 	if (err)
- 		return dev_err_probe(&pdev->dev, err,
-@@ -1104,6 +1099,11 @@ static int lan966x_probe(struct platform_device *pdev)
- 		}
- 	}
+ 	if (cl->level)
+@@ -1553,14 +1553,17 @@ static int htb_destroy_class_offload(struct Qdisc *sch, struct htb_class *cl,
  
-+	ports = device_get_named_child_node(&pdev->dev, "ethernet-ports");
-+	if (!ports)
-+		return dev_err_probe(&pdev->dev, -ENODEV,
-+				     "no ethernet-ports child found\n");
-+
- 	/* init switch */
- 	lan966x_init(lan966x);
- 	lan966x_stats_init(lan966x);
-@@ -1138,6 +1138,8 @@ static int lan966x_probe(struct platform_device *pdev)
- 		lan966x_port_init(lan966x->ports[p]);
- 	}
+ 	WARN_ON(!q);
+ 	dev_queue = htb_offload_get_queue(cl);
+-	old = htb_graft_helper(dev_queue, NULL);
+-	if (destroying)
+-		/* Before HTB is destroyed, the kernel grafts noop_qdisc to
+-		 * all queues.
++	/* When destroying, caller qdisc_graft grafts the new qdisc and invokes
++	 * qdisc_put for the qdisc being destroyed. htb_destroy_class_offload
++	 * does not need to graft or qdisc_put the qdisc being destroyed.
++	 */
++	if (!destroying) {
++		old = htb_graft_helper(dev_queue, NULL);
++		/* Last qdisc grafted should be the same as cl->leaf.q when
++		 * calling htb_delete.
+ 		 */
+-		WARN_ON(!(old->flags & TCQ_F_BUILTIN));
+-	else
+ 		WARN_ON(old != q);
++	}
  
-+	fwnode_handle_put(ports);
-+
- 	lan966x_mdb_init(lan966x);
- 	err = lan966x_fdb_init(lan966x);
- 	if (err)
-@@ -1160,6 +1162,7 @@ static int lan966x_probe(struct platform_device *pdev)
- 	lan966x_fdb_deinit(lan966x);
+ 	if (cl->parent) {
+ 		_bstats_update(&cl->parent->bstats_bias,
+@@ -1577,10 +1580,12 @@ static int htb_destroy_class_offload(struct Qdisc *sch, struct htb_class *cl,
+ 	};
+ 	err = htb_offload(qdisc_dev(sch), &offload_opt);
  
- cleanup_ports:
-+	fwnode_handle_put(ports);
- 	fwnode_handle_put(portnp);
+-	if (!err || destroying)
+-		qdisc_put(old);
+-	else
+-		htb_graft_helper(dev_queue, old);
++	if (!destroying) {
++		if (!err)
++			qdisc_put(old);
++		else
++			htb_graft_helper(dev_queue, old);
++	}
  
- 	lan966x_cleanup_ports(lan966x);
+ 	if (last_child)
+ 		return err;
 -- 
 2.39.0
 
