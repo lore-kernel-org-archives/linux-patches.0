@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A76C528EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:10:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08400C433EF;
-	Mon, 30 Jan 2023 14:10:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A209C28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:11:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45CDC433D2;
+	Mon, 30 Jan 2023 14:11:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087859;
-	bh=3ba9il19a7JA91ZLcQKFLSWjcAp+9FW/xRFkQVBV0aU=;
+	s=korg; t=1675087862;
+	bh=HIuAtD7PP0GscvnFPtW6sWcXVA2xXCCEW3Lsq9AnqR0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tzBXPKrS46H3PExQEt9FpZ3zfS2E3U/Aryq4pBaufq7/g/gLzcvLrCkjXVd5DeNk8
-	 T7tJeRtnFUOt81U7xjRUhXX+KtzCDUWDihn7sLOIUfvkyRYcBpXtG15YctXUaAJcna
-	 Mkpm7JpviTjZEFeWBTcJn6f8Qvhv4ezu4hH2YqTk=
+	b=SptBtG51DU9Iroea/a0s2fXJuOz59EiVR+nD8EIGSXLOczCDxW1DxbeXJm4R99ZZt
+	 Ajg8cVFBxqv3PEgp+gnL45rKLIxgadRAXUtZ2jgZbCbm3M+mgU/eVdtVN/MfjGmZJy
+	 6vrUoFs0PW7+7jKp0rbDVPSz4bxxdrD0WdU3IOOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 006/204] ARM: dts: imx6ul-pico-dwarf: Use clock-frequency
-Date: Mon, 30 Jan 2023 14:49:31 +0100
-Message-Id: <20230130134316.584251502@linuxfoundation.org>
+Subject: [PATCH 5.15 033/204] ARM: dts: at91: sam9x60: fix the ddr clock for sam9x60
+Date: Mon, 30 Jan 2023 14:49:58 +0100
+Message-Id: <20230130134317.765302386@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,35 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabio Estevam <festevam@denx.de>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit 94e2cf1e0db5b06c7a6ae0878c5cbec925819a8a ]
+[ Upstream commit 9bfa2544dbd1133f0b0af4e967de3bb9c1e3a497 ]
 
-'clock_frequency' is not a valid property.
+The 2nd DDR clock for sam9x60 DDR controller is peripheral clock with
+id 49.
 
-Use the correct 'clock-frequency' instead.
-
-Fixes: 47246fafef84 ("ARM: dts: imx6ul-pico: Add support for the dwarf baseboard")
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 1e5f532c2737 ("ARM: dts: at91: sam9x60: add device tree for soc and board")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20221208115241.36312-1-claudiu.beznea@microchip.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6ul-pico-dwarf.dts | 2 +-
+ arch/arm/boot/dts/sam9x60.dtsi | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/imx6ul-pico-dwarf.dts b/arch/arm/boot/dts/imx6ul-pico-dwarf.dts
-index 162dc259edc8..5a74c7f68eb6 100644
---- a/arch/arm/boot/dts/imx6ul-pico-dwarf.dts
-+++ b/arch/arm/boot/dts/imx6ul-pico-dwarf.dts
-@@ -32,7 +32,7 @@ sys_mclk: clock-sys-mclk {
- };
+diff --git a/arch/arm/boot/dts/sam9x60.dtsi b/arch/arm/boot/dts/sam9x60.dtsi
+index ec45ced3cde6..e1e0dec8cc1f 100644
+--- a/arch/arm/boot/dts/sam9x60.dtsi
++++ b/arch/arm/boot/dts/sam9x60.dtsi
+@@ -567,7 +567,7 @@ pmecc: ecc-engine@ffffe000 {
+ 			mpddrc: mpddrc@ffffe800 {
+ 				compatible = "microchip,sam9x60-ddramc", "atmel,sama5d3-ddramc";
+ 				reg = <0xffffe800 0x200>;
+-				clocks = <&pmc PMC_TYPE_SYSTEM 2>, <&pmc PMC_TYPE_CORE PMC_MCK>;
++				clocks = <&pmc PMC_TYPE_SYSTEM 2>, <&pmc PMC_TYPE_PERIPHERAL 49>;
+ 				clock-names = "ddrck", "mpddr";
+ 			};
  
- &i2c2 {
--	clock_frequency = <100000>;
-+	clock-frequency = <100000>;
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_i2c2>;
- 	status = "okay";
 -- 
 2.39.0
 
