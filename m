@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A36D28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:12:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E788C433D2;
-	Mon, 30 Jan 2023 14:12:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DC6B28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:12:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ADF7C433D2;
+	Mon, 30 Jan 2023 14:12:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087954;
-	bh=1+EqSCh+MI8+1yG5YgYl1rTfrhhhLtc6vZ/QlWufpJQ=;
+	s=korg; t=1675087956;
+	bh=od2+84rHqzHmfgO0/CjVxae8TsjveLctZX+Tal3gvUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RqhsXfKFWWN73CGgB9FnZ3DIFWiNmpWdQAKfTZye5lZqB5ajMpZfyB9XddNQl7c8l
-	 n13Hxx7Odw0AzierKgeNXa0hX4EP1MeKhGFCAqRPCXvBV1RtAF7zUz7FYj/heARdhE
-	 d7bl9vBpW1bPQykhNvz3xtrG6En+xen2dKl2j4AY=
+	b=Rxt669SvacqYccEm09rP6r2wZf6HjDzeupL0ilphC7CZTuuk8secBC/zN1F9uDuv5
+	 pyQAq58VNgPJEpdEcIkc1eeuWdvgwU2ZvIEvGb3YN5SpSd7W42E/J/KMkjdRCekmOo
+	 TNjSSg/UFSiqpLNUkKhQdfkiDb0jb6euhdW1w5hk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d7ce59...@syzkaller.appspotmail.com,
-	Ying Hsu <yinghsu@chromium.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Esina Ekaterina <eesina@astralinux.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 065/204] Bluetooth: Fix possible deadlock in rfcomm_sk_state_change
-Date: Mon, 30 Jan 2023 14:50:30 +0100
-Message-Id: <20230130134319.166645041@linuxfoundation.org>
+Subject: [PATCH 5.15 039/204] net: wan: Add checks for NULL for utdm in undo_uhdlc_init and unmap_si_regs
+Date: Mon, 30 Jan 2023 14:50:04 +0100
+Message-Id: <20230130134318.031257445@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -36,75 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ying Hsu <yinghsu@chromium.org>
+From: Esina Ekaterina <eesina@astralinux.ru>
 
-[ Upstream commit 1d80d57ffcb55488f0ec0b77928d4f82d16b6a90 ]
+[ Upstream commit 488e0bf7f34af3d42d1d5e56f7a5a7beaff188a3 ]
 
-syzbot reports a possible deadlock in rfcomm_sk_state_change [1].
-While rfcomm_sock_connect acquires the sk lock and waits for
-the rfcomm lock, rfcomm_sock_release could have the rfcomm
-lock and hit a deadlock for acquiring the sk lock.
-Here's a simplified flow:
+If uhdlc_priv_tsa != 1 then utdm is not initialized.
+And if ret != NULL then goto undo_uhdlc_init, where
+utdm is dereferenced. Same if dev == NULL.
 
-rfcomm_sock_connect:
-  lock_sock(sk)
-  rfcomm_dlc_open:
-    rfcomm_lock()
+Found by Astra Linux on behalf of Linux Verification Center
+(linuxtesting.org) with SVACE.
 
-rfcomm_sock_release:
-  rfcomm_sock_shutdown:
-    rfcomm_lock()
-    __rfcomm_dlc_close:
-        rfcomm_k_state_change:
-	  lock_sock(sk)
-
-This patch drops the sk lock before calling rfcomm_dlc_open to
-avoid the possible deadlock and holds sk's reference count to
-prevent use-after-free after rfcomm_dlc_open completes.
-
-Reported-by: syzbot+d7ce59...@syzkaller.appspotmail.com
-Fixes: 1804fdf6e494 ("Bluetooth: btintel: Combine setting up MSFT extension")
-Link: https://syzkaller.appspot.com/bug?extid=d7ce59b06b3eb14fd218 [1]
-
-Signed-off-by: Ying Hsu <yinghsu@chromium.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 8d68100ab4ad ("soc/fsl/qe: fix err handling of ucc_of_parse_tdm")
+Signed-off-by: Esina Ekaterina <eesina@astralinux.ru>
+Link: https://lore.kernel.org/r/20230112074703.13558-1-eesina@astralinux.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/sock.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/net/wan/fsl_ucc_hdlc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
-index 21e24da4847f..4397e14ff560 100644
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -391,6 +391,7 @@ static int rfcomm_sock_connect(struct socket *sock, struct sockaddr *addr, int a
- 	    addr->sa_family != AF_BLUETOOTH)
- 		return -EINVAL;
- 
-+	sock_hold(sk);
- 	lock_sock(sk);
- 
- 	if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND) {
-@@ -410,14 +411,18 @@ static int rfcomm_sock_connect(struct socket *sock, struct sockaddr *addr, int a
- 	d->sec_level = rfcomm_pi(sk)->sec_level;
- 	d->role_switch = rfcomm_pi(sk)->role_switch;
- 
-+	/* Drop sock lock to avoid potential deadlock with the RFCOMM lock */
-+	release_sock(sk);
- 	err = rfcomm_dlc_open(d, &rfcomm_pi(sk)->src, &sa->rc_bdaddr,
- 			      sa->rc_channel);
--	if (!err)
-+	lock_sock(sk);
-+	if (!err && !sock_flag(sk, SOCK_ZAPPED))
- 		err = bt_sock_wait_state(sk, BT_CONNECTED,
- 				sock_sndtimeo(sk, flags & O_NONBLOCK));
- 
- done:
- 	release_sock(sk);
-+	sock_put(sk);
- 	return err;
- }
- 
+diff --git a/drivers/net/wan/fsl_ucc_hdlc.c b/drivers/net/wan/fsl_ucc_hdlc.c
+index cda1b4ce6b21..8305df1a3008 100644
+--- a/drivers/net/wan/fsl_ucc_hdlc.c
++++ b/drivers/net/wan/fsl_ucc_hdlc.c
+@@ -1241,9 +1241,11 @@ static int ucc_hdlc_probe(struct platform_device *pdev)
+ free_dev:
+ 	free_netdev(dev);
+ undo_uhdlc_init:
+-	iounmap(utdm->siram);
++	if (utdm)
++		iounmap(utdm->siram);
+ unmap_si_regs:
+-	iounmap(utdm->si_regs);
++	if (utdm)
++		iounmap(utdm->si_regs);
+ free_utdm:
+ 	if (uhdlc_priv->tsa)
+ 		kfree(utdm);
 -- 
 2.39.0
 
