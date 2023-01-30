@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5FB28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:06:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFB8C433EF;
-	Mon, 30 Jan 2023 14:06:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F85328EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:06:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 88D38C433D2;
+	Mon, 30 Jan 2023 14:06:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087601;
-	bh=1lIUHZ33b4w/rqN0rFNfxj2gZ+wj22kCkUCagSbW0uo=;
+	s=korg; t=1675087605;
+	bh=Kf+89QtSLgs0rsAG+wzmH+kIIR+4efLXXuL6DtOHln8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sz7SNjEMSYabP1NtBtxPCxI71m/Y/WnXEtCgDoxTql6YyiFQC5q0/5C+IRcTWwF7N
-	 13NY4RmmtvPbQNhw59sE/qpe7suH2u7B8mycgKjejuUgIOy/YjkGa0zyLBJU+9JaxO
-	 vASX17O7imoyBaJqJWEg7GWamx1T2LCdF+JG42X8=
+	b=1J1wZrcZFzfcFUMnzUoxsBryU2pt/+6+d/6lEjmpUIJSPl9vb3ey5ZCn/bNOkNITs
+	 bZud8vUgv78A08hK/oD51T+grZ0MpykzkLFpQaGBRYhxyAUNLMqnn49dMgxCAG55qt
+	 yarWwi80VqHk1Nd6UEVIqgpmcVLBkT4leADPSoFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	Feifei Xu <Feifei.Xu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 235/313] drm/amd/pm: add missing AllowIHInterrupt message mapping for SMU13.0.0
-Date: Mon, 30 Jan 2023 14:51:10 +0100
-Message-Id: <20230130134347.639354997@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 262/313] ACPI: video: Add backlight=native DMI quirk for HP EliteBook 8460p
+Date: Mon, 30 Jan 2023 14:51:37 +0100
+Message-Id: <20230130134348.946352271@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,35 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Evan Quan <evan.quan@amd.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 15b207d0abdcbb2271774aa99d9a290789159e75 upstream.
+[ Upstream commit 9dcb34234b8235144c96103266317da33321077e ]
 
-Add SMU13.0.0 AllowIHInterrupt message mapping.
+The HP EliteBook 8460p predates Windows 8, so it defaults to using
+acpi_video# for backlight control.
 
-Signed-off-by: Evan Quan <evan.quan@amd.com>
-Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.x
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Starting with the 6.1.y kernels the native radeon_bl0 backlight is hidden
+in this case instead of relying on userspace preferring acpi_video# over
+native backlight devices.
+
+It turns out that for the acpi_video# interface to work on
+the HP EliteBook 8460p, the brightness needs to be set at least once
+through the native interface, which now no longer is done breaking
+backlight control.
+
+The native interface however always works without problems, so add
+a quirk to use native backlight on the EliteBook 8460p to fix this.
+
+Fixes: fb1836c91317 ("ACPI: video: Prefer native over vendor")
+Link: https://bugzilla.redhat.com/show_bug.cgi?id=2161428
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/acpi/video_detect.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-index 4c20d17e7416..cf96c3f2affe 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
-@@ -145,6 +145,7 @@ static struct cmn2asic_msg_mapping smu_v13_0_0_message_map[SMU_MSG_MAX_COUNT] =
- 	MSG_MAP(SetBadMemoryPagesRetiredFlagsPerChannel,
- 			    PPSMC_MSG_SetBadMemoryPagesRetiredFlagsPerChannel,   0),
- 	MSG_MAP(AllowGpo,			PPSMC_MSG_SetGpoAllow,           0),
-+	MSG_MAP(AllowIHHostInterrupt,		PPSMC_MSG_AllowIHHostInterrupt,       0),
- };
- 
- static struct cmn2asic_mapping smu_v13_0_0_clk_map[SMU_CLK_COUNT] = {
+diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
+index c20fc7ddca2f..4719978b8aa3 100644
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -608,6 +608,14 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
+ 		DMI_MATCH(DMI_PRODUCT_NAME, "UX303UB"),
+ 		},
+ 	},
++	{
++	 .callback = video_detect_force_native,
++	 /* HP EliteBook 8460p */
++	 .matches = {
++		DMI_MATCH(DMI_SYS_VENDOR, "Hewlett-Packard"),
++		DMI_MATCH(DMI_PRODUCT_NAME, "HP EliteBook 8460p"),
++		},
++	},
+ 	{
+ 	 .callback = video_detect_force_native,
+ 	 /* HP Pavilion g6-1d80nr / B4U19UA */
 -- 
-2.39.1
+2.39.0
 
 
 
