@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9B5628EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:54:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B08EC4339E;
-	Mon, 30 Jan 2023 13:54:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DCDC28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:54:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65CA3C433EF;
+	Mon, 30 Jan 2023 13:54:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675086887;
-	bh=LnHzplZUs47NFxVACjT+g/5ZU5ZrkyZeZ3zf997n3lc=;
+	s=korg; t=1675086890;
+	bh=aH5unU8TfgzYcKYYA1/3+3JaY9ipWGLSX8E0g004OYE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c1AqRIOXvMPzxzXfpAIoClIhRV+qJyHZQvmjO4Lqibi65a7jX3QltQ4pJ70lOHf66
-	 kduGZnXHQ1X9dmR6Q9OSo3rpK9m6/GrpHPp9yQhoE7fVKUu9xpezznsJ1e0zMtWDXw
-	 QGwMtuIOjAon6KA8lb3D/v8KLTbEbyhbGBH1Hrb4=
+	b=1XA4WqeqmfmRdPsqUpwOXZlJvvinqz+6ZDBDrmrTYBJqHJ/T+xoIkBVUFrSg4MaTz
+	 GLgaHJ2fvY6hLJQKxGYjPXlznf44VZaTUF8zMtX57COzB9sfpKo+DzZbyO7CCZySFY
+	 yGDB2jPDqpYM6B+cxcUID6lFi9MEhRjlM8Kc4Y1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Georgi Djakov <djakov@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/313] firmware: arm_scmi: Fix virtio channels cleanup on shutdown
-Date: Mon, 30 Jan 2023 14:47:44 +0100
-Message-Id: <20230130134338.033490299@linuxfoundation.org>
+Subject: [PATCH 6.1 030/313] interconnect: qcom: msm8996: Provide UFS clocks to A2NoC
+Date: Mon, 30 Jan 2023 14:47:45 +0100
+Message-Id: <20230130134338.077249760@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,140 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit e325285de2cd82fbdcc4df8898e4c6a597674816 ]
+[ Upstream commit 60426ff08af6a21275d9c879c0dfb09406469868 ]
 
-When unloading the SCMI core stack module, configured to use the virtio
-SCMI transport, LOCKDEP reports the splat down below about unsafe locks
-dependencies.
+On eMMC devices the bootloader has no business enabling UFS clocks.
+That results in a platform hang and hard reboot when trying to vote
+on paths including MASTER_UFS and since sync_state guarantees that
+it's done at boot time, this effectively prevents such devices from
+booting. Fix that.
 
-In order to avoid this possible unsafe locking scenario call upfront
-virtio_break_device() before getting hold of vioch->lock.
-
-=====================================================
- WARNING: HARDIRQ-safe -> HARDIRQ-unsafe lock order detected
- 6.1.0-00067-g6b934395ba07-dirty #4 Not tainted
- -----------------------------------------------------
- rmmod/307 [HC0[0]:SC0[0]:HE0:SE1] is trying to acquire:
- ffff000080c510e0 (&dev->vqs_list_lock){+.+.}-{3:3}, at: virtio_break_device+0x28/0x68
-
- and this task is already holding:
- ffff00008288ada0 (&channels[i].lock){-.-.}-{3:3}, at: virtio_chan_free+0x60/0x168 [scmi_module]
-
- which would create a new lock dependency:
-  (&channels[i].lock){-.-.}-{3:3} -> (&dev->vqs_list_lock){+.+.}-{3:3}
-
- but this new dependency connects a HARDIRQ-irq-safe lock:
-  (&channels[i].lock){-.-.}-{3:3}
-
- ... which became HARDIRQ-irq-safe at:
-   lock_acquire+0x128/0x398
-   _raw_spin_lock_irqsave+0x78/0x140
-   scmi_vio_complete_cb+0xb4/0x3b8 [scmi_module]
-   vring_interrupt+0x84/0x120
-   vm_interrupt+0x94/0xe8
-   __handle_irq_event_percpu+0xb4/0x3d8
-   handle_irq_event_percpu+0x20/0x68
-   handle_irq_event+0x50/0xb0
-   handle_fasteoi_irq+0xac/0x138
-   generic_handle_domain_irq+0x34/0x50
-   gic_handle_irq+0xa0/0xd8
-   call_on_irq_stack+0x2c/0x54
-   do_interrupt_handler+0x8c/0x90
-   el1_interrupt+0x40/0x78
-   el1h_64_irq_handler+0x18/0x28
-   el1h_64_irq+0x64/0x68
-   _raw_write_unlock_irq+0x48/0x80
-   ep_start_scan+0xf0/0x128
-   do_epoll_wait+0x390/0x858
-   do_compat_epoll_pwait.part.34+0x1c/0xb8
-   __arm64_sys_epoll_pwait+0x80/0xd0
-   invoke_syscall+0x4c/0x110
-   el0_svc_common.constprop.3+0x98/0x120
-   do_el0_svc+0x34/0xd0
-   el0_svc+0x40/0x98
-   el0t_64_sync_handler+0x98/0xc0
-   el0t_64_sync+0x170/0x174
-
- to a HARDIRQ-irq-unsafe lock:
-  (&dev->vqs_list_lock){+.+.}-{3:3}
-
- ... which became HARDIRQ-irq-unsafe at:
- ...
-   lock_acquire+0x128/0x398
-   _raw_spin_lock+0x58/0x70
-   __vring_new_virtqueue+0x130/0x1c0
-   vring_create_virtqueue+0xc4/0x2b8
-   vm_find_vqs+0x20c/0x430
-   init_vq+0x308/0x390
-   virtblk_probe+0x114/0x9b0
-   virtio_dev_probe+0x1a4/0x248
-   really_probe+0xc8/0x3a8
-   __driver_probe_device+0x84/0x190
-   driver_probe_device+0x44/0x110
-   __driver_attach+0x104/0x1e8
-   bus_for_each_dev+0x7c/0xd0
-   driver_attach+0x2c/0x38
-   bus_add_driver+0x1e4/0x258
-   driver_register+0x6c/0x128
-   register_virtio_driver+0x2c/0x48
-   virtio_blk_init+0x70/0xac
-   do_one_initcall+0x84/0x420
-   kernel_init_freeable+0x2d0/0x340
-   kernel_init+0x2c/0x138
-   ret_from_fork+0x10/0x20
-
- other info that might help us debug this:
-
-  Possible interrupt unsafe locking scenario:
-
-        CPU0                    CPU1
-        ----                    ----
-   lock(&dev->vqs_list_lock);
-                                local_irq_disable();
-                                lock(&channels[i].lock);
-                                lock(&dev->vqs_list_lock);
-   <Interrupt>
-     lock(&channels[i].lock);
-
-  *** DEADLOCK ***
-================
-
-Fixes: 42e90eb53bf3f ("firmware: arm_scmi: Add a virtio channel refcount")
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20221222183823.518856-6-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Fixes: 7add937f5222 ("interconnect: qcom: Add MSM8996 interconnect provider driver")
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Tested-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org> #db820c
+Link: https://lore.kernel.org/r/20221210200353.418391-3-konrad.dybcio@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/virtio.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/interconnect/qcom/msm8996.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/firmware/arm_scmi/virtio.c b/drivers/firmware/arm_scmi/virtio.c
-index 33c9b81a55cd..1db975c08896 100644
---- a/drivers/firmware/arm_scmi/virtio.c
-+++ b/drivers/firmware/arm_scmi/virtio.c
-@@ -160,7 +160,6 @@ static void scmi_vio_channel_cleanup_sync(struct scmi_vio_channel *vioch)
- 	}
+diff --git a/drivers/interconnect/qcom/msm8996.c b/drivers/interconnect/qcom/msm8996.c
+index c2903ae3b3bc..7ddb1f23fb2a 100644
+--- a/drivers/interconnect/qcom/msm8996.c
++++ b/drivers/interconnect/qcom/msm8996.c
+@@ -33,6 +33,13 @@ static const char * const bus_a0noc_clocks[] = {
+ 	"aggre0_noc_mpu_cfg"
+ };
  
- 	vioch->shutdown_done = &vioch_shutdown_done;
--	virtio_break_device(vioch->vqueue->vdev);
- 	if (!vioch->is_rx && vioch->deferred_tx_wq)
- 		/* Cannot be kicked anymore after this...*/
- 		vioch->deferred_tx_wq = NULL;
-@@ -482,6 +481,12 @@ static int virtio_chan_free(int id, void *p, void *data)
- 	struct scmi_chan_info *cinfo = p;
- 	struct scmi_vio_channel *vioch = cinfo->transport_info;
++static const char * const bus_a2noc_clocks[] = {
++	"bus",
++	"bus_a",
++	"aggre2_ufs_axi",
++	"ufs_axi"
++};
++
+ static const u16 mas_a0noc_common_links[] = {
+ 	MSM8996_SLAVE_A0NOC_SNOC
+ };
+@@ -1859,6 +1866,8 @@ static const struct qcom_icc_desc msm8996_a2noc = {
+ 	.type = QCOM_ICC_NOC,
+ 	.nodes = a2noc_nodes,
+ 	.num_nodes = ARRAY_SIZE(a2noc_nodes),
++	.clocks = bus_a2noc_clocks,
++	.num_clocks = ARRAY_SIZE(bus_a2noc_clocks),
+ 	.regmap_cfg = &msm8996_a2noc_regmap_config
+ };
  
-+	/*
-+	 * Break device to inhibit further traffic flowing while shutting down
-+	 * the channels: doing it later holding vioch->lock creates unsafe
-+	 * locking dependency chains as reported by LOCKDEP.
-+	 */
-+	virtio_break_device(vioch->vqueue->vdev);
- 	scmi_vio_channel_cleanup_sync(vioch);
- 
- 	scmi_free_channel(cinfo, data, id);
 -- 
 2.39.0
 
