@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E46C73229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:25:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64189C4339B;
-	Mon, 30 Jan 2023 14:25:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE4423229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:25:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B0C3C433EF;
+	Mon, 30 Jan 2023 14:25:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088745;
-	bh=0Bv6vF6sdxPMc4hXnPyUAGmxZuAmKITuj/ilcO9wjUE=;
+	s=korg; t=1675088748;
+	bh=LAsH34jvqhWeJgceykPfVWPNk4MKY4rdBQryX2RmVxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mvYOysnurQ22pvT+TiiOz/6Hnyn17XMJQIJorc5fTjgKeQoh75Hh7pLhjMBgoptUG
-	 +Mj6aXL5d1LDYa3dv+r9G2Y6wKRizoGvINDHBmZjw399eI/c4nXm6cHqZI68F+Ec15
-	 pR3j3Ix6JGIjV5KO5arIWqM8rAtdm6/URXBbk2K0=
+	b=h9NL9uDAP3zYkvPBxnCkO/vwEzT+p5A9/rFF9zNRbQHn3CtDgzSAf+7w41uOCxeh0
+	 udZHOS5QHkFgTI5ureOk0yT6XFVApvnSC4peEwbxf1hqKUyI9FOXUxBV0Enn8JcqsU
+	 nWzkiOAfsq06dMmN9GT4a2YON5aGTHkCYqckJ4MU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 114/143] i2c: designware: Use DIV_ROUND_CLOSEST() macro
-Date: Mon, 30 Jan 2023 14:52:51 +0100
-Message-Id: <20230130134311.552546765@linuxfoundation.org>
+Subject: [PATCH 5.10 123/143] ipv4: prevent potential spectre v1 gadget in ip_metrics_convert()
+Date: Mon, 30 Jan 2023 14:53:00 +0100
+Message-Id: <20230130134311.923079854@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -35,92 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c045214a0f31dd5d6be716ed2f119b57b6c5d3a2 ]
+[ Upstream commit 1d1d63b612801b3f0a39b7d4467cad0abd60e5c8 ]
 
-Instead of open-coding DIV_ROUND_CLOSEST() and similar use the macros directly.
-While at it, replace numbers with predefined SI metric prefixes.
+if (!type)
+		continue;
+	if (type > RTAX_MAX)
+		return -EINVAL;
+	...
+	metrics[type - 1] = val;
 
-No functional change intended.
+@type being used as an array index, we need to prevent
+cpu speculation or risk leaking kernel memory content.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
-Stable-dep-of: c8c37bc51451 ("i2c: designware: use casting of u64 in clock multiplication to avoid overflow")
+Fixes: 6cf9dfd3bd62 ("net: fib: move metrics parsing to a helper")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230120133040.3623463-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-common.c  | 8 ++++----
- drivers/i2c/busses/i2c-designware-platdrv.c | 5 +++--
- 2 files changed, 7 insertions(+), 6 deletions(-)
+ net/ipv4/metrics.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/i2c/busses/i2c-designware-common.c b/drivers/i2c/busses/i2c-designware-common.c
-index 9468c6c89b3f..73a4ef8130e6 100644
---- a/drivers/i2c/busses/i2c-designware-common.c
-+++ b/drivers/i2c/busses/i2c-designware-common.c
-@@ -24,6 +24,7 @@
- #include <linux/regmap.h>
- #include <linux/swab.h>
+diff --git a/net/ipv4/metrics.c b/net/ipv4/metrics.c
+index 3205d5f7c8c9..4966ac2aaf87 100644
+--- a/net/ipv4/metrics.c
++++ b/net/ipv4/metrics.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ #include <linux/netlink.h>
++#include <linux/nospec.h>
+ #include <linux/rtnetlink.h>
  #include <linux/types.h>
-+#include <linux/units.h>
+ #include <net/ip.h>
+@@ -28,6 +29,7 @@ static int ip_metrics_convert(struct net *net, struct nlattr *fc_mx,
+ 			return -EINVAL;
+ 		}
  
- #include "i2c-designware-core.h"
++		type = array_index_nospec(type, RTAX_MAX + 1);
+ 		if (type == RTAX_CC_ALGO) {
+ 			char tmp[TCP_CA_NAME_MAX];
  
-@@ -347,7 +348,7 @@ u32 i2c_dw_scl_hcnt(u32 ic_clk, u32 tSYMBOL, u32 tf, int cond, int offset)
- 		 *
- 		 * If your hardware is free from tHD;STA issue, try this one.
- 		 */
--		return (ic_clk * tSYMBOL + 500000) / 1000000 - 8 + offset;
-+		return DIV_ROUND_CLOSEST(ic_clk * tSYMBOL, MICRO) - 8 + offset;
- 	else
- 		/*
- 		 * Conditional expression:
-@@ -363,8 +364,7 @@ u32 i2c_dw_scl_hcnt(u32 ic_clk, u32 tSYMBOL, u32 tf, int cond, int offset)
- 		 * The reason why we need to take into account "tf" here,
- 		 * is the same as described in i2c_dw_scl_lcnt().
- 		 */
--		return (ic_clk * (tSYMBOL + tf) + 500000) / 1000000
--			- 3 + offset;
-+		return DIV_ROUND_CLOSEST(ic_clk * (tSYMBOL + tf), MICRO) - 3 + offset;
- }
- 
- u32 i2c_dw_scl_lcnt(u32 ic_clk, u32 tLOW, u32 tf, int offset)
-@@ -380,7 +380,7 @@ u32 i2c_dw_scl_lcnt(u32 ic_clk, u32 tLOW, u32 tf, int offset)
- 	 * account the fall time of SCL signal (tf).  Default tf value
- 	 * should be 0.3 us, for safety.
- 	 */
--	return ((ic_clk * (tLOW + tf) + 500000) / 1000000) - 1 + offset;
-+	return DIV_ROUND_CLOSEST(ic_clk * (tLOW + tf), MICRO) - 1 + offset;
- }
- 
- int i2c_dw_set_sda_hold(struct dw_i2c_dev *dev)
-diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
-index ad91c7c0faa5..474754151725 100644
---- a/drivers/i2c/busses/i2c-designware-platdrv.c
-+++ b/drivers/i2c/busses/i2c-designware-platdrv.c
-@@ -32,12 +32,13 @@
- #include <linux/sched.h>
- #include <linux/slab.h>
- #include <linux/suspend.h>
-+#include <linux/units.h>
- 
- #include "i2c-designware-core.h"
- 
- static u32 i2c_dw_get_clk_rate_khz(struct dw_i2c_dev *dev)
- {
--	return clk_get_rate(dev->clk)/1000;
-+	return clk_get_rate(dev->clk) / KILO;
- }
- 
- #ifdef CONFIG_ACPI
-@@ -284,7 +285,7 @@ static int dw_i2c_plat_probe(struct platform_device *pdev)
- 
- 		if (!dev->sda_hold_time && t->sda_hold_ns)
- 			dev->sda_hold_time =
--				div_u64(clk_khz * t->sda_hold_ns + 500000, 1000000);
-+				DIV_S64_ROUND_CLOSEST(clk_khz * t->sda_hold_ns, MICRO);
- 	}
- 
- 	adap = &dev->adapter;
 -- 
 2.39.0
 
