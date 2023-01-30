@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82AD328EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:16:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA1D4C433D2;
-	Mon, 30 Jan 2023 14:16:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A3BE28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:16:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BA6C433EF;
+	Mon, 30 Jan 2023 14:16:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088169;
-	bh=HHC/z2XE0bIF+5GXUVS5Upiz2E+Ymxj7p9v+1oSjCHM=;
+	s=korg; t=1675088172;
+	bh=Mg2s4iszE+kCEIF9Pcy0R3NPcVM0A1bYGOhjvjwVvKE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D+CLYWmMJ+J8WWJzoy0dld/E85gbayCL/bgBmTNNDbCte1XiKgZZq+Z9bRDF70zGX
-	 vu1R8mzVFeFRZMPq0h4/lwRgioscH2njgBmt1nMF56ILDx12I4S5KTZ343pS5tb719
-	 fRunDSrP1Mxsgt/mKgII3fhDY32sifUiPmoIJgjE=
+	b=cmIWcoz0IBxxs8RRqhl59QZCBxeWzfPnrA8ICVnolhaHdz8oN76dnF7zh2zh6Dw7e
+	 ub8PQ9SdnNcu5dFE30uDVnw7xSkiamJdCIWS1LPLJn2r3ZGhbv5Ic6Wc9JUnHOXn98
+	 wAeMx7T7KLOymyb+J/H7g4LGmz6wGetX12VtjWl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Chancel Liu <chancel.liu@nxp.com>,
 	Shengjiu Wang <shengjiu.wang@gmail.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 109/204] ASoC: fsl-asoc-card: Fix naming of AC97 CODEC widgets
-Date: Mon, 30 Jan 2023 14:51:14 +0100
-Message-Id: <20230130134321.150319253@linuxfoundation.org>
+Subject: [PATCH 5.15 100/204] ASoC: fsl_micfil: Correct the number of steps on SX controls
+Date: Mon, 30 Jan 2023 14:51:05 +0100
+Message-Id: <20230130134320.731859925@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,40 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Chancel Liu <chancel.liu@nxp.com>
 
-[ Upstream commit 242fc66ae6e1e2b8519daacc7590a73cd0e8a6e4 ]
+[ Upstream commit cdfa92eb90f5770b26a79824ef213ebdbbd988b1 ]
 
-The fsl-asoc-card AC'97 support currently tries to route to Playback and
-Capture widgets provided by the AC'97 CODEC. This doesn't work since the
-generic AC'97 driver registers with an "AC97" at the front of the stream
-and hence widget names, update to reflect reality. It's not clear to me
-if or how this ever worked.
+The parameter "max" of SOC_SINGLE_SX_TLV() means the number of steps
+rather than maximum value. This patch corrects the minimum value to -8
+and the number of steps to 15.
 
+Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
 Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20230106-asoc-udoo-probe-v1-2-a5d7469d4f67@kernel.org
+Link: https://lore.kernel.org/r/20230104025754.3019235-1-chancel.liu@nxp.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl-asoc-card.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/fsl/fsl_micfil.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
-index 978496c2fc09..5000d779aade 100644
---- a/sound/soc/fsl/fsl-asoc-card.c
-+++ b/sound/soc/fsl/fsl-asoc-card.c
-@@ -120,8 +120,8 @@ static const struct snd_soc_dapm_route audio_map[] = {
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index d1cd104f8584..38d4d1b7cfe3 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -88,21 +88,21 @@ static DECLARE_TLV_DB_SCALE(gain_tlv, 0, 100, 0);
  
- static const struct snd_soc_dapm_route audio_map_ac97[] = {
- 	/* 1st half -- Normal DAPM routes */
--	{"Playback",  NULL, "CPU AC97 Playback"},
--	{"CPU AC97 Capture",  NULL, "Capture"},
-+	{"AC97 Playback",  NULL, "CPU AC97 Playback"},
-+	{"CPU AC97 Capture",  NULL, "AC97 Capture"},
- 	/* 2nd half -- ASRC DAPM routes */
- 	{"CPU AC97 Playback",  NULL, "ASRC-Playback"},
- 	{"ASRC-Capture",  NULL, "CPU AC97 Capture"},
+ static const struct snd_kcontrol_new fsl_micfil_snd_controls[] = {
+ 	SOC_SINGLE_SX_TLV("CH0 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(0), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(0), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH1 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(1), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(1), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH2 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(2), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(2), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH3 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(3), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(3), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH4 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(4), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(4), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH5 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(5), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(5), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH6 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(6), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(6), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH7 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(7), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(7), 0x8, 0xF, gain_tlv),
+ 	SOC_ENUM_EXT("MICFIL Quality Select",
+ 		     fsl_micfil_quality_enum,
+ 		     snd_soc_get_enum_double, snd_soc_put_enum_double),
 -- 
 2.39.0
 
