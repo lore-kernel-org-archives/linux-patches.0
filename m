@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1D0528EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:56:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2087DC433D2;
-	Mon, 30 Jan 2023 13:56:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 334C428EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:56:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B029EC433EF;
+	Mon, 30 Jan 2023 13:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675086979;
-	bh=aiDoIJ+gWHMj7E7ALkDEl/YDF8LnB+NRaiUUS29VMpM=;
+	s=korg; t=1675086982;
+	bh=Lf/M4MFIF6ROOxcJrajfkudMtPYRr1ftrXmHU30jbrQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U69l/jw28bjTMayLgMemloSuOB8TvwEgU0omylQCCMNNx8Kt7tBxz7KOo4Ld2AF7m
-	 8esOORIwm+8j15B4JFsihvhiZbO97HfPJKd0EOsgkMfroGjAoJ12SUEf14Lkk+Uogd
-	 aAJg4IuVg58Z1XC8NnDXwOIUnqyQiWZzIZQjgvII=
+	b=YSRXqT/Uw6GqE255d2OlgVsq0544hm1srqJbXVJU+95pD99eKpqWT845KxBTVBai8
+	 XYwOneGjZDxOrLIaZyWUD8PDQSXnKCN/Lz8QrXggi/NdRL3gKvhwvXPsfkYpBdmT5i
+	 Nx8QY7HyUbvANiV8kGwTl2g9zCpJL1IkGc3vbZ58=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xingyuan Mo <hdthky0@gmail.com>,
-	Jeff Layton <jlayton@kernel.org>,
-	Chuck Lever <chuck.lever@oracle.com>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 059/313] NFSD: fix use-after-free in nfsd4_ssc_setup_dul()
-Date: Mon, 30 Jan 2023 14:48:14 +0100
-Message-Id: <20230130134339.436235070@linuxfoundation.org>
+Subject: [PATCH 6.1 060/313] ARM: dts: at91: sam9x60: fix the ddr clock for sam9x60
+Date: Mon, 30 Jan 2023 14:48:15 +0100
+Message-Id: <20230130134339.484687058@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,36 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xingyuan Mo <hdthky0@gmail.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit e6cf91b7b47ff82b624bdfe2fdcde32bb52e71dd ]
+[ Upstream commit 9bfa2544dbd1133f0b0af4e967de3bb9c1e3a497 ]
 
-If signal_pending() returns true, schedule_timeout() will not be executed,
-causing the waiting task to remain in the wait queue.
-Fixed by adding a call to finish_wait(), which ensures that the waiting
-task will always be removed from the wait queue.
+The 2nd DDR clock for sam9x60 DDR controller is peripheral clock with
+id 49.
 
-Fixes: f4e44b393389 ("NFSD: delay unmount source's export after inter-server copy completed.")
-Signed-off-by: Xingyuan Mo <hdthky0@gmail.com>
-Reviewed-by: Jeff Layton <jlayton@kernel.org>
-Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
+Fixes: 1e5f532c2737 ("ARM: dts: at91: sam9x60: add device tree for soc and board")
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20221208115241.36312-1-claudiu.beznea@microchip.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/arm/boot/dts/sam9x60.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index 30a08ec31a70..ba04ce9b9fa5 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1331,6 +1331,7 @@ static __be32 nfsd4_ssc_setup_dul(struct nfsd_net *nn, char *ipaddr,
- 			/* allow 20secs for mount/unmount for now - revisit */
- 			if (signal_pending(current) ||
- 					(schedule_timeout(20*HZ) == 0)) {
-+				finish_wait(&nn->nfsd_ssc_waitq, &wait);
- 				kfree(work);
- 				return nfserr_eagain;
- 			}
+diff --git a/arch/arm/boot/dts/sam9x60.dtsi b/arch/arm/boot/dts/sam9x60.dtsi
+index 8f5477e307dd..37a5d96aaf64 100644
+--- a/arch/arm/boot/dts/sam9x60.dtsi
++++ b/arch/arm/boot/dts/sam9x60.dtsi
+@@ -564,7 +564,7 @@ pmecc: ecc-engine@ffffe000 {
+ 			mpddrc: mpddrc@ffffe800 {
+ 				compatible = "microchip,sam9x60-ddramc", "atmel,sama5d3-ddramc";
+ 				reg = <0xffffe800 0x200>;
+-				clocks = <&pmc PMC_TYPE_SYSTEM 2>, <&pmc PMC_TYPE_CORE PMC_MCK>;
++				clocks = <&pmc PMC_TYPE_SYSTEM 2>, <&pmc PMC_TYPE_PERIPHERAL 49>;
+ 				clock-names = "ddrck", "mpddr";
+ 			};
+ 
 -- 
 2.39.0
 
