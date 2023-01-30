@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 916D0323C
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:23:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBE5AC433EF;
-	Mon, 30 Jan 2023 14:23:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13CF73229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:24:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B80EC433EF;
+	Mon, 30 Jan 2023 14:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088637;
-	bh=0Ff1wA/jsyyzrcmDhgicIlBx8qhymYYf+T9UwvZxt8o=;
+	s=korg; t=1675088640;
+	bh=S7wEEfAUdIx5jrUJ1SbKokddBYPBiPwSPs3PZ6941d4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZOOQD0uQNAkhEhRcOIcljHd2KaAjpBmNHAh79zrlml85pnbG1K8oOReUpiwwDkU3z
-	 kdmgkRNXwdXi7Y+z6Uyxq1j/Rt3dwulr7DHZjZtaREKmyjPwV2xgw66bcPK8JRrsgv
-	 s88oFxWq2FUQfZUJv6z0ATRaZ+1jYu5FRVLL2pjg=
+	b=Ey/celrDfbd8ZXvVVdSIzck/1hqLWc9Pln+pjCdxHfyCTiRgH0326pTvxneVwY48l
+	 Erwokw1Dsdx3w7tTnojsPkapH+qa4e+HX7XaGI/vcJbilB510NUPtAVQmux4E4GSpm
+	 v0doEa0O6WVtSckXlJp8VqEbudYqVKtC1S3qd4NM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Chen Zhongjin <chenzhongjin@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 056/143] w1: fix WARNING after calling w1_process()
-Date: Mon, 30 Jan 2023 14:51:53 +0100
-Message-Id: <20230130134309.185051367@linuxfoundation.org>
+Subject: [PATCH 5.10 057/143] driver core: Fix test_async_probe_init saves device in wrong array
+Date: Mon, 30 Jan 2023 14:51:54 +0100
+Message-Id: <20230130134309.224075991@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -34,53 +34,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Chen Zhongjin <chenzhongjin@huawei.com>
 
-[ Upstream commit 36225a7c72e9e3e1ce4001b6ce72849f5c9a2d3b ]
+[ Upstream commit 9be182da0a7526f1b9a3777a336f83baa2e64d23 ]
 
-I got the following WARNING message while removing driver(ds2482):
+In test_async_probe_init, second set of asynchronous devices are saved
+in sync_dev[sync_id], which should be async_dev[async_id].
+This makes these devices not unregistered when exit.
 
-------------[ cut here ]------------
-do not call blocking ops when !TASK_RUNNING; state=1 set at [<000000002d50bfb6>] w1_process+0x9e/0x1d0 [wire]
-WARNING: CPU: 0 PID: 262 at kernel/sched/core.c:9817 __might_sleep+0x98/0xa0
-CPU: 0 PID: 262 Comm: w1_bus_master1 Tainted: G                 N 6.1.0-rc3+ #307
-RIP: 0010:__might_sleep+0x98/0xa0
-Call Trace:
- exit_signals+0x6c/0x550
- do_exit+0x2b4/0x17e0
- kthread_exit+0x52/0x60
- kthread+0x16d/0x1e0
- ret_from_fork+0x1f/0x30
+> modprobe test_async_driver_probe && \
+> modprobe -r test_async_driver_probe && \
+> modprobe test_async_driver_probe
+ ...
+> sysfs: cannot create duplicate filename '/devices/platform/test_async_driver.4'
+> kobject_add_internal failed for test_async_driver.4 with -EEXIST,
+  don't try to register things with the same name in the same directory.
 
-The state of task is set to TASK_INTERRUPTIBLE in loop in w1_process(),
-set it to TASK_RUNNING when it breaks out of the loop to avoid the
-warning.
-
-Fixes: 3c52e4e62789 ("W1: w1_process, block or sleep")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221205101558.3599162-1-yangyingliang@huawei.com
+Fixes: 57ea974fb871 ("driver core: Rewrite test_async_driver_probe to cover serialization and NUMA affinity")
+Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
+Link: https://lore.kernel.org/r/20221125063541.241328-1-chenzhongjin@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/w1/w1.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/base/test/test_async_driver_probe.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/w1/w1.c b/drivers/w1/w1.c
-index 6e9f3569971d..15842377c8d2 100644
---- a/drivers/w1/w1.c
-+++ b/drivers/w1/w1.c
-@@ -1160,8 +1160,10 @@ int w1_process(void *data)
- 		 */
- 		mutex_unlock(&dev->list_mutex);
+diff --git a/drivers/base/test/test_async_driver_probe.c b/drivers/base/test/test_async_driver_probe.c
+index 3bb7beb127a9..c157a912d673 100644
+--- a/drivers/base/test/test_async_driver_probe.c
++++ b/drivers/base/test/test_async_driver_probe.c
+@@ -146,7 +146,7 @@ static int __init test_async_probe_init(void)
+ 	calltime = ktime_get();
+ 	for_each_online_cpu(cpu) {
+ 		nid = cpu_to_node(cpu);
+-		pdev = &sync_dev[sync_id];
++		pdev = &async_dev[async_id];
  
--		if (kthread_should_stop())
-+		if (kthread_should_stop()) {
-+			__set_current_state(TASK_RUNNING);
- 			break;
-+		}
- 
- 		/* Only sleep when the search is active. */
- 		if (dev->search_count) {
+ 		*pdev = test_platform_device_register_node("test_async_driver",
+ 							   async_id,
 -- 
 2.39.0
 
