@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BACD28F3
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:17:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80CA5C433EF;
-	Mon, 30 Jan 2023 14:17:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A9A03229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:17:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7594AC4339B;
+	Mon, 30 Jan 2023 14:17:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088243;
-	bh=NuOBLGWAYgmRap10Ieh1WLunH460rVT+96k5ULgr8vo=;
+	s=korg; t=1675088246;
+	bh=mpFuFh6JFmkTAooGvPqZ0lyTgxxdn+1xfdLelFQpU1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jSTps+yewY6xfBz3A2YzORARXr+fD29+Z/KQRUHoqZYkosqgxbWjr3Eivrej+idqK
-	 x7nzCbL+gAeoF08JRWN3dL2RD94us1evYifVJSQl9k4xcXksUhhf7RKGY2XgEAYbU2
-	 h23R4zvla7pvOjqzTyufumugfeHyRZUCajsTcomw=
+	b=KuyAR3hwBehilefVrxsBJoaOujMKlS/46huxWeEKnUMXPJ+60U3fbj3c0/fbqkYiR
+	 tqJx3GmayAwgo2Wrt5ocGTUZr5GznQoj0oP50jLoD4KnFAodlbw17hedvZRydCHwKv
+	 DU9Nyf4MJQxlt6nvOi5dTMET/CRB+DDuSxNprs9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.15 162/204] thermal: intel: int340x: Protect trip temperature from concurrent updates
-Date: Mon, 30 Jan 2023 14:52:07 +0100
-Message-Id: <20230130134323.684479968@linuxfoundation.org>
+	Gergely Risko <gergely.risko@gmail.com>,
+	David Ahern <dsahern@kernel.org>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 163/204] ipv6: fix reachability confirmation with proxy_ndp
+Date: Mon, 30 Jan 2023 14:52:08 +0100
+Message-Id: <20230130134323.723987888@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -34,117 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Gergely Risko <gergely.risko@gmail.com>
 
-commit 6757a7abe47bcb12cb2d45661067e182424b0ee3 upstream.
+commit 9f535c870e493841ac7be390610ff2edec755762 upstream.
 
-Trip temperatures are read using ACPI methods and stored in the memory
-during zone initializtion and when the firmware sends a notification for
-change. This trip temperature is returned when the thermal core calls via
-callback get_trip_temp().
+When proxying IPv6 NDP requests, the adverts to the initial multicast
+solicits are correct and working.  On the other hand, when later a
+reachability confirmation is requested (on unicast), no reply is sent.
 
-But it is possible that while updating the memory copy of the trips when
-the firmware sends a notification for change, thermal core is reading the
-trip temperature via the callback get_trip_temp(). This may return invalid
-trip temperature.
+This causes the neighbor entry expiring on the sending node, which is
+mostly a non-issue, as a new multicast request is sent.  There are
+routers, where the multicast requests are intentionally delayed, and in
+these environments the current implementation causes periodic packet
+loss for the proxied endpoints.
 
-To address this add a mutex to protect the invalid temperature reads in
-the callback get_trip_temp() and int340x_thermal_read_trips().
+The root cause is the erroneous decrease of the hop limit, as this
+is checked in ndisc.c and no answer is generated when it's 254 instead
+of the correct 255.
 
-Fixes: 5fbf7f27fa3d ("Thermal/int340x: Add common thermal zone handler")
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Cc: 5.0+ <stable@vger.kernel.org> # 5.0+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: stable@vger.kernel.org
+Fixes: 46c7655f0b56 ("ipv6: decrease hop limit counter in ip6_forward()")
+Signed-off-by: Gergely Risko <gergely.risko@gmail.com>
+Tested-by: Gergely Risko <gergely.risko@gmail.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c |   18 +++++++++--
- drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.h |    1 
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ net/ipv6/ip6_output.c |   15 ++++++++++++++-
+ 1 file changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
-+++ b/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
-@@ -44,11 +44,13 @@ static int int340x_thermal_get_trip_temp
- 					 int trip, int *temp)
- {
- 	struct int34x_thermal_zone *d = zone->devdata;
--	int i;
-+	int i, ret = 0;
- 
- 	if (d->override_ops && d->override_ops->get_trip_temp)
- 		return d->override_ops->get_trip_temp(zone, trip, temp);
- 
-+	mutex_lock(&d->trip_mutex);
-+
- 	if (trip < d->aux_trip_nr)
- 		*temp = d->aux_trips[trip];
- 	else if (trip == d->crt_trip_id)
-@@ -66,10 +68,12 @@ static int int340x_thermal_get_trip_temp
- 			}
- 		}
- 		if (i == INT340X_THERMAL_MAX_ACT_TRIP_COUNT)
--			return -EINVAL;
-+			ret = -EINVAL;
- 	}
- 
--	return 0;
-+	mutex_unlock(&d->trip_mutex);
-+
-+	return ret;
- }
- 
- static int int340x_thermal_get_trip_type(struct thermal_zone_device *zone,
-@@ -180,6 +184,8 @@ int int340x_thermal_read_trips(struct in
- 	int trip_cnt = int34x_zone->aux_trip_nr;
- 	int i;
- 
-+	mutex_lock(&int34x_zone->trip_mutex);
-+
- 	int34x_zone->crt_trip_id = -1;
- 	if (!int340x_thermal_get_trip_config(int34x_zone->adev->handle, "_CRT",
- 					     &int34x_zone->crt_temp))
-@@ -207,6 +213,8 @@ int int340x_thermal_read_trips(struct in
- 		int34x_zone->act_trips[i].valid = true;
- 	}
- 
-+	mutex_unlock(&int34x_zone->trip_mutex);
-+
- 	return trip_cnt;
- }
- EXPORT_SYMBOL_GPL(int340x_thermal_read_trips);
-@@ -230,6 +238,8 @@ struct int34x_thermal_zone *int340x_ther
- 	if (!int34x_thermal_zone)
- 		return ERR_PTR(-ENOMEM);
- 
-+	mutex_init(&int34x_thermal_zone->trip_mutex);
-+
- 	int34x_thermal_zone->adev = adev;
- 	int34x_thermal_zone->override_ops = override_ops;
- 
-@@ -281,6 +291,7 @@ err_thermal_zone:
- 	acpi_lpat_free_conversion_table(int34x_thermal_zone->lpat_table);
- 	kfree(int34x_thermal_zone->aux_trips);
- err_trip_alloc:
-+	mutex_destroy(&int34x_thermal_zone->trip_mutex);
- 	kfree(int34x_thermal_zone);
- 	return ERR_PTR(ret);
- }
-@@ -292,6 +303,7 @@ void int340x_thermal_zone_remove(struct
- 	thermal_zone_device_unregister(int34x_thermal_zone->zone);
- 	acpi_lpat_free_conversion_table(int34x_thermal_zone->lpat_table);
- 	kfree(int34x_thermal_zone->aux_trips);
-+	mutex_destroy(&int34x_thermal_zone->trip_mutex);
- 	kfree(int34x_thermal_zone);
- }
- EXPORT_SYMBOL_GPL(int340x_thermal_zone_remove);
---- a/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.h
-+++ b/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.h
-@@ -32,6 +32,7 @@ struct int34x_thermal_zone {
- 	struct thermal_zone_device_ops *override_ops;
- 	void *priv_data;
- 	struct acpi_lpat_conversion_table *lpat_table;
-+	struct mutex trip_mutex;
- };
- 
- struct int34x_thermal_zone *int340x_thermal_zone_add(struct acpi_device *,
+--- a/net/ipv6/ip6_output.c
++++ b/net/ipv6/ip6_output.c
+@@ -527,7 +527,20 @@ int ip6_forward(struct sk_buff *skb)
+ 	    pneigh_lookup(&nd_tbl, net, &hdr->daddr, skb->dev, 0)) {
+ 		int proxied = ip6_forward_proxy_check(skb);
+ 		if (proxied > 0) {
+-			hdr->hop_limit--;
++			/* It's tempting to decrease the hop limit
++			 * here by 1, as we do at the end of the
++			 * function too.
++			 *
++			 * But that would be incorrect, as proxying is
++			 * not forwarding.  The ip6_input function
++			 * will handle this packet locally, and it
++			 * depends on the hop limit being unchanged.
++			 *
++			 * One example is the NDP hop limit, that
++			 * always has to stay 255, but other would be
++			 * similar checks around RA packets, where the
++			 * user can even change the desired limit.
++			 */
+ 			return ip6_input(skb);
+ 		} else if (proxied < 0) {
+ 			__IP6_INC_STATS(net, idev, IPSTATS_MIB_INDISCARDS);
 
 
