@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B827C28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:17:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260B8C433D2;
-	Mon, 30 Jan 2023 14:17:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF99E28F3
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:17:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 260EAC4339B;
+	Mon, 30 Jan 2023 14:17:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088225;
-	bh=8fbt8vPswItPK8ub1PvxmY0Sn7SpW/ZuGrVapLwmwmE=;
+	s=korg; t=1675088228;
+	bh=WVLyatBJW/tzgI7JOERmnuF54z+Zc/94C9CHoOx1eRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AJUesG57U0gwszS8nG5OiLrpKU0jVdFpXU+UmSPQRb9sQF0stwa2DHCQdke4Y/u3V
-	 t+KXC/Rg1mUN43Y7He20zjznej4oajqZfu/SWXABg2e5ZqFcsJVtnP6gf+jVCNqKYu
-	 8LZUpDtiU+pv5GbqrlIWpNVjjq3JEfZc+6i7YZrc=
+	b=EXHUPykESKIrk8tS/NWxLTZ7a02QfUe5OXhU/ngnzDOVuNDWN3Zppz+xTkyqqV0Go
+	 jzueqY8UIwxb6aNqiNIfXDomjzZ+zEO2lcqprcaLXsWmb+fh1NBjLlA+VO+Blw76wX
+	 ezRAVTjLK97iPaoA6B3RDn/xwLI9z9GQ1EutJiGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 157/204] ksmbd: downgrade ndr version error message to debug
-Date: Mon, 30 Jan 2023 14:52:02 +0100
-Message-Id: <20230130134323.441328309@linuxfoundation.org>
+	Steve French <stfrench@microsoft.com>,
+	zdi-disclosures@trendmicro.com
+Subject: [PATCH 5.15 158/204] ksmbd: limit pdu length size according to connection status
+Date: Mon, 30 Jan 2023 14:52:03 +0100
+Message-Id: <20230130134323.488865623@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -36,66 +37,76 @@ Content-Transfer-Encoding: 8bit
 
 From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit a34dc4a9b9e2fb3a45c179a60bb0b26539c96189 upstream.
+commit 62c487b53a7ff31e322cf2874d3796b8202c54a5 upstream.
 
-When user switch samba to ksmbd, The following message flood is coming
-when accessing files. Samba seems to changs dos attribute version to v5.
-This patch downgrade ndr version error message to debug.
+Stream protocol length will never be larger than 16KB until session setup.
+After session setup, the size of requests will not be larger than
+16KB + SMB2 MAX WRITE size. This patch limits these invalidly oversized
+requests and closes the connection immediately.
 
-$ dmesg
-...
-[68971.766914] ksmbd: v5 version is not supported
-[68971.779808] ksmbd: v5 version is not supported
-[68971.871544] ksmbd: v5 version is not supported
-[68971.910135] ksmbd: v5 version is not supported
-...
-
+Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
 Cc: stable@vger.kernel.org
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-18259
 Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/ndr.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/ksmbd/connection.c |   17 +++++++++++++++--
+ fs/ksmbd/smb2pdu.h    |    5 +++--
+ 2 files changed, 18 insertions(+), 4 deletions(-)
 
---- a/fs/ksmbd/ndr.c
-+++ b/fs/ksmbd/ndr.c
-@@ -242,7 +242,7 @@ int ndr_decode_dos_attr(struct ndr *n, s
- 		return ret;
+--- a/fs/ksmbd/connection.c
++++ b/fs/ksmbd/connection.c
+@@ -274,7 +274,7 @@ int ksmbd_conn_handler_loop(void *p)
+ {
+ 	struct ksmbd_conn *conn = (struct ksmbd_conn *)p;
+ 	struct ksmbd_transport *t = conn->transport;
+-	unsigned int pdu_size;
++	unsigned int pdu_size, max_allowed_pdu_size;
+ 	char hdr_buf[4] = {0,};
+ 	int size;
  
- 	if (da->version != 3 && da->version != 4) {
--		pr_err("v%d version is not supported\n", da->version);
-+		ksmbd_debug(VFS, "v%d version is not supported\n", da->version);
- 		return -EINVAL;
- 	}
+@@ -299,13 +299,26 @@ int ksmbd_conn_handler_loop(void *p)
+ 		pdu_size = get_rfc1002_len(hdr_buf);
+ 		ksmbd_debug(CONN, "RFC1002 header %u bytes\n", pdu_size);
  
-@@ -251,7 +251,7 @@ int ndr_decode_dos_attr(struct ndr *n, s
- 		return ret;
++		if (conn->status == KSMBD_SESS_GOOD)
++			max_allowed_pdu_size =
++				SMB3_MAX_MSGSIZE + conn->vals->max_write_size;
++		else
++			max_allowed_pdu_size = SMB3_MAX_MSGSIZE;
++
++		if (pdu_size > max_allowed_pdu_size) {
++			pr_err_ratelimited("PDU length(%u) excceed maximum allowed pdu size(%u) on connection(%d)\n",
++					pdu_size, max_allowed_pdu_size,
++					conn->status);
++			break;
++		}
++
+ 		/*
+ 		 * Check if pdu size is valid (min : smb header size,
+ 		 * max : 0x00FFFFFF).
+ 		 */
+ 		if (pdu_size < __SMB2_HEADER_STRUCTURE_SIZE ||
+ 		    pdu_size > MAX_STREAM_PROT_LEN) {
+-			continue;
++			break;
+ 		}
  
- 	if (da->version != version2) {
--		pr_err("ndr version mismatched(version: %d, version2: %d)\n",
-+		ksmbd_debug(VFS, "ndr version mismatched(version: %d, version2: %d)\n",
- 		       da->version, version2);
- 		return -EINVAL;
- 	}
-@@ -453,7 +453,7 @@ int ndr_decode_v4_ntacl(struct ndr *n, s
- 	if (ret)
- 		return ret;
- 	if (acl->version != 4) {
--		pr_err("v%d version is not supported\n", acl->version);
-+		ksmbd_debug(VFS, "v%d version is not supported\n", acl->version);
- 		return -EINVAL;
- 	}
+ 		/* 4 for rfc1002 length field */
+--- a/fs/ksmbd/smb2pdu.h
++++ b/fs/ksmbd/smb2pdu.h
+@@ -113,8 +113,9 @@
+ #define SMB21_DEFAULT_IOSIZE	(1024 * 1024)
+ #define SMB3_DEFAULT_IOSIZE	(4 * 1024 * 1024)
+ #define SMB3_DEFAULT_TRANS_SIZE	(1024 * 1024)
+-#define SMB3_MIN_IOSIZE	(64 * 1024)
+-#define SMB3_MAX_IOSIZE	(8 * 1024 * 1024)
++#define SMB3_MIN_IOSIZE		(64 * 1024)
++#define SMB3_MAX_IOSIZE		(8 * 1024 * 1024)
++#define SMB3_MAX_MSGSIZE	(4 * 4096)
  
-@@ -461,7 +461,7 @@ int ndr_decode_v4_ntacl(struct ndr *n, s
- 	if (ret)
- 		return ret;
- 	if (acl->version != version2) {
--		pr_err("ndr version mismatched(version: %d, version2: %d)\n",
-+		ksmbd_debug(VFS, "ndr version mismatched(version: %d, version2: %d)\n",
- 		       acl->version, version2);
- 		return -EINVAL;
- 	}
+ /*
+  * SMB2 Header Definition
 
 
