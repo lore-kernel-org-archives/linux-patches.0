@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92EA228EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:00:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17C70C433D2;
-	Mon, 30 Jan 2023 14:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B5E28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:00:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4FA4C433D2;
+	Mon, 30 Jan 2023 14:00:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087235;
-	bh=C7GgloiIFQmAR6+aRZZITATpNSeQgm91hCd/foFrF+c=;
+	s=korg; t=1675087238;
+	bh=twiw61iTGSbgosF8BpkJ8HSHOW966YfS7FZR9W9hTcg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MpapfS7S616O+vsSTGxMCxO0VFVJ8w1GP58LWrPcLrebUT05Gy/aFhyTsumQJ88mx
-	 X6hCck5ChfIdyQ09yyNjmoFpBsRJl4qafD9UgEmHP+Yp5hLyfMuskTlJ0/WfGetpYY
-	 iyY2wJUre6NKVkrFXzX4uZ2Q7ievUO0S+D3H+eGY=
+	b=ATrdQtV2R32SmNqtRDPzfiIgIjdnSWhs/674RmHNP+BPIIfAFZGSGPhCkT4ATFgMY
+	 QCeE3I60hOGXQ1c+M70UNzHBq57/jGZfQj/8AyGOAorcDEBEBSFm9arsGWpj+y3hdT
+	 2cxzogMmReg4J+Pl2I/+okyFPk7C0ZMoxozCdt4g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rakesh Sankaranarayanan <rakesh.sankaranarayanan@microchip.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	Curtis Malainey <cujomalainey@chromium.org>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 134/313] net: dsa: microchip: ksz9477: port map correction in ALU table entry register
-Date: Mon, 30 Jan 2023 14:49:29 +0100
-Message-Id: <20230130134342.897581515@linuxfoundation.org>
+Subject: [PATCH 6.1 143/313] ASoC: SOF: pm: Always tear down pipelines before DSP suspend
+Date: Mon, 30 Jan 2023 14:49:38 +0100
+Message-Id: <20230130134343.318204534@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,53 +39,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rakesh Sankaranarayanan <rakesh.sankaranarayanan@microchip.com>
+From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 
-[ Upstream commit 6c977c5c2e4c5d8ad1b604724cc344e38f96fe9b ]
+[ Upstream commit d185e0689abc98ef55fb7a7d75aa0c48a0ed5838 ]
 
-ALU table entry 2 register in KSZ9477 have bit positions reserved for
-forwarding port map. This field is referred in ksz9477_fdb_del() for
-clearing forward port map and alu table.
+When the DSP is suspended while the firmware is in the crashed state, we
+skip tearing down the pipelines. This means that the widget reference
+counts will not get to reset to 0 before suspend. This will lead to
+errors with resuming audio after system resume. To fix this, invoke the
+tear_down_all_pipelines op before skipping to DSP suspend.
 
-But current fdb_del refer ALU table entry 3 register for accessing forward
-port map. Update ksz9477_fdb_del() to get forward port map from correct
-alu table entry register.
-
-With this bug, issue can be observed while deleting static MAC entries.
-Delete any specific MAC entry using "bridge fdb del" command. This should
-clear all the specified MAC entries. But it is observed that entries with
-self static alone are retained.
-
-Tested on LAN9370 EVB since ksz9477_fdb_del() is used common across
-LAN937x and KSZ series.
-
-Fixes: b987e98e50ab ("dsa: add DSA switch driver for Microchip KSZ9477")
-Signed-off-by: Rakesh Sankaranarayanan <rakesh.sankaranarayanan@microchip.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://lore.kernel.org/r/20230118174735.702377-1-rakesh.sankaranarayanan@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Curtis Malainey <cujomalainey@chromium.org>
+Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Link: https://lore.kernel.org/r/20221220125629.8469-3-peter.ujfalusi@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/microchip/ksz9477.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/sof/pm.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/dsa/microchip/ksz9477.c b/drivers/net/dsa/microchip/ksz9477.c
-index a6a0321a8931..a73697147053 100644
---- a/drivers/net/dsa/microchip/ksz9477.c
-+++ b/drivers/net/dsa/microchip/ksz9477.c
-@@ -548,10 +548,10 @@ int ksz9477_fdb_del(struct ksz_device *dev, int port,
- 		ksz_read32(dev, REG_SW_ALU_VAL_D, &alu_table[3]);
+diff --git a/sound/soc/sof/pm.c b/sound/soc/sof/pm.c
+index 5f88c4a01fa3..8722bbd7fd3d 100644
+--- a/sound/soc/sof/pm.c
++++ b/sound/soc/sof/pm.c
+@@ -192,6 +192,9 @@ static int sof_suspend(struct device *dev, bool runtime_suspend)
+ 	if (runtime_suspend && !sof_ops(sdev)->runtime_suspend)
+ 		return 0;
  
- 		/* clear forwarding port */
--		alu_table[2] &= ~BIT(port);
-+		alu_table[1] &= ~BIT(port);
++	if (tplg_ops && tplg_ops->tear_down_all_pipelines)
++		tplg_ops->tear_down_all_pipelines(sdev, false);
++
+ 	if (sdev->fw_state != SOF_FW_BOOT_COMPLETE)
+ 		goto suspend;
  
- 		/* if there is no port to forward, clear table */
--		if ((alu_table[2] & ALU_V_PORT_MAP) == 0) {
-+		if ((alu_table[1] & ALU_V_PORT_MAP) == 0) {
- 			alu_table[0] = 0;
- 			alu_table[1] = 0;
- 			alu_table[2] = 0;
+@@ -216,9 +219,6 @@ static int sof_suspend(struct device *dev, bool runtime_suspend)
+ 		goto suspend;
+ 	}
+ 
+-	if (tplg_ops->tear_down_all_pipelines)
+-		tplg_ops->tear_down_all_pipelines(sdev, false);
+-
+ 	/* suspend DMA trace */
+ 	sof_fw_trace_suspend(sdev, pm_state);
+ 
 -- 
 2.39.0
 
