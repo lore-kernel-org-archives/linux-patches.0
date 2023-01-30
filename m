@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B69528EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:58:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85822C433EF;
-	Mon, 30 Jan 2023 13:58:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F47D28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:58:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9708EC4339B;
+	Mon, 30 Jan 2023 13:58:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087114;
-	bh=WK9M1JMhE4yIcDv0R2RgSIobbe4NY9UaaaXM3uuJVt4=;
+	s=korg; t=1675087117;
+	bh=mJ/RL0qJmJLL0dPQ/Z/L34KkcnDdhTzNokLYOPsLSDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m8kR/rnHRgxAtWG6MlobMAQ7Oy6TK14WikJnpwoD0n/9eaCt61FD7XCGt3SxHfY12
-	 wPCFR/NIZcOCpVGuxncKB24hE2z+1UwCT9nmi9Y99AIaEeV2G8QXm79pbhb9A3SmXU
-	 9IRkPvM3pVyEE5amN+mCVYskARfgsX+TCJsynjoE=
+	b=BsOiMcbSFWnd4zsZnmdMx6ZgMYcshEov8fhTerYikk4HwNXk15vy4TPUu2sKoxvkN
+	 B2QV1niOz4AHfuOUTGV99Cs0eTk9Sp2DvmpkgYCNiN7Y/MVRXK6jwPq2DsnG7eU2ge
+	 uthmak9ITN9y9HIotPiptwqvpDxQcPgpUh4yS/BI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhengchao Shao <shaozhengchao@huawei.com>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <clement.leger@bootlin.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 100/313] Bluetooth: hci_sync: fix memory leak in hci_update_adv_data()
-Date: Mon, 30 Jan 2023 14:48:55 +0100
-Message-Id: <20230130134341.293145273@linuxfoundation.org>
+Subject: [PATCH 6.1 072/313] net: lan966x: add missing fwnode_handle_put() for ports node
+Date: Mon, 30 Jan 2023 14:48:27 +0100
+Message-Id: <20230130134340.016220112@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,50 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhengchao Shao <shaozhengchao@huawei.com>
+From: Clément Léger <clement.leger@bootlin.com>
 
-[ Upstream commit 1ed8b37cbaf14574c779064ef1372af62e8ba6aa ]
+[ Upstream commit 925f3deb45df73173a33e1e81db77575f4ffde39 ]
 
-When hci_cmd_sync_queue() failed in hci_update_adv_data(), inst_ptr is
-not freed, which will cause memory leak, convert to use ERR_PTR/PTR_ERR
-to pass the instance to callback so no memory needs to be allocated.
+Since the "ethernet-ports" node is retrieved using
+device_get_named_child_node(), it should be release after using it. Add
+missing fwnode_handle_put() and move the code that retrieved the node
+from device-tree to avoid complicated handling in case of error.
 
-Fixes: 651cd3d65b0f ("Bluetooth: convert hci_update_adv_data to hci_sync")
-Signed-off-by: Zhengchao Shao <shaozhengchao@huawei.com>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: db8bcaad5393 ("net: lan966x: add the basic lan966x driver")
+Signed-off-by: Clément Léger <clement.leger@bootlin.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Link: https://lore.kernel.org/r/20230112161311.495124-1-clement.leger@bootlin.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/hci_sync.c | 13 +++----------
- 1 file changed, 3 insertions(+), 10 deletions(-)
+ .../net/ethernet/microchip/lan966x/lan966x_main.c   | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
-index 8d6c8cbfe1de..67dd4c9fa4a5 100644
---- a/net/bluetooth/hci_sync.c
-+++ b/net/bluetooth/hci_sync.c
-@@ -6168,20 +6168,13 @@ int hci_get_random_address(struct hci_dev *hdev, bool require_privacy,
+diff --git a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+index 20ee5b28f70a..569108c49cbc 100644
+--- a/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
++++ b/drivers/net/ethernet/microchip/lan966x/lan966x_main.c
+@@ -1022,11 +1022,6 @@ static int lan966x_probe(struct platform_device *pdev)
+ 		lan966x->base_mac[5] &= 0xf0;
+ 	}
  
- static int _update_adv_data_sync(struct hci_dev *hdev, void *data)
- {
--	u8 instance = *(u8 *)data;
+-	ports = device_get_named_child_node(&pdev->dev, "ethernet-ports");
+-	if (!ports)
+-		return dev_err_probe(&pdev->dev, -ENODEV,
+-				     "no ethernet-ports child found\n");
 -
--	kfree(data);
-+	u8 instance = PTR_ERR(data);
+ 	err = lan966x_create_targets(pdev, lan966x);
+ 	if (err)
+ 		return dev_err_probe(&pdev->dev, err,
+@@ -1104,6 +1099,11 @@ static int lan966x_probe(struct platform_device *pdev)
+ 		}
+ 	}
  
- 	return hci_update_adv_data_sync(hdev, instance);
- }
++	ports = device_get_named_child_node(&pdev->dev, "ethernet-ports");
++	if (!ports)
++		return dev_err_probe(&pdev->dev, -ENODEV,
++				     "no ethernet-ports child found\n");
++
+ 	/* init switch */
+ 	lan966x_init(lan966x);
+ 	lan966x_stats_init(lan966x);
+@@ -1138,6 +1138,8 @@ static int lan966x_probe(struct platform_device *pdev)
+ 		lan966x_port_init(lan966x->ports[p]);
+ 	}
  
- int hci_update_adv_data(struct hci_dev *hdev, u8 instance)
- {
--	u8 *inst_ptr = kmalloc(1, GFP_KERNEL);
--
--	if (!inst_ptr)
--		return -ENOMEM;
--
--	*inst_ptr = instance;
--	return hci_cmd_sync_queue(hdev, _update_adv_data_sync, inst_ptr, NULL);
-+	return hci_cmd_sync_queue(hdev, _update_adv_data_sync,
-+				  ERR_PTR(instance), NULL);
- }
++	fwnode_handle_put(ports);
++
+ 	lan966x_mdb_init(lan966x);
+ 	err = lan966x_fdb_init(lan966x);
+ 	if (err)
+@@ -1160,6 +1162,7 @@ static int lan966x_probe(struct platform_device *pdev)
+ 	lan966x_fdb_deinit(lan966x);
+ 
+ cleanup_ports:
++	fwnode_handle_put(ports);
+ 	fwnode_handle_put(portnp);
+ 
+ 	lan966x_cleanup_ports(lan966x);
 -- 
 2.39.0
 
