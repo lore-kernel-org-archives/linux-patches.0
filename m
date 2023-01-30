@@ -1,96 +1,121 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B326AA3
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 17:49:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D677C433EF;
-	Mon, 30 Jan 2023 17:49:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1675100980;
-	bh=lWpbM2LBKmzekcSUy3qEo2NqmJsFR7GUfXN4EgsE1hc=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=aFPD8m7icQ4Wb2aBmTkJRUW2YTfW8tAbu5d6/lq8ffWESbGAsa1mGxsgEEZx0UF1a
-	 p+Pmvh5wh8LANtauXLD9x0bXgPvzY0pbhZdcRKiKv9l5tGz6Cnk9QEybEGUPj5f8+y
-	 wqNqp2O+1hilpWos5/XJHm1mQ9O+pboKhDLmiBKhn3cI6THKMsdwq6JfwxReiV0LfU
-	 3QyoMyBoT6tr0AAnS0xx5urNAAt6qgCXRQcPkVF4TFJOQjpwubASG3I5pJw/lgg4p4
-	 U21Hkj5gLzFDMbU7csvbXRjla7KK8IkK514GrX+TEdaInnYSTYKaZTC1P5lb6eOAxm
-	 g/7fLnXGXK1ng==
-Date: Mon, 30 Jan 2023 17:49:34 +0000
-From: Conor Dooley <conor@kernel.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 000/313] 6.1.9-rc1 review
-Message-ID: <Y9gDLmmAwaKZX9yw@spud>
-References: <20230130134336.532886729@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BA916AA3;
+	Mon, 30 Jan 2023 18:11:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1675102280; x=1706638280;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=gXD0R29Ib6o2ty6I1G9sKFWkOOk8CVk6fMR1Zb5Z1wU=;
+  b=KU/ghU1BbI5bBf1R3tMLXHaeMGKs+FYYSn/RM8Iibc/m3q5bJzvrKvPD
+   YLX4J7mxP39wJ1RWiy7SieI+ZcpjarMSrqWulyhv0kFUrx0jPZ3KmRstD
+   oALJqVUakPbXEvuKN7OnB//aqry/AiCK3Wq3NY5/V2cqrbr31YfoqFvet
+   TtQyapfegMG9NCiSjSFQdrEzXzYtKGhB0aUggczZwHeak3rJuwKsDdet0
+   q0PghiKqf+cVl30TWDvuaDqZ/uQXWuxLMFsYM5ckozZGzKRjYtJ7q7OFV
+   y5f26o2GBz8qGKE8EDtgv4R0Iz+w/BGpvmhTI/GVXNdSNGkf4aexRZPsS
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10606"; a="327651845"
+X-IronPort-AV: E=Sophos;i="5.97,258,1669104000"; 
+   d="scan'208";a="327651845"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 30 Jan 2023 10:11:18 -0800
+X-ExtLoop1: 1
+X-IronPort-AV: E=McAfee;i="6500,9779,10606"; a="694653248"
+X-IronPort-AV: E=Sophos;i="5.97,258,1669104000"; 
+   d="scan'208";a="694653248"
+Received: from lkp-server01.sh.intel.com (HELO ffa7f14d1d0f) ([10.239.97.150])
+  by orsmga008.jf.intel.com with ESMTP; 30 Jan 2023 10:11:15 -0800
+Received: from kbuild by ffa7f14d1d0f with local (Exim 4.96)
+	(envelope-from <lkp@intel.com>)
+	id 1pMYcc-0003oA-20;
+	Mon, 30 Jan 2023 18:11:14 +0000
+Date: Tue, 31 Jan 2023 02:10:41 +0800
+From: kernel test robot <lkp@intel.com>
+To: Nathan Chancellor <nathan@kernel.org>, linux@armlinux.org.uk,
+	arnd@arndb.de
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+	ndesaulniers@google.com, trix@redhat.com,
+	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev, Nathan Chancellor <nathan@kernel.org>
+Subject: Re: [PATCH] ARM: Allow pre-ARMv5 builds with ld.lld 16.0.0 and newer
+Message-ID: <202301310149.euWWUSrD-lkp@intel.com>
+References: <20230118-v4-v4t-lld-16-v1-1-e3d9a00ae47c@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="NR3ZMAgE4gQVTbRu"
-Content-Disposition: inline
-In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
-
-
---NR3ZMAgE4gQVTbRu
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230118-v4-v4t-lld-16-v1-1-e3d9a00ae47c@kernel.org>
 
-On Mon, Jan 30, 2023 at 02:47:15PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.9 release.
-> There are 313 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
-> Responses should be made by Wed, 01 Feb 2023 13:42:39 +0000.
-> Anything received after that time might be too late.
->=20
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.9-r=
-c1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
- linux-6.1.y
-> and the diffstat can be found below.
->=20
-> thanks,
->=20
-> greg k-h
+Hi Nathan,
 
-Apart from the build issue that Guenter reported, things look fine on my
-hardware.
+I love your patch! Perhaps something to improve:
 
-> Conor Dooley <conor.dooley@microchip.com>
->     dt-bindings: riscv: fix single letter canonical order
->=20
-> Conor Dooley <conor.dooley@microchip.com>
->     dt-bindings: riscv: fix underscore requirement for multi-letter exten=
-sions
+[auto build test WARNING on 5dc4c995db9eb45f6373a956eb1f69460e69e6d4]
 
-I think the email for these came in over the weekend but I was busy
-unfortunately. Is dt-binding stuff like this usually backported?
-I suppose there's no harm in making sure that it is correct...
+url:    https://github.com/intel-lab-lkp/linux/commits/Nathan-Chancellor/ARM-Allow-pre-ARMv5-builds-with-ld-lld-16-0-0-and-newer/20230119-032402
+base:   5dc4c995db9eb45f6373a956eb1f69460e69e6d4
+patch link:    https://lore.kernel.org/r/20230118-v4-v4t-lld-16-v1-1-e3d9a00ae47c%40kernel.org
+patch subject: [PATCH] ARM: Allow pre-ARMv5 builds with ld.lld 16.0.0 and newer
+config: arm-shannon_defconfig (https://download.01.org/0day-ci/archive/20230131/202301310149.euWWUSrD-lkp@intel.com/config)
+compiler: clang version 16.0.0 (https://github.com/llvm/llvm-project 4196ca3278f78c6e19246e54ab0ecb364e37d66a)
+reproduce (this is a W=1 build):
+        wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
+        chmod +x ~/bin/make.cross
+        # install arm cross compiling tool for clang build
+        # apt-get install binutils-arm-linux-gnueabi
+        # https://github.com/intel-lab-lkp/linux/commit/197c1476db190ad6d2afe14bc0f90de0e82f63b6
+        git remote add linux-review https://github.com/intel-lab-lkp/linux
+        git fetch --no-tags linux-review Nathan-Chancellor/ARM-Allow-pre-ARMv5-builds-with-ld-lld-16-0-0-and-newer/20230119-032402
+        git checkout 197c1476db190ad6d2afe14bc0f90de0e82f63b6
+        # save the config file
+        mkdir build_dir && cp config build_dir/.config
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm olddefconfig
+        COMPILER_INSTALL_PATH=$HOME/0day COMPILER=clang make.cross W=1 O=build_dir ARCH=arm SHELL=/bin/bash arch/arm/mach-sa1100/ drivers/gpio/ drivers/video/fbdev/
 
-Thanks,
-Conor.
+If you fix the issue, kindly add following tag where applicable
+| Reported-by: kernel test robot <lkp@intel.com>
 
---NR3ZMAgE4gQVTbRu
-Content-Type: application/pgp-signature; name="signature.asc"
+All warnings (new ones prefixed by >>):
 
------BEGIN PGP SIGNATURE-----
+>> arch/arm/mach-sa1100/pm.c:122:12: warning: no previous prototype for function 'sa11x0_pm_init' [-Wmissing-prototypes]
+   int __init sa11x0_pm_init(void)
+              ^
+   arch/arm/mach-sa1100/pm.c:122:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   int __init sa11x0_pm_init(void)
+   ^
+   static 
+   1 warning generated.
+--
+>> drivers/gpio/gpio-sa1100.c:309:13: warning: no previous prototype for function 'sa1100_init_gpio' [-Wmissing-prototypes]
+   void __init sa1100_init_gpio(void)
+               ^
+   drivers/gpio/gpio-sa1100.c:309:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   void __init sa1100_init_gpio(void)
+   ^
+   static 
+   1 warning generated.
+--
+>> drivers/video/fbdev/sa1100fb.c:1219:12: warning: no previous prototype for function 'sa1100fb_init' [-Wmissing-prototypes]
+   int __init sa1100fb_init(void)
+              ^
+   drivers/video/fbdev/sa1100fb.c:1219:1: note: declare 'static' if the function is not intended to be used outside of this translation unit
+   int __init sa1100fb_init(void)
+   ^
+   static 
+   1 warning generated.
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCY9gDKwAKCRB4tDGHoIJi
-0vsGAP40zBb1oywUvBje8ff/7Mx472MTK1QSNShqAvwCrFfpZgD/WUmUbmzAj7Fl
-jqPRHtP7SYLDpH4UX/I8P8ShQTM50wU=
-=6ICP
------END PGP SIGNATURE-----
 
---NR3ZMAgE4gQVTbRu--
+vim +/sa11x0_pm_init +122 arch/arm/mach-sa1100/pm.c
+
+^1da177e4c3f41 Linus Torvalds 2005-04-16  121  
+7fea1ba58e61c1 Shawn Guo      2012-04-26 @122  int __init sa11x0_pm_init(void)
+
+-- 
+0-DAY CI Kernel Test Service
+https://github.com/intel/lkp-tests
