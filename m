@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFBF628EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:55:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E912C433EF;
-	Mon, 30 Jan 2023 13:55:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A74D428EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:55:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BD72C4339B;
+	Mon, 30 Jan 2023 13:55:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675086910;
-	bh=mwjPiMSpCowuhqBd4ioIGv06VucaUbgOoi5AjAQeAa8=;
+	s=korg; t=1675086913;
+	bh=o/oAq+HzCNCmmDYnBpg5D0Mt9vy/jjHbBA6McS5SlDM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FF2IsxrA4zKddqczla2MoVob/bH6nNDHd0s705OxHwaGr/S6sigS+UqlHEmmcTh5c
-	 rrIJ43YPuVT565xzdLfSizN/6VYgEJ27PSBqPeNvEc74kSwqNS4DWHqwMGV5r4zgqx
-	 IaOsBG0p+p33rQMNuAG1kE7xEWdJOo3OCMH9SFK8=
+	b=JZ90oiwShldb3gLca1cWIqoIiGv4uTSXnQJXEtWTZ6kWpNeaftNw5838A1MyAochP
+	 yDzAJh9/MHcAqpn8GfUN35CMji2MIBfz/3JI0rrXVl2E3AFFs/3HAsvykfcjwfomec
+	 la9lv2+3M6Xvtixm3urCznfYGdNsJUUQ0QuCwb10=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Eric Biggers <ebiggers@google.com>,
-	Jens Axboe <axboe@kernel.dk>,
+	Teresa Remmet <t.remmet@phytec.de>,
+	Fabio Estevam <festevam@denx.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/313] blk-crypto: pass a gendisk to blk_crypto_sysfs_{,un}register
-Date: Mon, 30 Jan 2023 14:47:50 +0100
-Message-Id: <20230130134338.315648950@linuxfoundation.org>
+Subject: [PATCH 6.1 008/313] arm64: dts: imx8mp-phycore-som: Remove invalid PMIC property
+Date: Mon, 30 Jan 2023 14:47:23 +0100
+Message-Id: <20230130134337.045027072@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,107 +36,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit 450deb93df7d457cdd93594a1987f9650c749b96 ]
+[ Upstream commit cfd04dd1c4b6c33afc2a934b957d71cf8ddd1539 ]
 
-Prepare for changes to the block layer sysfs handling by passing the
-readily available gendisk to blk_crypto_sysfs_{,un}register.
+'regulator-compatible' is not a valid property according to
+nxp,pca9450-regulator.yaml and causes the following warning:
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20221114042637.1009333-2-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 49e4d04f0486 ("block: Drop spurious might_sleep() from blk_put_queue()")
+  DTC_CHK arch/arm64/boot/dts/freescale/imx8mp-dhcom-pdk2.dtb
+...
+pmic@25: regulators:LDO1: Unevaluated properties are not allowed ('regulator-compatible' was unexpected)
+
+Remove the invalid 'regulator-compatible' property.
+
+Cc: Teresa Remmet <t.remmet@phytec.de>
+Fixes: 88f7f6bcca37 ("arm64: dts: freescale: Add support for phyBOARD-Pollux-i.MX8MP")
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Reviewed-by: Teresa Remmet <t.remmet@phytec.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-crypto-internal.h | 10 ++++++----
- block/blk-crypto-sysfs.c    |  7 ++++---
- block/blk-sysfs.c           |  4 ++--
- 3 files changed, 12 insertions(+), 9 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mp-phycore-som.dtsi | 10 ----------
+ 1 file changed, 10 deletions(-)
 
-diff --git a/block/blk-crypto-internal.h b/block/blk-crypto-internal.h
-index e6818ffaddbf..b8a00847171f 100644
---- a/block/blk-crypto-internal.h
-+++ b/block/blk-crypto-internal.h
-@@ -21,9 +21,9 @@ extern const struct blk_crypto_mode blk_crypto_modes[];
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp-phycore-som.dtsi b/arch/arm64/boot/dts/freescale/imx8mp-phycore-som.dtsi
+index 79b290a002c1..ecc4bce6db97 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp-phycore-som.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp-phycore-som.dtsi
+@@ -99,7 +99,6 @@ pmic: pmic@25 {
  
- #ifdef CONFIG_BLK_INLINE_ENCRYPTION
+ 		regulators {
+ 			buck1: BUCK1 {
+-				regulator-compatible = "BUCK1";
+ 				regulator-min-microvolt = <600000>;
+ 				regulator-max-microvolt = <2187500>;
+ 				regulator-boot-on;
+@@ -108,7 +107,6 @@ buck1: BUCK1 {
+ 			};
  
--int blk_crypto_sysfs_register(struct request_queue *q);
-+int blk_crypto_sysfs_register(struct gendisk *disk);
+ 			buck2: BUCK2 {
+-				regulator-compatible = "BUCK2";
+ 				regulator-min-microvolt = <600000>;
+ 				regulator-max-microvolt = <2187500>;
+ 				regulator-boot-on;
+@@ -119,7 +117,6 @@ buck2: BUCK2 {
+ 			};
  
--void blk_crypto_sysfs_unregister(struct request_queue *q);
-+void blk_crypto_sysfs_unregister(struct gendisk *disk);
+ 			buck4: BUCK4 {
+-				regulator-compatible = "BUCK4";
+ 				regulator-min-microvolt = <600000>;
+ 				regulator-max-microvolt = <3400000>;
+ 				regulator-boot-on;
+@@ -127,7 +124,6 @@ buck4: BUCK4 {
+ 			};
  
- void bio_crypt_dun_increment(u64 dun[BLK_CRYPTO_DUN_ARRAY_SIZE],
- 			     unsigned int inc);
-@@ -67,12 +67,14 @@ static inline bool blk_crypto_rq_is_encrypted(struct request *rq)
+ 			buck5: BUCK5 {
+-				regulator-compatible = "BUCK5";
+ 				regulator-min-microvolt = <600000>;
+ 				regulator-max-microvolt = <3400000>;
+ 				regulator-boot-on;
+@@ -135,7 +131,6 @@ buck5: BUCK5 {
+ 			};
  
- #else /* CONFIG_BLK_INLINE_ENCRYPTION */
+ 			buck6: BUCK6 {
+-				regulator-compatible = "BUCK6";
+ 				regulator-min-microvolt = <600000>;
+ 				regulator-max-microvolt = <3400000>;
+ 				regulator-boot-on;
+@@ -143,7 +138,6 @@ buck6: BUCK6 {
+ 			};
  
--static inline int blk_crypto_sysfs_register(struct request_queue *q)
-+static inline int blk_crypto_sysfs_register(struct gendisk *disk)
- {
- 	return 0;
- }
+ 			ldo1: LDO1 {
+-				regulator-compatible = "LDO1";
+ 				regulator-min-microvolt = <1600000>;
+ 				regulator-max-microvolt = <3300000>;
+ 				regulator-boot-on;
+@@ -151,7 +145,6 @@ ldo1: LDO1 {
+ 			};
  
--static inline void blk_crypto_sysfs_unregister(struct request_queue *q) { }
-+static inline void blk_crypto_sysfs_unregister(struct gendisk *disk)
-+{
-+}
+ 			ldo2: LDO2 {
+-				regulator-compatible = "LDO2";
+ 				regulator-min-microvolt = <800000>;
+ 				regulator-max-microvolt = <1150000>;
+ 				regulator-boot-on;
+@@ -159,7 +152,6 @@ ldo2: LDO2 {
+ 			};
  
- static inline bool bio_crypt_rq_ctx_compatible(struct request *rq,
- 					       struct bio *bio)
-diff --git a/block/blk-crypto-sysfs.c b/block/blk-crypto-sysfs.c
-index fd93bd2f33b7..e05f145cd797 100644
---- a/block/blk-crypto-sysfs.c
-+++ b/block/blk-crypto-sysfs.c
-@@ -126,8 +126,9 @@ static struct kobj_type blk_crypto_ktype = {
-  * If the request_queue has a blk_crypto_profile, create the "crypto"
-  * subdirectory in sysfs (/sys/block/$disk/queue/crypto/).
-  */
--int blk_crypto_sysfs_register(struct request_queue *q)
-+int blk_crypto_sysfs_register(struct gendisk *disk)
- {
-+	struct request_queue *q = disk->queue;
- 	struct blk_crypto_kobj *obj;
- 	int err;
+ 			ldo3: LDO3 {
+-				regulator-compatible = "LDO3";
+ 				regulator-min-microvolt = <800000>;
+ 				regulator-max-microvolt = <3300000>;
+ 				regulator-boot-on;
+@@ -167,13 +159,11 @@ ldo3: LDO3 {
+ 			};
  
-@@ -149,9 +150,9 @@ int blk_crypto_sysfs_register(struct request_queue *q)
- 	return 0;
- }
+ 			ldo4: LDO4 {
+-				regulator-compatible = "LDO4";
+ 				regulator-min-microvolt = <800000>;
+ 				regulator-max-microvolt = <3300000>;
+ 			};
  
--void blk_crypto_sysfs_unregister(struct request_queue *q)
-+void blk_crypto_sysfs_unregister(struct gendisk *disk)
- {
--	kobject_put(q->crypto_kobject);
-+	kobject_put(disk->queue->crypto_kobject);
- }
- 
- static int __init blk_crypto_sysfs_init(void)
-diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index e7871665825a..2b1cf0b2a5c7 100644
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -833,7 +833,7 @@ int blk_register_queue(struct gendisk *disk)
- 			goto put_dev;
- 	}
- 
--	ret = blk_crypto_sysfs_register(q);
-+	ret = blk_crypto_sysfs_register(disk);
- 	if (ret)
- 		goto put_dev;
- 
-@@ -910,7 +910,7 @@ void blk_unregister_queue(struct gendisk *disk)
- 	 */
- 	if (queue_is_mq(q))
- 		blk_mq_sysfs_unregister(disk);
--	blk_crypto_sysfs_unregister(q);
-+	blk_crypto_sysfs_unregister(disk);
- 
- 	mutex_lock(&q->sysfs_lock);
- 	elv_unregister_queue(q);
+ 			ldo5: LDO5 {
+-				regulator-compatible = "LDO5";
+ 				regulator-min-microvolt = <1800000>;
+ 				regulator-max-microvolt = <3300000>;
+ 				regulator-boot-on;
 -- 
 2.39.0
 
