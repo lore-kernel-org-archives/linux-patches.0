@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 244F628EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:11:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A022C4339E;
-	Mon, 30 Jan 2023 14:11:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F6828EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:11:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 788EBC433EF;
+	Mon, 30 Jan 2023 14:11:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087868;
-	bh=HUrkAexcccMEp7kXG9tEI7qhMvnOIq/+Oq/eJegQM1k=;
+	s=korg; t=1675087870;
+	bh=Q2F2xsnlUwXx0ft16LWnzPAtKRrvVWQG96vS6GTFW2g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TKCfCCcr6FBJx6MryeX4cWY8/ziOsfJ/TQ5Le1pyr/KAjN0/C0bGkrRi0Z+/gI7KM
-	 Oz2JkuRTBSUG+TUjWob8dJiVv4mFecy4ihukSdpJ0gY3T67uIsLJubtqP+0YBitmC1
-	 zjRWNDJpgvmSdr+Yf4M02nvui/YVxVNsypMvn2Jc=
+	b=XKJgyTGX4luvPmHDVhU+Wy4d/k/Pn+Ryt5w+pHszP35Hbj1B8objkzXUPWg+f+6NK
+	 0Uw6YdecHlMO9LbeMwTp5KfB7b42yHTmShUD2YqOm45dNmiGn72IshncpqaR/KeKXp
+	 3qGA1k6oTgJYS2eQewNdbjh/otrEdi23rckq5fQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudheesh Mavila <sudheesh.mavila@amd.com>,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Fabio Estevam <festevam@denx.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 035/204] amd-xgbe: Delay AN timeout during KR training
-Date: Mon, 30 Jan 2023 14:50:00 +0100
-Message-Id: <20230130134317.855997645@linuxfoundation.org>
+Subject: [PATCH 5.15 007/204] ARM: dts: imx7d-pico: Use clock-frequency
+Date: Mon, 30 Jan 2023 14:49:32 +0100
+Message-Id: <20230130134316.632563550@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -37,98 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Fabio Estevam <festevam@denx.de>
 
-[ Upstream commit 926446ae24c03311a480fb96eb78f0ce7ea6d091 ]
+[ Upstream commit f4dd0845c4f1f5371f1e06fef0e4a1734a2db964 ]
 
-AN restart triggered during KR training not only aborts the KR training
-process but also move the HW to unstable state. Driver has to wait upto
-500ms or until the KR training is completed before restarting AN cycle.
+'clock_frequency' is not a valid property.
 
-Fixes: 7c12aa08779c ("amd-xgbe: Move the PHY support into amd-xgbe")
-Co-developed-by: Sudheesh Mavila <sudheesh.mavila@amd.com>
-Signed-off-by: Sudheesh Mavila <sudheesh.mavila@amd.com>
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Use the correct 'clock-frequency' instead.
+
+Fixes: 8b646cfb84c3 ("ARM: dts: imx7d-pico: Add support for the dwarf baseboard")
+Fixes: 6418fd92417f ("ARM: dts: imx7d-pico: Add support for the nymph baseboard")
+Signed-off-by: Fabio Estevam <festevam@denx.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 24 +++++++++++++++++++++++
- drivers/net/ethernet/amd/xgbe/xgbe.h      |  2 ++
- 2 files changed, 26 insertions(+)
+ arch/arm/boot/dts/imx7d-pico-dwarf.dts | 4 ++--
+ arch/arm/boot/dts/imx7d-pico-nymph.dts | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-index 0c5c1b155683..43fdd111235a 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-@@ -496,6 +496,7 @@ static enum xgbe_an xgbe_an73_tx_training(struct xgbe_prv_data *pdata,
- 	reg |= XGBE_KR_TRAINING_ENABLE;
- 	reg |= XGBE_KR_TRAINING_START;
- 	XMDIO_WRITE(pdata, MDIO_MMD_PMAPMD, MDIO_PMA_10GBR_PMD_CTRL, reg);
-+	pdata->kr_start_time = jiffies;
+diff --git a/arch/arm/boot/dts/imx7d-pico-dwarf.dts b/arch/arm/boot/dts/imx7d-pico-dwarf.dts
+index 5162fe227d1e..fdc10563f147 100644
+--- a/arch/arm/boot/dts/imx7d-pico-dwarf.dts
++++ b/arch/arm/boot/dts/imx7d-pico-dwarf.dts
+@@ -32,7 +32,7 @@ sys_mclk: clock-sys-mclk {
+ };
  
- 	netif_dbg(pdata, link, pdata->netdev,
- 		  "KR training initiated\n");
-@@ -632,6 +633,8 @@ static enum xgbe_an xgbe_an73_incompat_link(struct xgbe_prv_data *pdata)
+ &i2c1 {
+-	clock_frequency = <100000>;
++	clock-frequency = <100000>;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_i2c1>;
+ 	status = "okay";
+@@ -52,7 +52,7 @@ pressure-sensor@60 {
+ };
  
- 	xgbe_switch_mode(pdata);
+ &i2c4 {
+-	clock_frequency = <100000>;
++	clock-frequency = <100000>;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_i2c1>;
+ 	status = "okay";
+diff --git a/arch/arm/boot/dts/imx7d-pico-nymph.dts b/arch/arm/boot/dts/imx7d-pico-nymph.dts
+index 104a85254adb..5afb1674e012 100644
+--- a/arch/arm/boot/dts/imx7d-pico-nymph.dts
++++ b/arch/arm/boot/dts/imx7d-pico-nymph.dts
+@@ -43,7 +43,7 @@ sys_mclk: clock-sys-mclk {
+ };
  
-+	pdata->an_result = XGBE_AN_READY;
-+
- 	xgbe_an_restart(pdata);
+ &i2c1 {
+-	clock_frequency = <100000>;
++	clock-frequency = <100000>;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_i2c1>;
+ 	status = "okay";
+@@ -64,7 +64,7 @@ adc@52 {
+ };
  
- 	return XGBE_AN_INCOMPAT_LINK;
-@@ -1275,9 +1278,30 @@ static bool xgbe_phy_aneg_done(struct xgbe_prv_data *pdata)
- static void xgbe_check_link_timeout(struct xgbe_prv_data *pdata)
- {
- 	unsigned long link_timeout;
-+	unsigned long kr_time;
-+	int wait;
- 
- 	link_timeout = pdata->link_check + (XGBE_LINK_TIMEOUT * HZ);
- 	if (time_after(jiffies, link_timeout)) {
-+		if ((xgbe_cur_mode(pdata) == XGBE_MODE_KR) &&
-+		    pdata->phy.autoneg == AUTONEG_ENABLE) {
-+			/* AN restart should not happen while KR training is in progress.
-+			 * The while loop ensures no AN restart during KR training,
-+			 * waits up to 500ms and AN restart is triggered only if KR
-+			 * training is failed.
-+			 */
-+			wait = XGBE_KR_TRAINING_WAIT_ITER;
-+			while (wait--) {
-+				kr_time = pdata->kr_start_time +
-+					  msecs_to_jiffies(XGBE_AN_MS_TIMEOUT);
-+				if (time_after(jiffies, kr_time))
-+					break;
-+				/* AN restart is not required, if AN result is COMPLETE */
-+				if (pdata->an_result == XGBE_AN_COMPLETE)
-+					return;
-+				usleep_range(10000, 11000);
-+			}
-+		}
- 		netif_dbg(pdata, link, pdata->netdev, "AN link timeout\n");
- 		xgbe_phy_config_aneg(pdata);
- 	}
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe.h b/drivers/net/ethernet/amd/xgbe/xgbe.h
-index 3305979a9f7c..e0b8f3c4cc0b 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe.h
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe.h
-@@ -289,6 +289,7 @@
- /* Auto-negotiation */
- #define XGBE_AN_MS_TIMEOUT		500
- #define XGBE_LINK_TIMEOUT		5
-+#define XGBE_KR_TRAINING_WAIT_ITER	50
- 
- #define XGBE_SGMII_AN_LINK_STATUS	BIT(1)
- #define XGBE_SGMII_AN_LINK_SPEED	(BIT(2) | BIT(3))
-@@ -1253,6 +1254,7 @@ struct xgbe_prv_data {
- 	unsigned int parallel_detect;
- 	unsigned int fec_ability;
- 	unsigned long an_start;
-+	unsigned long kr_start_time;
- 	enum xgbe_an_mode an_mode;
- 
- 	/* I2C support */
+ &i2c2 {
+-	clock_frequency = <100000>;
++	clock-frequency = <100000>;
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&pinctrl_i2c2>;
+ 	status = "okay";
 -- 
 2.39.0
 
