@@ -1,26 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC6628EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:58:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A43C433EF;
-	Mon, 30 Jan 2023 13:58:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C414C28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:59:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1C8FC433EF;
+	Mon, 30 Jan 2023 13:59:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087138;
-	bh=PaBntS6sQ6YPznsHsjulhhp7hdw3LAzJqNH/OE4skB8=;
+	s=korg; t=1675087141;
+	bh=bQGkPhK9j4/zWMExVl339q2m/S9giFKq73ihTtHmKxY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AbaZAHRnTIyosM2Yu2f5iGdVR9gEwVl1ld3USRRu7SQPvUq3xNTj4FaqicYpm7XQf
-	 jgZbFzHMvbmBA/popAyMcmvNU1ruNa7as95BltExVEHpawCmQMwjJmvgOQqi89D1DM
-	 UVLmALGCMv2NJQXSkwmpFBOL9bpljRc5g2m/vi/k=
+	b=ZjxSpCGmi0ExXTzhT/uunMpnIpfbxY+gmD9wSzJI6CPjJbxg6MYfzP7cHcLfECzzg
+	 5I2075jYxhdJD3LGlifi794Hmu7VmSraIWibyjIGA9kxrs0pnl65ioZxz3LYl1pQ3Q
+	 dY6ljAXFyg17zSeP41M36JREax1Kyg7hZ5TowTWM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Eli Cohen <eli@mellanox.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	linux-rdma@vger.kernel.org,
+	Ira Weiny <ira.weiny@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 102/313] Bluetooth: ISO: Fix possible circular locking dependency
-Date: Mon, 30 Jan 2023 14:48:57 +0100
-Message-Id: <20230130134341.395637087@linuxfoundation.org>
+Subject: [PATCH 6.1 111/313] net: mlx5: eliminate anonymous module_init & module_exit
+Date: Mon, 30 Jan 2023 14:49:06 +0100
+Message-Id: <20230130134341.825871779@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -34,225 +40,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 6a5ad251b7cdb990a3705428aef408433f05614a ]
+[ Upstream commit 2c1e1b949024989e20907b84e11a731a50778416 ]
 
-This attempts to fix the following trace:
+Eliminate anonymous module_init() and module_exit(), which can lead to
+confusion or ambiguity when reading System.map, crashes/oops/bugs,
+or an initcall_debug log.
 
-kworker/u3:1/184 is trying to acquire lock:
-ffff888001888130 (sk_lock-AF_BLUETOOTH-BTPROTO_ISO){+.+.}-{0:0}, at:
-iso_connect_cfm+0x2de/0x690
+Give each of these init and exit functions unique driver-specific
+names to eliminate the anonymous names.
 
-but task is already holding lock:
-ffff8880028d1c20 (&conn->lock){+.+.}-{2:2}, at:
-iso_connect_cfm+0x265/0x690
+Example 1: (System.map)
+ ffffffff832fc78c t init
+ ffffffff832fc79e t init
+ ffffffff832fc8f8 t init
 
-which lock already depends on the new lock.
+Example 2: (initcall_debug log)
+ calling  init+0x0/0x12 @ 1
+ initcall init+0x0/0x12 returned 0 after 15 usecs
+ calling  init+0x0/0x60 @ 1
+ initcall init+0x0/0x60 returned 0 after 2 usecs
+ calling  init+0x0/0x9a @ 1
+ initcall init+0x0/0x9a returned 0 after 74 usecs
 
-the existing dependency chain (in reverse order) is:
-
--> #1 (&conn->lock){+.+.}-{2:2}:
-       lock_acquire+0x176/0x3d0
-       _raw_spin_lock+0x2a/0x40
-       __iso_sock_close+0x1dd/0x4f0
-       iso_sock_release+0xa0/0x1b0
-       sock_close+0x5e/0x120
-       __fput+0x102/0x410
-       task_work_run+0xf1/0x160
-       exit_to_user_mode_prepare+0x170/0x180
-       syscall_exit_to_user_mode+0x19/0x50
-       do_syscall_64+0x4e/0x90
-       entry_SYSCALL_64_after_hwframe+0x62/0xcc
-
--> #0 (sk_lock-AF_BLUETOOTH-BTPROTO_ISO){+.+.}-{0:0}:
-       check_prev_add+0xfc/0x1190
-       __lock_acquire+0x1e27/0x2750
-       lock_acquire+0x176/0x3d0
-       lock_sock_nested+0x32/0x80
-       iso_connect_cfm+0x2de/0x690
-       hci_cc_le_setup_iso_path+0x195/0x340
-       hci_cmd_complete_evt+0x1ae/0x500
-       hci_event_packet+0x38e/0x7c0
-       hci_rx_work+0x34c/0x980
-       process_one_work+0x5a5/0x9a0
-       worker_thread+0x89/0x6f0
-       kthread+0x14e/0x180
-       ret_from_fork+0x22/0x30
-
-other info that might help us debug this:
-
- Possible unsafe locking scenario:
-
-       CPU0                    CPU1
-       ----                    ----
-  lock(&conn->lock);
-                               lock(sk_lock-AF_BLUETOOTH-BTPROTO_ISO);
-                               lock(&conn->lock);
-  lock(sk_lock-AF_BLUETOOTH-BTPROTO_ISO);
-
- *** DEADLOCK ***
-
-Fixes: ccf74f2390d6 ("Bluetooth: Add BTPROTO_ISO socket type")
-Fixes: f764a6c2c1e4 ("Bluetooth: ISO: Add broadcast support")
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Eli Cohen <eli@mellanox.com>
+Cc: Saeed Mahameed <saeedm@nvidia.com>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: linux-rdma@vger.kernel.org
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/iso.c | 61 +++++++++++++++++++--------------------------
- 1 file changed, 26 insertions(+), 35 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/main.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/net/bluetooth/iso.c b/net/bluetooth/iso.c
-index df57cbe27b3d..2dabef488eaa 100644
---- a/net/bluetooth/iso.c
-+++ b/net/bluetooth/iso.c
-@@ -288,15 +288,15 @@ static int iso_connect_bis(struct sock *sk)
- 	hci_dev_unlock(hdev);
- 	hci_dev_put(hdev);
- 
-+	err = iso_chan_add(conn, sk, NULL);
-+	if (err)
-+		return err;
-+
- 	lock_sock(sk);
- 
- 	/* Update source addr of the socket */
- 	bacpy(&iso_pi(sk)->src, &hcon->src);
- 
--	err = iso_chan_add(conn, sk, NULL);
--	if (err)
--		goto release;
--
- 	if (hcon->state == BT_CONNECTED) {
- 		iso_sock_clear_timer(sk);
- 		sk->sk_state = BT_CONNECTED;
-@@ -305,7 +305,6 @@ static int iso_connect_bis(struct sock *sk)
- 		iso_sock_set_timer(sk, sk->sk_sndtimeo);
- 	}
- 
--release:
- 	release_sock(sk);
- 	return err;
- 
-@@ -371,15 +370,15 @@ static int iso_connect_cis(struct sock *sk)
- 	hci_dev_unlock(hdev);
- 	hci_dev_put(hdev);
- 
-+	err = iso_chan_add(conn, sk, NULL);
-+	if (err)
-+		return err;
-+
- 	lock_sock(sk);
- 
- 	/* Update source addr of the socket */
- 	bacpy(&iso_pi(sk)->src, &hcon->src);
- 
--	err = iso_chan_add(conn, sk, NULL);
--	if (err)
--		goto release;
--
- 	if (hcon->state == BT_CONNECTED) {
- 		iso_sock_clear_timer(sk);
- 		sk->sk_state = BT_CONNECTED;
-@@ -391,7 +390,6 @@ static int iso_connect_cis(struct sock *sk)
- 		iso_sock_set_timer(sk, sk->sk_sndtimeo);
- 	}
- 
--release:
- 	release_sock(sk);
- 	return err;
- 
-@@ -1430,33 +1428,29 @@ static void iso_conn_ready(struct iso_conn *conn)
- 	struct sock *parent;
- 	struct sock *sk = conn->sk;
- 	struct hci_ev_le_big_sync_estabilished *ev;
-+	struct hci_conn *hcon;
- 
- 	BT_DBG("conn %p", conn);
- 
- 	if (sk) {
- 		iso_sock_ready(conn->sk);
- 	} else {
--		iso_conn_lock(conn);
--
--		if (!conn->hcon) {
--			iso_conn_unlock(conn);
-+		hcon = conn->hcon;
-+		if (!hcon)
- 			return;
--		}
- 
--		ev = hci_recv_event_data(conn->hcon->hdev,
-+		ev = hci_recv_event_data(hcon->hdev,
- 					 HCI_EVT_LE_BIG_SYNC_ESTABILISHED);
- 		if (ev)
--			parent = iso_get_sock_listen(&conn->hcon->src,
--						     &conn->hcon->dst,
-+			parent = iso_get_sock_listen(&hcon->src,
-+						     &hcon->dst,
- 						     iso_match_big, ev);
- 		else
--			parent = iso_get_sock_listen(&conn->hcon->src,
-+			parent = iso_get_sock_listen(&hcon->src,
- 						     BDADDR_ANY, NULL, NULL);
- 
--		if (!parent) {
--			iso_conn_unlock(conn);
-+		if (!parent)
- 			return;
--		}
- 
- 		lock_sock(parent);
- 
-@@ -1464,30 +1458,29 @@ static void iso_conn_ready(struct iso_conn *conn)
- 				    BTPROTO_ISO, GFP_ATOMIC, 0);
- 		if (!sk) {
- 			release_sock(parent);
--			iso_conn_unlock(conn);
- 			return;
- 		}
- 
- 		iso_sock_init(sk, parent);
- 
--		bacpy(&iso_pi(sk)->src, &conn->hcon->src);
--		iso_pi(sk)->src_type = conn->hcon->src_type;
-+		bacpy(&iso_pi(sk)->src, &hcon->src);
-+		iso_pi(sk)->src_type = hcon->src_type;
- 
- 		/* If hcon has no destination address (BDADDR_ANY) it means it
- 		 * was created by HCI_EV_LE_BIG_SYNC_ESTABILISHED so we need to
- 		 * initialize using the parent socket destination address.
- 		 */
--		if (!bacmp(&conn->hcon->dst, BDADDR_ANY)) {
--			bacpy(&conn->hcon->dst, &iso_pi(parent)->dst);
--			conn->hcon->dst_type = iso_pi(parent)->dst_type;
--			conn->hcon->sync_handle = iso_pi(parent)->sync_handle;
-+		if (!bacmp(&hcon->dst, BDADDR_ANY)) {
-+			bacpy(&hcon->dst, &iso_pi(parent)->dst);
-+			hcon->dst_type = iso_pi(parent)->dst_type;
-+			hcon->sync_handle = iso_pi(parent)->sync_handle;
- 		}
- 
--		bacpy(&iso_pi(sk)->dst, &conn->hcon->dst);
--		iso_pi(sk)->dst_type = conn->hcon->dst_type;
-+		bacpy(&iso_pi(sk)->dst, &hcon->dst);
-+		iso_pi(sk)->dst_type = hcon->dst_type;
- 
--		hci_conn_hold(conn->hcon);
--		__iso_chan_add(conn, sk, parent);
-+		hci_conn_hold(hcon);
-+		iso_chan_add(conn, sk, parent);
- 
- 		if (test_bit(BT_SK_DEFER_SETUP, &bt_sk(parent)->flags))
- 			sk->sk_state = BT_CONNECT2;
-@@ -1498,8 +1491,6 @@ static void iso_conn_ready(struct iso_conn *conn)
- 		parent->sk_data_ready(parent);
- 
- 		release_sock(parent);
--
--		iso_conn_unlock(conn);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 00758312df06..d4db1adae3e3 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -2082,7 +2082,7 @@ static void mlx5_core_verify_params(void)
  	}
  }
  
+-static int __init init(void)
++static int __init mlx5_init(void)
+ {
+ 	int err;
+ 
+@@ -2117,7 +2117,7 @@ static int __init init(void)
+ 	return err;
+ }
+ 
+-static void __exit cleanup(void)
++static void __exit mlx5_cleanup(void)
+ {
+ 	mlx5e_cleanup();
+ 	mlx5_sf_driver_unregister();
+@@ -2125,5 +2125,5 @@ static void __exit cleanup(void)
+ 	mlx5_unregister_debugfs();
+ }
+ 
+-module_init(init);
+-module_exit(cleanup);
++module_init(mlx5_init);
++module_exit(mlx5_cleanup);
 -- 
 2.39.0
 
