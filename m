@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEE1728EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:16:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 40056C433D2;
-	Mon, 30 Jan 2023 14:16:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA26F291F
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:16:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD81C433EF;
+	Mon, 30 Jan 2023 14:16:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088210;
-	bh=9MLON69AHoR+q/K+zfaO2GiUr4oqO7b6QntrDhxsdpo=;
+	s=korg; t=1675088213;
+	bh=Q/BRIbzshuoEbGWOMb6c8tUt8RvSZSPLK/DKIPfLb/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qs5KIgTowgTmrQK7JtbDufcTMJpNLqk0mapI17SB4xm0jV28wKh7iJ6HG64ijGydZ
-	 X2myRMFUCHZuPLQOlFe3ERCouOTlF/jE19PP889SP+cjFH5hKfPNphLxYjr+bkfWIu
-	 voUJGcoj54uFYg3ADa4LVpQDbsltfexnWpOJDfzY=
+	b=zF30wchhROKv/O1e5lWqngXdK4thCytmBThxLs6lfbGDbri17VtnF4aByy9Qfi2nn
+	 cKLC+/Tgc4o7yZRGfHHZ1sqFyykvnAQPm72gL/I7Pv6Hd2Pnv220D7NXMCc1ieaiGA
+	 Ybl7lSgt5TVNIzvapDrbW0lTSbre2h+e87bq8H+c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gregory CLEMENT <gregory.clement@bootlin.com>,
 	Wolfram Sang <wsa@kernel.org>,
 	Tong Zhang <ztong0001@gmail.com>
-Subject: [PATCH 5.15 152/204] i2c: mv64xxx: Remove shutdown method from driver
-Date: Mon, 30 Jan 2023 14:51:57 +0100
-Message-Id: <20230130134323.236051412@linuxfoundation.org>
+Subject: [PATCH 5.15 153/204] i2c: mv64xxx: Add atomic_xfer method to driver
+Date: Mon, 30 Jan 2023 14:51:58 +0100
+Message-Id: <20230130134323.275728931@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -38,21 +38,16 @@ Content-Transfer-Encoding: 8bit
 
 From: Chris Morgan <macromorgan@hotmail.com>
 
-commit 09b343038e3470e4d0da45f0ee09fb42107e5314 upstream.
+commit 544a8d75f3d6e60e160cd92dc56321484598a993 upstream.
 
-When I attempt to shut down (or reboot) my R8 based NTC CHIP with this
-i2c driver I get the following error: "i2c i2c-0: mv64xxx: I2C bus
-locked, block: 1, time_left: 0". Reboots are successful but shutdowns
-freeze. If I comment out the shutdown routine the device both reboots
-and shuts down successfully without receiving this error (however it
-does receive a warning of missing atomic_xfer).
+Add an atomic_xfer method to the driver so that it behaves correctly
+when controlling a PMIC that is responsible for device shutdown.
 
-It appears that very few i2c drivers have a shutdown method, I assume
-because these devices are often used to communicate with PMICs (such
-as in my case with the R8 based NTC CHIP). I'm proposing we simply
-remove this method so long as it doesn't cause trouble for others
-downstream. I'll work on an atomic_xfer method and submit that in
-a different patch.
+The atomic_xfer method added is similar to the one from the i2c-rk3x
+driver. When running an atomic_xfer a bool flag in the driver data is
+set, the interrupt is not unmasked on transfer start, and the IRQ
+handler is manually invoked while waiting for pending transfers to
+complete.
 
 Signed-off-by: Chris Morgan <macromorgan@hotmail.com>
 Acked-by: Gregory CLEMENT <gregory.clement@bootlin.com>
@@ -60,33 +55,127 @@ Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Cc: Tong Zhang <ztong0001@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/i2c/busses/i2c-mv64xxx.c |    9 ---------
- 1 file changed, 9 deletions(-)
+ drivers/i2c/busses/i2c-mv64xxx.c |   52 ++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 46 insertions(+), 6 deletions(-)
 
 --- a/drivers/i2c/busses/i2c-mv64xxx.c
 +++ b/drivers/i2c/busses/i2c-mv64xxx.c
-@@ -1047,14 +1047,6 @@ mv64xxx_i2c_remove(struct platform_devic
- 	return 0;
+@@ -150,6 +150,7 @@ struct mv64xxx_i2c_data {
+ 	/* Clk div is 2 to the power n, not 2 to the power n + 1 */
+ 	bool			clk_n_base_0;
+ 	struct i2c_bus_recovery_info	rinfo;
++	bool			atomic;
+ };
+ 
+ static struct mv64xxx_i2c_regs mv64xxx_i2c_regs_mv64xxx = {
+@@ -179,7 +180,10 @@ mv64xxx_i2c_prepare_for_io(struct mv64xx
+ 	u32	dir = 0;
+ 
+ 	drv_data->cntl_bits = MV64XXX_I2C_REG_CONTROL_ACK |
+-		MV64XXX_I2C_REG_CONTROL_INTEN | MV64XXX_I2C_REG_CONTROL_TWSIEN;
++			      MV64XXX_I2C_REG_CONTROL_TWSIEN;
++
++	if (!drv_data->atomic)
++		drv_data->cntl_bits |= MV64XXX_I2C_REG_CONTROL_INTEN;
+ 
+ 	if (msg->flags & I2C_M_RD)
+ 		dir = 1;
+@@ -409,7 +413,8 @@ mv64xxx_i2c_do_action(struct mv64xxx_i2c
+ 	case MV64XXX_I2C_ACTION_RCV_DATA_STOP:
+ 		drv_data->msg->buf[drv_data->byte_posn++] =
+ 			readl(drv_data->reg_base + drv_data->reg_offsets.data);
+-		drv_data->cntl_bits &= ~MV64XXX_I2C_REG_CONTROL_INTEN;
++		if (!drv_data->atomic)
++			drv_data->cntl_bits &= ~MV64XXX_I2C_REG_CONTROL_INTEN;
+ 		writel(drv_data->cntl_bits | MV64XXX_I2C_REG_CONTROL_STOP,
+ 			drv_data->reg_base + drv_data->reg_offsets.control);
+ 		drv_data->block = 0;
+@@ -427,7 +432,8 @@ mv64xxx_i2c_do_action(struct mv64xxx_i2c
+ 		drv_data->rc = -EIO;
+ 		fallthrough;
+ 	case MV64XXX_I2C_ACTION_SEND_STOP:
+-		drv_data->cntl_bits &= ~MV64XXX_I2C_REG_CONTROL_INTEN;
++		if (!drv_data->atomic)
++			drv_data->cntl_bits &= ~MV64XXX_I2C_REG_CONTROL_INTEN;
+ 		writel(drv_data->cntl_bits | MV64XXX_I2C_REG_CONTROL_STOP,
+ 			drv_data->reg_base + drv_data->reg_offsets.control);
+ 		drv_data->block = 0;
+@@ -575,6 +581,17 @@ mv64xxx_i2c_wait_for_completion(struct m
+ 		spin_unlock_irqrestore(&drv_data->lock, flags);
  }
  
--static void
--mv64xxx_i2c_shutdown(struct platform_device *pd)
--{
--	pm_runtime_disable(&pd->dev);
--	if (!pm_runtime_status_suspended(&pd->dev))
--		mv64xxx_i2c_runtime_suspend(&pd->dev);
--}
--
- static const struct dev_pm_ops mv64xxx_i2c_pm_ops = {
- 	SET_RUNTIME_PM_OPS(mv64xxx_i2c_runtime_suspend,
- 			   mv64xxx_i2c_runtime_resume, NULL)
-@@ -1065,7 +1057,6 @@ static const struct dev_pm_ops mv64xxx_i
- static struct platform_driver mv64xxx_i2c_driver = {
- 	.probe	= mv64xxx_i2c_probe,
- 	.remove	= mv64xxx_i2c_remove,
--	.shutdown = mv64xxx_i2c_shutdown,
- 	.driver	= {
- 		.name	= MV64XXX_I2C_CTLR_NAME,
- 		.pm     = &mv64xxx_i2c_pm_ops,
++static void mv64xxx_i2c_wait_polling(struct mv64xxx_i2c_data *drv_data)
++{
++	ktime_t timeout = ktime_add_ms(ktime_get(), drv_data->adapter.timeout);
++
++	while (READ_ONCE(drv_data->block) &&
++	       ktime_compare(ktime_get(), timeout) < 0) {
++		udelay(5);
++		mv64xxx_i2c_intr(0, drv_data);
++	}
++}
++
+ static int
+ mv64xxx_i2c_execute_msg(struct mv64xxx_i2c_data *drv_data, struct i2c_msg *msg,
+ 				int is_last)
+@@ -590,7 +607,11 @@ mv64xxx_i2c_execute_msg(struct mv64xxx_i
+ 	mv64xxx_i2c_send_start(drv_data);
+ 	spin_unlock_irqrestore(&drv_data->lock, flags);
+ 
+-	mv64xxx_i2c_wait_for_completion(drv_data);
++	if (!drv_data->atomic)
++		mv64xxx_i2c_wait_for_completion(drv_data);
++	else
++		mv64xxx_i2c_wait_polling(drv_data);
++
+ 	return drv_data->rc;
+ }
+ 
+@@ -717,7 +738,7 @@ mv64xxx_i2c_functionality(struct i2c_ada
+ }
+ 
+ static int
+-mv64xxx_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[], int num)
++mv64xxx_i2c_xfer_core(struct i2c_adapter *adap, struct i2c_msg msgs[], int num)
+ {
+ 	struct mv64xxx_i2c_data *drv_data = i2c_get_adapdata(adap);
+ 	int rc, ret = num;
+@@ -730,7 +751,7 @@ mv64xxx_i2c_xfer(struct i2c_adapter *ada
+ 	drv_data->msgs = msgs;
+ 	drv_data->num_msgs = num;
+ 
+-	if (mv64xxx_i2c_can_offload(drv_data))
++	if (mv64xxx_i2c_can_offload(drv_data) && !drv_data->atomic)
+ 		rc = mv64xxx_i2c_offload_xfer(drv_data);
+ 	else
+ 		rc = mv64xxx_i2c_execute_msg(drv_data, &msgs[0], num == 1);
+@@ -747,8 +768,27 @@ mv64xxx_i2c_xfer(struct i2c_adapter *ada
+ 	return ret;
+ }
+ 
++static int
++mv64xxx_i2c_xfer(struct i2c_adapter *adap, struct i2c_msg msgs[], int num)
++{
++	struct mv64xxx_i2c_data *drv_data = i2c_get_adapdata(adap);
++
++	drv_data->atomic = 0;
++	return mv64xxx_i2c_xfer_core(adap, msgs, num);
++}
++
++static int mv64xxx_i2c_xfer_atomic(struct i2c_adapter *adap,
++				   struct i2c_msg msgs[], int num)
++{
++	struct mv64xxx_i2c_data *drv_data = i2c_get_adapdata(adap);
++
++	drv_data->atomic = 1;
++	return mv64xxx_i2c_xfer_core(adap, msgs, num);
++}
++
+ static const struct i2c_algorithm mv64xxx_i2c_algo = {
+ 	.master_xfer = mv64xxx_i2c_xfer,
++	.master_xfer_atomic = mv64xxx_i2c_xfer_atomic,
+ 	.functionality = mv64xxx_i2c_functionality,
+ };
+ 
 
 
