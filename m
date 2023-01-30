@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B9328EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:55:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10AAAC433D2;
-	Mon, 30 Jan 2023 13:55:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA50828EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:55:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D2FC433EF;
+	Mon, 30 Jan 2023 13:55:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675086931;
-	bh=K3yiNmnkXwN4HW6GU7KXho3/PS4j7sWEwJp7DDr2oF8=;
+	s=korg; t=1675086934;
+	bh=OldQd+pjjY/uPVBrXOONOgMkVGz4djGO0hEMCA/WObk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=o0MxCQFJf2DbZOZ74HxaRtV62LxfKkwcivTUirAYGZgJihdXH3BY7cE/5X/9W4LoK
-	 KrWDtpxOGBaysaOlHH53WW6n3TEL9FInB7ORrFfcvEm8xL0e+7zz+XMCe1HgLtHxhe
-	 kTUcFG/H3pn/hi1QFrHdlNt0PiHAEkumBpYBF0cw=
+	b=ESaAvyaSyMuhGarQN4Mo6h21o8qA2vwB5muUjjoo8JHgN8BwNMVTmWVsAa/FqZDok
+	 Ke4ZB+h16zA9vSaF0nACDkZMgK6vHxXmTWEhwK/45NEjzOoyvqOd/DkpOjWyrC3QBe
+	 vuiZdL9GrgcT4WVji48NBQU44mCLaRMy/HM8bQQw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Bjorn Andersson <andersson@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 004/313] arm64: dts: qcom: sc8280xp: fix primary USB-DP PHY reset
-Date: Mon, 30 Jan 2023 14:47:19 +0100
-Message-Id: <20230130134336.749273867@linuxfoundation.org>
+Subject: [PATCH 6.1 037/313] block: fix error unwinding in blk_register_queue
+Date: Mon, 30 Jan 2023 14:47:52 +0100
+Message-Id: <20230130134338.409842952@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,37 +35,99 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit ee4e530bdde29a69c58656a919545251a782674e ]
+[ Upstream commit 40602997be26887bdfa3d58659c3acb4579099e9 ]
 
-The vendor kernel is using the GCC_USB4_DP_PHY_PRIM_BCR and
-GCC_USB4_1_DP_PHY_PRIM_BCR resets for the USB4-USB3-DP QMP PHYs.
+blk_register_queue fails to handle errors from blk_mq_sysfs_register,
+leaks various resources on errors and accidentally sets queue refs percpu
+refcount to percpu mode on kobject_add failure.  Fix all that by
+properly unwinding on errors.
 
-Update the primary USB-DP PHY node to match.
-
-Fixes: 152d1faf1e2f ("arm64: dts: qcom: add SC8280XP platform")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221121085058.31213-15-johan+linaro@kernel.org
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20221114042637.1009333-4-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 49e4d04f0486 ("block: Drop spurious might_sleep() from blk_put_queue()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sc8280xp.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/blk-sysfs.c | 28 ++++++++++++++++------------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-index 9f2a136d5cbc..146a4285c395 100644
---- a/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc8280xp.dtsi
-@@ -1173,7 +1173,7 @@ usb_0_qmpphy: phy-wrapper@88ec000 {
- 			clock-names = "aux", "ref_clk_src", "ref", "com_aux";
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 3d6951a0b4e7..1631ba2f7259 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -820,13 +820,15 @@ int blk_register_queue(struct gendisk *disk)
+ 	int ret;
  
- 			resets = <&gcc GCC_USB3_PHY_PRIM_BCR>,
--				 <&gcc GCC_USB3_DP_PHY_PRIM_BCR>;
-+				 <&gcc GCC_USB4_DP_PHY_PRIM_BCR>;
- 			reset-names = "phy", "common";
+ 	mutex_lock(&q->sysfs_dir_lock);
+-
+ 	ret = kobject_add(&q->kobj, &disk_to_dev(disk)->kobj, "queue");
+ 	if (ret < 0)
+-		goto unlock;
++		goto out_unlock_dir;
  
- 			power-domains = <&gcc USB30_PRIM_GDSC>;
+-	if (queue_is_mq(q))
+-		blk_mq_sysfs_register(disk);
++	if (queue_is_mq(q)) {
++		ret = blk_mq_sysfs_register(disk);
++		if (ret)
++			goto out_del_queue_kobj;
++	}
+ 	mutex_lock(&q->sysfs_lock);
+ 
+ 	mutex_lock(&q->debugfs_mutex);
+@@ -838,17 +840,17 @@ int blk_register_queue(struct gendisk *disk)
+ 
+ 	ret = disk_register_independent_access_ranges(disk);
+ 	if (ret)
+-		goto put_dev;
++		goto out_debugfs_remove;
+ 
+ 	if (q->elevator) {
+ 		ret = elv_register_queue(q, false);
+ 		if (ret)
+-			goto put_dev;
++			goto out_unregister_ia_ranges;
+ 	}
+ 
+ 	ret = blk_crypto_sysfs_register(disk);
+ 	if (ret)
+-		goto put_dev;
++		goto out_elv_unregister;
+ 
+ 	blk_queue_flag_set(QUEUE_FLAG_REGISTERED, q);
+ 	wbt_enable_default(q);
+@@ -859,8 +861,6 @@ int blk_register_queue(struct gendisk *disk)
+ 	if (q->elevator)
+ 		kobject_uevent(&q->elevator->kobj, KOBJ_ADD);
+ 	mutex_unlock(&q->sysfs_lock);
+-
+-unlock:
+ 	mutex_unlock(&q->sysfs_dir_lock);
+ 
+ 	/*
+@@ -879,13 +879,17 @@ int blk_register_queue(struct gendisk *disk)
+ 
+ 	return ret;
+ 
+-put_dev:
++out_elv_unregister:
+ 	elv_unregister_queue(q);
++out_unregister_ia_ranges:
+ 	disk_unregister_independent_access_ranges(disk);
++out_debugfs_remove:
++	blk_debugfs_remove(disk);
+ 	mutex_unlock(&q->sysfs_lock);
+-	mutex_unlock(&q->sysfs_dir_lock);
++out_del_queue_kobj:
+ 	kobject_del(&q->kobj);
+-
++out_unlock_dir:
++	mutex_unlock(&q->sysfs_dir_lock);
+ 	return ret;
+ }
+ 
 -- 
 2.39.0
 
