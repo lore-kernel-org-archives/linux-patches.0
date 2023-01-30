@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B791E28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C064C433D2;
-	Mon, 30 Jan 2023 14:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B130E28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2FC07C433D2;
+	Mon, 30 Jan 2023 14:14:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088089;
-	bh=aa5C0dAsOQZTYhUI+KJVLBVc9xEz97J7qqmOkoHQV64=;
+	s=korg; t=1675088092;
+	bh=E0opZVpGMvHLTfupELEr0tewt30goMO+tLp5tw2iaxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s4C6loF1Yc8JQ/bA3CZNCAdXoj404ZO9MC7iXiYJPISdGTeyi+CbU88h6d0Db9ZUP
-	 hmMDIWen0ErnShx70ifob6nD8ozL26EGqh0Yb66A/pxRgU33jV9FfPW75Bel6GUVOs
-	 INBVdUePRfhwj5XpR2Ul5gKHnD38nJV3rF1ouG9A=
+	b=18ksk2HgqVSFUNud/kVjgOwmedoEhQ9XyRaR4VPki5GFJt2isFgo0LCeYfW4R3r0n
+	 ZIur1m/cLfo80yRHTN4llBCJXYgO6r/UbL3Ms2slmUzvdwAkcRFXaWnfs4DxEwfAVn
+	 H2GqrFE1oLqitehHeUIcwhFsNsL3cFM1z5+ufvRQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yihang Li <liyihang9@huawei.com>,
-	Xiang Chen <chenxiang66@hisilicon.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Andre Przywara <andre.przywara@arm.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 112/204] scsi: hisi_sas: Set a port invalid only if there are no devices attached when refreshing port id
-Date: Mon, 30 Jan 2023 14:51:17 +0100
-Message-Id: <20230130134321.374698245@linuxfoundation.org>
+Subject: [PATCH 5.15 113/204] r8152: add vendor/device ID pair for Microsoft Devkit
+Date: Mon, 30 Jan 2023 14:51:18 +0100
+Message-Id: <20230130134321.426214511@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -36,40 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yihang Li <liyihang9@huawei.com>
+From: Andre Przywara <andre.przywara@arm.com>
 
-[ Upstream commit f58c89700630da6554b24fd3df293a24874c10c1 ]
+[ Upstream commit be53771c87f4e322a9835d3faa9cd73a4ecdec5b ]
 
-Currently the driver sets the port invalid if one phy in the port is not
-enabled, which may cause issues in expander situation. In directly attached
-situation, if phy up doesn't occur in time when refreshing port id, the
-port is incorrectly set to invalid which will also cause disk lost.
+The Microsoft Devkit 2023 is a an ARM64 based machine featuring a
+Realtek 8153 USB3.0-to-GBit Ethernet adapter. As in their other
+machines, Microsoft uses a custom USB device ID.
 
-Therefore set a port invalid only if there are no devices attached to the
-port.
+Add the respective ID values to the driver. This makes Ethernet work on
+the MS Devkit device. The chip has been visually confirmed to be a
+RTL8153.
 
-Signed-off-by: Yihang Li <liyihang9@huawei.com>
-Signed-off-by: Xiang Chen <chenxiang66@hisilicon.com>
-Link: https://lore.kernel.org/r/1672805000-141102-3-git-send-email-chenxiang66@hisilicon.com
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://lore.kernel.org/r/20230111133228.190801-1-andre.przywara@arm.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hisi_sas/hisi_sas_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/r8152.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
-index 9515c45affa5..7d93783c09a5 100644
---- a/drivers/scsi/hisi_sas/hisi_sas_main.c
-+++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
-@@ -1414,7 +1414,7 @@ static void hisi_sas_refresh_port_id(struct hisi_hba *hisi_hba)
- 				device->linkrate = phy->sas_phy.linkrate;
- 
- 			hisi_hba->hw->setup_itct(hisi_hba, sas_dev);
--		} else
-+		} else if (!port->port_attached)
- 			port->id = 0xff;
- 	}
- }
+diff --git a/drivers/net/usb/r8152.c b/drivers/net/usb/r8152.c
+index 109c288d8b47..cf6941b1d280 100644
+--- a/drivers/net/usb/r8152.c
++++ b/drivers/net/usb/r8152.c
+@@ -9809,6 +9809,7 @@ static const struct usb_device_id rtl8152_table[] = {
+ 	REALTEK_USB_DEVICE(VENDOR_ID_MICROSOFT, 0x07ab),
+ 	REALTEK_USB_DEVICE(VENDOR_ID_MICROSOFT, 0x07c6),
+ 	REALTEK_USB_DEVICE(VENDOR_ID_MICROSOFT, 0x0927),
++	REALTEK_USB_DEVICE(VENDOR_ID_MICROSOFT, 0x0c5e),
+ 	REALTEK_USB_DEVICE(VENDOR_ID_SAMSUNG, 0xa101),
+ 	REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x304f),
+ 	REALTEK_USB_DEVICE(VENDOR_ID_LENOVO,  0x3054),
 -- 
 2.39.0
 
