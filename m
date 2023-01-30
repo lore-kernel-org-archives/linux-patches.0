@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A42228EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:11:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7033C433D2;
-	Mon, 30 Jan 2023 14:11:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E458228EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:11:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6D5C433EF;
+	Mon, 30 Jan 2023 14:11:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087895;
-	bh=gvyWmz22ge2Io3IuSWmz9Hio7JErqDHy3e+TNRus36I=;
+	s=korg; t=1675087897;
+	bh=r8cYJJteDgct7mExJTUuVRYwKVoig31XXj7RoH02RtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KTgLmepagiqM/7pqHixbOcFk2sjSZ657+2nA3R6jQBGff5CC6h66FQUPN6Q9mQmjx
-	 f6uWz89Kf2X4ZaZ9bXSVJ9LUFfmNBC7K3AyTd3YnL8ms4a4wueLUXolzrkmFL0ISp+
-	 FGE+PAcTQi9oiTvgBUFUm2qsIsC6I6D+n1YduTeQ=
+	b=Kls7Wcho7+NzpM2nXAeio9+0e12+wM/zQPlAABJ7cx4B3t590hkDeDrSsfWJBCh29
+	 yrkDeH0iTm+p3rzlxf+EsHxfrebrwDUJNdV1QfW9hRKqORw4Ed5SqvSQYH8lRtc4+L
+	 RxMuQ5HQ3XGdbWQsMMsxKkzzGcuChokSuNT+4MZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Heiko Stuebner <heiko@sntech.de>,
+	Sebastian Reichel <sebastian.reichel@collabora.com>,
+	=?UTF-8?q?Heiko=20St=C3=BCbner?= <heiko@sntech.de>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 046/204] pinctrl/rockchip: Use temporary variable for struct device
-Date: Mon, 30 Jan 2023 14:50:11 +0100
-Message-Id: <20230130134318.341607429@linuxfoundation.org>
+Subject: [PATCH 5.15 047/204] pinctrl/rockchip: add error handling for pull/drive register getters
+Date: Mon, 30 Jan 2023 14:50:12 +0100
+Message-Id: <20230130134318.389286011@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,442 +36,478 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Sebastian Reichel <sebastian.reichel@collabora.com>
 
-[ Upstream commit e4dd7fd5ff0acb3f3ed290f52afe20fd840d22b0 ]
+[ Upstream commit 42573ab3b9f94fbeba8b84e142703ea551624f6d ]
 
-Use temporary variable for struct device to make code neater.
+Add error handling for the pull and driver register getters in preparation
+for RK3588 support.
 
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
+Signed-off-by: Sebastian Reichel <sebastian.reichel@collabora.com>
+Reviewed-by: Heiko Stübner <heiko@sntech.de>
+Link: https://lore.kernel.org/r/20220422170920.401914-13-sebastian.reichel@collabora.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Stable-dep-of: 31b62a98de42 ("pinctrl: rockchip: fix reading pull type on rk3568")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-rockchip.c | 116 +++++++++++++----------------
- 1 file changed, 53 insertions(+), 63 deletions(-)
+ drivers/pinctrl/pinctrl-rockchip.c | 168 ++++++++++++++++++-----------
+ drivers/pinctrl/pinctrl-rockchip.h |   4 +-
+ 2 files changed, 109 insertions(+), 63 deletions(-)
 
 diff --git a/drivers/pinctrl/pinctrl-rockchip.c b/drivers/pinctrl/pinctrl-rockchip.c
-index 25ec0d22f184..fcff8e7798b3 100644
+index fcff8e7798b3..4888840dfc33 100644
 --- a/drivers/pinctrl/pinctrl-rockchip.c
 +++ b/drivers/pinctrl/pinctrl-rockchip.c
-@@ -285,6 +285,7 @@ static int rockchip_dt_node_to_map(struct pinctrl_dev *pctldev,
- {
- 	struct rockchip_pinctrl *info = pinctrl_dev_get_drvdata(pctldev);
- 	const struct rockchip_pin_group *grp;
-+	struct device *dev = info->dev;
- 	struct pinctrl_map *new_map;
- 	struct device_node *parent;
- 	int map_num = 1;
-@@ -296,8 +297,7 @@ static int rockchip_dt_node_to_map(struct pinctrl_dev *pctldev,
- 	 */
- 	grp = pinctrl_name_to_group(info, np->name);
- 	if (!grp) {
--		dev_err(info->dev, "unable to find group for node %pOFn\n",
--			np);
-+		dev_err(dev, "unable to find group for node %pOFn\n", np);
- 		return -EINVAL;
- 	}
+@@ -1039,9 +1039,9 @@ static int rockchip_set_mux(struct rockchip_pin_bank *bank, int pin, int mux)
+ #define PX30_PULL_PINS_PER_REG		8
+ #define PX30_PULL_BANK_STRIDE		16
  
-@@ -331,7 +331,7 @@ static int rockchip_dt_node_to_map(struct pinctrl_dev *pctldev,
- 		new_map[i].data.configs.num_configs = grp->data[i].nconfigs;
- 	}
- 
--	dev_dbg(pctldev->dev, "maps: function %s group %s num %d\n",
-+	dev_dbg(dev, "maps: function %s group %s num %d\n",
- 		(*map)->data.mux.function, (*map)->data.mux.group, map_num);
- 
- 	return 0;
-@@ -927,20 +927,20 @@ static int rockchip_verify_mux(struct rockchip_pin_bank *bank,
- 			       int pin, int mux)
+-static void px30_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+-				       int pin_num, struct regmap **regmap,
+-				       int *reg, u8 *bit)
++static int px30_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
++				      int pin_num, struct regmap **regmap,
++				      int *reg, u8 *bit)
  {
  	struct rockchip_pinctrl *info = bank->drvdata;
-+	struct device *dev = info->dev;
- 	int iomux_num = (pin / 8);
  
- 	if (iomux_num > 3)
- 		return -EINVAL;
+@@ -1061,6 +1061,8 @@ static void px30_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ 	*reg += ((pin_num / PX30_PULL_PINS_PER_REG) * 4);
+ 	*bit = (pin_num % PX30_PULL_PINS_PER_REG);
+ 	*bit *= PX30_PULL_BITS_PER_PIN;
++
++	return 0;
+ }
  
- 	if (bank->iomux[iomux_num].type & IOMUX_UNROUTED) {
--		dev_err(info->dev, "pin %d is unrouted\n", pin);
-+		dev_err(dev, "pin %d is unrouted\n", pin);
- 		return -EINVAL;
- 	}
+ #define PX30_DRV_PMU_OFFSET		0x20
+@@ -1069,9 +1071,9 @@ static void px30_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ #define PX30_DRV_PINS_PER_REG		8
+ #define PX30_DRV_BANK_STRIDE		16
  
- 	if (bank->iomux[iomux_num].type & IOMUX_GPIO_ONLY) {
- 		if (mux != RK_FUNC_GPIO) {
--			dev_err(info->dev,
--				"pin %d only supports a gpio mux\n", pin);
-+			dev_err(dev, "pin %d only supports a gpio mux\n", pin);
- 			return -ENOTSUPP;
- 		}
- 	}
-@@ -964,6 +964,7 @@ static int rockchip_verify_mux(struct rockchip_pin_bank *bank,
- static int rockchip_set_mux(struct rockchip_pin_bank *bank, int pin, int mux)
+-static void px30_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+-				      int pin_num, struct regmap **regmap,
+-				      int *reg, u8 *bit)
++static int px30_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
++				     int pin_num, struct regmap **regmap,
++				     int *reg, u8 *bit)
  {
  	struct rockchip_pinctrl *info = bank->drvdata;
-+	struct device *dev = info->dev;
- 	int iomux_num = (pin / 8);
- 	struct regmap *regmap;
- 	int reg, ret, mask, mux_type;
-@@ -977,8 +978,7 @@ static int rockchip_set_mux(struct rockchip_pin_bank *bank, int pin, int mux)
- 	if (bank->iomux[iomux_num].type & IOMUX_GPIO_ONLY)
- 		return 0;
  
--	dev_dbg(info->dev, "setting mux of GPIO%d-%d to %d\n",
--						bank->bank_num, pin, mux);
-+	dev_dbg(dev, "setting mux of GPIO%d-%d to %d\n", bank->bank_num, pin, mux);
+@@ -1091,6 +1093,8 @@ static void px30_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+ 	*reg += ((pin_num / PX30_DRV_PINS_PER_REG) * 4);
+ 	*bit = (pin_num % PX30_DRV_PINS_PER_REG);
+ 	*bit *= PX30_DRV_BITS_PER_PIN;
++
++	return 0;
+ }
  
- 	regmap = (bank->iomux[iomux_num].type & IOMUX_SOURCE_PMU)
- 				? info->regmap_pmu : info->regmap_base;
-@@ -1630,6 +1630,7 @@ static int rockchip_get_drive_perpin(struct rockchip_pin_bank *bank,
+ #define PX30_SCHMITT_PMU_OFFSET			0x38
+@@ -1130,9 +1134,9 @@ static int px30_calc_schmitt_reg_and_bit(struct rockchip_pin_bank *bank,
+ #define RV1108_PULL_BITS_PER_PIN	2
+ #define RV1108_PULL_BANK_STRIDE		16
+ 
+-static void rv1108_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+-					 int pin_num, struct regmap **regmap,
+-					 int *reg, u8 *bit)
++static int rv1108_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
++					int pin_num, struct regmap **regmap,
++					int *reg, u8 *bit)
  {
  	struct rockchip_pinctrl *info = bank->drvdata;
- 	struct rockchip_pin_ctrl *ctrl = info->ctrl;
-+	struct device *dev = info->dev;
- 	struct regmap *regmap;
- 	int reg, ret;
- 	u32 data, temp, rmask_bits;
-@@ -1675,7 +1676,7 @@ static int rockchip_get_drive_perpin(struct rockchip_pin_bank *bank,
- 			bit -= 16;
- 			break;
- 		default:
--			dev_err(info->dev, "unsupported bit: %d for pinctrl drive type: %d\n",
-+			dev_err(dev, "unsupported bit: %d for pinctrl drive type: %d\n",
- 				bit, drv_type);
- 			return -EINVAL;
- 		}
-@@ -1687,8 +1688,7 @@ static int rockchip_get_drive_perpin(struct rockchip_pin_bank *bank,
- 		rmask_bits = RK3288_DRV_BITS_PER_PIN;
- 		break;
- 	default:
--		dev_err(info->dev, "unsupported pinctrl drive type: %d\n",
--			drv_type);
-+		dev_err(dev, "unsupported pinctrl drive type: %d\n", drv_type);
- 		return -EINVAL;
+ 
+@@ -1151,6 +1155,8 @@ static void rv1108_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ 	*reg += ((pin_num / RV1108_PULL_PINS_PER_REG) * 4);
+ 	*bit = (pin_num % RV1108_PULL_PINS_PER_REG);
+ 	*bit *= RV1108_PULL_BITS_PER_PIN;
++
++	return 0;
+ }
+ 
+ #define RV1108_DRV_PMU_OFFSET		0x20
+@@ -1159,9 +1165,9 @@ static void rv1108_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ #define RV1108_DRV_PINS_PER_REG		8
+ #define RV1108_DRV_BANK_STRIDE		16
+ 
+-static void rv1108_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+-					int pin_num, struct regmap **regmap,
+-					int *reg, u8 *bit)
++static int rv1108_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
++				       int pin_num, struct regmap **regmap,
++				       int *reg, u8 *bit)
+ {
+ 	struct rockchip_pinctrl *info = bank->drvdata;
+ 
+@@ -1181,6 +1187,8 @@ static void rv1108_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+ 	*reg += ((pin_num / RV1108_DRV_PINS_PER_REG) * 4);
+ 	*bit = pin_num % RV1108_DRV_PINS_PER_REG;
+ 	*bit *= RV1108_DRV_BITS_PER_PIN;
++
++	return 0;
+ }
+ 
+ #define RV1108_SCHMITT_PMU_OFFSET		0x30
+@@ -1237,9 +1245,9 @@ static int rk3308_calc_schmitt_reg_and_bit(struct rockchip_pin_bank *bank,
+ #define RK2928_PULL_PINS_PER_REG	16
+ #define RK2928_PULL_BANK_STRIDE		8
+ 
+-static void rk2928_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+-				    int pin_num, struct regmap **regmap,
+-				    int *reg, u8 *bit)
++static int rk2928_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
++					int pin_num, struct regmap **regmap,
++					int *reg, u8 *bit)
+ {
+ 	struct rockchip_pinctrl *info = bank->drvdata;
+ 
+@@ -1249,13 +1257,15 @@ static void rk2928_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ 	*reg += (pin_num / RK2928_PULL_PINS_PER_REG) * 4;
+ 
+ 	*bit = pin_num % RK2928_PULL_PINS_PER_REG;
++
++	return 0;
+ };
+ 
+ #define RK3128_PULL_OFFSET	0x118
+ 
+-static void rk3128_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+-					 int pin_num, struct regmap **regmap,
+-					 int *reg, u8 *bit)
++static int rk3128_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
++					int pin_num, struct regmap **regmap,
++					int *reg, u8 *bit)
+ {
+ 	struct rockchip_pinctrl *info = bank->drvdata;
+ 
+@@ -1265,6 +1275,8 @@ static void rk3128_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ 	*reg += ((pin_num / RK2928_PULL_PINS_PER_REG) * 4);
+ 
+ 	*bit = pin_num % RK2928_PULL_PINS_PER_REG;
++
++	return 0;
+ }
+ 
+ #define RK3188_PULL_OFFSET		0x164
+@@ -1273,9 +1285,9 @@ static void rk3128_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ #define RK3188_PULL_BANK_STRIDE		16
+ #define RK3188_PULL_PMU_OFFSET		0x64
+ 
+-static void rk3188_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+-				    int pin_num, struct regmap **regmap,
+-				    int *reg, u8 *bit)
++static int rk3188_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
++					int pin_num, struct regmap **regmap,
++					int *reg, u8 *bit)
+ {
+ 	struct rockchip_pinctrl *info = bank->drvdata;
+ 
+@@ -1305,12 +1317,14 @@ static void rk3188_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ 		*bit = 7 - (pin_num % RK3188_PULL_PINS_PER_REG);
+ 		*bit *= RK3188_PULL_BITS_PER_PIN;
  	}
++
++	return 0;
+ }
  
-@@ -1707,13 +1707,14 @@ static int rockchip_set_drive_perpin(struct rockchip_pin_bank *bank,
+ #define RK3288_PULL_OFFSET		0x140
+-static void rk3288_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+-				    int pin_num, struct regmap **regmap,
+-				    int *reg, u8 *bit)
++static int rk3288_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
++					int pin_num, struct regmap **regmap,
++					int *reg, u8 *bit)
  {
  	struct rockchip_pinctrl *info = bank->drvdata;
- 	struct rockchip_pin_ctrl *ctrl = info->ctrl;
-+	struct device *dev = info->dev;
- 	struct regmap *regmap;
- 	int reg, ret, i;
- 	u32 data, rmask, rmask_bits, temp;
+ 
+@@ -1334,6 +1348,8 @@ static void rk3288_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ 		*bit = (pin_num % RK3188_PULL_PINS_PER_REG);
+ 		*bit *= RK3188_PULL_BITS_PER_PIN;
+ 	}
++
++	return 0;
+ }
+ 
+ #define RK3288_DRV_PMU_OFFSET		0x70
+@@ -1342,9 +1358,9 @@ static void rk3288_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ #define RK3288_DRV_PINS_PER_REG		8
+ #define RK3288_DRV_BANK_STRIDE		16
+ 
+-static void rk3288_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+-				    int pin_num, struct regmap **regmap,
+-				    int *reg, u8 *bit)
++static int rk3288_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
++				       int pin_num, struct regmap **regmap,
++				       int *reg, u8 *bit)
+ {
+ 	struct rockchip_pinctrl *info = bank->drvdata;
+ 
+@@ -1368,13 +1384,15 @@ static void rk3288_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+ 		*bit = (pin_num % RK3288_DRV_PINS_PER_REG);
+ 		*bit *= RK3288_DRV_BITS_PER_PIN;
+ 	}
++
++	return 0;
+ }
+ 
+ #define RK3228_PULL_OFFSET		0x100
+ 
+-static void rk3228_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+-				    int pin_num, struct regmap **regmap,
+-				    int *reg, u8 *bit)
++static int rk3228_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
++					int pin_num, struct regmap **regmap,
++					int *reg, u8 *bit)
+ {
+ 	struct rockchip_pinctrl *info = bank->drvdata;
+ 
+@@ -1385,13 +1403,15 @@ static void rk3228_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ 
+ 	*bit = (pin_num % RK3188_PULL_PINS_PER_REG);
+ 	*bit *= RK3188_PULL_BITS_PER_PIN;
++
++	return 0;
+ }
+ 
+ #define RK3228_DRV_GRF_OFFSET		0x200
+ 
+-static void rk3228_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+-				    int pin_num, struct regmap **regmap,
+-				    int *reg, u8 *bit)
++static int rk3228_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
++				       int pin_num, struct regmap **regmap,
++				       int *reg, u8 *bit)
+ {
+ 	struct rockchip_pinctrl *info = bank->drvdata;
+ 
+@@ -1402,13 +1422,15 @@ static void rk3228_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+ 
+ 	*bit = (pin_num % RK3288_DRV_PINS_PER_REG);
+ 	*bit *= RK3288_DRV_BITS_PER_PIN;
++
++	return 0;
+ }
+ 
+ #define RK3308_PULL_OFFSET		0xa0
+ 
+-static void rk3308_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+-				    int pin_num, struct regmap **regmap,
+-				    int *reg, u8 *bit)
++static int rk3308_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
++					int pin_num, struct regmap **regmap,
++					int *reg, u8 *bit)
+ {
+ 	struct rockchip_pinctrl *info = bank->drvdata;
+ 
+@@ -1419,13 +1441,15 @@ static void rk3308_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ 
+ 	*bit = (pin_num % RK3188_PULL_PINS_PER_REG);
+ 	*bit *= RK3188_PULL_BITS_PER_PIN;
++
++	return 0;
+ }
+ 
+ #define RK3308_DRV_GRF_OFFSET		0x100
+ 
+-static void rk3308_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+-				    int pin_num, struct regmap **regmap,
+-				    int *reg, u8 *bit)
++static int rk3308_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
++				       int pin_num, struct regmap **regmap,
++				       int *reg, u8 *bit)
+ {
+ 	struct rockchip_pinctrl *info = bank->drvdata;
+ 
+@@ -1436,14 +1460,16 @@ static void rk3308_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+ 
+ 	*bit = (pin_num % RK3288_DRV_PINS_PER_REG);
+ 	*bit *= RK3288_DRV_BITS_PER_PIN;
++
++	return 0;
+ }
+ 
+ #define RK3368_PULL_GRF_OFFSET		0x100
+ #define RK3368_PULL_PMU_OFFSET		0x10
+ 
+-static void rk3368_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+-				    int pin_num, struct regmap **regmap,
+-				    int *reg, u8 *bit)
++static int rk3368_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
++					int pin_num, struct regmap **regmap,
++					int *reg, u8 *bit)
+ {
+ 	struct rockchip_pinctrl *info = bank->drvdata;
+ 
+@@ -1467,14 +1493,16 @@ static void rk3368_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ 		*bit = (pin_num % RK3188_PULL_PINS_PER_REG);
+ 		*bit *= RK3188_PULL_BITS_PER_PIN;
+ 	}
++
++	return 0;
+ }
+ 
+ #define RK3368_DRV_PMU_OFFSET		0x20
+ #define RK3368_DRV_GRF_OFFSET		0x200
+ 
+-static void rk3368_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+-				    int pin_num, struct regmap **regmap,
+-				    int *reg, u8 *bit)
++static int rk3368_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
++				       int pin_num, struct regmap **regmap,
++				       int *reg, u8 *bit)
+ {
+ 	struct rockchip_pinctrl *info = bank->drvdata;
+ 
+@@ -1498,15 +1526,17 @@ static void rk3368_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+ 		*bit = (pin_num % RK3288_DRV_PINS_PER_REG);
+ 		*bit *= RK3288_DRV_BITS_PER_PIN;
+ 	}
++
++	return 0;
+ }
+ 
+ #define RK3399_PULL_GRF_OFFSET		0xe040
+ #define RK3399_PULL_PMU_OFFSET		0x40
+ #define RK3399_DRV_3BITS_PER_PIN	3
+ 
+-static void rk3399_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+-					 int pin_num, struct regmap **regmap,
+-					 int *reg, u8 *bit)
++static int rk3399_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
++					int pin_num, struct regmap **regmap,
++					int *reg, u8 *bit)
+ {
+ 	struct rockchip_pinctrl *info = bank->drvdata;
+ 
+@@ -1532,11 +1562,13 @@ static void rk3399_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ 		*bit = (pin_num % RK3188_PULL_PINS_PER_REG);
+ 		*bit *= RK3188_PULL_BITS_PER_PIN;
+ 	}
++
++	return 0;
+ }
+ 
+-static void rk3399_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+-					int pin_num, struct regmap **regmap,
+-					int *reg, u8 *bit)
++static int rk3399_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
++				       int pin_num, struct regmap **regmap,
++				       int *reg, u8 *bit)
+ {
+ 	struct rockchip_pinctrl *info = bank->drvdata;
+ 	int drv_num = (pin_num / 8);
+@@ -1553,6 +1585,8 @@ static void rk3399_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+ 		*bit = (pin_num % 8) * 3;
+ 	else
+ 		*bit = (pin_num % 8) * 2;
++
++	return 0;
+ }
+ 
+ #define RK3568_PULL_PMU_OFFSET		0x20
+@@ -1561,9 +1595,9 @@ static void rk3399_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+ #define RK3568_PULL_PINS_PER_REG	8
+ #define RK3568_PULL_BANK_STRIDE		0x10
+ 
+-static void rk3568_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+-					 int pin_num, struct regmap **regmap,
+-					 int *reg, u8 *bit)
++static int rk3568_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
++					int pin_num, struct regmap **regmap,
++					int *reg, u8 *bit)
+ {
+ 	struct rockchip_pinctrl *info = bank->drvdata;
+ 
+@@ -1584,6 +1618,8 @@ static void rk3568_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ 		*bit = (pin_num % RK3568_PULL_PINS_PER_REG);
+ 		*bit *= RK3568_PULL_BITS_PER_PIN;
+ 	}
++
++	return 0;
+ }
+ 
+ #define RK3568_DRV_PMU_OFFSET		0x70
+@@ -1592,9 +1628,9 @@ static void rk3568_calc_pull_reg_and_bit(struct rockchip_pin_bank *bank,
+ #define RK3568_DRV_PINS_PER_REG		2
+ #define RK3568_DRV_BANK_STRIDE		0x40
+ 
+-static void rk3568_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+-					int pin_num, struct regmap **regmap,
+-					int *reg, u8 *bit)
++static int rk3568_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
++				       int pin_num, struct regmap **regmap,
++				       int *reg, u8 *bit)
+ {
+ 	struct rockchip_pinctrl *info = bank->drvdata;
+ 
+@@ -1615,6 +1651,8 @@ static void rk3568_calc_drv_reg_and_bit(struct rockchip_pin_bank *bank,
+ 		*bit = (pin_num % RK3568_DRV_PINS_PER_REG);
+ 		*bit *= RK3568_DRV_BITS_PER_PIN;
+ 	}
++
++	return 0;
+ }
+ 
+ static int rockchip_perpin_drv_list[DRV_TYPE_MAX][8] = {
+@@ -1637,7 +1675,9 @@ static int rockchip_get_drive_perpin(struct rockchip_pin_bank *bank,
  	u8 bit;
  	int drv_type = bank->drv[pin_num / 8].drv_type;
  
--	dev_dbg(info->dev, "setting drive of GPIO%d-%d to %d\n",
-+	dev_dbg(dev, "setting drive of GPIO%d-%d to %d\n",
+-	ctrl->drv_calc_reg(bank, pin_num, &regmap, &reg, &bit);
++	ret = ctrl->drv_calc_reg(bank, pin_num, &regmap, &reg, &bit);
++	if (ret)
++		return ret;
+ 
+ 	switch (drv_type) {
+ 	case DRV_TYPE_IO_1V8_3V0_AUTO:
+@@ -1717,7 +1757,9 @@ static int rockchip_set_drive_perpin(struct rockchip_pin_bank *bank,
+ 	dev_dbg(dev, "setting drive of GPIO%d-%d to %d\n",
  		bank->bank_num, pin_num, strength);
  
- 	ctrl->drv_calc_reg(bank, pin_num, &regmap, &reg, &bit);
-@@ -1735,8 +1736,7 @@ static int rockchip_set_drive_perpin(struct rockchip_pin_bank *bank,
- 	}
- 
- 	if (ret < 0) {
--		dev_err(info->dev, "unsupported driver strength %d\n",
--			strength);
-+		dev_err(dev, "unsupported driver strength %d\n", strength);
- 		return ret;
- 	}
- 
-@@ -1775,7 +1775,7 @@ static int rockchip_set_drive_perpin(struct rockchip_pin_bank *bank,
- 			bit -= 16;
- 			break;
- 		default:
--			dev_err(info->dev, "unsupported bit: %d for pinctrl drive type: %d\n",
-+			dev_err(dev, "unsupported bit: %d for pinctrl drive type: %d\n",
- 				bit, drv_type);
- 			return -EINVAL;
- 		}
-@@ -1786,8 +1786,7 @@ static int rockchip_set_drive_perpin(struct rockchip_pin_bank *bank,
- 		rmask_bits = RK3288_DRV_BITS_PER_PIN;
- 		break;
- 	default:
--		dev_err(info->dev, "unsupported pinctrl drive type: %d\n",
--			drv_type);
-+		dev_err(dev, "unsupported pinctrl drive type: %d\n", drv_type);
- 		return -EINVAL;
- 	}
- 
-@@ -1821,6 +1820,7 @@ static int rockchip_get_pull(struct rockchip_pin_bank *bank, int pin_num)
- {
- 	struct rockchip_pinctrl *info = bank->drvdata;
- 	struct rockchip_pin_ctrl *ctrl = info->ctrl;
-+	struct device *dev = info->dev;
- 	struct regmap *regmap;
- 	int reg, ret, pull_type;
- 	u8 bit;
-@@ -1855,7 +1855,7 @@ static int rockchip_get_pull(struct rockchip_pin_bank *bank, int pin_num)
- 
- 		return rockchip_pull_list[pull_type][data];
- 	default:
--		dev_err(info->dev, "unsupported pinctrl type\n");
-+		dev_err(dev, "unsupported pinctrl type\n");
- 		return -EINVAL;
- 	};
- }
-@@ -1865,13 +1865,13 @@ static int rockchip_set_pull(struct rockchip_pin_bank *bank,
- {
- 	struct rockchip_pinctrl *info = bank->drvdata;
- 	struct rockchip_pin_ctrl *ctrl = info->ctrl;
-+	struct device *dev = info->dev;
- 	struct regmap *regmap;
- 	int reg, ret, i, pull_type;
- 	u8 bit;
- 	u32 data, rmask;
- 
--	dev_dbg(info->dev, "setting pull of GPIO%d-%d to %d\n",
--		 bank->bank_num, pin_num, pull);
-+	dev_dbg(dev, "setting pull of GPIO%d-%d to %d\n", bank->bank_num, pin_num, pull);
- 
- 	/* rk3066b does support any pulls */
+-	ctrl->drv_calc_reg(bank, pin_num, &regmap, &reg, &bit);
++	ret = ctrl->drv_calc_reg(bank, pin_num, &regmap, &reg, &bit);
++	if (ret)
++		return ret;
+ 	if (ctrl->type == RK3568) {
+ 		rmask_bits = RK3568_DRV_BITS_PER_PIN;
+ 		ret = (1 << (strength + 1)) - 1;
+@@ -1830,7 +1872,9 @@ static int rockchip_get_pull(struct rockchip_pin_bank *bank, int pin_num)
  	if (ctrl->type == RK3066B)
-@@ -1914,8 +1914,7 @@ static int rockchip_set_pull(struct rockchip_pin_bank *bank,
- 		}
+ 		return PIN_CONFIG_BIAS_DISABLE;
  
- 		if (ret < 0) {
--			dev_err(info->dev, "unsupported pull setting %d\n",
--				pull);
-+			dev_err(dev, "unsupported pull setting %d\n", pull);
- 			return ret;
- 		}
+-	ctrl->pull_calc_reg(bank, pin_num, &regmap, &reg, &bit);
++	ret = ctrl->pull_calc_reg(bank, pin_num, &regmap, &reg, &bit);
++	if (ret)
++		return ret;
  
-@@ -1927,7 +1926,7 @@ static int rockchip_set_pull(struct rockchip_pin_bank *bank,
- 		ret = regmap_update_bits(regmap, reg, rmask, data);
- 		break;
- 	default:
--		dev_err(info->dev, "unsupported pinctrl type\n");
-+		dev_err(dev, "unsupported pinctrl type\n");
- 		return -EINVAL;
- 	}
- 
-@@ -2018,12 +2017,13 @@ static int rockchip_set_schmitt(struct rockchip_pin_bank *bank,
- {
- 	struct rockchip_pinctrl *info = bank->drvdata;
- 	struct rockchip_pin_ctrl *ctrl = info->ctrl;
-+	struct device *dev = info->dev;
- 	struct regmap *regmap;
- 	int reg, ret;
- 	u8 bit;
- 	u32 data, rmask;
- 
--	dev_dbg(info->dev, "setting input schmitt of GPIO%d-%d to %d\n",
-+	dev_dbg(dev, "setting input schmitt of GPIO%d-%d to %d\n",
- 		bank->bank_num, pin_num, enable);
- 
- 	ret = ctrl->schmitt_calc_reg(bank, pin_num, &regmap, &reg, &bit);
-@@ -2083,10 +2083,11 @@ static int rockchip_pmx_set(struct pinctrl_dev *pctldev, unsigned selector,
- 	struct rockchip_pinctrl *info = pinctrl_dev_get_drvdata(pctldev);
- 	const unsigned int *pins = info->groups[group].pins;
- 	const struct rockchip_pin_config *data = info->groups[group].data;
-+	struct device *dev = info->dev;
- 	struct rockchip_pin_bank *bank;
- 	int cnt, ret = 0;
- 
--	dev_dbg(info->dev, "enable function %s group %s\n",
-+	dev_dbg(dev, "enable function %s group %s\n",
- 		info->functions[selector].name, info->groups[group].name);
- 
- 	/*
-@@ -2392,6 +2393,7 @@ static int rockchip_pinctrl_parse_groups(struct device_node *np,
- 					      struct rockchip_pinctrl *info,
- 					      u32 index)
- {
-+	struct device *dev = info->dev;
- 	struct rockchip_pin_bank *bank;
- 	int size;
- 	const __be32 *list;
-@@ -2399,7 +2401,7 @@ static int rockchip_pinctrl_parse_groups(struct device_node *np,
- 	int i, j;
- 	int ret;
- 
--	dev_dbg(info->dev, "group(%d): %pOFn\n", index, np);
-+	dev_dbg(dev, "group(%d): %pOFn\n", index, np);
- 
- 	/* Initialise group */
- 	grp->name = np->name;
-@@ -2412,18 +2414,14 @@ static int rockchip_pinctrl_parse_groups(struct device_node *np,
- 	/* we do not check return since it's safe node passed down */
- 	size /= sizeof(*list);
- 	if (!size || size % 4) {
--		dev_err(info->dev, "wrong pins number or pins and configs should be by 4\n");
-+		dev_err(dev, "wrong pins number or pins and configs should be by 4\n");
- 		return -EINVAL;
- 	}
- 
- 	grp->npins = size / 4;
- 
--	grp->pins = devm_kcalloc(info->dev, grp->npins, sizeof(unsigned int),
--						GFP_KERNEL);
--	grp->data = devm_kcalloc(info->dev,
--					grp->npins,
--					sizeof(struct rockchip_pin_config),
--					GFP_KERNEL);
-+	grp->pins = devm_kcalloc(dev, grp->npins, sizeof(*grp->pins), GFP_KERNEL);
-+	grp->data = devm_kcalloc(dev, grp->npins, sizeof(*grp->data), GFP_KERNEL);
- 	if (!grp->pins || !grp->data)
- 		return -ENOMEM;
- 
-@@ -2457,6 +2455,7 @@ static int rockchip_pinctrl_parse_functions(struct device_node *np,
- 						struct rockchip_pinctrl *info,
- 						u32 index)
- {
-+	struct device *dev = info->dev;
- 	struct device_node *child;
- 	struct rockchip_pmx_func *func;
- 	struct rockchip_pin_group *grp;
-@@ -2464,7 +2463,7 @@ static int rockchip_pinctrl_parse_functions(struct device_node *np,
- 	static u32 grp_index;
- 	u32 i = 0;
- 
--	dev_dbg(info->dev, "parse function(%d): %pOFn\n", index, np);
-+	dev_dbg(dev, "parse function(%d): %pOFn\n", index, np);
- 
- 	func = &info->functions[index];
- 
-@@ -2474,8 +2473,7 @@ static int rockchip_pinctrl_parse_functions(struct device_node *np,
- 	if (func->ngroups <= 0)
- 		return 0;
- 
--	func->groups = devm_kcalloc(info->dev,
--			func->ngroups, sizeof(char *), GFP_KERNEL);
-+	func->groups = devm_kcalloc(dev, func->ngroups, sizeof(*func->groups), GFP_KERNEL);
- 	if (!func->groups)
- 		return -ENOMEM;
- 
-@@ -2503,20 +2501,14 @@ static int rockchip_pinctrl_parse_dt(struct platform_device *pdev,
- 
- 	rockchip_pinctrl_child_count(info, np);
- 
--	dev_dbg(&pdev->dev, "nfunctions = %d\n", info->nfunctions);
--	dev_dbg(&pdev->dev, "ngroups = %d\n", info->ngroups);
-+	dev_dbg(dev, "nfunctions = %d\n", info->nfunctions);
-+	dev_dbg(dev, "ngroups = %d\n", info->ngroups);
- 
--	info->functions = devm_kcalloc(dev,
--					      info->nfunctions,
--					      sizeof(struct rockchip_pmx_func),
--					      GFP_KERNEL);
-+	info->functions = devm_kcalloc(dev, info->nfunctions, sizeof(*info->functions), GFP_KERNEL);
- 	if (!info->functions)
- 		return -ENOMEM;
- 
--	info->groups = devm_kcalloc(dev,
--					    info->ngroups,
--					    sizeof(struct rockchip_pin_group),
--					    GFP_KERNEL);
-+	info->groups = devm_kcalloc(dev, info->ngroups, sizeof(*info->groups), GFP_KERNEL);
- 	if (!info->groups)
- 		return -ENOMEM;
- 
-@@ -2528,7 +2520,7 @@ static int rockchip_pinctrl_parse_dt(struct platform_device *pdev,
- 
- 		ret = rockchip_pinctrl_parse_functions(child, info, i++);
- 		if (ret) {
--			dev_err(&pdev->dev, "failed to parse function\n");
-+			dev_err(dev, "failed to parse function\n");
- 			of_node_put(child);
- 			return ret;
- 		}
-@@ -2543,6 +2535,7 @@ static int rockchip_pinctrl_register(struct platform_device *pdev,
- 	struct pinctrl_desc *ctrldesc = &info->pctl;
- 	struct pinctrl_pin_desc *pindesc, *pdesc;
- 	struct rockchip_pin_bank *pin_bank;
-+	struct device *dev = &pdev->dev;
- 	int pin, bank, ret;
- 	int k;
- 
-@@ -2552,9 +2545,7 @@ static int rockchip_pinctrl_register(struct platform_device *pdev,
- 	ctrldesc->pmxops = &rockchip_pmx_ops;
- 	ctrldesc->confops = &rockchip_pinconf_ops;
- 
--	pindesc = devm_kcalloc(&pdev->dev,
--			       info->ctrl->nr_pins, sizeof(*pindesc),
--			       GFP_KERNEL);
-+	pindesc = devm_kcalloc(dev, info->ctrl->nr_pins, sizeof(*pindesc), GFP_KERNEL);
- 	if (!pindesc)
- 		return -ENOMEM;
- 
-@@ -2579,9 +2570,9 @@ static int rockchip_pinctrl_register(struct platform_device *pdev,
+ 	ret = regmap_read(regmap, reg, &data);
  	if (ret)
- 		return ret;
+@@ -1877,7 +1921,9 @@ static int rockchip_set_pull(struct rockchip_pin_bank *bank,
+ 	if (ctrl->type == RK3066B)
+ 		return pull ? -EINVAL : 0;
  
--	info->pctl_dev = devm_pinctrl_register(&pdev->dev, ctrldesc, info);
-+	info->pctl_dev = devm_pinctrl_register(dev, ctrldesc, info);
- 	if (IS_ERR(info->pctl_dev)) {
--		dev_err(&pdev->dev, "could not register pinctrl driver\n");
-+		dev_err(dev, "could not register pinctrl driver\n");
- 		return PTR_ERR(info->pctl_dev);
- 	}
+-	ctrl->pull_calc_reg(bank, pin_num, &regmap, &reg, &bit);
++	ret = ctrl->pull_calc_reg(bank, pin_num, &regmap, &reg, &bit);
++	if (ret)
++		return ret;
  
-@@ -2595,8 +2586,9 @@ static struct rockchip_pin_ctrl *rockchip_pinctrl_get_soc_data(
- 						struct rockchip_pinctrl *d,
- 						struct platform_device *pdev)
- {
-+	struct device *dev = &pdev->dev;
-+	struct device_node *node = dev->of_node;
- 	const struct of_device_id *match;
--	struct device_node *node = pdev->dev.of_node;
- 	struct rockchip_pin_ctrl *ctrl;
- 	struct rockchip_pin_bank *bank;
- 	int grf_offs, pmu_offs, drv_grf_offs, drv_pmu_offs, i, j;
-@@ -2648,7 +2640,7 @@ static struct rockchip_pin_ctrl *rockchip_pinctrl_get_soc_data(
- 						drv_pmu_offs : drv_grf_offs;
- 			}
+ 	switch (ctrl->type) {
+ 	case RK2928:
+diff --git a/drivers/pinctrl/pinctrl-rockchip.h b/drivers/pinctrl/pinctrl-rockchip.h
+index 98a01a616da6..59116e13758d 100644
+--- a/drivers/pinctrl/pinctrl-rockchip.h
++++ b/drivers/pinctrl/pinctrl-rockchip.h
+@@ -230,10 +230,10 @@ struct rockchip_pin_ctrl {
+ 	struct rockchip_mux_route_data *iomux_routes;
+ 	u32				niomux_routes;
  
--			dev_dbg(d->dev, "bank %d, iomux %d has iom_offset 0x%x drv_offset 0x%x\n",
-+			dev_dbg(dev, "bank %d, iomux %d has iom_offset 0x%x drv_offset 0x%x\n",
- 				i, j, iom->offset, drv->offset);
- 
- 			/*
-@@ -2757,8 +2749,8 @@ static int rockchip_pinctrl_probe(struct platform_device *pdev)
- {
- 	struct rockchip_pinctrl *info;
- 	struct device *dev = &pdev->dev;
-+	struct device_node *np = dev->of_node, *node;
- 	struct rockchip_pin_ctrl *ctrl;
--	struct device_node *np = pdev->dev.of_node, *node;
- 	struct resource *res;
- 	void __iomem *base;
- 	int ret;
-@@ -2795,8 +2787,8 @@ static int rockchip_pinctrl_probe(struct platform_device *pdev)
- 
- 		rockchip_regmap_config.max_register = resource_size(res) - 4;
- 		rockchip_regmap_config.name = "rockchip,pinctrl";
--		info->regmap_base = devm_regmap_init_mmio(&pdev->dev, base,
--						    &rockchip_regmap_config);
-+		info->regmap_base =
-+			devm_regmap_init_mmio(dev, base, &rockchip_regmap_config);
- 
- 		/* to check for the old dt-bindings */
- 		info->reg_size = resource_size(res);
-@@ -2808,12 +2800,10 @@ static int rockchip_pinctrl_probe(struct platform_device *pdev)
- 			if (IS_ERR(base))
- 				return PTR_ERR(base);
- 
--			rockchip_regmap_config.max_register =
--							resource_size(res) - 4;
-+			rockchip_regmap_config.max_register = resource_size(res) - 4;
- 			rockchip_regmap_config.name = "rockchip,pinctrl-pull";
--			info->regmap_pull = devm_regmap_init_mmio(&pdev->dev,
--						    base,
--						    &rockchip_regmap_config);
-+			info->regmap_pull =
-+				devm_regmap_init_mmio(dev, base, &rockchip_regmap_config);
- 		}
- 	}
- 
-@@ -2834,7 +2824,7 @@ static int rockchip_pinctrl_probe(struct platform_device *pdev)
- 
- 	ret = of_platform_populate(np, NULL, NULL, &pdev->dev);
- 	if (ret) {
--		dev_err(&pdev->dev, "failed to register gpio device\n");
-+		dev_err(dev, "failed to register gpio device\n");
- 		return ret;
- 	}
- 
+-	void	(*pull_calc_reg)(struct rockchip_pin_bank *bank,
++	int	(*pull_calc_reg)(struct rockchip_pin_bank *bank,
+ 				    int pin_num, struct regmap **regmap,
+ 				    int *reg, u8 *bit);
+-	void	(*drv_calc_reg)(struct rockchip_pin_bank *bank,
++	int	(*drv_calc_reg)(struct rockchip_pin_bank *bank,
+ 				    int pin_num, struct regmap **regmap,
+ 				    int *reg, u8 *bit);
+ 	int	(*schmitt_calc_reg)(struct rockchip_pin_bank *bank,
 -- 
 2.39.0
 
