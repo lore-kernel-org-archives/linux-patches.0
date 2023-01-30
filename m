@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 517FA3229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:17:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F64CC433EF;
-	Mon, 30 Jan 2023 14:17:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12926323C
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:17:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8959FC433EF;
+	Mon, 30 Jan 2023 14:17:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088271;
-	bh=OUpHPG1jDuMPWy5rGZzA37BYAiAnsdDeQyyDo4TKPGg=;
+	s=korg; t=1675088273;
+	bh=sx80RY1j1NA+28Zxc/ujMkWRNWUMKpnPcPs4BqBBH0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C56fRgRlKz+iELGfGgEi5cNi4dr9u48IBuPtjNJ6B16mdNYMhdH6z/wDYUgpzg15q
-	 hbJJBklppuD3oVweuRvcR0h7e2XV/WYyt9ALtlZ5ewQn4SZC3XwlFtFSg+nOoxSHwT
-	 OQKuP4ZVgUbh8bqTDE+WNdMQW0vyVOzJaSU5TB3c=
+	b=bKw0iHdcI0NYDlziC34upVHf5SHSKvJpULx8VBeQWhH6gyZspspY+q2ZHgCL2gWVb
+	 cc8HBavDqhEzLS45wWNx7lx8kC66B/ttM7zXZ9HSEbns0lNvwxO84FqBjq4DzIj78n
+	 ybHgDNaPK5CDMPJca+e2kyMP+Nogzq90yjj1ourk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Guo Ren <guoren@kernel.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 132/204] csky: Fix function name in csky_alignment() and die()
-Date: Mon, 30 Jan 2023 14:51:37 +0100
-Message-Id: <20230130134322.346038651@linuxfoundation.org>
+	Steev Klimaszewski <steev@kali.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH 5.15 166/204] EDAC/qcom: Do not pass llcc_driv_data as edac_device_ctl_infos pvt_info
+Date: Mon, 30 Jan 2023 14:52:11 +0100
+Message-Id: <20230130134323.866405310@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -37,61 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit 751971af2e3615dc5bd12674080bc795505fefeb upstream.
+commit 977c6ba624f24ae20cf0faee871257a39348d4a9 upstream.
 
-When building ARCH=csky defconfig:
+The memory for llcc_driv_data is allocated by the LLCC driver. But when
+it is passed as the private driver info to the EDAC core, it will get freed
+during the qcom_edac driver release. So when the qcom_edac driver gets probed
+again, it will try to use the freed data leading to the use-after-free bug.
 
-arch/csky/kernel/traps.c: In function 'die':
-arch/csky/kernel/traps.c:112:17: error: implicit declaration of function
-'make_dead_task' [-Werror=implicit-function-declaration]
-  112 |                 make_dead_task(SIGSEGV);
-      |                 ^~~~~~~~~~~~~~
+Hence, do not pass llcc_driv_data as pvt_info but rather reference it
+using the platform_data pointer in the qcom_edac driver.
 
-The function's name is make_task_dead(), change it so there is no more
-build error.
-
-Fixes: 0e25498f8cd4 ("exit: Add and use make_task_dead.")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Link: https://lkml.kernel.org/r/20211227184851.2297759-4-nathan@kernel.org
-Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 27450653f1db ("drivers: edac: Add EDAC driver support for QCOM SoCs")
+Reported-by: Steev Klimaszewski <steev@kali.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
+Cc: <stable@vger.kernel.org> # 4.20
+Link: https://lore.kernel.org/r/20230118150904.26913-4-manivannan.sadhasivam@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/csky/abiv1/alignment.c | 2 +-
- arch/csky/kernel/traps.c    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ drivers/edac/qcom_edac.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/arch/csky/abiv1/alignment.c b/arch/csky/abiv1/alignment.c
-index 5e2fb45d605c..2df115d0e210 100644
---- a/arch/csky/abiv1/alignment.c
-+++ b/arch/csky/abiv1/alignment.c
-@@ -294,7 +294,7 @@ void csky_alignment(struct pt_regs *regs)
- 				__func__, opcode, rz, rx, imm, addr);
- 		show_regs(regs);
- 		bust_spinlocks(0);
--		make_dead_task(SIGKILL);
-+		make_task_dead(SIGKILL);
- 	}
+--- a/drivers/edac/qcom_edac.c
++++ b/drivers/edac/qcom_edac.c
+@@ -252,7 +252,7 @@ clear:
+ static int
+ dump_syn_reg(struct edac_device_ctl_info *edev_ctl, int err_type, u32 bank)
+ {
+-	struct llcc_drv_data *drv = edev_ctl->pvt_info;
++	struct llcc_drv_data *drv = edev_ctl->dev->platform_data;
+ 	int ret;
  
- 	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *)addr);
-diff --git a/arch/csky/kernel/traps.c b/arch/csky/kernel/traps.c
-index b445c5aee220..6e426fba0119 100644
---- a/arch/csky/kernel/traps.c
-+++ b/arch/csky/kernel/traps.c
-@@ -109,7 +109,7 @@ void die(struct pt_regs *regs, const char *str)
- 	if (panic_on_oops)
- 		panic("Fatal exception");
- 	if (ret != NOTIFY_STOP)
--		make_dead_task(SIGSEGV);
-+		make_task_dead(SIGSEGV);
- }
+ 	ret = dump_syn_reg_values(drv, bank, err_type);
+@@ -289,7 +289,7 @@ static irqreturn_t
+ llcc_ecc_irq_handler(int irq, void *edev_ctl)
+ {
+ 	struct edac_device_ctl_info *edac_dev_ctl = edev_ctl;
+-	struct llcc_drv_data *drv = edac_dev_ctl->pvt_info;
++	struct llcc_drv_data *drv = edac_dev_ctl->dev->platform_data;
+ 	irqreturn_t irq_rc = IRQ_NONE;
+ 	u32 drp_error, trp_error, i;
+ 	int ret;
+@@ -358,7 +358,6 @@ static int qcom_llcc_edac_probe(struct p
+ 	edev_ctl->dev_name = dev_name(dev);
+ 	edev_ctl->ctl_name = "llcc";
+ 	edev_ctl->panic_on_ue = LLCC_ERP_PANIC_ON_UE;
+-	edev_ctl->pvt_info = llcc_driv_data;
  
- void do_trap(struct pt_regs *regs, int signo, int code, unsigned long addr)
--- 
-2.39.0
-
+ 	rc = edac_device_add_device(edev_ctl);
+ 	if (rc)
 
 
