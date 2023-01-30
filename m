@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 11E4A28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:07:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66ED8C433D2;
-	Mon, 30 Jan 2023 14:07:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E170828EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:07:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 559A7C433D2;
+	Mon, 30 Jan 2023 14:07:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087658;
-	bh=C4+1NCGshatBTcXabSWAElGtsT0hVdZRKnXYKE57Q4c=;
+	s=korg; t=1675087661;
+	bh=fpReE+b5+GjmPdd6xk2PqV/Ar4GK3VsfGhgIRkBBu68=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dTIfvRczBdG5gj10m5BmHvZLMb38Y2Fn6n+VFugvXlKjRD7DY05IpIhhMng1MdyiX
-	 QH2ZjHWrhF1wZrsLgxISrMRXL8t1b6R2oDxvnUyCHfELFFiAotGdgspn9s3Nxm7Mm0
-	 GT1MDx8LUEva7UY4O0hH7IC2aUXLLIOFw+Fo1eGU=
+	b=v4+kaJji0j6IGSjCG6TuN1D1g1QsXZP4T/JI3wHzNdRrVY49Ta7Z3ol/BGRAaCMe2
+	 pDhgs0sEb/gbzX4+tndKmh0/CVohbh4lrk8tTdXVdExqksui7fH07ntkZV6IOR475G
+	 lIRm47nhgem0cmIPJla2BnkXlZVThoOuLBL+5XfQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Liao Chang <liaochang1@huawei.com>,
+	Guo Ren <guoren@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 282/313] sctp: fail if no bound addresses can be used for a given scope
-Date: Mon, 30 Jan 2023 14:51:57 +0100
-Message-Id: <20230130134349.867726189@linuxfoundation.org>
+Subject: [PATCH 6.1 283/313] riscv/kprobe: Fix instruction simulation of JALR
+Date: Mon, 30 Jan 2023 14:51:58 +0100
+Message-Id: <20230130134349.908883206@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -37,66 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+From: Liao Chang <liaochang1@huawei.com>
 
-[ Upstream commit 458e279f861d3f61796894cd158b780765a1569f ]
+[ Upstream commit ca0254998be4d74cf6add70ccfab0d2dbd362a10 ]
 
-Currently, if you bind the socket to something like:
-        servaddr.sin6_family = AF_INET6;
-        servaddr.sin6_port = htons(0);
-        servaddr.sin6_scope_id = 0;
-        inet_pton(AF_INET6, "::1", &servaddr.sin6_addr);
+Set kprobe at 'jalr 1140(ra)' of vfs_write results in the following
+crash:
 
-And then request a connect to:
-        connaddr.sin6_family = AF_INET6;
-        connaddr.sin6_port = htons(20000);
-        connaddr.sin6_scope_id = if_nametoindex("lo");
-        inet_pton(AF_INET6, "fe88::1", &connaddr.sin6_addr);
+[   32.092235] Unable to handle kernel access to user memory without uaccess routines at virtual address 00aaaaaad77b1170
+[   32.093115] Oops [#1]
+[   32.093251] Modules linked in:
+[   32.093626] CPU: 0 PID: 135 Comm: ftracetest Not tainted 6.2.0-rc2-00013-gb0aa5e5df0cb-dirty #16
+[   32.093985] Hardware name: riscv-virtio,qemu (DT)
+[   32.094280] epc : ksys_read+0x88/0xd6
+[   32.094855]  ra : ksys_read+0xc0/0xd6
+[   32.095016] epc : ffffffff801cda80 ra : ffffffff801cdab8 sp : ff20000000d7bdc0
+[   32.095227]  gp : ffffffff80f14000 tp : ff60000080f9cb40 t0 : ffffffff80f13e80
+[   32.095500]  t1 : ffffffff8000c29c t2 : ffffffff800dbc54 s0 : ff20000000d7be60
+[   32.095716]  s1 : 0000000000000000 a0 : ffffffff805a64ae a1 : ffffffff80a83708
+[   32.095921]  a2 : ffffffff80f160a0 a3 : 0000000000000000 a4 : f229b0afdb165300
+[   32.096171]  a5 : f229b0afdb165300 a6 : ffffffff80eeebd0 a7 : 00000000000003ff
+[   32.096411]  s2 : ff6000007ff76800 s3 : fffffffffffffff7 s4 : 00aaaaaad77b1170
+[   32.096638]  s5 : ffffffff80f160a0 s6 : ff6000007ff76800 s7 : 0000000000000030
+[   32.096865]  s8 : 00ffffffc3d97be0 s9 : 0000000000000007 s10: 00aaaaaad77c9410
+[   32.097092]  s11: 0000000000000000 t3 : ffffffff80f13e48 t4 : ffffffff8000c29c
+[   32.097317]  t5 : ffffffff8000c29c t6 : ffffffff800dbc54
+[   32.097505] status: 0000000200000120 badaddr: 00aaaaaad77b1170 cause: 000000000000000d
+[   32.098011] [<ffffffff801cdb72>] ksys_write+0x6c/0xd6
+[   32.098222] [<ffffffff801cdc06>] sys_write+0x2a/0x38
+[   32.098405] [<ffffffff80003c76>] ret_from_syscall+0x0/0x2
 
-What the stack does is:
- - bind the socket
- - create a new asoc
- - to handle the connect
-   - copy the addresses that can be used for the given scope
-   - try to connect
+Since the rs1 and rd might be the same one, such as 'jalr 1140(ra)',
+hence it requires obtaining the target address from rs1 followed by
+updating rd.
 
-But the copy returns 0 addresses, and the effect is that it ends up
-trying to connect as if the socket wasn't bound, which is not the
-desired behavior. This unexpected behavior also allows KASLR leaks
-through SCTP diag interface.
-
-The fix here then is, if when trying to copy the addresses that can
-be used for the scope used in connect() it returns 0 addresses, bail
-out. This is what TCP does with a similar reproducer.
-
-Reported-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/9fcd182f1099f86c6661f3717f63712ddd1c676c.1674496737.git.marcelo.leitner@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c22b0bcb1dd0 ("riscv: Add kprobes supported")
+Signed-off-by: Liao Chang <liaochang1@huawei.com>
+Reviewed-by: Guo Ren <guoren@kernel.org>
+Link: https://lore.kernel.org/r/20230116064342.2092136-1-liaochang1@huawei.com
+[Palmer: Pick Guo's cleanup]
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/bind_addr.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/riscv/kernel/probes/simulate-insn.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/bind_addr.c b/net/sctp/bind_addr.c
-index 59e653b528b1..6b95d3ba8fe1 100644
---- a/net/sctp/bind_addr.c
-+++ b/net/sctp/bind_addr.c
-@@ -73,6 +73,12 @@ int sctp_bind_addr_copy(struct net *net, struct sctp_bind_addr *dest,
- 		}
- 	}
+diff --git a/arch/riscv/kernel/probes/simulate-insn.c b/arch/riscv/kernel/probes/simulate-insn.c
+index d73e96f6ed7c..a20568bd1f1a 100644
+--- a/arch/riscv/kernel/probes/simulate-insn.c
++++ b/arch/riscv/kernel/probes/simulate-insn.c
+@@ -71,11 +71,11 @@ bool __kprobes simulate_jalr(u32 opcode, unsigned long addr, struct pt_regs *reg
+ 	u32 rd_index = (opcode >> 7) & 0x1f;
+ 	u32 rs1_index = (opcode >> 15) & 0x1f;
  
-+	/* If somehow no addresses were found that can be used with this
-+	 * scope, it's an error.
-+	 */
-+	if (list_empty(&dest->address_list))
-+		error = -ENETUNREACH;
-+
- out:
- 	if (error)
- 		sctp_bind_addr_clean(dest);
+-	ret = rv_insn_reg_set_val(regs, rd_index, addr + 4);
++	ret = rv_insn_reg_get_val(regs, rs1_index, &base_addr);
+ 	if (!ret)
+ 		return ret;
+ 
+-	ret = rv_insn_reg_get_val(regs, rs1_index, &base_addr);
++	ret = rv_insn_reg_set_val(regs, rd_index, addr + 4);
+ 	if (!ret)
+ 		return ret;
+ 
 -- 
 2.39.0
 
