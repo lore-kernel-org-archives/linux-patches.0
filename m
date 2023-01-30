@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2AEF428EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:09:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98F6BC4339C;
-	Mon, 30 Jan 2023 14:09:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5590A28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:09:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF13AC433D2;
+	Mon, 30 Jan 2023 14:09:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087792;
-	bh=U72pPCZV2lrwQaUZXzcx+/mAkHFkSN3oaE0EcKSMo4U=;
+	s=korg; t=1675087795;
+	bh=QLX6WgW1wIuVM837j38lDg2WUtVYMLuCnvNM1srsRJk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=llY7lDgKc29p6A3SWy4WBze663rbR3B7gO2bah/5+XWqjkFMgRyW59mXmV31OJvDy
-	 OxKC0qOL+8MkLUsQNezqqdlNr80BJNfB01RRSNb0fVwJi4XlEjk4OL/ZEwjmU1vXWB
-	 83OAg219Z0ZdWQHrkgcUXYWuz0Fe/NyoCx1NzmH4=
+	b=UPINpBPIbJJUzsQJUhwlKcgjSvqFvXHOIfiYimFLG7lOShrwgg6E210nItf9so0wY
+	 9Fg2jmbbtIsuwMooJiFSlDwfUolwuU3btKmcYZqLQ+xhWXWJonAX14xZbiHoZYGcIJ
+	 JRWtBZjZdbkM7gUm652pvjRRLS+/aAcXiQrAj82M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jayesh Choudhary <j-choudhary@ti.com>,
-	Peter Ujfalusi <peter.ujfalusi@gmail.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 004/204] dmaengine: ti: k3-udma: Do conditional decrement of UDMA_CHAN_RT_PEER_BCNT_REG
-Date: Mon, 30 Jan 2023 14:49:29 +0100
-Message-Id: <20230130134316.509649230@linuxfoundation.org>
+Subject: [PATCH 5.15 013/204] soc: imx8m: Fix incorrect check for of_clk_get_by_name()
+Date: Mon, 30 Jan 2023 14:49:38 +0100
+Message-Id: <20230130134316.887623406@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -36,45 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jayesh Choudhary <j-choudhary@ti.com>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit efab25894a41a920d9581183741e7fadba00719c ]
+[ Upstream commit 490748874ebf1875420fc29b335bba2075dd1b5e ]
 
-PSIL_EP_NATIVE endpoints may not have PEER registers for BCNT and thus
-udma_decrement_byte_counters() should not try to decrement these counters.
-This fixes the issue of crypto IPERF testing where the client side (EVM)
-hangs without transfer of packets to the server side, seen since this
-function was added.
+of_clk_get_by_name() returns error pointers instead of NULL.
+Use IS_ERR() checks the return value to catch errors.
 
-Fixes: 7c94dcfa8fcf ("dmaengine: ti: k3-udma: Reset UDMA_CHAN_RT byte counters to prevent overflow")
-Signed-off-by: Jayesh Choudhary <j-choudhary@ti.com>
-Acked-by: Peter Ujfalusi <peter.ujfalusi@gmail.com>
-Link: https://lore.kernel.org/r/20221128085005.489964-1-j-choudhary@ti.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Fixes: 836fb30949d9 ("soc: imx8m: Enable OCOTP clock before reading the register")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/ti/k3-udma.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/soc/imx/soc-imx8m.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/dma/ti/k3-udma.c b/drivers/dma/ti/k3-udma.c
-index 75f2a0006c73..d796e50dfe99 100644
---- a/drivers/dma/ti/k3-udma.c
-+++ b/drivers/dma/ti/k3-udma.c
-@@ -760,11 +760,12 @@ static void udma_decrement_byte_counters(struct udma_chan *uc, u32 val)
- 	if (uc->desc->dir == DMA_DEV_TO_MEM) {
- 		udma_rchanrt_write(uc, UDMA_CHAN_RT_BCNT_REG, val);
- 		udma_rchanrt_write(uc, UDMA_CHAN_RT_SBCNT_REG, val);
--		udma_rchanrt_write(uc, UDMA_CHAN_RT_PEER_BCNT_REG, val);
-+		if (uc->config.ep_type != PSIL_EP_NATIVE)
-+			udma_rchanrt_write(uc, UDMA_CHAN_RT_PEER_BCNT_REG, val);
- 	} else {
- 		udma_tchanrt_write(uc, UDMA_CHAN_RT_BCNT_REG, val);
- 		udma_tchanrt_write(uc, UDMA_CHAN_RT_SBCNT_REG, val);
--		if (!uc->bchan)
-+		if (!uc->bchan && uc->config.ep_type != PSIL_EP_NATIVE)
- 			udma_tchanrt_write(uc, UDMA_CHAN_RT_PEER_BCNT_REG, val);
+diff --git a/drivers/soc/imx/soc-imx8m.c b/drivers/soc/imx/soc-imx8m.c
+index 28144c699b0c..32ed9dc88e45 100644
+--- a/drivers/soc/imx/soc-imx8m.c
++++ b/drivers/soc/imx/soc-imx8m.c
+@@ -66,8 +66,8 @@ static u32 __init imx8mq_soc_revision(void)
+ 	ocotp_base = of_iomap(np, 0);
+ 	WARN_ON(!ocotp_base);
+ 	clk = of_clk_get_by_name(np, NULL);
+-	if (!clk) {
+-		WARN_ON(!clk);
++	if (IS_ERR(clk)) {
++		WARN_ON(IS_ERR(clk));
+ 		return 0;
  	}
- }
+ 
 -- 
 2.39.0
 
