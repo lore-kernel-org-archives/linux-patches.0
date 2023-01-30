@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A33063229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:19:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00317C4339C;
-	Mon, 30 Jan 2023 14:18:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64D83229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:19:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3B6C433D2;
+	Mon, 30 Jan 2023 14:19:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088340;
-	bh=u0n9NZ4jo00qux4YYb48cj2+ZzRuRyVk1GCkKeK4zdw=;
+	s=korg; t=1675088343;
+	bh=lN6k3dcEO1OI6t8RlQqlMqMPRbyUdFnqj+8KhAzMYSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HoWA6GnL2JDKRsj/yrlgqmhfrntBetu5zkO4N6gBPvwIgY1H48EmMbd7kXOtBm3GO
-	 XoUV1pHZIWbVIfwuAOs+6MNGzsZ5vp9a+A0rLU5b+9SzQbz0llEsg7JOVbij2Hx7AF
-	 b18P+BKpzJ6kc0DEqAwlPCmy0aZJMaswMzJZ8LU4=
+	b=GpC1kUq/4ql5yARxeZtDRkshlOLnDQN/C9zZX4//bmZOf0gQi9esfpRVjOWIkUcza
+	 QiIn36Jyzp7Z7kQ4VQX3yqwCjX2TFbwgSM1fYZS/hovIvsnkSdjWnM1WL1H27+n3kH
+	 5llXfvM73JYv+SDhZtLQUVyChTTI3A84akh63QkE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	"David S. Miller" <davem@davemloft.net>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 191/204] net: mctp: mark socks as dead on unhash, prevent re-add
-Date: Mon, 30 Jan 2023 14:52:36 +0100
-Message-Id: <20230130134324.959799091@linuxfoundation.org>
+Subject: [PATCH 5.15 192/204] thermal: intel: int340x: Add locking to int340x_thermal_get_trip_type()
+Date: Mon, 30 Jan 2023 14:52:37 +0100
+Message-Id: <20230130134325.004432855@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,64 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Kerr <jk@codeconstruct.com.au>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit b98e1a04e27fddfdc808bf46fe78eca30db89ab3 ]
+[ Upstream commit acd7e9ee57c880b99671dd99680cb707b7b5b0ee ]
 
-Once a socket has been unhashed, we want to prevent it from being
-re-used in a sk_key entry as part of a routing operation.
+In order to prevent int340x_thermal_get_trip_type() from possibly
+racing with int340x_thermal_read_trips() invoked by int3403_notify()
+add locking to it in analogy with int340x_thermal_get_trip_temp().
 
-This change marks the sk as SOCK_DEAD on unhash, which prevents addition
-into the net's key list.
-
-We need to do this during the key add path, rather than key lookup, as
-we release the net keys_lock between those operations.
-
-Fixes: 4a992bbd3650 ("mctp: Implement message fragmentation & reassembly")
-Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 6757a7abe47b ("thermal: intel: int340x: Protect trip temperature from concurrent updates")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/af_mctp.c | 1 +
- net/mctp/route.c   | 6 ++++++
- 2 files changed, 7 insertions(+)
+ .../intel/int340x_thermal/int340x_thermal_zone.c       | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/net/mctp/af_mctp.c b/net/mctp/af_mctp.c
-index cbbde0f73a08..a77fafbc31cf 100644
---- a/net/mctp/af_mctp.c
-+++ b/net/mctp/af_mctp.c
-@@ -288,6 +288,7 @@ static void mctp_sk_unhash(struct sock *sk)
+diff --git a/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c b/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
+index 852f6c579af5..0a4eaa307156 100644
+--- a/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
++++ b/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
+@@ -81,11 +81,13 @@ static int int340x_thermal_get_trip_type(struct thermal_zone_device *zone,
+ 					 enum thermal_trip_type *type)
+ {
+ 	struct int34x_thermal_zone *d = zone->devdata;
+-	int i;
++	int i, ret = 0;
  
- 		kfree_rcu(key, rcu);
- 	}
-+	sock_set_flag(sk, SOCK_DEAD);
- 	spin_unlock_irqrestore(&net->mctp.keys_lock, flags);
+ 	if (d->override_ops && d->override_ops->get_trip_type)
+ 		return d->override_ops->get_trip_type(zone, trip, type);
  
- 	synchronize_rcu();
-diff --git a/net/mctp/route.c b/net/mctp/route.c
-index 6aebb4a3eded..89e67399249b 100644
---- a/net/mctp/route.c
-+++ b/net/mctp/route.c
-@@ -135,6 +135,11 @@ static int mctp_key_add(struct mctp_sk_key *key, struct mctp_sock *msk)
- 
- 	spin_lock_irqsave(&net->mctp.keys_lock, flags);
- 
-+	if (sock_flag(&msk->sk, SOCK_DEAD)) {
-+		rc = -EINVAL;
-+		goto out_unlock;
-+	}
++	mutex_lock(&d->trip_mutex);
 +
- 	hlist_for_each_entry(tmp, &net->mctp.keys, hlist) {
- 		if (mctp_key_match(tmp, key->local_addr, key->peer_addr,
- 				   key->tag)) {
-@@ -148,6 +153,7 @@ static int mctp_key_add(struct mctp_sk_key *key, struct mctp_sock *msk)
- 		hlist_add_head(&key->sklist, &msk->keys);
+ 	if (trip < d->aux_trip_nr)
+ 		*type = THERMAL_TRIP_PASSIVE;
+ 	else if (trip == d->crt_trip_id)
+@@ -103,10 +105,12 @@ static int int340x_thermal_get_trip_type(struct thermal_zone_device *zone,
+ 			}
+ 		}
+ 		if (i == INT340X_THERMAL_MAX_ACT_TRIP_COUNT)
+-			return -EINVAL;
++			ret = -EINVAL;
  	}
  
-+out_unlock:
- 	spin_unlock_irqrestore(&net->mctp.keys_lock, flags);
+-	return 0;
++	mutex_unlock(&d->trip_mutex);
++
++	return ret;
+ }
  
- 	return rc;
+ static int int340x_thermal_set_trip_temp(struct thermal_zone_device *zone,
 -- 
 2.39.0
 
