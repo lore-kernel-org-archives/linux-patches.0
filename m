@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E751E28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:03:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD44C433EF;
-	Mon, 30 Jan 2023 14:03:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C866B28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:03:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49D7CC433EF;
+	Mon, 30 Jan 2023 14:03:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087406;
-	bh=PErPhc6FwlK5m7pwExcif+u7Q15JPcp5bbO4+O7OAVo=;
+	s=korg; t=1675087409;
+	bh=l1H+fOC0Nc1Nao39+ApHRgz7glpZpqmOr+cw/n12dh0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=blTAR46eWoy2ZooqtuDcdD20flGVxAju90LDdvcPoOfhbMHNBByzNS2JZaxY4dHjG
-	 25xlovnfsERflWgYvdb4HzbbxKNLjBsEiI8GijPrsIflKz9iU9qSg0Fz/KCNlCSE/w
-	 jde8j8b2/+xTAJxo8SA6KQ+IaCAT9smzXMNUMLJI=
+	b=ID+A6vR2lPJlOt+MdC08fx/9WPgfRfW66HnkXqfSpvv+1VsN+6U581KTrhQqX1FBH
+	 hPT5KuZ6TK43WWgyomhaujudZgB2uh6YnmLPVtuJt+VWD8AGMyz7NVrto2ASC52sKe
+	 +Yc4pifSi4xOe1qaHWRlioCecJo1273moeAS4a6g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Archie Pusaka <apusaka@chromium.org>,
+	Abhishek Pandit-Subedi <abhishekpandit@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 196/313] arm64: efi: Account for the EFI runtime stack in stack unwinder
-Date: Mon, 30 Jan 2023 14:50:31 +0100
-Message-Id: <20230130134345.829974922@linuxfoundation.org>
+Subject: [PATCH 6.1 197/313] Bluetooth: hci_sync: cancel cmd_timer if hci_open failed
+Date: Mon, 30 Jan 2023 14:50:32 +0100
+Message-Id: <20230130134345.879993697@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,89 +37,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Archie Pusaka <apusaka@chromium.org>
 
-[ Upstream commit 7ea55715c421d22c1b63f7129cae6a654091b695 ]
+commit 97dfaf073f5881c624856ef293be307b6166115c upstream.
 
-The EFI runtime services run from a dedicated stack now, and so the
-stack unwinder needs to be informed about this.
+If a command is already sent, we take care of freeing it, but we
+also need to cancel the timeout as well.
 
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Archie Pusaka <apusaka@chromium.org>
+Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/stacktrace.h | 15 +++++++++++++++
- arch/arm64/kernel/stacktrace.c      | 12 ++++++++++++
- 2 files changed, 27 insertions(+)
+ net/bluetooth/hci_sync.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/arm64/include/asm/stacktrace.h b/arch/arm64/include/asm/stacktrace.h
-index 5a0edb064ea4..327cdcfcb1db 100644
---- a/arch/arm64/include/asm/stacktrace.h
-+++ b/arch/arm64/include/asm/stacktrace.h
-@@ -104,4 +104,19 @@ static inline struct stack_info stackinfo_get_sdei_critical(void)
- #define stackinfo_get_sdei_critical()	stackinfo_get_unknown()
- #endif
+diff --git a/net/bluetooth/hci_sync.c b/net/bluetooth/hci_sync.c
+index 67dd4c9fa4a5..3eec688a88a9 100644
+--- a/net/bluetooth/hci_sync.c
++++ b/net/bluetooth/hci_sync.c
+@@ -4703,6 +4703,7 @@ int hci_dev_open_sync(struct hci_dev *hdev)
+ 			hdev->flush(hdev);
  
-+#ifdef CONFIG_EFI
-+extern u64 *efi_rt_stack_top;
-+
-+static inline struct stack_info stackinfo_get_efi(void)
-+{
-+	unsigned long high = (u64)efi_rt_stack_top;
-+	unsigned long low = high - THREAD_SIZE;
-+
-+	return (struct stack_info) {
-+		.low = low,
-+		.high = high,
-+	};
-+}
-+#endif
-+
- #endif	/* __ASM_STACKTRACE_H */
-diff --git a/arch/arm64/kernel/stacktrace.c b/arch/arm64/kernel/stacktrace.c
-index 117e2c180f3c..83154303e682 100644
---- a/arch/arm64/kernel/stacktrace.c
-+++ b/arch/arm64/kernel/stacktrace.c
-@@ -5,6 +5,7 @@
-  * Copyright (C) 2012 ARM Ltd.
-  */
- #include <linux/kernel.h>
-+#include <linux/efi.h>
- #include <linux/export.h>
- #include <linux/ftrace.h>
- #include <linux/sched.h>
-@@ -12,6 +13,7 @@
- #include <linux/sched/task_stack.h>
- #include <linux/stacktrace.h>
- 
-+#include <asm/efi.h>
- #include <asm/irq.h>
- #include <asm/stack_pointer.h>
- #include <asm/stacktrace.h>
-@@ -186,6 +188,13 @@ void show_stack(struct task_struct *tsk, unsigned long *sp, const char *loglvl)
- 			: stackinfo_get_unknown();		\
- 	})
- 
-+#define STACKINFO_EFI						\
-+	({							\
-+		((task == current) && current_in_efi())		\
-+			? stackinfo_get_efi()			\
-+			: stackinfo_get_unknown();		\
-+	})
-+
- noinline noinstr void arch_stack_walk(stack_trace_consume_fn consume_entry,
- 			      void *cookie, struct task_struct *task,
- 			      struct pt_regs *regs)
-@@ -199,6 +208,9 @@ noinline noinstr void arch_stack_walk(stack_trace_consume_fn consume_entry,
- #if defined(CONFIG_VMAP_STACK) && defined(CONFIG_ARM_SDE_INTERFACE)
- 		STACKINFO_SDEI(normal),
- 		STACKINFO_SDEI(critical),
-+#endif
-+#ifdef CONFIG_EFI
-+		STACKINFO_EFI,
- #endif
- 	};
- 	struct unwind_state state = {
+ 		if (hdev->sent_cmd) {
++			cancel_delayed_work_sync(&hdev->cmd_timer);
+ 			kfree_skb(hdev->sent_cmd);
+ 			hdev->sent_cmd = NULL;
+ 		}
 -- 
 2.39.0
 
