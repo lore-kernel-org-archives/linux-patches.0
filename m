@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE9A528EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:15:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F103C4339B;
-	Mon, 30 Jan 2023 14:15:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7720028EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:15:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01D7C433D2;
+	Mon, 30 Jan 2023 14:15:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088143;
-	bh=Mc4MWRN7tzO1+3uBygRSvBjRFmkGqfd9XzSUxBgzD2g=;
+	s=korg; t=1675088146;
+	bh=9wYsGPt01SM5B7DLK6/+TO3cr8wzvrNlWYrTwa8gmwE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2iSyADvtBA2QW9W+Gg/giD5TbW/CQ/ajWT2FvB2mcy4dGFEf4epedoOQxobdj74ud
-	 gh/RTjbo60p6jp8JHfKDix4+GxZN/ZWSYmJoepIp4y/yuuABuw4sKloBuuMvshtgtv
-	 CXc+/umyBF7C8nKxGisnC38EJPcjzz21BEVmfLKU=
+	b=HbzkQrgkLH45jeCIxDMhue9LdHNHDUlrnN9NI9ErA9WvJ2l4sOidmR96kbOO3pafo
+	 HkG4D2QRAED87GjdIq/ZE2x4IGmd9Yo9QvgbZbV/xViIq2WEiuwLFY6umXtNYf02iS
+	 kttWXAMGcQCS1As2En3S9Dxqfx9IsotOdKpXpM6Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Eric Biggers <ebiggers@google.com>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 129/204] objtool: Add a missing comma to avoid string concatenation
-Date: Mon, 30 Jan 2023 14:51:34 +0100
-Message-Id: <20230130134322.202689226@linuxfoundation.org>
+Subject: [PATCH 5.15 103/204] s390/debug: add _ASM_S390_ prefix to header guard
+Date: Mon, 30 Jan 2023 14:51:08 +0100
+Message-Id: <20230130134320.865538768@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -36,45 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric W. Biederman <ebiederm@xmission.com>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-commit 1fb466dff904e4a72282af336f2c355f011eec61 upstream.
+[ Upstream commit 0d4d52361b6c29bf771acd4fa461f06d78fb2fac ]
 
-Recently the kbuild robot reported two new errors:
+Using DEBUG_H without a prefix is very generic and inconsistent with
+other header guards in arch/s390/include/asm. In fact it collides with
+the same name in the ath9k wireless driver though that depends on !S390
+via disabled wireless support. Let's just use a consistent header guard
+name and prevent possible future trouble.
 
->> lib/kunit/kunit-example-test.o: warning: objtool: .text.unlikely: unexpected end of section
->> arch/x86/kernel/dumpstack.o: warning: objtool: oops_end() falls through to next function show_opcodes()
-
-I don't know why they did not occur in my test setup but after digging
-it I realized I had accidentally dropped a comma in
-tools/objtool/check.c when I renamed rewind_stack_do_exit to
-rewind_stack_and_make_dead.
-
-Add that comma back to fix objtool errors.
-
-Link: https://lkml.kernel.org/r/202112140949.Uq5sFKR1-lkp@intel.com
-Fixes: 0e25498f8cd4 ("exit: Add and use make_task_dead.")
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: "Eric W. Biederman" <ebiederm@xmission.com>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/objtool/check.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/include/asm/debug.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/objtool/check.c b/tools/objtool/check.c
-index 82ade76dcef2..758c0ba8de35 100644
---- a/tools/objtool/check.c
-+++ b/tools/objtool/check.c
-@@ -177,7 +177,7 @@ static bool __dead_end_function(struct objtool_file *file, struct symbol *func,
- 		"fortify_panic",
- 		"usercopy_abort",
- 		"machine_real_restart",
--		"rewind_stack_and_make_dead"
-+		"rewind_stack_and_make_dead",
- 		"kunit_try_catch_throw",
- 		"xen_start_kernel",
- 		"cpu_bringup_and_idle",
+diff --git a/arch/s390/include/asm/debug.h b/arch/s390/include/asm/debug.h
+index 19a55e1e3a0c..5fc91a90657e 100644
+--- a/arch/s390/include/asm/debug.h
++++ b/arch/s390/include/asm/debug.h
+@@ -4,8 +4,8 @@
+  *
+  *    Copyright IBM Corp. 1999, 2020
+  */
+-#ifndef DEBUG_H
+-#define DEBUG_H
++#ifndef _ASM_S390_DEBUG_H
++#define _ASM_S390_DEBUG_H
+ 
+ #include <linux/string.h>
+ #include <linux/spinlock.h>
+@@ -487,4 +487,4 @@ void debug_register_static(debug_info_t *id, int pages_per_area, int nr_areas);
+ 
+ #endif /* MODULE */
+ 
+-#endif /* DEBUG_H */
++#endif /* _ASM_S390_DEBUG_H */
 -- 
 2.39.0
 
