@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5839228EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:12:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7F3DC433EF;
-	Mon, 30 Jan 2023 14:12:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B9B828EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:12:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B541FC433EF;
+	Mon, 30 Jan 2023 14:12:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087933;
-	bh=8p/xeOIoapy+wEU9yglndDAsvBh0eaGTdbj5+Yohxgw=;
+	s=korg; t=1675087936;
+	bh=5Ql//xyiGJLl8Ga0Js8lkb5AZkXI24aaadvwxvQXQwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WVECyNbSYJzOilwKsttMR8/tVCtao67LO85zLJ4z5v/dAQ3hfApW8LfNzjSlxsCc1
-	 4GBLV0e4clP/soEIWBB/v0hAq9S3HcYjIxcpUHrHQGfOy+xjcT/TeFvO/D/T4nJYxf
-	 stH9k4MxhdBfd4sH4IKwkRGf8OxuSpv5kzab/HjY=
+	b=xLKtAUrN6YyiViXyh0iJaKcJvhlYdVD6S+6YUWvEWOIT3plXTymMN+yOCWC6/9m6/
+	 eQIBWkOuLt5axDUHzrdHg6dFXD4VsB1vD3ozupTyAKzioo/VTTwGGIm8Xaay5gDopw
+	 6/lBXA9pV5da/OaFr2OOU0Cquj/HjmWcTDwjevCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Pietro Borrello <borrello@diag.uniroma1.it>,
 	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 058/204] HID: check empty report_list in hid_validate_values()
-Date: Mon, 30 Jan 2023 14:50:23 +0100
-Message-Id: <20230130134318.867399178@linuxfoundation.org>
+Subject: [PATCH 5.15 059/204] HID: check empty report_list in bigben_probe()
+Date: Mon, 30 Jan 2023 14:50:24 +0100
+Message-Id: <20230130134318.907590184@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -37,38 +37,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit b12fece4c64857e5fab4290bf01b2e0317a88456 ]
+[ Upstream commit c7bf714f875531f227f2ef1fdcc8f4d44e7c7d9d ]
 
-Add a check for empty report_list in hid_validate_values().
+Add a check for empty report_list in bigben_probe().
 The missing check causes a type confusion when issuing a list_entry()
 on an empty report_list.
 The problem is caused by the assumption that the device must
 have valid report_list. While this will be true for all normal HID
 devices, a suitably malicious device can violate the assumption.
 
-Fixes: 1b15d2e5b807 ("HID: core: fix validation of report id 0")
+Fixes: 256a90ed9e46 ("HID: hid-bigbenff: driver for BigBen Interactive PS3OFMINIPAD gamepad")
 Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
 Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/hid/hid-bigbenff.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index ef9c799fa371..2e475bd426b8 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -988,8 +988,8 @@ struct hid_report *hid_validate_values(struct hid_device *hid,
- 		 * Validating on id 0 means we should examine the first
- 		 * report in the list.
- 		 */
--		report = list_entry(
--				hid->report_enum[type].report_list.next,
-+		report = list_first_entry_or_null(
-+				&hid->report_enum[type].report_list,
- 				struct hid_report, list);
- 	} else {
- 		report = hid->report_enum[type].report_id_hash[id];
+diff --git a/drivers/hid/hid-bigbenff.c b/drivers/hid/hid-bigbenff.c
+index e8c5e3ac9fff..e8b16665860d 100644
+--- a/drivers/hid/hid-bigbenff.c
++++ b/drivers/hid/hid-bigbenff.c
+@@ -344,6 +344,11 @@ static int bigben_probe(struct hid_device *hid,
+ 	}
+ 
+ 	report_list = &hid->report_enum[HID_OUTPUT_REPORT].report_list;
++	if (list_empty(report_list)) {
++		hid_err(hid, "no output report found\n");
++		error = -ENODEV;
++		goto error_hw_stop;
++	}
+ 	bigben->report = list_entry(report_list->next,
+ 		struct hid_report, list);
+ 
 -- 
 2.39.0
 
