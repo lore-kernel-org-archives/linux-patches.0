@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F341B3229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:24:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 59030C433EF;
-	Mon, 30 Jan 2023 14:24:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 025B43229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:24:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52168C433EF;
+	Mon, 30 Jan 2023 14:24:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088692;
-	bh=xyfc8lTCVMvnK7t/kwr12+yqcFAAvsnSl1Jn034eCQs=;
+	s=korg; t=1675088695;
+	bh=QY3P6+9xFiKRCIVEw6awfLAZZfy2UItLKnbxaWuwuMY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=koh8sk8TEWP9ojv5BTCMmYbD/2qyB31XF6Nzos4DyfIKmgqhax4UXXycB/CUezBwt
-	 q8iNDWXj+NGpx5RHvpEhdSk4X/EdBwKmt29aL1McLmLHwZpTaSEzonpEMFwjnFl3w+
-	 D4SkiXS0XqsDAL8YVD6FV2c1dbrcyV+70piZr/Ho=
+	b=cfI9XY/50ED0Tl/h5m4J4oHS/mdPWIhIIgZr7Hm0HNcBj0NPnMxml4GTiYOV314S4
+	 a/R3aTgLKNtxTR6Hf20PfckXrDi98E2+yMthrFgOFZWQ/kMJZQSZwP6i6I5cYdL3aU
+	 d4LZjTaOWxoJez+b6u8/qpU541wOaOU/qpj433MY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	Natalia Petrova <n.petrova@fintech.ru>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.10 103/143] tracing: Make sure trace_printk() can output as soon as it can be used
-Date: Mon, 30 Jan 2023 14:52:40 +0100
-Message-Id: <20230130134311.121327994@linuxfoundation.org>
+Subject: [PATCH 5.10 104/143] trace_events_hist: add check for return value of create_hist_field
+Date: Mon, 30 Jan 2023 14:52:41 +0100
+Message-Id: <20230130134311.152957051@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -35,80 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: Natalia Petrova <n.petrova@fintech.ru>
 
-commit 3bb06eb6e9acf7c4a3e1b5bc87aed398ff8e2253 upstream.
+commit 8b152e9150d07a885f95e1fd401fc81af202d9a4 upstream.
 
-Currently trace_printk() can be used as soon as early_trace_init() is
-called from start_kernel(). But if a crash happens, and
-"ftrace_dump_on_oops" is set on the kernel command line, all you get will
-be:
+Function 'create_hist_field' is called recursively at
+trace_events_hist.c:1954 and can return NULL-value that's why we have
+to check it to avoid null pointer dereference.
 
-  [    0.456075]   <idle>-0         0dN.2. 347519us : Unknown type 6
-  [    0.456075]   <idle>-0         0dN.2. 353141us : Unknown type 6
-  [    0.456075]   <idle>-0         0dN.2. 358684us : Unknown type 6
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-This is because the trace_printk() event (type 6) hasn't been registered
-yet. That gets done via an early_initcall(), which may be early, but not
-early enough.
-
-Instead of registering the trace_printk() event (and other ftrace events,
-which are not trace events) via an early_initcall(), have them registered at
-the same time that trace_printk() can be used. This way, if there is a
-crash before early_initcall(), then the trace_printk()s will actually be
-useful.
-
-Link: https://lkml.kernel.org/r/20230104161412.019f6c55@gandalf.local.home
+Link: https://lkml.kernel.org/r/20230111120409.4111-1-n.petrova@fintech.ru
 
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Fixes: e725c731e3bb1 ("tracing: Split tracing initialization into two for early initialization")
-Reported-by: "Joel Fernandes (Google)" <joel@joelfernandes.org>
-Tested-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Fixes: 30350d65ac56 ("tracing: Add variable support to hist triggers")
+Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c        |    2 ++
- kernel/trace/trace.h        |    1 +
- kernel/trace/trace_output.c |    3 +--
- 3 files changed, 4 insertions(+), 2 deletions(-)
+ kernel/trace/trace_events_hist.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -9680,6 +9680,8 @@ void __init early_trace_init(void)
- 			static_key_enable(&tracepoint_printk_key.key);
- 	}
- 	tracer_alloc_buffers();
-+
-+	init_events();
- }
- 
- void __init trace_init(void)
---- a/kernel/trace/trace.h
-+++ b/kernel/trace/trace.h
-@@ -1673,6 +1673,7 @@ extern void trace_event_enable_cmd_recor
- extern void trace_event_enable_tgid_record(bool enable);
- 
- extern int event_trace_init(void);
-+extern int init_events(void);
- extern int event_trace_add_tracer(struct dentry *parent, struct trace_array *tr);
- extern int event_trace_del_tracer(struct trace_array *tr);
- extern void __trace_early_add_events(struct trace_array *tr);
---- a/kernel/trace/trace_output.c
-+++ b/kernel/trace/trace_output.c
-@@ -1378,7 +1378,7 @@ static struct trace_event *events[] __in
- 	NULL
- };
- 
--__init static int init_events(void)
-+__init int init_events(void)
- {
- 	struct trace_event *event;
- 	int i, ret;
-@@ -1396,4 +1396,3 @@ __init static int init_events(void)
- 
- 	return 0;
- }
--early_initcall(init_events);
+--- a/kernel/trace/trace_events_hist.c
++++ b/kernel/trace/trace_events_hist.c
+@@ -1646,6 +1646,8 @@ static struct hist_field *create_hist_fi
+ 		unsigned long fl = flags & ~HIST_FIELD_FL_LOG2;
+ 		hist_field->fn = hist_field_log2;
+ 		hist_field->operands[0] = create_hist_field(hist_data, field, fl, NULL);
++		if (!hist_field->operands[0])
++			goto free;
+ 		hist_field->size = hist_field->operands[0]->size;
+ 		hist_field->type = kstrdup(hist_field->operands[0]->type, GFP_KERNEL);
+ 		if (!hist_field->type)
 
 
