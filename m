@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9B223229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:17:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30CD5C433EF;
-	Mon, 30 Jan 2023 14:17:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D501D323C
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:18:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CD40C433D2;
+	Mon, 30 Jan 2023 14:18:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088279;
-	bh=GCHr4zE8k6vG4SCP9Fkym8HpFDzYpyDjYQliWKYRSLQ=;
+	s=korg; t=1675088282;
+	bh=mm6h8Q+Mg7Og8CPPL4M957ggUxpfD0UmpbALo4fl2pw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RQJ18D/OS2WJHzGLWNoMW6UysUL7yc6UR2CeWJln/JiTf91W1SM+XMMq/MsbU4q2M
-	 1d2qX2q7HvstC39zKEuLH2BlWRYRhC6xo5R2m3JvNrxvzYWlkrh41fN2B+MyJtWAZS
-	 5yp+a4Tdq4aELZNqcx40+Rt4RRKgktislNbsYbOQ=
+	b=YoSE+6PtzGpfm5u7bEoK63nOVYHJA4MOTkvzr21Wwqf5HJTil1ESRanS7dWJWUAKt
+	 mb6KgTNJBDcOU0/peFmbrNdfkwb8qsiQwAlwD8VU/j8Y6YUl4zDSCZdVeyuKDYkbBq
+	 ZPxL69Kd+DRfxvYggLwKKpVuKlIr/XBok+TM+z3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 176/204] netlink: annotate data races around dst_portid and dst_group
-Date: Mon, 30 Jan 2023 14:52:21 +0100
-Message-Id: <20230130134324.297893547@linuxfoundation.org>
+Subject: [PATCH 5.15 177/204] netlink: annotate data races around sk_state
+Date: Mon, 30 Jan 2023 14:52:22 +0100
+Message-Id: <20230130134324.345021503@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -37,83 +37,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 004db64d185a5f23dfb891d7701e23713b2420ee ]
+[ Upstream commit 9b663b5cbb15b494ef132a3c937641c90646eb73 ]
 
-netlink_getname(), netlink_sendmsg() and netlink_getsockbyportid()
-can read nlk->dst_portid and nlk->dst_group while another
-thread is changing them.
+netlink_getsockbyportid() reads sk_state while a concurrent
+netlink_connect() can change its value.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ net/netlink/af_netlink.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 1eab80af5112..e041d2df9280 100644
+index e041d2df9280..011ec7d9a719 100644
 --- a/net/netlink/af_netlink.c
 +++ b/net/netlink/af_netlink.c
-@@ -1090,8 +1090,9 @@ static int netlink_connect(struct socket *sock, struct sockaddr *addr,
+@@ -1089,7 +1089,8 @@ static int netlink_connect(struct socket *sock, struct sockaddr *addr,
+ 		return -EINVAL;
  
  	if (addr->sa_family == AF_UNSPEC) {
- 		sk->sk_state	= NETLINK_UNCONNECTED;
--		nlk->dst_portid	= 0;
--		nlk->dst_group  = 0;
-+		/* dst_portid and dst_group can be read locklessly */
-+		WRITE_ONCE(nlk->dst_portid, 0);
-+		WRITE_ONCE(nlk->dst_group, 0);
- 		return 0;
- 	}
- 	if (addr->sa_family != AF_NETLINK)
-@@ -1113,8 +1114,9 @@ static int netlink_connect(struct socket *sock, struct sockaddr *addr,
+-		sk->sk_state	= NETLINK_UNCONNECTED;
++		/* paired with READ_ONCE() in netlink_getsockbyportid() */
++		WRITE_ONCE(sk->sk_state, NETLINK_UNCONNECTED);
+ 		/* dst_portid and dst_group can be read locklessly */
+ 		WRITE_ONCE(nlk->dst_portid, 0);
+ 		WRITE_ONCE(nlk->dst_group, 0);
+@@ -1113,7 +1114,8 @@ static int netlink_connect(struct socket *sock, struct sockaddr *addr,
+ 		err = netlink_autobind(sock);
  
  	if (err == 0) {
- 		sk->sk_state	= NETLINK_CONNECTED;
--		nlk->dst_portid = nladdr->nl_pid;
--		nlk->dst_group  = ffs(nladdr->nl_groups);
-+		/* dst_portid and dst_group can be read locklessly */
-+		WRITE_ONCE(nlk->dst_portid, nladdr->nl_pid);
-+		WRITE_ONCE(nlk->dst_group, ffs(nladdr->nl_groups));
- 	}
- 
- 	return err;
-@@ -1131,8 +1133,9 @@ static int netlink_getname(struct socket *sock, struct sockaddr *addr,
- 	nladdr->nl_pad = 0;
- 
- 	if (peer) {
--		nladdr->nl_pid = nlk->dst_portid;
--		nladdr->nl_groups = netlink_group_mask(nlk->dst_group);
-+		/* Paired with WRITE_ONCE() in netlink_connect() */
-+		nladdr->nl_pid = READ_ONCE(nlk->dst_portid);
-+		nladdr->nl_groups = netlink_group_mask(READ_ONCE(nlk->dst_group));
- 	} else {
- 		/* Paired with WRITE_ONCE() in netlink_insert() */
- 		nladdr->nl_pid = READ_ONCE(nlk->portid);
-@@ -1162,8 +1165,9 @@ static struct sock *netlink_getsockbyportid(struct sock *ssk, u32 portid)
+-		sk->sk_state	= NETLINK_CONNECTED;
++		/* paired with READ_ONCE() in netlink_getsockbyportid() */
++		WRITE_ONCE(sk->sk_state, NETLINK_CONNECTED);
+ 		/* dst_portid and dst_group can be read locklessly */
+ 		WRITE_ONCE(nlk->dst_portid, nladdr->nl_pid);
+ 		WRITE_ONCE(nlk->dst_group, ffs(nladdr->nl_groups));
+@@ -1165,8 +1167,8 @@ static struct sock *netlink_getsockbyportid(struct sock *ssk, u32 portid)
  
  	/* Don't bother queuing skb if kernel socket has no input function */
  	nlk = nlk_sk(sock);
-+	/* dst_portid can be changed in netlink_connect() */
- 	if (sock->sk_state == NETLINK_CONNECTED &&
--	    nlk->dst_portid != nlk_sk(ssk)->portid) {
-+	    READ_ONCE(nlk->dst_portid) != nlk_sk(ssk)->portid) {
+-	/* dst_portid can be changed in netlink_connect() */
+-	if (sock->sk_state == NETLINK_CONNECTED &&
++	/* dst_portid and sk_state can be changed in netlink_connect() */
++	if (READ_ONCE(sock->sk_state) == NETLINK_CONNECTED &&
+ 	    READ_ONCE(nlk->dst_portid) != nlk_sk(ssk)->portid) {
  		sock_put(sock);
  		return ERR_PTR(-ECONNREFUSED);
- 	}
-@@ -1899,8 +1903,9 @@ static int netlink_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 			goto out;
- 		netlink_skb_flags |= NETLINK_SKB_DST;
- 	} else {
--		dst_portid = nlk->dst_portid;
--		dst_group = nlk->dst_group;
-+		/* Paired with WRITE_ONCE() in netlink_connect() */
-+		dst_portid = READ_ONCE(nlk->dst_portid);
-+		dst_group = READ_ONCE(nlk->dst_group);
- 	}
- 
- 	/* Paired with WRITE_ONCE() in netlink_insert() */
 -- 
 2.39.0
 
