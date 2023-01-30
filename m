@@ -1,69 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DE413229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:23:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D334DC433D2;
-	Mon, 30 Jan 2023 14:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03B9C323D
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:23:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EE85AC4339B;
+	Mon, 30 Jan 2023 14:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088619;
-	bh=O7YXLeNFdcQL3wgtIXi7DcWcf0TOm21OaiEJXNCYJfM=;
+	s=korg; t=1675088622;
+	bh=13fyRSN/3eWBTNzv1YvQdDzghTiXdzCGsk3D29gof6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=e3vRpvZMPWdE99hpOETa1r8RlTwo200xHN3E4gqIojD6xuDjreBsH/Bg9sX67HxHN
-	 Yze3NGoB2OooQxX+r11Flb0oNhSzxSmYWuoZY9ODIoNVthBQEd+MCDGvxQHpneuqpF
-	 ck61V3la4gur3GAePemdsy/Z7TzAvr2rCk0+eTmw=
+	b=FXoYMdg2qu8I6SXaGqb3691RUYXZeLIdh4H6J/V7a9jw7zYKst5tSnu/ssDspGkqL
+	 s3x3OtT6J7K5opV0C4HV/Zl7D1R0DdCsemrCL/sUcga1GEG5Lh66KOTgOD1VCP9NVp
+	 SAKi2z8GgySmMipDL3HnF0Kdf6r1JF7G6tP2HBZg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiaoming Ni <nixiaoming@huawei.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Iurii Zaikin <yzaikin@google.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Paul Turner <pjt@google.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Sebastian Reichel <sre@kernel.org>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
-	Petr Mladek <pmladek@suse.com>,
-	Sergey Senozhatsky <senozhatsky@chromium.org>,
-	Qing Wang <wangqing@vivo.com>,
-	Benjamin LaHaise <bcrl@kvack.org>,
-	Al Viro <viro@zeniv.linux.org.uk>,
-	Jan Kara <jack@suse.cz>,
-	Amir Goldstein <amir73il@gmail.com>,
-	Stephen Kitt <steve@sk2.org>,
-	Antti Palosaari <crope@iki.fi>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Benjamin Herrenschmidt <benh@kernel.crashing.org>,
-	Clemens Ladisch <clemens@ladisch.de>,
-	David Airlie <airlied@linux.ie>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Joel Becker <jlbec@evilplan.org>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Joseph Qi <joseph.qi@linux.alibaba.com>,
-	Julia Lawall <julia.lawall@inria.fr>,
-	Lukas Middendorf <kernel@tuxforce.de>,
-	Mark Fasheh <mark@fasheh.com>,
-	Phillip Potter <phil@philpotter.co.uk>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Douglas Gilbert <dgilbert@interlog.com>,
-	"James E.J. Bottomley" <jejb@linux.ibm.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	John Ogness <john.ogness@linutronix.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	"Rafael J. Wysocki" <rafael@kernel.org>,
-	"Steven Rostedt (VMware)" <rostedt@goodmis.org>,
-	Suren Baghdasaryan <surenb@google.com>,
-	"Theodore Tso" <tytso@mit.edu>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Eric Biggers <ebiggers@google.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 079/143] sysctl: add a new register_sysctl_init() interface
-Date: Mon, 30 Jan 2023 14:52:16 +0100
-Message-Id: <20230130134310.154812690@linuxfoundation.org>
+Subject: [PATCH 5.10 053/143] nvme-pci: fix timeout request state check
+Date: Mon, 30 Jan 2023 14:51:50 +0100
+Message-Id: <20230130134309.063748715@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -77,180 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiaoming Ni <nixiaoming@huawei.com>
+From: Keith Busch <kbusch@kernel.org>
 
-commit 3ddd9a808cee7284931312f2f3e854c9617f44b2 upstream.
+[ Upstream commit 1c5842085851f786eba24a39ecd02650ad892064 ]
 
-Patch series "sysctl: first set of kernel/sysctl cleanups", v2.
+Polling the completion can progress the request state to IDLE, either
+inline with the completion, or through softirq. Either way, the state
+may not be COMPLETED, so don't check for that. We only care if the state
+isn't IN_FLIGHT.
 
-Finally had time to respin the series of the work we had started last
-year on cleaning up the kernel/sysct.c kitchen sink.  People keeps
-stuffing their sysctls in that file and this creates a maintenance
-burden.  So this effort is aimed at placing sysctls where they actually
-belong.
+This is fixing an issue where the driver aborts an IO that we just
+completed. Seeing the "aborting" message instead of "polled" is very
+misleading as to where the timeout problem resides.
 
-I'm going to split patches up into series as there is quite a bit of
-work.
-
-This first set adds register_sysctl_init() for uses of registerting a
-sysctl on the init path, adds const where missing to a few places,
-generalizes common values so to be more easy to share, and starts the
-move of a few kernel/sysctl.c out where they belong.
-
-The majority of rework on v2 in this first patch set is 0-day fixes.
-Eric Biederman's feedback is later addressed in subsequent patch sets.
-
-I'll only post the first two patch sets for now.  We can address the
-rest once the first two patch sets get completely reviewed / Acked.
-
-This patch (of 9):
-
-The kernel/sysctl.c is a kitchen sink where everyone leaves their dirty
-dishes, this makes it very difficult to maintain.
-
-To help with this maintenance let's start by moving sysctls to places
-where they actually belong.  The proc sysctl maintainers do not want to
-know what sysctl knobs you wish to add for your own piece of code, we
-just care about the core logic.
-
-Today though folks heavily rely on tables on kernel/sysctl.c so they can
-easily just extend this table with their needed sysctls.  In order to
-help users move their sysctls out we need to provide a helper which can
-be used during code initialization.
-
-We special-case the initialization use of register_sysctl() since it
-*is* safe to fail, given all that sysctls do is provide a dynamic
-interface to query or modify at runtime an existing variable.  So the
-use case of register_sysctl() on init should *not* stop if the sysctls
-don't end up getting registered.  It would be counter productive to stop
-boot if a simple sysctl registration failed.
-
-Provide a helper for init then, and document the recommended init levels
-to use for callers of this routine.  We will later use this in
-subsequent patches to start slimming down kernel/sysctl.c tables and
-moving sysctl registration to the code which actually needs these
-sysctls.
-
-[mcgrof@kernel.org: major commit log and documentation rephrasing also moved to fs/proc/proc_sysctl.c                  ]
-
-Link: https://lkml.kernel.org/r/20211123202347.818157-1-mcgrof@kernel.org
-Link: https://lkml.kernel.org/r/20211123202347.818157-2-mcgrof@kernel.org
-Signed-off-by: Xiaoming Ni <nixiaoming@huawei.com>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Cc: Iurii Zaikin <yzaikin@google.com>
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: Paul Turner <pjt@google.com>
-Cc: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Cc: Sebastian Reichel <sre@kernel.org>
-Cc: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: Sergey Senozhatsky <senozhatsky@chromium.org>
-Cc: Qing Wang <wangqing@vivo.com>
-Cc: Benjamin LaHaise <bcrl@kvack.org>
-Cc: Al Viro <viro@zeniv.linux.org.uk>
-Cc: Jan Kara <jack@suse.cz>
-Cc: Amir Goldstein <amir73il@gmail.com>
-Cc: Stephen Kitt <steve@sk2.org>
-Cc: Antti Palosaari <crope@iki.fi>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: Benjamin Herrenschmidt <benh@kernel.crashing.org>
-Cc: Clemens Ladisch <clemens@ladisch.de>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Joel Becker <jlbec@evilplan.org>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Joseph Qi <joseph.qi@linux.alibaba.com>
-Cc: Julia Lawall <julia.lawall@inria.fr>
-Cc: Lukas Middendorf <kernel@tuxforce.de>
-Cc: Mark Fasheh <mark@fasheh.com>
-Cc: Phillip Potter <phil@philpotter.co.uk>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Douglas Gilbert <dgilbert@interlog.com>
-Cc: James E.J. Bottomley <jejb@linux.ibm.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: John Ogness <john.ogness@linutronix.de>
-Cc: Martin K. Petersen <martin.petersen@oracle.com>
-Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-Cc: Steven Rostedt (VMware) <rostedt@goodmis.org>
-Cc: Suren Baghdasaryan <surenb@google.com>
-Cc: "Theodore Ts'o" <tytso@mit.edu>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
+Fixes: bf392a5dc02a9b ("nvme-pci: Remove tag from process cq")
+Signed-off-by: Keith Busch <kbusch@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/proc/proc_sysctl.c  | 33 +++++++++++++++++++++++++++++++++
- include/linux/sysctl.h |  3 +++
- 2 files changed, 36 insertions(+)
+ drivers/nvme/host/pci.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
-index 070d2df8ab9c..cd7c6c4af83a 100644
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -16,6 +16,7 @@
- #include <linux/module.h>
- #include <linux/bpf-cgroup.h>
- #include <linux/mount.h>
-+#include <linux/kmemleak.h>
- #include "internal.h"
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index 67dd68462b81..c47512da9872 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -1292,7 +1292,7 @@ static enum blk_eh_timer_return nvme_timeout(struct request *req, bool reserved)
+ 	else
+ 		nvme_poll_irqdisable(nvmeq);
  
- static const struct dentry_operations proc_sys_dentry_operations;
-@@ -1380,6 +1381,38 @@ struct ctl_table_header *register_sysctl(const char *path, struct ctl_table *tab
- }
- EXPORT_SYMBOL(register_sysctl);
- 
-+/**
-+ * __register_sysctl_init() - register sysctl table to path
-+ * @path: path name for sysctl base
-+ * @table: This is the sysctl table that needs to be registered to the path
-+ * @table_name: The name of sysctl table, only used for log printing when
-+ *              registration fails
-+ *
-+ * The sysctl interface is used by userspace to query or modify at runtime
-+ * a predefined value set on a variable. These variables however have default
-+ * values pre-set. Code which depends on these variables will always work even
-+ * if register_sysctl() fails. If register_sysctl() fails you'd just loose the
-+ * ability to query or modify the sysctls dynamically at run time. Chances of
-+ * register_sysctl() failing on init are extremely low, and so for both reasons
-+ * this function does not return any error as it is used by initialization code.
-+ *
-+ * Context: Can only be called after your respective sysctl base path has been
-+ * registered. So for instance, most base directories are registered early on
-+ * init before init levels are processed through proc_sys_init() and
-+ * sysctl_init().
-+ */
-+void __init __register_sysctl_init(const char *path, struct ctl_table *table,
-+				 const char *table_name)
-+{
-+	struct ctl_table_header *hdr = register_sysctl(path, table);
-+
-+	if (unlikely(!hdr)) {
-+		pr_err("failed when register_sysctl %s to %s\n", table_name, path);
-+		return;
-+	}
-+	kmemleak_not_leak(hdr);
-+}
-+
- static char *append_path(const char *path, char *pos, const char *name)
- {
- 	int namelen;
-diff --git a/include/linux/sysctl.h b/include/linux/sysctl.h
-index 51298a4f4623..161eba9fd912 100644
---- a/include/linux/sysctl.h
-+++ b/include/linux/sysctl.h
-@@ -195,6 +195,9 @@ struct ctl_table_header *register_sysctl_paths(const struct ctl_path *path,
- void unregister_sysctl_table(struct ctl_table_header * table);
- 
- extern int sysctl_init(void);
-+extern void __register_sysctl_init(const char *path, struct ctl_table *table,
-+				 const char *table_name);
-+#define register_sysctl_init(path, table) __register_sysctl_init(path, table, #table)
- void do_sysctl_args(void);
- 
- extern int pwrsw_enabled;
+-	if (blk_mq_request_completed(req)) {
++	if (blk_mq_rq_state(req) != MQ_RQ_IN_FLIGHT) {
+ 		dev_warn(dev->ctrl.device,
+ 			 "I/O %d QID %d timeout, completion polled\n",
+ 			 req->tag, nvmeq->qid);
 -- 
 2.39.0
 
