@@ -1,29 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4563229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:24:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20D87C433EF;
-	Mon, 30 Jan 2023 14:24:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C8383229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:24:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1598C433D2;
+	Mon, 30 Jan 2023 14:24:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088671;
-	bh=A3tC2FbFK0ui4EdTlSAS2z7JqfxGBW7AJ2cXa2P2ug8=;
+	s=korg; t=1675088674;
+	bh=00tXwpANIqfoedYdIG7Pm+XgsPbIa7RAKzfE1Rm319U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mw1tp/ywvxRbt4pE4c7ft7DyyTTkpWBzg2JSEKWcN2ZemRGPWm/9c0vmuIugiwljf
-	 PpEPoA2rSqu661DMMVY1PmxxC9KB+3jwHAiMleQSzV/+eGjWxeT4WU46N7UpkfVX6y
-	 pqgQlnnRSBtHuqs/IvGt0JziMN9zZs5bHAh65y14=
+	b=SSNY4Xeum05PVREBH9H1G/ejr3vCO8j3rv7eBxwoq8YPfpAn76ojTNUsNNi5zYL6d
+	 jaelJQR1BvP4FWGc16hl9bbpriwA1vZ9CdNLQMQWKghWmVlT5x4DGywhuGND4TSlEV
+	 eEhw95qLpjjsSKb4RXR8rC6cw0lrtlqC/S/O5XII=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	linux-hardening@vger.kernel.org,
+	Peter Zijlstra <peterz@infradead.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Jann Horn <jannh@google.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Petr Mladek <pmladek@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Marco Elver <elver@google.com>,
+	tangmeng <tangmeng@uniontech.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
 	Kees Cook <keescook@chromium.org>,
 	Eric Biggers <ebiggers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 097/143] docs: Fix path paste-o for /sys/kernel/warn_count
-Date: Mon, 30 Jan 2023 14:52:34 +0100
-Message-Id: <20230130134310.862271417@linuxfoundation.org>
+Subject: [PATCH 5.10 098/143] exit: Use READ_ONCE() for all oops/warn limit reads
+Date: Mon, 30 Jan 2023 14:52:35 +0100
+Message-Id: <20230130134310.900320438@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -39,38 +48,80 @@ Content-Transfer-Encoding: 8bit
 
 From: Kees Cook <keescook@chromium.org>
 
-commit 00dd027f721e0458418f7750d8a5a664ed3e5994 upstream.
+commit 7535b832c6399b5ebfc5b53af5c51dd915ee2538 upstream.
 
-Running "make htmldocs" shows that "/sys/kernel/oops_count" was
-duplicated. This should have been "warn_count":
+Use a temporary variable to take full advantage of READ_ONCE() behavior.
+Without this, the report (and even the test) might be out of sync with
+the initial test.
 
-  Warning: /sys/kernel/oops_count is defined 2 times:
-  ./Documentation/ABI/testing/sysfs-kernel-warn_count:0
-  ./Documentation/ABI/testing/sysfs-kernel-oops_count:0
-
-Fix the typo.
-
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/linux-doc/202212110529.A3Qav8aR-lkp@intel.com
-Fixes: 8b05aa263361 ("panic: Expose "warn_count" to sysfs")
-Cc: linux-hardening@vger.kernel.org
+Reported-by: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/lkml/Y5x7GXeluFmZ8E0E@hirez.programming.kicks-ass.net
+Fixes: 9fc9e278a5c0 ("panic: Introduce warn_limit")
+Fixes: d4ccd54d28d3 ("exit: Put an upper limit on how often we can oops")
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: tangmeng <tangmeng@uniontech.com>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
 Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-kernel-warn_count | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/exit.c  | 6 ++++--
+ kernel/panic.c | 7 +++++--
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/Documentation/ABI/testing/sysfs-kernel-warn_count b/Documentation/ABI/testing/sysfs-kernel-warn_count
-index 08f083d2fd51..90a029813717 100644
---- a/Documentation/ABI/testing/sysfs-kernel-warn_count
-+++ b/Documentation/ABI/testing/sysfs-kernel-warn_count
-@@ -1,4 +1,4 @@
--What:		/sys/kernel/oops_count
-+What:		/sys/kernel/warn_count
- Date:		November 2022
- KernelVersion:	6.2.0
- Contact:	Linux Kernel Hardening List <linux-hardening@vger.kernel.org>
+diff --git a/kernel/exit.c b/kernel/exit.c
+index 8c820aa7b9c5..bacdaf980933 100644
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -916,6 +916,7 @@ void __noreturn make_task_dead(int signr)
+ 	 * Take the task off the cpu after something catastrophic has
+ 	 * happened.
+ 	 */
++	unsigned int limit;
+ 
+ 	/*
+ 	 * Every time the system oopses, if the oops happens while a reference
+@@ -927,8 +928,9 @@ void __noreturn make_task_dead(int signr)
+ 	 * To make sure this can't happen, place an upper bound on how often the
+ 	 * kernel may oops without panic().
+ 	 */
+-	if (atomic_inc_return(&oops_count) >= READ_ONCE(oops_limit) && oops_limit)
+-		panic("Oopsed too often (kernel.oops_limit is %d)", oops_limit);
++	limit = READ_ONCE(oops_limit);
++	if (atomic_inc_return(&oops_count) >= limit && limit)
++		panic("Oopsed too often (kernel.oops_limit is %d)", limit);
+ 
+ 	do_exit(signr);
+ }
+diff --git a/kernel/panic.c b/kernel/panic.c
+index 6e30455eb2e7..bc39e2b27d31 100644
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -222,12 +222,15 @@ static void panic_print_sys_info(void)
+ 
+ void check_panic_on_warn(const char *origin)
+ {
++	unsigned int limit;
++
+ 	if (panic_on_warn)
+ 		panic("%s: panic_on_warn set ...\n", origin);
+ 
+-	if (atomic_inc_return(&warn_count) >= READ_ONCE(warn_limit) && warn_limit)
++	limit = READ_ONCE(warn_limit);
++	if (atomic_inc_return(&warn_count) >= limit && limit)
+ 		panic("%s: system warned too often (kernel.warn_limit is %d)",
+-		      origin, warn_limit);
++		      origin, limit);
+ }
+ 
+ /**
 -- 
 2.39.0
 
