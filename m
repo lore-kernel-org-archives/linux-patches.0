@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F9228EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:06:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF02C433D2;
-	Mon, 30 Jan 2023 14:06:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4823428EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:06:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2790C433EF;
+	Mon, 30 Jan 2023 14:06:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087593;
-	bh=NusBK45PXs0DCRScUDi9uENmjrOFltWEJUZDoxF46Z8=;
+	s=korg; t=1675087596;
+	bh=IawFp/nV9b5Krmw1txI9XqGLgDj4bpwTJGFs457JIkw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vondJPcp2J3U/2M2B78CAnLgS92wnJN0qRMj3Mzoj45Xh9Tw3e6jCvMZmA97bvHNH
-	 wqXP8DisDH3QZSM4G+8s+34P1VSlfE4e397UC5VgfrZmWlyyLWwhF4mkSCI7pIB3xR
-	 j9kR6P9LQnUFx6As/ZVEkX6MH+FmTfBbhSWbXmPA=
+	b=ssiS6IYpn7AYyNPjrFn4d2C+nkbu9hy2zLXaA910uXA1SQWOqWGQEKmK/KUn8n1Sz
+	 YDqvKEL7WhoXvTRKZ85bhTsoGY5ZpnFJ3VCD42stNvoA+5B/szV4verHUkQSpw4970
+	 WtxbGZJlcx4M/dnquQWn9nZxVJ5WrLjp/xjzcalw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ross Lagerwall <ross.lagerwall@citrix.com>,
-	Sagi Grimberg <sagi@grimberg.me>,
-	Christoph Hellwig <hch@lst.de>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 259/313] nvme-fc: fix initialization order
-Date: Mon, 30 Jan 2023 14:51:34 +0100
-Message-Id: <20230130134348.791073812@linuxfoundation.org>
+Subject: [PATCH 6.1 260/313] drm/i915/selftest: fix intel_selftest_modify_policy argument types
+Date: Mon, 30 Jan 2023 14:51:35 +0100
+Message-Id: <20230130134348.843710098@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,69 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ross Lagerwall <ross.lagerwall@citrix.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 98e3528012cd571c48bbae7c7c0f868823254b6c ]
+[ Upstream commit 2255bbcdc39d5b0311968f86614ae4f25fdd465d ]
 
-ctrl->ops is used by nvme_alloc_admin_tag_set() but set by
-nvme_init_ctrl() so reorder the calls to avoid a NULL pointer
-dereference.
+The definition of intel_selftest_modify_policy() does not match the
+declaration, as gcc-13 points out:
 
-Fixes: 6dfba1c09c10 ("nvme-fc: use the tagset alloc/free helpers")
-Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
-Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+drivers/gpu/drm/i915/selftests/intel_scheduler_helpers.c:29:5: error: conflicting types for 'intel_selftest_modify_policy' due to enum/integer mismatch; have 'int(struct intel_engine_cs *, struct intel_selftest_saved_policy *, u32)' {aka 'int(struct intel_engine_cs *, struct intel_selftest_saved_policy *, unsigned int)'} [-Werror=enum-int-mismatch]
+   29 | int intel_selftest_modify_policy(struct intel_engine_cs *engine,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+In file included from drivers/gpu/drm/i915/selftests/intel_scheduler_helpers.c:11:
+drivers/gpu/drm/i915/selftests/intel_scheduler_helpers.h:28:5: note: previous declaration of 'intel_selftest_modify_policy' with type 'int(struct intel_engine_cs *, struct intel_selftest_saved_policy *, enum selftest_scheduler_modify)'
+   28 | int intel_selftest_modify_policy(struct intel_engine_cs *engine,
+      |     ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Change the type in the definition to match.
+
+Fixes: 617e87c05c72 ("drm/i915/selftest: Fix hangcheck self test for GuC submission")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Signed-off-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230117163743.1003219-1-arnd@kernel.org
+(cherry picked from commit 8d7eb8ed3f83f248e01a4f548d9c500a950a2c2d)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/fc.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ drivers/gpu/drm/i915/selftests/intel_scheduler_helpers.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
-index 5f07a6b29276..6c3d469eed7e 100644
---- a/drivers/nvme/host/fc.c
-+++ b/drivers/nvme/host/fc.c
-@@ -3508,13 +3508,6 @@ nvme_fc_init_ctrl(struct device *dev, struct nvmf_ctrl_options *opts,
+diff --git a/drivers/gpu/drm/i915/selftests/intel_scheduler_helpers.c b/drivers/gpu/drm/i915/selftests/intel_scheduler_helpers.c
+index 310fb83c527e..2990dd4d4a0d 100644
+--- a/drivers/gpu/drm/i915/selftests/intel_scheduler_helpers.c
++++ b/drivers/gpu/drm/i915/selftests/intel_scheduler_helpers.c
+@@ -28,8 +28,7 @@ struct intel_engine_cs *intel_selftest_find_any_engine(struct intel_gt *gt)
  
- 	nvme_fc_init_queue(ctrl, 0);
- 
--	ret = nvme_alloc_admin_tag_set(&ctrl->ctrl, &ctrl->admin_tag_set,
--			&nvme_fc_admin_mq_ops,
--			struct_size((struct nvme_fcp_op_w_sgl *)NULL, priv,
--				    ctrl->lport->ops->fcprqst_priv_sz));
--	if (ret)
--		goto out_free_queues;
+ int intel_selftest_modify_policy(struct intel_engine_cs *engine,
+ 				 struct intel_selftest_saved_policy *saved,
+-				 u32 modify_type)
 -
- 	/*
- 	 * Would have been nice to init io queues tag set as well.
- 	 * However, we require interaction from the controller
-@@ -3524,10 +3517,17 @@ nvme_fc_init_ctrl(struct device *dev, struct nvmf_ctrl_options *opts,
++				 enum selftest_scheduler_modify modify_type)
+ {
+ 	int err;
  
- 	ret = nvme_init_ctrl(&ctrl->ctrl, dev, &nvme_fc_ctrl_ops, 0);
- 	if (ret)
--		goto out_cleanup_tagset;
-+		goto out_free_queues;
- 
- 	/* at this point, teardown path changes to ref counting on nvme ctrl */
- 
-+	ret = nvme_alloc_admin_tag_set(&ctrl->ctrl, &ctrl->admin_tag_set,
-+			&nvme_fc_admin_mq_ops,
-+			struct_size((struct nvme_fcp_op_w_sgl *)NULL, priv,
-+				    ctrl->lport->ops->fcprqst_priv_sz));
-+	if (ret)
-+		goto fail_ctrl;
-+
- 	spin_lock_irqsave(&rport->lock, flags);
- 	list_add_tail(&ctrl->ctrl_list, &rport->ctrl_list);
- 	spin_unlock_irqrestore(&rport->lock, flags);
-@@ -3579,8 +3579,6 @@ nvme_fc_init_ctrl(struct device *dev, struct nvmf_ctrl_options *opts,
- 
- 	return ERR_PTR(-EIO);
- 
--out_cleanup_tagset:
--	nvme_remove_admin_tag_set(&ctrl->ctrl);
- out_free_queues:
- 	kfree(ctrl->queues);
- out_free_ida:
 -- 
 2.39.0
 
