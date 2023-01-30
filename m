@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F5E33229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:22:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0A16C433EF;
-	Mon, 30 Jan 2023 14:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86E103229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:22:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1445C433EF;
+	Mon, 30 Jan 2023 14:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088564;
-	bh=cdHe+udxpYgClHlqye1cFOO9CWwTQDqhBz7JE/8s0dg=;
+	s=korg; t=1675088567;
+	bh=la4SqUhrduBoaHftY+v/BXB9s2CTKmRi5DSf31CRhbo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wXh+Q7c0BqMc2+3Bs4/3Yu4m5+gK6RBDxE+D0y8k52Fa5QLweGffb6enfMegEIsaH
-	 raAnRNztOYwCR4hPPsSVsFc6otTpSdUtvGiOM3FPHpFLZ4K+3zF23xqhFlTnJ4PVfP
-	 SCDIuSapNaJcyVNEMyyF8Ax8CA7ikLZioDux5A58=
+	b=eyBOFOXDCIhvT3/UlowbPhXL2WDzXsfinDt5L9xLXq2+GjErg3Otu2MU8pHOhuz1O
+	 QraNWgtuEKwyn24pPAUiLvXUg/9YKUPpCOuUZB2iZEHvwFMZ1tHpfRpmIbzvwLJ2RM
+	 D0Rc6N1OrIRa5lPw3OxIUdRz1Uq+lrrrZEvpyasw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Max Filippov <jcmvbkbc@gmail.com>,
-	Marco Elver <elver@google.com>,
+	Chancel Liu <chancel.liu@nxp.com>,
+	Shengjiu Wang <shengjiu.wang@gmail.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 062/143] kcsan: test: dont put the expect array on the stack
-Date: Mon, 30 Jan 2023 14:51:59 +0100
-Message-Id: <20230130134309.412251750@linuxfoundation.org>
+Subject: [PATCH 5.10 063/143] ASoC: fsl_micfil: Correct the number of steps on SX controls
+Date: Mon, 30 Jan 2023 14:52:00 +0100
+Message-Id: <20230130134309.453249990@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -35,62 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Max Filippov <jcmvbkbc@gmail.com>
+From: Chancel Liu <chancel.liu@nxp.com>
 
-[ Upstream commit 5b24ac2dfd3eb3e36f794af3aa7f2828b19035bd ]
+[ Upstream commit cdfa92eb90f5770b26a79824ef213ebdbbd988b1 ]
 
-Size of the 'expect' array in the __report_matches is 1536 bytes, which
-is exactly the default frame size warning limit of the xtensa
-architecture.
-As a result allmodconfig xtensa kernel builds with the gcc that does not
-support the compiler plugins (which otherwise would push the said
-warning limit to 2K) fail with the following message:
+The parameter "max" of SOC_SINGLE_SX_TLV() means the number of steps
+rather than maximum value. This patch corrects the minimum value to -8
+and the number of steps to 15.
 
-  kernel/kcsan/kcsan_test.c:257:1: error: the frame size of 1680 bytes
-    is larger than 1536 bytes
-
-Fix it by dynamically allocating the 'expect' array.
-
-Signed-off-by: Max Filippov <jcmvbkbc@gmail.com>
-Reviewed-by: Marco Elver <elver@google.com>
-Tested-by: Marco Elver <elver@google.com>
+Signed-off-by: Chancel Liu <chancel.liu@nxp.com>
+Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
+Link: https://lore.kernel.org/r/20230104025754.3019235-1-chancel.liu@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/kcsan/kcsan-test.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ sound/soc/fsl/fsl_micfil.c | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/kernel/kcsan/kcsan-test.c b/kernel/kcsan/kcsan-test.c
-index ebe7fd245104..8a8ccaf4f38f 100644
---- a/kernel/kcsan/kcsan-test.c
-+++ b/kernel/kcsan/kcsan-test.c
-@@ -149,7 +149,7 @@ static bool report_matches(const struct expect_report *r)
- 	const bool is_assert = (r->access[0].type | r->access[1].type) & KCSAN_ACCESS_ASSERT;
- 	bool ret = false;
- 	unsigned long flags;
--	typeof(observed.lines) expect;
-+	typeof(*observed.lines) *expect;
- 	const char *end;
- 	char *cur;
- 	int i;
-@@ -158,6 +158,10 @@ static bool report_matches(const struct expect_report *r)
- 	if (!report_available())
- 		return false;
+diff --git a/sound/soc/fsl/fsl_micfil.c b/sound/soc/fsl/fsl_micfil.c
+index 6c794605e33c..97f83c63e765 100644
+--- a/sound/soc/fsl/fsl_micfil.c
++++ b/sound/soc/fsl/fsl_micfil.c
+@@ -87,21 +87,21 @@ static DECLARE_TLV_DB_SCALE(gain_tlv, 0, 100, 0);
  
-+	expect = kmalloc(sizeof(observed.lines), GFP_KERNEL);
-+	if (WARN_ON(!expect))
-+		return false;
-+
- 	/* Generate expected report contents. */
- 
- 	/* Title */
-@@ -241,6 +245,7 @@ static bool report_matches(const struct expect_report *r)
- 		strstr(observed.lines[2], expect[1])));
- out:
- 	spin_unlock_irqrestore(&observed.lock, flags);
-+	kfree(expect);
- 	return ret;
- }
- 
+ static const struct snd_kcontrol_new fsl_micfil_snd_controls[] = {
+ 	SOC_SINGLE_SX_TLV("CH0 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(0), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(0), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH1 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(1), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(1), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH2 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(2), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(2), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH3 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(3), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(3), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH4 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(4), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(4), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH5 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(5), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(5), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH6 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(6), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(6), 0x8, 0xF, gain_tlv),
+ 	SOC_SINGLE_SX_TLV("CH7 Volume", REG_MICFIL_OUT_CTRL,
+-			  MICFIL_OUTGAIN_CHX_SHIFT(7), 0xF, 0x7, gain_tlv),
++			  MICFIL_OUTGAIN_CHX_SHIFT(7), 0x8, 0xF, gain_tlv),
+ 	SOC_ENUM_EXT("MICFIL Quality Select",
+ 		     fsl_micfil_quality_enum,
+ 		     snd_soc_get_enum_double, snd_soc_put_enum_double),
 -- 
 2.39.0
 
