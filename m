@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C70728EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85AC6C433EF;
-	Mon, 30 Jan 2023 14:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D03D28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65B48C433EF;
+	Mon, 30 Jan 2023 14:14:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088077;
-	bh=LdbWgqhOCwigN/XNs+dNRbgNbm0z9zRrtlv+osUfzbI=;
+	s=korg; t=1675088080;
+	bh=ebyvD34D+PRgNoMDHayHCTt8bvc0PVoaIRc9WHDv2y8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0U3G4KWbOnXuuwfMQtXpDq+a7S26IdhrqpdnfBoTaq+hZf5aITpVwP0WzyitGTREs
-	 wDzvYgDDt0JP8g3NOAxWFSWxbiWR2dfqHQyIL9rTrL5VUQSQrUaGVRQeW0wLmfYIjM
-	 wXTyLr6OcbB/yMUZW7GQ+F7C2UEpugOWYW6A2ur8=
+	b=ybQeSYBavMmFNcpHCUG86yIizQP0+54cIw3en3ob4Ba6Gvsm+TUSoTP1RYmdX+G1U
+	 MVqgzC4v4nCwUwEzLTh7JdcZ2l+LalOu0DSp1oFGLo5r6nzsbbT7DsdJM2hLKSbtZk
+	 hiiFETKvbAXYVspYx9hkiwppYqXWnGulsFDPi3Do=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maor Dickman <maord@nvidia.com>,
-	Eli Cohen <elic@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Hui Wang <hui.wang@canonical.com>,
+	Jiri Pirko <jiri@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 067/204] net/mlx5: E-switch, Fix setting of reserved fields on MODIFY_SCHEDULING_ELEMENT
-Date: Mon, 30 Jan 2023 14:50:32 +0100
-Message-Id: <20230130134319.265283902@linuxfoundation.org>
+Subject: [PATCH 5.15 101/204] net: usb: cdc_ether: add support for Thales Cinterion PLS62-W modem
+Date: Mon, 30 Jan 2023 14:51:06 +0100
+Message-Id: <20230130134320.782330398@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -36,79 +36,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maor Dickman <maord@nvidia.com>
+From: Hui Wang <hui.wang@canonical.com>
 
-[ Upstream commit f51471d1935ce1f504fce6c115ce3bfbc32032b0 ]
+[ Upstream commit eea8ce81fbb544e3caad1a1c876ba1af467b3d3c ]
 
-According to HW spec element_type, element_attributes and parent_element_id fields
-should be reserved (0x0) when calling MODIFY_SCHEDULING_ELEMENT command.
+This modem has 7 interfaces, 5 of them are serial interfaces and are
+driven by cdc_acm, while 2 of them are wwan interfaces and are driven
+by cdc_ether:
+If 0: Abstract (modem)
+If 1: Abstract (modem)
+If 2: Abstract (modem)
+If 3: Abstract (modem)
+If 4: Abstract (modem)
+If 5: Ethernet Networking
+If 6: Ethernet Networking
 
-This patch remove initialization of these fields when calling the command.
+Without this change, the 2 network interfaces will be named to usb0
+and usb1, our QA think the names are confusing and filed a bug on it.
 
-Fixes: bd77bf1cb595 ("net/mlx5: Add SRIOV VF max rate configuration support")
-Signed-off-by: Maor Dickman <maord@nvidia.com>
-Reviewed-by: Eli Cohen <elic@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+After applying this change, the name will be wwan0 and wwan1, and
+they could work well with modem manager.
+
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Reviewed-by: Jiri Pirko <jiri@nvidia.com>
+Link: https://lore.kernel.org/r/20230105034249.10433-1-hui.wang@canonical.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/esw/qos.c  | 18 +++---------------
- 1 file changed, 3 insertions(+), 15 deletions(-)
+ drivers/net/usb/cdc_ether.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
-index d377ddc70fc7..65c8f1f08472 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
-@@ -22,15 +22,13 @@ struct mlx5_esw_rate_group {
- };
- 
- static int esw_qos_tsar_config(struct mlx5_core_dev *dev, u32 *sched_ctx,
--			       u32 parent_ix, u32 tsar_ix,
--			       u32 max_rate, u32 bw_share)
-+			       u32 tsar_ix, u32 max_rate, u32 bw_share)
- {
- 	u32 bitmask = 0;
- 
- 	if (!MLX5_CAP_GEN(dev, qos) || !MLX5_CAP_QOS(dev, esw_scheduling))
- 		return -EOPNOTSUPP;
- 
--	MLX5_SET(scheduling_context, sched_ctx, parent_element_id, parent_ix);
- 	MLX5_SET(scheduling_context, sched_ctx, max_average_bw, max_rate);
- 	MLX5_SET(scheduling_context, sched_ctx, bw_share, bw_share);
- 	bitmask |= MODIFY_SCHEDULING_ELEMENT_IN_MODIFY_BITMASK_MAX_AVERAGE_BW;
-@@ -51,7 +49,7 @@ static int esw_qos_group_config(struct mlx5_eswitch *esw, struct mlx5_esw_rate_g
- 	int err;
- 
- 	err = esw_qos_tsar_config(dev, sched_ctx,
--				  esw->qos.root_tsar_ix, group->tsar_ix,
-+				  group->tsar_ix,
- 				  max_rate, bw_share);
- 	if (err)
- 		NL_SET_ERR_MSG_MOD(extack, "E-Switch modify group TSAR element failed");
-@@ -67,23 +65,13 @@ static int esw_qos_vport_config(struct mlx5_eswitch *esw,
- 				struct netlink_ext_ack *extack)
- {
- 	u32 sched_ctx[MLX5_ST_SZ_DW(scheduling_context)] = {};
--	struct mlx5_esw_rate_group *group = vport->qos.group;
- 	struct mlx5_core_dev *dev = esw->dev;
--	u32 parent_tsar_ix;
--	void *vport_elem;
- 	int err;
- 
- 	if (!vport->qos.enabled)
- 		return -EIO;
- 
--	parent_tsar_ix = group ? group->tsar_ix : esw->qos.root_tsar_ix;
--	MLX5_SET(scheduling_context, sched_ctx, element_type,
--		 SCHEDULING_CONTEXT_ELEMENT_TYPE_VPORT);
--	vport_elem = MLX5_ADDR_OF(scheduling_context, sched_ctx,
--				  element_attributes);
--	MLX5_SET(vport_element, vport_elem, vport_number, vport->vport);
--
--	err = esw_qos_tsar_config(dev, sched_ctx, parent_tsar_ix, vport->qos.esw_tsar_ix,
-+	err = esw_qos_tsar_config(dev, sched_ctx, vport->qos.esw_tsar_ix,
- 				  max_rate, bw_share);
- 	if (err) {
- 		esw_warn(esw->dev,
+diff --git a/drivers/net/usb/cdc_ether.c b/drivers/net/usb/cdc_ether.c
+index c6b0de1b752f..3497b5a286ea 100644
+--- a/drivers/net/usb/cdc_ether.c
++++ b/drivers/net/usb/cdc_ether.c
+@@ -1000,6 +1000,12 @@ static const struct usb_device_id	products[] = {
+ 				      USB_CDC_SUBCLASS_ETHERNET,
+ 				      USB_CDC_PROTO_NONE),
+ 	.driver_info = (unsigned long)&wwan_info,
++}, {
++	/* Cinterion PLS62-W modem by GEMALTO/THALES */
++	USB_DEVICE_AND_INTERFACE_INFO(0x1e2d, 0x005b, USB_CLASS_COMM,
++				      USB_CDC_SUBCLASS_ETHERNET,
++				      USB_CDC_PROTO_NONE),
++	.driver_info = (unsigned long)&wwan_info,
+ }, {
+ 	/* Cinterion PLS83/PLS63 modem by GEMALTO/THALES */
+ 	USB_DEVICE_AND_INTERFACE_INFO(0x1e2d, 0x0069, USB_CLASS_COMM,
 -- 
 2.39.0
 
