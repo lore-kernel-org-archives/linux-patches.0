@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5341828EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:05:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA210C433EF;
-	Mon, 30 Jan 2023 14:05:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3E58D28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:05:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2B95C433EF;
+	Mon, 30 Jan 2023 14:05:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087520;
-	bh=IQsu13b3t6jWLILa8J93eMa3pjIvJq/R/Awrsr3saN4=;
+	s=korg; t=1675087523;
+	bh=k0MPJtcYSmF/GUKU6MAyPKpvja/CSt1sCkzf3EO7jn4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qNJjIg+QqIUnhfbiE2vjQ39PTIbryLSXmMvvPoYo3BzN++ptVdC6O6kkeCCoj6wKw
-	 S9S6Ilddg37jXIGMa0vemqDqlzouZaKTDGlmpcickUf/Zs+T1gw5bBZJERJIWVHPbR
-	 5NNS+gu1SZVVGJUGXA0m9SyHI4QeNoq31BGRJuSw=
+	b=1Mi+qvst63/mQQsD7aMp6qfZjeyLmtAWhyktmMWPfRHzuh1a3RHk8tLWR81jX1PGx
+	 ulf0K+sXOMAR8FFy8U6FO/ALnbY2GisAl64L5RgGNxyeOEFbLw+X7jA5fF1+8ladhQ
+	 OIvXL6XyT2+sanC9jAKQYI9sO2eaUiymCGMYo3YA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Matthew Rosato <mjrosato@linux.ibm.com>,
-	Jason Gunthorpe <jgg@nvidia.com>,
-	Alex Williamson <alex.williamson@redhat.com>,
+	"Alexey V. Vissarionov" <gremlin@altlinux.org>,
+	Don Brace <don.brace@microchip.com>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 206/313] vfio/type1: Respect IOMMU reserved regions in vfio_test_domain_fgsp()
-Date: Mon, 30 Jan 2023 14:50:41 +0100
-Message-Id: <20230130134346.282994490@linuxfoundation.org>
+Subject: [PATCH 6.1 207/313] scsi: hpsa: Fix allocation size for scsi_host_alloc()
+Date: Mon, 30 Jan 2023 14:50:42 +0100
+Message-Id: <20230130134346.330398704@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -37,101 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Alexey V. Vissarionov <gremlin@altlinux.org>
 
-[ Upstream commit 895c0747f726bb50c9b7a805613a61d1b6f9fa06 ]
+[ Upstream commit bbbd25499100c810ceaf5193c3cfcab9f7402a33 ]
 
-Since commit cbf7827bc5dc ("iommu/s390: Fix potential s390_domain
-aperture shrinking") the s390 IOMMU driver uses reserved regions for the
-system provided DMA ranges of PCI devices. Previously it reduced the
-size of the IOMMU aperture and checked it on each mapping operation.
-On current machines the system denies use of DMA addresses below 2^32 for
-all PCI devices.
+The 'h' is a pointer to struct ctlr_info, so it's just 4 or 8 bytes, while
+the structure itself is much bigger.
 
-Usually mapping IOVAs in a reserved regions is harmless until a DMA
-actually tries to utilize the mapping. However on s390 there is
-a virtual PCI device called ISM which is implemented in firmware and
-used for cross LPAR communication. Unlike real PCI devices this device
-does not use the hardware IOMMU but inspects IOMMU translation tables
-directly on IOTLB flush (s390 RPCIT instruction). If it detects IOVA
-mappings outside the allowed ranges it goes into an error state. This
-error state then causes the device to be unavailable to the KVM guest.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Analysing this we found that vfio_test_domain_fgsp() maps 2 pages at DMA
-address 0 irrespective of the IOMMUs reserved regions. Even if usually
-harmless this seems wrong in the general case so instead go through the
-freshly updated IOVA list and try to find a range that isn't reserved,
-and fits 2 pages, is PAGE_SIZE * 2 aligned. If found use that for
-testing for fine grained super pages.
-
-Fixes: af029169b8fd ("vfio/type1: Check reserved region conflict and update iova list")
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
-Link: https://lore.kernel.org/r/20230110164427.4051938-2-schnelle@linux.ibm.com
-Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
+Fixes: edd163687ea5 ("hpsa: add driver for HP Smart Array controllers.")
+Link: https://lore.kernel.org/r/20230118031255.GE15213@altlinux.org
+Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
+Acked-by: Don Brace <don.brace@microchip.com>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vfio/vfio_iommu_type1.c | 31 ++++++++++++++++++++-----------
- 1 file changed, 20 insertions(+), 11 deletions(-)
+ drivers/scsi/hpsa.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
-index 23c24fe98c00..2209372f236d 100644
---- a/drivers/vfio/vfio_iommu_type1.c
-+++ b/drivers/vfio/vfio_iommu_type1.c
-@@ -1856,24 +1856,33 @@ static int vfio_iommu_replay(struct vfio_iommu *iommu,
-  * significantly boosts non-hugetlbfs mappings and doesn't seem to hurt when
-  * hugetlbfs is in use.
-  */
--static void vfio_test_domain_fgsp(struct vfio_domain *domain)
-+static void vfio_test_domain_fgsp(struct vfio_domain *domain, struct list_head *regions)
+diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
+index 4dbf51e2623a..f6da34850af9 100644
+--- a/drivers/scsi/hpsa.c
++++ b/drivers/scsi/hpsa.c
+@@ -5850,7 +5850,7 @@ static int hpsa_scsi_host_alloc(struct ctlr_info *h)
  {
--	struct page *pages;
- 	int ret, order = get_order(PAGE_SIZE * 2);
-+	struct vfio_iova *region;
-+	struct page *pages;
-+	dma_addr_t start;
+ 	struct Scsi_Host *sh;
  
- 	pages = alloc_pages(GFP_KERNEL | __GFP_ZERO, order);
- 	if (!pages)
- 		return;
- 
--	ret = iommu_map(domain->domain, 0, page_to_phys(pages), PAGE_SIZE * 2,
--			IOMMU_READ | IOMMU_WRITE | IOMMU_CACHE);
--	if (!ret) {
--		size_t unmapped = iommu_unmap(domain->domain, 0, PAGE_SIZE);
-+	list_for_each_entry(region, regions, list) {
-+		start = ALIGN(region->start, PAGE_SIZE * 2);
-+		if (start >= region->end || (region->end - start < PAGE_SIZE * 2))
-+			continue;
- 
--		if (unmapped == PAGE_SIZE)
--			iommu_unmap(domain->domain, PAGE_SIZE, PAGE_SIZE);
--		else
--			domain->fgsp = true;
-+		ret = iommu_map(domain->domain, start, page_to_phys(pages), PAGE_SIZE * 2,
-+				IOMMU_READ | IOMMU_WRITE | IOMMU_CACHE);
-+		if (!ret) {
-+			size_t unmapped = iommu_unmap(domain->domain, start, PAGE_SIZE);
-+
-+			if (unmapped == PAGE_SIZE)
-+				iommu_unmap(domain->domain, start + PAGE_SIZE, PAGE_SIZE);
-+			else
-+				domain->fgsp = true;
-+		}
-+		break;
- 	}
- 
- 	__free_pages(pages, order);
-@@ -2326,7 +2335,7 @@ static int vfio_iommu_type1_attach_group(void *iommu_data,
- 		}
- 	}
- 
--	vfio_test_domain_fgsp(domain);
-+	vfio_test_domain_fgsp(domain, &iova_copy);
- 
- 	/* replay mappings on new domains */
- 	ret = vfio_iommu_replay(iommu, domain);
+-	sh = scsi_host_alloc(&hpsa_driver_template, sizeof(h));
++	sh = scsi_host_alloc(&hpsa_driver_template, sizeof(struct ctlr_info));
+ 	if (sh == NULL) {
+ 		dev_err(&h->pdev->dev, "scsi_host_alloc failed\n");
+ 		return -ENOMEM;
 -- 
 2.39.0
 
