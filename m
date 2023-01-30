@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 765CB28F3
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:16:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9AC6C433EF;
-	Mon, 30 Jan 2023 14:16:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1234628EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:16:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6766FC433EF;
+	Mon, 30 Jan 2023 14:16:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088201;
-	bh=tMi/I2IQP7Y1fVtCtwAubQHLyulTqFBBke+i7It+p7E=;
+	s=korg; t=1675088204;
+	bh=py5Id8UF3tih0zkrTCVFvCxcpXEDE+FhXYVN0vEAASc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2gA0RADBM9ND1sRu55XjozEG3U67ZWfPhpJUuC8mEEwtDBYEToCjK/xMWZ/nvmO39
-	 4oXj9iES4+TACDlBLdyRCimzB5z2ZtUGcL/vViS1lBzetAhBDsZ7vkIcm5ifVGCtRn
-	 /xNnjYZYiq+KqFsZlcswYhg/BtjiguvrAq7QEjRo=
+	b=u27sF6sKzOQ2SfVtLxrnyEE1QOX8aWsn7/KyBPLE2gawYtN4HqoHbF1DF61dUOVlZ
+	 zNktcF5igrY1BaTnBkZ6Qtjt3jx0LM1BefuSnNgDSkWiMYr21pihFAyL2m+48yZ91d
+	 4FUlUmvwSGX2+9vGB5pvatUER6NbRnsinqIU124I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masami Hiramatsu <mhiramat@kernel.org>,
-	Mark Rutland <mark.rutland@arm.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 150/204] ftrace/scripts: Update the instructions for ftrace-bisect.sh
-Date: Mon, 30 Jan 2023 14:51:55 +0100
-Message-Id: <20230130134323.157059572@linuxfoundation.org>
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Tom Talpey <tom@talpey.com>,
+	David Howells <dhowells@redhat.com>,
+	Long Li <longli@microsoft.com>,
+	Pavel Shilovsky <piastryyy@gmail.com>,
+	Ronnie Sahlberg <lsahlber@redhat.com>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.15 151/204] cifs: Fix oops due to uncleared server->smbd_conn in reconnect
+Date: Mon, 30 Jan 2023 14:51:56 +0100
+Message-Id: <20230130134323.204806583@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,98 +39,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Steven Rostedt (Google) <rostedt@goodmis.org>
+From: David Howells <dhowells@redhat.com>
 
-commit 7ae4ba7195b1bac04a4210a499da9d8c63b0ba9c upstream.
+commit b7ab9161cf5ddc42a288edf9d1a61f3bdffe17c7 upstream.
 
-The instructions for the ftrace-bisect.sh script, which is used to find
-what function is being traced that is causing a kernel crash, and possibly
-a triple fault reboot, uses the old method. In 5.1, a new feature was
-added that let the user write in the index into available_filter_functions
-that maps to the function a user wants to set in set_ftrace_filter (or
-set_ftrace_notrace). This takes O(1) to set, as suppose to writing a
-function name, which takes O(n) (where n is the number of functions in
-available_filter_functions).
+In smbd_destroy(), clear the server->smbd_conn pointer after freeing the
+smbd_connection struct that it points to so that reconnection doesn't get
+confused.
 
-The ftrace-bisect.sh requires setting half of the functions in
-available_filter_functions, which is O(n^2) using the name method to enable
-and can take several minutes to complete. The number method is O(n) which
-takes less than a second to complete. Using the number method for any
-kernel 5.1 and after is the proper way to do the bisect.
-
-Update the usage to reflect the new change, as well as using the
-/sys/kernel/tracing path instead of the obsolete debugfs path.
-
-Link: https://lkml.kernel.org/r/20230123112252.022003dd@gandalf.local.home
-
+Fixes: 8ef130f9ec27 ("CIFS: SMBD: Implement function to destroy a SMB Direct connection")
 Cc: stable@vger.kernel.org
-Cc: Masami Hiramatsu <mhiramat@kernel.org>
-Acked-by: Mark Rutland <mark.rutland@arm.com>
-Fixes: f79b3f338564e ("ftrace: Allow enabling of filters via index of available_filter_functions")
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Reviewed-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Acked-by: Tom Talpey <tom@talpey.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Cc: Long Li <longli@microsoft.com>
+Cc: Pavel Shilovsky <piastryyy@gmail.com>
+Cc: Ronnie Sahlberg <lsahlber@redhat.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- scripts/tracing/ftrace-bisect.sh |   34 ++++++++++++++++++++++++++--------
- 1 file changed, 26 insertions(+), 8 deletions(-)
+ fs/cifs/smbdirect.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/scripts/tracing/ftrace-bisect.sh
-+++ b/scripts/tracing/ftrace-bisect.sh
-@@ -12,7 +12,7 @@
- #   (note, if this is a problem with function_graph tracing, then simply
- #    replace "function" with "function_graph" in the following steps).
- #
--#  # cd /sys/kernel/debug/tracing
-+#  # cd /sys/kernel/tracing
- #  # echo schedule > set_ftrace_filter
- #  # echo function > current_tracer
- #
-@@ -20,22 +20,40 @@
- #
- #  # echo nop > current_tracer
- #
--#  # cat available_filter_functions > ~/full-file
-+# Starting with v5.1 this can be done with numbers, making it much faster:
-+#
-+# The old (slow) way, for kernels before v5.1.
-+#
-+# [old-way] # cat available_filter_functions > ~/full-file
-+#
-+# [old-way] *** Note ***  this process will take several minutes to update the
-+# [old-way] filters. Setting multiple functions is an O(n^2) operation, and we
-+# [old-way] are dealing with thousands of functions. So go have coffee, talk
-+# [old-way] with your coworkers, read facebook. And eventually, this operation
-+# [old-way] will end.
-+#
-+# The new way (using numbers) is an O(n) operation, and usually takes less than a second.
-+#
-+# seq `wc -l available_filter_functions | cut -d' ' -f1` > ~/full-file
-+#
-+# This will create a sequence of numbers that match the functions in
-+# available_filter_functions, and when echoing in a number into the
-+# set_ftrace_filter file, it will enable the corresponding function in
-+# O(1) time. Making enabling all functions O(n) where n is the number of
-+# functions to enable.
-+#
-+# For either the new or old way, the rest of the operations remain the same.
-+#
- #  # ftrace-bisect ~/full-file ~/test-file ~/non-test-file
- #  # cat ~/test-file > set_ftrace_filter
- #
--# *** Note *** this will take several minutes. Setting multiple functions is
--# an O(n^2) operation, and we are dealing with thousands of functions. So go
--# have  coffee, talk with your coworkers, read facebook. And eventually, this
--# operation will end.
--#
- #  # echo function > current_tracer
- #
- # If it crashes, we know that ~/test-file has a bad function.
- #
- #   Reboot back to test kernel.
- #
--#     # cd /sys/kernel/debug/tracing
-+#     # cd /sys/kernel/tracing
- #     # mv ~/test-file ~/full-file
- #
- # If it didn't crash.
+--- a/fs/cifs/smbdirect.c
++++ b/fs/cifs/smbdirect.c
+@@ -1405,6 +1405,7 @@ void smbd_destroy(struct TCP_Server_Info
+ 	destroy_workqueue(info->workqueue);
+ 	log_rdma_event(INFO,  "rdma session destroyed\n");
+ 	kfree(info);
++	server->smbd_conn = NULL;
+ }
+ 
+ /*
 
 
