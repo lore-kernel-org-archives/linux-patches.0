@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA50828EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:55:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D2FC433EF;
-	Mon, 30 Jan 2023 13:55:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D80FB28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:55:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D07EC433D2;
+	Mon, 30 Jan 2023 13:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675086934;
-	bh=OldQd+pjjY/uPVBrXOONOgMkVGz4djGO0hEMCA/WObk=;
+	s=korg; t=1675086937;
+	bh=EZLT0AVsqWKxKUV5hGR5Zz6ojJW7QsNZkPV2uRH0bSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ESaAvyaSyMuhGarQN4Mo6h21o8qA2vwB5muUjjoo8JHgN8BwNMVTmWVsAa/FqZDok
-	 Ke4ZB+h16zA9vSaF0nACDkZMgK6vHxXmTWEhwK/45NEjzOoyvqOd/DkpOjWyrC3QBe
-	 vuiZdL9GrgcT4WVji48NBQU44mCLaRMy/HM8bQQw=
+	b=x8HH0eEqo9+dogiy94/siX/eWRNC/mS/ZGOGQ/f1qCnJ4/GAQyDGW6EGHZm5w2QGv
+	 FdDmGEDHEJl+Lq4RoLx/ajaUFZXBJRJEmUwYeSglkKF9f4ekzbPjiooRBtWu0+Gf0y
+	 vnzAHOBz4/ytGdxjpARS56HXjFBYsXmzLo8O20WU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Jens Axboe <axboe@kernel.dk>,
+	Dean Luick <dean.luick@cornelisnetworks.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/313] block: fix error unwinding in blk_register_queue
-Date: Mon, 30 Jan 2023 14:47:52 +0100
-Message-Id: <20230130134338.409842952@linuxfoundation.org>
+Subject: [PATCH 6.1 046/313] IB/hfi1: Reject a zero-length user expected buffer
+Date: Mon, 30 Jan 2023 14:48:01 +0100
+Message-Id: <20230130134338.833338042@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,99 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Dean Luick <dean.luick@cornelisnetworks.com>
 
-[ Upstream commit 40602997be26887bdfa3d58659c3acb4579099e9 ]
+[ Upstream commit 0a0a6e80472c98947d73c3d13bcd7d101895f55d ]
 
-blk_register_queue fails to handle errors from blk_mq_sysfs_register,
-leaks various resources on errors and accidentally sets queue refs percpu
-refcount to percpu mode on kobject_add failure.  Fix all that by
-properly unwinding on errors.
+A zero length user buffer makes no sense and the code
+does not handle it correctly.  Instead, reject a
+zero length as invalid.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20221114042637.1009333-4-hch@lst.de
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: 49e4d04f0486 ("block: Drop spurious might_sleep() from blk_put_queue()")
+Fixes: 97736f36dbeb ("IB/hfi1: Validate page aligned for a given virtual addres")
+Signed-off-by: Dean Luick <dean.luick@cornelisnetworks.com>
+Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Link: https://lore.kernel.org/r/167328547120.1472310.6362802432127399257.stgit@awfm-02.cornelisnetworks.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/blk-sysfs.c | 28 ++++++++++++++++------------
- 1 file changed, 16 insertions(+), 12 deletions(-)
+ drivers/infiniband/hw/hfi1/user_exp_rcv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
-index 3d6951a0b4e7..1631ba2f7259 100644
---- a/block/blk-sysfs.c
-+++ b/block/blk-sysfs.c
-@@ -820,13 +820,15 @@ int blk_register_queue(struct gendisk *disk)
- 	int ret;
+diff --git a/drivers/infiniband/hw/hfi1/user_exp_rcv.c b/drivers/infiniband/hw/hfi1/user_exp_rcv.c
+index 186d30291260..3c609b11e71c 100644
+--- a/drivers/infiniband/hw/hfi1/user_exp_rcv.c
++++ b/drivers/infiniband/hw/hfi1/user_exp_rcv.c
+@@ -256,6 +256,8 @@ int hfi1_user_exp_rcv_setup(struct hfi1_filedata *fd,
  
- 	mutex_lock(&q->sysfs_dir_lock);
--
- 	ret = kobject_add(&q->kobj, &disk_to_dev(disk)->kobj, "queue");
- 	if (ret < 0)
--		goto unlock;
-+		goto out_unlock_dir;
+ 	if (!PAGE_ALIGNED(tinfo->vaddr))
+ 		return -EINVAL;
++	if (tinfo->length == 0)
++		return -EINVAL;
  
--	if (queue_is_mq(q))
--		blk_mq_sysfs_register(disk);
-+	if (queue_is_mq(q)) {
-+		ret = blk_mq_sysfs_register(disk);
-+		if (ret)
-+			goto out_del_queue_kobj;
-+	}
- 	mutex_lock(&q->sysfs_lock);
- 
- 	mutex_lock(&q->debugfs_mutex);
-@@ -838,17 +840,17 @@ int blk_register_queue(struct gendisk *disk)
- 
- 	ret = disk_register_independent_access_ranges(disk);
- 	if (ret)
--		goto put_dev;
-+		goto out_debugfs_remove;
- 
- 	if (q->elevator) {
- 		ret = elv_register_queue(q, false);
- 		if (ret)
--			goto put_dev;
-+			goto out_unregister_ia_ranges;
- 	}
- 
- 	ret = blk_crypto_sysfs_register(disk);
- 	if (ret)
--		goto put_dev;
-+		goto out_elv_unregister;
- 
- 	blk_queue_flag_set(QUEUE_FLAG_REGISTERED, q);
- 	wbt_enable_default(q);
-@@ -859,8 +861,6 @@ int blk_register_queue(struct gendisk *disk)
- 	if (q->elevator)
- 		kobject_uevent(&q->elevator->kobj, KOBJ_ADD);
- 	mutex_unlock(&q->sysfs_lock);
--
--unlock:
- 	mutex_unlock(&q->sysfs_dir_lock);
- 
- 	/*
-@@ -879,13 +879,17 @@ int blk_register_queue(struct gendisk *disk)
- 
- 	return ret;
- 
--put_dev:
-+out_elv_unregister:
- 	elv_unregister_queue(q);
-+out_unregister_ia_ranges:
- 	disk_unregister_independent_access_ranges(disk);
-+out_debugfs_remove:
-+	blk_debugfs_remove(disk);
- 	mutex_unlock(&q->sysfs_lock);
--	mutex_unlock(&q->sysfs_dir_lock);
-+out_del_queue_kobj:
- 	kobject_del(&q->kobj);
--
-+out_unlock_dir:
-+	mutex_unlock(&q->sysfs_dir_lock);
- 	return ret;
- }
- 
+ 	tidbuf = kzalloc(sizeof(*tidbuf), GFP_KERNEL);
+ 	if (!tidbuf)
 -- 
 2.39.0
 
