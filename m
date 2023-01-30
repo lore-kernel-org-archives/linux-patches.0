@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4AA428EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1172BC433D2;
-	Mon, 30 Jan 2023 14:14:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AFD328EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F033EC433EF;
+	Mon, 30 Jan 2023 14:14:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088057;
-	bh=jIBAPAVrCr6k7xXt91czoeA9kRhU+zg4zMDQpo9pcA4=;
+	s=korg; t=1675088060;
+	bh=bk05yq3BLEKKoF6Scw2iMs1+O3oVJJo3UqnqA1aZfro=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yfaHr/LtAKKGSGzqs4RoynqDWlBaeABRTg6aMybELVeJI9iuo2Mwb6FwS4N8lRube
-	 Cwn2bOIvn2597p4NLP/BtaFJfFOqUub4/WkrE4IQMpxd5QNX4SYYLlooMHYPZBB2Wh
-	 XANQEfRifIBUzRNjsYU1/y36rlcnv/v5BgX/WrRo=
+	b=XWoD+9xZl/Eyn6ArfpWPvNFXjgC/WAzNJMiOsZZZURYVXPC2rRRGW6meI4Em5YN2N
+	 JJLkGj0+KTbP+gt7CPt8bBIVyO2s7MO+EGGQb04kHUJiK57B8Khtf7/UL/py4GsgG1
+	 doZE8MJblL9yCYI+4IBgB9bm6v/hiXpcc6Ys7USc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Robert Hancock <robert.hancock@calian.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 099/204] cpufreq: Add SM6375 to cpufreq-dt-platdev blocklist
-Date: Mon, 30 Jan 2023 14:51:04 +0100
-Message-Id: <20230130134320.701315911@linuxfoundation.org>
+Subject: [PATCH 5.15 071/204] net: macb: fix PTP TX timestamp failure due to packet padding
+Date: Mon, 30 Jan 2023 14:50:36 +0100
+Message-Id: <20230130134319.453290883@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,32 +37,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Konrad Dybcio <konrad.dybcio@linaro.org>
+From: Robert Hancock <robert.hancock@calian.com>
 
-[ Upstream commit faf28e240dd118d9521c68aeb9388b9b8f02d9d0 ]
+[ Upstream commit 7b90f5a665acd46efbbfa677a3a3a18d01ad6487 ]
 
-The Qualcomm SM6375 platform uses the qcom-cpufreq-hw driver, so add
-it to the cpufreq-dt-platdev driver's blocklist.
+PTP TX timestamp handling was observed to be broken with this driver
+when using the raw Layer 2 PTP encapsulation. ptp4l was not receiving
+the expected TX timestamp after transmitting a packet, causing it to
+enter a failure state.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+The problem appears to be due to the way that the driver pads packets
+which are smaller than the Ethernet minimum of 60 bytes. If headroom
+space was available in the SKB, this caused the driver to move the data
+back to utilize it. However, this appears to cause other data references
+in the SKB to become inconsistent. In particular, this caused the
+ptp_one_step_sync function to later (in the TX completion path) falsely
+detect the packet as a one-step SYNC packet, even when it was not, which
+caused the TX timestamp to not be processed when it should be.
+
+Using the headroom for this purpose seems like an unnecessary complexity
+as this is not a hot path in the driver, and in most cases it appears
+that there is sufficient tailroom to not require using the headroom
+anyway. Remove this usage of headroom to prevent this inconsistency from
+occurring and causing other problems.
+
+Fixes: 653e92a9175e ("net: macb: add support for padding and fcs computation")
+Signed-off-by: Robert Hancock <robert.hancock@calian.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Claudiu Beznea <claudiu.beznea@microchip.com> # on SAMA7G5
+Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/ethernet/cadence/macb_main.c | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
-index 27a3b8800a35..e1b5975c7daa 100644
---- a/drivers/cpufreq/cpufreq-dt-platdev.c
-+++ b/drivers/cpufreq/cpufreq-dt-platdev.c
-@@ -144,6 +144,7 @@ static const struct of_device_id blocklist[] __initconst = {
- 	{ .compatible = "qcom,sc8180x", },
- 	{ .compatible = "qcom,sdm845", },
- 	{ .compatible = "qcom,sm6350", },
-+	{ .compatible = "qcom,sm6375", },
- 	{ .compatible = "qcom,sm8150", },
- 	{ .compatible = "qcom,sm8250", },
- 	{ .compatible = "qcom,sm8350", },
+diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
+index 61efb2350412..906c5bbefaac 100644
+--- a/drivers/net/ethernet/cadence/macb_main.c
++++ b/drivers/net/ethernet/cadence/macb_main.c
+@@ -2154,7 +2154,6 @@ static int macb_pad_and_fcs(struct sk_buff **skb, struct net_device *ndev)
+ 	bool cloned = skb_cloned(*skb) || skb_header_cloned(*skb) ||
+ 		      skb_is_nonlinear(*skb);
+ 	int padlen = ETH_ZLEN - (*skb)->len;
+-	int headroom = skb_headroom(*skb);
+ 	int tailroom = skb_tailroom(*skb);
+ 	struct sk_buff *nskb;
+ 	u32 fcs;
+@@ -2168,9 +2167,6 @@ static int macb_pad_and_fcs(struct sk_buff **skb, struct net_device *ndev)
+ 		/* FCS could be appeded to tailroom. */
+ 		if (tailroom >= ETH_FCS_LEN)
+ 			goto add_fcs;
+-		/* FCS could be appeded by moving data to headroom. */
+-		else if (!cloned && headroom + tailroom >= ETH_FCS_LEN)
+-			padlen = 0;
+ 		/* No room for FCS, need to reallocate skb. */
+ 		else
+ 			padlen = ETH_FCS_LEN;
+@@ -2179,10 +2175,7 @@ static int macb_pad_and_fcs(struct sk_buff **skb, struct net_device *ndev)
+ 		padlen += ETH_FCS_LEN;
+ 	}
+ 
+-	if (!cloned && headroom + tailroom >= padlen) {
+-		(*skb)->data = memmove((*skb)->head, (*skb)->data, (*skb)->len);
+-		skb_set_tail_pointer(*skb, (*skb)->len);
+-	} else {
++	if (cloned || tailroom < padlen) {
+ 		nskb = skb_copy_expand(*skb, 0, padlen, GFP_ATOMIC);
+ 		if (!nskb)
+ 			return -ENOMEM;
 -- 
 2.39.0
 
