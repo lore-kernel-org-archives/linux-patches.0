@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E329428EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:55:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68889C433EF;
-	Mon, 30 Jan 2023 13:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9CBA28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:55:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 43962C433EF;
+	Mon, 30 Jan 2023 13:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675086955;
-	bh=IjdQCOwY+5jE7+z9IGogYRj0Y2flj86Xw072f41f4iA=;
+	s=korg; t=1675086958;
+	bh=66UZHVx8mU4XpU43MdVHUlmkiXznqZbQd+ephi2GD4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UAKyGlHHKnketxe29GokqmA0b2xGRctkUQQihEcI+QxFYSoALbBXuWUBTEovW2BEj
-	 7ZZZf93eeRy0hdigweCjyxYz2EYvUnVUIMhONUw9de52o/3GMobP4fmKoCV4gvog/v
-	 1g1m5CkO6pgSCKIL4XmXx/TimWaM6gryZ9xznBO8=
+	b=dSUnQb3rd/rJkesXujHqxPaGIfrO9Jq3rLkK1aEr2jb/2na4q+73mcxviMM1ueZ4b
+	 qiP9RThgXw4DCplUrDhRp0HCz0XdJU5EyKhZajXD1pH+nTClN2dMnZ+8gl1ryqA4/N
+	 LPxYPeu/OQLiAX+/QMcJ9hnM8dtuso8/FH9zzw00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
+	Eugene Lepshy <fekz115@gmail.com>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 052/313] PM: AVS: qcom-cpr: Fix an error handling path in cpr_probe()
-Date: Mon, 30 Jan 2023 14:48:07 +0100
-Message-Id: <20230130134339.126370127@linuxfoundation.org>
+Subject: [PATCH 6.1 053/313] arm64: dts: qcom: msm8992: Dont use sfpb mutex
+Date: Mon, 30 Jan 2023 14:48:08 +0100
+Message-Id: <20230130134339.165802267@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,48 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit 6049aae52392539e505bfb8ccbcff3c26f1d2f0b ]
+[ Upstream commit 2bd5ab93335bf2c4d22c8db427822ae637ed8dc3 ]
 
-If an error occurs after a successful pm_genpd_init() call, it should be
-undone by a corresponding pm_genpd_remove().
+MSM8992 uses the same mutex hardware as MSM8994. This was wrong
+from the start, but never presented as an issue until the sfpb
+compatible was given different driver data.
 
-Add the missing call in the error handling path, as already done in the
-remove function.
-
-Fixes: bf6910abf548 ("power: avs: Add support for CPR (Core Power Reduction)")
-Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
+Fixes: 6a6d1978f9c0 ("arm64: dts: msm8992 SoC and LG Bullhead (Nexus 5X) support")
+Reported-by: Eugene Lepshy <fekz115@gmail.com>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/0f520597dbad89ab99c217c8986912fa53eaf5f9.1671293108.git.christophe.jaillet@wanadoo.fr
+Link: https://lore.kernel.org/r/20221219131918.446587-1-konrad.dybcio@linaro.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/soc/qcom/cpr.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/msm8992.dtsi | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/soc/qcom/cpr.c b/drivers/soc/qcom/cpr.c
-index e9b854ed1bdf..144ea68e0920 100644
---- a/drivers/soc/qcom/cpr.c
-+++ b/drivers/soc/qcom/cpr.c
-@@ -1708,12 +1708,16 @@ static int cpr_probe(struct platform_device *pdev)
+diff --git a/arch/arm64/boot/dts/qcom/msm8992.dtsi b/arch/arm64/boot/dts/qcom/msm8992.dtsi
+index 750643763a76..f4be09fc1b15 100644
+--- a/arch/arm64/boot/dts/qcom/msm8992.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8992.dtsi
+@@ -36,10 +36,6 @@ &rpmcc {
+ 	compatible = "qcom,rpmcc-msm8992", "qcom,rpmcc";
+ };
  
- 	ret = of_genpd_add_provider_simple(dev->of_node, &drv->pd);
- 	if (ret)
--		return ret;
-+		goto err_remove_genpd;
- 
- 	platform_set_drvdata(pdev, drv);
- 	cpr_debugfs_init(drv);
- 
- 	return 0;
-+
-+err_remove_genpd:
-+	pm_genpd_remove(&drv->pd);
-+	return ret;
- }
- 
- static int cpr_remove(struct platform_device *pdev)
+-&tcsr_mutex {
+-	compatible = "qcom,sfpb-mutex";
+-};
+-
+ &timer {
+ 	interrupts = <GIC_PPI 2 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
+ 			     <GIC_PPI 3 (GIC_CPU_MASK_SIMPLE(4) | IRQ_TYPE_LEVEL_LOW)>,
 -- 
 2.39.0
 
