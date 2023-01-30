@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 18B873229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:27:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEE0C4339B;
-	Mon, 30 Jan 2023 14:27:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676DF3229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:27:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BFA2C433EF;
+	Mon, 30 Jan 2023 14:27:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088833;
-	bh=zRWNzo5aoVWeJjJ/HZP/c2IU0EZ5EKL8odoT6ODrt10=;
+	s=korg; t=1675088837;
+	bh=Dtm1TnpOmr2KvuNJLcKbBBW7XQLvD2VLM+AndWxBQc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XxvfFesdtPX8uDsGogJrG8lPfy87V1JScI64X8Q64oVl2TCqoYe8v5wc1GzawmiDr
-	 xXErrBRmrRBdWrodpWM4T6NZdZaxpzH8bULpc/zsjCdp2TrkhYbVNNyCe5vqvQjDys
-	 uNgEp5KKcCQ2zbOAN4TXfx8YCqb+E0Ek3nKrIw/Y=
+	b=DSvpOhSbIF7szC+GuoPUWMAt1dgJ7hpk1W9vGaYnGq0A+tKx8XHEbAOko2WR0iU7d
+	 LemSR4fvG3GTXGxq0V5DLI/genj9Da1XLTiO8Yn5sLVhozI0DkntSutGwiv1b1+86b
+	 jQyyYTHffNaxEz3OwYBP3v19qPI3HvbPbPN42vQA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 122/143] netlink: annotate data races around sk_state
-Date: Mon, 30 Jan 2023 14:52:59 +0100
-Message-Id: <20230130134311.885627408@linuxfoundation.org>
+Subject: [PATCH 5.10 113/143] units: Add SI metric prefix definitions
+Date: Mon, 30 Jan 2023 14:52:50 +0100
+Message-Id: <20230130134311.521025448@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -35,56 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit 9b663b5cbb15b494ef132a3c937641c90646eb73 ]
+[ Upstream commit 26471d4a6cf8d5d0bd0fb55c7169de7d67cc703a ]
 
-netlink_getsockbyportid() reads sk_state while a concurrent
-netlink_connect() can change its value.
+Sometimes it's useful to have well-defined SI metric prefix to be used
+to self-describe the formulas or equations.
 
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+List most popular ones in the units.h.
+
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Stable-dep-of: c8c37bc51451 ("i2c: designware: use casting of u64 in clock multiplication to avoid overflow")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ include/linux/units.h | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index cdecd1977583..2104fbdd63d2 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1081,7 +1081,8 @@ static int netlink_connect(struct socket *sock, struct sockaddr *addr,
- 		return -EINVAL;
+diff --git a/include/linux/units.h b/include/linux/units.h
+index 92c234e71cab..3457179f7116 100644
+--- a/include/linux/units.h
++++ b/include/linux/units.h
+@@ -4,6 +4,22 @@
  
- 	if (addr->sa_family == AF_UNSPEC) {
--		sk->sk_state	= NETLINK_UNCONNECTED;
-+		/* paired with READ_ONCE() in netlink_getsockbyportid() */
-+		WRITE_ONCE(sk->sk_state, NETLINK_UNCONNECTED);
- 		/* dst_portid and dst_group can be read locklessly */
- 		WRITE_ONCE(nlk->dst_portid, 0);
- 		WRITE_ONCE(nlk->dst_group, 0);
-@@ -1105,7 +1106,8 @@ static int netlink_connect(struct socket *sock, struct sockaddr *addr,
- 		err = netlink_autobind(sock);
+ #include <linux/kernel.h>
  
- 	if (err == 0) {
--		sk->sk_state	= NETLINK_CONNECTED;
-+		/* paired with READ_ONCE() in netlink_getsockbyportid() */
-+		WRITE_ONCE(sk->sk_state, NETLINK_CONNECTED);
- 		/* dst_portid and dst_group can be read locklessly */
- 		WRITE_ONCE(nlk->dst_portid, nladdr->nl_pid);
- 		WRITE_ONCE(nlk->dst_group, ffs(nladdr->nl_groups));
-@@ -1157,8 +1159,8 @@ static struct sock *netlink_getsockbyportid(struct sock *ssk, u32 portid)
- 
- 	/* Don't bother queuing skb if kernel socket has no input function */
- 	nlk = nlk_sk(sock);
--	/* dst_portid can be changed in netlink_connect() */
--	if (sock->sk_state == NETLINK_CONNECTED &&
-+	/* dst_portid and sk_state can be changed in netlink_connect() */
-+	if (READ_ONCE(sock->sk_state) == NETLINK_CONNECTED &&
- 	    READ_ONCE(nlk->dst_portid) != nlk_sk(ssk)->portid) {
- 		sock_put(sock);
- 		return ERR_PTR(-ECONNREFUSED);
++/* Metric prefixes in accordance with Système international (d'unités) */
++#define PETA	1000000000000000ULL
++#define TERA	1000000000000ULL
++#define GIGA	1000000000UL
++#define MEGA	1000000UL
++#define KILO	1000UL
++#define HECTO	100UL
++#define DECA	10UL
++#define DECI	10UL
++#define CENTI	100UL
++#define MILLI	1000UL
++#define MICRO	1000000UL
++#define NANO	1000000000UL
++#define PICO	1000000000000ULL
++#define FEMTO	1000000000000000ULL
++
+ #define MILLIWATT_PER_WATT	1000L
+ #define MICROWATT_PER_MILLIWATT	1000L
+ #define MICROWATT_PER_WATT	1000000L
 -- 
 2.39.0
 
