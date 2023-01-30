@@ -1,100 +1,83 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E017479F7
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 22:03:26 +0000 (UTC)
-Received: by mail-pl1-f177.google.com with SMTP id p24so13109140plw.11
-        for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:03:26 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C5CD160
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 22:57:34 +0000 (UTC)
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-163ba2b7c38so5351297fac.4
+        for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:57:34 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=BQY9unmzOV7TCZ96aU2p1l97OntyBK2gZGuBkFiwM9A=;
-        b=kQ5/LBE4EPmy0MTjOLRhc7F+4NC2emrrWOeOsFIdDMoM6TY4QMWar6RfJKJvMjsYxf
-         5aGron06eS18nyIgvaYuvNjXzAW9psgcktCwJlm6XwmaTc2k/ECsXNAjasvPiENdvkMM
-         8sWFPzniRelG8krBvqHTNtdpxdqNSjGrONOHCYImQ/iZHfiMly0NDoypeYmfSQqYs+Kd
-         XE+DisN7vEDdePh/OQQ0v/6WCUY9QKF0yPRien8ylSn4Qu5UUYxciPC/mPumeOjcqHDc
-         Zr3x8WTqi23teJmdjv3iwTSuCfbzkUgswKW1D/epr7IQYPSoPbVVYVXwRVkMzFUzNtp/
-         nqRA==
+        d=linuxtx.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=H4C3LLRe7XudZxVhxF9djT/1jzCGZdm6sY4sPImvKLY=;
+        b=C5HOxKzbKCXsAxmhxxStBrxA7KmKH5sorHz15rcY/lnCedBwFHiEl+vphFvneNyL+F
+         Atc/qUJx4oN90L84rpFKpJMDyy/k/dSYdHB+FX0Z49nYSU+z/2lgSfllfG46LFbYfQqQ
+         I8mRCuZWWL845ITNtKlsGDOydPj6zB1VzCSCc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BQY9unmzOV7TCZ96aU2p1l97OntyBK2gZGuBkFiwM9A=;
-        b=u+Pm1bYIg4OoJvL7MHK0iyW8iWTpTCl4nN76b3VLny7wBiYX11OX2wro3iaeEQsRfP
-         PqzLwkUrSQy4CRCAyPe5yrMRq6MRtiyslRFyo/p1OpxJk7uQ9RzRHrl/rvfijiBmefJT
-         eiUPrMde3BtYrSeArlwI6v94VhzKgC/Vu+c/ywUOgzQQQZSLST2HFinOtHRcQ5N2bvbm
-         KC0m9gjsH0Q7FJIAzpBoEh48uTfVU7qZSD47ZRwSNi77CljpMRAvO2zYeTs3GcCUOXo0
-         S6+o3ByMIS+jbgptrUt5XfClnu78CUKQ51OfoKQ577O26ncvX+XnYDOrbXtuP/bvmMWs
-         AXgw==
-X-Gm-Message-State: AO0yUKXa4VY+LLJmsuSjsW7I5ekfCbhRblIWqnXsTEG1iOxn9PuDnsLV
-	Cd40+pLmhGZk5ixysHvxs6RK5oNSa0QMzzSxTs+N1w==
-X-Google-Smtp-Source: AK7set/bVllA+pXLc5bfi4Hr1MjNdTVvmsxv0RI7/gPQMOGYUc7EXoUGxxPyg9Z429Lxw5P7MYpHCt7QsgZFWpVdr5U=
-X-Received: by 2002:a17:90a:9c1:b0:22c:816f:3203 with SMTP id
- 59-20020a17090a09c100b0022c816f3203mr1221685pjo.28.1675116206022; Mon, 30 Jan
- 2023 14:03:26 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=H4C3LLRe7XudZxVhxF9djT/1jzCGZdm6sY4sPImvKLY=;
+        b=GwAz4bsCsUnCouEGvIaxL9ApM6U9ad3cjfVw/6YFb57SzFyA/1SvHWqb2DObeLLHp6
+         UfRuzWq6Dyx8Wz5dc1NVj2BYZGMCKAhdSRJ2Uv60MtaZPvu1p9l4s6Uj2VRedNFD39LX
+         bOpg1Mys7Rs8pK6hA4le30W05kPnVaKD6UJb6HzmWrDiMWr4lx5UqgTMi2mqrWNt0lMd
+         5wpx1k6BZUWgWC6bcdBAdZdAK0jCKsLrYVwjo/ySJXoWs+KIXdEOh13EsyBbGX2ghhxy
+         dr09dkLfKYrrE227gEm9Ua4X4TqDZdy6vvjw01EDlfohrq0A3GnABIYYJB8IZkMpFRjI
+         sUmg==
+X-Gm-Message-State: AO0yUKUAKFW6dqX80/FVKTOWAQ/Ic4s93fn2F9icQIT02/nlKQexdnNi
+	iE2hC5ZFycWWEr2qQY47qWOsgw==
+X-Google-Smtp-Source: AK7set8YyE0Ax5BBAeYzcYcOqGbn0g4cxVDxl7J238q/i8urKB9VuhYDVNT0IzxlWYf6K7hppB1Jpg==
+X-Received: by 2002:a05:6870:20d:b0:15f:1c2:230b with SMTP id j13-20020a056870020d00b0015f01c2230bmr5569641oad.43.1675119453368;
+        Mon, 30 Jan 2023 14:57:33 -0800 (PST)
+Received: from fedora64.linuxtx.org (99-47-93-78.lightspeed.rcsntx.sbcglobal.net. [99.47.93.78])
+        by smtp.gmail.com with ESMTPSA id nr9-20020a056870dc4900b00140d421445bsm5769855oab.11.2023.01.30.14.57.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Jan 2023 14:57:32 -0800 (PST)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Mon, 30 Jan 2023 16:57:31 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/313] 6.1.9-rc2 review
+Message-ID: <Y9hLW3Rl8b8iMS7D@fedora64.linuxtx.org>
+References: <20230130181611.883327545@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230118-v4-v4t-lld-16-v1-1-e3d9a00ae47c@kernel.org>
- <202301310149.euWWUSrD-lkp@intel.com> <a40df1e3-ed92-4662-bb9e-106becce63d7@app.fastmail.com>
-In-Reply-To: <a40df1e3-ed92-4662-bb9e-106becce63d7@app.fastmail.com>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Mon, 30 Jan 2023 14:03:14 -0800
-Message-ID: <CAKwvOd=GbixTFko8aGzPQiq8QBtDY0ZZncHKag-gjsgqUM_diA@mail.gmail.com>
-Subject: Re: [PATCH] ARM: Allow pre-ARMv5 builds with ld.lld 16.0.0 and newer
-To: Arnd Bergmann <arnd@arndb.de>
-Cc: kernel test robot <lkp@intel.com>, Nathan Chancellor <nathan@kernel.org>, 
-	Russell King <linux@armlinux.org.uk>, llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev, 
-	Tom Rix <trix@redhat.com>, linux-arm-kernel@lists.infradead.org, 
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230130181611.883327545@linuxfoundation.org>
 
-On Mon, Jan 30, 2023 at 10:19 AM Arnd Bergmann <arnd@arndb.de> wrote:
->
-> On Mon, Jan 30, 2023, at 19:10, kernel test robot wrote:
-> > Hi Nathan,
-> >
-> > I love your patch! Perhaps something to improve:
-> >
-> > [auto build test WARNING on 5dc4c995db9eb45f6373a956eb1f69460e69e6d4]
-> >
-> > url:
-> > https://github.com/intel-lab-lkp/linux/commits/Nathan-Chancellor/ARM-Allow-pre-ARMv5-builds-with-ld-lld-16-0-0-and-newer/20230119-032402
-> > base:   5dc4c995db9eb45f6373a956eb1f69460e69e6d4
-> >>> arch/arm/mach-sa1100/pm.c:122:12: warning: no previous prototype for function 'sa11x0_pm_init' [-Wmissing-prototypes]
-> >    int __init sa11x0_pm_init(void)
-> >               ^
-> >    arch/arm/mach-sa1100/pm.c:122:1: note: declare 'static' if the
-> > function is not intended to be used outside of this translation unit
-> >    int __init sa11x0_pm_init(void)
-> >    ^
-> >    static
-> >    1 warning generated.
-> > --
->
->
-> For refernece, these are all known problems, the patch just allowed
-> the code to be built by clang/lld when that was previously not
-> possible.
->
-> After the 6.3 merge window, we can probably go through the much
-> smaller set of board files are address most of the W=1 warnings that
-> were previously overwhelming.
+On Mon, Jan 30, 2023 at 07:24:47PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.9 release.
+> There are 313 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 01 Feb 2023 18:15:14 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.9-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Yeah! I've filed
-https://github.com/ClangBuiltLinux/continuous-integration2/issues/509
-too so that we can wire up an ARMv4 test in our CI as well.
+Tested rc2 against the Fedora build system (aarch64, armv7, ppc64le,
+s390x, x86_64), and boot tested x86_64. No regressions noted.
 
->
->       Arnd
-
-
-
--- 
-Thanks,
-~Nick Desaulniers
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
