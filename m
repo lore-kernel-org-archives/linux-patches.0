@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7947828EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:03:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB59CC433EF;
-	Mon, 30 Jan 2023 14:03:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6ADDC28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:03:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C42DFC433EF;
+	Mon, 30 Jan 2023 14:03:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087433;
-	bh=67/+PveVQo0kseaAnuvU5gi+av7iXo0LgzJR7sULXe4=;
+	s=korg; t=1675087436;
+	bh=kPGzsg3iak9bUhKpj7DoiBI4rzmGDwMtLp3JfFiEzvM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ehhTs/fOItKbPqB7QfsRUE9Z8UvNQZgahvXGvZ1k7IowOgvdcZyDqfE40TueXK6tm
-	 I+Ss31tJd2e0JwJsA9HmDxvAv4dZe5u326FmBNnS4L6FR0l0B/ShNkmcIomOLRsN+C
-	 XquvBGJX/YEWcVs+8fNDtE4ta2znwNc/3B3NKDsI=
+	b=ycwKo0Mbd83eqiRvdnURM04gruB1pfrpJZ6gg5OpDDt5uGo7185An2b7Mc8GNwt77
+	 rwM5HM3fTRPCw4wiAsN0VvS8IBdphW+716GqPWsACvhOEgixikgb1Jyssrqjh8aPb+
+	 0peIs5mVxnJzz3hXTdHnRQjl5epxSEpUzJjPtkB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Huang <jinhuieric.huang@amd.com>,
-	Felix Kuehling <Felix.Kuehling@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Willy Tarreau <w@1wt.eu>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 175/313] drm/amdkfd: Fix NULL pointer error for GC 11.0.1 on mGPU
-Date: Mon, 30 Jan 2023 14:50:10 +0100
-Message-Id: <20230130134344.842290742@linuxfoundation.org>
+Subject: [PATCH 6.1 166/313] nolibc: fix fd_set type
+Date: Mon, 30 Jan 2023 14:50:01 +0100
+Message-Id: <20230130134344.396762979@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,49 +36,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Huang <jinhuieric.huang@amd.com>
+From: Sven Schnelle <svens@linux.ibm.com>
 
-[ Upstream commit a6941f89d7c6a6ba49316bbd7da2fb2f719119a7 ]
+[ Upstream commit feaf75658783a919410f8c2039dbc24b6a29603d ]
 
-The point bo->kfd_bo is NULL for queue's write pointer BO
-when creating queue on mGPU. To avoid using the pointer
-fixes the error.
+The kernel uses unsigned long for the fd_set bitmap,
+but nolibc use u32. This works fine on little endian
+machines, but fails on big endian. Convert to unsigned
+long to fix this.
 
-Signed-off-by: Eric Huang <jinhuieric.huang@amd.com>
-Reviewed-by: Felix Kuehling <Felix.Kuehling@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Willy Tarreau <w@1wt.eu>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c      | 2 +-
- drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ tools/include/nolibc/types.h | 53 ++++++++++++++++++++----------------
+ 1 file changed, 30 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-index 29f045079a3e..404c839683b1 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_amdkfd_gpuvm.c
-@@ -2130,7 +2130,7 @@ int amdgpu_amdkfd_map_gtt_bo_to_gart(struct amdgpu_device *adev, struct amdgpu_b
- 	}
+diff --git a/tools/include/nolibc/types.h b/tools/include/nolibc/types.h
+index 959997034e55..300e0ff1cd58 100644
+--- a/tools/include/nolibc/types.h
++++ b/tools/include/nolibc/types.h
+@@ -89,39 +89,46 @@
+ #define EXIT_SUCCESS 0
+ #define EXIT_FAILURE 1
  
- 	amdgpu_amdkfd_remove_eviction_fence(
--		bo, bo->kfd_bo->process_info->eviction_fence);
-+		bo, bo->vm_bo->vm->process_info->eviction_fence);
++#define FD_SETIDXMASK (8 * sizeof(unsigned long))
++#define FD_SETBITMASK (8 * sizeof(unsigned long)-1)
++
+ /* for select() */
+ typedef struct {
+-	uint32_t fd32[(FD_SETSIZE + 31) / 32];
++	unsigned long fds[(FD_SETSIZE + FD_SETBITMASK) / FD_SETIDXMASK];
+ } fd_set;
  
- 	amdgpu_bo_unreserve(bo);
+-#define FD_CLR(fd, set) do {                                            \
+-		fd_set *__set = (set);                                  \
+-		int __fd = (fd);                                        \
+-		if (__fd >= 0)                                          \
+-			__set->fd32[__fd / 32] &= ~(1U << (__fd & 31)); \
++#define FD_CLR(fd, set) do {						\
++		fd_set *__set = (set);					\
++		int __fd = (fd);					\
++		if (__fd >= 0)						\
++			__set->fds[__fd / FD_SETIDXMASK] &=		\
++				~(1U << (__fd & FX_SETBITMASK));	\
+ 	} while (0)
  
-diff --git a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-index ecb4c3abc629..c06ada0844ba 100644
---- a/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-+++ b/drivers/gpu/drm/amd/amdkfd/kfd_device_queue_manager.c
-@@ -200,7 +200,7 @@ static int add_queue_mes(struct device_queue_manager *dqm, struct queue *q,
- 	queue_input.wptr_addr = (uint64_t)q->properties.write_ptr;
+-#define FD_SET(fd, set) do {                                            \
+-		fd_set *__set = (set);                                  \
+-		int __fd = (fd);                                        \
+-		if (__fd >= 0)                                          \
+-			__set->fd32[__fd / 32] |= 1U << (__fd & 31);    \
++#define FD_SET(fd, set) do {						\
++		fd_set *__set = (set);					\
++		int __fd = (fd);					\
++		if (__fd >= 0)						\
++			__set->fds[__fd / FD_SETIDXMASK] |=		\
++				1 << (__fd & FD_SETBITMASK);		\
+ 	} while (0)
  
- 	if (q->wptr_bo) {
--		wptr_addr_off = (uint64_t)q->properties.write_ptr - (uint64_t)q->wptr_bo->kfd_bo->va;
-+		wptr_addr_off = (uint64_t)q->properties.write_ptr & (PAGE_SIZE - 1);
- 		queue_input.wptr_mc_addr = ((uint64_t)q->wptr_bo->tbo.resource->start << PAGE_SHIFT) + wptr_addr_off;
- 	}
+-#define FD_ISSET(fd, set) ({                                                  \
+-		fd_set *__set = (set);                                        \
+-		int __fd = (fd);                                              \
+-		int __r = 0;                                                  \
+-		if (__fd >= 0)                                                \
+-			__r = !!(__set->fd32[__fd / 32] & 1U << (__fd & 31)); \
+-		__r;                                                          \
++#define FD_ISSET(fd, set) ({						\
++			fd_set *__set = (set);				\
++			int __fd = (fd);				\
++		int __r = 0;						\
++		if (__fd >= 0)						\
++			__r = !!(__set->fds[__fd / FD_SETIDXMASK] &	\
++1U << (__fd & FD_SET_BITMASK));						\
++		__r;							\
+ 	})
  
+-#define FD_ZERO(set) do {                                               \
+-		fd_set *__set = (set);                                  \
+-		int __idx;                                              \
+-		for (__idx = 0; __idx < (FD_SETSIZE+31) / 32; __idx ++) \
+-			__set->fd32[__idx] = 0;                         \
++#define FD_ZERO(set) do {						\
++		fd_set *__set = (set);					\
++		int __idx;						\
++		int __size = (FD_SETSIZE+FD_SETBITMASK) / FD_SETIDXMASK;\
++		for (__idx = 0; __idx < __size; __idx++)		\
++			__set->fds[__idx] = 0;				\
+ 	} while (0)
+ 
+ /* for poll() */
 -- 
 2.39.0
 
