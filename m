@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF5E3229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:19:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08F2C433EF;
-	Mon, 30 Jan 2023 14:19:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C90B3229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:19:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8BA2C4339B;
+	Mon, 30 Jan 2023 14:19:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088386;
-	bh=MR6q2UrBxQWwHOLqXV+cNwXVgjCiS4gX9NJktqqsoT4=;
+	s=korg; t=1675088389;
+	bh=7DpJ06onAH3BFSPE0sIoK9WIQtt4k/stsG06JqKlkw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VTfo1uv7tqEwUOBY/0peFnc5fXhvaWm6iiLDevRs1TJ+7m7WxsTGQvCvuAUbFh+e+
-	 xm4vgBrzwhj/FWYka1xUtk2FlwvAKHHVlCGGkl66W6MUxG19p+xqpajRXPzuhZWXko
-	 i74cR106iyW0D6F4dPA6T2yMRHe9s86YesNbmbtM=
+	b=HVQnyXrZ5ZNeAYkMEPuJ2dg+cVHapzVMNAzne+pidxiOqfA9QcuvwqnCrH+oPR486
+	 iWuAddUTJT9OBVnwTD9F3vTRDwkmar14atzl7JCRE2Zkur+IofvwYYDhIUBXoFn89L
+	 wWqTryRyyaHiO9ZDGCJdSBWNw5AF1THzBm2otcak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hao <haokexin@gmail.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.15 199/204] cpufreq: governor: Use kobject release() method to free dbs_data
-Date: Mon, 30 Jan 2023 14:52:44 +0100
-Message-Id: <20230130134325.319999622@linuxfoundation.org>
+	Chun-Tse Shao <ctshao@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Stephen Boyd <swboyd@chromium.org>
+Subject: [PATCH 5.15 200/204] kbuild: Allow kernel installation packaging to override pkg-config
+Date: Mon, 30 Jan 2023 14:52:45 +0100
+Message-Id: <20230130134325.352955399@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -34,135 +36,237 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kevin Hao <haokexin@gmail.com>
+From: Chun-Tse Shao <ctshao@google.com>
 
-commit a85ee6401a47ae3fc64ba506cacb3e7873823c65 upstream.
+commit d5ea4fece4508bf8e72b659cd22fa4840d8d61e5 upstream.
 
-The struct dbs_data embeds a struct gov_attr_set and
-the struct gov_attr_set embeds a kobject. Since every kobject must have
-a release() method and we can't use kfree() to free it directly,
-so introduce cpufreq_dbs_data_release() to release the dbs_data via
-the kobject::release() method. This fixes the calltrace like below:
+Add HOSTPKG_CONFIG to allow tooling that builds the kernel to override
+what pkg-config and parameters are used.
 
-  ODEBUG: free active (active state 0) object type: timer_list hint: delayed_work_timer_fn+0x0/0x34
-  WARNING: CPU: 12 PID: 810 at lib/debugobjects.c:505 debug_print_object+0xb8/0x100
-  Modules linked in:
-  CPU: 12 PID: 810 Comm: sh Not tainted 5.16.0-next-20220120-yocto-standard+ #536
-  Hardware name: Marvell OcteonTX CN96XX board (DT)
-  pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-  pc : debug_print_object+0xb8/0x100
-  lr : debug_print_object+0xb8/0x100
-  sp : ffff80001dfcf9a0
-  x29: ffff80001dfcf9a0 x28: 0000000000000001 x27: ffff0001464f0000
-  x26: 0000000000000000 x25: ffff8000090e3f00 x24: ffff80000af60210
-  x23: ffff8000094dfb78 x22: ffff8000090e3f00 x21: ffff0001080b7118
-  x20: ffff80000aeb2430 x19: ffff800009e8f5e0 x18: 0000000000000000
-  x17: 0000000000000002 x16: 00004d62e58be040 x15: 013590470523aff8
-  x14: ffff8000090e1828 x13: 0000000001359047 x12: 00000000f5257d14
-  x11: 0000000000040591 x10: 0000000066c1ffea x9 : ffff8000080d15e0
-  x8 : ffff80000a1765a8 x7 : 0000000000000000 x6 : 0000000000000001
-  x5 : ffff800009e8c000 x4 : ffff800009e8c760 x3 : 0000000000000000
-  x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0001474ed040
-  Call trace:
-   debug_print_object+0xb8/0x100
-   __debug_check_no_obj_freed+0x1d0/0x25c
-   debug_check_no_obj_freed+0x24/0xa0
-   kfree+0x11c/0x440
-   cpufreq_dbs_governor_exit+0xa8/0xac
-   cpufreq_exit_governor+0x44/0x90
-   cpufreq_set_policy+0x29c/0x570
-   store_scaling_governor+0x110/0x154
-   store+0xb0/0xe0
-   sysfs_kf_write+0x58/0x84
-   kernfs_fop_write_iter+0x12c/0x1c0
-   new_sync_write+0xf0/0x18c
-   vfs_write+0x1cc/0x220
-   ksys_write+0x74/0x100
-   __arm64_sys_write+0x28/0x3c
-   invoke_syscall.constprop.0+0x58/0xf0
-   do_el0_svc+0x70/0x170
-   el0_svc+0x54/0x190
-   el0t_64_sync_handler+0xa4/0x130
-   el0t_64_sync+0x1a0/0x1a4
-  irq event stamp: 189006
-  hardirqs last  enabled at (189005): [<ffff8000080849d0>] finish_task_switch.isra.0+0xe0/0x2c0
-  hardirqs last disabled at (189006): [<ffff8000090667a4>] el1_dbg+0x24/0xa0
-  softirqs last  enabled at (188966): [<ffff8000080106d0>] __do_softirq+0x4b0/0x6a0
-  softirqs last disabled at (188957): [<ffff80000804a618>] __irq_exit_rcu+0x108/0x1a4
-
-[ rjw: Because can be freed by the gov_attr_set_put() in
-  cpufreq_dbs_governor_exit() now, it is also necessary to put the
-  invocation of the governor ->exit() callback into the new
-  cpufreq_dbs_data_release() function. ]
-
-Fixes: c4435630361d ("cpufreq: governor: New sysfs show/store callbacks for governor tunables")
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Chun-Tse Shao <ctshao@google.com>
+Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+[swboyd@chromium.org: Drop certs/Makefile hunk that doesn't
+apply because pkg-config isn't used there, add dtc/Makefile hunk to
+fix dtb builds]
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cpufreq/cpufreq_governor.c |   20 +++++++++++++-------
- drivers/cpufreq/cpufreq_governor.h |    1 +
- 2 files changed, 14 insertions(+), 7 deletions(-)
+ Makefile                     |    3 ++-
+ scripts/Makefile             |    4 ++--
+ scripts/dtc/Makefile         |    6 +++---
+ scripts/kconfig/gconf-cfg.sh |   12 ++++++------
+ scripts/kconfig/mconf-cfg.sh |   16 ++++++++--------
+ scripts/kconfig/nconf-cfg.sh |   16 ++++++++--------
+ scripts/kconfig/qconf-cfg.sh |   14 +++++++-------
+ tools/objtool/Makefile       |    4 ++--
+ 8 files changed, 38 insertions(+), 37 deletions(-)
 
---- a/drivers/cpufreq/cpufreq_governor.c
-+++ b/drivers/cpufreq/cpufreq_governor.c
-@@ -388,6 +388,15 @@ static void free_policy_dbs_info(struct
- 	gov->free(policy_dbs);
- }
+--- a/Makefile
++++ b/Makefile
+@@ -430,6 +430,7 @@ else
+ HOSTCC	= gcc
+ HOSTCXX	= g++
+ endif
++HOSTPKG_CONFIG	= pkg-config
  
-+static void cpufreq_dbs_data_release(struct kobject *kobj)
-+{
-+	struct dbs_data *dbs_data = to_dbs_data(to_gov_attr_set(kobj));
-+	struct dbs_governor *gov = dbs_data->gov;
-+
-+	gov->exit(dbs_data);
-+	kfree(dbs_data);
-+}
-+
- int cpufreq_dbs_governor_init(struct cpufreq_policy *policy)
- {
- 	struct dbs_governor *gov = dbs_governor_of(policy);
-@@ -425,6 +434,7 @@ int cpufreq_dbs_governor_init(struct cpu
- 		goto free_policy_dbs_info;
- 	}
+ export KBUILD_USERCFLAGS := -Wall -Wmissing-prototypes -Wstrict-prototypes \
+ 			      -O2 -fomit-frame-pointer -std=gnu89
+@@ -525,7 +526,7 @@ KBUILD_LDFLAGS_MODULE :=
+ KBUILD_LDFLAGS :=
+ CLANG_FLAGS :=
  
-+	dbs_data->gov = gov;
- 	gov_attr_set_init(&dbs_data->attr_set, &policy_dbs->list);
+-export ARCH SRCARCH CONFIG_SHELL BASH HOSTCC KBUILD_HOSTCFLAGS CROSS_COMPILE LD CC
++export ARCH SRCARCH CONFIG_SHELL BASH HOSTCC KBUILD_HOSTCFLAGS CROSS_COMPILE LD CC HOSTPKG_CONFIG
+ export CPP AR NM STRIP OBJCOPY OBJDUMP READELF PAHOLE RESOLVE_BTFIDS LEX YACC AWK INSTALLKERNEL
+ export PERL PYTHON3 CHECK CHECKFLAGS MAKE UTS_MACHINE HOSTCXX
+ export KGZIP KBZIP2 KLZOP LZMA LZ4 XZ ZSTD
+--- a/scripts/Makefile
++++ b/scripts/Makefile
+@@ -3,8 +3,8 @@
+ # scripts contains sources for various helper programs used throughout
+ # the kernel for the build process.
  
- 	ret = gov->init(dbs_data);
-@@ -447,6 +457,7 @@ int cpufreq_dbs_governor_init(struct cpu
- 	policy->governor_data = policy_dbs;
+-CRYPTO_LIBS = $(shell pkg-config --libs libcrypto 2> /dev/null || echo -lcrypto)
+-CRYPTO_CFLAGS = $(shell pkg-config --cflags libcrypto 2> /dev/null)
++CRYPTO_LIBS = $(shell $(HOSTPKG_CONFIG) --libs libcrypto 2> /dev/null || echo -lcrypto)
++CRYPTO_CFLAGS = $(shell $(HOSTPKG_CONFIG) --cflags libcrypto 2> /dev/null)
  
- 	gov->kobj_type.sysfs_ops = &governor_sysfs_ops;
-+	gov->kobj_type.release = cpufreq_dbs_data_release;
- 	ret = kobject_init_and_add(&dbs_data->attr_set.kobj, &gov->kobj_type,
- 				   get_governor_parent_kobj(policy),
- 				   "%s", gov->gov.name);
-@@ -488,13 +499,8 @@ void cpufreq_dbs_governor_exit(struct cp
+ hostprogs-always-$(CONFIG_BUILD_BIN2C)			+= bin2c
+ hostprogs-always-$(CONFIG_KALLSYMS)			+= kallsyms
+--- a/scripts/dtc/Makefile
++++ b/scripts/dtc/Makefile
+@@ -18,7 +18,7 @@ fdtoverlay-objs	:= $(libfdt) fdtoverlay.
+ # Source files need to get at the userspace version of libfdt_env.h to compile
+ HOST_EXTRACFLAGS += -I $(srctree)/$(src)/libfdt
  
- 	policy->governor_data = NULL;
+-ifeq ($(shell pkg-config --exists yaml-0.1 2>/dev/null && echo yes),)
++ifeq ($(shell $(HOSTPKG_CONFIG) --exists yaml-0.1 2>/dev/null && echo yes),)
+ ifneq ($(CHECK_DT_BINDING)$(CHECK_DTBS),)
+ $(error dtc needs libyaml for DT schema validation support. \
+ 	Install the necessary libyaml development package.)
+@@ -27,9 +27,9 @@ HOST_EXTRACFLAGS += -DNO_YAML
+ else
+ dtc-objs	+= yamltree.o
+ # To include <yaml.h> installed in a non-default path
+-HOSTCFLAGS_yamltree.o := $(shell pkg-config --cflags yaml-0.1)
++HOSTCFLAGS_yamltree.o := $(shell $(HOSTPKG_CONFIG) --cflags yaml-0.1)
+ # To link libyaml installed in a non-default path
+-HOSTLDLIBS_dtc	:= $(shell pkg-config --libs yaml-0.1)
++HOSTLDLIBS_dtc	:= $(shell $(HOSTPKG_CONFIG) --libs yaml-0.1)
+ endif
  
--	if (!count) {
--		if (!have_governor_per_policy())
--			gov->gdbs_data = NULL;
--
--		gov->exit(dbs_data);
--		kfree(dbs_data);
--	}
-+	if (!count && !have_governor_per_policy())
-+		gov->gdbs_data = NULL;
+ # Generated files need one more search path to include headers in source tree
+--- a/scripts/kconfig/gconf-cfg.sh
++++ b/scripts/kconfig/gconf-cfg.sh
+@@ -3,14 +3,14 @@
  
- 	free_policy_dbs_info(policy_dbs, gov);
+ PKG="gtk+-2.0 gmodule-2.0 libglade-2.0"
  
---- a/drivers/cpufreq/cpufreq_governor.h
-+++ b/drivers/cpufreq/cpufreq_governor.h
-@@ -37,6 +37,7 @@ enum {OD_NORMAL_SAMPLE, OD_SUB_SAMPLE};
- /* Governor demand based switching data (per-policy or global). */
- struct dbs_data {
- 	struct gov_attr_set attr_set;
-+	struct dbs_governor *gov;
- 	void *tuners;
- 	unsigned int ignore_nice_load;
- 	unsigned int sampling_rate;
+-if [ -z "$(command -v pkg-config)" ]; then
++if [ -z "$(command -v ${HOSTPKG_CONFIG})" ]; then
+ 	echo >&2 "*"
+-	echo >&2 "* 'make gconfig' requires 'pkg-config'. Please install it."
++	echo >&2 "* 'make gconfig' requires '${HOSTPKG_CONFIG}'. Please install it."
+ 	echo >&2 "*"
+ 	exit 1
+ fi
+ 
+-if ! pkg-config --exists $PKG; then
++if ! ${HOSTPKG_CONFIG} --exists $PKG; then
+ 	echo >&2 "*"
+ 	echo >&2 "* Unable to find the GTK+ installation. Please make sure that"
+ 	echo >&2 "* the GTK+ 2.0 development package is correctly installed."
+@@ -19,12 +19,12 @@ if ! pkg-config --exists $PKG; then
+ 	exit 1
+ fi
+ 
+-if ! pkg-config --atleast-version=2.0.0 gtk+-2.0; then
++if ! ${HOSTPKG_CONFIG} --atleast-version=2.0.0 gtk+-2.0; then
+ 	echo >&2 "*"
+ 	echo >&2 "* GTK+ is present but version >= 2.0.0 is required."
+ 	echo >&2 "*"
+ 	exit 1
+ fi
+ 
+-echo cflags=\"$(pkg-config --cflags $PKG)\"
+-echo libs=\"$(pkg-config --libs $PKG)\"
++echo cflags=\"$(${HOSTPKG_CONFIG} --cflags $PKG)\"
++echo libs=\"$(${HOSTPKG_CONFIG} --libs $PKG)\"
+--- a/scripts/kconfig/mconf-cfg.sh
++++ b/scripts/kconfig/mconf-cfg.sh
+@@ -4,16 +4,16 @@
+ PKG="ncursesw"
+ PKG2="ncurses"
+ 
+-if [ -n "$(command -v pkg-config)" ]; then
+-	if pkg-config --exists $PKG; then
+-		echo cflags=\"$(pkg-config --cflags $PKG)\"
+-		echo libs=\"$(pkg-config --libs $PKG)\"
++if [ -n "$(command -v ${HOSTPKG_CONFIG})" ]; then
++	if ${HOSTPKG_CONFIG} --exists $PKG; then
++		echo cflags=\"$(${HOSTPKG_CONFIG} --cflags $PKG)\"
++		echo libs=\"$(${HOSTPKG_CONFIG} --libs $PKG)\"
+ 		exit 0
+ 	fi
+ 
+-	if pkg-config --exists $PKG2; then
+-		echo cflags=\"$(pkg-config --cflags $PKG2)\"
+-		echo libs=\"$(pkg-config --libs $PKG2)\"
++	if ${HOSTPKG_CONFIG} --exists $PKG2; then
++		echo cflags=\"$(${HOSTPKG_CONFIG} --cflags $PKG2)\"
++		echo libs=\"$(${HOSTPKG_CONFIG} --libs $PKG2)\"
+ 		exit 0
+ 	fi
+ fi
+@@ -46,7 +46,7 @@ echo >&2 "* Unable to find the ncurses p
+ echo >&2 "* Install ncurses (ncurses-devel or libncurses-dev"
+ echo >&2 "* depending on your distribution)."
+ echo >&2 "*"
+-echo >&2 "* You may also need to install pkg-config to find the"
++echo >&2 "* You may also need to install ${HOSTPKG_CONFIG} to find the"
+ echo >&2 "* ncurses installed in a non-default location."
+ echo >&2 "*"
+ exit 1
+--- a/scripts/kconfig/nconf-cfg.sh
++++ b/scripts/kconfig/nconf-cfg.sh
+@@ -4,16 +4,16 @@
+ PKG="ncursesw menuw panelw"
+ PKG2="ncurses menu panel"
+ 
+-if [ -n "$(command -v pkg-config)" ]; then
+-	if pkg-config --exists $PKG; then
+-		echo cflags=\"$(pkg-config --cflags $PKG)\"
+-		echo libs=\"$(pkg-config --libs $PKG)\"
++if [ -n "$(command -v ${HOSTPKG_CONFIG})" ]; then
++	if ${HOSTPKG_CONFIG} --exists $PKG; then
++		echo cflags=\"$(${HOSTPKG_CONFIG} --cflags $PKG)\"
++		echo libs=\"$(${HOSTPKG_CONFIG} --libs $PKG)\"
+ 		exit 0
+ 	fi
+ 
+-	if pkg-config --exists $PKG2; then
+-		echo cflags=\"$(pkg-config --cflags $PKG2)\"
+-		echo libs=\"$(pkg-config --libs $PKG2)\"
++	if ${HOSTPKG_CONFIG} --exists $PKG2; then
++		echo cflags=\"$(${HOSTPKG_CONFIG} --cflags $PKG2)\"
++		echo libs=\"$(${HOSTPKG_CONFIG} --libs $PKG2)\"
+ 		exit 0
+ 	fi
+ fi
+@@ -44,7 +44,7 @@ echo >&2 "* Unable to find the ncurses p
+ echo >&2 "* Install ncurses (ncurses-devel or libncurses-dev"
+ echo >&2 "* depending on your distribution)."
+ echo >&2 "*"
+-echo >&2 "* You may also need to install pkg-config to find the"
++echo >&2 "* You may also need to install ${HOSTPKG_CONFIG} to find the"
+ echo >&2 "* ncurses installed in a non-default location."
+ echo >&2 "*"
+ exit 1
+--- a/scripts/kconfig/qconf-cfg.sh
++++ b/scripts/kconfig/qconf-cfg.sh
+@@ -3,22 +3,22 @@
+ 
+ PKG="Qt5Core Qt5Gui Qt5Widgets"
+ 
+-if [ -z "$(command -v pkg-config)" ]; then
++if [ -z "$(command -v ${HOSTPKG_CONFIG})" ]; then
+ 	echo >&2 "*"
+-	echo >&2 "* 'make xconfig' requires 'pkg-config'. Please install it."
++	echo >&2 "* 'make xconfig' requires '${HOSTPKG_CONFIG}'. Please install it."
+ 	echo >&2 "*"
+ 	exit 1
+ fi
+ 
+-if pkg-config --exists $PKG; then
+-	echo cflags=\"-std=c++11 -fPIC $(pkg-config --cflags $PKG)\"
+-	echo libs=\"$(pkg-config --libs $PKG)\"
+-	echo moc=\"$(pkg-config --variable=host_bins Qt5Core)/moc\"
++if ${HOSTPKG_CONFIG} --exists $PKG; then
++	echo cflags=\"-std=c++11 -fPIC $(${HOSTPKG_CONFIG} --cflags $PKG)\"
++	echo libs=\"$(${HOSTPKG_CONFIG} --libs $PKG)\"
++	echo moc=\"$(${HOSTPKG_CONFIG} --variable=host_bins Qt5Core)/moc\"
+ 	exit 0
+ fi
+ 
+ echo >&2 "*"
+-echo >&2 "* Could not find Qt5 via pkg-config."
++echo >&2 "* Could not find Qt5 via ${HOSTPKG_CONFIG}."
+ echo >&2 "* Please install Qt5 and make sure it's in PKG_CONFIG_PATH"
+ echo >&2 "*"
+ exit 1
+--- a/tools/objtool/Makefile
++++ b/tools/objtool/Makefile
+@@ -19,8 +19,8 @@ LIBSUBCMD		= $(LIBSUBCMD_OUTPUT)libsubcm
+ OBJTOOL    := $(OUTPUT)objtool
+ OBJTOOL_IN := $(OBJTOOL)-in.o
+ 
+-LIBELF_FLAGS := $(shell pkg-config libelf --cflags 2>/dev/null)
+-LIBELF_LIBS  := $(shell pkg-config libelf --libs 2>/dev/null || echo -lelf)
++LIBELF_FLAGS := $(shell $(HOSTPKG_CONFIG) libelf --cflags 2>/dev/null)
++LIBELF_LIBS  := $(shell $(HOSTPKG_CONFIG) libelf --libs 2>/dev/null || echo -lelf)
+ 
+ all: $(OBJTOOL)
+ 
 
 
