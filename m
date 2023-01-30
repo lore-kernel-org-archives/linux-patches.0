@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7720028EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:15:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E01D7C433D2;
-	Mon, 30 Jan 2023 14:15:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DA128EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:15:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7262C433D2;
+	Mon, 30 Jan 2023 14:15:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088146;
-	bh=9wYsGPt01SM5B7DLK6/+TO3cr8wzvrNlWYrTwa8gmwE=;
+	s=korg; t=1675088149;
+	bh=M9QqjWcnMQ82/qi6H4r7WthglJD/V66MbBnFMi48uSU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HbzkQrgkLH45jeCIxDMhue9LdHNHDUlrnN9NI9ErA9WvJ2l4sOidmR96kbOO3pafo
-	 HkG4D2QRAED87GjdIq/ZE2x4IGmd9Yo9QvgbZbV/xViIq2WEiuwLFY6umXtNYf02iS
-	 kttWXAMGcQCS1As2En3S9Dxqfx9IsotOdKpXpM6Q=
+	b=TPqJIDMloH3F5edazXmgjrBt/zIlGXLDnmlAhJZAPW1+VpjpgJxKFZYawn1VMxqWP
+	 SmaC8Qd9P6Sv/eDdJIZpilCwarER/yGhBl8WmP1mSTDD0T+qoF44ea18i6Fvinu/TB
+	 K6w3wrHGN2/DIH1IE2s2xr/7BuOik7lT345jQ3Vc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Niklas Schnelle <schnelle@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Eric Biggers <ebiggers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 103/204] s390/debug: add _ASM_S390_ prefix to header guard
-Date: Mon, 30 Jan 2023 14:51:08 +0100
-Message-Id: <20230130134320.865538768@linuxfoundation.org>
+Subject: [PATCH 5.15 130/204] hexagon: Fix function name in die()
+Date: Mon, 30 Jan 2023 14:51:35 +0100
+Message-Id: <20230130134322.250704906@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,44 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Niklas Schnelle <schnelle@linux.ibm.com>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit 0d4d52361b6c29bf771acd4fa461f06d78fb2fac ]
+commit 4f0712ccec09c071e221242a2db9a6779a55a949 upstream.
 
-Using DEBUG_H without a prefix is very generic and inconsistent with
-other header guards in arch/s390/include/asm. In fact it collides with
-the same name in the ath9k wireless driver though that depends on !S390
-via disabled wireless support. Let's just use a consistent header guard
-name and prevent possible future trouble.
+When building ARCH=hexagon defconfig:
 
-Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+arch/hexagon/kernel/traps.c:217:2: error: implicit declaration of
+function 'make_dead_task' [-Werror,-Wimplicit-function-declaration]
+        make_dead_task(err);
+        ^
+
+The function's name is make_task_dead(), change it so there is no more
+build error.
+
+Fixes: 0e25498f8cd4 ("exit: Add and use make_task_dead.")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lkml.kernel.org/r/20211227184851.2297759-2-nathan@kernel.org
+Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/include/asm/debug.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/hexagon/kernel/traps.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/s390/include/asm/debug.h b/arch/s390/include/asm/debug.h
-index 19a55e1e3a0c..5fc91a90657e 100644
---- a/arch/s390/include/asm/debug.h
-+++ b/arch/s390/include/asm/debug.h
-@@ -4,8 +4,8 @@
-  *
-  *    Copyright IBM Corp. 1999, 2020
-  */
--#ifndef DEBUG_H
--#define DEBUG_H
-+#ifndef _ASM_S390_DEBUG_H
-+#define _ASM_S390_DEBUG_H
+diff --git a/arch/hexagon/kernel/traps.c b/arch/hexagon/kernel/traps.c
+index 6dd6cf0ab711..1240f038cce0 100644
+--- a/arch/hexagon/kernel/traps.c
++++ b/arch/hexagon/kernel/traps.c
+@@ -214,7 +214,7 @@ int die(const char *str, struct pt_regs *regs, long err)
+ 		panic("Fatal exception");
  
- #include <linux/string.h>
- #include <linux/spinlock.h>
-@@ -487,4 +487,4 @@ void debug_register_static(debug_info_t *id, int pages_per_area, int nr_areas);
+ 	oops_exit();
+-	make_dead_task(err);
++	make_task_dead(err);
+ 	return 0;
+ }
  
- #endif /* MODULE */
- 
--#endif /* DEBUG_H */
-+#endif /* _ASM_S390_DEBUG_H */
 -- 
 2.39.0
 
