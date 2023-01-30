@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BB5728EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:02:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775BCC433D2;
-	Mon, 30 Jan 2023 14:02:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17BB928EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:02:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 834F9C433EF;
+	Mon, 30 Jan 2023 14:02:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087358;
-	bh=zysS/rugNhPlITyUntUPufCwdCRROuiPCqcuUFnif8A=;
+	s=korg; t=1675087361;
+	bh=j0duFur5c6CIXIftviDaaJ8CymnVCN+7E2W2c0PdPy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=heK955EIsh898iMd8gS3Gw+hO49LV9v3L4UTQsdhxbIfLjAdAFt1ZYu/U2Shgj2mH
-	 zIpaF6WtKhIfCb0p6JUIL3rIyB88793uIA5vLJUBYjv5hdd92zNupSoOL9ItL2evUy
-	 PLjF5XrQWKhdebJMWW6CSHoyUp9k+HceuFpDQ2c4=
+	b=SJs64R4VR/yoXVh4C6S6/xvCH7U0CAyNPWZJVpO8uu11NWaqfZFBEowar5LI/G/if
+	 9kz1ex5KiM9UBLEhMX1Pv50gbOp9K+vJm80k+GGPkBDqNtJU9Pjw4tLTDFkPaWPeCn
+	 YPVTX+uU50eTBCKe0jyPyQd9LqVhkm+4sNlqND30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Klein <m.klein@mvz-labor-lb.de>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 182/313] platform/x86: touchscreen_dmi: Add info for the CSL Panther Tab HD
-Date: Mon, 30 Jan 2023 14:50:17 +0100
-Message-Id: <20230130134345.170678924@linuxfoundation.org>
+Subject: [PATCH 6.1 183/313] platform/x86: asus-nb-wmi: Add alternate mapping for KEY_CAMERA
+Date: Mon, 30 Jan 2023 14:50:18 +0100
+Message-Id: <20230130134345.219489308@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,64 +35,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Klein <m.klein@mvz-labor-lb.de>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 36c2b9d6710427f802494ba070621cb415198293 ]
+[ Upstream commit c78a4e191839edc1e8c3e51565cf2e71d40e8883 ]
 
-Add touchscreen info for the CSL Panther Tab HD.
+This keycode is emitted on a Asus VivoBook E410MAB with firmware
+E410MAB.304.
 
-Signed-off-by: Michael Klein <m.klein@mvz-labor-lb.de>
-Link: https://lore.kernel.org/r/20221220121103.uiwn5l7fii2iggct@LLGMVZLB-0037
+The physical key has a strikken-through camera printed on it.
+
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lore.kernel.org/r/20221216-asus-key-v1-1-45da124119a3@weissschuh.net
 Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 25 +++++++++++++++++++++++++
- 1 file changed, 25 insertions(+)
+ drivers/platform/x86/asus-nb-wmi.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index baae3120efd0..f00995390fdf 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -264,6 +264,23 @@ static const struct ts_dmi_data connect_tablet9_data = {
- 	.properties     = connect_tablet9_props,
- };
- 
-+static const struct property_entry csl_panther_tab_hd_props[] = {
-+	PROPERTY_ENTRY_U32("touchscreen-min-x", 1),
-+	PROPERTY_ENTRY_U32("touchscreen-min-y", 20),
-+	PROPERTY_ENTRY_U32("touchscreen-size-x", 1980),
-+	PROPERTY_ENTRY_U32("touchscreen-size-y", 1526),
-+	PROPERTY_ENTRY_BOOL("touchscreen-inverted-y"),
-+	PROPERTY_ENTRY_BOOL("touchscreen-swapped-x-y"),
-+	PROPERTY_ENTRY_STRING("firmware-name", "gsl1680-csl-panther-tab-hd.fw"),
-+	PROPERTY_ENTRY_U32("silead,max-fingers", 10),
-+	{ }
-+};
-+
-+static const struct ts_dmi_data csl_panther_tab_hd_data = {
-+	.acpi_name      = "MSSL1680:00",
-+	.properties     = csl_panther_tab_hd_props,
-+};
-+
- static const struct property_entry cube_iwork8_air_props[] = {
- 	PROPERTY_ENTRY_U32("touchscreen-min-x", 1),
- 	PROPERTY_ENTRY_U32("touchscreen-min-y", 3),
-@@ -1124,6 +1141,14 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_PRODUCT_NAME, "Tablet 9"),
- 		},
- 	},
-+	{
-+		/* CSL Panther Tab HD */
-+		.driver_data = (void *)&csl_panther_tab_hd_data,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "CSL Computer GmbH & Co. KG"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "CSL Panther Tab HD"),
-+		},
-+	},
- 	{
- 		/* CUBE iwork8 Air */
- 		.driver_data = (void *)&cube_iwork8_air_data,
+diff --git a/drivers/platform/x86/asus-nb-wmi.c b/drivers/platform/x86/asus-nb-wmi.c
+index c685a705b73d..8ee5d108e9e0 100644
+--- a/drivers/platform/x86/asus-nb-wmi.c
++++ b/drivers/platform/x86/asus-nb-wmi.c
+@@ -544,6 +544,7 @@ static const struct key_entry asus_nb_wmi_keymap[] = {
+ 	{ KE_KEY, 0x7D, { KEY_BLUETOOTH } }, /* Bluetooth Enable */
+ 	{ KE_KEY, 0x7E, { KEY_BLUETOOTH } }, /* Bluetooth Disable */
+ 	{ KE_KEY, 0x82, { KEY_CAMERA } },
++	{ KE_KEY, 0x85, { KEY_CAMERA } },
+ 	{ KE_KEY, 0x86, { KEY_PROG1 } }, /* MyASUS Key */
+ 	{ KE_KEY, 0x88, { KEY_RFKILL  } }, /* Radio Toggle Key */
+ 	{ KE_KEY, 0x8A, { KEY_PROG1 } }, /* Color enhancement mode */
 -- 
 2.39.0
 
