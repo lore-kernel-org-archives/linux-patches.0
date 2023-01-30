@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA57528EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:06:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 68C43C433EF;
-	Mon, 30 Jan 2023 14:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF5FB28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:06:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DFB8C433EF;
+	Mon, 30 Jan 2023 14:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087598;
-	bh=MII1gthDuE70IDCSNFXk7nI7lYhYLxdTG/ukJwCJFjg=;
+	s=korg; t=1675087601;
+	bh=1lIUHZ33b4w/rqN0rFNfxj2gZ+wj22kCkUCagSbW0uo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Uw9vyKAS0Gzp+fIhoC6OASe3NihxEgRaf+WHm/zjeLhr6nesgubHPRb2cepf0VvZt
-	 xQWoMT94MwjyjceMoWLChiFkxiaxiTISHy3WFzjRbVkTtpevIwBLP+btpJkGLFJ3/U
-	 xUbO3zLO5IPuQwRYRS1XvBru8QF/FrHXPPl5mglo=
+	b=sz7SNjEMSYabP1NtBtxPCxI71m/Y/WnXEtCgDoxTql6YyiFQC5q0/5C+IRcTWwF7N
+	 13NY4RmmtvPbQNhw59sE/qpe7suH2u7B8mycgKjejuUgIOy/YjkGa0zyLBJU+9JaxO
+	 vASX17O7imoyBaJqJWEg7GWamx1T2LCdF+JG42X8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 261/313] ACPI: video: Add backlight=native DMI quirk for HP Pavilion g6-1d80nr
-Date: Mon, 30 Jan 2023 14:51:36 +0100
-Message-Id: <20230130134348.894068042@linuxfoundation.org>
+	Evan Quan <evan.quan@amd.com>,
+	Feifei Xu <Feifei.Xu@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 235/313] drm/amd/pm: add missing AllowIHInterrupt message mapping for SMU13.0.0
+Date: Mon, 30 Jan 2023 14:51:10 +0100
+Message-Id: <20230130134347.639354997@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,47 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Evan Quan <evan.quan@amd.com>
 
-[ Upstream commit d77596d432cc4142520af32b5388d512e52e0edb ]
+commit 15b207d0abdcbb2271774aa99d9a290789159e75 upstream.
 
-The HP Pavilion g6-1d80nr predates Windows 8, so it defaults to using
-acpi_video# for backlight control, but this is non functional on
-this model.
+Add SMU13.0.0 AllowIHInterrupt message mapping.
 
-Add a DMI quirk to use the native backlight interface which does
-work properly.
-
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Stable-dep-of: 9dcb34234b82 ("ACPI: video: Add backlight=native DMI quirk for HP EliteBook 8460p")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Evan Quan <evan.quan@amd.com>
+Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.1.x
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/video_detect.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
-index 1db8e68cd8bc..c20fc7ddca2f 100644
---- a/drivers/acpi/video_detect.c
-+++ b/drivers/acpi/video_detect.c
-@@ -608,6 +608,15 @@ static const struct dmi_system_id video_detect_dmi_table[] = {
- 		DMI_MATCH(DMI_PRODUCT_NAME, "UX303UB"),
- 		},
- 	},
-+	{
-+	 .callback = video_detect_force_native,
-+	 /* HP Pavilion g6-1d80nr / B4U19UA */
-+	 .matches = {
-+		DMI_MATCH(DMI_SYS_VENDOR, "Hewlett-Packard"),
-+		DMI_MATCH(DMI_PRODUCT_NAME, "HP Pavilion g6 Notebook PC"),
-+		DMI_MATCH(DMI_PRODUCT_SKU, "B4U19UA"),
-+		},
-+	},
- 	{
- 	 .callback = video_detect_force_native,
- 	 /* Samsung N150P */
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+index 4c20d17e7416..cf96c3f2affe 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
++++ b/drivers/gpu/drm/amd/pm/swsmu/smu13/smu_v13_0_0_ppt.c
+@@ -145,6 +145,7 @@ static struct cmn2asic_msg_mapping smu_v13_0_0_message_map[SMU_MSG_MAX_COUNT] =
+ 	MSG_MAP(SetBadMemoryPagesRetiredFlagsPerChannel,
+ 			    PPSMC_MSG_SetBadMemoryPagesRetiredFlagsPerChannel,   0),
+ 	MSG_MAP(AllowGpo,			PPSMC_MSG_SetGpoAllow,           0),
++	MSG_MAP(AllowIHHostInterrupt,		PPSMC_MSG_AllowIHHostInterrupt,       0),
+ };
+ 
+ static struct cmn2asic_mapping smu_v13_0_0_clk_map[SMU_CLK_COUNT] = {
 -- 
-2.39.0
+2.39.1
 
 
 
