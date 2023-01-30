@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EBC828EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BD4AC4339B;
-	Mon, 30 Jan 2023 14:14:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB3B528EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BD3EC433A0;
+	Mon, 30 Jan 2023 14:14:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088046;
-	bh=ijWIKt8a3aOBVFaLTtget1mNxlzo7W5LYyhjWhvb550=;
+	s=korg; t=1675088048;
+	bh=lRcyXaRIXBMRupAe2tCowfCE8QKvoBFCfYZUuKn4Zng=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mK+qOhbopX4GWOjlNwRDOcWmc5uZuszC8i/uJmSCR15pTgFzsXEH86zuwwK2q2umJ
-	 cX01qJBxNwrYBOoMAq5WA1a5kl6Uj71RzTG7oZ6QiEDrflhODoyjVRok4dDFFjgcdf
-	 d5G01n/jr76qA+elY0+6BQi9h8F3xPfe1LZwDRec=
+	b=NJEShONZACFaiWnWniSQb6LCywiwlJEzuKxxO39O5ANo9UkeYLqZ8FAj9o44+TtYE
+	 iOsdY+irXB/c4EZKP/tXxWUr3yI3BQa37EZLyjZOgVE1sZGYQCm1tlDDkIF2M6Xhcv
+	 KivoNOSLtwIrmsAircU/J0aOTg9MwGb/QrtXJrgA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wenchao Hao <haowenchao@huawei.com>,
-	Mike Christie <michael.christie@oracle.com>,
-	Wu Bo <wubo40@huawei.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Koba Ko <koba.ko@canonical.com>,
+	Jie Hai <haijie1@huawei.com>,
+	Jerry Snitselaar <jsnitsel@redhat.com>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Joel Savitz <jsavitz@redhat.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 096/204] scsi: iscsi: Fix multiple iSCSI session unbind events sent to userspace
-Date: Mon, 30 Jan 2023 14:51:01 +0100
-Message-Id: <20230130134320.578708679@linuxfoundation.org>
+Subject: [PATCH 5.15 070/204] dmaengine: Fix double increment of client_count in dma_chan_get()
+Date: Mon, 30 Jan 2023 14:50:35 +0100
+Message-Id: <20230130134319.412425502@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -37,192 +39,124 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wenchao Hao <haowenchao@huawei.com>
+From: Koba Ko <koba.ko@canonical.com>
 
-[ Upstream commit a3be19b91ea7121d388084e8c07f5b1b982eb40c ]
+[ Upstream commit f3dc1b3b4750851a94212dba249703dd0e50bb20 ]
 
-It was observed that the kernel would potentially send
-ISCSI_KEVENT_UNBIND_SESSION multiple times. Introduce 'target_state' in
-iscsi_cls_session() to make sure session will send only one unbind session
-event.
+The first time dma_chan_get() is called for a channel the channel
+client_count is incorrectly incremented twice for public channels,
+first in balance_ref_count(), and again prior to returning. This
+results in an incorrect client count which will lead to the
+channel resources not being freed when they should be. A simple
+ test of repeated module load and unload of async_tx on a Dell
+ Power Edge R7425 also shows this resulting in a kref underflow
+ warning.
 
-This introduces a regression wrt. the issue fixed in commit 13e60d3ba287
-("scsi: iscsi: Report unbind session event when the target has been
-removed"). If iscsid dies for any reason after sending an unbind session to
-kernel, once iscsid is restarted, the kernel's ISCSI_KEVENT_UNBIND_SESSION
-event is lost and userspace is then unable to logout. However, the session
-is actually in invalid state (its target_id is INVALID) so iscsid should
-not sync this session during restart.
+[  124.329662] async_tx: api initialized (async)
+[  129.000627] async_tx: api initialized (async)
+[  130.047839] ------------[ cut here ]------------
+[  130.052472] refcount_t: underflow; use-after-free.
+[  130.057279] WARNING: CPU: 3 PID: 19364 at lib/refcount.c:28
+refcount_warn_saturate+0xba/0x110
+[  130.065811] Modules linked in: async_tx(-) rfkill intel_rapl_msr
+intel_rapl_common amd64_edac edac_mce_amd ipmi_ssif kvm_amd dcdbas kvm
+mgag200 drm_shmem_helper acpi_ipmi irqbypass drm_kms_helper ipmi_si
+syscopyarea sysfillrect rapl pcspkr ipmi_devintf sysimgblt fb_sys_fops
+k10temp i2c_piix4 ipmi_msghandler acpi_power_meter acpi_cpufreq vfat
+fat drm fuse xfs libcrc32c sd_mod t10_pi sg ahci crct10dif_pclmul
+libahci crc32_pclmul crc32c_intel ghash_clmulni_intel igb megaraid_sas
+i40e libata i2c_algo_bit ccp sp5100_tco dca dm_mirror dm_region_hash
+dm_log dm_mod [last unloaded: async_tx]
+[  130.117361] CPU: 3 PID: 19364 Comm: modprobe Kdump: loaded Not
+tainted 5.14.0-185.el9.x86_64 #1
+[  130.126091] Hardware name: Dell Inc. PowerEdge R7425/02MJ3T, BIOS
+1.18.0 01/17/2022
+[  130.133806] RIP: 0010:refcount_warn_saturate+0xba/0x110
+[  130.139041] Code: 01 01 e8 6d bd 55 00 0f 0b e9 72 9d 8a 00 80 3d
+26 18 9c 01 00 75 85 48 c7 c7 f8 a3 03 9d c6 05 16 18 9c 01 01 e8 4a
+bd 55 00 <0f> 0b e9 4f 9d 8a 00 80 3d 01 18 9c 01 00 0f 85 5e ff ff ff
+48 c7
+[  130.157807] RSP: 0018:ffffbf98898afe68 EFLAGS: 00010286
+[  130.163036] RAX: 0000000000000000 RBX: ffff9da06028e598 RCX: 0000000000000000
+[  130.170172] RDX: ffff9daf9de26480 RSI: ffff9daf9de198a0 RDI: ffff9daf9de198a0
+[  130.177316] RBP: ffff9da7cddf3970 R08: 0000000000000000 R09: 00000000ffff7fff
+[  130.184459] R10: ffffbf98898afd00 R11: ffffffff9d9e8c28 R12: ffff9da7cddf1970
+[  130.191596] R13: 0000000000000000 R14: 0000000000000000 R15: 0000000000000000
+[  130.198739] FS:  00007f646435c740(0000) GS:ffff9daf9de00000(0000)
+knlGS:0000000000000000
+[  130.206832] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+[  130.212586] CR2: 00007f6463b214f0 CR3: 00000008ab98c000 CR4: 00000000003506e0
+[  130.219729] Call Trace:
+[  130.222192]  <TASK>
+[  130.224305]  dma_chan_put+0x10d/0x110
+[  130.227988]  dmaengine_put+0x7a/0xa0
+[  130.231575]  __do_sys_delete_module.constprop.0+0x178/0x280
+[  130.237157]  ? syscall_trace_enter.constprop.0+0x145/0x1d0
+[  130.242652]  do_syscall_64+0x5c/0x90
+[  130.246240]  ? exc_page_fault+0x62/0x150
+[  130.250178]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+[  130.255243] RIP: 0033:0x7f6463a3f5ab
+[  130.258830] Code: 73 01 c3 48 8b 0d 75 a8 1b 00 f7 d8 64 89 01 48
+83 c8 ff c3 66 2e 0f 1f 84 00 00 00 00 00 90 f3 0f 1e fa b8 b0 00 00
+00 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 8b 0d 45 a8 1b 00 f7 d8 64 89
+01 48
+[  130.277591] RSP: 002b:00007fff22f972c8 EFLAGS: 00000206 ORIG_RAX:
+00000000000000b0
+[  130.285164] RAX: ffffffffffffffda RBX: 000055b6786edd40 RCX: 00007f6463a3f5ab
+[  130.292303] RDX: 0000000000000000 RSI: 0000000000000800 RDI: 000055b6786edda8
+[  130.299443] RBP: 000055b6786edd40 R08: 0000000000000000 R09: 0000000000000000
+[  130.306584] R10: 00007f6463b9eac0 R11: 0000000000000206 R12: 000055b6786edda8
+[  130.313731] R13: 0000000000000000 R14: 000055b6786edda8 R15: 00007fff22f995f8
+[  130.320875]  </TASK>
+[  130.323081] ---[ end trace eff7156d56b5cf25 ]---
 
-Consequently we need to check the session's target state during iscsid
-restart.  If session is in unbound state, do not sync this session and
-perform session teardown. This is OK because once a session is unbound, we
-can not recover it any more (mainly because its target id is INVALID).
+cat /sys/class/dma/dma0chan*/in_use would get the wrong result.
+2
+2
+2
 
-Signed-off-by: Wenchao Hao <haowenchao@huawei.com>
-Link: https://lore.kernel.org/r/20221126010752.231917-1-haowenchao@huawei.com
-Reviewed-by: Mike Christie <michael.christie@oracle.com>
-Reviewed-by: Wu Bo <wubo40@huawei.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: d2f4f99db3e9 ("dmaengine: Rework dma_chan_get")
+Signed-off-by: Koba Ko <koba.ko@canonical.com>
+Reviewed-by: Jie Hai <haijie1@huawei.com>
+Test-by: Jie Hai <haijie1@huawei.com>
+Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Tested-by: Joel Savitz <jsavitz@redhat.com>
+Link: https://lore.kernel.org/r/20221201030050.978595-1-koba.ko@canonical.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_transport_iscsi.c | 50 ++++++++++++++++++++++++++---
- include/scsi/scsi_transport_iscsi.h |  9 ++++++
- 2 files changed, 54 insertions(+), 5 deletions(-)
+ drivers/dma/dmaengine.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/scsi_transport_iscsi.c b/drivers/scsi/scsi_transport_iscsi.c
-index cc39cbef9d7f..4d23e5af20d3 100644
---- a/drivers/scsi/scsi_transport_iscsi.c
-+++ b/drivers/scsi/scsi_transport_iscsi.c
-@@ -1679,6 +1679,13 @@ static const char *iscsi_session_state_name(int state)
- 	return name;
- }
- 
-+static char *iscsi_session_target_state_name[] = {
-+	[ISCSI_SESSION_TARGET_UNBOUND]   = "UNBOUND",
-+	[ISCSI_SESSION_TARGET_ALLOCATED] = "ALLOCATED",
-+	[ISCSI_SESSION_TARGET_SCANNED]   = "SCANNED",
-+	[ISCSI_SESSION_TARGET_UNBINDING] = "UNBINDING",
-+};
-+
- int iscsi_session_chkready(struct iscsi_cls_session *session)
- {
- 	int err;
-@@ -1807,9 +1814,13 @@ static int iscsi_user_scan_session(struct device *dev, void *data)
- 		if ((scan_data->channel == SCAN_WILD_CARD ||
- 		     scan_data->channel == 0) &&
- 		    (scan_data->id == SCAN_WILD_CARD ||
--		     scan_data->id == id))
-+		     scan_data->id == id)) {
- 			scsi_scan_target(&session->dev, 0, id,
- 					 scan_data->lun, scan_data->rescan);
-+			spin_lock_irqsave(&session->lock, flags);
-+			session->target_state = ISCSI_SESSION_TARGET_SCANNED;
-+			spin_unlock_irqrestore(&session->lock, flags);
-+		}
+diff --git a/drivers/dma/dmaengine.c b/drivers/dma/dmaengine.c
+index af3ee288bc11..4ec7bb58c195 100644
+--- a/drivers/dma/dmaengine.c
++++ b/drivers/dma/dmaengine.c
+@@ -451,7 +451,8 @@ static int dma_chan_get(struct dma_chan *chan)
+ 	/* The channel is already in use, update client count */
+ 	if (chan->client_count) {
+ 		__module_get(owner);
+-		goto out;
++		chan->client_count++;
++		return 0;
  	}
  
- user_scan_exit:
-@@ -1998,31 +2009,41 @@ static void __iscsi_unbind_session(struct work_struct *work)
- 	struct iscsi_cls_host *ihost = shost->shost_data;
- 	unsigned long flags;
- 	unsigned int target_id;
-+	bool remove_target = true;
- 
- 	ISCSI_DBG_TRANS_SESSION(session, "Unbinding session\n");
- 
- 	/* Prevent new scans and make sure scanning is not in progress */
- 	mutex_lock(&ihost->mutex);
- 	spin_lock_irqsave(&session->lock, flags);
--	if (session->target_id == ISCSI_MAX_TARGET) {
-+	if (session->target_state == ISCSI_SESSION_TARGET_ALLOCATED) {
-+		remove_target = false;
-+	} else if (session->target_state != ISCSI_SESSION_TARGET_SCANNED) {
- 		spin_unlock_irqrestore(&session->lock, flags);
- 		mutex_unlock(&ihost->mutex);
--		goto unbind_session_exit;
-+		ISCSI_DBG_TRANS_SESSION(session,
-+			"Skipping target unbinding: Session is unbound/unbinding.\n");
-+		return;
+ 	if (!try_module_get(owner))
+@@ -470,11 +471,11 @@ static int dma_chan_get(struct dma_chan *chan)
+ 			goto err_out;
  	}
  
-+	session->target_state = ISCSI_SESSION_TARGET_UNBINDING;
- 	target_id = session->target_id;
- 	session->target_id = ISCSI_MAX_TARGET;
- 	spin_unlock_irqrestore(&session->lock, flags);
- 	mutex_unlock(&ihost->mutex);
- 
--	scsi_remove_target(&session->dev);
-+	if (remove_target)
-+		scsi_remove_target(&session->dev);
- 
- 	if (session->ida_used)
- 		ida_simple_remove(&iscsi_sess_ida, target_id);
- 
--unbind_session_exit:
- 	iscsi_session_event(session, ISCSI_KEVENT_UNBIND_SESSION);
- 	ISCSI_DBG_TRANS_SESSION(session, "Completed target removal\n");
++	chan->client_count++;
 +
-+	spin_lock_irqsave(&session->lock, flags);
-+	session->target_state = ISCSI_SESSION_TARGET_UNBOUND;
-+	spin_unlock_irqrestore(&session->lock, flags);
- }
+ 	if (!dma_has_cap(DMA_PRIVATE, chan->device->cap_mask))
+ 		balance_ref_count(chan);
  
- static void __iscsi_destroy_session(struct work_struct *work)
-@@ -2091,6 +2112,9 @@ int iscsi_add_session(struct iscsi_cls_session *session, unsigned int target_id)
- 		session->ida_used = true;
- 	} else
- 		session->target_id = target_id;
-+	spin_lock_irqsave(&session->lock, flags);
-+	session->target_state = ISCSI_SESSION_TARGET_ALLOCATED;
-+	spin_unlock_irqrestore(&session->lock, flags);
+-out:
+-	chan->client_count++;
+ 	return 0;
  
- 	dev_set_name(&session->dev, "session%u", session->sid);
- 	err = device_add(&session->dev);
-@@ -4391,6 +4415,19 @@ iscsi_session_attr(def_taskmgmt_tmo, ISCSI_PARAM_DEF_TASKMGMT_TMO, 0);
- iscsi_session_attr(discovery_parent_idx, ISCSI_PARAM_DISCOVERY_PARENT_IDX, 0);
- iscsi_session_attr(discovery_parent_type, ISCSI_PARAM_DISCOVERY_PARENT_TYPE, 0);
- 
-+static ssize_t
-+show_priv_session_target_state(struct device *dev, struct device_attribute *attr,
-+			char *buf)
-+{
-+	struct iscsi_cls_session *session = iscsi_dev_to_session(dev->parent);
-+
-+	return sysfs_emit(buf, "%s\n",
-+			iscsi_session_target_state_name[session->target_state]);
-+}
-+
-+static ISCSI_CLASS_ATTR(priv_sess, target_state, S_IRUGO,
-+			show_priv_session_target_state, NULL);
-+
- static ssize_t
- show_priv_session_state(struct device *dev, struct device_attribute *attr,
- 			char *buf)
-@@ -4493,6 +4530,7 @@ static struct attribute *iscsi_session_attrs[] = {
- 	&dev_attr_sess_boot_target.attr,
- 	&dev_attr_priv_sess_recovery_tmo.attr,
- 	&dev_attr_priv_sess_state.attr,
-+	&dev_attr_priv_sess_target_state.attr,
- 	&dev_attr_priv_sess_creator.attr,
- 	&dev_attr_sess_chap_out_idx.attr,
- 	&dev_attr_sess_chap_in_idx.attr,
-@@ -4606,6 +4644,8 @@ static umode_t iscsi_session_attr_is_visible(struct kobject *kobj,
- 		return S_IRUGO | S_IWUSR;
- 	else if (attr == &dev_attr_priv_sess_state.attr)
- 		return S_IRUGO;
-+	else if (attr == &dev_attr_priv_sess_target_state.attr)
-+		return S_IRUGO;
- 	else if (attr == &dev_attr_priv_sess_creator.attr)
- 		return S_IRUGO;
- 	else if (attr == &dev_attr_priv_sess_target_id.attr)
-diff --git a/include/scsi/scsi_transport_iscsi.h b/include/scsi/scsi_transport_iscsi.h
-index 0f2f149ad916..304ccf153928 100644
---- a/include/scsi/scsi_transport_iscsi.h
-+++ b/include/scsi/scsi_transport_iscsi.h
-@@ -236,6 +236,14 @@ enum {
- 	ISCSI_SESSION_FREE,
- };
- 
-+enum {
-+	ISCSI_SESSION_TARGET_UNBOUND,
-+	ISCSI_SESSION_TARGET_ALLOCATED,
-+	ISCSI_SESSION_TARGET_SCANNED,
-+	ISCSI_SESSION_TARGET_UNBINDING,
-+	ISCSI_SESSION_TARGET_MAX,
-+};
-+
- #define ISCSI_MAX_TARGET -1
- 
- struct iscsi_cls_session {
-@@ -262,6 +270,7 @@ struct iscsi_cls_session {
- 	 */
- 	pid_t creator;
- 	int state;
-+	int target_state;			/* session target bind state */
- 	int sid;				/* session id */
- 	void *dd_data;				/* LLD private data */
- 	struct device dev;	/* sysfs transport/container device */
+ err_out:
 -- 
 2.39.0
 
