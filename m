@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81A828EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:59:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CC68C4339B;
-	Mon, 30 Jan 2023 13:59:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A9D28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:00:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC02C433EF;
+	Mon, 30 Jan 2023 14:00:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087199;
-	bh=wumQt6sHXmTBKAwGpUBCu7xeJbqjpwXp3m5ZwX7LMiM=;
+	s=korg; t=1675087202;
+	bh=gpwzdyVOFULh0qWwfN70dlQcQ2gD66eXLB0zvnF8/RA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YnhKBnMkbDD0kMoNxQX9mW9rdM9SHt96ewYlPLe/gy1+apJz4HbqNfwTGdQ+l44YO
-	 2Dm3dfzF/wqPaptoqM9MFx+wu3zSxkxKQtfP2atnECgghYIXGeT9mUrVEcJCf0FLV+
-	 8OBjAMw1GFsvlJ86OyR3eMiE+QiwFD0eFH7pqqnI=
+	b=fMjoww1InuwRIRsfBIhjuyW/CXYrVNRyvJjRRCFFKh1nb7OBQizfGy7wh+FZJiXBS
+	 8dNKTBTWuqO1nNPB7Hem/csazNiRge/g0CU1Qw9mFJGITixH4s1d1hykIbf+pv9ACf
+	 5dDCR6AyqYUaMvlOcT1ED3JBooISvuLpUf3BD5Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
-	Sakari Ailus <sakari.ailus@linux.intel.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Daniel Scally <djrscally@gmail.com>
-Subject: [PATCH 6.1 129/313] device property: fix of node refcount leak in fwnode_graph_get_next_endpoint()
-Date: Mon, 30 Jan 2023 14:49:24 +0100
-Message-Id: <20230130134342.667094617@linuxfoundation.org>
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 130/313] w1: fix deadloop in __w1_remove_master_device()
+Date: Mon, 30 Jan 2023 14:49:25 +0100
+Message-Id: <20230130134342.717170763@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -39,71 +36,79 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 39af728649b05e88a2b40e714feeee6451c3f18e ]
+[ Upstream commit 25d5648802f12ae486076ceca5d7ddf1fef792b2 ]
 
-The 'parent' returned by fwnode_graph_get_port_parent()
-with refcount incremented when 'prev' is not NULL, it
-needs be put when finish using it.
+I got a deadloop report while doing device(ds2482) add/remove test:
 
-Because the parent is const, introduce a new variable to
-store the returned fwnode, then put it before returning
-from fwnode_graph_get_next_endpoint().
+  [  162.241881] w1_master_driver w1_bus_master1: Waiting for w1_bus_master1 to become free: refcnt=1.
+  [  163.272251] w1_master_driver w1_bus_master1: Waiting for w1_bus_master1 to become free: refcnt=1.
+  [  164.296157] w1_master_driver w1_bus_master1: Waiting for w1_bus_master1 to become free: refcnt=1.
+  ...
 
-Fixes: b5b41ab6b0c1 ("device property: Check fwnode->secondary in fwnode_graph_get_next_endpoint()")
+__w1_remove_master_device() can't return, because the dev->refcnt is not zero.
+
+w1_add_master_device()			|
+  w1_alloc_dev()			|
+    atomic_set(&dev->refcnt, 2)		|
+  kthread_run()				|
+					|__w1_remove_master_device()
+					|  kthread_stop()
+  // KTHREAD_SHOULD_STOP is set,	|
+  // threadfn(w1_process) won't be	|
+  // called.				|
+  kthread()				|
+					|  // refcnt will never be 0, it's deadloop.
+					|  while (atomic_read(&dev->refcnt)) {...}
+
+After calling w1_add_master_device(), w1_process() is not really
+invoked, before w1_process() starting, if kthread_stop() is called
+in __w1_remove_master_device(), w1_process() will never be called,
+the refcnt can not be decreased, then it causes deadloop in remove
+function because of non-zero refcnt.
+
+We need to make sure w1_process() is really started, so move the
+set refcnt into w1_process() to fix this problem.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Reviewed-by: Sakari Ailus <sakari.ailus@linux.intel.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Reviewed-and-tested-by: Daniel Scally <djrscally@gmail.com>
-Link: https://lore.kernel.org/r/20221123022542.2999510-1-yangyingliang@huawei.com
+Link: https://lore.kernel.org/r/20221205080434.3149205-1-yangyingliang@huawei.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/property.c | 18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/w1/w1.c     | 2 ++
+ drivers/w1/w1_int.c | 5 ++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/base/property.c b/drivers/base/property.c
-index 2a5a37fcd998..7f338cb4fb7b 100644
---- a/drivers/base/property.c
-+++ b/drivers/base/property.c
-@@ -989,26 +989,32 @@ struct fwnode_handle *
- fwnode_graph_get_next_endpoint(const struct fwnode_handle *fwnode,
- 			       struct fwnode_handle *prev)
- {
-+	struct fwnode_handle *ep, *port_parent = NULL;
- 	const struct fwnode_handle *parent;
--	struct fwnode_handle *ep;
+diff --git a/drivers/w1/w1.c b/drivers/w1/w1.c
+index f2ae2e563dc5..8b35fae4cd61 100644
+--- a/drivers/w1/w1.c
++++ b/drivers/w1/w1.c
+@@ -1166,6 +1166,8 @@ int w1_process(void *data)
+ 	/* remainder if it woke up early */
+ 	unsigned long jremain = 0;
  
- 	/*
- 	 * If this function is in a loop and the previous iteration returned
- 	 * an endpoint from fwnode->secondary, then we need to use the secondary
- 	 * as parent rather than @fwnode.
- 	 */
--	if (prev)
--		parent = fwnode_graph_get_port_parent(prev);
--	else
-+	if (prev) {
-+		port_parent = fwnode_graph_get_port_parent(prev);
-+		parent = port_parent;
-+	} else {
- 		parent = fwnode;
-+	}
- 	if (IS_ERR_OR_NULL(parent))
- 		return NULL;
- 
- 	ep = fwnode_call_ptr_op(parent, graph_get_next_endpoint, prev);
- 	if (ep)
--		return ep;
-+		goto out_put_port_parent;
++	atomic_inc(&dev->refcnt);
 +
-+	ep = fwnode_graph_get_next_endpoint(parent->secondary, NULL);
+ 	for (;;) {
  
--	return fwnode_graph_get_next_endpoint(parent->secondary, NULL);
-+out_put_port_parent:
-+	fwnode_handle_put(port_parent);
-+	return ep;
- }
- EXPORT_SYMBOL_GPL(fwnode_graph_get_next_endpoint);
+ 		if (!jremain && dev->search_count) {
+diff --git a/drivers/w1/w1_int.c b/drivers/w1/w1_int.c
+index b3e1792d9c49..3a71c5eb2f83 100644
+--- a/drivers/w1/w1_int.c
++++ b/drivers/w1/w1_int.c
+@@ -51,10 +51,9 @@ static struct w1_master *w1_alloc_dev(u32 id, int slave_count, int slave_ttl,
+ 	dev->search_count	= w1_search_count;
+ 	dev->enable_pullup	= w1_enable_pullup;
  
+-	/* 1 for w1_process to decrement
+-	 * 1 for __w1_remove_master_device to decrement
++	/* For __w1_remove_master_device to decrement
+ 	 */
+-	atomic_set(&dev->refcnt, 2);
++	atomic_set(&dev->refcnt, 1);
+ 
+ 	INIT_LIST_HEAD(&dev->slist);
+ 	INIT_LIST_HEAD(&dev->async_list);
 -- 
 2.39.0
 
