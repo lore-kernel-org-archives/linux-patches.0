@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45DA128EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:15:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7262C433D2;
-	Mon, 30 Jan 2023 14:15:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1DF28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:15:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8805DC433EF;
+	Mon, 30 Jan 2023 14:15:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088149;
-	bh=M9QqjWcnMQ82/qi6H4r7WthglJD/V66MbBnFMi48uSU=;
+	s=korg; t=1675088152;
+	bh=mj6lICcpa7m0Utsdikf997YzThqHVEMnmpZqgic5Fik=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TPqJIDMloH3F5edazXmgjrBt/zIlGXLDnmlAhJZAPW1+VpjpgJxKFZYawn1VMxqWP
-	 SmaC8Qd9P6Sv/eDdJIZpilCwarER/yGhBl8WmP1mSTDD0T+qoF44ea18i6Fvinu/TB
-	 K6w3wrHGN2/DIH1IE2s2xr/7BuOik7lT345jQ3Vc=
+	b=RUPd7jIWXd8y03KTMlY12fvkKuWEQ1wkRdbqn8jRf4sJIJg6X1RkcNlJFz/6YtcMB
+	 URfcHvzmP1ysWVaxwhbq3WvFADyYN4dy7LJPBTL/jhkzXOBwHCktjnKOkHKtzaGEHk
+	 OhFagq9TjVLBzDvTNj7FYJFzqzQshZgh/kPNNLrg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Eric W. Biederman" <ebiederm@xmission.com>,
 	Eric Biggers <ebiggers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 130/204] hexagon: Fix function name in die()
-Date: Mon, 30 Jan 2023 14:51:35 +0100
-Message-Id: <20230130134322.250704906@linuxfoundation.org>
+Subject: [PATCH 5.15 131/204] h8300: Fix build errors from do_exit() to make_task_dead() transition
+Date: Mon, 30 Jan 2023 14:51:36 +0100
+Message-Id: <20230130134322.297285956@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -38,41 +38,74 @@ Content-Transfer-Encoding: 8bit
 
 From: Nathan Chancellor <nathan@kernel.org>
 
-commit 4f0712ccec09c071e221242a2db9a6779a55a949 upstream.
+commit ab4ababdf77ccc56c7301c751dff49c79709c51c upstream.
 
-When building ARCH=hexagon defconfig:
+When building ARCH=h8300 defconfig:
 
-arch/hexagon/kernel/traps.c:217:2: error: implicit declaration of
-function 'make_dead_task' [-Werror,-Wimplicit-function-declaration]
-        make_dead_task(err);
-        ^
+arch/h8300/kernel/traps.c: In function 'die':
+arch/h8300/kernel/traps.c:109:2: error: implicit declaration of function
+'make_dead_task' [-Werror=implicit-function-declaration]
+  109 |  make_dead_task(SIGSEGV);
+      |  ^~~~~~~~~~~~~~
+
+arch/h8300/mm/fault.c: In function 'do_page_fault':
+arch/h8300/mm/fault.c:54:2: error: implicit declaration of function
+'make_dead_task' [-Werror=implicit-function-declaration]
+   54 |  make_dead_task(SIGKILL);
+      |  ^~~~~~~~~~~~~~
 
 The function's name is make_task_dead(), change it so there is no more
 build error.
 
+Additionally, include linux/sched/task.h in arch/h8300/kernel/traps.c
+to avoid the same error because do_exit()'s declaration is in kernel.h
+but make_task_dead()'s is in task.h, which is not included in traps.c.
+
 Fixes: 0e25498f8cd4 ("exit: Add and use make_task_dead.")
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lkml.kernel.org/r/20211227184851.2297759-2-nathan@kernel.org
+Link: https://lkml.kernel.org/r/20211227184851.2297759-3-nathan@kernel.org
 Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
 Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/hexagon/kernel/traps.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/h8300/kernel/traps.c | 3 ++-
+ arch/h8300/mm/fault.c     | 2 +-
+ 2 files changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/arch/hexagon/kernel/traps.c b/arch/hexagon/kernel/traps.c
-index 6dd6cf0ab711..1240f038cce0 100644
---- a/arch/hexagon/kernel/traps.c
-+++ b/arch/hexagon/kernel/traps.c
-@@ -214,7 +214,7 @@ int die(const char *str, struct pt_regs *regs, long err)
- 		panic("Fatal exception");
+diff --git a/arch/h8300/kernel/traps.c b/arch/h8300/kernel/traps.c
+index 3d4e0bde37ae..a92c39e03802 100644
+--- a/arch/h8300/kernel/traps.c
++++ b/arch/h8300/kernel/traps.c
+@@ -17,6 +17,7 @@
+ #include <linux/types.h>
+ #include <linux/sched.h>
+ #include <linux/sched/debug.h>
++#include <linux/sched/task.h>
+ #include <linux/mm_types.h>
+ #include <linux/kernel.h>
+ #include <linux/errno.h>
+@@ -106,7 +107,7 @@ void die(const char *str, struct pt_regs *fp, unsigned long err)
+ 	dump(fp);
  
- 	oops_exit();
--	make_dead_task(err);
-+	make_task_dead(err);
- 	return 0;
+ 	spin_unlock_irq(&die_lock);
+-	make_dead_task(SIGSEGV);
++	make_task_dead(SIGSEGV);
  }
  
+ static int kstack_depth_to_print = 24;
+diff --git a/arch/h8300/mm/fault.c b/arch/h8300/mm/fault.c
+index 0223528565dd..b465441f490d 100644
+--- a/arch/h8300/mm/fault.c
++++ b/arch/h8300/mm/fault.c
+@@ -51,7 +51,7 @@ asmlinkage int do_page_fault(struct pt_regs *regs, unsigned long address,
+ 	printk(" at virtual address %08lx\n", address);
+ 	if (!user_mode(regs))
+ 		die("Oops", regs, error_code);
+-	make_dead_task(SIGKILL);
++	make_task_dead(SIGKILL);
+ 
+ 	return 1;
+ }
 -- 
 2.39.0
 
