@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84BA3229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:26:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22446C433D2;
-	Mon, 30 Jan 2023 14:26:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8CC3229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:26:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24417C433EF;
+	Mon, 30 Jan 2023 14:26:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088778;
-	bh=LfMbnbYD6mz6JQjrp++urRBLuEcXHS2FlR+VQ6AUfhU=;
+	s=korg; t=1675088781;
+	bh=SVI7IFTtZOxgdmygIPoBWcj0FFNZOkCYn6rIBbSM0dE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MyMyjQKeX29HGri0+SEof3wnLnDy6i0xn/UchJ0d8hsOlUv4eiC3HKoMJX8ahwHT9
-	 Ct3gZownS2q4wxlqVuOYiXqrHBOr5mbnOr24w3cnsGCp7tc8XeUw+TfAM2+WyLcjho
-	 IL1xKhyGb6Z6f7bVM4mstkRy28ZAXw4WBNXUoKrI=
+	b=pcTsR4kiq4Q3pECusd8cItZC8Vq6PDUTtjyXG+E3EzZYw5hqmX0VKfdMVcsVGNAco
+	 umVcbcQdG+R0umIScBpr5QiMBEeMqy9NicNDNXjCV9NltnezjHBL29oBPy6lYDJAPA
+	 t1GvIHRKTCSvOxmSUH+ep/i3IseNFUN5CT0WsQgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lareine Khawaly <lareine@amazon.com>,
-	Hanna Hawa <hhhawa@amazon.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Qi Duan <qi.duan@amlogic.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 115/143] i2c: designware: use casting of u64 in clock multiplication to avoid overflow
-Date: Mon, 30 Jan 2023 14:52:52 +0100
-Message-Id: <20230130134311.601486238@linuxfoundation.org>
+Subject: [PATCH 5.10 133/143] net: mdio-mux-meson-g12a: force internal PHY off on mux switch
+Date: Mon, 30 Jan 2023 14:53:10 +0100
+Message-Id: <20230130134312.336967437@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -38,63 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lareine Khawaly <lareine@amazon.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit c8c37bc514514999e62a17e95160ed9ebf75ca8d ]
+[ Upstream commit 7083df59abbc2b7500db312cac706493be0273ff ]
 
-In functions i2c_dw_scl_lcnt() and i2c_dw_scl_hcnt() may have overflow
-by depending on the values of the given parameters including the ic_clk.
-For example in our use case where ic_clk is larger than one million,
-multiplication of ic_clk * 4700 will result in 32 bit overflow.
+Force the internal PHY off then on when switching to the internal path.
+This fixes problems where the PHY ID is not properly set.
 
-Add cast of u64 to the calculation to avoid multiplication overflow, and
-use the corresponding define for divide.
-
-Fixes: 2373f6b9744d ("i2c-designware: split of i2c-designware.c into core and bus specific parts")
-Signed-off-by: Lareine Khawaly <lareine@amazon.com>
-Signed-off-by: Hanna Hawa <hhhawa@amazon.com>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Fixes: 7090425104db ("net: phy: add amlogic g12a mdio mux support")
+Suggested-by: Qi Duan <qi.duan@amlogic.com>
+Co-developed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://lore.kernel.org/r/20230124101157.232234-1-jbrunet@baylibre.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-common.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/mdio/mdio-mux-meson-g12a.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-designware-common.c b/drivers/i2c/busses/i2c-designware-common.c
-index 73a4ef8130e6..682fffaab2b4 100644
---- a/drivers/i2c/busses/i2c-designware-common.c
-+++ b/drivers/i2c/busses/i2c-designware-common.c
-@@ -348,7 +348,8 @@ u32 i2c_dw_scl_hcnt(u32 ic_clk, u32 tSYMBOL, u32 tf, int cond, int offset)
- 		 *
- 		 * If your hardware is free from tHD;STA issue, try this one.
- 		 */
--		return DIV_ROUND_CLOSEST(ic_clk * tSYMBOL, MICRO) - 8 + offset;
-+		return DIV_ROUND_CLOSEST_ULL((u64)ic_clk * tSYMBOL, MICRO) -
-+		       8 + offset;
- 	else
- 		/*
- 		 * Conditional expression:
-@@ -364,7 +365,8 @@ u32 i2c_dw_scl_hcnt(u32 ic_clk, u32 tSYMBOL, u32 tf, int cond, int offset)
- 		 * The reason why we need to take into account "tf" here,
- 		 * is the same as described in i2c_dw_scl_lcnt().
- 		 */
--		return DIV_ROUND_CLOSEST(ic_clk * (tSYMBOL + tf), MICRO) - 3 + offset;
-+		return DIV_ROUND_CLOSEST_ULL((u64)ic_clk * (tSYMBOL + tf), MICRO) -
-+		       3 + offset;
+diff --git a/drivers/net/mdio/mdio-mux-meson-g12a.c b/drivers/net/mdio/mdio-mux-meson-g12a.c
+index bf86c9c7a288..ab863530c9e8 100644
+--- a/drivers/net/mdio/mdio-mux-meson-g12a.c
++++ b/drivers/net/mdio/mdio-mux-meson-g12a.c
+@@ -4,6 +4,7 @@
+  */
+ 
+ #include <linux/bitfield.h>
++#include <linux/delay.h>
+ #include <linux/clk.h>
+ #include <linux/clk-provider.h>
+ #include <linux/device.h>
+@@ -150,6 +151,7 @@ static const struct clk_ops g12a_ephy_pll_ops = {
+ 
+ static int g12a_enable_internal_mdio(struct g12a_mdio_mux *priv)
+ {
++	u32 value;
+ 	int ret;
+ 
+ 	/* Enable the phy clock */
+@@ -163,18 +165,25 @@ static int g12a_enable_internal_mdio(struct g12a_mdio_mux *priv)
+ 
+ 	/* Initialize ephy control */
+ 	writel(EPHY_G12A_ID, priv->regs + ETH_PHY_CNTL0);
+-	writel(FIELD_PREP(PHY_CNTL1_ST_MODE, 3) |
+-	       FIELD_PREP(PHY_CNTL1_ST_PHYADD, EPHY_DFLT_ADD) |
+-	       FIELD_PREP(PHY_CNTL1_MII_MODE, EPHY_MODE_RMII) |
+-	       PHY_CNTL1_CLK_EN |
+-	       PHY_CNTL1_CLKFREQ |
+-	       PHY_CNTL1_PHY_ENB,
+-	       priv->regs + ETH_PHY_CNTL1);
++
++	/* Make sure we get a 0 -> 1 transition on the enable bit */
++	value = FIELD_PREP(PHY_CNTL1_ST_MODE, 3) |
++		FIELD_PREP(PHY_CNTL1_ST_PHYADD, EPHY_DFLT_ADD) |
++		FIELD_PREP(PHY_CNTL1_MII_MODE, EPHY_MODE_RMII) |
++		PHY_CNTL1_CLK_EN |
++		PHY_CNTL1_CLKFREQ;
++	writel(value, priv->regs + ETH_PHY_CNTL1);
+ 	writel(PHY_CNTL2_USE_INTERNAL |
+ 	       PHY_CNTL2_SMI_SRC_MAC |
+ 	       PHY_CNTL2_RX_CLK_EPHY,
+ 	       priv->regs + ETH_PHY_CNTL2);
+ 
++	value |= PHY_CNTL1_PHY_ENB;
++	writel(value, priv->regs + ETH_PHY_CNTL1);
++
++	/* The phy needs a bit of time to power up */
++	mdelay(10);
++
+ 	return 0;
  }
  
- u32 i2c_dw_scl_lcnt(u32 ic_clk, u32 tLOW, u32 tf, int offset)
-@@ -380,7 +382,8 @@ u32 i2c_dw_scl_lcnt(u32 ic_clk, u32 tLOW, u32 tf, int offset)
- 	 * account the fall time of SCL signal (tf).  Default tf value
- 	 * should be 0.3 us, for safety.
- 	 */
--	return DIV_ROUND_CLOSEST(ic_clk * (tLOW + tf), MICRO) - 1 + offset;
-+	return DIV_ROUND_CLOSEST_ULL((u64)ic_clk * (tLOW + tf), MICRO) -
-+	       1 + offset;
- }
- 
- int i2c_dw_set_sda_hold(struct dw_i2c_dev *dev)
 -- 
 2.39.0
 
