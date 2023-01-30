@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A43E13229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:19:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0C244C433EF;
-	Mon, 30 Jan 2023 14:19:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B886E3229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:19:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3C0C433D2;
+	Mon, 30 Jan 2023 14:19:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088359;
-	bh=943133jui6r9WFeBmMycMBl+F7EKIy7CJB8mKCaDJlA=;
+	s=korg; t=1675088362;
+	bh=W90CcxRv/GgdKjJd8nx1g0Z2YD6sfIrrwvsaf4h/13Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2gB9WjAmT8aqFws6S6hxibsa+0dqS+QKfl3geuYxNZIx932m6e+d5ccgVF1byUQEz
-	 EJUdIwyIwFpfdqb4ToT0x92P0hRPhni9HoCUbaeiEaV31Ei66mgfkCvVsrtYBGc+jS
-	 J5KBoWMq1p+v/I9KqRZXXXeugY5solxOcLmejzxM=
+	b=fL81ys6I76v4bJP2DtkHhUpGBQia7cOgApyDrp3YCRqsiCJTHC1bXFGxsu13VMWB7
+	 mIctlZPL9M9U6ZAEaDDyGIP7ElMv/J6w9rLlZlG176r+sKtPobE2xClGpPP0EhM6tC
+	 7EMrHTp+wUJVd6bhQMb8LstP+38WDwkVqef7cjp8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ivo Borisov Shopov <ivoshopov@gmail.com>,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 196/204] tools: gpio: fix -c option of gpio-event-mon
-Date: Mon, 30 Jan 2023 14:52:41 +0100
-Message-Id: <20230130134325.197816096@linuxfoundation.org>
+	Jiri Slaby <jirislaby@kernel.org>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 5.15 197/204] Revert "Input: synaptics - switch touchpad on HP Laptop 15-da3001TU to RMI mode"
+Date: Mon, 30 Jan 2023 14:52:42 +0100
+Message-Id: <20230130134325.236709261@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -36,58 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ivo Borisov Shopov <ivoshopov@gmail.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-[ Upstream commit 677d85e1a1ee69fa05ccea83847309484be3781c ]
+commit 3c44e2b6cde674797b76e76d3a903a63ce8a18bb upstream.
 
-Following line should listen for a rising edge and exit after the first
-one since '-c 1' is provided.
+This reverts commit ac5408991ea6b06e29129b4d4861097c4c3e0d59 because
+it causes loss of keyboard on HP 15-da1xxx.
 
-    # gpio-event-mon -n gpiochip1 -o 0 -r -c 1
-
-It works with kernel 4.19 but it doesn't work with 5.10. In 5.10 the
-above command doesn't exit after the first rising edge it keep listening
-for an event forever. The '-c 1' is not taken into an account.
-The problem is in commit 62757c32d5db ("tools: gpio: add multi-line
-monitoring to gpio-event-mon").
-Before this commit the iterator 'i' in monitor_device() is used for
-counting of the events (loops). In the case of the above command (-c 1)
-we should start from 0 and increment 'i' only ones and hit the 'break'
-statement and exit the process. But after the above commit counting
-doesn't start from 0, it start from 1 when we listen on one line.
-It is because 'i' is used from one more purpose, counting of lines
-(num_lines) and it isn't restore to 0 after following code
-
-    for (i = 0; i < num_lines; i++)
-        gpiotools_set_bit(&values.mask, i);
-
-Restore the initial value of the iterator to 0 in order to allow counting
-of loops to work for any cases.
-
-Fixes: 62757c32d5db ("tools: gpio: add multi-line monitoring to gpio-event-mon")
-Signed-off-by: Ivo Borisov Shopov <ivoshopov@gmail.com>
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-[Bartosz: tweak the commit message]
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: ac5408991ea6 ("Input: synaptics - switch touchpad on HP Laptop 15-da3001TU to RMI mode")
+Reported-by: Jiri Slaby <jirislaby@kernel.org>
+Link: https://lore.kernel.org/r/824effa5-8b9a-c28a-82bb-9b0ab24623e1@kernel.org
+Bugzilla: https://bugzilla.suse.com/show_bug.cgi?id=1206358
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/gpio/gpio-event-mon.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/input/mouse/synaptics.c |    1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/tools/gpio/gpio-event-mon.c b/tools/gpio/gpio-event-mon.c
-index a2b233fdb572..667019990982 100644
---- a/tools/gpio/gpio-event-mon.c
-+++ b/tools/gpio/gpio-event-mon.c
-@@ -86,6 +86,7 @@ int monitor_device(const char *device_name,
- 			gpiotools_test_bit(values.bits, i));
- 	}
+--- a/drivers/input/mouse/synaptics.c
++++ b/drivers/input/mouse/synaptics.c
+@@ -191,7 +191,6 @@ static const char * const smbus_pnp_ids[
+ 	"SYN3221", /* HP 15-ay000 */
+ 	"SYN323d", /* HP Spectre X360 13-w013dx */
+ 	"SYN3257", /* HP Envy 13-ad105ng */
+-	"SYN3286", /* HP Laptop 15-da3001TU */
+ 	NULL
+ };
  
-+	i = 0;
- 	while (1) {
- 		struct gpio_v2_line_event event;
- 
--- 
-2.39.0
-
 
 
