@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09A4B2F31
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:20:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 695F0C433A4;
-	Mon, 30 Jan 2023 14:20:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A613229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:20:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6986DC433D2;
+	Mon, 30 Jan 2023 14:20:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088450;
-	bh=8Nmi/JYNxs1putaANckz7bhYmNhF8kqDs8ruM9ZWIq8=;
+	s=korg; t=1675088453;
+	bh=TZ2l8vhywVHirnNwaO3I4uaoRq+4QC+PF8k0ul6JD60=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ncz+9JEV0aGDhpQlXFM/qWrgBTBQFU7fS1dOCSzVf155aJ89PULNAk4WhaVsNe7/c
-	 MEp4T7CF431KRMRnvgEnO0w8uVOZE9N0zytsdozyiQ6YWHcrDimoVsW3mCZX/Ay27L
-	 1SXZSWJ6eu84NBtYoQTjIGm7K8L/RocVXc3P/oMs=
+	b=pACfcAoZ7SU+oErUh7bjifobPfkCRk+DsQIsB/pyOgAYNmHDSqD91BznX7mx47g4L
+	 EXP6cP7mQqYtWyseVrgFL1MHVx2dhypcJRCBBmqTsCfijFU79bEDxxxjGqmhA9tmJE
+	 0gAWjVc+lCXRNKgfehHp2Baih1s+W7bhzohT9nmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Tim Harvey <tharvey@gateworks.com>,
+	Adam Ford <aford173@gmail.com>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 007/143] ARM: dts: imx6qdl-gw560x: Remove incorrect uart-has-rtscts
-Date: Mon, 30 Jan 2023 14:51:04 +0100
-Message-Id: <20230130134307.186643447@linuxfoundation.org>
+Subject: [PATCH 5.10 008/143] arm64: dts: imx8mm-beacon: Fix ecspi2 pinmux
+Date: Mon, 30 Jan 2023 14:51:05 +0100
+Message-Id: <20230130134307.227583398@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -36,46 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabio Estevam <festevam@denx.de>
+From: Adam Ford <aford173@gmail.com>
 
-[ Upstream commit 9dfbc72256b5de608ad10989bcbafdbbd1ac8d4e ]
+[ Upstream commit 5225ba9db112ec4ed67da5e4d8b72e618573955e ]
 
-The following build warning is seen when running:
+Early hardware did not support hardware handshaking on the UART, but
+final production hardware did.  When the hardware was updated the chip
+select was changed to facilitate hardware handshaking on UART3.  Fix the
+ecspi2 pin mux to eliminate a pin conflict with UART3 and allow the
+EEPROM to operate again.
 
-make dtbs_check DT_SCHEMA_FILES=fsl-imx-uart.yaml
-
-arch/arm/boot/dts/imx6dl-gw560x.dtb: serial@2020000: rts-gpios: False schema does not allow [[20, 1, 0]]
-	From schema: Documentation/devicetree/bindings/serial/fsl-imx-uart.yaml
-
-The imx6qdl-gw560x board does not expose the UART RTS and CTS
-as native UART pins, so 'uart-has-rtscts' should not be used.
-
-Using 'uart-has-rtscts' with 'rts-gpios' is an invalid combination
-detected by serial.yaml.
-
-Fix the problem by removing the incorrect 'uart-has-rtscts' property.
-
-Fixes: b8a559feffb2 ("ARM: dts: imx: add Gateworks Ventana GW5600 support")
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Acked-by: Tim Harvey <tharvey@gateworks.com>
+Fixes: 4ce01ce36d77 ("arm64: dts: imx8mm-beacon: Enable RTS-CTS on UART3")
+Signed-off-by: Adam Ford <aford173@gmail.com>
 Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6qdl-gw560x.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mm-beacon-baseboard.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/imx6qdl-gw560x.dtsi b/arch/arm/boot/dts/imx6qdl-gw560x.dtsi
-index 093a219a77ae..f520e337698a 100644
---- a/arch/arm/boot/dts/imx6qdl-gw560x.dtsi
-+++ b/arch/arm/boot/dts/imx6qdl-gw560x.dtsi
-@@ -634,7 +634,6 @@ &ssi1 {
- &uart1 {
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-beacon-baseboard.dtsi b/arch/arm64/boot/dts/freescale/imx8mm-beacon-baseboard.dtsi
+index 5667009aae13..674a0ab8a539 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm-beacon-baseboard.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm-beacon-baseboard.dtsi
+@@ -70,7 +70,7 @@ sound {
+ &ecspi2 {
  	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_uart1>;
--	uart-has-rtscts;
- 	rts-gpios = <&gpio7 1 GPIO_ACTIVE_HIGH>;
+ 	pinctrl-0 = <&pinctrl_espi2>;
+-	cs-gpios = <&gpio5 9 GPIO_ACTIVE_LOW>;
++	cs-gpios = <&gpio5 13 GPIO_ACTIVE_LOW>;
  	status = "okay";
- };
+ 
+ 	eeprom@0 {
+@@ -187,7 +187,7 @@ pinctrl_espi2: espi2grp {
+ 			MX8MM_IOMUXC_ECSPI2_SCLK_ECSPI2_SCLK		0x82
+ 			MX8MM_IOMUXC_ECSPI2_MOSI_ECSPI2_MOSI		0x82
+ 			MX8MM_IOMUXC_ECSPI2_MISO_ECSPI2_MISO		0x82
+-			MX8MM_IOMUXC_ECSPI1_SS0_GPIO5_IO9		0x41
++			MX8MM_IOMUXC_ECSPI2_SS0_GPIO5_IO13              0x41
+ 		>;
+ 	};
+ 
 -- 
 2.39.0
 
