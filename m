@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CC43229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:22:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01C24C433D2;
-	Mon, 30 Jan 2023 14:22:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7721C3229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:22:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBB7BC4339B;
+	Mon, 30 Jan 2023 14:22:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088540;
-	bh=4ElO/R3L3+EGeDHZXIAMKMXT98lXaw7ijyereow6mwI=;
+	s=korg; t=1675088543;
+	bh=HUrkAexcccMEp7kXG9tEI7qhMvnOIq/+Oq/eJegQM1k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gxTshhDifc4rgYMaxc5+wOToQgifvmOZLHReDpN8RJ1BQTiqt7gzMEcXd50QgPeCN
-	 d03tEzOh/Ttkk3rLvoAY0AfREvbLtH/KsBnbFqxrzYmXyF1t/6WT52Qfgu/JcxXB5p
-	 nNoJVPhRk+f3ws7xa1ugOnHm69W9T0g4X2m9fwjA=
+	b=Q+uYYoyOvsPjrnc480C2R6xpn1Uiru7oUD+PTRvz8Vt9a8g0kQi/Vy95hs6eu7MNm
+	 ZhKiEJTF9VYNMw7Gr+rV647QuRfg8HUbzhFvJq4VMUAk248mFODe7ig6N31BwiJIuo
+	 ERGHqVogrxHFCis40uktPkdkyla2Uwifk3COO9nQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajith Nayak <Ajith.Nayak@amd.com>,
+	Sudheesh Mavila <sudheesh.mavila@amd.com>,
 	Raju Rangoju <Raju.Rangoju@amd.com>,
 	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 025/143] amd-xgbe: TX Flow Ctrl Registers are h/w ver dependent
-Date: Mon, 30 Jan 2023 14:51:22 +0100
-Message-Id: <20230130134307.918808441@linuxfoundation.org>
+Subject: [PATCH 5.10 026/143] amd-xgbe: Delay AN timeout during KR training
+Date: Mon, 30 Jan 2023 14:51:23 +0100
+Message-Id: <20230130134307.948516711@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -39,85 +39,96 @@ Content-Transfer-Encoding: 8bit
 
 From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit 579923d84b04abb6cd4cd1fd9974096a2dd1832b ]
+[ Upstream commit 926446ae24c03311a480fb96eb78f0ce7ea6d091 ]
 
-There is difference in the TX Flow Control registers (TFCR) between the
-revisions of the hardware. The older revisions of hardware used to have
-single register per queue. Whereas, the newer revision of hardware (from
-ver 30H onwards) have one register per priority.
+AN restart triggered during KR training not only aborts the KR training
+process but also move the HW to unstable state. Driver has to wait upto
+500ms or until the KR training is completed before restarting AN cycle.
 
-Update the driver to use the TFCR based on the reported version of the
-hardware.
-
-Fixes: c5aa9e3b8156 ("amd-xgbe: Initial AMD 10GbE platform driver")
-Co-developed-by: Ajith Nayak <Ajith.Nayak@amd.com>
-Signed-off-by: Ajith Nayak <Ajith.Nayak@amd.com>
+Fixes: 7c12aa08779c ("amd-xgbe: Move the PHY support into amd-xgbe")
+Co-developed-by: Sudheesh Mavila <sudheesh.mavila@amd.com>
+Signed-off-by: Sudheesh Mavila <sudheesh.mavila@amd.com>
 Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
 Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-dev.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 24 +++++++++++++++++++++++
+ drivers/net/ethernet/amd/xgbe/xgbe.h      |  2 ++
+ 2 files changed, 26 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-dev.c b/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
-index d5fd49dd25f3..decc1c09a031 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
-@@ -524,19 +524,28 @@ static void xgbe_disable_vxlan(struct xgbe_prv_data *pdata)
- 	netif_dbg(pdata, drv, pdata->netdev, "VXLAN acceleration disabled\n");
- }
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+index 0c5c1b155683..43fdd111235a 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
+@@ -496,6 +496,7 @@ static enum xgbe_an xgbe_an73_tx_training(struct xgbe_prv_data *pdata,
+ 	reg |= XGBE_KR_TRAINING_ENABLE;
+ 	reg |= XGBE_KR_TRAINING_START;
+ 	XMDIO_WRITE(pdata, MDIO_MMD_PMAPMD, MDIO_PMA_10GBR_PMD_CTRL, reg);
++	pdata->kr_start_time = jiffies;
  
-+static unsigned int xgbe_get_fc_queue_count(struct xgbe_prv_data *pdata)
-+{
-+	unsigned int max_q_count = XGMAC_MAX_FLOW_CONTROL_QUEUES;
+ 	netif_dbg(pdata, link, pdata->netdev,
+ 		  "KR training initiated\n");
+@@ -632,6 +633,8 @@ static enum xgbe_an xgbe_an73_incompat_link(struct xgbe_prv_data *pdata)
+ 
+ 	xgbe_switch_mode(pdata);
+ 
++	pdata->an_result = XGBE_AN_READY;
 +
-+	/* From MAC ver 30H the TFCR is per priority, instead of per queue */
-+	if (XGMAC_GET_BITS(pdata->hw_feat.version, MAC_VR, SNPSVER) >= 0x30)
-+		return max_q_count;
-+	else
-+		return min_t(unsigned int, pdata->tx_q_count, max_q_count);
-+}
-+
- static int xgbe_disable_tx_flow_control(struct xgbe_prv_data *pdata)
+ 	xgbe_an_restart(pdata);
+ 
+ 	return XGBE_AN_INCOMPAT_LINK;
+@@ -1275,9 +1278,30 @@ static bool xgbe_phy_aneg_done(struct xgbe_prv_data *pdata)
+ static void xgbe_check_link_timeout(struct xgbe_prv_data *pdata)
  {
--	unsigned int max_q_count, q_count;
- 	unsigned int reg, reg_val;
--	unsigned int i;
-+	unsigned int i, q_count;
+ 	unsigned long link_timeout;
++	unsigned long kr_time;
++	int wait;
  
- 	/* Clear MTL flow control */
- 	for (i = 0; i < pdata->rx_q_count; i++)
- 		XGMAC_MTL_IOWRITE_BITS(pdata, i, MTL_Q_RQOMR, EHFC, 0);
- 
- 	/* Clear MAC flow control */
--	max_q_count = XGMAC_MAX_FLOW_CONTROL_QUEUES;
--	q_count = min_t(unsigned int, pdata->tx_q_count, max_q_count);
-+	q_count = xgbe_get_fc_queue_count(pdata);
- 	reg = MAC_Q0TFCR;
- 	for (i = 0; i < q_count; i++) {
- 		reg_val = XGMAC_IOREAD(pdata, reg);
-@@ -553,9 +562,8 @@ static int xgbe_enable_tx_flow_control(struct xgbe_prv_data *pdata)
- {
- 	struct ieee_pfc *pfc = pdata->pfc;
- 	struct ieee_ets *ets = pdata->ets;
--	unsigned int max_q_count, q_count;
- 	unsigned int reg, reg_val;
--	unsigned int i;
-+	unsigned int i, q_count;
- 
- 	/* Set MTL flow control */
- 	for (i = 0; i < pdata->rx_q_count; i++) {
-@@ -579,8 +587,7 @@ static int xgbe_enable_tx_flow_control(struct xgbe_prv_data *pdata)
+ 	link_timeout = pdata->link_check + (XGBE_LINK_TIMEOUT * HZ);
+ 	if (time_after(jiffies, link_timeout)) {
++		if ((xgbe_cur_mode(pdata) == XGBE_MODE_KR) &&
++		    pdata->phy.autoneg == AUTONEG_ENABLE) {
++			/* AN restart should not happen while KR training is in progress.
++			 * The while loop ensures no AN restart during KR training,
++			 * waits up to 500ms and AN restart is triggered only if KR
++			 * training is failed.
++			 */
++			wait = XGBE_KR_TRAINING_WAIT_ITER;
++			while (wait--) {
++				kr_time = pdata->kr_start_time +
++					  msecs_to_jiffies(XGBE_AN_MS_TIMEOUT);
++				if (time_after(jiffies, kr_time))
++					break;
++				/* AN restart is not required, if AN result is COMPLETE */
++				if (pdata->an_result == XGBE_AN_COMPLETE)
++					return;
++				usleep_range(10000, 11000);
++			}
++		}
+ 		netif_dbg(pdata, link, pdata->netdev, "AN link timeout\n");
+ 		xgbe_phy_config_aneg(pdata);
  	}
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe.h b/drivers/net/ethernet/amd/xgbe/xgbe.h
+index 3305979a9f7c..e0b8f3c4cc0b 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe.h
++++ b/drivers/net/ethernet/amd/xgbe/xgbe.h
+@@ -289,6 +289,7 @@
+ /* Auto-negotiation */
+ #define XGBE_AN_MS_TIMEOUT		500
+ #define XGBE_LINK_TIMEOUT		5
++#define XGBE_KR_TRAINING_WAIT_ITER	50
  
- 	/* Set MAC flow control */
--	max_q_count = XGMAC_MAX_FLOW_CONTROL_QUEUES;
--	q_count = min_t(unsigned int, pdata->tx_q_count, max_q_count);
-+	q_count = xgbe_get_fc_queue_count(pdata);
- 	reg = MAC_Q0TFCR;
- 	for (i = 0; i < q_count; i++) {
- 		reg_val = XGMAC_IOREAD(pdata, reg);
+ #define XGBE_SGMII_AN_LINK_STATUS	BIT(1)
+ #define XGBE_SGMII_AN_LINK_SPEED	(BIT(2) | BIT(3))
+@@ -1253,6 +1254,7 @@ struct xgbe_prv_data {
+ 	unsigned int parallel_detect;
+ 	unsigned int fec_ability;
+ 	unsigned long an_start;
++	unsigned long kr_start_time;
+ 	enum xgbe_an_mode an_mode;
+ 
+ 	/* I2C support */
 -- 
 2.39.0
 
