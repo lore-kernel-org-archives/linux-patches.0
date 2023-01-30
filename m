@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4894628EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:07:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C34C3C433D2;
-	Mon, 30 Jan 2023 14:07:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D9628EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:08:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0113C433D2;
+	Mon, 30 Jan 2023 14:08:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087679;
-	bh=KFRINgm8KcJ1OURcJmVKkvn0OoSNh4bp4JQmh+bAYQ4=;
+	s=korg; t=1675087682;
+	bh=33bPHrH0OmXJrbGxu1Py4VXTBA+BJIFLr5ZjqxedDAQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vvLlCq6s2ouzpwsWLkqNpaY6w4HBjlH8qpVZbwEZRfxQQ5FtDSwY3ITlDqHJbhx9/
-	 6H/ot3n+rThI3U1ai1+9ZaWIEBa74I5ED1OiK5Dvhg+ClFhrSGCn632X39Ke5gFlwo
-	 sb5FYWcop3rBbKVZDuCW6ve6qDvMgfBUY3fH+TJg=
+	b=aGdPXSektR4tXmdAv0e3R/nUCLTTd4Nd82MHG/DxgCfbvL31Kv9chQ6OEAF8cPmKF
+	 EEHKNlCko876OM9rUteBL6fG7yZgNGtr8Vi6BHkFK1UZx2plX0QsNevZ1t4D/vVZOQ
+	 81JVnvik8XO++ZMl/a/vpjymLSCYqLGmhmje2i0U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	Jeremy Kerr <jk@codeconstruct.com.au>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 288/313] net: ravb: Fix possible hang if RIS2_QFF1 happen
-Date: Mon, 30 Jan 2023 14:52:03 +0100
-Message-Id: <20230130134350.143708322@linuxfoundation.org>
+Subject: [PATCH 6.1 289/313] net: mctp: add an explicit reference from a mctp_sk_key to sock
+Date: Mon, 30 Jan 2023 14:52:04 +0100
+Message-Id: <20230130134350.193311790@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,47 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-[ Upstream commit f3c07758c9007a6bfff5290d9e19d3c41930c897 ]
+[ Upstream commit de8a6b15d9654c3e4f672d76da9d9df8ee06331d ]
 
-Since this driver enables the interrupt by RIC2_QFE1, this driver
-should clear the interrupt flag if it happens. Otherwise, the interrupt
-causes to hang the system.
+Currently, we correlate the mctp_sk_key lifetime to the sock lifetime
+through the sock hash/unhash operations, but this is pretty tenuous, and
+there are cases where we may have a temporary reference to an unhashed
+sk.
 
-Note that this also fix a minor coding style (a comment indentation)
-around the fixed code.
+This change makes the reference more explicit, by adding a hold on the
+sock when it's associated with a mctp_sk_key, released on final key
+unref.
 
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Fixes: 73c618456dc5 ("mctp: locking, lifetime and validity changes for sk_keys")
+Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/mctp/route.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index 3f61100c02f4..0f54849a3823 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -1101,14 +1101,14 @@ static void ravb_error_interrupt(struct net_device *ndev)
- 	ravb_write(ndev, ~(EIS_QFS | EIS_RESERVED), EIS);
- 	if (eis & EIS_QFS) {
- 		ris2 = ravb_read(ndev, RIS2);
--		ravb_write(ndev, ~(RIS2_QFF0 | RIS2_RFFF | RIS2_RESERVED),
-+		ravb_write(ndev, ~(RIS2_QFF0 | RIS2_QFF1 | RIS2_RFFF | RIS2_RESERVED),
- 			   RIS2);
+diff --git a/net/mctp/route.c b/net/mctp/route.c
+index f9a80b82dc51..ce10ba7ae839 100644
+--- a/net/mctp/route.c
++++ b/net/mctp/route.c
+@@ -147,6 +147,7 @@ static struct mctp_sk_key *mctp_key_alloc(struct mctp_sock *msk,
+ 	key->valid = true;
+ 	spin_lock_init(&key->lock);
+ 	refcount_set(&key->refs, 1);
++	sock_hold(key->sk);
  
- 		/* Receive Descriptor Empty int */
- 		if (ris2 & RIS2_QFF0)
- 			priv->stats[RAVB_BE].rx_over_errors++;
+ 	return key;
+ }
+@@ -165,6 +166,7 @@ void mctp_key_unref(struct mctp_sk_key *key)
+ 	mctp_dev_release_key(key->dev, key);
+ 	spin_unlock_irqrestore(&key->lock, flags);
  
--		    /* Receive Descriptor Empty int */
-+		/* Receive Descriptor Empty int */
- 		if (ris2 & RIS2_QFF1)
- 			priv->stats[RAVB_NC].rx_over_errors++;
++	sock_put(key->sk);
+ 	kfree(key);
+ }
  
+@@ -419,14 +421,14 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
+ 			 * this function.
+ 			 */
+ 			rc = mctp_key_add(key, msk);
+-			if (rc) {
+-				kfree(key);
+-			} else {
++			if (!rc)
+ 				trace_mctp_key_acquire(key);
+ 
+-				/* we don't need to release key->lock on exit */
+-				mctp_key_unref(key);
+-			}
++			/* we don't need to release key->lock on exit, so
++			 * clean up here and suppress the unlock via
++			 * setting to NULL
++			 */
++			mctp_key_unref(key);
+ 			key = NULL;
+ 
+ 		} else {
 -- 
 2.39.0
 
