@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 89E3D28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:13:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FB0DC433EF;
-	Mon, 30 Jan 2023 14:13:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 910F528EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:13:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D65EC433D2;
+	Mon, 30 Jan 2023 14:13:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087998;
-	bh=AYzYYfJX1b2Ap5QGLxgzEbXeKJ131oOq+nTNsXyXVCA=;
+	s=korg; t=1675088001;
+	bh=1fnZXKa+0GAW/lAy/VgNG+gifL5udmoQAIFoPdlpyGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=029iiO0sshKPvTDGiOjOi/kQAR2tgtpR25CQGofnTs3uG8r2mKyRx5mXXwSmbw0VH
-	 UwJjriYcKk7YTRTiuE9T1lupmYePM0iVRkDK/inJWj6y+h4f5mlOywFJem53zf1tg/
-	 eygAhZSaFfZiZdSO0ICanqgWGJeQ0ncrc+E8Fe+M=
+	b=ie+cVCt2BEpoZQ1Wy1bJ9oq3i3FMmWkolAs/Eyo2clMtXz2/pqLwHVCYYrEAJVNX2
+	 XZrmSfqYooke1GkqSUgaQlY41UH8649IN/ONQxIpodaMr9H2hZ8GTnY7wIBtksR2uj
+	 F900V1bHGf6MMy+lD0g3ce/CegfgUnI+SpgpBnWw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kevin Hao <haokexin@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Eric Pilmore <epilmore@gigaio.com>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 081/204] octeontx2-pf: Fix the use of GFP_KERNEL in atomic context on rt
-Date: Mon, 30 Jan 2023 14:50:46 +0100
-Message-Id: <20230130134319.899284686@linuxfoundation.org>
+Subject: [PATCH 5.15 082/204] ptdma: pt_core_execute_cmd() should use spinlock
+Date: Mon, 30 Jan 2023 14:50:47 +0100
+Message-Id: <20230130134319.945921476@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,145 +35,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kevin Hao <haokexin@gmail.com>
+From: Eric Pilmore <epilmore@gigaio.com>
 
-[ Upstream commit 55ba18dc62deff5910c0fa64486dea1ff20832ff ]
+[ Upstream commit 95e5fda3b5f9ed8239b145da3fa01e641cf5d53c ]
 
-The commit 4af1b64f80fb ("octeontx2-pf: Fix lmtst ID used in aura
-free") uses the get/put_cpu() to protect the usage of percpu pointer
-in ->aura_freeptr() callback, but it also unnecessarily disable the
-preemption for the blockable memory allocation. The commit 87b93b678e95
-("octeontx2-pf: Avoid use of GFP_KERNEL in atomic context") tried to
-fix these sleep inside atomic warnings. But it only fix the one for
-the non-rt kernel. For the rt kernel, we still get the similar warnings
-like below.
-  BUG: sleeping function called from invalid context at kernel/locking/spinlock_rt.c:46
-  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 1, name: swapper/0
-  preempt_count: 1, expected: 0
-  RCU nest depth: 0, expected: 0
-  3 locks held by swapper/0/1:
-   #0: ffff800009fc5fe8 (rtnl_mutex){+.+.}-{3:3}, at: rtnl_lock+0x24/0x30
-   #1: ffff000100c276c0 (&mbox->lock){+.+.}-{3:3}, at: otx2_init_hw_resources+0x8c/0x3a4
-   #2: ffffffbfef6537e0 (&cpu_rcache->lock){+.+.}-{2:2}, at: alloc_iova_fast+0x1ac/0x2ac
-  Preemption disabled at:
-  [<ffff800008b1908c>] otx2_rq_aura_pool_init+0x14c/0x284
-  CPU: 20 PID: 1 Comm: swapper/0 Tainted: G        W          6.2.0-rc3-rt1-yocto-preempt-rt #1
-  Hardware name: Marvell OcteonTX CN96XX board (DT)
-  Call trace:
-   dump_backtrace.part.0+0xe8/0xf4
-   show_stack+0x20/0x30
-   dump_stack_lvl+0x9c/0xd8
-   dump_stack+0x18/0x34
-   __might_resched+0x188/0x224
-   rt_spin_lock+0x64/0x110
-   alloc_iova_fast+0x1ac/0x2ac
-   iommu_dma_alloc_iova+0xd4/0x110
-   __iommu_dma_map+0x80/0x144
-   iommu_dma_map_page+0xe8/0x260
-   dma_map_page_attrs+0xb4/0xc0
-   __otx2_alloc_rbuf+0x90/0x150
-   otx2_rq_aura_pool_init+0x1c8/0x284
-   otx2_init_hw_resources+0xe4/0x3a4
-   otx2_open+0xf0/0x610
-   __dev_open+0x104/0x224
-   __dev_change_flags+0x1e4/0x274
-   dev_change_flags+0x2c/0x7c
-   ic_open_devs+0x124/0x2f8
-   ip_auto_config+0x180/0x42c
-   do_one_initcall+0x90/0x4dc
-   do_basic_setup+0x10c/0x14c
-   kernel_init_freeable+0x10c/0x13c
-   kernel_init+0x2c/0x140
-   ret_from_fork+0x10/0x20
+The interrupt handler (pt_core_irq_handler()) of the ptdma
+driver can be called from interrupt context. The code flow
+in this function can lead down to pt_core_execute_cmd() which
+will attempt to grab a mutex, which is not appropriate in
+interrupt context and ultimately leads to a kernel panic.
+The fix here changes this mutex to a spinlock, which has
+been verified to resolve the issue.
 
-Of course, we can shuffle the get/put_cpu() to only wrap the invocation
-of ->aura_freeptr() as what commit 87b93b678e95 does. But there are only
-two ->aura_freeptr() callbacks, otx2_aura_freeptr() and
-cn10k_aura_freeptr(). There is no usage of perpcu variable in the
-otx2_aura_freeptr() at all, so the get/put_cpu() seems redundant to it.
-We can move the get/put_cpu() into the corresponding callback which
-really has the percpu variable usage and avoid the sprinkling of
-get/put_cpu() in several places.
-
-Fixes: 4af1b64f80fb ("octeontx2-pf: Fix lmtst ID used in aura free")
-Signed-off-by: Kevin Hao <haokexin@gmail.com>
-Link: https://lore.kernel.org/r/20230118071300.3271125-1-haokexin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: fa5d823b16a9 ("dmaengine: ptdma: Initial driver for the AMD PTDMA")
+Signed-off-by: Eric Pilmore <epilmore@gigaio.com>
+Link: https://lore.kernel.org/r/20230119033907.35071-1-epilmore@gigaio.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/marvell/octeontx2/nic/otx2_common.c  | 11 ++---------
- .../net/ethernet/marvell/octeontx2/nic/otx2_common.h  |  2 ++
- 2 files changed, 4 insertions(+), 9 deletions(-)
+ drivers/dma/ptdma/ptdma-dev.c | 7 ++++---
+ drivers/dma/ptdma/ptdma.h     | 2 +-
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-index 30d4c0ad712d..2e225309de9c 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.c
-@@ -962,7 +962,6 @@ static void otx2_pool_refill_task(struct work_struct *work)
- 	rbpool = cq->rbpool;
- 	free_ptrs = cq->pool_ptrs;
+diff --git a/drivers/dma/ptdma/ptdma-dev.c b/drivers/dma/ptdma/ptdma-dev.c
+index daafea5bc35d..bca4063b0dce 100644
+--- a/drivers/dma/ptdma/ptdma-dev.c
++++ b/drivers/dma/ptdma/ptdma-dev.c
+@@ -71,12 +71,13 @@ static int pt_core_execute_cmd(struct ptdma_desc *desc, struct pt_cmd_queue *cmd
+ 	bool soc = FIELD_GET(DWORD0_SOC, desc->dw0);
+ 	u8 *q_desc = (u8 *)&cmd_q->qbase[cmd_q->qidx];
+ 	u32 tail;
++	unsigned long flags;
  
--	get_cpu();
- 	while (cq->pool_ptrs) {
- 		if (otx2_alloc_rbuf(pfvf, rbpool, &bufptr)) {
- 			/* Schedule a WQ if we fails to free atleast half of the
-@@ -982,7 +981,6 @@ static void otx2_pool_refill_task(struct work_struct *work)
- 		pfvf->hw_ops->aura_freeptr(pfvf, qidx, bufptr + OTX2_HEAD_ROOM);
- 		cq->pool_ptrs--;
+ 	if (soc) {
+ 		desc->dw0 |= FIELD_PREP(DWORD0_IOC, desc->dw0);
+ 		desc->dw0 &= ~DWORD0_SOC;
  	}
--	put_cpu();
- 	cq->refill_task_sched = false;
+-	mutex_lock(&cmd_q->q_mutex);
++	spin_lock_irqsave(&cmd_q->q_lock, flags);
+ 
+ 	/* Copy 32-byte command descriptor to hw queue. */
+ 	memcpy(q_desc, desc, 32);
+@@ -91,7 +92,7 @@ static int pt_core_execute_cmd(struct ptdma_desc *desc, struct pt_cmd_queue *cmd
+ 
+ 	/* Turn the queue back on using our cached control register */
+ 	pt_start_queue(cmd_q);
+-	mutex_unlock(&cmd_q->q_mutex);
++	spin_unlock_irqrestore(&cmd_q->q_lock, flags);
+ 
+ 	return 0;
  }
+@@ -197,7 +198,7 @@ int pt_core_init(struct pt_device *pt)
  
-@@ -1333,9 +1331,7 @@ int otx2_sq_aura_pool_init(struct otx2_nic *pfvf)
- 			err = otx2_alloc_rbuf(pfvf, pool, &bufptr);
- 			if (err)
- 				goto err_mem;
--			get_cpu();
- 			pfvf->hw_ops->aura_freeptr(pfvf, pool_id, bufptr);
--			put_cpu();
- 			sq->sqb_ptrs[sq->sqb_count++] = (u64)bufptr;
- 		}
- 	}
-@@ -1381,21 +1377,18 @@ int otx2_rq_aura_pool_init(struct otx2_nic *pfvf)
- 	if (err)
- 		goto fail;
+ 	cmd_q->pt = pt;
+ 	cmd_q->dma_pool = dma_pool;
+-	mutex_init(&cmd_q->q_mutex);
++	spin_lock_init(&cmd_q->q_lock);
  
--	get_cpu();
- 	/* Allocate pointers and free them to aura/pool */
- 	for (pool_id = 0; pool_id < hw->rqpool_cnt; pool_id++) {
- 		pool = &pfvf->qset.pool[pool_id];
- 		for (ptr = 0; ptr < num_ptrs; ptr++) {
- 			err = otx2_alloc_rbuf(pfvf, pool, &bufptr);
- 			if (err)
--				goto err_mem;
-+				return -ENOMEM;
- 			pfvf->hw_ops->aura_freeptr(pfvf, pool_id,
- 						   bufptr + OTX2_HEAD_ROOM);
- 		}
- 	}
--err_mem:
--	put_cpu();
--	return err ? -ENOMEM : 0;
-+	return 0;
- fail:
- 	otx2_mbox_reset(&pfvf->mbox.mbox, 0);
- 	otx2_aura_pool_free(pfvf);
-diff --git a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-index 095e5de78c0b..e685628b9294 100644
---- a/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-+++ b/drivers/net/ethernet/marvell/octeontx2/nic/otx2_common.h
-@@ -605,8 +605,10 @@ static inline void cn10k_aura_freeptr(void *dev, int aura, u64 buf)
- 	u64 ptrs[2];
+ 	/* Page alignment satisfies our needs for N <= 128 */
+ 	cmd_q->qsize = Q_SIZE(Q_DESC_SIZE);
+diff --git a/drivers/dma/ptdma/ptdma.h b/drivers/dma/ptdma/ptdma.h
+index afbf192c9230..0f0b400a864e 100644
+--- a/drivers/dma/ptdma/ptdma.h
++++ b/drivers/dma/ptdma/ptdma.h
+@@ -196,7 +196,7 @@ struct pt_cmd_queue {
+ 	struct ptdma_desc *qbase;
  
- 	ptrs[1] = buf;
-+	get_cpu();
- 	/* Free only one buffer at time during init and teardown */
- 	__cn10k_aura_freeptr(pfvf, aura, ptrs, 2);
-+	put_cpu();
- }
+ 	/* Aligned queue start address (per requirement) */
+-	struct mutex q_mutex ____cacheline_aligned;
++	spinlock_t q_lock ____cacheline_aligned;
+ 	unsigned int qidx;
  
- /* Alloc pointer from pool/aura */
+ 	unsigned int qsize;
 -- 
 2.39.0
 
