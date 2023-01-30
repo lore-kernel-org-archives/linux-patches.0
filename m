@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B42DE3229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:25:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BCBAC433D2;
-	Mon, 30 Jan 2023 14:25:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8551D2F31
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:25:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D18ABC433EF;
+	Mon, 30 Jan 2023 14:25:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088707;
-	bh=4OrA0ZDpwKQpPRV0xuqGGanvcqCqBG/tGPjB2AVrfp4=;
+	s=korg; t=1675088713;
+	bh=7TB58F2YJRfwdowX6BjU2VDFV/ZoHgwBV6QbWTkAs9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gacEXbydc54Lr7bJFxqOxX85CSMCM14Q8+7wlrIAjpA5RHRKkss0KLyzOqK0+6jZj
-	 7lx8JLTu1kSmhSyDwubY2ndyCfU2gnbH+3731J+VgDuV7+ISJTjefaH62fn0dKdspv
-	 zsnihbd/PaIqvlPurqxiJG9L1cDvOtsp5gKSGcbg=
+	b=M0ETwhLXkymZYfsZx7T8qiaBBiucepS85c0v1WTG3sUVrtHxC2MXnTdxCudxOHs/O
+	 mfaXUzu+e5fT7DuNQiPjxsLiAlXfuRRa00h+Agl0ZGDfkTox/MAe4xHmS0hr9bQ5Mg
+	 86is6yXuJ48I6bs5zgqGiGN1oWmwriF4oR5ZAl1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: [PATCH 5.10 108/143] thermal: intel: int340x: Protect trip temperature from concurrent updates
-Date: Mon, 30 Jan 2023 14:52:45 +0100
-Message-Id: <20230130134311.312121455@linuxfoundation.org>
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Steev Klimaszewski <steev@kali.org>,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH 5.10 110/143] EDAC/device: Respect any driver-supplied workqueue polling value
+Date: Mon, 30 Jan 2023 14:52:47 +0100
+Message-Id: <20230130134311.396027582@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -34,117 +37,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit 6757a7abe47bcb12cb2d45661067e182424b0ee3 upstream.
+commit cec669ff716cc83505c77b242aecf6f7baad869d upstream.
 
-Trip temperatures are read using ACPI methods and stored in the memory
-during zone initializtion and when the firmware sends a notification for
-change. This trip temperature is returned when the thermal core calls via
-callback get_trip_temp().
+The EDAC drivers may optionally pass the poll_msec value. Use that value
+if available, else fall back to 1000ms.
 
-But it is possible that while updating the memory copy of the trips when
-the firmware sends a notification for change, thermal core is reading the
-trip temperature via the callback get_trip_temp(). This may return invalid
-trip temperature.
+  [ bp: Touchups. ]
 
-To address this add a mutex to protect the invalid temperature reads in
-the callback get_trip_temp() and int340x_thermal_read_trips().
-
-Fixes: 5fbf7f27fa3d ("Thermal/int340x: Add common thermal zone handler")
-Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Cc: 5.0+ <stable@vger.kernel.org> # 5.0+
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Fixes: e27e3dac6517 ("drivers/edac: add edac_device class")
+Reported-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
+Cc: <stable@vger.kernel.org> # 4.9
+Link: https://lore.kernel.org/r/COZYL8MWN97H.MROQ391BGA09@otso
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c |   18 +++++++++--
- drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.h |    1 
- 2 files changed, 16 insertions(+), 3 deletions(-)
+ drivers/edac/edac_device.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
-+++ b/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
-@@ -44,11 +44,13 @@ static int int340x_thermal_get_trip_temp
- 					 int trip, int *temp)
+--- a/drivers/edac/edac_device.c
++++ b/drivers/edac/edac_device.c
+@@ -34,6 +34,9 @@
+ static DEFINE_MUTEX(device_ctls_mutex);
+ static LIST_HEAD(edac_device_list);
+ 
++/* Default workqueue processing interval on this instance, in msecs */
++#define DEFAULT_POLL_INTERVAL 1000
++
+ #ifdef CONFIG_EDAC_DEBUG
+ static void edac_device_dump_device(struct edac_device_ctl_info *edac_dev)
  {
- 	struct int34x_thermal_zone *d = zone->devdata;
--	int i;
-+	int i, ret = 0;
+@@ -366,7 +369,7 @@ static void edac_device_workq_function(s
+ 	 * whole one second to save timers firing all over the period
+ 	 * between integral seconds
+ 	 */
+-	if (edac_dev->poll_msec == 1000)
++	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
+ 		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
+ 	else
+ 		edac_queue_work(&edac_dev->work, edac_dev->delay);
+@@ -396,7 +399,7 @@ static void edac_device_workq_setup(stru
+ 	 * timers firing on sub-second basis, while they are happy
+ 	 * to fire together on the 1 second exactly
+ 	 */
+-	if (edac_dev->poll_msec == 1000)
++	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
+ 		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
+ 	else
+ 		edac_queue_work(&edac_dev->work, edac_dev->delay);
+@@ -430,7 +433,7 @@ void edac_device_reset_delay_period(stru
+ 	edac_dev->delay	    = msecs_to_jiffies(msec);
  
- 	if (d->override_ops && d->override_ops->get_trip_temp)
- 		return d->override_ops->get_trip_temp(zone, trip, temp);
+ 	/* See comment in edac_device_workq_setup() above */
+-	if (edac_dev->poll_msec == 1000)
++	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
+ 		edac_mod_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
+ 	else
+ 		edac_mod_work(&edac_dev->work, edac_dev->delay);
+@@ -472,11 +475,7 @@ int edac_device_add_device(struct edac_d
+ 		/* This instance is NOW RUNNING */
+ 		edac_dev->op_state = OP_RUNNING_POLL;
  
-+	mutex_lock(&d->trip_mutex);
-+
- 	if (trip < d->aux_trip_nr)
- 		*temp = d->aux_trips[trip];
- 	else if (trip == d->crt_trip_id)
-@@ -66,10 +68,12 @@ static int int340x_thermal_get_trip_temp
- 			}
- 		}
- 		if (i == INT340X_THERMAL_MAX_ACT_TRIP_COUNT)
--			return -EINVAL;
-+			ret = -EINVAL;
+-		/*
+-		 * enable workq processing on this instance,
+-		 * default = 1000 msec
+-		 */
+-		edac_device_workq_setup(edac_dev, 1000);
++		edac_device_workq_setup(edac_dev, edac_dev->poll_msec ?: DEFAULT_POLL_INTERVAL);
+ 	} else {
+ 		edac_dev->op_state = OP_RUNNING_INTERRUPT;
  	}
- 
--	return 0;
-+	mutex_unlock(&d->trip_mutex);
-+
-+	return ret;
- }
- 
- static int int340x_thermal_get_trip_type(struct thermal_zone_device *zone,
-@@ -174,6 +178,8 @@ int int340x_thermal_read_trips(struct in
- 	int trip_cnt = int34x_zone->aux_trip_nr;
- 	int i;
- 
-+	mutex_lock(&int34x_zone->trip_mutex);
-+
- 	int34x_zone->crt_trip_id = -1;
- 	if (!int340x_thermal_get_trip_config(int34x_zone->adev->handle, "_CRT",
- 					     &int34x_zone->crt_temp))
-@@ -201,6 +207,8 @@ int int340x_thermal_read_trips(struct in
- 		int34x_zone->act_trips[i].valid = true;
- 	}
- 
-+	mutex_unlock(&int34x_zone->trip_mutex);
-+
- 	return trip_cnt;
- }
- EXPORT_SYMBOL_GPL(int340x_thermal_read_trips);
-@@ -224,6 +232,8 @@ struct int34x_thermal_zone *int340x_ther
- 	if (!int34x_thermal_zone)
- 		return ERR_PTR(-ENOMEM);
- 
-+	mutex_init(&int34x_thermal_zone->trip_mutex);
-+
- 	int34x_thermal_zone->adev = adev;
- 	int34x_thermal_zone->override_ops = override_ops;
- 
-@@ -275,6 +285,7 @@ err_thermal_zone:
- 	acpi_lpat_free_conversion_table(int34x_thermal_zone->lpat_table);
- 	kfree(int34x_thermal_zone->aux_trips);
- err_trip_alloc:
-+	mutex_destroy(&int34x_thermal_zone->trip_mutex);
- 	kfree(int34x_thermal_zone);
- 	return ERR_PTR(ret);
- }
-@@ -286,6 +297,7 @@ void int340x_thermal_zone_remove(struct
- 	thermal_zone_device_unregister(int34x_thermal_zone->zone);
- 	acpi_lpat_free_conversion_table(int34x_thermal_zone->lpat_table);
- 	kfree(int34x_thermal_zone->aux_trips);
-+	mutex_destroy(&int34x_thermal_zone->trip_mutex);
- 	kfree(int34x_thermal_zone);
- }
- EXPORT_SYMBOL_GPL(int340x_thermal_zone_remove);
---- a/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.h
-+++ b/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.h
-@@ -32,6 +32,7 @@ struct int34x_thermal_zone {
- 	struct thermal_zone_device_ops *override_ops;
- 	void *priv_data;
- 	struct acpi_lpat_conversion_table *lpat_table;
-+	struct mutex trip_mutex;
- };
- 
- struct int34x_thermal_zone *int340x_thermal_zone_add(struct acpi_device *,
 
 
