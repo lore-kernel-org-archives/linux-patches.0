@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F5028EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:07:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 347BEC433EF;
-	Mon, 30 Jan 2023 14:07:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7E9628EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:07:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D6F3C433D2;
+	Mon, 30 Jan 2023 14:07:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087628;
-	bh=sx80RY1j1NA+28Zxc/ujMkWRNWUMKpnPcPs4BqBBH0M=;
+	s=korg; t=1675087631;
+	bh=xYmaA+wONafaHmY7s1tEfwKwVF4wo4/dWHD+JYFlK3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K0W0+LAsXtkjztH/FmFlH6BeV0PzjdJPBEr7KQdHyZy5ZSy0MBs2n8U/PmDSy2HNj
-	 At2OdUg+79VLVrUgblAV0U4QKjm9u+ZvXQtdGteKUAhL+OEzZ31tu8MJ8Xy+f5BKtd
-	 9tjVSYmUeSllinBMEXjRusXhx437JgkhpzIpC7ik=
+	b=sm9kO3lny8ttRRdB4b/AxGe3uRUj5NXfKlcn42JXOqBKMRCfKwHdLfCSeHtW2TPzG
+	 3jUzhI0SfGKXE8upkKHze8zdyQtkvEzp/1n5bIVVfzckjkWci02ZPKZEuawq/wG4T+
+	 TxJYGtN0rVw7XIv3mGFCeW5JTLAR5Nchlia9axPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steev Klimaszewski <steev@kali.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH 6.1 232/313] EDAC/qcom: Do not pass llcc_driv_data as edac_device_ctl_infos pvt_info
-Date: Mon, 30 Jan 2023 14:51:07 +0100
-Message-Id: <20230130134347.521188374@linuxfoundation.org>
+	Stefano Brivio <sbrivio@redhat.com>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 265/313] netfilter: nft_set_rbtree: skip elements in transaction from garbage collection
+Date: Mon, 30 Jan 2023 14:51:40 +0100
+Message-Id: <20230130134349.083730967@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,58 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Pablo Neira Ayuso <pablo@netfilter.org>
 
-commit 977c6ba624f24ae20cf0faee871257a39348d4a9 upstream.
+[ Upstream commit 5d235d6ce75c12a7fdee375eb211e4116f7ab01b ]
 
-The memory for llcc_driv_data is allocated by the LLCC driver. But when
-it is passed as the private driver info to the EDAC core, it will get freed
-during the qcom_edac driver release. So when the qcom_edac driver gets probed
-again, it will try to use the freed data leading to the use-after-free bug.
+Skip interference with an ongoing transaction, do not perform garbage
+collection on inactive elements. Reset annotated previous end interval
+if the expired element is marked as busy (control plane removed the
+element right before expiration).
 
-Hence, do not pass llcc_driv_data as pvt_info but rather reference it
-using the platform_data pointer in the qcom_edac driver.
-
-Fixes: 27450653f1db ("drivers: edac: Add EDAC driver support for QCOM SoCs")
-Reported-by: Steev Klimaszewski <steev@kali.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
-Cc: <stable@vger.kernel.org> # 4.20
-Link: https://lore.kernel.org/r/20230118150904.26913-4-manivannan.sadhasivam@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 8d8540c4f5e0 ("netfilter: nft_set_rbtree: add timeout support")
+Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/qcom_edac.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/netfilter/nft_set_rbtree.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/drivers/edac/qcom_edac.c
-+++ b/drivers/edac/qcom_edac.c
-@@ -252,7 +252,7 @@ clear:
- static int
- dump_syn_reg(struct edac_device_ctl_info *edev_ctl, int err_type, u32 bank)
- {
--	struct llcc_drv_data *drv = edev_ctl->pvt_info;
-+	struct llcc_drv_data *drv = edev_ctl->dev->platform_data;
- 	int ret;
+diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
+index 217225e13faf..19ea4d3c3553 100644
+--- a/net/netfilter/nft_set_rbtree.c
++++ b/net/netfilter/nft_set_rbtree.c
+@@ -563,23 +563,37 @@ static void nft_rbtree_gc(struct work_struct *work)
+ 	struct nft_rbtree *priv;
+ 	struct rb_node *node;
+ 	struct nft_set *set;
++	struct net *net;
++	u8 genmask;
  
- 	ret = dump_syn_reg_values(drv, bank, err_type);
-@@ -289,7 +289,7 @@ static irqreturn_t
- llcc_ecc_irq_handler(int irq, void *edev_ctl)
- {
- 	struct edac_device_ctl_info *edac_dev_ctl = edev_ctl;
--	struct llcc_drv_data *drv = edac_dev_ctl->pvt_info;
-+	struct llcc_drv_data *drv = edac_dev_ctl->dev->platform_data;
- 	irqreturn_t irq_rc = IRQ_NONE;
- 	u32 drp_error, trp_error, i;
- 	int ret;
-@@ -358,7 +358,6 @@ static int qcom_llcc_edac_probe(struct p
- 	edev_ctl->dev_name = dev_name(dev);
- 	edev_ctl->ctl_name = "llcc";
- 	edev_ctl->panic_on_ue = LLCC_ERP_PANIC_ON_UE;
--	edev_ctl->pvt_info = llcc_driv_data;
+ 	priv = container_of(work, struct nft_rbtree, gc_work.work);
+ 	set  = nft_set_container_of(priv);
++	net  = read_pnet(&set->net);
++	genmask = nft_genmask_cur(net);
  
- 	rc = edac_device_add_device(edev_ctl);
- 	if (rc)
+ 	write_lock_bh(&priv->lock);
+ 	write_seqcount_begin(&priv->count);
+ 	for (node = rb_first(&priv->root); node != NULL; node = rb_next(node)) {
+ 		rbe = rb_entry(node, struct nft_rbtree_elem, node);
+ 
++		if (!nft_set_elem_active(&rbe->ext, genmask))
++			continue;
++
++		/* elements are reversed in the rbtree for historical reasons,
++		 * from highest to lowest value, that is why end element is
++		 * always visited before the start element.
++		 */
+ 		if (nft_rbtree_interval_end(rbe)) {
+ 			rbe_end = rbe;
+ 			continue;
+ 		}
+ 		if (!nft_set_elem_expired(&rbe->ext))
+ 			continue;
+-		if (nft_set_elem_mark_busy(&rbe->ext))
++
++		if (nft_set_elem_mark_busy(&rbe->ext)) {
++			rbe_end = NULL;
+ 			continue;
++		}
+ 
+ 		if (rbe_prev) {
+ 			rb_erase(&rbe_prev->node, &priv->root);
+-- 
+2.39.0
+
 
 
