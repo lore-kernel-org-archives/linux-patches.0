@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCEA28F3
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:08:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F659C433EF;
-	Mon, 30 Jan 2023 14:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C59B528EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:08:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45FB0C433EF;
+	Mon, 30 Jan 2023 14:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087703;
-	bh=5tWisySBMkAeTCnBTIYLyTp8TabqmRXXx/3GY1UtUFA=;
+	s=korg; t=1675087706;
+	bh=RF+eZ5QPDwfrxVrFaV5K/BFJwCf2699qjYjEo4z5ggk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ia7ZY3jBn79sFpeVqd3BO/+fl6ZdcmM/J9jHmKXroZKZSNgrN99RJg9Zi38KrTzyK
-	 DfFmHG5hLn+uGKPkV7kg69iZJHy6K6Rz8u6PtAiYwtHRsjAvPL/vsssYw+1bYDTHXK
-	 1twl2BITzUm+OhUlOdDSSdfFYk4WIZ+WkN0aUrFU=
+	b=YEQtM+mqoZGTZ+bi+T6qEVsWIBB7LRgaPzn+W8SLLjfIiN/1uZRxWDuncrHyXfiNr
+	 dkumvGb7E3Uenikzvr8nH+9i857OmphcUG0R/wpuWdC6JpSWZcqExlUKOmkSBBC7LU
+	 nkHoukESicZAoKSTFlWWDFMIR7srCy0K74e7MrXo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Christensen <drc@linux.vnet.ibm.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Gerhard Engleder <gerhard@engleder-embedded.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 295/313] net/tg3: resolve deadlock in tg3_reset_task() during EEH
-Date: Mon, 30 Jan 2023 14:52:10 +0100
-Message-Id: <20230130134350.478251421@linuxfoundation.org>
+Subject: [PATCH 6.1 296/313] tsnep: Fix TX queue stop/wake for multiple queues
+Date: Mon, 30 Jan 2023 14:52:11 +0100
+Message-Id: <20230130134350.527364792@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,117 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Christensen <drc@linux.vnet.ibm.com>
+From: Gerhard Engleder <gerhard@engleder-embedded.com>
 
-[ Upstream commit 6c4ca03bd890566d873e3593b32d034bf2f5a087 ]
+[ Upstream commit 3d53aaef4332245044b2f3688ac0ea10436c719c ]
 
-During EEH error injection testing, a deadlock was encountered in the tg3
-driver when tg3_io_error_detected() was attempting to cancel outstanding
-reset tasks:
+netif_stop_queue() and netif_wake_queue() act on TX queue 0. This is ok
+as long as only a single TX queue is supported. But support for multiple
+TX queues was introduced with 762031375d5c and I missed to adapt stop
+and wake of TX queues.
 
-crash> foreach UN bt
-...
-PID: 159    TASK: c0000000067c6000  CPU: 8   COMMAND: "eehd"
-...
- #5 [c00000000681f990] __cancel_work_timer at c00000000019fd18
- #6 [c00000000681fa30] tg3_io_error_detected at c00800000295f098 [tg3]
- #7 [c00000000681faf0] eeh_report_error at c00000000004e25c
-...
+Use netif_stop_subqueue() and netif_tx_wake_queue() to act on specific
+TX queue.
 
-PID: 290    TASK: c000000036e5f800  CPU: 6   COMMAND: "kworker/6:1"
-...
- #4 [c00000003721fbc0] rtnl_lock at c000000000c940d8
- #5 [c00000003721fbe0] tg3_reset_task at c008000002969358 [tg3]
- #6 [c00000003721fc60] process_one_work at c00000000019e5c4
-...
-
-PID: 296    TASK: c000000037a65800  CPU: 21  COMMAND: "kworker/21:1"
-...
- #4 [c000000037247bc0] rtnl_lock at c000000000c940d8
- #5 [c000000037247be0] tg3_reset_task at c008000002969358 [tg3]
- #6 [c000000037247c60] process_one_work at c00000000019e5c4
-...
-
-PID: 655    TASK: c000000036f49000  CPU: 16  COMMAND: "kworker/16:2"
-...:1
-
- #4 [c0000000373ebbc0] rtnl_lock at c000000000c940d8
- #5 [c0000000373ebbe0] tg3_reset_task at c008000002969358 [tg3]
- #6 [c0000000373ebc60] process_one_work at c00000000019e5c4
-...
-
-Code inspection shows that both tg3_io_error_detected() and
-tg3_reset_task() attempt to acquire the RTNL lock at the beginning of
-their code blocks.  If tg3_reset_task() should happen to execute between
-the times when tg3_io_error_deteced() acquires the RTNL lock and
-tg3_reset_task_cancel() is called, a deadlock will occur.
-
-Moving tg3_reset_task_cancel() call earlier within the code block, prior
-to acquiring RTNL, prevents this from happening, but also exposes another
-deadlock issue where tg3_reset_task() may execute AFTER
-tg3_io_error_detected() has executed:
-
-crash> foreach UN bt
-PID: 159    TASK: c0000000067d2000  CPU: 9   COMMAND: "eehd"
-...
- #4 [c000000006867a60] rtnl_lock at c000000000c940d8
- #5 [c000000006867a80] tg3_io_slot_reset at c0080000026c2ea8 [tg3]
- #6 [c000000006867b00] eeh_report_reset at c00000000004de88
-...
-PID: 363    TASK: c000000037564000  CPU: 6   COMMAND: "kworker/6:1"
-...
- #3 [c000000036c1bb70] msleep at c000000000259e6c
- #4 [c000000036c1bba0] napi_disable at c000000000c6b848
- #5 [c000000036c1bbe0] tg3_reset_task at c0080000026d942c [tg3]
- #6 [c000000036c1bc60] process_one_work at c00000000019e5c4
-...
-
-This issue can be avoided by aborting tg3_reset_task() if EEH error
-recovery is already in progress.
-
-Fixes: db84bf43ef23 ("tg3: tg3_reset_task() needs to use rtnl_lock to synchronize")
-Signed-off-by: David Christensen <drc@linux.vnet.ibm.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://lore.kernel.org/r/20230124185339.225806-1-drc@linux.vnet.ibm.com
+Fixes: 762031375d5c ("tsnep: Support multiple TX/RX queue pairs")
+Signed-off-by: Gerhard Engleder <gerhard@engleder-embedded.com>
+Link: https://lore.kernel.org/r/20230124191440.56887-1-gerhard@engleder-embedded.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/engleder/tsnep_main.c | 15 +++++++++------
+ 1 file changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index 4179a12fc881..af9ea5e4371b 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -11174,7 +11174,7 @@ static void tg3_reset_task(struct work_struct *work)
- 	rtnl_lock();
- 	tg3_full_lock(tp, 0);
+diff --git a/drivers/net/ethernet/engleder/tsnep_main.c b/drivers/net/ethernet/engleder/tsnep_main.c
+index 13d5ff4e0e02..6bf3cc11d212 100644
+--- a/drivers/net/ethernet/engleder/tsnep_main.c
++++ b/drivers/net/ethernet/engleder/tsnep_main.c
+@@ -419,7 +419,7 @@ static netdev_tx_t tsnep_xmit_frame_ring(struct sk_buff *skb,
+ 		/* ring full, shall not happen because queue is stopped if full
+ 		 * below
+ 		 */
+-		netif_stop_queue(tx->adapter->netdev);
++		netif_stop_subqueue(tx->adapter->netdev, tx->queue_index);
  
--	if (!netif_running(tp->dev)) {
-+	if (tp->pcierr_recovery || !netif_running(tp->dev)) {
- 		tg3_flag_clear(tp, RESET_TASK_PENDING);
- 		tg3_full_unlock(tp);
- 		rtnl_unlock();
-@@ -18109,6 +18109,9 @@ static pci_ers_result_t tg3_io_error_detected(struct pci_dev *pdev,
+ 		spin_unlock_irqrestore(&tx->lock, flags);
  
- 	netdev_info(netdev, "PCI I/O error detected\n");
+@@ -462,7 +462,7 @@ static netdev_tx_t tsnep_xmit_frame_ring(struct sk_buff *skb,
  
-+	/* Want to make sure that the reset task doesn't run */
-+	tg3_reset_task_cancel(tp);
+ 	if (tsnep_tx_desc_available(tx) < (MAX_SKB_FRAGS + 1)) {
+ 		/* ring can get full with next frame */
+-		netif_stop_queue(tx->adapter->netdev);
++		netif_stop_subqueue(tx->adapter->netdev, tx->queue_index);
+ 	}
+ 
+ 	spin_unlock_irqrestore(&tx->lock, flags);
+@@ -472,11 +472,14 @@ static netdev_tx_t tsnep_xmit_frame_ring(struct sk_buff *skb,
+ 
+ static bool tsnep_tx_poll(struct tsnep_tx *tx, int napi_budget)
+ {
++	struct tsnep_tx_entry *entry;
++	struct netdev_queue *nq;
+ 	unsigned long flags;
+ 	int budget = 128;
+-	struct tsnep_tx_entry *entry;
+-	int count;
+ 	int length;
++	int count;
 +
- 	rtnl_lock();
++	nq = netdev_get_tx_queue(tx->adapter->netdev, tx->queue_index);
  
- 	/* Could be second call or maybe we don't have netdev yet */
-@@ -18125,9 +18128,6 @@ static pci_ers_result_t tg3_io_error_detected(struct pci_dev *pdev,
+ 	spin_lock_irqsave(&tx->lock, flags);
  
- 	tg3_timer_stop(tp);
+@@ -533,8 +536,8 @@ static bool tsnep_tx_poll(struct tsnep_tx *tx, int napi_budget)
+ 	} while (likely(budget));
  
--	/* Want to make sure that the reset task doesn't run */
--	tg3_reset_task_cancel(tp);
--
- 	netif_device_detach(netdev);
+ 	if ((tsnep_tx_desc_available(tx) >= ((MAX_SKB_FRAGS + 1) * 2)) &&
+-	    netif_queue_stopped(tx->adapter->netdev)) {
+-		netif_wake_queue(tx->adapter->netdev);
++	    netif_tx_queue_stopped(nq)) {
++		netif_tx_wake_queue(nq);
+ 	}
  
- 	/* Clean up software state, even if MMIO is blocked */
+ 	spin_unlock_irqrestore(&tx->lock, flags);
 -- 
 2.39.0
 
