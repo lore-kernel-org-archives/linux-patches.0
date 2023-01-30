@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C64D83229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:19:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B3B6C433D2;
-	Mon, 30 Jan 2023 14:19:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF3BD3229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:19:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D630C433EF;
+	Mon, 30 Jan 2023 14:19:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088343;
-	bh=lN6k3dcEO1OI6t8RlQqlMqMPRbyUdFnqj+8KhAzMYSU=;
+	s=korg; t=1675088346;
+	bh=b9mhJCY7VyH+ak6ttcE8umrGGeb40RB/jBMUH7rpU8Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GpC1kUq/4ql5yARxeZtDRkshlOLnDQN/C9zZX4//bmZOf0gQi9esfpRVjOWIkUcza
-	 QiIn36Jyzp7Z7kQ4VQX3yqwCjX2TFbwgSM1fYZS/hovIvsnkSdjWnM1WL1H27+n3kH
-	 5llXfvM73JYv+SDhZtLQUVyChTTI3A84akh63QkE=
+	b=jz6h/G64FQ0L8EMPzYlfc6OnPp29f4SimZ2cF/T5UGsuKHQe1aYXrExY3hIuevcHr
+	 wRTqlAJxWYub5OVTp0zDGJ9Ua59lC3I+G3tPQyPU4lX4zA8hwcgoERJt2J0L6OQRR+
+	 D+q/4K6hgxokk0EeNvdgIm2fACqrO1a5q+veEND4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	David Christensen <drc@linux.vnet.ibm.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 192/204] thermal: intel: int340x: Add locking to int340x_thermal_get_trip_type()
-Date: Mon, 30 Jan 2023 14:52:37 +0100
-Message-Id: <20230130134325.004432855@linuxfoundation.org>
+Subject: [PATCH 5.15 193/204] net/tg3: resolve deadlock in tg3_reset_task() during EEH
+Date: Mon, 30 Jan 2023 14:52:38 +0100
+Message-Id: <20230130134325.054744019@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -34,55 +36,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+From: David Christensen <drc@linux.vnet.ibm.com>
 
-[ Upstream commit acd7e9ee57c880b99671dd99680cb707b7b5b0ee ]
+[ Upstream commit 6c4ca03bd890566d873e3593b32d034bf2f5a087 ]
 
-In order to prevent int340x_thermal_get_trip_type() from possibly
-racing with int340x_thermal_read_trips() invoked by int3403_notify()
-add locking to it in analogy with int340x_thermal_get_trip_temp().
+During EEH error injection testing, a deadlock was encountered in the tg3
+driver when tg3_io_error_detected() was attempting to cancel outstanding
+reset tasks:
 
-Fixes: 6757a7abe47b ("thermal: intel: int340x: Protect trip temperature from concurrent updates")
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+crash> foreach UN bt
+...
+PID: 159    TASK: c0000000067c6000  CPU: 8   COMMAND: "eehd"
+...
+ #5 [c00000000681f990] __cancel_work_timer at c00000000019fd18
+ #6 [c00000000681fa30] tg3_io_error_detected at c00800000295f098 [tg3]
+ #7 [c00000000681faf0] eeh_report_error at c00000000004e25c
+...
+
+PID: 290    TASK: c000000036e5f800  CPU: 6   COMMAND: "kworker/6:1"
+...
+ #4 [c00000003721fbc0] rtnl_lock at c000000000c940d8
+ #5 [c00000003721fbe0] tg3_reset_task at c008000002969358 [tg3]
+ #6 [c00000003721fc60] process_one_work at c00000000019e5c4
+...
+
+PID: 296    TASK: c000000037a65800  CPU: 21  COMMAND: "kworker/21:1"
+...
+ #4 [c000000037247bc0] rtnl_lock at c000000000c940d8
+ #5 [c000000037247be0] tg3_reset_task at c008000002969358 [tg3]
+ #6 [c000000037247c60] process_one_work at c00000000019e5c4
+...
+
+PID: 655    TASK: c000000036f49000  CPU: 16  COMMAND: "kworker/16:2"
+...:1
+
+ #4 [c0000000373ebbc0] rtnl_lock at c000000000c940d8
+ #5 [c0000000373ebbe0] tg3_reset_task at c008000002969358 [tg3]
+ #6 [c0000000373ebc60] process_one_work at c00000000019e5c4
+...
+
+Code inspection shows that both tg3_io_error_detected() and
+tg3_reset_task() attempt to acquire the RTNL lock at the beginning of
+their code blocks.  If tg3_reset_task() should happen to execute between
+the times when tg3_io_error_deteced() acquires the RTNL lock and
+tg3_reset_task_cancel() is called, a deadlock will occur.
+
+Moving tg3_reset_task_cancel() call earlier within the code block, prior
+to acquiring RTNL, prevents this from happening, but also exposes another
+deadlock issue where tg3_reset_task() may execute AFTER
+tg3_io_error_detected() has executed:
+
+crash> foreach UN bt
+PID: 159    TASK: c0000000067d2000  CPU: 9   COMMAND: "eehd"
+...
+ #4 [c000000006867a60] rtnl_lock at c000000000c940d8
+ #5 [c000000006867a80] tg3_io_slot_reset at c0080000026c2ea8 [tg3]
+ #6 [c000000006867b00] eeh_report_reset at c00000000004de88
+...
+PID: 363    TASK: c000000037564000  CPU: 6   COMMAND: "kworker/6:1"
+...
+ #3 [c000000036c1bb70] msleep at c000000000259e6c
+ #4 [c000000036c1bba0] napi_disable at c000000000c6b848
+ #5 [c000000036c1bbe0] tg3_reset_task at c0080000026d942c [tg3]
+ #6 [c000000036c1bc60] process_one_work at c00000000019e5c4
+...
+
+This issue can be avoided by aborting tg3_reset_task() if EEH error
+recovery is already in progress.
+
+Fixes: db84bf43ef23 ("tg3: tg3_reset_task() needs to use rtnl_lock to synchronize")
+Signed-off-by: David Christensen <drc@linux.vnet.ibm.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://lore.kernel.org/r/20230124185339.225806-1-drc@linux.vnet.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../intel/int340x_thermal/int340x_thermal_zone.c       | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/broadcom/tg3.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c b/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
-index 852f6c579af5..0a4eaa307156 100644
---- a/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
-+++ b/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
-@@ -81,11 +81,13 @@ static int int340x_thermal_get_trip_type(struct thermal_zone_device *zone,
- 					 enum thermal_trip_type *type)
- {
- 	struct int34x_thermal_zone *d = zone->devdata;
--	int i;
-+	int i, ret = 0;
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index 8aab07419263..50f86bebbc19 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -11176,7 +11176,7 @@ static void tg3_reset_task(struct work_struct *work)
+ 	rtnl_lock();
+ 	tg3_full_lock(tp, 0);
  
- 	if (d->override_ops && d->override_ops->get_trip_type)
- 		return d->override_ops->get_trip_type(zone, trip, type);
+-	if (!netif_running(tp->dev)) {
++	if (tp->pcierr_recovery || !netif_running(tp->dev)) {
+ 		tg3_flag_clear(tp, RESET_TASK_PENDING);
+ 		tg3_full_unlock(tp);
+ 		rtnl_unlock();
+@@ -18111,6 +18111,9 @@ static pci_ers_result_t tg3_io_error_detected(struct pci_dev *pdev,
  
-+	mutex_lock(&d->trip_mutex);
+ 	netdev_info(netdev, "PCI I/O error detected\n");
+ 
++	/* Want to make sure that the reset task doesn't run */
++	tg3_reset_task_cancel(tp);
 +
- 	if (trip < d->aux_trip_nr)
- 		*type = THERMAL_TRIP_PASSIVE;
- 	else if (trip == d->crt_trip_id)
-@@ -103,10 +105,12 @@ static int int340x_thermal_get_trip_type(struct thermal_zone_device *zone,
- 			}
- 		}
- 		if (i == INT340X_THERMAL_MAX_ACT_TRIP_COUNT)
--			return -EINVAL;
-+			ret = -EINVAL;
- 	}
+ 	rtnl_lock();
  
--	return 0;
-+	mutex_unlock(&d->trip_mutex);
-+
-+	return ret;
- }
+ 	/* Could be second call or maybe we don't have netdev yet */
+@@ -18127,9 +18130,6 @@ static pci_ers_result_t tg3_io_error_detected(struct pci_dev *pdev,
  
- static int int340x_thermal_set_trip_temp(struct thermal_zone_device *zone,
+ 	tg3_timer_stop(tp);
+ 
+-	/* Want to make sure that the reset task doesn't run */
+-	tg3_reset_task_cancel(tp);
+-
+ 	netif_device_detach(netdev);
+ 
+ 	/* Clean up software state, even if MMIO is blocked */
 -- 
 2.39.0
 
