@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C5A328EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:05:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 209E4C433EF;
-	Mon, 30 Jan 2023 14:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5341828EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:05:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA210C433EF;
+	Mon, 30 Jan 2023 14:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087517;
-	bh=U6uvrp33YWiHXyyne+1WMFhq5/IADpvUTMZrmfymyro=;
+	s=korg; t=1675087520;
+	bh=IQsu13b3t6jWLILa8J93eMa3pjIvJq/R/Awrsr3saN4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IoF061Z74XFMzgG+cFICRDcq+iNyE4YYkpiriikVGQmiUoT8LjvnonyfOJLlNC5Uh
-	 Dcj4g402u0pSePh/Gp0Sah0TooJFOdnyFYY7W2Q5IUV7afcfD/6QgN3WYSstZ7NrQ0
-	 s/9HpoFWQCyZRRkBMf1IiyKh+n93wUNEKoRPrw0o=
+	b=qNJjIg+QqIUnhfbiE2vjQ39PTIbryLSXmMvvPoYo3BzN++ptVdC6O6kkeCCoj6wKw
+	 S9S6Ilddg37jXIGMa0vemqDqlzouZaKTDGlmpcickUf/Zs+T1gw5bBZJERJIWVHPbR
+	 5NNS+gu1SZVVGJUGXA0m9SyHI4QeNoq31BGRJuSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	"Qais Yousef (Google)" <qyousef@layalina.io>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
+	Niklas Schnelle <schnelle@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Jason Gunthorpe <jgg@nvidia.com>,
+	Alex Williamson <alex.williamson@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 205/313] sched/uclamp: Fix a uninitialized variable warnings
-Date: Mon, 30 Jan 2023 14:50:40 +0100
-Message-Id: <20230130134346.251654203@linuxfoundation.org>
+Subject: [PATCH 6.1 206/313] vfio/type1: Respect IOMMU reserved regions in vfio_test_domain_fgsp()
+Date: Mon, 30 Jan 2023 14:50:41 +0100
+Message-Id: <20230130134346.282994490@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -38,94 +37,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qais Yousef <qyousef@layalina.io>
+From: Niklas Schnelle <schnelle@linux.ibm.com>
 
-[ Upstream commit e26fd28db82899be71b4b949527373d0a6be1e65 ]
+[ Upstream commit 895c0747f726bb50c9b7a805613a61d1b6f9fa06 ]
 
-Addresses the following warnings:
+Since commit cbf7827bc5dc ("iommu/s390: Fix potential s390_domain
+aperture shrinking") the s390 IOMMU driver uses reserved regions for the
+system provided DMA ranges of PCI devices. Previously it reduced the
+size of the IOMMU aperture and checked it on each mapping operation.
+On current machines the system denies use of DMA addresses below 2^32 for
+all PCI devices.
 
-> config: riscv-randconfig-m031-20221111
-> compiler: riscv64-linux-gcc (GCC) 12.1.0
->
-> smatch warnings:
-> kernel/sched/fair.c:7263 find_energy_efficient_cpu() error: uninitialized symbol 'util_min'.
-> kernel/sched/fair.c:7263 find_energy_efficient_cpu() error: uninitialized symbol 'util_max'.
+Usually mapping IOVAs in a reserved regions is harmless until a DMA
+actually tries to utilize the mapping. However on s390 there is
+a virtual PCI device called ISM which is implemented in firmware and
+used for cross LPAR communication. Unlike real PCI devices this device
+does not use the hardware IOMMU but inspects IOMMU translation tables
+directly on IOTLB flush (s390 RPCIT instruction). If it detects IOVA
+mappings outside the allowed ranges it goes into an error state. This
+error state then causes the device to be unavailable to the KVM guest.
 
-Fixes: 244226035a1f ("sched/uclamp: Fix fits_capacity() check in feec()")
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Qais Yousef (Google) <qyousef@layalina.io>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Reviewed-by: Vincent Guittot <vincent.guittot@linaro.org>
-Link: https://lore.kernel.org/r/20230112122708.330667-2-qyousef@layalina.io
+Analysing this we found that vfio_test_domain_fgsp() maps 2 pages at DMA
+address 0 irrespective of the IOMMUs reserved regions. Even if usually
+harmless this seems wrong in the general case so instead go through the
+freshly updated IOVA list and try to find a range that isn't reserved,
+and fits 2 pages, is PAGE_SIZE * 2 aligned. If found use that for
+testing for fine grained super pages.
+
+Fixes: af029169b8fd ("vfio/type1: Check reserved region conflict and update iova list")
+Signed-off-by: Niklas Schnelle <schnelle@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Reviewed-by: Jason Gunthorpe <jgg@nvidia.com>
+Link: https://lore.kernel.org/r/20230110164427.4051938-2-schnelle@linux.ibm.com
+Signed-off-by: Alex Williamson <alex.williamson@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/sched/fair.c | 35 ++++++++++++++++-------------------
- 1 file changed, 16 insertions(+), 19 deletions(-)
+ drivers/vfio/vfio_iommu_type1.c | 31 ++++++++++++++++++++-----------
+ 1 file changed, 20 insertions(+), 11 deletions(-)
 
-diff --git a/kernel/sched/fair.c b/kernel/sched/fair.c
-index bb04ca795fc3..2c3d0d49c80e 100644
---- a/kernel/sched/fair.c
-+++ b/kernel/sched/fair.c
-@@ -7213,10 +7213,10 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
- 	eenv_task_busy_time(&eenv, p, prev_cpu);
+diff --git a/drivers/vfio/vfio_iommu_type1.c b/drivers/vfio/vfio_iommu_type1.c
+index 23c24fe98c00..2209372f236d 100644
+--- a/drivers/vfio/vfio_iommu_type1.c
++++ b/drivers/vfio/vfio_iommu_type1.c
+@@ -1856,24 +1856,33 @@ static int vfio_iommu_replay(struct vfio_iommu *iommu,
+  * significantly boosts non-hugetlbfs mappings and doesn't seem to hurt when
+  * hugetlbfs is in use.
+  */
+-static void vfio_test_domain_fgsp(struct vfio_domain *domain)
++static void vfio_test_domain_fgsp(struct vfio_domain *domain, struct list_head *regions)
+ {
+-	struct page *pages;
+ 	int ret, order = get_order(PAGE_SIZE * 2);
++	struct vfio_iova *region;
++	struct page *pages;
++	dma_addr_t start;
  
- 	for (; pd; pd = pd->next) {
-+		unsigned long util_min = p_util_min, util_max = p_util_max;
- 		unsigned long cpu_cap, cpu_thermal_cap, util;
- 		unsigned long cur_delta, max_spare_cap = 0;
- 		unsigned long rq_util_min, rq_util_max;
--		unsigned long util_min, util_max;
- 		unsigned long prev_spare_cap = 0;
- 		int max_spare_cap_cpu = -1;
- 		unsigned long base_energy;
-@@ -7235,6 +7235,8 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
- 		eenv.pd_cap = 0;
+ 	pages = alloc_pages(GFP_KERNEL | __GFP_ZERO, order);
+ 	if (!pages)
+ 		return;
  
- 		for_each_cpu(cpu, cpus) {
-+			struct rq *rq = cpu_rq(cpu);
+-	ret = iommu_map(domain->domain, 0, page_to_phys(pages), PAGE_SIZE * 2,
+-			IOMMU_READ | IOMMU_WRITE | IOMMU_CACHE);
+-	if (!ret) {
+-		size_t unmapped = iommu_unmap(domain->domain, 0, PAGE_SIZE);
++	list_for_each_entry(region, regions, list) {
++		start = ALIGN(region->start, PAGE_SIZE * 2);
++		if (start >= region->end || (region->end - start < PAGE_SIZE * 2))
++			continue;
+ 
+-		if (unmapped == PAGE_SIZE)
+-			iommu_unmap(domain->domain, PAGE_SIZE, PAGE_SIZE);
+-		else
+-			domain->fgsp = true;
++		ret = iommu_map(domain->domain, start, page_to_phys(pages), PAGE_SIZE * 2,
++				IOMMU_READ | IOMMU_WRITE | IOMMU_CACHE);
++		if (!ret) {
++			size_t unmapped = iommu_unmap(domain->domain, start, PAGE_SIZE);
 +
- 			eenv.pd_cap += cpu_thermal_cap;
++			if (unmapped == PAGE_SIZE)
++				iommu_unmap(domain->domain, start + PAGE_SIZE, PAGE_SIZE);
++			else
++				domain->fgsp = true;
++		}
++		break;
+ 	}
  
- 			if (!cpumask_test_cpu(cpu, sched_domain_span(sd)))
-@@ -7253,24 +7255,19 @@ static int find_energy_efficient_cpu(struct task_struct *p, int prev_cpu)
- 			 * much capacity we can get out of the CPU; this is
- 			 * aligned with sched_cpu_util().
- 			 */
--			if (uclamp_is_used()) {
--				if (uclamp_rq_is_idle(cpu_rq(cpu))) {
--					util_min = p_util_min;
--					util_max = p_util_max;
--				} else {
--					/*
--					 * Open code uclamp_rq_util_with() except for
--					 * the clamp() part. Ie: apply max aggregation
--					 * only. util_fits_cpu() logic requires to
--					 * operate on non clamped util but must use the
--					 * max-aggregated uclamp_{min, max}.
--					 */
--					rq_util_min = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MIN);
--					rq_util_max = uclamp_rq_get(cpu_rq(cpu), UCLAMP_MAX);
--
--					util_min = max(rq_util_min, p_util_min);
--					util_max = max(rq_util_max, p_util_max);
--				}
-+			if (uclamp_is_used() && !uclamp_rq_is_idle(rq)) {
-+				/*
-+				 * Open code uclamp_rq_util_with() except for
-+				 * the clamp() part. Ie: apply max aggregation
-+				 * only. util_fits_cpu() logic requires to
-+				 * operate on non clamped util but must use the
-+				 * max-aggregated uclamp_{min, max}.
-+				 */
-+				rq_util_min = uclamp_rq_get(rq, UCLAMP_MIN);
-+				rq_util_max = uclamp_rq_get(rq, UCLAMP_MAX);
-+
-+				util_min = max(rq_util_min, p_util_min);
-+				util_max = max(rq_util_max, p_util_max);
- 			}
- 			if (!util_fits_cpu(util, util_min, util_max, cpu))
- 				continue;
+ 	__free_pages(pages, order);
+@@ -2326,7 +2335,7 @@ static int vfio_iommu_type1_attach_group(void *iommu_data,
+ 		}
+ 	}
+ 
+-	vfio_test_domain_fgsp(domain);
++	vfio_test_domain_fgsp(domain, &iova_copy);
+ 
+ 	/* replay mappings on new domains */
+ 	ret = vfio_iommu_replay(iommu, domain);
 -- 
 2.39.0
 
