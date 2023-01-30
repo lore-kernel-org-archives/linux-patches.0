@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D59128EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:09:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FB2C433D2;
-	Mon, 30 Jan 2023 14:09:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94CDA28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:09:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDD80C433EF;
+	Mon, 30 Jan 2023 14:09:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087743;
-	bh=/kf3B+xPe72iydFm4rav9awomDkPmHf5K8qGjpi2dBw=;
+	s=korg; t=1675087746;
+	bh=/tnghT1D09Nt123/1AO7Ae5/si0ZjEEbhzKYyHQkw/U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r/dfl4syHuNC1ni2XWnoT7wCKBBLSyGQSdZPI2WgntOb9zWyCNooGHrZ24T65ppPT
-	 XhKty9Y4M7Zatt3r8cHvhKwvhpv7rJvXRFZKVkNklIDGJIHC3NT+4ShqiFgYsKI/65
-	 k6v4F+92c3JZr+TYZuz35F0MC+GS4WQS9LJRxJ7U=
+	b=x04pn2BBUCf+HVjXFmglN0a+tfhU/1bvB3gGbQxe8k217vC1jCFMlHgA1RQAPVcKJ
+	 0VMmw0h1eLwCOGwSES9jbSuI4rJa/aEKwVlvEAtDV2gjj1IQOtmD5rtc2KK1wAuzdW
+	 0OD+cpZ/Zbrda9xrubqms0mhK4zMONEx8yXRj9Dg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoquan He <bhe@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 6.1 310/313] x86/i8259: Mark legacy PIC interrupts with IRQ_LEVEL
-Date: Mon, 30 Jan 2023 14:52:25 +0100
-Message-Id: <20230130134351.188386136@linuxfoundation.org>
+	Fabrizio Castro <fabrizio.castro.jz@renesas.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Wolfram Sang <wsa@kernel.org>
+Subject: [PATCH 6.1 311/313] dt-bindings: i2c: renesas,rzv2m: Fix SoC specific string
+Date: Mon, 30 Jan 2023 14:52:26 +0100
+Message-Id: <20230130134351.236693583@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -34,61 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
 
-commit 5fa55950729d0762a787451dc52862c3f850f859 upstream.
+commit 0a4eecf96c640886226f1ca7fdbb11bb20bc55b9 upstream.
 
-Baoquan reported that after triggering a crash the subsequent crash-kernel
-fails to boot about half of the time. It triggers a NULL pointer
-dereference in the periodic tick code.
+The preferred form for Renesas' compatible strings is:
+"<vendor>,<family>-<module>"
 
-This happens because the legacy timer interrupt (IRQ0) is resent in
-software which happens in soft interrupt (tasklet) context. In this context
-get_irq_regs() returns NULL which leads to the NULL pointer dereference.
+Somehow the compatible string for the r9a09g011 I2C IP was upstreamed
+as renesas,i2c-r9a09g011 instead of renesas,r9a09g011-i2c, which
+is really confusing, especially considering the generic fallback
+is renesas,rzv2m-i2c.
 
-The reason for the resend is a spurious APIC interrupt on the IRQ0 vector
-which is captured and leads to a resend when the legacy timer interrupt is
-enabled. This is wrong because the legacy PIC interrupts are level
-triggered and therefore should never be resent in software, but nothing
-ever sets the IRQ_LEVEL flag on those interrupts, so the core code does not
-know about their trigger type.
+The first user of renesas,i2c-r9a09g011 in the kernel is not yet in
+a kernel release, it will be in v6.1, therefore it can still be
+fixed in v6.1.
+Even if we don't fix it before v6.2, I don't think there is any
+harm in making such a change.
 
-Ensure that IRQ_LEVEL is set when the legacy PCI interrupts are set up.
+s/renesas,i2c-r9a09g011/renesas,r9a09g011-i2c/g for consistency.
 
-Fixes: a4633adcdbc1 ("[PATCH] genirq: add genirq sw IRQ-retrigger")
-Reported-by: Baoquan He <bhe@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Baoquan He <bhe@redhat.com>
-Link: https://lore.kernel.org/r/87mt6rjrra.ffs@tglx
+Fixes: ba7a4d15e2c4 ("dt-bindings: i2c: Document RZ/V2M I2C controller")
+Signed-off-by: Fabrizio Castro <fabrizio.castro.jz@renesas.com>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/i8259.c   |    1 +
- arch/x86/kernel/irqinit.c |    4 +++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ Documentation/devicetree/bindings/i2c/renesas,rzv2m.yaml |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/x86/kernel/i8259.c
-+++ b/arch/x86/kernel/i8259.c
-@@ -114,6 +114,7 @@ static void make_8259A_irq(unsigned int
- 	disable_irq_nosync(irq);
- 	io_apic_irqs &= ~(1<<irq);
- 	irq_set_chip_and_handler(irq, &i8259A_chip, handle_level_irq);
-+	irq_set_status_flags(irq, IRQ_LEVEL);
- 	enable_irq(irq);
- 	lapic_assign_legacy_vector(irq, true);
- }
---- a/arch/x86/kernel/irqinit.c
-+++ b/arch/x86/kernel/irqinit.c
-@@ -65,8 +65,10 @@ void __init init_ISA_irqs(void)
+--- a/Documentation/devicetree/bindings/i2c/renesas,rzv2m.yaml
++++ b/Documentation/devicetree/bindings/i2c/renesas,rzv2m.yaml
+@@ -16,7 +16,7 @@ properties:
+   compatible:
+     items:
+       - enum:
+-          - renesas,i2c-r9a09g011  # RZ/V2M
++          - renesas,r9a09g011-i2c  # RZ/V2M
+       - const: renesas,rzv2m-i2c
  
- 	legacy_pic->init(0);
+   reg:
+@@ -66,7 +66,7 @@ examples:
+     #include <dt-bindings/interrupt-controller/arm-gic.h>
  
--	for (i = 0; i < nr_legacy_irqs(); i++)
-+	for (i = 0; i < nr_legacy_irqs(); i++) {
- 		irq_set_chip_and_handler(i, chip, handle_level_irq);
-+		irq_set_status_flags(i, IRQ_LEVEL);
-+	}
- }
- 
- void __init init_IRQ(void)
+     i2c0: i2c@a4030000 {
+-        compatible = "renesas,i2c-r9a09g011", "renesas,rzv2m-i2c";
++        compatible = "renesas,r9a09g011-i2c", "renesas,rzv2m-i2c";
+         reg = <0xa4030000 0x80>;
+         interrupts = <GIC_SPI 232 IRQ_TYPE_EDGE_RISING>,
+                      <GIC_SPI 236 IRQ_TYPE_EDGE_RISING>;
 
 
