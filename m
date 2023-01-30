@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDC673229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:26:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44B82C433D2;
-	Mon, 30 Jan 2023 14:26:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A84BA3229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:26:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22446C433D2;
+	Mon, 30 Jan 2023 14:26:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088775;
-	bh=v/kpmz2168WKnrfNRzSlZJ1n8laKsx1iQpoPnaKEwvM=;
+	s=korg; t=1675088778;
+	bh=LfMbnbYD6mz6JQjrp++urRBLuEcXHS2FlR+VQ6AUfhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DaKhY3hdC9V6pfVJXl2VfT54kl5mUFS2ZKneXokvXiLyT4m3HRc1iYpM/1xOq7yRJ
-	 Ds734cDhmi0MeNdxqHNBJHBk/1c/LDvJmzS/EZ8wihh31WxUfNHwphMxH5gAiMpt/H
-	 MnHxkeNFT2wsFkARfv3Kf96JJLlDTiFY0MupHq6o=
+	b=MyMyjQKeX29HGri0+SEof3wnLnDy6i0xn/UchJ0d8hsOlUv4eiC3HKoMJX8ahwHT9
+	 Ct3gZownS2q4wxlqVuOYiXqrHBOr5mbnOr24w3cnsGCp7tc8XeUw+TfAM2+WyLcjho
+	 IL1xKhyGb6Z6f7bVM4mstkRy28ZAXw4WBNXUoKrI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	David Christensen <drc@linux.vnet.ibm.com>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Lareine Khawaly <lareine@amazon.com>,
+	Hanna Hawa <hhhawa@amazon.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 132/143] net/tg3: resolve deadlock in tg3_reset_task() during EEH
-Date: Mon, 30 Jan 2023 14:53:09 +0100
-Message-Id: <20230130134312.298794446@linuxfoundation.org>
+Subject: [PATCH 5.10 115/143] i2c: designware: use casting of u64 in clock multiplication to avoid overflow
+Date: Mon, 30 Jan 2023 14:52:52 +0100
+Message-Id: <20230130134311.601486238@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -36,117 +38,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Christensen <drc@linux.vnet.ibm.com>
+From: Lareine Khawaly <lareine@amazon.com>
 
-[ Upstream commit 6c4ca03bd890566d873e3593b32d034bf2f5a087 ]
+[ Upstream commit c8c37bc514514999e62a17e95160ed9ebf75ca8d ]
 
-During EEH error injection testing, a deadlock was encountered in the tg3
-driver when tg3_io_error_detected() was attempting to cancel outstanding
-reset tasks:
+In functions i2c_dw_scl_lcnt() and i2c_dw_scl_hcnt() may have overflow
+by depending on the values of the given parameters including the ic_clk.
+For example in our use case where ic_clk is larger than one million,
+multiplication of ic_clk * 4700 will result in 32 bit overflow.
 
-crash> foreach UN bt
-...
-PID: 159    TASK: c0000000067c6000  CPU: 8   COMMAND: "eehd"
-...
- #5 [c00000000681f990] __cancel_work_timer at c00000000019fd18
- #6 [c00000000681fa30] tg3_io_error_detected at c00800000295f098 [tg3]
- #7 [c00000000681faf0] eeh_report_error at c00000000004e25c
-...
+Add cast of u64 to the calculation to avoid multiplication overflow, and
+use the corresponding define for divide.
 
-PID: 290    TASK: c000000036e5f800  CPU: 6   COMMAND: "kworker/6:1"
-...
- #4 [c00000003721fbc0] rtnl_lock at c000000000c940d8
- #5 [c00000003721fbe0] tg3_reset_task at c008000002969358 [tg3]
- #6 [c00000003721fc60] process_one_work at c00000000019e5c4
-...
-
-PID: 296    TASK: c000000037a65800  CPU: 21  COMMAND: "kworker/21:1"
-...
- #4 [c000000037247bc0] rtnl_lock at c000000000c940d8
- #5 [c000000037247be0] tg3_reset_task at c008000002969358 [tg3]
- #6 [c000000037247c60] process_one_work at c00000000019e5c4
-...
-
-PID: 655    TASK: c000000036f49000  CPU: 16  COMMAND: "kworker/16:2"
-...:1
-
- #4 [c0000000373ebbc0] rtnl_lock at c000000000c940d8
- #5 [c0000000373ebbe0] tg3_reset_task at c008000002969358 [tg3]
- #6 [c0000000373ebc60] process_one_work at c00000000019e5c4
-...
-
-Code inspection shows that both tg3_io_error_detected() and
-tg3_reset_task() attempt to acquire the RTNL lock at the beginning of
-their code blocks.  If tg3_reset_task() should happen to execute between
-the times when tg3_io_error_deteced() acquires the RTNL lock and
-tg3_reset_task_cancel() is called, a deadlock will occur.
-
-Moving tg3_reset_task_cancel() call earlier within the code block, prior
-to acquiring RTNL, prevents this from happening, but also exposes another
-deadlock issue where tg3_reset_task() may execute AFTER
-tg3_io_error_detected() has executed:
-
-crash> foreach UN bt
-PID: 159    TASK: c0000000067d2000  CPU: 9   COMMAND: "eehd"
-...
- #4 [c000000006867a60] rtnl_lock at c000000000c940d8
- #5 [c000000006867a80] tg3_io_slot_reset at c0080000026c2ea8 [tg3]
- #6 [c000000006867b00] eeh_report_reset at c00000000004de88
-...
-PID: 363    TASK: c000000037564000  CPU: 6   COMMAND: "kworker/6:1"
-...
- #3 [c000000036c1bb70] msleep at c000000000259e6c
- #4 [c000000036c1bba0] napi_disable at c000000000c6b848
- #5 [c000000036c1bbe0] tg3_reset_task at c0080000026d942c [tg3]
- #6 [c000000036c1bc60] process_one_work at c00000000019e5c4
-...
-
-This issue can be avoided by aborting tg3_reset_task() if EEH error
-recovery is already in progress.
-
-Fixes: db84bf43ef23 ("tg3: tg3_reset_task() needs to use rtnl_lock to synchronize")
-Signed-off-by: David Christensen <drc@linux.vnet.ibm.com>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://lore.kernel.org/r/20230124185339.225806-1-drc@linux.vnet.ibm.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 2373f6b9744d ("i2c-designware: split of i2c-designware.c into core and bus specific parts")
+Signed-off-by: Lareine Khawaly <lareine@amazon.com>
+Signed-off-by: Hanna Hawa <hhhawa@amazon.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/tg3.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/i2c/busses/i2c-designware-common.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
-index be96116dc2cc..613ca6124e3c 100644
---- a/drivers/net/ethernet/broadcom/tg3.c
-+++ b/drivers/net/ethernet/broadcom/tg3.c
-@@ -11185,7 +11185,7 @@ static void tg3_reset_task(struct work_struct *work)
- 	rtnl_lock();
- 	tg3_full_lock(tp, 0);
+diff --git a/drivers/i2c/busses/i2c-designware-common.c b/drivers/i2c/busses/i2c-designware-common.c
+index 73a4ef8130e6..682fffaab2b4 100644
+--- a/drivers/i2c/busses/i2c-designware-common.c
++++ b/drivers/i2c/busses/i2c-designware-common.c
+@@ -348,7 +348,8 @@ u32 i2c_dw_scl_hcnt(u32 ic_clk, u32 tSYMBOL, u32 tf, int cond, int offset)
+ 		 *
+ 		 * If your hardware is free from tHD;STA issue, try this one.
+ 		 */
+-		return DIV_ROUND_CLOSEST(ic_clk * tSYMBOL, MICRO) - 8 + offset;
++		return DIV_ROUND_CLOSEST_ULL((u64)ic_clk * tSYMBOL, MICRO) -
++		       8 + offset;
+ 	else
+ 		/*
+ 		 * Conditional expression:
+@@ -364,7 +365,8 @@ u32 i2c_dw_scl_hcnt(u32 ic_clk, u32 tSYMBOL, u32 tf, int cond, int offset)
+ 		 * The reason why we need to take into account "tf" here,
+ 		 * is the same as described in i2c_dw_scl_lcnt().
+ 		 */
+-		return DIV_ROUND_CLOSEST(ic_clk * (tSYMBOL + tf), MICRO) - 3 + offset;
++		return DIV_ROUND_CLOSEST_ULL((u64)ic_clk * (tSYMBOL + tf), MICRO) -
++		       3 + offset;
+ }
  
--	if (!netif_running(tp->dev)) {
-+	if (tp->pcierr_recovery || !netif_running(tp->dev)) {
- 		tg3_flag_clear(tp, RESET_TASK_PENDING);
- 		tg3_full_unlock(tp);
- 		rtnl_unlock();
-@@ -18179,6 +18179,9 @@ static pci_ers_result_t tg3_io_error_detected(struct pci_dev *pdev,
+ u32 i2c_dw_scl_lcnt(u32 ic_clk, u32 tLOW, u32 tf, int offset)
+@@ -380,7 +382,8 @@ u32 i2c_dw_scl_lcnt(u32 ic_clk, u32 tLOW, u32 tf, int offset)
+ 	 * account the fall time of SCL signal (tf).  Default tf value
+ 	 * should be 0.3 us, for safety.
+ 	 */
+-	return DIV_ROUND_CLOSEST(ic_clk * (tLOW + tf), MICRO) - 1 + offset;
++	return DIV_ROUND_CLOSEST_ULL((u64)ic_clk * (tLOW + tf), MICRO) -
++	       1 + offset;
+ }
  
- 	netdev_info(netdev, "PCI I/O error detected\n");
- 
-+	/* Want to make sure that the reset task doesn't run */
-+	tg3_reset_task_cancel(tp);
-+
- 	rtnl_lock();
- 
- 	/* Could be second call or maybe we don't have netdev yet */
-@@ -18195,9 +18198,6 @@ static pci_ers_result_t tg3_io_error_detected(struct pci_dev *pdev,
- 
- 	tg3_timer_stop(tp);
- 
--	/* Want to make sure that the reset task doesn't run */
--	tg3_reset_task_cancel(tp);
--
- 	netif_device_detach(netdev);
- 
- 	/* Clean up software state, even if MMIO is blocked */
+ int i2c_dw_set_sda_hold(struct dw_i2c_dev *dev)
 -- 
 2.39.0
 
