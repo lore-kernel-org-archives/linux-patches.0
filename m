@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA66028EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:03:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51339C433EF;
-	Mon, 30 Jan 2023 14:03:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCE6B28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:03:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FE71C4339B;
+	Mon, 30 Jan 2023 14:03:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087400;
-	bh=PWYosrf9Kd/gdZZn1RErsxTdT2IXrtH28PlKz6Z4y4U=;
+	s=korg; t=1675087403;
+	bh=byea834qYCPLEZDaybRi9t7oYbN0K3ZyeJQ0Hp83vsM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qg0I+WKrrgxZpUKtvtNW/ucjklc4cFzuRBIUsO/4FfzhVZTnRJp+bNTtW/EQdNeV5
-	 cRYBjCnizDTBh/zkF0uhDviJKvonvFt4w1IIaGoaDD3Mw9KyouO8h6Qq0PImJqygkV
-	 kvf4+JI1+iGvN/6tzt9pYDDNuBgegMaJaNFMv69U=
+	b=PeIrbrkWBeaItPifBc49PClm2m+7M+/OrKeUHh1IawHIGsfVeg6KU+MBDLbYit07g
+	 oKMpzUKpLSLUqbLCC5p3Bjib9AqgWcTWxZGw2VM+vbnholruSZG9Q4DSmy7RfQVuMj
+	 pPlLk6gKP9mBqvlbWcp8z83lMofSns5ZTnJbHjhM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Rutland <mark.rutland@arm.com>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Willy Tarreau <w@1wt.eu>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 195/313] arm64: efi: Avoid workqueue to check whether EFI runtime is live
-Date: Mon, 30 Jan 2023 14:50:30 +0100
-Message-Id: <20230130134345.780635162@linuxfoundation.org>
+Subject: [PATCH 6.1 169/313] tools/nolibc: prevent gcc from making memset() loop over itself
+Date: Mon, 30 Jan 2023 14:50:04 +0100
+Message-Id: <20230130134344.535704244@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,102 +35,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Willy Tarreau <w@1wt.eu>
 
-[ Upstream commit 8a9a1a18731eb123e35f48176380a18b9782845e ]
+[ Upstream commit 1bfbe1f3e96720daf185f03d101f072d69753f88 ]
 
-Comparing current_work() against efi_rts_work.work is sufficient to
-decide whether current is currently running EFI runtime services code at
-any level in its call stack.
+When building on ARM in thumb mode with gcc-11.3 at -O2 or -O3,
+nolibc-test segfaults during the select() tests. It turns out that at
+this level, gcc recognizes an opportunity for using memset() to zero
+the fd_set, but it miscompiles it because it also recognizes a memset
+pattern as well, and decides to call memset() from the memset() code:
 
-However, there are other potential users of the EFI runtime stack, such
-as the ACPI subsystem, which may invoke efi_call_virt_pointer()
-directly, and so any sync exceptions occurring in firmware during those
-calls are currently misidentified.
+  000122bc <memset>:
+     122bc:       b510            push    {r4, lr}
+     122be:       0004            movs    r4, r0
+     122c0:       2a00            cmp     r2, #0
+     122c2:       d003            beq.n   122cc <memset+0x10>
+     122c4:       23ff            movs    r3, #255        ; 0xff
+     122c6:       4019            ands    r1, r3
+     122c8:       f7ff fff8       bl      122bc <memset>
+     122cc:       0020            movs    r0, r4
+     122ce:       bd10            pop     {r4, pc}
 
-So instead, let's check whether the stashed value of the thread stack
-pointer points into current's thread stack. This can only be the case if
-current was interrupted while running EFI runtime code. Note that this
-implies that we should clear the stashed value after switching back, to
-avoid false positives.
+Simply placing an empty asm() statement inside the loop suffices to
+avoid this.
 
-Reviewed-by: Mark Rutland <mark.rutland@arm.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Willy Tarreau <w@1wt.eu>
+Signed-off-by: Paul E. McKenney <paulmck@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/include/asm/efi.h       | 9 +++++++++
- arch/arm64/kernel/efi-rt-wrapper.S | 6 ++++++
- arch/arm64/kernel/efi.c            | 3 ++-
- 3 files changed, 17 insertions(+), 1 deletion(-)
+ tools/include/nolibc/string.h | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/include/asm/efi.h b/arch/arm64/include/asm/efi.h
-index 0edaf8e385b8..b13c22046de5 100644
---- a/arch/arm64/include/asm/efi.h
-+++ b/arch/arm64/include/asm/efi.h
-@@ -48,8 +48,17 @@ int efi_set_mapping_permissions(struct mm_struct *mm, efi_memory_desc_t *md);
- })
- 
- extern spinlock_t efi_rt_lock;
-+extern u64 *efi_rt_stack_top;
- efi_status_t __efi_rt_asm_wrapper(void *, const char *, ...);
- 
-+/*
-+ * efi_rt_stack_top[-1] contains the value the stack pointer had before
-+ * switching to the EFI runtime stack.
-+ */
-+#define current_in_efi()						\
-+	(!preemptible() && efi_rt_stack_top != NULL &&			\
-+	 on_task_stack(current, READ_ONCE(efi_rt_stack_top[-1]), 1))
-+
- #define ARCH_EFI_IRQ_FLAGS_MASK (PSR_D_BIT | PSR_A_BIT | PSR_I_BIT | PSR_F_BIT)
- 
- /*
-diff --git a/arch/arm64/kernel/efi-rt-wrapper.S b/arch/arm64/kernel/efi-rt-wrapper.S
-index d872d18101d8..e8ae803662cf 100644
---- a/arch/arm64/kernel/efi-rt-wrapper.S
-+++ b/arch/arm64/kernel/efi-rt-wrapper.S
-@@ -46,7 +46,10 @@ SYM_FUNC_START(__efi_rt_asm_wrapper)
- 	mov	x4, x6
- 	blr	x8
- 
-+	mov	x16, sp
- 	mov	sp, x29
-+	str	xzr, [x16, #8]			// clear recorded task SP value
-+
- 	ldp	x1, x2, [sp, #16]
- 	cmp	x2, x18
- 	ldp	x29, x30, [sp], #112
-@@ -71,6 +74,9 @@ SYM_FUNC_END(__efi_rt_asm_wrapper)
- SYM_CODE_START(__efi_rt_asm_recover)
- 	mov	sp, x30
- 
-+	ldr_l	x16, efi_rt_stack_top		// clear recorded task SP value
-+	str	xzr, [x16, #-8]
-+
- 	ldp	x19, x20, [sp, #32]
- 	ldp	x21, x22, [sp, #48]
- 	ldp	x23, x24, [sp, #64]
-diff --git a/arch/arm64/kernel/efi.c b/arch/arm64/kernel/efi.c
-index fab05de2e12d..b273900f4566 100644
---- a/arch/arm64/kernel/efi.c
-+++ b/arch/arm64/kernel/efi.c
-@@ -11,6 +11,7 @@
- #include <linux/init.h>
- 
- #include <asm/efi.h>
-+#include <asm/stacktrace.h>
- 
- static bool region_is_misaligned(const efi_memory_desc_t *md)
+diff --git a/tools/include/nolibc/string.h b/tools/include/nolibc/string.h
+index 0932db3817d2..fffdaf6ff467 100644
+--- a/tools/include/nolibc/string.h
++++ b/tools/include/nolibc/string.h
+@@ -88,8 +88,11 @@ void *memset(void *dst, int b, size_t len)
  {
-@@ -154,7 +155,7 @@ asmlinkage efi_status_t __efi_rt_asm_recover(void);
- bool efi_runtime_fixup_exception(struct pt_regs *regs, const char *msg)
- {
- 	 /* Check whether the exception occurred while running the firmware */
--	if (current_work() != &efi_rts_work.work || regs->pc >= TASK_SIZE_64)
-+	if (!current_in_efi() || regs->pc >= TASK_SIZE_64)
- 		return false;
+ 	char *p = dst;
  
- 	pr_err(FW_BUG "Unable to handle %s in EFI runtime service\n", msg);
+-	while (len--)
++	while (len--) {
++		/* prevent gcc from recognizing memset() here */
++		asm volatile("");
+ 		*(p++) = b;
++	}
+ 	return dst;
+ }
+ 
 -- 
 2.39.0
 
