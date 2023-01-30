@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F31DE28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:57:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 701DCC433EF;
-	Mon, 30 Jan 2023 13:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DF4328EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:57:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 659BAC4339C;
+	Mon, 30 Jan 2023 13:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087032;
-	bh=0kNJ79Qm9F2GK6XzsJH1qoyerr3ZgUbpP2fFeTH9nSA=;
+	s=korg; t=1675087035;
+	bh=/A1goj0Hay/q+vRHKZLohhH96PauuW0UNPP8GmJz78M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1G92dkKjgEOAjLNj1vi0Sxa7S0iRjQB+dTySNHCJ96qpAFGvtCrRC0aSlbMaNy2/s
-	 84fV1zyOi6oP7LTRaftuC9oBMUZkiVA6zgqq5hjJJBDnWssnqbKMPo/nBfDUU7ll4k
-	 E79eBVRjVqauRCc6bRhcXYvjX4JQ3RKseHENWBeg=
+	b=tyRw3tAS0Q7CSPvicakbBbaI5wp/tj8YmupedzOUZPgRvwwFlqTY3/1Ct47AR7XoF
+	 hqcd9JMrlkHzSYvAmddZbT4v9E6Fz89wsSRx+mnxfvS8UKnfcQHvHVpnVaW5/RyQE/
+	 /CyAhTvndXtv75uZ7p2LGEFxCX8V3MpWLGy5C0Ds=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kurt Kanzenbach <kurt@linutronix.de>,
-	Vijayakannan Ayyathurai <vijayakannan.ayyathurai@intel.com>,
-	Wong Vee Khee <vee.khee.wong@linux.intel.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Alexander Potapenko <glider@google.com>,
+	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 078/313] net: stmmac: Fix queue statistics reading
-Date: Mon, 30 Jan 2023 14:48:33 +0100
-Message-Id: <20230130134340.279522556@linuxfoundation.org>
+Subject: [PATCH 6.1 079/313] net/sched: sch_taprio: fix possible use-after-free
+Date: Mon, 30 Jan 2023 14:48:34 +0100
+Message-Id: <20230130134340.326893870@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -37,68 +38,126 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kurt Kanzenbach <kurt@linutronix.de>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c296c77efb66994d94d9f706446a115581226550 ]
+[ Upstream commit 3a415d59c1dbec9d772dbfab2d2520d98360caae ]
 
-Correct queue statistics reading. All queue statistics are stored as unsigned
-long values. The retrieval for ethtool fetches these values as u64. However, on
-some systems the size of the counters are 32 bit. That yields wrong queue
-statistic counters e.g., on arm32 systems such as the stm32mp157. Fix it by
-using the correct data type.
+syzbot reported a nasty crash [1] in net_tx_action() which
+made little sense until we got a repro.
 
-Tested on Olimex STMP157-OLinuXino-LIME2 by simple running linuxptp for a short
-period of time:
+This repro installs a taprio qdisc, but providing an
+invalid TCA_RATE attribute.
 
-Non-patched kernel:
-|root@st1:~# ethtool -S eth0 | grep q0
-|     q0_tx_pkt_n: 3775276254951 # ???
-|     q0_tx_irq_n: 879
-|     q0_rx_pkt_n: 1194000908909 # ???
-|     q0_rx_irq_n: 278
+qdisc_create() has to destroy the just initialized
+taprio qdisc, and taprio_destroy() is called.
 
-Patched kernel:
-|root@st1:~# ethtool -S eth0 | grep q0
-|     q0_tx_pkt_n: 2434
-|     q0_tx_irq_n: 1274
-|     q0_rx_pkt_n: 1604
-|     q0_rx_irq_n: 846
+However, the hrtimer used by taprio had already fired,
+therefore advance_sched() called __netif_schedule().
 
-Fixes: 68e9c5dee1cf ("net: stmmac: add ethtool per-queue statistic framework")
-Signed-off-by: Kurt Kanzenbach <kurt@linutronix.de>
-Cc: Vijayakannan Ayyathurai <vijayakannan.ayyathurai@intel.com>
-Cc: Wong Vee Khee <vee.khee.wong@linux.intel.com>
+Then net_tx_action was trying to use a destroyed qdisc.
+
+We can not undo the __netif_schedule(), so we must wait
+until one cpu serviced the qdisc before we can proceed.
+
+Many thanks to Alexander Potapenko for his help.
+
+[1]
+BUG: KMSAN: uninit-value in queued_spin_trylock include/asm-generic/qspinlock.h:94 [inline]
+BUG: KMSAN: uninit-value in do_raw_spin_trylock include/linux/spinlock.h:191 [inline]
+BUG: KMSAN: uninit-value in __raw_spin_trylock include/linux/spinlock_api_smp.h:89 [inline]
+BUG: KMSAN: uninit-value in _raw_spin_trylock+0x92/0xa0 kernel/locking/spinlock.c:138
+ queued_spin_trylock include/asm-generic/qspinlock.h:94 [inline]
+ do_raw_spin_trylock include/linux/spinlock.h:191 [inline]
+ __raw_spin_trylock include/linux/spinlock_api_smp.h:89 [inline]
+ _raw_spin_trylock+0x92/0xa0 kernel/locking/spinlock.c:138
+ spin_trylock include/linux/spinlock.h:359 [inline]
+ qdisc_run_begin include/net/sch_generic.h:187 [inline]
+ qdisc_run+0xee/0x540 include/net/pkt_sched.h:125
+ net_tx_action+0x77c/0x9a0 net/core/dev.c:5086
+ __do_softirq+0x1cc/0x7fb kernel/softirq.c:571
+ run_ksoftirqd+0x2c/0x50 kernel/softirq.c:934
+ smpboot_thread_fn+0x554/0x9f0 kernel/smpboot.c:164
+ kthread+0x31b/0x430 kernel/kthread.c:376
+ ret_from_fork+0x1f/0x30
+
+Uninit was created at:
+ slab_post_alloc_hook mm/slab.h:732 [inline]
+ slab_alloc_node mm/slub.c:3258 [inline]
+ __kmalloc_node_track_caller+0x814/0x1250 mm/slub.c:4970
+ kmalloc_reserve net/core/skbuff.c:358 [inline]
+ __alloc_skb+0x346/0xcf0 net/core/skbuff.c:430
+ alloc_skb include/linux/skbuff.h:1257 [inline]
+ nlmsg_new include/net/netlink.h:953 [inline]
+ netlink_ack+0x5f3/0x12b0 net/netlink/af_netlink.c:2436
+ netlink_rcv_skb+0x55d/0x6c0 net/netlink/af_netlink.c:2507
+ rtnetlink_rcv+0x30/0x40 net/core/rtnetlink.c:6108
+ netlink_unicast_kernel net/netlink/af_netlink.c:1319 [inline]
+ netlink_unicast+0xf3b/0x1270 net/netlink/af_netlink.c:1345
+ netlink_sendmsg+0x1288/0x1440 net/netlink/af_netlink.c:1921
+ sock_sendmsg_nosec net/socket.c:714 [inline]
+ sock_sendmsg net/socket.c:734 [inline]
+ ____sys_sendmsg+0xabc/0xe90 net/socket.c:2482
+ ___sys_sendmsg+0x2a1/0x3f0 net/socket.c:2536
+ __sys_sendmsg net/socket.c:2565 [inline]
+ __do_sys_sendmsg net/socket.c:2574 [inline]
+ __se_sys_sendmsg net/socket.c:2572 [inline]
+ __x64_sys_sendmsg+0x367/0x540 net/socket.c:2572
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x3d/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+CPU: 0 PID: 13 Comm: ksoftirqd/0 Not tainted 6.0.0-rc2-syzkaller-47461-gac3859c02d7f #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 07/22/2022
+
+Fixes: 5a781ccbd19e ("tc: Add support for configuring the taprio scheduler")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Vinicius Costa Gomes <vinicius.gomes@intel.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ include/net/sch_generic.h | 7 +++++++
+ net/sched/sch_taprio.c    | 3 +++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-index f453b0d09366..35c8dd92d369 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_ethtool.c
-@@ -551,16 +551,16 @@ static void stmmac_get_per_qstats(struct stmmac_priv *priv, u64 *data)
- 		p = (char *)priv + offsetof(struct stmmac_priv,
- 					    xstats.txq_stats[q].tx_pkt_n);
- 		for (stat = 0; stat < STMMAC_TXQ_STATS; stat++) {
--			*data++ = (*(u64 *)p);
--			p += sizeof(u64 *);
-+			*data++ = (*(unsigned long *)p);
-+			p += sizeof(unsigned long);
- 		}
- 	}
- 	for (q = 0; q < rx_cnt; q++) {
- 		p = (char *)priv + offsetof(struct stmmac_priv,
- 					    xstats.rxq_stats[q].rx_pkt_n);
- 		for (stat = 0; stat < STMMAC_RXQ_STATS; stat++) {
--			*data++ = (*(u64 *)p);
--			p += sizeof(u64 *);
-+			*data++ = (*(unsigned long *)p);
-+			p += sizeof(unsigned long);
- 		}
- 	}
- }
+diff --git a/include/net/sch_generic.h b/include/net/sch_generic.h
+index d5517719af4e..af4aa66aaa4e 100644
+--- a/include/net/sch_generic.h
++++ b/include/net/sch_generic.h
+@@ -1288,4 +1288,11 @@ void mq_change_real_num_tx(struct Qdisc *sch, unsigned int new_real_tx);
+ 
+ int sch_frag_xmit_hook(struct sk_buff *skb, int (*xmit)(struct sk_buff *skb));
+ 
++/* Make sure qdisc is no longer in SCHED state. */
++static inline void qdisc_synchronize(const struct Qdisc *q)
++{
++	while (test_bit(__QDISC_STATE_SCHED, &q->state))
++		msleep(1);
++}
++
+ #endif
+diff --git a/net/sched/sch_taprio.c b/net/sched/sch_taprio.c
+index 570389f6cdd7..9a11a499ea2d 100644
+--- a/net/sched/sch_taprio.c
++++ b/net/sched/sch_taprio.c
+@@ -1700,6 +1700,8 @@ static void taprio_reset(struct Qdisc *sch)
+ 	int i;
+ 
+ 	hrtimer_cancel(&q->advance_timer);
++	qdisc_synchronize(sch);
++
+ 	if (q->qdiscs) {
+ 		for (i = 0; i < dev->num_tx_queues; i++)
+ 			if (q->qdiscs[i])
+@@ -1720,6 +1722,7 @@ static void taprio_destroy(struct Qdisc *sch)
+ 	 * happens in qdisc_create(), after taprio_init() has been called.
+ 	 */
+ 	hrtimer_cancel(&q->advance_timer);
++	qdisc_synchronize(sch);
+ 
+ 	taprio_disable_offload(dev, q, NULL);
+ 
 -- 
 2.39.0
 
