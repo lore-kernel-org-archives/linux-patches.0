@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88FF3229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:19:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0FAC433EF;
-	Mon, 30 Jan 2023 14:19:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF5E3229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:19:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F08F2C433EF;
+	Mon, 30 Jan 2023 14:19:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088383;
-	bh=7TB58F2YJRfwdowX6BjU2VDFV/ZoHgwBV6QbWTkAs9k=;
+	s=korg; t=1675088386;
+	bh=MR6q2UrBxQWwHOLqXV+cNwXVgjCiS4gX9NJktqqsoT4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Oucp0YQt86UI+MqtIGvShNexHpPhm+WRuYElahFJGRacmrSm0vq0b10QXIZcbNZmR
-	 ODhSx91vwaJ+In7+cGdpzIR1TMtzgm47oMrUjID01lm+ByfU878ao+DUJnLS3YT1F/
-	 SrJQso4dmrewjjYrLTLNcFfCQnD0Qj8J6J8UG85U=
+	b=VTfo1uv7tqEwUOBY/0peFnc5fXhvaWm6iiLDevRs1TJ+7m7WxsTGQvCvuAUbFh+e+
+	 xm4vgBrzwhj/FWYka1xUtk2FlwvAKHHVlCGGkl66W6MUxG19p+xqpajRXPzuhZWXko
+	 i74cR106iyW0D6F4dPA6T2yMRHe9s86YesNbmbtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Steev Klimaszewski <steev@kali.org>,
-	Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH 5.15 165/204] EDAC/device: Respect any driver-supplied workqueue polling value
-Date: Mon, 30 Jan 2023 14:52:10 +0100
-Message-Id: <20230130134323.821083241@linuxfoundation.org>
+	Kevin Hao <haokexin@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.15 199/204] cpufreq: governor: Use kobject release() method to free dbs_data
+Date: Mon, 30 Jan 2023 14:52:44 +0100
+Message-Id: <20230130134325.319999622@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -37,79 +34,135 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Kevin Hao <haokexin@gmail.com>
 
-commit cec669ff716cc83505c77b242aecf6f7baad869d upstream.
+commit a85ee6401a47ae3fc64ba506cacb3e7873823c65 upstream.
 
-The EDAC drivers may optionally pass the poll_msec value. Use that value
-if available, else fall back to 1000ms.
+The struct dbs_data embeds a struct gov_attr_set and
+the struct gov_attr_set embeds a kobject. Since every kobject must have
+a release() method and we can't use kfree() to free it directly,
+so introduce cpufreq_dbs_data_release() to release the dbs_data via
+the kobject::release() method. This fixes the calltrace like below:
 
-  [ bp: Touchups. ]
+  ODEBUG: free active (active state 0) object type: timer_list hint: delayed_work_timer_fn+0x0/0x34
+  WARNING: CPU: 12 PID: 810 at lib/debugobjects.c:505 debug_print_object+0xb8/0x100
+  Modules linked in:
+  CPU: 12 PID: 810 Comm: sh Not tainted 5.16.0-next-20220120-yocto-standard+ #536
+  Hardware name: Marvell OcteonTX CN96XX board (DT)
+  pstate: 60400009 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+  pc : debug_print_object+0xb8/0x100
+  lr : debug_print_object+0xb8/0x100
+  sp : ffff80001dfcf9a0
+  x29: ffff80001dfcf9a0 x28: 0000000000000001 x27: ffff0001464f0000
+  x26: 0000000000000000 x25: ffff8000090e3f00 x24: ffff80000af60210
+  x23: ffff8000094dfb78 x22: ffff8000090e3f00 x21: ffff0001080b7118
+  x20: ffff80000aeb2430 x19: ffff800009e8f5e0 x18: 0000000000000000
+  x17: 0000000000000002 x16: 00004d62e58be040 x15: 013590470523aff8
+  x14: ffff8000090e1828 x13: 0000000001359047 x12: 00000000f5257d14
+  x11: 0000000000040591 x10: 0000000066c1ffea x9 : ffff8000080d15e0
+  x8 : ffff80000a1765a8 x7 : 0000000000000000 x6 : 0000000000000001
+  x5 : ffff800009e8c000 x4 : ffff800009e8c760 x3 : 0000000000000000
+  x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff0001474ed040
+  Call trace:
+   debug_print_object+0xb8/0x100
+   __debug_check_no_obj_freed+0x1d0/0x25c
+   debug_check_no_obj_freed+0x24/0xa0
+   kfree+0x11c/0x440
+   cpufreq_dbs_governor_exit+0xa8/0xac
+   cpufreq_exit_governor+0x44/0x90
+   cpufreq_set_policy+0x29c/0x570
+   store_scaling_governor+0x110/0x154
+   store+0xb0/0xe0
+   sysfs_kf_write+0x58/0x84
+   kernfs_fop_write_iter+0x12c/0x1c0
+   new_sync_write+0xf0/0x18c
+   vfs_write+0x1cc/0x220
+   ksys_write+0x74/0x100
+   __arm64_sys_write+0x28/0x3c
+   invoke_syscall.constprop.0+0x58/0xf0
+   do_el0_svc+0x70/0x170
+   el0_svc+0x54/0x190
+   el0t_64_sync_handler+0xa4/0x130
+   el0t_64_sync+0x1a0/0x1a4
+  irq event stamp: 189006
+  hardirqs last  enabled at (189005): [<ffff8000080849d0>] finish_task_switch.isra.0+0xe0/0x2c0
+  hardirqs last disabled at (189006): [<ffff8000090667a4>] el1_dbg+0x24/0xa0
+  softirqs last  enabled at (188966): [<ffff8000080106d0>] __do_softirq+0x4b0/0x6a0
+  softirqs last disabled at (188957): [<ffff80000804a618>] __irq_exit_rcu+0x108/0x1a4
 
-Fixes: e27e3dac6517 ("drivers/edac: add edac_device class")
-Reported-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
-Cc: <stable@vger.kernel.org> # 4.9
-Link: https://lore.kernel.org/r/COZYL8MWN97H.MROQ391BGA09@otso
+[ rjw: Because can be freed by the gov_attr_set_put() in
+  cpufreq_dbs_governor_exit() now, it is also necessary to put the
+  invocation of the governor ->exit() callback into the new
+  cpufreq_dbs_data_release() function. ]
+
+Fixes: c4435630361d ("cpufreq: governor: New sysfs show/store callbacks for governor tunables")
+Signed-off-by: Kevin Hao <haokexin@gmail.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/edac_device.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/cpufreq/cpufreq_governor.c |   20 +++++++++++++-------
+ drivers/cpufreq/cpufreq_governor.h |    1 +
+ 2 files changed, 14 insertions(+), 7 deletions(-)
 
---- a/drivers/edac/edac_device.c
-+++ b/drivers/edac/edac_device.c
-@@ -34,6 +34,9 @@
- static DEFINE_MUTEX(device_ctls_mutex);
- static LIST_HEAD(edac_device_list);
+--- a/drivers/cpufreq/cpufreq_governor.c
++++ b/drivers/cpufreq/cpufreq_governor.c
+@@ -388,6 +388,15 @@ static void free_policy_dbs_info(struct
+ 	gov->free(policy_dbs);
+ }
  
-+/* Default workqueue processing interval on this instance, in msecs */
-+#define DEFAULT_POLL_INTERVAL 1000
++static void cpufreq_dbs_data_release(struct kobject *kobj)
++{
++	struct dbs_data *dbs_data = to_dbs_data(to_gov_attr_set(kobj));
++	struct dbs_governor *gov = dbs_data->gov;
 +
- #ifdef CONFIG_EDAC_DEBUG
- static void edac_device_dump_device(struct edac_device_ctl_info *edac_dev)
++	gov->exit(dbs_data);
++	kfree(dbs_data);
++}
++
+ int cpufreq_dbs_governor_init(struct cpufreq_policy *policy)
  {
-@@ -366,7 +369,7 @@ static void edac_device_workq_function(s
- 	 * whole one second to save timers firing all over the period
- 	 * between integral seconds
- 	 */
--	if (edac_dev->poll_msec == 1000)
-+	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
- 		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
- 	else
- 		edac_queue_work(&edac_dev->work, edac_dev->delay);
-@@ -396,7 +399,7 @@ static void edac_device_workq_setup(stru
- 	 * timers firing on sub-second basis, while they are happy
- 	 * to fire together on the 1 second exactly
- 	 */
--	if (edac_dev->poll_msec == 1000)
-+	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
- 		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
- 	else
- 		edac_queue_work(&edac_dev->work, edac_dev->delay);
-@@ -430,7 +433,7 @@ void edac_device_reset_delay_period(stru
- 	edac_dev->delay	    = msecs_to_jiffies(msec);
- 
- 	/* See comment in edac_device_workq_setup() above */
--	if (edac_dev->poll_msec == 1000)
-+	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
- 		edac_mod_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
- 	else
- 		edac_mod_work(&edac_dev->work, edac_dev->delay);
-@@ -472,11 +475,7 @@ int edac_device_add_device(struct edac_d
- 		/* This instance is NOW RUNNING */
- 		edac_dev->op_state = OP_RUNNING_POLL;
- 
--		/*
--		 * enable workq processing on this instance,
--		 * default = 1000 msec
--		 */
--		edac_device_workq_setup(edac_dev, 1000);
-+		edac_device_workq_setup(edac_dev, edac_dev->poll_msec ?: DEFAULT_POLL_INTERVAL);
- 	} else {
- 		edac_dev->op_state = OP_RUNNING_INTERRUPT;
+ 	struct dbs_governor *gov = dbs_governor_of(policy);
+@@ -425,6 +434,7 @@ int cpufreq_dbs_governor_init(struct cpu
+ 		goto free_policy_dbs_info;
  	}
+ 
++	dbs_data->gov = gov;
+ 	gov_attr_set_init(&dbs_data->attr_set, &policy_dbs->list);
+ 
+ 	ret = gov->init(dbs_data);
+@@ -447,6 +457,7 @@ int cpufreq_dbs_governor_init(struct cpu
+ 	policy->governor_data = policy_dbs;
+ 
+ 	gov->kobj_type.sysfs_ops = &governor_sysfs_ops;
++	gov->kobj_type.release = cpufreq_dbs_data_release;
+ 	ret = kobject_init_and_add(&dbs_data->attr_set.kobj, &gov->kobj_type,
+ 				   get_governor_parent_kobj(policy),
+ 				   "%s", gov->gov.name);
+@@ -488,13 +499,8 @@ void cpufreq_dbs_governor_exit(struct cp
+ 
+ 	policy->governor_data = NULL;
+ 
+-	if (!count) {
+-		if (!have_governor_per_policy())
+-			gov->gdbs_data = NULL;
+-
+-		gov->exit(dbs_data);
+-		kfree(dbs_data);
+-	}
++	if (!count && !have_governor_per_policy())
++		gov->gdbs_data = NULL;
+ 
+ 	free_policy_dbs_info(policy_dbs, gov);
+ 
+--- a/drivers/cpufreq/cpufreq_governor.h
++++ b/drivers/cpufreq/cpufreq_governor.h
+@@ -37,6 +37,7 @@ enum {OD_NORMAL_SAMPLE, OD_SUB_SAMPLE};
+ /* Governor demand based switching data (per-policy or global). */
+ struct dbs_data {
+ 	struct gov_attr_set attr_set;
++	struct dbs_governor *gov;
+ 	void *tuners;
+ 	unsigned int ignore_nice_load;
+ 	unsigned int sampling_rate;
 
 
