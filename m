@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A127F28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:58:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26684C433D2;
-	Mon, 30 Jan 2023 13:58:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B734428EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:58:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F5A0C433D2;
+	Mon, 30 Jan 2023 13:58:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087101;
-	bh=/vEFgg09wF5YSjgFzgBQVAmj5cYnnCgev8QsubM81tE=;
+	s=korg; t=1675087104;
+	bh=8GU/kw5G7/rHc2P1sEzR+PzivwtEwdapU1zdzB03oXE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tiULeeLZPRELY9NwEqDytI2479OpadlR3aAHra5TvOalnOvavsistZSwwD2JkxBdZ
-	 Z6K0ijZqh1YQQJr4YhVk+IokZrK/qXP1VfYG2FREoUQLlZShPjYu5Wuw2uaeOeB5zP
-	 JQuesYFjm4CYiWGO2UmsYdKmkxESnl0gTb/4IByk=
+	b=1oojdBdzWh4sNPeT3dwommSby7CmOQPQiP371choWrQp45ufz8zV7xw2skM3OuIWj
+	 6fBSLydoRjtnhVdeAYMePT/q0t2jGMS4PX0kbsKFoQrALBXqejCKdgQpQDyvDQ/GA5
+	 sdRL9PCC5DMCFxAzGbnqYbb414lmUtGoTB9d/FhA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Tesar <mtesar@redhat.com>,
-	Florian Westphal <fw@strlen.de>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 097/313] netfilter: conntrack: handle tcp challenge acks during connection reuse
-Date: Mon, 30 Jan 2023 14:48:52 +0100
-Message-Id: <20230130134341.153578433@linuxfoundation.org>
+Subject: [PATCH 6.1 071/313] net: enetc: avoid deadlock in enetc_tx_onestep_tstamp()
+Date: Mon, 30 Jan 2023 14:48:26 +0100
+Message-Id: <20230130134339.983687043@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,74 +36,116 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit c410cb974f2ba562920ecb8492ee66945dcf88af ]
+[ Upstream commit 3c463721a73bdb57a913e0d3124677a3758886fc ]
 
-When a connection is re-used, following can happen:
-[ connection starts to close, fin sent in either direction ]
- > syn   # initator quickly reuses connection
- < ack   # peer sends a challenge ack
- > rst   # rst, sequence number == ack_seq of previous challenge ack
- > syn   # this syn is expected to pass
+This lockdep splat says it better than I could:
 
-Problem is that the rst will fail window validation, so it gets
-tagged as invalid.
+================================
+WARNING: inconsistent lock state
+6.2.0-rc2-07010-ga9b9500ffaac-dirty #967 Not tainted
+--------------------------------
+inconsistent {IN-SOFTIRQ-W} -> {SOFTIRQ-ON-W} usage.
+kworker/1:3/179 [HC0[0]:SC0[0]:HE1:SE1] takes:
+ffff3ec4036ce098 (_xmit_ETHER#2){+.?.}-{3:3}, at: netif_freeze_queues+0x5c/0xc0
+{IN-SOFTIRQ-W} state was registered at:
+  _raw_spin_lock+0x5c/0xc0
+  sch_direct_xmit+0x148/0x37c
+  __dev_queue_xmit+0x528/0x111c
+  ip6_finish_output2+0x5ec/0xb7c
+  ip6_finish_output+0x240/0x3f0
+  ip6_output+0x78/0x360
+  ndisc_send_skb+0x33c/0x85c
+  ndisc_send_rs+0x54/0x12c
+  addrconf_rs_timer+0x154/0x260
+  call_timer_fn+0xb8/0x3a0
+  __run_timers.part.0+0x214/0x26c
+  run_timer_softirq+0x3c/0x74
+  __do_softirq+0x14c/0x5d8
+  ____do_softirq+0x10/0x20
+  call_on_irq_stack+0x2c/0x5c
+  do_softirq_own_stack+0x1c/0x30
+  __irq_exit_rcu+0x168/0x1a0
+  irq_exit_rcu+0x10/0x40
+  el1_interrupt+0x38/0x64
+irq event stamp: 7825
+hardirqs last  enabled at (7825): [<ffffdf1f7200cae4>] exit_to_kernel_mode+0x34/0x130
+hardirqs last disabled at (7823): [<ffffdf1f708105f0>] __do_softirq+0x550/0x5d8
+softirqs last  enabled at (7824): [<ffffdf1f7081050c>] __do_softirq+0x46c/0x5d8
+softirqs last disabled at (7811): [<ffffdf1f708166e0>] ____do_softirq+0x10/0x20
 
-If ruleset drops such packets, we get repeated syn-retransmits until
-initator gives up or peer starts responding with syn/ack.
+other info that might help us debug this:
+ Possible unsafe locking scenario:
 
-Before the commit indicated in the "Fixes" tag below this used to work:
+       CPU0
+       ----
+  lock(_xmit_ETHER#2);
+  <Interrupt>
+    lock(_xmit_ETHER#2);
 
-The challenge-ack made conntrack re-init state based on the challenge
-ack itself, so the following rst would pass window validation.
+ *** DEADLOCK ***
 
-Add challenge-ack support: If we get ack for syn, record the ack_seq,
-and then check if the rst sequence number matches the last ack number
-seen in reverse direction.
+3 locks held by kworker/1:3/179:
+ #0: ffff3ec400004748 ((wq_completion)events){+.+.}-{0:0}, at: process_one_work+0x1f4/0x6c0
+ #1: ffff80000a0bbdc8 ((work_completion)(&priv->tx_onestep_tstamp)){+.+.}-{0:0}, at: process_one_work+0x1f4/0x6c0
+ #2: ffff3ec4036cd438 (&dev->tx_global_lock){+.+.}-{3:3}, at: netif_tx_lock+0x1c/0x34
 
-Fixes: c7aab4f17021 ("netfilter: nf_conntrack_tcp: re-init for syn packets only")
-Reported-by: Michal Tesar <mtesar@redhat.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+Workqueue: events enetc_tx_onestep_tstamp
+Call trace:
+ print_usage_bug.part.0+0x208/0x22c
+ mark_lock+0x7f0/0x8b0
+ __lock_acquire+0x7c4/0x1ce0
+ lock_acquire.part.0+0xe0/0x220
+ lock_acquire+0x68/0x84
+ _raw_spin_lock+0x5c/0xc0
+ netif_freeze_queues+0x5c/0xc0
+ netif_tx_lock+0x24/0x34
+ enetc_tx_onestep_tstamp+0x20/0x100
+ process_one_work+0x28c/0x6c0
+ worker_thread+0x74/0x450
+ kthread+0x118/0x11c
+
+but I'll say it anyway: the enetc_tx_onestep_tstamp() work item runs in
+process context, therefore with softirqs enabled (i.o.w., it can be
+interrupted by a softirq). If we hold the netif_tx_lock() when there is
+an interrupt, and the NET_TX softirq then gets scheduled, this will take
+the netif_tx_lock() a second time and deadlock the kernel.
+
+To solve this, use netif_tx_lock_bh(), which blocks softirqs from
+running.
+
+Fixes: 7294380c5211 ("enetc: support PTP Sync packet one-step timestamping")
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Link: https://lore.kernel.org/r/20230112105440.1786799-1-vladimir.oltean@nxp.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_proto_tcp.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ drivers/net/ethernet/freescale/enetc/enetc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_proto_tcp.c b/net/netfilter/nf_conntrack_proto_tcp.c
-index 656631083177..3ac1af6f59fc 100644
---- a/net/netfilter/nf_conntrack_proto_tcp.c
-+++ b/net/netfilter/nf_conntrack_proto_tcp.c
-@@ -1068,6 +1068,13 @@ int nf_conntrack_tcp_packet(struct nf_conn *ct,
- 				ct->proto.tcp.last_flags |=
- 					IP_CT_EXP_CHALLENGE_ACK;
- 		}
-+
-+		/* possible challenge ack reply to syn */
-+		if (old_state == TCP_CONNTRACK_SYN_SENT &&
-+		    index == TCP_ACK_SET &&
-+		    dir == IP_CT_DIR_REPLY)
-+			ct->proto.tcp.last_ack = ntohl(th->ack_seq);
-+
- 		spin_unlock_bh(&ct->lock);
- 		nf_ct_l4proto_log_invalid(skb, ct, state,
- 					  "packet (index %d) in dir %d ignored, state %s",
-@@ -1193,6 +1200,14 @@ int nf_conntrack_tcp_packet(struct nf_conn *ct,
- 			 * segments we ignored. */
- 			goto in_window;
- 		}
-+
-+		/* Reset in response to a challenge-ack we let through earlier */
-+		if (old_state == TCP_CONNTRACK_SYN_SENT &&
-+		    ct->proto.tcp.last_index == TCP_ACK_SET &&
-+		    ct->proto.tcp.last_dir == IP_CT_DIR_REPLY &&
-+		    ntohl(th->seq) == ct->proto.tcp.last_ack)
-+			goto in_window;
-+
- 		break;
- 	default:
- 		/* Keep compilers happy. */
+diff --git a/drivers/net/ethernet/freescale/enetc/enetc.c b/drivers/net/ethernet/freescale/enetc/enetc.c
+index 3a79ead5219a..e96449eedfb5 100644
+--- a/drivers/net/ethernet/freescale/enetc/enetc.c
++++ b/drivers/net/ethernet/freescale/enetc/enetc.c
+@@ -2290,14 +2290,14 @@ static void enetc_tx_onestep_tstamp(struct work_struct *work)
+ 
+ 	priv = container_of(work, struct enetc_ndev_priv, tx_onestep_tstamp);
+ 
+-	netif_tx_lock(priv->ndev);
++	netif_tx_lock_bh(priv->ndev);
+ 
+ 	clear_bit_unlock(ENETC_TX_ONESTEP_TSTAMP_IN_PROGRESS, &priv->flags);
+ 	skb = skb_dequeue(&priv->tx_skbs);
+ 	if (skb)
+ 		enetc_start_xmit(skb, priv->ndev);
+ 
+-	netif_tx_unlock(priv->ndev);
++	netif_tx_unlock_bh(priv->ndev);
+ }
+ 
+ static void enetc_tx_onestep_tstamp_init(struct enetc_ndev_priv *priv)
 -- 
 2.39.0
 
