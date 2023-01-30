@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 935BD3229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:26:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11650C433EF;
-	Mon, 30 Jan 2023 14:26:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068843229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:26:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69A15C433EF;
+	Mon, 30 Jan 2023 14:26:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088796;
-	bh=ezzE3+CW8K03nv60S3Y5tB/PV/lTwsGqG3OO2IAdH58=;
+	s=korg; t=1675088800;
+	bh=UfTo3TH7ARMv7fj9ZQCPp+FXrygSu6ygwUZckk8v0M0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oS7jyKeEeAdENhW+hZSwJp3yzOadTx2RC6+ZTjvPjKcUPk6QgRIbcpmnGOPz/CMM9
-	 7N07Fv5g0iLnfAQPszTjDVUHfSxCOAzyGreSQVEzgJu6+gK+RJAFCRDz5MpzoBcCbY
-	 nJd2lGkKiD3Vmg3rgJ8SKwUN7fKs+9SzYCW/3IJw=
+	b=iYPe5siyd93Wjy+cSGCZQT0GC9YBessqxFczBt6ZEMkWXJMbAzTqa67z6x64EuuDA
+	 f/yB//heG/Af5941/eVriHzQ+ktDZUKwKBLpxXbcD/Oco4ebnvA5A9Dmxoet6TnLzx
+	 JXYzuvXCqdLCI3EbYKMwcyePQeiCE7lhXu+1NF3g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
-	Zheng Yejian <zhengyejian1@huawei.com>
-Subject: [PATCH 5.10 138/143] Revert "selftests/ftrace: Update synthetic event syntax errors"
-Date: Mon, 30 Jan 2023 14:53:15 +0100
-Message-Id: <20230130134312.537877225@linuxfoundation.org>
+	Christoph Hellwig <hch@lst.de>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Fedor Pchelkin <pchelkin@ispras.ru>
+Subject: [PATCH 5.10 139/143] block: fix and cleanup bio_check_ro
+Date: Mon, 30 Jan 2023 14:53:16 +0100
+Message-Id: <20230130134312.588559457@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -34,76 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zheng Yejian <zhengyejian1@huawei.com>
+From: Christoph Hellwig <hch@lst.de>
 
-This reverts commit 31c2e369b5335d70e913afee3ae11e54d61afef2 which is commit
-b5734e997e1117afb479ffda500e36fa91aea3e8 upstream.
+commit 57e95e4670d1126c103305bcf34a9442f49f6d6a upstream.
 
-The reverted commit belongs to patchset which updated synthetic event
-command parsing and testcase 'trigger-synthetic_event_syntax_errors.tc'
-Link: https://lore.kernel.org/all/20210211020950.102294806@goodmis.org/
+Don't use a WARN_ON when printing a potentially user triggered
+condition.  Also don't print the partno when the block device name
+already includes it, and use the %pg specifier to simplify printing
+the block device name.
 
-However this testcase update was backported alone without feature
-update, which makes the testcase cannot pass on stable branch.
-
-Revert this commit to make the testcase correct.
-
-Fixes: 31c2e369b533 ("selftests/ftrace: Update synthetic event syntax errors")
-Reported-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Signed-off-by: Zheng Yejian <zhengyejian1@huawei.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Link: https://lore.kernel.org/r/20220304180105.409765-2-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/ftrace/test.d/trigger/inter-event/trigger-synthetic_event_syntax_errors.tc |   35 ++--------
- 1 file changed, 8 insertions(+), 27 deletions(-)
+ block/blk-core.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/tools/testing/selftests/ftrace/test.d/trigger/inter-event/trigger-synthetic_event_syntax_errors.tc
-+++ b/tools/testing/selftests/ftrace/test.d/trigger/inter-event/trigger-synthetic_event_syntax_errors.tc
-@@ -1,38 +1,19 @@
- #!/bin/sh
- # SPDX-License-Identifier: GPL-2.0
- # description: event trigger - test synthetic_events syntax parser errors
--# requires: synthetic_events error_log "char name[]' >> synthetic_events":README
-+# requires: synthetic_events error_log
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -700,9 +700,7 @@ static inline bool bio_check_ro(struct b
  
- check_error() { # command-with-error-pos-by-^
-     ftrace_errlog_check 'synthetic_events' "$1" 'synthetic_events'
- }
- 
--check_dyn_error() { # command-with-error-pos-by-^
--    ftrace_errlog_check 'synthetic_events' "$1" 'dynamic_events'
--}
+ 		if (op_is_flush(bio->bi_opf) && !bio_sectors(bio))
+ 			return false;
 -
- check_error 'myevent ^chr arg'			# INVALID_TYPE
--check_error 'myevent ^unsigned arg'		# INCOMPLETE_TYPE
--
--check_error 'myevent char ^str]; int v'		# BAD_NAME
--check_error '^mye-vent char str[]'		# BAD_NAME
--check_error 'myevent char ^st-r[]'		# BAD_NAME
--
--check_error 'myevent char str;^[]'		# INVALID_FIELD
--check_error 'myevent char str; ^int'		# INVALID_FIELD
--
--check_error 'myevent char ^str[; int v'		# INVALID_ARRAY_SPEC
--check_error 'myevent char ^str[kdjdk]'		# INVALID_ARRAY_SPEC
--check_error 'myevent char ^str[257]'		# INVALID_ARRAY_SPEC
--
--check_error '^mye;vent char str[]'		# INVALID_CMD
--check_error '^myevent ; char str[]'		# INVALID_CMD
--check_error '^myevent; char str[]'		# INVALID_CMD
--check_error '^myevent ;char str[]'		# INVALID_CMD
--check_error '^; char str[]'			# INVALID_CMD
--check_error '^;myevent char str[]'		# INVALID_CMD
--check_error '^myevent'				# INVALID_CMD
--
--check_dyn_error '^s:junk/myevent char str['	# INVALID_DYN_CMD
-+check_error 'myevent ^char str[];; int v'	# INVALID_TYPE
-+check_error 'myevent char ^str]; int v'		# INVALID_NAME
-+check_error 'myevent char ^str;[]'		# INVALID_NAME
-+check_error 'myevent ^char str[; int v'		# INVALID_TYPE
-+check_error '^mye;vent char str[]'		# BAD_NAME
-+check_error 'myevent char str[]; ^int'		# INVALID_FIELD
-+check_error '^myevent'				# INCOMPLETE_CMD
- 
- exit 0
+-		WARN_ONCE(1,
+-		       "Trying to write to read-only block-device %s (partno %d)\n",
++		pr_warn("Trying to write to read-only block-device %s (partno %d)\n",
+ 			bio_devname(bio, b), part->partno);
+ 		/* Older lvm-tools actually trigger this */
+ 		return false;
 
 
