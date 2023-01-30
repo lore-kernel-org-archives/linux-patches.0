@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7369228EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:13:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CBE49C433EF;
-	Mon, 30 Jan 2023 14:13:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82F3628EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:13:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD4C7C4339E;
+	Mon, 30 Jan 2023 14:13:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088013;
-	bh=S7wEEfAUdIx5jrUJ1SbKokddBYPBiPwSPs3PZ6941d4=;
+	s=korg; t=1675088016;
+	bh=De1wu6qamyD+3EsbkBp7VVk9WF4WQOB4p2v4BYE9zdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KVaofqfD2bC55BfKpprqP9EDCj87Ce12crAjvyI+3GhaiqDiniDrR/ZjdafLhNdKy
-	 o/EjHR7SbAmm24RZzazGfi7t3Hwy0JClzSoJKWM//4GmyI66hFnPhKn86altQTPZ0u
-	 C1d/YK3n9zISADKbPc3bjn287+uFObH2Ab92MvrM=
+	b=CrGZiF1wrImr9oaz9OzfInueAZ8CEtOO/hBSbLNXI/mYbOMTOvbbIo7vw0E4FbCER
+	 H7XIQMWlk4JYxLiaiXrGn5cTvi4+SMKOzdhBxYpBOOxMwRRGRZNtTQEN4QHcgsRZSx
+	 HY2m55aIM+KLKicQYTC2V7oXVGJBPNtnMMpwC00E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen Zhongjin <chenzhongjin@huawei.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 086/204] driver core: Fix test_async_probe_init saves device in wrong array
-Date: Mon, 30 Jan 2023 14:50:51 +0100
-Message-Id: <20230130134320.119804006@linuxfoundation.org>
+Subject: [PATCH 5.15 069/204] drm/panfrost: fix GENERIC_ATOMIC64 dependency
+Date: Mon, 30 Jan 2023 14:50:34 +0100
+Message-Id: <20230130134319.363118870@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -34,44 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen Zhongjin <chenzhongjin@huawei.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 9be182da0a7526f1b9a3777a336f83baa2e64d23 ]
+[ Upstream commit 6437a549ae178a3f5a5c03e983f291ebcdc2bbc7 ]
 
-In test_async_probe_init, second set of asynchronous devices are saved
-in sync_dev[sync_id], which should be async_dev[async_id].
-This makes these devices not unregistered when exit.
+On ARMv5 and earlier, a randconfig build can still run into
 
-> modprobe test_async_driver_probe && \
-> modprobe -r test_async_driver_probe && \
-> modprobe test_async_driver_probe
- ...
-> sysfs: cannot create duplicate filename '/devices/platform/test_async_driver.4'
-> kobject_add_internal failed for test_async_driver.4 with -EEXIST,
-  don't try to register things with the same name in the same directory.
+WARNING: unmet direct dependencies detected for IOMMU_IO_PGTABLE_LPAE
+  Depends on [n]: IOMMU_SUPPORT [=y] && (ARM [=y] || ARM64 || COMPILE_TEST [=y]) && !GENERIC_ATOMIC64 [=y]
+  Selected by [y]:
+  - DRM_PANFROST [=y] && HAS_IOMEM [=y] && DRM [=y] && (ARM [=y] || ARM64 || COMPILE_TEST [=y] && !GENERIC_ATOMIC64 [=y]) && MMU [=y]
 
-Fixes: 57ea974fb871 ("driver core: Rewrite test_async_driver_probe to cover serialization and NUMA affinity")
-Signed-off-by: Chen Zhongjin <chenzhongjin@huawei.com>
-Link: https://lore.kernel.org/r/20221125063541.241328-1-chenzhongjin@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Rework the dependencies to always require a working cmpxchg64.
+
+Fixes: db594ba3fcf9 ("drm/panfrost: depend on !GENERIC_ATOMIC64 when using COMPILE_TEST")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230117164456.1591901-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/base/test/test_async_driver_probe.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/panfrost/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/base/test/test_async_driver_probe.c b/drivers/base/test/test_async_driver_probe.c
-index 3bb7beb127a9..c157a912d673 100644
---- a/drivers/base/test/test_async_driver_probe.c
-+++ b/drivers/base/test/test_async_driver_probe.c
-@@ -146,7 +146,7 @@ static int __init test_async_probe_init(void)
- 	calltime = ktime_get();
- 	for_each_online_cpu(cpu) {
- 		nid = cpu_to_node(cpu);
--		pdev = &sync_dev[sync_id];
-+		pdev = &async_dev[async_id];
- 
- 		*pdev = test_platform_device_register_node("test_async_driver",
- 							   async_id,
+diff --git a/drivers/gpu/drm/panfrost/Kconfig b/drivers/gpu/drm/panfrost/Kconfig
+index 86cdc0ce79e6..77f4d32e5204 100644
+--- a/drivers/gpu/drm/panfrost/Kconfig
++++ b/drivers/gpu/drm/panfrost/Kconfig
+@@ -3,7 +3,8 @@
+ config DRM_PANFROST
+ 	tristate "Panfrost (DRM support for ARM Mali Midgard/Bifrost GPUs)"
+ 	depends on DRM
+-	depends on ARM || ARM64 || (COMPILE_TEST && !GENERIC_ATOMIC64)
++	depends on ARM || ARM64 || COMPILE_TEST
++	depends on !GENERIC_ATOMIC64    # for IOMMU_IO_PGTABLE_LPAE
+ 	depends on MMU
+ 	select DRM_SCHED
+ 	select IOMMU_SUPPORT
 -- 
 2.39.0
 
