@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12926323C
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:17:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8959FC433EF;
-	Mon, 30 Jan 2023 14:17:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E6BD1323C
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:17:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FDABC433EF;
+	Mon, 30 Jan 2023 14:17:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088273;
-	bh=sx80RY1j1NA+28Zxc/ujMkWRNWUMKpnPcPs4BqBBH0M=;
+	s=korg; t=1675088276;
+	bh=d83yDMRhfWu2mHNXIQ5Zwj2WzAEprSJTeJ9B8AU63dk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bKw0iHdcI0NYDlziC34upVHf5SHSKvJpULx8VBeQWhH6gyZspspY+q2ZHgCL2gWVb
-	 cc8HBavDqhEzLS45wWNx7lx8kC66B/ttM7zXZ9HSEbns0lNvwxO84FqBjq4DzIj78n
-	 ybHgDNaPK5CDMPJca+e2kyMP+Nogzq90yjj1ourk=
+	b=RCVE0+7wkv2aCfgX64P1Hb9i/UObAzHdK7lN0Z6SrlI2UQjrFCB2bi/TvB3rHzbLF
+	 bWQWz7GViw9rPvIN3VG9XBJRD05XKb1BvnmY2eiSU/8ASkA9cbGc/hX+HiqlSTj4rS
+	 mzvzxqAARq9pp0gjNPBLZ6ciGJrlp/47cvc8k9i8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steev Klimaszewski <steev@kali.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH 5.15 166/204] EDAC/qcom: Do not pass llcc_driv_data as edac_device_ctl_infos pvt_info
-Date: Mon, 30 Jan 2023 14:52:11 +0100
-Message-Id: <20230130134323.866405310@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 175/204] netlink: annotate data races around nlk->portid
+Date: Mon, 30 Jan 2023 14:52:20 +0100
+Message-Id: <20230130134324.249531738@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -36,58 +36,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 977c6ba624f24ae20cf0faee871257a39348d4a9 upstream.
+[ Upstream commit c1bb9484e3b05166880da8574504156ccbd0549e ]
 
-The memory for llcc_driv_data is allocated by the LLCC driver. But when
-it is passed as the private driver info to the EDAC core, it will get freed
-during the qcom_edac driver release. So when the qcom_edac driver gets probed
-again, it will try to use the freed data leading to the use-after-free bug.
+syzbot reminds us netlink_getname() runs locklessly [1]
 
-Hence, do not pass llcc_driv_data as pvt_info but rather reference it
-using the platform_data pointer in the qcom_edac driver.
+This first patch annotates the race against nlk->portid.
 
-Fixes: 27450653f1db ("drivers: edac: Add EDAC driver support for QCOM SoCs")
-Reported-by: Steev Klimaszewski <steev@kali.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
-Cc: <stable@vger.kernel.org> # 4.20
-Link: https://lore.kernel.org/r/20230118150904.26913-4-manivannan.sadhasivam@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Following patches take care of the remaining races.
+
+[1]
+BUG: KCSAN: data-race in netlink_getname / netlink_insert
+
+write to 0xffff88814176d310 of 4 bytes by task 2315 on cpu 1:
+netlink_insert+0xf1/0x9a0 net/netlink/af_netlink.c:583
+netlink_autobind+0xae/0x180 net/netlink/af_netlink.c:856
+netlink_sendmsg+0x444/0x760 net/netlink/af_netlink.c:1895
+sock_sendmsg_nosec net/socket.c:714 [inline]
+sock_sendmsg net/socket.c:734 [inline]
+____sys_sendmsg+0x38f/0x500 net/socket.c:2476
+___sys_sendmsg net/socket.c:2530 [inline]
+__sys_sendmsg+0x19a/0x230 net/socket.c:2559
+__do_sys_sendmsg net/socket.c:2568 [inline]
+__se_sys_sendmsg net/socket.c:2566 [inline]
+__x64_sys_sendmsg+0x42/0x50 net/socket.c:2566
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+read to 0xffff88814176d310 of 4 bytes by task 2316 on cpu 0:
+netlink_getname+0xcd/0x1a0 net/netlink/af_netlink.c:1144
+__sys_getsockname+0x11d/0x1b0 net/socket.c:2026
+__do_sys_getsockname net/socket.c:2041 [inline]
+__se_sys_getsockname net/socket.c:2038 [inline]
+__x64_sys_getsockname+0x3e/0x50 net/socket.c:2038
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x00000000 -> 0xc9a49780
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 2316 Comm: syz-executor.2 Not tainted 6.2.0-rc3-syzkaller-00030-ge8f60cd7db24-dirty #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/qcom_edac.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ net/netlink/af_netlink.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/edac/qcom_edac.c
-+++ b/drivers/edac/qcom_edac.c
-@@ -252,7 +252,7 @@ clear:
- static int
- dump_syn_reg(struct edac_device_ctl_info *edev_ctl, int err_type, u32 bank)
- {
--	struct llcc_drv_data *drv = edev_ctl->pvt_info;
-+	struct llcc_drv_data *drv = edev_ctl->dev->platform_data;
- 	int ret;
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 974d32632ef4..1eab80af5112 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -578,7 +578,9 @@ static int netlink_insert(struct sock *sk, u32 portid)
+ 	if (nlk_sk(sk)->bound)
+ 		goto err;
  
- 	ret = dump_syn_reg_values(drv, bank, err_type);
-@@ -289,7 +289,7 @@ static irqreturn_t
- llcc_ecc_irq_handler(int irq, void *edev_ctl)
- {
- 	struct edac_device_ctl_info *edac_dev_ctl = edev_ctl;
--	struct llcc_drv_data *drv = edac_dev_ctl->pvt_info;
-+	struct llcc_drv_data *drv = edac_dev_ctl->dev->platform_data;
- 	irqreturn_t irq_rc = IRQ_NONE;
- 	u32 drp_error, trp_error, i;
- 	int ret;
-@@ -358,7 +358,6 @@ static int qcom_llcc_edac_probe(struct p
- 	edev_ctl->dev_name = dev_name(dev);
- 	edev_ctl->ctl_name = "llcc";
- 	edev_ctl->panic_on_ue = LLCC_ERP_PANIC_ON_UE;
--	edev_ctl->pvt_info = llcc_driv_data;
+-	nlk_sk(sk)->portid = portid;
++	/* portid can be read locklessly from netlink_getname(). */
++	WRITE_ONCE(nlk_sk(sk)->portid, portid);
++
+ 	sock_hold(sk);
  
- 	rc = edac_device_add_device(edev_ctl);
- 	if (rc)
+ 	err = __netlink_insert(table, sk);
+@@ -1132,7 +1134,8 @@ static int netlink_getname(struct socket *sock, struct sockaddr *addr,
+ 		nladdr->nl_pid = nlk->dst_portid;
+ 		nladdr->nl_groups = netlink_group_mask(nlk->dst_group);
+ 	} else {
+-		nladdr->nl_pid = nlk->portid;
++		/* Paired with WRITE_ONCE() in netlink_insert() */
++		nladdr->nl_pid = READ_ONCE(nlk->portid);
+ 		netlink_lock_table();
+ 		nladdr->nl_groups = nlk->groups ? nlk->groups[0] : 0;
+ 		netlink_unlock_table();
+-- 
+2.39.0
+
 
 
