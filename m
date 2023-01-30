@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 808F63229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:22:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0AFBC433D2;
-	Mon, 30 Jan 2023 14:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE30C3229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:22:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05FE5C433EF;
+	Mon, 30 Jan 2023 14:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088531;
-	bh=7nXtLsb1HngUsSwr9IzV/5MJ6zfn64GxA6Vpfd6Ik5g=;
+	s=korg; t=1675088534;
+	bh=UeGqHrvCWKj5EAXMF8Sn6n5DCLBy4MFpPvC5d4V2EpE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sDH7txRNZBsgcWDPEpQauJRgZiotYvwVK4v1CSz93Wz148is3ToLnKKP7tLD7WndC
-	 I1A5ZulIPVohEAD410/3hsNGFS7K7bqKinvpuLK5QY3iTFf3jOs0P1hP1LzbOMUTw+
-	 /K7Daz7NChYbiQ4i3ovNIW6chtU3WCfQPcCkPq2U=
+	b=enasQs+kltfe3Uq3E8ZsCOKWFnOVsduyhISU/rYgxAvLERYcMRnJVbwMysvBa/AX5
+	 8vlO5A8vXzRP3ppkxutJKqgtsIOswjD485fVYY8MFVevYVSEnbXeJlsQIMD4xWKYMo
+	 KSxTIjLV3Y5b9nYwXhQL2FDdWirAQd/nRAD0w7sI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Robert Hancock <robert.hancock@calian.com>,
-	Jacob Keller <jacob.e.keller@intel.com>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Kishon Vijay Abraham I <kishon@kernel.org>,
+	linux-phy@lists.infradead.org,
+	Arnd Bergmann <arnd@arndb.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 049/143] net: macb: fix PTP TX timestamp failure due to packet padding
-Date: Mon, 30 Jan 2023 14:51:46 +0100
-Message-Id: <20230130134308.898325275@linuxfoundation.org>
+Subject: [PATCH 5.10 023/143] phy: ti: fix Kconfig warning and operator precedence
+Date: Mon, 30 Jan 2023 14:51:20 +0100
+Message-Id: <20230130134307.832524841@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -37,75 +38,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Robert Hancock <robert.hancock@calian.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit 7b90f5a665acd46efbbfa677a3a3a18d01ad6487 ]
+[ Upstream commit 7124c93887cc4e6c5b48920f83115e4a5892e870 ]
 
-PTP TX timestamp handling was observed to be broken with this driver
-when using the raw Layer 2 PTP encapsulation. ptp4l was not receiving
-the expected TX timestamp after transmitting a packet, causing it to
-enter a failure state.
+Fix Kconfig depends operator precedence to prevent a Kconfig warning:
 
-The problem appears to be due to the way that the driver pads packets
-which are smaller than the Ethernet minimum of 60 bytes. If headroom
-space was available in the SKB, this caused the driver to move the data
-back to utilize it. However, this appears to cause other data references
-in the SKB to become inconsistent. In particular, this caused the
-ptp_one_step_sync function to later (in the TX completion path) falsely
-detect the packet as a one-step SYNC packet, even when it was not, which
-caused the TX timestamp to not be processed when it should be.
+WARNING: unmet direct dependencies detected for MUX_MMIO
+  Depends on [n]: MULTIPLEXER [=m] && OF [=n]
+  Selected by [m]:
+  - PHY_AM654_SERDES [=m] && (OF [=n] && ARCH_K3 || COMPILE_TEST [=y]) && COMMON_CLK [=y]
 
-Using the headroom for this purpose seems like an unnecessary complexity
-as this is not a hot path in the driver, and in most cases it appears
-that there is sufficient tailroom to not require using the headroom
-anyway. Remove this usage of headroom to prevent this inconsistency from
-occurring and causing other problems.
-
-Fixes: 653e92a9175e ("net: macb: add support for padding and fcs computation")
-Signed-off-by: Robert Hancock <robert.hancock@calian.com>
-Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
-Tested-by: Claudiu Beznea <claudiu.beznea@microchip.com> # on SAMA7G5
-Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 71e2f5c5c224 ("phy: ti: Add a new SERDES driver for TI's AM654x SoC")
+Fixes: 091876cc355d ("phy: ti: j721e-wiz: Add support for WIZ module present in TI J721E SoC")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Vinod Koul <vkoul@kernel.org>
+Cc: Kishon Vijay Abraham I <kishon@kernel.org>
+Cc: linux-phy@lists.infradead.org
+Cc: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230110062529.22668-1-rdunlap@infradead.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 9 +--------
- 1 file changed, 1 insertion(+), 8 deletions(-)
+ drivers/phy/ti/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 792c8147c2c4..e0d62e251387 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -1963,7 +1963,6 @@ static int macb_pad_and_fcs(struct sk_buff **skb, struct net_device *ndev)
- 	bool cloned = skb_cloned(*skb) || skb_header_cloned(*skb) ||
- 		      skb_is_nonlinear(*skb);
- 	int padlen = ETH_ZLEN - (*skb)->len;
--	int headroom = skb_headroom(*skb);
- 	int tailroom = skb_tailroom(*skb);
- 	struct sk_buff *nskb;
- 	u32 fcs;
-@@ -1977,9 +1976,6 @@ static int macb_pad_and_fcs(struct sk_buff **skb, struct net_device *ndev)
- 		/* FCS could be appeded to tailroom. */
- 		if (tailroom >= ETH_FCS_LEN)
- 			goto add_fcs;
--		/* FCS could be appeded by moving data to headroom. */
--		else if (!cloned && headroom + tailroom >= ETH_FCS_LEN)
--			padlen = 0;
- 		/* No room for FCS, need to reallocate skb. */
- 		else
- 			padlen = ETH_FCS_LEN;
-@@ -1988,10 +1984,7 @@ static int macb_pad_and_fcs(struct sk_buff **skb, struct net_device *ndev)
- 		padlen += ETH_FCS_LEN;
- 	}
+diff --git a/drivers/phy/ti/Kconfig b/drivers/phy/ti/Kconfig
+index 15a3bcf32308..b905902d5750 100644
+--- a/drivers/phy/ti/Kconfig
++++ b/drivers/phy/ti/Kconfig
+@@ -23,7 +23,7 @@ config PHY_DM816X_USB
  
--	if (!cloned && headroom + tailroom >= padlen) {
--		(*skb)->data = memmove((*skb)->head, (*skb)->data, (*skb)->len);
--		skb_set_tail_pointer(*skb, (*skb)->len);
--	} else {
-+	if (cloned || tailroom < padlen) {
- 		nskb = skb_copy_expand(*skb, 0, padlen, GFP_ATOMIC);
- 		if (!nskb)
- 			return -ENOMEM;
+ config PHY_AM654_SERDES
+ 	tristate "TI AM654 SERDES support"
+-	depends on OF && ARCH_K3 || COMPILE_TEST
++	depends on OF && (ARCH_K3 || COMPILE_TEST)
+ 	depends on COMMON_CLK
+ 	select GENERIC_PHY
+ 	select MULTIPLEXER
+@@ -35,7 +35,7 @@ config PHY_AM654_SERDES
+ 
+ config PHY_J721E_WIZ
+ 	tristate "TI J721E WIZ (SERDES Wrapper) support"
+-	depends on OF && ARCH_K3 || COMPILE_TEST
++	depends on OF && (ARCH_K3 || COMPILE_TEST)
+ 	depends on HAS_IOMEM && OF_ADDRESS
+ 	depends on COMMON_CLK
+ 	select GENERIC_PHY
 -- 
 2.39.0
 
