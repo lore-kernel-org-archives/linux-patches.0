@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B65DE28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:06:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D29FC433D2;
-	Mon, 30 Jan 2023 14:06:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96F9228EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:06:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AF02C433D2;
+	Mon, 30 Jan 2023 14:06:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087590;
-	bh=6B49tPf7Yh4d+JaVXRuJRfB7Mpp2mAvEKuL1d/mwQBA=;
+	s=korg; t=1675087593;
+	bh=NusBK45PXs0DCRScUDi9uENmjrOFltWEJUZDoxF46Z8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xx1+cqD9OC+4LqnCKWk/0oBkBzrl6hGhCeqEpqTvKuwnBpUJDfVRRMRXnvsZeHmbH
-	 XkPyD9y5r00mSefp8iQtilJdV4FWwaXmcrasQTP2YGdTCPT18O9F4AiRj7MqorVtY1
-	 kJDFAAA67j6XmzYkBVIh+h/UI0qOHdui/FBRzfrM=
+	b=vondJPcp2J3U/2M2B78CAnLgS92wnJN0qRMj3Mzoj45Xh9Tw3e6jCvMZmA97bvHNH
+	 wqXP8DisDH3QZSM4G+8s+34P1VSlfE4e397UC5VgfrZmWlyyLWwhF4mkSCI7pIB3xR
+	 j9kR6P9LQnUFx6As/ZVEkX6MH+FmTfBbhSWbXmPA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
+	Ross Lagerwall <ross.lagerwall@citrix.com>,
 	Sagi Grimberg <sagi@grimberg.me>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 258/313] nvme: consolidate setting the tagset flags
-Date: Mon, 30 Jan 2023 14:51:33 +0100
-Message-Id: <20230130134348.741689092@linuxfoundation.org>
+Subject: [PATCH 6.1 259/313] nvme-fc: fix initialization order
+Date: Mon, 30 Jan 2023 14:51:34 +0100
+Message-Id: <20230130134348.791073812@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,202 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Ross Lagerwall <ross.lagerwall@citrix.com>
 
-[ Upstream commit db45e1a5ddccc034eb60d62fc5352022d7963ae2 ]
+[ Upstream commit 98e3528012cd571c48bbae7c7c0f868823254b6c ]
 
-All nvme transports should be using the same flags for their tagsets,
-with the exception for the blocking flag that should only be set for
-transports that can block in ->queue_rq.
+ctrl->ops is used by nvme_alloc_admin_tag_set() but set by
+nvme_init_ctrl() so reorder the calls to avoid a NULL pointer
+dereference.
 
-Add a NVME_F_BLOCKING flag to nvme_ctrl_ops to control the blocking
-behavior and lift setting the flags into nvme_alloc_{admin,io}_tag_set.
-
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Fixes: 6dfba1c09c10 ("nvme-fc: use the tagset alloc/free helpers")
+Signed-off-by: Ross Lagerwall <ross.lagerwall@citrix.com>
 Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Stable-dep-of: 98e3528012cd ("nvme-fc: fix initialization order")
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c   | 15 +++++++++------
- drivers/nvme/host/fc.c     |  4 ++--
- drivers/nvme/host/nvme.h   |  9 +++++----
- drivers/nvme/host/rdma.c   |  3 +--
- drivers/nvme/host/tcp.c    |  5 ++---
- drivers/nvme/target/loop.c |  4 ++--
- 6 files changed, 21 insertions(+), 19 deletions(-)
+ drivers/nvme/host/fc.c | 18 ++++++++----------
+ 1 file changed, 8 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index badc6984ff83..9e9ad91618ab 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4840,8 +4840,7 @@ void nvme_complete_async_event(struct nvme_ctrl *ctrl, __le16 status,
- EXPORT_SYMBOL_GPL(nvme_complete_async_event);
- 
- int nvme_alloc_admin_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
--		const struct blk_mq_ops *ops, unsigned int flags,
--		unsigned int cmd_size)
-+		const struct blk_mq_ops *ops, unsigned int cmd_size)
- {
- 	int ret;
- 
-@@ -4851,7 +4850,9 @@ int nvme_alloc_admin_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
- 	if (ctrl->ops->flags & NVME_F_FABRICS)
- 		set->reserved_tags = NVMF_RESERVED_TAGS;
- 	set->numa_node = ctrl->numa_node;
--	set->flags = flags;
-+	set->flags = BLK_MQ_F_NO_SCHED;
-+	if (ctrl->ops->flags & NVME_F_BLOCKING)
-+		set->flags |= BLK_MQ_F_BLOCKING;
- 	set->cmd_size = cmd_size;
- 	set->driver_data = ctrl;
- 	set->nr_hw_queues = 1;
-@@ -4895,8 +4896,8 @@ void nvme_remove_admin_tag_set(struct nvme_ctrl *ctrl)
- EXPORT_SYMBOL_GPL(nvme_remove_admin_tag_set);
- 
- int nvme_alloc_io_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
--		const struct blk_mq_ops *ops, unsigned int flags,
--		unsigned int nr_maps, unsigned int cmd_size)
-+		const struct blk_mq_ops *ops, unsigned int nr_maps,
-+		unsigned int cmd_size)
- {
- 	int ret;
- 
-@@ -4905,7 +4906,9 @@ int nvme_alloc_io_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
- 	set->queue_depth = ctrl->sqsize + 1;
- 	set->reserved_tags = NVMF_RESERVED_TAGS;
- 	set->numa_node = ctrl->numa_node;
--	set->flags = flags;
-+	set->flags = BLK_MQ_F_SHOULD_MERGE;
-+	if (ctrl->ops->flags & NVME_F_BLOCKING)
-+		set->flags |= BLK_MQ_F_BLOCKING;
- 	set->cmd_size = cmd_size,
- 	set->driver_data = ctrl;
- 	set->nr_hw_queues = ctrl->queue_count - 1;
 diff --git a/drivers/nvme/host/fc.c b/drivers/nvme/host/fc.c
-index 20b0c29a9a34..5f07a6b29276 100644
+index 5f07a6b29276..6c3d469eed7e 100644
 --- a/drivers/nvme/host/fc.c
 +++ b/drivers/nvme/host/fc.c
-@@ -2903,7 +2903,7 @@ nvme_fc_create_io_queues(struct nvme_fc_ctrl *ctrl)
- 	nvme_fc_init_io_queues(ctrl);
+@@ -3508,13 +3508,6 @@ nvme_fc_init_ctrl(struct device *dev, struct nvmf_ctrl_options *opts,
  
- 	ret = nvme_alloc_io_tag_set(&ctrl->ctrl, &ctrl->tag_set,
--			&nvme_fc_mq_ops, BLK_MQ_F_SHOULD_MERGE, 1,
-+			&nvme_fc_mq_ops, 1,
- 			struct_size((struct nvme_fcp_op_w_sgl *)NULL, priv,
- 				    ctrl->lport->ops->fcprqst_priv_sz));
- 	if (ret)
-@@ -3509,7 +3509,7 @@ nvme_fc_init_ctrl(struct device *dev, struct nvmf_ctrl_options *opts,
  	nvme_fc_init_queue(ctrl, 0);
  
- 	ret = nvme_alloc_admin_tag_set(&ctrl->ctrl, &ctrl->admin_tag_set,
--			&nvme_fc_admin_mq_ops, BLK_MQ_F_NO_SCHED,
+-	ret = nvme_alloc_admin_tag_set(&ctrl->ctrl, &ctrl->admin_tag_set,
+-			&nvme_fc_admin_mq_ops,
+-			struct_size((struct nvme_fcp_op_w_sgl *)NULL, priv,
+-				    ctrl->lport->ops->fcprqst_priv_sz));
+-	if (ret)
+-		goto out_free_queues;
+-
+ 	/*
+ 	 * Would have been nice to init io queues tag set as well.
+ 	 * However, we require interaction from the controller
+@@ -3524,10 +3517,17 @@ nvme_fc_init_ctrl(struct device *dev, struct nvmf_ctrl_options *opts,
+ 
+ 	ret = nvme_init_ctrl(&ctrl->ctrl, dev, &nvme_fc_ctrl_ops, 0);
+ 	if (ret)
+-		goto out_cleanup_tagset;
++		goto out_free_queues;
+ 
+ 	/* at this point, teardown path changes to ref counting on nvme ctrl */
+ 
++	ret = nvme_alloc_admin_tag_set(&ctrl->ctrl, &ctrl->admin_tag_set,
 +			&nvme_fc_admin_mq_ops,
- 			struct_size((struct nvme_fcp_op_w_sgl *)NULL, priv,
- 				    ctrl->lport->ops->fcprqst_priv_sz));
- 	if (ret)
-diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
-index aef3693ba5d3..01d90424af53 100644
---- a/drivers/nvme/host/nvme.h
-+++ b/drivers/nvme/host/nvme.h
-@@ -508,6 +508,8 @@ struct nvme_ctrl_ops {
- 	unsigned int flags;
- #define NVME_F_FABRICS			(1 << 0)
- #define NVME_F_METADATA_SUPPORTED	(1 << 1)
-+#define NVME_F_BLOCKING			(1 << 2)
++			struct_size((struct nvme_fcp_op_w_sgl *)NULL, priv,
++				    ctrl->lport->ops->fcprqst_priv_sz));
++	if (ret)
++		goto fail_ctrl;
 +
- 	const struct attribute_group **dev_attr_groups;
- 	int (*reg_read32)(struct nvme_ctrl *ctrl, u32 off, u32 *val);
- 	int (*reg_write32)(struct nvme_ctrl *ctrl, u32 off, u32 val);
-@@ -739,12 +741,11 @@ void nvme_start_ctrl(struct nvme_ctrl *ctrl);
- void nvme_stop_ctrl(struct nvme_ctrl *ctrl);
- int nvme_init_ctrl_finish(struct nvme_ctrl *ctrl);
- int nvme_alloc_admin_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
--		const struct blk_mq_ops *ops, unsigned int flags,
--		unsigned int cmd_size);
-+		const struct blk_mq_ops *ops, unsigned int cmd_size);
- void nvme_remove_admin_tag_set(struct nvme_ctrl *ctrl);
- int nvme_alloc_io_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
--		const struct blk_mq_ops *ops, unsigned int flags,
--		unsigned int nr_maps, unsigned int cmd_size);
-+		const struct blk_mq_ops *ops, unsigned int nr_maps,
-+		unsigned int cmd_size);
- void nvme_remove_io_tag_set(struct nvme_ctrl *ctrl);
+ 	spin_lock_irqsave(&rport->lock, flags);
+ 	list_add_tail(&ctrl->ctrl_list, &rport->ctrl_list);
+ 	spin_unlock_irqrestore(&rport->lock, flags);
+@@ -3579,8 +3579,6 @@ nvme_fc_init_ctrl(struct device *dev, struct nvmf_ctrl_options *opts,
  
- void nvme_remove_namespaces(struct nvme_ctrl *ctrl);
-diff --git a/drivers/nvme/host/rdma.c b/drivers/nvme/host/rdma.c
-index a55d3e8b607d..6f918e61b6ae 100644
---- a/drivers/nvme/host/rdma.c
-+++ b/drivers/nvme/host/rdma.c
-@@ -798,7 +798,7 @@ static int nvme_rdma_alloc_tag_set(struct nvme_ctrl *ctrl)
- 			    NVME_RDMA_METADATA_SGL_SIZE;
+ 	return ERR_PTR(-EIO);
  
- 	return nvme_alloc_io_tag_set(ctrl, &to_rdma_ctrl(ctrl)->tag_set,
--			&nvme_rdma_mq_ops, BLK_MQ_F_SHOULD_MERGE,
-+			&nvme_rdma_mq_ops,
- 			ctrl->opts->nr_poll_queues ? HCTX_MAX_TYPES : 2,
- 			cmd_size);
- }
-@@ -848,7 +848,6 @@ static int nvme_rdma_configure_admin_queue(struct nvme_rdma_ctrl *ctrl,
- 	if (new) {
- 		error = nvme_alloc_admin_tag_set(&ctrl->ctrl,
- 				&ctrl->admin_tag_set, &nvme_rdma_admin_mq_ops,
--				BLK_MQ_F_NO_SCHED,
- 				sizeof(struct nvme_rdma_request) +
- 				NVME_RDMA_DATA_SGL_SIZE);
- 		if (error)
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 83735c52d34a..eacd445b5333 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -1867,7 +1867,6 @@ static int nvme_tcp_configure_io_queues(struct nvme_ctrl *ctrl, bool new)
- 	if (new) {
- 		ret = nvme_alloc_io_tag_set(ctrl, &to_tcp_ctrl(ctrl)->tag_set,
- 				&nvme_tcp_mq_ops,
--				BLK_MQ_F_SHOULD_MERGE | BLK_MQ_F_BLOCKING,
- 				ctrl->opts->nr_poll_queues ? HCTX_MAX_TYPES : 2,
- 				sizeof(struct nvme_tcp_request));
- 		if (ret)
-@@ -1943,7 +1942,7 @@ static int nvme_tcp_configure_admin_queue(struct nvme_ctrl *ctrl, bool new)
- 	if (new) {
- 		error = nvme_alloc_admin_tag_set(ctrl,
- 				&to_tcp_ctrl(ctrl)->admin_tag_set,
--				&nvme_tcp_admin_mq_ops, BLK_MQ_F_BLOCKING,
-+				&nvme_tcp_admin_mq_ops,
- 				sizeof(struct nvme_tcp_request));
- 		if (error)
- 			goto out_free_queue;
-@@ -2524,7 +2523,7 @@ static const struct blk_mq_ops nvme_tcp_admin_mq_ops = {
- static const struct nvme_ctrl_ops nvme_tcp_ctrl_ops = {
- 	.name			= "tcp",
- 	.module			= THIS_MODULE,
--	.flags			= NVME_F_FABRICS,
-+	.flags			= NVME_F_FABRICS | NVME_F_BLOCKING,
- 	.reg_read32		= nvmf_reg_read32,
- 	.reg_read64		= nvmf_reg_read64,
- 	.reg_write32		= nvmf_reg_write32,
-diff --git a/drivers/nvme/target/loop.c b/drivers/nvme/target/loop.c
-index 08c583258e90..c864e902e91e 100644
---- a/drivers/nvme/target/loop.c
-+++ b/drivers/nvme/target/loop.c
-@@ -353,7 +353,7 @@ static int nvme_loop_configure_admin_queue(struct nvme_loop_ctrl *ctrl)
- 	ctrl->ctrl.queue_count = 1;
- 
- 	error = nvme_alloc_admin_tag_set(&ctrl->ctrl, &ctrl->admin_tag_set,
--			&nvme_loop_admin_mq_ops, BLK_MQ_F_NO_SCHED,
-+			&nvme_loop_admin_mq_ops,
- 			sizeof(struct nvme_loop_iod) +
- 			NVME_INLINE_SG_CNT * sizeof(struct scatterlist));
- 	if (error)
-@@ -494,7 +494,7 @@ static int nvme_loop_create_io_queues(struct nvme_loop_ctrl *ctrl)
- 		return ret;
- 
- 	ret = nvme_alloc_io_tag_set(&ctrl->ctrl, &ctrl->tag_set,
--			&nvme_loop_mq_ops, BLK_MQ_F_SHOULD_MERGE, 1,
-+			&nvme_loop_mq_ops, 1,
- 			sizeof(struct nvme_loop_iod) +
- 			NVME_INLINE_SG_CNT * sizeof(struct scatterlist));
- 	if (ret)
+-out_cleanup_tagset:
+-	nvme_remove_admin_tag_set(&ctrl->ctrl);
+ out_free_queues:
+ 	kfree(ctrl->queues);
+ out_free_ida:
 -- 
 2.39.0
 
