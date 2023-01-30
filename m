@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2BE928EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:09:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22048C433EF;
-	Mon, 30 Jan 2023 14:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D59128EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:09:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11FB2C433D2;
+	Mon, 30 Jan 2023 14:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087740;
-	bh=3Lq75sPSoSHWXeFKKS8WfbyvTaALIHw/yo2b2Iv0CbY=;
+	s=korg; t=1675087743;
+	bh=/kf3B+xPe72iydFm4rav9awomDkPmHf5K8qGjpi2dBw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pjtOhw8LBoyvUnfEq7hj+SqennFBXmI+LwPPlaTv8H5Y2W25spDMmyeEgaT2OXfMh
-	 hnLNSYmFZg10d4QXhjrUUTvCZPxut38Msh6Isj0docFwXH/nm90C+29tSv8P1G9wfB
-	 gtJ/bAAlUTOnaKJuaa+r9BL8uiHUnxYtdIINFgf0=
+	b=r/dfl4syHuNC1ni2XWnoT7wCKBBLSyGQSdZPI2WgntOb9zWyCNooGHrZ24T65ppPT
+	 XhKty9Y4M7Zatt3r8cHvhKwvhpv7rJvXRFZKVkNklIDGJIHC3NT+4ShqiFgYsKI/65
+	 k6v4F+92c3JZr+TYZuz35F0MC+GS4WQS9LJRxJ7U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@kernel.org>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Rob Herring <robh@kernel.org>
-Subject: [PATCH 6.1 309/313] dt-bindings: riscv: fix single letter canonical order
-Date: Mon, 30 Jan 2023 14:52:24 +0100
-Message-Id: <20230130134351.140875383@linuxfoundation.org>
+	Baoquan He <bhe@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 6.1 310/313] x86/i8259: Mark legacy PIC interrupts with IRQ_LEVEL
+Date: Mon, 30 Jan 2023 14:52:25 +0100
+Message-Id: <20230130134351.188386136@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -37,51 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Conor Dooley <conor.dooley@microchip.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit a943385aa80151c6b2611d3a1cf8338af2b257a1 upstream.
+commit 5fa55950729d0762a787451dc52862c3f850f859 upstream.
 
-I used the wikipedia table for ordering extensions when updating the
-pattern here in commit 299824e68bd0 ("dt-bindings: riscv: add new
-riscv,isa strings for emulators").
+Baoquan reported that after triggering a crash the subsequent crash-kernel
+fails to boot about half of the time. It triggers a NULL pointer
+dereference in the periodic tick code.
 
-Unfortunately that table did not match canonical order, as defined by
-the RISC-V ISA Manual, which defines extension ordering in (what is
-currently) Table 41, "Standard ISA extension names". Fix things up by
-re-sorting v (vector) and adding p (packed-simd) & j (dynamic
-languages). The e (reduced integer) and g (general) extensions are still
-intentionally left out.
+This happens because the legacy timer interrupt (IRQ0) is resent in
+software which happens in soft interrupt (tasklet) context. In this context
+get_irq_regs() returns NULL which leads to the NULL pointer dereference.
 
-Link: https://github.com/riscv/riscv-isa-manual/releases/tag/riscv-unpriv-pdf-from-asciidoc-15112022 # Chapter 29.5
-Fixes: 299824e68bd0 ("dt-bindings: riscv: add new riscv,isa strings for emulators")
-Acked-by: Guo Ren <guoren@kernel.org>
-Reviewed-by: Heiko Stuebner <heiko@sntech.de>
-Reviewed-by: Palmer Dabbelt <palmer@rivosinc.com>
-Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
-Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
-Acked-by: Rob Herring <robh@kernel.org>
-Link: https://lore.kernel.org/r/20221205174459.60195-3-conor@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+The reason for the resend is a spurious APIC interrupt on the IRQ0 vector
+which is captured and leads to a resend when the legacy timer interrupt is
+enabled. This is wrong because the legacy PIC interrupts are level
+triggered and therefore should never be resent in software, but nothing
+ever sets the IRQ_LEVEL flag on those interrupts, so the core code does not
+know about their trigger type.
+
+Ensure that IRQ_LEVEL is set when the legacy PCI interrupts are set up.
+
+Fixes: a4633adcdbc1 ("[PATCH] genirq: add genirq sw IRQ-retrigger")
+Reported-by: Baoquan He <bhe@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Baoquan He <bhe@redhat.com>
+Link: https://lore.kernel.org/r/87mt6rjrra.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/devicetree/bindings/riscv/cpus.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kernel/i8259.c   |    1 +
+ arch/x86/kernel/irqinit.c |    4 +++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/riscv/cpus.yaml b/Documentation/devicetree/bindings/riscv/cpus.yaml
-index 97659bb71811..d4148418350c 100644
---- a/Documentation/devicetree/bindings/riscv/cpus.yaml
-+++ b/Documentation/devicetree/bindings/riscv/cpus.yaml
-@@ -80,7 +80,7 @@ properties:
-       insensitive, letters in the riscv,isa string must be all
-       lowercase to simplify parsing.
-     $ref: "/schemas/types.yaml#/definitions/string"
--    pattern: ^rv(?:64|32)imaf?d?q?c?b?v?k?h?(?:[hsxz](?:[a-z])+)?(?:_[hsxz](?:[a-z])+)*$
-+    pattern: ^rv(?:64|32)imaf?d?q?c?b?k?j?p?v?h?(?:[hsxz](?:[a-z])+)?(?:_[hsxz](?:[a-z])+)*$
+--- a/arch/x86/kernel/i8259.c
++++ b/arch/x86/kernel/i8259.c
+@@ -114,6 +114,7 @@ static void make_8259A_irq(unsigned int
+ 	disable_irq_nosync(irq);
+ 	io_apic_irqs &= ~(1<<irq);
+ 	irq_set_chip_and_handler(irq, &i8259A_chip, handle_level_irq);
++	irq_set_status_flags(irq, IRQ_LEVEL);
+ 	enable_irq(irq);
+ 	lapic_assign_legacy_vector(irq, true);
+ }
+--- a/arch/x86/kernel/irqinit.c
++++ b/arch/x86/kernel/irqinit.c
+@@ -65,8 +65,10 @@ void __init init_ISA_irqs(void)
  
-   # RISC-V requires 'timebase-frequency' in /cpus, so disallow it here
-   timebase-frequency: false
--- 
-2.39.1
-
+ 	legacy_pic->init(0);
+ 
+-	for (i = 0; i < nr_legacy_irqs(); i++)
++	for (i = 0; i < nr_legacy_irqs(); i++) {
+ 		irq_set_chip_and_handler(i, chip, handle_level_irq);
++		irq_set_status_flags(i, IRQ_LEVEL);
++	}
+ }
+ 
+ void __init init_IRQ(void)
 
 
