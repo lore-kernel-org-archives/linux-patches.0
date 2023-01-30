@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 030C428EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:08:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D142C4339B;
-	Mon, 30 Jan 2023 14:08:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCCEA28F3
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:08:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F659C433EF;
+	Mon, 30 Jan 2023 14:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087700;
-	bh=Hr2W4gaAjdGlVp+cggVmW4is9db3JoUMLLwy8ldIHpU=;
+	s=korg; t=1675087703;
+	bh=5tWisySBMkAeTCnBTIYLyTp8TabqmRXXx/3GY1UtUFA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=juBqk1CRZBf7rl8HpDM5BUKOLVBScqRi6sVsxYKtyUMkY5/Q/NCM7+xptfWqcenWB
-	 0lW7h167e8WW9O9j6J7a0Vzwdq/QmrUmv4nLP5nxOMN0rR8c1G/b4YEXFO8OXaBeYh
-	 S0y+F9HiSG6TGjiKA1Q+FpaFWpRek+1j8OY+TDlM=
+	b=ia7ZY3jBn79sFpeVqd3BO/+fl6ZdcmM/J9jHmKXroZKZSNgrN99RJg9Zi38KrTzyK
+	 DfFmHG5hLn+uGKPkV7kg69iZJHy6K6Rz8u6PtAiYwtHRsjAvPL/vsssYw+1bYDTHXK
+	 1twl2BITzUm+OhUlOdDSSdfFYk4WIZ+WkN0aUrFU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Conor Dooley <conor.dooley@microchip.com>,
-	Andrew Jones <ajones@ventanamicro.com>,
-	Ley Foon Tan <leyfoon.tan@starfivetech.com>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	David Christensen <drc@linux.vnet.ibm.com>,
+	Pavan Chebbi <pavan.chebbi@broadcom.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 294/313] riscv: Move call to init_cpu_topology() to later initialization stage
-Date: Mon, 30 Jan 2023 14:52:09 +0100
-Message-Id: <20230130134350.439174898@linuxfoundation.org>
+Subject: [PATCH 6.1 295/313] net/tg3: resolve deadlock in tg3_reset_task() during EEH
+Date: Mon, 30 Jan 2023 14:52:10 +0100
+Message-Id: <20230130134350.478251421@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -37,58 +36,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ley Foon Tan <leyfoon.tan@starfivetech.com>
+From: David Christensen <drc@linux.vnet.ibm.com>
 
-[ Upstream commit c1d6105869464635d8a2bcf87a43c05f4c0cfca4 ]
+[ Upstream commit 6c4ca03bd890566d873e3593b32d034bf2f5a087 ]
 
-If "capacity-dmips-mhz" is present in a CPU DT node,
-topology_parse_cpu_capacity() will fail to allocate memory.  arm64, with
-which this code path is shared, does not call
-topology_parse_cpu_capacity() until later in boot where memory
-allocation is available.  While "capacity-dmips-mhz" is not yet a valid
-property on RISC-V, invalid properties should be ignored rather than
-cause issues.  Move init_cpu_topology(), which calls
-topology_parse_cpu_capacity(), to a later initialization stage, to match
-arm64.
+During EEH error injection testing, a deadlock was encountered in the tg3
+driver when tg3_io_error_detected() was attempting to cancel outstanding
+reset tasks:
 
-As a side effect of this change, RISC-V is "protected" from changes to
-core topology code that would work on arm64 where memory allocation is
-safe but on RISC-V isn't.
+crash> foreach UN bt
+...
+PID: 159    TASK: c0000000067c6000  CPU: 8   COMMAND: "eehd"
+...
+ #5 [c00000000681f990] __cancel_work_timer at c00000000019fd18
+ #6 [c00000000681fa30] tg3_io_error_detected at c00800000295f098 [tg3]
+ #7 [c00000000681faf0] eeh_report_error at c00000000004e25c
+...
 
-Fixes: 03f11f03dbfe ("RISC-V: Parse cpu topology during boot.")
-Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
-Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
-Signed-off-by: Ley Foon Tan <leyfoon.tan@starfivetech.com>
-Link: https://lore.kernel.org/r/20230105033705.3946130-1-leyfoon.tan@starfivetech.com
-[Palmer: use Conor's commit text]
-Link: https://lore.kernel.org/linux-riscv/20230104183033.755668-1-pierre.gondois@arm.com/T/#me592d4c8b9508642954839f0077288a353b0b9b2
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+PID: 290    TASK: c000000036e5f800  CPU: 6   COMMAND: "kworker/6:1"
+...
+ #4 [c00000003721fbc0] rtnl_lock at c000000000c940d8
+ #5 [c00000003721fbe0] tg3_reset_task at c008000002969358 [tg3]
+ #6 [c00000003721fc60] process_one_work at c00000000019e5c4
+...
+
+PID: 296    TASK: c000000037a65800  CPU: 21  COMMAND: "kworker/21:1"
+...
+ #4 [c000000037247bc0] rtnl_lock at c000000000c940d8
+ #5 [c000000037247be0] tg3_reset_task at c008000002969358 [tg3]
+ #6 [c000000037247c60] process_one_work at c00000000019e5c4
+...
+
+PID: 655    TASK: c000000036f49000  CPU: 16  COMMAND: "kworker/16:2"
+...:1
+
+ #4 [c0000000373ebbc0] rtnl_lock at c000000000c940d8
+ #5 [c0000000373ebbe0] tg3_reset_task at c008000002969358 [tg3]
+ #6 [c0000000373ebc60] process_one_work at c00000000019e5c4
+...
+
+Code inspection shows that both tg3_io_error_detected() and
+tg3_reset_task() attempt to acquire the RTNL lock at the beginning of
+their code blocks.  If tg3_reset_task() should happen to execute between
+the times when tg3_io_error_deteced() acquires the RTNL lock and
+tg3_reset_task_cancel() is called, a deadlock will occur.
+
+Moving tg3_reset_task_cancel() call earlier within the code block, prior
+to acquiring RTNL, prevents this from happening, but also exposes another
+deadlock issue where tg3_reset_task() may execute AFTER
+tg3_io_error_detected() has executed:
+
+crash> foreach UN bt
+PID: 159    TASK: c0000000067d2000  CPU: 9   COMMAND: "eehd"
+...
+ #4 [c000000006867a60] rtnl_lock at c000000000c940d8
+ #5 [c000000006867a80] tg3_io_slot_reset at c0080000026c2ea8 [tg3]
+ #6 [c000000006867b00] eeh_report_reset at c00000000004de88
+...
+PID: 363    TASK: c000000037564000  CPU: 6   COMMAND: "kworker/6:1"
+...
+ #3 [c000000036c1bb70] msleep at c000000000259e6c
+ #4 [c000000036c1bba0] napi_disable at c000000000c6b848
+ #5 [c000000036c1bbe0] tg3_reset_task at c0080000026d942c [tg3]
+ #6 [c000000036c1bc60] process_one_work at c00000000019e5c4
+...
+
+This issue can be avoided by aborting tg3_reset_task() if EEH error
+recovery is already in progress.
+
+Fixes: db84bf43ef23 ("tg3: tg3_reset_task() needs to use rtnl_lock to synchronize")
+Signed-off-by: David Christensen <drc@linux.vnet.ibm.com>
+Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
+Link: https://lore.kernel.org/r/20230124185339.225806-1-drc@linux.vnet.ibm.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/smpboot.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/tg3.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/riscv/kernel/smpboot.c b/arch/riscv/kernel/smpboot.c
-index 3373df413c88..ddb2afba6d25 100644
---- a/arch/riscv/kernel/smpboot.c
-+++ b/arch/riscv/kernel/smpboot.c
-@@ -39,7 +39,6 @@ static DECLARE_COMPLETION(cpu_running);
+diff --git a/drivers/net/ethernet/broadcom/tg3.c b/drivers/net/ethernet/broadcom/tg3.c
+index 4179a12fc881..af9ea5e4371b 100644
+--- a/drivers/net/ethernet/broadcom/tg3.c
++++ b/drivers/net/ethernet/broadcom/tg3.c
+@@ -11174,7 +11174,7 @@ static void tg3_reset_task(struct work_struct *work)
+ 	rtnl_lock();
+ 	tg3_full_lock(tp, 0);
  
- void __init smp_prepare_boot_cpu(void)
- {
--	init_cpu_topology();
- }
+-	if (!netif_running(tp->dev)) {
++	if (tp->pcierr_recovery || !netif_running(tp->dev)) {
+ 		tg3_flag_clear(tp, RESET_TASK_PENDING);
+ 		tg3_full_unlock(tp);
+ 		rtnl_unlock();
+@@ -18109,6 +18109,9 @@ static pci_ers_result_t tg3_io_error_detected(struct pci_dev *pdev,
  
- void __init smp_prepare_cpus(unsigned int max_cpus)
-@@ -48,6 +47,8 @@ void __init smp_prepare_cpus(unsigned int max_cpus)
- 	int ret;
- 	unsigned int curr_cpuid;
+ 	netdev_info(netdev, "PCI I/O error detected\n");
  
-+	init_cpu_topology();
++	/* Want to make sure that the reset task doesn't run */
++	tg3_reset_task_cancel(tp);
 +
- 	curr_cpuid = smp_processor_id();
- 	store_cpu_topology(curr_cpuid);
- 	numa_store_cpu_info(curr_cpuid);
+ 	rtnl_lock();
+ 
+ 	/* Could be second call or maybe we don't have netdev yet */
+@@ -18125,9 +18128,6 @@ static pci_ers_result_t tg3_io_error_detected(struct pci_dev *pdev,
+ 
+ 	tg3_timer_stop(tp);
+ 
+-	/* Want to make sure that the reset task doesn't run */
+-	tg3_reset_task_cancel(tp);
+-
+ 	netif_device_detach(netdev);
+ 
+ 	/* Clean up software state, even if MMIO is blocked */
 -- 
 2.39.0
 
