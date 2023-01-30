@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 068FE28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B229C4339B;
-	Mon, 30 Jan 2023 14:14:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA8FD28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67716C433EF;
+	Mon, 30 Jan 2023 14:14:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088083;
-	bh=8JY8sU+CLjn8g1bawyang7tEx8ZTh7aes2g7aqcXurE=;
+	s=korg; t=1675088086;
+	bh=tr5zK0C8q0wp18TqMxxo82b+L+xwEXrLcx9cnV+T3Oo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wO8FYQMPoqTVIwxZ5egoquc2FcvKQaPUNZhmgwzWE7wxcwiOD8f1Os5cfAp52r3j9
-	 EP0JgTKRzVeqcZ5SHTxLIMmmXfhHiI2QtrxX8n7ZTLJrMyXb2kjkIxGY+mTFnVA+WW
-	 /N9zNZLr3zMqEJsdCurTGi58ELSgb8gIj9pjNiNM=
+	b=p4VfGQ1oq6VsCls7V3LBQoIYtXLp31BHkpTVEIAtI1NtL0sPcMj98tei9Y+8SptoQ
+	 0fdTR+ddOVnaEK3tH0MqbU4eJcGK7f+CPF6HA5OXQEHgKSkhdU6ielNxx76SQzcTY5
+	 PxCLonQd79OE8TXwK7GBGAwR0BiUErGXYk1enFyI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Mark Brown <broonie@kernel.org>,
+	Christian Borntraeger <borntraeger@linux.ibm.com>,
+	Claudio Imbrenda <imbrenda@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 110/204] spi: spidev: remove debug messages that access spidev->spi without locking
-Date: Mon, 30 Jan 2023 14:51:15 +0100
-Message-Id: <20230130134321.199319747@linuxfoundation.org>
+Subject: [PATCH 5.15 111/204] KVM: s390: interrupt: use READ_ONCE() before cmpxchg()
+Date: Mon, 30 Jan 2023 14:51:16 +0100
+Message-Id: <20230130134321.325342695@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,43 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Heiko Carstens <hca@linux.ibm.com>
 
-[ Upstream commit 6b35b173dbc1711f8d272e3f322d2ad697015919 ]
+[ Upstream commit 42400d99e9f0728c17240edb9645637ead40f6b9 ]
 
-The two debug messages in spidev_open() dereference spidev->spi without
-taking the lock and without checking if it's not null. This can lead to
-a crash. Drop the messages as they're not needed - the user-space will
-get informed about ENOMEM with the syscall return value.
+Use READ_ONCE() before cmpxchg() to prevent that the compiler generates
+code that fetches the to be compared old value several times from memory.
 
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Link: https://lore.kernel.org/r/20230106100719.196243-2-brgl@bgdev.pl
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Reviewed-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Claudio Imbrenda <imbrenda@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230109145456.2895385-1-hca@linux.ibm.com
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/spi/spidev.c | 2 --
- 1 file changed, 2 deletions(-)
+ arch/s390/kvm/interrupt.c | 12 ++++++++----
+ 1 file changed, 8 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
-index d233e2424ad1..922d778df064 100644
---- a/drivers/spi/spidev.c
-+++ b/drivers/spi/spidev.c
-@@ -592,7 +592,6 @@ static int spidev_open(struct inode *inode, struct file *filp)
- 	if (!spidev->tx_buffer) {
- 		spidev->tx_buffer = kmalloc(bufsiz, GFP_KERNEL);
- 		if (!spidev->tx_buffer) {
--			dev_dbg(&spidev->spi->dev, "open/ENOMEM\n");
- 			status = -ENOMEM;
- 			goto err_find_dev;
- 		}
-@@ -601,7 +600,6 @@ static int spidev_open(struct inode *inode, struct file *filp)
- 	if (!spidev->rx_buffer) {
- 		spidev->rx_buffer = kmalloc(bufsiz, GFP_KERNEL);
- 		if (!spidev->rx_buffer) {
--			dev_dbg(&spidev->spi->dev, "open/ENOMEM\n");
- 			status = -ENOMEM;
- 			goto err_alloc_rx_buf;
- 		}
+diff --git a/arch/s390/kvm/interrupt.c b/arch/s390/kvm/interrupt.c
+index 8ce03a5ca863..ca7d09f09809 100644
+--- a/arch/s390/kvm/interrupt.c
++++ b/arch/s390/kvm/interrupt.c
+@@ -81,8 +81,9 @@ static int sca_inject_ext_call(struct kvm_vcpu *vcpu, int src_id)
+ 		struct esca_block *sca = vcpu->kvm->arch.sca;
+ 		union esca_sigp_ctrl *sigp_ctrl =
+ 			&(sca->cpu[vcpu->vcpu_id].sigp_ctrl);
+-		union esca_sigp_ctrl new_val = {0}, old_val = *sigp_ctrl;
++		union esca_sigp_ctrl new_val = {0}, old_val;
+ 
++		old_val = READ_ONCE(*sigp_ctrl);
+ 		new_val.scn = src_id;
+ 		new_val.c = 1;
+ 		old_val.c = 0;
+@@ -93,8 +94,9 @@ static int sca_inject_ext_call(struct kvm_vcpu *vcpu, int src_id)
+ 		struct bsca_block *sca = vcpu->kvm->arch.sca;
+ 		union bsca_sigp_ctrl *sigp_ctrl =
+ 			&(sca->cpu[vcpu->vcpu_id].sigp_ctrl);
+-		union bsca_sigp_ctrl new_val = {0}, old_val = *sigp_ctrl;
++		union bsca_sigp_ctrl new_val = {0}, old_val;
+ 
++		old_val = READ_ONCE(*sigp_ctrl);
+ 		new_val.scn = src_id;
+ 		new_val.c = 1;
+ 		old_val.c = 0;
+@@ -124,16 +126,18 @@ static void sca_clear_ext_call(struct kvm_vcpu *vcpu)
+ 		struct esca_block *sca = vcpu->kvm->arch.sca;
+ 		union esca_sigp_ctrl *sigp_ctrl =
+ 			&(sca->cpu[vcpu->vcpu_id].sigp_ctrl);
+-		union esca_sigp_ctrl old = *sigp_ctrl;
++		union esca_sigp_ctrl old;
+ 
++		old = READ_ONCE(*sigp_ctrl);
+ 		expect = old.value;
+ 		rc = cmpxchg(&sigp_ctrl->value, old.value, 0);
+ 	} else {
+ 		struct bsca_block *sca = vcpu->kvm->arch.sca;
+ 		union bsca_sigp_ctrl *sigp_ctrl =
+ 			&(sca->cpu[vcpu->vcpu_id].sigp_ctrl);
+-		union bsca_sigp_ctrl old = *sigp_ctrl;
++		union bsca_sigp_ctrl old;
+ 
++		old = READ_ONCE(*sigp_ctrl);
+ 		expect = old.value;
+ 		rc = cmpxchg(&sigp_ctrl->value, old.value, 0);
+ 	}
 -- 
 2.39.0
 
