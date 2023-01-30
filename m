@@ -1,32 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBD9A3229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:21:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4B970C4339C;
-	Mon, 30 Jan 2023 14:21:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C40393229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:22:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C24FC433EF;
+	Mon, 30 Jan 2023 14:22:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088519;
-	bh=SYbamkHUAh7SO2/XCkhZFZVPZCew/g1XBLcll1P10J4=;
+	s=korg; t=1675088522;
+	bh=De1wu6qamyD+3EsbkBp7VVk9WF4WQOB4p2v4BYE9zdk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QzR328xYoriI/9gy+Kf92PAOUxrbZBMlBjZz2nnTVcT6QjeZv+ZaK6MwB4UZYxM3I
-	 bUW08RkC/BVVD7RBpaaPNjvlr2PGWVZr1RrWp3JeAvEg+YTM3jCSomQ7EtDM9W0AbH
-	 9ZMUaKZs980ct6Z6B6IV3xLRT8oxWhWeAWnYDGjs=
+	b=uhQub1Bxr8rnWhxwp0YrVV1cAmUP9tB6D+URVvHcwMYOMGdHNiH8zAcwNX+013bd3
+	 NqQ8Lubxo7jNwZDghf1Lec5UjnuMsSMBhmspD6UfeugY5GEnpvkGmLsQ7uPNvOvcr/
+	 qDexkw0EclfF+oOJajPVc0XJG72ixKr0dx2Yan/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Eli Cohen <eli@mellanox.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	linux-rdma@vger.kernel.org,
-	Ira Weiny <ira.weiny@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Steven Price <steven.price@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 046/143] net: mlx5: eliminate anonymous module_init & module_exit
-Date: Mon, 30 Jan 2023 14:51:43 +0100
-Message-Id: <20230130134308.762370156@linuxfoundation.org>
+Subject: [PATCH 5.10 047/143] drm/panfrost: fix GENERIC_ATOMIC64 dependency
+Date: Mon, 30 Jan 2023 14:51:44 +0100
+Message-Id: <20230130134308.807653506@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -40,74 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 2c1e1b949024989e20907b84e11a731a50778416 ]
+[ Upstream commit 6437a549ae178a3f5a5c03e983f291ebcdc2bbc7 ]
 
-Eliminate anonymous module_init() and module_exit(), which can lead to
-confusion or ambiguity when reading System.map, crashes/oops/bugs,
-or an initcall_debug log.
+On ARMv5 and earlier, a randconfig build can still run into
 
-Give each of these init and exit functions unique driver-specific
-names to eliminate the anonymous names.
+WARNING: unmet direct dependencies detected for IOMMU_IO_PGTABLE_LPAE
+  Depends on [n]: IOMMU_SUPPORT [=y] && (ARM [=y] || ARM64 || COMPILE_TEST [=y]) && !GENERIC_ATOMIC64 [=y]
+  Selected by [y]:
+  - DRM_PANFROST [=y] && HAS_IOMEM [=y] && DRM [=y] && (ARM [=y] || ARM64 || COMPILE_TEST [=y] && !GENERIC_ATOMIC64 [=y]) && MMU [=y]
 
-Example 1: (System.map)
- ffffffff832fc78c t init
- ffffffff832fc79e t init
- ffffffff832fc8f8 t init
+Rework the dependencies to always require a working cmpxchg64.
 
-Example 2: (initcall_debug log)
- calling  init+0x0/0x12 @ 1
- initcall init+0x0/0x12 returned 0 after 15 usecs
- calling  init+0x0/0x60 @ 1
- initcall init+0x0/0x60 returned 0 after 2 usecs
- calling  init+0x0/0x9a @ 1
- initcall init+0x0/0x9a returned 0 after 74 usecs
-
-Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Eli Cohen <eli@mellanox.com>
-Cc: Saeed Mahameed <saeedm@nvidia.com>
-Cc: Leon Romanovsky <leon@kernel.org>
-Cc: linux-rdma@vger.kernel.org
-Reviewed-by: Ira Weiny <ira.weiny@intel.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: db594ba3fcf9 ("drm/panfrost: depend on !GENERIC_ATOMIC64 when using COMPILE_TEST")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Reviewed-by: Steven Price <steven.price@arm.com>
+Signed-off-by: Steven Price <steven.price@arm.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230117164456.1591901-1-arnd@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/panfrost/Kconfig | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 29bc1df28aeb..112eaef186e1 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -1642,7 +1642,7 @@ static void mlx5_core_verify_params(void)
- 	}
- }
- 
--static int __init init(void)
-+static int __init mlx5_init(void)
- {
- 	int err;
- 
-@@ -1667,7 +1667,7 @@ static int __init init(void)
- 	return err;
- }
- 
--static void __exit cleanup(void)
-+static void __exit mlx5_cleanup(void)
- {
- #ifdef CONFIG_MLX5_CORE_EN
- 	mlx5e_cleanup();
-@@ -1676,5 +1676,5 @@ static void __exit cleanup(void)
- 	mlx5_unregister_debugfs();
- }
- 
--module_init(init);
--module_exit(cleanup);
-+module_init(mlx5_init);
-+module_exit(mlx5_cleanup);
+diff --git a/drivers/gpu/drm/panfrost/Kconfig b/drivers/gpu/drm/panfrost/Kconfig
+index 86cdc0ce79e6..77f4d32e5204 100644
+--- a/drivers/gpu/drm/panfrost/Kconfig
++++ b/drivers/gpu/drm/panfrost/Kconfig
+@@ -3,7 +3,8 @@
+ config DRM_PANFROST
+ 	tristate "Panfrost (DRM support for ARM Mali Midgard/Bifrost GPUs)"
+ 	depends on DRM
+-	depends on ARM || ARM64 || (COMPILE_TEST && !GENERIC_ATOMIC64)
++	depends on ARM || ARM64 || COMPILE_TEST
++	depends on !GENERIC_ATOMIC64    # for IOMMU_IO_PGTABLE_LPAE
+ 	depends on MMU
+ 	select DRM_SCHED
+ 	select IOMMU_SUPPORT
 -- 
 2.39.0
 
