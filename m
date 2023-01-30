@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E23C828EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:15:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34F81C433D2;
-	Mon, 30 Jan 2023 14:15:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFB2F28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:15:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D96FC433D2;
+	Mon, 30 Jan 2023 14:15:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088134;
-	bh=kG2+0oUbFIinc6nLHeIhciIYjrsp/tX4uJHkZIrWjKg=;
+	s=korg; t=1675088137;
+	bh=gVds+48/+yLt355nRBQcGrCi0+JTMErULT4z+WcxfVo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O1ZApOqolej+7bqRLPiNmu5o5+QpiqODc0tB+XwVRxNM9bwzupOeRslaWPzvn+4vi
-	 V3HZV06Bg1Cm3/WXomXVGY4N4u000TgCiApcGLj4gCWDSocnNRXOhV3XdLt30vs8af
-	 k4TaPJSotiGv6RbUhJXDv8EIGCOJOJrpjXJgPU7k=
+	b=nXZ56ykWSOBWpzRmnGIfcFlx9mDFYXqAiPaMd5edq373NfZWwrem4QJZBaZKn0KYS
+	 WOoDH6FYTcUaRtrzMzvCBDV5jl8S2s0ngt93O1P07pxrI3RbWv73TqcWfkqitMT3lu
+	 b2mKjfTWip/+sOe5ciu/P8o7pEXLDNj39fPjUdB8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -26,9 +26,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Eric Biggers <ebiggers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 126/204] ubsan: no need to unset panic_on_warn in ubsan_epilogue()
-Date: Mon, 30 Jan 2023 14:51:31 +0100
-Message-Id: <20230130134322.052156181@linuxfoundation.org>
+Subject: [PATCH 5.15 127/204] kasan: no need to unset panic_on_warn in end_report()
+Date: Mon, 30 Jan 2023 14:51:32 +0100
+Message-Id: <20230130134322.099035810@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -44,12 +44,12 @@ Content-Transfer-Encoding: 8bit
 
 From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit d83ce027a54068fabb70d2c252e1ce2da86784a4 upstream.
+commit e7ce7500375a63348e1d3a703c8d5003cbe3fea6 upstream.
 
 panic_on_warn is unset inside panic(), so no need to unset it before
-calling panic() in ubsan_epilogue().
+calling panic() in end_report().
 
-Link: https://lkml.kernel.org/r/1644324666-15947-5-git-send-email-yangtiezhu@loongson.cn
+Link: https://lkml.kernel.org/r/1644324666-15947-6-git-send-email-yangtiezhu@loongson.cn
 Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
 Reviewed-by: Marco Elver <elver@google.com>
 Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
@@ -61,18 +61,18 @@ Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- lib/ubsan.c | 10 +---------
+ mm/kasan/report.c | 10 +---------
  1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/lib/ubsan.c b/lib/ubsan.c
-index bdc380ff5d5c..36bd75e33426 100644
---- a/lib/ubsan.c
-+++ b/lib/ubsan.c
-@@ -154,16 +154,8 @@ static void ubsan_epilogue(void)
- 
- 	current->in_ubsan--;
- 
--	if (panic_on_warn) {
+diff --git a/mm/kasan/report.c b/mm/kasan/report.c
+index 884a950c7026..bf17704b302f 100644
+--- a/mm/kasan/report.c
++++ b/mm/kasan/report.c
+@@ -117,16 +117,8 @@ static void end_report(unsigned long *flags, unsigned long addr)
+ 	pr_err("==================================================================\n");
+ 	add_taint(TAINT_BAD_PAGE, LOCKDEP_NOW_UNRELIABLE);
+ 	spin_unlock_irqrestore(&report_lock, *flags);
+-	if (panic_on_warn && !test_bit(KASAN_BIT_MULTI_SHOT, &kasan_flags)) {
 -		/*
 -		 * This thread may hit another WARN() in the panic path.
 -		 * Resetting this prevents additional WARN() from panicking the
@@ -80,12 +80,12 @@ index bdc380ff5d5c..36bd75e33426 100644
 -		 * panic_mutex in panic().
 -		 */
 -		panic_on_warn = 0;
-+	if (panic_on_warn)
++	if (panic_on_warn && !test_bit(KASAN_BIT_MULTI_SHOT, &kasan_flags))
  		panic("panic_on_warn set ...\n");
 -	}
- }
- 
- void __ubsan_handle_divrem_overflow(void *_data, void *lhs, void *rhs)
+ 	if (kasan_arg_fault == KASAN_ARG_FAULT_PANIC)
+ 		panic("kasan.fault=panic set ...\n");
+ 	kasan_enable_current();
 -- 
 2.39.0
 
