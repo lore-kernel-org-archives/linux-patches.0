@@ -1,28 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D23C28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:01:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE53C433EF;
-	Mon, 30 Jan 2023 14:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B18F28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:02:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8DF4DC433D2;
+	Mon, 30 Jan 2023 14:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087318;
-	bh=axvQKe13YnMQQ3pm7ZRTxZipZu2ozLBuOLAC+cMDoZM=;
+	s=korg; t=1675087321;
+	bh=aUHe/ku59CJyZQYm3tJm3BPQl1OqQXpECyjv8TUP338=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eV2nulTnbv4CfjFG53M2PUu8kblIMtN68h7776Jw/3UDvF0Wmgp/yM1y//t9jkKU8
-	 PCji3HD6TBV7NyoUSupxskz9GcIwbj/3CDoL6fwcP3atlealhabkXvKTMH96Iq+2TS
-	 QqBbWhDw5sQZzyR4uaNmHATYC1rzH8+lnFMgrhuk=
+	b=LIbnsMlyR/6YDlxxmjI5FfUDPNV+gmD/SfSs+li+gj+2lSfQk78RwFlyOCRNwu2Jo
+	 DqtSaJM4KfHdrNwBFClJnBcQBwWOZWqqra4ClYPDCjvUJBMJDdF145CkEkCfsbcz3m
+	 ClTvwDbxQHbHcmEsEu6mgJXDiuCvh0s9FBYKSxtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ning Cai <ncai@quicinc.com>,
-	Andrew Halaney <ahalaney@redhat.com>,
+	Niklas Cassel <Niklas.Cassel@wdc.com>,
+	Michael Chan <michael.chan@broadcom.com>,
 	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	netdev@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
+	Niklas Cassel <niklas.cassel@wdc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 138/313] net: stmmac: enable all safety features by default
-Date: Mon, 30 Jan 2023 14:49:33 +0100
-Message-Id: <20230130134343.074169123@linuxfoundation.org>
+Subject: [PATCH 6.1 139/313] bnxt: Do not read past the end of test names
+Date: Mon, 30 Jan 2023 14:49:34 +0100
+Message-Id: <20230130134343.125552398@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,96 +42,93 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Halaney <ahalaney@redhat.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit fdfc76a116b5e9d3e98e6c96fe83b42d011d21d4 ]
+[ Upstream commit d3e599c090fc6977331150c5f0a69ab8ce87da21 ]
 
-In the original implementation of dwmac5
-commit 8bf993a5877e ("net: stmmac: Add support for DWMAC5 and implement Safety Features")
-all safety features were enabled by default.
+Test names were being concatenated based on a offset beyond the end of
+the first name, which tripped the buffer overflow detection logic:
 
-Later it seems some implementations didn't have support for all the
-features, so in
-commit 5ac712dcdfef ("net: stmmac: enable platform specific safety features")
-the safety_feat_cfg structure was added to the callback and defined for
-some platforms to selectively enable these safety features.
+ detected buffer overflow in strnlen
+ [...]
+ Call Trace:
+ bnxt_ethtool_init.cold+0x18/0x18
 
-The problem is that only certain platforms were given that software
-support. If the automotive safety package bit is set in the hardware
-features register the safety feature callback is called for the platform,
-and for platforms that didn't get a safety_feat_cfg defined this results
-in the following NULL pointer dereference:
+Refactor struct hwrm_selftest_qlist_output to use an actual array,
+and adjust the concatenation to use snprintf() rather than a series of
+strncat() calls.
 
-[    7.933303] Call trace:
-[    7.935812]  dwmac5_safety_feat_config+0x20/0x170 [stmmac]
-[    7.941455]  __stmmac_open+0x16c/0x474 [stmmac]
-[    7.946117]  stmmac_open+0x38/0x70 [stmmac]
-[    7.950414]  __dev_open+0x100/0x1dc
-[    7.954006]  __dev_change_flags+0x18c/0x204
-[    7.958297]  dev_change_flags+0x24/0x6c
-[    7.962237]  do_setlink+0x2b8/0xfa4
-[    7.965827]  __rtnl_newlink+0x4ec/0x840
-[    7.969766]  rtnl_newlink+0x50/0x80
-[    7.973353]  rtnetlink_rcv_msg+0x12c/0x374
-[    7.977557]  netlink_rcv_skb+0x5c/0x130
-[    7.981500]  rtnetlink_rcv+0x18/0x2c
-[    7.985172]  netlink_unicast+0x2e8/0x340
-[    7.989197]  netlink_sendmsg+0x1a8/0x420
-[    7.993222]  ____sys_sendmsg+0x218/0x280
-[    7.997249]  ___sys_sendmsg+0xac/0x100
-[    8.001103]  __sys_sendmsg+0x84/0xe0
-[    8.004776]  __arm64_sys_sendmsg+0x24/0x30
-[    8.008983]  invoke_syscall+0x48/0x114
-[    8.012840]  el0_svc_common.constprop.0+0xcc/0xec
-[    8.017665]  do_el0_svc+0x38/0xb0
-[    8.021071]  el0_svc+0x2c/0x84
-[    8.024212]  el0t_64_sync_handler+0xf4/0x120
-[    8.028598]  el0t_64_sync+0x190/0x194
-
-Go back to the original behavior, if the automotive safety package
-is found to be supported in hardware enable all the features unless
-safety_feat_cfg is passed in saying this particular platform only
-supports a subset of the features.
-
-Fixes: 5ac712dcdfef ("net: stmmac: enable platform specific safety features")
-Reported-by: Ning Cai <ncai@quicinc.com>
-Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+Reported-by: Niklas Cassel <Niklas.Cassel@wdc.com>
+Link: https://lore.kernel.org/lkml/Y8F%2F1w1AZTvLglFX@x1-carbon/
+Tested-by: Niklas Cassel <Niklas.Cassel@wdc.com>
+Fixes: eb51365846bc ("bnxt_en: Add basic ethtool -t selftest support.")
+Cc: Michael Chan <michael.chan@broadcom.com>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: netdev@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Michael Chan <michael.chan@broadcom.com>
+Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac5.c | 14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c | 13 ++++---------
+ drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h     |  9 +--------
+ 2 files changed, 5 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac5.c b/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
-index 9c2d40f853ed..413f66017219 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
-@@ -186,11 +186,25 @@ static void dwmac5_handle_dma_err(struct net_device *ndev,
- int dwmac5_safety_feat_config(void __iomem *ioaddr, unsigned int asp,
- 			      struct stmmac_safety_feature_cfg *safety_feat_cfg)
- {
-+	struct stmmac_safety_feature_cfg all_safety_feats = {
-+		.tsoee = 1,
-+		.mrxpee = 1,
-+		.mestee = 1,
-+		.mrxee = 1,
-+		.mtxee = 1,
-+		.epsi = 1,
-+		.edpp = 1,
-+		.prtyen = 1,
-+		.tmouten = 1,
-+	};
- 	u32 value;
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+index 8cad15c458b3..703fc163235f 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_ethtool.c
+@@ -3865,7 +3865,7 @@ void bnxt_ethtool_init(struct bnxt *bp)
+ 		test_info->timeout = HWRM_CMD_TIMEOUT;
+ 	for (i = 0; i < bp->num_tests; i++) {
+ 		char *str = test_info->string[i];
+-		char *fw_str = resp->test0_name + i * 32;
++		char *fw_str = resp->test_name[i];
  
- 	if (!asp)
- 		return -EINVAL;
+ 		if (i == BNXT_MACLPBK_TEST_IDX) {
+ 			strcpy(str, "Mac loopback test (offline)");
+@@ -3876,14 +3876,9 @@ void bnxt_ethtool_init(struct bnxt *bp)
+ 		} else if (i == BNXT_IRQ_TEST_IDX) {
+ 			strcpy(str, "Interrupt_test (offline)");
+ 		} else {
+-			strscpy(str, fw_str, ETH_GSTRING_LEN);
+-			strncat(str, " test", ETH_GSTRING_LEN - strlen(str));
+-			if (test_info->offline_mask & (1 << i))
+-				strncat(str, " (offline)",
+-					ETH_GSTRING_LEN - strlen(str));
+-			else
+-				strncat(str, " (online)",
+-					ETH_GSTRING_LEN - strlen(str));
++			snprintf(str, ETH_GSTRING_LEN, "%s test (%s)",
++				 fw_str, test_info->offline_mask & (1 << i) ?
++					"offline" : "online");
+ 		}
+ 	}
  
-+	if (!safety_feat_cfg)
-+		safety_feat_cfg = &all_safety_feats;
-+
- 	/* 1. Enable Safety Features */
- 	value = readl(ioaddr + MTL_ECC_CONTROL);
- 	value |= MEEAO; /* MTL ECC Error Addr Status Override */
+diff --git a/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h b/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h
+index b753032a1047..fb78fc38530d 100644
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt_hsi.h
+@@ -10099,14 +10099,7 @@ struct hwrm_selftest_qlist_output {
+ 	u8	unused_0;
+ 	__le16	test_timeout;
+ 	u8	unused_1[2];
+-	char	test0_name[32];
+-	char	test1_name[32];
+-	char	test2_name[32];
+-	char	test3_name[32];
+-	char	test4_name[32];
+-	char	test5_name[32];
+-	char	test6_name[32];
+-	char	test7_name[32];
++	char	test_name[8][32];
+ 	u8	eyescope_target_BER_support;
+ 	#define SELFTEST_QLIST_RESP_EYESCOPE_TARGET_BER_SUPPORT_BER_1E8_SUPPORTED  0x0UL
+ 	#define SELFTEST_QLIST_RESP_EYESCOPE_TARGET_BER_SUPPORT_BER_1E9_SUPPORTED  0x1UL
 -- 
 2.39.0
 
