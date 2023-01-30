@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5EBD3229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:19:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E6B8C433D2;
-	Mon, 30 Jan 2023 14:19:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C88FF3229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:19:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E0FAC433EF;
+	Mon, 30 Jan 2023 14:19:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088380;
-	bh=xYmaA+wONafaHmY7s1tEfwKwVF4wo4/dWHD+JYFlK3g=;
+	s=korg; t=1675088383;
+	bh=7TB58F2YJRfwdowX6BjU2VDFV/ZoHgwBV6QbWTkAs9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JlNvVFhZi3cXm2c0NpFW7eXuSkpsC4FiJQ61tGf+U3YSCSq82HUog79UWHFPZ2AWl
-	 b7aCPeCp2N3u1bVvM+D8wKP2eYK/q8bxZtO3dyJmN0E/3es9RRIUPkmOnkmhqBNnzq
-	 BZeUgQpvzAxgDquK65sfWXo8+o6egJJrrkwhe+hc=
+	b=Oucp0YQt86UI+MqtIGvShNexHpPhm+WRuYElahFJGRacmrSm0vq0b10QXIZcbNZmR
+	 ODhSx91vwaJ+In7+cGdpzIR1TMtzgm47oMrUjID01lm+ByfU878ao+DUJnLS3YT1F/
+	 SrJQso4dmrewjjYrLTLNcFfCQnD0Qj8J6J8UG85U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Stefano Brivio <sbrivio@redhat.com>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 174/204] netfilter: nft_set_rbtree: skip elements in transaction from garbage collection
-Date: Mon, 30 Jan 2023 14:52:19 +0100
-Message-Id: <20230130134324.210714874@linuxfoundation.org>
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Steev Klimaszewski <steev@kali.org>,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH 5.15 165/204] EDAC/device: Respect any driver-supplied workqueue polling value
+Date: Mon, 30 Jan 2023 14:52:10 +0100
+Message-Id: <20230130134323.821083241@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,68 +37,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pablo Neira Ayuso <pablo@netfilter.org>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 5d235d6ce75c12a7fdee375eb211e4116f7ab01b ]
+commit cec669ff716cc83505c77b242aecf6f7baad869d upstream.
 
-Skip interference with an ongoing transaction, do not perform garbage
-collection on inactive elements. Reset annotated previous end interval
-if the expired element is marked as busy (control plane removed the
-element right before expiration).
+The EDAC drivers may optionally pass the poll_msec value. Use that value
+if available, else fall back to 1000ms.
 
-Fixes: 8d8540c4f5e0 ("netfilter: nft_set_rbtree: add timeout support")
-Reviewed-by: Stefano Brivio <sbrivio@redhat.com>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+  [ bp: Touchups. ]
+
+Fixes: e27e3dac6517 ("drivers/edac: add edac_device class")
+Reported-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
+Cc: <stable@vger.kernel.org> # 4.9
+Link: https://lore.kernel.org/r/COZYL8MWN97H.MROQ391BGA09@otso
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_set_rbtree.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/edac/edac_device.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/net/netfilter/nft_set_rbtree.c b/net/netfilter/nft_set_rbtree.c
-index 217225e13faf..19ea4d3c3553 100644
---- a/net/netfilter/nft_set_rbtree.c
-+++ b/net/netfilter/nft_set_rbtree.c
-@@ -563,23 +563,37 @@ static void nft_rbtree_gc(struct work_struct *work)
- 	struct nft_rbtree *priv;
- 	struct rb_node *node;
- 	struct nft_set *set;
-+	struct net *net;
-+	u8 genmask;
+--- a/drivers/edac/edac_device.c
++++ b/drivers/edac/edac_device.c
+@@ -34,6 +34,9 @@
+ static DEFINE_MUTEX(device_ctls_mutex);
+ static LIST_HEAD(edac_device_list);
  
- 	priv = container_of(work, struct nft_rbtree, gc_work.work);
- 	set  = nft_set_container_of(priv);
-+	net  = read_pnet(&set->net);
-+	genmask = nft_genmask_cur(net);
- 
- 	write_lock_bh(&priv->lock);
- 	write_seqcount_begin(&priv->count);
- 	for (node = rb_first(&priv->root); node != NULL; node = rb_next(node)) {
- 		rbe = rb_entry(node, struct nft_rbtree_elem, node);
- 
-+		if (!nft_set_elem_active(&rbe->ext, genmask))
-+			continue;
++/* Default workqueue processing interval on this instance, in msecs */
++#define DEFAULT_POLL_INTERVAL 1000
 +
-+		/* elements are reversed in the rbtree for historical reasons,
-+		 * from highest to lowest value, that is why end element is
-+		 * always visited before the start element.
-+		 */
- 		if (nft_rbtree_interval_end(rbe)) {
- 			rbe_end = rbe;
- 			continue;
- 		}
- 		if (!nft_set_elem_expired(&rbe->ext))
- 			continue;
--		if (nft_set_elem_mark_busy(&rbe->ext))
-+
-+		if (nft_set_elem_mark_busy(&rbe->ext)) {
-+			rbe_end = NULL;
- 			continue;
-+		}
+ #ifdef CONFIG_EDAC_DEBUG
+ static void edac_device_dump_device(struct edac_device_ctl_info *edac_dev)
+ {
+@@ -366,7 +369,7 @@ static void edac_device_workq_function(s
+ 	 * whole one second to save timers firing all over the period
+ 	 * between integral seconds
+ 	 */
+-	if (edac_dev->poll_msec == 1000)
++	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
+ 		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
+ 	else
+ 		edac_queue_work(&edac_dev->work, edac_dev->delay);
+@@ -396,7 +399,7 @@ static void edac_device_workq_setup(stru
+ 	 * timers firing on sub-second basis, while they are happy
+ 	 * to fire together on the 1 second exactly
+ 	 */
+-	if (edac_dev->poll_msec == 1000)
++	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
+ 		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
+ 	else
+ 		edac_queue_work(&edac_dev->work, edac_dev->delay);
+@@ -430,7 +433,7 @@ void edac_device_reset_delay_period(stru
+ 	edac_dev->delay	    = msecs_to_jiffies(msec);
  
- 		if (rbe_prev) {
- 			rb_erase(&rbe_prev->node, &priv->root);
--- 
-2.39.0
-
+ 	/* See comment in edac_device_workq_setup() above */
+-	if (edac_dev->poll_msec == 1000)
++	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
+ 		edac_mod_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
+ 	else
+ 		edac_mod_work(&edac_dev->work, edac_dev->delay);
+@@ -472,11 +475,7 @@ int edac_device_add_device(struct edac_d
+ 		/* This instance is NOW RUNNING */
+ 		edac_dev->op_state = OP_RUNNING_POLL;
+ 
+-		/*
+-		 * enable workq processing on this instance,
+-		 * default = 1000 msec
+-		 */
+-		edac_device_workq_setup(edac_dev, 1000);
++		edac_device_workq_setup(edac_dev, edac_dev->poll_msec ?: DEFAULT_POLL_INTERVAL);
+ 	} else {
+ 		edac_dev->op_state = OP_RUNNING_INTERRUPT;
+ 	}
 
 
