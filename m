@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4777228EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:02:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C168BC433D2;
-	Mon, 30 Jan 2023 14:02:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D85C28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:02:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97D61C433EF;
+	Mon, 30 Jan 2023 14:02:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087340;
-	bh=//nUVaek03QVesbOXFgFBkXNU6I9qUBGK2xjkqOsWVI=;
+	s=korg; t=1675087343;
+	bh=3GIBHPRCozmg3Be7Z3jLXRh3nA6YI3vFYl7/UJV3/v8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z3xlU8wT1JOB2d/cdmgERZvRrvs6yVLr3po1vQO78pOpMABTwcF48T569NQlb0rKE
-	 ngnH1nsaNqHDXtwOtws1vSKTs7fV8qLNdoI4aTysDs8RAz9+7ULOaSkECk+kudxTRp
-	 p5Crnh8HMCSjXa0vaDBsAa+g69vTLrrRSXwy4lCI=
+	b=N9t8tPXlm5TH2qNAFjhtAY5LXZkQGHGuBzrO3cBHOwTQl0AkBbmI8emylspP+o/uc
+	 0v+5BfqoBl2svHDo+8m+hWPkOVssfX0XWVIXfUHDZgB1XqKUVvKfzU6nEaaxJvDmBL
+	 Pv9cIDl7nEPF3v+oLaiphKwTjwkfjpF7Lhkc/M6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 176/313] cifs: fix potential memory leaks in session setup
-Date: Mon, 30 Jan 2023 14:50:11 +0100
-Message-Id: <20230130134344.882638176@linuxfoundation.org>
+Subject: [PATCH 6.1 177/313] spi: spidev: remove debug messages that access spidev->spi without locking
+Date: Mon, 30 Jan 2023 14:50:12 +0100
+Message-Id: <20230130134344.928365752@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,66 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@cjr.nz>
+From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 
-[ Upstream commit 2fe58d977ee05da5bb89ef5dc4f5bf2dc15db46f ]
+[ Upstream commit 6b35b173dbc1711f8d272e3f322d2ad697015919 ]
 
-Make sure to free cifs_ses::auth_key.response before allocating it as
-we might end up leaking memory in reconnect or mounting.
+The two debug messages in spidev_open() dereference spidev->spi without
+taking the lock and without checking if it's not null. This can lead to
+a crash. Drop the messages as they're not needed - the user-space will
+get informed about ENOMEM with the syscall return value.
 
-Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Link: https://lore.kernel.org/r/20230106100719.196243-2-brgl@bgdev.pl
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/cifsencrypt.c | 1 +
- fs/cifs/sess.c        | 2 ++
- fs/cifs/smb2pdu.c     | 1 +
- 3 files changed, 4 insertions(+)
+ drivers/spi/spidev.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-diff --git a/fs/cifs/cifsencrypt.c b/fs/cifs/cifsencrypt.c
-index 5db73c0f792a..cbc18b4a9cb2 100644
---- a/fs/cifs/cifsencrypt.c
-+++ b/fs/cifs/cifsencrypt.c
-@@ -278,6 +278,7 @@ build_avpair_blob(struct cifs_ses *ses, const struct nls_table *nls_cp)
- 	 * ( for NTLMSSP_AV_NB_DOMAIN_NAME followed by NTLMSSP_AV_EOL ) +
- 	 * unicode length of a netbios domain name
- 	 */
-+	kfree_sensitive(ses->auth_key.response);
- 	ses->auth_key.len = size + 2 * dlen;
- 	ses->auth_key.response = kzalloc(ses->auth_key.len, GFP_KERNEL);
- 	if (!ses->auth_key.response) {
-diff --git a/fs/cifs/sess.c b/fs/cifs/sess.c
-index 0b842a07e157..c47b254f0d1e 100644
---- a/fs/cifs/sess.c
-+++ b/fs/cifs/sess.c
-@@ -815,6 +815,7 @@ int decode_ntlmssp_challenge(char *bcc_ptr, int blob_len,
- 		return -EINVAL;
- 	}
- 	if (tilen) {
-+		kfree_sensitive(ses->auth_key.response);
- 		ses->auth_key.response = kmemdup(bcc_ptr + tioffset, tilen,
- 						 GFP_KERNEL);
- 		if (!ses->auth_key.response) {
-@@ -1428,6 +1429,7 @@ sess_auth_kerberos(struct sess_data *sess_data)
- 		goto out_put_spnego_key;
- 	}
- 
-+	kfree_sensitive(ses->auth_key.response);
- 	ses->auth_key.response = kmemdup(msg->data, msg->sesskey_len,
- 					 GFP_KERNEL);
- 	if (!ses->auth_key.response) {
-diff --git a/fs/cifs/smb2pdu.c b/fs/cifs/smb2pdu.c
-index 92f39052d311..2c9ffa921e6f 100644
---- a/fs/cifs/smb2pdu.c
-+++ b/fs/cifs/smb2pdu.c
-@@ -1453,6 +1453,7 @@ SMB2_auth_kerberos(struct SMB2_sess_data *sess_data)
- 
- 	/* keep session key if binding */
- 	if (!is_binding) {
-+		kfree_sensitive(ses->auth_key.response);
- 		ses->auth_key.response = kmemdup(msg->data, msg->sesskey_len,
- 						 GFP_KERNEL);
- 		if (!ses->auth_key.response) {
+diff --git a/drivers/spi/spidev.c b/drivers/spi/spidev.c
+index 6313e7d0cdf8..71c3db60e968 100644
+--- a/drivers/spi/spidev.c
++++ b/drivers/spi/spidev.c
+@@ -601,7 +601,6 @@ static int spidev_open(struct inode *inode, struct file *filp)
+ 	if (!spidev->tx_buffer) {
+ 		spidev->tx_buffer = kmalloc(bufsiz, GFP_KERNEL);
+ 		if (!spidev->tx_buffer) {
+-			dev_dbg(&spidev->spi->dev, "open/ENOMEM\n");
+ 			status = -ENOMEM;
+ 			goto err_find_dev;
+ 		}
+@@ -610,7 +609,6 @@ static int spidev_open(struct inode *inode, struct file *filp)
+ 	if (!spidev->rx_buffer) {
+ 		spidev->rx_buffer = kmalloc(bufsiz, GFP_KERNEL);
+ 		if (!spidev->rx_buffer) {
+-			dev_dbg(&spidev->spi->dev, "open/ENOMEM\n");
+ 			status = -ENOMEM;
+ 			goto err_alloc_rx_buf;
+ 		}
 -- 
 2.39.0
 
