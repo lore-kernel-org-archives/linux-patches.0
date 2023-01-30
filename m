@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A209C28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:11:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D45CDC433D2;
-	Mon, 30 Jan 2023 14:11:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4941E28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:11:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9FE1C4339E;
+	Mon, 30 Jan 2023 14:11:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087862;
-	bh=HIuAtD7PP0GscvnFPtW6sWcXVA2xXCCEW3Lsq9AnqR0=;
+	s=korg; t=1675087865;
+	bh=4ElO/R3L3+EGeDHZXIAMKMXT98lXaw7ijyereow6mwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SptBtG51DU9Iroea/a0s2fXJuOz59EiVR+nD8EIGSXLOczCDxW1DxbeXJm4R99ZZt
-	 Ajg8cVFBxqv3PEgp+gnL45rKLIxgadRAXUtZ2jgZbCbm3M+mgU/eVdtVN/MfjGmZJy
-	 6vrUoFs0PW7+7jKp0rbDVPSz4bxxdrD0WdU3IOOI=
+	b=lCT7SC6S6vYUlx1o6MnmM4TNBog+EdNbc/CXdTvcmBf22AjpjwZYoI2CBBaDnCw4O
+	 7LptwtW/L++oquWZ5HDGPRCrnD3F2R0WjmIEMukkgvmW9hPdjRaps3ICk6PxE2/+NY
+	 V2mSIS2FbOV8/Ls+GN2jEruBcGlbDUr67DzfSY1I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Ajith Nayak <Ajith.Nayak@amd.com>,
+	Raju Rangoju <Raju.Rangoju@amd.com>,
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 033/204] ARM: dts: at91: sam9x60: fix the ddr clock for sam9x60
-Date: Mon, 30 Jan 2023 14:49:58 +0100
-Message-Id: <20230130134317.765302386@linuxfoundation.org>
+Subject: [PATCH 5.15 034/204] amd-xgbe: TX Flow Ctrl Registers are h/w ver dependent
+Date: Mon, 30 Jan 2023 14:49:59 +0100
+Message-Id: <20230130134317.815650030@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -34,34 +37,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Claudiu Beznea <claudiu.beznea@microchip.com>
+From: Raju Rangoju <Raju.Rangoju@amd.com>
 
-[ Upstream commit 9bfa2544dbd1133f0b0af4e967de3bb9c1e3a497 ]
+[ Upstream commit 579923d84b04abb6cd4cd1fd9974096a2dd1832b ]
 
-The 2nd DDR clock for sam9x60 DDR controller is peripheral clock with
-id 49.
+There is difference in the TX Flow Control registers (TFCR) between the
+revisions of the hardware. The older revisions of hardware used to have
+single register per queue. Whereas, the newer revision of hardware (from
+ver 30H onwards) have one register per priority.
 
-Fixes: 1e5f532c2737 ("ARM: dts: at91: sam9x60: add device tree for soc and board")
-Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/20221208115241.36312-1-claudiu.beznea@microchip.com
+Update the driver to use the TFCR based on the reported version of the
+hardware.
+
+Fixes: c5aa9e3b8156 ("amd-xgbe: Initial AMD 10GbE platform driver")
+Co-developed-by: Ajith Nayak <Ajith.Nayak@amd.com>
+Signed-off-by: Ajith Nayak <Ajith.Nayak@amd.com>
+Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
+Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/sam9x60.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/amd/xgbe/xgbe-dev.c | 23 +++++++++++++++--------
+ 1 file changed, 15 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm/boot/dts/sam9x60.dtsi b/arch/arm/boot/dts/sam9x60.dtsi
-index ec45ced3cde6..e1e0dec8cc1f 100644
---- a/arch/arm/boot/dts/sam9x60.dtsi
-+++ b/arch/arm/boot/dts/sam9x60.dtsi
-@@ -567,7 +567,7 @@ pmecc: ecc-engine@ffffe000 {
- 			mpddrc: mpddrc@ffffe800 {
- 				compatible = "microchip,sam9x60-ddramc", "atmel,sama5d3-ddramc";
- 				reg = <0xffffe800 0x200>;
--				clocks = <&pmc PMC_TYPE_SYSTEM 2>, <&pmc PMC_TYPE_CORE PMC_MCK>;
-+				clocks = <&pmc PMC_TYPE_SYSTEM 2>, <&pmc PMC_TYPE_PERIPHERAL 49>;
- 				clock-names = "ddrck", "mpddr";
- 			};
+diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-dev.c b/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
+index d5fd49dd25f3..decc1c09a031 100644
+--- a/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
++++ b/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
+@@ -524,19 +524,28 @@ static void xgbe_disable_vxlan(struct xgbe_prv_data *pdata)
+ 	netif_dbg(pdata, drv, pdata->netdev, "VXLAN acceleration disabled\n");
+ }
  
++static unsigned int xgbe_get_fc_queue_count(struct xgbe_prv_data *pdata)
++{
++	unsigned int max_q_count = XGMAC_MAX_FLOW_CONTROL_QUEUES;
++
++	/* From MAC ver 30H the TFCR is per priority, instead of per queue */
++	if (XGMAC_GET_BITS(pdata->hw_feat.version, MAC_VR, SNPSVER) >= 0x30)
++		return max_q_count;
++	else
++		return min_t(unsigned int, pdata->tx_q_count, max_q_count);
++}
++
+ static int xgbe_disable_tx_flow_control(struct xgbe_prv_data *pdata)
+ {
+-	unsigned int max_q_count, q_count;
+ 	unsigned int reg, reg_val;
+-	unsigned int i;
++	unsigned int i, q_count;
+ 
+ 	/* Clear MTL flow control */
+ 	for (i = 0; i < pdata->rx_q_count; i++)
+ 		XGMAC_MTL_IOWRITE_BITS(pdata, i, MTL_Q_RQOMR, EHFC, 0);
+ 
+ 	/* Clear MAC flow control */
+-	max_q_count = XGMAC_MAX_FLOW_CONTROL_QUEUES;
+-	q_count = min_t(unsigned int, pdata->tx_q_count, max_q_count);
++	q_count = xgbe_get_fc_queue_count(pdata);
+ 	reg = MAC_Q0TFCR;
+ 	for (i = 0; i < q_count; i++) {
+ 		reg_val = XGMAC_IOREAD(pdata, reg);
+@@ -553,9 +562,8 @@ static int xgbe_enable_tx_flow_control(struct xgbe_prv_data *pdata)
+ {
+ 	struct ieee_pfc *pfc = pdata->pfc;
+ 	struct ieee_ets *ets = pdata->ets;
+-	unsigned int max_q_count, q_count;
+ 	unsigned int reg, reg_val;
+-	unsigned int i;
++	unsigned int i, q_count;
+ 
+ 	/* Set MTL flow control */
+ 	for (i = 0; i < pdata->rx_q_count; i++) {
+@@ -579,8 +587,7 @@ static int xgbe_enable_tx_flow_control(struct xgbe_prv_data *pdata)
+ 	}
+ 
+ 	/* Set MAC flow control */
+-	max_q_count = XGMAC_MAX_FLOW_CONTROL_QUEUES;
+-	q_count = min_t(unsigned int, pdata->tx_q_count, max_q_count);
++	q_count = xgbe_get_fc_queue_count(pdata);
+ 	reg = MAC_Q0TFCR;
+ 	for (i = 0; i < q_count; i++) {
+ 		reg_val = XGMAC_IOREAD(pdata, reg);
 -- 
 2.39.0
 
