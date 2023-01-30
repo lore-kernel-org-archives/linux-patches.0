@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E0A9D28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:00:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FC02C433EF;
-	Mon, 30 Jan 2023 14:00:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BE528EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:00:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55433C433D2;
+	Mon, 30 Jan 2023 14:00:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087202;
-	bh=gpwzdyVOFULh0qWwfN70dlQcQ2gD66eXLB0zvnF8/RA=;
+	s=korg; t=1675087205;
+	bh=1+EqSCh+MI8+1yG5YgYl1rTfrhhhLtc6vZ/QlWufpJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fMjoww1InuwRIRsfBIhjuyW/CXYrVNRyvJjRRCFFKh1nb7OBQizfGy7wh+FZJiXBS
-	 8dNKTBTWuqO1nNPB7Hem/csazNiRge/g0CU1Qw9mFJGITixH4s1d1hykIbf+pv9ACf
-	 5dDCR6AyqYUaMvlOcT1ED3JBooISvuLpUf3BD5Dg=
+	b=wWunWSH+Jony/7y+AZGY1o++TffHaLcbQsXxQscHV1wi/TOgnUyNFsOexAOCoxwNO
+	 e1GCJjNVMHKcJGDNXXrW5jgNdzjPMpPYMlI1nKp4g2UpZztXYzimMpcJHcxeHC6SHc
+	 g/ECpje6KHT9wo9dxAxt9FaIIP0++7PvCfKFt4bg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	syzbot+d7ce59...@syzkaller.appspotmail.com,
+	Ying Hsu <yinghsu@chromium.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 130/313] w1: fix deadloop in __w1_remove_master_device()
-Date: Mon, 30 Jan 2023 14:49:25 +0100
-Message-Id: <20230130134342.717170763@linuxfoundation.org>
+Subject: [PATCH 6.1 104/313] Bluetooth: Fix possible deadlock in rfcomm_sk_state_change
+Date: Mon, 30 Jan 2023 14:48:59 +0100
+Message-Id: <20230130134341.488068842@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -34,81 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Ying Hsu <yinghsu@chromium.org>
 
-[ Upstream commit 25d5648802f12ae486076ceca5d7ddf1fef792b2 ]
+[ Upstream commit 1d80d57ffcb55488f0ec0b77928d4f82d16b6a90 ]
 
-I got a deadloop report while doing device(ds2482) add/remove test:
+syzbot reports a possible deadlock in rfcomm_sk_state_change [1].
+While rfcomm_sock_connect acquires the sk lock and waits for
+the rfcomm lock, rfcomm_sock_release could have the rfcomm
+lock and hit a deadlock for acquiring the sk lock.
+Here's a simplified flow:
 
-  [  162.241881] w1_master_driver w1_bus_master1: Waiting for w1_bus_master1 to become free: refcnt=1.
-  [  163.272251] w1_master_driver w1_bus_master1: Waiting for w1_bus_master1 to become free: refcnt=1.
-  [  164.296157] w1_master_driver w1_bus_master1: Waiting for w1_bus_master1 to become free: refcnt=1.
-  ...
+rfcomm_sock_connect:
+  lock_sock(sk)
+  rfcomm_dlc_open:
+    rfcomm_lock()
 
-__w1_remove_master_device() can't return, because the dev->refcnt is not zero.
+rfcomm_sock_release:
+  rfcomm_sock_shutdown:
+    rfcomm_lock()
+    __rfcomm_dlc_close:
+        rfcomm_k_state_change:
+	  lock_sock(sk)
 
-w1_add_master_device()			|
-  w1_alloc_dev()			|
-    atomic_set(&dev->refcnt, 2)		|
-  kthread_run()				|
-					|__w1_remove_master_device()
-					|  kthread_stop()
-  // KTHREAD_SHOULD_STOP is set,	|
-  // threadfn(w1_process) won't be	|
-  // called.				|
-  kthread()				|
-					|  // refcnt will never be 0, it's deadloop.
-					|  while (atomic_read(&dev->refcnt)) {...}
+This patch drops the sk lock before calling rfcomm_dlc_open to
+avoid the possible deadlock and holds sk's reference count to
+prevent use-after-free after rfcomm_dlc_open completes.
 
-After calling w1_add_master_device(), w1_process() is not really
-invoked, before w1_process() starting, if kthread_stop() is called
-in __w1_remove_master_device(), w1_process() will never be called,
-the refcnt can not be decreased, then it causes deadloop in remove
-function because of non-zero refcnt.
+Reported-by: syzbot+d7ce59...@syzkaller.appspotmail.com
+Fixes: 1804fdf6e494 ("Bluetooth: btintel: Combine setting up MSFT extension")
+Link: https://syzkaller.appspot.com/bug?extid=d7ce59b06b3eb14fd218 [1]
 
-We need to make sure w1_process() is really started, so move the
-set refcnt into w1_process() to fix this problem.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221205080434.3149205-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/w1/w1.c     | 2 ++
- drivers/w1/w1_int.c | 5 ++---
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ net/bluetooth/rfcomm/sock.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/w1/w1.c b/drivers/w1/w1.c
-index f2ae2e563dc5..8b35fae4cd61 100644
---- a/drivers/w1/w1.c
-+++ b/drivers/w1/w1.c
-@@ -1166,6 +1166,8 @@ int w1_process(void *data)
- 	/* remainder if it woke up early */
- 	unsigned long jremain = 0;
+diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
+index 21e24da4847f..4397e14ff560 100644
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -391,6 +391,7 @@ static int rfcomm_sock_connect(struct socket *sock, struct sockaddr *addr, int a
+ 	    addr->sa_family != AF_BLUETOOTH)
+ 		return -EINVAL;
  
-+	atomic_inc(&dev->refcnt);
-+
- 	for (;;) {
++	sock_hold(sk);
+ 	lock_sock(sk);
  
- 		if (!jremain && dev->search_count) {
-diff --git a/drivers/w1/w1_int.c b/drivers/w1/w1_int.c
-index b3e1792d9c49..3a71c5eb2f83 100644
---- a/drivers/w1/w1_int.c
-+++ b/drivers/w1/w1_int.c
-@@ -51,10 +51,9 @@ static struct w1_master *w1_alloc_dev(u32 id, int slave_count, int slave_ttl,
- 	dev->search_count	= w1_search_count;
- 	dev->enable_pullup	= w1_enable_pullup;
+ 	if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND) {
+@@ -410,14 +411,18 @@ static int rfcomm_sock_connect(struct socket *sock, struct sockaddr *addr, int a
+ 	d->sec_level = rfcomm_pi(sk)->sec_level;
+ 	d->role_switch = rfcomm_pi(sk)->role_switch;
  
--	/* 1 for w1_process to decrement
--	 * 1 for __w1_remove_master_device to decrement
-+	/* For __w1_remove_master_device to decrement
- 	 */
--	atomic_set(&dev->refcnt, 2);
-+	atomic_set(&dev->refcnt, 1);
++	/* Drop sock lock to avoid potential deadlock with the RFCOMM lock */
++	release_sock(sk);
+ 	err = rfcomm_dlc_open(d, &rfcomm_pi(sk)->src, &sa->rc_bdaddr,
+ 			      sa->rc_channel);
+-	if (!err)
++	lock_sock(sk);
++	if (!err && !sock_flag(sk, SOCK_ZAPPED))
+ 		err = bt_sock_wait_state(sk, BT_CONNECTED,
+ 				sock_sndtimeo(sk, flags & O_NONBLOCK));
  
- 	INIT_LIST_HEAD(&dev->slist);
- 	INIT_LIST_HEAD(&dev->async_list);
+ done:
+ 	release_sock(sk);
++	sock_put(sk);
+ 	return err;
+ }
+ 
 -- 
 2.39.0
 
