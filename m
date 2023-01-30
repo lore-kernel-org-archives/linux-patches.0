@@ -1,26 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B886E3229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:19:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D3C0C433D2;
-	Mon, 30 Jan 2023 14:19:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971CB3229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:19:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D71AC433D2;
+	Mon, 30 Jan 2023 14:19:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088362;
-	bh=W90CcxRv/GgdKjJd8nx1g0Z2YD6sfIrrwvsaf4h/13Y=;
+	s=korg; t=1675088365;
+	bh=1gryz0cv82+0ccF08W16vekhIdzYwFssQ/bTF71gZiY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fL81ys6I76v4bJP2DtkHhUpGBQia7cOgApyDrp3YCRqsiCJTHC1bXFGxsu13VMWB7
-	 mIctlZPL9M9U6ZAEaDDyGIP7ElMv/J6w9rLlZlG176r+sKtPobE2xClGpPP0EhM6tC
-	 7EMrHTp+wUJVd6bhQMb8LstP+38WDwkVqef7cjp8=
+	b=V6EsxLNfU5JH8PUzMTD/zwCx1CZYhqQtM2QJLamAtzOfacx4L3sahuzNUTPjMM0RM
+	 LqM5vAizlSTa4A8Tc9F2y4XCkTal+Mh7hG2NuipeFf0LE8xlLD7x6CcvPgwrTh8lXI
+	 jrWDrAiNvGxxl77dn6+iIAfodHjeFrHQui6L4Q5M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 5.15 197/204] Revert "Input: synaptics - switch touchpad on HP Laptop 15-da3001TU to RMI mode"
-Date: Mon, 30 Jan 2023 14:52:42 +0100
-Message-Id: <20230130134325.236709261@linuxfoundation.org>
+	Lareine Khawaly <lareine@amazon.com>,
+	Hanna Hawa <hhhawa@amazon.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Wolfram Sang <wsa@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 169/204] i2c: designware: use casting of u64 in clock multiplication to avoid overflow
+Date: Mon, 30 Jan 2023 14:52:14 +0100
+Message-Id: <20230130134324.008833552@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -34,33 +38,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Lareine Khawaly <lareine@amazon.com>
 
-commit 3c44e2b6cde674797b76e76d3a903a63ce8a18bb upstream.
+[ Upstream commit c8c37bc514514999e62a17e95160ed9ebf75ca8d ]
 
-This reverts commit ac5408991ea6b06e29129b4d4861097c4c3e0d59 because
-it causes loss of keyboard on HP 15-da1xxx.
+In functions i2c_dw_scl_lcnt() and i2c_dw_scl_hcnt() may have overflow
+by depending on the values of the given parameters including the ic_clk.
+For example in our use case where ic_clk is larger than one million,
+multiplication of ic_clk * 4700 will result in 32 bit overflow.
 
-Fixes: ac5408991ea6 ("Input: synaptics - switch touchpad on HP Laptop 15-da3001TU to RMI mode")
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/824effa5-8b9a-c28a-82bb-9b0ab24623e1@kernel.org
-Bugzilla: https://bugzilla.suse.com/show_bug.cgi?id=1206358
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Add cast of u64 to the calculation to avoid multiplication overflow, and
+use the corresponding define for divide.
+
+Fixes: 2373f6b9744d ("i2c-designware: split of i2c-designware.c into core and bus specific parts")
+Signed-off-by: Lareine Khawaly <lareine@amazon.com>
+Signed-off-by: Hanna Hawa <hhhawa@amazon.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/mouse/synaptics.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/i2c/busses/i2c-designware-common.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -191,7 +191,6 @@ static const char * const smbus_pnp_ids[
- 	"SYN3221", /* HP 15-ay000 */
- 	"SYN323d", /* HP Spectre X360 13-w013dx */
- 	"SYN3257", /* HP Envy 13-ad105ng */
--	"SYN3286", /* HP Laptop 15-da3001TU */
- 	NULL
- };
+diff --git a/drivers/i2c/busses/i2c-designware-common.c b/drivers/i2c/busses/i2c-designware-common.c
+index a1100e37626e..4af65f101dac 100644
+--- a/drivers/i2c/busses/i2c-designware-common.c
++++ b/drivers/i2c/busses/i2c-designware-common.c
+@@ -351,7 +351,8 @@ u32 i2c_dw_scl_hcnt(u32 ic_clk, u32 tSYMBOL, u32 tf, int cond, int offset)
+ 		 *
+ 		 * If your hardware is free from tHD;STA issue, try this one.
+ 		 */
+-		return DIV_ROUND_CLOSEST(ic_clk * tSYMBOL, MICRO) - 8 + offset;
++		return DIV_ROUND_CLOSEST_ULL((u64)ic_clk * tSYMBOL, MICRO) -
++		       8 + offset;
+ 	else
+ 		/*
+ 		 * Conditional expression:
+@@ -367,7 +368,8 @@ u32 i2c_dw_scl_hcnt(u32 ic_clk, u32 tSYMBOL, u32 tf, int cond, int offset)
+ 		 * The reason why we need to take into account "tf" here,
+ 		 * is the same as described in i2c_dw_scl_lcnt().
+ 		 */
+-		return DIV_ROUND_CLOSEST(ic_clk * (tSYMBOL + tf), MICRO) - 3 + offset;
++		return DIV_ROUND_CLOSEST_ULL((u64)ic_clk * (tSYMBOL + tf), MICRO) -
++		       3 + offset;
+ }
  
+ u32 i2c_dw_scl_lcnt(u32 ic_clk, u32 tLOW, u32 tf, int offset)
+@@ -383,7 +385,8 @@ u32 i2c_dw_scl_lcnt(u32 ic_clk, u32 tLOW, u32 tf, int offset)
+ 	 * account the fall time of SCL signal (tf).  Default tf value
+ 	 * should be 0.3 us, for safety.
+ 	 */
+-	return DIV_ROUND_CLOSEST(ic_clk * (tLOW + tf), MICRO) - 1 + offset;
++	return DIV_ROUND_CLOSEST_ULL((u64)ic_clk * (tLOW + tf), MICRO) -
++	       1 + offset;
+ }
+ 
+ int i2c_dw_set_sda_hold(struct dw_i2c_dev *dev)
+-- 
+2.39.0
+
 
 
