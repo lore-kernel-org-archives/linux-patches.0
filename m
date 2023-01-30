@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3564528EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:16:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2BDEC433A1;
-	Mon, 30 Jan 2023 14:16:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1994E28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:16:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E9E4C433EF;
+	Mon, 30 Jan 2023 14:16:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088187;
-	bh=2HL7tmYeypnH4DJsHPNWadjD7bhnmDe9C97S3FrTmWA=;
+	s=korg; t=1675088189;
+	bh=yP+C9jsDkhvmUpRU0rh3670V1w1/7fAVpedJOou/BHg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CYL0O5118J9DUFImOvJI5iUY0htKLrMyXMvkHoQCSxrkQws/c2ipqpaX0/glHgVrZ
-	 E5uPqvjELyGwIL5bAJMAbeHf22LLRvBsmDPT8cwD4hHlIdGkGnZrI/05bZJeYz2IOZ
-	 6kXZxAq4vZG78wm8w6h/8ngf9K22+OKPXj9HFXQU=
+	b=wmWr6XEzBO9sOKbms0+0DseR+rRa4kIgM8DqYnvKn1U7OUHB5y0Kz3q/kdeifAmfO
+	 iuKtA/JwOcKfAQJk+BbCnmjl3sce9ZpNbrG6ArwQCWkXeJc8W9Z3qRbqqN1Yixz+gb
+	 vCEQ+VBJdxL3dwAdNpAMFV480ozQ5ey/5WoHI6y0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexey V. Vissarionov" <gremlin@altlinux.org>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Maxim Levitsky <mlevitsk@redhat.com>,
+	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 145/204] scsi: hpsa: Fix allocation size for scsi_host_alloc()
-Date: Mon, 30 Jan 2023 14:51:50 +0100
-Message-Id: <20230130134322.924726426@linuxfoundation.org>
+Subject: [PATCH 5.15 146/204] KVM: SVM: fix tsc scaling cache logic
+Date: Mon, 30 Jan 2023 14:51:51 +0100
+Message-Id: <20230130134322.967580282@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -36,38 +35,130 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey V. Vissarionov <gremlin@altlinux.org>
+From: Maxim Levitsky <mlevitsk@redhat.com>
 
-[ Upstream commit bbbd25499100c810ceaf5193c3cfcab9f7402a33 ]
+[ Upstream commit 11d39e8cc43e1c6737af19ca9372e590061b5ad2 ]
 
-The 'h' is a pointer to struct ctlr_info, so it's just 4 or 8 bytes, while
-the structure itself is much bigger.
+SVM uses a per-cpu variable to cache the current value of the
+tsc scaling multiplier msr on each cpu.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Commit 1ab9287add5e2
+("KVM: X86: Add vendor callbacks for writing the TSC multiplier")
+broke this caching logic.
 
-Fixes: edd163687ea5 ("hpsa: add driver for HP Smart Array controllers.")
-Link: https://lore.kernel.org/r/20230118031255.GE15213@altlinux.org
-Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
-Acked-by: Don Brace <don.brace@microchip.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Refactor the code so that all TSC scaling multiplier writes go through
+a single function which checks and updates the cache.
+
+This fixes the following scenario:
+
+1. A CPU runs a guest with some tsc scaling ratio.
+
+2. New guest with different tsc scaling ratio starts on this CPU
+   and terminates almost immediately.
+
+   This ensures that the short running guest had set the tsc scaling ratio just
+   once when it was set via KVM_SET_TSC_KHZ. Due to the bug,
+   the per-cpu cache is not updated.
+
+3. The original guest continues to run, it doesn't restore the msr
+   value back to its own value, because the cache matches,
+   and thus continues to run with a wrong tsc scaling ratio.
+
+Fixes: 1ab9287add5e2 ("KVM: X86: Add vendor callbacks for writing the TSC multiplier")
+Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
+Message-Id: <20220606181149.103072-1-mlevitsk@redhat.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/hpsa.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/svm/svm.c | 34 +++++++++++++++++++++++-----------
+ arch/x86/kvm/svm/svm.h |  1 +
+ 2 files changed, 24 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
-index cf7988de7b90..8aa5c22ae3ff 100644
---- a/drivers/scsi/hpsa.c
-+++ b/drivers/scsi/hpsa.c
-@@ -5848,7 +5848,7 @@ static int hpsa_scsi_host_alloc(struct ctlr_info *h)
- {
- 	struct Scsi_Host *sh;
+diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+index 773420203305..c1a758038892 100644
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -465,11 +465,24 @@ static int has_svm(void)
+ 	return 1;
+ }
  
--	sh = scsi_host_alloc(&hpsa_driver_template, sizeof(h));
-+	sh = scsi_host_alloc(&hpsa_driver_template, sizeof(struct ctlr_info));
- 	if (sh == NULL) {
- 		dev_err(&h->pdev->dev, "scsi_host_alloc failed\n");
- 		return -ENOMEM;
++void __svm_write_tsc_multiplier(u64 multiplier)
++{
++	preempt_disable();
++
++	if (multiplier == __this_cpu_read(current_tsc_ratio))
++		goto out;
++
++	wrmsrl(MSR_AMD64_TSC_RATIO, multiplier);
++	__this_cpu_write(current_tsc_ratio, multiplier);
++out:
++	preempt_enable();
++}
++
+ static void svm_hardware_disable(void)
+ {
+ 	/* Make sure we clean up behind us */
+ 	if (static_cpu_has(X86_FEATURE_TSCRATEMSR))
+-		wrmsrl(MSR_AMD64_TSC_RATIO, TSC_RATIO_DEFAULT);
++		__svm_write_tsc_multiplier(TSC_RATIO_DEFAULT);
+ 
+ 	cpu_svm_disable();
+ 
+@@ -511,8 +524,11 @@ static int svm_hardware_enable(void)
+ 	wrmsrl(MSR_VM_HSAVE_PA, __sme_page_pa(sd->save_area));
+ 
+ 	if (static_cpu_has(X86_FEATURE_TSCRATEMSR)) {
+-		wrmsrl(MSR_AMD64_TSC_RATIO, TSC_RATIO_DEFAULT);
+-		__this_cpu_write(current_tsc_ratio, TSC_RATIO_DEFAULT);
++		/*
++		 * Set the default value, even if we don't use TSC scaling
++		 * to avoid having stale value in the msr
++		 */
++		__svm_write_tsc_multiplier(TSC_RATIO_DEFAULT);
+ 	}
+ 
+ 
+@@ -1125,9 +1141,10 @@ static void svm_write_tsc_offset(struct kvm_vcpu *vcpu, u64 offset)
+ 
+ static void svm_write_tsc_multiplier(struct kvm_vcpu *vcpu, u64 multiplier)
+ {
+-	wrmsrl(MSR_AMD64_TSC_RATIO, multiplier);
++	__svm_write_tsc_multiplier(multiplier);
+ }
+ 
++
+ /* Evaluate instruction intercepts that depend on guest CPUID features. */
+ static void svm_recalc_instruction_intercepts(struct kvm_vcpu *vcpu,
+ 					      struct vcpu_svm *svm)
+@@ -1451,13 +1468,8 @@ static void svm_prepare_guest_switch(struct kvm_vcpu *vcpu)
+ 		vmsave(__sme_page_pa(sd->save_area));
+ 	}
+ 
+-	if (static_cpu_has(X86_FEATURE_TSCRATEMSR)) {
+-		u64 tsc_ratio = vcpu->arch.tsc_scaling_ratio;
+-		if (tsc_ratio != __this_cpu_read(current_tsc_ratio)) {
+-			__this_cpu_write(current_tsc_ratio, tsc_ratio);
+-			wrmsrl(MSR_AMD64_TSC_RATIO, tsc_ratio);
+-		}
+-	}
++	if (static_cpu_has(X86_FEATURE_TSCRATEMSR))
++		__svm_write_tsc_multiplier(vcpu->arch.tsc_scaling_ratio);
+ 
+ 	if (likely(tsc_aux_uret_slot >= 0))
+ 		kvm_set_user_return_msr(tsc_aux_uret_slot, svm->tsc_aux, -1ull);
+diff --git a/arch/x86/kvm/svm/svm.h b/arch/x86/kvm/svm/svm.h
+index 7004f356edf9..1d9b1a9e4398 100644
+--- a/arch/x86/kvm/svm/svm.h
++++ b/arch/x86/kvm/svm/svm.h
+@@ -487,6 +487,7 @@ int nested_svm_check_exception(struct vcpu_svm *svm, unsigned nr,
+ int nested_svm_exit_special(struct vcpu_svm *svm);
+ void nested_load_control_from_vmcb12(struct vcpu_svm *svm,
+ 				     struct vmcb_control_area *control);
++void __svm_write_tsc_multiplier(u64 multiplier);
+ void nested_sync_control_from_vmcb02(struct vcpu_svm *svm);
+ void nested_vmcb02_compute_g_pat(struct vcpu_svm *svm);
+ void svm_switch_vmcb(struct vcpu_svm *svm, struct kvm_vmcb_info *target_vmcb);
 -- 
 2.39.0
 
