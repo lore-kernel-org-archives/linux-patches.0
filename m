@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C52BE28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:13:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D236C433D2;
-	Mon, 30 Jan 2023 14:13:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6BB928EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:13:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33A4AC433EF;
+	Mon, 30 Jan 2023 14:13:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087992;
-	bh=N3KoFhrFOX+6JxZC8kJ+87kqt95pSiwVEUzZnKKgNio=;
+	s=korg; t=1675087995;
+	bh=zOJNOuBPicxNhN0xDatkZlgkcxdIKlcWX8hn9JAfhnk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OccsKKsiQ81PiLnPsMp1zTn/d570EtcQBZPt4kgKa2FNGskwdri6BqMmoeVXujgnp
-	 XXtT7zQS0e2VXMckYm941/gTgyyusMgRwH0Hdm5lRir6+yGF4cpTD1KTi1N9WWJt/l
-	 n4My69L9aOqD3KLDDQYMB87D0Shjc3fq89WGVoIg=
+	b=exexEp/FsweRDUUUh/01ecw1X5zCtzjkKgTsWGfw/3ZogKOvtVUS9lJLvKj68072t
+	 RE1RQiRiwdsBjrZdpNHNAyxa2tuGAL+lqZj3Toj/6+Yhd00z2sCAmbWXRdKMGF1zxg
+	 NMk/1IuJaKzBVo9Wyme6ay8fRMv87Q22ST1qE6g0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Keith Busch <kbusch@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Jason Xing <kernelxing@tencent.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 079/204] nvme-pci: fix timeout request state check
-Date: Mon, 30 Jan 2023 14:50:44 +0100
-Message-Id: <20230130134319.810028168@linuxfoundation.org>
+Subject: [PATCH 5.15 080/204] tcp: avoid the lookup process failing to get sk in ehash table
+Date: Mon, 30 Jan 2023 14:50:45 +0100
+Message-Id: <20230130134319.857957049@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,40 +37,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Keith Busch <kbusch@kernel.org>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit 1c5842085851f786eba24a39ecd02650ad892064 ]
+[ Upstream commit 3f4ca5fafc08881d7a57daa20449d171f2887043 ]
 
-Polling the completion can progress the request state to IDLE, either
-inline with the completion, or through softirq. Either way, the state
-may not be COMPLETED, so don't check for that. We only care if the state
-isn't IN_FLIGHT.
+While one cpu is working on looking up the right socket from ehash
+table, another cpu is done deleting the request socket and is about
+to add (or is adding) the big socket from the table. It means that
+we could miss both of them, even though it has little chance.
 
-This is fixing an issue where the driver aborts an IO that we just
-completed. Seeing the "aborting" message instead of "polled" is very
-misleading as to where the timeout problem resides.
+Let me draw a call trace map of the server side.
+   CPU 0                           CPU 1
+   -----                           -----
+tcp_v4_rcv()                  syn_recv_sock()
+                            inet_ehash_insert()
+                            -> sk_nulls_del_node_init_rcu(osk)
+__inet_lookup_established()
+                            -> __sk_nulls_add_node_rcu(sk, list)
 
-Fixes: bf392a5dc02a9b ("nvme-pci: Remove tag from process cq")
-Signed-off-by: Keith Busch <kbusch@kernel.org>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Notice that the CPU 0 is receiving the data after the final ack
+during 3-way shakehands and CPU 1 is still handling the final ack.
+
+Why could this be a real problem?
+This case is happening only when the final ack and the first data
+receiving by different CPUs. Then the server receiving data with
+ACK flag tries to search one proper established socket from ehash
+table, but apparently it fails as my map shows above. After that,
+the server fetches a listener socket and then sends a RST because
+it finds a ACK flag in the skb (data), which obeys RST definition
+in RFC 793.
+
+Besides, Eric pointed out there's one more race condition where it
+handles tw socket hashdance. Only by adding to the tail of the list
+before deleting the old one can we avoid the race if the reader has
+already begun the bucket traversal and it would possibly miss the head.
+
+Many thanks to Eric for great help from beginning to end.
+
+Fixes: 5e0724d027f0 ("tcp/dccp: fix hashdance race for passive sessions")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/lkml/20230112065336.41034-1-kerneljasonxing@gmail.com/
+Link: https://lore.kernel.org/r/20230118015941.1313-1-kerneljasonxing@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/inet_hashtables.c    | 17 +++++++++++++++--
+ net/ipv4/inet_timewait_sock.c |  8 ++++----
+ 2 files changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
-index 0165e65cf548..00552cd02d73 100644
---- a/drivers/nvme/host/pci.c
-+++ b/drivers/nvme/host/pci.c
-@@ -1280,7 +1280,7 @@ static enum blk_eh_timer_return nvme_timeout(struct request *req, bool reserved)
- 	else
- 		nvme_poll_irqdisable(nvmeq);
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index 0d378da4b1b1..410b6b7998ca 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -571,8 +571,20 @@ bool inet_ehash_insert(struct sock *sk, struct sock *osk, bool *found_dup_sk)
+ 	spin_lock(lock);
+ 	if (osk) {
+ 		WARN_ON_ONCE(sk->sk_hash != osk->sk_hash);
+-		ret = sk_nulls_del_node_init_rcu(osk);
+-	} else if (found_dup_sk) {
++		ret = sk_hashed(osk);
++		if (ret) {
++			/* Before deleting the node, we insert a new one to make
++			 * sure that the look-up-sk process would not miss either
++			 * of them and that at least one node would exist in ehash
++			 * table all the time. Otherwise there's a tiny chance
++			 * that lookup process could find nothing in ehash table.
++			 */
++			__sk_nulls_add_node_tail_rcu(sk, list);
++			sk_nulls_del_node_init_rcu(osk);
++		}
++		goto unlock;
++	}
++	if (found_dup_sk) {
+ 		*found_dup_sk = inet_ehash_lookup_by_sk(sk, list);
+ 		if (*found_dup_sk)
+ 			ret = false;
+@@ -581,6 +593,7 @@ bool inet_ehash_insert(struct sock *sk, struct sock *osk, bool *found_dup_sk)
+ 	if (ret)
+ 		__sk_nulls_add_node_rcu(sk, list);
  
--	if (blk_mq_request_completed(req)) {
-+	if (blk_mq_rq_state(req) != MQ_RQ_IN_FLIGHT) {
- 		dev_warn(dev->ctrl.device,
- 			 "I/O %d QID %d timeout, completion polled\n",
- 			 req->tag, nvmeq->qid);
++unlock:
+ 	spin_unlock(lock);
+ 
+ 	return ret;
+diff --git a/net/ipv4/inet_timewait_sock.c b/net/ipv4/inet_timewait_sock.c
+index 437afe392e66..fe6340c363b4 100644
+--- a/net/ipv4/inet_timewait_sock.c
++++ b/net/ipv4/inet_timewait_sock.c
+@@ -81,10 +81,10 @@ void inet_twsk_put(struct inet_timewait_sock *tw)
+ }
+ EXPORT_SYMBOL_GPL(inet_twsk_put);
+ 
+-static void inet_twsk_add_node_rcu(struct inet_timewait_sock *tw,
+-				   struct hlist_nulls_head *list)
++static void inet_twsk_add_node_tail_rcu(struct inet_timewait_sock *tw,
++					struct hlist_nulls_head *list)
+ {
+-	hlist_nulls_add_head_rcu(&tw->tw_node, list);
++	hlist_nulls_add_tail_rcu(&tw->tw_node, list);
+ }
+ 
+ static void inet_twsk_add_bind_node(struct inet_timewait_sock *tw,
+@@ -120,7 +120,7 @@ void inet_twsk_hashdance(struct inet_timewait_sock *tw, struct sock *sk,
+ 
+ 	spin_lock(lock);
+ 
+-	inet_twsk_add_node_rcu(tw, &ehead->chain);
++	inet_twsk_add_node_tail_rcu(tw, &ehead->chain);
+ 
+ 	/* Step 3: Remove SK from hash chain */
+ 	if (__sk_nulls_del_node_init_rcu(sk))
 -- 
 2.39.0
 
