@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC61828EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:03:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 234A5C4339B;
-	Mon, 30 Jan 2023 14:03:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 80C3028EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:03:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9C4DC433EF;
+	Mon, 30 Jan 2023 14:03:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087424;
-	bh=gXWrTr/Qhm8AVNLtJEZ9LrrYUmKwvtYoSbpjWomSIqs=;
+	s=korg; t=1675087427;
+	bh=HPZeV60QbEJc5Qcpd6bgpFwQpKcnvRxlWIkvBgetv94=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vVQ1W41QiX6UfGwR2e2KETRcfsIS06iBQCaHUL3UH/ExmTrV2UqhfBTnKCGHLCZ/y
-	 F0jPeEz77nLLkfitfmvnQkvLitKf2REZCTvWJ/Q49tWgw7POVdYFiN6XaCJ8kpcWkV
-	 MtEwlEVvfhGUsbMRAWdfQPF/NDEvZWdsNHrctM18=
+	b=A+1X9OPxB03P2t0ccpCYryYc7q4BbvuCZOkdTCorHiT38hOdi5bPpQlz6OFjc5FSV
+	 MV6Psq1QT6mm/WRILzCb9EAwHpn86B5kMcL/fqssx4h2t09TeArqaQB3g/Dgt/euMt
+	 owK1LzeIDxbVXcMuXiZT4For97m8UFiXsb8EoujE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	zelenat <zelenat@gmail.com>,
+	Tamim Khan <tamim@fusetak.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 172/313] ASoC: fsl-asoc-card: Fix naming of AC97 CODEC widgets
-Date: Mon, 30 Jan 2023 14:50:07 +0100
-Message-Id: <20230130134344.693849834@linuxfoundation.org>
+Subject: [PATCH 6.1 173/313] ACPI: resource: Skip IRQ override on Asus Expertbook B2402CBA
+Date: Mon, 30 Jan 2023 14:50:08 +0100
+Message-Id: <20230130134344.744577644@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,40 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Tamim Khan <tamim@fusetak.com>
 
-[ Upstream commit 242fc66ae6e1e2b8519daacc7590a73cd0e8a6e4 ]
+[ Upstream commit 77c7248882385397cd7dffe9e1437f59f32ce2de ]
 
-The fsl-asoc-card AC'97 support currently tries to route to Playback and
-Capture widgets provided by the AC'97 CODEC. This doesn't work since the
-generic AC'97 driver registers with an "AC97" at the front of the stream
-and hence widget names, update to reflect reality. It's not clear to me
-if or how this ever worked.
+Like the Asus Expertbook B2502CBA and various Asus Vivobook laptops,
+the Asus Expertbook B2402CBA has an ACPI DSDT table that describes IRQ 1
+as ActiveLow while the kernel overrides it to Edge_High. This prevents the
+keyboard from working. To fix this issue, add this laptop to the
+skip_override_table so that the kernel does not override IRQ 1.
 
-Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20230106-asoc-udoo-probe-v1-2-a5d7469d4f67@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216864
+Tested-by: zelenat <zelenat@gmail.com>
+Signed-off-by: Tamim Khan <tamim@fusetak.com>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl-asoc-card.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/acpi/resource.c | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
-index 1dfd0341e487..8d14b5593658 100644
---- a/sound/soc/fsl/fsl-asoc-card.c
-+++ b/sound/soc/fsl/fsl-asoc-card.c
-@@ -121,8 +121,8 @@ static const struct snd_soc_dapm_route audio_map[] = {
- 
- static const struct snd_soc_dapm_route audio_map_ac97[] = {
- 	/* 1st half -- Normal DAPM routes */
--	{"Playback",  NULL, "CPU AC97 Playback"},
--	{"CPU AC97 Capture",  NULL, "Capture"},
-+	{"AC97 Playback",  NULL, "CPU AC97 Playback"},
-+	{"CPU AC97 Capture",  NULL, "AC97 Capture"},
- 	/* 2nd half -- ASRC DAPM routes */
- 	{"CPU AC97 Playback",  NULL, "ASRC-Playback"},
- 	{"ASRC-Capture",  NULL, "CPU AC97 Capture"},
+diff --git a/drivers/acpi/resource.c b/drivers/acpi/resource.c
+index 16dcd31d124f..192d1784e409 100644
+--- a/drivers/acpi/resource.c
++++ b/drivers/acpi/resource.c
+@@ -432,6 +432,13 @@ static const struct dmi_system_id asus_laptop[] = {
+ 			DMI_MATCH(DMI_BOARD_NAME, "S5602ZA"),
+ 		},
+ 	},
++	{
++		.ident = "Asus ExpertBook B2402CBA",
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "ASUSTeK COMPUTER INC."),
++			DMI_MATCH(DMI_BOARD_NAME, "B2402CBA"),
++		},
++	},
+ 	{
+ 		.ident = "Asus ExpertBook B2502",
+ 		.matches = {
 -- 
 2.39.0
 
