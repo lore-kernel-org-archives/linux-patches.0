@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53C4428EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E150C433D2;
-	Mon, 30 Jan 2023 14:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C70728EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85AC6C433EF;
+	Mon, 30 Jan 2023 14:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088075;
-	bh=kdUii50/BH1ZhGd/rG3v/soTosoVHtJSBrPhlWqA9l8=;
+	s=korg; t=1675088077;
+	bh=LdbWgqhOCwigN/XNs+dNRbgNbm0z9zRrtlv+osUfzbI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mNEZFIzSYm293GbPbWgGcZ6qPPOptWBpsXVFZCEGr37bbY50wtDiOY4+hNC9eCzD9
-	 jhDXvcwC+a2SLqt+g94Bme5Z+30dFVd3EVCMtmMX1knPSdJ7cBSdse5fi56i9V3wd+
-	 JZwe+8OAbaOsPXNeAtzWfZH7Mvg5z8IVedcaY+5A=
+	b=0U3G4KWbOnXuuwfMQtXpDq+a7S26IdhrqpdnfBoTaq+hZf5aITpVwP0WzyitGTREs
+	 wDzvYgDDt0JP8g3NOAxWFSWxbiWR2dfqHQyIL9rTrL5VUQSQrUaGVRQeW0wLmfYIjM
+	 wXTyLr6OcbB/yMUZW7GQ+F7C2UEpugOWYW6A2ur8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Maor Dickman <maord@nvidia.com>,
+	Eli Cohen <elic@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 076/204] dmaengine: xilinx_dma: call of_node_put() when breaking out of for_each_child_of_node()
-Date: Mon, 30 Jan 2023 14:50:41 +0100
-Message-Id: <20230130134319.686671061@linuxfoundation.org>
+Subject: [PATCH 5.15 067/204] net/mlx5: E-switch, Fix setting of reserved fields on MODIFY_SCHEDULING_ELEMENT
+Date: Mon, 30 Jan 2023 14:50:32 +0100
+Message-Id: <20230130134319.265283902@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -36,39 +36,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Maor Dickman <maord@nvidia.com>
 
-[ Upstream commit 596b53ccc36a546ab28e8897315c5b4d1d5a0200 ]
+[ Upstream commit f51471d1935ce1f504fce6c115ce3bfbc32032b0 ]
 
-Since for_each_child_of_node() will increase the refcount of node, we need
-to call of_node_put() manually when breaking out of the iteration.
+According to HW spec element_type, element_attributes and parent_element_id fields
+should be reserved (0x0) when calling MODIFY_SCHEDULING_ELEMENT command.
 
-Fixes: 9cd4360de609 ("dma: Add Xilinx AXI Video Direct Memory Access Engine driver support")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Link: https://lore.kernel.org/r/20221122021612.1908866-1-liushixin2@huawei.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+This patch remove initialization of these fields when calling the command.
+
+Fixes: bd77bf1cb595 ("net/mlx5: Add SRIOV VF max rate configuration support")
+Signed-off-by: Maor Dickman <maord@nvidia.com>
+Reviewed-by: Eli Cohen <elic@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ .../net/ethernet/mellanox/mlx5/core/esw/qos.c  | 18 +++---------------
+ 1 file changed, 3 insertions(+), 15 deletions(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 4273150b68dc..edc2bb8f0523 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -3138,8 +3138,10 @@ static int xilinx_dma_probe(struct platform_device *pdev)
- 	/* Initialize the channels */
- 	for_each_child_of_node(node, child) {
- 		err = xilinx_dma_child_probe(xdev, child);
--		if (err < 0)
-+		if (err < 0) {
-+			of_node_put(child);
- 			goto error;
-+		}
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
+index d377ddc70fc7..65c8f1f08472 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/qos.c
+@@ -22,15 +22,13 @@ struct mlx5_esw_rate_group {
+ };
  
- 	if (xdev->dma_config->dmatype == XDMA_TYPE_VDMA) {
+ static int esw_qos_tsar_config(struct mlx5_core_dev *dev, u32 *sched_ctx,
+-			       u32 parent_ix, u32 tsar_ix,
+-			       u32 max_rate, u32 bw_share)
++			       u32 tsar_ix, u32 max_rate, u32 bw_share)
+ {
+ 	u32 bitmask = 0;
+ 
+ 	if (!MLX5_CAP_GEN(dev, qos) || !MLX5_CAP_QOS(dev, esw_scheduling))
+ 		return -EOPNOTSUPP;
+ 
+-	MLX5_SET(scheduling_context, sched_ctx, parent_element_id, parent_ix);
+ 	MLX5_SET(scheduling_context, sched_ctx, max_average_bw, max_rate);
+ 	MLX5_SET(scheduling_context, sched_ctx, bw_share, bw_share);
+ 	bitmask |= MODIFY_SCHEDULING_ELEMENT_IN_MODIFY_BITMASK_MAX_AVERAGE_BW;
+@@ -51,7 +49,7 @@ static int esw_qos_group_config(struct mlx5_eswitch *esw, struct mlx5_esw_rate_g
+ 	int err;
+ 
+ 	err = esw_qos_tsar_config(dev, sched_ctx,
+-				  esw->qos.root_tsar_ix, group->tsar_ix,
++				  group->tsar_ix,
+ 				  max_rate, bw_share);
+ 	if (err)
+ 		NL_SET_ERR_MSG_MOD(extack, "E-Switch modify group TSAR element failed");
+@@ -67,23 +65,13 @@ static int esw_qos_vport_config(struct mlx5_eswitch *esw,
+ 				struct netlink_ext_ack *extack)
+ {
+ 	u32 sched_ctx[MLX5_ST_SZ_DW(scheduling_context)] = {};
+-	struct mlx5_esw_rate_group *group = vport->qos.group;
+ 	struct mlx5_core_dev *dev = esw->dev;
+-	u32 parent_tsar_ix;
+-	void *vport_elem;
+ 	int err;
+ 
+ 	if (!vport->qos.enabled)
+ 		return -EIO;
+ 
+-	parent_tsar_ix = group ? group->tsar_ix : esw->qos.root_tsar_ix;
+-	MLX5_SET(scheduling_context, sched_ctx, element_type,
+-		 SCHEDULING_CONTEXT_ELEMENT_TYPE_VPORT);
+-	vport_elem = MLX5_ADDR_OF(scheduling_context, sched_ctx,
+-				  element_attributes);
+-	MLX5_SET(vport_element, vport_elem, vport_number, vport->vport);
+-
+-	err = esw_qos_tsar_config(dev, sched_ctx, parent_tsar_ix, vport->qos.esw_tsar_ix,
++	err = esw_qos_tsar_config(dev, sched_ctx, vport->qos.esw_tsar_ix,
+ 				  max_rate, bw_share);
+ 	if (err) {
+ 		esw_warn(esw->dev,
 -- 
 2.39.0
 
