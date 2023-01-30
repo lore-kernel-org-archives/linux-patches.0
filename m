@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA8CC3229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:26:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24417C433EF;
-	Mon, 30 Jan 2023 14:26:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8BD73229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:26:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35AC4C433EF;
+	Mon, 30 Jan 2023 14:26:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088781;
-	bh=SVI7IFTtZOxgdmygIPoBWcj0FFNZOkCYn6rIBbSM0dE=;
+	s=korg; t=1675088784;
+	bh=xWR1no2GUHRJRi6ZMYnwd/p+LgTk7+pTJX6RE2FVl6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pcTsR4kiq4Q3pECusd8cItZC8Vq6PDUTtjyXG+E3EzZYw5hqmX0VKfdMVcsVGNAco
-	 umVcbcQdG+R0umIScBpr5QiMBEeMqy9NicNDNXjCV9NltnezjHBL29oBPy6lYDJAPA
-	 t1GvIHRKTCSvOxmSUH+ep/i3IseNFUN5CT0WsQgY=
+	b=LpqSRDoM/67lWaYkEi9ocaVseJ8re67vLX9b2DzkXZq3Cf0UCh3sr1FwjPilhtJBj
+	 QWQXZ9lea2AGSsD1htHiustQ5J4blxnhVBy8MRKzgZW0vHKyQpNDbEX5KzdvH0Kmbh
+	 AWkWW7DJGcING29zNwZCq1JWnUPookLX/7wvBQcA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Duan <qi.duan@amlogic.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Ivo Borisov Shopov <ivoshopov@gmail.com>,
+	Andy Shevchenko <andy.shevchenko@gmail.com>,
+	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 133/143] net: mdio-mux-meson-g12a: force internal PHY off on mux switch
-Date: Mon, 30 Jan 2023 14:53:10 +0100
-Message-Id: <20230130134312.336967437@linuxfoundation.org>
+Subject: [PATCH 5.10 134/143] tools: gpio: fix -c option of gpio-event-mon
+Date: Mon, 30 Jan 2023 14:53:11 +0100
+Message-Id: <20230130134312.376123310@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -37,77 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jerome Brunet <jbrunet@baylibre.com>
+From: Ivo Borisov Shopov <ivoshopov@gmail.com>
 
-[ Upstream commit 7083df59abbc2b7500db312cac706493be0273ff ]
+[ Upstream commit 677d85e1a1ee69fa05ccea83847309484be3781c ]
 
-Force the internal PHY off then on when switching to the internal path.
-This fixes problems where the PHY ID is not properly set.
+Following line should listen for a rising edge and exit after the first
+one since '-c 1' is provided.
 
-Fixes: 7090425104db ("net: phy: add amlogic g12a mdio mux support")
-Suggested-by: Qi Duan <qi.duan@amlogic.com>
-Co-developed-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
-Link: https://lore.kernel.org/r/20230124101157.232234-1-jbrunet@baylibre.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+    # gpio-event-mon -n gpiochip1 -o 0 -r -c 1
+
+It works with kernel 4.19 but it doesn't work with 5.10. In 5.10 the
+above command doesn't exit after the first rising edge it keep listening
+for an event forever. The '-c 1' is not taken into an account.
+The problem is in commit 62757c32d5db ("tools: gpio: add multi-line
+monitoring to gpio-event-mon").
+Before this commit the iterator 'i' in monitor_device() is used for
+counting of the events (loops). In the case of the above command (-c 1)
+we should start from 0 and increment 'i' only ones and hit the 'break'
+statement and exit the process. But after the above commit counting
+doesn't start from 0, it start from 1 when we listen on one line.
+It is because 'i' is used from one more purpose, counting of lines
+(num_lines) and it isn't restore to 0 after following code
+
+    for (i = 0; i < num_lines; i++)
+        gpiotools_set_bit(&values.mask, i);
+
+Restore the initial value of the iterator to 0 in order to allow counting
+of loops to work for any cases.
+
+Fixes: 62757c32d5db ("tools: gpio: add multi-line monitoring to gpio-event-mon")
+Signed-off-by: Ivo Borisov Shopov <ivoshopov@gmail.com>
+Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
+[Bartosz: tweak the commit message]
+Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/mdio/mdio-mux-meson-g12a.c | 23 ++++++++++++++++-------
- 1 file changed, 16 insertions(+), 7 deletions(-)
+ tools/gpio/gpio-event-mon.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/mdio/mdio-mux-meson-g12a.c b/drivers/net/mdio/mdio-mux-meson-g12a.c
-index bf86c9c7a288..ab863530c9e8 100644
---- a/drivers/net/mdio/mdio-mux-meson-g12a.c
-+++ b/drivers/net/mdio/mdio-mux-meson-g12a.c
-@@ -4,6 +4,7 @@
-  */
+diff --git a/tools/gpio/gpio-event-mon.c b/tools/gpio/gpio-event-mon.c
+index 84ae1039b0a8..367c10636890 100644
+--- a/tools/gpio/gpio-event-mon.c
++++ b/tools/gpio/gpio-event-mon.c
+@@ -86,6 +86,7 @@ int monitor_device(const char *device_name,
+ 			gpiotools_test_bit(values.bits, i));
+ 	}
  
- #include <linux/bitfield.h>
-+#include <linux/delay.h>
- #include <linux/clk.h>
- #include <linux/clk-provider.h>
- #include <linux/device.h>
-@@ -150,6 +151,7 @@ static const struct clk_ops g12a_ephy_pll_ops = {
- 
- static int g12a_enable_internal_mdio(struct g12a_mdio_mux *priv)
- {
-+	u32 value;
- 	int ret;
- 
- 	/* Enable the phy clock */
-@@ -163,18 +165,25 @@ static int g12a_enable_internal_mdio(struct g12a_mdio_mux *priv)
- 
- 	/* Initialize ephy control */
- 	writel(EPHY_G12A_ID, priv->regs + ETH_PHY_CNTL0);
--	writel(FIELD_PREP(PHY_CNTL1_ST_MODE, 3) |
--	       FIELD_PREP(PHY_CNTL1_ST_PHYADD, EPHY_DFLT_ADD) |
--	       FIELD_PREP(PHY_CNTL1_MII_MODE, EPHY_MODE_RMII) |
--	       PHY_CNTL1_CLK_EN |
--	       PHY_CNTL1_CLKFREQ |
--	       PHY_CNTL1_PHY_ENB,
--	       priv->regs + ETH_PHY_CNTL1);
-+
-+	/* Make sure we get a 0 -> 1 transition on the enable bit */
-+	value = FIELD_PREP(PHY_CNTL1_ST_MODE, 3) |
-+		FIELD_PREP(PHY_CNTL1_ST_PHYADD, EPHY_DFLT_ADD) |
-+		FIELD_PREP(PHY_CNTL1_MII_MODE, EPHY_MODE_RMII) |
-+		PHY_CNTL1_CLK_EN |
-+		PHY_CNTL1_CLKFREQ;
-+	writel(value, priv->regs + ETH_PHY_CNTL1);
- 	writel(PHY_CNTL2_USE_INTERNAL |
- 	       PHY_CNTL2_SMI_SRC_MAC |
- 	       PHY_CNTL2_RX_CLK_EPHY,
- 	       priv->regs + ETH_PHY_CNTL2);
- 
-+	value |= PHY_CNTL1_PHY_ENB;
-+	writel(value, priv->regs + ETH_PHY_CNTL1);
-+
-+	/* The phy needs a bit of time to power up */
-+	mdelay(10);
-+
- 	return 0;
- }
++	i = 0;
+ 	while (1) {
+ 		struct gpio_v2_line_event event;
  
 -- 
 2.39.0
