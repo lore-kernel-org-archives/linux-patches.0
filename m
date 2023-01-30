@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1869728EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:10:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91C69C433EF;
-	Mon, 30 Jan 2023 14:10:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EBF028EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:10:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82969C433D2;
+	Mon, 30 Jan 2023 14:10:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087809;
-	bh=JWV/LZ4M/HhUsHtYVWN7lXThWaXbYb+kb5ffyuLctmw=;
+	s=korg; t=1675087813;
+	bh=ZOHy4zDgMFlK6xjhcbJMwUmPeR8ZEwcxRMhxMNPe9/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L9Dbupe/RFVuRdTmNO4K+Km2DztYAowfouTM/o4WW+SoKah0q1mN9ofvNDnqmOKYW
-	 oyicT1nuyjxwWzLkhrn3VDSmsIE8CbEVTnU7OEKQS9D1csxJzHj55rwF5lA2Hsd9Sk
-	 xJALQX3G6IbdN8D+Ns62cmaJrwZAWijtIt8fYKo4=
+	b=gee9bGanWqEiiMNLyJILUiTsRGxC5COTvVNM6RpWRu1dhTvD7c0HtqkFnC36yWtpk
+	 e4FILx1AJQhE/sPfZgSa9yazGqCbCs/WcIWKoTh11S1IjsTrdaopUDPTW3RFGEFkKg
+	 RGqxhk8rjLt1QO0SCFQ48RpYN2Vg2imQNu6ehzSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 018/204] firmware: arm_scmi: Harden shared memory access in fetch_notification
-Date: Mon, 30 Jan 2023 14:49:43 +0100
-Message-Id: <20230130134317.091667812@linuxfoundation.org>
+Subject: [PATCH 5.15 019/204] tomoyo: fix broken dependency on *.conf.default
+Date: Mon, 30 Jan 2023 14:49:44 +0100
+Message-Id: <20230130134317.129341446@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,38 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 9bae076cd4e3e3c3dc185cae829d80b2dddec86e ]
+[ Upstream commit eaf2213ba563b2d74a1f2c13a6b258273f689802 ]
 
-A misbheaving SCMI platform firmware could reply with out-of-spec
-notifications, shorter than the mimimum size comprising a header.
+If *.conf.default is updated, builtin-policy.h should be rebuilt,
+but this does not work when compiled with O= option.
 
-Fixes: d5141f37c42e ("firmware: arm_scmi: Add notifications support in transport layer")
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20221222183823.518856-4-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+[Without this commit]
+
+  $ touch security/tomoyo/policy/exception_policy.conf.default
+  $ make O=/tmp security/tomoyo/
+  make[1]: Entering directory '/tmp'
+    GEN     Makefile
+    CALL    /home/masahiro/ref/linux/scripts/checksyscalls.sh
+    DESCEND objtool
+  make[1]: Leaving directory '/tmp'
+
+[With this commit]
+
+  $ touch security/tomoyo/policy/exception_policy.conf.default
+  $ make O=/tmp security/tomoyo/
+  make[1]: Entering directory '/tmp'
+    GEN     Makefile
+    CALL    /home/masahiro/ref/linux/scripts/checksyscalls.sh
+    DESCEND objtool
+    POLICY  security/tomoyo/builtin-policy.h
+    CC      security/tomoyo/common.o
+    AR      security/tomoyo/built-in.a
+  make[1]: Leaving directory '/tmp'
+
+$(srctree)/ is essential because $(wildcard ) does not follow VPATH.
+
+Fixes: f02dee2d148b ("tomoyo: Do not generate empty policy files")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/shmem.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ security/tomoyo/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/arm_scmi/shmem.c b/drivers/firmware/arm_scmi/shmem.c
-index 415ef7df8fc3..56a1f61aa3ff 100644
---- a/drivers/firmware/arm_scmi/shmem.c
-+++ b/drivers/firmware/arm_scmi/shmem.c
-@@ -71,8 +71,10 @@ void shmem_fetch_response(struct scmi_shared_mem __iomem *shmem,
- void shmem_fetch_notification(struct scmi_shared_mem __iomem *shmem,
- 			      size_t max_len, struct scmi_xfer *xfer)
- {
-+	size_t len = ioread32(&shmem->length);
-+
- 	/* Skip only the length of header in shmem area i.e 4 bytes */
--	xfer->rx.len = min_t(size_t, max_len, ioread32(&shmem->length) - 4);
-+	xfer->rx.len = min_t(size_t, max_len, len > 4 ? len - 4 : 0);
+diff --git a/security/tomoyo/Makefile b/security/tomoyo/Makefile
+index cca5a3012fee..221eaadffb09 100644
+--- a/security/tomoyo/Makefile
++++ b/security/tomoyo/Makefile
+@@ -10,7 +10,7 @@ endef
+ quiet_cmd_policy  = POLICY  $@
+       cmd_policy  = ($(call do_policy,profile); $(call do_policy,exception_policy); $(call do_policy,domain_policy); $(call do_policy,manager); $(call do_policy,stat)) >$@
  
- 	/* Take a copy to the rx buffer.. */
- 	memcpy_fromio(xfer->rx.buf, shmem->msg_payload, xfer->rx.len);
+-$(obj)/builtin-policy.h: $(wildcard $(obj)/policy/*.conf $(src)/policy/*.conf.default) FORCE
++$(obj)/builtin-policy.h: $(wildcard $(obj)/policy/*.conf $(srctree)/$(src)/policy/*.conf.default) FORCE
+ 	$(call if_changed,policy)
+ 
+ $(obj)/common.o: $(obj)/builtin-policy.h
 -- 
 2.39.0
 
