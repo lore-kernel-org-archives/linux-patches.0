@@ -1,28 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72D2228F3
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:03:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B23C5C433D2;
-	Mon, 30 Jan 2023 14:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A40E28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:03:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E4FC433D2;
+	Mon, 30 Jan 2023 14:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087386;
-	bh=TVyG5JsgA9ts8zbDC5owS35CEr3yMGcKEAiFf8DzGxk=;
+	s=korg; t=1675087389;
+	bh=DvqY4zbmbFW77b1cKIU/1IBDL/FxujeF5PglJoGY+5A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wYQeCbEqecGK4d9WkFwsH04hCy6ohWFtgXpterVF9y5QVZ5pg10ZLvxN4N96G5g+J
-	 wYYHkJiuxPWNGi5gAWSZnqcouW95N7+03ZKdPpm6XvtBUnfxslhO9KRxaXSz/1Zilw
-	 FD5rW3ZCPC52jB/JZksaryun+myGKbizkULPV0Mw=
+	b=XhUoEnRsS0fPLgjacneG9R+M3TjCO1rxLZmm9XGgiQC4v4qGaqtwq43UcIkcSjgK1
+	 In+L1f4Q/wWuU1GZoToAyw8oR5BT3v6V5BhRQLs0bE4ibG2Rjl5SsppW9vWL9JHQvS
+	 qqwjwGM4HdENzSLpwLXrb7NOERJEehlesXPjw/MU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Foley <pefoley2@pefoley.com>,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Paul Menzel <pmenzel@molgen.mpg.de>,
+	Jack Rosenthal <jrosenth@chromium.org>,
+	Guenter Roeck <groeck@chromium.org>,
+	Julius Werner <jwerner@chromium.org>,
+	Brian Norris <briannorris@chromium.org>,
+	Stephen Boyd <swboyd@chromium.org>,
+	Kees Cook <keescook@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 190/313] ata: pata_cs5535: Dont build on UML
-Date: Mon, 30 Jan 2023 14:50:25 +0100
-Message-Id: <20230130134345.541808394@linuxfoundation.org>
+Subject: [PATCH 6.1 191/313] firmware: coreboot: Check size of table entry and use flex-array
+Date: Mon, 30 Jan 2023 14:50:26 +0100
+Message-Id: <20230130134345.592394226@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,42 +40,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Foley <pefoley2@pefoley.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 22eebaa631c40f3dac169ba781e0de471b83bf45 ]
+[ Upstream commit 3b293487b8752cc42c1cbf8a0447bc6076c075fa ]
 
-This driver uses MSR functions that aren't implemented under UML.
-Avoid building it to prevent tripping up allyesconfig.
+The memcpy() of the data following a coreboot_table_entry couldn't
+be evaluated by the compiler under CONFIG_FORTIFY_SOURCE. To make it
+easier to reason about, add an explicit flexible array member to struct
+coreboot_device so the entire entry can be copied at once. Additionally,
+validate the sizes before copying. Avoids this run-time false positive
+warning:
 
-e.g.
-/usr/lib/gcc/x86_64-pc-linux-gnu/12/../../../../x86_64-pc-linux-gnu/bin/ld: pata_cs5535.c:(.text+0x3a3): undefined reference to `__tracepoint_read_msr'
-/usr/lib/gcc/x86_64-pc-linux-gnu/12/../../../../x86_64-pc-linux-gnu/bin/ld: pata_cs5535.c:(.text+0x3d2): undefined reference to `__tracepoint_write_msr'
-/usr/lib/gcc/x86_64-pc-linux-gnu/12/../../../../x86_64-pc-linux-gnu/bin/ld: pata_cs5535.c:(.text+0x457): undefined reference to `__tracepoint_write_msr'
-/usr/lib/gcc/x86_64-pc-linux-gnu/12/../../../../x86_64-pc-linux-gnu/bin/ld: pata_cs5535.c:(.text+0x481): undefined reference to `do_trace_write_msr'
-/usr/lib/gcc/x86_64-pc-linux-gnu/12/../../../../x86_64-pc-linux-gnu/bin/ld: pata_cs5535.c:(.text+0x4d5): undefined reference to `do_trace_write_msr'
-/usr/lib/gcc/x86_64-pc-linux-gnu/12/../../../../x86_64-pc-linux-gnu/bin/ld: pata_cs5535.c:(.text+0x4f5): undefined reference to `do_trace_read_msr'
-/usr/lib/gcc/x86_64-pc-linux-gnu/12/../../../../x86_64-pc-linux-gnu/bin/ld: pata_cs5535.c:(.text+0x51c): undefined reference to `do_trace_write_msr'
+  memcpy: detected field-spanning write (size 168) of single field "&device->entry" at drivers/firmware/google/coreboot_table.c:103 (size 8)
 
-Signed-off-by: Peter Foley <pefoley2@pefoley.com>
-Reviewed-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
+Link: https://lore.kernel.org/all/03ae2704-8c30-f9f0-215b-7cdf4ad35a9a@molgen.mpg.de/
+Cc: Jack Rosenthal <jrosenth@chromium.org>
+Cc: Guenter Roeck <groeck@chromium.org>
+Cc: Julius Werner <jwerner@chromium.org>
+Cc: Brian Norris <briannorris@chromium.org>
+Cc: Stephen Boyd <swboyd@chromium.org>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Julius Werner <jwerner@chromium.org>
+Reviewed-by: Guenter Roeck <groeck@chromium.org>
+Link: https://lore.kernel.org/r/20230107031406.gonna.761-kees@kernel.org
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Reviewed-by: Jack Rosenthal <jrosenth@chromium.org>
+Link: https://lore.kernel.org/r/20230112230312.give.446-kees@kernel.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/firmware/google/coreboot_table.c | 9 +++++++--
+ drivers/firmware/google/coreboot_table.h | 1 +
+ 2 files changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/ata/Kconfig b/drivers/ata/Kconfig
-index 36833a862998..d9b305a3427f 100644
---- a/drivers/ata/Kconfig
-+++ b/drivers/ata/Kconfig
-@@ -650,6 +650,7 @@ config PATA_CS5530
- config PATA_CS5535
- 	tristate "CS5535 PATA support (Experimental)"
- 	depends on PCI && (X86_32 || (X86_64 && COMPILE_TEST))
-+	depends on !UML
- 	help
- 	  This option enables support for the NatSemi/AMD CS5535
- 	  companion chip used with the Geode processor family.
+diff --git a/drivers/firmware/google/coreboot_table.c b/drivers/firmware/google/coreboot_table.c
+index 9ca21feb9d45..f3694d347801 100644
+--- a/drivers/firmware/google/coreboot_table.c
++++ b/drivers/firmware/google/coreboot_table.c
+@@ -93,7 +93,12 @@ static int coreboot_table_populate(struct device *dev, void *ptr)
+ 	for (i = 0; i < header->table_entries; i++) {
+ 		entry = ptr_entry;
+ 
+-		device = kzalloc(sizeof(struct device) + entry->size, GFP_KERNEL);
++		if (entry->size < sizeof(*entry)) {
++			dev_warn(dev, "coreboot table entry too small!\n");
++			return -EINVAL;
++		}
++
++		device = kzalloc(sizeof(device->dev) + entry->size, GFP_KERNEL);
+ 		if (!device)
+ 			return -ENOMEM;
+ 
+@@ -101,7 +106,7 @@ static int coreboot_table_populate(struct device *dev, void *ptr)
+ 		device->dev.parent = dev;
+ 		device->dev.bus = &coreboot_bus_type;
+ 		device->dev.release = coreboot_device_release;
+-		memcpy(&device->entry, ptr_entry, entry->size);
++		memcpy(device->raw, ptr_entry, entry->size);
+ 
+ 		ret = device_register(&device->dev);
+ 		if (ret) {
+diff --git a/drivers/firmware/google/coreboot_table.h b/drivers/firmware/google/coreboot_table.h
+index beb778674acd..4a89277b99a3 100644
+--- a/drivers/firmware/google/coreboot_table.h
++++ b/drivers/firmware/google/coreboot_table.h
+@@ -66,6 +66,7 @@ struct coreboot_device {
+ 		struct coreboot_table_entry entry;
+ 		struct lb_cbmem_ref cbmem_ref;
+ 		struct lb_framebuffer framebuffer;
++		DECLARE_FLEX_ARRAY(u8, raw);
+ 	};
+ };
+ 
 -- 
 2.39.0
 
