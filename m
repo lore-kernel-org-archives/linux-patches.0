@@ -1,33 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57BD428EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:16:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94873C433EF;
-	Mon, 30 Jan 2023 14:16:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 524F928EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:16:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9306FC433D2;
+	Mon, 30 Jan 2023 14:16:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088175;
-	bh=yI7JtT8JbeCx13DyIoSOKpWE6dUOQFSPdteKv5tz6Wk=;
+	s=korg; t=1675088178;
+	bh=0su5Int2LpPR2wnLekb83ICqB+78/uKRM7peJdt9L3s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jcAs8yhtc7hSYq6INBziRrtGxQkmmJUqVZJe/ku3Lw8PVOqQuAwv6/otTNyR6OGic
-	 ZkSgx2455XiQ2KlY9p7XMgExV14UwRnpo3pLZUkTZhZp7W8VE+x8wHB58Njh/g4KsC
-	 Gkm9cws8iB25KCWErT9aC6MbMMczzww/RDJtffEE=
+	b=UiZFnF4R9/MHkA3Ji0L3x1bqJFrziEEaSOQCBfid3ulIv75A4hRG2nJTrhggWr5g7
+	 j8pGSwA+kSXNnBic6miSpejowXxkYJVQGsdjx1Hb/lJa1b+/NhSR2Gp/srKBXpI1qt
+	 mRrXIwugLmRcboO4UvuKIwqQPHoGqMIAweCwHFc0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Christoph Hellwig <hch@infradead.org>,
-	Christoph Hellwig <hch@lst.de>,
+	Peter Zijlstra <peterz@infradead.org>,
 	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Tony Luck <tony.luck@intel.com>,
+	Jann Horn <jannh@google.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Petr Mladek <pmladek@suse.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Marco Elver <elver@google.com>,
+	tangmeng <tangmeng@uniontech.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Kees Cook <keescook@chromium.org>,
 	Eric Biggers <ebiggers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 133/204] ia64: make IA64_MCA_RECOVERY bool instead of tristate
-Date: Mon, 30 Jan 2023 14:51:38 +0100
-Message-Id: <20230130134322.386682494@linuxfoundation.org>
+Subject: [PATCH 5.15 142/204] exit: Use READ_ONCE() for all oops/warn limit reads
+Date: Mon, 30 Jan 2023 14:51:47 +0100
+Message-Id: <20230130134322.781746357@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -41,51 +46,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Kees Cook <keescook@chromium.org>
 
-commit dbecf9b8b8ce580f4e11afed9d61e8aa294cddd2 upstream.
+commit 7535b832c6399b5ebfc5b53af5c51dd915ee2538 upstream.
 
-In linux-next, IA64_MCA_RECOVERY uses the (new) function
-make_task_dead(), which is not exported for use by modules.  Instead of
-exporting it for one user, convert IA64_MCA_RECOVERY to be a bool
-Kconfig symbol.
+Use a temporary variable to take full advantage of READ_ONCE() behavior.
+Without this, the report (and even the test) might be out of sync with
+the initial test.
 
-In a config file from "kernel test robot <lkp@intel.com>" for a
-different problem, this linker error was exposed when
-CONFIG_IA64_MCA_RECOVERY=m.
-
-Fixes this build error:
-
-  ERROR: modpost: "make_task_dead" [arch/ia64/kernel/mca_recovery.ko] undefined!
-
-Link: https://lkml.kernel.org/r/20220124213129.29306-1-rdunlap@infradead.org
-Fixes: 0e25498f8cd4 ("exit: Add and use make_task_dead.")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Suggested-by: Christoph Hellwig <hch@infradead.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: "Eric W. Biederman" <ebiederm@xmission.com>
-Cc: Tony Luck <tony.luck@intel.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Reported-by: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/lkml/Y5x7GXeluFmZ8E0E@hirez.programming.kicks-ass.net
+Fixes: 9fc9e278a5c0 ("panic: Introduce warn_limit")
+Fixes: d4ccd54d28d3 ("exit: Put an upper limit on how often we can oops")
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: tangmeng <tangmeng@uniontech.com>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Kees Cook <keescook@chromium.org>
 Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/ia64/Kconfig | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/exit.c  | 6 ++++--
+ kernel/panic.c | 7 +++++--
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/arch/ia64/Kconfig b/arch/ia64/Kconfig
-index 1e33666fa679..b1f2b6ac9b1d 100644
---- a/arch/ia64/Kconfig
-+++ b/arch/ia64/Kconfig
-@@ -323,7 +323,7 @@ config ARCH_PROC_KCORE_TEXT
- 	depends on PROC_KCORE
+diff --git a/kernel/exit.c b/kernel/exit.c
+index f6c85101dba0..80efdfda6662 100644
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -930,6 +930,7 @@ void __noreturn make_task_dead(int signr)
+ 	 * Take the task off the cpu after something catastrophic has
+ 	 * happened.
+ 	 */
++	unsigned int limit;
  
- config IA64_MCA_RECOVERY
--	tristate "MCA recovery from errors other than TLB."
-+	bool "MCA recovery from errors other than TLB."
+ 	/*
+ 	 * Every time the system oopses, if the oops happens while a reference
+@@ -941,8 +942,9 @@ void __noreturn make_task_dead(int signr)
+ 	 * To make sure this can't happen, place an upper bound on how often the
+ 	 * kernel may oops without panic().
+ 	 */
+-	if (atomic_inc_return(&oops_count) >= READ_ONCE(oops_limit) && oops_limit)
+-		panic("Oopsed too often (kernel.oops_limit is %d)", oops_limit);
++	limit = READ_ONCE(oops_limit);
++	if (atomic_inc_return(&oops_count) >= limit && limit)
++		panic("Oopsed too often (kernel.oops_limit is %d)", limit);
  
- config IA64_PALINFO
- 	tristate "/proc/pal support"
+ 	do_exit(signr);
+ }
+diff --git a/kernel/panic.c b/kernel/panic.c
+index 4aef355e9a5d..47933d4c769b 100644
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -223,12 +223,15 @@ static void panic_print_sys_info(void)
+ 
+ void check_panic_on_warn(const char *origin)
+ {
++	unsigned int limit;
++
+ 	if (panic_on_warn)
+ 		panic("%s: panic_on_warn set ...\n", origin);
+ 
+-	if (atomic_inc_return(&warn_count) >= READ_ONCE(warn_limit) && warn_limit)
++	limit = READ_ONCE(warn_limit);
++	if (atomic_inc_return(&warn_count) >= limit && limit)
+ 		panic("%s: system warned too often (kernel.warn_limit is %d)",
+-		      origin, warn_limit);
++		      origin, limit);
+ }
+ 
+ /**
 -- 
 2.39.0
 
