@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8CED28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:15:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 47D18C433EF;
-	Mon, 30 Jan 2023 14:15:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF90A28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:15:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 378ABC433EF;
+	Mon, 30 Jan 2023 14:15:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088154;
-	bh=2BY6GzTK9RYrfOyad5chZwX5jIzkZJQd5mnrGsIhcGA=;
+	s=korg; t=1675088157;
+	bh=oQMtx7NufkVDtsOcmTfoxzd+Q67sQff0+LCC8sKKthg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ubj5Ese43I3qwHG61sgJ3tJqvBV8/euPH1vU/QBPMKu7PVXGRFKk5iknzw50n+KfH
-	 SLjvkAetD7Dd0c0PvLEhHfraANSveNGFJ0hMAWpFXaUnNxWHCUCnWYOGC0NwOFdFz9
-	 kyBN01oArTH6ZvOwjUsnM2Vqan4xICnci1nWQk64=
+	b=W46sskzmnfYVQjGFSsCj4RWUjamQfkQKr+yZ4Qz9rntqWKf+XkUrpGQxru47DCfrI
+	 wsRvZCD3BUSdvqtn1Rtk3n4qlp/b5qzBQ+Zqti666sM9HCWQybei7R1UXYSPEU5IpJ
+	 4F0/cAe5L1jxW1/osZ7dsCR+F50BlmjQd0LVh/EM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Alexander Gordeev <agordeev@linux.ibm.com>,
+	Kan Liang <kan.liang@linux.intel.com>,
+	Ingo Molnar <mingo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 104/204] s390: expicitly align _edata and _end symbols on page boundary
-Date: Mon, 30 Jan 2023 14:51:09 +0100
-Message-Id: <20230130134320.915532605@linuxfoundation.org>
+Subject: [PATCH 5.15 105/204] perf/x86/msr: Add Emerald Rapids
+Date: Mon, 30 Jan 2023 14:51:10 +0100
+Message-Id: <20230130134320.962773450@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,54 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Gordeev <agordeev@linux.ibm.com>
+From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit 45d619bdaf799196d702a9ae464b07066d6db2f9 ]
+[ Upstream commit 69ced4160969025821f2999ff92163ed26568f1c ]
 
-Symbols _edata and _end in the linker script are the
-only unaligned expicitly on page boundary. Although
-_end is aligned implicitly by BSS_SECTION macro that
-is still inconsistent and could lead to a bug if a tool
-or function would assume that _edata is as aligned as
-others.
+The same as Sapphire Rapids, the SMI_COUNT MSR is also supported on
+Emerald Rapids. Add Emerald Rapids model.
 
-For example, vmem_map_init() function does not align
-symbols _etext, _einittext etc. Should these symbols
-be unaligned as well, the size of ranges to update
-were short on one page.
-
-Instead of fixing every occurrence of this kind in the
-code and external tools just force the alignment on
-these two symbols.
-
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Alexander Gordeev <agordeev@linux.ibm.com>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Link: https://lore.kernel.org/r/20230106160449.3566477-3-kan.liang@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/vmlinux.lds.S | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/events/msr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/arch/s390/kernel/vmlinux.lds.S b/arch/s390/kernel/vmlinux.lds.S
-index b508ccad4856..8ce1615c1046 100644
---- a/arch/s390/kernel/vmlinux.lds.S
-+++ b/arch/s390/kernel/vmlinux.lds.S
-@@ -80,6 +80,7 @@ SECTIONS
- 		_end_amode31_refs = .;
- 	}
+diff --git a/arch/x86/events/msr.c b/arch/x86/events/msr.c
+index 96c775abe31f..d23b5523cdd3 100644
+--- a/arch/x86/events/msr.c
++++ b/arch/x86/events/msr.c
+@@ -69,6 +69,7 @@ static bool test_intel(int idx, void *data)
+ 	case INTEL_FAM6_BROADWELL_G:
+ 	case INTEL_FAM6_BROADWELL_X:
+ 	case INTEL_FAM6_SAPPHIRERAPIDS_X:
++	case INTEL_FAM6_EMERALDRAPIDS_X:
  
-+	. = ALIGN(PAGE_SIZE);
- 	_edata = .;		/* End of data section */
- 
- 	/* will be freed after init */
-@@ -194,6 +195,7 @@ SECTIONS
- 
- 	BSS_SECTION(PAGE_SIZE, 4 * PAGE_SIZE, PAGE_SIZE)
- 
-+	. = ALIGN(PAGE_SIZE);
- 	_end = . ;
- 
- 	/*
+ 	case INTEL_FAM6_ATOM_SILVERMONT:
+ 	case INTEL_FAM6_ATOM_SILVERMONT_D:
 -- 
 2.39.0
 
