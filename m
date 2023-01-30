@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68F1328EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:01:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4A5CC433EF;
-	Mon, 30 Jan 2023 14:01:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D23C28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:01:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CCE53C433EF;
+	Mon, 30 Jan 2023 14:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087315;
-	bh=bXjbyUsvr/NuB9rjNJzTi5gu5fIcnfr1NGjHq9vU8KQ=;
+	s=korg; t=1675087318;
+	bh=axvQKe13YnMQQ3pm7ZRTxZipZu2ozLBuOLAC+cMDoZM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0GWKTGyUdHA0A6lcCdm7nJWxAMvicCZH4wpZfxynKZYMWbByVOMRGVWdJzSz3xpNA
-	 vGMdQeIFe81Z7FOgWilc0m/se08QsrBix2AO6QoxzIUvcmkfdJsuJcPe8uk9B5MXTG
-	 SfkYCpgG8JbJ45JmQO+dWhvvvGB2r7NU03QNxYUM=
+	b=eV2nulTnbv4CfjFG53M2PUu8kblIMtN68h7776Jw/3UDvF0Wmgp/yM1y//t9jkKU8
+	 PCji3HD6TBV7NyoUSupxskz9GcIwbj/3CDoL6fwcP3atlealhabkXvKTMH96Iq+2TS
+	 QqBbWhDw5sQZzyR4uaNmHATYC1rzH8+lnFMgrhuk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Caleb Connolly <caleb.connolly@linaro.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Ning Cai <ncai@quicinc.com>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 137/313] thermal: core: call put_device() only after device_register() fails
-Date: Mon, 30 Jan 2023 14:49:32 +0100
-Message-Id: <20230130134343.028190499@linuxfoundation.org>
+Subject: [PATCH 6.1 138/313] net: stmmac: enable all safety features by default
+Date: Mon, 30 Jan 2023 14:49:33 +0100
+Message-Id: <20230130134343.074169123@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -38,70 +36,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Viresh Kumar <viresh.kumar@linaro.org>
+From: Andrew Halaney <ahalaney@redhat.com>
 
-[ Upstream commit 6c54b7bc8a31ce0f7cc7f8deef05067df414f1d8 ]
+[ Upstream commit fdfc76a116b5e9d3e98e6c96fe83b42d011d21d4 ]
 
-put_device() shouldn't be called before a prior call to
-device_register(). __thermal_cooling_device_register() doesn't follow
-that properly and needs fixing. Also
-thermal_cooling_device_destroy_sysfs() is getting called unnecessarily
-on few error paths.
+In the original implementation of dwmac5
+commit 8bf993a5877e ("net: stmmac: Add support for DWMAC5 and implement Safety Features")
+all safety features were enabled by default.
 
-Fix all this by placing the calls at the right place.
+Later it seems some implementations didn't have support for all the
+features, so in
+commit 5ac712dcdfef ("net: stmmac: enable platform specific safety features")
+the safety_feat_cfg structure was added to the callback and defined for
+some platforms to selectively enable these safety features.
 
-Based on initial work done by Caleb Connolly.
+The problem is that only certain platforms were given that software
+support. If the automotive safety package bit is set in the hardware
+features register the safety feature callback is called for the platform,
+and for platforms that didn't get a safety_feat_cfg defined this results
+in the following NULL pointer dereference:
 
-Fixes: 4748f9687caa ("thermal: core: fix some possible name leaks in error paths")
-Fixes: c408b3d1d9bb ("thermal: Validate new state in cur_state_store()")
-Reported-by: Caleb Connolly <caleb.connolly@linaro.org>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
-Tested-by: Frank Rowand <frowand.list@gmail.com>
-Reviewed-by: Yang Yingliang <yangyingliang@huawei.com>
-Tested-by: Caleb Connolly <caleb.connolly@linaro.org>
-Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+[    7.933303] Call trace:
+[    7.935812]  dwmac5_safety_feat_config+0x20/0x170 [stmmac]
+[    7.941455]  __stmmac_open+0x16c/0x474 [stmmac]
+[    7.946117]  stmmac_open+0x38/0x70 [stmmac]
+[    7.950414]  __dev_open+0x100/0x1dc
+[    7.954006]  __dev_change_flags+0x18c/0x204
+[    7.958297]  dev_change_flags+0x24/0x6c
+[    7.962237]  do_setlink+0x2b8/0xfa4
+[    7.965827]  __rtnl_newlink+0x4ec/0x840
+[    7.969766]  rtnl_newlink+0x50/0x80
+[    7.973353]  rtnetlink_rcv_msg+0x12c/0x374
+[    7.977557]  netlink_rcv_skb+0x5c/0x130
+[    7.981500]  rtnetlink_rcv+0x18/0x2c
+[    7.985172]  netlink_unicast+0x2e8/0x340
+[    7.989197]  netlink_sendmsg+0x1a8/0x420
+[    7.993222]  ____sys_sendmsg+0x218/0x280
+[    7.997249]  ___sys_sendmsg+0xac/0x100
+[    8.001103]  __sys_sendmsg+0x84/0xe0
+[    8.004776]  __arm64_sys_sendmsg+0x24/0x30
+[    8.008983]  invoke_syscall+0x48/0x114
+[    8.012840]  el0_svc_common.constprop.0+0xcc/0xec
+[    8.017665]  do_el0_svc+0x38/0xb0
+[    8.021071]  el0_svc+0x2c/0x84
+[    8.024212]  el0t_64_sync_handler+0xf4/0x120
+[    8.028598]  el0t_64_sync+0x190/0x194
+
+Go back to the original behavior, if the automotive safety package
+is found to be supported in hardware enable all the features unless
+safety_feat_cfg is passed in saying this particular platform only
+supports a subset of the features.
+
+Fixes: 5ac712dcdfef ("net: stmmac: enable platform specific safety features")
+Reported-by: Ning Cai <ncai@quicinc.com>
+Signed-off-by: Andrew Halaney <ahalaney@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/thermal/thermal_core.c | 13 ++++++++++---
- 1 file changed, 10 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac5.c | 14 ++++++++++++++
+ 1 file changed, 14 insertions(+)
 
-diff --git a/drivers/thermal/thermal_core.c b/drivers/thermal/thermal_core.c
-index 449e60c4a1b6..1eae4ec719a8 100644
---- a/drivers/thermal/thermal_core.c
-+++ b/drivers/thermal/thermal_core.c
-@@ -893,15 +893,20 @@ __thermal_cooling_device_register(struct device_node *np,
- 	cdev->devdata = devdata;
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac5.c b/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
+index 9c2d40f853ed..413f66017219 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
+@@ -186,11 +186,25 @@ static void dwmac5_handle_dma_err(struct net_device *ndev,
+ int dwmac5_safety_feat_config(void __iomem *ioaddr, unsigned int asp,
+ 			      struct stmmac_safety_feature_cfg *safety_feat_cfg)
+ {
++	struct stmmac_safety_feature_cfg all_safety_feats = {
++		.tsoee = 1,
++		.mrxpee = 1,
++		.mestee = 1,
++		.mrxee = 1,
++		.mtxee = 1,
++		.epsi = 1,
++		.edpp = 1,
++		.prtyen = 1,
++		.tmouten = 1,
++	};
+ 	u32 value;
  
- 	ret = cdev->ops->get_max_state(cdev, &cdev->max_state);
--	if (ret)
--		goto out_kfree_type;
-+	if (ret) {
-+		kfree(cdev->type);
-+		goto out_ida_remove;
-+	}
+ 	if (!asp)
+ 		return -EINVAL;
  
- 	thermal_cooling_device_setup_sysfs(cdev);
++	if (!safety_feat_cfg)
++		safety_feat_cfg = &all_safety_feats;
 +
- 	ret = dev_set_name(&cdev->device, "cooling_device%d", cdev->id);
- 	if (ret) {
-+		kfree(cdev->type);
- 		thermal_cooling_device_destroy_sysfs(cdev);
--		goto out_kfree_type;
-+		goto out_ida_remove;
- 	}
-+
- 	ret = device_register(&cdev->device);
- 	if (ret)
- 		goto out_kfree_type;
-@@ -927,6 +932,8 @@ __thermal_cooling_device_register(struct device_node *np,
- 	thermal_cooling_device_destroy_sysfs(cdev);
- 	kfree(cdev->type);
- 	put_device(&cdev->device);
-+
-+	/* thermal_release() takes care of the rest */
- 	cdev = NULL;
- out_ida_remove:
- 	ida_free(&thermal_cdev_ida, id);
+ 	/* 1. Enable Safety Features */
+ 	value = readl(ioaddr + MTL_ECC_CONTROL);
+ 	value |= MEEAO; /* MTL ECC Error Addr Status Override */
 -- 
 2.39.0
 
