@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4BE528EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:00:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55433C433D2;
-	Mon, 30 Jan 2023 14:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C43FA28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:00:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 478A1C433D2;
+	Mon, 30 Jan 2023 14:00:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087205;
-	bh=1+EqSCh+MI8+1yG5YgYl1rTfrhhhLtc6vZ/QlWufpJQ=;
+	s=korg; t=1675087208;
+	bh=pQA/HbSrQYi/SLs7Wq695giNStFCaHnSeweNSMloVX4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wWunWSH+Jony/7y+AZGY1o++TffHaLcbQsXxQscHV1wi/TOgnUyNFsOexAOCoxwNO
-	 e1GCJjNVMHKcJGDNXXrW5jgNdzjPMpPYMlI1nKp4g2UpZztXYzimMpcJHcxeHC6SHc
-	 g/ECpje6KHT9wo9dxAxt9FaIIP0++7PvCfKFt4bg=
+	b=rqiwspkq9bA2U4ZfU9OZjZkYxH9GfvB5RbIfDcyVnSC57+ggBd3E9jFFiSSLjngNA
+	 UlrVUAZVvAKtEQ6vsv3grzkIkZdf6s8D0/QjpiCN+EB4Z0amW8advGdXFzUvaej5Xi
+	 u7va8RcQfPSo2cGQi9SG31BfOOEpWkNFxb2O35jc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+d7ce59...@syzkaller.appspotmail.com,
-	Ying Hsu <yinghsu@chromium.org>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 104/313] Bluetooth: Fix possible deadlock in rfcomm_sk_state_change
-Date: Mon, 30 Jan 2023 14:48:59 +0100
-Message-Id: <20230130134341.488068842@linuxfoundation.org>
+Subject: [PATCH 6.1 131/313] w1: fix WARNING after calling w1_process()
+Date: Mon, 30 Jan 2023 14:49:26 +0100
+Message-Id: <20230130134342.757985584@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,75 +34,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ying Hsu <yinghsu@chromium.org>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit 1d80d57ffcb55488f0ec0b77928d4f82d16b6a90 ]
+[ Upstream commit 36225a7c72e9e3e1ce4001b6ce72849f5c9a2d3b ]
 
-syzbot reports a possible deadlock in rfcomm_sk_state_change [1].
-While rfcomm_sock_connect acquires the sk lock and waits for
-the rfcomm lock, rfcomm_sock_release could have the rfcomm
-lock and hit a deadlock for acquiring the sk lock.
-Here's a simplified flow:
+I got the following WARNING message while removing driver(ds2482):
 
-rfcomm_sock_connect:
-  lock_sock(sk)
-  rfcomm_dlc_open:
-    rfcomm_lock()
+------------[ cut here ]------------
+do not call blocking ops when !TASK_RUNNING; state=1 set at [<000000002d50bfb6>] w1_process+0x9e/0x1d0 [wire]
+WARNING: CPU: 0 PID: 262 at kernel/sched/core.c:9817 __might_sleep+0x98/0xa0
+CPU: 0 PID: 262 Comm: w1_bus_master1 Tainted: G                 N 6.1.0-rc3+ #307
+RIP: 0010:__might_sleep+0x98/0xa0
+Call Trace:
+ exit_signals+0x6c/0x550
+ do_exit+0x2b4/0x17e0
+ kthread_exit+0x52/0x60
+ kthread+0x16d/0x1e0
+ ret_from_fork+0x1f/0x30
 
-rfcomm_sock_release:
-  rfcomm_sock_shutdown:
-    rfcomm_lock()
-    __rfcomm_dlc_close:
-        rfcomm_k_state_change:
-	  lock_sock(sk)
+The state of task is set to TASK_INTERRUPTIBLE in loop in w1_process(),
+set it to TASK_RUNNING when it breaks out of the loop to avoid the
+warning.
 
-This patch drops the sk lock before calling rfcomm_dlc_open to
-avoid the possible deadlock and holds sk's reference count to
-prevent use-after-free after rfcomm_dlc_open completes.
-
-Reported-by: syzbot+d7ce59...@syzkaller.appspotmail.com
-Fixes: 1804fdf6e494 ("Bluetooth: btintel: Combine setting up MSFT extension")
-Link: https://syzkaller.appspot.com/bug?extid=d7ce59b06b3eb14fd218 [1]
-
-Signed-off-by: Ying Hsu <yinghsu@chromium.org>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
+Fixes: 3c52e4e62789 ("W1: w1_process, block or sleep")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221205101558.3599162-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/bluetooth/rfcomm/sock.c | 7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ drivers/w1/w1.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
-index 21e24da4847f..4397e14ff560 100644
---- a/net/bluetooth/rfcomm/sock.c
-+++ b/net/bluetooth/rfcomm/sock.c
-@@ -391,6 +391,7 @@ static int rfcomm_sock_connect(struct socket *sock, struct sockaddr *addr, int a
- 	    addr->sa_family != AF_BLUETOOTH)
- 		return -EINVAL;
+diff --git a/drivers/w1/w1.c b/drivers/w1/w1.c
+index 8b35fae4cd61..4a2ddf730a3a 100644
+--- a/drivers/w1/w1.c
++++ b/drivers/w1/w1.c
+@@ -1195,8 +1195,10 @@ int w1_process(void *data)
+ 		 */
+ 		mutex_unlock(&dev->list_mutex);
  
-+	sock_hold(sk);
- 	lock_sock(sk);
+-		if (kthread_should_stop())
++		if (kthread_should_stop()) {
++			__set_current_state(TASK_RUNNING);
+ 			break;
++		}
  
- 	if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND) {
-@@ -410,14 +411,18 @@ static int rfcomm_sock_connect(struct socket *sock, struct sockaddr *addr, int a
- 	d->sec_level = rfcomm_pi(sk)->sec_level;
- 	d->role_switch = rfcomm_pi(sk)->role_switch;
- 
-+	/* Drop sock lock to avoid potential deadlock with the RFCOMM lock */
-+	release_sock(sk);
- 	err = rfcomm_dlc_open(d, &rfcomm_pi(sk)->src, &sa->rc_bdaddr,
- 			      sa->rc_channel);
--	if (!err)
-+	lock_sock(sk);
-+	if (!err && !sock_flag(sk, SOCK_ZAPPED))
- 		err = bt_sock_wait_state(sk, BT_CONNECTED,
- 				sock_sndtimeo(sk, flags & O_NONBLOCK));
- 
- done:
- 	release_sock(sk);
-+	sock_put(sk);
- 	return err;
- }
- 
+ 		/* Only sleep when the search is active. */
+ 		if (dev->search_count) {
 -- 
 2.39.0
 
