@@ -1,31 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3B5E28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:00:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4FA4C433D2;
-	Mon, 30 Jan 2023 14:00:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB7C28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:00:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21E80C433D2;
+	Mon, 30 Jan 2023 14:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087238;
-	bh=twiw61iTGSbgosF8BpkJ8HSHOW966YfS7FZR9W9hTcg=;
+	s=korg; t=1675087241;
+	bh=x+gOVXtRDYV5uej9F6oIqNv17uN1ek1roduVasw9TaU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ATrdQtV2R32SmNqtRDPzfiIgIjdnSWhs/674RmHNP+BPIIfAFZGSGPhCkT4ATFgMY
-	 QCeE3I60hOGXQ1c+M70UNzHBq57/jGZfQj/8AyGOAorcDEBEBSFm9arsGWpj+y3hdT
-	 2cxzogMmReg4J+Pl2I/+okyFPk7C0ZMoxozCdt4g=
+	b=Vz1DCEuFUSPmd3W0l8Zl5IfomHE5SqKE8sVpEouDQLDLT/PHs+FhndFiWVJOB23HM
+	 useSxtkRSdw87AfA5F6OS3dZ/FhAPtv1ZX1KtAcgvxDlYGxoSf4ujiReeZ5ScCreOY
+	 oavysqhgZVsc5G4uwF7TmbO5MiEn7SB+3ZSTvEiI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
 	Curtis Malainey <cujomalainey@chromium.org>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
 	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
 	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 143/313] ASoC: SOF: pm: Always tear down pipelines before DSP suspend
-Date: Mon, 30 Jan 2023 14:49:38 +0100
-Message-Id: <20230130134343.318204534@linuxfoundation.org>
+Subject: [PATCH 6.1 144/313] ASoC: SOF: Add FW state to debugfs
+Date: Mon, 30 Jan 2023 14:49:39 +0100
+Message-Id: <20230130134343.368975414@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -39,52 +38,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+From: Curtis Malainey <cujomalainey@chromium.org>
 
-[ Upstream commit d185e0689abc98ef55fb7a7d75aa0c48a0ed5838 ]
+[ Upstream commit 9a9134fd56f6ba614ff7b2b3b0bac0bf1d0dc0c9 ]
 
-When the DSP is suspended while the firmware is in the crashed state, we
-skip tearing down the pipelines. This means that the widget reference
-counts will not get to reset to 0 before suspend. This will lead to
-errors with resuming audio after system resume. To fix this, invoke the
-tear_down_all_pipelines op before skipping to DSP suspend.
+Allow system health detection mechanisms to check the FW state, this
+will allow them to check if the FW is in its "crashed" state going
+forward to help automatically diagnose driver state.
 
-Signed-off-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Curtis Malainey <cujomalainey@chromium.org>
+Signed-off-by: Curtis Malainey <cujomalainey@chromium.org>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
 Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
 Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20221220125629.8469-3-peter.ujfalusi@linux.intel.com
+Link: https://lore.kernel.org/r/20221220125629.8469-4-peter.ujfalusi@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/sof/pm.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ sound/soc/sof/debug.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/sound/soc/sof/pm.c b/sound/soc/sof/pm.c
-index 5f88c4a01fa3..8722bbd7fd3d 100644
---- a/sound/soc/sof/pm.c
-+++ b/sound/soc/sof/pm.c
-@@ -192,6 +192,9 @@ static int sof_suspend(struct device *dev, bool runtime_suspend)
- 	if (runtime_suspend && !sof_ops(sdev)->runtime_suspend)
- 		return 0;
- 
-+	if (tplg_ops && tplg_ops->tear_down_all_pipelines)
-+		tplg_ops->tear_down_all_pipelines(sdev, false);
-+
- 	if (sdev->fw_state != SOF_FW_BOOT_COMPLETE)
- 		goto suspend;
- 
-@@ -216,9 +219,6 @@ static int sof_suspend(struct device *dev, bool runtime_suspend)
- 		goto suspend;
+diff --git a/sound/soc/sof/debug.c b/sound/soc/sof/debug.c
+index d9a3ce7b69e1..ade0507328af 100644
+--- a/sound/soc/sof/debug.c
++++ b/sound/soc/sof/debug.c
+@@ -353,7 +353,9 @@ int snd_sof_dbg_init(struct snd_sof_dev *sdev)
+ 			return err;
  	}
  
--	if (tplg_ops->tear_down_all_pipelines)
--		tplg_ops->tear_down_all_pipelines(sdev, false);
--
- 	/* suspend DMA trace */
- 	sof_fw_trace_suspend(sdev, pm_state);
+-	return 0;
++	return snd_sof_debugfs_buf_item(sdev, &sdev->fw_state,
++					sizeof(sdev->fw_state),
++					"fw_state", 0444);
+ }
+ EXPORT_SYMBOL_GPL(snd_sof_dbg_init);
  
 -- 
 2.39.0
