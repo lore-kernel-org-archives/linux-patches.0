@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF9C28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:06:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 92C4AC433EF;
-	Mon, 30 Jan 2023 14:06:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBF5428EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:06:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B2BFC433D2;
+	Mon, 30 Jan 2023 14:06:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087614;
-	bh=/LJomUwJeln5kBIwnKZfFr7jgYhsd961uQUBRomjUes=;
+	s=korg; t=1675087616;
+	bh=7sCe5CcemCW/s7+ZnhGjqQB84qDkBBVOTW241vkao3E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZnWW3WncJO5EbOdRaIJoSxtcocnmL0HusLTyM5ACLQEtkDV6xzlVlRT6iJJkrepGQ
-	 7hqZHG2wxm+Nx5FRcTDKi21NiyzzqUsAQmX8v8XZZLMQ8X1XoTMqk4wYGAtcnwzyjf
-	 6F3lM+T5e5Yt1PeAo69nfMqgs8pvgeO3Kom7w4Wo=
+	b=ln3Pk40dt7bnMR1WQmvie7hTB/ghKwxAvca7gFHZnT1rPzU7xchf/CAyjQkw/gFQL
+	 8XuDkntiWbyDA5Zggjrpwb5KMTsyWllHsrPVcfXtHFTgPV0LQTE1oTjqvOjC6Ll93C
+	 A48BRmoi9SpLwpgnx/ksxRV40alabCqeP4i05RDM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lyude Paul <lyude@redhat.com>,
+	Wayne Lin <Wayne.Lin@amd.com>,
 	Harry Wentland <harry.wentland@amd.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Didier Raboud <odyx@debian.org>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 237/313] drm/amdgpu/display/mst: Fix mst_state->pbn_div and slot count assignments
-Date: Mon, 30 Jan 2023 14:51:12 +0100
-Message-Id: <20230130134347.722527537@linuxfoundation.org>
+Subject: [PATCH 6.1 238/313] drm/amdgpu/display/mst: limit payload to be updated one by one
+Date: Mon, 30 Jan 2023 14:51:13 +0100
+Message-Id: <20230130134347.763927423@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,87 +37,107 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lyude Paul <lyude@redhat.com>
+From: Wayne Lin <Wayne.Lin@amd.com>
 
-commit 1119e1f9636b76aef14068c7fd0b4d55132b86b8 upstream.
+commit cb1e0b015f56b8f3c7f5ce33ff4b782ee5674512 upstream.
 
-Looks like I made a pretty big mistake here without noticing: it seems when
-I moved the assignments of mst_state->pbn_div I completely missed the fact
-that the reason for us calling drm_dp_mst_update_slots() earlier was to
-account for the fact that we need to call this function using info from the
-root MST connector, instead of just trying to do this from each MST
-encoder's atomic check function. Otherwise, we end up filling out all of
-DC's link information with zeroes.
+[Why]
+amdgpu expects to update payload table for one stream one time
+by calling dm_helpers_dp_mst_write_payload_allocation_table().
+Currently, it get modified to try to update HW payload table
+at once by referring mst_state.
 
-So, let's restore that and hopefully fix this DSC regression.
+[How]
+This is just a quick workaround. Should find way to remove the
+temporary struct dc_dp_mst_stream_allocation_table later if set
+struct link_mst_stream_allocatio directly is possible.
 
 Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2171
-Signed-off-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
 Signed-off-by: Harry Wentland <harry.wentland@amd.com>
 Fixes: 4d07b0bc4034 ("drm/display/dp_mst: Move all payload info into the atomic state")
 Cc: stable@vger.kernel.org # 6.1
-Reviewed-by: Harry Wentland <harry.wentland@amd.com>
+Acked-by: Harry Wentland <harry.wentland@amd.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
 Tested-by: Didier Raboud <odyx@debian.org>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c           |   24 ++++++++++++
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c |    5 --
- 2 files changed, 24 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c |   51 ++++++++++----
+ 1 file changed, 39 insertions(+), 12 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -9393,6 +9393,8 @@ static int amdgpu_dm_atomic_check(struct
- 	struct drm_connector_state *old_con_state, *new_con_state;
- 	struct drm_crtc *crtc;
- 	struct drm_crtc_state *old_crtc_state, *new_crtc_state;
-+	struct drm_dp_mst_topology_mgr *mgr;
-+	struct drm_dp_mst_topology_state *mst_state;
- 	struct drm_plane *plane;
- 	struct drm_plane_state *old_plane_state, *new_plane_state;
- 	enum dc_status status;
-@@ -9648,6 +9650,28 @@ static int amdgpu_dm_atomic_check(struct
- 		lock_and_validation_needed = true;
- 	}
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -120,23 +120,50 @@ enum dc_edid_status dm_helpers_parse_edi
+ }
  
-+#if defined(CONFIG_DRM_AMD_DC_DCN)
-+	/* set the slot info for each mst_state based on the link encoding format */
-+	for_each_new_mst_mgr_in_state(state, mgr, mst_state, i) {
-+		struct amdgpu_dm_connector *aconnector;
-+		struct drm_connector *connector;
-+		struct drm_connector_list_iter iter;
-+		u8 link_coding_cap;
+ static void
+-fill_dc_mst_payload_table_from_drm(struct drm_dp_mst_topology_state *mst_state,
+-				   struct amdgpu_dm_connector *aconnector,
++fill_dc_mst_payload_table_from_drm(struct dc_link *link,
++				   bool enable,
++				   struct drm_dp_mst_atomic_payload *target_payload,
+ 				   struct dc_dp_mst_stream_allocation_table *table)
+ {
+ 	struct dc_dp_mst_stream_allocation_table new_table = { 0 };
+ 	struct dc_dp_mst_stream_allocation *sa;
+-	struct drm_dp_mst_atomic_payload *payload;
++	struct link_mst_stream_allocation_table copy_of_link_table =
++										link->mst_stream_alloc_table;
 +
-+		drm_connector_list_iter_begin(dev, &iter);
-+		drm_for_each_connector_iter(connector, &iter) {
-+			if (connector->index == mst_state->mgr->conn_base_id) {
-+				aconnector = to_amdgpu_dm_connector(connector);
-+				link_coding_cap = dc_link_dp_mst_decide_link_encoding_format(aconnector->dc_link);
-+				drm_dp_mst_update_slots(mst_state, link_coding_cap);
++	int i;
++	int current_hw_table_stream_cnt = copy_of_link_table.stream_count;
++	struct link_mst_stream_allocation *dc_alloc;
 +
++	/* TODO: refactor to set link->mst_stream_alloc_table directly if possible.*/
++	if (enable) {
++		dc_alloc =
++		&copy_of_link_table.stream_allocations[current_hw_table_stream_cnt];
++		dc_alloc->vcp_id = target_payload->vcpi;
++		dc_alloc->slot_count = target_payload->time_slots;
++	} else {
++		for (i = 0; i < copy_of_link_table.stream_count; i++) {
++			dc_alloc =
++			&copy_of_link_table.stream_allocations[i];
++
++			if (dc_alloc->vcp_id == target_payload->vcpi) {
++				dc_alloc->vcp_id = 0;
++				dc_alloc->slot_count = 0;
 +				break;
 +			}
 +		}
-+		drm_connector_list_iter_end(&iter);
++		ASSERT(i != copy_of_link_table.stream_count);
 +	}
-+#endif
-+
- 	/**
- 	 * Streams and planes are reset when there are changes that affect
- 	 * bandwidth. Anything that affects bandwidth needs to go through
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_mst_types.c
-@@ -896,11 +896,6 @@ static int compute_mst_dsc_configs_for_l
- 	if (IS_ERR(mst_state))
- 		return PTR_ERR(mst_state);
  
--	mst_state->pbn_div = dm_mst_get_pbn_divider(dc_link);
--#if defined(CONFIG_DRM_AMD_DC_DCN)
--	drm_dp_mst_update_slots(mst_state, dc_link_dp_mst_decide_link_encoding_format(dc_link));
--#endif
+ 	/* Fill payload info*/
+-	list_for_each_entry(payload, &mst_state->payloads, next) {
+-		if (payload->delete)
+-			continue;
 -
- 	/* Set up params */
- 	for (i = 0; i < dc_state->stream_count; i++) {
- 		struct dc_dsc_policy dsc_policy = {0};
+-		sa = &new_table.stream_allocations[new_table.stream_count];
+-		sa->slot_count = payload->time_slots;
+-		sa->vcp_id = payload->vcpi;
+-		new_table.stream_count++;
++	for (i = 0; i < MAX_CONTROLLER_NUM; i++) {
++		dc_alloc =
++			&copy_of_link_table.stream_allocations[i];
++		if (dc_alloc->vcp_id > 0 && dc_alloc->slot_count > 0) {
++			sa = &new_table.stream_allocations[new_table.stream_count];
++			sa->slot_count = dc_alloc->slot_count;
++			sa->vcp_id = dc_alloc->vcp_id;
++			new_table.stream_count++;
++		}
+ 	}
+ 
+ 	/* Overwrite the old table */
+@@ -185,7 +212,7 @@ bool dm_helpers_dp_mst_write_payload_all
+ 	 * AUX message. The sequence is slot 1-63 allocated sequence for each
+ 	 * stream. AMD ASIC stream slot allocation should follow the same
+ 	 * sequence. copy DRM MST allocation to dc */
+-	fill_dc_mst_payload_table_from_drm(mst_state, aconnector, proposed_table);
++	fill_dc_mst_payload_table_from_drm(stream->link, enable, payload, proposed_table);
+ 
+ 	return true;
+ }
 
 
