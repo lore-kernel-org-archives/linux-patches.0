@@ -1,29 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E31DC28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:06:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6888AC433D2;
-	Mon, 30 Jan 2023 14:06:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF5728EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:06:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 941D3C433EF;
+	Mon, 30 Jan 2023 14:06:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087560;
-	bh=QhQ7BzoNhchZCDAyyU04IcTh+COTyiJSpggSGvTQd38=;
+	s=korg; t=1675087564;
+	bh=RYGBw4iF8YP5daCzuYM8BQBQVP8zZYEz5c0rqqyIiCk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r3srgGL8+8UmaCcjdl8yGAqSoEY0tgHj1piQ7qIk8tCJH+tLvPWflqctDXB3Ya194
-	 7XIEYTD3nj7cbaFwrPNl4etqsJyTAcZZhHSwk8SmtHlWyiQSNJ4xhM0/vZ5LLrSpT6
-	 M9b1PL1q3CI5jdrM+wWlXADjVeicpCHUE8KVhSUs=
+	b=QaqW9SI6E0QyJNnbTHkmx6+EH4YKbVmFlk+Z+yJFbPRymYmr7DFlp7Y4fS8/sHZV8
+	 RgblAFprRBMIC0lZrnY2UUtwn2tKjrc0sN3ddatZlzUlFBF3q1McQgfiSKWuZL/Cu5
+	 BgQYWHqSx3nu2nAtCd11UtF9Vo2ndnIcyv3+opeE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Richard Fitzgerald <rf@opensource.cirrus.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
-	Wolfram Sang <wsa@kernel.org>,
+	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Maxime Ripard <mripard@kernel.org>,
+	Thomas Zimmermann <tzimmermann@suse.de>,
+	David Airlie <airlied@gmail.com>,
+	Daniel Vetter <daniel@ffwll.ch>,
+	Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>,
+	Andi Shyti <andi.shyti@linux.intel.com>,
+	Chris Wilson <chris.p.wilson@intel.com>,
+	Nirmoy Das <nirmoy.das@intel.com>,
+	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
+	Maxime Ripard <maxime@cerno.tech>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 249/313] i2c: designware: Fix unbalanced suspended flag
-Date: Mon, 30 Jan 2023 14:51:24 +0100
-Message-Id: <20230130134348.309361267@linuxfoundation.org>
+Subject: [PATCH 6.1 250/313] drm/drm_vma_manager: Add drm_vma_node_allow_once()
+Date: Mon, 30 Jan 2023 14:51:25 +0100
+Message-Id: <20230130134348.358434849@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -37,101 +44,151 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Richard Fitzgerald <rf@opensource.cirrus.com>
+From: Nirmoy Das <nirmoy.das@intel.com>
 
-[ Upstream commit 75507a319876aba88932e2c7dab58b6c22d89f6b ]
+[ Upstream commit 899d3a3c19ac0e5da013ce34833dccb97d19b5e4 ]
 
-Ensure that i2c_mark_adapter_suspended() is always balanced by a call to
-i2c_mark_adapter_resumed().
+Currently there is no easy way for a drm driver to safely check and allow
+drm_vma_offset_node for a drm file just once. Allow drm drivers to call
+non-refcounted version of drm_vma_node_allow() so that a driver doesn't
+need to keep track of each drm_vma_node_allow() to call subsequent
+drm_vma_node_revoke() to prevent memory leak.
 
-dw_i2c_plat_resume() must always be called, so that
-i2c_mark_adapter_resumed() is called. This is not compatible with
-DPM_FLAG_MAY_SKIP_RESUME, so remove the flag.
+Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Cc: Maxime Ripard <mripard@kernel.org>
+Cc: Thomas Zimmermann <tzimmermann@suse.de>
+Cc: David Airlie <airlied@gmail.com>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Tvrtko Ursulin <tvrtko.ursulin@linux.intel.com>
+Cc: Andi Shyti <andi.shyti@linux.intel.com>
 
-Since the controller is always resumed on system resume the
-dw_i2c_plat_complete() callback is redundant and has been removed.
-
-The unbalanced suspended flag was introduced by commit c57813b8b288
-("i2c: designware: Lock the adapter while setting the suspended flag")
-
-Before that commit, the system and runtime PM used the same functions. The
-DPM_FLAG_MAY_SKIP_RESUME was used to skip the system resume if the driver
-had been in runtime-suspend. If system resume was skipped, the suspended
-flag would be cleared by the next runtime resume. The check of the
-suspended flag was _after_ the call to pm_runtime_get_sync() in
-i2c_dw_xfer(). So either a system resume or a runtime resume would clear
-the flag before it was checked.
-
-Having introduced the unbalanced suspended flag with that commit, a further
-commit 80704a84a9f8
-("i2c: designware: Use the i2c_mark_adapter_suspended/resumed() helpers")
-
-changed from using a local suspended flag to using the
-i2c_mark_adapter_suspended/resumed() functions. These use a flag that is
-checked by I2C core code before issuing the transfer to the bus driver, so
-there was no opportunity for the bus driver to runtime resume itself before
-the flag check.
-
-Signed-off-by: Richard Fitzgerald <rf@opensource.cirrus.com>
-Fixes: c57813b8b288 ("i2c: designware: Lock the adapter while setting the suspended flag")
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Suggested-by: Chris Wilson <chris.p.wilson@intel.com>
+Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
+Reviewed-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
+Reviewed-by: Andi Shyti <andi.shyti@linux.intel.com>
+Link: https://lore.kernel.org/r/20230117175236.22317-1-nirmoy.das@intel.com
+Signed-off-by: Maxime Ripard <maxime@cerno.tech>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-designware-platdrv.c | 20 ++------------------
- 1 file changed, 2 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/drm_vma_manager.c | 76 ++++++++++++++++++++++---------
+ include/drm/drm_vma_manager.h     |  1 +
+ 2 files changed, 55 insertions(+), 22 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-designware-platdrv.c b/drivers/i2c/busses/i2c-designware-platdrv.c
-index ba043b547393..74182db03a88 100644
---- a/drivers/i2c/busses/i2c-designware-platdrv.c
-+++ b/drivers/i2c/busses/i2c-designware-platdrv.c
-@@ -351,13 +351,11 @@ static int dw_i2c_plat_probe(struct platform_device *pdev)
- 
- 	if (dev->flags & ACCESS_NO_IRQ_SUSPEND) {
- 		dev_pm_set_driver_flags(&pdev->dev,
--					DPM_FLAG_SMART_PREPARE |
--					DPM_FLAG_MAY_SKIP_RESUME);
-+					DPM_FLAG_SMART_PREPARE);
- 	} else {
- 		dev_pm_set_driver_flags(&pdev->dev,
- 					DPM_FLAG_SMART_PREPARE |
--					DPM_FLAG_SMART_SUSPEND |
--					DPM_FLAG_MAY_SKIP_RESUME);
-+					DPM_FLAG_SMART_SUSPEND);
- 	}
- 
- 	device_enable_async_suspend(&pdev->dev);
-@@ -419,21 +417,8 @@ static int dw_i2c_plat_prepare(struct device *dev)
- 	 */
- 	return !has_acpi_companion(dev);
+diff --git a/drivers/gpu/drm/drm_vma_manager.c b/drivers/gpu/drm/drm_vma_manager.c
+index 7de37f8c68fd..83229a031af0 100644
+--- a/drivers/gpu/drm/drm_vma_manager.c
++++ b/drivers/gpu/drm/drm_vma_manager.c
+@@ -240,27 +240,8 @@ void drm_vma_offset_remove(struct drm_vma_offset_manager *mgr,
  }
--
--static void dw_i2c_plat_complete(struct device *dev)
--{
--	/*
--	 * The device can only be in runtime suspend at this point if it has not
--	 * been resumed throughout the ending system suspend/resume cycle, so if
--	 * the platform firmware might mess up with it, request the runtime PM
--	 * framework to resume it.
--	 */
--	if (pm_runtime_suspended(dev) && pm_resume_via_firmware())
--		pm_request_resume(dev);
--}
- #else
- #define dw_i2c_plat_prepare	NULL
--#define dw_i2c_plat_complete	NULL
- #endif
+ EXPORT_SYMBOL(drm_vma_offset_remove);
  
- #ifdef CONFIG_PM
-@@ -483,7 +468,6 @@ static int __maybe_unused dw_i2c_plat_resume(struct device *dev)
+-/**
+- * drm_vma_node_allow - Add open-file to list of allowed users
+- * @node: Node to modify
+- * @tag: Tag of file to remove
+- *
+- * Add @tag to the list of allowed open-files for this node. If @tag is
+- * already on this list, the ref-count is incremented.
+- *
+- * The list of allowed-users is preserved across drm_vma_offset_add() and
+- * drm_vma_offset_remove() calls. You may even call it if the node is currently
+- * not added to any offset-manager.
+- *
+- * You must remove all open-files the same number of times as you added them
+- * before destroying the node. Otherwise, you will leak memory.
+- *
+- * This is locked against concurrent access internally.
+- *
+- * RETURNS:
+- * 0 on success, negative error code on internal failure (out-of-mem)
+- */
+-int drm_vma_node_allow(struct drm_vma_offset_node *node, struct drm_file *tag)
++static int vma_node_allow(struct drm_vma_offset_node *node,
++			  struct drm_file *tag, bool ref_counted)
+ {
+ 	struct rb_node **iter;
+ 	struct rb_node *parent = NULL;
+@@ -282,7 +263,8 @@ int drm_vma_node_allow(struct drm_vma_offset_node *node, struct drm_file *tag)
+ 		entry = rb_entry(*iter, struct drm_vma_offset_file, vm_rb);
  
- static const struct dev_pm_ops dw_i2c_dev_pm_ops = {
- 	.prepare = dw_i2c_plat_prepare,
--	.complete = dw_i2c_plat_complete,
- 	SET_LATE_SYSTEM_SLEEP_PM_OPS(dw_i2c_plat_suspend, dw_i2c_plat_resume)
- 	SET_RUNTIME_PM_OPS(dw_i2c_plat_runtime_suspend, dw_i2c_plat_runtime_resume, NULL)
- };
+ 		if (tag == entry->vm_tag) {
+-			entry->vm_count++;
++			if (ref_counted)
++				entry->vm_count++;
+ 			goto unlock;
+ 		} else if (tag > entry->vm_tag) {
+ 			iter = &(*iter)->rb_right;
+@@ -307,8 +289,58 @@ int drm_vma_node_allow(struct drm_vma_offset_node *node, struct drm_file *tag)
+ 	kfree(new);
+ 	return ret;
+ }
++
++/**
++ * drm_vma_node_allow - Add open-file to list of allowed users
++ * @node: Node to modify
++ * @tag: Tag of file to remove
++ *
++ * Add @tag to the list of allowed open-files for this node. If @tag is
++ * already on this list, the ref-count is incremented.
++ *
++ * The list of allowed-users is preserved across drm_vma_offset_add() and
++ * drm_vma_offset_remove() calls. You may even call it if the node is currently
++ * not added to any offset-manager.
++ *
++ * You must remove all open-files the same number of times as you added them
++ * before destroying the node. Otherwise, you will leak memory.
++ *
++ * This is locked against concurrent access internally.
++ *
++ * RETURNS:
++ * 0 on success, negative error code on internal failure (out-of-mem)
++ */
++int drm_vma_node_allow(struct drm_vma_offset_node *node, struct drm_file *tag)
++{
++	return vma_node_allow(node, tag, true);
++}
+ EXPORT_SYMBOL(drm_vma_node_allow);
+ 
++/**
++ * drm_vma_node_allow_once - Add open-file to list of allowed users
++ * @node: Node to modify
++ * @tag: Tag of file to remove
++ *
++ * Add @tag to the list of allowed open-files for this node.
++ *
++ * The list of allowed-users is preserved across drm_vma_offset_add() and
++ * drm_vma_offset_remove() calls. You may even call it if the node is currently
++ * not added to any offset-manager.
++ *
++ * This is not ref-counted unlike drm_vma_node_allow() hence drm_vma_node_revoke()
++ * should only be called once after this.
++ *
++ * This is locked against concurrent access internally.
++ *
++ * RETURNS:
++ * 0 on success, negative error code on internal failure (out-of-mem)
++ */
++int drm_vma_node_allow_once(struct drm_vma_offset_node *node, struct drm_file *tag)
++{
++	return vma_node_allow(node, tag, false);
++}
++EXPORT_SYMBOL(drm_vma_node_allow_once);
++
+ /**
+  * drm_vma_node_revoke - Remove open-file from list of allowed users
+  * @node: Node to modify
+diff --git a/include/drm/drm_vma_manager.h b/include/drm/drm_vma_manager.h
+index 4f8c35206f7c..6c2a2f21dbf0 100644
+--- a/include/drm/drm_vma_manager.h
++++ b/include/drm/drm_vma_manager.h
+@@ -74,6 +74,7 @@ void drm_vma_offset_remove(struct drm_vma_offset_manager *mgr,
+ 			   struct drm_vma_offset_node *node);
+ 
+ int drm_vma_node_allow(struct drm_vma_offset_node *node, struct drm_file *tag);
++int drm_vma_node_allow_once(struct drm_vma_offset_node *node, struct drm_file *tag);
+ void drm_vma_node_revoke(struct drm_vma_offset_node *node,
+ 			 struct drm_file *tag);
+ bool drm_vma_node_is_allowed(struct drm_vma_offset_node *node,
 -- 
 2.39.0
 
