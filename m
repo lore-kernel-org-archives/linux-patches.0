@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 755E228EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:56:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC23DC433D2;
-	Mon, 30 Jan 2023 13:56:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DEBD28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:56:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 125D6C433D2;
+	Mon, 30 Jan 2023 13:56:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675086964;
-	bh=1OK8LLH93mzD3AX+UbGUS752enwr8xTZ/Xqdqymlh4s=;
+	s=korg; t=1675086967;
+	bh=mrxBIJ7OOW3AcZsjeS9qK++IRjH9Dhoyx6/83Eiwi/Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xL9XVtjNkbS09E+XeLnIZJZB1/Hrbzzr0fQSIqdMaWP/dkZdK6CM5lBdqyebxQJ3L
-	 YbDVxAiZNBL2USjeF1iSjUK73av/jojmgWZGs+IE3xaw1i82nebBK0Hxp4SDpULYfy
-	 r6Df8SV43ilInqnytUlZpNsDTIOFebdBqNhrzjuM=
+	b=H0M68n3K4KCebtPCS3ruZj4e4Vcj3VptdZmPWFKemKP6UCcsatM9K9rTnG+4/xWNs
+	 s4s9Hdl8JNvXHUHQ9YwSQfP6sPFIEVlP83xCTc3ZoZrfHT3ZHrJhCxnikBo1sczFmq
+	 aANB+qpi38BIApBItXCC+LdDFKVv42OMMRMmDMRI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Nicolas Schier <nicolas@fjasle.eu>,
+	Christoph Hellwig <hch@lst.de>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 055/313] kbuild: export top-level LDFLAGS_vmlinux only to scripts/Makefile.vmlinux
-Date: Mon, 30 Jan 2023 14:48:10 +0100
-Message-Id: <20230130134339.262530801@linuxfoundation.org>
+Subject: [PATCH 6.1 038/313] block: untangle request_queue refcounting from sysfs
+Date: Mon, 30 Jan 2023 14:47:53 +0100
+Message-Id: <20230130134338.453340205@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,142 +35,398 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit 8debed3efe3a731451ad9a91a7a74eeb18a7f7eb ]
+[ Upstream commit 2bd85221a625b316114bafaab527770b607095d3 ]
 
-Nathan Chancellor reports that $(NM) emits an error message when
-GNU Make 4.4 is used to build the ARM zImage.
+The kobject embedded into the request_queue is used for the queue
+directory in sysfs, but that is a child of the gendisks directory and is
+intimately tied to it.  Move this kobject to the gendisk and use a
+refcount_t in the request_queue for the actual request_queue refcounting
+that is completely unrelated to the device model.
 
-  $ make-4.4 ARCH=arm CROSS_COMPILE=arm-linux-gnueabi- O=build defconfig zImage
-    [snip]
-    LD      vmlinux
-    NM      System.map
-    SORTTAB vmlinux
-    OBJCOPY arch/arm/boot/Image
-    Kernel: arch/arm/boot/Image is ready
-  arm-linux-gnueabi-nm: 'arch/arm/boot/compressed/../../../../vmlinux': No such file
-  /bin/sh: 1: arithmetic expression: expecting primary: " "
-    LDS     arch/arm/boot/compressed/vmlinux.lds
-    AS      arch/arm/boot/compressed/head.o
-    GZIP    arch/arm/boot/compressed/piggy_data
-    AS      arch/arm/boot/compressed/piggy.o
-    CC      arch/arm/boot/compressed/misc.o
-
-This occurs since GNU Make commit 98da874c4303 ("[SV 10593] Export
-variables to $(shell ...) commands"), and the O= option is needed to
-reproduce it. The generated zImage is correct despite the error message.
-
-As the commit description of 98da874c4303 [1] says, exported variables
-are passed down to $(shell ) functions, which means exported recursive
-variables might be expanded earlier than before, in the parse stage.
-
-The following test code demonstrates the change for GNU Make 4.4.
-
-[Test Makefile]
-
-  $(shell echo hello > foo)
-  export foo = $(shell cat bar/../foo)
-  $(shell mkdir bar)
-
-  all:
-          @echo $(foo)
-
-[GNU Make 4.3]
-
-  $ rm -rf bar; make-4.3
-  hello
-
-[GNU Make 4.4]
-
-  $ rm -rf bar; make-4.4
-  cat: bar/../foo: No such file or directory
-  hello
-
-The 'foo' is a resursively expanded (i.e. lazily expanded) variable.
-
-GNU Make 4.3 expands 'foo' just before running the recipe '@echo $(foo)',
-at this point, the directory 'bar' exists.
-
-GNU Make 4.4 expands 'foo' to evaluate $(shell mkdir bar) because it is
-exported. At this point, the directory 'bar' does not exit yet. The cat
-command cannot resolve the bar/../foo path, hence the error message.
-
-Let's get back to the kernel Makefile.
-
-In arch/arm/boot/compressed/Makefile, KBSS_SZ is referenced by
-LDFLAGS_vmlinux, which is recursive and also exported by the top
-Makefile.
-
-GNU Make 4.3 expands KBSS_SZ just before running the recipes, so no
-error message.
-
-GNU Make 4.4 expands KBSS_SZ in the parse stage, where the directory
-arm/arm/boot/compressed does not exit yet. When compiled with O=,
-the output directory is created by $(shell mkdir -p $(obj-dirs))
-in scripts/Makefile.build.
-
-There are two ways to fix this particular issue:
-
- - change "$(obj)/../../../../vmlinux" in KBSS_SZ to "vmlinux"
- - unexport LDFLAGS_vmlinux
-
-This commit takes the latter course because it is what I originally
-intended.
-
-Commit 3ec8a5b33dea ("kbuild: do not export LDFLAGS_vmlinux")
-unexported LDFLAGS_vmlinux.
-
-Commit 5d4aeffbf709 ("kbuild: rebuild .vmlinux.export.o when its
-prerequisite is updated") accidentally exported it again.
-
-We can clean up arch/arm/boot/compressed/Makefile later.
-
-[1]: https://git.savannah.gnu.org/cgit/make.git/commit/?id=98da874c43035a490cdca81331724f233a3d0c9a
-
-Link: https://lore.kernel.org/all/Y7i8+EjwdnhHtlrr@dev-arch.thelio-3990X/
-Fixes: 5d4aeffbf709 ("kbuild: rebuild .vmlinux.export.o when its prerequisite is updated")
-Reported-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Reviewed-by: Nicolas Schier <nicolas@fjasle.eu>
-Tested-by: Nathan Chancellor <nathan@kernel.org>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Link: https://lore.kernel.org/r/20221114042637.1009333-5-hch@lst.de
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: 49e4d04f0486 ("block: Drop spurious might_sleep() from blk_put_queue()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Makefile | 14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ block/blk-core.c         | 42 ++++++++++++++++----
+ block/blk-crypto-sysfs.c |  4 +-
+ block/blk-ia-ranges.c    |  3 +-
+ block/blk-sysfs.c        | 86 +++++++++++-----------------------------
+ block/blk.h              |  4 --
+ block/bsg.c              | 11 +++--
+ block/elevator.c         |  2 +-
+ include/linux/blkdev.h   |  6 +--
+ 8 files changed, 71 insertions(+), 87 deletions(-)
 
-diff --git a/Makefile b/Makefile
-index 49261450039a..770e509d4da4 100644
---- a/Makefile
-+++ b/Makefile
-@@ -538,7 +538,7 @@ LDFLAGS_MODULE  =
- CFLAGS_KERNEL	=
- RUSTFLAGS_KERNEL =
- AFLAGS_KERNEL	=
--export LDFLAGS_vmlinux =
-+LDFLAGS_vmlinux =
+diff --git a/block/blk-core.c b/block/blk-core.c
+index 9d6a947024ea..7de1bb16e9a7 100644
+--- a/block/blk-core.c
++++ b/block/blk-core.c
+@@ -59,12 +59,12 @@ EXPORT_TRACEPOINT_SYMBOL_GPL(block_split);
+ EXPORT_TRACEPOINT_SYMBOL_GPL(block_unplug);
+ EXPORT_TRACEPOINT_SYMBOL_GPL(block_rq_insert);
  
- # Use USERINCLUDE when you must reference the UAPI directories only.
- USERINCLUDE    := \
-@@ -1232,6 +1232,18 @@ vmlinux.o modules.builtin.modinfo modules.builtin: vmlinux_o
- 	@:
+-DEFINE_IDA(blk_queue_ida);
++static DEFINE_IDA(blk_queue_ida);
  
- PHONY += vmlinux
-+# LDFLAGS_vmlinux in the top Makefile defines linker flags for the top vmlinux,
-+# not for decompressors. LDFLAGS_vmlinux in arch/*/boot/compressed/Makefile is
-+# unrelated; the decompressors just happen to have the same base name,
-+# arch/*/boot/compressed/vmlinux.
-+# Export LDFLAGS_vmlinux only to scripts/Makefile.vmlinux.
-+#
-+# _LDFLAGS_vmlinux is a workaround for the 'private export' bug:
-+#   https://savannah.gnu.org/bugs/?61463
-+# For Make > 4.4, the following simple code will work:
-+#  vmlinux: private export LDFLAGS_vmlinux := $(LDFLAGS_vmlinux)
-+vmlinux: private _LDFLAGS_vmlinux := $(LDFLAGS_vmlinux)
-+vmlinux: export LDFLAGS_vmlinux = $(_LDFLAGS_vmlinux)
- vmlinux: vmlinux.o $(KBUILD_LDS) modpost
- 	$(Q)$(MAKE) -f $(srctree)/scripts/Makefile.vmlinux
+ /*
+  * For queue allocation
+  */
+-struct kmem_cache *blk_requestq_cachep;
++static struct kmem_cache *blk_requestq_cachep;
  
+ /*
+  * Controlling structure to kblockd
+@@ -252,19 +252,46 @@ void blk_clear_pm_only(struct request_queue *q)
+ }
+ EXPORT_SYMBOL_GPL(blk_clear_pm_only);
+ 
++static void blk_free_queue_rcu(struct rcu_head *rcu_head)
++{
++	kmem_cache_free(blk_requestq_cachep,
++			container_of(rcu_head, struct request_queue, rcu_head));
++}
++
++static void blk_free_queue(struct request_queue *q)
++{
++	might_sleep();
++
++	percpu_ref_exit(&q->q_usage_counter);
++
++	if (q->poll_stat)
++		blk_stat_remove_callback(q, q->poll_cb);
++	blk_stat_free_callback(q->poll_cb);
++
++	blk_free_queue_stats(q->stats);
++	kfree(q->poll_stat);
++
++	if (queue_is_mq(q))
++		blk_mq_release(q);
++
++	ida_free(&blk_queue_ida, q->id);
++	call_rcu(&q->rcu_head, blk_free_queue_rcu);
++}
++
+ /**
+  * blk_put_queue - decrement the request_queue refcount
+  * @q: the request_queue structure to decrement the refcount for
+  *
+- * Decrements the refcount of the request_queue kobject. When this reaches 0
+- * we'll have blk_release_queue() called.
++ * Decrements the refcount of the request_queue and free it when the refcount
++ * reaches 0.
+  *
+  * Context: Any context, but the last reference must not be dropped from
+  *          atomic context.
+  */
+ void blk_put_queue(struct request_queue *q)
+ {
+-	kobject_put(&q->kobj);
++	if (refcount_dec_and_test(&q->refs))
++		blk_free_queue(q);
+ }
+ EXPORT_SYMBOL(blk_put_queue);
+ 
+@@ -399,8 +426,7 @@ struct request_queue *blk_alloc_queue(int node_id)
+ 	INIT_WORK(&q->timeout_work, blk_timeout_work);
+ 	INIT_LIST_HEAD(&q->icq_list);
+ 
+-	kobject_init(&q->kobj, &blk_queue_ktype);
+-
++	refcount_set(&q->refs, 1);
+ 	mutex_init(&q->debugfs_mutex);
+ 	mutex_init(&q->sysfs_lock);
+ 	mutex_init(&q->sysfs_dir_lock);
+@@ -444,7 +470,7 @@ bool blk_get_queue(struct request_queue *q)
+ {
+ 	if (unlikely(blk_queue_dying(q)))
+ 		return false;
+-	kobject_get(&q->kobj);
++	refcount_inc(&q->refs);
+ 	return true;
+ }
+ EXPORT_SYMBOL(blk_get_queue);
+diff --git a/block/blk-crypto-sysfs.c b/block/blk-crypto-sysfs.c
+index e05f145cd797..55268edc0625 100644
+--- a/block/blk-crypto-sysfs.c
++++ b/block/blk-crypto-sysfs.c
+@@ -140,8 +140,8 @@ int blk_crypto_sysfs_register(struct gendisk *disk)
+ 		return -ENOMEM;
+ 	obj->profile = q->crypto_profile;
+ 
+-	err = kobject_init_and_add(&obj->kobj, &blk_crypto_ktype, &q->kobj,
+-				   "crypto");
++	err = kobject_init_and_add(&obj->kobj, &blk_crypto_ktype,
++				   &disk->queue_kobj, "crypto");
+ 	if (err) {
+ 		kobject_put(&obj->kobj);
+ 		return err;
+diff --git a/block/blk-ia-ranges.c b/block/blk-ia-ranges.c
+index 2bd1d311033b..2141931ddd37 100644
+--- a/block/blk-ia-ranges.c
++++ b/block/blk-ia-ranges.c
+@@ -123,7 +123,8 @@ int disk_register_independent_access_ranges(struct gendisk *disk)
+ 	 */
+ 	WARN_ON(iars->sysfs_registered);
+ 	ret = kobject_init_and_add(&iars->kobj, &blk_ia_ranges_ktype,
+-				   &q->kobj, "%s", "independent_access_ranges");
++				   &disk->queue_kobj, "%s",
++				   "independent_access_ranges");
+ 	if (ret) {
+ 		disk->ia_ranges = NULL;
+ 		kobject_put(&iars->kobj);
+diff --git a/block/blk-sysfs.c b/block/blk-sysfs.c
+index 1631ba2f7259..35e854bb6e0c 100644
+--- a/block/blk-sysfs.c
++++ b/block/blk-sysfs.c
+@@ -680,8 +680,8 @@ static struct attribute *queue_attrs[] = {
+ static umode_t queue_attr_visible(struct kobject *kobj, struct attribute *attr,
+ 				int n)
+ {
+-	struct request_queue *q =
+-		container_of(kobj, struct request_queue, kobj);
++	struct gendisk *disk = container_of(kobj, struct gendisk, queue_kobj);
++	struct request_queue *q = disk->queue;
+ 
+ 	if (attr == &queue_io_timeout_entry.attr &&
+ 		(!q->mq_ops || !q->mq_ops->timeout))
+@@ -707,8 +707,8 @@ static ssize_t
+ queue_attr_show(struct kobject *kobj, struct attribute *attr, char *page)
+ {
+ 	struct queue_sysfs_entry *entry = to_queue(attr);
+-	struct request_queue *q =
+-		container_of(kobj, struct request_queue, kobj);
++	struct gendisk *disk = container_of(kobj, struct gendisk, queue_kobj);
++	struct request_queue *q = disk->queue;
+ 	ssize_t res;
+ 
+ 	if (!entry->show)
+@@ -724,63 +724,19 @@ queue_attr_store(struct kobject *kobj, struct attribute *attr,
+ 		    const char *page, size_t length)
+ {
+ 	struct queue_sysfs_entry *entry = to_queue(attr);
+-	struct request_queue *q;
++	struct gendisk *disk = container_of(kobj, struct gendisk, queue_kobj);
++	struct request_queue *q = disk->queue;
+ 	ssize_t res;
+ 
+ 	if (!entry->store)
+ 		return -EIO;
+ 
+-	q = container_of(kobj, struct request_queue, kobj);
+ 	mutex_lock(&q->sysfs_lock);
+ 	res = entry->store(q, page, length);
+ 	mutex_unlock(&q->sysfs_lock);
+ 	return res;
+ }
+ 
+-static void blk_free_queue_rcu(struct rcu_head *rcu_head)
+-{
+-	kmem_cache_free(blk_requestq_cachep,
+-			container_of(rcu_head, struct request_queue, rcu_head));
+-}
+-
+-/**
+- * blk_release_queue - releases all allocated resources of the request_queue
+- * @kobj: pointer to a kobject, whose container is a request_queue
+- *
+- * This function releases all allocated resources of the request queue.
+- *
+- * The struct request_queue refcount is incremented with blk_get_queue() and
+- * decremented with blk_put_queue(). Once the refcount reaches 0 this function
+- * is called.
+- *
+- * Drivers exist which depend on the release of the request_queue to be
+- * synchronous, it should not be deferred.
+- *
+- * Context: can sleep
+- */
+-static void blk_release_queue(struct kobject *kobj)
+-{
+-	struct request_queue *q =
+-		container_of(kobj, struct request_queue, kobj);
+-
+-	might_sleep();
+-
+-	percpu_ref_exit(&q->q_usage_counter);
+-
+-	if (q->poll_stat)
+-		blk_stat_remove_callback(q, q->poll_cb);
+-	blk_stat_free_callback(q->poll_cb);
+-
+-	blk_free_queue_stats(q->stats);
+-	kfree(q->poll_stat);
+-
+-	if (queue_is_mq(q))
+-		blk_mq_release(q);
+-
+-	ida_free(&blk_queue_ida, q->id);
+-	call_rcu(&q->rcu_head, blk_free_queue_rcu);
+-}
+-
+ static const struct sysfs_ops queue_sysfs_ops = {
+ 	.show	= queue_attr_show,
+ 	.store	= queue_attr_store,
+@@ -791,10 +747,15 @@ static const struct attribute_group *blk_queue_attr_groups[] = {
+ 	NULL
+ };
+ 
+-struct kobj_type blk_queue_ktype = {
++static void blk_queue_release(struct kobject *kobj)
++{
++	/* nothing to do here, all data is associated with the parent gendisk */
++}
++
++static struct kobj_type blk_queue_ktype = {
+ 	.default_groups = blk_queue_attr_groups,
+ 	.sysfs_ops	= &queue_sysfs_ops,
+-	.release	= blk_release_queue,
++	.release	= blk_queue_release,
+ };
+ 
+ static void blk_debugfs_remove(struct gendisk *disk)
+@@ -820,20 +781,20 @@ int blk_register_queue(struct gendisk *disk)
+ 	int ret;
+ 
+ 	mutex_lock(&q->sysfs_dir_lock);
+-	ret = kobject_add(&q->kobj, &disk_to_dev(disk)->kobj, "queue");
++	kobject_init(&disk->queue_kobj, &blk_queue_ktype);
++	ret = kobject_add(&disk->queue_kobj, &disk_to_dev(disk)->kobj, "queue");
+ 	if (ret < 0)
+-		goto out_unlock_dir;
++		goto out_put_queue_kobj;
+ 
+ 	if (queue_is_mq(q)) {
+ 		ret = blk_mq_sysfs_register(disk);
+ 		if (ret)
+-			goto out_del_queue_kobj;
++			goto out_put_queue_kobj;
+ 	}
+ 	mutex_lock(&q->sysfs_lock);
+ 
+ 	mutex_lock(&q->debugfs_mutex);
+-	q->debugfs_dir = debugfs_create_dir(kobject_name(q->kobj.parent),
+-					    blk_debugfs_root);
++	q->debugfs_dir = debugfs_create_dir(disk->disk_name, blk_debugfs_root);
+ 	if (queue_is_mq(q))
+ 		blk_mq_debugfs_register(q);
+ 	mutex_unlock(&q->debugfs_mutex);
+@@ -857,7 +818,7 @@ int blk_register_queue(struct gendisk *disk)
+ 	blk_throtl_register(disk);
+ 
+ 	/* Now everything is ready and send out KOBJ_ADD uevent */
+-	kobject_uevent(&q->kobj, KOBJ_ADD);
++	kobject_uevent(&disk->queue_kobj, KOBJ_ADD);
+ 	if (q->elevator)
+ 		kobject_uevent(&q->elevator->kobj, KOBJ_ADD);
+ 	mutex_unlock(&q->sysfs_lock);
+@@ -886,9 +847,8 @@ int blk_register_queue(struct gendisk *disk)
+ out_debugfs_remove:
+ 	blk_debugfs_remove(disk);
+ 	mutex_unlock(&q->sysfs_lock);
+-out_del_queue_kobj:
+-	kobject_del(&q->kobj);
+-out_unlock_dir:
++out_put_queue_kobj:
++	kobject_put(&disk->queue_kobj);
+ 	mutex_unlock(&q->sysfs_dir_lock);
+ 	return ret;
+ }
+@@ -935,8 +895,8 @@ void blk_unregister_queue(struct gendisk *disk)
+ 	mutex_unlock(&q->sysfs_lock);
+ 
+ 	/* Now that we've deleted all child objects, we can delete the queue. */
+-	kobject_uevent(&q->kobj, KOBJ_REMOVE);
+-	kobject_del(&q->kobj);
++	kobject_uevent(&disk->queue_kobj, KOBJ_REMOVE);
++	kobject_del(&disk->queue_kobj);
+ 	mutex_unlock(&q->sysfs_dir_lock);
+ 
+ 	blk_debugfs_remove(disk);
+diff --git a/block/blk.h b/block/blk.h
+index 0661fa4b3a4d..6fe583dd6e3b 100644
+--- a/block/blk.h
++++ b/block/blk.h
+@@ -26,10 +26,6 @@ struct blk_flush_queue {
+ 	spinlock_t		mq_flush_lock;
+ };
+ 
+-extern struct kmem_cache *blk_requestq_cachep;
+-extern struct kobj_type blk_queue_ktype;
+-extern struct ida blk_queue_ida;
+-
+ bool is_flush_rq(struct request *req);
+ 
+ struct blk_flush_queue *blk_alloc_flush_queue(int node, int cmd_size,
+diff --git a/block/bsg.c b/block/bsg.c
+index 2ab1351eb082..8eba57b9bb46 100644
+--- a/block/bsg.c
++++ b/block/bsg.c
+@@ -175,8 +175,10 @@ static void bsg_device_release(struct device *dev)
+ 
+ void bsg_unregister_queue(struct bsg_device *bd)
+ {
+-	if (bd->queue->kobj.sd)
+-		sysfs_remove_link(&bd->queue->kobj, "bsg");
++	struct gendisk *disk = bd->queue->disk;
++
++	if (disk && disk->queue_kobj.sd)
++		sysfs_remove_link(&disk->queue_kobj, "bsg");
+ 	cdev_device_del(&bd->cdev, &bd->device);
+ 	put_device(&bd->device);
+ }
+@@ -216,8 +218,9 @@ struct bsg_device *bsg_register_queue(struct request_queue *q,
+ 	if (ret)
+ 		goto out_put_device;
+ 
+-	if (q->kobj.sd) {
+-		ret = sysfs_create_link(&q->kobj, &bd->device.kobj, "bsg");
++	if (q->disk && q->disk->queue_kobj.sd) {
++		ret = sysfs_create_link(&q->disk->queue_kobj, &bd->device.kobj,
++					"bsg");
+ 		if (ret)
+ 			goto out_device_del;
+ 	}
+diff --git a/block/elevator.c b/block/elevator.c
+index bd71f0fc4e4b..ac096f494911 100644
+--- a/block/elevator.c
++++ b/block/elevator.c
+@@ -499,7 +499,7 @@ int elv_register_queue(struct request_queue *q, bool uevent)
+ 
+ 	lockdep_assert_held(&q->sysfs_lock);
+ 
+-	error = kobject_add(&e->kobj, &q->kobj, "%s", "iosched");
++	error = kobject_add(&e->kobj, &q->disk->queue_kobj, "iosched");
+ 	if (!error) {
+ 		struct elv_fs_entry *attr = e->type->elevator_attrs;
+ 		if (attr) {
+diff --git a/include/linux/blkdev.h b/include/linux/blkdev.h
+index 36c286d22fb2..17dc59c5aa90 100644
+--- a/include/linux/blkdev.h
++++ b/include/linux/blkdev.h
+@@ -155,6 +155,7 @@ struct gendisk {
+ 	unsigned open_partitions;	/* number of open partitions */
+ 
+ 	struct backing_dev_info	*bdi;
++	struct kobject queue_kobj;	/* the queue/ directory */
+ 	struct kobject *slave_dir;
+ #ifdef CONFIG_BLOCK_HOLDER_DEPRECATED
+ 	struct list_head slave_bdevs;
+@@ -437,10 +438,7 @@ struct request_queue {
+ 
+ 	struct gendisk		*disk;
+ 
+-	/*
+-	 * queue kobject
+-	 */
+-	struct kobject kobj;
++	refcount_t		refs;
+ 
+ 	/*
+ 	 * mq queue kobject
 -- 
 2.39.0
 
