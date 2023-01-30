@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 493AF28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:12:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93F3EC433EF;
-	Mon, 30 Jan 2023 14:12:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A36D28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:12:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E788C433D2;
+	Mon, 30 Jan 2023 14:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087951;
-	bh=pRgRBK8jJLrpJqaeV0PxZ+NRBqxZjf7mzsZwif1bYck=;
+	s=korg; t=1675087954;
+	bh=1+EqSCh+MI8+1yG5YgYl1rTfrhhhLtc6vZ/QlWufpJQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xS2/aIcKZG63c0wXcgfImunyfHgEWM+nPaew+yeBGIEQRLMPAkTXCr0h6pv0ePy+y
-	 gJGLWjTZRLE1Itm4l4af/aPcbhgmyOmIJ+QDyzmBk2wJJkLLgj4zc47aiESn/P9e0x
-	 l8wYCVGYBZPF84BtoTK90dUHYskgjb7hVFt12D1Q=
+	b=RqhsXfKFWWN73CGgB9FnZ3DIFWiNmpWdQAKfTZye5lZqB5ajMpZfyB9XddNQl7c8l
+	 n13Hxx7Odw0AzierKgeNXa0hX4EP1MeKhGFCAqRPCXvBV1RtAF7zUz7FYj/heARdhE
+	 d7bl9vBpW1bPQykhNvz3xtrG6En+xen2dKl2j4AY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Udipto Goswami <quic_ugoswami@quicinc.com>,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	syzbot+d7ce59...@syzkaller.appspotmail.com,
+	Ying Hsu <yinghsu@chromium.org>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 064/204] usb: gadget: f_fs: Ensure ep0req is dequeued before free_request
-Date: Mon, 30 Jan 2023 14:50:29 +0100
-Message-Id: <20230130134319.117385910@linuxfoundation.org>
+Subject: [PATCH 5.15 065/204] Bluetooth: Fix possible deadlock in rfcomm_sk_state_change
+Date: Mon, 30 Jan 2023 14:50:30 +0100
+Message-Id: <20230130134319.166645041@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,41 +36,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Udipto Goswami <quic_ugoswami@quicinc.com>
+From: Ying Hsu <yinghsu@chromium.org>
 
-[ Upstream commit ce405d561b020e5a46340eb5146805a625dcacee ]
+[ Upstream commit 1d80d57ffcb55488f0ec0b77928d4f82d16b6a90 ]
 
-As per the documentation, function usb_ep_free_request guarantees
-the request will not be queued or no longer be re-queued (or
-otherwise used). However, with the current implementation it
-doesn't make sure that the request in ep0 isn't reused.
+syzbot reports a possible deadlock in rfcomm_sk_state_change [1].
+While rfcomm_sock_connect acquires the sk lock and waits for
+the rfcomm lock, rfcomm_sock_release could have the rfcomm
+lock and hit a deadlock for acquiring the sk lock.
+Here's a simplified flow:
 
-Fix this by dequeuing the ep0req on functionfs_unbind before
-freeing the request to align with the definition.
+rfcomm_sock_connect:
+  lock_sock(sk)
+  rfcomm_dlc_open:
+    rfcomm_lock()
 
-Fixes: ddf8abd25994 ("USB: f_fs: the FunctionFS driver")
-Signed-off-by: Udipto Goswami <quic_ugoswami@quicinc.com>
-Tested-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Link: https://lore.kernel.org/r/20221215052906.8993-3-quic_ugoswami@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+rfcomm_sock_release:
+  rfcomm_sock_shutdown:
+    rfcomm_lock()
+    __rfcomm_dlc_close:
+        rfcomm_k_state_change:
+	  lock_sock(sk)
+
+This patch drops the sk lock before calling rfcomm_dlc_open to
+avoid the possible deadlock and holds sk's reference count to
+prevent use-after-free after rfcomm_dlc_open completes.
+
+Reported-by: syzbot+d7ce59...@syzkaller.appspotmail.com
+Fixes: 1804fdf6e494 ("Bluetooth: btintel: Combine setting up MSFT extension")
+Link: https://syzkaller.appspot.com/bug?extid=d7ce59b06b3eb14fd218 [1]
+
+Signed-off-by: Ying Hsu <yinghsu@chromium.org>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_fs.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/bluetooth/rfcomm/sock.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
-index 54f36d5c42a7..c9145ee95956 100644
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -1895,6 +1895,8 @@ static void functionfs_unbind(struct ffs_data *ffs)
- 	ENTER();
+diff --git a/net/bluetooth/rfcomm/sock.c b/net/bluetooth/rfcomm/sock.c
+index 21e24da4847f..4397e14ff560 100644
+--- a/net/bluetooth/rfcomm/sock.c
++++ b/net/bluetooth/rfcomm/sock.c
+@@ -391,6 +391,7 @@ static int rfcomm_sock_connect(struct socket *sock, struct sockaddr *addr, int a
+ 	    addr->sa_family != AF_BLUETOOTH)
+ 		return -EINVAL;
  
- 	if (!WARN_ON(!ffs->gadget)) {
-+		/* dequeue before freeing ep0req */
-+		usb_ep_dequeue(ffs->gadget->ep0, ffs->ep0req);
- 		mutex_lock(&ffs->mutex);
- 		usb_ep_free_request(ffs->gadget->ep0, ffs->ep0req);
- 		ffs->ep0req = NULL;
++	sock_hold(sk);
+ 	lock_sock(sk);
+ 
+ 	if (sk->sk_state != BT_OPEN && sk->sk_state != BT_BOUND) {
+@@ -410,14 +411,18 @@ static int rfcomm_sock_connect(struct socket *sock, struct sockaddr *addr, int a
+ 	d->sec_level = rfcomm_pi(sk)->sec_level;
+ 	d->role_switch = rfcomm_pi(sk)->role_switch;
+ 
++	/* Drop sock lock to avoid potential deadlock with the RFCOMM lock */
++	release_sock(sk);
+ 	err = rfcomm_dlc_open(d, &rfcomm_pi(sk)->src, &sa->rc_bdaddr,
+ 			      sa->rc_channel);
+-	if (!err)
++	lock_sock(sk);
++	if (!err && !sock_flag(sk, SOCK_ZAPPED))
+ 		err = bt_sock_wait_state(sk, BT_CONNECTED,
+ 				sock_sndtimeo(sk, flags & O_NONBLOCK));
+ 
+ done:
+ 	release_sock(sk);
++	sock_put(sk);
+ 	return err;
+ }
+ 
 -- 
 2.39.0
 
