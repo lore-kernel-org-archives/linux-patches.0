@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A73F728EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:56:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F6EAC433D2;
-	Mon, 30 Jan 2023 13:56:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9E0928EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:56:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20214C433EF;
+	Mon, 30 Jan 2023 13:56:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675086973;
-	bh=UeGqHrvCWKj5EAXMF8Sn6n5DCLBy4MFpPvC5d4V2EpE=;
+	s=korg; t=1675086976;
+	bh=4a+QTkMdc0mzJHSgqQaJuAN6fofa782hTTFz+JbDLoA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HGU6jLjkgx5I3tPU8yki/ASbFDFWTpdSD0iqzkIR30xqBAy/ruF8pCpyZoa8Mo3NA
-	 +3iqqOYN+/296FBqZztQPbloVDBQ9KWxtscCCOkb1DUeVOhrEtLW9/MK3YFu50IsDU
-	 DBM/oEKRhZfvb6VhYJtqO8iyGe7V7aLoyR9aChM4=
+	b=PEeGRrWmnMPFWgLfvl1C9v3x1cFYdkXg6f5cFVXHoY5bhlA9Rx2rQ9elUz27qkmIz
+	 baD24VTgUtHIWrnEV3lRjl5pfKrV+5xihjyZPGC66HtswHoC+CgdSdDwJI12W6y+qu
+	 y/Q9U+eKCW5LrECXmIPHvYcEM46cJYESOpWnNtZo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Kishon Vijay Abraham I <kishon@kernel.org>,
-	linux-phy@lists.infradead.org,
-	Arnd Bergmann <arnd@arndb.de>,
+	Rob Clark <robdclark@chromium.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/313] phy: ti: fix Kconfig warning and operator precedence
-Date: Mon, 30 Jan 2023 14:48:12 +0100
-Message-Id: <20230130134339.344522391@linuxfoundation.org>
+Subject: [PATCH 6.1 058/313] drm/msm/gpu: Fix potential double-free
+Date: Mon, 30 Jan 2023 14:48:13 +0100
+Message-Id: <20230130134339.395561259@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -38,53 +34,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 7124c93887cc4e6c5b48920f83115e4a5892e870 ]
+[ Upstream commit a66f1efcf748febea7758c4c3c8b5bc5294949ef ]
 
-Fix Kconfig depends operator precedence to prevent a Kconfig warning:
+If userspace was calling the MSM_SET_PARAM ioctl on multiple threads to
+set the COMM or CMDLINE param, it could trigger a race causing the
+previous value to be kfree'd multiple times.  Fix this by serializing on
+the gpu lock.
 
-WARNING: unmet direct dependencies detected for MUX_MMIO
-  Depends on [n]: MULTIPLEXER [=m] && OF [=n]
-  Selected by [m]:
-  - PHY_AM654_SERDES [=m] && (OF [=n] && ARCH_K3 || COMPILE_TEST [=y]) && COMMON_CLK [=y]
-
-Fixes: 71e2f5c5c224 ("phy: ti: Add a new SERDES driver for TI's AM654x SoC")
-Fixes: 091876cc355d ("phy: ti: j721e-wiz: Add support for WIZ module present in TI J721E SoC")
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Cc: Vinod Koul <vkoul@kernel.org>
-Cc: Kishon Vijay Abraham I <kishon@kernel.org>
-Cc: linux-phy@lists.infradead.org
-Cc: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230110062529.22668-1-rdunlap@infradead.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Fixes: d4726d770068 ("drm/msm: Add a way to override processes comm/cmdline")
+Patchwork: https://patchwork.freedesktop.org/patch/517778/
+Link: https://lore.kernel.org/r/20230110212903.1925878-1-robdclark@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/phy/ti/Kconfig | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c |  4 ++++
+ drivers/gpu/drm/msm/msm_gpu.c           |  2 ++
+ drivers/gpu/drm/msm/msm_gpu.h           | 12 ++++++++++--
+ 3 files changed, 16 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/phy/ti/Kconfig b/drivers/phy/ti/Kconfig
-index 15a3bcf32308..b905902d5750 100644
---- a/drivers/phy/ti/Kconfig
-+++ b/drivers/phy/ti/Kconfig
-@@ -23,7 +23,7 @@ config PHY_DM816X_USB
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 5a0e8491cd3a..2e7531d2a5d6 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -351,6 +351,8 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
+ 		/* Ensure string is null terminated: */
+ 		str[len] = '\0';
  
- config PHY_AM654_SERDES
- 	tristate "TI AM654 SERDES support"
--	depends on OF && ARCH_K3 || COMPILE_TEST
-+	depends on OF && (ARCH_K3 || COMPILE_TEST)
- 	depends on COMMON_CLK
- 	select GENERIC_PHY
- 	select MULTIPLEXER
-@@ -35,7 +35,7 @@ config PHY_AM654_SERDES
++		mutex_lock(&gpu->lock);
++
+ 		if (param == MSM_PARAM_COMM) {
+ 			paramp = &ctx->comm;
+ 		} else {
+@@ -360,6 +362,8 @@ int adreno_set_param(struct msm_gpu *gpu, struct msm_file_private *ctx,
+ 		kfree(*paramp);
+ 		*paramp = str;
  
- config PHY_J721E_WIZ
- 	tristate "TI J721E WIZ (SERDES Wrapper) support"
--	depends on OF && ARCH_K3 || COMPILE_TEST
-+	depends on OF && (ARCH_K3 || COMPILE_TEST)
- 	depends on HAS_IOMEM && OF_ADDRESS
- 	depends on COMMON_CLK
- 	select GENERIC_PHY
++		mutex_unlock(&gpu->lock);
++
+ 		return 0;
+ 	}
+ 	case MSM_PARAM_SYSPROF:
+diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
+index 021f4e29b613..4f495eecc34b 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.c
++++ b/drivers/gpu/drm/msm/msm_gpu.c
+@@ -335,6 +335,8 @@ static void get_comm_cmdline(struct msm_gem_submit *submit, char **comm, char **
+ 	struct msm_file_private *ctx = submit->queue->ctx;
+ 	struct task_struct *task;
+ 
++	WARN_ON(!mutex_is_locked(&submit->gpu->lock));
++
+ 	/* Note that kstrdup will return NULL if argument is NULL: */
+ 	*comm = kstrdup(ctx->comm, GFP_KERNEL);
+ 	*cmd  = kstrdup(ctx->cmdline, GFP_KERNEL);
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index 58a72e6b1400..a89bfdc3d7f9 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -366,10 +366,18 @@ struct msm_file_private {
+ 	 */
+ 	int sysprof;
+ 
+-	/** comm: Overridden task comm, see MSM_PARAM_COMM */
++	/**
++	 * comm: Overridden task comm, see MSM_PARAM_COMM
++	 *
++	 * Accessed under msm_gpu::lock
++	 */
+ 	char *comm;
+ 
+-	/** cmdline: Overridden task cmdline, see MSM_PARAM_CMDLINE */
++	/**
++	 * cmdline: Overridden task cmdline, see MSM_PARAM_CMDLINE
++	 *
++	 * Accessed under msm_gpu::lock
++	 */
+ 	char *cmdline;
+ 
+ 	/**
 -- 
 2.39.0
 
