@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B28BF28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:15:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 12FFAC433EF;
-	Mon, 30 Jan 2023 14:15:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 906F328EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:15:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3C28C433D2;
+	Mon, 30 Jan 2023 14:15:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088116;
-	bh=RXNmd/dgWjvRq0zz7xmzDRzW+wE2hOYWXcVsO/eLZ+8=;
+	s=korg; t=1675088119;
+	bh=erl/GSgzJcCR3Xzy6LAAt9P6QF9rBuS+rCSKlStHteU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h1KxrVIA3o0s9mJs85psGUMQf02vc5sSawV6kP5+kSPmuNOXSa//B+P6Mo2eunvLU
-	 nkmxm5OD+tRa2V4envTfC2BPkd4SBehgI8H9EKBmj6eXETM4kY4Ue00wQLJRFkT0f7
-	 Mk3EDR8/n2VWglrh4sG4GbaupWb3pXPUnvic4ABs=
+	b=FkoDhnzQGJpRrPQcq8zVQEEVMTcmAbh41J9py4owCX1NmFLyP+eZCqgJABh9x5OuT
+	 AG70roT/LGw9exx6zd3u/RcHWx5mnqHqse7As5BTeei2EGSoE7kGz2OmNF0eW7uCtY
+	 Qp4U7n85CX2ECbs+yBeLQMnt1ZujbutSSJjHEcp4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nirmoy Das <nirmoy.das@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 5.15 120/204] drm/i915: Remove unused variable
-Date: Mon, 30 Jan 2023 14:51:25 +0100
-Message-Id: <20230130134321.765091723@linuxfoundation.org>
+	Deepak Sharma <deepak.sharma@amd.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Subject: [PATCH 5.15 121/204] x86: ACPI: cstate: Optimize C3 entry on AMD CPUs
+Date: Mon, 30 Jan 2023 14:51:26 +0100
+Message-Id: <20230130134321.813243732@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -34,33 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nirmoy Das <nirmoy.das@intel.com>
+From: Deepak Sharma <deepak.sharma@amd.com>
 
-commit 2293a73ad4f3b6c37c06713ff1b67659d92ef43d upstream.
+commit a8fb40966f19ff81520d9ccf8f7e2b95201368b8 upstream.
 
-Removed unused i915 var.
+All Zen or newer CPU which support C3 shares cache. Its not necessary to
+flush the caches in software before entering C3. This will cause drop in
+performance for the cores which share some caches. ARB_DIS is not used
+with current AMD C state implementation. So set related flags correctly.
 
-Fixes: a273e95721e9 ("drm/i915: Allow switching away via vga-switcheroo if uninitialized")
-Signed-off-by: Nirmoy Das <nirmoy.das@intel.com>
-Reviewed-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230118170624.9326-1-nirmoy.das@intel.com
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Deepak Sharma <deepak.sharma@amd.com>
+Acked-by: Thomas Gleixner <tglx@linutronix.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/i915_drv.c |    2 --
- 1 file changed, 2 deletions(-)
+ arch/x86/kernel/acpi/cstate.c |   15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
---- a/drivers/gpu/drm/i915/i915_drv.c
-+++ b/drivers/gpu/drm/i915/i915_drv.c
-@@ -986,8 +986,6 @@ static int i915_driver_open(struct drm_d
-  */
- static void i915_driver_lastclose(struct drm_device *dev)
- {
--	struct drm_i915_private *i915 = to_i915(dev);
--
- 	intel_fbdev_restore_mode(dev);
+--- a/arch/x86/kernel/acpi/cstate.c
++++ b/arch/x86/kernel/acpi/cstate.c
+@@ -79,6 +79,21 @@ void acpi_processor_power_init_bm_check(
+ 		 */
+ 		flags->bm_control = 0;
+ 	}
++	if (c->x86_vendor == X86_VENDOR_AMD && c->x86 >= 0x17) {
++		/*
++		 * For all AMD Zen or newer CPUs that support C3, caches
++		 * should not be flushed by software while entering C3
++		 * type state. Set bm->check to 1 so that kernel doesn't
++		 * need to execute cache flush operation.
++		 */
++		flags->bm_check = 1;
++		/*
++		 * In current AMD C state implementation ARB_DIS is no longer
++		 * used. So set bm_control to zero to indicate ARB_DIS is not
++		 * required while entering C3 type state.
++		 */
++		flags->bm_control = 0;
++	}
+ }
+ EXPORT_SYMBOL(acpi_processor_power_init_bm_check);
  
- 	vga_switcheroo_process_delayed_switch();
 
 
