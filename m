@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1994E28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:16:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E9E4C433EF;
-	Mon, 30 Jan 2023 14:16:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1653D28F3
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:16:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7EEACC433EF;
+	Mon, 30 Jan 2023 14:16:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088189;
-	bh=yP+C9jsDkhvmUpRU0rh3670V1w1/7fAVpedJOou/BHg=;
+	s=korg; t=1675088192;
+	bh=EiKjJ7FsNyfZU1RHsJUX+ZsAjry5xWTV31n2bG/h9nI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wmWr6XEzBO9sOKbms0+0DseR+rRa4kIgM8DqYnvKn1U7OUHB5y0Kz3q/kdeifAmfO
-	 iuKtA/JwOcKfAQJk+BbCnmjl3sce9ZpNbrG6ArwQCWkXeJc8W9Z3qRbqqN1Yixz+gb
-	 vCEQ+VBJdxL3dwAdNpAMFV480ozQ5ey/5WoHI6y0=
+	b=JieAQekD9m4gABkOzVrcwTyIHfDajMGbgr2Eair7uXqbnHW4CYQdWsCNv9OZ9hMXP
+	 20mtkKlrzL/dtGiIcwIecNzXyBrFWMt3aX1xy6Y2wUeO367qy2NUOiX87phzCbHHsC
+	 Omij23DLJPcpL35nFu4+S+ySExHhbkz6acrl/Y68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Levitsky <mlevitsk@redhat.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 146/204] KVM: SVM: fix tsc scaling cache logic
-Date: Mon, 30 Jan 2023 14:51:51 +0100
-Message-Id: <20230130134322.967580282@linuxfoundation.org>
+	Martin Wilck <mwilck@suse.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 5.15 147/204] module: Dont wait for GOING modules
+Date: Mon, 30 Jan 2023 14:51:52 +0100
+Message-Id: <20230130134323.016245138@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,132 +36,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Levitsky <mlevitsk@redhat.com>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-[ Upstream commit 11d39e8cc43e1c6737af19ca9372e590061b5ad2 ]
+commit 0254127ab977e70798707a7a2b757c9f3c971210 upstream.
 
-SVM uses a per-cpu variable to cache the current value of the
-tsc scaling multiplier msr on each cpu.
+During a system boot, it can happen that the kernel receives a burst of
+requests to insert the same module but loading it eventually fails
+during its init call. For instance, udev can make a request to insert
+a frequency module for each individual CPU when another frequency module
+is already loaded which causes the init function of the new module to
+return an error.
 
-Commit 1ab9287add5e2
-("KVM: X86: Add vendor callbacks for writing the TSC multiplier")
-broke this caching logic.
+Since commit 6e6de3dee51a ("kernel/module.c: Only return -EEXIST for
+modules that have finished loading"), the kernel waits for modules in
+MODULE_STATE_GOING state to finish unloading before making another
+attempt to load the same module.
 
-Refactor the code so that all TSC scaling multiplier writes go through
-a single function which checks and updates the cache.
+This creates unnecessary work in the described scenario and delays the
+boot. In the worst case, it can prevent udev from loading drivers for
+other devices and might cause timeouts of services waiting on them and
+subsequently a failed boot.
 
-This fixes the following scenario:
+This patch attempts a different solution for the problem 6e6de3dee51a
+was trying to solve. Rather than waiting for the unloading to complete,
+it returns a different error code (-EBUSY) for modules in the GOING
+state. This should avoid the error situation that was described in
+6e6de3dee51a (user space attempting to load a dependent module because
+the -EEXIST error code would suggest to user space that the first module
+had been loaded successfully), while avoiding the delay situation too.
 
-1. A CPU runs a guest with some tsc scaling ratio.
+This has been tested on linux-next since December 2022 and passes
+all kmod selftests except test 0009 with module compression enabled
+but it has been confirmed that this issue has existed and has gone
+unnoticed since prior to this commit and can also be reproduced without
+module compression with a simple usleep(5000000) on tools/modprobe.c [0].
+These failures are caused by hitting the kernel mod_concurrent_max and can
+happen either due to a self inflicted kernel module auto-loead DoS somehow
+or on a system with large CPU count and each CPU count incorrectly triggering
+many module auto-loads. Both of those issues need to be fixed in-kernel.
 
-2. New guest with different tsc scaling ratio starts on this CPU
-   and terminates almost immediately.
+[0] https://lore.kernel.org/all/Y9A4fiobL6IHp%2F%2FP@bombadil.infradead.org/
 
-   This ensures that the short running guest had set the tsc scaling ratio just
-   once when it was set via KVM_SET_TSC_KHZ. Due to the bug,
-   the per-cpu cache is not updated.
-
-3. The original guest continues to run, it doesn't restore the msr
-   value back to its own value, because the cache matches,
-   and thus continues to run with a wrong tsc scaling ratio.
-
-Fixes: 1ab9287add5e2 ("KVM: X86: Add vendor callbacks for writing the TSC multiplier")
-Signed-off-by: Maxim Levitsky <mlevitsk@redhat.com>
-Message-Id: <20220606181149.103072-1-mlevitsk@redhat.com>
+Fixes: 6e6de3dee51a ("kernel/module.c: Only return -EEXIST for modules that have finished loading")
+Co-developed-by: Martin Wilck <mwilck@suse.com>
+Signed-off-by: Martin Wilck <mwilck@suse.com>
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+[mcgrof: enhance commit log with testing and kmod test result interpretation ]
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/svm/svm.c | 34 +++++++++++++++++++++++-----------
- arch/x86/kvm/svm/svm.h |  1 +
- 2 files changed, 24 insertions(+), 11 deletions(-)
+ kernel/module.c |   26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
-index 773420203305..c1a758038892 100644
---- a/arch/x86/kvm/svm/svm.c
-+++ b/arch/x86/kvm/svm/svm.c
-@@ -465,11 +465,24 @@ static int has_svm(void)
- 	return 1;
- }
+--- a/kernel/module.c
++++ b/kernel/module.c
+@@ -3665,7 +3665,8 @@ static bool finished_loading(const char
+ 	sched_annotate_sleep();
+ 	mutex_lock(&module_mutex);
+ 	mod = find_module_all(name, strlen(name), true);
+-	ret = !mod || mod->state == MODULE_STATE_LIVE;
++	ret = !mod || mod->state == MODULE_STATE_LIVE
++		|| mod->state == MODULE_STATE_GOING;
+ 	mutex_unlock(&module_mutex);
  
-+void __svm_write_tsc_multiplier(u64 multiplier)
-+{
-+	preempt_disable();
+ 	return ret;
+@@ -3835,20 +3836,35 @@ static int add_unformed_module(struct mo
+ 
+ 	mod->state = MODULE_STATE_UNFORMED;
+ 
+-again:
+ 	mutex_lock(&module_mutex);
+ 	old = find_module_all(mod->name, strlen(mod->name), true);
+ 	if (old != NULL) {
+-		if (old->state != MODULE_STATE_LIVE) {
++		if (old->state == MODULE_STATE_COMING
++		    || old->state == MODULE_STATE_UNFORMED) {
+ 			/* Wait in case it fails to load. */
+ 			mutex_unlock(&module_mutex);
+ 			err = wait_event_interruptible(module_wq,
+ 					       finished_loading(mod->name));
+ 			if (err)
+ 				goto out_unlocked;
+-			goto again;
 +
-+	if (multiplier == __this_cpu_read(current_tsc_ratio))
-+		goto out;
++			/* The module might have gone in the meantime. */
++			mutex_lock(&module_mutex);
++			old = find_module_all(mod->name, strlen(mod->name),
++					      true);
+ 		}
+-		err = -EEXIST;
 +
-+	wrmsrl(MSR_AMD64_TSC_RATIO, multiplier);
-+	__this_cpu_write(current_tsc_ratio, multiplier);
-+out:
-+	preempt_enable();
-+}
-+
- static void svm_hardware_disable(void)
- {
- 	/* Make sure we clean up behind us */
- 	if (static_cpu_has(X86_FEATURE_TSCRATEMSR))
--		wrmsrl(MSR_AMD64_TSC_RATIO, TSC_RATIO_DEFAULT);
-+		__svm_write_tsc_multiplier(TSC_RATIO_DEFAULT);
- 
- 	cpu_svm_disable();
- 
-@@ -511,8 +524,11 @@ static int svm_hardware_enable(void)
- 	wrmsrl(MSR_VM_HSAVE_PA, __sme_page_pa(sd->save_area));
- 
- 	if (static_cpu_has(X86_FEATURE_TSCRATEMSR)) {
--		wrmsrl(MSR_AMD64_TSC_RATIO, TSC_RATIO_DEFAULT);
--		__this_cpu_write(current_tsc_ratio, TSC_RATIO_DEFAULT);
 +		/*
-+		 * Set the default value, even if we don't use TSC scaling
-+		 * to avoid having stale value in the msr
++		 * We are here only when the same module was being loaded. Do
++		 * not try to load it again right now. It prevents long delays
++		 * caused by serialized module load failures. It might happen
++		 * when more devices of the same type trigger load of
++		 * a particular module.
 +		 */
-+		__svm_write_tsc_multiplier(TSC_RATIO_DEFAULT);
++		if (old && old->state == MODULE_STATE_LIVE)
++			err = -EEXIST;
++		else
++			err = -EBUSY;
+ 		goto out;
  	}
- 
- 
-@@ -1125,9 +1141,10 @@ static void svm_write_tsc_offset(struct kvm_vcpu *vcpu, u64 offset)
- 
- static void svm_write_tsc_multiplier(struct kvm_vcpu *vcpu, u64 multiplier)
- {
--	wrmsrl(MSR_AMD64_TSC_RATIO, multiplier);
-+	__svm_write_tsc_multiplier(multiplier);
- }
- 
-+
- /* Evaluate instruction intercepts that depend on guest CPUID features. */
- static void svm_recalc_instruction_intercepts(struct kvm_vcpu *vcpu,
- 					      struct vcpu_svm *svm)
-@@ -1451,13 +1468,8 @@ static void svm_prepare_guest_switch(struct kvm_vcpu *vcpu)
- 		vmsave(__sme_page_pa(sd->save_area));
- 	}
- 
--	if (static_cpu_has(X86_FEATURE_TSCRATEMSR)) {
--		u64 tsc_ratio = vcpu->arch.tsc_scaling_ratio;
--		if (tsc_ratio != __this_cpu_read(current_tsc_ratio)) {
--			__this_cpu_write(current_tsc_ratio, tsc_ratio);
--			wrmsrl(MSR_AMD64_TSC_RATIO, tsc_ratio);
--		}
--	}
-+	if (static_cpu_has(X86_FEATURE_TSCRATEMSR))
-+		__svm_write_tsc_multiplier(vcpu->arch.tsc_scaling_ratio);
- 
- 	if (likely(tsc_aux_uret_slot >= 0))
- 		kvm_set_user_return_msr(tsc_aux_uret_slot, svm->tsc_aux, -1ull);
-diff --git a/arch/x86/kvm/svm/svm.h b/arch/x86/kvm/svm/svm.h
-index 7004f356edf9..1d9b1a9e4398 100644
---- a/arch/x86/kvm/svm/svm.h
-+++ b/arch/x86/kvm/svm/svm.h
-@@ -487,6 +487,7 @@ int nested_svm_check_exception(struct vcpu_svm *svm, unsigned nr,
- int nested_svm_exit_special(struct vcpu_svm *svm);
- void nested_load_control_from_vmcb12(struct vcpu_svm *svm,
- 				     struct vmcb_control_area *control);
-+void __svm_write_tsc_multiplier(u64 multiplier);
- void nested_sync_control_from_vmcb02(struct vcpu_svm *svm);
- void nested_vmcb02_compute_g_pat(struct vcpu_svm *svm);
- void svm_switch_vmcb(struct vcpu_svm *svm, struct kvm_vmcb_info *target_vmcb);
--- 
-2.39.0
-
+ 	mod_update_bounds(mod);
 
 
