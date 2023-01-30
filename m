@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C404C28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:58:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2622DC433EF;
-	Mon, 30 Jan 2023 13:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D28A828EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:58:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A37CC433D2;
+	Mon, 30 Jan 2023 13:58:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087080;
-	bh=ISKq4zoKlXMms6LyLvHrc9dp4pM+MVB0HUonyq7Qb7M=;
+	s=korg; t=1675087083;
+	bh=SyhV1wXk19Z1wuhlY9/I4zbKoyKhQ5G+hOCxeoj3U2U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rXLT3s7bWFZ6rvPiscsb8Vr3ZyhnDFrg9Cj06OGb/Z329WzCuk+miK9a93MFQHzo4
-	 v4UuGvPKGIDXjQca+NbCBQcezbm3UXFNH/YTOnkvvwM4ShT8Ig3XVjdOh4BmoQ73GB
-	 KHb+kCUKRENZiNpQBaH+hfRRphmodCSK+bDxTA4Q=
+	b=MD8PKvjldfjrP76bcc42OCQVf2/sk1+071Sg4zrGB8X2J0HAMpK9dJsueo/0DOp/9
+	 PFl0WCJKdulZ4JtF5ZxztANKIO3+AFunZSpDlNjXZQ6kej8ZZTCya/USFirtTIfclz
+	 0YUY7veHAjbkBjTYIjl0jxTHUEAabxDm4rz4LbaU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Patrice Chotard <patrice.chotard@foss.st.com>,
-	Reinhold Mueller <reinhold.mueller@emtrion.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
 	Alexandre Torgue <alexandre.torgue@st.com>,
 	linux-stm32@st-md-mailman.stormreply.com,
 	linux-arm-kernel@lists.infradead.org,
 	Alexandre Torgue <alexandre.torgue@foss.st.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 090/313] ARM: dts: stm32: Fix qspi pinctrl phandle for stm32mp157c-emstamp-argon
-Date: Mon, 30 Jan 2023 14:48:45 +0100
-Message-Id: <20230130134340.839279229@linuxfoundation.org>
+Subject: [PATCH 6.1 091/313] ARM: dts: stm32: Fix qspi pinctrl phandle for stm32mp151a-prtt1l
+Date: Mon, 30 Jan 2023 14:48:46 +0100
+Message-Id: <20230130134340.885423222@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -41,28 +41,28 @@ Content-Transfer-Encoding: 8bit
 
 From: Patrice Chotard <patrice.chotard@foss.st.com>
 
-[ Upstream commit 732dbcf52f74b254a7ddd4226e0b9638e1e7aeff ]
+[ Upstream commit 175281f80695569c7f9cf062e5d0ddc4addc109f ]
 
 Chip select pinctrl phandle was missing in several stm32mp15x based boards.
 
 Fixes: ea99a5a02ebc ("ARM: dts: stm32: Create separate pinmux for qspi cs pin in stm32mp15-pinctrl.dtsi")
 
 Signed-off-by: Patrice Chotard <patrice.chotard@foss.st.com>
-Cc: Reinhold Mueller <reinhold.mueller@emtrion.com>
+Cc: Oleksij Rempel <o.rempel@pengutronix.de>
 Cc: Alexandre Torgue <alexandre.torgue@st.com>
 Cc: linux-stm32@st-md-mailman.stormreply.com
 Cc: linux-arm-kernel@lists.infradead.org
 Signed-off-by: Alexandre Torgue <alexandre.torgue@foss.st.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/stm32mp157c-emstamp-argon.dtsi | 8 ++++++--
+ arch/arm/boot/dts/stm32mp151a-prtt1l.dtsi | 8 ++++++--
  1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm/boot/dts/stm32mp157c-emstamp-argon.dtsi b/arch/arm/boot/dts/stm32mp157c-emstamp-argon.dtsi
-index 30156b7546ed..d540550f7da2 100644
---- a/arch/arm/boot/dts/stm32mp157c-emstamp-argon.dtsi
-+++ b/arch/arm/boot/dts/stm32mp157c-emstamp-argon.dtsi
-@@ -391,8 +391,12 @@ &pwr_regulators {
+diff --git a/arch/arm/boot/dts/stm32mp151a-prtt1l.dtsi b/arch/arm/boot/dts/stm32mp151a-prtt1l.dtsi
+index d865ab5d866b..dd23de85100c 100644
+--- a/arch/arm/boot/dts/stm32mp151a-prtt1l.dtsi
++++ b/arch/arm/boot/dts/stm32mp151a-prtt1l.dtsi
+@@ -101,8 +101,12 @@ &iwdg2 {
  
  &qspi {
  	pinctrl-names = "default", "sleep";
