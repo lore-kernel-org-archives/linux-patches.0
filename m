@@ -1,45 +1,42 @@
-Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
+Received: from mail-io1-f54.google.com (mail-io1-f54.google.com [209.85.166.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A47EC746A
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 19:23:41 +0000 (UTC)
-Received: by mail-pj1-f42.google.com with SMTP id cl23-20020a17090af69700b0022c745bfdc3so5532236pjb.3
-        for <patches@lists.linux.dev>; Mon, 30 Jan 2023 11:23:41 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33E0F29AC
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 21:05:46 +0000 (UTC)
+Received: by mail-io1-f54.google.com with SMTP id o1so1173020ioo.10
+        for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:05:45 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=linuxfoundation.org; s=google;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=Ituez93tXiPISb8QxsJuaj50hV2g6GXvJqV6M4Cvo9I=;
-        b=ojDTbg1ZpHomHEeNlJBCU78XmRk0cHtwOWVdFQilsoYzfR/FEgA+igDdr5rDKzsKRA
-         IEOswJR5bYhQA3S4x6bLoO+4oNessN2mA93BTBLJ5CAsL8pCxNtSMhrfuM3z7crXlsn2
-         dNnQ/3QJRHTqa9U30LKkFLUtUPIwhmvV61SN6HrxGOywkYszV1eONTCyAWn6xNUixHpN
-         n40RzaRHFQqGNXjoPpx0ry4zPOgy7BbhNuRddC+f5xYAhyd4gkDH4sTgG7WvWGdBhzMj
-         ue36SSxc0GCdWET8GdK9y7aPfJYqnQ72QUn0v0zvF1RvveI7IbFRJIVz1LQ0+5zBX6s8
-         Z1PA==
+        bh=4Yg7svhVghi2FwAaCr1trqBzknfSY2QukGFpxxcVl4E=;
+        b=f9+SVlIeCAtmftHkMq4LU3vuk8e7WGQi5yVTzJYW7GIeXW5odNP349fdMgOLBeMAzq
+         LpyGiKEQxsA62QZixvCi7F0UKsw6cNfbTDejCwhigPK30f80OFwpMJauSISEgoTGq+XL
+         ZHVgFIi8NBfcBm0j8mvwwPd2CuQFt0qkxqnfk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Ituez93tXiPISb8QxsJuaj50hV2g6GXvJqV6M4Cvo9I=;
-        b=tIMIzNRRgCMhwny1c/PdpN9hGE2Zy/nTX7iOcFi3wG+IfAMJjmFFyrVM6rFs+aheMq
-         quT3AH33hOxAll4YjymzCeMnSMe+IMSjXQlhIHbqiOanBGhq5tg7kJzrbzCj3BFT6IVL
-         P2TH9fgsFRocy3wvEO+2wRFiaSGo4V0NqYtYyVYwfI10o2intEcfknnPkSqynSCxX/6I
-         bMtQ/knws2NUNmINoITu+CXbsVwNf5xYb8pDgBJqQpMdO2pEYk1RCzVXTVoSjBgJK7sD
-         q0g5mMm2oc9ewVol6bkaF42EXScII30v3zvl1IopEo5XxejshEbcMCrT8anu9KTSu7Zg
-         s9CA==
-X-Gm-Message-State: AO0yUKVY0iHGu3ilzIERMDCbGJDgmiCTGp1ENiTHVrG7YCawH/bTCHt1
-	ys64sNhD1o+oM5n2u2Ob0QY=
-X-Google-Smtp-Source: AK7set9IzBJytj1bxn9fO8Ny04tdwbCymt2l5GwbitOTn5A41npF9H3kqxZtOvP2B0wgVMNXttIlMg==
-X-Received: by 2002:a17:902:e2cb:b0:196:357f:9382 with SMTP id l11-20020a170902e2cb00b00196357f9382mr7427034plc.24.1675106621023;
-        Mon, 30 Jan 2023 11:23:41 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id b8-20020a170902a9c800b001967cfc81a0sm3093654plr.287.2023.01.30.11.23.39
+        bh=4Yg7svhVghi2FwAaCr1trqBzknfSY2QukGFpxxcVl4E=;
+        b=gHAzavoaOraM3yZngzUDMAi8Pi67OFS1TvW1ZuKOSlnPpg2FK4bkNWbMsEVG2y6mNG
+         Sebz1H4hRqTfj/LcYa49QAOrA1czlmAnejuVipjSJikq0fApj3S/kaMrg3zMprwoJVBj
+         56G2lzUwn8kBoRoEzj/QaPgkYid6C+WtLc6W++rL3GtZdwnf6NbR6+FSZrm8ECwvfdXA
+         32ayVumSt5QxtnHNz04s1kbgcyUHrrUmrT5pJXr48xi/4dakDVS7aL1pQWVYqe+19Nil
+         DD7adRajs4fB4MTtofhx6myTMJXniKcYzIMt2VGVcglXzgsdGkUfGgRJkJ6BhMu5jZD7
+         ufTg==
+X-Gm-Message-State: AFqh2krq7T/TvlIheWnL1QRV4T86wY5qQGRk/8SnFcddPeoir2vsXcmr
+	U5K3Bhq2BCVIULtMtv7rV614mg==
+X-Google-Smtp-Source: AMrXdXvqFoVe6g5u6x5x85R35qxNQPoaSl/vg+4nY+i2nCJz1vJxa6EtsKvRTMZ++C2vGiMxXCQYSg==
+X-Received: by 2002:a05:6602:341a:b0:704:d91f:9932 with SMTP id n26-20020a056602341a00b00704d91f9932mr8577267ioz.0.1675112745041;
+        Mon, 30 Jan 2023 13:05:45 -0800 (PST)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id c33-20020a023b21000000b003a068d00373sm4965945jaa.138.2023.01.30.13.05.43
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Jan 2023 11:23:40 -0800 (PST)
-Message-ID: <1f046722-dcaf-5775-7c12-2d604e69e528@gmail.com>
-Date: Mon, 30 Jan 2023 11:23:38 -0800
+        Mon, 30 Jan 2023 13:05:44 -0800 (PST)
+Message-ID: <ea974e95-723f-23e1-364c-4d4a388fdd31@linuxfoundation.org>
+Date: Mon, 30 Jan 2023 14:05:43 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,14 +52,15 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Shuah Khan <skhan@linuxfoundation.org>
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 1/30/23 05:47, Greg Kroah-Hartman wrote:
+On 1/30/23 06:47, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.1.9 release.
 > There are 313 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
@@ -80,10 +78,11 @@ On 1/30/23 05:47, Greg Kroah-Hartman wrote:
 > thanks,
 > 
 > greg k-h
+> 
 
-On ARCH_BRCMSTB using 32-bit and 64-bit, build tested on BMIPS_GENERIC:
+Compiled and booted on my test system. No dmesg regressions.
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
---
-Florian
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
+thanks,
+-- Shuah
