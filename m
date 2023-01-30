@@ -1,78 +1,140 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1904617D9
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 10:22:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BD55C433EF;
-	Mon, 30 Jan 2023 10:22:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3A952597
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:53:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B2B9C433EF;
+	Mon, 30 Jan 2023 13:53:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675074148;
-	bh=l2jre3iHB3Bs/ZVbdIMxyNn0ZCbV0x1+gKltjmDsJhU=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=RovmwEzX/oA70hh2nVs3iLRzg9vlO8H6cKlzZ0XyCOZJ5HLhXY69du2oQonxfYcwZ
-	 kZLqBWajvD4badsCKgVhdvZZsLAKXp7+7qpDp3bCYV/WnBgKELTCQogzAPPKOSczfm
-	 7Zh7N3yV5C0Ty5ShBu6nDO7NJ+/nM9b6L+pfqxRA=
-Date: Mon, 30 Jan 2023 11:22:25 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: stable@vger.kernel.org, Chun-Tse Shao <ctshao@google.com>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	Masahiro Yamada <masahiroy@kernel.org>
-Subject: Re: [PATCH 5.15.y] kbuild: Allow kernel installation packaging to
- override pkg-config
-Message-ID: <Y9eaYcJl52ub5dAl@kroah.com>
-References: <20230113002149.3984494-1-swboyd@chromium.org>
- <Y8Ky1UgT2yxFB2EB@kroah.com>
- <CAE-0n52wiAiHACFXeki6w7hfn3swuUp6jK6gpFvPxfrnmcV0TQ@mail.gmail.com>
+	s=korg; t=1675086819;
+	bh=z/cMeEvprjK6p43dh1CrldtsgcIO04ZC5IhnVCYxorM=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=C7xXgGWJq4IfyLlv3fMUo3zh/+ChlsiVF4iaTUBdvNxBAB45aVLvjQ2KhOWk8diqy
+	 RNy3p0w4pyaZn7U+Kgbd6pBlKQYL8HCZX0TEr/AbHZpSbnMQOOAeaKHIwVc595R2Td
+	 LL0qUrCct1EL280iUXVzcFHVweEmIAh4/GVVGEzk=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Ashish Mhetre <amhetre@nvidia.com>,
+	Thierry Reding <treding@nvidia.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 001/313] memory: tegra: Remove clients SID override programming
+Date: Mon, 30 Jan 2023 14:47:16 +0100
+Message-Id: <20230130134336.614720700@linuxfoundation.org>
+X-Mailer: git-send-email 2.39.1
+In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
+References: <20230130134336.532886729@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n52wiAiHACFXeki6w7hfn3swuUp6jK6gpFvPxfrnmcV0TQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Tue, Jan 17, 2023 at 12:09:29PM -0800, Stephen Boyd wrote:
-> Quoting Greg KH (2023-01-14 05:49:09)
-> > On Thu, Jan 12, 2023 at 04:21:49PM -0800, Stephen Boyd wrote:
-> > > From: Chun-Tse Shao <ctshao@google.com>
-> > >
-> > > commit d5ea4fece4508bf8e72b659cd22fa4840d8d61e5 upstream.
-> > >
-> > > Add HOSTPKG_CONFIG to allow tooling that builds the kernel to override
-> > > what pkg-config and parameters are used.
-> > >
-> > > Signed-off-by: Chun-Tse Shao <ctshao@google.com>
-> > > Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-> > > Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-> > > [swboyd@chromium.org: Drop certs/Makefile hunk that doesn't
-> > > apply because pkg-config isn't used there, add dtc/Makefile hunk to
-> > > fix dtb builds]
-> > > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > > ---
-> > >
-> > > I need this to properly compile 5.15.y stable kernels in the chromeos
-> > > build system.
-> >
-> > Is this a new issue?  A regression?  This feels odd to add a new build
-> > feature to an old kernel when nothing changed to require it other than
-> > an external tool suddenly requiring something new?
-> >
-> 
-> The chromeos build system checks for pkg-config being called directly
-> and fails the build if the proper wrapper isn't used. We set
-> HOSTPKG_CONFIG in the environment when building the kernel so that it
-> doesn't fail.
-> 
-> It's not exactly a new issue, but a self-inflicted one that makes
-> building the stable kernel annoying. I figured it was similar to fixing
-> problems with compiling stable kernels with newer toolchains, but if it
-> feels odd then I'll just have to remember to pick this patch whenever
-> bisecting stable trees. No worries.
+From: Ashish Mhetre <amhetre@nvidia.com>
 
-Now queued up, thanks.
+[ Upstream commit ef86b2c2807f41c045e5534d8513a8b83f63bc39 ]
 
-greg k-h
+On newer Tegra releases, early boot SID override programming and SID
+override programming during resume is handled by bootloader.
+In the function tegra186_mc_program_sid() which is getting removed, SID
+override register of all clients is written without checking if secure
+firmware has allowed write on it or not. If write is disabled by secure
+firmware then it can lead to errors coming from secure firmware and hang
+in kernel boot.
+Also, SID override is programmed on-demand during probe_finalize() call
+of IOMMU which is done in tegra186_mc_client_sid_override() in this same
+file. This function does it correctly by checking if write is permitted
+on SID override register. It also checks if SID override register is
+already written with correct value and skips re-writing it in that case.
+
+Fixes: 393d66fd2cac ("memory: tegra: Implement SID override programming")
+Signed-off-by: Ashish Mhetre <amhetre@nvidia.com>
+Acked-by: Thierry Reding <treding@nvidia.com>
+Link: https://lore.kernel.org/r/20221125040752.12627-1-amhetre@nvidia.com
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/memory/tegra/tegra186.c | 36 ---------------------------------
+ 1 file changed, 36 deletions(-)
+
+diff --git a/drivers/memory/tegra/tegra186.c b/drivers/memory/tegra/tegra186.c
+index 62477e592bf5..7bb73f06fad3 100644
+--- a/drivers/memory/tegra/tegra186.c
++++ b/drivers/memory/tegra/tegra186.c
+@@ -22,32 +22,6 @@
+ #define MC_SID_STREAMID_SECURITY_WRITE_ACCESS_DISABLED BIT(16)
+ #define MC_SID_STREAMID_SECURITY_OVERRIDE BIT(8)
+ 
+-static void tegra186_mc_program_sid(struct tegra_mc *mc)
+-{
+-	unsigned int i;
+-
+-	for (i = 0; i < mc->soc->num_clients; i++) {
+-		const struct tegra_mc_client *client = &mc->soc->clients[i];
+-		u32 override, security;
+-
+-		override = readl(mc->regs + client->regs.sid.override);
+-		security = readl(mc->regs + client->regs.sid.security);
+-
+-		dev_dbg(mc->dev, "client %s: override: %x security: %x\n",
+-			client->name, override, security);
+-
+-		dev_dbg(mc->dev, "setting SID %u for %s\n", client->sid,
+-			client->name);
+-		writel(client->sid, mc->regs + client->regs.sid.override);
+-
+-		override = readl(mc->regs + client->regs.sid.override);
+-		security = readl(mc->regs + client->regs.sid.security);
+-
+-		dev_dbg(mc->dev, "client %s: override: %x security: %x\n",
+-			client->name, override, security);
+-	}
+-}
+-
+ static int tegra186_mc_probe(struct tegra_mc *mc)
+ {
+ 	struct platform_device *pdev = to_platform_device(mc->dev);
+@@ -85,8 +59,6 @@ static int tegra186_mc_probe(struct tegra_mc *mc)
+ 	if (err < 0)
+ 		return err;
+ 
+-	tegra186_mc_program_sid(mc);
+-
+ 	return 0;
+ }
+ 
+@@ -95,13 +67,6 @@ static void tegra186_mc_remove(struct tegra_mc *mc)
+ 	of_platform_depopulate(mc->dev);
+ }
+ 
+-static int tegra186_mc_resume(struct tegra_mc *mc)
+-{
+-	tegra186_mc_program_sid(mc);
+-
+-	return 0;
+-}
+-
+ #if IS_ENABLED(CONFIG_IOMMU_API)
+ static void tegra186_mc_client_sid_override(struct tegra_mc *mc,
+ 					    const struct tegra_mc_client *client,
+@@ -173,7 +138,6 @@ static int tegra186_mc_probe_device(struct tegra_mc *mc, struct device *dev)
+ const struct tegra_mc_ops tegra186_mc_ops = {
+ 	.probe = tegra186_mc_probe,
+ 	.remove = tegra186_mc_remove,
+-	.resume = tegra186_mc_resume,
+ 	.probe_device = tegra186_mc_probe_device,
+ 	.handle_irq = tegra30_mc_handle_irq,
+ };
+-- 
+2.39.0
+
+
+
