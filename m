@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C74A28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:17:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42CCCC433D2;
-	Mon, 30 Jan 2023 14:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BACD28F3
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:17:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80CA5C433EF;
+	Mon, 30 Jan 2023 14:17:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088241;
-	bh=l+bYylecLYb+hhHOYYTlQG2Pw6Qk+9Fm2t0L+YHgjdA=;
+	s=korg; t=1675088243;
+	bh=NuOBLGWAYgmRap10Ieh1WLunH460rVT+96k5ULgr8vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gh4qbOFdSXnS2TxnrtEygG4EcCrDKBxrJEWVltdDAMKsThDNmI2j5JHvYbKb/Jytl
-	 FmR/pIIqBFlMbh3ET2M167DXslBOH2QXm3OdjKf1r4HMrMvc3BxpXkPXAu9TYv6WYx
-	 kwv4ZEbehNMFzRekrAWd2p7xnM7nVLrMMNQ4vnpM=
+	b=jSTps+yewY6xfBz3A2YzORARXr+fD29+Z/KQRUHoqZYkosqgxbWjr3Eivrej+idqK
+	 x7nzCbL+gAeoF08JRWN3dL2RD94us1evYifVJSQl9k4xcXksUhhf7RKGY2XgEAYbU2
+	 h23R4zvla7pvOjqzTyufumugfeHyRZUCajsTcomw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Eric Biggers <ebiggers@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 135/204] exit: Put an upper limit on how often we can oops
-Date: Mon, 30 Jan 2023 14:51:40 +0100
-Message-Id: <20230130134322.461318536@linuxfoundation.org>
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 5.15 162/204] thermal: intel: int340x: Protect trip temperature from concurrent updates
+Date: Mon, 30 Jan 2023 14:52:07 +0100
+Message-Id: <20230130134323.684479968@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -37,147 +34,117 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jann Horn <jannh@google.com>
+From: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
 
-commit d4ccd54d28d3c8598e2354acc13e28c060961dbb upstream.
+commit 6757a7abe47bcb12cb2d45661067e182424b0ee3 upstream.
 
-Many Linux systems are configured to not panic on oops; but allowing an
-attacker to oops the system **really** often can make even bugs that look
-completely unexploitable exploitable (like NULL dereferences and such) if
-each crash elevates a refcount by one or a lock is taken in read mode, and
-this causes a counter to eventually overflow.
+Trip temperatures are read using ACPI methods and stored in the memory
+during zone initializtion and when the firmware sends a notification for
+change. This trip temperature is returned when the thermal core calls via
+callback get_trip_temp().
 
-The most interesting counters for this are 32 bits wide (like open-coded
-refcounts that don't use refcount_t). (The ldsem reader count on 32-bit
-platforms is just 16 bits, but probably nobody cares about 32-bit platforms
-that much nowadays.)
+But it is possible that while updating the memory copy of the trips when
+the firmware sends a notification for change, thermal core is reading the
+trip temperature via the callback get_trip_temp(). This may return invalid
+trip temperature.
 
-So let's panic the system if the kernel is constantly oopsing.
+To address this add a mutex to protect the invalid temperature reads in
+the callback get_trip_temp() and int340x_thermal_read_trips().
 
-The speed of oopsing 2^32 times probably depends on several factors, like
-how long the stack trace is and which unwinder you're using; an empirically
-important one is whether your console is showing a graphical environment or
-a text console that oopses will be printed to.
-In a quick single-threaded benchmark, it looks like oopsing in a vfork()
-child with a very short stack trace only takes ~510 microseconds per run
-when a graphical console is active; but switching to a text console that
-oopses are printed to slows it down around 87x, to ~45 milliseconds per
-run.
-(Adding more threads makes this faster, but the actual oops printing
-happens under &die_lock on x86, so you can maybe speed this up by a factor
-of around 2 and then any further improvement gets eaten up by lock
-contention.)
-
-It looks like it would take around 8-12 days to overflow a 32-bit counter
-with repeated oopsing on a multi-core X86 system running a graphical
-environment; both me (in an X86 VM) and Seth (with a distro kernel on
-normal hardware in a standard configuration) got numbers in that ballpark.
-
-12 days aren't *that* short on a desktop system, and you'd likely need much
-longer on a typical server system (assuming that people don't run graphical
-desktop environments on their servers), and this is a *very* noisy and
-violent approach to exploiting the kernel; and it also seems to take orders
-of magnitude longer on some machines, probably because stuff like EFI
-pstore will slow it down a ton if that's active.
-
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/r/20221107201317.324457-1-jannh@google.com
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221117234328.594699-2-keescook@chromium.org
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 5fbf7f27fa3d ("Thermal/int340x: Add common thermal zone handler")
+Signed-off-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Cc: 5.0+ <stable@vger.kernel.org> # 5.0+
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/admin-guide/sysctl/kernel.rst |  8 ++++
- kernel/exit.c                               | 43 +++++++++++++++++++++
- 2 files changed, 51 insertions(+)
+ drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c |   18 +++++++++--
+ drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.h |    1 
+ 2 files changed, 16 insertions(+), 3 deletions(-)
 
-diff --git a/Documentation/admin-guide/sysctl/kernel.rst b/Documentation/admin-guide/sysctl/kernel.rst
-index 609b89175408..b6e68d6f297e 100644
---- a/Documentation/admin-guide/sysctl/kernel.rst
-+++ b/Documentation/admin-guide/sysctl/kernel.rst
-@@ -671,6 +671,14 @@ This is the default behavior.
- an oops event is detected.
- 
- 
-+oops_limit
-+==========
-+
-+Number of kernel oopses after which the kernel should panic when
-+``panic_on_oops`` is not set. Setting this to 0 or 1 has the same effect
-+as setting ``panic_on_oops=1``.
-+
-+
- osrelease, ostype & version
- ===========================
- 
-diff --git a/kernel/exit.c b/kernel/exit.c
-index 5d1a507fd4ba..172d7f835f80 100644
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -69,6 +69,33 @@
- #include <asm/unistd.h>
- #include <asm/mmu_context.h>
- 
-+/*
-+ * The default value should be high enough to not crash a system that randomly
-+ * crashes its kernel from time to time, but low enough to at least not permit
-+ * overflowing 32-bit refcounts or the ldsem writer count.
-+ */
-+static unsigned int oops_limit = 10000;
-+
-+#ifdef CONFIG_SYSCTL
-+static struct ctl_table kern_exit_table[] = {
-+	{
-+		.procname       = "oops_limit",
-+		.data           = &oops_limit,
-+		.maxlen         = sizeof(oops_limit),
-+		.mode           = 0644,
-+		.proc_handler   = proc_douintvec,
-+	},
-+	{ }
-+};
-+
-+static __init int kernel_exit_sysctls_init(void)
-+{
-+	register_sysctl_init("kernel", kern_exit_table);
-+	return 0;
-+}
-+late_initcall(kernel_exit_sysctls_init);
-+#endif
-+
- static void __unhash_process(struct task_struct *p, bool group_dead)
+--- a/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
++++ b/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
+@@ -44,11 +44,13 @@ static int int340x_thermal_get_trip_temp
+ 					 int trip, int *temp)
  {
- 	nr_threads--;
-@@ -879,10 +906,26 @@ EXPORT_SYMBOL_GPL(do_exit);
+ 	struct int34x_thermal_zone *d = zone->devdata;
+-	int i;
++	int i, ret = 0;
  
- void __noreturn make_task_dead(int signr)
- {
-+	static atomic_t oops_count = ATOMIC_INIT(0);
+ 	if (d->override_ops && d->override_ops->get_trip_temp)
+ 		return d->override_ops->get_trip_temp(zone, trip, temp);
+ 
++	mutex_lock(&d->trip_mutex);
 +
- 	/*
- 	 * Take the task off the cpu after something catastrophic has
- 	 * happened.
- 	 */
+ 	if (trip < d->aux_trip_nr)
+ 		*temp = d->aux_trips[trip];
+ 	else if (trip == d->crt_trip_id)
+@@ -66,10 +68,12 @@ static int int340x_thermal_get_trip_temp
+ 			}
+ 		}
+ 		if (i == INT340X_THERMAL_MAX_ACT_TRIP_COUNT)
+-			return -EINVAL;
++			ret = -EINVAL;
+ 	}
+ 
+-	return 0;
++	mutex_unlock(&d->trip_mutex);
 +
-+	/*
-+	 * Every time the system oopses, if the oops happens while a reference
-+	 * to an object was held, the reference leaks.
-+	 * If the oops doesn't also leak memory, repeated oopsing can cause
-+	 * reference counters to wrap around (if they're not using refcount_t).
-+	 * This means that repeated oopsing can make unexploitable-looking bugs
-+	 * exploitable through repeated oopsing.
-+	 * To make sure this can't happen, place an upper bound on how often the
-+	 * kernel may oops without panic().
-+	 */
-+	if (atomic_inc_return(&oops_count) >= READ_ONCE(oops_limit))
-+		panic("Oopsed too often (kernel.oops_limit is %d)", oops_limit);
-+
- 	do_exit(signr);
++	return ret;
  }
  
--- 
-2.39.0
-
+ static int int340x_thermal_get_trip_type(struct thermal_zone_device *zone,
+@@ -180,6 +184,8 @@ int int340x_thermal_read_trips(struct in
+ 	int trip_cnt = int34x_zone->aux_trip_nr;
+ 	int i;
+ 
++	mutex_lock(&int34x_zone->trip_mutex);
++
+ 	int34x_zone->crt_trip_id = -1;
+ 	if (!int340x_thermal_get_trip_config(int34x_zone->adev->handle, "_CRT",
+ 					     &int34x_zone->crt_temp))
+@@ -207,6 +213,8 @@ int int340x_thermal_read_trips(struct in
+ 		int34x_zone->act_trips[i].valid = true;
+ 	}
+ 
++	mutex_unlock(&int34x_zone->trip_mutex);
++
+ 	return trip_cnt;
+ }
+ EXPORT_SYMBOL_GPL(int340x_thermal_read_trips);
+@@ -230,6 +238,8 @@ struct int34x_thermal_zone *int340x_ther
+ 	if (!int34x_thermal_zone)
+ 		return ERR_PTR(-ENOMEM);
+ 
++	mutex_init(&int34x_thermal_zone->trip_mutex);
++
+ 	int34x_thermal_zone->adev = adev;
+ 	int34x_thermal_zone->override_ops = override_ops;
+ 
+@@ -281,6 +291,7 @@ err_thermal_zone:
+ 	acpi_lpat_free_conversion_table(int34x_thermal_zone->lpat_table);
+ 	kfree(int34x_thermal_zone->aux_trips);
+ err_trip_alloc:
++	mutex_destroy(&int34x_thermal_zone->trip_mutex);
+ 	kfree(int34x_thermal_zone);
+ 	return ERR_PTR(ret);
+ }
+@@ -292,6 +303,7 @@ void int340x_thermal_zone_remove(struct
+ 	thermal_zone_device_unregister(int34x_thermal_zone->zone);
+ 	acpi_lpat_free_conversion_table(int34x_thermal_zone->lpat_table);
+ 	kfree(int34x_thermal_zone->aux_trips);
++	mutex_destroy(&int34x_thermal_zone->trip_mutex);
+ 	kfree(int34x_thermal_zone);
+ }
+ EXPORT_SYMBOL_GPL(int340x_thermal_zone_remove);
+--- a/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.h
++++ b/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.h
+@@ -32,6 +32,7 @@ struct int34x_thermal_zone {
+ 	struct thermal_zone_device_ops *override_ops;
+ 	void *priv_data;
+ 	struct acpi_lpat_conversion_table *lpat_table;
++	struct mutex trip_mutex;
+ };
+ 
+ struct int34x_thermal_zone *int340x_thermal_zone_add(struct acpi_device *,
 
 
