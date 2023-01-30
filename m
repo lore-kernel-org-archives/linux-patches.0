@@ -1,94 +1,96 @@
-Received: from mail-oa1-f43.google.com (mail-oa1-f43.google.com [209.85.160.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85CC617F8
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 16:41:53 +0000 (UTC)
-Received: by mail-oa1-f43.google.com with SMTP id 586e51a60fabf-163ba2b7c38so3895136fac.4
-        for <patches@lists.linux.dev>; Mon, 30 Jan 2023 08:41:53 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=lQykz+ho0dzn//pid42h0j3Zw5664RNaB/N6NIgAdVA=;
-        b=bzWlcPkEN7DoXeuoghAZy74wsaFYn7VDW7/q7bKZWkq+zGnrn2Nc+/esC+BZmoiS/Y
-         h+4s2I8+v4tMJqebI5+Dt4MO/YfJAQMm/zaTl03ZOyBBeDchbL9ABiPfJ4KFQOQoTlR3
-         IRPDzgIGjYNtQFRSxx60YYHJR7sW1mUewibsyHoxU2P4/SBNFfR3zTSEyYyuyE0YgJYa
-         6eLhjR7Rb5Q08jSom9cCRobFRYrp55bHfePJTWkU2A/WK1TY95vugAAHCmbO36nalY7W
-         nJIwtpfOfznzwgDbN61OnKzT/5sJR+ozx0wbTzI1zfrJMJWa+ZZb2X0IaIRGhz9fZS39
-         tttw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:content-language
-         :references:cc:to:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=lQykz+ho0dzn//pid42h0j3Zw5664RNaB/N6NIgAdVA=;
-        b=chzLvvkXBYz2HbFqPLbu+WyuOlFGFO4dbCp7qgFUQ3tq8JKGQP8cunAjQ5R7dGEpUl
-         Jc1DREKBgprEjjDGFPpEgZSLFehbQsXD94EqexnrNZep5mQrjqWg396KwfBaTqo+gfti
-         CkJZ1cLtkvyBt/H2QwoDU50nNtuG1AgooysKu6BVgEjjWNoxnR8ezK+md3f6qxSsCFM/
-         0cfB00jMG7V/uAKgPllpi/+FrlAHf36G2h5jJ5ZZJKVtTdWeXZx87yuyFKys5DbEm0ZV
-         W9JKdqR9fnx0SddzxRFeeSp7t+y39z9JoHMNgpOlyfUk3afMbIsA17GpguZMxY0ILEJj
-         FDdg==
-X-Gm-Message-State: AFqh2kqhXAlA9Y290VVTIHYYL+GDBaLTWCN3sHdJ1sUr6Zhcr5hWRUA3
-	WL4UwWsaNyPAhmUkZRFzCreEHo3kqUs=
-X-Google-Smtp-Source: AMrXdXsHgi6SKqNcCm2Dwbkqgbbdu22MQPHCna+uJLvYJPCswiqpDAky5tWakbPzK4li+s81xKv+4A==
-X-Received: by 2002:a05:6870:b30f:b0:160:3545:d167 with SMTP id a15-20020a056870b30f00b001603545d167mr15539104oao.36.1675096912582;
-        Mon, 30 Jan 2023 08:41:52 -0800 (PST)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id n19-20020a9d64d3000000b006884924ca4bsm5551478otl.5.2023.01.30.08.41.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Jan 2023 08:41:51 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <01cb274a-1adb-1a46-0260-fbaee94feb8a@roeck-us.net>
-Date: Mon, 30 Jan 2023 08:41:48 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F3B326AA3
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 17:49:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D677C433EF;
+	Mon, 30 Jan 2023 17:49:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1675100980;
+	bh=lWpbM2LBKmzekcSUy3qEo2NqmJsFR7GUfXN4EgsE1hc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=aFPD8m7icQ4Wb2aBmTkJRUW2YTfW8tAbu5d6/lq8ffWESbGAsa1mGxsgEEZx0UF1a
+	 p+Pmvh5wh8LANtauXLD9x0bXgPvzY0pbhZdcRKiKv9l5tGz6Cnk9QEybEGUPj5f8+y
+	 wqNqp2O+1hilpWos5/XJHm1mQ9O+pboKhDLmiBKhn3cI6THKMsdwq6JfwxReiV0LfU
+	 3QyoMyBoT6tr0AAnS0xx5urNAAt6qgCXRQcPkVF4TFJOQjpwubASG3I5pJw/lgg4p4
+	 U21Hkj5gLzFDMbU7csvbXRjla7KK8IkK514GrX+TEdaInnYSTYKaZTC1P5lb6eOAxm
+	 g/7fLnXGXK1ng==
+Date: Mon, 30 Jan 2023 17:49:34 +0000
+From: Conor Dooley <conor@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/313] 6.1.9-rc1 review
+Message-ID: <Y9gDLmmAwaKZX9yw@spud>
+References: <20230130134336.532886729@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 6.1 000/313] 6.1.9-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230130134336.532886729@linuxfoundation.org>
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="NR3ZMAgE4gQVTbRu"
+Content-Disposition: inline
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
 
-On 1/30/23 05:47, Greg Kroah-Hartman wrote:
+
+--NR3ZMAgE4gQVTbRu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Jan 30, 2023 at 02:47:15PM +0100, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.1.9 release.
 > There are 313 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>=20
 > Responses should be made by Wed, 01 Feb 2023 13:42:39 +0000.
 > Anything received after that time might be too late.
-> 
+>=20
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.9-r=
+c1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
+ linux-6.1.y
+> and the diffstat can be found below.
+>=20
+> thanks,
+>=20
+> greg k-h
 
-Building csky:allmodconfig ... failed
---------------
-Error log:
-drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm.c: In function 'amdgpu_dm_atomic_check':
-drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm.c:9397:43: error: unused variable 'mst_state' [-Werror=unused-variable]
-  9397 |         struct drm_dp_mst_topology_state *mst_state;
-       |                                           ^~~~~~~~~
-drivers/gpu/drm/amd/amdgpu/../display/amdgpu_dm/amdgpu_dm.c:9396:41: error: unused variable 'mgr' [-Werror=unused-variable]
-  9396 |         struct drm_dp_mst_topology_mgr *mgr;
-       |                                         ^~~
+Apart from the build issue that Guenter reported, things look fine on my
+hardware.
 
-and other similar errors.
+> Conor Dooley <conor.dooley@microchip.com>
+>     dt-bindings: riscv: fix single letter canonical order
+>=20
+> Conor Dooley <conor.dooley@microchip.com>
+>     dt-bindings: riscv: fix underscore requirement for multi-letter exten=
+sions
 
-AFAICS it is missing upstream commit f439a959dcfb ("amdgpu: fix build on
-non-DCN platforms.").
+I think the email for these came in over the weekend but I was busy
+unfortunately. Is dt-binding stuff like this usually backported?
+I suppose there's no harm in making sure that it is correct...
 
-Guenter
+Thanks,
+Conor.
 
+--NR3ZMAgE4gQVTbRu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCY9gDKwAKCRB4tDGHoIJi
+0vsGAP40zBb1oywUvBje8ff/7Mx472MTK1QSNShqAvwCrFfpZgD/WUmUbmzAj7Fl
+jqPRHtP7SYLDpH4UX/I8P8ShQTM50wU=
+=6ICP
+-----END PGP SIGNATURE-----
+
+--NR3ZMAgE4gQVTbRu--
