@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B68F28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:04:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97513C433EF;
-	Mon, 30 Jan 2023 14:04:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4CF8828EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:04:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A99D0C433D2;
+	Mon, 30 Jan 2023 14:04:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087488;
-	bh=ncb5Oym5fMqNbpP4HNgb57+Y06GfPFAEoWeCU/qiN40=;
+	s=korg; t=1675087491;
+	bh=aGczaBOYP1/QtMYSj6BpzEPL9Tncc8eoXO0awz9orpI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Fj2xK0ToYtXBcX99hhAI6uL/1q8SDyrVhsMqbOx4f25sFAD7LRGnSdAl++cGihkdZ
-	 KSUsIwpb87LA7EwqTgvrcWXtpjtZbIuaN7U1p2tsCkFGNHJ/RF+6bhXW68U8t7I54H
-	 nzSfxJazeQ7s04wOP61EO2AYTujki1XNtpM4xM+E=
+	b=qJz2ae0157RpX3O/oYYstbSsgDH9mO/aEUMs6zELGkDitXipXt1saL09AchiKUOta
+	 3/blbpVN8QIUPe5FU5ZO2fIvGofbBYcwt/IFaSZab8UeWr2SqJ0bgPSeIiVlxkY/G+
+	 azvPZl2WNWRfBNQY1Yr/h+Qn7zjfSOyMgla6w/60=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shanker Donthineni <sdonthineni@nvidia.com>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.1 224/313] KVM: arm64: GICv4.1: Fix race with doorbell on VPE activation/deactivation
-Date: Mon, 30 Jan 2023 14:50:59 +0100
-Message-Id: <20230130134347.146693528@linuxfoundation.org>
+	Can Guo <quic_cang@quicinc.com>,
+	Andrew Halaney <ahalaney@redhat.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Bart Van Assche <bvanassche@acm.org>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>
+Subject: [PATCH 6.1 225/313] scsi: ufs: core: Fix devfreq deadlocks
+Date: Mon, 30 Jan 2023 14:51:00 +0100
+Message-Id: <20230130134347.196355426@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -34,133 +37,217 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marc Zyngier <maz@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit ef3691683d7bfd0a2acf48812e4ffe894f10bfa8 upstream.
+commit ba81043753fffbc2ad6e0c5ff2659f12ac2f46b4 upstream.
 
-To save the vgic LPI pending state with GICv4.1, the VPEs must all be
-unmapped from the ITSs so that the sGIC caches can be flushed.
-The opposite is done once the state is saved.
+There is a lock inversion and rwsem read-lock recursion in the devfreq
+target callback which can lead to deadlocks.
 
-This is all done by using the activate/deactivate irqdomain callbacks
-directly from the vgic code. Crutially, this is done without holding
-the irqdesc lock for the interrupts that represent the VPE. And these
-callbacks are changing the state of the irqdesc. What could possibly
-go wrong?
+Specifically, ufshcd_devfreq_scale() already holds a clk_scaling_lock
+read lock when toggling the write booster, which involves taking the
+dev_cmd mutex before taking another clk_scaling_lock read lock.
 
-If a doorbell fires while we are messing with the irqdesc state,
-it will acquire the lock and change the interrupt state concurrently.
-Since we don't hole the lock, curruption occurs in on the interrupt
-state. Oh well.
+This can lead to a deadlock if another thread:
 
-While acquiring the lock would fix this (and this was Shanker's
-initial approach), this is still a layering violation we could do
-without. A better approach is actually to free the VPE interrupt,
-do what we have to do, and re-request it.
+  1) tries to acquire the dev_cmd and clk_scaling locks in the correct
+     order, or
 
-It is more work, but this usually happens only once in the lifetime
-of the VM and we don't really care about this sort of overhead.
+  2) takes a clk_scaling write lock before the attempt to take the
+     clk_scaling read lock a second time.
 
-Fixes: f66b7b151e00 ("KVM: arm64: GICv4.1: Try to save VLPI state in save_pending_tables")
-Reported-by: Shanker Donthineni <sdonthineni@nvidia.com>
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230118022348.4137094-1-sdonthineni@nvidia.com
+Fix this by dropping the clk_scaling_lock before toggling the write booster
+as was done before commit 0e9d4ca43ba8 ("scsi: ufs: Protect some contexts
+from unexpected clock scaling").
+
+While the devfreq callbacks are already serialised, add a second
+serialising mutex to handle the unlikely case where a callback triggered
+through the devfreq sysfs interface is racing with a request to disable
+clock scaling through the UFS controller 'clkscale_enable' sysfs
+attribute. This could otherwise lead to the write booster being left
+disabled after having disabled clock scaling.
+
+Also take the new mutex in ufshcd_clk_scaling_allow() to make sure that any
+pending write booster update has completed on return.
+
+Note that this currently only affects Qualcomm platforms since commit
+87bd05016a64 ("scsi: ufs: core: Allow host driver to disable wb toggling
+during clock scaling").
+
+The lock inversion (i.e. 1 above) was reported by lockdep as:
+
+ ======================================================
+ WARNING: possible circular locking dependency detected
+ 6.1.0-next-20221216 #211 Not tainted
+ ------------------------------------------------------
+ kworker/u16:2/71 is trying to acquire lock:
+ ffff076280ba98a0 (&hba->dev_cmd.lock){+.+.}-{3:3}, at: ufshcd_query_flag+0x50/0x1c0
+
+ but task is already holding lock:
+ ffff076280ba9cf0 (&hba->clk_scaling_lock){++++}-{3:3}, at: ufshcd_devfreq_scale+0x2b8/0x380
+
+ which lock already depends on the new lock.
+[  +0.011606]
+ the existing dependency chain (in reverse order) is:
+
+ -> #1 (&hba->clk_scaling_lock){++++}-{3:3}:
+        lock_acquire+0x68/0x90
+        down_read+0x58/0x80
+        ufshcd_exec_dev_cmd+0x70/0x2c0
+        ufshcd_verify_dev_init+0x68/0x170
+        ufshcd_probe_hba+0x398/0x1180
+        ufshcd_async_scan+0x30/0x320
+        async_run_entry_fn+0x34/0x150
+        process_one_work+0x288/0x6c0
+        worker_thread+0x74/0x450
+        kthread+0x118/0x120
+        ret_from_fork+0x10/0x20
+
+ -> #0 (&hba->dev_cmd.lock){+.+.}-{3:3}:
+        __lock_acquire+0x12a0/0x2240
+        lock_acquire.part.0+0xcc/0x220
+        lock_acquire+0x68/0x90
+        __mutex_lock+0x98/0x430
+        mutex_lock_nested+0x2c/0x40
+        ufshcd_query_flag+0x50/0x1c0
+        ufshcd_query_flag_retry+0x64/0x100
+        ufshcd_wb_toggle+0x5c/0x120
+        ufshcd_devfreq_scale+0x2c4/0x380
+        ufshcd_devfreq_target+0xf4/0x230
+        devfreq_set_target+0x84/0x2f0
+        devfreq_update_target+0xc4/0xf0
+        devfreq_monitor+0x38/0x1f0
+        process_one_work+0x288/0x6c0
+        worker_thread+0x74/0x450
+        kthread+0x118/0x120
+        ret_from_fork+0x10/0x20
+
+ other info that might help us debug this:
+  Possible unsafe locking scenario:
+        CPU0                    CPU1
+        ----                    ----
+   lock(&hba->clk_scaling_lock);
+                                lock(&hba->dev_cmd.lock);
+                                lock(&hba->clk_scaling_lock);
+   lock(&hba->dev_cmd.lock);
+
+  *** DEADLOCK ***
+
+Fixes: 0e9d4ca43ba8 ("scsi: ufs: Protect some contexts from unexpected clock scaling")
+Cc: stable@vger.kernel.org      # 5.12
+Cc: Can Guo <quic_cang@quicinc.com>
+Tested-by: Andrew Halaney <ahalaney@redhat.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Bart Van Assche <bvanassche@acm.org>
+Link: https://lore.kernel.org/r/20230116161201.16923-1-johan+linaro@kernel.org
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/kvm/vgic/vgic-v3.c |   25 +++++++++++--------------
- arch/arm64/kvm/vgic/vgic-v4.c |    8 ++++++--
- arch/arm64/kvm/vgic/vgic.h    |    1 +
- 3 files changed, 18 insertions(+), 16 deletions(-)
+ drivers/ufs/core/ufshcd.c |   29 +++++++++++++++--------------
+ include/ufs/ufshcd.h      |    2 ++
+ 2 files changed, 17 insertions(+), 14 deletions(-)
 
---- a/arch/arm64/kvm/vgic/vgic-v3.c
-+++ b/arch/arm64/kvm/vgic/vgic-v3.c
-@@ -350,26 +350,23 @@ retry:
-  * The deactivation of the doorbell interrupt will trigger the
-  * unmapping of the associated vPE.
-  */
--static void unmap_all_vpes(struct vgic_dist *dist)
-+static void unmap_all_vpes(struct kvm *kvm)
- {
--	struct irq_desc *desc;
-+	struct vgic_dist *dist = &kvm->arch.vgic;
- 	int i;
- 
--	for (i = 0; i < dist->its_vm.nr_vpes; i++) {
--		desc = irq_to_desc(dist->its_vm.vpes[i]->irq);
--		irq_domain_deactivate_irq(irq_desc_get_irq_data(desc));
--	}
-+	for (i = 0; i < dist->its_vm.nr_vpes; i++)
-+		free_irq(dist->its_vm.vpes[i]->irq, kvm_get_vcpu(kvm, i));
- }
- 
--static void map_all_vpes(struct vgic_dist *dist)
-+static void map_all_vpes(struct kvm *kvm)
- {
--	struct irq_desc *desc;
-+	struct vgic_dist *dist = &kvm->arch.vgic;
- 	int i;
- 
--	for (i = 0; i < dist->its_vm.nr_vpes; i++) {
--		desc = irq_to_desc(dist->its_vm.vpes[i]->irq);
--		irq_domain_activate_irq(irq_desc_get_irq_data(desc), false);
--	}
-+	for (i = 0; i < dist->its_vm.nr_vpes; i++)
-+		WARN_ON(vgic_v4_request_vpe_irq(kvm_get_vcpu(kvm, i),
-+						dist->its_vm.vpes[i]->irq));
- }
- 
- /**
-@@ -394,7 +391,7 @@ int vgic_v3_save_pending_tables(struct k
- 	 * and enabling of the doorbells have already been done.
+--- a/drivers/ufs/core/ufshcd.c
++++ b/drivers/ufs/core/ufshcd.c
+@@ -1231,12 +1231,14 @@ static int ufshcd_clock_scaling_prepare(
+ 	 * clock scaling is in progress
  	 */
- 	if (kvm_vgic_global_state.has_gicv4_1) {
--		unmap_all_vpes(dist);
-+		unmap_all_vpes(kvm);
- 		vlpi_avail = true;
+ 	ufshcd_scsi_block_requests(hba);
++	mutex_lock(&hba->wb_mutex);
+ 	down_write(&hba->clk_scaling_lock);
+ 
+ 	if (!hba->clk_scaling.is_allowed ||
+ 	    ufshcd_wait_for_doorbell_clr(hba, DOORBELL_CLR_TOUT_US)) {
+ 		ret = -EBUSY;
+ 		up_write(&hba->clk_scaling_lock);
++		mutex_unlock(&hba->wb_mutex);
+ 		ufshcd_scsi_unblock_requests(hba);
+ 		goto out;
  	}
- 
-@@ -444,7 +441,7 @@ int vgic_v3_save_pending_tables(struct k
- 
- out:
- 	if (vlpi_avail)
--		map_all_vpes(dist);
-+		map_all_vpes(kvm);
- 
+@@ -1248,12 +1250,16 @@ out:
  	return ret;
  }
---- a/arch/arm64/kvm/vgic/vgic-v4.c
-+++ b/arch/arm64/kvm/vgic/vgic-v4.c
-@@ -222,6 +222,11 @@ void vgic_v4_get_vlpi_state(struct vgic_
- 	*val = !!(*ptr & mask);
+ 
+-static void ufshcd_clock_scaling_unprepare(struct ufs_hba *hba, bool writelock)
++static void ufshcd_clock_scaling_unprepare(struct ufs_hba *hba, int err, bool scale_up)
+ {
+-	if (writelock)
+-		up_write(&hba->clk_scaling_lock);
+-	else
+-		up_read(&hba->clk_scaling_lock);
++	up_write(&hba->clk_scaling_lock);
++
++	/* Enable Write Booster if we have scaled up else disable it */
++	if (ufshcd_enable_wb_if_scaling_up(hba) && !err)
++		ufshcd_wb_toggle(hba, scale_up);
++
++	mutex_unlock(&hba->wb_mutex);
++
+ 	ufshcd_scsi_unblock_requests(hba);
+ 	ufshcd_release(hba);
+ }
+@@ -1270,7 +1276,6 @@ static void ufshcd_clock_scaling_unprepa
+ static int ufshcd_devfreq_scale(struct ufs_hba *hba, bool scale_up)
+ {
+ 	int ret = 0;
+-	bool is_writelock = true;
+ 
+ 	ret = ufshcd_clock_scaling_prepare(hba);
+ 	if (ret)
+@@ -1299,15 +1304,8 @@ static int ufshcd_devfreq_scale(struct u
+ 		}
+ 	}
+ 
+-	/* Enable Write Booster if we have scaled up else disable it */
+-	if (ufshcd_enable_wb_if_scaling_up(hba)) {
+-		downgrade_write(&hba->clk_scaling_lock);
+-		is_writelock = false;
+-		ufshcd_wb_toggle(hba, scale_up);
+-	}
+-
+ out_unprepare:
+-	ufshcd_clock_scaling_unprepare(hba, is_writelock);
++	ufshcd_clock_scaling_unprepare(hba, ret, scale_up);
+ 	return ret;
  }
  
-+int vgic_v4_request_vpe_irq(struct kvm_vcpu *vcpu, int irq)
-+{
-+	return request_irq(irq, vgic_v4_doorbell_handler, 0, "vcpu", vcpu);
-+}
-+
- /**
-  * vgic_v4_init - Initialize the GICv4 data structures
-  * @kvm:	Pointer to the VM being initialized
-@@ -283,8 +288,7 @@ int vgic_v4_init(struct kvm *kvm)
- 			irq_flags &= ~IRQ_NOAUTOEN;
- 		irq_set_status_flags(irq, irq_flags);
+@@ -6104,9 +6102,11 @@ static void ufshcd_force_error_recovery(
  
--		ret = request_irq(irq, vgic_v4_doorbell_handler,
--				  0, "vcpu", vcpu);
-+		ret = vgic_v4_request_vpe_irq(vcpu, irq);
- 		if (ret) {
- 			kvm_err("failed to allocate vcpu IRQ%d\n", irq);
- 			/*
---- a/arch/arm64/kvm/vgic/vgic.h
-+++ b/arch/arm64/kvm/vgic/vgic.h
-@@ -331,5 +331,6 @@ int vgic_v4_init(struct kvm *kvm);
- void vgic_v4_teardown(struct kvm *kvm);
- void vgic_v4_configure_vsgis(struct kvm *kvm);
- void vgic_v4_get_vlpi_state(struct vgic_irq *irq, bool *val);
-+int vgic_v4_request_vpe_irq(struct kvm_vcpu *vcpu, int irq);
+ static void ufshcd_clk_scaling_allow(struct ufs_hba *hba, bool allow)
+ {
++	mutex_lock(&hba->wb_mutex);
+ 	down_write(&hba->clk_scaling_lock);
+ 	hba->clk_scaling.is_allowed = allow;
+ 	up_write(&hba->clk_scaling_lock);
++	mutex_unlock(&hba->wb_mutex);
+ }
  
- #endif
+ static void ufshcd_clk_scaling_suspend(struct ufs_hba *hba, bool suspend)
+@@ -9773,6 +9773,7 @@ int ufshcd_init(struct ufs_hba *hba, voi
+ 	/* Initialize mutex for exception event control */
+ 	mutex_init(&hba->ee_ctrl_mutex);
+ 
++	mutex_init(&hba->wb_mutex);
+ 	init_rwsem(&hba->clk_scaling_lock);
+ 
+ 	ufshcd_init_clk_gating(hba);
+--- a/include/ufs/ufshcd.h
++++ b/include/ufs/ufshcd.h
+@@ -806,6 +806,7 @@ struct ufs_hba_monitor {
+  * @urgent_bkops_lvl: keeps track of urgent bkops level for device
+  * @is_urgent_bkops_lvl_checked: keeps track if the urgent bkops level for
+  *  device is known or not.
++ * @wb_mutex: used to serialize devfreq and sysfs write booster toggling
+  * @clk_scaling_lock: used to serialize device commands and clock scaling
+  * @desc_size: descriptor sizes reported by device
+  * @scsi_block_reqs_cnt: reference counting for scsi block requests
+@@ -948,6 +949,7 @@ struct ufs_hba {
+ 	enum bkops_status urgent_bkops_lvl;
+ 	bool is_urgent_bkops_lvl_checked;
+ 
++	struct mutex wb_mutex;
+ 	struct rw_semaphore clk_scaling_lock;
+ 	unsigned char desc_size[QUERY_DESC_IDN_MAX];
+ 	atomic_t scsi_block_reqs_cnt;
 
 
