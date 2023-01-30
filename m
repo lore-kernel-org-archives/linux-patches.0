@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 533A828EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:07:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA66EC433D2;
-	Mon, 30 Jan 2023 14:07:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8788628EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:07:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D921C433D2;
+	Mon, 30 Jan 2023 14:07:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087647;
-	bh=PtAuXWgnXXdw5oqeuV6B6C6pLVpDlBDs++FN8X33Z9c=;
+	s=korg; t=1675087650;
+	bh=j2G78z+Y1KOFVIoWkBc1EqYnWCP7Dq5tP3tPumRzF9o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xD4BZhwBKBCuIusp4SCwWth8a/+JIQTN6F7f9ku1WMeVibEUl6DdLB6ISpLXnh0bQ
-	 1ZVvUZ0HHOy7Xm0yC+ah/0BWxwslQH7S2DstlRNUmtlk0g0uur5FpCLfmGihsjP25r
-	 IOLj5Ib7j0mq+0ADVaHvQA5mYTjM7SdlReVYd308=
+	b=yChmz7XjnjF6hQWsyXmkmZ18S1Uzi8BP5L6pmgFrRjCM9vZqgjJm0CxlMElp4JWrs
+	 nZhWigsc1xisGJxBpkNOrtozKbmohapn2YRpzwKZue6qsRzgscArFV+pjZkksR0XuV
+	 sOq//B/QNX5/SdqXJUwqU1RDrvyQhL19eabUdVo0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Emmanouil Kouroupakis <kartebi@gmail.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 278/313] platform/x86: apple-gmux: Add apple_gmux_detect() helper
-Date: Mon, 30 Jan 2023 14:51:53 +0100
-Message-Id: <20230130134349.681278811@linuxfoundation.org>
+Subject: [PATCH 6.1 279/313] ACPI: video: Fix apple gmux detection
+Date: Mon, 30 Jan 2023 14:51:54 +0100
+Message-Id: <20230130134349.725318598@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -37,25 +38,19 @@ Content-Transfer-Encoding: 8bit
 
 From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit d143908f80f3e5d164ac3342f73d6b9f536e8b4d ]
+[ Upstream commit b0935f110cff5d70da05c5cb1670bee0b07b631c ]
 
-Add a new (static inline) apple_gmux_detect() helper to apple-gmux.h
-which can be used for gmux detection instead of apple_gmux_present().
+Some apple laptop models have an ACPI device with a HID of APP000B
+and that device has an IO resource (so it does not describe the new
+unsupported MMIO based gmux type), but there actually is no gmux
+in the laptop at all.
 
-The latter is not really reliable since an ACPI device with a HID
-of APP000B is present on some devices without a gmux at all, as well
-as on devices with a newer (unsupported) MMIO based gmux model.
+The gmux_probe() function of the actual apple-gmux driver has code
+to detect this, this code has been factored out into a new
+apple_gmux_detect() helper in apple-gmux.h.
 
-This causes apple_gmux_present() to return false-positives on
-a number of different Apple laptop models.
-
-This new helper uses the same probing as the actual apple-gmux
-driver, so that it does not return false positives.
-
-To avoid code duplication the gmux_probe() function of the actual
-driver is also moved over to using the new apple_gmux_detect() helper.
-
-This avoids false positives (vs _HID + IO region detection) on:
+Use this new function to fix acpi_video_get_backlight_type() wrongly
+returning apple_gmux as type on the following laptops:
 
 MacBookPro5,4
 https://pastebin.com/8Xjq7RhS
@@ -73,243 +68,75 @@ MacBookPro11,2
 https://forums.fedora-fr.org/viewtopic.php?id=70142
 
 MacBookPro11,4
-https://raw.githubusercontent.com/im-0/investigate-card-reader-suspend-problem-on-mbp11.4/master/test-16/dmesg
+https://raw.githubusercontent.com/im-0/investigate-card-reader-suspend-problem-on-mbp11.4/mast
 
 Fixes: 21245df307cb ("ACPI: video: Add Apple GMUX brightness control detection")
 Link: https://lore.kernel.org/platform-driver-x86/20230123113750.462144-1-hdegoede@redhat.com/
 Reported-by: Emmanouil Kouroupakis <kartebi@gmail.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230124105754.62167-3-hdegoede@redhat.com
+Link: https://lore.kernel.org/r/20230124105754.62167-4-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/apple-gmux.c | 70 +++++++------------------
- include/linux/apple-gmux.h        | 86 ++++++++++++++++++++++++++++++-
- 2 files changed, 102 insertions(+), 54 deletions(-)
+ drivers/acpi/video_detect.c | 24 +++---------------------
+ 1 file changed, 3 insertions(+), 21 deletions(-)
 
-diff --git a/drivers/platform/x86/apple-gmux.c b/drivers/platform/x86/apple-gmux.c
-index a0af01f6a0fd..9333f82cfa8a 100644
---- a/drivers/platform/x86/apple-gmux.c
-+++ b/drivers/platform/x86/apple-gmux.c
-@@ -226,23 +226,6 @@ static void gmux_write32(struct apple_gmux_data *gmux_data, int port,
- 		gmux_pio_write32(gmux_data, port, val);
+diff --git a/drivers/acpi/video_detect.c b/drivers/acpi/video_detect.c
+index 04f3b26e3a75..5c32b318c173 100644
+--- a/drivers/acpi/video_detect.c
++++ b/drivers/acpi/video_detect.c
+@@ -110,26 +110,6 @@ static bool nvidia_wmi_ec_supported(void)
  }
+ #endif
  
--static bool gmux_is_indexed(struct apple_gmux_data *gmux_data)
+-static bool apple_gmux_backlight_present(void)
 -{
--	u16 val;
+-	struct acpi_device *adev;
+-	struct device *dev;
 -
--	outb(0xaa, gmux_data->iostart + 0xcc);
--	outb(0x55, gmux_data->iostart + 0xcd);
--	outb(0x00, gmux_data->iostart + 0xce);
+-	adev = acpi_dev_get_first_match_dev(GMUX_ACPI_HID, NULL, -1);
+-	if (!adev)
+-		return false;
 -
--	val = inb(gmux_data->iostart + 0xcc) |
--		(inb(gmux_data->iostart + 0xcd) << 8);
+-	dev = acpi_get_first_physical_node(adev);
+-	if (!dev)
+-		return false;
 -
--	if (val == 0x55aa)
--		return true;
--
--	return false;
+-	/*
+-	 * drivers/platform/x86/apple-gmux.c only supports old style
+-	 * Apple GMUX with an IO-resource.
+-	 */
+-	return pnp_get_resource(to_pnp_dev(dev), IORESOURCE_IO, 0) != NULL;
 -}
 -
- /**
-  * DOC: Backlight control
-  *
-@@ -582,60 +565,43 @@ static int gmux_probe(struct pnp_dev *pnp, const struct pnp_device_id *id)
- 	int ret = -ENXIO;
- 	acpi_status status;
- 	unsigned long long gpe;
-+	bool indexed = false;
-+	u32 version;
- 
- 	if (apple_gmux_data)
- 		return -EBUSY;
- 
-+	if (!apple_gmux_detect(pnp, &indexed)) {
-+		pr_info("gmux device not present\n");
-+		return -ENODEV;
-+	}
-+
- 	gmux_data = kzalloc(sizeof(*gmux_data), GFP_KERNEL);
- 	if (!gmux_data)
- 		return -ENOMEM;
- 	pnp_set_drvdata(pnp, gmux_data);
- 
- 	res = pnp_get_resource(pnp, IORESOURCE_IO, 0);
--	if (!res) {
--		pr_err("Failed to find gmux I/O resource\n");
--		goto err_free;
--	}
--
- 	gmux_data->iostart = res->start;
- 	gmux_data->iolen = resource_size(res);
- 
--	if (gmux_data->iolen < GMUX_MIN_IO_LEN) {
--		pr_err("gmux I/O region too small (%lu < %u)\n",
--		       gmux_data->iolen, GMUX_MIN_IO_LEN);
--		goto err_free;
--	}
--
- 	if (!request_region(gmux_data->iostart, gmux_data->iolen,
- 			    "Apple gmux")) {
- 		pr_err("gmux I/O already in use\n");
- 		goto err_free;
+ /* Force to use vendor driver when the ACPI device is known to be
+  * buggy */
+ static int video_detect_force_vendor(const struct dmi_system_id *d)
+@@ -781,6 +761,7 @@ static enum acpi_backlight_type __acpi_video_get_backlight_type(bool native)
+ {
+ 	static DEFINE_MUTEX(init_mutex);
+ 	static bool nvidia_wmi_ec_present;
++	static bool apple_gmux_present;
+ 	static bool native_available;
+ 	static bool init_done;
+ 	static long video_caps;
+@@ -794,6 +775,7 @@ static enum acpi_backlight_type __acpi_video_get_backlight_type(bool native)
+ 				    ACPI_UINT32_MAX, find_video, NULL,
+ 				    &video_caps, NULL);
+ 		nvidia_wmi_ec_present = nvidia_wmi_ec_supported();
++		apple_gmux_present = apple_gmux_detect(NULL, NULL);
+ 		init_done = true;
  	}
+ 	if (native)
+@@ -815,7 +797,7 @@ static enum acpi_backlight_type __acpi_video_get_backlight_type(bool native)
+ 	if (nvidia_wmi_ec_present)
+ 		return acpi_backlight_nvidia_wmi_ec;
  
--	/*
--	 * Invalid version information may indicate either that the gmux
--	 * device isn't present or that it's a new one that uses indexed
--	 * io
--	 */
--
--	ver_major = gmux_read8(gmux_data, GMUX_PORT_VERSION_MAJOR);
--	ver_minor = gmux_read8(gmux_data, GMUX_PORT_VERSION_MINOR);
--	ver_release = gmux_read8(gmux_data, GMUX_PORT_VERSION_RELEASE);
--	if (ver_major == 0xff && ver_minor == 0xff && ver_release == 0xff) {
--		if (gmux_is_indexed(gmux_data)) {
--			u32 version;
--			mutex_init(&gmux_data->index_lock);
--			gmux_data->indexed = true;
--			version = gmux_read32(gmux_data,
--				GMUX_PORT_VERSION_MAJOR);
--			ver_major = (version >> 24) & 0xff;
--			ver_minor = (version >> 16) & 0xff;
--			ver_release = (version >> 8) & 0xff;
--		} else {
--			pr_info("gmux device not present\n");
--			ret = -ENODEV;
--			goto err_release;
--		}
-+	if (indexed) {
-+		mutex_init(&gmux_data->index_lock);
-+		gmux_data->indexed = true;
-+		version = gmux_read32(gmux_data, GMUX_PORT_VERSION_MAJOR);
-+		ver_major = (version >> 24) & 0xff;
-+		ver_minor = (version >> 16) & 0xff;
-+		ver_release = (version >> 8) & 0xff;
-+	} else {
-+		ver_major = gmux_read8(gmux_data, GMUX_PORT_VERSION_MAJOR);
-+		ver_minor = gmux_read8(gmux_data, GMUX_PORT_VERSION_MINOR);
-+		ver_release = gmux_read8(gmux_data, GMUX_PORT_VERSION_RELEASE);
- 	}
- 	pr_info("Found gmux version %d.%d.%d [%s]\n", ver_major, ver_minor,
- 		ver_release, (gmux_data->indexed ? "indexed" : "classic"));
-diff --git a/include/linux/apple-gmux.h b/include/linux/apple-gmux.h
-index 80efaaf89e07..1f68b49bcd68 100644
---- a/include/linux/apple-gmux.h
-+++ b/include/linux/apple-gmux.h
-@@ -8,6 +8,8 @@
- #define LINUX_APPLE_GMUX_H
+-	if (apple_gmux_backlight_present())
++	if (apple_gmux_present)
+ 		return acpi_backlight_apple_gmux;
  
- #include <linux/acpi.h>
-+#include <linux/io.h>
-+#include <linux/pnp.h>
- 
- #define GMUX_ACPI_HID "APP000B"
- 
-@@ -35,14 +37,89 @@
- #define GMUX_MIN_IO_LEN			(GMUX_PORT_BRIGHTNESS + 4)
- 
- #if IS_ENABLED(CONFIG_APPLE_GMUX)
-+static inline bool apple_gmux_is_indexed(unsigned long iostart)
-+{
-+	u16 val;
-+
-+	outb(0xaa, iostart + 0xcc);
-+	outb(0x55, iostart + 0xcd);
-+	outb(0x00, iostart + 0xce);
-+
-+	val = inb(iostart + 0xcc) | (inb(iostart + 0xcd) << 8);
-+	if (val == 0x55aa)
-+		return true;
-+
-+	return false;
-+}
- 
- /**
-- * apple_gmux_present() - detect if gmux is built into the machine
-+ * apple_gmux_detect() - detect if gmux is built into the machine
-+ *
-+ * @pnp_dev:     Device to probe or NULL to use the first matching device
-+ * @indexed_ret: Returns (by reference) if the gmux is indexed or not
-+ *
-+ * Detect if a supported gmux device is present by actually probing it.
-+ * This avoids the false positives returned on some models by
-+ * apple_gmux_present().
-+ *
-+ * Return: %true if a supported gmux ACPI device is detected and the kernel
-+ * was configured with CONFIG_APPLE_GMUX, %false otherwise.
-+ */
-+static inline bool apple_gmux_detect(struct pnp_dev *pnp_dev, bool *indexed_ret)
-+{
-+	u8 ver_major, ver_minor, ver_release;
-+	struct device *dev = NULL;
-+	struct acpi_device *adev;
-+	struct resource *res;
-+	bool indexed = false;
-+	bool ret = false;
-+
-+	if (!pnp_dev) {
-+		adev = acpi_dev_get_first_match_dev(GMUX_ACPI_HID, NULL, -1);
-+		if (!adev)
-+			return false;
-+
-+		dev = get_device(acpi_get_first_physical_node(adev));
-+		acpi_dev_put(adev);
-+		if (!dev)
-+			return false;
-+
-+		pnp_dev = to_pnp_dev(dev);
-+	}
-+
-+	res = pnp_get_resource(pnp_dev, IORESOURCE_IO, 0);
-+	if (!res || resource_size(res) < GMUX_MIN_IO_LEN)
-+		goto out;
-+
-+	/*
-+	 * Invalid version information may indicate either that the gmux
-+	 * device isn't present or that it's a new one that uses indexed io.
-+	 */
-+	ver_major = inb(res->start + GMUX_PORT_VERSION_MAJOR);
-+	ver_minor = inb(res->start + GMUX_PORT_VERSION_MINOR);
-+	ver_release = inb(res->start + GMUX_PORT_VERSION_RELEASE);
-+	if (ver_major == 0xff && ver_minor == 0xff && ver_release == 0xff) {
-+		indexed = apple_gmux_is_indexed(res->start);
-+		if (!indexed)
-+			goto out;
-+	}
-+
-+	if (indexed_ret)
-+		*indexed_ret = indexed;
-+
-+	ret = true;
-+out:
-+	put_device(dev);
-+	return ret;
-+}
-+
-+/**
-+ * apple_gmux_present() - check if gmux ACPI device is present
-  *
-  * Drivers may use this to activate quirks specific to dual GPU MacBook Pros
-  * and Mac Pros, e.g. for deferred probing, runtime pm and backlight.
-  *
-- * Return: %true if gmux is present and the kernel was configured
-+ * Return: %true if gmux ACPI device is present and the kernel was configured
-  * with CONFIG_APPLE_GMUX, %false otherwise.
-  */
- static inline bool apple_gmux_present(void)
-@@ -57,6 +134,11 @@ static inline bool apple_gmux_present(void)
- 	return false;
- }
- 
-+static inline bool apple_gmux_detect(struct pnp_dev *pnp_dev, bool *indexed_ret)
-+{
-+	return false;
-+}
-+
- #endif /* !CONFIG_APPLE_GMUX */
- 
- #endif /* LINUX_APPLE_GMUX_H */
+ 	/* Use ACPI video if available, except when native should be preferred. */
 -- 
 2.39.0
 
