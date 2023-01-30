@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4529A28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:01:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9206C4339B;
-	Mon, 30 Jan 2023 14:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5868728EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:01:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1239C433EF;
+	Mon, 30 Jan 2023 14:01:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087306;
-	bh=Srfi0VUrYryvu5LSCeZu3IfvdVJDv6xn3XjqpR9zd+c=;
+	s=korg; t=1675087309;
+	bh=RN7VLJp+O7Bz4vKfVO30MZU6lj4S2u5GUiHV5ezFWUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BJi9GPra25qvrTi5smV3FEF7u5IcnXXCqOpTtymFkMYAyRc+lxJsS4fy20Wj7cFNB
-	 Q5UHkE82docu/qDBdwPyj4kxzkoyVwiICnxsv2cB1/txL767ijr2BQ4WRMctJUDq6E
-	 aj65Y2ZCAj7/lvsEQg3I6tWy3BAgXr6BDdbxmsyI=
+	b=BKUKBkppv+pHpopwYWTphPnjv+Ga5iCtqh9cFkUusqU06v7FQN2SV8l7/HSLU0M/c
+	 EMoAZiPWqXlNsnQaVViy3VOSTfMSNS2egEh4PsOeuncbTCy6gSHaT/el053ZMJ8l8s
+	 Wt1w0pDkMHbLHMVilr1+wOukhsiBZtcnYqTkTZe4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Kan Liang <kan.liang@linux.intel.com>,
 	Ingo Molnar <mingo@kernel.org>,
-	Andi Kleen <ak@linux.intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 163/313] perf/x86/msr: Add Meteor Lake support
-Date: Mon, 30 Jan 2023 14:49:58 +0100
-Message-Id: <20230130134344.256278176@linuxfoundation.org>
+Subject: [PATCH 6.1 164/313] perf/x86/msr: Add Emerald Rapids
+Date: Mon, 30 Jan 2023 14:49:59 +0100
+Message-Id: <20230130134344.308875732@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -38,33 +37,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Kan Liang <kan.liang@linux.intel.com>
 
-[ Upstream commit 6887a4d3aede084bf08b70fbc9736c69fce05d7f ]
+[ Upstream commit 69ced4160969025821f2999ff92163ed26568f1c ]
 
-Meteor Lake is Intel's successor to Raptor lake. PPERF and SMI_COUNT MSRs
-are also supported.
+The same as Sapphire Rapids, the SMI_COUNT MSR is also supported on
+Emerald Rapids. Add Emerald Rapids model.
 
 Signed-off-by: Kan Liang <kan.liang@linux.intel.com>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Andi Kleen <ak@linux.intel.com>
-Link: https://lore.kernel.org/r/20230104201349.1451191-7-kan.liang@linux.intel.com
+Link: https://lore.kernel.org/r/20230106160449.3566477-3-kan.liang@linux.intel.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/events/msr.c | 2 ++
- 1 file changed, 2 insertions(+)
+ arch/x86/events/msr.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/arch/x86/events/msr.c b/arch/x86/events/msr.c
-index ecced3a52668..074150d28fa8 100644
+index 074150d28fa8..c65d8906cbcf 100644
 --- a/arch/x86/events/msr.c
 +++ b/arch/x86/events/msr.c
-@@ -107,6 +107,8 @@ static bool test_intel(int idx, void *data)
- 	case INTEL_FAM6_RAPTORLAKE:
- 	case INTEL_FAM6_RAPTORLAKE_P:
- 	case INTEL_FAM6_RAPTORLAKE_S:
-+	case INTEL_FAM6_METEORLAKE:
-+	case INTEL_FAM6_METEORLAKE_L:
- 		if (idx == PERF_MSR_SMI || idx == PERF_MSR_PPERF)
- 			return true;
- 		break;
+@@ -69,6 +69,7 @@ static bool test_intel(int idx, void *data)
+ 	case INTEL_FAM6_BROADWELL_G:
+ 	case INTEL_FAM6_BROADWELL_X:
+ 	case INTEL_FAM6_SAPPHIRERAPIDS_X:
++	case INTEL_FAM6_EMERALDRAPIDS_X:
+ 
+ 	case INTEL_FAM6_ATOM_SILVERMONT:
+ 	case INTEL_FAM6_ATOM_SILVERMONT_D:
 -- 
 2.39.0
 
