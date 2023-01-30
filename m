@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC55628EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:53:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 356BEC433D2;
-	Mon, 30 Jan 2023 13:53:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B16228EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 13:53:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DB8EC433D2;
+	Mon, 30 Jan 2023 13:53:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675086822;
-	bh=HdwkosLvFl4Eg2pq4SB31AaUfIR9aVUGypswrbgFuUs=;
+	s=korg; t=1675086826;
+	bh=FxERe+RFUM5rPkiZbMMrkk1q7F2XS/VoDUBqXu9nvOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KcE7M1ouS4umQusHHdwc1KDEr7tlGK8xKV1KjLIYfj2MwlCoS/pgp6nZOoUaf4+jE
-	 iufrFeaEWnO031j2DLtDPTMNkuQp6PluTomJuYvUj09dX8KJE6pkvEbWiCFTQM2Qqq
-	 mDkMtZ4QUBm3dOzpviFUhUvYEDXaGASTEndPDugY=
+	b=bBNwWTM8LJSJbOpOFPiApgRvgGqCpxO+k7HNyBJeAVmtOBvtxIEJYxvcIOUZUM8V1
+	 MsvUu3HZxO1wlx/I11WCJDnX8EQxstJMkW/H4XzcWjv5wmBKNR1cF7J96lmx/gxJuS
+	 z3VsJlk6TcaDXviUAxkdgeawpi4j/SgPWPicyZCk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Gaosheng Cui <cuigaosheng1@huawei.com>,
 	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 002/313] memory: atmel-sdramc: Fix missing clk_disable_unprepare in atmel_ramc_probe()
-Date: Mon, 30 Jan 2023 14:47:17 +0100
-Message-Id: <20230130134336.656436945@linuxfoundation.org>
+Subject: [PATCH 6.1 003/313] memory: mvebu-devbus: Fix missing clk_disable_unprepare in mvebu_devbus_probe()
+Date: Mon, 30 Jan 2023 14:47:18 +0100
+Message-Id: <20230130134336.705563096@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -37,47 +37,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit 340cb392a038cf70540a4cdf2e98a247c66b6df4 ]
+[ Upstream commit cb8fd6f75775165390ededea8799b60d93d9fe3e ]
 
 The clk_disable_unprepare() should be called in the error handling
-of caps->has_mpddr_clk, fix it by replacing devm_clk_get and
-clk_prepare_enable by devm_clk_get_enabled.
+of devbus_get_timing_params() and of_platform_populate(), fix it by
+replacing devm_clk_get and clk_prepare_enable by devm_clk_get_enabled.
 
 Fixes: e81b6abebc87 ("memory: add a driver for atmel ram controllers")
 Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
-Link: https://lore.kernel.org/r/20221125073757.3535219-1-cuigaosheng1@huawei.com
+Link: https://lore.kernel.org/r/20221126044911.7226-1-cuigaosheng1@huawei.com
 Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/memory/atmel-sdramc.c | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ drivers/memory/mvebu-devbus.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/memory/atmel-sdramc.c b/drivers/memory/atmel-sdramc.c
-index 9c49d00c2a96..ea6e9e1eaf04 100644
---- a/drivers/memory/atmel-sdramc.c
-+++ b/drivers/memory/atmel-sdramc.c
-@@ -47,19 +47,17 @@ static int atmel_ramc_probe(struct platform_device *pdev)
- 	caps = of_device_get_match_data(&pdev->dev);
+diff --git a/drivers/memory/mvebu-devbus.c b/drivers/memory/mvebu-devbus.c
+index 8450638e8670..efc6c08db2b7 100644
+--- a/drivers/memory/mvebu-devbus.c
++++ b/drivers/memory/mvebu-devbus.c
+@@ -280,10 +280,9 @@ static int mvebu_devbus_probe(struct platform_device *pdev)
+ 	if (IS_ERR(devbus->base))
+ 		return PTR_ERR(devbus->base);
  
- 	if (caps->has_ddrck) {
--		clk = devm_clk_get(&pdev->dev, "ddrck");
-+		clk = devm_clk_get_enabled(&pdev->dev, "ddrck");
- 		if (IS_ERR(clk))
- 			return PTR_ERR(clk);
--		clk_prepare_enable(clk);
- 	}
+-	clk = devm_clk_get(&pdev->dev, NULL);
++	clk = devm_clk_get_enabled(&pdev->dev, NULL);
+ 	if (IS_ERR(clk))
+ 		return PTR_ERR(clk);
+-	clk_prepare_enable(clk);
  
- 	if (caps->has_mpddr_clk) {
--		clk = devm_clk_get(&pdev->dev, "mpddr");
-+		clk = devm_clk_get_enabled(&pdev->dev, "mpddr");
- 		if (IS_ERR(clk)) {
- 			pr_err("AT91 RAMC: couldn't get mpddr clock\n");
- 			return PTR_ERR(clk);
- 		}
--		clk_prepare_enable(clk);
- 	}
- 
- 	return 0;
+ 	/*
+ 	 * Obtain clock period in picoseconds,
 -- 
 2.39.0
 
