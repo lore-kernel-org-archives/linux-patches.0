@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208F23229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:21:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81BC1C433EF;
-	Mon, 30 Jan 2023 14:21:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0CC453229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:21:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C1DCC433D2;
+	Mon, 30 Jan 2023 14:21:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088508;
-	bh=F2yG3WWNJLD6l8ZwPi0fb543XMI9dhiFCKhXETUNQ+k=;
+	s=korg; t=1675088510;
+	bh=ZPBNkYHNdaXUw3YjMlw/9uRgVvvBokfJ/ELHRsCy8Jw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IFnG5balqdN6be/o6Jiotg51F9vqoJeGTAO3IU8X+LUmrbe7YrLURQNmRqcvpxt6N
-	 0dnFKBIHS//k3/uoVLuhsQDFfNfvPAF5/LRlxEk51M3uiq3aFdYlcI/XZVQqWqWlnX
-	 48PYMhk6gPb3iptwPWTsjZ/SdiNA9DP96ovdwRCI=
+	b=oH/13o35f98gg91zU/QhRYKKYK8FHZoJXT17KDMh5OdbelhXxmnXGWfPmV7vVKVTy
+	 z5xeBXKnWNoM/slA3sAneeIz5R2d/YTusyEcCVPKkZJwXwHR+lawY2HHo9IAN2M/ZE
+	 8xs4btqZ/lebeWzYlyF2cZI/b8h1Tl1pOol7OWxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Christian Zigotzky <chzigotzky@xenosoft.de>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 042/143] net: stmmac: fix invalid call to mdiobus_get_phy()
-Date: Mon, 30 Jan 2023 14:51:39 +0100
-Message-Id: <20230130134308.584227856@linuxfoundation.org>
+Subject: [PATCH 5.10 043/143] HID: revert CHERRY_MOUSE_000C quirk
+Date: Mon, 30 Jan 2023 14:51:40 +0100
+Message-Id: <20230130134308.623779136@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -35,40 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Jiri Kosina <jkosina@suse.cz>
 
-[ Upstream commit 1f3bd64ad921f051254591fbed04fd30b306cde6 ]
+[ Upstream commit cbf44580ce6b310272a73e3e794233fd064330bd ]
 
-In a number of cases the driver assigns a default value of -1 to
-priv->plat->phy_addr. This may result in calling mdiobus_get_phy()
-with addr parameter being -1. Therefore check for this scenario and
-bail out before calling mdiobus_get_phy().
+This partially reverts commit f6d910a89a2391 ("HID: usbhid: Add ALWAYS_POLL quirk
+for some mice"), as it turns out to break reboot on some platforms for reason
+yet to be understood.
 
-Fixes: 42e87024f727 ("net: stmmac: Fix case when PHY handle is not present")
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/669f9671-ecd1-a41b-2727-7b73e3003985@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: f6d910a89a2391 ("HID: usbhid: Add ALWAYS_POLL quirk for some mice")
+Reported-by: Christian Zigotzky <chzigotzky@xenosoft.de>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/hid/hid-ids.h    | 1 -
+ drivers/hid/hid-quirks.c | 1 -
+ 2 files changed, 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 14ea0168b548..b52ca2fe04d8 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -1125,6 +1125,11 @@ static int stmmac_init_phy(struct net_device *dev)
- 		int addr = priv->plat->phy_addr;
- 		struct phy_device *phydev;
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index 09c3f30f10d3..1d1306a6004e 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -257,7 +257,6 @@
+ #define USB_DEVICE_ID_CH_AXIS_295	0x001c
  
-+		if (addr < 0) {
-+			netdev_err(priv->dev, "no phy found\n");
-+			return -ENODEV;
-+		}
-+
- 		phydev = mdiobus_get_phy(priv->mii, addr);
- 		if (!phydev) {
- 			netdev_err(priv->dev, "no phy at addr %d\n", addr);
+ #define USB_VENDOR_ID_CHERRY		0x046a
+-#define USB_DEVICE_ID_CHERRY_MOUSE_000C	0x000c
+ #define USB_DEVICE_ID_CHERRY_CYMOTION	0x0023
+ #define USB_DEVICE_ID_CHERRY_CYMOTION_SOLAR	0x0027
+ 
+diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
+index 1efde40e5136..9f1fcbea19eb 100644
+--- a/drivers/hid/hid-quirks.c
++++ b/drivers/hid/hid-quirks.c
+@@ -54,7 +54,6 @@ static const struct hid_device_id hid_quirks[] = {
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CH, USB_DEVICE_ID_CH_FLIGHT_SIM_YOKE), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CH, USB_DEVICE_ID_CH_PRO_PEDALS), HID_QUIRK_NOGET },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CH, USB_DEVICE_ID_CH_PRO_THROTTLE), HID_QUIRK_NOGET },
+-	{ HID_USB_DEVICE(USB_VENDOR_ID_CHERRY, USB_DEVICE_ID_CHERRY_MOUSE_000C), HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_K65RGB), HID_QUIRK_NO_INIT_REPORTS },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_K65RGB_RAPIDFIRE), HID_QUIRK_NO_INIT_REPORTS | HID_QUIRK_ALWAYS_POLL },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_CORSAIR, USB_DEVICE_ID_CORSAIR_K70RGB), HID_QUIRK_NO_INIT_REPORTS },
 -- 
 2.39.0
 
