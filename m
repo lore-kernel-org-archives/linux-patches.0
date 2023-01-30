@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46AE128EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B5FC5C433EF;
-	Mon, 30 Jan 2023 14:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2175528EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:14:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93D3AC433EF;
+	Mon, 30 Jan 2023 14:14:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088069;
-	bh=N/ZEUfMEHi/7Ti8SnwWQXS17rCalQc//wZIl1EmhCqI=;
+	s=korg; t=1675088072;
+	bh=nwg9DuutqA/VAJGrJmRSbb0ZVbAoxopA6OjCEa6nptA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ll98011BK7CpSAbKfB6jCKioFFnTJT1iyy6mW8UT+3+hdqqe2G8olidh0j/1DmPHA
-	 9LFKNcfh09BXRYdBByVn3y5XwCXeynZA4b0H7ji2XP7yCoDMddJq0ptP/Vn/8rxM9x
-	 /zeWRM9utT7edi/tXcVBQ7s405FsTxFAvs0tGu1c=
+	b=1xvuBx4HWgTgmxXZ4ZPgBxYeHaOY93OU+W2jLwRVCEevwDyGy3HEdw8xjq6JFixXp
+	 tfWu+Zcz299N9dVVgf4CFpL3/XQJlUZapr0m1bTqycfQxJj9OJg95UOsatABkhpEkc
+	 ekmLamRrHYkBDfpe1gyjPlHqhO1bpzKr4pige9WI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Jiri Kosina <jkosina@suse.cz>,
+	=?UTF-8?q?Aur=C3=A9lien=20Aptel?= <aurelien.aptel@gmail.com>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 074/204] HID: betop: check shape of output reports
-Date: Mon, 30 Jan 2023 14:50:39 +0100
-Message-Id: <20230130134319.589139531@linuxfoundation.org>
+Subject: [PATCH 5.15 075/204] cifs: fix potential deadlock in cache_refresh_path()
+Date: Mon, 30 Jan 2023 14:50:40 +0100
+Message-Id: <20230130134319.639227377@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
 References: <20230130134316.327556078@linuxfoundation.org>
@@ -35,66 +36,114 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Paulo Alcantara <pc@cjr.nz>
 
-[ Upstream commit 3782c0d6edf658b71354a64d60aa7a296188fc90 ]
+[ Upstream commit 9fb0db40513e27537fde63287aea920b60557a69 ]
 
-betopff_init() only checks the total sum of the report counts for each
-report field to be at least 4, but hid_betopff_play() expects 4 report
-fields.
-A device advertising an output report with one field and 4 report counts
-would pass the check but crash the kernel with a NULL pointer dereference
-in hid_betopff_play().
+Avoid getting DFS referral from an exclusive lock in
+cache_refresh_path() because the tcon IPC used for getting the
+referral could be disconnected and thus causing a deadlock as shown
+below:
 
-Fixes: 52cd7785f3cd ("HID: betop: add drivers/hid/hid-betopff.c")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+task A                       task B
+======                       ======
+cifs_demultiplex_thread()    dfs_cache_find()
+ cifs_handle_standard()       cache_refresh_path()
+  reconnect_dfs_server()       down_write()
+   dfs_cache_noreq_find()       get_dfs_referral()
+    down_read() <- deadlock      smb2_get_dfs_refer()
+                                  SMB2_ioctl()
+				   cifs_send_recv()
+				    compound_send_recv()
+				     wait_for_response()
+
+where task A cannot wake up task B because it is blocked on
+down_read() due to the exclusive lock held in cache_refresh_path() and
+therefore not being able to make progress.
+
+Fixes: c9f711039905 ("cifs: keep referral server sessions alive")
+Reviewed-by: Aurélien Aptel <aurelien.aptel@gmail.com>
+Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-betopff.c | 17 +++++++++--------
- 1 file changed, 9 insertions(+), 8 deletions(-)
+ fs/cifs/dfs_cache.c | 42 +++++++++++++++++++++++-------------------
+ 1 file changed, 23 insertions(+), 19 deletions(-)
 
-diff --git a/drivers/hid/hid-betopff.c b/drivers/hid/hid-betopff.c
-index 467d789f9bc2..25ed7b9a917e 100644
---- a/drivers/hid/hid-betopff.c
-+++ b/drivers/hid/hid-betopff.c
-@@ -60,7 +60,6 @@ static int betopff_init(struct hid_device *hid)
- 	struct list_head *report_list =
- 			&hid->report_enum[HID_OUTPUT_REPORT].report_list;
- 	struct input_dev *dev;
--	int field_count = 0;
- 	int error;
- 	int i, j;
+diff --git a/fs/cifs/dfs_cache.c b/fs/cifs/dfs_cache.c
+index 1f3efa7821a0..8c98fa507768 100644
+--- a/fs/cifs/dfs_cache.c
++++ b/fs/cifs/dfs_cache.c
+@@ -792,26 +792,27 @@ static int get_dfs_referral(const unsigned int xid, struct cifs_ses *ses, const
+  */
+ static int cache_refresh_path(const unsigned int xid, struct cifs_ses *ses, const char *path)
+ {
+-	int rc;
+-	struct cache_entry *ce;
+ 	struct dfs_info3_param *refs = NULL;
++	struct cache_entry *ce;
+ 	int numrefs = 0;
+-	bool newent = false;
++	int rc;
  
-@@ -86,19 +85,21 @@ static int betopff_init(struct hid_device *hid)
- 	 * -----------------------------------------
- 	 * Do init them with default value.
+ 	cifs_dbg(FYI, "%s: search path: %s\n", __func__, path);
+ 
+-	down_write(&htable_rw_lock);
++	down_read(&htable_rw_lock);
+ 
+ 	ce = lookup_cache_entry(path);
+-	if (!IS_ERR(ce)) {
+-		if (!cache_entry_expired(ce)) {
+-			dump_ce(ce);
+-			up_write(&htable_rw_lock);
+-			return 0;
+-		}
+-	} else {
+-		newent = true;
++	if (!IS_ERR(ce) && !cache_entry_expired(ce)) {
++		up_read(&htable_rw_lock);
++		return 0;
+ 	}
++	/*
++	 * Unlock shared access as we don't want to hold any locks while getting
++	 * a new referral.  The @ses used for performing the I/O could be
++	 * reconnecting and it acquires @htable_rw_lock to look up the dfs cache
++	 * in order to failover -- if necessary.
++	 */
++	up_read(&htable_rw_lock);
+ 
+ 	/*
+ 	 * Either the entry was not found, or it is expired.
+@@ -819,19 +820,22 @@ static int cache_refresh_path(const unsigned int xid, struct cifs_ses *ses, cons
  	 */
-+	if (report->maxfield < 4) {
-+		hid_err(hid, "not enough fields in the report: %d\n",
-+				report->maxfield);
-+		return -ENODEV;
-+	}
- 	for (i = 0; i < report->maxfield; i++) {
-+		if (report->field[i]->report_count < 1) {
-+			hid_err(hid, "no values in the field\n");
-+			return -ENODEV;
-+		}
- 		for (j = 0; j < report->field[i]->report_count; j++) {
- 			report->field[i]->value[j] = 0x00;
--			field_count++;
- 		}
+ 	rc = get_dfs_referral(xid, ses, path, &refs, &numrefs);
+ 	if (rc)
+-		goto out_unlock;
++		goto out;
+ 
+ 	dump_refs(refs, numrefs);
+ 
+-	if (!newent) {
+-		rc = update_cache_entry_locked(ce, refs, numrefs);
+-		goto out_unlock;
++	down_write(&htable_rw_lock);
++	/* Re-check as another task might have it added or refreshed already */
++	ce = lookup_cache_entry(path);
++	if (!IS_ERR(ce)) {
++		if (cache_entry_expired(ce))
++			rc = update_cache_entry_locked(ce, refs, numrefs);
++	} else {
++		rc = add_cache_entry_locked(refs, numrefs);
  	}
  
--	if (field_count < 4) {
--		hid_err(hid, "not enough fields in the report: %d\n",
--				field_count);
--		return -ENODEV;
--	}
+-	rc = add_cache_entry_locked(refs, numrefs);
 -
- 	betopff = kzalloc(sizeof(*betopff), GFP_KERNEL);
- 	if (!betopff)
- 		return -ENOMEM;
+-out_unlock:
+ 	up_write(&htable_rw_lock);
++out:
+ 	free_dfs_info_array(refs, numrefs);
+ 	return rc;
+ }
 -- 
 2.39.0
 
