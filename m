@@ -1,32 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A40E28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:03:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2E4FC433D2;
-	Mon, 30 Jan 2023 14:03:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1909428EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:03:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A4A5C433EF;
+	Mon, 30 Jan 2023 14:03:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087389;
-	bh=DvqY4zbmbFW77b1cKIU/1IBDL/FxujeF5PglJoGY+5A=;
+	s=korg; t=1675087391;
+	bh=93GWhiji0lyZxjJI6UGQKdFH6KAyLaOvKtCojPxaUi4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XhUoEnRsS0fPLgjacneG9R+M3TjCO1rxLZmm9XGgiQC4v4qGaqtwq43UcIkcSjgK1
-	 In+L1f4Q/wWuU1GZoToAyw8oR5BT3v6V5BhRQLs0bE4ibG2Rjl5SsppW9vWL9JHQvS
-	 qqwjwGM4HdENzSLpwLXrb7NOERJEehlesXPjw/MU=
+	b=CmmqWrpE0etEr6nVXtSdp1BITtQKkkec0NJHePgrg27p7/NMmvqfWvUd20EPH2WDr
+	 BjVcnRXljjuRzqRgLN8SGRzkg7owpi8TlJ9+MENGmWXcuM8kFxzKI9/KuhyAZx+xo8
+	 bj6rXVJUAMUqsNV88sBKzYUv2BpacHBOrhB7Os1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Menzel <pmenzel@molgen.mpg.de>,
-	Jack Rosenthal <jrosenth@chromium.org>,
-	Guenter Roeck <groeck@chromium.org>,
-	Julius Werner <jwerner@chromium.org>,
-	Brian Norris <briannorris@chromium.org>,
-	Stephen Boyd <swboyd@chromium.org>,
-	Kees Cook <keescook@chromium.org>,
+	Johannes Thumshirn <johannes.thumshirn@wdc.com>,
+	Naohiro Aota <naohiro.aota@wdc.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 191/313] firmware: coreboot: Check size of table entry and use flex-array
-Date: Mon, 30 Jan 2023 14:50:26 +0100
-Message-Id: <20230130134345.592394226@linuxfoundation.org>
+Subject: [PATCH 6.1 192/313] btrfs: zoned: enable metadata over-commit for non-ZNS setup
+Date: Mon, 30 Jan 2023 14:50:27 +0100
+Message-Id: <20230130134345.633143606@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -40,79 +36,82 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Naohiro Aota <naohiro.aota@wdc.com>
 
-[ Upstream commit 3b293487b8752cc42c1cbf8a0447bc6076c075fa ]
+[ Upstream commit 85e79ec7b78f863178ca488fd8cb5b3de6347756 ]
 
-The memcpy() of the data following a coreboot_table_entry couldn't
-be evaluated by the compiler under CONFIG_FORTIFY_SOURCE. To make it
-easier to reason about, add an explicit flexible array member to struct
-coreboot_device so the entire entry can be copied at once. Additionally,
-validate the sizes before copying. Avoids this run-time false positive
-warning:
+The commit 79417d040f4f ("btrfs: zoned: disable metadata overcommit for
+zoned") disabled the metadata over-commit to track active zones properly.
 
-  memcpy: detected field-spanning write (size 168) of single field "&device->entry" at drivers/firmware/google/coreboot_table.c:103 (size 8)
+However, it also introduced a heavy overhead by allocating new metadata
+block groups and/or flushing dirty buffers to release the space
+reservations. Specifically, a workload (write only without any sync
+operations) worsen its performance from 343.77 MB/sec (v5.19) to 182.89
+MB/sec (v6.0).
 
-Reported-by: Paul Menzel <pmenzel@molgen.mpg.de>
-Link: https://lore.kernel.org/all/03ae2704-8c30-f9f0-215b-7cdf4ad35a9a@molgen.mpg.de/
-Cc: Jack Rosenthal <jrosenth@chromium.org>
-Cc: Guenter Roeck <groeck@chromium.org>
-Cc: Julius Werner <jwerner@chromium.org>
-Cc: Brian Norris <briannorris@chromium.org>
-Cc: Stephen Boyd <swboyd@chromium.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Julius Werner <jwerner@chromium.org>
-Reviewed-by: Guenter Roeck <groeck@chromium.org>
-Link: https://lore.kernel.org/r/20230107031406.gonna.761-kees@kernel.org
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Reviewed-by: Jack Rosenthal <jrosenth@chromium.org>
-Link: https://lore.kernel.org/r/20230112230312.give.446-kees@kernel.org
+The performance is still bad on current misc-next which is 187.95 MB/sec.
+And, with this patch applied, it improves back to 326.70 MB/sec (+73.82%).
+
+This patch introduces a new fs_info->flag BTRFS_FS_NO_OVERCOMMIT to
+indicate it needs to disable the metadata over-commit. The flag is enabled
+when a device with max active zones limit is loaded into a file-system.
+
+Fixes: 79417d040f4f ("btrfs: zoned: disable metadata overcommit for zoned")
+CC: stable@vger.kernel.org # 6.0+
+Reviewed-by: Johannes Thumshirn <johannes.thumshirn@wdc.com>
+Signed-off-by: Naohiro Aota <naohiro.aota@wdc.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/google/coreboot_table.c | 9 +++++++--
- drivers/firmware/google/coreboot_table.h | 1 +
- 2 files changed, 8 insertions(+), 2 deletions(-)
+ fs/btrfs/ctree.h      | 6 ++++++
+ fs/btrfs/space-info.c | 3 ++-
+ fs/btrfs/zoned.c      | 2 ++
+ 3 files changed, 10 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/firmware/google/coreboot_table.c b/drivers/firmware/google/coreboot_table.c
-index 9ca21feb9d45..f3694d347801 100644
---- a/drivers/firmware/google/coreboot_table.c
-+++ b/drivers/firmware/google/coreboot_table.c
-@@ -93,7 +93,12 @@ static int coreboot_table_populate(struct device *dev, void *ptr)
- 	for (i = 0; i < header->table_entries; i++) {
- 		entry = ptr_entry;
+diff --git a/fs/btrfs/ctree.h b/fs/btrfs/ctree.h
+index 9e6d48ff4597..a3febabacec0 100644
+--- a/fs/btrfs/ctree.h
++++ b/fs/btrfs/ctree.h
+@@ -590,6 +590,12 @@ enum {
+ 	/* Indicate we have to finish a zone to do next allocation. */
+ 	BTRFS_FS_NEED_ZONE_FINISH,
  
--		device = kzalloc(sizeof(struct device) + entry->size, GFP_KERNEL);
-+		if (entry->size < sizeof(*entry)) {
-+			dev_warn(dev, "coreboot table entry too small!\n");
-+			return -EINVAL;
-+		}
++	/*
++	 * Indicate metadata over-commit is disabled. This is set when active
++	 * zone tracking is needed.
++	 */
++	BTRFS_FS_NO_OVERCOMMIT,
 +
-+		device = kzalloc(sizeof(device->dev) + entry->size, GFP_KERNEL);
- 		if (!device)
- 			return -ENOMEM;
+ #if BITS_PER_LONG == 32
+ 	/* Indicate if we have error/warn message printed on 32bit systems */
+ 	BTRFS_FS_32BIT_ERROR,
+diff --git a/fs/btrfs/space-info.c b/fs/btrfs/space-info.c
+index f171bf875633..65c010159fb5 100644
+--- a/fs/btrfs/space-info.c
++++ b/fs/btrfs/space-info.c
+@@ -404,7 +404,8 @@ int btrfs_can_overcommit(struct btrfs_fs_info *fs_info,
+ 		return 0;
  
-@@ -101,7 +106,7 @@ static int coreboot_table_populate(struct device *dev, void *ptr)
- 		device->dev.parent = dev;
- 		device->dev.bus = &coreboot_bus_type;
- 		device->dev.release = coreboot_device_release;
--		memcpy(&device->entry, ptr_entry, entry->size);
-+		memcpy(device->raw, ptr_entry, entry->size);
+ 	used = btrfs_space_info_used(space_info, true);
+-	if (btrfs_is_zoned(fs_info) && (space_info->flags & BTRFS_BLOCK_GROUP_METADATA))
++	if (test_bit(BTRFS_FS_NO_OVERCOMMIT, &fs_info->flags) &&
++	    (space_info->flags & BTRFS_BLOCK_GROUP_METADATA))
+ 		avail = 0;
+ 	else
+ 		avail = calc_available_free_space(fs_info, space_info, flush);
+diff --git a/fs/btrfs/zoned.c b/fs/btrfs/zoned.c
+index c9e2b0c85309..056f002263db 100644
+--- a/fs/btrfs/zoned.c
++++ b/fs/btrfs/zoned.c
+@@ -538,6 +538,8 @@ int btrfs_get_dev_zone_info(struct btrfs_device *device, bool populate_cache)
+ 		}
+ 		atomic_set(&zone_info->active_zones_left,
+ 			   max_active_zones - nactive);
++		/* Overcommit does not work well with active zone tacking. */
++		set_bit(BTRFS_FS_NO_OVERCOMMIT, &fs_info->flags);
+ 	}
  
- 		ret = device_register(&device->dev);
- 		if (ret) {
-diff --git a/drivers/firmware/google/coreboot_table.h b/drivers/firmware/google/coreboot_table.h
-index beb778674acd..4a89277b99a3 100644
---- a/drivers/firmware/google/coreboot_table.h
-+++ b/drivers/firmware/google/coreboot_table.h
-@@ -66,6 +66,7 @@ struct coreboot_device {
- 		struct coreboot_table_entry entry;
- 		struct lb_cbmem_ref cbmem_ref;
- 		struct lb_framebuffer framebuffer;
-+		DECLARE_FLEX_ARRAY(u8, raw);
- 	};
- };
- 
+ 	/* Validate superblock log */
 -- 
 2.39.0
 
