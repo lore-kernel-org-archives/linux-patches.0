@@ -1,22 +1,12 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F8579F7
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 21:26:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0DEFC433EF;
-	Mon, 30 Jan 2023 21:26:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1675113993;
-	bh=69CmkvsAbzmB0w9yvusSxAkH+Iv9Zou02nNhg1UoZ/s=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=hITV6zcJl+zPv06uNIW0x9+IywAcIYBAjrBbx3W2I/2dqy8rdHFJTutUU8oGN7nom
-	 /88MKRM2FkTpq0ws5PRantg+oDmcStc28iD/FCtgzmg3p0O7zpi7v2qk2Y8sUbXTg2
-	 LNj/f7/yRGNOsQFHUMoLciXMI5hdWzowzVagi39Jb0ur0GL7P5D9vWUOxvYfCFvtiY
-	 pg7F+1aBAog2XzxRxnNsw0Geok6stnpG3dwZQGgV5KG25F9SeeoFpCoVsP14yWK/B4
-	 Txqsc18rPAeeq4giQmEoB7gveDdpTSpW0Ujuh1vMBoseZNfOclAc/2W+ndvKSpxGle
-	 AcS5TqoC4O2gA==
-Date: Mon, 30 Jan 2023 21:26:27 +0000
-From: Conor Dooley <conor@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A40FB79F7
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 22:00:37 +0000 (UTC)
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 1BF7B1C09F4; Mon, 30 Jan 2023 22:54:57 +0100 (CET)
+Date: Mon, 30 Jan 2023 22:54:56 +0100
+From: Pavel Machek <pavel@denx.de>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
@@ -24,59 +14,54 @@ Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
 	jonathanh@nvidia.com, f.fainelli@gmail.com,
 	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 000/313] 6.1.9-rc2 review
-Message-ID: <Y9g2A/z/onA/2qsi@spud>
-References: <20230130181611.883327545@linuxfoundation.org>
+Subject: Re: [PATCH 5.10 000/143] 5.10.166-rc1 review
+Message-ID: <Y9g8sM6sulaIvA5d@duo.ucw.cz>
+References: <20230130134306.862721518@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="qH2vrN+ER9KGegbW"
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="HDaQ5JHC6QdBB6HL"
 Content-Disposition: inline
-In-Reply-To: <20230130181611.883327545@linuxfoundation.org>
+In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 
 
---qH2vrN+ER9KGegbW
+--HDaQ5JHC6QdBB6HL
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Jan 30, 2023 at 07:24:47PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.9 release.
-> There are 313 patches in this series, all will be posted as a response
+Hi!
+
+> This is the start of the stable review cycle for the 5.10.166 release.
+> There are 143 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
-> Responses should be made by Wed, 01 Feb 2023 18:15:14 +0000.
-> Anything received after that time might be too late.
->=20
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.9-r=
-c2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
- linux-6.1.y
-> and the diffstat can be found below.
 
-Build issue resolved, thanks Greg/Guenter.
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
+CIP testing did not find any problems here:
 
-Cheers,
-Conor.
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+5.10.y
 
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
 
---qH2vrN+ER9KGegbW
+Best regards,
+                                                                Pavel
+--=20
+DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--HDaQ5JHC6QdBB6HL
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCY9g2AwAKCRB4tDGHoIJi
-0oaBAP4yhrulYZEanKEByJMYIYCRZNQSuJVK/KWAtI6o9zcoswD/YgDyCKbCnLAV
-A+eMZRiYsLIqRKcyK5rUL6d1MoPmaAo=
-=3nEY
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY9g8sAAKCRAw5/Bqldv6
+8peoAJ9ZL+wnl4YNAeYpsBrFWLeSRagdTwCfUvU4OWvsYv9BnBvBJtX4Okwr/zE=
+=g0YB
 -----END PGP SIGNATURE-----
 
---qH2vrN+ER9KGegbW--
+--HDaQ5JHC6QdBB6HL--
