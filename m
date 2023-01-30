@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BED9528EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:07:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3BC67C433EF;
-	Mon, 30 Jan 2023 14:07:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7F5028EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:07:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 347BEC433EF;
+	Mon, 30 Jan 2023 14:07:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087625;
-	bh=c8ZVW4xjWEJnhftBdbzNSiYJSGcA/I0CN+tSqmItAbw=;
+	s=korg; t=1675087628;
+	bh=sx80RY1j1NA+28Zxc/ujMkWRNWUMKpnPcPs4BqBBH0M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LGjtYTwp9MBYVYEf5ToIGVBoklw4HUyhtLkJmhBD6ocoaO9/JSk72f1p0JN1c30F0
-	 OzXrpPwIObEZ/nsch+gcTCL+uHkfi23v91BqyMYwo5CIHFxBIMYcom+W9PoxwTbcvX
-	 UCfmp/g1qWgB3QQF+iFPnQhd74iMHcfsF37dk6s0=
+	b=K0W0+LAsXtkjztH/FmFlH6BeV0PzjdJPBEr7KQdHyZy5ZSy0MBs2n8U/PmDSy2HNj
+	 At2OdUg+79VLVrUgblAV0U4QKjm9u+ZvXQtdGteKUAhL+OEzZ31tu8MJ8Xy+f5BKtd
+	 9tjVSYmUeSllinBMEXjRusXhx437JgkhpzIpC7ik=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Begunkov <asml.silence@gmail.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 241/313] io_uring: inline __io_req_complete_post()
-Date: Mon, 30 Jan 2023 14:51:16 +0100
-Message-Id: <20230130134347.913633952@linuxfoundation.org>
+	Steev Klimaszewski <steev@kali.org>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH 6.1 232/313] EDAC/qcom: Do not pass llcc_driv_data as edac_device_ctl_infos pvt_info
+Date: Mon, 30 Jan 2023 14:51:07 +0100
+Message-Id: <20230130134347.521188374@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,63 +36,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Begunkov <asml.silence@gmail.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit f9d567c75ec216447f36da6e855500023504fa04 ]
+commit 977c6ba624f24ae20cf0faee871257a39348d4a9 upstream.
 
-There is only one user of __io_req_complete_post(), inline it.
+The memory for llcc_driv_data is allocated by the LLCC driver. But when
+it is passed as the private driver info to the EDAC core, it will get freed
+during the qcom_edac driver release. So when the qcom_edac driver gets probed
+again, it will try to use the freed data leading to the use-after-free bug.
 
-Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
-Link: https://lore.kernel.org/r/ef4c9059950a3da5cf68df00f977f1fd13bd9306.1668597569.git.asml.silence@gmail.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: ef5c600adb1d ("io_uring: always prep_async for drain requests")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Hence, do not pass llcc_driv_data as pvt_info but rather reference it
+using the platform_data pointer in the qcom_edac driver.
+
+Fixes: 27450653f1db ("drivers: edac: Add EDAC driver support for QCOM SoCs")
+Reported-by: Steev Klimaszewski <steev@kali.org>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
+Cc: <stable@vger.kernel.org> # 4.20
+Link: https://lore.kernel.org/r/20230118150904.26913-4-manivannan.sadhasivam@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- io_uring/io_uring.c | 11 +++--------
- io_uring/io_uring.h |  1 -
- 2 files changed, 3 insertions(+), 9 deletions(-)
+ drivers/edac/qcom_edac.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
-index b4f9707730b8..9b1c917c99d9 100644
---- a/io_uring/io_uring.c
-+++ b/io_uring/io_uring.c
-@@ -854,19 +854,14 @@ static void __io_req_complete_put(struct io_kiocb *req)
- 	}
- }
- 
--void __io_req_complete_post(struct io_kiocb *req)
--{
--	if (!(req->flags & REQ_F_CQE_SKIP))
--		__io_fill_cqe_req(req->ctx, req);
--	__io_req_complete_put(req);
--}
--
- void io_req_complete_post(struct io_kiocb *req)
+--- a/drivers/edac/qcom_edac.c
++++ b/drivers/edac/qcom_edac.c
+@@ -252,7 +252,7 @@ clear:
+ static int
+ dump_syn_reg(struct edac_device_ctl_info *edev_ctl, int err_type, u32 bank)
  {
- 	struct io_ring_ctx *ctx = req->ctx;
+-	struct llcc_drv_data *drv = edev_ctl->pvt_info;
++	struct llcc_drv_data *drv = edev_ctl->dev->platform_data;
+ 	int ret;
  
- 	io_cq_lock(ctx);
--	__io_req_complete_post(req);
-+	if (!(req->flags & REQ_F_CQE_SKIP))
-+		__io_fill_cqe_req(ctx, req);
-+	__io_req_complete_put(req);
- 	io_cq_unlock_post(ctx);
- }
+ 	ret = dump_syn_reg_values(drv, bank, err_type);
+@@ -289,7 +289,7 @@ static irqreturn_t
+ llcc_ecc_irq_handler(int irq, void *edev_ctl)
+ {
+ 	struct edac_device_ctl_info *edac_dev_ctl = edev_ctl;
+-	struct llcc_drv_data *drv = edac_dev_ctl->pvt_info;
++	struct llcc_drv_data *drv = edac_dev_ctl->dev->platform_data;
+ 	irqreturn_t irq_rc = IRQ_NONE;
+ 	u32 drp_error, trp_error, i;
+ 	int ret;
+@@ -358,7 +358,6 @@ static int qcom_llcc_edac_probe(struct p
+ 	edev_ctl->dev_name = dev_name(dev);
+ 	edev_ctl->ctl_name = "llcc";
+ 	edev_ctl->panic_on_ue = LLCC_ERP_PANIC_ON_UE;
+-	edev_ctl->pvt_info = llcc_driv_data;
  
-diff --git a/io_uring/io_uring.h b/io_uring/io_uring.h
-index 56ecc1550476..0cf544ba6656 100644
---- a/io_uring/io_uring.h
-+++ b/io_uring/io_uring.h
-@@ -33,7 +33,6 @@ int io_run_local_work(struct io_ring_ctx *ctx);
- void io_req_complete_failed(struct io_kiocb *req, s32 res);
- void __io_req_complete(struct io_kiocb *req, unsigned issue_flags);
- void io_req_complete_post(struct io_kiocb *req);
--void __io_req_complete_post(struct io_kiocb *req);
- bool io_post_aux_cqe(struct io_ring_ctx *ctx, u64 user_data, s32 res, u32 cflags,
- 		     bool allow_overflow);
- bool io_fill_cqe_aux(struct io_ring_ctx *ctx, u64 user_data, s32 res, u32 cflags,
--- 
-2.39.0
-
+ 	rc = edac_device_add_device(edev_ctl);
+ 	if (rc)
 
 
