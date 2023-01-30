@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B9628EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:04:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B341BC433D2;
-	Mon, 30 Jan 2023 14:04:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A8D428EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:04:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6BE9C4339B;
+	Mon, 30 Jan 2023 14:04:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087463;
-	bh=a1CuucqzvtiC7qVxZGxrEI9PDlQBfwrCUQy8TOiw01o=;
+	s=korg; t=1675087466;
+	bh=uiFcGnQF1khghIzvlqlCvSKjjDsigoFBSOPPxnPsdxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UR8vTjjbxIn0Cni6RlNYcsRpR36aZAZiHUr7FZ0OQ+4EQgbuqxvwnuzNzPpL+X7Xm
-	 TdNlsD+o0kulFDK714brOIfqbu0rU6mrW2E1DL8rW87ZGEMX4Ocyv8lfl5kvVUabdr
-	 lT0RIvQv+F19nFtCh126u177YUITC/wrVZTQo9co=
+	b=2XXjWDF45ARAwXnpcpLaOlXHwGmkXYszaogHzOS3K7cqeDnX3nmIu7TX/BaIyM9Kg
+	 c7cAQEecCUfkivTxn/hQYG/q+P6JNRnGZ1073ZYNWYlaE6l5ks0JASFmDeW1nFeH85
+	 irdDvhh7vtjNudGED2vIHoGcXO6y2Y6kNp+L8Ptg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marios Makassikis <mmakassikis@freebox.fr>,
 	Namjae Jeon <linkinjeon@kernel.org>,
 	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 6.1 217/313] ksmbd: do not sign response to session request for guest login
-Date: Mon, 30 Jan 2023 14:50:52 +0100
-Message-Id: <20230130134346.815235688@linuxfoundation.org>
+Subject: [PATCH 6.1 218/313] ksmbd: downgrade ndr version error message to debug
+Date: Mon, 30 Jan 2023 14:50:53 +0100
+Message-Id: <20230130134346.859099057@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,50 +34,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marios Makassikis <mmakassikis@freebox.fr>
+From: Namjae Jeon <linkinjeon@kernel.org>
 
-commit 5fde3c21cf33830eda7bfd006dc7f4bf07ec9fe6 upstream.
+commit a34dc4a9b9e2fb3a45c179a60bb0b26539c96189 upstream.
 
-If ksmbd.mountd is configured to assign unknown users to the guest account
-("map to guest = bad user" in the config), ksmbd signs the response.
+When user switch samba to ksmbd, The following message flood is coming
+when accessing files. Samba seems to changs dos attribute version to v5.
+This patch downgrade ndr version error message to debug.
 
-This is wrong according to MS-SMB2 3.3.5.5.3:
-   12. If the SMB2_SESSION_FLAG_IS_GUEST bit is not set in the SessionFlags
-   field, and Session.IsAnonymous is FALSE, the server MUST sign the
-   final session setup response before sending it to the client, as
-   follows:
-    [...]
+$ dmesg
+...
+[68971.766914] ksmbd: v5 version is not supported
+[68971.779808] ksmbd: v5 version is not supported
+[68971.871544] ksmbd: v5 version is not supported
+[68971.910135] ksmbd: v5 version is not supported
+...
 
-This fixes libsmb2 based applications failing to establish a session
-("Wrong signature in received").
-
-Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
 Cc: stable@vger.kernel.org
-Signed-off-by: Marios Makassikis <mmakassikis@freebox.fr>
-Acked-by: Namjae Jeon <linkinjeon@kernel.org>
+Fixes: e2f34481b24d ("cifsd: add server-side procedures for SMB3")
+Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
 Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/smb2pdu.c |    2 ++
- 1 file changed, 2 insertions(+)
+ fs/ksmbd/ndr.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/ksmbd/smb2pdu.c
-+++ b/fs/ksmbd/smb2pdu.c
-@@ -8657,6 +8657,7 @@ int smb3_decrypt_req(struct ksmbd_work *
- bool smb3_11_final_sess_setup_resp(struct ksmbd_work *work)
- {
- 	struct ksmbd_conn *conn = work->conn;
-+	struct ksmbd_session *sess = work->sess;
- 	struct smb2_hdr *rsp = smb2_get_msg(work->response_buf);
+--- a/fs/ksmbd/ndr.c
++++ b/fs/ksmbd/ndr.c
+@@ -242,7 +242,7 @@ int ndr_decode_dos_attr(struct ndr *n, s
+ 		return ret;
  
- 	if (conn->dialect < SMB30_PROT_ID)
-@@ -8666,6 +8667,7 @@ bool smb3_11_final_sess_setup_resp(struc
- 		rsp = ksmbd_resp_buf_next(work);
+ 	if (da->version != 3 && da->version != 4) {
+-		pr_err("v%d version is not supported\n", da->version);
++		ksmbd_debug(VFS, "v%d version is not supported\n", da->version);
+ 		return -EINVAL;
+ 	}
  
- 	if (le16_to_cpu(rsp->Command) == SMB2_SESSION_SETUP_HE &&
-+	    sess->user && !user_guest(sess->user) &&
- 	    rsp->Status == STATUS_SUCCESS)
- 		return true;
- 	return false;
+@@ -251,7 +251,7 @@ int ndr_decode_dos_attr(struct ndr *n, s
+ 		return ret;
+ 
+ 	if (da->version != version2) {
+-		pr_err("ndr version mismatched(version: %d, version2: %d)\n",
++		ksmbd_debug(VFS, "ndr version mismatched(version: %d, version2: %d)\n",
+ 		       da->version, version2);
+ 		return -EINVAL;
+ 	}
+@@ -457,7 +457,7 @@ int ndr_decode_v4_ntacl(struct ndr *n, s
+ 	if (ret)
+ 		return ret;
+ 	if (acl->version != 4) {
+-		pr_err("v%d version is not supported\n", acl->version);
++		ksmbd_debug(VFS, "v%d version is not supported\n", acl->version);
+ 		return -EINVAL;
+ 	}
+ 
+@@ -465,7 +465,7 @@ int ndr_decode_v4_ntacl(struct ndr *n, s
+ 	if (ret)
+ 		return ret;
+ 	if (acl->version != version2) {
+-		pr_err("ndr version mismatched(version: %d, version2: %d)\n",
++		ksmbd_debug(VFS, "ndr version mismatched(version: %d, version2: %d)\n",
+ 		       acl->version, version2);
+ 		return -EINVAL;
+ 	}
 
 
