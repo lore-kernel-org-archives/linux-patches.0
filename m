@@ -1,76 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B724F6AA3
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 18:14:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E086FC433EF;
-	Mon, 30 Jan 2023 18:14:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675102496;
-	bh=oX+bzUXLmw7EG3moYPRfQi8Pzz7mkEIFn66WKrGzm4w=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=jm3zWolTLZYTVABD5Z9AxAZNV/CYQ4lE0nIMzdoor3tSYc2TX87dSe6xOQM6sqTxr
-	 ueNqd+F79r/yi/F7v0BaEEonq5Uqxp287L1zq6r5KS7mPFhjbKHePjntmEgYP/6F0a
-	 50Oh5B6pe23VdWAtU4t51q/+BRedQsQ05jWsvfRQ=
-Date: Mon, 30 Jan 2023 19:14:53 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Conor Dooley <conor@kernel.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 000/313] 6.1.9-rc1 review
-Message-ID: <Y9gJHXshbV5vk9za@kroah.com>
-References: <20230130134336.532886729@linuxfoundation.org>
- <Y9gDLmmAwaKZX9yw@spud>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788CA6AA3;
+	Mon, 30 Jan 2023 18:19:50 +0000 (UTC)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.nyi.internal (Postfix) with ESMTP id 896635C00A9;
+	Mon, 30 Jan 2023 13:19:49 -0500 (EST)
+Received: from imap51 ([10.202.2.101])
+  by compute6.internal (MEProxy); Mon, 30 Jan 2023 13:19:49 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=arndb.de; h=cc
+	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1675102789; x=1675189189; bh=8FutbuCl/D
+	NR6Qsqy22oynbrQgR9pREAJal0Upg9trQ=; b=QVVyRlo9wMicMWSz+RpRPUi5j1
+	aOeVdg+ZgqkfmxSpvHIBB4EJSroOwPVaRMYGAyivkZbHJ8yruyBKBZNvUiginpw6
+	nu+0c6Ftuj2g5Et50cRwHNDOCo8ejiWv/PKMlPKQW2pmdHflq3Zbu+PAD45BjWpj
+	FfXW5ara1qmk1ME2VGYj0pXx7dZJigVu/izAZ0IPKe6DRnoiG2bY9iJHE5YsBJkj
+	9RtCx5ciQLzJ8RMy6OxBtBkKrm1LOu6K4EsCKKyvKe/nbyolOIFColtPJcmjwVEb
+	ZsxHjP50NisVKMbdhteeF8J1v/Swvx1WzRUgFOpwGYmbwrH8qAuXh5+0pDZg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1675102789; x=1675189189; bh=8FutbuCl/DNR6Qsqy22oynbrQgR9
+	pREAJal0Upg9trQ=; b=EX9Y8/kVjckmt9+F81BT0c82vP2qkKpVWNwxOYUdRc+h
+	iwhGbWsiWwftaqsbKW+YvIELYEk3BgNhphf7t8stt2EpFG96LsMcY+bsK0cL2YBb
+	E5ydnC9xNEj0q7bi7drA6P9QuW5DIs057sJR2TCXZRmSwtg67hcuC8dqZj6j3lWE
+	LNh8HDu0i4q7vm+Ft29mZgVmlFv915ohRNi7Vtt2NlBLDqTr0XGtYEUch+06H5rb
+	ZWYAyOczliCWgA1JY9YNK2PY6RY6YJTL4gmRKUITjKM3P6GJn9WEuTN9clGhkPX1
+	JvGh0COOiI9wlopWlyFCL1D9RsXsmZhLPVaACXWKew==
+X-ME-Sender: <xms:RQrYYyAl0tyXfvr0RqyDj_HXhhDkw0qJB4CzrYpPmT-alAjd5U1vxg>
+    <xme:RQrYY8iqShS-BJVesOlWH6tqeKJ34jOYYlrwJqjRlrJAyIWnv-UIu5YdtTLhyX4V0
+    kJUNfohb3xs0zDIdtI>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudefvddguddugecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
+    enucfjughrpefofgggkfgjfhffhffvvefutgesthdtredtreertdenucfhrhhomhepfdet
+    rhhnugcuuegvrhhgmhgrnhhnfdcuoegrrhhnugesrghrnhgusgdruggvqeenucggtffrrg
+    htthgvrhhnpeejvddvvdduleduheejiedtheehiedvjefgleelffeigfevhffhueduhfeg
+    feefheenucffohhmrghinhepghhithhhuhgsrdgtohhmnecuvehluhhsthgvrhfuihiivg
+    eptdenucfrrghrrghmpehmrghilhhfrhhomheprghrnhgusegrrhhnuggsrdguvg
+X-ME-Proxy: <xmx:RQrYY1m_-pDAvLiREiFxn_w0vRAbam-L7479rXhFXoPTgsymfpK8yA>
+    <xmx:RQrYYwzbnNtyVg1XwWrq23IrB4QHcE2FAqcEpA0usRTVwQrRk4do_g>
+    <xmx:RQrYY3TQ6QHpSvsKQ0StC7Um4ah5Exlg-wgNaCKzDSzOdksA8J6jlg>
+    <xmx:RQrYYwR3VBGEYOfemcsuO7BKA4tC_WjKuqg-KQCwquf7n7aXEB93og>
+Feedback-ID: i56a14606:Fastmail
+Received: by mailuser.nyi.internal (Postfix, from userid 501)
+	id 426DCB60086; Mon, 30 Jan 2023 13:19:49 -0500 (EST)
+X-Mailer: MessagingEngine.com Webmail Interface
+User-Agent: Cyrus-JMAP/3.9.0-alpha0-106-gfe3ab13a96-fm-20230124.001-gfe3ab13a
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y9gDLmmAwaKZX9yw@spud>
+Mime-Version: 1.0
+Message-Id: <a40df1e3-ed92-4662-bb9e-106becce63d7@app.fastmail.com>
+In-Reply-To: <202301310149.euWWUSrD-lkp@intel.com>
+References: <20230118-v4-v4t-lld-16-v1-1-e3d9a00ae47c@kernel.org>
+ <202301310149.euWWUSrD-lkp@intel.com>
+Date: Mon, 30 Jan 2023 19:19:28 +0100
+From: "Arnd Bergmann" <arnd@arndb.de>
+To: "kernel test robot" <lkp@intel.com>,
+ "Nathan Chancellor" <nathan@kernel.org>,
+ "Russell King" <linux@armlinux.org.uk>
+Cc: llvm@lists.linux.dev, oe-kbuild-all@lists.linux.dev,
+ "Nick Desaulniers" <ndesaulniers@google.com>, "Tom Rix" <trix@redhat.com>,
+ linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+ patches@lists.linux.dev
+Subject: Re: [PATCH] ARM: Allow pre-ARMv5 builds with ld.lld 16.0.0 and newer
+Content-Type: text/plain
 
-On Mon, Jan 30, 2023 at 05:49:34PM +0000, Conor Dooley wrote:
-> On Mon, Jan 30, 2023 at 02:47:15PM +0100, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.1.9 release.
-> > There are 313 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> > 
-> > Responses should be made by Wed, 01 Feb 2023 13:42:39 +0000.
-> > Anything received after that time might be too late.
-> > 
-> > The whole patch series can be found in one patch at:
-> > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.9-rc1.gz
-> > or in the git tree and branch at:
-> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > and the diffstat can be found below.
-> > 
-> > thanks,
-> > 
-> > greg k-h
-> 
-> Apart from the build issue that Guenter reported, things look fine on my
-> hardware.
-> 
-> > Conor Dooley <conor.dooley@microchip.com>
-> >     dt-bindings: riscv: fix single letter canonical order
-> > 
-> > Conor Dooley <conor.dooley@microchip.com>
-> >     dt-bindings: riscv: fix underscore requirement for multi-letter extensions
-> 
-> I think the email for these came in over the weekend but I was busy
-> unfortunately. Is dt-binding stuff like this usually backported?
-> I suppose there's no harm in making sure that it is correct...
+On Mon, Jan 30, 2023, at 19:10, kernel test robot wrote:
+> Hi Nathan,
+>
+> I love your patch! Perhaps something to improve:
+>
+> [auto build test WARNING on 5dc4c995db9eb45f6373a956eb1f69460e69e6d4]
+>
+> url:    
+> https://github.com/intel-lab-lkp/linux/commits/Nathan-Chancellor/ARM-Allow-pre-ARMv5-builds-with-ld-lld-16-0-0-and-newer/20230119-032402
+> base:   5dc4c995db9eb45f6373a956eb1f69460e69e6d4
+>>> arch/arm/mach-sa1100/pm.c:122:12: warning: no previous prototype for function 'sa11x0_pm_init' [-Wmissing-prototypes]
+>    int __init sa11x0_pm_init(void)
+>               ^
+>    arch/arm/mach-sa1100/pm.c:122:1: note: declare 'static' if the 
+> function is not intended to be used outside of this translation unit
+>    int __init sa11x0_pm_init(void)
+>    ^
+>    static 
+>    1 warning generated.
+> --
 
-Yes, we add dt binding fixes all the time if they are relevant and
-marked as fixes for problems.
 
-thanks,
+For refernece, these are all known problems, the patch just allowed
+the code to be built by clang/lld when that was previously not
+possible.
 
-greg k-h
+After the 6.3 merge window, we can probably go through the much
+smaller set of board files are address most of the W=1 warnings that
+were previously overwhelming.
+
+      Arnd
