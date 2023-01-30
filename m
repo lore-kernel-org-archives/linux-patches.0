@@ -1,29 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8DB283229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:25:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB885C433D2;
-	Mon, 30 Jan 2023 14:25:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86BA03229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:25:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C4BA3C433EF;
+	Mon, 30 Jan 2023 14:25:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088739;
-	bh=EW4My3mM8GfFjW6I5iI3ir8gR1WIaAIyJOjcXSN3+Mg=;
+	s=korg; t=1675088742;
+	bh=iGXR7+C5GplkKLcKhMRxsxgtn9qEudSI371K+qCAJuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b25bA0vXZdcxZefeumm7Q5azVA6f7xoiH6BimcNcyoG/q6ziXO9FvZZwuV5iCxXN0
-	 5VQHu8KgtW1mauH64sgAaunFLOiQVmpbzi1K5YePKM2bdYU0EOL+u3m83Q0hDL87uV
-	 tb93Q13PclgkfauZamJq8APlFkidrK9Vzth46/AY=
+	b=Ox/8Xr2JpvRh+DMP0Wpoi+tFINX40vpaHq17ujs99TPKjdR5M95E9WUX1/QCylrij
+	 kZ//MODcGG6aDcB+SAqllDzaVyKV+7CIfdxalIa8f+zQGhr8Ir/KoVzdCEeMzENzqW
+	 eFQuA+FXqrnKhwjC+OcJHJL0y+njass6HrHjgYm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Marco Elver <elver@google.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Baoquan He <bhe@redhat.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Xuefeng Li <lixuefeng@loongson.cn>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Eric Biggers <ebiggers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 091/143] exit: Put an upper limit on how often we can oops
-Date: Mon, 30 Jan 2023 14:52:28 +0100
-Message-Id: <20230130134310.645894736@linuxfoundation.org>
+Subject: [PATCH 5.10 082/143] ubsan: no need to unset panic_on_warn in ubsan_epilogue()
+Date: Mon, 30 Jan 2023 14:52:19 +0100
+Message-Id: <20230130134310.266824177@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -37,145 +42,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jann Horn <jannh@google.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit d4ccd54d28d3c8598e2354acc13e28c060961dbb upstream.
+commit d83ce027a54068fabb70d2c252e1ce2da86784a4 upstream.
 
-Many Linux systems are configured to not panic on oops; but allowing an
-attacker to oops the system **really** often can make even bugs that look
-completely unexploitable exploitable (like NULL dereferences and such) if
-each crash elevates a refcount by one or a lock is taken in read mode, and
-this causes a counter to eventually overflow.
+panic_on_warn is unset inside panic(), so no need to unset it before
+calling panic() in ubsan_epilogue().
 
-The most interesting counters for this are 32 bits wide (like open-coded
-refcounts that don't use refcount_t). (The ldsem reader count on 32-bit
-platforms is just 16 bits, but probably nobody cares about 32-bit platforms
-that much nowadays.)
-
-So let's panic the system if the kernel is constantly oopsing.
-
-The speed of oopsing 2^32 times probably depends on several factors, like
-how long the stack trace is and which unwinder you're using; an empirically
-important one is whether your console is showing a graphical environment or
-a text console that oopses will be printed to.
-In a quick single-threaded benchmark, it looks like oopsing in a vfork()
-child with a very short stack trace only takes ~510 microseconds per run
-when a graphical console is active; but switching to a text console that
-oopses are printed to slows it down around 87x, to ~45 milliseconds per
-run.
-(Adding more threads makes this faster, but the actual oops printing
-happens under &die_lock on x86, so you can maybe speed this up by a factor
-of around 2 and then any further improvement gets eaten up by lock
-contention.)
-
-It looks like it would take around 8-12 days to overflow a 32-bit counter
-with repeated oopsing on a multi-core X86 system running a graphical
-environment; both me (in an X86 VM) and Seth (with a distro kernel on
-normal hardware in a standard configuration) got numbers in that ballpark.
-
-12 days aren't *that* short on a desktop system, and you'd likely need much
-longer on a typical server system (assuming that people don't run graphical
-desktop environments on their servers), and this is a *very* noisy and
-violent approach to exploiting the kernel; and it also seems to take orders
-of magnitude longer on some machines, probably because stuff like EFI
-pstore will slow it down a ton if that's active.
-
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/r/20221107201317.324457-1-jannh@google.com
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221117234328.594699-2-keescook@chromium.org
+Link: https://lkml.kernel.org/r/1644324666-15947-5-git-send-email-yangtiezhu@loongson.cn
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Reviewed-by: Marco Elver <elver@google.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Xuefeng Li <lixuefeng@loongson.cn>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/admin-guide/sysctl/kernel.rst |  8 ++++
- kernel/exit.c                               | 43 +++++++++++++++++++++
- 2 files changed, 51 insertions(+)
+ lib/ubsan.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/Documentation/admin-guide/sysctl/kernel.rst b/Documentation/admin-guide/sysctl/kernel.rst
-index a4b1ebc2e70b..cd9247b48fc7 100644
---- a/Documentation/admin-guide/sysctl/kernel.rst
-+++ b/Documentation/admin-guide/sysctl/kernel.rst
-@@ -663,6 +663,14 @@ This is the default behavior.
- an oops event is detected.
+diff --git a/lib/ubsan.c b/lib/ubsan.c
+index adf8dcf3c84e..d81d107f64f4 100644
+--- a/lib/ubsan.c
++++ b/lib/ubsan.c
+@@ -151,16 +151,8 @@ static void ubsan_epilogue(void)
  
+ 	current->in_ubsan--;
  
-+oops_limit
-+==========
-+
-+Number of kernel oopses after which the kernel should panic when
-+``panic_on_oops`` is not set. Setting this to 0 or 1 has the same effect
-+as setting ``panic_on_oops=1``.
-+
-+
- osrelease, ostype & version
- ===========================
- 
-diff --git a/kernel/exit.c b/kernel/exit.c
-index 8d7577940077..db832cff6b7b 100644
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -69,6 +69,33 @@
- #include <asm/unistd.h>
- #include <asm/mmu_context.h>
- 
-+/*
-+ * The default value should be high enough to not crash a system that randomly
-+ * crashes its kernel from time to time, but low enough to at least not permit
-+ * overflowing 32-bit refcounts or the ldsem writer count.
-+ */
-+static unsigned int oops_limit = 10000;
-+
-+#ifdef CONFIG_SYSCTL
-+static struct ctl_table kern_exit_table[] = {
-+	{
-+		.procname       = "oops_limit",
-+		.data           = &oops_limit,
-+		.maxlen         = sizeof(oops_limit),
-+		.mode           = 0644,
-+		.proc_handler   = proc_douintvec,
-+	},
-+	{ }
-+};
-+
-+static __init int kernel_exit_sysctls_init(void)
-+{
-+	register_sysctl_init("kernel", kern_exit_table);
-+	return 0;
-+}
-+late_initcall(kernel_exit_sysctls_init);
-+#endif
-+
- static void __unhash_process(struct task_struct *p, bool group_dead)
- {
- 	nr_threads--;
-@@ -865,10 +892,26 @@ EXPORT_SYMBOL_GPL(do_exit);
- 
- void __noreturn make_task_dead(int signr)
- {
-+	static atomic_t oops_count = ATOMIC_INIT(0);
-+
- 	/*
- 	 * Take the task off the cpu after something catastrophic has
- 	 * happened.
- 	 */
-+
-+	/*
-+	 * Every time the system oopses, if the oops happens while a reference
-+	 * to an object was held, the reference leaks.
-+	 * If the oops doesn't also leak memory, repeated oopsing can cause
-+	 * reference counters to wrap around (if they're not using refcount_t).
-+	 * This means that repeated oopsing can make unexploitable-looking bugs
-+	 * exploitable through repeated oopsing.
-+	 * To make sure this can't happen, place an upper bound on how often the
-+	 * kernel may oops without panic().
-+	 */
-+	if (atomic_inc_return(&oops_count) >= READ_ONCE(oops_limit))
-+		panic("Oopsed too often (kernel.oops_limit is %d)", oops_limit);
-+
- 	do_exit(signr);
+-	if (panic_on_warn) {
+-		/*
+-		 * This thread may hit another WARN() in the panic path.
+-		 * Resetting this prevents additional WARN() from panicking the
+-		 * system on this thread.  Other threads are blocked by the
+-		 * panic_mutex in panic().
+-		 */
+-		panic_on_warn = 0;
++	if (panic_on_warn)
+ 		panic("panic_on_warn set ...\n");
+-	}
  }
  
+ static void handle_overflow(struct overflow_data *data, void *lhs,
 -- 
 2.39.0
 
