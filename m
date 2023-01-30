@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45A9728EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:04:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4B5DC433EF;
-	Mon, 30 Jan 2023 14:04:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 788B928EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:04:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CF3CBC433EF;
+	Mon, 30 Jan 2023 14:04:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087469;
-	bh=lcdR1wP8zurpBkXYfi6+6QHyNOSpzivbq2ak6oIbLxY=;
+	s=korg; t=1675087472;
+	bh=U65pbiX9FuqiQ3xZZPTQyh4tMo1FHfGmx/7+n0LdAAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qAikbgPpCOtU818f6hOYLUf2HOwYKYAC7th+DXGzLPiXyIbJ0WUpfEYPpACreMqA5
-	 9Elq1cpuy3Z00aHchcrr1IQ97c1xBu9NuaxcxtkMTILCuy0JTkahWSdB3C52ctrRQm
-	 WAEMC49mLVjhvrwd3HvhNGkoc7nlAYzKa7mqTCoE=
+	b=sMkMD8GhaCSoPEB1sphGh8MVW0TMiMAuKiXENo1bj0d9n9y7aQ5Cwaisba7gIcIm1
+	 R7CHvnbKFseq+f5nKpSw5UHhmXLYHxPe3ztO7VFa5KwXhr0xhEvuDd8fA9SJNp2qDr
+	 lms8ksb7vQRnuCNUa8JsGrr+SzTWu2FCNkGwfRWY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Namjae Jeon <linkinjeon@kernel.org>,
-	Steve French <stfrench@microsoft.com>,
-	zdi-disclosures@trendmicro.com
-Subject: [PATCH 6.1 219/313] ksmbd: limit pdu length size according to connection status
-Date: Mon, 30 Jan 2023 14:50:54 +0100
-Message-Id: <20230130134346.909611079@linuxfoundation.org>
+	Alexander Wetzel <alexander@wetzel-home.de>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 202/313] wifi: mac80211: Proper mark iTXQs for resumption
+Date: Mon, 30 Jan 2023 14:50:37 +0100
+Message-Id: <20230130134346.118629566@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,78 +34,201 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Namjae Jeon <linkinjeon@kernel.org>
+From: Alexander Wetzel <alexander@wetzel-home.de>
 
-commit 62c487b53a7ff31e322cf2874d3796b8202c54a5 upstream.
+commit 4444bc2116aecdcde87dce80373540adc8bd478b upstream.
 
-Stream protocol length will never be larger than 16KB until session setup.
-After session setup, the size of requests will not be larger than
-16KB + SMB2 MAX WRITE size. This patch limits these invalidly oversized
-requests and closes the connection immediately.
+When a running wake_tx_queue() call is aborted due to a hw queue stop
+the corresponding iTXQ is not always correctly marked for resumption:
+wake_tx_push_queue() can stops the queue run without setting
+@IEEE80211_TXQ_STOP_NETIF_TX.
 
-Fixes: 0626e6641f6b ("cifsd: add server handler for central processing and tranport layers")
+Without the @IEEE80211_TXQ_STOP_NETIF_TX flag __ieee80211_wake_txqs()
+will not schedule a new queue run and remaining frames in the queue get
+stuck till another frame is queued to it.
+
+Fix the issue for all drivers - also the ones with custom wake_tx_queue
+callbacks - by moving the logic into ieee80211_tx_dequeue() and drop the
+redundant @txqs_stopped.
+
+@IEEE80211_TXQ_STOP_NETIF_TX is also renamed to @IEEE80211_TXQ_DIRTY to
+better describe the flag.
+
+Fixes: c850e31f79f0 ("wifi: mac80211: add internal handler for wake_tx_queue")
+Signed-off-by: Alexander Wetzel <alexander@wetzel-home.de>
+Link: https://lore.kernel.org/r/20221230121850.218810-1-alexander@wetzel-home.de
 Cc: stable@vger.kernel.org
-Reported-by: zdi-disclosures@trendmicro.com # ZDI-CAN-18259
-Signed-off-by: Namjae Jeon <linkinjeon@kernel.org>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ksmbd/connection.c |   17 +++++++++++++++--
- fs/ksmbd/smb2pdu.h    |    5 +++--
- 2 files changed, 18 insertions(+), 4 deletions(-)
+ include/net/mac80211.h     |    4 ----
+ net/mac80211/debugfs_sta.c |    5 +++--
+ net/mac80211/driver-ops.h  |    2 +-
+ net/mac80211/ieee80211_i.h |    2 +-
+ net/mac80211/tx.c          |   23 +++++++++++++++--------
+ net/mac80211/util.c        |   20 ++++++--------------
+ 6 files changed, 26 insertions(+), 30 deletions(-)
 
---- a/fs/ksmbd/connection.c
-+++ b/fs/ksmbd/connection.c
-@@ -280,7 +280,7 @@ int ksmbd_conn_handler_loop(void *p)
- {
- 	struct ksmbd_conn *conn = (struct ksmbd_conn *)p;
- 	struct ksmbd_transport *t = conn->transport;
--	unsigned int pdu_size;
-+	unsigned int pdu_size, max_allowed_pdu_size;
- 	char hdr_buf[4] = {0,};
- 	int size;
+--- a/include/net/mac80211.h
++++ b/include/net/mac80211.h
+@@ -1827,8 +1827,6 @@ struct ieee80211_vif_cfg {
+  * @drv_priv: data area for driver use, will always be aligned to
+  *	sizeof(void \*).
+  * @txq: the multicast data TX queue (if driver uses the TXQ abstraction)
+- * @txqs_stopped: per AC flag to indicate that intermediate TXQs are stopped,
+- *	protected by fq->lock.
+  * @offload_flags: 802.3 -> 802.11 enapsulation offload flags, see
+  *	&enum ieee80211_offload_flags.
+  * @mbssid_tx_vif: Pointer to the transmitting interface if MBSSID is enabled.
+@@ -1857,8 +1855,6 @@ struct ieee80211_vif {
+ 	bool probe_req_reg;
+ 	bool rx_mcast_action_reg;
  
-@@ -305,13 +305,26 @@ int ksmbd_conn_handler_loop(void *p)
- 		pdu_size = get_rfc1002_len(hdr_buf);
- 		ksmbd_debug(CONN, "RFC1002 header %u bytes\n", pdu_size);
+-	bool txqs_stopped[IEEE80211_NUM_ACS];
+-
+ 	struct ieee80211_vif *mbssid_tx_vif;
  
-+		if (conn->status == KSMBD_SESS_GOOD)
-+			max_allowed_pdu_size =
-+				SMB3_MAX_MSGSIZE + conn->vals->max_write_size;
-+		else
-+			max_allowed_pdu_size = SMB3_MAX_MSGSIZE;
+ 	/* must be last */
+--- a/net/mac80211/debugfs_sta.c
++++ b/net/mac80211/debugfs_sta.c
+@@ -167,7 +167,7 @@ static ssize_t sta_aqm_read(struct file
+ 			continue;
+ 		txqi = to_txq_info(sta->sta.txq[i]);
+ 		p += scnprintf(p, bufsz + buf - p,
+-			       "%d %d %u %u %u %u %u %u %u %u %u 0x%lx(%s%s%s)\n",
++			       "%d %d %u %u %u %u %u %u %u %u %u 0x%lx(%s%s%s%s)\n",
+ 			       txqi->txq.tid,
+ 			       txqi->txq.ac,
+ 			       txqi->tin.backlog_bytes,
+@@ -182,7 +182,8 @@ static ssize_t sta_aqm_read(struct file
+ 			       txqi->flags,
+ 			       test_bit(IEEE80211_TXQ_STOP, &txqi->flags) ? "STOP" : "RUN",
+ 			       test_bit(IEEE80211_TXQ_AMPDU, &txqi->flags) ? " AMPDU" : "",
+-			       test_bit(IEEE80211_TXQ_NO_AMSDU, &txqi->flags) ? " NO-AMSDU" : "");
++			       test_bit(IEEE80211_TXQ_NO_AMSDU, &txqi->flags) ? " NO-AMSDU" : "",
++			       test_bit(IEEE80211_TXQ_DIRTY, &txqi->flags) ? " DIRTY" : "");
+ 	}
+ 
+ 	rcu_read_unlock();
+--- a/net/mac80211/driver-ops.h
++++ b/net/mac80211/driver-ops.h
+@@ -1183,7 +1183,7 @@ static inline void drv_wake_tx_queue(str
+ 
+ 	/* In reconfig don't transmit now, but mark for waking later */
+ 	if (local->in_reconfig) {
+-		set_bit(IEEE80211_TXQ_STOP_NETIF_TX, &txq->flags);
++		set_bit(IEEE80211_TXQ_DIRTY, &txq->flags);
+ 		return;
+ 	}
+ 
+--- a/net/mac80211/ieee80211_i.h
++++ b/net/mac80211/ieee80211_i.h
+@@ -836,7 +836,7 @@ enum txq_info_flags {
+ 	IEEE80211_TXQ_STOP,
+ 	IEEE80211_TXQ_AMPDU,
+ 	IEEE80211_TXQ_NO_AMSDU,
+-	IEEE80211_TXQ_STOP_NETIF_TX,
++	IEEE80211_TXQ_DIRTY,
+ };
+ 
+ /**
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -3709,13 +3709,15 @@ struct sk_buff *ieee80211_tx_dequeue(str
+ 	struct ieee80211_local *local = hw_to_local(hw);
+ 	struct txq_info *txqi = container_of(txq, struct txq_info, txq);
+ 	struct ieee80211_hdr *hdr;
+-	struct sk_buff *skb = NULL;
+ 	struct fq *fq = &local->fq;
+ 	struct fq_tin *tin = &txqi->tin;
+ 	struct ieee80211_tx_info *info;
+ 	struct ieee80211_tx_data tx;
++	struct sk_buff *skb;
+ 	ieee80211_tx_result r;
+ 	struct ieee80211_vif *vif = txq->vif;
++	int q = vif->hw_queue[txq->ac];
++	bool q_stopped;
+ 
+ 	WARN_ON_ONCE(softirq_count() == 0);
+ 
+@@ -3723,16 +3725,21 @@ struct sk_buff *ieee80211_tx_dequeue(str
+ 		return NULL;
+ 
+ begin:
+-	spin_lock_bh(&fq->lock);
++	skb = NULL;
++	spin_lock(&local->queue_stop_reason_lock);
++	q_stopped = local->queue_stop_reasons[q];
++	spin_unlock(&local->queue_stop_reason_lock);
 +
-+		if (pdu_size > max_allowed_pdu_size) {
-+			pr_err_ratelimited("PDU length(%u) excceed maximum allowed pdu size(%u) on connection(%d)\n",
-+					pdu_size, max_allowed_pdu_size,
-+					conn->status);
-+			break;
-+		}
-+
- 		/*
- 		 * Check if pdu size is valid (min : smb header size,
- 		 * max : 0x00FFFFFF).
- 		 */
- 		if (pdu_size < __SMB2_HEADER_STRUCTURE_SIZE ||
- 		    pdu_size > MAX_STREAM_PROT_LEN) {
--			continue;
-+			break;
++	if (unlikely(q_stopped)) {
++		/* mark for waking later */
++		set_bit(IEEE80211_TXQ_DIRTY, &txqi->flags);
++		return NULL;
++	}
+ 
+-	if (test_bit(IEEE80211_TXQ_STOP, &txqi->flags) ||
+-	    test_bit(IEEE80211_TXQ_STOP_NETIF_TX, &txqi->flags))
+-		goto out;
++	spin_lock_bh(&fq->lock);
+ 
+-	if (vif->txqs_stopped[txq->ac]) {
+-		set_bit(IEEE80211_TXQ_STOP_NETIF_TX, &txqi->flags);
++	if (unlikely(test_bit(IEEE80211_TXQ_STOP, &txqi->flags)))
+ 		goto out;
+-	}
+ 
+ 	/* Make sure fragments stay together. */
+ 	skb = __skb_dequeue(&txqi->frags);
+--- a/net/mac80211/util.c
++++ b/net/mac80211/util.c
+@@ -301,8 +301,6 @@ static void __ieee80211_wake_txqs(struct
+ 	local_bh_disable();
+ 	spin_lock(&fq->lock);
+ 
+-	sdata->vif.txqs_stopped[ac] = false;
+-
+ 	if (!test_bit(SDATA_STATE_RUNNING, &sdata->state))
+ 		goto out;
+ 
+@@ -324,7 +322,7 @@ static void __ieee80211_wake_txqs(struct
+ 			if (ac != txq->ac)
+ 				continue;
+ 
+-			if (!test_and_clear_bit(IEEE80211_TXQ_STOP_NETIF_TX,
++			if (!test_and_clear_bit(IEEE80211_TXQ_DIRTY,
+ 						&txqi->flags))
+ 				continue;
+ 
+@@ -339,7 +337,7 @@ static void __ieee80211_wake_txqs(struct
+ 
+ 	txqi = to_txq_info(vif->txq);
+ 
+-	if (!test_and_clear_bit(IEEE80211_TXQ_STOP_NETIF_TX, &txqi->flags) ||
++	if (!test_and_clear_bit(IEEE80211_TXQ_DIRTY, &txqi->flags) ||
+ 	    (ps && atomic_read(&ps->num_sta_ps)) || ac != vif->txq->ac)
+ 		goto out;
+ 
+@@ -537,16 +535,10 @@ static void __ieee80211_stop_queue(struc
+ 			continue;
+ 
+ 		for (ac = 0; ac < n_acs; ac++) {
+-			if (sdata->vif.hw_queue[ac] == queue ||
+-			    sdata->vif.cab_queue == queue) {
+-				if (!local->ops->wake_tx_queue) {
+-					netif_stop_subqueue(sdata->dev, ac);
+-					continue;
+-				}
+-				spin_lock(&local->fq.lock);
+-				sdata->vif.txqs_stopped[ac] = true;
+-				spin_unlock(&local->fq.lock);
+-			}
++			if (!local->ops->wake_tx_queue &&
++			    (sdata->vif.hw_queue[ac] == queue ||
++			     sdata->vif.cab_queue == queue))
++				netif_stop_subqueue(sdata->dev, ac);
  		}
- 
- 		/* 4 for rfc1002 length field */
---- a/fs/ksmbd/smb2pdu.h
-+++ b/fs/ksmbd/smb2pdu.h
-@@ -24,8 +24,9 @@
- 
- #define SMB21_DEFAULT_IOSIZE	(1024 * 1024)
- #define SMB3_DEFAULT_TRANS_SIZE	(1024 * 1024)
--#define SMB3_MIN_IOSIZE	(64 * 1024)
--#define SMB3_MAX_IOSIZE	(8 * 1024 * 1024)
-+#define SMB3_MIN_IOSIZE		(64 * 1024)
-+#define SMB3_MAX_IOSIZE		(8 * 1024 * 1024)
-+#define SMB3_MAX_MSGSIZE	(4 * 4096)
- 
- /*
-  *	Definitions for SMB2 Protocol Data Units (network frames)
+ 	}
+ 	rcu_read_unlock();
 
 
