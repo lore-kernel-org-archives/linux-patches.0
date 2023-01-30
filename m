@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B046328EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:06:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 318E1C4339B;
-	Mon, 30 Jan 2023 14:06:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AAA5928EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:06:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16D76C433D2;
+	Mon, 30 Jan 2023 14:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087584;
-	bh=EA8Tb2uZVZGwb4kTLTuVAkeSf88p75ilMzP/adNidWw=;
+	s=korg; t=1675087587;
+	bh=yM283uqsZhGyBbctYoENPcELMYDiYbGfVnB1kbZlVtQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=14vTz0Ku3j13a/pqPIJULS7tyouvCucD0T96HprKCB7fXYY6ryCwzJ/zTvSzioTnT
-	 gwKMxvx83gvDNanHfsjlhkfttZFjiHPUdIVfHVmHkcoqhNdbc20LPtF2nK4jy6Lers
-	 SaRuNkDj96yxsPe0iakus6G9v8syV4GxbmaJgvv8=
+	b=Vdz5NtKpF/dKqNrJsHncRG8sZySSekFxjiihz8XzMK7YXMQWXws5zZ3FakIerY1IT
+	 +YveNBwhnc1vW01r0luwGjfNQ4onqjcPhwEevvaYhgPz17+6nFA+AXIgub9NsBN8sM
+	 yWe7In0k2/empzehOUXNx3/r38ca3XOZnjP9JXh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wei Fang <wei.fang@nxp.com>,
-	shenwei wang <Shenwei.wang@nxp.com>,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Christoph Hellwig <hch@lst.de>,
+	Keith Busch <kbusch@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 256/313] net: fec: Use page_pool_put_full_page when freeing rx buffers
-Date: Mon, 30 Jan 2023 14:51:31 +0100
-Message-Id: <20230130134348.645092567@linuxfoundation.org>
+Subject: [PATCH 6.1 257/313] nvme: simplify transport specific device attribute handling
+Date: Mon, 30 Jan 2023 14:51:32 +0100
+Message-Id: <20230130134348.692907898@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -37,191 +37,149 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wei Fang <wei.fang@nxp.com>
+From: Christoph Hellwig <hch@lst.de>
 
-[ Upstream commit e38553bdc377e3e7a6caa9dd9770d8b644d8dac3 ]
+[ Upstream commit 86adbf0cdb9ec6533234696c3e243184d4d0d040 ]
 
-The page_pool_release_page was used when freeing rx buffers, and this
-function just unmaps the page (if mapped) and does not recycle the page.
-So after hundreds of down/up the eth0, the system will out of memory.
-For more details, please refer to the following reproduce steps and
-bug logs. To solve this issue and refer to the doc of page pool, the
-page_pool_put_full_page should be used to replace page_pool_release_page.
-Because this API will try to recycle the page if the page refcnt equal to
-1. After testing 20000 times, the issue can not be reproduced anymore
-(about testing 391 times the issue will occur on i.MX8MN-EVK before).
+Allow the transport driver to override the attribute groups for the
+control device, so that the PCIe driver doesn't manually have to add a
+group after device creation and keep track of it.
 
-Reproduce steps:
-Create the test script and run the script. The script content is as
-follows:
-LOOPS=20000
-i=1
-while [ $i -le $LOOPS ]
-do
-    echo "TINFO:ENET $curface up and down test $i times"
-    org_macaddr=$(cat /sys/class/net/eth0/address)
-    ifconfig eth0 down
-    ifconfig eth0  hw ether $org_macaddr up
-    i=$(expr $i + 1)
-done
-sleep 5
-if cat /sys/class/net/eth0/operstate | grep 'up';then
-    echo "TEST PASS"
-else
-    echo "TEST FAIL"
-fi
-
-Bug detail logs:
-TINFO:ENET  up and down test 391 times
-[  850.471205] Qualcomm Atheros AR8031/AR8033 30be0000.ethernet-1:00: attached PHY driver (mii_bus:phy_addr=30be0000.ethernet-1:00, irq=POLL)
-[  853.535318] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
-[  853.541694] fec 30be0000.ethernet eth0: Link is Up - 1Gbps/Full - flow control rx/tx
-[  870.590531] page_pool_release_retry() stalled pool shutdown 199 inflight 60 sec
-[  931.006557] page_pool_release_retry() stalled pool shutdown 199 inflight 120 sec
-TINFO:ENET  up and down test 392 times
-[  991.426544] page_pool_release_retry() stalled pool shutdown 192 inflight 181 sec
-[ 1051.838531] page_pool_release_retry() stalled pool shutdown 170 inflight 241 sec
-[ 1093.751217] Qualcomm Atheros AR8031/AR8033 30be0000.ethernet-1:00: attached PHY driver (mii_bus:phy_addr=30be0000.ethernet-1:00, irq=POLL)
-[ 1096.446520] page_pool_release_retry() stalled pool shutdown 308 inflight 60 sec
-[ 1096.831245] fec 30be0000.ethernet eth0: Link is Up - 1Gbps/Full - flow control rx/tx
-[ 1096.839092] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
-[ 1112.254526] page_pool_release_retry() stalled pool shutdown 103 inflight 302 sec
-[ 1156.862533] page_pool_release_retry() stalled pool shutdown 308 inflight 120 sec
-[ 1172.674516] page_pool_release_retry() stalled pool shutdown 103 inflight 362 sec
-[ 1217.278532] page_pool_release_retry() stalled pool shutdown 308 inflight 181 sec
-TINFO:ENET  up and down test 393 times
-[ 1233.086535] page_pool_release_retry() stalled pool shutdown 103 inflight 422 sec
-[ 1277.698513] page_pool_release_retry() stalled pool shutdown 308 inflight 241 sec
-[ 1293.502525] page_pool_release_retry() stalled pool shutdown 86 inflight 483 sec
-[ 1338.110518] page_pool_release_retry() stalled pool shutdown 308 inflight 302 sec
-[ 1353.918540] page_pool_release_retry() stalled pool shutdown 32 inflight 543 sec
-[ 1361.179205] Qualcomm Atheros AR8031/AR8033 30be0000.ethernet-1:00: attached PHY driver (mii_bus:phy_addr=30be0000.ethernet-1:00, irq=POLL)
-[ 1364.255298] fec 30be0000.ethernet eth0: Link is Up - 1Gbps/Full - flow control rx/tx
-[ 1364.263189] IPv6: ADDRCONF(NETDEV_CHANGE): eth0: link becomes ready
-[ 1371.998532] page_pool_release_retry() stalled pool shutdown 310 inflight 60 sec
-[ 1398.530542] page_pool_release_retry() stalled pool shutdown 308 inflight 362 sec
-[ 1414.334539] page_pool_release_retry() stalled pool shutdown 16 inflight 604 sec
-[ 1432.414520] page_pool_release_retry() stalled pool shutdown 310 inflight 120 sec
-[ 1458.942523] page_pool_release_retry() stalled pool shutdown 308 inflight 422 sec
-[ 1474.750521] page_pool_release_retry() stalled pool shutdown 16 inflight 664 sec
-TINFO:ENET  up and down test 394 times
-[ 1492.830522] page_pool_release_retry() stalled pool shutdown 310 inflight 181 sec
-[ 1519.358519] page_pool_release_retry() stalled pool shutdown 308 inflight 483 sec
-[ 1535.166545] page_pool_release_retry() stalled pool shutdown 2 inflight 724 sec
-[ 1537.090278] eth_test2.sh invoked oom-killer: gfp_mask=0x400dc0(GFP_KERNEL_ACCOUNT|__GFP_ZERO), order=0, oom_score_adj=0
-[ 1537.101192] CPU: 3 PID: 2379 Comm: eth_test2.sh Tainted: G         C         6.1.1+g56321e101aca #1
-[ 1537.110249] Hardware name: NXP i.MX8MNano EVK board (DT)
-[ 1537.115561] Call trace:
-[ 1537.118005]  dump_backtrace.part.0+0xe0/0xf0
-[ 1537.122289]  show_stack+0x18/0x40
-[ 1537.125608]  dump_stack_lvl+0x64/0x80
-[ 1537.129276]  dump_stack+0x18/0x34
-[ 1537.132592]  dump_header+0x44/0x208
-[ 1537.136083]  oom_kill_process+0x2b4/0x2c0
-[ 1537.140097]  out_of_memory+0xe4/0x594
-[ 1537.143766]  __alloc_pages+0xb68/0xd00
-[ 1537.147521]  alloc_pages+0xac/0x160
-[ 1537.151013]  __get_free_pages+0x14/0x40
-[ 1537.154851]  pgd_alloc+0x1c/0x30
-[ 1537.158082]  mm_init+0xf8/0x1d0
-[ 1537.161228]  mm_alloc+0x48/0x60
-[ 1537.164368]  alloc_bprm+0x7c/0x240
-[ 1537.167777]  do_execveat_common.isra.0+0x70/0x240
-[ 1537.172486]  __arm64_sys_execve+0x40/0x54
-[ 1537.176502]  invoke_syscall+0x48/0x114
-[ 1537.180255]  el0_svc_common.constprop.0+0xcc/0xec
-[ 1537.184964]  do_el0_svc+0x2c/0xd0
-[ 1537.188280]  el0_svc+0x2c/0x84
-[ 1537.191340]  el0t_64_sync_handler+0xf4/0x120
-[ 1537.195613]  el0t_64_sync+0x18c/0x190
-[ 1537.199334] Mem-Info:
-[ 1537.201620] active_anon:342 inactive_anon:10343 isolated_anon:0
-[ 1537.201620]  active_file:54 inactive_file:112 isolated_file:0
-[ 1537.201620]  unevictable:0 dirty:0 writeback:0
-[ 1537.201620]  slab_reclaimable:2620 slab_unreclaimable:7076
-[ 1537.201620]  mapped:1489 shmem:2473 pagetables:466
-[ 1537.201620]  sec_pagetables:0 bounce:0
-[ 1537.201620]  kernel_misc_reclaimable:0
-[ 1537.201620]  free:136672 free_pcp:96 free_cma:129241
-[ 1537.240419] Node 0 active_anon:1368kB inactive_anon:41372kB active_file:216kB inactive_file:5052kB unevictable:0kB isolated(anon):0kB isolated(file):0kB s
-[ 1537.271422] Node 0 DMA free:541636kB boost:0kB min:30000kB low:37500kB high:45000kB reserved_highatomic:0KB active_anon:1368kB inactive_anon:41372kB actiB
-[ 1537.300219] lowmem_reserve[]: 0 0 0 0
-[ 1537.303929] Node 0 DMA: 1015*4kB (UMEC) 743*8kB (UMEC) 417*16kB (UMEC) 235*32kB (UMEC) 116*64kB (UMEC) 25*128kB (UMEC) 4*256kB (UC) 2*512kB (UC) 0*1024kBB
-[ 1537.323938] Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=1048576kB
-[ 1537.332708] Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=32768kB
-[ 1537.341292] Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=2048kB
-[ 1537.349776] Node 0 hugepages_total=0 hugepages_free=0 hugepages_surp=0 hugepages_size=64kB
-[ 1537.358087] 2939 total pagecache pages
-[ 1537.361876] 0 pages in swap cache
-[ 1537.365229] Free swap  = 0kB
-[ 1537.368147] Total swap = 0kB
-[ 1537.371065] 516096 pages RAM
-[ 1537.373959] 0 pages HighMem/MovableOnly
-[ 1537.377834] 17302 pages reserved
-[ 1537.381103] 163840 pages cma reserved
-[ 1537.384809] 0 pages hwpoisoned
-[ 1537.387902] Tasks state (memory values in pages):
-[ 1537.392652] [  pid  ]   uid  tgid total_vm      rss pgtables_bytes swapents oom_score_adj name
-[ 1537.401356] [    201]   993   201     1130       72    45056        0             0 rpcbind
-[ 1537.409772] [    202]     0   202     4529     1640    77824        0          -250 systemd-journal
-[ 1537.418861] [    222]     0   222     4691      801    69632        0         -1000 systemd-udevd
-[ 1537.427787] [    248]   994   248    20914      130    65536        0             0 systemd-timesyn
-[ 1537.436884] [    497]     0   497      620       31    49152        0             0 atd
-[ 1537.444938] [    500]     0   500      854       77    53248        0             0 crond
-[ 1537.453165] [    503]   997   503     1470      160    49152        0          -900 dbus-daemon
-[ 1537.461908] [    505]     0   505      633       24    40960        0             0 firmwared
-[ 1537.470491] [    513]     0   513     2507      180    61440        0             0 ofonod
-[ 1537.478800] [    514]   990   514    69640      137    81920        0             0 parsec
-[ 1537.487120] [    533]     0   533      599       39    40960        0             0 syslogd
-[ 1537.495518] [    534]     0   534     4546      148    65536        0             0 systemd-logind
-[ 1537.504560] [    535]     0   535      690       24    45056        0             0 tee-supplicant
-[ 1537.513564] [    540]   996   540     2769      168    61440        0             0 systemd-network
-[ 1537.522680] [    566]     0   566     3878      228    77824        0             0 connmand
-[ 1537.531168] [    645]   998   645     1538      133    57344        0             0 avahi-daemon
-[ 1537.540004] [    646]   998   646     1461       64    57344        0             0 avahi-daemon
-[ 1537.548846] [    648]   992   648      781       41    45056        0             0 rpc.statd
-[ 1537.557415] [    650] 64371   650      590       23    45056        0             0 ninfod
-[ 1537.565754] [    653] 61563   653      555       24    45056        0             0 rdisc
-[ 1537.573971] [    655]     0   655   374569     2999   290816        0          -999 containerd
-[ 1537.582621] [    658]     0   658     1311       20    49152        0             0 agetty
-[ 1537.590922] [    663]     0   663     1529       97    49152        0             0 login
-[ 1537.599138] [    666]     0   666     3430      202    69632        0             0 wpa_supplicant
-[ 1537.608147] [    667]     0   667     2344       96    61440        0             0 systemd-userdbd
-[ 1537.617240] [    677]     0   677     2964      314    65536        0           100 systemd
-[ 1537.625651] [    679]     0   679     3720      646    73728        0           100 (sd-pam)
-[ 1537.634138] [    687]     0   687     1289      403    45056        0             0 sh
-[ 1537.642108] [    789]     0   789      970       93    45056        0             0 eth_test2.sh
-[ 1537.650955] [   2355]     0  2355     2346       94    61440        0             0 systemd-userwor
-[ 1537.660046] [   2356]     0  2356     2346       94    61440        0             0 systemd-userwor
-[ 1537.669137] [   2358]     0  2358     2346       95    57344        0             0 systemd-userwor
-[ 1537.678258] [   2379]     0  2379      970       93    45056        0             0 eth_test2.sh
-[ 1537.687098] oom-kill:constraint=CONSTRAINT_NONE,nodemask=(null),cpuset=/,mems_allowed=0,global_oom,task_memcg=/user.slice/user-0.slice/user@0.service,tas0
-[ 1537.703009] Out of memory: Killed process 679 ((sd-pam)) total-vm:14880kB, anon-rss:2584kB, file-rss:0kB, shmem-rss:0kB, UID:0 pgtables:72kB oom_score_ad0
-[ 1553.246526] page_pool_release_retry() stalled pool shutdown 310 inflight 241 sec
-
-Fixes: 95698ff6177b ("net: fec: using page pool to manage RX buffers")
-Signed-off-by: Wei Fang <wei.fang@nxp.com>
-Reviewed-by: shenwei wang <Shenwei.wang@nxp.com>
-Reviewed-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Tested-by Gerd Bayer <gbayer@linxu.ibm.com>
+Stable-dep-of: 98e3528012cd ("nvme-fc: fix initialization order")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/fec_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/host/core.c |  8 ++++++--
+ drivers/nvme/host/nvme.h |  2 ++
+ drivers/nvme/host/pci.c  | 23 ++++++++---------------
+ 3 files changed, 16 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/net/ethernet/freescale/fec_main.c b/drivers/net/ethernet/freescale/fec_main.c
-index f250b0df27fb..6f914180f479 100644
---- a/drivers/net/ethernet/freescale/fec_main.c
-+++ b/drivers/net/ethernet/freescale/fec_main.c
-@@ -3089,7 +3089,7 @@ static void fec_enet_free_buffers(struct net_device *ndev)
- 	for (q = 0; q < fep->num_rx_queues; q++) {
- 		rxq = fep->rx_queue[q];
- 		for (i = 0; i < rxq->bd.ring_size; i++)
--			page_pool_release_page(rxq->page_pool, rxq->rx_skb_info[i].page);
-+			page_pool_put_full_page(rxq->page_pool, rxq->rx_skb_info[i].page, false);
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index 1ded96d1bfd2..badc6984ff83 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -3903,10 +3903,11 @@ static umode_t nvme_dev_attrs_are_visible(struct kobject *kobj,
+ 	return a->mode;
+ }
  
- 		if (xdp_rxq_info_is_reg(&rxq->xdp_rxq))
- 			xdp_rxq_info_unreg(&rxq->xdp_rxq);
+-static const struct attribute_group nvme_dev_attrs_group = {
++const struct attribute_group nvme_dev_attrs_group = {
+ 	.attrs		= nvme_dev_attrs,
+ 	.is_visible	= nvme_dev_attrs_are_visible,
+ };
++EXPORT_SYMBOL_GPL(nvme_dev_attrs_group);
+ 
+ static const struct attribute_group *nvme_dev_attr_groups[] = {
+ 	&nvme_dev_attrs_group,
+@@ -5080,7 +5081,10 @@ int nvme_init_ctrl(struct nvme_ctrl *ctrl, struct device *dev,
+ 			ctrl->instance);
+ 	ctrl->device->class = nvme_class;
+ 	ctrl->device->parent = ctrl->dev;
+-	ctrl->device->groups = nvme_dev_attr_groups;
++	if (ops->dev_attr_groups)
++		ctrl->device->groups = ops->dev_attr_groups;
++	else
++		ctrl->device->groups = nvme_dev_attr_groups;
+ 	ctrl->device->release = nvme_free_ctrl;
+ 	dev_set_drvdata(ctrl->device, ctrl);
+ 	ret = dev_set_name(ctrl->device, "nvme%d", ctrl->instance);
+diff --git a/drivers/nvme/host/nvme.h b/drivers/nvme/host/nvme.h
+index cbda8a19409b..aef3693ba5d3 100644
+--- a/drivers/nvme/host/nvme.h
++++ b/drivers/nvme/host/nvme.h
+@@ -508,6 +508,7 @@ struct nvme_ctrl_ops {
+ 	unsigned int flags;
+ #define NVME_F_FABRICS			(1 << 0)
+ #define NVME_F_METADATA_SUPPORTED	(1 << 1)
++	const struct attribute_group **dev_attr_groups;
+ 	int (*reg_read32)(struct nvme_ctrl *ctrl, u32 off, u32 *val);
+ 	int (*reg_write32)(struct nvme_ctrl *ctrl, u32 off, u32 val);
+ 	int (*reg_read64)(struct nvme_ctrl *ctrl, u32 off, u64 *val);
+@@ -857,6 +858,7 @@ int nvme_dev_uring_cmd(struct io_uring_cmd *ioucmd, unsigned int issue_flags);
+ extern const struct attribute_group *nvme_ns_id_attr_groups[];
+ extern const struct pr_ops nvme_pr_ops;
+ extern const struct block_device_operations nvme_ns_head_ops;
++extern const struct attribute_group nvme_dev_attrs_group;
+ 
+ struct nvme_ns *nvme_find_path(struct nvme_ns_head *head);
+ #ifdef CONFIG_NVME_MULTIPATH
+diff --git a/drivers/nvme/host/pci.c b/drivers/nvme/host/pci.c
+index e2de5d0de5d9..d839689af17c 100644
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -158,8 +158,6 @@ struct nvme_dev {
+ 	unsigned int nr_allocated_queues;
+ 	unsigned int nr_write_queues;
+ 	unsigned int nr_poll_queues;
+-
+-	bool attrs_added;
+ };
+ 
+ static int io_queue_depth_set(const char *val, const struct kernel_param *kp)
+@@ -2241,11 +2239,17 @@ static struct attribute *nvme_pci_attrs[] = {
+ 	NULL,
+ };
+ 
+-static const struct attribute_group nvme_pci_attr_group = {
++static const struct attribute_group nvme_pci_dev_attrs_group = {
+ 	.attrs		= nvme_pci_attrs,
+ 	.is_visible	= nvme_pci_attrs_are_visible,
+ };
+ 
++static const struct attribute_group *nvme_pci_dev_attr_groups[] = {
++	&nvme_dev_attrs_group,
++	&nvme_pci_dev_attrs_group,
++	NULL,
++};
++
+ /*
+  * nirqs is the number of interrupts available for write and read
+  * queues. The core already reserved an interrupt for the admin queue.
+@@ -2935,10 +2939,6 @@ static void nvme_reset_work(struct work_struct *work)
+ 		goto out;
+ 	}
+ 
+-	if (!dev->attrs_added && !sysfs_create_group(&dev->ctrl.device->kobj,
+-			&nvme_pci_attr_group))
+-		dev->attrs_added = true;
+-
+ 	nvme_start_ctrl(&dev->ctrl);
+ 	return;
+ 
+@@ -3011,6 +3011,7 @@ static const struct nvme_ctrl_ops nvme_pci_ctrl_ops = {
+ 	.name			= "pcie",
+ 	.module			= THIS_MODULE,
+ 	.flags			= NVME_F_METADATA_SUPPORTED,
++	.dev_attr_groups	= nvme_pci_dev_attr_groups,
+ 	.reg_read32		= nvme_pci_reg_read32,
+ 	.reg_write32		= nvme_pci_reg_write32,
+ 	.reg_read64		= nvme_pci_reg_read64,
+@@ -3209,13 +3210,6 @@ static void nvme_shutdown(struct pci_dev *pdev)
+ 	nvme_disable_prepare_reset(dev, true);
+ }
+ 
+-static void nvme_remove_attrs(struct nvme_dev *dev)
+-{
+-	if (dev->attrs_added)
+-		sysfs_remove_group(&dev->ctrl.device->kobj,
+-				   &nvme_pci_attr_group);
+-}
+-
+ /*
+  * The driver's remove may be called on a device in a partially initialized
+  * state. This function must not have any dependencies on the device state in
+@@ -3237,7 +3231,6 @@ static void nvme_remove(struct pci_dev *pdev)
+ 	nvme_stop_ctrl(&dev->ctrl);
+ 	nvme_remove_namespaces(&dev->ctrl);
+ 	nvme_dev_disable(dev, true);
+-	nvme_remove_attrs(dev);
+ 	nvme_free_host_mem(dev);
+ 	nvme_dev_remove_admin(dev);
+ 	nvme_free_queues(dev, 0);
 -- 
 2.39.0
 
