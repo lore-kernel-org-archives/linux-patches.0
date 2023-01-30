@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74D9628EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:08:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0113C433D2;
-	Mon, 30 Jan 2023 14:08:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF1B528EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:08:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B7A0C4339B;
+	Mon, 30 Jan 2023 14:08:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087682;
-	bh=33bPHrH0OmXJrbGxu1Py4VXTBA+BJIFLr5ZjqxedDAQ=;
+	s=korg; t=1675087685;
+	bh=RiMduKbuLamA74C98UqKheL4ulsBqT74/8dKmISunWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aGdPXSektR4tXmdAv0e3R/nUCLTTd4Nd82MHG/DxgCfbvL31Kv9chQ6OEAF8cPmKF
-	 EEHKNlCko876OM9rUteBL6fG7yZgNGtr8Vi6BHkFK1UZx2plX0QsNevZ1t4D/vVZOQ
-	 81JVnvik8XO++ZMl/a/vpjymLSCYqLGmhmje2i0U=
+	b=Y1dU3YaPIWjKNAgJfhqTufUQco1kfVBeKXP0fga1iPxZWkLKETGNO63eDYZ3pjJAC
+	 xyLb2PBCJTaWSmJ2bLdsGyEffLlrmPaZldl7Lk4ipnh1wPlJR5tKg6iDWUArOvcUCj
+	 HLO39cs/EBlf9nmb/jYPdLuAN3Kn/mvId37Mn064=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jeremy Kerr <jk@codeconstruct.com.au>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 289/313] net: mctp: add an explicit reference from a mctp_sk_key to sock
-Date: Mon, 30 Jan 2023 14:52:04 +0100
-Message-Id: <20230130134350.193311790@linuxfoundation.org>
+Subject: [PATCH 6.1 290/313] net: mctp: move expiry timer delete to unhash
+Date: Mon, 30 Jan 2023 14:52:05 +0100
+Message-Id: <20230130134350.243104077@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -37,66 +37,50 @@ Content-Transfer-Encoding: 8bit
 
 From: Jeremy Kerr <jk@codeconstruct.com.au>
 
-[ Upstream commit de8a6b15d9654c3e4f672d76da9d9df8ee06331d ]
+[ Upstream commit 5f41ae6fca9d40ab3cb9b0507931ef7a9b3ea50b ]
 
-Currently, we correlate the mctp_sk_key lifetime to the sock lifetime
-through the sock hash/unhash operations, but this is pretty tenuous, and
-there are cases where we may have a temporary reference to an unhashed
-sk.
+Currently, we delete the key expiry timer (in sk->close) before
+unhashing the sk. This means that another thread may find the sk through
+its presence on the key list, and re-queue the timer.
 
-This change makes the reference more explicit, by adding a hold on the
-sock when it's associated with a mctp_sk_key, released on final key
-unref.
+This change moves the timer deletion to the unhash, after we have made
+the key no longer observable, so the timer cannot be re-queued.
 
-Fixes: 73c618456dc5 ("mctp: locking, lifetime and validity changes for sk_keys")
+Fixes: 7b14e15ae6f4 ("mctp: Implement a timeout for tags")
 Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/route.c | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
+ net/mctp/af_mctp.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/net/mctp/route.c b/net/mctp/route.c
-index f9a80b82dc51..ce10ba7ae839 100644
---- a/net/mctp/route.c
-+++ b/net/mctp/route.c
-@@ -147,6 +147,7 @@ static struct mctp_sk_key *mctp_key_alloc(struct mctp_sock *msk,
- 	key->valid = true;
- 	spin_lock_init(&key->lock);
- 	refcount_set(&key->refs, 1);
-+	sock_hold(key->sk);
+diff --git a/net/mctp/af_mctp.c b/net/mctp/af_mctp.c
+index fc9e728b6333..fb6ae3110528 100644
+--- a/net/mctp/af_mctp.c
++++ b/net/mctp/af_mctp.c
+@@ -544,9 +544,6 @@ static int mctp_sk_init(struct sock *sk)
  
- 	return key;
- }
-@@ -165,6 +166,7 @@ void mctp_key_unref(struct mctp_sk_key *key)
- 	mctp_dev_release_key(key->dev, key);
- 	spin_unlock_irqrestore(&key->lock, flags);
- 
-+	sock_put(key->sk);
- 	kfree(key);
+ static void mctp_sk_close(struct sock *sk, long timeout)
+ {
+-	struct mctp_sock *msk = container_of(sk, struct mctp_sock, sk);
+-
+-	del_timer_sync(&msk->key_expiry);
+ 	sk_common_release(sk);
  }
  
-@@ -419,14 +421,14 @@ static int mctp_route_input(struct mctp_route *route, struct sk_buff *skb)
- 			 * this function.
- 			 */
- 			rc = mctp_key_add(key, msk);
--			if (rc) {
--				kfree(key);
--			} else {
-+			if (!rc)
- 				trace_mctp_key_acquire(key);
+@@ -581,6 +578,12 @@ static void mctp_sk_unhash(struct sock *sk)
+ 		__mctp_key_remove(key, net, fl2, MCTP_TRACE_KEY_CLOSED);
+ 	}
+ 	spin_unlock_irqrestore(&net->mctp.keys_lock, flags);
++
++	/* Since there are no more tag allocations (we have removed all of the
++	 * keys), stop any pending expiry events. the timer cannot be re-queued
++	 * as the sk is no longer observable
++	 */
++	del_timer_sync(&msk->key_expiry);
+ }
  
--				/* we don't need to release key->lock on exit */
--				mctp_key_unref(key);
--			}
-+			/* we don't need to release key->lock on exit, so
-+			 * clean up here and suppress the unlock via
-+			 * setting to NULL
-+			 */
-+			mctp_key_unref(key);
- 			key = NULL;
- 
- 		} else {
+ static struct proto mctp_proto = {
 -- 
 2.39.0
 
