@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D810C28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:06:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C1B6C433D2;
-	Mon, 30 Jan 2023 14:06:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C628E28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:07:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 39979C433D2;
+	Mon, 30 Jan 2023 14:07:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087619;
-	bh=/Q68WvVQEMJAHQFG4dJgYFDyWNUfbbkq37cIYVX3zzw=;
+	s=korg; t=1675087622;
+	bh=tPpC3oTeTUOvpksg8hiU7270p4ewTdGdTk6rEf+rkS4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LIp/uGZaeHz8U5B5y8iIZj5M5/oIU1i4enGMQSDs9unQnPvDiJHBpIoy0VbV2CJoO
-	 Y/DRF+iiNwbjhXZr8jX6yT7czQCN4a+Y+NDhOUVZdGgIIpyIG7a6nGV5QZCT4Sk4y5
-	 R3BLf3CWxFURG3fu3iVE1onCRICGZpkh52e2OKlo=
+	b=hEoaAS2IqHZNFZ8D73BkwGpyHA/+s6SLkmkJt1GN1npL0WhRVp0OI3HkY1dhZFfsE
+	 /YOJuIcXaOD80wY0Bxp6K4pghZa9X4sg+RXXyGvQOi72wtnaBwaG2HLWMUntmARTqI
+	 9hWDZLVQqmKitVmp7qvT5RBD2g5bJjF/hc741X0g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wayne Lin <Wayne.Lin@amd.com>,
-	Harry Wentland <harry.wentland@amd.com>,
-	Lyude Paul <lyude@redhat.com>,
-	Didier Raboud <odyx@debian.org>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 239/313] drm/amdgpu/display/mst: update mst_mgr relevant variable when long HPD
-Date: Mon, 30 Jan 2023 14:51:14 +0100
-Message-Id: <20230130134347.815444398@linuxfoundation.org>
+	Pavel Begunkov <asml.silence@gmail.com>,
+	Jens Axboe <axboe@kernel.dk>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 240/313] io_uring: inline io_req_task_work_add()
+Date: Mon, 30 Jan 2023 14:51:15 +0100
+Message-Id: <20230130134347.867056593@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -37,80 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wayne Lin <Wayne.Lin@amd.com>
+From: Pavel Begunkov <asml.silence@gmail.com>
 
-commit f85c5e25fd28fe0bf6d6d0563cf83758a4e05c8f upstream.
+[ Upstream commit e52d2e583e4ad1d5d0b804d79c2b8752eb0e5ceb ]
 
-[Why & How]
-Now the vc_start_slot is controlled at drm side. When we
-service a long HPD, we still need to run
-dm_helpers_dp_mst_write_payload_allocation_table() to update
-drm mst_mgr's relevant variable. Otherwise, on the next plug-in,
-payload will get assigned with a wrong start slot.
+__io_req_task_work_add() is huge but marked inline, that makes compilers
+to generate lots of garbage. Inline the wrapper caller
+io_req_task_work_add() instead.
 
-Bug: https://gitlab.freedesktop.org/drm/amd/-/issues/2171
-Signed-off-by: Wayne Lin <Wayne.Lin@amd.com>
-Signed-off-by: Harry Wentland <harry.wentland@amd.com>
-Fixes: 4d07b0bc4034 ("drm/display/dp_mst: Move all payload info into the atomic state")
-Cc: stable@vger.kernel.org # 6.1
-Acked-by: Harry Wentland <harry.wentland@amd.com>
-Reviewed-by: Lyude Paul <lyude@redhat.com>
-Tested-by: Didier Raboud <odyx@debian.org>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+before and after:
+   text    data     bss     dec     hex filename
+  47347   16248       8   63603    f873 io_uring/io_uring.o
+   text    data     bss     dec     hex filename
+  45303   16248       8   61559    f077 io_uring/io_uring.o
+
+Signed-off-by: Pavel Begunkov <asml.silence@gmail.com>
+Link: https://lore.kernel.org/r/26dc8c28ca0160e3269ef3e55c5a8b917c4d4450.1668162751.git.asml.silence@gmail.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Stable-dep-of: ef5c600adb1d ("io_uring: always prep_async for drain requests")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/core/dc_link.c | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+ io_uring/io_uring.c | 7 +------
+ io_uring/io_uring.h | 7 ++++++-
+ 2 files changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/core/dc_link.c b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
-index 342e906ae26e..c88f044666fe 100644
---- a/drivers/gpu/drm/amd/display/dc/core/dc_link.c
-+++ b/drivers/gpu/drm/amd/display/dc/core/dc_link.c
-@@ -3995,10 +3995,13 @@ static enum dc_status deallocate_mst_payload(struct pipe_ctx *pipe_ctx)
- 	struct fixed31_32 avg_time_slots_per_mtp = dc_fixpt_from_int(0);
- 	int i;
- 	bool mst_mode = (link->type == dc_connection_mst_branch);
-+	/* adjust for drm changes*/
-+	bool update_drm_mst_state = true;
- 	const struct link_hwss *link_hwss = get_link_hwss(link, &pipe_ctx->link_res);
- 	const struct dc_link_settings empty_link_settings = {0};
- 	DC_LOGGER_INIT(link->ctx->logger);
- 
-+
- 	/* deallocate_mst_payload is called before disable link. When mode or
- 	 * disable/enable monitor, new stream is created which is not in link
- 	 * stream[] yet. For this, payload is not allocated yet, so de-alloc
-@@ -4014,7 +4017,7 @@ static enum dc_status deallocate_mst_payload(struct pipe_ctx *pipe_ctx)
- 				&empty_link_settings,
- 				avg_time_slots_per_mtp);
- 
--	if (mst_mode) {
-+	if (mst_mode || update_drm_mst_state) {
- 		/* when link is in mst mode, reply on mst manager to remove
- 		 * payload
- 		 */
-@@ -4077,11 +4080,18 @@ static enum dc_status deallocate_mst_payload(struct pipe_ctx *pipe_ctx)
- 			stream->ctx,
- 			stream);
- 
-+		if (!update_drm_mst_state)
-+			dm_helpers_dp_mst_send_payload_allocation(
-+				stream->ctx,
-+				stream,
-+				false);
-+	}
-+
-+	if (update_drm_mst_state)
- 		dm_helpers_dp_mst_send_payload_allocation(
- 			stream->ctx,
- 			stream,
- 			false);
--	}
- 
- 	return DC_OK;
+diff --git a/io_uring/io_uring.c b/io_uring/io_uring.c
+index cea5de98c423..b4f9707730b8 100644
+--- a/io_uring/io_uring.c
++++ b/io_uring/io_uring.c
+@@ -1133,7 +1133,7 @@ static void io_req_local_work_add(struct io_kiocb *req)
+ 	percpu_ref_put(&ctx->refs);
  }
+ 
+-static inline void __io_req_task_work_add(struct io_kiocb *req, bool allow_local)
++void __io_req_task_work_add(struct io_kiocb *req, bool allow_local)
+ {
+ 	struct io_uring_task *tctx = req->task->io_uring;
+ 	struct io_ring_ctx *ctx = req->ctx;
+@@ -1165,11 +1165,6 @@ static inline void __io_req_task_work_add(struct io_kiocb *req, bool allow_local
+ 	}
+ }
+ 
+-void io_req_task_work_add(struct io_kiocb *req)
+-{
+-	__io_req_task_work_add(req, true);
+-}
+-
+ static void __cold io_move_task_work_from_local(struct io_ring_ctx *ctx)
+ {
+ 	struct llist_node *node;
+diff --git a/io_uring/io_uring.h b/io_uring/io_uring.h
+index 4334cd30c423..56ecc1550476 100644
+--- a/io_uring/io_uring.h
++++ b/io_uring/io_uring.h
+@@ -51,9 +51,9 @@ static inline bool io_req_ffs_set(struct io_kiocb *req)
+ 	return req->flags & REQ_F_FIXED_FILE;
+ }
+ 
++void __io_req_task_work_add(struct io_kiocb *req, bool allow_local);
+ bool io_is_uring_fops(struct file *file);
+ bool io_alloc_async_data(struct io_kiocb *req);
+-void io_req_task_work_add(struct io_kiocb *req);
+ void io_req_tw_post_queue(struct io_kiocb *req, s32 res, u32 cflags);
+ void io_req_task_queue(struct io_kiocb *req);
+ void io_queue_iowq(struct io_kiocb *req, bool *dont_use);
+@@ -83,6 +83,11 @@ bool __io_alloc_req_refill(struct io_ring_ctx *ctx);
+ bool io_match_task_safe(struct io_kiocb *head, struct task_struct *task,
+ 			bool cancel_all);
+ 
++static inline void io_req_task_work_add(struct io_kiocb *req)
++{
++	__io_req_task_work_add(req, true);
++}
++
+ #define io_for_each_link(pos, head) \
+ 	for (pos = (head); pos; pos = pos->link)
+ 
 -- 
-2.39.1
+2.39.0
 
 
 
