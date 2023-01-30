@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 32B8128EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:05:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C138C433D2;
-	Mon, 30 Jan 2023 14:05:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 286F828EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:05:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C51FC4339B;
+	Mon, 30 Jan 2023 14:05:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087503;
-	bh=82415CGKbUzBEhlc6s+RlHMcIvWU9cmk9RWWoIynJA0=;
+	s=korg; t=1675087506;
+	bh=o8Gh7NTXKb+nGnOzWOA0gXN2mSnZqAXiIsHFkMSsGY8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sRPYaxHWyjf0sXaiiUaqc0U4zw8dDfjCSEUVSAEUtU4wvXuOnHDgeqtL/ybQmowcl
-	 EmCX1CZ9umKkzx4i8iblP3w/gi1vpAq89VC/mpjjVdDrhaeOINYQ6tXT5Svg6y7WUx
-	 wKWoxFglOq/52vIqIoixl+10FfY1oUFH91Xp78YM=
+	b=sLqSmOzP2NvTGnLyiQfLRSxcsxu+z5KNvoQImbQexchQWEYllHiAZ/Q3zUD5FPFxp
+	 jAJf7DHyTBMdRhOP/7w0SR+Xkav7ttQGOV8tagzNFzqSIP5SfXq8I9pS/y1FZLy+y9
+	 CfWcNSqjRlsSRPViDN09f/0yxE4ApZoWWb6Ma7BE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gergely Risko <gergely.risko@gmail.com>,
-	David Ahern <dsahern@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 229/313] ipv6: fix reachability confirmation with proxy_ndp
-Date: Mon, 30 Jan 2023 14:51:04 +0100
-Message-Id: <20230130134347.384768791@linuxfoundation.org>
+	kernel test robot <oliver.sang@intel.com>,
+	Alexander Wetzel <alexander@wetzel-home.de>,
+	Johannes Berg <johannes.berg@intel.com>
+Subject: [PATCH 6.1 203/313] wifi: mac80211: Fix iTXQ AMPDU fragmentation handling
+Date: Mon, 30 Jan 2023 14:50:38 +0100
+Message-Id: <20230130134346.160692158@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -35,58 +35,132 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Gergely Risko <gergely.risko@gmail.com>
+From: Alexander Wetzel <alexander@wetzel-home.de>
 
-commit 9f535c870e493841ac7be390610ff2edec755762 upstream.
+commit 592234e941f1addaa598601c9227e3b72d608625 upstream.
 
-When proxying IPv6 NDP requests, the adverts to the initial multicast
-solicits are correct and working.  On the other hand, when later a
-reachability confirmation is requested (on unicast), no reply is sent.
+mac80211 must not enable aggregation wile transmitting a fragmented
+MPDU. Enforce that for mac80211 internal TX queues (iTXQs).
 
-This causes the neighbor entry expiring on the sending node, which is
-mostly a non-issue, as a new multicast request is sent.  There are
-routers, where the multicast requests are intentionally delayed, and in
-these environments the current implementation causes periodic packet
-loss for the proxied endpoints.
-
-The root cause is the erroneous decrease of the hop limit, as this
-is checked in ndisc.c and no answer is generated when it's 254 instead
-of the correct 255.
-
+Reported-by: kernel test robot <oliver.sang@intel.com>
+Link: https://lore.kernel.org/oe-lkp/202301021738.7cd3e6ae-oliver.sang@intel.com
+Signed-off-by: Alexander Wetzel <alexander@wetzel-home.de>
+Link: https://lore.kernel.org/r/20230106223141.98696-1-alexander@wetzel-home.de
 Cc: stable@vger.kernel.org
-Fixes: 46c7655f0b56 ("ipv6: decrease hop limit counter in ip6_forward()")
-Signed-off-by: Gergely Risko <gergely.risko@gmail.com>
-Tested-by: Gergely Risko <gergely.risko@gmail.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Johannes Berg <johannes.berg@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/ip6_output.c |   15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
+ net/mac80211/agg-tx.c |    2 --
+ net/mac80211/ht.c     |   37 +++++++++++++++++++++++++++++++++++++
+ net/mac80211/tx.c     |   13 +++++++------
+ 3 files changed, 44 insertions(+), 8 deletions(-)
 
---- a/net/ipv6/ip6_output.c
-+++ b/net/ipv6/ip6_output.c
-@@ -547,7 +547,20 @@ int ip6_forward(struct sk_buff *skb)
- 	    pneigh_lookup(&nd_tbl, net, &hdr->daddr, skb->dev, 0)) {
- 		int proxied = ip6_forward_proxy_check(skb);
- 		if (proxied > 0) {
--			hdr->hop_limit--;
-+			/* It's tempting to decrease the hop limit
-+			 * here by 1, as we do at the end of the
-+			 * function too.
-+			 *
-+			 * But that would be incorrect, as proxying is
-+			 * not forwarding.  The ip6_input function
-+			 * will handle this packet locally, and it
-+			 * depends on the hop limit being unchanged.
-+			 *
-+			 * One example is the NDP hop limit, that
-+			 * always has to stay 255, but other would be
-+			 * similar checks around RA packets, where the
-+			 * user can even change the desired limit.
-+			 */
- 			return ip6_input(skb);
- 		} else if (proxied < 0) {
- 			__IP6_INC_STATS(net, idev, IPSTATS_MIB_INDISCARDS);
+--- a/net/mac80211/agg-tx.c
++++ b/net/mac80211/agg-tx.c
+@@ -511,8 +511,6 @@ void ieee80211_tx_ba_session_handle_star
+ 	 */
+ 	clear_bit(HT_AGG_STATE_WANT_START, &tid_tx->state);
+ 
+-	ieee80211_agg_stop_txq(sta, tid);
+-
+ 	/*
+ 	 * Make sure no packets are being processed. This ensures that
+ 	 * we have a valid starting sequence number and that in-flight
+--- a/net/mac80211/ht.c
++++ b/net/mac80211/ht.c
+@@ -391,6 +391,43 @@ void ieee80211_ba_session_work(struct wo
+ 
+ 		tid_tx = sta->ampdu_mlme.tid_start_tx[tid];
+ 		if (!blocked && tid_tx) {
++			struct ieee80211_sub_if_data *sdata = sta->sdata;
++			struct ieee80211_local *local = sdata->local;
++
++			if (local->ops->wake_tx_queue) {
++				struct txq_info *txqi =
++					to_txq_info(sta->sta.txq[tid]);
++				struct fq *fq = &local->fq;
++
++				spin_lock_bh(&fq->lock);
++
++				/* Allow only frags to be dequeued */
++				set_bit(IEEE80211_TXQ_STOP, &txqi->flags);
++
++				if (!skb_queue_empty(&txqi->frags)) {
++					/* Fragmented Tx is ongoing, wait for it
++					 * to finish. Reschedule worker to retry
++					 * later.
++					 */
++
++					spin_unlock_bh(&fq->lock);
++					spin_unlock_bh(&sta->lock);
++
++					/* Give the task working on the txq a
++					 * chance to send out the queued frags
++					 */
++					synchronize_net();
++
++					mutex_unlock(&sta->ampdu_mlme.mtx);
++
++					ieee80211_queue_work(&sdata->local->hw,
++							     work);
++					return;
++				}
++
++				spin_unlock_bh(&fq->lock);
++			}
++
+ 			/*
+ 			 * Assign it over to the normal tid_tx array
+ 			 * where it "goes live".
+--- a/net/mac80211/tx.c
++++ b/net/mac80211/tx.c
+@@ -1295,7 +1295,8 @@ ieee80211_tx_prepare(struct ieee80211_su
+ 	if (!(info->flags & IEEE80211_TX_CTL_DONTFRAG)) {
+ 		if (!(tx->flags & IEEE80211_TX_UNICAST) ||
+ 		    skb->len + FCS_LEN <= local->hw.wiphy->frag_threshold ||
+-		    info->flags & IEEE80211_TX_CTL_AMPDU)
++		    (info->flags & IEEE80211_TX_CTL_AMPDU &&
++		     !local->ops->wake_tx_queue))
+ 			info->flags |= IEEE80211_TX_CTL_DONTFRAG;
+ 	}
+ 
+@@ -3725,7 +3726,6 @@ struct sk_buff *ieee80211_tx_dequeue(str
+ 		return NULL;
+ 
+ begin:
+-	skb = NULL;
+ 	spin_lock(&local->queue_stop_reason_lock);
+ 	q_stopped = local->queue_stop_reasons[q];
+ 	spin_unlock(&local->queue_stop_reason_lock);
+@@ -3738,9 +3738,6 @@ begin:
+ 
+ 	spin_lock_bh(&fq->lock);
+ 
+-	if (unlikely(test_bit(IEEE80211_TXQ_STOP, &txqi->flags)))
+-		goto out;
+-
+ 	/* Make sure fragments stay together. */
+ 	skb = __skb_dequeue(&txqi->frags);
+ 	if (unlikely(skb)) {
+@@ -3750,6 +3747,9 @@ begin:
+ 		IEEE80211_SKB_CB(skb)->control.flags &=
+ 			~IEEE80211_TX_INTCFL_NEED_TXPROCESSING;
+ 	} else {
++		if (unlikely(test_bit(IEEE80211_TXQ_STOP, &txqi->flags)))
++			goto out;
++
+ 		skb = fq_tin_dequeue(fq, tin, fq_tin_dequeue_func);
+ 	}
+ 
+@@ -3800,7 +3800,8 @@ begin:
+ 	}
+ 
+ 	if (test_bit(IEEE80211_TXQ_AMPDU, &txqi->flags))
+-		info->flags |= IEEE80211_TX_CTL_AMPDU;
++		info->flags |= (IEEE80211_TX_CTL_AMPDU |
++				IEEE80211_TX_CTL_DONTFRAG);
+ 	else
+ 		info->flags &= ~IEEE80211_TX_CTL_AMPDU;
+ 
 
 
