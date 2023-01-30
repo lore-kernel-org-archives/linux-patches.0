@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB66C28EB
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:07:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38A0EC433EF;
-	Mon, 30 Jan 2023 14:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D71D28EB
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:07:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1029DC433EF;
+	Mon, 30 Jan 2023 14:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675087637;
-	bh=b1grx+0ni3uWa3ow56kR1h6FHvRUggVisBq7oraVU1s=;
+	s=korg; t=1675087640;
+	bh=NEcAUwmfP1Pl4DqjkoblaE/AK37RaHOFEb56yhnWZh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zNT8g59TtgLt9mCujlrWh+aDEgdJG29BZAn9QiD9NJyK5a4LzWD/4N0l+kcdzXuhk
-	 iezx3dKn8lShkXsbrDGmswkLdCeX3guy1Ga4hSY1DluBfyqp4PyXfx35f2wbzVAcu5
-	 V9/R379Q4pUUkrffYmPs4rurDwLdjYzIgUy7Q7Dw=
+	b=sh6qKCO7h4Ok7ji6/PkxazxwIq4hqfsXBFqTAmVxLGMItZZw9so82PuDYkvNB4+X2
+	 nJNt3RWz98k0OA56+PWzUNCYAEG6k2pq96fu+fWfxGHWWbc9SPL7WcpzYc9UakQiqF
+	 HXjcKGc5gu5P0lbcW2dlqRI1zjNM6wDvFbvTopMg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5fafd5cfe1fc91f6b352@syzkaller.appspotmail.com,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 275/313] netrom: Fix use-after-free of a listening socket.
-Date: Mon, 30 Jan 2023 14:51:50 +0100
-Message-Id: <20230130134349.547641568@linuxfoundation.org>
+Subject: [PATCH 6.1 276/313] platform/x86: asus-wmi: Fix kbd_dock_devid tablet-switch reporting
+Date: Mon, 30 Jan 2023 14:51:51 +0100
+Message-Id: <20230130134349.586677161@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134336.532886729@linuxfoundation.org>
 References: <20230130134336.532886729@linuxfoundation.org>
@@ -36,159 +34,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 409db27e3a2eb5e8ef7226ca33be33361b3ed1c9 ]
+[ Upstream commit fdcc0602d64f22185f61c70747214b630049cc33 ]
 
-syzbot reported a use-after-free in do_accept(), precisely nr_accept()
-as sk_prot_alloc() allocated the memory and sock_put() frees it. [0]
+Commit 1ea0d3b46798 ("platform/x86: asus-wmi: Simplify tablet-mode-switch
+handling") unified the asus-wmi tablet-switch handling, but it did not take
+into account that the value returned for the kbd_dock_devid WMI method is
+inverted where as the other ones are not inverted.
 
-The issue could happen if the heartbeat timer is fired and
-nr_heartbeat_expiry() calls nr_destroy_socket(), where a socket
-has SOCK_DESTROY or a listening socket has SOCK_DEAD.
+This causes asus-wmi to report an inverted tablet-switch state for devices
+which use the kbd_dock_devid, which causes libinput to ignore touchpad
+events while the affected T10x model 2-in-1s are docked.
 
-In this case, the first condition cannot be true.  SOCK_DESTROY is
-flagged in nr_release() only when the file descriptor is close()d,
-but accept() is being called for the listening socket, so the second
-condition must be true.
+Add inverting of the return value in the kbd_dock_devid case to fix this.
 
-Usually, the AF_NETROM listener neither starts timers nor sets
-SOCK_DEAD.  However, the condition is met if connect() fails before
-listen().  connect() starts the t1 timer and heartbeat timer, and
-t1timer calls nr_disconnect() when timeout happens.  Then, SOCK_DEAD
-is set, and if we call listen(), the heartbeat timer calls
-nr_destroy_socket().
-
-  nr_connect
-    nr_establish_data_link(sk)
-      nr_start_t1timer(sk)
-    nr_start_heartbeat(sk)
-                                    nr_t1timer_expiry
-                                      nr_disconnect(sk, ETIMEDOUT)
-                                        nr_sk(sk)->state = NR_STATE_0
-                                        sk->sk_state = TCP_CLOSE
-                                        sock_set_flag(sk, SOCK_DEAD)
-nr_listen
-  if (sk->sk_state != TCP_LISTEN)
-    sk->sk_state = TCP_LISTEN
-                                    nr_heartbeat_expiry
-                                      switch (nr->state)
-                                      case NR_STATE_0
-                                        if (sk->sk_state == TCP_LISTEN &&
-                                            sock_flag(sk, SOCK_DEAD))
-                                          nr_destroy_socket(sk)
-
-This path seems expected, and nr_destroy_socket() is called to clean
-up resources.  Initially, there was sock_hold() before nr_destroy_socket()
-so that the socket would not be freed, but the commit 517a16b1a88b
-("netrom: Decrease sock refcount when sock timers expire") accidentally
-removed it.
-
-To fix use-after-free, let's add sock_hold().
-
-[0]:
-BUG: KASAN: use-after-free in do_accept+0x483/0x510 net/socket.c:1848
-Read of size 8 at addr ffff88807978d398 by task syz-executor.3/5315
-
-CPU: 0 PID: 5315 Comm: syz-executor.3 Not tainted 6.2.0-rc3-syzkaller-00165-gd9fc1511728c #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-Call Trace:
- <TASK>
- __dump_stack lib/dump_stack.c:88 [inline]
- dump_stack_lvl+0xd1/0x138 lib/dump_stack.c:106
- print_address_description mm/kasan/report.c:306 [inline]
- print_report+0x15e/0x461 mm/kasan/report.c:417
- kasan_report+0xbf/0x1f0 mm/kasan/report.c:517
- do_accept+0x483/0x510 net/socket.c:1848
- __sys_accept4_file net/socket.c:1897 [inline]
- __sys_accept4+0x9a/0x120 net/socket.c:1927
- __do_sys_accept net/socket.c:1944 [inline]
- __se_sys_accept net/socket.c:1941 [inline]
- __x64_sys_accept+0x75/0xb0 net/socket.c:1941
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-RIP: 0033:0x7fa436a8c0c9
-Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 f1 19 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
-RSP: 002b:00007fa437784168 EFLAGS: 00000246 ORIG_RAX: 000000000000002b
-RAX: ffffffffffffffda RBX: 00007fa436bac050 RCX: 00007fa436a8c0c9
-RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000005
-RBP: 00007fa436ae7ae9 R08: 0000000000000000 R09: 0000000000000000
-R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
-R13: 00007ffebc6700df R14: 00007fa437784300 R15: 0000000000022000
- </TASK>
-
-Allocated by task 5294:
- kasan_save_stack+0x22/0x40 mm/kasan/common.c:45
- kasan_set_track+0x25/0x30 mm/kasan/common.c:52
- ____kasan_kmalloc mm/kasan/common.c:371 [inline]
- ____kasan_kmalloc mm/kasan/common.c:330 [inline]
- __kasan_kmalloc+0xa3/0xb0 mm/kasan/common.c:380
- kasan_kmalloc include/linux/kasan.h:211 [inline]
- __do_kmalloc_node mm/slab_common.c:968 [inline]
- __kmalloc+0x5a/0xd0 mm/slab_common.c:981
- kmalloc include/linux/slab.h:584 [inline]
- sk_prot_alloc+0x140/0x290 net/core/sock.c:2038
- sk_alloc+0x3a/0x7a0 net/core/sock.c:2091
- nr_create+0xb6/0x5f0 net/netrom/af_netrom.c:433
- __sock_create+0x359/0x790 net/socket.c:1515
- sock_create net/socket.c:1566 [inline]
- __sys_socket_create net/socket.c:1603 [inline]
- __sys_socket_create net/socket.c:1588 [inline]
- __sys_socket+0x133/0x250 net/socket.c:1636
- __do_sys_socket net/socket.c:1649 [inline]
- __se_sys_socket net/socket.c:1647 [inline]
- __x64_sys_socket+0x73/0xb0 net/socket.c:1647
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-Freed by task 14:
- kasan_save_stack+0x22/0x40 mm/kasan/common.c:45
- kasan_set_track+0x25/0x30 mm/kasan/common.c:52
- kasan_save_free_info+0x2b/0x40 mm/kasan/generic.c:518
- ____kasan_slab_free mm/kasan/common.c:236 [inline]
- ____kasan_slab_free+0x13b/0x1a0 mm/kasan/common.c:200
- kasan_slab_free include/linux/kasan.h:177 [inline]
- __cache_free mm/slab.c:3394 [inline]
- __do_kmem_cache_free mm/slab.c:3580 [inline]
- __kmem_cache_free+0xcd/0x3b0 mm/slab.c:3587
- sk_prot_free net/core/sock.c:2074 [inline]
- __sk_destruct+0x5df/0x750 net/core/sock.c:2166
- sk_destruct net/core/sock.c:2181 [inline]
- __sk_free+0x175/0x460 net/core/sock.c:2192
- sk_free+0x7c/0xa0 net/core/sock.c:2203
- sock_put include/net/sock.h:1991 [inline]
- nr_heartbeat_expiry+0x1d7/0x460 net/netrom/nr_timer.c:148
- call_timer_fn+0x1da/0x7c0 kernel/time/timer.c:1700
- expire_timers+0x2c6/0x5c0 kernel/time/timer.c:1751
- __run_timers kernel/time/timer.c:2022 [inline]
- __run_timers kernel/time/timer.c:1995 [inline]
- run_timer_softirq+0x326/0x910 kernel/time/timer.c:2035
- __do_softirq+0x1fb/0xadc kernel/softirq.c:571
-
-Fixes: 517a16b1a88b ("netrom: Decrease sock refcount when sock timers expire")
-Reported-by: syzbot+5fafd5cfe1fc91f6b352@syzkaller.appspotmail.com
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230120231927.51711-1-kuniyu@amazon.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: 1ea0d3b46798 ("platform/x86: asus-wmi: Simplify tablet-mode-switch handling")
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230120143441.527334-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netrom/nr_timer.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/asus-wmi.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
-diff --git a/net/netrom/nr_timer.c b/net/netrom/nr_timer.c
-index a8da88db7893..4e7c968cde2d 100644
---- a/net/netrom/nr_timer.c
-+++ b/net/netrom/nr_timer.c
-@@ -121,6 +121,7 @@ static void nr_heartbeat_expiry(struct timer_list *t)
- 		   is accepted() it isn't 'dead' so doesn't get removed. */
- 		if (sock_flag(sk, SOCK_DESTROY) ||
- 		    (sk->sk_state == TCP_LISTEN && sock_flag(sk, SOCK_DEAD))) {
-+			sock_hold(sk);
- 			bh_unlock_sock(sk);
- 			nr_destroy_socket(sk);
- 			goto out;
+diff --git a/drivers/platform/x86/asus-wmi.c b/drivers/platform/x86/asus-wmi.c
+index 8e317d57ecc3..02bf28692418 100644
+--- a/drivers/platform/x86/asus-wmi.c
++++ b/drivers/platform/x86/asus-wmi.c
+@@ -225,6 +225,7 @@ struct asus_wmi {
+ 
+ 	int tablet_switch_event_code;
+ 	u32 tablet_switch_dev_id;
++	bool tablet_switch_inverted;
+ 
+ 	enum fan_type fan_type;
+ 	enum fan_type gpu_fan_type;
+@@ -493,6 +494,13 @@ static bool asus_wmi_dev_is_present(struct asus_wmi *asus, u32 dev_id)
+ }
+ 
+ /* Input **********************************************************************/
++static void asus_wmi_tablet_sw_report(struct asus_wmi *asus, bool value)
++{
++	input_report_switch(asus->inputdev, SW_TABLET_MODE,
++			    asus->tablet_switch_inverted ? !value : value);
++	input_sync(asus->inputdev);
++}
++
+ static void asus_wmi_tablet_sw_init(struct asus_wmi *asus, u32 dev_id, int event_code)
+ {
+ 	struct device *dev = &asus->platform_device->dev;
+@@ -501,7 +509,7 @@ static void asus_wmi_tablet_sw_init(struct asus_wmi *asus, u32 dev_id, int event
+ 	result = asus_wmi_get_devstate_simple(asus, dev_id);
+ 	if (result >= 0) {
+ 		input_set_capability(asus->inputdev, EV_SW, SW_TABLET_MODE);
+-		input_report_switch(asus->inputdev, SW_TABLET_MODE, result);
++		asus_wmi_tablet_sw_report(asus, result);
+ 		asus->tablet_switch_dev_id = dev_id;
+ 		asus->tablet_switch_event_code = event_code;
+ 	} else if (result == -ENODEV) {
+@@ -534,6 +542,7 @@ static int asus_wmi_input_init(struct asus_wmi *asus)
+ 	case asus_wmi_no_tablet_switch:
+ 		break;
+ 	case asus_wmi_kbd_dock_devid:
++		asus->tablet_switch_inverted = true;
+ 		asus_wmi_tablet_sw_init(asus, ASUS_WMI_DEVID_KBD_DOCK, NOTIFY_KBD_DOCK_CHANGE);
+ 		break;
+ 	case asus_wmi_lid_flip_devid:
+@@ -573,10 +582,8 @@ static void asus_wmi_tablet_mode_get_state(struct asus_wmi *asus)
+ 		return;
+ 
+ 	result = asus_wmi_get_devstate_simple(asus, asus->tablet_switch_dev_id);
+-	if (result >= 0) {
+-		input_report_switch(asus->inputdev, SW_TABLET_MODE, result);
+-		input_sync(asus->inputdev);
+-	}
++	if (result >= 0)
++		asus_wmi_tablet_sw_report(asus, result);
+ }
+ 
+ /* dGPU ********************************************************************/
 -- 
 2.39.0
 
