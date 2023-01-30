@@ -1,28 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2CBA3229
-	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:23:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58FFFC433D2;
-	Mon, 30 Jan 2023 14:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A83193229
+	for <patches@lists.linux.dev>; Mon, 30 Jan 2023 14:23:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8CE1C433D2;
+	Mon, 30 Jan 2023 14:23:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675088625;
-	bh=K94B71Svv5sBTPFrKRvGxqxJtGTeoaTvOZD6XNna7fI=;
+	s=korg; t=1675088628;
+	bh=Ti0svx79X+fRJvH3mDjnQrKehohEvLPWJWqJATTDRu0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mLLGQ+qoDAQ4PK4RFaaik6c63cIsCmPT9E6SyN5nX8751ni+IdXRtD76ZDQ4On7So
-	 DQxgoCfSkQPja75YX6ci2vjWOwjwHJuIuPcIbdaf8ZUHQpHb108Dn+TfUwjrPXCnPl
-	 mIzf31e3HZ9YMXV4unbGrvY7RWg18V/ubDrW2uB0=
+	b=IUm6GEKi/40HRNUzPIdRHoHphb1C9Z8jcoK1uIrehV0S1VkrxYlesPkt3hFyQqQ/Y
+	 PfpmYJ/DR9Yg0P/AVeOpeUeMkCz+vy0QexO54Yy4vGFYLxyRI7VWrF6QXWqisnfdRT
+	 pJKQFtx3aH01zcNWirIuVIo9lV4jiSft0pvHXMeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	tangmeng <tangmeng@uniontech.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Marco Elver <elver@google.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Baoquan He <bhe@redhat.com>,
+	Jonathan Corbet <corbet@lwn.net>,
+	Xuefeng Li <lixuefeng@loongson.cn>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
 	Eric Biggers <ebiggers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 080/143] kernel/panic: move panic sysctls to its own file
-Date: Mon, 30 Jan 2023 14:52:17 +0100
-Message-Id: <20230130134310.195303063@linuxfoundation.org>
+Subject: [PATCH 5.10 081/143] panic: unset panic_on_warn inside panic()
+Date: Mon, 30 Jan 2023 14:52:18 +0100
+Message-Id: <20230130134310.234331447@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230130134306.862721518@linuxfoundation.org>
 References: <20230130134306.862721518@linuxfoundation.org>
@@ -36,115 +42,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: tangmeng <tangmeng@uniontech.com>
+From: Tiezhu Yang <yangtiezhu@loongson.cn>
 
-commit 9df918698408fd914493aba0b7858fef50eba63a upstream.
+commit 1a2383e8b84c0451fd9b1eec3b9aab16f30b597c upstream.
 
-kernel/sysctl.c is a kitchen sink where everyone leaves their dirty
-dishes, this makes it very difficult to maintain.
+In the current code, the following three places need to unset
+panic_on_warn before calling panic() to avoid recursive panics:
 
-To help with this maintenance let's start by moving sysctls to places
-where they actually belong.  The proc sysctl maintainers do not want to
-know what sysctl knobs you wish to add for your own piece of code, we
-just care about the core logic.
+kernel/kcsan/report.c: print_report()
+kernel/sched/core.c: __schedule_bug()
+mm/kfence/report.c: kfence_report_error()
 
-All filesystem syctls now get reviewed by fs folks. This commit
-follows the commit of fs, move the oops_all_cpu_backtrace sysctl to
-its own file, kernel/panic.c.
+In order to avoid copy-pasting "panic_on_warn = 0" all over the places,
+it is better to move it inside panic() and then remove it from the other
+places.
 
-Signed-off-by: tangmeng <tangmeng@uniontech.com>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Link: https://lkml.kernel.org/r/1644324666-15947-4-git-send-email-yangtiezhu@loongson.cn
+Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
+Reviewed-by: Marco Elver <elver@google.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Baoquan He <bhe@redhat.com>
+Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Xuefeng Li <lixuefeng@loongson.cn>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/kernel.h |  6 ------
- kernel/panic.c         | 26 +++++++++++++++++++++++++-
- kernel/sysctl.c        | 11 -----------
- 3 files changed, 25 insertions(+), 18 deletions(-)
+ kernel/panic.c | 20 +++++++++++---------
+ 1 file changed, 11 insertions(+), 9 deletions(-)
 
-diff --git a/include/linux/kernel.h b/include/linux/kernel.h
-index f5392d96d688..084d97070ed9 100644
---- a/include/linux/kernel.h
-+++ b/include/linux/kernel.h
-@@ -520,12 +520,6 @@ static inline u32 int_sqrt64(u64 x)
- }
- #endif
- 
--#ifdef CONFIG_SMP
--extern unsigned int sysctl_oops_all_cpu_backtrace;
--#else
--#define sysctl_oops_all_cpu_backtrace 0
--#endif /* CONFIG_SMP */
--
- extern void bust_spinlocks(int yes);
- extern int panic_timeout;
- extern unsigned long panic_print;
 diff --git a/kernel/panic.c b/kernel/panic.c
-index 332736a72a58..f567195d45d9 100644
+index f567195d45d9..960c2be2759c 100644
 --- a/kernel/panic.c
 +++ b/kernel/panic.c
-@@ -41,7 +41,9 @@
-  * Should we dump all CPUs backtraces in an oops event?
-  * Defaults to 0, can be changed via sysctl.
-  */
--unsigned int __read_mostly sysctl_oops_all_cpu_backtrace;
-+static unsigned int __read_mostly sysctl_oops_all_cpu_backtrace;
-+#else
-+#define sysctl_oops_all_cpu_backtrace 0
- #endif /* CONFIG_SMP */
+@@ -207,6 +207,16 @@ void panic(const char *fmt, ...)
+ 	int old_cpu, this_cpu;
+ 	bool _crash_kexec_post_notifiers = crash_kexec_post_notifiers;
  
- int panic_on_oops = CONFIG_PANIC_ON_OOPS_VALUE;
-@@ -70,6 +72,28 @@ ATOMIC_NOTIFIER_HEAD(panic_notifier_list);
- 
- EXPORT_SYMBOL(panic_notifier_list);
- 
-+#if defined(CONFIG_SMP) && defined(CONFIG_SYSCTL)
-+static struct ctl_table kern_panic_table[] = {
-+	{
-+		.procname       = "oops_all_cpu_backtrace",
-+		.data           = &sysctl_oops_all_cpu_backtrace,
-+		.maxlen         = sizeof(int),
-+		.mode           = 0644,
-+		.proc_handler   = proc_dointvec_minmax,
-+		.extra1         = SYSCTL_ZERO,
-+		.extra2         = SYSCTL_ONE,
-+	},
-+	{ }
-+};
++	if (panic_on_warn) {
++		/*
++		 * This thread may hit another WARN() in the panic path.
++		 * Resetting this prevents additional WARN() from panicking the
++		 * system on this thread.  Other threads are blocked by the
++		 * panic_mutex in panic().
++		 */
++		panic_on_warn = 0;
++	}
 +
-+static __init int kernel_panic_sysctls_init(void)
-+{
-+	register_sysctl_init("kernel", kern_panic_table);
-+	return 0;
-+}
-+late_initcall(kernel_panic_sysctls_init);
-+#endif
-+
- static long no_blink(int state)
- {
- 	return 0;
-diff --git a/kernel/sysctl.c b/kernel/sysctl.c
-index 3eb527f8a269..d8b7b2846313 100644
---- a/kernel/sysctl.c
-+++ b/kernel/sysctl.c
-@@ -2199,17 +2199,6 @@ static struct ctl_table kern_table[] = {
- 		.proc_handler	= proc_dointvec,
- 	},
- #endif
--#ifdef CONFIG_SMP
--	{
--		.procname	= "oops_all_cpu_backtrace",
--		.data		= &sysctl_oops_all_cpu_backtrace,
--		.maxlen		= sizeof(int),
--		.mode		= 0644,
--		.proc_handler	= proc_dointvec_minmax,
--		.extra1		= SYSCTL_ZERO,
--		.extra2		= SYSCTL_ONE,
--	},
--#endif /* CONFIG_SMP */
- 	{
- 		.procname	= "pid_max",
- 		.data		= &pid_max,
+ 	/*
+ 	 * Disable local interrupts. This will prevent panic_smp_self_stop
+ 	 * from deadlocking the first cpu that invokes the panic, since
+@@ -618,16 +628,8 @@ void __warn(const char *file, int line, void *caller, unsigned taint,
+ 	if (regs)
+ 		show_regs(regs);
+ 
+-	if (panic_on_warn) {
+-		/*
+-		 * This thread may hit another WARN() in the panic path.
+-		 * Resetting this prevents additional WARN() from panicking the
+-		 * system on this thread.  Other threads are blocked by the
+-		 * panic_mutex in panic().
+-		 */
+-		panic_on_warn = 0;
++	if (panic_on_warn)
+ 		panic("panic_on_warn set ...\n");
+-	}
+ 
+ 	if (!regs)
+ 		dump_stack();
 -- 
 2.39.0
 
