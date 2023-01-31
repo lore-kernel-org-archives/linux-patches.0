@@ -1,105 +1,91 @@
-Received: from qproxy2-pub.mail.unifiedlayer.com (qproxy2-pub.mail.unifiedlayer.com [69.89.16.161])
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8D14627
-	for <patches@lists.linux.dev>; Tue, 31 Jan 2023 22:40:59 +0000 (UTC)
-Received: from gproxy3-pub.mail.unifiedlayer.com (gproxy3-pub.mail.unifiedlayer.com [69.89.30.42])
-	by qproxy2.mail.unifiedlayer.com (Postfix) with ESMTP id 713548027EB4
-	for <patches@lists.linux.dev>; Tue, 31 Jan 2023 22:17:57 +0000 (UTC)
-Received: from cmgw10.mail.unifiedlayer.com (unknown [10.0.90.125])
-	by progateway5.mail.pro1.eigbox.com (Postfix) with ESMTP id 3E96D100563C2
-	for <patches@lists.linux.dev>; Tue, 31 Jan 2023 22:17:50 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id Mywopb7y0x5dfMywopIBRM; Tue, 31 Jan 2023 22:17:50 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=R+nGpfdX c=1 sm=1 tr=0 ts=63d9938e
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=RvmDmJFTN0MA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=GJu6-S3nnsZq6mQa6O8A:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=ogul/3P+0fBr842LZyIYdpdnHH6FmcaSD6blNeYVVhY=; b=m6ADB0NIvJRyJEVsqlAM0keJDW
-	psmgkvli3Q8eJSXp9UdLf3JApohN4ExTzTqVHklQCzOIjxQT1J9TNiFtxGx5OXM5XVRhxMu86g0rU
-	aKmX4Ag1NmzLi7m6ODYQPPVmj7MaDtHcN3LSjyeQJRSUJzcdzeP5RM94ABJvlV8Wj/4iEoB73ulTj
-	x6epqBVu4rwqdwDhdUx9lMnLhGLHwiFhAQvnPKysDVUWxzUbxiZaNXnRmAosi1sWKu73O4dVVrDth
-	PLgVZxIc55HRYTmKnPCCcbG4GYhawf6KJOokCjrHAJ8puIvIVSA3NctnDAsa4ZBZF6gU4zljFOBh/
-	2KqXZpCg==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:53154 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1pMywn-000hUQ-B4;
-	Tue, 31 Jan 2023 15:17:49 -0700
-Subject: Re: [PATCH 6.1 000/306] 6.1.9-rc3 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230131072621.746783417@linuxfoundation.org>
-In-Reply-To: <20230131072621.746783417@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <03c296a8-6267-e73f-d10a-c0557cd26d11@w6rz.net>
-Date: Tue, 31 Jan 2023 14:17:45 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B250AD29
+	for <patches@lists.linux.dev>; Tue, 31 Jan 2023 23:44:56 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1675208696; x=1706744696;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=rRr0dU2Ax3D388aE0RxUG7UZP/5GO+5UGBpNxL+OVL0=;
+  b=VL7Sr/rbFqN5pSSkFBT0VkxjOdO29RdwR6T0YCnpT1RLIumPeCdLBZ15
+   2GmDHIZ9YxDn4o3xCBds129oTehyTxfLGXEKa8TCjcWIPgWQJzlIg+u6A
+   hjwplqm5xLbF7GP9tehVnM7UkEDQcwiE4hLW9/7CqKnWv57QlYXwG6KPc
+   hRMmi76xeVJo2J2go01dnPfsekqUbEDcfNVtB1EVoDVGTQi+0u3zv+v/S
+   857VODHKlTbJHYnoUq9KUuzGiSqRfxn7F+mnVeAnXDyBEmeHgtwGVJTdb
+   osD3OQrzi5uR9w3Se1tywT1P+1a/TQoTv7lTUZronNqjQXAe0XicgfOPn
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10607"; a="390360408"
+X-IronPort-AV: E=Sophos;i="5.97,261,1669104000"; 
+   d="scan'208";a="390360408"
+Received: from fmsmga002.fm.intel.com ([10.253.24.26])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Jan 2023 15:44:55 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10607"; a="773192021"
+X-IronPort-AV: E=Sophos;i="5.97,261,1669104000"; 
+   d="scan'208";a="773192021"
+Received: from jithujos.sc.intel.com ([172.25.103.66])
+  by fmsmga002-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 31 Jan 2023 15:44:55 -0800
+From: Jithu Joseph <jithu.joseph@intel.com>
+To: hdegoede@redhat.com,
+	markgross@kernel.org
+Cc: tglx@linutronix.de,
+	mingo@redhat.com,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	hpa@zytor.com,
+	gregkh@linuxfoundation.org,
+	rostedt@goodmis.org,
+	jithu.joseph@intel.com,
+	ashok.raj@intel.com,
+	tony.luck@intel.com,
+	linux-kernel@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	patches@lists.linux.dev,
+	ravi.v.shankar@intel.com,
+	thiago.macieira@intel.com,
+	athenas.jimenez.gonzalez@intel.com,
+	sohil.mehta@intel.com
+Subject: [PATCH 0/5] Add Array BIST test support to IFS
+Date: Tue, 31 Jan 2023 15:42:57 -0800
+Message-Id: <20230131234302.3997223-1-jithu.joseph@intel.com>
+X-Mailer: git-send-email 2.25.1
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1pMywn-000hUQ-B4
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:53154
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Transfer-Encoding: 8bit
 
-On 1/30/23 11:34 PM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.9 release.
-> There are 306 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Thu, 02 Feb 2023 07:25:23 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.9-rc3.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Array BIST is a new type of core test introduced under the Intel Infield
+Scan (IFS) suite of tests.
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Emerald Rapids (EMR) is the first CPU to support Array BIST.
+Array BIST performs tests on some portions of the core logic such as
+caches and register files. These are different portions of the silicon
+compared to the parts tested by Scan at Field (SAF).
 
-Tested-by: Ron Economos <re@w6rz.net>
+Unlike SAF, Array BIST doesn't require any test content to be loaded.
+
+Jithu Joseph (5):
+  x86/include/asm/msr-index.h: Add IFS Array test bits
+  platform/x86/intel/ifs: Introduce Array Scan test to IFS
+  platform/x86/intel/ifs: Sysfs interface for Array BIST
+  platform/x86/intel/ifs: Implement Array BIST test
+  platform/x86/intel/ifs: Trace support for array test
+
+ arch/x86/include/asm/msr-index.h         |   2 +
+ drivers/platform/x86/intel/ifs/ifs.h     |  18 ++++
+ include/trace/events/intel_ifs.h         |  27 ++++++
+ drivers/platform/x86/intel/ifs/core.c    |  82 ++++++++++++------
+ drivers/platform/x86/intel/ifs/runtest.c | 104 ++++++++++++++++++++++-
+ drivers/platform/x86/intel/ifs/sysfs.c   |  17 +++-
+ 6 files changed, 223 insertions(+), 27 deletions(-)
+
+
+base-commit: 6d796c50f84ca79f1722bb131799e5a5710c4700
+-- 
+2.25.1
 
