@@ -1,147 +1,226 @@
-Received: from APC01-TYZ-obe.outbound.protection.outlook.com (mail-tyzapc01on2057.outbound.protection.outlook.com [40.107.117.57])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vk1-f182.google.com (mail-vk1-f182.google.com [209.85.221.182])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98F48640
-	for <patches@lists.linux.dev>; Tue, 31 Jan 2023 04:50:15 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=BjkaPFMJpVGNtn5WFHzdF4SF4LvF2bJK2jnFRIQ2JlmDVsbFLX/QpwkliVzV5Dh4+cUbbI/d+kFBaOzV3meyOr54FpNUOug8tcD0YVmTVf4zg8y8j8jFSOSF+8SFPGpQBOEpggwjo227xNrUa/6NekmuGcBzLAoqIZt0FgQe15zvzFP5mg491aZ6o0Yq1qguU8klXpB6voGOjzt8TS96WXa7drCXOw6zQDLh4EiMySr/OW3owUOdrLVr0Xws8xojMoyTjr3ejYfOpMqxZTBzzoDu5L+PB73cwViKJYnnARPebX90rjcuEOmB791AoJu8nGDZNsAy8jcdEnxbuzHO7g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=zFfwTRK/96CsKwbnL3OOhxTMFIiMVGik+JWaIwwmy4I=;
- b=Zc5Pgd6q38K/MZhm8ScPdtIPy3mW2UFts6Q7DVpA+jXe8aiH+gQOAGMSyRMmbbHLfJ/VMBwxvV7GU4dB8vU5sFVHcvhM8qNLWJ2Ct7QgYUC/3L6iDGQSzMbUlDYeV4fMjVAyzTL7AIArzCOXIIl/XOpIOt8sjIZgJiZCyWz57qM9Oc1F1LOJp8BHnp9+JtpCp6cGrb8zlbTWOIWsZYVQHczhqkrAznrPXNtZmoVHF5L7BcTYufPWlyvYgR+tVSvlIsRcfDz9HQ280b1jDJhzWhzKGXQhfHBEZ5nUszoDzQxnDarg17P/jXMq1MFMLcxibnBQWCBn5B9tfedHftQVTw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nec.com; dmarc=pass action=none header.from=nec.com; dkim=pass
- header.d=nec.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nec.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=zFfwTRK/96CsKwbnL3OOhxTMFIiMVGik+JWaIwwmy4I=;
- b=CVvckjKor+Un2HZMaM0uLUSJ1YnzhOSCSSIHptZ2uBm7cXJ064onPOr5KgAQ2yNtM8ul0ZMSc99pw1h9Oqye16cD9SSUltcx4BYN7ZyC4k5GDiEGI/h1DcWFnbiHl1P03OgmlxFIcjoblv5JTMGfwRUWpUr4JCJ9L5Za0IdBYNM=
-Received: from TYWPR01MB8591.jpnprd01.prod.outlook.com (2603:1096:400:13c::10)
- by TYCPR01MB9893.jpnprd01.prod.outlook.com (2603:1096:400:208::7) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6043.36; Tue, 31 Jan
- 2023 04:50:12 +0000
-Received: from TYWPR01MB8591.jpnprd01.prod.outlook.com
- ([fe80::f495:bf26:717c:c45b]) by TYWPR01MB8591.jpnprd01.prod.outlook.com
- ([fe80::f495:bf26:717c:c45b%3]) with mapi id 15.20.6043.038; Tue, 31 Jan 2023
- 04:50:12 +0000
-From: =?utf-8?B?SE9SSUdVQ0hJIE5BT1lBKOWggOWPo+OAgOebtOS5nyk=?=
-	<naoya.horiguchi@nec.com>
-To: "Luck, Tony" <tony.luck@intel.com>
-CC: Borislav Petkov <bp@alien8.de>, "x86@kernel.org" <x86@kernel.org>,
-	"linux-edac@vger.kernel.org" <linux-edac@vger.kernel.org>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>, "Li, Zhiquan1"
-	<zhiquan1.li@intel.com>, "Song, Youquan" <youquan.song@intel.com>
-Subject: Re: [PATCH] x86/mce: Set PG_hwpoison page flag to avoid the capture
- kernel panic
-Thread-Topic: [PATCH] x86/mce: Set PG_hwpoison page flag to avoid the capture
- kernel panic
-Thread-Index: AQHZMfHKlFBLaxkfiUOM52KUXu/6vq62QkoAgAEZ3ICAAJ72gA==
-Date: Tue, 31 Jan 2023 04:50:12 +0000
-Message-ID: <20230131045011.GB3997492@hori.linux.bs1.fc.nec.co.jp>
-References: <20230127015030.30074-1-tony.luck@intel.com>
- <20230130023226.GA3955454@hori.linux.bs1.fc.nec.co.jp>
- <SJ1PR11MB6083B06E5B75E429E5143B76FCD39@SJ1PR11MB6083.namprd11.prod.outlook.com>
-In-Reply-To:
- <SJ1PR11MB6083B06E5B75E429E5143B76FCD39@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Accept-Language: ja-JP, en-US
-Content-Language: en-US
-X-MS-Has-Attach:
-X-MS-TNEF-Correlator:
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nec.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: TYWPR01MB8591:EE_|TYCPR01MB9893:EE_
-x-ms-office365-filtering-correlation-id: 60a122f8-3878-4f6b-70b5-08db0346a343
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info:
- gHs9117BPXsswxUpwHboeUmHOXPMJE6KoGVd7qQAt+5uwRF/DrUDRVOJ1gT+1VxK6DYs/1wxnwW9KJAe3tTk1jn9+2td7mdCLFa3o31maK15Kb3Qm/tlcjHurQi69gjjiUJOpCA7m+k3mdXTWNr7QBTxmvc5EqMcWPAyF5rrYRpfG4MQf31SJdbrpUChVHuj8EXSFitkt7sGfg8V785RJkaYquwMhJbS4rMeMTivNihsiPV3sKSu947ro2fk+kIFl/py4ssRhe/79YtfKDTG14tVAuBOxtx7Yp3Ns/pdOc/1TGep4pySJAyncBe2FLK2ryDKork2Xz/y/9eAziAKVbJdUgfBA49rU9wTq9G+mNDqrYhiytX0jvK/dN7N6f+Lpv4HlBRPnrieo7LAVbrX6XBkPI9oYiP26W3Cedgs0J7UAiZvE90yo1GRXI/cb6mcnvBeWoX+buJ/ov7s/WrVLE6rvsU57IxdL/92J3tlUa0+4Y9GTqN3ZD67jqZhSHfreCWZKyg7bRqvlrtFjawrzsFQV8g1poxtOYc/L/BTAGvBk9P209KlZYt7hUKwMCOEU3dTVoZptWmZPIOR7gj9pzCz7xwWDm0O5mt7nBdlp4rVlgygfq32yY6vIMcWnlCd6O6jXIEImV58Hz+QbrGfydmfSwAnM3kNLKJLX3w5MJuYtPBEZnlrNJl9ktBqXiL/CwMrVJnWUNRSafIdjXwYYA==
-x-forefront-antispam-report:
- CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:TYWPR01MB8591.jpnprd01.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(346002)(396003)(39860400002)(366004)(376002)(136003)(451199018)(4326008)(66946007)(76116006)(41300700001)(64756008)(6916009)(66556008)(8676002)(66446008)(66476007)(33656002)(8936002)(316002)(5660300002)(54906003)(6486002)(85182001)(71200400001)(2906002)(186003)(6512007)(9686003)(26005)(478600001)(6506007)(1076003)(55236004)(38070700005)(86362001)(82960400001)(122000001)(38100700002);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0:
- =?utf-8?B?MVN4WUlmQVVORjZSTWFlMjBnUzEwektsbEpGVFRCMDFxT2dvVEZneGhDaEM1?=
- =?utf-8?B?a2pDZ2VZZ0ZyWGdPbXE2c256NU5GeTRCc0NNTEVVRWVpZTI3OUNwOExjTjdC?=
- =?utf-8?B?S1JQM0JqNGV6Rk1jYVk1YjN4ZkxwdFQ0djVFNmlKaEZvWTk2YkRpSTN2VlV5?=
- =?utf-8?B?WHFxNXV0bEI0WlpML0R5bC9SSFJGRmdma2tCUWNaWVVkQlU5bWxvQ2swUndo?=
- =?utf-8?B?UHdwSStvcU9IUDFrNmpydjFBTFYwMHFFc1RDS0I3QnlrOVpjdnhyWll4WGcv?=
- =?utf-8?B?UjRiYjR6eVNZQXVKMElMYS9Dd3BrOGM3dmJlSmFpVWhMMTZBemNyVk5Lem52?=
- =?utf-8?B?NXpNQzFjRXlGSE1rOUV6TFg2K0pLTGFNSFkvTTFsNENRNkRYNTNuYVBFenFM?=
- =?utf-8?B?T05lQ2FkREIweHhDWXhiK01JWVE4MnduaTBzMUJndzlhR3hDckVaZVdFWHp5?=
- =?utf-8?B?S3BjUEJwTVdPbUptd0paWUc4S1ZJMFVacUZaNmZxMUx5aDNRSk0yY2QvQlVK?=
- =?utf-8?B?ZGlJemUyUnRvWjArd2RkbjhuZEcvK1QxZFd5bFlaQk5MSHlZSkRmdStBTmd1?=
- =?utf-8?B?WmJ1R2o0VzFHVS9QZUFtUmlYTWgwWU9hRmpnNUVUSFBvQ0hQYzVDRHo3TTNB?=
- =?utf-8?B?aExtRXkyK29TZ2ZvekVRRk9HcEVSdmJJN0kzbXl4RTVERlBwaERCdW9ocTA1?=
- =?utf-8?B?M3JGeS83NUxQcGNyRkVwS051UTU4eVNYaDVzc0JLVXMzTDNlK3dpeTkvdTVh?=
- =?utf-8?B?UVFkaHRKZ2ZkSSsrSHVtN1ppVElVS1ZUczA3djhxcFB2WEtEM3lQTmFyM2Z4?=
- =?utf-8?B?M3pyWVZjRjUyTGFlTk13NVRodFRFUTZsNlRmWGdvWCsxOXBINWpQZ0xONHox?=
- =?utf-8?B?SXU4bkN3WUVnV0NZREtkYWQ0aVBFVS9vNkFRYitnQkVnVm9YTjhtd2NDOHNS?=
- =?utf-8?B?c1ptNnlPZWNTSy8xQUVJTEl3bjcvT3hKRlZJbmRQMjQrTTFGclB1Ly9wVFly?=
- =?utf-8?B?K2plUTBoY0QvQWFkVE9xek1Xd0FOTnJrc2FLTmcxdUZKV2s4VHdZWWlMN2g2?=
- =?utf-8?B?YUNjTnN6OE44NWVBL3dJNXhKVzA5V0VJcnRQOTVjSG5hM2t1Y21DSlJtNzNJ?=
- =?utf-8?B?eXY4NHd0V1YwUzV3dVlaTmNGT3dDVGlHZmxQUk5JZDAzcEVJb25tUTZmcVp2?=
- =?utf-8?B?WTlRajdFMWFrOFlwTzRHOW1DR2prZ1daNGhiOTVMNnVEeEg5dVpGc0lwT2VD?=
- =?utf-8?B?YXNoeVdPd3NDU0pVWTY2R0xnVzlhT0ZwMGtKMnZscjAwZzZZOUNmSTZZRW9E?=
- =?utf-8?B?QVZ1M1VONXZpK0FTOE1OY0E4RzVnZ1RWY0VTM1RsUTNjczdjQ0xUR01YR2pn?=
- =?utf-8?B?U3RkdWN5YzFjK3dEUXpCNzRJUUVVdzhGVFNBWXIzVFNCRHJLSmF2ZVRCaXVo?=
- =?utf-8?B?Tkx5Yk80ZzVWRkovWTZoeTBGdy96KzJlbStSVjlTUjdrZUFJc0xnZGRPQzFC?=
- =?utf-8?B?SjRjblhWRElDTEg2T1JYb0IydGFlUnB0bkRCVHVRSXJnOC9iSmtKQWJFVmtl?=
- =?utf-8?B?ZzlweTVoKzBGYWNHWkljVUdsakN5aGRCMVBFbjIxK1JRVmhjdWxPL2dLT1RT?=
- =?utf-8?B?d3ZicENuYUNvbjlOQUtjUk9SVUhXTFdZVUxCRWdaZEJ6RkliTVNQSTR4VEhP?=
- =?utf-8?B?aVlLL3F4V05HVGxQSnM0UVREVXFGelJGQWJ1UkRzcElrUGc3Tk9QSWk1eDQx?=
- =?utf-8?B?QXphaEtvbDJDVXpMS0RJT1B2RzBMSjJpSHJYdGM3Rnc2TmJXT04rbTFjWXhp?=
- =?utf-8?B?ditmMm0xdDA2aVltbUtYVmE2UXpTd0ZXWC9kUUwrL1BqV3Y3UkV2N0FoM1NK?=
- =?utf-8?B?a1kxRXJCeDF0RlVnN3JpZXltZ2lNaUZPaUNXeVlnTHRQZmtMUUYrTk1ZQkVy?=
- =?utf-8?B?Y01SSVZ3NE5wODE1Y3hPVEVaS1VhcmV3VDBZYnNaQ3B1N2h4N1k4MGtyRlZT?=
- =?utf-8?B?M0JPVzhRWW5Jak5kaFdzVzFqQUllTDRXS3FSSnN5Y3FJeW9VWWVHbmkvNkxG?=
- =?utf-8?B?MzJ3WWo1VytrNGpVb1BJalV3N1F5a0JJbkFoTFd2Y211UVhkQkhJWmwrYU52?=
- =?utf-8?B?L1Rob0xycmtoMmd4ZnQvaDl1U1N0enpDK2VPN1RTYkFHT3JrUTJjaVFLL3o1?=
- =?utf-8?B?ZWc9PQ==?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <5F249A6E9421C0488847AB9EBFB9CF3E@jpnprd01.prod.outlook.com>
-Content-Transfer-Encoding: base64
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5B67659
+	for <patches@lists.linux.dev>; Tue, 31 Jan 2023 07:12:45 +0000 (UTC)
+Received: by mail-vk1-f182.google.com with SMTP id v5so6877894vkc.10
+        for <patches@lists.linux.dev>; Mon, 30 Jan 2023 23:12:45 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=5//sUDN7aAa+/fdAa54DT1YY07Np/vQiCEXU20HW7A8=;
+        b=mp5Sv6Mm56vPapy+tjZGh3nfS/GG1pk5KRXs4RHrdXQKmMyifRidlaN5LS2Z994ec1
+         bENSN1Ztt56ZOpibf/EraXbQvDF+tXBOY6yLj1ZxQDVy3zyZYs0Jof8T92/hxDyFn7Fa
+         W3Vau43jZKssGvJEUrOekJPF8gPn7/MpPjeix5hVCSiWyeUlzZ1BBcLIAIlIPYbu9fr1
+         jN5Nftzmnq3QF7VHhsAJeG9AvZUnFWSG/JkKnS1IQmgEc1Eqbw+QtfzpvkzTUYdJYTKT
+         5Fy+CLYwRZgasA+QhO41c7MVEmt+vV8CNumdTggcuBp3T3/1CXqv6K146hFbLsLbS6i9
+         FJew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=5//sUDN7aAa+/fdAa54DT1YY07Np/vQiCEXU20HW7A8=;
+        b=xvpY2HIbNRan8RWDkh594cAwv3RQkxTM9mYyLcN5+mgKjwv6327nPYi7gxn1VWaolb
+         vtuwzJoe7hYwvgnGWihnzHltcYuxJZgsIn5CgM2PEI36j3To71d7FE7+ZqxSpHVSBUUZ
+         YGMYo9zbgaBhFdlKY431w5i2BYYreERMwMdsFZDkDu1xalWALRoXNW/tJYRZBJ/ofX1j
+         zEulDQ367pIhXgGck2KF82A5lOrIMkL7eOPXt/218Hh6o8YYDBBLPsTxy6UEruiJSix6
+         72ki4xnGqpUJd0zm/s+tOZci7k8L1uCs/RZo6/B/FtoIeSOcgWAv045Y9doC9FZ6jodJ
+         T6nQ==
+X-Gm-Message-State: AFqh2kqmId7fIBAT74AW0wnexCLXFz42lQjgPYKz0xCZOtV1Dss6b9zP
+	zO0jprHWr8FGEYlabpWE3Sy7R7j3XVvUa7G/sZE4zQ==
+X-Google-Smtp-Source: AMrXdXvjqVMGMbYiTFtTDld6AddwuPV8R5YGhW/eXTCuAwdkRC/HVJ98OdA1IRSeM3saP5w1wvmGnhbD7/CyoLbP1R0=
+X-Received: by 2002:a1f:ab92:0:b0:3d5:63ee:dae1 with SMTP id
+ u140-20020a1fab92000000b003d563eedae1mr7199589vke.9.1675149164506; Mon, 30
+ Jan 2023 23:12:44 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-OriginatorOrg: nec.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: TYWPR01MB8591.jpnprd01.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 60a122f8-3878-4f6b-70b5-08db0346a343
-X-MS-Exchange-CrossTenant-originalarrivaltime: 31 Jan 2023 04:50:12.4288
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: e67df547-9d0d-4f4d-9161-51c6ed1f7d11
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: I2/Vr/CQ9KFzo9W3vPV0RDVdX9iaY/8cAsnPDsxChPBXVk47MynTEEg1DEcjdSA/B3qUn9kI4+3w8MyMmGq69Q==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYCPR01MB9893
+References: <20230130134316.327556078@linuxfoundation.org>
+In-Reply-To: <20230130134316.327556078@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 31 Jan 2023 12:42:33 +0530
+Message-ID: <CA+G9fYvGio_rUOQPemEB-jTryPaP=nsfzkCRQY60d=-QoipwAQ@mail.gmail.com>
+Subject: Re: [PATCH 5.15 000/204] 5.15.91-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-T24gTW9uLCBKYW4gMzAsIDIwMjMgYXQgMDc6MjE6MTVQTSArMDAwMCwgTHVjaywgVG9ueSB3cm90
-ZToNCj4gPiBBbHRob3VnaCBJJ20gbm90IHN1cmUgdGhhdCBTR1ggbWVtb3J5IG9yIFBNRU0gcGFn
-ZXMgYXJlIGV4cGVjdGVkIHRvIGJlDQo+ID4gaW5jbHVkZWQgaW4ga2R1bXAsIGJ1dCBzaW1wbHkg
-c2V0dGluZyBQYWdlSFdQb2lzb24gZG9lcyBub3Qgd29yayBmb3IgdGhlbT8NCj4gPiAoTWF5YmUg
-dGhhdCBkZXBlbmRzIG9uIGhvdyBrZHVtcCBoYW5kbGVzIHRoZXNlIHR5cGVzIG9mIG1lbW9yeS4p
-DQo+IA0KPiBTR1gvVERYIHBhZ2VzIGNhbid0IGJlIGR1bXBlZC4gVGhleSBhcmUgZW5jcnlwdGVk
-IHdpdGggbm8gd2F5IGZvciBrZHVtcCB0bw0KPiBnZXQgdGhlIGtleS4NCj4gDQo+IFBNRU0gc2Vl
-bXMgcG9pbnRsZXNzIChidXQgSSBkb24ndCBrbm93IHdoYXQga2R1bXAgZG9lcyBoZXJlKS4NCj4g
-DQo+ID4gQXMgZm9yIEh1Z2VUTEIsIGtkdW1wIHV0aWxpdHkgc2hvdWxkIHBhcnNlIHRoZSBzdHJ1
-Y3QgcGFnZSBhbmQgYmUgYXdhcmUgb2YNCj4gPiBIdWdlVExCIHBhZ2VzLCBzbyBtYXliZSBzZXR0
-aW5nIFBhZ2VIV1BvaXNvbiBvbiB0aGUgaGVhZCBwYWdlIGNvdWxkIHdvcmsuDQo+IA0KPiBPciBt
-YXliZSBrZHVtcCBjYW4gdGFrZSBub3Qgb2YgdGhlIFBhZ2VIV1BvaXNvbiBmbGFnIG9uIHRoZSBz
-dWItcGFnZSBvZiB0aGUNCj4gaHVnZSBwYWdlPyBJdCBkZXBlbmRzIG9uIHdoZXRoZXIgdGhlcmUg
-aXMgYW55IGJlbmVmaXQgdG8gdGhlIGR1bXAgdG8gaW5jbHVkZSB0aGUNCj4gbm90LXBvaXNvbmVk
-IHBhcnRzIG9mIGEgaHVnZSBwYWdlLg0KDQpJIHRoaW5rIHRoYXQgbWFueSBrZHVtcCB1c2VycyBm
-aWx0ZXIgb3V0IEh1Z2VUTEIgcGFnZXMgKHNldHRpbmcgZHVtcF9sZXZlbA0KdG8gZmlsdGVyICJV
-c2VyIHBhZ2VzIikgdG8gcmVkdWNlIHRoZSBzaXplIG9mIGtkdW1wLiAgVXNlciBwYWdlcyBhcmUg
-bm90DQptdWNoIGhlbHBmdWwgdG8gaW52ZXN0aWdhdGUga2VybmVsIHByb2JsZW1zLCBzbyBmaWx0
-ZXJpbmcgYWxsIHN1Yi1wYWdlcyBpbg0KaHdwb2lzb25lZCBodWdlcGFnZSBzZWVtcyB0byBtZSBu
-b3Qgc28gaGFybWZ1bC4NCg0KSSBkb24ndCBzYXkgdGhhdCBzYXZpbmcgaGVhbHRoeSBzdWJwYWdl
-cyBoYXMgbm8gYmVuZWZpdCwgYnV0IEkgZG9uJ3Qga25vdw0KbXVjaCBhYm91dCB1c2VjYXNlcyB3
-aGVyZSB1c2VyIHBhZ2VzIGluIGtkdW1wIGZpbGUgaGVscC4NCg0KVGhhbmtzLA0KTmFveWEgSG9y
-aWd1Y2hp
+On Mon, 30 Jan 2023 at 19:39, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 5.15.91 release.
+> There are 204 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Wed, 01 Feb 2023 13:42:39 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
+5.15.91-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-5.15.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+Results from Linaro=E2=80=99s test farm.
+No regressions on arm64, arm, x86_64, and i386.
+
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+
+## Build
+* kernel: 5.15.91-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-5.15.y
+* git commit: 5605d15db0225e49efaa8f83e03f78a8bee3bb5d
+* git describe: v5.15.90-205-g5605d15db022
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
+.90-205-g5605d15db022
+
+## Test Regressions (compared to v5.15.90)
+
+## Metric Regressions (compared to v5.15.90)
+
+## Test Fixes (compared to v5.15.90)
+
+## Metric Fixes (compared to v5.15.90)
+
+## Test result summary
+total: 154391, pass: 127547, fail: 4115, skip: 22498, xfail: 231
+
+## Build Summary
+* arc: 5 total, 5 passed, 0 failed
+* arm: 151 total, 150 passed, 1 failed
+* arm64: 49 total, 47 passed, 2 failed
+* i386: 39 total, 35 passed, 4 failed
+* mips: 31 total, 29 passed, 2 failed
+* parisc: 8 total, 8 passed, 0 failed
+* powerpc: 34 total, 32 passed, 2 failed
+* riscv: 14 total, 14 passed, 0 failed
+* s390: 16 total, 14 passed, 2 failed
+* sh: 14 total, 12 passed, 2 failed
+* sparc: 8 total, 8 passed, 0 failed
+* x86_64: 42 total, 40 passed, 2 failed
+
+## Test suites summary
+* boot
+* fwts
+* kselftest-android
+* kselftest-arm64
+* kselftest-breakpoints
+* kselftest-capabilities
+* kselftest-cgroup
+* kselftest-clone3
+* kselftest-core
+* kselftest-cpu-hotplug
+* kselftest-cpufreq
+* kselftest-drivers-dma-buf
+* kselftest-efivarfs
+* kselftest-filesystems
+* kselftest-filesystems-binderfs
+* kselftest-firmware
+* kselftest-fpu
+* kselftest-futex
+* kselftest-gpio
+* kselftest-intel_pstate
+* kselftest-ipc
+* kselftest-ir
+* kselftest-kcmp
+* kselftest-kexec
+* kselftest-kvm
+* kselftest-lib
+* kselftest-livepatch
+* kselftest-membarrier
+* kselftest-memfd
+* kselftest-memory-hotplug
+* kselftest-mincore
+* kselftest-mount
+* kselftest-mqueue
+* kselftest-net
+* kselftest-net-forwarding
+* kselftest-net-mptcp
+* kselftest-netfilter
+* kselftest-nsfs
+* kselftest-openat2
+* kselftest-pid_namespace
+* kselftest-pidfd
+* kselftest-proc
+* kselftest-pstore
+* kselftest-ptrace
+* kselftest-rseq
+* kselftest-rtc
+* kselftest-seccomp
+* kselftest-sigaltstack
+* kselftest-size
+* kselftest-splice
+* kselftest-static_keys
+* kselftest-sync
+* kselftest-sysctl
+* kselftest-tc-testing
+* kselftest-timens
+* kselftest-timers
+* kselftest-tmpfs
+* kselftest-tpm2
+* kselftest-user
+* kselftest-vm
+* kselftest-x86
+* kselftest-zram
+* kunit
+* kvm-unit-tests
+* libgpiod
+* libhugetlbfs
+* log-parser-boot
+* log-parser-test
+* ltp-cap_bounds
+* ltp-commands
+* ltp-containers
+* ltp-controllers
+* ltp-cpuhotplug
+* ltp-crypto
+* ltp-cve
+* ltp-dio
+* ltp-fcntl-locktests
+* ltp-filecaps
+* ltp-fs
+* ltp-fs_bind
+* ltp-fs_perms_simple
+* ltp-fsx
+* ltp-hugetlb
+* ltp-io
+* ltp-ipc
+* ltp-math
+* ltp-mm
+* ltp-nptl
+* ltp-open-posix-tests
+* ltp-pty
+* ltp-sched
+* ltp-securebits
+* ltp-smoke
+* ltp-syscalls
+* ltp-tracing
+* network-basic-tests
+* perf
+* rcutorture
+* v4l2-compliance
+* vdso
+
+--
+Linaro LKFT
+https://lkft.linaro.org
