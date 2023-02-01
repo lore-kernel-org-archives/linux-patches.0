@@ -1,107 +1,80 @@
-Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
+Received: from mga06.intel.com (mga06b.intel.com [134.134.136.31])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082FA33FA
-	for <patches@lists.linux.dev>; Wed,  1 Feb 2023 19:22:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1564233FA
+	for <patches@lists.linux.dev>; Wed,  1 Feb 2023 19:35:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1675279346; x=1706815346;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=wy1msrIPfznHGysWzTYnh4CoIsPDb+6Js1yj4Dk5Y4w=;
-  b=VidhZcNQjPHNc8WHbfFhot7GGMyzlu7ixQDa5yadbBFxP86Som6t2OTN
-   FlCN2C5wUQPBEqGPCJFww0tmYct+J9yuQi6FrIYTJX54YvDO2bPXqlg8f
-   fF6mjmsCX40HbDEzFBVZjKV6yTkMYqHAqUGb8s112CrtL+UsDsQ1iFYlK
-   qbIESl9+eYcPDAch3aV3WeV1awyWJP+zkJUl9E/Z8sblpKwsztW1b2/fx
-   NvFt1qb5X/Zc2j8CQVf3qUv+4WjpIXC7VmSAR1IIUNSj9gV2PRHsmMuv0
-   z/bE/U5ibClmoBXmeBKSeTMykophZL6Fr4QDMHy+gYtqF+6auLyZNOb8y
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="328259716"
+  t=1675280150; x=1706816150;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=/Obl8rqfTGH6trUZEs37Lq7tRxm2qrcEOy/7J7nsiCE=;
+  b=Zu2In3ZoEL4VyT8aqMTSXGE4kthLT8jWKWExC5FXFwQAlAjeygGbALgi
+   ZZPvSXbonUPa8ysl+GQ4JLNCMzX8obrAYqghRNMgmYXtzu2VXybdkBlcc
+   r7gmmqx/LiqDHa+daJUa315MmI59Gt8I/HimW67EOJz+COvP/bxZ863IZ
+   jV5raNiiaxPSZFtPfeCrm/SAPbIzCqDlmYGTS1bJSXNMUjxz+SZo1enHU
+   Tw8XJaIVrFmkWMJTiJJGhumhXQm8WXf/LKo+0kD+9zWjcDkxIDRycYFCw
+   UHg6OQj2RKSsLefbLzRGJb75mSsPfzqKWlGP8OHRh43NI8nSvjnVVJxzD
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="390643896"
 X-IronPort-AV: E=Sophos;i="5.97,265,1669104000"; 
-   d="scan'208";a="328259716"
-Received: from orsmga006.jf.intel.com ([10.7.209.51])
-  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 11:22:26 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="642569336"
+   d="scan'208";a="390643896"
+Received: from orsmga005.jf.intel.com ([10.7.209.41])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 11:35:49 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="838892059"
 X-IronPort-AV: E=Sophos;i="5.97,265,1669104000"; 
-   d="scan'208";a="642569336"
-Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
-  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 11:22:25 -0800
-Date: Wed, 1 Feb 2023 11:22:24 -0800
-From: Tony Luck <tony.luck@intel.com>
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: "Joseph, Jithu" <jithu.joseph@intel.com>,
-	"hdegoede@redhat.com" <hdegoede@redhat.com>,
-	"markgross@kernel.org" <markgross@kernel.org>,
-	"tglx@linutronix.de" <tglx@linutronix.de>,
-	"mingo@redhat.com" <mingo@redhat.com>,
-	"bp@alien8.de" <bp@alien8.de>,
-	"dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
-	"x86@kernel.org" <x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>,
-	"rostedt@goodmis.org" <rostedt@goodmis.org>,
-	"Raj, Ashok" <ashok.raj@intel.com>,
-	"linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-	"platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
-	"patches@lists.linux.dev" <patches@lists.linux.dev>,
-	"Shankar, Ravi V" <ravi.v.shankar@intel.com>,
-	"Macieira, Thiago" <thiago.macieira@intel.com>,
-	"Jimenez Gonzalez, Athenas" <athenas.jimenez.gonzalez@intel.com>,
-	"Mehta, Sohil" <sohil.mehta@intel.com>
-Subject: Re: [PATCH 4/5] platform/x86/intel/ifs: Implement Array BIST test
-Message-ID: <Y9q78P9EKlz2k6Fg@agluck-desk3.sc.intel.com>
-References: <20230131234302.3997223-1-jithu.joseph@intel.com>
- <20230131234302.3997223-5-jithu.joseph@intel.com>
- <Y9nyWVNtfBEny66w@kroah.com>
- <SJ1PR11MB6083EBD2D2826E0A247AF242FCD19@SJ1PR11MB6083.namprd11.prod.outlook.com>
- <Y9qtI+CZaX051rLo@kroah.com>
+   d="scan'208";a="838892059"
+Received: from sgkhacha-mobl1.amr.corp.intel.com (HELO [10.212.227.86]) ([10.212.227.86])
+  by orsmga005-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 11:35:48 -0800
+Message-ID: <aedc760b-ca4d-031d-6797-4f0a1ab2d5d7@intel.com>
+Date: Wed, 1 Feb 2023 11:35:48 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y9qtI+CZaX051rLo@kroah.com>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH 4/5] platform/x86/intel/ifs: Implement Array BIST test
+Content-Language: en-US
+To: Jithu Joseph <jithu.joseph@intel.com>, hdegoede@redhat.com,
+ markgross@kernel.org
+Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+ dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+ gregkh@linuxfoundation.org, rostedt@goodmis.org, ashok.raj@intel.com,
+ tony.luck@intel.com, linux-kernel@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+ ravi.v.shankar@intel.com, thiago.macieira@intel.com,
+ athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
+References: <20230131234302.3997223-1-jithu.joseph@intel.com>
+ <20230131234302.3997223-5-jithu.joseph@intel.com>
+From: Dave Hansen <dave.hansen@intel.com>
+In-Reply-To: <20230131234302.3997223-5-jithu.joseph@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Wed, Feb 01, 2023 at 07:19:15PM +0100, Greg KH wrote:
-> It shouldn't be that hard, lots of people use them today.
-> 
-> Try and see!
+On 1/31/23 15:43, Jithu Joseph wrote:
+> +union ifs_array {
+> +	u64	data;
+> +	struct {
+> +		u32	array_bitmask		:32;
+> +		u32	array_bank		:16;
+> +		u32	rsvd			:15;
+> +		u32	ctrl_result		:1;
+> +	};
+> +};
 
+Why bother with a bitfield?  Just do:
 
-Extract from the first of our in-field-scan tests:
+union ifs_array {
+	u64	data;
+	struct {
+		u32	array_bitmask;
+		u16	array_bank;
+		u16	flags;
+	};
+};
 
-	while (activate.start <= activate.stop) {
-
-		... trigger scan ...
-
-		if (status.chunk_num == activate.start) {
-			... check for too many retries on same chunk ...
-		} else {
-			activate.start = status.chunk_num;
-		}
-	}
-
-using <linux/bitfield.h> becomes:
-
-	while (FIELD_GET(GENMASK(7, 0), activate) <= FIELD_GET(GENMASK(15, 8), activate) {
-
-
-		if (FIELD_GET(GENMASK(7, 0), status) == FIELD_GET(GENMASK(7, 0), activate) {
-			...
-		} else {
-			activate &= ~GENMASK(7, 0);
-			activate |= FIELD_PREP(GENMASK(7, 0), FIELD_GET(GENMASK(7, 0), status));
-		}
-	}
-
-While I can make that more legible with some helper #defines for the
-fields, it becomes more difficult to write, and no easier to read (since
-I then have to chase down what the macros are doing).
-
-If this were in some performance critical path, I might worry about
-whether the generated code was good enough. But this code path isn't
-remotely critical to anyone. The test takes up to 200 usec, so saving
-a handful of cycles in the surrounding code will be in the noise.
-
--Tony
+Then you only need to mask 'ctrl_result' out of flags.  You don't need
+any crazy macros.
