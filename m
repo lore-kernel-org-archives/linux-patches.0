@@ -1,18 +1,18 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CF137F4
-	for <patches@lists.linux.dev>; Wed,  1 Feb 2023 05:02:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24C61C433D2;
-	Wed,  1 Feb 2023 05:02:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E98C7FA
+	for <patches@lists.linux.dev>; Wed,  1 Feb 2023 05:04:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 520F8C4339B;
+	Wed,  1 Feb 2023 05:04:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675227740;
-	bh=iaknZJR8YagHqnSa2Z/Ot6UlzkXpuXetE2JWHZW1tm8=;
+	s=korg; t=1675227846;
+	bh=RLaIix0nWRF9inMGPANhbNfy1fN3Q3H7JVqsMkSylhI=;
 	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=uMK++tKeLj0J5+Bt0fYYd2PhcffpS5G0meHhqMvBBdOJ+eozAMilTWNqUSfgJehfg
-	 tRZWZl/M3HWKzQm9YoAwOR2Ow3+IZ3StZvIBYCtZf9jji2y2tgc15cWJezr16Dwrg2
-	 QXnR4wwYTO31s3Y9paIECB49ClmhXIkQf9BHD3ls=
-Date: Wed, 1 Feb 2023 06:02:17 +0100
+	b=A3EcFiTjRHjJCEg3v0sEKjOOeDfUs6A5mSVRr1ekyzN+KdixkOhRLQogIO19L42h/
+	 b+5U8R24DMk6J8cOnO+QQEo/fUR4l7Ts4yhXwOIM2NdMO9tFNrrUCOPS7l8IR8zMnj
+	 QmgoZAK5yTN2iSuJ0lDyh8MveBsUCUoj6dxp8Vw8=
+Date: Wed, 1 Feb 2023 06:04:04 +0100
 From: Greg KH <gregkh@linuxfoundation.org>
 To: Jithu Joseph <jithu.joseph@intel.com>
 Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
@@ -23,10 +23,11 @@ Cc: hdegoede@redhat.com, markgross@kernel.org, tglx@linutronix.de,
 	patches@lists.linux.dev, ravi.v.shankar@intel.com,
 	thiago.macieira@intel.com, athenas.jimenez.gonzalez@intel.com,
 	sohil.mehta@intel.com
-Subject: Re: [PATCH 4/5] platform/x86/intel/ifs: Implement Array BIST test
-Message-ID: <Y9nyWVNtfBEny66w@kroah.com>
+Subject: Re: [PATCH 3/5] platform/x86/intel/ifs: Sysfs interface for Array
+ BIST
+Message-ID: <Y9nyxNesVHCUXAcH@kroah.com>
 References: <20230131234302.3997223-1-jithu.joseph@intel.com>
- <20230131234302.3997223-5-jithu.joseph@intel.com>
+ <20230131234302.3997223-4-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,56 +36,151 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230131234302.3997223-5-jithu.joseph@intel.com>
+In-Reply-To: <20230131234302.3997223-4-jithu.joseph@intel.com>
 
-On Tue, Jan 31, 2023 at 03:43:01PM -0800, Jithu Joseph wrote:
-> Array BIST test (for a particlular core) is triggered by writing
-> to MSR_ARRAY_BIST from one sibling of the core.
+On Tue, Jan 31, 2023 at 03:43:00PM -0800, Jithu Joseph wrote:
+> The interface to trigger Array BIST test and obtain its result
+> is similar to the existing scan test. The only notable
+> difference is that, Array BIST doesn't require any test content
+> to be loaded. So binary load related options are not needed for
+> this test.
 > 
-> This will initiate a test for all supported arrays on that
-> CPU. Array BIST test may be aborted before completing all the
-> arrays in the event of an interrupt or other reasons.
-> In this case, kernel will restart the test from that point
-> onwards. Array test will also be aborted when the test fails,
-> in which case the test is stopped immediately without further
-> retry.
+> Add sysfs interface array BIST test, the testing support will
+> be added by subsequent patch.
+
+What is "sysfs interface array" exactly?
+
+Where is the new Documentation/ABI/ entries for these new sysfs files
+you added?
+
 > 
 > Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
 > Reviewed-by: Tony Luck <tony.luck@intel.com>
 > ---
->  drivers/platform/x86/intel/ifs/ifs.h     | 12 ++++
->  drivers/platform/x86/intel/ifs/runtest.c | 92 ++++++++++++++++++++++++
->  2 files changed, 104 insertions(+)
+>  drivers/platform/x86/intel/ifs/ifs.h     |  1 +
+>  drivers/platform/x86/intel/ifs/core.c    | 18 +++++++++++++-----
+>  drivers/platform/x86/intel/ifs/runtest.c | 11 ++++++++++-
+>  drivers/platform/x86/intel/ifs/sysfs.c   | 17 ++++++++++++++++-
+>  4 files changed, 40 insertions(+), 7 deletions(-)
 > 
 > diff --git a/drivers/platform/x86/intel/ifs/ifs.h b/drivers/platform/x86/intel/ifs/ifs.h
-> index 07423bc4e368..b1a997e39216 100644
+> index 2cef88a88aa9..07423bc4e368 100644
 > --- a/drivers/platform/x86/intel/ifs/ifs.h
 > +++ b/drivers/platform/x86/intel/ifs/ifs.h
-> @@ -127,6 +127,7 @@
->  #include <linux/device.h>
->  #include <linux/miscdevice.h>
+> @@ -249,5 +249,6 @@ static inline struct ifs_data *ifs_get_data(struct device *dev)
+>  int ifs_load_firmware(struct device *dev);
+>  int do_core_test(int cpu, struct device *dev);
+>  const struct attribute_group **ifs_get_groups(void);
+> +const struct attribute_group **ifs_get_array_groups(void);
 >  
-> +#define MSR_ARRAY_BIST				0x00000105
->  #define MSR_COPY_SCAN_HASHES			0x000002c2
->  #define MSR_SCAN_HASHES_STATUS			0x000002c3
->  #define MSR_AUTHENTICATE_AND_COPY_CHUNK		0x000002c4
-> @@ -194,6 +195,17 @@ union ifs_status {
->  	};
->  };
+>  #endif
+> diff --git a/drivers/platform/x86/intel/ifs/core.c b/drivers/platform/x86/intel/ifs/core.c
+> index ab234620ef4c..2b7a49fd473d 100644
+> --- a/drivers/platform/x86/intel/ifs/core.c
+> +++ b/drivers/platform/x86/intel/ifs/core.c
+> @@ -25,6 +25,7 @@ static struct ifs_device ifs_devices[] = {
+>  	[IFS_SAF] = {
+>  		.data = {
+>  			.integrity_cap_bit = MSR_INTEGRITY_CAPS_PERIODIC_BIST_BIT,
+> +			.pkg_auth = NULL,
+>  			.test_num = IFS_SAF,
+>  		},
+>  		.misc = {
+> @@ -36,6 +37,7 @@ static struct ifs_device ifs_devices[] = {
+>  	[IFS_ARRAY] = {
+>  		.data = {
+>  			.integrity_cap_bit = MSR_INTEGRITY_CAPS_ARRAY_BIST_BIT,
+> +			.pkg_auth = NULL,
+>  			.test_num = IFS_ARRAY,
+>  		},
+>  		.misc = {
+> @@ -72,11 +74,17 @@ static int __init ifs_init(void)
+>  		if (!(msrval & BIT(ifs_devices[i].data.integrity_cap_bit)))
+>  			continue;
 >  
-> +/* MSR_ARRAY_BIST bit fields */
-> +union ifs_array {
-> +	u64	data;
-> +	struct {
-> +		u32	array_bitmask		:32;
-> +		u32	array_bank		:16;
-> +		u32	rsvd			:15;
-> +		u32	ctrl_result		:1;
+> -		ifs_devices[i].data.pkg_auth = kmalloc_array(topology_max_packages(),
+> -							     sizeof(bool), GFP_KERNEL);
+> -		if (!ifs_devices[i].data.pkg_auth)
+> -			continue;
+> -		ifs_devices[i].misc.groups = ifs_get_groups();
+> +		switch (ifs_devices[i].data.test_num) {
+> +		case IFS_SAF:
+> +			ifs_devices[i].data.pkg_auth = kmalloc_array(topology_max_packages(),
+> +								     sizeof(bool), GFP_KERNEL);
+> +			if (!ifs_devices[i].data.pkg_auth)
+> +				continue;
+> +			ifs_devices[i].misc.groups = ifs_get_groups();
+> +			break;
+> +		case IFS_ARRAY:
+> +			ifs_devices[i].misc.groups = ifs_get_array_groups();
+> +		}
+>  
+>  		if (misc_register(&ifs_devices[i].misc))
+>  			kfree(ifs_devices[i].data.pkg_auth);
+> diff --git a/drivers/platform/x86/intel/ifs/runtest.c b/drivers/platform/x86/intel/ifs/runtest.c
+> index 0bfd8fcdd7e8..65e08af70994 100644
+> --- a/drivers/platform/x86/intel/ifs/runtest.c
+> +++ b/drivers/platform/x86/intel/ifs/runtest.c
+> @@ -236,6 +236,7 @@ static void ifs_test_core(int cpu, struct device *dev)
+>   */
+>  int do_core_test(int cpu, struct device *dev)
+>  {
+> +	struct ifs_data *ifsd = ifs_get_data(dev);
+>  	int ret = 0;
+>  
+>  	/* Prevent CPUs from being taken offline during the scan test */
+> @@ -247,7 +248,15 @@ int do_core_test(int cpu, struct device *dev)
+>  		goto out;
+>  	}
+>  
+> -	ifs_test_core(cpu, dev);
+> +	switch (ifsd->test_num) {
+> +	case IFS_SAF:
+> +		ifs_test_core(cpu, dev);
+> +		break;
+> +	case IFS_ARRAY:
+> +	default:
+> +		return -EINVAL;
+> +	}
+> +
+>  out:
+>  	cpus_read_unlock();
+>  	return ret;
+> diff --git a/drivers/platform/x86/intel/ifs/sysfs.c b/drivers/platform/x86/intel/ifs/sysfs.c
+> index ee636a76b083..7cf32184ce6a 100644
+> --- a/drivers/platform/x86/intel/ifs/sysfs.c
+> +++ b/drivers/platform/x86/intel/ifs/sysfs.c
+> @@ -75,7 +75,7 @@ static ssize_t run_test_store(struct device *dev,
+>  	if (down_interruptible(&ifs_sem))
+>  		return -EINTR;
+>  
+> -	if (!ifsd->loaded)
+> +	if (ifsd->test_num != IFS_ARRAY && !ifsd->loaded)
+>  		rc = -EPERM;
+>  	else
+>  		rc = do_core_test(cpu, dev);
+> @@ -156,3 +156,18 @@ const struct attribute_group **ifs_get_groups(void)
+>  {
+>  	return plat_ifs_groups;
+>  }
+> +
+> +/* global array sysfs attributes */
+> +static struct attribute *plat_ifs_array_attrs[] = {
+> +	&dev_attr_details.attr,
+> +	&dev_attr_status.attr,
+> +	&dev_attr_run_test.attr,
+> +	NULL
+> +};
+> +
+> +ATTRIBUTE_GROUPS(plat_ifs_array);
+> +
+> +const struct attribute_group **ifs_get_array_groups(void)
+> +{
+> +	return plat_ifs_array_groups;
+> +}
 
-This isn't going to work well over time, just mask the bits you want off
-properly, don't rely on the compiler to lay them out like this.
-
-Note, we have bitmask and bitfield operations, please use them.
+Why do you need a function to get access to a static variable?  Just
+make the variable not static.
 
 thanks,
 
