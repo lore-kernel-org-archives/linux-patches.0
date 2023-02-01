@@ -1,20 +1,34 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from mga14.intel.com (mga14.intel.com [192.55.52.115])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009EF8483
-	for <patches@lists.linux.dev>; Wed,  1 Feb 2023 18:19:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18537C433D2;
-	Wed,  1 Feb 2023 18:19:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675275558;
-	bh=b+wlHDCzi8AdBnLpjdjGeEQLMS0qfahPSzCmwkMSiqk=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=ptKD62LX78owda4w+Y0RYSwG/OXKHYW9gSEjj671KQR76Ta78vlE4GMdxxs917kzR
-	 PCfbb2N85zBghqkfACFMRL+3ZxXNtYLf4aSBG0SAHb6yFKqDEANTmgwPUc4JdE0Bql
-	 UNksukzT9Zu1Bgzqhmcu/MxeVgzk4miNdZdxRHbw=
-Date: Wed, 1 Feb 2023 19:19:15 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: "Luck, Tony" <tony.luck@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082FA33FA
+	for <patches@lists.linux.dev>; Wed,  1 Feb 2023 19:22:26 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1675279346; x=1706815346;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=wy1msrIPfznHGysWzTYnh4CoIsPDb+6Js1yj4Dk5Y4w=;
+  b=VidhZcNQjPHNc8WHbfFhot7GGMyzlu7ixQDa5yadbBFxP86Som6t2OTN
+   FlCN2C5wUQPBEqGPCJFww0tmYct+J9yuQi6FrIYTJX54YvDO2bPXqlg8f
+   fF6mjmsCX40HbDEzFBVZjKV6yTkMYqHAqUGb8s112CrtL+UsDsQ1iFYlK
+   qbIESl9+eYcPDAch3aV3WeV1awyWJP+zkJUl9E/Z8sblpKwsztW1b2/fx
+   NvFt1qb5X/Zc2j8CQVf3qUv+4WjpIXC7VmSAR1IIUNSj9gV2PRHsmMuv0
+   z/bE/U5ibClmoBXmeBKSeTMykophZL6Fr4QDMHy+gYtqF+6auLyZNOb8y
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="328259716"
+X-IronPort-AV: E=Sophos;i="5.97,265,1669104000"; 
+   d="scan'208";a="328259716"
+Received: from orsmga006.jf.intel.com ([10.7.209.51])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 11:22:26 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="642569336"
+X-IronPort-AV: E=Sophos;i="5.97,265,1669104000"; 
+   d="scan'208";a="642569336"
+Received: from agluck-desk3.sc.intel.com ([172.25.222.78])
+  by orsmga006-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 11:22:25 -0800
+Date: Wed, 1 Feb 2023 11:22:24 -0800
+From: Tony Luck <tony.luck@intel.com>
+To: Greg KH <gregkh@linuxfoundation.org>
 Cc: "Joseph, Jithu" <jithu.joseph@intel.com>,
 	"hdegoede@redhat.com" <hdegoede@redhat.com>,
 	"markgross@kernel.org" <markgross@kernel.org>,
@@ -33,11 +47,12 @@ Cc: "Joseph, Jithu" <jithu.joseph@intel.com>,
 	"Jimenez Gonzalez, Athenas" <athenas.jimenez.gonzalez@intel.com>,
 	"Mehta, Sohil" <sohil.mehta@intel.com>
 Subject: Re: [PATCH 4/5] platform/x86/intel/ifs: Implement Array BIST test
-Message-ID: <Y9qtI+CZaX051rLo@kroah.com>
+Message-ID: <Y9q78P9EKlz2k6Fg@agluck-desk3.sc.intel.com>
 References: <20230131234302.3997223-1-jithu.joseph@intel.com>
  <20230131234302.3997223-5-jithu.joseph@intel.com>
  <Y9nyWVNtfBEny66w@kroah.com>
  <SJ1PR11MB6083EBD2D2826E0A247AF242FCD19@SJ1PR11MB6083.namprd11.prod.outlook.com>
+ <Y9qtI+CZaX051rLo@kroah.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -46,50 +61,47 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <SJ1PR11MB6083EBD2D2826E0A247AF242FCD19@SJ1PR11MB6083.namprd11.prod.outlook.com>
+In-Reply-To: <Y9qtI+CZaX051rLo@kroah.com>
 
-On Wed, Feb 01, 2023 at 05:22:18PM +0000, Luck, Tony wrote:
-> > > +/* MSR_ARRAY_BIST bit fields */
-> > > +union ifs_array {
-> > > +   u64     data;
-> > > +   struct {
-> > > +           u32     array_bitmask           :32;
-> > > +           u32     array_bank              :16;
-> > > +           u32     rsvd                    :15;
-> > > +           u32     ctrl_result             :1;
-> >
-> > This isn't going to work well over time, just mask the bits you want off
-> > properly, don't rely on the compiler to lay them out like this.
+On Wed, Feb 01, 2023 at 07:19:15PM +0100, Greg KH wrote:
+> It shouldn't be that hard, lots of people use them today.
 > 
-> What is this "time" issue?  This driver is X86_64 specific (and it seems
-> incredibly unlikely that some other architecture will copy this h/w
-> interface so closely that they want to re-use this driver. There's an x86_64
-> ABI that says how bitfields in C are allocated. So should not break moving
-> to other C compilers.
+> Try and see!
 
-Ok, but generally this is considered a "bad idea" that you should not
-do.  It's been this way for many many years, just because this file only
-runs on one system now, doesn't mean you shouldn't use the proper apis.
 
-Also, odds are, using the proper apis will get you faster/smaller code
-than using a bitfield like this as compilers were notorious for doing
-odd things here in the past.
+Extract from the first of our in-field-scan tests:
 
-> Is there going to be a "re-write all drivers in Rust" edict coming soon?
+	while (activate.start <= activate.stop) {
 
-Don't be silly, it's been this way for drivers for decades.
+		... trigger scan ...
 
-> 
-> > Note, we have bitmask and bitfield operations, please use them.
-> 
-> We do, but code written using them is not as easy to read (unless
-> you wrap in even more macros, which has its own maintainability
-> issues).
+		if (status.chunk_num == activate.start) {
+			... check for too many retries on same chunk ...
+		} else {
+			activate.start = status.chunk_num;
+		}
+	}
 
-It shouldn't be that hard, lots of people use them today.
+using <linux/bitfield.h> becomes:
 
-Try and see!
+	while (FIELD_GET(GENMASK(7, 0), activate) <= FIELD_GET(GENMASK(15, 8), activate) {
 
-thanks,
 
-greg k-h
+		if (FIELD_GET(GENMASK(7, 0), status) == FIELD_GET(GENMASK(7, 0), activate) {
+			...
+		} else {
+			activate &= ~GENMASK(7, 0);
+			activate |= FIELD_PREP(GENMASK(7, 0), FIELD_GET(GENMASK(7, 0), status));
+		}
+	}
+
+While I can make that more legible with some helper #defines for the
+fields, it becomes more difficult to write, and no easier to read (since
+I then have to chase down what the macros are doing).
+
+If this were in some performance critical path, I might worry about
+whether the generated code was good enough. But this code path isn't
+remotely critical to anyone. The test takes up to 200 usec, so saving
+a handful of cycles in the surrounding code will be in the noise.
+
+-Tony
