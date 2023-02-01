@@ -1,33 +1,33 @@
-Received: from mga11.intel.com (mga11.intel.com [192.55.52.93])
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B3EA881D
-	for <patches@lists.linux.dev>; Wed,  1 Feb 2023 19:45:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 119AA881D
+	for <patches@lists.linux.dev>; Wed,  1 Feb 2023 19:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
   d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1675280747; x=1706816747;
+  t=1675281229; x=1706817229;
   h=message-id:date:mime-version:subject:to:cc:references:
    from:in-reply-to:content-transfer-encoding;
-  bh=5d9faIyt3THLEq6wTmtBD/I94RAQ6aWlbTrJuUrhtBs=;
-  b=BQBLUizqQ32GC8BSTIVZNgZ2dAU2jkyODDAAWFPHxJ7hn4nq8qGcrwYj
-   9+beUrukQy3TOMbkq3wpG9n8yRJJasVJ+pD98AENAXFhkepYp3Kyc8+8Y
-   dheKMZ3FQbptbskl+WTTFYCUJn0HcB+CHO5IcPC7IRZlBVJFXtDNUIlWG
-   iY98QUDLSJ/zIUsgp81SebSiE8Z4QG2T41q1sOGPvyafLj1L+up6gPpPr
-   uzfFjUPlFMDT8Ksnv8qk7b8u/d752V8OkyOm2DEfjxKgba/K/oJ45QBVW
-   NQxhKycEenhSJZn3aVNVufC2P0tT0ys2oJ8SwV3Q+PyVDwo3Of/4CgPkb
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="325951344"
+  bh=6HAwN89xCS0t9HJi/h3nmQ7e1/evEaQAYP62NFj2lds=;
+  b=c71AkwRniOlFKyKHmaKUx6RGRGW0ifXXI7EPVZJc4fJz/IzZMDCNYOby
+   hNviXBsTEkJjfd5kJVUlYB40o1kjuTSPunCzlXYtDgzvDEopLS72FTyzd
+   YQfkYGEsP0Ua6fh7pMz8MspWFIV5KC+i2PAidGLTYPIxCM8/yzo5LAAWl
+   juItmiet/ho7zekOjMqz37n2V76xXtnh7brHCUyVUgBZhq8mB7Dqz9GoO
+   A6/CYzeGOjSIW0/Rzlb/id1ZC3RxXPoGNk0e5ZXyWiLpRsNNiza96PThr
+   wxN21TllS0t+7WG/Bjl/DQ3R41m+8r4nnEZyWMGwyTC4LXYPeaK8ztkcp
+   Q==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="308598526"
 X-IronPort-AV: E=Sophos;i="5.97,265,1669104000"; 
-   d="scan'208";a="325951344"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by fmsmga102.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 11:45:46 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="993811995"
+   d="scan'208";a="308598526"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 11:53:48 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10608"; a="807702685"
 X-IronPort-AV: E=Sophos;i="5.97,265,1669104000"; 
-   d="scan'208";a="993811995"
+   d="scan'208";a="807702685"
 Received: from sgkhacha-mobl1.amr.corp.intel.com (HELO [10.212.227.86]) ([10.212.227.86])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 11:45:45 -0800
-Message-ID: <6a675f9b-2bbb-9317-2015-0b3362e49fdc@intel.com>
-Date: Wed, 1 Feb 2023 11:45:44 -0800
+  by fmsmga001-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 01 Feb 2023 11:53:47 -0800
+Message-ID: <0097571c-890f-997d-5b6a-0a7b474d8fe9@intel.com>
+Date: Wed, 1 Feb 2023 11:53:46 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,61 +38,78 @@ User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.6.1
 Subject: Re: [PATCH 4/5] platform/x86/intel/ifs: Implement Array BIST test
 Content-Language: en-US
-To: Jithu Joseph <jithu.joseph@intel.com>, hdegoede@redhat.com,
- markgross@kernel.org
-Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
- dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
- gregkh@linuxfoundation.org, rostedt@goodmis.org, ashok.raj@intel.com,
- tony.luck@intel.com, linux-kernel@vger.kernel.org,
- platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
- ravi.v.shankar@intel.com, thiago.macieira@intel.com,
- athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
+To: "Luck, Tony" <tony.luck@intel.com>, "Joseph, Jithu"
+ <jithu.joseph@intel.com>, "hdegoede@redhat.com" <hdegoede@redhat.com>,
+ "markgross@kernel.org" <markgross@kernel.org>
+Cc: "tglx@linutronix.de" <tglx@linutronix.de>,
+ "mingo@redhat.com" <mingo@redhat.com>, "bp@alien8.de" <bp@alien8.de>,
+ "dave.hansen@linux.intel.com" <dave.hansen@linux.intel.com>,
+ "x86@kernel.org" <x86@kernel.org>, "hpa@zytor.com" <hpa@zytor.com>,
+ "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+ "rostedt@goodmis.org" <rostedt@goodmis.org>, "Raj, Ashok"
+ <ashok.raj@intel.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "platform-driver-x86@vger.kernel.org" <platform-driver-x86@vger.kernel.org>,
+ "patches@lists.linux.dev" <patches@lists.linux.dev>,
+ "Shankar, Ravi V" <ravi.v.shankar@intel.com>,
+ "Macieira, Thiago" <thiago.macieira@intel.com>,
+ "Jimenez Gonzalez, Athenas" <athenas.jimenez.gonzalez@intel.com>,
+ "Mehta, Sohil" <sohil.mehta@intel.com>
 References: <20230131234302.3997223-1-jithu.joseph@intel.com>
  <20230131234302.3997223-5-jithu.joseph@intel.com>
+ <aedc760b-ca4d-031d-6797-4f0a1ab2d5d7@intel.com>
+ <SJ1PR11MB6083616D3AA5738944EE37DDFCD19@SJ1PR11MB6083.namprd11.prod.outlook.com>
 From: Dave Hansen <dave.hansen@intel.com>
-In-Reply-To: <20230131234302.3997223-5-jithu.joseph@intel.com>
+In-Reply-To: <SJ1PR11MB6083616D3AA5738944EE37DDFCD19@SJ1PR11MB6083.namprd11.prod.outlook.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-On 1/31/23 15:43, Jithu Joseph wrote:
-> +static void ifs_array_test_core(int cpu, struct device *dev)
-> +{
-> +	union ifs_array activate, status;
-> +	bool timed_out = false;
-> +	struct ifs_data *ifsd;
-> +	unsigned long timeout;
-> +	u64 msrvals[2];
-> +
-> +	ifsd = ifs_get_data(dev);
-> +
-> +	activate.data = 0;
-> +	activate.array_bitmask = ~0U;
-> +	activate.ctrl_result = 0;
+On 2/1/23 11:43, Luck, Tony wrote:
+>> Why bother with a bitfield?  Just do:
+> How much "bother" is a bitfield?
+> 
+>> union ifs_array {
+>>       u64     data;
+>>       struct {
+>>               u32     array_bitmask;
+>>               u16     array_bank;
+>>               u16     flags;
+>>       };
+>> };
+>>
+>> Then you only need to mask 'ctrl_result' out of flags.  You don't need
+>> any crazy macros.
+> "only need" to special case this one field ... but that's extra
+> code for humans to read (and humans aren't good at that)
+> rather than the computer (compiler) which is really good at
+> doing this.
 
-I think this whole 'ifs_array' as a union thing is bogus.  It's actually
-obfuscating and *COMPLICATING* the code more than anything.  Look what
-you have:
+I don't follow.
 
-	union ifs_array activate; // declare it on the stack, unzeroed
+If you have:
 
-	activate.data = 0; // zero the structure;
-	activate.array_bitmask = ~0U; // set one field
-	activate.ctrl_result = 0; // set the field to zero again???
+	struct foo {
+		u16	rsvd			:15;
+		u16	ctrl_result		:1;
+	};
 
-Can we make it less obfuscated?  How about:
+versus:
 
-	struct ifs_array activate = {}; // zero it
-	...
-	activate.array_bitmask = ~0U; // set the only nonzero field
+	struct bar {
+		u16	flags;
+	};
 
-Voila!  Less code, less obfuscation, less duplicated effort.  Or, worst
-case:
+and you do:
 
-	struct ifs_array activate;
-	...
-	memset(&activate, 0, sizeof(activate));
-	activate.array_bitmask = ~0U;
+	if (foo->ctrl_result)
+		something();
 
-That's sane and everyone knows what it does and doesn't have to know
-what unions are involved or how they are used.  It's correct code no
-matter *WHAT* craziness lies within 'activate'.
+versus:
+
+	if (bar->flags & CTRL_RESULT_MASK)
+		something();
+
+I think both of those are quite readable.  I'd argue that humans will be
+less _surprised_ by 'bar'.  I also like to write portable code even if
+it's going to be x86 only.  It helps people who are used to reading
+portable generic code read and find bugs in x86 only code.
