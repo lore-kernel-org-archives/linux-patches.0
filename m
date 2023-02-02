@@ -1,173 +1,97 @@
-Received: from mail-pf1-f171.google.com (mail-pf1-f171.google.com [209.85.210.171])
+Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 266188F7D
-	for <patches@lists.linux.dev>; Thu,  2 Feb 2023 21:53:33 +0000 (UTC)
-Received: by mail-pf1-f171.google.com with SMTP id 144so2195156pfv.11
-        for <patches@lists.linux.dev>; Thu, 02 Feb 2023 13:53:32 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6912D8F7D
+	for <patches@lists.linux.dev>; Thu,  2 Feb 2023 22:27:09 +0000 (UTC)
+Received: by mail-lf1-f49.google.com with SMTP id h24so5172221lfv.6
+        for <patches@lists.linux.dev>; Thu, 02 Feb 2023 14:27:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=0MCj0cFQfLc6l+F+joHSy2ngku9zmGXjqJjBuWdwnqo=;
-        b=THonEsNsrNwwDbGNAqMP0NR+bqP30aRxRaMPF9aTDsX2pPqFLiPILalesYfvBvM2gD
-         e9miAlWLqAArGKWpKox5efYs1QYJxBieHICLgKW7iip0R14dfj6wlAwQ4oF2dIrH10vc
-         FD57j/5KRh7NE3/TpOqv9remFAGIp720df5UQ=
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=rNl1d9WjdzfG8r6+o/TTbbJlOXijTqxl4wlecMFWfHc=;
+        b=W86IfmDtu2J4p+3OYOZAQ2kPhD4TOuckQrtBxpeHkGS4TFNPokFEKLLjCxRVjJzpnT
+         /tMtxDN6d3ao0Yr4ZUPI8JgXfGBBZR0Zrlcu3uRRYTTwu2dDMHLktXbmieOoq62CMAMz
+         8Rb5vGERLKakT/KMKZHBcOQs8aXITcg3SPmhI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=0MCj0cFQfLc6l+F+joHSy2ngku9zmGXjqJjBuWdwnqo=;
-        b=eFdYV8kvKr676835z3lWrbB65HdFlECGm54SLRG5LLXdUS0Oe958k7bUDbNlz40xFD
-         KjCZ86ysQdf9OrQToCp/rDSAu7BQm2vtYw2Ch/srxfIPE2sxFGkQQ6LQYVsQT3/cMaJ9
-         Yw8vyCMdaVY4OU4xK0UMPdC0mNeXoLxWZH/a0LJW2E/A7xtgah15uMggEbG6mGMDRJhD
-         Do+FQOX9UxHxXtsLEF+CXmnuaIhYBjpVyOxkB9PVgUoxznE3iReAkm1d3IdeLr+Ieunh
-         Qk4BCpo7YhZKl7r1aJ5ESqmgXkBphfXU7Dyw9oJHtHmji0cwxLY5EMtuoJw8F2OtqenN
-         O4vw==
-X-Gm-Message-State: AO0yUKXgFUNc3TbZZs0dc3h3ZVR98rQh/ijivcgxdXaQXSKpB0olNN0S
-	bcnU12hWFmXu9CqKZ2foswXXlg==
-X-Google-Smtp-Source: AK7set+QJxtFkEvINMG9wGwgRXKwCl9zJpvCZ3GD62ypGcPQW9TH9CoPBFotF6iO9/XlA9iDu4OdOA==
-X-Received: by 2002:a62:4ecc:0:b0:593:c41e:474 with SMTP id c195-20020a624ecc000000b00593c41e0474mr6856838pfb.9.1675374812326;
-        Thu, 02 Feb 2023 13:53:32 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:11a:201:4d8f:351:ff3d:e8eb])
-        by smtp.gmail.com with ESMTPSA id j22-20020a62b616000000b00594235980e4sm147447pff.181.2023.02.02.13.53.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Feb 2023 13:53:31 -0800 (PST)
-From: Stephen Boyd <swboyd@chromium.org>
-To: Vinod Koul <vkoul@kernel.org>
-Cc: linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	linux-arm-msm@vger.kernel.org,
-	linux-phy@lists.infradead.org,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>
-Subject: [PATCH v2] phy: qcom-qmp: Introduce Kconfig symbols for discrete drivers
-Date: Thu,  2 Feb 2023 13:53:29 -0800
-Message-Id: <20230202215330.2152726-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.39.1.519.gcb327c4b5f-goog
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=rNl1d9WjdzfG8r6+o/TTbbJlOXijTqxl4wlecMFWfHc=;
+        b=3PvxpFr8TKw/hSND1G+aSdeB6g7ZnEfPdVi8WN1bpyGCjGKpMyWEXfvWArNe0vHt1h
+         AWS8D/eFEuPKz0ZJovjl5etOCXmDmIM5YLJViP6+Vf3IRjbunZP97zzDldL7yrzrXS9m
+         GniqeRuZSYhdO0QqFkX6M1CYSmUA+bC3iIerEUWPZCPVKMVl4Mg4rtu9rzog/adHLNT/
+         ROPmtx9QzBBw0s/tqRg00RoOn/xicLERL1dlXoidTyryL07ykO28P744boSeyWajWDok
+         itLqKxmTbpEtkqV7ZGQd7caqG92tA00sci3LlNd6uwPeLpbT+xlhxddgPogQHjDwMXkD
+         nxgQ==
+X-Gm-Message-State: AO0yUKXhTadGyPrb6TxzWrx5FQpzE7z9dovHmpoCnjHaJOB2X/cuXhSN
+	jgSWDRtK08y2Zj1wg3n4UICFX8mW6NImRVoZalY9Dw==
+X-Google-Smtp-Source: AK7set8BLWiiUSmP1ZnKxPXJ1C4jOaYXgC8mhhJgjy8MjW3z0hLNlQVz0f5qVXMSJuwF1hP61XhwjGdZrkB7RksH74E=
+X-Received: by 2002:ac2:5a19:0:b0:4d8:775b:a58f with SMTP id
+ q25-20020ac25a19000000b004d8775ba58fmr1607468lfn.73.1675376827426; Thu, 02
+ Feb 2023 14:27:07 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 2 Feb 2023 14:27:06 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <Y81G3X7TSNk57hqc@kroah.com>
+References: <20230113204548.578798-1-swboyd@chromium.org> <Y81G3X7TSNk57hqc@kroah.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Thu, 2 Feb 2023 14:27:06 -0800
+Message-ID: <CAE-0n52WYuDhozGijwJoMOL9PLRQshLCMAJsWvudz4KdS+jN=Q@mail.gmail.com>
+Subject: Re: [PATCH 5.15.y v2 0/5] phy: qcom-qmp-combo: Backport some stable fixes
+To: Greg KH <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, linux-kernel@vger.kernel.org, 
+	patches@lists.linux.dev, Johan Hovold <johan+linaro@kernel.org>, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Vinod Koul <vkoul@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-Introduce a config option for each QMP PHY driver now that the QMP PHY
-mega-driver has been split up into different modules. This allows kernel
-configurators to limit the binary size of the kernel by only compiling
-in the QMP PHY driver that they need.
+Quoting Greg KH (2023-01-22 06:23:25)
+> On Fri, Jan 13, 2023 at 12:45:43PM -0800, Stephen Boyd wrote:
+> > After the qmp phy driver was split it looks like 5.15.y stable kernels
+> > aren't getting fixes like commit 7a7d86d14d07 ("phy: qcom-qmp-combo: fix
+> > broken power on") which is tagged for stable 5.10. Trogdor boards use
+> > the qmp phy on 5.15.y kernels, so I backported the fixes I could find
+> > that looked like we may possibly trip over at some point.
+> >
+> > USB and DP work on my Trogdor.Lazor board with this set.
+> >
+> > Changes from v1 (https://lore.kernel.org/r/20230113005405.3992011-1-swboyd@chromium.org):
+> >  * New patch for memleak on probe deferal to avoid compat issues
+> >  * Update "fix broken power on" patch for pcie/ufs phy
+> >
+> > Johan Hovold (5):
+> >   phy: qcom-qmp-combo: disable runtime PM on unbind
+> >   phy: qcom-qmp-combo: fix memleak on probe deferral
+> >   phy: qcom-qmp-usb: fix memleak on probe deferral
+> >   phy: qcom-qmp-combo: fix broken power on
+> >   phy: qcom-qmp-combo: fix runtime suspend
+> >
+> >  drivers/phy/qualcomm/phy-qcom-qmp.c | 97 ++++++++++++++++++-----------
+> >  1 file changed, 61 insertions(+), 36 deletions(-)
+> >
+> > Cc: Johan Hovold <johan+linaro@kernel.org>
+> > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > Cc: Vinod Koul <vkoul@kernel.org>
+> >
+> > base-commit: d57287729e229188e7d07ef0117fe927664e08cb
+> > --
+> > https://chromeos.dev
+> >
+>
+> For obvious reasons, I can't take this series if newer kernel releases
+> do not also contain all of these (no would you want me to.)
+>
+> So can you please also provide a backported series for 6.1.y so that
+> these can be considered?
 
-Leave the old config QCOM_QMP in place and make it into a menuconfig so
-that 'make olddefconfig' continues to work. Furthermore, set the default
-of the new Kconfig symbols to be QCOM_QMP so that the transition is
-smooth.
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
-
-Changes from v1 (https://lore.kernel.org/r/20230114000910.1256462-1-swboyd@chromium.org):
- * Pick up review tags
- * Update commit text to better reflect reality
- * Rebase to phy tree's next branch
-
- drivers/phy/qualcomm/Kconfig  | 50 ++++++++++++++++++++++++++++++++---
- drivers/phy/qualcomm/Makefile | 12 ++++-----
- 2 files changed, 52 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/Kconfig b/drivers/phy/qualcomm/Kconfig
-index eb9ddc685b38..62cf51aab1b8 100644
---- a/drivers/phy/qualcomm/Kconfig
-+++ b/drivers/phy/qualcomm/Kconfig
-@@ -50,14 +50,56 @@ config PHY_QCOM_PCIE2
- 	  Enable this to support the Qualcomm PCIe PHY, used with the Synopsys
- 	  based PCIe controller.
- 
--config PHY_QCOM_QMP
--	tristate "Qualcomm QMP PHY Driver"
-+menuconfig PHY_QCOM_QMP
-+	tristate "Qualcomm QMP PHY Drivers"
- 	depends on OF && COMMON_CLK && (ARCH_QCOM || COMPILE_TEST)
-+
-+if PHY_QCOM_QMP
-+
-+config PHY_QCOM_QMP_COMBO
-+	tristate "Qualcomm QMP Combo PHY Driver"
-+	default PHY_QCOM_QMP
- 	select GENERIC_PHY
- 	select MFD_SYSCON
- 	help
--	  Enable this to support the QMP PHY transceiver that is used
--	  with controllers such as PCIe, UFS, and USB on Qualcomm chips.
-+	  Enable this to support the QMP Combo PHY transceiver that is used
-+	  with USB3 and DisplayPort controllers on Qualcomm chips.
-+
-+config PHY_QCOM_QMP_PCIE
-+	tristate "Qualcomm QMP PCIe PHY Driver"
-+	depends on PCI || COMPILE_TEST
-+	select GENERIC_PHY
-+	default PHY_QCOM_QMP
-+	help
-+	  Enable this to support the QMP PCIe PHY transceiver that is used
-+	  with PCIe controllers on Qualcomm chips.
-+
-+config PHY_QCOM_QMP_PCIE_8996
-+	tristate "Qualcomm QMP PCIe 8996 PHY Driver"
-+	depends on PCI || COMPILE_TEST
-+	select GENERIC_PHY
-+	default PHY_QCOM_QMP
-+	help
-+	  Enable this to support the QMP PCIe PHY transceiver that is used
-+	  with PCIe controllers on Qualcomm msm8996 chips.
-+
-+config PHY_QCOM_QMP_UFS
-+	tristate "Qualcomm QMP UFS PHY Driver"
-+	select GENERIC_PHY
-+	default PHY_QCOM_QMP
-+	help
-+	  Enable this to support the QMP UFS PHY transceiver that is used
-+	  with UFS controllers on Qualcomm chips.
-+
-+config PHY_QCOM_QMP_USB
-+	tristate "Qualcomm QMP USB PHY Driver"
-+	select GENERIC_PHY
-+	default PHY_QCOM_QMP
-+	help
-+	  Enable this to support the QMP USB PHY transceiver that is used
-+	  with USB3 controllers on Qualcomm chips.
-+
-+endif # PHY_QCOM_QMP
- 
- config PHY_QCOM_QUSB2
- 	tristate "Qualcomm QUSB2 PHY Driver"
-diff --git a/drivers/phy/qualcomm/Makefile b/drivers/phy/qualcomm/Makefile
-index 65f6c30a3e93..79dd4e507961 100644
---- a/drivers/phy/qualcomm/Makefile
-+++ b/drivers/phy/qualcomm/Makefile
-@@ -5,12 +5,12 @@ obj-$(CONFIG_PHY_QCOM_EDP)		+= phy-qcom-edp.o
- obj-$(CONFIG_PHY_QCOM_IPQ4019_USB)	+= phy-qcom-ipq4019-usb.o
- obj-$(CONFIG_PHY_QCOM_IPQ806X_SATA)	+= phy-qcom-ipq806x-sata.o
- obj-$(CONFIG_PHY_QCOM_PCIE2)		+= phy-qcom-pcie2.o
--obj-$(CONFIG_PHY_QCOM_QMP)		+= \
--	phy-qcom-qmp-combo.o \
--	phy-qcom-qmp-pcie.o \
--	phy-qcom-qmp-pcie-msm8996.o \
--	phy-qcom-qmp-ufs.o \
--	phy-qcom-qmp-usb.o
-+
-+obj-$(CONFIG_PHY_QCOM_QMP_COMBO)	+= phy-qcom-qmp-combo.o
-+obj-$(CONFIG_PHY_QCOM_QMP_PCIE)		+= phy-qcom-qmp-pcie.o
-+obj-$(CONFIG_PHY_QCOM_QMP_PCIE_8996)	+= phy-qcom-qmp-pcie-msm8996.o
-+obj-$(CONFIG_PHY_QCOM_QMP_UFS)		+= phy-qcom-qmp-ufs.o
-+obj-$(CONFIG_PHY_QCOM_QMP_USB)		+= phy-qcom-qmp-usb.o
- 
- obj-$(CONFIG_PHY_QCOM_QUSB2)		+= phy-qcom-qusb2.o
- obj-$(CONFIG_PHY_QCOM_USB_HS) 		+= phy-qcom-usb-hs.o
-
-base-commit: b41499a1085b9278d73c6132d49849a6a86a81bc
--- 
-https://chromeos.dev
-
+Sure. All of the patches have been applied to 6.1.y except for the last
+one, which picks cleanly, c7b98de745cf ("phy: qcom-qmp-combo: fix
+runtime suspend"). I can send that over.
