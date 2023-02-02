@@ -1,82 +1,80 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093AB8F60;
-	Thu,  2 Feb 2023 20:15:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA4EC433EF;
-	Thu,  2 Feb 2023 20:15:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1675368940;
-	bh=90+83JUa3aCx3Qxq9grwhDgZO6pg9KQsVAzYsh3KHgs=;
-	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
-	b=LScRtsZLI6kbvVNMwo6ZZAvq+OCE/R2Z5Zh+ADsX8OMy3qvMJ0HQWe2ZOLNCEDO1N
-	 0/shpbgtZknqV14gPpzKQFEV839L60ptleOboIzjHYrtTWit0yeKmSL078wdpBVvsk
-	 OO0QBOXdpJvZzDXM96FH1GInhfGXBJzC1y1s4JDubQ7H0dbr3FceUTntvt8jTsDb8g
-	 4y3j/VAki8Djw+gOz6Ro+nKV6HDFnVzWhF3E1aYpyx8r9z3Se2d+H3oDKMabShpRcV
-	 U/+W/Spo2vSNp0qqYmbwLwSS464RkHQnWtoAmNjkmUBkCTcYYiODgwb0ZN1EPG0w35
-	 5W3TWjeCHL/uQ==
-From: Mark Brown <broonie@kernel.org>
-To: codrin.ciubotariu@microchip.com, lgirdwood@gmail.com, 
- claudiu.beznea@microchip.com, Nathan Chancellor <nathan@kernel.org>
-Cc: nicolas.ferre@microchip.com, alexandre.belloni@bootlin.com, 
- ndesaulniers@google.com, trix@redhat.com, alsa-devel@alsa-project.org, 
- linux-arm-kernel@lists.infradead.org, llvm@lists.linux.dev, 
- patches@lists.linux.dev
-In-Reply-To: <20230202-mchp-spdifrx-fix-uninit-mr-v1-1-629a045d7a2f@kernel.org>
-References: <20230202-mchp-spdifrx-fix-uninit-mr-v1-1-629a045d7a2f@kernel.org>
-Subject: Re: [PATCH] ASoC: mchp-spdifrx: Fix uninitialized use of mr in
- mchp_spdifrx_hw_params()
-Message-Id: <167536893801.1481377.11250986201319801994.b4-ty@kernel.org>
-Date: Thu, 02 Feb 2023 20:15:38 +0000
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26AC58F7D
+	for <patches@lists.linux.dev>; Thu,  2 Feb 2023 21:49:49 +0000 (UTC)
+Received: by mail-lf1-f42.google.com with SMTP id f34so5014833lfv.10
+        for <patches@lists.linux.dev>; Thu, 02 Feb 2023 13:49:48 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=KDgDu4Pg6Xihc/t0MuyIpqIzGcYpSCTohlnE5v2ocN4=;
+        b=E1GIRojfvxs42+81MLxR/crCAkmGa0m7dglBBaSPcKfBcrb70wqCF4vLE0F5FRVIcz
+         YxqXb0Z8Esm5uf3ctMLJVPXZFter8aeyB90SEQT1Y0dxU1Eic2jaxjmERcPwB+tyIVMU
+         DtgPX32JZJxL2eaOEVtlLcpeqwueU9dKrXMoE=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:user-agent:from:references
+         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=KDgDu4Pg6Xihc/t0MuyIpqIzGcYpSCTohlnE5v2ocN4=;
+        b=Vl9Xc/r11DFPlELknWhoMzZxE5vwyEybPA/TU4/Gpsm45J98Qz9gdI6s/FCFQut8++
+         Pcso9EvxECvOzMv7W9UV8tqGq9TWZUT1RoKWjHefDW568qER1zvtPxH5s1NmYCGYSmT+
+         JbUexfPt5tRl6UdImotQi/JwiEdWX1nw5LvOuTfUEgym0jtpHNvEkrkzpP8f4nktw2Fi
+         Vs6FnhhwTeJ8jN5UevwAve43GVLp0htzRKw3YVlNlK1XajAjDTlGhtOS2BQN9lIx0LIr
+         HrGziV2IBbsTpo2eNeY+NZFDHNbrIV9DG7GIXdfQFpD4BXp28eAg+3E0fb5fO1vL0zqt
+         YgoA==
+X-Gm-Message-State: AO0yUKWtc0IE39oDH0dc3bHyQ0lqoX4gvqpRGLwPq4mHzC3pLOgdIS8n
+	Gh5zuL40HwbifYUneKlqmHPVHPJxieBGdRh47vpRuw==
+X-Google-Smtp-Source: AK7set8tw6glWzk+9yeJqW1TWOCmFoiQcVBfgfEBkbXcPo7ThefbfwmGxv6nVfCiz4o5sPmEjXJ7Pl4PU3COKQNMYv8=
+X-Received: by 2002:a19:7005:0:b0:4d8:7552:2c19 with SMTP id
+ h5-20020a197005000000b004d875522c19mr1166727lfc.34.1675374587154; Thu, 02 Feb
+ 2023 13:49:47 -0800 (PST)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 2 Feb 2023 13:49:46 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-Mailer: b4 0.12.0
+In-Reply-To: <Y85l4aQmEW0iOHHa@hovoldconsulting.com>
+References: <20230113204548.578798-1-swboyd@chromium.org> <20230113204548.578798-6-swboyd@chromium.org>
+ <Y85l4aQmEW0iOHHa@hovoldconsulting.com>
+From: Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.10
+Date: Thu, 2 Feb 2023 13:49:46 -0800
+Message-ID: <CAE-0n52ky-ugoOe4yWZNNsma=HSp1MbTT+A=Bu9+R_=jBeTNoA@mail.gmail.com>
+Subject: Re: [PATCH 5.15.y v2 5/5] phy: qcom-qmp-combo: fix runtime suspend
+To: Johan Hovold <johan@kernel.org>
+Cc: stable@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>, 
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev, 
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Vinod Koul <vkoul@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 02 Feb 2023 09:34:19 -0700, Nathan Chancellor wrote:
-> Clang warns:
-> 
->   ../sound/soc/atmel/mchp-spdifrx.c:455:3: error: variable 'mr' is uninitialized when used here [-Werror,-Wuninitialized]
->                   mr |= SPDIFRX_MR_ENDIAN_BIG;
->                   ^~
->   ../sound/soc/atmel/mchp-spdifrx.c:432:8: note: initialize the variable 'mr' to silence this warning
->           u32 mr;
->                 ^
->                  = 0
->   1 error generated.
-> 
-> [...]
+Quoting Johan Hovold (2023-01-23 02:48:01)
+> On Fri, Jan 13, 2023 at 12:45:48PM -0800, Stephen Boyd wrote:
+> > diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > index b8646eaf1767..64a42e28e99f 100644
+> > --- a/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > +++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+> > @@ -4985,15 +4985,11 @@ static void qcom_qmp_phy_disable_autonomous_mode(struct qmp_phy *qphy)
+> >  static int __maybe_unused qcom_qmp_phy_runtime_suspend(struct device *dev)
+> >  {
+> >       struct qcom_qmp *qmp = dev_get_drvdata(dev);
+> > -     struct qmp_phy *qphy = qmp->phys[0];
+> > +     struct qmp_phy *qphy = qmp->usb_phy;
+> >       const struct qmp_phy_cfg *cfg = qphy->cfg;
+> >
+> >       dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qphy->mode);
+> >
+> > -     /* Supported only for USB3 PHY and luckily USB3 is the first phy */
+> > -     if (cfg->type != PHY_TYPE_USB3)
+> > -             return 0;
+>
+> This is still not correct as this code would now be executed also for
+> PCIe and UFS PHYs, which wasn't the case before.
 
-Applied to
-
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
-
-Thanks!
-
-[1/1] ASoC: mchp-spdifrx: Fix uninitialized use of mr in mchp_spdifrx_hw_params()
-      commit: 218674a45930c700486d27b765bf2f1b43f8cbf7
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
-
+Ah right. So weirdly, the conditional should be kept.
