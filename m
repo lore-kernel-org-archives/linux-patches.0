@@ -1,117 +1,82 @@
-Received: from mail-pg1-f170.google.com (mail-pg1-f170.google.com [209.85.215.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4AAD8F63
-	for <patches@lists.linux.dev>; Thu,  2 Feb 2023 19:00:49 +0000 (UTC)
-Received: by mail-pg1-f170.google.com with SMTP id 78so2019943pgb.8
-        for <patches@lists.linux.dev>; Thu, 02 Feb 2023 11:00:49 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=p3ZYbtaIavkAf5aV8P1noUyCGHCi0NGSeVESNHvFnYY=;
-        b=tERd3yuEcFjOGwSs1S4VXGdkVqpN6d4UcJwqaiEYucEdFffjmVwx6IDBVLa7XV4kOY
-         nkeXbAEzLNpaYr3MNTHiUQ8AU6tUR3k35WlLLOUxlKQYXW1vs7nUDrTUnF75dZCDdl3o
-         Vgb3Jmf8Oj2ZVHxRhbmUPbn+Wq6fNVwAlOjMd2lxhqQwYZsk471YYelimQvNaCIsbFtR
-         97gVJnMI13LURT+JSYWHTIWHKmrVE0AkyLru+Y6TE74DiYtQBmSakWGDyIk6aOfMhCTv
-         ZcAes6tsNcN4zMcgAOcWyvVFf1+5DdwWbLSuazZCgEA3RdGPwAcIUl50DbZA5YxsBPnw
-         Jx8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=p3ZYbtaIavkAf5aV8P1noUyCGHCi0NGSeVESNHvFnYY=;
-        b=N8grnjEt550fN3Icn/WuLqm+OQRCjZ+xYtr8sV58fF3YXpC00FYD1JbrW4CWeKFEqz
-         UemrhA3eLklqeZ/M07NLAuP4NpGghdftdNE0TEBKRjUj5oqwBeqxHo2IP9NVSI9cIPuO
-         TjkOTlnbXBqWTqKxyeeoO6nm0anTGchVw2O6BcAcLZ+FBodv6QiS2mJDBODqe706iIPr
-         J9EiUnZ+14MHstmJ18mwgQMXoUlN4rgZExGxfs7H9RTTzre3h35qhRyc7k9dPK497LWC
-         1DfEbKOTocgOyUdpjnUFNAYZ6TgeWgPVomTAPxLa77AX8AKB/vOMzlDZZWGkZPlZHocl
-         SLww==
-X-Gm-Message-State: AO0yUKVk7JZdBxjiWVuNKWe+cQmxqJbFF/J9veMtgYQCvRgBx92Q1mbe
-	a3TMGxrwcu9O3aLiwa7RveCaxa5EQx0+siPZM4IRBQ==
-X-Google-Smtp-Source: AK7set8NvDoA9gf4AicHigBtu9UpVuZVLhwEfuP2Vzy2j1FjpsC9TsZ1y3DDjZctSawx3/ctiEaprHJ0rsQLVFXvU3g=
-X-Received: by 2002:a63:dd43:0:b0:4da:af6:ed with SMTP id g3-20020a63dd43000000b004da0af600edmr1187478pgj.30.1675364449073;
- Thu, 02 Feb 2023 11:00:49 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093AB8F60;
+	Thu,  2 Feb 2023 20:15:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AA4EC433EF;
+	Thu,  2 Feb 2023 20:15:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1675368940;
+	bh=90+83JUa3aCx3Qxq9grwhDgZO6pg9KQsVAzYsh3KHgs=;
+	h=From:To:Cc:In-Reply-To:References:Subject:Date:From;
+	b=LScRtsZLI6kbvVNMwo6ZZAvq+OCE/R2Z5Zh+ADsX8OMy3qvMJ0HQWe2ZOLNCEDO1N
+	 0/shpbgtZknqV14gPpzKQFEV839L60ptleOboIzjHYrtTWit0yeKmSL078wdpBVvsk
+	 OO0QBOXdpJvZzDXM96FH1GInhfGXBJzC1y1s4JDubQ7H0dbr3FceUTntvt8jTsDb8g
+	 4y3j/VAki8Djw+gOz6Ro+nKV6HDFnVzWhF3E1aYpyx8r9z3Se2d+H3oDKMabShpRcV
+	 U/+W/Spo2vSNp0qqYmbwLwSS464RkHQnWtoAmNjkmUBkCTcYYiODgwb0ZN1EPG0w35
+	 5W3TWjeCHL/uQ==
+From: Mark Brown <broonie@kernel.org>
+To: codrin.ciubotariu@microchip.com, lgirdwood@gmail.com, 
+ claudiu.beznea@microchip.com, Nathan Chancellor <nathan@kernel.org>
+Cc: nicolas.ferre@microchip.com, alexandre.belloni@bootlin.com, 
+ ndesaulniers@google.com, trix@redhat.com, alsa-devel@alsa-project.org, 
+ linux-arm-kernel@lists.infradead.org, llvm@lists.linux.dev, 
+ patches@lists.linux.dev
+In-Reply-To: <20230202-mchp-spdifrx-fix-uninit-mr-v1-1-629a045d7a2f@kernel.org>
+References: <20230202-mchp-spdifrx-fix-uninit-mr-v1-1-629a045d7a2f@kernel.org>
+Subject: Re: [PATCH] ASoC: mchp-spdifrx: Fix uninitialized use of mr in
+ mchp_spdifrx_hw_params()
+Message-Id: <167536893801.1481377.11250986201319801994.b4-ty@kernel.org>
+Date: Thu, 02 Feb 2023 20:15:38 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230202-dm-parenthesis-warning-v1-1-ebdee213eeb9@kernel.org>
-In-Reply-To: <20230202-dm-parenthesis-warning-v1-1-ebdee213eeb9@kernel.org>
-From: Nick Desaulniers <ndesaulniers@google.com>
-Date: Thu, 2 Feb 2023 11:00:37 -0800
-Message-ID: <CAKwvOdnffHbU4ObT2jDr_iASEC==CUsX2FfqdA-+iLU4y5Ma=g@mail.gmail.com>
-Subject: Re: [PATCH] dm flakey: Fix clang -Wparentheses-equality in flakey_map()
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: agk@redhat.com, snitzer@kernel.org, trix@redhat.com, 
-	sweettea-kernel@dorminy.me, mpatocka@redhat.com, dm-devel@redhat.com, 
-	linux-kernel@vger.kernel.org, llvm@lists.linux.dev, patches@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-Mailer: b4 0.12.0
 
-On Thu, Feb 2, 2023 at 9:00 AM Nathan Chancellor <nathan@kernel.org> wrote:
->
+On Thu, 02 Feb 2023 09:34:19 -0700, Nathan Chancellor wrote:
 > Clang warns:
->
->   ../drivers/md/dm-flakey.c:369:28: error: equality comparison with extraneous parentheses [-Werror,-Wparentheses-equality]
->                           if ((fc->corrupt_bio_rw == WRITE)) {
->                                ~~~~~~~~~~~~~~~~~~~^~~~~~~~
->   ../drivers/md/dm-flakey.c:369:28: note: remove extraneous parentheses around the comparison to silence this warning
->                           if ((fc->corrupt_bio_rw == WRITE)) {
->                               ~                   ^       ~
->   ../drivers/md/dm-flakey.c:369:28: note: use '=' to turn this equality comparison into an assignment
->                           if ((fc->corrupt_bio_rw == WRITE)) {
->                                                   ^~
->                                                   =
+> 
+>   ../sound/soc/atmel/mchp-spdifrx.c:455:3: error: variable 'mr' is uninitialized when used here [-Werror,-Wuninitialized]
+>                   mr |= SPDIFRX_MR_ENDIAN_BIG;
+>                   ^~
+>   ../sound/soc/atmel/mchp-spdifrx.c:432:8: note: initialize the variable 'mr' to silence this warning
+>           u32 mr;
+>                 ^
+>                  = 0
 >   1 error generated.
->
-> GCC only warns when one set of parentheses are used for assignment
-> expressions, whereas clang additionally warns when two sets of
-> parentheses are used for equality comparisons. Remove the extra set of
-> parentheses to silence the warning as it suggests, as this is obviously
-> supposed to be an equality comparison.
->
-> Fixes: 0e766389cedc ("dm flakey: fix logic when corrupting a bio")
-> Link: https://github.com/ClangBuiltLinux/linux/issues/1798
-> Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+> 
+> [...]
 
-Thanks for the patch!
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
+Applied to
 
-> ---
-> I do not mind this change being squashed with the offending commit, as I
-> noticed it was Cc'd for stable, which would minimize the chance for
-> breakage.
-> ---
->  drivers/md/dm-flakey.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/drivers/md/dm-flakey.c b/drivers/md/dm-flakey.c
-> index 08f9aa476d97..335684a1aeaa 100644
-> --- a/drivers/md/dm-flakey.c
-> +++ b/drivers/md/dm-flakey.c
-> @@ -366,7 +366,7 @@ static int flakey_map(struct dm_target *ti, struct bio *bio)
->                  * Corrupt matching writes.
->                  */
->                 if (fc->corrupt_bio_byte) {
-> -                       if ((fc->corrupt_bio_rw == WRITE)) {
-> +                       if (fc->corrupt_bio_rw == WRITE) {
->                                 if (all_corrupt_bio_flags_match(bio, fc))
->                                         corrupt_bio_data(bio, fc);
->                         }
->
-> ---
-> base-commit: 6f30cc248507ee96c22ff4c3cbc86099ff12b7a9
-> change-id: 20230202-dm-parenthesis-warning-6139f4b5020b
->
-> Best regards,
-> --
-> Nathan Chancellor <nathan@kernel.org>
->
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
+Thanks!
 
--- 
+[1/1] ASoC: mchp-spdifrx: Fix uninitialized use of mr in mchp_spdifrx_hw_params()
+      commit: 218674a45930c700486d27b765bf2f1b43f8cbf7
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
 Thanks,
-~Nick Desaulniers
+Mark
+
