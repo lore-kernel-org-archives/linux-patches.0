@@ -1,34 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830F91FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:20:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04CD3C433D2;
-	Fri,  3 Feb 2023 10:20:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EA501FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:20:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8E01C433EF;
+	Fri,  3 Feb 2023 10:20:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419654;
-	bh=oa7tHOlecuPQs9W5vrkbnAaURhiPmPoKanwo93secLg=;
+	s=korg; t=1675419657;
+	bh=WxcJGs9JmjBIz7MtnQGfiAVBOir7rh3JhjDNt+dDZOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yfyOvgs/hegDLcfrSZQG5hv43zzjmi6Mrqlr7ow/mqO6vjeDm5ZihAZqY1cgC5xe4
-	 C39oNPZoQy01CDAzbHMabf/OhHl07LCKQdk/Wi/M/ZwazMdUib3TKf+qhpj749lTnl
-	 /zzQprNFIb/I8GdC1HqdwWN6Gk59sfwQNN+mU/+A=
+	b=eK7CZ852qB0sQMkGi/kL1+h5EvInD3rzjG8yowbdKP/elrlVNngOHFJrAfxNSaPRr
+	 LtuQp53x7qj1q0L0HnWy57Oxd4c0HvJs4ISpfv7U+5Sj+zgzWrjnStvIz9t5c7viKE
+	 V7DMDsUIpnq3a2UQcVHPHe2SLzSfU8FP38ubdYA8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Jann Horn <jannh@google.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 4.19 72/80] exit: Expose "oops_count" to sysfs
-Date: Fri,  3 Feb 2023 11:13:06 +0100
-Message-Id: <20230203101018.316619998@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 01/28] ARM: dts: imx: Fix pca9547 i2c-mux node name
+Date: Fri,  3 Feb 2023 11:12:49 +0100
+Message-Id: <20230203101010.026482587@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
-References: <20230203101015.263854890@linuxfoundation.org>
+In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
+References: <20230203101009.946745030@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,80 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit 9db89b41117024f80b38b15954017fb293133364 upstream.
+[ Upstream commit f78985f9f58380eec37f82c8a2c765aa7670fc29 ]
 
-Since Oops count is now tracked and is a fairly interesting signal, add
-the entry /sys/kernel/oops_count to expose it to userspace.
+"make dtbs_check":
 
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221117234328.594699-3-keescook@chromium.org
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    arch/arm/boot/dts/imx53-ppd.dtb: i2c-switch@70: $nodename:0: 'i2c-switch@70' does not match '^(i2c-?)?mux'
+	    From schema: Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
+    arch/arm/boot/dts/imx53-ppd.dtb: i2c-switch@70: Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'i2c@0', 'i2c@1', 'i2c@2', 'i2c@3', 'i2c@4', 'i2c@5', 'i2c@6', 'i2c@7' were unexpected)
+	    From schema: Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
+
+Fix this by renaming the PCA9547 node to "i2c-mux", to match the I2C bus
+multiplexer/switch DT bindings and the Generic Names Recommendation in
+the Devicetree Specification.
+
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-kernel-oops_count |    6 ++++++
- kernel/exit.c                                     |   22 ++++++++++++++++++++--
- 2 files changed, 26 insertions(+), 2 deletions(-)
- create mode 100644 Documentation/ABI/testing/sysfs-kernel-oops_count
+ arch/arm/boot/dts/imx53-ppd.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- /dev/null
-+++ b/Documentation/ABI/testing/sysfs-kernel-oops_count
-@@ -0,0 +1,6 @@
-+What:		/sys/kernel/oops_count
-+Date:		November 2022
-+KernelVersion:	6.2.0
-+Contact:	Linux Kernel Hardening List <linux-hardening@vger.kernel.org>
-+Description:
-+		Shows how many times the system has Oopsed since last boot.
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -62,6 +62,7 @@
- #include <linux/random.h>
- #include <linux/rcuwait.h>
- #include <linux/compat.h>
-+#include <linux/sysfs.h>
+diff --git a/arch/arm/boot/dts/imx53-ppd.dts b/arch/arm/boot/dts/imx53-ppd.dts
+index 37d0cffea99c..70c4a4852256 100644
+--- a/arch/arm/boot/dts/imx53-ppd.dts
++++ b/arch/arm/boot/dts/imx53-ppd.dts
+@@ -488,7 +488,7 @@ &i2c1 {
+ 	scl-gpios = <&gpio3 21 GPIO_ACTIVE_HIGH>;
+ 	status = "okay";
  
- #include <linux/uaccess.h>
- #include <asm/unistd.h>
-@@ -95,6 +96,25 @@ static __init int kernel_exit_sysctls_in
- late_initcall(kernel_exit_sysctls_init);
- #endif
- 
-+static atomic_t oops_count = ATOMIC_INIT(0);
-+
-+#ifdef CONFIG_SYSFS
-+static ssize_t oops_count_show(struct kobject *kobj, struct kobj_attribute *attr,
-+			       char *page)
-+{
-+	return sysfs_emit(page, "%d\n", atomic_read(&oops_count));
-+}
-+
-+static struct kobj_attribute oops_count_attr = __ATTR_RO(oops_count);
-+
-+static __init int kernel_exit_sysfs_init(void)
-+{
-+	sysfs_add_file_to_group(kernel_kobj, &oops_count_attr.attr, NULL);
-+	return 0;
-+}
-+late_initcall(kernel_exit_sysfs_init);
-+#endif
-+
- static void __unhash_process(struct task_struct *p, bool group_dead)
- {
- 	nr_threads--;
-@@ -951,8 +971,6 @@ EXPORT_SYMBOL_GPL(do_exit);
- 
- void __noreturn make_task_dead(int signr)
- {
--	static atomic_t oops_count = ATOMIC_INIT(0);
--
- 	/*
- 	 * Take the task off the cpu after something catastrophic has
- 	 * happened.
+-	i2c-switch@70 {
++	i2c-mux@70 {
+ 		compatible = "nxp,pca9547";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+-- 
+2.39.0
+
 
 
