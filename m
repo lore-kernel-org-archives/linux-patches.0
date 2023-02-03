@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E111FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E8FC433EF;
-	Fri,  3 Feb 2023 10:23:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B2B1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4457DC433EF;
+	Fri,  3 Feb 2023 10:23:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419822;
-	bh=KKT9nlYtpQ7Pb9dL4NaBymw1fdbaOTURA3l4RpsvtX8=;
+	s=korg; t=1675419825;
+	bh=qk5tTsGIO8023rVFYdm44Dfw3q3U3Zcp9VWIK+8jgcs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FynXm6zFo5w50EfEuZVAe05/drtoshvCNb2Nvnb5Tiu9kWJ17GRM3OcZt4WA1jjyP
-	 cTi53Xfjk0za+tPEqr1H37z4YUpImJLlNx1NPjy2mpS083c3+yVZCZ3MWpgcOZQ03g
-	 2mXN9Yp/sphSHiMrF23zmEyehRntutP/3OrV28sk=
+	b=R/1jwv9Q0kMq8C3qUE2pFeko0dO0G7ozjSP/ME3uW/+U60xvFAT5u064rdSKqadYM
+	 F2clLV271seB30/9anaFQHe9K0GXiwjS8auvn8eMTDjHbH/VlZepl4/u7pFeMGV7/X
+	 yOA+WSEdasewBX0M93jAVm85ARSgwkLZX3/M5NNY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hui Wang <hui.wang@canonical.com>,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Vinod Koul <vkoul@kernel.org>,
+	kernel test robot <lkp@intel.com>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 10/20] dmaengine: imx-sdma: Fix a possible memory leak in sdma_transfer_init
-Date: Fri,  3 Feb 2023 11:13:37 +0100
-Message-Id: <20230203101008.446050542@linuxfoundation.org>
+Subject: [PATCH 5.15 11/20] cifs: fix return of uninitialized rc in dfs_cache_update_tgthint()
+Date: Fri,  3 Feb 2023 11:13:38 +0100
+Message-Id: <20230203101008.486859284@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101007.985835823@linuxfoundation.org>
 References: <20230203101007.985835823@linuxfoundation.org>
@@ -36,47 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hui Wang <hui.wang@canonical.com>
+From: Paulo Alcantara <pc@cjr.nz>
 
-[ Upstream commit 1417f59ac0b02130ee56c0c50794b9b257be3d17 ]
+[ Upstream commit d6a49e8c4ca4d399ed65ac219585187fc8c2e2b1 ]
 
-If the function sdma_load_context() fails, the sdma_desc will be
-freed, but the allocated desc->bd is forgot to be freed.
+Fix this by initializing rc to 0 as cache_refresh_path() would not set
+it in case of success.
 
-We already met the sdma_load_context() failure case and the log as
-below:
-[ 450.699064] imx-sdma 30bd0000.dma-controller: Timeout waiting for CH0 ready
-...
-
-In this case, the desc->bd will not be freed without this change.
-
-Signed-off-by: Hui Wang <hui.wang@canonical.com>
-Reviewed-by: Sascha Hauer <s.hauer@pengutronix.de>
-Link: https://lore.kernel.org/r/20221130090800.102035-1-hui.wang@canonical.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Link: https://lore.kernel.org/all/202301190004.bEHvbKG6-lkp@intel.com/
+Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/imx-sdma.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/cifs/dfs_cache.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
-index 5215a5e39f3c..292f4c9a963d 100644
---- a/drivers/dma/imx-sdma.c
-+++ b/drivers/dma/imx-sdma.c
-@@ -1428,10 +1428,12 @@ static struct sdma_desc *sdma_transfer_init(struct sdma_channel *sdmac,
- 		sdma_config_ownership(sdmac, false, true, false);
+diff --git a/fs/cifs/dfs_cache.c b/fs/cifs/dfs_cache.c
+index 8c98fa507768..1864bdadf3dd 100644
+--- a/fs/cifs/dfs_cache.c
++++ b/fs/cifs/dfs_cache.c
+@@ -1050,10 +1050,10 @@ int dfs_cache_update_tgthint(const unsigned int xid, struct cifs_ses *ses,
+ 			     const struct nls_table *cp, int remap, const char *path,
+ 			     const struct dfs_cache_tgt_iterator *it)
+ {
+-	int rc;
+-	const char *npath;
+-	struct cache_entry *ce;
+ 	struct cache_dfs_tgt *t;
++	struct cache_entry *ce;
++	const char *npath;
++	int rc = 0;
  
- 	if (sdma_load_context(sdmac))
--		goto err_desc_out;
-+		goto err_bd_out;
- 
- 	return desc;
- 
-+err_bd_out:
-+	sdma_free_bd(desc);
- err_desc_out:
- 	kfree(desc);
- err_out:
+ 	npath = dfs_cache_canonical_path(path, cp, remap);
+ 	if (IS_ERR(npath))
 -- 
 2.39.0
 
