@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 743061FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:18:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F291BC433A0;
-	Fri,  3 Feb 2023 10:18:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E7F81FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:18:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D96FBC4339B;
+	Fri,  3 Feb 2023 10:18:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419510;
-	bh=T9VIyIm1xO5cjFvakPl7Bn+647iGGVdR06RocoiRhtc=;
+	s=korg; t=1675419514;
+	bh=rG1SKxKYeeWmXXAijIM6HLGVMA+L85yg6UhhYDCDE78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nt9sOsgWVzxmY8cmuD7SMBa1b6FycWFK2gPN84HpNrGQ4HjEulnwPy7Y/mx2tzOHk
-	 zR6Y9oDYg5uF9qdxTuhxDJMw78SAROQ9PuPAsM4wtNrNm0FroM4hmAQfiY0dCcyWT+
-	 ovWLYd1mEscsgzHRkgnI/Xdi0GzeHPj923QNdKZs=
+	b=1C+TRL6z8WGdxYj3GXvHlQJRY1tpybXX9YLy+MDaCRuGIsCRy0Uq8iLcN2KAUr7u/
+	 TrgJUw/hy+lxkOb7Ox89Z4meHlvGfJj8ObeTdlP6L8nq68MucEU9q3dJI2je/0YAU2
+	 es0wj4gYuxpJslm8uNCanD/BhXoDMxS1S3WXfdYo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Peter Korsgaard <peter@korsgaard.com>,
-	Vinod Koul <vkoul@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jason Xing <kernelxing@tencent.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 28/80] dmaengine: xilinx_dma: call of_node_put() when breaking out of for_each_child_of_node()
-Date: Fri,  3 Feb 2023 11:12:22 +0100
-Message-Id: <20230203101016.370368918@linuxfoundation.org>
+Subject: [PATCH 4.19 29/80] tcp: avoid the lookup process failing to get sk in ehash table
+Date: Fri,  3 Feb 2023 11:12:23 +0100
+Message-Id: <20230203101016.412855262@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
 References: <20230203101015.263854890@linuxfoundation.org>
@@ -36,39 +37,119 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit 596b53ccc36a546ab28e8897315c5b4d1d5a0200 ]
+[ Upstream commit 3f4ca5fafc08881d7a57daa20449d171f2887043 ]
 
-Since for_each_child_of_node() will increase the refcount of node, we need
-to call of_node_put() manually when breaking out of the iteration.
+While one cpu is working on looking up the right socket from ehash
+table, another cpu is done deleting the request socket and is about
+to add (or is adding) the big socket from the table. It means that
+we could miss both of them, even though it has little chance.
 
-Fixes: 9cd4360de609 ("dma: Add Xilinx AXI Video Direct Memory Access Engine driver support")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Acked-by: Peter Korsgaard <peter@korsgaard.com>
-Link: https://lore.kernel.org/r/20221122021612.1908866-1-liushixin2@huawei.com
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Let me draw a call trace map of the server side.
+   CPU 0                           CPU 1
+   -----                           -----
+tcp_v4_rcv()                  syn_recv_sock()
+                            inet_ehash_insert()
+                            -> sk_nulls_del_node_init_rcu(osk)
+__inet_lookup_established()
+                            -> __sk_nulls_add_node_rcu(sk, list)
+
+Notice that the CPU 0 is receiving the data after the final ack
+during 3-way shakehands and CPU 1 is still handling the final ack.
+
+Why could this be a real problem?
+This case is happening only when the final ack and the first data
+receiving by different CPUs. Then the server receiving data with
+ACK flag tries to search one proper established socket from ehash
+table, but apparently it fails as my map shows above. After that,
+the server fetches a listener socket and then sends a RST because
+it finds a ACK flag in the skb (data), which obeys RST definition
+in RFC 793.
+
+Besides, Eric pointed out there's one more race condition where it
+handles tw socket hashdance. Only by adding to the tail of the list
+before deleting the old one can we avoid the race if the reader has
+already begun the bucket traversal and it would possibly miss the head.
+
+Many thanks to Eric for great help from beginning to end.
+
+Fixes: 5e0724d027f0 ("tcp/dccp: fix hashdance race for passive sessions")
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/lkml/20230112065336.41034-1-kerneljasonxing@gmail.com/
+Link: https://lore.kernel.org/r/20230118015941.1313-1-kerneljasonxing@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/ipv4/inet_hashtables.c    | 17 +++++++++++++++--
+ net/ipv4/inet_timewait_sock.c |  8 ++++----
+ 2 files changed, 19 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index c56ce7cd1f6f..5f9945651e95 100644
---- a/drivers/dma/xilinx/xilinx_dma.c
-+++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -2759,8 +2759,10 @@ static int xilinx_dma_probe(struct platform_device *pdev)
- 	/* Initialize the channels */
- 	for_each_child_of_node(node, child) {
- 		err = xilinx_dma_child_probe(xdev, child);
--		if (err < 0)
-+		if (err < 0) {
-+			of_node_put(child);
- 			goto error;
+diff --git a/net/ipv4/inet_hashtables.c b/net/ipv4/inet_hashtables.c
+index 3c58019f0718..d64522af9c3a 100644
+--- a/net/ipv4/inet_hashtables.c
++++ b/net/ipv4/inet_hashtables.c
+@@ -579,8 +579,20 @@ bool inet_ehash_insert(struct sock *sk, struct sock *osk, bool *found_dup_sk)
+ 	spin_lock(lock);
+ 	if (osk) {
+ 		WARN_ON_ONCE(sk->sk_hash != osk->sk_hash);
+-		ret = sk_nulls_del_node_init_rcu(osk);
+-	} else if (found_dup_sk) {
++		ret = sk_hashed(osk);
++		if (ret) {
++			/* Before deleting the node, we insert a new one to make
++			 * sure that the look-up-sk process would not miss either
++			 * of them and that at least one node would exist in ehash
++			 * table all the time. Otherwise there's a tiny chance
++			 * that lookup process could find nothing in ehash table.
++			 */
++			__sk_nulls_add_node_tail_rcu(sk, list);
++			sk_nulls_del_node_init_rcu(osk);
 +		}
- 	}
++		goto unlock;
++	}
++	if (found_dup_sk) {
+ 		*found_dup_sk = inet_ehash_lookup_by_sk(sk, list);
+ 		if (*found_dup_sk)
+ 			ret = false;
+@@ -589,6 +601,7 @@ bool inet_ehash_insert(struct sock *sk, struct sock *osk, bool *found_dup_sk)
+ 	if (ret)
+ 		__sk_nulls_add_node_rcu(sk, list);
  
- 	if (xdev->dma_config->dmatype == XDMA_TYPE_VDMA) {
++unlock:
+ 	spin_unlock(lock);
+ 
+ 	return ret;
+diff --git a/net/ipv4/inet_timewait_sock.c b/net/ipv4/inet_timewait_sock.c
+index 88c5069b5d20..fedd19c22b39 100644
+--- a/net/ipv4/inet_timewait_sock.c
++++ b/net/ipv4/inet_timewait_sock.c
+@@ -80,10 +80,10 @@ void inet_twsk_put(struct inet_timewait_sock *tw)
+ }
+ EXPORT_SYMBOL_GPL(inet_twsk_put);
+ 
+-static void inet_twsk_add_node_rcu(struct inet_timewait_sock *tw,
+-				   struct hlist_nulls_head *list)
++static void inet_twsk_add_node_tail_rcu(struct inet_timewait_sock *tw,
++					struct hlist_nulls_head *list)
+ {
+-	hlist_nulls_add_head_rcu(&tw->tw_node, list);
++	hlist_nulls_add_tail_rcu(&tw->tw_node, list);
+ }
+ 
+ static void inet_twsk_add_bind_node(struct inet_timewait_sock *tw,
+@@ -119,7 +119,7 @@ void inet_twsk_hashdance(struct inet_timewait_sock *tw, struct sock *sk,
+ 
+ 	spin_lock(lock);
+ 
+-	inet_twsk_add_node_rcu(tw, &ehead->chain);
++	inet_twsk_add_node_tail_rcu(tw, &ehead->chain);
+ 
+ 	/* Step 3: Remove SK from hash chain */
+ 	if (__sk_nulls_del_node_init_rcu(sk))
 -- 
 2.39.0
 
