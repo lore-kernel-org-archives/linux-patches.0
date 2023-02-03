@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CEC71FBC
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:30:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96572C433D2;
-	Fri,  3 Feb 2023 10:30:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 373F31FBC
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:30:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 901AAC433D2;
+	Fri,  3 Feb 2023 10:30:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420237;
-	bh=ubhx+6jn2Ei4Fi41pGxJBU8ENCU3neMCtfe0bGU/w7E=;
+	s=korg; t=1675420240;
+	bh=tfsu1SA4WofwymTc7IbfYDNYaytKICd9f/jPHkiM1sI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ApCBRdNhwmy8zitnyQuLPHRBMA3Ai3Y825H3/7RMKPfkCTkedNdZh7KUEt2CLqbsR
-	 DmP9ED135G+ELP5y0R7UFQ1KSDWazOn71MQCelPVrfFAkurEsr74XskUJNfRDMoyyA
-	 C17znQNjiSylJUSmQfVhzwywGfu8gs+CaVbfqXnI=
+	b=LNTXeygfwHutlQNM4uuR8nYfEOxSpA345BoCc6RhpB3R5Di2jaxAFImhhDdzV1uu8
+	 5Ny4OEfLEqGtl7givP5DOm/Bw2otmO3gLu7vq7yk9O1idKJO+9HtPYFNK+c+02mKkn
+	 jlsZefEMac0jGkBs/mzK7dCrwEJfG3IkunA/cEy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
-	Sergey Shtylyov <s.shtylyov@omp.ru>,
-	"David S. Miller" <davem@davemloft.net>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 096/134] net: ravb: Fix possible hang if RIS2_QFF1 happen
-Date: Fri,  3 Feb 2023 11:13:21 +0100
-Message-Id: <20230203101028.172075943@linuxfoundation.org>
+Subject: [PATCH 5.4 097/134] thermal: intel: int340x: Add locking to int340x_thermal_get_trip_type()
+Date: Fri,  3 Feb 2023 11:13:22 +0100
+Message-Id: <20230203101028.221202598@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -36,47 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-[ Upstream commit f3c07758c9007a6bfff5290d9e19d3c41930c897 ]
+[ Upstream commit acd7e9ee57c880b99671dd99680cb707b7b5b0ee ]
 
-Since this driver enables the interrupt by RIC2_QFE1, this driver
-should clear the interrupt flag if it happens. Otherwise, the interrupt
-causes to hang the system.
+In order to prevent int340x_thermal_get_trip_type() from possibly
+racing with int340x_thermal_read_trips() invoked by int3403_notify()
+add locking to it in analogy with int340x_thermal_get_trip_temp().
 
-Note that this also fix a minor coding style (a comment indentation)
-around the fixed code.
-
-Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
-Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
-Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: 6757a7abe47b ("thermal: intel: int340x: Protect trip temperature from concurrent updates")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/renesas/ravb_main.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ .../intel/int340x_thermal/int340x_thermal_zone.c       | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
-index 3fd5155bdd5f..231a1295c470 100644
---- a/drivers/net/ethernet/renesas/ravb_main.c
-+++ b/drivers/net/ethernet/renesas/ravb_main.c
-@@ -736,14 +736,14 @@ static void ravb_error_interrupt(struct net_device *ndev)
- 	ravb_write(ndev, ~(EIS_QFS | EIS_RESERVED), EIS);
- 	if (eis & EIS_QFS) {
- 		ris2 = ravb_read(ndev, RIS2);
--		ravb_write(ndev, ~(RIS2_QFF0 | RIS2_RFFF | RIS2_RESERVED),
-+		ravb_write(ndev, ~(RIS2_QFF0 | RIS2_QFF1 | RIS2_RFFF | RIS2_RESERVED),
- 			   RIS2);
+diff --git a/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c b/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
+index 62ba34a4d7ae..9090f87b4491 100644
+--- a/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
++++ b/drivers/thermal/intel/int340x_thermal/int340x_thermal_zone.c
+@@ -80,11 +80,13 @@ static int int340x_thermal_get_trip_type(struct thermal_zone_device *zone,
+ 					 enum thermal_trip_type *type)
+ {
+ 	struct int34x_thermal_zone *d = zone->devdata;
+-	int i;
++	int i, ret = 0;
  
- 		/* Receive Descriptor Empty int */
- 		if (ris2 & RIS2_QFF0)
- 			priv->stats[RAVB_BE].rx_over_errors++;
+ 	if (d->override_ops && d->override_ops->get_trip_type)
+ 		return d->override_ops->get_trip_type(zone, trip, type);
  
--		    /* Receive Descriptor Empty int */
-+		/* Receive Descriptor Empty int */
- 		if (ris2 & RIS2_QFF1)
- 			priv->stats[RAVB_NC].rx_over_errors++;
++	mutex_lock(&d->trip_mutex);
++
+ 	if (trip < d->aux_trip_nr)
+ 		*type = THERMAL_TRIP_PASSIVE;
+ 	else if (trip == d->crt_trip_id)
+@@ -102,10 +104,12 @@ static int int340x_thermal_get_trip_type(struct thermal_zone_device *zone,
+ 			}
+ 		}
+ 		if (i == INT340X_THERMAL_MAX_ACT_TRIP_COUNT)
+-			return -EINVAL;
++			ret = -EINVAL;
+ 	}
  
+-	return 0;
++	mutex_unlock(&d->trip_mutex);
++
++	return ret;
+ }
+ 
+ static int int340x_thermal_set_trip_temp(struct thermal_zone_device *zone,
 -- 
 2.39.0
 
