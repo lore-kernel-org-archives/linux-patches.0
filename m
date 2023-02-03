@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326391FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:17:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3168C433EF;
-	Fri,  3 Feb 2023 10:17:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 454651FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:17:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B82D3C433EF;
+	Fri,  3 Feb 2023 10:17:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419439;
-	bh=7TB58F2YJRfwdowX6BjU2VDFV/ZoHgwBV6QbWTkAs9k=;
+	s=korg; t=1675419442;
+	bh=lHqXY8BP9PluxY4FmrLgcaVVPxYBjoSn6ptrU+YrONU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EUKge8e+dU/PFEWJWi2u3QSSKjAFqt+T5q88WW7WSYoD/mTWKiZNZXWEfBLC0qrf7
-	 Xat0gKgrRjIHhrdlXQzjblkOuw3f5KaV6dehsEFZK0+YDZMBoUaxbaj1xnu3O37uan
-	 Oq7/Qjdqf5JsAVzjvCn3c/bOZpAmm5UftYeVvyUA=
+	b=rn81KPHGzRmfvAqw1MQG2DTb7WEDjrNdi99YNsvFftFxrJ2Ehy8Gir6Y7Z5oT5t8d
+	 FBFadtVLzpMuQv/Ho572O+Umb4ha5CumsE6sBu93Eu33Tp5suiazRrqovMPoghYRr2
+	 dI40Y82BGjB6BpHCh7I6AxM0Ajs82rMjL4ygbhSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Steev Klimaszewski <steev@kali.org>,
-	Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH 4.14 29/62] EDAC/device: Respect any driver-supplied workqueue polling value
-Date: Fri,  3 Feb 2023 11:12:25 +0100
-Message-Id: <20230203101014.267522357@linuxfoundation.org>
+	Matthias Kaehlcke <mka@chromium.org>,
+	Peter Chen <peter.chen@nxp.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Florian Fainelli <f.fainelli@gmail.com>
+Subject: [PATCH 4.14 62/62] usb: host: xhci-plat: add wakeup entry at sysfs
+Date: Fri,  3 Feb 2023 11:12:58 +0100
+Message-Id: <20230203101015.639554272@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -37,79 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Peter Chen <peter.chen@nxp.com>
 
-commit cec669ff716cc83505c77b242aecf6f7baad869d upstream.
+commit 4bb4fc0dbfa23acab9b762949b91ffd52106fe4b upstream.
 
-The EDAC drivers may optionally pass the poll_msec value. Use that value
-if available, else fall back to 1000ms.
+With this change, there will be a wakeup entry at /sys/../power/wakeup,
+and the user could use this entry to choose whether enable xhci wakeup
+features (wake up system from suspend) or not.
 
-  [ bp: Touchups. ]
-
-Fixes: e27e3dac6517 ("drivers/edac: add edac_device class")
-Reported-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
-Cc: <stable@vger.kernel.org> # 4.9
-Link: https://lore.kernel.org/r/COZYL8MWN97H.MROQ391BGA09@otso
+Tested-by: Matthias Kaehlcke <mka@chromium.org>
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Peter Chen <peter.chen@nxp.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20200918131752.16488-6-mathias.nyman@linux.intel.com
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/edac/edac_device.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ drivers/usb/host/xhci-plat.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/edac/edac_device.c
-+++ b/drivers/edac/edac_device.c
-@@ -34,6 +34,9 @@
- static DEFINE_MUTEX(device_ctls_mutex);
- static LIST_HEAD(edac_device_list);
- 
-+/* Default workqueue processing interval on this instance, in msecs */
-+#define DEFAULT_POLL_INTERVAL 1000
-+
- #ifdef CONFIG_EDAC_DEBUG
- static void edac_device_dump_device(struct edac_device_ctl_info *edac_dev)
- {
-@@ -366,7 +369,7 @@ static void edac_device_workq_function(s
- 	 * whole one second to save timers firing all over the period
- 	 * between integral seconds
- 	 */
--	if (edac_dev->poll_msec == 1000)
-+	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
- 		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
- 	else
- 		edac_queue_work(&edac_dev->work, edac_dev->delay);
-@@ -396,7 +399,7 @@ static void edac_device_workq_setup(stru
- 	 * timers firing on sub-second basis, while they are happy
- 	 * to fire together on the 1 second exactly
- 	 */
--	if (edac_dev->poll_msec == 1000)
-+	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
- 		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
- 	else
- 		edac_queue_work(&edac_dev->work, edac_dev->delay);
-@@ -430,7 +433,7 @@ void edac_device_reset_delay_period(stru
- 	edac_dev->delay	    = msecs_to_jiffies(msec);
- 
- 	/* See comment in edac_device_workq_setup() above */
--	if (edac_dev->poll_msec == 1000)
-+	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
- 		edac_mod_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
- 	else
- 		edac_mod_work(&edac_dev->work, edac_dev->delay);
-@@ -472,11 +475,7 @@ int edac_device_add_device(struct edac_d
- 		/* This instance is NOW RUNNING */
- 		edac_dev->op_state = OP_RUNNING_POLL;
- 
--		/*
--		 * enable workq processing on this instance,
--		 * default = 1000 msec
--		 */
--		edac_device_workq_setup(edac_dev, 1000);
-+		edac_device_workq_setup(edac_dev, edac_dev->poll_msec ?: DEFAULT_POLL_INTERVAL);
- 	} else {
- 		edac_dev->op_state = OP_RUNNING_INTERRUPT;
+--- a/drivers/usb/host/xhci-plat.c
++++ b/drivers/usb/host/xhci-plat.c
+@@ -252,7 +252,7 @@ static int xhci_plat_probe(struct platfo
+ 			*priv = *priv_match;
  	}
+ 
+-	device_wakeup_enable(hcd->self.controller);
++	device_set_wakeup_capable(&pdev->dev, true);
+ 
+ 	xhci->clk = clk;
+ 	xhci->main_hcd = hcd;
 
 
