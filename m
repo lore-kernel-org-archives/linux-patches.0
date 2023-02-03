@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23FB41FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:15:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F07C4339B;
-	Fri,  3 Feb 2023 10:15:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 422331FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:15:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C618C4339B;
+	Fri,  3 Feb 2023 10:15:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419345;
-	bh=7UwvYFByB20saoVSvH1j/CggmuIiRUMJjLAS0+X/jfQ=;
+	s=korg; t=1675419348;
+	bh=CeJ2r+/LSNxIsohXanKRY9uSKANAWJGw/9fWllbpYtY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dLRAEV621Sl/OwxldWKHzV+7Wsr1XrmJN/VtwZrAe8JngGSZP8pzNKB9RQP9P5cMb
-	 5WVV+lohTJV4M51XpuGILhRVsOLgbom3VwDmprXEbAucGFEVgWDQ29CqtJo1RpgRpS
-	 MDpZhJWbcWYOYprWUIVNvourL8dbf0a4/hEvmyTg=
+	b=K5MgEeaG2J4t5l1tPHq9DpgfwPZY98WSSR50V37AHc+1YSnj8Uy5tGyej2HfKyoqP
+	 HgCdxnXAHGpl9VxnIjOwGAOGhpArBKVvMWXM7frhGKTPPEGOm9WxaH3xENZqFHOS7B
+	 ++UaLmFUlk2gENhYYZVUM6XWvRzGxBggYRp/xRxE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Dokyung Song <dokyungs@yonsei.ac.kr>,
+	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
+	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 30/62] netlink: annotate data races around dst_portid and dst_group
-Date: Fri,  3 Feb 2023 11:12:26 +0100
-Message-Id: <20230203101014.311613084@linuxfoundation.org>
+Subject: [PATCH 4.14 39/62] wifi: brcmfmac: fix up incorrect 4.14.y backport for brcmf_fw_map_chip_to_name()
+Date: Fri,  3 Feb 2023 11:12:35 +0100
+Message-Id: <20230203101014.663497180@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -35,87 +38,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-[ Upstream commit 004db64d185a5f23dfb891d7701e23713b2420ee ]
+In commit bc45aa1911bf699b9905f12414e3c1879d6b784f which is commit
+81d17f6f3331f03c8eafdacea68ab773426c1e3c upstream, the return value of the
+error condition needs to be reworked to return a real error and not NULL.
 
-netlink_getname(), netlink_sendmsg() and netlink_getsockbyportid()
-can read nlk->dst_portid and nlk->dst_group while another
-thread is changing them.
-
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
+Cc: Dokyung Song <dokyungs@yonsei.ac.kr>
+Cc: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
+Cc: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+Cc: Kalle Valo <kvalo@kernel.org>
+Cc: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/r/Y8gccXXyE30sbPSg@dev-arch.thelio-3990X
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netlink/af_netlink.c | 23 ++++++++++++++---------
- 1 file changed, 14 insertions(+), 9 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 1b2e99ce54e5..1547d0825668 100644
---- a/net/netlink/af_netlink.c
-+++ b/net/netlink/af_netlink.c
-@@ -1062,8 +1062,9 @@ static int netlink_connect(struct socket *sock, struct sockaddr *addr,
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/firmware.c
+@@ -574,7 +574,7 @@ int brcmf_fw_map_chip_to_name(u32 chip,
  
- 	if (addr->sa_family == AF_UNSPEC) {
- 		sk->sk_state	= NETLINK_UNCONNECTED;
--		nlk->dst_portid	= 0;
--		nlk->dst_group  = 0;
-+		/* dst_portid and dst_group can be read locklessly */
-+		WRITE_ONCE(nlk->dst_portid, 0);
-+		WRITE_ONCE(nlk->dst_group, 0);
- 		return 0;
- 	}
- 	if (addr->sa_family != AF_NETLINK)
-@@ -1085,8 +1086,9 @@ static int netlink_connect(struct socket *sock, struct sockaddr *addr,
- 
- 	if (err == 0) {
- 		sk->sk_state	= NETLINK_CONNECTED;
--		nlk->dst_portid = nladdr->nl_pid;
--		nlk->dst_group  = ffs(nladdr->nl_groups);
-+		/* dst_portid and dst_group can be read locklessly */
-+		WRITE_ONCE(nlk->dst_portid, nladdr->nl_pid);
-+		WRITE_ONCE(nlk->dst_group, ffs(nladdr->nl_groups));
+ 	if (chiprev >= BITS_PER_TYPE(u32)) {
+ 		brcmf_err("Invalid chip revision %u\n", chiprev);
+-		return NULL;
++		return -EINVAL;
  	}
  
- 	return err;
-@@ -1104,8 +1106,9 @@ static int netlink_getname(struct socket *sock, struct sockaddr *addr,
- 	*addr_len = sizeof(*nladdr);
- 
- 	if (peer) {
--		nladdr->nl_pid = nlk->dst_portid;
--		nladdr->nl_groups = netlink_group_mask(nlk->dst_group);
-+		/* Paired with WRITE_ONCE() in netlink_connect() */
-+		nladdr->nl_pid = READ_ONCE(nlk->dst_portid);
-+		nladdr->nl_groups = netlink_group_mask(READ_ONCE(nlk->dst_group));
- 	} else {
- 		nladdr->nl_pid = nlk->portid;
- 		netlink_lock_table();
-@@ -1134,8 +1137,9 @@ static struct sock *netlink_getsockbyportid(struct sock *ssk, u32 portid)
- 
- 	/* Don't bother queuing skb if kernel socket has no input function */
- 	nlk = nlk_sk(sock);
-+	/* dst_portid can be changed in netlink_connect() */
- 	if (sock->sk_state == NETLINK_CONNECTED &&
--	    nlk->dst_portid != nlk_sk(ssk)->portid) {
-+	    READ_ONCE(nlk->dst_portid) != nlk_sk(ssk)->portid) {
- 		sock_put(sock);
- 		return ERR_PTR(-ECONNREFUSED);
- 	}
-@@ -1847,8 +1851,9 @@ static int netlink_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
- 			goto out;
- 		netlink_skb_flags |= NETLINK_SKB_DST;
- 	} else {
--		dst_portid = nlk->dst_portid;
--		dst_group = nlk->dst_group;
-+		/* Paired with WRITE_ONCE() in netlink_connect() */
-+		dst_portid = READ_ONCE(nlk->dst_portid);
-+		dst_group = READ_ONCE(nlk->dst_group);
- 	}
- 
- 	/* Paired with WRITE_ONCE() in netlink_insert() */
--- 
-2.39.0
-
+ 	for (i = 0; i < table_size; i++) {
 
 
