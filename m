@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5644A1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:22:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C3BC433EF;
-	Fri,  3 Feb 2023 10:22:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5046C1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:22:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B73C433EF;
+	Fri,  3 Feb 2023 10:22:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419734;
-	bh=H0Hp6I3Q8cOz+PUapxlRXUDRk2kBz4qkaYnpLHVfn9U=;
+	s=korg; t=1675419737;
+	bh=iybTctbjMJ1gz+niId1IJbZDt4T31oDZ7QcrLv+nC6A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nxaqbjBWzr6tOyAuToL8d9o8d2zHM4yFexZ/D9EMCOcV4qHagnaDzP3ExK86DtY6z
-	 koqr6EB5qKzxqyfmGd3NiTlpQYLSphfrkKdUXM+jxYZzKpwh/kYE4U5a4/Fu/4ifFD
-	 uZkr7Wx4lNG2eXoItDWcoN30UBAjZ5sgHgTQNjrw=
+	b=DvLaNmg2P3A1DvvMlC0CpwLmtWj7Q5SfQTdrngH1yJYPQJ6Wri/X6osM5Yoi0Njhl
+	 bY7r56n+YTIqbMCezVG9nO17Y7PouMCYTzYD8qyn6zo9on1wO+oue8yeP9xrshQF3G
+	 4aop3U0QYbrG0w9uPm2Q8XHUU66BEeFsWIT7zBWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Roderick Colenbrander <roderick.colenbrander@sony.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Hui Wang <hui.wang@canonical.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 19/28] HID: playstation: sanity check DualSense calibration data.
-Date: Fri,  3 Feb 2023 11:13:07 +0100
-Message-Id: <20230203101010.786787179@linuxfoundation.org>
+Subject: [PATCH 6.1 20/28] dmaengine: imx-sdma: Fix a possible memory leak in sdma_transfer_init
+Date: Fri,  3 Feb 2023 11:13:08 +0100
+Message-Id: <20230203101010.836950668@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
 References: <20230203101009.946745030@linuxfoundation.org>
@@ -35,85 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Roderick Colenbrander <roderick@gaikai.com>
+From: Hui Wang <hui.wang@canonical.com>
 
-[ Upstream commit ccf1e1626d37745d0a697db67407beec9ae9d4b8 ]
+[ Upstream commit 1417f59ac0b02130ee56c0c50794b9b257be3d17 ]
 
-Make sure calibration values are defined to prevent potential kernel
-crashes. This fixes a hypothetical issue for virtual or clone devices
-inspired by a similar fix for DS4.
+If the function sdma_load_context() fails, the sdma_desc will be
+freed, but the allocated desc->bd is forgot to be freed.
 
-Signed-off-by: Roderick Colenbrander <roderick.colenbrander@sony.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+We already met the sdma_load_context() failure case and the log as
+below:
+[ 450.699064] imx-sdma 30bd0000.dma-controller: Timeout waiting for CH0 ready
+...
+
+In this case, the desc->bd will not be freed without this change.
+
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Reviewed-by: Sascha Hauer <s.hauer@pengutronix.de>
+Link: https://lore.kernel.org/r/20221130090800.102035-1-hui.wang@canonical.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-playstation.c | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ drivers/dma/imx-sdma.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-playstation.c b/drivers/hid/hid-playstation.c
-index 0b58763bfd30..2228f6e4ba23 100644
---- a/drivers/hid/hid-playstation.c
-+++ b/drivers/hid/hid-playstation.c
-@@ -712,6 +712,7 @@ ATTRIBUTE_GROUPS(ps_device);
+diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
+index fbea5f62dd98..b926abe4fa43 100644
+--- a/drivers/dma/imx-sdma.c
++++ b/drivers/dma/imx-sdma.c
+@@ -1521,10 +1521,12 @@ static struct sdma_desc *sdma_transfer_init(struct sdma_channel *sdmac,
+ 		sdma_config_ownership(sdmac, false, true, false);
  
- static int dualsense_get_calibration_data(struct dualsense *ds)
- {
-+	struct hid_device *hdev = ds->base.hdev;
- 	short gyro_pitch_bias, gyro_pitch_plus, gyro_pitch_minus;
- 	short gyro_yaw_bias, gyro_yaw_plus, gyro_yaw_minus;
- 	short gyro_roll_bias, gyro_roll_plus, gyro_roll_minus;
-@@ -722,6 +723,7 @@ static int dualsense_get_calibration_data(struct dualsense *ds)
- 	int speed_2x;
- 	int range_2g;
- 	int ret = 0;
-+	int i;
- 	uint8_t *buf;
+ 	if (sdma_load_context(sdmac))
+-		goto err_desc_out;
++		goto err_bd_out;
  
- 	buf = kzalloc(DS_FEATURE_REPORT_CALIBRATION_SIZE, GFP_KERNEL);
-@@ -773,6 +775,21 @@ static int dualsense_get_calibration_data(struct dualsense *ds)
- 	ds->gyro_calib_data[2].sens_numer = speed_2x*DS_GYRO_RES_PER_DEG_S;
- 	ds->gyro_calib_data[2].sens_denom = gyro_roll_plus - gyro_roll_minus;
+ 	return desc;
  
-+	/*
-+	 * Sanity check gyro calibration data. This is needed to prevent crashes
-+	 * during report handling of virtual, clone or broken devices not implementing
-+	 * calibration data properly.
-+	 */
-+	for (i = 0; i < ARRAY_SIZE(ds->gyro_calib_data); i++) {
-+		if (ds->gyro_calib_data[i].sens_denom == 0) {
-+			hid_warn(hdev, "Invalid gyro calibration data for axis (%d), disabling calibration.",
-+					ds->gyro_calib_data[i].abs_code);
-+			ds->gyro_calib_data[i].bias = 0;
-+			ds->gyro_calib_data[i].sens_numer = DS_GYRO_RANGE;
-+			ds->gyro_calib_data[i].sens_denom = S16_MAX;
-+		}
-+	}
-+
- 	/*
- 	 * Set accelerometer calibration and normalization parameters.
- 	 * Data values will be normalized to 1/DS_ACC_RES_PER_G g.
-@@ -795,6 +812,21 @@ static int dualsense_get_calibration_data(struct dualsense *ds)
- 	ds->accel_calib_data[2].sens_numer = 2*DS_ACC_RES_PER_G;
- 	ds->accel_calib_data[2].sens_denom = range_2g;
- 
-+	/*
-+	 * Sanity check accelerometer calibration data. This is needed to prevent crashes
-+	 * during report handling of virtual, clone or broken devices not implementing calibration
-+	 * data properly.
-+	 */
-+	for (i = 0; i < ARRAY_SIZE(ds->accel_calib_data); i++) {
-+		if (ds->accel_calib_data[i].sens_denom == 0) {
-+			hid_warn(hdev, "Invalid accelerometer calibration data for axis (%d), disabling calibration.",
-+					ds->accel_calib_data[i].abs_code);
-+			ds->accel_calib_data[i].bias = 0;
-+			ds->accel_calib_data[i].sens_numer = DS_ACC_RANGE;
-+			ds->accel_calib_data[i].sens_denom = S16_MAX;
-+		}
-+	}
-+
- err_free:
- 	kfree(buf);
- 	return ret;
++err_bd_out:
++	sdma_free_bd(desc);
+ err_desc_out:
+ 	kfree(desc);
+ err_out:
 -- 
 2.39.0
 
