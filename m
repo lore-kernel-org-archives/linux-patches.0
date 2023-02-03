@@ -1,35 +1,55 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 543251FBC
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:16:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 56B72C433EF;
-	Fri,  3 Feb 2023 10:16:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9670C1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:16:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8ACEBC4339C;
+	Fri,  3 Feb 2023 10:16:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419396;
-	bh=N+rV6EKhDZsum/KiBap1+KzA3Es3Qr9XZnZ+bEtsFeQ=;
+	s=korg; t=1675419399;
+	bh=3emU3UY8p14orfXfoNLqUgWSkbCt+Y+PCzx989oGuGM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VYydFemeHJYfyhryNJw8nyPu3TRwZwSZ8NiIogePiyANQLfEYSWbOJ7fw/vwn7BMj
-	 ZycOk/LZfuvSL4WZ1jcrMXwiktpS9F7ZMGmlAs7X3iIRagDdQXF57saYsOI/OSM6mO
-	 hUmiLM36qscePgGa2wiwNiKcTe9rhUU4RRVYc7DU=
+	b=1nPcQt5fjoRF/9726usp7zOayQOg7dAYCJ1GJt10lIlN0TC43zW3KClknkIc+AKY1
+	 XuXMWSb4veZe314bx1CSXlXMXktWeAG1A8IPNk5DzPhyeLqrOgFnTI+xM02tI6XVsY
+	 rxIjaVElQqHqVw3a9l2QdnlR1ru1EU2/jlX3jPAI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
+	Marco Elver <elver@google.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Peter Zijlstra <peterz@infradead.org>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
+	Dietmar Eggemann <dietmar.eggemann@arm.com>,
+	Steven Rostedt <rostedt@goodmis.org>,
+	Ben Segall <bsegall@google.com>,
+	Mel Gorman <mgorman@suse.de>,
+	Daniel Bristot de Oliveira <bristot@redhat.com>,
+	Valentin Schneider <vschneid@redhat.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Huang Ying <ying.huang@intel.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	linux-doc@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 4.14 54/62] exit: Allow oops_limit to be disabled
-Date: Fri,  3 Feb 2023 11:12:50 +0100
-Message-Id: <20230203101015.275705468@linuxfoundation.org>
+	David Gow <davidgow@google.com>,
+	tangmeng <tangmeng@uniontech.com>,
+	Jann Horn <jannh@google.com>,
+	Shuah Khan <skhan@linuxfoundation.org>,
+	Petr Mladek <pmladek@suse.com>,
+	"Paul E. McKenney" <paulmck@kernel.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	kasan-dev@googlegroups.com,
+	linux-mm@kvack.org,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Eric Biggers <ebiggers@google.com>
+Subject: [PATCH 4.14 55/62] panic: Consolidate open-coded panic_on_warn checks
+Date: Fri,  3 Feb 2023 11:12:51 +0100
+Message-Id: <20230203101015.317152114@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -45,53 +65,113 @@ Content-Transfer-Encoding: 8bit
 
 From: Kees Cook <keescook@chromium.org>
 
-commit de92f65719cd672f4b48397540b9f9eff67eca40 upstream.
+commit 79cc1ba7badf9e7a12af99695a557e9ce27ee967 upstream.
 
-In preparation for keeping oops_limit logic in sync with warn_limit,
-have oops_limit == 0 disable checking the Oops counter.
+Several run-time checkers (KASAN, UBSAN, KFENCE, KCSAN, sched) roll
+their own warnings, and each check "panic_on_warn". Consolidate this
+into a single function so that future instrumentation can be added in
+a single location.
 
-Cc: Jann Horn <jannh@google.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
+Cc: Marco Elver <elver@google.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Peter Zijlstra <peterz@infradead.org>
+Cc: Juri Lelli <juri.lelli@redhat.com>
+Cc: Vincent Guittot <vincent.guittot@linaro.org>
+Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
+Cc: Steven Rostedt <rostedt@goodmis.org>
+Cc: Ben Segall <bsegall@google.com>
+Cc: Mel Gorman <mgorman@suse.de>
+Cc: Daniel Bristot de Oliveira <bristot@redhat.com>
+Cc: Valentin Schneider <vschneid@redhat.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
 Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Eric Biggers <ebiggers@google.com>
-Cc: Huang Ying <ying.huang@intel.com>
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: linux-doc@vger.kernel.org
+Cc: David Gow <davidgow@google.com>
+Cc: tangmeng <tangmeng@uniontech.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Shuah Khan <skhan@linuxfoundation.org>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: "Paul E. McKenney" <paulmck@kernel.org>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
+Cc: kasan-dev@googlegroups.com
+Cc: linux-mm@kvack.org
+Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
 Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Marco Elver <elver@google.com>
+Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
+Link: https://lore.kernel.org/r/20221117234328.594699-4-keescook@chromium.org
 Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- Documentation/sysctl/kernel.txt |    5 +++--
- kernel/exit.c                   |    2 +-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ include/linux/kernel.h |    1 +
+ kernel/panic.c         |    9 +++++++--
+ kernel/sched/core.c    |    3 +--
+ mm/kasan/report.c      |    3 +--
+ 4 files changed, 10 insertions(+), 6 deletions(-)
 
---- a/Documentation/sysctl/kernel.txt
-+++ b/Documentation/sysctl/kernel.txt
-@@ -519,8 +519,9 @@ scanned for a given scan.
- oops_limit:
+--- a/include/linux/kernel.h
++++ b/include/linux/kernel.h
+@@ -293,6 +293,7 @@ extern long (*panic_blink)(int state);
+ __printf(1, 2)
+ void panic(const char *fmt, ...) __noreturn __cold;
+ void nmi_panic(struct pt_regs *regs, const char *msg);
++void check_panic_on_warn(const char *origin);
+ extern void oops_enter(void);
+ extern void oops_exit(void);
+ void print_oops_end_marker(void);
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -122,6 +122,12 @@ void nmi_panic(struct pt_regs *regs, con
+ }
+ EXPORT_SYMBOL(nmi_panic);
  
- Number of kernel oopses after which the kernel should panic when
--``panic_on_oops`` is not set. Setting this to 0 or 1 has the same effect
--as setting ``panic_on_oops=1``.
-+``panic_on_oops`` is not set. Setting this to 0 disables checking
-+the count. Setting this to  1 has the same effect as setting
-+``panic_on_oops=1``. The default value is 10000.
++void check_panic_on_warn(const char *origin)
++{
++	if (panic_on_warn)
++		panic("%s: panic_on_warn set ...\n", origin);
++}
++
+ /**
+  *	panic - halt the system
+  *	@fmt: The text string to print
+@@ -546,8 +552,7 @@ void __warn(const char *file, int line,
+ 	if (args)
+ 		vprintk(args->fmt, args->args);
  
- ==============================================================
+-	if (panic_on_warn)
+-		panic("panic_on_warn set ...\n");
++	check_panic_on_warn("kernel");
  
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -984,7 +984,7 @@ void __noreturn make_task_dead(int signr
- 	 * To make sure this can't happen, place an upper bound on how often the
- 	 * kernel may oops without panic().
- 	 */
--	if (atomic_inc_return(&oops_count) >= READ_ONCE(oops_limit))
-+	if (atomic_inc_return(&oops_count) >= READ_ONCE(oops_limit) && oops_limit)
- 		panic("Oopsed too often (kernel.oops_limit is %d)", oops_limit);
+ 	print_modules();
  
- 	do_exit(signr);
+--- a/kernel/sched/core.c
++++ b/kernel/sched/core.c
+@@ -3185,8 +3185,7 @@ static noinline void __schedule_bug(stru
+ 		print_ip_sym(preempt_disable_ip);
+ 		pr_cont("\n");
+ 	}
+-	if (panic_on_warn)
+-		panic("scheduling while atomic\n");
++	check_panic_on_warn("scheduling while atomic");
+ 
+ 	dump_stack();
+ 	add_taint(TAINT_WARN, LOCKDEP_STILL_OK);
+--- a/mm/kasan/report.c
++++ b/mm/kasan/report.c
+@@ -172,8 +172,7 @@ static void kasan_end_report(unsigned lo
+ 	pr_err("==================================================================\n");
+ 	add_taint(TAINT_BAD_PAGE, LOCKDEP_NOW_UNRELIABLE);
+ 	spin_unlock_irqrestore(&report_lock, *flags);
+-	if (panic_on_warn)
+-		panic("panic_on_warn set ...\n");
++	check_panic_on_warn("KASAN");
+ 	kasan_enable_current();
+ }
+ 
 
 
