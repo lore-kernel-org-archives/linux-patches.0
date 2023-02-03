@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3283F1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A588DC433D2;
-	Fri,  3 Feb 2023 10:21:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 956881FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B41BC433D2;
+	Fri,  3 Feb 2023 10:21:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419669;
-	bh=pVFhmK1OzbLwAKw8v2EFl1woG6UUyLfwuaTOEDUyuDI=;
+	s=korg; t=1675419672;
+	bh=IMSLEoUUOhgGZE8HXGFK0hq2i6vQWSXAvJe09sVSAr0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jz+VuyhhewXJIEoBcCFBxMO4PyhWStArFGSyEKa4KL5QdcwBLX4hPRN0dUuEMTGK/
-	 95EboZBpLGNk4KKt6ouucLEkBfj7+LdO8sAUGm5Y2SdIAYxXNevtx23dT2FSkfsz8B
-	 WX7GJbFS3dYT9HUHaJKqs/A2PLvvhu0ExD5tfCVU=
+	b=fOpdVR6fQa5sPurZXnsRSq41XZ91e7U0YvSpmZskhuCXGpN0Jee/xtFC/VtWU/FP0
+	 DflxSzS9iW4W4sZmDeTm7/gyRPhBFYRQ5TMmtqnJYNeAflehjsdUC+OuFxE1/SoMro
+	 6IVhb7t7Yiz4tvQN0Uz4tiZhRpJZHBUqX8eJgkTY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Eric Dumazet <edumazet@google.com>,
-	syzbot <syzkaller@googlegroups.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 48/80] netlink: annotate data races around nlk->portid
-Date: Fri,  3 Feb 2023 11:12:42 +0100
-Message-Id: <20230203101017.278060031@linuxfoundation.org>
+Subject: [PATCH 4.19 49/80] netlink: annotate data races around dst_portid and dst_group
+Date: Fri,  3 Feb 2023 11:12:43 +0100
+Message-Id: <20230203101017.319291480@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
 References: <20230203101015.263854890@linuxfoundation.org>
@@ -38,83 +37,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit c1bb9484e3b05166880da8574504156ccbd0549e ]
+[ Upstream commit 004db64d185a5f23dfb891d7701e23713b2420ee ]
 
-syzbot reminds us netlink_getname() runs locklessly [1]
-
-This first patch annotates the race against nlk->portid.
-
-Following patches take care of the remaining races.
-
-[1]
-BUG: KCSAN: data-race in netlink_getname / netlink_insert
-
-write to 0xffff88814176d310 of 4 bytes by task 2315 on cpu 1:
-netlink_insert+0xf1/0x9a0 net/netlink/af_netlink.c:583
-netlink_autobind+0xae/0x180 net/netlink/af_netlink.c:856
-netlink_sendmsg+0x444/0x760 net/netlink/af_netlink.c:1895
-sock_sendmsg_nosec net/socket.c:714 [inline]
-sock_sendmsg net/socket.c:734 [inline]
-____sys_sendmsg+0x38f/0x500 net/socket.c:2476
-___sys_sendmsg net/socket.c:2530 [inline]
-__sys_sendmsg+0x19a/0x230 net/socket.c:2559
-__do_sys_sendmsg net/socket.c:2568 [inline]
-__se_sys_sendmsg net/socket.c:2566 [inline]
-__x64_sys_sendmsg+0x42/0x50 net/socket.c:2566
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-read to 0xffff88814176d310 of 4 bytes by task 2316 on cpu 0:
-netlink_getname+0xcd/0x1a0 net/netlink/af_netlink.c:1144
-__sys_getsockname+0x11d/0x1b0 net/socket.c:2026
-__do_sys_getsockname net/socket.c:2041 [inline]
-__se_sys_getsockname net/socket.c:2038 [inline]
-__x64_sys_getsockname+0x3e/0x50 net/socket.c:2038
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
-entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-value changed: 0x00000000 -> 0xc9a49780
-
-Reported by Kernel Concurrency Sanitizer on:
-CPU: 0 PID: 2316 Comm: syz-executor.2 Not tainted 6.2.0-rc3-syzkaller-00030-ge8f60cd7db24-dirty #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+netlink_getname(), netlink_sendmsg() and netlink_getsockbyportid()
+can read nlk->dst_portid and nlk->dst_group while another
+thread is changing them.
 
 Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
 Signed-off-by: Eric Dumazet <edumazet@google.com>
-Reported-by: syzbot <syzkaller@googlegroups.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ net/netlink/af_netlink.c | 23 ++++++++++++++---------
+ 1 file changed, 14 insertions(+), 9 deletions(-)
 
 diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 966c709c3831..52bf99ed7093 100644
+index 52bf99ed7093..5c630506b7cd 100644
 --- a/net/netlink/af_netlink.c
 +++ b/net/netlink/af_netlink.c
-@@ -578,7 +578,9 @@ static int netlink_insert(struct sock *sk, u32 portid)
- 	if (nlk_sk(sk)->bound)
- 		goto err;
+@@ -1091,8 +1091,9 @@ static int netlink_connect(struct socket *sock, struct sockaddr *addr,
  
--	nlk_sk(sk)->portid = portid;
-+	/* portid can be read locklessly from netlink_getname(). */
-+	WRITE_ONCE(nlk_sk(sk)->portid, portid);
-+
- 	sock_hold(sk);
+ 	if (addr->sa_family == AF_UNSPEC) {
+ 		sk->sk_state	= NETLINK_UNCONNECTED;
+-		nlk->dst_portid	= 0;
+-		nlk->dst_group  = 0;
++		/* dst_portid and dst_group can be read locklessly */
++		WRITE_ONCE(nlk->dst_portid, 0);
++		WRITE_ONCE(nlk->dst_group, 0);
+ 		return 0;
+ 	}
+ 	if (addr->sa_family != AF_NETLINK)
+@@ -1114,8 +1115,9 @@ static int netlink_connect(struct socket *sock, struct sockaddr *addr,
  
- 	err = __netlink_insert(table, sk);
-@@ -1133,7 +1135,8 @@ static int netlink_getname(struct socket *sock, struct sockaddr *addr,
- 		nladdr->nl_pid = nlk->dst_portid;
- 		nladdr->nl_groups = netlink_group_mask(nlk->dst_group);
+ 	if (err == 0) {
+ 		sk->sk_state	= NETLINK_CONNECTED;
+-		nlk->dst_portid = nladdr->nl_pid;
+-		nlk->dst_group  = ffs(nladdr->nl_groups);
++		/* dst_portid and dst_group can be read locklessly */
++		WRITE_ONCE(nlk->dst_portid, nladdr->nl_pid);
++		WRITE_ONCE(nlk->dst_group, ffs(nladdr->nl_groups));
+ 	}
+ 
+ 	return err;
+@@ -1132,8 +1134,9 @@ static int netlink_getname(struct socket *sock, struct sockaddr *addr,
+ 	nladdr->nl_pad = 0;
+ 
+ 	if (peer) {
+-		nladdr->nl_pid = nlk->dst_portid;
+-		nladdr->nl_groups = netlink_group_mask(nlk->dst_group);
++		/* Paired with WRITE_ONCE() in netlink_connect() */
++		nladdr->nl_pid = READ_ONCE(nlk->dst_portid);
++		nladdr->nl_groups = netlink_group_mask(READ_ONCE(nlk->dst_group));
  	} else {
--		nladdr->nl_pid = nlk->portid;
-+		/* Paired with WRITE_ONCE() in netlink_insert() */
-+		nladdr->nl_pid = READ_ONCE(nlk->portid);
- 		netlink_lock_table();
- 		nladdr->nl_groups = nlk->groups ? nlk->groups[0] : 0;
- 		netlink_unlock_table();
+ 		/* Paired with WRITE_ONCE() in netlink_insert() */
+ 		nladdr->nl_pid = READ_ONCE(nlk->portid);
+@@ -1163,8 +1166,9 @@ static struct sock *netlink_getsockbyportid(struct sock *ssk, u32 portid)
+ 
+ 	/* Don't bother queuing skb if kernel socket has no input function */
+ 	nlk = nlk_sk(sock);
++	/* dst_portid can be changed in netlink_connect() */
+ 	if (sock->sk_state == NETLINK_CONNECTED &&
+-	    nlk->dst_portid != nlk_sk(ssk)->portid) {
++	    READ_ONCE(nlk->dst_portid) != nlk_sk(ssk)->portid) {
+ 		sock_put(sock);
+ 		return ERR_PTR(-ECONNREFUSED);
+ 	}
+@@ -1876,8 +1880,9 @@ static int netlink_sendmsg(struct socket *sock, struct msghdr *msg, size_t len)
+ 			goto out;
+ 		netlink_skb_flags |= NETLINK_SKB_DST;
+ 	} else {
+-		dst_portid = nlk->dst_portid;
+-		dst_group = nlk->dst_group;
++		/* Paired with WRITE_ONCE() in netlink_connect() */
++		dst_portid = READ_ONCE(nlk->dst_portid);
++		dst_group = READ_ONCE(nlk->dst_group);
+ 	}
+ 
+ 	/* Paired with WRITE_ONCE() in netlink_insert() */
 -- 
 2.39.0
 
