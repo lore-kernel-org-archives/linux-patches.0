@@ -1,38 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 503251FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 915CBC433D2;
-	Fri,  3 Feb 2023 10:20:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C211FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5909C433D2;
+	Fri,  3 Feb 2023 10:21:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419660;
-	bh=/VgTckNen0NoZp3QkraZBalffdZWyEDO/GFqKXBbjzI=;
+	s=korg; t=1675419663;
+	bh=ha6wSSidaRlk8k90MtcnTgktnMiu1qtSpWXQtQtoTg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2UsKDAgOdKmrnYVaGx8QTiPvphAiZXc1PLFJQ0QK/Sxkmss0OskLZeImq736FypTa
-	 TPmANKdaASkXR82JTNH2O0HUpafrxAyQcZ/vPV8uwIYXkJ45p6PALlGSkJf4GJqAfE
-	 xEvEWv9CbMaMgABw9z27QJUGdq//TUAg15eMCSLA=
+	b=ClaU5HOy3jNuu92Z0fWgVW9KZiZF5ipWNNOH+8eq2vfHszDP7O8aN8Owzp9zkcP/H
+	 rTIO+cZrScn1FcBBeRdGz4Dua3XrcKK9uuWwysblJY7EWWR2W5o8mh9YQV+xiE4Fmc
+	 NClRJFJsyYZQM6dWozeFDxDOk8zDDUA6CyxZcees=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Huang Ying <ying.huang@intel.com>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Arnd Bergmann <arnd@arndb.de>,
-	linux-doc@vger.kernel.org,
-	Kees Cook <keescook@chromium.org>
-Subject: [PATCH 4.19 73/80] exit: Allow oops_limit to be disabled
-Date: Fri,  3 Feb 2023 11:13:07 +0100
-Message-Id: <20230203101018.358100986@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 02/28] ARM: dts: vf610: Fix pca9548 i2c-mux node names
+Date: Fri,  3 Feb 2023 11:12:50 +0100
+Message-Id: <20230203101010.071324454@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
-References: <20230203101015.263854890@linuxfoundation.org>
+In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
+References: <20230203101009.946745030@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -43,55 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit de92f65719cd672f4b48397540b9f9eff67eca40 upstream.
+[ Upstream commit 42825d1f269355d63554ab3c3762611e4d8053e9 ]
 
-In preparation for keeping oops_limit logic in sync with warn_limit,
-have oops_limit == 0 disable checking the Oops counter.
+"make dtbs_check":
 
-Cc: Jann Horn <jannh@google.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: "Jason A. Donenfeld" <Jason@zx2c4.com>
-Cc: Eric Biggers <ebiggers@google.com>
-Cc: Huang Ying <ying.huang@intel.com>
-Cc: "Eric W. Biederman" <ebiederm@xmission.com>
-Cc: Arnd Bergmann <arnd@arndb.de>
-Cc: linux-doc@vger.kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    arch/arm/boot/dts/vf610-zii-dev-rev-b.dtb: tca9548@70: $nodename:0: 'tca9548@70' does not match '^(i2c-?)?mux'
+	    From schema: Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
+    arch/arm/boot/dts/vf610-zii-dev-rev-b.dtb: tca9548@70: Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'i2c@0', 'i2c@1', 'i2c@2', 'i2c@3', 'i2c@4' were unexpected)
+	    From schema: /scratch/geert/linux/linux-renesas/Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
+    ...
+
+Fix this by renaming PCA9548 nodes to "i2c-mux", to match the I2C bus
+multiplexer/switch DT bindings and the Generic Names Recommendation in
+the Devicetree Specification.
+
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/sysctl/kernel.txt |    5 +++--
- kernel/exit.c                   |    2 +-
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/vf610-zii-dev-rev-b.dts | 2 +-
+ arch/arm/boot/dts/vf610-zii-dev-rev-c.dts | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/Documentation/sysctl/kernel.txt
-+++ b/Documentation/sysctl/kernel.txt
-@@ -559,8 +559,9 @@ scanned for a given scan.
- oops_limit:
+diff --git a/arch/arm/boot/dts/vf610-zii-dev-rev-b.dts b/arch/arm/boot/dts/vf610-zii-dev-rev-b.dts
+index 42ed4a04a12e..6280c5e86a12 100644
+--- a/arch/arm/boot/dts/vf610-zii-dev-rev-b.dts
++++ b/arch/arm/boot/dts/vf610-zii-dev-rev-b.dts
+@@ -345,7 +345,7 @@ gpio6: io-expander@22 {
+ };
  
- Number of kernel oopses after which the kernel should panic when
--``panic_on_oops`` is not set. Setting this to 0 or 1 has the same effect
--as setting ``panic_on_oops=1``.
-+``panic_on_oops`` is not set. Setting this to 0 disables checking
-+the count. Setting this to  1 has the same effect as setting
-+``panic_on_oops=1``. The default value is 10000.
+ &i2c2 {
+-	tca9548@70 {
++	i2c-mux@70 {
+ 		compatible = "nxp,pca9548";
+ 		pinctrl-0 = <&pinctrl_i2c_mux_reset>;
+ 		pinctrl-names = "default";
+diff --git a/arch/arm/boot/dts/vf610-zii-dev-rev-c.dts b/arch/arm/boot/dts/vf610-zii-dev-rev-c.dts
+index de79dcfd32e6..ba2001f37315 100644
+--- a/arch/arm/boot/dts/vf610-zii-dev-rev-c.dts
++++ b/arch/arm/boot/dts/vf610-zii-dev-rev-c.dts
+@@ -340,7 +340,7 @@ eeprom@50 {
+ };
  
- ==============================================================
- 
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -986,7 +986,7 @@ void __noreturn make_task_dead(int signr
- 	 * To make sure this can't happen, place an upper bound on how often the
- 	 * kernel may oops without panic().
- 	 */
--	if (atomic_inc_return(&oops_count) >= READ_ONCE(oops_limit))
-+	if (atomic_inc_return(&oops_count) >= READ_ONCE(oops_limit) && oops_limit)
- 		panic("Oopsed too often (kernel.oops_limit is %d)", oops_limit);
- 
- 	do_exit(signr);
+ &i2c2 {
+-	tca9548@70 {
++	i2c-mux@70 {
+ 		compatible = "nxp,pca9548";
+ 		pinctrl-0 = <&pinctrl_i2c_mux_reset>;
+ 		pinctrl-names = "default";
+-- 
+2.39.0
+
 
 
