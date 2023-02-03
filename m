@@ -1,34 +1,39 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B34A1FBC
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:30:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6496CC433EF;
-	Fri,  3 Feb 2023 10:30:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2E6721FBC
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:30:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76D6DC433D2;
+	Fri,  3 Feb 2023 10:30:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420207;
-	bh=Z8hXusJkDckdwRCJs0czb6woDYTT6MhIM6MNbsiP7L4=;
+	s=korg; t=1675420210;
+	bh=kqGRXnEMrWJ0HAljQwIowisBctvphsQPY24cGx5mihE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OwZ2z2nh9SHd4gnzOF1jXwPC1qObq1x1bcx/QD2TBDF2VJAOxabSrtpzz4Vgq6ZrA
-	 j87E0urblTzipYpkcjVpCW79sB4A2CydDq9V5zgSbVx4KJEb9XcIK8mBX/5qGjERcy
-	 rkeDH6UymzagjDy7zRhk/ihibpdxC039QWFO4KCk=
+	b=m4PiuRyWekzC9yhXQd4ZslI3wz+FRYgGFaewDB+taQ1poR/H1zSSf+MWvdNW1CH5y
+	 CLGoVEf/dAg2KVcQmxi4Qcl7Bmu6UV27XVDByS1u5pyFARxBBCT/5Yql8fd5THXsOE
+	 756npjp1EqQOM+czen4yBQYi8P0UBGe8k5LivrVs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Marco Elver <elver@google.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Baoquan He <bhe@redhat.com>,
-	Jonathan Corbet <corbet@lwn.net>,
-	Xuefeng Li <lixuefeng@loongson.cn>,
+	David Gow <davidgow@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>,
+	Andrey Konovalov <andreyknvl@google.com>,
+	Brendan Higgins <brendanhiggins@google.com>,
+	Andrey Ryabinin <aryabinin@virtuozzo.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Ingo Molnar <mingo@redhat.com>,
+	Juri Lelli <juri.lelli@redhat.com>,
+	Patricia Alfonso <trishalfonso@google.com>,
+	Peter Zijlstra <a.p.zijlstra@chello.nl>,
+	Shuah Khan <shuah@kernel.org>,
+	Vincent Guittot <vincent.guittot@linaro.org>,
 	Linus Torvalds <torvalds@linux-foundation.org>,
 	Eric Biggers <ebiggers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 115/134] panic: unset panic_on_warn inside panic()
-Date: Fri,  3 Feb 2023 11:13:40 +0100
-Message-Id: <20230203101029.010886300@linuxfoundation.org>
+Subject: [PATCH 5.4 116/134] mm: kasan: do not panic if both panic_on_warn and kasan_multishot set
+Date: Fri,  3 Feb 2023 11:13:41 +0100
+Message-Id: <20230203101029.044317449@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -42,75 +47,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: David Gow <davidgow@google.com>
 
-commit 1a2383e8b84c0451fd9b1eec3b9aab16f30b597c upstream.
+commit be4f1ae978ffe98cc95ec49ceb95386fb4474974 upstream.
 
-In the current code, the following three places need to unset
-panic_on_warn before calling panic() to avoid recursive panics:
+KASAN errors will currently trigger a panic when panic_on_warn is set.
+This renders kasan_multishot useless, as further KASAN errors won't be
+reported if the kernel has already paniced.  By making kasan_multishot
+disable this behaviour for KASAN errors, we can still have the benefits of
+panic_on_warn for non-KASAN warnings, yet be able to use kasan_multishot.
 
-kernel/kcsan/report.c: print_report()
-kernel/sched/core.c: __schedule_bug()
-mm/kfence/report.c: kfence_report_error()
+This is particularly important when running KASAN tests, which need to
+trigger multiple KASAN errors: previously these would panic the system if
+panic_on_warn was set, now they can run (and will panic the system should
+non-KASAN warnings show up).
 
-In order to avoid copy-pasting "panic_on_warn = 0" all over the places,
-it is better to move it inside panic() and then remove it from the other
-places.
-
-Link: https://lkml.kernel.org/r/1644324666-15947-4-git-send-email-yangtiezhu@loongson.cn
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Reviewed-by: Marco Elver <elver@google.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Baoquan He <bhe@redhat.com>
-Cc: Jonathan Corbet <corbet@lwn.net>
-Cc: Xuefeng Li <lixuefeng@loongson.cn>
+Signed-off-by: David Gow <davidgow@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Tested-by: Andrey Konovalov <andreyknvl@google.com>
+Reviewed-by: Andrey Konovalov <andreyknvl@google.com>
+Reviewed-by: Brendan Higgins <brendanhiggins@google.com>
+Cc: Andrey Ryabinin <aryabinin@virtuozzo.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Juri Lelli <juri.lelli@redhat.com>
+Cc: Patricia Alfonso <trishalfonso@google.com>
+Cc: Peter Zijlstra <a.p.zijlstra@chello.nl>
+Cc: Shuah Khan <shuah@kernel.org>
+Cc: Vincent Guittot <vincent.guittot@linaro.org>
+Link: https://lkml.kernel.org/r/20200915035828.570483-6-davidgow@google.com
+Link: https://lkml.kernel.org/r/20200910070331.3358048-6-davidgow@google.com
 Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/panic.c | 20 +++++++++++---------
- 1 file changed, 11 insertions(+), 9 deletions(-)
+ mm/kasan/report.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/kernel/panic.c b/kernel/panic.c
-index f470a038b05b..5e2b764ff5d5 100644
---- a/kernel/panic.c
-+++ b/kernel/panic.c
-@@ -173,6 +173,16 @@ void panic(const char *fmt, ...)
- 	int old_cpu, this_cpu;
- 	bool _crash_kexec_post_notifiers = crash_kexec_post_notifiers;
- 
-+	if (panic_on_warn) {
-+		/*
-+		 * This thread may hit another WARN() in the panic path.
-+		 * Resetting this prevents additional WARN() from panicking the
-+		 * system on this thread.  Other threads are blocked by the
-+		 * panic_mutex in panic().
-+		 */
-+		panic_on_warn = 0;
-+	}
-+
- 	/*
- 	 * Disable local interrupts. This will prevent panic_smp_self_stop
- 	 * from deadlocking the first cpu that invokes the panic, since
-@@ -571,16 +581,8 @@ void __warn(const char *file, int line, void *caller, unsigned taint,
- 	if (args)
- 		vprintk(args->fmt, args->args);
- 
--	if (panic_on_warn) {
--		/*
--		 * This thread may hit another WARN() in the panic path.
--		 * Resetting this prevents additional WARN() from panicking the
--		 * system on this thread.  Other threads are blocked by the
--		 * panic_mutex in panic().
--		 */
--		panic_on_warn = 0;
-+	if (panic_on_warn)
+diff --git a/mm/kasan/report.c b/mm/kasan/report.c
+index 621782100eaa..a05ff1922d49 100644
+--- a/mm/kasan/report.c
++++ b/mm/kasan/report.c
+@@ -92,7 +92,7 @@ static void end_report(unsigned long *flags)
+ 	pr_err("==================================================================\n");
+ 	add_taint(TAINT_BAD_PAGE, LOCKDEP_NOW_UNRELIABLE);
+ 	spin_unlock_irqrestore(&report_lock, *flags);
+-	if (panic_on_warn)
++	if (panic_on_warn && !test_bit(KASAN_BIT_MULTI_SHOT, &kasan_flags))
  		panic("panic_on_warn set ...\n");
--	}
- 
- 	print_modules();
- 
+ 	kasan_enable_current();
+ }
 -- 
 2.39.0
 
