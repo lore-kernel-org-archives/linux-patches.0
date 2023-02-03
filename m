@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132D81FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:27:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77E25C433D2;
-	Fri,  3 Feb 2023 10:27:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 056C11FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:28:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 807E6C433D2;
+	Fri,  3 Feb 2023 10:28:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420077;
-	bh=MxF7jsI00vTqB1YGsqfnXGr8nEe1oRgp6NH2ha/3qGw=;
+	s=korg; t=1675420080;
+	bh=/w84pOef1tMY3fc1sWOSqXxi4jqk57Tg2fV45DIehe8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R6DxoyZvRjTTXaTG97QQ8ZATOpoE12tLfSyAfr7Q9kwEum49+vsntwpnWNzO2NF5F
-	 ZWhL1BHRDCO7l2gzcd2dQzcUWNYZG7oh/Pmnplj7Hvo4FonhfGvF4dGI7HBQJIISCq
-	 m5yivYz6j2HGKOIHWDTFEhRYPDZDY3WWsoGBRnDE=
+	b=F5dLpTuEUP+5kahPqLB0s4ADn0e43W8beDsOVjfDX6hk7qeOq6VzsEvkaGWWMJ+WW
+	 z3cW4UCBn57+zjwgO2BMqXaI1J8kWyltWvxTai9YfHg4eFrEfFqiefCVSyxKybrenQ
+	 XBnnHktc6KZSpBceJh5cb5CDpU9lMohYgdUI6lto=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Alexey V. Vissarionov" <gremlin@altlinux.org>,
-	Don Brace <don.brace@microchip.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 073/134] scsi: hpsa: Fix allocation size for scsi_host_alloc()
-Date: Fri,  3 Feb 2023 11:12:58 +0100
-Message-Id: <20230203101027.144814125@linuxfoundation.org>
+	Martin Wilck <mwilck@suse.com>,
+	Petr Pavlu <petr.pavlu@suse.com>,
+	Petr Mladek <pmladek@suse.com>,
+	Luis Chamberlain <mcgrof@kernel.org>
+Subject: [PATCH 5.4 074/134] module: Dont wait for GOING modules
+Date: Fri,  3 Feb 2023 11:12:59 +0100
+Message-Id: <20230203101027.193080938@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -36,40 +36,111 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexey V. Vissarionov <gremlin@altlinux.org>
+From: Petr Pavlu <petr.pavlu@suse.com>
 
-[ Upstream commit bbbd25499100c810ceaf5193c3cfcab9f7402a33 ]
+commit 0254127ab977e70798707a7a2b757c9f3c971210 upstream.
 
-The 'h' is a pointer to struct ctlr_info, so it's just 4 or 8 bytes, while
-the structure itself is much bigger.
+During a system boot, it can happen that the kernel receives a burst of
+requests to insert the same module but loading it eventually fails
+during its init call. For instance, udev can make a request to insert
+a frequency module for each individual CPU when another frequency module
+is already loaded which causes the init function of the new module to
+return an error.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+Since commit 6e6de3dee51a ("kernel/module.c: Only return -EEXIST for
+modules that have finished loading"), the kernel waits for modules in
+MODULE_STATE_GOING state to finish unloading before making another
+attempt to load the same module.
 
-Fixes: edd163687ea5 ("hpsa: add driver for HP Smart Array controllers.")
-Link: https://lore.kernel.org/r/20230118031255.GE15213@altlinux.org
-Signed-off-by: Alexey V. Vissarionov <gremlin@altlinux.org>
-Acked-by: Don Brace <don.brace@microchip.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This creates unnecessary work in the described scenario and delays the
+boot. In the worst case, it can prevent udev from loading drivers for
+other devices and might cause timeouts of services waiting on them and
+subsequently a failed boot.
+
+This patch attempts a different solution for the problem 6e6de3dee51a
+was trying to solve. Rather than waiting for the unloading to complete,
+it returns a different error code (-EBUSY) for modules in the GOING
+state. This should avoid the error situation that was described in
+6e6de3dee51a (user space attempting to load a dependent module because
+the -EEXIST error code would suggest to user space that the first module
+had been loaded successfully), while avoiding the delay situation too.
+
+This has been tested on linux-next since December 2022 and passes
+all kmod selftests except test 0009 with module compression enabled
+but it has been confirmed that this issue has existed and has gone
+unnoticed since prior to this commit and can also be reproduced without
+module compression with a simple usleep(5000000) on tools/modprobe.c [0].
+These failures are caused by hitting the kernel mod_concurrent_max and can
+happen either due to a self inflicted kernel module auto-loead DoS somehow
+or on a system with large CPU count and each CPU count incorrectly triggering
+many module auto-loads. Both of those issues need to be fixed in-kernel.
+
+[0] https://lore.kernel.org/all/Y9A4fiobL6IHp%2F%2FP@bombadil.infradead.org/
+
+Fixes: 6e6de3dee51a ("kernel/module.c: Only return -EEXIST for modules that have finished loading")
+Co-developed-by: Martin Wilck <mwilck@suse.com>
+Signed-off-by: Martin Wilck <mwilck@suse.com>
+Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
+Cc: stable@vger.kernel.org
+Reviewed-by: Petr Mladek <pmladek@suse.com>
+[mcgrof: enhance commit log with testing and kmod test result interpretation ]
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/hpsa.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/module.c |   26 +++++++++++++++++++++-----
+ 1 file changed, 21 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/scsi/hpsa.c b/drivers/scsi/hpsa.c
-index ba125ed7e06a..e670cce0cb6e 100644
---- a/drivers/scsi/hpsa.c
-+++ b/drivers/scsi/hpsa.c
-@@ -5810,7 +5810,7 @@ static int hpsa_scsi_host_alloc(struct ctlr_info *h)
- {
- 	struct Scsi_Host *sh;
+--- a/kernel/module.c
++++ b/kernel/module.c
+@@ -3654,7 +3654,8 @@ static bool finished_loading(const char
+ 	sched_annotate_sleep();
+ 	mutex_lock(&module_mutex);
+ 	mod = find_module_all(name, strlen(name), true);
+-	ret = !mod || mod->state == MODULE_STATE_LIVE;
++	ret = !mod || mod->state == MODULE_STATE_LIVE
++		|| mod->state == MODULE_STATE_GOING;
+ 	mutex_unlock(&module_mutex);
  
--	sh = scsi_host_alloc(&hpsa_driver_template, sizeof(h));
-+	sh = scsi_host_alloc(&hpsa_driver_template, sizeof(struct ctlr_info));
- 	if (sh == NULL) {
- 		dev_err(&h->pdev->dev, "scsi_host_alloc failed\n");
- 		return -ENOMEM;
--- 
-2.39.0
-
+ 	return ret;
+@@ -3820,20 +3821,35 @@ static int add_unformed_module(struct mo
+ 
+ 	mod->state = MODULE_STATE_UNFORMED;
+ 
+-again:
+ 	mutex_lock(&module_mutex);
+ 	old = find_module_all(mod->name, strlen(mod->name), true);
+ 	if (old != NULL) {
+-		if (old->state != MODULE_STATE_LIVE) {
++		if (old->state == MODULE_STATE_COMING
++		    || old->state == MODULE_STATE_UNFORMED) {
+ 			/* Wait in case it fails to load. */
+ 			mutex_unlock(&module_mutex);
+ 			err = wait_event_interruptible(module_wq,
+ 					       finished_loading(mod->name));
+ 			if (err)
+ 				goto out_unlocked;
+-			goto again;
++
++			/* The module might have gone in the meantime. */
++			mutex_lock(&module_mutex);
++			old = find_module_all(mod->name, strlen(mod->name),
++					      true);
+ 		}
+-		err = -EEXIST;
++
++		/*
++		 * We are here only when the same module was being loaded. Do
++		 * not try to load it again right now. It prevents long delays
++		 * caused by serialized module load failures. It might happen
++		 * when more devices of the same type trigger load of
++		 * a particular module.
++		 */
++		if (old && old->state == MODULE_STATE_LIVE)
++			err = -EEXIST;
++		else
++			err = -EBUSY;
+ 		goto out;
+ 	}
+ 	mod_update_bounds(mod);
 
 
