@@ -1,89 +1,89 @@
-Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+Received: from mail-pj1-f52.google.com (mail-pj1-f52.google.com [209.85.216.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB95AD5A
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 20:17:11 +0000 (UTC)
-Received: by mail-qt1-f173.google.com with SMTP id m12so6857749qth.4
-        for <patches@lists.linux.dev>; Fri, 03 Feb 2023 12:17:11 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15110D507
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 22:26:19 +0000 (UTC)
+Received: by mail-pj1-f52.google.com with SMTP id ge21-20020a17090b0e1500b002308aac5b5eso338335pjb.4
+        for <patches@lists.linux.dev>; Fri, 03 Feb 2023 14:26:19 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=Tz0vkX+QDBEXSWfMljU2RoqMurA9Jj1S2vJ9oKVLxt8=;
-        b=aXJoYibQR7crF+jW9fEGAoKlJ/KsYWmA5ifgHpQ0/K0l8n40v9AZANBPYjnQ2d5IQn
-         1di2VGiN+y3Is5q2/dc0EQjaAtmQaHNeNoUBO0+BqlHXE0Y+YoHyZHMps2sXfS8y6QBs
-         2sT51xEeRu5weYRRGgQJqKmZeuWvIybeAtOUVajqbvt+fm1y+rKLJlt0rMs1D1rwewux
-         mlszvBjqFy8Dg7ZPbtbo70D+jePKpRZ6SxldplVPlZVBtqXwMNPOC3c7725E4aROxbPt
-         YSa+El7DxBDUJNi0LfikJBPmBdIrA0AoGzfhcNvI9mlxodqJAA0C1xQD1w2FEuu9/p34
-         WjvA==
+        d=chromium.org; s=google;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:from:to:cc:subject:date:message-id:reply-to;
+        bh=iHxAFePE6v7rT4zOswJZdtSc+7UyWrXh0p5Q9UZZyzE=;
+        b=lKfqlinQAeUhCIbSFIAy3NQ96mYo9oFgw3RGTz4iYu0FpfOVZfGxOdGngYCk6NwoU2
+         7UARxZhoaYrcQPanC+zuDeqJRcmjmhq82eYXVYI8LCKnrB1lj3npybqxkBhC7JK2Qwky
+         /bAIc02GG0JqaH/u0uHl0lUyF1KWhV1iJ7Dwg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=Tz0vkX+QDBEXSWfMljU2RoqMurA9Jj1S2vJ9oKVLxt8=;
-        b=JiBltq8zMzmRfY2B46A+/eps4QBZXTAnUvec7zdqZ5miZA03CWvFmf0cMd9zSpGUKq
-         ygTujiYdMlgTWb8c+JVg6Jk7/ASP1sdmlUx9tq5c7AQv+bZ0lRv64jpElZYS8R0iI2Mv
-         SvGoscMFeartWAfqCg2kmpHeT0tAX39HuC1ArwqxjhE5ZqX/u8O4Cw/ocOyc2PUtpTFb
-         SQhQgicRrinZrSHNNlbsZWgdkKmf+07ORbyZbfqixiwItemo17cQIJ6yNribtXAa8VxO
-         3pyl4ezwBIwskakXNRwnhgpZ3FoZYC7MKz8S7FgOVY4+kEdMiO60tdB1JxuDoeJngwD/
-         PcFQ==
-X-Gm-Message-State: AO0yUKXhuSVDWibYDFZsQdqDwWlkMe0LBMUQLvFuM9a4bLR5aIFC8M1z
-	UNG2u6cPeAQS3uEsUbvbTHbk7rFd8ZlqQw==
-X-Google-Smtp-Source: AK7set/CmQZEZRWboM3v9kcrW+AxXPaCGo0l2YSRSUATFBKPk0vu9Ry5Ooq/EcVNGZ55Sz3o7olD1w==
-X-Received: by 2002:a05:622a:2c7:b0:3b2:e2e3:df2c with SMTP id a7-20020a05622a02c700b003b2e2e3df2cmr22328219qtx.57.1675455430620;
-        Fri, 03 Feb 2023 12:17:10 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id 3-20020ac856e3000000b003b86c0046a0sm2147233qtu.20.2023.02.03.12.16.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Feb 2023 12:17:09 -0800 (PST)
-Message-ID: <c10eefe6-af9d-94da-dcb5-a8f0f5874dd8@gmail.com>
-Date: Fri, 3 Feb 2023 12:16:53 -0800
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=iHxAFePE6v7rT4zOswJZdtSc+7UyWrXh0p5Q9UZZyzE=;
+        b=NwGDvbQ4cbxvOnu8TIIFlyJ9B+YrVjVnrwKHk1VOwiAHN0bJZkqTQgg2IAugaJvjDJ
+         34qQ5hceukZn557s7ZlBM/XuNdX9j1gWK2ZlsMRklqch5xXnNxGH4+0gVLzGn7A6mfuL
+         qh4AvJ8y+H227KrN1I/jZy+dJCXfzp/WaPSDLtXWXto7BCiXsUaJe39A/lRpAlQfxGxN
+         z5Kc3QnezHcg5UbU4tRvurP112oNonfZd1hNZRbmesKfHnyVYPMtHVJ8y7k4fR8E8+hY
+         6yp7TQwUzIjgHmGJLyCEAiyuX27akYmeEjnJG1moEUH4pXJMmqx9CVq3npQCzd9SpJJs
+         oMAQ==
+X-Gm-Message-State: AO0yUKUgf4IQcuMColWHYPzQO1Ti6DjZEBBEXWGZQ7X8CWbBckuaScJg
+	m7CCMMlRrJkzmRUKqNEaz2SzaA==
+X-Google-Smtp-Source: AK7set98RIMuVhD340OlniJTOMaJOWCS/UuD2DMsBdRnheHbwkuTw6SV50oE5XAftSx9a+3PbDm2Og==
+X-Received: by 2002:a17:902:ec8c:b0:196:1087:ee04 with SMTP id x12-20020a170902ec8c00b001961087ee04mr14679200plg.18.1675463179244;
+        Fri, 03 Feb 2023 14:26:19 -0800 (PST)
+Received: from smtp.gmail.com ([2620:15c:11a:201:44f:ac27:361d:7805])
+        by smtp.gmail.com with ESMTPSA id x13-20020a170902a38d00b0019602263feesm2095071pla.90.2023.02.03.14.26.17
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Feb 2023 14:26:18 -0800 (PST)
+From: Stephen Boyd <swboyd@chromium.org>
+To: stable@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org,
+	patches@lists.linux.dev,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: [PATCH 5.15.y v3 0/5] phy: qcom-qmp-combo: Backport some stable fixes
+Date: Fri,  3 Feb 2023 14:26:11 -0800
+Message-Id: <20230203222616.2935268-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.39.1.519.gcb327c4b5f-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 6.1 00/28] 6.1.10-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230203101009.946745030@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 
-On 2/3/23 02:12, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.10 release.
-> There are 28 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Sun, 05 Feb 2023 10:09:58 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.10-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+After the qmp phy driver was split it looks like 5.15.y stable kernels
+aren't getting fixes like commit 7a7d86d14d07 ("phy: qcom-qmp-combo: fix
+broken power on") which is tagged for stable 5.10. Trogdor boards use
+the qmp phy on 5.15.y kernels, so I backported the fixes I could find
+that looked like we may possibly trip over at some point.
 
-On ARCH_BRCMSTB using 32-bit and 64-bit, build tested on BMIPS_GENERIC:
+USB and DP work on my Trogdor.Lazor board with this set.
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+Changes from v2 (https://lore.kernel.org/r/20230113204548.578798-1-swboyd@chromium.org):
+ * Keep conditional that can't be removed from last patch
+ * Rebase to latest 5.15.y stable tree
+
+Changes from v1 (https://lore.kernel.org/r/20230113005405.3992011-1-swboyd@chromium.org):
+ * New patch for memleak on probe deferal to avoid compat issues
+ * Update "fix broken power on" patch for pcie/ufs phy
+
+Johan Hovold (5):
+  phy: qcom-qmp-combo: disable runtime PM on unbind
+  phy: qcom-qmp-combo: fix memleak on probe deferral
+  phy: qcom-qmp-usb: fix memleak on probe deferral
+  phy: qcom-qmp-combo: fix broken power on
+  phy: qcom-qmp-combo: fix runtime suspend
+
+ drivers/phy/qualcomm/phy-qcom-qmp.c | 89 ++++++++++++++++++++---------
+ 1 file changed, 61 insertions(+), 28 deletions(-)
+
+Cc: Johan Hovold <johan+linaro@kernel.org>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Vinod Koul <vkoul@kernel.org>
+
+base-commit: 9cf4111cdf9420fa99792ae16c8de23242bb2e0b
 -- 
-Florian
+https://chromeos.dev
 
