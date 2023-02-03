@@ -1,121 +1,105 @@
-Received: from mail-pl1-f170.google.com (mail-pl1-f170.google.com [209.85.214.170])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from qproxy3-pub.mail.unifiedlayer.com (qproxy3-pub.mail.unifiedlayer.com [67.222.38.20])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96DC7D507
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 22:28:23 +0000 (UTC)
-Received: by mail-pl1-f170.google.com with SMTP id b5so6729417plz.5
-        for <patches@lists.linux.dev>; Fri, 03 Feb 2023 14:28:23 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:from:to:cc:subject:date:message-id:reply-to;
-        bh=gMyHt710tobXZzqB4RVOXm/lfSphZfIQDyw8A1rvqM8=;
-        b=KJQTCWhAd7IPsSxTwSEdEe5ccYd6PTpm9gQe4BkQOs0WlNmdWxAQxrM8F0aHiu25In
-         0386XN/L0AG/jmBhyONVoBbYBvi5VNUa6YG27G3cZnsLDOCeubj2Fjew82Ab9wI5dFm9
-         1JfI/nmp3tNTYA0zPEKeDUbvR5uVXlIKAwp+w=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:mime-version:message-id:date:subject:cc
-         :to:from:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=gMyHt710tobXZzqB4RVOXm/lfSphZfIQDyw8A1rvqM8=;
-        b=fDBWTbumJIPjy1WvQu3cN7LLonJIsseY7dney9gHoDB22Lg6iLlPnL8pkAZwqa7qTz
-         38STgesnSjjX2+CM+WsTcmhG1uxbNWiAXuRU1tO89OpPYdsJlp1xZUxlx9vwzlPW+T8E
-         fo9s5vHBq+qPuexhfgimLUcNRIeXo6jAm5JiDLRdEuwH6QP7pN8JMOd5gS0DGCw/dPfS
-         QpndjntvjfXrF2CoSCieXFD2Tp5ItyoLKZ1m/cBguQ9PkeSH/y+lVuyAyljQB770fjms
-         PTGVOlvwGiq6YnYXeBcm9FWCJ6HMLIz80yWm0FOp1rB9AXud1QMa6T/lUYhFSrYmp+QR
-         I3mA==
-X-Gm-Message-State: AO0yUKUMDW5KcIdwrva2E1tj/6l8WqTIAWiPo1MBHxT4kVQMYDWkXFwa
-	qV6xTuRnJPG87hkqK8L+Ee9nlw==
-X-Google-Smtp-Source: AK7set//yln2V1DGJdDa8X2Q3rBGRrmvfMdT9UHoD5EABS+sltirE42ArLrbAQz68gi6qCTk07lZkQ==
-X-Received: by 2002:a17:903:30d2:b0:195:efa7:d54e with SMTP id s18-20020a17090330d200b00195efa7d54emr4510904plc.12.1675463303088;
-        Fri, 03 Feb 2023 14:28:23 -0800 (PST)
-Received: from smtp.gmail.com ([2620:15c:11a:201:44f:ac27:361d:7805])
-        by smtp.gmail.com with ESMTPSA id u65-20020a627944000000b0058da56167b7sm2333853pfc.127.2023.02.03.14.28.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Feb 2023 14:28:22 -0800 (PST)
-From: Stephen Boyd <swboyd@chromium.org>
-To: stable@vger.kernel.org
-Cc: Johan Hovold <johan+linaro@kernel.org>,
-	linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: [PATCH 6.1.y] phy: qcom-qmp-combo: fix runtime suspend
-Date: Fri,  3 Feb 2023 14:28:20 -0800
-Message-Id: <20230203222820.2958983-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.39.1.519.gcb327c4b5f-goog
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB08C290B
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 22:59:22 +0000 (UTC)
+Received: from outbound-ss-820.bluehost.com (outbound-ss-820.bluehost.com [69.89.24.241])
+	by qproxy3.mail.unifiedlayer.com (Postfix) with ESMTP id 364EA8037352
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 22:34:18 +0000 (UTC)
+Received: from cmgw10.mail.unifiedlayer.com (unknown [10.0.90.125])
+	by progateway2.mail.pro1.eigbox.com (Postfix) with ESMTP id A70E4100478C5
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 22:34:09 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id O4dFpK6QMx5dfO4dFp0n0X; Fri, 03 Feb 2023 22:34:09 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=R+nGpfdX c=1 sm=1 tr=0 ts=63dd8be1
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=m04uMKEZRckA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=9uMecodHOrM1Mh/Ettcy3fDGpdPiW2Q6fXzJRqmojTM=; b=lATq6kpm/nF0NqogvFwOLxtryJ
+	8uDxhquvkv8ScvAuV6gCB1rBuweOwmTRS6C6hbZXf0PK5QfoarK0Aw5obOmMK1EvrombzxTWKq6aB
+	c5XS3gKgWWu/SSjFzJp3CKBkx2uGv0eZyCDTyRjlNXN9GhB36vvQ/8iXjBhZ2JF3X0/KtbOSMruXf
+	Cg+GG1MUJlm1bRlQv5QeSF/HNjJCszNORG88uLO/TDgzUegVgyTMRMceqx2rZVyVzsl8XsrtBQhql
+	BFogntQIPODB906eNSigIHJoeAruRXDsDSY80tvu4m0DOtvAtieV/ms2jDB2ua9ePv6XDyS7yW0lL
+	X0A7/+Mw==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:53436 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1pO4dE-003xup-KF;
+	Fri, 03 Feb 2023 15:34:08 -0700
+Subject: Re: [PATCH 6.1 00/28] 6.1.10-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230203101009.946745030@linuxfoundation.org>
+In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <9fc58557-e0b5-02a8-3a18-bfdeba716e95@w6rz.net>
+Date: Fri, 3 Feb 2023 14:34:03 -0800
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1pO4dE-003xup-KF
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:53436
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-From: Johan Hovold <johan+linaro@kernel.org>
+On 2/3/23 2:12 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.10 release.
+> There are 28 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sun, 05 Feb 2023 10:09:58 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.10-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
 
-commit c7b98de745cffdceefc077ad5cf9cda032ef8959 upstream.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Drop the confused runtime-suspend type check which effectively broke
-runtime PM if the DP child node happens to be parsed before the USB
-child node during probe (e.g. due to order of child nodes in the
-devicetree).
-
-Instead use the new driver data USB PHY pointer to access the USB
-configuration and resources.
-
-Fixes: 52e013d0bffa ("phy: qcom-qmp: Add support for DP in USB3+DP combo phy")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20221114081346.5116-6-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
-
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-index adcda7762acf..816829105135 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -2296,15 +2296,11 @@ static void qmp_combo_disable_autonomous_mode(struct qmp_phy *qphy)
- static int __maybe_unused qmp_combo_runtime_suspend(struct device *dev)
- {
- 	struct qcom_qmp *qmp = dev_get_drvdata(dev);
--	struct qmp_phy *qphy = qmp->phys[0];
-+	struct qmp_phy *qphy = qmp->usb_phy;
- 	const struct qmp_phy_cfg *cfg = qphy->cfg;
- 
- 	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qphy->mode);
- 
--	/* Supported only for USB3 PHY and luckily USB3 is the first phy */
--	if (cfg->type != PHY_TYPE_USB3)
--		return 0;
--
- 	if (!qmp->init_count) {
- 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
- 		return 0;
-@@ -2321,16 +2317,12 @@ static int __maybe_unused qmp_combo_runtime_suspend(struct device *dev)
- static int __maybe_unused qmp_combo_runtime_resume(struct device *dev)
- {
- 	struct qcom_qmp *qmp = dev_get_drvdata(dev);
--	struct qmp_phy *qphy = qmp->phys[0];
-+	struct qmp_phy *qphy = qmp->usb_phy;
- 	const struct qmp_phy_cfg *cfg = qphy->cfg;
- 	int ret = 0;
- 
- 	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qphy->mode);
- 
--	/* Supported only for USB3 PHY and luckily USB3 is the first phy */
--	if (cfg->type != PHY_TYPE_USB3)
--		return 0;
--
- 	if (!qmp->init_count) {
- 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
- 		return 0;
-
-base-commit: 68a95455c153f8adc513e5b688f4b348daa7c1b1
--- 
-https://chromeos.dev
+Tested-by: Ron Economos <re@w6rz.net>
 
