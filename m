@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 51CF51FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE138C4339C;
-	Fri,  3 Feb 2023 10:23:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E391FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE31C4339B;
+	Fri,  3 Feb 2023 10:23:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419810;
-	bh=qK6dU8Q1RVgxK1eaf4/idch0rGUITW/wxXvP68iw/Oc=;
+	s=korg; t=1675419813;
+	bh=QQyJ6UbkHg3jK72rd5CD8YVecxmP6Cpa9pLZ1/xTCGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=t/XXgHn/umEklP3AKFlSjG9oZ/Duta93l+lLdoc1X0c/7eiQC12E/k6ik82wOzqkn
-	 XfdebFODwY5B/8cwKorCy2pXIz/nVteL27iF0z6a1PuJOV9o3ZELCieoiTkMmXZOz9
-	 m0dBP34Cj4eoeczcY7dNHiHlfgNDUVPFkN+vCCLI=
+	b=JifTXNgCRePzBaMgjH7Yn0rjVfKzgoAHg0lJ29+/Yy9riZ/TySpSr3BUf5yypdxed
+	 eBJA4OE5ioM26Ao9SfYqy7UaOk/iqKerG+sCucxiD75tBHyUpGtuK92JD8DTAmChYq
+	 NBsniE5fItb5TTApJ3oIiqc9UvrAoY7E7h+SSXAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Soenke Huster <soenke.huster@eknoes.de>,
-	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
-	Ovidiu Panait <ovidiu.panait@eng.windriver.com>
-Subject: [PATCH 5.10 8/9] Bluetooth: fix null ptr deref on hci_sync_conn_complete_evt
-Date: Fri,  3 Feb 2023 11:13:37 +0100
-Message-Id: <20230203101006.747150911@linuxfoundation.org>
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Willem de Bruijn <willemb@google.com>,
+	Yan Zhai <yan@cloudflare.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 9/9] net: fix NULL pointer in skb_segment_list
+Date: Fri,  3 Feb 2023 11:13:38 +0100
+Message-Id: <20230203101006.783007808@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101006.422534094@linuxfoundation.org>
 References: <20230203101006.422534094@linuxfoundation.org>
@@ -35,45 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Soenke Huster <soenke.huster@eknoes.de>
+From: Yan Zhai <yan@cloudflare.com>
 
-commit 3afee2118132e93e5f6fa636dfde86201a860ab3 upstream.
+commit 876e8ca8366735a604bac86ff7e2732fc9d85d2d upstream.
 
-This event is just specified for SCO and eSCO link types.
-On the reception of a HCI_Synchronous_Connection_Complete for a BDADDR
-of an existing LE connection, LE link type and a status that triggers the
-second case of the packet processing a NULL pointer dereference happens,
-as conn->link is NULL.
+Commit 3a1296a38d0c ("net: Support GRO/GSO fraglist chaining.")
+introduced UDP listifyed GRO. The segmentation relies on frag_list being
+untouched when passing through the network stack. This assumption can be
+broken sometimes, where frag_list itself gets pulled into linear area,
+leaving frag_list being NULL. When this happens it can trigger
+following NULL pointer dereference, and panic the kernel. Reverse the
+test condition should fix it.
 
-Signed-off-by: Soenke Huster <soenke.huster@eknoes.de>
-Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
-Signed-off-by: Ovidiu Panait <ovidiu.panait@eng.windriver.com>
+[19185.577801][    C1] BUG: kernel NULL pointer dereference, address:
+...
+[19185.663775][    C1] RIP: 0010:skb_segment_list+0x1cc/0x390
+...
+[19185.834644][    C1] Call Trace:
+[19185.841730][    C1]  <TASK>
+[19185.848563][    C1]  __udp_gso_segment+0x33e/0x510
+[19185.857370][    C1]  inet_gso_segment+0x15b/0x3e0
+[19185.866059][    C1]  skb_mac_gso_segment+0x97/0x110
+[19185.874939][    C1]  __skb_gso_segment+0xb2/0x160
+[19185.883646][    C1]  udp_queue_rcv_skb+0xc3/0x1d0
+[19185.892319][    C1]  udp_unicast_rcv_skb+0x75/0x90
+[19185.900979][    C1]  ip_protocol_deliver_rcu+0xd2/0x200
+[19185.910003][    C1]  ip_local_deliver_finish+0x44/0x60
+[19185.918757][    C1]  __netif_receive_skb_one_core+0x8b/0xa0
+[19185.927834][    C1]  process_backlog+0x88/0x130
+[19185.935840][    C1]  __napi_poll+0x27/0x150
+[19185.943447][    C1]  net_rx_action+0x27e/0x5f0
+[19185.951331][    C1]  ? mlx5_cq_tasklet_cb+0x70/0x160 [mlx5_core]
+[19185.960848][    C1]  __do_softirq+0xbc/0x25d
+[19185.968607][    C1]  irq_exit_rcu+0x83/0xb0
+[19185.976247][    C1]  common_interrupt+0x43/0xa0
+[19185.984235][    C1]  asm_common_interrupt+0x22/0x40
+...
+[19186.094106][    C1]  </TASK>
+
+Fixes: 3a1296a38d0c ("net: Support GRO/GSO fraglist chaining.")
+Suggested-by: Daniel Borkmann <daniel@iogearbox.net>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Yan Zhai <yan@cloudflare.com>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/r/Y9gt5EUizK1UImEP@debian
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/bluetooth/hci_event.c |   13 +++++++++++++
- 1 file changed, 13 insertions(+)
+ net/core/skbuff.c |    5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
---- a/net/bluetooth/hci_event.c
-+++ b/net/bluetooth/hci_event.c
-@@ -4307,6 +4307,19 @@ static void hci_sync_conn_complete_evt(s
- 	struct hci_ev_sync_conn_complete *ev = (void *) skb->data;
- 	struct hci_conn *conn;
+--- a/net/core/skbuff.c
++++ b/net/core/skbuff.c
+@@ -3688,7 +3688,7 @@ struct sk_buff *skb_segment_list(struct
  
-+	switch (ev->link_type) {
-+	case SCO_LINK:
-+	case ESCO_LINK:
-+		break;
-+	default:
-+		/* As per Core 5.3 Vol 4 Part E 7.7.35 (p.2219), Link_Type
-+		 * for HCI_Synchronous_Connection_Complete is limited to
-+		 * either SCO or eSCO
-+		 */
-+		bt_dev_err(hdev, "Ignoring connect complete event for invalid link type");
-+		return;
+ 	skb_shinfo(skb)->frag_list = NULL;
+ 
+-	do {
++	while (list_skb) {
+ 		nskb = list_skb;
+ 		list_skb = list_skb->next;
+ 
+@@ -3732,8 +3732,7 @@ struct sk_buff *skb_segment_list(struct
+ 		if (skb_needs_linearize(nskb, features) &&
+ 		    __skb_linearize(nskb))
+ 			goto err_linearize;
+-
+-	} while (list_skb);
 +	}
-+
- 	BT_DBG("%s status 0x%2.2x", hdev->name, ev->status);
  
- 	hci_dev_lock(hdev);
+ 	skb->truesize = skb->truesize - delta_truesize;
+ 	skb->data_len = skb->data_len - delta_len;
 
 
