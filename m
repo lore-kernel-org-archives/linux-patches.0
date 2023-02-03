@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14C8B1FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33BAFC4339E;
-	Fri,  3 Feb 2023 10:21:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE9571FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44987C433D2;
+	Fri,  3 Feb 2023 10:21:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419703;
-	bh=WZl2eKdtabjmBmr+WssfJF8VVwfHHWPXijY6QfNZVV8=;
+	s=korg; t=1675419706;
+	bh=zL2k4u+Jj8vLXa5xAgk1+a1szX++mO4axPA7wz/3+pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=deBI4TwsW6IUYQFIaTGU+4s0z8QQuo4Fk5wxNtcjMJnweT03txGVsCbXbSzXDEB9H
-	 bCmcRTqCf1jFSXqrcn+dl8KVPmZuukZ0modcxppq8LYniNBNXA+ygVTqLGAunsN4Sm
-	 q3huiIStFhR5EsUda/FlFZ6KlMEwodb2k04O8pzA=
+	b=sxLVSdKpyQO3i1btEhh3gzFR3+NhRm8yWJk/L4nkdcdYkuraUHjn3UCRlpQEHXb0K
+	 IMLnH45jtynLuMGBhMv+BSrzB/6xbEg4zjJFfz9E6ocULdtQeahLGeYaIjdm+Kr41/
+	 QGXrTPlLJ6GhkqYFCKdK72YoN3q6Vs2vABjgGkmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aaro Koskinen <aaro.koskinen@iki.fi>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Mark Brown <broonie@kernel.org>,
+	Shuah Khan <skhan@linuxfoundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 10/28] ARM: omap1: fix building gpio15xx
-Date: Fri,  3 Feb 2023 11:12:58 +0100
-Message-Id: <20230203101010.410641102@linuxfoundation.org>
+Subject: [PATCH 6.1 11/28] kselftest: Fix error message for unconfigured LLVM builds
+Date: Fri,  3 Feb 2023 11:12:59 +0100
+Message-Id: <20230203101010.450195850@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
 References: <20230203101009.946745030@linuxfoundation.org>
@@ -35,43 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Mark Brown <broonie@kernel.org>
 
-[ Upstream commit 9d46ce57f4d1c626bb48170226ea5e35deb5877c ]
+[ Upstream commit 9fdaca2c1e157dc0a3c0faecf3a6a68e7d8d0c7b ]
 
-In some randconfig builds, the asm/irq.h header is not included
-in gpio15xx.c, so add an explicit include to avoid a build fialure:
+We are missing a ) when we attempt to complain about not having enough
+configuration for clang, resulting in the rather inscrutable error:
 
-In file included from arch/arm/mach-omap1/gpio15xx.c:15:
-arch/arm/mach-omap1/irqs.h:99:34: error: 'NR_IRQS_LEGACY' undeclared here (not in a function)
-   99 | #define IH2_BASE                (NR_IRQS_LEGACY + 32)
-      |                                  ^~~~~~~~~~~~~~
-arch/arm/mach-omap1/irqs.h:105:38: note: in expansion of macro 'IH2_BASE'
-  105 | #define INT_MPUIO               (5 + IH2_BASE)
-      |                                      ^~~~~~~~
-arch/arm/mach-omap1/gpio15xx.c:28:27: note: in expansion of macro 'INT_MPUIO'
-   28 |                 .start  = INT_MPUIO,
-      |                           ^~~~~~~~~
+../lib.mk:23: *** unterminated call to function 'error': missing ')'.  Stop.
 
-Acked-by: Aaro Koskinen <aaro.koskinen@iki.fi>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Add the required ) so we print the message we were trying to print.
+
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mach-omap1/gpio15xx.c | 1 +
- 1 file changed, 1 insertion(+)
+ tools/testing/selftests/lib.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/mach-omap1/gpio15xx.c b/arch/arm/mach-omap1/gpio15xx.c
-index c675f11de99d..61fa26efd865 100644
---- a/arch/arm/mach-omap1/gpio15xx.c
-+++ b/arch/arm/mach-omap1/gpio15xx.c
-@@ -11,6 +11,7 @@
- #include <linux/gpio.h>
- #include <linux/platform_data/gpio-omap.h>
- #include <linux/soc/ti/omap1-soc.h>
-+#include <asm/irq.h>
+diff --git a/tools/testing/selftests/lib.mk b/tools/testing/selftests/lib.mk
+index 291144c284fb..f7900e75d230 100644
+--- a/tools/testing/selftests/lib.mk
++++ b/tools/testing/selftests/lib.mk
+@@ -20,7 +20,7 @@ CLANG_TARGET_FLAGS              := $(CLANG_TARGET_FLAGS_$(ARCH))
  
- #include "irqs.h"
- 
+ ifeq ($(CROSS_COMPILE),)
+ ifeq ($(CLANG_TARGET_FLAGS),)
+-$(error Specify CROSS_COMPILE or add '--target=' option to lib.mk
++$(error Specify CROSS_COMPILE or add '--target=' option to lib.mk)
+ else
+ CLANG_FLAGS     += --target=$(CLANG_TARGET_FLAGS)
+ endif # CLANG_TARGET_FLAGS
 -- 
 2.39.0
 
