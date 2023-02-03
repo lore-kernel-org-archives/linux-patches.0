@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2DD81FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:15:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2527CC433D2;
-	Fri,  3 Feb 2023 10:15:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5741FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:15:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185DEC433EF;
+	Fri,  3 Feb 2023 10:15:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419320;
-	bh=0YPwNPiOFEzX4+43YB82x9sDmQ4Vka+SLvGPPPgIAFs=;
+	s=korg; t=1675419323;
+	bh=COg3Lcz4kAJDcAA71w0um+JBdb3/nhWqDuK3huaOPsw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mor2CqfO52NqVCZE5gg810wmOjDXmcjw4j6aem4o/FHHQ/pcWynHz3DPXde31Exl6
-	 G8JgbrD6sl41+Fjz8uJMeo+9yql88FxyKn8viojTdkbMh/rL/cFfN1Eozy1KKzbwK5
-	 QwGKBls2778EF9gvJvwIvXZf3Sm9GejD4fJsSoWc=
+	b=xSaIjaOH8WsAa1nVEnYb4xUXCd0Fs1VLrZaJmfu4eZf4itp9KuH6qFjy6lMnNRVO+
+	 byG+3xnDtNmo/eByDw6KXOuP+LnIMK3YUzGhnBA6zZFkP7YRHxr4eFMLXu5L7kT8s7
+	 4TIZwpvPX73w5SwU3D5sgGcgRUe0NyJXB2U/nC/g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaoqian Lin <linmq006@gmail.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Andre Przywara <andre.przywara@arm.com>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 03/62] EDAC/highbank: Fix memory leak in highbank_mc_probe()
-Date: Fri,  3 Feb 2023 11:11:59 +0100
-Message-Id: <20230203101013.128469047@linuxfoundation.org>
+Subject: [PATCH 4.14 04/62] tomoyo: fix broken dependency on *.conf.default
+Date: Fri,  3 Feb 2023 11:12:00 +0100
+Message-Id: <20230203101013.176898015@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -36,52 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaoqian Lin <linmq006@gmail.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit e7a293658c20a7945014570e1921bf7d25d68a36 ]
+[ Upstream commit eaf2213ba563b2d74a1f2c13a6b258273f689802 ]
 
-When devres_open_group() fails, it returns -ENOMEM without freeing memory
-allocated by edac_mc_alloc().
+If *.conf.default is updated, builtin-policy.h should be rebuilt,
+but this does not work when compiled with O= option.
 
-Call edac_mc_free() on the error handling path to avoid a memory leak.
+[Without this commit]
 
-  [ bp: Massage commit message. ]
+  $ touch security/tomoyo/policy/exception_policy.conf.default
+  $ make O=/tmp security/tomoyo/
+  make[1]: Entering directory '/tmp'
+    GEN     Makefile
+    CALL    /home/masahiro/ref/linux/scripts/checksyscalls.sh
+    DESCEND objtool
+  make[1]: Leaving directory '/tmp'
 
-Fixes: a1b01edb2745 ("edac: add support for Calxeda highbank memory controller")
-Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Reviewed-by: Andre Przywara <andre.przywara@arm.com>
-Link: https://lore.kernel.org/r/20221229054825.1361993-1-linmq006@gmail.com
+[With this commit]
+
+  $ touch security/tomoyo/policy/exception_policy.conf.default
+  $ make O=/tmp security/tomoyo/
+  make[1]: Entering directory '/tmp'
+    GEN     Makefile
+    CALL    /home/masahiro/ref/linux/scripts/checksyscalls.sh
+    DESCEND objtool
+    POLICY  security/tomoyo/builtin-policy.h
+    CC      security/tomoyo/common.o
+    AR      security/tomoyo/built-in.a
+  make[1]: Leaving directory '/tmp'
+
+$(srctree)/ is essential because $(wildcard ) does not follow VPATH.
+
+Fixes: f02dee2d148b ("tomoyo: Do not generate empty policy files")
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/highbank_mc_edac.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ security/tomoyo/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/edac/highbank_mc_edac.c b/drivers/edac/highbank_mc_edac.c
-index 6092e61be605..bcf41601a977 100644
---- a/drivers/edac/highbank_mc_edac.c
-+++ b/drivers/edac/highbank_mc_edac.c
-@@ -185,8 +185,10 @@ static int highbank_mc_probe(struct platform_device *pdev)
- 	drvdata = mci->pvt_info;
- 	platform_set_drvdata(pdev, mci);
+diff --git a/security/tomoyo/Makefile b/security/tomoyo/Makefile
+index b7c6a7ffc058..a1ecf68930c7 100644
+--- a/security/tomoyo/Makefile
++++ b/security/tomoyo/Makefile
+@@ -10,7 +10,7 @@ endef
+ quiet_cmd_policy  = POLICY  $@
+       cmd_policy  = ($(call do_policy,profile); $(call do_policy,exception_policy); $(call do_policy,domain_policy); $(call do_policy,manager); $(call do_policy,stat)) >$@
  
--	if (!devres_open_group(&pdev->dev, NULL, GFP_KERNEL))
--		return -ENOMEM;
-+	if (!devres_open_group(&pdev->dev, NULL, GFP_KERNEL)) {
-+		res = -ENOMEM;
-+		goto free;
-+	}
+-$(obj)/builtin-policy.h: $(wildcard $(obj)/policy/*.conf $(src)/policy/*.conf.default) FORCE
++$(obj)/builtin-policy.h: $(wildcard $(obj)/policy/*.conf $(srctree)/$(src)/policy/*.conf.default) FORCE
+ 	$(call if_changed,policy)
  
- 	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
- 	if (!r) {
-@@ -254,6 +256,7 @@ static int highbank_mc_probe(struct platform_device *pdev)
- 	edac_mc_del_mc(&pdev->dev);
- err:
- 	devres_release_group(&pdev->dev, NULL);
-+free:
- 	edac_mc_free(mci);
- 	return res;
- }
+ $(obj)/common.o: $(obj)/builtin-policy.h
 -- 
 2.39.0
 
