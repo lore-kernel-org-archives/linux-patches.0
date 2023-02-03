@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 305331FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:19:42 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B47BC433EF;
-	Fri,  3 Feb 2023 10:19:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6071FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:19:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC89DC433EF;
+	Fri,  3 Feb 2023 10:19:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419582;
-	bh=/sTDVTHC7UGpb41ay0nSftlTBFJy88UzUPnGw8klPJM=;
+	s=korg; t=1675419585;
+	bh=7TB58F2YJRfwdowX6BjU2VDFV/ZoHgwBV6QbWTkAs9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=npS6r2ROvd4onxz7cj9xs9/NnxId/bj+WL9xwJpt0EcqRguZdjKoUgNqnRCeq8zkV
-	 7tXGXSjmwlqyK8pSGRwHkNiCLRfz48ytQFVg1XukKKXj7JONHb4dWgB7lCv96VkorB
-	 p5rWfmc3i6hLxrV9c5Tq6pPDMsn3am7dST9gBFUg=
+	b=gSglw9BF8t0hfAIgBNjY5Cr9D889qEfMMv41nOChPUo40M3RicZP80gO2Hw4LpT2q
+	 xvDQo2z5xPIcJ/yKHKc262qF6ViVfAsihmfZzXws5z2uwBa2xfoKBzda/5LigaT+sd
+	 7R7pQBaP7wdVvCrw879KBO8i2MIIrO/QHE1Zdn98=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ajith Nayak <Ajith.Nayak@amd.com>,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 10/80] amd-xgbe: TX Flow Ctrl Registers are h/w ver dependent
-Date: Fri,  3 Feb 2023 11:12:04 +0100
-Message-Id: <20230203101015.686407378@linuxfoundation.org>
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Steev Klimaszewski <steev@kali.org>,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH 4.19 44/80] EDAC/device: Respect any driver-supplied workqueue polling value
+Date: Fri,  3 Feb 2023 11:12:38 +0100
+Message-Id: <20230203101017.085896565@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
 References: <20230203101015.263854890@linuxfoundation.org>
@@ -37,89 +37,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-[ Upstream commit 579923d84b04abb6cd4cd1fd9974096a2dd1832b ]
+commit cec669ff716cc83505c77b242aecf6f7baad869d upstream.
 
-There is difference in the TX Flow Control registers (TFCR) between the
-revisions of the hardware. The older revisions of hardware used to have
-single register per queue. Whereas, the newer revision of hardware (from
-ver 30H onwards) have one register per priority.
+The EDAC drivers may optionally pass the poll_msec value. Use that value
+if available, else fall back to 1000ms.
 
-Update the driver to use the TFCR based on the reported version of the
-hardware.
+  [ bp: Touchups. ]
 
-Fixes: c5aa9e3b8156 ("amd-xgbe: Initial AMD 10GbE platform driver")
-Co-developed-by: Ajith Nayak <Ajith.Nayak@amd.com>
-Signed-off-by: Ajith Nayak <Ajith.Nayak@amd.com>
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e27e3dac6517 ("drivers/edac: add edac_device class")
+Reported-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
+Cc: <stable@vger.kernel.org> # 4.9
+Link: https://lore.kernel.org/r/COZYL8MWN97H.MROQ391BGA09@otso
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-dev.c | 23 +++++++++++++++--------
- 1 file changed, 15 insertions(+), 8 deletions(-)
+ drivers/edac/edac_device.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-dev.c b/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
-index 4666084eda16..9d6fe5a892d9 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-dev.c
-@@ -524,19 +524,28 @@ static void xgbe_disable_vxlan(struct xgbe_prv_data *pdata)
- 	netif_dbg(pdata, drv, pdata->netdev, "VXLAN acceleration disabled\n");
- }
+--- a/drivers/edac/edac_device.c
++++ b/drivers/edac/edac_device.c
+@@ -34,6 +34,9 @@
+ static DEFINE_MUTEX(device_ctls_mutex);
+ static LIST_HEAD(edac_device_list);
  
-+static unsigned int xgbe_get_fc_queue_count(struct xgbe_prv_data *pdata)
-+{
-+	unsigned int max_q_count = XGMAC_MAX_FLOW_CONTROL_QUEUES;
++/* Default workqueue processing interval on this instance, in msecs */
++#define DEFAULT_POLL_INTERVAL 1000
 +
-+	/* From MAC ver 30H the TFCR is per priority, instead of per queue */
-+	if (XGMAC_GET_BITS(pdata->hw_feat.version, MAC_VR, SNPSVER) >= 0x30)
-+		return max_q_count;
-+	else
-+		return min_t(unsigned int, pdata->tx_q_count, max_q_count);
-+}
-+
- static int xgbe_disable_tx_flow_control(struct xgbe_prv_data *pdata)
+ #ifdef CONFIG_EDAC_DEBUG
+ static void edac_device_dump_device(struct edac_device_ctl_info *edac_dev)
  {
--	unsigned int max_q_count, q_count;
- 	unsigned int reg, reg_val;
--	unsigned int i;
-+	unsigned int i, q_count;
+@@ -366,7 +369,7 @@ static void edac_device_workq_function(s
+ 	 * whole one second to save timers firing all over the period
+ 	 * between integral seconds
+ 	 */
+-	if (edac_dev->poll_msec == 1000)
++	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
+ 		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
+ 	else
+ 		edac_queue_work(&edac_dev->work, edac_dev->delay);
+@@ -396,7 +399,7 @@ static void edac_device_workq_setup(stru
+ 	 * timers firing on sub-second basis, while they are happy
+ 	 * to fire together on the 1 second exactly
+ 	 */
+-	if (edac_dev->poll_msec == 1000)
++	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
+ 		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
+ 	else
+ 		edac_queue_work(&edac_dev->work, edac_dev->delay);
+@@ -430,7 +433,7 @@ void edac_device_reset_delay_period(stru
+ 	edac_dev->delay	    = msecs_to_jiffies(msec);
  
- 	/* Clear MTL flow control */
- 	for (i = 0; i < pdata->rx_q_count; i++)
- 		XGMAC_MTL_IOWRITE_BITS(pdata, i, MTL_Q_RQOMR, EHFC, 0);
+ 	/* See comment in edac_device_workq_setup() above */
+-	if (edac_dev->poll_msec == 1000)
++	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
+ 		edac_mod_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
+ 	else
+ 		edac_mod_work(&edac_dev->work, edac_dev->delay);
+@@ -472,11 +475,7 @@ int edac_device_add_device(struct edac_d
+ 		/* This instance is NOW RUNNING */
+ 		edac_dev->op_state = OP_RUNNING_POLL;
  
- 	/* Clear MAC flow control */
--	max_q_count = XGMAC_MAX_FLOW_CONTROL_QUEUES;
--	q_count = min_t(unsigned int, pdata->tx_q_count, max_q_count);
-+	q_count = xgbe_get_fc_queue_count(pdata);
- 	reg = MAC_Q0TFCR;
- 	for (i = 0; i < q_count; i++) {
- 		reg_val = XGMAC_IOREAD(pdata, reg);
-@@ -553,9 +562,8 @@ static int xgbe_enable_tx_flow_control(struct xgbe_prv_data *pdata)
- {
- 	struct ieee_pfc *pfc = pdata->pfc;
- 	struct ieee_ets *ets = pdata->ets;
--	unsigned int max_q_count, q_count;
- 	unsigned int reg, reg_val;
--	unsigned int i;
-+	unsigned int i, q_count;
- 
- 	/* Set MTL flow control */
- 	for (i = 0; i < pdata->rx_q_count; i++) {
-@@ -579,8 +587,7 @@ static int xgbe_enable_tx_flow_control(struct xgbe_prv_data *pdata)
+-		/*
+-		 * enable workq processing on this instance,
+-		 * default = 1000 msec
+-		 */
+-		edac_device_workq_setup(edac_dev, 1000);
++		edac_device_workq_setup(edac_dev, edac_dev->poll_msec ?: DEFAULT_POLL_INTERVAL);
+ 	} else {
+ 		edac_dev->op_state = OP_RUNNING_INTERRUPT;
  	}
- 
- 	/* Set MAC flow control */
--	max_q_count = XGMAC_MAX_FLOW_CONTROL_QUEUES;
--	q_count = min_t(unsigned int, pdata->tx_q_count, max_q_count);
-+	q_count = xgbe_get_fc_queue_count(pdata);
- 	reg = MAC_Q0TFCR;
- 	for (i = 0; i < q_count; i++) {
- 		reg_val = XGMAC_IOREAD(pdata, reg);
--- 
-2.39.0
-
 
 
