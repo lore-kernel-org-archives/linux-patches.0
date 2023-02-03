@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A971FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:15:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6F0C433EF;
-	Fri,  3 Feb 2023 10:15:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C32C1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:15:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 768E3C433D2;
+	Fri,  3 Feb 2023 10:15:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419302;
-	bh=7XpHiww4oRNskhgKyhp0bZboDML/MPxINlsbuHs4678=;
+	s=korg; t=1675419305;
+	bh=Zyo5FTrGry/McMnAJYMNO149LS+7CakmgYvSCFniIGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GeJnEr9Qbz773A+0VNpISlx1H8AGUSCe/tn399Rt8TXop2Boj/lWdrcLOpVGNYfTX
-	 7BQBzU1bNRwV/IVG8dUC/Y7PMYHIg8jiMjwqRBH7rudYm8Ughosl0pBJR9+Hc0JksY
-	 u0ZktCXRKpTlS541URZzuO5j+jqulAuOF0WEzVUQ=
+	b=dNZO5qH65olaAN6a/NnKLJQY33CIK4N+jl+32MLVIThrYRVhvNse9prslWOEhZL6o
+	 0vY6cK7JVcGK3PxNSeVFfm7rXyUxencHB8RRndwTagLOIm//aIEDG0cjpopuym8D8g
+	 K/V6lWIVaNeob1Cbir3uLIXCa5VAQKwaYKiCDGNE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dongliang Mu <mudongliangabcd@gmail.com>,
-	Jan Kara <jack@suse.cz>,
-	Fedor Pchelkin <pchelkin@ispras.ru>
-Subject: [PATCH 4.14 23/62] fs: reiserfs: remove useless new_opts in reiserfs_remount
-Date: Fri,  3 Feb 2023 11:12:19 +0100
-Message-Id: <20230203101014.018723479@linuxfoundation.org>
+	Archie Pusaka <apusaka@chromium.org>,
+	Abhishek Pandit-Subedi <abhishekpandit@google.com>,
+	Luiz Augusto von Dentz <luiz.von.dentz@intel.com>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 24/62] Bluetooth: hci_sync: cancel cmd_timer if hci_open failed
+Date: Fri,  3 Feb 2023 11:12:20 +0100
+Message-Id: <20230203101014.059672721@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -35,56 +37,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dongliang Mu <mudongliangabcd@gmail.com>
+From: Archie Pusaka <apusaka@chromium.org>
 
-commit 81dedaf10c20959bdf5624f9783f408df26ba7a4 upstream.
+commit 97dfaf073f5881c624856ef293be307b6166115c upstream.
 
-Since the commit c3d98ea08291 ("VFS: Don't use save/replace_mount_options
-if not using generic_show_options") eliminates replace_mount_options
-in reiserfs_remount, but does not handle the allocated new_opts,
-it will cause memory leak in the reiserfs_remount.
+If a command is already sent, we take care of freeing it, but we
+also need to cancel the timeout as well.
 
-Because new_opts is useless in reiserfs_mount, so we fix this bug by
-removing the useless new_opts in reiserfs_remount.
-
-Fixes: c3d98ea08291 ("VFS: Don't use save/replace_mount_options if not using generic_show_options")
-Link: https://lore.kernel.org/r/20211027143445.4156459-1-mudongliangabcd@gmail.com
-Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
-Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Archie Pusaka <apusaka@chromium.org>
+Reviewed-by: Abhishek Pandit-Subedi <abhishekpandit@google.com>
+Signed-off-by: Luiz Augusto von Dentz <luiz.von.dentz@intel.com>
 Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/reiserfs/super.c |    6 ------
- 1 file changed, 6 deletions(-)
+ net/bluetooth/hci_core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/fs/reiserfs/super.c
-+++ b/fs/reiserfs/super.c
-@@ -1443,7 +1443,6 @@ static int reiserfs_remount(struct super
- 	unsigned long safe_mask = 0;
- 	unsigned int commit_max_age = (unsigned int)-1;
- 	struct reiserfs_journal *journal = SB_JOURNAL(s);
--	char *new_opts;
- 	int err;
- 	char *qf_names[REISERFS_MAXQUOTAS];
- 	unsigned int qfmt = 0;
-@@ -1451,10 +1450,6 @@ static int reiserfs_remount(struct super
- 	int i;
- #endif
+diff --git a/net/bluetooth/hci_core.c b/net/bluetooth/hci_core.c
+index 81a151ca4a24..1fd6498e3387 100644
+--- a/net/bluetooth/hci_core.c
++++ b/net/bluetooth/hci_core.c
+@@ -1479,6 +1479,7 @@ static int hci_dev_do_open(struct hci_dev *hdev)
+ 			hdev->flush(hdev);
  
--	new_opts = kstrdup(arg, GFP_KERNEL);
--	if (arg && !new_opts)
--		return -ENOMEM;
--
- 	sync_filesystem(s);
- 	reiserfs_write_lock(s);
- 
-@@ -1605,7 +1600,6 @@ out_ok_unlocked:
- out_err_unlock:
- 	reiserfs_write_unlock(s);
- out_err:
--	kfree(new_opts);
- 	return err;
- }
- 
+ 		if (hdev->sent_cmd) {
++			cancel_delayed_work_sync(&hdev->cmd_timer);
+ 			kfree_skb(hdev->sent_cmd);
+ 			hdev->sent_cmd = NULL;
+ 		}
+-- 
+2.39.0
+
 
 
