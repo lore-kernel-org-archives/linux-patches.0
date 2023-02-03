@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87A161FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:27:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3835C4339B;
-	Fri,  3 Feb 2023 10:27:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B066D1FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:27:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 143CDC433D2;
+	Fri,  3 Feb 2023 10:27:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420040;
-	bh=TEBPdHf5iqfyUasc8iSZHTJoSRvhWtPhfFnE2kBk2+k=;
+	s=korg; t=1675420043;
+	bh=OyGkbB0Xcmun0roV4XTypLnYbPxrfpMwRKJULzS3kv0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mazwu2+2dSC01KN6CgEh/VMICyDBkdC9HsTCY2Sf5+H0aeKvJmM8jDSTaHxBf2wNN
-	 OIkLG69lSvz2eFYRGqkCoIAHqHqiXDDQw2uWqYPU5tKRdnJAEC9pmjK33UkTIahxHB
-	 8r3Vd7POgCIgxS7cA+xiOknaYmB9xddiCVEz8UrQ=
+	b=wXvWiJX/HJ2DtMsOHP6ihb8PBbpopnXw/OXXVONH94tcJnpp6dWnU2UtWistzrIWR
+	 ZG+lGWj6SYL8AhMojQm+R27k+sL8vtSSGiq2fagOEdZoBOqYpXmR8sKlAQB+1vsPGf
+	 PBkBxR71uhV1KlNpaQ/SDLfgXbCnKDYzUzHBcJdw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Szymon Heidrich <szymon.heidrich@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Andrew Lunn <andrew@lunn.ch>,
 	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 030/134] net: usb: sr9700: Handle negative len
-Date: Fri,  3 Feb 2023 11:12:15 +0100
-Message-Id: <20230203101025.223660802@linuxfoundation.org>
+Subject: [PATCH 5.4 031/134] net: mdio: validate parameter addr in mdiobus_get_phy()
+Date: Fri,  3 Feb 2023 11:12:16 +0100
+Message-Id: <20230203101025.263157212@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -35,39 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Szymon Heidrich <szymon.heidrich@gmail.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit ecf7cf8efb59789e2b21d2f9ab926142579092b2 ]
+[ Upstream commit 867dbe784c5010a466f00a7d1467c1c5ea569c75 ]
 
-Packet len computed as difference of length word extracted from
-skb data and four may result in a negative value. In such case
-processing of the buffer should be interrupted rather than
-setting sr_skb->len to an unexpectedly large value (due to cast
-from signed to unsigned integer) and passing sr_skb to
-usbnet_skb_return.
+The caller may pass any value as addr, what may result in an out-of-bounds
+access to array mdio_map. One existing case is stmmac_init_phy() that
+may pass -1 as addr. Therefore validate addr before using it.
 
-Fixes: e9da0b56fe27 ("sr9700: sanity check for packet length")
-Signed-off-by: Szymon Heidrich <szymon.heidrich@gmail.com>
-Link: https://lore.kernel.org/r/20230114182326.30479-1-szymon.heidrich@gmail.com
+Fixes: 7f854420fbfe ("phy: Add API for {un}registering an mdio device to a bus.")
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+Link: https://lore.kernel.org/r/cdf664ea-3312-e915-73f8-021678d08887@gmail.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/usb/sr9700.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/mdio_bus.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/usb/sr9700.c b/drivers/net/usb/sr9700.c
-index fce6713e970b..811c8751308c 100644
---- a/drivers/net/usb/sr9700.c
-+++ b/drivers/net/usb/sr9700.c
-@@ -410,7 +410,7 @@ static int sr9700_rx_fixup(struct usbnet *dev, struct sk_buff *skb)
- 		/* ignore the CRC length */
- 		len = (skb->data[1] | (skb->data[2] << 8)) - 4;
+diff --git a/drivers/net/phy/mdio_bus.c b/drivers/net/phy/mdio_bus.c
+index 757763735e1f..fdf8221f46fa 100644
+--- a/drivers/net/phy/mdio_bus.c
++++ b/drivers/net/phy/mdio_bus.c
+@@ -117,7 +117,12 @@ EXPORT_SYMBOL(mdiobus_unregister_device);
  
--		if (len > ETH_FRAME_LEN || len > skb->len)
-+		if (len > ETH_FRAME_LEN || len > skb->len || len < 0)
- 			return 0;
+ struct phy_device *mdiobus_get_phy(struct mii_bus *bus, int addr)
+ {
+-	struct mdio_device *mdiodev = bus->mdio_map[addr];
++	struct mdio_device *mdiodev;
++
++	if (addr < 0 || addr >= ARRAY_SIZE(bus->mdio_map))
++		return NULL;
++
++	mdiodev = bus->mdio_map[addr];
  
- 		/* the last packet of current skb */
+ 	if (!mdiodev)
+ 		return NULL;
 -- 
 2.39.0
 
