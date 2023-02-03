@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783FB1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BFDC4339B;
-	Fri,  3 Feb 2023 10:23:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DBF1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DB8C4339B;
+	Fri,  3 Feb 2023 10:23:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419816;
-	bh=PkH1ckxbwV8PR9YZccXb30VGjW1ffGRBVluUZi7xmMk=;
+	s=korg; t=1675419819;
+	bh=WxcJGs9JmjBIz7MtnQGfiAVBOir7rh3JhjDNt+dDZOk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UJLG7DdYyzL4FjM/XoV5ioYC6DG+F06Nk948KS8+/BGRf23jZ+NUhYOeO5536Sk2L
-	 5HFTHQQvx8Ob5mH+XklsH6sKjiVHwpLqEGw0ZLPflqXN2ClLEUeBIhDhwK3NN23+Sy
-	 0uRuixYjHgXui9DowrZUDDQMI6IVbfT6vnevOjlI=
+	b=xt+Saue8BzvbUB7CQWG1I+is+xI686wQMoZSE84RHTimFzPNl2QBKzGEjUiJf/JA+
+	 dMA9XhZsYJol7x9nlqOAioN7IP+YsY+2Udvs9rxcQnKKVgMjqsew++wWYkC1jYcvqd
+	 yu6pTB0qvKdbRd9OTJiCAwDDu6ikPbKzmDAc1sE0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,12 +19,12 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Geert Uytterhoeven <geert+renesas@glider.be>,
 	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 1/9] ARM: dts: imx: Fix pca9547 i2c-mux node name
-Date: Fri,  3 Feb 2023 11:13:30 +0100
-Message-Id: <20230203101006.486606694@linuxfoundation.org>
+Subject: [PATCH 5.15 01/20] ARM: dts: imx: Fix pca9547 i2c-mux node name
+Date: Fri,  3 Feb 2023 11:13:28 +0100
+Message-Id: <20230203101008.062422333@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230203101006.422534094@linuxfoundation.org>
-References: <20230203101006.422534094@linuxfoundation.org>
+In-Reply-To: <20230203101007.985835823@linuxfoundation.org>
+References: <20230203101007.985835823@linuxfoundation.org>
 User-Agent: quilt/0.67
 X-stable: review
 X-Patchwork-Hint: ignore
@@ -60,10 +60,10 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm/boot/dts/imx53-ppd.dts b/arch/arm/boot/dts/imx53-ppd.dts
-index 006fbd7f5432..54e39db447c4 100644
+index 37d0cffea99c..70c4a4852256 100644
 --- a/arch/arm/boot/dts/imx53-ppd.dts
 +++ b/arch/arm/boot/dts/imx53-ppd.dts
-@@ -487,7 +487,7 @@ &i2c1 {
+@@ -488,7 +488,7 @@ &i2c1 {
  	scl-gpios = <&gpio3 21 GPIO_ACTIVE_HIGH>;
  	status = "okay";
  
