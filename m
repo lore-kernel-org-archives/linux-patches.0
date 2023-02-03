@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CCD41FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:29:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2319C4339B;
-	Fri,  3 Feb 2023 10:29:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 53E611FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:29:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEA42C433EF;
+	Fri,  3 Feb 2023 10:29:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420189;
-	bh=wlhF59pgf4V8qDjElfKhTcj52TEZtrqe3q44xNjnm4Y=;
+	s=korg; t=1675420192;
+	bh=PKDqEiA9wpuk408a8IhDajU/bWJUc0MZMwjxAsjRxic=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mJTMWIsJfVhk1jMqrbkljOIK69NbbBYixDMKEj75SxbNUMsvr9Ney3DjtJn5RnLQp
-	 V0ATdwTFpcRzZbnDVS8Pz2W/X74nr0bfSF3tRz8J1C3CQW1qPGBMkomMik5QfYbPz3
-	 XAYTCLrmlqKilkG33yTHMEQHDExUzZEdjFZ7kwb4=
+	b=JAyZPxMXo18yXuhWj/XoZACbl3z+JL1fAshvD7skxKXRgusltqseDb2UUs/XRVXQ7
+	 jgsqPNbHky/7nq02kUTuXWKCNcKqFv1IIiesGMws++41nnQrCNNwR7r2pX7osc2Rtb
+	 KQDxKFZpDTysRJSsOGTNDqs1ASfV+ldSfDGFsoDI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mikulas Patocka <mpatocka@redhat.com>,
-	Ingo Molnar <mingo@kernel.org>,
-	linux-kernel@vger.kernel.org
-Subject: [PATCH 5.4 109/134] x86/asm: Fix an assembler warning with current binutils
-Date: Fri,  3 Feb 2023 11:13:34 +0100
-Message-Id: <20230203101028.732656549@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 110/134] ARM: dts: imx: Fix pca9547 i2c-mux node name
+Date: Fri,  3 Feb 2023 11:13:35 +0100
+Message-Id: <20230203101028.770872865@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -35,29 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mikulas Patocka <mpatocka@redhat.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit 55d235361fccef573990dfa5724ab453866e7816 upstream.
+[ Upstream commit f78985f9f58380eec37f82c8a2c765aa7670fc29 ]
 
-Fix a warning: "found `movsd'; assuming `movsl' was meant"
+"make dtbs_check":
 
-Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    arch/arm/boot/dts/imx53-ppd.dtb: i2c-switch@70: $nodename:0: 'i2c-switch@70' does not match '^(i2c-?)?mux'
+	    From schema: Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
+    arch/arm/boot/dts/imx53-ppd.dtb: i2c-switch@70: Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'i2c@0', 'i2c@1', 'i2c@2', 'i2c@3', 'i2c@4', 'i2c@5', 'i2c@6', 'i2c@7' were unexpected)
+	    From schema: Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
+
+Fix this by renaming the PCA9547 node to "i2c-mux", to match the I2C bus
+multiplexer/switch DT bindings and the Generic Names Recommendation in
+the Devicetree Specification.
+
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/lib/iomap_copy_64.S |    2 +-
+ arch/arm/boot/dts/imx53-ppd.dts | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/x86/lib/iomap_copy_64.S
-+++ b/arch/x86/lib/iomap_copy_64.S
-@@ -10,6 +10,6 @@
-  */
- ENTRY(__iowrite32_copy)
- 	movl %edx,%ecx
--	rep movsd
-+	rep movsl
- 	ret
- ENDPROC(__iowrite32_copy)
+diff --git a/arch/arm/boot/dts/imx53-ppd.dts b/arch/arm/boot/dts/imx53-ppd.dts
+index c80d1700e094..c01dc571b55c 100644
+--- a/arch/arm/boot/dts/imx53-ppd.dts
++++ b/arch/arm/boot/dts/imx53-ppd.dts
+@@ -461,7 +461,7 @@ &i2c1 {
+ 	scl-gpios = <&gpio3 21 GPIO_ACTIVE_HIGH>;
+ 	status = "okay";
+ 
+-	i2c-switch@70 {
++	i2c-mux@70 {
+ 		compatible = "nxp,pca9547";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+-- 
+2.39.0
+
 
 
