@@ -1,66 +1,70 @@
-Received: from mail-ot1-f45.google.com (mail-ot1-f45.google.com [209.85.210.45])
+Received: from mail-qt1-f181.google.com (mail-qt1-f181.google.com [209.85.160.181])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91C78AD3A
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 18:02:13 +0000 (UTC)
-Received: by mail-ot1-f45.google.com with SMTP id n25-20020a9d7119000000b0068bd8c1e836so1593795otj.3
-        for <patches@lists.linux.dev>; Fri, 03 Feb 2023 10:02:13 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9CA62CA4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 18:41:59 +0000 (UTC)
+Received: by mail-qt1-f181.google.com with SMTP id c2so6521410qtw.5
+        for <patches@lists.linux.dev>; Fri, 03 Feb 2023 10:41:59 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ElhPdy3HZ+tMC66D0gemUG0NJ36awklBIZwajDDuj7s=;
-        b=f0AK8r8vs8eozo/g9nuqIK/W7TzHFx8/hO/ZKJ+fWZfQP+Tv3O9nMZj9A3cH/ZhOh+
-         JUXUqzbvQBjhduPyOXf0iK3vHMnRAPgoKG2PtrQtgaShqDyYGzv7AH6r3Uie+uGN4bUd
-         qkqwoNMd782+neKg69YbNKNj9tyjKX5Fn1WUM=
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=Cug0hlfDT36Dqw7jW/V5xSD4WJgWtg61okF6HbuI67I=;
+        b=QVlAEAfi41Sh2E24X+wje0kCV9S5nVzwiYF1UyN0oKYqyI6kYUqZNp7PCls/pjdSpz
+         IRbBLpHRcYcsk9yfCVwxUPBv1wgLjtQC/vivo7i2gwVFfx30NGR+QsyLdjft7yN7jDKi
+         1iaOyC5ncB/B628hz5iW5J0EZiAHtaKxtC32NOEFoUduGVk5byBUDsXIguB9cnXoXIQr
+         2QJKVgxu8Svx4yLSyHLos5Q+10klGsUhQsmOK+CBBvhg5ohhVPL9OwU7gUwg4CENI5Nm
+         5Cny0E1BoXgl5BVxESR3az6Zdh2H4Zl/qXWOh8bOz5UJHqX+pYQJ/F7xWEkURKUT7lWa
+         8d6Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=ElhPdy3HZ+tMC66D0gemUG0NJ36awklBIZwajDDuj7s=;
-        b=yh+TIZxXwETTEwxEaOJBZ7+qVFGxakQx/NG0RvCPA7tAhUQHn42al3lDvHxjas31dt
-         IZSqI/jfrIrJNxPy+hKrQU+wCHHpQ13QRaB7uKPkpgWuwTjquvx355ziy6MpBq9/WXuS
-         Z+hfUIbJI8uv3/RQ44MPv886K4buFH0iVggWmidyAof21Qr8rN0q8rPrDaVK7EKbWnmF
-         HCt5LeWKcofqsZ+4ahRBumfw++lV9nRsW1mY8EKXlICvix4S7ZS/pLI+CXzzPp88jmuz
-         2NEWHTVEfgygN6BBxuzSG0iWiUPp6Hu2uW+T+o5Uxpd3j6R4t479JcCFmDhKqH+Mjo4O
-         9JRA==
-X-Gm-Message-State: AO0yUKVk9Zwfo5BZEQQGzQBqMkEzTUIG36kWKgvLBXZfdqnynOjN019v
-	f0zT67E9g/e22vrfpugGYCwZ9g==
-X-Google-Smtp-Source: AK7set+RTVC00E1jPHi1Tlxiq2+cviCtfF+wr4WU3fLv/XOzfcmGOLhrWp4yINiCB07leT5sNOplkA==
-X-Received: by 2002:a9d:758d:0:b0:68b:baa9:cc95 with SMTP id s13-20020a9d758d000000b0068bbaa9cc95mr5339413otk.5.1675447332290;
-        Fri, 03 Feb 2023 10:02:12 -0800 (PST)
-Received: from fedora64.linuxtx.org ([99.47.93.78])
-        by smtp.gmail.com with ESMTPSA id b9-20020a9d6b89000000b0068bcef4f543sm1382571otq.21.2023.02.03.10.02.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Feb 2023 10:02:11 -0800 (PST)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Fri, 3 Feb 2023 12:02:10 -0600
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 00/28] 6.1.10-rc1 review
-Message-ID: <Y91MIjq1Bgyq7jHr@fedora64.linuxtx.org>
-References: <20230203101009.946745030@linuxfoundation.org>
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=Cug0hlfDT36Dqw7jW/V5xSD4WJgWtg61okF6HbuI67I=;
+        b=JWaXGs8VC9pn/6/vTncx1tMIsFRzzV2+9alCOJ3CefUG11uIQTnGKgmCgB845hRpV8
+         QEczOIglufJNetz9hFFfBl8DfwMnZE1GFlueAX6cvH1beTPlRds++ZQKgY42nQHgVxgb
+         zDWOalPvxJfOiJwupUL2WFhTiLxxdW9igJ2aTTLQ31DMtvhFGjkYsTt+qMQWkDHpF5x+
+         lCQJnX3dI9u3FPLHYYukVTomhIm4FnE6wblXrr4HApviB7sh4MXuf06AiOQeQeQYPuXX
+         tuSCot+H7oEwJ0DrSs1S99poLfaCGl/+zMwKrLP7+z/JjUJRPSTAYJDv1R4jkuBe2aGO
+         FVzw==
+X-Gm-Message-State: AO0yUKXMguhGltOWwdSwjn06KwPrbw/Wrhp1C+L2fqKOKr0AkxlJuu5O
+	dCxA55E4iVqUoswvFbj098Y=
+X-Google-Smtp-Source: AK7set+yKBp9Lzl4KayhlSB33ocRyQjHvACLYd6X6UX7mV/n2SUrn2vJNFEpDouXWZPthOGFenA/cA==
+X-Received: by 2002:ac8:5c48:0:b0:3b9:a965:7af2 with SMTP id j8-20020ac85c48000000b003b9a9657af2mr21237410qtj.45.1675449718550;
+        Fri, 03 Feb 2023 10:41:58 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id bk19-20020a05620a1a1300b006f9f3c0c63csm2352729qkb.32.2023.02.03.10.41.55
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Feb 2023 10:41:57 -0800 (PST)
+Message-ID: <ca5b519c-c349-297c-1780-53275e0c8579@gmail.com>
+Date: Fri, 3 Feb 2023 10:41:53 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 5.4 000/134] 5.4.231-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230203101023.832083974@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Fri, Feb 03, 2023 at 11:12:48AM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.10 release.
-> There are 28 patches in this series, all will be posted as a response
+On 2/3/23 02:11, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.231 release.
+> There are 134 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -68,16 +72,18 @@ On Fri, Feb 03, 2023 at 11:12:48AM +0100, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.10-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.231-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
 
-Tested rc1 against the Fedora build system (aarch64, armv7, ppc64le,
-s390x, x86_64), and boot tested x86_64. No regressions noted.
+On ARCH_BRCMSTB using 32-bit and 64-bit, build tested on BMIPS_GENERIC:
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
+
