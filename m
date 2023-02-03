@@ -1,26 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 029F21FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:20:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2810AC433D2;
-	Fri,  3 Feb 2023 10:20:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C9D1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:20:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CBEEC433D2;
+	Fri,  3 Feb 2023 10:20:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419603;
-	bh=zDpHAm1OUlImzdPXBA0SE2thcz18ap7cRJsY/4du8Zw=;
+	s=korg; t=1675419606;
+	bh=JvCrWRmie9YuKDVYlWJjVi2HVwDz/MZLtyW+7Vh3JQ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fdB2D+Eb4gxoCREBlGfVeJsIPzO/bC4eGI/6MzUlTSoZ19QDP3eBuKbdjGVg2LbhE
-	 Y2Uj2c/Mr59eLBJNM2Zc+wQN2C0cqMV3kk66XElK5umM3OZGkb1+Vh4G7SawuhA4C4
-	 UrTLOlYSsf3g6Oj08uxkItpKscyZ2jpc6nNX6NDk=
+	b=Mv1jgdBrGwyud+A2pqnT7c3w9W6Xs+soofw+NGlK1wHhpiocVjRxsBOyzatgJD5/E
+	 Vi7RQn2GYsV5Dso3umlYJ1yzqxypD1UXK9GQptdJqdN8+U8+In5tjU1YniMUWZOFLG
+	 3h8W1Y4UapmR4T9VD2JPo9r3BvXgBWz034pNWeFs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoquan He <bhe@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 4.19 58/80] x86/i8259: Mark legacy PIC interrupts with IRQ_LEVEL
-Date: Fri,  3 Feb 2023 11:12:52 +0100
-Message-Id: <20230203101017.691761932@linuxfoundation.org>
+	Jani Nikula <jani.nikula@intel.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Daniel Vetter <daniel.vetter@ffwll.ch>,
+	Dave Airlie <airlied@redhat.com>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 4.19 59/80] drm/i915/display: fix compiler warning about array overrun
+Date: Fri,  3 Feb 2023 11:12:53 +0100
+Message-Id: <20230203101017.739800407@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
 References: <20230203101015.263854890@linuxfoundation.org>
@@ -34,61 +39,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Linus Torvalds <torvalds@linux-foundation.org>
 
-commit 5fa55950729d0762a787451dc52862c3f850f859 upstream.
+commit fec4d42724a1bf3dcba52307e55375fdb967b852 upstream.
 
-Baoquan reported that after triggering a crash the subsequent crash-kernel
-fails to boot about half of the time. It triggers a NULL pointer
-dereference in the periodic tick code.
+intel_dp_check_mst_status() uses a 14-byte array to read the DPRX Event
+Status Indicator data, but then passes that buffer at offset 10 off as
+an argument to drm_dp_channel_eq_ok().
 
-This happens because the legacy timer interrupt (IRQ0) is resent in
-software which happens in soft interrupt (tasklet) context. In this context
-get_irq_regs() returns NULL which leads to the NULL pointer dereference.
+End result: there are only 4 bytes remaining of the buffer, yet
+drm_dp_channel_eq_ok() wants a 6-byte buffer.  gcc-11 correctly warns
+about this case:
 
-The reason for the resend is a spurious APIC interrupt on the IRQ0 vector
-which is captured and leads to a resend when the legacy timer interrupt is
-enabled. This is wrong because the legacy PIC interrupts are level
-triggered and therefore should never be resent in software, but nothing
-ever sets the IRQ_LEVEL flag on those interrupts, so the core code does not
-know about their trigger type.
+  drivers/gpu/drm/i915/display/intel_dp.c: In function ‘intel_dp_check_mst_status’:
+  drivers/gpu/drm/i915/display/intel_dp.c:3491:22: warning: ‘drm_dp_channel_eq_ok’ reading 6 bytes from a region of size 4 [-Wstringop-overread]
+   3491 |                     !drm_dp_channel_eq_ok(&esi[10], intel_dp->lane_count)) {
+        |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  drivers/gpu/drm/i915/display/intel_dp.c:3491:22: note: referencing argument 1 of type ‘const u8 *’ {aka ‘const unsigned char *’}
+  In file included from drivers/gpu/drm/i915/display/intel_dp.c:38:
+  include/drm/drm_dp_helper.h:1466:6: note: in a call to function ‘drm_dp_channel_eq_ok’
+   1466 | bool drm_dp_channel_eq_ok(const u8 link_status[DP_LINK_STATUS_SIZE],
+        |      ^~~~~~~~~~~~~~~~~~~~
+       6:14 elapsed
 
-Ensure that IRQ_LEVEL is set when the legacy PCI interrupts are set up.
+This commit just extends the original array by 2 zero-initialized bytes,
+avoiding the warning.
 
-Fixes: a4633adcdbc1 ("[PATCH] genirq: add genirq sw IRQ-retrigger")
-Reported-by: Baoquan He <bhe@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Baoquan He <bhe@redhat.com>
-Link: https://lore.kernel.org/r/87mt6rjrra.ffs@tglx
+There may be some underlying bug in here that caused this confusion, but
+this is at least no worse than the existing situation that could use
+random data off the stack.
+
+Cc: Jani Nikula <jani.nikula@intel.com>
+Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
+Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc: Dave Airlie <airlied@redhat.com>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/i8259.c   |    1 +
- arch/x86/kernel/irqinit.c |    4 +++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/intel_dp.c |   13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kernel/i8259.c
-+++ b/arch/x86/kernel/i8259.c
-@@ -114,6 +114,7 @@ static void make_8259A_irq(unsigned int
- 	disable_irq_nosync(irq);
- 	io_apic_irqs &= ~(1<<irq);
- 	irq_set_chip_and_handler(irq, &i8259A_chip, handle_level_irq);
-+	irq_set_status_flags(irq, IRQ_LEVEL);
- 	enable_irq(irq);
- 	lapic_assign_legacy_vector(irq, true);
- }
---- a/arch/x86/kernel/irqinit.c
-+++ b/arch/x86/kernel/irqinit.c
-@@ -72,8 +72,10 @@ void __init init_ISA_irqs(void)
+--- a/drivers/gpu/drm/i915/intel_dp.c
++++ b/drivers/gpu/drm/i915/intel_dp.c
+@@ -4116,7 +4116,18 @@ intel_dp_check_mst_status(struct intel_d
+ 	bool bret;
  
- 	legacy_pic->init(0);
- 
--	for (i = 0; i < nr_legacy_irqs(); i++)
-+	for (i = 0; i < nr_legacy_irqs(); i++) {
- 		irq_set_chip_and_handler(i, chip, handle_level_irq);
-+		irq_set_status_flags(i, IRQ_LEVEL);
-+	}
- }
- 
- void __init init_IRQ(void)
+ 	if (intel_dp->is_mst) {
+-		u8 esi[DP_DPRX_ESI_LEN] = { 0 };
++		/*
++		 * The +2 is because DP_DPRX_ESI_LEN is 14, but we then
++		 * pass in "esi+10" to drm_dp_channel_eq_ok(), which
++		 * takes a 6-byte array. So we actually need 16 bytes
++		 * here.
++		 *
++		 * Somebody who knows what the limits actually are
++		 * should check this, but for now this is at least
++		 * harmless and avoids a valid compiler warning about
++		 * using more of the array than we have allocated.
++		 */
++		u8 esi[DP_DPRX_ESI_LEN+2] = { 0 };
+ 		int ret = 0;
+ 		int retry;
+ 		bool handled;
 
 
