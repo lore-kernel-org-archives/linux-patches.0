@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A9B11FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:19:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDFE6C433D2;
-	Fri,  3 Feb 2023 10:19:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 861961FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:19:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029E2C4339E;
+	Fri,  3 Feb 2023 10:19:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419591;
-	bh=q8ZVPrzYnvQYOtEZp+gw5Y/8Y/9B04SLAkMw9KEwhr0=;
+	s=korg; t=1675419594;
+	bh=E7ILEv6xYLIze7BuDctwewhya2kxi7QeYBzfDzeccc4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rZrGt6PbZx80Q/V2jqJ1yXUGvqk2lpsNju28t2PTJxCZkEg9sCXLGMA1qYCrDaGYO
-	 DwdUzSyhLWMFxYJdWlhBfDZvpOdcRHQ67SAtjgq75ZxXDNmA8UdfIEIJ/6oQaauUK0
-	 cY2joBOuD5QVwlytaBtntidZ05IMHYns0wYsPJWw=
+	b=GCxrAT5GQfiC1P5bHibB72g2Yq0l97nx1JK0kEbCnR3A6CVyo4KUDCL293YInKEzA
+	 Wk18MJ1MKOvCZ/Oc2osvit1ujkgT2p/u5j0/2pwLeC6g844lF5aAcZ6MaRuUkhNCxw
+	 vMaSl+ggek/OZufOT8cn2ITmLx1KsBSrD4sIDN5g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Xin Long <lucien.xin@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>,
+	Sergey Shtylyov <s.shtylyov@omp.ru>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 54/80] sctp: fail if no bound addresses can be used for a given scope
-Date: Fri,  3 Feb 2023 11:12:48 +0100
-Message-Id: <20230203101017.515477741@linuxfoundation.org>
+Subject: [PATCH 4.19 55/80] net: ravb: Fix possible hang if RIS2_QFF1 happen
+Date: Fri,  3 Feb 2023 11:12:49 +0100
+Message-Id: <20230203101017.546752261@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
 References: <20230203101015.263854890@linuxfoundation.org>
@@ -37,66 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
+From: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
 
-[ Upstream commit 458e279f861d3f61796894cd158b780765a1569f ]
+[ Upstream commit f3c07758c9007a6bfff5290d9e19d3c41930c897 ]
 
-Currently, if you bind the socket to something like:
-        servaddr.sin6_family = AF_INET6;
-        servaddr.sin6_port = htons(0);
-        servaddr.sin6_scope_id = 0;
-        inet_pton(AF_INET6, "::1", &servaddr.sin6_addr);
+Since this driver enables the interrupt by RIC2_QFE1, this driver
+should clear the interrupt flag if it happens. Otherwise, the interrupt
+causes to hang the system.
 
-And then request a connect to:
-        connaddr.sin6_family = AF_INET6;
-        connaddr.sin6_port = htons(20000);
-        connaddr.sin6_scope_id = if_nametoindex("lo");
-        inet_pton(AF_INET6, "fe88::1", &connaddr.sin6_addr);
+Note that this also fix a minor coding style (a comment indentation)
+around the fixed code.
 
-What the stack does is:
- - bind the socket
- - create a new asoc
- - to handle the connect
-   - copy the addresses that can be used for the given scope
-   - try to connect
-
-But the copy returns 0 addresses, and the effect is that it ends up
-trying to connect as if the socket wasn't bound, which is not the
-desired behavior. This unexpected behavior also allows KASLR leaks
-through SCTP diag interface.
-
-The fix here then is, if when trying to copy the addresses that can
-be used for the scope used in connect() it returns 0 addresses, bail
-out. This is what TCP does with a similar reproducer.
-
-Reported-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Reviewed-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/9fcd182f1099f86c6661f3717f63712ddd1c676c.1674496737.git.marcelo.leitner@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c156633f1353 ("Renesas Ethernet AVB driver proper")
+Signed-off-by: Yoshihiro Shimoda <yoshihiro.shimoda.uh@renesas.com>
+Reviewed-by: Sergey Shtylyov <s.shtylyov@omp.ru>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/bind_addr.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/net/ethernet/renesas/ravb_main.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/sctp/bind_addr.c b/net/sctp/bind_addr.c
-index f8a283245672..d723942e5e65 100644
---- a/net/sctp/bind_addr.c
-+++ b/net/sctp/bind_addr.c
-@@ -88,6 +88,12 @@ int sctp_bind_addr_copy(struct net *net, struct sctp_bind_addr *dest,
- 		}
- 	}
+diff --git a/drivers/net/ethernet/renesas/ravb_main.c b/drivers/net/ethernet/renesas/ravb_main.c
+index ff374d0d80a7..a1906804c139 100644
+--- a/drivers/net/ethernet/renesas/ravb_main.c
++++ b/drivers/net/ethernet/renesas/ravb_main.c
+@@ -738,14 +738,14 @@ static void ravb_error_interrupt(struct net_device *ndev)
+ 	ravb_write(ndev, ~(EIS_QFS | EIS_RESERVED), EIS);
+ 	if (eis & EIS_QFS) {
+ 		ris2 = ravb_read(ndev, RIS2);
+-		ravb_write(ndev, ~(RIS2_QFF0 | RIS2_RFFF | RIS2_RESERVED),
++		ravb_write(ndev, ~(RIS2_QFF0 | RIS2_QFF1 | RIS2_RFFF | RIS2_RESERVED),
+ 			   RIS2);
  
-+	/* If somehow no addresses were found that can be used with this
-+	 * scope, it's an error.
-+	 */
-+	if (list_empty(&dest->address_list))
-+		error = -ENETUNREACH;
-+
- out:
- 	if (error)
- 		sctp_bind_addr_clean(dest);
+ 		/* Receive Descriptor Empty int */
+ 		if (ris2 & RIS2_QFF0)
+ 			priv->stats[RAVB_BE].rx_over_errors++;
+ 
+-		    /* Receive Descriptor Empty int */
++		/* Receive Descriptor Empty int */
+ 		if (ris2 & RIS2_QFF1)
+ 			priv->stats[RAVB_NC].rx_over_errors++;
+ 
 -- 
 2.39.0
 
