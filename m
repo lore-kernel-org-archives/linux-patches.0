@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E2581FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:19:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 868FAC4339B;
-	Fri,  3 Feb 2023 10:19:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250B41FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:19:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77728C433EF;
+	Fri,  3 Feb 2023 10:19:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419575;
-	bh=/NGu3Yi8Kh/SzcCLvM40A0UwCroSA2kULjzok+8Fmlk=;
+	s=korg; t=1675419578;
+	bh=rgUzRbqhxWWZCzzAf5rso5n/j9RyYPdh/Gxm3gTJ3zs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UHDlAxKmNQMCsxIOdDIJ5MsT9wLt2iEoFsYm2mdBGFlQqREGB06+JE/SUU4aKpUJn
-	 RH5Ivk707p+BXeGmlGdVvhtbg1W0Pdx3e5EMOXU2Vwnhtn3kpyuTEJPnwZBNQ2TPfF
-	 fwJsEWGoU7aC6rvybjH3tvrpeAzTzBsAbSinRBRQ=
+	b=aq8JffuQgYBIY9yBtigJFq2UTQdVkurY1uqRCaD/ESvVZiWvhPIHTHCdcLC00srrl
+	 DFGuLfCItts9qXTzBObBxEdnlCmPq+8ynXmHCwAOwen/QczMU3pNVMn/Br3j1jzGYl
+	 yhcG7rzXyhTsYYpWT/5dHto4rQayqIIxNc3kTkQc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Udipto Goswami <quic_ugoswami@quicinc.com>,
+	Krishna Kurapati <quic_kriskura@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 18/80] HID: check empty report_list in hid_validate_values()
-Date: Fri,  3 Feb 2023 11:12:12 +0100
-Message-Id: <20230203101015.975059012@linuxfoundation.org>
+Subject: [PATCH 4.19 19/80] usb: gadget: f_fs: Prevent race during ffs_ep0_queue_wait
+Date: Fri,  3 Feb 2023 11:12:13 +0100
+Message-Id: <20230203101016.013747521@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
 References: <20230203101015.263854890@linuxfoundation.org>
@@ -35,40 +35,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Udipto Goswami <quic_ugoswami@quicinc.com>
 
-[ Upstream commit b12fece4c64857e5fab4290bf01b2e0317a88456 ]
+[ Upstream commit 6a19da111057f69214b97c62fb0ac59023970850 ]
 
-Add a check for empty report_list in hid_validate_values().
-The missing check causes a type confusion when issuing a list_entry()
-on an empty report_list.
-The problem is caused by the assumption that the device must
-have valid report_list. While this will be true for all normal HID
-devices, a suitably malicious device can violate the assumption.
+While performing fast composition switch, there is a possibility that the
+process of ffs_ep0_write/ffs_ep0_read get into a race condition
+due to ep0req being freed up from functionfs_unbind.
 
-Fixes: 1b15d2e5b807 ("HID: core: fix validation of report id 0")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Consider the scenario that the ffs_ep0_write calls the ffs_ep0_queue_wait
+by taking a lock &ffs->ev.waitq.lock. However, the functionfs_unbind isn't
+bounded so it can go ahead and mark the ep0req to NULL, and since there
+is no NULL check in ffs_ep0_queue_wait we will end up in use-after-free.
+
+Fix this by making a serialized execution between the two functions using
+a mutex_lock(ffs->mutex).
+
+Fixes: ddf8abd25994 ("USB: f_fs: the FunctionFS driver")
+Signed-off-by: Udipto Goswami <quic_ugoswami@quicinc.com>
+Tested-by: Krishna Kurapati <quic_kriskura@quicinc.com>
+Link: https://lore.kernel.org/r/20221215052906.8993-2-quic_ugoswami@quicinc.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/f_fs.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index 62656636d30c..8cc79d0d11fb 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -980,8 +980,8 @@ struct hid_report *hid_validate_values(struct hid_device *hid,
- 		 * Validating on id 0 means we should examine the first
- 		 * report in the list.
- 		 */
--		report = list_entry(
--				hid->report_enum[type].report_list.next,
-+		report = list_first_entry_or_null(
-+				&hid->report_enum[type].report_list,
- 				struct hid_report, list);
- 	} else {
- 		report = hid->report_enum[type].report_id_hash[id];
+diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
+index 49eb4e3c760f..b3489a3449f6 100644
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -271,6 +271,9 @@ static int __ffs_ep0_queue_wait(struct ffs_data *ffs, char *data, size_t len)
+ 	struct usb_request *req = ffs->ep0req;
+ 	int ret;
+ 
++	if (!req)
++		return -EINVAL;
++
+ 	req->zero     = len < le16_to_cpu(ffs->ev.setup.wLength);
+ 
+ 	spin_unlock_irq(&ffs->ev.waitq.lock);
+@@ -1807,10 +1810,12 @@ static void functionfs_unbind(struct ffs_data *ffs)
+ 	ENTER();
+ 
+ 	if (!WARN_ON(!ffs->gadget)) {
++		mutex_lock(&ffs->mutex);
+ 		usb_ep_free_request(ffs->gadget->ep0, ffs->ep0req);
+ 		ffs->ep0req = NULL;
+ 		ffs->gadget = NULL;
+ 		clear_bit(FFS_FL_BOUND, &ffs->flags);
++		mutex_unlock(&ffs->mutex);
+ 		ffs_data_put(ffs);
+ 	}
+ }
 -- 
 2.39.0
 
