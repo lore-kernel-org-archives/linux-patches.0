@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADE51FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450E3C433EF;
-	Fri,  3 Feb 2023 10:23:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D669D1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F531C433EF;
+	Fri,  3 Feb 2023 10:23:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419834;
-	bh=LkoBjuiq2polH/rK24e4vvUSa+FRr/93moqEdFoFrqM=;
+	s=korg; t=1675419837;
+	bh=Fr8ngUSDZFbNweZe4Xpvn5UQljHV0Y4OKofXPoxRvOc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MjBr27Q8EcbrGiZSFfghuL3Lkcq2UymZFTo3JGYzrPeTY6DcVZUi8+wMfR62H8+bp
-	 99pAlNa6wdiCDaPVVHtS9nDB7UhDxxU07t6FE33iK5Za+3RSH7/hPbByEE4ln5KSNd
-	 Ji4PqWNIkTtO7f7wfNwmRyUB29/dFZkeFkbkHsLg=
+	b=qxghTJp1/86+MStRi5r88OXUxE5nKpa0WQqS3xVVbiwOdVi9c7SzDrQXhAjNTBcg4
+	 J5EqGPr/OW/NUXRo8DW/cQzTOoD6Rpdbtr/RUH70HWQ+GkimqrH5tS5SZid9BFHl3A
+	 hjl3zSC/f3nHYfj6jpSf/oeXe455sR/AQoFlGxug=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 04/20] arm64: dts: imx8mq-thor96: fix no-mmc property for SDHCI
-Date: Fri,  3 Feb 2023 11:13:31 +0100
-Message-Id: <20230203101008.190292039@linuxfoundation.org>
+Subject: [PATCH 5.15 05/20] firmware: arm_scmi: Clear stale xfer->hdr.status
+Date: Fri,  3 Feb 2023 11:13:32 +0100
+Message-Id: <20230203101008.229256403@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101007.985835823@linuxfoundation.org>
 References: <20230203101007.985835823@linuxfoundation.org>
@@ -35,42 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-[ Upstream commit ef10d57936ead5e817ef7cea6a87531085e77773 ]
+[ Upstream commit f6ca5059dc0d6608dc46070f48e396d611f240d6 ]
 
-There is no "no-emmc" property, so intention for SD/SDIO only nodes was
-to use "no-mmc".
+Stale error status reported from a previous message transaction must be
+cleared before starting a new transaction to avoid being confusingly
+reported in the following SCMI message dump traces.
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20221222183823.518856-2-cristian.marussi@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mq-thor96.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/firmware/arm_scmi/driver.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mq-thor96.dts b/arch/arm64/boot/dts/freescale/imx8mq-thor96.dts
-index 5d5aa6537225..6e6182709d22 100644
---- a/arch/arm64/boot/dts/freescale/imx8mq-thor96.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mq-thor96.dts
-@@ -339,7 +339,7 @@ &usdhc1 {
- 	bus-width = <4>;
- 	non-removable;
- 	no-sd;
--	no-emmc;
-+	no-mmc;
- 	status = "okay";
+diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
+index a8ff4c9508b7..11842497b226 100644
+--- a/drivers/firmware/arm_scmi/driver.c
++++ b/drivers/firmware/arm_scmi/driver.c
+@@ -783,6 +783,8 @@ static int do_xfer(const struct scmi_protocol_handle *ph,
+ 			      xfer->hdr.protocol_id, xfer->hdr.seq,
+ 			      xfer->hdr.poll_completion);
  
- 	brcmf: wifi@1 {
-@@ -359,7 +359,7 @@ &usdhc2 {
- 	cd-gpios = <&gpio2 12 GPIO_ACTIVE_LOW>;
- 	bus-width = <4>;
- 	no-sdio;
--	no-emmc;
-+	no-mmc;
- 	disable-wp;
- 	status = "okay";
- };
++	/* Clear any stale status */
++	xfer->hdr.status = SCMI_SUCCESS;
+ 	xfer->state = SCMI_XFER_SENT_OK;
+ 	/*
+ 	 * Even though spinlocking is not needed here since no race is possible
 -- 
 2.39.0
 
