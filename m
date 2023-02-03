@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 387191FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:15:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5CF8C433D2;
-	Fri,  3 Feb 2023 10:15:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1B111FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:15:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5FBF3C433D2;
+	Fri,  3 Feb 2023 10:15:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419312;
-	bh=flk5BHzPUCuYt5c86n4+uAB5uVdmaZY3EUUaNmaQhqI=;
+	s=korg; t=1675419314;
+	bh=vJ13PiUs1ztiB8qu3vu0O605Lor91EoBchOYMk3urF0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aq3FH3XbwroLHCvRsxKGiS6FD6LIm1fZY4tt8G04yazGCSVyhDFHWlT+6TohSEpmr
-	 37mzDjNz23D0pCZUntHDqWjWRGki8qx625iJ5KGlegfmvzV9sF2bGZAACFP/qFZOFL
-	 qruzUi2JXArcL3/iuEWhYMKLH3RTyO0kyVj9h/0A=
+	b=iLnQygPf6qNPMZJtaElX/i5yeNK6QWHJlyOPpoyWzVa0Zywlem7zTk+cX1iDvsZ7O
+	 VzNGyEfy7jeiAnj03APXOvdJM5scHRYfRtnoAJl7kIIoeuJD6AZXLguqDnoCHx+kyN
+	 Z52ZzSfrAd8NjJKk/faSgI8b8FrqKNFlYhrY055w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin Wilck <mwilck@suse.com>,
-	Petr Pavlu <petr.pavlu@suse.com>,
-	Petr Mladek <pmladek@suse.com>,
-	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 4.14 26/62] module: Dont wait for GOING modules
-Date: Fri,  3 Feb 2023 11:12:22 +0100
-Message-Id: <20230203101014.134407485@linuxfoundation.org>
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	"Joel Fernandes (Google)" <joel@joelfernandes.org>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 4.14 27/62] tracing: Make sure trace_printk() can output as soon as it can be used
+Date: Fri,  3 Feb 2023 11:12:23 +0100
+Message-Id: <20230203101014.183857152@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -36,111 +35,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Petr Pavlu <petr.pavlu@suse.com>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 0254127ab977e70798707a7a2b757c9f3c971210 upstream.
+commit 3bb06eb6e9acf7c4a3e1b5bc87aed398ff8e2253 upstream.
 
-During a system boot, it can happen that the kernel receives a burst of
-requests to insert the same module but loading it eventually fails
-during its init call. For instance, udev can make a request to insert
-a frequency module for each individual CPU when another frequency module
-is already loaded which causes the init function of the new module to
-return an error.
+Currently trace_printk() can be used as soon as early_trace_init() is
+called from start_kernel(). But if a crash happens, and
+"ftrace_dump_on_oops" is set on the kernel command line, all you get will
+be:
 
-Since commit 6e6de3dee51a ("kernel/module.c: Only return -EEXIST for
-modules that have finished loading"), the kernel waits for modules in
-MODULE_STATE_GOING state to finish unloading before making another
-attempt to load the same module.
+  [    0.456075]   <idle>-0         0dN.2. 347519us : Unknown type 6
+  [    0.456075]   <idle>-0         0dN.2. 353141us : Unknown type 6
+  [    0.456075]   <idle>-0         0dN.2. 358684us : Unknown type 6
 
-This creates unnecessary work in the described scenario and delays the
-boot. In the worst case, it can prevent udev from loading drivers for
-other devices and might cause timeouts of services waiting on them and
-subsequently a failed boot.
+This is because the trace_printk() event (type 6) hasn't been registered
+yet. That gets done via an early_initcall(), which may be early, but not
+early enough.
 
-This patch attempts a different solution for the problem 6e6de3dee51a
-was trying to solve. Rather than waiting for the unloading to complete,
-it returns a different error code (-EBUSY) for modules in the GOING
-state. This should avoid the error situation that was described in
-6e6de3dee51a (user space attempting to load a dependent module because
-the -EEXIST error code would suggest to user space that the first module
-had been loaded successfully), while avoiding the delay situation too.
+Instead of registering the trace_printk() event (and other ftrace events,
+which are not trace events) via an early_initcall(), have them registered at
+the same time that trace_printk() can be used. This way, if there is a
+crash before early_initcall(), then the trace_printk()s will actually be
+useful.
 
-This has been tested on linux-next since December 2022 and passes
-all kmod selftests except test 0009 with module compression enabled
-but it has been confirmed that this issue has existed and has gone
-unnoticed since prior to this commit and can also be reproduced without
-module compression with a simple usleep(5000000) on tools/modprobe.c [0].
-These failures are caused by hitting the kernel mod_concurrent_max and can
-happen either due to a self inflicted kernel module auto-loead DoS somehow
-or on a system with large CPU count and each CPU count incorrectly triggering
-many module auto-loads. Both of those issues need to be fixed in-kernel.
+Link: https://lkml.kernel.org/r/20230104161412.019f6c55@gandalf.local.home
 
-[0] https://lore.kernel.org/all/Y9A4fiobL6IHp%2F%2FP@bombadil.infradead.org/
-
-Fixes: 6e6de3dee51a ("kernel/module.c: Only return -EEXIST for modules that have finished loading")
-Co-developed-by: Martin Wilck <mwilck@suse.com>
-Signed-off-by: Martin Wilck <mwilck@suse.com>
-Signed-off-by: Petr Pavlu <petr.pavlu@suse.com>
 Cc: stable@vger.kernel.org
-Reviewed-by: Petr Mladek <pmladek@suse.com>
-[mcgrof: enhance commit log with testing and kmod test result interpretation ]
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Fixes: e725c731e3bb1 ("tracing: Split tracing initialization into two for early initialization")
+Reported-by: "Joel Fernandes (Google)" <joel@joelfernandes.org>
+Tested-by: Joel Fernandes (Google) <joel@joelfernandes.org>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/module.c |   26 +++++++++++++++++++++-----
- 1 file changed, 21 insertions(+), 5 deletions(-)
+ kernel/trace/trace.c        |    2 ++
+ kernel/trace/trace.h        |    1 +
+ kernel/trace/trace_output.c |    3 +--
+ 3 files changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/module.c
-+++ b/kernel/module.c
-@@ -3451,7 +3451,8 @@ static bool finished_loading(const char
- 	sched_annotate_sleep();
- 	mutex_lock(&module_mutex);
- 	mod = find_module_all(name, strlen(name), true);
--	ret = !mod || mod->state == MODULE_STATE_LIVE;
-+	ret = !mod || mod->state == MODULE_STATE_LIVE
-+		|| mod->state == MODULE_STATE_GOING;
- 	mutex_unlock(&module_mutex);
- 
- 	return ret;
-@@ -3603,20 +3604,35 @@ static int add_unformed_module(struct mo
- 
- 	mod->state = MODULE_STATE_UNFORMED;
- 
--again:
- 	mutex_lock(&module_mutex);
- 	old = find_module_all(mod->name, strlen(mod->name), true);
- 	if (old != NULL) {
--		if (old->state != MODULE_STATE_LIVE) {
-+		if (old->state == MODULE_STATE_COMING
-+		    || old->state == MODULE_STATE_UNFORMED) {
- 			/* Wait in case it fails to load. */
- 			mutex_unlock(&module_mutex);
- 			err = wait_event_interruptible(module_wq,
- 					       finished_loading(mod->name));
- 			if (err)
- 				goto out_unlocked;
--			goto again;
-+
-+			/* The module might have gone in the meantime. */
-+			mutex_lock(&module_mutex);
-+			old = find_module_all(mod->name, strlen(mod->name),
-+					      true);
- 		}
--		err = -EEXIST;
-+
-+		/*
-+		 * We are here only when the same module was being loaded. Do
-+		 * not try to load it again right now. It prevents long delays
-+		 * caused by serialized module load failures. It might happen
-+		 * when more devices of the same type trigger load of
-+		 * a particular module.
-+		 */
-+		if (old && old->state == MODULE_STATE_LIVE)
-+			err = -EEXIST;
-+		else
-+			err = -EBUSY;
- 		goto out;
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -8487,6 +8487,8 @@ void __init early_trace_init(void)
+ 			static_key_enable(&tracepoint_printk_key.key);
  	}
- 	mod_update_bounds(mod);
+ 	tracer_alloc_buffers();
++
++	init_events();
+ }
+ 
+ void __init trace_init(void)
+--- a/kernel/trace/trace.h
++++ b/kernel/trace/trace.h
+@@ -1531,6 +1531,7 @@ trace_find_event_field(struct trace_even
+ extern void trace_event_enable_cmd_record(bool enable);
+ extern void trace_event_enable_tgid_record(bool enable);
+ 
++extern int init_events(void);
+ extern int event_trace_add_tracer(struct dentry *parent, struct trace_array *tr);
+ extern int event_trace_del_tracer(struct trace_array *tr);
+ 
+--- a/kernel/trace/trace_output.c
++++ b/kernel/trace/trace_output.c
+@@ -1394,7 +1394,7 @@ static struct trace_event *events[] __in
+ 	NULL
+ };
+ 
+-__init static int init_events(void)
++__init int init_events(void)
+ {
+ 	struct trace_event *event;
+ 	int i, ret;
+@@ -1412,4 +1412,3 @@ __init static int init_events(void)
+ 
+ 	return 0;
+ }
+-early_initcall(init_events);
 
 
