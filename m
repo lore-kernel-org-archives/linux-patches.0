@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250CC1FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:27:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A44BC433EF;
-	Fri,  3 Feb 2023 10:27:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442011FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:27:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4DFAC433EF;
+	Fri,  3 Feb 2023 10:27:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420053;
-	bh=XtqzqyFi6NHjYkGogIwxDXuw3txw7Gr+FR7jN8+kZ50=;
+	s=korg; t=1675420056;
+	bh=DTDbU4njEa8cVmUSV2f19Qh4e5R96knZqgdrgah3aKI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Silk1Wa3is7jkPfRgPtCNCXoD6zMEtaIy4Oc3ohx16eldR16WtKIHfbjf98NTitVJ
-	 rRY5W4NTN3do52OtTya+vyJi/euHbqryKHjSHlXf/aV6Xy7CmC4WQ1vYwBOTfXQT+B
-	 ikKD7Q0I0xw2xzafn7j9UIJLqDvoQYRtwF6oa3O8=
+	b=XFenw6eumJ2jSrGbwLnXQ5plb/+mCByZwGvCpgZZwS4v/FO0tntcvzGwGCF27//jK
+	 TTcfL5yM4Lc+whA+lPZUnATae4xu0rl/yfJYiS2eb9/HJPEWFKiPrrxN2PbPh0C4xY
+	 1Qe49odVYSKu7PThX9M9m7jVJ04Q3ew4AtXpn49c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shengjiu Wang <shengjiu.wang@gmail.com>,
-	Mark Brown <broonie@kernel.org>,
+	Haibo Chen <haibo.chen@nxp.com>,
+	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 057/134] ASoC: fsl_ssi: Rename AC97 streams to avoid collisions with AC97 CODEC
-Date: Fri,  3 Feb 2023 11:12:42 +0100
-Message-Id: <20230203101026.445869724@linuxfoundation.org>
+Subject: [PATCH 5.4 066/134] mmc: sdhci-esdhc-imx: disable the CMD CRC check for standard tuning
+Date: Fri,  3 Feb 2023 11:12:51 +0100
+Message-Id: <20230203101026.841481866@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -35,67 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Brown <broonie@kernel.org>
+From: Haibo Chen <haibo.chen@nxp.com>
 
-[ Upstream commit 8c6a42b5b0ed6f96624f56954e93eeae107440a6 ]
+[ Upstream commit 16e40e5b1e3c6646fd90d0c3186703d209216f03 ]
 
-The SSI driver calls the AC'97 playback and transmit streams "AC97 Playback"
-and "AC97 Capture" respectively. This is the same name used by the generic
-AC'97 CODEC driver in ASoC, creating confusion for the Freescale ASoC card
-when it attempts to use these widgets in routing. Add a "CPU" in the name
-like the regular DAIs registered by the driver to disambiguate.
+In current code, we add 1ms dealy after each tuning command for standard
+tuning method. Adding this 1ms dealy is because USDHC default check the
+CMD CRC and DATA line. If detect the CMD CRC, USDHC standard tuning
+IC logic do not wait for the tuning data sending out by the card, trigger
+the buffer read ready interrupt immediately, and step to next cycle. So
+when next time the new tuning command send out by USDHC, card may still
+not send out the tuning data of the upper command，then some eMMC cards
+may stuck, can't response to any command, block the whole tuning procedure.
 
-Acked-by: Shengjiu Wang <shengjiu.wang@gmail.com>
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Link: https://lore.kernel.org/r/20230106-asoc-udoo-probe-v1-1-a5d7469d4f67@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+If do not check the CMD CRC for tuning, then do not has this issue. USDHC
+will wait for the tuning data of each tuning command and check them. If the
+tuning data pass the check, it also means the CMD line also okay for tuning.
+
+So this patch disable the CMD CRC check for tuning, save some time for the
+whole tuning procedure.
+
+Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
+Link: https://lore.kernel.org/r/1590488522-9292-2-git-send-email-haibo.chen@nxp.com
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Stable-dep-of: 1e336aa0c025 ("mmc: sdhci-esdhc-imx: correct the tuning start tap and step setting")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/fsl/fsl-asoc-card.c | 8 ++++----
- sound/soc/fsl/fsl_ssi.c       | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ drivers/mmc/host/sdhci-esdhc-imx.c | 15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/sound/soc/fsl/fsl-asoc-card.c b/sound/soc/fsl/fsl-asoc-card.c
-index 39ea9bda1394..d78eb9f9d24c 100644
---- a/sound/soc/fsl/fsl-asoc-card.c
-+++ b/sound/soc/fsl/fsl-asoc-card.c
-@@ -112,11 +112,11 @@ static const struct snd_soc_dapm_route audio_map[] = {
+diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
+index 22bb5499f515..453ac2b6910c 100644
+--- a/drivers/mmc/host/sdhci-esdhc-imx.c
++++ b/drivers/mmc/host/sdhci-esdhc-imx.c
+@@ -89,6 +89,7 @@
+ /* NOTE: the minimum valid tuning start tap for mx6sl is 1 */
+ #define ESDHC_TUNING_START_TAP_DEFAULT	0x1
+ #define ESDHC_TUNING_START_TAP_MASK	0x7f
++#define ESDHC_TUNING_CMD_CRC_CHECK_DISABLE	(1 << 7)
+ #define ESDHC_TUNING_STEP_MASK		0x00070000
+ #define ESDHC_TUNING_STEP_SHIFT		16
  
- static const struct snd_soc_dapm_route audio_map_ac97[] = {
- 	/* 1st half -- Normal DAPM routes */
--	{"Playback",  NULL, "AC97 Playback"},
--	{"AC97 Capture",  NULL, "Capture"},
-+	{"Playback",  NULL, "CPU AC97 Playback"},
-+	{"CPU AC97 Capture",  NULL, "Capture"},
- 	/* 2nd half -- ASRC DAPM routes */
--	{"AC97 Playback",  NULL, "ASRC-Playback"},
--	{"ASRC-Capture",  NULL, "AC97 Capture"},
-+	{"CPU AC97 Playback",  NULL, "ASRC-Playback"},
-+	{"ASRC-Capture",  NULL, "CPU AC97 Capture"},
- };
+@@ -1246,6 +1247,18 @@ static void sdhci_esdhc_imx_hwinit(struct sdhci_host *host)
+ 				tmp |= imx_data->boarddata.tuning_step
+ 					<< ESDHC_TUNING_STEP_SHIFT;
+ 			}
++
++			/* Disable the CMD CRC check for tuning, if not, need to
++			 * add some delay after every tuning command, because
++			 * hardware standard tuning logic will directly go to next
++			 * step once it detect the CMD CRC error, will not wait for
++			 * the card side to finally send out the tuning data, trigger
++			 * the buffer read ready interrupt immediately. If usdhc send
++			 * the next tuning command some eMMC card will stuck, can't
++			 * response, block the tuning procedure or the first command
++			 * after the whole tuning procedure always can't get any response.
++			 */
++			 tmp |= ESDHC_TUNING_CMD_CRC_CHECK_DISABLE;
+ 			writel(tmp, host->ioaddr + ESDHC_TUNING_CTRL);
+ 		} else if (imx_data->socdata->flags & ESDHC_FLAG_MAN_TUNING) {
+ 			/*
+@@ -1587,8 +1600,6 @@ static int sdhci_esdhc_imx_probe(struct platform_device *pdev)
+ 	if (err)
+ 		goto disable_ahb_clk;
  
- /* Add all possible widgets into here without being redundant */
-diff --git a/sound/soc/fsl/fsl_ssi.c b/sound/soc/fsl/fsl_ssi.c
-index ed18bc69e095..0ab35c3dc7d2 100644
---- a/sound/soc/fsl/fsl_ssi.c
-+++ b/sound/soc/fsl/fsl_ssi.c
-@@ -1147,14 +1147,14 @@ static struct snd_soc_dai_driver fsl_ssi_ac97_dai = {
- 	.symmetric_channels = 1,
- 	.probe = fsl_ssi_dai_probe,
- 	.playback = {
--		.stream_name = "AC97 Playback",
-+		.stream_name = "CPU AC97 Playback",
- 		.channels_min = 2,
- 		.channels_max = 2,
- 		.rates = SNDRV_PCM_RATE_8000_48000,
- 		.formats = SNDRV_PCM_FMTBIT_S16 | SNDRV_PCM_FMTBIT_S20,
- 	},
- 	.capture = {
--		.stream_name = "AC97 Capture",
-+		.stream_name = "CPU AC97 Capture",
- 		.channels_min = 2,
- 		.channels_max = 2,
- 		.rates = SNDRV_PCM_RATE_48000,
+-	host->tuning_delay = 1;
+-
+ 	sdhci_esdhc_imx_hwinit(host);
+ 
+ 	err = sdhci_add_host(host);
 -- 
 2.39.0
 
