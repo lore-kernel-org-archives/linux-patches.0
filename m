@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61AEC1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:17:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CB030C433D2;
-	Fri,  3 Feb 2023 10:17:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A4D1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:17:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6F9C433EF;
+	Fri,  3 Feb 2023 10:17:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419433;
-	bh=C+g312KBcHits2IDYl6m/p8UuizQjD5fOKht7QKECSk=;
+	s=korg; t=1675419436;
+	bh=Y+IBNpG8WHY4TlSbPlQo/difBj8aGI83NtMEs+c9kMo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CzhYB9K5FZpkqBFecwMosz9YQPnx19GXuf4Sc5/rnpgSJ8ccsbtyIlg8OejrmwHHo
-	 JPlrp7nIJXYO+gYYUPizwo7LuvNxAgGgncTnpK4RmfiC3HdmF/LH0DQek9fv4M4Ioj
-	 ItZWzwfOcHnsyFKNL9KrmBcKSbDX5NwkXxSdLg9w=
+	b=TsJq85x1dE5OuWrt8ZgZgVAlKXhvFCxnPMtfuqgSMi1biO1TAd4Y8NAUIJRArNokl
+	 YugY09UagQlehCd36JHrWov/0ykcb/xG2p+/qLO6eTfxNekOEGhCKAp+dP927KSYjD
+	 oYEb7p89o/kdrLJkhKV+VwAEBalzZvsicop0+hN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Slaby <jirislaby@kernel.org>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Subject: [PATCH 4.14 37/62] Revert "Input: synaptics - switch touchpad on HP Laptop 15-da3001TU to RMI mode"
-Date: Fri,  3 Feb 2023 11:12:33 +0100
-Message-Id: <20230203101014.594447883@linuxfoundation.org>
+	Baoquan He <bhe@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>
+Subject: [PATCH 4.14 38/62] x86/i8259: Mark legacy PIC interrupts with IRQ_LEVEL
+Date: Fri,  3 Feb 2023 11:12:34 +0100
+Message-Id: <20230203101014.633031651@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -34,33 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+From: Thomas Gleixner <tglx@linutronix.de>
 
-commit 3c44e2b6cde674797b76e76d3a903a63ce8a18bb upstream.
+commit 5fa55950729d0762a787451dc52862c3f850f859 upstream.
 
-This reverts commit ac5408991ea6b06e29129b4d4861097c4c3e0d59 because
-it causes loss of keyboard on HP 15-da1xxx.
+Baoquan reported that after triggering a crash the subsequent crash-kernel
+fails to boot about half of the time. It triggers a NULL pointer
+dereference in the periodic tick code.
 
-Fixes: ac5408991ea6 ("Input: synaptics - switch touchpad on HP Laptop 15-da3001TU to RMI mode")
-Reported-by: Jiri Slaby <jirislaby@kernel.org>
-Link: https://lore.kernel.org/r/824effa5-8b9a-c28a-82bb-9b0ab24623e1@kernel.org
-Bugzilla: https://bugzilla.suse.com/show_bug.cgi?id=1206358
-Cc: stable@vger.kernel.org
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
+This happens because the legacy timer interrupt (IRQ0) is resent in
+software which happens in soft interrupt (tasklet) context. In this context
+get_irq_regs() returns NULL which leads to the NULL pointer dereference.
+
+The reason for the resend is a spurious APIC interrupt on the IRQ0 vector
+which is captured and leads to a resend when the legacy timer interrupt is
+enabled. This is wrong because the legacy PIC interrupts are level
+triggered and therefore should never be resent in software, but nothing
+ever sets the IRQ_LEVEL flag on those interrupts, so the core code does not
+know about their trigger type.
+
+Ensure that IRQ_LEVEL is set when the legacy PCI interrupts are set up.
+
+Fixes: a4633adcdbc1 ("[PATCH] genirq: add genirq sw IRQ-retrigger")
+Reported-by: Baoquan He <bhe@redhat.com>
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Tested-by: Baoquan He <bhe@redhat.com>
+Link: https://lore.kernel.org/r/87mt6rjrra.ffs@tglx
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/mouse/synaptics.c |    1 -
- 1 file changed, 1 deletion(-)
+ arch/x86/kernel/i8259.c   |    1 +
+ arch/x86/kernel/irqinit.c |    4 +++-
+ 2 files changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/input/mouse/synaptics.c
-+++ b/drivers/input/mouse/synaptics.c
-@@ -192,7 +192,6 @@ static const char * const smbus_pnp_ids[
- 	"SYN3221", /* HP 15-ay000 */
- 	"SYN323d", /* HP Spectre X360 13-w013dx */
- 	"SYN3257", /* HP Envy 13-ad105ng */
--	"SYN3286", /* HP Laptop 15-da3001TU */
- 	NULL
- };
+--- a/arch/x86/kernel/i8259.c
++++ b/arch/x86/kernel/i8259.c
+@@ -114,6 +114,7 @@ static void make_8259A_irq(unsigned int
+ 	disable_irq_nosync(irq);
+ 	io_apic_irqs &= ~(1<<irq);
+ 	irq_set_chip_and_handler(irq, &i8259A_chip, handle_level_irq);
++	irq_set_status_flags(irq, IRQ_LEVEL);
+ 	enable_irq(irq);
+ }
  
+--- a/arch/x86/kernel/irqinit.c
++++ b/arch/x86/kernel/irqinit.c
+@@ -67,8 +67,10 @@ void __init init_ISA_irqs(void)
+ #endif
+ 	legacy_pic->init(0);
+ 
+-	for (i = 0; i < nr_legacy_irqs(); i++)
++	for (i = 0; i < nr_legacy_irqs(); i++) {
+ 		irq_set_chip_and_handler(i, chip, handle_level_irq);
++		irq_set_status_flags(i, IRQ_LEVEL);
++	}
+ }
+ 
+ void __init init_IRQ(void)
 
 
