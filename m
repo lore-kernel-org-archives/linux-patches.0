@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62E391FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BDE31C4339B;
-	Fri,  3 Feb 2023 10:23:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 783FB1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0BFDC4339B;
+	Fri,  3 Feb 2023 10:23:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419813;
-	bh=QQyJ6UbkHg3jK72rd5CD8YVecxmP6Cpa9pLZ1/xTCGQ=;
+	s=korg; t=1675419816;
+	bh=PkH1ckxbwV8PR9YZccXb30VGjW1ffGRBVluUZi7xmMk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JifTXNgCRePzBaMgjH7Yn0rjVfKzgoAHg0lJ29+/Yy9riZ/TySpSr3BUf5yypdxed
-	 eBJA4OE5ioM26Ao9SfYqy7UaOk/iqKerG+sCucxiD75tBHyUpGtuK92JD8DTAmChYq
-	 NBsniE5fItb5TTApJ3oIiqc9UvrAoY7E7h+SSXAA=
+	b=UJLG7DdYyzL4FjM/XoV5ioYC6DG+F06Nk948KS8+/BGRf23jZ+NUhYOeO5536Sk2L
+	 5HFTHQQvx8Ob5mH+XklsH6sKjiVHwpLqEGw0ZLPflqXN2ClLEUeBIhDhwK3NN23+Sy
+	 0uRuixYjHgXui9DowrZUDDQMI6IVbfT6vnevOjlI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Willem de Bruijn <willemb@google.com>,
-	Yan Zhai <yan@cloudflare.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 9/9] net: fix NULL pointer in skb_segment_list
-Date: Fri,  3 Feb 2023 11:13:38 +0100
-Message-Id: <20230203101006.783007808@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 1/9] ARM: dts: imx: Fix pca9547 i2c-mux node name
+Date: Fri,  3 Feb 2023 11:13:30 +0100
+Message-Id: <20230203101006.486606694@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101006.422534094@linuxfoundation.org>
 References: <20230203101006.422534094@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,76 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yan Zhai <yan@cloudflare.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit 876e8ca8366735a604bac86ff7e2732fc9d85d2d upstream.
+[ Upstream commit f78985f9f58380eec37f82c8a2c765aa7670fc29 ]
 
-Commit 3a1296a38d0c ("net: Support GRO/GSO fraglist chaining.")
-introduced UDP listifyed GRO. The segmentation relies on frag_list being
-untouched when passing through the network stack. This assumption can be
-broken sometimes, where frag_list itself gets pulled into linear area,
-leaving frag_list being NULL. When this happens it can trigger
-following NULL pointer dereference, and panic the kernel. Reverse the
-test condition should fix it.
+"make dtbs_check":
 
-[19185.577801][    C1] BUG: kernel NULL pointer dereference, address:
-...
-[19185.663775][    C1] RIP: 0010:skb_segment_list+0x1cc/0x390
-...
-[19185.834644][    C1] Call Trace:
-[19185.841730][    C1]  <TASK>
-[19185.848563][    C1]  __udp_gso_segment+0x33e/0x510
-[19185.857370][    C1]  inet_gso_segment+0x15b/0x3e0
-[19185.866059][    C1]  skb_mac_gso_segment+0x97/0x110
-[19185.874939][    C1]  __skb_gso_segment+0xb2/0x160
-[19185.883646][    C1]  udp_queue_rcv_skb+0xc3/0x1d0
-[19185.892319][    C1]  udp_unicast_rcv_skb+0x75/0x90
-[19185.900979][    C1]  ip_protocol_deliver_rcu+0xd2/0x200
-[19185.910003][    C1]  ip_local_deliver_finish+0x44/0x60
-[19185.918757][    C1]  __netif_receive_skb_one_core+0x8b/0xa0
-[19185.927834][    C1]  process_backlog+0x88/0x130
-[19185.935840][    C1]  __napi_poll+0x27/0x150
-[19185.943447][    C1]  net_rx_action+0x27e/0x5f0
-[19185.951331][    C1]  ? mlx5_cq_tasklet_cb+0x70/0x160 [mlx5_core]
-[19185.960848][    C1]  __do_softirq+0xbc/0x25d
-[19185.968607][    C1]  irq_exit_rcu+0x83/0xb0
-[19185.976247][    C1]  common_interrupt+0x43/0xa0
-[19185.984235][    C1]  asm_common_interrupt+0x22/0x40
-...
-[19186.094106][    C1]  </TASK>
+    arch/arm/boot/dts/imx53-ppd.dtb: i2c-switch@70: $nodename:0: 'i2c-switch@70' does not match '^(i2c-?)?mux'
+	    From schema: Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
+    arch/arm/boot/dts/imx53-ppd.dtb: i2c-switch@70: Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'i2c@0', 'i2c@1', 'i2c@2', 'i2c@3', 'i2c@4', 'i2c@5', 'i2c@6', 'i2c@7' were unexpected)
+	    From schema: Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
 
-Fixes: 3a1296a38d0c ("net: Support GRO/GSO fraglist chaining.")
-Suggested-by: Daniel Borkmann <daniel@iogearbox.net>
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Yan Zhai <yan@cloudflare.com>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>
-Link: https://lore.kernel.org/r/Y9gt5EUizK1UImEP@debian
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fix this by renaming the PCA9547 node to "i2c-mux", to match the I2C bus
+multiplexer/switch DT bindings and the Generic Names Recommendation in
+the Devicetree Specification.
+
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/skbuff.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/imx53-ppd.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/core/skbuff.c
-+++ b/net/core/skbuff.c
-@@ -3688,7 +3688,7 @@ struct sk_buff *skb_segment_list(struct
+diff --git a/arch/arm/boot/dts/imx53-ppd.dts b/arch/arm/boot/dts/imx53-ppd.dts
+index 006fbd7f5432..54e39db447c4 100644
+--- a/arch/arm/boot/dts/imx53-ppd.dts
++++ b/arch/arm/boot/dts/imx53-ppd.dts
+@@ -487,7 +487,7 @@ &i2c1 {
+ 	scl-gpios = <&gpio3 21 GPIO_ACTIVE_HIGH>;
+ 	status = "okay";
  
- 	skb_shinfo(skb)->frag_list = NULL;
- 
--	do {
-+	while (list_skb) {
- 		nskb = list_skb;
- 		list_skb = list_skb->next;
- 
-@@ -3732,8 +3732,7 @@ struct sk_buff *skb_segment_list(struct
- 		if (skb_needs_linearize(nskb, features) &&
- 		    __skb_linearize(nskb))
- 			goto err_linearize;
--
--	} while (list_skb);
-+	}
- 
- 	skb->truesize = skb->truesize - delta_truesize;
- 	skb->data_len = skb->data_len - delta_len;
+-	i2c-switch@70 {
++	i2c-mux@70 {
+ 		compatible = "nxp,pca9547";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+-- 
+2.39.0
+
 
 
