@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A27591FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:18:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F076FC433D2;
-	Fri,  3 Feb 2023 10:18:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 823421FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:18:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F219BC433EF;
+	Fri,  3 Feb 2023 10:18:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419533;
-	bh=2jQp1AqTaQVNTK5KV7qHirX/+99pKghYPpxMeYr39pE=;
+	s=korg; t=1675419536;
+	bh=7XpHiww4oRNskhgKyhp0bZboDML/MPxINlsbuHs4678=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=187EMVgzYh8PK3XVjfk4u0IaSo/4Iv2/v4rRqwD6yWt65Syu7+NCFa4BZ/+Iuqf7t
-	 cqlYMZVIa3F5mDr0sS4zNjkQWwfOXmTGauLlOgq0/JW/6iotLKVNYEjcLX5/ysl9DP
-	 W6JkxShvefK8mqhLfNcpPnQOukYEoTQyVztX5jzM=
+	b=z+BKyPJzS7E8jCzxj5NvKv/xzyyyBthOkccuopivfkn9GG5VTW7GeoeCNsMx4ay8t
+	 BiHvZs3c3PX5tBS7J5fy1L8Sc7/MUyCyprLiSG9om8CjeivdDAkxpPWCTHunl6EW0t
+	 ph+7gnxPNJrdPgQs6n0DsPfjwFGpaQpPMG4FfAWE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiri Olsa <jolsa@kernel.org>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Namhyung Kim <namhyung@kernel.org>,
-	Arnaldo Carvalho de Melo <acme@redhat.com>,
-	Guenter Roeck <linux@roeck-us.net>
-Subject: [PATCH 4.19 34/80] perf env: Do not return pointers to local variables
-Date: Fri,  3 Feb 2023 11:12:28 +0100
-Message-Id: <20230203101016.634095461@linuxfoundation.org>
+	Dongliang Mu <mudongliangabcd@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Fedor Pchelkin <pchelkin@ispras.ru>
+Subject: [PATCH 4.19 35/80] fs: reiserfs: remove useless new_opts in reiserfs_remount
+Date: Fri,  3 Feb 2023 11:12:29 +0100
+Message-Id: <20230203101016.674723198@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
 References: <20230203101015.263854890@linuxfoundation.org>
@@ -37,49 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnaldo Carvalho de Melo <acme@redhat.com>
+From: Dongliang Mu <mudongliangabcd@gmail.com>
 
-commit ebcb9464a2ae3a547e97de476575c82ece0e93e2 upstream.
+commit 81dedaf10c20959bdf5624f9783f408df26ba7a4 upstream.
 
-It is possible to return a pointer to a local variable when looking up
-the architecture name for the running system and no normalization is
-done on that value, i.e. we may end up returning the uts.machine local
-variable.
+Since the commit c3d98ea08291 ("VFS: Don't use save/replace_mount_options
+if not using generic_show_options") eliminates replace_mount_options
+in reiserfs_remount, but does not handle the allocated new_opts,
+it will cause memory leak in the reiserfs_remount.
 
-While this doesn't happen on most arches, as normalization takes place,
-lets fix this by making that a static variable and optimize it a bit by
-not always running uname(), only the first time.
+Because new_opts is useless in reiserfs_mount, so we fix this bug by
+removing the useless new_opts in reiserfs_remount.
 
-Noticed in fedora rawhide running with:
-
-  [perfbuilder@a5ff49d6e6e4 ~]$ gcc --version
-  gcc (GCC) 10.0.1 20200216 (Red Hat 10.0.1-0.8)
-
-Reported-by: Jiri Olsa <jolsa@kernel.org>
-Cc: Adrian Hunter <adrian.hunter@intel.com>
-Cc: Namhyung Kim <namhyung@kernel.org>
-Signed-off-by: Arnaldo Carvalho de Melo <acme@redhat.com>
-Cc: Guenter Roeck <linux@roeck-us.net>
+Fixes: c3d98ea08291 ("VFS: Don't use save/replace_mount_options if not using generic_show_options")
+Link: https://lore.kernel.org/r/20211027143445.4156459-1-mudongliangabcd@gmail.com
+Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/perf/util/env.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ fs/reiserfs/super.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/tools/perf/util/env.c
-+++ b/tools/perf/util/env.c
-@@ -163,11 +163,11 @@ static const char *normalize_arch(char *
+--- a/fs/reiserfs/super.c
++++ b/fs/reiserfs/super.c
+@@ -1443,7 +1443,6 @@ static int reiserfs_remount(struct super
+ 	unsigned long safe_mask = 0;
+ 	unsigned int commit_max_age = (unsigned int)-1;
+ 	struct reiserfs_journal *journal = SB_JOURNAL(s);
+-	char *new_opts;
+ 	int err;
+ 	char *qf_names[REISERFS_MAXQUOTAS];
+ 	unsigned int qfmt = 0;
+@@ -1451,10 +1450,6 @@ static int reiserfs_remount(struct super
+ 	int i;
+ #endif
  
- const char *perf_env__arch(struct perf_env *env)
- {
--	struct utsname uts;
- 	char *arch_name;
+-	new_opts = kstrdup(arg, GFP_KERNEL);
+-	if (arg && !new_opts)
+-		return -ENOMEM;
+-
+ 	sync_filesystem(s);
+ 	reiserfs_write_lock(s);
  
- 	if (!env || !env->arch) { /* Assume local operation */
--		if (uname(&uts) < 0)
-+		static struct utsname uts = { .machine[0] = '\0', };
-+		if (uts.machine[0] == '\0' && uname(&uts) < 0)
- 			return NULL;
- 		arch_name = uts.machine;
- 	} else
+@@ -1605,7 +1600,6 @@ out_ok_unlocked:
+ out_err_unlock:
+ 	reiserfs_write_unlock(s);
+ out_err:
+-	kfree(new_opts);
+ 	return err;
+ }
+ 
 
 
