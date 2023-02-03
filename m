@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CC391FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:25:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93E27C433EF;
-	Fri,  3 Feb 2023 10:25:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A2B1FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:25:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A2A6C4339C;
+	Fri,  3 Feb 2023 10:25:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419953;
-	bh=f56znlzjrdcwOMryZQoMnkauanbKTnSKyumII1QUjUw=;
+	s=korg; t=1675419956;
+	bh=5Ql//xyiGJLl8Ga0Js8lkb5AZkXI24aaadvwxvQXQwc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JJeueYI6jdeNc7yQ0x6XCvQiXHZQ+XB5qpHAbEZ4eNIyP/Y4BeU29M8t9vfw5MkSK
-	 FM7Dv9oXlQ4Z6GsGO5Yd+uxeEtaGmeK3zhOKzpKarvOvx+Xl1BWgl3TTSYDRQ6A8kn
-	 Db797exUJcmA6q0nMRzSHsbwdFjoS/p6O8nJnewk=
+	b=hWIZB2ZYMEotAqE1qR27F0moa0xgsXRrimJR9joLTUv4YLlSv8wyDOHeUvhFfbbsA
+	 BM1wbcoivtui241QAlky4BRtTpIHQMEocpSq0qGmXwUgXphZ28jfYXnrNiFhBzm2gU
+	 Nrj0KKRQalVRqeUhfPrLWiXQ/17hpIMlDpuJQdtM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Marek Vasut <marex@denx.de>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 024/134] gpio: mxc: Always set GPIOs used as interrupt source to INPUT mode
-Date: Fri,  3 Feb 2023 11:12:09 +0100
-Message-Id: <20230203101024.929920879@linuxfoundation.org>
+Subject: [PATCH 5.4 033/134] HID: check empty report_list in bigben_probe()
+Date: Fri,  3 Feb 2023 11:12:18 +0100
+Message-Id: <20230203101025.361076553@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -36,39 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit 8e88a0feebb241cab0253698b2f7358b6ebec802 ]
+[ Upstream commit c7bf714f875531f227f2ef1fdcc8f4d44e7c7d9d ]
 
-Always configure GPIO pins which are used as interrupt source as INPUTs.
-In case the default pin configuration is OUTPUT, or the prior stage does
-configure the pins as OUTPUT, then Linux will not reconfigure the pin as
-INPUT and no interrupts are received.
+Add a check for empty report_list in bigben_probe().
+The missing check causes a type confusion when issuing a list_entry()
+on an empty report_list.
+The problem is caused by the assumption that the device must
+have valid report_list. While this will be true for all normal HID
+devices, a suitably malicious device can violate the assumption.
 
-Always configure the interrupt source GPIO pin as input to fix the above case.
-
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Fixes: 07bd1a6cc7cbb ("MXC arch: Add gpio support for the whole platform")
-Signed-off-by: Marek Vasut <marex@denx.de>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+Fixes: 256a90ed9e46 ("HID: hid-bigbenff: driver for BigBen Interactive PS3OFMINIPAD gamepad")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpio/gpio-mxc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/hid/hid-bigbenff.c | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/gpio/gpio-mxc.c b/drivers/gpio/gpio-mxc.c
-index c77d474185f3..2e4b6b176875 100644
---- a/drivers/gpio/gpio-mxc.c
-+++ b/drivers/gpio/gpio-mxc.c
-@@ -229,7 +229,7 @@ static int gpio_set_irq_type(struct irq_data *d, u32 type)
+diff --git a/drivers/hid/hid-bigbenff.c b/drivers/hid/hid-bigbenff.c
+index e8c5e3ac9fff..e8b16665860d 100644
+--- a/drivers/hid/hid-bigbenff.c
++++ b/drivers/hid/hid-bigbenff.c
+@@ -344,6 +344,11 @@ static int bigben_probe(struct hid_device *hid,
+ 	}
  
- 	writel(1 << gpio_idx, port->base + GPIO_ISR);
+ 	report_list = &hid->report_enum[HID_OUTPUT_REPORT].report_list;
++	if (list_empty(report_list)) {
++		hid_err(hid, "no output report found\n");
++		error = -ENODEV;
++		goto error_hw_stop;
++	}
+ 	bigben->report = list_entry(report_list->next,
+ 		struct hid_report, list);
  
--	return 0;
-+	return port->gc.direction_input(&port->gc, gpio_idx);
- }
- 
- static void mxc_flip_edge(struct mxc_gpio_port *port, u32 gpio)
 -- 
 2.39.0
 
