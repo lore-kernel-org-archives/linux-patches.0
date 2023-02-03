@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A6071FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:19:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC89DC433EF;
-	Fri,  3 Feb 2023 10:19:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75F2D1FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:19:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE366C4339B;
+	Fri,  3 Feb 2023 10:19:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419585;
-	bh=7TB58F2YJRfwdowX6BjU2VDFV/ZoHgwBV6QbWTkAs9k=;
+	s=korg; t=1675419588;
+	bh=zqopiyW3p9GCd5wuca4dTfP4WgEtM+Uqg8178/tnTLg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gSglw9BF8t0hfAIgBNjY5Cr9D889qEfMMv41nOChPUo40M3RicZP80gO2Hw4LpT2q
-	 xvDQo2z5xPIcJ/yKHKc262qF6ViVfAsihmfZzXws5z2uwBa2xfoKBzda/5LigaT+sd
-	 7R7pQBaP7wdVvCrw879KBO8i2MIIrO/QHE1Zdn98=
+	b=deViJ88msz64Fdcyxjyk8dGgqNxqEtpGYQi72pliFvV1CMWYcHdBfco1E2M6JdD+d
+	 JM6/mi/Z74esv1IpwE8BiPEjYB/eznl9PReqIEf1PqYH73kWs3zLSnXcmKZjOmJhGp
+	 8KCLp4cvjM2XNVdhDt5frJwW/pZb+l3JmJn0/RV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luca Weiss <luca.weiss@fairphone.com>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Steev Klimaszewski <steev@kali.org>,
-	Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH 4.19 44/80] EDAC/device: Respect any driver-supplied workqueue polling value
-Date: Fri,  3 Feb 2023 11:12:38 +0100
-Message-Id: <20230203101017.085896565@linuxfoundation.org>
+	syzbot+5fafd5cfe1fc91f6b352@syzkaller.appspotmail.com,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 53/80] netrom: Fix use-after-free of a listening socket.
+Date: Fri,  3 Feb 2023 11:12:47 +0100
+Message-Id: <20230203101017.477607573@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
 References: <20230203101015.263854890@linuxfoundation.org>
@@ -37,79 +36,161 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit cec669ff716cc83505c77b242aecf6f7baad869d upstream.
+[ Upstream commit 409db27e3a2eb5e8ef7226ca33be33361b3ed1c9 ]
 
-The EDAC drivers may optionally pass the poll_msec value. Use that value
-if available, else fall back to 1000ms.
+syzbot reported a use-after-free in do_accept(), precisely nr_accept()
+as sk_prot_alloc() allocated the memory and sock_put() frees it. [0]
 
-  [ bp: Touchups. ]
+The issue could happen if the heartbeat timer is fired and
+nr_heartbeat_expiry() calls nr_destroy_socket(), where a socket
+has SOCK_DESTROY or a listening socket has SOCK_DEAD.
 
-Fixes: e27e3dac6517 ("drivers/edac: add edac_device class")
-Reported-by: Luca Weiss <luca.weiss@fairphone.com>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
-Cc: <stable@vger.kernel.org> # 4.9
-Link: https://lore.kernel.org/r/COZYL8MWN97H.MROQ391BGA09@otso
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+In this case, the first condition cannot be true.  SOCK_DESTROY is
+flagged in nr_release() only when the file descriptor is close()d,
+but accept() is being called for the listening socket, so the second
+condition must be true.
+
+Usually, the AF_NETROM listener neither starts timers nor sets
+SOCK_DEAD.  However, the condition is met if connect() fails before
+listen().  connect() starts the t1 timer and heartbeat timer, and
+t1timer calls nr_disconnect() when timeout happens.  Then, SOCK_DEAD
+is set, and if we call listen(), the heartbeat timer calls
+nr_destroy_socket().
+
+  nr_connect
+    nr_establish_data_link(sk)
+      nr_start_t1timer(sk)
+    nr_start_heartbeat(sk)
+                                    nr_t1timer_expiry
+                                      nr_disconnect(sk, ETIMEDOUT)
+                                        nr_sk(sk)->state = NR_STATE_0
+                                        sk->sk_state = TCP_CLOSE
+                                        sock_set_flag(sk, SOCK_DEAD)
+nr_listen
+  if (sk->sk_state != TCP_LISTEN)
+    sk->sk_state = TCP_LISTEN
+                                    nr_heartbeat_expiry
+                                      switch (nr->state)
+                                      case NR_STATE_0
+                                        if (sk->sk_state == TCP_LISTEN &&
+                                            sock_flag(sk, SOCK_DEAD))
+                                          nr_destroy_socket(sk)
+
+This path seems expected, and nr_destroy_socket() is called to clean
+up resources.  Initially, there was sock_hold() before nr_destroy_socket()
+so that the socket would not be freed, but the commit 517a16b1a88b
+("netrom: Decrease sock refcount when sock timers expire") accidentally
+removed it.
+
+To fix use-after-free, let's add sock_hold().
+
+[0]:
+BUG: KASAN: use-after-free in do_accept+0x483/0x510 net/socket.c:1848
+Read of size 8 at addr ffff88807978d398 by task syz-executor.3/5315
+
+CPU: 0 PID: 5315 Comm: syz-executor.3 Not tainted 6.2.0-rc3-syzkaller-00165-gd9fc1511728c #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+Call Trace:
+ <TASK>
+ __dump_stack lib/dump_stack.c:88 [inline]
+ dump_stack_lvl+0xd1/0x138 lib/dump_stack.c:106
+ print_address_description mm/kasan/report.c:306 [inline]
+ print_report+0x15e/0x461 mm/kasan/report.c:417
+ kasan_report+0xbf/0x1f0 mm/kasan/report.c:517
+ do_accept+0x483/0x510 net/socket.c:1848
+ __sys_accept4_file net/socket.c:1897 [inline]
+ __sys_accept4+0x9a/0x120 net/socket.c:1927
+ __do_sys_accept net/socket.c:1944 [inline]
+ __se_sys_accept net/socket.c:1941 [inline]
+ __x64_sys_accept+0x75/0xb0 net/socket.c:1941
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+RIP: 0033:0x7fa436a8c0c9
+Code: 28 00 00 00 75 05 48 83 c4 28 c3 e8 f1 19 00 00 90 48 89 f8 48 89 f7 48 89 d6 48 89 ca 4d 89 c2 4d 89 c8 4c 8b 4c 24 08 0f 05 <48> 3d 01 f0 ff ff 73 01 c3 48 c7 c1 b8 ff ff ff f7 d8 64 89 01 48
+RSP: 002b:00007fa437784168 EFLAGS: 00000246 ORIG_RAX: 000000000000002b
+RAX: ffffffffffffffda RBX: 00007fa436bac050 RCX: 00007fa436a8c0c9
+RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000005
+RBP: 00007fa436ae7ae9 R08: 0000000000000000 R09: 0000000000000000
+R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+R13: 00007ffebc6700df R14: 00007fa437784300 R15: 0000000000022000
+ </TASK>
+
+Allocated by task 5294:
+ kasan_save_stack+0x22/0x40 mm/kasan/common.c:45
+ kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+ ____kasan_kmalloc mm/kasan/common.c:371 [inline]
+ ____kasan_kmalloc mm/kasan/common.c:330 [inline]
+ __kasan_kmalloc+0xa3/0xb0 mm/kasan/common.c:380
+ kasan_kmalloc include/linux/kasan.h:211 [inline]
+ __do_kmalloc_node mm/slab_common.c:968 [inline]
+ __kmalloc+0x5a/0xd0 mm/slab_common.c:981
+ kmalloc include/linux/slab.h:584 [inline]
+ sk_prot_alloc+0x140/0x290 net/core/sock.c:2038
+ sk_alloc+0x3a/0x7a0 net/core/sock.c:2091
+ nr_create+0xb6/0x5f0 net/netrom/af_netrom.c:433
+ __sock_create+0x359/0x790 net/socket.c:1515
+ sock_create net/socket.c:1566 [inline]
+ __sys_socket_create net/socket.c:1603 [inline]
+ __sys_socket_create net/socket.c:1588 [inline]
+ __sys_socket+0x133/0x250 net/socket.c:1636
+ __do_sys_socket net/socket.c:1649 [inline]
+ __se_sys_socket net/socket.c:1647 [inline]
+ __x64_sys_socket+0x73/0xb0 net/socket.c:1647
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Freed by task 14:
+ kasan_save_stack+0x22/0x40 mm/kasan/common.c:45
+ kasan_set_track+0x25/0x30 mm/kasan/common.c:52
+ kasan_save_free_info+0x2b/0x40 mm/kasan/generic.c:518
+ ____kasan_slab_free mm/kasan/common.c:236 [inline]
+ ____kasan_slab_free+0x13b/0x1a0 mm/kasan/common.c:200
+ kasan_slab_free include/linux/kasan.h:177 [inline]
+ __cache_free mm/slab.c:3394 [inline]
+ __do_kmem_cache_free mm/slab.c:3580 [inline]
+ __kmem_cache_free+0xcd/0x3b0 mm/slab.c:3587
+ sk_prot_free net/core/sock.c:2074 [inline]
+ __sk_destruct+0x5df/0x750 net/core/sock.c:2166
+ sk_destruct net/core/sock.c:2181 [inline]
+ __sk_free+0x175/0x460 net/core/sock.c:2192
+ sk_free+0x7c/0xa0 net/core/sock.c:2203
+ sock_put include/net/sock.h:1991 [inline]
+ nr_heartbeat_expiry+0x1d7/0x460 net/netrom/nr_timer.c:148
+ call_timer_fn+0x1da/0x7c0 kernel/time/timer.c:1700
+ expire_timers+0x2c6/0x5c0 kernel/time/timer.c:1751
+ __run_timers kernel/time/timer.c:2022 [inline]
+ __run_timers kernel/time/timer.c:1995 [inline]
+ run_timer_softirq+0x326/0x910 kernel/time/timer.c:2035
+ __do_softirq+0x1fb/0xadc kernel/softirq.c:571
+
+Fixes: 517a16b1a88b ("netrom: Decrease sock refcount when sock timers expire")
+Reported-by: syzbot+5fafd5cfe1fc91f6b352@syzkaller.appspotmail.com
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Link: https://lore.kernel.org/r/20230120231927.51711-1-kuniyu@amazon.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/edac_device.c |   15 +++++++--------
- 1 file changed, 7 insertions(+), 8 deletions(-)
+ net/netrom/nr_timer.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/edac/edac_device.c
-+++ b/drivers/edac/edac_device.c
-@@ -34,6 +34,9 @@
- static DEFINE_MUTEX(device_ctls_mutex);
- static LIST_HEAD(edac_device_list);
- 
-+/* Default workqueue processing interval on this instance, in msecs */
-+#define DEFAULT_POLL_INTERVAL 1000
-+
- #ifdef CONFIG_EDAC_DEBUG
- static void edac_device_dump_device(struct edac_device_ctl_info *edac_dev)
- {
-@@ -366,7 +369,7 @@ static void edac_device_workq_function(s
- 	 * whole one second to save timers firing all over the period
- 	 * between integral seconds
- 	 */
--	if (edac_dev->poll_msec == 1000)
-+	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
- 		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
- 	else
- 		edac_queue_work(&edac_dev->work, edac_dev->delay);
-@@ -396,7 +399,7 @@ static void edac_device_workq_setup(stru
- 	 * timers firing on sub-second basis, while they are happy
- 	 * to fire together on the 1 second exactly
- 	 */
--	if (edac_dev->poll_msec == 1000)
-+	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
- 		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
- 	else
- 		edac_queue_work(&edac_dev->work, edac_dev->delay);
-@@ -430,7 +433,7 @@ void edac_device_reset_delay_period(stru
- 	edac_dev->delay	    = msecs_to_jiffies(msec);
- 
- 	/* See comment in edac_device_workq_setup() above */
--	if (edac_dev->poll_msec == 1000)
-+	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
- 		edac_mod_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
- 	else
- 		edac_mod_work(&edac_dev->work, edac_dev->delay);
-@@ -472,11 +475,7 @@ int edac_device_add_device(struct edac_d
- 		/* This instance is NOW RUNNING */
- 		edac_dev->op_state = OP_RUNNING_POLL;
- 
--		/*
--		 * enable workq processing on this instance,
--		 * default = 1000 msec
--		 */
--		edac_device_workq_setup(edac_dev, 1000);
-+		edac_device_workq_setup(edac_dev, edac_dev->poll_msec ?: DEFAULT_POLL_INTERVAL);
- 	} else {
- 		edac_dev->op_state = OP_RUNNING_INTERRUPT;
- 	}
+diff --git a/net/netrom/nr_timer.c b/net/netrom/nr_timer.c
+index 426d49609524..2bf99bd5be58 100644
+--- a/net/netrom/nr_timer.c
++++ b/net/netrom/nr_timer.c
+@@ -124,6 +124,7 @@ static void nr_heartbeat_expiry(struct timer_list *t)
+ 		   is accepted() it isn't 'dead' so doesn't get removed. */
+ 		if (sock_flag(sk, SOCK_DESTROY) ||
+ 		    (sk->sk_state == TCP_LISTEN && sock_flag(sk, SOCK_DEAD))) {
++			sock_hold(sk);
+ 			bh_unlock_sock(sk);
+ 			nr_destroy_socket(sk);
+ 			goto out;
+-- 
+2.39.0
+
 
 
