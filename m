@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6DC21FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E489CC4339B;
-	Fri,  3 Feb 2023 10:23:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 844321FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EBACBC433EF;
+	Fri,  3 Feb 2023 10:23:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419794;
-	bh=LkoBjuiq2polH/rK24e4vvUSa+FRr/93moqEdFoFrqM=;
+	s=korg; t=1675419797;
+	bh=kDp6C65pVdVqhY4qD81CaQMBTLjF4OYidp1jbJSNjkk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ijOj+HAmwTzcxRRkZH6Bb9fCclz2OkCnIJ15+cqIjltzZfrkEQ/EddxlFl2TPzL7v
-	 0BRcj235kG/gp1ybwvW7wa462EJzvm7ALyv4+7TYb1bvy7doTiVzerkckc9NEWd926
-	 Wb83+fIiXJlD6wCX7RNrte/XjurN2XoEdXPiwYjo=
+	b=JXv2Ode6pLPlbVowOVbZD7PA2CGcA3UycjZ7k1tvcKMQUrm3/Rmrrnh+jDt8HqcAF
+	 F+itqiDzJqnnIp1mTuue0MN/p37XQpe5xQujJ8DM174QbUg7rn97Rc261lXanldFeg
+	 ta+VjyqDFilxni4xHMLe5m2wtAuqfbjuA8e+0SM4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Hao Sun <sunhao.th@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Stanislav Fomichev <sdf@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 3/9] arm64: dts: imx8mq-thor96: fix no-mmc property for SDHCI
-Date: Fri,  3 Feb 2023 11:13:32 +0100
-Message-Id: <20230203101006.584311027@linuxfoundation.org>
+Subject: [PATCH 5.10 4/9] bpf: Skip task with pid=1 in send_signal_common()
+Date: Fri,  3 Feb 2023 11:13:33 +0100
+Message-Id: <20230203101006.615032192@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101006.422534094@linuxfoundation.org>
 References: <20230203101006.422534094@linuxfoundation.org>
@@ -35,42 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Hao Sun <sunhao.th@gmail.com>
 
-[ Upstream commit ef10d57936ead5e817ef7cea6a87531085e77773 ]
+[ Upstream commit a3d81bc1eaef48e34dd0b9b48eefed9e02a06451 ]
 
-There is no "no-emmc" property, so intention for SD/SDIO only nodes was
-to use "no-mmc".
+The following kernel panic can be triggered when a task with pid=1 attaches
+a prog that attempts to send killing signal to itself, also see [1] for more
+details:
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+  Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
+  CPU: 3 PID: 1 Comm: systemd Not tainted 6.1.0-09652-g59fe41b5255f #148
+  Call Trace:
+  <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x100/0x178 lib/dump_stack.c:106
+  panic+0x2c4/0x60f kernel/panic.c:275
+  do_exit.cold+0x63/0xe4 kernel/exit.c:789
+  do_group_exit+0xd4/0x2a0 kernel/exit.c:950
+  get_signal+0x2460/0x2600 kernel/signal.c:2858
+  arch_do_signal_or_restart+0x78/0x5d0 arch/x86/kernel/signal.c:306
+  exit_to_user_mode_loop kernel/entry/common.c:168 [inline]
+  exit_to_user_mode_prepare+0x15f/0x250 kernel/entry/common.c:203
+  __syscall_exit_to_user_mode_work kernel/entry/common.c:285 [inline]
+  syscall_exit_to_user_mode+0x1d/0x50 kernel/entry/common.c:296
+  do_syscall_64+0x44/0xb0 arch/x86/entry/common.c:86
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+So skip task with pid=1 in bpf_send_signal_common() to avoid the panic.
+
+  [1] https://lore.kernel.org/bpf/20221222043507.33037-1-sunhao.th@gmail.com
+
+Signed-off-by: Hao Sun <sunhao.th@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/bpf/20230106084838.12690-1-sunhao.th@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/freescale/imx8mq-thor96.dts | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ kernel/trace/bpf_trace.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/freescale/imx8mq-thor96.dts b/arch/arm64/boot/dts/freescale/imx8mq-thor96.dts
-index 5d5aa6537225..6e6182709d22 100644
---- a/arch/arm64/boot/dts/freescale/imx8mq-thor96.dts
-+++ b/arch/arm64/boot/dts/freescale/imx8mq-thor96.dts
-@@ -339,7 +339,7 @@ &usdhc1 {
- 	bus-width = <4>;
- 	non-removable;
- 	no-sd;
--	no-emmc;
-+	no-mmc;
- 	status = "okay";
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index a9e074769881..ab4f51716645 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -1072,6 +1072,9 @@ static int bpf_send_signal_common(u32 sig, enum pid_type type)
+ 		return -EPERM;
+ 	if (unlikely(!nmi_uaccess_okay()))
+ 		return -EPERM;
++	/* Task should not be pid=1 to avoid kernel panic. */
++	if (unlikely(is_global_init(current)))
++		return -EPERM;
  
- 	brcmf: wifi@1 {
-@@ -359,7 +359,7 @@ &usdhc2 {
- 	cd-gpios = <&gpio2 12 GPIO_ACTIVE_LOW>;
- 	bus-width = <4>;
- 	no-sdio;
--	no-emmc;
-+	no-mmc;
- 	disable-wp;
- 	status = "okay";
- };
+ 	if (irqs_disabled()) {
+ 		/* Do an early check on signal validity. Otherwise,
 -- 
 2.39.0
 
