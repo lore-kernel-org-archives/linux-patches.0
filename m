@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60591FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:18:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECE85C433D2;
-	Fri,  3 Feb 2023 10:18:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9257D1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:18:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF3C7C433D2;
+	Fri,  3 Feb 2023 10:18:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419524;
-	bh=744CDKKi8E7YUCWU6p1rLxd7RRXaOcHUycsnTVTv/1g=;
+	s=korg; t=1675419527;
+	bh=1UU1VZfWvg9on0k10bFNysDuWML1MiqmAYB3DUG/xTY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bsE1mkoLrrgB8NPvzc+pbnSdS13ts5TWs8J0GxjPgHOCB0xU9Y6MvHA341lCtmluk
-	 wX/Ut83ThSlEUHh48v2fH19eSjmb+vg19aHtloF7Z6tei79tK+Ts5SOyM/XWjObdWu
-	 xAe9HU6/HWvdTwyiR3Xiqznw4KP3Zuiq7x1Rh7YI=
+	b=ei3zAJhAACS/iPlEQVdweIU2S07LLq5UXgpPgLXZUHClamdGZog07MpfVQs0nWaze
+	 WnSHAxtWh2L1Ffwh6JJbVbSw8wTppbsMsCnkFqYkaAvIDk4cFUFd8ZUQkxxEy60NID
+	 sjNSrWhthtGOBbUWA8jPp9WMPPmDJ/OwBcUxeymc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 31/80] w1: fix WARNING after calling w1_process()
-Date: Fri,  3 Feb 2023 11:12:25 +0100
-Message-Id: <20230203101016.495674998@linuxfoundation.org>
+Subject: [PATCH 4.19 32/80] netfilter: conntrack: do not renew entry stuck in tcp SYN_SENT state
+Date: Fri,  3 Feb 2023 11:12:26 +0100
+Message-Id: <20230203101016.545496261@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
 References: <20230203101015.263854890@linuxfoundation.org>
@@ -34,53 +35,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 36225a7c72e9e3e1ce4001b6ce72849f5c9a2d3b ]
+[ Upstream commit e15d4cdf27cb0c1e977270270b2cea12e0955edd ]
 
-I got the following WARNING message while removing driver(ds2482):
+Consider:
+  client -----> conntrack ---> Host
 
-------------[ cut here ]------------
-do not call blocking ops when !TASK_RUNNING; state=1 set at [<000000002d50bfb6>] w1_process+0x9e/0x1d0 [wire]
-WARNING: CPU: 0 PID: 262 at kernel/sched/core.c:9817 __might_sleep+0x98/0xa0
-CPU: 0 PID: 262 Comm: w1_bus_master1 Tainted: G                 N 6.1.0-rc3+ #307
-RIP: 0010:__might_sleep+0x98/0xa0
-Call Trace:
- exit_signals+0x6c/0x550
- do_exit+0x2b4/0x17e0
- kthread_exit+0x52/0x60
- kthread+0x16d/0x1e0
- ret_from_fork+0x1f/0x30
+client sends a SYN, but $Host is unreachable/silent.
+Client eventually gives up and the conntrack entry will time out.
 
-The state of task is set to TASK_INTERRUPTIBLE in loop in w1_process(),
-set it to TASK_RUNNING when it breaks out of the loop to avoid the
-warning.
+However, if the client is restarted with same addr/port pair, it
+may prevent the conntrack entry from timing out.
 
-Fixes: 3c52e4e62789 ("W1: w1_process, block or sleep")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221205101558.3599162-1-yangyingliang@huawei.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is noticeable when the existing conntrack entry has no NAT
+transformation or an outdated one and port reuse happens either
+on client or due to a NAT middlebox.
+
+This change prevents refresh of the timeout for SYN retransmits,
+so entry is going away after nf_conntrack_tcp_timeout_syn_sent
+seconds (default: 60).
+
+Entry will be re-created on next connection attempt, but then
+nat rules will be evaluated again.
+
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/w1/w1.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ net/netfilter/nf_conntrack_proto_tcp.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/drivers/w1/w1.c b/drivers/w1/w1.c
-index c1d0e723fabc..cb3650efc29c 100644
---- a/drivers/w1/w1.c
-+++ b/drivers/w1/w1.c
-@@ -1169,8 +1169,10 @@ int w1_process(void *data)
- 		 */
- 		mutex_unlock(&dev->list_mutex);
- 
--		if (kthread_should_stop())
-+		if (kthread_should_stop()) {
-+			__set_current_state(TASK_RUNNING);
- 			break;
+diff --git a/net/netfilter/nf_conntrack_proto_tcp.c b/net/netfilter/nf_conntrack_proto_tcp.c
+index 66cda5e2d6b9..955b73a9a05e 100644
+--- a/net/netfilter/nf_conntrack_proto_tcp.c
++++ b/net/netfilter/nf_conntrack_proto_tcp.c
+@@ -1094,6 +1094,16 @@ static int tcp_packet(struct nf_conn *ct,
+ 			nf_ct_kill_acct(ct, ctinfo, skb);
+ 			return NF_ACCEPT;
+ 		}
++
++		if (index == TCP_SYN_SET && old_state == TCP_CONNTRACK_SYN_SENT) {
++			/* do not renew timeout on SYN retransmit.
++			 *
++			 * Else port reuse by client or NAT middlebox can keep
++			 * entry alive indefinitely (including nat info).
++			 */
++			return NF_ACCEPT;
 +		}
- 
- 		/* Only sleep when the search is active. */
- 		if (dev->search_count) {
++
+ 		/* ESTABLISHED without SEEN_REPLY, i.e. mid-connection
+ 		 * pickup with loose=1. Avoid large ESTABLISHED timeout.
+ 		 */
 -- 
 2.39.0
 
