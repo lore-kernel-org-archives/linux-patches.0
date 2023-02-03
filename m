@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D3351FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:28:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B2E6C433EF;
-	Fri,  3 Feb 2023 10:28:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 442131FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:28:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9CFBCC433D2;
+	Fri,  3 Feb 2023 10:28:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420090;
-	bh=N1No8VHBGzrYCWl0VMuFSPCS4kD9cyYqRKLukILRu4Y=;
+	s=korg; t=1675420093;
+	bh=tMi/I2IQP7Y1fVtCtwAubQHLyulTqFBBke+i7It+p7E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=od6NmBl8xqf7c4NneXLI3pBJQUsIHrdEM9kTgjvrf+S6bJzKzZhsX99Zq5XK4PkUJ
-	 V0LEIN9onorkHcQr+PVBfOqbCP8WpXyt1/7Vlhbucgkky2okB0Nxx9k3v6IA//F99c
-	 K4TxIKUolN7nMULHiIzy6pYvhA556nVwgMejaISY=
+	b=zTXXpkcB7rVaYNBDzF1/s2mfiMNa7FpRBKEzosQn/qA5B9I1sAf6noqhkhSMMuRbB
+	 Ns2IcFxdbyX3C3CMZDaBaYUFfQhEQbp90Oq0DBPjzd43yeecytH3k27vYayAw4viLc
+	 gVHX3MupZwFRiE48IywUoNmRpziPjuB1v9bmH/CM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Natalia Petrova <n.petrova@fintech.ru>,
+	Masami Hiramatsu <mhiramat@kernel.org>,
+	Mark Rutland <mark.rutland@arm.com>,
 	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.4 076/134] trace_events_hist: add check for return value of create_hist_field
-Date: Fri,  3 Feb 2023 11:13:01 +0100
-Message-Id: <20230203101027.279301732@linuxfoundation.org>
+Subject: [PATCH 5.4 077/134] ftrace/scripts: Update the instructions for ftrace-bisect.sh
+Date: Fri,  3 Feb 2023 11:13:02 +0100
+Message-Id: <20230203101027.326234440@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -34,37 +35,98 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Natalia Petrova <n.petrova@fintech.ru>
+From: Steven Rostedt (Google) <rostedt@goodmis.org>
 
-commit 8b152e9150d07a885f95e1fd401fc81af202d9a4 upstream.
+commit 7ae4ba7195b1bac04a4210a499da9d8c63b0ba9c upstream.
 
-Function 'create_hist_field' is called recursively at
-trace_events_hist.c:1954 and can return NULL-value that's why we have
-to check it to avoid null pointer dereference.
+The instructions for the ftrace-bisect.sh script, which is used to find
+what function is being traced that is causing a kernel crash, and possibly
+a triple fault reboot, uses the old method. In 5.1, a new feature was
+added that let the user write in the index into available_filter_functions
+that maps to the function a user wants to set in set_ftrace_filter (or
+set_ftrace_notrace). This takes O(1) to set, as suppose to writing a
+function name, which takes O(n) (where n is the number of functions in
+available_filter_functions).
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+The ftrace-bisect.sh requires setting half of the functions in
+available_filter_functions, which is O(n^2) using the name method to enable
+and can take several minutes to complete. The number method is O(n) which
+takes less than a second to complete. Using the number method for any
+kernel 5.1 and after is the proper way to do the bisect.
 
-Link: https://lkml.kernel.org/r/20230111120409.4111-1-n.petrova@fintech.ru
+Update the usage to reflect the new change, as well as using the
+/sys/kernel/tracing path instead of the obsolete debugfs path.
+
+Link: https://lkml.kernel.org/r/20230123112252.022003dd@gandalf.local.home
 
 Cc: stable@vger.kernel.org
-Fixes: 30350d65ac56 ("tracing: Add variable support to hist triggers")
-Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
+Cc: Masami Hiramatsu <mhiramat@kernel.org>
+Acked-by: Mark Rutland <mark.rutland@arm.com>
+Fixes: f79b3f338564e ("ftrace: Allow enabling of filters via index of available_filter_functions")
 Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace_events_hist.c |    2 ++
- 1 file changed, 2 insertions(+)
+ scripts/tracing/ftrace-bisect.sh |   34 ++++++++++++++++++++++++++--------
+ 1 file changed, 26 insertions(+), 8 deletions(-)
 
---- a/kernel/trace/trace_events_hist.c
-+++ b/kernel/trace/trace_events_hist.c
-@@ -2552,6 +2552,8 @@ static struct hist_field *create_hist_fi
- 		unsigned long fl = flags & ~HIST_FIELD_FL_LOG2;
- 		hist_field->fn = hist_field_log2;
- 		hist_field->operands[0] = create_hist_field(hist_data, field, fl, NULL);
-+		if (!hist_field->operands[0])
-+			goto free;
- 		hist_field->size = hist_field->operands[0]->size;
- 		hist_field->type = kstrdup(hist_field->operands[0]->type, GFP_KERNEL);
- 		if (!hist_field->type)
+--- a/scripts/tracing/ftrace-bisect.sh
++++ b/scripts/tracing/ftrace-bisect.sh
+@@ -12,7 +12,7 @@
+ #   (note, if this is a problem with function_graph tracing, then simply
+ #    replace "function" with "function_graph" in the following steps).
+ #
+-#  # cd /sys/kernel/debug/tracing
++#  # cd /sys/kernel/tracing
+ #  # echo schedule > set_ftrace_filter
+ #  # echo function > current_tracer
+ #
+@@ -20,22 +20,40 @@
+ #
+ #  # echo nop > current_tracer
+ #
+-#  # cat available_filter_functions > ~/full-file
++# Starting with v5.1 this can be done with numbers, making it much faster:
++#
++# The old (slow) way, for kernels before v5.1.
++#
++# [old-way] # cat available_filter_functions > ~/full-file
++#
++# [old-way] *** Note ***  this process will take several minutes to update the
++# [old-way] filters. Setting multiple functions is an O(n^2) operation, and we
++# [old-way] are dealing with thousands of functions. So go have coffee, talk
++# [old-way] with your coworkers, read facebook. And eventually, this operation
++# [old-way] will end.
++#
++# The new way (using numbers) is an O(n) operation, and usually takes less than a second.
++#
++# seq `wc -l available_filter_functions | cut -d' ' -f1` > ~/full-file
++#
++# This will create a sequence of numbers that match the functions in
++# available_filter_functions, and when echoing in a number into the
++# set_ftrace_filter file, it will enable the corresponding function in
++# O(1) time. Making enabling all functions O(n) where n is the number of
++# functions to enable.
++#
++# For either the new or old way, the rest of the operations remain the same.
++#
+ #  # ftrace-bisect ~/full-file ~/test-file ~/non-test-file
+ #  # cat ~/test-file > set_ftrace_filter
+ #
+-# *** Note *** this will take several minutes. Setting multiple functions is
+-# an O(n^2) operation, and we are dealing with thousands of functions. So go
+-# have  coffee, talk with your coworkers, read facebook. And eventually, this
+-# operation will end.
+-#
+ #  # echo function > current_tracer
+ #
+ # If it crashes, we know that ~/test-file has a bad function.
+ #
+ #   Reboot back to test kernel.
+ #
+-#     # cd /sys/kernel/debug/tracing
++#     # cd /sys/kernel/tracing
+ #     # mv ~/test-file ~/full-file
+ #
+ # If it didn't crash.
 
 
