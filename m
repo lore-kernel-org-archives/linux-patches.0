@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30C211FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5909C433D2;
-	Fri,  3 Feb 2023 10:21:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E0C1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A389C433EF;
+	Fri,  3 Feb 2023 10:21:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419663;
-	bh=ha6wSSidaRlk8k90MtcnTgktnMiu1qtSpWXQtQtoTg0=;
+	s=korg; t=1675419666;
+	bh=sWNmFSAJP0r7Cr2Lz17OUH6SAVoWFwd0TaQ7BzeDIGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ClaU5HOy3jNuu92Z0fWgVW9KZiZF5ipWNNOH+8eq2vfHszDP7O8aN8Owzp9zkcP/H
-	 rTIO+cZrScn1FcBBeRdGz4Dua3XrcKK9uuWwysblJY7EWWR2W5o8mh9YQV+xiE4Fmc
-	 NClRJFJsyYZQM6dWozeFDxDOk8zDDUA6CyxZcees=
+	b=eFe8Hwc6j28YK3k+8hzK/+TifMZyqjhETfaUO5uMT9fbNYo3VixGN8/r6fyFC1Lh0
+	 ENnPW8hGNNvepAZhj9XuJE83iNeSn1W5ZJRZVP4AKYBNkNOY0DfJYIwCf5mAp45LZW
+	 UXC3Xy+W2SZ8zu57FmN4dNYtY+eLvTR4XQHoP3lI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Zhang Yu <zhangyu31@baidu.com>,
+	Li RongQing <lirongqing@baidu.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 02/28] ARM: dts: vf610: Fix pca9548 i2c-mux node names
-Date: Fri,  3 Feb 2023 11:12:50 +0100
-Message-Id: <20230203101010.071324454@linuxfoundation.org>
+Subject: [PATCH 4.19 47/80] netlink: remove hash::nelems check in netlink_insert
+Date: Fri,  3 Feb 2023 11:12:41 +0100
+Message-Id: <20230203101017.236992079@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
-References: <20230203101009.946745030@linuxfoundation.org>
+In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
+References: <20230203101015.263854890@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,56 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Li RongQing <lirongqing@baidu.com>
 
-[ Upstream commit 42825d1f269355d63554ab3c3762611e4d8053e9 ]
+[ Upstream commit 0041195d55bc38df6b574cc8c36dcf2266fbee39 ]
 
-"make dtbs_check":
+The type of hash::nelems has been changed from size_t to atom_t
+which in fact is int, so not need to check if BITS_PER_LONG, that
+is bit number of size_t, is bigger than 32
 
-    arch/arm/boot/dts/vf610-zii-dev-rev-b.dtb: tca9548@70: $nodename:0: 'tca9548@70' does not match '^(i2c-?)?mux'
-	    From schema: Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
-    arch/arm/boot/dts/vf610-zii-dev-rev-b.dtb: tca9548@70: Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'i2c@0', 'i2c@1', 'i2c@2', 'i2c@3', 'i2c@4' were unexpected)
-	    From schema: /scratch/geert/linux/linux-renesas/Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
-    ...
+and rht_grow_above_max() will be called to check if hashtable is
+too big, ensure it can not bigger than 1<<31
 
-Fix this by renaming PCA9548 nodes to "i2c-mux", to match the I2C bus
-multiplexer/switch DT bindings and the Generic Names Recommendation in
-the Devicetree Specification.
-
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Zhang Yu <zhangyu31@baidu.com>
+Signed-off-by: Li RongQing <lirongqing@baidu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: c1bb9484e3b0 ("netlink: annotate data races around nlk->portid")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/vf610-zii-dev-rev-b.dts | 2 +-
- arch/arm/boot/dts/vf610-zii-dev-rev-c.dts | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ net/netlink/af_netlink.c | 5 -----
+ 1 file changed, 5 deletions(-)
 
-diff --git a/arch/arm/boot/dts/vf610-zii-dev-rev-b.dts b/arch/arm/boot/dts/vf610-zii-dev-rev-b.dts
-index 42ed4a04a12e..6280c5e86a12 100644
---- a/arch/arm/boot/dts/vf610-zii-dev-rev-b.dts
-+++ b/arch/arm/boot/dts/vf610-zii-dev-rev-b.dts
-@@ -345,7 +345,7 @@ gpio6: io-expander@22 {
- };
+diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
+index 6ffa83319d08..966c709c3831 100644
+--- a/net/netlink/af_netlink.c
++++ b/net/netlink/af_netlink.c
+@@ -578,11 +578,6 @@ static int netlink_insert(struct sock *sk, u32 portid)
+ 	if (nlk_sk(sk)->bound)
+ 		goto err;
  
- &i2c2 {
--	tca9548@70 {
-+	i2c-mux@70 {
- 		compatible = "nxp,pca9548";
- 		pinctrl-0 = <&pinctrl_i2c_mux_reset>;
- 		pinctrl-names = "default";
-diff --git a/arch/arm/boot/dts/vf610-zii-dev-rev-c.dts b/arch/arm/boot/dts/vf610-zii-dev-rev-c.dts
-index de79dcfd32e6..ba2001f37315 100644
---- a/arch/arm/boot/dts/vf610-zii-dev-rev-c.dts
-+++ b/arch/arm/boot/dts/vf610-zii-dev-rev-c.dts
-@@ -340,7 +340,7 @@ eeprom@50 {
- };
+-	err = -ENOMEM;
+-	if (BITS_PER_LONG > 32 &&
+-	    unlikely(atomic_read(&table->hash.nelems) >= UINT_MAX))
+-		goto err;
+-
+ 	nlk_sk(sk)->portid = portid;
+ 	sock_hold(sk);
  
- &i2c2 {
--	tca9548@70 {
-+	i2c-mux@70 {
- 		compatible = "nxp,pca9548";
- 		pinctrl-0 = <&pinctrl_i2c_mux_reset>;
- 		pinctrl-names = "default";
 -- 
 2.39.0
 
