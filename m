@@ -1,183 +1,212 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF7611FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:20:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 301EFC4339E;
-	Fri,  3 Feb 2023 10:20:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B21DD1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:20:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC8B8C433D2;
+	Fri,  3 Feb 2023 10:20:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419645;
-	bh=YXwoWCdLdociTeFvSe1VLZmJCLCH7r0/im5fBWA1NcI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b00nGZm0bOMlnbukbmU1XLrC5c66PrVT27TyL/dfgVTrRQVfZnXWZexH/Usa27cXm
-	 XwCnr5yepzdJIiCTs3TGPPg/0o/pOZtGDxK2YIGep3qBys80CF6Mj2vtefXEgQwEQk
-	 +sAQ47rC0qZ49jiZV0/efC46mkf9yQ//mpT9ZUzo=
+	s=korg; t=1675419648;
+	bh=hGGirB/MkQLm/1/vblk4wapwUHWf/861OK5xdBjeNgk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=VjfA21suc/ZvCtHQ0RP7X9j4u4LAPvE4ivBHEAAtICxx9ufbSSJpaTBenCdeiNcOJ
+	 sglXyQj8rNGFUigNoy9qoFJMxku8UC2srIFMC6TYCHOLdugYcLL24yLTO2g10MLBr9
+	 /8XPBc03nJ77GXeArveLpV9F2rnzeF1Y9JQgOeek=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 4.19 71/80] exit: Put an upper limit on how often we can oops
-Date: Fri,  3 Feb 2023 11:13:05 +0100
-Message-Id: <20230203101018.267182220@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 6.1 00/28] 6.1.10-rc1 review
+Date: Fri,  3 Feb 2023 11:12:48 +0100
+Message-Id: <20230203101009.946745030@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
-References: <20230203101015.263854890@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.10-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.1.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.1.10-rc1
+X-KernelTest-Deadline: 2023-02-05T10:10+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jann Horn <jannh@google.com>
+This is the start of the stable review cycle for the 6.1.10 release.
+There are 28 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit d4ccd54d28d3c8598e2354acc13e28c060961dbb upstream.
+Responses should be made by Sun, 05 Feb 2023 10:09:58 +0000.
+Anything received after that time might be too late.
 
-Many Linux systems are configured to not panic on oops; but allowing an
-attacker to oops the system **really** often can make even bugs that look
-completely unexploitable exploitable (like NULL dereferences and such) if
-each crash elevates a refcount by one or a lock is taken in read mode, and
-this causes a counter to eventually overflow.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.10-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+and the diffstat can be found below.
 
-The most interesting counters for this are 32 bits wide (like open-coded
-refcounts that don't use refcount_t). (The ldsem reader count on 32-bit
-platforms is just 16 bits, but probably nobody cares about 32-bit platforms
-that much nowadays.)
+thanks,
 
-So let's panic the system if the kernel is constantly oopsing.
+greg k-h
 
-The speed of oopsing 2^32 times probably depends on several factors, like
-how long the stack trace is and which unwinder you're using; an empirically
-important one is whether your console is showing a graphical environment or
-a text console that oopses will be printed to.
-In a quick single-threaded benchmark, it looks like oopsing in a vfork()
-child with a very short stack trace only takes ~510 microseconds per run
-when a graphical console is active; but switching to a text console that
-oopses are printed to slows it down around 87x, to ~45 milliseconds per
-run.
-(Adding more threads makes this faster, but the actual oops printing
-happens under &die_lock on x86, so you can maybe speed this up by a factor
-of around 2 and then any further improvement gets eaten up by lock
-contention.)
+-------------
+Pseudo-Shortlog of commits:
 
-It looks like it would take around 8-12 days to overflow a 32-bit counter
-with repeated oopsing on a multi-core X86 system running a graphical
-environment; both me (in an X86 VM) and Seth (with a distro kernel on
-normal hardware in a standard configuration) got numbers in that ballpark.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.1.10-rc1
 
-12 days aren't *that* short on a desktop system, and you'd likely need much
-longer on a typical server system (assuming that people don't run graphical
-desktop environments on their servers), and this is a *very* noisy and
-violent approach to exploiting the kernel; and it also seems to take orders
-of magnitude longer on some machines, probably because stuff like EFI
-pstore will slow it down a ton if that's active.
+Jeremy Kerr <jk@codeconstruct.com.au>
+    net: mctp: purge receive queues on sk destruction
 
-Signed-off-by: Jann Horn <jannh@google.com>
-Link: https://lore.kernel.org/r/20221107201317.324457-1-jannh@google.com
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221117234328.594699-2-keescook@chromium.org
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- Documentation/sysctl/kernel.txt |    9 ++++++++
- kernel/exit.c                   |   43 ++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 52 insertions(+)
+Miguel Ojeda <ojeda@kernel.org>
+    rust: print: avoid evaluating arguments in `pr_*` macros in `unsafe` blocks
 
---- a/Documentation/sysctl/kernel.txt
-+++ b/Documentation/sysctl/kernel.txt
-@@ -51,6 +51,7 @@ show up in /proc/sys/kernel:
- - msgmnb
- - msgmni
- - nmi_watchdog
-+- oops_limit
- - osrelease
- - ostype
- - overflowgid
-@@ -555,6 +556,14 @@ scanned for a given scan.
- 
- ==============================================================
- 
-+oops_limit:
-+
-+Number of kernel oopses after which the kernel should panic when
-+``panic_on_oops`` is not set. Setting this to 0 or 1 has the same effect
-+as setting ``panic_on_oops=1``.
-+
-+==============================================================
-+
- osrelease, ostype & version:
- 
- # cat osrelease
---- a/kernel/exit.c
-+++ b/kernel/exit.c
-@@ -68,6 +68,33 @@
- #include <asm/pgtable.h>
- #include <asm/mmu_context.h>
- 
-+/*
-+ * The default value should be high enough to not crash a system that randomly
-+ * crashes its kernel from time to time, but low enough to at least not permit
-+ * overflowing 32-bit refcounts or the ldsem writer count.
-+ */
-+static unsigned int oops_limit = 10000;
-+
-+#ifdef CONFIG_SYSCTL
-+static struct ctl_table kern_exit_table[] = {
-+	{
-+		.procname       = "oops_limit",
-+		.data           = &oops_limit,
-+		.maxlen         = sizeof(oops_limit),
-+		.mode           = 0644,
-+		.proc_handler   = proc_douintvec,
-+	},
-+	{ }
-+};
-+
-+static __init int kernel_exit_sysctls_init(void)
-+{
-+	register_sysctl_init("kernel", kern_exit_table);
-+	return 0;
-+}
-+late_initcall(kernel_exit_sysctls_init);
-+#endif
-+
- static void __unhash_process(struct task_struct *p, bool group_dead)
- {
- 	nr_threads--;
-@@ -924,10 +951,26 @@ EXPORT_SYMBOL_GPL(do_exit);
- 
- void __noreturn make_task_dead(int signr)
- {
-+	static atomic_t oops_count = ATOMIC_INIT(0);
-+
- 	/*
- 	 * Take the task off the cpu after something catastrophic has
- 	 * happened.
- 	 */
-+
-+	/*
-+	 * Every time the system oopses, if the oops happens while a reference
-+	 * to an object was held, the reference leaks.
-+	 * If the oops doesn't also leak memory, repeated oopsing can cause
-+	 * reference counters to wrap around (if they're not using refcount_t).
-+	 * This means that repeated oopsing can make unexploitable-looking bugs
-+	 * exploitable through repeated oopsing.
-+	 * To make sure this can't happen, place an upper bound on how often the
-+	 * kernel may oops without panic().
-+	 */
-+	if (atomic_inc_return(&oops_count) >= READ_ONCE(oops_limit))
-+		panic("Oopsed too often (kernel.oops_limit is %d)", oops_limit);
-+
- 	do_exit(signr);
- }
- 
+Yan Zhai <yan@cloudflare.com>
+    net: fix NULL pointer in skb_segment_list
+
+Mario Limonciello <mario.limonciello@amd.com>
+    gpiolib-acpi: Don't set GPIOs for wakeup in S3 mode
+
+Mario Limonciello <mario.limonciello@amd.com>
+    gpiolib: acpi: Add a ignore wakeup quirk for Clevo NL5xRU
+
+Janne Grunau <j@jannau.net>
+    nvme-apple: only reset the controller when RTKit is running
+
+Paulo Alcantara <pc@cjr.nz>
+    cifs: fix return of uninitialized rc in dfs_cache_update_tgthint()
+
+Mario Limonciello <mario.limonciello@amd.com>
+    gpiolib: acpi: Allow ignoring wake capability on pins that aren't in _AEI
+
+Hui Wang <hui.wang@canonical.com>
+    dmaengine: imx-sdma: Fix a possible memory leak in sdma_transfer_init
+
+Roderick Colenbrander <roderick@gaikai.com>
+    HID: playstation: sanity check DualSense calibration data.
+
+José Expósito <jose.exposito89@gmail.com>
+    HID: uclogic: Add support for XP-PEN Deco 01 V2
+
+Heiko Carstens <hca@linux.ibm.com>
+    s390: workaround invalid gcc-11 out of bounds read warning
+
+Pavel Begunkov <asml.silence@gmail.com>
+    block: fix hctx checks for batch allocation
+
+Hans de Goede <hdegoede@redhat.com>
+    ACPI: video: Add backlight=native DMI quirk for Acer Aspire 4810T
+
+Jinyang He <hejinyang@loongson.cn>
+    LoongArch: Get frame info in unwind_start() when regs is not available
+
+Yu Kuai <yukuai3@huawei.com>
+    blk-cgroup: fix missing pd_online_fn() while activating policy
+
+Jingbo Xu <jefflexu@linux.alibaba.com>
+    erofs: clean up parsing of fscache related options
+
+Mark Brown <broonie@kernel.org>
+    kselftest: Fix error message for unconfigured LLVM builds
+
+Arnd Bergmann <arnd@arndb.de>
+    ARM: omap1: fix building gpio15xx
+
+Dominik Kobinski <dominikkobinski314@gmail.com>
+    arm64: dts: msm8994-angler: fix the memory map
+
+Sriram R <quic_srirrama@quicinc.com>
+    mac80211: Fix MLO address translation for multiple bss case
+
+Siddh Raman Pant <code@siddh.me>
+    erofs/zmap.c: Fix incorrect offset calculation
+
+Hao Sun <sunhao.th@gmail.com>
+    bpf: Skip task with pid=1 in send_signal_common()
+
+Cristian Marussi <cristian.marussi@arm.com>
+    firmware: arm_scmi: Clear stale xfer->hdr.status
+
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+    arm64: dts: imx8mq-thor96: fix no-mmc property for SDHCI
+
+Geert Uytterhoeven <geert+renesas@glider.be>
+    arm64: dts: freescale: Fix pca954x i2c-mux node names
+
+Geert Uytterhoeven <geert+renesas@glider.be>
+    ARM: dts: vf610: Fix pca9548 i2c-mux node names
+
+Geert Uytterhoeven <geert+renesas@glider.be>
+    ARM: dts: imx: Fix pca9547 i2c-mux node name
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |  4 +--
+ arch/arm/boot/dts/imx53-ppd.dts                    |  2 +-
+ arch/arm/boot/dts/vf610-zii-dev-rev-b.dts          |  2 +-
+ arch/arm/boot/dts/vf610-zii-dev-rev-c.dts          |  2 +-
+ arch/arm/mach-omap1/gpio15xx.c                     |  1 +
+ arch/arm64/boot/dts/freescale/fsl-ls1012a-qds.dts  |  2 +-
+ arch/arm64/boot/dts/freescale/fsl-ls1043a-qds.dts  |  2 +-
+ arch/arm64/boot/dts/freescale/fsl-ls1046a-qds.dts  |  2 +-
+ arch/arm64/boot/dts/freescale/fsl-ls1088a-qds.dts  |  2 +-
+ arch/arm64/boot/dts/freescale/fsl-ls1088a-rdb.dts  |  2 +-
+ .../arm64/boot/dts/freescale/fsl-ls1088a-ten64.dts |  2 +-
+ arch/arm64/boot/dts/freescale/fsl-ls208xa-qds.dtsi |  2 +-
+ arch/arm64/boot/dts/freescale/fsl-ls208xa-rdb.dtsi |  2 +-
+ .../arm64/boot/dts/freescale/fsl-lx2160a-cex7.dtsi |  2 +-
+ .../boot/dts/freescale/imx8mm-nitrogen-r2.dts      |  2 +-
+ arch/arm64/boot/dts/freescale/imx8mq-nitrogen.dts  |  4 +--
+ arch/arm64/boot/dts/freescale/imx8mq-thor96.dts    |  4 +--
+ arch/arm64/boot/dts/freescale/imx8qxp-mek.dts      |  2 +-
+ .../dts/qcom/msm8994-huawei-angler-rev-101.dts     | 19 +++++++++++--
+ arch/loongarch/kernel/process.c                    | 12 ++------
+ arch/loongarch/kernel/unwind_guess.c               |  6 ++++
+ arch/loongarch/kernel/unwind_prologue.c            | 16 +++++++++--
+ arch/s390/kernel/setup.c                           |  5 ++--
+ block/blk-cgroup.c                                 |  4 +++
+ block/blk-mq.c                                     |  6 +++-
+ drivers/acpi/video_detect.c                        |  8 ++++++
+ drivers/dma/imx-sdma.c                             |  4 ++-
+ drivers/firmware/arm_scmi/driver.c                 |  2 ++
+ drivers/gpio/gpiolib-acpi.c                        | 20 ++++++++++++--
+ drivers/hid/hid-ids.h                              |  1 +
+ drivers/hid/hid-playstation.c                      | 32 ++++++++++++++++++++++
+ drivers/hid/hid-uclogic-core.c                     |  2 ++
+ drivers/hid/hid-uclogic-params.c                   |  2 ++
+ drivers/nvme/host/apple.c                          |  6 ++--
+ fs/cifs/dfs_cache.c                                |  6 ++--
+ fs/erofs/super.c                                   | 13 ++++-----
+ fs/erofs/zmap.c                                    | 10 +++++--
+ kernel/trace/bpf_trace.c                           |  3 ++
+ net/core/skbuff.c                                  |  5 ++--
+ net/mac80211/rx.c                                  |  3 ++
+ net/mctp/af_mctp.c                                 |  6 ++++
+ rust/kernel/print.rs                               | 29 ++++++++++++--------
+ tools/testing/selftests/lib.mk                     |  2 +-
+ 43 files changed, 190 insertions(+), 73 deletions(-)
 
 
