@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 578C61FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:22:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3A81C433EF;
-	Fri,  3 Feb 2023 10:22:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504941FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:22:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCBEFC433D2;
+	Fri,  3 Feb 2023 10:22:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419764;
-	bh=pt1rSltNBFBLCWdk1rNMYsruffAUqt+GJFUF7hugn80=;
+	s=korg; t=1675419767;
+	bh=plVLPqyNKrCgUkP+vGqlaiEfLLVEMW02/8pVeTqqtSI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hj83VhSkwKcE/jumWiQSphPLRj7FxUoPqKYJuhctOhgoyjCrAovXBBJnDO8Go1W5m
-	 i+qlk8zHe6lnccAw5TZxRIl1cjDk1Nqs1l5zhBJwm9RnCcIx8/a/zdB3mGwigwYiPN
-	 VtzlPy6veGtHG0NQQTgwaODWyc1JQ6GK87aXz2ss=
+	b=W/wmW8JF4r58fGgQh5SsaoU0XXddBSZfcQEQaHb6yl0taQ/siWmrXny5RxbESCJzw
+	 bJ5niuQdhyQfrYwIVzYKBtr7+4pezxG1FCtqKmWbAU0TNbKYXtw1aA6wiV7fAaaWM2
+	 qX16qfsUkdNlj9+TYOkVFR3C9KS79t6rM6tnJiaE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Kerr <jk@codeconstruct.com.au>,
-	Pavan Chebbi <pavan.chebbi@broadcom.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 28/28] net: mctp: purge receive queues on sk destruction
-Date: Fri,  3 Feb 2023 11:13:16 +0100
-Message-Id: <20230203101011.142443636@linuxfoundation.org>
+	Cristian Marussi <cristian.marussi@arm.com>,
+	Sudeep Holla <sudeep.holla@arm.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 05/28] firmware: arm_scmi: Clear stale xfer->hdr.status
+Date: Fri,  3 Feb 2023 11:12:53 +0100
+Message-Id: <20230203101010.198037184@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
 References: <20230203101009.946745030@linuxfoundation.org>
@@ -35,46 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Kerr <jk@codeconstruct.com.au>
+From: Cristian Marussi <cristian.marussi@arm.com>
 
-commit 60bd1d9008a50cc78c4033a16a6f5d78210d481c upstream.
+[ Upstream commit f6ca5059dc0d6608dc46070f48e396d611f240d6 ]
 
-We may have pending skbs in the receive queue when the sk is being
-destroyed; add a destructor to purge the queue.
+Stale error status reported from a previous message transaction must be
+cleared before starting a new transaction to avoid being confusingly
+reported in the following SCMI message dump traces.
 
-MCTP doesn't use the error queue, so only the receive_queue is purged.
-
-Fixes: 833ef3b91de6 ("mctp: Populate socket implementation")
-Signed-off-by: Jeremy Kerr <jk@codeconstruct.com.au>
-Reviewed-by: Pavan Chebbi <pavan.chebbi@broadcom.com>
-Link: https://lore.kernel.org/r/20230126064551.464468-1-jk@codeconstruct.com.au
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
+Link: https://lore.kernel.org/r/20221222183823.518856-2-cristian.marussi@arm.com
+Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mctp/af_mctp.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/firmware/arm_scmi/driver.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/mctp/af_mctp.c
-+++ b/net/mctp/af_mctp.c
-@@ -587,6 +587,11 @@ static void mctp_sk_unhash(struct sock *
- 	del_timer_sync(&msk->key_expiry);
- }
+diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
+index f818d00bb2c6..ffdad59ec81f 100644
+--- a/drivers/firmware/arm_scmi/driver.c
++++ b/drivers/firmware/arm_scmi/driver.c
+@@ -910,6 +910,8 @@ static int do_xfer(const struct scmi_protocol_handle *ph,
+ 			      xfer->hdr.protocol_id, xfer->hdr.seq,
+ 			      xfer->hdr.poll_completion);
  
-+static void mctp_sk_destruct(struct sock *sk)
-+{
-+	skb_queue_purge(&sk->sk_receive_queue);
-+}
-+
- static struct proto mctp_proto = {
- 	.name		= "MCTP",
- 	.owner		= THIS_MODULE,
-@@ -623,6 +628,7 @@ static int mctp_pf_create(struct net *ne
- 		return -ENOMEM;
- 
- 	sock_init_data(sock, sk);
-+	sk->sk_destruct = mctp_sk_destruct;
- 
- 	rc = 0;
- 	if (sk->sk_prot->init)
++	/* Clear any stale status */
++	xfer->hdr.status = SCMI_SUCCESS;
+ 	xfer->state = SCMI_XFER_SENT_OK;
+ 	/*
+ 	 * Even though spinlocking is not needed here since no race is possible
+-- 
+2.39.0
+
 
 
