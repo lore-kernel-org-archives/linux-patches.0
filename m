@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DD5741FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:15:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 185DEC433EF;
-	Fri,  3 Feb 2023 10:15:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB4751FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:15:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A5CBC433EF;
+	Fri,  3 Feb 2023 10:15:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419323;
-	bh=COg3Lcz4kAJDcAA71w0um+JBdb3/nhWqDuK3huaOPsw=;
+	s=korg; t=1675419326;
+	bh=coGMrlm5fe48LP0mx3hQPmQs+TBFplvV12g0EHKn7TY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xSaIjaOH8WsAa1nVEnYb4xUXCd0Fs1VLrZaJmfu4eZf4itp9KuH6qFjy6lMnNRVO+
-	 byG+3xnDtNmo/eByDw6KXOuP+LnIMK3YUzGhnBA6zZFkP7YRHxr4eFMLXu5L7kT8s7
-	 4TIZwpvPX73w5SwU3D5sgGcgRUe0NyJXB2U/nC/g=
+	b=vH3MTjQ3O1d1R36H3VZ6IDbuXq3ucp4lj+aRwJK6KSMT2DJBPYB0pbc00LpX2S8BH
+	 opSn8NKFc9SlvF1fvRsaywlQqpiE7mVv9btQJvzh/xlJwM8QxCFny8TjVrhbDvvCj0
+	 12IdkT+yBvfykYyE3d2iBy5aHXTgAINnHu3enA9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Masahiro Yamada <masahiroy@kernel.org>,
-	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Dean Luick <dean.luick@cornelisnetworks.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 04/62] tomoyo: fix broken dependency on *.conf.default
-Date: Fri,  3 Feb 2023 11:12:00 +0100
-Message-Id: <20230203101013.176898015@linuxfoundation.org>
+Subject: [PATCH 4.14 05/62] IB/hfi1: Reject a zero-length user expected buffer
+Date: Fri,  3 Feb 2023 11:12:01 +0100
+Message-Id: <20230203101013.207989807@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -35,59 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masahiro Yamada <masahiroy@kernel.org>
+From: Dean Luick <dean.luick@cornelisnetworks.com>
 
-[ Upstream commit eaf2213ba563b2d74a1f2c13a6b258273f689802 ]
+[ Upstream commit 0a0a6e80472c98947d73c3d13bcd7d101895f55d ]
 
-If *.conf.default is updated, builtin-policy.h should be rebuilt,
-but this does not work when compiled with O= option.
+A zero length user buffer makes no sense and the code
+does not handle it correctly.  Instead, reject a
+zero length as invalid.
 
-[Without this commit]
-
-  $ touch security/tomoyo/policy/exception_policy.conf.default
-  $ make O=/tmp security/tomoyo/
-  make[1]: Entering directory '/tmp'
-    GEN     Makefile
-    CALL    /home/masahiro/ref/linux/scripts/checksyscalls.sh
-    DESCEND objtool
-  make[1]: Leaving directory '/tmp'
-
-[With this commit]
-
-  $ touch security/tomoyo/policy/exception_policy.conf.default
-  $ make O=/tmp security/tomoyo/
-  make[1]: Entering directory '/tmp'
-    GEN     Makefile
-    CALL    /home/masahiro/ref/linux/scripts/checksyscalls.sh
-    DESCEND objtool
-    POLICY  security/tomoyo/builtin-policy.h
-    CC      security/tomoyo/common.o
-    AR      security/tomoyo/built-in.a
-  make[1]: Leaving directory '/tmp'
-
-$(srctree)/ is essential because $(wildcard ) does not follow VPATH.
-
-Fixes: f02dee2d148b ("tomoyo: Do not generate empty policy files")
-Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
-Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Fixes: 97736f36dbeb ("IB/hfi1: Validate page aligned for a given virtual addres")
+Signed-off-by: Dean Luick <dean.luick@cornelisnetworks.com>
+Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Link: https://lore.kernel.org/r/167328547120.1472310.6362802432127399257.stgit@awfm-02.cornelisnetworks.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- security/tomoyo/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/infiniband/hw/hfi1/user_exp_rcv.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/security/tomoyo/Makefile b/security/tomoyo/Makefile
-index b7c6a7ffc058..a1ecf68930c7 100644
---- a/security/tomoyo/Makefile
-+++ b/security/tomoyo/Makefile
-@@ -10,7 +10,7 @@ endef
- quiet_cmd_policy  = POLICY  $@
-       cmd_policy  = ($(call do_policy,profile); $(call do_policy,exception_policy); $(call do_policy,domain_policy); $(call do_policy,manager); $(call do_policy,stat)) >$@
+diff --git a/drivers/infiniband/hw/hfi1/user_exp_rcv.c b/drivers/infiniband/hw/hfi1/user_exp_rcv.c
+index c6d085e1c10d..056ffab86a06 100644
+--- a/drivers/infiniband/hw/hfi1/user_exp_rcv.c
++++ b/drivers/infiniband/hw/hfi1/user_exp_rcv.c
+@@ -323,6 +323,8 @@ int hfi1_user_exp_rcv_setup(struct hfi1_filedata *fd,
  
--$(obj)/builtin-policy.h: $(wildcard $(obj)/policy/*.conf $(src)/policy/*.conf.default) FORCE
-+$(obj)/builtin-policy.h: $(wildcard $(obj)/policy/*.conf $(srctree)/$(src)/policy/*.conf.default) FORCE
- 	$(call if_changed,policy)
+ 	if (!PAGE_ALIGNED(tinfo->vaddr))
+ 		return -EINVAL;
++	if (tinfo->length == 0)
++		return -EINVAL;
  
- $(obj)/common.o: $(obj)/builtin-policy.h
+ 	tidbuf = kzalloc(sizeof(*tidbuf), GFP_KERNEL);
+ 	if (!tidbuf)
 -- 
 2.39.0
 
