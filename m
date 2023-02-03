@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04AD1FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:26:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF37C433EF;
-	Fri,  3 Feb 2023 10:26:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B81201FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:26:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24B2DC4339B;
+	Fri,  3 Feb 2023 10:26:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420012;
-	bh=0xTtpMY3Jtj0UpVNjecMQt5B9aFsguyjROFJ4dMOLa4=;
+	s=korg; t=1675420015;
+	bh=Kk8FnmoasE2R9oGQXn6GDqDXhEe4AJA/YZ2Hwj/Gxp8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qk4Zid4wdqfUMeNTxAZmNVksZQiqz1R5A8qmgyfZ0+w7mq+f4goBSX0QOSm107EUb
-	 TKTa4SlL6taXMc+L89IxlcmDI+Nnch4bwCAXlyYcBA+jfMMf3Kv+AZpIA7rGXLAuIe
-	 fFUgU3PAg3oJA7/9OIjHZsV1c6CAKn1ZhzleRhCw=
+	b=FCzY6YVCpeV2XbuziLB7qCS4HSF9UmIWBkhzz7TSnLiFUNy0ctSh4wybDzgc3iuRv
+	 cek+KsuUdyM949r4fIQUG2loEZuzTpwL3FTf0KhgKtVUS77/JUybWQJZNPYMZHfNSC
+	 oaduMAGE8RP+CIj6Hra2DHFZBCalGc+Xc0+Acd2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuchung Cheng <ycheng@google.com>,
-	David Morley <morleyd@google.com>,
-	Neal Cardwell <ncardwell@google.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Sumit Gupta <sumitg@nvidia.com>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 051/134] tcp: fix rate_app_limited to default to 1
-Date: Fri,  3 Feb 2023 11:12:36 +0100
-Message-Id: <20230203101026.172127425@linuxfoundation.org>
+Subject: [PATCH 5.4 052/134] cpufreq: Add Tegra234 to cpufreq-dt-platdev blocklist
+Date: Fri,  3 Feb 2023 11:12:37 +0100
+Message-Id: <20230203101026.222395686@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -38,49 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: David Morley <morleyd@google.com>
+From: Sumit Gupta <sumitg@nvidia.com>
 
-[ Upstream commit 300b655db1b5152d6101bcb6801d50899b20c2d6 ]
+[ Upstream commit 01c5bb0cc2a39fbc56ff9a5ef28b79447f0c2351 ]
 
-The initial default value of 0 for tp->rate_app_limited was incorrect,
-since a flow is indeed application-limited until it first sends
-data. Fixing the default to be 1 is generally correct but also
-specifically will help user-space applications avoid using the initial
-tcpi_delivery_rate value of 0 that persists until the connection has
-some non-zero bandwidth sample.
+Tegra234 platform uses the tegra194-cpufreq driver, so add it
+to the blocklist in cpufreq-dt-platdev driver to avoid the cpufreq
+driver registration from there.
 
-Fixes: eb8329e0a04d ("tcp: export data delivery rate")
-Suggested-by: Yuchung Cheng <ycheng@google.com>
-Signed-off-by: David Morley <morleyd@google.com>
-Signed-off-by: Neal Cardwell <ncardwell@google.com>
-Tested-by: David Morley <morleyd@google.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sumit Gupta <sumitg@nvidia.com>
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/ipv4/tcp.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
-index 93825ec968aa..a74965a6a54f 100644
---- a/net/ipv4/tcp.c
-+++ b/net/ipv4/tcp.c
-@@ -429,6 +429,7 @@ void tcp_init_sock(struct sock *sk)
+diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
+index 1200842c3da4..5d28553b69f5 100644
+--- a/drivers/cpufreq/cpufreq-dt-platdev.c
++++ b/drivers/cpufreq/cpufreq-dt-platdev.c
+@@ -126,6 +126,7 @@ static const struct of_device_id blacklist[] __initconst = {
  
- 	/* There's a bubble in the pipe until at least the first ACK. */
- 	tp->app_limited = ~0U;
-+	tp->rate_app_limited = 1;
+ 	{ .compatible = "nvidia,tegra124", },
+ 	{ .compatible = "nvidia,tegra210", },
++	{ .compatible = "nvidia,tegra234", },
  
- 	/* See draft-stevens-tcpca-spec-01 for discussion of the
- 	 * initialization of these values.
-@@ -2675,6 +2676,7 @@ int tcp_disconnect(struct sock *sk, int flags)
- 	tp->last_oow_ack_time = 0;
- 	/* There's a bubble in the pipe until at least the first ACK. */
- 	tp->app_limited = ~0U;
-+	tp->rate_app_limited = 1;
- 	tp->rack.mstamp = 0;
- 	tp->rack.advanced = 0;
- 	tp->rack.reo_wnd_steps = 1;
+ 	{ .compatible = "qcom,apq8096", },
+ 	{ .compatible = "qcom,msm8996", },
 -- 
 2.39.0
 
