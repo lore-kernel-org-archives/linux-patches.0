@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 905CF1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:24:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 090C3C4339B;
-	Fri,  3 Feb 2023 10:24:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A24F41FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:24:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1EDE2C4339B;
+	Fri,  3 Feb 2023 10:24:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419843;
-	bh=rABEJ5R54kDbYVYt0oHBixOG5wLExHEGnQML3AO2kk4=;
+	s=korg; t=1675419846;
+	bh=mJLPCi/3sB+LqCzxEK11/00G7g5mPE/RTW6D4kkkB5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tf7reewyQNs+27glq4Tu6/9gmazzYpar3eL+V7w/1Rz0SepWW72/AzxB5nD3sQ7p1
-	 Q6z1g/hWLSTAymurzURHejTvPrk8OAslEtwwuK1PwKfaeiC+ptDaa4INhxXKLvmQKd
-	 TFV8Rm+xdsziyIVt49nFIOkkaHQILRRTT7kMVnQw=
+	b=BEl0mRAeBCzfsebQXWZFncXAwv6mzGsgilz5WePhMzwQRQejYStV8HySRDV8WOqv7
+	 0yDhWh8Ybw01FFG+oYPW3UYLAXPCKdDb5OxTreBaK6nK3NwIUdo4JqW5wp8KYRaiR2
+	 B93128wu07MFvjfZ/2wG17Kol/0nqivHZn9rCbJ0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+a8e049cd3abd342936b6@syzkaller.appspotmail.com,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
-	Siddh Raman Pant <code@siddh.me>,
-	Chao Yu <chao@kernel.org>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 07/20] erofs/zmap.c: Fix incorrect offset calculation
-Date: Fri,  3 Feb 2023 11:13:34 +0100
-Message-Id: <20230203101008.305266521@linuxfoundation.org>
+Subject: [PATCH 5.15 08/20] blk-cgroup: fix missing pd_online_fn() while activating policy
+Date: Fri,  3 Feb 2023 11:13:35 +0100
+Message-Id: <20230203101008.347042352@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101007.985835823@linuxfoundation.org>
 References: <20230203101007.985835823@linuxfoundation.org>
@@ -37,59 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Siddh Raman Pant <code@siddh.me>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit 6acd87d50998ef0afafc441613aeaf5a8f5c9eff ]
+[ Upstream commit e3ff8887e7db757360f97634e0d6f4b8e27a8c46 ]
 
-Effective offset to add to length was being incorrectly calculated,
-which resulted in iomap->length being set to 0, triggering a WARN_ON
-in iomap_iter_done().
+If the policy defines pd_online_fn(), it should be called after
+pd_init_fn(), like blkg_create().
 
-Fix that, and describe it in comments.
-
-This was reported as a crash by syzbot under an issue about a warning
-encountered in iomap_iter_done(), but unrelated to erofs.
-
-C reproducer: https://syzkaller.appspot.com/text?tag=ReproC&x=1037a6b2880000
-Kernel config: https://syzkaller.appspot.com/text?tag=KernelConfig&x=e2021a61197ebe02
-Dashboard link: https://syzkaller.appspot.com/bug?extid=a8e049cd3abd342936b6
-
-Reported-by: syzbot+a8e049cd3abd342936b6@syzkaller.appspotmail.com
-Suggested-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Signed-off-by: Siddh Raman Pant <code@siddh.me>
-Reviewed-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Link: https://lore.kernel.org/r/20221209102151.311049-1-code@siddh.me
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230103112833.2013432-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/zmap.c | 10 +++++++---
- 1 file changed, 7 insertions(+), 3 deletions(-)
+ block/blk-cgroup.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/erofs/zmap.c b/fs/erofs/zmap.c
-index 7a6df35fdc91..73b86b5c1a75 100644
---- a/fs/erofs/zmap.c
-+++ b/fs/erofs/zmap.c
-@@ -700,12 +700,16 @@ static int z_erofs_iomap_begin_report(struct inode *inode, loff_t offset,
- 		iomap->type = IOMAP_HOLE;
- 		iomap->addr = IOMAP_NULL_ADDR;
- 		/*
--		 * No strict rule how to describe extents for post EOF, yet
--		 * we need do like below. Otherwise, iomap itself will get
-+		 * No strict rule on how to describe extents for post EOF, yet
-+		 * we need to do like below. Otherwise, iomap itself will get
- 		 * into an endless loop on post EOF.
-+		 *
-+		 * Calculate the effective offset by subtracting extent start
-+		 * (map.m_la) from the requested offset, and add it to length.
-+		 * (NB: offset >= map.m_la always)
- 		 */
- 		if (iomap->offset >= inode->i_size)
--			iomap->length = length + map.m_la - offset;
-+			iomap->length = length + offset - map.m_la;
- 	}
- 	iomap->flags = 0;
- 	return 0;
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index ce5858dadca5..3ee4c1217b63 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -1360,6 +1360,10 @@ int blkcg_activate_policy(struct request_queue *q,
+ 		list_for_each_entry_reverse(blkg, &q->blkg_list, q_node)
+ 			pol->pd_init_fn(blkg->pd[pol->plid]);
+ 
++	if (pol->pd_online_fn)
++		list_for_each_entry_reverse(blkg, &q->blkg_list, q_node)
++			pol->pd_online_fn(blkg->pd[pol->plid]);
++
+ 	__set_bit(pol->plid, q->blkcg_pols);
+ 	ret = 0;
+ 
 -- 
 2.39.0
 
