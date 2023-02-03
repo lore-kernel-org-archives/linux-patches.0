@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 741F91FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D71E5C433EF;
-	Fri,  3 Feb 2023 10:21:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F37D1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E8029C433D2;
+	Fri,  3 Feb 2023 10:21:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419685;
-	bh=SAp6l6Th0cytDJz0r1Xs2HJYWDJXY2RDqGYmyH0tKHI=;
+	s=korg; t=1675419688;
+	bh=TAjISH3kC9VlyZ71RgLxYE9fYC9FDp1gSpzujC+9D8E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XhzD3ycCvpn/CS5a7ZtRKwrhsYtuiQC7sG3/+x5cbyhtbSb4uRd6e/Ks6tVE1UDgM
-	 vn5WP7EHvHYQGc3QDqF5CXke73oIjaNa192brmHRGKA/VwI3GInoy2tKrGUuHDpiaZ
-	 vEVlRinkcd3VTlf32QODbhibbQD727R8A2+t4UL0=
+	b=mwSH/WnoWZ2jza59DQ2kV/rb/uUJlz4mqJt6IVJbh1cL5yunExNTkUsNEYKBETipK
+	 RD803RJyDDGXVwiAkW5MaSNmpMrCgVk745GwnH48g++6gG2fVqMmr0GtKk7vir/YYg
+	 V8SG0U4rBIF1g8HlHExLxbCN92KoySDCIqnk3qpE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Giulio Benetti <giulio.benetti@benettiengineering.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>
-Subject: [PATCH 4.19 43/80] ARM: 9280/1: mm: fix warning on phys_addr_t to void pointer assignment
-Date: Fri,  3 Feb 2023 11:12:37 +0100
-Message-Id: <20230203101017.046884062@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Shawn Guo <shawnguo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 03/28] arm64: dts: freescale: Fix pca954x i2c-mux node names
+Date: Fri,  3 Feb 2023 11:12:51 +0100
+Message-Id: <20230203101010.120524672@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
-References: <20230203101015.263854890@linuxfoundation.org>
+In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
+References: <20230203101009.946745030@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -34,34 +35,207 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Giulio Benetti <giulio.benetti@benettiengineering.com>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-commit a4e03921c1bb118e6718e0a3b0322a2c13ed172b upstream.
+[ Upstream commit b025b4f5c288e29bbea421613a5b4eacf9261fbb ]
 
-zero_page is a void* pointer but memblock_alloc() returns phys_addr_t type
-so this generates a warning while using clang and with -Wint-error enabled
-that becomes and error. So let's cast the return of memblock_alloc() to
-(void *).
+"make dtbs_check":
 
-Cc: <stable@vger.kernel.org> # 4.14.x +
-Fixes: 340a982825f7 ("ARM: 9266/1: mm: fix no-MMU ZERO_PAGE() implementation")
-Signed-off-by: Giulio Benetti <giulio.benetti@benettiengineering.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    arch/arm64/boot/dts/freescale/fsl-ls1012a-qds.dtb: pca9547@77: $nodename:0: 'pca9547@77' does not match '^(i2c-?)?mux'
+	    From schema: Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
+    arch/arm64/boot/dts/freescale/fsl-ls1012a-qds.dtb: pca9547@77: Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'i2c@4' were unexpected)
+	    From schema: Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
+    ...
+
+Fix this by renaming PCA954x nodes to "i2c-mux", to match the I2C bus
+multiplexer/switch DT bindings and the Generic Names Recommendation in
+the Devicetree Specification.
+
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/mm/nommu.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/fsl-ls1012a-qds.dts    | 2 +-
+ arch/arm64/boot/dts/freescale/fsl-ls1043a-qds.dts    | 2 +-
+ arch/arm64/boot/dts/freescale/fsl-ls1046a-qds.dts    | 2 +-
+ arch/arm64/boot/dts/freescale/fsl-ls1088a-qds.dts    | 2 +-
+ arch/arm64/boot/dts/freescale/fsl-ls1088a-rdb.dts    | 2 +-
+ arch/arm64/boot/dts/freescale/fsl-ls1088a-ten64.dts  | 2 +-
+ arch/arm64/boot/dts/freescale/fsl-ls208xa-qds.dtsi   | 2 +-
+ arch/arm64/boot/dts/freescale/fsl-ls208xa-rdb.dtsi   | 2 +-
+ arch/arm64/boot/dts/freescale/fsl-lx2160a-cex7.dtsi  | 2 +-
+ arch/arm64/boot/dts/freescale/imx8mm-nitrogen-r2.dts | 2 +-
+ arch/arm64/boot/dts/freescale/imx8mq-nitrogen.dts    | 4 ++--
+ arch/arm64/boot/dts/freescale/imx8qxp-mek.dts        | 2 +-
+ 12 files changed, 13 insertions(+), 13 deletions(-)
 
---- a/arch/arm/mm/nommu.c
-+++ b/arch/arm/mm/nommu.c
-@@ -160,7 +160,7 @@ void __init paging_init(const struct mac
- 	mpu_setup();
+diff --git a/arch/arm64/boot/dts/freescale/fsl-ls1012a-qds.dts b/arch/arm64/boot/dts/freescale/fsl-ls1012a-qds.dts
+index 5a8d85a7d161..bbdf989058ff 100644
+--- a/arch/arm64/boot/dts/freescale/fsl-ls1012a-qds.dts
++++ b/arch/arm64/boot/dts/freescale/fsl-ls1012a-qds.dts
+@@ -110,7 +110,7 @@ &esdhc1 {
+ &i2c0 {
+ 	status = "okay";
  
- 	/* allocate the zero page. */
--	zero_page = memblock_alloc(PAGE_SIZE, PAGE_SIZE);
-+	zero_page = (void *)memblock_alloc(PAGE_SIZE, PAGE_SIZE);
- 	if (!zero_page)
- 		panic("%s: Failed to allocate %lu bytes align=0x%lx\n",
- 		      __func__, PAGE_SIZE, PAGE_SIZE);
+-	pca9547@77 {
++	i2c-mux@77 {
+ 		compatible = "nxp,pca9547";
+ 		reg = <0x77>;
+ 		#address-cells = <1>;
+diff --git a/arch/arm64/boot/dts/freescale/fsl-ls1043a-qds.dts b/arch/arm64/boot/dts/freescale/fsl-ls1043a-qds.dts
+index 9b726c2a4842..dda27ed7aaf2 100644
+--- a/arch/arm64/boot/dts/freescale/fsl-ls1043a-qds.dts
++++ b/arch/arm64/boot/dts/freescale/fsl-ls1043a-qds.dts
+@@ -89,7 +89,7 @@ fpga: board-control@2,0 {
+ &i2c0 {
+ 	status = "okay";
+ 
+-	pca9547@77 {
++	i2c-mux@77 {
+ 		compatible = "nxp,pca9547";
+ 		reg = <0x77>;
+ 		#address-cells = <1>;
+diff --git a/arch/arm64/boot/dts/freescale/fsl-ls1046a-qds.dts b/arch/arm64/boot/dts/freescale/fsl-ls1046a-qds.dts
+index b2fcbba60d3a..3b0ed9305f2b 100644
+--- a/arch/arm64/boot/dts/freescale/fsl-ls1046a-qds.dts
++++ b/arch/arm64/boot/dts/freescale/fsl-ls1046a-qds.dts
+@@ -88,7 +88,7 @@ &duart1 {
+ &i2c0 {
+ 	status = "okay";
+ 
+-	pca9547@77 {
++	i2c-mux@77 {
+ 		compatible = "nxp,pca9547";
+ 		reg = <0x77>;
+ 		#address-cells = <1>;
+diff --git a/arch/arm64/boot/dts/freescale/fsl-ls1088a-qds.dts b/arch/arm64/boot/dts/freescale/fsl-ls1088a-qds.dts
+index 41d8b15f25a5..aa52ff73ff9e 100644
+--- a/arch/arm64/boot/dts/freescale/fsl-ls1088a-qds.dts
++++ b/arch/arm64/boot/dts/freescale/fsl-ls1088a-qds.dts
+@@ -53,7 +53,7 @@ flash@2 {
+ &i2c0 {
+ 	status = "okay";
+ 
+-	i2c-switch@77 {
++	i2c-mux@77 {
+ 		compatible = "nxp,pca9547";
+ 		reg = <0x77>;
+ 		#address-cells = <1>;
+diff --git a/arch/arm64/boot/dts/freescale/fsl-ls1088a-rdb.dts b/arch/arm64/boot/dts/freescale/fsl-ls1088a-rdb.dts
+index 1bfbce69cc8b..ee8e932628d1 100644
+--- a/arch/arm64/boot/dts/freescale/fsl-ls1088a-rdb.dts
++++ b/arch/arm64/boot/dts/freescale/fsl-ls1088a-rdb.dts
+@@ -136,7 +136,7 @@ mdio2_aquantia_phy: ethernet-phy@0 {
+ &i2c0 {
+ 	status = "okay";
+ 
+-	i2c-switch@77 {
++	i2c-mux@77 {
+ 		compatible = "nxp,pca9547";
+ 		reg = <0x77>;
+ 		#address-cells = <1>;
+diff --git a/arch/arm64/boot/dts/freescale/fsl-ls1088a-ten64.dts b/arch/arm64/boot/dts/freescale/fsl-ls1088a-ten64.dts
+index ef6c8967533e..d4867d6cf47c 100644
+--- a/arch/arm64/boot/dts/freescale/fsl-ls1088a-ten64.dts
++++ b/arch/arm64/boot/dts/freescale/fsl-ls1088a-ten64.dts
+@@ -245,7 +245,7 @@ rx8035: rtc@32 {
+ &i2c3 {
+ 	status = "okay";
+ 
+-	i2c-switch@70 {
++	i2c-mux@70 {
+ 		compatible = "nxp,pca9540";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+diff --git a/arch/arm64/boot/dts/freescale/fsl-ls208xa-qds.dtsi b/arch/arm64/boot/dts/freescale/fsl-ls208xa-qds.dtsi
+index f598669e742f..52c5a43b30a0 100644
+--- a/arch/arm64/boot/dts/freescale/fsl-ls208xa-qds.dtsi
++++ b/arch/arm64/boot/dts/freescale/fsl-ls208xa-qds.dtsi
+@@ -103,7 +103,7 @@ mdio0_phy15: mdio-phy3@1f {
+ 
+ &i2c0 {
+ 	status = "okay";
+-	pca9547@77 {
++	i2c-mux@77 {
+ 		compatible = "nxp,pca9547";
+ 		reg = <0x77>;
+ 		#address-cells = <1>;
+diff --git a/arch/arm64/boot/dts/freescale/fsl-ls208xa-rdb.dtsi b/arch/arm64/boot/dts/freescale/fsl-ls208xa-rdb.dtsi
+index 3d9647b3da14..537cecb13dd0 100644
+--- a/arch/arm64/boot/dts/freescale/fsl-ls208xa-rdb.dtsi
++++ b/arch/arm64/boot/dts/freescale/fsl-ls208xa-rdb.dtsi
+@@ -44,7 +44,7 @@ cpld@3,0 {
+ 
+ &i2c0 {
+ 	status = "okay";
+-	pca9547@75 {
++	i2c-mux@75 {
+ 		compatible = "nxp,pca9547";
+ 		reg = <0x75>;
+ 		#address-cells = <1>;
+diff --git a/arch/arm64/boot/dts/freescale/fsl-lx2160a-cex7.dtsi b/arch/arm64/boot/dts/freescale/fsl-lx2160a-cex7.dtsi
+index afb455210bd0..d32a52ab00a4 100644
+--- a/arch/arm64/boot/dts/freescale/fsl-lx2160a-cex7.dtsi
++++ b/arch/arm64/boot/dts/freescale/fsl-lx2160a-cex7.dtsi
+@@ -54,7 +54,7 @@ &esdhc1 {
+ &i2c0 {
+ 	status = "okay";
+ 
+-	i2c-switch@77 {
++	i2c-mux@77 {
+ 		compatible = "nxp,pca9547";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-nitrogen-r2.dts b/arch/arm64/boot/dts/freescale/imx8mm-nitrogen-r2.dts
+index 74c09891600f..6357078185ed 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm-nitrogen-r2.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mm-nitrogen-r2.dts
+@@ -214,7 +214,7 @@ &i2c3 {
+ 	pinctrl-0 = <&pinctrl_i2c3>;
+ 	status = "okay";
+ 
+-	i2cmux@70 {
++	i2c-mux@70 {
+ 		compatible = "nxp,pca9540";
+ 		reg = <0x70>;
+ 		#address-cells = <1>;
+diff --git a/arch/arm64/boot/dts/freescale/imx8mq-nitrogen.dts b/arch/arm64/boot/dts/freescale/imx8mq-nitrogen.dts
+index 9dda2a1554c3..8614c18b5998 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mq-nitrogen.dts
++++ b/arch/arm64/boot/dts/freescale/imx8mq-nitrogen.dts
+@@ -133,7 +133,7 @@ &i2c1 {
+ 	pinctrl-0 = <&pinctrl_i2c1>;
+ 	status = "okay";
+ 
+-	i2cmux@70 {
++	i2c-mux@70 {
+ 		compatible = "nxp,pca9546";
+ 		pinctrl-names = "default";
+ 		pinctrl-0 = <&pinctrl_i2c1_pca9546>;
+@@ -216,7 +216,7 @@ &i2c4 {
+ 	pinctrl-0 = <&pinctrl_i2c4>;
+ 	status = "okay";
+ 
+-	pca9546: i2cmux@70 {
++	pca9546: i2c-mux@70 {
+ 		compatible = "nxp,pca9546";
+ 		reg = <0x70>;
+ 		#address-cells = <1>;
+diff --git a/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts b/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts
+index 07d8dd8160f6..afa883389456 100644
+--- a/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts
++++ b/arch/arm64/boot/dts/freescale/imx8qxp-mek.dts
+@@ -61,7 +61,7 @@ &i2c1 {
+ 	pinctrl-0 = <&pinctrl_lpi2c1 &pinctrl_ioexp_rst>;
+ 	status = "okay";
+ 
+-	i2c-switch@71 {
++	i2c-mux@71 {
+ 		compatible = "nxp,pca9646", "nxp,pca9546";
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+-- 
+2.39.0
+
 
 
