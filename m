@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D15C31FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:25:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49CEFC433EF;
-	Fri,  3 Feb 2023 10:25:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 535991FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:25:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B68C5C433EF;
+	Fri,  3 Feb 2023 10:25:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419903;
-	bh=INmcdVg3RPnELl01J82Iy7k78ksSjh8zqgEkZwW4IUk=;
+	s=korg; t=1675419908;
+	bh=G/su3jtvzH9r0NThXvyHeCffHzpTOyo5BMuGrBz7T14=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AUqz8KxDhN1MSjv2xrQyJXpCUfZxNgWCPA9ZdpOxvD38wqIAfbC9X/iyP2X0r9pbT
-	 /o4AQz/wuGnGXYnfgab+afPzQpB8HVzFhssTNBdcmuJFIUZ2PSjvXvZMykubxibgIk
-	 pLum/NUutqdfSA7heTmt5pc1bgfDvH1dUAtk4Up8=
+	b=N18GOy4tnoXBDEWyy/jHWuxWaIzDOiEZT+93EdihTbANRlQ81TWAeMzYPynmsEngH
+	 rCBcXB8F4B+WKb0m6kCfNx3wQ3F8xXiJ5GMReNF+zR1QFiSDizS4RcTbB9rbI1kvHw
+	 zqhfDs5XMPPyGEn0Ty7dXIg4dJxnSnoSm6W8m34U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dean Luick <dean.luick@cornelisnetworks.com>,
-	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Eric Biggers <ebiggers@kernel.org>,
+	Alexander Potapenko <glider@google.com>,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 016/134] IB/hfi1: Fix expected receive setup error exit issues
-Date: Fri,  3 Feb 2023 11:12:01 +0100
-Message-Id: <20230203101024.600046379@linuxfoundation.org>
+Subject: [PATCH 5.4 017/134] affs: initialize fsdata in affs_truncate()
+Date: Fri,  3 Feb 2023 11:12:02 +0100
+Message-Id: <20230203101024.632714775@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -36,168 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dean Luick <dean.luick@cornelisnetworks.com>
+From: Alexander Potapenko <glider@google.com>
 
-[ Upstream commit e0c4a422f5246abefbf7c178ef99a1f2dc3c5f62 ]
+[ Upstream commit eef034ac6690118c88f357b00e2b3239c9d8575d ]
 
-Fix three error exit issues in expected receive setup.
-Re-arrange error exits to increase readability.
+When aops->write_begin() does not initialize fsdata, KMSAN may report
+an error passing the latter to aops->write_end().
 
-Issues and fixes:
-1. Possible missed page unpin if tidlist copyout fails and
-   not all pinned pages where made part of a TID.
-   Fix: Unpin the unused pages.
+Fix this by unconditionally initializing fsdata.
 
-2. Return success with unset return values tidcnt and length
-   when no pages were pinned.
-   Fix: Return -ENOSPC if no pages were pinned.
-
-3. Return success with unset return values tidcnt and length when
-   no rcvarray entries available.
-   Fix: Return -ENOSPC if no rcvarray entries are available.
-
-Fixes: 7e7a436ecb6e ("staging/hfi1: Add TID entry program function body")
-Fixes: 97736f36dbeb ("IB/hfi1: Validate page aligned for a given virtual addres")
-Fixes: f404ca4c7ea8 ("IB/hfi1: Refactor hfi_user_exp_rcv_setup() IOCTL")
-Signed-off-by: Dean Luick <dean.luick@cornelisnetworks.com>
-Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-Link: https://lore.kernel.org/r/167328548150.1472310.1492305874804187634.stgit@awfm-02.cornelisnetworks.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: f2b6a16eb8f5 ("fs: affs convert to new aops")
+Suggested-by: Eric Biggers <ebiggers@kernel.org>
+Signed-off-by: Alexander Potapenko <glider@google.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/user_exp_rcv.c | 83 ++++++++++++++---------
- 1 file changed, 50 insertions(+), 33 deletions(-)
+ fs/affs/file.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/infiniband/hw/hfi1/user_exp_rcv.c b/drivers/infiniband/hw/hfi1/user_exp_rcv.c
-index 7623cb61ec4c..e7daa65589ab 100644
---- a/drivers/infiniband/hw/hfi1/user_exp_rcv.c
-+++ b/drivers/infiniband/hw/hfi1/user_exp_rcv.c
-@@ -337,15 +337,14 @@ int hfi1_user_exp_rcv_setup(struct hfi1_filedata *fd,
- 	tidbuf->psets = kcalloc(uctxt->expected_count, sizeof(*tidbuf->psets),
- 				GFP_KERNEL);
- 	if (!tidbuf->psets) {
--		kfree(tidbuf);
--		return -ENOMEM;
-+		ret = -ENOMEM;
-+		goto fail_release_mem;
- 	}
+diff --git a/fs/affs/file.c b/fs/affs/file.c
+index ba084b0b214b..82bb38370aa9 100644
+--- a/fs/affs/file.c
++++ b/fs/affs/file.c
+@@ -878,7 +878,7 @@ affs_truncate(struct inode *inode)
+ 	if (inode->i_size > AFFS_I(inode)->mmu_private) {
+ 		struct address_space *mapping = inode->i_mapping;
+ 		struct page *page;
+-		void *fsdata;
++		void *fsdata = NULL;
+ 		loff_t isize = inode->i_size;
+ 		int res;
  
- 	pinned = pin_rcv_pages(fd, tidbuf);
- 	if (pinned <= 0) {
--		kfree(tidbuf->psets);
--		kfree(tidbuf);
--		return pinned;
-+		ret = (pinned < 0) ? pinned : -ENOSPC;
-+		goto fail_unpin;
- 	}
- 
- 	/* Find sets of physically contiguous pages */
-@@ -360,14 +359,16 @@ int hfi1_user_exp_rcv_setup(struct hfi1_filedata *fd,
- 	fd->tid_used += pageset_count;
- 	spin_unlock(&fd->tid_lock);
- 
--	if (!pageset_count)
--		goto bail;
-+	if (!pageset_count) {
-+		ret = -ENOSPC;
-+		goto fail_unreserve;
-+	}
- 
- 	ngroups = pageset_count / dd->rcv_entries.group_size;
- 	tidlist = kcalloc(pageset_count, sizeof(*tidlist), GFP_KERNEL);
- 	if (!tidlist) {
- 		ret = -ENOMEM;
--		goto nomem;
-+		goto fail_unreserve;
- 	}
- 
- 	tididx = 0;
-@@ -463,44 +464,60 @@ int hfi1_user_exp_rcv_setup(struct hfi1_filedata *fd,
- 	}
- unlock:
- 	mutex_unlock(&uctxt->exp_mutex);
--nomem:
- 	hfi1_cdbg(TID, "total mapped: tidpairs:%u pages:%u (%d)", tididx,
- 		  mapped_pages, ret);
-+
-+	/* fail if nothing was programmed, set error if none provided */
-+	if (tididx == 0) {
-+		if (ret >= 0)
-+			ret = -ENOSPC;
-+		goto fail_unreserve;
-+	}
-+
- 	/* adjust reserved tid_used to actual count */
- 	spin_lock(&fd->tid_lock);
- 	fd->tid_used -= pageset_count - tididx;
- 	spin_unlock(&fd->tid_lock);
--	if (tididx) {
--		tinfo->tidcnt = tididx;
--		tinfo->length = mapped_pages * PAGE_SIZE;
- 
--		if (copy_to_user(u64_to_user_ptr(tinfo->tidlist),
--				 tidlist, sizeof(tidlist[0]) * tididx)) {
--			/*
--			 * On failure to copy to the user level, we need to undo
--			 * everything done so far so we don't leak resources.
--			 */
--			tinfo->tidlist = (unsigned long)&tidlist;
--			hfi1_user_exp_rcv_clear(fd, tinfo);
--			tinfo->tidlist = 0;
--			ret = -EFAULT;
--			goto bail;
--		}
-+	/* unpin all pages not covered by a TID */
-+	unpin_rcv_pages(fd, tidbuf, NULL, mapped_pages, pinned - mapped_pages,
-+			false);
-+
-+	tinfo->tidcnt = tididx;
-+	tinfo->length = mapped_pages * PAGE_SIZE;
-+
-+	if (copy_to_user(u64_to_user_ptr(tinfo->tidlist),
-+			 tidlist, sizeof(tidlist[0]) * tididx)) {
-+		ret = -EFAULT;
-+		goto fail_unprogram;
- 	}
- 
--	/*
--	 * If not everything was mapped (due to insufficient RcvArray entries,
--	 * for example), unpin all unmapped pages so we can pin them nex time.
--	 */
--	if (mapped_pages != pinned)
--		unpin_rcv_pages(fd, tidbuf, NULL, mapped_pages,
--				(pinned - mapped_pages), false);
--bail:
-+	kfree(tidbuf->pages);
- 	kfree(tidbuf->psets);
-+	kfree(tidbuf);
- 	kfree(tidlist);
-+	return 0;
-+
-+fail_unprogram:
-+	/* unprogram, unmap, and unpin all allocated TIDs */
-+	tinfo->tidlist = (unsigned long)tidlist;
-+	hfi1_user_exp_rcv_clear(fd, tinfo);
-+	tinfo->tidlist = 0;
-+	pinned = 0;		/* nothing left to unpin */
-+	pageset_count = 0;	/* nothing left reserved */
-+fail_unreserve:
-+	spin_lock(&fd->tid_lock);
-+	fd->tid_used -= pageset_count;
-+	spin_unlock(&fd->tid_lock);
-+fail_unpin:
-+	if (pinned > 0)
-+		unpin_rcv_pages(fd, tidbuf, NULL, 0, pinned, false);
-+fail_release_mem:
- 	kfree(tidbuf->pages);
-+	kfree(tidbuf->psets);
- 	kfree(tidbuf);
--	return ret > 0 ? 0 : ret;
-+	kfree(tidlist);
-+	return ret;
- }
- 
- int hfi1_user_exp_rcv_clear(struct hfi1_filedata *fd,
 -- 
 2.39.0
 
