@@ -1,177 +1,122 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 261A01FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7899FC433D2;
-	Fri,  3 Feb 2023 10:23:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 525A11FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77498C433D2;
+	Fri,  3 Feb 2023 10:23:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419785;
-	bh=FbUetLhw79WW3EuXs6rQ4Ut0dLEdVl38E2k3pLvcuxU=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KBHhxWWPsxyIhrgmBBuAAdURU/MbHCAdsFA5l5HhCF9+QEX/07BEDDIrNpBenwXKp
-	 xlUc7H1HkpYbySfQM2o+qrmurMGLgVXhs5D8jiY3oJ0IfZiu/Pi5Dm5p2QTbc0pz0B
-	 m6o6IhLm/R98xUNr6lQhx2Y+f6i8o9VWHx7K6vbU=
+	s=korg; t=1675419788;
+	bh=vZz2fXuEaeQwNy1wZBxCZF+GAUxemlvH6I6lLPmPJ6I=;
+	h=From:To:Cc:Subject:Date:From;
+	b=XjMfxlEN7olZOODqYKZYGkZGPX5ZqAww4gmv2kMLUzXkbNLCHx/sp8qqH9XO8DAT3
+	 k+8bfAOgwKwdPDUaRZtntju2yOPvo6Cl8IaOqnugfCukleKyhaR6kn3Xh2ogA4oBsQ
+	 0HTDmDl6ymnddt/bK/oNi4yCAVM+FtA4kOcu5I80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Elver <elver@google.com>,
-	Dmitry Vyukov <dvyukov@google.com>,
-	Ingo Molnar <mingo@redhat.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Juri Lelli <juri.lelli@redhat.com>,
-	Vincent Guittot <vincent.guittot@linaro.org>,
-	Dietmar Eggemann <dietmar.eggemann@arm.com>,
-	Steven Rostedt <rostedt@goodmis.org>,
-	Ben Segall <bsegall@google.com>,
-	Mel Gorman <mgorman@suse.de>,
-	Daniel Bristot de Oliveira <bristot@redhat.com>,
-	Valentin Schneider <vschneid@redhat.com>,
-	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
-	Alexander Potapenko <glider@google.com>,
-	Andrey Konovalov <andreyknvl@gmail.com>,
-	Vincenzo Frascino <vincenzo.frascino@arm.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	David Gow <davidgow@google.com>,
-	tangmeng <tangmeng@uniontech.com>,
-	Jann Horn <jannh@google.com>,
-	Shuah Khan <skhan@linuxfoundation.org>,
-	Petr Mladek <pmladek@suse.com>,
-	"Paul E. McKenney" <paulmck@kernel.org>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	kasan-dev@googlegroups.com,
-	linux-mm@kvack.org,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 4.19 74/80] panic: Consolidate open-coded panic_on_warn checks
-Date: Fri,  3 Feb 2023 11:13:08 +0100
-Message-Id: <20230203101018.408088099@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 5.10 0/9] 5.10.167-rc1 review
+Date: Fri,  3 Feb 2023 11:13:29 +0100
+Message-Id: <20230203101006.422534094@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
-References: <20230203101015.263854890@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.167-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.10.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.10.167-rc1
+X-KernelTest-Deadline: 2023-02-05T10:10+00:00
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+This is the start of the stable review cycle for the 5.10.167 release.
+There are 9 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit 79cc1ba7badf9e7a12af99695a557e9ce27ee967 upstream.
+Responses should be made by Sun, 05 Feb 2023 10:09:58 +0000.
+Anything received after that time might be too late.
 
-Several run-time checkers (KASAN, UBSAN, KFENCE, KCSAN, sched) roll
-their own warnings, and each check "panic_on_warn". Consolidate this
-into a single function so that future instrumentation can be added in
-a single location.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.167-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+and the diffstat can be found below.
 
-Cc: Marco Elver <elver@google.com>
-Cc: Dmitry Vyukov <dvyukov@google.com>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Juri Lelli <juri.lelli@redhat.com>
-Cc: Vincent Guittot <vincent.guittot@linaro.org>
-Cc: Dietmar Eggemann <dietmar.eggemann@arm.com>
-Cc: Steven Rostedt <rostedt@goodmis.org>
-Cc: Ben Segall <bsegall@google.com>
-Cc: Mel Gorman <mgorman@suse.de>
-Cc: Daniel Bristot de Oliveira <bristot@redhat.com>
-Cc: Valentin Schneider <vschneid@redhat.com>
-Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
-Cc: Alexander Potapenko <glider@google.com>
-Cc: Andrey Konovalov <andreyknvl@gmail.com>
-Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: David Gow <davidgow@google.com>
-Cc: tangmeng <tangmeng@uniontech.com>
-Cc: Jann Horn <jannh@google.com>
-Cc: Shuah Khan <skhan@linuxfoundation.org>
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: "Paul E. McKenney" <paulmck@kernel.org>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
-Cc: kasan-dev@googlegroups.com
-Cc: linux-mm@kvack.org
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Marco Elver <elver@google.com>
-Reviewed-by: Andrey Konovalov <andreyknvl@gmail.com>
-Link: https://lore.kernel.org/r/20221117234328.594699-4-keescook@chromium.org
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- include/linux/kernel.h |    1 +
- kernel/panic.c         |    9 +++++++--
- kernel/sched/core.c    |    3 +--
- mm/kasan/report.c      |    3 +--
- 4 files changed, 10 insertions(+), 6 deletions(-)
+thanks,
 
---- a/include/linux/kernel.h
-+++ b/include/linux/kernel.h
-@@ -327,6 +327,7 @@ extern long (*panic_blink)(int state);
- __printf(1, 2)
- void panic(const char *fmt, ...) __noreturn __cold;
- void nmi_panic(struct pt_regs *regs, const char *msg);
-+void check_panic_on_warn(const char *origin);
- extern void oops_enter(void);
- extern void oops_exit(void);
- void print_oops_end_marker(void);
---- a/kernel/panic.c
-+++ b/kernel/panic.c
-@@ -125,6 +125,12 @@ void nmi_panic(struct pt_regs *regs, con
- }
- EXPORT_SYMBOL(nmi_panic);
- 
-+void check_panic_on_warn(const char *origin)
-+{
-+	if (panic_on_warn)
-+		panic("%s: panic_on_warn set ...\n", origin);
-+}
-+
- /**
-  *	panic - halt the system
-  *	@fmt: The text string to print
-@@ -540,8 +546,7 @@ void __warn(const char *file, int line,
- 	if (args)
- 		vprintk(args->fmt, args->args);
- 
--	if (panic_on_warn)
--		panic("panic_on_warn set ...\n");
-+	check_panic_on_warn("kernel");
- 
- 	print_modules();
- 
---- a/kernel/sched/core.c
-+++ b/kernel/sched/core.c
-@@ -3316,8 +3316,7 @@ static noinline void __schedule_bug(stru
- 		print_ip_sym(preempt_disable_ip);
- 		pr_cont("\n");
- 	}
--	if (panic_on_warn)
--		panic("scheduling while atomic\n");
-+	check_panic_on_warn("scheduling while atomic");
- 
- 	dump_stack();
- 	add_taint(TAINT_WARN, LOCKDEP_STILL_OK);
---- a/mm/kasan/report.c
-+++ b/mm/kasan/report.c
-@@ -176,8 +176,7 @@ static void kasan_end_report(unsigned lo
- 	pr_err("==================================================================\n");
- 	add_taint(TAINT_BAD_PAGE, LOCKDEP_NOW_UNRELIABLE);
- 	spin_unlock_irqrestore(&report_lock, *flags);
--	if (panic_on_warn)
--		panic("panic_on_warn set ...\n");
-+	check_panic_on_warn("KASAN");
- 	kasan_enable_current();
- }
- 
+greg k-h
+
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.10.167-rc1
+
+Yan Zhai <yan@cloudflare.com>
+    net: fix NULL pointer in skb_segment_list
+
+Soenke Huster <soenke.huster@eknoes.de>
+    Bluetooth: fix null ptr deref on hci_sync_conn_complete_evt
+
+Dave Hansen <dave.hansen@intel.com>
+    ACPI: processor idle: Practically limit "Dummy wait" workaround to old Intel systems
+
+Hui Wang <hui.wang@canonical.com>
+    dmaengine: imx-sdma: Fix a possible memory leak in sdma_transfer_init
+
+Yu Kuai <yukuai3@huawei.com>
+    blk-cgroup: fix missing pd_online_fn() while activating policy
+
+Hao Sun <sunhao.th@gmail.com>
+    bpf: Skip task with pid=1 in send_signal_common()
+
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+    arm64: dts: imx8mq-thor96: fix no-mmc property for SDHCI
+
+Geert Uytterhoeven <geert+renesas@glider.be>
+    ARM: dts: vf610: Fix pca9548 i2c-mux node names
+
+Geert Uytterhoeven <geert+renesas@glider.be>
+    ARM: dts: imx: Fix pca9547 i2c-mux node name
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                        |  4 ++--
+ arch/arm/boot/dts/imx53-ppd.dts                 |  2 +-
+ arch/arm/boot/dts/vf610-zii-dev-rev-b.dts       |  2 +-
+ arch/arm/boot/dts/vf610-zii-dev-rev-c.dts       |  2 +-
+ arch/arm64/boot/dts/freescale/imx8mq-thor96.dts |  4 ++--
+ block/blk-cgroup.c                              |  4 ++++
+ drivers/acpi/processor_idle.c                   | 23 ++++++++++++++++++++---
+ drivers/dma/imx-sdma.c                          |  4 +++-
+ kernel/trace/bpf_trace.c                        |  3 +++
+ net/bluetooth/hci_event.c                       | 13 +++++++++++++
+ net/core/skbuff.c                               |  5 ++---
+ 11 files changed, 52 insertions(+), 14 deletions(-)
 
 
