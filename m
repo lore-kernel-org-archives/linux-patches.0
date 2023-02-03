@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D669D1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F531C433EF;
-	Fri,  3 Feb 2023 10:23:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD691FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:24:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36FF5C433D2;
+	Fri,  3 Feb 2023 10:24:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419837;
-	bh=Fr8ngUSDZFbNweZe4Xpvn5UQljHV0Y4OKofXPoxRvOc=;
+	s=korg; t=1675419840;
+	bh=3vgnvte2osfMBtMjrtOmBoOUizzuO4dZOocQHADAMOo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qxghTJp1/86+MStRi5r88OXUxE5nKpa0WQqS3xVVbiwOdVi9c7SzDrQXhAjNTBcg4
-	 J5EqGPr/OW/NUXRo8DW/cQzTOoD6Rpdbtr/RUH70HWQ+GkimqrH5tS5SZid9BFHl3A
-	 hjl3zSC/f3nHYfj6jpSf/oeXe455sR/AQoFlGxug=
+	b=UjNvF7teWmCgHuH+CQ50oTrYtfvlwaDmSibO1U8vpS/X7wCTAfLQdcylg+aauCSmR
+	 wg1DHJxY5H4xmXlOnfhO7N0qe6mTcg+6eFsqRZNcX/d+X/83CP+fIhmNPizJKy2YZ7
+	 Oo8r7I5fmDm7qYu49LjWwrp5cQmxDYVJc8gsKGFw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
+	Hao Sun <sunhao.th@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Stanislav Fomichev <sdf@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 05/20] firmware: arm_scmi: Clear stale xfer->hdr.status
-Date: Fri,  3 Feb 2023 11:13:32 +0100
-Message-Id: <20230203101008.229256403@linuxfoundation.org>
+Subject: [PATCH 5.15 06/20] bpf: Skip task with pid=1 in send_signal_common()
+Date: Fri,  3 Feb 2023 11:13:33 +0100
+Message-Id: <20230203101008.264445148@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101007.985835823@linuxfoundation.org>
 References: <20230203101007.985835823@linuxfoundation.org>
@@ -35,35 +36,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Hao Sun <sunhao.th@gmail.com>
 
-[ Upstream commit f6ca5059dc0d6608dc46070f48e396d611f240d6 ]
+[ Upstream commit a3d81bc1eaef48e34dd0b9b48eefed9e02a06451 ]
 
-Stale error status reported from a previous message transaction must be
-cleared before starting a new transaction to avoid being confusingly
-reported in the following SCMI message dump traces.
+The following kernel panic can be triggered when a task with pid=1 attaches
+a prog that attempts to send killing signal to itself, also see [1] for more
+details:
 
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20221222183823.518856-2-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
+  Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
+  CPU: 3 PID: 1 Comm: systemd Not tainted 6.1.0-09652-g59fe41b5255f #148
+  Call Trace:
+  <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x100/0x178 lib/dump_stack.c:106
+  panic+0x2c4/0x60f kernel/panic.c:275
+  do_exit.cold+0x63/0xe4 kernel/exit.c:789
+  do_group_exit+0xd4/0x2a0 kernel/exit.c:950
+  get_signal+0x2460/0x2600 kernel/signal.c:2858
+  arch_do_signal_or_restart+0x78/0x5d0 arch/x86/kernel/signal.c:306
+  exit_to_user_mode_loop kernel/entry/common.c:168 [inline]
+  exit_to_user_mode_prepare+0x15f/0x250 kernel/entry/common.c:203
+  __syscall_exit_to_user_mode_work kernel/entry/common.c:285 [inline]
+  syscall_exit_to_user_mode+0x1d/0x50 kernel/entry/common.c:296
+  do_syscall_64+0x44/0xb0 arch/x86/entry/common.c:86
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+So skip task with pid=1 in bpf_send_signal_common() to avoid the panic.
+
+  [1] https://lore.kernel.org/bpf/20221222043507.33037-1-sunhao.th@gmail.com
+
+Signed-off-by: Hao Sun <sunhao.th@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/bpf/20230106084838.12690-1-sunhao.th@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 2 ++
- 1 file changed, 2 insertions(+)
+ kernel/trace/bpf_trace.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index a8ff4c9508b7..11842497b226 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -783,6 +783,8 @@ static int do_xfer(const struct scmi_protocol_handle *ph,
- 			      xfer->hdr.protocol_id, xfer->hdr.seq,
- 			      xfer->hdr.poll_completion);
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index c289010b0964..4daf1e044556 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -793,6 +793,9 @@ static int bpf_send_signal_common(u32 sig, enum pid_type type)
+ 		return -EPERM;
+ 	if (unlikely(!nmi_uaccess_okay()))
+ 		return -EPERM;
++	/* Task should not be pid=1 to avoid kernel panic. */
++	if (unlikely(is_global_init(current)))
++		return -EPERM;
  
-+	/* Clear any stale status */
-+	xfer->hdr.status = SCMI_SUCCESS;
- 	xfer->state = SCMI_XFER_SENT_OK;
- 	/*
- 	 * Even though spinlocking is not needed here since no race is possible
+ 	if (irqs_disabled()) {
+ 		/* Do an early check on signal validity. Otherwise,
 -- 
 2.39.0
 
