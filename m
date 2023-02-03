@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB32F1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:14:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5331AC433D2;
-	Fri,  3 Feb 2023 10:14:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E8A971FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:15:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C6F0C433EF;
+	Fri,  3 Feb 2023 10:15:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419299;
-	bh=QsKsbBGiRqVtLWs+WkLHLaGbKXKHzpxMZzMwdkHnCaE=;
+	s=korg; t=1675419302;
+	bh=7XpHiww4oRNskhgKyhp0bZboDML/MPxINlsbuHs4678=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=sfb11ODLQJvakpzSHn61M2wqsi3+HSYusaOyJU1T1Ra3bjtth7IOPefKvEHVmXFSq
-	 0nwTPiIKvjF+GEI73wUp8A8OBJja3ILLzZKPxyQEIKr7LLMhA505ZESpitatb3AZsf
-	 RteZyKqCE1EAwgiEwPFeCL6nWbQs7OLFxpwBtAyU=
+	b=GeJnEr9Qbz773A+0VNpISlx1H8AGUSCe/tn399Rt8TXop2Boj/lWdrcLOpVGNYfTX
+	 7BQBzU1bNRwV/IVG8dUC/Y7PMYHIg8jiMjwqRBH7rudYm8Ughosl0pBJR9+Hc0JksY
+	 u0ZktCXRKpTlS541URZzuO5j+jqulAuOF0WEzVUQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ian Abbott <abbotti@mev.co.uk>
-Subject: [PATCH 4.14 22/62] comedi: adv_pci1760: Fix PWM instruction handling
-Date: Fri,  3 Feb 2023 11:12:18 +0100
-Message-Id: <20230203101013.974210835@linuxfoundation.org>
+	Dongliang Mu <mudongliangabcd@gmail.com>,
+	Jan Kara <jack@suse.cz>,
+	Fedor Pchelkin <pchelkin@ispras.ru>
+Subject: [PATCH 4.14 23/62] fs: reiserfs: remove useless new_opts in reiserfs_remount
+Date: Fri,  3 Feb 2023 11:12:19 +0100
+Message-Id: <20230203101014.018723479@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -33,48 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ian Abbott <abbotti@mev.co.uk>
+From: Dongliang Mu <mudongliangabcd@gmail.com>
 
-commit 2efb6edd52dc50273f5e68ad863dd1b1fb2f2d1c upstream.
+commit 81dedaf10c20959bdf5624f9783f408df26ba7a4 upstream.
 
-(Actually, this is fixing the "Read the Current Status" command sent to
-the device's outgoing mailbox, but it is only currently used for the PWM
-instructions.)
+Since the commit c3d98ea08291 ("VFS: Don't use save/replace_mount_options
+if not using generic_show_options") eliminates replace_mount_options
+in reiserfs_remount, but does not handle the allocated new_opts,
+it will cause memory leak in the reiserfs_remount.
 
-The PCI-1760 is operated mostly by sending commands to a set of Outgoing
-Mailbox registers, waiting for the command to complete, and reading the
-result from the Incoming Mailbox registers.  One of these commands is
-the "Read the Current Status" command.  The number of this command is
-0x07 (see the User's Manual for the PCI-1760 at
-<https://advdownload.advantech.com/productfile/Downloadfile2/1-11P6653/PCI-1760.pdf>.
-The `PCI1760_CMD_GET_STATUS` macro defined in the driver should expand
-to this command number 0x07, but unfortunately it currently expands to
-0x03.  (Command number 0x03 is not defined in the User's Manual.)
-Correct the definition of the `PCI1760_CMD_GET_STATUS` macro to fix it.
+Because new_opts is useless in reiserfs_mount, so we fix this bug by
+removing the useless new_opts in reiserfs_remount.
 
-This is used by all the PWM subdevice related instructions handled by
-`pci1760_pwm_insn_config()` which are probably all broken.  The effect
-of sending the undefined command number 0x03 is not known.
-
-Fixes: 14b93bb6bbf0 ("staging: comedi: adv_pci_dio: separate out PCI-1760 support")
-Cc: <stable@vger.kernel.org> # v4.5+
-Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
-Link: https://lore.kernel.org/r/20230103143754.17564-1-abbotti@mev.co.uk
+Fixes: c3d98ea08291 ("VFS: Don't use save/replace_mount_options if not using generic_show_options")
+Link: https://lore.kernel.org/r/20211027143445.4156459-1-mudongliangabcd@gmail.com
+Signed-off-by: Dongliang Mu <mudongliangabcd@gmail.com>
+Signed-off-by: Jan Kara <jack@suse.cz>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/staging/comedi/drivers/adv_pci1760.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/reiserfs/super.c |    6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/drivers/staging/comedi/drivers/adv_pci1760.c
-+++ b/drivers/staging/comedi/drivers/adv_pci1760.c
-@@ -68,7 +68,7 @@
- #define PCI1760_CMD_CLR_IMB2		0x00	/* Clears IMB2 */
- #define PCI1760_CMD_SET_DO		0x01	/* Set output state */
- #define PCI1760_CMD_GET_DO		0x02	/* Read output status */
--#define PCI1760_CMD_GET_STATUS		0x03	/* Read current status */
-+#define PCI1760_CMD_GET_STATUS		0x07	/* Read current status */
- #define PCI1760_CMD_GET_FW_VER		0x0e	/* Read firware version */
- #define PCI1760_CMD_GET_HW_VER		0x0f	/* Read hardware version */
- #define PCI1760_CMD_SET_PWM_HI(x)	(0x10 + (x) * 2) /* Set "hi" period */
+--- a/fs/reiserfs/super.c
++++ b/fs/reiserfs/super.c
+@@ -1443,7 +1443,6 @@ static int reiserfs_remount(struct super
+ 	unsigned long safe_mask = 0;
+ 	unsigned int commit_max_age = (unsigned int)-1;
+ 	struct reiserfs_journal *journal = SB_JOURNAL(s);
+-	char *new_opts;
+ 	int err;
+ 	char *qf_names[REISERFS_MAXQUOTAS];
+ 	unsigned int qfmt = 0;
+@@ -1451,10 +1450,6 @@ static int reiserfs_remount(struct super
+ 	int i;
+ #endif
+ 
+-	new_opts = kstrdup(arg, GFP_KERNEL);
+-	if (arg && !new_opts)
+-		return -ENOMEM;
+-
+ 	sync_filesystem(s);
+ 	reiserfs_write_lock(s);
+ 
+@@ -1605,7 +1600,6 @@ out_ok_unlocked:
+ out_err_unlock:
+ 	reiserfs_write_unlock(s);
+ out_err:
+-	kfree(new_opts);
+ 	return err;
+ }
+ 
 
 
