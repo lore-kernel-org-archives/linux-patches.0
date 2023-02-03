@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B55B1FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:29:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC0E3C4339B;
-	Fri,  3 Feb 2023 10:29:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D6191FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:29:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C659FC433D2;
+	Fri,  3 Feb 2023 10:29:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420195;
-	bh=uCIiHQzpCzLj7w5EfDpGVIqc92qbFsqM5jiyi3oFMOY=;
+	s=korg; t=1675420198;
+	bh=6IPvLjmhgSXxnwws/KoW+dUYQVKEQRL1CCrrjuWAOiE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vpQ7pwsOq2m2mfJ4nExgTlcCWTIhxh05m7DWwEKvOjqJtzF7tLt5bwLuamxn7fcEz
-	 5LRHwkadT9YwacLwZEnW0dep0G9Et/4UgdQ4Qgb3EKtkEcGFeoza+KF44oNYVK93UB
-	 1NMH22AhhxK1RkE51WqrnwuoeqA7soOhPIK6bZx8=
+	b=CGF8BZU+ZoPHJ9vbtHwCvfv4F9a6ZT02yawjzuDoGtWhVeMk8khrIfX+tmx6zNMOs
+	 yWJu/X7uaQxgCAm2Gq/v56GSKezBC9stBJr73rBzHIZoJrWiFZHaV8dznsQITDrnXT
+	 YC8udo3g+WLbq/FlJTNO4r9sw6LPjt7f25Jmh+Kw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Sun <sunhao.th@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Stanislav Fomichev <sdf@google.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 111/134] bpf: Skip task with pid=1 in send_signal_common()
-Date: Fri,  3 Feb 2023 11:13:36 +0100
-Message-Id: <20230203101028.820843310@linuxfoundation.org>
+Subject: [PATCH 5.4 112/134] blk-cgroup: fix missing pd_online_fn() while activating policy
+Date: Fri,  3 Feb 2023 11:13:37 +0100
+Message-Id: <20230203101028.869720807@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -36,59 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hao Sun <sunhao.th@gmail.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit a3d81bc1eaef48e34dd0b9b48eefed9e02a06451 ]
+[ Upstream commit e3ff8887e7db757360f97634e0d6f4b8e27a8c46 ]
 
-The following kernel panic can be triggered when a task with pid=1 attaches
-a prog that attempts to send killing signal to itself, also see [1] for more
-details:
+If the policy defines pd_online_fn(), it should be called after
+pd_init_fn(), like blkg_create().
 
-  Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
-  CPU: 3 PID: 1 Comm: systemd Not tainted 6.1.0-09652-g59fe41b5255f #148
-  Call Trace:
-  <TASK>
-  __dump_stack lib/dump_stack.c:88 [inline]
-  dump_stack_lvl+0x100/0x178 lib/dump_stack.c:106
-  panic+0x2c4/0x60f kernel/panic.c:275
-  do_exit.cold+0x63/0xe4 kernel/exit.c:789
-  do_group_exit+0xd4/0x2a0 kernel/exit.c:950
-  get_signal+0x2460/0x2600 kernel/signal.c:2858
-  arch_do_signal_or_restart+0x78/0x5d0 arch/x86/kernel/signal.c:306
-  exit_to_user_mode_loop kernel/entry/common.c:168 [inline]
-  exit_to_user_mode_prepare+0x15f/0x250 kernel/entry/common.c:203
-  __syscall_exit_to_user_mode_work kernel/entry/common.c:285 [inline]
-  syscall_exit_to_user_mode+0x1d/0x50 kernel/entry/common.c:296
-  do_syscall_64+0x44/0xb0 arch/x86/entry/common.c:86
-  entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-So skip task with pid=1 in bpf_send_signal_common() to avoid the panic.
-
-  [1] https://lore.kernel.org/bpf/20221222043507.33037-1-sunhao.th@gmail.com
-
-Signed-off-by: Hao Sun <sunhao.th@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Stanislav Fomichev <sdf@google.com>
-Link: https://lore.kernel.org/bpf/20230106084838.12690-1-sunhao.th@gmail.com
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230103112833.2013432-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 3 +++
- 1 file changed, 3 insertions(+)
+ block/blk-cgroup.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index 4d9f81802911..1e1345cd21b4 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -649,6 +649,9 @@ BPF_CALL_1(bpf_send_signal, u32, sig)
- 		return -EPERM;
- 	if (unlikely(!nmi_uaccess_okay()))
- 		return -EPERM;
-+	/* Task should not be pid=1 to avoid kernel panic. */
-+	if (unlikely(is_global_init(current)))
-+		return -EPERM;
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index dde8d0acfb34..cd085a0e5e4a 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -1445,6 +1445,10 @@ int blkcg_activate_policy(struct request_queue *q,
+ 		list_for_each_entry_reverse(blkg, &q->blkg_list, q_node)
+ 			pol->pd_init_fn(blkg->pd[pol->plid]);
  
- 	if (irqs_disabled()) {
- 		/* Do an early check on signal validity. Otherwise,
++	if (pol->pd_online_fn)
++		list_for_each_entry_reverse(blkg, &q->blkg_list, q_node)
++			pol->pd_online_fn(blkg->pd[pol->plid]);
++
+ 	__set_bit(pol->plid, q->blkcg_pols);
+ 	ret = 0;
+ 
 -- 
 2.39.0
 
