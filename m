@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9B2B1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4457DC433EF;
-	Fri,  3 Feb 2023 10:23:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D55CF1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3B8A5C433D2;
+	Fri,  3 Feb 2023 10:23:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419825;
-	bh=qk5tTsGIO8023rVFYdm44Dfw3q3U3Zcp9VWIK+8jgcs=;
+	s=korg; t=1675419828;
+	bh=aobMfV4KXpO1WlPmw8nZ4eDsSrPy5wwkn9f3yXwFjhM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R/1jwv9Q0kMq8C3qUE2pFeko0dO0G7ozjSP/ME3uW/+U60xvFAT5u064rdSKqadYM
-	 F2clLV271seB30/9anaFQHe9K0GXiwjS8auvn8eMTDjHbH/VlZepl4/u7pFeMGV7/X
-	 yOA+WSEdasewBX0M93jAVm85ARSgwkLZX3/M5NNY=
+	b=dL1VVljVu6mA98vXUUpIRNMxHNLES7hcZ7AaQ4vjqtZikwz3bnvhV8I8+gqyVLJMs
+	 /B1bt59waqSP1ur0Or0Z1nht+xzysrwAvpwbC3hd5ibjqZ2DpAX13PcQlneHPfnP9d
+	 xLcoXVopgZ9hbb92svj7JRDHT25PScuBRY32H7n0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 11/20] cifs: fix return of uninitialized rc in dfs_cache_update_tgthint()
-Date: Fri,  3 Feb 2023 11:13:38 +0100
-Message-Id: <20230203101008.486859284@linuxfoundation.org>
+Subject: [PATCH 5.15 02/20] ARM: dts: vf610: Fix pca9548 i2c-mux node names
+Date: Fri,  3 Feb 2023 11:13:29 +0100
+Message-Id: <20230203101008.110802891@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101007.985835823@linuxfoundation.org>
 References: <20230203101007.985835823@linuxfoundation.org>
@@ -36,40 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@cjr.nz>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit d6a49e8c4ca4d399ed65ac219585187fc8c2e2b1 ]
+[ Upstream commit 42825d1f269355d63554ab3c3762611e4d8053e9 ]
 
-Fix this by initializing rc to 0 as cache_refresh_path() would not set
-it in case of success.
+"make dtbs_check":
 
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/all/202301190004.bEHvbKG6-lkp@intel.com/
-Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+    arch/arm/boot/dts/vf610-zii-dev-rev-b.dtb: tca9548@70: $nodename:0: 'tca9548@70' does not match '^(i2c-?)?mux'
+	    From schema: Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
+    arch/arm/boot/dts/vf610-zii-dev-rev-b.dtb: tca9548@70: Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'i2c@0', 'i2c@1', 'i2c@2', 'i2c@3', 'i2c@4' were unexpected)
+	    From schema: /scratch/geert/linux/linux-renesas/Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
+    ...
+
+Fix this by renaming PCA9548 nodes to "i2c-mux", to match the I2C bus
+multiplexer/switch DT bindings and the Generic Names Recommendation in
+the Devicetree Specification.
+
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/dfs_cache.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm/boot/dts/vf610-zii-dev-rev-b.dts | 2 +-
+ arch/arm/boot/dts/vf610-zii-dev-rev-c.dts | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/cifs/dfs_cache.c b/fs/cifs/dfs_cache.c
-index 8c98fa507768..1864bdadf3dd 100644
---- a/fs/cifs/dfs_cache.c
-+++ b/fs/cifs/dfs_cache.c
-@@ -1050,10 +1050,10 @@ int dfs_cache_update_tgthint(const unsigned int xid, struct cifs_ses *ses,
- 			     const struct nls_table *cp, int remap, const char *path,
- 			     const struct dfs_cache_tgt_iterator *it)
- {
--	int rc;
--	const char *npath;
--	struct cache_entry *ce;
- 	struct cache_dfs_tgt *t;
-+	struct cache_entry *ce;
-+	const char *npath;
-+	int rc = 0;
+diff --git a/arch/arm/boot/dts/vf610-zii-dev-rev-b.dts b/arch/arm/boot/dts/vf610-zii-dev-rev-b.dts
+index 043ddd70372f..36d5299b2baa 100644
+--- a/arch/arm/boot/dts/vf610-zii-dev-rev-b.dts
++++ b/arch/arm/boot/dts/vf610-zii-dev-rev-b.dts
+@@ -343,7 +343,7 @@ gpio6: io-expander@22 {
+ };
  
- 	npath = dfs_cache_canonical_path(path, cp, remap);
- 	if (IS_ERR(npath))
+ &i2c2 {
+-	tca9548@70 {
++	i2c-mux@70 {
+ 		compatible = "nxp,pca9548";
+ 		pinctrl-0 = <&pinctrl_i2c_mux_reset>;
+ 		pinctrl-names = "default";
+diff --git a/arch/arm/boot/dts/vf610-zii-dev-rev-c.dts b/arch/arm/boot/dts/vf610-zii-dev-rev-c.dts
+index de79dcfd32e6..ba2001f37315 100644
+--- a/arch/arm/boot/dts/vf610-zii-dev-rev-c.dts
++++ b/arch/arm/boot/dts/vf610-zii-dev-rev-c.dts
+@@ -340,7 +340,7 @@ eeprom@50 {
+ };
+ 
+ &i2c2 {
+-	tca9548@70 {
++	i2c-mux@70 {
+ 		compatible = "nxp,pca9548";
+ 		pinctrl-0 = <&pinctrl_i2c_mux_reset>;
+ 		pinctrl-names = "default";
 -- 
 2.39.0
 
