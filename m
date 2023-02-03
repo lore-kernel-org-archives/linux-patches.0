@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C9D1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:20:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CBEEC433D2;
-	Fri,  3 Feb 2023 10:20:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B3AD1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:20:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70003C433D2;
+	Fri,  3 Feb 2023 10:20:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419606;
-	bh=JvCrWRmie9YuKDVYlWJjVi2HVwDz/MZLtyW+7Vh3JQ0=;
+	s=korg; t=1675419609;
+	bh=3gN4Ub4grtZnQaSSRAejTV95S513QlFlsiZh4LY97go=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mv1jgdBrGwyud+A2pqnT7c3w9W6Xs+soofw+NGlK1wHhpiocVjRxsBOyzatgJD5/E
-	 Vi7RQn2GYsV5Dso3umlYJ1yzqxypD1UXK9GQptdJqdN8+U8+In5tjU1YniMUWZOFLG
-	 3h8W1Y4UapmR4T9VD2JPo9r3BvXgBWz034pNWeFs=
+	b=VprRW15ZAyTYxEK8Y+1TweQBKiGoWDIZpZPp+VavDsjf2B4pVy/d+BBmkLr08Y9CM
+	 orp8Y2Hm4u2JVvHIBPHMJqUEhUKdC9HgrraYH0SI5rk4qd0qybWA4dVJaSoABxaZmj
+	 2uD9flts6fMGDEY5O6zIqCZHCha7Foj8vNecSAVI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jani Nikula <jani.nikula@intel.com>,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Daniel Vetter <daniel.vetter@ffwll.ch>,
-	Dave Airlie <airlied@redhat.com>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 4.19 59/80] drm/i915/display: fix compiler warning about array overrun
-Date: Fri,  3 Feb 2023 11:12:53 +0100
-Message-Id: <20230203101017.739800407@linuxfoundation.org>
+	Mikulas Patocka <mpatocka@redhat.com>,
+	Ingo Molnar <mingo@kernel.org>,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 4.19 60/80] x86/asm: Fix an assembler warning with current binutils
+Date: Fri,  3 Feb 2023 11:12:54 +0100
+Message-Id: <20230203101017.782827596@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
 References: <20230203101015.263854890@linuxfoundation.org>
@@ -39,69 +35,29 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Linus Torvalds <torvalds@linux-foundation.org>
+From: Mikulas Patocka <mpatocka@redhat.com>
 
-commit fec4d42724a1bf3dcba52307e55375fdb967b852 upstream.
+commit 55d235361fccef573990dfa5724ab453866e7816 upstream.
 
-intel_dp_check_mst_status() uses a 14-byte array to read the DPRX Event
-Status Indicator data, but then passes that buffer at offset 10 off as
-an argument to drm_dp_channel_eq_ok().
+Fix a warning: "found `movsd'; assuming `movsl' was meant"
 
-End result: there are only 4 bytes remaining of the buffer, yet
-drm_dp_channel_eq_ok() wants a 6-byte buffer.  gcc-11 correctly warns
-about this case:
-
-  drivers/gpu/drm/i915/display/intel_dp.c: In function ‘intel_dp_check_mst_status’:
-  drivers/gpu/drm/i915/display/intel_dp.c:3491:22: warning: ‘drm_dp_channel_eq_ok’ reading 6 bytes from a region of size 4 [-Wstringop-overread]
-   3491 |                     !drm_dp_channel_eq_ok(&esi[10], intel_dp->lane_count)) {
-        |                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  drivers/gpu/drm/i915/display/intel_dp.c:3491:22: note: referencing argument 1 of type ‘const u8 *’ {aka ‘const unsigned char *’}
-  In file included from drivers/gpu/drm/i915/display/intel_dp.c:38:
-  include/drm/drm_dp_helper.h:1466:6: note: in a call to function ‘drm_dp_channel_eq_ok’
-   1466 | bool drm_dp_channel_eq_ok(const u8 link_status[DP_LINK_STATUS_SIZE],
-        |      ^~~~~~~~~~~~~~~~~~~~
-       6:14 elapsed
-
-This commit just extends the original array by 2 zero-initialized bytes,
-avoiding the warning.
-
-There may be some underlying bug in here that caused this confusion, but
-this is at least no worse than the existing situation that could use
-random data off the stack.
-
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc: Dave Airlie <airlied@redhat.com>
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Mikulas Patocka <mpatocka@redhat.com>
+Signed-off-by: Ingo Molnar <mingo@kernel.org>
+Cc: linux-kernel@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/intel_dp.c |   13 ++++++++++++-
- 1 file changed, 12 insertions(+), 1 deletion(-)
+ arch/x86/lib/iomap_copy_64.S |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/intel_dp.c
-+++ b/drivers/gpu/drm/i915/intel_dp.c
-@@ -4116,7 +4116,18 @@ intel_dp_check_mst_status(struct intel_d
- 	bool bret;
- 
- 	if (intel_dp->is_mst) {
--		u8 esi[DP_DPRX_ESI_LEN] = { 0 };
-+		/*
-+		 * The +2 is because DP_DPRX_ESI_LEN is 14, but we then
-+		 * pass in "esi+10" to drm_dp_channel_eq_ok(), which
-+		 * takes a 6-byte array. So we actually need 16 bytes
-+		 * here.
-+		 *
-+		 * Somebody who knows what the limits actually are
-+		 * should check this, but for now this is at least
-+		 * harmless and avoids a valid compiler warning about
-+		 * using more of the array than we have allocated.
-+		 */
-+		u8 esi[DP_DPRX_ESI_LEN+2] = { 0 };
- 		int ret = 0;
- 		int retry;
- 		bool handled;
+--- a/arch/x86/lib/iomap_copy_64.S
++++ b/arch/x86/lib/iomap_copy_64.S
+@@ -22,6 +22,6 @@
+  */
+ ENTRY(__iowrite32_copy)
+ 	movl %edx,%ecx
+-	rep movsd
++	rep movsl
+ 	ret
+ ENDPROC(__iowrite32_copy)
 
 
