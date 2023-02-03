@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C34231FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:24:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26619C433D2;
-	Fri,  3 Feb 2023 10:24:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B7A111FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:25:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F9FBC433EF;
+	Fri,  3 Feb 2023 10:24:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419897;
-	bh=aNU1B65HKTeCEfVyCNfC70O/XZudIRAfxi046krNWEk=;
+	s=korg; t=1675419900;
+	bh=rEjltXzBDvwaMWv21N8qvZ8HJRUy9ujzC+NX4MYX0FY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gejDrsPjcgyi0JBiY48Yomzoi4i+Y73hazUDqHDiKZOGGNCpycDZem5Q4Y8eUHgrw
-	 k1wY4PcWPJKhvEgvwyoeAyyjZ1iGaWjxSOBodOxp2D5Hs2TzB/a3AmWd4WfcJhgw1z
-	 Jem2ncvrjq1sMQKZ0Djbztd1eQthwSzNhgOKkwkU=
+	b=oxD8hO5mF+ztE5hCoqJFOmdljU2mRXtrUr9yqcaY98qHmRaIskYYdjqh0jaXrlMxR
+	 92r+7dvDslXhe+xVRt5V1afvBJjiWSnLIy1d8Z/4piSI0FBev0Ks84r6ni62zYNOqa
+	 ZSg0jSgJ+JFkUi8QGEqHCR9HTHcHspzEzlrjHC/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
 	Leon Romanovsky <leon@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 014/134] IB/hfi1: Reject a zero-length user expected buffer
-Date: Fri,  3 Feb 2023 11:11:59 +0100
-Message-Id: <20230203101024.504443222@linuxfoundation.org>
+Subject: [PATCH 5.4 015/134] IB/hfi1: Reserve user expected TIDs
+Date: Fri,  3 Feb 2023 11:12:00 +0100
+Message-Id: <20230203101024.552820844@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -38,35 +38,59 @@ Content-Transfer-Encoding: 8bit
 
 From: Dean Luick <dean.luick@cornelisnetworks.com>
 
-[ Upstream commit 0a0a6e80472c98947d73c3d13bcd7d101895f55d ]
+[ Upstream commit ecf91551cdd2925ed6d9a9d99074fa5f67b90596 ]
 
-A zero length user buffer makes no sense and the code
-does not handle it correctly.  Instead, reject a
-zero length as invalid.
+To avoid a race, reserve the number of user expected
+TIDs before setup.
 
-Fixes: 97736f36dbeb ("IB/hfi1: Validate page aligned for a given virtual addres")
+Fixes: 7e7a436ecb6e ("staging/hfi1: Add TID entry program function body")
 Signed-off-by: Dean Luick <dean.luick@cornelisnetworks.com>
 Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
-Link: https://lore.kernel.org/r/167328547120.1472310.6362802432127399257.stgit@awfm-02.cornelisnetworks.com
+Link: https://lore.kernel.org/r/167328547636.1472310.7419712824785353905.stgit@awfm-02.cornelisnetworks.com
 Signed-off-by: Leon Romanovsky <leon@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/hfi1/user_exp_rcv.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/infiniband/hw/hfi1/user_exp_rcv.c | 14 ++++++--------
+ 1 file changed, 6 insertions(+), 8 deletions(-)
 
 diff --git a/drivers/infiniband/hw/hfi1/user_exp_rcv.c b/drivers/infiniband/hw/hfi1/user_exp_rcv.c
-index 4d732353379d..28f1b3c37a4f 100644
+index 28f1b3c37a4f..7623cb61ec4c 100644
 --- a/drivers/infiniband/hw/hfi1/user_exp_rcv.c
 +++ b/drivers/infiniband/hw/hfi1/user_exp_rcv.c
-@@ -325,6 +325,8 @@ int hfi1_user_exp_rcv_setup(struct hfi1_filedata *fd,
+@@ -351,16 +351,13 @@ int hfi1_user_exp_rcv_setup(struct hfi1_filedata *fd,
+ 	/* Find sets of physically contiguous pages */
+ 	tidbuf->n_psets = find_phys_blocks(tidbuf, pinned);
  
- 	if (!PAGE_ALIGNED(tinfo->vaddr))
- 		return -EINVAL;
-+	if (tinfo->length == 0)
-+		return -EINVAL;
+-	/*
+-	 * We don't need to access this under a lock since tid_used is per
+-	 * process and the same process cannot be in hfi1_user_exp_rcv_clear()
+-	 * and hfi1_user_exp_rcv_setup() at the same time.
+-	 */
++	/* Reserve the number of expected tids to be used. */
+ 	spin_lock(&fd->tid_lock);
+ 	if (fd->tid_used + tidbuf->n_psets > fd->tid_limit)
+ 		pageset_count = fd->tid_limit - fd->tid_used;
+ 	else
+ 		pageset_count = tidbuf->n_psets;
++	fd->tid_used += pageset_count;
+ 	spin_unlock(&fd->tid_lock);
  
- 	tidbuf = kzalloc(sizeof(*tidbuf), GFP_KERNEL);
- 	if (!tidbuf)
+ 	if (!pageset_count)
+@@ -469,10 +466,11 @@ int hfi1_user_exp_rcv_setup(struct hfi1_filedata *fd,
+ nomem:
+ 	hfi1_cdbg(TID, "total mapped: tidpairs:%u pages:%u (%d)", tididx,
+ 		  mapped_pages, ret);
++	/* adjust reserved tid_used to actual count */
++	spin_lock(&fd->tid_lock);
++	fd->tid_used -= pageset_count - tididx;
++	spin_unlock(&fd->tid_lock);
+ 	if (tididx) {
+-		spin_lock(&fd->tid_lock);
+-		fd->tid_used += tididx;
+-		spin_unlock(&fd->tid_lock);
+ 		tinfo->tidcnt = tididx;
+ 		tinfo->length = mapped_pages * PAGE_SIZE;
+ 
 -- 
 2.39.0
 
