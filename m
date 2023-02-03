@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606E51FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:22:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FBB6C4339C;
-	Fri,  3 Feb 2023 10:22:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5644A1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:22:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1C3BC433EF;
+	Fri,  3 Feb 2023 10:22:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419731;
-	bh=j/A8cqEJ0w7kCi9WPe+IrLHJ4UgBxMMSuHyLaMcGZNM=;
+	s=korg; t=1675419734;
+	bh=H0Hp6I3Q8cOz+PUapxlRXUDRk2kBz4qkaYnpLHVfn9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bzc9+1dQfVUocz/AvACqGjlEzrmN5fK9q0xzDAl2Sart6sXty3KT5rYRTTSklT6Gd
-	 s4OrVyP1hg6njBiW7ZJGwcMQ9BhNpfyLrZZQ64FGN2pkUjdSKaAtLvdII+rkob4I5v
-	 Xffq54qnv2fdiBHPcOF5wxxjMUMj4MSa95xmiquc=
+	b=nxaqbjBWzr6tOyAuToL8d9o8d2zHM4yFexZ/D9EMCOcV4qHagnaDzP3ExK86DtY6z
+	 koqr6EB5qKzxqyfmGd3NiTlpQYLSphfrkKdUXM+jxYZzKpwh/kYE4U5a4/Fu/4ifFD
+	 uZkr7Wx4lNG2eXoItDWcoN30UBAjZ5sgHgTQNjrw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mark Waddoups <mwaddoups@gmail.com>,
-	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+	Roderick Colenbrander <roderick.colenbrander@sony.com>,
 	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 18/28] HID: uclogic: Add support for XP-PEN Deco 01 V2
-Date: Fri,  3 Feb 2023 11:13:06 +0100
-Message-Id: <20230203101010.747653988@linuxfoundation.org>
+Subject: [PATCH 6.1 19/28] HID: playstation: sanity check DualSense calibration data.
+Date: Fri,  3 Feb 2023 11:13:07 +0100
+Message-Id: <20230203101010.786787179@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
 References: <20230203101009.946745030@linuxfoundation.org>
@@ -36,64 +35,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: José Expósito <jose.exposito89@gmail.com>
+From: Roderick Colenbrander <roderick@gaikai.com>
 
-[ Upstream commit febb2c0d7c69c0396aa32d5ab425a4163473961a ]
+[ Upstream commit ccf1e1626d37745d0a697db67407beec9ae9d4b8 ]
 
-The XP-PEN Deco 01 V2 is a UGEE v2 device with a frame with 8 buttons.
-Its pen has 2 buttons, supports tilt and pressure.
+Make sure calibration values are defined to prevent potential kernel
+crashes. This fixes a hypothetical issue for virtual or clone devices
+inspired by a similar fix for DS4.
 
-Add its ID in order to support the device.
-
-Link: https://gitlab.freedesktop.org/libinput/libinput/-/issues/839
-Tested-by: Mark Waddoups <mwaddoups@gmail.com>
-Signed-off-by: José Expósito <jose.exposito89@gmail.com>
+Signed-off-by: Roderick Colenbrander <roderick.colenbrander@sony.com>
 Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h            | 1 +
- drivers/hid/hid-uclogic-core.c   | 2 ++
- drivers/hid/hid-uclogic-params.c | 2 ++
- 3 files changed, 5 insertions(+)
+ drivers/hid/hid-playstation.c | 32 ++++++++++++++++++++++++++++++++
+ 1 file changed, 32 insertions(+)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index c3735848ed5d..0f8c11842a3a 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -1294,6 +1294,7 @@
- #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_G540	0x0075
- #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_G640	0x0094
- #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO01	0x0042
-+#define USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO01_V2	0x0905
- #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_L	0x0935
- #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_PRO_S	0x0909
- #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_STAR06	0x0078
-diff --git a/drivers/hid/hid-uclogic-core.c b/drivers/hid/hid-uclogic-core.c
-index 7fa6fe04f1b2..cfbbc39807a6 100644
---- a/drivers/hid/hid-uclogic-core.c
-+++ b/drivers/hid/hid-uclogic-core.c
-@@ -525,6 +525,8 @@ static const struct hid_device_id uclogic_devices[] = {
- 				USB_DEVICE_ID_UGEE_XPPEN_TABLET_G640) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE,
- 				USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO01) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE,
-+				USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO01_V2) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE,
- 				USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_L) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE,
-diff --git a/drivers/hid/hid-uclogic-params.c b/drivers/hid/hid-uclogic-params.c
-index cd1233d7e253..3c5eea3df328 100644
---- a/drivers/hid/hid-uclogic-params.c
-+++ b/drivers/hid/hid-uclogic-params.c
-@@ -1655,6 +1655,8 @@ int uclogic_params_init(struct uclogic_params *params,
- 		break;
- 	case VID_PID(USB_VENDOR_ID_UGEE,
- 		     USB_DEVICE_ID_UGEE_PARBLO_A610_PRO):
-+	case VID_PID(USB_VENDOR_ID_UGEE,
-+		     USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO01_V2):
- 	case VID_PID(USB_VENDOR_ID_UGEE,
- 		     USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_L):
- 	case VID_PID(USB_VENDOR_ID_UGEE,
+diff --git a/drivers/hid/hid-playstation.c b/drivers/hid/hid-playstation.c
+index 0b58763bfd30..2228f6e4ba23 100644
+--- a/drivers/hid/hid-playstation.c
++++ b/drivers/hid/hid-playstation.c
+@@ -712,6 +712,7 @@ ATTRIBUTE_GROUPS(ps_device);
+ 
+ static int dualsense_get_calibration_data(struct dualsense *ds)
+ {
++	struct hid_device *hdev = ds->base.hdev;
+ 	short gyro_pitch_bias, gyro_pitch_plus, gyro_pitch_minus;
+ 	short gyro_yaw_bias, gyro_yaw_plus, gyro_yaw_minus;
+ 	short gyro_roll_bias, gyro_roll_plus, gyro_roll_minus;
+@@ -722,6 +723,7 @@ static int dualsense_get_calibration_data(struct dualsense *ds)
+ 	int speed_2x;
+ 	int range_2g;
+ 	int ret = 0;
++	int i;
+ 	uint8_t *buf;
+ 
+ 	buf = kzalloc(DS_FEATURE_REPORT_CALIBRATION_SIZE, GFP_KERNEL);
+@@ -773,6 +775,21 @@ static int dualsense_get_calibration_data(struct dualsense *ds)
+ 	ds->gyro_calib_data[2].sens_numer = speed_2x*DS_GYRO_RES_PER_DEG_S;
+ 	ds->gyro_calib_data[2].sens_denom = gyro_roll_plus - gyro_roll_minus;
+ 
++	/*
++	 * Sanity check gyro calibration data. This is needed to prevent crashes
++	 * during report handling of virtual, clone or broken devices not implementing
++	 * calibration data properly.
++	 */
++	for (i = 0; i < ARRAY_SIZE(ds->gyro_calib_data); i++) {
++		if (ds->gyro_calib_data[i].sens_denom == 0) {
++			hid_warn(hdev, "Invalid gyro calibration data for axis (%d), disabling calibration.",
++					ds->gyro_calib_data[i].abs_code);
++			ds->gyro_calib_data[i].bias = 0;
++			ds->gyro_calib_data[i].sens_numer = DS_GYRO_RANGE;
++			ds->gyro_calib_data[i].sens_denom = S16_MAX;
++		}
++	}
++
+ 	/*
+ 	 * Set accelerometer calibration and normalization parameters.
+ 	 * Data values will be normalized to 1/DS_ACC_RES_PER_G g.
+@@ -795,6 +812,21 @@ static int dualsense_get_calibration_data(struct dualsense *ds)
+ 	ds->accel_calib_data[2].sens_numer = 2*DS_ACC_RES_PER_G;
+ 	ds->accel_calib_data[2].sens_denom = range_2g;
+ 
++	/*
++	 * Sanity check accelerometer calibration data. This is needed to prevent crashes
++	 * during report handling of virtual, clone or broken devices not implementing calibration
++	 * data properly.
++	 */
++	for (i = 0; i < ARRAY_SIZE(ds->accel_calib_data); i++) {
++		if (ds->accel_calib_data[i].sens_denom == 0) {
++			hid_warn(hdev, "Invalid accelerometer calibration data for axis (%d), disabling calibration.",
++					ds->accel_calib_data[i].abs_code);
++			ds->accel_calib_data[i].bias = 0;
++			ds->accel_calib_data[i].sens_numer = DS_ACC_RANGE;
++			ds->accel_calib_data[i].sens_denom = S16_MAX;
++		}
++	}
++
+ err_free:
+ 	kfree(buf);
+ 	return ret;
 -- 
 2.39.0
 
