@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7455F1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:17:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2531C433EF;
-	Fri,  3 Feb 2023 10:17:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47ACF1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:17:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A0EDBC4339B;
+	Fri,  3 Feb 2023 10:17:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419454;
-	bh=IDD3NPbkIJAskQi11J6DF/FeRG5jQnqqKvx7zei3oj8=;
+	s=korg; t=1675419457;
+	bh=0YPwNPiOFEzX4+43YB82x9sDmQ4Vka+SLvGPPPgIAFs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uAnSJV3mQPx3a0YMux3yseWzZT3u+gv/L41HF8Judg2FoZ9AAVgPUXEjkkYg2dgHx
-	 Egnt85Zir1Njw7SCCCHbVadLj2T9UsNY9GVsuu/nQ0MHQKsEiunxEXKTLMBVto8xzD
-	 NwSzGXlJnXJxQ9iUjKH+gRGR9MjU48HPG0kvxPb0=
+	b=LoJnJBJ3fcsUJ98MFEw2f67hY0dga5C0tWPvjeOc73pk+7FqMOJ7wZ8GkhC89r6+s
+	 EoFl7dvs3AHV9OoHpuhhN48xLuIc0Z5I+jlcVHR2WdAYqzA5kCHaOj+C7tW1w6y+iq
+	 chVXmPGHQsUcZKzntVuDdIQFi1aVHOPzjMhO/Wtk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Miaoqian Lin <linmq006@gmail.com>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Andre Przywara <andre.przywara@arm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 03/80] HID: intel_ish-hid: Add check for ishtp_dma_tx_map
-Date: Fri,  3 Feb 2023 11:11:57 +0100
-Message-Id: <20230203101015.407499595@linuxfoundation.org>
+Subject: [PATCH 4.19 04/80] EDAC/highbank: Fix memory leak in highbank_mc_probe()
+Date: Fri,  3 Feb 2023 11:11:58 +0100
+Message-Id: <20230203101015.447558368@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
 References: <20230203101015.263854890@linuxfoundation.org>
@@ -36,51 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Miaoqian Lin <linmq006@gmail.com>
 
-[ Upstream commit b3d40c3ec3dc4ad78017de6c3a38979f57aaaab8 ]
+[ Upstream commit e7a293658c20a7945014570e1921bf7d25d68a36 ]
 
-As the kcalloc may return NULL pointer,
-it should be better to check the ishtp_dma_tx_map
-before use in order to avoid NULL pointer dereference.
+When devres_open_group() fails, it returns -ENOMEM without freeing memory
+allocated by edac_mc_alloc().
 
-Fixes: 3703f53b99e4 ("HID: intel_ish-hid: ISH Transport layer")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Call edac_mc_free() on the error handling path to avoid a memory leak.
+
+  [ bp: Massage commit message. ]
+
+Fixes: a1b01edb2745 ("edac: add support for Calxeda highbank memory controller")
+Signed-off-by: Miaoqian Lin <linmq006@gmail.com>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Reviewed-by: Andre Przywara <andre.przywara@arm.com>
+Link: https://lore.kernel.org/r/20221229054825.1361993-1-linmq006@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-ish-hid/ishtp/dma-if.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/edac/highbank_mc_edac.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/intel-ish-hid/ishtp/dma-if.c b/drivers/hid/intel-ish-hid/ishtp/dma-if.c
-index 2783f3666114..ff4419c8ed4f 100644
---- a/drivers/hid/intel-ish-hid/ishtp/dma-if.c
-+++ b/drivers/hid/intel-ish-hid/ishtp/dma-if.c
-@@ -113,6 +113,11 @@ void *ishtp_cl_get_dma_send_buf(struct ishtp_device *dev,
- 	int required_slots = (size / DMA_SLOT_SIZE)
- 		+ 1 * (size % DMA_SLOT_SIZE != 0);
+diff --git a/drivers/edac/highbank_mc_edac.c b/drivers/edac/highbank_mc_edac.c
+index 6092e61be605..bcf41601a977 100644
+--- a/drivers/edac/highbank_mc_edac.c
++++ b/drivers/edac/highbank_mc_edac.c
+@@ -185,8 +185,10 @@ static int highbank_mc_probe(struct platform_device *pdev)
+ 	drvdata = mci->pvt_info;
+ 	platform_set_drvdata(pdev, mci);
  
-+	if (!dev->ishtp_dma_tx_map) {
-+		dev_err(dev->devc, "Fail to allocate Tx map\n");
-+		return NULL;
+-	if (!devres_open_group(&pdev->dev, NULL, GFP_KERNEL))
+-		return -ENOMEM;
++	if (!devres_open_group(&pdev->dev, NULL, GFP_KERNEL)) {
++		res = -ENOMEM;
++		goto free;
 +	}
-+
- 	spin_lock_irqsave(&dev->ishtp_dma_tx_lock, flags);
- 	for (i = 0; i <= (dev->ishtp_dma_num_slots - required_slots); i++) {
- 		free = 1;
-@@ -159,6 +164,11 @@ void ishtp_cl_release_dma_acked_mem(struct ishtp_device *dev,
- 		return;
- 	}
  
-+	if (!dev->ishtp_dma_tx_map) {
-+		dev_err(dev->devc, "Fail to allocate Tx map\n");
-+		return;
-+	}
-+
- 	i = (msg_addr - dev->ishtp_host_dma_tx_buf) / DMA_SLOT_SIZE;
- 	spin_lock_irqsave(&dev->ishtp_dma_tx_lock, flags);
- 	for (j = 0; j < acked_slots; j++) {
+ 	r = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+ 	if (!r) {
+@@ -254,6 +256,7 @@ static int highbank_mc_probe(struct platform_device *pdev)
+ 	edac_mc_del_mc(&pdev->dev);
+ err:
+ 	devres_release_group(&pdev->dev, NULL);
++free:
+ 	edac_mc_free(mci);
+ 	return res;
+ }
 -- 
 2.39.0
 
