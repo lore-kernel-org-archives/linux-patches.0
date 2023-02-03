@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6948C1FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:29:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D114EC433EF;
-	Fri,  3 Feb 2023 10:29:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6EB5B1FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:29:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C965DC433D2;
+	Fri,  3 Feb 2023 10:29:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420183;
-	bh=PTAN08f624d61xpyE0rHVMlxXktCuUz+QiffyKAkUKo=;
+	s=korg; t=1675420186;
+	bh=V9xsyCE0w2FCpEv6FghycC4cTcqxdoSrnaMIQV27rJc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Loo5mYyE8BSiy7hyqbdm5bQ1utAo1bXa1GalQwp5WPQKzZr3/EiAAhOWx7hCIaiUS
-	 qas0sAsTMS94H1ObDuoo+F3PCAqrZIvgDsmbe859Zi/sOGWOzccy7CjM8SEJFOq77/
-	 lE3vVpx8qnTCrsZWKMFkfh6d7yjhekRbtg759GOY=
+	b=fWGsxs306ucmOqAqUrogXONj2sPmMWBsE/O5b3oYcV8XyFsVveAbiO+i8d/l68g8X
+	 V04kHS95JPkTmPeHk4mMEZ6IaAfAkpx9hqeKiBpB7LfKCuvufLfC2cdPn0L5WdwUUt
+	 PXDATRpFszWTPza9/Gei4Zk2INnLGOoYm3hetPjU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 5.4 108/134] clk: Fix pointer casting to prevent oops in devm_clk_release()
-Date: Fri,  3 Feb 2023 11:13:33 +0100
-Message-Id: <20230203101028.680984232@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 091/134] ipv4: prevent potential spectre v1 gadget in fib_metrics_match()
+Date: Fri,  3 Feb 2023 11:13:16 +0100
+Message-Id: <20230203101027.954206273@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -36,36 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 8b3d743fc9e2542822826890b482afabf0e7522a upstream.
+[ Upstream commit 5e9398a26a92fc402d82ce1f97cc67d832527da0 ]
 
-The release function is called with a pointer to the memory returned by
-devres_alloc(). I was confused about that by the code before the
-generalization that used a struct clk **ptr.
+if (!type)
+        continue;
+    if (type > RTAX_MAX)
+        return false;
+    ...
+    fi_val = fi->fib_metrics->metrics[type - 1];
 
-Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Fixes: abae8e57e49a ("clk: generalize devm_clk_get() a bit")
-Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
-Link: https://lore.kernel.org/r/20220620171815.114212-1-u.kleine-koenig@pengutronix.de
-Tested-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+@type being used as an array index, we need to prevent
+cpu speculation or risk leaking kernel memory content.
+
+Fixes: 5f9ae3d9e7e4 ("ipv4: do metrics match when looking up and deleting a route")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230120133140.3624204-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/clk-devres.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/fib_semantics.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/clk/clk-devres.c
-+++ b/drivers/clk/clk-devres.c
-@@ -11,7 +11,7 @@ struct devm_clk_state {
+diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
+index f45b9daf62cf..42a4ee192f8d 100644
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -30,6 +30,7 @@
+ #include <linux/slab.h>
+ #include <linux/netlink.h>
+ #include <linux/hash.h>
++#include <linux/nospec.h>
  
- static void devm_clk_release(struct device *dev, void *res)
- {
--	struct devm_clk_state *state = *(struct devm_clk_state **)res;
-+	struct devm_clk_state *state = res;
+ #include <net/arp.h>
+ #include <net/ip.h>
+@@ -1009,6 +1010,7 @@ bool fib_metrics_match(struct fib_config *cfg, struct fib_info *fi)
+ 		if (type > RTAX_MAX)
+ 			return false;
  
- 	if (state->exit)
- 		state->exit(state->clk);
++		type = array_index_nospec(type, RTAX_MAX + 1);
+ 		if (type == RTAX_CC_ALGO) {
+ 			char tmp[TCP_CA_NAME_MAX];
+ 			bool ecn_ca = false;
+-- 
+2.39.0
+
 
 
