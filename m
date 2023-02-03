@@ -1,36 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300CB1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:22:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7260AC433EF;
-	Fri,  3 Feb 2023 10:22:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 417BA1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:22:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9C09FC433EF;
+	Fri,  3 Feb 2023 10:22:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419770;
-	bh=FETfPiqHj8EbA+/SDiegA9TGbLbIiiwGqJ2y8TI9Ngc=;
+	s=korg; t=1675419773;
+	bh=+w4Mt7NQhz5wfTJKN9+gyiK/g8JApmAnN3joOItZmvw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bVqvwumapDHUdQJXyobibtT9r1fQrDHmKSoDxrZ+uUCsTAqZIFVm9D/0jkFaEsNAF
-	 5ScM8RTlrF3HbIhsiDbBLIpc2wlrfb6RBOhnuMVqp0qJE6+RI+lo3qdEsVlDVmpLI2
-	 DISgVI30IQ/HuthVegHiFyvux0ZXrspVYWkNBG6U=
+	b=gjFxccR2PrIfqBkVWyAvIwajXCXFoWdRYLQ3lbjxmaW7zRDQNHT6u6LZJQ2WZ/t6U
+	 OiFxQmDQTnjN8XJI5gYTXUnfaqYrnIhvdW9PeTRr6YLsrlFFHiXvV7Uv4mOj0bhzOj
+	 D14AkuOEK07qQjhZMtCW5PSJIKbL8hxUjVn+aKn8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Mladek <pmladek@suse.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	tangmeng <tangmeng@uniontech.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Luis Chamberlain <mcgrof@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 4.19 76/80] panic: Expose "warn_count" to sysfs
-Date: Fri,  3 Feb 2023 11:13:10 +0100
-Message-Id: <20230203101018.497978225@linuxfoundation.org>
+	Hao Sun <sunhao.th@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	Stanislav Fomichev <sdf@google.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 06/28] bpf: Skip task with pid=1 in send_signal_common()
+Date: Fri,  3 Feb 2023 11:12:54 +0100
+Message-Id: <20230203101010.237145507@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
-References: <20230203101015.263854890@linuxfoundation.org>
+In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
+References: <20230203101009.946745030@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -41,83 +36,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Hao Sun <sunhao.th@gmail.com>
 
-commit 8b05aa26336113c4cea25f1c333ee8cd4fc212a6 upstream.
+[ Upstream commit a3d81bc1eaef48e34dd0b9b48eefed9e02a06451 ]
 
-Since Warn count is now tracked and is a fairly interesting signal, add
-the entry /sys/kernel/warn_count to expose it to userspace.
+The following kernel panic can be triggered when a task with pid=1 attaches
+a prog that attempts to send killing signal to itself, also see [1] for more
+details:
 
-Cc: Petr Mladek <pmladek@suse.com>
-Cc: Andrew Morton <akpm@linux-foundation.org>
-Cc: tangmeng <tangmeng@uniontech.com>
-Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
-Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/20221117234328.594699-6-keescook@chromium.org
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+  Kernel panic - not syncing: Attempted to kill init! exitcode=0x0000000b
+  CPU: 3 PID: 1 Comm: systemd Not tainted 6.1.0-09652-g59fe41b5255f #148
+  Call Trace:
+  <TASK>
+  __dump_stack lib/dump_stack.c:88 [inline]
+  dump_stack_lvl+0x100/0x178 lib/dump_stack.c:106
+  panic+0x2c4/0x60f kernel/panic.c:275
+  do_exit.cold+0x63/0xe4 kernel/exit.c:789
+  do_group_exit+0xd4/0x2a0 kernel/exit.c:950
+  get_signal+0x2460/0x2600 kernel/signal.c:2858
+  arch_do_signal_or_restart+0x78/0x5d0 arch/x86/kernel/signal.c:306
+  exit_to_user_mode_loop kernel/entry/common.c:168 [inline]
+  exit_to_user_mode_prepare+0x15f/0x250 kernel/entry/common.c:203
+  __syscall_exit_to_user_mode_work kernel/entry/common.c:285 [inline]
+  syscall_exit_to_user_mode+0x1d/0x50 kernel/entry/common.c:296
+  do_syscall_64+0x44/0xb0 arch/x86/entry/common.c:86
+  entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+So skip task with pid=1 in bpf_send_signal_common() to avoid the panic.
+
+  [1] https://lore.kernel.org/bpf/20221222043507.33037-1-sunhao.th@gmail.com
+
+Signed-off-by: Hao Sun <sunhao.th@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Acked-by: Stanislav Fomichev <sdf@google.com>
+Link: https://lore.kernel.org/bpf/20230106084838.12690-1-sunhao.th@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- Documentation/ABI/testing/sysfs-kernel-warn_count |    6 ++++++
- kernel/panic.c                                    |   22 ++++++++++++++++++++--
- 2 files changed, 26 insertions(+), 2 deletions(-)
- create mode 100644 Documentation/ABI/testing/sysfs-kernel-warn_count
+ kernel/trace/bpf_trace.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- /dev/null
-+++ b/Documentation/ABI/testing/sysfs-kernel-warn_count
-@@ -0,0 +1,6 @@
-+What:		/sys/kernel/oops_count
-+Date:		November 2022
-+KernelVersion:	6.2.0
-+Contact:	Linux Kernel Hardening List <linux-hardening@vger.kernel.org>
-+Description:
-+		Shows how many times the system has Warned since last boot.
---- a/kernel/panic.c
-+++ b/kernel/panic.c
-@@ -29,6 +29,7 @@
- #include <linux/bug.h>
- #include <linux/ratelimit.h>
- #include <linux/debugfs.h>
-+#include <linux/sysfs.h>
- #include <asm/sections.h>
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index 1ed08967fb97..eb8c117cc8b6 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -847,6 +847,9 @@ static int bpf_send_signal_common(u32 sig, enum pid_type type)
+ 		return -EPERM;
+ 	if (unlikely(!nmi_uaccess_okay()))
+ 		return -EPERM;
++	/* Task should not be pid=1 to avoid kernel panic. */
++	if (unlikely(is_global_init(current)))
++		return -EPERM;
  
- #define PANIC_TIMER_STEP 100
-@@ -71,6 +72,25 @@ static __init int kernel_panic_sysctls_i
- late_initcall(kernel_panic_sysctls_init);
- #endif
- 
-+static atomic_t warn_count = ATOMIC_INIT(0);
-+
-+#ifdef CONFIG_SYSFS
-+static ssize_t warn_count_show(struct kobject *kobj, struct kobj_attribute *attr,
-+			       char *page)
-+{
-+	return sysfs_emit(page, "%d\n", atomic_read(&warn_count));
-+}
-+
-+static struct kobj_attribute warn_count_attr = __ATTR_RO(warn_count);
-+
-+static __init int kernel_panic_sysfs_init(void)
-+{
-+	sysfs_add_file_to_group(kernel_kobj, &warn_count_attr.attr, NULL);
-+	return 0;
-+}
-+late_initcall(kernel_panic_sysfs_init);
-+#endif
-+
- static long no_blink(int state)
- {
- 	return 0;
-@@ -148,8 +168,6 @@ EXPORT_SYMBOL(nmi_panic);
- 
- void check_panic_on_warn(const char *origin)
- {
--	static atomic_t warn_count = ATOMIC_INIT(0);
--
- 	if (panic_on_warn)
- 		panic("%s: panic_on_warn set ...\n", origin);
- 
+ 	if (irqs_disabled()) {
+ 		/* Do an early check on signal validity. Otherwise,
+-- 
+2.39.0
+
 
 
