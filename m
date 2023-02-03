@@ -1,33 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86DBF1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DB8C4339B;
-	Fri,  3 Feb 2023 10:23:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9E111FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:23:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30E8FC433EF;
+	Fri,  3 Feb 2023 10:23:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419819;
-	bh=WxcJGs9JmjBIz7MtnQGfiAVBOir7rh3JhjDNt+dDZOk=;
+	s=korg; t=1675419822;
+	bh=KKT9nlYtpQ7Pb9dL4NaBymw1fdbaOTURA3l4RpsvtX8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xt+Saue8BzvbUB7CQWG1I+is+xI686wQMoZSE84RHTimFzPNl2QBKzGEjUiJf/JA+
-	 dMA9XhZsYJol7x9nlqOAioN7IP+YsY+2Udvs9rxcQnKKVgMjqsew++wWYkC1jYcvqd
-	 yu6pTB0qvKdbRd9OTJiCAwDDu6ikPbKzmDAc1sE0=
+	b=FynXm6zFo5w50EfEuZVAe05/drtoshvCNb2Nvnb5Tiu9kWJ17GRM3OcZt4WA1jjyP
+	 cTi53Xfjk0za+tPEqr1H37z4YUpImJLlNx1NPjy2mpS083c3+yVZCZ3MWpgcOZQ03g
+	 2mXN9Yp/sphSHiMrF23zmEyehRntutP/3OrV28sk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert+renesas@glider.be>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Hui Wang <hui.wang@canonical.com>,
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 01/20] ARM: dts: imx: Fix pca9547 i2c-mux node name
-Date: Fri,  3 Feb 2023 11:13:28 +0100
-Message-Id: <20230203101008.062422333@linuxfoundation.org>
+Subject: [PATCH 5.15 10/20] dmaengine: imx-sdma: Fix a possible memory leak in sdma_transfer_init
+Date: Fri,  3 Feb 2023 11:13:37 +0100
+Message-Id: <20230203101008.446050542@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101007.985835823@linuxfoundation.org>
 References: <20230203101007.985835823@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,41 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert+renesas@glider.be>
+From: Hui Wang <hui.wang@canonical.com>
 
-[ Upstream commit f78985f9f58380eec37f82c8a2c765aa7670fc29 ]
+[ Upstream commit 1417f59ac0b02130ee56c0c50794b9b257be3d17 ]
 
-"make dtbs_check":
+If the function sdma_load_context() fails, the sdma_desc will be
+freed, but the allocated desc->bd is forgot to be freed.
 
-    arch/arm/boot/dts/imx53-ppd.dtb: i2c-switch@70: $nodename:0: 'i2c-switch@70' does not match '^(i2c-?)?mux'
-	    From schema: Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
-    arch/arm/boot/dts/imx53-ppd.dtb: i2c-switch@70: Unevaluated properties are not allowed ('#address-cells', '#size-cells', 'i2c@0', 'i2c@1', 'i2c@2', 'i2c@3', 'i2c@4', 'i2c@5', 'i2c@6', 'i2c@7' were unexpected)
-	    From schema: Documentation/devicetree/bindings/i2c/i2c-mux-pca954x.yaml
+We already met the sdma_load_context() failure case and the log as
+below:
+[ 450.699064] imx-sdma 30bd0000.dma-controller: Timeout waiting for CH0 ready
+...
 
-Fix this by renaming the PCA9547 node to "i2c-mux", to match the I2C bus
-multiplexer/switch DT bindings and the Generic Names Recommendation in
-the Devicetree Specification.
+In this case, the desc->bd will not be freed without this change.
 
-Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Signed-off-by: Hui Wang <hui.wang@canonical.com>
+Reviewed-by: Sascha Hauer <s.hauer@pengutronix.de>
+Link: https://lore.kernel.org/r/20221130090800.102035-1-hui.wang@canonical.com
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx53-ppd.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/dma/imx-sdma.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/imx53-ppd.dts b/arch/arm/boot/dts/imx53-ppd.dts
-index 37d0cffea99c..70c4a4852256 100644
---- a/arch/arm/boot/dts/imx53-ppd.dts
-+++ b/arch/arm/boot/dts/imx53-ppd.dts
-@@ -488,7 +488,7 @@ &i2c1 {
- 	scl-gpios = <&gpio3 21 GPIO_ACTIVE_HIGH>;
- 	status = "okay";
+diff --git a/drivers/dma/imx-sdma.c b/drivers/dma/imx-sdma.c
+index 5215a5e39f3c..292f4c9a963d 100644
+--- a/drivers/dma/imx-sdma.c
++++ b/drivers/dma/imx-sdma.c
+@@ -1428,10 +1428,12 @@ static struct sdma_desc *sdma_transfer_init(struct sdma_channel *sdmac,
+ 		sdma_config_ownership(sdmac, false, true, false);
  
--	i2c-switch@70 {
-+	i2c-mux@70 {
- 		compatible = "nxp,pca9547";
- 		#address-cells = <1>;
- 		#size-cells = <0>;
+ 	if (sdma_load_context(sdmac))
+-		goto err_desc_out;
++		goto err_bd_out;
+ 
+ 	return desc;
+ 
++err_bd_out:
++	sdma_free_bd(desc);
+ err_desc_out:
+ 	kfree(desc);
+ err_out:
 -- 
 2.39.0
 
