@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31CDA1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:24:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B1F5C4339B;
-	Fri,  3 Feb 2023 10:24:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CB831FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:24:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6372C433AA;
+	Fri,  3 Feb 2023 10:24:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419864;
-	bh=QVWL9Ryh5/fAmRZzxLER3tGYMSZKgPr7dmH+SGZuT/E=;
+	s=korg; t=1675419867;
+	bh=dsy3YWhkKzp2txKhA8z4hxCJ1vOdg+ndBt0MQUuhYXA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=druKFEM50F9US6up1HpBTFmGT9Ag2BPa+uMZ7MDlL9FWlzafv/WRonJV0khp/mVKc
-	 1HmO8l2nN8tUDjmRHNMCaaAHNINPWf6LIqr1rTxubq3P6N0gei65uEnNS4L/cCoN8N
-	 WFblvk4QCHqWLVY4CM5n3y7tVNanUH4faYlwMdA0=
+	b=On0LpP9kQ783vxxrSPi1R7pwVUF/ROEVywSTfNNNN/n0djI9runNvxqXc1u1gwwu2
+	 OwDmu+mrawGW9wkPiHAL5EbQSrGj02NUq3T35+Pik+t/db9cIJd9/ehCcFtU/aWL6K
+	 sskk9Y4L/FXWmmIPkRoCWtEzxmhdMz9ZYQYLD/BE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shuah Khan <skhan@linuxfoundation.org>,
 	Kyle Huey <me@kylehuey.com>
-Subject: [PATCH 5.15 16/20] tools: fix ARRAY_SIZE defines in tools and selftests hdrs
-Date: Fri,  3 Feb 2023 11:13:43 +0100
-Message-Id: <20230203101008.677359238@linuxfoundation.org>
+Subject: [PATCH 5.15 17/20] selftests/vm: remove ARRAY_SIZE define from individual tests
+Date: Fri,  3 Feb 2023 11:13:44 +0100
+Message-Id: <20230203101008.714697109@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101007.985835823@linuxfoundation.org>
 References: <20230203101007.985835823@linuxfoundation.org>
@@ -36,64 +36,64 @@ Content-Transfer-Encoding: 8bit
 
 From: Shuah Khan <skhan@linuxfoundation.org>
 
-commit 066b34aa5461f6072dbbecb690f4fe446b736ebf upstream.
+commit e89908201e2509354c40158b517945bf3d645812 upstream.
 
-tools/include/linux/kernel.h and kselftest_harness.h are missing
-ifndef guard around ARRAY_SIZE define. Fix them to avoid duplicate
-define errors during compile when another file defines it. This
-problem was found when compiling selftests that include a header
-with ARRAY_SIZE define.
+ARRAY_SIZE is defined in several selftests. Remove definitions from
+individual test files and include header file for the define instead.
+ARRAY_SIZE define is added in a separate patch to prepare for this
+change.
 
-ARRAY_SIZE is defined in several selftests. There are about 25+
-duplicate defines in various selftests source and header files.
-Add ARRAY_SIZE to kselftest.h in preparation for removing duplicate
-ARRAY_SIZE defines from individual test files.
+Remove ARRAY_SIZE from vm tests and pickup the one defined in
+kselftest.h.
 
 Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
 Cc: Kyle Huey <me@kylehuey.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/include/linux/kernel.h                |    2 ++
- tools/testing/selftests/kselftest.h         |    4 ++++
- tools/testing/selftests/kselftest_harness.h |    2 ++
- 3 files changed, 8 insertions(+)
+ tools/testing/selftests/vm/mremap_test.c    |    1 -
+ tools/testing/selftests/vm/pkey-helpers.h   |    3 ++-
+ tools/testing/selftests/vm/va_128TBswitch.c |    2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
---- a/tools/include/linux/kernel.h
-+++ b/tools/include/linux/kernel.h
-@@ -108,7 +108,9 @@ int vscnprintf(char *buf, size_t size, c
- int scnprintf(char * buf, size_t size, const char * fmt, ...);
- int scnprintf_pad(char * buf, size_t size, const char * fmt, ...);
+--- a/tools/testing/selftests/vm/mremap_test.c
++++ b/tools/testing/selftests/vm/mremap_test.c
+@@ -22,7 +22,6 @@
+ #define VALIDATION_DEFAULT_THRESHOLD 4	/* 4MB */
+ #define VALIDATION_NO_THRESHOLD 0	/* Verify the entire region */
  
-+#ifndef ARRAY_SIZE
- #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]) + __must_be_array(arr))
-+#endif
+-#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
+ #define MIN(X, Y) ((X) < (Y) ? (X) : (Y))
  
- /*
-  * This looks more complex than it should be. But we need to
---- a/tools/testing/selftests/kselftest.h
-+++ b/tools/testing/selftests/kselftest.h
-@@ -48,6 +48,10 @@
- #include <stdarg.h>
- #include <stdio.h>
+ struct config {
+--- a/tools/testing/selftests/vm/pkey-helpers.h
++++ b/tools/testing/selftests/vm/pkey-helpers.h
+@@ -13,6 +13,8 @@
+ #include <ucontext.h>
+ #include <sys/mman.h>
  
-+#ifndef ARRAY_SIZE
-+#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
-+#endif
++#include "../kselftest.h"
 +
- /* define kselftest exit codes */
- #define KSFT_PASS  0
- #define KSFT_FAIL  1
---- a/tools/testing/selftests/kselftest_harness.h
-+++ b/tools/testing/selftests/kselftest_harness.h
-@@ -671,7 +671,9 @@
- #define EXPECT_STRNE(expected, seen) \
- 	__EXPECT_STR(expected, seen, !=, 0)
+ /* Define some kernel-like types */
+ #define  u8 __u8
+ #define u16 __u16
+@@ -175,7 +177,6 @@ static inline void __pkey_write_allow(in
+ 	dprintf4("pkey_reg now: %016llx\n", read_pkey_reg());
+ }
  
-+#ifndef ARRAY_SIZE
- #define ARRAY_SIZE(a)	(sizeof(a) / sizeof(a[0]))
-+#endif
+-#define ARRAY_SIZE(x) (sizeof(x) / sizeof(*(x)))
+ #define ALIGN_UP(x, align_to)	(((x) + ((align_to)-1)) & ~((align_to)-1))
+ #define ALIGN_DOWN(x, align_to) ((x) & ~((align_to)-1))
+ #define ALIGN_PTR_UP(p, ptr_align_to)	\
+--- a/tools/testing/selftests/vm/va_128TBswitch.c
++++ b/tools/testing/selftests/vm/va_128TBswitch.c
+@@ -9,7 +9,7 @@
+ #include <sys/mman.h>
+ #include <string.h>
  
- /* Support an optional handler after and ASSERT_* or EXPECT_*.  The approach is
-  * not thread-safe, but it should be fine in most sane test scenarios.
+-#define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
++#include "../kselftest.h"
+ 
+ #ifdef __powerpc64__
+ #define PAGE_SIZE	(64 << 10)
 
 
