@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B524D1FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:26:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EA44BC433D2;
-	Fri,  3 Feb 2023 10:26:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85BA11FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:26:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1CDAC433EF;
+	Fri,  3 Feb 2023 10:26:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419991;
-	bh=riyNIuRZTk3+oGubtIc28EovjLZfdVdV5b9fzEtz60M=;
+	s=korg; t=1675419994;
+	bh=zo6EIPtBcWQW862Z/+02ER2JvazX91lvGA4QC5E6lEo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n6b8Xdd/MXtKqWQjU8aGQjtcgX1G0yuo4DiXEUeEnUwTaZolCy+tMTSaX9bYfqcSP
-	 URyS8EYP9LmWKzwBA7r0iV316HvScIKyIR3SRaaquchROgJ2+E8fZPPF8jWcqklafr
-	 pgROhYrJ29cja3oi1J+5XmahcyHIeV2bocTQyvXs=
+	b=WobL6gBFDOhMShO8Tq9EWjJetlQheTe7WkcQU28YaOhd1lxPel0IvN2qNFJdtTScJ
+	 E9LF3lghsn1QSaNefIZsPhA/URuTcjeWszRs03yQqjTP/O9LZis0GEGcGoqITNmiTC
+	 EmkB8hoffM6476lmU98m+Inq/gaIC22CTFZTkjww=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Swati Agarwal <swati.agarwal@xilinx.com>,
+	Liu Shixin <liushixin2@huawei.com>,
+	Peter Korsgaard <peter@korsgaard.com>,
 	Vinod Koul <vkoul@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 044/134] dmaengine: xilinx_dma: Fix devm_platform_ioremap_resource error handling
-Date: Fri,  3 Feb 2023 11:12:29 +0100
-Message-Id: <20230203101025.859856757@linuxfoundation.org>
+Subject: [PATCH 5.4 045/134] dmaengine: xilinx_dma: call of_node_put() when breaking out of for_each_child_of_node()
+Date: Fri,  3 Feb 2023 11:12:30 +0100
+Message-Id: <20230203101025.908901351@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -35,65 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Swati Agarwal <swati.agarwal@xilinx.com>
+From: Liu Shixin <liushixin2@huawei.com>
 
-[ Upstream commit 91df7751eb890e970afc08f50b8f0fa5ea39e03d ]
+[ Upstream commit 596b53ccc36a546ab28e8897315c5b4d1d5a0200 ]
 
-Add missing cleanup in devm_platform_ioremap_resource().
-When probe fails remove dma channel resources and disable clocks in
-accordance with the order of resources allocated .
+Since for_each_child_of_node() will increase the refcount of node, we need
+to call of_node_put() manually when breaking out of the iteration.
 
-Signed-off-by: Swati Agarwal <swati.agarwal@xilinx.com>
-Link: https://lore.kernel.org/r/20220817061125.4720-2-swati.agarwal@xilinx.com
+Fixes: 9cd4360de609 ("dma: Add Xilinx AXI Video Direct Memory Access Engine driver support")
+Signed-off-by: Liu Shixin <liushixin2@huawei.com>
+Acked-by: Peter Korsgaard <peter@korsgaard.com>
+Link: https://lore.kernel.org/r/20221122021612.1908866-1-liushixin2@huawei.com
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Stable-dep-of: 596b53ccc36a ("dmaengine: xilinx_dma: call of_node_put() when breaking out of for_each_child_of_node()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/dma/xilinx/xilinx_dma.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ drivers/dma/xilinx/xilinx_dma.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/dma/xilinx/xilinx_dma.c b/drivers/dma/xilinx/xilinx_dma.c
-index 8a7606bc326a..7b60248be725 100644
+index 7b60248be725..be44c86a1e03 100644
 --- a/drivers/dma/xilinx/xilinx_dma.c
 +++ b/drivers/dma/xilinx/xilinx_dma.c
-@@ -2652,9 +2652,10 @@ static int xilinx_dma_probe(struct platform_device *pdev)
- 
- 	/* Request and map I/O memory */
- 	xdev->regs = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(xdev->regs))
--		return PTR_ERR(xdev->regs);
--
-+	if (IS_ERR(xdev->regs)) {
-+		err = PTR_ERR(xdev->regs);
-+		goto disable_clks;
-+	}
- 	/* Retrieve the DMA engine properties from the device tree */
- 	xdev->max_buffer_len = GENMASK(XILINX_DMA_MAX_TRANS_LEN_MAX - 1, 0);
- 
-@@ -2747,7 +2748,7 @@ static int xilinx_dma_probe(struct platform_device *pdev)
+@@ -2747,8 +2747,10 @@ static int xilinx_dma_probe(struct platform_device *pdev)
+ 	/* Initialize the channels */
  	for_each_child_of_node(node, child) {
  		err = xilinx_dma_child_probe(xdev, child);
- 		if (err < 0)
--			goto disable_clks;
-+			goto error;
+-		if (err < 0)
++		if (err < 0) {
++			of_node_put(child);
+ 			goto error;
++		}
  	}
  
  	if (xdev->dma_config->dmatype == XDMA_TYPE_VDMA) {
-@@ -2780,12 +2781,12 @@ static int xilinx_dma_probe(struct platform_device *pdev)
- 
- 	return 0;
- 
--disable_clks:
--	xdma_disable_allclks(xdev);
- error:
- 	for (i = 0; i < xdev->nr_channels; i++)
- 		if (xdev->chan[i])
- 			xilinx_dma_chan_remove(xdev->chan[i]);
-+disable_clks:
-+	xdma_disable_allclks(xdev);
- 
- 	return err;
- }
 -- 
 2.39.0
 
