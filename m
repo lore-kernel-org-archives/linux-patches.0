@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB8731FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:14:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55E1DC433EF;
-	Fri,  3 Feb 2023 10:14:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB32F1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:14:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5331AC433D2;
+	Fri,  3 Feb 2023 10:14:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419296;
-	bh=YFugI6fF0y/pLwD8xkHIPODEv09xlUpUaHCLgIt+uw0=;
+	s=korg; t=1675419299;
+	bh=QsKsbBGiRqVtLWs+WkLHLaGbKXKHzpxMZzMwdkHnCaE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nO+EnPMDX4cuexsTb9y78PN2dbtFl6UyxNMooTFukitfUGm0A79dmhpkxnWmNWoWw
-	 QU4YTzTPPClEujl+uNdT/x29E5Zc6uRUwvH3KiZ1TR/0M//Ie4eudBLtPQTChFfMZH
-	 qRMMuqiPFgXoEIB1zF+DFT/je0w1tKxyvKlQOxFo=
+	b=sfb11ODLQJvakpzSHn61M2wqsi3+HSYusaOyJU1T1Ra3bjtth7IOPefKvEHVmXFSq
+	 0nwTPiIKvjF+GEI73wUp8A8OBJja3ILLzZKPxyQEIKr7LLMhA505ZESpitatb3AZsf
+	 RteZyKqCE1EAwgiEwPFeCL6nWbQs7OLFxpwBtAyU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 21/62] w1: fix WARNING after calling w1_process()
-Date: Fri,  3 Feb 2023 11:12:17 +0100
-Message-Id: <20230203101013.931978137@linuxfoundation.org>
+	Ian Abbott <abbotti@mev.co.uk>
+Subject: [PATCH 4.14 22/62] comedi: adv_pci1760: Fix PWM instruction handling
+Date: Fri,  3 Feb 2023 11:12:18 +0100
+Message-Id: <20230203101013.974210835@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -34,55 +33,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Ian Abbott <abbotti@mev.co.uk>
 
-[ Upstream commit 36225a7c72e9e3e1ce4001b6ce72849f5c9a2d3b ]
+commit 2efb6edd52dc50273f5e68ad863dd1b1fb2f2d1c upstream.
 
-I got the following WARNING message while removing driver(ds2482):
+(Actually, this is fixing the "Read the Current Status" command sent to
+the device's outgoing mailbox, but it is only currently used for the PWM
+instructions.)
 
-------------[ cut here ]------------
-do not call blocking ops when !TASK_RUNNING; state=1 set at [<000000002d50bfb6>] w1_process+0x9e/0x1d0 [wire]
-WARNING: CPU: 0 PID: 262 at kernel/sched/core.c:9817 __might_sleep+0x98/0xa0
-CPU: 0 PID: 262 Comm: w1_bus_master1 Tainted: G                 N 6.1.0-rc3+ #307
-RIP: 0010:__might_sleep+0x98/0xa0
-Call Trace:
- exit_signals+0x6c/0x550
- do_exit+0x2b4/0x17e0
- kthread_exit+0x52/0x60
- kthread+0x16d/0x1e0
- ret_from_fork+0x1f/0x30
+The PCI-1760 is operated mostly by sending commands to a set of Outgoing
+Mailbox registers, waiting for the command to complete, and reading the
+result from the Incoming Mailbox registers.  One of these commands is
+the "Read the Current Status" command.  The number of this command is
+0x07 (see the User's Manual for the PCI-1760 at
+<https://advdownload.advantech.com/productfile/Downloadfile2/1-11P6653/PCI-1760.pdf>.
+The `PCI1760_CMD_GET_STATUS` macro defined in the driver should expand
+to this command number 0x07, but unfortunately it currently expands to
+0x03.  (Command number 0x03 is not defined in the User's Manual.)
+Correct the definition of the `PCI1760_CMD_GET_STATUS` macro to fix it.
 
-The state of task is set to TASK_INTERRUPTIBLE in loop in w1_process(),
-set it to TASK_RUNNING when it breaks out of the loop to avoid the
-warning.
+This is used by all the PWM subdevice related instructions handled by
+`pci1760_pwm_insn_config()` which are probably all broken.  The effect
+of sending the undefined command number 0x03 is not known.
 
-Fixes: 3c52e4e62789 ("W1: w1_process, block or sleep")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20221205101558.3599162-1-yangyingliang@huawei.com
+Fixes: 14b93bb6bbf0 ("staging: comedi: adv_pci_dio: separate out PCI-1760 support")
+Cc: <stable@vger.kernel.org> # v4.5+
+Signed-off-by: Ian Abbott <abbotti@mev.co.uk>
+Link: https://lore.kernel.org/r/20230103143754.17564-1-abbotti@mev.co.uk
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/w1/w1.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/staging/comedi/drivers/adv_pci1760.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/w1/w1.c b/drivers/w1/w1.c
-index 44315f9fd669..4d43c373e5c6 100644
---- a/drivers/w1/w1.c
-+++ b/drivers/w1/w1.c
-@@ -1165,8 +1165,10 @@ int w1_process(void *data)
- 		 */
- 		mutex_unlock(&dev->list_mutex);
- 
--		if (kthread_should_stop())
-+		if (kthread_should_stop()) {
-+			__set_current_state(TASK_RUNNING);
- 			break;
-+		}
- 
- 		/* Only sleep when the search is active. */
- 		if (dev->search_count) {
--- 
-2.39.0
-
+--- a/drivers/staging/comedi/drivers/adv_pci1760.c
++++ b/drivers/staging/comedi/drivers/adv_pci1760.c
+@@ -68,7 +68,7 @@
+ #define PCI1760_CMD_CLR_IMB2		0x00	/* Clears IMB2 */
+ #define PCI1760_CMD_SET_DO		0x01	/* Set output state */
+ #define PCI1760_CMD_GET_DO		0x02	/* Read output status */
+-#define PCI1760_CMD_GET_STATUS		0x03	/* Read current status */
++#define PCI1760_CMD_GET_STATUS		0x07	/* Read current status */
+ #define PCI1760_CMD_GET_FW_VER		0x0e	/* Read firware version */
+ #define PCI1760_CMD_GET_HW_VER		0x0f	/* Read hardware version */
+ #define PCI1760_CMD_SET_PWM_HI(x)	(0x10 + (x) * 2) /* Set "hi" period */
 
 
