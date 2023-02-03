@@ -1,27 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 355C51FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:16:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74181C4339B;
-	Fri,  3 Feb 2023 10:16:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 129D21FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:16:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5466AC4339C;
+	Fri,  3 Feb 2023 10:16:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419411;
-	bh=amR6QC3yKINv5pLmudzLUae99jLq112NtJW3mlKUGkk=;
+	s=korg; t=1675419414;
+	bh=ZOmLCp2PHHsd4Lxv47bUTxi/JaMIOedsY5ztTbwhP+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1PyXkUsf/eEyjaBIHpSRGd3Lxxeb3EAVEyKhQvjGRuEwQNEDkvh93brZDGmP8rEzI
-	 diDzGvGQBspsbLuro8pABs9I5szErwV/kwWAYDte4m107oX6Ofh4371mWrRopHDxfo
-	 y8iUtiaNi+GCFJH2Ob4v6HUc7QyEu8FeNN1H8J8Y=
+	b=J/j/si1ORo2oFuscPPK0kGuUM86MV2xnqtB0dy/7tZwIVkdTkVMiZB5JX5PKN8CGp
+	 IDIGnAI7R2UyMWiU2XcR563Qw09aF6GaEyxrmK0vsbt737/KFEnBpwXjSPnAEEnY0g
+	 fFoyYeBxK/HnQT6Qj3Cfn+ioEE6JA18LxID15AYY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 32/62] netfilter: conntrack: fix vtag checks for ABORT/SHUTDOWN_COMPLETE
-Date: Fri,  3 Feb 2023 11:12:28 +0100
-Message-Id: <20230203101014.394691796@linuxfoundation.org>
+	Peter Zijlstra <peterz@infradead.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Jann Horn <jannh@google.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Petr Mladek <pmladek@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Marco Elver <elver@google.com>,
+	tangmeng <tangmeng@uniontech.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Kees Cook <keescook@chromium.org>,
+	Eric Biggers <ebiggers@google.com>
+Subject: [PATCH 4.14 59/62] exit: Use READ_ONCE() for all oops/warn limit reads
+Date: Fri,  3 Feb 2023 11:12:55 +0100
+Message-Id: <20230203101015.489103673@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -35,71 +45,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit a9993591fa94246b16b444eea55d84c54608282a ]
+commit 7535b832c6399b5ebfc5b53af5c51dd915ee2538 upstream.
 
-RFC 9260, Sec 8.5.1 states that for ABORT/SHUTDOWN_COMPLETE, the chunk
-MUST be accepted if the vtag of the packet matches its own tag and the
-T bit is not set OR if it is set to its peer's vtag and the T bit is set
-in chunk flags. Otherwise the packet MUST be silently dropped.
+Use a temporary variable to take full advantage of READ_ONCE() behavior.
+Without this, the report (and even the test) might be out of sync with
+the initial test.
 
-Update vtag verification for ABORT/SHUTDOWN_COMPLETE based on the above
-description.
-
-Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
-Signed-off-by: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Reported-by: Peter Zijlstra <peterz@infradead.org>
+Link: https://lore.kernel.org/lkml/Y5x7GXeluFmZ8E0E@hirez.programming.kicks-ass.net
+Fixes: 9fc9e278a5c0 ("panic: Introduce warn_limit")
+Fixes: d4ccd54d28d3 ("exit: Put an upper limit on how often we can oops")
+Cc: "Eric W. Biederman" <ebiederm@xmission.com>
+Cc: Jann Horn <jannh@google.com>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: Luis Chamberlain <mcgrof@kernel.org>
+Cc: Marco Elver <elver@google.com>
+Cc: tangmeng <tangmeng@uniontech.com>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nf_conntrack_proto_sctp.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ kernel/exit.c  |    6 ++++--
+ kernel/panic.c |    7 +++++--
+ 2 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
-index 6303a88af12b..1278b27c625a 100644
---- a/net/netfilter/nf_conntrack_proto_sctp.c
-+++ b/net/netfilter/nf_conntrack_proto_sctp.c
-@@ -343,22 +343,29 @@ static int sctp_packet(struct nf_conn *ct,
- 	for_each_sctp_chunk (skb, sch, _sch, offset, dataoff, count) {
- 		/* Special cases of Verification tag check (Sec 8.5.1) */
- 		if (sch->type == SCTP_CID_INIT) {
--			/* Sec 8.5.1 (A) */
-+			/* (A) vtag MUST be zero */
- 			if (sh->vtag != 0)
- 				goto out_unlock;
- 		} else if (sch->type == SCTP_CID_ABORT) {
--			/* Sec 8.5.1 (B) */
--			if (sh->vtag != ct->proto.sctp.vtag[dir] &&
--			    sh->vtag != ct->proto.sctp.vtag[!dir])
-+			/* (B) vtag MUST match own vtag if T flag is unset OR
-+			 * MUST match peer's vtag if T flag is set
-+			 */
-+			if ((!(sch->flags & SCTP_CHUNK_FLAG_T) &&
-+			     sh->vtag != ct->proto.sctp.vtag[dir]) ||
-+			    ((sch->flags & SCTP_CHUNK_FLAG_T) &&
-+			     sh->vtag != ct->proto.sctp.vtag[!dir]))
- 				goto out_unlock;
- 		} else if (sch->type == SCTP_CID_SHUTDOWN_COMPLETE) {
--			/* Sec 8.5.1 (C) */
--			if (sh->vtag != ct->proto.sctp.vtag[dir] &&
--			    sh->vtag != ct->proto.sctp.vtag[!dir] &&
--			    sch->flags & SCTP_CHUNK_FLAG_T)
-+			/* (C) vtag MUST match own vtag if T flag is unset OR
-+			 * MUST match peer's vtag if T flag is set
-+			 */
-+			if ((!(sch->flags & SCTP_CHUNK_FLAG_T) &&
-+			     sh->vtag != ct->proto.sctp.vtag[dir]) ||
-+			    ((sch->flags & SCTP_CHUNK_FLAG_T) &&
-+			     sh->vtag != ct->proto.sctp.vtag[!dir]))
- 				goto out_unlock;
- 		} else if (sch->type == SCTP_CID_COOKIE_ECHO) {
--			/* Sec 8.5.1 (D) */
-+			/* (D) vtag must be same as init_vtag as found in INIT_ACK */
- 			if (sh->vtag != ct->proto.sctp.vtag[dir])
- 				goto out_unlock;
- 		} else if (sch->type == SCTP_CID_HEARTBEAT ||
--- 
-2.39.0
-
+--- a/kernel/exit.c
++++ b/kernel/exit.c
+@@ -973,6 +973,7 @@ void __noreturn make_task_dead(int signr
+ 	 * Take the task off the cpu after something catastrophic has
+ 	 * happened.
+ 	 */
++	unsigned int limit;
+ 
+ 	/*
+ 	 * Every time the system oopses, if the oops happens while a reference
+@@ -984,8 +985,9 @@ void __noreturn make_task_dead(int signr
+ 	 * To make sure this can't happen, place an upper bound on how often the
+ 	 * kernel may oops without panic().
+ 	 */
+-	if (atomic_inc_return(&oops_count) >= READ_ONCE(oops_limit) && oops_limit)
+-		panic("Oopsed too often (kernel.oops_limit is %d)", oops_limit);
++	limit = READ_ONCE(oops_limit);
++	if (atomic_inc_return(&oops_count) >= limit && limit)
++		panic("Oopsed too often (kernel.oops_limit is %d)", limit);
+ 
+ 	do_exit(signr);
+ }
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -165,12 +165,15 @@ EXPORT_SYMBOL(nmi_panic);
+ 
+ void check_panic_on_warn(const char *origin)
+ {
++	unsigned int limit;
++
+ 	if (panic_on_warn)
+ 		panic("%s: panic_on_warn set ...\n", origin);
+ 
+-	if (atomic_inc_return(&warn_count) >= READ_ONCE(warn_limit) && warn_limit)
++	limit = READ_ONCE(warn_limit);
++	if (atomic_inc_return(&warn_count) >= limit && limit)
+ 		panic("%s: system warned too often (kernel.warn_limit is %d)",
+-		      origin, warn_limit);
++		      origin, limit);
+ }
+ 
+ /**
 
 
