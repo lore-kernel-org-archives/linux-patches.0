@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7882C1FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:27:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFA16C433EF;
-	Fri,  3 Feb 2023 10:27:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BDC41FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:27:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E11DFC433D2;
+	Fri,  3 Feb 2023 10:27:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420059;
-	bh=Pyz4TWxt/TzHY2kAIGb/EQx+ZpKDWHb5ZvBWJJ0izvw=;
+	s=korg; t=1675420062;
+	bh=LdwYU/RMtgMgxI2T87nwUFxfRS92zy/wrBC8eWwcNGE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rhcRDMTEno8pOzHeSMKm7Lu3IyGkLwT7BufsXdMqRX6gx0B2v5YlvcqXtLTgBbrSl
-	 i8CQGR0VW2k7LEjz8z1893eedXaO5p18I5Z7C2R9x6I0NrYzxxXjeHBQimIsBTkLWM
-	 61KM7+bckV2y8CogEb9ycs2uVbCd9dLtEOP5vC8o=
+	b=x3YRoFQreQiOOMb5vJ815sFYcRnmx1Rqpdm0S84GGejRY0XiAKjb2d82oiuzVZ5y/
+	 NzJBn/zkUOr3RjM2AdnQBXz7lREYAFfjwUjSZleN7g9fiJKBiT4xJf/RfRJiInGiRi
+	 3TFtZ0Iw/sQt1xuwzOhnH7/BeONcXlDjt963z6p0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Haibo Chen <haibo.chen@nxp.com>,
-	Adrian Hunter <adrian.hunter@intel.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 067/134] mmc: sdhci-esdhc-imx: correct the tuning start tap and step setting
-Date: Fri,  3 Feb 2023 11:12:52 +0100
-Message-Id: <20230203101026.882993615@linuxfoundation.org>
+Subject: [PATCH 5.4 068/134] Revert "selftests/bpf: check null propagation only neither reg is PTR_TO_BTF_ID"
+Date: Fri,  3 Feb 2023 11:12:53 +0100
+Message-Id: <20230203101026.931946561@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -36,76 +33,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Haibo Chen <haibo.chen@nxp.com>
+This reverts commit 4de1a5af1be3daa8177473904dfde03b53298785.
 
-[ Upstream commit 1e336aa0c0250ec84c6f16efac40c9f0138e367d ]
-
-Current code logic may be impacted by the setting of ROM/Bootloader,
-so unmask these bits first, then setting these bits accordingly.
-
-Fixes: 2b16cf326b70 ("mmc: sdhci-esdhc-imx: move tuning static configuration into hwinit function")
-Signed-off-by: Haibo Chen <haibo.chen@nxp.com>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20221207112315.1812222-1-haibo.chen@nxp.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/sdhci-esdhc-imx.c | 22 +++++++++++++++-------
- 1 file changed, 15 insertions(+), 7 deletions(-)
+ .../bpf/prog_tests/jeq_infer_not_null.c       |  9 ----
+ .../bpf/progs/jeq_infer_not_null_fail.c       | 42 -------------------
+ 2 files changed, 51 deletions(-)
+ delete mode 100644 tools/testing/selftests/bpf/prog_tests/jeq_infer_not_null.c
+ delete mode 100644 tools/testing/selftests/bpf/progs/jeq_infer_not_null_fail.c
 
-diff --git a/drivers/mmc/host/sdhci-esdhc-imx.c b/drivers/mmc/host/sdhci-esdhc-imx.c
-index 453ac2b6910c..b3f761eca829 100644
---- a/drivers/mmc/host/sdhci-esdhc-imx.c
-+++ b/drivers/mmc/host/sdhci-esdhc-imx.c
-@@ -90,6 +90,7 @@
- #define ESDHC_TUNING_START_TAP_DEFAULT	0x1
- #define ESDHC_TUNING_START_TAP_MASK	0x7f
- #define ESDHC_TUNING_CMD_CRC_CHECK_DISABLE	(1 << 7)
-+#define ESDHC_TUNING_STEP_DEFAULT	0x1
- #define ESDHC_TUNING_STEP_MASK		0x00070000
- #define ESDHC_TUNING_STEP_SHIFT		16
- 
-@@ -1182,7 +1183,7 @@ static void sdhci_esdhc_imx_hwinit(struct sdhci_host *host)
- 	struct sdhci_pltfm_host *pltfm_host = sdhci_priv(host);
- 	struct pltfm_imx_data *imx_data = sdhci_pltfm_priv(pltfm_host);
- 	struct cqhci_host *cq_host = host->mmc->cqe_private;
--	int tmp;
-+	u32 tmp;
- 
- 	if (esdhc_is_usdhc(imx_data)) {
- 		/*
-@@ -1235,17 +1236,24 @@ static void sdhci_esdhc_imx_hwinit(struct sdhci_host *host)
- 
- 		if (imx_data->socdata->flags & ESDHC_FLAG_STD_TUNING) {
- 			tmp = readl(host->ioaddr + ESDHC_TUNING_CTRL);
--			tmp |= ESDHC_STD_TUNING_EN |
--				ESDHC_TUNING_START_TAP_DEFAULT;
--			if (imx_data->boarddata.tuning_start_tap) {
--				tmp &= ~ESDHC_TUNING_START_TAP_MASK;
-+			tmp |= ESDHC_STD_TUNING_EN;
-+
-+			/*
-+			 * ROM code or bootloader may config the start tap
-+			 * and step, unmask them first.
-+			 */
-+			tmp &= ~(ESDHC_TUNING_START_TAP_MASK | ESDHC_TUNING_STEP_MASK);
-+			if (imx_data->boarddata.tuning_start_tap)
- 				tmp |= imx_data->boarddata.tuning_start_tap;
--			}
-+			else
-+				tmp |= ESDHC_TUNING_START_TAP_DEFAULT;
- 
- 			if (imx_data->boarddata.tuning_step) {
--				tmp &= ~ESDHC_TUNING_STEP_MASK;
- 				tmp |= imx_data->boarddata.tuning_step
- 					<< ESDHC_TUNING_STEP_SHIFT;
-+			} else {
-+				tmp |= ESDHC_TUNING_STEP_DEFAULT
-+					<< ESDHC_TUNING_STEP_SHIFT;
- 			}
- 
- 			/* Disable the CMD CRC check for tuning, if not, need to
+diff --git a/tools/testing/selftests/bpf/prog_tests/jeq_infer_not_null.c b/tools/testing/selftests/bpf/prog_tests/jeq_infer_not_null.c
+deleted file mode 100644
+index 3add34df5767..000000000000
+--- a/tools/testing/selftests/bpf/prog_tests/jeq_infer_not_null.c
++++ /dev/null
+@@ -1,9 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
+-
+-#include <test_progs.h>
+-#include "jeq_infer_not_null_fail.skel.h"
+-
+-void test_jeq_infer_not_null(void)
+-{
+-	RUN_TESTS(jeq_infer_not_null_fail);
+-}
+diff --git a/tools/testing/selftests/bpf/progs/jeq_infer_not_null_fail.c b/tools/testing/selftests/bpf/progs/jeq_infer_not_null_fail.c
+deleted file mode 100644
+index f46965053acb..000000000000
+--- a/tools/testing/selftests/bpf/progs/jeq_infer_not_null_fail.c
++++ /dev/null
+@@ -1,42 +0,0 @@
+-// SPDX-License-Identifier: GPL-2.0
+-
+-#include "vmlinux.h"
+-#include <bpf/bpf_helpers.h>
+-#include "bpf_misc.h"
+-
+-char _license[] SEC("license") = "GPL";
+-
+-struct {
+-	__uint(type, BPF_MAP_TYPE_HASH);
+-	__uint(max_entries, 1);
+-	__type(key, u64);
+-	__type(value, u64);
+-} m_hash SEC(".maps");
+-
+-SEC("?raw_tp")
+-__failure __msg("R8 invalid mem access 'map_value_or_null")
+-int jeq_infer_not_null_ptr_to_btfid(void *ctx)
+-{
+-	struct bpf_map *map = (struct bpf_map *)&m_hash;
+-	struct bpf_map *inner_map = map->inner_map_meta;
+-	u64 key = 0, ret = 0, *val;
+-
+-	val = bpf_map_lookup_elem(map, &key);
+-	/* Do not mark ptr as non-null if one of them is
+-	 * PTR_TO_BTF_ID (R9), reject because of invalid
+-	 * access to map value (R8).
+-	 *
+-	 * Here, we need to inline those insns to access
+-	 * R8 directly, since compiler may use other reg
+-	 * once it figures out val==inner_map.
+-	 */
+-	asm volatile("r8 = %[val];\n"
+-		     "r9 = %[inner_map];\n"
+-		     "if r8 != r9 goto +1;\n"
+-		     "%[ret] = *(u64 *)(r8 +0);\n"
+-		     : [ret] "+r"(ret)
+-		     : [inner_map] "r"(inner_map), [val] "r"(val)
+-		     : "r8", "r9");
+-
+-	return ret;
+-}
 -- 
 2.39.0
 
