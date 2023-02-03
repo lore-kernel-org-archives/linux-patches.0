@@ -1,30 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D37401FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E13B6C433D2;
-	Fri,  3 Feb 2023 10:21:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A945C1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B54FC433EF;
+	Fri,  3 Feb 2023 10:21:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419691;
-	bh=p/TESxW3x2c13Ep18IXZqi2TzocwFHIWf5tuyhmRZmM=;
+	s=korg; t=1675419694;
+	bh=n7iZVRZCPGxn55ZItX8hVgljGjXwUKaTrOHJAspUczE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MfohrZ+sKkGnZH2Yd2MDczh4xy1BWWgR8Lg1CV2KWl4oIhGxBhsKrqX0w+DZZ5m3+
-	 pziq5UXVto2S2mAxievyWGidjxxddKUasvV9rK+l8dy2b679T7CAYBhjL+iIs2wkdI
-	 VPpTEDWY2nHVWcClbc6yEqImjAPSyJa8olGl0QBY=
+	b=zA4OK/ZHlZQtVzD5TriopQL6qI7DbTntUyHsZ0oHQz65mlmRjerh1fmK8D4Ux3tY6
+	 VG35Tc/6pWjjsIvdOn5wqGeA7BetNU2x3MQa5bgKbNtoXN5PaaXEJCF9TiRfj4YIZ5
+	 1EoDUDb24BpOr2D5gRkz2CTT8ps8Ak9IDbrsvT80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sriram R <quic_srirrama@quicinc.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 08/28] mac80211: Fix MLO address translation for multiple bss case
-Date: Fri,  3 Feb 2023 11:12:56 +0100
-Message-Id: <20230203101010.331917874@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Tudor Ambarus <tudor.ambarus@linaro.org>
+Subject: [PATCH 4.19 79/80] ipv6: ensure sane device mtu in tunnels
+Date: Fri,  3 Feb 2023 11:13:13 +0100
+Message-Id: <20230203101018.635953965@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
-References: <20230203101009.946745030@linuxfoundation.org>
+In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
+References: <20230203101015.263854890@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,43 +36,151 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sriram R <quic_srirrama@quicinc.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit fa22b51ace8aa106267636f36170e940e676809c ]
+commit d89d7ff01235f218dad37de84457717f699dee79 upstream.
 
-When multiple interfaces are present in the local interface
-list, new skb copy is taken before rx processing except for
-the first interface. The address translation happens each
-time only on the original skb since the hdr pointer is not
-updated properly to the newly created skb.
+Another syzbot report [1] with no reproducer hints
+at a bug in ip6_gre tunnel (dev:ip6gretap0)
 
-As a result frames start to drop in userspace when address
-based checks or search fails.
+Since ipv6 mcast code makes sure to read dev->mtu once
+and applies a sanity check on it (see commit b9b312a7a451
+"ipv6: mcast: better catch silly mtu values"), a remaining
+possibility is that a layer is able to set dev->mtu to
+an underflowed value (high order bit set).
 
-Signed-off-by: Sriram R <quic_srirrama@quicinc.com>
-Link: https://lore.kernel.org/r/20221208040050.25922-1-quic_srirrama@quicinc.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+This could happen indeed in ip6gre_tnl_link_config_route(),
+ip6_tnl_link_config() and ipip6_tunnel_bind_dev()
+
+Make sure to sanitize mtu value in a local variable before
+it is written once on dev->mtu, as lockless readers could
+catch wrong temporary value.
+
+[1]
+skbuff: skb_over_panic: text:ffff80000b7a2f38 len:40 put:40 head:ffff000149dcf200 data:ffff000149dcf2b0 tail:0xd8 end:0xc0 dev:ip6gretap0
+------------[ cut here ]------------
+kernel BUG at net/core/skbuff.c:120
+Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
+Modules linked in:
+CPU: 1 PID: 10241 Comm: kworker/1:1 Not tainted 6.0.0-rc7-syzkaller-18095-gbbed346d5a96 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 09/30/2022
+Workqueue: mld mld_ifc_work
+pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : skb_panic+0x4c/0x50 net/core/skbuff.c:116
+lr : skb_panic+0x4c/0x50 net/core/skbuff.c:116
+sp : ffff800020dd3b60
+x29: ffff800020dd3b70 x28: 0000000000000000 x27: ffff00010df2a800
+x26: 00000000000000c0 x25: 00000000000000b0 x24: ffff000149dcf200
+x23: 00000000000000c0 x22: 00000000000000d8 x21: ffff80000b7a2f38
+x20: ffff00014c2f7800 x19: 0000000000000028 x18: 00000000000001a9
+x17: 0000000000000000 x16: ffff80000db49158 x15: ffff000113bf1a80
+x14: 0000000000000000 x13: 00000000ffffffff x12: ffff000113bf1a80
+x11: ff808000081c0d5c x10: 0000000000000000 x9 : 73f125dc5c63ba00
+x8 : 73f125dc5c63ba00 x7 : ffff800008161d1c x6 : 0000000000000000
+x5 : 0000000000000080 x4 : 0000000000000001 x3 : 0000000000000000
+x2 : ffff0001fefddcd0 x1 : 0000000100000000 x0 : 0000000000000089
+Call trace:
+skb_panic+0x4c/0x50 net/core/skbuff.c:116
+skb_over_panic net/core/skbuff.c:125 [inline]
+skb_put+0xd4/0xdc net/core/skbuff.c:2049
+ip6_mc_hdr net/ipv6/mcast.c:1714 [inline]
+mld_newpack+0x14c/0x270 net/ipv6/mcast.c:1765
+add_grhead net/ipv6/mcast.c:1851 [inline]
+add_grec+0xa20/0xae0 net/ipv6/mcast.c:1989
+mld_send_cr+0x438/0x5a8 net/ipv6/mcast.c:2115
+mld_ifc_work+0x38/0x290 net/ipv6/mcast.c:2653
+process_one_work+0x2d8/0x504 kernel/workqueue.c:2289
+worker_thread+0x340/0x610 kernel/workqueue.c:2436
+kthread+0x12c/0x158 kernel/kthread.c:376
+ret_from_fork+0x10/0x20 arch/arm64/kernel/entry.S:860
+Code: 91011400 aa0803e1 a90027ea 94373093 (d4210000)
+
+Fixes: c12b395a4664 ("gre: Support GRE over IPv6")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20221024020124.3756833-1-eric.dumazet@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+[ta: Backport patch for stable kernels < 5.10.y. Fix conflict in
+net/ipv6/ip6_tunnel.c, mtu initialized with:
+mtu = rt->dst.dev->mtu - t_hlen;]
+Cc: <stable@vger.kernel.org> # 4.14.y, 4.19.y, 5.4.y
+Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/rx.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv6/ip6_gre.c    |   12 +++++++-----
+ net/ipv6/ip6_tunnel.c |   10 ++++++----
+ net/ipv6/sit.c        |    8 +++++---
+ 3 files changed, 18 insertions(+), 12 deletions(-)
 
-diff --git a/net/mac80211/rx.c b/net/mac80211/rx.c
-index 3262ebb24092..8f0d7c666df7 100644
---- a/net/mac80211/rx.c
-+++ b/net/mac80211/rx.c
-@@ -4859,6 +4859,9 @@ static bool ieee80211_prepare_and_rx_handle(struct ieee80211_rx_data *rx,
- 		 */
- 		shwt = skb_hwtstamps(rx->skb);
- 		shwt->hwtstamp = skb_hwtstamps(skb)->hwtstamp;
-+
-+		/* Update the hdr pointer to the new skb for translation below */
-+		hdr = (struct ieee80211_hdr *)rx->skb->data;
- 	}
+--- a/net/ipv6/ip6_gre.c
++++ b/net/ipv6/ip6_gre.c
+@@ -1154,14 +1154,16 @@ static void ip6gre_tnl_link_config_route
+ 				dev->needed_headroom = dst_len;
  
- 	if (unlikely(rx->sta && rx->sta->sta.mlo)) {
--- 
-2.39.0
-
+ 			if (set_mtu) {
+-				dev->mtu = rt->dst.dev->mtu - t_hlen;
++				int mtu = rt->dst.dev->mtu - t_hlen;
++
+ 				if (!(t->parms.flags & IP6_TNL_F_IGN_ENCAP_LIMIT))
+-					dev->mtu -= 8;
++					mtu -= 8;
+ 				if (dev->type == ARPHRD_ETHER)
+-					dev->mtu -= ETH_HLEN;
++					mtu -= ETH_HLEN;
+ 
+-				if (dev->mtu < IPV6_MIN_MTU)
+-					dev->mtu = IPV6_MIN_MTU;
++				if (mtu < IPV6_MIN_MTU)
++					mtu = IPV6_MIN_MTU;
++				WRITE_ONCE(dev->mtu, mtu);
+ 			}
+ 		}
+ 		ip6_rt_put(rt);
+--- a/net/ipv6/ip6_tunnel.c
++++ b/net/ipv6/ip6_tunnel.c
+@@ -1435,6 +1435,7 @@ static void ip6_tnl_link_config(struct i
+ 	struct __ip6_tnl_parm *p = &t->parms;
+ 	struct flowi6 *fl6 = &t->fl.u.ip6;
+ 	int t_hlen;
++	int mtu;
+ 
+ 	memcpy(dev->dev_addr, &p->laddr, sizeof(struct in6_addr));
+ 	memcpy(dev->broadcast, &p->raddr, sizeof(struct in6_addr));
+@@ -1477,12 +1478,13 @@ static void ip6_tnl_link_config(struct i
+ 			dev->hard_header_len = rt->dst.dev->hard_header_len +
+ 				t_hlen;
+ 
+-			dev->mtu = rt->dst.dev->mtu - t_hlen;
++			mtu = rt->dst.dev->mtu - t_hlen;
+ 			if (!(t->parms.flags & IP6_TNL_F_IGN_ENCAP_LIMIT))
+-				dev->mtu -= 8;
++				mtu -= 8;
+ 
+-			if (dev->mtu < IPV6_MIN_MTU)
+-				dev->mtu = IPV6_MIN_MTU;
++			if (mtu < IPV6_MIN_MTU)
++				mtu = IPV6_MIN_MTU;
++			WRITE_ONCE(dev->mtu, mtu);
+ 		}
+ 		ip6_rt_put(rt);
+ 	}
+--- a/net/ipv6/sit.c
++++ b/net/ipv6/sit.c
+@@ -1082,10 +1082,12 @@ static void ipip6_tunnel_bind_dev(struct
+ 
+ 	if (tdev && !netif_is_l3_master(tdev)) {
+ 		int t_hlen = tunnel->hlen + sizeof(struct iphdr);
++		int mtu;
+ 
+-		dev->mtu = tdev->mtu - t_hlen;
+-		if (dev->mtu < IPV6_MIN_MTU)
+-			dev->mtu = IPV6_MIN_MTU;
++		mtu = tdev->mtu - t_hlen;
++		if (mtu < IPV6_MIN_MTU)
++			mtu = IPV6_MIN_MTU;
++		WRITE_ONCE(dev->mtu, mtu);
+ 	}
+ }
+ 
 
 
