@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15D901FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FE76C4339B;
-	Fri,  3 Feb 2023 10:21:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0FFD31FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7D9F9C433EF;
+	Fri,  3 Feb 2023 10:21:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419709;
-	bh=3KKifScuk1hhvnnfmlwGuRuD5jQ4e0Nucu2H8lY9BBk=;
+	s=korg; t=1675419712;
+	bh=jmVxCeavWO+FBi8yxOKCkQ7COU927JaLBNSDf/y4n/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m9hb3QZ2G3YSP5e/EZ7qS9pnCLgScyFJnISNexXePbYdl6B3uYUBjdn1SPSIHBjsc
-	 S0hiYA+i0jDVJfepnZ9C8031cteEnmxBKpFJvyN1X28pgfwdFBtM13Iao8/qHcez2R
-	 WQE18HL/pfklXlmCMORyQAJWS6TbivcBKMXbLtYw=
+	b=kX/xU5n/8gXXuTo7hmcsZAQ8ptyfw8CXlcRVgdA0hXnNNz+kDxfz8uUXRADRSHQAm
+	 ifh234xd/4uamCpJuY4EE4Ks8QFLIFndGFkOhZTTgSwlRq1k6AFGvil9181SfcbmAz
+	 Bh0lSG9g+I2uibEgabXEzrfNffJjgrGFpyJS58Ko=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yue Hu <huyue2@coolpad.com>,
-	Chao Yu <chao@kernel.org>,
-	Jingbo Xu <jefflexu@linux.alibaba.com>,
-	Gao Xiang <hsiangkao@linux.alibaba.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Tejun Heo <tj@kernel.org>,
+	Jens Axboe <axboe@kernel.dk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 12/28] erofs: clean up parsing of fscache related options
-Date: Fri,  3 Feb 2023 11:13:00 +0100
-Message-Id: <20230203101010.485999238@linuxfoundation.org>
+Subject: [PATCH 6.1 13/28] blk-cgroup: fix missing pd_online_fn() while activating policy
+Date: Fri,  3 Feb 2023 11:13:01 +0100
+Message-Id: <20230203101010.534557485@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
 References: <20230203101009.946745030@linuxfoundation.org>
@@ -37,61 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jingbo Xu <jefflexu@linux.alibaba.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-[ Upstream commit e02ac3e7329f76c5de40cba2746cbe165f571dff ]
+[ Upstream commit e3ff8887e7db757360f97634e0d6f4b8e27a8c46 ]
 
-... to avoid the mess of conditional preprocessing as we are continually
-adding fscache related mount options.
+If the policy defines pd_online_fn(), it should be called after
+pd_init_fn(), like blkg_create().
 
-Reviewd-by: Gao Xiang <hsiangkao@linux.alibaba.com>
-Reviewed-by: Yue Hu <huyue2@coolpad.com>
-Reviewed-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jingbo Xu <jefflexu@linux.alibaba.com>
-Link: https://lore.kernel.org/r/20230112065431.124926-3-jefflexu@linux.alibaba.com
-Signed-off-by: Gao Xiang <hsiangkao@linux.alibaba.com>
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Acked-by: Tejun Heo <tj@kernel.org>
+Link: https://lore.kernel.org/r/20230103112833.2013432-1-yukuai1@huaweicloud.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/erofs/super.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+ block/blk-cgroup.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/fs/erofs/super.c b/fs/erofs/super.c
-index 481788c24a68..626a615dafc2 100644
---- a/fs/erofs/super.c
-+++ b/fs/erofs/super.c
-@@ -577,26 +577,25 @@ static int erofs_fc_parse_param(struct fs_context *fc,
- 		}
- 		++ctx->devs->extra_devices;
- 		break;
--	case Opt_fsid:
- #ifdef CONFIG_EROFS_FS_ONDEMAND
-+	case Opt_fsid:
- 		kfree(ctx->fsid);
- 		ctx->fsid = kstrdup(param->string, GFP_KERNEL);
- 		if (!ctx->fsid)
- 			return -ENOMEM;
--#else
--		errorfc(fc, "fsid option not supported");
--#endif
- 		break;
- 	case Opt_domain_id:
--#ifdef CONFIG_EROFS_FS_ONDEMAND
- 		kfree(ctx->domain_id);
- 		ctx->domain_id = kstrdup(param->string, GFP_KERNEL);
- 		if (!ctx->domain_id)
- 			return -ENOMEM;
-+		break;
- #else
--		errorfc(fc, "domain_id option not supported");
--#endif
-+	case Opt_fsid:
-+	case Opt_domain_id:
-+		errorfc(fc, "%s option not supported", erofs_fs_parameters[opt].name);
- 		break;
-+#endif
- 	default:
- 		return -ENOPARAM;
- 	}
+diff --git a/block/blk-cgroup.c b/block/blk-cgroup.c
+index fcf9cf49f5de..7c91d9195da8 100644
+--- a/block/blk-cgroup.c
++++ b/block/blk-cgroup.c
+@@ -1408,6 +1408,10 @@ int blkcg_activate_policy(struct request_queue *q,
+ 		list_for_each_entry_reverse(blkg, &q->blkg_list, q_node)
+ 			pol->pd_init_fn(blkg->pd[pol->plid]);
+ 
++	if (pol->pd_online_fn)
++		list_for_each_entry_reverse(blkg, &q->blkg_list, q_node)
++			pol->pd_online_fn(blkg->pd[pol->plid]);
++
+ 	__set_bit(pol->plid, q->blkcg_pols);
+ 	ret = 0;
+ 
 -- 
 2.39.0
 
