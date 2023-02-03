@@ -1,30 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 504941FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:22:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BCBEFC433D2;
-	Fri,  3 Feb 2023 10:22:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 300CB1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:22:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7260AC433EF;
+	Fri,  3 Feb 2023 10:22:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419767;
-	bh=plVLPqyNKrCgUkP+vGqlaiEfLLVEMW02/8pVeTqqtSI=;
+	s=korg; t=1675419770;
+	bh=FETfPiqHj8EbA+/SDiegA9TGbLbIiiwGqJ2y8TI9Ngc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W/wmW8JF4r58fGgQh5SsaoU0XXddBSZfcQEQaHb6yl0taQ/siWmrXny5RxbESCJzw
-	 bJ5niuQdhyQfrYwIVzYKBtr7+4pezxG1FCtqKmWbAU0TNbKYXtw1aA6wiV7fAaaWM2
-	 qX16qfsUkdNlj9+TYOkVFR3C9KS79t6rM6tnJiaE=
+	b=bVqvwumapDHUdQJXyobibtT9r1fQrDHmKSoDxrZ+uUCsTAqZIFVm9D/0jkFaEsNAF
+	 5ScM8RTlrF3HbIhsiDbBLIpc2wlrfb6RBOhnuMVqp0qJE6+RI+lo3qdEsVlDVmpLI2
+	 DISgVI30IQ/HuthVegHiFyvux0ZXrspVYWkNBG6U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Cristian Marussi <cristian.marussi@arm.com>,
-	Sudeep Holla <sudeep.holla@arm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 05/28] firmware: arm_scmi: Clear stale xfer->hdr.status
-Date: Fri,  3 Feb 2023 11:12:53 +0100
-Message-Id: <20230203101010.198037184@linuxfoundation.org>
+	Petr Mladek <pmladek@suse.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	tangmeng <tangmeng@uniontech.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Tiezhu Yang <yangtiezhu@loongson.cn>,
+	Luis Chamberlain <mcgrof@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Eric Biggers <ebiggers@google.com>
+Subject: [PATCH 4.19 76/80] panic: Expose "warn_count" to sysfs
+Date: Fri,  3 Feb 2023 11:13:10 +0100
+Message-Id: <20230203101018.497978225@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
-References: <20230203101009.946745030@linuxfoundation.org>
+In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
+References: <20230203101015.263854890@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -35,37 +41,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cristian Marussi <cristian.marussi@arm.com>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit f6ca5059dc0d6608dc46070f48e396d611f240d6 ]
+commit 8b05aa26336113c4cea25f1c333ee8cd4fc212a6 upstream.
 
-Stale error status reported from a previous message transaction must be
-cleared before starting a new transaction to avoid being confusingly
-reported in the following SCMI message dump traces.
+Since Warn count is now tracked and is a fairly interesting signal, add
+the entry /sys/kernel/warn_count to expose it to userspace.
 
-Signed-off-by: Cristian Marussi <cristian.marussi@arm.com>
-Link: https://lore.kernel.org/r/20221222183823.518856-2-cristian.marussi@arm.com
-Signed-off-by: Sudeep Holla <sudeep.holla@arm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: Petr Mladek <pmladek@suse.com>
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: tangmeng <tangmeng@uniontech.com>
+Cc: "Guilherme G. Piccoli" <gpiccoli@igalia.com>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: Tiezhu Yang <yangtiezhu@loongson.cn>
+Reviewed-by: Luis Chamberlain <mcgrof@kernel.org>
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/20221117234328.594699-6-keescook@chromium.org
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/arm_scmi/driver.c | 2 ++
- 1 file changed, 2 insertions(+)
+ Documentation/ABI/testing/sysfs-kernel-warn_count |    6 ++++++
+ kernel/panic.c                                    |   22 ++++++++++++++++++++--
+ 2 files changed, 26 insertions(+), 2 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-kernel-warn_count
 
-diff --git a/drivers/firmware/arm_scmi/driver.c b/drivers/firmware/arm_scmi/driver.c
-index f818d00bb2c6..ffdad59ec81f 100644
---- a/drivers/firmware/arm_scmi/driver.c
-+++ b/drivers/firmware/arm_scmi/driver.c
-@@ -910,6 +910,8 @@ static int do_xfer(const struct scmi_protocol_handle *ph,
- 			      xfer->hdr.protocol_id, xfer->hdr.seq,
- 			      xfer->hdr.poll_completion);
+--- /dev/null
++++ b/Documentation/ABI/testing/sysfs-kernel-warn_count
+@@ -0,0 +1,6 @@
++What:		/sys/kernel/oops_count
++Date:		November 2022
++KernelVersion:	6.2.0
++Contact:	Linux Kernel Hardening List <linux-hardening@vger.kernel.org>
++Description:
++		Shows how many times the system has Warned since last boot.
+--- a/kernel/panic.c
++++ b/kernel/panic.c
+@@ -29,6 +29,7 @@
+ #include <linux/bug.h>
+ #include <linux/ratelimit.h>
+ #include <linux/debugfs.h>
++#include <linux/sysfs.h>
+ #include <asm/sections.h>
  
-+	/* Clear any stale status */
-+	xfer->hdr.status = SCMI_SUCCESS;
- 	xfer->state = SCMI_XFER_SENT_OK;
- 	/*
- 	 * Even though spinlocking is not needed here since no race is possible
--- 
-2.39.0
-
+ #define PANIC_TIMER_STEP 100
+@@ -71,6 +72,25 @@ static __init int kernel_panic_sysctls_i
+ late_initcall(kernel_panic_sysctls_init);
+ #endif
+ 
++static atomic_t warn_count = ATOMIC_INIT(0);
++
++#ifdef CONFIG_SYSFS
++static ssize_t warn_count_show(struct kobject *kobj, struct kobj_attribute *attr,
++			       char *page)
++{
++	return sysfs_emit(page, "%d\n", atomic_read(&warn_count));
++}
++
++static struct kobj_attribute warn_count_attr = __ATTR_RO(warn_count);
++
++static __init int kernel_panic_sysfs_init(void)
++{
++	sysfs_add_file_to_group(kernel_kobj, &warn_count_attr.attr, NULL);
++	return 0;
++}
++late_initcall(kernel_panic_sysfs_init);
++#endif
++
+ static long no_blink(int state)
+ {
+ 	return 0;
+@@ -148,8 +168,6 @@ EXPORT_SYMBOL(nmi_panic);
+ 
+ void check_panic_on_warn(const char *origin)
+ {
+-	static atomic_t warn_count = ATOMIC_INIT(0);
+-
+ 	if (panic_on_warn)
+ 		panic("%s: panic_on_warn set ...\n", origin);
+ 
 
 
