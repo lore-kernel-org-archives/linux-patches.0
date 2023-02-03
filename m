@@ -1,97 +1,147 @@
-Received: from mail-lf1-f49.google.com (mail-lf1-f49.google.com [209.85.167.49])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6912D8F7D
-	for <patches@lists.linux.dev>; Thu,  2 Feb 2023 22:27:09 +0000 (UTC)
-Received: by mail-lf1-f49.google.com with SMTP id h24so5172221lfv.6
-        for <patches@lists.linux.dev>; Thu, 02 Feb 2023 14:27:09 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=rNl1d9WjdzfG8r6+o/TTbbJlOXijTqxl4wlecMFWfHc=;
-        b=W86IfmDtu2J4p+3OYOZAQ2kPhD4TOuckQrtBxpeHkGS4TFNPokFEKLLjCxRVjJzpnT
-         /tMtxDN6d3ao0Yr4ZUPI8JgXfGBBZR0Zrlcu3uRRYTTwu2dDMHLktXbmieOoq62CMAMz
-         8Rb5vGERLKakT/KMKZHBcOQs8aXITcg3SPmhI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:user-agent:from:references
-         :in-reply-to:mime-version:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=rNl1d9WjdzfG8r6+o/TTbbJlOXijTqxl4wlecMFWfHc=;
-        b=3PvxpFr8TKw/hSND1G+aSdeB6g7ZnEfPdVi8WN1bpyGCjGKpMyWEXfvWArNe0vHt1h
-         AWS8D/eFEuPKz0ZJovjl5etOCXmDmIM5YLJViP6+Vf3IRjbunZP97zzDldL7yrzrXS9m
-         GniqeRuZSYhdO0QqFkX6M1CYSmUA+bC3iIerEUWPZCPVKMVl4Mg4rtu9rzog/adHLNT/
-         ROPmtx9QzBBw0s/tqRg00RoOn/xicLERL1dlXoidTyryL07ykO28P744boSeyWajWDok
-         itLqKxmTbpEtkqV7ZGQd7caqG92tA00sci3LlNd6uwPeLpbT+xlhxddgPogQHjDwMXkD
-         nxgQ==
-X-Gm-Message-State: AO0yUKXhTadGyPrb6TxzWrx5FQpzE7z9dovHmpoCnjHaJOB2X/cuXhSN
-	jgSWDRtK08y2Zj1wg3n4UICFX8mW6NImRVoZalY9Dw==
-X-Google-Smtp-Source: AK7set8BLWiiUSmP1ZnKxPXJ1C4jOaYXgC8mhhJgjy8MjW3z0hLNlQVz0f5qVXMSJuwF1hP61XhwjGdZrkB7RksH74E=
-X-Received: by 2002:ac2:5a19:0:b0:4d8:775b:a58f with SMTP id
- q25-20020ac25a19000000b004d8775ba58fmr1607468lfn.73.1675376827426; Thu, 02
- Feb 2023 14:27:07 -0800 (PST)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 2 Feb 2023 14:27:06 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2CA11863
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 09:25:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A9A4C433EF;
+	Fri,  3 Feb 2023 09:25:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1675416329;
+	bh=vbvQLdXJzz3U3wn+spS+rWmWUdndzQ+tvfvHBwXLkHc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=FNd+o2FbnK06zKV8CS/JtFjckF7RN+wlkuqa+bwd17Nn7hkWEcNcUKxs6dY0VCaun
+	 naKtvFjtxlcbSZ4KyIvlSMBUQBBI7oK2BxkYmOL7SlQrZeDPHNgqFNwTGyNaK/BaGR
+	 izYDNnYARXnxooTSmNbAzwDKJT0v4aeLp689d3ho=
+Date: Fri, 3 Feb 2023 10:25:18 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Trond Myklebust <trond.myklebust@hammerspace.com>,
+	Sasha Levin <sashal@kernel.org>, Dan Carpenter <error27@gmail.com>,
+	Darren Kenny <darren.kenny@oracle.com>
+Subject: Re: [PATCH 5.4 185/658] xprtrdma: Fix regbuf data not freed in
+ rpcrdma_req_create()
+Message-ID: <Y9zS/nOrhDLzV4r9@kroah.com>
+References: <20230116154909.645460653@linuxfoundation.org>
+ <20230116154917.918263147@linuxfoundation.org>
+ <4d2928e1-c836-b817-3dc2-3fe9adcaf2d6@oracle.com>
+ <Y81RIkI9ygwWvheM@kroah.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-In-Reply-To: <Y81G3X7TSNk57hqc@kroah.com>
-References: <20230113204548.578798-1-swboyd@chromium.org> <Y81G3X7TSNk57hqc@kroah.com>
-From: Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.10
-Date: Thu, 2 Feb 2023 14:27:06 -0800
-Message-ID: <CAE-0n52WYuDhozGijwJoMOL9PLRQshLCMAJsWvudz4KdS+jN=Q@mail.gmail.com>
-Subject: Re: [PATCH 5.15.y v2 0/5] phy: qcom-qmp-combo: Backport some stable fixes
-To: Greg KH <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, linux-kernel@vger.kernel.org, 
-	patches@lists.linux.dev, Johan Hovold <johan+linaro@kernel.org>, 
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Vinod Koul <vkoul@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y81RIkI9ygwWvheM@kroah.com>
 
-Quoting Greg KH (2023-01-22 06:23:25)
-> On Fri, Jan 13, 2023 at 12:45:43PM -0800, Stephen Boyd wrote:
-> > After the qmp phy driver was split it looks like 5.15.y stable kernels
-> > aren't getting fixes like commit 7a7d86d14d07 ("phy: qcom-qmp-combo: fix
-> > broken power on") which is tagged for stable 5.10. Trogdor boards use
-> > the qmp phy on 5.15.y kernels, so I backported the fixes I could find
-> > that looked like we may possibly trip over at some point.
-> >
-> > USB and DP work on my Trogdor.Lazor board with this set.
-> >
-> > Changes from v1 (https://lore.kernel.org/r/20230113005405.3992011-1-swboyd@chromium.org):
-> >  * New patch for memleak on probe deferal to avoid compat issues
-> >  * Update "fix broken power on" patch for pcie/ufs phy
-> >
-> > Johan Hovold (5):
-> >   phy: qcom-qmp-combo: disable runtime PM on unbind
-> >   phy: qcom-qmp-combo: fix memleak on probe deferral
-> >   phy: qcom-qmp-usb: fix memleak on probe deferral
-> >   phy: qcom-qmp-combo: fix broken power on
-> >   phy: qcom-qmp-combo: fix runtime suspend
-> >
-> >  drivers/phy/qualcomm/phy-qcom-qmp.c | 97 ++++++++++++++++++-----------
-> >  1 file changed, 61 insertions(+), 36 deletions(-)
-> >
-> > Cc: Johan Hovold <johan+linaro@kernel.org>
-> > Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > Cc: Vinod Koul <vkoul@kernel.org>
-> >
-> > base-commit: d57287729e229188e7d07ef0117fe927664e08cb
-> > --
-> > https://chromeos.dev
-> >
->
-> For obvious reasons, I can't take this series if newer kernel releases
-> do not also contain all of these (no would you want me to.)
->
-> So can you please also provide a backported series for 6.1.y so that
-> these can be considered?
+On Sun, Jan 22, 2023 at 04:07:14PM +0100, Greg Kroah-Hartman wrote:
+> On Thu, Jan 19, 2023 at 11:39:35AM +0530, Harshit Mogalapalli wrote:
+> > Hi,
+> > 
+> > On 16/01/23 9:14 pm, Greg Kroah-Hartman wrote:
+> > > From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+> > > 
+> > > [ Upstream commit 9181f40fb2952fd59ecb75e7158620c9c669eee3 ]
+> > > 
+> > > If rdma receive buffer allocate failed, should call rpcrdma_regbuf_free()
+> > > to free the send buffer, otherwise, the buffer data will be leaked.
+> > > 
+> > > Fixes: bb93a1ae2bf4 ("xprtrdma: Allocate req's regbufs at xprt create time")
+> > > Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+> > > Signed-off-by: Trond Myklebust <trond.myklebust@hammerspace.com>
+> > > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> > > ---
+> > >   net/sunrpc/xprtrdma/verbs.c | 1 +
+> > >   1 file changed, 1 insertion(+)
+> > > 
+> > > diff --git a/net/sunrpc/xprtrdma/verbs.c b/net/sunrpc/xprtrdma/verbs.c
+> > > index 0f4d39fdb48f..e13115bbe719 100644
+> > > --- a/net/sunrpc/xprtrdma/verbs.c
+> > > +++ b/net/sunrpc/xprtrdma/verbs.c
+> > > @@ -1037,6 +1037,7 @@ struct rpcrdma_req *rpcrdma_req_create(struct rpcrdma_xprt *r_xprt, size_t size,
+> > >   	kfree(req->rl_sendbuf);
+> > >   out3:
+> > >   	kfree(req->rl_rdmabuf);
+> > > +	rpcrdma_regbuf_free(req->rl_sendbuf);
+> > 
+> > I think this introduces a double free in rpcrdma_req_create() [5.4.y]
+> > 
+> > Copying the function from 5.4.229 post the above patch here.
+> > 
+> > Comments added with //// marker.
+> > 
+> > struct rpcrdma_req *rpcrdma_req_create(struct rpcrdma_xprt *r_xprt, size_t
+> > size,
+> >                                        gfp_t flags)
+> > {
+> >         struct rpcrdma_buffer *buffer = &r_xprt->rx_buf;
+> >         struct rpcrdma_regbuf *rb;
+> >         struct rpcrdma_req *req;
+> >         size_t maxhdrsize;
+> > 
+> >         req = kzalloc(sizeof(*req), flags);
+> >         if (req == NULL)
+> >                 goto out1;
+> > 
+> >         /* Compute maximum header buffer size in bytes */
+> >         maxhdrsize = rpcrdma_fixed_maxsz + 3 +
+> >                      r_xprt->rx_ia.ri_max_segs * rpcrdma_readchunk_maxsz;
+> >         maxhdrsize *= sizeof(__be32);
+> >         rb = rpcrdma_regbuf_alloc(__roundup_pow_of_two(maxhdrsize),
+> >                                   DMA_TO_DEVICE, flags);
+> >         if (!rb)
+> >                 goto out2;
+> >         req->rl_rdmabuf = rb;
+> >         xdr_buf_init(&req->rl_hdrbuf, rdmab_data(rb), rdmab_length(rb));
+> > 
+> >         req->rl_sendbuf = rpcrdma_regbuf_alloc(size, DMA_TO_DEVICE, flags);
+> >         if (!req->rl_sendbuf)
+> >                 goto out3;
+> > 
+> >         req->rl_recvbuf = rpcrdma_regbuf_alloc(size, DMA_NONE, flags);
+> >         if (!req->rl_recvbuf)
+> >                 goto out4; ///// let us say we hit this.
+> > 
+> >         INIT_LIST_HEAD(&req->rl_free_mrs);
+> >         INIT_LIST_HEAD(&req->rl_registered);
+> >         spin_lock(&buffer->rb_lock);
+> >         list_add(&req->rl_all, &buffer->rb_allreqs);
+> >         spin_unlock(&buffer->rb_lock);
+> >         return req;
+> > 
+> > out4:
+> >         kfree(req->rl_sendbuf);
+> > //// free of (req->rl_sendbuf)
+> > out3:
+> >         kfree(req->rl_rdmabuf);
+> >         rpcrdma_regbuf_free(req->rl_sendbuf);
+> > //// double free of req->rl_sendbuf, we have a kfree in rpcrdma_regbuf_free.
+> > 
+> > out2:
+> >         kfree(req);
+> > out1:
+> >         return NULL;
+> > }
+> > 
+> > Found using smatch.
+> > 
+> > I looked at the history of the function, the reason is that we don't have
+> > commit b78de1dca00376aaba7a58bb5fe21c1606524abe in 5.4.y
+> > 
+> > This problem is only in 5.4.y not seen in newer LTS.
+> > 
+> > Please correct me if I am missing something here.
+> > 
+> 
+> I think you are correct.  I'll look into fixing it on Monday, thanks for
+> the review!
 
-Sure. All of the patches have been applied to 6.1.y except for the last
-one, which picks cleanly, c7b98de745cf ("phy: qcom-qmp-combo: fix
-runtime suspend"). I can send that over.
+I've just reverted this commit from the tree now, a working backport
+would be appreciated :)
+
+thanks,
+
+greg k-h
