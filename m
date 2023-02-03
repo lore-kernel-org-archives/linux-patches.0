@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2CF31FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:29:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A7C6C4339B;
-	Fri,  3 Feb 2023 10:29:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28C531FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:29:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85880C433EF;
+	Fri,  3 Feb 2023 10:29:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420149;
-	bh=VpdS/nuFM5FGMF64NllKwwudRpy/E5eUEaD2DZTNveo=;
+	s=korg; t=1675420153;
+	bh=LAsH34jvqhWeJgceykPfVWPNk4MKY4rdBQryX2RmVxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N2qA4vEslsaX2vnUADW8pNERTXw/8o8DOrILHe5HMDyEAt00fozEvSUsfABNWLWsn
-	 kUXjtfiowAiEsdxWXSjJLWJ/y6iO2tU/fJ++h7fTY34yuK523bMSfBUOn7o5L0kZtS
-	 0WUZSv7SVPwXZNtWnYLd3qz0A7mMVXqJNXsgBt+0=
+	b=jqEqNpDHGbiL/tN8/2JBQ+tOVvCYsG3JQdKpKq65obOBxTOSVYbimX0SwEDJWmCC+
+	 vkNskCar8nix9KaAjtUEWp/rJ/nz0P1kk9lQJChnbwqcUakwZ03WFpUW27PXZFfMZm
+	 JxAFHZWvvWwk0cUYk0ADlukv0vxmpw/HFo0dV9P0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miles Chen <miles.chen@mediatek.com>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 056/134] cpufreq: armada-37xx: stop using 0 as NULL pointer
-Date: Fri,  3 Feb 2023 11:12:41 +0100
-Message-Id: <20230203101026.396124875@linuxfoundation.org>
+Subject: [PATCH 5.4 090/134] ipv4: prevent potential spectre v1 gadget in ip_metrics_convert()
+Date: Fri,  3 Feb 2023 11:13:15 +0100
+Message-Id: <20230203101027.902187182@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -35,33 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miles Chen <miles.chen@mediatek.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 08f0adb193c008de640fde34a2e00a666c01d77c ]
+[ Upstream commit 1d1d63b612801b3f0a39b7d4467cad0abd60e5c8 ]
 
-Use NULL for NULL pointer to fix the following sparse warning:
-drivers/cpufreq/armada-37xx-cpufreq.c:448:32: sparse: warning: Using plain integer as NULL pointer
+if (!type)
+		continue;
+	if (type > RTAX_MAX)
+		return -EINVAL;
+	...
+	metrics[type - 1] = val;
 
-Signed-off-by: Miles Chen <miles.chen@mediatek.com>
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+@type being used as an array index, we need to prevent
+cpu speculation or risk leaking kernel memory content.
+
+Fixes: 6cf9dfd3bd62 ("net: fib: move metrics parsing to a helper")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230120133040.3623463-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/armada-37xx-cpufreq.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv4/metrics.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/cpufreq/armada-37xx-cpufreq.c b/drivers/cpufreq/armada-37xx-cpufreq.c
-index 2de7fd18f66a..f0be8a43ec49 100644
---- a/drivers/cpufreq/armada-37xx-cpufreq.c
-+++ b/drivers/cpufreq/armada-37xx-cpufreq.c
-@@ -443,7 +443,7 @@ static int __init armada37xx_cpufreq_driver_init(void)
- 		return -ENODEV;
- 	}
+diff --git a/net/ipv4/metrics.c b/net/ipv4/metrics.c
+index 3205d5f7c8c9..4966ac2aaf87 100644
+--- a/net/ipv4/metrics.c
++++ b/net/ipv4/metrics.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ #include <linux/netlink.h>
++#include <linux/nospec.h>
+ #include <linux/rtnetlink.h>
+ #include <linux/types.h>
+ #include <net/ip.h>
+@@ -28,6 +29,7 @@ static int ip_metrics_convert(struct net *net, struct nlattr *fc_mx,
+ 			return -EINVAL;
+ 		}
  
--	clk = clk_get(cpu_dev, 0);
-+	clk = clk_get(cpu_dev, NULL);
- 	if (IS_ERR(clk)) {
- 		dev_err(cpu_dev, "Cannot get clock for CPU0\n");
- 		return PTR_ERR(clk);
++		type = array_index_nospec(type, RTAX_MAX + 1);
+ 		if (type == RTAX_CC_ALGO) {
+ 			char tmp[TCP_CA_NAME_MAX];
+ 
 -- 
 2.39.0
 
