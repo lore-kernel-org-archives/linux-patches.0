@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90E3F1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:14:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15538C4339B;
-	Fri,  3 Feb 2023 10:14:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0738F1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:14:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7BBE2C433EF;
+	Fri,  3 Feb 2023 10:14:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419290;
-	bh=IDD3NPbkIJAskQi11J6DF/FeRG5jQnqqKvx7zei3oj8=;
+	s=korg; t=1675419293;
+	bh=wMh0IIVZuuSsmRUhAmkbOju4A4VotdFHEbV9pEewxlw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KT8wwW6q3qV5hpyn4RkAwNCRT/PBh95LkM+2+u1sj5Bl+Lj3O8okfE2axAlj8Sdc5
-	 TEKC60En0S2LJhyaaJ3Ar1eFMevTpiXOT5YZxDBqRZqia5e/F1//Xw769onoNfC43O
-	 8Ft4voBjZyaG+pqjBeY2U+mOaq2wXSq+ETAGP0ss=
+	b=yMjR0pyt6NNMswtMK2rcaPvjcGlibWtyro1rJ1HQ2L5AXkaAJ/w+q+Op4GMtFvhb3
+	 2q/lLxC0likTTJ6A4z2f/el7k0aoS6xJvPyIaCmXWqmUPG1wjfBw5lJPR78puNj8tV
+	 LbTRPoxfTv0mUT98bmWmI+cMT64SoegDJeHYVVoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 02/62] HID: intel_ish-hid: Add check for ishtp_dma_tx_map
-Date: Fri,  3 Feb 2023 11:11:58 +0100
-Message-Id: <20230203101013.078336307@linuxfoundation.org>
+Subject: [PATCH 4.14 20/62] w1: fix deadloop in __w1_remove_master_device()
+Date: Fri,  3 Feb 2023 11:12:16 +0100
+Message-Id: <20230203101013.892963324@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -36,51 +34,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-[ Upstream commit b3d40c3ec3dc4ad78017de6c3a38979f57aaaab8 ]
+[ Upstream commit 25d5648802f12ae486076ceca5d7ddf1fef792b2 ]
 
-As the kcalloc may return NULL pointer,
-it should be better to check the ishtp_dma_tx_map
-before use in order to avoid NULL pointer dereference.
+I got a deadloop report while doing device(ds2482) add/remove test:
 
-Fixes: 3703f53b99e4 ("HID: intel_ish-hid: ISH Transport layer")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+  [  162.241881] w1_master_driver w1_bus_master1: Waiting for w1_bus_master1 to become free: refcnt=1.
+  [  163.272251] w1_master_driver w1_bus_master1: Waiting for w1_bus_master1 to become free: refcnt=1.
+  [  164.296157] w1_master_driver w1_bus_master1: Waiting for w1_bus_master1 to become free: refcnt=1.
+  ...
+
+__w1_remove_master_device() can't return, because the dev->refcnt is not zero.
+
+w1_add_master_device()			|
+  w1_alloc_dev()			|
+    atomic_set(&dev->refcnt, 2)		|
+  kthread_run()				|
+					|__w1_remove_master_device()
+					|  kthread_stop()
+  // KTHREAD_SHOULD_STOP is set,	|
+  // threadfn(w1_process) won't be	|
+  // called.				|
+  kthread()				|
+					|  // refcnt will never be 0, it's deadloop.
+					|  while (atomic_read(&dev->refcnt)) {...}
+
+After calling w1_add_master_device(), w1_process() is not really
+invoked, before w1_process() starting, if kthread_stop() is called
+in __w1_remove_master_device(), w1_process() will never be called,
+the refcnt can not be decreased, then it causes deadloop in remove
+function because of non-zero refcnt.
+
+We need to make sure w1_process() is really started, so move the
+set refcnt into w1_process() to fix this problem.
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20221205080434.3149205-1-yangyingliang@huawei.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/intel-ish-hid/ishtp/dma-if.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/w1/w1.c     | 2 ++
+ drivers/w1/w1_int.c | 5 ++---
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hid/intel-ish-hid/ishtp/dma-if.c b/drivers/hid/intel-ish-hid/ishtp/dma-if.c
-index 2783f3666114..ff4419c8ed4f 100644
---- a/drivers/hid/intel-ish-hid/ishtp/dma-if.c
-+++ b/drivers/hid/intel-ish-hid/ishtp/dma-if.c
-@@ -113,6 +113,11 @@ void *ishtp_cl_get_dma_send_buf(struct ishtp_device *dev,
- 	int required_slots = (size / DMA_SLOT_SIZE)
- 		+ 1 * (size % DMA_SLOT_SIZE != 0);
+diff --git a/drivers/w1/w1.c b/drivers/w1/w1.c
+index 6f9e9505b34c..44315f9fd669 100644
+--- a/drivers/w1/w1.c
++++ b/drivers/w1/w1.c
+@@ -1136,6 +1136,8 @@ int w1_process(void *data)
+ 	/* remainder if it woke up early */
+ 	unsigned long jremain = 0;
  
-+	if (!dev->ishtp_dma_tx_map) {
-+		dev_err(dev->devc, "Fail to allocate Tx map\n");
-+		return NULL;
-+	}
++	atomic_inc(&dev->refcnt);
 +
- 	spin_lock_irqsave(&dev->ishtp_dma_tx_lock, flags);
- 	for (i = 0; i <= (dev->ishtp_dma_num_slots - required_slots); i++) {
- 		free = 1;
-@@ -159,6 +164,11 @@ void ishtp_cl_release_dma_acked_mem(struct ishtp_device *dev,
- 		return;
- 	}
+ 	for (;;) {
  
-+	if (!dev->ishtp_dma_tx_map) {
-+		dev_err(dev->devc, "Fail to allocate Tx map\n");
-+		return;
-+	}
-+
- 	i = (msg_addr - dev->ishtp_host_dma_tx_buf) / DMA_SLOT_SIZE;
- 	spin_lock_irqsave(&dev->ishtp_dma_tx_lock, flags);
- 	for (j = 0; j < acked_slots; j++) {
+ 		if (!jremain && dev->search_count) {
+diff --git a/drivers/w1/w1_int.c b/drivers/w1/w1_int.c
+index 1c776178f598..eb851eb44300 100644
+--- a/drivers/w1/w1_int.c
++++ b/drivers/w1/w1_int.c
+@@ -60,10 +60,9 @@ static struct w1_master *w1_alloc_dev(u32 id, int slave_count, int slave_ttl,
+ 	dev->search_count	= w1_search_count;
+ 	dev->enable_pullup	= w1_enable_pullup;
+ 
+-	/* 1 for w1_process to decrement
+-	 * 1 for __w1_remove_master_device to decrement
++	/* For __w1_remove_master_device to decrement
+ 	 */
+-	atomic_set(&dev->refcnt, 2);
++	atomic_set(&dev->refcnt, 1);
+ 
+ 	INIT_LIST_HEAD(&dev->slist);
+ 	INIT_LIST_HEAD(&dev->async_list);
 -- 
 2.39.0
 
