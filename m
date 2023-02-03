@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 306631FBC
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:30:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC69EC433EF;
-	Fri,  3 Feb 2023 10:30:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12D1D1FBC
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:30:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AC2AC433EF;
+	Fri,  3 Feb 2023 10:30:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420219;
-	bh=6HrlNku7YbktY9HGS3wwX4E7ykkzUv05r1m+cn1dGag=;
+	s=korg; t=1675420221;
+	bh=T1fxqDkPY2/wb0zKSnnB1uc6PN1+e2oObFc1+Y5YXkU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FwIxvlmasDIVX42nbN3eOwLhgMzqqD8mNAb2cs+8YL5FuDFkbox3niJGm5c0ltoHP
-	 TvbhoKvS9U8n1yOzJkiyUgjmUtxiDupZGfTY4sPbcPhhZnZeyl5grg9ELLYdDQEhWz
-	 Am5TfIPYEl4w0uvY85HwmYNttx1wwqtV2z5geVv4=
+	b=19qmym9XPMXMHY06s12WZORd6r/9G0WSA2XlwNIoDCy58EpghAZ6RTQNzdpeQZx9J
+	 DSOExSLTIWUzeT0Q3ivFiP0ZcU5TMWVAuvuMsMGJFMmG6dnqI2TvJ4RD0mwekfgJOn
+	 eNz8Qtn7H2ZgPJSBkf5NDr0jRuMTlT/UsV1wCPE8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sriram Yagnaraman <sriram.yagnaraman@est.tech>,
-	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	"Eric W. Biederman" <ebiederm@xmission.com>,
+	Eric Biggers <ebiggers@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 092/134] netfilter: conntrack: fix vtag checks for ABORT/SHUTDOWN_COMPLETE
-Date: Fri,  3 Feb 2023 11:13:17 +0100
-Message-Id: <20230203101028.005763301@linuxfoundation.org>
+Subject: [PATCH 5.4 119/134] hexagon: Fix function name in die()
+Date: Fri,  3 Feb 2023 11:13:44 +0100
+Message-Id: <20230203101029.172862892@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -35,69 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
+From: Nathan Chancellor <nathan@kernel.org>
 
-[ Upstream commit a9993591fa94246b16b444eea55d84c54608282a ]
+commit 4f0712ccec09c071e221242a2db9a6779a55a949 upstream.
 
-RFC 9260, Sec 8.5.1 states that for ABORT/SHUTDOWN_COMPLETE, the chunk
-MUST be accepted if the vtag of the packet matches its own tag and the
-T bit is not set OR if it is set to its peer's vtag and the T bit is set
-in chunk flags. Otherwise the packet MUST be silently dropped.
+When building ARCH=hexagon defconfig:
 
-Update vtag verification for ABORT/SHUTDOWN_COMPLETE based on the above
-description.
+arch/hexagon/kernel/traps.c:217:2: error: implicit declaration of
+function 'make_dead_task' [-Werror,-Wimplicit-function-declaration]
+        make_dead_task(err);
+        ^
 
-Fixes: 9fb9cbb1082d ("[NETFILTER]: Add nf_conntrack subsystem.")
-Signed-off-by: Sriram Yagnaraman <sriram.yagnaraman@est.tech>
-Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
+The function's name is make_task_dead(), change it so there is no more
+build error.
+
+Fixes: 0e25498f8cd4 ("exit: Add and use make_task_dead.")
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lkml.kernel.org/r/20211227184851.2297759-2-nathan@kernel.org
+Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netfilter/nf_conntrack_proto_sctp.c | 25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ arch/hexagon/kernel/traps.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/netfilter/nf_conntrack_proto_sctp.c b/net/netfilter/nf_conntrack_proto_sctp.c
-index 7626f3e1c70a..72d0aa603cd6 100644
---- a/net/netfilter/nf_conntrack_proto_sctp.c
-+++ b/net/netfilter/nf_conntrack_proto_sctp.c
-@@ -412,22 +412,29 @@ int nf_conntrack_sctp_packet(struct nf_conn *ct,
- 	for_each_sctp_chunk (skb, sch, _sch, offset, dataoff, count) {
- 		/* Special cases of Verification tag check (Sec 8.5.1) */
- 		if (sch->type == SCTP_CID_INIT) {
--			/* Sec 8.5.1 (A) */
-+			/* (A) vtag MUST be zero */
- 			if (sh->vtag != 0)
- 				goto out_unlock;
- 		} else if (sch->type == SCTP_CID_ABORT) {
--			/* Sec 8.5.1 (B) */
--			if (sh->vtag != ct->proto.sctp.vtag[dir] &&
--			    sh->vtag != ct->proto.sctp.vtag[!dir])
-+			/* (B) vtag MUST match own vtag if T flag is unset OR
-+			 * MUST match peer's vtag if T flag is set
-+			 */
-+			if ((!(sch->flags & SCTP_CHUNK_FLAG_T) &&
-+			     sh->vtag != ct->proto.sctp.vtag[dir]) ||
-+			    ((sch->flags & SCTP_CHUNK_FLAG_T) &&
-+			     sh->vtag != ct->proto.sctp.vtag[!dir]))
- 				goto out_unlock;
- 		} else if (sch->type == SCTP_CID_SHUTDOWN_COMPLETE) {
--			/* Sec 8.5.1 (C) */
--			if (sh->vtag != ct->proto.sctp.vtag[dir] &&
--			    sh->vtag != ct->proto.sctp.vtag[!dir] &&
--			    sch->flags & SCTP_CHUNK_FLAG_T)
-+			/* (C) vtag MUST match own vtag if T flag is unset OR
-+			 * MUST match peer's vtag if T flag is set
-+			 */
-+			if ((!(sch->flags & SCTP_CHUNK_FLAG_T) &&
-+			     sh->vtag != ct->proto.sctp.vtag[dir]) ||
-+			    ((sch->flags & SCTP_CHUNK_FLAG_T) &&
-+			     sh->vtag != ct->proto.sctp.vtag[!dir]))
- 				goto out_unlock;
- 		} else if (sch->type == SCTP_CID_COOKIE_ECHO) {
--			/* Sec 8.5.1 (D) */
-+			/* (D) vtag must be same as init_vtag as found in INIT_ACK */
- 			if (sh->vtag != ct->proto.sctp.vtag[dir])
- 				goto out_unlock;
- 		} else if (sch->type == SCTP_CID_HEARTBEAT) {
+diff --git a/arch/hexagon/kernel/traps.c b/arch/hexagon/kernel/traps.c
+index bfd04a388bca..f69eae3f32bd 100644
+--- a/arch/hexagon/kernel/traps.c
++++ b/arch/hexagon/kernel/traps.c
+@@ -221,7 +221,7 @@ int die(const char *str, struct pt_regs *regs, long err)
+ 		panic("Fatal exception");
+ 
+ 	oops_exit();
+-	make_dead_task(err);
++	make_task_dead(err);
+ 	return 0;
+ }
+ 
 -- 
 2.39.0
 
