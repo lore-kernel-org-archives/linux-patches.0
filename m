@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ADF2E1FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:26:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 233E1C433EF;
-	Fri,  3 Feb 2023 10:26:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B04AD1FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:26:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AF37C433EF;
+	Fri,  3 Feb 2023 10:26:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420009;
-	bh=kMbTJuFZtzVYtqEkw9Nukwqo6dOiIlkQQ5VHAiXr5tQ=;
+	s=korg; t=1675420012;
+	bh=0xTtpMY3Jtj0UpVNjecMQt5B9aFsguyjROFJ4dMOLa4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a4V9DjrvfkfDOTyJm5E4/SspAm6uQBh/awkcUhXtTMH6VvdUMv186Pj+sozTvCRGS
-	 WfUw8cj5YgbpVwS7RocBX+nnfF8cOKlCT+JS8cMoggnB56Q7+0vzU6vKaDv+Izz5cV
-	 eEQDmhXONnddnF1DVwVkHgsjZk4RBO+T5ohhx1ZY=
+	b=Qk4Zid4wdqfUMeNTxAZmNVksZQiqz1R5A8qmgyfZ0+w7mq+f4goBSX0QOSm107EUb
+	 TKTa4SlL6taXMc+L89IxlcmDI+Nnch4bwCAXlyYcBA+jfMMf3Kv+AZpIA7rGXLAuIe
+	 fFUgU3PAg3oJA7/9OIjHZsV1c6CAKn1ZhzleRhCw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Rakesh Sankaranarayanan <rakesh.sankaranarayanan@microchip.com>,
-	Vladimir Oltean <olteanv@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Yuchung Cheng <ycheng@google.com>,
+	David Morley <morleyd@google.com>,
+	Neal Cardwell <ncardwell@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 050/134] net: dsa: microchip: ksz9477: port map correction in ALU table entry register
-Date: Fri,  3 Feb 2023 11:12:35 +0100
-Message-Id: <20230203101026.123697664@linuxfoundation.org>
+Subject: [PATCH 5.4 051/134] tcp: fix rate_app_limited to default to 1
+Date: Fri,  3 Feb 2023 11:12:36 +0100
+Message-Id: <20230203101026.172127425@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -36,53 +38,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rakesh Sankaranarayanan <rakesh.sankaranarayanan@microchip.com>
+From: David Morley <morleyd@google.com>
 
-[ Upstream commit 6c977c5c2e4c5d8ad1b604724cc344e38f96fe9b ]
+[ Upstream commit 300b655db1b5152d6101bcb6801d50899b20c2d6 ]
 
-ALU table entry 2 register in KSZ9477 have bit positions reserved for
-forwarding port map. This field is referred in ksz9477_fdb_del() for
-clearing forward port map and alu table.
+The initial default value of 0 for tp->rate_app_limited was incorrect,
+since a flow is indeed application-limited until it first sends
+data. Fixing the default to be 1 is generally correct but also
+specifically will help user-space applications avoid using the initial
+tcpi_delivery_rate value of 0 that persists until the connection has
+some non-zero bandwidth sample.
 
-But current fdb_del refer ALU table entry 3 register for accessing forward
-port map. Update ksz9477_fdb_del() to get forward port map from correct
-alu table entry register.
-
-With this bug, issue can be observed while deleting static MAC entries.
-Delete any specific MAC entry using "bridge fdb del" command. This should
-clear all the specified MAC entries. But it is observed that entries with
-self static alone are retained.
-
-Tested on LAN9370 EVB since ksz9477_fdb_del() is used common across
-LAN937x and KSZ series.
-
-Fixes: b987e98e50ab ("dsa: add DSA switch driver for Microchip KSZ9477")
-Signed-off-by: Rakesh Sankaranarayanan <rakesh.sankaranarayanan@microchip.com>
-Reviewed-by: Vladimir Oltean <olteanv@gmail.com>
-Link: https://lore.kernel.org/r/20230118174735.702377-1-rakesh.sankaranarayanan@microchip.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: eb8329e0a04d ("tcp: export data delivery rate")
+Suggested-by: Yuchung Cheng <ycheng@google.com>
+Signed-off-by: David Morley <morleyd@google.com>
+Signed-off-by: Neal Cardwell <ncardwell@google.com>
+Tested-by: David Morley <morleyd@google.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/microchip/ksz9477.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/ipv4/tcp.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/net/dsa/microchip/ksz9477.c b/drivers/net/dsa/microchip/ksz9477.c
-index c66e78b2870d..ba2dc01e0f6b 100644
---- a/drivers/net/dsa/microchip/ksz9477.c
-+++ b/drivers/net/dsa/microchip/ksz9477.c
-@@ -682,10 +682,10 @@ static int ksz9477_port_fdb_del(struct dsa_switch *ds, int port,
- 		ksz_read32(dev, REG_SW_ALU_VAL_D, &alu_table[3]);
+diff --git a/net/ipv4/tcp.c b/net/ipv4/tcp.c
+index 93825ec968aa..a74965a6a54f 100644
+--- a/net/ipv4/tcp.c
++++ b/net/ipv4/tcp.c
+@@ -429,6 +429,7 @@ void tcp_init_sock(struct sock *sk)
  
- 		/* clear forwarding port */
--		alu_table[2] &= ~BIT(port);
-+		alu_table[1] &= ~BIT(port);
+ 	/* There's a bubble in the pipe until at least the first ACK. */
+ 	tp->app_limited = ~0U;
++	tp->rate_app_limited = 1;
  
- 		/* if there is no port to forward, clear table */
--		if ((alu_table[2] & ALU_V_PORT_MAP) == 0) {
-+		if ((alu_table[1] & ALU_V_PORT_MAP) == 0) {
- 			alu_table[0] = 0;
- 			alu_table[1] = 0;
- 			alu_table[2] = 0;
+ 	/* See draft-stevens-tcpca-spec-01 for discussion of the
+ 	 * initialization of these values.
+@@ -2675,6 +2676,7 @@ int tcp_disconnect(struct sock *sk, int flags)
+ 	tp->last_oow_ack_time = 0;
+ 	/* There's a bubble in the pipe until at least the first ACK. */
+ 	tp->app_limited = ~0U;
++	tp->rate_app_limited = 1;
+ 	tp->rack.mstamp = 0;
+ 	tp->rack.advanced = 0;
+ 	tp->rack.reo_wnd_steps = 1;
 -- 
 2.39.0
 
