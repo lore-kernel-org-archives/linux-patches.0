@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42A4D1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:17:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF6F9C433EF;
-	Fri,  3 Feb 2023 10:17:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 326391FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:17:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3168C433EF;
+	Fri,  3 Feb 2023 10:17:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419436;
-	bh=Y+IBNpG8WHY4TlSbPlQo/difBj8aGI83NtMEs+c9kMo=;
+	s=korg; t=1675419439;
+	bh=7TB58F2YJRfwdowX6BjU2VDFV/ZoHgwBV6QbWTkAs9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TsJq85x1dE5OuWrt8ZgZgVAlKXhvFCxnPMtfuqgSMi1biO1TAd4Y8NAUIJRArNokl
-	 YugY09UagQlehCd36JHrWov/0ykcb/xG2p+/qLO6eTfxNekOEGhCKAp+dP927KSYjD
-	 oYEb7p89o/kdrLJkhKV+VwAEBalzZvsicop0+hN8=
+	b=EUKge8e+dU/PFEWJWi2u3QSSKjAFqt+T5q88WW7WSYoD/mTWKiZNZXWEfBLC0qrf7
+	 Xat0gKgrRjIHhrdlXQzjblkOuw3f5KaV6dehsEFZK0+YDZMBoUaxbaj1xnu3O37uan
+	 Oq7/Qjdqf5JsAVzjvCn3c/bOZpAmm5UftYeVvyUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baoquan He <bhe@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 4.14 38/62] x86/i8259: Mark legacy PIC interrupts with IRQ_LEVEL
-Date: Fri,  3 Feb 2023 11:12:34 +0100
-Message-Id: <20230203101014.633031651@linuxfoundation.org>
+	Luca Weiss <luca.weiss@fairphone.com>,
+	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Steev Klimaszewski <steev@kali.org>,
+	Andrew Halaney <ahalaney@redhat.com>
+Subject: [PATCH 4.14 29/62] EDAC/device: Respect any driver-supplied workqueue polling value
+Date: Fri,  3 Feb 2023 11:12:25 +0100
+Message-Id: <20230203101014.267522357@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -34,61 +37,79 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Gleixner <tglx@linutronix.de>
+From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 
-commit 5fa55950729d0762a787451dc52862c3f850f859 upstream.
+commit cec669ff716cc83505c77b242aecf6f7baad869d upstream.
 
-Baoquan reported that after triggering a crash the subsequent crash-kernel
-fails to boot about half of the time. It triggers a NULL pointer
-dereference in the periodic tick code.
+The EDAC drivers may optionally pass the poll_msec value. Use that value
+if available, else fall back to 1000ms.
 
-This happens because the legacy timer interrupt (IRQ0) is resent in
-software which happens in soft interrupt (tasklet) context. In this context
-get_irq_regs() returns NULL which leads to the NULL pointer dereference.
+  [ bp: Touchups. ]
 
-The reason for the resend is a spurious APIC interrupt on the IRQ0 vector
-which is captured and leads to a resend when the legacy timer interrupt is
-enabled. This is wrong because the legacy PIC interrupts are level
-triggered and therefore should never be resent in software, but nothing
-ever sets the IRQ_LEVEL flag on those interrupts, so the core code does not
-know about their trigger type.
-
-Ensure that IRQ_LEVEL is set when the legacy PCI interrupts are set up.
-
-Fixes: a4633adcdbc1 ("[PATCH] genirq: add genirq sw IRQ-retrigger")
-Reported-by: Baoquan He <bhe@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
-Tested-by: Baoquan He <bhe@redhat.com>
-Link: https://lore.kernel.org/r/87mt6rjrra.ffs@tglx
+Fixes: e27e3dac6517 ("drivers/edac: add edac_device class")
+Reported-by: Luca Weiss <luca.weiss@fairphone.com>
+Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
+Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
+Cc: <stable@vger.kernel.org> # 4.9
+Link: https://lore.kernel.org/r/COZYL8MWN97H.MROQ391BGA09@otso
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/i8259.c   |    1 +
- arch/x86/kernel/irqinit.c |    4 +++-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/edac/edac_device.c |   15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
---- a/arch/x86/kernel/i8259.c
-+++ b/arch/x86/kernel/i8259.c
-@@ -114,6 +114,7 @@ static void make_8259A_irq(unsigned int
- 	disable_irq_nosync(irq);
- 	io_apic_irqs &= ~(1<<irq);
- 	irq_set_chip_and_handler(irq, &i8259A_chip, handle_level_irq);
-+	irq_set_status_flags(irq, IRQ_LEVEL);
- 	enable_irq(irq);
- }
+--- a/drivers/edac/edac_device.c
++++ b/drivers/edac/edac_device.c
+@@ -34,6 +34,9 @@
+ static DEFINE_MUTEX(device_ctls_mutex);
+ static LIST_HEAD(edac_device_list);
  
---- a/arch/x86/kernel/irqinit.c
-+++ b/arch/x86/kernel/irqinit.c
-@@ -67,8 +67,10 @@ void __init init_ISA_irqs(void)
- #endif
- 	legacy_pic->init(0);
++/* Default workqueue processing interval on this instance, in msecs */
++#define DEFAULT_POLL_INTERVAL 1000
++
+ #ifdef CONFIG_EDAC_DEBUG
+ static void edac_device_dump_device(struct edac_device_ctl_info *edac_dev)
+ {
+@@ -366,7 +369,7 @@ static void edac_device_workq_function(s
+ 	 * whole one second to save timers firing all over the period
+ 	 * between integral seconds
+ 	 */
+-	if (edac_dev->poll_msec == 1000)
++	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
+ 		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
+ 	else
+ 		edac_queue_work(&edac_dev->work, edac_dev->delay);
+@@ -396,7 +399,7 @@ static void edac_device_workq_setup(stru
+ 	 * timers firing on sub-second basis, while they are happy
+ 	 * to fire together on the 1 second exactly
+ 	 */
+-	if (edac_dev->poll_msec == 1000)
++	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
+ 		edac_queue_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
+ 	else
+ 		edac_queue_work(&edac_dev->work, edac_dev->delay);
+@@ -430,7 +433,7 @@ void edac_device_reset_delay_period(stru
+ 	edac_dev->delay	    = msecs_to_jiffies(msec);
  
--	for (i = 0; i < nr_legacy_irqs(); i++)
-+	for (i = 0; i < nr_legacy_irqs(); i++) {
- 		irq_set_chip_and_handler(i, chip, handle_level_irq);
-+		irq_set_status_flags(i, IRQ_LEVEL);
-+	}
- }
+ 	/* See comment in edac_device_workq_setup() above */
+-	if (edac_dev->poll_msec == 1000)
++	if (edac_dev->poll_msec == DEFAULT_POLL_INTERVAL)
+ 		edac_mod_work(&edac_dev->work, round_jiffies_relative(edac_dev->delay));
+ 	else
+ 		edac_mod_work(&edac_dev->work, edac_dev->delay);
+@@ -472,11 +475,7 @@ int edac_device_add_device(struct edac_d
+ 		/* This instance is NOW RUNNING */
+ 		edac_dev->op_state = OP_RUNNING_POLL;
  
- void __init init_IRQ(void)
+-		/*
+-		 * enable workq processing on this instance,
+-		 * default = 1000 msec
+-		 */
+-		edac_device_workq_setup(edac_dev, 1000);
++		edac_device_workq_setup(edac_dev, edac_dev->poll_msec ?: DEFAULT_POLL_INTERVAL);
+ 	} else {
+ 		edac_dev->op_state = OP_RUNNING_INTERRUPT;
+ 	}
 
 
