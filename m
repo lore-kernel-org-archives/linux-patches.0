@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB5471FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:22:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69766C4339B;
-	Fri,  3 Feb 2023 10:22:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE941FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:22:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B4A3C433EF;
+	Fri,  3 Feb 2023 10:22:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419742;
-	bh=Kfm10YM4wOU9MMngm6aaYAT2Dw2J8RCuxn/H1CXoZ0Q=;
+	s=korg; t=1675419746;
+	bh=SGhr37+TV6G0LvjAGKsSRgYYqvpyCDZRUG+oipTEypM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y6Ns3rNYGF2L5dkiuwJ/IqQPLcBMfsU6TL5c/biQNqBBEVEWrPQCVnSkTl88mga8+
-	 /JVzLwo6PjlaQREJdCvSxPzj1YyCAfLKaCa3+7pGMc67ExKwDiTA5/jy2M8HCL/LtF
-	 KjHIkOt/lQJgQ7S8yrGkdNDIYS9bMwq0I7AhiIrY=
+	b=ukEfSm1tfsA3xFZjSIqV8m0fT6GAOgi3qmxhjDm9hOh2iV5ElUs4L3rDDE2LOH5oL
+	 TSMzcMDv4xXPCTWJMdIWR3TdafQe7fIDsGERUUgjsECotNukqtFKhQaAyp0HQVNWGr
+	 aHCuopzYPMoosVpqSqO19YvMmibFsg5rgb5mihss=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>,
+	Janne Grunau <j@jannau.net>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 22/28] cifs: fix return of uninitialized rc in dfs_cache_update_tgthint()
-Date: Fri,  3 Feb 2023 11:13:10 +0100
-Message-Id: <20230203101010.917245367@linuxfoundation.org>
+Subject: [PATCH 6.1 23/28] nvme-apple: only reset the controller when RTKit is running
+Date: Fri,  3 Feb 2023 11:13:11 +0100
+Message-Id: <20230203101010.958075281@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
 References: <20230203101009.946745030@linuxfoundation.org>
@@ -36,40 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paulo Alcantara <pc@cjr.nz>
+From: Janne Grunau <j@jannau.net>
 
-[ Upstream commit d6a49e8c4ca4d399ed65ac219585187fc8c2e2b1 ]
+[ Upstream commit c0a4a1eafbd48e02829045bba3e6163c03037276 ]
 
-Fix this by initializing rc to 0 as cache_refresh_path() would not set
-it in case of success.
+NVMe controller register access hangs indefinitely when the co-processor
+is not running. A missed reset is preferable over a hanging thread since
+it could be recoverable.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Link: https://lore.kernel.org/all/202301190004.bEHvbKG6-lkp@intel.com/
-Signed-off-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Signed-off-by: Janne Grunau <j@jannau.net>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/cifs/dfs_cache.c | 6 +++---
+ drivers/nvme/host/apple.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/fs/cifs/dfs_cache.c b/fs/cifs/dfs_cache.c
-index 4302dc75843c..3bc1d3494be3 100644
---- a/fs/cifs/dfs_cache.c
-+++ b/fs/cifs/dfs_cache.c
-@@ -1050,10 +1050,10 @@ int dfs_cache_update_tgthint(const unsigned int xid, struct cifs_ses *ses,
- 			     const struct nls_table *cp, int remap, const char *path,
- 			     const struct dfs_cache_tgt_iterator *it)
- {
--	int rc;
--	const char *npath;
--	struct cache_entry *ce;
- 	struct cache_dfs_tgt *t;
-+	struct cache_entry *ce;
-+	const char *npath;
-+	int rc = 0;
+diff --git a/drivers/nvme/host/apple.c b/drivers/nvme/host/apple.c
+index ff8b083dc5c6..262d2b60ac6d 100644
+--- a/drivers/nvme/host/apple.c
++++ b/drivers/nvme/host/apple.c
+@@ -987,11 +987,11 @@ static void apple_nvme_reset_work(struct work_struct *work)
+ 		goto out;
+ 	}
  
- 	npath = dfs_cache_canonical_path(path, cp, remap);
- 	if (IS_ERR(npath))
+-	if (anv->ctrl.ctrl_config & NVME_CC_ENABLE)
+-		apple_nvme_disable(anv, false);
+-
+ 	/* RTKit must be shut down cleanly for the (soft)-reset to work */
+ 	if (apple_rtkit_is_running(anv->rtk)) {
++		/* reset the controller if it is enabled */
++		if (anv->ctrl.ctrl_config & NVME_CC_ENABLE)
++			apple_nvme_disable(anv, false);
+ 		dev_dbg(anv->dev, "Trying to shut down RTKit before reset.");
+ 		ret = apple_rtkit_shutdown(anv->rtk);
+ 		if (ret)
 -- 
 2.39.0
 
