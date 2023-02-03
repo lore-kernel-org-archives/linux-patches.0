@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40E0C1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9A389C433EF;
-	Fri,  3 Feb 2023 10:21:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3283F1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A588DC433D2;
+	Fri,  3 Feb 2023 10:21:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419666;
-	bh=sWNmFSAJP0r7Cr2Lz17OUH6SAVoWFwd0TaQ7BzeDIGY=;
+	s=korg; t=1675419669;
+	bh=pVFhmK1OzbLwAKw8v2EFl1woG6UUyLfwuaTOEDUyuDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eFe8Hwc6j28YK3k+8hzK/+TifMZyqjhETfaUO5uMT9fbNYo3VixGN8/r6fyFC1Lh0
-	 ENnPW8hGNNvepAZhj9XuJE83iNeSn1W5ZJRZVP4AKYBNkNOY0DfJYIwCf5mAp45LZW
-	 UXC3Xy+W2SZ8zu57FmN4dNYtY+eLvTR4XQHoP3lI=
+	b=jz+VuyhhewXJIEoBcCFBxMO4PyhWStArFGSyEKa4KL5QdcwBLX4hPRN0dUuEMTGK/
+	 95EboZBpLGNk4KKt6ouucLEkBfj7+LdO8sAUGm5Y2SdIAYxXNevtx23dT2FSkfsz8B
+	 WX7GJbFS3dYT9HUHaJKqs/A2PLvvhu0ExD5tfCVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Yu <zhangyu31@baidu.com>,
-	Li RongQing <lirongqing@baidu.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	syzbot <syzkaller@googlegroups.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 47/80] netlink: remove hash::nelems check in netlink_insert
-Date: Fri,  3 Feb 2023 11:12:41 +0100
-Message-Id: <20230203101017.236992079@linuxfoundation.org>
+Subject: [PATCH 4.19 48/80] netlink: annotate data races around nlk->portid
+Date: Fri,  3 Feb 2023 11:12:42 +0100
+Message-Id: <20230203101017.278060031@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
 References: <20230203101015.263854890@linuxfoundation.org>
@@ -36,42 +36,85 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Li RongQing <lirongqing@baidu.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit 0041195d55bc38df6b574cc8c36dcf2266fbee39 ]
+[ Upstream commit c1bb9484e3b05166880da8574504156ccbd0549e ]
 
-The type of hash::nelems has been changed from size_t to atom_t
-which in fact is int, so not need to check if BITS_PER_LONG, that
-is bit number of size_t, is bigger than 32
+syzbot reminds us netlink_getname() runs locklessly [1]
 
-and rht_grow_above_max() will be called to check if hashtable is
-too big, ensure it can not bigger than 1<<31
+This first patch annotates the race against nlk->portid.
 
-Signed-off-by: Zhang Yu <zhangyu31@baidu.com>
-Signed-off-by: Li RongQing <lirongqing@baidu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: c1bb9484e3b0 ("netlink: annotate data races around nlk->portid")
+Following patches take care of the remaining races.
+
+[1]
+BUG: KCSAN: data-race in netlink_getname / netlink_insert
+
+write to 0xffff88814176d310 of 4 bytes by task 2315 on cpu 1:
+netlink_insert+0xf1/0x9a0 net/netlink/af_netlink.c:583
+netlink_autobind+0xae/0x180 net/netlink/af_netlink.c:856
+netlink_sendmsg+0x444/0x760 net/netlink/af_netlink.c:1895
+sock_sendmsg_nosec net/socket.c:714 [inline]
+sock_sendmsg net/socket.c:734 [inline]
+____sys_sendmsg+0x38f/0x500 net/socket.c:2476
+___sys_sendmsg net/socket.c:2530 [inline]
+__sys_sendmsg+0x19a/0x230 net/socket.c:2559
+__do_sys_sendmsg net/socket.c:2568 [inline]
+__se_sys_sendmsg net/socket.c:2566 [inline]
+__x64_sys_sendmsg+0x42/0x50 net/socket.c:2566
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+read to 0xffff88814176d310 of 4 bytes by task 2316 on cpu 0:
+netlink_getname+0xcd/0x1a0 net/netlink/af_netlink.c:1144
+__sys_getsockname+0x11d/0x1b0 net/socket.c:2026
+__do_sys_getsockname net/socket.c:2041 [inline]
+__se_sys_getsockname net/socket.c:2038 [inline]
+__x64_sys_getsockname+0x3e/0x50 net/socket.c:2038
+do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+do_syscall_64+0x2b/0x70 arch/x86/entry/common.c:80
+entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+value changed: 0x00000000 -> 0xc9a49780
+
+Reported by Kernel Concurrency Sanitizer on:
+CPU: 0 PID: 2316 Comm: syz-executor.2 Not tainted 6.2.0-rc3-syzkaller-00030-ge8f60cd7db24-dirty #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
+
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/netlink/af_netlink.c | 5 -----
- 1 file changed, 5 deletions(-)
+ net/netlink/af_netlink.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/net/netlink/af_netlink.c b/net/netlink/af_netlink.c
-index 6ffa83319d08..966c709c3831 100644
+index 966c709c3831..52bf99ed7093 100644
 --- a/net/netlink/af_netlink.c
 +++ b/net/netlink/af_netlink.c
-@@ -578,11 +578,6 @@ static int netlink_insert(struct sock *sk, u32 portid)
+@@ -578,7 +578,9 @@ static int netlink_insert(struct sock *sk, u32 portid)
  	if (nlk_sk(sk)->bound)
  		goto err;
  
--	err = -ENOMEM;
--	if (BITS_PER_LONG > 32 &&
--	    unlikely(atomic_read(&table->hash.nelems) >= UINT_MAX))
--		goto err;
--
- 	nlk_sk(sk)->portid = portid;
+-	nlk_sk(sk)->portid = portid;
++	/* portid can be read locklessly from netlink_getname(). */
++	WRITE_ONCE(nlk_sk(sk)->portid, portid);
++
  	sock_hold(sk);
  
+ 	err = __netlink_insert(table, sk);
+@@ -1133,7 +1135,8 @@ static int netlink_getname(struct socket *sock, struct sockaddr *addr,
+ 		nladdr->nl_pid = nlk->dst_portid;
+ 		nladdr->nl_groups = netlink_group_mask(nlk->dst_group);
+ 	} else {
+-		nladdr->nl_pid = nlk->portid;
++		/* Paired with WRITE_ONCE() in netlink_insert() */
++		nladdr->nl_pid = READ_ONCE(nlk->portid);
+ 		netlink_lock_table();
+ 		nladdr->nl_groups = nlk->groups ? nlk->groups[0] : 0;
+ 		netlink_unlock_table();
 -- 
 2.39.0
 
