@@ -1,24 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F9E1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:15:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E6CDC433EF;
-	Fri,  3 Feb 2023 10:15:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D03E1FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:15:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AEA91C433D2;
+	Fri,  3 Feb 2023 10:15:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419351;
-	bh=ci2wQ74Ka6aZRuRC4wL+H/8zkWkpnEHNMXxW19TnQWY=;
+	s=korg; t=1675419354;
+	bh=UnE3vT5uESBE6CIl+3rDhCyUoCgqJKfhAFu6i7XDVl4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HrLs+4BuLNw2iywtnE9XxHABwlyRPOpqUYrgDkzLU3PJ15zj8Nz8205AutIOF1nJm
-	 O91iNmrRUu/BVCpSdRwsRTQcdEhULL6jx+GhZ63Zt05TNSrIfigawJGlYmoRapp/LB
-	 4R/Nqn+1Ma9rKmZHMtIqcrU3eiAkqmBF7ywgX3as=
+	b=s0cDtN5jcJtoDvTs2ykZs3e3uu/J4kxmrp+rdx8C95GYMZ04GeXeq7gq81KCCMX/Y
+	 ghF2Zv6Trl0ReR4CF0a+GeVRw5//B2OuwpfRaqq5y1wNhpfgP2w+9Do1rNMxhFPyL5
+	 HdCMDruUogBukAasLDlaJgwY2E2DjFmy472vcIOY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev
-Subject: [PATCH 4.14 40/62] xen: Fix up build warning with xen_init_time_ops() reference
-Date: Fri,  3 Feb 2023 11:12:36 +0100
-Message-Id: <20230203101014.695568832@linuxfoundation.org>
+	patches@lists.linux.dev,
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 4.14 41/62] drm/radeon/dp: make radeon_dp_get_dp_link_config static
+Date: Fri,  3 Feb 2023 11:12:37 +0100
+Message-Id: <20230203101014.732770326@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -32,32 +34,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-Somehow the xen_init_time_ops() reference got out of sync in the 4.14.y
-tree (or it never was in sync), and now there's a build warning.  Fix
-that up by making xen_init_time_ops() be __init, not __ref.
+commit d3f04c98ead2b89887e1e3c09b26e4917bacdd9e upstream.
 
+It's not used outside this file any longer.
+
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/xen/time.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/radeon/atombios_dp.c |    8 ++++----
+ drivers/gpu/drm/radeon/radeon_mode.h |    4 ----
+ 2 files changed, 4 insertions(+), 8 deletions(-)
 
-diff --git a/arch/x86/xen/time.c b/arch/x86/xen/time.c
-index 03706331f567..8ecc38110bcc 100644
---- a/arch/x86/xen/time.c
-+++ b/arch/x86/xen/time.c
-@@ -516,7 +516,7 @@ static void __init xen_time_init(void)
- 		pvclock_gtod_register_notifier(&xen_pvclock_gtod_notifier);
- }
+--- a/drivers/gpu/drm/radeon/atombios_dp.c
++++ b/drivers/gpu/drm/radeon/atombios_dp.c
+@@ -302,10 +302,10 @@ static int convert_bpc_to_bpp(int bpc)
  
--void __ref xen_init_time_ops(void)
-+void __init xen_init_time_ops(void)
+ /***** radeon specific DP functions *****/
+ 
+-int radeon_dp_get_dp_link_config(struct drm_connector *connector,
+-				 const u8 dpcd[DP_DPCD_SIZE],
+-				 unsigned pix_clock,
+-				 unsigned *dp_lanes, unsigned *dp_rate)
++static int radeon_dp_get_dp_link_config(struct drm_connector *connector,
++					const u8 dpcd[DP_DPCD_SIZE],
++					unsigned pix_clock,
++					unsigned *dp_lanes, unsigned *dp_rate)
  {
- 	xen_sched_clock_offset = xen_clocksource_read();
- 	pv_time_ops = xen_time_ops;
--- 
-2.39.1
-
+ 	int bpp = convert_bpc_to_bpp(radeon_get_monitor_bpc(connector));
+ 	static const unsigned link_rates[3] = { 162000, 270000, 540000 };
+--- a/drivers/gpu/drm/radeon/radeon_mode.h
++++ b/drivers/gpu/drm/radeon/radeon_mode.h
+@@ -762,10 +762,6 @@ extern u8 radeon_dp_getsinktype(struct r
+ extern bool radeon_dp_getdpcd(struct radeon_connector *radeon_connector);
+ extern int radeon_dp_get_panel_mode(struct drm_encoder *encoder,
+ 				    struct drm_connector *connector);
+-extern int radeon_dp_get_dp_link_config(struct drm_connector *connector,
+-					const u8 *dpcd,
+-					unsigned pix_clock,
+-					unsigned *dp_lanes, unsigned *dp_rate);
+ extern void radeon_dp_set_rx_power_state(struct drm_connector *connector,
+ 					 u8 power_state);
+ extern void radeon_dp_aux_init(struct radeon_connector *radeon_connector);
 
 
