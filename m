@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 841B51FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:14:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE56DC4339C;
-	Fri,  3 Feb 2023 10:14:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6621FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:14:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F5D6C433EF;
+	Fri,  3 Feb 2023 10:14:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419275;
-	bh=0AZmkI7q5XU4UUTe/jJ3VU4lsC6+IOtcvre012hFDCc=;
+	s=korg; t=1675419278;
+	bh=Lw3R6106//KBTq0Ltx2yrM0QNokyGmX5H1FHoBfHhWQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bJijimsArQUskiW00Z6p3Zwb0EjtB1B6gVMYTemUZFr7/RTNOPo1j6nUfJ1wLHj5W
-	 kwf7nawHFj4hfBazBRvITcMEB+lZFMy8CPKpqwvy4yQGUzJfYA3Lh4wfJs2XiwphrM
-	 vNvruM7fEpCnPk/izOKlOUCre2lRLvgLMmcZOq3w=
+	b=UtrAjOAn62DRR84nv92v5im0lfuYT3NvicfyXid8bOrtFKG74KEzpsOqmzojcUEUP
+	 zboguwaMGmzClWMgzlBVjJAQk3DZolmlC/pncFWtPUb3u1Y43nGywNXEvohlDsxenf
+	 vKGHTBQB4b7mdGCym00xDQeka0tFBwM6Kv/p2zIA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Udipto Goswami <quic_ugoswami@quicinc.com>,
 	Krishna Kurapati <quic_kriskura@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 15/62] usb: gadget: f_fs: Prevent race during ffs_ep0_queue_wait
-Date: Fri,  3 Feb 2023 11:12:11 +0100
-Message-Id: <20230203101013.665713966@linuxfoundation.org>
+Subject: [PATCH 4.14 16/62] usb: gadget: f_fs: Ensure ep0req is dequeued before free_request
+Date: Fri,  3 Feb 2023 11:12:12 +0100
+Message-Id: <20230203101013.716978093@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -37,57 +37,39 @@ Content-Transfer-Encoding: 8bit
 
 From: Udipto Goswami <quic_ugoswami@quicinc.com>
 
-[ Upstream commit 6a19da111057f69214b97c62fb0ac59023970850 ]
+[ Upstream commit ce405d561b020e5a46340eb5146805a625dcacee ]
 
-While performing fast composition switch, there is a possibility that the
-process of ffs_ep0_write/ffs_ep0_read get into a race condition
-due to ep0req being freed up from functionfs_unbind.
+As per the documentation, function usb_ep_free_request guarantees
+the request will not be queued or no longer be re-queued (or
+otherwise used). However, with the current implementation it
+doesn't make sure that the request in ep0 isn't reused.
 
-Consider the scenario that the ffs_ep0_write calls the ffs_ep0_queue_wait
-by taking a lock &ffs->ev.waitq.lock. However, the functionfs_unbind isn't
-bounded so it can go ahead and mark the ep0req to NULL, and since there
-is no NULL check in ffs_ep0_queue_wait we will end up in use-after-free.
-
-Fix this by making a serialized execution between the two functions using
-a mutex_lock(ffs->mutex).
+Fix this by dequeuing the ep0req on functionfs_unbind before
+freeing the request to align with the definition.
 
 Fixes: ddf8abd25994 ("USB: f_fs: the FunctionFS driver")
 Signed-off-by: Udipto Goswami <quic_ugoswami@quicinc.com>
 Tested-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Link: https://lore.kernel.org/r/20221215052906.8993-2-quic_ugoswami@quicinc.com
+Link: https://lore.kernel.org/r/20221215052906.8993-3-quic_ugoswami@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_fs.c | 5 +++++
- 1 file changed, 5 insertions(+)
+ drivers/usb/gadget/function/f_fs.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
 diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
-index 13a38ed806df..df880fe73088 100644
+index df880fe73088..946cf039eddd 100644
 --- a/drivers/usb/gadget/function/f_fs.c
 +++ b/drivers/usb/gadget/function/f_fs.c
-@@ -274,6 +274,9 @@ static int __ffs_ep0_queue_wait(struct ffs_data *ffs, char *data, size_t len)
- 	struct usb_request *req = ffs->ep0req;
- 	int ret;
- 
-+	if (!req)
-+		return -EINVAL;
-+
- 	req->zero     = len < le16_to_cpu(ffs->ev.setup.wLength);
- 
- 	spin_unlock_irq(&ffs->ev.waitq.lock);
-@@ -1797,10 +1800,12 @@ static void functionfs_unbind(struct ffs_data *ffs)
+@@ -1800,6 +1800,8 @@ static void functionfs_unbind(struct ffs_data *ffs)
  	ENTER();
  
  	if (!WARN_ON(!ffs->gadget)) {
-+		mutex_lock(&ffs->mutex);
++		/* dequeue before freeing ep0req */
++		usb_ep_dequeue(ffs->gadget->ep0, ffs->ep0req);
+ 		mutex_lock(&ffs->mutex);
  		usb_ep_free_request(ffs->gadget->ep0, ffs->ep0req);
  		ffs->ep0req = NULL;
- 		ffs->gadget = NULL;
- 		clear_bit(FFS_FL_BOUND, &ffs->flags);
-+		mutex_unlock(&ffs->mutex);
- 		ffs_data_put(ffs);
- 	}
- }
 -- 
 2.39.0
 
