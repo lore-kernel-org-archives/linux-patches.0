@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCF261FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:27:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E40AC433D2;
-	Fri,  3 Feb 2023 10:27:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10DC31FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:27:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81855C433D2;
+	Fri,  3 Feb 2023 10:27:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420046;
-	bh=8Z+/H/jfAMpjZtXvvjZQ7vLgoTAnpHyHMhT1kzXVJcM=;
+	s=korg; t=1675420049;
+	bh=PspiVEo4OHcGeMoRBT7C8m7qnHXLDga3iTlZGgnGtuk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GQ3JbYBa+T1gyYEr8ebqqxVOVrSi5AiXzDcVGr85nLop0rzd6UMDT1imB1I2WwNEH
-	 uyRRLbw7KltybA0GcyNV7BPwkD1slsnJiqFkka3sy1SLwWvwNRtDsUk0Kh4uGvneav
-	 AezfA4qQoRPNlpfVX4O37wlA+dR7elUl3Iqojiaw=
+	b=HQ4PQhSOuzcK+eQ/zAwkXYLxa3d/up3Nd1yk/cL7HFFeoWiFRgg3i42sASWqcqDoA
+	 5f+lnuM85fw81TJzPInzik5Ye3YpAWLjzJX6mde5cu7595i6KuLoGKdBIEdc+U3n0y
+	 wthNz4e3/+AuDZLwHe8DPUs3GyVILTfCZTCD8qUI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Esina Ekaterina <eesina@astralinux.ru>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 032/134] HID: check empty report_list in hid_validate_values()
-Date: Fri,  3 Feb 2023 11:12:17 +0100
-Message-Id: <20230203101025.311756022@linuxfoundation.org>
+Subject: [PATCH 5.4 023/134] net: wan: Add checks for NULL for utdm in undo_uhdlc_init and unmap_si_regs
+Date: Fri,  3 Feb 2023 11:12:08 +0100
+Message-Id: <20230203101024.879965775@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -35,40 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Esina Ekaterina <eesina@astralinux.ru>
 
-[ Upstream commit b12fece4c64857e5fab4290bf01b2e0317a88456 ]
+[ Upstream commit 488e0bf7f34af3d42d1d5e56f7a5a7beaff188a3 ]
 
-Add a check for empty report_list in hid_validate_values().
-The missing check causes a type confusion when issuing a list_entry()
-on an empty report_list.
-The problem is caused by the assumption that the device must
-have valid report_list. While this will be true for all normal HID
-devices, a suitably malicious device can violate the assumption.
+If uhdlc_priv_tsa != 1 then utdm is not initialized.
+And if ret != NULL then goto undo_uhdlc_init, where
+utdm is dereferenced. Same if dev == NULL.
 
-Fixes: 1b15d2e5b807 ("HID: core: fix validation of report id 0")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+Found by Astra Linux on behalf of Linux Verification Center
+(linuxtesting.org) with SVACE.
+
+Fixes: 8d68100ab4ad ("soc/fsl/qe: fix err handling of ucc_of_parse_tdm")
+Signed-off-by: Esina Ekaterina <eesina@astralinux.ru>
+Link: https://lore.kernel.org/r/20230112074703.13558-1-eesina@astralinux.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-core.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wan/fsl_ucc_hdlc.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
-index eda96c92977b..2888bd5502f3 100644
---- a/drivers/hid/hid-core.c
-+++ b/drivers/hid/hid-core.c
-@@ -981,8 +981,8 @@ struct hid_report *hid_validate_values(struct hid_device *hid,
- 		 * Validating on id 0 means we should examine the first
- 		 * report in the list.
- 		 */
--		report = list_entry(
--				hid->report_enum[type].report_list.next,
-+		report = list_first_entry_or_null(
-+				&hid->report_enum[type].report_list,
- 				struct hid_report, list);
- 	} else {
- 		report = hid->report_enum[type].report_id_hash[id];
+diff --git a/drivers/net/wan/fsl_ucc_hdlc.c b/drivers/net/wan/fsl_ucc_hdlc.c
+index 034eb6535ab7..46077cef855b 100644
+--- a/drivers/net/wan/fsl_ucc_hdlc.c
++++ b/drivers/net/wan/fsl_ucc_hdlc.c
+@@ -1249,9 +1249,11 @@ static int ucc_hdlc_probe(struct platform_device *pdev)
+ free_dev:
+ 	free_netdev(dev);
+ undo_uhdlc_init:
+-	iounmap(utdm->siram);
++	if (utdm)
++		iounmap(utdm->siram);
+ unmap_si_regs:
+-	iounmap(utdm->si_regs);
++	if (utdm)
++		iounmap(utdm->si_regs);
+ free_utdm:
+ 	if (uhdlc_priv->tsa)
+ 		kfree(utdm);
 -- 
 2.39.0
 
