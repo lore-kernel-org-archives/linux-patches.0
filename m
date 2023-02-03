@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 479261FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:28:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1760C433A7;
-	Fri,  3 Feb 2023 10:28:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 724D21FB9
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:28:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC878C433EF;
+	Fri,  3 Feb 2023 10:28:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420111;
-	bh=sx80RY1j1NA+28Zxc/ujMkWRNWUMKpnPcPs4BqBBH0M=;
+	s=korg; t=1675420114;
+	bh=NuBiGS8R60NjYxqjfUa/4a3Psxr8CNyMrkwqFlgeYNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=v9Q5t1T37+AcVphpz3UpO0xx1IrgQkwOiV982VSHZut83sNiWHcKbnGrhwH8ifeXt
-	 t954CHVE+dJf48aRWbe7GMytr/PXzwrznmUBBWYKDSF0HNHQEljXYyD1xu2GjeUo8f
-	 MUey4IFQliUdXJeMpKHZukjhr0X4KY1s4iGrEe5c=
+	b=YPNM8IaWmewCcqru7oEN5wiEeZeoVgPSE8KviQpjkxMndXgOnwNV3ntT/HY5glBqy
+	 KajUG6MBHrD9GAbIeak57i50IdkWOHmkdG04YmBfMlOujVi6qwkYTkv1MB8Mg4loOg
+	 U3vgCej0PwzZXmTyuEOtSM2NT4xBctNgU587T/Ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Steev Klimaszewski <steev@kali.org>,
-	Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
-	Andrew Halaney <ahalaney@redhat.com>
-Subject: [PATCH 5.4 083/134] EDAC/qcom: Do not pass llcc_driv_data as edac_device_ctl_infos pvt_info
-Date: Fri,  3 Feb 2023 11:13:08 +0100
-Message-Id: <20230203101027.588817283@linuxfoundation.org>
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 084/134] netlink: prevent potential spectre v1 gadgets
+Date: Fri,  3 Feb 2023 11:13:09 +0100
+Message-Id: <20230203101027.639294733@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -36,58 +35,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+From: Eric Dumazet <edumazet@google.com>
 
-commit 977c6ba624f24ae20cf0faee871257a39348d4a9 upstream.
+[ Upstream commit f0950402e8c76e7dcb08563f1b4e8000fbc62455 ]
 
-The memory for llcc_driv_data is allocated by the LLCC driver. But when
-it is passed as the private driver info to the EDAC core, it will get freed
-during the qcom_edac driver release. So when the qcom_edac driver gets probed
-again, it will try to use the freed data leading to the use-after-free bug.
+Most netlink attributes are parsed and validated from
+__nla_validate_parse() or validate_nla()
 
-Hence, do not pass llcc_driv_data as pvt_info but rather reference it
-using the platform_data pointer in the qcom_edac driver.
+    u16 type = nla_type(nla);
 
-Fixes: 27450653f1db ("drivers: edac: Add EDAC driver support for QCOM SoCs")
-Reported-by: Steev Klimaszewski <steev@kali.org>
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Tested-by: Steev Klimaszewski <steev@kali.org> # Thinkpad X13s
-Tested-by: Andrew Halaney <ahalaney@redhat.com> # sa8540p-ride
-Cc: <stable@vger.kernel.org> # 4.20
-Link: https://lore.kernel.org/r/20230118150904.26913-4-manivannan.sadhasivam@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    if (type == 0 || type > maxtype) {
+        /* error or continue */
+    }
+
+@type is then used as an array index and can be used
+as a Spectre v1 gadget.
+
+array_index_nospec() can be used to prevent leaking
+content of kernel memory to malicious users.
+
+This should take care of vast majority of netlink uses,
+but an audit is needed to take care of others where
+validation is not yet centralized in core netlink functions.
+
+Fixes: bfa83a9e03cf ("[NETLINK]: Type-safe netlink messages/attributes interface")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Link: https://lore.kernel.org/r/20230119110150.2678537-1-edumazet@google.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/edac/qcom_edac.c |    5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+ lib/nlattr.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/edac/qcom_edac.c
-+++ b/drivers/edac/qcom_edac.c
-@@ -252,7 +252,7 @@ clear:
- static int
- dump_syn_reg(struct edac_device_ctl_info *edev_ctl, int err_type, u32 bank)
- {
--	struct llcc_drv_data *drv = edev_ctl->pvt_info;
-+	struct llcc_drv_data *drv = edev_ctl->dev->platform_data;
- 	int ret;
+diff --git a/lib/nlattr.c b/lib/nlattr.c
+index 0d84f79cb4b5..b5ce5e46c06e 100644
+--- a/lib/nlattr.c
++++ b/lib/nlattr.c
+@@ -10,6 +10,7 @@
+ #include <linux/kernel.h>
+ #include <linux/errno.h>
+ #include <linux/jiffies.h>
++#include <linux/nospec.h>
+ #include <linux/skbuff.h>
+ #include <linux/string.h>
+ #include <linux/types.h>
+@@ -169,6 +170,7 @@ static int validate_nla(const struct nlattr *nla, int maxtype,
+ 	if (type <= 0 || type > maxtype)
+ 		return 0;
  
- 	ret = dump_syn_reg_values(drv, bank, err_type);
-@@ -289,7 +289,7 @@ static irqreturn_t
- llcc_ecc_irq_handler(int irq, void *edev_ctl)
- {
- 	struct edac_device_ctl_info *edac_dev_ctl = edev_ctl;
--	struct llcc_drv_data *drv = edac_dev_ctl->pvt_info;
-+	struct llcc_drv_data *drv = edac_dev_ctl->dev->platform_data;
- 	irqreturn_t irq_rc = IRQ_NONE;
- 	u32 drp_error, trp_error, i;
- 	int ret;
-@@ -358,7 +358,6 @@ static int qcom_llcc_edac_probe(struct p
- 	edev_ctl->dev_name = dev_name(dev);
- 	edev_ctl->ctl_name = "llcc";
- 	edev_ctl->panic_on_ue = LLCC_ERP_PANIC_ON_UE;
--	edev_ctl->pvt_info = llcc_driv_data;
++	type = array_index_nospec(type, maxtype + 1);
+ 	pt = &policy[type];
  
- 	rc = edac_device_add_device(edev_ctl);
- 	if (rc)
+ 	BUG_ON(pt->type > NLA_TYPE_MAX);
+@@ -377,6 +379,7 @@ static int __nla_validate_parse(const struct nlattr *head, int len, int maxtype,
+ 			}
+ 			continue;
+ 		}
++		type = array_index_nospec(type, maxtype + 1);
+ 		if (policy) {
+ 			int err = validate_nla(nla, maxtype, policy,
+ 					       validate, extack);
+-- 
+2.39.0
+
 
 
