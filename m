@@ -1,97 +1,105 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-ua1-f54.google.com (mail-ua1-f54.google.com [209.85.222.54])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74C481FBC
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:31:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6E93C433D2;
-	Fri,  3 Feb 2023 10:31:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675420289;
-	bh=b1yZA9BhvISqTldKefzHm6YwhVGopOL6TPdcuDbEgSQ=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0m+onB7OVIeI9D6q0PYvYsn6Fx+hEKvzYc0k9agqabcOVBSMns+DjFWsqoUoEAMA/
-	 vJT/4WFhCzhAmoahiNtfxlcZihGG9I0RStXnXWcj/OOHHIvynsWfE/Qt5NZkYWDZ3U
-	 5eNmaGyzjsEIyx+kP1u9EavKLU+vUIgyW7885XqM=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Guo Ren <guoren@kernel.org>,
-	"Eric W. Biederman" <ebiederm@xmission.com>,
-	Eric Biggers <ebiggers@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 121/134] csky: Fix function name in csky_alignment() and die()
-Date: Fri,  3 Feb 2023 11:13:46 +0100
-Message-Id: <20230203101029.254899632@linuxfoundation.org>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
-References: <20230203101023.832083974@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A37381FBC
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 11:04:52 +0000 (UTC)
+Received: by mail-ua1-f54.google.com with SMTP id u3so905865uae.0
+        for <patches@lists.linux.dev>; Fri, 03 Feb 2023 03:04:52 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=wnrwfiCPx7vL+qz/J1ZaOtVtgqhukwB1qeXvDIQyZGo=;
+        b=oxTdMXY9RjdoTFpjfLHxRYwBYx2BDlYAdVzmsIWSIppFdAgcmhtjbRvQ3oOxN7i7t1
+         zL7pc46FSr5hcUBefjrWpSGoUaUIDoMdgQGlJsRsJ76ZYt+LOnY3rP34yhAa+93TtOVV
+         LP9k88clQFViMdEILQJskXeHjynXHNd6iq/RbpJyZGusBlntR2SfxmcDm5z7V71vRxYW
+         E5xDX68zdZKhglajGdbuQAbih6jwrY9DECDOL/ODcMbQZ6aVqm52zzkXkQ6pHUIWrV3N
+         eV/V/6tEw9XAn1Nbcq2jJ/Rt2EsOZMk1Jvcwq92FpI1I8C0etXaqITKCDT79j6UB7gTY
+         MvPw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=wnrwfiCPx7vL+qz/J1ZaOtVtgqhukwB1qeXvDIQyZGo=;
+        b=aIpnJYj7+voZGDguh2g1D6HQ23h3wyR66NlMTrX9pgz8Oy7/lGFtFtYMNzvBZjmqyo
+         hXjLGtmt1J0x8ul4tXfPFtl3DRo1N+WF8eVtEJuGQ4oSNNh189uUkoYgCQcRpEkopBn3
+         LE4y+jHWrU9u0LFN9kg+BdCqjbx2MuzgfxLkGQ9r3ue1pDiQ88Z7mLUdA8fYyMsdZJL3
+         ua6sS9A4BqyQ8DmvYR3d4+kJH6eMIqsv3Dh2Guw7zsu1EfpYf47oD8sEZZVBQ/10a9+o
+         KTYFXILNHIRIQbMi2GjijxRrnsDYUUUhGwrosrMemwQCB53hKG5RxN93ITgPKE5dfOML
+         qmjw==
+X-Gm-Message-State: AO0yUKVANp2jeAkLM+vso2XFxkIdfwHEk3G07+4xby0wqnfRvwNrc+zR
+	qzI3eiUgQesc5Dbfcqz/WSnMp+LLATqeav2rh7f2Zg==
+X-Google-Smtp-Source: AK7set92aeZ/0wrMCHop1qBlba0EQ1xdx/6wHYhZYAkDlHH+pESAFsHybxatTahoAeHp/QIkKSBkQhCILu7YGoc5iDk=
+X-Received: by 2002:ab0:2059:0:b0:5e3:bece:86a3 with SMTP id
+ g25-20020ab02059000000b005e3bece86a3mr1478802ual.48.1675422291331; Fri, 03
+ Feb 2023 03:04:51 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <20230203101015.263854890@linuxfoundation.org>
+In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 3 Feb 2023 16:34:40 +0530
+Message-ID: <CA+G9fYvd8D3LfxPg2afZXKFC3WNHrhyE7c3fFLViaG4WhJeHVg@mail.gmail.com>
+Subject: Re: [PATCH 4.19 00/80] 4.19.272-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Gaosheng Cui <cuigaosheng1@huawei.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, 
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 
-From: Nathan Chancellor <nathan@kernel.org>
+On Fri, 3 Feb 2023 at 15:48, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 4.19.272 release.
+> There are 80 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sun, 05 Feb 2023 10:09:58 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.272-rc1.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-commit 751971af2e3615dc5bd12674080bc795505fefeb upstream.
+Following patch caused build error on arm,
 
-When building ARCH=csky defconfig:
+> Gaosheng Cui <cuigaosheng1@huawei.com>
+>     memory: mvebu-devbus: Fix missing clk_disable_unprepare in mvebu_devbus_probe()
 
-arch/csky/kernel/traps.c: In function 'die':
-arch/csky/kernel/traps.c:112:17: error: implicit declaration of function
-'make_dead_task' [-Werror=implicit-function-declaration]
-  112 |                 make_dead_task(SIGSEGV);
-      |                 ^~~~~~~~~~~~~~
+drivers/memory/mvebu-devbus.c: In function 'mvebu_devbus_probe':
+drivers/memory/mvebu-devbus.c:297:8: error: implicit declaration of
+function 'devm_clk_get_enabled'
+[-Werror=implicit-function-declaration]
+  297 |  clk = devm_clk_get_enabled(&pdev->dev, NULL);
+      |        ^~~~~~~~~~~~~~~~~~~~
+drivers/memory/mvebu-devbus.c:297:6: warning: assignment to 'struct
+clk *' from 'int' makes pointer from integer without a cast
+[-Wint-conversion]
+  297 |  clk = devm_clk_get_enabled(&pdev->dev, NULL);
+      |      ^
+cc1: some warnings being treated as errors
 
-The function's name is make_task_dead(), change it so there is no more
-build error.
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Fixes: 0e25498f8cd4 ("exit: Add and use make_task_dead.")
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Reviewed-by: Guo Ren <guoren@kernel.org>
-Link: https://lkml.kernel.org/r/20211227184851.2297759-4-nathan@kernel.org
-Signed-off-by: Eric W. Biederman <ebiederm@xmission.com>
-Signed-off-by: Eric Biggers <ebiggers@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- arch/csky/abiv1/alignment.c | 2 +-
- arch/csky/kernel/traps.c    | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+Build link, https://storage.tuxsuite.com/public/linaro/lkft/builds/2LDxPVbsGpzKKtYLew33pC6wCSc/
 
-diff --git a/arch/csky/abiv1/alignment.c b/arch/csky/abiv1/alignment.c
-index 5e2fb45d605c..2df115d0e210 100644
---- a/arch/csky/abiv1/alignment.c
-+++ b/arch/csky/abiv1/alignment.c
-@@ -294,7 +294,7 @@ void csky_alignment(struct pt_regs *regs)
- 				__func__, opcode, rz, rx, imm, addr);
- 		show_regs(regs);
- 		bust_spinlocks(0);
--		make_dead_task(SIGKILL);
-+		make_task_dead(SIGKILL);
- 	}
- 
- 	force_sig_fault(SIGBUS, BUS_ADRALN, (void __user *)addr);
-diff --git a/arch/csky/kernel/traps.c b/arch/csky/kernel/traps.c
-index af7562907f7f..8cdbbcb5ed87 100644
---- a/arch/csky/kernel/traps.c
-+++ b/arch/csky/kernel/traps.c
-@@ -85,7 +85,7 @@ void die_if_kernel(char *str, struct pt_regs *regs, int nr)
- 	pr_err("%s: %08x\n", str, nr);
- 	show_regs(regs);
- 	add_taint(TAINT_DIE, LOCKDEP_NOW_UNRELIABLE);
--	make_dead_task(SIGSEGV);
-+	make_task_dead(SIGSEGV);
- }
- 
- void buserr(struct pt_regs *regs)
--- 
-2.39.0
-
-
-
+--
+Linaro LKFT
+https://lkft.linaro.org
