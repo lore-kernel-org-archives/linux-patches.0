@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 185911FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:22:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8F7E7C4339B;
-	Fri,  3 Feb 2023 10:22:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 606E51FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:22:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FBB6C4339C;
+	Fri,  3 Feb 2023 10:22:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419727;
-	bh=xL6mj3in65YLENSDB9HU2mlwGRdqZQ1tv1ig7iJgYqI=;
+	s=korg; t=1675419731;
+	bh=j/A8cqEJ0w7kCi9WPe+IrLHJ4UgBxMMSuHyLaMcGZNM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FBCGmRNNzm6lPVa1bxJr6zm8NCOaegzw9gW3JTN59d8eEasIwNkHjCLNRi56S5T71
-	 gBlKw97l7xfJZ+3jRXXPnBRGpyTeNHRhDLh88tqwxilVkDp4/O2lNlw725z9QwptMr
-	 yV217EEMBtlPZI1LzkuxiMb7TAoUhSqomV0ByW4o=
+	b=bzc9+1dQfVUocz/AvACqGjlEzrmN5fK9q0xzDAl2Sart6sXty3KT5rYRTTSklT6Gd
+	 s4OrVyP1hg6njBiW7ZJGwcMQ9BhNpfyLrZZQ64FGN2pkUjdSKaAtLvdII+rkob4I5v
+	 Xffq54qnv2fdiBHPcOF5wxxjMUMj4MSa95xmiquc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Mark Waddoups <mwaddoups@gmail.com>,
+	=?UTF-8?q?Jos=C3=A9=20Exp=C3=B3sito?= <jose.exposito89@gmail.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 17/28] s390: workaround invalid gcc-11 out of bounds read warning
-Date: Fri,  3 Feb 2023 11:13:05 +0100
-Message-Id: <20230203101010.708423717@linuxfoundation.org>
+Subject: [PATCH 6.1 18/28] HID: uclogic: Add support for XP-PEN Deco 01 V2
+Date: Fri,  3 Feb 2023 11:13:06 +0100
+Message-Id: <20230203101010.747653988@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
 References: <20230203101009.946745030@linuxfoundation.org>
@@ -35,57 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiko Carstens <hca@linux.ibm.com>
+From: José Expósito <jose.exposito89@gmail.com>
 
-[ Upstream commit 41e1992665a2701fa025a8b76970c43b4148446f ]
+[ Upstream commit febb2c0d7c69c0396aa32d5ab425a4163473961a ]
 
-GCC 11.1.0 and 11.2.0 generate a wrong warning when compiling the
-kernel e.g. with allmodconfig:
+The XP-PEN Deco 01 V2 is a UGEE v2 device with a frame with 8 buttons.
+Its pen has 2 buttons, supports tilt and pressure.
 
-arch/s390/kernel/setup.c: In function ‘setup_lowcore_dat_on’:
-./include/linux/fortify-string.h:57:33: error: ‘__builtin_memcpy’ reading 128 bytes from a region of size 0 [-Werror=stringop-overread]
-...
-arch/s390/kernel/setup.c:526:9: note: in expansion of macro ‘memcpy’
-  526 |         memcpy(abs_lc->cregs_save_area, S390_lowcore.cregs_save_area,
-      |         ^~~~~~
+Add its ID in order to support the device.
 
-This could be addressed by using absolute_pointer() with the
-S390_lowcore macro, but this is not a good idea since this generates
-worse code for performance critical paths.
-
-Therefore simply use a for loop to copy the array in question and get
-rid of the warning.
-
-Reported-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Link: https://gitlab.freedesktop.org/libinput/libinput/-/issues/839
+Tested-by: Mark Waddoups <mwaddoups@gmail.com>
+Signed-off-by: José Expósito <jose.exposito89@gmail.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/kernel/setup.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/hid/hid-ids.h            | 1 +
+ drivers/hid/hid-uclogic-core.c   | 2 ++
+ drivers/hid/hid-uclogic-params.c | 2 ++
+ 3 files changed, 5 insertions(+)
 
-diff --git a/arch/s390/kernel/setup.c b/arch/s390/kernel/setup.c
-index ab19ddb09d65..2ec5f1e0312f 100644
---- a/arch/s390/kernel/setup.c
-+++ b/arch/s390/kernel/setup.c
-@@ -507,6 +507,7 @@ static void __init setup_lowcore_dat_on(void)
- {
- 	struct lowcore *abs_lc;
- 	unsigned long flags;
-+	int i;
- 
- 	__ctl_clear_bit(0, 28);
- 	S390_lowcore.external_new_psw.mask |= PSW_MASK_DAT;
-@@ -521,8 +522,8 @@ static void __init setup_lowcore_dat_on(void)
- 	abs_lc = get_abs_lowcore(&flags);
- 	abs_lc->restart_flags = RESTART_FLAG_CTLREGS;
- 	abs_lc->program_new_psw = S390_lowcore.program_new_psw;
--	memcpy(abs_lc->cregs_save_area, S390_lowcore.cregs_save_area,
--	       sizeof(abs_lc->cregs_save_area));
-+	for (i = 0; i < 16; i++)
-+		abs_lc->cregs_save_area[i] = S390_lowcore.cregs_save_area[i];
- 	put_abs_lowcore(abs_lc, flags);
- }
- 
+diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
+index c3735848ed5d..0f8c11842a3a 100644
+--- a/drivers/hid/hid-ids.h
++++ b/drivers/hid/hid-ids.h
+@@ -1294,6 +1294,7 @@
+ #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_G540	0x0075
+ #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_G640	0x0094
+ #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO01	0x0042
++#define USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO01_V2	0x0905
+ #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_L	0x0935
+ #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_PRO_S	0x0909
+ #define USB_DEVICE_ID_UGEE_XPPEN_TABLET_STAR06	0x0078
+diff --git a/drivers/hid/hid-uclogic-core.c b/drivers/hid/hid-uclogic-core.c
+index 7fa6fe04f1b2..cfbbc39807a6 100644
+--- a/drivers/hid/hid-uclogic-core.c
++++ b/drivers/hid/hid-uclogic-core.c
+@@ -525,6 +525,8 @@ static const struct hid_device_id uclogic_devices[] = {
+ 				USB_DEVICE_ID_UGEE_XPPEN_TABLET_G640) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE,
+ 				USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO01) },
++	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE,
++				USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO01_V2) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE,
+ 				USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_L) },
+ 	{ HID_USB_DEVICE(USB_VENDOR_ID_UGEE,
+diff --git a/drivers/hid/hid-uclogic-params.c b/drivers/hid/hid-uclogic-params.c
+index cd1233d7e253..3c5eea3df328 100644
+--- a/drivers/hid/hid-uclogic-params.c
++++ b/drivers/hid/hid-uclogic-params.c
+@@ -1655,6 +1655,8 @@ int uclogic_params_init(struct uclogic_params *params,
+ 		break;
+ 	case VID_PID(USB_VENDOR_ID_UGEE,
+ 		     USB_DEVICE_ID_UGEE_PARBLO_A610_PRO):
++	case VID_PID(USB_VENDOR_ID_UGEE,
++		     USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO01_V2):
+ 	case VID_PID(USB_VENDOR_ID_UGEE,
+ 		     USB_DEVICE_ID_UGEE_XPPEN_TABLET_DECO_L):
+ 	case VID_PID(USB_VENDOR_ID_UGEE,
 -- 
 2.39.0
 
