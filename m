@@ -1,27 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A6621FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:14:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F5D6C433EF;
-	Fri,  3 Feb 2023 10:14:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E16D51FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:14:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35AFFC433D2;
+	Fri,  3 Feb 2023 10:14:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419278;
-	bh=Lw3R6106//KBTq0Ltx2yrM0QNokyGmX5H1FHoBfHhWQ=;
+	s=korg; t=1675419281;
+	bh=KAnr4WULa5ASUa8KXdggdXbHOBxi66r8fkkdZrBpDXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UtrAjOAn62DRR84nv92v5im0lfuYT3NvicfyXid8bOrtFKG74KEzpsOqmzojcUEUP
-	 zboguwaMGmzClWMgzlBVjJAQk3DZolmlC/pncFWtPUb3u1Y43nGywNXEvohlDsxenf
-	 vKGHTBQB4b7mdGCym00xDQeka0tFBwM6Kv/p2zIA=
+	b=r6cAGW+W04VaegLiSvBjIpnz09FpB7bHSJUTTV12xzfkqbEfndf2a+floqbUPf8jO
+	 vuTlYByk0qASYq6DE3WwJkLzFOUmQOFhqk13VAgVxdWFuC0pdbW4zMjJZ4c7L8WZce
+	 7rA/0zb9qwOYoT2xOKlRdKFn5tklw7EyHpqr5MRw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Udipto Goswami <quic_ugoswami@quicinc.com>,
-	Krishna Kurapati <quic_kriskura@quicinc.com>,
+	Randy Dunlap <rdunlap@infradead.org>,
+	Eli Cohen <eli@mellanox.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	linux-rdma@vger.kernel.org,
+	Ira Weiny <ira.weiny@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 16/62] usb: gadget: f_fs: Ensure ep0req is dequeued before free_request
-Date: Fri,  3 Feb 2023 11:12:12 +0100
-Message-Id: <20230203101013.716978093@linuxfoundation.org>
+Subject: [PATCH 4.14 17/62] net: mlx5: eliminate anonymous module_init & module_exit
+Date: Fri,  3 Feb 2023 11:12:13 +0100
+Message-Id: <20230203101013.758033814@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 References: <20230203101012.959398849@linuxfoundation.org>
@@ -35,41 +40,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Udipto Goswami <quic_ugoswami@quicinc.com>
+From: Randy Dunlap <rdunlap@infradead.org>
 
-[ Upstream commit ce405d561b020e5a46340eb5146805a625dcacee ]
+[ Upstream commit 2c1e1b949024989e20907b84e11a731a50778416 ]
 
-As per the documentation, function usb_ep_free_request guarantees
-the request will not be queued or no longer be re-queued (or
-otherwise used). However, with the current implementation it
-doesn't make sure that the request in ep0 isn't reused.
+Eliminate anonymous module_init() and module_exit(), which can lead to
+confusion or ambiguity when reading System.map, crashes/oops/bugs,
+or an initcall_debug log.
 
-Fix this by dequeuing the ep0req on functionfs_unbind before
-freeing the request to align with the definition.
+Give each of these init and exit functions unique driver-specific
+names to eliminate the anonymous names.
 
-Fixes: ddf8abd25994 ("USB: f_fs: the FunctionFS driver")
-Signed-off-by: Udipto Goswami <quic_ugoswami@quicinc.com>
-Tested-by: Krishna Kurapati <quic_kriskura@quicinc.com>
-Link: https://lore.kernel.org/r/20221215052906.8993-3-quic_ugoswami@quicinc.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Example 1: (System.map)
+ ffffffff832fc78c t init
+ ffffffff832fc79e t init
+ ffffffff832fc8f8 t init
+
+Example 2: (initcall_debug log)
+ calling  init+0x0/0x12 @ 1
+ initcall init+0x0/0x12 returned 0 after 15 usecs
+ calling  init+0x0/0x60 @ 1
+ initcall init+0x0/0x60 returned 0 after 2 usecs
+ calling  init+0x0/0x9a @ 1
+ initcall init+0x0/0x9a returned 0 after 74 usecs
+
+Fixes: e126ba97dba9 ("mlx5: Add driver for Mellanox Connect-IB adapters")
+Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
+Cc: Eli Cohen <eli@mellanox.com>
+Cc: Saeed Mahameed <saeedm@nvidia.com>
+Cc: Leon Romanovsky <leon@kernel.org>
+Cc: linux-rdma@vger.kernel.org
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/gadget/function/f_fs.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/mellanox/mlx5/core/main.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
-index df880fe73088..946cf039eddd 100644
---- a/drivers/usb/gadget/function/f_fs.c
-+++ b/drivers/usb/gadget/function/f_fs.c
-@@ -1800,6 +1800,8 @@ static void functionfs_unbind(struct ffs_data *ffs)
- 	ENTER();
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+index 049d9d19c66d..840ce070bddf 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
+@@ -1615,7 +1615,7 @@ static void mlx5_core_verify_params(void)
+ 	}
+ }
  
- 	if (!WARN_ON(!ffs->gadget)) {
-+		/* dequeue before freeing ep0req */
-+		usb_ep_dequeue(ffs->gadget->ep0, ffs->ep0req);
- 		mutex_lock(&ffs->mutex);
- 		usb_ep_free_request(ffs->gadget->ep0, ffs->ep0req);
- 		ffs->ep0req = NULL;
+-static int __init init(void)
++static int __init mlx5_init(void)
+ {
+ 	int err;
+ 
+@@ -1637,7 +1637,7 @@ static int __init init(void)
+ 	return err;
+ }
+ 
+-static void __exit cleanup(void)
++static void __exit mlx5_cleanup(void)
+ {
+ #ifdef CONFIG_MLX5_CORE_EN
+ 	mlx5e_cleanup();
+@@ -1646,5 +1646,5 @@ static void __exit cleanup(void)
+ 	mlx5_unregister_debugfs();
+ }
+ 
+-module_init(init);
+-module_exit(cleanup);
++module_init(mlx5_init);
++module_exit(mlx5_cleanup);
 -- 
 2.39.0
 
