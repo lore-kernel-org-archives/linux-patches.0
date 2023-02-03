@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C14A1FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:25:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1399C433EF;
-	Fri,  3 Feb 2023 10:25:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 570F71FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:25:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA8F4C433D2;
+	Fri,  3 Feb 2023 10:25:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419914;
-	bh=XGwZ1w8UdnQwFtEVv8bESBqtunOQaYZC1Zd9Zto2jhk=;
+	s=korg; t=1675419917;
+	bh=U7OauHV/cJCJa9QuX2R8HrMAeby7p4pxhpfV/vp6TWc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Av1ASaog6RSlDjBgUnBp5jAkBGOvkAIez1BvQ8NlXcIfNwz5Zx34K85Wh4hpAgNyZ
-	 31GPx59J79NapfiYUlnRJM82e9Dr+8mpCHS22PtkDXuGj0Ew/zxi2Wrm/KKSWxdoaN
-	 P8WjJSQxU8dNqSNT8itraYgF2FsmsVHAsyxIUZI8=
+	b=quuXZEiE0A6Vgt0hYfDtim1nqzQKJ1JB0Ld15nTdPpTROYzqJLN3dzFtP9V36tQ3T
+	 JxSanux5/t4bHQqfJ4atZc6ILju3B8AN/e1TB8HRkL8XVVSgsGRu7KupOmSb3Urxex
+	 og40E43coQcN9yF5v9J10KqFx6+XycyjvEIN7OCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sudheesh Mavila <sudheesh.mavila@amd.com>,
-	Raju Rangoju <Raju.Rangoju@amd.com>,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Alexandru Ardelean <aardelean@deviqon.com>,
+	=?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 019/134] amd-xgbe: Delay AN timeout during KR training
-Date: Fri,  3 Feb 2023 11:12:04 +0100
-Message-Id: <20230203101024.710660808@linuxfoundation.org>
+Subject: [PATCH 5.4 002/134] clk: Provide new devm_clk helpers for prepared and enabled clocks
+Date: Fri,  3 Feb 2023 11:11:47 +0100
+Message-Id: <20230203101023.960196707@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101023.832083974@linuxfoundation.org>
 References: <20230203101023.832083974@linuxfoundation.org>
@@ -37,98 +37,209 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Raju Rangoju <Raju.Rangoju@amd.com>
+From: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
 
-[ Upstream commit 926446ae24c03311a480fb96eb78f0ce7ea6d091 ]
+[ Upstream commit 7ef9651e9792b08eb310c6beb202cbc947f43cab ]
 
-AN restart triggered during KR training not only aborts the KR training
-process but also move the HW to unstable state. Driver has to wait upto
-500ms or until the KR training is completed before restarting AN cycle.
+When a driver keeps a clock prepared (or enabled) during the whole
+lifetime of the driver, these helpers allow to simplify the drivers.
 
-Fixes: 7c12aa08779c ("amd-xgbe: Move the PHY support into amd-xgbe")
-Co-developed-by: Sudheesh Mavila <sudheesh.mavila@amd.com>
-Signed-off-by: Sudheesh Mavila <sudheesh.mavila@amd.com>
-Signed-off-by: Raju Rangoju <Raju.Rangoju@amd.com>
-Acked-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Reviewed-by: Alexandru Ardelean <aardelean@deviqon.com>
+Signed-off-by: Uwe Kleine-König <u.kleine-koenig@pengutronix.de>
+Link: https://lore.kernel.org/r/20220520075737.758761-4-u.kleine-koenig@pengutronix.de
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: 340cb392a038 ("memory: atmel-sdramc: Fix missing clk_disable_unprepare in atmel_ramc_probe()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/amd/xgbe/xgbe-mdio.c | 24 +++++++++++++++++++++++
- drivers/net/ethernet/amd/xgbe/xgbe.h      |  2 ++
- 2 files changed, 26 insertions(+)
+ drivers/clk/clk-devres.c |  27 ++++++++++
+ include/linux/clk.h      | 109 +++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 136 insertions(+)
 
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-index 97167fc9bebe..7840eb4cdb8d 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe-mdio.c
-@@ -496,6 +496,7 @@ static enum xgbe_an xgbe_an73_tx_training(struct xgbe_prv_data *pdata,
- 	reg |= XGBE_KR_TRAINING_ENABLE;
- 	reg |= XGBE_KR_TRAINING_START;
- 	XMDIO_WRITE(pdata, MDIO_MMD_PMAPMD, MDIO_PMA_10GBR_PMD_CTRL, reg);
-+	pdata->kr_start_time = jiffies;
+diff --git a/drivers/clk/clk-devres.c b/drivers/clk/clk-devres.c
+index c822f4ef1584..43ccd20e0298 100644
+--- a/drivers/clk/clk-devres.c
++++ b/drivers/clk/clk-devres.c
+@@ -66,12 +66,39 @@ struct clk *devm_clk_get(struct device *dev, const char *id)
+ }
+ EXPORT_SYMBOL(devm_clk_get);
  
- 	netif_dbg(pdata, link, pdata->netdev,
- 		  "KR training initiated\n");
-@@ -632,6 +633,8 @@ static enum xgbe_an xgbe_an73_incompat_link(struct xgbe_prv_data *pdata)
- 
- 	xgbe_switch_mode(pdata);
- 
-+	pdata->an_result = XGBE_AN_READY;
++struct clk *devm_clk_get_prepared(struct device *dev, const char *id)
++{
++	return __devm_clk_get(dev, id, clk_get, clk_prepare, clk_unprepare);
++}
++EXPORT_SYMBOL_GPL(devm_clk_get_prepared);
 +
- 	xgbe_an_restart(pdata);
- 
- 	return XGBE_AN_INCOMPAT_LINK;
-@@ -1275,9 +1278,30 @@ static bool xgbe_phy_aneg_done(struct xgbe_prv_data *pdata)
- static void xgbe_check_link_timeout(struct xgbe_prv_data *pdata)
++struct clk *devm_clk_get_enabled(struct device *dev, const char *id)
++{
++	return __devm_clk_get(dev, id, clk_get,
++			      clk_prepare_enable, clk_disable_unprepare);
++}
++EXPORT_SYMBOL_GPL(devm_clk_get_enabled);
++
+ struct clk *devm_clk_get_optional(struct device *dev, const char *id)
  {
- 	unsigned long link_timeout;
-+	unsigned long kr_time;
-+	int wait;
+ 	return __devm_clk_get(dev, id, clk_get_optional, NULL, NULL);
+ }
+ EXPORT_SYMBOL(devm_clk_get_optional);
  
- 	link_timeout = pdata->link_check + (XGBE_LINK_TIMEOUT * HZ);
- 	if (time_after(jiffies, link_timeout)) {
-+		if ((xgbe_cur_mode(pdata) == XGBE_MODE_KR) &&
-+		    pdata->phy.autoneg == AUTONEG_ENABLE) {
-+			/* AN restart should not happen while KR training is in progress.
-+			 * The while loop ensures no AN restart during KR training,
-+			 * waits up to 500ms and AN restart is triggered only if KR
-+			 * training is failed.
-+			 */
-+			wait = XGBE_KR_TRAINING_WAIT_ITER;
-+			while (wait--) {
-+				kr_time = pdata->kr_start_time +
-+					  msecs_to_jiffies(XGBE_AN_MS_TIMEOUT);
-+				if (time_after(jiffies, kr_time))
-+					break;
-+				/* AN restart is not required, if AN result is COMPLETE */
-+				if (pdata->an_result == XGBE_AN_COMPLETE)
-+					return;
-+				usleep_range(10000, 11000);
-+			}
-+		}
- 		netif_dbg(pdata, link, pdata->netdev, "AN link timeout\n");
- 		xgbe_phy_config_aneg(pdata);
- 	}
-diff --git a/drivers/net/ethernet/amd/xgbe/xgbe.h b/drivers/net/ethernet/amd/xgbe/xgbe.h
-index 0c93a552b921..729307a96c50 100644
---- a/drivers/net/ethernet/amd/xgbe/xgbe.h
-+++ b/drivers/net/ethernet/amd/xgbe/xgbe.h
-@@ -290,6 +290,7 @@
- /* Auto-negotiation */
- #define XGBE_AN_MS_TIMEOUT		500
- #define XGBE_LINK_TIMEOUT		5
-+#define XGBE_KR_TRAINING_WAIT_ITER	50
++struct clk *devm_clk_get_optional_prepared(struct device *dev, const char *id)
++{
++	return __devm_clk_get(dev, id, clk_get_optional,
++			      clk_prepare, clk_unprepare);
++}
++EXPORT_SYMBOL_GPL(devm_clk_get_optional_prepared);
++
++struct clk *devm_clk_get_optional_enabled(struct device *dev, const char *id)
++{
++	return __devm_clk_get(dev, id, clk_get_optional,
++			      clk_prepare_enable, clk_disable_unprepare);
++}
++EXPORT_SYMBOL_GPL(devm_clk_get_optional_enabled);
++
+ struct clk_bulk_devres {
+ 	struct clk_bulk_data *clks;
+ 	int num_clks;
+diff --git a/include/linux/clk.h b/include/linux/clk.h
+index 18b7b95a8253..87730337e28f 100644
+--- a/include/linux/clk.h
++++ b/include/linux/clk.h
+@@ -418,6 +418,47 @@ int __must_check devm_clk_bulk_get_all(struct device *dev,
+  */
+ struct clk *devm_clk_get(struct device *dev, const char *id);
  
- #define XGBE_SGMII_AN_LINK_STATUS	BIT(1)
- #define XGBE_SGMII_AN_LINK_SPEED	(BIT(2) | BIT(3))
-@@ -1266,6 +1267,7 @@ struct xgbe_prv_data {
- 	unsigned int parallel_detect;
- 	unsigned int fec_ability;
- 	unsigned long an_start;
-+	unsigned long kr_start_time;
- 	enum xgbe_an_mode an_mode;
++/**
++ * devm_clk_get_prepared - devm_clk_get() + clk_prepare()
++ * @dev: device for clock "consumer"
++ * @id: clock consumer ID
++ *
++ * Context: May sleep.
++ *
++ * Return: a struct clk corresponding to the clock producer, or
++ * valid IS_ERR() condition containing errno.  The implementation
++ * uses @dev and @id to determine the clock consumer, and thereby
++ * the clock producer.  (IOW, @id may be identical strings, but
++ * clk_get may return different clock producers depending on @dev.)
++ *
++ * The returned clk (if valid) is prepared. Drivers must however assume
++ * that the clock is not enabled.
++ *
++ * The clock will automatically be unprepared and freed when the device
++ * is unbound from the bus.
++ */
++struct clk *devm_clk_get_prepared(struct device *dev, const char *id);
++
++/**
++ * devm_clk_get_enabled - devm_clk_get() + clk_prepare_enable()
++ * @dev: device for clock "consumer"
++ * @id: clock consumer ID
++ *
++ * Context: May sleep.
++ *
++ * Return: a struct clk corresponding to the clock producer, or
++ * valid IS_ERR() condition containing errno.  The implementation
++ * uses @dev and @id to determine the clock consumer, and thereby
++ * the clock producer.  (IOW, @id may be identical strings, but
++ * clk_get may return different clock producers depending on @dev.)
++ *
++ * The returned clk (if valid) is prepared and enabled.
++ *
++ * The clock will automatically be disabled, unprepared and freed
++ * when the device is unbound from the bus.
++ */
++struct clk *devm_clk_get_enabled(struct device *dev, const char *id);
++
+ /**
+  * devm_clk_get_optional - lookup and obtain a managed reference to an optional
+  *			   clock producer.
+@@ -429,6 +470,50 @@ struct clk *devm_clk_get(struct device *dev, const char *id);
+  */
+ struct clk *devm_clk_get_optional(struct device *dev, const char *id);
  
- 	/* I2C support */
++/**
++ * devm_clk_get_optional_prepared - devm_clk_get_optional() + clk_prepare()
++ * @dev: device for clock "consumer"
++ * @id: clock consumer ID
++ *
++ * Context: May sleep.
++ *
++ * Return: a struct clk corresponding to the clock producer, or
++ * valid IS_ERR() condition containing errno.  The implementation
++ * uses @dev and @id to determine the clock consumer, and thereby
++ * the clock producer.  If no such clk is found, it returns NULL
++ * which serves as a dummy clk.  That's the only difference compared
++ * to devm_clk_get_prepared().
++ *
++ * The returned clk (if valid) is prepared. Drivers must however
++ * assume that the clock is not enabled.
++ *
++ * The clock will automatically be unprepared and freed when the
++ * device is unbound from the bus.
++ */
++struct clk *devm_clk_get_optional_prepared(struct device *dev, const char *id);
++
++/**
++ * devm_clk_get_optional_enabled - devm_clk_get_optional() +
++ *                                 clk_prepare_enable()
++ * @dev: device for clock "consumer"
++ * @id: clock consumer ID
++ *
++ * Context: May sleep.
++ *
++ * Return: a struct clk corresponding to the clock producer, or
++ * valid IS_ERR() condition containing errno.  The implementation
++ * uses @dev and @id to determine the clock consumer, and thereby
++ * the clock producer.  If no such clk is found, it returns NULL
++ * which serves as a dummy clk.  That's the only difference compared
++ * to devm_clk_get_enabled().
++ *
++ * The returned clk (if valid) is prepared and enabled.
++ *
++ * The clock will automatically be disabled, unprepared and freed
++ * when the device is unbound from the bus.
++ */
++struct clk *devm_clk_get_optional_enabled(struct device *dev, const char *id);
++
+ /**
+  * devm_get_clk_from_child - lookup and obtain a managed reference to a
+  *			     clock producer from child node.
+@@ -770,12 +855,36 @@ static inline struct clk *devm_clk_get(struct device *dev, const char *id)
+ 	return NULL;
+ }
+ 
++static inline struct clk *devm_clk_get_prepared(struct device *dev,
++						const char *id)
++{
++	return NULL;
++}
++
++static inline struct clk *devm_clk_get_enabled(struct device *dev,
++					       const char *id)
++{
++	return NULL;
++}
++
+ static inline struct clk *devm_clk_get_optional(struct device *dev,
+ 						const char *id)
+ {
+ 	return NULL;
+ }
+ 
++static inline struct clk *devm_clk_get_optional_prepared(struct device *dev,
++							 const char *id)
++{
++	return NULL;
++}
++
++static inline struct clk *devm_clk_get_optional_enabled(struct device *dev,
++							const char *id)
++{
++	return NULL;
++}
++
+ static inline int __must_check devm_clk_bulk_get(struct device *dev, int num_clks,
+ 						 struct clk_bulk_data *clks)
+ {
 -- 
 2.39.0
 
