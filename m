@@ -1,31 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B019D1FB9
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 108FFC433EF;
-	Fri,  3 Feb 2023 10:21:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D344D1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:21:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C366C433EF;
+	Fri,  3 Feb 2023 10:21:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419697;
-	bh=qbSGnQlAtzWva+t/AgMOcqav+DHSqPi2FkRVLWcY2gI=;
+	s=korg; t=1675419700;
+	bh=86x9vvKHbucsBW2OPMoE2wOAMraFJXYuGgdCZbln5+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gsbKyeAZkioiGFXd7HARptpb2O1GyvjDNglcXfntkhNp8jVkZ+VKzN0MoUfDFZCyu
-	 96h5aA1eygf1/J70Z+/WkfVCCZFjX7izIu5xv54O0iI3ItzHczoZnsxDFSgZ5u48aR
-	 PuFoyzLxtoyUe5wTBqOKPIn6x+lpMyd9t1Fciwqc=
+	b=mZ+Iv3rWHGQjmgodHorn1yuckQ8Jqd61tUHBm6FHUpzSJSSBXLWHoxsz2IRfFuOrS
+	 3i2xhCxC+b6w7UdcoSkpFD6QZuH5GkfQsGcQrdyGSDpOx/h4EhBmxwULwE3HE2kNnf
+	 WOJg1t5XpnFTkIt131P9hfiGvNfbgyVHIoHrRyO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Petr Vorel <petr.vorel@gmail.com>,
-	Dominik Kobinski <dominikkobinski314@gmail.com>,
-	Bjorn Andersson <andersson@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 09/28] arm64: dts: msm8994-angler: fix the memory map
-Date: Fri,  3 Feb 2023 11:12:57 +0100
-Message-Id: <20230203101010.368148359@linuxfoundation.org>
+	Matthias Kaehlcke <mka@chromium.org>,
+	Peter Chen <peter.chen@nxp.com>,
+	Mathias Nyman <mathias.nyman@linux.intel.com>,
+	Florian Fainelli <f.fainelli@gmail.com>
+Subject: [PATCH 4.19 80/80] usb: host: xhci-plat: add wakeup entry at sysfs
+Date: Fri,  3 Feb 2023 11:13:14 +0100
+Message-Id: <20230203101018.686081716@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
-References: <20230203101009.946745030@linuxfoundation.org>
+In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
+References: <20230203101015.263854890@linuxfoundation.org>
 User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
@@ -36,63 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dominik Kobinski <dominikkobinski314@gmail.com>
+From: Peter Chen <peter.chen@nxp.com>
 
-[ Upstream commit 380cd3a34b7f9825a60ccb045611af9cb4533b70 ]
+commit 4bb4fc0dbfa23acab9b762949b91ffd52106fe4b upstream.
 
-Add reserved regions for memory hole and tz app mem to prevent
-rebooting. Also enable cont_splash_mem, it is the same as the
-generic 8994 one.
+With this change, there will be a wakeup entry at /sys/../power/wakeup,
+and the user could use this entry to choose whether enable xhci wakeup
+features (wake up system from suspend) or not.
 
-Reported-by: Petr Vorel <petr.vorel@gmail.com>
-Signed-off-by: Dominik Kobinski <dominikkobinski314@gmail.com>
-Reviewed-by: Petr Vorel <petr.vorel@gmail.com>
-Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20221230194845.57780-1-dominikkobinski314@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Tested-by: Matthias Kaehlcke <mka@chromium.org>
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Signed-off-by: Peter Chen <peter.chen@nxp.com>
+Signed-off-by: Mathias Nyman <mathias.nyman@linux.intel.com>
+Link: https://lore.kernel.org/r/20200918131752.16488-6-mathias.nyman@linux.intel.com
+Signed-off-by: Florian Fainelli <f.fainelli@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../qcom/msm8994-huawei-angler-rev-101.dts    | 19 ++++++++++++++++---
- 1 file changed, 16 insertions(+), 3 deletions(-)
+ drivers/usb/host/xhci-plat.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-index dbfbb77e9ff5..7e2c0dcc11ab 100644
---- a/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8994-huawei-angler-rev-101.dts
-@@ -8,9 +8,6 @@
+--- a/drivers/usb/host/xhci-plat.c
++++ b/drivers/usb/host/xhci-plat.c
+@@ -261,7 +261,7 @@ static int xhci_plat_probe(struct platfo
+ 			*priv = *priv_match;
+ 	}
  
- #include "msm8994.dtsi"
+-	device_wakeup_enable(hcd->self.controller);
++	device_set_wakeup_capable(&pdev->dev, true);
  
--/* Angler's firmware does not report where the memory is allocated */
--/delete-node/ &cont_splash_mem;
--
- / {
- 	model = "Huawei Nexus 6P";
- 	compatible = "huawei,angler", "qcom,msm8994";
-@@ -27,6 +24,22 @@ aliases {
- 	chosen {
- 		stdout-path = "serial0:115200n8";
- 	};
-+
-+	reserved-memory {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		tzapp_mem: tzapp@4800000 {
-+			reg = <0 0x04800000 0 0x1900000>;
-+			no-map;
-+		};
-+
-+		removed_region: reserved@6300000 {
-+			reg = <0 0x06300000 0 0xD00000>;
-+			no-map;
-+		};
-+	};
- };
- 
- &blsp1_uart2 {
--- 
-2.39.0
-
+ 	xhci->clk = clk;
+ 	xhci->reg_clk = reg_clk;
 
 
