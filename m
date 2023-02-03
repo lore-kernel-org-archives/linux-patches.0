@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4FEF71FB4
-	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:17:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8A96C433EF;
-	Fri,  3 Feb 2023 10:17:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7455F1FB4
+	for <patches@lists.linux.dev>; Fri,  3 Feb 2023 10:17:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A2531C433EF;
+	Fri,  3 Feb 2023 10:17:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675419451;
-	bh=pUeP8ftZNXqzoyeGesJQh4oaNTKIXyT6cqzQfaOr8D4=;
+	s=korg; t=1675419454;
+	bh=IDD3NPbkIJAskQi11J6DF/FeRG5jQnqqKvx7zei3oj8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zb7nWJ/ks1I5DQJvtQ0HJuY/IUzRMLXfZE3BOcoIJh9XYZYBjrnT2WvFlnyA9QfKC
-	 4JS9w0LNfkjDF9+ToN3x8PRqnosbo278VDeRu7i7xh4lGpUQJ06Ea/S8nxkljlLNen
-	 vfmHz+BhRj7y5OTGu9GAw9ijwhxhzbXaPQjzskvY=
+	b=uAnSJV3mQPx3a0YMux3yseWzZT3u+gv/L41HF8Judg2FoZ9AAVgPUXEjkkYg2dgHx
+	 Egnt85Zir1Njw7SCCCHbVadLj2T9UsNY9GVsuu/nQ0MHQKsEiunxEXKTLMBVto8xzD
+	 NwSzGXlJnXJxQ9iUjKH+gRGR9MjU48HPG0kvxPb0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Tim Harvey <tharvey@gateworks.com>,
-	Shawn Guo <shawnguo@kernel.org>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+	Jiri Kosina <jkosina@suse.cz>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 02/80] ARM: dts: imx6qdl-gw560x: Remove incorrect uart-has-rtscts
-Date: Fri,  3 Feb 2023 11:11:56 +0100
-Message-Id: <20230203101015.359877786@linuxfoundation.org>
+Subject: [PATCH 4.19 03/80] HID: intel_ish-hid: Add check for ishtp_dma_tx_map
+Date: Fri,  3 Feb 2023 11:11:57 +0100
+Message-Id: <20230203101015.407499595@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
 References: <20230203101015.263854890@linuxfoundation.org>
@@ -36,46 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabio Estevam <festevam@denx.de>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-[ Upstream commit 9dfbc72256b5de608ad10989bcbafdbbd1ac8d4e ]
+[ Upstream commit b3d40c3ec3dc4ad78017de6c3a38979f57aaaab8 ]
 
-The following build warning is seen when running:
+As the kcalloc may return NULL pointer,
+it should be better to check the ishtp_dma_tx_map
+before use in order to avoid NULL pointer dereference.
 
-make dtbs_check DT_SCHEMA_FILES=fsl-imx-uart.yaml
-
-arch/arm/boot/dts/imx6dl-gw560x.dtb: serial@2020000: rts-gpios: False schema does not allow [[20, 1, 0]]
-	From schema: Documentation/devicetree/bindings/serial/fsl-imx-uart.yaml
-
-The imx6qdl-gw560x board does not expose the UART RTS and CTS
-as native UART pins, so 'uart-has-rtscts' should not be used.
-
-Using 'uart-has-rtscts' with 'rts-gpios' is an invalid combination
-detected by serial.yaml.
-
-Fix the problem by removing the incorrect 'uart-has-rtscts' property.
-
-Fixes: b8a559feffb2 ("ARM: dts: imx: add Gateworks Ventana GW5600 support")
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Acked-by: Tim Harvey <tharvey@gateworks.com>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Fixes: 3703f53b99e4 ("HID: intel_ish-hid: ISH Transport layer")
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Acked-by: Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>
+Signed-off-by: Jiri Kosina <jkosina@suse.cz>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/imx6qdl-gw560x.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+ drivers/hid/intel-ish-hid/ishtp/dma-if.c | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
-diff --git a/arch/arm/boot/dts/imx6qdl-gw560x.dtsi b/arch/arm/boot/dts/imx6qdl-gw560x.dtsi
-index b5986efe1090..143d249b821e 100644
---- a/arch/arm/boot/dts/imx6qdl-gw560x.dtsi
-+++ b/arch/arm/boot/dts/imx6qdl-gw560x.dtsi
-@@ -463,7 +463,6 @@ &ssi1 {
- &uart1 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_uart1>;
--	uart-has-rtscts;
- 	rts-gpios = <&gpio7 1 GPIO_ACTIVE_HIGH>;
- 	status = "okay";
- };
+diff --git a/drivers/hid/intel-ish-hid/ishtp/dma-if.c b/drivers/hid/intel-ish-hid/ishtp/dma-if.c
+index 2783f3666114..ff4419c8ed4f 100644
+--- a/drivers/hid/intel-ish-hid/ishtp/dma-if.c
++++ b/drivers/hid/intel-ish-hid/ishtp/dma-if.c
+@@ -113,6 +113,11 @@ void *ishtp_cl_get_dma_send_buf(struct ishtp_device *dev,
+ 	int required_slots = (size / DMA_SLOT_SIZE)
+ 		+ 1 * (size % DMA_SLOT_SIZE != 0);
+ 
++	if (!dev->ishtp_dma_tx_map) {
++		dev_err(dev->devc, "Fail to allocate Tx map\n");
++		return NULL;
++	}
++
+ 	spin_lock_irqsave(&dev->ishtp_dma_tx_lock, flags);
+ 	for (i = 0; i <= (dev->ishtp_dma_num_slots - required_slots); i++) {
+ 		free = 1;
+@@ -159,6 +164,11 @@ void ishtp_cl_release_dma_acked_mem(struct ishtp_device *dev,
+ 		return;
+ 	}
+ 
++	if (!dev->ishtp_dma_tx_map) {
++		dev_err(dev->devc, "Fail to allocate Tx map\n");
++		return;
++	}
++
+ 	i = (msg_addr - dev->ishtp_host_dma_tx_buf) / DMA_SLOT_SIZE;
+ 	spin_lock_irqsave(&dev->ishtp_dma_tx_lock, flags);
+ 	for (j = 0; j < acked_slots; j++) {
 -- 
 2.39.0
 
