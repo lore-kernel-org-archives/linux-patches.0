@@ -1,67 +1,85 @@
-Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from outbound-ss-820.bluehost.com (outbound-ss-820.bluehost.com [69.89.24.241])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009A27F
-	for <patches@lists.linux.dev>; Sat,  4 Feb 2023 08:43:56 +0000 (UTC)
-Received: by mail-vk1-f169.google.com with SMTP id v81so3744703vkv.5
-        for <patches@lists.linux.dev>; Sat, 04 Feb 2023 00:43:56 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=WfIQcOwb3dWkgDSw0lSfmPr25dlvhIlu3sOQI1zR7+M=;
-        b=FwH1Yb0Ea+3DoopFhDZ0j+nFkXhjf6hSxRphzYN4NLRQk0YzVEvG+mOtBYYgUA+zjS
-         HIPFqMeGXQAILnJA4e0+ncED3VHYSArH+5VYUV7eWWkiqY7OQ24OanmXS2yWDjY+k+gn
-         YjLhgiFOTO4GBPkFAyl7WJ+yMLG5zhj22jHWZjcegAzuQTss0aZ/2dsegGAitkBZfpXl
-         fI+LvtoR+8QA7ZQnkMzyDpkEcw3GSusfy65YiTP7+6ANuBKV51WjY7vTXyajbeW1OTkg
-         AllD3xM5LuDeYYKP0S1r4pW6DrYCs9vNm5ScLxZwoR1WfnCnlGiYM+tEfcUBp22PfzPg
-         lIkQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=WfIQcOwb3dWkgDSw0lSfmPr25dlvhIlu3sOQI1zR7+M=;
-        b=DDrfC974m/06m0BE8uTBYGsXexxXzT8nMJRl8+ygwKG/PwJWWTQlbMhkjuDXRLzdQn
-         Bm1W7mt9trV/cisq/tjvMIAU5o5wbpnYm/G7XNiDd+M4Mfq/EfPRvn+MaT/0ZJZEPEXC
-         ffb52LRS44GdcyjJF2uZXIwI0yA48dunR3NBBE97ZhhVQhGksTWK+NXXekfc5nzmocS7
-         aTa5bT9Jz6s3id8fygEvqebPUsvZshQazH1SNA/K7lqbgSi9Geu5CtYmkK+3VBokaXLl
-         KEsZkjvMiQ1XJaRpjBrUbYh+ArggSymGtUn9o438ZxTsz7HJBzW5GXMrXg4ACOIVIB8L
-         2/Sw==
-X-Gm-Message-State: AO0yUKUx/ek3AlPvbBUqdvVtuIZVXL18vG73qkof6/nvpScDyEy5xKDJ
-	veoZNvBmDB6DRt0Caq8a3D6Q3LvVqP+S6Q8qwgBX8A==
-X-Google-Smtp-Source: AK7set+XZ+Wvinf1/vcUxNLeNk8uoKnfBNpM4AzHxlnDAMb2hfU/rPeLYY1CsEk7+vk9ebKozxGCcAEwWIiWl3oMT48=
-X-Received: by 2002:a05:6122:b43:b0:3ea:4be1:4a72 with SMTP id
- 3-20020a0561220b4300b003ea4be14a72mr1900084vko.20.1675500235601; Sat, 04 Feb
- 2023 00:43:55 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC8BC7F
+	for <patches@lists.linux.dev>; Sat,  4 Feb 2023 08:55:42 +0000 (UTC)
+Received: from cmgw12.mail.unifiedlayer.com (unknown [10.0.90.127])
+	by progateway2.mail.pro1.eigbox.com (Postfix) with ESMTP id DE56C10049CDA
+	for <patches@lists.linux.dev>; Sat,  4 Feb 2023 08:55:40 +0000 (UTC)
+Received: from box5620.bluehost.com ([162.241.219.59])
+	by cmsmtp with ESMTP
+	id OEKipmeuxMMgoOEKipAIF6; Sat, 04 Feb 2023 08:55:40 +0000
+X-Authority-Reason: nr=8
+X-Authority-Analysis: v=2.4 cv=SuFVVNC0 c=1 sm=1 tr=0 ts=63de1d8c
+ a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
+ a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
+ a=m04uMKEZRckA:10:nop_rcvd_month_year
+ a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
+ a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
+ a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
+	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
+	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
+	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
+	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
+	List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=gYy1Q2bXS39MClsk3KgCHi5jX7KhWTU2o29KMyE2kvg=; b=iUd9gTOpQYs6mCJ+YAqAbCLdeI
+	bFl94R2Xy2mVnOLFy3MXL9/iGUPURP8xbmUO4waI0T03CSrMP4vefIvMTbHR0hsEQALuSY53pt4k8
+	vmcfz4mTcaqV4NDd0tRDsce3ePdWH44HL3p1HEl2HwA7oz8tpNt3Yk3zlu5ha518bWjLsUm62Uw93
+	8f+WfTaFE8BwJkUmC4CSk+lzg2MRDKYyNAYBN2wqZqOV1gjD2CihYxXhZRUUY2vSb6NMR9QardlRe
+	fnL7NpQyylu35MfGegZrePJ8yYcZZWX4wPq4W/Oqg2CMD3HhA3Q+P8Ya6O27w0ZrkbzhM49R5t3RI
+	PArbwhzg==;
+Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:53464 helo=[10.0.1.47])
+	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+	(Exim 4.95)
+	(envelope-from <re@w6rz.net>)
+	id 1pOEKh-003UY0-Lw;
+	Sat, 04 Feb 2023 01:55:39 -0700
+Subject: Re: [PATCH 5.15 00/20] 5.15.92-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230203101007.985835823@linuxfoundation.org>
+In-Reply-To: <20230203101007.985835823@linuxfoundation.org>
+From: Ron Economos <re@w6rz.net>
+Message-ID: <de146bc5-50b8-f347-31cf-70b5e93a4541@w6rz.net>
+Date: Sat, 4 Feb 2023 00:55:36 -0800
+User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230203101006.422534094@linuxfoundation.org>
-In-Reply-To: <20230203101006.422534094@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Sat, 4 Feb 2023 14:13:44 +0530
-Message-ID: <CA+G9fYscBgwZ5MxeTyo8XQfKkuPV1xJ+24E0gq1DgEyMzas44w@mail.gmail.com>
-Subject: Re: [PATCH 5.10 0/9] 5.10.167-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
+X-AntiAbuse: Primary Hostname - box5620.bluehost.com
+X-AntiAbuse: Original Domain - lists.linux.dev
+X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
+X-AntiAbuse: Sender Address Domain - w6rz.net
+X-BWhitelist: no
+X-Source-IP: 73.162.232.9
+X-Source-L: No
+X-Exim-ID: 1pOEKh-003UY0-Lw
+X-Source: 
+X-Source-Args: 
+X-Source-Dir: 
+X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:53464
+X-Source-Auth: re@w6rz.net
+X-Email-Count: 3
+X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
+X-Local-Domain: yes
 
-On Fri, 3 Feb 2023 at 15:53, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.10.167 release.
-> There are 9 patches in this series, all will be posted as a response
+On 2/3/23 2:13 AM, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.92 release.
+> There are 20 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -69,153 +87,16 @@ On Fri, 3 Feb 2023 at 15:53, Greg Kroah-Hartman
 > Anything received after that time might be too late.
 >
 > The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.10.167-rc1.gz
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.92-rc1.gz
 > or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.10.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Ron Economos <re@w6rz.net>
 
-## Build
-* kernel: 5.10.167-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.10.y
-* git commit: 6278b8c9832e3a5adb841ca9e2cfebadb522f304
-* git describe: v5.10.166-10-g6278b8c9832e
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
-.166-10-g6278b8c9832e
-
-## Test Regressions (compared to v5.10.165-144-g930bc29c79c4)
-
-## Metric Regressions (compared to v5.10.165-144-g930bc29c79c4)
-
-## Test Fixes (compared to v5.10.165-144-g930bc29c79c4)
-
-## Metric Fixes (compared to v5.10.165-144-g930bc29c79c4)
-
-## Test result summary
-total: 155976, pass: 129575, fail: 3537, skip: 22567, xfail: 297
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 149 total, 148 passed, 1 failed
-* arm64: 49 total, 46 passed, 3 failed
-* i386: 39 total, 37 passed, 2 failed
-* mips: 31 total, 29 passed, 2 failed
-* parisc: 8 total, 8 passed, 0 failed
-* powerpc: 32 total, 25 passed, 7 failed
-* riscv: 16 total, 14 passed, 2 failed
-* s390: 16 total, 16 passed, 0 failed
-* sh: 14 total, 12 passed, 2 failed
-* sparc: 8 total, 8 passed, 0 failed
-* x86_64: 42 total, 40 passed, 2 failed
-
-## Test suites summary
-* boot
-* fwts
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-vm
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-open-posix-tests
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* packetdrill
-* perf
-* rcutorture
-* v4l2-compliance
-* vdso
-
---
-Linaro LKFT
-https://lkft.linaro.org
