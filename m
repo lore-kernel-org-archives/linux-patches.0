@@ -1,69 +1,67 @@
-Received: from mail-vk1-f175.google.com (mail-vk1-f175.google.com [209.85.221.175])
+Received: from mail-vk1-f169.google.com (mail-vk1-f169.google.com [209.85.221.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5EE027F
-	for <patches@lists.linux.dev>; Sat,  4 Feb 2023 08:31:50 +0000 (UTC)
-Received: by mail-vk1-f175.google.com with SMTP id l20so3713395vkm.11
-        for <patches@lists.linux.dev>; Sat, 04 Feb 2023 00:31:50 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 009A27F
+	for <patches@lists.linux.dev>; Sat,  4 Feb 2023 08:43:56 +0000 (UTC)
+Received: by mail-vk1-f169.google.com with SMTP id v81so3744703vkv.5
+        for <patches@lists.linux.dev>; Sat, 04 Feb 2023 00:43:56 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=DaVyYh/c2Uk1dR1FJCUBHRJioL1G3oEqQyGFL1fwAH0=;
-        b=i0hpbL/CL19fMLx19G92LNWJYWoAbSEqhqJ/efjKlf5uJ2c3QQzCyOZM3Gf4svWW+1
-         vh8aexWV3PplB0zmX7iiif9lrt9tmascDCay02oBgYgiGsihdhpZ4c/Gq1VQ1SC547D2
-         2HdWsObgj2TP+Bv+ZV90k2DGRydX9M5AFe4xHanM88LVewb8CD3+pbp05PRqci8qhZYA
-         9v5D6LE4nMASWo0VfvGj4BqXLvsZMj/Vh484P9VwmTEcCzfVAdRiYOWjvsekkmJjMjvL
-         h/1yh2hjTFNiZOE5KQ/evJHFw6v+cffUFp3cePzR/Z/9/rRIbZUoxW8QH5LLVJJJ/0HN
-         Gyaw==
+        bh=WfIQcOwb3dWkgDSw0lSfmPr25dlvhIlu3sOQI1zR7+M=;
+        b=FwH1Yb0Ea+3DoopFhDZ0j+nFkXhjf6hSxRphzYN4NLRQk0YzVEvG+mOtBYYgUA+zjS
+         HIPFqMeGXQAILnJA4e0+ncED3VHYSArH+5VYUV7eWWkiqY7OQ24OanmXS2yWDjY+k+gn
+         YjLhgiFOTO4GBPkFAyl7WJ+yMLG5zhj22jHWZjcegAzuQTss0aZ/2dsegGAitkBZfpXl
+         fI+LvtoR+8QA7ZQnkMzyDpkEcw3GSusfy65YiTP7+6ANuBKV51WjY7vTXyajbeW1OTkg
+         AllD3xM5LuDeYYKP0S1r4pW6DrYCs9vNm5ScLxZwoR1WfnCnlGiYM+tEfcUBp22PfzPg
+         lIkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:cc:to:subject:message-id:date:from
          :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
          :subject:date:message-id:reply-to;
-        bh=DaVyYh/c2Uk1dR1FJCUBHRJioL1G3oEqQyGFL1fwAH0=;
-        b=gfCJiN5FOcgmcipNeQXtmQlnV2VREHTIH2hecDDhYaLR3xVNJM3ctNEYZXNxkCApZK
-         7nMRBlUQqVtI4tKxl1KM8WpoUI5Qk4uBGsPA5GJVVatzKTV8mkfcBkUv9CgknBlauGFX
-         wXzQV4FB7UtYtQk0XNDtAz3bFEpPooBDfBNdcwfzs5N6uNdaLnG41XoUb2DL227LXpjg
-         NcSK9hlPtGgPjQRI+4nYnnY3+axwNr9mrPkgj+J88ZljoYjGN/rYSza1W6Y66xhpHPoE
-         tStPKedqe8oqoHBbGhgktguznm4T59imR6jC/IphIqYV/e7h+G94CTv8OvnC+WT5noxP
-         Oacw==
-X-Gm-Message-State: AO0yUKV4adPoGOngIZ894nuvS2bUMU2VZzOKq6q1V/vt6GkeqBWuqOrF
-	fT2QJKEwaWn4yr1x0y0yf2XpgSXX5qusepE8l9fBtw==
-X-Google-Smtp-Source: AK7set+DLDpSKuybnOXMTABXcXt7goMwbT25dpFRLnPPP6EIOafvTK8SB0vDC/TSdvC11RQ43YlUIjHahmkPciNNDgw=
-X-Received: by 2002:ac5:c1c1:0:b0:3e5:7064:1bf9 with SMTP id
- g1-20020ac5c1c1000000b003e570641bf9mr1939753vkk.30.1675499508949; Sat, 04 Feb
- 2023 00:31:48 -0800 (PST)
+        bh=WfIQcOwb3dWkgDSw0lSfmPr25dlvhIlu3sOQI1zR7+M=;
+        b=DDrfC974m/06m0BE8uTBYGsXexxXzT8nMJRl8+ygwKG/PwJWWTQlbMhkjuDXRLzdQn
+         Bm1W7mt9trV/cisq/tjvMIAU5o5wbpnYm/G7XNiDd+M4Mfq/EfPRvn+MaT/0ZJZEPEXC
+         ffb52LRS44GdcyjJF2uZXIwI0yA48dunR3NBBE97ZhhVQhGksTWK+NXXekfc5nzmocS7
+         aTa5bT9Jz6s3id8fygEvqebPUsvZshQazH1SNA/K7lqbgSi9Geu5CtYmkK+3VBokaXLl
+         KEsZkjvMiQ1XJaRpjBrUbYh+ArggSymGtUn9o438ZxTsz7HJBzW5GXMrXg4ACOIVIB8L
+         2/Sw==
+X-Gm-Message-State: AO0yUKUx/ek3AlPvbBUqdvVtuIZVXL18vG73qkof6/nvpScDyEy5xKDJ
+	veoZNvBmDB6DRt0Caq8a3D6Q3LvVqP+S6Q8qwgBX8A==
+X-Google-Smtp-Source: AK7set+XZ+Wvinf1/vcUxNLeNk8uoKnfBNpM4AzHxlnDAMb2hfU/rPeLYY1CsEk7+vk9ebKozxGCcAEwWIiWl3oMT48=
+X-Received: by 2002:a05:6122:b43:b0:3ea:4be1:4a72 with SMTP id
+ 3-20020a0561220b4300b003ea4be14a72mr1900084vko.20.1675500235601; Sat, 04 Feb
+ 2023 00:43:55 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230203101007.985835823@linuxfoundation.org>
-In-Reply-To: <20230203101007.985835823@linuxfoundation.org>
+References: <20230203101006.422534094@linuxfoundation.org>
+In-Reply-To: <20230203101006.422534094@linuxfoundation.org>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Sat, 4 Feb 2023 14:01:37 +0530
-Message-ID: <CA+G9fYsRZcCu986iGaqrRw7uDjdaX2NEbDs9P5QFr58ja5BnTA@mail.gmail.com>
-Subject: Re: [PATCH 5.15 00/20] 5.15.92-rc1 review
+Date: Sat, 4 Feb 2023 14:13:44 +0530
+Message-ID: <CA+G9fYscBgwZ5MxeTyo8XQfKkuPV1xJ+24E0gq1DgEyMzas44w@mail.gmail.com>
+Subject: Re: [PATCH 5.10 0/9] 5.10.167-rc1 review
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
 	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
 	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
 	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, 
-	"open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>, Kyle Huey <me@kylehuey.com>, 
-	Will Deacon <will@kernel.org>
+	srw@sladewatkins.net, rwarsow@gmx.de
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Fri, 3 Feb 2023 at 15:54, Greg Kroah-Hartman
+On Fri, 3 Feb 2023 at 15:53, Greg Kroah-Hartman
 <gregkh@linuxfoundation.org> wrote:
 >
-> This is the start of the stable review cycle for the 5.15.92 release.
-> There are 20 patches in this series, all will be posted as a response
+> This is the start of the stable review cycle for the 5.10.167 release.
+> There are 9 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 >
@@ -72,110 +70,52 @@ On Fri, 3 Feb 2023 at 15:54, Greg Kroah-Hartman
 >
 > The whole patch series can be found in one patch at:
 >         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.15.92-rc1.gz
+5.10.167-rc1.gz
 > or in the git tree and branch at:
 >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.15.y
+-rc.git linux-5.10.y
 > and the diffstat can be found below.
 >
 > thanks,
 >
 > greg k-h
 
-
 Results from Linaro=E2=80=99s test farm.
 No regressions on arm64, arm, x86_64, and i386.
 
 Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-NOTE:
-Following two commits causing build warnings with gcc-12 on arm64 and i386
-while building tools/testing/selftests.
-
-  selftests/vm: remove ARRAY_SIZE define from individual tests
-    commit e89908201e2509354c40158b517945bf3d645812 upstream.
-
-  tools: fix ARRAY_SIZE defines in tools and selftests hdrs
-    commit 066b34aa5461f6072dbbecb690f4fe446b736ebf upstream.
-
 ## Build
-* kernel: 5.15.92-rc1
+* kernel: 5.10.167-rc1
 * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.15.y
-* git commit: c8466dc0f6290e0ea087f808e9b4a29da36e82ca
-* git describe: v5.15.91-21-gc8466dc0f629
+* git branch: linux-5.10.y
+* git commit: 6278b8c9832e3a5adb841ca9e2cfebadb522f304
+* git describe: v5.10.166-10-g6278b8c9832e
 * test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.15.y/build/v5.15=
-.91-21-gc8466dc0f629
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
+.166-10-g6278b8c9832e
 
-## Test Regressions (compared to v5.15.90-205-g5605d15db022)
+## Test Regressions (compared to v5.10.165-144-g930bc29c79c4)
 
-## Metric Regressions (compared to v5.15.90-205-g5605d15db022)
+## Metric Regressions (compared to v5.10.165-144-g930bc29c79c4)
 
-* arm64, build
-  - gcc-12-lkftconfig-kselftest-warnings
+## Test Fixes (compared to v5.10.165-144-g930bc29c79c4)
 
-Build warnings:
-    tools/testing/selftests/arm64/fp:
-    vec-syscfg.c:24: warning: "ARRAY_SIZE" redefined
-       24 | #define ARRAY_SIZE(a) (sizeof(a) / sizeof(a[0]))
-          |
-    In file included from vec-syscfg.c:21:
-    ../../kselftest.h:52: note: this is the location of the previous defini=
-tion
-       52 | #define ARRAY_SIZE(arr) (sizeof(arr) / sizeof((arr)[0]))
-          |
-    vec-syscfg.c: In function 'get_child_rdvl':
-    vec-syscfg.c:112:33: warning: too many arguments for format
-[-Wformat-extra-args]
-      112 |                 fprintf(stderr, "execl(%s) failed: %d\n",
-          |                                 ^~~~~~~~~~~~~~~~~~~~~~~~
-    vec-syscfg.c: At top level:
-    vec-syscfg.c:326:13: warning: 'prctl_set_same' defined but not
-used [-Wunused-function]
-      326 | static void prctl_set_same(struct vec_data *data)
-          |             ^~~~~~~~~~~~~~
-    vec-syscfg.c: In function 'file_write_integer':
-    vec-syscfg.c:195:12: warning: 'ret' may be used uninitialized
-[-Wmaybe-uninitialized]
-      195 |         if (ret < 0) {
-          |            ^
-    vec-syscfg.c:183:13: note: 'ret' was declared here
-      183 |         int ret;
-          |             ^~~
-
-
-* i386, build
-  - gcc-12-lkftconfig-kselftest-warnings
-
-Build warnings:
-    tools/testing/selftests/vm
-    virtual_address_range.c:43:31: warning: left shift count >=3D width
-of type [-Wshift-count-overflow]
-    virtual_address_range.c:88:34: warning: left shift count >=3D width
-of type [-Wshift-count-overflow]
-    virtual_address_range.c:22:26: warning: conversion from 'long long
-unsigned int' to 'size_t' {aka 'unsigned int'} changes value from
-'17179869184' to '0' [-Woverflow]
-
-
-## Test Fixes (compared to v5.15.90-205-g5605d15db022)
-
-## Metric Fixes (compared to v5.15.90-205-g5605d15db022)
+## Metric Fixes (compared to v5.10.165-144-g930bc29c79c4)
 
 ## Test result summary
-total: 162736, pass: 133853, fail: 4290, skip: 24262, xfail: 331
+total: 155976, pass: 129575, fail: 3537, skip: 22567, xfail: 297
 
 ## Build Summary
 * arc: 5 total, 5 passed, 0 failed
 * arm: 149 total, 148 passed, 1 failed
-* arm64: 49 total, 47 passed, 2 failed
-* i386: 39 total, 35 passed, 4 failed
+* arm64: 49 total, 46 passed, 3 failed
+* i386: 39 total, 37 passed, 2 failed
 * mips: 31 total, 29 passed, 2 failed
 * parisc: 8 total, 8 passed, 0 failed
-* powerpc: 34 total, 32 passed, 2 failed
-* riscv: 14 total, 14 passed, 0 failed
-* s390: 16 total, 14 passed, 2 failed
+* powerpc: 32 total, 25 passed, 7 failed
+* riscv: 16 total, 14 passed, 2 failed
+* s390: 16 total, 16 passed, 0 failed
 * sh: 14 total, 12 passed, 2 failed
 * sparc: 8 total, 8 passed, 0 failed
 * x86_64: 42 total, 40 passed, 2 failed
@@ -227,13 +167,6 @@ total: 162736, pass: 133853, fail: 4290, skip: 24262, xfail: 331
 * kselftest-ptrace
 * kselftest-rseq
 * kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
 * kselftest-tc-testing
 * kselftest-timens
 * kselftest-timers
@@ -250,7 +183,6 @@ total: 162736, pass: 133853, fail: 4290, skip: 24262, xfail: 331
 * log-parser-boot
 * log-parser-test
 * ltp-cap_bounds
-* ltp-comman[
 * ltp-commands
 * ltp-containers
 * ltp-controllers
