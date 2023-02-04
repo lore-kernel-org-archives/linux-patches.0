@@ -1,39 +1,56 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f53.google.com (mail-oa1-f53.google.com [209.85.160.53])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10FA7322A
-	for <patches@lists.linux.dev>; Sat,  4 Feb 2023 16:23:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 385BDC4339B;
-	Sat,  4 Feb 2023 16:23:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675527797;
-	bh=IFQHzkK3hjBlnB9Ffcx/Fid6aLV7Fr94Uu3CRb/nrGE=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=KkIOVEf2YTsVghmsoLmtzCFHl6SPYnRMn9ZOl3xNWSufTZ0KJQXj2BltMfsf/2lvE
-	 qIQgK+5fuzRgjr0nZPWhIq5FCZmY7pAQB4ztrzg9aBf3iAoPhk/swm2C6+FokiOO0O
-	 Q51id47fJrepXwG/DD+wzcdNiojdU51uX00Z0WGc=
-Date: Sat, 4 Feb 2023 17:23:14 +0100
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: Sasha Levin <sashal@kernel.org>
-Cc: Eric Biggers <ebiggers@kernel.org>, Guenter Roeck <linux@roeck-us.net>,
-	stable@vger.kernel.org, patches@lists.linux.dev,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCB167C
+	for <patches@lists.linux.dev>; Sat,  4 Feb 2023 23:01:37 +0000 (UTC)
+Received: by mail-oa1-f53.google.com with SMTP id 586e51a60fabf-16346330067so11076806fac.3
+        for <patches@lists.linux.dev>; Sat, 04 Feb 2023 15:01:37 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=cVsHER4Yof2lEQueL0RY30lS4pwURHfmMFaF6gV4zLU=;
+        b=AKHSK8YJPv5+ZblpmnNjZfbfGIygi+MUXqZwYQUoUr3M7DZYyshlclnDCBTwBiwtY+
+         sFHe79+66hDBDiKYUHzbUqWgqaJrzRqoM04V3PtAmXlQ5bROrxvkJgqow1X7rlSTbNQU
+         O0BxdJYx4PgLyUyyZNU4HZAIoDYmAXAQsdbqslyQDrpEmrO7A+uzlu4/B7SIrUh+iS5y
+         mzc0z8kpBKcD/kaa6r5wWYHWewwByOHViJqDupa3uxXLTFfYiWJ72Bld8yrurLOFnghZ
+         4atotDXmP7Az/sWBjgB72EdqZj62hsLS3q5EH81kdKQDWGTRSfq26ijM4V0yCGcFHVOB
+         uIaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=cVsHER4Yof2lEQueL0RY30lS4pwURHfmMFaF6gV4zLU=;
+        b=OUNao64D+Rki5w+BCd1EWoE8EaEHwkDZKVS7jsMLXZeSEpccGQN/28Ck99Cil9G9ns
+         9NKw6dwsnS5Xh/hoilSDeYF1kmljApXe9BZsXDJMYCb5VA2HNadJqOs2pkapAqplObW8
+         23MRqeAfVo3T3gjX4TiVCfdMm5+3m8oJlwzXMhaIwjpD6g5EAq2s3ZW+LZjT6jJ5Zag2
+         BCdGZagRyf1gyPNzSIUMmWbfb5DdRLSSOGf55lTRuzBxFNQIka+NAzKHc/R40Ui0QxsN
+         P/nMJVUwe5+B1hHo2S8oENj0xq78yEPr6S/3i4lByF8UfNMrsJhBU6j3jRfOZAWz3bKW
+         S8HQ==
+X-Gm-Message-State: AO0yUKUFmONux7nB62XWPPDT4ewAaIH6PVeoZehAw04uVn2xgPufWR65
+	a3MYG96pEV6aS6W1A4s4ifQ=
+X-Google-Smtp-Source: AK7set8s0K8k078nldDtTg/8E3XYe4g3PJLVfwGzAGIl2kWCyreMQ3fCjWhjngjbdOmVmKar/JyPGA==
+X-Received: by 2002:a05:6870:562b:b0:163:263f:84ce with SMTP id m43-20020a056870562b00b00163263f84cemr8367716oao.27.1675551696860;
+        Sat, 04 Feb 2023 15:01:36 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id j21-20020a4a7515000000b0051a5b963423sm1954928ooc.33.2023.02.04.15.01.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 04 Feb 2023 15:01:36 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Sat, 4 Feb 2023 15:01:34 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
 	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.4 000/134] 5.4.231-rc1 review
-Message-ID: <Y96GcqPb0ctSq68G@kroah.com>
-References: <Y906Hz3UWYxoxYdD@kroah.com>
- <20230203171826.GA1500930@roeck-us.net>
- <Y91YWzopMMGF1Lgh@sol.localdomain>
- <Y91bjnIuQRvVqpO7@sol.localdomain>
- <705ab151-da1e-30e1-c232-c9860717267d@roeck-us.net>
- <Y91lXYN7zF8d/fek@sol.localdomain>
- <Y94QTVUg2H68XnQ2@kroah.com>
- <Y95iSDo7Qa+HoWSg@sashalap>
- <Y95k0h8XetGmcSP1@kroah.com>
- <Y96DBADEhFbBN0+I@sashalap>
+Subject: Re: [PATCH 4.14 00/62] 4.14.305-rc2 review
+Message-ID: <20230204230134.GA114073@roeck-us.net>
+References: <20230204143556.057468358@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,93 +59,23 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <Y96DBADEhFbBN0+I@sashalap>
+In-Reply-To: <20230204143556.057468358@linuxfoundation.org>
 
-On Sat, Feb 04, 2023 at 11:08:36AM -0500, Sasha Levin wrote:
-> On Sat, Feb 04, 2023 at 02:59:46PM +0100, Greg Kroah-Hartman wrote:
-> > On Sat, Feb 04, 2023 at 08:48:56AM -0500, Sasha Levin wrote:
-> > > On Sat, Feb 04, 2023 at 08:59:09AM +0100, Greg Kroah-Hartman wrote:
-> > > > On Fri, Feb 03, 2023 at 11:49:49AM -0800, Eric Biggers wrote:
-> > > > > On Fri, Feb 03, 2023 at 11:28:46AM -0800, Guenter Roeck wrote:
-> > > > > > On 2/3/23 11:07, Eric Biggers wrote:
-> > > > > > > On Fri, Feb 03, 2023 at 10:54:21AM -0800, Eric Biggers wrote:
-> > > > > > > > On Fri, Feb 03, 2023 at 09:18:26AM -0800, Guenter Roeck wrote:
-> > > > > > > > > On Fri, Feb 03, 2023 at 05:45:19PM +0100, Greg Kroah-Hartman wrote:
-> > > > > > > > > > On Fri, Feb 03, 2023 at 07:56:19AM -0800, Guenter Roeck wrote:
-> > > > > > > > > > > On Fri, Feb 03, 2023 at 11:11:45AM +0100, Greg Kroah-Hartman wrote:
-> > > > > > > > > > > > This is the start of the stable review cycle for the 5.4.231 release.
-> > > > > > > > > > > > There are 134 patches in this series, all will be posted as a response
-> > > > > > > > > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > > > > > > > > let me know.
-> > > > > > > > > > > >
-> > > > > > > > > > > > Responses should be made by Sun, 05 Feb 2023 10:09:58 +0000.
-> > > > > > > > > > > > Anything received after that time might be too late.
-> > > > > > > > > > > >
-> > > > > > > > > > >
-> > > > > > > > > > > Building ia64:defconfig ... failed
-> > > > > > > > > > > --------------
-> > > > > > > > > > > Error log:
-> > > > > > > > > > > <stdin>:1511:2: warning: #warning syscall clone3 not implemented [-Wcpp]
-> > > > > > > > > > > arch/ia64/kernel/mca_drv.c: In function 'mca_handler_bh':
-> > > > > > > > > > > arch/ia64/kernel/mca_drv.c:179:9: error: implicit declaration of function 'make_task_dead'
-> > > > > > > > > > >
-> > > > > > > > > > > Caused by "exit: Add and use make_task_dead.". Did that really have to be backported ?
-> > > > > > > > > >
-> > > > > > > > > > Yup, it does!
-> > > > > > > > > >
-> > > > > > > > > > Eric, any help with this?
-> > > > > > > > > >
-> > > > > > > > >
-> > > > > > > > > Adding "#include <linux/sched/task.h>" to the affected file would probably
-> > > > > > > > > be the easy fix. I did a quick check, and it works.
-> > > > > > > > >
-> > > > > > > > > Note that the same problem is seen in v4.14.y and v4.19.y. Later
-> > > > > > > > > kernels don't have the problem.
-> > > > > > > > >
-> > > > > > > >
-> > > > > > > > This problem arises because <linux/mm.h> transitively includes
-> > > > > > > > <linux/sched/task.h> in 5.10 and later, but not in 5.4 and earlier.
-> > > > > > > >
-> > > > > > > > Greg, any preference for how to handle this situation?
-> > > > > > > >
-> > > > > > > > Just add '#include <linux/sched/task.h>' to the affected .c file (and hope there
-> > > > > > > > are no more affected .c files in the other arch directories) and call it a day?
-> > > > > > > >
-> > > > > > > > Or should we backport the transitive inclusion (i.e., the #include added by
-> > > > > > > > commit 80fbaf1c3f29)?  Or move the declaration of make_task_dead() into
-> > > > > > > > <linux/kernel.h> so that it's next to do_exit()?
-> > > > > > >
-> > > > > > > One question: do *all* the arches actually get built as part of the testing for
-> > > > > > > each stable release?  If so, we can just add the #include to the .c files that
-> > > > > > > need it.  If not, then it would be safer to take one of the other approaches.
-> > > > > > >
-> > > > > >
-> > > > > > Yes, I do build all architectures for each stable release.
-> > > > > >
-> > > > > > FWIW, I only noticed that one build failure due to this problem.
-> > > > >
-> > > > > Okay, great.  In that case, Greg or Sasha, can you fold the needed #include into
-> > > > > arch/ia64/kernel/mca_drv.c in exit-add-and-use-make_task_dead.patch on 4.14,
-> > > > > 4.19, and 5.4?  Or should I just send the whole series again for each?
-> > > >
-> > > > I'll fold it in later today when I get a chance, no need to resubmit the
-> > > > whole thing, thanks!
-> > > 
-> > > Greg, I did it for the 5.4 backport. If I do it for 4.19 and 4.14 it's
-> > > going to add a bunch of fuzz into those, lmk if you want me to push
-> > > those too or whether you'll fix it up.
-> > 
-> > I just fixed up those 2 trees, and I don't understand what you mean by
-> > "a bunch of fuzz".  Can you look at my changes to verify I got it right?
+On Sat, Feb 04, 2023 at 03:42:23PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.14.305 release.
+> There are 62 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Your changes look right.
+> Responses should be made by Mon, 06 Feb 2023 14:35:41 +0000.
+> Anything received after that time might be too late.
 > 
-> We're likely using different tools to format a patch - you can see
-> differences in things like indentation of the diffstat, which headers
-> are kept in the patch, and so on...
 
-Yeah, I'm using quilt, you're using git, different whitespace in places.
+Build results:
+	total: 168 pass: 168 fail: 0
+Qemu test results:
+	total: 425 pass: 425 fail: 0
 
-thanks for verifying the change was correct.
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
-greg k-h
+Guenter
