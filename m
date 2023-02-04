@@ -1,88 +1,83 @@
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com [209.85.166.51])
+Received: from mail-oo1-f54.google.com (mail-oo1-f54.google.com [209.85.161.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62C1C10FF
-	for <patches@lists.linux.dev>; Sat,  4 Feb 2023 01:04:42 +0000 (UTC)
-Received: by mail-io1-f51.google.com with SMTP id l128so2626455iof.2
-        for <patches@lists.linux.dev>; Fri, 03 Feb 2023 17:04:42 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F7E81365
+	for <patches@lists.linux.dev>; Sat,  4 Feb 2023 01:48:39 +0000 (UTC)
+Received: by mail-oo1-f54.google.com with SMTP id bb32-20020a056820162000b0051a698e1174so49107oob.10
+        for <patches@lists.linux.dev>; Fri, 03 Feb 2023 17:48:39 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=pEiHHmlJSzJPx9D+kEWk3DrlaKBm5JKbFkxKskYpgM0=;
-        b=OOrGrY5SzRYWa2GOMolAOdtd9Cg9icVaoG4FLxfREIKbbZj6AAQxqLashDieu2Re+e
-         X1Dfn8mHHYsKxi9pQU4vobVG58U/fzYu9UzXj8Jrex/grJAo5aLEtWBGTYTfZdGA+7gf
-         zv1diuthFKOHnGa0V3Nc6Q/dVRjHET/eV2gQo=
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=9W/qk0n/CPhDpra9Z2blMDuqhiMKXk82qamoSsWubKk=;
+        b=H1Snbxx+lr32UlIiWM9csNOvM9VWm4O3vDUNTNdzKVOLys1M27TF2f9LYlkcjELfZ+
+         6ZBN8pTqyWAaD/d3TyRZjNe4cILDlFimkGT97L26o+X8RJdm+ZaYbpL1Pc9iqfMj4VC5
+         b1wAe5oLd7DGBnTsEokLG3EpGElZiNpIRGp3/BaJLoYijMXfUKFRxTXderNM5FJC9ccE
+         5i0xm5QFPuxs0ZEQlqWWYqEABt+97Cj3CIc/z6GbS3PSPJPna/6LGhNuWYZHCyzzYsBa
+         l1PdfXp2Dw6t3JsLXx6eHiZSsMdYGIV8eT2TMvux0HIuNA/PdOMAL0ssXIUrSain8yw/
+         V+eA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=pEiHHmlJSzJPx9D+kEWk3DrlaKBm5JKbFkxKskYpgM0=;
-        b=K8sSyEBiw+K7H/1BR2tOCV8CPc16Xtuq0hKchOYxC0t2f/mhwc0D5D02IrA3a49Lus
-         pZWaZAv59Hv6u94Zl+ndJrInflSnOVMsIb0GpWzUCZFdeRKGNHAfeFLqEVzI2OGs4C8/
-         efWfT4LdSngU8u96NOXoCcDY+LHW8EKBDgzwuEGXiCxgji42SguMM82rKBJKPl5NPoiu
-         dB3cGNg9QVJwN4I9zOGysLAbi3rVBW+oBUGvIBAeQ0FgXW0cAiywvfpqcqSRT4JxxV/a
-         ZBtxRuo/xT34KdlZbof1JXKx4kAE5GMcsDl9AUU6j3jMqPtsK9j6bzboxzqzXqQeggoV
-         9sJA==
-X-Gm-Message-State: AO0yUKW7n8WFFUdDuffMMO/4AnwQ6cF8QnrFAQX04+zoXYWxv0ZPbJT7
-	ZibRuhEqZuThvA87S99hj34lew==
-X-Google-Smtp-Source: AK7set/KM7BVz+ZipCrscdb43Q3Z/bGz4avXrcHLm/gozrthyz0wZme6CloNW83PhjeyFk4tEOagjw==
-X-Received: by 2002:a5e:8307:0:b0:707:6808:45c0 with SMTP id x7-20020a5e8307000000b00707680845c0mr8256875iom.1.1675472681339;
-        Fri, 03 Feb 2023 17:04:41 -0800 (PST)
-Received: from [192.168.1.128] ([38.15.45.1])
-        by smtp.gmail.com with ESMTPSA id c15-20020a02c9cf000000b0035a40af60fcsm1340823jap.86.2023.02.03.17.04.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Feb 2023 17:04:40 -0800 (PST)
-Message-ID: <8ec8c5a0-8935-631c-fb44-864c6d1b9fa5@linuxfoundation.org>
-Date: Fri, 3 Feb 2023 18:04:39 -0700
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=9W/qk0n/CPhDpra9Z2blMDuqhiMKXk82qamoSsWubKk=;
+        b=vRpmycJfyOpL6RU6KQDOsZ8/edeUzhoG28E07tOxhnxB6Mqb1022bsBYHu3U+ogEWd
+         0wqlmSzoRL15cJj+RsKxY6ntZ7EIZdXcKPLgblP0OBfc5z9ZaXyHQvM8DiM0JaklQGK9
+         c4cp09Mx0t3MH+T0KN+CIqhdnpiO2B8ZC2gTEUMTsT9luRgjFiUuRxbR1zx9/qCa28B3
+         dh9ykCuLy2OlbAqj36w5g8Lzv3jOWRPg59zd1isKEQ4hnD4Fbd6Z4S/bIkQtZJlykbbs
+         xc25sUTFwW8mj+jwajz+Nu+qtmyXKQVFUV7os2+CYzkHVCDJYj+0Che+C7EfoJ29fyC6
+         H0Yg==
+X-Gm-Message-State: AO0yUKWSB/AXD8UizCkA0C3u9iH4EHIefmmmkkjFu+PP+rN9tnJZL6PW
+	9mjUZ8FGOXLOa79hF4mkGJM=
+X-Google-Smtp-Source: AK7set8gqlr7FWMhAyZFBDLub7uhKpdVOKB3YOGmesWRAaxUOH/qmAHmIyXi47Rjig9AVbhN0iHQvg==
+X-Received: by 2002:a4a:3346:0:b0:4fa:325e:ebb0 with SMTP id q67-20020a4a3346000000b004fa325eebb0mr6994130ooq.5.1675475318462;
+        Fri, 03 Feb 2023 17:48:38 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id l12-20020a4ac60c000000b00517587f8817sm1604408ooq.19.2023.02.03.17.48.37
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Feb 2023 17:48:37 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Fri, 3 Feb 2023 17:48:36 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 4.14 00/62] 4.14.305-rc1 review
+Message-ID: <20230204014836.GA3089769@roeck-us.net>
+References: <20230203101012.959398849@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 4.19 00/80] 4.19.272-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
-References: <20230203101015.263854890@linuxfoundation.org>
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20230203101015.263854890@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
 
-On 2/3/23 03:11, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.272 release.
-> There are 80 patches in this series, all will be posted as a response
+On Fri, Feb 03, 2023 at 11:11:56AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.14.305 release.
+> There are 62 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
 > Responses should be made by Sun, 05 Feb 2023 10:09:58 +0000.
 > Anything received after that time might be too late.
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.272-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
 
-Compiled and booted on my test system. No dmesg regressions.
+Build results:
+	total: 168 pass: 167 fail: 1
+Failed builds:
+	ia64:defconfig
+Qemu test results:
+	total: 425 pass: 425 fail: 0
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+ia64 build error as reported separately.
 
-thanks,
--- Shuah
+Guenter
