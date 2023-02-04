@@ -1,81 +1,97 @@
-Received: from mail-oo1-f48.google.com (mail-oo1-f48.google.com [209.85.161.48])
+Received: from mail-pg1-f176.google.com (mail-pg1-f176.google.com [209.85.215.176])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E43C1365
-	for <patches@lists.linux.dev>; Sat,  4 Feb 2023 01:51:24 +0000 (UTC)
-Received: by mail-oo1-f48.google.com with SMTP id h12-20020a4a940c000000b004fa81915b1cso677198ooi.4
-        for <patches@lists.linux.dev>; Fri, 03 Feb 2023 17:51:24 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4AA671365
+	for <patches@lists.linux.dev>; Sat,  4 Feb 2023 02:04:01 +0000 (UTC)
+Received: by mail-pg1-f176.google.com with SMTP id q9so4856524pgq.5
+        for <patches@lists.linux.dev>; Fri, 03 Feb 2023 18:04:01 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=e1hnwrQg/7TrlKiWRJR4hcEttZPGMMEcTVNIQ+LbzmA=;
-        b=eFIFeueLVEjLat1j3tzYef0iCRSXaYNriZQFGtlW5SMwAGBBHnmvjHGan6KeqNyyKR
-         5EnDF8KnCrdM/FVW9nHbwovNqXAXyBlbCxTnVpPM+BifQdUMcpHSE3lxDBs+LOaeiS9Q
-         lNhSisOSgGwJaU4lZSoZ5ujkMcBO0OGWSE9FHJcxiG5VKKebG0p2AyckxFdoie8dmwRx
-         2gsR/gLbG5GGzj5VhQZsdD6tQOa0ID4a4eBDSTmtgPw6ZuUxq8dVkRHIjcNS5zhpnyvn
-         qvVNtqkTXOw9WQbuedSiUSHMm75Dy4Yn7s3krr4DLIT8+EskXQDfLmwSMkQmzIncOmbe
-         b4Ug==
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=uePF3eDJemwYV3SuvTrXUS0Nc0Z+OSgE9N4Vx3eaMM8=;
+        b=C4RiucKjZPpCAg6YAF4eBUtU6U9GxzZ+KQE285cOOmXecDTMdNZG/Z7dDCwajOZFq5
+         6fhggg0AghxpLqm5J6HrpFFeqzc3AIgHFFtTocELrOFpSlWfM16f0lFf3Tio55n/ijbT
+         CC2a+so6nwR3dmAh06sZhhTZvojCQ9NMTfNl9bznW1T3TVXH9eWfcxQIhVfiXDJkkvM7
+         fCDKnvCzQFcdw5U3BpoM8qpb1o2dUlI8gNAYXpHqH1uL8ao8OS7VX16KnoOfFzBhAm6i
+         v2nkRY8PsoD2YqDcCPFqGBDWUfq06PRO6xA2kzd59Hmh7AL1ybcUpE0Vud/fRxbzIwJg
+         OQYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=e1hnwrQg/7TrlKiWRJR4hcEttZPGMMEcTVNIQ+LbzmA=;
-        b=AK72YobbTU95NMaYtOeDI0pQ0YZpXxWlq7Ecn1fr1ubaW2KdL9R0rN6rax3rJKG6MS
-         Qm/ZtKibkYN/Vqms585JLvz9pa9oSICkkjZ7QZTgjDEr5VQOsQ4WEm8GiA8ySeKXXWAZ
-         lnhVp0fAbT4uV9d1WVgr2tThKvtvochb/vQ15AacRtb0IAiWJpDuNuqBMteLFes4bB1c
-         zdzfWOVSb/iXIuH/oclhEYHXeXkPc0/trbDuaXV2liOmpfmjb9J5ZdbfSqeZOn7MTAXY
-         RuJJqod5/O+lDMyc73qfm8YdTxI+tM0aWUt5IgRzhOgHNIo6oBDb09/BlSWNWmQ0+joc
-         oDqA==
-X-Gm-Message-State: AO0yUKXF12OlZ79ooZMfAJUwJMUmw1xzwfNRkhWuqj3CB3ULpfZQXS4w
-	Vt6eNI0KCrIt0KL7+HuEohY=
-X-Google-Smtp-Source: AK7set/p2A8FdtXyfiQ00tDpRUMXqwb2TTooDavd11tdWB5qJQv1lo7zQ55/9bEQ692IyMch8SriyA==
-X-Received: by 2002:a4a:e38c:0:b0:517:afee:a386 with SMTP id l12-20020a4ae38c000000b00517afeea386mr5626564oov.2.1675475483713;
-        Fri, 03 Feb 2023 17:51:23 -0800 (PST)
-Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id h13-20020a4aa28d000000b004fd878ef510sm1616569ool.21.2023.02.03.17.51.23
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=uePF3eDJemwYV3SuvTrXUS0Nc0Z+OSgE9N4Vx3eaMM8=;
+        b=zebesY2dX6m5eZcr58nbd4xohO1AsS+FbHfX832jgKEl8Z9gOaEAsoonqZOXTUSDBe
+         97sIabqaCdud3FDuuctXmoacNyKGRKbKrU8U1tgmRhxuI+nNOnU3Ie9Vjar+PWlUpykg
+         R6zsYaLyoGYV+D1HAYsZB2a2riGK6WIYmiMb7ladF3haruT2NACAL7fJNMenJw9urIFL
+         OswWw3vx+ZJvzRu6tQ36C7MUZ560/jzZh5efqp8r5gNUXaYZ+bM4DyejUjsearq73wu5
+         lWrkOj0Rybnyx7fcsGukyVUJEBkkSwdaWQ1ShXs2FEt59lBxDFhSVD/8hvXP72hXaDmP
+         qqXg==
+X-Gm-Message-State: AO0yUKX/5GKGNaJPzhWKV90xaijvBCYDPM4kgq2TVVzb8H4oO8c9GFmS
+	iP0bSey+YLMyzol1MJHRgj8=
+X-Google-Smtp-Source: AK7set8cRFAs1HA7CysvGz1jSHh+UPjUA8HI6i+unKtdWIXeai5/n/5suMpr8o/8lEDCDNck9eOImQ==
+X-Received: by 2002:aa7:915a:0:b0:593:cfbb:3446 with SMTP id 26-20020aa7915a000000b00593cfbb3446mr10195154pfi.11.1675476240673;
+        Fri, 03 Feb 2023 18:04:00 -0800 (PST)
+Received: from debian.me (subs02-180-214-232-73.three.co.id. [180.214.232.73])
+        by smtp.gmail.com with ESMTPSA id y66-20020a626445000000b005821db4fd84sm2507025pfb.131.2023.02.03.18.03.59
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 03 Feb 2023 17:51:23 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Date: Fri, 3 Feb 2023 17:51:22 -0800
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+        Fri, 03 Feb 2023 18:04:00 -0800 (PST)
+Received: by debian.me (Postfix, from userid 1000)
+	id 02D1B1052EA; Sat,  4 Feb 2023 09:03:56 +0700 (WIB)
+Date: Sat, 4 Feb 2023 09:03:56 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
 	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 00/28] 6.1.10-rc1 review
-Message-ID: <20230204015122.GF3089769@roeck-us.net>
-References: <20230203101009.946745030@linuxfoundation.org>
+Subject: Re: [PATCH 5.15 00/20] 5.15.92-rc1 review
+Message-ID: <Y929DJ7bSaFVc+/I@debian.me>
+References: <20230203101007.985835823@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="e/62PjlpUEBrbBLG"
 Content-Disposition: inline
-In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
+In-Reply-To: <20230203101007.985835823@linuxfoundation.org>
 
-On Fri, Feb 03, 2023 at 11:12:48AM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.10 release.
-> There are 28 patches in this series, all will be posted as a response
+
+--e/62PjlpUEBrbBLG
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Fri, Feb 03, 2023 at 11:13:27AM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.92 release.
+> There are 20 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Sun, 05 Feb 2023 10:09:58 +0000.
-> Anything received after that time might be too late.
-> 
+>=20
 
-Build results:
-	total: 155 pass: 155 fail: 0
-Qemu test results:
-	total: 503 pass: 503 fail: 0
+Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
+powerpc (ps3_defconfig, GCC 12.2.0).
 
-Tested-by: Guenter Roeck <linux@roeck-us.net>
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
-Guenter
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--e/62PjlpUEBrbBLG
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY929AwAKCRD2uYlJVVFO
+o0pSAP4xikCjYlehto1K/7EG/Q607otvnze80g/FIRqCPSAYwAEA804JcdwogPij
+qlQ/MNtoUy6DzGoPWMSSabw4cIbkQgA=
+=vUuP
+-----END PGP SIGNATURE-----
+
+--e/62PjlpUEBrbBLG--
