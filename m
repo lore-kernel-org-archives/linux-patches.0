@@ -1,219 +1,122 @@
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8FA317F
-	for <patches@lists.linux.dev>; Sat,  4 Feb 2023 09:36:51 +0000 (UTC)
-Received: by mail-vs1-f52.google.com with SMTP id 187so7820473vsv.10
-        for <patches@lists.linux.dev>; Sat, 04 Feb 2023 01:36:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=XyoKiQ7zeC9iLhE6WOuhw6cWFuYLyGHZEkrfQLzhroc=;
-        b=mYhN8sPaOx7ArX81ubvoDo8WWoKL5Y3kj1U7wnjI7vJKHzWmYSC3CW+takqwsx0oXS
-         84/AE8mfHbRtcHKkq28mWSc0gNCFD/o5o/gvh4zfplfofXrd/+yahBCvArbrse+NnDLd
-         FrRdQALPJkuwf9DKAWNnHjMTKeT4k2EBDjwjAmQilxttmO+QWPEM8B4vrcVt51PBNj4W
-         yfqpZ8Zil9LCG4rh3V3XFO3ZM+bMqLOTxFESqt7S55ye9wMac+UEC1RFY+DCUk/Yq89v
-         b4qhDYD21BOlypF8IYxX5BgYfUQCtXEwaQV5x9rduGvkP/TQxFcwNXYZYfOW28yT9ExL
-         Eycw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=XyoKiQ7zeC9iLhE6WOuhw6cWFuYLyGHZEkrfQLzhroc=;
-        b=EAYpcLFRlScgSLSSM63MsJLyvDgB4Mod+dGnLVlDgnoMtRw7auuCvReHfFpzcDTQ5S
-         UIXXSM0DMWWUSirnA5hfi/QYSIjUALCgABSAsZmshKYP6NiBGyHBG8cmgERKmNyRqLiO
-         DHulGCe8pS1PC5+UwUFKWEw6YFywg3SDLSbRF0UTb28r/epz1AmnEuSGa31DNNL0CyqW
-         SKytoLHEPgvuZUVgJsbVSSAPAd3fKlHF90PJXcEWAY+s61T2zoNW7jPdIHVrAjI1IN1c
-         5GarPhYiJ+6QkdpQVk1Z2GolvwoVloC4OhLJ1FlQHy3Q1UM3jnTlqldQ61P4vr30wRxR
-         VjUQ==
-X-Gm-Message-State: AO0yUKW2pSfmsYM4YmWBqj6AMGa3oYtnnkGB0FehIN8iHEk79vOoxLqA
-	ZTrMxSo/47DrxV249eiNGgKXJVG4RKlCBLJ1fi6iVw==
-X-Google-Smtp-Source: AK7set+fjvCQQ/rq4Vudh9xe09bpSjdm95pV6GiaBLXbbEPh3SJM1xLwDHkX151ez658u6eBcK6cuGO2TgDc+2tu5LI=
-X-Received: by 2002:a67:e19a:0:b0:3f7:528b:d25f with SMTP id
- e26-20020a67e19a000000b003f7528bd25fmr2142314vsl.9.1675503410280; Sat, 04 Feb
- 2023 01:36:50 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2DE423A9
+	for <patches@lists.linux.dev>; Sat,  4 Feb 2023 13:48:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10A2AC433D2;
+	Sat,  4 Feb 2023 13:48:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1675518538;
+	bh=FXY1uJuhh8GYNVQnAlficUDBMLFbM987wNiwPA4b5XE=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=uqFdtYbJebqXhjd+dvwJCzX0rxcgwAN6cVpI5t/+Ue1Pl+DOqVhzC4dSijETr286y
+	 EmqpTPnKOJgIiPxNB7BNfJCjWTHvE5zhUrCj7BnCnb23Ox9rrcNo7cNwjYNA2EKDEX
+	 3AI1ybHSl/6jz4/2A7ToiFt/CdP0eHztF+oYcoJLBdwKCFlWURGAYTQTFJvENtkcS8
+	 u6ewnZq6P7HtEor/rncefqLGCy+U+nSA0ztTucGGsfaWzEulIrjQiHHspjyvfGk+GG
+	 KcomEUS3Xx89Xc2PFqANjpALGP2m3+/EOB6kF8zddb7AsNbHWoZnnDoiVJg32kOGxg
+	 mGvce7ZA9UiRQ==
+Date: Sat, 4 Feb 2023 08:48:56 -0500
+From: Sasha Levin <sashal@kernel.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Eric Biggers <ebiggers@kernel.org>, Guenter Roeck <linux@roeck-us.net>,
+	stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.4 000/134] 5.4.231-rc1 review
+Message-ID: <Y95iSDo7Qa+HoWSg@sashalap>
+References: <20230203101023.832083974@linuxfoundation.org>
+ <20230203155619.GA3176223@roeck-us.net>
+ <Y906Hz3UWYxoxYdD@kroah.com>
+ <20230203171826.GA1500930@roeck-us.net>
+ <Y91YWzopMMGF1Lgh@sol.localdomain>
+ <Y91bjnIuQRvVqpO7@sol.localdomain>
+ <705ab151-da1e-30e1-c232-c9860717267d@roeck-us.net>
+ <Y91lXYN7zF8d/fek@sol.localdomain>
+ <Y94QTVUg2H68XnQ2@kroah.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230203101012.959398849@linuxfoundation.org>
-In-Reply-To: <20230203101012.959398849@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Sat, 4 Feb 2023 15:06:39 +0530
-Message-ID: <CA+G9fYvDk2QKX9iJQy_GMrntYqSqbf_HHaTO2cLsMSvsKuT6iQ@mail.gmail.com>
-Subject: Re: [PATCH 4.14 00/62] 4.14.305-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Disposition: inline
+In-Reply-To: <Y94QTVUg2H68XnQ2@kroah.com>
 
-On Fri, 3 Feb 2023 at 15:45, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+On Sat, Feb 04, 2023 at 08:59:09AM +0100, Greg Kroah-Hartman wrote:
+>On Fri, Feb 03, 2023 at 11:49:49AM -0800, Eric Biggers wrote:
+>> On Fri, Feb 03, 2023 at 11:28:46AM -0800, Guenter Roeck wrote:
+>> > On 2/3/23 11:07, Eric Biggers wrote:
+>> > > On Fri, Feb 03, 2023 at 10:54:21AM -0800, Eric Biggers wrote:
+>> > > > On Fri, Feb 03, 2023 at 09:18:26AM -0800, Guenter Roeck wrote:
+>> > > > > On Fri, Feb 03, 2023 at 05:45:19PM +0100, Greg Kroah-Hartman wrote:
+>> > > > > > On Fri, Feb 03, 2023 at 07:56:19AM -0800, Guenter Roeck wrote:
+>> > > > > > > On Fri, Feb 03, 2023 at 11:11:45AM +0100, Greg Kroah-Hartman wrote:
+>> > > > > > > > This is the start of the stable review cycle for the 5.4.231 release.
+>> > > > > > > > There are 134 patches in this series, all will be posted as a response
+>> > > > > > > > to this one.  If anyone has any issues with these being applied, please
+>> > > > > > > > let me know.
+>> > > > > > > >
+>> > > > > > > > Responses should be made by Sun, 05 Feb 2023 10:09:58 +0000.
+>> > > > > > > > Anything received after that time might be too late.
+>> > > > > > > >
+>> > > > > > >
+>> > > > > > > Building ia64:defconfig ... failed
+>> > > > > > > --------------
+>> > > > > > > Error log:
+>> > > > > > > <stdin>:1511:2: warning: #warning syscall clone3 not implemented [-Wcpp]
+>> > > > > > > arch/ia64/kernel/mca_drv.c: In function 'mca_handler_bh':
+>> > > > > > > arch/ia64/kernel/mca_drv.c:179:9: error: implicit declaration of function 'make_task_dead'
+>> > > > > > >
+>> > > > > > > Caused by "exit: Add and use make_task_dead.". Did that really have to be backported ?
+>> > > > > >
+>> > > > > > Yup, it does!
+>> > > > > >
+>> > > > > > Eric, any help with this?
+>> > > > > >
+>> > > > >
+>> > > > > Adding "#include <linux/sched/task.h>" to the affected file would probably
+>> > > > > be the easy fix. I did a quick check, and it works.
+>> > > > >
+>> > > > > Note that the same problem is seen in v4.14.y and v4.19.y. Later
+>> > > > > kernels don't have the problem.
+>> > > > >
+>> > > >
+>> > > > This problem arises because <linux/mm.h> transitively includes
+>> > > > <linux/sched/task.h> in 5.10 and later, but not in 5.4 and earlier.
+>> > > >
+>> > > > Greg, any preference for how to handle this situation?
+>> > > >
+>> > > > Just add '#include <linux/sched/task.h>' to the affected .c file (and hope there
+>> > > > are no more affected .c files in the other arch directories) and call it a day?
+>> > > >
+>> > > > Or should we backport the transitive inclusion (i.e., the #include added by
+>> > > > commit 80fbaf1c3f29)?  Or move the declaration of make_task_dead() into
+>> > > > <linux/kernel.h> so that it's next to do_exit()?
+>> > >
+>> > > One question: do *all* the arches actually get built as part of the testing for
+>> > > each stable release?  If so, we can just add the #include to the .c files that
+>> > > need it.  If not, then it would be safer to take one of the other approaches.
+>> > >
+>> >
+>> > Yes, I do build all architectures for each stable release.
+>> >
+>> > FWIW, I only noticed that one build failure due to this problem.
+>>
+>> Okay, great.  In that case, Greg or Sasha, can you fold the needed #include into
+>> arch/ia64/kernel/mca_drv.c in exit-add-and-use-make_task_dead.patch on 4.14,
+>> 4.19, and 5.4?  Or should I just send the whole series again for each?
 >
-> This is the start of the stable review cycle for the 4.14.305 release.
-> There are 62 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Sun, 05 Feb 2023 10:09:58 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-=
-4.14.305-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-4.14.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+>I'll fold it in later today when I get a chance, no need to resubmit the
+>whole thing, thanks!
 
+Greg, I did it for the 5.4 backport. If I do it for 4.19 and 4.14 it's
+going to add a bunch of fuzz into those, lmk if you want me to push
+those too or whether you'll fix it up.
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
-
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-## Build
-* kernel: 4.14.305-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-4.14.y
-* git commit: 001d96b34795b15b9037ba2fb3c63dffcfc0566e
-* git describe: v4.14.304-63-g001d96b34795
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.14.y/build/v4.14=
-.304-63-g001d96b34795
-
-## Test Regressions (compared to v4.14.304)
-
-## Metric Regressions (compared to v4.14.304)
-
-## Test Fixes (compared to v4.14.304)
-
-## Metric Fixes (compared to v4.14.304)
-
-## Test result summary
-total: 92228, pass: 79865, fail: 2880, skip: 9186, xfail: 297
-
-## Build Summary
-* arc: 10 total, 10 passed, 0 failed
-* arm: 311 total, 306 passed, 5 failed
-* arm64: 53 total, 50 passed, 3 failed
-* i386: 29 total, 28 passed, 1 failed
-* mips: 41 total, 41 passed, 0 failed
-* parisc: 12 total, 12 passed, 0 failed
-* powerpc: 20 total, 19 passed, 1 failed
-* s390: 15 total, 11 passed, 4 failed
-* sh: 24 total, 24 passed, 0 failed
-* sparc: 12 total, 12 passed, 0 failed
-* x86_64: 51 total, 50 passed, 1 failed
-
-## Test suites summary
-* boot
-* fwts
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-vm
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-open-posix-tests
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* packetdrill
-* rcutorture
-* v4l2-compliance
-* vdso
-
---
-Linaro LKFT
-https://lkft.linaro.org
+-- 
+Thanks,
+Sasha
