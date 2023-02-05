@@ -1,90 +1,144 @@
-Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-fw-33001.amazon.com (smtp-fw-33001.amazon.com [207.171.190.10])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AEA03107A5
-	for <patches@lists.linux.dev>; Sat,  4 Feb 2023 23:46:08 +0000 (UTC)
-Received: by mail-pj1-f43.google.com with SMTP id mi9so8430045pjb.4
-        for <patches@lists.linux.dev>; Sat, 04 Feb 2023 15:46:08 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027157F
+	for <patches@lists.linux.dev>; Sun,  5 Feb 2023 05:31:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=heitbaum.com; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=J+jdujSeP2mHDJ6PO03JdJUpF+OgLYCSJ56+6Fm8Qok=;
-        b=Re0S/6cz86wse3Z6m6Kr8TIJj+1Sem2PjHzeLMsKOMQCzmlYLU17M7hHPLJbBu3jF6
-         kB/QmjUN6Jm6qvE5Yeev9198dB7WAvb1emSnNRe3rIaRrvnwC0B/cqSkvm8kW269jPY3
-         Abp6J+ZTyRAs1BumfTZ6gozCv7NFq5VSZYZ4A=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=J+jdujSeP2mHDJ6PO03JdJUpF+OgLYCSJ56+6Fm8Qok=;
-        b=KeYjrDvn69Zoy/cg106L4XADRecUJ7qxj1GHu9bmk53LIiEQ5OrtYnZl9uXnjwbbiv
-         18xF9gNurhKRIjTqv6807UQrio1glMTh7wuDvPT2asqKBRdrMpwylaK4DGd+8A5SpH8T
-         XNe8YcDLYvQZ0KqeYcY5GeMOGjxEL66qBmmaOtmA45R9iwZqv+1nXr/RrqNWZgASCbLr
-         iSfKhOtcD7vwhZMiFgvZgE551acGTVLI6SfFGgNr7SR1gfvEB3sEMAOpO7CVQXI4i3dm
-         +1g4bbb7YLWxZrQyoAeSxnHtB02bhD1qBLdl/OLZNRKA4ZBfyvoYtGyfyHiUGgu5qODM
-         8xXA==
-X-Gm-Message-State: AO0yUKWrtwKrrW9mK/x59xlscFYbcP83F8l6mjxQ2kDFNGrcQ22UbmAq
-	+HTqZB0wrAW4vzvEefy0K8kMGw==
-X-Google-Smtp-Source: AK7set+1fSsPfdowmjfG5BTcGzkvXsTp7vgzLwkQGJOOmbmGBC6LN99rGP5Kj75XNJzrdKefS1bXmw==
-X-Received: by 2002:a17:90b:3b8b:b0:226:3f8:5b78 with SMTP id pc11-20020a17090b3b8b00b0022603f85b78mr15636263pjb.13.1675554368018;
-        Sat, 04 Feb 2023 15:46:08 -0800 (PST)
-Received: from 8da818ad58c5 (124-148-239-102.tpgi.com.au. [124.148.239.102])
-        by smtp.gmail.com with ESMTPSA id f3-20020a17090a8e8300b0022c08b63564sm3795121pjo.52.2023.02.04.15.46.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 04 Feb 2023 15:46:06 -0800 (PST)
-Date: Sat, 4 Feb 2023 23:45:58 +0000
-From: Rudi Heitbaum <rudi@heitbaum.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 00/28] 6.1.10-rc1 review
-Message-ID: <20230204234558.GA3214795@8da818ad58c5>
-References: <20230203101009.946745030@linuxfoundation.org>
+  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
+  t=1675575097; x=1707111097;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=XkbPWjDO/QtZNr0E3SDhaSmquDn0r6FIVKgJTahd54g=;
+  b=MBhMbjS1QivuT1ulbPjhoyA6x/N0w4kLQ9xf4g2WCL3fJB2Xyl/0Sm1B
+   iEBOF4qR3mzLfwmDFBRzhegFGBf4kFf48xYubAqRYns1BcTwLSbFEV+Br
+   GF1LN5+mrZFr4zJk6Yr2RrFF/OsHRrzD1+lrmWfhZ+F2UTX0mZzznP6+C
+   g=;
+X-IronPort-AV: E=Sophos;i="5.97,274,1669075200"; 
+   d="scan'208";a="260155441"
+Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO email-inbound-relay-pdx-2c-m6i4x-dc7c3f8b.us-west-2.amazon.com) ([10.43.8.6])
+  by smtp-border-fw-33001.sea14.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2023 05:31:35 +0000
+Received: from EX13MTAUWB001.ant.amazon.com (pdx1-ws-svc-p6-lb9-vlan2.pdx.amazon.com [10.236.137.194])
+	by email-inbound-relay-pdx-2c-m6i4x-dc7c3f8b.us-west-2.amazon.com (Postfix) with ESMTPS id D4641A27CE;
+	Sun,  5 Feb 2023 05:31:33 +0000 (UTC)
+Received: from EX19D046UWB004.ant.amazon.com (10.13.139.164) by
+ EX13MTAUWB001.ant.amazon.com (10.43.161.207) with Microsoft SMTP Server (TLS)
+ id 15.0.1497.45; Sun, 5 Feb 2023 05:31:32 +0000
+Received: from dev-dsk-shaoyi-2b-b6ac9e9c.us-west-2.amazon.com (10.43.160.120)
+ by EX19D046UWB004.ant.amazon.com (10.13.139.164) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
+ 15.2.1118.24; Sun, 5 Feb 2023 05:31:32 +0000
+From: Shaoying Xu <shaoyi@amazon.com>
+To: <gregkh@linuxfoundation.org>
+CC: <dsahern@kernel.org>, <idosch@nvidia.com>, <kuba@kernel.org>,
+	<patches@lists.linux.dev>, <sashal@kernel.org>, <stable@vger.kernel.org>,
+	Shaoying Xu <shaoyi@amazon.com>
+Subject: Re: [PATCH 5.4 60/67] ipv4: Fix incorrect route flushing when source address is deleted 
+Date: Sun, 5 Feb 2023 05:30:58 +0000
+Message-ID: <20230205053100.15903-1-shaoyi@amazon.com>
+X-Mailer: git-send-email 2.38.1
+In-Reply-To: <20221212130920.482075438@linuxfoundation.org>
+References: <20221212130920.482075438@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230203101009.946745030@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.43.160.120]
+X-ClientProxiedBy: EX13D41UWB004.ant.amazon.com (10.43.161.135) To
+ EX19D046UWB004.ant.amazon.com (10.13.139.164)
 
-On Fri, Feb 03, 2023 at 11:12:48AM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.10 release.
-> There are 28 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On Mon, 12 Dec 2022 14:17:35 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+
+> From: Ido Schimmel <idosch@nvidia.com>
 > 
-> Responses should be made by Sun, 05 Feb 2023 10:09:58 +0000.
-> Anything received after that time might be too late.
+> [ Upstream commit f96a3d74554df537b6db5c99c27c80e7afadc8d1 ]
+> 
+> Cited commit added the table ID to the FIB info structure, but did not
+> prevent structures with different table IDs from being consolidated.
+> This can lead to routes being flushed from a VRF when an address is
+> deleted from a different VRF.
+> 
+> Fix by taking the table ID into account when looking for a matching FIB
+> info. This is already done for FIB info structures backed by a nexthop
+> object in fib_find_info_nh().
+> 
+> Add test cases that fail before the fix:
+> 
+>  # ./fib_tests.sh -t ipv4_del_addr
+> 
+>  IPv4 delete address route tests
+>      Regular FIB info
+>      TEST: Route removed from VRF when source address deleted            [ OK ]
+>      TEST: Route in default VRF not removed                              [ OK ]
+>      TEST: Route removed in default VRF when source address deleted      [ OK ]
+>      TEST: Route in VRF is not removed by address delete                 [ OK ]
+>      Identical FIB info with different table ID
+>      TEST: Route removed from VRF when source address deleted            [FAIL]
+>      TEST: Route in default VRF not removed                              [ OK ]
+>  RTNETLINK answers: File exists
+>      TEST: Route removed in default VRF when source address deleted      [ OK ]
+>      TEST: Route in VRF is not removed by address delete                 [FAIL]
+> 
+>  Tests passed:   6
+>  Tests failed:   2
+> 
+> And pass after:
+> 
+>  # ./fib_tests.sh -t ipv4_del_addr
+> 
+>  IPv4 delete address route tests
+>      Regular FIB info
+>      TEST: Route removed from VRF when source address deleted            [ OK ]
+>      TEST: Route in default VRF not removed                              [ OK ]
+>      TEST: Route removed in default VRF when source address deleted      [ OK ]
+>      TEST: Route in VRF is not removed by address delete                 [ OK ]
+>      Identical FIB info with different table ID
+>      TEST: Route removed from VRF when source address deleted            [ OK ]
+>      TEST: Route in default VRF not removed                              [ OK ]
+>      TEST: Route removed in default VRF when source address deleted      [ OK ]
+>      TEST: Route in VRF is not removed by address delete                 [ OK ]
+> 
+>  Tests passed:   8
+>  Tests failed:   0
+> 
+> Fixes: 5a56a0b3a45d ("net: Don't delete routes in different VRFs")
+> Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+> Reviewed-by: David Ahern <dsahern@kernel.org>
+> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+> Signed-off-by: Sasha Levin <sashal@kernel.org>
+> ---
+>  net/ipv4/fib_semantics.c                 |    1 +
+>  tools/testing/selftests/net/fib_tests.sh | 1727 ----------------------
+>  2 files changed, 1 insertion(+), 1727 deletions(-)
+>  delete mode 100755 tools/testing/selftests/net/fib_tests.sh
 
 Hi Greg,
 
-6.1.10-rc1 tested.
+Sorry for last unclear message without context. I found this commit deleted
+the whole fib_tests.sh that causes new failure in kselftests run. Looking at
+the upstream patch [1] and given the context that ipv4_del_addr test is not
+available to kernel 5.4, I added the revert patch and new backport of this
+commit to resolve the potential mistake.
 
-Run tested on:
-- Allwinner H6 (Tanix TX6)
-- Intel Alder Lake x86_64 (nuc12 i7-1260P)
+[1] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=f96a3d74554df537b6db5c99c27c80e7afadc8d1
 
-In addition - build tested for:
-- Allwinner A64
-- Allwinner H3
-- Allwinner H5
-- NXP iMX6
-- NXP iMX8
-- Qualcomm Dragonboard
-- Rockchip RK3288
-- Rockchip RK3328
-- Rockchip RK3399pro
-- Samsung Exynos
+Thanks,
+Shaoying
 
-Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
---
-Rudi
+Ido Schimmel (1):
+  ipv4: Fix incorrect route flushing when source address is deleted
+
+Shaoying Xu (1):
+  Revert "ipv4: Fix incorrect route flushing when source address is
+    deleted"
+
+ tools/testing/selftests/net/fib_tests.sh | 1727 ++++++++++++++++++++++
+ 1 file changed, 1727 insertions(+)
+ create mode 100755 tools/testing/selftests/net/fib_tests.sh
+
+-- 
+2.38.1
+
