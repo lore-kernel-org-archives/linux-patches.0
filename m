@@ -1,43 +1,44 @@
-Received: from smtp-fw-33001.amazon.com (smtp-fw-33001.amazon.com [207.171.190.10])
+Received: from smtp-fw-9103.amazon.com (smtp-fw-9103.amazon.com [207.171.188.200])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 027157F
-	for <patches@lists.linux.dev>; Sun,  5 Feb 2023 05:31:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3101C04
+	for <patches@lists.linux.dev>; Sun,  5 Feb 2023 05:31:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
   d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1675575097; x=1707111097;
+  t=1675575118; x=1707111118;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version:content-transfer-encoding;
-  bh=XkbPWjDO/QtZNr0E3SDhaSmquDn0r6FIVKgJTahd54g=;
-  b=MBhMbjS1QivuT1ulbPjhoyA6x/N0w4kLQ9xf4g2WCL3fJB2Xyl/0Sm1B
-   iEBOF4qR3mzLfwmDFBRzhegFGBf4kFf48xYubAqRYns1BcTwLSbFEV+Br
-   GF1LN5+mrZFr4zJk6Yr2RrFF/OsHRrzD1+lrmWfhZ+F2UTX0mZzznP6+C
-   g=;
+  bh=RiQroxHsMesevYUDkYjoMfOm7jVhlZoKX6jWWO+I6PY=;
+  b=jZHNBek/bbZB+ykvoPI6u81ozKQSUNL1vDx0bO+rGRMlnzThJeThtTd3
+   D+GA13l+h6wY/8VHywkxOk+ulm4KA8gChYJbYzhYUg1YL4RXGonx1b8Nm
+   Q2SQFOqpoFLFFvcs1ssnh5WYYAqOum1y3xmYhGwIYWhErk9bUmcKEr5a3
+   s=;
 X-IronPort-AV: E=Sophos;i="5.97,274,1669075200"; 
-   d="scan'208";a="260155441"
-Received: from iad12-co-svc-p1-lb1-vlan3.amazon.com (HELO email-inbound-relay-pdx-2c-m6i4x-dc7c3f8b.us-west-2.amazon.com) ([10.43.8.6])
-  by smtp-border-fw-33001.sea14.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2023 05:31:35 +0000
+   d="scan'208";a="1099380297"
+Received: from pdx4-co-svc-p1-lb2-vlan3.amazon.com (HELO email-inbound-relay-pdx-2b-m6i4x-0ec33b60.us-west-2.amazon.com) ([10.25.36.214])
+  by smtp-border-fw-9103.sea19.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Feb 2023 05:31:57 +0000
 Received: from EX13MTAUWB001.ant.amazon.com (pdx1-ws-svc-p6-lb9-vlan2.pdx.amazon.com [10.236.137.194])
-	by email-inbound-relay-pdx-2c-m6i4x-dc7c3f8b.us-west-2.amazon.com (Postfix) with ESMTPS id D4641A27CE;
-	Sun,  5 Feb 2023 05:31:33 +0000 (UTC)
+	by email-inbound-relay-pdx-2b-m6i4x-0ec33b60.us-west-2.amazon.com (Postfix) with ESMTPS id 1ACD5A24AE;
+	Sun,  5 Feb 2023 05:31:57 +0000 (UTC)
 Received: from EX19D046UWB004.ant.amazon.com (10.13.139.164) by
  EX13MTAUWB001.ant.amazon.com (10.43.161.207) with Microsoft SMTP Server (TLS)
- id 15.0.1497.45; Sun, 5 Feb 2023 05:31:32 +0000
+ id 15.0.1497.45; Sun, 5 Feb 2023 05:31:56 +0000
 Received: from dev-dsk-shaoyi-2b-b6ac9e9c.us-west-2.amazon.com (10.43.160.120)
  by EX19D046UWB004.ant.amazon.com (10.13.139.164) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.2.1118.24; Sun, 5 Feb 2023 05:31:32 +0000
+ 15.2.1118.24; Sun, 5 Feb 2023 05:31:56 +0000
 From: Shaoying Xu <shaoyi@amazon.com>
 To: <gregkh@linuxfoundation.org>
 CC: <dsahern@kernel.org>, <idosch@nvidia.com>, <kuba@kernel.org>,
 	<patches@lists.linux.dev>, <sashal@kernel.org>, <stable@vger.kernel.org>,
 	Shaoying Xu <shaoyi@amazon.com>
-Subject: Re: [PATCH 5.4 60/67] ipv4: Fix incorrect route flushing when source address is deleted 
-Date: Sun, 5 Feb 2023 05:30:58 +0000
-Message-ID: <20230205053100.15903-1-shaoyi@amazon.com>
+Subject: [PATCH stable 5.4 2/2] ipv4: Fix incorrect route flushing when source address is deleted
+Date: Sun, 5 Feb 2023 05:31:00 +0000
+Message-ID: <20230205053100.15903-3-shaoyi@amazon.com>
 X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20221212130920.482075438@linuxfoundation.org>
+In-Reply-To: <20230205053100.15903-1-shaoyi@amazon.com>
 References: <20221212130920.482075438@linuxfoundation.org>
+ <20230205053100.15903-1-shaoyi@amazon.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -50,95 +51,80 @@ X-Originating-IP: [10.43.160.120]
 X-ClientProxiedBy: EX13D41UWB004.ant.amazon.com (10.43.161.135) To
  EX19D046UWB004.ant.amazon.com (10.13.139.164)
 
-On Mon, 12 Dec 2022 14:17:35 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+From: Ido Schimmel <idosch@nvidia.com>
 
-> From: Ido Schimmel <idosch@nvidia.com>
-> 
-> [ Upstream commit f96a3d74554df537b6db5c99c27c80e7afadc8d1 ]
-> 
-> Cited commit added the table ID to the FIB info structure, but did not
-> prevent structures with different table IDs from being consolidated.
-> This can lead to routes being flushed from a VRF when an address is
-> deleted from a different VRF.
-> 
-> Fix by taking the table ID into account when looking for a matching FIB
-> info. This is already done for FIB info structures backed by a nexthop
-> object in fib_find_info_nh().
-> 
-> Add test cases that fail before the fix:
-> 
->  # ./fib_tests.sh -t ipv4_del_addr
-> 
->  IPv4 delete address route tests
->      Regular FIB info
->      TEST: Route removed from VRF when source address deleted            [ OK ]
->      TEST: Route in default VRF not removed                              [ OK ]
->      TEST: Route removed in default VRF when source address deleted      [ OK ]
->      TEST: Route in VRF is not removed by address delete                 [ OK ]
->      Identical FIB info with different table ID
->      TEST: Route removed from VRF when source address deleted            [FAIL]
->      TEST: Route in default VRF not removed                              [ OK ]
->  RTNETLINK answers: File exists
->      TEST: Route removed in default VRF when source address deleted      [ OK ]
->      TEST: Route in VRF is not removed by address delete                 [FAIL]
-> 
->  Tests passed:   6
->  Tests failed:   2
-> 
-> And pass after:
-> 
->  # ./fib_tests.sh -t ipv4_del_addr
-> 
->  IPv4 delete address route tests
->      Regular FIB info
->      TEST: Route removed from VRF when source address deleted            [ OK ]
->      TEST: Route in default VRF not removed                              [ OK ]
->      TEST: Route removed in default VRF when source address deleted      [ OK ]
->      TEST: Route in VRF is not removed by address delete                 [ OK ]
->      Identical FIB info with different table ID
->      TEST: Route removed from VRF when source address deleted            [ OK ]
->      TEST: Route in default VRF not removed                              [ OK ]
->      TEST: Route removed in default VRF when source address deleted      [ OK ]
->      TEST: Route in VRF is not removed by address delete                 [ OK ]
-> 
->  Tests passed:   8
->  Tests failed:   0
-> 
-> Fixes: 5a56a0b3a45d ("net: Don't delete routes in different VRFs")
-> Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-> Reviewed-by: David Ahern <dsahern@kernel.org>
-> Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-> Signed-off-by: Sasha Levin <sashal@kernel.org>
-> ---
->  net/ipv4/fib_semantics.c                 |    1 +
->  tools/testing/selftests/net/fib_tests.sh | 1727 ----------------------
->  2 files changed, 1 insertion(+), 1727 deletions(-)
->  delete mode 100755 tools/testing/selftests/net/fib_tests.sh
+[ Upstream commit f96a3d74554df537b6db5c99c27c80e7afadc8d1 ]
 
-Hi Greg,
+Cited commit added the table ID to the FIB info structure, but did not
+prevent structures with different table IDs from being consolidated.
+This can lead to routes being flushed from a VRF when an address is
+deleted from a different VRF.
 
-Sorry for last unclear message without context. I found this commit deleted
-the whole fib_tests.sh that causes new failure in kselftests run. Looking at
-the upstream patch [1] and given the context that ipv4_del_addr test is not
-available to kernel 5.4, I added the revert patch and new backport of this
-commit to resolve the potential mistake.
+Fix by taking the table ID into account when looking for a matching FIB
+info. This is already done for FIB info structures backed by a nexthop
+object in fib_find_info_nh().
 
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=f96a3d74554df537b6db5c99c27c80e7afadc8d1
+Add test cases that fail before the fix:
 
-Thanks,
-Shaoying
+ # ./fib_tests.sh -t ipv4_del_addr
 
-Ido Schimmel (1):
-  ipv4: Fix incorrect route flushing when source address is deleted
+ IPv4 delete address route tests
+     Regular FIB info
+     TEST: Route removed from VRF when source address deleted            [ OK ]
+     TEST: Route in default VRF not removed                              [ OK ]
+     TEST: Route removed in default VRF when source address deleted      [ OK ]
+     TEST: Route in VRF is not removed by address delete                 [ OK ]
+     Identical FIB info with different table ID
+     TEST: Route removed from VRF when source address deleted            [FAIL]
+     TEST: Route in default VRF not removed                              [ OK ]
+ RTNETLINK answers: File exists
+     TEST: Route removed in default VRF when source address deleted      [ OK ]
+     TEST: Route in VRF is not removed by address delete                 [FAIL]
 
-Shaoying Xu (1):
-  Revert "ipv4: Fix incorrect route flushing when source address is
-    deleted"
+ Tests passed:   6
+ Tests failed:   2
 
- tools/testing/selftests/net/fib_tests.sh | 1727 ++++++++++++++++++++++
- 1 file changed, 1727 insertions(+)
- create mode 100755 tools/testing/selftests/net/fib_tests.sh
+And pass after:
 
+ # ./fib_tests.sh -t ipv4_del_addr
+
+ IPv4 delete address route tests
+     Regular FIB info
+     TEST: Route removed from VRF when source address deleted            [ OK ]
+     TEST: Route in default VRF not removed                              [ OK ]
+     TEST: Route removed in default VRF when source address deleted      [ OK ]
+     TEST: Route in VRF is not removed by address delete                 [ OK ]
+     Identical FIB info with different table ID
+     TEST: Route removed from VRF when source address deleted            [ OK ]
+     TEST: Route in default VRF not removed                              [ OK ]
+     TEST: Route removed in default VRF when source address deleted      [ OK ]
+     TEST: Route in VRF is not removed by address delete                 [ OK ]
+
+ Tests passed:   8
+ Tests failed:   0
+
+Fixes: 5a56a0b3a45d ("net: Don't delete routes in different VRFs")
+Signed-off-by: Ido Schimmel <idosch@nvidia.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Shaoying Xu <shaoyi@amazon.com>
+---
+ net/ipv4/fib_semantics.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
+index 908913d75847..f45b9daf62cf 100644
+--- a/net/ipv4/fib_semantics.c
++++ b/net/ipv4/fib_semantics.c
+@@ -420,6 +420,7 @@ static struct fib_info *fib_find_info(struct fib_info *nfi)
+ 		    nfi->fib_prefsrc == fi->fib_prefsrc &&
+ 		    nfi->fib_priority == fi->fib_priority &&
+ 		    nfi->fib_type == fi->fib_type &&
++		    nfi->fib_tb_id == fi->fib_tb_id &&
+ 		    memcmp(nfi->fib_metrics, fi->fib_metrics,
+ 			   sizeof(u32) * RTAX_MAX) == 0 &&
+ 		    !((nfi->fib_flags ^ fi->fib_flags) & ~RTNH_COMPARE_MASK) &&
 -- 
 2.38.1
 
