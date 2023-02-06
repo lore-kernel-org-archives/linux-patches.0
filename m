@@ -1,114 +1,90 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF6A42F21;
-	Sun,  5 Feb 2023 19:51:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 812EDC433EF;
-	Sun,  5 Feb 2023 19:51:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1675626678;
-	bh=Cfoi1fMvKQ+evElfR1WMirNcIoGAQaH3B+wkU7DqXV4=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=MvcZdFZg/xHLkp7b83g3kjNleHoLKzlz6oRoW47yybJHhOwV+lHds4wSQMBySE+cb
-	 +3tYF/R6oPo4f5IgnmTSjUTrj5XWX61XTdok7Ee8ZvqOoTLRv6BTcEAZJtvmhkU/vw
-	 Dje5Rhfe29c0vmfgLy07RqXvMu26ESVwXtbnoz4DD6EEKAW+PbSIs0WkcyA/7b3PyN
-	 Wc3Gsxa+rB/LtL3QPaAiEAop6fdNzgyqHzUpf6nLBw0UlGjNWpYkm/y8HiaijMPKnp
-	 +znSzrIREnMU1hMenIInjNOLVHQIOaPxvVKH7yGmVTTH7Lc8giryN3xrSG7hLGAwJ2
-	 LFv+nxUUxja5Q==
-Date: Sun, 5 Feb 2023 12:51:15 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de, llvm@lists.linux.dev
-Subject: Re: [PATCH 6.1 00/28] 6.1.10-rc1 review
-Message-ID: <Y+AIsz4/7Ms28aWK@dev-arch.thelio-3990X>
-References: <20230203101009.946745030@linuxfoundation.org>
- <CA+G9fYtsSuw=W0LSpzJRzsXB6qGYS3og1v=FOrvPHSAdRPCDPA@mail.gmail.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78391197
+	for <patches@lists.linux.dev>; Mon,  6 Feb 2023 02:54:29 +0000 (UTC)
+Received: from kwepemm600020.china.huawei.com (unknown [172.30.72.57])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4P99lV2yJ1zRrq8;
+	Mon,  6 Feb 2023 10:52:06 +0800 (CST)
+Received: from [127.0.0.1] (10.174.178.94) by kwepemm600020.china.huawei.com
+ (7.193.23.147) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.34; Mon, 6 Feb
+ 2023 10:54:25 +0800
+Message-ID: <57e180f7-291f-0a26-2680-7033cd47283e@huawei.com>
+Date: Mon, 6 Feb 2023 10:54:22 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.2.0
+Subject: Re: [PATCH 5.4 000/134] 5.4.231-rc2 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
+CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
+	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
+	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
+	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
+	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
+	<rwarsow@gmx.de>
+References: <20230204143608.813973353@linuxfoundation.org>
+From: zhouzhixiu <zhouzhixiu@huawei.com>
+In-Reply-To: <20230204143608.813973353@linuxfoundation.org>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <CA+G9fYtsSuw=W0LSpzJRzsXB6qGYS3og1v=FOrvPHSAdRPCDPA@mail.gmail.com>
+X-Originating-IP: [10.174.178.94]
+X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
+ kwepemm600020.china.huawei.com (7.193.23.147)
+X-CFilter-Loop: Reflected
 
-Hi Naresh,
 
-On Sat, Feb 04, 2023 at 12:55:10PM +0530, Naresh Kamboju wrote:
-> On Fri, 3 Feb 2023 at 15:50, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > This is the start of the stable review cycle for the 6.1.10 release.
-> > There are 28 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Sun, 05 Feb 2023 10:09:58 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.10-rc1.gz
-> > or in the git tree and branch at:
-> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > and the diffstat can be found below.
-> >
-> > thanks,
-> >
-> > greg k-h
-> 
-> 
-> Results from Linaro’s test farm.
-> No regressions on arm64, arm, x86_64, and i386.
-> 
-> Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> 
-> NOTE:
-> 
-> clang-nightly-allmodconfig - Failed
-> 
-> Build error:
-> -----------
->   include/linux/fortify-string.h:430:4: error: call to '__write_overflow_field'
->    declared with 'warning' attribute: detected write beyond size of field
->    (1st parameter); maybe use struct_group()? [-Werror,-Wattribute-warning]
-> 
-> This is already reported upstream,
-> https://lore.kernel.org/llvm/63d0c141.050a0220.c848b.4e93@mx.google.com/
+On 2023/2/4 22:42, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.4.231 release.
+> There are 134 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Mon, 06 Feb 2023 14:35:41 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.231-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
+> -------------
+Tested on arm64 and x86 for 5.4.231-rc2,
 
-I think you copied the wrong warning, as the one upstream is a write
-warning, whereas the one I see in your build logs is a read error:
+Kernel 
+repo:https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+Branch: linux-5.4.y
+Version: 5.4.231-rc2
+Commit:  9d36c855cb4a7dd9498bddd4095b51a237b3217f
+Compiler: gcc version 7.3.0 (GCC)
 
-In file included from /builds/linux/drivers/infiniband/core/cma.c:9:
-In file included from /builds/linux/include/linux/completion.h:12:
-In file included from /builds/linux/include/linux/swait.h:7:
-In file included from /builds/linux/include/linux/spinlock.h:56:
-In file included from /builds/linux/include/linux/preempt.h:78:
-In file included from /builds/linux/arch/x86/include/asm/preempt.h:7:
-In file included from /builds/linux/include/linux/thread_info.h:60:
-In file included from /builds/linux/arch/x86/include/asm/thread_info.h:53:
-In file included from /builds/linux/arch/x86/include/asm/cpufeature.h:5:
-In file included from /builds/linux/arch/x86/include/asm/processor.h:22:
-In file included from /builds/linux/arch/x86/include/asm/msr.h:11:
-In file included from /builds/linux/arch/x86/include/asm/cpumask.h:5:
-In file included from /builds/linux/include/linux/cpumask.h:12:
-In file included from /builds/linux/include/linux/bitmap.h:11:
-In file included from /builds/linux/include/linux/string.h:253:
-/builds/linux/include/linux/fortify-string.h:543:4: error: call to '__read_overflow' declared with 'error' attribute: detected read beyond size of object (1st parameter)
-                        __read_overflow();
-                        ^
+arm64:
+--------------------------------------------------------------------
+Testcase Result Summary:
+total: 9017
+passed: 9017
+failed: 0
+timeout: 0
+--------------------------------------------------------------------
 
-Regardless, this is still a clang bug that we are actively investigating, so it
-can still be safely ignored by the kernel folks.
+x86:
+--------------------------------------------------------------------
+Testcase Result Summary:
+total: 9017
+passed: 9017
+failed: 0
+timeout: 0
+--------------------------------------------------------------------
+Tested-by: Hulk Robot <hulkrobot@huawei.com>
 
-https://github.com/ClangBuiltLinux/linux/issues/1687
-
-Cheers,
-Nathan
