@@ -1,90 +1,65 @@
-Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 78391197
-	for <patches@lists.linux.dev>; Mon,  6 Feb 2023 02:54:29 +0000 (UTC)
-Received: from kwepemm600020.china.huawei.com (unknown [172.30.72.57])
-	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4P99lV2yJ1zRrq8;
-	Mon,  6 Feb 2023 10:52:06 +0800 (CST)
-Received: from [127.0.0.1] (10.174.178.94) by kwepemm600020.china.huawei.com
- (7.193.23.147) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2375.34; Mon, 6 Feb
- 2023 10:54:25 +0800
-Message-ID: <57e180f7-291f-0a26-2680-7033cd47283e@huawei.com>
-Date: Mon, 6 Feb 2023 10:54:22 +0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A267423A0
+	for <patches@lists.linux.dev>; Mon,  6 Feb 2023 07:12:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A56D3C433D2;
+	Mon,  6 Feb 2023 07:12:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1675667564;
+	bh=LsLH3jBO12QKh3Xi1FZhgwHQZkDfk6ZGnO+uu7Ij+Cg=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Evdhd9dLdsAAmEhE5K/dFDt6VYM5/G2luLtgqLa/xCoawqvnwkQkqNgwxZlu/YhJh
+	 r0/QipWMHqBk3ct51Y+zS7rGgy41Wvpw/A0pOeMsYk0E4rWZfPJnCCYd2/PKm5DBh2
+	 CzH68o8K5VJHPGUOtVU5WfaJPVzzCu7ZDebw3YGs=
+Date: Mon, 6 Feb 2023 08:12:41 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Ron Economos <re@w6rz.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.15 00/20] 5.15.92-rc1 review
+Message-ID: <Y+CoaR9hEzyB+6s5@kroah.com>
+References: <20230203101007.985835823@linuxfoundation.org>
+ <de146bc5-50b8-f347-31cf-70b5e93a4541@w6rz.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.2.0
-Subject: Re: [PATCH 5.4 000/134] 5.4.231-rc2 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, <stable@vger.kernel.org>
-CC: <patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>
-References: <20230204143608.813973353@linuxfoundation.org>
-From: zhouzhixiu <zhouzhixiu@huawei.com>
-In-Reply-To: <20230204143608.813973353@linuxfoundation.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.174.178.94]
-X-ClientProxiedBy: dggems702-chm.china.huawei.com (10.3.19.179) To
- kwepemm600020.china.huawei.com (7.193.23.147)
-X-CFilter-Loop: Reflected
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <de146bc5-50b8-f347-31cf-70b5e93a4541@w6rz.net>
 
+On Sat, Feb 04, 2023 at 12:55:36AM -0800, Ron Economos wrote:
+> On 2/3/23 2:13 AM, Greg Kroah-Hartman wrote:
+> > This is the start of the stable review cycle for the 5.15.92 release.
+> > There are 20 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> > 
+> > Responses should be made by Sun, 05 Feb 2023 10:09:58 +0000.
+> > Anything received after that time might be too late.
+> > 
+> > The whole patch series can be found in one patch at:
+> > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.92-rc1.gz
+> > or in the git tree and branch at:
+> > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> > and the diffstat can be found below.
+> > 
+> > thanks,
+> > 
+> > greg k-h
+> 
+> Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+> 
+> Tested-by: Ron Economos <re@w6rz.net>
+> 
 
-On 2023/2/4 22:42, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.231 release.
-> There are 134 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Mon, 06 Feb 2023 14:35:41 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.231-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
->
-> -------------
-Tested on arm64 and x86 for 5.4.231-rc2,
+Thanks for testing and letting me know,
 
-Kernel 
-repo:https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-Branch: linux-5.4.y
-Version: 5.4.231-rc2
-Commit:  9d36c855cb4a7dd9498bddd4095b51a237b3217f
-Compiler: gcc version 7.3.0 (GCC)
-
-arm64:
---------------------------------------------------------------------
-Testcase Result Summary:
-total: 9017
-passed: 9017
-failed: 0
-timeout: 0
---------------------------------------------------------------------
-
-x86:
---------------------------------------------------------------------
-Testcase Result Summary:
-total: 9017
-passed: 9017
-failed: 0
-timeout: 0
---------------------------------------------------------------------
-Tested-by: Hulk Robot <hulkrobot@huawei.com>
-
+greg k-h
