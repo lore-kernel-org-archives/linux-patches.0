@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BD7A2C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7153FC433D2;
-	Tue,  7 Feb 2023 13:06:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69D52C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6DDC433EF;
+	Tue,  7 Feb 2023 13:06:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775180;
-	bh=Z8wNkXhNV2I8A7muiZVNlEeBOypjQrLAsS7BVvnIryg=;
+	s=korg; t=1675775183;
+	bh=+4MgNm7jobg0Th/28M5WXMhfu5tTKoujsHCRE8soPbk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ixSqE3GnLUlAxbshtEOcAf3KrY9TdeL9yCWZsdavDZxFewF1D/YaNkr1sGul/GXKO
-	 lReKl5The9Gsq7zHW+k5MmX4BgodtSkygIXAUUcUw9YARiXAThWl7nb4wzxZrGVkk2
-	 5kq8M8VLNuJwacp5E0hr9mMrH0OSBuS5A89nXPzY=
+	b=yN21ihhHr1RtHITI6vTclVGU/JjeXeubBcoeTdjVxMRp/JdGnxOI6hM0MKgl4PFGz
+	 9QjqXHKmdji6GuqyjuwLc7WUEEs27iC8GueYsU+YMvMHtajdAnVS/iTrbwiEt8hd1v
+	 +gzptpk66XY0W2ojHygwUJ51zTOP33YQKycQNPRk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"K. Y. Srinivasan" <kys@microsoft.com>,
-	Haiyang Zhang <haiyangz@microsoft.com>,
-	Wei Liu <wei.liu@kernel.org>,
-	Dexuan Cui <decui@microsoft.com>,
-	stable <stable@kernel.org>,
-	Michael Kelley <mikelley@microsoft.com>
-Subject: [PATCH 6.1 163/208] HV: hv_balloon: fix memory leak with using debugfs_lookup()
-Date: Tue,  7 Feb 2023 13:56:57 +0100
-Message-Id: <20230207125641.805621730@linuxfoundation.org>
+	Alexey Kardashevskiy <aik@amd.com>,
+	Joerg Roedel <jroedel@suse.de>,
+	"Borislav Petkov (AMD)" <bp@alien8.de>
+Subject: [PATCH 6.1 164/208] x86/debug: Fix stack recursion caused by wrongly ordered DR7 accesses
+Date: Tue,  7 Feb 2023 13:56:58 +0100
+Message-Id: <20230207125641.841052013@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -38,38 +35,80 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Joerg Roedel <jroedel@suse.de>
 
-commit 6dfb0771429a63db8561d44147f2bb76f93e1c86 upstream.
+commit 9d2c7203ffdb846399b82b0660563c89e918c751 upstream.
 
-When calling debugfs_lookup() the result must have dput() called on it,
-otherwise the memory will leak over time.  To make things simpler, just
-call debugfs_lookup_and_remove() instead which handles all of the logic
-at once.
+In kernels compiled with CONFIG_PARAVIRT=n, the compiler re-orders the
+DR7 read in exc_nmi() to happen before the call to sev_es_ist_enter().
 
-Cc: "K. Y. Srinivasan" <kys@microsoft.com>
-Cc: Haiyang Zhang <haiyangz@microsoft.com>
-Cc: Wei Liu <wei.liu@kernel.org>
-Cc: Dexuan Cui <decui@microsoft.com>
-Fixes: d180e0a1be6c ("Drivers: hv: Create debugfs file with hyper-v balloon usage information")
-Cc: stable <stable@kernel.org>
-Reviewed-by: Michael Kelley <mikelley@microsoft.com>
-Link: https://lore.kernel.org/r/20230202140918.2289522-1-gregkh@linuxfoundation.org
+This is problematic when running as an SEV-ES guest because in this
+environment the DR7 read might cause a #VC exception, and taking #VC
+exceptions is not safe in exc_nmi() before sev_es_ist_enter() has run.
+
+The result is stack recursion if the NMI was caused on the #VC IST
+stack, because a subsequent #VC exception in the NMI handler will
+overwrite the stack frame of the interrupted #VC handler.
+
+As there are no compiler barriers affecting the ordering of DR7
+reads/writes, make the accesses to this register volatile, forbidding
+the compiler to re-order them.
+
+  [ bp: Massage text, make them volatile too, to make sure some
+  aggressive compiler optimization pass doesn't discard them. ]
+
+Fixes: 315562c9af3d ("x86/sev-es: Adjust #VC IST Stack on entering NMI handler")
+Reported-by: Alexey Kardashevskiy <aik@amd.com>
+Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230127035616.508966-1-aik@amd.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/hv/hv_balloon.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/include/asm/debugreg.h |   26 ++++++++++++++++++++++++--
+ 1 file changed, 24 insertions(+), 2 deletions(-)
 
---- a/drivers/hv/hv_balloon.c
-+++ b/drivers/hv/hv_balloon.c
-@@ -1911,7 +1911,7 @@ static void  hv_balloon_debugfs_init(str
- 
- static void  hv_balloon_debugfs_exit(struct hv_dynmem_device *b)
- {
--	debugfs_remove(debugfs_lookup("hv-balloon", NULL));
-+	debugfs_lookup_and_remove("hv-balloon", NULL);
- }
- 
- #else
+--- a/arch/x86/include/asm/debugreg.h
++++ b/arch/x86/include/asm/debugreg.h
+@@ -39,7 +39,20 @@ static __always_inline unsigned long nat
+ 		asm("mov %%db6, %0" :"=r" (val));
+ 		break;
+ 	case 7:
+-		asm("mov %%db7, %0" :"=r" (val));
++		/*
++		 * Apply __FORCE_ORDER to DR7 reads to forbid re-ordering them
++		 * with other code.
++		 *
++		 * This is needed because a DR7 access can cause a #VC exception
++		 * when running under SEV-ES. Taking a #VC exception is not a
++		 * safe thing to do just anywhere in the entry code and
++		 * re-ordering might place the access into an unsafe location.
++		 *
++		 * This happened in the NMI handler, where the DR7 read was
++		 * re-ordered to happen before the call to sev_es_ist_enter(),
++		 * causing stack recursion.
++		 */
++		asm volatile("mov %%db7, %0" : "=r" (val) : __FORCE_ORDER);
+ 		break;
+ 	default:
+ 		BUG();
+@@ -66,7 +79,16 @@ static __always_inline void native_set_d
+ 		asm("mov %0, %%db6"	::"r" (value));
+ 		break;
+ 	case 7:
+-		asm("mov %0, %%db7"	::"r" (value));
++		/*
++		 * Apply __FORCE_ORDER to DR7 writes to forbid re-ordering them
++		 * with other code.
++		 *
++		 * While is didn't happen with a DR7 write (see the DR7 read
++		 * comment above which explains where it happened), add the
++		 * __FORCE_ORDER here too to avoid similar problems in the
++		 * future.
++		 */
++		asm volatile("mov %0, %%db7"	::"r" (value), __FORCE_ORDER);
+ 		break;
+ 	default:
+ 		BUG();
 
 
