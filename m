@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0596329CA
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:04:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A744C4339B;
-	Tue,  7 Feb 2023 13:04:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 174AB2C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:04:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7270AC433A7;
+	Tue,  7 Feb 2023 13:04:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775094;
-	bh=sP9NFXg/tlRbb+P7nepIMIFKhcsu2YgWBrOPUaw2VAs=;
+	s=korg; t=1675775097;
+	bh=PkhAOa2M8QTSfj6y+sG5lPQsokaSFL6X1FEumSu0IeU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CudZhk0jW6rI/c/d/zV6aG14zcK2WHvmYr6/aJ58jhrXKf0web96YJyRZXpoRzMfe
-	 Wwubdu4tFl1S97AvroXjbycpc/+8Idr0ZCjNyBFw+liBZEZab7sjzJIClP5lIK9tXP
-	 f3r2tiMEVI0ODGUluYptf045igiCWLjoSOH6W4LI=
+	b=k8lSBBS5aiYgLWm86nMNiTeEpYggnKhwxNyW33hJQqaGux2Rcpp2zxc5J8ZUofeb7
+	 i/ogVeQlRznzl3cvocqLEGnJ3A0VxPzUcThYdVUI58fszJQn/IWSyAaOXmDXhzqyB+
+	 UXU2C5xyspRIR2AJLrzv37FczgeGEM7UFIKXOiPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Pagani <marpagan@redhat.com>,
-	Michal Simek <michal.simek@amd.com>,
+	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
+	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 134/208] iio: adc: xilinx-ams: fix devm_krealloc() return value check
-Date: Tue,  7 Feb 2023 13:56:28 +0100
-Message-Id: <20230207125640.500768222@linuxfoundation.org>
+Subject: [PATCH 6.1 135/208] iio: adc: berlin2-adc: Add missing of_node_put() in error path
+Date: Tue,  7 Feb 2023 13:56:29 +0100
+Message-Id: <20230207125640.546636100@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,37 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marco Pagani <marpagan@redhat.com>
+From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
 
-commit 6794ed0cfcc6ce737240eccc48b3e8190df36703 upstream.
+commit cbd3a0153cd18a2cbef6bf3cf31bb406c3fc9f55 upstream.
 
-The clang-analyzer reported a warning: "Value stored to 'ret'
-is never read".
+of_get_parent() will return a device_node pointer with refcount
+incremented. We need to use of_node_put() on it when done. Add the
+missing of_node_put() in the error path of berlin2_adc_probe();
 
-Fix the return value check if devm_krealloc() fails to resize
-ams_channels.
-
-Fixes: d5c70627a794 ("iio: adc: Add Xilinx AMS driver")
-Signed-off-by: Marco Pagani <marpagan@redhat.com>
-Acked-by: Michal Simek <michal.simek@amd.com>
-Link: https://lore.kernel.org/r/20221125113112.219290-1-marpagan@redhat.com
-Cc: <stable@vger.kernel.org>
+Fixes: 70f1937911ca ("iio: adc: add support for Berlin")
+Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+Link: https://lore.kernel.org/r/20221129020316.191731-1-wangxiongfeng2@huawei.com
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/xilinx-ams.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/berlin2-adc.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/adc/xilinx-ams.c
-+++ b/drivers/iio/adc/xilinx-ams.c
-@@ -1329,7 +1329,7 @@ static int ams_parse_firmware(struct iio
+--- a/drivers/iio/adc/berlin2-adc.c
++++ b/drivers/iio/adc/berlin2-adc.c
+@@ -298,8 +298,10 @@ static int berlin2_adc_probe(struct plat
+ 	int ret;
  
- 	dev_channels = devm_krealloc(dev, ams_channels, dev_size, GFP_KERNEL);
- 	if (!dev_channels)
--		ret = -ENOMEM;
-+		return -ENOMEM;
+ 	indio_dev = devm_iio_device_alloc(&pdev->dev, sizeof(*priv));
+-	if (!indio_dev)
++	if (!indio_dev) {
++		of_node_put(parent_np);
+ 		return -ENOMEM;
++	}
  
- 	indio_dev->channels = dev_channels;
- 	indio_dev->num_channels = num_channels;
+ 	priv = iio_priv(indio_dev);
+ 
 
 
