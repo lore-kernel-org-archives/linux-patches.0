@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 192BB2C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:14:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7371CC433EF;
-	Tue,  7 Feb 2023 13:14:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197D52C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:14:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712CEC4339B;
+	Tue,  7 Feb 2023 13:14:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775643;
-	bh=zw3Ej4DQHnK68ivRbJEMtNpSPtbdX+rbd1524cdgHL8=;
+	s=korg; t=1675775646;
+	bh=7Zh6+6uu1xARXr1+iq9wDoel6vMURA8Hu632DijSVJA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HLQQedcb8jbnQoOCAaiX3gYPx9uRyV7FR60omitN/m+HJEEyrheAJBwF3hk7Rqs+X
-	 qH36HI3qvd3zueNYv8u+5Ku27oTCvTMV7okOY4TmwHgWvzNfATuCHvmw26/v6aODGw
-	 QfFBC1iw361bM1GQusrSm/IAZQ59l9swar++Ijd8=
+	b=vsXDRxzWNFsrm3ybeZA+23hiv3apRVS161T67DpmjoBgdIKC6mOZPCqPNpFbjnJ/k
+	 bzKKr17YIu2vmub49xgU1c6mtsGDZr/mZ3kMwz83Mi1ZI1FX0HqsINcURjP5vOs/kg
+	 zofCP0higH2R6irZ8k1qFtOfWYscrmd03AgXza88=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Carlos Song <carlos.song@nxp.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 079/120] iio: imu: fxos8700: fix IMU data bits returned to user space
-Date: Tue,  7 Feb 2023 13:57:30 +0100
-Message-Id: <20230207125622.107210717@linuxfoundation.org>
+Subject: [PATCH 5.15 080/120] iio: imu: fxos8700: fix map label of channel type to MAGN sensor
+Date: Tue,  7 Feb 2023 13:57:31 +0100
+Message-Id: <20230207125622.140590784@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -37,71 +37,35 @@ Content-Transfer-Encoding: 8bit
 
 From: Carlos Song <carlos.song@nxp.com>
 
-commit a53f945879c0cb9de3a4c05a665f5157884b5208 upstream.
+commit 429e1e8ec696e0e7a0742904e3dc2f83b7b23dfb upstream.
 
-ACCEL output data registers contain the X-axis, Y-axis, and Z-axis
-14-bit left-justified sample data and MAGN output data registers
-contain the X-axis, Y-axis, and Z-axis 16-bit sample data. The ACCEL
-raw register output data should be divided by 4 before sent to
-userspace.
+FXOS8700 is an IMU sensor with ACCEL sensor and MAGN sensor.
+Sensor type is indexed by corresponding channel type in a switch.
+IIO_ANGL_VEL channel type mapped to MAGN sensor has caused confusion.
 
-Apply a 2 bits signed right shift to the raw data from ACCEL output
-data register but keep that from MAGN sensor as the origin.
+Fix the mapping label of "IIO_MAGN" channel type instead of
+"IIO_ANGL_VEL" channel type to MAGN sensor.
 
 Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
 Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://lore.kernel.org/r/20221208071911.2405922-5-carlos.song@nxp.com
+Link: https://lore.kernel.org/r/20221208071911.2405922-2-carlos.song@nxp.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/fxos8700_core.c |   28 +++++++++++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+ drivers/iio/imu/fxos8700_core.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 --- a/drivers/iio/imu/fxos8700_core.c
 +++ b/drivers/iio/imu/fxos8700_core.c
-@@ -418,6 +418,7 @@ static int fxos8700_get_data(struct fxos
- 			     int axis, int *val)
- {
- 	u8 base, reg;
-+	s16 tmp;
- 	int ret;
- 	enum fxos8700_sensor type = fxos8700_to_sensor(chan_type);
- 
-@@ -432,8 +433,33 @@ static int fxos8700_get_data(struct fxos
- 	/* Convert axis to buffer index */
- 	reg = axis - IIO_MOD_X;
- 
-+	/*
-+	 * Convert to native endianness. The accel data and magn data
-+	 * are signed, so a forced type conversion is needed.
-+	 */
-+	tmp = be16_to_cpu(data->buf[reg]);
-+
-+	/*
-+	 * ACCEL output data registers contain the X-axis, Y-axis, and Z-axis
-+	 * 14-bit left-justified sample data and MAGN output data registers
-+	 * contain the X-axis, Y-axis, and Z-axis 16-bit sample data. Apply
-+	 * a signed 2 bits right shift to the readback raw data from ACCEL
-+	 * output data register and keep that from MAGN sensor as the origin.
-+	 * Value should be extended to 32 bit.
-+	 */
-+	switch (chan_type) {
-+	case IIO_ACCEL:
-+		tmp = tmp >> 2;
-+		break;
+@@ -320,7 +320,7 @@ static enum fxos8700_sensor fxos8700_to_
+ 	switch (iio_type) {
+ 	case IIO_ACCEL:
+ 		return FXOS8700_ACCEL;
+-	case IIO_ANGL_VEL:
 +	case IIO_MAGN:
-+		/* Nothing to do */
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
-+
- 	/* Convert to native endianness */
--	*val = sign_extend32(be16_to_cpu(data->buf[reg]), 15);
-+	*val = sign_extend32(tmp, 15);
- 
- 	return 0;
- }
+ 		return FXOS8700_MAGN;
+ 	default:
+ 		return -EINVAL;
 
 
