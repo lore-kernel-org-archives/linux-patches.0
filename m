@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9388D2C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:10:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED37CC433D2;
-	Tue,  7 Feb 2023 13:10:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B33E12C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:10:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0445CC433A0;
+	Tue,  7 Feb 2023 13:10:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775443;
-	bh=LmhQXKuVOmnYavpzne5sEcoSOSkYxRd20k8Tv0eXUUo=;
+	s=korg; t=1675775446;
+	bh=e5zjjYJKCUqZnzTWq5l/GUNm8H6ePnwsjgCCW+4q8FI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K6NypBfCp7I7PL13u7aXbwst3sxwQPyAILwFBhSZ6meZirc1TOorWiW+LFePwerFU
-	 d1r40eTR/wWVLNagRjU4mGeDZUf8poBHKjuVLRgU0CKOXw9AhYtlcsa/RQdo5EnzPW
-	 3mArzLOrJIRP66o5GdriqFrGhEgblOf9HLNThEFs=
+	b=0QlLyySXqLCfF5+h7SlXqMgYYmGGpcPOuhPJmO++GSPc3+Cn018m4yVCg0jifcBON
+	 5TgeHiyM/vJDMP4T72yQbQBf1LnYT84XyOu/FxYNAMDpknKIK/miC6Sk5eiUuVhPud
+	 dKeZhBjJRFr49kR7UiW1UXOjQxoQQ3ocE5bLlnxw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
+	syzbot+04c21ed96d861dccc5cd@syzkaller.appspotmail.com,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
 	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 012/120] bpf: Fix to preserve reg parent/live fields when copying range info
-Date: Tue,  7 Feb 2023 13:56:23 +0100
-Message-Id: <20230207125619.275472889@linuxfoundation.org>
+Subject: [PATCH 5.15 013/120] bpf, sockmap: Check for any of tcp_bpf_prots when cloning a listener
+Date: Tue,  7 Feb 2023 13:56:24 +0100
+Message-Id: <20230207125619.315108252@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -35,191 +37,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Jakub Sitnicki <jakub@cloudflare.com>
 
-[ Upstream commit 71f656a50176915d6813751188b5758daa8d012b ]
+[ Upstream commit ddce1e091757d0259107c6c0c7262df201de2b66 ]
 
-Register range information is copied in several places. The intent is
-to transfer range/id information from one register/stack spill to
-another. Currently this is done using direct register assignment, e.g.:
+A listening socket linked to a sockmap has its sk_prot overridden. It
+points to one of the struct proto variants in tcp_bpf_prots. The variant
+depends on the socket's family and which sockmap programs are attached.
 
-static void find_equal_scalars(..., struct bpf_reg_state *known_reg)
-{
-	...
-	struct bpf_reg_state *reg;
-	...
-			*reg = *known_reg;
-	...
-}
+A child socket cloned from a TCP listener initially inherits their sk_prot.
+But before cloning is finished, we restore the child's proto to the
+listener's original non-tcp_bpf_prots one. This happens in
+tcp_create_openreq_child -> tcp_bpf_clone.
 
-However, such assignments also copy the following bpf_reg_state fields:
+Today, in tcp_bpf_clone we detect if the child's proto should be restored
+by checking only for the TCP_BPF_BASE proto variant. This is not
+correct. The sk_prot of listening socket linked to a sockmap can point to
+to any variant in tcp_bpf_prots.
 
-struct bpf_reg_state {
-	...
-	struct bpf_reg_state *parent;
-	...
-	enum bpf_reg_liveness live;
-	...
-};
+If the listeners sk_prot happens to be not the TCP_BPF_BASE variant, then
+the child socket unintentionally is left if the inherited sk_prot by
+tcp_bpf_clone.
 
-Copying of these fields is accidental and incorrect, as could be
-demonstrated by the following example:
+This leads to issues like infinite recursion on close [1], because the
+child state is otherwise not set up for use with tcp_bpf_prot operations.
 
-     0: call ktime_get_ns()
-     1: r6 = r0
-     2: call ktime_get_ns()
-     3: r7 = r0
-     4: if r0 > r6 goto +1             ; r0 & r6 are unbound thus generated
-                                       ; branch states are identical
-     5: *(u64 *)(r10 - 8) = 0xdeadbeef ; 64-bit write to fp[-8]
-    --- checkpoint ---
-     6: r1 = 42                        ; r1 marked as written
-     7: *(u8 *)(r10 - 8) = r1          ; 8-bit write, fp[-8] parent & live
-                                       ; overwritten
-     8: r2 = *(u64 *)(r10 - 8)
-     9: r0 = 0
-    10: exit
+Adjust the check in tcp_bpf_clone to detect all of tcp_bpf_prots variants.
 
-This example is unsafe because 64-bit write to fp[-8] at (5) is
-conditional, thus not all bytes of fp[-8] are guaranteed to be set
-when it is read at (8). However, currently the example passes
-verification.
+Note that it wouldn't be sufficient to check the socket state when
+overriding the sk_prot in tcp_bpf_update_proto in order to always use the
+TCP_BPF_BASE variant for listening sockets. Since commit
+b8b8315e39ff ("bpf, sockmap: Remove unhash handler for BPF sockmap usage")
+it is possible for a socket to transition to TCP_LISTEN state while already
+linked to a sockmap, e.g. connect() -> insert into map ->
+connect(AF_UNSPEC) -> listen().
 
-First, the execution path 1-10 is examined by verifier.
-Suppose that a new checkpoint is created by is_state_visited() at (6).
-After checkpoint creation:
-- r1.parent points to checkpoint.r1,
-- fp[-8].parent points to checkpoint.fp[-8].
-At (6) the r1.live is set to REG_LIVE_WRITTEN.
-At (7) the fp[-8].parent is set to r1.parent and fp[-8].live is set to
-REG_LIVE_WRITTEN, because of the following code called in
-check_stack_write_fixed_off():
+[1]: https://lore.kernel.org/all/00000000000073b14905ef2e7401@google.com/
 
-static void save_register_state(struct bpf_func_state *state,
-				int spi, struct bpf_reg_state *reg,
-				int size)
-{
-	...
-	state->stack[spi].spilled_ptr = *reg;  // <--- parent & live copied
-	if (size == BPF_REG_SIZE)
-		state->stack[spi].spilled_ptr.live |= REG_LIVE_WRITTEN;
-	...
-}
-
-Note the intent to mark stack spill as written only if 8 bytes are
-spilled to a slot, however this intent is spoiled by a 'live' field copy.
-At (8) the checkpoint.fp[-8] should be marked as REG_LIVE_READ but
-this does not happen:
-- fp[-8] in a current state is already marked as REG_LIVE_WRITTEN;
-- fp[-8].parent points to checkpoint.r1, parentage chain is used by
-  mark_reg_read() to mark checkpoint states.
-At (10) the verification is finished for path 1-10 and jump 4-6 is
-examined. The checkpoint.fp[-8] never gets REG_LIVE_READ mark and this
-spill is pruned from the cached states by clean_live_states(). Hence
-verifier state obtained via path 1-4,6 is deemed identical to one
-obtained via path 1-6 and program marked as safe.
-
-Note: the example should be executed with BPF_F_TEST_STATE_FREQ flag
-set to force creation of intermediate verifier states.
-
-This commit revisits the locations where bpf_reg_state instances are
-copied and replaces the direct copies with a call to a function
-copy_register_state(dst, src) that preserves 'parent' and 'live'
-fields of the 'dst'.
-
-Fixes: 679c782de14b ("bpf/verifier: per-register parent pointers")
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20230106142214.1040390-2-eddyz87@gmail.com
+Fixes: e80251555f0b ("tcp_bpf: Don't let child socket inherit parent protocol ops on copy")
+Reported-by: syzbot+04c21ed96d861dccc5cd@syzkaller.appspotmail.com
+Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20230113-sockmap-fix-v2-2-1e0ee7ac2f90@cloudflare.com
 Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 25 ++++++++++++++++++-------
- 1 file changed, 18 insertions(+), 7 deletions(-)
+ include/linux/util_macros.h | 12 ++++++++++++
+ net/ipv4/tcp_bpf.c          |  4 ++--
+ 2 files changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index d2ccf7725e73..1c89c25327c8 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2613,13 +2613,24 @@ static bool __is_pointer_value(bool allow_ptr_leaks,
- 	return reg->type != SCALAR_VALUE;
- }
+diff --git a/include/linux/util_macros.h b/include/linux/util_macros.h
+index 72299f261b25..43db6e47503c 100644
+--- a/include/linux/util_macros.h
++++ b/include/linux/util_macros.h
+@@ -38,4 +38,16 @@
+  */
+ #define find_closest_descending(x, a, as) __find_closest(x, a, as, >=)
  
-+/* Copy src state preserving dst->parent and dst->live fields */
-+static void copy_register_state(struct bpf_reg_state *dst, const struct bpf_reg_state *src)
-+{
-+	struct bpf_reg_state *parent = dst->parent;
-+	enum bpf_reg_liveness live = dst->live;
++/**
++ * is_insidevar - check if the @ptr points inside the @var memory range.
++ * @ptr:	the pointer to a memory address.
++ * @var:	the variable which address and size identify the memory range.
++ *
++ * Evaluates to true if the address in @ptr lies within the memory
++ * range allocated to @var.
++ */
++#define is_insidevar(ptr, var)						\
++	((uintptr_t)(ptr) >= (uintptr_t)(var) &&			\
++	 (uintptr_t)(ptr) <  (uintptr_t)(var) + sizeof(var))
 +
-+	*dst = *src;
-+	dst->parent = parent;
-+	dst->live = live;
-+}
-+
- static void save_register_state(struct bpf_func_state *state,
- 				int spi, struct bpf_reg_state *reg,
- 				int size)
+ #endif
+diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
+index b4b642e3de78..7f34c455651d 100644
+--- a/net/ipv4/tcp_bpf.c
++++ b/net/ipv4/tcp_bpf.c
+@@ -6,6 +6,7 @@
+ #include <linux/bpf.h>
+ #include <linux/init.h>
+ #include <linux/wait.h>
++#include <linux/util_macros.h>
+ 
+ #include <net/inet_common.h>
+ #include <net/tls.h>
+@@ -640,10 +641,9 @@ EXPORT_SYMBOL_GPL(tcp_bpf_update_proto);
+  */
+ void tcp_bpf_clone(const struct sock *sk, struct sock *newsk)
  {
- 	int i;
+-	int family = sk->sk_family == AF_INET6 ? TCP_BPF_IPV6 : TCP_BPF_IPV4;
+ 	struct proto *prot = newsk->sk_prot;
  
--	state->stack[spi].spilled_ptr = *reg;
-+	copy_register_state(&state->stack[spi].spilled_ptr, reg);
- 	if (size == BPF_REG_SIZE)
- 		state->stack[spi].spilled_ptr.live |= REG_LIVE_WRITTEN;
- 
-@@ -2945,7 +2956,7 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
- 				 */
- 				s32 subreg_def = state->regs[dst_regno].subreg_def;
- 
--				state->regs[dst_regno] = *reg;
-+				copy_register_state(&state->regs[dst_regno], reg);
- 				state->regs[dst_regno].subreg_def = subreg_def;
- 			} else {
- 				for (i = 0; i < size; i++) {
-@@ -2972,7 +2983,7 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
- 
- 		if (dst_regno >= 0) {
- 			/* restore register state from stack */
--			state->regs[dst_regno] = *reg;
-+			copy_register_state(&state->regs[dst_regno], reg);
- 			/* mark reg as written since spilled pointer state likely
- 			 * has its liveness marks cleared by is_state_visited()
- 			 * which resets stack/reg liveness for state transitions
-@@ -6904,7 +6915,7 @@ static int sanitize_ptr_alu(struct bpf_verifier_env *env,
- 	 */
- 	if (!ptr_is_dst_reg) {
- 		tmp = *dst_reg;
--		*dst_reg = *ptr_reg;
-+		copy_register_state(dst_reg, ptr_reg);
- 	}
- 	ret = sanitize_speculative_path(env, NULL, env->insn_idx + 1,
- 					env->insn_idx);
-@@ -8160,7 +8171,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
- 					 * to propagate min/max range.
- 					 */
- 					src_reg->id = ++env->id_gen;
--				*dst_reg = *src_reg;
-+				copy_register_state(dst_reg, src_reg);
- 				dst_reg->live |= REG_LIVE_WRITTEN;
- 				dst_reg->subreg_def = DEF_NOT_SUBREG;
- 			} else {
-@@ -8171,7 +8182,7 @@ static int check_alu_op(struct bpf_verifier_env *env, struct bpf_insn *insn)
- 						insn->src_reg);
- 					return -EACCES;
- 				} else if (src_reg->type == SCALAR_VALUE) {
--					*dst_reg = *src_reg;
-+					copy_register_state(dst_reg, src_reg);
- 					/* Make sure ID is cleared otherwise
- 					 * dst_reg min/max could be incorrectly
- 					 * propagated into src_reg by find_equal_scalars()
-@@ -8967,7 +8978,7 @@ static void find_equal_scalars(struct bpf_verifier_state *vstate,
- 
- 	bpf_for_each_reg_in_vstate(vstate, state, reg, ({
- 		if (reg->type == SCALAR_VALUE && reg->id == known_reg->id)
--			*reg = *known_reg;
-+			copy_register_state(reg, known_reg);
- 	}));
+-	if (prot == &tcp_bpf_prots[family][TCP_BPF_BASE])
++	if (is_insidevar(prot, tcp_bpf_prots))
+ 		newsk->sk_prot = sk->sk_prot_creator;
  }
- 
+ #endif /* CONFIG_BPF_SYSCALL */
 -- 
 2.39.0
 
