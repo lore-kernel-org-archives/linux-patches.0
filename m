@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FC433212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:12:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D72C8C433EF;
-	Tue,  7 Feb 2023 13:12:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 597AE3212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:12:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE21BC433D2;
+	Tue,  7 Feb 2023 13:12:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775567;
-	bh=CQD2zTRv6IvxSk0ehkLp5YyyC7+HnZAr7mRo/tKTSBk=;
+	s=korg; t=1675775570;
+	bh=Co39vqHw1caTdOO0x1RYgwYCTJJk5eaLWGt6vCErSVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WPq+mYjnZ7cKk3/fDYtEUUULaqR1q45V86vXjT8THRn5AjT9xkkctHm31LHweK2rq
-	 VHtnnwNkV5JGvs3Uj8a42e73vRVEfIGhJJcMQqmFcYyJOYdOMFviZwtj8bCOjwpIYF
-	 ZbhERMCNZrGGzyuHVsmY4hf0cCGrpqEM/adOMiaw=
+	b=XKYJB2QWgotXS3oEt9OU0lXc65shP/P/ZSSt2wz3bDKYQJ91L2QeUAzTo/XD8Z1mv
+	 72C6+YtY65N4HpYmDP+zPvR+TmwBnP1sVeIFQD8BQFhfKpwthSxPMORTEbX4Z/pnXu
+	 ikht3qSC4kuBfo/EFquSWaSD5Ojfx2Fd8HbBeBZE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Carlos Song <carlos.song@nxp.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 084/120] iio: imu: fxos8700: remove definition FXOS8700_CTRL_ODR_MIN
-Date: Tue,  7 Feb 2023 13:57:35 +0100
-Message-Id: <20230207125622.325745555@linuxfoundation.org>
+Subject: [PATCH 5.15 085/120] iio: imu: fxos8700: fix MAGN sensor scale and unit
+Date: Tue,  7 Feb 2023 13:57:36 +0100
+Message-Id: <20230207125622.363873348@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -37,31 +37,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Carlos Song <carlos.song@nxp.com>
 
-commit ff5e2cd92ffda9a25ffa2cbdb3a0cf17650172a6 upstream.
+commit 2acd031347f645871959a799238a7caf6803aa18 upstream.
 
-FXOS8700_CTRL_ODR_MIN is not used but value is probably wrong.
++/-1200uT is a MAGN sensor full measurement range. Magnetometer scale
+is the magnetic sensitivity parameter. It is referenced as 0.1uT
+according to datasheet and magnetometer channel unit is Gauss in
+sysfs-bus-iio documentation. Gauss and uTesla unit conversion
+relationship as follows: 0.1uT = 0.001Gs.
 
-Remove it for a good readability.
+Set magnetometer scale and available magnetometer scale as fixed 0.001Gs.
 
 Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
 Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://lore.kernel.org/r/20230118074227.1665098-4-carlos.song@nxp.com
+Link: https://lore.kernel.org/r/20230118074227.1665098-5-carlos.song@nxp.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/fxos8700_core.c |    1 -
- 1 file changed, 1 deletion(-)
+ drivers/iio/imu/fxos8700_core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 --- a/drivers/iio/imu/fxos8700_core.c
 +++ b/drivers/iio/imu/fxos8700_core.c
-@@ -146,7 +146,6 @@
+@@ -351,7 +351,7 @@ static int fxos8700_set_scale(struct fxo
+ 	struct device *dev = regmap_get_device(data->regmap);
  
- /* Bit definitions for FXOS8700_CTRL_REG1 */
- #define FXOS8700_CTRL_ODR_MAX       0x00
--#define FXOS8700_CTRL_ODR_MIN       GENMASK(4, 3)
- #define FXOS8700_CTRL_ODR_MSK       GENMASK(5, 3)
+ 	if (t == FXOS8700_MAGN) {
+-		dev_err(dev, "Magnetometer scale is locked at 1200uT\n");
++		dev_err(dev, "Magnetometer scale is locked at 0.001Gs\n");
+ 		return -EINVAL;
+ 	}
  
- /* Bit definitions for FXOS8700_M_CTRL_REG1 */
+@@ -396,7 +396,7 @@ static int fxos8700_get_scale(struct fxo
+ 	static const int scale_num = ARRAY_SIZE(fxos8700_accel_scale);
+ 
+ 	if (t == FXOS8700_MAGN) {
+-		*uscale = 1200; /* Magnetometer is locked at 1200uT */
++		*uscale = 1000; /* Magnetometer is locked at 0.001Gs */
+ 		return 0;
+ 	}
+ 
+@@ -588,7 +588,7 @@ static IIO_CONST_ATTR(in_accel_sampling_
+ static IIO_CONST_ATTR(in_magn_sampling_frequency_available,
+ 		      "1.5625 6.25 12.5 50 100 200 400 800");
+ static IIO_CONST_ATTR(in_accel_scale_available, "0.000244 0.000488 0.000976");
+-static IIO_CONST_ATTR(in_magn_scale_available, "0.000001200");
++static IIO_CONST_ATTR(in_magn_scale_available, "0.001000");
+ 
+ static struct attribute *fxos8700_attrs[] = {
+ 	&iio_const_attr_in_accel_sampling_frequency_available.dev_attr.attr,
 
 
