@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 042BC3212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:02:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E147C433D2;
-	Tue,  7 Feb 2023 13:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D42AF3212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:02:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55040C433D2;
+	Tue,  7 Feb 2023 13:02:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675774923;
-	bh=Tg2di0cyajyHM2SnIK5d7yOWen8H8U6QWF5NkdhuHf8=;
+	s=korg; t=1675774926;
+	bh=gYGHPw3ENpPznyq1j2cJTE//ba/G0A0Hp6On5NHJEvo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LLQLWYbxrxoJm+PMX3Y58GaITwBgQ58Lyg7nGU2qoXxG0rR2FbN9n8egEIIqOpC61
-	 52YCMy8k4kIJUKNblbZkvtAhetG6kurWwCqEwrW49igyXHKnG7SqaECfSl48ZvHXts
-	 bUV9pN9r4NkfbA2j9GqAnSJoG/OhoaY2ixEDVlVY=
+	b=p8nPlXrb54zUS185UmRCebAXcZel7i+6ljrkiH+c1VehegtkHNla+Anbxe1Q7HHb3
+	 P4yOscYjr+WYfk6Az5mc8ROysx7W7nm1uo09ZR40WdpvKFLQ0KIrsY64p2wcNBGF4h
+	 yqFQdxynUw4ETeA6KX9AZQdHDj6QwSetQak7rFwA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ratheesh Kannoth <rkannoth@marvell.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+9981a614060dcee6eeca@syzkaller.appspotmail.com,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 078/208] octeontx2-af: Fix devlink unregister
-Date: Tue,  7 Feb 2023 13:55:32 +0100
-Message-Id: <20230207125637.860886235@linuxfoundation.org>
+Subject: [PATCH 6.1 079/208] can: j1939: fix errant WARN_ON_ONCE in j1939_session_deactivate
+Date: Tue,  7 Feb 2023 13:55:33 +0100
+Message-Id: <20230207125637.909914730@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -36,101 +37,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ratheesh Kannoth <rkannoth@marvell.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit 917d5e04d4dd2bbbf36fc6976ba442e284ccc42d ]
+[ Upstream commit d0553680f94c49bbe0e39eb50d033ba563b4212d ]
 
-Exact match feature is only available in CN10K-B.
-Unregister exact match devlink entry only for
-this silicon variant.
+The conclusion "j1939_session_deactivate() should be called with a
+session ref-count of at least 2" is incorrect. In some concurrent
+scenarios, j1939_session_deactivate can be called with the session
+ref-count less than 2. But there is not any problem because it
+will check the session active state before session putting in
+j1939_session_deactivate_locked().
 
-Fixes: 87e4ea29b030 ("octeontx2-af: Debugsfs support for exact match.")
-Signed-off-by: Ratheesh Kannoth <rkannoth@marvell.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Link: https://lore.kernel.org/r/20230131061659.1025137-1-rkannoth@marvell.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Here is the concurrent scenario of the problem reported by syzbot
+and my reproduction log.
+
+        cpu0                            cpu1
+                                j1939_xtp_rx_eoma
+j1939_xtp_rx_abort_one
+                                j1939_session_get_by_addr [kref == 2]
+j1939_session_get_by_addr [kref == 3]
+j1939_session_deactivate [kref == 2]
+j1939_session_put [kref == 1]
+				j1939_session_completed
+				j1939_session_deactivate
+				WARN_ON_ONCE(kref < 2)
+
+=====================================================
+WARNING: CPU: 1 PID: 21 at net/can/j1939/transport.c:1088 j1939_session_deactivate+0x5f/0x70
+CPU: 1 PID: 21 Comm: ksoftirqd/1 Not tainted 5.14.0-rc7+ #32
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1 04/01/2014
+RIP: 0010:j1939_session_deactivate+0x5f/0x70
+Call Trace:
+ j1939_session_deactivate_activate_next+0x11/0x28
+ j1939_xtp_rx_eoma+0x12a/0x180
+ j1939_tp_recv+0x4a2/0x510
+ j1939_can_recv+0x226/0x380
+ can_rcv_filter+0xf8/0x220
+ can_receive+0x102/0x220
+ ? process_backlog+0xf0/0x2c0
+ can_rcv+0x53/0xf0
+ __netif_receive_skb_one_core+0x67/0x90
+ ? process_backlog+0x97/0x2c0
+ __netif_receive_skb+0x22/0x80
+
+Fixes: 0c71437dd50d ("can: j1939: j1939_session_deactivate(): clarify lifetime of session object")
+Reported-by: syzbot+9981a614060dcee6eeca@syzkaller.appspotmail.com
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/all/20210906094200.95868-1-william.xuanziyang@huawei.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../marvell/octeontx2/af/rvu_devlink.c        | 35 ++++++++++++++-----
- 1 file changed, 27 insertions(+), 8 deletions(-)
+ net/can/j1939/transport.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-index 88dee589cb21..dc7bd2ce78f7 100644
---- a/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-+++ b/drivers/net/ethernet/marvell/octeontx2/af/rvu_devlink.c
-@@ -1500,6 +1500,9 @@ static const struct devlink_param rvu_af_dl_params[] = {
- 			     BIT(DEVLINK_PARAM_CMODE_RUNTIME),
- 			     rvu_af_dl_dwrr_mtu_get, rvu_af_dl_dwrr_mtu_set,
- 			     rvu_af_dl_dwrr_mtu_validate),
-+};
-+
-+static const struct devlink_param rvu_af_dl_param_exact_match[] = {
- 	DEVLINK_PARAM_DRIVER(RVU_AF_DEVLINK_PARAM_ID_NPC_EXACT_FEATURE_DISABLE,
- 			     "npc_exact_feature_disable", DEVLINK_PARAM_TYPE_STRING,
- 			     BIT(DEVLINK_PARAM_CMODE_RUNTIME),
-@@ -1563,7 +1566,6 @@ int rvu_register_dl(struct rvu *rvu)
- {
- 	struct rvu_devlink *rvu_dl;
- 	struct devlink *dl;
--	size_t size;
- 	int err;
+diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
+index 55f29c9f9e08..4177e9617070 100644
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -1092,10 +1092,6 @@ static bool j1939_session_deactivate(struct j1939_session *session)
+ 	bool active;
  
- 	dl = devlink_alloc(&rvu_devlink_ops, sizeof(struct rvu_devlink),
-@@ -1585,21 +1587,32 @@ int rvu_register_dl(struct rvu *rvu)
- 		goto err_dl_health;
- 	}
+ 	j1939_session_list_lock(priv);
+-	/* This function should be called with a session ref-count of at
+-	 * least 2.
+-	 */
+-	WARN_ON_ONCE(kref_read(&session->kref) < 2);
+ 	active = j1939_session_deactivate_locked(session);
+ 	j1939_session_list_unlock(priv);
  
-+	err = devlink_params_register(dl, rvu_af_dl_params, ARRAY_SIZE(rvu_af_dl_params));
-+	if (err) {
-+		dev_err(rvu->dev,
-+			"devlink params register failed with error %d", err);
-+		goto err_dl_health;
-+	}
-+
- 	/* Register exact match devlink only for CN10K-B */
--	size = ARRAY_SIZE(rvu_af_dl_params);
- 	if (!rvu_npc_exact_has_match_table(rvu))
--		size -= 1;
-+		goto done;
- 
--	err = devlink_params_register(dl, rvu_af_dl_params, size);
-+	err = devlink_params_register(dl, rvu_af_dl_param_exact_match,
-+				      ARRAY_SIZE(rvu_af_dl_param_exact_match));
- 	if (err) {
- 		dev_err(rvu->dev,
--			"devlink params register failed with error %d", err);
--		goto err_dl_health;
-+			"devlink exact match params register failed with error %d", err);
-+		goto err_dl_exact_match;
- 	}
- 
-+done:
- 	devlink_register(dl);
- 	return 0;
- 
-+err_dl_exact_match:
-+	devlink_params_unregister(dl, rvu_af_dl_params, ARRAY_SIZE(rvu_af_dl_params));
-+
- err_dl_health:
- 	rvu_health_reporters_destroy(rvu);
- 	devlink_free(dl);
-@@ -1612,8 +1625,14 @@ void rvu_unregister_dl(struct rvu *rvu)
- 	struct devlink *dl = rvu_dl->dl;
- 
- 	devlink_unregister(dl);
--	devlink_params_unregister(dl, rvu_af_dl_params,
--				  ARRAY_SIZE(rvu_af_dl_params));
-+
-+	devlink_params_unregister(dl, rvu_af_dl_params, ARRAY_SIZE(rvu_af_dl_params));
-+
-+	/* Unregister exact match devlink only for CN10K-B */
-+	if (rvu_npc_exact_has_match_table(rvu))
-+		devlink_params_unregister(dl, rvu_af_dl_param_exact_match,
-+					  ARRAY_SIZE(rvu_af_dl_param_exact_match));
-+
- 	rvu_health_reporters_destroy(rvu);
- 	devlink_free(dl);
- }
 -- 
 2.39.0
 
