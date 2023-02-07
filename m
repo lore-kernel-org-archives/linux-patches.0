@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5E3062C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:05:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3434C433D2;
-	Tue,  7 Feb 2023 13:05:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A28B2C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:05:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12A8C433EF;
+	Tue,  7 Feb 2023 13:05:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775140;
-	bh=xTgWYW4047ZdZNMuBPKL5pL3N9LIJxIDOgYlbf98YXA=;
+	s=korg; t=1675775143;
+	bh=5O+JOmJZjb/YmOW13oU3k8/xz3IHasOpy4T9+r5zmAA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dDvd00oolXv4htM3HYQZE4PDsBPpsZva8StEMDhlS/a0jwj9Xvo9XG3/1QAkt6oyu
-	 53HJmjQe/yjbES/lYPC6VOpN4WdeNJeoIsCK5T0Uq7Qsf6Jug9s5341vcejyYBYyrj
-	 YYuSteZXAowrldjhUzQRnoWhxmTNquou0XKP55Iw=
+	b=PbCRYktBVgXlh8+BZJPRGwfPEk81Whcraawrml2m8zU/Q4dRujYaM6GDry4AmCPVB
+	 rs1gKd5M70xH1bPr5qd3cwN0jRlR86jcVEJz++zZ0NCYBwZS7YrBEhzii3WThIKqqX
+	 YEoNkZzJSECQmXH9Xor2OIaOTBwZ35V2td2wvE7k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Oliver Hartkopp <socketcan@hartkopp.net>,
-	Marc Kleine-Budde <mkl@pengutronix.de>
-Subject: [PATCH 6.1 121/208] can: isotp: handle wait_event_interruptible() return values
-Date: Tue,  7 Feb 2023 13:56:15 +0100
-Message-Id: <20230207125639.889060164@linuxfoundation.org>
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 112/208] usb: dwc3: qcom: enable vbus override when in OTG dr-mode
+Date: Tue,  7 Feb 2023 13:56:06 +0100
+Message-Id: <20230207125639.448342836@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -34,36 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Oliver Hartkopp <socketcan@hartkopp.net>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-commit 823b2e42720f96f277940c37ea438b7c5ead51a4 upstream.
+[ Upstream commit eb320f76e31dc835b9f57f04af1a2353b13bb7d8 ]
 
-When wait_event_interruptible() has been interrupted by a signal the
-tx.state value might not be ISOTP_IDLE. Force the state machines
-into idle state to inhibit the timer handlers to continue working.
+With vbus override enabled when in OTG dr_mode, Host<->Peripheral
+switch now works on SM8550, otherwise the DWC3 seems to be stuck
+in Host mode only.
 
-Fixes: 866337865f37 ("can: isotp: fix tx state handling for echo tx processing")
-Cc: stable@vger.kernel.org
-Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
-Link: https://lore.kernel.org/all/20230112192347.1944-1-socketcan@hartkopp.net
-Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20230123-topic-sm8550-upstream-dwc3-qcom-otg-v2-1-2d400e598463@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/can/isotp.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/dwc3/dwc3-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/can/isotp.c
-+++ b/net/can/isotp.c
-@@ -1152,6 +1152,10 @@ static int isotp_release(struct socket *
- 	/* wait for complete transmission of current pdu */
- 	wait_event_interruptible(so->wait, so->tx.state == ISOTP_IDLE);
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index b0a0351d2d8b..959fc925ca7c 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -901,7 +901,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+ 	qcom->mode = usb_get_dr_mode(&qcom->dwc3->dev);
  
-+	/* force state machines to be idle also when a signal occurred */
-+	so->tx.state = ISOTP_IDLE;
-+	so->rx.state = ISOTP_IDLE;
-+
- 	spin_lock(&isotp_notifier_lock);
- 	while (isotp_busy_notifier == so) {
- 		spin_unlock(&isotp_notifier_lock);
+ 	/* enable vbus override for device mode */
+-	if (qcom->mode == USB_DR_MODE_PERIPHERAL)
++	if (qcom->mode != USB_DR_MODE_HOST)
+ 		dwc3_qcom_vbus_override_enable(qcom, true);
+ 
+ 	/* register extcon to override sw_vbus on Vbus change later */
+-- 
+2.39.0
+
 
 
