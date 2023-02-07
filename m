@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54992C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:10:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A63AC433EF;
-	Tue,  7 Feb 2023 13:10:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 985BF2C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:10:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20568C433EF;
+	Tue,  7 Feb 2023 13:10:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775421;
-	bh=TVQk+bO6tkncvgzhOCDzoprhxgzLa4/E6RAW4D/b/dw=;
+	s=korg; t=1675775424;
+	bh=E8nyAZd/nMaU+ViZgPVGnhjzCTTMn/SPXSrBNONPfYs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ss+e+LaLDLGwgdaK4IlN++NPAZzGhrLSmToXB/Hhfsjurw7jAzYbz2kG5u1bs8mr5
-	 WyKKeuDWwPiX8fMwSDZ5vJg3z4mH9h35/BRh87sK8fdp+nV4fDdanRz+cxrBFfwx53
-	 PC77BtTbsWWT7BBjrFte8YeXgz2D66n2UVZHex/0=
+	b=TAfeGBJYBZIxzKb/9QLbBH/WINGnA3Noj4dmP+ZmHEIen/WbEVYw5nnJVvzm9H8Z0
+	 wGILLVAwaDG2nJ07NX13NT56KTYmLLAToDS/SVZlcgTG5gCVDslWy13NujnQyLGuRJ
+	 i33M+BQo/QeK52WHFvxUghTX+q4jZuqguM14Mt/U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 034/120] drm/i915/adlp: Fix typo for reference clock
-Date: Tue,  7 Feb 2023 13:56:45 +0100
-Message-Id: <20230207125620.250480253@linuxfoundation.org>
+	Florian Westphal <fw@strlen.de>,
+	Pablo Neira Ayuso <pablo@netfilter.org>,
+	Sasha Levin <sashal@kernel.org>,
+	Wolfgang Nothdurft <wolfgang@linogate.de>
+Subject: [PATCH 5.15 035/120] netfilter: br_netfilter: disable sabotage_in hook after first suppression
+Date: Tue,  7 Feb 2023 13:56:46 +0100
+Message-Id: <20230207125620.295763155@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -37,38 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 47a2bd9d985bfdb55900f313603619fc9234f317 ]
+[ Upstream commit 2b272bb558f1d3a5aa95ed8a82253786fd1a48ba ]
 
-Fix typo for reference clock from 24400 to 24000.
+When using a xfrm interface in a bridged setup (the outgoing device is
+bridged), the incoming packets in the xfrm interface are only tracked
+in the outgoing direction.
 
-Bspec: 55409
-Fixes: 626426ff9ce4 ("drm/i915/adl_p: Add cdclk support for ADL-P")
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230112094131.550252-1-chaitanya.kumar.borah@intel.com
-(cherry picked from commit 2b6f7e39ccae065abfbe3b6e562ec95ccad09f1e)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+$ brctl show
+bridge name     interfaces
+br_eth1         eth1
+
+$ conntrack -L
+tcp 115 SYN_SENT src=192... dst=192... [UNREPLIED] ...
+
+If br_netfilter is enabled, the first (encrypted) packet is received onR
+eth1, conntrack hooks are called from br_netfilter emulation which
+allocates nf_bridge info for this skb.
+
+If the packet is for local machine, skb gets passed up the ip stack.
+The skb passes through ip prerouting a second time. br_netfilter
+ip_sabotage_in supresses the re-invocation of the hooks.
+
+After this, skb gets decrypted in xfrm layer and appears in
+network stack a second time (after decryption).
+
+Then, ip_sabotage_in is called again and suppresses netfilter
+hook invocation, even though the bridge layer never called them
+for the plaintext incarnation of the packet.
+
+Free the bridge info after the first suppression to avoid this.
+
+I was unable to figure out where the regression comes from, as far as i
+can see br_netfilter always had this problem; i did not expect that skb
+is looped again with different headers.
+
+Fixes: c4b0e771f906 ("netfilter: avoid using skb->nf_bridge directly")
+Reported-and-tested-by: Wolfgang Nothdurft <wolfgang@linogate.de>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Pablo Neira Ayuso <pablo@netfilter.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_cdclk.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/bridge/br_netfilter_hooks.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_cdclk.c b/drivers/gpu/drm/i915/display/intel_cdclk.c
-index 34fa4130d5c4..745ffa7572e8 100644
---- a/drivers/gpu/drm/i915/display/intel_cdclk.c
-+++ b/drivers/gpu/drm/i915/display/intel_cdclk.c
-@@ -1269,7 +1269,7 @@ static const struct intel_cdclk_vals adlp_cdclk_table[] = {
- 	{ .refclk = 24000, .cdclk = 192000, .divider = 2, .ratio = 16 },
- 	{ .refclk = 24000, .cdclk = 312000, .divider = 2, .ratio = 26 },
- 	{ .refclk = 24000, .cdclk = 552000, .divider = 2, .ratio = 46 },
--	{ .refclk = 24400, .cdclk = 648000, .divider = 2, .ratio = 54 },
-+	{ .refclk = 24000, .cdclk = 648000, .divider = 2, .ratio = 54 },
- 
- 	{ .refclk = 38400, .cdclk = 179200, .divider = 3, .ratio = 14 },
- 	{ .refclk = 38400, .cdclk = 192000, .divider = 2, .ratio = 10 },
+diff --git a/net/bridge/br_netfilter_hooks.c b/net/bridge/br_netfilter_hooks.c
+index a718204c4bfd..f3c7cfba31e1 100644
+--- a/net/bridge/br_netfilter_hooks.c
++++ b/net/bridge/br_netfilter_hooks.c
+@@ -871,6 +871,7 @@ static unsigned int ip_sabotage_in(void *priv,
+ 	if (nf_bridge && !nf_bridge->in_prerouting &&
+ 	    !netif_is_l3_master(skb->dev) &&
+ 	    !netif_is_l3_slave(skb->dev)) {
++		nf_bridge_info_free(skb);
+ 		state->okfn(state->net, state->sk, skb);
+ 		return NF_STOLEN;
+ 	}
 -- 
 2.39.0
 
