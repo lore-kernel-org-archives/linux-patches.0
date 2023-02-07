@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42F323212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:02:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B72A0C433EF;
-	Tue,  7 Feb 2023 13:02:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E730F3212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:02:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D98C433EF;
+	Tue,  7 Feb 2023 13:02:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675774956;
-	bh=LGhrTu8dDwWqP1rkr28Vl8YPkH6lCuJpFE2ruP5mHYE=;
+	s=korg; t=1675774959;
+	bh=MD9RcAccVG2aSKGg6cMa2PfqMKg1BGDfhdXtOS/+uko=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N3Lgr3Nffoz56IeRj9lA5Ua4MrHweHfsLUFP8ogOAmqwNvfqMnP47CS/x2qTLiv9d
-	 0L8AK+c9u/Omyt6yQts/hzGLIE/Aeoe/yA7thq/Nemy04MSoVWfcxYjFiE8pKIIQqV
-	 eekxgtDU5CWFmoDEx9ZOVYl6aqGRUq18vQTB52TI=
+	b=KvpiVFh65fVFt/Df51DmI7UiV6J3sWrVICCgBzDlwr56b+KAzeJE/8iotquQXEkK9
+	 nX2IxqZHIGC5DR0hCUuRcCMBUouzzZVDSMgc17yfdPWtM/TVT3XG00nNIFj06LiCG2
+	 +jjjqL+fAd4aaBcugDxoEGVzVLc4jqfMWgDyuwtI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Alexandre Belloni <alexandre.belloni@bootlin.com>,
+	Jan Luebbe <jlu@pengutronix.de>,
+	Masahiro Yamada <masahiroy@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 090/208] rtc: sunplus: fix format string for printing resource
-Date: Tue,  7 Feb 2023 13:55:44 +0100
-Message-Id: <20230207125638.434274692@linuxfoundation.org>
+Subject: [PATCH 6.1 091/208] certs: Fix build error when PKCS#11 URI contains semicolon
+Date: Tue,  7 Feb 2023 13:55:45 +0100
+Message-Id: <20230207125638.479822972@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,45 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Jan Luebbe <jlu@pengutronix.de>
 
-[ Upstream commit 08279468a294d8c996a657ecc9e51bd5c084c75d ]
+[ Upstream commit b1c3d2beed8ef3699fab106340e33a79052df116 ]
 
-On 32-bit architectures with 64-bit resource_size_t, sp_rtc_probe()
-causes a compiler warning:
+When CONFIG_MODULE_SIG_KEY is PKCS#11 URI (pkcs11:*) and contains a
+semicolon, signing_key.x509 fails to build:
 
-drivers/rtc/rtc-sunplus.c: In function 'sp_rtc_probe':
-drivers/rtc/rtc-sunplus.c:243:33: error: format '%x' expects argument of type 'unsigned int', but argument 4 has type 'resource_size_t' {aka 'long long unsigned int'} [-Werror=format=]
-  243 |         dev_dbg(&plat_dev->dev, "res = 0x%x, reg_base = 0x%lx\n",
-      |                                 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  certs/extract-cert pkcs11:token=foo;object=bar;pin-value=1111 certs/signing_key.x509
+  Usage: extract-cert <source> <dest>
 
-The best way to print a resource is the special %pR format string,
-and similarly to print a pointer we can use %p and avoid the cast.
+Add quotes to the extract-cert argument to avoid splitting by the shell.
 
-Fixes: fad6cbe9b2b4 ("rtc: Add driver for RTC in Sunplus SP7021")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230117172450.2938962-1-arnd@kernel.org
-Signed-off-by: Alexandre Belloni <alexandre.belloni@bootlin.com>
+This approach was suggested by Masahiro Yamada <masahiroy@kernel.org>.
+
+Fixes: 129ab0d2d9f3 ("kbuild: do not quote string values in include/config/auto.conf")
+Signed-off-by: Jan Luebbe <jlu@pengutronix.de>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/rtc/rtc-sunplus.c | 4 ++--
+ certs/Makefile | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/rtc/rtc-sunplus.c b/drivers/rtc/rtc-sunplus.c
-index e8e2ab1103fc..4b578e4d44f6 100644
---- a/drivers/rtc/rtc-sunplus.c
-+++ b/drivers/rtc/rtc-sunplus.c
-@@ -240,8 +240,8 @@ static int sp_rtc_probe(struct platform_device *plat_dev)
- 	if (IS_ERR(sp_rtc->reg_base))
- 		return dev_err_probe(&plat_dev->dev, PTR_ERR(sp_rtc->reg_base),
- 					    "%s devm_ioremap_resource fail\n", RTC_REG_NAME);
--	dev_dbg(&plat_dev->dev, "res = 0x%x, reg_base = 0x%lx\n",
--		sp_rtc->res->start, (unsigned long)sp_rtc->reg_base);
-+	dev_dbg(&plat_dev->dev, "res = %pR, reg_base = %p\n",
-+		sp_rtc->res, sp_rtc->reg_base);
+diff --git a/certs/Makefile b/certs/Makefile
+index 9486ed924731..799ad7b9e68a 100644
+--- a/certs/Makefile
++++ b/certs/Makefile
+@@ -23,8 +23,8 @@ $(obj)/blacklist_hash_list: $(CONFIG_SYSTEM_BLACKLIST_HASH_LIST) FORCE
+ targets += blacklist_hash_list
  
- 	sp_rtc->irq = platform_get_irq(plat_dev, 0);
- 	if (sp_rtc->irq < 0)
+ quiet_cmd_extract_certs  = CERT    $@
+-      cmd_extract_certs  = $(obj)/extract-cert $(extract-cert-in) $@
+-extract-cert-in = $(or $(filter-out $(obj)/extract-cert, $(real-prereqs)),"")
++      cmd_extract_certs  = $(obj)/extract-cert "$(extract-cert-in)" $@
++extract-cert-in = $(filter-out $(obj)/extract-cert, $(real-prereqs))
+ 
+ $(obj)/system_certificates.o: $(obj)/x509_certificate_list
+ 
 -- 
 2.39.0
 
