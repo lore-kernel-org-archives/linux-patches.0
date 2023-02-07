@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBF443212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:03:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52495C433D2;
-	Tue,  7 Feb 2023 13:03:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B74AB3212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:03:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3859EC433EF;
+	Tue,  7 Feb 2023 13:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675774986;
-	bh=O7eBE4jfHcGPJUk25Olfzak2s63pZcqZLlVDUxzvnbg=;
+	s=korg; t=1675774989;
+	bh=PjzvtvzRyPE1lISI3S86XP20Rkfoe0mmh2vjoMORNd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L7nTBA0F6eLUM9v4gkMY8CnRqx74iG1iR4MTBQYPrHhcTQhwvJJlZcoAy9UZB4CM5
-	 hj7iLhdUx2ixbc93AXj2ippWtBiZmhvy5Oau83/MlcEmuenmlEQ7LmYf5yOXrAJqsS
-	 6cjnY31/uzOMfB99Ov82eWg+4tx6TWaQNx3Poz5A=
+	b=rMafCc6SQQOYEmDgLy8mImVGewSODglRPvgOjfLm6+FiG2RUEAwSdrb8rjO29UL0k
+	 2ZD/iOpcNu5h1XJFH6/8FMbYYh5e94dlz3SNYX+HCnuhQCRin508EIVdJdzWohHlMd
+	 ajf7UrvNvlhD0br9XIdYZgaVOq20ysK8pWhRexgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marius Dinu <marius@psihoexpert.ro>,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Mike Christie <michael.christie@oracle.com>,
+	Lee Duncan <lduncan@suse.com>,
+	Ding Hui <dinghui@sangfor.com.cn>,
+	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 082/208] ata: libata: Fix sata_down_spd_limit() when no link speed is reported
-Date: Tue,  7 Feb 2023 13:55:36 +0100
-Message-Id: <20230207125638.055141208@linuxfoundation.org>
+Subject: [PATCH 6.1 100/208] scsi: iscsi_tcp: Fix UAF during login when accessing the shost ipaddress
+Date: Tue,  7 Feb 2023 13:55:54 +0100
+Message-Id: <20230207125638.874143275@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -36,55 +37,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 69f2c9346313ba3d3dfa4091ff99df26c67c9021 ]
+[ Upstream commit f484a794e4ee2a9ce61f52a78e810ac45f3fe3b3 ]
 
-Commit 2dc0b46b5ea3 ("libata: sata_down_spd_limit should return if
-driver has not recorded sstatus speed") changed the behavior of
-sata_down_spd_limit() to return doing nothing if a drive does not report
-a current link speed, to avoid reducing the link speed to the lowest 1.5
-Gbps speed.
+If during iscsi_sw_tcp_session_create() iscsi_tcp_r2tpool_alloc() fails,
+userspace could be accessing the host's ipaddress attr. If we then free the
+session via iscsi_session_teardown() while userspace is still accessing the
+session we will hit a use after free bug.
 
-However, the change assumed that a speed was recorded before probing
-(e.g. before a suspend/resume) and set in link->sata_spd. This causes
-problems with adapters/drives combination failing to establish a link
-speed during probe autonegotiation. One example reported of this problem
-is an mvebu adapter with a 3Gbps port-multiplier box: autonegotiation
-fails, leaving no recorded link speed and no reported current link
-speed. Probe retries also fail as no action is taken by sata_set_spd()
-after each retry.
+Set the tcp_sw_host->session after we have completed session creation and
+can no longer fail.
 
-Fix this by returning early in sata_down_spd_limit() only if we do have
-a recorded link speed, that is, if link->sata_spd is not 0. With this
-fix, a failed probe not leading to a recorded link speed is retried at
-the lower 1.5 Gbps speed, with the link speed potentially increased
-later on the second revalidate of the device if the device reports
-that it supports higher link speeds.
-
-Reported-by: Marius Dinu <marius@psihoexpert.ro>
-Fixes: 2dc0b46b5ea3 ("libata: sata_down_spd_limit should return if driver has not recorded sstatus speed")
-Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
-Tested-by: Marius Dinu <marius@psihoexpert.ro>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Link: https://lore.kernel.org/r/20230117193937.21244-3-michael.christie@oracle.com
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Reviewed-by: Lee Duncan <lduncan@suse.com>
+Acked-by: Ding Hui <dinghui@sangfor.com.cn>
+Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/scsi/iscsi_tcp.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index d3ce5c383f3a..26a75f5cce95 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -3108,7 +3108,7 @@ int sata_down_spd_limit(struct ata_link *link, u32 spd_limit)
- 	 */
- 	if (spd > 1)
- 		mask &= (1 << (spd - 1)) - 1;
--	else
-+	else if (link->sata_spd)
- 		return -EINVAL;
+diff --git a/drivers/scsi/iscsi_tcp.c b/drivers/scsi/iscsi_tcp.c
+index 9c0c8f34ef67..c3ad04ad66e0 100644
+--- a/drivers/scsi/iscsi_tcp.c
++++ b/drivers/scsi/iscsi_tcp.c
+@@ -848,7 +848,7 @@ static int iscsi_sw_tcp_host_get_param(struct Scsi_Host *shost,
+ 				       enum iscsi_host_param param, char *buf)
+ {
+ 	struct iscsi_sw_tcp_host *tcp_sw_host = iscsi_host_priv(shost);
+-	struct iscsi_session *session = tcp_sw_host->session;
++	struct iscsi_session *session;
+ 	struct iscsi_conn *conn;
+ 	struct iscsi_tcp_conn *tcp_conn;
+ 	struct iscsi_sw_tcp_conn *tcp_sw_conn;
+@@ -858,6 +858,7 @@ static int iscsi_sw_tcp_host_get_param(struct Scsi_Host *shost,
  
- 	/* were we already at the bottom? */
+ 	switch (param) {
+ 	case ISCSI_HOST_PARAM_IPADDRESS:
++		session = tcp_sw_host->session;
+ 		if (!session)
+ 			return -ENOTCONN;
+ 
+@@ -958,11 +959,13 @@ iscsi_sw_tcp_session_create(struct iscsi_endpoint *ep, uint16_t cmds_max,
+ 	if (!cls_session)
+ 		goto remove_host;
+ 	session = cls_session->dd_data;
+-	tcp_sw_host = iscsi_host_priv(shost);
+-	tcp_sw_host->session = session;
+ 
+ 	if (iscsi_tcp_r2tpool_alloc(session))
+ 		goto remove_session;
++
++	/* We are now fully setup so expose the session to sysfs. */
++	tcp_sw_host = iscsi_host_priv(shost);
++	tcp_sw_host->session = session;
+ 	return cls_session;
+ 
+ remove_session:
 -- 
 2.39.0
 
