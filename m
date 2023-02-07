@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A60652C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D16CC433EF;
-	Tue,  7 Feb 2023 13:06:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB9A2C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC444C433EF;
+	Tue,  7 Feb 2023 13:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775169;
-	bh=EgTfjRlPyeWxVC28WpWmcHYUzRvZoc1zyJZ/O57LTqU=;
+	s=korg; t=1675775172;
+	bh=zs3eS/gc82oxlqyBtAntTvrWRIJpO7o0OutcSgAAh0Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SxiwRVxJTYDhzNA4mfuZgoynVD+xwkSIiYJplwTjh894vtNNbxpsKzJ2qWbPmfYTi
-	 5doBcjgw/DazhzbxtleGE64tTBIWdN/KOR1F46RNt3H5Qn2RYwLOy8R6l5Pl7qRLav
-	 WccWoYfzkwJrgfI4ssWW6h8OR+/ObaMrXxPxcNh0=
+	b=lKcr7JYpQe0S1P7abw2NHQLwT0HKsDZVkaDubgRloT0u3iLpHBnzKoRNhNAiPzotM
+	 BR/JK2G+mZlSj6exSy+ypeTFzxBnMtKu0auCAZU+dFHyTZhTntU2b3cxAQL+IIFK/y
+	 xWcaKWOEIYPtb2nd/0yvRDjJUeVsL6m5HMosHCJY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 6.1 160/208] usb: typec: ucsi: Dont attempt to resume the ports before they exist
-Date: Tue,  7 Feb 2023 13:56:54 +0100
-Message-Id: <20230207125641.680021040@linuxfoundation.org>
+	stable <stable@kernel.org>,
+	Aaro Koskinen <aaro.koskinen@iki.fi>,
+	Alan Stern <stern@rowland.harvard.edu>
+Subject: [PATCH 6.1 161/208] usb: gadget: udc: do not clear gadget driver.bus
+Date: Tue,  7 Feb 2023 13:56:55 +0100
+Message-Id: <20230207125641.713719096@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -33,55 +35,202 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+From: Aaro Koskinen <aaro.koskinen@iki.fi>
 
-commit f82060da749c611ed427523b6d1605d87338aac1 upstream.
+commit 30d09b3131f5b1b9d54ad9b7ee171a45e21362b3 upstream.
 
-This will fix null pointer dereference that was caused by
-the driver attempting to resume ports that were not yet
-registered.
+Before the commit fc274c1e9973 ("USB: gadget: Add a new bus for gadgets")
+gadget driver.bus was unused. For whatever reason, many UDC drivers set
+this field explicitly to NULL in udc_start(). With the newly added gadget
+bus, doing this will crash the driver during the attach.
 
-Fixes: e0dced9c7d47 ("usb: typec: ucsi: Resume in separate work")
-Cc: <stable@vger.kernel.org>
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=216697
-Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Link: https://lore.kernel.org/r/20230131141518.78215-1-heikki.krogerus@linux.intel.com
+The problem was first reported, fixed and tested with OMAP UDC and g_ether.
+Other drivers are changed based on code analysis only.
+
+Fixes: fc274c1e9973 ("USB: gadget: Add a new bus for gadgets")
+Cc: stable <stable@kernel.org>
+Signed-off-by: Aaro Koskinen <aaro.koskinen@iki.fi>
+Acked-by: Alan Stern <stern@rowland.harvard.edu>
+Link: https://lore.kernel.org/r/20230201220125.GD2415@darkstar.musicnaut.iki.fi
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/ucsi/ucsi.c |    9 ++++++++-
- 1 file changed, 8 insertions(+), 1 deletion(-)
+ drivers/usb/gadget/udc/bcm63xx_udc.c   |    1 -
+ drivers/usb/gadget/udc/fotg210-udc.c   |    1 -
+ drivers/usb/gadget/udc/fsl_qe_udc.c    |    1 -
+ drivers/usb/gadget/udc/fsl_udc_core.c  |    1 -
+ drivers/usb/gadget/udc/fusb300_udc.c   |    1 -
+ drivers/usb/gadget/udc/goku_udc.c      |    1 -
+ drivers/usb/gadget/udc/gr_udc.c        |    1 -
+ drivers/usb/gadget/udc/m66592-udc.c    |    1 -
+ drivers/usb/gadget/udc/max3420_udc.c   |    1 -
+ drivers/usb/gadget/udc/mv_u3d_core.c   |    1 -
+ drivers/usb/gadget/udc/mv_udc_core.c   |    1 -
+ drivers/usb/gadget/udc/net2272.c       |    1 -
+ drivers/usb/gadget/udc/net2280.c       |    1 -
+ drivers/usb/gadget/udc/omap_udc.c      |    1 -
+ drivers/usb/gadget/udc/pch_udc.c       |    1 -
+ drivers/usb/gadget/udc/snps_udc_core.c |    1 -
+ 16 files changed, 16 deletions(-)
 
---- a/drivers/usb/typec/ucsi/ucsi.c
-+++ b/drivers/usb/typec/ucsi/ucsi.c
-@@ -1269,6 +1269,9 @@ err_unregister:
- 		con->port = NULL;
+--- a/drivers/usb/gadget/udc/bcm63xx_udc.c
++++ b/drivers/usb/gadget/udc/bcm63xx_udc.c
+@@ -1830,7 +1830,6 @@ static int bcm63xx_udc_start(struct usb_
+ 	bcm63xx_select_phy_mode(udc, true);
+ 
+ 	udc->driver = driver;
+-	driver->driver.bus = NULL;
+ 	udc->gadget.dev.of_node = udc->dev->of_node;
+ 
+ 	spin_unlock_irqrestore(&udc->lock, flags);
+--- a/drivers/usb/gadget/udc/fotg210-udc.c
++++ b/drivers/usb/gadget/udc/fotg210-udc.c
+@@ -1009,7 +1009,6 @@ static int fotg210_udc_start(struct usb_
+ 	u32 value;
+ 
+ 	/* hook up the driver */
+-	driver->driver.bus = NULL;
+ 	fotg210->driver = driver;
+ 
+ 	/* enable device global interrupt */
+--- a/drivers/usb/gadget/udc/fsl_qe_udc.c
++++ b/drivers/usb/gadget/udc/fsl_qe_udc.c
+@@ -2285,7 +2285,6 @@ static int fsl_qe_start(struct usb_gadge
+ 	/* lock is needed but whether should use this lock or another */
+ 	spin_lock_irqsave(&udc->lock, flags);
+ 
+-	driver->driver.bus = NULL;
+ 	/* hook up the driver */
+ 	udc->driver = driver;
+ 	udc->gadget.speed = driver->max_speed;
+--- a/drivers/usb/gadget/udc/fsl_udc_core.c
++++ b/drivers/usb/gadget/udc/fsl_udc_core.c
+@@ -1943,7 +1943,6 @@ static int fsl_udc_start(struct usb_gadg
+ 	/* lock is needed but whether should use this lock or another */
+ 	spin_lock_irqsave(&udc_controller->lock, flags);
+ 
+-	driver->driver.bus = NULL;
+ 	/* hook up the driver */
+ 	udc_controller->driver = driver;
+ 	spin_unlock_irqrestore(&udc_controller->lock, flags);
+--- a/drivers/usb/gadget/udc/fusb300_udc.c
++++ b/drivers/usb/gadget/udc/fusb300_udc.c
+@@ -1311,7 +1311,6 @@ static int fusb300_udc_start(struct usb_
+ 	struct fusb300 *fusb300 = to_fusb300(g);
+ 
+ 	/* hook up the driver */
+-	driver->driver.bus = NULL;
+ 	fusb300->driver = driver;
+ 
+ 	return 0;
+--- a/drivers/usb/gadget/udc/goku_udc.c
++++ b/drivers/usb/gadget/udc/goku_udc.c
+@@ -1375,7 +1375,6 @@ static int goku_udc_start(struct usb_gad
+ 	struct goku_udc	*dev = to_goku_udc(g);
+ 
+ 	/* hook up the driver */
+-	driver->driver.bus = NULL;
+ 	dev->driver = driver;
+ 
+ 	/*
+--- a/drivers/usb/gadget/udc/gr_udc.c
++++ b/drivers/usb/gadget/udc/gr_udc.c
+@@ -1906,7 +1906,6 @@ static int gr_udc_start(struct usb_gadge
+ 	spin_lock(&dev->lock);
+ 
+ 	/* Hook up the driver */
+-	driver->driver.bus = NULL;
+ 	dev->driver = driver;
+ 
+ 	/* Get ready for host detection */
+--- a/drivers/usb/gadget/udc/m66592-udc.c
++++ b/drivers/usb/gadget/udc/m66592-udc.c
+@@ -1454,7 +1454,6 @@ static int m66592_udc_start(struct usb_g
+ 	struct m66592 *m66592 = to_m66592(g);
+ 
+ 	/* hook up the driver */
+-	driver->driver.bus = NULL;
+ 	m66592->driver = driver;
+ 
+ 	m66592_bset(m66592, M66592_VBSE | M66592_URST, M66592_INTENB0);
+--- a/drivers/usb/gadget/udc/max3420_udc.c
++++ b/drivers/usb/gadget/udc/max3420_udc.c
+@@ -1108,7 +1108,6 @@ static int max3420_udc_start(struct usb_
+ 
+ 	spin_lock_irqsave(&udc->lock, flags);
+ 	/* hook up the driver */
+-	driver->driver.bus = NULL;
+ 	udc->driver = driver;
+ 	udc->gadget.speed = USB_SPEED_FULL;
+ 
+--- a/drivers/usb/gadget/udc/mv_u3d_core.c
++++ b/drivers/usb/gadget/udc/mv_u3d_core.c
+@@ -1243,7 +1243,6 @@ static int mv_u3d_start(struct usb_gadge
  	}
  
-+	kfree(ucsi->connector);
-+	ucsi->connector = NULL;
-+
- err_reset:
- 	memset(&ucsi->cap, 0, sizeof(ucsi->cap));
- 	ucsi_reset_ppm(ucsi);
-@@ -1300,7 +1303,8 @@ static void ucsi_resume_work(struct work
+ 	/* hook up the driver ... */
+-	driver->driver.bus = NULL;
+ 	u3d->driver = driver;
  
- int ucsi_resume(struct ucsi *ucsi)
+ 	u3d->ep0_dir = USB_DIR_OUT;
+--- a/drivers/usb/gadget/udc/mv_udc_core.c
++++ b/drivers/usb/gadget/udc/mv_udc_core.c
+@@ -1359,7 +1359,6 @@ static int mv_udc_start(struct usb_gadge
+ 	spin_lock_irqsave(&udc->lock, flags);
+ 
+ 	/* hook up the driver ... */
+-	driver->driver.bus = NULL;
+ 	udc->driver = driver;
+ 
+ 	udc->usb_state = USB_STATE_ATTACHED;
+--- a/drivers/usb/gadget/udc/net2272.c
++++ b/drivers/usb/gadget/udc/net2272.c
+@@ -1451,7 +1451,6 @@ static int net2272_start(struct usb_gadg
+ 		dev->ep[i].irqs = 0;
+ 	/* hook up the driver ... */
+ 	dev->softconnect = 1;
+-	driver->driver.bus = NULL;
+ 	dev->driver = driver;
+ 
+ 	/* ... then enable host detection and ep0; and we're ready
+--- a/drivers/usb/gadget/udc/net2280.c
++++ b/drivers/usb/gadget/udc/net2280.c
+@@ -2423,7 +2423,6 @@ static int net2280_start(struct usb_gadg
+ 		dev->ep[i].irqs = 0;
+ 
+ 	/* hook up the driver ... */
+-	driver->driver.bus = NULL;
+ 	dev->driver = driver;
+ 
+ 	retval = device_create_file(&dev->pdev->dev, &dev_attr_function);
+--- a/drivers/usb/gadget/udc/omap_udc.c
++++ b/drivers/usb/gadget/udc/omap_udc.c
+@@ -2066,7 +2066,6 @@ static int omap_udc_start(struct usb_gad
+ 	udc->softconnect = 1;
+ 
+ 	/* hook up the driver */
+-	driver->driver.bus = NULL;
+ 	udc->driver = driver;
+ 	spin_unlock_irqrestore(&udc->lock, flags);
+ 
+--- a/drivers/usb/gadget/udc/pch_udc.c
++++ b/drivers/usb/gadget/udc/pch_udc.c
+@@ -2908,7 +2908,6 @@ static int pch_udc_start(struct usb_gadg
  {
--	queue_work(system_long_wq, &ucsi->resume_work);
-+	if (ucsi->connector)
-+		queue_work(system_long_wq, &ucsi->resume_work);
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(ucsi_resume);
-@@ -1420,6 +1424,9 @@ void ucsi_unregister(struct ucsi *ucsi)
- 	/* Disable notifications */
- 	ucsi->ops->async_write(ucsi, UCSI_CONTROL, &cmd, sizeof(cmd));
+ 	struct pch_udc_dev	*dev = to_pch_udc(g);
  
-+	if (!ucsi->connector)
-+		return;
-+
- 	for (i = 0; i < ucsi->cap.num_connectors; i++) {
- 		cancel_work_sync(&ucsi->connector[i].work);
- 		ucsi_unregister_partner(&ucsi->connector[i]);
+-	driver->driver.bus = NULL;
+ 	dev->driver = driver;
+ 
+ 	/* get ready for ep0 traffic */
+--- a/drivers/usb/gadget/udc/snps_udc_core.c
++++ b/drivers/usb/gadget/udc/snps_udc_core.c
+@@ -1933,7 +1933,6 @@ static int amd5536_udc_start(struct usb_
+ 	struct udc *dev = to_amd5536_udc(g);
+ 	u32 tmp;
+ 
+-	driver->driver.bus = NULL;
+ 	dev->driver = driver;
+ 
+ 	/* Some gadget drivers use both ep0 directions.
 
 
