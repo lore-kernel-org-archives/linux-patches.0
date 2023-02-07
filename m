@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E91642C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:08:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 667FBC433D2;
-	Tue,  7 Feb 2023 13:08:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B202C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:08:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC195C43443;
+	Tue,  7 Feb 2023 13:08:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775321;
-	bh=vxRVJVFsg3ha/9AJLdmNdeyF3VTK/hlw1dKoKN2CMzs=;
+	s=korg; t=1675775325;
+	bh=FQoo1cYxT9+xUFmp7j4fTzAWcNSiimY92euimoOaADs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kVcmwMfm83u8D1caKzV/Ijj0bgZXJRWp5yt5UiunIuuMCh8dCzfoJV8pG6aVi4GvQ
-	 GNVlMTdNRyFJafEvjs7Yjs0hUFSzehtomP6AREnpm/KiVJH9kWnX/qmTRFbrSyKTrI
-	 nKmaWTdkRMezRu7Zuc35qJMuDD/58aponc9UPUWk=
+	b=FgAwanx7dBNiaUIjfBfcNuSKZOqoS0hv5r0g6Rfik/M+cG5duIZMkyPISSCKul5kl
+	 NvWChSnyWBdYoFwHWaMHvY6nNHiRFInXviJgRzbWnlFY8lqfy4+DE2MQtN9SBxDGqt
+	 eKmKEeXZ0IKPQcw731xAxssM2q0IVc326QwuqQ7g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tim Huang <tim.huang@amd.com>,
-	Yifan Zhang <yifan1.zhang@amd.com>,
+	Graham Sider <Graham.Sider@amd.com>,
+	Mukul Joshi <Mukul.Joshi@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 182/208] drm/amd/pm: drop unneeded dpm features disablement for SMU 13.0.4/11
-Date: Tue,  7 Feb 2023 13:57:16 +0100
-Message-Id: <20230207125642.713925190@linuxfoundation.org>
+Subject: [PATCH 6.1 183/208] drm/amdgpu: update wave data type to 3 for gfx11
+Date: Tue,  7 Feb 2023 13:57:17 +0100
+Message-Id: <20230207125642.759741948@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,44 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tim Huang <tim.huang@amd.com>
+From: Graham Sider <Graham.Sider@amd.com>
 
-commit 1538709c9f1c207d30afd95ea41b3aeb973f67e7 upstream.
+commit ed8e793c65e4c6633e8577e40d574da8a56d2e0f upstream.
 
-PMFW will handle the features disablement properly for gpu reset case,
-driver involvement may cause some unexpected issues.
+SQ_WAVE_INST_DW0 isn't present on gfx11 compared to gfx10, so update
+wave data type to signify a difference.
 
-Cc: stable@vger.kernel.org # 6.1
-Signed-off-by: Tim Huang <tim.huang@amd.com>
-Reviewed-by: Yifan Zhang <yifan1.zhang@amd.com>
+Signed-off-by: Graham Sider <Graham.Sider@amd.com>
+Reviewed-by: Mukul Joshi <Mukul.Joshi@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c |   14 ++++++++++++++
- 1 file changed, 14 insertions(+)
+ drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-+++ b/drivers/gpu/drm/amd/pm/swsmu/amdgpu_smu.c
-@@ -1499,6 +1499,20 @@ static int smu_disable_dpms(struct smu_c
- 	}
+diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+index b9b57a66e113..66eb102cd88f 100644
+--- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
++++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
+@@ -790,8 +790,8 @@ static void gfx_v11_0_read_wave_data(struct amdgpu_device *adev, uint32_t simd,
+ 	 * zero here */
+ 	WARN_ON(simd != 0);
  
- 	/*
-+	 * For SMU 13.0.4/11, PMFW will handle the features disablement properly
-+	 * for gpu reset case. Driver involvement is unnecessary.
-+	 */
-+	if (amdgpu_in_reset(adev)) {
-+		switch (adev->ip_versions[MP1_HWIP][0]) {
-+		case IP_VERSION(13, 0, 4):
-+		case IP_VERSION(13, 0, 11):
-+			return 0;
-+		default:
-+			break;
-+		}
-+	}
-+
-+	/*
- 	 * For gpu reset, runpm and hibernation through BACO,
- 	 * BACO feature has to be kept enabled.
- 	 */
+-	/* type 2 wave data */
+-	dst[(*no_fields)++] = 2;
++	/* type 3 wave data */
++	dst[(*no_fields)++] = 3;
+ 	dst[(*no_fields)++] = wave_read_ind(adev, wave, ixSQ_WAVE_STATUS);
+ 	dst[(*no_fields)++] = wave_read_ind(adev, wave, ixSQ_WAVE_PC_LO);
+ 	dst[(*no_fields)++] = wave_read_ind(adev, wave, ixSQ_WAVE_PC_HI);
+-- 
+2.39.1
+
 
 
