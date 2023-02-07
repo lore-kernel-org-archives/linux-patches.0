@@ -1,27 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711882C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:07:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2194C433EF;
-	Tue,  7 Feb 2023 13:07:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2E92C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:07:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC040C4339C;
+	Tue,  7 Feb 2023 13:07:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775237;
-	bh=E/2uAleW193iYSoF3EWEG2aHf0e9jDEeAf7JcQHrP8c=;
+	s=korg; t=1675775240;
+	bh=uFhBu2r1ZCzedcPp/oxQ4KaA3xtZi3rMQAACOP/fiuc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=D9QkVThmuS92G2rk+VnvWlfChWVXl1xlj8oK86RycNVEaHjUqycb9kaiuiGXk7IOL
-	 T7XpaLPm0ZiOINGxNcUxSXAwHHvhIf1l/VHL8xsknsanh4iplpsj2tPIs4BS9bVi6T
-	 1cU5pnalrqjewOTx3JBYgL2GoVNKf+7O0fk8dCGk=
+	b=eFe10IROP6XqSErNNdBu7BVCwlETjAme2ek/d1t4tO4Z36gAdGvPOUo3FAois27Ha
+	 N2ElP3K/F1P9zY3h9T3P+3OT8TIxTBkNUuHDPZwPEmZ/t7SidYKlKz7fJJ39QQlXHn
+	 4W9th6QBpMvETKi8zpK7cuHHotWw5c769f7lWeZI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 143/208] iio: imu: fxos8700: fix swapped ACCEL and MAGN channels readback
-Date: Tue,  7 Feb 2023 13:56:37 +0100
-Message-Id: <20230207125640.904006692@linuxfoundation.org>
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Peter Xu <peterx@redhat.com>,
+	David Hildenbrand <david@redhat.com>,
+	James Houghton <jthoughton@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Naoya Horiguchi <naoya.horiguchi@linux.dev>,
+	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 176/208] migrate: hugetlb: check for hugetlb shared PMD in node migration
+Date: Tue,  7 Feb 2023 13:57:10 +0100
+Message-Id: <20230207125642.419653931@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,50 +43,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Mike Kravetz <mike.kravetz@oracle.com>
 
-commit c68b44bc7d9b1469774a1c985ee71d2cbc5ebef5 upstream.
+commit 73bdf65ea74857d7fb2ec3067a3cec0e261b1462 upstream.
 
-Because ACCEL and MAGN channels data register base address is
-swapped the accelerometer and magnetometer channels readback is
-swapped.
+migrate_pages/mempolicy semantics state that CAP_SYS_NICE is required to
+move pages shared with another process to a different node.  page_mapcount
+> 1 is being used to determine if a hugetlb page is shared.  However, a
+hugetlb page will have a mapcount of 1 if mapped by multiple processes via
+a shared PMD.  As a result, hugetlb pages shared by multiple processes and
+mapped with a shared PMD can be moved by a process without CAP_SYS_NICE.
 
-Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://lore.kernel.org/r/20221208071911.2405922-3-carlos.song@nxp.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+To fix, check for a shared PMD if mapcount is 1.  If a shared PMD is found
+consider the page shared.
+
+Link: https://lkml.kernel.org/r/20230126222721.222195-3-mike.kravetz@oracle.com
+Fixes: e2d8cf405525 ("migrate: add hugepage migration code to migrate_pages()")
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Acked-by: Peter Xu <peterx@redhat.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Naoya Horiguchi <naoya.horiguchi@linux.dev>
+Cc: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/fxos8700_core.c |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ mm/mempolicy.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/imu/fxos8700_core.c
-+++ b/drivers/iio/imu/fxos8700_core.c
-@@ -420,9 +420,22 @@ static int fxos8700_get_data(struct fxos
- 	u8 base, reg;
- 	s16 tmp;
- 	int ret;
--	enum fxos8700_sensor type = fxos8700_to_sensor(chan_type);
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -600,7 +600,8 @@ static int queue_pages_hugetlb(pte_t *pt
  
--	base = type ? FXOS8700_OUT_X_MSB : FXOS8700_M_OUT_X_MSB;
-+	/*
-+	 * Different register base addresses varies with channel types.
-+	 * This bug hasn't been noticed before because using an enum is
-+	 * really hard to read. Use an a switch statement to take over that.
-+	 */
-+	switch (chan_type) {
-+	case IIO_ACCEL:
-+		base = FXOS8700_OUT_X_MSB;
-+		break;
-+	case IIO_MAGN:
-+		base = FXOS8700_M_OUT_X_MSB;
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
- 
- 	/* Block read 6 bytes of device output registers to avoid data loss */
- 	ret = regmap_bulk_read(data->regmap, base, data->buf,
+ 	/* With MPOL_MF_MOVE, we migrate only unshared hugepage. */
+ 	if (flags & (MPOL_MF_MOVE_ALL) ||
+-	    (flags & MPOL_MF_MOVE && page_mapcount(page) == 1)) {
++	    (flags & MPOL_MF_MOVE && page_mapcount(page) == 1 &&
++	     !hugetlb_pmd_shared(pte))) {
+ 		if (isolate_hugetlb(page, qp->pagelist) &&
+ 			(flags & MPOL_MF_STRICT))
+ 			/*
 
 
