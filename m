@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 92A232C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:07:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07462C433D2;
-	Tue,  7 Feb 2023 13:07:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 711882C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:07:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2194C433EF;
+	Tue,  7 Feb 2023 13:07:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775234;
-	bh=aVeVN9zXt46j7A6KlhydEwhohHrf8YAsAgHUlnU+h0s=;
+	s=korg; t=1675775237;
+	bh=E/2uAleW193iYSoF3EWEG2aHf0e9jDEeAf7JcQHrP8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=W7nrg02LG+QJNwmIUNxCZ+QPBUdHLw7/4qJO6W5h8qZN9JZQjV9Dm6uOs2f8WFMmD
-	 7EL/OQBW1Qjnfd9XohfJSbHZq360xnc2/zF6871IbvKB4OeA0+yZYw/GZ6MWxjWMZR
-	 jVZvGyM+lUdVqr+Nv446N9CQ3eGMP1ZwoIWqSPfw=
+	b=D9QkVThmuS92G2rk+VnvWlfChWVXl1xlj8oK86RycNVEaHjUqycb9kaiuiGXk7IOL
+	 T7XpaLPm0ZiOINGxNcUxSXAwHHvhIf1l/VHL8xsknsanh4iplpsj2tPIs4BS9bVi6T
+	 1cU5pnalrqjewOTx3JBYgL2GoVNKf+7O0fk8dCGk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 6.1 152/208] parisc: Replace hardcoded value with PRIV_USER constant in ptrace.c
-Date: Tue,  7 Feb 2023 13:56:46 +0100
-Message-Id: <20230207125641.344017904@linuxfoundation.org>
+	Carlos Song <carlos.song@nxp.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 143/208] iio: imu: fxos8700: fix swapped ACCEL and MAGN channels readback
+Date: Tue,  7 Feb 2023 13:56:37 +0100
+Message-Id: <20230207125640.904006692@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -33,48 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Carlos Song <carlos.song@nxp.com>
 
-commit 3f0c17809a098d3f0c1ec83f1fb3ca61638d3dcd upstream.
+commit c68b44bc7d9b1469774a1c985ee71d2cbc5ebef5 upstream.
 
-Prefer usage of the PRIV_USER constant over the hard-coded value to set
-the lowest 2 bits for the userspace privilege.
+Because ACCEL and MAGN channels data register base address is
+swapped the accelerometer and magnetometer channels readback is
+swapped.
 
-Signed-off-by: Helge Deller <deller@gmx.de>
-Cc: stable@vger.kernel.org # 5.16+
+Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Link: https://lore.kernel.org/r/20221208071911.2405922-3-carlos.song@nxp.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/parisc/kernel/ptrace.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/iio/imu/fxos8700_core.c |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
---- a/arch/parisc/kernel/ptrace.c
-+++ b/arch/parisc/kernel/ptrace.c
-@@ -166,7 +166,7 @@ long arch_ptrace(struct task_struct *chi
- 		     addr >= sizeof(struct pt_regs))
- 			break;
- 		if (addr == PT_IAOQ0 || addr == PT_IAOQ1) {
--			data |= 3; /* ensure userspace privilege */
-+			data |= PRIV_USER; /* ensure userspace privilege */
- 		}
- 		if ((addr >= PT_GR1 && addr <= PT_GR31) ||
- 				addr == PT_IAOQ0 || addr == PT_IAOQ1 ||
-@@ -285,7 +285,7 @@ long compat_arch_ptrace(struct task_stru
- 			if (addr >= sizeof(struct pt_regs))
- 				break;
- 			if (addr == PT_IAOQ0+4 || addr == PT_IAOQ1+4) {
--				data |= 3; /* ensure userspace privilege */
-+				data |= PRIV_USER; /* ensure userspace privilege */
- 			}
- 			if (addr >= PT_FR0 && addr <= PT_FR31 + 4) {
- 				/* Special case, fp regs are 64 bits anyway */
-@@ -483,7 +483,7 @@ static void set_reg(struct pt_regs *regs
- 	case RI(iaoq[0]):
- 	case RI(iaoq[1]):
- 			/* set 2 lowest bits to ensure userspace privilege: */
--			regs->iaoq[num - RI(iaoq[0])] = val | 3;
-+			regs->iaoq[num - RI(iaoq[0])] = val | PRIV_USER;
- 			return;
- 	case RI(sar):	regs->sar = val;
- 			return;
+--- a/drivers/iio/imu/fxos8700_core.c
++++ b/drivers/iio/imu/fxos8700_core.c
+@@ -420,9 +420,22 @@ static int fxos8700_get_data(struct fxos
+ 	u8 base, reg;
+ 	s16 tmp;
+ 	int ret;
+-	enum fxos8700_sensor type = fxos8700_to_sensor(chan_type);
+ 
+-	base = type ? FXOS8700_OUT_X_MSB : FXOS8700_M_OUT_X_MSB;
++	/*
++	 * Different register base addresses varies with channel types.
++	 * This bug hasn't been noticed before because using an enum is
++	 * really hard to read. Use an a switch statement to take over that.
++	 */
++	switch (chan_type) {
++	case IIO_ACCEL:
++		base = FXOS8700_OUT_X_MSB;
++		break;
++	case IIO_MAGN:
++		base = FXOS8700_M_OUT_X_MSB;
++		break;
++	default:
++		return -EINVAL;
++	}
+ 
+ 	/* Block read 6 bytes of device output registers to avoid data loss */
+ 	ret = regmap_bulk_read(data->regmap, base, data->buf,
 
 
