@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 809C72C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:07:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3CCBC433EF;
-	Tue,  7 Feb 2023 13:07:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EBC2C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:07:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC78AC433D2;
+	Tue,  7 Feb 2023 13:07:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775258;
-	bh=My6mlmHCfLUlL6XKL7+NsEhNImict+ApCQBH3E0X2zE=;
+	s=korg; t=1675775261;
+	bh=208FxcEOmKtcmuObKM2S+LMvPtGrS41bOAP4yAz0AgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pvCFX86NKouw85qSMyqEcvex6FK6dsZIPOILo9Pw18ea1Rbl8/Tg1pgNn8JEWMFjP
-	 p7tqX7srPUIyvN+MFUo0B6t5QdRlqe/6tlCkwHDjqpJkxgkmWmXPmR/nttg3bV3wrS
-	 dtgyjgDsVQdugpO/kSrntUnEO8P5KYbnWrk8+nzk=
+	b=gQJKzdBJOd70jRV/ciEn2I1GrCO10ghIW/EGl+5pGqxgqRQ1jOhvf//x1lnwO3Nsb
+	 2dDYLYzHS37XXM3UZ0lLxFvByG3jLhBNXKwgJ8lUReq+LE/MLjQNq4yZrTdE/7sE81
+	 72GBdYkf4B6lGYGpPh1WMN99hFh5dgVb5ehKg0UE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.1 190/208] nvmem: core: fix return value
-Date: Tue,  7 Feb 2023 13:57:24 +0100
-Message-Id: <20230207125643.086743679@linuxfoundation.org>
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Stephen Boyd <swboyd@chromium.org>
+Subject: [PATCH 6.1 191/208] phy: qcom-qmp-combo: fix runtime suspend
+Date: Tue,  7 Feb 2023 13:57:25 +0100
+Message-Id: <20230207125643.134813761@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -36,36 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 0c4862b1c1465e473bc961a02765490578bf5c20 upstream.
+commit c7b98de745cffdceefc077ad5cf9cda032ef8959 upstream.
 
-Dan Carpenter points out that the return code was not set in commit
-60c8b4aebd8e ("nvmem: core: fix cleanup after dev_set_name()"), but
-this is not the only issue - we also need to zero wp_gpio to prevent
-gpiod_put() being called on an error value.
+Drop the confused runtime-suspend type check which effectively broke
+runtime PM if the DP child node happens to be parsed before the USB
+child node during probe (e.g. due to order of child nodes in the
+devicetree).
 
-Fixes: 560181d3ace6 ("nvmem: core: fix cleanup after dev_set_name()")
-Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230127104015.23839-10-srinivas.kandagatla@linaro.org
+Instead use the new driver data USB PHY pointer to access the USB
+configuration and resources.
+
+Fixes: 52e013d0bffa ("phy: qcom-qmp: Add support for DP in USB3+DP combo phy")
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20221114081346.5116-6-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/phy/qualcomm/phy-qcom-qmp-combo.c |   12 ++----------
+ 1 file changed, 2 insertions(+), 10 deletions(-)
 
---- a/drivers/nvmem/core.c
-+++ b/drivers/nvmem/core.c
-@@ -783,6 +783,7 @@ struct nvmem_device *nvmem_register(cons
- 						    GPIOD_OUT_HIGH);
- 	if (IS_ERR(nvmem->wp_gpio)) {
- 		rval = PTR_ERR(nvmem->wp_gpio);
-+		nvmem->wp_gpio = NULL;
- 		goto err_put_device;
- 	}
+--- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
+@@ -2296,15 +2296,11 @@ static void qmp_combo_disable_autonomous
+ static int __maybe_unused qmp_combo_runtime_suspend(struct device *dev)
+ {
+ 	struct qcom_qmp *qmp = dev_get_drvdata(dev);
+-	struct qmp_phy *qphy = qmp->phys[0];
++	struct qmp_phy *qphy = qmp->usb_phy;
+ 	const struct qmp_phy_cfg *cfg = qphy->cfg;
  
+ 	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qphy->mode);
+ 
+-	/* Supported only for USB3 PHY and luckily USB3 is the first phy */
+-	if (cfg->type != PHY_TYPE_USB3)
+-		return 0;
+-
+ 	if (!qmp->init_count) {
+ 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
+ 		return 0;
+@@ -2321,16 +2317,12 @@ static int __maybe_unused qmp_combo_runt
+ static int __maybe_unused qmp_combo_runtime_resume(struct device *dev)
+ {
+ 	struct qcom_qmp *qmp = dev_get_drvdata(dev);
+-	struct qmp_phy *qphy = qmp->phys[0];
++	struct qmp_phy *qphy = qmp->usb_phy;
+ 	const struct qmp_phy_cfg *cfg = qphy->cfg;
+ 	int ret = 0;
+ 
+ 	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qphy->mode);
+ 
+-	/* Supported only for USB3 PHY and luckily USB3 is the first phy */
+-	if (cfg->type != PHY_TYPE_USB3)
+-		return 0;
+-
+ 	if (!qmp->init_count) {
+ 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
+ 		return 0;
 
 
