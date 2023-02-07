@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94BC02C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 12:59:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 065FCC4339B;
-	Tue,  7 Feb 2023 12:59:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 713C22CA7
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 12:59:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3A77C433D2;
+	Tue,  7 Feb 2023 12:59:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675774790;
-	bh=pJFaWIrjJ0FdhcAB0IL0KRrRhR7x39EfMXX4m47ubyw=;
+	s=korg; t=1675774793;
+	bh=qT1yM+3TmoqA5/2spy6kedzotbF5GyyeRRwRP0z1LsE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LLuppKESxQXS34TOcY/dZCoIvcWZ/znD0XKY+9XP3XxGAfrd9q75nQCvSFQaOYxCb
-	 eD+/eM6XXMW/SE4Q8xrbj9/DbI1PgqFTIpqTW2yot4SpFZ046dA8+LCLMP36r1Hcbh
-	 Ui/gcxFDMBC8cPwqS+6cH9uqUX8fPx+f9C2ntAXM=
+	b=l+lmkV+ZQ0inhCUcsHS4apdUJ+CcU4dGAkCE5+mDldgf/HuuffKSKTfmJ1Tof/EUA
+	 lw3knsBa/KtShjyxZNM005K+yvPX8qfxcdhZg955O8LeyXxCGoZHLFC4z66A3ebxHZ
+	 zM+Ry/XcLzLcVhOQhDTgLQSxZixPiT1bpwZ/7QHQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/208] fix iov_iter_bvec() "direction" argument
-Date: Tue,  7 Feb 2023 13:54:49 +0100
-Message-Id: <20230207125635.910189543@linuxfoundation.org>
+Subject: [PATCH 6.1 036/208] fix direction argument of iov_iter_{init,bvec}()
+Date: Tue,  7 Feb 2023 13:54:50 +0100
+Message-Id: <20230207125635.956241309@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -36,37 +36,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit b676668d99155e6859d99bbf2df18b3f03851902 ]
+[ Upstream commit e3bf3df824675ea9cadc3cd2c75d08ee83a6ae26 ]
+
+READ means "data destination", WRITE - "data source".
 
 Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Stable-dep-of: 6dd88fd59da8 ("vhost-scsi: unbreak any layout for response")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_file.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/vhost/vhost.c  | 6 +++---
+ drivers/vhost/vringh.c | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/target/target_core_file.c b/drivers/target/target_core_file.c
-index 28aa643be5d5..55935040541b 100644
---- a/drivers/target/target_core_file.c
-+++ b/drivers/target/target_core_file.c
-@@ -337,7 +337,7 @@ static int fd_do_rw(struct se_cmd *cmd, struct file *fd,
- 		len += sg->length;
+diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
+index 547f89a6940f..c234869d6727 100644
+--- a/drivers/vhost/vhost.c
++++ b/drivers/vhost/vhost.c
+@@ -833,7 +833,7 @@ static int vhost_copy_to_user(struct vhost_virtqueue *vq, void __user *to,
+ 				     VHOST_ACCESS_WO);
+ 		if (ret < 0)
+ 			goto out;
+-		iov_iter_init(&t, WRITE, vq->iotlb_iov, ret, size);
++		iov_iter_init(&t, READ, vq->iotlb_iov, ret, size);
+ 		ret = copy_to_iter(from, size, &t);
+ 		if (ret == size)
+ 			ret = 0;
+@@ -872,7 +872,7 @@ static int vhost_copy_from_user(struct vhost_virtqueue *vq, void *to,
+ 			       (unsigned long long) size);
+ 			goto out;
+ 		}
+-		iov_iter_init(&f, READ, vq->iotlb_iov, ret, size);
++		iov_iter_init(&f, WRITE, vq->iotlb_iov, ret, size);
+ 		ret = copy_from_iter(to, size, &f);
+ 		if (ret == size)
+ 			ret = 0;
+@@ -2136,7 +2136,7 @@ static int get_indirect(struct vhost_virtqueue *vq,
+ 			vq_err(vq, "Translation failure %d in indirect.\n", ret);
+ 		return ret;
  	}
+-	iov_iter_init(&from, READ, vq->indirect, ret, len);
++	iov_iter_init(&from, WRITE, vq->indirect, ret, len);
+ 	count = len / sizeof desc;
+ 	/* Buffers are chained via a 16 bit next field, so
+ 	 * we can have at most 2^16 of these. */
+diff --git a/drivers/vhost/vringh.c b/drivers/vhost/vringh.c
+index 828c29306565..139c782848c6 100644
+--- a/drivers/vhost/vringh.c
++++ b/drivers/vhost/vringh.c
+@@ -1161,7 +1161,7 @@ static inline int copy_from_iotlb(const struct vringh *vrh, void *dst,
+ 		else if (ret < 0)
+ 			return ret;
  
--	iov_iter_bvec(&iter, READ, bvec, sgl_nents, len);
-+	iov_iter_bvec(&iter, is_write, bvec, sgl_nents, len);
- 	if (is_write)
- 		ret = vfs_iter_write(fd, &iter, &pos, 0);
- 	else
-@@ -473,7 +473,7 @@ fd_execute_write_same(struct se_cmd *cmd)
- 		len += se_dev->dev_attrib.block_size;
- 	}
+-		iov_iter_bvec(&iter, READ, iov, ret, translated);
++		iov_iter_bvec(&iter, WRITE, iov, ret, translated);
  
--	iov_iter_bvec(&iter, READ, bvec, nolb, len);
-+	iov_iter_bvec(&iter, WRITE, bvec, nolb, len);
- 	ret = vfs_iter_write(fd_dev->fd_file, &iter, &pos, 0);
+ 		ret = copy_from_iter(dst, translated, &iter);
+ 		if (ret < 0)
+@@ -1194,7 +1194,7 @@ static inline int copy_to_iotlb(const struct vringh *vrh, void *dst,
+ 		else if (ret < 0)
+ 			return ret;
  
- 	kfree(bvec);
+-		iov_iter_bvec(&iter, WRITE, iov, ret, translated);
++		iov_iter_bvec(&iter, READ, iov, ret, translated);
+ 
+ 		ret = copy_to_iter(src, translated, &iter);
+ 		if (ret < 0)
 -- 
 2.39.0
 
