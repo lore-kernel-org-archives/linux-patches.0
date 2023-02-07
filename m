@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8A5B2C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:07:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CA54C433EF;
-	Tue,  7 Feb 2023 13:07:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 766532C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:07:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDE24C4339C;
+	Tue,  7 Feb 2023 13:07:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775270;
-	bh=LdmUlfcJx7v6Z4LVgzmCWROplouTj3dNtEHHdETCLsA=;
+	s=korg; t=1675775273;
+	bh=XCawbP+v4dVHOdk/ZSjwrhu3RVUsOBkys5F1aqwCRuI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nV6lBLH5tx9VR8N33dB5ld1Z+XwfblboSJ+a7XbiuE04XLjTR2HUJCSWXg9GtM0mk
-	 SdwyB+uTW9qo0xNqY7s3KHm0FzGVV8HFFjzGwy1ZG6IMRtT5M82nH0ONYjz3EESIMN
-	 x8rtEn/9BhGGdMtnVa+YJuSrri8CVPAr6C3vbTvA=
+	b=Z3ZOGztUzdypg+QijmbLg4VDl8DDKfkMpPTm8x+eaNj57k8CYhG0g4OkfJNMHc6C/
+	 dvPOn1Ob9/glTiCCrP41pXgq8/0owCPJzel+jdCCF+ESKSrKDnUoznfh6tUQ7IZ0lW
+	 m13xkGWUp7/Z0SaGUtgcCoXoCGd4iZ2YpcW/Fge0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 194/208] platform/x86/amd: pmc: add CONFIG_SERIO dependency
-Date: Tue,  7 Feb 2023 13:57:28 +0100
-Message-Id: <20230207125643.270957414@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Danilo Krummrich <dakr@redhat.com>
+Subject: [PATCH 6.1 177/208] dma-buf: actually set signaling bit for private stub fences
+Date: Tue,  7 Feb 2023 13:57:11 +0100
+Message-Id: <20230207125642.469479500@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -34,37 +34,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Danilo Krummrich <dakr@redhat.com>
 
-commit abce209d18fd26e865b2406cc68819289db973f9 upstream.
+commit d2ceea0eb6e17bb37d8b85cb4c16797c0d683d1c upstream.
 
-Using the serio subsystem now requires the code to be reachable:
+In dma_fence_allocate_private_stub() set the signaling bit of the newly
+allocated private stub fence rather than the signaling bit of the
+shared dma_fence_stub.
 
-x86_64-linux-ld: drivers/platform/x86/amd/pmc.o: in function `amd_pmc_suspend_handler':
-pmc.c:(.text+0x86c): undefined reference to `serio_bus'
-
-Add the usual dependency: as other users of serio use 'select'
-rather than 'depends on', use the same here.
-
-Fixes: 8e60615e8932 ("platform/x86/amd: pmc: Disable IRQ1 wakeup for RN/CZN")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230127093950.2368575-1-arnd@kernel.org
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Cc: <stable@vger.kernel.org> # v6.1
+Fixes: c85d00d4fd8b ("dma-buf: set signaling bit for the stub fence")
+Reviewed-by: Christian König <christian.koenig@amd.com>
+Signed-off-by: Danilo Krummrich <dakr@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230126002844.339593-1-dakr@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/dma-buf/dma-fence.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/platform/x86/amd/Kconfig
-+++ b/drivers/platform/x86/amd/Kconfig
-@@ -8,6 +8,7 @@ source "drivers/platform/x86/amd/pmf/Kco
- config AMD_PMC
- 	tristate "AMD SoC PMC driver"
- 	depends on ACPI && PCI && RTC_CLASS
-+	select SERIO
- 	help
- 	  The driver provides support for AMD Power Management Controller
- 	  primarily responsible for S2Idle transactions that are driven from
+diff --git a/drivers/dma-buf/dma-fence.c b/drivers/dma-buf/dma-fence.c
+index 406b4e26f538..0de0482cd36e 100644
+--- a/drivers/dma-buf/dma-fence.c
++++ b/drivers/dma-buf/dma-fence.c
+@@ -167,7 +167,7 @@ struct dma_fence *dma_fence_allocate_private_stub(void)
+ 		       0, 0);
+ 
+ 	set_bit(DMA_FENCE_FLAG_ENABLE_SIGNAL_BIT,
+-		&dma_fence_stub.flags);
++		&fence->flags);
+ 
+ 	dma_fence_signal(fence);
+ 
+-- 
+2.39.1
+
 
 
