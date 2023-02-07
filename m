@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4EDF3212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:04:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6CFC433EF;
-	Tue,  7 Feb 2023 13:04:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BF58D3212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:04:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C678C433EF;
+	Tue,  7 Feb 2023 13:04:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775055;
-	bh=Bps+J6UDRFPS9Wp2ZEWdaBrTanEGPs8en/1gsdXGfy0=;
+	s=korg; t=1675775058;
+	bh=W8LzfYwBHWkCgzq/1VsMk6yZEviYsKZDynuA1IxVJ/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=drVUvlRwpuKIaZJOYBluVBMQFPzEX+gHqngPD9Rhzj0S1ol74K25FXr7q8x78CG8W
-	 hmyDI0yPEEilIy9YnhhmSIdoNO3lp5iQpcDyNSnNjowWv83p12ruuGaYRgSLa/yP7B
-	 g3BJwcaMxfozE9Lt36V2FjMilBAiRqG9JHAlk4xs=
+	b=nTCvSGsECrclOSuHiHbpic7CCxJA+ZCwftIzZkiT0sQajmskGNSUy2zKHDeZM6rb9
+	 WCCZ9xb0/HcL3FJaDWKh4E6EL1d/nype9O+1EU8N4vUqbh474ZUIb/e8/RWgS0ZT7T
+	 rzfuJmhuEQfla99yCSD9b/SlnDweimzMT/chRPuE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Egorenkov <egorenar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>
-Subject: [PATCH 6.1 123/208] watchdog: diag288_wdt: fix __diag288() inline assembly
-Date: Tue,  7 Feb 2023 13:56:17 +0100
-Message-Id: <20230207125639.982504607@linuxfoundation.org>
+	Victor Shyba <victor1984@riseup.net>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 124/208] ALSA: hda/realtek: Add Acer Predator PH315-54
+Date: Tue,  7 Feb 2023 13:56:18 +0100
+Message-Id: <20230207125640.016799479@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -34,33 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Egorenkov <egorenar@linux.ibm.com>
+From: Victor Shyba <victor1984@riseup.net>
 
-commit 32e40f9506b9e32917eb73154f93037b443124d1 upstream.
+commit 6a28a25d358079b7d0d144689f850aecacf63cba upstream.
 
-The DIAG 288 statement consumes an EBCDIC string the address of which is
-passed in a register. Use a "memory" clobber to tell the compiler that
-memory is accessed within the inline assembly.
+Same issue as SP513-54N: Headset microphone does not work without
+ALC255_FIXUP_ACER_MIC_NO_PRESENCE fixup.
 
-Signed-off-by: Alexander Egorenkov <egorenar@linux.ibm.com>
-Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=211853
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Victor Shyba <victor1984@riseup.net>
+Link: https://lore.kernel.org/r/20230123222129.17589-1-victor1984@riseup.net
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/watchdog/diag288_wdt.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/watchdog/diag288_wdt.c
-+++ b/drivers/watchdog/diag288_wdt.c
-@@ -86,7 +86,7 @@ static int __diag288(unsigned int func,
- 		"1:\n"
- 		EX_TABLE(0b, 1b)
- 		: "+d" (err) : "d"(__func), "d"(__timeout),
--		  "d"(__action), "d"(__len) : "1", "cc");
-+		  "d"(__action), "d"(__len) : "1", "cc", "memory");
- 	return err;
- }
- 
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9202,6 +9202,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1025, 0x142b, "Acer Swift SF314-42", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x1430, "Acer TravelMate B311R-31", ALC256_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1025, 0x1466, "Acer Aspire A515-56", ALC255_FIXUP_ACER_HEADPHONE_AND_MIC),
++	SND_PCI_QUIRK(0x1025, 0x1534, "Acer Predator PH315-54", ALC255_FIXUP_ACER_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1028, 0x0470, "Dell M101z", ALC269_FIXUP_DELL_M101Z),
+ 	SND_PCI_QUIRK(0x1028, 0x053c, "Dell Latitude E5430", ALC292_FIXUP_DELL_E7X),
+ 	SND_PCI_QUIRK(0x1028, 0x054b, "Dell XPS one 2710", ALC275_FIXUP_DELL_XPS),
 
 
