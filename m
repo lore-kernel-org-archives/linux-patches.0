@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5A28B2C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:05:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C12A8C433EF;
-	Tue,  7 Feb 2023 13:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C9B2C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:05:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B51C4339C;
+	Tue,  7 Feb 2023 13:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775143;
-	bh=5O+JOmJZjb/YmOW13oU3k8/xz3IHasOpy4T9+r5zmAA=;
+	s=korg; t=1675775146;
+	bh=9vkRVo911xuMNy+PWzxTzzANl7aShG2b2WHpcmtQFwM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PbCRYktBVgXlh8+BZJPRGwfPEk81Whcraawrml2m8zU/Q4dRujYaM6GDry4AmCPVB
-	 rs1gKd5M70xH1bPr5qd3cwN0jRlR86jcVEJz++zZ0NCYBwZS7YrBEhzii3WThIKqqX
-	 YEoNkZzJSECQmXH9Xor2OIaOTBwZ35V2td2wvE7k=
+	b=MJWLUprfX4WpLNr7BLgfRlFYaFJoLdvR2r6adHW1tlrxq99MjMDY51RO2YgmDNrc/
+	 RqvgZ/HdLmmx9h87AbLUTNWsxPIb5f56SYSPEftTb89uTcQmfKkTyaxcfATNcHQVin
+	 O+dXZFBCi1oyFpgk48hq8sq+O08S2UJx4hJzUkBU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 112/208] usb: dwc3: qcom: enable vbus override when in OTG dr-mode
-Date: Tue,  7 Feb 2023 13:56:06 +0100
-Message-Id: <20230207125639.448342836@linuxfoundation.org>
+	Carlos Song <carlos.song@nxp.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 144/208] iio: imu: fxos8700: fix incorrect ODR mode readback
+Date: Tue,  7 Feb 2023 13:56:38 +0100
+Message-Id: <20230207125640.952018934@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,39 +35,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Carlos Song <carlos.song@nxp.com>
 
-[ Upstream commit eb320f76e31dc835b9f57f04af1a2353b13bb7d8 ]
+commit 78ad6864e9e012cdba7c353d044d21ffcfd5f34b upstream.
 
-With vbus override enabled when in OTG dr_mode, Host<->Peripheral
-switch now works on SM8550, otherwise the DWC3 seems to be stuck
-in Host mode only.
+The absence of a correct offset leads an incorrect ODR mode
+readback after use a hexadecimal number to mark the value from
+FXOS8700_CTRL_REG1.
 
-Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20230123-topic-sm8550-upstream-dwc3-qcom-otg-v2-1-2d400e598463@linaro.org
+Get ODR mode by field mask and FIELD_GET clearly and conveniently.
+And attach other additional fix for keeping the original code logic
+and a good readability.
+
+Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Link: https://lore.kernel.org/r/20230118074227.1665098-2-carlos.song@nxp.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/imu/fxos8700_core.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index b0a0351d2d8b..959fc925ca7c 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -901,7 +901,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 	qcom->mode = usb_get_dr_mode(&qcom->dwc3->dev);
+--- a/drivers/iio/imu/fxos8700_core.c
++++ b/drivers/iio/imu/fxos8700_core.c
+@@ -10,6 +10,7 @@
+ #include <linux/regmap.h>
+ #include <linux/acpi.h>
+ #include <linux/bitops.h>
++#include <linux/bitfield.h>
  
- 	/* enable vbus override for device mode */
--	if (qcom->mode == USB_DR_MODE_PERIPHERAL)
-+	if (qcom->mode != USB_DR_MODE_HOST)
- 		dwc3_qcom_vbus_override_enable(qcom, true);
+ #include <linux/iio/iio.h>
+ #include <linux/iio/sysfs.h>
+@@ -144,9 +145,9 @@
+ #define FXOS8700_NVM_DATA_BNK0      0xa7
  
- 	/* register extcon to override sw_vbus on Vbus change later */
--- 
-2.39.0
-
+ /* Bit definitions for FXOS8700_CTRL_REG1 */
+-#define FXOS8700_CTRL_ODR_MSK       0x38
+ #define FXOS8700_CTRL_ODR_MAX       0x00
+ #define FXOS8700_CTRL_ODR_MIN       GENMASK(4, 3)
++#define FXOS8700_CTRL_ODR_MSK       GENMASK(5, 3)
+ 
+ /* Bit definitions for FXOS8700_M_CTRL_REG1 */
+ #define FXOS8700_HMS_MASK           GENMASK(1, 0)
+@@ -508,10 +509,9 @@ static int fxos8700_set_odr(struct fxos8
+ 	if (i >= odr_num)
+ 		return -EINVAL;
+ 
+-	return regmap_update_bits(data->regmap,
+-				  FXOS8700_CTRL_REG1,
+-				  FXOS8700_CTRL_ODR_MSK + FXOS8700_ACTIVE,
+-				  fxos8700_odr[i].bits << 3 | active_mode);
++	val &= ~FXOS8700_CTRL_ODR_MSK;
++	val |= FIELD_PREP(FXOS8700_CTRL_ODR_MSK, fxos8700_odr[i].bits) | FXOS8700_ACTIVE;
++	return regmap_write(data->regmap, FXOS8700_CTRL_REG1, val);
+ }
+ 
+ static int fxos8700_get_odr(struct fxos8700_data *data, enum fxos8700_sensor t,
+@@ -524,7 +524,7 @@ static int fxos8700_get_odr(struct fxos8
+ 	if (ret)
+ 		return ret;
+ 
+-	val &= FXOS8700_CTRL_ODR_MSK;
++	val = FIELD_GET(FXOS8700_CTRL_ODR_MSK, val);
+ 
+ 	for (i = 0; i < odr_num; i++)
+ 		if (val == fxos8700_odr[i].bits)
 
 
