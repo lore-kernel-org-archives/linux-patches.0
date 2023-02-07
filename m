@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372E12C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:08:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA3BC433EF;
-	Tue,  7 Feb 2023 13:08:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 480D32C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:08:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A30DFC433A0;
+	Tue,  7 Feb 2023 13:08:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775295;
-	bh=bmO0opIXXod8eYZ3Rq2Qyh9+FxwaSkw57Q2LFjvdJlQ=;
+	s=korg; t=1675775298;
+	bh=XBg4KXqhiXdT0HgyOEdy7u4fjvrriCevx0gwhZ0Awyg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VKUg91eO5jwE6tiLVHQ16BL9RiZei69LuR/Zp2PdlQ0pa5RMCfXEOZwOe5rO7NEDl
-	 JFLDOrxjsO4t6MJuGkHggXzp4bbHoMpc2wQ+DaWhCT0x4UvyWEdyj8TIPvGC5wGagX
-	 FFSu3faVe8deJwvSCv+QajJ4ZhIVXwgsnpIKcyp0=
+	b=w+W0iBk+AiYbq+l8XAh/CZwk2aBvQuDJz/fbSeMWzj97ty08z6Dx+7gKjFB+bGdGS
+	 Yr4jR21OCp1qv/5XQcwPnAWqsQGOQ/TbgNPlX4XF6EuyefcBqkNIyZILpn7SLrpGtM
+	 dSDaN7buAPSWT1iFSqrFMga9glxdWLHoz//dl17w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+9d14351a171d0d1c7955@syzkaller.appspotmail.com,
-	Kees Cook <keescook@chromium.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Miklos Szeredi <mszeredi@redhat.com>
-Subject: [PATCH 6.1 201/208] ovl: Use "buf" flexible array for memcpy() destination
-Date: Tue,  7 Feb 2023 13:57:35 +0100
-Message-Id: <20230207125643.602050455@linuxfoundation.org>
+	syzbot <syzbot+40642be9b7e0bb28e0df@syzkaller.appspotmail.com>,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	Chao Yu <chao@kernel.org>,
+	Jaegeuk Kim <jaegeuk@kernel.org>
+Subject: [PATCH 6.1 202/208] f2fs: initialize locks earlier in f2fs_fill_super()
+Date: Tue,  7 Feb 2023 13:57:36 +0100
+Message-Id: <20230207125643.651721875@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -36,49 +36,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
 
-commit cf8aa9bf97cadf85745506c6a3e244b22c268d63 upstream.
+commit 92b4cf5b48955a4bdd15fe4e2067db8ebd87f04c upstream.
 
-The "buf" flexible array needs to be the memcpy() destination to avoid
-false positive run-time warning from the recent FORTIFY_SOURCE
-hardening:
+syzbot is reporting lockdep warning at f2fs_handle_error() [1], for
+spin_lock(&sbi->error_lock) is called before spin_lock_init() is called.
+For safe locking in error handling, move initialization of locks (and
+obvious structures) in f2fs_fill_super() to immediately after memory
+allocation.
 
-  memcpy: detected field-spanning write (size 93) of single field "&fh->fb"
-  at fs/overlayfs/export.c:799 (size 21)
-
-Reported-by: syzbot+9d14351a171d0d1c7955@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/all/000000000000763a6c05e95a5985@google.com/
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
+Link: https://syzkaller.appspot.com/bug?extid=40642be9b7e0bb28e0df [1]
+Reported-by: syzbot <syzbot+40642be9b7e0bb28e0df@syzkaller.appspotmail.com>
+Signed-off-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Tested-by: syzbot <syzbot+40642be9b7e0bb28e0df@syzkaller.appspotmail.com>
+Reviewed-by: Chao Yu <chao@kernel.org>
+Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/overlayfs/export.c    |    2 +-
- fs/overlayfs/overlayfs.h |    2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ fs/f2fs/super.c |   38 ++++++++++++++++++++------------------
+ 1 file changed, 20 insertions(+), 18 deletions(-)
 
---- a/fs/overlayfs/export.c
-+++ b/fs/overlayfs/export.c
-@@ -796,7 +796,7 @@ static struct ovl_fh *ovl_fid_to_fh(stru
- 		return ERR_PTR(-ENOMEM);
+--- a/fs/f2fs/super.c
++++ b/fs/f2fs/super.c
+@@ -4095,6 +4095,24 @@ try_onemore:
  
- 	/* Copy unaligned inner fh into aligned buffer */
--	memcpy(&fh->fb, fid, buflen - OVL_FH_WIRE_OFFSET);
-+	memcpy(fh->buf, fid, buflen - OVL_FH_WIRE_OFFSET);
- 	return fh;
- }
+ 	sbi->sb = sb;
  
---- a/fs/overlayfs/overlayfs.h
-+++ b/fs/overlayfs/overlayfs.h
-@@ -108,7 +108,7 @@ struct ovl_fh {
- 	u8 padding[3];	/* make sure fb.fid is 32bit aligned */
- 	union {
- 		struct ovl_fb fb;
--		u8 buf[0];
-+		DECLARE_FLEX_ARRAY(u8, buf);
- 	};
- } __packed;
++	/* initialize locks within allocated memory */
++	init_f2fs_rwsem(&sbi->gc_lock);
++	mutex_init(&sbi->writepages);
++	init_f2fs_rwsem(&sbi->cp_global_sem);
++	init_f2fs_rwsem(&sbi->node_write);
++	init_f2fs_rwsem(&sbi->node_change);
++	spin_lock_init(&sbi->stat_lock);
++	init_f2fs_rwsem(&sbi->cp_rwsem);
++	init_f2fs_rwsem(&sbi->quota_sem);
++	init_waitqueue_head(&sbi->cp_wait);
++	spin_lock_init(&sbi->error_lock);
++
++	for (i = 0; i < NR_INODE_TYPE; i++) {
++		INIT_LIST_HEAD(&sbi->inode_list[i]);
++		spin_lock_init(&sbi->inode_lock[i]);
++	}
++	mutex_init(&sbi->flush_lock);
++
+ 	/* Load the checksum driver */
+ 	sbi->s_chksum_driver = crypto_alloc_shash("crc32", 0, 0);
+ 	if (IS_ERR(sbi->s_chksum_driver)) {
+@@ -4118,6 +4136,8 @@ try_onemore:
+ 	sb->s_fs_info = sbi;
+ 	sbi->raw_super = raw_super;
  
++	memcpy(sbi->errors, raw_super->s_errors, MAX_F2FS_ERRORS);
++
+ 	/* precompute checksum seed for metadata */
+ 	if (f2fs_sb_has_inode_chksum(sbi))
+ 		sbi->s_chksum_seed = f2fs_chksum(sbi, ~0, raw_super->uuid,
+@@ -4174,26 +4194,14 @@ try_onemore:
+ 
+ 	/* init f2fs-specific super block info */
+ 	sbi->valid_super_block = valid_super_block;
+-	init_f2fs_rwsem(&sbi->gc_lock);
+-	mutex_init(&sbi->writepages);
+-	init_f2fs_rwsem(&sbi->cp_global_sem);
+-	init_f2fs_rwsem(&sbi->node_write);
+-	init_f2fs_rwsem(&sbi->node_change);
+ 
+ 	/* disallow all the data/node/meta page writes */
+ 	set_sbi_flag(sbi, SBI_POR_DOING);
+-	spin_lock_init(&sbi->stat_lock);
+ 
+ 	err = f2fs_init_write_merge_io(sbi);
+ 	if (err)
+ 		goto free_bio_info;
+ 
+-	spin_lock_init(&sbi->error_lock);
+-	memcpy(sbi->errors, raw_super->s_errors, MAX_F2FS_ERRORS);
+-
+-	init_f2fs_rwsem(&sbi->cp_rwsem);
+-	init_f2fs_rwsem(&sbi->quota_sem);
+-	init_waitqueue_head(&sbi->cp_wait);
+ 	init_sb_info(sbi);
+ 
+ 	err = f2fs_init_iostat(sbi);
+@@ -4271,12 +4279,6 @@ try_onemore:
+ 	limit_reserve_root(sbi);
+ 	adjust_unusable_cap_perc(sbi);
+ 
+-	for (i = 0; i < NR_INODE_TYPE; i++) {
+-		INIT_LIST_HEAD(&sbi->inode_list[i]);
+-		spin_lock_init(&sbi->inode_lock[i]);
+-	}
+-	mutex_init(&sbi->flush_lock);
+-
+ 	f2fs_init_extent_cache_info(sbi);
+ 
+ 	f2fs_init_ino_entry_info(sbi);
 
 
