@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A32532C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:09:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08EABC433EF;
-	Tue,  7 Feb 2023 13:09:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A49342C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:09:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC12C433D2;
+	Tue,  7 Feb 2023 13:09:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775352;
-	bh=NLnR/V9Y30Xfga6MRPtnaLANKfVCxmwjwUPK0q84qLc=;
+	s=korg; t=1675775355;
+	bh=LYk+lzo9k9CsxxG4MfU21xUw4VyYZ/0U9S348TXIvzE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O9ZOMuO3OWgaRF0SQTCMwBnVuwMo/JniQ1PFpusYebY0kBE2IfG1Fdct+l2fo9W8o
-	 zggKjfTcDXLO2Dh85iMfXjKAgUOynCX68kj1zDqhtb6jQN0jqajye/hXbyx7by3V2j
-	 IxdeWcNeb83Rqxcke/sVgL10NAJT6lpaVVaelfVE=
+	b=t7VwqroLAVuFAg56cDZ9dZY2NASE0+gZF+H99GDC4bhQGa2UucyojgjOpUaRwd+vp
+	 oBYhqij57APB+SXULMik61SYyqydC/4agzsP/iJChlv+TW4kPt2Wagdix4nEexKyrT
+	 iZUNeSQ7RA/dNr9thA1I+8QJ7u25M+FBAIurU1l0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
 	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 004/120] ASoC: Intel: bytcht_es8316: move comment to the right place
-Date: Tue,  7 Feb 2023 13:56:15 +0100
-Message-Id: <20230207125618.923225198@linuxfoundation.org>
+Subject: [PATCH 5.15 005/120] ASoC: Intel: bytcht_es8316: Drop reference count of ACPI device after use
+Date: Tue,  7 Feb 2023 13:56:16 +0100
+Message-Id: <20230207125618.968684559@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -37,44 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-[ Upstream commit fe0596a006081bc963874d4f3d38cd0b1b5e46d4 ]
+[ Upstream commit 6b1c0bd6fdefbf3c3d75680c2708f5423ef72e46 ]
 
-Additional code was added and the comment on the speaker GPIO needs to
-be moved before we actually try to get the GPIO.
+Theoretically the device might gone if its reference count drops to 0.
+This might be the case when we try to find the first physical node of
+the ACPI device. We need to keep reference to it until we get a result
+of the above mentioned call. Refactor the code to drop the reference
+count at the correct place.
 
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20220308192610.392950-21-pierre-louis.bossart@linux.intel.com
+While at it, move to acpi_dev_put() as symmetrical call to the
+acpi_dev_get_first_match_dev().
+
+Fixes: 3c22a73fb873 ("ASoC: Intel: bytcht_es8316: fix HID handling")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20230112112852.67714-2-andriy.shevchenko@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
-Stable-dep-of: 6b1c0bd6fdef ("ASoC: Intel: bytcht_es8316: Drop reference count of ACPI device after use")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcht_es8316.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/soc/intel/boards/bytcht_es8316.c | 20 ++++++++++++--------
+ 1 file changed, 12 insertions(+), 8 deletions(-)
 
 diff --git a/sound/soc/intel/boards/bytcht_es8316.c b/sound/soc/intel/boards/bytcht_es8316.c
-index 78b7e24b0c79..95058398b1be 100644
+index 95058398b1be..b5c97d35864a 100644
 --- a/sound/soc/intel/boards/bytcht_es8316.c
 +++ b/sound/soc/intel/boards/bytcht_es8316.c
-@@ -542,7 +542,6 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
- 	if (IS_ERR(priv->mclk))
- 		return dev_err_probe(dev, PTR_ERR(priv->mclk), "clk_get pmc_plt_clk_3 failed\n");
- 
--	/* get speaker enable GPIO */
- 	codec_dev = acpi_get_first_physical_node(adev);
- 	if (!codec_dev)
- 		return -EPROBE_DEFER;
-@@ -568,6 +567,7 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
- 		}
+@@ -497,21 +497,28 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
+ 	if (adev) {
+ 		snprintf(codec_name, sizeof(codec_name),
+ 			 "i2c-%s", acpi_dev_name(adev));
+-		put_device(&adev->dev);
+ 		byt_cht_es8316_dais[dai_index].codecs->name = codec_name;
+ 	} else {
+ 		dev_err(dev, "Error cannot find '%s' dev\n", mach->id);
+ 		return -ENXIO;
  	}
  
-+	/* get speaker enable GPIO */
- 	devm_acpi_dev_add_driver_gpios(codec_dev, byt_cht_es8316_gpios);
- 	priv->speaker_en_gpio =
- 		gpiod_get_optional(codec_dev, "speaker-enable",
++	codec_dev = acpi_get_first_physical_node(adev);
++	acpi_dev_put(adev);
++	if (!codec_dev)
++		return -EPROBE_DEFER;
++	priv->codec_dev = get_device(codec_dev);
++
+ 	/* override platform name, if required */
+ 	byt_cht_es8316_card.dev = dev;
+ 	platform_name = mach->mach_params.platform;
+ 
+ 	ret = snd_soc_fixup_dai_links_platform_name(&byt_cht_es8316_card,
+ 						    platform_name);
+-	if (ret)
++	if (ret) {
++		put_device(codec_dev);
+ 		return ret;
++	}
+ 
+ 	/* Check for BYTCR or other platform and setup quirks */
+ 	dmi_id = dmi_first_match(byt_cht_es8316_quirk_table);
+@@ -539,13 +546,10 @@ static int snd_byt_cht_es8316_mc_probe(struct platform_device *pdev)
+ 
+ 	/* get the clock */
+ 	priv->mclk = devm_clk_get(dev, "pmc_plt_clk_3");
+-	if (IS_ERR(priv->mclk))
++	if (IS_ERR(priv->mclk)) {
++		put_device(codec_dev);
+ 		return dev_err_probe(dev, PTR_ERR(priv->mclk), "clk_get pmc_plt_clk_3 failed\n");
+-
+-	codec_dev = acpi_get_first_physical_node(adev);
+-	if (!codec_dev)
+-		return -EPROBE_DEFER;
+-	priv->codec_dev = get_device(codec_dev);
++	}
+ 
+ 	if (quirk & BYT_CHT_ES8316_JD_INVERTED)
+ 		props[cnt++] = PROPERTY_ENTRY_BOOL("everest,jack-detect-inverted");
 -- 
 2.39.0
 
