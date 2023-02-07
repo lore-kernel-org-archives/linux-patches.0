@@ -1,27 +1,64 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 46B2420E8
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 09:40:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93EEEC433EF;
-	Tue,  7 Feb 2023 09:40:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675762839;
-	bh=SQUviBUizO1hZYWn0mGXkIEt73F60h6UPfc9e8NjHlw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=mLgqWMxPaRcK93ejaMDk0ZS9rUUfQShy2rQJjThlOh4LbXOcd3rRd7Z1MC754y5ME
-	 +T1GW1WEN/EpWgUMM+J/hUE2NNMXZfSzqqplRA3Q6IgJPGczYLVMjvfIwPV8yUA5H9
-	 LRXwbtWrWFBk3IuSmlcIt22esE/fKwKc+aymxy5Q=
-Date: Tue, 7 Feb 2023 10:40:33 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: Shaoying Xu <shaoyi@amazon.com>
-Cc: dsahern@kernel.org, idosch@nvidia.com, kuba@kernel.org,
-	patches@lists.linux.dev, sashal@kernel.org, stable@vger.kernel.org
-Subject: Re: [PATCH 5.4 60/67] ipv4: Fix incorrect route flushing when source
- address is deleted
-Message-ID: <Y+IckeUtbE/UfOz/@kroah.com>
-References: <20221212130920.482075438@linuxfoundation.org>
- <20230205053100.15903-1-shaoyi@amazon.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF0C20E8
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 09:43:42 +0000 (UTC)
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
+	by mailout.nyi.internal (Postfix) with ESMTP id 3D42C5C0102;
+	Tue,  7 Feb 2023 04:43:41 -0500 (EST)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Tue, 07 Feb 2023 04:43:41 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
+	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
+	:message-id:mime-version:references:reply-to:sender:subject
+	:subject:to:to; s=fm3; t=1675763021; x=1675849421; bh=3M3iH4rrEW
+	APo7oiKzxVdGL8I3tHzD4LYYQmpY5RCJE=; b=n9k6wmvjaEyA71gqFlnqRrRjgl
+	ssl09QPQhOIY7lTKitZ7r62SLvs3W12cltzQsqJnW08h2vaTevCHY6ymFzYOayeX
+	Ptutp1uEUEgPn2nzB7arX/CeMBHjMczhPRAcaewKZdZ9lFMUoSHIGUD7d5aPCGQE
+	uP3811imsqHbDjsiN+SPVc7rO2KMHINgmgd6rZKfmW54bS9np3CsojfVkTYxPqAo
+	pbQds4H29RQpp4oSORxoNKS+IPNOJceTkcSBIdDCvpn/o+CNT/r+p/eu0ZPVevKy
+	ywFbWeRkSrGym6WW04nWDERak/zuJaKQnzFLRM9Nl2I3Gz/zTBNAEBofVIZQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
+	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
+	:mime-version:references:reply-to:sender:subject:subject:to:to
+	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
+	fm3; t=1675763021; x=1675849421; bh=3M3iH4rrEWAPo7oiKzxVdGL8I3tH
+	zD4LYYQmpY5RCJE=; b=IoGxfGGEEDlYwmbd6n33zQxbRoaEFmT+D+RQShwSIs9m
+	WhPM50gSyKD3GSHEOcUa2R/8ObyD7Wyq3we/IdqCEsj+4WhLkJhEUCuu51zehlCS
+	ivCaqRnghoiREeAdd2Y6gZxMHg5q4Eud3YkD1bHHn6iYzc6sP0d1X3qHPxnWd+Kj
+	hwybMy90g/a3UrhhGnfChWMTbRM1hkgd5Vfb8dPcDvv7AUncg8IHBeGTBRJ6SxuF
+	Sopmn7W0CWnRo3YwBU0p1DqDOoS0+JaYvNMCRJn985caMUYJNvEQa4225Cv5Hz7T
+	li15CSD1xKSGOebJ/vcMW6r1u8UJbSf7EZZ+uTZW3w==
+X-ME-Sender: <xms:TB3iY0ZCEpZghxL91PX-ogpjuA_OCbWds2hKsO2U9DebRWmUTPHeXg>
+    <xme:TB3iY_Y3z2GF44x4NAVU_Xox5jq3BEcS3N17wQl0-ZfTzbB-GdKGXJH5VzYiDweGD
+    Jf3-OrYfaaPTA>
+X-ME-Received: <xmr:TB3iY-8vqrNOOQs04GgNq0ZCSkMWRlqW64ErMHaLoRfr2Wxl08Ix2VsOHNI_PictSwrGBHvAwb6_nbpdPVVUVfJ0nPpLF1r43mL5WA>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudegkedgtdehucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepifhrvghg
+    ucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheqnecuggftrfgrthhtvghrnhepgeehue
+    ehgfdtledutdelkeefgeejteegieekheefudeiffdvudeffeelvedttddvnecuffhomhgr
+    ihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
+    epmhgrihhlfhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
+X-ME-Proxy: <xmx:TB3iY-qOvh1h-zLELyuVMbjZz-GNZeFOzitDDj-WnrKSyO9s8B7QqQ>
+    <xmx:TB3iY_rZhMasNK1CDlFVCqQRi-Xy47WrQANzNyX2EB3keejoZOFBzA>
+    <xmx:TB3iY8QHxiHZCq_MV-6CfdpKd3Knz6qRCrg1V5xhRmRFA599c6CWtw>
+    <xmx:TR3iY9jqurut_kghDLpx31Kr5nO1iMUpDLHhGxezrQgpCadaruc06g>
+Feedback-ID: i787e41f1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 7 Feb 2023 04:43:40 -0500 (EST)
+Date: Tue, 7 Feb 2023 10:43:38 +0100
+From: Greg KH <greg@kroah.com>
+To: Stephen Boyd <swboyd@chromium.org>
+Cc: stable@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>,
+	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
+	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH 6.1.y] phy: qcom-qmp-combo: fix runtime suspend
+Message-ID: <Y+IdSjVsaXOH9oM+@kroah.com>
+References: <20230203222820.2958983-1-swboyd@chromium.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -30,100 +67,31 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230205053100.15903-1-shaoyi@amazon.com>
+In-Reply-To: <20230203222820.2958983-1-swboyd@chromium.org>
 
-On Sun, Feb 05, 2023 at 05:30:58AM +0000, Shaoying Xu wrote:
-> On Mon, 12 Dec 2022 14:17:35 +0100 Greg Kroah-Hartman <gregkh@linuxfoundation.org> wrote:
+On Fri, Feb 03, 2023 at 02:28:20PM -0800, Stephen Boyd wrote:
+> From: Johan Hovold <johan+linaro@kernel.org>
 > 
-> > From: Ido Schimmel <idosch@nvidia.com>
-> > 
-> > [ Upstream commit f96a3d74554df537b6db5c99c27c80e7afadc8d1 ]
-> > 
-> > Cited commit added the table ID to the FIB info structure, but did not
-> > prevent structures with different table IDs from being consolidated.
-> > This can lead to routes being flushed from a VRF when an address is
-> > deleted from a different VRF.
-> > 
-> > Fix by taking the table ID into account when looking for a matching FIB
-> > info. This is already done for FIB info structures backed by a nexthop
-> > object in fib_find_info_nh().
-> > 
-> > Add test cases that fail before the fix:
-> > 
-> >  # ./fib_tests.sh -t ipv4_del_addr
-> > 
-> >  IPv4 delete address route tests
-> >      Regular FIB info
-> >      TEST: Route removed from VRF when source address deleted            [ OK ]
-> >      TEST: Route in default VRF not removed                              [ OK ]
-> >      TEST: Route removed in default VRF when source address deleted      [ OK ]
-> >      TEST: Route in VRF is not removed by address delete                 [ OK ]
-> >      Identical FIB info with different table ID
-> >      TEST: Route removed from VRF when source address deleted            [FAIL]
-> >      TEST: Route in default VRF not removed                              [ OK ]
-> >  RTNETLINK answers: File exists
-> >      TEST: Route removed in default VRF when source address deleted      [ OK ]
-> >      TEST: Route in VRF is not removed by address delete                 [FAIL]
-> > 
-> >  Tests passed:   6
-> >  Tests failed:   2
-> > 
-> > And pass after:
-> > 
-> >  # ./fib_tests.sh -t ipv4_del_addr
-> > 
-> >  IPv4 delete address route tests
-> >      Regular FIB info
-> >      TEST: Route removed from VRF when source address deleted            [ OK ]
-> >      TEST: Route in default VRF not removed                              [ OK ]
-> >      TEST: Route removed in default VRF when source address deleted      [ OK ]
-> >      TEST: Route in VRF is not removed by address delete                 [ OK ]
-> >      Identical FIB info with different table ID
-> >      TEST: Route removed from VRF when source address deleted            [ OK ]
-> >      TEST: Route in default VRF not removed                              [ OK ]
-> >      TEST: Route removed in default VRF when source address deleted      [ OK ]
-> >      TEST: Route in VRF is not removed by address delete                 [ OK ]
-> > 
-> >  Tests passed:   8
-> >  Tests failed:   0
-> > 
-> > Fixes: 5a56a0b3a45d ("net: Don't delete routes in different VRFs")
-> > Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-> > Reviewed-by: David Ahern <dsahern@kernel.org>
-> > Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-> > Signed-off-by: Sasha Levin <sashal@kernel.org>
-> > ---
-> >  net/ipv4/fib_semantics.c                 |    1 +
-> >  tools/testing/selftests/net/fib_tests.sh | 1727 ----------------------
-> >  2 files changed, 1 insertion(+), 1727 deletions(-)
-> >  delete mode 100755 tools/testing/selftests/net/fib_tests.sh
+> commit c7b98de745cffdceefc077ad5cf9cda032ef8959 upstream.
 > 
-> Hi Greg,
+> Drop the confused runtime-suspend type check which effectively broke
+> runtime PM if the DP child node happens to be parsed before the USB
+> child node during probe (e.g. due to order of child nodes in the
+> devicetree).
 > 
-> Sorry for last unclear message without context. I found this commit deleted
-> the whole fib_tests.sh that causes new failure in kselftests run. Looking at
-> the upstream patch [1] and given the context that ipv4_del_addr test is not
-> available to kernel 5.4, I added the revert patch and new backport of this
-> commit to resolve the potential mistake.
+> Instead use the new driver data USB PHY pointer to access the USB
+> configuration and resources.
 > 
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git/commit/?id=f96a3d74554df537b6db5c99c27c80e7afadc8d1
-> 
-> Thanks,
-> Shaoying
-> 
-> Ido Schimmel (1):
->   ipv4: Fix incorrect route flushing when source address is deleted
-> 
-> Shaoying Xu (1):
->   Revert "ipv4: Fix incorrect route flushing when source address is
->     deleted"
-> 
->  tools/testing/selftests/net/fib_tests.sh | 1727 ++++++++++++++++++++++
->  1 file changed, 1727 insertions(+)
->  create mode 100755 tools/testing/selftests/net/fib_tests.sh
+> Fixes: 52e013d0bffa ("phy: qcom-qmp: Add support for DP in USB3+DP combo phy")
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+> Link: https://lore.kernel.org/r/20221114081346.5116-6-johan+linaro@kernel.org
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 12 ++----------
+>  1 file changed, 2 insertions(+), 10 deletions(-)
 
-See my comments on patch 1/2 here, can you fix that up and resend these?
-
-thanks,
+Now queued up, thanks.
 
 greg k-h
