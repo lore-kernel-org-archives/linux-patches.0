@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E51F52C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:08:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48968C433EF;
-	Tue,  7 Feb 2023 13:08:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3EA32C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:08:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A44FC433D2;
+	Tue,  7 Feb 2023 13:08:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775303;
-	bh=Kk9Kw8/Tbi6SmjZ3zkhvg2Pc9yw8tuZ7fpKKh0ABlB0=;
+	s=korg; t=1675775306;
+	bh=SfqGsNZnSaoRf/CpzCthsIqLBl4D4AqPediq7uT4wRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bmGRH7Htk81EnGYSWoFmmxUt92OSa8e0MSyoDwzHhD8c4qeMhL6YSFlG6/Q2htRw7
-	 UnAHnzyKIWj690TaWIiR84lZ/pRYdx45kzeuGG3gRhW6U+siDHFTgZAZrbbbrdWkg3
-	 K28REYqYnHx4keGhPOb8V1sStS4JQj42cZMMYa18=
+	b=wb4LWgK0KOZDYdoCE8DwOHWKUD0FFe23Is0eSqGJLbuKzj8MQ2U3VxuESCgNi4EYq
+	 m7i7e0LvThMArX7oZDScak6BGyeEFJ7QbqbquldIHjvOYvMHkBBTTNY2XIWjPqvMZq
+	 D/k7li4CrKzxwXvIDH6zJ4+/x+Fpvzan2hrY6AUA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+f8f3dfa4abc489e768a1@syzkaller.appspotmail.com,
-	Chao Yu <chao@kernel.org>,
-	Jaegeuk Kim <jaegeuk@kernel.org>
-Subject: [PATCH 6.1 204/208] f2fs: fix to do sanity check on i_extra_isize in is_alive()
-Date: Tue,  7 Feb 2023 13:57:38 +0100
-Message-Id: <20230207125643.754128404@linuxfoundation.org>
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Marek Vasut <marex@denx.de>,
+	Valentin Caron <valentin.caron@foss.st.com>
+Subject: [PATCH 6.1 178/208] serial: stm32: Merge hard IRQ and threaded IRQ handling into single IRQ handler
+Date: Tue,  7 Feb 2023 13:57:12 +0100
+Message-Id: <20230207125642.511701214@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,95 +35,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chao Yu <chao@kernel.org>
+From: Marek Vasut <marex@denx.de>
 
-commit d3b7b4afd6b2c344eabf9cc26b8bfa903c164c7c upstream.
+commit 3f6c02fa712bd453871877fe1d1969625617471e upstream.
 
-syzbot found a f2fs bug:
+Requesting an interrupt with IRQF_ONESHOT will run the primary handler
+in the hard-IRQ context even in the force-threaded mode. The
+force-threaded mode is used by PREEMPT_RT in order to avoid acquiring
+sleeping locks (spinlock_t) in hard-IRQ context. This combination
+makes it impossible and leads to "sleeping while atomic" warnings.
 
-BUG: KASAN: slab-out-of-bounds in data_blkaddr fs/f2fs/f2fs.h:2891 [inline]
-BUG: KASAN: slab-out-of-bounds in is_alive fs/f2fs/gc.c:1117 [inline]
-BUG: KASAN: slab-out-of-bounds in gc_data_segment fs/f2fs/gc.c:1520 [inline]
-BUG: KASAN: slab-out-of-bounds in do_garbage_collect+0x386a/0x3df0 fs/f2fs/gc.c:1734
-Read of size 4 at addr ffff888076557568 by task kworker/u4:3/52
+Use one interrupt handler for both handlers (primary and secondary)
+and drop the IRQF_ONESHOT flag which is not needed.
 
-CPU: 1 PID: 52 Comm: kworker/u4:3 Not tainted 6.1.0-rc4-syzkaller-00362-gfef7fd48922d #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
-Workqueue: writeback wb_workfn (flush-7:0)
-Call Trace:
-<TASK>
-__dump_stack lib/dump_stack.c:88 [inline]
-dump_stack_lvl+0xcd/0x134 lib/dump_stack.c:106
-print_address_description mm/kasan/report.c:284 [inline]
-print_report+0x15e/0x45d mm/kasan/report.c:395
-kasan_report+0xbb/0x1f0 mm/kasan/report.c:495
-data_blkaddr fs/f2fs/f2fs.h:2891 [inline]
-is_alive fs/f2fs/gc.c:1117 [inline]
-gc_data_segment fs/f2fs/gc.c:1520 [inline]
-do_garbage_collect+0x386a/0x3df0 fs/f2fs/gc.c:1734
-f2fs_gc+0x88c/0x20a0 fs/f2fs/gc.c:1831
-f2fs_balance_fs+0x544/0x6b0 fs/f2fs/segment.c:410
-f2fs_write_inode+0x57e/0xe20 fs/f2fs/inode.c:753
-write_inode fs/fs-writeback.c:1440 [inline]
-__writeback_single_inode+0xcfc/0x1440 fs/fs-writeback.c:1652
-writeback_sb_inodes+0x54d/0xf90 fs/fs-writeback.c:1870
-wb_writeback+0x2c5/0xd70 fs/fs-writeback.c:2044
-wb_do_writeback fs/fs-writeback.c:2187 [inline]
-wb_workfn+0x2dc/0x12f0 fs/fs-writeback.c:2227
-process_one_work+0x9bf/0x1710 kernel/workqueue.c:2289
-worker_thread+0x665/0x1080 kernel/workqueue.c:2436
-kthread+0x2e4/0x3a0 kernel/kthread.c:376
-ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
-
-The root cause is that we forgot to do sanity check on .i_extra_isize
-in below path, result in accessing invalid address later, fix it.
-- gc_data_segment
- - is_alive
-  - data_blkaddr
-   - offset_in_addr
-
-Reported-by: syzbot+f8f3dfa4abc489e768a1@syzkaller.appspotmail.com
-Link: https://lore.kernel.org/linux-f2fs-devel/0000000000003cb3c405ed5c17f9@google.com/T/#u
-Signed-off-by: Chao Yu <chao@kernel.org>
-Signed-off-by: Jaegeuk Kim <jaegeuk@kernel.org>
+Fixes: e359b4411c283 ("serial: stm32: fix threaded interrupt handling")
+Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Tested-by: Valentin Caron <valentin.caron@foss.st.com> # V3
+Signed-off-by: Marek Vasut <marex@denx.de>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230120160332.57930-1-marex@denx.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/f2fs/gc.c |   18 ++++++++++++------
- 1 file changed, 12 insertions(+), 6 deletions(-)
+ drivers/tty/serial/stm32-usart.c |   33 +++++----------------------------
+ 1 file changed, 5 insertions(+), 28 deletions(-)
 
---- a/fs/f2fs/gc.c
-+++ b/fs/f2fs/gc.c
-@@ -1078,7 +1078,7 @@ static bool is_alive(struct f2fs_sb_info
- {
- 	struct page *node_page;
- 	nid_t nid;
--	unsigned int ofs_in_node, max_addrs;
-+	unsigned int ofs_in_node, max_addrs, base;
- 	block_t source_blkaddr;
- 
- 	nid = le32_to_cpu(sum->nid);
-@@ -1104,11 +1104,17 @@ static bool is_alive(struct f2fs_sb_info
- 		return false;
+--- a/drivers/tty/serial/stm32-usart.c
++++ b/drivers/tty/serial/stm32-usart.c
+@@ -798,25 +798,11 @@ static irqreturn_t stm32_usart_interrupt
+ 		spin_unlock(&port->lock);
  	}
  
--	max_addrs = IS_INODE(node_page) ? DEF_ADDRS_PER_INODE :
--						DEF_ADDRS_PER_BLOCK;
--	if (ofs_in_node >= max_addrs) {
--		f2fs_err(sbi, "Inconsistent ofs_in_node:%u in summary, ino:%u, nid:%u, max:%u",
--			ofs_in_node, dni->ino, dni->nid, max_addrs);
-+	if (IS_INODE(node_page)) {
-+		base = offset_in_addr(F2FS_INODE(node_page));
-+		max_addrs = DEF_ADDRS_PER_INODE;
-+	} else {
-+		base = 0;
-+		max_addrs = DEF_ADDRS_PER_BLOCK;
-+	}
-+
-+	if (base + ofs_in_node >= max_addrs) {
-+		f2fs_err(sbi, "Inconsistent blkaddr offset: base:%u, ofs_in_node:%u, max:%u, ino:%u, nid:%u",
-+			base, ofs_in_node, max_addrs, dni->ino, dni->nid);
- 		f2fs_put_page(node_page, 1);
- 		return false;
+-	if (stm32_usart_rx_dma_enabled(port))
+-		return IRQ_WAKE_THREAD;
+-	else
+-		return IRQ_HANDLED;
+-}
+-
+-static irqreturn_t stm32_usart_threaded_interrupt(int irq, void *ptr)
+-{
+-	struct uart_port *port = ptr;
+-	struct tty_port *tport = &port->state->port;
+-	struct stm32_port *stm32_port = to_stm32_port(port);
+-	unsigned int size;
+-	unsigned long flags;
+-
+ 	/* Receiver timeout irq for DMA RX */
+-	if (!stm32_port->throttled) {
+-		spin_lock_irqsave(&port->lock, flags);
++	if (stm32_usart_rx_dma_enabled(port) && !stm32_port->throttled) {
++		spin_lock(&port->lock);
+ 		size = stm32_usart_receive_chars(port, false);
+-		uart_unlock_and_check_sysrq_irqrestore(port, flags);
++		uart_unlock_and_check_sysrq(port);
+ 		if (size)
+ 			tty_flip_buffer_push(tport);
  	}
+@@ -1016,10 +1002,8 @@ static int stm32_usart_startup(struct ua
+ 	u32 val;
+ 	int ret;
+ 
+-	ret = request_threaded_irq(port->irq, stm32_usart_interrupt,
+-				   stm32_usart_threaded_interrupt,
+-				   IRQF_ONESHOT | IRQF_NO_SUSPEND,
+-				   name, port);
++	ret = request_irq(port->irq, stm32_usart_interrupt,
++			  IRQF_NO_SUSPEND, name, port);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1602,13 +1586,6 @@ static int stm32_usart_of_dma_rx_probe(s
+ 	struct dma_slave_config config;
+ 	int ret;
+ 
+-	/*
+-	 * Using DMA and threaded handler for the console could lead to
+-	 * deadlocks.
+-	 */
+-	if (uart_console(port))
+-		return -ENODEV;
+-
+ 	stm32port->rx_buf = dma_alloc_coherent(dev, RX_BUF_L,
+ 					       &stm32port->rx_dma_buf,
+ 					       GFP_KERNEL);
 
 
