@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71F6E3212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:03:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD138C433EF;
-	Tue,  7 Feb 2023 13:03:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6BDCB3212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:03:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DCF0BC433EF;
+	Tue,  7 Feb 2023 13:03:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675774998;
-	bh=MsX6TvKUrOgdywcPMMp13ZeuJnNul08OEcEkHSl1LGk=;
+	s=korg; t=1675775001;
+	bh=WN5XNCcaUp6nqDzams28+vaOqySgO2F7e2eKuBhrBE8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Nf/6S0kPMngMqrlHrX5ZI1U2mVP5xe/zcObP6fNqTC6wRsqzzx04HXsHLA3MP+JFr
-	 N7/GBadw0SmafeENo7CAK/e4OMSFmJFsz1EkvkmCYzc9yj4RHsQwzPzS2OrjyfY30E
-	 Oek+Ttls7mdawBdxAwPX9NLNdaQ/u4QOWGZvXj2s=
+	b=ISNDaEQcJSHkgqyYZQnw75ydEKEBBasS7HqqxwRnIienBUwBqvxaBrKMxcbwr/0ET
+	 4a4pDERraMEMlnZqAYdqxgxZiH5uBoLejADcwJG86S2PbVj4TqPhlMqusvyCAUx2Xe
+	 XfbloW4l3g3QR3SOUSymg22ODzlEG6E5OagQs4Ok=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	Nick Desaulniers <ndesaulniers@google.com>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
+	Koba Ko <koba.ko@canonical.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 103/208] x86/build: Move -mindirect-branch-cs-prefix out of GCC-only block
-Date: Tue,  7 Feb 2023 13:55:57 +0100
-Message-Id: <20230207125639.021360699@linuxfoundation.org>
+Subject: [PATCH 6.1 104/208] platform/x86: dell-wmi: Add a keymap for KEY_MUTE in type 0x0010 table
+Date: Tue,  7 Feb 2023 13:55:58 +0100
+Message-Id: <20230207125639.062586660@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -37,45 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Koba Ko <koba.ko@canonical.com>
 
-[ Upstream commit 27b5de622ea3fe0ad5a31a0ebd9f7a0a276932d1 ]
+[ Upstream commit 83bcf3e52e9cfc727df33f1055ef0618c91719d0 ]
 
-LLVM 16 will have support for this flag so move it out of the GCC-only
-block to allow LLVM builds to take advantage of it.
+Some platforms send the speaker-mute key from EC. dell-wmi can't
+recognize it.
 
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Tested-by: Nick Desaulniers <ndesaulniers@google.com>
-Reviewed-by: Nick Desaulniers <ndesaulniers@google.com>
-Acked-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Link: https://github.com/ClangBuiltLinux/linux/issues/1665
-Link: https://github.com/llvm/llvm-project/commit/6f867f9102838ebe314c1f3661fdf95700386e5a
-Link: https://lore.kernel.org/r/20230120165826.2469302-1-nathan@kernel.org
+Add a new keymap for KEY_MUTE in type 0x0010 table.
+
+Signed-off-by: Koba Ko <koba.ko@canonical.com>
+Link: https://lore.kernel.org/r/20230117123436.200440-1-koba.ko@canonical.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/dell/dell-wmi-base.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/x86/Makefile b/arch/x86/Makefile
-index 415a5d138de4..3419ffa2a350 100644
---- a/arch/x86/Makefile
-+++ b/arch/x86/Makefile
-@@ -14,13 +14,13 @@ endif
+diff --git a/drivers/platform/x86/dell/dell-wmi-base.c b/drivers/platform/x86/dell/dell-wmi-base.c
+index 0a259a27459f..502783a7adb1 100644
+--- a/drivers/platform/x86/dell/dell-wmi-base.c
++++ b/drivers/platform/x86/dell/dell-wmi-base.c
+@@ -261,6 +261,9 @@ static const struct key_entry dell_wmi_keymap_type_0010[] = {
+ 	{ KE_KEY,    0x57, { KEY_BRIGHTNESSDOWN } },
+ 	{ KE_KEY,    0x58, { KEY_BRIGHTNESSUP } },
  
- ifdef CONFIG_CC_IS_GCC
- RETPOLINE_CFLAGS	:= $(call cc-option,-mindirect-branch=thunk-extern -mindirect-branch-register)
--RETPOLINE_CFLAGS	+= $(call cc-option,-mindirect-branch-cs-prefix)
- RETPOLINE_VDSO_CFLAGS	:= $(call cc-option,-mindirect-branch=thunk-inline -mindirect-branch-register)
- endif
- ifdef CONFIG_CC_IS_CLANG
- RETPOLINE_CFLAGS	:= -mretpoline-external-thunk
- RETPOLINE_VDSO_CFLAGS	:= -mretpoline
- endif
-+RETPOLINE_CFLAGS	+= $(call cc-option,-mindirect-branch-cs-prefix)
++	/*Speaker Mute*/
++	{ KE_KEY, 0x109, { KEY_MUTE} },
++
+ 	/* Mic mute */
+ 	{ KE_KEY, 0x150, { KEY_MICMUTE } },
  
- ifdef CONFIG_RETHUNK
- RETHUNK_CFLAGS		:= -mfunction-return=thunk-extern
 -- 
 2.39.0
 
