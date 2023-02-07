@@ -1,134 +1,125 @@
-Received: from NAM10-DM6-obe.outbound.protection.outlook.com (mail-dm6nam10on2077.outbound.protection.outlook.com [40.107.93.77])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-vs1-f51.google.com (mail-vs1-f51.google.com [209.85.217.51])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 36DB54439
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 15:08:24 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=RFFma4vJiTm54RISCyDzJzUVEfhI3uPMMVyHidv9TZXff7SEpg6/xWVoqudoTd5CVWAdoPEugNzxz3Qumc3DO/YNUxhyd9tNmNj/V8tbrnb6oag7WMUgLEEyHBo5UxtKw8BfgmYEJoS6kQt1Gmr83sub24301vGKV+i+sl3KapOJL77hP6FZ+w4wySyV42xehQQw0fpdWPgxVV1/nwjIbTaHAJJC9WROm5qWCfsy40izLDvzyJnAjcHYPuMZ/FNDBDGTBg/+SKVyl0X+fv4nlGGeTdvF1e1Qh9TpgP2F7st5OlCzb9ilpGTsGJ91vwCebdygTe9P+0+SmgKGwtiyEg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=3B1VyWzjcf5HhZyZt4z5ccNoAqFvujFXI8YD1F8LpE0=;
- b=dBR+jFgEbdgioimEMwFGzV6yuX6h5bBDLKrMTsDf9CwjA8Pd3je3et/ULHu6Hx9kuXsG+vpqszu8C1z/n0KCedxCxpZHSy0fcnKFFuNQzW4aO/l1aPj10b8tzW8liOqUlsGZzyGfdPGCIjNf6NwRyhsomT1qWPOjCHr182KEB5IaOt+XvK3kqwGbNl5uL9PTItNnJky1x6rSJtLN/951XUJ3nf0a130xVcfYVcxSlloG4tl8kJ708hukjG/w8SG5qQAlCO2Dw7qEQc1gsALYut6dmGmVxJR0krPy2q3KTMHn52RBJU21RsTFlqHt0YdwB2yOkbW8wDhCIDJo4Dmmrg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.117.161) smtp.rcpttodomain=linuxfoundation.org
- smtp.mailfrom=nvidia.com; dmarc=pass (p=reject sp=reject pct=100) action=none
- header.from=nvidia.com; dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=3B1VyWzjcf5HhZyZt4z5ccNoAqFvujFXI8YD1F8LpE0=;
- b=E3u4Xo5rLE/Y9R8rRuOFimab+msj8cQoNVd2HNMy4+wUS+pbgsXuTeRYvlls47H15hJFpk2mfg6KQ3G1Hk/gPggHkEbzugcFlRjx5h1M/lHTAgIe6A+GOyzOeoNnLlULvD0xEp3QNs0CfevKT2LfTj+NacECJGCDBvUiXzNpdCu7x5D2O2hfL1UgeiVV+UmyEDcl3rCXXW8tS8XBtJ4Kql0i3AtruDJcs8nTB5WIowtYSRBKwp/N3WLQRGgkAjmV75xg9PqJXTVhCqrytNxDp+qc/AYwCaLymmwtmNEuPuKBL276SUTOT44hbcxRyAhNzlW7d3bQ7nGVy7r3/lZBmQ==
-Received: from BN9PR03CA0637.namprd03.prod.outlook.com (2603:10b6:408:13b::12)
- by DS7PR12MB8081.namprd12.prod.outlook.com (2603:10b6:8:e6::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6064.34; Tue, 7 Feb
- 2023 15:08:20 +0000
-Received: from BL02EPF000108E9.namprd05.prod.outlook.com
- (2603:10b6:408:13b:cafe::14) by BN9PR03CA0637.outlook.office365.com
- (2603:10b6:408:13b::12) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6064.35 via Frontend
- Transport; Tue, 7 Feb 2023 15:08:20 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.161)
- smtp.mailfrom=nvidia.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.117.161 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.117.161; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.117.161) by
- BL02EPF000108E9.mail.protection.outlook.com (10.167.241.202) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.6086.16 via Frontend Transport; Tue, 7 Feb 2023 15:08:20 +0000
-Received: from rnnvmail203.nvidia.com (10.129.68.9) by mail.nvidia.com
- (10.129.200.67) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 7 Feb 2023
- 07:08:08 -0800
-Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail203.nvidia.com
- (10.129.68.9) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36; Tue, 7 Feb 2023
- 07:08:08 -0800
-Received: from jonathanh-vm-01.nvidia.com (10.127.8.9) by mail.nvidia.com
- (10.129.68.7) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.986.36 via Frontend
- Transport; Tue, 7 Feb 2023 07:08:07 -0800
-From: Jon Hunter <jonathanh@nvidia.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	<patches@lists.linux.dev>, <linux-kernel@vger.kernel.org>,
-	<torvalds@linux-foundation.org>, <akpm@linux-foundation.org>,
-	<linux@roeck-us.net>, <shuah@kernel.org>, <patches@kernelci.org>,
-	<lkft-triage@lists.linaro.org>, <pavel@denx.de>, <jonathanh@nvidia.com>,
-	<f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>, <srw@sladewatkins.net>,
-	<rwarsow@gmx.de>, <linux-tegra@vger.kernel.org>
-Subject: Re: [PATCH 6.1 000/208] 6.1.11-rc1 review
-In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
-References: <20230207125634.292109991@linuxfoundation.org>
-X-NVConfidentiality: public
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA54D566F
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 17:05:31 +0000 (UTC)
+Received: by mail-vs1-f51.google.com with SMTP id k4so16958833vsc.4
+        for <patches@lists.linux.dev>; Tue, 07 Feb 2023 09:05:31 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=Jy30Q5CoBNY/fYhc8eo/JNrKPpHvqjYzbsThzSZQ05U=;
+        b=Y31FS5ez5mYuEOMGf2wYCnFBEFEciLaVqR+RLWmFlbxCWqOcmkY14QtUZ7dkFhmC+O
+         PDMSq5yzcXI0T51xRc/2s/UUFykhNMSyTQzICJHHIJRU2izA1t4KSHk8yktXRxJNxVrT
+         ZiT8DXZJ5smC06drjvdCOyyl7mjXb42jQEBBKggsQI+/+KFu841IuGjrTVshxJ6Av/0+
+         QqaZKhEPbLglpIHV8DjD3RJiOR8xMrEwyxhEQXoO2NuEEafSRYCBlBMshBy1jA1qpsOp
+         MO2V3JVupMw82IwwE7ysHQm4YaNsvaLHusal1GRsGQQM4P5uH6J3KdukdTJeqkJVjalb
+         Xqiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=Jy30Q5CoBNY/fYhc8eo/JNrKPpHvqjYzbsThzSZQ05U=;
+        b=l4UVjdv9e217d0CMpIHstw9dNcl2LsLN0LuhTdew9j8ZUvSZmw8njxJ9su5OvLKlx3
+         TZgLNGhSjCDaMGPtEgI8T8lcSj6TfEJW5N74WT3QUzZcN9xfW+92z/6f26WV50vTDSDc
+         Kwg3m8seF+ZWu47CUPMz59RMpWEFmjQb0DEQ/Y/rrcobP2DqxI52bPX+w+M6vy/W0p6R
+         WQDfu7HoTOYNlgYl3OJpxbq7Tww6XZf1jfC3S/yvbFWGBV/3bcUklBbKjfI/8in4KHgO
+         OUxigCU/BuqL2PaAWg5i3XkYbClHLJ4EtjH7eWZKnh1upjoFyGqd5lQRumvd68AhbN8r
+         8UiA==
+X-Gm-Message-State: AO0yUKWywuGbx3Mj3haNkBCF8hsCewn8m0N4MIXIHIDT0PpFdYxEigN/
+	pt44naM7RZPmK4bRodp5gCwqAroTMqPLgxNBKafDjw==
+X-Google-Smtp-Source: AK7set9uk3OElOHb0yhkRGf2onss+eUAKY+U2mMVPjOU31IcxZDvidX54UErqpO3uYDm9FSXb5UH8kR/BztMfS422qM=
+X-Received: by 2002:a05:6102:3c4:b0:3ed:7a8f:d181 with SMTP id
+ n4-20020a05610203c400b003ed7a8fd181mr794571vsq.3.1675789530500; Tue, 07 Feb
+ 2023 09:05:30 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Message-ID: <39b1a1f5-9c2e-4cc4-824d-a787ecc8315a@rnnvmail202.nvidia.com>
-Date: Tue, 7 Feb 2023 07:08:07 -0800
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL02EPF000108E9:EE_|DS7PR12MB8081:EE_
-X-MS-Office365-Filtering-Correlation-Id: 2e09b0da-f470-49df-5920-08db091d2636
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	E9QNWbqLyuT/yrOeO71QFOxwAHMjrL8OTIr+j6gXLmQ4M5hW8qs203qwIbR9+bCKcg66W47tOxIMhUsxbciAiBfcwxdQclWbBs+Z7cPad57sBfwKXDrfPXTWLR0l9Iwq5sMnIbx+eL8IsgtPaMRW5O4zgu+2TESupDeVqIk5HnZhmsTvS9a0Bk0KbvmvsoOzb1eB1MK9zgNMNormArIQ7cWKF2XXEotNAWRk0o0fEi+vAT65JKOfqxjrXjCPQifnViHVlG+jTqgNu8HNHRrCqidqN0bfS1XPLpwFZlmItJYYpIUT6vFQ4ZZgNgxIstUn3lAP+IipEyjjandr6i3Y7c9mHEtvHJwYBk1RAb1r2lPRSTZYsIRD0Hh++j1PnKCC7AHofLBvXRlDphqflCxv1FVsmKRZF4J9x8HHLVXiweyUFudJYvW3QhYB/q7pGcHeNHAaRap5ojJHoKgbD11hBTp4old1hs2es2Yg3ey2z10FV5h/aEKLLdJIPBMNvWtcabsPKSlTqSWP1dtTggu0bPWlRmZ9wY+n2FX05DUSpF3LpmXzRTHo+epatjCqY/nR210QeJ3P0/q3cBpY4R8aNSUzTQeej6MS38cPQVjM5+pyhNvUwzoCROa8qIz2f2rj5jO00xddQt/4XMGnxnWyyqypBHODSfJt1tP9AnhRYVMYiReUEsE7CoWVeIu0CNFx/LzEwYh6Av+gjncawGS91kTDvxyy9Y/LQe6EIUnxg9h+kPu9ixmTTWXjcUXR798hSPZDq7Gr4VZD1/Y0XsrITcGqBO5PpM2bzRcS08BiqpA=
-X-Forefront-Antispam-Report:
-	CIP:216.228.117.161;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:dc6edge2.nvidia.com;CAT:NONE;SFS:(13230025)(4636009)(396003)(346002)(39860400002)(376002)(136003)(451199018)(46966006)(40470700004)(36840700001)(36860700001)(31696002)(40460700003)(86362001)(356005)(82740400003)(7636003)(7416002)(41300700001)(8936002)(4326008)(8676002)(316002)(5660300002)(70586007)(54906003)(478600001)(40480700001)(426003)(47076005)(336012)(966005)(82310400005)(186003)(26005)(2906002)(6916009)(70206006)(31686004);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 07 Feb 2023 15:08:20.0823
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 2e09b0da-f470-49df-5920-08db091d2636
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.117.161];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource:
-	BL02EPF000108E9.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR12MB8081
+References: <20230207125634.292109991@linuxfoundation.org>
+In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Tue, 7 Feb 2023 22:35:19 +0530
+Message-ID: <CA+G9fYtgJX507GJ3fG7-G+vGhG4BnU=kzu3fOH_a-_aMU0S_0w@mail.gmail.com>
+Subject: Re: [PATCH 6.1 000/208] 6.1.11-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, Peter Xu <peterx@redhat.com>, 
+	Mike Kravetz <mike.kravetz@oracle.com>, Jann Horn <jannh@google.com>, 
+	Anders Roxell <anders.roxell@linaro.org>, 
+	"open list:KERNEL SELFTEST FRAMEWORK" <linux-kselftest@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Tue, 07 Feb 2023 13:54:14 +0100, Greg Kroah-Hartman wrote:
+On Tue, 7 Feb 2023 at 18:29, Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
 > This is the start of the stable review cycle for the 6.1.11 release.
 > There are 208 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
+>
 > Responses should be made by Thu, 09 Feb 2023 12:55:54 +0000.
 > Anything received after that time might be too late.
-> 
+>
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.11-rc1.gz
+>         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-=
+6.1.11-rc1.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
+-rc.git linux-6.1.y
 > and the diffstat can be found below.
-> 
+>
 > thanks,
-> 
+>
 > greg k-h
 
-All tests passing for Tegra ...
+Results from Linaro=E2=80=99s test farm.
+Following build regressions noticed while building
+selftests/vm/hugetlb-madvise.c
+with kselftest-merge configs.
 
-Test results for stable-v6.1:
-    11 builds:	11 pass, 0 fail
-    28 boots:	28 pass, 0 fail
-    130 tests:	130 pass, 0 fail
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-Linux version:	6.1.11-rc1-g78e134c7117c
-Boards tested:	tegra124-jetson-tk1, tegra186-p2771-0000,
-                tegra194-p2972-0000, tegra194-p3509-0000+p3668-0000,
-                tegra20-ventana, tegra210-p2371-2180,
-                tegra210-p3450-0000, tegra30-cardhu-a04
+Build errors:
+----------
+hugetlb-madvise.c:242:13: warning: implicit declaration of function
+'fallocate'; did you mean 'alloca'? [-Wimplicit-function-declaration]
+  242 |         if (fallocate(fd, 0, 0, NR_HUGE_PAGES * huge_page_size)) {
+      |             ^~~~~~~~~
+      |             alloca
+hugetlb-madvise.c:289:27: error: 'FALLOC_FL_PUNCH_HOLE' undeclared
+(first use in this function)
+  289 |         if (fallocate(fd, FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZ=
+E,
+      |                           ^~~~~~~~~~~~~~~~~~~~
+hugetlb-madvise.c:289:27: note: each undeclared identifier is reported
+only once for each function it appears in
+hugetlb-madvise.c:289:50: error: 'FALLOC_FL_KEEP_SIZE' undeclared
+(first use in this function)
+  289 |         if (fallocate(fd, FALLOC_FL_PUNCH_HOLE | FALLOC_FL_KEEP_SIZ=
+E,
+      |                                                  ^~~~~~~~~~~~~~~~~~=
+~
+make[3]: *** [../lib.mk:145:
+/home/tuxbuild/.cache/tuxmake/builds/1/build/kselftest/vm/hugetlb-madvise]
+Error 1
 
-Tested-by: Jon Hunter <jonathanh@nvidia.com>
+Build log:
+https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc/-/jobs/372819=
+8425#L1676
+https://storage.tuxsuite.com/public/linaro/lkft/builds/2LPeQeCIu0YEfltwqAFC=
+vDaj29A/
 
-Jon
+--
+Linaro LKFT
+https://lkft.linaro.org
