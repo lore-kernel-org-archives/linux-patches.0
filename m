@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0F493212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:13:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E259C433D2;
-	Tue,  7 Feb 2023 13:13:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B77673212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:13:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E690C4339E;
+	Tue,  7 Feb 2023 13:13:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775587;
-	bh=pm9XZgkdvp3mzqs89wg0NvNQEd7ddgjucM5+/O0kS0U=;
+	s=korg; t=1675775590;
+	bh=goxfcl1FFRAEnODy5PYLrPZbgVVInMCfajJ9h9X4jTA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z0nc4y+wvW4JzNyyYYPhEXooaVY6kCLRdsl9IwUANF/KMOmG0zAjASMTknXBJp/yT
-	 F1cPe/hoFsyVAEt47Pc7Z9774MAWw2xqB/CcpcUCEtKxKPDX8OxQaZeU8NWyN3unPX
-	 cxvqVyBM2z8pS3E+BNMUqbzJy+ysrffZfYp4I2V4=
+	b=d6aDDR+T4zYRRZLpMTBvrfR9WbfkCyYaeV28NDXhhVl2Fh4cSm0N4iHdOdt/d9YiG
+	 Ta6nJaN/zZkhcyZGOZuJ3jcr6Uc2WeuyGoR/YOih/7fZrvAw4J4RQC2l5DBtusapHb
+	 nlIdRSXYbqKmOuzqSR6WaePxQO1tDj0DFyXOGA1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Pratham Pratap <quic_ppratap@quicinc.com>,
-	Prashanth K <quic_prashk@quicinc.com>
-Subject: [PATCH 5.15 091/120] usb: gadget: f_uac2: Fix incorrect increment of bNumEndpoints
-Date: Tue,  7 Feb 2023 13:57:42 +0100
-Message-Id: <20230207125622.635694020@linuxfoundation.org>
+	Dmitry Perchanov <dmitry.perchanov@intel.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.15 074/120] iio: hid: fix the retval in gyro_3d_capture_sample
+Date: Tue,  7 Feb 2023 13:57:25 +0100
+Message-Id: <20230207125621.911839410@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -35,38 +35,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pratham Pratap <quic_ppratap@quicinc.com>
+From: Dmitry Perchanov <dmitry.perchanov@intel.com>
 
-commit 2fa89458af9993fab8054daf827f38881e2ad473 upstream.
+commit eb50cd5bfdac61627a5026566cf3b90ced7b141c upstream.
 
-Currently connect/disconnect of USB cable calls afunc_bind and
-eventually increments the bNumEndpoints. Performing multiple
-plugin/plugout will increment bNumEndpoints incorrectly, and on
-the next plug-in it leads to invalid configuration of descriptor
-and hence enumeration fails.
+Return value should be zero for success. This was forgotten for timestamp
+feature. Verified on RealSense cameras.
 
-Fix this by resetting the value of bNumEndpoints to 1 on every
-afunc_bind call.
-
-Fixes: 40c73b30546e ("usb: gadget: f_uac2: add adaptive sync support for capture")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Pratham Pratap <quic_ppratap@quicinc.com>
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
-Link: https://lore.kernel.org/r/1674631645-28888-1-git-send-email-quic_prashk@quicinc.com
+Fixes: 4648cbd8fb92 ("iio: hid-sensor-gyro-3d: Add timestamp channel")
+Signed-off-by: Dmitry Perchanov <dmitry.perchanov@intel.com>
+Link: https://lore.kernel.org/r/7c1809dc74eb2f58a20595f4d02e76934f8e9219.camel@intel.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/f_uac2.c |    1 +
+ drivers/iio/gyro/hid-sensor-gyro-3d.c |    1 +
  1 file changed, 1 insertion(+)
 
---- a/drivers/usb/gadget/function/f_uac2.c
-+++ b/drivers/usb/gadget/function/f_uac2.c
-@@ -1069,6 +1069,7 @@ afunc_bind(struct usb_configuration *cfg
- 		}
- 		std_as_out_if0_desc.bInterfaceNumber = ret;
- 		std_as_out_if1_desc.bInterfaceNumber = ret;
-+		std_as_out_if1_desc.bNumEndpoints = 1;
- 		uac2->as_out_intf = ret;
- 		uac2->as_out_alt = 0;
- 
+--- a/drivers/iio/gyro/hid-sensor-gyro-3d.c
++++ b/drivers/iio/gyro/hid-sensor-gyro-3d.c
+@@ -231,6 +231,7 @@ static int gyro_3d_capture_sample(struct
+ 		gyro_state->timestamp =
+ 			hid_sensor_convert_timestamp(&gyro_state->common_attributes,
+ 						     *(s64 *)raw_data);
++		ret = 0;
+ 	break;
+ 	default:
+ 		break;
 
 
