@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8542C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:14:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED61C433D2;
-	Tue,  7 Feb 2023 13:14:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4763A2C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:14:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AB5CEC433D2;
+	Tue,  7 Feb 2023 13:14:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775656;
-	bh=4uLpr1Xo/N2qDPWVW25uI9SN/oBpojsiNev8qRuCSNo=;
+	s=korg; t=1675775659;
+	bh=xC04bUYkYkPLu9Ciq5SLazJsdAW35MmdtMKKCPwcEB4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=woX7HSSGijdfycJlxLUEK5LLglZgWYpinOXtIfRv9wyp49H77wsxiiYOLUcwkEWNF
-	 lYRrKDInHuWW7p8jXHC06y7MDjJoHozU6+X6RRPf3sbdXBLuzGsHCnirEdo4j9jPG/
-	 hLaGQf2HP45ICaAzqt7Z5dds/eyCrSxDCwoZrvCY=
+	b=JgNPbp8C/KVntuqaWD8puim+olBgWAtBzqAni6j+VNspgpVnwXlGCEdJaoF7aJPdc
+	 5reCQDQGCBt0z+NcGhEULWr+RHwWrAtaH42XyDAYCTEd8IoXIVEbQnkJRDJPSvKDW1
+	 J6wC+DOcmqgIBvfm/Nv7p52fMoQB5SSl5dIwigog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Stephen Boyd <swboyd@chromium.org>
-Subject: [PATCH 5.15 106/120] phy: qcom-qmp-usb: fix memleak on probe deferral
-Date: Tue,  7 Feb 2023 13:57:57 +0100
-Message-Id: <20230207125623.270559535@linuxfoundation.org>
+	syzkaller <syzkaller@googlegroups.com>,
+	Dongliang Mu <dzm91@hust.edu.cn>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 5.15 115/120] fbdev: smscufx: fix error handling code in ufx_usb_probe
+Date: Tue,  7 Feb 2023 13:58:06 +0100
+Message-Id: <20230207125623.678388764@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -35,81 +35,160 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Dongliang Mu <dzm91@hust.edu.cn>
 
-commit a5d6b1ac56cbd6b5850a3a54e35f1cb71e8e8cdd upstream.
+commit b76449ee75e21acfe9fa4c653d8598f191ed7d68 upstream.
 
-Switch to using the device-managed of_iomap helper to avoid leaking
-memory on probe deferral and driver unbind.
+The current error handling code in ufx_usb_probe have many unmatching
+issues, e.g., missing ufx_free_usb_list, destroy_modedb label should
+only include framebuffer_release, fb_dealloc_cmap only matches
+fb_alloc_cmap.
 
-Note that this helper checks for already reserved regions and may fail
-if there are multiple devices claiming the same memory.
+My local syzkaller reports a memory leak bug:
 
-Two bindings currently rely on overlapping mappings for the PCS region
-so fallback to non-exclusive mappings for those for now.
+memory leak in ufx_usb_probe
 
-Fixes: e78f3d15e115 ("phy: qcom-qmp: new qmp phy driver for qcom-chipsets")
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20220916102340.11520-7-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-[swboyd@chromium.org: Backport to pre-split driver]
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+BUG: memory leak
+unreferenced object 0xffff88802f879580 (size 128):
+  comm "kworker/0:7", pid 17416, jiffies 4295067474 (age 46.710s)
+  hex dump (first 32 bytes):
+    80 21 7c 2e 80 88 ff ff 18 d0 d0 0c 80 88 ff ff  .!|.............
+    00 d0 d0 0c 80 88 ff ff e0 ff ff ff 0f 00 00 00  ................
+  backtrace:
+    [<ffffffff814c99a0>] kmalloc_trace+0x20/0x90 mm/slab_common.c:1045
+    [<ffffffff824d219c>] kmalloc include/linux/slab.h:553 [inline]
+    [<ffffffff824d219c>] kzalloc include/linux/slab.h:689 [inline]
+    [<ffffffff824d219c>] ufx_alloc_urb_list drivers/video/fbdev/smscufx.c:1873 [inline]
+    [<ffffffff824d219c>] ufx_usb_probe+0x11c/0x15a0 drivers/video/fbdev/smscufx.c:1655
+    [<ffffffff82d17927>] usb_probe_interface+0x177/0x370 drivers/usb/core/driver.c:396
+    [<ffffffff82712f0d>] call_driver_probe drivers/base/dd.c:560 [inline]
+    [<ffffffff82712f0d>] really_probe+0x12d/0x390 drivers/base/dd.c:639
+    [<ffffffff8271322f>] __driver_probe_device+0xbf/0x140 drivers/base/dd.c:778
+    [<ffffffff827132da>] driver_probe_device+0x2a/0x120 drivers/base/dd.c:808
+    [<ffffffff82713c27>] __device_attach_driver+0xf7/0x150 drivers/base/dd.c:936
+    [<ffffffff82710137>] bus_for_each_drv+0xb7/0x100 drivers/base/bus.c:427
+    [<ffffffff827136b5>] __device_attach+0x105/0x2d0 drivers/base/dd.c:1008
+    [<ffffffff82711d36>] bus_probe_device+0xc6/0xe0 drivers/base/bus.c:487
+    [<ffffffff8270e242>] device_add+0x642/0xdc0 drivers/base/core.c:3517
+    [<ffffffff82d14d5f>] usb_set_configuration+0x8ef/0xb80 drivers/usb/core/message.c:2170
+    [<ffffffff82d2576c>] usb_generic_driver_probe+0x8c/0xc0 drivers/usb/core/generic.c:238
+    [<ffffffff82d16ffc>] usb_probe_device+0x5c/0x140 drivers/usb/core/driver.c:293
+    [<ffffffff82712f0d>] call_driver_probe drivers/base/dd.c:560 [inline]
+    [<ffffffff82712f0d>] really_probe+0x12d/0x390 drivers/base/dd.c:639
+    [<ffffffff8271322f>] __driver_probe_device+0xbf/0x140 drivers/base/dd.c:778
+
+Fix this bug by rewriting the error handling code in ufx_usb_probe.
+
+Reported-by: syzkaller <syzkaller@googlegroups.com>
+Tested-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: Dongliang Mu <dzm91@hust.edu.cn>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp.c |   27 ++++++++++++++++++++++++++-
- 1 file changed, 26 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/smscufx.c |   46 ++++++++++++++++++++++++++++--------------
+ 1 file changed, 31 insertions(+), 15 deletions(-)
 
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -5387,6 +5387,21 @@ static void qcom_qmp_reset_control_put(v
- 	reset_control_put(data);
+--- a/drivers/video/fbdev/smscufx.c
++++ b/drivers/video/fbdev/smscufx.c
+@@ -1621,7 +1621,7 @@ static int ufx_usb_probe(struct usb_inte
+ 	struct usb_device *usbdev;
+ 	struct ufx_data *dev;
+ 	struct fb_info *info;
+-	int retval;
++	int retval = -ENOMEM;
+ 	u32 id_rev, fpga_rev;
+ 
+ 	/* usb initialization */
+@@ -1653,15 +1653,17 @@ static int ufx_usb_probe(struct usb_inte
+ 
+ 	if (!ufx_alloc_urb_list(dev, WRITES_IN_FLIGHT, MAX_TRANSFER)) {
+ 		dev_err(dev->gdev, "ufx_alloc_urb_list failed\n");
+-		goto e_nomem;
++		goto put_ref;
+ 	}
+ 
+ 	/* We don't register a new USB class. Our client interface is fbdev */
+ 
+ 	/* allocates framebuffer driver structure, not framebuffer memory */
+ 	info = framebuffer_alloc(0, &usbdev->dev);
+-	if (!info)
+-		goto e_nomem;
++	if (!info) {
++		dev_err(dev->gdev, "framebuffer_alloc failed\n");
++		goto free_urb_list;
++	}
+ 
+ 	dev->info = info;
+ 	info->par = dev;
+@@ -1704,22 +1706,34 @@ static int ufx_usb_probe(struct usb_inte
+ 	check_warn_goto_error(retval, "unable to find common mode for display and adapter");
+ 
+ 	retval = ufx_reg_set_bits(dev, 0x4000, 0x00000001);
+-	check_warn_goto_error(retval, "error %d enabling graphics engine", retval);
++	if (retval < 0) {
++		dev_err(dev->gdev, "error %d enabling graphics engine", retval);
++		goto setup_modes;
++	}
+ 
+ 	/* ready to begin using device */
+ 	atomic_set(&dev->usb_active, 1);
+ 
+ 	dev_dbg(dev->gdev, "checking var");
+ 	retval = ufx_ops_check_var(&info->var, info);
+-	check_warn_goto_error(retval, "error %d ufx_ops_check_var", retval);
++	if (retval < 0) {
++		dev_err(dev->gdev, "error %d ufx_ops_check_var", retval);
++		goto reset_active;
++	}
+ 
+ 	dev_dbg(dev->gdev, "setting par");
+ 	retval = ufx_ops_set_par(info);
+-	check_warn_goto_error(retval, "error %d ufx_ops_set_par", retval);
++	if (retval < 0) {
++		dev_err(dev->gdev, "error %d ufx_ops_set_par", retval);
++		goto reset_active;
++	}
+ 
+ 	dev_dbg(dev->gdev, "registering framebuffer");
+ 	retval = register_framebuffer(info);
+-	check_warn_goto_error(retval, "error %d register_framebuffer", retval);
++	if (retval < 0) {
++		dev_err(dev->gdev, "error %d register_framebuffer", retval);
++		goto reset_active;
++	}
+ 
+ 	dev_info(dev->gdev, "SMSC UDX USB device /dev/fb%d attached. %dx%d resolution."
+ 		" Using %dK framebuffer memory\n", info->node,
+@@ -1727,21 +1741,23 @@ static int ufx_usb_probe(struct usb_inte
+ 
+ 	return 0;
+ 
+-error:
+-	fb_dealloc_cmap(&info->cmap);
+-destroy_modedb:
++reset_active:
++	atomic_set(&dev->usb_active, 0);
++setup_modes:
+ 	fb_destroy_modedb(info->monspecs.modedb);
+ 	vfree(info->screen_base);
+ 	fb_destroy_modelist(&info->modelist);
++error:
++	fb_dealloc_cmap(&info->cmap);
++destroy_modedb:
+ 	framebuffer_release(info);
++free_urb_list:
++	if (dev->urbs.count > 0)
++		ufx_free_urb_list(dev);
+ put_ref:
+ 	kref_put(&dev->kref, ufx_free); /* ref for framebuffer */
+ 	kref_put(&dev->kref, ufx_free); /* last ref from kref_init */
+ 	return retval;
+-
+-e_nomem:
+-	retval = -ENOMEM;
+-	goto put_ref;
  }
  
-+static void __iomem *qmp_usb_iomap(struct device *dev, struct device_node *np,
-+		int index, bool exclusive)
-+{
-+	struct resource res;
-+
-+	if (!exclusive) {
-+		if (of_address_to_resource(np, index, &res))
-+			return IOMEM_ERR_PTR(-EINVAL);
-+
-+		return devm_ioremap(dev, res.start, resource_size(&res));
-+	}
-+
-+	return devm_of_iomap(dev, np, index, NULL);
-+}
-+
- static
- int qcom_qmp_phy_create(struct device *dev, struct device_node *np, int id,
- 			void __iomem *serdes, const struct qmp_phy_cfg *cfg)
-@@ -5396,8 +5411,18 @@ int qcom_qmp_phy_create(struct device *d
- 	struct qmp_phy *qphy;
- 	const struct phy_ops *ops;
- 	char prop_name[MAX_PROP_NAME];
-+	bool exclusive = true;
- 	int ret;
- 
-+	/*
-+	 * FIXME: These bindings should be fixed to not rely on overlapping
-+	 *        mappings for PCS.
-+	 */
-+	if (of_device_is_compatible(dev->of_node, "qcom,sdx65-qmp-usb3-uni-phy"))
-+		exclusive = false;
-+	if (of_device_is_compatible(dev->of_node, "qcom,sm8350-qmp-usb3-uni-phy"))
-+		exclusive = false;
-+
- 	qphy = devm_kzalloc(dev, sizeof(*qphy), GFP_KERNEL);
- 	if (!qphy)
- 		return -ENOMEM;
-@@ -5418,7 +5443,7 @@ int qcom_qmp_phy_create(struct device *d
- 	if (IS_ERR(qphy->rx))
- 		return PTR_ERR(qphy->rx);
- 
--	qphy->pcs = devm_of_iomap(dev, np, 2, NULL);
-+	qphy->pcs = qmp_usb_iomap(dev, np, 2, exclusive);
- 	if (IS_ERR(qphy->pcs))
- 		return PTR_ERR(qphy->pcs);
- 
+ static void ufx_usb_disconnect(struct usb_interface *interface)
 
 
