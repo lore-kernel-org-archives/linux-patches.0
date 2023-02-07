@@ -1,27 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E142C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:05:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D309C433EF;
-	Tue,  7 Feb 2023 13:05:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D84642C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34B33C433EF;
+	Tue,  7 Feb 2023 13:06:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775157;
-	bh=49eVP3VvglhYDyZ+MybjCp1gHpBrluq4dXb3TC50YQg=;
+	s=korg; t=1675775160;
+	bh=PEBsTSBkPLmv8wodgH5UhR0D3En2xa1T+6j58LcBnu4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kUnqZYsLiBItl3Yg0d57KTdUdybS+AGOLe461aSoqAWEIMRkHYTj8VcRboRoLwzz4
-	 jizKV0FeKcqUOWTPz6q7mPejfvIyqJwFlIs3e5/7Isv+hvvcZ5QO/Rd8kLjGfFvJ+B
-	 0KedBIzvr5nM3RAeVzSgy5rTFwc5jPPOLEmtEp90=
+	b=0gE/oLYubnOrFUXOl9qbgkhsAeZEn5P5ekrjnkQasASNAlwZSytatO2z7alemFrWM
+	 77dQ9UoiKXqOGEbyZ1XcRRgJjMpkslYGCzjUlFTvFngV+D+3sHxQWPCL9LQZeRsxEy
+	 oZ4Ed7LWxqnKkx4t+Aie5Ap5PZDb3ONGXDH4YlTI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Zhao <yuzhao@google.com>,
-	msizanoen <msizanoen@qtmlabs.xyz>,
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Peter Xu <peterx@redhat.com>,
+	David Hildenbrand <david@redhat.com>,
+	James Houghton <jthoughton@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Naoya Horiguchi <naoya.horiguchi@linux.dev>,
+	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
+	Yang Shi <shy828301@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 156/208] mm: multi-gen LRU: fix crash during cgroup migration
-Date: Tue,  7 Feb 2023 13:56:50 +0100
-Message-Id: <20230207125641.519933289@linuxfoundation.org>
+Subject: [PATCH 6.1 157/208] mm: hugetlb: proc: check for hugetlb shared PMD in /proc/PID/smaps
+Date: Tue,  7 Feb 2023 13:56:51 +0100
+Message-Id: <20230207125641.560340976@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,61 +43,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Zhao <yuzhao@google.com>
+From: Mike Kravetz <mike.kravetz@oracle.com>
 
-commit de08eaa6156405f2e9369f06ba5afae0e4ab3b62 upstream.
+commit 3489dbb696d25602aea8c3e669a6d43b76bd5358 upstream.
 
-lru_gen_migrate_mm() assumes lru_gen_add_mm() runs prior to itself.  This
-isn't true for the following scenario:
+Patch series "Fixes for hugetlb mapcount at most 1 for shared PMDs".
 
-    CPU 1                         CPU 2
+This issue of mapcount in hugetlb pages referenced by shared PMDs was
+discussed in [1].  The following two patches address user visible behavior
+caused by this issue.
 
-  clone()
-    cgroup_can_fork()
-                                cgroup_procs_write()
-    cgroup_post_fork()
-                                  task_lock()
-                                  lru_gen_migrate_mm()
-                                  task_unlock()
-    task_lock()
-    lru_gen_add_mm()
-    task_unlock()
+[1] https://lore.kernel.org/linux-mm/Y9BF+OCdWnCSilEu@monkey/
 
-And when the above happens, kernel crashes because of linked list
-corruption (mm_struct->lru_gen.list).
 
-Link: https://lore.kernel.org/r/20230115134651.30028-1-msizanoen@qtmlabs.xyz/
-Link: https://lkml.kernel.org/r/20230116034405.2960276-1-yuzhao@google.com
-Fixes: bd74fdaea146 ("mm: multi-gen LRU: support page table walks")
-Signed-off-by: Yu Zhao <yuzhao@google.com>
-Reported-by: msizanoen <msizanoen@qtmlabs.xyz>
-Tested-by: msizanoen <msizanoen@qtmlabs.xyz>
-Cc: <stable@vger.kernel.org>	[6.1+]
+This patch (of 2):
+
+A hugetlb page will have a mapcount of 1 if mapped by multiple processes
+via a shared PMD.  This is because only the first process increases the
+map count, and subsequent processes just add the shared PMD page to their
+page table.
+
+page_mapcount is being used to decide if a hugetlb page is shared or
+private in /proc/PID/smaps.  Pages referenced via a shared PMD were
+incorrectly being counted as private.
+
+To fix, check for a shared PMD if mapcount is 1.  If a shared PMD is found
+count the hugetlb page as shared.  A new helper to check for a shared PMD
+is added.
+
+[akpm@linux-foundation.org: simplification, per David]
+[akpm@linux-foundation.org: hugetlb.h: include page_ref.h for page_count()]
+Link: https://lkml.kernel.org/r/20230126222721.222195-2-mike.kravetz@oracle.com
+Fixes: 25ee01a2fca0 ("mm: hugetlb: proc: add hugetlb-related fields to /proc/PID/smaps")
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Acked-by: Peter Xu <peterx@redhat.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Naoya Horiguchi <naoya.horiguchi@linux.dev>
+Cc: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/vmscan.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/proc/task_mmu.c      |    4 +---
+ include/linux/hugetlb.h |   13 +++++++++++++
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -3290,13 +3290,16 @@ void lru_gen_migrate_mm(struct mm_struct
- 	if (mem_cgroup_disabled())
- 		return;
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -737,9 +737,7 @@ static int smaps_hugetlb_range(pte_t *pt
+ 			page = pfn_swap_entry_to_page(swpent);
+ 	}
+ 	if (page) {
+-		int mapcount = page_mapcount(page);
+-
+-		if (mapcount >= 2)
++		if (page_mapcount(page) >= 2 || hugetlb_pmd_shared(pte))
+ 			mss->shared_hugetlb += huge_page_size(hstate_vma(vma));
+ 		else
+ 			mss->private_hugetlb += huge_page_size(hstate_vma(vma));
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -7,6 +7,7 @@
+ #include <linux/fs.h>
+ #include <linux/hugetlb_inline.h>
+ #include <linux/cgroup.h>
++#include <linux/page_ref.h>
+ #include <linux/list.h>
+ #include <linux/kref.h>
+ #include <linux/pgtable.h>
+@@ -1182,6 +1183,18 @@ static inline __init void hugetlb_cma_re
+ }
+ #endif
  
-+	/* migration can happen before addition */
-+	if (!mm->lru_gen.memcg)
-+		return;
++#ifdef CONFIG_ARCH_WANT_HUGE_PMD_SHARE
++static inline bool hugetlb_pmd_shared(pte_t *pte)
++{
++	return page_count(virt_to_page(pte)) > 1;
++}
++#else
++static inline bool hugetlb_pmd_shared(pte_t *pte)
++{
++	return false;
++}
++#endif
 +
- 	rcu_read_lock();
- 	memcg = mem_cgroup_from_task(task);
- 	rcu_read_unlock();
- 	if (memcg == mm->lru_gen.memcg)
- 		return;
+ bool want_pmd_share(struct vm_area_struct *vma, unsigned long addr);
  
--	VM_WARN_ON_ONCE(!mm->lru_gen.memcg);
- 	VM_WARN_ON_ONCE(list_empty(&mm->lru_gen.list));
- 
- 	lru_gen_del_mm(mm);
+ #ifndef __HAVE_ARCH_FLUSH_HUGETLB_TLB_RANGE
 
 
