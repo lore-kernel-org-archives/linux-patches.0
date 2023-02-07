@@ -1,41 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26D292C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:10:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72591C4339B;
-	Tue,  7 Feb 2023 13:10:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C54992C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:10:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4A63AC433EF;
+	Tue,  7 Feb 2023 13:10:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775419;
-	bh=qbGbWbYSxQNvlc8Z61NgmbCx3ATDyqc8wSOeCT9FL9Y=;
+	s=korg; t=1675775421;
+	bh=TVQk+bO6tkncvgzhOCDzoprhxgzLa4/E6RAW4D/b/dw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TKQshUJmVr6icN5Nf4J7s4kg3pAJZrO0q1tyQwB6/uaixWUeAL1V9IlvSfEQ7gUTB
-	 MkUYCfG3fzJpy7RiVt/hEEMMTI2ygVOtUsgtco79eY2HbL2uHuh2fCxwMwAMk6I8og
-	 OYOJmfyb0/IKvtAVADUFRirmiUcA7RTV1qVGnn7k=
+	b=ss+e+LaLDLGwgdaK4IlN++NPAZzGhrLSmToXB/Hhfsjurw7jAzYbz2kG5u1bs8mr5
+	 WyKKeuDWwPiX8fMwSDZ5vJg3z4mH9h35/BRh87sK8fdp+nV4fDdanRz+cxrBFfwx53
+	 PC77BtTbsWWT7BBjrFte8YeXgz2D66n2UVZHex/0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	John Harrison <John.C.Harrison@Intel.com>,
-	Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Matthew Brost <matthew.brost@intel.com>,
-	Jani Nikula <jani.nikula@linux.intel.com>,
-	Joonas Lahtinen <joonas.lahtinen@linux.intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Matt Roper <matthew.d.roper@intel.com>,
-	Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>,
-	Michael Cheng <michael.cheng@intel.com>,
-	Lucas De Marchi <lucas.demarchi@intel.com>,
-	Tejas Upadhyay <tejaskumarx.surendrakumar.upadhyay@intel.com>,
-	Chris Wilson <chris.p.wilson@intel.com>,
-	Bruce Chang <yu.bruce.chang@intel.com>,
-	Alan Previn <alan.previn.teres.alexis@intel.com>,
-	Matthew Auld <matthew.auld@intel.com>,
+	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 033/120] drm/i915/guc: Fix locking when searching for a hung request
-Date: Tue,  7 Feb 2023 13:56:44 +0100
-Message-Id: <20230207125620.199577202@linuxfoundation.org>
+Subject: [PATCH 5.15 034/120] drm/i915/adlp: Fix typo for reference clock
+Date: Tue,  7 Feb 2023 13:56:45 +0100
+Message-Id: <20230207125620.250480253@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -49,71 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: John Harrison <John.C.Harrison@Intel.com>
+From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
 
-[ Upstream commit 87b04e53daf806945c415e94de9f90943d434aed ]
+[ Upstream commit 47a2bd9d985bfdb55900f313603619fc9234f317 ]
 
-intel_guc_find_hung_context() was not acquiring the correct spinlock
-before searching the request list. So fix that up. While at it, add
-some extra whitespace padding for readability.
+Fix typo for reference clock from 24400 to 24000.
 
-Fixes: dc0dad365c5e ("drm/i915/guc: Fix for error capture after full GPU reset with GuC")
-Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
-Reviewed-by: Daniele Ceraolo Spurio <daniele.ceraolospurio@intel.com>
-Acked-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Cc: Matthew Brost <matthew.brost@intel.com>
-Cc: Jani Nikula <jani.nikula@linux.intel.com>
-Cc: Joonas Lahtinen <joonas.lahtinen@linux.intel.com>
-Cc: Rodrigo Vivi <rodrigo.vivi@intel.com>
-Cc: Matt Roper <matthew.d.roper@intel.com>
-Cc: Umesh Nerlige Ramappa <umesh.nerlige.ramappa@intel.com>
-Cc: Michael Cheng <michael.cheng@intel.com>
-Cc: Lucas De Marchi <lucas.demarchi@intel.com>
-Cc: Tejas Upadhyay <tejaskumarx.surendrakumar.upadhyay@intel.com>
-Cc: Chris Wilson <chris.p.wilson@intel.com>
-Cc: Bruce Chang <yu.bruce.chang@intel.com>
-Cc: Alan Previn <alan.previn.teres.alexis@intel.com>
-Cc: Matthew Auld <matthew.auld@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230127002842.3169194-2-John.C.Harrison@Intel.com
-(cherry picked from commit d1c3717501bcf56536e8b8c1bdaf5cd5357f6bb2)
+Bspec: 55409
+Fixes: 626426ff9ce4 ("drm/i915/adl_p: Add cdclk support for ADL-P")
+Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
+Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+Signed-off-by: Jani Nikula <jani.nikula@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230112094131.550252-1-chaitanya.kumar.borah@intel.com
+(cherry picked from commit 2b6f7e39ccae065abfbe3b6e562ec95ccad09f1e)
 Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/gpu/drm/i915/display/intel_cdclk.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-index 6e09a1cca37b..97b5ba2fc834 100644
---- a/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-+++ b/drivers/gpu/drm/i915/gt/uc/intel_guc_submission.c
-@@ -2845,6 +2845,8 @@ void intel_guc_find_hung_context(struct intel_engine_cs *engine)
- 		return;
+diff --git a/drivers/gpu/drm/i915/display/intel_cdclk.c b/drivers/gpu/drm/i915/display/intel_cdclk.c
+index 34fa4130d5c4..745ffa7572e8 100644
+--- a/drivers/gpu/drm/i915/display/intel_cdclk.c
++++ b/drivers/gpu/drm/i915/display/intel_cdclk.c
+@@ -1269,7 +1269,7 @@ static const struct intel_cdclk_vals adlp_cdclk_table[] = {
+ 	{ .refclk = 24000, .cdclk = 192000, .divider = 2, .ratio = 16 },
+ 	{ .refclk = 24000, .cdclk = 312000, .divider = 2, .ratio = 26 },
+ 	{ .refclk = 24000, .cdclk = 552000, .divider = 2, .ratio = 46 },
+-	{ .refclk = 24400, .cdclk = 648000, .divider = 2, .ratio = 54 },
++	{ .refclk = 24000, .cdclk = 648000, .divider = 2, .ratio = 54 },
  
- 	xa_for_each(&guc->context_lookup, index, ce) {
-+		bool found;
-+
- 		if (!intel_context_is_pinned(ce))
- 			continue;
- 
-@@ -2856,10 +2858,18 @@ void intel_guc_find_hung_context(struct intel_engine_cs *engine)
- 				continue;
- 		}
- 
-+		found = false;
-+		spin_lock(&ce->guc_state.lock);
- 		list_for_each_entry(rq, &ce->guc_active.requests, sched.link) {
- 			if (i915_test_request_state(rq) != I915_REQUEST_ACTIVE)
- 				continue;
- 
-+			found = true;
-+			break;
-+		}
-+		spin_unlock(&ce->guc_state.lock);
-+
-+		if (found) {
- 			intel_engine_set_hung_context(engine, ce);
- 
- 			/* Can only cope with one hang at a time... */
+ 	{ .refclk = 38400, .cdclk = 179200, .divider = 3, .ratio = 14 },
+ 	{ .refclk = 38400, .cdclk = 192000, .divider = 2, .ratio = 10 },
 -- 
 2.39.0
 
