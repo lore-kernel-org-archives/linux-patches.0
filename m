@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA16B3212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:12:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D064C433D2;
-	Tue,  7 Feb 2023 13:12:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFD403212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:12:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CC74C4339B;
+	Tue,  7 Feb 2023 13:12:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775540;
-	bh=MR/kAdflOEhns2wWlMYM/lsSbRZCkzPNXCRCtKITWiE=;
+	s=korg; t=1675775543;
+	bh=ryRjPv5+EV4SdbMn0PqZCEH2sX01BDvZSzs4Y9hggKk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mzixsmN0r7b/pMLIEDnGDgLC7gNAa5bw57GS0zqd//sg/bmxNz2A3IY0fxVrmFM7U
-	 osx/iBjPqfqCfvm04N49bhDIKQ2/RbW+I8sNaV8OCBHEhwsIOx4qMpCXprvNV6AjtF
-	 g5l+5fLCUYceWYHos+zlydv8jdxccL1Hp2HJEh80=
+	b=0uC2WCR2O4YzlezANUJ0KS4WsqOlZ51lpWjD18QuWkwvpTLR2HNOGLWYk6azCZdL2
+	 CA56AvlgrNOA+io4UjTtEEuLb2e9OAq1lENhTZ/WfWxkzH6pK0s67I+dIUMAJOLAIJ
+	 77OR0kk0DC072isdVndqabWVJ7oIffM8X0NeqSWI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Andrei Gherzan <andrei.gherzan@canonical.com>,
-	Willem de Bruijn <willemb@google.com>,
 	Paolo Abeni <pabeni@redhat.com>,
+	Willem de Bruijn <willemb@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 045/120] selftests: net: udpgso_bench_rx/tx: Stop when wrong CLI args are provided
-Date: Tue,  7 Feb 2023 13:56:56 +0100
-Message-Id: <20230207125620.686525888@linuxfoundation.org>
+Subject: [PATCH 5.15 046/120] selftests: net: udpgso_bench: Fix racing bug between the rx/tx programs
+Date: Tue,  7 Feb 2023 13:56:57 +0100
+Message-Id: <20230207125620.728697783@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -38,50 +38,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Andrei Gherzan <andrei.gherzan@canonical.com>
 
-[ Upstream commit db9b47ee9f5f375ab0c5daeb20321c75b4fa657d ]
+[ Upstream commit dafe93b9ee21028d625dce347118b82659652eff ]
 
-Leaving unrecognized arguments buried in the output, can easily hide a
-CLI/script typo. Avoid this by exiting when wrong arguments are provided to
-the udpgso_bench test programs.
+"udpgro_bench.sh" invokes udpgso_bench_rx/udpgso_bench_tx programs
+subsequently and while doing so, there is a chance that the rx one is not
+ready to accept socket connections. This racing bug could fail the test
+with at least one of the following:
+
+./udpgso_bench_tx: connect: Connection refused
+./udpgso_bench_tx: sendmsg: Connection refused
+./udpgso_bench_tx: write: Connection refused
+
+This change addresses this by making udpgro_bench.sh wait for the rx
+program to be ready before firing off the tx one - up to a 10s timeout.
 
 Fixes: 3a687bef148d ("selftests: udp gso benchmark")
 Signed-off-by: Andrei Gherzan <andrei.gherzan@canonical.com>
+Cc: Paolo Abeni <pabeni@redhat.com>
 Cc: Willem de Bruijn <willemb@google.com>
 Reviewed-by: Willem de Bruijn <willemb@google.com>
-Link: https://lore.kernel.org/r/20230201001612.515730-2-andrei.gherzan@canonical.com
+Link: https://lore.kernel.org/r/20230201001612.515730-3-andrei.gherzan@canonical.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/udpgso_bench_rx.c | 2 ++
- tools/testing/selftests/net/udpgso_bench_tx.c | 2 ++
- 2 files changed, 4 insertions(+)
+ tools/testing/selftests/net/udpgso_bench.sh | 24 +++++++++++++++++----
+ 1 file changed, 20 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/net/udpgso_bench_rx.c b/tools/testing/selftests/net/udpgso_bench_rx.c
-index d0895bd1933f..4058c7451e70 100644
---- a/tools/testing/selftests/net/udpgso_bench_rx.c
-+++ b/tools/testing/selftests/net/udpgso_bench_rx.c
-@@ -336,6 +336,8 @@ static void parse_opts(int argc, char **argv)
- 			cfg_verify = true;
- 			cfg_read_all = true;
- 			break;
-+		default:
-+			exit(1);
- 		}
- 	}
+diff --git a/tools/testing/selftests/net/udpgso_bench.sh b/tools/testing/selftests/net/udpgso_bench.sh
+index dc932fd65363..640bc43452fa 100755
+--- a/tools/testing/selftests/net/udpgso_bench.sh
++++ b/tools/testing/selftests/net/udpgso_bench.sh
+@@ -7,6 +7,7 @@ readonly GREEN='\033[0;92m'
+ readonly YELLOW='\033[0;33m'
+ readonly RED='\033[0;31m'
+ readonly NC='\033[0m' # No Color
++readonly TESTPORT=8000
  
-diff --git a/tools/testing/selftests/net/udpgso_bench_tx.c b/tools/testing/selftests/net/udpgso_bench_tx.c
-index f1fdaa270291..b47b5c32039f 100644
---- a/tools/testing/selftests/net/udpgso_bench_tx.c
-+++ b/tools/testing/selftests/net/udpgso_bench_tx.c
-@@ -490,6 +490,8 @@ static void parse_opts(int argc, char **argv)
- 		case 'z':
- 			cfg_zerocopy = true;
- 			break;
-+		default:
-+			exit(1);
- 		}
- 	}
+ readonly KSFT_PASS=0
+ readonly KSFT_FAIL=1
+@@ -56,11 +57,26 @@ trap wake_children EXIT
  
+ run_one() {
+ 	local -r args=$@
++	local nr_socks=0
++	local i=0
++	local -r timeout=10
++
++	./udpgso_bench_rx -p "$TESTPORT" &
++	./udpgso_bench_rx -p "$TESTPORT" -t &
++
++	# Wait for the above test program to get ready to receive connections.
++	while [ "$i" -lt "$timeout" ]; do
++		nr_socks="$(ss -lnHi | grep -c "\*:${TESTPORT}")"
++		[ "$nr_socks" -eq 2 ] && break
++		i=$((i + 1))
++		sleep 1
++	done
++	if [ "$nr_socks" -ne 2 ]; then
++		echo "timed out while waiting for udpgso_bench_rx"
++		exit 1
++	fi
+ 
+-	./udpgso_bench_rx &
+-	./udpgso_bench_rx -t &
+-
+-	./udpgso_bench_tx ${args}
++	./udpgso_bench_tx -p "$TESTPORT" ${args}
+ }
+ 
+ run_in_netns() {
 -- 
 2.39.0
 
