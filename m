@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6E42C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D418C433D2;
-	Tue,  7 Feb 2023 13:06:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B64402C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23358C433EF;
+	Tue,  7 Feb 2023 13:06:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775186;
-	bh=fpUQUoq0adnD/CahJ68tUfvXHb4Q5EZwacrdUdOheeQ=;
+	s=korg; t=1675775189;
+	bh=MacZ1whNHk5jZpB3a+BAxtb940aA4gQt/9BRQ1UrugA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O50+d6A09PbKE5ijyRCgyctsTwLDgju2NZ2NedekcO/WVf9HhqwgLGlefgAUDWm2W
-	 N9p1wmgP350wOJlAEvGmYIB/vJ8bsasK4NHW+2AGt0r/bf0ej0lkSqCySdrBxl/i0j
-	 uvu/m3RAYiHalQarujTxnij64H6Mn/wWk27Qfe1Q=
+	b=u26hmNjeDhUhMuA8XoRYREpKpSDiDT23BGaZnj6P2aCmdWt+h1086u2S4SWPQv5Vi
+	 RJN5P2O1N84aFnZ5B0jGBIkmYn0Ho3S0xuPxrwOhXe6jjH/u2HRAjDTSp93FFlWy1F
+	 TcxV8gG1IIer3TN2aidv0VRigOZc0Q40EOKEH49w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Gerlach <matthew.gerlach@linux.intel.com>,
+	Zheng Yongjun <zhengyongjun3@huawei.com>,
 	Russ Weight <russell.h.weight@intel.com>,
-	Marco Pagani <marpagan@redhat.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
 	Xu Yilun <yilun.xu@intel.com>
-Subject: [PATCH 6.1 165/208] fpga: m10bmc-sec: Fix probe rollback
-Date: Tue,  7 Feb 2023 13:56:59 +0100
-Message-Id: <20230207125641.889469962@linuxfoundation.org>
+Subject: [PATCH 6.1 166/208] fpga: stratix10-soc: Fix return value check in s10_ops_write_init()
+Date: Tue,  7 Feb 2023 13:57:00 +0100
+Message-Id: <20230207125641.933198175@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -37,65 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Zheng Yongjun <zhengyongjun3@huawei.com>
 
-commit 60ce26d10e5850f33cc76fce52f5377045e75a15 upstream.
+commit 65ea840afd508194b0ee903256162aa87e46ec30 upstream.
 
-Handle probe error rollbacks properly to avoid leaks.
+In case of error, the function stratix10_svc_allocate_memory()
+returns ERR_PTR() and never returns NULL. The NULL test in the
+return value check should be replaced with IS_ERR().
 
-Fixes: 5cd339b370e2 ("fpga: m10bmc-sec: add max10 secure update functions")
-Reviewed-by: Matthew Gerlach <matthew.gerlach@linux.intel.com>
+Fixes: e7eef1d7633a ("fpga: add intel stratix10 soc fpga manager driver")
+Signed-off-by: Zheng Yongjun <zhengyongjun3@huawei.com>
 Reviewed-by: Russ Weight <russell.h.weight@intel.com>
-Reviewed-by: Marco Pagani <marpagan@redhat.com>
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Cc: stable@vger.kernel.org
 Acked-by: Xu Yilun <yilun.xu@intel.com>
-Link: https://lore.kernel.org/r/20221214144952.8392-1-ilpo.jarvinen@linux.intel.com
+Link: https://lore.kernel.org/r/20221126071430.19540-1-zhengyongjun3@huawei.com
 Signed-off-by: Xu Yilun <yilun.xu@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/fpga/intel-m10-bmc-sec-update.c | 17 ++++++++++++-----
- 1 file changed, 12 insertions(+), 5 deletions(-)
+ drivers/fpga/stratix10-soc.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/fpga/intel-m10-bmc-sec-update.c b/drivers/fpga/intel-m10-bmc-sec-update.c
-index 79d48852825e..03f1bd81c434 100644
---- a/drivers/fpga/intel-m10-bmc-sec-update.c
-+++ b/drivers/fpga/intel-m10-bmc-sec-update.c
-@@ -574,20 +574,27 @@ static int m10bmc_sec_probe(struct platform_device *pdev)
- 	len = scnprintf(buf, SEC_UPDATE_LEN_MAX, "secure-update%d",
- 			sec->fw_name_id);
- 	sec->fw_name = kmemdup_nul(buf, len, GFP_KERNEL);
--	if (!sec->fw_name)
--		return -ENOMEM;
-+	if (!sec->fw_name) {
-+		ret = -ENOMEM;
-+		goto fw_name_fail;
-+	}
+--- a/drivers/fpga/stratix10-soc.c
++++ b/drivers/fpga/stratix10-soc.c
+@@ -213,9 +213,9 @@ static int s10_ops_write_init(struct fpg
+ 	/* Allocate buffers from the service layer's pool. */
+ 	for (i = 0; i < NUM_SVC_BUFS; i++) {
+ 		kbuf = stratix10_svc_allocate_memory(priv->chan, SVC_BUF_SIZE);
+-		if (!kbuf) {
++		if (IS_ERR(kbuf)) {
+ 			s10_free_buffers(mgr);
+-			ret = -ENOMEM;
++			ret = PTR_ERR(kbuf);
+ 			goto init_done;
+ 		}
  
- 	fwl = firmware_upload_register(THIS_MODULE, sec->dev, sec->fw_name,
- 				       &m10bmc_ops, sec);
- 	if (IS_ERR(fwl)) {
- 		dev_err(sec->dev, "Firmware Upload driver failed to start\n");
--		kfree(sec->fw_name);
--		xa_erase(&fw_upload_xa, sec->fw_name_id);
--		return PTR_ERR(fwl);
-+		ret = PTR_ERR(fwl);
-+		goto fw_uploader_fail;
- 	}
- 
- 	sec->fwl = fwl;
- 	return 0;
-+
-+fw_uploader_fail:
-+	kfree(sec->fw_name);
-+fw_name_fail:
-+	xa_erase(&fw_upload_xa, sec->fw_name_id);
-+	return ret;
- }
- 
- static int m10bmc_sec_remove(struct platform_device *pdev)
--- 
-2.39.1
-
 
 
