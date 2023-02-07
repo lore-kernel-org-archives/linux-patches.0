@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 93B402C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:05:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18080C433D2;
-	Tue,  7 Feb 2023 13:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 710152C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:05:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1DDEC433EF;
+	Tue,  7 Feb 2023 13:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775131;
-	bh=CYFQnn3biJ0HCKTJBtsmSFwTgBIf/HXY+qDFM2MA6qc=;
+	s=korg; t=1675775134;
+	bh=Gr9uIgVDAHyauhn8f87dNgCiKUiY0/qJ3erdheKXwwA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ilCgwAQpjgv++hv6kDXRqgeNGVX2+aB+sdyPeUc/1oAe8qmmOt7gopwt/pLp6vB19
-	 AcpjhuPGl+Zoe2UdVYH8ogdHOe/GdAEN6qRt7pU+ktIQuiYysHqV3Sjt/v9svHXJJC
-	 LGbqMB3wtQAf2tBvwlMN7tWcEHg5BpCSl9adSLeY=
+	b=mYCWs+xqojDw+y0BJkJS7YeQdGUPTgo5acuMn0fQpMAqGXJ9B8gFuaTvKw3Vh13wl
+	 Q4F3jWp+o16rKoSSkdJAsP6b3VC0ThshD2gIJBIks8BsQBPsvIPUBSAU11oWQoHioj
+	 q1Pn7WTOfIfyuhMIKIlw4KQrvL96ZtS6joED0ySE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fabio Estevam <festevam@denx.de>,
-	Shawn Guo <shawnguo@kernel.org>
-Subject: [PATCH 6.1 118/208] ARM: dts: imx7d-smegw01: Fix USB host over-current polarity
-Date: Tue,  7 Feb 2023 13:56:12 +0100
-Message-Id: <20230207125639.741905130@linuxfoundation.org>
+	Natalia Petrova <n.petrova@fintech.ru>,
+	Simon Horman <simon.horman@corigine.com>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 119/208] net: qrtr: free memory on error path in radix_tree_insert()
+Date: Tue,  7 Feb 2023 13:56:13 +0100
+Message-Id: <20230207125639.790590928@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -34,52 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fabio Estevam <festevam@denx.de>
+From: Natalia Petrova <n.petrova@fintech.ru>
 
-commit 1febf88ef907b142fdde34f7c64ed3535d9339e4 upstream.
+commit 29de68c2b32ce58d64dea496d281e25ad0f551bd upstream.
 
-Currently, when resetting the USB modem via AT commands, the modem is
-no longer re-connected.
+Function radix_tree_insert() returns errors if the node hasn't
+been initialized and added to the tree.
 
-This problem is caused by the incorrect description of the USB_OTG2_OC
-pad. It should have pull-up enabled, hysteresis enabled and the
-property 'over-current-active-low' should be passed.
+"kfree(node)" and return value "NULL" of node_get() help
+to avoid using unclear node in other calls.
 
-With this change, the USB modem can be successfully re-connected
-after a reset.
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
-Cc: stable@vger.kernel.org
-Fixes: 9ac0ae97e349 ("ARM: dts: imx7d-smegw01: Add support for i.MX7D SMEGW01 board")
-Signed-off-by: Fabio Estevam <festevam@denx.de>
-Signed-off-by: Shawn Guo <shawnguo@kernel.org>
+Cc: <stable@vger.kernel.org> # 5.7
+Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
+Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+Link: https://lore.kernel.org/r/20230125134831.8090-1-n.petrova@fintech.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm/boot/dts/imx7d-smegw01.dts | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ net/qrtr/ns.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/imx7d-smegw01.dts b/arch/arm/boot/dts/imx7d-smegw01.dts
-index 546268b8d0b1..c0f00f5db11e 100644
---- a/arch/arm/boot/dts/imx7d-smegw01.dts
-+++ b/arch/arm/boot/dts/imx7d-smegw01.dts
-@@ -198,6 +198,7 @@
- &usbotg2 {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&pinctrl_usbotg2>;
-+	over-current-active-low;
- 	dr_mode = "host";
- 	status = "okay";
- };
-@@ -374,7 +375,7 @@
+--- a/net/qrtr/ns.c
++++ b/net/qrtr/ns.c
+@@ -83,7 +83,10 @@ static struct qrtr_node *node_get(unsign
  
- 	pinctrl_usbotg2: usbotg2grp {
- 		fsl,pins = <
--			MX7D_PAD_UART3_RTS_B__USB_OTG2_OC	0x04
-+			MX7D_PAD_UART3_RTS_B__USB_OTG2_OC	0x5c
- 		>;
- 	};
+ 	node->id = node_id;
  
--- 
-2.39.1
-
+-	radix_tree_insert(&nodes, node_id, node);
++	if (radix_tree_insert(&nodes, node_id, node)) {
++		kfree(node);
++		return NULL;
++	}
+ 
+ 	return node;
+ }
 
 
