@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3EA32C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:08:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A44FC433D2;
-	Tue,  7 Feb 2023 13:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD5D42C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:08:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E027C433EF;
+	Tue,  7 Feb 2023 13:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775306;
-	bh=SfqGsNZnSaoRf/CpzCthsIqLBl4D4AqPediq7uT4wRA=;
+	s=korg; t=1675775309;
+	bh=mQ5FYBaENysT7iXJJxljnO8krs+vaO5G9JGt9Y5ZgMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wb4LWgK0KOZDYdoCE8DwOHWKUD0FFe23Is0eSqGJLbuKzj8MQ2U3VxuESCgNi4EYq
-	 m7i7e0LvThMArX7oZDScak6BGyeEFJ7QbqbquldIHjvOYvMHkBBTTNY2XIWjPqvMZq
-	 D/k7li4CrKzxwXvIDH6zJ4+/x+Fpvzan2hrY6AUA=
+	b=YMMYu5MyEZbDBXbkXxqDhv5TOnNmwfnFtX3mGEI+BDw9RG/6olve0tDBPpbWemuqO
+	 CPY414WRsgQh5X9fpxh0AKR5uNfTKBaX7a9h8hnMaqBrMPC0Qder+k1dwwIbdtaHH7
+	 asJa5J2e9fFyGnViEyf4aG+HB62LIhT9DJJJJsgg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
-	Marek Vasut <marex@denx.de>,
-	Valentin Caron <valentin.caron@foss.st.com>
-Subject: [PATCH 6.1 178/208] serial: stm32: Merge hard IRQ and threaded IRQ handling into single IRQ handler
-Date: Tue,  7 Feb 2023 13:57:12 +0100
-Message-Id: <20230207125642.511701214@linuxfoundation.org>
+	Dokyung Song <dokyungs@yonsei.ac.kr>,
+	Jisoo Jang <jisoo.jang@yonsei.ac.kr>,
+	Minsuk Kang <linuxlovemin@yonsei.ac.kr>,
+	Arend van Spriel <arend.vanspriel@broadcom.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.1 205/208] wifi: brcmfmac: Check the count value of channel spec to prevent out-of-bounds reads
+Date: Tue,  7 Feb 2023 13:57:39 +0100
+Message-Id: <20230207125643.804784297@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,87 +37,254 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Vasut <marex@denx.de>
+From: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
 
-commit 3f6c02fa712bd453871877fe1d1969625617471e upstream.
+commit 4920ab131b2dbae7464b72bdcac465d070254209 upstream.
 
-Requesting an interrupt with IRQF_ONESHOT will run the primary handler
-in the hard-IRQ context even in the force-threaded mode. The
-force-threaded mode is used by PREEMPT_RT in order to avoid acquiring
-sleeping locks (spinlock_t) in hard-IRQ context. This combination
-makes it impossible and leads to "sleeping while atomic" warnings.
+This patch fixes slab-out-of-bounds reads in brcmfmac that occur in
+brcmf_construct_chaninfo() and brcmf_enable_bw40_2g() when the count
+value of channel specifications provided by the device is greater than
+the length of 'list->element[]', decided by the size of the 'list'
+allocated with kzalloc(). The patch adds checks that make the functions
+free the buffer and return -EINVAL if that is the case. Note that the
+negative return is handled by the caller, brcmf_setup_wiphybands() or
+brcmf_cfg80211_attach().
 
-Use one interrupt handler for both handlers (primary and secondary)
-and drop the IRQF_ONESHOT flag which is not needed.
+Found by a modified version of syzkaller.
 
-Fixes: e359b4411c283 ("serial: stm32: fix threaded interrupt handling")
-Reviewed-by: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
-Tested-by: Valentin Caron <valentin.caron@foss.st.com> # V3
-Signed-off-by: Marek Vasut <marex@denx.de>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230120160332.57930-1-marex@denx.de
+Crash Report from brcmf_construct_chaninfo():
+==================================================================
+BUG: KASAN: slab-out-of-bounds in brcmf_setup_wiphybands+0x1238/0x1430
+Read of size 4 at addr ffff888115f24600 by task kworker/0:2/1896
+
+CPU: 0 PID: 1896 Comm: kworker/0:2 Tainted: G        W  O      5.14.0+ #132
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
+Workqueue: usb_hub_wq hub_event
+Call Trace:
+ dump_stack_lvl+0x57/0x7d
+ print_address_description.constprop.0.cold+0x93/0x334
+ kasan_report.cold+0x83/0xdf
+ brcmf_setup_wiphybands+0x1238/0x1430
+ brcmf_cfg80211_attach+0x2118/0x3fd0
+ brcmf_attach+0x389/0xd40
+ brcmf_usb_probe+0x12de/0x1690
+ usb_probe_interface+0x25f/0x710
+ really_probe+0x1be/0xa90
+ __driver_probe_device+0x2ab/0x460
+ driver_probe_device+0x49/0x120
+ __device_attach_driver+0x18a/0x250
+ bus_for_each_drv+0x123/0x1a0
+ __device_attach+0x207/0x330
+ bus_probe_device+0x1a2/0x260
+ device_add+0xa61/0x1ce0
+ usb_set_configuration+0x984/0x1770
+ usb_generic_driver_probe+0x69/0x90
+ usb_probe_device+0x9c/0x220
+ really_probe+0x1be/0xa90
+ __driver_probe_device+0x2ab/0x460
+ driver_probe_device+0x49/0x120
+ __device_attach_driver+0x18a/0x250
+ bus_for_each_drv+0x123/0x1a0
+ __device_attach+0x207/0x330
+ bus_probe_device+0x1a2/0x260
+ device_add+0xa61/0x1ce0
+ usb_new_device.cold+0x463/0xf66
+ hub_event+0x10d5/0x3330
+ process_one_work+0x873/0x13e0
+ worker_thread+0x8b/0xd10
+ kthread+0x379/0x450
+ ret_from_fork+0x1f/0x30
+
+Allocated by task 1896:
+ kasan_save_stack+0x1b/0x40
+ __kasan_kmalloc+0x7c/0x90
+ kmem_cache_alloc_trace+0x19e/0x330
+ brcmf_setup_wiphybands+0x290/0x1430
+ brcmf_cfg80211_attach+0x2118/0x3fd0
+ brcmf_attach+0x389/0xd40
+ brcmf_usb_probe+0x12de/0x1690
+ usb_probe_interface+0x25f/0x710
+ really_probe+0x1be/0xa90
+ __driver_probe_device+0x2ab/0x460
+ driver_probe_device+0x49/0x120
+ __device_attach_driver+0x18a/0x250
+ bus_for_each_drv+0x123/0x1a0
+ __device_attach+0x207/0x330
+ bus_probe_device+0x1a2/0x260
+ device_add+0xa61/0x1ce0
+ usb_set_configuration+0x984/0x1770
+ usb_generic_driver_probe+0x69/0x90
+ usb_probe_device+0x9c/0x220
+ really_probe+0x1be/0xa90
+ __driver_probe_device+0x2ab/0x460
+ driver_probe_device+0x49/0x120
+ __device_attach_driver+0x18a/0x250
+ bus_for_each_drv+0x123/0x1a0
+ __device_attach+0x207/0x330
+ bus_probe_device+0x1a2/0x260
+ device_add+0xa61/0x1ce0
+ usb_new_device.cold+0x463/0xf66
+ hub_event+0x10d5/0x3330
+ process_one_work+0x873/0x13e0
+ worker_thread+0x8b/0xd10
+ kthread+0x379/0x450
+ ret_from_fork+0x1f/0x30
+
+The buggy address belongs to the object at ffff888115f24000
+ which belongs to the cache kmalloc-2k of size 2048
+The buggy address is located 1536 bytes inside of
+ 2048-byte region [ffff888115f24000, ffff888115f24800)
+
+Memory state around the buggy address:
+ ffff888115f24500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffff888115f24580: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffff888115f24600: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+                   ^
+ ffff888115f24680: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff888115f24700: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+==================================================================
+
+Crash Report from brcmf_enable_bw40_2g():
+==================================================================
+BUG: KASAN: slab-out-of-bounds in brcmf_cfg80211_attach+0x3d11/0x3fd0
+Read of size 4 at addr ffff888103787600 by task kworker/0:2/1896
+
+CPU: 0 PID: 1896 Comm: kworker/0:2 Tainted: G        W  O      5.14.0+ #132
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.12.1-0-ga5cab58e9a3f-prebuilt.qemu.org 04/01/2014
+Workqueue: usb_hub_wq hub_event
+Call Trace:
+ dump_stack_lvl+0x57/0x7d
+ print_address_description.constprop.0.cold+0x93/0x334
+ kasan_report.cold+0x83/0xdf
+ brcmf_cfg80211_attach+0x3d11/0x3fd0
+ brcmf_attach+0x389/0xd40
+ brcmf_usb_probe+0x12de/0x1690
+ usb_probe_interface+0x25f/0x710
+ really_probe+0x1be/0xa90
+ __driver_probe_device+0x2ab/0x460
+ driver_probe_device+0x49/0x120
+ __device_attach_driver+0x18a/0x250
+ bus_for_each_drv+0x123/0x1a0
+ __device_attach+0x207/0x330
+ bus_probe_device+0x1a2/0x260
+ device_add+0xa61/0x1ce0
+ usb_set_configuration+0x984/0x1770
+ usb_generic_driver_probe+0x69/0x90
+ usb_probe_device+0x9c/0x220
+ really_probe+0x1be/0xa90
+ __driver_probe_device+0x2ab/0x460
+ driver_probe_device+0x49/0x120
+ __device_attach_driver+0x18a/0x250
+ bus_for_each_drv+0x123/0x1a0
+ __device_attach+0x207/0x330
+ bus_probe_device+0x1a2/0x260
+ device_add+0xa61/0x1ce0
+ usb_new_device.cold+0x463/0xf66
+ hub_event+0x10d5/0x3330
+ process_one_work+0x873/0x13e0
+ worker_thread+0x8b/0xd10
+ kthread+0x379/0x450
+ ret_from_fork+0x1f/0x30
+
+Allocated by task 1896:
+ kasan_save_stack+0x1b/0x40
+ __kasan_kmalloc+0x7c/0x90
+ kmem_cache_alloc_trace+0x19e/0x330
+ brcmf_cfg80211_attach+0x3302/0x3fd0
+ brcmf_attach+0x389/0xd40
+ brcmf_usb_probe+0x12de/0x1690
+ usb_probe_interface+0x25f/0x710
+ really_probe+0x1be/0xa90
+ __driver_probe_device+0x2ab/0x460
+ driver_probe_device+0x49/0x120
+ __device_attach_driver+0x18a/0x250
+ bus_for_each_drv+0x123/0x1a0
+ __device_attach+0x207/0x330
+ bus_probe_device+0x1a2/0x260
+ device_add+0xa61/0x1ce0
+ usb_set_configuration+0x984/0x1770
+ usb_generic_driver_probe+0x69/0x90
+ usb_probe_device+0x9c/0x220
+ really_probe+0x1be/0xa90
+ __driver_probe_device+0x2ab/0x460
+ driver_probe_device+0x49/0x120
+ __device_attach_driver+0x18a/0x250
+ bus_for_each_drv+0x123/0x1a0
+ __device_attach+0x207/0x330
+ bus_probe_device+0x1a2/0x260
+ device_add+0xa61/0x1ce0
+ usb_new_device.cold+0x463/0xf66
+ hub_event+0x10d5/0x3330
+ process_one_work+0x873/0x13e0
+ worker_thread+0x8b/0xd10
+ kthread+0x379/0x450
+ ret_from_fork+0x1f/0x30
+
+The buggy address belongs to the object at ffff888103787000
+ which belongs to the cache kmalloc-2k of size 2048
+The buggy address is located 1536 bytes inside of
+ 2048-byte region [ffff888103787000, ffff888103787800)
+
+Memory state around the buggy address:
+ ffff888103787500: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+ ffff888103787580: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+>ffff888103787600: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+                   ^
+ ffff888103787680: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+ ffff888103787700: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
+==================================================================
+
+Reported-by: Dokyung Song <dokyungs@yonsei.ac.kr>
+Reported-by: Jisoo Jang <jisoo.jang@yonsei.ac.kr>
+Reported-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+Reviewed-by: Arend van Spriel <arend.vanspriel@broadcom.com>
+Signed-off-by: Minsuk Kang <linuxlovemin@yonsei.ac.kr>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20221116142952.518241-1-linuxlovemin@yonsei.ac.kr
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/stm32-usart.c |   33 +++++----------------------------
- 1 file changed, 5 insertions(+), 28 deletions(-)
+ drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c |   17 ++++++++++++
+ 1 file changed, 17 insertions(+)
 
---- a/drivers/tty/serial/stm32-usart.c
-+++ b/drivers/tty/serial/stm32-usart.c
-@@ -798,25 +798,11 @@ static irqreturn_t stm32_usart_interrupt
- 		spin_unlock(&port->lock);
- 	}
+--- a/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
++++ b/drivers/net/wireless/broadcom/brcm80211/brcmfmac/cfg80211.c
+@@ -91,6 +91,9 @@
+ #define BRCMF_ASSOC_PARAMS_FIXED_SIZE \
+ 	(sizeof(struct brcmf_assoc_params_le) - sizeof(u16))
  
--	if (stm32_usart_rx_dma_enabled(port))
--		return IRQ_WAKE_THREAD;
--	else
--		return IRQ_HANDLED;
--}
--
--static irqreturn_t stm32_usart_threaded_interrupt(int irq, void *ptr)
--{
--	struct uart_port *port = ptr;
--	struct tty_port *tport = &port->state->port;
--	struct stm32_port *stm32_port = to_stm32_port(port);
--	unsigned int size;
--	unsigned long flags;
--
- 	/* Receiver timeout irq for DMA RX */
--	if (!stm32_port->throttled) {
--		spin_lock_irqsave(&port->lock, flags);
-+	if (stm32_usart_rx_dma_enabled(port) && !stm32_port->throttled) {
-+		spin_lock(&port->lock);
- 		size = stm32_usart_receive_chars(port, false);
--		uart_unlock_and_check_sysrq_irqrestore(port, flags);
-+		uart_unlock_and_check_sysrq(port);
- 		if (size)
- 			tty_flip_buffer_push(tport);
- 	}
-@@ -1016,10 +1002,8 @@ static int stm32_usart_startup(struct ua
- 	u32 val;
- 	int ret;
++#define BRCMF_MAX_CHANSPEC_LIST \
++	(BRCMF_DCMD_MEDLEN / sizeof(__le32) - 1)
++
+ static bool check_vif_up(struct brcmf_cfg80211_vif *vif)
+ {
+ 	if (!test_bit(BRCMF_VIF_STATUS_READY, &vif->sme_state)) {
+@@ -6556,6 +6559,13 @@ static int brcmf_construct_chaninfo(stru
+ 			band->channels[i].flags = IEEE80211_CHAN_DISABLED;
  
--	ret = request_threaded_irq(port->irq, stm32_usart_interrupt,
--				   stm32_usart_threaded_interrupt,
--				   IRQF_ONESHOT | IRQF_NO_SUSPEND,
--				   name, port);
-+	ret = request_irq(port->irq, stm32_usart_interrupt,
-+			  IRQF_NO_SUSPEND, name, port);
- 	if (ret)
- 		return ret;
- 
-@@ -1602,13 +1586,6 @@ static int stm32_usart_of_dma_rx_probe(s
- 	struct dma_slave_config config;
- 	int ret;
- 
--	/*
--	 * Using DMA and threaded handler for the console could lead to
--	 * deadlocks.
--	 */
--	if (uart_console(port))
--		return -ENODEV;
--
- 	stm32port->rx_buf = dma_alloc_coherent(dev, RX_BUF_L,
- 					       &stm32port->rx_dma_buf,
- 					       GFP_KERNEL);
+ 	total = le32_to_cpu(list->count);
++	if (total > BRCMF_MAX_CHANSPEC_LIST) {
++		bphy_err(drvr, "Invalid count of channel Spec. (%u)\n",
++			 total);
++		err = -EINVAL;
++		goto fail_pbuf;
++	}
++
+ 	for (i = 0; i < total; i++) {
+ 		ch.chspec = (u16)le32_to_cpu(list->element[i]);
+ 		cfg->d11inf.decchspec(&ch);
+@@ -6701,6 +6711,13 @@ static int brcmf_enable_bw40_2g(struct b
+ 		band = cfg_to_wiphy(cfg)->bands[NL80211_BAND_2GHZ];
+ 		list = (struct brcmf_chanspec_list *)pbuf;
+ 		num_chan = le32_to_cpu(list->count);
++		if (num_chan > BRCMF_MAX_CHANSPEC_LIST) {
++			bphy_err(drvr, "Invalid count of channel Spec. (%u)\n",
++				 num_chan);
++			kfree(pbuf);
++			return -EINVAL;
++		}
++
+ 		for (i = 0; i < num_chan; i++) {
+ 			ch.chspec = (u16)le32_to_cpu(list->element[i]);
+ 			cfg->d11inf.decchspec(&ch);
 
 
