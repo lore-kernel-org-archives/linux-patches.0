@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A537B3212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:04:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 293ABC433D2;
-	Tue,  7 Feb 2023 13:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 86F093212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:04:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0BBC6C4339B;
+	Tue,  7 Feb 2023 13:04:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775061;
-	bh=GXj/1WGP/5qdlx2md4bAj4G0DPjbf9mfshzObgjlNDk=;
+	s=korg; t=1675775064;
+	bh=yTIYNGziTg5Jh33hB4ppgzFiGuBfNKAeKiQnWnbadz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kIJjlGNtO9IA8h5gRo/awNIWdSeWkebzhkollEptqGJXrE45nhZVwNvEPqNoWwh2E
-	 BdkKCjkhaXcI2AuBsK73rouFKCohQ/taj9OatP7eBWN08IEBx+7WDWt2H307dgXRR+
-	 GvvhPXhHwZjo6/2hBGoT0MlcxsgKjIoCoFTdzy3k=
+	b=OB3YOzUoztlX+fk0TAxlVUe4mmIIUQax8n8tis88qFmyOgsjyX0anzr2tbPxbWya6
+	 kilXTeu/rZuxHVFn2qDNVqTAGJC9qjyzKYQ8Req9YKituArZcIMi2dwo7/cp4wvCt8
+	 xR8HxN3FdZfqmCgIcI7rznZprxjdDK24eKcpPz2E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jeremy Szu <jeremy.szu@canonical.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 125/208] ALSA: hda/realtek: fix mute/micmute LEDs, speaker dont work for a HP platform
-Date: Tue,  7 Feb 2023 13:56:19 +0100
-Message-Id: <20230207125640.065172068@linuxfoundation.org>
+	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
+	Mark Brown <broonie@kernel.org>
+Subject: [PATCH 6.1 126/208] ASoC: codecs: wsa883x: correct playback min/max rates
+Date: Tue,  7 Feb 2023 13:56:20 +0100
+Message-Id: <20230207125640.114853269@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -34,31 +34,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jeremy Szu <jeremy.szu@canonical.com>
+From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
 
-commit 858c54152658ccd4e305c1e12d3cc6825bc90504 upstream.
+commit 100c94ffde489ee11e23400f2a07b236144b048f upstream.
 
-There is a HP platform needs ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED quirk to
-make mic-mute/audio-mute/speaker working.
+Correct reversed values used in min/max rates, leading to incorrect
+playback constraints.
 
-Signed-off-by: Jeremy Szu <jeremy.szu@canonical.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230118115446.14902-1-jeremy.szu@canonical.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Fixes: 43b8c7dc85a1 ("ASoC: codecs: add wsa883x amplifier support")
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+Link: https://lore.kernel.org/r/20230124123049.285395-1-krzysztof.kozlowski@linaro.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/soc/codecs/wsa883x.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9433,6 +9433,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x8ad2, "HP EliteBook 860 16 inch G9 Notebook PC", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8b5d, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8b5e, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
-+	SND_PCI_QUIRK(0x103c, 0x8b92, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8bf0, "HP", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x1043, 0x103e, "ASUS X540SA", ALC256_FIXUP_ASUS_MIC),
- 	SND_PCI_QUIRK(0x1043, 0x103f, "ASUS TX300", ALC282_FIXUP_ASUS_TX300),
+diff --git a/sound/soc/codecs/wsa883x.c b/sound/soc/codecs/wsa883x.c
+index 966ba4909204..58fdb4e9fd97 100644
+--- a/sound/soc/codecs/wsa883x.c
++++ b/sound/soc/codecs/wsa883x.c
+@@ -1359,8 +1359,8 @@ static struct snd_soc_dai_driver wsa883x_dais[] = {
+ 			.stream_name = "SPKR Playback",
+ 			.rates = WSA883X_RATES | WSA883X_FRAC_RATES,
+ 			.formats = WSA883X_FORMATS,
+-			.rate_max = 8000,
+-			.rate_min = 352800,
++			.rate_min = 8000,
++			.rate_max = 352800,
+ 			.channels_min = 1,
+ 			.channels_max = 1,
+ 		},
+-- 
+2.39.1
+
 
 
