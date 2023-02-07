@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 285263212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:12:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8278DC433EF;
-	Tue,  7 Feb 2023 13:12:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED09B3212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:12:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7139BC4339C;
+	Tue,  7 Feb 2023 13:12:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775523;
-	bh=Gr9uIgVDAHyauhn8f87dNgCiKUiY0/qJ3erdheKXwwA=;
+	s=korg; t=1675775525;
+	bh=jaF2ORhaKh4b+IjRoPmH57vBzpUUok2poMj1wAoCf6c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Pcc7AZAuING5gW8QazX69zZ62pPZWoMqjvyJZBdzpqAfh7RqU3bQG1N2WLfBRSrDl
-	 OJYyNsL/hcwkF24Bq/k1e03+oPZAGA6vIz2TwFqG9+fMLHcupPw3exQODuGaW1mceg
-	 nZlWVEcN8mWqzcqVvkc281QgSAqSv70OPivY+GVU=
+	b=l14uHztFNT+Jb8DdWsF+DA3SvuE1aga3b/WbgK3q/pHoKN3Svlsvi8c3OPI+yDJo0
+	 2+zLEVKnpm7HQkgPW4/wdum5Uu8uT2P0aXrAmRE8ilug9mSbXqTTek6BYR6h7RBRL2
+	 97taiv9L95ZmHvys0/Zc5nmMrXKO+YrUA8dvKOPU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Natalia Petrova <n.petrova@fintech.ru>,
-	Simon Horman <simon.horman@corigine.com>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 068/120] net: qrtr: free memory on error path in radix_tree_insert()
-Date: Tue,  7 Feb 2023 13:57:19 +0100
-Message-Id: <20230207125621.650205883@linuxfoundation.org>
+	Alexander Egorenkov <egorenar@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 5.15 069/120] watchdog: diag288_wdt: do not use stack buffers for hardware data
+Date: Tue,  7 Feb 2023 13:57:20 +0100
+Message-Id: <20230207125621.689724328@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -36,43 +34,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Natalia Petrova <n.petrova@fintech.ru>
+From: Alexander Egorenkov <egorenar@linux.ibm.com>
 
-commit 29de68c2b32ce58d64dea496d281e25ad0f551bd upstream.
+commit fe8973a3ad0905cb9ba2d42db42ed51de14737df upstream.
 
-Function radix_tree_insert() returns errors if the node hasn't
-been initialized and added to the tree.
+With CONFIG_VMAP_STACK=y the stack is allocated from the vmalloc space.
+Data passed to a hardware or a hypervisor interface that
+requires V=R can no longer be allocated on the stack.
 
-"kfree(node)" and return value "NULL" of node_get() help
-to avoid using unclear node in other calls.
+Use kmalloc() to get memory for a diag288 command.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Cc: <stable@vger.kernel.org> # 5.7
-Fixes: 0c2204a4ad71 ("net: qrtr: Migrate nameservice to kernel from userspace")
-Signed-off-by: Natalia Petrova <n.petrova@fintech.ru>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-Link: https://lore.kernel.org/r/20230125134831.8090-1-n.petrova@fintech.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Alexander Egorenkov <egorenar@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/qrtr/ns.c |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/watchdog/diag288_wdt.c |   13 +++++++++++--
+ 1 file changed, 11 insertions(+), 2 deletions(-)
 
---- a/net/qrtr/ns.c
-+++ b/net/qrtr/ns.c
-@@ -83,7 +83,10 @@ static struct qrtr_node *node_get(unsign
+--- a/drivers/watchdog/diag288_wdt.c
++++ b/drivers/watchdog/diag288_wdt.c
+@@ -268,12 +268,21 @@ static int __init diag288_init(void)
+ 	char ebc_begin[] = {
+ 		194, 197, 199, 201, 213
+ 	};
++	char *ebc_cmd;
  
- 	node->id = node_id;
+ 	watchdog_set_nowayout(&wdt_dev, nowayout_info);
  
--	radix_tree_insert(&nodes, node_id, node);
-+	if (radix_tree_insert(&nodes, node_id, node)) {
-+		kfree(node);
-+		return NULL;
-+	}
- 
- 	return node;
- }
+ 	if (MACHINE_IS_VM) {
+-		if (__diag288_vm(WDT_FUNC_INIT, 15,
+-				 ebc_begin, sizeof(ebc_begin)) != 0) {
++		ebc_cmd = kmalloc(sizeof(ebc_begin), GFP_KERNEL);
++		if (!ebc_cmd) {
++			pr_err("The watchdog cannot be initialized\n");
++			return -ENOMEM;
++		}
++		memcpy(ebc_cmd, ebc_begin, sizeof(ebc_begin));
++		ret = __diag288_vm(WDT_FUNC_INIT, 15,
++				   ebc_cmd, sizeof(ebc_begin));
++		kfree(ebc_cmd);
++		if (ret != 0) {
+ 			pr_err("The watchdog cannot be initialized\n");
+ 			return -EINVAL;
+ 		}
 
 
