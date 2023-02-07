@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2389329CA
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:08:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90FD3C433EF;
-	Tue,  7 Feb 2023 13:08:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 372E12C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:08:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6BA3BC433EF;
+	Tue,  7 Feb 2023 13:08:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775292;
-	bh=UpoLVT7g6V00nbnjrSzuK4ZlVZuL1+TKq7LFS53doko=;
+	s=korg; t=1675775295;
+	bh=bmO0opIXXod8eYZ3Rq2Qyh9+FxwaSkw57Q2LFjvdJlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TZIYUDVlT0zZ9Kl/F8MU+EHxzkF/7flEsSKqTZazF97G7+2qT//Wnw9Dxb4xZVqA3
-	 Qvb+bDYBciXtlVyOh+p7krPpgzvY31HmxcZrpp8XuQ8vTCtMlsUkaEiS4O6ttJY6OG
-	 JYBWVxyyYbaRG5lRYMW3xKQuS8OJ9zQ+KM6ff0/s=
+	b=VKUg91eO5jwE6tiLVHQ16BL9RiZei69LuR/Zp2PdlQ0pa5RMCfXEOZwOe5rO7NEDl
+	 JFLDOrxjsO4t6MJuGkHggXzp4bbHoMpc2wQ+DaWhCT0x4UvyWEdyj8TIPvGC5wGagX
+	 FFSu3faVe8deJwvSCv+QajJ4ZhIVXwgsnpIKcyp0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Abdun Nihaal <abdun.nihaal@gmail.com>,
-	Konstantin Komarov <almaz.alexandrovich@paragon-software.com>,
-	syzbot+fa4648a5446460b7b963@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 200/208] fs/ntfs3: Validate attribute data and valid sizes
-Date: Tue,  7 Feb 2023 13:57:34 +0100
-Message-Id: <20230207125643.553605626@linuxfoundation.org>
+	syzbot+9d14351a171d0d1c7955@syzkaller.appspotmail.com,
+	Kees Cook <keescook@chromium.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Miklos Szeredi <mszeredi@redhat.com>
+Subject: [PATCH 6.1 201/208] ovl: Use "buf" flexible array for memcpy() destination
+Date: Tue,  7 Feb 2023 13:57:35 +0100
+Message-Id: <20230207125643.602050455@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,46 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Abdun Nihaal <abdun.nihaal@gmail.com>
+From: Kees Cook <keescook@chromium.org>
 
-commit 019d22eb0eb707fc099e6e8fad9b3933236a06d0 upstream.
+commit cf8aa9bf97cadf85745506c6a3e244b22c268d63 upstream.
 
-The data_size and valid_size fields of non resident attributes should be
-less than the its alloc_size field, but this is not checked in
-ntfs_read_mft function.
+The "buf" flexible array needs to be the memcpy() destination to avoid
+false positive run-time warning from the recent FORTIFY_SOURCE
+hardening:
 
-Syzbot reports a allocation order warning due to a large unchecked value
-of data_size getting assigned to inode->i_size which is then passed to
-kcalloc.
+  memcpy: detected field-spanning write (size 93) of single field "&fh->fb"
+  at fs/overlayfs/export.c:799 (size 21)
 
-Add sanity check for ensuring that the data_size and valid_size fields
-are not larger than alloc_size field.
-
-Link: https://syzkaller.appspot.com/bug?extid=fa4648a5446460b7b963
-Reported-and-tested-by: syzbot+fa4648a5446460b7b963@syzkaller.appspotmail.com
-Fixes: (82cae269cfa95) fs/ntfs3: Add initialization of super block
-Signed-off-by: Abdun Nihaal <abdun.nihaal@gmail.com>
-Signed-off-by: Konstantin Komarov <almaz.alexandrovich@paragon-software.com>
+Reported-by: syzbot+9d14351a171d0d1c7955@syzkaller.appspotmail.com
+Link: https://lore.kernel.org/all/000000000000763a6c05e95a5985@google.com/
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Miklos Szeredi <mszeredi@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ntfs3/inode.c |    7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/overlayfs/export.c    |    2 +-
+ fs/overlayfs/overlayfs.h |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/fs/ntfs3/inode.c
-+++ b/fs/ntfs3/inode.c
-@@ -132,6 +132,13 @@ next_attr:
- 	if (le16_to_cpu(attr->name_off) + attr->name_len > asize)
- 		goto out;
+--- a/fs/overlayfs/export.c
++++ b/fs/overlayfs/export.c
+@@ -796,7 +796,7 @@ static struct ovl_fh *ovl_fid_to_fh(stru
+ 		return ERR_PTR(-ENOMEM);
  
-+	if (attr->non_res) {
-+		t64 = le64_to_cpu(attr->nres.alloc_size);
-+		if (le64_to_cpu(attr->nres.data_size) > t64 ||
-+		    le64_to_cpu(attr->nres.valid_size) > t64)
-+			goto out;
-+	}
-+
- 	switch (attr->type) {
- 	case ATTR_STD:
- 		if (attr->non_res ||
+ 	/* Copy unaligned inner fh into aligned buffer */
+-	memcpy(&fh->fb, fid, buflen - OVL_FH_WIRE_OFFSET);
++	memcpy(fh->buf, fid, buflen - OVL_FH_WIRE_OFFSET);
+ 	return fh;
+ }
+ 
+--- a/fs/overlayfs/overlayfs.h
++++ b/fs/overlayfs/overlayfs.h
+@@ -108,7 +108,7 @@ struct ovl_fh {
+ 	u8 padding[3];	/* make sure fb.fid is 32bit aligned */
+ 	union {
+ 		struct ovl_fb fb;
+-		u8 buf[0];
++		DECLARE_FLEX_ARRAY(u8, buf);
+ 	};
+ } __packed;
+ 
 
 
