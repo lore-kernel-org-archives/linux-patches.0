@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2574B2C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:14:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E51AC433EF;
-	Tue,  7 Feb 2023 13:14:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EC42C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:14:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76951C433D2;
+	Tue,  7 Feb 2023 13:14:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775650;
-	bh=E/2uAleW193iYSoF3EWEG2aHf0e9jDEeAf7JcQHrP8c=;
+	s=korg; t=1675775652;
+	bh=N0Edf6x1f9TIiVhbmnpnJAYmENyxyBYo5ixaFPZ5WKg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AO1Cvdxsu1l/KY+lvvP/AD3WQ6D4N5eJH4cxVWkLWc268cMj2fL5XMFl/WIPcCqau
-	 eOTT8asED3PabX+dxEONT1DfCJ/8HkydVmbvq9XZNVsplO/7zJE3d5d9n5cfFWvk0c
-	 23RAf25eGF8wpJJGtudYUJU6xQMgfUrC9O+AI7Mw=
+	b=fmXcMzGlO1oML2W1rafcwt1koxFCx6+ZU4L9L/YCozlpwKtdN8v9sOS2FCf2orW6c
+	 1Te6K9IJcCmWA3tNVRMI5LXY/O9QZLEb7lKMm13c/MpoMgL0A7n6FILdfMN7IR4IYa
+	 i2JrYQMEWtG12sNXpqzSgjqlolzwK5RKRwiO7WSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 081/120] iio: imu: fxos8700: fix swapped ACCEL and MAGN channels readback
-Date: Tue,  7 Feb 2023 13:57:32 +0100
-Message-Id: <20230207125622.181032721@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 5.15 072/120] efi: Accept version 2 of memory attributes table
+Date: Tue,  7 Feb 2023 13:57:23 +0100
+Message-Id: <20230207125621.822870823@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -35,50 +33,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-commit c68b44bc7d9b1469774a1c985ee71d2cbc5ebef5 upstream.
+commit 636ab417a7aec4ee993916e688eb5c5977570836 upstream.
 
-Because ACCEL and MAGN channels data register base address is
-swapped the accelerometer and magnetometer channels readback is
-swapped.
+UEFI v2.10 introduces version 2 of the memory attributes table, which
+turns the reserved field into a flags field, but is compatible with
+version 1 in all other respects. So let's not complain about version 2
+if we encounter it.
 
-Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://lore.kernel.org/r/20221208071911.2405922-3-carlos.song@nxp.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/fxos8700_core.c |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ drivers/firmware/efi/memattr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iio/imu/fxos8700_core.c
-+++ b/drivers/iio/imu/fxos8700_core.c
-@@ -420,9 +420,22 @@ static int fxos8700_get_data(struct fxos
- 	u8 base, reg;
- 	s16 tmp;
- 	int ret;
--	enum fxos8700_sensor type = fxos8700_to_sensor(chan_type);
+--- a/drivers/firmware/efi/memattr.c
++++ b/drivers/firmware/efi/memattr.c
+@@ -33,7 +33,7 @@ int __init efi_memattr_init(void)
+ 		return -ENOMEM;
+ 	}
  
--	base = type ? FXOS8700_OUT_X_MSB : FXOS8700_M_OUT_X_MSB;
-+	/*
-+	 * Different register base addresses varies with channel types.
-+	 * This bug hasn't been noticed before because using an enum is
-+	 * really hard to read. Use an a switch statement to take over that.
-+	 */
-+	switch (chan_type) {
-+	case IIO_ACCEL:
-+		base = FXOS8700_OUT_X_MSB;
-+		break;
-+	case IIO_MAGN:
-+		base = FXOS8700_M_OUT_X_MSB;
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
- 
- 	/* Block read 6 bytes of device output registers to avoid data loss */
- 	ret = regmap_bulk_read(data->regmap, base, data->buf,
+-	if (tbl->version > 1) {
++	if (tbl->version > 2) {
+ 		pr_warn("Unexpected EFI Memory Attributes table version %d\n",
+ 			tbl->version);
+ 		goto unmap;
 
 
