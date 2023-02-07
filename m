@@ -1,97 +1,109 @@
-Received: from out3-smtp.messagingengine.com (out3-smtp.messagingengine.com [66.111.4.27])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2EF0C20E8
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 09:43:42 +0000 (UTC)
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.47])
-	by mailout.nyi.internal (Postfix) with ESMTP id 3D42C5C0102;
-	Tue,  7 Feb 2023 04:43:41 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Tue, 07 Feb 2023 04:43:41 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=kroah.com; h=cc
-	:cc:content-type:date:date:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to; s=fm3; t=1675763021; x=1675849421; bh=3M3iH4rrEW
-	APo7oiKzxVdGL8I3tHzD4LYYQmpY5RCJE=; b=n9k6wmvjaEyA71gqFlnqRrRjgl
-	ssl09QPQhOIY7lTKitZ7r62SLvs3W12cltzQsqJnW08h2vaTevCHY6ymFzYOayeX
-	Ptutp1uEUEgPn2nzB7arX/CeMBHjMczhPRAcaewKZdZ9lFMUoSHIGUD7d5aPCGQE
-	uP3811imsqHbDjsiN+SPVc7rO2KMHINgmgd6rZKfmW54bS9np3CsojfVkTYxPqAo
-	pbQds4H29RQpp4oSORxoNKS+IPNOJceTkcSBIdDCvpn/o+CNT/r+p/eu0ZPVevKy
-	ywFbWeRkSrGym6WW04nWDERak/zuJaKQnzFLRM9Nl2I3Gz/zTBNAEBofVIZQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:date:date:feedback-id
-	:feedback-id:from:from:in-reply-to:in-reply-to:message-id
-	:mime-version:references:reply-to:sender:subject:subject:to:to
-	:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-	fm3; t=1675763021; x=1675849421; bh=3M3iH4rrEWAPo7oiKzxVdGL8I3tH
-	zD4LYYQmpY5RCJE=; b=IoGxfGGEEDlYwmbd6n33zQxbRoaEFmT+D+RQShwSIs9m
-	WhPM50gSyKD3GSHEOcUa2R/8ObyD7Wyq3we/IdqCEsj+4WhLkJhEUCuu51zehlCS
-	ivCaqRnghoiREeAdd2Y6gZxMHg5q4Eud3YkD1bHHn6iYzc6sP0d1X3qHPxnWd+Kj
-	hwybMy90g/a3UrhhGnfChWMTbRM1hkgd5Vfb8dPcDvv7AUncg8IHBeGTBRJ6SxuF
-	Sopmn7W0CWnRo3YwBU0p1DqDOoS0+JaYvNMCRJn985caMUYJNvEQa4225Cv5Hz7T
-	li15CSD1xKSGOebJ/vcMW6r1u8UJbSf7EZZ+uTZW3w==
-X-ME-Sender: <xms:TB3iY0ZCEpZghxL91PX-ogpjuA_OCbWds2hKsO2U9DebRWmUTPHeXg>
-    <xme:TB3iY_Y3z2GF44x4NAVU_Xox5jq3BEcS3N17wQl0-ZfTzbB-GdKGXJH5VzYiDweGD
-    Jf3-OrYfaaPTA>
-X-ME-Received: <xmr:TB3iY-8vqrNOOQs04GgNq0ZCSkMWRlqW64ErMHaLoRfr2Wxl08Ix2VsOHNI_PictSwrGBHvAwb6_nbpdPVVUVfJ0nPpLF1r43mL5WA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudegkedgtdehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesthdtredttddtvdenucfhrhhomhepifhrvghg
-    ucfmjfcuoehgrhgvgheskhhrohgrhhdrtghomheqnecuggftrfgrthhtvghrnhepgeehue
-    ehgfdtledutdelkeefgeejteegieekheefudeiffdvudeffeelvedttddvnecuffhomhgr
-    ihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmh
-    epmhgrihhlfhhrohhmpehgrhgvgheskhhrohgrhhdrtghomh
-X-ME-Proxy: <xmx:TB3iY-qOvh1h-zLELyuVMbjZz-GNZeFOzitDDj-WnrKSyO9s8B7QqQ>
-    <xmx:TB3iY_rZhMasNK1CDlFVCqQRi-Xy47WrQANzNyX2EB3keejoZOFBzA>
-    <xmx:TB3iY8QHxiHZCq_MV-6CfdpKd3Knz6qRCrg1V5xhRmRFA599c6CWtw>
-    <xmx:TR3iY9jqurut_kghDLpx31Kr5nO1iMUpDLHhGxezrQgpCadaruc06g>
-Feedback-ID: i787e41f1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 7 Feb 2023 04:43:40 -0500 (EST)
-Date: Tue, 7 Feb 2023 10:43:38 +0100
-From: Greg KH <greg@kroah.com>
-To: Stephen Boyd <swboyd@chromium.org>
-Cc: stable@vger.kernel.org, Johan Hovold <johan+linaro@kernel.org>,
-	linux-kernel@vger.kernel.org, patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Vinod Koul <vkoul@kernel.org>
-Subject: Re: [PATCH 6.1.y] phy: qcom-qmp-combo: fix runtime suspend
-Message-ID: <Y+IdSjVsaXOH9oM+@kroah.com>
-References: <20230203222820.2958983-1-swboyd@chromium.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D509220FC
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 11:10:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F50FC433D2;
+	Tue,  7 Feb 2023 11:10:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1675768231;
+	bh=OkRO0TmzgwU/D7fzKHxZGJ0808t2SLtMzoyYoyWjuXk=;
+	h=Subject:To:Cc:From:Date:In-Reply-To:From;
+	b=q2inZrJyxJNUbn6/zSUtVFHM2v6U0059eoege5pYkr+lb4S/pf75nqEZ1arfQ8ocl
+	 9e7fpO/A165+j8NaRmfe5d3uaApNEF98LkieP5uP7A6s69nHPYjuALymDcsFUWjrxP
+	 Ij/HlOfR6/M/cOWI6GFgUFwjhwTrn2y+nOpORi5Q=
+Subject: Patch "phy: qcom-qmp-combo: disable runtime PM on unbind" has been added to the 5.15-stable tree
+To: dmitry.baryshkov@linaro.org,gregkh@linuxfoundation.org,johan+linaro@kernel.org,patches@lists.linux.dev,swboyd@chromium.org,vkoul@kernel.org
+Cc: <stable-commits@vger.kernel.org>
+From: <gregkh@linuxfoundation.org>
+Date: Tue, 07 Feb 2023 12:10:28 +0100
+In-Reply-To: <20230203222616.2935268-2-swboyd@chromium.org>
+Message-ID: <167576822820142@kroah.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230203222820.2958983-1-swboyd@chromium.org>
+Content-Type: text/plain; charset=ANSI_X3.4-1968
+Content-Transfer-Encoding: 8bit
+X-stable: commit
+X-Patchwork-Hint: ignore 
 
-On Fri, Feb 03, 2023 at 02:28:20PM -0800, Stephen Boyd wrote:
-> From: Johan Hovold <johan+linaro@kernel.org>
-> 
-> commit c7b98de745cffdceefc077ad5cf9cda032ef8959 upstream.
-> 
-> Drop the confused runtime-suspend type check which effectively broke
-> runtime PM if the DP child node happens to be parsed before the USB
-> child node during probe (e.g. due to order of child nodes in the
-> devicetree).
-> 
-> Instead use the new driver data USB PHY pointer to access the USB
-> configuration and resources.
-> 
-> Fixes: 52e013d0bffa ("phy: qcom-qmp: Add support for DP in USB3+DP combo phy")
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-> Link: https://lore.kernel.org/r/20221114081346.5116-6-johan+linaro@kernel.org
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/phy/qualcomm/phy-qcom-qmp-combo.c | 12 ++----------
->  1 file changed, 2 insertions(+), 10 deletions(-)
 
-Now queued up, thanks.
+This is a note to let you know that I've just added the patch titled
 
-greg k-h
+    phy: qcom-qmp-combo: disable runtime PM on unbind
+
+to the 5.15-stable tree which can be found at:
+    http://www.kernel.org/git/?p=linux/kernel/git/stable/stable-queue.git;a=summary
+
+The filename of the patch is:
+     phy-qcom-qmp-combo-disable-runtime-pm-on-unbind.patch
+and it can be found in the queue-5.15 subdirectory.
+
+If you, or anyone else, feels it should not be added to the stable tree,
+please let <stable@vger.kernel.org> know about it.
+
+
+From stable-owner@vger.kernel.org Fri Feb  3 23:27:27 2023
+From: Stephen Boyd <swboyd@chromium.org>
+Date: Fri,  3 Feb 2023 14:26:12 -0800
+Subject: phy: qcom-qmp-combo: disable runtime PM on unbind
+To: stable@vger.kernel.org
+Cc: Johan Hovold <johan+linaro@kernel.org>, linux-kernel@vger.kernel.org, patches@lists.linux.dev, Dmitry Baryshkov <dmitry.baryshkov@linaro.org>, Vinod Koul <vkoul@kernel.org>
+Message-ID: <20230203222616.2935268-2-swboyd@chromium.org>
+
+From: Johan Hovold <johan+linaro@kernel.org>
+
+commit 4382d518d1887e62234560ea08a0203d11d28cc1 upstream.
+
+Make sure to disable runtime PM also on driver unbind.
+
+Fixes: ac0d239936bd ("phy: qcom-qmp: Add support for runtime PM").
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Link: https://lore.kernel.org/r/20220907110728.19092-2-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/phy/qualcomm/phy-qcom-qmp.c |    7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+@@ -5740,7 +5740,9 @@ static int qcom_qmp_phy_probe(struct pla
+ 		return -ENOMEM;
+ 
+ 	pm_runtime_set_active(dev);
+-	pm_runtime_enable(dev);
++	ret = devm_pm_runtime_enable(dev);
++	if (ret)
++		return ret;
+ 	/*
+ 	 * Prevent runtime pm from being ON by default. Users can enable
+ 	 * it using power/control in sysfs.
+@@ -5790,13 +5792,10 @@ static int qcom_qmp_phy_probe(struct pla
+ 	phy_provider = devm_of_phy_provider_register(dev, of_phy_simple_xlate);
+ 	if (!IS_ERR(phy_provider))
+ 		dev_info(dev, "Registered Qcom-QMP phy\n");
+-	else
+-		pm_runtime_disable(dev);
+ 
+ 	return PTR_ERR_OR_ZERO(phy_provider);
+ 
+ err_node_put:
+-	pm_runtime_disable(dev);
+ 	of_node_put(child);
+ 	return ret;
+ }
+
+
+Patches currently in stable-queue which might be from stable-owner@vger.kernel.org are
+
+queue-5.15/phy-qcom-qmp-combo-fix-broken-power-on.patch
+queue-5.15/phy-qcom-qmp-combo-fix-runtime-suspend.patch
+queue-5.15/phy-qcom-qmp-combo-disable-runtime-pm-on-unbind.patch
+queue-5.15/phy-qcom-qmp-usb-fix-memleak-on-probe-deferral.patch
+queue-5.15/phy-qcom-qmp-combo-fix-memleak-on-probe-deferral.patch
