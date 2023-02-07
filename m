@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 70C9B2C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:05:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3B51C4339C;
-	Tue,  7 Feb 2023 13:05:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4ABCF2C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:05:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC784C433D2;
+	Tue,  7 Feb 2023 13:05:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775146;
-	bh=9vkRVo911xuMNy+PWzxTzzANl7aShG2b2WHpcmtQFwM=;
+	s=korg; t=1675775149;
+	bh=YfAdvFglgr+/z/jUx7RWhiahpjEL47BF695t08TNpQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MJWLUprfX4WpLNr7BLgfRlFYaFJoLdvR2r6adHW1tlrxq99MjMDY51RO2YgmDNrc/
-	 RqvgZ/HdLmmx9h87AbLUTNWsxPIb5f56SYSPEftTb89uTcQmfKkTyaxcfATNcHQVin
-	 O+dXZFBCi1oyFpgk48hq8sq+O08S2UJx4hJzUkBU=
+	b=sencxIM/+auQyaTSRwtSQwKqbjT+vIHxGK4W97wsuh4nPZYStWP6kTLwAOZ+v/fcn
+	 WCKwJm/7gULulv/Bvmj/H7DtBbQpt1m5hvoTdTONR96tpos3jMGG/gQKsljJQSVHNe
+	 7cXmV5zZ9uySQDpmG+vpoI3y2IHr3D3TzD6hbLDk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 144/208] iio: imu: fxos8700: fix incorrect ODR mode readback
-Date: Tue,  7 Feb 2023 13:56:38 +0100
-Message-Id: <20230207125640.952018934@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 153/208] parisc: Wire up PTRACE_GETREGS/PTRACE_SETREGS for compat case
+Date: Tue,  7 Feb 2023 13:56:47 +0100
+Message-Id: <20230207125641.387792857@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,71 +33,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Helge Deller <deller@gmx.de>
 
-commit 78ad6864e9e012cdba7c353d044d21ffcfd5f34b upstream.
+commit 316f1f42b5cc1d95124c1f0387c867c1ba7b6d0e upstream.
 
-The absence of a correct offset leads an incorrect ODR mode
-readback after use a hexadecimal number to mark the value from
-FXOS8700_CTRL_REG1.
+Wire up the missing ptrace requests PTRACE_GETREGS, PTRACE_SETREGS,
+PTRACE_GETFPREGS and PTRACE_SETFPREGS when running 32-bit applications
+on 64-bit kernels.
 
-Get ODR mode by field mask and FIELD_GET clearly and conveniently.
-And attach other additional fix for keeping the original code logic
-and a good readability.
-
-Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://lore.kernel.org/r/20230118074227.1665098-2-carlos.song@nxp.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org # 4.7+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/fxos8700_core.c |   12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ arch/parisc/kernel/ptrace.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/imu/fxos8700_core.c
-+++ b/drivers/iio/imu/fxos8700_core.c
-@@ -10,6 +10,7 @@
- #include <linux/regmap.h>
- #include <linux/acpi.h>
- #include <linux/bitops.h>
-+#include <linux/bitfield.h>
+--- a/arch/parisc/kernel/ptrace.c
++++ b/arch/parisc/kernel/ptrace.c
+@@ -126,6 +126,12 @@ long arch_ptrace(struct task_struct *chi
+ 	unsigned long tmp;
+ 	long ret = -EIO;
  
- #include <linux/iio/iio.h>
- #include <linux/iio/sysfs.h>
-@@ -144,9 +145,9 @@
- #define FXOS8700_NVM_DATA_BNK0      0xa7
++	unsigned long user_regs_struct_size = sizeof(struct user_regs_struct);
++#ifdef CONFIG_64BIT
++	if (is_compat_task())
++		user_regs_struct_size /= 2;
++#endif
++
+ 	switch (request) {
  
- /* Bit definitions for FXOS8700_CTRL_REG1 */
--#define FXOS8700_CTRL_ODR_MSK       0x38
- #define FXOS8700_CTRL_ODR_MAX       0x00
- #define FXOS8700_CTRL_ODR_MIN       GENMASK(4, 3)
-+#define FXOS8700_CTRL_ODR_MSK       GENMASK(5, 3)
+ 	/* Read the word at location addr in the USER area.  For ptraced
+@@ -181,14 +187,14 @@ long arch_ptrace(struct task_struct *chi
+ 		return copy_regset_to_user(child,
+ 					   task_user_regset_view(current),
+ 					   REGSET_GENERAL,
+-					   0, sizeof(struct user_regs_struct),
++					   0, user_regs_struct_size,
+ 					   datap);
  
- /* Bit definitions for FXOS8700_M_CTRL_REG1 */
- #define FXOS8700_HMS_MASK           GENMASK(1, 0)
-@@ -508,10 +509,9 @@ static int fxos8700_set_odr(struct fxos8
- 	if (i >= odr_num)
- 		return -EINVAL;
+ 	case PTRACE_SETREGS:	/* Set all gp regs in the child. */
+ 		return copy_regset_from_user(child,
+ 					     task_user_regset_view(current),
+ 					     REGSET_GENERAL,
+-					     0, sizeof(struct user_regs_struct),
++					     0, user_regs_struct_size,
+ 					     datap);
  
--	return regmap_update_bits(data->regmap,
--				  FXOS8700_CTRL_REG1,
--				  FXOS8700_CTRL_ODR_MSK + FXOS8700_ACTIVE,
--				  fxos8700_odr[i].bits << 3 | active_mode);
-+	val &= ~FXOS8700_CTRL_ODR_MSK;
-+	val |= FIELD_PREP(FXOS8700_CTRL_ODR_MSK, fxos8700_odr[i].bits) | FXOS8700_ACTIVE;
-+	return regmap_write(data->regmap, FXOS8700_CTRL_REG1, val);
- }
+ 	case PTRACE_GETFPREGS:	/* Get the child FPU state. */
+@@ -302,6 +308,11 @@ long compat_arch_ptrace(struct task_stru
+ 			}
+ 		}
+ 		break;
++	case PTRACE_GETREGS:
++	case PTRACE_SETREGS:
++	case PTRACE_GETFPREGS:
++	case PTRACE_SETFPREGS:
++		return arch_ptrace(child, request, addr, data);
  
- static int fxos8700_get_odr(struct fxos8700_data *data, enum fxos8700_sensor t,
-@@ -524,7 +524,7 @@ static int fxos8700_get_odr(struct fxos8
- 	if (ret)
- 		return ret;
- 
--	val &= FXOS8700_CTRL_ODR_MSK;
-+	val = FIELD_GET(FXOS8700_CTRL_ODR_MSK, val);
- 
- 	for (i = 0; i < odr_num; i++)
- 		if (val == fxos8700_odr[i].bits)
+ 	default:
+ 		ret = compat_ptrace_request(child, request, addr, data);
 
 
