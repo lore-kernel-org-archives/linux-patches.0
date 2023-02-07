@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C69D52C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4D6DDC433EF;
-	Tue,  7 Feb 2023 13:06:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA6E42C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D418C433D2;
+	Tue,  7 Feb 2023 13:06:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775183;
-	bh=+4MgNm7jobg0Th/28M5WXMhfu5tTKoujsHCRE8soPbk=;
+	s=korg; t=1675775186;
+	bh=fpUQUoq0adnD/CahJ68tUfvXHb4Q5EZwacrdUdOheeQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yN21ihhHr1RtHITI6vTclVGU/JjeXeubBcoeTdjVxMRp/JdGnxOI6hM0MKgl4PFGz
-	 9QjqXHKmdji6GuqyjuwLc7WUEEs27iC8GueYsU+YMvMHtajdAnVS/iTrbwiEt8hd1v
-	 +gzptpk66XY0W2ojHygwUJ51zTOP33YQKycQNPRk=
+	b=O50+d6A09PbKE5ijyRCgyctsTwLDgju2NZ2NedekcO/WVf9HhqwgLGlefgAUDWm2W
+	 N9p1wmgP350wOJlAEvGmYIB/vJ8bsasK4NHW+2AGt0r/bf0ej0lkSqCySdrBxl/i0j
+	 uvu/m3RAYiHalQarujTxnij64H6Mn/wWk27Qfe1Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Kardashevskiy <aik@amd.com>,
-	Joerg Roedel <jroedel@suse.de>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>
-Subject: [PATCH 6.1 164/208] x86/debug: Fix stack recursion caused by wrongly ordered DR7 accesses
-Date: Tue,  7 Feb 2023 13:56:58 +0100
-Message-Id: <20230207125641.841052013@linuxfoundation.org>
+	Matthew Gerlach <matthew.gerlach@linux.intel.com>,
+	Russ Weight <russell.h.weight@intel.com>,
+	Marco Pagani <marpagan@redhat.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>,
+	Xu Yilun <yilun.xu@intel.com>
+Subject: [PATCH 6.1 165/208] fpga: m10bmc-sec: Fix probe rollback
+Date: Tue,  7 Feb 2023 13:56:59 +0100
+Message-Id: <20230207125641.889469962@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,80 +37,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joerg Roedel <jroedel@suse.de>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 9d2c7203ffdb846399b82b0660563c89e918c751 upstream.
+commit 60ce26d10e5850f33cc76fce52f5377045e75a15 upstream.
 
-In kernels compiled with CONFIG_PARAVIRT=n, the compiler re-orders the
-DR7 read in exc_nmi() to happen before the call to sev_es_ist_enter().
+Handle probe error rollbacks properly to avoid leaks.
 
-This is problematic when running as an SEV-ES guest because in this
-environment the DR7 read might cause a #VC exception, and taking #VC
-exceptions is not safe in exc_nmi() before sev_es_ist_enter() has run.
-
-The result is stack recursion if the NMI was caused on the #VC IST
-stack, because a subsequent #VC exception in the NMI handler will
-overwrite the stack frame of the interrupted #VC handler.
-
-As there are no compiler barriers affecting the ordering of DR7
-reads/writes, make the accesses to this register volatile, forbidding
-the compiler to re-order them.
-
-  [ bp: Massage text, make them volatile too, to make sure some
-  aggressive compiler optimization pass doesn't discard them. ]
-
-Fixes: 315562c9af3d ("x86/sev-es: Adjust #VC IST Stack on entering NMI handler")
-Reported-by: Alexey Kardashevskiy <aik@amd.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
+Fixes: 5cd339b370e2 ("fpga: m10bmc-sec: add max10 secure update functions")
+Reviewed-by: Matthew Gerlach <matthew.gerlach@linux.intel.com>
+Reviewed-by: Russ Weight <russell.h.weight@intel.com>
+Reviewed-by: Marco Pagani <marpagan@redhat.com>
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230127035616.508966-1-aik@amd.com
+Acked-by: Xu Yilun <yilun.xu@intel.com>
+Link: https://lore.kernel.org/r/20221214144952.8392-1-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Xu Yilun <yilun.xu@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/include/asm/debugreg.h |   26 ++++++++++++++++++++++++--
- 1 file changed, 24 insertions(+), 2 deletions(-)
+ drivers/fpga/intel-m10-bmc-sec-update.c | 17 ++++++++++++-----
+ 1 file changed, 12 insertions(+), 5 deletions(-)
 
---- a/arch/x86/include/asm/debugreg.h
-+++ b/arch/x86/include/asm/debugreg.h
-@@ -39,7 +39,20 @@ static __always_inline unsigned long nat
- 		asm("mov %%db6, %0" :"=r" (val));
- 		break;
- 	case 7:
--		asm("mov %%db7, %0" :"=r" (val));
-+		/*
-+		 * Apply __FORCE_ORDER to DR7 reads to forbid re-ordering them
-+		 * with other code.
-+		 *
-+		 * This is needed because a DR7 access can cause a #VC exception
-+		 * when running under SEV-ES. Taking a #VC exception is not a
-+		 * safe thing to do just anywhere in the entry code and
-+		 * re-ordering might place the access into an unsafe location.
-+		 *
-+		 * This happened in the NMI handler, where the DR7 read was
-+		 * re-ordered to happen before the call to sev_es_ist_enter(),
-+		 * causing stack recursion.
-+		 */
-+		asm volatile("mov %%db7, %0" : "=r" (val) : __FORCE_ORDER);
- 		break;
- 	default:
- 		BUG();
-@@ -66,7 +79,16 @@ static __always_inline void native_set_d
- 		asm("mov %0, %%db6"	::"r" (value));
- 		break;
- 	case 7:
--		asm("mov %0, %%db7"	::"r" (value));
-+		/*
-+		 * Apply __FORCE_ORDER to DR7 writes to forbid re-ordering them
-+		 * with other code.
-+		 *
-+		 * While is didn't happen with a DR7 write (see the DR7 read
-+		 * comment above which explains where it happened), add the
-+		 * __FORCE_ORDER here too to avoid similar problems in the
-+		 * future.
-+		 */
-+		asm volatile("mov %0, %%db7"	::"r" (value), __FORCE_ORDER);
- 		break;
- 	default:
- 		BUG();
+diff --git a/drivers/fpga/intel-m10-bmc-sec-update.c b/drivers/fpga/intel-m10-bmc-sec-update.c
+index 79d48852825e..03f1bd81c434 100644
+--- a/drivers/fpga/intel-m10-bmc-sec-update.c
++++ b/drivers/fpga/intel-m10-bmc-sec-update.c
+@@ -574,20 +574,27 @@ static int m10bmc_sec_probe(struct platform_device *pdev)
+ 	len = scnprintf(buf, SEC_UPDATE_LEN_MAX, "secure-update%d",
+ 			sec->fw_name_id);
+ 	sec->fw_name = kmemdup_nul(buf, len, GFP_KERNEL);
+-	if (!sec->fw_name)
+-		return -ENOMEM;
++	if (!sec->fw_name) {
++		ret = -ENOMEM;
++		goto fw_name_fail;
++	}
+ 
+ 	fwl = firmware_upload_register(THIS_MODULE, sec->dev, sec->fw_name,
+ 				       &m10bmc_ops, sec);
+ 	if (IS_ERR(fwl)) {
+ 		dev_err(sec->dev, "Firmware Upload driver failed to start\n");
+-		kfree(sec->fw_name);
+-		xa_erase(&fw_upload_xa, sec->fw_name_id);
+-		return PTR_ERR(fwl);
++		ret = PTR_ERR(fwl);
++		goto fw_uploader_fail;
+ 	}
+ 
+ 	sec->fwl = fwl;
+ 	return 0;
++
++fw_uploader_fail:
++	kfree(sec->fw_name);
++fw_name_fail:
++	xa_erase(&fw_upload_xa, sec->fw_name_id);
++	return ret;
+ }
+ 
+ static int m10bmc_sec_remove(struct platform_device *pdev)
+-- 
+2.39.1
+
 
 
