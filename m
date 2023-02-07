@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDA5E3212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:12:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CBEDC4339C;
-	Tue,  7 Feb 2023 13:12:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093143212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:12:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6CAADC433EF;
+	Tue,  7 Feb 2023 13:12:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775528;
-	bh=mL2Xv086YHKFQ132QvU+UqfkzeMBMdu3wLN6CGZo3vs=;
+	s=korg; t=1675775531;
+	bh=Bps+J6UDRFPS9Wp2ZEWdaBrTanEGPs8en/1gsdXGfy0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TfaHvKk3YuaLXpLYu7hdKMajJtyWLFlhFVGSKfUtl9x9WrflbYwc1VA3mht3xTUjz
-	 rnB6vyayzLwU93YZFCeGvdvRIVM9OKxF4TTJ+esw/P6IYKQVZPDiJxPuMNS5g+BKAq
-	 NUpFPWk2k8Q/Mcep8xsQxkUENQJf3+XwPk6bo2x4=
+	b=IcRfyS42YV7/KJgcdun+ankhlWdtsAgac0EfF7tUB5dqgAGnTd5uKLlwhhV6RqGEf
+	 gfrvJrXQlL0I9iAzw8eXUYUjNVAlWF24Rr46bknKKqtVdVAxSzlsRGFGjGy2hWTuv3
+	 PJ6UJsNqNzLs1YrwpFyH4bF2/yZMKyATV6h7j5Ew=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marius Dinu <marius@psihoexpert.ro>,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 043/120] ata: libata: Fix sata_down_spd_limit() when no link speed is reported
-Date: Tue,  7 Feb 2023 13:56:54 +0100
-Message-Id: <20230207125620.595951563@linuxfoundation.org>
+	Alexander Egorenkov <egorenar@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>
+Subject: [PATCH 5.15 070/120] watchdog: diag288_wdt: fix __diag288() inline assembly
+Date: Tue,  7 Feb 2023 13:57:21 +0100
+Message-Id: <20230207125621.733170263@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -36,57 +34,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Alexander Egorenkov <egorenar@linux.ibm.com>
 
-[ Upstream commit 69f2c9346313ba3d3dfa4091ff99df26c67c9021 ]
+commit 32e40f9506b9e32917eb73154f93037b443124d1 upstream.
 
-Commit 2dc0b46b5ea3 ("libata: sata_down_spd_limit should return if
-driver has not recorded sstatus speed") changed the behavior of
-sata_down_spd_limit() to return doing nothing if a drive does not report
-a current link speed, to avoid reducing the link speed to the lowest 1.5
-Gbps speed.
+The DIAG 288 statement consumes an EBCDIC string the address of which is
+passed in a register. Use a "memory" clobber to tell the compiler that
+memory is accessed within the inline assembly.
 
-However, the change assumed that a speed was recorded before probing
-(e.g. before a suspend/resume) and set in link->sata_spd. This causes
-problems with adapters/drives combination failing to establish a link
-speed during probe autonegotiation. One example reported of this problem
-is an mvebu adapter with a 3Gbps port-multiplier box: autonegotiation
-fails, leaving no recorded link speed and no reported current link
-speed. Probe retries also fail as no action is taken by sata_set_spd()
-after each retry.
-
-Fix this by returning early in sata_down_spd_limit() only if we do have
-a recorded link speed, that is, if link->sata_spd is not 0. With this
-fix, a failed probe not leading to a recorded link speed is retried at
-the lower 1.5 Gbps speed, with the link speed potentially increased
-later on the second revalidate of the device if the device reports
-that it supports higher link speeds.
-
-Reported-by: Marius Dinu <marius@psihoexpert.ro>
-Fixes: 2dc0b46b5ea3 ("libata: sata_down_spd_limit should return if driver has not recorded sstatus speed")
-Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
-Tested-by: Marius Dinu <marius@psihoexpert.ro>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Alexander Egorenkov <egorenar@linux.ibm.com>
+Reviewed-by: Heiko Carstens <hca@linux.ibm.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/ata/libata-core.c | 2 +-
+ drivers/watchdog/diag288_wdt.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index c430cd3cfa17..025260b80a94 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -3076,7 +3076,7 @@ int sata_down_spd_limit(struct ata_link *link, u32 spd_limit)
- 	 */
- 	if (spd > 1)
- 		mask &= (1 << (spd - 1)) - 1;
--	else
-+	else if (link->sata_spd)
- 		return -EINVAL;
+--- a/drivers/watchdog/diag288_wdt.c
++++ b/drivers/watchdog/diag288_wdt.c
+@@ -86,7 +86,7 @@ static int __diag288(unsigned int func,
+ 		"1:\n"
+ 		EX_TABLE(0b, 1b)
+ 		: "+d" (err) : "d"(__func), "d"(__timeout),
+-		  "d"(__action), "d"(__len) : "1", "cc");
++		  "d"(__action), "d"(__len) : "1", "cc", "memory");
+ 	return err;
+ }
  
- 	/* were we already at the bottom? */
--- 
-2.39.0
-
 
 
