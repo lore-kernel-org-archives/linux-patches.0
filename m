@@ -1,29 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920742C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:09:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03825C433A0;
-	Tue,  7 Feb 2023 13:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EB1F2C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:09:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1669C433D2;
+	Tue,  7 Feb 2023 13:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775340;
-	bh=07K9p89gxShzJmG7D98uLbLagE01zg0t9gIKKt5wSQ8=;
+	s=korg; t=1675775343;
+	bh=Gra5ErS4X0GNbZsEVC8ttmGP+ep9iw21Wvq0/qZPMaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j2/pFAWm3TypanQfuCntwWd1BeyCrqIlX15pOW/ahDyII+2KCFEO1hU7iWZDkIyRX
-	 UfOzN1gpCE0i80A0v8wgL1yLTvCjcli4k2JEnaJsrOSyeTOavzSSp9/oIVkm3BA1g6
-	 ZcmgScHaAzJqY2PFN9v1KkwvouTWTf3k0SfmLpRs=
+	b=kUd8gn/h/w2P7LZy68wy5XYPtdpFzBHxUCujSqw8kkBF18M1kQ9gvDfIdLn9PAeQp
+	 cifsBYW6hRo9DiuKSYZBP2TMHnECsszFtfnjlJ8eMrDh8IbCpgAXiYrDW14tOmiaC3
+	 88RW1NbuK6PlbGu8m65mVCxBMNqEzZBLvZfqn7lo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Gruenbacher <agruenba@redhat.com>
-Subject: [PATCH 6.1 206/208] gfs2: Cosmetic gfs2_dinode_{in,out} cleanup
-Date: Tue,  7 Feb 2023 13:57:40 +0100
-Message-Id: <20230207125643.858005750@linuxfoundation.org>
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.15 001/120] firewire: fix memory leak for payload of request subaction to IEC 61883-1 FCP region
+Date: Tue,  7 Feb 2023 13:56:12 +0100
+Message-Id: <20230207125618.779037731@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
-References: <20230207125634.292109991@linuxfoundation.org>
+In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
+References: <20230207125618.699726054@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -33,154 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Gruenbacher <agruenba@redhat.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-commit 7db354444ad8429e660b0f8145d425285d4f90ff upstream.
+commit 531390a243ef47448f8bad01c186c2787666bf4d upstream.
 
-In each of the two functions, add an inode variable that points to
-&ip->i_inode and use that throughout the rest of the function.
+This patch is fix for Linux kernel v2.6.33 or later.
 
-Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
+For request subaction to IEC 61883-1 FCP region, Linux FireWire subsystem
+have had an issue of use-after-free. The subsystem allows multiple
+user space listeners to the region, while data of the payload was likely
+released before the listeners execute read(2) to access to it for copying
+to user space.
+
+The issue was fixed by a commit 281e20323ab7 ("firewire: core: fix
+use-after-free regression in FCP handler"). The object of payload is
+duplicated in kernel space for each listener. When the listener executes
+ioctl(2) with FW_CDEV_IOC_SEND_RESPONSE request, the object is going to
+be released.
+
+However, it causes memory leak since the commit relies on call of
+release_request() in drivers/firewire/core-cdev.c. Against the
+expectation, the function is never called due to the design of
+release_client_resource(). The function delegates release task
+to caller when called with non-NULL fourth argument. The implementation
+of ioctl_send_response() is the case. It should release the object
+explicitly.
+
+This commit fixes the bug.
+
+Cc: <stable@vger.kernel.org>
+Fixes: 281e20323ab7 ("firewire: core: fix use-after-free regression in FCP handler")
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Link: https://lore.kernel.org/r/20230117090610.93792-2-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/gfs2/glops.c |   41 +++++++++++++++++++++--------------------
- fs/gfs2/super.c |   27 ++++++++++++++-------------
- 2 files changed, 35 insertions(+), 33 deletions(-)
+ drivers/firewire/core-cdev.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/fs/gfs2/glops.c
-+++ b/fs/gfs2/glops.c
-@@ -397,38 +397,39 @@ static int gfs2_dinode_in(struct gfs2_in
- 	struct timespec64 atime;
- 	u16 height, depth;
- 	umode_t mode = be32_to_cpu(str->di_mode);
--	bool is_new = ip->i_inode.i_state & I_NEW;
-+	struct inode *inode = &ip->i_inode;
-+	bool is_new = inode->i_state & I_NEW;
+--- a/drivers/firewire/core-cdev.c
++++ b/drivers/firewire/core-cdev.c
+@@ -818,8 +818,10 @@ static int ioctl_send_response(struct cl
  
- 	if (unlikely(ip->i_no_addr != be64_to_cpu(str->di_num.no_addr)))
- 		goto corrupt;
--	if (unlikely(!is_new && inode_wrong_type(&ip->i_inode, mode)))
-+	if (unlikely(!is_new && inode_wrong_type(inode, mode)))
- 		goto corrupt;
- 	ip->i_no_formal_ino = be64_to_cpu(str->di_num.no_formal_ino);
--	ip->i_inode.i_mode = mode;
-+	inode->i_mode = mode;
- 	if (is_new) {
--		ip->i_inode.i_rdev = 0;
-+		inode->i_rdev = 0;
- 		switch (mode & S_IFMT) {
- 		case S_IFBLK:
- 		case S_IFCHR:
--			ip->i_inode.i_rdev = MKDEV(be32_to_cpu(str->di_major),
--						   be32_to_cpu(str->di_minor));
-+			inode->i_rdev = MKDEV(be32_to_cpu(str->di_major),
-+					      be32_to_cpu(str->di_minor));
- 			break;
- 		}
- 	}
+ 	r = container_of(resource, struct inbound_transaction_resource,
+ 			 resource);
+-	if (is_fcp_request(r->request))
++	if (is_fcp_request(r->request)) {
++		kfree(r->data);
+ 		goto out;
++	}
  
--	i_uid_write(&ip->i_inode, be32_to_cpu(str->di_uid));
--	i_gid_write(&ip->i_inode, be32_to_cpu(str->di_gid));
--	set_nlink(&ip->i_inode, be32_to_cpu(str->di_nlink));
--	i_size_write(&ip->i_inode, be64_to_cpu(str->di_size));
--	gfs2_set_inode_blocks(&ip->i_inode, be64_to_cpu(str->di_blocks));
-+	i_uid_write(inode, be32_to_cpu(str->di_uid));
-+	i_gid_write(inode, be32_to_cpu(str->di_gid));
-+	set_nlink(inode, be32_to_cpu(str->di_nlink));
-+	i_size_write(inode, be64_to_cpu(str->di_size));
-+	gfs2_set_inode_blocks(inode, be64_to_cpu(str->di_blocks));
- 	atime.tv_sec = be64_to_cpu(str->di_atime);
- 	atime.tv_nsec = be32_to_cpu(str->di_atime_nsec);
--	if (timespec64_compare(&ip->i_inode.i_atime, &atime) < 0)
--		ip->i_inode.i_atime = atime;
--	ip->i_inode.i_mtime.tv_sec = be64_to_cpu(str->di_mtime);
--	ip->i_inode.i_mtime.tv_nsec = be32_to_cpu(str->di_mtime_nsec);
--	ip->i_inode.i_ctime.tv_sec = be64_to_cpu(str->di_ctime);
--	ip->i_inode.i_ctime.tv_nsec = be32_to_cpu(str->di_ctime_nsec);
-+	if (timespec64_compare(&inode->i_atime, &atime) < 0)
-+		inode->i_atime = atime;
-+	inode->i_mtime.tv_sec = be64_to_cpu(str->di_mtime);
-+	inode->i_mtime.tv_nsec = be32_to_cpu(str->di_mtime_nsec);
-+	inode->i_ctime.tv_sec = be64_to_cpu(str->di_ctime);
-+	inode->i_ctime.tv_nsec = be32_to_cpu(str->di_ctime_nsec);
- 
- 	ip->i_goal = be64_to_cpu(str->di_goal_meta);
- 	ip->i_generation = be64_to_cpu(str->di_generation);
-@@ -436,7 +437,7 @@ static int gfs2_dinode_in(struct gfs2_in
- 	ip->i_diskflags = be32_to_cpu(str->di_flags);
- 	ip->i_eattr = be64_to_cpu(str->di_eattr);
- 	/* i_diskflags and i_eattr must be set before gfs2_set_inode_flags() */
--	gfs2_set_inode_flags(&ip->i_inode);
-+	gfs2_set_inode_flags(inode);
- 	height = be16_to_cpu(str->di_height);
- 	if (unlikely(height > GFS2_MAX_META_HEIGHT))
- 		goto corrupt;
-@@ -448,8 +449,8 @@ static int gfs2_dinode_in(struct gfs2_in
- 	ip->i_depth = (u8)depth;
- 	ip->i_entries = be32_to_cpu(str->di_entries);
- 
--	if (S_ISREG(ip->i_inode.i_mode))
--		gfs2_set_aops(&ip->i_inode);
-+	if (S_ISREG(inode->i_mode))
-+		gfs2_set_aops(inode);
- 
- 	return 0;
- corrupt:
---- a/fs/gfs2/super.c
-+++ b/fs/gfs2/super.c
-@@ -379,6 +379,7 @@ out:
- 
- void gfs2_dinode_out(const struct gfs2_inode *ip, void *buf)
- {
-+	const struct inode *inode = &ip->i_inode;
- 	struct gfs2_dinode *str = buf;
- 
- 	str->di_header.mh_magic = cpu_to_be32(GFS2_MAGIC);
-@@ -386,15 +387,15 @@ void gfs2_dinode_out(const struct gfs2_i
- 	str->di_header.mh_format = cpu_to_be32(GFS2_FORMAT_DI);
- 	str->di_num.no_addr = cpu_to_be64(ip->i_no_addr);
- 	str->di_num.no_formal_ino = cpu_to_be64(ip->i_no_formal_ino);
--	str->di_mode = cpu_to_be32(ip->i_inode.i_mode);
--	str->di_uid = cpu_to_be32(i_uid_read(&ip->i_inode));
--	str->di_gid = cpu_to_be32(i_gid_read(&ip->i_inode));
--	str->di_nlink = cpu_to_be32(ip->i_inode.i_nlink);
--	str->di_size = cpu_to_be64(i_size_read(&ip->i_inode));
--	str->di_blocks = cpu_to_be64(gfs2_get_inode_blocks(&ip->i_inode));
--	str->di_atime = cpu_to_be64(ip->i_inode.i_atime.tv_sec);
--	str->di_mtime = cpu_to_be64(ip->i_inode.i_mtime.tv_sec);
--	str->di_ctime = cpu_to_be64(ip->i_inode.i_ctime.tv_sec);
-+	str->di_mode = cpu_to_be32(inode->i_mode);
-+	str->di_uid = cpu_to_be32(i_uid_read(inode));
-+	str->di_gid = cpu_to_be32(i_gid_read(inode));
-+	str->di_nlink = cpu_to_be32(inode->i_nlink);
-+	str->di_size = cpu_to_be64(i_size_read(inode));
-+	str->di_blocks = cpu_to_be64(gfs2_get_inode_blocks(inode));
-+	str->di_atime = cpu_to_be64(inode->i_atime.tv_sec);
-+	str->di_mtime = cpu_to_be64(inode->i_mtime.tv_sec);
-+	str->di_ctime = cpu_to_be64(inode->i_ctime.tv_sec);
- 
- 	str->di_goal_meta = cpu_to_be64(ip->i_goal);
- 	str->di_goal_data = cpu_to_be64(ip->i_goal);
-@@ -402,16 +403,16 @@ void gfs2_dinode_out(const struct gfs2_i
- 
- 	str->di_flags = cpu_to_be32(ip->i_diskflags);
- 	str->di_height = cpu_to_be16(ip->i_height);
--	str->di_payload_format = cpu_to_be32(S_ISDIR(ip->i_inode.i_mode) &&
-+	str->di_payload_format = cpu_to_be32(S_ISDIR(inode->i_mode) &&
- 					     !(ip->i_diskflags & GFS2_DIF_EXHASH) ?
- 					     GFS2_FORMAT_DE : 0);
- 	str->di_depth = cpu_to_be16(ip->i_depth);
- 	str->di_entries = cpu_to_be32(ip->i_entries);
- 
- 	str->di_eattr = cpu_to_be64(ip->i_eattr);
--	str->di_atime_nsec = cpu_to_be32(ip->i_inode.i_atime.tv_nsec);
--	str->di_mtime_nsec = cpu_to_be32(ip->i_inode.i_mtime.tv_nsec);
--	str->di_ctime_nsec = cpu_to_be32(ip->i_inode.i_ctime.tv_nsec);
-+	str->di_atime_nsec = cpu_to_be32(inode->i_atime.tv_nsec);
-+	str->di_mtime_nsec = cpu_to_be32(inode->i_mtime.tv_nsec);
-+	str->di_ctime_nsec = cpu_to_be32(inode->i_ctime.tv_nsec);
- }
- 
- /**
+ 	if (a->length != fw_get_response_length(r->request)) {
+ 		ret = -EINVAL;
 
 
