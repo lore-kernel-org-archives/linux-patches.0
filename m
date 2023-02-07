@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8793C2C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:07:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDFC0C433D2;
-	Tue,  7 Feb 2023 13:07:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6024D2C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:07:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4551C433D2;
+	Tue,  7 Feb 2023 13:07:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775249;
-	bh=820600CiMm+BT/WuR55GoEBkWOqQ4G/uB7yKcisAtsQ=;
+	s=korg; t=1675775252;
+	bh=y2lR5wTufN+3XO4Pksl4GAytSosY7tsE5z1ebI2IkSY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TeXqw6icqjo1f7OGxvKvjvpx80GkjJdpJF/iDBcyKlLQGa/DE0AphrxJOqWp2LLoH
-	 i4dShzKiT7N58sT0SaGCRL+Ec70XBG3a3Mr7UdlDYVgSWh5GHT6nohMxNGkqktY6Tv
-	 Ji2ekXXzZ+HnjpzRs9LhEEcTrdmHdzvOrNQA4xRI=
+	b=I51KJWMVQ7YrvhJOmv3F23nZe2e1vvwtff2bDF3gxQJQMwpLN5UeRSzfGetDIWgtI
+	 8eqMLYRsUgk0iBNiSPd7IV3ax0xRDCwHsr0ygoZDZxx9lmOPqJ/8yGYSt5yUZWUkhq
+	 H9c60Xjf+CIQXcKsOR50DOmHx9jkspvLDlYlX5k0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Michael Walle <michael@walle.cc>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.1 187/208] nvmem: core: fix registration vs use race
-Date: Tue,  7 Feb 2023 13:57:21 +0100
-Message-Id: <20230207125642.945762870@linuxfoundation.org>
+Subject: [PATCH 6.1 188/208] nvmem: core: fix device node refcounting
+Date: Tue,  7 Feb 2023 13:57:22 +0100
+Message-Id: <20230207125642.992438342@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -34,81 +34,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Michael Walle <michael@walle.cc>
 
-commit ab3428cfd9aa2f3463ee4b2909b5bb2193bd0c4a upstream.
+commit edcf2fb660526b5ed29f93bd17328a2b4835c8b2 upstream.
 
-The i.MX6 CPU frequency driver sometimes fails to register at boot time
-due to nvmem_cell_read_u32() sporadically returning -ENOENT.
+In of_nvmem_cell_get(), of_get_next_parent() is used on cell_np. This
+will decrement the refcount on cell_np, but cell_np is still used later
+in the code. Use of_get_parent() instead and of_node_put() in the
+appropriate places.
 
-This happens because there is a window where __nvmem_device_get() in
-of_nvmem_cell_get() is able to return the nvmem device, but as cells
-have been setup, nvmem_find_cell_entry_by_node() returns NULL.
-
-The occurs because the nvmem core registration code violates one of the
-fundamental principles of kernel programming: do not publish data
-structures before their setup is complete.
-
-Fix this by making nvmem core code conform with this principle.
-
-Fixes: eace75cfdcf7 ("nvmem: Add a simple NVMEM framework for nvmem providers")
+Fixes: 69aba7948cbe ("nvmem: Add a simple NVMEM framework for consumers")
+Fixes: 7ae6478b304b ("nvmem: core: rework nvmem cell instance creation")
 Cc: stable@vger.kernel.org
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Michael Walle <michael@walle.cc>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230127104015.23839-7-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20230127104015.23839-8-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/core.c |   18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ drivers/nvmem/core.c |   11 ++++++++---
+ 1 file changed, 8 insertions(+), 3 deletions(-)
 
 --- a/drivers/nvmem/core.c
 +++ b/drivers/nvmem/core.c
-@@ -832,22 +832,16 @@ struct nvmem_device *nvmem_register(cons
- 	nvmem->dev.groups = nvmem_dev_groups;
- #endif
+@@ -1237,16 +1237,21 @@ struct nvmem_cell *of_nvmem_cell_get(str
+ 	if (!cell_np)
+ 		return ERR_PTR(-ENOENT);
  
--	dev_dbg(&nvmem->dev, "Registering nvmem device %s\n", config->name);
--
--	rval = device_add(&nvmem->dev);
--	if (rval)
--		goto err_put_device;
--
- 	if (nvmem->nkeepout) {
- 		rval = nvmem_validate_keepouts(nvmem);
- 		if (rval)
--			goto err_device_del;
-+			goto err_put_device;
- 	}
+-	nvmem_np = of_get_next_parent(cell_np);
+-	if (!nvmem_np)
++	nvmem_np = of_get_parent(cell_np);
++	if (!nvmem_np) {
++		of_node_put(cell_np);
+ 		return ERR_PTR(-EINVAL);
++	}
  
- 	if (config->compat) {
- 		rval = nvmem_sysfs_setup_compat(nvmem, config);
- 		if (rval)
--			goto err_device_del;
-+			goto err_put_device;
- 	}
+ 	nvmem = __nvmem_device_get(nvmem_np, device_match_of_node);
+ 	of_node_put(nvmem_np);
+-	if (IS_ERR(nvmem))
++	if (IS_ERR(nvmem)) {
++		of_node_put(cell_np);
+ 		return ERR_CAST(nvmem);
++	}
  
- 	if (config->cells) {
-@@ -864,6 +858,12 @@ struct nvmem_device *nvmem_register(cons
- 	if (rval)
- 		goto err_remove_cells;
- 
-+	dev_dbg(&nvmem->dev, "Registering nvmem device %s\n", config->name);
-+
-+	rval = device_add(&nvmem->dev);
-+	if (rval)
-+		goto err_remove_cells;
-+
- 	blocking_notifier_call_chain(&nvmem_notifier, NVMEM_ADD, nvmem);
- 
- 	return nvmem;
-@@ -873,8 +873,6 @@ err_remove_cells:
- err_teardown_compat:
- 	if (config->compat)
- 		nvmem_sysfs_remove_compat(nvmem, config);
--err_device_del:
--	device_del(&nvmem->dev);
- err_put_device:
- 	put_device(&nvmem->dev);
- 
+ 	cell_entry = nvmem_find_cell_entry_by_node(nvmem, cell_np);
++	of_node_put(cell_np);
+ 	if (!cell_entry) {
+ 		__nvmem_device_put(nvmem);
+ 		return ERR_PTR(-ENOENT);
 
 
