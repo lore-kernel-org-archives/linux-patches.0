@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B9B02919
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 12:59:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1C9C5C433EF;
-	Tue,  7 Feb 2023 12:59:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A044C29CA
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 12:59:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2600AC433D2;
+	Tue,  7 Feb 2023 12:59:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675774766;
-	bh=65hwGgIvCMkExfJRsYVu7I5nLGI+k6SS/gP9hroCNis=;
+	s=korg; t=1675774769;
+	bh=Xt/ek+ApdoMht0lN8y1NS92ksDZrNPeDsXf05bhnX/s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wW+eQmzh1XC7ZWAhRW2ugEbO5vFdE7vMCRqbm952AwTc64oUbLPkX7IEyjCfg21C4
-	 KNuhBVRVRdJ/uEXZxYtvVXa8y0hKnazkxo3IlIEk4aQeeEq0a0tmxPxkURwKWlOT8L
-	 mOkbkD+l1vQv58LdQudR38Hv1FHmh5yvdVWMxprw=
+	b=kgwc+LxnKXrSVF7H/mijpIxsmcPYdYi1HcddtIb0oHGj7p8hLN6SndbzD58YPZo/4
+	 25ENLHVvKn5EWvzDafUSU5s9NEUIFlgEKGTZczG4D7idOHXcjbmiLE/oTB6FkuCQbS
+	 u/uc7eAi0L9fV/9rotdNJWyztzWLLrNNxKJK4q+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kumar Kartikeya Dwivedi <memxor@gmail.com>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Alexei Starovoitov <ast@kernel.org>,
+	=?UTF-8?q?Marek=20Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 019/208] bpf: Add missing btf_put to register_btf_id_dtor_kfuncs
-Date: Tue,  7 Feb 2023 13:54:33 +0100
-Message-Id: <20230207125635.190907823@linuxfoundation.org>
+Subject: [PATCH 6.1 028/208] ALSA: memalloc: Workaround for Xen PV
+Date: Tue,  7 Feb 2023 13:54:42 +0100
+Message-Id: <20230207125635.580228103@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -36,44 +35,215 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiri Olsa <jolsa@kernel.org>
+From: Takashi Iwai <tiwai@suse.de>
 
-[ Upstream commit 74bc3a5acc82f020d2e126f56c535d02d1e74e37 ]
+[ Upstream commit 53466ebdec614f915c691809b0861acecb941e30 ]
 
-We take the BTF reference before we register dtors and we need
-to put it back when it's done.
+We change recently the memalloc helper to use
+dma_alloc_noncontiguous() and the fallback to get_pages().  Although
+lots of issues with IOMMU (or non-IOMMU) have been addressed, but
+there seems still a regression on Xen PV.  Interestingly, the only
+proper way to work is use dma_alloc_coherent().  The use of
+dma_alloc_coherent() for SG buffer was dropped as it's problematic on
+IOMMU systems.  OTOH, Xen PV has a different way, and it's fine to use
+the dma_alloc_coherent().
 
-We probably won't se a problem with kernel BTF, but module BTF
-would stay loaded (because of the extra ref) even when its module
-is removed.
+This patch is a workaround for Xen PV.  It consists of the following
+changes:
+- For Xen PV, use only the fallback allocation without
+  dma_alloc_noncontiguous()
+- In the fallback allocation, use dma_alloc_coherent();
+  the DMA address from dma_alloc_coherent() is returned in get_addr
+  ops
+- The DMA addresses are stored in an array; the first entry stores the
+  number of allocated pages in lower bits, which are referred at
+  releasing pages again
 
-Cc: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Fixes: 5ce937d613a4 ("bpf: Populate pairs of btf_id and destructor kfunc in btf")
-Acked-by: Kumar Kartikeya Dwivedi <memxor@gmail.com>
-Signed-off-by: Jiri Olsa <jolsa@kernel.org>
-Link: https://lore.kernel.org/r/20230120122148.1522359-1-jolsa@kernel.org
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Reported-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Tested-by: Marek Marczykowski-Górecki <marmarek@invisiblethingslab.com>
+Fixes: a8d302a0b770 ("ALSA: memalloc: Revive x86-specific WC page allocations again")
+Fixes: 9736a325137b ("ALSA: memalloc: Don't fall back for SG-buffer with IOMMU")
+Link: https://lore.kernel.org/r/87tu256lqs.wl-tiwai@suse.de
+Link: https://lore.kernel.org/r/20230125153104.5527-1-tiwai@suse.de
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/btf.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/core/memalloc.c | 87 ++++++++++++++++++++++++++++++++++---------
+ 1 file changed, 69 insertions(+), 18 deletions(-)
 
-diff --git a/kernel/bpf/btf.c b/kernel/bpf/btf.c
-index efdbba2a0230..a7c2f0c3fc19 100644
---- a/kernel/bpf/btf.c
-+++ b/kernel/bpf/btf.c
-@@ -7607,9 +7607,9 @@ int register_btf_id_dtor_kfuncs(const struct btf_id_dtor_kfunc *dtors, u32 add_c
+diff --git a/sound/core/memalloc.c b/sound/core/memalloc.c
+index 7268304009ad..11ff1ee51345 100644
+--- a/sound/core/memalloc.c
++++ b/sound/core/memalloc.c
+@@ -542,16 +542,15 @@ static void *snd_dma_noncontig_alloc(struct snd_dma_buffer *dmab, size_t size)
+ 	struct sg_table *sgt;
+ 	void *p;
  
- 	sort(tab->dtors, tab->cnt, sizeof(tab->dtors[0]), btf_id_cmp_func, NULL);
++#ifdef CONFIG_SND_DMA_SGBUF
++	if (cpu_feature_enabled(X86_FEATURE_XENPV))
++		return snd_dma_sg_fallback_alloc(dmab, size);
++#endif
+ 	sgt = dma_alloc_noncontiguous(dmab->dev.dev, size, dmab->dev.dir,
+ 				      DEFAULT_GFP, 0);
+ #ifdef CONFIG_SND_DMA_SGBUF
+-	if (!sgt && !get_dma_ops(dmab->dev.dev)) {
+-		if (dmab->dev.type == SNDRV_DMA_TYPE_DEV_WC_SG)
+-			dmab->dev.type = SNDRV_DMA_TYPE_DEV_WC_SG_FALLBACK;
+-		else
+-			dmab->dev.type = SNDRV_DMA_TYPE_DEV_SG_FALLBACK;
++	if (!sgt && !get_dma_ops(dmab->dev.dev))
+ 		return snd_dma_sg_fallback_alloc(dmab, size);
+-	}
+ #endif
+ 	if (!sgt)
+ 		return NULL;
+@@ -718,19 +717,38 @@ static const struct snd_malloc_ops snd_dma_sg_wc_ops = {
  
--	return 0;
- end:
--	btf_free_dtor_kfunc_tab(btf);
-+	if (ret)
-+		btf_free_dtor_kfunc_tab(btf);
- 	btf_put(btf);
- 	return ret;
+ /* Fallback SG-buffer allocations for x86 */
+ struct snd_dma_sg_fallback {
++	bool use_dma_alloc_coherent;
+ 	size_t count;
+ 	struct page **pages;
++	/* DMA address array; the first page contains #pages in ~PAGE_MASK */
++	dma_addr_t *addrs;
+ };
+ 
+ static void __snd_dma_sg_fallback_free(struct snd_dma_buffer *dmab,
+ 				       struct snd_dma_sg_fallback *sgbuf)
+ {
+-	bool wc = dmab->dev.type == SNDRV_DMA_TYPE_DEV_WC_SG_FALLBACK;
+-	size_t i;
+-
+-	for (i = 0; i < sgbuf->count && sgbuf->pages[i]; i++)
+-		do_free_pages(page_address(sgbuf->pages[i]), PAGE_SIZE, wc);
++	size_t i, size;
++
++	if (sgbuf->pages && sgbuf->addrs) {
++		i = 0;
++		while (i < sgbuf->count) {
++			if (!sgbuf->pages[i] || !sgbuf->addrs[i])
++				break;
++			size = sgbuf->addrs[i] & ~PAGE_MASK;
++			if (WARN_ON(!size))
++				break;
++			if (sgbuf->use_dma_alloc_coherent)
++				dma_free_coherent(dmab->dev.dev, size << PAGE_SHIFT,
++						  page_address(sgbuf->pages[i]),
++						  sgbuf->addrs[i] & PAGE_MASK);
++			else
++				do_free_pages(page_address(sgbuf->pages[i]),
++					      size << PAGE_SHIFT, false);
++			i += size;
++		}
++	}
+ 	kvfree(sgbuf->pages);
++	kvfree(sgbuf->addrs);
+ 	kfree(sgbuf);
  }
+ 
+@@ -739,24 +757,36 @@ static void *snd_dma_sg_fallback_alloc(struct snd_dma_buffer *dmab, size_t size)
+ 	struct snd_dma_sg_fallback *sgbuf;
+ 	struct page **pagep, *curp;
+ 	size_t chunk, npages;
++	dma_addr_t *addrp;
+ 	dma_addr_t addr;
+ 	void *p;
+-	bool wc = dmab->dev.type == SNDRV_DMA_TYPE_DEV_WC_SG_FALLBACK;
++
++	/* correct the type */
++	if (dmab->dev.type == SNDRV_DMA_TYPE_DEV_SG)
++		dmab->dev.type = SNDRV_DMA_TYPE_DEV_SG_FALLBACK;
++	else if (dmab->dev.type == SNDRV_DMA_TYPE_DEV_WC_SG)
++		dmab->dev.type = SNDRV_DMA_TYPE_DEV_WC_SG_FALLBACK;
+ 
+ 	sgbuf = kzalloc(sizeof(*sgbuf), GFP_KERNEL);
+ 	if (!sgbuf)
+ 		return NULL;
++	sgbuf->use_dma_alloc_coherent = cpu_feature_enabled(X86_FEATURE_XENPV);
+ 	size = PAGE_ALIGN(size);
+ 	sgbuf->count = size >> PAGE_SHIFT;
+ 	sgbuf->pages = kvcalloc(sgbuf->count, sizeof(*sgbuf->pages), GFP_KERNEL);
+-	if (!sgbuf->pages)
++	sgbuf->addrs = kvcalloc(sgbuf->count, sizeof(*sgbuf->addrs), GFP_KERNEL);
++	if (!sgbuf->pages || !sgbuf->addrs)
+ 		goto error;
+ 
+ 	pagep = sgbuf->pages;
+-	chunk = size;
++	addrp = sgbuf->addrs;
++	chunk = (PAGE_SIZE - 1) << PAGE_SHIFT; /* to fit in low bits in addrs */
+ 	while (size > 0) {
+ 		chunk = min(size, chunk);
+-		p = do_alloc_pages(dmab->dev.dev, chunk, &addr, wc);
++		if (sgbuf->use_dma_alloc_coherent)
++			p = dma_alloc_coherent(dmab->dev.dev, chunk, &addr, DEFAULT_GFP);
++		else
++			p = do_alloc_pages(dmab->dev.dev, chunk, &addr, false);
+ 		if (!p) {
+ 			if (chunk <= PAGE_SIZE)
+ 				goto error;
+@@ -768,17 +798,25 @@ static void *snd_dma_sg_fallback_alloc(struct snd_dma_buffer *dmab, size_t size)
+ 		size -= chunk;
+ 		/* fill pages */
+ 		npages = chunk >> PAGE_SHIFT;
++		*addrp = npages; /* store in lower bits */
+ 		curp = virt_to_page(p);
+-		while (npages--)
++		while (npages--) {
+ 			*pagep++ = curp++;
++			*addrp++ |= addr;
++			addr += PAGE_SIZE;
++		}
+ 	}
+ 
+ 	p = vmap(sgbuf->pages, sgbuf->count, VM_MAP, PAGE_KERNEL);
+ 	if (!p)
+ 		goto error;
++
++	if (dmab->dev.type == SNDRV_DMA_TYPE_DEV_WC_SG_FALLBACK)
++		set_pages_array_wc(sgbuf->pages, sgbuf->count);
++
+ 	dmab->private_data = sgbuf;
+ 	/* store the first page address for convenience */
+-	dmab->addr = snd_sgbuf_get_addr(dmab, 0);
++	dmab->addr = sgbuf->addrs[0] & PAGE_MASK;
+ 	return p;
+ 
+  error:
+@@ -788,10 +826,23 @@ static void *snd_dma_sg_fallback_alloc(struct snd_dma_buffer *dmab, size_t size)
+ 
+ static void snd_dma_sg_fallback_free(struct snd_dma_buffer *dmab)
+ {
++	struct snd_dma_sg_fallback *sgbuf = dmab->private_data;
++
++	if (dmab->dev.type == SNDRV_DMA_TYPE_DEV_WC_SG_FALLBACK)
++		set_pages_array_wb(sgbuf->pages, sgbuf->count);
+ 	vunmap(dmab->area);
+ 	__snd_dma_sg_fallback_free(dmab, dmab->private_data);
+ }
+ 
++static dma_addr_t snd_dma_sg_fallback_get_addr(struct snd_dma_buffer *dmab,
++					       size_t offset)
++{
++	struct snd_dma_sg_fallback *sgbuf = dmab->private_data;
++	size_t index = offset >> PAGE_SHIFT;
++
++	return (sgbuf->addrs[index] & PAGE_MASK) | (offset & ~PAGE_MASK);
++}
++
+ static int snd_dma_sg_fallback_mmap(struct snd_dma_buffer *dmab,
+ 				    struct vm_area_struct *area)
+ {
+@@ -806,8 +857,8 @@ static const struct snd_malloc_ops snd_dma_sg_fallback_ops = {
+ 	.alloc = snd_dma_sg_fallback_alloc,
+ 	.free = snd_dma_sg_fallback_free,
+ 	.mmap = snd_dma_sg_fallback_mmap,
++	.get_addr = snd_dma_sg_fallback_get_addr,
+ 	/* reuse vmalloc helpers */
+-	.get_addr = snd_dma_vmalloc_get_addr,
+ 	.get_page = snd_dma_vmalloc_get_page,
+ 	.get_chunk_size = snd_dma_vmalloc_get_chunk_size,
+ };
 -- 
 2.39.0
 
