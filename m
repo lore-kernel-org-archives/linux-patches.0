@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41D992C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B56A1C433EF;
-	Tue,  7 Feb 2023 13:06:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C1982C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 981A3C433EF;
+	Tue,  7 Feb 2023 13:06:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775175;
-	bh=0diB4gK3m4UIbSO8LGaJXTRTVQeqYwtfrhA37jpzZkk=;
+	s=korg; t=1675775178;
+	bh=UZoXbmAiNMVb0C7wIkEF54FHEltGJrek1o93zidJOxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MnM48AOB5Ud4MSD8bV72VIDT4v8FP/0nxZmcjJvpAPxR/if5OhDGM+pOwR0K2Wnzr
-	 MlGUjgijzKxochQcVufF70DrYqUMsoNOWclObNzAhZqkuV7zeljs70dObpBDx91kuC
-	 LxPrAOy9zqUpctddkfpTciAlrqKB+3+0z7n/jRbg=
+	b=Qss3dlj4Dky0qOl4Mwc6xTKYebHGs//XeRPBqocH6RtizwCyINj7Egx7bZeYA/Bek
+	 ojNMIO5/lNjyfd+h4VuCE/IpHA5BzhrEeYM+9C70KW+RqxBaZ1BujlLuw38DFT6WQH
+	 NCSKt/Nug4N+zxAtYm/X3aW6TtgOYcxJHF3YpP2Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thomas Gleixner <tglx@linutronix.de>,
-	stable <stable@kernel.org>,
-	Marc Zyngier <maz@kernel.org>
-Subject: [PATCH 6.1 162/208] kernel/irq/irqdomain.c: fix memory leak with using debugfs_lookup()
-Date: Tue,  7 Feb 2023 13:56:56 +0100
-Message-Id: <20230207125641.760542147@linuxfoundation.org>
+	Carlos Song <carlos.song@nxp.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 145/208] iio: imu: fxos8700: fix failed initialization ODR mode assignment
+Date: Tue,  7 Feb 2023 13:56:39 +0100
+Message-Id: <20230207125641.001680065@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,34 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Carlos Song <carlos.song@nxp.com>
 
-commit d83d7ed260283560700d4034a80baad46620481b upstream.
+commit eb6d8f8705bc19141bac81d8161461f9e256948a upstream.
 
-When calling debugfs_lookup() the result must have dput() called on it,
-otherwise the memory will leak over time.  To make things simpler, just
-call debugfs_lookup_and_remove() instead which handles all of the logic
-at once.
+The absence of correct offset leads a failed initialization ODR mode
+assignment.
 
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: stable <stable@kernel.org>
-Reviewed-by: Marc Zyngier <maz@kernel.org>
-Link: https://lore.kernel.org/r/20230202151554.2310273-1-gregkh@linuxfoundation.org
+Select MAX ODR mode as the initialization ODR mode by field mask and
+FIELD_PREP.
+
+Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Link: https://lore.kernel.org/r/20230118074227.1665098-3-carlos.song@nxp.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/irq/irqdomain.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/imu/fxos8700_core.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/kernel/irq/irqdomain.c
-+++ b/kernel/irq/irqdomain.c
-@@ -1915,7 +1915,7 @@ static void debugfs_add_domain_dir(struc
+--- a/drivers/iio/imu/fxos8700_core.c
++++ b/drivers/iio/imu/fxos8700_core.c
+@@ -664,8 +664,10 @@ static int fxos8700_chip_init(struct fxo
+ 		return ret;
  
- static void debugfs_remove_domain_dir(struct irq_domain *d)
- {
--	debugfs_remove(debugfs_lookup(d->name, domain_dir));
-+	debugfs_lookup_and_remove(d->name, domain_dir);
+ 	/* Max ODR (800Hz individual or 400Hz hybrid), active mode */
+-	return regmap_write(data->regmap, FXOS8700_CTRL_REG1,
+-			   FXOS8700_CTRL_ODR_MAX | FXOS8700_ACTIVE);
++	return regmap_update_bits(data->regmap, FXOS8700_CTRL_REG1,
++				FXOS8700_CTRL_ODR_MSK | FXOS8700_ACTIVE,
++				FIELD_PREP(FXOS8700_CTRL_ODR_MSK, FXOS8700_CTRL_ODR_MAX) |
++				FXOS8700_ACTIVE);
  }
  
- void __init irq_domain_debugfs_init(struct dentry *root)
+ static void fxos8700_chip_uninit(void *data)
 
 
