@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23EC42C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:14:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76951C433D2;
-	Tue,  7 Feb 2023 13:14:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E8542C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:14:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6ED61C433D2;
+	Tue,  7 Feb 2023 13:14:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775652;
-	bh=N0Edf6x1f9TIiVhbmnpnJAYmENyxyBYo5ixaFPZ5WKg=;
+	s=korg; t=1675775656;
+	bh=4uLpr1Xo/N2qDPWVW25uI9SN/oBpojsiNev8qRuCSNo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fmXcMzGlO1oML2W1rafcwt1koxFCx6+ZU4L9L/YCozlpwKtdN8v9sOS2FCf2orW6c
-	 1Te6K9IJcCmWA3tNVRMI5LXY/O9QZLEb7lKMm13c/MpoMgL0A7n6FILdfMN7IR4IYa
-	 i2JrYQMEWtG12sNXpqzSgjqlolzwK5RKRwiO7WSw=
+	b=woX7HSSGijdfycJlxLUEK5LLglZgWYpinOXtIfRv9wyp49H77wsxiiYOLUcwkEWNF
+	 lYRrKDInHuWW7p8jXHC06y7MDjJoHozU6+X6RRPf3sbdXBLuzGsHCnirEdo4j9jPG/
+	 hLaGQf2HP45ICaAzqt7Z5dds/eyCrSxDCwoZrvCY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 5.15 072/120] efi: Accept version 2 of memory attributes table
-Date: Tue,  7 Feb 2023 13:57:23 +0100
-Message-Id: <20230207125621.822870823@linuxfoundation.org>
+	Johan Hovold <johan+linaro@kernel.org>,
+	Vinod Koul <vkoul@kernel.org>,
+	Stephen Boyd <swboyd@chromium.org>
+Subject: [PATCH 5.15 106/120] phy: qcom-qmp-usb: fix memleak on probe deferral
+Date: Tue,  7 Feb 2023 13:57:57 +0100
+Message-Id: <20230207125623.270559535@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -33,32 +35,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 636ab417a7aec4ee993916e688eb5c5977570836 upstream.
+commit a5d6b1ac56cbd6b5850a3a54e35f1cb71e8e8cdd upstream.
 
-UEFI v2.10 introduces version 2 of the memory attributes table, which
-turns the reserved field into a flags field, but is compatible with
-version 1 in all other respects. So let's not complain about version 2
-if we encounter it.
+Switch to using the device-managed of_iomap helper to avoid leaking
+memory on probe deferral and driver unbind.
 
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Note that this helper checks for already reserved regions and may fail
+if there are multiple devices claiming the same memory.
+
+Two bindings currently rely on overlapping mappings for the PCS region
+so fallback to non-exclusive mappings for those for now.
+
+Fixes: e78f3d15e115 ("phy: qcom-qmp: new qmp phy driver for qcom-chipsets")
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Link: https://lore.kernel.org/r/20220916102340.11520-7-johan+linaro@kernel.org
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+[swboyd@chromium.org: Backport to pre-split driver]
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/memattr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/phy/qualcomm/phy-qcom-qmp.c |   27 ++++++++++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
 
---- a/drivers/firmware/efi/memattr.c
-+++ b/drivers/firmware/efi/memattr.c
-@@ -33,7 +33,7 @@ int __init efi_memattr_init(void)
- 		return -ENOMEM;
- 	}
+--- a/drivers/phy/qualcomm/phy-qcom-qmp.c
++++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
+@@ -5387,6 +5387,21 @@ static void qcom_qmp_reset_control_put(v
+ 	reset_control_put(data);
+ }
  
--	if (tbl->version > 1) {
-+	if (tbl->version > 2) {
- 		pr_warn("Unexpected EFI Memory Attributes table version %d\n",
- 			tbl->version);
- 		goto unmap;
++static void __iomem *qmp_usb_iomap(struct device *dev, struct device_node *np,
++		int index, bool exclusive)
++{
++	struct resource res;
++
++	if (!exclusive) {
++		if (of_address_to_resource(np, index, &res))
++			return IOMEM_ERR_PTR(-EINVAL);
++
++		return devm_ioremap(dev, res.start, resource_size(&res));
++	}
++
++	return devm_of_iomap(dev, np, index, NULL);
++}
++
+ static
+ int qcom_qmp_phy_create(struct device *dev, struct device_node *np, int id,
+ 			void __iomem *serdes, const struct qmp_phy_cfg *cfg)
+@@ -5396,8 +5411,18 @@ int qcom_qmp_phy_create(struct device *d
+ 	struct qmp_phy *qphy;
+ 	const struct phy_ops *ops;
+ 	char prop_name[MAX_PROP_NAME];
++	bool exclusive = true;
+ 	int ret;
+ 
++	/*
++	 * FIXME: These bindings should be fixed to not rely on overlapping
++	 *        mappings for PCS.
++	 */
++	if (of_device_is_compatible(dev->of_node, "qcom,sdx65-qmp-usb3-uni-phy"))
++		exclusive = false;
++	if (of_device_is_compatible(dev->of_node, "qcom,sm8350-qmp-usb3-uni-phy"))
++		exclusive = false;
++
+ 	qphy = devm_kzalloc(dev, sizeof(*qphy), GFP_KERNEL);
+ 	if (!qphy)
+ 		return -ENOMEM;
+@@ -5418,7 +5443,7 @@ int qcom_qmp_phy_create(struct device *d
+ 	if (IS_ERR(qphy->rx))
+ 		return PTR_ERR(qphy->rx);
+ 
+-	qphy->pcs = devm_of_iomap(dev, np, 2, NULL);
++	qphy->pcs = qmp_usb_iomap(dev, np, 2, exclusive);
+ 	if (IS_ERR(qphy->pcs))
+ 		return PTR_ERR(qphy->pcs);
+ 
 
 
