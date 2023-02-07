@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 438742C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:09:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE1C0C433EF;
-	Tue,  7 Feb 2023 13:09:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1C7EF2C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:09:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E99FC433D2;
+	Tue,  7 Feb 2023 13:09:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775394;
-	bh=zIXkYUpqMbvT2UfERVaGm7HtwwdkAsjPXvYG01raM14=;
+	s=korg; t=1675775396;
+	bh=k5IRJoPCdDvC9nVT8BVYa6KupsP9zhjCginJqZKWups=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Utxm7dYdM7HRR4aiM66aa6eK1phLNq/nYid3U0cHMpxih6FtFsY6q6zS5V0VbjPFj
-	 jEXkyueRCQjPLTypYVIQUjLL82bdXf8Q415Fa73vm0DqVAegyF5p0F0hD4xrBscSaD
-	 jhuxFfMU5/f+ZTf1KzfWM9b6vD/oUi3WKkPVY0mw=
+	b=bH6lceAICUmI5rhOeRjLspcStLcKrcNWK3Adna87Qh6qXXzUBCNFcztxrKwgGNjoc
+	 hEmgdDiqkRfUFUIFBDjvuIdJJrZ6JWDX6YsvfTINviIK4ToM7JnR61HVmmk1Tdi/Jf
+	 JoH/50ZD1vJGytK/bzGcr36CVZsmK/SYxERGvuO4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Magnus Karlsson <magnus.karlsson@intel.com>,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Tianhao Zhao <tizhao@redhat.com>,
+	=?UTF-8?q?=C3=8D=C3=B1igo=20Huguet?= <ihuguet@redhat.com>,
+	Martin Habets <habetsm.xilinx@gmail.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 026/120] dpaa2-eth: execute xdp_do_flush() before napi_complete_done()
-Date: Tue,  7 Feb 2023 13:56:37 +0100
-Message-Id: <20230207125619.907908923@linuxfoundation.org>
+Subject: [PATCH 5.15 027/120] sfc: correctly advertise tunneled IPv6 segmentation
+Date: Tue,  7 Feb 2023 13:56:38 +0100
+Message-Id: <20230207125619.944883455@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -36,67 +37,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Magnus Karlsson <magnus.karlsson@intel.com>
+From: Íñigo Huguet <ihuguet@redhat.com>
 
-[ Upstream commit a3191c4d86c5d3bd35b00dfde6910b88391436a0 ]
+[ Upstream commit ffffd2454a7a1bc9f7242b12c4cc0b05c12692b4 ]
 
-Make sure that xdp_do_flush() is always executed before
-napi_complete_done(). This is important for two reasons. First, a
-redirect to an XSKMAP assumes that a call to xdp_do_redirect() from
-napi context X on CPU Y will be followed by a xdp_do_flush() from the
-same napi context and CPU. This is not guaranteed if the
-napi_complete_done() is executed before xdp_do_flush(), as it tells
-the napi logic that it is fine to schedule napi context X on another
-CPU. Details from a production system triggering this bug using the
-veth driver can be found following the first link below.
+Recent sfc NICs are TSO capable for some tunnel protocols. However, it
+was not working properly because the feature was not advertised in
+hw_enc_features, but in hw_features only.
 
-The second reason is that the XDP_REDIRECT logic in itself relies on
-being inside a single NAPI instance through to the xdp_do_flush() call
-for RCU protection of all in-kernel data structures. Details can be
-found in the second link below.
+Setting up a GENEVE tunnel and using iperf3 to send IPv4 and IPv6 traffic
+to the tunnel show, with tcpdump, that the IPv4 packets still had ~64k
+size but the IPv6 ones had only ~1500 bytes (they had been segmented by
+software, not offloaded). With this patch segmentation is offloaded as
+expected and the traffic is correctly received at the other end.
 
-Fixes: d678be1dc1ec ("dpaa2-eth: add XDP_REDIRECT support")
-Signed-off-by: Magnus Karlsson <magnus.karlsson@intel.com>
-Acked-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Link: https://lore.kernel.org/r/20221220185903.1105011-1-sbohrer@cloudflare.com
-Link: https://lore.kernel.org/all/20210624160609.292325-1-toke@redhat.com/
+Fixes: 24b2c3751aa3 ("sfc: advertise encapsulated offloads on EF10")
+Reported-by: Tianhao Zhao <tizhao@redhat.com>
+Signed-off-by: Íñigo Huguet <ihuguet@redhat.com>
+Acked-by: Martin Habets <habetsm.xilinx@gmail.com>
+Link: https://lore.kernel.org/r/20230125143513.25841-1-ihuguet@redhat.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c | 9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/sfc/efx.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-index 5899139aec97..c48d41093651 100644
---- a/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-+++ b/drivers/net/ethernet/freescale/dpaa2/dpaa2-eth.c
-@@ -1597,10 +1597,15 @@ static int dpaa2_eth_poll(struct napi_struct *napi, int budget)
- 		if (rx_cleaned >= budget ||
- 		    txconf_cleaned >= DPAA2_ETH_TXCONF_PER_NAPI) {
- 			work_done = budget;
-+			if (ch->xdp.res & XDP_REDIRECT)
-+				xdp_do_flush();
- 			goto out;
- 		}
- 	} while (store_cleaned);
- 
-+	if (ch->xdp.res & XDP_REDIRECT)
-+		xdp_do_flush();
-+
- 	/* We didn't consume the entire budget, so finish napi and
- 	 * re-enable data availability notifications
- 	 */
-@@ -1625,9 +1630,7 @@ static int dpaa2_eth_poll(struct napi_struct *napi, int budget)
- 		txc_fq->dq_bytes = 0;
- 	}
- 
--	if (ch->xdp.res & XDP_REDIRECT)
--		xdp_do_flush_map();
--	else if (rx_cleaned && ch->xdp.res & XDP_TX)
-+	if (rx_cleaned && ch->xdp.res & XDP_TX)
- 		dpaa2_eth_xdp_tx_flush(priv, ch, &priv->fq[flowid]);
- 
- 	return work_done;
+diff --git a/drivers/net/ethernet/sfc/efx.c b/drivers/net/ethernet/sfc/efx.c
+index 43ef4f529028..b6243f03e953 100644
+--- a/drivers/net/ethernet/sfc/efx.c
++++ b/drivers/net/ethernet/sfc/efx.c
+@@ -1005,8 +1005,11 @@ static int efx_pci_probe_post_io(struct efx_nic *efx)
+ 	/* Determine netdevice features */
+ 	net_dev->features |= (efx->type->offload_features | NETIF_F_SG |
+ 			      NETIF_F_TSO | NETIF_F_RXCSUM | NETIF_F_RXALL);
+-	if (efx->type->offload_features & (NETIF_F_IPV6_CSUM | NETIF_F_HW_CSUM))
++	if (efx->type->offload_features & (NETIF_F_IPV6_CSUM | NETIF_F_HW_CSUM)) {
+ 		net_dev->features |= NETIF_F_TSO6;
++		if (efx_has_cap(efx, TX_TSO_V2_ENCAP))
++			net_dev->hw_enc_features |= NETIF_F_TSO6;
++	}
+ 	/* Check whether device supports TSO */
+ 	if (!efx->type->tso_versions || !efx->type->tso_versions(efx))
+ 		net_dev->features &= ~NETIF_F_ALL_TSO;
 -- 
 2.39.0
 
