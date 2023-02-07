@@ -1,28 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ECB3A2C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7425DC433EF;
-	Tue,  7 Feb 2023 13:06:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDB232C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D28DC433D2;
+	Tue,  7 Feb 2023 13:06:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775204;
-	bh=yVKU1OHeYOFlT8xPWLuLVbbABqL8Qeuj7eqdH5woGCk=;
+	s=korg; t=1675775207;
+	bh=yDuZG3/qcGrbxsj5Fojd5PWK0oNDKUqOAugYGnMPXwQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G98AicGmUqUwmglpFbJEp5V1IrLTXZqs6eMiiikwGxeGVzgDHD/NuCAvrLmceJO/U
-	 hSgh/qxIQp5m3ZyTGlwjAxKzDbQmVKBsy2t+RhF+iqG54FbiURnodgtj+fwiJSwMgE
-	 Hbc3uG9tuwyoVA9joD92DwSISEYtC2fSlDVsT3SI=
+	b=KCdrg1+XgE/CMMFvjTvBQD8sNtS/2JV+lZhq3/4uSJr0Sn4+pVQh1WiDRb+vakp2A
+	 Z0NpbKsBQ/j9GdrgDChcMtnDHpFrInRmN2p6jLRIilQTkuiMIjp20OE1RXPkEas23z
+	 wiUNeKcf+1Blvnixsgwdy1VqAXTezrJuJ3UoQkAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zach OKeefe <zokeefe@google.com>,
-	Hugh Dickins <hughd@google.com>,
-	Yang Shi <shy828301@gmail.com>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Ira Weiny <ira.weiny@intel.com>,
+	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Helge Deller <deller@gmx.de>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Bagas Sanjaya <bagasdotme@gmail.com>,
+	David Sterba <dsterba@suse.com>,
+	Kees Cook <keescook@chromium.org>,
+	Sebastian Andrzej Siewior <bigeasy@linutronix.de>,
+	Tony Luck <tony.luck@intel.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 171/208] mm/MADV_COLLAPSE: catch !none !huge !bad pmd lookups
-Date: Tue,  7 Feb 2023 13:57:05 +0100
-Message-Id: <20230207125642.166861433@linuxfoundation.org>
+Subject: [PATCH 6.1 172/208] highmem: round down the address passed to kunmap_flush_on_unmap()
+Date: Tue,  7 Feb 2023 13:57:06 +0100
+Message-Id: <20230207125642.214796006@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -36,144 +46,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zach O'Keefe <zokeefe@google.com>
+From: Matthew Wilcox (Oracle) <willy@infradead.org>
 
-commit edb5d0cf5525357652aff6eacd9850b8ced07143 upstream.
+commit 88d7b12068b95731c280af8ce88e8ee9561f96de upstream.
 
-In commit 34488399fa08 ("mm/madvise: add file and shmem support to
-MADV_COLLAPSE") we make the following change to find_pmd_or_thp_or_none():
+We already round down the address in kunmap_local_indexed() which is the
+other implementation of __kunmap_local().  The only implementation of
+kunmap_flush_on_unmap() is PA-RISC which is expecting a page-aligned
+address.  This may be causing PA-RISC to be flushing the wrong addresses
+currently.
 
-	-       if (!pmd_present(pmde))
-	-               return SCAN_PMD_NULL;
-	+       if (pmd_none(pmde))
-	+               return SCAN_PMD_NONE;
-
-This was for-use by MADV_COLLAPSE file/shmem codepaths, where
-MADV_COLLAPSE might identify a pte-mapped hugepage, only to have
-khugepaged race-in, free the pte table, and clear the pmd.  Such codepaths
-include:
-
-A) If we find a suitably-aligned compound page of order HPAGE_PMD_ORDER
-   already in the pagecache.
-B) In retract_page_tables(), if we fail to grab mmap_lock for the target
-   mm/address.
-
-In these cases, collapse_pte_mapped_thp() really does expect a none (not
-just !present) pmd, and we want to suitably identify that case separate
-from the case where no pmd is found, or it's a bad-pmd (of course, many
-things could happen once we drop mmap_lock, and the pmd could plausibly
-undergo multiple transitions due to intervening fault, split, etc).
-Regardless, the code is prepared install a huge-pmd only when the existing
-pmd entry is either a genuine pte-table-mapping-pmd, or the none-pmd.
-
-However, the commit introduces a logical hole; namely, that we've allowed
-!none- && !huge- && !bad-pmds to be classified as genuine
-pte-table-mapping-pmds.  One such example that could leak through are swap
-entries.  The pmd values aren't checked again before use in
-pte_offset_map_lock(), which is expecting nothing less than a genuine
-pte-table-mapping-pmd.
-
-We want to put back the !pmd_present() check (below the pmd_none() check),
-but need to be careful to deal with subtleties in pmd transitions and
-treatments by various arch.
-
-The issue is that __split_huge_pmd_locked() temporarily clears the present
-bit (or otherwise marks the entry as invalid), but pmd_present() and
-pmd_trans_huge() still need to return true while the pmd is in this
-transitory state.  For example, x86's pmd_present() also checks the
-_PAGE_PSE , riscv's version also checks the _PAGE_LEAF bit, and arm64 also
-checks a PMD_PRESENT_INVALID bit.
-
-Covering all 4 cases for x86 (all checks done on the same pmd value):
-
-1) pmd_present() && pmd_trans_huge()
-   All we actually know here is that the PSE bit is set. Either:
-   a) We aren't racing with __split_huge_page(), and PRESENT or PROTNONE
-      is set.
-      => huge-pmd
-   b) We are currently racing with __split_huge_page().  The danger here
-      is that we proceed as-if we have a huge-pmd, but really we are
-      looking at a pte-mapping-pmd.  So, what is the risk of this
-      danger?
-
-      The only relevant path is:
-
-	madvise_collapse() -> collapse_pte_mapped_thp()
-
-      Where we might just incorrectly report back "success", when really
-      the memory isn't pmd-backed.  This is fine, since split could
-      happen immediately after (actually) successful madvise_collapse().
-      So, it should be safe to just assume huge-pmd here.
-
-2) pmd_present() && !pmd_trans_huge()
-   Either:
-   a) PSE not set and either PRESENT or PROTNONE is.
-      => pte-table-mapping pmd (or PROT_NONE)
-   b) devmap.  This routine can be called immediately after
-      unlocking/locking mmap_lock -- or called with no locks held (see
-      khugepaged_scan_mm_slot()), so previous VMA checks have since been
-      invalidated.
-
-3) !pmd_present() && pmd_trans_huge()
-  Not possible.
-
-4) !pmd_present() && !pmd_trans_huge()
-  Neither PRESENT nor PROTNONE set
-  => not present
-
-I've checked all archs that implement pmd_trans_huge() (arm64, riscv,
-powerpc, longarch, x86, mips, s390) and this logic roughly translates
-(though devmap treatment is unique to x86 and powerpc, and (3) doesn't
-necessarily hold in general -- but that doesn't matter since
-!pmd_present() always takes failure path).
-
-Also, add a comment above find_pmd_or_thp_or_none() to help future
-travelers reason about the validity of the code; namely, the possible
-mutations that might happen out from under us, depending on how mmap_lock
-is held (if at all).
-
-Link: https://lkml.kernel.org/r/20230125225358.2576151-1-zokeefe@google.com
-Fixes: 34488399fa08 ("mm/madvise: add file and shmem support to MADV_COLLAPSE")
-Signed-off-by: Zach O'Keefe <zokeefe@google.com>
-Reported-by: Hugh Dickins <hughd@google.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
+Link: https://lkml.kernel.org/r/20230126200727.1680362-1-willy@infradead.org
+Signed-off-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Fixes: 298fa1ad5571 ("highmem: Provide generic variant of kmap_atomic*")
+Reviewed-by: Ira Weiny <ira.weiny@intel.com>
+Cc: "Fabio M. De Francesco" <fmdefrancesco@gmail.com>
+Cc: Al Viro <viro@zeniv.linux.org.uk>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Helge Deller <deller@gmx.de>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Bagas Sanjaya <bagasdotme@gmail.com>
+Cc: David Sterba <dsterba@suse.com>
+Cc: Kees Cook <keescook@chromium.org>
+Cc: Sebastian Andrzej Siewior <bigeasy@linutronix.de>
+Cc: Tony Luck <tony.luck@intel.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/khugepaged.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ include/linux/highmem-internal.h |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/mm/khugepaged.c b/mm/khugepaged.c
-index 935aa8b71d1c..90acfea40c13 100644
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -847,6 +847,10 @@ static int hugepage_vma_revalidate(struct mm_struct *mm, unsigned long address,
- 	return SCAN_SUCCEED;
+--- a/include/linux/highmem-internal.h
++++ b/include/linux/highmem-internal.h
+@@ -200,7 +200,7 @@ static inline void *kmap_local_pfn(unsig
+ static inline void __kunmap_local(const void *addr)
+ {
+ #ifdef ARCH_HAS_FLUSH_ON_KUNMAP
+-	kunmap_flush_on_unmap(addr);
++	kunmap_flush_on_unmap(PTR_ALIGN_DOWN(addr, PAGE_SIZE));
+ #endif
  }
  
-+/*
-+ * See pmd_trans_unstable() for how the result may change out from
-+ * underneath us, even if we hold mmap_lock in read.
-+ */
- static int find_pmd_or_thp_or_none(struct mm_struct *mm,
- 				   unsigned long address,
- 				   pmd_t **pmd)
-@@ -865,8 +869,12 @@ static int find_pmd_or_thp_or_none(struct mm_struct *mm,
+@@ -227,7 +227,7 @@ static inline void *kmap_atomic_pfn(unsi
+ static inline void __kunmap_atomic(const void *addr)
+ {
+ #ifdef ARCH_HAS_FLUSH_ON_KUNMAP
+-	kunmap_flush_on_unmap(addr);
++	kunmap_flush_on_unmap(PTR_ALIGN_DOWN(addr, PAGE_SIZE));
  #endif
- 	if (pmd_none(pmde))
- 		return SCAN_PMD_NONE;
-+	if (!pmd_present(pmde))
-+		return SCAN_PMD_NULL;
- 	if (pmd_trans_huge(pmde))
- 		return SCAN_PMD_MAPPED;
-+	if (pmd_devmap(pmde))
-+		return SCAN_PMD_NULL;
- 	if (pmd_bad(pmde))
- 		return SCAN_PMD_NULL;
- 	return SCAN_SUCCEED;
--- 
-2.39.1
-
+ 	pagefault_enable();
+ 	if (IS_ENABLED(CONFIG_PREEMPT_RT))
 
 
