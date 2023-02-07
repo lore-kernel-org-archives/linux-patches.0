@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 660112C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:11:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC7F2C4339B;
-	Tue,  7 Feb 2023 13:11:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45FF32C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:11:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8360C4339C;
+	Tue,  7 Feb 2023 13:11:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775461;
-	bh=R9aAMCZ/q/kbiWBH10oC0k2XazJntGcUbdnB7n85A8g=;
+	s=korg; t=1675775464;
+	bh=oMYNWlnrFQvgi2KFq0FfdDsk4wZiHAzCaidq0WhfHS8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=y+TI/DqFIpBYU2Sqae0otd5+Xj+GR6s3zeRLEm9FqbNgaMqizNin1B85PZPl2K+UU
-	 jyO6Sg5jPS2oZ1voHtxZvIFMGCoaJ+K8tjyBV0LiN+V58D+fbQz0p2/4BcoxMkLwJu
-	 m8zUVNp6+LwV9foNhgZnhYKzmDbn1UMySGOBgCvo=
+	b=XNDlH6FDmKcY7wBrv7u+MXdoVy+BtWe7hwnKmrz7aum+I9zASy+GNJU3ngEeAJZyW
+	 s/+Qn1gJ+DcyeMt3GZSyFxq3BJKvkpppXjxDgVIIAVUDD7zgaw63Aaq0tvQZtjF7Hs
+	 XlpgW5ffwYr6d4yZDRyRK//NVxEpQmQ9Evl3iyEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
+	Tom Rix <trix@redhat.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Sasha Neftin <sasha.neftin@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 008/120] ASoC: Intel: bytcr_wm5102: Drop reference count of ACPI device after use
-Date: Tue,  7 Feb 2023 13:56:19 +0100
-Message-Id: <20230207125619.114574644@linuxfoundation.org>
+Subject: [PATCH 5.15 041/120] igc: return an error if the mac type is unknown in igc_ptp_systim_to_hwtstamp()
+Date: Tue,  7 Feb 2023 13:56:52 +0100
+Message-Id: <20230207125620.520960195@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -36,44 +39,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Tom Rix <trix@redhat.com>
 
-[ Upstream commit c8aa49abdeda2ab587aadb083e670f6aa0236f93 ]
+[ Upstream commit a2df8463e15c10a8a882090f3d7a760fdb7b189d ]
 
-Theoretically the device might gone if its reference count drops to 0.
-This might be the case when we try to find the first physical node of
-the ACPI device. We need to keep reference to it until we get a result
-of the above mentioned call. Refactor the code to drop the reference
-count at the correct place.
+clang static analysis reports
+drivers/net/ethernet/intel/igc/igc_ptp.c:673:3: warning: The left operand of
+  '+' is a garbage value [core.UndefinedBinaryOperatorResult]
+   ktime_add_ns(shhwtstamps.hwtstamp, adjust);
+   ^            ~~~~~~~~~~~~~~~~~~~~
 
-While at it, move to acpi_dev_put() as symmetrical call to the
-acpi_dev_get_first_match_dev().
+igc_ptp_systim_to_hwtstamp() silently returns without setting the hwtstamp
+if the mac type is unknown.  This should be treated as an error.
 
-Fixes: 9a87fc1e0619 ("ASoC: Intel: bytcr_wm5102: Add machine driver for BYT/WM5102")
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Link: https://lore.kernel.org/r/20230112112852.67714-5-andriy.shevchenko@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: 81b055205e8b ("igc: Add support for RX timestamping")
+Signed-off-by: Tom Rix <trix@redhat.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Sasha Neftin <sasha.neftin@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20230131215437.1528994-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/bytcr_wm5102.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/intel/igc/igc_ptp.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/sound/soc/intel/boards/bytcr_wm5102.c b/sound/soc/intel/boards/bytcr_wm5102.c
-index bb669d58eb8b..9a4126f19d5f 100644
---- a/sound/soc/intel/boards/bytcr_wm5102.c
-+++ b/sound/soc/intel/boards/bytcr_wm5102.c
-@@ -411,9 +411,9 @@ static int snd_byt_wm5102_mc_probe(struct platform_device *pdev)
- 		return -ENOENT;
+diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
+index fbde7826927b..743c31659709 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ptp.c
++++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
+@@ -418,10 +418,12 @@ static int igc_ptp_verify_pin(struct ptp_clock_info *ptp, unsigned int pin,
+  *
+  * We need to convert the system time value stored in the RX/TXSTMP registers
+  * into a hwtstamp which can be used by the upper level timestamping functions.
++ *
++ * Returns 0 on success.
+  **/
+-static void igc_ptp_systim_to_hwtstamp(struct igc_adapter *adapter,
+-				       struct skb_shared_hwtstamps *hwtstamps,
+-				       u64 systim)
++static int igc_ptp_systim_to_hwtstamp(struct igc_adapter *adapter,
++				      struct skb_shared_hwtstamps *hwtstamps,
++				      u64 systim)
+ {
+ 	switch (adapter->hw.mac.type) {
+ 	case igc_i225:
+@@ -431,8 +433,9 @@ static void igc_ptp_systim_to_hwtstamp(struct igc_adapter *adapter,
+ 						systim & 0xFFFFFFFF);
+ 		break;
+ 	default:
+-		break;
++		return -EINVAL;
  	}
- 	snprintf(codec_name, sizeof(codec_name), "spi-%s", acpi_dev_name(adev));
--	put_device(&adev->dev);
++	return 0;
+ }
  
- 	codec_dev = bus_find_device_by_name(&spi_bus_type, NULL, codec_name);
-+	acpi_dev_put(adev);
- 	if (!codec_dev)
- 		return -EPROBE_DEFER;
+ /**
+@@ -657,7 +660,8 @@ static void igc_ptp_tx_hwtstamp(struct igc_adapter *adapter)
  
+ 	regval = rd32(IGC_TXSTMPL);
+ 	regval |= (u64)rd32(IGC_TXSTMPH) << 32;
+-	igc_ptp_systim_to_hwtstamp(adapter, &shhwtstamps, regval);
++	if (igc_ptp_systim_to_hwtstamp(adapter, &shhwtstamps, regval))
++		return;
+ 
+ 	switch (adapter->link_speed) {
+ 	case SPEED_10:
 -- 
 2.39.0
 
