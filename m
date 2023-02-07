@@ -1,130 +1,88 @@
-Received: from smtp-fw-6001.amazon.com (smtp-fw-6001.amazon.com [52.95.48.154])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-il1-f180.google.com (mail-il1-f180.google.com [209.85.166.180])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB8A77470
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 18:30:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D3CF8BF1
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 21:21:37 +0000 (UTC)
+Received: by mail-il1-f180.google.com with SMTP id x18so917514ilp.10
+        for <patches@lists.linux.dev>; Tue, 07 Feb 2023 13:21:37 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1675794601; x=1707330601;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=RiQroxHsMesevYUDkYjoMfOm7jVhlZoKX6jWWO+I6PY=;
-  b=OtZMHxR5dVF2O1XkpDYtJL+hCrue9eqELNs6xXEvShyzXrnr9XCnnToG
-   PGunKAVAbNV8pk1Ld5Pcx65TjTreCZs7UTuJ1+yq54KJEM6OG5mphuaD5
-   Kvk9xAH7TqcHVLtqykJs8ega77eSMh05iMYzZUdSxYw7pYFFI+l0XuUkN
-   Q=;
-X-IronPort-AV: E=Sophos;i="5.97,278,1669075200"; 
-   d="scan'208";a="296302866"
-Received: from iad12-co-svc-p1-lb1-vlan2.amazon.com (HELO email-inbound-relay-pdx-2b-m6i4x-32fb4f1a.us-west-2.amazon.com) ([10.43.8.2])
-  by smtp-border-fw-6001.iad6.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 07 Feb 2023 18:29:59 +0000
-Received: from EX13MTAUWB002.ant.amazon.com (pdx1-ws-svc-p6-lb9-vlan2.pdx.amazon.com [10.236.137.194])
-	by email-inbound-relay-pdx-2b-m6i4x-32fb4f1a.us-west-2.amazon.com (Postfix) with ESMTPS id 4782EC0601;
-	Tue,  7 Feb 2023 18:29:58 +0000 (UTC)
-Received: from EX19D046UWB004.ant.amazon.com (10.13.139.164) by
- EX13MTAUWB002.ant.amazon.com (10.43.161.202) with Microsoft SMTP Server (TLS)
- id 15.0.1497.45; Tue, 7 Feb 2023 18:29:57 +0000
-Received: from dev-dsk-shaoyi-2b-b6ac9e9c.us-west-2.amazon.com (10.43.162.56)
- by EX19D046UWB004.ant.amazon.com (10.13.139.164) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.2.1118.24; Tue, 7 Feb 2023 18:29:57 +0000
-From: Shaoying Xu <shaoyi@amazon.com>
-To: <gregkh@linuxfoundation.org>
-CC: <dsahern@kernel.org>, <idosch@nvidia.com>, <kuba@kernel.org>,
-	<patches@lists.linux.dev>, <sashal@kernel.org>, <shaoyi@amazon.com>,
-	<stable@vger.kernel.org>
-Subject: [PATCH 5.4 v2 2/2] ipv4: Fix incorrect route flushing when source address is deleted
-Date: Tue, 7 Feb 2023 18:28:20 +0000
-Message-ID: <20230207182820.4959-2-shaoyi@amazon.com>
-X-Mailer: git-send-email 2.38.1
-In-Reply-To: <20230207182820.4959-1-shaoyi@amazon.com>
-References: <Y+IckeUtbE/UfOz/@kroah.com>
- <20230207182820.4959-1-shaoyi@amazon.com>
+        d=linuxfoundation.org; s=google;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=4pWtMDHlChNZpBVUhtxKeU61bbziVZ1L3zQXJ9Q/ELQ=;
+        b=iGG49ZGHPzcvfk5FpC/wPCPjp3eRBlDLnfbucFVpWLpsl2Z8RzUxLQhMjaoGLnVgBq
+         xjeqRsYNHx/x1cXl5gl7p7O8mwLBteNJy4e4Jt0xmGTfls523cXFG6Zp+e76SIzupePC
+         DseNoGGv79jE/4Z6vcZzHYWFK5W0bjBjcgF6w=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=4pWtMDHlChNZpBVUhtxKeU61bbziVZ1L3zQXJ9Q/ELQ=;
+        b=cm1W5gB7W4SrG9OBHWNc1et4sRLJTp33M/PP6e4hVadpe11pDoYjfqxr+1Pi3MKyhp
+         9qXsamRvjMu+4W+dManyQ4GgVtQmUX/xGJCOonvfYT7t900mPrYlcyQc5D2b1MHROopv
+         kKJA8v41I2ghVunlUD1b/qaQmolmJfuagiolgVoQrgDUOYz1Yb1gUnC1ZkwMCzn2nxm7
+         ngPKeDoSRI8C984OtmwLF7twRIcckhoQdavy6mmevFf29kCSrkUrL/9siKVoauPLKj+V
+         xz3SL3cuMlZG2bV/8pCfX73A2UI2AAqX4C6wDilTeOEv8rPbQOYKeaBUmhz3KJY0KUd+
+         oHMQ==
+X-Gm-Message-State: AO0yUKUhGMKOT5xa0+wjk2QhAi0SRDmDpx4k9L+6v0wHHUXW784maGUB
+	apVIi3FdpkH3MZyyl+xo2kGNxA==
+X-Google-Smtp-Source: AK7set9iKHCEqTPRQ6Y+u1bMD/+Kbw88A5WZcUuyVysTNoY0Ai0/BDNKii8NCmibzYRgz4gqOf3llA==
+X-Received: by 2002:a05:6e02:12a8:b0:313:d901:82e6 with SMTP id f8-20020a056e0212a800b00313d90182e6mr3726764ilr.2.1675804896995;
+        Tue, 07 Feb 2023 13:21:36 -0800 (PST)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id i15-20020a92c94f000000b00304ae88ebebsm4375569ilq.88.2023.02.07.13.21.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Feb 2023 13:21:36 -0800 (PST)
+Message-ID: <8ca9283f-36ff-8e79-c168-c59f8e84f7dc@linuxfoundation.org>
+Date: Tue, 7 Feb 2023 14:21:34 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.43.162.56]
-X-ClientProxiedBy: EX13D40UWC001.ant.amazon.com (10.43.162.149) To
- EX19D046UWB004.ant.amazon.com (10.13.139.164)
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 6.1 000/208] 6.1.11-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
+References: <20230207125634.292109991@linuxfoundation.org>
+From: Shuah Khan <skhan@linuxfoundation.org>
+In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+On 2/7/23 05:54, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.11 release.
+> There are 208 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 09 Feb 2023 12:55:54 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.11-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
+> 
 
-[ Upstream commit f96a3d74554df537b6db5c99c27c80e7afadc8d1 ]
+Compiled and booted on my test system. No dmesg regressions.
 
-Cited commit added the table ID to the FIB info structure, but did not
-prevent structures with different table IDs from being consolidated.
-This can lead to routes being flushed from a VRF when an address is
-deleted from a different VRF.
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
-Fix by taking the table ID into account when looking for a matching FIB
-info. This is already done for FIB info structures backed by a nexthop
-object in fib_find_info_nh().
-
-Add test cases that fail before the fix:
-
- # ./fib_tests.sh -t ipv4_del_addr
-
- IPv4 delete address route tests
-     Regular FIB info
-     TEST: Route removed from VRF when source address deleted            [ OK ]
-     TEST: Route in default VRF not removed                              [ OK ]
-     TEST: Route removed in default VRF when source address deleted      [ OK ]
-     TEST: Route in VRF is not removed by address delete                 [ OK ]
-     Identical FIB info with different table ID
-     TEST: Route removed from VRF when source address deleted            [FAIL]
-     TEST: Route in default VRF not removed                              [ OK ]
- RTNETLINK answers: File exists
-     TEST: Route removed in default VRF when source address deleted      [ OK ]
-     TEST: Route in VRF is not removed by address delete                 [FAIL]
-
- Tests passed:   6
- Tests failed:   2
-
-And pass after:
-
- # ./fib_tests.sh -t ipv4_del_addr
-
- IPv4 delete address route tests
-     Regular FIB info
-     TEST: Route removed from VRF when source address deleted            [ OK ]
-     TEST: Route in default VRF not removed                              [ OK ]
-     TEST: Route removed in default VRF when source address deleted      [ OK ]
-     TEST: Route in VRF is not removed by address delete                 [ OK ]
-     Identical FIB info with different table ID
-     TEST: Route removed from VRF when source address deleted            [ OK ]
-     TEST: Route in default VRF not removed                              [ OK ]
-     TEST: Route removed in default VRF when source address deleted      [ OK ]
-     TEST: Route in VRF is not removed by address delete                 [ OK ]
-
- Tests passed:   8
- Tests failed:   0
-
-Fixes: 5a56a0b3a45d ("net: Don't delete routes in different VRFs")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
-Signed-off-by: Shaoying Xu <shaoyi@amazon.com>
----
- net/ipv4/fib_semantics.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
-index 908913d75847..f45b9daf62cf 100644
---- a/net/ipv4/fib_semantics.c
-+++ b/net/ipv4/fib_semantics.c
-@@ -420,6 +420,7 @@ static struct fib_info *fib_find_info(struct fib_info *nfi)
- 		    nfi->fib_prefsrc == fi->fib_prefsrc &&
- 		    nfi->fib_priority == fi->fib_priority &&
- 		    nfi->fib_type == fi->fib_type &&
-+		    nfi->fib_tb_id == fi->fib_tb_id &&
- 		    memcmp(nfi->fib_metrics, fi->fib_metrics,
- 			   sizeof(u32) * RTAX_MAX) == 0 &&
- 		    !((nfi->fib_flags ^ fi->fib_flags) & ~RTNH_COMPARE_MASK) &&
--- 
-2.38.1
-
+thanks,
+-- Shuah
