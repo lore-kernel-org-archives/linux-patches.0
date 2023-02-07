@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9910A2F39
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:11:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0F736C433EF;
-	Tue,  7 Feb 2023 13:11:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC25A2F39
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:11:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 118C5C433D2;
+	Tue,  7 Feb 2023 13:11:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775504;
-	bh=29fr1vRF2CD8ZhSmSHZMkKB769ss+joUnMktIOwPCTk=;
+	s=korg; t=1675775507;
+	bh=VABBjr9mrARkZ+fI/Xk9Qj9ilYzC4AM3ssk59QkQYgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=traTlKobtsC1lYGxPJ3Byd4i0oVns+xnqD47627ZalToLiEk56HBZhAyhQ5CdLHEs
-	 SUU0XN2nfG9e3IHDhfn0SoJwBQawRkKHf+l1YzwAs4zitBeSwBkuOu8DOgWIN3cI1F
-	 kEQIRt7Vvz0dUN1C2Mr1NA4oIoXeHFRMlI5hxcDM=
+	b=gBPD/CW83kAaFwTeLdXQKY9zdhDidSH9yKifeN7Sqir1ztwmFN+Ij/KVyvLiCnc9n
+	 vHySfAiWcI08Y3m0qSG4eZMPp+4y8Jn2clY6wuj0swahKYNXQFmmzHWsoe+DiSONA7
+	 JlfSPq9OpkOGctWIskQRRShkkhaxyE6MORWwNL68=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Moysan <olivier.moysan@foss.st.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 062/120] iio: adc: stm32-dfsdm: fill module aliases
-Date: Tue,  7 Feb 2023 13:57:13 +0100
-Message-Id: <20230207125621.398445836@linuxfoundation.org>
+Subject: [PATCH 5.15 063/120] usb: dwc3: qcom: enable vbus override when in OTG dr-mode
+Date: Tue,  7 Feb 2023 13:57:14 +0100
+Message-Id: <20230207125621.437706711@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -35,35 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Olivier Moysan <olivier.moysan@foss.st.com>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit cc3304052a89ab6ac887ed9224420a27e3d354e1 ]
+[ Upstream commit eb320f76e31dc835b9f57f04af1a2353b13bb7d8 ]
 
-When STM32 DFSDM driver is built as module, no modalias information
-is available. This prevents module to be loaded by udev.
-Add MODULE_DEVICE_TABLE() to fill module aliases.
+With vbus override enabled when in OTG dr_mode, Host<->Peripheral
+switch now works on SM8550, otherwise the DWC3 seems to be stuck
+in Host mode only.
 
-Fixes: e2e6771c6462 ("IIO: ADC: add STM32 DFSDM sigma delta ADC support")
-Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
-Link: https://lore.kernel.org/r/20221202152848.45585-1-olivier.moysan@foss.st.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20230123-topic-sm8550-upstream-dwc3-qcom-otg-v2-1-2d400e598463@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/stm32-dfsdm-adc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/usb/dwc3/dwc3-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/iio/adc/stm32-dfsdm-adc.c b/drivers/iio/adc/stm32-dfsdm-adc.c
-index 1cfefb3b5e56..6592221cbe21 100644
---- a/drivers/iio/adc/stm32-dfsdm-adc.c
-+++ b/drivers/iio/adc/stm32-dfsdm-adc.c
-@@ -1521,6 +1521,7 @@ static const struct of_device_id stm32_dfsdm_adc_match[] = {
- 	},
- 	{}
- };
-+MODULE_DEVICE_TABLE(of, stm32_dfsdm_adc_match);
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index ec1de6f6c290..28bc7480acf3 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -836,7 +836,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+ 	qcom->mode = usb_get_dr_mode(&qcom->dwc3->dev);
  
- static int stm32_dfsdm_adc_probe(struct platform_device *pdev)
- {
+ 	/* enable vbus override for device mode */
+-	if (qcom->mode == USB_DR_MODE_PERIPHERAL)
++	if (qcom->mode != USB_DR_MODE_HOST)
+ 		dwc3_qcom_vbus_override_enable(qcom, true);
+ 
+ 	/* register extcon to override sw_vbus on Vbus change later */
 -- 
 2.39.0
 
