@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 197D52C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:14:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 712CEC4339B;
-	Tue,  7 Feb 2023 13:14:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2574B2C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:14:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E51AC433EF;
+	Tue,  7 Feb 2023 13:14:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775646;
-	bh=7Zh6+6uu1xARXr1+iq9wDoel6vMURA8Hu632DijSVJA=;
+	s=korg; t=1675775650;
+	bh=E/2uAleW193iYSoF3EWEG2aHf0e9jDEeAf7JcQHrP8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vsXDRxzWNFsrm3ybeZA+23hiv3apRVS161T67DpmjoBgdIKC6mOZPCqPNpFbjnJ/k
-	 bzKKr17YIu2vmub49xgU1c6mtsGDZr/mZ3kMwz83Mi1ZI1FX0HqsINcURjP5vOs/kg
-	 zofCP0higH2R6irZ8k1qFtOfWYscrmd03AgXza88=
+	b=AO1Cvdxsu1l/KY+lvvP/AD3WQ6D4N5eJH4cxVWkLWc268cMj2fL5XMFl/WIPcCqau
+	 eOTT8asED3PabX+dxEONT1DfCJ/8HkydVmbvq9XZNVsplO/7zJE3d5d9n5cfFWvk0c
+	 23RAf25eGF8wpJJGtudYUJU6xQMgfUrC9O+AI7Mw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Carlos Song <carlos.song@nxp.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.15 080/120] iio: imu: fxos8700: fix map label of channel type to MAGN sensor
-Date: Tue,  7 Feb 2023 13:57:31 +0100
-Message-Id: <20230207125622.140590784@linuxfoundation.org>
+Subject: [PATCH 5.15 081/120] iio: imu: fxos8700: fix swapped ACCEL and MAGN channels readback
+Date: Tue,  7 Feb 2023 13:57:32 +0100
+Message-Id: <20230207125622.181032721@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -37,35 +37,48 @@ Content-Transfer-Encoding: 8bit
 
 From: Carlos Song <carlos.song@nxp.com>
 
-commit 429e1e8ec696e0e7a0742904e3dc2f83b7b23dfb upstream.
+commit c68b44bc7d9b1469774a1c985ee71d2cbc5ebef5 upstream.
 
-FXOS8700 is an IMU sensor with ACCEL sensor and MAGN sensor.
-Sensor type is indexed by corresponding channel type in a switch.
-IIO_ANGL_VEL channel type mapped to MAGN sensor has caused confusion.
-
-Fix the mapping label of "IIO_MAGN" channel type instead of
-"IIO_ANGL_VEL" channel type to MAGN sensor.
+Because ACCEL and MAGN channels data register base address is
+swapped the accelerometer and magnetometer channels readback is
+swapped.
 
 Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
 Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://lore.kernel.org/r/20221208071911.2405922-2-carlos.song@nxp.com
+Link: https://lore.kernel.org/r/20221208071911.2405922-3-carlos.song@nxp.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/fxos8700_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/imu/fxos8700_core.c |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
 --- a/drivers/iio/imu/fxos8700_core.c
 +++ b/drivers/iio/imu/fxos8700_core.c
-@@ -320,7 +320,7 @@ static enum fxos8700_sensor fxos8700_to_
- 	switch (iio_type) {
- 	case IIO_ACCEL:
- 		return FXOS8700_ACCEL;
--	case IIO_ANGL_VEL:
+@@ -420,9 +420,22 @@ static int fxos8700_get_data(struct fxos
+ 	u8 base, reg;
+ 	s16 tmp;
+ 	int ret;
+-	enum fxos8700_sensor type = fxos8700_to_sensor(chan_type);
+ 
+-	base = type ? FXOS8700_OUT_X_MSB : FXOS8700_M_OUT_X_MSB;
++	/*
++	 * Different register base addresses varies with channel types.
++	 * This bug hasn't been noticed before because using an enum is
++	 * really hard to read. Use an a switch statement to take over that.
++	 */
++	switch (chan_type) {
++	case IIO_ACCEL:
++		base = FXOS8700_OUT_X_MSB;
++		break;
 +	case IIO_MAGN:
- 		return FXOS8700_MAGN;
- 	default:
- 		return -EINVAL;
++		base = FXOS8700_M_OUT_X_MSB;
++		break;
++	default:
++		return -EINVAL;
++	}
+ 
+ 	/* Block read 6 bytes of device output registers to avoid data loss */
+ 	ret = regmap_bulk_read(data->regmap, base, data->buf,
 
 
