@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9220028E7
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 12:58:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE95DC433EF;
-	Tue,  7 Feb 2023 12:58:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8B1F528E7
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 12:58:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D51CFC433D2;
+	Tue,  7 Feb 2023 12:58:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675774711;
-	bh=ngT58OFUkmRVOW7n2aLexycgPEImrsEQgB1bKO8Y9QM=;
+	s=korg; t=1675774714;
+	bh=kzUS0FtuoAG5+oYBaLM27DVU3NOUt+8fQjfGm3/jNNk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ANsIggEWM4KyBl/1awYQpyFB7QdBErxw9bsMh3weIisKwj1k9DnN4eaUYFaQKdypN
-	 rCKAz89EMjEDCojSvrPSKRCL0Hj4r7e13JDIHVwGecZfshxfepy/AUD/vK+SwVu67I
-	 0WDko4qrCz8y/Fje2uIcMirwjm+IUtWirDOHgTSA=
+	b=X6zzxVITdL8j1Zv47RpjaUuoEIFD2+29zyQoI22qNjBUXZ/jCftx8lQ6LIXOXH7wo
+	 P8PjtA6p8y+yPyMQWUv+aI5WxpsQUI1I1fNwKir/yavfan0xVHT9LyaSF4hYMnjj0r
+	 ANOhOjAOKZEesH+BtT0eYAVz08de/uGYEBlfojc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 6.1 001/208] firewire: fix memory leak for payload of request subaction to IEC 61883-1 FCP region
-Date: Tue,  7 Feb 2023 13:54:15 +0100
-Message-Id: <20230207125634.376293753@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 010/208] ASoC: Intel: sof_es8336: Drop reference count of ACPI device after use
+Date: Tue,  7 Feb 2023 13:54:24 +0100
+Message-Id: <20230207125634.801832550@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,57 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit 531390a243ef47448f8bad01c186c2787666bf4d upstream.
+[ Upstream commit 64e57b2195725c1ae2246a8a2ce224abb60620ac ]
 
-This patch is fix for Linux kernel v2.6.33 or later.
+Theoretically the device might gone if its reference count drops to 0.
+This might be the case when we try to find the first physical node of
+the ACPI device. We need to keep reference to it until we get a result
+of the above mentioned call. Refactor the code to drop the reference
+count at the correct place.
 
-For request subaction to IEC 61883-1 FCP region, Linux FireWire subsystem
-have had an issue of use-after-free. The subsystem allows multiple
-user space listeners to the region, while data of the payload was likely
-released before the listeners execute read(2) to access to it for copying
-to user space.
+While at it, move to acpi_dev_put() as symmetrical call to the
+acpi_dev_get_first_match_dev().
 
-The issue was fixed by a commit 281e20323ab7 ("firewire: core: fix
-use-after-free regression in FCP handler"). The object of payload is
-duplicated in kernel space for each listener. When the listener executes
-ioctl(2) with FW_CDEV_IOC_SEND_RESPONSE request, the object is going to
-be released.
-
-However, it causes memory leak since the commit relies on call of
-release_request() in drivers/firewire/core-cdev.c. Against the
-expectation, the function is never called due to the design of
-release_client_resource(). The function delegates release task
-to caller when called with non-NULL fourth argument. The implementation
-of ioctl_send_response() is the case. It should release the object
-explicitly.
-
-This commit fixes the bug.
-
-Cc: <stable@vger.kernel.org>
-Fixes: 281e20323ab7 ("firewire: core: fix use-after-free regression in FCP handler")
-Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
-Link: https://lore.kernel.org/r/20230117090610.93792-2-o-takashi@sakamocchi.jp
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: a164137ce91a ("ASoC: Intel: add machine driver for SOF+ES8336")
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Link: https://lore.kernel.org/r/20230112112852.67714-6-andriy.shevchenko@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firewire/core-cdev.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/soc/intel/boards/sof_es8336.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
---- a/drivers/firewire/core-cdev.c
-+++ b/drivers/firewire/core-cdev.c
-@@ -819,8 +819,10 @@ static int ioctl_send_response(struct cl
+diff --git a/sound/soc/intel/boards/sof_es8336.c b/sound/soc/intel/boards/sof_es8336.c
+index 773e5d1d87d4..894b6610b9e2 100644
+--- a/sound/soc/intel/boards/sof_es8336.c
++++ b/sound/soc/intel/boards/sof_es8336.c
+@@ -681,7 +681,6 @@ static int sof_es8336_probe(struct platform_device *pdev)
+ 	if (adev) {
+ 		snprintf(codec_name, sizeof(codec_name),
+ 			 "i2c-%s", acpi_dev_name(adev));
+-		put_device(&adev->dev);
+ 		dai_links[0].codecs->name = codec_name;
  
- 	r = container_of(resource, struct inbound_transaction_resource,
- 			 resource);
--	if (is_fcp_request(r->request))
-+	if (is_fcp_request(r->request)) {
-+		kfree(r->data);
- 		goto out;
+ 		/* also fixup codec dai name if relevant */
+@@ -692,16 +691,19 @@ static int sof_es8336_probe(struct platform_device *pdev)
+ 		return -ENXIO;
+ 	}
+ 
+-	ret = snd_soc_fixup_dai_links_platform_name(&sof_es8336_card,
+-						    mach->mach_params.platform);
+-	if (ret)
+-		return ret;
+-
+ 	codec_dev = acpi_get_first_physical_node(adev);
++	acpi_dev_put(adev);
+ 	if (!codec_dev)
+ 		return -EPROBE_DEFER;
+ 	priv->codec_dev = get_device(codec_dev);
+ 
++	ret = snd_soc_fixup_dai_links_platform_name(&sof_es8336_card,
++						    mach->mach_params.platform);
++	if (ret) {
++		put_device(codec_dev);
++		return ret;
 +	}
++
+ 	if (quirk & SOF_ES8336_JD_INVERTED)
+ 		props[cnt++] = PROPERTY_ENTRY_BOOL("everest,jack-detect-inverted");
  
- 	if (a->length != fw_get_response_length(r->request)) {
- 		ret = -EINVAL;
+-- 
+2.39.0
+
 
 
