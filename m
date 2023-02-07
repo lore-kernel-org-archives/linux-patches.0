@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EEC4E3212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:01:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 627B1C4339B;
-	Tue,  7 Feb 2023 13:01:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09B193212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:01:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71841C4339B;
+	Tue,  7 Feb 2023 13:01:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675774874;
-	bh=UaPsElJ3PyE8FI45seQnHwjHKE+lgR2HwsSU5iFta8g=;
+	s=korg; t=1675774877;
+	bh=w5JQsmd+idHfWEj3+FjUusmRJWIvJcB20o2WkD4QGys=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2MxThs+dJ9yY4OOw2ZsuDr+/Kcrmkmqw2EV6UpZTbKo2JDsY4PRSfvyzfDx4qPXLT
-	 hcwcbfIBW5k/r5yywu5Pe6IoJDhzl8FryqQ71xoF4SWVe/Gfxxp64ZRogZXOnUrxej
-	 tmsODdww8+ImXOcKccrFnmoZMt/2GtFxZcowLUyE=
+	b=b+/kxqbAqmHqb5ZLCGGD1+pnlmUEkbvL+TaXXvwBOnCrwqprYCgKcBNRO8DdAJvIW
+	 As8N4/I2fctKQf7jlBT9JdcQVVGK3Je1APEhyxrAUzeRYnVvDiUqRefeh0JqzpgpUM
+	 xVkPgZesXxQ7vhB563aI5Aap4+nkjE1hcPFkL014=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 063/208] drm/i915/adlp: Fix typo for reference clock
-Date: Tue,  7 Feb 2023 13:55:17 +0100
-Message-Id: <20230207125637.150254742@linuxfoundation.org>
+Subject: [PATCH 6.1 064/208] net/tls: tls_is_tx_ready() checked list_entry
+Date: Tue,  7 Feb 2023 13:55:18 +0100
+Message-Id: <20230207125637.203075920@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -37,38 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit 47a2bd9d985bfdb55900f313603619fc9234f317 ]
+[ Upstream commit ffe2a22562444720b05bdfeb999c03e810d84cbb ]
 
-Fix typo for reference clock from 24400 to 24000.
+tls_is_tx_ready() checks that list_first_entry() does not return NULL.
+This condition can never happen. For empty lists, list_first_entry()
+returns the list_entry() of the head, which is a type confusion.
+Use list_first_entry_or_null() which returns NULL in case of empty
+lists.
 
-Bspec: 55409
-Fixes: 626426ff9ce4 ("drm/i915/adl_p: Add cdclk support for ADL-P")
-Reviewed-by: Matt Roper <matthew.d.roper@intel.com>
-Signed-off-by: Chaitanya Kumar Borah <chaitanya.kumar.borah@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230112094131.550252-1-chaitanya.kumar.borah@intel.com
-(cherry picked from commit 2b6f7e39ccae065abfbe3b6e562ec95ccad09f1e)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: a42055e8d2c3 ("net/tls: Add support for async encryption of records for performance")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Link: https://lore.kernel.org/r/20230128-list-entry-null-check-tls-v1-1-525bbfe6f0d0@diag.uniroma1.it
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_cdclk.c | 2 +-
+ net/tls/tls_sw.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/intel_cdclk.c b/drivers/gpu/drm/i915/display/intel_cdclk.c
-index ed05070b7307..92925f0f7239 100644
---- a/drivers/gpu/drm/i915/display/intel_cdclk.c
-+++ b/drivers/gpu/drm/i915/display/intel_cdclk.c
-@@ -1323,7 +1323,7 @@ static const struct intel_cdclk_vals adlp_cdclk_table[] = {
- 	{ .refclk = 24000, .cdclk = 192000, .divider = 2, .ratio = 16 },
- 	{ .refclk = 24000, .cdclk = 312000, .divider = 2, .ratio = 26 },
- 	{ .refclk = 24000, .cdclk = 552000, .divider = 2, .ratio = 46 },
--	{ .refclk = 24400, .cdclk = 648000, .divider = 2, .ratio = 54 },
-+	{ .refclk = 24000, .cdclk = 648000, .divider = 2, .ratio = 54 },
+diff --git a/net/tls/tls_sw.c b/net/tls/tls_sw.c
+index 9ed978634125..a83d2b4275fa 100644
+--- a/net/tls/tls_sw.c
++++ b/net/tls/tls_sw.c
+@@ -2427,7 +2427,7 @@ static bool tls_is_tx_ready(struct tls_sw_context_tx *ctx)
+ {
+ 	struct tls_rec *rec;
  
- 	{ .refclk = 38400, .cdclk = 179200, .divider = 3, .ratio = 14 },
- 	{ .refclk = 38400, .cdclk = 192000, .divider = 2, .ratio = 10 },
+-	rec = list_first_entry(&ctx->tx_list, struct tls_rec, list);
++	rec = list_first_entry_or_null(&ctx->tx_list, struct tls_rec, list);
+ 	if (!rec)
+ 		return false;
+ 
 -- 
 2.39.0
 
