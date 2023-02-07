@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E808F2C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:05:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B5F1C4339C;
-	Tue,  7 Feb 2023 13:05:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E28982C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:05:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DA82C433D2;
+	Tue,  7 Feb 2023 13:05:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775116;
-	bh=zw3Ej4DQHnK68ivRbJEMtNpSPtbdX+rbd1524cdgHL8=;
+	s=korg; t=1675775119;
+	bh=8e0waacTRKmpf30TuKo7z9wWoZAElm/cThhQSzTP7wA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T4RLR26+0Nwdw2Gc/bQsU3euV4T0LfbHmX0y0mo5dMG88JWDguaCFPp2kX3veM40/
-	 b4zt70ZvBh/JMnt1oJ2YqEGQ67XqKK1/Zds3cDm6mdKL7t/jTnaLYBZqup8WAtTjme
-	 bwJ/qkCnldKvvNumQo94AfW2zqErGTofO+zKaMA0=
+	b=yXBt3Po7REY8lTbqdYebLED3snO9wZ+fqCK3WFBTlmxJ65p0ifhytHRb0jrFMW4/m
+	 B+9fO2OcbUs+u3uAPAcZpjePnnjMwO+rnGfjJzlQsGvXjsOVXIXQNHTEuJFhUyWHJT
+	 Hw5BULk+A8HLvnAf6YuVPC3ou9bf1644oP5VceZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 141/208] iio: imu: fxos8700: fix IMU data bits returned to user space
-Date: Tue,  7 Feb 2023 13:56:35 +0100
-Message-Id: <20230207125640.813155230@linuxfoundation.org>
+	Sanan Hasanov <sanan.hasanov@Knights.ucf.edu>,
+	Samuel Thibault <samuel.thibault@ens-lyon.org>,
+	Miko Larsson <mikoxyzzz@gmail.com>,
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 115/208] fbcon: Check font dimension limits
+Date: Tue,  7 Feb 2023 13:56:09 +0100
+Message-Id: <20230207125639.592314853@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,73 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Samuel Thibault <samuel.thibault@ens-lyon.org>
 
-commit a53f945879c0cb9de3a4c05a665f5157884b5208 upstream.
+commit 2b09d5d364986f724f17001ccfe4126b9b43a0be upstream.
 
-ACCEL output data registers contain the X-axis, Y-axis, and Z-axis
-14-bit left-justified sample data and MAGN output data registers
-contain the X-axis, Y-axis, and Z-axis 16-bit sample data. The ACCEL
-raw register output data should be divided by 4 before sent to
-userspace.
+blit_x and blit_y are u32, so fbcon currently cannot support fonts
+larger than 32x32.
 
-Apply a 2 bits signed right shift to the raw data from ACCEL output
-data register but keep that from MAGN sensor as the origin.
+The 32x32 case also needs shifting an unsigned int, to properly set bit
+31, otherwise we get "UBSAN: shift-out-of-bounds in fbcon_set_font",
+as reported on:
 
-Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://lore.kernel.org/r/20221208071911.2405922-5-carlos.song@nxp.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+http://lore.kernel.org/all/IA1PR07MB98308653E259A6F2CE94A4AFABCE9@IA1PR07MB9830.namprd07.prod.outlook.com
+Kernel Branch: 6.2.0-rc5-next-20230124
+Kernel config: https://drive.google.com/file/d/1F-LszDAizEEH0ZX0HcSR06v5q8FPl2Uv/view?usp=sharing
+Reproducer: https://drive.google.com/file/d/1mP1jcLBY7vWCNM60OMf-ogw-urQRjNrm/view?usp=sharing
+
+Reported-by: Sanan Hasanov <sanan.hasanov@Knights.ucf.edu>
+Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
+Fixes: 2d2699d98492 ("fbcon: font setting should check limitation of driver")
+Cc: stable@vger.kernel.org
+Tested-by: Miko Larsson <mikoxyzzz@gmail.com>
+Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/fxos8700_core.c |   28 +++++++++++++++++++++++++++-
- 1 file changed, 27 insertions(+), 1 deletion(-)
+ drivers/video/fbdev/core/fbcon.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/imu/fxos8700_core.c
-+++ b/drivers/iio/imu/fxos8700_core.c
-@@ -418,6 +418,7 @@ static int fxos8700_get_data(struct fxos
- 			     int axis, int *val)
- {
- 	u8 base, reg;
-+	s16 tmp;
- 	int ret;
- 	enum fxos8700_sensor type = fxos8700_to_sensor(chan_type);
+--- a/drivers/video/fbdev/core/fbcon.c
++++ b/drivers/video/fbdev/core/fbcon.c
+@@ -2495,9 +2495,12 @@ static int fbcon_set_font(struct vc_data
+ 	    h > FBCON_SWAP(info->var.rotate, info->var.yres, info->var.xres))
+ 		return -EINVAL;
  
-@@ -432,8 +433,33 @@ static int fxos8700_get_data(struct fxos
- 	/* Convert axis to buffer index */
- 	reg = axis - IIO_MOD_X;
- 
-+	/*
-+	 * Convert to native endianness. The accel data and magn data
-+	 * are signed, so a forced type conversion is needed.
-+	 */
-+	tmp = be16_to_cpu(data->buf[reg]);
-+
-+	/*
-+	 * ACCEL output data registers contain the X-axis, Y-axis, and Z-axis
-+	 * 14-bit left-justified sample data and MAGN output data registers
-+	 * contain the X-axis, Y-axis, and Z-axis 16-bit sample data. Apply
-+	 * a signed 2 bits right shift to the readback raw data from ACCEL
-+	 * output data register and keep that from MAGN sensor as the origin.
-+	 * Value should be extended to 32 bit.
-+	 */
-+	switch (chan_type) {
-+	case IIO_ACCEL:
-+		tmp = tmp >> 2;
-+		break;
-+	case IIO_MAGN:
-+		/* Nothing to do */
-+		break;
-+	default:
++	if (font->width > 32 || font->height > 32)
 +		return -EINVAL;
-+	}
 +
- 	/* Convert to native endianness */
--	*val = sign_extend32(be16_to_cpu(data->buf[reg]), 15);
-+	*val = sign_extend32(tmp, 15);
+ 	/* Make sure drawing engine can handle the font */
+-	if (!(info->pixmap.blit_x & (1 << (font->width - 1))) ||
+-	    !(info->pixmap.blit_y & (1 << (font->height - 1))))
++	if (!(info->pixmap.blit_x & BIT(font->width - 1)) ||
++	    !(info->pixmap.blit_y & BIT(font->height - 1)))
+ 		return -EINVAL;
  
- 	return 0;
- }
+ 	/* Make sure driver can handle the font length */
 
 
