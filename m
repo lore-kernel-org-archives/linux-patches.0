@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A2E182C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:07:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FF04C433EF;
-	Tue,  7 Feb 2023 13:07:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 958082C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:07:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19CE5C433D2;
+	Tue,  7 Feb 2023 13:07:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775228;
-	bh=Dc+iMzuihmCLQGO7bhJClC1Hh9LN/ktbwKl+J/4cAVU=;
+	s=korg; t=1675775231;
+	bh=OBV0Dx/8rYSW4bY1xtD7EPxxcBOwRGOKu9maCzLUX6U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nJgFIwkfiURbnhMdiN5qnCz8omYwxnNjO3MIdDr2k4eNhbnP5pjSZeQtEiEVSyJgt
-	 f8CbVVTw+Qihy6lR3QQ1WdI/lQzQcYT2tbvMxc3uAy8Ns9ArkWA9rT8keNabqWmNAy
-	 Ik718ic8dttDfBVaeyH+dhnw99r01x6ex48ddJG4=
+	b=jjfhESC6DN4ovV2gJfezotPLBnOiVKPC9xRa3eyqSk5iUp+8ltM7f84JeLeTTmEJl
+	 mlFY39Tm8U8S+/45/kK4nbOZPPWfNzCWLnwxL76tJfT8jPEiqUfwBFYiNlsros3QUY
+	 p6qgUm/yIw+QY1UTdLcCdhFULT6yevKH7Xpy5/cg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bjorn Andersson <andersson@kernel.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.1 150/208] nvmem: qcom-spmi-sdam: fix module autoloading
-Date: Tue,  7 Feb 2023 13:56:44 +0100
-Message-Id: <20230207125641.239311202@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 6.1 151/208] parisc: Fix return code of pdc_iodc_print()
+Date: Tue,  7 Feb 2023 13:56:45 +0100
+Message-Id: <20230207125641.292888234@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,38 +33,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Helge Deller <deller@gmx.de>
 
-commit 1ca7fca349316231bbaa68d16f819a08d683c5a7 upstream.
+commit 5d1335dabb3c493a3d6d5b233953b6ac7b6c1ff2 upstream.
 
-Add the missing module device table so that the driver can be autoloaded
-when built as a module.
+There is an off-by-one if the printed string includes a new-line
+char.
 
-Fixes: 40ce9798794f ("nvmem: add QTI SDAM driver")
-Cc: stable@vger.kernel.org	# 5.6
-Reviewed-by: Bjorn Andersson <andersson@kernel.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230127104015.23839-11-srinivas.kandagatla@linaro.org
+Cc: stable@vger.kernel.org
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/qcom-spmi-sdam.c | 1 +
- 1 file changed, 1 insertion(+)
+ arch/parisc/kernel/firmware.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/nvmem/qcom-spmi-sdam.c b/drivers/nvmem/qcom-spmi-sdam.c
-index 4fcb63507ecd..8499892044b7 100644
---- a/drivers/nvmem/qcom-spmi-sdam.c
-+++ b/drivers/nvmem/qcom-spmi-sdam.c
-@@ -166,6 +166,7 @@ static const struct of_device_id sdam_match_table[] = {
- 	{ .compatible = "qcom,spmi-sdam" },
- 	{},
- };
-+MODULE_DEVICE_TABLE(of, sdam_match_table);
+--- a/arch/parisc/kernel/firmware.c
++++ b/arch/parisc/kernel/firmware.c
+@@ -1303,7 +1303,7 @@ static char iodc_dbuf[4096] __page_align
+  */
+ int pdc_iodc_print(const unsigned char *str, unsigned count)
+ {
+-	unsigned int i;
++	unsigned int i, found = 0;
+ 	unsigned long flags;
  
- static struct platform_driver sdam_driver = {
- 	.driver = {
--- 
-2.39.1
-
+ 	count = min_t(unsigned int, count, sizeof(iodc_dbuf));
+@@ -1315,6 +1315,7 @@ int pdc_iodc_print(const unsigned char *
+ 			iodc_dbuf[i+0] = '\r';
+ 			iodc_dbuf[i+1] = '\n';
+ 			i += 2;
++			found = 1;
+ 			goto print;
+ 		default:
+ 			iodc_dbuf[i] = str[i];
+@@ -1330,7 +1331,7 @@ print:
+ 		__pa(pdc_result), 0, __pa(iodc_dbuf), i, 0);
+ 	spin_unlock_irqrestore(&pdc_lock, flags);
+ 
+-	return i;
++	return i - found;
+ }
+ 
+ #if !defined(BOOTLOADER)
 
 
