@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EA12C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7F7C433D2;
-	Tue,  7 Feb 2023 13:06:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9013F2C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:07:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0BB9C4339B;
+	Tue,  7 Feb 2023 13:07:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775219;
-	bh=Co39vqHw1caTdOO0x1RYgwYCTJJk5eaLWGt6vCErSVk=;
+	s=korg; t=1675775222;
+	bh=sW2sqmw7CZZM1sIiWHvBXxQBmrWLvLJjyCvk8m7LSR4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RjbMqDYKAIaIpjZw1fp2vVC+yBOP21+bT6IZb2vuLQE42P+iqRukFzeF/cwhhRgb4
-	 ZfgXYxSoydgi8nmQIywnVq8x3Ox4RxsT8f2egMyDIzrd1Xgq+A+745HSdxZOmEraq+
-	 7vCvEExBMQLhx+4D0nz8QVvaHVv30zlTKOnRI8Ac=
+	b=1RIkwP7JL61K6THu2UAogkcS5vMS15erlB47FQJA+QcptOms9dIO/lZhB7i4+s4JA
+	 JbkLjbZJf2vrup1z68cYuJgcPHSix+cKOBH7SeDu7q84azsHjB4o1griyuFY7KbHz2
+	 HVUt7IV4aNOSIvefB2N4ttjjyfH7w/8pmkkIOLCM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 6.1 147/208] iio: imu: fxos8700: fix MAGN sensor scale and unit
-Date: Tue,  7 Feb 2023 13:56:41 +0100
-Message-Id: <20230207125641.096698946@linuxfoundation.org>
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.1 148/208] nvmem: brcm_nvram: Add check for kzalloc
+Date: Tue,  7 Feb 2023 13:56:42 +0100
+Message-Id: <20230207125641.137790659@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,56 +34,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-commit 2acd031347f645871959a799238a7caf6803aa18 upstream.
+commit b0576ade3aaf24b376ea1a4406ae138e2a22b0c0 upstream.
 
-+/-1200uT is a MAGN sensor full measurement range. Magnetometer scale
-is the magnetic sensitivity parameter. It is referenced as 0.1uT
-according to datasheet and magnetometer channel unit is Gauss in
-sysfs-bus-iio documentation. Gauss and uTesla unit conversion
-relationship as follows: 0.1uT = 0.001Gs.
+Add the check for the return value of kzalloc in order to avoid
+NULL pointer dereference.
 
-Set magnetometer scale and available magnetometer scale as fixed 0.001Gs.
-
-Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://lore.kernel.org/r/20230118074227.1665098-5-carlos.song@nxp.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 6e977eaa8280 ("nvmem: brcm_nvram: parse NVRAM content into NVMEM cells")
+Cc: stable@vger.kernel.org
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230127104015.23839-2-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/fxos8700_core.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/nvmem/brcm_nvram.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/iio/imu/fxos8700_core.c
-+++ b/drivers/iio/imu/fxos8700_core.c
-@@ -351,7 +351,7 @@ static int fxos8700_set_scale(struct fxo
- 	struct device *dev = regmap_get_device(data->regmap);
+--- a/drivers/nvmem/brcm_nvram.c
++++ b/drivers/nvmem/brcm_nvram.c
+@@ -97,6 +97,9 @@ static int brcm_nvram_parse(struct brcm_
+ 	len = le32_to_cpu(header.len);
  
- 	if (t == FXOS8700_MAGN) {
--		dev_err(dev, "Magnetometer scale is locked at 1200uT\n");
-+		dev_err(dev, "Magnetometer scale is locked at 0.001Gs\n");
- 		return -EINVAL;
- 	}
+ 	data = kzalloc(len, GFP_KERNEL);
++	if (!data)
++		return -ENOMEM;
++
+ 	memcpy_fromio(data, priv->base, len);
+ 	data[len - 1] = '\0';
  
-@@ -396,7 +396,7 @@ static int fxos8700_get_scale(struct fxo
- 	static const int scale_num = ARRAY_SIZE(fxos8700_accel_scale);
- 
- 	if (t == FXOS8700_MAGN) {
--		*uscale = 1200; /* Magnetometer is locked at 1200uT */
-+		*uscale = 1000; /* Magnetometer is locked at 0.001Gs */
- 		return 0;
- 	}
- 
-@@ -588,7 +588,7 @@ static IIO_CONST_ATTR(in_accel_sampling_
- static IIO_CONST_ATTR(in_magn_sampling_frequency_available,
- 		      "1.5625 6.25 12.5 50 100 200 400 800");
- static IIO_CONST_ATTR(in_accel_scale_available, "0.000244 0.000488 0.000976");
--static IIO_CONST_ATTR(in_magn_scale_available, "0.000001200");
-+static IIO_CONST_ATTR(in_magn_scale_available, "0.001000");
- 
- static struct attribute *fxos8700_attrs[] = {
- 	&iio_const_attr_in_accel_sampling_frequency_available.dev_attr.attr,
 
 
