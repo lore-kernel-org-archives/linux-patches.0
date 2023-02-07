@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3B202C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:08:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC195C43443;
-	Tue,  7 Feb 2023 13:08:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927E02C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:08:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B0CEC433EF;
+	Tue,  7 Feb 2023 13:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775325;
-	bh=FQoo1cYxT9+xUFmp7j4fTzAWcNSiimY92euimoOaADs=;
+	s=korg; t=1675775328;
+	bh=4smbWeCBAUMO3z05FeL6wI8xmb0nj2NbxhZE+VwPpBk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FgAwanx7dBNiaUIjfBfcNuSKZOqoS0hv5r0g6Rfik/M+cG5duIZMkyPISSCKul5kl
-	 NvWChSnyWBdYoFwHWaMHvY6nNHiRFInXviJgRzbWnlFY8lqfy4+DE2MQtN9SBxDGqt
-	 eKmKEeXZ0IKPQcw731xAxssM2q0IVc326QwuqQ7g=
+	b=ix3yF0vJ3Oc2Thw2xjtWvDgH5WOK+q0Dl5V9SIyJhx7ijzGEtBZfuxJSFNWjoPdZw
+	 zlgNQyJ2QZc+49vmKRVSxCvnn44xiYyUz2z8+sggctOsMqDpI6Vv21GN6yNSdU4Vjp
+	 UdStGg7gIrlDEIEg3rJSB3t21ZKl21XR7gb5qR94=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Graham Sider <Graham.Sider@amd.com>,
-	Mukul Joshi <Mukul.Joshi@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 183/208] drm/amdgpu: update wave data type to 3 for gfx11
-Date: Tue,  7 Feb 2023 13:57:17 +0100
-Message-Id: <20230207125642.759741948@linuxfoundation.org>
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 6.1 184/208] nvmem: core: initialise nvmem->id early
+Date: Tue,  7 Feb 2023 13:57:18 +0100
+Message-Id: <20230207125642.811200965@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,39 +34,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Graham Sider <Graham.Sider@amd.com>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-commit ed8e793c65e4c6633e8577e40d574da8a56d2e0f upstream.
+commit 3bd747c7ea13cb145f0d84444e00df928b0842d9 upstream.
 
-SQ_WAVE_INST_DW0 isn't present on gfx11 compared to gfx10, so update
-wave data type to signify a difference.
+The error path for wp_gpio attempts to free the IDA nvmem->id, but
+this has yet to be assigned, so will always be zero - leaking the
+ID allocated by ida_alloc(). Fix this by moving the initialisation
+of nvmem->id earlier.
 
-Signed-off-by: Graham Sider <Graham.Sider@amd.com>
-Reviewed-by: Mukul Joshi <Mukul.Joshi@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.x
+Fixes: f7d8d7dcd978 ("nvmem: fix memory leak in error path")
+Cc: stable@vger.kernel.org
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230127104015.23839-4-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvmem/core.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-index b9b57a66e113..66eb102cd88f 100644
---- a/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/gfx_v11_0.c
-@@ -790,8 +790,8 @@ static void gfx_v11_0_read_wave_data(struct amdgpu_device *adev, uint32_t simd,
- 	 * zero here */
- 	WARN_ON(simd != 0);
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -770,6 +770,8 @@ struct nvmem_device *nvmem_register(cons
+ 		return ERR_PTR(rval);
+ 	}
  
--	/* type 2 wave data */
--	dst[(*no_fields)++] = 2;
-+	/* type 3 wave data */
-+	dst[(*no_fields)++] = 3;
- 	dst[(*no_fields)++] = wave_read_ind(adev, wave, ixSQ_WAVE_STATUS);
- 	dst[(*no_fields)++] = wave_read_ind(adev, wave, ixSQ_WAVE_PC_LO);
- 	dst[(*no_fields)++] = wave_read_ind(adev, wave, ixSQ_WAVE_PC_HI);
--- 
-2.39.1
-
++	nvmem->id = rval;
++
+ 	if (config->wp_gpio)
+ 		nvmem->wp_gpio = config->wp_gpio;
+ 	else if (!config->ignore_wp)
+@@ -785,7 +787,6 @@ struct nvmem_device *nvmem_register(cons
+ 	kref_init(&nvmem->refcnt);
+ 	INIT_LIST_HEAD(&nvmem->cells);
+ 
+-	nvmem->id = rval;
+ 	nvmem->owner = config->owner;
+ 	if (!nvmem->owner && config->dev->driver)
+ 		nvmem->owner = config->dev->driver->owner;
 
 
