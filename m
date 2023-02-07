@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A61552C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24E62C433D2;
-	Tue,  7 Feb 2023 13:06:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 83EA12C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF7F7C433D2;
+	Tue,  7 Feb 2023 13:06:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775216;
-	bh=v8xvOr5k4tvtgOHuiMD+La+xZmHaOyFzcEDxyzwf6Es=;
+	s=korg; t=1675775219;
+	bh=Co39vqHw1caTdOO0x1RYgwYCTJJk5eaLWGt6vCErSVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oKzJ+8HAzZ4mHSXOVN6rk7BPqeVUwzPlJv5R9SLD+gpWMJDNhCpX05SA1QcEgxIA6
-	 Xm9NiTbX5GO87cmE1MvqeMqgbzhAp26bAhp0IEAsLRQaPGpV/OalA8Ldp8UjuSQIFn
-	 wxMoA0U2uvnX52ZC1z7BlewuDh8+B+RmfhHKQg84=
+	b=RjbMqDYKAIaIpjZw1fp2vVC+yBOP21+bT6IZb2vuLQE42P+iqRukFzeF/cwhhRgb4
+	 ZfgXYxSoydgi8nmQIywnVq8x3Ox4RxsT8f2egMyDIzrd1Xgq+A+745HSdxZOmEraq+
+	 7vCvEExBMQLhx+4D0nz8QVvaHVv30zlTKOnRI8Ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	syzbot+082fa4af80a5bb1a9843@syzkaller.appspotmail.com,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 174/208] Squashfs: fix handling and sanity checking of xattr_ids count
-Date: Tue,  7 Feb 2023 13:57:08 +0100
-Message-Id: <20230207125642.317891969@linuxfoundation.org>
+	Carlos Song <carlos.song@nxp.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 6.1 147/208] iio: imu: fxos8700: fix MAGN sensor scale and unit
+Date: Tue,  7 Feb 2023 13:56:41 +0100
+Message-Id: <20230207125641.096698946@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -37,143 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Phillip Lougher <phillip@squashfs.org.uk>
+From: Carlos Song <carlos.song@nxp.com>
 
-commit f65c4bbbd682b0877b669828b4e033b8d5d0a2dc upstream.
+commit 2acd031347f645871959a799238a7caf6803aa18 upstream.
 
-A Sysbot [1] corrupted filesystem exposes two flaws in the handling and
-sanity checking of the xattr_ids count in the filesystem.  Both of these
-flaws cause computation overflow due to incorrect typing.
++/-1200uT is a MAGN sensor full measurement range. Magnetometer scale
+is the magnetic sensitivity parameter. It is referenced as 0.1uT
+according to datasheet and magnetometer channel unit is Gauss in
+sysfs-bus-iio documentation. Gauss and uTesla unit conversion
+relationship as follows: 0.1uT = 0.001Gs.
 
-In the corrupted filesystem the xattr_ids value is 4294967071, which
-stored in a signed variable becomes the negative number -225.
+Set magnetometer scale and available magnetometer scale as fixed 0.001Gs.
 
-Flaw 1 (64-bit systems only):
-
-The signed integer xattr_ids variable causes sign extension.
-
-This causes variable overflow in the SQUASHFS_XATTR_*(A) macros.  The
-variable is first multiplied by sizeof(struct squashfs_xattr_id) where the
-type of the sizeof operator is "unsigned long".
-
-On a 64-bit system this is 64-bits in size, and causes the negative number
-to be sign extended and widened to 64-bits and then become unsigned.  This
-produces the very large number 18446744073709548016 or 2^64 - 3600.  This
-number when rounded up by SQUASHFS_METADATA_SIZE - 1 (8191 bytes) and
-divided by SQUASHFS_METADATA_SIZE overflows and produces a length of 0
-(stored in len).
-
-Flaw 2 (32-bit systems only):
-
-On a 32-bit system the integer variable is not widened by the unsigned
-long type of the sizeof operator (32-bits), and the signedness of the
-variable has no effect due it always being treated as unsigned.
-
-The above corrupted xattr_ids value of 4294967071, when multiplied
-overflows and produces the number 4294963696 or 2^32 - 3400.  This number
-when rounded up by SQUASHFS_METADATA_SIZE - 1 (8191 bytes) and divided by
-SQUASHFS_METADATA_SIZE overflows again and produces a length of 0.
-
-The effect of the 0 length computation:
-
-In conjunction with the corrupted xattr_ids field, the filesystem also has
-a corrupted xattr_table_start value, where it matches the end of
-filesystem value of 850.
-
-This causes the following sanity check code to fail because the
-incorrectly computed len of 0 matches the incorrect size of the table
-reported by the superblock (0 bytes).
-
-    len = SQUASHFS_XATTR_BLOCK_BYTES(*xattr_ids);
-    indexes = SQUASHFS_XATTR_BLOCKS(*xattr_ids);
-
-    /*
-     * The computed size of the index table (len bytes) should exactly
-     * match the table start and end points
-    */
-    start = table_start + sizeof(*id_table);
-    end = msblk->bytes_used;
-
-    if (len != (end - start))
-            return ERR_PTR(-EINVAL);
-
-Changing the xattr_ids variable to be "usigned int" fixes the flaw on a
-64-bit system.  This relies on the fact the computation is widened by the
-unsigned long type of the sizeof operator.
-
-Casting the variable to u64 in the above macro fixes this flaw on a 32-bit
-system.
-
-It also means 64-bit systems do not implicitly rely on the type of the
-sizeof operator to widen the computation.
-
-[1] https://lore.kernel.org/lkml/000000000000cd44f005f1a0f17f@google.com/
-
-Link: https://lkml.kernel.org/r/20230127061842.10965-1-phillip@squashfs.org.uk
-Fixes: 506220d2ba21 ("squashfs: add more sanity checks in xattr id lookup")
-Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
-Reported-by: <syzbot+082fa4af80a5bb1a9843@syzkaller.appspotmail.com>
-Cc: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Cc: Fedor Pchelkin <pchelkin@ispras.ru>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Link: https://lore.kernel.org/r/20230118074227.1665098-5-carlos.song@nxp.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/squashfs/squashfs_fs.h    |    2 +-
- fs/squashfs/squashfs_fs_sb.h |    2 +-
- fs/squashfs/xattr.h          |    4 ++--
- fs/squashfs/xattr_id.c       |    2 +-
- 4 files changed, 5 insertions(+), 5 deletions(-)
+ drivers/iio/imu/fxos8700_core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/fs/squashfs/squashfs_fs.h
-+++ b/fs/squashfs/squashfs_fs.h
-@@ -183,7 +183,7 @@ static inline int squashfs_block_size(__
- #define SQUASHFS_ID_BLOCK_BYTES(A)	(SQUASHFS_ID_BLOCKS(A) *\
- 					sizeof(u64))
- /* xattr id lookup table defines */
--#define SQUASHFS_XATTR_BYTES(A)		((A) * sizeof(struct squashfs_xattr_id))
-+#define SQUASHFS_XATTR_BYTES(A)		(((u64) (A)) * sizeof(struct squashfs_xattr_id))
+--- a/drivers/iio/imu/fxos8700_core.c
++++ b/drivers/iio/imu/fxos8700_core.c
+@@ -351,7 +351,7 @@ static int fxos8700_set_scale(struct fxo
+ 	struct device *dev = regmap_get_device(data->regmap);
  
- #define SQUASHFS_XATTR_BLOCK(A)		(SQUASHFS_XATTR_BYTES(A) / \
- 					SQUASHFS_METADATA_SIZE)
---- a/fs/squashfs/squashfs_fs_sb.h
-+++ b/fs/squashfs/squashfs_fs_sb.h
-@@ -63,7 +63,7 @@ struct squashfs_sb_info {
- 	long long				bytes_used;
- 	unsigned int				inodes;
- 	unsigned int				fragments;
--	int					xattr_ids;
-+	unsigned int				xattr_ids;
- 	unsigned int				ids;
- 	bool					panic_on_errors;
- };
---- a/fs/squashfs/xattr.h
-+++ b/fs/squashfs/xattr.h
-@@ -10,12 +10,12 @@
+ 	if (t == FXOS8700_MAGN) {
+-		dev_err(dev, "Magnetometer scale is locked at 1200uT\n");
++		dev_err(dev, "Magnetometer scale is locked at 0.001Gs\n");
+ 		return -EINVAL;
+ 	}
  
- #ifdef CONFIG_SQUASHFS_XATTR
- extern __le64 *squashfs_read_xattr_id_table(struct super_block *, u64,
--		u64 *, int *);
-+		u64 *, unsigned int *);
- extern int squashfs_xattr_lookup(struct super_block *, unsigned int, int *,
- 		unsigned int *, unsigned long long *);
- #else
- static inline __le64 *squashfs_read_xattr_id_table(struct super_block *sb,
--		u64 start, u64 *xattr_table_start, int *xattr_ids)
-+		u64 start, u64 *xattr_table_start, unsigned int *xattr_ids)
- {
- 	struct squashfs_xattr_id_table *id_table;
+@@ -396,7 +396,7 @@ static int fxos8700_get_scale(struct fxo
+ 	static const int scale_num = ARRAY_SIZE(fxos8700_accel_scale);
  
---- a/fs/squashfs/xattr_id.c
-+++ b/fs/squashfs/xattr_id.c
-@@ -56,7 +56,7 @@ int squashfs_xattr_lookup(struct super_b
-  * Read uncompressed xattr id lookup table indexes from disk into memory
-  */
- __le64 *squashfs_read_xattr_id_table(struct super_block *sb, u64 table_start,
--		u64 *xattr_table_start, int *xattr_ids)
-+		u64 *xattr_table_start, unsigned int *xattr_ids)
- {
- 	struct squashfs_sb_info *msblk = sb->s_fs_info;
- 	unsigned int len, indexes;
+ 	if (t == FXOS8700_MAGN) {
+-		*uscale = 1200; /* Magnetometer is locked at 1200uT */
++		*uscale = 1000; /* Magnetometer is locked at 0.001Gs */
+ 		return 0;
+ 	}
+ 
+@@ -588,7 +588,7 @@ static IIO_CONST_ATTR(in_accel_sampling_
+ static IIO_CONST_ATTR(in_magn_sampling_frequency_available,
+ 		      "1.5625 6.25 12.5 50 100 200 400 800");
+ static IIO_CONST_ATTR(in_accel_scale_available, "0.000244 0.000488 0.000976");
+-static IIO_CONST_ATTR(in_magn_scale_available, "0.000001200");
++static IIO_CONST_ATTR(in_magn_scale_available, "0.001000");
+ 
+ static struct attribute *fxos8700_attrs[] = {
+ 	&iio_const_attr_in_accel_sampling_frequency_available.dev_attr.attr,
 
 
