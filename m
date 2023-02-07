@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 216A83212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:00:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79762C433D2;
-	Tue,  7 Feb 2023 13:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 490FF3212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:00:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3910C433EF;
+	Tue,  7 Feb 2023 13:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675774839;
-	bh=1fAa6k1mwQRSnOZe31Kzo8oKONdjGcfLHZhM9nThEpw=;
+	s=korg; t=1675774842;
+	bh=SZ1g8TnfQKTRubrRPGLu3W/MOAQ5SQAttpPooeWndhU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eX4O693kYgkLIHoGar1da3IeGyJKqeXhD/ihfLU/WVAMeDHWANfXQ0ia4qFjN6Fg+
-	 t+gwH2lMkEI7Bwt+8MdA3xquqA/SvuBZualt7KS8Rg1U7SFCmr47QqCaw3XtMnY6F4
-	 6zj02/vDZyNfhCDI9alYar4dDhIPraKKytugaR30=
+	b=O203lMQg/1v4ZfCot64r8Jkwi9kwv6NpEEmA6iEsfX9nPUgyLFfW4S0vwdLdCKFwg
+	 5fqVfS2IIEeHcTPmtYmOPUeOgxskJiK2oaD2RisRfGR7sT8w0yCHNK1miyin8Eioie
+	 aTHqwI9kH5aVMnHRyD8P+Al5wSROIsMzTRMKfN84=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yu Kuai <yukuai3@huawei.com>,
-	Jan Kara <jack@suse.cz>,
-	Jens Axboe <axboe@kernel.dk>,
+	Pierluigi Passaro <pierluigi.p@variscite.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 049/208] block, bfq: replace 0/1 with false/true in bic apis
-Date: Tue,  7 Feb 2023 13:55:03 +0100
-Message-Id: <20230207125636.502515863@linuxfoundation.org>
+Subject: [PATCH 6.1 022/208] arm64: dts: imx8mm: Fix pad control for UART1_DTE_RX
+Date: Tue,  7 Feb 2023 13:54:36 +0100
+Message-Id: <20230207125635.303044841@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -36,77 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yu Kuai <yukuai3@huawei.com>
+From: Pierluigi Passaro <pierluigi.p@variscite.com>
 
-[ Upstream commit 337366e02b370d2800110fbc99940f6ddddcbdfa ]
+[ Upstream commit 47123900f3e4a7f769631d6ec15abf44086276f6 ]
 
-Just to make the code a litter cleaner, there are no functional changes.
+According section
+    8.2.5.313 Select Input Register (IOMUXC_UART1_RXD_SELECT_INPUT)
+of 
+    i.MX 8M Mini Applications Processor Reference Manual, Rev. 3, 11/2020
+the required setting for this specific pin configuration is "1"
 
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Jan Kara <jack@suse.cz>
-Link: https://lore.kernel.org/r/20221214033155.3455754-3-yukuai1@huaweicloud.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Stable-dep-of: b600de2d7d3a ("block, bfq: fix uaf for bfqq in bic_set_bfqq()")
+Signed-off-by: Pierluigi Passaro <pierluigi.p@variscite.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Fixes: c1c9d41319c3 ("dt-bindings: imx: Add pinctrl binding doc for imx8mm")
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- block/bfq-cgroup.c  | 8 ++++----
- block/bfq-iosched.c | 4 ++--
- 2 files changed, 6 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mm-pinfunc.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/block/bfq-cgroup.c b/block/bfq-cgroup.c
-index 7d624a3a3f0f..dfb6d1d8bd46 100644
---- a/block/bfq-cgroup.c
-+++ b/block/bfq-cgroup.c
-@@ -718,15 +718,15 @@ static void *__bfq_bic_change_cgroup(struct bfq_data *bfqd,
- 				     struct bfq_io_cq *bic,
- 				     struct bfq_group *bfqg)
- {
--	struct bfq_queue *async_bfqq = bic_to_bfqq(bic, 0);
--	struct bfq_queue *sync_bfqq = bic_to_bfqq(bic, 1);
-+	struct bfq_queue *async_bfqq = bic_to_bfqq(bic, false);
-+	struct bfq_queue *sync_bfqq = bic_to_bfqq(bic, true);
- 	struct bfq_entity *entity;
- 
- 	if (async_bfqq) {
- 		entity = &async_bfqq->entity;
- 
- 		if (entity->sched_data != &bfqg->sched_data) {
--			bic_set_bfqq(bic, NULL, 0);
-+			bic_set_bfqq(bic, NULL, false);
- 			bfq_release_process_ref(bfqd, async_bfqq);
- 		}
- 	}
-@@ -762,7 +762,7 @@ static void *__bfq_bic_change_cgroup(struct bfq_data *bfqd,
- 				 */
- 				bfq_put_cooperator(sync_bfqq);
- 				bfq_release_process_ref(bfqd, sync_bfqq);
--				bic_set_bfqq(bic, NULL, 1);
-+				bic_set_bfqq(bic, NULL, true);
- 			}
- 		}
- 	}
-diff --git a/block/bfq-iosched.c b/block/bfq-iosched.c
-index 7b894df32e32..917939b60ef8 100644
---- a/block/bfq-iosched.c
-+++ b/block/bfq-iosched.c
-@@ -3180,7 +3180,7 @@ bfq_merge_bfqqs(struct bfq_data *bfqd, struct bfq_io_cq *bic,
- 	/*
- 	 * Merge queues (that is, let bic redirect its requests to new_bfqq)
- 	 */
--	bic_set_bfqq(bic, new_bfqq, 1);
-+	bic_set_bfqq(bic, new_bfqq, true);
- 	bfq_mark_bfqq_coop(new_bfqq);
- 	/*
- 	 * new_bfqq now belongs to at least two bics (it is a shared queue):
-@@ -6627,7 +6627,7 @@ bfq_split_bfqq(struct bfq_io_cq *bic, struct bfq_queue *bfqq)
- 		return bfqq;
- 	}
- 
--	bic_set_bfqq(bic, NULL, 1);
-+	bic_set_bfqq(bic, NULL, true);
- 
- 	bfq_put_cooperator(bfqq);
- 
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-pinfunc.h b/arch/arm64/boot/dts/freescale/imx8mm-pinfunc.h
+index 83c8f715cd90..b1f11098d248 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm-pinfunc.h
++++ b/arch/arm64/boot/dts/freescale/imx8mm-pinfunc.h
+@@ -602,7 +602,7 @@
+ #define MX8MM_IOMUXC_UART1_RXD_GPIO5_IO22                                   0x234 0x49C 0x000 0x5 0x0
+ #define MX8MM_IOMUXC_UART1_RXD_TPSMP_HDATA24                                0x234 0x49C 0x000 0x7 0x0
+ #define MX8MM_IOMUXC_UART1_TXD_UART1_DCE_TX                                 0x238 0x4A0 0x000 0x0 0x0
+-#define MX8MM_IOMUXC_UART1_TXD_UART1_DTE_RX                                 0x238 0x4A0 0x4F4 0x0 0x0
++#define MX8MM_IOMUXC_UART1_TXD_UART1_DTE_RX                                 0x238 0x4A0 0x4F4 0x0 0x1
+ #define MX8MM_IOMUXC_UART1_TXD_ECSPI3_MOSI                                  0x238 0x4A0 0x000 0x1 0x0
+ #define MX8MM_IOMUXC_UART1_TXD_GPIO5_IO23                                   0x238 0x4A0 0x000 0x5 0x0
+ #define MX8MM_IOMUXC_UART1_TXD_TPSMP_HDATA25                                0x238 0x4A0 0x000 0x7 0x0
 -- 
 2.39.0
 
