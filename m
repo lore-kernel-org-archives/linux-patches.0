@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8D792F39
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 12:59:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18E80C433EF;
-	Tue,  7 Feb 2023 12:59:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E06C82F39
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 12:59:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44CD9C4339B;
+	Tue,  7 Feb 2023 12:59:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675774796;
-	bh=N8ki9vuoU17EXwNe13mBXTXBo5xllC1yfpaLEOQJpFo=;
+	s=korg; t=1675774799;
+	bh=Bt+EPyA3cKRXVrJMXiAemRmgo7CuhkHhH/hgHK04cRU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=So1fqoc53po2zDOKrww9vqSvw1XJH1vcYzw6cnTqEYxSKmwOBYPcosT55yCboqQsu
-	 niDrfl5Hme87YPxngy7Dxba31o+9Wk0VD3sQOvlM17p4gJpmNWVDKRuLTIu6MIawk+
-	 cmhWDGR7MU5Cs5zS7JRR7XcB/FyhXFeQy2RZn0bw=
+	b=o2FU0Y+2K4LtmNG0kQI6jk3vtwz3W8K2twsi4dGkNGEM3hVVBPKP/nOyZHUA9csCj
+	 f9ydwn9QDHhY6alU/VUiLXpv8Bu6Icwxp7gcbQeqWceP2pcpcaUn2VRLSft39NR43I
+	 /HeRZk5XIF+T/7cQNRzDroZE0fv3SieRakZ/9YXU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+	Mauro Carvalho Chehab <mchehab@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 037/208] fix "direction" argument of iov_iter_kvec()
-Date: Tue,  7 Feb 2023 13:54:51 +0100
-Message-Id: <20230207125635.996371100@linuxfoundation.org>
+Subject: [PATCH 6.1 020/208] media: v4l2-ctrls-api.c: move ctrl->is_new = 1 to the correct line
+Date: Tue,  7 Feb 2023 13:54:34 +0100
+Message-Id: <20230207125635.230688314@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -34,53 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Hans Verkuil <hverkuil-cisco@xs4all.nl>
 
-[ Upstream commit fc02f33787d8dd227b54f263eba983d5b249c032 ]
+[ Upstream commit a1550700629f30c5bd554161524f14f14600d554 ]
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
-Stable-dep-of: 6dd88fd59da8 ("vhost-scsi: unbreak any layout for response")
+The patch that fixed string control support somehow got mangled when it was
+merged in mainline: the added line ended up in the wrong place.
+
+Fix this.
+
+Fixes: 73278d483378 ("media: v4l2-ctrls-api.c: add back dropped ctrl->is_new = 1")
+Signed-off-by: Hans Verkuil <hverkuil-cisco@xs4all.nl>
+Signed-off-by: Mauro Carvalho Chehab <mchehab@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/xen/pvcalls-back.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/media/v4l2-core/v4l2-ctrls-api.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/xen/pvcalls-back.c b/drivers/xen/pvcalls-back.c
-index d6f945fd4147..21b9c850a382 100644
---- a/drivers/xen/pvcalls-back.c
-+++ b/drivers/xen/pvcalls-back.c
-@@ -129,13 +129,13 @@ static bool pvcalls_conn_back_read(void *opaque)
- 	if (masked_prod < masked_cons) {
- 		vec[0].iov_base = data->in + masked_prod;
- 		vec[0].iov_len = wanted;
--		iov_iter_kvec(&msg.msg_iter, WRITE, vec, 1, wanted);
-+		iov_iter_kvec(&msg.msg_iter, READ, vec, 1, wanted);
- 	} else {
- 		vec[0].iov_base = data->in + masked_prod;
- 		vec[0].iov_len = array_size - masked_prod;
- 		vec[1].iov_base = data->in;
- 		vec[1].iov_len = wanted - vec[0].iov_len;
--		iov_iter_kvec(&msg.msg_iter, WRITE, vec, 2, wanted);
-+		iov_iter_kvec(&msg.msg_iter, READ, vec, 2, wanted);
- 	}
- 
- 	atomic_set(&map->read, 0);
-@@ -188,13 +188,13 @@ static bool pvcalls_conn_back_write(struct sock_mapping *map)
- 	if (pvcalls_mask(prod, array_size) > pvcalls_mask(cons, array_size)) {
- 		vec[0].iov_base = data->out + pvcalls_mask(cons, array_size);
- 		vec[0].iov_len = size;
--		iov_iter_kvec(&msg.msg_iter, READ, vec, 1, size);
-+		iov_iter_kvec(&msg.msg_iter, WRITE, vec, 1, size);
- 	} else {
- 		vec[0].iov_base = data->out + pvcalls_mask(cons, array_size);
- 		vec[0].iov_len = array_size - pvcalls_mask(cons, array_size);
- 		vec[1].iov_base = data->out;
- 		vec[1].iov_len = size - vec[0].iov_len;
--		iov_iter_kvec(&msg.msg_iter, READ, vec, 2, size);
-+		iov_iter_kvec(&msg.msg_iter, WRITE, vec, 2, size);
- 	}
- 
- 	atomic_set(&map->write, 0);
+diff --git a/drivers/media/v4l2-core/v4l2-ctrls-api.c b/drivers/media/v4l2-core/v4l2-ctrls-api.c
+index 3d3b6dc24ca6..002ea6588edf 100644
+--- a/drivers/media/v4l2-core/v4l2-ctrls-api.c
++++ b/drivers/media/v4l2-core/v4l2-ctrls-api.c
+@@ -150,8 +150,8 @@ static int user_to_new(struct v4l2_ext_control *c, struct v4l2_ctrl *ctrl)
+ 			 * then return an error.
+ 			 */
+ 			if (strlen(ctrl->p_new.p_char) == ctrl->maximum && last)
+-			ctrl->is_new = 1;
+ 				return -ERANGE;
++			ctrl->is_new = 1;
+ 		}
+ 		return ret;
+ 	default:
 -- 
 2.39.0
 
