@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB7A52C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51137C433EF;
-	Tue,  7 Feb 2023 13:06:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AF812C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:06:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C5F7C433D2;
+	Tue,  7 Feb 2023 13:06:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775198;
-	bh=i2h5QWv1pKWSJYkxbpOEQbmV6AZdrWL5NEdW9AwPDLg=;
+	s=korg; t=1675775201;
+	bh=+jD4e3suyyY4f1/T8AqCIt9y+xN97eQ8HidQmKJPrn8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oHFo388V8uOAfZE60S8RSyjwf4IPK6L2szSGeX1b49bS8uKlaDrnV87aDNbbhC1aW
-	 pv6k9OK95MqtxAQ+aaTGsCrFxesLbAcW1k5gC+xC3DOrcKfLd0FP6hQ1KywLl7LMib
-	 HF9epF+oG4y6MVkzA5wkO16MZU2Py8QTwKUZfMS4=
+	b=NkO44L2VF+9NDR4TJ7oFkBMrYJG05EQiwafnkt3jzNbGI9sLXLIGcotvu9XxOPcZD
+	 khdTDacRKVTzKajOteOGfN44FeD3mVEfleQUE4Y70mpWUqGwdMpzaeV+UJtvtqvZG5
+	 SNaQ7LE7GNheF0yt6anFNCM0DlQZOhqrlxYNHKpQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jann Horn <jannh@google.com>,
-	Zach OKeefe <zokeefe@google.com>,
-	"Kirill A. Shutemov" <kirill.shutemov@intel.linux.com>,
-	Yang Shi <shy828301@gmail.com>,
-	David Hildenbrand <david@redhat.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	Fabian Vogt <fvogt@suse.com>,
+	=?UTF-8?q?Jakub=20Mat=C4=9Bna?= <matenajakub@gmail.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 169/208] mm/khugepaged: fix ->anon_vma race
-Date: Tue,  7 Feb 2023 13:57:03 +0100
-Message-Id: <20230207125642.069846036@linuxfoundation.org>
+Subject: [PATCH 6.1 170/208] mm, mremap: fix mremap() expanding for vmas with vm_ops->close()
+Date: Tue,  7 Feb 2023 13:57:04 +0100
+Message-Id: <20230207125642.121793909@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -38,77 +36,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jann Horn <jannh@google.com>
+From: Vlastimil Babka <vbabka@suse.cz>
 
-commit 023f47a8250c6bdb4aebe744db4bf7f73414028b upstream.
+commit d014cd7c1c358edc3ea82ebf327a036a42ed0164 upstream.
 
-If an ->anon_vma is attached to the VMA, collapse_and_free_pmd() requires
-it to be locked.
+Fabian has reported another regression in 6.1 due to ca3d76b0aa80 ("mm:
+add merging after mremap resize").  The problem is that vma_merge() can
+fail when vma has a vm_ops->close() method, causing is_mergeable_vma()
+test to be negative.  This was happening for vma mapping a file from
+fuse-overlayfs, which does have the method.  But when we are simply
+expanding the vma, we never remove it due to the "merge" with the added
+area, so the test should not prevent the expansion.
 
-Page table traversal is allowed under any one of the mmap lock, the
-anon_vma lock (if the VMA is associated with an anon_vma), and the
-mapping lock (if the VMA is associated with a mapping); and so to be
-able to remove page tables, we must hold all three of them.
-retract_page_tables() bails out if an ->anon_vma is attached, but does
-this check before holding the mmap lock (as the comment above the check
-explains).
+As a quick fix, check for such vmas and expand them using vma_adjust()
+directly as was done before commit ca3d76b0aa80.  For a more robust long
+term solution we should try to limit the check for vma_ops->close only to
+cases that actually result in vma removal, so that no merge would be
+prevented unnecessarily.
 
-If we racily merged an existing ->anon_vma (shared with a child
-process) from a neighboring VMA, subsequent rmap traversals on pages
-belonging to the child will be able to see the page tables that we are
-concurrently removing while assuming that nothing else can access them.
-
-Repeat the ->anon_vma check once we hold the mmap lock to ensure that
-there really is no concurrent page table access.
-
-Hitting this bug causes a lockdep warning in collapse_and_free_pmd(),
-in the line "lockdep_assert_held_write(&vma->anon_vma->root->rwsem)".
-It can also lead to use-after-free access.
-
-Link: https://lore.kernel.org/linux-mm/CAG48ez3434wZBKFFbdx4M9j6eUwSUVPd4dxhzW_k_POneSDF+A@mail.gmail.com/
-Link: https://lkml.kernel.org/r/20230111133351.807024-1-jannh@google.com
-Fixes: f3f0e1d2150b ("khugepaged: add support of collapse for tmpfs/shmem pages")
-Signed-off-by: Jann Horn <jannh@google.com>
-Reported-by: Zach O'Keefe <zokeefe@google.com>
-Acked-by: Kirill A. Shutemov <kirill.shutemov@intel.linux.com>
-Reviewed-by: Yang Shi <shy828301@gmail.com>
-Cc: David Hildenbrand <david@redhat.com>
+[akpm@linux-foundation.org: fix indenting whitespace, reflow comment]
+Link: https://lkml.kernel.org/r/20230117101939.9753-1-vbabka@suse.cz
+Fixes: ca3d76b0aa80 ("mm: add merging after mremap resize")
+Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
+Reported-by: Fabian Vogt <fvogt@suse.com>
+  Link: https://bugzilla.suse.com/show_bug.cgi?id=1206359#c35
+Tested-by: Fabian Vogt <fvogt@suse.com>
+Cc: Jakub Matěna <matenajakub@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/khugepaged.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ mm/mremap.c | 25 +++++++++++++++++++------
+ 1 file changed, 19 insertions(+), 6 deletions(-)
 
---- a/mm/khugepaged.c
-+++ b/mm/khugepaged.c
-@@ -1649,7 +1649,7 @@ static int retract_page_tables(struct ad
- 		 * has higher cost too. It would also probably require locking
- 		 * the anon_vma.
- 		 */
--		if (vma->anon_vma) {
-+		if (READ_ONCE(vma->anon_vma)) {
- 			result = SCAN_PAGE_ANON;
- 			goto next;
- 		}
-@@ -1678,6 +1678,18 @@ static int retract_page_tables(struct ad
- 		if ((cc->is_khugepaged || is_target) &&
- 		    mmap_write_trylock(mm)) {
+diff --git a/mm/mremap.c b/mm/mremap.c
+index fe587c5d6591..930f65c315c0 100644
+--- a/mm/mremap.c
++++ b/mm/mremap.c
+@@ -1027,16 +1027,29 @@ SYSCALL_DEFINE5(mremap, unsigned long, addr, unsigned long, old_len,
+ 			}
+ 
  			/*
-+			 * Re-check whether we have an ->anon_vma, because
-+			 * collapse_and_free_pmd() requires that either no
-+			 * ->anon_vma exists or the anon_vma is locked.
-+			 * We already checked ->anon_vma above, but that check
-+			 * is racy because ->anon_vma can be populated under the
-+			 * mmap lock in read mode.
-+			 */
-+			if (vma->anon_vma) {
-+				result = SCAN_PAGE_ANON;
-+				goto unlock_next;
+-			 * Function vma_merge() is called on the extension we are adding to
+-			 * the already existing vma, vma_merge() will merge this extension with
+-			 * the already existing vma (expand operation itself) and possibly also
+-			 * with the next vma if it becomes adjacent to the expanded vma and
+-			 * otherwise compatible.
++			 * Function vma_merge() is called on the extension we
++			 * are adding to the already existing vma, vma_merge()
++			 * will merge this extension with the already existing
++			 * vma (expand operation itself) and possibly also with
++			 * the next vma if it becomes adjacent to the expanded
++			 * vma and  otherwise compatible.
++			 *
++			 * However, vma_merge() can currently fail due to
++			 * is_mergeable_vma() check for vm_ops->close (see the
++			 * comment there). Yet this should not prevent vma
++			 * expanding, so perform a simple expand for such vma.
++			 * Ideally the check for close op should be only done
++			 * when a vma would be actually removed due to a merge.
+ 			 */
+-			vma = vma_merge(mm, vma, extension_start, extension_end,
++			if (!vma->vm_ops || !vma->vm_ops->close) {
++				vma = vma_merge(mm, vma, extension_start, extension_end,
+ 					vma->vm_flags, vma->anon_vma, vma->vm_file,
+ 					extension_pgoff, vma_policy(vma),
+ 					vma->vm_userfaultfd_ctx, anon_vma_name(vma));
++			} else if (vma_adjust(vma, vma->vm_start, addr + new_len,
++				   vma->vm_pgoff, NULL)) {
++				vma = NULL;
 +			}
-+			/*
- 			 * When a vma is registered with uffd-wp, we can't
- 			 * recycle the pmd pgtable because there can be pte
- 			 * markers installed.  Skip it only, so the rest mm/vma
+ 			if (!vma) {
+ 				vm_unacct_memory(pages);
+ 				ret = -ENOMEM;
+-- 
+2.39.1
+
 
 
