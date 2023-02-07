@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C04803212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:00:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454B0C433EF;
-	Tue,  7 Feb 2023 13:00:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A58CB3212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:00:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25479C433EF;
+	Tue,  7 Feb 2023 13:00:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675774812;
-	bh=Hixmd54q8F93agSiIl8Y2CmxYs67LaRQAuhSX+WqFS8=;
+	s=korg; t=1675774815;
+	bh=iYDNLoGHSljLmmj8F240PD1EWwUnNsRQZI/DZWR/u8U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BKdimp3jY6OzP1x53fGhNemiau78YM8pr23hCqKZ3vdl0bkZpKsRv2xtKzYCJLjTG
-	 X9XQy7jSF6aGknTaH+ZhnRMJuJtIhUJ5FQYrYS1/IjFByevyctEIWfeDaAI7fifqyf
-	 TZ5rkmvHgnQ8iIXCsLW7FJ64Gm+oJpwe5yCNh/t4=
+	b=hbBnJxqtEGltJvEb4rcmHRIB26f8VHfYY7ov8lm4uHLNGyMUcAU/5FPdMKSA7AJwr
+	 cZud/OCthDNVAbxNtaOgUfRxa1WLo+A/+SGrYVoD0xMY+dodl6prgokASjd+0jAHGq
+	 lXzY2+WgeHNxwZ1+nEveeUeVxKB1Hs1Sx8dZqsck=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Magnus Karlsson <magnus.karlsson@intel.com>,
 	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/208] qede: execute xdp_do_flush() before napi_complete_done()
-Date: Tue,  7 Feb 2023 13:54:55 +0100
-Message-Id: <20230207125636.155261058@linuxfoundation.org>
+Subject: [PATCH 6.1 042/208] virtio-net: execute xdp_do_flush() before napi_complete_done()
+Date: Tue,  7 Feb 2023 13:54:56 +0100
+Message-Id: <20230207125636.195265428@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -38,7 +39,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Magnus Karlsson <magnus.karlsson@intel.com>
 
-[ Upstream commit 2ccce20d51faa0178086163ccb6c84a099a87ab4 ]
+[ Upstream commit ad7e615f646c9b5b2cf655cdfb9d91a28db4f25a ]
 
 Make sure that xdp_do_flush() is always executed before
 napi_complete_done(). This is important for two reasons. First, a
@@ -55,42 +56,39 @@ being inside a single NAPI instance through to the xdp_do_flush() call
 for RCU protection of all in-kernel data structures. Details can be
 found in the second link below.
 
-Fixes: d1b25b79e162b ("qede: add .ndo_xdp_xmit() and XDP_REDIRECT support")
+Fixes: 186b3c998c50 ("virtio-net: support XDP_REDIRECT")
 Signed-off-by: Magnus Karlsson <magnus.karlsson@intel.com>
 Acked-by: Toke Høiland-Jørgensen <toke@redhat.com>
 Link: https://lore.kernel.org/r/20221220185903.1105011-1-sbohrer@cloudflare.com
 Link: https://lore.kernel.org/all/20210624160609.292325-1-toke@redhat.com/
+Acked-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_fp.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/net/virtio_net.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qede/qede_fp.c b/drivers/net/ethernet/qlogic/qede/qede_fp.c
-index 7c2af482192d..cb1746bc0e0c 100644
---- a/drivers/net/ethernet/qlogic/qede/qede_fp.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_fp.c
-@@ -1438,6 +1438,10 @@ int qede_poll(struct napi_struct *napi, int budget)
- 	rx_work_done = (likely(fp->type & QEDE_FASTPATH_RX) &&
- 			qede_has_rx_work(fp->rxq)) ?
- 			qede_rx_int(fp, budget) : 0;
-+
-+	if (fp->xdp_xmit & QEDE_XDP_REDIRECT)
+diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
+index 3cd15f16090f..ec388932aacf 100644
+--- a/drivers/net/virtio_net.c
++++ b/drivers/net/virtio_net.c
+@@ -1673,13 +1673,13 @@ static int virtnet_poll(struct napi_struct *napi, int budget)
+ 
+ 	received = virtnet_receive(rq, budget, &xdp_xmit);
+ 
++	if (xdp_xmit & VIRTIO_XDP_REDIR)
 +		xdp_do_flush();
 +
- 	/* Handle case where we are called by netpoll with a budget of 0 */
- 	if (rx_work_done < budget || !budget) {
- 		if (!qede_poll_is_more_work(fp)) {
-@@ -1457,9 +1461,6 @@ int qede_poll(struct napi_struct *napi, int budget)
- 		qede_update_tx_producer(fp->xdp_tx);
- 	}
+ 	/* Out of packets? */
+ 	if (received < budget)
+ 		virtqueue_napi_complete(napi, rq->vq, received);
  
--	if (fp->xdp_xmit & QEDE_XDP_REDIRECT)
--		xdp_do_flush_map();
+-	if (xdp_xmit & VIRTIO_XDP_REDIR)
+-		xdp_do_flush();
 -
- 	return rx_work_done;
- }
- 
+ 	if (xdp_xmit & VIRTIO_XDP_TX) {
+ 		sq = virtnet_xdp_get_sq(vi);
+ 		if (virtqueue_kick_prepare(sq->vq) && virtqueue_notify(sq->vq)) {
 -- 
 2.39.0
 
