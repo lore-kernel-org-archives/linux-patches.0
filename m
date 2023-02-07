@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3AE672C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:05:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AD8CCC4339B;
-	Tue,  7 Feb 2023 13:05:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19E142C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:05:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D309C433EF;
+	Tue,  7 Feb 2023 13:05:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775155;
-	bh=YuAxhSscfdcXIpSSCrr/6za3dBM/xLH3uBpNT/2Ut+c=;
+	s=korg; t=1675775157;
+	bh=49eVP3VvglhYDyZ+MybjCp1gHpBrluq4dXb3TC50YQg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kZ0Mul67Ydjxv3g0Mxj23eC7pUQWdZkoSLftJWMIE9CbTN1EGgokOlLFro40MAjhp
-	 CjifWopFZJgaMkN45h+iZv6z9xbPafEvo4FCt4iYAwl9r77WC7yWYy1J/QO10ungoI
-	 +QHJ0U4bm3YxCgpGRLERJIMyGJ25DhbPblV7NYRY=
+	b=kUnqZYsLiBItl3Yg0d57KTdUdybS+AGOLe461aSoqAWEIMRkHYTj8VcRboRoLwzz4
+	 jizKV0FeKcqUOWTPz6q7mPejfvIyqJwFlIs3e5/7Isv+hvvcZ5QO/Rd8kLjGfFvJ+B
+	 0KedBIzvr5nM3RAeVzSgy5rTFwc5jPPOLEmtEp90=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Calvin Zhang <calvinzhang.cool@gmail.com>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Saravana Kannan <saravanak@google.com>,
+	Yu Zhao <yuzhao@google.com>,
+	msizanoen <msizanoen@qtmlabs.xyz>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 155/208] Revert "mm: kmemleak: alloc gray object for reserved region with direct map"
-Date: Tue,  7 Feb 2023 13:56:49 +0100
-Message-Id: <20230207125641.483877071@linuxfoundation.org>
+Subject: [PATCH 6.1 156/208] mm: multi-gen LRU: fix crash during cgroup migration
+Date: Tue,  7 Feb 2023 13:56:50 +0100
+Message-Id: <20230207125641.519933289@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -39,61 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Isaac J. Manjarres <isaacmanjarres@google.com>
+From: Yu Zhao <yuzhao@google.com>
 
-commit 8ef852f1cb426a5812aee700d3b4297aaa426acc upstream.
+commit de08eaa6156405f2e9369f06ba5afae0e4ab3b62 upstream.
 
-This reverts commit 972fa3a7c17c9d60212e32ecc0205dc585b1e769.
+lru_gen_migrate_mm() assumes lru_gen_add_mm() runs prior to itself.  This
+isn't true for the following scenario:
 
-Kmemleak operates by periodically scanning memory regions for pointers to
-allocated memory blocks to determine if they are leaked or not.  However,
-reserved memory regions can be used for DMA transactions between a device
-and a CPU, and thus, wouldn't contain pointers to allocated memory blocks,
-making them inappropriate for kmemleak to scan.  Thus, revert this commit.
+    CPU 1                         CPU 2
 
-Link: https://lkml.kernel.org/r/20230124230254.295589-1-isaacmanjarres@google.com
-Fixes: 972fa3a7c17c9 ("mm: kmemleak: alloc gray object for reserved region with direct map")
-Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Calvin Zhang <calvinzhang.cool@gmail.com>
-Cc: Frank Rowand <frowand.list@gmail.com>
-Cc: Rob Herring <robh+dt@kernel.org>
-Cc: Saravana Kannan <saravanak@google.com>
-Cc: <stable@vger.kernel.org>	[5.17+]
+  clone()
+    cgroup_can_fork()
+                                cgroup_procs_write()
+    cgroup_post_fork()
+                                  task_lock()
+                                  lru_gen_migrate_mm()
+                                  task_unlock()
+    task_lock()
+    lru_gen_add_mm()
+    task_unlock()
+
+And when the above happens, kernel crashes because of linked list
+corruption (mm_struct->lru_gen.list).
+
+Link: https://lore.kernel.org/r/20230115134651.30028-1-msizanoen@qtmlabs.xyz/
+Link: https://lkml.kernel.org/r/20230116034405.2960276-1-yuzhao@google.com
+Fixes: bd74fdaea146 ("mm: multi-gen LRU: support page table walks")
+Signed-off-by: Yu Zhao <yuzhao@google.com>
+Reported-by: msizanoen <msizanoen@qtmlabs.xyz>
+Tested-by: msizanoen <msizanoen@qtmlabs.xyz>
+Cc: <stable@vger.kernel.org>	[6.1+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/fdt.c | 6 +-----
- 1 file changed, 1 insertion(+), 5 deletions(-)
+ mm/vmscan.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/of/fdt.c b/drivers/of/fdt.c
-index f08b25195ae7..d1a68b6d03b3 100644
---- a/drivers/of/fdt.c
-+++ b/drivers/of/fdt.c
-@@ -26,7 +26,6 @@
- #include <linux/serial_core.h>
- #include <linux/sysfs.h>
- #include <linux/random.h>
--#include <linux/kmemleak.h>
+--- a/mm/vmscan.c
++++ b/mm/vmscan.c
+@@ -3290,13 +3290,16 @@ void lru_gen_migrate_mm(struct mm_struct
+ 	if (mem_cgroup_disabled())
+ 		return;
  
- #include <asm/setup.h>  /* for COMMAND_LINE_SIZE */
- #include <asm/page.h>
-@@ -525,12 +524,9 @@ static int __init __reserved_mem_reserve_reg(unsigned long node,
- 		size = dt_mem_next_cell(dt_root_size_cells, &prop);
++	/* migration can happen before addition */
++	if (!mm->lru_gen.memcg)
++		return;
++
+ 	rcu_read_lock();
+ 	memcg = mem_cgroup_from_task(task);
+ 	rcu_read_unlock();
+ 	if (memcg == mm->lru_gen.memcg)
+ 		return;
  
- 		if (size &&
--		    early_init_dt_reserve_memory(base, size, nomap) == 0) {
-+		    early_init_dt_reserve_memory(base, size, nomap) == 0)
- 			pr_debug("Reserved memory: reserved region for node '%s': base %pa, size %lu MiB\n",
- 				uname, &base, (unsigned long)(size / SZ_1M));
--			if (!nomap)
--				kmemleak_alloc_phys(base, size, 0);
--		}
- 		else
- 			pr_err("Reserved memory: failed to reserve memory for node '%s': base %pa, size %lu MiB\n",
- 			       uname, &base, (unsigned long)(size / SZ_1M));
--- 
-2.39.1
-
+-	VM_WARN_ON_ONCE(!mm->lru_gen.memcg);
+ 	VM_WARN_ON_ONCE(list_empty(&mm->lru_gen.list));
+ 
+ 	lru_gen_del_mm(mm);
 
 
