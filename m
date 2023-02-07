@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 01C942C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:09:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 735CBC433EF;
-	Tue,  7 Feb 2023 13:09:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450C22C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:09:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D9CAC433EF;
+	Tue,  7 Feb 2023 13:09:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775387;
-	bh=TIUHxUK7dqNIgpch7SnrrQMY2niILT/y+yxnIVgYOXA=;
+	s=korg; t=1675775391;
+	bh=YxVGKsfHPqjxc+ObLWXdUonRsvTbqIuEsZnYsn1D8l8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ai1iTH1BPSnuSG/uBm0W0ynZJlJdBjEeLntU+wIiYqM6L0njsSy3zV5kxBdEkbRzF
-	 WXVJW11BSyk9GIc+mLN+DiN/JPFx7slVQHOAwv9Mg6Q7gCqWtf4rDKMoGlkjgF+lw/
-	 HrV+yTPFkcWvydhp343phyQh3qen7TQPRcB6I5og=
+	b=BScoOROt9pZD7DyY2oRG4K8lXsy8wBpJSHHbT1N7taPYcY2gEcfCqVXZnBvoGNVRR
+	 lLHuAviMcv3QXOnMCXeXvacYDzgO41JUEc9eMpeWx19NR/slOnrs3N2JrQvIDeVpOK
+	 EefJ+xKmG89w2++nn9O2+tMI/9f3TawV3q2El1+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Magnus Karlsson <magnus.karlsson@intel.com>,
 	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Camelia Groza <camelia.groza@nxp.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 024/120] virtio-net: execute xdp_do_flush() before napi_complete_done()
-Date: Tue,  7 Feb 2023 13:56:35 +0100
-Message-Id: <20230207125619.825056722@linuxfoundation.org>
+Subject: [PATCH 5.15 025/120] dpaa_eth: execute xdp_do_flush() before napi_complete_done()
+Date: Tue,  7 Feb 2023 13:56:36 +0100
+Message-Id: <20230207125619.867140417@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -39,7 +39,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Magnus Karlsson <magnus.karlsson@intel.com>
 
-[ Upstream commit ad7e615f646c9b5b2cf655cdfb9d91a28db4f25a ]
+[ Upstream commit b534013798b77f81a36f36dafd59bab9de837619 ]
 
 Make sure that xdp_do_flush() is always executed before
 napi_complete_done(). This is important for two reasons. First, a
@@ -56,39 +56,42 @@ being inside a single NAPI instance through to the xdp_do_flush() call
 for RCU protection of all in-kernel data structures. Details can be
 found in the second link below.
 
-Fixes: 186b3c998c50 ("virtio-net: support XDP_REDIRECT")
+Fixes: a1e031ffb422 ("dpaa_eth: add XDP_REDIRECT support")
 Signed-off-by: Magnus Karlsson <magnus.karlsson@intel.com>
 Acked-by: Toke Høiland-Jørgensen <toke@redhat.com>
 Link: https://lore.kernel.org/r/20221220185903.1105011-1-sbohrer@cloudflare.com
 Link: https://lore.kernel.org/all/20210624160609.292325-1-toke@redhat.com/
-Acked-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Camelia Groza <camelia.groza@nxp.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/virtio_net.c | 6 +++---
+ drivers/net/ethernet/freescale/dpaa/dpaa_eth.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/virtio_net.c b/drivers/net/virtio_net.c
-index 9222be208aba..a5ec81c76155 100644
---- a/drivers/net/virtio_net.c
-+++ b/drivers/net/virtio_net.c
-@@ -1580,13 +1580,13 @@ static int virtnet_poll(struct napi_struct *napi, int budget)
+diff --git a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
+index 685d2d8a3b36..fe5fc2b3406f 100644
+--- a/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
++++ b/drivers/net/ethernet/freescale/dpaa/dpaa_eth.c
+@@ -2395,6 +2395,9 @@ static int dpaa_eth_poll(struct napi_struct *napi, int budget)
  
- 	received = virtnet_receive(rq, budget, &xdp_xmit);
+ 	cleaned = qman_p_poll_dqrr(np->p, budget);
  
-+	if (xdp_xmit & VIRTIO_XDP_REDIR)
++	if (np->xdp_act & XDP_REDIRECT)
 +		xdp_do_flush();
 +
- 	/* Out of packets? */
- 	if (received < budget)
- 		virtqueue_napi_complete(napi, rq->vq, received);
+ 	if (cleaned < budget) {
+ 		napi_complete_done(napi, cleaned);
+ 		qman_p_irqsource_add(np->p, QM_PIRQ_DQRI);
+@@ -2402,9 +2405,6 @@ static int dpaa_eth_poll(struct napi_struct *napi, int budget)
+ 		qman_p_irqsource_add(np->p, QM_PIRQ_DQRI);
+ 	}
  
--	if (xdp_xmit & VIRTIO_XDP_REDIR)
+-	if (np->xdp_act & XDP_REDIRECT)
 -		xdp_do_flush();
 -
- 	if (xdp_xmit & VIRTIO_XDP_TX) {
- 		sq = virtnet_xdp_get_sq(vi);
- 		if (virtqueue_kick_prepare(sq->vq) && virtqueue_notify(sq->vq)) {
+ 	return cleaned;
+ }
+ 
 -- 
 2.39.0
 
