@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCA162C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:10:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 314FBC433EF;
-	Tue,  7 Feb 2023 13:10:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DDE1B2C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:10:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28F40C433D2;
+	Tue,  7 Feb 2023 13:10:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775433;
-	bh=D4uJcnqlzQZA7Yj2TZW96q1LMfDB2EspoZPGsxVT3iI=;
+	s=korg; t=1675775436;
+	bh=uRjtyO4j07J5l4XRzZHwbY5V0dkF2U/++5iYmH2kLLE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Juita/RHUJniZNn5SZ0ccYMCa9EEBXfgdb3UNwAtzrNc0/ha3vgMKdAarmfCb2UQO
-	 6fRYgs0/sB8ncVN6KqxaUEzRRPHEmTo5DUPpszn2xyzehLaDw71sr8iHTOob60Ogr6
-	 Irlp/37NNOXuiI31s6FuGj3FYoWk/p/Ae1xmE9Mk=
+	b=dqqm5B1K+VnRcYXslPublkiCXLHenBAIpy/LVeyESHtCcSJ/U3ayYBWug2/SYTD0X
+	 qcUUHZR1lCjVNwlSwRKpFqo3pYOxyYF44mYrkEKswfHrfBbKF2xn61CHCtcFurxOjA
+	 p8ynl2pWDNOkDYzhw79CxCvFn+lmP7wYULroklEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Martin KaFai Lau <kafai@fb.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Thomas Winter <Thomas.Winter@alliedtelesis.co.nz>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 011/120] bpf: Support <8-byte scalar spill and refill
-Date: Tue,  7 Feb 2023 13:56:22 +0100
-Message-Id: <20230207125619.244203156@linuxfoundation.org>
+Subject: [PATCH 5.15 038/120] ip/ip6_gre: Fix changing addr gen mode not generating IPv6 link local address
+Date: Tue,  7 Feb 2023 13:56:49 +0100
+Message-Id: <20230207125620.400329718@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -35,216 +36,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin KaFai Lau <kafai@fb.com>
+From: Thomas Winter <Thomas.Winter@alliedtelesis.co.nz>
 
-[ Upstream commit 354e8f1970f821d4952458f77b1ab6c3eb24d530 ]
+[ Upstream commit 23ca0c2c93406bdb1150659e720bda1cec1fad04 ]
 
-The verifier currently does not save the reg state when
-spilling <8byte bounded scalar to the stack.  The bpf program
-will be incorrectly rejected when this scalar is refilled to
-the reg and then used to offset into a packet header.
-The later patch has a simplified bpf prog from a real use case
-to demonstrate this case.  The current work around is
-to reparse the packet again such that this offset scalar
-is close to where the packet data will be accessed to
-avoid the spill.  Thus, the header is parsed twice.
+For our point-to-point GRE tunnels, they have IN6_ADDR_GEN_MODE_NONE
+when they are created then we set IN6_ADDR_GEN_MODE_EUI64 when they
+come up to generate the IPv6 link local address for the interface.
+Recently we found that they were no longer generating IPv6 addresses.
+This issue would also have affected SIT tunnels.
 
-The llvm patch [1] will align the <8bytes spill to
-the 8-byte stack address.  This can simplify the verifier
-support by avoiding to store multiple reg states for
-each 8 byte stack slot.
+Commit e5dd729460ca changed the code path so that GRE tunnels
+generate an IPv6 address based on the tunnel source address.
+It also changed the code path so GRE tunnels don't call addrconf_addr_gen
+in addrconf_dev_config which is called by addrconf_sysctl_addr_gen_mode
+when the IN6_ADDR_GEN_MODE is changed.
 
-This patch changes the verifier to save the reg state when
-spilling <8bytes scalar to the stack.  This reg state saving
-is limited to spill aligned to the 8-byte stack address.
-The current refill logic has already called coerce_reg_to_size(),
-so coerce_reg_to_size() is not called on state->stack[spi].spilled_ptr
-during spill.
+This patch aims to fix this issue by moving the code in addrconf_notify
+which calls the addr gen for GRE and SIT into a separate function
+and calling it in the places that expect the IPv6 address to be
+generated.
 
-When refilling in check_stack_read_fixed_off(),  it checks
-the refill size is the same as the number of bytes marked with
-STACK_SPILL before restoring the reg state.  When restoring
-the reg state to state->regs[dst_regno], it needs
-to avoid the state->regs[dst_regno].subreg_def being
-over written because it has been marked by the check_reg_arg()
-earlier [check_mem_access() is called after check_reg_arg() in
-do_check()].  Reordering check_mem_access() and check_reg_arg()
-will need a lot of changes in test_verifier's tests because
-of the difference in verifier's error message.  Thus, the
-patch here is to save the state->regs[dst_regno].subreg_def
-first in check_stack_read_fixed_off().
+The previous addrconf_dev_config is renamed to addrconf_eth_config
+since it only expected eth type interfaces and follows the
+addrconf_gre/sit_config format.
 
-There are cases that the verifier needs to scrub the spilled slot
-from STACK_SPILL to STACK_MISC.  After this patch the spill is not always
-in 8 bytes now, so it can no longer assume the other 7 bytes are always
-marked as STACK_SPILL.  In particular, the scrub needs to avoid marking
-an uninitialized byte from STACK_INVALID to STACK_MISC.  Otherwise, the
-verifier will incorrectly accept bpf program reading uninitialized bytes
-from the stack.  A new helper scrub_spilled_slot() is created for this
-purpose.
+A part of this changes means that the loopback address will be
+attempted to be configured when changing addr_gen_mode for lo.
+This should not be a problem because the address should exist anyway
+and if does already exist then no error is produced.
 
-[1]: https://reviews.llvm.org/D109073
-
-Signed-off-by: Martin KaFai Lau <kafai@fb.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
-Link: https://lore.kernel.org/bpf/20210922004941.625398-1-kafai@fb.com
-Stable-dep-of: 71f656a50176 ("bpf: Fix to preserve reg parent/live fields when copying range info")
+Fixes: e5dd729460ca ("ip/ip6_gre: use the same logic as SIT interfaces when computing v6LL address")
+Signed-off-by: Thomas Winter <Thomas.Winter@alliedtelesis.co.nz>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/bpf/verifier.c | 67 +++++++++++++++++++++++++++++++++----------
- 1 file changed, 52 insertions(+), 15 deletions(-)
+ net/ipv6/addrconf.c | 49 +++++++++++++++++++++++++--------------------
+ 1 file changed, 27 insertions(+), 22 deletions(-)
 
-diff --git a/kernel/bpf/verifier.c b/kernel/bpf/verifier.c
-index 49e51fc0c2f4..d2ccf7725e73 100644
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -614,6 +614,12 @@ static bool is_spilled_reg(const struct bpf_stack_state *stack)
- 	return stack->slot_type[BPF_REG_SIZE - 1] == STACK_SPILL;
+diff --git a/net/ipv6/addrconf.c b/net/ipv6/addrconf.c
+index 8800987fdb40..cc1c94bc5b0e 100644
+--- a/net/ipv6/addrconf.c
++++ b/net/ipv6/addrconf.c
+@@ -3447,6 +3447,30 @@ static void addrconf_gre_config(struct net_device *dev)
  }
+ #endif
  
-+static void scrub_spilled_slot(u8 *stype)
++static void addrconf_init_auto_addrs(struct net_device *dev)
 +{
-+	if (*stype != STACK_INVALID)
-+		*stype = STACK_MISC;
++	switch (dev->type) {
++#if IS_ENABLED(CONFIG_IPV6_SIT)
++	case ARPHRD_SIT:
++		addrconf_sit_config(dev);
++		break;
++#endif
++#if IS_ENABLED(CONFIG_NET_IPGRE) || IS_ENABLED(CONFIG_IPV6_GRE)
++	case ARPHRD_IP6GRE:
++	case ARPHRD_IPGRE:
++		addrconf_gre_config(dev);
++		break;
++#endif
++	case ARPHRD_LOOPBACK:
++		init_loopback(dev);
++		break;
++
++	default:
++		addrconf_dev_config(dev);
++		break;
++	}
 +}
 +
- static void print_verifier_state(struct bpf_verifier_env *env,
- 				 const struct bpf_func_state *state)
- {
-@@ -2608,15 +2614,21 @@ static bool __is_pointer_value(bool allow_ptr_leaks,
- }
- 
- static void save_register_state(struct bpf_func_state *state,
--				int spi, struct bpf_reg_state *reg)
-+				int spi, struct bpf_reg_state *reg,
-+				int size)
- {
- 	int i;
- 
- 	state->stack[spi].spilled_ptr = *reg;
--	state->stack[spi].spilled_ptr.live |= REG_LIVE_WRITTEN;
-+	if (size == BPF_REG_SIZE)
-+		state->stack[spi].spilled_ptr.live |= REG_LIVE_WRITTEN;
- 
--	for (i = 0; i < BPF_REG_SIZE; i++)
--		state->stack[spi].slot_type[i] = STACK_SPILL;
-+	for (i = BPF_REG_SIZE; i > BPF_REG_SIZE - size; i--)
-+		state->stack[spi].slot_type[i - 1] = STACK_SPILL;
-+
-+	/* size < 8 bytes spill */
-+	for (; i; i--)
-+		scrub_spilled_slot(&state->stack[spi].slot_type[i - 1]);
- }
- 
- /* check_stack_{read,write}_fixed_off functions track spill/fill of registers,
-@@ -2665,7 +2677,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 			env->insn_aux_data[insn_idx].sanitize_stack_spill = true;
- 	}
- 
--	if (reg && size == BPF_REG_SIZE && register_is_bounded(reg) &&
-+	if (reg && !(off % BPF_REG_SIZE) && register_is_bounded(reg) &&
- 	    !register_is_null(reg) && env->bpf_capable) {
- 		if (dst_reg != BPF_REG_FP) {
- 			/* The backtracking logic can only recognize explicit
-@@ -2678,7 +2690,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 			if (err)
- 				return err;
+ static int fixup_permanent_addr(struct net *net,
+ 				struct inet6_dev *idev,
+ 				struct inet6_ifaddr *ifp)
+@@ -3611,26 +3635,7 @@ static int addrconf_notify(struct notifier_block *this, unsigned long event,
+ 			run_pending = 1;
  		}
--		save_register_state(state, spi, reg);
-+		save_register_state(state, spi, reg, size);
- 	} else if (reg && is_spillable_regtype(reg->type)) {
- 		/* register containing pointer is being spilled into stack */
- 		if (size != BPF_REG_SIZE) {
-@@ -2690,7 +2702,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 			verbose(env, "cannot spill pointers to stack into stack frame of the caller\n");
- 			return -EINVAL;
- 		}
--		save_register_state(state, spi, reg);
-+		save_register_state(state, spi, reg, size);
- 	} else {
- 		u8 type = STACK_MISC;
  
-@@ -2699,7 +2711,7 @@ static int check_stack_write_fixed_off(struct bpf_verifier_env *env,
- 		/* Mark slots as STACK_MISC if they belonged to spilled ptr. */
- 		if (is_spilled_reg(&state->stack[spi]))
- 			for (i = 0; i < BPF_REG_SIZE; i++)
--				state->stack[spi].slot_type[i] = STACK_MISC;
-+				scrub_spilled_slot(&state->stack[spi].slot_type[i]);
- 
- 		/* only mark the slot as written if all 8 bytes were written
- 		 * otherwise read propagation may incorrectly stop too soon
-@@ -2905,23 +2917,50 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
- 	struct bpf_func_state *state = vstate->frame[vstate->curframe];
- 	int i, slot = -off - 1, spi = slot / BPF_REG_SIZE;
- 	struct bpf_reg_state *reg;
--	u8 *stype;
-+	u8 *stype, type;
- 
- 	stype = reg_state->stack[spi].slot_type;
- 	reg = &reg_state->stack[spi].spilled_ptr;
- 
- 	if (is_spilled_reg(&reg_state->stack[spi])) {
- 		if (size != BPF_REG_SIZE) {
-+			u8 scalar_size = 0;
-+
- 			if (reg->type != SCALAR_VALUE) {
- 				verbose_linfo(env, env->insn_idx, "; ");
- 				verbose(env, "invalid size of register fill\n");
- 				return -EACCES;
- 			}
--			if (dst_regno >= 0) {
-+
-+			mark_reg_read(env, reg, reg->parent, REG_LIVE_READ64);
-+			if (dst_regno < 0)
-+				return 0;
-+
-+			for (i = BPF_REG_SIZE; i > 0 && stype[i - 1] == STACK_SPILL; i--)
-+				scalar_size++;
-+
-+			if (!(off % BPF_REG_SIZE) && size == scalar_size) {
-+				/* The earlier check_reg_arg() has decided the
-+				 * subreg_def for this insn.  Save it first.
-+				 */
-+				s32 subreg_def = state->regs[dst_regno].subreg_def;
-+
-+				state->regs[dst_regno] = *reg;
-+				state->regs[dst_regno].subreg_def = subreg_def;
-+			} else {
-+				for (i = 0; i < size; i++) {
-+					type = stype[(slot - i) % BPF_REG_SIZE];
-+					if (type == STACK_SPILL)
-+						continue;
-+					if (type == STACK_MISC)
-+						continue;
-+					verbose(env, "invalid read from stack off %d+%d size %d\n",
-+						off, i, size);
-+					return -EACCES;
-+				}
- 				mark_reg_unknown(env, state->regs, dst_regno);
--				state->regs[dst_regno].live |= REG_LIVE_WRITTEN;
- 			}
--			mark_reg_read(env, reg, reg->parent, REG_LIVE_READ64);
-+			state->regs[dst_regno].live |= REG_LIVE_WRITTEN;
- 			return 0;
- 		}
- 		for (i = 1; i < BPF_REG_SIZE; i++) {
-@@ -2952,8 +2991,6 @@ static int check_stack_read_fixed_off(struct bpf_verifier_env *env,
- 		}
- 		mark_reg_read(env, reg, reg->parent, REG_LIVE_READ64);
- 	} else {
--		u8 type;
+-		switch (dev->type) {
+-#if IS_ENABLED(CONFIG_IPV6_SIT)
+-		case ARPHRD_SIT:
+-			addrconf_sit_config(dev);
+-			break;
+-#endif
+-#if IS_ENABLED(CONFIG_NET_IPGRE) || IS_ENABLED(CONFIG_IPV6_GRE)
+-		case ARPHRD_IP6GRE:
+-		case ARPHRD_IPGRE:
+-			addrconf_gre_config(dev);
+-			break;
+-#endif
+-		case ARPHRD_LOOPBACK:
+-			init_loopback(dev);
+-			break;
 -
- 		for (i = 0; i < size; i++) {
- 			type = stype[(slot - i) % BPF_REG_SIZE];
- 			if (type == STACK_MISC)
-@@ -4559,7 +4596,7 @@ static int check_stack_range_initialized(
- 			if (clobber) {
- 				__mark_reg_unknown(env, &state->stack[spi].spilled_ptr);
- 				for (j = 0; j < BPF_REG_SIZE; j++)
--					state->stack[spi].slot_type[j] = STACK_MISC;
-+					scrub_spilled_slot(&state->stack[spi].slot_type[j]);
+-		default:
+-			addrconf_dev_config(dev);
+-			break;
+-		}
++		addrconf_init_auto_addrs(dev);
+ 
+ 		if (!IS_ERR_OR_NULL(idev)) {
+ 			if (run_pending)
+@@ -6385,7 +6390,7 @@ static int addrconf_sysctl_addr_gen_mode(struct ctl_table *ctl, int write,
+ 
+ 			if (idev->cnf.addr_gen_mode != new_val) {
+ 				idev->cnf.addr_gen_mode = new_val;
+-				addrconf_dev_config(idev->dev);
++				addrconf_init_auto_addrs(idev->dev);
  			}
- 			goto mark;
+ 		} else if (&net->ipv6.devconf_all->addr_gen_mode == ctl->data) {
+ 			struct net_device *dev;
+@@ -6396,7 +6401,7 @@ static int addrconf_sysctl_addr_gen_mode(struct ctl_table *ctl, int write,
+ 				if (idev &&
+ 				    idev->cnf.addr_gen_mode != new_val) {
+ 					idev->cnf.addr_gen_mode = new_val;
+-					addrconf_dev_config(idev->dev);
++					addrconf_init_auto_addrs(idev->dev);
+ 				}
+ 			}
  		}
 -- 
 2.39.0
