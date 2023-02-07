@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC6973212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:04:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F3774C433EF;
-	Tue,  7 Feb 2023 13:04:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D2203212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:04:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0FC94C433EF;
+	Tue,  7 Feb 2023 13:04:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775043;
-	bh=oaqzQltnMQMT2ctjGsAuwsDRERHxGHPDrLhlldPZSO0=;
+	s=korg; t=1675775046;
+	bh=mioz/qpi8BJ3OFa7/gLnj2gJ2G9Cfjkn96jv3tWsk0I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LwLIvTLvvCIBbWoR5rq/sRhTQKVn8RBI9laR1/4Pe785Xac74938qnmpSwTWRjBuS
-	 dO0GRy0kwg9yczkFQ7DqQ92VAXBdtIOZ4aQrB3+qd5AvZbSUHXQma5tzuLI8jhJpnW
-	 5/g8UoysqPhX+ACRzw6WId+Nx6/5BRotw5Tdow9U=
+	b=kPOfq4TP/OvlKbaNnBJ5crRBXIBSQTjqaDATBT/XNl5oU3oJO4TNx1alp/3iP/aRD
+	 p0EKeAfCwjj2URo32/gQJL9M1dU42Gmi93DPy+WZ3+udLpwv7l7Jz6AkQDSKq2V8Bu
+	 TPTukDsRA9WxIPGROwI3byjVssvIwLU53ylPIp4k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Gusev <aagusev@ispras.ru>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Oliver Hartkopp <socketcan@hartkopp.net>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 089/208] efi: fix potential NULL deref in efi_mem_reserve_persistent
-Date: Tue,  7 Feb 2023 13:55:43 +0100
-Message-Id: <20230207125638.387524091@linuxfoundation.org>
+Subject: [PATCH 6.1 080/208] can: raw: fix CAN FD frame transmissions over CAN XL devices
+Date: Tue,  7 Feb 2023 13:55:34 +0100
+Message-Id: <20230207125637.958938165@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -35,40 +35,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anton Gusev <aagusev@ispras.ru>
+From: Oliver Hartkopp <socketcan@hartkopp.net>
 
-[ Upstream commit 966d47e1f27c45507c5df82b2a2157e5a4fd3909 ]
+[ Upstream commit 3793301cbaa4a62d83e21f685307da7671f812ab ]
 
-When iterating on a linked list, a result of memremap is dereferenced
-without checking it for NULL.
+A CAN XL device is always capable to process CAN FD frames. The former
+check when sending CAN FD frames relied on the existence of a CAN FD
+device and did not check for a CAN XL device that would be correct
+too.
 
-This patch adds a check that falls back on allocating a new page in
-case memremap doesn't succeed.
+With this patch the CAN FD feature is enabled automatically when CAN
+XL is switched on - and CAN FD cannot be switch off while CAN XL is
+enabled.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This precondition also leads to a clean up and reduction of checks in
+the hot path in raw_rcv() and raw_sendmsg(). Some conditions are
+reordered to handle simple checks first.
 
-Fixes: 18df7577adae ("efi/memreserve: deal with memreserve entries in unmapped memory")
-Signed-off-by: Anton Gusev <aagusev@ispras.ru>
-[ardb: return -ENOMEM instead of breaking out of the loop]
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+changes since v1: https://lore.kernel.org/all/20230131091012.50553-1-socketcan@hartkopp.net
+- fixed typo: devive -> device
+changes since v2: https://lore.kernel.org/all/20230131091824.51026-1-socketcan@hartkopp.net/
+- reorder checks in if statements to handle simple checks first
+
+Fixes: 626332696d75 ("can: raw: add CAN XL support")
+Signed-off-by: Oliver Hartkopp <socketcan@hartkopp.net>
+Link: https://lore.kernel.org/all/20230131105613.55228-1-socketcan@hartkopp.net
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/efi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ net/can/raw.c | 47 +++++++++++++++++++++++++++++++----------------
+ 1 file changed, 31 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c
-index 033aac6be7da..b43e5e6ddaf6 100644
---- a/drivers/firmware/efi/efi.c
-+++ b/drivers/firmware/efi/efi.c
-@@ -984,6 +984,8 @@ int __ref efi_mem_reserve_persistent(phys_addr_t addr, u64 size)
- 	/* first try to find a slot in an existing linked list entry */
- 	for (prsv = efi_memreserve_root->next; prsv; ) {
- 		rsv = memremap(prsv, sizeof(*rsv), MEMREMAP_WB);
-+		if (!rsv)
-+			return -ENOMEM;
- 		index = atomic_fetch_add_unless(&rsv->count, 1, rsv->size);
- 		if (index < rsv->size) {
- 			rsv->entry[index].base = addr;
+diff --git a/net/can/raw.c b/net/can/raw.c
+index 3eb7d3e2b541..4abab2c3011a 100644
+--- a/net/can/raw.c
++++ b/net/can/raw.c
+@@ -132,8 +132,8 @@ static void raw_rcv(struct sk_buff *oskb, void *data)
+ 		return;
+ 
+ 	/* make sure to not pass oversized frames to the socket */
+-	if ((can_is_canfd_skb(oskb) && !ro->fd_frames && !ro->xl_frames) ||
+-	    (can_is_canxl_skb(oskb) && !ro->xl_frames))
++	if ((!ro->fd_frames && can_is_canfd_skb(oskb)) ||
++	    (!ro->xl_frames && can_is_canxl_skb(oskb)))
+ 		return;
+ 
+ 	/* eliminate multiple filter matches for the same skb */
+@@ -670,6 +670,11 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
+ 		if (copy_from_sockptr(&ro->fd_frames, optval, optlen))
+ 			return -EFAULT;
+ 
++		/* Enabling CAN XL includes CAN FD */
++		if (ro->xl_frames && !ro->fd_frames) {
++			ro->fd_frames = ro->xl_frames;
++			return -EINVAL;
++		}
+ 		break;
+ 
+ 	case CAN_RAW_XL_FRAMES:
+@@ -679,6 +684,9 @@ static int raw_setsockopt(struct socket *sock, int level, int optname,
+ 		if (copy_from_sockptr(&ro->xl_frames, optval, optlen))
+ 			return -EFAULT;
+ 
++		/* Enabling CAN XL includes CAN FD */
++		if (ro->xl_frames)
++			ro->fd_frames = ro->xl_frames;
+ 		break;
+ 
+ 	case CAN_RAW_JOIN_FILTERS:
+@@ -786,6 +794,25 @@ static int raw_getsockopt(struct socket *sock, int level, int optname,
+ 	return 0;
+ }
+ 
++static bool raw_bad_txframe(struct raw_sock *ro, struct sk_buff *skb, int mtu)
++{
++	/* Classical CAN -> no checks for flags and device capabilities */
++	if (can_is_can_skb(skb))
++		return false;
++
++	/* CAN FD -> needs to be enabled and a CAN FD or CAN XL device */
++	if (ro->fd_frames && can_is_canfd_skb(skb) &&
++	    (mtu == CANFD_MTU || can_is_canxl_dev_mtu(mtu)))
++		return false;
++
++	/* CAN XL -> needs to be enabled and a CAN XL device */
++	if (ro->xl_frames && can_is_canxl_skb(skb) &&
++	    can_is_canxl_dev_mtu(mtu))
++		return false;
++
++	return true;
++}
++
+ static int raw_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
+ {
+ 	struct sock *sk = sock->sk;
+@@ -833,20 +860,8 @@ static int raw_sendmsg(struct socket *sock, struct msghdr *msg, size_t size)
+ 		goto free_skb;
+ 
+ 	err = -EINVAL;
+-	if (ro->xl_frames && can_is_canxl_dev_mtu(dev->mtu)) {
+-		/* CAN XL, CAN FD and Classical CAN */
+-		if (!can_is_canxl_skb(skb) && !can_is_canfd_skb(skb) &&
+-		    !can_is_can_skb(skb))
+-			goto free_skb;
+-	} else if (ro->fd_frames && dev->mtu == CANFD_MTU) {
+-		/* CAN FD and Classical CAN */
+-		if (!can_is_canfd_skb(skb) && !can_is_can_skb(skb))
+-			goto free_skb;
+-	} else {
+-		/* Classical CAN */
+-		if (!can_is_can_skb(skb))
+-			goto free_skb;
+-	}
++	if (raw_bad_txframe(ro, skb, dev->mtu))
++		goto free_skb;
+ 
+ 	sockcm_init(&sockc, sk);
+ 	if (msg->msg_controllen) {
 -- 
 2.39.0
 
