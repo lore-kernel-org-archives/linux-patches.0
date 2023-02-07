@@ -1,28 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E5132C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:08:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1B53C433EF;
-	Tue,  7 Feb 2023 13:08:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 920742C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:09:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03825C433A0;
+	Tue,  7 Feb 2023 13:08:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775337;
-	bh=WhrdKPPHdL6yoQ+dPqODFmRx32le96iyXNlUI/3lgnU=;
+	s=korg; t=1675775340;
+	bh=07K9p89gxShzJmG7D98uLbLagE01zg0t9gIKKt5wSQ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Aw2RMISll1M8CcF/rW8VkebuqVx4+PElWSifeu2s2/7IaD4zb+dO6UNRrldkS2rmc
-	 LC9YlvaP5F1oJbw/AOXu1KbrTj4eKAkbdDxb0A+BXbVCZ1fc0IKSib+1/ayMMjuxME
-	 qPD59BpE0d7qbdY4m4vk8h0FxnaNbohm7A9BWlh0=
+	b=j2/pFAWm3TypanQfuCntwWd1BeyCrqIlX15pOW/ahDyII+2KCFEO1hU7iWZDkIyRX
+	 UfOzN1gpCE0i80A0v8wgL1yLTvCjcli4k2JEnaJsrOSyeTOavzSSp9/oIVkm3BA1g6
+	 ZcmgScHaAzJqY2PFN9v1KkwvouTWTf3k0SfmLpRs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+4da3ff23081bafe74fc2@syzkaller.appspotmail.com,
-	Hao Sun <sunhao.th@gmail.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Yonghong Song <yhs@fb.com>
-Subject: [PATCH 6.1 208/208] bpf: Skip invalid kfunc call in backtrack_insn
-Date: Tue,  7 Feb 2023 13:57:42 +0100
-Message-Id: <20230207125643.952071799@linuxfoundation.org>
+	Andreas Gruenbacher <agruenba@redhat.com>
+Subject: [PATCH 6.1 206/208] gfs2: Cosmetic gfs2_dinode_{in,out} cleanup
+Date: Tue,  7 Feb 2023 13:57:40 +0100
+Message-Id: <20230207125643.858005750@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -36,55 +33,154 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hao Sun <sunhao.th@gmail.com>
+From: Andreas Gruenbacher <agruenba@redhat.com>
 
-commit d3178e8a434b58678d99257c0387810a24042fb6 upstream.
+commit 7db354444ad8429e660b0f8145d425285d4f90ff upstream.
 
-The verifier skips invalid kfunc call in check_kfunc_call(), which
-would be captured in fixup_kfunc_call() if such insn is not eliminated
-by dead code elimination. However, this can lead to the following
-warning in backtrack_insn(), also see [1]:
+In each of the two functions, add an inode variable that points to
+&ip->i_inode and use that throughout the rest of the function.
 
-  ------------[ cut here ]------------
-  verifier backtracking bug
-  WARNING: CPU: 6 PID: 8646 at kernel/bpf/verifier.c:2756 backtrack_insn
-  kernel/bpf/verifier.c:2756
-	__mark_chain_precision kernel/bpf/verifier.c:3065
-	mark_chain_precision kernel/bpf/verifier.c:3165
-	adjust_reg_min_max_vals kernel/bpf/verifier.c:10715
-	check_alu_op kernel/bpf/verifier.c:10928
-	do_check kernel/bpf/verifier.c:13821 [inline]
-	do_check_common kernel/bpf/verifier.c:16289
-  [...]
-
-So make backtracking conservative with this by returning ENOTSUPP.
-
-  [1] https://lore.kernel.org/bpf/CACkBjsaXNceR8ZjkLG=dT3P=4A8SBsg0Z5h5PWLryF5=ghKq=g@mail.gmail.com/
-
-Reported-by: syzbot+4da3ff23081bafe74fc2@syzkaller.appspotmail.com
-Signed-off-by: Hao Sun <sunhao.th@gmail.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/bpf/20230104014709.9375-1-sunhao.th@gmail.com
+Signed-off-by: Andreas Gruenbacher <agruenba@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |    6 ++++++
- 1 file changed, 6 insertions(+)
+ fs/gfs2/glops.c |   41 +++++++++++++++++++++--------------------
+ fs/gfs2/super.c |   27 ++++++++++++++-------------
+ 2 files changed, 35 insertions(+), 33 deletions(-)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -2664,6 +2664,12 @@ static int backtrack_insn(struct bpf_ver
- 		if (opcode == BPF_CALL) {
- 			if (insn->src_reg == BPF_PSEUDO_CALL)
- 				return -ENOTSUPP;
-+			/* kfunc with imm==0 is invalid and fixup_kfunc_call will
-+			 * catch this error later. Make backtracking conservative
-+			 * with ENOTSUPP.
-+			 */
-+			if (insn->src_reg == BPF_PSEUDO_KFUNC_CALL && insn->imm == 0)
-+				return -ENOTSUPP;
- 			/* regular helper call sets R0 */
- 			*reg_mask &= ~1;
- 			if (*reg_mask & 0x3f) {
+--- a/fs/gfs2/glops.c
++++ b/fs/gfs2/glops.c
+@@ -397,38 +397,39 @@ static int gfs2_dinode_in(struct gfs2_in
+ 	struct timespec64 atime;
+ 	u16 height, depth;
+ 	umode_t mode = be32_to_cpu(str->di_mode);
+-	bool is_new = ip->i_inode.i_state & I_NEW;
++	struct inode *inode = &ip->i_inode;
++	bool is_new = inode->i_state & I_NEW;
+ 
+ 	if (unlikely(ip->i_no_addr != be64_to_cpu(str->di_num.no_addr)))
+ 		goto corrupt;
+-	if (unlikely(!is_new && inode_wrong_type(&ip->i_inode, mode)))
++	if (unlikely(!is_new && inode_wrong_type(inode, mode)))
+ 		goto corrupt;
+ 	ip->i_no_formal_ino = be64_to_cpu(str->di_num.no_formal_ino);
+-	ip->i_inode.i_mode = mode;
++	inode->i_mode = mode;
+ 	if (is_new) {
+-		ip->i_inode.i_rdev = 0;
++		inode->i_rdev = 0;
+ 		switch (mode & S_IFMT) {
+ 		case S_IFBLK:
+ 		case S_IFCHR:
+-			ip->i_inode.i_rdev = MKDEV(be32_to_cpu(str->di_major),
+-						   be32_to_cpu(str->di_minor));
++			inode->i_rdev = MKDEV(be32_to_cpu(str->di_major),
++					      be32_to_cpu(str->di_minor));
+ 			break;
+ 		}
+ 	}
+ 
+-	i_uid_write(&ip->i_inode, be32_to_cpu(str->di_uid));
+-	i_gid_write(&ip->i_inode, be32_to_cpu(str->di_gid));
+-	set_nlink(&ip->i_inode, be32_to_cpu(str->di_nlink));
+-	i_size_write(&ip->i_inode, be64_to_cpu(str->di_size));
+-	gfs2_set_inode_blocks(&ip->i_inode, be64_to_cpu(str->di_blocks));
++	i_uid_write(inode, be32_to_cpu(str->di_uid));
++	i_gid_write(inode, be32_to_cpu(str->di_gid));
++	set_nlink(inode, be32_to_cpu(str->di_nlink));
++	i_size_write(inode, be64_to_cpu(str->di_size));
++	gfs2_set_inode_blocks(inode, be64_to_cpu(str->di_blocks));
+ 	atime.tv_sec = be64_to_cpu(str->di_atime);
+ 	atime.tv_nsec = be32_to_cpu(str->di_atime_nsec);
+-	if (timespec64_compare(&ip->i_inode.i_atime, &atime) < 0)
+-		ip->i_inode.i_atime = atime;
+-	ip->i_inode.i_mtime.tv_sec = be64_to_cpu(str->di_mtime);
+-	ip->i_inode.i_mtime.tv_nsec = be32_to_cpu(str->di_mtime_nsec);
+-	ip->i_inode.i_ctime.tv_sec = be64_to_cpu(str->di_ctime);
+-	ip->i_inode.i_ctime.tv_nsec = be32_to_cpu(str->di_ctime_nsec);
++	if (timespec64_compare(&inode->i_atime, &atime) < 0)
++		inode->i_atime = atime;
++	inode->i_mtime.tv_sec = be64_to_cpu(str->di_mtime);
++	inode->i_mtime.tv_nsec = be32_to_cpu(str->di_mtime_nsec);
++	inode->i_ctime.tv_sec = be64_to_cpu(str->di_ctime);
++	inode->i_ctime.tv_nsec = be32_to_cpu(str->di_ctime_nsec);
+ 
+ 	ip->i_goal = be64_to_cpu(str->di_goal_meta);
+ 	ip->i_generation = be64_to_cpu(str->di_generation);
+@@ -436,7 +437,7 @@ static int gfs2_dinode_in(struct gfs2_in
+ 	ip->i_diskflags = be32_to_cpu(str->di_flags);
+ 	ip->i_eattr = be64_to_cpu(str->di_eattr);
+ 	/* i_diskflags and i_eattr must be set before gfs2_set_inode_flags() */
+-	gfs2_set_inode_flags(&ip->i_inode);
++	gfs2_set_inode_flags(inode);
+ 	height = be16_to_cpu(str->di_height);
+ 	if (unlikely(height > GFS2_MAX_META_HEIGHT))
+ 		goto corrupt;
+@@ -448,8 +449,8 @@ static int gfs2_dinode_in(struct gfs2_in
+ 	ip->i_depth = (u8)depth;
+ 	ip->i_entries = be32_to_cpu(str->di_entries);
+ 
+-	if (S_ISREG(ip->i_inode.i_mode))
+-		gfs2_set_aops(&ip->i_inode);
++	if (S_ISREG(inode->i_mode))
++		gfs2_set_aops(inode);
+ 
+ 	return 0;
+ corrupt:
+--- a/fs/gfs2/super.c
++++ b/fs/gfs2/super.c
+@@ -379,6 +379,7 @@ out:
+ 
+ void gfs2_dinode_out(const struct gfs2_inode *ip, void *buf)
+ {
++	const struct inode *inode = &ip->i_inode;
+ 	struct gfs2_dinode *str = buf;
+ 
+ 	str->di_header.mh_magic = cpu_to_be32(GFS2_MAGIC);
+@@ -386,15 +387,15 @@ void gfs2_dinode_out(const struct gfs2_i
+ 	str->di_header.mh_format = cpu_to_be32(GFS2_FORMAT_DI);
+ 	str->di_num.no_addr = cpu_to_be64(ip->i_no_addr);
+ 	str->di_num.no_formal_ino = cpu_to_be64(ip->i_no_formal_ino);
+-	str->di_mode = cpu_to_be32(ip->i_inode.i_mode);
+-	str->di_uid = cpu_to_be32(i_uid_read(&ip->i_inode));
+-	str->di_gid = cpu_to_be32(i_gid_read(&ip->i_inode));
+-	str->di_nlink = cpu_to_be32(ip->i_inode.i_nlink);
+-	str->di_size = cpu_to_be64(i_size_read(&ip->i_inode));
+-	str->di_blocks = cpu_to_be64(gfs2_get_inode_blocks(&ip->i_inode));
+-	str->di_atime = cpu_to_be64(ip->i_inode.i_atime.tv_sec);
+-	str->di_mtime = cpu_to_be64(ip->i_inode.i_mtime.tv_sec);
+-	str->di_ctime = cpu_to_be64(ip->i_inode.i_ctime.tv_sec);
++	str->di_mode = cpu_to_be32(inode->i_mode);
++	str->di_uid = cpu_to_be32(i_uid_read(inode));
++	str->di_gid = cpu_to_be32(i_gid_read(inode));
++	str->di_nlink = cpu_to_be32(inode->i_nlink);
++	str->di_size = cpu_to_be64(i_size_read(inode));
++	str->di_blocks = cpu_to_be64(gfs2_get_inode_blocks(inode));
++	str->di_atime = cpu_to_be64(inode->i_atime.tv_sec);
++	str->di_mtime = cpu_to_be64(inode->i_mtime.tv_sec);
++	str->di_ctime = cpu_to_be64(inode->i_ctime.tv_sec);
+ 
+ 	str->di_goal_meta = cpu_to_be64(ip->i_goal);
+ 	str->di_goal_data = cpu_to_be64(ip->i_goal);
+@@ -402,16 +403,16 @@ void gfs2_dinode_out(const struct gfs2_i
+ 
+ 	str->di_flags = cpu_to_be32(ip->i_diskflags);
+ 	str->di_height = cpu_to_be16(ip->i_height);
+-	str->di_payload_format = cpu_to_be32(S_ISDIR(ip->i_inode.i_mode) &&
++	str->di_payload_format = cpu_to_be32(S_ISDIR(inode->i_mode) &&
+ 					     !(ip->i_diskflags & GFS2_DIF_EXHASH) ?
+ 					     GFS2_FORMAT_DE : 0);
+ 	str->di_depth = cpu_to_be16(ip->i_depth);
+ 	str->di_entries = cpu_to_be32(ip->i_entries);
+ 
+ 	str->di_eattr = cpu_to_be64(ip->i_eattr);
+-	str->di_atime_nsec = cpu_to_be32(ip->i_inode.i_atime.tv_nsec);
+-	str->di_mtime_nsec = cpu_to_be32(ip->i_inode.i_mtime.tv_nsec);
+-	str->di_ctime_nsec = cpu_to_be32(ip->i_inode.i_ctime.tv_nsec);
++	str->di_atime_nsec = cpu_to_be32(inode->i_atime.tv_nsec);
++	str->di_mtime_nsec = cpu_to_be32(inode->i_mtime.tv_nsec);
++	str->di_ctime_nsec = cpu_to_be32(inode->i_ctime.tv_nsec);
+ }
+ 
+ /**
 
 
