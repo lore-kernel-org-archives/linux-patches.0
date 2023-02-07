@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB14D3212
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:01:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 552A7C433EF;
-	Tue,  7 Feb 2023 13:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0703E3212
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:02:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F274C433EF;
+	Tue,  7 Feb 2023 13:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675774917;
-	bh=mqoe6X3YD2RvOwfUAxMUoPGoqHAMVDhoX0MODqiqh3c=;
+	s=korg; t=1675774920;
+	bh=UCyvdVIOHYwJH1XVdrZthCrSW7TvvTt4+Z8BlfCqcAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dH4k88wKgFnVh8yMCHQBWMMuKL7Y3cfnhlPOlcQpjrkeCJdQqUQ1oSxSfryvUefH1
-	 PZ0pnhwnjaepAVQE1FdT6KqyCP0a39XSrfoP/4a0hVbCWErwjRWmxcDEEQnlDVaLE/
-	 TF1JU3mtABtkYamACIOYHBzpo+fEMLNiqoIa+cuk=
+	b=wwG4A/Vxnj4PrXc2uZ8GyfaYFfNywRXC3+rCtJN9jo3JRLYyJjekLe0Z5TzPeyvhh
+	 KsseKvY85QHGDXnLuuo0MFQd+R7U0AkQU0lgZO51IlrAN8Wc1gRlXOAIzB3SuoTfZ3
+	 +V/Q5tPvTyfTnApnsNj5XiDFZgmSO7u/h3qvnuzY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@linux.alibaba.com>,
-	Guo Ren <guoren@kernel.org>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Tom Rix <trix@redhat.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Sasha Neftin <sasha.neftin@intel.com>,
+	Naama Meir <naamax.meir@linux.intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 076/208] riscv: kprobe: Fixup kernel panic when probing an illegal position
-Date: Tue,  7 Feb 2023 13:55:30 +0100
-Message-Id: <20230207125637.768316666@linuxfoundation.org>
+Subject: [PATCH 6.1 077/208] igc: return an error if the mac type is unknown in igc_ptp_systim_to_hwtstamp()
+Date: Tue,  7 Feb 2023 13:55:31 +0100
+Message-Id: <20230207125637.809071040@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -37,90 +39,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guo Ren <guoren@linux.alibaba.com>
+From: Tom Rix <trix@redhat.com>
 
-[ Upstream commit 87f48c7ccc73afc78630530d9af51f458f58cab8 ]
+[ Upstream commit a2df8463e15c10a8a882090f3d7a760fdb7b189d ]
 
-The kernel would panic when probed for an illegal position. eg:
+clang static analysis reports
+drivers/net/ethernet/intel/igc/igc_ptp.c:673:3: warning: The left operand of
+  '+' is a garbage value [core.UndefinedBinaryOperatorResult]
+   ktime_add_ns(shhwtstamps.hwtstamp, adjust);
+   ^            ~~~~~~~~~~~~~~~~~~~~
 
-(CONFIG_RISCV_ISA_C=n)
+igc_ptp_systim_to_hwtstamp() silently returns without setting the hwtstamp
+if the mac type is unknown.  This should be treated as an error.
 
-echo 'p:hello kernel_clone+0x16 a0=%a0' >> kprobe_events
-echo 1 > events/kprobes/hello/enable
-cat trace
-
-Kernel panic - not syncing: stack-protector: Kernel stack
-is corrupted in: __do_sys_newfstatat+0xb8/0xb8
-CPU: 0 PID: 111 Comm: sh Not tainted
-6.2.0-rc1-00027-g2d398fe49a4d #490
-Hardware name: riscv-virtio,qemu (DT)
-Call Trace:
-[<ffffffff80007268>] dump_backtrace+0x38/0x48
-[<ffffffff80c5e83c>] show_stack+0x50/0x68
-[<ffffffff80c6da28>] dump_stack_lvl+0x60/0x84
-[<ffffffff80c6da6c>] dump_stack+0x20/0x30
-[<ffffffff80c5ecf4>] panic+0x160/0x374
-[<ffffffff80c6db94>] generic_handle_arch_irq+0x0/0xa8
-[<ffffffff802deeb0>] sys_newstat+0x0/0x30
-[<ffffffff800158c0>] sys_clone+0x20/0x30
-[<ffffffff800039e8>] ret_from_syscall+0x0/0x4
----[ end Kernel panic - not syncing: stack-protector:
-Kernel stack is corrupted in: __do_sys_newfstatat+0xb8/0xb8 ]---
-
-That is because the kprobe's ebreak instruction broke the kernel's
-original code. The user should guarantee the correction of the probe
-position, but it couldn't make the kernel panic.
-
-This patch adds arch_check_kprobe in arch_prepare_kprobe to prevent an
-illegal position (Such as the middle of an instruction).
-
-Fixes: c22b0bcb1dd0 ("riscv: Add kprobes supported")
-Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
-Signed-off-by: Guo Ren <guoren@kernel.org>
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Link: https://lore.kernel.org/r/20230201040604.3390509-1-guoren@kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: 81b055205e8b ("igc: Add support for RX timestamping")
+Signed-off-by: Tom Rix <trix@redhat.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Sasha Neftin <sasha.neftin@intel.com>
+Tested-by: Naama Meir <naamax.meir@linux.intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20230131215437.1528994-1-anthony.l.nguyen@intel.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/probes/kprobes.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ drivers/net/ethernet/intel/igc/igc_ptp.c | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
-diff --git a/arch/riscv/kernel/probes/kprobes.c b/arch/riscv/kernel/probes/kprobes.c
-index e6e950b7cf32..388ecada500c 100644
---- a/arch/riscv/kernel/probes/kprobes.c
-+++ b/arch/riscv/kernel/probes/kprobes.c
-@@ -48,6 +48,21 @@ static void __kprobes arch_simulate_insn(struct kprobe *p, struct pt_regs *regs)
- 	post_kprobe_handler(p, kcb, regs);
+diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
+index c34734d432e0..4e10ced736db 100644
+--- a/drivers/net/ethernet/intel/igc/igc_ptp.c
++++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
+@@ -417,10 +417,12 @@ static int igc_ptp_verify_pin(struct ptp_clock_info *ptp, unsigned int pin,
+  *
+  * We need to convert the system time value stored in the RX/TXSTMP registers
+  * into a hwtstamp which can be used by the upper level timestamping functions.
++ *
++ * Returns 0 on success.
+  **/
+-static void igc_ptp_systim_to_hwtstamp(struct igc_adapter *adapter,
+-				       struct skb_shared_hwtstamps *hwtstamps,
+-				       u64 systim)
++static int igc_ptp_systim_to_hwtstamp(struct igc_adapter *adapter,
++				      struct skb_shared_hwtstamps *hwtstamps,
++				      u64 systim)
+ {
+ 	switch (adapter->hw.mac.type) {
+ 	case igc_i225:
+@@ -430,8 +432,9 @@ static void igc_ptp_systim_to_hwtstamp(struct igc_adapter *adapter,
+ 						systim & 0xFFFFFFFF);
+ 		break;
+ 	default:
+-		break;
++		return -EINVAL;
+ 	}
++	return 0;
  }
  
-+static bool __kprobes arch_check_kprobe(struct kprobe *p)
-+{
-+	unsigned long tmp  = (unsigned long)p->addr - p->offset;
-+	unsigned long addr = (unsigned long)p->addr;
-+
-+	while (tmp <= addr) {
-+		if (tmp == addr)
-+			return true;
-+
-+		tmp += GET_INSN_LENGTH(*(u16 *)tmp);
-+	}
-+
-+	return false;
-+}
-+
- int __kprobes arch_prepare_kprobe(struct kprobe *p)
- {
- 	unsigned long probe_addr = (unsigned long)p->addr;
-@@ -55,6 +70,9 @@ int __kprobes arch_prepare_kprobe(struct kprobe *p)
- 	if (probe_addr & 0x1)
- 		return -EILSEQ;
+ /**
+@@ -652,7 +655,8 @@ static void igc_ptp_tx_hwtstamp(struct igc_adapter *adapter)
  
-+	if (!arch_check_kprobe(p))
-+		return -EILSEQ;
-+
- 	/* copy instruction */
- 	p->opcode = *p->addr;
+ 	regval = rd32(IGC_TXSTMPL);
+ 	regval |= (u64)rd32(IGC_TXSTMPH) << 32;
+-	igc_ptp_systim_to_hwtstamp(adapter, &shhwtstamps, regval);
++	if (igc_ptp_systim_to_hwtstamp(adapter, &shhwtstamps, regval))
++		return;
  
+ 	switch (adapter->link_speed) {
+ 	case SPEED_10:
 -- 
 2.39.0
 
