@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84EBC2C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:07:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC78AC433D2;
-	Tue,  7 Feb 2023 13:07:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7885C2C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:07:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED87DC433EF;
+	Tue,  7 Feb 2023 13:07:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775261;
-	bh=208FxcEOmKtcmuObKM2S+LMvPtGrS41bOAP4yAz0AgI=;
+	s=korg; t=1675775264;
+	bh=V6GM9uwUvUy/PvRIwnGebL4eGKjM9nR14sbYlIFzsNA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gQJKzdBJOd70jRV/ciEn2I1GrCO10ghIW/EGl+5pGqxgqRQ1jOhvf//x1lnwO3Nsb
-	 2dDYLYzHS37XXM3UZ0lLxFvByG3jLhBNXKwgJ8lUReq+LE/MLjQNq4yZrTdE/7sE81
-	 72GBdYkf4B6lGYGpPh1WMN99hFh5dgVb5ehKg0UE=
+	b=ULQKyShj2lg2rruTdjMl63l+IfCpmP48GDqruFLIl0ietlX4pv9r+uVnTFOQnHeHw
+	 S2sE/YY0/eizGJ6RSAdvWB8bx+CHXPrtItnG41TOLoUJW0dVC9X89tbrF7jqPkJ8vt
+	 4tlwqa63NCsI+6FYqVywO0wp20voDdxTAtyqr8p8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-	Johan Hovold <johan+linaro@kernel.org>,
-	Vinod Koul <vkoul@kernel.org>,
-	Stephen Boyd <swboyd@chromium.org>
-Subject: [PATCH 6.1 191/208] phy: qcom-qmp-combo: fix runtime suspend
-Date: Tue,  7 Feb 2023 13:57:25 +0100
-Message-Id: <20230207125643.134813761@linuxfoundation.org>
+	Gilles BULOZ <gilles.buloz@kontron.com>,
+	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
+Subject: [PATCH 6.1 192/208] serial: 8250_dma: Fix DMA Rx completion race
+Date: Tue,  7 Feb 2023 13:57:26 +0100
+Message-Id: <20230207125643.182625284@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -36,65 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johan Hovold <johan+linaro@kernel.org>
+From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit c7b98de745cffdceefc077ad5cf9cda032ef8959 upstream.
+commit 31352811e13dc2313f101b890fd4b1ce760b5fe7 upstream.
 
-Drop the confused runtime-suspend type check which effectively broke
-runtime PM if the DP child node happens to be parsed before the USB
-child node during probe (e.g. due to order of child nodes in the
-devicetree).
+__dma_rx_complete() is called from two places:
+  - Through the DMA completion callback dma_rx_complete()
+  - From serial8250_rx_dma_flush() after IIR_RLSI or IIR_RX_TIMEOUT
+The former does not hold port's lock during __dma_rx_complete() which
+allows these two to race and potentially insert the same data twice.
 
-Instead use the new driver data USB PHY pointer to access the USB
-configuration and resources.
+Extend port's lock coverage in dma_rx_complete() to prevent the race
+and check if the DMA Rx is still pending completion before calling
+into __dma_rx_complete().
 
-Fixes: 52e013d0bffa ("phy: qcom-qmp: Add support for DP in USB3+DP combo phy")
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
-Link: https://lore.kernel.org/r/20221114081346.5116-6-johan+linaro@kernel.org
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Reported-by: Gilles BULOZ <gilles.buloz@kontron.com>
+Tested-by: Gilles BULOZ <gilles.buloz@kontron.com>
+Fixes: 9ee4b83e51f7 ("serial: 8250: Add support for dmaengine")
+Cc: stable@vger.kernel.org
+Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+Link: https://lore.kernel.org/r/20230130114841.25749-2-ilpo.jarvinen@linux.intel.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/phy/qualcomm/phy-qcom-qmp-combo.c |   12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+ drivers/tty/serial/8250/8250_dma.c |   14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
 
---- a/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp-combo.c
-@@ -2296,15 +2296,11 @@ static void qmp_combo_disable_autonomous
- static int __maybe_unused qmp_combo_runtime_suspend(struct device *dev)
+--- a/drivers/tty/serial/8250/8250_dma.c
++++ b/drivers/tty/serial/8250/8250_dma.c
+@@ -57,6 +57,18 @@ static void __dma_rx_complete(void *para
+ 	tty_flip_buffer_push(tty_port);
+ }
+ 
++static void dma_rx_complete(void *param)
++{
++	struct uart_8250_port *p = param;
++	struct uart_8250_dma *dma = p->dma;
++	unsigned long flags;
++
++	spin_lock_irqsave(&p->port.lock, flags);
++	if (dma->rx_running)
++		__dma_rx_complete(p);
++	spin_unlock_irqrestore(&p->port.lock, flags);
++}
++
+ int serial8250_tx_dma(struct uart_8250_port *p)
  {
- 	struct qcom_qmp *qmp = dev_get_drvdata(dev);
--	struct qmp_phy *qphy = qmp->phys[0];
-+	struct qmp_phy *qphy = qmp->usb_phy;
- 	const struct qmp_phy_cfg *cfg = qphy->cfg;
+ 	struct uart_8250_dma		*dma = p->dma;
+@@ -130,7 +142,7 @@ int serial8250_rx_dma(struct uart_8250_p
+ 		return -EBUSY;
  
- 	dev_vdbg(dev, "Suspending QMP phy, mode:%d\n", qphy->mode);
+ 	dma->rx_running = 1;
+-	desc->callback = __dma_rx_complete;
++	desc->callback = dma_rx_complete;
+ 	desc->callback_param = p;
  
--	/* Supported only for USB3 PHY and luckily USB3 is the first phy */
--	if (cfg->type != PHY_TYPE_USB3)
--		return 0;
--
- 	if (!qmp->init_count) {
- 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
- 		return 0;
-@@ -2321,16 +2317,12 @@ static int __maybe_unused qmp_combo_runt
- static int __maybe_unused qmp_combo_runtime_resume(struct device *dev)
- {
- 	struct qcom_qmp *qmp = dev_get_drvdata(dev);
--	struct qmp_phy *qphy = qmp->phys[0];
-+	struct qmp_phy *qphy = qmp->usb_phy;
- 	const struct qmp_phy_cfg *cfg = qphy->cfg;
- 	int ret = 0;
- 
- 	dev_vdbg(dev, "Resuming QMP phy, mode:%d\n", qphy->mode);
- 
--	/* Supported only for USB3 PHY and luckily USB3 is the first phy */
--	if (cfg->type != PHY_TYPE_USB3)
--		return 0;
--
- 	if (!qmp->init_count) {
- 		dev_vdbg(dev, "PHY not initialized, bailing out\n");
- 		return 0;
+ 	dma->rx_cookie = dmaengine_submit(desc);
 
 
