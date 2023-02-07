@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 927E02C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:08:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B0CEC433EF;
-	Tue,  7 Feb 2023 13:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B57592C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:08:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24216C4339B;
+	Tue,  7 Feb 2023 13:08:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775328;
-	bh=4smbWeCBAUMO3z05FeL6wI8xmb0nj2NbxhZE+VwPpBk=;
+	s=korg; t=1675775331;
+	bh=MqQvoHVGyF75wL7kXSATwWTqAmvCqSSDppWyvCcL9KE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ix3yF0vJ3Oc2Thw2xjtWvDgH5WOK+q0Dl5V9SIyJhx7ijzGEtBZfuxJSFNWjoPdZw
-	 zlgNQyJ2QZc+49vmKRVSxCvnn44xiYyUz2z8+sggctOsMqDpI6Vv21GN6yNSdU4Vjp
-	 UdStGg7gIrlDEIEg3rJSB3t21ZKl21XR7gb5qR94=
+	b=KVEu12C9fq4HwcV9HkrdJzKljQ88NzdYob1Tv9hSUJU3pk/Nvj+IVKetV2IRlcbHn
+	 x6s68XDWgyW0H7PLUXDlJGw7Jl3y/7NiQDl2W+xJPNRyVshBvBHpEJS4L6zSz6nMqb
+	 HykafMM6cgw45UyRux0nzK8o3vr9Rxm7BdfHcRkA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 6.1 184/208] nvmem: core: initialise nvmem->id early
-Date: Tue,  7 Feb 2023 13:57:18 +0100
-Message-Id: <20230207125642.811200965@linuxfoundation.org>
+	"Liam R. Howlett" <Liam.Howlett@oracle.com>,
+	amanieu@gmail.com,
+	Holger Hoffsttte <holger@applied-asynchrony.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 175/208] maple_tree: fix mas_empty_area_rev() lower bound validation
+Date: Tue,  7 Feb 2023 13:57:09 +0100
+Message-Id: <20230207125642.367523550@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -34,43 +36,186 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Liam Howlett <liam.howlett@oracle.com>
 
-commit 3bd747c7ea13cb145f0d84444e00df928b0842d9 upstream.
+commit 7327e8111adb315423035fb5233533016dfd3f2e upstream.
 
-The error path for wp_gpio attempts to free the IDA nvmem->id, but
-this has yet to be assigned, so will always be zero - leaking the
-ID allocated by ida_alloc(). Fix this by moving the initialisation
-of nvmem->id earlier.
+mas_empty_area_rev() was not correctly validating the start of a gap
+against the lower limit.  This could lead to the range starting lower than
+the requested minimum.
 
-Fixes: f7d8d7dcd978 ("nvmem: fix memory leak in error path")
-Cc: stable@vger.kernel.org
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230127104015.23839-4-srinivas.kandagatla@linaro.org
+Fix the issue by better validating a gap once one is found.
+
+This commit also adds tests to the maple tree test suite for this issue
+and tests the mas_empty_area() function for similar bound checking.
+
+Link: https://lkml.kernel.org/r/20230111200136.1851322-1-Liam.Howlett@oracle.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216911
+Fixes: 54a611b60590 ("Maple Tree: add new data structure")
+Signed-off-by: Liam R. Howlett <Liam.Howlett@oracle.com>
+Reported-by: <amanieu@gmail.com>
+  Link: https://lore.kernel.org/linux-mm/0b9f5425-08d4-8013-aa4c-e620c3b10bb2@leemhuis.info/
+Tested-by: Holger Hoffsttte <holger@applied-asynchrony.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/core.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ lib/maple_tree.c      |   17 ++++-----
+ lib/test_maple_tree.c |   89 ++++++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 97 insertions(+), 9 deletions(-)
 
---- a/drivers/nvmem/core.c
-+++ b/drivers/nvmem/core.c
-@@ -770,6 +770,8 @@ struct nvmem_device *nvmem_register(cons
- 		return ERR_PTR(rval);
+--- a/lib/maple_tree.c
++++ b/lib/maple_tree.c
+@@ -4883,7 +4883,7 @@ static bool mas_rev_awalk(struct ma_stat
+ 	unsigned long *pivots, *gaps;
+ 	void __rcu **slots;
+ 	unsigned long gap = 0;
+-	unsigned long max, min, index;
++	unsigned long max, min;
+ 	unsigned char offset;
+ 
+ 	if (unlikely(mas_is_err(mas)))
+@@ -4905,8 +4905,7 @@ static bool mas_rev_awalk(struct ma_stat
+ 		min = mas_safe_min(mas, pivots, --offset);
+ 
+ 	max = mas_safe_pivot(mas, pivots, offset, type);
+-	index = mas->index;
+-	while (index <= max) {
++	while (mas->index <= max) {
+ 		gap = 0;
+ 		if (gaps)
+ 			gap = gaps[offset];
+@@ -4937,10 +4936,8 @@ static bool mas_rev_awalk(struct ma_stat
+ 		min = mas_safe_min(mas, pivots, offset);
  	}
  
-+	nvmem->id = rval;
-+
- 	if (config->wp_gpio)
- 		nvmem->wp_gpio = config->wp_gpio;
- 	else if (!config->ignore_wp)
-@@ -785,7 +787,6 @@ struct nvmem_device *nvmem_register(cons
- 	kref_init(&nvmem->refcnt);
- 	INIT_LIST_HEAD(&nvmem->cells);
+-	if (unlikely(index > max)) {
+-		mas_set_err(mas, -EBUSY);
+-		return false;
+-	}
++	if (unlikely((mas->index > max) || (size - 1 > max - mas->index)))
++		goto no_space;
  
--	nvmem->id = rval;
- 	nvmem->owner = config->owner;
- 	if (!nvmem->owner && config->dev->driver)
- 		nvmem->owner = config->dev->driver->owner;
+ 	if (unlikely(ma_is_leaf(type))) {
+ 		mas->offset = offset;
+@@ -4957,9 +4954,11 @@ static bool mas_rev_awalk(struct ma_stat
+ 	return false;
+ 
+ ascend:
+-	if (mte_is_root(mas->node))
+-		mas_set_err(mas, -EBUSY);
++	if (!mte_is_root(mas->node))
++		return false;
+ 
++no_space:
++	mas_set_err(mas, -EBUSY);
+ 	return false;
+ }
+ 
+--- a/lib/test_maple_tree.c
++++ b/lib/test_maple_tree.c
+@@ -2517,6 +2517,91 @@ static noinline void check_bnode_min_spa
+ 	mt_set_non_kernel(0);
+ }
+ 
++static noinline void check_empty_area_window(struct maple_tree *mt)
++{
++	unsigned long i, nr_entries = 20;
++	MA_STATE(mas, mt, 0, 0);
++
++	for (i = 1; i <= nr_entries; i++)
++		mtree_store_range(mt, i*10, i*10 + 9,
++				  xa_mk_value(i), GFP_KERNEL);
++
++	/* Create another hole besides the one at 0 */
++	mtree_store_range(mt, 160, 169, NULL, GFP_KERNEL);
++
++	/* Check lower bounds that don't fit */
++	rcu_read_lock();
++	MT_BUG_ON(mt, mas_empty_area_rev(&mas, 5, 90, 10) != -EBUSY);
++
++	mas_reset(&mas);
++	MT_BUG_ON(mt, mas_empty_area_rev(&mas, 6, 90, 5) != -EBUSY);
++
++	/* Check lower bound that does fit */
++	mas_reset(&mas);
++	MT_BUG_ON(mt, mas_empty_area_rev(&mas, 5, 90, 5) != 0);
++	MT_BUG_ON(mt, mas.index != 5);
++	MT_BUG_ON(mt, mas.last != 9);
++	rcu_read_unlock();
++
++	/* Check one gap that doesn't fit and one that does */
++	rcu_read_lock();
++	mas_reset(&mas);
++	MT_BUG_ON(mt, mas_empty_area_rev(&mas, 5, 217, 9) != 0);
++	MT_BUG_ON(mt, mas.index != 161);
++	MT_BUG_ON(mt, mas.last != 169);
++
++	/* Check one gap that does fit above the min */
++	mas_reset(&mas);
++	MT_BUG_ON(mt, mas_empty_area_rev(&mas, 100, 218, 3) != 0);
++	MT_BUG_ON(mt, mas.index != 216);
++	MT_BUG_ON(mt, mas.last != 218);
++
++	/* Check size that doesn't fit any gap */
++	mas_reset(&mas);
++	MT_BUG_ON(mt, mas_empty_area_rev(&mas, 100, 218, 16) != -EBUSY);
++
++	/*
++	 * Check size that doesn't fit the lower end of the window but
++	 * does fit the gap
++	 */
++	mas_reset(&mas);
++	MT_BUG_ON(mt, mas_empty_area_rev(&mas, 167, 200, 4) != -EBUSY);
++
++	/*
++	 * Check size that doesn't fit the upper end of the window but
++	 * does fit the gap
++	 */
++	mas_reset(&mas);
++	MT_BUG_ON(mt, mas_empty_area_rev(&mas, 100, 162, 4) != -EBUSY);
++
++	/* Check mas_empty_area forward */
++	mas_reset(&mas);
++	MT_BUG_ON(mt, mas_empty_area(&mas, 0, 100, 9) != 0);
++	MT_BUG_ON(mt, mas.index != 0);
++	MT_BUG_ON(mt, mas.last != 8);
++
++	mas_reset(&mas);
++	MT_BUG_ON(mt, mas_empty_area(&mas, 0, 100, 4) != 0);
++	MT_BUG_ON(mt, mas.index != 0);
++	MT_BUG_ON(mt, mas.last != 3);
++
++	mas_reset(&mas);
++	MT_BUG_ON(mt, mas_empty_area(&mas, 0, 100, 11) != -EBUSY);
++
++	mas_reset(&mas);
++	MT_BUG_ON(mt, mas_empty_area(&mas, 5, 100, 6) != -EBUSY);
++
++	mas_reset(&mas);
++	MT_BUG_ON(mt, mas_empty_area(&mas, 0, 8, 10) != -EBUSY);
++
++	mas_reset(&mas);
++	mas_empty_area(&mas, 100, 165, 3);
++
++	mas_reset(&mas);
++	MT_BUG_ON(mt, mas_empty_area(&mas, 100, 163, 6) != -EBUSY);
++	rcu_read_unlock();
++}
++
+ static DEFINE_MTREE(tree);
+ static int maple_tree_seed(void)
+ {
+@@ -2765,6 +2850,10 @@ static int maple_tree_seed(void)
+ 	check_bnode_min_spanning(&tree);
+ 	mtree_destroy(&tree);
+ 
++	mt_init_flags(&tree, MT_FLAGS_ALLOC_RANGE);
++	check_empty_area_window(&tree);
++	mtree_destroy(&tree);
++
+ #if defined(BENCH)
+ skip:
+ #endif
 
 
