@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED63F2C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:11:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7188FC433D2;
-	Tue,  7 Feb 2023 13:11:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF4982C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 13:11:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 255A6C4339E;
+	Tue,  7 Feb 2023 13:11:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675775466;
-	bh=NaqXkfFZtpoDH9Rm1mz+i9p6uXwYGnK7GsGYT4K3MM0=;
+	s=korg; t=1675775469;
+	bh=ORxyPurPUpb2eVfx7B8dQLqy0+8bI7l7yIYrqlAgWos=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zHwInzKFzkWV3erUP2PLlElu9RUnFn9Fm8WzKX/mO0KMUF5lNDT5XaBKyvkDLp0wf
-	 bAjd6u9jiVG5CvBK+39kBZINf5JhajQEXgaLs7aBgmnoNFvsw8hI8DEi4IuH7mCT/N
-	 7gmxVQfHTbjt9PhGXbMSplnh158Yc4p/7/z09DAE=
+	b=f8ZGLJPXarvhdh0BvrO100hp6cr4eYR29mbN1qyQVIaJ0DsNg5kiGX+E3z82ZVe/j
+	 CGQEt3Ug2l6pofvqcmeWjYjz5PQP95IBkpD86Z7l9h9fQNoOPvb9KkmzpGNqniildx
+	 StrqXTtyR6gjCxJ3X3v7gssROisx+ycEWUYzwnP8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Gusev <aagusev@ispras.ru>,
-	Ard Biesheuvel <ardb@kernel.org>,
+	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
+	Sanath S <Sanath.S@amd.com>,
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Jarkko Nikula <jarkko.nikula@linux.intel.com>,
+	Wolfram Sang <wsa@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 050/120] efi: fix potential NULL deref in efi_mem_reserve_persistent
-Date: Tue,  7 Feb 2023 13:57:01 +0100
-Message-Id: <20230207125620.909127447@linuxfoundation.org>
+Subject: [PATCH 5.15 051/120] i2c: designware-pci: Add new PCI IDs for AMD NAVI GPU
+Date: Tue,  7 Feb 2023 13:57:02 +0100
+Message-Id: <20230207125620.950133320@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 References: <20230207125618.699726054@linuxfoundation.org>
@@ -35,40 +38,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anton Gusev <aagusev@ispras.ru>
+From: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
 
-[ Upstream commit 966d47e1f27c45507c5df82b2a2157e5a4fd3909 ]
+[ Upstream commit 2ece0930ac5662bccce0ba4c59b84c98d2437200 ]
 
-When iterating on a linked list, a result of memremap is dereferenced
-without checking it for NULL.
+Add additional supported PCI IDs for latest AMD NAVI GPU card which
+has an integrated Type-C controller and designware I2C with PCI
+interface.
 
-This patch adds a check that falls back on allocating a new page in
-case memremap doesn't succeed.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 18df7577adae ("efi/memreserve: deal with memreserve entries in unmapped memory")
-Signed-off-by: Anton Gusev <aagusev@ispras.ru>
-[ardb: return -ENOMEM instead of breaking out of the loop]
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
+Tested-by: Sanath S <Sanath.S@amd.com>
+Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Acked-by: Jarkko Nikula <jarkko.nikula@linux.intel.com>
+Signed-off-by: Wolfram Sang <wsa@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/firmware/efi/efi.c | 2 ++
+ drivers/i2c/busses/i2c-designware-pcidrv.c | 2 ++
  1 file changed, 2 insertions(+)
 
-diff --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c
-index a2765d668856..332739f3eded 100644
---- a/drivers/firmware/efi/efi.c
-+++ b/drivers/firmware/efi/efi.c
-@@ -950,6 +950,8 @@ int __ref efi_mem_reserve_persistent(phys_addr_t addr, u64 size)
- 	/* first try to find a slot in an existing linked list entry */
- 	for (prsv = efi_memreserve_root->next; prsv; ) {
- 		rsv = memremap(prsv, sizeof(*rsv), MEMREMAP_WB);
-+		if (!rsv)
-+			return -ENOMEM;
- 		index = atomic_fetch_add_unless(&rsv->count, 1, rsv->size);
- 		if (index < rsv->size) {
- 			rsv->entry[index].base = addr;
+diff --git a/drivers/i2c/busses/i2c-designware-pcidrv.c b/drivers/i2c/busses/i2c-designware-pcidrv.c
+index 5b45941bcbdd..de8dd3e3333e 100644
+--- a/drivers/i2c/busses/i2c-designware-pcidrv.c
++++ b/drivers/i2c/busses/i2c-designware-pcidrv.c
+@@ -398,6 +398,8 @@ static const struct pci_device_id i2_designware_pci_ids[] = {
+ 	{ PCI_VDEVICE(ATI,  0x73a4), navi_amd },
+ 	{ PCI_VDEVICE(ATI,  0x73e4), navi_amd },
+ 	{ PCI_VDEVICE(ATI,  0x73c4), navi_amd },
++	{ PCI_VDEVICE(ATI,  0x7444), navi_amd },
++	{ PCI_VDEVICE(ATI,  0x7464), navi_amd },
+ 	{ 0,}
+ };
+ MODULE_DEVICE_TABLE(pci, i2_designware_pci_ids);
 -- 
 2.39.0
 
