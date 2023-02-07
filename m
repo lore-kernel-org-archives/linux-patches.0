@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 637782C9C
-	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 12:59:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BEAA3C433D2;
-	Tue,  7 Feb 2023 12:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 38C172C9C
+	for <patches@lists.linux.dev>; Tue,  7 Feb 2023 12:59:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A572AC4339B;
+	Tue,  7 Feb 2023 12:59:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1675774778;
-	bh=Go9wbQRrGvzCTM/B46k+Kt0HKtfLSptJFlXj6VRU3cE=;
+	s=korg; t=1675774781;
+	bh=6FP4Up7o4YKU+iBZLQkTAcD4vL7Bjdx0l4DQ/hJdyD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bq4CJuF+3HnQdh1G4piFSfRvf9UHAThYbySXZ99Ce6AIfF999GcnKR4qRW/aQPxqe
-	 pcS5+VBnmeIP8zp7Bw5GLB9Cq/tjDizEzKALSmVwRymcuI/rpzdPP8m2ld7PD6JlKG
-	 YToMWC2iNWaoSjhdgpljn+51P65re/l41y+oarVU=
+	b=xNx7FKvfl3Kwu1JoB596wVFJ7TaqvMienVPnW5a1sUELMdat/1LzCZ4Ha66PFKtZE
+	 zs3twmQpw+G5ZIilONEFWg08HeTlifXYyk6XIUoQCAvQbaUJuyHq20n3ID1cE8Uvhj
+	 L97+oScUs6lTQEm7DWlkGtvz0cvSs5zY6F1TXRA0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/208] WRITE is "data source", not destination...
-Date: Tue,  7 Feb 2023 13:54:45 +0100
-Message-Id: <20230207125635.726813931@linuxfoundation.org>
+Subject: [PATCH 6.1 032/208] READ is "data destination", not source...
+Date: Tue,  7 Feb 2023 13:54:46 +0100
+Message-Id: <20230207125635.775525088@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 References: <20230207125634.292109991@linuxfoundation.org>
@@ -36,46 +36,28 @@ Content-Transfer-Encoding: 8bit
 
 From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 974c36fb828aeae7b4f9063f94860ae6c5633efd ]
+[ Upstream commit 355d2c2798e9dc39f6714fa7ef8902c0d4c5350b ]
 
 Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Stable-dep-of: 6dd88fd59da8 ("vhost-scsi: unbreak any layout for response")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/fsi/fsi-sbefifo.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/infiniband/ulp/rtrs/rtrs-clt.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/fsi/fsi-sbefifo.c b/drivers/fsi/fsi-sbefifo.c
-index 5f93a53846aa..efd4942aa043 100644
---- a/drivers/fsi/fsi-sbefifo.c
-+++ b/drivers/fsi/fsi-sbefifo.c
-@@ -659,7 +659,7 @@ static void sbefifo_collect_async_ffdc(struct sbefifo *sbefifo)
- 	}
-         ffdc_iov.iov_base = ffdc;
- 	ffdc_iov.iov_len = SBEFIFO_MAX_FFDC_SIZE;
--        iov_iter_kvec(&ffdc_iter, WRITE, &ffdc_iov, 1, SBEFIFO_MAX_FFDC_SIZE);
-+        iov_iter_kvec(&ffdc_iter, READ, &ffdc_iov, 1, SBEFIFO_MAX_FFDC_SIZE);
- 	cmd[0] = cpu_to_be32(2);
- 	cmd[1] = cpu_to_be32(SBEFIFO_CMD_GET_SBE_FFDC);
- 	rc = sbefifo_do_command(sbefifo, cmd, 2, &ffdc_iter);
-@@ -756,7 +756,7 @@ int sbefifo_submit(struct device *dev, const __be32 *command, size_t cmd_len,
- 	rbytes = (*resp_len) * sizeof(__be32);
- 	resp_iov.iov_base = response;
- 	resp_iov.iov_len = rbytes;
--        iov_iter_kvec(&resp_iter, WRITE, &resp_iov, 1, rbytes);
-+        iov_iter_kvec(&resp_iter, READ, &resp_iov, 1, rbytes);
+diff --git a/drivers/infiniband/ulp/rtrs/rtrs-clt.c b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+index 8546b8816524..88282b288abd 100644
+--- a/drivers/infiniband/ulp/rtrs/rtrs-clt.c
++++ b/drivers/infiniband/ulp/rtrs/rtrs-clt.c
+@@ -966,7 +966,7 @@ static void rtrs_clt_init_req(struct rtrs_clt_io_req *req,
+ 	refcount_set(&req->ref, 1);
+ 	req->mp_policy = clt_path->clt->mp_policy;
  
- 	/* Perform the command */
- 	rc = mutex_lock_interruptible(&sbefifo->lock);
-@@ -839,7 +839,7 @@ static ssize_t sbefifo_user_read(struct file *file, char __user *buf,
- 	/* Prepare iov iterator */
- 	resp_iov.iov_base = buf;
- 	resp_iov.iov_len = len;
--	iov_iter_init(&resp_iter, WRITE, &resp_iov, 1, len);
-+	iov_iter_init(&resp_iter, READ, &resp_iov, 1, len);
+-	iov_iter_kvec(&iter, READ, vec, 1, usr_len);
++	iov_iter_kvec(&iter, WRITE, vec, 1, usr_len);
+ 	len = _copy_from_iter(req->iu->buf, usr_len, &iter);
+ 	WARN_ON(len != usr_len);
  
- 	/* Perform the command */
- 	rc = mutex_lock_interruptible(&sbefifo->lock);
 -- 
 2.39.0
 
