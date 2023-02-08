@@ -1,83 +1,97 @@
-Received: from smtp-fw-80006.amazon.com (smtp-fw-80006.amazon.com [99.78.197.217])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A5377F
-	for <patches@lists.linux.dev>; Wed,  8 Feb 2023 02:40:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D3FC7F
+	for <patches@lists.linux.dev>; Wed,  8 Feb 2023 03:02:09 +0000 (UTC)
+Received: by mail-pl1-f169.google.com with SMTP id be8so17804636plb.7
+        for <patches@lists.linux.dev>; Tue, 07 Feb 2023 19:02:09 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=amazon.com; i=@amazon.com; q=dns/txt; s=amazon201209;
-  t=1675824008; x=1707360008;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=PjWRrm2LJtOm8PvLNduPpn+Q1l4tJ8mCU1PPR66XryE=;
-  b=hHv6Kiy7YVDjUx2wx4cACF+JK6SmJD1YDJ9X/4xD5lfLDJ6ElbUOCU9r
-   +jvSWlrxTyMNnU7v8m6H+Bk9MKo7hRdpKJVLDY21CPEUIkp7lfYw1lWBf
-   U5mwJ7XHghT331WX9wYNr4MtnfeJI/+Oy1cWNQSPdZAQfyLTMAOA5MUUl
-   w=;
-X-IronPort-AV: E=Sophos;i="5.97,279,1669075200"; 
-   d="scan'208";a="179521674"
-Received: from pdx4-co-svc-p1-lb2-vlan2.amazon.com (HELO email-inbound-relay-iad-1a-m6i4x-b5bd57cf.us-east-1.amazon.com) ([10.25.36.210])
-  by smtp-border-fw-80006.pdx80.corp.amazon.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Feb 2023 02:40:07 +0000
-Received: from EX13MTAUWA002.ant.amazon.com (iad12-ws-svc-p26-lb9-vlan3.iad.amazon.com [10.40.163.38])
-	by email-inbound-relay-iad-1a-m6i4x-b5bd57cf.us-east-1.amazon.com (Postfix) with ESMTPS id 7622A4359E;
-	Wed,  8 Feb 2023 02:40:04 +0000 (UTC)
-Received: from EX19D043UWA003.ant.amazon.com (10.13.139.31) by
- EX13MTAUWA002.ant.amazon.com (10.43.160.12) with Microsoft SMTP Server (TLS)
- id 15.0.1497.45; Wed, 8 Feb 2023 02:40:03 +0000
-Received: from EX13MTAUWA001.ant.amazon.com (10.43.160.58) by
- EX19D043UWA003.ant.amazon.com (10.13.139.31) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.2.1118.24; Wed, 8 Feb 2023 02:40:03 +0000
-Received: from dev-dsk-shaoyi-2b-b6ac9e9c.us-west-2.amazon.com (10.189.91.91)
- by mail-relay.amazon.com (10.43.160.118) with Microsoft SMTP Server id
- 15.0.1497.45 via Frontend Transport; Wed, 8 Feb 2023 02:40:03 +0000
-Received: by dev-dsk-shaoyi-2b-b6ac9e9c.us-west-2.amazon.com (Postfix, from userid 13116433)
-	id 545F82236D; Wed,  8 Feb 2023 02:40:02 +0000 (UTC)
-Date: Wed, 8 Feb 2023 02:40:02 +0000
-From: Shaoying Xu <shaoyi@amazon.com>
-To: David Ahern <dsahern@kernel.org>, <gregkh@linuxfoundation.org>
-CC: <idosch@nvidia.com>, <kuba@kernel.org>, <patches@lists.linux.dev>,
-	<sashal@kernel.org>, <stable@vger.kernel.org>
-Subject: Re: [PATCH 5.4 v2 2/2] ipv4: Fix incorrect route flushing when
- source address is deleted
-Message-ID: <20230208024002.GA20289@dev-dsk-shaoyi-2b-b6ac9e9c.us-west-2.amazon.com>
-References: <Y+IckeUtbE/UfOz/@kroah.com>
- <20230207182820.4959-1-shaoyi@amazon.com>
- <20230207182820.4959-2-shaoyi@amazon.com>
- <9d90e05b-c9cb-03d2-645a-b50b1cae694d@kernel.org>
- <98459a1b-eb42-afe3-9795-70c45292add9@kernel.org>
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=nlkpngfGvD/yiVPysVUCiWbRJJEon+jqBMZmtnq4MwM=;
+        b=ek5FXFElcRs9ejujZlv3HlBxR3Y9EKzX11DkCe1K52VMjYTlN37n2TAtu77PdPnBmt
+         6JvygYOx82MhMTJrF34aCl5udCf81cBRGzi6VJN4AwTt6WdusGJhudGxi7O0LD8Mvkrj
+         nleA9JZ02gQjfGOD6L3IYxjDaPBgCWmplFBFkV7vxEAzubLVuuYwkMtFKLB72NBT2JkR
+         vUQQXaZvtCJESU/sdO7tKDkAq5IhGP3kPnzSgiiVNJy3ywIC9c8z5BFGSFDk4CTdIWT6
+         heZxJgXL44VQREYGc67TMOcOOqwTjzu21o4tDyB7m47RXfoMeJjAQB6uYymjWl0Rre0D
+         F3MQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nlkpngfGvD/yiVPysVUCiWbRJJEon+jqBMZmtnq4MwM=;
+        b=KEVlpoqTv6cpts5Exduc/qz0loVX3a01y6XJBV2P2POGNMTReEXJ0I/Jq7OLiGxB5D
+         eKt6KG8qKU24FEUVqZvgBUzc8ZmWtAdArxzAuESu46EHb+D8MKjARIviCuStcXPOPvnr
+         8AXdj3lfjBuTd2ACl1rX0/O1fnMgpfU3RmyBR6qx4rMBS/ULpJ9EG6muD0p99fSYmY0Z
+         cgG4Q7ApOcBQscA63QF0JgWS5ZT0R6S5PV1b5WQq24m9ENzM4M8PxmF1kVZ1eTj6Lhqh
+         x9g24KxZzDwH0hWGXOWCjK7rL/ncaX8UQjpfR1ck4yD3hXig8rCyJG96WoGQLeco+4p5
+         nQLQ==
+X-Gm-Message-State: AO0yUKU3TmdnFRXfN1zd5GQs2//bzImQsXsbSWMHcjM8KeK7Y0wnqsfN
+	6BJ1zyvv+Zg9d0JfhS7Ihls=
+X-Google-Smtp-Source: AK7set/Lu7/GmxZwF6rYKdq5yeGObj5e8OHmUfmGFlcldoL0DbWJJALT6tXH2snOJ16bT+/w0fn3Vg==
+X-Received: by 2002:a17:902:c40c:b0:199:41a5:1085 with SMTP id k12-20020a170902c40c00b0019941a51085mr1708108plk.33.1675825329410;
+        Tue, 07 Feb 2023 19:02:09 -0800 (PST)
+Received: from debian.me (subs28-116-206-12-49.three.co.id. [116.206.12.49])
+        by smtp.gmail.com with ESMTPSA id ju10-20020a170903428a00b001991594d783sm4982267plb.302.2023.02.07.19.02.08
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Feb 2023 19:02:08 -0800 (PST)
+Received: by debian.me (Postfix, from userid 1000)
+	id 2CD6A10558B; Wed,  8 Feb 2023 10:02:04 +0700 (WIB)
+Date: Wed, 8 Feb 2023 10:02:04 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.15 000/120] 5.15.93-rc1 review
+Message-ID: <Y+MQrB33TH8NxK+g@debian.me>
+References: <20230207125618.699726054@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="5GvqER+TUurvWIAH"
 Content-Disposition: inline
-In-Reply-To: <98459a1b-eb42-afe3-9795-70c45292add9@kernel.org>
-User-Agent: Mutt/1.5.21 (2010-09-15)
+In-Reply-To: <20230207125618.699726054@linuxfoundation.org>
 
-On Tue, Feb 07, 2023 at 07:23:41PM -0700, David Ahern wrote:
-> CAUTION: This email originated from outside of the organization. Do not click links or open attachments unless you can confirm the sender and know the content is safe.
-> 
-> 
-> 
-> On 2/7/23 7:22 PM, David Ahern wrote:
-> > On 2/7/23 11:28 AM, Shaoying Xu wrote:
-> >> From: Ido Schimmel <idosch@nvidia.com>
-> >>
-> >> [ Upstream commit f96a3d74554df537b6db5c99c27c80e7afadc8d1 ]
-> >>
-> >
-> > That commit, does not have this change:
-> >
-> 
-> nevermind. I was looking at the other commit with that Fixes tag.
-> 
-> 
-> You did drop the selftests associated with the commit.
-> 
-Yes because ipv4_del_addr test does not exist in fib_tests.sh of kernel 5.4 
-and similar drop in the commit ("ipv4: Fix incorrect route flushing when
-table ID 0 is used") [1].
 
-[1] https://lore.kernel.org/stable/20221212130920.527377379@linuxfoundation.org/
+--5GvqER+TUurvWIAH
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Tue, Feb 07, 2023 at 01:56:11PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.93 release.
+> There are 120 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
+
+Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
+powerpc (ps3_defconfig, GCC 12.2.0).
+
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--5GvqER+TUurvWIAH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY+MQogAKCRD2uYlJVVFO
+o6ARAP9n61msPuqELh0EJq1OflA4UmYoG7WzN4E8R2ejNFECRgEAufEoTChhbKqn
+IKCAZYTNPeyuLUPJgB8QSD3U/hwIBwI=
+=srVn
+-----END PGP SIGNATURE-----
+
+--5GvqER+TUurvWIAH--
