@@ -1,105 +1,90 @@
-Received: from qproxy4-pub.mail.unifiedlayer.com (qproxy4-pub.mail.unifiedlayer.com [66.147.248.250])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pj1-f43.google.com (mail-pj1-f43.google.com [209.85.216.43])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 082AC2109
-	for <patches@lists.linux.dev>; Wed,  8 Feb 2023 09:32:47 +0000 (UTC)
-Received: from gproxy3-pub.mail.unifiedlayer.com (gproxy3-pub.mail.unifiedlayer.com [69.89.30.42])
-	by qproxy4.mail.unifiedlayer.com (Postfix) with ESMTP id B777B802F015
-	for <patches@lists.linux.dev>; Wed,  8 Feb 2023 09:11:03 +0000 (UTC)
-Received: from cmgw11.mail.unifiedlayer.com (unknown [10.0.90.126])
-	by progateway5.mail.pro1.eigbox.com (Postfix) with ESMTP id 388B4100401E5
-	for <patches@lists.linux.dev>; Wed,  8 Feb 2023 09:10:51 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id PgTbpcVpFzuwQPgTbpCPAu; Wed, 08 Feb 2023 09:10:51 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=Jts0EO0C c=1 sm=1 tr=0 ts=63e3671b
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=m04uMKEZRckA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=ts_C7CwfbZPzB7fMd6YA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=kBOgxujGwJT8g0QRA2MDESFelzmvAemaGgEVzYTziEQ=; b=VeFsSEDeodgCDrR/btEtOUhsq9
-	sjgIsNJDzyVOnKpCY6jvyVtI5S1k4aK86wooDDdIVEuS5IicyP1dAeKTH4ORUqQz8oLUJmVrxDq9B
-	Av6FV2XkFQPOzCMaLeIFom25xeruUQVcQ4Kbxo+VTpwQjQE8g/tHS9hIU+QDD9OJCl8LHLVl55vLn
-	CTb1fx2gZUO3eaajjpTLIrxY22JsBPUtLVmWoM26xg7bVkoUMJsDbDKIppsu9jGiQafcyeDQnP9SE
-	X75Ppmi8+mEXak5FmZwyuar0OjsPcw1Mr49gzGtpiDpR1khLdJSV+73IsJEJO9l4SDZMIsPJWalU8
-	gZVUeLAg==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:53778 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1pPgTa-0046FU-7I;
-	Wed, 08 Feb 2023 02:10:50 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ABD159476
+	for <patches@lists.linux.dev>; Wed,  8 Feb 2023 12:43:19 +0000 (UTC)
+Received: by mail-pj1-f43.google.com with SMTP id pj3so18279882pjb.1
+        for <patches@lists.linux.dev>; Wed, 08 Feb 2023 04:43:19 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=heitbaum.com; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=O+Wh65jPwZ2iDPb66Pml9WSpf/i3Bn1WviFQSAOELT4=;
+        b=Y4ur5YRYEXujDSJhVCJwpIz3CAjiott1io5LCS3/AwwJrwlLDCu1FoLhxV6bWlsOun
+         512JfBadYS/fMg0nXIHuc35yHLVGH3tDdeJJQ/IA+ExP2h5VK1RpsP9vS2vXpOH8jFvM
+         +7uhedfGNQJNWgFGWaVZW8C+fdCRUHa1sJsXM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=O+Wh65jPwZ2iDPb66Pml9WSpf/i3Bn1WviFQSAOELT4=;
+        b=xmi0q1mLNIVdVTWxUodz/MNI9ryoohXeEdd0OJP/9MvBBkM1UxtEJcGxsdGmqU/s3l
+         a4N6619jBrlTPzS8XyIO4HXHvcx2RzAOawz15KAlw+UNSBLgy3rSNCokpqj0XW0QXcBC
+         GFbHIlt23palwUEA1nvSVKrgyGAmH6B328Wem7AHso8rCdbcLYQysHiSZBIzAYZZtmId
+         +ciS9nTrrNRoYjdya7xr7kHCQIbpY9C7BZssPYnfOOzykOGUBOGbKT9oZAC6M3QnS/3k
+         jda5xK+kSeEvh9Ni9hJOKh2Abpsh8pEx0CozexqXeLchP8FirbW9aNyTpLUTO4+iGhoE
+         CkbQ==
+X-Gm-Message-State: AO0yUKUtEM2SZ3r8oCypCjkLbJwJaX5ur2V7UqUSgsQCYUxX4u5u/Sb/
+	gdfzXxCbKADnkh0yOCeOmHDokw==
+X-Google-Smtp-Source: AK7set+QT0GP0bBUPF4ShuI0zGxWoOq0+tBWzazN3oEPqceoWb4lucXU/DFyNSI8XvZmcpxMp+xpww==
+X-Received: by 2002:a17:902:e809:b0:198:e4bd:86b6 with SMTP id u9-20020a170902e80900b00198e4bd86b6mr8504271plg.67.1675860198807;
+        Wed, 08 Feb 2023 04:43:18 -0800 (PST)
+Received: from c5da58673b58 (124-148-239-102.tpgi.com.au. [124.148.239.102])
+        by smtp.gmail.com with ESMTPSA id c4-20020a170902c1c400b00186a2dd3ffdsm10873478plc.15.2023.02.08.04.43.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 08 Feb 2023 04:43:17 -0800 (PST)
+Date: Wed, 8 Feb 2023 12:43:10 +0000
+From: Rudi Heitbaum <rudi@heitbaum.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
 Subject: Re: [PATCH 6.1 000/208] 6.1.11-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
+Message-ID: <20230208124310.GA1940401@c5da58673b58>
 References: <20230207125634.292109991@linuxfoundation.org>
-In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <f594acb3-f395-c097-c446-df1a2c3c8c70@w6rz.net>
-Date: Wed, 8 Feb 2023 01:10:45 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1pPgTa-0046FU-7I
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:53778
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
 
-On 2/7/23 4:54 AM, Greg Kroah-Hartman wrote:
+On Tue, Feb 07, 2023 at 01:54:14PM +0100, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.1.11 release.
 > There are 208 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
+> 
 > Responses should be made by Thu, 09 Feb 2023 12:55:54 +0000.
 > Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.11-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Hi Greg,
 
-Tested-by: Ron Economos <re@w6rz.net>
+6.1.11-rc1 tested.
 
+Run tested on:
+- Allwinner H6 (Tanix TX6)
+- Intel Alder Lake x86_64 (nuc12 i7-1260P)
+
+In addition - build tested for:
+- Allwinner A64
+- Allwinner H3
+- Allwinner H5
+- NXP iMX6
+- NXP iMX8
+- Qualcomm Dragonboard
+- Rockchip RK3288
+- Rockchip RK3328
+- Rockchip RK3399pro
+- Samsung Exynos
+
+Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
+--
+Rudi
