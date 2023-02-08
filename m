@@ -1,92 +1,62 @@
-Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CAA637B
-	for <patches@lists.linux.dev>; Wed,  8 Feb 2023 01:52:13 +0000 (UTC)
-Received: by mail-pl1-f177.google.com with SMTP id g13so12862944ple.10
-        for <patches@lists.linux.dev>; Tue, 07 Feb 2023 17:52:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=aPilZBrvyzgqjsmqEP8Qm1Zad9diYGZYlfH9HP2RVME=;
-        b=MQKhOHJts6z//UPEl+WhIfzfwHlZU1MQJynwBlxINA6DXfbAYZsUyjQyKjMrhJsudh
-         P82X4M9ssJAOFwHETUUn8pyMebXnTTRrR3bG1qV60hNilJaHNdcPq4MSiURbedW3jEz/
-         eVhqmQYFwC+gOf8lMs5HtsGqpF4VOIJG6ScjHfwd2gzAT/9PS7mHHCd/sFIsKe+mQe1W
-         J4kQ5c6LAI4wwCEDr9p6pX7ZbIQ/HbyCD1LKOTHy/spJKT0QQwANX47Wbd9mbuHpzNkq
-         /o7yxEY1yTO1v1O/RbY9T0Ly3vM2Oi631BVaLK6aRJkPdkmkHc894AHlx0b9iqtlQO2E
-         VBQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=aPilZBrvyzgqjsmqEP8Qm1Zad9diYGZYlfH9HP2RVME=;
-        b=FVf9YeCeoWmwSa5ZrZbB/hpBrCY4geTrmIekgS1RbOrAVlujq1Lpsz31OAdE8a/BuH
-         Z2xULSkbONQa+v01qWDaMN6rC5fJLuY33uUkr6huVZHZUJv3u+0MyVEfPrHY9+I3eouh
-         W+VcgFL+mPodeXY19kbzxfn57p+WK/lA7ieQobjEyYlbI5otVysqMWDoAUiZAVGe5zZx
-         Q5YrlRQtAar688dNoa/K82tpiL2dwpdO9TmQBk5jAqi1z1GaKT7Qgak1SgJqmEG6SZvd
-         HpRhgbr5Mr2prYsXUV/46TV97fJHfxJOvjuLmnK39TkMCg91LhEqRcoSWHyW2cDfjQsq
-         EM/A==
-X-Gm-Message-State: AO0yUKXHzcfR8PfeLx3oSdjkIlfnhuMWvuLUmnXhE7YUq5QG+B3FCx1C
-	g5UK/i6zepbEV0paq3aCkAM=
-X-Google-Smtp-Source: AK7set+9+THITSv0u/2MrM0c5aqwptCz230WHuS/r54mf5+W8GrlqVJOGl/cdgs1q5bio5YyJqu08g==
-X-Received: by 2002:a17:902:f392:b0:199:48fc:3dcb with SMTP id f18-20020a170902f39200b0019948fc3dcbmr183954ple.68.1675821133051;
-        Tue, 07 Feb 2023 17:52:13 -0800 (PST)
-Received: from [192.168.1.3] (ip72-194-116-95.oc.oc.cox.net. [72.194.116.95])
-        by smtp.gmail.com with ESMTPSA id u1-20020a170903124100b00172b87d9770sm9641676plh.81.2023.02.07.17.52.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Feb 2023 17:52:12 -0800 (PST)
-Message-ID: <a8b73e1a-8909-b316-48f9-b83fff322fc7@gmail.com>
-Date: Tue, 7 Feb 2023 17:52:10 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E445A37B
+	for <patches@lists.linux.dev>; Wed,  8 Feb 2023 02:22:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41C09C433EF;
+	Wed,  8 Feb 2023 02:22:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1675822949;
+	bh=+w19YZg2i26yM5ERjw0MCPZycXtB6tucgvRP+U+a2WU=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=pEF3P4QaJNF3B8rFVrzFd93Snsn4CmGfaf7FW9ETIMc1kUgM6DPaopnq4t5RNSG5w
+	 Mm1heyVq00WMBjeVivygMRPx0+Jesla1JVCtI87x+j9URJP0zO8eqWjdu2VQ8KkxIv
+	 uUAsHw7RV4fPP7AiV3884360+SBv1VrB1OSyj2NgonIWqUTHET/nP82fVsmbLjagkH
+	 fV8MgC1L+9PBLuyWqvicRxmMo6i0Aqd+2M8jcue9aRLTtlDOTKAgNtWmTeKhWlHRdg
+	 Xc3JF5/WzYvvtKhkyX69KxwGLomob9//5KsFZJJvRaJS406pYeBVyTG1M4nqyUIa+J
+	 19Z+Zg1P3ypiQ==
+Message-ID: <9d90e05b-c9cb-03d2-645a-b50b1cae694d@kernel.org>
+Date: Tue, 7 Feb 2023 19:22:28 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 6.1 000/208] 6.1.11-rc1 review
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.6.1
+Subject: Re: [PATCH 5.4 v2 2/2] ipv4: Fix incorrect route flushing when source
+ address is deleted
 Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230207125634.292109991@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230207125634.292109991@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Shaoying Xu <shaoyi@amazon.com>, gregkh@linuxfoundation.org
+Cc: idosch@nvidia.com, kuba@kernel.org, patches@lists.linux.dev,
+ sashal@kernel.org, stable@vger.kernel.org
+References: <Y+IckeUtbE/UfOz/@kroah.com>
+ <20230207182820.4959-1-shaoyi@amazon.com>
+ <20230207182820.4959-2-shaoyi@amazon.com>
+From: David Ahern <dsahern@kernel.org>
+In-Reply-To: <20230207182820.4959-2-shaoyi@amazon.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 
-
-
-On 2/7/2023 4:54 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.11 release.
-> There are 208 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 2/7/23 11:28 AM, Shaoying Xu wrote:
+> From: Ido Schimmel <idosch@nvidia.com>
 > 
-> Responses should be made by Thu, 09 Feb 2023 12:55:54 +0000.
-> Anything received after that time might be too late.
+> [ Upstream commit f96a3d74554df537b6db5c99c27c80e7afadc8d1 ]
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.11-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
+That commit, does not have this change:
 
-On ARCH_BRCMSTB using 32-bit and 64-bit ARM kernels, build tested on 
-BMIPS_GENERIC:
+> diff --git a/net/ipv4/fib_semantics.c b/net/ipv4/fib_semantics.c
+> index 908913d75847..f45b9daf62cf 100644
+> --- a/net/ipv4/fib_semantics.c
+> +++ b/net/ipv4/fib_semantics.c
+> @@ -420,6 +420,7 @@ static struct fib_info *fib_find_info(struct fib_info *nfi)
+>  		    nfi->fib_prefsrc == fi->fib_prefsrc &&
+>  		    nfi->fib_priority == fi->fib_priority &&
+>  		    nfi->fib_type == fi->fib_type &&
+> +		    nfi->fib_tb_id == fi->fib_tb_id &&
+>  		    memcmp(nfi->fib_metrics, fi->fib_metrics,
+>  			   sizeof(u32) * RTAX_MAX) == 0 &&
+>  		    !((nfi->fib_flags ^ fi->fib_flags) & ~RTNH_COMPARE_MASK) &&
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
