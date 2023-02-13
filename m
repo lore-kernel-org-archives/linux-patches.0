@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 601C08F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:55:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDCB5C433EF;
-	Mon, 13 Feb 2023 14:55:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F313F8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:55:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B9DAC4339B;
+	Mon, 13 Feb 2023 14:55:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300101;
-	bh=0up6jw7Mae1Ga3Lqhw4j1jIKiRErptlngHtST1bG7Z4=;
+	s=korg; t=1676300103;
+	bh=p5Rovouv9TkL97MHJnaSG5S3dzTb/gfGEqkYG4wHRGQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gigvEdMKmWoxDu4xnC9J8oAbgjJau5JsfT5tB9I1EpV+0Hd23Ha6/qweQAvFq91+n
-	 w5FV7wzcW7orTc8js5lIb1DWoTBZGnmqGNYlfRJqS1h0LrSWzT11LXGKgsh0M+pf1T
-	 cghA7C6DLGrd+Zw/OicOVdzaH7ZyQOUHUnxYEguA=
+	b=p7fPkWVWqZzUp3gCIq4VPKlyGD42UFmcHuBN82YN3oOoXOeK8DOlfuZxy81xYUeX2
+	 EyrUp1gz88DsoU85rdl8vn3ywc+2laKCL3qC5XXmwOy03rjj0LYwVPByDa/PjM+kA0
+	 Pubm70YFMo3zlVStrwilWP3Dz3Y3wTTYxEBBQCJM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Liu Shixin <liushixin2@huawei.com>,
-	Samuel Holland <samuel@sholland.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Hangbin Liu <liuhangbin@gmail.com>,
+	Petr Machata <petrm@nvidia.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 064/114] riscv: stacktrace: Fix missing the first frame
-Date: Mon, 13 Feb 2023 15:48:19 +0100
-Message-Id: <20230213144745.541282588@linuxfoundation.org>
+Subject: [PATCH 6.1 060/114] selftests: forwarding: lib: quote the sysctl values
+Date: Mon, 13 Feb 2023 15:48:15 +0100
+Message-Id: <20230213144745.328069293@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -36,74 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Hangbin Liu <liuhangbin@gmail.com>
 
-[ Upstream commit cb80242cc679d6397e77d8a964deeb3ff218d2b5 ]
+[ Upstream commit 3a082086aa200852545cf15159213582c0c80eba ]
 
-When running kfence_test, I found some testcases failed like this:
+When set/restore sysctl value, we should quote the value as some keys
+may have multi values, e.g. net.ipv4.ping_group_range
 
- # test_out_of_bounds_read: EXPECTATION FAILED at mm/kfence/kfence_test.c:346
- Expected report_matches(&expect) to be true, but is false
- not ok 1 - test_out_of_bounds_read
-
-The corresponding call-trace is:
-
- BUG: KFENCE: out-of-bounds read in kunit_try_run_case+0x38/0x84
-
- Out-of-bounds read at 0x(____ptrval____) (32B right of kfence-#10):
-  kunit_try_run_case+0x38/0x84
-  kunit_generic_run_threadfn_adapter+0x12/0x1e
-  kthread+0xc8/0xde
-  ret_from_exception+0x0/0xc
-
-The kfence_test using the first frame of call trace to check whether the
-testcase is succeed or not. Commit 6a00ef449370 ("riscv: eliminate
-unreliable __builtin_frame_address(1)") skip first frame for all
-case, which results the kfence_test failed. Indeed, we only need to skip
-the first frame for case (task==NULL || task==current).
-
-With this patch, the call-trace will be:
-
- BUG: KFENCE: out-of-bounds read in test_out_of_bounds_read+0x88/0x19e
-
- Out-of-bounds read at 0x(____ptrval____) (1B left of kfence-#7):
-  test_out_of_bounds_read+0x88/0x19e
-  kunit_try_run_case+0x38/0x84
-  kunit_generic_run_threadfn_adapter+0x12/0x1e
-  kthread+0xc8/0xde
-  ret_from_exception+0x0/0xc
-
-Fixes: 6a00ef449370 ("riscv: eliminate unreliable __builtin_frame_address(1)")
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Tested-by: Samuel Holland <samuel@sholland.org>
-Link: https://lore.kernel.org/r/20221207025038.1022045-1-liushixin2@huawei.com
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+Fixes: f5ae57784ba8 ("selftests: forwarding: lib: Add sysctl_set(), sysctl_restore()")
+Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
+Reviewed-by: Petr Machata <petrm@nvidia.com>
+Link: https://lore.kernel.org/r/20230208032110.879205-1-liuhangbin@gmail.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/stacktrace.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ tools/testing/selftests/net/forwarding/lib.sh | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/riscv/kernel/stacktrace.c b/arch/riscv/kernel/stacktrace.c
-index bcfe9eb55f80f..85cd5442d2f81 100644
---- a/arch/riscv/kernel/stacktrace.c
-+++ b/arch/riscv/kernel/stacktrace.c
-@@ -30,6 +30,7 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
- 		fp = (unsigned long)__builtin_frame_address(0);
- 		sp = current_stack_pointer;
- 		pc = (unsigned long)walk_stackframe;
-+		level = -1;
- 	} else {
- 		/* task blocked in __switch_to */
- 		fp = task->thread.s[0];
-@@ -41,7 +42,7 @@ void notrace walk_stackframe(struct task_struct *task, struct pt_regs *regs,
- 		unsigned long low, high;
- 		struct stackframe *frame;
+diff --git a/tools/testing/selftests/net/forwarding/lib.sh b/tools/testing/selftests/net/forwarding/lib.sh
+index 3ffb9d6c09504..f4721f1b2886b 100755
+--- a/tools/testing/selftests/net/forwarding/lib.sh
++++ b/tools/testing/selftests/net/forwarding/lib.sh
+@@ -906,14 +906,14 @@ sysctl_set()
+ 	local value=$1; shift
  
--		if (unlikely(!__kernel_text_address(pc) || (level++ >= 1 && !fn(arg, pc))))
-+		if (unlikely(!__kernel_text_address(pc) || (level++ >= 0 && !fn(arg, pc))))
- 			break;
+ 	SYSCTL_ORIG[$key]=$(sysctl -n $key)
+-	sysctl -qw $key=$value
++	sysctl -qw $key="$value"
+ }
  
- 		/* Validate frame pointer */
+ sysctl_restore()
+ {
+ 	local key=$1; shift
+ 
+-	sysctl -qw $key=${SYSCTL_ORIG["$key"]}
++	sysctl -qw $key="${SYSCTL_ORIG[$key]}"
+ }
+ 
+ forwarding_enable()
 -- 
 2.39.0
 
