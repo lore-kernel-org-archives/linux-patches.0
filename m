@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE7258F58
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:06:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 450E9C433D2;
-	Mon, 13 Feb 2023 15:06:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4BB648F58
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:06:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5B1FC4339E;
+	Mon, 13 Feb 2023 15:06:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300782;
-	bh=TlNNSeaWoUAzdD+lkgHypDGg0IvlhhO20zbxLPo8sdc=;
+	s=korg; t=1676300785;
+	bh=rBQ2n6Al8ifFhz+/YpcGJx6OcBmmwX2em7hYq8jO6tQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TarttJWB7g2xCEQzXCSm0VT2QkyutwHrRTqWM0JcBzEI56ulukw1DPPSaEKn8FjGK
-	 C8wWV77u88V1zlm0rPbhVUurLs6y8SYm7+/LNaTPko24Y7J6XOaEgizhjtlUpgnJkc
-	 MGHSEeqpOIwhzvv+JqTxrbCM79nrWQZkPYTKGHC4=
+	b=WIWGZ1J88UTuMhfWOaBx8ZJJ3GEajYkfDoC4fE/WrSGUV5vE4DwWQIUIMnWB+l2qA
+	 dmLYh9N4M1Oky67EBfO5eqBF6YSjXK7josMD3IvNjrqpfV/yFhUpV39MG+1zXS2dZ8
+	 Q/hCCBxOkme44JZf9KdKjx/VHENI8seA9fXInFRc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Suti <peter.suti@streamunlimited.com>,
-	Vyacheslav Bocharov <adeep@lexina.in>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 5.10 137/139] arm64: dts: meson-axg: Make mmc host controller interrupts level-sensitive
-Date: Mon, 13 Feb 2023 15:51:22 +0100
-Message-Id: <20230213144753.246096096@linuxfoundation.org>
+	ZhaoLong Wang <wangzhaolong1@huawei.com>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Steve French <stfrench@microsoft.com>
+Subject: [PATCH 5.10 128/139] cifs: Fix use-after-free in rdata->read_into_pages()
+Date: Mon, 13 Feb 2023 15:51:13 +0100
+Message-Id: <20230213144752.710756764@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -36,51 +35,123 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: ZhaoLong Wang <wangzhaolong1@huawei.com>
 
-commit d182bcf300772d8b2e5f43e47fa0ebda2b767cc4 upstream.
+commit aa5465aeca3c66fecdf7efcf554aed79b4c4b211 upstream.
 
-The usage of edge-triggered interrupts lead to lost interrupts under load,
-see [0]. This was confirmed to be fixed by using level-triggered
-interrupts.
-The report was about SDIO. However, as the host controller is the same
-for SD and MMC, apply the change to all mmc controller instances.
+When the network status is unstable, use-after-free may occur when
+read data from the server.
 
-[0] https://www.spinics.net/lists/linux-mmc/msg73991.html
+  BUG: KASAN: use-after-free in readpages_fill_pages+0x14c/0x7e0
 
-Fixes: 221cf34bac54 ("ARM64: dts: meson-axg: enable the eMMC controller")
-Reported-by: Peter Suti <peter.suti@streamunlimited.com>
-Tested-by: Vyacheslav Bocharov <adeep@lexina.in>
-Tested-by: Peter Suti <peter.suti@streamunlimited.com>
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x38/0x4c
+   print_report+0x16f/0x4a6
+   kasan_report+0xb7/0x130
+   readpages_fill_pages+0x14c/0x7e0
+   cifs_readv_receive+0x46d/0xa40
+   cifs_demultiplex_thread+0x121c/0x1490
+   kthread+0x16b/0x1a0
+   ret_from_fork+0x2c/0x50
+   </TASK>
+
+  Allocated by task 2535:
+   kasan_save_stack+0x22/0x50
+   kasan_set_track+0x25/0x30
+   __kasan_kmalloc+0x82/0x90
+   cifs_readdata_direct_alloc+0x2c/0x110
+   cifs_readdata_alloc+0x2d/0x60
+   cifs_readahead+0x393/0xfe0
+   read_pages+0x12f/0x470
+   page_cache_ra_unbounded+0x1b1/0x240
+   filemap_get_pages+0x1c8/0x9a0
+   filemap_read+0x1c0/0x540
+   cifs_strict_readv+0x21b/0x240
+   vfs_read+0x395/0x4b0
+   ksys_read+0xb8/0x150
+   do_syscall_64+0x3f/0x90
+   entry_SYSCALL_64_after_hwframe+0x72/0xdc
+
+  Freed by task 79:
+   kasan_save_stack+0x22/0x50
+   kasan_set_track+0x25/0x30
+   kasan_save_free_info+0x2e/0x50
+   __kasan_slab_free+0x10e/0x1a0
+   __kmem_cache_free+0x7a/0x1a0
+   cifs_readdata_release+0x49/0x60
+   process_one_work+0x46c/0x760
+   worker_thread+0x2a4/0x6f0
+   kthread+0x16b/0x1a0
+   ret_from_fork+0x2c/0x50
+
+  Last potentially related work creation:
+   kasan_save_stack+0x22/0x50
+   __kasan_record_aux_stack+0x95/0xb0
+   insert_work+0x2b/0x130
+   __queue_work+0x1fe/0x660
+   queue_work_on+0x4b/0x60
+   smb2_readv_callback+0x396/0x800
+   cifs_abort_connection+0x474/0x6a0
+   cifs_reconnect+0x5cb/0xa50
+   cifs_readv_from_socket.cold+0x22/0x6c
+   cifs_read_page_from_socket+0xc1/0x100
+   readpages_fill_pages.cold+0x2f/0x46
+   cifs_readv_receive+0x46d/0xa40
+   cifs_demultiplex_thread+0x121c/0x1490
+   kthread+0x16b/0x1a0
+   ret_from_fork+0x2c/0x50
+
+The following function calls will cause UAF of the rdata pointer.
+
+readpages_fill_pages
+ cifs_read_page_from_socket
+  cifs_readv_from_socket
+   cifs_reconnect
+    __cifs_reconnect
+     cifs_abort_connection
+      mid->callback() --> smb2_readv_callback
+       queue_work(&rdata->work)  # if the worker completes first,
+                                 # the rdata is freed
+          cifs_readv_complete
+            kref_put
+              cifs_readdata_release
+                kfree(rdata)
+ return rdata->...               # UAF in readpages_fill_pages()
+
+Similarly, this problem also occurs in the uncache_fill_pages().
+
+Fix this by adjusts the order of condition judgment in the return
+statement.
+
+Signed-off-by: ZhaoLong Wang <wangzhaolong1@huawei.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/c00655d3-02f8-6f5f-4239-ca2412420cad@gmail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Acked-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-axg.dtsi |    4 ++--
+ fs/cifs/file.c |    4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-@@ -1754,7 +1754,7 @@
- 			sd_emmc_b: sd@5000 {
- 				compatible = "amlogic,meson-axg-mmc";
- 				reg = <0x0 0x5000 0x0 0x800>;
--				interrupts = <GIC_SPI 217 IRQ_TYPE_EDGE_RISING>;
-+				interrupts = <GIC_SPI 217 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 				clocks = <&clkc CLKID_SD_EMMC_B>,
- 					<&clkc CLKID_SD_EMMC_B_CLK0>,
-@@ -1766,7 +1766,7 @@
- 			sd_emmc_c: mmc@7000 {
- 				compatible = "amlogic,meson-axg-mmc";
- 				reg = <0x0 0x7000 0x0 0x800>;
--				interrupts = <GIC_SPI 218 IRQ_TYPE_EDGE_RISING>;
-+				interrupts = <GIC_SPI 218 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 				clocks = <&clkc CLKID_SD_EMMC_C>,
- 					<&clkc CLKID_SD_EMMC_C_CLK0>,
+--- a/fs/cifs/file.c
++++ b/fs/cifs/file.c
+@@ -3539,7 +3539,7 @@ uncached_fill_pages(struct TCP_Server_In
+ 		rdata->got_bytes += result;
+ 	}
+ 
+-	return rdata->got_bytes > 0 && result != -ECONNABORTED ?
++	return result != -ECONNABORTED && rdata->got_bytes > 0 ?
+ 						rdata->got_bytes : result;
+ }
+ 
+@@ -4302,7 +4302,7 @@ readpages_fill_pages(struct TCP_Server_I
+ 		rdata->got_bytes += result;
+ 	}
+ 
+-	return rdata->got_bytes > 0 && result != -ECONNABORTED ?
++	return result != -ECONNABORTED && rdata->got_bytes > 0 ?
+ 						rdata->got_bytes : result;
+ }
+ 
 
 
