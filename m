@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5FECC8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:53:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D95F9C4339C;
-	Mon, 13 Feb 2023 14:53:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26318F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:53:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7720EC433D2;
+	Mon, 13 Feb 2023 14:53:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300026;
-	bh=1llLMwtq/nFFNr7x4mcJ8VB2OxVCixEDxRFdsIPb3mI=;
+	s=korg; t=1676300028;
+	bh=GyCGdW6FD89Vetw074HgGvNGB19z9svlks6wk0wps5Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qSBH0VIYHHwK66hPEmL62+0VlEqJK71sKAWvNfEpqgoz4nX8NTnuJiLafyLe4Y1Sp
-	 yawrtFWT0XQcKx5zOT1DVLFFU+HDGLpj75HqjWQZNPueQaB/+4juiUUKrfzCeNpD7T
-	 z4jeRiWUSaSl678Of7t4w+D/JCtmwVg62ezqbC10=
+	b=qPrntCzwLgCJ6t2VLFewk4GWhRopPKRemH7orAIRuwVaWIjmiF/FwLSSfQVOFpoMJ
+	 gccZZ2HVLwR9zPIcMvrM3tMhz0PSw2Ffxc3Gwvktr+MqHeSzTLKHghG5TVH6aTPq01
+	 eW/eZyqGKVopjnWROtvrlciw4MSCyue3NogLI9w0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xaver Hugl <xaver.hugl@gmail.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Basavaraj Natikar <Basavaraj.Natikar@amd.com>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Douglas Anderson <dianders@chromium.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
+	Manivannan Sadhasivam <mani@kernel.org>,
+	Viresh Kumar <viresh.kumar@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 035/114] HID: amd_sfh: if no sensors are enabled, clean up
-Date: Mon, 13 Feb 2023 15:47:50 +0100
-Message-Id: <20230213144743.961562101@linuxfoundation.org>
+Subject: [PATCH 6.1 032/114] cpufreq: qcom-hw: Fix cpufreq_driver->get() for non-LMH systems
+Date: Mon, 13 Feb 2023 15:47:47 +0100
+Message-Id: <20230213144743.824867875@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -37,95 +37,96 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mario Limonciello <mario.limonciello@amd.com>
+From: Douglas Anderson <dianders@chromium.org>
 
-[ Upstream commit 7bcfdab3f0c6672ca52be3cb65a0550d8b99554b ]
+[ Upstream commit 51be2fffd65d9f9cb427030ab0ee85d791b4437d ]
 
-It was reported that commit b300667b33b2 ("HID: amd_sfh: Disable the
-interrupt for all command") had caused increased resume time on HP Envy
-x360.
+On a sc7180-based Chromebook, when I go to
+/sys/devices/system/cpu/cpu0/cpufreq I can see:
 
-Before this commit 3 sensors were reported, but they were not actually
-functional.  After this commit the sensors are no longer reported, but
-also the resume time increased.
+  cpuinfo_cur_freq:2995200
+  cpuinfo_max_freq:1804800
+  scaling_available_frequencies:300000 576000 ... 1708800 1804800
+  scaling_cur_freq:1804800
+  scaling_max_freq:1804800
 
-To avoid this problem explicitly look for the number of disabled sensors.
-If all the sensors are disabled, clean everything up.
+As you can see the `cpuinfo_cur_freq` is bogus. It turns out that this
+bogus info started showing up as of commit c72cf0cb1d77 ("cpufreq:
+qcom-hw: Fix the frequency returned by cpufreq_driver->get()"). That
+commit seems to assume that everyone is on the LMH bandwagon, but
+sc7180 isn't.
 
-Fixes: b300667b33b2 ("HID: amd_sfh: Disable the interrupt for all command")
-Link: https://gitlab.freedesktop.org/drm/amd/-/issues/2115
-Reported-by: Xaver Hugl <xaver.hugl@gmail.com>
-Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
-Acked-by: Basavaraj Natikar <Basavaraj.Natikar@amd.com>
-Link: https://lore.kernel.org/r/20230203220850.13924-1-mario.limonciello@amd.com
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+Let's go back to the old code in the case where LMH isn't used.
+
+Fixes: c72cf0cb1d77 ("cpufreq: qcom-hw: Fix the frequency returned by cpufreq_driver->get()")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
+Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
+[ Viresh: Fixed the 'fixes' tag ]
+Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/amd-sfh-hid/amd_sfh_client.c | 13 +++++++++++--
- drivers/hid/amd-sfh-hid/amd_sfh_hid.h    |  1 +
- 2 files changed, 12 insertions(+), 2 deletions(-)
+ drivers/cpufreq/qcom-cpufreq-hw.c | 24 +++++++++++++-----------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_client.c b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-index 1fb0f7105fb21..c751d12f5df89 100644
---- a/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-+++ b/drivers/hid/amd-sfh-hid/amd_sfh_client.c
-@@ -227,6 +227,7 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
- 	cl_data->num_hid_devices = amd_mp2_get_sensor_num(privdata, &cl_data->sensor_idx[0]);
- 	if (cl_data->num_hid_devices == 0)
- 		return -ENODEV;
-+	cl_data->is_any_sensor_enabled = false;
+diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
+index 3c623a0bc147f..d10bf7635a0d5 100644
+--- a/drivers/cpufreq/qcom-cpufreq-hw.c
++++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+@@ -137,40 +137,42 @@ static unsigned long qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
+ 	return lval * xo_rate;
+ }
  
- 	INIT_DELAYED_WORK(&cl_data->work, amd_sfh_work);
- 	INIT_DELAYED_WORK(&cl_data->work_buffer, amd_sfh_work_buffer);
-@@ -287,6 +288,7 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
- 		status = amd_sfh_wait_for_response
- 				(privdata, cl_data->sensor_idx[i], SENSOR_ENABLED);
- 		if (status == SENSOR_ENABLED) {
-+			cl_data->is_any_sensor_enabled = true;
- 			cl_data->sensor_sts[i] = SENSOR_ENABLED;
- 			rc = amdtp_hid_probe(cl_data->cur_hid_dev, cl_data);
- 			if (rc) {
-@@ -301,19 +303,26 @@ int amd_sfh_hid_client_init(struct amd_mp2_dev *privdata)
- 					cl_data->sensor_sts[i]);
- 				goto cleanup;
- 			}
-+		} else {
-+			cl_data->sensor_sts[i] = SENSOR_DISABLED;
-+			dev_dbg(dev, "sid 0x%x (%s) status 0x%x\n",
-+				cl_data->sensor_idx[i],
-+				get_sensor_name(cl_data->sensor_idx[i]),
-+				cl_data->sensor_sts[i]);
- 		}
- 		dev_dbg(dev, "sid 0x%x (%s) status 0x%x\n",
- 			cl_data->sensor_idx[i], get_sensor_name(cl_data->sensor_idx[i]),
- 			cl_data->sensor_sts[i]);
- 	}
--	if (mp2_ops->discovery_status && mp2_ops->discovery_status(privdata) == 0) {
-+	if (!cl_data->is_any_sensor_enabled ||
-+	   (mp2_ops->discovery_status && mp2_ops->discovery_status(privdata) == 0)) {
- 		amd_sfh_hid_client_deinit(privdata);
- 		for (i = 0; i < cl_data->num_hid_devices; i++) {
- 			devm_kfree(dev, cl_data->feature_report[i]);
- 			devm_kfree(dev, in_data->input_report[i]);
- 			devm_kfree(dev, cl_data->report_descr[i]);
- 		}
--		dev_warn(dev, "Failed to discover, sensors not enabled\n");
-+		dev_warn(dev, "Failed to discover, sensors not enabled is %d\n", cl_data->is_any_sensor_enabled);
- 		return -EOPNOTSUPP;
- 	}
- 	schedule_delayed_work(&cl_data->work_buffer, msecs_to_jiffies(AMD_SFH_IDLE_LOOP));
-diff --git a/drivers/hid/amd-sfh-hid/amd_sfh_hid.h b/drivers/hid/amd-sfh-hid/amd_sfh_hid.h
-index 3754fb423e3ae..528036892c9d2 100644
---- a/drivers/hid/amd-sfh-hid/amd_sfh_hid.h
-+++ b/drivers/hid/amd-sfh-hid/amd_sfh_hid.h
-@@ -32,6 +32,7 @@ struct amd_input_data {
- struct amdtp_cl_data {
- 	u8 init_done;
- 	u32 cur_hid_dev;
-+	bool is_any_sensor_enabled;
- 	u32 hid_dev_count;
- 	u32 num_hid_devices;
- 	struct device_info *hid_devices;
+-/* Get the current frequency of the CPU (after throttling) */
+-static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
++/* Get the frequency requested by the cpufreq core for the CPU */
++static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
+ {
+ 	struct qcom_cpufreq_data *data;
++	const struct qcom_cpufreq_soc_data *soc_data;
+ 	struct cpufreq_policy *policy;
++	unsigned int index;
+ 
+ 	policy = cpufreq_cpu_get_raw(cpu);
+ 	if (!policy)
+ 		return 0;
+ 
+ 	data = policy->driver_data;
++	soc_data = data->soc_data;
+ 
+-	return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
++	index = readl_relaxed(data->base + soc_data->reg_perf_state);
++	index = min(index, LUT_MAX_ENTRIES - 1);
++
++	return policy->freq_table[index].frequency;
+ }
+ 
+-/* Get the frequency requested by the cpufreq core for the CPU */
+-static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
++static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
+ {
+ 	struct qcom_cpufreq_data *data;
+-	const struct qcom_cpufreq_soc_data *soc_data;
+ 	struct cpufreq_policy *policy;
+-	unsigned int index;
+ 
+ 	policy = cpufreq_cpu_get_raw(cpu);
+ 	if (!policy)
+ 		return 0;
+ 
+ 	data = policy->driver_data;
+-	soc_data = data->soc_data;
+ 
+-	index = readl_relaxed(data->base + soc_data->reg_perf_state);
+-	index = min(index, LUT_MAX_ENTRIES - 1);
++	if (data->throttle_irq >= 0)
++		return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
+ 
+-	return policy->freq_table[index].frequency;
++	return qcom_cpufreq_get_freq(cpu);
+ }
+ 
+ static unsigned int qcom_cpufreq_hw_fast_switch(struct cpufreq_policy *policy,
 -- 
 2.39.0
 
