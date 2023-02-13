@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E2E818F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A652C433D2;
-	Mon, 13 Feb 2023 14:58:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC648F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E342C433D2;
+	Mon, 13 Feb 2023 14:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300328;
-	bh=u60rqAm79HWBtWjkdXQlS7SlpsLayggWWHCsKDXbEOA=;
+	s=korg; t=1676300331;
+	bh=PdM+V68yQHdWToKcief3q038+CVjfW4U1Odeqg3IjSk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YMD9qa5Mds4ij/PJkNwUtNv/vrkRMOmJUNU1odumeOGnp6orxl6AboZE+DY3YQDAF
-	 tPjjetR3rHARzghzJvYWj1AMEnzHIbFUDR3cjW2bxR3t1iimYQKGo0tmMIw7FhAATo
-	 kkcXVeotimyOR9IspwRDLAt+AG5a8MZMx7i7cE6o=
+	b=MsDwP+sxnRyBgD565/NUIb0BGXd/IWO1KrTaacWEvksOZLqMsgiEp3eC2/S3A9WZg
+	 8KqoY5q7+C9aw1878wOFeX4OtgQrWFUiB2bv39R3uQT2GfkIXMwtbgNjfdujFIyfX9
+	 E/JaJNGyQpyflHR/Wlv1B0qBeGBbPHgiMgSmBZTo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
+	Vlad Buslov <vladbu@nvidia.com>,
+	Maor Dickman <maord@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 37/67] net/mlx5: Serialize module cleanup with reload and remove
-Date: Mon, 13 Feb 2023 15:49:18 +0100
-Message-Id: <20230213144734.142481788@linuxfoundation.org>
+Subject: [PATCH 5.15 33/67] net/mlx5: Bridge, fix ageing of peer FDB entries
+Date: Mon, 13 Feb 2023 15:49:14 +0100
+Message-Id: <20230213144733.943538696@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -36,81 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shay Drory <shayd@nvidia.com>
+From: Vlad Buslov <vladbu@nvidia.com>
 
-[ Upstream commit 8f0d1451ecf7b3bd5a06ffc866c753d0f3ab4683 ]
+[ Upstream commit da0c52426cd23f8728eff72c2b2d2a3eb6b451f5 ]
 
-Currently, remove and reload flows can run in parallel to module cleanup.
-This design is error prone. For example: aux_drivers callbacks are called
-from both cleanup and remove flows with different lockings, which can
-cause a deadlock[1].
-Hence, serialize module cleanup with reload and remove.
+SWITCHDEV_FDB_ADD_TO_BRIDGE event handler that updates FDB entry 'lastuse'
+field is only executed for eswitch that owns the entry. However, if peer
+entry processed packets at least once it will have hardware counter 'used'
+value greater than entry 'lastuse' from that point on, which will cause FDB
+entry not being aged out.
 
-[1]
-       cleanup                        remove
-       -------                        ------
-   auxiliary_driver_unregister();
-                                     devl_lock()
-                                      auxiliary_device_delete(mlx5e_aux)
-    device_lock(mlx5e_aux)
-     devl_lock()
-                                       device_lock(mlx5e_aux)
+Process the event on all eswitch instances.
 
-Fixes: 912cebf420c2 ("net/mlx5e: Connect ethernet part to auxiliary bus")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
+Fixes: ff9b7521468b ("net/mlx5: Bridge, support LAG")
+Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
+Reviewed-by: Maor Dickman <maord@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/main.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c | 4 ----
+ drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c    | 2 +-
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/main.c b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-index 9e15eea9743fe..485a6a6220f6a 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/main.c
-@@ -1862,7 +1862,7 @@ static int __init mlx5_init(void)
- 	mlx5_fpga_ipsec_build_fs_cmds();
- 	mlx5_register_debugfs();
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
+index 8e7177d4539e3..291bd59639044 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
+@@ -432,10 +432,6 @@ static int mlx5_esw_bridge_switchdev_event(struct notifier_block *nb,
  
--	err = pci_register_driver(&mlx5_core_driver);
-+	err = mlx5e_init();
- 	if (err)
- 		goto err_debug;
+ 	switch (event) {
+ 	case SWITCHDEV_FDB_ADD_TO_BRIDGE:
+-		/* only handle the event on native eswtich of representor */
+-		if (!mlx5_esw_bridge_is_local(dev, rep, esw))
+-			break;
+-
+ 		fdb_info = container_of(info,
+ 					struct switchdev_notifier_fdb_info,
+ 					info);
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+index 317d76b97c42a..aec0f67cef005 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
+@@ -1270,7 +1270,7 @@ void mlx5_esw_bridge_fdb_update_used(struct net_device *dev, u16 vport_num, u16
+ 	struct mlx5_esw_bridge *bridge;
  
-@@ -1870,16 +1870,16 @@ static int __init mlx5_init(void)
- 	if (err)
- 		goto err_sf;
+ 	port = mlx5_esw_bridge_port_lookup(vport_num, esw_owner_vhca_id, br_offloads);
+-	if (!port || port->flags & MLX5_ESW_BRIDGE_PORT_FLAG_PEER)
++	if (!port)
+ 		return;
  
--	err = mlx5e_init();
-+	err = pci_register_driver(&mlx5_core_driver);
- 	if (err)
--		goto err_en;
-+		goto err_pci;
- 
- 	return 0;
- 
--err_en:
-+err_pci:
- 	mlx5_sf_driver_unregister();
- err_sf:
--	pci_unregister_driver(&mlx5_core_driver);
-+	mlx5e_cleanup();
- err_debug:
- 	mlx5_unregister_debugfs();
- 	return err;
-@@ -1887,9 +1887,9 @@ static int __init mlx5_init(void)
- 
- static void __exit mlx5_cleanup(void)
- {
--	mlx5e_cleanup();
--	mlx5_sf_driver_unregister();
- 	pci_unregister_driver(&mlx5_core_driver);
-+	mlx5_sf_driver_unregister();
-+	mlx5e_cleanup();
- 	mlx5_unregister_debugfs();
- }
- 
+ 	bridge = port->bridge;
 -- 
 2.39.0
 
