@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC648F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0E342C433D2;
-	Mon, 13 Feb 2023 14:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D4338F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E3A9C433EF;
+	Mon, 13 Feb 2023 14:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300331;
-	bh=PdM+V68yQHdWToKcief3q038+CVjfW4U1Odeqg3IjSk=;
+	s=korg; t=1676300334;
+	bh=W6c0zlTCwaL0Bm1yT9ofMMh4BTpC3Ohw2V+ilySlOvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MsDwP+sxnRyBgD565/NUIb0BGXd/IWO1KrTaacWEvksOZLqMsgiEp3eC2/S3A9WZg
-	 8KqoY5q7+C9aw1878wOFeX4OtgQrWFUiB2bv39R3uQT2GfkIXMwtbgNjfdujFIyfX9
-	 E/JaJNGyQpyflHR/Wlv1B0qBeGBbPHgiMgSmBZTo=
+	b=PnJXQlU56qxGlwWqhi9yy8HrVJyLYi+z3DckPnhLeN9IO2Loe06GBPVoqJDiA07KN
+	 oUaZFmNqOaGme+lwAtfJhXeub2kXK9yXwHDJIzfXcZN9tfylB8V0DABNJQPMelRZPJ
+	 sRxtfQcw3QuXwtyGCmxydsDgPRZFsFln5E86rg6c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Maor Dickman <maord@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 33/67] net/mlx5: Bridge, fix ageing of peer FDB entries
-Date: Mon, 13 Feb 2023 15:49:14 +0100
-Message-Id: <20230213144733.943538696@linuxfoundation.org>
+Subject: [PATCH 5.15 39/67] rds: rds_rm_zerocopy_callback() use list_first_entry()
+Date: Mon, 13 Feb 2023 15:49:20 +0100
+Message-Id: <20230213144734.230764871@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -36,56 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vlad Buslov <vladbu@nvidia.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit da0c52426cd23f8728eff72c2b2d2a3eb6b451f5 ]
+[ Upstream commit f753a68980cf4b59a80fe677619da2b1804f526d ]
 
-SWITCHDEV_FDB_ADD_TO_BRIDGE event handler that updates FDB entry 'lastuse'
-field is only executed for eswitch that owns the entry. However, if peer
-entry processed packets at least once it will have hardware counter 'used'
-value greater than entry 'lastuse' from that point on, which will cause FDB
-entry not being aged out.
+rds_rm_zerocopy_callback() uses list_entry() on the head of a list
+causing a type confusion.
+Use list_first_entry() to actually access the first element of the
+rs_zcookie_queue list.
 
-Process the event on all eswitch instances.
-
-Fixes: ff9b7521468b ("net/mlx5: Bridge, support LAG")
-Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
-Reviewed-by: Maor Dickman <maord@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 9426bbc6de99 ("rds: use list structure to track information for zerocopy completion notification")
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Link: https://lore.kernel.org/r/20230202-rds-zerocopy-v3-1-83b0df974f9a@diag.uniroma1.it
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c | 4 ----
- drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c    | 2 +-
- 2 files changed, 1 insertion(+), 5 deletions(-)
+ net/rds/message.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
-index 8e7177d4539e3..291bd59639044 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
-@@ -432,10 +432,6 @@ static int mlx5_esw_bridge_switchdev_event(struct notifier_block *nb,
- 
- 	switch (event) {
- 	case SWITCHDEV_FDB_ADD_TO_BRIDGE:
--		/* only handle the event on native eswtich of representor */
--		if (!mlx5_esw_bridge_is_local(dev, rep, esw))
--			break;
--
- 		fdb_info = container_of(info,
- 					struct switchdev_notifier_fdb_info,
- 					info);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
-index 317d76b97c42a..aec0f67cef005 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
-@@ -1270,7 +1270,7 @@ void mlx5_esw_bridge_fdb_update_used(struct net_device *dev, u16 vport_num, u16
- 	struct mlx5_esw_bridge *bridge;
- 
- 	port = mlx5_esw_bridge_port_lookup(vport_num, esw_owner_vhca_id, br_offloads);
--	if (!port || port->flags & MLX5_ESW_BRIDGE_PORT_FLAG_PEER)
-+	if (!port)
- 		return;
- 
- 	bridge = port->bridge;
+diff --git a/net/rds/message.c b/net/rds/message.c
+index 799034e0f513d..b363ef13c75ef 100644
+--- a/net/rds/message.c
++++ b/net/rds/message.c
+@@ -104,9 +104,9 @@ static void rds_rm_zerocopy_callback(struct rds_sock *rs,
+ 	spin_lock_irqsave(&q->lock, flags);
+ 	head = &q->zcookie_head;
+ 	if (!list_empty(head)) {
+-		info = list_entry(head, struct rds_msg_zcopy_info,
+-				  rs_zcookie_next);
+-		if (info && rds_zcookie_add(info, cookie)) {
++		info = list_first_entry(head, struct rds_msg_zcopy_info,
++					rs_zcookie_next);
++		if (rds_zcookie_add(info, cookie)) {
+ 			spin_unlock_irqrestore(&q->lock, flags);
+ 			kfree(rds_info_from_znotifier(znotif));
+ 			/* caller invokes rds_wake_sk_sleep() */
 -- 
 2.39.0
 
