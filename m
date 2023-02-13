@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3E118F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E2C1C4339B;
-	Mon, 13 Feb 2023 14:58:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 093CA8F58
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 82FAEC4339B;
+	Mon, 13 Feb 2023 14:58:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300284;
-	bh=PGwWfxbIybMQGdRCzPgTOzJdRYvn5d/o0LGBVWj5gL4=;
+	s=korg; t=1676300289;
+	bh=k1JUl+DJjRksbEthALM0cRXtv2SUDwnwWVrbNr6GC9A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MxB/IQLhDPQRqgH60DvdNyyPm5+Wm6ukyyvdtBuy9zIX+UV5m92F8T90naiFWc1/1
-	 c1Jgm8JzYfQ+ZV80zKcp8J/rKk0ouSNBS2beTZiRccoy+k8L64y6oJ6CJq978A2TPp
-	 glmOWE63lITHWBe9G4+zEzDcEkI90itGgx198m1Q=
+	b=xCiLVeHTurAWBVefz1vXAH5gg+2hf/2iRpyEPZXR118vbOdsZ02MI2hCiDCgGOubj
+	 IJQRx3GpZuYVoMdkGZrXjcDRuto/+BVY9wLTxkfSE8WAoQaiTYChZFy5B2sO6YTzTi
+	 udbnZMbKS5RjdiiDLd4A1Y4p8NTxumJ1nf24Fhho=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	=?UTF-8?q?Cl=C3=A9ment=20L=C3=A9ger?= <clement.leger@bootlin.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 20/67] RDMA/usnic: use iommu_map_atomic() under spin_lock()
-Date: Mon, 13 Feb 2023 15:49:01 +0100
-Message-Id: <20230213144733.314004301@linuxfoundation.org>
+Subject: [PATCH 5.15 22/67] net: phylink: move phy_device_free() to correctly release phy device
+Date: Mon, 13 Feb 2023 15:49:03 +0100
+Message-Id: <20230213144733.416604105@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -35,49 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Clément Léger <clement.leger@bootlin.com>
 
-[ Upstream commit b7e08a5a63a11627601915473c3b569c1f6c6c06 ]
+[ Upstream commit ce93fdb5f2ca5c9e2a9668411cc39091507f8dc9 ]
 
-usnic_uiom_map_sorted_intervals() is called under spin_lock(), iommu_map()
-might sleep, use iommu_map_atomic() to avoid potential sleep in atomic
-context.
+After calling fwnode_phy_find_device(), the phy device refcount is
+incremented. Then, when the phy device is attached to a netdev with
+phy_attach_direct(), the refcount is also incremented but only
+decremented in the caller if phy_attach_direct() fails. Move
+phy_device_free() before the "if" to always release it correctly.
+Indeed, either phy_attach_direct() failed and we don't want to keep a
+reference to the phydev or it succeeded and a reference has been taken
+internally.
 
-Fixes: e3cf00d0a87f ("IB/usnic: Add Cisco VIC low-level hardware driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20230129093757.637354-1-yangyingliang@huawei.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 25396f680dd6 ("net: phylink: introduce phylink_fwnode_phy_connect()")
+Signed-off-by: Clément Léger <clement.leger@bootlin.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/usnic/usnic_uiom.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/phy/phylink.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/infiniband/hw/usnic/usnic_uiom.c b/drivers/infiniband/hw/usnic/usnic_uiom.c
-index 760b254ba42d6..48a57568cad69 100644
---- a/drivers/infiniband/hw/usnic/usnic_uiom.c
-+++ b/drivers/infiniband/hw/usnic/usnic_uiom.c
-@@ -281,8 +281,8 @@ static int usnic_uiom_map_sorted_intervals(struct list_head *intervals,
- 				size = pa_end - pa_start + PAGE_SIZE;
- 				usnic_dbg("va 0x%lx pa %pa size 0x%zx flags 0x%x",
- 					va_start, &pa_start, size, flags);
--				err = iommu_map(pd->domain, va_start, pa_start,
--							size, flags);
-+				err = iommu_map_atomic(pd->domain, va_start,
-+						       pa_start, size, flags);
- 				if (err) {
- 					usnic_err("Failed to map va 0x%lx pa %pa size 0x%zx with err %d\n",
- 						va_start, &pa_start, size, err);
-@@ -298,8 +298,8 @@ static int usnic_uiom_map_sorted_intervals(struct list_head *intervals,
- 				size = pa - pa_start + PAGE_SIZE;
- 				usnic_dbg("va 0x%lx pa %pa size 0x%zx flags 0x%x\n",
- 					va_start, &pa_start, size, flags);
--				err = iommu_map(pd->domain, va_start, pa_start,
--						size, flags);
-+				err = iommu_map_atomic(pd->domain, va_start,
-+						       pa_start, size, flags);
- 				if (err) {
- 					usnic_err("Failed to map va 0x%lx pa %pa size 0x%zx with err %d\n",
- 						va_start, &pa_start, size, err);
+diff --git a/drivers/net/phy/phylink.c b/drivers/net/phy/phylink.c
+index 7afcf6310d59f..422dc92ecac94 100644
+--- a/drivers/net/phy/phylink.c
++++ b/drivers/net/phy/phylink.c
+@@ -1166,10 +1166,9 @@ int phylink_fwnode_phy_connect(struct phylink *pl,
+ 
+ 	ret = phy_attach_direct(pl->netdev, phy_dev, flags,
+ 				pl->link_interface);
+-	if (ret) {
+-		phy_device_free(phy_dev);
++	phy_device_free(phy_dev);
++	if (ret)
+ 		return ret;
+-	}
+ 
+ 	ret = phylink_bringup_phy(pl, phy_dev, pl->link_config.interface);
+ 	if (ret)
 -- 
 2.39.0
 
