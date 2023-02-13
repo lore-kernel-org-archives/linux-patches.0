@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064B18F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:54:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D30C433D2;
-	Mon, 13 Feb 2023 14:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96E1A8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:54:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DA32C433D2;
+	Mon, 13 Feb 2023 14:54:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300041;
-	bh=yNhaBNpkBy+X/0ebLwxQL2wxf2clS3WJ8h+jXXyC/3g=;
+	s=korg; t=1676300044;
+	bh=Aa87QOCEVQyGu9ULvRSOCTUeB1XZjsoZhqgUtes0NCY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=V+gZpgAopJewcf9DPAiL7P+mS93CD12RptNklxJXzyEKGSp7ImBQCgE7hHZcmzmUS
-	 jt/PY9OWH6hXubKJIibu6r9qKs1faIV0Rpm/pSrh8owifwzvj8lAsrQCKnfQ95sAO+
-	 7Cw1kjQriBEv0CGiHYkl5K7S8aFmJ90DT4uFOKmI=
+	b=ajzkQPT2hsAX7yXLgrBT/bNxvGQ/NmSoZLeBPLNp7IOfw9xGIvkEBiHyPmclhR/P2
+	 +It2SPae7QeeaChQ633ovk5POQt9178Ej1fjW2jNWy0SM7NM3ysjHNbQ+ZrwL3cLQG
+	 grQBiKUNPsxCle9ZbOg93X3sy97q5bhPwS45A6kE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Zhang Changzhong <zhangchangzhong@huawei.com>,
+	Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 036/114] drm/i915: Dont do the WM0->WM1 copy w/a if WM1 is already enabled
-Date: Mon, 13 Feb 2023 15:47:51 +0100
-Message-Id: <20230213144744.016345273@linuxfoundation.org>
+Subject: [PATCH 6.1 042/114] ice: switch: fix potential memleak in ice_add_adv_recipe()
+Date: Mon, 13 Feb 2023 15:47:57 +0100
+Message-Id: <20230213144744.314696886@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -36,49 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Zhang Changzhong <zhangchangzhong@huawei.com>
 
-[ Upstream commit 90d5e8301ac24550be80d193aa5582cab56c29fc ]
+[ Upstream commit 4a606ce68426c88ff2563382b33cc34f3485fe57 ]
 
-Due to a workaround we have to make sure the WM1 watermarks block/lines
-values are sensible even when WM1 is disabled. To that end we copy those
-values from WM0.
+When ice_add_special_words() fails, the 'rm' is not released, which will
+lead to a memory leak. Fix this up by going to 'err_unroll' label.
 
-However since we now keep each wm level enabled on a per-plane basis
-it doesn't seem necessary to do that copy when we already have an
-enabled WM1 on the current plane. That is, we might be in a situation
-where another plane can only do WM0 (and thus needs the copy) but
-the current plane's WM1 is still perfectly valid (ie. fits into the
-current DDB allocation).
+Compile tested only.
 
-Skipping the copy could avoid reprogramming the plane's registers
-needlessly in some cases.
-
-Fixes: a301cb0fca2d ("drm/i915: Keep plane watermarks enabled more aggressively")
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230131002127.29305-1-ville.syrjala@linux.intel.com
-Reviewed-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
-(cherry picked from commit c580c2d27ac8754cc6f01da1d715b7272f5f9cbb)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Fixes: 8b032a55c1bd ("ice: low level support for tunnels")
+Signed-off-by: Zhang Changzhong <zhangchangzhong@huawei.com>
+Tested-by: Sujai Buvaneswaran <sujai.buvaneswaran@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/skl_watermark.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/intel/ice/ice_switch.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/i915/display/skl_watermark.c b/drivers/gpu/drm/i915/display/skl_watermark.c
-index 18178b01375e4..a7adf02476f6a 100644
---- a/drivers/gpu/drm/i915/display/skl_watermark.c
-+++ b/drivers/gpu/drm/i915/display/skl_watermark.c
-@@ -1587,7 +1587,8 @@ skl_crtc_allocate_plane_ddb(struct intel_atomic_state *state,
- 				skl_check_wm_level(&wm->wm[level], ddb);
+diff --git a/drivers/net/ethernet/intel/ice/ice_switch.c b/drivers/net/ethernet/intel/ice/ice_switch.c
+index 9b762f7972ce5..61f844d225123 100644
+--- a/drivers/net/ethernet/intel/ice/ice_switch.c
++++ b/drivers/net/ethernet/intel/ice/ice_switch.c
+@@ -5420,7 +5420,7 @@ ice_add_adv_recipe(struct ice_hw *hw, struct ice_adv_lkup_elem *lkups,
+ 	 */
+ 	status = ice_add_special_words(rinfo, lkup_exts, ice_is_dvm_ena(hw));
+ 	if (status)
+-		goto err_free_lkup_exts;
++		goto err_unroll;
  
- 			if (icl_need_wm1_wa(i915, plane_id) &&
--			    level == 1 && wm->wm[0].enable) {
-+			    level == 1 && !wm->wm[level].enable &&
-+			    wm->wm[0].enable) {
- 				wm->wm[level].blocks = wm->wm[0].blocks;
- 				wm->wm[level].lines = wm->wm[0].lines;
- 				wm->wm[level].ignore_lines = wm->wm[0].ignore_lines;
+ 	/* Group match words into recipes using preferred recipe grouping
+ 	 * criteria.
 -- 
 2.39.0
 
