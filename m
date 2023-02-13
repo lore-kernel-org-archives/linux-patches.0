@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 507C78F58
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:55:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C88E3C433D2;
-	Mon, 13 Feb 2023 14:55:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7887B8F58
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:55:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1DF9C4339B;
+	Mon, 13 Feb 2023 14:55:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300153;
-	bh=Xn2s9b9zvceMPwGSnwMVIypGjOYtD7ureubCOqCepBo=;
+	s=korg; t=1676300158;
+	bh=zPxhC4+Ujbc1j8dmCQACNMsdtWd8zI2Br739gjz3CKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O7uvSJbxazhT4TjI0CoOSxaVediylsy39R662oZgGpkg6src5Ufy5yooIfg8b1vcX
-	 o9jWNbhw1rPNc40+qb2nL3il+ogfMLeZWEKqnKntGWPeCSAcXDalf4seuNGiY4JI1W
-	 XA9haiyAk8Tl5eQBEYVTwvXxSkiYuUrTnvmnWBCM=
+	b=so3NZhpt0I/JLx0L6RZAhdefyqZQz5Fyh4VW8nwjLy9Gj3h8HiZW+yf98mxlr9IfX
+	 4Ehmwvuz+SXPW6C5HsCgveC7TdZITyJXnoCsom0bu7zPebjzhHHx9AbNeDyPErRf1L
+	 rVKY5ZABlSpJmFSK1LLgtml6nhDtN8F6/diC0Irc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Daan De Meyer <daandemeyer@fb.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Anand Jain <anand.jain@oracle.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 6.1 084/114] btrfs: free device in btrfs_close_devices for a single device filesystem
-Date: Mon, 13 Feb 2023 15:48:39 +0100
-Message-Id: <20230213144746.501714669@linuxfoundation.org>
+	Diana Zigterman <dzigterman@chromium.org>,
+	Prashant Malani <pmalani@chromium.org>
+Subject: [PATCH 6.1 086/114] usb: typec: altmodes/displayport: Fix probe pin assign check
+Date: Mon, 13 Feb 2023 15:48:41 +0100
+Message-Id: <20230213144746.598910713@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -36,70 +34,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anand Jain <anand.jain@oracle.com>
+From: Prashant Malani <pmalani@chromium.org>
 
-commit 5f58d783fd7823b2c2d5954d1126e702f94bfc4c upstream.
+commit 54e5c00a4eb0a4c663445b245f641bbfab142430 upstream.
 
-We have this check to make sure we don't accidentally add older devices
-that may have disappeared and re-appeared with an older generation from
-being added to an fs_devices (such as a replace source device). This
-makes sense, we don't want stale disks in our file system. However for
-single disks this doesn't really make sense.
+While checking Pin Assignments of the port and partner during probe, we
+don't take into account whether the peripheral is a plug or receptacle.
 
-I've seen this in testing, but I was provided a reproducer from a
-project that builds btrfs images on loopback devices. The loopback
-device gets cached with the new generation, and then if it is re-used to
-generate a new file system we'll fail to mount it because the new fs is
-"older" than what we have in cache.
+This manifests itself in a mode entry failure on certain docks and
+dongles with captive cables. For instance, the Startech.com Type-C to DP
+dongle (Model #CDP2DP) advertises its DP VDO as 0x405. This would fail
+the Pin Assignment compatibility check, despite it supporting
+Pin Assignment C as a UFP.
 
-Fix this by freeing the cache when closing the device for a single device
-filesystem. This will ensure that the mount command passed device path is
-scanned successfully during the next mount.
+Update the check to use the correct DP Pin Assign macros that
+take the peripheral's receptacle bit into account.
 
-CC: stable@vger.kernel.org # 5.10+
-Reported-by: Daan De Meyer <daandemeyer@fb.com>
-Signed-off-by: Josef Bacik <josef@toxicpanda.com>
-Signed-off-by: Anand Jain <anand.jain@oracle.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Fixes: c1e5c2f0cb8a ("usb: typec: altmodes/displayport: correct pin assignment for UFP receptacles")
+Cc: stable@vger.kernel.org
+Reported-by: Diana Zigterman <dzigterman@chromium.org>
+Signed-off-by: Prashant Malani <pmalani@chromium.org>
+Link: https://lore.kernel.org/r/20230208205318.131385-1-pmalani@chromium.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/volumes.c |   16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/usb/typec/altmodes/displayport.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/fs/btrfs/volumes.c
-+++ b/fs/btrfs/volumes.c
-@@ -408,6 +408,7 @@ void btrfs_free_device(struct btrfs_devi
- static void free_fs_devices(struct btrfs_fs_devices *fs_devices)
- {
- 	struct btrfs_device *device;
-+
- 	WARN_ON(fs_devices->opened);
- 	while (!list_empty(&fs_devices->devices)) {
- 		device = list_entry(fs_devices->devices.next,
-@@ -1194,9 +1195,22 @@ void btrfs_close_devices(struct btrfs_fs
+diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
+index 9a6860285fbe..50b24096eb7f 100644
+--- a/drivers/usb/typec/altmodes/displayport.c
++++ b/drivers/usb/typec/altmodes/displayport.c
+@@ -535,10 +535,10 @@ int dp_altmode_probe(struct typec_altmode *alt)
+ 	/* FIXME: Port can only be DFP_U. */
  
- 	mutex_lock(&uuid_mutex);
- 	close_fs_devices(fs_devices);
--	if (!fs_devices->opened)
-+	if (!fs_devices->opened) {
- 		list_splice_init(&fs_devices->seed_list, &list);
+ 	/* Make sure we have compatiple pin configurations */
+-	if (!(DP_CAP_DFP_D_PIN_ASSIGN(port->vdo) &
+-	      DP_CAP_UFP_D_PIN_ASSIGN(alt->vdo)) &&
+-	    !(DP_CAP_UFP_D_PIN_ASSIGN(port->vdo) &
+-	      DP_CAP_DFP_D_PIN_ASSIGN(alt->vdo)))
++	if (!(DP_CAP_PIN_ASSIGN_DFP_D(port->vdo) &
++	      DP_CAP_PIN_ASSIGN_UFP_D(alt->vdo)) &&
++	    !(DP_CAP_PIN_ASSIGN_UFP_D(port->vdo) &
++	      DP_CAP_PIN_ASSIGN_DFP_D(alt->vdo)))
+ 		return -ENODEV;
  
-+		/*
-+		 * If the struct btrfs_fs_devices is not assembled with any
-+		 * other device, it can be re-initialized during the next mount
-+		 * without the needing device-scan step. Therefore, it can be
-+		 * fully freed.
-+		 */
-+		if (fs_devices->num_devices == 1) {
-+			list_del(&fs_devices->fs_list);
-+			free_fs_devices(fs_devices);
-+		}
-+	}
-+
-+
- 	list_for_each_entry_safe(fs_devices, tmp, &list, seed_list) {
- 		close_fs_devices(fs_devices);
- 		list_del(&fs_devices->seed_list);
+ 	ret = sysfs_create_group(&alt->dev.kobj, &dp_altmode_group);
+-- 
+2.39.1
+
 
 
