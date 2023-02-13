@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6288F58
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:04:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893C4C433D2;
-	Mon, 13 Feb 2023 15:04:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A9C418F58
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:04:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F335C4339C;
+	Mon, 13 Feb 2023 15:04:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300660;
-	bh=Co39vqHw1caTdOO0x1RYgwYCTJJk5eaLWGt6vCErSVk=;
+	s=korg; t=1676300663;
+	bh=cEdrSOKa4mOg4IORvVXfkEdUdYScvNnKVbVKW5AKf20=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jmop9geGW868I35X0sjOEXOY+97olTLXPjeY35oI0MulEUQ5bveYg+6AFygRY3iT0
-	 HD92ZxmHKOQDfmWq3CfaUQgeBj+dUGHaIx8rDE6JaJdVnYo89sB6OYPnKSWtT8Cpf9
-	 TLbAt2grF/Xtwv7kQsaRtZxccuzbDJPSxugI6BHg=
+	b=TyB8XtNGrI/irTFBHRIomH5U/DAZo1B50lkPfEeX0MC6j4CQA5B0Dx9Wao+Ii7t/V
+	 L/f1//ly0gvSaOWGd3cjJdwTjIAR7AMUG7fZI58SBuiqhuqZbjZTYMZYSW4HvdmXYH
+	 TzZOHDR4KQ9DU6fRnLAPrcNq/nni6cPllllw8O2Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 071/139] iio: imu: fxos8700: fix MAGN sensor scale and unit
-Date: Mon, 13 Feb 2023 15:50:16 +0100
-Message-Id: <20230213144749.567348831@linuxfoundation.org>
+	Bjorn Andersson <andersson@kernel.org>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 5.10 072/139] nvmem: qcom-spmi-sdam: fix module autoloading
+Date: Mon, 13 Feb 2023 15:50:17 +0100
+Message-Id: <20230213144749.625696738@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -35,56 +35,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 2acd031347f645871959a799238a7caf6803aa18 upstream.
+commit 1ca7fca349316231bbaa68d16f819a08d683c5a7 upstream.
 
-+/-1200uT is a MAGN sensor full measurement range. Magnetometer scale
-is the magnetic sensitivity parameter. It is referenced as 0.1uT
-according to datasheet and magnetometer channel unit is Gauss in
-sysfs-bus-iio documentation. Gauss and uTesla unit conversion
-relationship as follows: 0.1uT = 0.001Gs.
+Add the missing module device table so that the driver can be autoloaded
+when built as a module.
 
-Set magnetometer scale and available magnetometer scale as fixed 0.001Gs.
-
-Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://lore.kernel.org/r/20230118074227.1665098-5-carlos.song@nxp.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fixes: 40ce9798794f ("nvmem: add QTI SDAM driver")
+Cc: stable@vger.kernel.org	# 5.6
+Reviewed-by: Bjorn Andersson <andersson@kernel.org>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230127104015.23839-11-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/fxos8700_core.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/nvmem/qcom-spmi-sdam.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/iio/imu/fxos8700_core.c
-+++ b/drivers/iio/imu/fxos8700_core.c
-@@ -351,7 +351,7 @@ static int fxos8700_set_scale(struct fxo
- 	struct device *dev = regmap_get_device(data->regmap);
+--- a/drivers/nvmem/qcom-spmi-sdam.c
++++ b/drivers/nvmem/qcom-spmi-sdam.c
+@@ -166,6 +166,7 @@ static const struct of_device_id sdam_ma
+ 	{ .compatible = "qcom,spmi-sdam" },
+ 	{},
+ };
++MODULE_DEVICE_TABLE(of, sdam_match_table);
  
- 	if (t == FXOS8700_MAGN) {
--		dev_err(dev, "Magnetometer scale is locked at 1200uT\n");
-+		dev_err(dev, "Magnetometer scale is locked at 0.001Gs\n");
- 		return -EINVAL;
- 	}
- 
-@@ -396,7 +396,7 @@ static int fxos8700_get_scale(struct fxo
- 	static const int scale_num = ARRAY_SIZE(fxos8700_accel_scale);
- 
- 	if (t == FXOS8700_MAGN) {
--		*uscale = 1200; /* Magnetometer is locked at 1200uT */
-+		*uscale = 1000; /* Magnetometer is locked at 0.001Gs */
- 		return 0;
- 	}
- 
-@@ -588,7 +588,7 @@ static IIO_CONST_ATTR(in_accel_sampling_
- static IIO_CONST_ATTR(in_magn_sampling_frequency_available,
- 		      "1.5625 6.25 12.5 50 100 200 400 800");
- static IIO_CONST_ATTR(in_accel_scale_available, "0.000244 0.000488 0.000976");
--static IIO_CONST_ATTR(in_magn_scale_available, "0.000001200");
-+static IIO_CONST_ATTR(in_magn_scale_available, "0.001000");
- 
- static struct attribute *fxos8700_attrs[] = {
- 	&iio_const_attr_in_accel_sampling_frequency_available.dev_attr.attr,
+ static struct platform_driver sdam_driver = {
+ 	.driver = {
 
 
