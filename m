@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014FA8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:54:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EFFDC433D2;
-	Mon, 13 Feb 2023 14:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 65A798F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:54:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0299C433D2;
+	Mon, 13 Feb 2023 14:54:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300054;
-	bh=YMdjiCKXA7jQ+03kpyorUGNRsayhU0mtEzX6DYhxBlQ=;
+	s=korg; t=1676300057;
+	bh=3ab7IZgkQ2vWWUUfpEhgi0X8U8e4Rqj3KOjarsKZoBA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tbaiZxEl8UlpWoBts2IiLCjt9N7UkmtW6OUBdumHS47n7jbkzrVDeTUHXD2qrSSf9
-	 yZ1K60BBFO2Cy58Q3B3UkvDI78h8Mr56YLidIRGTyDgh6OvQ2hc0QSRoJaSDG//swH
-	 c1dzl19olmmBRjspAkfW1ISVqQR4vkq2U85eaU1E=
+	b=mgniuLY7cbCcFdrWoukSrWt6sukqQXkAPUU0MQJP8c38VTyph63vEAlb9MC69DIiI
+	 gi2my6Om47c0ST4yCteiT+0W8yqoxi//bGety8SwM3VnGq0JbJCyI2z006NYUwZNu6
+	 V4HqDyawW+5TD70YZl8qz218cZ32A1k1S0XHP1Z0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Brett Creeley <brett.creeley@intel.com>,
-	Karen Ostrowska <karen.ostrowska@intel.com>,
-	Marek Szlosek <marek.szlosek@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Amir Tzin <amirtz@nvidia.com>,
+	Maor Dickman <maord@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 041/114] ice: Fix disabling Rx VLAN filtering with port VLAN enabled
-Date: Mon, 13 Feb 2023 15:47:56 +0100
-Message-Id: <20230213144744.265382447@linuxfoundation.org>
+Subject: [PATCH 6.1 047/114] net/mlx5e: Fix crash unsetting rx-vlan-filter in switchdev mode
+Date: Mon, 13 Feb 2023 15:48:02 +0100
+Message-Id: <20230213144744.598146504@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -37,81 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Brett Creeley <brett.creeley@intel.com>
+From: Amir Tzin <amirtz@nvidia.com>
 
-[ Upstream commit c793f8ea15e312789b5b6b4a5e7b0b92315be5cb ]
+[ Upstream commit 8974aa9638df557f4642acef707af15648a03555 ]
 
-If the user turns on the vf-true-promiscuous-support flag, then Rx VLAN
-filtering will be disabled if the VF requests to enable promiscuous
-mode. When the VF is in a port VLAN, this is the incorrect behavior
-because it will allow the VF to receive traffic outside of its port VLAN
-domain. Fortunately this only resulted in the VF(s) receiving broadcast
-traffic outside of the VLAN domain because all of the VLAN promiscuous
-rules are based on the port VLAN ID. Fix this by setting the
-.disable_rx_filtering VLAN op to a no-op when a port VLAN is enabled on
-the VF.
+Moving to switchdev mode with rx-vlan-filter on and then setting it off
+causes the kernel to crash since fs->vlan is freed during nic profile
+cleanup flow.
 
-Also, make sure to make this fix for both Single VLAN Mode and Double
-VLAN Mode enabled devices.
+RX VLAN filtering is not supported in switchdev mode so unset it when
+changing to switchdev and restore its value when switching back to
+legacy.
 
-Fixes: c31af68a1b94 ("ice: Add outer_vlan_ops and VSI specific VLAN ops implementations")
-Signed-off-by: Brett Creeley <brett.creeley@intel.com>
-Signed-off-by: Karen Ostrowska <karen.ostrowska@intel.com>
-Tested-by: Marek Szlosek <marek.szlosek@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+trace:
+[] RIP: 0010:mlx5e_disable_cvlan_filter+0x43/0x70
+[] set_feature_cvlan_filter+0x37/0x40 [mlx5_core]
+[] mlx5e_handle_feature+0x3a/0x60 [mlx5_core]
+[] mlx5e_set_features+0x6d/0x160 [mlx5_core]
+[] __netdev_update_features+0x288/0xa70
+[] ethnl_set_features+0x309/0x380
+[] ? __nla_parse+0x21/0x30
+[] genl_family_rcv_msg_doit.isra.17+0x110/0x150
+[] genl_rcv_msg+0x112/0x260
+[] ? features_reply_size+0xe0/0xe0
+[] ? genl_family_rcv_msg_doit.isra.17+0x150/0x150
+[] netlink_rcv_skb+0x4e/0x100
+[] genl_rcv+0x24/0x40
+[] netlink_unicast+0x1ab/0x290
+[] netlink_sendmsg+0x257/0x4f0
+[] sock_sendmsg+0x5c/0x70
+
+Fixes: cb67b832921c ("net/mlx5e: Introduce SRIOV VF representors")
+Signed-off-by: Amir Tzin <amirtz@nvidia.com>
+Reviewed-by: Maor Dickman <maord@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c | 16 +++++++++++++++-
- 1 file changed, 15 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en_fs.c   | 2 +-
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c | 4 ++++
+ 2 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c b/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c
-index 5ecc0ee9a78e0..b1ffb81893d48 100644
---- a/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c
-+++ b/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c
-@@ -44,13 +44,17 @@ void ice_vf_vsi_init_vlan_ops(struct ice_vsi *vsi)
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c b/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c
+index 1892ccb889b3f..7cd36f4ac3efc 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_fs.c
+@@ -443,7 +443,7 @@ void mlx5e_enable_cvlan_filter(struct mlx5e_flow_steering *fs, bool promisc)
  
- 		/* outer VLAN ops regardless of port VLAN config */
- 		vlan_ops->add_vlan = ice_vsi_add_vlan;
--		vlan_ops->dis_rx_filtering = ice_vsi_dis_rx_vlan_filtering;
- 		vlan_ops->ena_tx_filtering = ice_vsi_ena_tx_vlan_filtering;
- 		vlan_ops->dis_tx_filtering = ice_vsi_dis_tx_vlan_filtering;
+ void mlx5e_disable_cvlan_filter(struct mlx5e_flow_steering *fs, bool promisc)
+ {
+-	if (fs->vlan->cvlan_filter_disabled)
++	if (!fs->vlan || fs->vlan->cvlan_filter_disabled)
+ 		return;
  
- 		if (ice_vf_is_port_vlan_ena(vf)) {
- 			/* setup outer VLAN ops */
- 			vlan_ops->set_port_vlan = ice_vsi_set_outer_port_vlan;
-+			/* all Rx traffic should be in the domain of the
-+			 * assigned port VLAN, so prevent disabling Rx VLAN
-+			 * filtering
-+			 */
-+			vlan_ops->dis_rx_filtering = noop_vlan;
- 			vlan_ops->ena_rx_filtering =
- 				ice_vsi_ena_rx_vlan_filtering;
+ 	fs->vlan->cvlan_filter_disabled = true;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 3e0d910b085d4..142ed2d98cd5d 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -4005,6 +4005,10 @@ static netdev_features_t mlx5e_fix_uplink_rep_features(struct net_device *netdev
+ 	if (netdev->features & NETIF_F_GRO_HW)
+ 		netdev_warn(netdev, "Disabling HW_GRO, not supported in switchdev mode\n");
  
-@@ -63,6 +67,9 @@ void ice_vf_vsi_init_vlan_ops(struct ice_vsi *vsi)
- 			vlan_ops->ena_insertion = ice_vsi_ena_inner_insertion;
- 			vlan_ops->dis_insertion = ice_vsi_dis_inner_insertion;
- 		} else {
-+			vlan_ops->dis_rx_filtering =
-+				ice_vsi_dis_rx_vlan_filtering;
++	features &= ~NETIF_F_HW_VLAN_CTAG_FILTER;
++	if (netdev->features & NETIF_F_HW_VLAN_CTAG_FILTER)
++		netdev_warn(netdev, "Disabling HW_VLAN CTAG FILTERING, not supported in switchdev mode\n");
 +
- 			if (!test_bit(ICE_FLAG_VF_VLAN_PRUNING, pf->flags))
- 				vlan_ops->ena_rx_filtering = noop_vlan;
- 			else
-@@ -96,7 +103,14 @@ void ice_vf_vsi_init_vlan_ops(struct ice_vsi *vsi)
- 			vlan_ops->set_port_vlan = ice_vsi_set_inner_port_vlan;
- 			vlan_ops->ena_rx_filtering =
- 				ice_vsi_ena_rx_vlan_filtering;
-+			/* all Rx traffic should be in the domain of the
-+			 * assigned port VLAN, so prevent disabling Rx VLAN
-+			 * filtering
-+			 */
-+			vlan_ops->dis_rx_filtering = noop_vlan;
- 		} else {
-+			vlan_ops->dis_rx_filtering =
-+				ice_vsi_dis_rx_vlan_filtering;
- 			if (!test_bit(ICE_FLAG_VF_VLAN_PRUNING, pf->flags))
- 				vlan_ops->ena_rx_filtering = noop_vlan;
- 			else
+ 	return features;
+ }
+ 
 -- 
 2.39.0
 
