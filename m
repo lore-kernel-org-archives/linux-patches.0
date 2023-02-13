@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AE828F58
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:04:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 22C43C433D2;
-	Mon, 13 Feb 2023 15:04:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338358F58
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:04:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEF6C433D2;
+	Mon, 13 Feb 2023 15:04:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300650;
-	bh=OCRM3eaWV1LLB3JIqkIOhVdGfCAKdWFyth2YXYJSQ4s=;
+	s=korg; t=1676300653;
+	bh=UZoXbmAiNMVb0C7wIkEF54FHEltGJrek1o93zidJOxg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NJak36hUhlc7UpIUl9i867PEno0B3SCQ4ebTOzesvvKOeM7JCgCfE9hbL2VbcxNWE
-	 ARgFiS0BxNwwDfv3C//cRVANG3a6ZTQyyuAdkOui5fme+8KVLZ5HG74xyXGk+ODDLy
-	 xr1PzbM/RPNR+yvq6/87UdyiwwXTZouWBkJu0rsg=
+	b=hXOkHAN/1WTAnhXXDqHWdba2tSmEg+6Nxg5EBR+p40UKEJBkXrxLsJr3D1XH/R+Tp
+	 MOqYBDLnlpsGjDmjF7Zo622XYa/jRpoayHTZXOAMTFNtDh7knQd4UcorStSbdCkn6u
+	 HqiK/mPcAI564IdAy+/PTrdOZ01XIQpxhqy3ln/I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Julia Lawall <julia.lawall@lip6.fr>,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 095/139] iio:adc:twl6030: Enable measurement of VAC
-Date: Mon, 13 Feb 2023 15:50:40 +0100
-Message-Id: <20230213144750.833159287@linuxfoundation.org>
+	Carlos Song <carlos.song@nxp.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.10 069/139] iio: imu: fxos8700: fix failed initialization ODR mode assignment
+Date: Mon, 13 Feb 2023 15:50:14 +0100
+Message-Id: <20230213144749.444435490@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -37,39 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Carlos Song <carlos.song@nxp.com>
 
-[ Upstream commit bffb7d9d1a3dbd09e083b88aefd093b3b10abbfb ]
+commit eb6d8f8705bc19141bac81d8161461f9e256948a upstream.
 
-VAC needs to be wired up to produce proper measurements,
-without this change only near zero values are reported.
+The absence of correct offset leads a failed initialization ODR mode
+assignment.
 
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Julia Lawall <julia.lawall@lip6.fr>
-Fixes: 1696f36482e7 ("iio: twl6030-gpadc: TWL6030, TWL6032 GPADC driver")
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Link: https://lore.kernel.org/r/20221217221305.671117-1-andreas@kemnade.info
+Select MAX ODR mode as the initialization ODR mode by field mask and
+FIELD_PREP.
+
+Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Link: https://lore.kernel.org/r/20230118074227.1665098-3-carlos.song@nxp.com
+Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/twl6030-gpadc.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/imu/fxos8700_core.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/iio/adc/twl6030-gpadc.c b/drivers/iio/adc/twl6030-gpadc.c
-index 9ab23b29bee3f..024bdc1ef77e6 100644
---- a/drivers/iio/adc/twl6030-gpadc.c
-+++ b/drivers/iio/adc/twl6030-gpadc.c
-@@ -952,7 +952,7 @@ static int twl6030_gpadc_probe(struct platform_device *pdev)
- 	}
+--- a/drivers/iio/imu/fxos8700_core.c
++++ b/drivers/iio/imu/fxos8700_core.c
+@@ -664,8 +664,10 @@ static int fxos8700_chip_init(struct fxo
+ 		return ret;
  
- 	ret = twl_i2c_write_u8(TWL6030_MODULE_ID0,
--				VBAT_MEAS | BB_MEAS | BB_MEAS,
-+				VBAT_MEAS | BB_MEAS | VAC_MEAS,
- 				TWL6030_MISC1);
- 	if (ret < 0) {
- 		dev_err(dev, "failed to wire up inputs\n");
--- 
-2.39.0
-
+ 	/* Max ODR (800Hz individual or 400Hz hybrid), active mode */
+-	return regmap_write(data->regmap, FXOS8700_CTRL_REG1,
+-			   FXOS8700_CTRL_ODR_MAX | FXOS8700_ACTIVE);
++	return regmap_update_bits(data->regmap, FXOS8700_CTRL_REG1,
++				FXOS8700_CTRL_ODR_MSK | FXOS8700_ACTIVE,
++				FIELD_PREP(FXOS8700_CTRL_ODR_MSK, FXOS8700_CTRL_ODR_MAX) |
++				FXOS8700_ACTIVE);
+ }
+ 
+ static void fxos8700_chip_uninit(void *data)
 
 
