@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7887B8F58
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:55:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1DF9C4339B;
-	Mon, 13 Feb 2023 14:55:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1628F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:55:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64078C433EF;
+	Mon, 13 Feb 2023 14:55:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300158;
-	bh=zPxhC4+Ujbc1j8dmCQACNMsdtWd8zI2Br739gjz3CKM=;
+	s=korg; t=1676300155;
+	bh=lkjKwDHTAZ1VYrN43NqHOcIg11AWeH4x+eAm1PuIb1g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=so3NZhpt0I/JLx0L6RZAhdefyqZQz5Fyh4VW8nwjLy9Gj3h8HiZW+yf98mxlr9IfX
-	 4Ehmwvuz+SXPW6C5HsCgveC7TdZITyJXnoCsom0bu7zPebjzhHHx9AbNeDyPErRf1L
-	 rVKY5ZABlSpJmFSK1LLgtml6nhDtN8F6/diC0Irc=
+	b=RVjkZZZkGHNZYxxt0WxD9bNAQiEfPLDTb3tYO3H/uGxmWIQxmC9dLbN+aG6AfsAXH
+	 zJ+wmBUOgXDO5J8WIKnz4UlXAUH4K7nBhXqWArXxK7H2OUfg0Sunpc1jImIuCbuY38
+	 ERCfk09Mi7xM/rVFUYoLgb1ZIVN4bc1zeg4ncCOw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diana Zigterman <dzigterman@chromium.org>,
-	Prashant Malani <pmalani@chromium.org>
-Subject: [PATCH 6.1 086/114] usb: typec: altmodes/displayport: Fix probe pin assign check
-Date: Mon, 13 Feb 2023 15:48:41 +0100
-Message-Id: <20230213144746.598910713@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 079/114] mptcp: do not wait for bare sockets timeout
+Date: Mon, 13 Feb 2023 15:48:34 +0100
+Message-Id: <20230213144746.251373216@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -34,53 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prashant Malani <pmalani@chromium.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit 54e5c00a4eb0a4c663445b245f641bbfab142430 upstream.
+commit d4e85922e3e7ef2071f91f65e61629b60f3a9cf4 upstream.
 
-While checking Pin Assignments of the port and partner during probe, we
-don't take into account whether the peripheral is a plug or receptacle.
+If the peer closes all the existing subflows for a given
+mptcp socket and later the application closes it, the current
+implementation let it survive until the timewait timeout expires.
 
-This manifests itself in a mode entry failure on certain docks and
-dongles with captive cables. For instance, the Startech.com Type-C to DP
-dongle (Model #CDP2DP) advertises its DP VDO as 0x405. This would fail
-the Pin Assignment compatibility check, despite it supporting
-Pin Assignment C as a UFP.
+While the above is allowed by the protocol specification it
+consumes resources for almost no reason and additionally
+causes sporadic self-tests failures.
 
-Update the check to use the correct DP Pin Assign macros that
-take the peripheral's receptacle bit into account.
+Let's move the mptcp socket to the TCP_CLOSE state when there are
+no alive subflows at close time, so that the allocated resources
+will be freed immediately.
 
-Fixes: c1e5c2f0cb8a ("usb: typec: altmodes/displayport: correct pin assignment for UFP receptacles")
+Fixes: e16163b6e2b7 ("mptcp: refactor shutdown and close")
 Cc: stable@vger.kernel.org
-Reported-by: Diana Zigterman <dzigterman@chromium.org>
-Signed-off-by: Prashant Malani <pmalani@chromium.org>
-Link: https://lore.kernel.org/r/20230208205318.131385-1-pmalani@chromium.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/altmodes/displayport.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/mptcp/protocol.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/usb/typec/altmodes/displayport.c b/drivers/usb/typec/altmodes/displayport.c
-index 9a6860285fbe..50b24096eb7f 100644
---- a/drivers/usb/typec/altmodes/displayport.c
-+++ b/drivers/usb/typec/altmodes/displayport.c
-@@ -535,10 +535,10 @@ int dp_altmode_probe(struct typec_altmode *alt)
- 	/* FIXME: Port can only be DFP_U. */
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2908,6 +2908,7 @@ bool __mptcp_close(struct sock *sk, long
+ 	struct mptcp_subflow_context *subflow;
+ 	struct mptcp_sock *msk = mptcp_sk(sk);
+ 	bool do_cancel_work = false;
++	int subflows_alive = 0;
  
- 	/* Make sure we have compatiple pin configurations */
--	if (!(DP_CAP_DFP_D_PIN_ASSIGN(port->vdo) &
--	      DP_CAP_UFP_D_PIN_ASSIGN(alt->vdo)) &&
--	    !(DP_CAP_UFP_D_PIN_ASSIGN(port->vdo) &
--	      DP_CAP_DFP_D_PIN_ASSIGN(alt->vdo)))
-+	if (!(DP_CAP_PIN_ASSIGN_DFP_D(port->vdo) &
-+	      DP_CAP_PIN_ASSIGN_UFP_D(alt->vdo)) &&
-+	    !(DP_CAP_PIN_ASSIGN_UFP_D(port->vdo) &
-+	      DP_CAP_PIN_ASSIGN_DFP_D(alt->vdo)))
- 		return -ENODEV;
+ 	sk->sk_shutdown = SHUTDOWN_MASK;
  
- 	ret = sysfs_create_group(&alt->dev.kobj, &dp_altmode_group);
--- 
-2.39.1
-
+@@ -2933,6 +2934,8 @@ cleanup:
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+ 		bool slow = lock_sock_fast_nested(ssk);
+ 
++		subflows_alive += ssk->sk_state != TCP_CLOSE;
++
+ 		/* since the close timeout takes precedence on the fail one,
+ 		 * cancel the latter
+ 		 */
+@@ -2948,6 +2951,12 @@ cleanup:
+ 	}
+ 	sock_orphan(sk);
+ 
++	/* all the subflows are closed, only timeout can change the msk
++	 * state, let's not keep resources busy for no reasons
++	 */
++	if (subflows_alive == 0)
++		inet_sk_state_store(sk, TCP_CLOSE);
++
+ 	sock_hold(sk);
+ 	pr_debug("msk=%p state=%d", sk, sk->sk_state);
+ 	if (mptcp_sk(sk)->token)
 
 
