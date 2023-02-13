@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 81A058F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:03:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01202C4339B;
-	Mon, 13 Feb 2023 15:03:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12EE48F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:03:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B740C433EF;
+	Mon, 13 Feb 2023 15:03:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300586;
-	bh=8d91AQT1e3CnN4jFQL+iFmU6yHLD1qbExdC4WZSdfkk=;
+	s=korg; t=1676300588;
+	bh=ix94DxuV/QtR2kk4loRy2CIZBhfC2bzbmIuT+Fcl75Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pKVpj/G7iSXMAV955gJxumJ5DYe4dmhJrK7WSgMtki3UVQJDyRccu5mdkuD773XW3
-	 4zd7GtvJKp27v4Yo26kCedH66FQ6JIHxRtaZXD870LznSEpHJ7np/bgLzNTgjJSRgw
-	 NUZgBXWNJ5obviiQaYXZyAEiFrnbKrhDtB//QdaU=
+	b=U0J/FnAYn9xj571GtdWFpzPNhAB/28SUP1xDp9YYXQjMhBSYRLgaMgaKkwanew43s
+	 l6U/unRh/sfdpMkD27po1GYgd2eRvg5Pfskouk92X8rKrRzbWVCYWn+XjSarMGLPP/
+	 yDkixXkAHzSDLLo05choX9aMwEfXN9qftCZ6VtvQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Koba Ko <koba.ko@canonical.com>,
-	Hans de Goede <hdegoede@redhat.com>,
+	Hyunwoo Kim <v4bel@theori.io>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 043/139] platform/x86: dell-wmi: Add a keymap for KEY_MUTE in type 0x0010 table
-Date: Mon, 13 Feb 2023 15:49:48 +0100
-Message-Id: <20230213144747.966085276@linuxfoundation.org>
+Subject: [PATCH 5.10 044/139] net/x25: Fix to not accept on connected socket
+Date: Mon, 13 Feb 2023 15:49:49 +0100
+Message-Id: <20230213144748.024314484@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -35,38 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Koba Ko <koba.ko@canonical.com>
+From: Hyunwoo Kim <v4bel@theori.io>
 
-[ Upstream commit 83bcf3e52e9cfc727df33f1055ef0618c91719d0 ]
+[ Upstream commit f2b0b5210f67c56a3bcdf92ff665fb285d6e0067 ]
 
-Some platforms send the speaker-mute key from EC. dell-wmi can't
-recognize it.
+When listen() and accept() are called on an x25 socket
+that connect() succeeds, accept() succeeds immediately.
+This is because x25_connect() queues the skb to
+sk->sk_receive_queue, and x25_accept() dequeues it.
 
-Add a new keymap for KEY_MUTE in type 0x0010 table.
+This creates a child socket with the sk of the parent
+x25 socket, which can cause confusion.
 
-Signed-off-by: Koba Ko <koba.ko@canonical.com>
-Link: https://lore.kernel.org/r/20230117123436.200440-1-koba.ko@canonical.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Fix x25_listen() to return -EINVAL if the socket has
+already been successfully connect()ed to avoid this issue.
+
+Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/dell-wmi.c | 3 +++
- 1 file changed, 3 insertions(+)
+ net/x25/af_x25.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/drivers/platform/x86/dell-wmi.c b/drivers/platform/x86/dell-wmi.c
-index bbdb3e860892..6ef327a80ccf 100644
---- a/drivers/platform/x86/dell-wmi.c
-+++ b/drivers/platform/x86/dell-wmi.c
-@@ -259,6 +259,9 @@ static const struct key_entry dell_wmi_keymap_type_0010[] = {
- 	{ KE_KEY,    0x57, { KEY_BRIGHTNESSDOWN } },
- 	{ KE_KEY,    0x58, { KEY_BRIGHTNESSUP } },
+diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c
+index d231d4620c38..161dc194e634 100644
+--- a/net/x25/af_x25.c
++++ b/net/x25/af_x25.c
+@@ -492,6 +492,12 @@ static int x25_listen(struct socket *sock, int backlog)
+ 	int rc = -EOPNOTSUPP;
  
-+	/*Speaker Mute*/
-+	{ KE_KEY, 0x109, { KEY_MUTE} },
+ 	lock_sock(sk);
++	if (sock->state != SS_UNCONNECTED) {
++		rc = -EINVAL;
++		release_sock(sk);
++		return rc;
++	}
 +
- 	/* Mic mute */
- 	{ KE_KEY, 0x150, { KEY_MICMUTE } },
- 
+ 	if (sk->sk_state != TCP_LISTEN) {
+ 		memset(&x25_sk(sk)->dest_addr, 0, X25_ADDR_LEN);
+ 		sk->sk_max_ack_backlog = backlog;
 -- 
 2.39.0
 
