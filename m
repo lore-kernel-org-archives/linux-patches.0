@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DA08F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:57:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 30F37C433EF;
-	Mon, 13 Feb 2023 14:57:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 419C78F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB78BC4339B;
+	Mon, 13 Feb 2023 14:58:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300279;
-	bh=d3ljdY6WjPi46qGIkPjBEW7NsULz4cjXlRoinqTKlc0=;
+	s=korg; t=1676300282;
+	bh=oq8qQtisxYxtgHO757OSD10qHlGvZcN+0TslBnYqKyo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SlKfHjjFr3j2sxyyGII0u+CXYdfPunrgSELA6+VteyccbKdn74lPmWHWKT271DRFc
-	 08gAM8IYYySK7ZiLGoCljxcy6QC6qjf9IopvW3/CTWnQrk4QU6J+0HYaMb3hN4GQLP
-	 FD70N5DpkT/UvoFCyN0r43zRkEzoeEkoBwunTFYU=
+	b=SGdfc7KDuoYtiA/lZbGZOYuj2az6h4My25sq6rEuISnzvn70ZVP1oOScqW360zy1p
+	 OW/7bh1R3CCh6D2pMjSUE7WwsKN8UPBdEs0iJB/06sMjzOBx2qMA19sZuI9hCwA1x7
+	 5OCJWKG6kzr3vMUbCsIq0+nqwDMPDIoKqh2FVNtY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Leon Romanovsky <leon@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 18/67] IB/IPoIB: Fix legacy IPoIB due to wrong number of queues
-Date: Mon, 13 Feb 2023 15:48:59 +0100
-Message-Id: <20230213144733.221648282@linuxfoundation.org>
+	Devid Antonio Filoni <devid.filoni@egluetechnologies.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>
+Subject: [PATCH 5.15 14/67] can: j1939: do not wait 250 ms if the same addr was already claimed
+Date: Mon, 13 Feb 2023 15:48:55 +0100
+Message-Id: <20230213144733.010817014@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -35,98 +35,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Devid Antonio Filoni <devid.filoni@egluetechnologies.com>
 
-[ Upstream commit e632291a2dbce45a24cddeb5fe28fe71d724ba43 ]
+commit 4ae5e1e97c44f4654516c1d41591a462ed62fa7b upstream.
 
-The cited commit creates child PKEY interfaces over netlink will
-multiple tx and rx queues, but some devices doesn't support more than 1
-tx and 1 rx queues. This causes to a crash when traffic is sent over the
-PKEY interface due to the parent having a single queue but the child
-having multiple queues.
+The ISO 11783-5 standard, in "4.5.2 - Address claim requirements", states:
+  d) No CF shall begin, or resume, transmission on the network until 250
+     ms after it has successfully claimed an address except when
+     responding to a request for address-claimed.
 
-This patch fixes the number of queues to 1 for legacy IPoIB at the
-earliest possible point in time.
+But "Figure 6" and "Figure 7" in "4.5.4.2 - Address-claim
+prioritization" show that the CF begins the transmission after 250 ms
+from the first AC (address-claimed) message even if it sends another AC
+message during that time window to resolve the address contention with
+another CF.
 
-BUG: kernel NULL pointer dereference, address: 000000000000036b
-PGD 0 P4D 0
-Oops: 0000 [#1] SMP
-CPU: 4 PID: 209665 Comm: python3 Not tainted 6.1.0_for_upstream_min_debug_2022_12_12_17_02 #1
-Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-RIP: 0010:kmem_cache_alloc+0xcb/0x450
-Code: ce 7e 49 8b 50 08 49 83 78 10 00 4d 8b 28 0f 84 cb 02 00 00 4d 85 ed 0f 84 c2 02 00 00 41 8b 44 24 28 48 8d 4a
-01 49 8b 3c 24 <49> 8b 5c 05 00 4c 89 e8 65 48 0f c7 0f 0f 94 c0 84 c0 74 b8 41 8b
-RSP: 0018:ffff88822acbbab8 EFLAGS: 00010202
-RAX: 0000000000000070 RBX: ffff8881c28e3e00 RCX: 00000000064f8dae
-RDX: 00000000064f8dad RSI: 0000000000000a20 RDI: 0000000000030d00
-RBP: 0000000000000a20 R08: ffff8882f5d30d00 R09: ffff888104032f40
-R10: ffff88810fade828 R11: 736f6d6570736575 R12: ffff88810081c000
-R13: 00000000000002fb R14: ffffffff817fc865 R15: 0000000000000000
-FS:  00007f9324ff9700(0000) GS:ffff8882f5d00000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000000000000036b CR3: 00000001125af004 CR4: 0000000000370ea0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
- <TASK>
- skb_clone+0x55/0xd0
- ip6_finish_output2+0x3fe/0x690
- ip6_finish_output+0xfa/0x310
- ip6_send_skb+0x1e/0x60
- udp_v6_send_skb+0x1e5/0x420
- udpv6_sendmsg+0xb3c/0xe60
- ? ip_mc_finish_output+0x180/0x180
- ? __switch_to_asm+0x3a/0x60
- ? __switch_to_asm+0x34/0x60
- sock_sendmsg+0x33/0x40
- __sys_sendto+0x103/0x160
- ? _copy_to_user+0x21/0x30
- ? kvm_clock_get_cycles+0xd/0x10
- ? ktime_get_ts64+0x49/0xe0
- __x64_sys_sendto+0x25/0x30
- do_syscall_64+0x3d/0x90
- entry_SYSCALL_64_after_hwframe+0x46/0xb0
-RIP: 0033:0x7f9374f1ed14
-Code: 42 41 f8 ff 44 8b 4c 24 2c 4c 8b 44 24 20 89 c5 44 8b 54 24 28 48 8b 54 24 18 b8 2c 00 00 00 48 8b 74 24 10 8b
-7c 24 08 0f 05 <48> 3d 00 f0 ff ff 77 34 89 ef 48 89 44 24 08 e8 68 41 f8 ff 48 8b
-RSP: 002b:00007f9324ff7bd0 EFLAGS: 00000293 ORIG_RAX: 000000000000002c
-RAX: ffffffffffffffda RBX: 00007f9324ff7cc8 RCX: 00007f9374f1ed14
-RDX: 00000000000002fb RSI: 00007f93000052f0 RDI: 0000000000000030
-RBP: 0000000000000000 R08: 00007f9324ff7d40 R09: 000000000000001c
-R10: 0000000000000000 R11: 0000000000000293 R12: 0000000000000000
-R13: 000000012a05f200 R14: 0000000000000001 R15: 00007f9374d57bdc
- </TASK>
+As stated in "4.4.2.3 - Address-claimed message":
+  In order to successfully claim an address, the CF sending an address
+  claimed message shall not receive a contending claim from another CF
+  for at least 250 ms.
 
-Fixes: dbc94a0fb817 ("IB/IPoIB: Fix queue count inconsistency for PKEY child interfaces")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Link: https://lore.kernel.org/r/95eb6b74c7cf49fa46281f9d056d685c9fa11d38.1674584576.git.leon@kernel.org
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+As stated in "4.4.3.2 - NAME management (NM) message":
+  1) A commanding CF can
+     d) request that a CF with a specified NAME transmit the address-
+        claimed message with its current NAME.
+  2) A target CF shall
+     d) send an address-claimed message in response to a request for a
+        matching NAME
+
+Taking the above arguments into account, the 250 ms wait is requested
+only during network initialization.
+
+Do not restart the timer on AC message if both the NAME and the address
+match and so if the address has already been claimed (timer has expired)
+or the AC message has been sent to resolve the contention with another
+CF (timer is still running).
+
+Signed-off-by: Devid Antonio Filoni <devid.filoni@egluetechnologies.com>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/all/20221125170418.34575-1-devid.filoni@egluetechnologies.com
+Fixes: 9d71dd0c7009 ("can: add support of SAE J1939 protocol")
+Cc: stable@vger.kernel.org
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/infiniband/ulp/ipoib/ipoib_main.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ net/can/j1939/address-claim.c |   40 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
 
-diff --git a/drivers/infiniband/ulp/ipoib/ipoib_main.c b/drivers/infiniband/ulp/ipoib/ipoib_main.c
-index 0aa8629fdf62e..1ea95f8009b82 100644
---- a/drivers/infiniband/ulp/ipoib/ipoib_main.c
-+++ b/drivers/infiniband/ulp/ipoib/ipoib_main.c
-@@ -2197,6 +2197,14 @@ int ipoib_intf_init(struct ib_device *hca, u32 port, const char *name,
- 		rn->attach_mcast = ipoib_mcast_attach;
- 		rn->detach_mcast = ipoib_mcast_detach;
- 		rn->hca = hca;
+--- a/net/can/j1939/address-claim.c
++++ b/net/can/j1939/address-claim.c
+@@ -165,6 +165,46 @@ static void j1939_ac_process(struct j193
+ 	 * leaving this function.
+ 	 */
+ 	ecu = j1939_ecu_get_by_name_locked(priv, name);
 +
-+		rc = netif_set_real_num_tx_queues(dev, 1);
-+		if (rc)
-+			goto out;
++	if (ecu && ecu->addr == skcb->addr.sa) {
++		/* The ISO 11783-5 standard, in "4.5.2 - Address claim
++		 * requirements", states:
++		 *   d) No CF shall begin, or resume, transmission on the
++		 *      network until 250 ms after it has successfully claimed
++		 *      an address except when responding to a request for
++		 *      address-claimed.
++		 *
++		 * But "Figure 6" and "Figure 7" in "4.5.4.2 - Address-claim
++		 * prioritization" show that the CF begins the transmission
++		 * after 250 ms from the first AC (address-claimed) message
++		 * even if it sends another AC message during that time window
++		 * to resolve the address contention with another CF.
++		 *
++		 * As stated in "4.4.2.3 - Address-claimed message":
++		 *   In order to successfully claim an address, the CF sending
++		 *   an address claimed message shall not receive a contending
++		 *   claim from another CF for at least 250 ms.
++		 *
++		 * As stated in "4.4.3.2 - NAME management (NM) message":
++		 *   1) A commanding CF can
++		 *      d) request that a CF with a specified NAME transmit
++		 *         the address-claimed message with its current NAME.
++		 *   2) A target CF shall
++		 *      d) send an address-claimed message in response to a
++		 *         request for a matching NAME
++		 *
++		 * Taking the above arguments into account, the 250 ms wait is
++		 * requested only during network initialization.
++		 *
++		 * Do not restart the timer on AC message if both the NAME and
++		 * the address match and so if the address has already been
++		 * claimed (timer has expired) or the AC message has been sent
++		 * to resolve the contention with another CF (timer is still
++		 * running).
++		 */
++		goto out_ecu_put;
++	}
 +
-+		rc = netif_set_real_num_rx_queues(dev, 1);
-+		if (rc)
-+			goto out;
- 	}
+ 	if (!ecu && j1939_address_is_unicast(skcb->addr.sa))
+ 		ecu = j1939_ecu_create_locked(priv, name);
  
- 	priv->rn_ops = dev->netdev_ops;
--- 
-2.39.0
-
 
 
