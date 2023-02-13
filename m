@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99A48F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:00:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6E7C433EF;
-	Mon, 13 Feb 2023 15:00:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DCF48F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:00:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B12CEC433D2;
+	Mon, 13 Feb 2023 15:00:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300420;
-	bh=XXTKGH8M/OwP3Kl+fuwdhe76Hjlg+Oj8MDhYKHugdlM=;
+	s=korg; t=1676300423;
+	bh=Gra5ErS4X0GNbZsEVC8ttmGP+ep9iw21Wvq0/qZPMaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rIrMMaX8qDNm+WLmkNwaybpiY5KGrHBxxE+LrserTkQ6XmUr2XfMR54UWuDutIZtM
-	 i5VFkoGWtUgaydaiMMMGuu0kHSF4OUpBJJMcVftVL/2YqXk0uUpwoMgsRQiAiYjn1B
-	 7CbEfpw3dk2yIjZJy86IhFlS/0aEkzfnR4xNJhEY=
+	b=WYcS4A9ncDJApeg7tWLlHSB3/oAALztSfq/dsLph3yAWiQ/jF+PEfvmByL4sm9O2l
+	 WSKzEazuq76hG924NUU+t8YMzsxStvD3C5Q44edvG2RSiGujpKdUXZKJerqDx3LnO0
+	 KRfb89Ej07nDDaCYEIERe9uXJEzLySY5MSTk/h7E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 5.15 67/67] nvmem: core: fix return value
-Date: Mon, 13 Feb 2023 15:49:48 +0100
-Message-Id: <20230213144735.602745645@linuxfoundation.org>
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 001/139] firewire: fix memory leak for payload of request subaction to IEC 61883-1 FCP region
+Date: Mon, 13 Feb 2023 15:49:06 +0100
+Message-Id: <20230213144745.781365386@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
-References: <20230213144732.336342050@linuxfoundation.org>
+In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
+References: <20230213144745.696901179@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,36 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-commit 0c4862b1c1465e473bc961a02765490578bf5c20 upstream.
+commit 531390a243ef47448f8bad01c186c2787666bf4d upstream.
 
-Dan Carpenter points out that the return code was not set in commit
-60c8b4aebd8e ("nvmem: core: fix cleanup after dev_set_name()"), but
-this is not the only issue - we also need to zero wp_gpio to prevent
-gpiod_put() being called on an error value.
+This patch is fix for Linux kernel v2.6.33 or later.
 
-Fixes: 560181d3ace6 ("nvmem: core: fix cleanup after dev_set_name()")
-Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230127104015.23839-10-srinivas.kandagatla@linaro.org
+For request subaction to IEC 61883-1 FCP region, Linux FireWire subsystem
+have had an issue of use-after-free. The subsystem allows multiple
+user space listeners to the region, while data of the payload was likely
+released before the listeners execute read(2) to access to it for copying
+to user space.
+
+The issue was fixed by a commit 281e20323ab7 ("firewire: core: fix
+use-after-free regression in FCP handler"). The object of payload is
+duplicated in kernel space for each listener. When the listener executes
+ioctl(2) with FW_CDEV_IOC_SEND_RESPONSE request, the object is going to
+be released.
+
+However, it causes memory leak since the commit relies on call of
+release_request() in drivers/firewire/core-cdev.c. Against the
+expectation, the function is never called due to the design of
+release_client_resource(). The function delegates release task
+to caller when called with non-NULL fourth argument. The implementation
+of ioctl_send_response() is the case. It should release the object
+explicitly.
+
+This commit fixes the bug.
+
+Cc: <stable@vger.kernel.org>
+Fixes: 281e20323ab7 ("firewire: core: fix use-after-free regression in FCP handler")
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Link: https://lore.kernel.org/r/20230117090610.93792-2-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/firewire/core-cdev.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/nvmem/core.c
-+++ b/drivers/nvmem/core.c
-@@ -779,6 +779,7 @@ struct nvmem_device *nvmem_register(cons
- 						    GPIOD_OUT_HIGH);
- 	if (IS_ERR(nvmem->wp_gpio)) {
- 		rval = PTR_ERR(nvmem->wp_gpio);
-+		nvmem->wp_gpio = NULL;
- 		goto err_put_device;
- 	}
+--- a/drivers/firewire/core-cdev.c
++++ b/drivers/firewire/core-cdev.c
+@@ -818,8 +818,10 @@ static int ioctl_send_response(struct cl
  
+ 	r = container_of(resource, struct inbound_transaction_resource,
+ 			 resource);
+-	if (is_fcp_request(r->request))
++	if (is_fcp_request(r->request)) {
++		kfree(r->data);
+ 		goto out;
++	}
+ 
+ 	if (a->length != fw_get_response_length(r->request)) {
+ 		ret = -EINVAL;
 
 
