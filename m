@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9B2468F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:55:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 238DBC433EF;
-	Mon, 13 Feb 2023 14:55:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 994AE8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:55:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C17BBC433EF;
+	Mon, 13 Feb 2023 14:55:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300124;
-	bh=5UM8IfTfm6oIFtYJjQ4Oz83rLBCbBHR9Hwmt35KS0uA=;
+	s=korg; t=1676300127;
+	bh=3tWLMNI+rhFeIFsx8Bs6iEKpiMQhzleDU7LP1bQ7FKc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IEPCf4mGxma/K+JdQHZBRklWFw2HwOkyZb/ZZEtOIZ5OpbcVpRe19iOINMvrj9UBY
-	 57b5EKO/6tPGqWsZHyQjeNo8pjogQ+GYQIY/Cvbep0JnxnXbCbcRmg+sbMie0BhMFU
-	 4jK9QBY1AnJ55VgTLug340xvbWGl4gvGzWSN2cJw=
+	b=VoxXwD0ywxmmxGRja+ckTUNLKNjgtWfoB3QTNAVGwI5r2ORasZh2A6nImFjsT3PMb
+	 aMntTSLZq46UJtJhy+PwXBzf/YL4sU2LiiLsqsLBeFYD18q3Udrjz0GPKvDWZp4trO
+	 HilAwVTKhalOtbc6m8u57njw8CIknhw1fxpks18Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Korotkov <korotkov.maxim.s@gmail.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	=?UTF-8?q?Amadeusz=20S=C5=82awi=C5=84ski?= <amadeuszx.slawinski@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 073/114] pinctrl: single: fix potential NULL dereference
-Date: Mon, 13 Feb 2023 15:48:28 +0100
-Message-Id: <20230213144745.981595265@linuxfoundation.org>
+Subject: [PATCH 6.1 069/114] ASoC: topology: Return -ENOMEM on memory allocation failure
+Date: Mon, 13 Feb 2023 15:48:24 +0100
+Message-Id: <20230213144745.790479981@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -36,39 +38,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Korotkov <korotkov.maxim.s@gmail.com>
+From: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
 
-[ Upstream commit d2d73e6d4822140445ad4a7b1c6091e0f5fe703b ]
+[ Upstream commit c173ee5b2fa6195066674d66d1d7e191010fb1ff ]
 
-Added checking of pointer "function" in pcs_set_mux().
-pinmux_generic_get_function() can return NULL and the pointer
-"function" was dereferenced without checking against NULL.
+When handling error path, ret needs to be set to correct value.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 571aec4df5b7 ("pinctrl: single: Use generic pinmux helpers for managing functions")
-Signed-off-by: Maxim Korotkov <korotkov.maxim.s@gmail.com>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20221118104332.943-1-korotkov.maxim.s@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Fixes: d29d41e28eea ("ASoC: topology: Add support for multiple kcontrol types to a widget")
+Reviewed-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Signed-off-by: Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+Link: https://lore.kernel.org/r/20230207210428.2076354-1-amadeuszx.slawinski@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/pinctrl-single.c | 2 ++
- 1 file changed, 2 insertions(+)
+ sound/soc/soc-topology.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
-index 414ee6bb8ac98..9ad8f70206142 100644
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -372,6 +372,8 @@ static int pcs_set_mux(struct pinctrl_dev *pctldev, unsigned fselector,
- 	if (!pcs->fmask)
- 		return 0;
- 	function = pinmux_generic_get_function(pctldev, fselector);
-+	if (!function)
-+		return -EINVAL;
- 	func = function->data;
- 	if (!func)
- 		return -EINVAL;
+diff --git a/sound/soc/soc-topology.c b/sound/soc/soc-topology.c
+index c3be24b2fac55..a79a2fb260b87 100644
+--- a/sound/soc/soc-topology.c
++++ b/sound/soc/soc-topology.c
+@@ -1401,13 +1401,17 @@ static int soc_tplg_dapm_widget_create(struct soc_tplg *tplg,
+ 
+ 	template.num_kcontrols = le32_to_cpu(w->num_kcontrols);
+ 	kc = devm_kcalloc(tplg->dev, le32_to_cpu(w->num_kcontrols), sizeof(*kc), GFP_KERNEL);
+-	if (!kc)
++	if (!kc) {
++		ret = -ENOMEM;
+ 		goto hdr_err;
++	}
+ 
+ 	kcontrol_type = devm_kcalloc(tplg->dev, le32_to_cpu(w->num_kcontrols), sizeof(unsigned int),
+ 				     GFP_KERNEL);
+-	if (!kcontrol_type)
++	if (!kcontrol_type) {
++		ret = -ENOMEM;
+ 		goto hdr_err;
++	}
+ 
+ 	for (i = 0; i < le32_to_cpu(w->num_kcontrols); i++) {
+ 		control_hdr = (struct snd_soc_tplg_ctl_hdr *)tplg->pos;
 -- 
 2.39.0
 
