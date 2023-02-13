@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4851D8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:03:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C15CCC433D2;
-	Mon, 13 Feb 2023 15:03:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7B3D8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:03:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E790C433EF;
+	Mon, 13 Feb 2023 15:03:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300635;
-	bh=AiN/WcsJAbp8dOzlKIJ1WO1WXc0pLDS+sTPFN74s+v0=;
+	s=korg; t=1676300637;
+	bh=CMZfIyw3TnPoFT4KtOz91YCqECrmo7vGeSulbne+whI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1NsVkXlpxoWhvHURANvRXfvvCxIdsOZXGdlD7O/byvRZyt/Mz/SwTjX6C1vCyP4qD
-	 nZCu6kkxHS4ejWqUhk6MttI8sJqMU1ztnst7JNXg1OJNd8WNVv0RW8xu+FruiwRp0h
-	 9T1YVOBYWb/fj1YfydbFq7/Jur82Mz/U0Zcwr7g0=
+	b=QJOj4bSXBUNI42TPbpbLkzbb3b0azBQ/y9xOQW9kArwAMryadJnD4P4bNjUym9BdK
+	 W9FsGYbD7iSuEoEwzW8BxjH6PHPDPLeuvCqtkLtfXO8kTBDA47yCIMlgJX7PJOpF12
+	 IZOSjIEcfkkU4VCp+WbcWpbdkuJoCcDZM+j+VXvs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Kerello <christophe.kerello@foss.st.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 089/139] nvmem: core: Fix a conflict between MTD and NVMEM on wp-gpios property
-Date: Mon, 13 Feb 2023 15:50:34 +0100
-Message-Id: <20230213144750.528935596@linuxfoundation.org>
+Subject: [PATCH 5.10 090/139] nvmem: core: add error handling for dev_set_name
+Date: Mon, 13 Feb 2023 15:50:35 +0100
+Message-Id: <20230213144750.579599423@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -35,78 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Kerello <christophe.kerello@foss.st.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit f6c052afe6f802d87c74153b7a57c43b2e9faf07 ]
+[ Upstream commit 5544e90c81261e82e02bbf7c6015a4b9c8c825ef ]
 
-Wp-gpios property can be used on NVMEM nodes and the same property can
-be also used on MTD NAND nodes. In case of the wp-gpios property is
-defined at NAND level node, the GPIO management is done at NAND driver
-level. Write protect is disabled when the driver is probed or resumed
-and is enabled when the driver is released or suspended.
+The type of return value of dev_set_name is int, which may return
+wrong result, so we add error handling for it to reclaim memory
+of nvmem resource, and return early when an error occurs.
 
-When no partitions are defined in the NAND DT node, then the NAND DT node
-will be passed to NVMEM framework. If wp-gpios property is defined in
-this node, the GPIO resource is taken twice and the NAND controller
-driver fails to probe.
-
-It would be possible to set config->wp_gpio at MTD level before calling
-nvmem_register function but NVMEM framework will toggle this GPIO on
-each write when this GPIO should only be controlled at NAND level driver
-to ensure that the Write Protect has not been enabled.
-
-A way to fix this conflict is to add a new boolean flag in nvmem_config
-named ignore_wp. In case ignore_wp is set, the GPIO resource will
-be managed by the provider.
-
-Fixes: 2a127da461a9 ("nvmem: add support for the write-protect pin")
-Cc: stable@vger.kernel.org
-Signed-off-by: Christophe Kerello <christophe.kerello@foss.st.com>
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20220220151432.16605-2-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20220916122100.170016-4-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Stable-dep-of: ab3428cfd9aa ("nvmem: core: fix registration vs use race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/core.c           | 2 +-
- include/linux/nvmem-provider.h | 4 +++-
- 2 files changed, 4 insertions(+), 2 deletions(-)
+ drivers/nvmem/core.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
-index 7b281ae540ad8..48fbe49e3772b 100644
+index 48fbe49e3772b..9da4edbabfe75 100644
 --- a/drivers/nvmem/core.c
 +++ b/drivers/nvmem/core.c
-@@ -629,7 +629,7 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
+@@ -661,18 +661,24 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
  
- 	if (config->wp_gpio)
- 		nvmem->wp_gpio = config->wp_gpio;
--	else
-+	else if (!config->ignore_wp)
- 		nvmem->wp_gpio = gpiod_get_optional(config->dev, "wp",
- 						    GPIOD_OUT_HIGH);
- 	if (IS_ERR(nvmem->wp_gpio)) {
-diff --git a/include/linux/nvmem-provider.h b/include/linux/nvmem-provider.h
-index 06409a6c40bcb..39ec67689898b 100644
---- a/include/linux/nvmem-provider.h
-+++ b/include/linux/nvmem-provider.h
-@@ -49,7 +49,8 @@ enum nvmem_type {
-  * @word_size:	Minimum read/write access granularity.
-  * @stride:	Minimum read/write access stride.
-  * @priv:	User context passed to read/write callbacks.
-- * @wp-gpio:   Write protect pin
-+ * @wp-gpio:	Write protect pin
-+ * @ignore_wp:  Write Protect pin is managed by the provider.
-  *
-  * Note: A default "nvmem<id>" name will be assigned to the device if
-  * no name is specified in its configuration. In such case "<id>" is
-@@ -69,6 +70,7 @@ struct nvmem_config {
- 	enum nvmem_type		type;
- 	bool			read_only;
- 	bool			root_only;
-+	bool			ignore_wp;
- 	bool			no_of_node;
- 	nvmem_reg_read_t	reg_read;
- 	nvmem_reg_write_t	reg_write;
+ 	switch (config->id) {
+ 	case NVMEM_DEVID_NONE:
+-		dev_set_name(&nvmem->dev, "%s", config->name);
++		rval = dev_set_name(&nvmem->dev, "%s", config->name);
+ 		break;
+ 	case NVMEM_DEVID_AUTO:
+-		dev_set_name(&nvmem->dev, "%s%d", config->name, nvmem->id);
++		rval = dev_set_name(&nvmem->dev, "%s%d", config->name, nvmem->id);
+ 		break;
+ 	default:
+-		dev_set_name(&nvmem->dev, "%s%d",
++		rval = dev_set_name(&nvmem->dev, "%s%d",
+ 			     config->name ? : "nvmem",
+ 			     config->name ? config->id : nvmem->id);
+ 		break;
+ 	}
+ 
++	if (rval) {
++		ida_free(&nvmem_ida, nvmem->id);
++		kfree(nvmem);
++		return ERR_PTR(rval);
++	}
++
+ 	nvmem->read_only = device_property_present(config->dev, "read-only") ||
+ 			   config->read_only || !nvmem->reg_write;
+ 
 -- 
 2.39.0
 
