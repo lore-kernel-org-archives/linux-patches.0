@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFC768F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:01:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3775AC433D2;
-	Mon, 13 Feb 2023 15:01:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47CC38F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:01:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1401C433EF;
+	Mon, 13 Feb 2023 15:01:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300479;
-	bh=BjLFm/uQyv2iHTs22s33gqNvQ3rD7xmUi4zYBI7unnU=;
+	s=korg; t=1676300482;
+	bh=HIknskYPa/Ba2/x4sv35oqZnRKagxd7936BqMdJ+D1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eTxOOtWnLJFg5krkn3D4+BC4HRlP/cndGrblBwpbf15YU1Hw4fV62jcFUHl+CUEIR
-	 y5fID9u0ZM4tdMiXwZ/xhJPvg8Ia/7xKOV+uLTer3GGN/ltZP8rIGIHSE84S40goef
-	 isAdotl0oNm7hKi3KRCZuUds2qRYfC+pYf9WfyAw=
+	b=U7Nusaz5stExurCvVz19ooAg0ynZnBaMcoRkDW4FSP8xU6NjD6SVTe7c3iJotkqec
+	 +IAqGVSz27oVYxXgeECUKpSVhPgDUAI+pHeBKZyQF7mFgJK1hE5ZeZf6wt+hlEhVtV
+	 iQpzk2SwNzDG5x/vm+qL1TfQceEOcSCBGMCiRl8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marius Dinu <marius@psihoexpert.ro>,
-	Niklas Cassel <niklas.cassel@wdc.com>,
-	Damien Le Moal <damien.lemoal@opensource.wdc.com>,
+	Andrei Gherzan <andrei.gherzan@canonical.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 029/139] ata: libata: Fix sata_down_spd_limit() when no link speed is reported
-Date: Mon, 13 Feb 2023 15:49:34 +0100
-Message-Id: <20230213144747.179880649@linuxfoundation.org>
+Subject: [PATCH 5.10 030/139] selftests: net: udpgso_bench_rx: Fix used uninitialized compiler warning
+Date: Mon, 13 Feb 2023 15:49:35 +0100
+Message-Id: <20230213144747.233702433@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -36,55 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+From: Andrei Gherzan <andrei.gherzan@canonical.com>
 
-[ Upstream commit 69f2c9346313ba3d3dfa4091ff99df26c67c9021 ]
+[ Upstream commit c03c80e3a03ffb4f790901d60797e9810539d946 ]
 
-Commit 2dc0b46b5ea3 ("libata: sata_down_spd_limit should return if
-driver has not recorded sstatus speed") changed the behavior of
-sata_down_spd_limit() to return doing nothing if a drive does not report
-a current link speed, to avoid reducing the link speed to the lowest 1.5
-Gbps speed.
+This change fixes the following compiler warning:
 
-However, the change assumed that a speed was recorded before probing
-(e.g. before a suspend/resume) and set in link->sata_spd. This causes
-problems with adapters/drives combination failing to establish a link
-speed during probe autonegotiation. One example reported of this problem
-is an mvebu adapter with a 3Gbps port-multiplier box: autonegotiation
-fails, leaving no recorded link speed and no reported current link
-speed. Probe retries also fail as no action is taken by sata_set_spd()
-after each retry.
+/usr/include/x86_64-linux-gnu/bits/error.h:40:5: warning: ‘gso_size’ may
+be used uninitialized [-Wmaybe-uninitialized]
+   40 |     __error_noreturn (__status, __errnum, __format,
+   __va_arg_pack ());
+         |
+	 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	 udpgso_bench_rx.c: In function ‘main’:
+	 udpgso_bench_rx.c:253:23: note: ‘gso_size’ was declared here
+	   253 |         int ret, len, gso_size, budget = 256;
 
-Fix this by returning early in sata_down_spd_limit() only if we do have
-a recorded link speed, that is, if link->sata_spd is not 0. With this
-fix, a failed probe not leading to a recorded link speed is retried at
-the lower 1.5 Gbps speed, with the link speed potentially increased
-later on the second revalidate of the device if the device reports
-that it supports higher link speeds.
-
-Reported-by: Marius Dinu <marius@psihoexpert.ro>
-Fixes: 2dc0b46b5ea3 ("libata: sata_down_spd_limit should return if driver has not recorded sstatus speed")
-Reviewed-by: Niklas Cassel <niklas.cassel@wdc.com>
-Tested-by: Marius Dinu <marius@psihoexpert.ro>
-Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Fixes: 3327a9c46352 ("selftests: add functionals test for UDP GRO")
+Signed-off-by: Andrei Gherzan <andrei.gherzan@canonical.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20230201001612.515730-1-andrei.gherzan@canonical.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/ata/libata-core.c | 2 +-
+ tools/testing/selftests/net/udpgso_bench_rx.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/ata/libata-core.c b/drivers/ata/libata-core.c
-index d13474c6d181..14150767be44 100644
---- a/drivers/ata/libata-core.c
-+++ b/drivers/ata/libata-core.c
-@@ -3051,7 +3051,7 @@ int sata_down_spd_limit(struct ata_link *link, u32 spd_limit)
- 	 */
- 	if (spd > 1)
- 		mask &= (1 << (spd - 1)) - 1;
--	else
-+	else if (link->sata_spd)
- 		return -EINVAL;
+diff --git a/tools/testing/selftests/net/udpgso_bench_rx.c b/tools/testing/selftests/net/udpgso_bench_rx.c
+index 6a193425c367..d0895bd1933f 100644
+--- a/tools/testing/selftests/net/udpgso_bench_rx.c
++++ b/tools/testing/selftests/net/udpgso_bench_rx.c
+@@ -250,7 +250,7 @@ static int recv_msg(int fd, char *buf, int len, int *gso_size)
+ static void do_flush_udp(int fd)
+ {
+ 	static char rbuf[ETH_MAX_MTU];
+-	int ret, len, gso_size, budget = 256;
++	int ret, len, gso_size = 0, budget = 256;
  
- 	/* were we already at the bottom? */
+ 	len = cfg_read_all ? sizeof(rbuf) : 0;
+ 	while (budget--) {
 -- 
 2.39.0
 
