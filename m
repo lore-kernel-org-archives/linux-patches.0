@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E1D838F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:00:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4867CC433EF;
-	Mon, 13 Feb 2023 15:00:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5BB0C8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:00:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE4B3C4339C;
+	Mon, 13 Feb 2023 15:00:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300438;
-	bh=uwhBNg0L0pnLL6LPl/mCp1smACiha3M728/xxBsN3B0=;
+	s=korg; t=1676300441;
+	bh=1ZFb6TkxNz5YNfw09QPpbWIwKMxrYhI5E6SeQnjsiig=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m+c918JNnfBY6qySEh2Z3AaFhm2HqB3/nXZBKvPYbAea19euGSvi2GU/Di9WiNnRH
-	 1mAsA8stnIpY2apEazBwUOYMocgEeM6qZGaP0XcXgCt2aE6BGQ7vjFaaTCkMFNcVa4
-	 b7RX6XzlbUsDYiGgzAOFNg4iYc8ia/e/eZakOKI8=
+	b=HCvTI1w7HsmxE7nrD9JcJ6zEbK2F7g57mziBMlgPIErIaTtxQE+uAgOHdeoU2csFZ
+	 PT04eKwbIHZYXO+pdKZLLh7aG9r0e8n2s3dCAtAVWbDOoqn1qUh5KbHtA/iWHX/jVI
+	 5Yd/Mpyn7QhvY3o/mDU09fY2zM8Kafqd147Ik4QU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Auger <eric.auger@redhat.com>,
-	Jason Wang <jasowang@redhat.com>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 015/139] vhost/net: Clear the pending messages when the backend is removed
-Date: Mon, 13 Feb 2023 15:49:20 +0100
-Message-Id: <20230213144746.467876639@linuxfoundation.org>
+Subject: [PATCH 5.10 016/139] WRITE is "data source", not destination...
+Date: Mon, 13 Feb 2023 15:49:21 +0100
+Message-Id: <20230213144746.518445475@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -36,81 +34,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Auger <eric.auger@redhat.com>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 9526f9a2b762af16be94a72aca5d65c677d28f50 ]
+[ Upstream commit 974c36fb828aeae7b4f9063f94860ae6c5633efd ]
 
-When the vhost iotlb is used along with a guest virtual iommu
-and the guest gets rebooted, some MISS messages may have been
-recorded just before the reboot and spuriously executed by
-the virtual iommu after the reboot.
-
-As vhost does not have any explicit reset user API,
-VHOST_NET_SET_BACKEND looks a reasonable point where to clear
-the pending messages, in case the backend is removed.
-
-Export vhost_clear_msg() and call it in vhost_net_set_backend()
-when fd == -1.
-
-Signed-off-by: Eric Auger <eric.auger@redhat.com>
-Suggested-by: Jason Wang <jasowang@redhat.com>
-Fixes: 6b1e6cc7855b0 ("vhost: new device IOTLB API")
-Message-Id: <20230117151518.44725-3-eric.auger@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/vhost/net.c   | 3 +++
- drivers/vhost/vhost.c | 3 ++-
- drivers/vhost/vhost.h | 1 +
- 3 files changed, 6 insertions(+), 1 deletion(-)
+ drivers/fsi/fsi-sbefifo.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/vhost/net.c b/drivers/vhost/net.c
-index 5beb20768b20..b9c8e4025214 100644
---- a/drivers/vhost/net.c
-+++ b/drivers/vhost/net.c
-@@ -1517,6 +1517,9 @@ static long vhost_net_set_backend(struct vhost_net *n, unsigned index, int fd)
- 	nvq = &n->vqs[index];
- 	mutex_lock(&vq->mutex);
+diff --git a/drivers/fsi/fsi-sbefifo.c b/drivers/fsi/fsi-sbefifo.c
+index 84cb965bfed5..97045a8d9422 100644
+--- a/drivers/fsi/fsi-sbefifo.c
++++ b/drivers/fsi/fsi-sbefifo.c
+@@ -640,7 +640,7 @@ static void sbefifo_collect_async_ffdc(struct sbefifo *sbefifo)
+ 	}
+         ffdc_iov.iov_base = ffdc;
+ 	ffdc_iov.iov_len = SBEFIFO_MAX_FFDC_SIZE;
+-        iov_iter_kvec(&ffdc_iter, WRITE, &ffdc_iov, 1, SBEFIFO_MAX_FFDC_SIZE);
++        iov_iter_kvec(&ffdc_iter, READ, &ffdc_iov, 1, SBEFIFO_MAX_FFDC_SIZE);
+ 	cmd[0] = cpu_to_be32(2);
+ 	cmd[1] = cpu_to_be32(SBEFIFO_CMD_GET_SBE_FFDC);
+ 	rc = sbefifo_do_command(sbefifo, cmd, 2, &ffdc_iter);
+@@ -737,7 +737,7 @@ int sbefifo_submit(struct device *dev, const __be32 *command, size_t cmd_len,
+ 	rbytes = (*resp_len) * sizeof(__be32);
+ 	resp_iov.iov_base = response;
+ 	resp_iov.iov_len = rbytes;
+-        iov_iter_kvec(&resp_iter, WRITE, &resp_iov, 1, rbytes);
++        iov_iter_kvec(&resp_iter, READ, &resp_iov, 1, rbytes);
  
-+	if (fd == -1)
-+		vhost_clear_msg(&n->dev);
-+
- 	/* Verify that ring has been setup correctly. */
- 	if (!vhost_vq_access_ok(vq)) {
- 		r = -EFAULT;
-diff --git a/drivers/vhost/vhost.c b/drivers/vhost/vhost.c
-index da00a5c57db6..1f9a1554ce5f 100644
---- a/drivers/vhost/vhost.c
-+++ b/drivers/vhost/vhost.c
-@@ -669,7 +669,7 @@ void vhost_dev_stop(struct vhost_dev *dev)
- }
- EXPORT_SYMBOL_GPL(vhost_dev_stop);
+ 	/* Perform the command */
+ 	mutex_lock(&sbefifo->lock);
+@@ -817,7 +817,7 @@ static ssize_t sbefifo_user_read(struct file *file, char __user *buf,
+ 	/* Prepare iov iterator */
+ 	resp_iov.iov_base = buf;
+ 	resp_iov.iov_len = len;
+-	iov_iter_init(&resp_iter, WRITE, &resp_iov, 1, len);
++	iov_iter_init(&resp_iter, READ, &resp_iov, 1, len);
  
--static void vhost_clear_msg(struct vhost_dev *dev)
-+void vhost_clear_msg(struct vhost_dev *dev)
- {
- 	struct vhost_msg_node *node, *n;
- 
-@@ -687,6 +687,7 @@ static void vhost_clear_msg(struct vhost_dev *dev)
- 
- 	spin_unlock(&dev->iotlb_lock);
- }
-+EXPORT_SYMBOL_GPL(vhost_clear_msg);
- 
- void vhost_dev_cleanup(struct vhost_dev *dev)
- {
-diff --git a/drivers/vhost/vhost.h b/drivers/vhost/vhost.h
-index b063324c7669..8f80d6b0d843 100644
---- a/drivers/vhost/vhost.h
-+++ b/drivers/vhost/vhost.h
-@@ -183,6 +183,7 @@ long vhost_dev_ioctl(struct vhost_dev *, unsigned int ioctl, void __user *argp);
- long vhost_vring_ioctl(struct vhost_dev *d, unsigned int ioctl, void __user *argp);
- bool vhost_vq_access_ok(struct vhost_virtqueue *vq);
- bool vhost_log_access_ok(struct vhost_dev *);
-+void vhost_clear_msg(struct vhost_dev *dev);
- 
- int vhost_get_vq_desc(struct vhost_virtqueue *,
- 		      struct iovec iov[], unsigned int iov_count,
+ 	/* Perform the command */
+ 	mutex_lock(&sbefifo->lock);
 -- 
 2.39.0
 
