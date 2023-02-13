@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF1628F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:55:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 64078C433EF;
-	Mon, 13 Feb 2023 14:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0298F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:56:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E92C433EF;
+	Mon, 13 Feb 2023 14:56:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300155;
-	bh=lkjKwDHTAZ1VYrN43NqHOcIg11AWeH4x+eAm1PuIb1g=;
+	s=korg; t=1676300160;
+	bh=piY5C0SW0QwhKhFd4bdTsT8zzgB32Iprq2BzyF8qr34=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RVjkZZZkGHNZYxxt0WxD9bNAQiEfPLDTb3tYO3H/uGxmWIQxmC9dLbN+aG6AfsAXH
-	 zJ+wmBUOgXDO5J8WIKnz4UlXAUH4K7nBhXqWArXxK7H2OUfg0Sunpc1jImIuCbuY38
-	 ERCfk09Mi7xM/rVFUYoLgb1ZIVN4bc1zeg4ncCOw=
+	b=wP05ylQ9M1mCFZJQJ90nLjOCcPg7F95uzLGWp87MjiVPN5W0zDNgG3LzK1Q+qR6r1
+	 nf0SFhgNIGSrwhUZdOCtvI6lCaJnxouqNjgDaboUm7BttiGubc1NFtyxhgmSKECh7/
+	 afnVs0vclP2h0QE4eVEjhP51KpFjXDXkC8n3uQvc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 079/114] mptcp: do not wait for bare sockets timeout
-Date: Mon, 13 Feb 2023 15:48:34 +0100
-Message-Id: <20230213144746.251373216@linuxfoundation.org>
+	Fan Ni <fan.ni@samsung.com>,
+	Davidlohr Bueso <dave@stgolabs.net>,
+	Dave Jiang <dave.jiang@intel.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Gregory Price <gregory.price@memverge.com>,
+	Dan Williams <dan.j.williams@intel.com>
+Subject: [PATCH 6.1 087/114] cxl/region: Fix null pointer dereference for resetting decoder
+Date: Mon, 13 Feb 2023 15:48:42 +0100
+Message-Id: <20230213144746.649020816@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -35,64 +38,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Fan Ni <fan.ni@samsung.com>
 
-commit d4e85922e3e7ef2071f91f65e61629b60f3a9cf4 upstream.
+commit 4fa4302d6dc7de7e8e74dc7405611a2efb4bf54b upstream.
 
-If the peer closes all the existing subflows for a given
-mptcp socket and later the application closes it, the current
-implementation let it survive until the timewait timeout expires.
+Not all decoders have a reset callback.
 
-While the above is allowed by the protocol specification it
-consumes resources for almost no reason and additionally
-causes sporadic self-tests failures.
+The CXL specification allows a host bridge with a single root port to
+have no explicit HDM decoders. Currently the region driver assumes there
+are none.  As such the CXL core creates a special pass through decoder
+instance without a commit/reset callback.
 
-Let's move the mptcp socket to the TCP_CLOSE state when there are
-no alive subflows at close time, so that the allocated resources
-will be freed immediately.
+Prior to this patch, the ->reset() callback was called unconditionally when
+calling cxl_region_decode_reset. Thus a configuration with 1 Host Bridge,
+1 Root Port, and one directly attached CXL type 3 device or multiple CXL
+type 3 devices attached to downstream ports of a switch can cause a null
+pointer dereference.
 
-Fixes: e16163b6e2b7 ("mptcp: refactor shutdown and close")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Before the fix, a kernel crash was observed when we destroy the region, and
+a pass through decoder is reset.
+
+The issue can be reproduced as below,
+    1) create a region with a CXL setup which includes a HB with a
+    single root port under which a memdev is attached directly.
+    2) destroy the region with cxl destroy-region regionX -f.
+
+Fixes: 176baefb2eb5 ("cxl/hdm: Commit decoder state to hardware")
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Fan Ni <fan.ni@samsung.com>
+Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
+Reviewed-by: Dave Jiang <dave.jiang@intel.com>
+Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Tested-by: Gregory Price <gregory.price@memverge.com>
+Reviewed-by: Gregory Price <gregory.price@memverge.com>
+Link: https://lore.kernel.org/r/20221215170909.2650271-1-fan.ni@samsung.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/protocol.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/cxl/core/region.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2908,6 +2908,7 @@ bool __mptcp_close(struct sock *sk, long
- 	struct mptcp_subflow_context *subflow;
- 	struct mptcp_sock *msk = mptcp_sk(sk);
- 	bool do_cancel_work = false;
-+	int subflows_alive = 0;
+diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
+index 02f28da519e3..02275e6b621b 100644
+--- a/drivers/cxl/core/region.c
++++ b/drivers/cxl/core/region.c
+@@ -131,7 +131,7 @@ static int cxl_region_decode_reset(struct cxl_region *cxlr, int count)
+ 		struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
+ 		struct cxl_port *iter = cxled_to_port(cxled);
+ 		struct cxl_ep *ep;
+-		int rc;
++		int rc = 0;
  
- 	sk->sk_shutdown = SHUTDOWN_MASK;
+ 		while (!is_cxl_root(to_cxl_port(iter->dev.parent)))
+ 			iter = to_cxl_port(iter->dev.parent);
+@@ -143,7 +143,8 @@ static int cxl_region_decode_reset(struct cxl_region *cxlr, int count)
  
-@@ -2933,6 +2934,8 @@ cleanup:
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
- 		bool slow = lock_sock_fast_nested(ssk);
+ 			cxl_rr = cxl_rr_load(iter, cxlr);
+ 			cxld = cxl_rr->decoder;
+-			rc = cxld->reset(cxld);
++			if (cxld->reset)
++				rc = cxld->reset(cxld);
+ 			if (rc)
+ 				return rc;
+ 		}
+@@ -186,7 +187,8 @@ static int cxl_region_decode_commit(struct cxl_region *cxlr)
+ 			     iter = ep->next, ep = cxl_ep_load(iter, cxlmd)) {
+ 				cxl_rr = cxl_rr_load(iter, cxlr);
+ 				cxld = cxl_rr->decoder;
+-				cxld->reset(cxld);
++				if (cxld->reset)
++					cxld->reset(cxld);
+ 			}
  
-+		subflows_alive += ssk->sk_state != TCP_CLOSE;
-+
- 		/* since the close timeout takes precedence on the fail one,
- 		 * cancel the latter
- 		 */
-@@ -2948,6 +2951,12 @@ cleanup:
- 	}
- 	sock_orphan(sk);
- 
-+	/* all the subflows are closed, only timeout can change the msk
-+	 * state, let's not keep resources busy for no reasons
-+	 */
-+	if (subflows_alive == 0)
-+		inet_sk_state_store(sk, TCP_CLOSE);
-+
- 	sock_hold(sk);
- 	pr_debug("msk=%p state=%d", sk, sk->sk_state);
- 	if (mptcp_sk(sk)->token)
+ 			cxled->cxld.reset(&cxled->cxld);
+-- 
+2.39.1
+
 
 
