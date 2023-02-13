@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8C888F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:00:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5EF54C433EF;
-	Mon, 13 Feb 2023 15:00:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707CA8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:00:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC9AC433EF;
+	Mon, 13 Feb 2023 15:00:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300425;
-	bh=S21e3Jqy4h87mLp2ooIwfArzbDnzPThib7N6PdXs7Oo=;
+	s=korg; t=1676300428;
+	bh=7b4NyyW9QPvJkIDtUQM9CO5MCIUG2WnjN5VJEe44Maw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vkyth5RKhRfsWHZGY0+5FvHVw2epTZe9uHKmJicvhNeYwcUq0hU8PtsO+6sHEmGcm
-	 dDytVS5ZO9rB3eJ4Z01EzNOaX95oIwp0q3BkLdLHhEl7IDIDyFgSaXsz9xtzLPk+nN
-	 eZmSaq4os+t00Fl2nCgWzuz6mfSGbduhHQTyVaho=
+	b=nT/0rz1tV4PEYWLZAD75begH1FP45Ma66LpVaEoU0RRK5DOsp7O1j1/w8wiIiSO2U
+	 ENRYO0njTp6/n6N5jsAGBNT5Y2oYJg+h/SW0Gifembypst+DB26FVx1y9sY9OXPf04
+	 WDF35a6AoUYXaIMqxZoyXQwqloFEXiCuFofalzQI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 002/139] bus: sunxi-rsb: Fix error handling in sunxi_rsb_init()
-Date: Mon, 13 Feb 2023 15:49:07 +0100
-Message-Id: <20230213144745.840369766@linuxfoundation.org>
+	Paul Chaignon <paul@isovalent.com>,
+	Alexei Starovoitov <ast@kernel.org>
+Subject: [PATCH 5.10 003/139] bpf: Fix incorrect state pruning for <8B spill/fill
+Date: Mon, 13 Feb 2023 15:49:08 +0100
+Message-Id: <20230213144745.882491330@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -35,41 +34,88 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Paul Chaignon <paul@isovalent.com>
 
-[ Upstream commit f71eaf2708be7831428eacae7db25d8ec6b8b4c5 ]
+commit 345e004d023343d38088fdfea39688aa11e06ccf upstream.
 
-The sunxi_rsb_init() returns the platform_driver_register() directly
-without checking its return value, if platform_driver_register() failed,
-the sunxi_rsb_bus is not unregistered.
-Fix by unregister sunxi_rsb_bus when platform_driver_register() failed.
+Commit 354e8f1970f8 ("bpf: Support <8-byte scalar spill and refill")
+introduced support in the verifier to track <8B spill/fills of scalars.
+The backtracking logic for the precision bit was however skipping
+spill/fills of less than 8B. That could cause state pruning to consider
+two states equivalent when they shouldn't be.
 
-Fixes: d787dcdb9c8f ("bus: sunxi-rsb: Add driver for Allwinner Reduced Serial Bus")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://lore.kernel.org/r/20221123094200.12036-1-yuancan@huawei.com
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+As an example, consider the following bytecode snippet:
+
+  0:  r7 = r1
+  1:  call bpf_get_prandom_u32
+  2:  r6 = 2
+  3:  if r0 == 0 goto pc+1
+  4:  r6 = 3
+  ...
+  8: [state pruning point]
+  ...
+  /* u32 spill/fill */
+  10: *(u32 *)(r10 - 8) = r6
+  11: r8 = *(u32 *)(r10 - 8)
+  12: r0 = 0
+  13: if r8 == 3 goto pc+1
+  14: r0 = 1
+  15: exit
+
+The verifier first walks the path with R6=3. Given the support for <8B
+spill/fills, at instruction 13, it knows the condition is true and skips
+instruction 14. At that point, the backtracking logic kicks in but stops
+at the fill instruction since it only propagates the precision bit for
+8B spill/fill. When the verifier then walks the path with R6=2, it will
+consider it safe at instruction 8 because R6 is not marked as needing
+precision. Instruction 14 is thus never walked and is then incorrectly
+removed as 'dead code'.
+
+It's also possible to lead the verifier to accept e.g. an out-of-bound
+memory access instead of causing an incorrect dead code elimination.
+
+This regression was found via Cilium's bpf-next CI where it was causing
+a conntrack map update to be silently skipped because the code had been
+removed by the verifier.
+
+This commit fixes it by enabling support for <8B spill/fills in the
+bactracking logic. In case of a <8B spill/fill, the full 8B stack slot
+will be marked as needing precision. Then, in __mark_chain_precision,
+any tracked register spilled in a marked slot will itself be marked as
+needing precision, regardless of the spill size. This logic makes two
+assumptions: (1) only 8B-aligned spill/fill are tracked and (2) spilled
+registers are only tracked if the spill and fill sizes are equal. Commit
+ef979017b837 ("bpf: selftest: Add verifier tests for <8-byte scalar
+spill and refill") covers the first assumption and the next commit in
+this patchset covers the second.
+
+Fixes: 354e8f1970f8 ("bpf: Support <8-byte scalar spill and refill")
+Signed-off-by: Paul Chaignon <paul@isovalent.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/sunxi-rsb.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ kernel/bpf/verifier.c |    4 ----
+ 1 file changed, 4 deletions(-)
 
---- a/drivers/bus/sunxi-rsb.c
-+++ b/drivers/bus/sunxi-rsb.c
-@@ -781,7 +781,13 @@ static int __init sunxi_rsb_init(void)
- 		return ret;
- 	}
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -1876,8 +1876,6 @@ static int backtrack_insn(struct bpf_ver
+ 		 */
+ 		if (insn->src_reg != BPF_REG_FP)
+ 			return 0;
+-		if (BPF_SIZE(insn->code) != BPF_DW)
+-			return 0;
  
--	return platform_driver_register(&sunxi_rsb_driver);
-+	ret = platform_driver_register(&sunxi_rsb_driver);
-+	if (ret) {
-+		bus_unregister(&sunxi_rsb_bus);
-+		return ret;
-+	}
-+
-+	return 0;
- }
- module_init(sunxi_rsb_init);
- 
+ 		/* dreg = *(u64 *)[fp - off] was a fill from the stack.
+ 		 * that [fp - off] slot contains scalar that needs to be
+@@ -1900,8 +1898,6 @@ static int backtrack_insn(struct bpf_ver
+ 		/* scalars can only be spilled into stack */
+ 		if (insn->dst_reg != BPF_REG_FP)
+ 			return 0;
+-		if (BPF_SIZE(insn->code) != BPF_DW)
+-			return 0;
+ 		spi = (-insn->off - 1) / BPF_REG_SIZE;
+ 		if (spi >= 64) {
+ 			verbose(env, "BUG spi %d\n", spi);
 
 
