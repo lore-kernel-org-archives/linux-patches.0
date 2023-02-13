@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23388F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:57:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38C6BC433D2;
-	Mon, 13 Feb 2023 14:57:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445968F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:57:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2869C433EF;
+	Mon, 13 Feb 2023 14:57:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300230;
-	bh=Hkx8/qx5/TOUzgIyU0M9AD20QuW7FfZS1los6aRa73Y=;
+	s=korg; t=1676300233;
+	bh=OBxZm3ZDl2Q56oH8pQ3V/48q6acdgNfKIbrsZ3J5P2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eO0TXMwAbYFO4AjEDcREe3yun6YRbI8Tn3/MdYO2/lzlc+6u02AcsFOW4iLuo/aWE
-	 Oz3DqXu+o/NLB17HIO5Tpy8/+9H+TZnPZv5P2oq11fRq2jc3AQBXu0uSIHQWH+Azsj
-	 +RwLv5luTiDMlmjBrdrXARzNE3d0Bkz9KteDLZQ8=
+	b=ClA8U6cL/loQO0QsU2rDn0ECZ6aP4/izDOMfMgjrz66enQzaG3leD+dRfAUvj+Sdi
+	 Rlr/4ryteOfHosaj1hFNpkHsA4vWiBDgtWecranujf2fNa9xYLHBDtyGFFh6OkCnsT
+	 oNYPfIYyCmrLBskEq/oDws8N+nB0SZcR7SnzH7HA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Guchun Chen <guchun.chen@amd.com>,
-	Luben Tuikov <luben.tuikov@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 108/114] drm/amdgpu/fence: Fix oops due to non-matching drm_sched init/fini
-Date: Mon, 13 Feb 2023 15:49:03 +0100
-Message-Id: <20230213144747.804028610@linuxfoundation.org>
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Jani Nikula <jani.nikula@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>
+Subject: [PATCH 6.1 114/114] drm/i915: Fix VBT DSI DVO port handling
+Date: Mon, 13 Feb 2023 15:49:09 +0100
+Message-Id: <20230213144748.128769395@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -38,77 +35,86 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guilherme G. Piccoli <gpiccoli@igalia.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-commit 5ad7bbf3dba5c4a684338df1f285080f2588b535 upstream.
+commit 6a7ff131f17f44c593173c5ee30e2c03ef211685 upstream.
 
-Currently amdgpu calls drm_sched_fini() from the fence driver sw fini
-routine - such function is expected to be called only after the
-respective init function - drm_sched_init() - was executed successfully.
+Turns out modern (icl+) VBTs still declare their DSI ports
+as MIPI-A and MIPI-C despite the PHYs now being A and B.
+Remap appropriately to allow the panels declared as MIPI-C
+to work.
 
-Happens that we faced a driver probe failure in the Steam Deck
-recently, and the function drm_sched_fini() was called even without
-its counter-part had been previously called, causing the following oops:
-
-amdgpu: probe of 0000:04:00.0 failed with error -110
-BUG: kernel NULL pointer dereference, address: 0000000000000090
-PGD 0 P4D 0
-Oops: 0002 [#1] PREEMPT SMP NOPTI
-CPU: 0 PID: 609 Comm: systemd-udevd Not tainted 6.2.0-rc3-gpiccoli #338
-Hardware name: Valve Jupiter/Jupiter, BIOS F7A0113 11/04/2022
-RIP: 0010:drm_sched_fini+0x84/0xa0 [gpu_sched]
-[...]
-Call Trace:
- <TASK>
- amdgpu_fence_driver_sw_fini+0xc8/0xd0 [amdgpu]
- amdgpu_device_fini_sw+0x2b/0x3b0 [amdgpu]
- amdgpu_driver_release_kms+0x16/0x30 [amdgpu]
- devm_drm_dev_init_release+0x49/0x70
- [...]
-
-To prevent that, check if the drm_sched was properly initialized for a
-given ring before calling its fini counter-part.
-
-Notice ideally we'd use sched.ready for that; such field is set as the latest
-thing on drm_sched_init(). But amdgpu seems to "override" the meaning of such
-field - in the above oops for example, it was a GFX ring causing the crash, and
-the sched.ready field was set to true in the ring init routine, regardless of
-the state of the DRM scheduler. Hence, we ended-up using sched.ops as per
-Christian's suggestion [0], and also removed the no_scheduler check [1].
-
-[0] https://lore.kernel.org/amd-gfx/984ee981-2906-0eaf-ccec-9f80975cb136@amd.com/
-[1] https://lore.kernel.org/amd-gfx/cd0e2994-f85f-d837-609f-7056d5fb7231@amd.com/
-
-Fixes: 067f44c8b459 ("drm/amdgpu: avoid over-handle of fence driver fini in s3 test (v2)")
-Suggested-by: Christian König <christian.koenig@amd.com>
-Cc: Guchun Chen <guchun.chen@amd.com>
-Cc: Luben Tuikov <luben.tuikov@amd.com>
-Cc: Mario Limonciello <mario.limonciello@amd.com>
-Reviewed-by: Luben Tuikov <luben.tuikov@amd.com>
-Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Cc: stable@vger.kernel.org
+Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8016
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230207064337.18697-2-ville.syrjala@linux.intel.com
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
+(cherry picked from commit 118b5c136c04da705b274b0d39982bb8b7430fc5)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c |    8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/intel_bios.c |   33 ++++++++++++++++++++----------
+ 1 file changed, 23 insertions(+), 10 deletions(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
-@@ -564,7 +564,13 @@ void amdgpu_fence_driver_sw_fini(struct
- 		if (!ring || !ring->fence_drv.initialized)
+--- a/drivers/gpu/drm/i915/display/intel_bios.c
++++ b/drivers/gpu/drm/i915/display/intel_bios.c
+@@ -2466,6 +2466,22 @@ static enum port dvo_port_to_port(struct
+ 					  dvo_port);
+ }
+ 
++static enum port
++dsi_dvo_port_to_port(struct drm_i915_private *i915, u8 dvo_port)
++{
++	switch (dvo_port) {
++	case DVO_PORT_MIPIA:
++		return PORT_A;
++	case DVO_PORT_MIPIC:
++		if (DISPLAY_VER(i915) >= 11)
++			return PORT_B;
++		else
++			return PORT_C;
++	default:
++		return PORT_NONE;
++	}
++}
++
+ static int parse_bdb_230_dp_max_link_rate(const int vbt_max_link_rate)
+ {
+ 	switch (vbt_max_link_rate) {
+@@ -3406,19 +3422,16 @@ bool intel_bios_is_dsi_present(struct dr
+ 
+ 		dvo_port = child->dvo_port;
+ 
+-		if (dvo_port == DVO_PORT_MIPIA ||
+-		    (dvo_port == DVO_PORT_MIPIB && DISPLAY_VER(i915) >= 11) ||
+-		    (dvo_port == DVO_PORT_MIPIC && DISPLAY_VER(i915) < 11)) {
+-			if (port)
+-				*port = dvo_port - DVO_PORT_MIPIA;
+-			return true;
+-		} else if (dvo_port == DVO_PORT_MIPIB ||
+-			   dvo_port == DVO_PORT_MIPIC ||
+-			   dvo_port == DVO_PORT_MIPID) {
++		if (dsi_dvo_port_to_port(i915, dvo_port) == PORT_NONE) {
+ 			drm_dbg_kms(&i915->drm,
+ 				    "VBT has unsupported DSI port %c\n",
+ 				    port_name(dvo_port - DVO_PORT_MIPIA));
++			continue;
+ 		}
++
++		if (port)
++			*port = dsi_dvo_port_to_port(i915, dvo_port);
++		return true;
+ 	}
+ 
+ 	return false;
+@@ -3503,7 +3516,7 @@ bool intel_bios_get_dsc_params(struct in
+ 		if (!(child->device_type & DEVICE_TYPE_MIPI_OUTPUT))
  			continue;
  
--		if (!ring->no_scheduler)
-+		/*
-+		 * Notice we check for sched.ops since there's some
-+		 * override on the meaning of sched.ready by amdgpu.
-+		 * The natural check would be sched.ready, which is
-+		 * set as drm_sched_init() finishes...
-+		 */
-+		if (ring->sched.ops)
- 			drm_sched_fini(&ring->sched);
+-		if (child->dvo_port - DVO_PORT_MIPIA == encoder->port) {
++		if (dsi_dvo_port_to_port(i915, child->dvo_port) == encoder->port) {
+ 			if (!devdata->dsc)
+ 				return false;
  
- 		for (j = 0; j <= ring->fence_drv.num_fences_mask; ++j)
 
 
