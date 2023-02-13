@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BA38F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:59:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACFCEC433D2;
-	Mon, 13 Feb 2023 14:59:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7BB68F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:59:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E727C433D2;
+	Mon, 13 Feb 2023 14:59:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300378;
-	bh=euOhVgYGuI8oZbdL2rie3QqxtQf/rzPsyBUWRRycc2w=;
+	s=korg; t=1676300380;
+	bh=N68nEjPipR2EjZtfxCf0mBnBAGSWiuZkGQzPgJQ94+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DWR5JqU2vgyfWAg93irEi5zwKvn33y0zoLvPVfYyiyfKbHuPEu9i+oewIFLsbzhHS
-	 PbDEfVZEvprfO4j2Dq44rg7TOWHNxjJlSNpRp/khiyFBDhK9GzaLttJHHuIRLy8e2s
-	 7qp/JwEFvM2vUNwtds8k0aZVFckiIf+tucY3obUg=
+	b=Y+3mgv/seQdkkB0T/NlLkp5IX0SwygIeYaXzwHhWznXuqBiAl9eJIifMXd1O8eLvJ
+	 V3zA2qbMGas9rY7684VwTDuB+wyx7o0lxXn9D/tv4oldFaZ4q6uCbUUZQKL+AMtltd
+	 7fKxeUo2F8Vn9KIFPainhW+9RHT+iQ2QZRE7/dsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 51/67] mptcp: be careful on subflow status propagation on errors
-Date: Mon, 13 Feb 2023 15:49:32 +0100
-Message-Id: <20230213144734.812602154@linuxfoundation.org>
+	Guo Ren <guoren@linux.alibaba.com>,
+	Guo Ren <guoren@kernel.org>,
+	Andrew Jones <ajones@ventanamicro.com>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 5.15 57/67] riscv: Fixup race condition on PG_dcache_clean in flush_icache_pte
+Date: Mon, 13 Feb 2023 15:49:38 +0100
+Message-Id: <20230213144735.090192379@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -35,63 +37,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Guo Ren <guoren@linux.alibaba.com>
 
-commit 1249db44a102d9d3541ed7798d4b01ffdcf03524 upstream.
+commit 950b879b7f0251317d26bae0687e72592d607532 upstream.
 
-Currently the subflow error report callback unconditionally
-propagates the fallback subflow status to the owning msk.
+In commit 588a513d3425 ("arm64: Fix race condition on PG_dcache_clean
+in __sync_icache_dcache()"), we found RISC-V has the same issue as the
+previous arm64. The previous implementation didn't guarantee the correct
+sequence of operations, which means flush_icache_all() hasn't been
+called when the PG_dcache_clean was set. That would cause a risk of page
+synchronization.
 
-If the msk is already orphaned, the above prevents the code
-from correctly tracking the msk moving to the TCP_CLOSE state
-and doing the appropriate cleanup.
-
-All the above causes increasing memory usage over time and
-sporadic self-tests failures.
-
-There is a great deal of infrastructure trying to propagate
-correctly the fallback subflow status to the owning mptcp socket,
-e.g. via mptcp_subflow_eof() and subflow_sched_work_if_closed():
-in the error propagation path we need only to cope with unorphaned
-sockets.
-
-Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/339
-Fixes: 15cc10453398 ("mptcp: deliver ssk errors to msk")
+Fixes: 08f051eda33b ("RISC-V: Flush I$ when making a dirty page executable")
+Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
+Signed-off-by: Guo Ren <guoren@kernel.org>
+Reviewed-by: Andrew Jones <ajones@ventanamicro.com>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Link: https://lore.kernel.org/r/20230127035306.1819561-1-guoren@kernel.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mptcp/subflow.c |   10 +++++++++-
- 1 file changed, 9 insertions(+), 1 deletion(-)
+ arch/riscv/mm/cacheflush.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/mptcp/subflow.c
-+++ b/net/mptcp/subflow.c
-@@ -1284,6 +1284,7 @@ void __mptcp_error_report(struct sock *s
- 	mptcp_for_each_subflow(msk, subflow) {
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
- 		int err = sock_error(ssk);
-+		int ssk_state;
+--- a/arch/riscv/mm/cacheflush.c
++++ b/arch/riscv/mm/cacheflush.c
+@@ -85,7 +85,9 @@ void flush_icache_pte(pte_t pte)
+ {
+ 	struct page *page = pte_page(pte);
  
- 		if (!err)
- 			continue;
-@@ -1294,7 +1295,14 @@ void __mptcp_error_report(struct sock *s
- 		if (sk->sk_state != TCP_SYN_SENT && !__mptcp_check_fallback(msk))
- 			continue;
- 
--		inet_sk_state_store(sk, inet_sk_state_load(ssk));
-+		/* We need to propagate only transition to CLOSE state.
-+		 * Orphaned socket will see such state change via
-+		 * subflow_sched_work_if_closed() and that path will properly
-+		 * destroy the msk as needed.
-+		 */
-+		ssk_state = inet_sk_state_load(ssk);
-+		if (ssk_state == TCP_CLOSE && !sock_flag(sk, SOCK_DEAD))
-+			inet_sk_state_store(sk, ssk_state);
- 		sk->sk_err = -err;
- 
- 		/* This barrier is coupled with smp_rmb() in mptcp_poll() */
+-	if (!test_and_set_bit(PG_dcache_clean, &page->flags))
++	if (!test_bit(PG_dcache_clean, &page->flags)) {
+ 		flush_icache_all();
++		set_bit(PG_dcache_clean, &page->flags);
++	}
+ }
+ #endif /* CONFIG_MMU */
 
 
