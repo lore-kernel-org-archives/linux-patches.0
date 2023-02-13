@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C4CD38F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:54:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21772C433D2;
-	Mon, 13 Feb 2023 14:54:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58D898F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:54:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D21AEC433EF;
+	Mon, 13 Feb 2023 14:54:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300067;
-	bh=gs1RZapX6LB/MI0TbJJPUrtZL68KKchYImWdUAvNpUQ=;
+	s=korg; t=1676300070;
+	bh=ln9DHkuLmhsCmgpE0v2NJmbIfn3LTMhnb1pD/k823+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vGsqaHI2jgrgGMtcnnd6c+aKNUCMHDfIxiz9ar+5gJMj/JapT+TZxHwWZfaZbbTLn
-	 3ZgFlZOzrwYbY24D7fApxM+nU/o36b7Dfx9P97omyle8GZLeKGZlbY01OK+CHbkkRs
-	 7W/J/jyigMHHim8vQIE2TD5quIgcVDZypaoLN/FU=
+	b=nxviegLhZ2KG0MIcnejCTQ4lI6JwubGvcvy664U0xQI8HfXWXrW1IedzLV6XHsaQY
+	 3VSp/CpxRhJ8TDj+yLtHKZzROXR3Z6kOV5x+zJP2ypC1kk9EkXLqhY7wYaJdDnb3Fj
+	 5rxkUeqB9xedwTcd+FqtXMBZouHVrAPBMTKcOPsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vlad Buslov <vladbu@nvidia.com>,
-	Maor Dickman <maord@nvidia.com>,
+	Shay Drory <shayd@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 046/114] net/mlx5: Bridge, fix ageing of peer FDB entries
-Date: Mon, 13 Feb 2023 15:48:01 +0100
-Message-Id: <20230213144744.544206972@linuxfoundation.org>
+Subject: [PATCH 6.1 052/114] net/mlx5: fw_tracer, Zero consumer index when reloading the tracer
+Date: Mon, 13 Feb 2023 15:48:07 +0100
+Message-Id: <20230213144744.898175170@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -36,56 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vlad Buslov <vladbu@nvidia.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit da0c52426cd23f8728eff72c2b2d2a3eb6b451f5 ]
+[ Upstream commit 184e1e4474dbcfebc4dbd1fa823a329978f25506 ]
 
-SWITCHDEV_FDB_ADD_TO_BRIDGE event handler that updates FDB entry 'lastuse'
-field is only executed for eswitch that owns the entry. However, if peer
-entry processed packets at least once it will have hardware counter 'used'
-value greater than entry 'lastuse' from that point on, which will cause FDB
-entry not being aged out.
+When tracer is reloaded, the device will log the traces at the
+beginning of the log buffer. Also, driver is reading the log buffer in
+chunks in accordance to the consumer index.
+Hence, zero consumer index when reloading the tracer.
 
-Process the event on all eswitch instances.
-
-Fixes: ff9b7521468b ("net/mlx5: Bridge, support LAG")
-Signed-off-by: Vlad Buslov <vladbu@nvidia.com>
-Reviewed-by: Maor Dickman <maord@nvidia.com>
+Fixes: 4383cfcc65e7 ("net/mlx5: Add devlink reload")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c | 4 ----
- drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c    | 2 +-
- 2 files changed, 1 insertion(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
-index 8099a21e674c9..ce85b48d327da 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/rep/bridge.c
-@@ -438,10 +438,6 @@ static int mlx5_esw_bridge_switchdev_event(struct notifier_block *nb,
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+index d82e98a0cdfa7..5b05b884b5fb3 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+@@ -757,6 +757,7 @@ static int mlx5_fw_tracer_set_mtrc_conf(struct mlx5_fw_tracer *tracer)
+ 	if (err)
+ 		mlx5_core_warn(dev, "FWTracer: Failed to set tracer configurations %d\n", err);
  
- 	switch (event) {
- 	case SWITCHDEV_FDB_ADD_TO_BRIDGE:
--		/* only handle the event on native eswtich of representor */
--		if (!mlx5_esw_bridge_is_local(dev, rep, esw))
--			break;
--
- 		fdb_info = container_of(info,
- 					struct switchdev_notifier_fdb_info,
- 					info);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
-index 4fbff7bcc1556..d0b2676c32145 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/esw/bridge.c
-@@ -1715,7 +1715,7 @@ void mlx5_esw_bridge_fdb_update_used(struct net_device *dev, u16 vport_num, u16
- 	struct mlx5_esw_bridge *bridge;
++	tracer->buff.consumer_index = 0;
+ 	return err;
+ }
  
- 	port = mlx5_esw_bridge_port_lookup(vport_num, esw_owner_vhca_id, br_offloads);
--	if (!port || port->flags & MLX5_ESW_BRIDGE_PORT_FLAG_PEER)
-+	if (!port)
+@@ -821,7 +822,6 @@ static void mlx5_fw_tracer_ownership_change(struct work_struct *work)
+ 	mlx5_core_dbg(tracer->dev, "FWTracer: ownership changed, current=(%d)\n", tracer->owner);
+ 	if (tracer->owner) {
+ 		tracer->owner = false;
+-		tracer->buff.consumer_index = 0;
  		return;
+ 	}
  
- 	bridge = port->bridge;
 -- 
 2.39.0
 
