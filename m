@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4028C8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:54:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAB03C433EF;
-	Mon, 13 Feb 2023 14:54:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFCCA8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:54:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5705FC433D2;
+	Mon, 13 Feb 2023 14:54:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300078;
-	bh=R0kwmgjr7k6VaSknFET5etDqGFQfopj1WRIbD6IDDsY=;
+	s=korg; t=1676300080;
+	bh=wndGZzRGH0bN3LY7nXy9TG5ClgqVUvXkXPpk7yqn9uA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FWLOXiBzKCc3NJoBKX6gtEtFiYdCIICI+Da4IB+WO/62aE3zb6ui7QFrXK7M2PmcI
-	 KR7lS/qNVYFGa/OCSZJF8tKhJIsqo+Lpm/LHgmLYT0glpYx8QIRqf4NejyYjE4tFfd
-	 6iumwqL1dpRCCNC4dpAFfIGAwrXkhDrMInxZsiAk=
+	b=BqeG9km5+khFXjpMnvEBB5u2A0kpB0O9ygogeF/AxTyCVNFPhzUUxwrqXSwmsJ17c
+	 3pmYXmZC1Q81aLpUt0uQGQx39I73bESnQFMr0HCNh0IzXN3SSzoQ4Pvgq5xr21d5V7
+	 VYLIpnr3kldKuHyxuCV/9LfBRio2EcK45AxwFbFY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Moshe Shemesh <moshe@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Kevin Yang <yyd@google.com>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 051/114] net/mlx5: fw_tracer, Clear load bit when freeing string DBs buffers
-Date: Mon, 13 Feb 2023 15:48:06 +0100
-Message-Id: <20230213144744.836151031@linuxfoundation.org>
+Subject: [PATCH 6.1 056/114] txhash: fix sk->sk_txrehash default
+Date: Mon, 13 Feb 2023 15:48:11 +0100
+Message-Id: <20230213144745.111808100@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -36,38 +36,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shay Drory <shayd@nvidia.com>
+From: Kevin Yang <yyd@google.com>
 
-[ Upstream commit db561fed6b8fa3878e74d5df6512a4a38152b63e ]
+[ Upstream commit c11204c78d6966c5bda6dd05c3ac5cbb193f93e3 ]
 
-Whenever the driver is reading the string DBs into buffers, the driver
-is setting the load bit, but the driver never clears this bit.
-As a result, in case load bit is on and the driver query the device for
-new string DBs, the driver won't read again the string DBs.
-Fix it by clearing the load bit when query the device for new string
-DBs.
+This code fix a bug that sk->sk_txrehash gets its default enable
+value from sysctl_txrehash only when the socket is a TCP listener.
 
-Fixes: 2d69356752ff ("net/mlx5: Add support for fw live patch event")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+We should have sysctl_txrehash to set the default sk->sk_txrehash,
+no matter TCP, nor listerner/connector.
+
+Tested by following packetdrill:
+  0 socket(..., SOCK_STREAM, IPPROTO_TCP) = 3
+  +0 socket(..., SOCK_DGRAM, IPPROTO_UDP) = 4
+  // SO_TXREHASH == 74, default to sysctl_txrehash == 1
+  +0 getsockopt(3, SOL_SOCKET, 74, [1], [4]) = 0
+  +0 getsockopt(4, SOL_SOCKET, 74, [1], [4]) = 0
+
+Fixes: 26859240e4ee ("txhash: Add socket option to control TX hash rethink behavior")
+Signed-off-by: Kevin Yang <yyd@google.com>
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 1 +
- 1 file changed, 1 insertion(+)
+ net/core/sock.c                 | 3 ++-
+ net/ipv4/af_inet.c              | 1 +
+ net/ipv4/inet_connection_sock.c | 3 ---
+ net/ipv6/af_inet6.c             | 1 +
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-index 21831386b26e8..d82e98a0cdfa7 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-@@ -64,6 +64,7 @@ static int mlx5_query_mtrc_caps(struct mlx5_fw_tracer *tracer)
- 			MLX5_GET(mtrc_cap, out, num_string_trace);
- 	tracer->str_db.num_string_db = MLX5_GET(mtrc_cap, out, num_string_db);
- 	tracer->owner = !!MLX5_GET(mtrc_cap, out, trace_owner);
-+	tracer->str_db.loaded = false;
+diff --git a/net/core/sock.c b/net/core/sock.c
+index 30407b2dd2ac4..ba6ea61b3458b 100644
+--- a/net/core/sock.c
++++ b/net/core/sock.c
+@@ -1524,6 +1524,8 @@ int sk_setsockopt(struct sock *sk, int level, int optname,
+ 			ret = -EINVAL;
+ 			break;
+ 		}
++		if ((u8)val == SOCK_TXREHASH_DEFAULT)
++			val = READ_ONCE(sock_net(sk)->core.sysctl_txrehash);
+ 		/* Paired with READ_ONCE() in tcp_rtx_synack() */
+ 		WRITE_ONCE(sk->sk_txrehash, (u8)val);
+ 		break;
+@@ -3428,7 +3430,6 @@ void sock_init_data(struct socket *sock, struct sock *sk)
+ 	sk->sk_pacing_rate = ~0UL;
+ 	WRITE_ONCE(sk->sk_pacing_shift, 10);
+ 	sk->sk_incoming_cpu = -1;
+-	sk->sk_txrehash = SOCK_TXREHASH_DEFAULT;
  
- 	for (i = 0; i < tracer->str_db.num_string_db; i++) {
- 		mtrc_cap_sp = MLX5_ADDR_OF(mtrc_cap, out, string_db_param[i]);
+ 	sk_rx_queue_clear(sk);
+ 	/*
+diff --git a/net/ipv4/af_inet.c b/net/ipv4/af_inet.c
+index 92d4237862518..5b19b77d5d759 100644
+--- a/net/ipv4/af_inet.c
++++ b/net/ipv4/af_inet.c
+@@ -347,6 +347,7 @@ static int inet_create(struct net *net, struct socket *sock, int protocol,
+ 	sk->sk_destruct	   = inet_sock_destruct;
+ 	sk->sk_protocol	   = protocol;
+ 	sk->sk_backlog_rcv = sk->sk_prot->backlog_rcv;
++	sk->sk_txrehash = READ_ONCE(net->core.sysctl_txrehash);
+ 
+ 	inet->uc_ttl	= -1;
+ 	inet->mc_loop	= 1;
+diff --git a/net/ipv4/inet_connection_sock.c b/net/ipv4/inet_connection_sock.c
+index 647b3c6b575ef..7152ede18f115 100644
+--- a/net/ipv4/inet_connection_sock.c
++++ b/net/ipv4/inet_connection_sock.c
+@@ -1225,9 +1225,6 @@ int inet_csk_listen_start(struct sock *sk)
+ 	sk->sk_ack_backlog = 0;
+ 	inet_csk_delack_init(sk);
+ 
+-	if (sk->sk_txrehash == SOCK_TXREHASH_DEFAULT)
+-		sk->sk_txrehash = READ_ONCE(sock_net(sk)->core.sysctl_txrehash);
+-
+ 	/* There is race window here: we announce ourselves listening,
+ 	 * but this transition is still not validated by get_port().
+ 	 * It is OK, because this socket enters to hash table only
+diff --git a/net/ipv6/af_inet6.c b/net/ipv6/af_inet6.c
+index 7b0cd54da452b..fb1bf6eb0ff8e 100644
+--- a/net/ipv6/af_inet6.c
++++ b/net/ipv6/af_inet6.c
+@@ -221,6 +221,7 @@ static int inet6_create(struct net *net, struct socket *sock, int protocol,
+ 	np->pmtudisc	= IPV6_PMTUDISC_WANT;
+ 	np->repflow	= net->ipv6.sysctl.flowlabel_reflect & FLOWLABEL_REFLECT_ESTABLISHED;
+ 	sk->sk_ipv6only	= net->ipv6.sysctl.bindv6only;
++	sk->sk_txrehash = READ_ONCE(net->core.sysctl_txrehash);
+ 
+ 	/* Init the ipv4 part of the socket since we can have sockets
+ 	 * using v6 API for ipv4.
 -- 
 2.39.0
 
