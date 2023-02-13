@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EA28F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21225C433EF;
-	Mon, 13 Feb 2023 14:58:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557208F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A950FC433EF;
+	Mon, 13 Feb 2023 14:58:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300310;
-	bh=wzZpU6F9WtJ94ygPICDTmIB0BOXU4zR+L00J7oAmH/4=;
+	s=korg; t=1676300313;
+	bh=UZOGAcmGTBilaFJYTy3xPYlOlNLCDmANFpbGsrIFXIg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=T+7RKeZ5u3xgL1DSa2vTQq4jWDm0Zyb7yaeY+sC39QGxefe1OwCHdeJ0BSt14WzDo
-	 acd29DW4JWTrdFDBeuojd3xsmNqZ4EFoADOCAUsH4arXMjgG8+4pB3QWIoBFsmIiJd
-	 39vCgDx1qQTKpUrvL58WBO4RfuK+TvXWO3/51rmg=
+	b=CbA97ZvAQm9utkCo4IX1hvpdbVWo/lvMrkGn7CcR5UZ3qkQh9qYht1p/Ps7Y+JubM
+	 V/40+wuKnusG8tClaPcbLAKRtl9QjO535qpcDza2Cq7skt3uIktf4vmTXh1woEa/Q7
+	 Dp5gpIoYipbo/8//FSsqC/chcMuky2pdlIpo+ax0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Maxim Mikityanskiy <maximmi@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 30/67] net/mlx5e: Move repeating clear_bit in mlx5e_rx_reporter_err_rq_cqe_recover
-Date: Mon, 13 Feb 2023 15:49:11 +0100
-Message-Id: <20230213144733.813988522@linuxfoundation.org>
+Subject: [PATCH 5.15 31/67] net/mlx5e: Introduce the mlx5e_flush_rq function
+Date: Mon, 13 Feb 2023 15:49:12 +0100
+Message-Id: <20230213144733.859833406@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -39,45 +39,124 @@ Content-Transfer-Encoding: 8bit
 
 From: Maxim Mikityanskiy <maximmi@nvidia.com>
 
-[ Upstream commit e64d71d055ca01fa5054d25b99fb29b98e543a31 ]
+[ Upstream commit d9ba64deb2f1ad58eb3067c7485518f3e96559ee ]
 
-The same clear_bit is called in both error and success flows. Move the
-call to do it only once and remove the out label.
+Add a function to flush an RQ: clean up descriptors, release pages and
+reset the RQ. This procedure is used by the recovery flow, and it will
+also be used in a following commit to free some memory when switching a
+channel to the XSK mode.
 
 Signed-off-by: Maxim Mikityanskiy <maximmi@nvidia.com>
-Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
 Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Stable-dep-of: 1e66220948df ("net/mlx5e: Update rx ring hw mtu upon each rx-fcs flag change")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en.h  |  2 +-
+ .../mellanox/mlx5/core/en/reporter_rx.c       | 23 +--------------
+ .../net/ethernet/mellanox/mlx5/core/en_main.c | 28 ++++++++++++++++++-
+ 3 files changed, 29 insertions(+), 24 deletions(-)
 
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
+index c22a38e5337b2..c822c3ac0544b 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
+@@ -1002,7 +1002,7 @@ void mlx5e_activate_priv_channels(struct mlx5e_priv *priv);
+ void mlx5e_deactivate_priv_channels(struct mlx5e_priv *priv);
+ int mlx5e_ptp_rx_manage_fs_ctx(struct mlx5e_priv *priv, void *ctx);
+ 
+-int mlx5e_modify_rq_state(struct mlx5e_rq *rq, int curr_state, int next_state);
++int mlx5e_flush_rq(struct mlx5e_rq *rq, int curr_state);
+ void mlx5e_activate_rq(struct mlx5e_rq *rq);
+ void mlx5e_deactivate_rq(struct mlx5e_rq *rq);
+ void mlx5e_activate_icosq(struct mlx5e_icosq *icosq);
 diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c
-index e329158fdc555..0f1dbad7c9f1a 100644
+index 0f1dbad7c9f1a..899a9a73eef68 100644
 --- a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c
 +++ b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c
-@@ -157,16 +157,13 @@ static int mlx5e_rx_reporter_err_rq_cqe_recover(void *ctx)
- 	mlx5e_free_rx_descs(rq);
- 
- 	err = mlx5e_rq_to_ready(rq, MLX5_RQC_STATE_ERR);
-+	clear_bit(MLX5E_RQ_STATE_RECOVERING, &rq->state);
- 	if (err)
--		goto out;
-+		return err;
- 
--	clear_bit(MLX5E_RQ_STATE_RECOVERING, &rq->state);
- 	mlx5e_activate_rq(rq);
- 	rq->stats->recover++;
- 	return 0;
--out:
--	clear_bit(MLX5E_RQ_STATE_RECOVERING, &rq->state);
--	return err;
+@@ -129,34 +129,13 @@ static int mlx5e_rx_reporter_err_icosq_cqe_recover(void *ctx)
+ 	return err;
  }
  
- static int mlx5e_rx_reporter_timeout_recover(void *ctx)
+-static int mlx5e_rq_to_ready(struct mlx5e_rq *rq, int curr_state)
+-{
+-	struct net_device *dev = rq->netdev;
+-	int err;
+-
+-	err = mlx5e_modify_rq_state(rq, curr_state, MLX5_RQC_STATE_RST);
+-	if (err) {
+-		netdev_err(dev, "Failed to move rq 0x%x to reset\n", rq->rqn);
+-		return err;
+-	}
+-	err = mlx5e_modify_rq_state(rq, MLX5_RQC_STATE_RST, MLX5_RQC_STATE_RDY);
+-	if (err) {
+-		netdev_err(dev, "Failed to move rq 0x%x to ready\n", rq->rqn);
+-		return err;
+-	}
+-
+-	return 0;
+-}
+-
+ static int mlx5e_rx_reporter_err_rq_cqe_recover(void *ctx)
+ {
+ 	struct mlx5e_rq *rq = ctx;
+ 	int err;
+ 
+ 	mlx5e_deactivate_rq(rq);
+-	mlx5e_free_rx_descs(rq);
+-
+-	err = mlx5e_rq_to_ready(rq, MLX5_RQC_STATE_ERR);
++	err = mlx5e_flush_rq(rq, MLX5_RQC_STATE_ERR);
+ 	clear_bit(MLX5E_RQ_STATE_RECOVERING, &rq->state);
+ 	if (err)
+ 		return err;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index be19f5cf9d150..866242ac72c29 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -672,7 +672,7 @@ int mlx5e_create_rq(struct mlx5e_rq *rq, struct mlx5e_rq_param *param)
+ 	return err;
+ }
+ 
+-int mlx5e_modify_rq_state(struct mlx5e_rq *rq, int curr_state, int next_state)
++static int mlx5e_modify_rq_state(struct mlx5e_rq *rq, int curr_state, int next_state)
+ {
+ 	struct mlx5_core_dev *mdev = rq->mdev;
+ 
+@@ -701,6 +701,32 @@ int mlx5e_modify_rq_state(struct mlx5e_rq *rq, int curr_state, int next_state)
+ 	return err;
+ }
+ 
++static int mlx5e_rq_to_ready(struct mlx5e_rq *rq, int curr_state)
++{
++	struct net_device *dev = rq->netdev;
++	int err;
++
++	err = mlx5e_modify_rq_state(rq, curr_state, MLX5_RQC_STATE_RST);
++	if (err) {
++		netdev_err(dev, "Failed to move rq 0x%x to reset\n", rq->rqn);
++		return err;
++	}
++	err = mlx5e_modify_rq_state(rq, MLX5_RQC_STATE_RST, MLX5_RQC_STATE_RDY);
++	if (err) {
++		netdev_err(dev, "Failed to move rq 0x%x to ready\n", rq->rqn);
++		return err;
++	}
++
++	return 0;
++}
++
++int mlx5e_flush_rq(struct mlx5e_rq *rq, int curr_state)
++{
++	mlx5e_free_rx_descs(rq);
++
++	return mlx5e_rq_to_ready(rq, curr_state);
++}
++
+ static int mlx5e_modify_rq_scatter_fcs(struct mlx5e_rq *rq, bool enable)
+ {
+ 	struct mlx5_core_dev *mdev = rq->mdev;
 -- 
 2.39.0
 
