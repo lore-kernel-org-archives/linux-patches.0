@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2790A8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:59:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7657CC433EF;
-	Mon, 13 Feb 2023 14:59:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87B9F8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:59:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10246C433EF;
+	Mon, 13 Feb 2023 14:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300385;
-	bh=MEmOQe5/1qgy8a3vclEnwF8C/ya497NIpCulmmwWdMY=;
+	s=korg; t=1676300388;
+	bh=UUYUb+chxw2xRrb4sfLLDeTaV9h2BA7JPMAyC8/11gI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CFWzdEeHzxK+g/f/a81VtOWZdKVi3qKYr2P+fNwawI3O6QiFTgUQcS+u0o0Qu/3NL
-	 8MhdADZCbi80I+8UDq2uc1RTp++gJRa/R7uW7uE2IA75zi5KqdV+2qdn9WYGRuIqp3
-	 9wvhe+SW/eBswJitMwk+aUwMaenkk17xTGMIsMZ4=
+	b=VAezjsUsuJnBdS6b4Xyds7TE2HCCJ/DJJlYN7QyDstkv5lOcIsLU/JKDvKxtBTbIG
+	 URf9kmf73fGU9K/xuMeKchu76DUQ5TFQfeMP+eHY0GEhbePofmxNsjAZV0PV9TLIsR
+	 TjmIEYiadyqqofEUBZ40pEbcI1n5b/u9WBQaa8jY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wander Lairson Costa <wander@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>
-Subject: [PATCH 5.15 59/67] rtmutex: Ensure that the top waiter is always woken up
-Date: Mon, 13 Feb 2023 15:49:40 +0100
-Message-Id: <20230213144735.179046086@linuxfoundation.org>
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Neil Armstrong <neil.armstrong@linaro.org>
+Subject: [PATCH 5.15 60/67] arm64: dts: meson-gx: Make mmc host controller interrupts level-sensitive
+Date: Mon, 13 Feb 2023 15:49:41 +0100
+Message-Id: <20230213144735.232733229@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -34,120 +34,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wander Lairson Costa <wander@redhat.com>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit db370a8b9f67ae5f17e3d5482493294467784504 upstream.
+commit 66e45351f7d6798751f98001d1fcd572024d87f0 upstream.
 
-Let L1 and L2 be two spinlocks.
+The usage of edge-triggered interrupts lead to lost interrupts under load,
+see [0]. This was confirmed to be fixed by using level-triggered
+interrupts.
+The report was about SDIO. However, as the host controller is the same
+for SD and MMC, apply the change to all mmc controller instances.
 
-Let T1 be a task holding L1 and blocked on L2. T1, currently, is the top
-waiter of L2.
+[0] https://www.spinics.net/lists/linux-mmc/msg73991.html
 
-Let T2 be the task holding L2.
-
-Let T3 be a task trying to acquire L1.
-
-The following events will lead to a state in which the wait queue of L2
-isn't empty, but no task actually holds the lock.
-
-T1                T2                                  T3
-==                ==                                  ==
-
-                                                      spin_lock(L1)
-                                                      | raw_spin_lock(L1->wait_lock)
-                                                      | rtlock_slowlock_locked(L1)
-                                                      | | task_blocks_on_rt_mutex(L1, T3)
-                                                      | | | orig_waiter->lock = L1
-                                                      | | | orig_waiter->task = T3
-                                                      | | | raw_spin_unlock(L1->wait_lock)
-                                                      | | | rt_mutex_adjust_prio_chain(T1, L1, L2, orig_waiter, T3)
-                  spin_unlock(L2)                     | | | |
-                  | rt_mutex_slowunlock(L2)           | | | |
-                  | | raw_spin_lock(L2->wait_lock)    | | | |
-                  | | wakeup(T1)                      | | | |
-                  | | raw_spin_unlock(L2->wait_lock)  | | | |
-                                                      | | | | waiter = T1->pi_blocked_on
-                                                      | | | | waiter == rt_mutex_top_waiter(L2)
-                                                      | | | | waiter->task == T1
-                                                      | | | | raw_spin_lock(L2->wait_lock)
-                                                      | | | | dequeue(L2, waiter)
-                                                      | | | | update_prio(waiter, T1)
-                                                      | | | | enqueue(L2, waiter)
-                                                      | | | | waiter != rt_mutex_top_waiter(L2)
-                                                      | | | | L2->owner == NULL
-                                                      | | | | wakeup(T1)
-                                                      | | | | raw_spin_unlock(L2->wait_lock)
-T1 wakes up
-T1 != top_waiter(L2)
-schedule_rtlock()
-
-If the deadline of T1 is updated before the call to update_prio(), and the
-new deadline is greater than the deadline of the second top waiter, then
-after the requeue, T1 is no longer the top waiter, and the wrong task is
-woken up which will then go back to sleep because it is not the top waiter.
-
-This can be reproduced in PREEMPT_RT with stress-ng:
-
-while true; do
-    stress-ng --sched deadline --sched-period 1000000000 \
-    	    --sched-runtime 800000000 --sched-deadline \
-    	    1000000000 --mmapfork 23 -t 20
-done
-
-A similar issue was pointed out by Thomas versus the cases where the top
-waiter drops out early due to a signal or timeout, which is a general issue
-for all regular rtmutex use cases, e.g. futex.
-
-The problematic code is in rt_mutex_adjust_prio_chain():
-
-    	// Save the top waiter before dequeue/enqueue
-	prerequeue_top_waiter = rt_mutex_top_waiter(lock);
-
-	rt_mutex_dequeue(lock, waiter);
-	waiter_update_prio(waiter, task);
-	rt_mutex_enqueue(lock, waiter);
-
-	// Lock has no owner?
-	if (!rt_mutex_owner(lock)) {
-	   	// Top waiter changed
-  ---->		if (prerequeue_top_waiter != rt_mutex_top_waiter(lock))
-  ---->			wake_up_state(waiter->task, waiter->wake_state);
-
-This only takes the case into account where @waiter is the new top waiter
-due to the requeue operation.
-
-But it fails to handle the case where @waiter is not longer the top
-waiter due to the requeue operation.
-
-Ensure that the new top waiter is woken up so in all cases so it can take
-over the ownerless lock.
-
-[ tglx: Amend changelog, add Fixes tag ]
-
-Fixes: c014ef69b3ac ("locking/rtmutex: Add wake_state to rt_mutex_waiter")
-Signed-off-by: Wander Lairson Costa <wander@redhat.com>
-Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Fixes: ef8d2ffedf18 ("ARM64: dts: meson-gxbb: add MMC support")
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230117172649.52465-1-wander@redhat.com
-Link: https://lore.kernel.org/r/20230202123020.14844-1-wander@redhat.com
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/76e042e0-a610-5ed5-209f-c4d7f879df44@gmail.com
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/locking/rtmutex.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/amlogic/meson-gx.dtsi |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/kernel/locking/rtmutex.c
-+++ b/kernel/locking/rtmutex.c
-@@ -855,8 +855,9 @@ static int __sched rt_mutex_adjust_prio_
- 		 * then we need to wake the new top waiter up to try
- 		 * to get the lock.
- 		 */
--		if (prerequeue_top_waiter != rt_mutex_top_waiter(lock))
--			wake_up_state(waiter->task, waiter->wake_state);
-+		top_waiter = rt_mutex_top_waiter(lock);
-+		if (prerequeue_top_waiter != top_waiter)
-+			wake_up_state(top_waiter->task, top_waiter->wake_state);
- 		raw_spin_unlock_irq(&lock->wait_lock);
- 		return 0;
- 	}
+--- a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
+@@ -602,21 +602,21 @@
+ 			sd_emmc_a: mmc@70000 {
+ 				compatible = "amlogic,meson-gx-mmc", "amlogic,meson-gxbb-mmc";
+ 				reg = <0x0 0x70000 0x0 0x800>;
+-				interrupts = <GIC_SPI 216 IRQ_TYPE_EDGE_RISING>;
++				interrupts = <GIC_SPI 216 IRQ_TYPE_LEVEL_HIGH>;
+ 				status = "disabled";
+ 			};
+ 
+ 			sd_emmc_b: mmc@72000 {
+ 				compatible = "amlogic,meson-gx-mmc", "amlogic,meson-gxbb-mmc";
+ 				reg = <0x0 0x72000 0x0 0x800>;
+-				interrupts = <GIC_SPI 217 IRQ_TYPE_EDGE_RISING>;
++				interrupts = <GIC_SPI 217 IRQ_TYPE_LEVEL_HIGH>;
+ 				status = "disabled";
+ 			};
+ 
+ 			sd_emmc_c: mmc@74000 {
+ 				compatible = "amlogic,meson-gx-mmc", "amlogic,meson-gxbb-mmc";
+ 				reg = <0x0 0x74000 0x0 0x800>;
+-				interrupts = <GIC_SPI 218 IRQ_TYPE_EDGE_RISING>;
++				interrupts = <GIC_SPI 218 IRQ_TYPE_LEVEL_HIGH>;
+ 				status = "disabled";
+ 			};
+ 		};
 
 
