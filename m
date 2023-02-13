@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F1D88F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95DCCC433D2;
-	Mon, 13 Feb 2023 14:58:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99EA28F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 21225C433EF;
+	Mon, 13 Feb 2023 14:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300307;
-	bh=i/S5+Ax0lHpX7RcBVjaLxJNyjW/Y5H/YZ6Woyz3Mmts=;
+	s=korg; t=1676300310;
+	bh=wzZpU6F9WtJ94ygPICDTmIB0BOXU4zR+L00J7oAmH/4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HYzCxcRPBjRAbyeZLSoRoGxL8Im9ZYG2av/IVqM2g0nWm6DRr4rN8bQI4OcaKbwCS
-	 h48/qLtZXv11QLwC8R/gqz9cKdEfCEuilQNayps4mA2XRzrw/K5oDV5zSiex2PS+Bf
-	 fzOMIRVP1BXb/b47TNaygife9SAwebH8zDqlGilQ=
+	b=T+7RKeZ5u3xgL1DSa2vTQq4jWDm0Zyb7yaeY+sC39QGxefe1OwCHdeJ0BSt14WzDo
+	 acd29DW4JWTrdFDBeuojd3xsmNqZ4EFoADOCAUsH4arXMjgG8+4pB3QWIoBFsmIiJd
+	 39vCgDx1qQTKpUrvL58WBO4RfuK+TvXWO3/51rmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Maxim Mikityanskiy <maximmi@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 29/67] net: mscc: ocelot: fix VCAP filters not matching on MAC with "protocol 802.1Q"
-Date: Mon, 13 Feb 2023 15:49:10 +0100
-Message-Id: <20230213144733.765367809@linuxfoundation.org>
+Subject: [PATCH 5.15 30/67] net/mlx5e: Move repeating clear_bit in mlx5e_rx_reporter_err_rq_cqe_recover
+Date: Mon, 13 Feb 2023 15:49:11 +0100
+Message-Id: <20230213144733.813988522@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -36,110 +37,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Maxim Mikityanskiy <maximmi@nvidia.com>
 
-[ Upstream commit f964f8399df29d3e3ced77177cf35131cd2491bf ]
+[ Upstream commit e64d71d055ca01fa5054d25b99fb29b98e543a31 ]
 
-Alternative short title: don't instruct the hardware to match on
-EtherType with "protocol 802.1Q" flower filters. It doesn't work for the
-reasons detailed below.
+The same clear_bit is called in both error and success flows. Move the
+call to do it only once and remove the out label.
 
-With a command such as the following:
-
-tc filter add dev $swp1 ingress chain $(IS1 2) pref 3 \
-	protocol 802.1Q flower skip_sw vlan_id 200 src_mac $h1_mac \
-	action vlan modify id 300 \
-	action goto chain $(IS2 0 0)
-
-the created filter is set by ocelot_flower_parse_key() to be of type
-OCELOT_VCAP_KEY_ETYPE, and etype is set to {value=0x8100, mask=0xffff}.
-This gets propagated all the way to is1_entry_set() which commits it to
-hardware (the VCAP_IS1_HK_ETYPE field of the key). Compare this to the
-case where src_mac isn't specified - the key type is OCELOT_VCAP_KEY_ANY,
-and is1_entry_set() doesn't populate VCAP_IS1_HK_ETYPE.
-
-The problem is that for VLAN-tagged frames, the hardware interprets the
-ETYPE field as holding the encapsulated VLAN protocol. So the above
-filter will only match those packets which have an encapsulated protocol
-of 0x8100, rather than all packets with VLAN ID 200 and the given src_mac.
-
-The reason why this is allowed to occur is because, although we have a
-block of code in ocelot_flower_parse_key() which sets "match_protocol"
-to false when VLAN keys are present, that code executes too late.
-There is another block of code, which executes for Ethernet addresses,
-and has a "goto finished_key_parsing" and skips the VLAN header parsing.
-By skipping it, "match_protocol" remains with the value it was
-initialized with, i.e. "true", and "proto" is set to f->common.protocol,
-or 0x8100.
-
-The concept of ignoring some keys rather than erroring out when they are
-present but can't be offloaded is dubious in itself, but is present
-since the initial commit fe3490e6107e ("net: mscc: ocelot: Hardware
-ofload for tc flower filter"), and it's outside of the scope of this
-patch to change that.
-
-The problem was introduced when the driver started to interpret the
-flower filter's protocol, and populate the VCAP filter's ETYPE field
-based on it.
-
-To fix this, it is sufficient to move the code that parses the VLAN keys
-earlier than the "goto finished_key_parsing" instruction. This will
-ensure that if we have a flower filter with both VLAN and Ethernet
-address keys, it won't match on ETYPE 0x8100, because the VLAN key
-parsing sets "match_protocol = false".
-
-Fixes: 86b956de119c ("net: mscc: ocelot: support matching on EtherType")
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230205192409.1796428-1-vladimir.oltean@nxp.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Maxim Mikityanskiy <maximmi@nvidia.com>
+Reviewed-by: Saeed Mahameed <saeedm@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Stable-dep-of: 1e66220948df ("net/mlx5e: Update rx ring hw mtu upon each rx-fcs flag change")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mscc/ocelot_flower.c | 24 +++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c | 7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/net/ethernet/mscc/ocelot_flower.c b/drivers/net/ethernet/mscc/ocelot_flower.c
-index a3a5ad5dbb0e0..b7e7bd744a1b8 100644
---- a/drivers/net/ethernet/mscc/ocelot_flower.c
-+++ b/drivers/net/ethernet/mscc/ocelot_flower.c
-@@ -473,6 +473,18 @@ ocelot_flower_parse_key(struct ocelot *ocelot, int port, bool ingress,
- 		flow_rule_match_control(rule, &match);
- 	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c
+index e329158fdc555..0f1dbad7c9f1a 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c
+@@ -157,16 +157,13 @@ static int mlx5e_rx_reporter_err_rq_cqe_recover(void *ctx)
+ 	mlx5e_free_rx_descs(rq);
  
-+	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_VLAN)) {
-+		struct flow_match_vlan match;
-+
-+		flow_rule_match_vlan(rule, &match);
-+		filter->key_type = OCELOT_VCAP_KEY_ANY;
-+		filter->vlan.vid.value = match.key->vlan_id;
-+		filter->vlan.vid.mask = match.mask->vlan_id;
-+		filter->vlan.pcp.value[0] = match.key->vlan_priority;
-+		filter->vlan.pcp.mask[0] = match.mask->vlan_priority;
-+		match_protocol = false;
-+	}
-+
- 	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_ETH_ADDRS)) {
- 		struct flow_match_eth_addrs match;
+ 	err = mlx5e_rq_to_ready(rq, MLX5_RQC_STATE_ERR);
++	clear_bit(MLX5E_RQ_STATE_RECOVERING, &rq->state);
+ 	if (err)
+-		goto out;
++		return err;
  
-@@ -605,18 +617,6 @@ ocelot_flower_parse_key(struct ocelot *ocelot, int port, bool ingress,
- 		match_protocol = false;
- 	}
+-	clear_bit(MLX5E_RQ_STATE_RECOVERING, &rq->state);
+ 	mlx5e_activate_rq(rq);
+ 	rq->stats->recover++;
+ 	return 0;
+-out:
+-	clear_bit(MLX5E_RQ_STATE_RECOVERING, &rq->state);
+-	return err;
+ }
  
--	if (flow_rule_match_key(rule, FLOW_DISSECTOR_KEY_VLAN)) {
--		struct flow_match_vlan match;
--
--		flow_rule_match_vlan(rule, &match);
--		filter->key_type = OCELOT_VCAP_KEY_ANY;
--		filter->vlan.vid.value = match.key->vlan_id;
--		filter->vlan.vid.mask = match.mask->vlan_id;
--		filter->vlan.pcp.value[0] = match.key->vlan_priority;
--		filter->vlan.pcp.mask[0] = match.mask->vlan_priority;
--		match_protocol = false;
--	}
--
- finished_key_parsing:
- 	if (match_protocol && proto != ETH_P_ALL) {
- 		if (filter->block_id == VCAP_ES0) {
+ static int mlx5e_rx_reporter_timeout_recover(void *ctx)
 -- 
 2.39.0
 
