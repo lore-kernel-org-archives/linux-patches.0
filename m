@@ -1,27 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2028F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:03:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42322C4339B;
-	Mon, 13 Feb 2023 15:03:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4A8A88F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:03:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9BCD8C4339E;
+	Mon, 13 Feb 2023 15:03:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300596;
-	bh=E/2uAleW193iYSoF3EWEG2aHf0e9jDEeAf7JcQHrP8c=;
+	s=korg; t=1676300599;
+	bh=3fApi2YkpBz60yN281cZP7HxkGDB4JPnZL13Rkwaoy4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g3GLtv7LHoPXVQHsexX3hRllSZSmjSbqdFxPbkjLe/UU7ySx990BoivaFdlwqwc/J
-	 a6vWCm8fdZO3CkVvOHerJA3y6asUlWOz8Wn0s9MC/04L593juqCEkMJKw4fQheW16s
-	 yVyd+UsbbfIzj80GSdUFOhdOEaqjZUZOteCXqeTU=
+	b=E6xnDgroY8+PegZV17AUjUr0qDGek7SubPI6+YEMqzQ5IJONrwk5q1Oh/vj9fipOd
+	 XOxOw9ZJ4LkgaJFU4+lDgrgG0Sqri/Uj0WD8SllgbvQnsW+cKJVsA2cmMB5RzIFgHt
+	 yGRg/8XHOpmJHGqxIlUReh9mro3wnNr+syzMeH30=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 067/139] iio: imu: fxos8700: fix swapped ACCEL and MAGN channels readback
-Date: Mon, 13 Feb 2023 15:50:12 +0100
-Message-Id: <20230213144749.323735916@linuxfoundation.org>
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Peter Xu <peterx@redhat.com>,
+	David Hildenbrand <david@redhat.com>,
+	James Houghton <jthoughton@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Naoya Horiguchi <naoya.horiguchi@linux.dev>,
+	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 076/139] mm: hugetlb: proc: check for hugetlb shared PMD in /proc/PID/smaps
+Date: Mon, 13 Feb 2023 15:50:21 +0100
+Message-Id: <20230213144749.848938863@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -35,50 +43,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Mike Kravetz <mike.kravetz@oracle.com>
 
-commit c68b44bc7d9b1469774a1c985ee71d2cbc5ebef5 upstream.
+commit 3489dbb696d25602aea8c3e669a6d43b76bd5358 upstream.
 
-Because ACCEL and MAGN channels data register base address is
-swapped the accelerometer and magnetometer channels readback is
-swapped.
+Patch series "Fixes for hugetlb mapcount at most 1 for shared PMDs".
 
-Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://lore.kernel.org/r/20221208071911.2405922-3-carlos.song@nxp.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+This issue of mapcount in hugetlb pages referenced by shared PMDs was
+discussed in [1].  The following two patches address user visible behavior
+caused by this issue.
+
+[1] https://lore.kernel.org/linux-mm/Y9BF+OCdWnCSilEu@monkey/
+
+
+This patch (of 2):
+
+A hugetlb page will have a mapcount of 1 if mapped by multiple processes
+via a shared PMD.  This is because only the first process increases the
+map count, and subsequent processes just add the shared PMD page to their
+page table.
+
+page_mapcount is being used to decide if a hugetlb page is shared or
+private in /proc/PID/smaps.  Pages referenced via a shared PMD were
+incorrectly being counted as private.
+
+To fix, check for a shared PMD if mapcount is 1.  If a shared PMD is found
+count the hugetlb page as shared.  A new helper to check for a shared PMD
+is added.
+
+[akpm@linux-foundation.org: simplification, per David]
+[akpm@linux-foundation.org: hugetlb.h: include page_ref.h for page_count()]
+Link: https://lkml.kernel.org/r/20230126222721.222195-2-mike.kravetz@oracle.com
+Fixes: 25ee01a2fca0 ("mm: hugetlb: proc: add hugetlb-related fields to /proc/PID/smaps")
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Acked-by: Peter Xu <peterx@redhat.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Naoya Horiguchi <naoya.horiguchi@linux.dev>
+Cc: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/fxos8700_core.c |   17 +++++++++++++++--
- 1 file changed, 15 insertions(+), 2 deletions(-)
+ fs/proc/task_mmu.c      |    4 +---
+ include/linux/hugetlb.h |   13 +++++++++++++
+ 2 files changed, 14 insertions(+), 3 deletions(-)
 
---- a/drivers/iio/imu/fxos8700_core.c
-+++ b/drivers/iio/imu/fxos8700_core.c
-@@ -420,9 +420,22 @@ static int fxos8700_get_data(struct fxos
- 	u8 base, reg;
- 	s16 tmp;
- 	int ret;
--	enum fxos8700_sensor type = fxos8700_to_sensor(chan_type);
+--- a/fs/proc/task_mmu.c
++++ b/fs/proc/task_mmu.c
+@@ -714,9 +714,7 @@ static int smaps_hugetlb_range(pte_t *pt
+ 			page = device_private_entry_to_page(swpent);
+ 	}
+ 	if (page) {
+-		int mapcount = page_mapcount(page);
+-
+-		if (mapcount >= 2)
++		if (page_mapcount(page) >= 2 || hugetlb_pmd_shared(pte))
+ 			mss->shared_hugetlb += huge_page_size(hstate_vma(vma));
+ 		else
+ 			mss->private_hugetlb += huge_page_size(hstate_vma(vma));
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -7,6 +7,7 @@
+ #include <linux/fs.h>
+ #include <linux/hugetlb_inline.h>
+ #include <linux/cgroup.h>
++#include <linux/page_ref.h>
+ #include <linux/list.h>
+ #include <linux/kref.h>
+ #include <linux/pgtable.h>
+@@ -942,4 +943,16 @@ static inline __init void hugetlb_cma_ch
+ }
+ #endif
  
--	base = type ? FXOS8700_OUT_X_MSB : FXOS8700_M_OUT_X_MSB;
-+	/*
-+	 * Different register base addresses varies with channel types.
-+	 * This bug hasn't been noticed before because using an enum is
-+	 * really hard to read. Use an a switch statement to take over that.
-+	 */
-+	switch (chan_type) {
-+	case IIO_ACCEL:
-+		base = FXOS8700_OUT_X_MSB;
-+		break;
-+	case IIO_MAGN:
-+		base = FXOS8700_M_OUT_X_MSB;
-+		break;
-+	default:
-+		return -EINVAL;
-+	}
- 
- 	/* Block read 6 bytes of device output registers to avoid data loss */
- 	ret = regmap_bulk_read(data->regmap, base, data->buf,
++#ifdef CONFIG_ARCH_WANT_HUGE_PMD_SHARE
++static inline bool hugetlb_pmd_shared(pte_t *pte)
++{
++	return page_count(virt_to_page(pte)) > 1;
++}
++#else
++static inline bool hugetlb_pmd_shared(pte_t *pte)
++{
++	return false;
++}
++#endif
++
+ #endif /* _LINUX_HUGETLB_H */
 
 
