@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B7748F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:54:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6B67C433EF;
-	Mon, 13 Feb 2023 14:54:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E7F08F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:54:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 861E7C433D2;
+	Mon, 13 Feb 2023 14:54:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300083;
-	bh=AxAluxM/BK+fXKw04pUKix1NYp6feId1wrRaWhDTZB4=;
+	s=korg; t=1676300085;
+	bh=KrDvIsjkHPSQm0uko5vYCNkPGsU6mBLlSaQcy/6qpqw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2JvP05n6RZdSWxafHN6ooy3l7hsOZCxfD/dijXKwxXhK/oF2AQ12rXXd4lIuFlMYH
-	 4Bd18/GfzeuzUF7bvBSiZuuLQazlKl6boWE+ODPHcM4LTe+9SV54oWtmnBfOYIhTEG
-	 8JQ4fX2zMWnFJGCMIbmvDdibRgSgK+f6frhfFH8k=
+	b=1DqCKMVah3ps/2zGapgzGkqh5wNOG2YyuVGw2Imrmr4D0glPP/bMXrpWAwQXqHnHq
+	 Hs+umY9aGOguNdg2TxD90WQpzDe5+fO+0ItFRq8PMAVQK1N70M2NV4NF6iEXV689Jn
+	 hbpVhvvi4qwSbHzU2ToCrYEcZb8OweIYnvWbA4+M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ido Schimmel <idosch@nvidia.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Willem de Bruijn <willemb@google.com>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 057/114] selftests: Fix failing VXLAN VNI filtering test
-Date: Mon, 13 Feb 2023 15:48:12 +0100
-Message-Id: <20230213144745.171076697@linuxfoundation.org>
+Subject: [PATCH 6.1 058/114] rds: rds_rm_zerocopy_callback() use list_first_entry()
+Date: Mon, 13 Feb 2023 15:48:13 +0100
+Message-Id: <20230213144745.215154262@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -36,66 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ido Schimmel <idosch@nvidia.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit b963d9d5b9437a6b99504987310f98537c9e77d4 ]
+[ Upstream commit f753a68980cf4b59a80fe677619da2b1804f526d ]
 
-iproute2 does not recognize the "group6" and "remote6" keywords. Fix by
-using "group" and "remote" instead.
+rds_rm_zerocopy_callback() uses list_entry() on the head of a list
+causing a type confusion.
+Use list_first_entry() to actually access the first element of the
+rs_zcookie_queue list.
 
-Before:
-
- # ./test_vxlan_vnifiltering.sh
- [...]
- Tests passed:  25
- Tests failed:   2
-
-After:
-
- # ./test_vxlan_vnifiltering.sh
- [...]
- Tests passed:  27
- Tests failed:   0
-
-Fixes: 3edf5f66c12a ("selftests: add new tests for vxlan vnifiltering")
-Signed-off-by: Ido Schimmel <idosch@nvidia.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Link: https://lore.kernel.org/r/20230207141819.256689-1-idosch@nvidia.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 9426bbc6de99 ("rds: use list structure to track information for zerocopy completion notification")
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Link: https://lore.kernel.org/r/20230202-rds-zerocopy-v3-1-83b0df974f9a@diag.uniroma1.it
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/net/test_vxlan_vnifiltering.sh   | 18 +++++-------------
- 1 file changed, 5 insertions(+), 13 deletions(-)
+ net/rds/message.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tools/testing/selftests/net/test_vxlan_vnifiltering.sh b/tools/testing/selftests/net/test_vxlan_vnifiltering.sh
-index 704997ffc2449..8c3ac0a725451 100755
---- a/tools/testing/selftests/net/test_vxlan_vnifiltering.sh
-+++ b/tools/testing/selftests/net/test_vxlan_vnifiltering.sh
-@@ -293,19 +293,11 @@ setup-vm() {
- 	elif [[ -n $vtype && $vtype == "vnifilterg" ]]; then
- 	   # Add per vni group config with 'bridge vni' api
- 	   if [ -n "$group" ]; then
--	      if [ "$family" == "v4" ]; then
--		 if [ $mcast -eq 1 ]; then
--		    bridge -netns hv-$hvid vni add dev $vxlandev vni $tid group $group
--		 else
--		    bridge -netns hv-$hvid vni add dev $vxlandev vni $tid remote $group
--		 fi
--	      else
--		 if [ $mcast -eq 1 ]; then
--		    bridge -netns hv-$hvid vni add dev $vxlandev vni $tid group6 $group
--		 else
--		    bridge -netns hv-$hvid vni add dev $vxlandev vni $tid remote6 $group
--		 fi
--	      fi
-+		if [ $mcast -eq 1 ]; then
-+			bridge -netns hv-$hvid vni add dev $vxlandev vni $tid group $group
-+		else
-+			bridge -netns hv-$hvid vni add dev $vxlandev vni $tid remote $group
-+		fi
- 	   fi
- 	fi
- 	done
+diff --git a/net/rds/message.c b/net/rds/message.c
+index 44dbc612ef549..9402bc941823f 100644
+--- a/net/rds/message.c
++++ b/net/rds/message.c
+@@ -104,9 +104,9 @@ static void rds_rm_zerocopy_callback(struct rds_sock *rs,
+ 	spin_lock_irqsave(&q->lock, flags);
+ 	head = &q->zcookie_head;
+ 	if (!list_empty(head)) {
+-		info = list_entry(head, struct rds_msg_zcopy_info,
+-				  rs_zcookie_next);
+-		if (info && rds_zcookie_add(info, cookie)) {
++		info = list_first_entry(head, struct rds_msg_zcopy_info,
++					rs_zcookie_next);
++		if (rds_zcookie_add(info, cookie)) {
+ 			spin_unlock_irqrestore(&q->lock, flags);
+ 			kfree(rds_info_from_znotifier(znotif));
+ 			/* caller invokes rds_wake_sk_sleep() */
 -- 
 2.39.0
 
