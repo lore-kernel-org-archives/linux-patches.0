@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26D78F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:03:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23DCCC4339B;
-	Mon, 13 Feb 2023 15:03:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2978F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:03:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3E4C433EF;
+	Mon, 13 Feb 2023 15:03:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300591;
-	bh=71iNlBL+XuH/eLkc5Yoh78ukUc4odthHKGnKPpcIj6c=;
+	s=korg; t=1676300594;
+	bh=NaqXkfFZtpoDH9Rm1mz+i9p6uXwYGnK7GsGYT4K3MM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pZVrjnIW7BZSKEbBeACP1GQF9DJBKuDbZ65bT8/pOUt13j/L/cwaziyu1gcRQPnJI
-	 dS9RW6sF0Uj1fz5peeOFtFIquyDa3U+Wp9mQyumOgTOVwCCYASdIK85usfnzWZfrhk
-	 2aXifdVOmWGJ54RXwQioS/nx9O3KIOrBAGjtSJhQ=
+	b=zMW/iRGox8ojVHk6rJesGMvlVfwFf6QB+7xgajvIferjKd4xR/d9P6kv9rjc5F/YG
+	 6pSuiyHlnkeH39FfdnNu+nF96L+oGtNFfDfeYDKU8nfjCh1Bp8d72nWAxpZqm0Vwpn
+	 WkDDbyAJaLG/HjddzKoXcSr8FYROIs1zwjhHipIY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Olivier Moysan <olivier.moysan@foss.st.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+	Anton Gusev <aagusev@ispras.ru>,
+	Ard Biesheuvel <ardb@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 045/139] iio: adc: stm32-dfsdm: fill module aliases
-Date: Mon, 13 Feb 2023 15:49:50 +0100
-Message-Id: <20230213144748.074470257@linuxfoundation.org>
+Subject: [PATCH 5.10 036/139] efi: fix potential NULL deref in efi_mem_reserve_persistent
+Date: Mon, 13 Feb 2023 15:49:41 +0100
+Message-Id: <20230213144747.561289739@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -35,35 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Olivier Moysan <olivier.moysan@foss.st.com>
+From: Anton Gusev <aagusev@ispras.ru>
 
-[ Upstream commit cc3304052a89ab6ac887ed9224420a27e3d354e1 ]
+[ Upstream commit 966d47e1f27c45507c5df82b2a2157e5a4fd3909 ]
 
-When STM32 DFSDM driver is built as module, no modalias information
-is available. This prevents module to be loaded by udev.
-Add MODULE_DEVICE_TABLE() to fill module aliases.
+When iterating on a linked list, a result of memremap is dereferenced
+without checking it for NULL.
 
-Fixes: e2e6771c6462 ("IIO: ADC: add STM32 DFSDM sigma delta ADC support")
-Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
-Link: https://lore.kernel.org/r/20221202152848.45585-1-olivier.moysan@foss.st.com
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+This patch adds a check that falls back on allocating a new page in
+case memremap doesn't succeed.
+
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 18df7577adae ("efi/memreserve: deal with memreserve entries in unmapped memory")
+Signed-off-by: Anton Gusev <aagusev@ispras.ru>
+[ardb: return -ENOMEM instead of breaking out of the loop]
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/stm32-dfsdm-adc.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/firmware/efi/efi.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/iio/adc/stm32-dfsdm-adc.c b/drivers/iio/adc/stm32-dfsdm-adc.c
-index 9234f14167b7..171d73efb2f8 100644
---- a/drivers/iio/adc/stm32-dfsdm-adc.c
-+++ b/drivers/iio/adc/stm32-dfsdm-adc.c
-@@ -1521,6 +1521,7 @@ static const struct of_device_id stm32_dfsdm_adc_match[] = {
- 	},
- 	{}
- };
-+MODULE_DEVICE_TABLE(of, stm32_dfsdm_adc_match);
- 
- static int stm32_dfsdm_adc_probe(struct platform_device *pdev)
- {
+diff --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c
+index a2765d668856..332739f3eded 100644
+--- a/drivers/firmware/efi/efi.c
++++ b/drivers/firmware/efi/efi.c
+@@ -950,6 +950,8 @@ int __ref efi_mem_reserve_persistent(phys_addr_t addr, u64 size)
+ 	/* first try to find a slot in an existing linked list entry */
+ 	for (prsv = efi_memreserve_root->next; prsv; ) {
+ 		rsv = memremap(prsv, sizeof(*rsv), MEMREMAP_WB);
++		if (!rsv)
++			return -ENOMEM;
+ 		index = atomic_fetch_add_unless(&rsv->count, 1, rsv->size);
+ 		if (index < rsv->size) {
+ 			rsv->entry[index].base = addr;
 -- 
 2.39.0
 
