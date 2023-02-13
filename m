@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 96A098F58
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B550C433D2;
-	Mon, 13 Feb 2023 14:58:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554858F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15EEC433EF;
+	Mon, 13 Feb 2023 14:58:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300292;
-	bh=SNnZ/UHTWtQ2tAgQ8UpG8AstocFc4FpVB7iDHDm8jUo=;
+	s=korg; t=1676300295;
+	bh=l5w8aGc2uijod/aRcxK5DaJQ6aqrKb4fHIJGLXiU63s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pkhCNi4Mayg95Na4HF65pvpAg4hBIjf8+ySII147VD3D1F+ZbsdDAr+hnc+tyZy7M
-	 /jUmvjzvtWYl2B17O6RXvUpSaprz0RAoM82tfiSwbzTTMZYvnLx+me9phf2QaJm3Rp
-	 tBPY3T7zkORgQBpkcgORZyXXwI0asMy12UWUVHW4=
+	b=TjTsPP1zs5pB/QWmrstw55kRnNMDZRMNnvByzNBvujgSBxVgwsPKa/MeKxP91e7Gx
+	 21yvNa+60VRBgKZW0FEfns0CtRJUiiMtmFrizDqhV6tnu4eI7rLQgJv0QJToyWi4Gm
+	 cYhUKuAHbgiYvmkvm/BRTOv4u3MpTNmYiTswM7u0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nikita Zhandarovich <n.zhandarovich@fintech.ru>,
-	Sindhu Devale <sindhu.devale@intel.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 19/67] RDMA/irdma: Fix potential NULL-ptr-dereference
-Date: Mon, 13 Feb 2023 15:49:00 +0100
-Message-Id: <20230213144733.264169370@linuxfoundation.org>
+Subject: [PATCH 5.15 24/67] net: phy: meson-gxl: use MMD access dummy stubs for GXL, internal PHY
+Date: Mon, 13 Feb 2023 15:49:05 +0100
+Message-Id: <20230213144733.513609705@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -36,40 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-[ Upstream commit 5d9745cead1f121974322b94ceadfb4d1e67960e ]
+[ Upstream commit 69ff53e4a4c9498eeed7d1441f68a1481dc69251 ]
 
-in_dev_get() can return NULL which will cause a failure once idev is
-dereferenced in in_dev_for_each_ifa_rtnl(). This patch adds a
-check for NULL value in idev beforehand.
+Jerome provided the information that also the GXL internal PHY doesn't
+support MMD register access and EEE. MMD reads return 0xffff, what
+results in e.g. completely wrong ethtool --show-eee output.
+Therefore use the MMD dummy stubs.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 146b9756f14c ("RDMA/irdma: Add connection manager")
-Signed-off-by: Nikita Zhandarovich <n.zhandarovich@fintech.ru>
-Link: https://lore.kernel.org/r/20230126185230.62464-1-n.zhandarovich@fintech.ru
-Reviewed-by: Sindhu Devale <sindhu.devale@intel.com>
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: d853d145ea3e ("net: phy: add an option to disable EEE advertisement")
+Suggested-by: Jerome Brunet <jbrunet@baylibre.com>
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://lore.kernel.org/r/84432fe4-0be4-bc82-4e5c-557206b40f56@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/irdma/cm.c | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/phy/meson-gxl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/irdma/cm.c b/drivers/infiniband/hw/irdma/cm.c
-index b08c67bb264c9..a8ec3d8f6e465 100644
---- a/drivers/infiniband/hw/irdma/cm.c
-+++ b/drivers/infiniband/hw/irdma/cm.c
-@@ -1723,6 +1723,9 @@ irdma_add_mqh_4(struct irdma_device *iwdev, struct irdma_cm_info *cm_info,
- 			continue;
- 
- 		idev = in_dev_get(ip_dev);
-+		if (!idev)
-+			continue;
-+
- 		in_dev_for_each_ifa_rtnl(ifa, idev) {
- 			ibdev_dbg(&iwdev->ibdev,
- 				  "CM: Allocating child CM Listener forIP=%pI4, vlan_id=%d, MAC=%pM\n",
+diff --git a/drivers/net/phy/meson-gxl.c b/drivers/net/phy/meson-gxl.c
+index 5e41658b1e2fa..a6015cd03bff8 100644
+--- a/drivers/net/phy/meson-gxl.c
++++ b/drivers/net/phy/meson-gxl.c
+@@ -261,6 +261,8 @@ static struct phy_driver meson_gxl_phy[] = {
+ 		.handle_interrupt = meson_gxl_handle_interrupt,
+ 		.suspend        = genphy_suspend,
+ 		.resume         = genphy_resume,
++		.read_mmd	= genphy_read_mmd_unsupported,
++		.write_mmd	= genphy_write_mmd_unsupported,
+ 	}, {
+ 		PHY_ID_MATCH_EXACT(0x01803301),
+ 		.name		= "Meson G12A Internal PHY",
 -- 
 2.39.0
 
