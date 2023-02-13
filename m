@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F08B8F58
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:06:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA542C4339B;
-	Mon, 13 Feb 2023 15:06:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCD548F58
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:06:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4CAD5C4339C;
+	Mon, 13 Feb 2023 15:06:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300762;
-	bh=5MxSNYSDPC4S3znAuFkHEzobPbcX0NWsoJQ3a9jV6AI=;
+	s=korg; t=1676300764;
+	bh=lFaRDoeFaN70eqoCWNicHQiZEmAMbC4hWzWoyyFBAZ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QTrv7ejKLPAqqFRPhLwaEec1jv8G3Yk3Mhq4EkhjHVWKEc8jPxrot1inh+kDgj4Kp
-	 0xzvS8iD0IIM8/+2U8K7JIdqI1pGdhHKDHtRn54GQ4IMWC+6lMDrNND5mLmCIRAvNK
-	 dQH2cKv7mTKZUA4+/11sJU9WOhOLp5ZGXbIsZwak=
+	b=CNSoVAlSUiXV7kSRCmLL3qtEgZp4ENgvf0xM3k14b/gODrLpXfUbaI0mn6p2xcU4z
+	 pbLuemOw1jN9EtXCScbyaVIuVO10UsEB73p2avvfx6HDo2/WpKa0jc0fS2s+2Qi3r9
+	 NMSY+ZH/AZX7sKdBg2h9FwA6hELvxfPI1/6hcgFE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH 5.10 139/139] nvmem: core: fix return value
-Date: Mon, 13 Feb 2023 15:51:24 +0100
-Message-Id: <20230213144753.376308293@linuxfoundation.org>
+	Daan De Meyer <daandemeyer@fb.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.10 130/139] btrfs: free device in btrfs_close_devices for a single device filesystem
+Date: Mon, 13 Feb 2023 15:51:15 +0100
+Message-Id: <20230213144752.833304521@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -36,36 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Anand Jain <anand.jain@oracle.com>
 
-commit 0c4862b1c1465e473bc961a02765490578bf5c20 upstream.
+commit 5f58d783fd7823b2c2d5954d1126e702f94bfc4c upstream.
 
-Dan Carpenter points out that the return code was not set in commit
-60c8b4aebd8e ("nvmem: core: fix cleanup after dev_set_name()"), but
-this is not the only issue - we also need to zero wp_gpio to prevent
-gpiod_put() being called on an error value.
+We have this check to make sure we don't accidentally add older devices
+that may have disappeared and re-appeared with an older generation from
+being added to an fs_devices (such as a replace source device). This
+makes sense, we don't want stale disks in our file system. However for
+single disks this doesn't really make sense.
 
-Fixes: 560181d3ace6 ("nvmem: core: fix cleanup after dev_set_name()")
-Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230127104015.23839-10-srinivas.kandagatla@linaro.org
+I've seen this in testing, but I was provided a reproducer from a
+project that builds btrfs images on loopback devices. The loopback
+device gets cached with the new generation, and then if it is re-used to
+generate a new file system we'll fail to mount it because the new fs is
+"older" than what we have in cache.
+
+Fix this by freeing the cache when closing the device for a single device
+filesystem. This will ensure that the mount command passed device path is
+scanned successfully during the next mount.
+
+CC: stable@vger.kernel.org # 5.10+
+Reported-by: Daan De Meyer <daandemeyer@fb.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Anand Jain <anand.jain@oracle.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvmem/core.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/btrfs/volumes.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
---- a/drivers/nvmem/core.c
-+++ b/drivers/nvmem/core.c
-@@ -638,6 +638,7 @@ struct nvmem_device *nvmem_register(cons
- 						    GPIOD_OUT_HIGH);
- 	if (IS_ERR(nvmem->wp_gpio)) {
- 		rval = PTR_ERR(nvmem->wp_gpio);
-+		nvmem->wp_gpio = NULL;
- 		goto err_put_device;
- 	}
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -381,6 +381,7 @@ void btrfs_free_device(struct btrfs_devi
+ static void free_fs_devices(struct btrfs_fs_devices *fs_devices)
+ {
+ 	struct btrfs_device *device;
++
+ 	WARN_ON(fs_devices->opened);
+ 	while (!list_empty(&fs_devices->devices)) {
+ 		device = list_entry(fs_devices->devices.next,
+@@ -1227,9 +1228,22 @@ void btrfs_close_devices(struct btrfs_fs
  
+ 	mutex_lock(&uuid_mutex);
+ 	close_fs_devices(fs_devices);
+-	if (!fs_devices->opened)
++	if (!fs_devices->opened) {
+ 		list_splice_init(&fs_devices->seed_list, &list);
+ 
++		/*
++		 * If the struct btrfs_fs_devices is not assembled with any
++		 * other device, it can be re-initialized during the next mount
++		 * without the needing device-scan step. Therefore, it can be
++		 * fully freed.
++		 */
++		if (fs_devices->num_devices == 1) {
++			list_del(&fs_devices->fs_list);
++			free_fs_devices(fs_devices);
++		}
++	}
++
++
+ 	list_for_each_entry_safe(fs_devices, tmp, &list, seed_list) {
+ 		close_fs_devices(fs_devices);
+ 		list_del(&fs_devices->seed_list);
 
 
