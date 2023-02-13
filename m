@@ -1,30 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E0298F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:56:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 95E92C433EF;
-	Mon, 13 Feb 2023 14:56:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A6C618F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:56:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF6AC433EF;
+	Mon, 13 Feb 2023 14:56:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300160;
-	bh=piY5C0SW0QwhKhFd4bdTsT8zzgB32Iprq2BzyF8qr34=;
+	s=korg; t=1676300163;
+	bh=HF/C6F1iH/7H756W8/+pL6VjCy/T6uyP+mv7SgGK/CI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wP05ylQ9M1mCFZJQJ90nLjOCcPg7F95uzLGWp87MjiVPN5W0zDNgG3LzK1Q+qR6r1
-	 nf0SFhgNIGSrwhUZdOCtvI6lCaJnxouqNjgDaboUm7BttiGubc1NFtyxhgmSKECh7/
-	 afnVs0vclP2h0QE4eVEjhP51KpFjXDXkC8n3uQvc=
+	b=O+buRwLC5yQw0Q7wri6jiIYrvaqa/kuIm6Xb7taIA23rhgozEL1VS5l+PJH6MoI2d
+	 nOog1zKpotrI9WfhQ5eb6nEI+qt7A1g5aW6X7m5BSxLekp/lsegmnIlChcbpNaYFz8
+	 aDTMbe49N7am4uhxwtRWqi8Fh7/bSC9XI4g3buAA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fan Ni <fan.ni@samsung.com>,
-	Davidlohr Bueso <dave@stgolabs.net>,
 	Dave Jiang <dave.jiang@intel.com>,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Gregory Price <gregory.price@memverge.com>,
 	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.1 087/114] cxl/region: Fix null pointer dereference for resetting decoder
-Date: Mon, 13 Feb 2023 15:48:42 +0100
-Message-Id: <20230213144746.649020816@linuxfoundation.org>
+Subject: [PATCH 6.1 088/114] cxl/region: Fix passthrough-decoder detection
+Date: Mon, 13 Feb 2023 15:48:43 +0100
+Message-Id: <20230213144746.695793633@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -38,79 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fan Ni <fan.ni@samsung.com>
+From: Dan Williams <dan.j.williams@intel.com>
 
-commit 4fa4302d6dc7de7e8e74dc7405611a2efb4bf54b upstream.
+commit 711442e29f16f0d39dd0e2460c9baacfccb9d5a7 upstream.
 
-Not all decoders have a reset callback.
+A passthrough decoder is a decoder that maps only 1 target. It is a
+special case because it does not impose any constraints on the
+interleave-math as compared to a decoder with multiple targets. Extend
+the passthrough case to multi-target-capable decoders that only have one
+target selected. I.e. the current code was only considering passthrough
+*ports* which are only a subset of the potential passthrough decoder
+scenarios.
 
-The CXL specification allows a host bridge with a single root port to
-have no explicit HDM decoders. Currently the region driver assumes there
-are none.  As such the CXL core creates a special pass through decoder
-instance without a commit/reset callback.
-
-Prior to this patch, the ->reset() callback was called unconditionally when
-calling cxl_region_decode_reset. Thus a configuration with 1 Host Bridge,
-1 Root Port, and one directly attached CXL type 3 device or multiple CXL
-type 3 devices attached to downstream ports of a switch can cause a null
-pointer dereference.
-
-Before the fix, a kernel crash was observed when we destroy the region, and
-a pass through decoder is reset.
-
-The issue can be reproduced as below,
-    1) create a region with a CXL setup which includes a HB with a
-    single root port under which a memdev is attached directly.
-    2) destroy the region with cxl destroy-region regionX -f.
-
-Fixes: 176baefb2eb5 ("cxl/hdm: Commit decoder state to hardware")
+Fixes: e4f6dfa9ef75 ("cxl/region: Fix 'distance' calculation with passthrough ports")
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Fan Ni <fan.ni@samsung.com>
-Reviewed-by: Davidlohr Bueso <dave@stgolabs.net>
 Reviewed-by: Dave Jiang <dave.jiang@intel.com>
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Tested-by: Gregory Price <gregory.price@memverge.com>
-Reviewed-by: Gregory Price <gregory.price@memverge.com>
-Link: https://lore.kernel.org/r/20221215170909.2650271-1-fan.ni@samsung.com
+Link: https://lore.kernel.org/r/167564540422.847146.13816934143225777888.stgit@dwillia2-xfh.jf.intel.com
 Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/core/region.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/cxl/core/region.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/drivers/cxl/core/region.c b/drivers/cxl/core/region.c
-index 02f28da519e3..02275e6b621b 100644
+index 02275e6b621b..940f805b1534 100644
 --- a/drivers/cxl/core/region.c
 +++ b/drivers/cxl/core/region.c
-@@ -131,7 +131,7 @@ static int cxl_region_decode_reset(struct cxl_region *cxlr, int count)
- 		struct cxl_memdev *cxlmd = cxled_to_memdev(cxled);
- 		struct cxl_port *iter = cxled_to_port(cxled);
- 		struct cxl_ep *ep;
--		int rc;
-+		int rc = 0;
+@@ -993,10 +993,10 @@ static int cxl_port_setup_targets(struct cxl_port *port,
+ 		int i, distance;
  
- 		while (!is_cxl_root(to_cxl_port(iter->dev.parent)))
- 			iter = to_cxl_port(iter->dev.parent);
-@@ -143,7 +143,8 @@ static int cxl_region_decode_reset(struct cxl_region *cxlr, int count)
- 
- 			cxl_rr = cxl_rr_load(iter, cxlr);
- 			cxld = cxl_rr->decoder;
--			rc = cxld->reset(cxld);
-+			if (cxld->reset)
-+				rc = cxld->reset(cxld);
- 			if (rc)
- 				return rc;
- 		}
-@@ -186,7 +187,8 @@ static int cxl_region_decode_commit(struct cxl_region *cxlr)
- 			     iter = ep->next, ep = cxl_ep_load(iter, cxlmd)) {
- 				cxl_rr = cxl_rr_load(iter, cxlr);
- 				cxld = cxl_rr->decoder;
--				cxld->reset(cxld);
-+				if (cxld->reset)
-+					cxld->reset(cxld);
- 			}
- 
- 			cxled->cxld.reset(&cxled->cxld);
+ 		/*
+-		 * Passthrough ports impose no distance requirements between
++		 * Passthrough decoders impose no distance requirements between
+ 		 * peers
+ 		 */
+-		if (port->nr_dports == 1)
++		if (cxl_rr->nr_targets == 1)
+ 			distance = 0;
+ 		else
+ 			distance = p->nr_targets / cxl_rr->nr_targets;
 -- 
 2.39.1
 
