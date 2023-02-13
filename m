@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DF8C28F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:59:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 66F0AC433D2;
-	Mon, 13 Feb 2023 14:59:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6DD528F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:59:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E86EFC433EF;
+	Mon, 13 Feb 2023 14:59:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300359;
-	bh=Yq/vdL97aq0WTS6n8uJuTqScgs7h9VdigHGga8wE43c=;
+	s=korg; t=1676300362;
+	bh=UTiNo5Antlr8IhouoiYLDPulwfrEup9AcyMwlVRyLgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gYgrsGOJe4Dsw+m4XsFV2ETWohQNv3CGVxcSiF8kr4hf0I3mSlmy+OEhGGJKs10uH
-	 eIDkF910oUufD96ZS1yJWD+zX8Mb2h1CKnV4wkeYdc+vvSWMIKBzBavfEmiYXXOIv9
-	 UTtqeYN9yaB+0ePHdlSnEsqGFwh94O/HEXwj7yPs=
+	b=JEzTDxo9F7lZKUSrFKLlmLRF4ZKzh/dnHWwrHlxtZXjiyum+r3MJtvoYdmyJX59ss
+	 J2SqhSS8XI/1GpKtiymtxS+ukhOoV43HGvJVj9mb7VB7rA7g2hZ9yH9mPBiVHXixBk
+	 B3hWleFa2K/Zxvv9y35m/enL7VSX0/tjd9/E8lV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	ZhaoLong Wang <wangzhaolong1@huawei.com>,
-	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
-	Steve French <stfrench@microsoft.com>
-Subject: [PATCH 5.15 49/67] cifs: Fix use-after-free in rdata->read_into_pages()
-Date: Mon, 13 Feb 2023 15:49:30 +0100
-Message-Id: <20230213144734.690108807@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	"David S. Miller" <davem@davemloft.net>,
+	syzbot+2a0e7abd24f1eb90ce25@syzkaller.appspotmail.com
+Subject: [PATCH 5.15 50/67] net: USB: Fix wrong-direction WARNING in plusb.c
+Date: Mon, 13 Feb 2023 15:49:31 +0100
+Message-Id: <20230213144734.743524001@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -35,122 +35,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: ZhaoLong Wang <wangzhaolong1@huawei.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit aa5465aeca3c66fecdf7efcf554aed79b4c4b211 upstream.
+commit 811d581194f7412eda97acc03d17fc77824b561f upstream.
 
-When the network status is unstable, use-after-free may occur when
-read data from the server.
+The syzbot fuzzer detected a bug in the plusb network driver: A
+zero-length control-OUT transfer was treated as a read instead of a
+write.  In modern kernels this error provokes a WARNING:
 
-  BUG: KASAN: use-after-free in readpages_fill_pages+0x14c/0x7e0
+usb 1-1: BOGUS control dir, pipe 80000280 doesn't match bRequestType c0
+WARNING: CPU: 0 PID: 4645 at drivers/usb/core/urb.c:411
+usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
+Modules linked in:
+CPU: 1 PID: 4645 Comm: dhcpcd Not tainted
+6.2.0-rc6-syzkaller-00050-g9f266ccaa2f5 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google
+01/12/2023
+RIP: 0010:usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
+...
+Call Trace:
+ <TASK>
+ usb_start_wait_urb+0x101/0x4b0 drivers/usb/core/message.c:58
+ usb_internal_control_msg drivers/usb/core/message.c:102 [inline]
+ usb_control_msg+0x320/0x4a0 drivers/usb/core/message.c:153
+ __usbnet_read_cmd+0xb9/0x390 drivers/net/usb/usbnet.c:2010
+ usbnet_read_cmd+0x96/0xf0 drivers/net/usb/usbnet.c:2068
+ pl_vendor_req drivers/net/usb/plusb.c:60 [inline]
+ pl_set_QuickLink_features drivers/net/usb/plusb.c:75 [inline]
+ pl_reset+0x2f/0xf0 drivers/net/usb/plusb.c:85
+ usbnet_open+0xcc/0x5d0 drivers/net/usb/usbnet.c:889
+ __dev_open+0x297/0x4d0 net/core/dev.c:1417
+ __dev_change_flags+0x587/0x750 net/core/dev.c:8530
+ dev_change_flags+0x97/0x170 net/core/dev.c:8602
+ devinet_ioctl+0x15a2/0x1d70 net/ipv4/devinet.c:1147
+ inet_ioctl+0x33f/0x380 net/ipv4/af_inet.c:979
+ sock_do_ioctl+0xcc/0x230 net/socket.c:1169
+ sock_ioctl+0x1f8/0x680 net/socket.c:1286
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:870 [inline]
+ __se_sys_ioctl fs/ioctl.c:856 [inline]
+ __x64_sys_ioctl+0x197/0x210 fs/ioctl.c:856
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-  Call Trace:
-   <TASK>
-   dump_stack_lvl+0x38/0x4c
-   print_report+0x16f/0x4a6
-   kasan_report+0xb7/0x130
-   readpages_fill_pages+0x14c/0x7e0
-   cifs_readv_receive+0x46d/0xa40
-   cifs_demultiplex_thread+0x121c/0x1490
-   kthread+0x16b/0x1a0
-   ret_from_fork+0x2c/0x50
-   </TASK>
+The fix is to call usbnet_write_cmd() instead of usbnet_read_cmd() and
+remove the USB_DIR_IN flag.
 
-  Allocated by task 2535:
-   kasan_save_stack+0x22/0x50
-   kasan_set_track+0x25/0x30
-   __kasan_kmalloc+0x82/0x90
-   cifs_readdata_direct_alloc+0x2c/0x110
-   cifs_readdata_alloc+0x2d/0x60
-   cifs_readahead+0x393/0xfe0
-   read_pages+0x12f/0x470
-   page_cache_ra_unbounded+0x1b1/0x240
-   filemap_get_pages+0x1c8/0x9a0
-   filemap_read+0x1c0/0x540
-   cifs_strict_readv+0x21b/0x240
-   vfs_read+0x395/0x4b0
-   ksys_read+0xb8/0x150
-   do_syscall_64+0x3f/0x90
-   entry_SYSCALL_64_after_hwframe+0x72/0xdc
-
-  Freed by task 79:
-   kasan_save_stack+0x22/0x50
-   kasan_set_track+0x25/0x30
-   kasan_save_free_info+0x2e/0x50
-   __kasan_slab_free+0x10e/0x1a0
-   __kmem_cache_free+0x7a/0x1a0
-   cifs_readdata_release+0x49/0x60
-   process_one_work+0x46c/0x760
-   worker_thread+0x2a4/0x6f0
-   kthread+0x16b/0x1a0
-   ret_from_fork+0x2c/0x50
-
-  Last potentially related work creation:
-   kasan_save_stack+0x22/0x50
-   __kasan_record_aux_stack+0x95/0xb0
-   insert_work+0x2b/0x130
-   __queue_work+0x1fe/0x660
-   queue_work_on+0x4b/0x60
-   smb2_readv_callback+0x396/0x800
-   cifs_abort_connection+0x474/0x6a0
-   cifs_reconnect+0x5cb/0xa50
-   cifs_readv_from_socket.cold+0x22/0x6c
-   cifs_read_page_from_socket+0xc1/0x100
-   readpages_fill_pages.cold+0x2f/0x46
-   cifs_readv_receive+0x46d/0xa40
-   cifs_demultiplex_thread+0x121c/0x1490
-   kthread+0x16b/0x1a0
-   ret_from_fork+0x2c/0x50
-
-The following function calls will cause UAF of the rdata pointer.
-
-readpages_fill_pages
- cifs_read_page_from_socket
-  cifs_readv_from_socket
-   cifs_reconnect
-    __cifs_reconnect
-     cifs_abort_connection
-      mid->callback() --> smb2_readv_callback
-       queue_work(&rdata->work)  # if the worker completes first,
-                                 # the rdata is freed
-          cifs_readv_complete
-            kref_put
-              cifs_readdata_release
-                kfree(rdata)
- return rdata->...               # UAF in readpages_fill_pages()
-
-Similarly, this problem also occurs in the uncache_fill_pages().
-
-Fix this by adjusts the order of condition judgment in the return
-statement.
-
-Signed-off-by: ZhaoLong Wang <wangzhaolong1@huawei.com>
-Cc: stable@vger.kernel.org
-Acked-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
-Signed-off-by: Steve French <stfrench@microsoft.com>
+Reported-and-tested-by: syzbot+2a0e7abd24f1eb90ce25@syzkaller.appspotmail.com
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 090ffa9d0e90 ("[PATCH] USB: usbnet (9/9) module for pl2301/2302 cables")
+CC: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/00000000000052099f05f3b3e298@google.com/
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/cifs/file.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/usb/plusb.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/fs/cifs/file.c
-+++ b/fs/cifs/file.c
-@@ -3613,7 +3613,7 @@ uncached_fill_pages(struct TCP_Server_In
- 		rdata->got_bytes += result;
- 	}
- 
--	return rdata->got_bytes > 0 && result != -ECONNABORTED ?
-+	return result != -ECONNABORTED && rdata->got_bytes > 0 ?
- 						rdata->got_bytes : result;
- }
- 
-@@ -4388,7 +4388,7 @@ readpages_fill_pages(struct TCP_Server_I
- 		rdata->got_bytes += result;
- 	}
- 
--	return rdata->got_bytes > 0 && result != -ECONNABORTED ?
-+	return result != -ECONNABORTED && rdata->got_bytes > 0 ?
- 						rdata->got_bytes : result;
+--- a/drivers/net/usb/plusb.c
++++ b/drivers/net/usb/plusb.c
+@@ -57,9 +57,7 @@
+ static inline int
+ pl_vendor_req(struct usbnet *dev, u8 req, u8 val, u8 index)
+ {
+-	return usbnet_read_cmd(dev, req,
+-				USB_DIR_IN | USB_TYPE_VENDOR |
+-				USB_RECIP_DEVICE,
++	return usbnet_write_cmd(dev, req, USB_TYPE_VENDOR | USB_RECIP_DEVICE,
+ 				val, index, NULL, 0);
  }
  
 
