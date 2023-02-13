@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 42B508F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:54:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE4F8C433EF;
-	Mon, 13 Feb 2023 14:54:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 014FA8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:54:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4EFFDC433D2;
+	Mon, 13 Feb 2023 14:54:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300052;
-	bh=eAji2CxCG2+/Ju2x9/gvG0BWgsAL/Wh0kTb3uVcNwYs=;
+	s=korg; t=1676300054;
+	bh=YMdjiCKXA7jQ+03kpyorUGNRsayhU0mtEzX6DYhxBlQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=n+fQgdEQDfSO+dKH8cNU4sLhzqVHqbo5gZA9F2hrnQ1cAZHzLS+BjSSEWqUTli1+J
-	 7pVk0jZGWtJeCHmzJXh9FowARNBTZXuJv+jWuz7tCwqymC7A+0MD7vrC6xiKkvojUd
-	 xWwWunb0lTmGCsSQNdMS02zUeSVbOf9ndAj3qawc=
+	b=tbaiZxEl8UlpWoBts2IiLCjt9N7UkmtW6OUBdumHS47n7jbkzrVDeTUHXD2qrSSf9
+	 yZ1K60BBFO2Cy58Q3B3UkvDI78h8Mr56YLidIRGTyDgh6OvQ2hc0QSRoJaSDG//swH
+	 c1dzl19olmmBRjspAkfW1ISVqQR4vkq2U85eaU1E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adham Faris <afaris@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Brett Creeley <brett.creeley@intel.com>,
+	Karen Ostrowska <karen.ostrowska@intel.com>,
+	Marek Szlosek <marek.szlosek@intel.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 045/114] net/mlx5e: Update rx ring hw mtu upon each rx-fcs flag change
-Date: Mon, 13 Feb 2023 15:48:00 +0100
-Message-Id: <20230213144744.491447448@linuxfoundation.org>
+Subject: [PATCH 6.1 041/114] ice: Fix disabling Rx VLAN filtering with port VLAN enabled
+Date: Mon, 13 Feb 2023 15:47:56 +0100
+Message-Id: <20230213144744.265382447@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -36,163 +37,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adham Faris <afaris@nvidia.com>
+From: Brett Creeley <brett.creeley@intel.com>
 
-[ Upstream commit 1e66220948df815d7b37e0ff8b4627ce10433738 ]
+[ Upstream commit c793f8ea15e312789b5b6b4a5e7b0b92315be5cb ]
 
-rq->hw_mtu is used in function en_rx.c/mlx5e_skb_from_cqe_mpwrq_linear()
-to catch oversized packets. If FCS is concatenated to the end of the
-packet then the check should be updated accordingly.
+If the user turns on the vf-true-promiscuous-support flag, then Rx VLAN
+filtering will be disabled if the VF requests to enable promiscuous
+mode. When the VF is in a port VLAN, this is the incorrect behavior
+because it will allow the VF to receive traffic outside of its port VLAN
+domain. Fortunately this only resulted in the VF(s) receiving broadcast
+traffic outside of the VLAN domain because all of the VLAN promiscuous
+rules are based on the port VLAN ID. Fix this by setting the
+.disable_rx_filtering VLAN op to a no-op when a port VLAN is enabled on
+the VF.
 
-Rx rings initialization (mlx5e_init_rxq_rq()) invoked for every new set
-of channels, as part of mlx5e_safe_switch_params(), unknowingly if it
-runs with default configuration or not. Current rq->hw_mtu
-initialization assumes default configuration and ignores
-params->scatter_fcs_en flag state.
-Fix this, by accounting for params->scatter_fcs_en flag state during
-rq->hw_mtu initialization.
+Also, make sure to make this fix for both Single VLAN Mode and Double
+VLAN Mode enabled devices.
 
-In addition, updating rq->hw_mtu value during ingress traffic might
-lead to packets drop and oversize_pkts_sw_drop counter increase with no
-good reason. Hence we remove this optimization and switch the set of
-channels with a new one, to make sure we don't get false positives on
-the oversize_pkts_sw_drop counter.
-
-Fixes: 102722fc6832 ("net/mlx5e: Add support for RXFCS feature flag")
-Signed-off-by: Adham Faris <afaris@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: c31af68a1b94 ("ice: Add outer_vlan_ops and VSI specific VLAN ops implementations")
+Signed-off-by: Brett Creeley <brett.creeley@intel.com>
+Signed-off-by: Karen Ostrowska <karen.ostrowska@intel.com>
+Tested-by: Marek Szlosek <marek.szlosek@intel.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_main.c | 86 ++++---------------
- 1 file changed, 15 insertions(+), 71 deletions(-)
+ .../net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c | 16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 4dc149ef618c4..3e0d910b085d4 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -591,7 +591,8 @@ static int mlx5e_init_rxq_rq(struct mlx5e_channel *c, struct mlx5e_params *param
- 	rq->ix           = c->ix;
- 	rq->channel      = c;
- 	rq->mdev         = mdev;
--	rq->hw_mtu       = MLX5E_SW2HW_MTU(params, params->sw_mtu);
-+	rq->hw_mtu =
-+		MLX5E_SW2HW_MTU(params, params->sw_mtu) - ETH_FCS_LEN * !params->scatter_fcs_en;
- 	rq->xdpsq        = &c->rq_xdpsq;
- 	rq->stats        = &c->priv->channel_stats[c->ix]->rq;
- 	rq->ptp_cyc2time = mlx5_rq_ts_translator(mdev);
-@@ -1014,35 +1015,6 @@ int mlx5e_flush_rq(struct mlx5e_rq *rq, int curr_state)
- 	return mlx5e_rq_to_ready(rq, curr_state);
- }
+diff --git a/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c b/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c
+index 5ecc0ee9a78e0..b1ffb81893d48 100644
+--- a/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c
++++ b/drivers/net/ethernet/intel/ice/ice_vf_vsi_vlan_ops.c
+@@ -44,13 +44,17 @@ void ice_vf_vsi_init_vlan_ops(struct ice_vsi *vsi)
  
--static int mlx5e_modify_rq_scatter_fcs(struct mlx5e_rq *rq, bool enable)
--{
--	struct mlx5_core_dev *mdev = rq->mdev;
--
--	void *in;
--	void *rqc;
--	int inlen;
--	int err;
--
--	inlen = MLX5_ST_SZ_BYTES(modify_rq_in);
--	in = kvzalloc(inlen, GFP_KERNEL);
--	if (!in)
--		return -ENOMEM;
--
--	rqc = MLX5_ADDR_OF(modify_rq_in, in, ctx);
--
--	MLX5_SET(modify_rq_in, in, rq_state, MLX5_RQC_STATE_RDY);
--	MLX5_SET64(modify_rq_in, in, modify_bitmask,
--		   MLX5_MODIFY_RQ_IN_MODIFY_BITMASK_SCATTER_FCS);
--	MLX5_SET(rqc, rqc, scatter_fcs, enable);
--	MLX5_SET(rqc, rqc, state, MLX5_RQC_STATE_RDY);
--
--	err = mlx5_core_modify_rq(mdev, rq->rqn, in);
--
--	kvfree(in);
--
--	return err;
--}
--
- static int mlx5e_modify_rq_vsd(struct mlx5e_rq *rq, bool vsd)
- {
- 	struct mlx5_core_dev *mdev = rq->mdev;
-@@ -3301,20 +3273,6 @@ static void mlx5e_cleanup_nic_tx(struct mlx5e_priv *priv)
- 	mlx5e_destroy_tises(priv);
- }
+ 		/* outer VLAN ops regardless of port VLAN config */
+ 		vlan_ops->add_vlan = ice_vsi_add_vlan;
+-		vlan_ops->dis_rx_filtering = ice_vsi_dis_rx_vlan_filtering;
+ 		vlan_ops->ena_tx_filtering = ice_vsi_ena_tx_vlan_filtering;
+ 		vlan_ops->dis_tx_filtering = ice_vsi_dis_tx_vlan_filtering;
  
--static int mlx5e_modify_channels_scatter_fcs(struct mlx5e_channels *chs, bool enable)
--{
--	int err = 0;
--	int i;
--
--	for (i = 0; i < chs->num; i++) {
--		err = mlx5e_modify_rq_scatter_fcs(&chs->c[i]->rq, enable);
--		if (err)
--			return err;
--	}
--
--	return 0;
--}
--
- static int mlx5e_modify_channels_vsd(struct mlx5e_channels *chs, bool vsd)
- {
- 	int err;
-@@ -3890,41 +3848,27 @@ static int mlx5e_set_rx_port_ts(struct mlx5_core_dev *mdev, bool enable)
- 	return mlx5_set_ports_check(mdev, in, sizeof(in));
- }
+ 		if (ice_vf_is_port_vlan_ena(vf)) {
+ 			/* setup outer VLAN ops */
+ 			vlan_ops->set_port_vlan = ice_vsi_set_outer_port_vlan;
++			/* all Rx traffic should be in the domain of the
++			 * assigned port VLAN, so prevent disabling Rx VLAN
++			 * filtering
++			 */
++			vlan_ops->dis_rx_filtering = noop_vlan;
+ 			vlan_ops->ena_rx_filtering =
+ 				ice_vsi_ena_rx_vlan_filtering;
  
-+static int mlx5e_set_rx_port_ts_wrap(struct mlx5e_priv *priv, void *ctx)
-+{
-+	struct mlx5_core_dev *mdev = priv->mdev;
-+	bool enable = *(bool *)ctx;
+@@ -63,6 +67,9 @@ void ice_vf_vsi_init_vlan_ops(struct ice_vsi *vsi)
+ 			vlan_ops->ena_insertion = ice_vsi_ena_inner_insertion;
+ 			vlan_ops->dis_insertion = ice_vsi_dis_inner_insertion;
+ 		} else {
++			vlan_ops->dis_rx_filtering =
++				ice_vsi_dis_rx_vlan_filtering;
 +
-+	return mlx5e_set_rx_port_ts(mdev, enable);
-+}
-+
- static int set_feature_rx_fcs(struct net_device *netdev, bool enable)
- {
- 	struct mlx5e_priv *priv = netdev_priv(netdev);
- 	struct mlx5e_channels *chs = &priv->channels;
--	struct mlx5_core_dev *mdev = priv->mdev;
-+	struct mlx5e_params new_params;
- 	int err;
- 
- 	mutex_lock(&priv->state_lock);
- 
--	if (enable) {
--		err = mlx5e_set_rx_port_ts(mdev, false);
--		if (err)
--			goto out;
--
--		chs->params.scatter_fcs_en = true;
--		err = mlx5e_modify_channels_scatter_fcs(chs, true);
--		if (err) {
--			chs->params.scatter_fcs_en = false;
--			mlx5e_set_rx_port_ts(mdev, true);
--		}
--	} else {
--		chs->params.scatter_fcs_en = false;
--		err = mlx5e_modify_channels_scatter_fcs(chs, false);
--		if (err) {
--			chs->params.scatter_fcs_en = true;
--			goto out;
--		}
--		err = mlx5e_set_rx_port_ts(mdev, true);
--		if (err) {
--			mlx5_core_warn(mdev, "Failed to set RX port timestamp %d\n", err);
--			err = 0;
--		}
--	}
--
--out:
-+	new_params = chs->params;
-+	new_params.scatter_fcs_en = enable;
-+	err = mlx5e_safe_switch_params(priv, &new_params, mlx5e_set_rx_port_ts_wrap,
-+				       &new_params.scatter_fcs_en, true);
- 	mutex_unlock(&priv->state_lock);
- 	return err;
- }
+ 			if (!test_bit(ICE_FLAG_VF_VLAN_PRUNING, pf->flags))
+ 				vlan_ops->ena_rx_filtering = noop_vlan;
+ 			else
+@@ -96,7 +103,14 @@ void ice_vf_vsi_init_vlan_ops(struct ice_vsi *vsi)
+ 			vlan_ops->set_port_vlan = ice_vsi_set_inner_port_vlan;
+ 			vlan_ops->ena_rx_filtering =
+ 				ice_vsi_ena_rx_vlan_filtering;
++			/* all Rx traffic should be in the domain of the
++			 * assigned port VLAN, so prevent disabling Rx VLAN
++			 * filtering
++			 */
++			vlan_ops->dis_rx_filtering = noop_vlan;
+ 		} else {
++			vlan_ops->dis_rx_filtering =
++				ice_vsi_dis_rx_vlan_filtering;
+ 			if (!test_bit(ICE_FLAG_VF_VLAN_PRUNING, pf->flags))
+ 				vlan_ops->ena_rx_filtering = noop_vlan;
+ 			else
 -- 
 2.39.0
 
