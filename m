@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E55F68F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:56:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F495C4339B;
-	Mon, 13 Feb 2023 14:56:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 899FF8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:56:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11C49C433EF;
+	Mon, 13 Feb 2023 14:56:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300204;
-	bh=isHMXmmCPO2lH7MLsNVdh+K6PFj6mLc6duGdSmEhzc4=;
+	s=korg; t=1676300207;
+	bh=sDsNj1HrGF2WR6Q950hDa0HSJFUhA10jD3RwuEufay4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AVOaYyklNv3tOPT7G9ukCx5zbz89yEG1kghh0SDb53242HhLY0dVWM+Dl3cjQ1Y9B
-	 ydrS9b7wMVI4WUPScpHjeZF+npaYcfgcJ3VdWT2TyNzj7IU2rzT8i56Klcjfq0O1lk
-	 19UuaW5letox+KoX6+eCNtZRJnU7OOsh32HtyQ2E=
+	b=o7dHlh/oD8vG/GJZZltjkkUNmX59faW60ldH/s/BBzlvw7hKC+syGgNdbtNrhR8ll
+	 IeDZjDj1TYHJ9QbypNNYLsy+2L8RwbETlhAPjgK8TIMwigSbhV5/8E3FAVHtU3e7vU
+	 YrzBumorLt6oCuiV3RPwNtAlcE3oHkuiXgo/RcnM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexandru Elisei <alexandru.elisei@gmail.com>,
-	Darren Hart <darren@os.amperecomputing.com>,
-	Justin He <justin.he@arm.com>,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 6.1 104/114] arm64: efi: Force the use of SetVirtualAddressMap() on eMAG and Altra Max machines
-Date: Mon, 13 Feb 2023 15:48:59 +0100
-Message-Id: <20230213144747.580887465@linuxfoundation.org>
+	Evan Quan <evan.quan@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
+	Guchun Chen <guchun.chen@amd.com>
+Subject: [PATCH 6.1 105/114] drm/amd/pm: bump SMU 13.0.0 driver_if header version
+Date: Mon, 13 Feb 2023 15:49:00 +0100
+Message-Id: <20230213144747.634907297@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -36,50 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Darren Hart <darren@os.amperecomputing.com>
+From: Evan Quan <evan.quan@amd.com>
 
-commit 190233164cd77115f8dea718cbac561f557092c6 upstream.
+commit 9874cc2df4e892c8744aa0472866cbf7c3cf1862 upstream.
 
-Commit 550b33cfd445 ("arm64: efi: Force the use of SetVirtualAddressMap()
-on Altra machines") identifies the Altra family via the family field in
-the type#1 SMBIOS record. eMAG and Altra Max machines are similarly
-affected but not detected with the strict strcmp test.
+This can suppress the warning caused by version mismatch.
 
-The type1_family smbios string is not an entirely reliable means of
-identifying systems with this issue as OEMs can, and do, use their own
-strings for these fields. However, until we have a better solution,
-capture the bulk of these systems by adding strcmp matching for "eMAG"
-and "Altra Max".
-
-Fixes: 550b33cfd445 ("arm64: efi: Force the use of SetVirtualAddressMap() on Altra machines")
-Cc: <stable@vger.kernel.org> # 6.1.x
-Cc: Alexandru Elisei <alexandru.elisei@gmail.com>
-Signed-off-by: Darren Hart <darren@os.amperecomputing.com>
-Tested-by: Justin He <justin.he@arm.com>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Evan Quan <evan.quan@amd.com>
+Acked-by: Alex Deucher <alexander.deucher@amd.com>
+Acked-by: Guchun Chen <guchun.chen@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org # 6.1.x
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/libstub/arm64-stub.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ .../drm/amd/pm/swsmu/inc/pmfw_if/smu13_driver_if_v13_0_0.h   | 5 +++--
+ drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h                 | 2 +-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/firmware/efi/libstub/arm64-stub.c
-+++ b/drivers/firmware/efi/libstub/arm64-stub.c
-@@ -20,10 +20,13 @@ static bool system_needs_vamap(void)
- 	const u8 *type1_family = efi_get_smbios_string(1, family);
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu13_driver_if_v13_0_0.h b/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu13_driver_if_v13_0_0.h
+index d6b964cf73bd..4bc7aee4d44f 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu13_driver_if_v13_0_0.h
++++ b/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu13_driver_if_v13_0_0.h
+@@ -123,7 +123,8 @@
+ 									(1 << FEATURE_DS_FCLK_BIT) | \
+ 									(1 << FEATURE_DS_LCLK_BIT) | \
+ 									(1 << FEATURE_DS_DCFCLK_BIT) | \
+-									(1 << FEATURE_DS_UCLK_BIT))
++									(1 << FEATURE_DS_UCLK_BIT) | \
++									(1ULL << FEATURE_DS_VCN_BIT))
  
- 	/*
--	 * Ampere Altra machines crash in SetTime() if SetVirtualAddressMap()
--	 * has not been called prior.
-+	 * Ampere eMAG, Altra, and Altra Max machines crash in SetTime() if
-+	 * SetVirtualAddressMap() has not been called prior.
- 	 */
--	if (!type1_family || strcmp(type1_family, "Altra"))
-+	if (!type1_family || (
-+	    strcmp(type1_family, "eMAG") &&
-+	    strcmp(type1_family, "Altra") &&
-+	    strcmp(type1_family, "Altra Max")))
- 		return false;
- 
- 	efi_warn("Working around broken SetVirtualAddressMap()\n");
+ //For use with feature control messages
+ typedef enum {
+@@ -522,9 +523,9 @@ typedef enum  {
+   TEMP_HOTSPOT_M,
+   TEMP_MEM,
+   TEMP_VR_GFX,
+-  TEMP_VR_SOC,
+   TEMP_VR_MEM0,
+   TEMP_VR_MEM1,
++  TEMP_VR_SOC,
+   TEMP_VR_U,
+   TEMP_LIQUID0,
+   TEMP_LIQUID1,
+diff --git a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
+index e8c6febb8b64..d9c4821bcfc8 100644
+--- a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
++++ b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
+@@ -28,7 +28,7 @@
+ #define SMU13_DRIVER_IF_VERSION_INV 0xFFFFFFFF
+ #define SMU13_DRIVER_IF_VERSION_YELLOW_CARP 0x04
+ #define SMU13_DRIVER_IF_VERSION_ALDE 0x08
+-#define SMU13_DRIVER_IF_VERSION_SMU_V13_0_0_0 0x34
++#define SMU13_DRIVER_IF_VERSION_SMU_V13_0_0_0 0x37
+ #define SMU13_DRIVER_IF_VERSION_SMU_V13_0_4 0x07
+ #define SMU13_DRIVER_IF_VERSION_SMU_V13_0_5 0x04
+ #define SMU13_DRIVER_IF_VERSION_SMU_V13_0_0_10 0x32
+-- 
+2.39.1
+
 
 
