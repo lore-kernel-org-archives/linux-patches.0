@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0D08F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D26C433EF;
-	Mon, 13 Feb 2023 14:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 310478F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7715C433EF;
+	Mon, 13 Feb 2023 14:58:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300318;
-	bh=zgBfq7s1Cxit47btw0Uli2ILQbpP6G3PcYn3JgUGv7c=;
+	s=korg; t=1676300321;
+	bh=XFM9O43lhkuwDZmHm0WAUxwEfJkPpf8IaJ9eIHLERLU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Khc3HoWAJ04fDEnpiHTyCmV6L8DMLRpg+27YdEgS/AwKV0STTg//mr3pUoTnSaf81
-	 dU3O3DiYOdHddq3GtxxgNj3iDcXUU+jAlXbtLQlgIMPu0Tq+K5yq6O/D3pGaurW9Cg
-	 +CYyknCcu5hhE5a1EV0CxG+Oz+KHTps9WuwQwrBY=
+	b=y6vtKguKGhDHGfuOipn5jkNjHS+X9nDAQK8BTXUZQrm5XNwTCbdU9rDYCQ8LemWWN
+	 qRq2zgRa7TQPx2juR6UhYyNAf83wEQeXNxte6Ud+ZZeGaKHxIJMLNDpYEmXnNmzuPo
+	 WVAdJqJIygj5SpBYQCL7oVP7O83lU1r+yG9prYo4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Frank Wunderlich <frank-w@public-files.de>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Dragos Tatulea <dtatulea@nvidia.com>,
+	Gal Pressman <gal@nvidia.com>,
+	Tariq Toukan <tariqt@nvidia.com>,
+	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 28/67] net: dsa: mt7530: dont change PVC_EG_TAG when CPU port becomes VLAN-aware
-Date: Mon, 13 Feb 2023 15:49:09 +0100
-Message-Id: <20230213144733.704951997@linuxfoundation.org>
+Subject: [PATCH 5.15 34/67] net/mlx5e: IPoIB, Show unknown speed instead of error
+Date: Mon, 13 Feb 2023 15:49:15 +0100
+Message-Id: <20230213144733.995380856@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -38,104 +37,94 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Dragos Tatulea <dtatulea@nvidia.com>
 
-[ Upstream commit 0b6d6425103a676e2b6a81f3fd35d7ea4f9b90ec ]
+[ Upstream commit 8aa5f171d51c1cb69e5e3106df4dd1a446102823 ]
 
-Frank reports that in a mt7530 setup where some ports are standalone and
-some are in a VLAN-aware bridge, 8021q uppers of the standalone ports
-lose their VLAN tag on xmit, as seen by the link partner.
+ethtool is returning an error for unknown speeds for the IPoIB interface:
 
-This seems to occur because once the other ports join the VLAN-aware
-bridge, mt7530_port_vlan_filtering() also calls
-mt7530_port_set_vlan_aware(ds, cpu_dp->index), and this affects the way
-that the switch processes the traffic of the standalone port.
+$ ethtool ib0
+netlink error: failed to retrieve link settings
+netlink error: Invalid argument
+netlink error: failed to retrieve link settings
+netlink error: Invalid argument
+Settings for ib0:
+Link detected: no
 
-Relevant is the PVC_EG_TAG bit. The MT7530 documentation says about it:
+After this change, ethtool will return success and show "unknown speed":
 
-EG_TAG: Incoming Port Egress Tag VLAN Attribution
-0: disabled (system default)
-1: consistent (keep the original ingress tag attribute)
+$ ethtool ib0
+Settings for ib0:
+Supported ports: [  ]
+Supported link modes:   Not reported
+Supported pause frame use: No
+Supports auto-negotiation: No
+Supported FEC modes: Not reported
+Advertised link modes:  Not reported
+Advertised pause frame use: No
+Advertised auto-negotiation: No
+Advertised FEC modes: Not reported
+Speed: Unknown!
+Duplex: Full
+Auto-negotiation: off
+Port: Other
+PHYAD: 0
+Transceiver: internal
+Link detected: no
 
-My interpretation is that this setting applies on the ingress port, and
-"disabled" is basically the normal behavior, where the egress tag format
-of the packet (tagged or untagged) is decided by the VLAN table
-(MT7530_VLAN_EGRESS_UNTAG or MT7530_VLAN_EGRESS_TAG).
-
-But there is also an option of overriding the system default behavior,
-and for the egress tagging format of packets to be decided not by the
-VLAN table, but simply by copying the ingress tag format (if ingress was
-tagged, egress is tagged; if ingress was untagged, egress is untagged;
-aka "consistent). This is useful in 2 scenarios:
-
-- VLAN-unaware bridge ports will always encounter a miss in the VLAN
-  table. They should forward a packet as-is, though. So we use
-  "consistent" there. See commit e045124e9399 ("net: dsa: mt7530: fix
-  tagged frames pass-through in VLAN-unaware mode").
-
-- Traffic injected from the CPU port. The operating system is in god
-  mode; if it wants a packet to exit as VLAN-tagged, it sends it as
-  VLAN-tagged. Otherwise it sends it as VLAN-untagged*.
-
-*This is true only if we don't consider the bridge TX forwarding offload
-feature, which mt7530 doesn't support.
-
-So for now, make the CPU port always stay in "consistent" mode to allow
-software VLANs to be forwarded to their egress ports with the VLAN tag
-intact, and not stripped.
-
-Link: https://lore.kernel.org/netdev/trinity-e6294d28-636c-4c40-bb8b-b523521b00be-1674233135062@3c-app-gmx-bs36/
-Fixes: e045124e9399 ("net: dsa: mt7530: fix tagged frames pass-through in VLAN-unaware mode")
-Reported-by: Frank Wunderlich <frank-w@public-files.de>
-Tested-by: Frank Wunderlich <frank-w@public-files.de>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Tested-by: Arınç ÜNAL <arinc.unal@arinc9.com>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230205140713.1609281-1-vladimir.oltean@nxp.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Fixes: eb234ee9d541 ("net/mlx5e: IPoIB, Add support for get_link_ksettings in ethtool")
+Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
+Reviewed-by: Gal Pressman <gal@nvidia.com>
+Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/dsa/mt7530.c | 26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/ipoib/ethtool.c | 13 +++++--------
+ 1 file changed, 5 insertions(+), 8 deletions(-)
 
-diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
-index 704ba461a6000..c1505de23957f 100644
---- a/drivers/net/dsa/mt7530.c
-+++ b/drivers/net/dsa/mt7530.c
-@@ -1290,14 +1290,26 @@ mt7530_port_set_vlan_aware(struct dsa_switch *ds, int port)
- 		if (!priv->ports[port].pvid)
- 			mt7530_rmw(priv, MT7530_PVC_P(port), ACC_FRM_MASK,
- 				   MT7530_VLAN_ACC_TAGGED);
--	}
- 
--	/* Set the port as a user port which is to be able to recognize VID
--	 * from incoming packets before fetching entry within the VLAN table.
--	 */
--	mt7530_rmw(priv, MT7530_PVC_P(port), VLAN_ATTR_MASK | PVC_EG_TAG_MASK,
--		   VLAN_ATTR(MT7530_VLAN_USER) |
--		   PVC_EG_TAG(MT7530_VLAN_EG_DISABLED));
-+		/* Set the port as a user port which is to be able to recognize
-+		 * VID from incoming packets before fetching entry within the
-+		 * VLAN table.
-+		 */
-+		mt7530_rmw(priv, MT7530_PVC_P(port),
-+			   VLAN_ATTR_MASK | PVC_EG_TAG_MASK,
-+			   VLAN_ATTR(MT7530_VLAN_USER) |
-+			   PVC_EG_TAG(MT7530_VLAN_EG_DISABLED));
-+	} else {
-+		/* Also set CPU ports to the "user" VLAN port attribute, to
-+		 * allow VLAN classification, but keep the EG_TAG attribute as
-+		 * "consistent" (i.o.w. don't change its value) for packets
-+		 * received by the switch from the CPU, so that tagged packets
-+		 * are forwarded to user ports as tagged, and untagged as
-+		 * untagged.
-+		 */
-+		mt7530_rmw(priv, MT7530_PVC_P(port), VLAN_ATTR_MASK,
-+			   VLAN_ATTR(MT7530_VLAN_USER));
-+	}
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ethtool.c
+index 0c8594c7df21d..908e5ee1a30fa 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ethtool.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ethtool.c
+@@ -172,16 +172,16 @@ static inline int mlx5_ptys_rate_enum_to_int(enum mlx5_ptys_rate rate)
+ 	}
  }
  
- static void
+-static int mlx5i_get_speed_settings(u16 ib_link_width_oper, u16 ib_proto_oper)
++static u32 mlx5i_get_speed_settings(u16 ib_link_width_oper, u16 ib_proto_oper)
+ {
+ 	int rate, width;
+ 
+ 	rate = mlx5_ptys_rate_enum_to_int(ib_proto_oper);
+ 	if (rate < 0)
+-		return -EINVAL;
++		return SPEED_UNKNOWN;
+ 	width = mlx5_ptys_width_enum_to_int(ib_link_width_oper);
+ 	if (width < 0)
+-		return -EINVAL;
++		return SPEED_UNKNOWN;
+ 
+ 	return rate * width;
+ }
+@@ -204,16 +204,13 @@ static int mlx5i_get_link_ksettings(struct net_device *netdev,
+ 	ethtool_link_ksettings_zero_link_mode(link_ksettings, advertising);
+ 
+ 	speed = mlx5i_get_speed_settings(ib_link_width_oper, ib_proto_oper);
+-	if (speed < 0)
+-		return -EINVAL;
++	link_ksettings->base.speed = speed;
++	link_ksettings->base.duplex = speed == SPEED_UNKNOWN ? DUPLEX_UNKNOWN : DUPLEX_FULL;
+ 
+-	link_ksettings->base.duplex = DUPLEX_FULL;
+ 	link_ksettings->base.port = PORT_OTHER;
+ 
+ 	link_ksettings->base.autoneg = AUTONEG_DISABLE;
+ 
+-	link_ksettings->base.speed = speed;
+-
+ 	return 0;
+ }
+ 
 -- 
 2.39.0
 
