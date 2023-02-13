@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 722998F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:55:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D283EC433D2;
-	Mon, 13 Feb 2023 14:55:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E90C78F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:55:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6A852C4339B;
+	Mon, 13 Feb 2023 14:55:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300140;
-	bh=sbhRK+0haLItP7fq4kT2sr5kiF6FilBWs1sVRUzpJwE=;
+	s=korg; t=1676300142;
+	bh=tCmo0LV+XWnV7qxergCVHAh9vvmWGwpvvGWs2W2mLoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Tdn7Fp0FD4RsjvEWv1iyqj6b2JpDCyBF29EGUE4YlB6CuyiV4wcPs6sIbUdXllbuE
-	 VRgZFOTDHMcGssfQVW+yd45kwuAaECRyI+JnBGHjeNQqDuzYfKZRIdLPP3V4Pd30J7
-	 m/6x3rQRwZ62f1oIkI47zfzRW4hBxZk2f+DEIkUE=
+	b=kGq9+43HdbUBJ/cQpftLcNnMrUJsmRYYeCUViUcm0PgJInuiNlB5yau2muqJEANZg
+	 1hJDKD/2MAlAiElcihiB/eTI86ytQJaBFvlq4aqpRxEtLN6GbibhnA7Qu+EdIKvw3b
+	 sPsHDdxG4zcs/PUyg1EPsnwPmTq+szcZ7TR4UfZQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Nazarov <Sergey.Nazarov@baikalelectronics.ru>,
-	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 074/114] spi: dw: Fix wrong FIFO level setting for long xfers
-Date: Mon, 13 Feb 2023 15:48:29 +0100
-Message-Id: <20230213144746.022211055@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 080/114] mptcp: be careful on subflow status propagation on errors
+Date: Mon, 13 Feb 2023 15:48:35 +0100
+Message-Id: <20230213144746.294570990@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -37,47 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit c63b8fd14a7db719f8252038a790638728c4eb66 ]
+commit 1249db44a102d9d3541ed7798d4b01ffdcf03524 upstream.
 
-Due to using the u16 type in the min_t() macros the SPI transfer length
-will be cast to word before participating in the conditional statement
-implied by the macro. Thus if the transfer length is greater than 64KB the
-Tx/Rx FIFO threshold level value will be determined by the leftover of the
-truncated after the type-case length. In the worst case it will cause the
-dramatical performance drop due to the "Tx FIFO Empty" or "Rx FIFO Full"
-interrupts triggered on each xfer word sent/received to/from the bus.
+Currently the subflow error report callback unconditionally
+propagates the fallback subflow status to the owning msk.
 
-The problem can be easily fixed by specifying the unsigned int type in the
-min_t() macros thus preventing the possible data loss.
+If the msk is already orphaned, the above prevents the code
+from correctly tracking the msk moving to the TCP_CLOSE state
+and doing the appropriate cleanup.
 
-Fixes: ea11370fffdf ("spi: dw: get TX level without an additional variable")
-Reported-by: Sergey Nazarov <Sergey.Nazarov@baikalelectronics.ru>
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230113185942.2516-1-Sergey.Semin@baikalelectronics.ru
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+All the above causes increasing memory usage over time and
+sporadic self-tests failures.
+
+There is a great deal of infrastructure trying to propagate
+correctly the fallback subflow status to the owning mptcp socket,
+e.g. via mptcp_subflow_eof() and subflow_sched_work_if_closed():
+in the error propagation path we need only to cope with unorphaned
+sockets.
+
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/339
+Fixes: 15cc10453398 ("mptcp: deliver ssk errors to msk")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-dw-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mptcp/subflow.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-dw-core.c b/drivers/spi/spi-dw-core.c
-index 99edddf9958b9..c3bfb6c84cab2 100644
---- a/drivers/spi/spi-dw-core.c
-+++ b/drivers/spi/spi-dw-core.c
-@@ -366,7 +366,7 @@ static void dw_spi_irq_setup(struct dw_spi *dws)
- 	 * will be adjusted at the final stage of the IRQ-based SPI transfer
- 	 * execution so not to lose the leftover of the incoming data.
- 	 */
--	level = min_t(u16, dws->fifo_len / 2, dws->tx_len);
-+	level = min_t(unsigned int, dws->fifo_len / 2, dws->tx_len);
- 	dw_writel(dws, DW_SPI_TXFTLR, level);
- 	dw_writel(dws, DW_SPI_RXFTLR, level - 1);
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1344,6 +1344,7 @@ void __mptcp_error_report(struct sock *s
+ 	mptcp_for_each_subflow(msk, subflow) {
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+ 		int err = sock_error(ssk);
++		int ssk_state;
  
--- 
-2.39.0
-
+ 		if (!err)
+ 			continue;
+@@ -1354,7 +1355,14 @@ void __mptcp_error_report(struct sock *s
+ 		if (sk->sk_state != TCP_SYN_SENT && !__mptcp_check_fallback(msk))
+ 			continue;
+ 
+-		inet_sk_state_store(sk, inet_sk_state_load(ssk));
++		/* We need to propagate only transition to CLOSE state.
++		 * Orphaned socket will see such state change via
++		 * subflow_sched_work_if_closed() and that path will properly
++		 * destroy the msk as needed.
++		 */
++		ssk_state = inet_sk_state_load(ssk);
++		if (ssk_state == TCP_CLOSE && !sock_flag(sk, SOCK_DEAD))
++			inet_sk_state_store(sk, ssk_state);
+ 		sk->sk_err = -err;
+ 
+ 		/* This barrier is coupled with smp_rmb() in mptcp_poll() */
 
 
