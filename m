@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E098F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:57:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E05C433EF;
-	Mon, 13 Feb 2023 14:57:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D131E8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:57:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57434C433D2;
+	Mon, 13 Feb 2023 14:57:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300264;
-	bh=mulZKyhUf7POD4ptCOWdAzBQIfJzTiocSRIhJEZUm3A=;
+	s=korg; t=1676300266;
+	bh=J8WpD2daCdqOZbyWy0ls5JntKKb8bQsGGgdXAIrvaY0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LfY2vaQXskncgyTKFyV3kEM/ny0ySpiPVcSjdi1AuO2K5DEwhBNFjB40nsV8bLdqK
-	 e8Y+KpaH/88tAr7u0jP/agpOWi6Ei89TaYBxdnWmB1EdcWRFsESTN+CRBPk9oxXXLh
-	 yzBjX/LADTvmse+JTSjj70SsrCjqDVs1QP8huvfw=
+	b=EFOOvbtA5WioQC2US5kDydZf/C4HyAF+yetG6pyYakUlLVLUuQ04gt0u0sDMwmkVU
+	 b+tVkiy/j3xfWFzeDjxLZRcnXTEQZukHVQBRNA/xhgM2+OiSW/5FUtKd+/Wqa4VT7i
+	 0s4aW9MNI1ol4WioK6QM3mNAj140YA+zSqgWgamw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	mhiramat@kernel.org,
-	mchehab@kernel.org,
-	linux-edac@vger.kernel.org,
-	Shiju Jose <shiju.jose@huawei.com>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>
-Subject: [PATCH 5.15 12/67] tracing: Fix poll() and select() do not work on per_cpu trace_pipe and trace_pipe_raw
-Date: Mon, 13 Feb 2023 15:48:53 +0100
-Message-Id: <20230213144732.893606073@linuxfoundation.org>
+	Mark Brown <broonie@kernel.org>,
+	Luca Di Stefano <luca.distefano@linaro.org>,
+	993612@bugs.debian.org,
+	stable@kernel.org,
+	Rob Herring <robh@kernel.org>
+Subject: [PATCH 5.15 13/67] of/address: Return an error when no valid dma-ranges are found
+Date: Mon, 13 Feb 2023 15:48:54 +0100
+Message-Id: <20230213144732.959050272@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -37,53 +37,81 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shiju Jose <shiju.jose@huawei.com>
+From: Mark Brown <broonie@kernel.org>
 
-commit 3e46d910d8acf94e5360126593b68bf4fee4c4a1 upstream.
+commit f6933c01e42d2fc83b9133ed755609e4aac6eadd upstream.
 
-poll() and select() on per_cpu trace_pipe and trace_pipe_raw do not work
-since kernel 6.1-rc6. This issue is seen after the commit
-42fb0a1e84ff525ebe560e2baf9451ab69127e2b ("tracing/ring-buffer: Have
-polling block on watermark").
+Commit 7a8b64d17e35 ("of/address: use range parser for of_dma_get_range")
+converted the parsing of dma-range properties to use code shared with the
+PCI range parser. The intent was to introduce no functional changes however
+in the case where we fail to translate the first resource instead of
+returning -EINVAL the new code we return 0. Restore the previous behaviour
+by returning an error if we find no valid ranges, the original code only
+handled the first range but subsequently support for parsing all supplied
+ranges was added.
 
-This issue is firstly detected and reported, when testing the CXL error
-events in the rasdaemon and also erified using the test application for poll()
-and select().
+This avoids confusing code using the parsed ranges which doesn't expect to
+successfully parse ranges but have only a list terminator returned, this
+fixes breakage with so far as I can tell all DMA for on SoC devices on the
+Socionext Synquacer platform which has a firmware supplied DT. A bisect
+identified the original conversion as triggering the issues there.
 
-This issue occurs for the per_cpu case, when calling the ring_buffer_poll_wait(),
-in kernel/trace/ring_buffer.c, with the buffer_percent > 0 and then wait until the
-percentage of pages are available. The default value set for the buffer_percent is 50
-in the kernel/trace/trace.c.
-
-As a fix, allow userspace application could set buffer_percent as 0 through
-the buffer_percent_fops, so that the task will wake up as soon as data is added
-to any of the specific cpu buffer.
-
-Link: https://lore.kernel.org/linux-trace-kernel/20230202182309.742-2-shiju.jose@huawei.com
-
-Cc: <mhiramat@kernel.org>
-Cc: <mchehab@kernel.org>
-Cc: <linux-edac@vger.kernel.org>
-Cc: stable@vger.kernel.org
-Fixes: 42fb0a1e84ff5 ("tracing/ring-buffer: Have polling block on watermark")
-Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
-Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
+Fixes: 7a8b64d17e35 ("of/address: use range parser for of_dma_get_range")
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Cc: Luca Di Stefano <luca.distefano@linaro.org>
+Cc: 993612@bugs.debian.org
+Cc: stable@kernel.org
+Link: https://lore.kernel.org/r/20230126-synquacer-boot-v2-1-cb80fd23c4e2@kernel.org
+Signed-off-by: Rob Herring <robh@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/trace/trace.c |    3 ---
- 1 file changed, 3 deletions(-)
+ drivers/of/address.c |   21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
 
---- a/kernel/trace/trace.c
-+++ b/kernel/trace/trace.c
-@@ -9089,9 +9089,6 @@ buffer_percent_write(struct file *filp,
- 	if (val > 100)
- 		return -EINVAL;
+--- a/drivers/of/address.c
++++ b/drivers/of/address.c
+@@ -963,8 +963,19 @@ int of_dma_get_range(struct device_node
+ 	}
  
--	if (!val)
--		val = 1;
--
- 	tr->buffer_percent = val;
+ 	of_dma_range_parser_init(&parser, node);
+-	for_each_of_range(&parser, &range)
++	for_each_of_range(&parser, &range) {
++		if (range.cpu_addr == OF_BAD_ADDR) {
++			pr_err("translation of DMA address(%llx) to CPU address failed node(%pOF)\n",
++			       range.bus_addr, node);
++			continue;
++		}
+ 		num_ranges++;
++	}
++
++	if (!num_ranges) {
++		ret = -EINVAL;
++		goto out;
++	}
  
- 	(*ppos)++;
+ 	r = kcalloc(num_ranges + 1, sizeof(*r), GFP_KERNEL);
+ 	if (!r) {
+@@ -973,18 +984,16 @@ int of_dma_get_range(struct device_node
+ 	}
+ 
+ 	/*
+-	 * Record all info in the generic DMA ranges array for struct device.
++	 * Record all info in the generic DMA ranges array for struct device,
++	 * returning an error if we don't find any parsable ranges.
+ 	 */
+ 	*map = r;
+ 	of_dma_range_parser_init(&parser, node);
+ 	for_each_of_range(&parser, &range) {
+ 		pr_debug("dma_addr(%llx) cpu_addr(%llx) size(%llx)\n",
+ 			 range.bus_addr, range.cpu_addr, range.size);
+-		if (range.cpu_addr == OF_BAD_ADDR) {
+-			pr_err("translation of DMA address(%llx) to CPU address failed node(%pOF)\n",
+-			       range.bus_addr, node);
++		if (range.cpu_addr == OF_BAD_ADDR)
+ 			continue;
+-		}
+ 		r->cpu_start = range.cpu_addr;
+ 		r->dma_start = range.bus_addr;
+ 		r->size = range.size;
 
 
