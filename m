@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D643A8F58
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:05:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D5BC433EF;
-	Mon, 13 Feb 2023 15:05:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6281E8F58
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:05:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DBC24C433AC;
+	Mon, 13 Feb 2023 15:05:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300715;
-	bh=zJJ2yQkL2pdi8kVEQ+ngMoe8FDO10cq1aVLGAMXspjc=;
+	s=korg; t=1676300718;
+	bh=W6c0zlTCwaL0Bm1yT9ofMMh4BTpC3Ohw2V+ilySlOvg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ODqQc0qmMT+ZA0hmfRpKMj2vMHAbEu7ZiXWjmFSgvfNi7q2nTeJWZ7uhV4b/Rnt+V
-	 Lc/PJycCOjyOw8ZYn0g/fDGOb1/3J0szm2xXXF9l1fhOdd1EGl3eyCvtK1qEPSbxYf
-	 DDX9F0fYSTcYPwjhEgAmpJoPDZOanjNJqrq/4CkM=
+	b=lOqK3JctdxDY7mdGcVkNYKan3L6zTb/r70L3ylXj82uJVHSdZ24pXorINGimg1tx7
+	 lY2TCJAs+aDu/nt7OJvHQajowU/loJIpsyoEOc4iJwUkeEn5zGQgpo+OGXYyJO3jhR
+	 pEpmonZCB7KEEC3NtsEM+Ps2JHxPTs+h0yzIdkvY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shay Drory <shayd@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 120/139] net/mlx5: fw_tracer, Zero consumer index when reloading the tracer
-Date: Mon, 13 Feb 2023 15:51:05 +0100
-Message-Id: <20230213144752.241810889@linuxfoundation.org>
+Subject: [PATCH 5.10 121/139] rds: rds_rm_zerocopy_callback() use list_first_entry()
+Date: Mon, 13 Feb 2023 15:51:06 +0100
+Message-Id: <20230213144752.296427595@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -35,43 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shay Drory <shayd@nvidia.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit 184e1e4474dbcfebc4dbd1fa823a329978f25506 ]
+[ Upstream commit f753a68980cf4b59a80fe677619da2b1804f526d ]
 
-When tracer is reloaded, the device will log the traces at the
-beginning of the log buffer. Also, driver is reading the log buffer in
-chunks in accordance to the consumer index.
-Hence, zero consumer index when reloading the tracer.
+rds_rm_zerocopy_callback() uses list_entry() on the head of a list
+causing a type confusion.
+Use list_first_entry() to actually access the first element of the
+rs_zcookie_queue list.
 
-Fixes: 4383cfcc65e7 ("net/mlx5: Add devlink reload")
-Signed-off-by: Shay Drory <shayd@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+Fixes: 9426bbc6de99 ("rds: use list structure to track information for zerocopy completion notification")
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Link: https://lore.kernel.org/r/20230202-rds-zerocopy-v3-1-83b0df974f9a@diag.uniroma1.it
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/rds/message.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-index 76232abfc7863..40d7bfca37499 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
-@@ -757,6 +757,7 @@ static int mlx5_fw_tracer_set_mtrc_conf(struct mlx5_fw_tracer *tracer)
- 	if (err)
- 		mlx5_core_warn(dev, "FWTracer: Failed to set tracer configurations %d\n", err);
- 
-+	tracer->buff.consumer_index = 0;
- 	return err;
- }
- 
-@@ -821,7 +822,6 @@ static void mlx5_fw_tracer_ownership_change(struct work_struct *work)
- 	mlx5_core_dbg(tracer->dev, "FWTracer: ownership changed, current=(%d)\n", tracer->owner);
- 	if (tracer->owner) {
- 		tracer->owner = false;
--		tracer->buff.consumer_index = 0;
- 		return;
- 	}
- 
+diff --git a/net/rds/message.c b/net/rds/message.c
+index 799034e0f513d..b363ef13c75ef 100644
+--- a/net/rds/message.c
++++ b/net/rds/message.c
+@@ -104,9 +104,9 @@ static void rds_rm_zerocopy_callback(struct rds_sock *rs,
+ 	spin_lock_irqsave(&q->lock, flags);
+ 	head = &q->zcookie_head;
+ 	if (!list_empty(head)) {
+-		info = list_entry(head, struct rds_msg_zcopy_info,
+-				  rs_zcookie_next);
+-		if (info && rds_zcookie_add(info, cookie)) {
++		info = list_first_entry(head, struct rds_msg_zcopy_info,
++					rs_zcookie_next);
++		if (rds_zcookie_add(info, cookie)) {
+ 			spin_unlock_irqrestore(&q->lock, flags);
+ 			kfree(rds_info_from_znotifier(znotif));
+ 			/* caller invokes rds_wake_sk_sleep() */
 -- 
 2.39.0
 
