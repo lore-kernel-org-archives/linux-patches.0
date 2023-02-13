@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91DC38F58
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:05:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E434FC433D2;
-	Mon, 13 Feb 2023 15:05:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 382DC8F58
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:05:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1F3CC433D2;
+	Mon, 13 Feb 2023 15:05:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300710;
-	bh=NLSpfwP7tntStuHLEkvOMqG9pjdAcxWAkGOhET4/D+k=;
+	s=korg; t=1676300713;
+	bh=kPVyfKwqRC6ArhZ4ktUHXKeLjFTs52NPAy/UBRn5ZQw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NXrUFO8TfUE8K27xTAa1unlZVgpflqRpurnTbBtXKg6DZygZtcZ9jokF3ks6MWRgk
-	 z1N6DhUnutJAFDkd6WCZcnLRWWstpud0kmMtpHWFwEazWO45xlMhQT9JQVFETbHPt3
-	 SXQ+xzaHI3GaGXJ1V4F39bqyLQhQjkD2AwFcnzI4=
+	b=Np6ry+C22GWm2Uike+r6OZzG0pdRcJK4+iKjVMFhUj7gWmH1A9o5ayfpWWQngBtEr
+	 l0COp36oF3jw5C+DgDsZREOcebUsgtFP1iWWREBwr5RDQ8MOwYiesvqYQshXRQzjOU
+	 cMufI9ZLXoMQJgOEWX7hpA9iYNLjrAW55PeEkghI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dragos Tatulea <dtatulea@nvidia.com>,
-	Gal Pressman <gal@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
+	Shay Drory <shayd@nvidia.com>,
+	Moshe Shemesh <moshe@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 118/139] net/mlx5e: IPoIB, Show unknown speed instead of error
-Date: Mon, 13 Feb 2023 15:51:03 +0100
-Message-Id: <20230213144752.146096075@linuxfoundation.org>
+Subject: [PATCH 5.10 119/139] net/mlx5: fw_tracer, Clear load bit when freeing string DBs buffers
+Date: Mon, 13 Feb 2023 15:51:04 +0100
+Message-Id: <20230213144752.198541865@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -37,94 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dragos Tatulea <dtatulea@nvidia.com>
+From: Shay Drory <shayd@nvidia.com>
 
-[ Upstream commit 8aa5f171d51c1cb69e5e3106df4dd1a446102823 ]
+[ Upstream commit db561fed6b8fa3878e74d5df6512a4a38152b63e ]
 
-ethtool is returning an error for unknown speeds for the IPoIB interface:
+Whenever the driver is reading the string DBs into buffers, the driver
+is setting the load bit, but the driver never clears this bit.
+As a result, in case load bit is on and the driver query the device for
+new string DBs, the driver won't read again the string DBs.
+Fix it by clearing the load bit when query the device for new string
+DBs.
 
-$ ethtool ib0
-netlink error: failed to retrieve link settings
-netlink error: Invalid argument
-netlink error: failed to retrieve link settings
-netlink error: Invalid argument
-Settings for ib0:
-Link detected: no
-
-After this change, ethtool will return success and show "unknown speed":
-
-$ ethtool ib0
-Settings for ib0:
-Supported ports: [  ]
-Supported link modes:   Not reported
-Supported pause frame use: No
-Supports auto-negotiation: No
-Supported FEC modes: Not reported
-Advertised link modes:  Not reported
-Advertised pause frame use: No
-Advertised auto-negotiation: No
-Advertised FEC modes: Not reported
-Speed: Unknown!
-Duplex: Full
-Auto-negotiation: off
-Port: Other
-PHYAD: 0
-Transceiver: internal
-Link detected: no
-
-Fixes: eb234ee9d541 ("net/mlx5e: IPoIB, Add support for get_link_ksettings in ethtool")
-Signed-off-by: Dragos Tatulea <dtatulea@nvidia.com>
-Reviewed-by: Gal Pressman <gal@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
+Fixes: 2d69356752ff ("net/mlx5: Add support for fw live patch event")
+Signed-off-by: Shay Drory <shayd@nvidia.com>
+Reviewed-by: Moshe Shemesh <moshe@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/ipoib/ethtool.c | 13 +++++--------
- 1 file changed, 5 insertions(+), 8 deletions(-)
+ drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ethtool.c b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ethtool.c
-index cac8f085b16d7..2cf7f0fc170b8 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ethtool.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/ipoib/ethtool.c
-@@ -166,16 +166,16 @@ static inline int mlx5_ptys_rate_enum_to_int(enum mlx5_ptys_rate rate)
- 	}
- }
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+index f800e1ca5ba62..76232abfc7863 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/diag/fw_tracer.c
+@@ -64,6 +64,7 @@ static int mlx5_query_mtrc_caps(struct mlx5_fw_tracer *tracer)
+ 			MLX5_GET(mtrc_cap, out, num_string_trace);
+ 	tracer->str_db.num_string_db = MLX5_GET(mtrc_cap, out, num_string_db);
+ 	tracer->owner = !!MLX5_GET(mtrc_cap, out, trace_owner);
++	tracer->str_db.loaded = false;
  
--static int mlx5i_get_speed_settings(u16 ib_link_width_oper, u16 ib_proto_oper)
-+static u32 mlx5i_get_speed_settings(u16 ib_link_width_oper, u16 ib_proto_oper)
- {
- 	int rate, width;
- 
- 	rate = mlx5_ptys_rate_enum_to_int(ib_proto_oper);
- 	if (rate < 0)
--		return -EINVAL;
-+		return SPEED_UNKNOWN;
- 	width = mlx5_ptys_width_enum_to_int(ib_link_width_oper);
- 	if (width < 0)
--		return -EINVAL;
-+		return SPEED_UNKNOWN;
- 
- 	return rate * width;
- }
-@@ -198,16 +198,13 @@ static int mlx5i_get_link_ksettings(struct net_device *netdev,
- 	ethtool_link_ksettings_zero_link_mode(link_ksettings, advertising);
- 
- 	speed = mlx5i_get_speed_settings(ib_link_width_oper, ib_proto_oper);
--	if (speed < 0)
--		return -EINVAL;
-+	link_ksettings->base.speed = speed;
-+	link_ksettings->base.duplex = speed == SPEED_UNKNOWN ? DUPLEX_UNKNOWN : DUPLEX_FULL;
- 
--	link_ksettings->base.duplex = DUPLEX_FULL;
- 	link_ksettings->base.port = PORT_OTHER;
- 
- 	link_ksettings->base.autoneg = AUTONEG_DISABLE;
- 
--	link_ksettings->base.speed = speed;
--
- 	return 0;
- }
- 
+ 	for (i = 0; i < tracer->str_db.num_string_db; i++) {
+ 		mtrc_cap_sp = MLX5_ADDR_OF(mtrc_cap, out, string_db_param[i]);
 -- 
 2.39.0
 
