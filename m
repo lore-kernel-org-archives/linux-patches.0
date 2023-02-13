@@ -1,26 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 136EE8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:57:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8593AC4339B;
-	Mon, 13 Feb 2023 14:57:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A29A8F58
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:57:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C488C433D2;
+	Mon, 13 Feb 2023 14:57:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300253;
-	bh=/8lxrx0iT7bSWIoWcRQXfAyqwLndKdvMsQTxJtjka+c=;
+	s=korg; t=1676300259;
+	bh=QdJbVDLORVGTqvqBjIdlpc60dR5Ps1+GqguQjDvgweA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hP7RQIA92Ll4jh77DJmH5GqLQs9EePm7Z0oHdswRauV4fQEgF9Wy8xgi9R5u4Fb/G
-	 HY1fjzkJeX4VN9t79pm/TC9VfuRsecNPFH25FtIqnm+nAx23JrVUeLAsN/LQXrGdbr
-	 IOG0xaGdDbqFbkHOnb8Qjcon5Q6TXPftiAQcFpQs=
+	b=QaMs0LsTgWmDIfvtYUo6jslOlnAyaS2mRzVhAP4AKtFZ86QWSvmnssDazJki3U7+3
+	 WkYaIPaICSEPDwo6VnjvH824odKiQytwxGQrDzW3Ex4WYrSEN7Vr3z299WW0CdDu/S
+	 xPaABr6c5kWCLkkRd8/3jWXxaJJx2yyR9+JWIv1A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 08/67] ALSA: hda/realtek: Add Positivo N14KP6-TG
-Date: Mon, 13 Feb 2023 15:48:49 +0100
-Message-Id: <20230213144732.702926926@linuxfoundation.org>
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Peter Xu <peterx@redhat.com>,
+	David Hildenbrand <david@redhat.com>,
+	James Houghton <jthoughton@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Naoya Horiguchi <naoya.horiguchi@linux.dev>,
+	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 05/67] migrate: hugetlb: check for hugetlb shared PMD in node migration
+Date: Mon, 13 Feb 2023 15:48:46 +0100
+Message-Id: <20230213144732.575198575@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -34,31 +44,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+From: Mike Kravetz <mike.kravetz@oracle.com>
 
-commit 88d18b8896bd98e636b632f805b7e84e61458255 upstream.
+[ Upstream commit 73bdf65ea74857d7fb2ec3067a3cec0e261b1462 ]
 
-Positivo N14KP6-TG (1c6c:1251)
-require quirk for enabling headset-mic
+migrate_pages/mempolicy semantics state that CAP_SYS_NICE is required to
+move pages shared with another process to a different node.  page_mapcount
+> 1 is being used to determine if a hugetlb page is shared.  However, a
+hugetlb page will have a mapcount of 1 if mapped by multiple processes via
+a shared PMD.  As a result, hugetlb pages shared by multiple processes and
+mapped with a shared PMD can be moved by a process without CAP_SYS_NICE.
 
-Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+To fix, check for a shared PMD if mapcount is 1.  If a shared PMD is found
+consider the page shared.
+
+Link: https://lkml.kernel.org/r/20230126222721.222195-3-mike.kravetz@oracle.com
+Fixes: e2d8cf405525 ("migrate: add hugepage migration code to migrate_pages()")
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Acked-by: Peter Xu <peterx@redhat.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Naoya Horiguchi <naoya.horiguchi@linux.dev>
+Cc: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Cc: Yang Shi <shy828301@gmail.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230207183720.2519-1-edson.drosdeck@gmail.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ mm/mempolicy.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9335,6 +9335,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x1b7d, 0xa831, "Ordissimo EVE2 ", ALC269VB_FIXUP_ORDISSIMO_EVE2), /* Also known as Malata PC-B1303 */
- 	SND_PCI_QUIRK(0x1c06, 0x2013, "Lemote A1802", ALC269_FIXUP_LEMOTE_A1802),
- 	SND_PCI_QUIRK(0x1c06, 0x2015, "Lemote A190X", ALC269_FIXUP_LEMOTE_A190X),
-+	SND_PCI_QUIRK(0x1c6c, 0x1251, "Positivo N14KP6-TG", ALC288_FIXUP_DELL1_MIC_NO_PRESENCE),
- 	SND_PCI_QUIRK(0x1d05, 0x1132, "TongFang PHxTxX1", ALC256_FIXUP_SET_COEF_DEFAULTS),
- 	SND_PCI_QUIRK(0x1d05, 0x1096, "TongFang GMxMRxx", ALC269_FIXUP_NO_SHUTUP),
- 	SND_PCI_QUIRK(0x1d05, 0x1100, "TongFang GKxNRxx", ALC269_FIXUP_NO_SHUTUP),
+diff --git a/mm/mempolicy.c b/mm/mempolicy.c
+index 8687781b41c96..818753635e427 100644
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -603,7 +603,8 @@ static int queue_pages_hugetlb(pte_t *pte, unsigned long hmask,
+ 
+ 	/* With MPOL_MF_MOVE, we migrate only unshared hugepage. */
+ 	if (flags & (MPOL_MF_MOVE_ALL) ||
+-	    (flags & MPOL_MF_MOVE && page_mapcount(page) == 1)) {
++	    (flags & MPOL_MF_MOVE && page_mapcount(page) == 1 &&
++	     !hugetlb_pmd_shared(pte))) {
+ 		if (isolate_hugetlb(page, qp->pagelist) &&
+ 			(flags & MPOL_MF_STRICT))
+ 			/*
+-- 
+2.39.0
+
 
 
