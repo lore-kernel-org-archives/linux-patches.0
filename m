@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 57C088F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:55:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D2C0DC433EF;
-	Mon, 13 Feb 2023 14:55:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E473F8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:55:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EDB0C4339E;
+	Mon, 13 Feb 2023 14:55:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300114;
-	bh=IveKXnijaLdf7GlElWquv5ObVO2jo7+fskoyomlBDi0=;
+	s=korg; t=1676300116;
+	bh=zyH6RDb6wPrM7rYOPNOx0UwGdwwUlSWPxzB6iMPQHQI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GfofPeF3fQQERm17ZP1LOIRIN+uY6oyuxmqb12PfAimmbWZ15JNlhEXFX9NuzNcnd
-	 bQeZAMaoI1UoOQhsJX2dZ6wLVZTCZ2KwDqQkmJrek/cHC1qIdUw+R67KI0Byx7H98X
-	 OUAXC8E1E7g//VbZ7ELW9mpXrTedHekdlxNlL7VA=
+	b=k+LooCL+7RMknomwuek6W423y9MohxeUkaTgxIvSscELCIV6uNWF60eHtdchAhR/d
+	 oJ1syxTbK0ZDyJwaSCBt7XGPUdVnPjvgfUiwO3Z9SfHdhWomyCD4oLKXePXlaDRPF4
+	 nwevuUztmBvaPM2OoXvzjYF8kWPF3UtbAYL/wD78=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Chen-Yu Tsai <wenst@chromium.org>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
-	Arnd Bergmann <arnd@arndb.de>,
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Conor Dooley <conor.dooley@microchip.com>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 065/114] arm64: dts: mediatek: mt8195: Fix vdosys* compatible strings
-Date: Mon, 13 Feb 2023 15:48:20 +0100
-Message-Id: <20230213144745.601170270@linuxfoundation.org>
+Subject: [PATCH 6.1 070/114] clk: microchip: mpfs-ccc: Use devm_kasprintf() for allocating formatted strings
+Date: Mon, 13 Feb 2023 15:48:25 +0100
+Message-Id: <20230213144745.832051751@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -37,59 +36,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Chen-Yu Tsai <wenst@chromium.org>
+From: Geert Uytterhoeven <geert+renesas@glider.be>
 
-[ Upstream commit 97801cfcf9565247bcc53b67ea47fa87b1704375 ]
+[ Upstream commit 86d884f5287f4369c198811aaa4931a3a11f36d2 ]
 
-When vdosys1 was initially added, it was incorrectly assumed to be
-compatible with vdosys0, and thus both had the same mt8195-mmsys
-compatible attached.
+In various places, string buffers of a fixed size are allocated, and
+filled using snprintf() with the same fixed size, which is error-prone.
 
-This has since been corrected in commit b237efd47df7 ("dt-bindings:
-arm: mediatek: mmsys: change compatible for MT8195") and commit
-82219cfbef18 ("dt-bindings: arm: mediatek: mmsys: add vdosys1 compatible
-for MT8195"). The device tree needs to be fixed as well, otherwise
-the vdosys1 block fails to work, and causes its dependent power domain
-controller to not work either.
+Replace this by calling devm_kasprintf() instead, which always uses the
+appropriate size.
 
-Change the compatible string of vdosys1 to "mediatek,mt8195-vdosys1".
-While at it, also add the new "mediatek,mt8195-vdosys0" compatible to
-vdosys0.
+While at it, remove an unneeded intermediate variable, which allows us
+to drop a cast as a bonus.
 
-Fixes: 6aa5b46d1755 ("arm64: dts: mt8195: Add vdosys and vppsys clock nodes")
-Signed-off-by: Chen-Yu Tsai <wenst@chromium.org>
-Tested-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Acked-by: Matthias Brugger <matthias.bgg@gmail.com>
-Link: https://lore.kernel.org/r/20230202104014.2931517-1-wenst@chromium.org
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+With the initial behavior it would have been possible to have a device tree
+with a node address that would make "ccc<node_address>_pll<N>" exceed
+18 characters. If that happened, the <N> would be cut off & both
+pll 0 & 1 would be named identically. If that happens, pll1 would fail
+to register. Thus, the fixes tag has been added to this commit.
+
+Fixes: d39fb172760e ("clk: microchip: add PolarFire SoC fabric clock support")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Reviewed-by: Conor Dooley <conor.dooley@microchip.com>
+Tested-by: Conor Dooley <conor.dooley@microchip.com>
+[claudiu.beznea: added the rationale behind fixes tag]
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/f904fd28b2087d1463ea65f059924e3b1acc193c.1672764239.git.geert+renesas@glider.be
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/mediatek/mt8195.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/clk/microchip/clk-mpfs-ccc.c | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/mediatek/mt8195.dtsi b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-index 0b85b5874a4f9..6f5fa7ca49013 100644
---- a/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-+++ b/arch/arm64/boot/dts/mediatek/mt8195.dtsi
-@@ -1966,7 +1966,7 @@
- 		};
+diff --git a/drivers/clk/microchip/clk-mpfs-ccc.c b/drivers/clk/microchip/clk-mpfs-ccc.c
+index 32aae880a14f3..0ddc73e07be42 100644
+--- a/drivers/clk/microchip/clk-mpfs-ccc.c
++++ b/drivers/clk/microchip/clk-mpfs-ccc.c
+@@ -164,12 +164,11 @@ static int mpfs_ccc_register_outputs(struct device *dev, struct mpfs_ccc_out_hw_
  
- 		vdosys0: syscon@1c01a000 {
--			compatible = "mediatek,mt8195-mmsys", "syscon";
-+			compatible = "mediatek,mt8195-vdosys0", "mediatek,mt8195-mmsys", "syscon";
- 			reg = <0 0x1c01a000 0 0x1000>;
- 			mboxes = <&gce0 0 CMDQ_THR_PRIO_4>;
- 			#clock-cells = <1>;
-@@ -2101,7 +2101,7 @@
- 		};
+ 	for (unsigned int i = 0; i < num_clks; i++) {
+ 		struct mpfs_ccc_out_hw_clock *out_hw = &out_hws[i];
+-		char *name = devm_kzalloc(dev, 23, GFP_KERNEL);
++		char *name = devm_kasprintf(dev, GFP_KERNEL, "%s_out%u", parent->name, i);
  
- 		vdosys1: syscon@1c100000 {
--			compatible = "mediatek,mt8195-mmsys", "syscon";
-+			compatible = "mediatek,mt8195-vdosys1", "syscon";
- 			reg = <0 0x1c100000 0 0x1000>;
- 			#clock-cells = <1>;
- 		};
+ 		if (!name)
+ 			return -ENOMEM;
+ 
+-		snprintf(name, 23, "%s_out%u", parent->name, i);
+ 		out_hw->divider.hw.init = CLK_HW_INIT_HW(name, &parent->hw, &clk_divider_ops, 0);
+ 		out_hw->divider.reg = data->pll_base[i / MPFS_CCC_OUTPUTS_PER_PLL] +
+ 			out_hw->reg_offset;
+@@ -201,14 +200,13 @@ static int mpfs_ccc_register_plls(struct device *dev, struct mpfs_ccc_pll_hw_clo
+ 
+ 	for (unsigned int i = 0; i < num_clks; i++) {
+ 		struct mpfs_ccc_pll_hw_clock *pll_hw = &pll_hws[i];
+-		char *name = devm_kzalloc(dev, 18, GFP_KERNEL);
+ 
+-		if (!name)
++		pll_hw->name = devm_kasprintf(dev, GFP_KERNEL, "ccc%s_pll%u",
++					      strchrnul(dev->of_node->full_name, '@'), i);
++		if (!pll_hw->name)
+ 			return -ENOMEM;
+ 
+ 		pll_hw->base = data->pll_base[i];
+-		snprintf(name, 18, "ccc%s_pll%u", strchrnul(dev->of_node->full_name, '@'), i);
+-		pll_hw->name = (const char *)name;
+ 		pll_hw->hw.init = CLK_HW_INIT_PARENTS_DATA_FIXED_SIZE(pll_hw->name,
+ 								      pll_hw->parents,
+ 								      &mpfs_ccc_pll_ops, 0);
 -- 
 2.39.0
 
