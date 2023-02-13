@@ -1,36 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7F7088F58
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:05:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CFF75C433D2;
-	Mon, 13 Feb 2023 15:05:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202878F58
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:05:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923F4C433EF;
+	Mon, 13 Feb 2023 15:05:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300754;
-	bh=BgbDW88+NlMTJlrePqHHqb8vfdxOeDs2Amuer/2gOPk=;
+	s=korg; t=1676300756;
+	bh=UTiNo5Antlr8IhouoiYLDPulwfrEup9AcyMwlVRyLgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AquS89M/xiU3HyIr/Wq0Xr0qzhgJ+iXK6aXDBXakxQEyKvxUa6hy3V3+9rcBMNx8K
-	 QfOudMUwUsfY6LY0VjkuJYHP6w8VTSjLGpumEEdtmxHhrL6UIgh7aC19y2yNgfAJdy
-	 I+4Pp+LHdJXxNAfPqDiXSSf3ndBC+Da1YRoWOllY=
+	b=iqWxbrBtZYjHZGKoARsF1vxcv+tBQgCXtVHo/Ns8/SNiNYg70nsLU3yCzSZ/PMZrU
+	 +sIyKkfF/jX33xtl4RHIL9WoF54RveM9C8VWu3x1qZTNwFlI4jjIyI2xBEseog0gFn
+	 y2gIZDH1+rVrs6YxIVMO870xk4DkCZEGkgs6qsjI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Peter Xu <peterx@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
-	James Houghton <jthoughton@google.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Naoya Horiguchi <naoya.horiguchi@linux.dev>,
-	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
-	Yang Shi <shy828301@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 097/139] migrate: hugetlb: check for hugetlb shared PMD in node migration
-Date: Mon, 13 Feb 2023 15:50:42 +0100
-Message-Id: <20230213144750.957124158@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	"David S. Miller" <davem@davemloft.net>,
+	syzbot+2a0e7abd24f1eb90ce25@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 129/139] net: USB: Fix wrong-direction WARNING in plusb.c
+Date: Mon, 13 Feb 2023 15:51:14 +0100
+Message-Id: <20230213144752.774373838@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -44,55 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Kravetz <mike.kravetz@oracle.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-[ Upstream commit 73bdf65ea74857d7fb2ec3067a3cec0e261b1462 ]
+commit 811d581194f7412eda97acc03d17fc77824b561f upstream.
 
-migrate_pages/mempolicy semantics state that CAP_SYS_NICE is required to
-move pages shared with another process to a different node.  page_mapcount
-> 1 is being used to determine if a hugetlb page is shared.  However, a
-hugetlb page will have a mapcount of 1 if mapped by multiple processes via
-a shared PMD.  As a result, hugetlb pages shared by multiple processes and
-mapped with a shared PMD can be moved by a process without CAP_SYS_NICE.
+The syzbot fuzzer detected a bug in the plusb network driver: A
+zero-length control-OUT transfer was treated as a read instead of a
+write.  In modern kernels this error provokes a WARNING:
 
-To fix, check for a shared PMD if mapcount is 1.  If a shared PMD is found
-consider the page shared.
+usb 1-1: BOGUS control dir, pipe 80000280 doesn't match bRequestType c0
+WARNING: CPU: 0 PID: 4645 at drivers/usb/core/urb.c:411
+usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
+Modules linked in:
+CPU: 1 PID: 4645 Comm: dhcpcd Not tainted
+6.2.0-rc6-syzkaller-00050-g9f266ccaa2f5 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google
+01/12/2023
+RIP: 0010:usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
+...
+Call Trace:
+ <TASK>
+ usb_start_wait_urb+0x101/0x4b0 drivers/usb/core/message.c:58
+ usb_internal_control_msg drivers/usb/core/message.c:102 [inline]
+ usb_control_msg+0x320/0x4a0 drivers/usb/core/message.c:153
+ __usbnet_read_cmd+0xb9/0x390 drivers/net/usb/usbnet.c:2010
+ usbnet_read_cmd+0x96/0xf0 drivers/net/usb/usbnet.c:2068
+ pl_vendor_req drivers/net/usb/plusb.c:60 [inline]
+ pl_set_QuickLink_features drivers/net/usb/plusb.c:75 [inline]
+ pl_reset+0x2f/0xf0 drivers/net/usb/plusb.c:85
+ usbnet_open+0xcc/0x5d0 drivers/net/usb/usbnet.c:889
+ __dev_open+0x297/0x4d0 net/core/dev.c:1417
+ __dev_change_flags+0x587/0x750 net/core/dev.c:8530
+ dev_change_flags+0x97/0x170 net/core/dev.c:8602
+ devinet_ioctl+0x15a2/0x1d70 net/ipv4/devinet.c:1147
+ inet_ioctl+0x33f/0x380 net/ipv4/af_inet.c:979
+ sock_do_ioctl+0xcc/0x230 net/socket.c:1169
+ sock_ioctl+0x1f8/0x680 net/socket.c:1286
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:870 [inline]
+ __se_sys_ioctl fs/ioctl.c:856 [inline]
+ __x64_sys_ioctl+0x197/0x210 fs/ioctl.c:856
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Link: https://lkml.kernel.org/r/20230126222721.222195-3-mike.kravetz@oracle.com
-Fixes: e2d8cf405525 ("migrate: add hugepage migration code to migrate_pages()")
-Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
-Acked-by: Peter Xu <peterx@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: James Houghton <jthoughton@google.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Naoya Horiguchi <naoya.horiguchi@linux.dev>
-Cc: Vishal Moola (Oracle) <vishal.moola@gmail.com>
-Cc: Yang Shi <shy828301@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The fix is to call usbnet_write_cmd() instead of usbnet_read_cmd() and
+remove the USB_DIR_IN flag.
+
+Reported-and-tested-by: syzbot+2a0e7abd24f1eb90ce25@syzkaller.appspotmail.com
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 090ffa9d0e90 ("[PATCH] USB: usbnet (9/9) module for pl2301/2302 cables")
+CC: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/00000000000052099f05f3b3e298@google.com/
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/mempolicy.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/usb/plusb.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index 59d72b121346f..6c98585f20dfe 100644
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -622,7 +622,8 @@ static int queue_pages_hugetlb(pte_t *pte, unsigned long hmask,
+--- a/drivers/net/usb/plusb.c
++++ b/drivers/net/usb/plusb.c
+@@ -57,9 +57,7 @@
+ static inline int
+ pl_vendor_req(struct usbnet *dev, u8 req, u8 val, u8 index)
+ {
+-	return usbnet_read_cmd(dev, req,
+-				USB_DIR_IN | USB_TYPE_VENDOR |
+-				USB_RECIP_DEVICE,
++	return usbnet_write_cmd(dev, req, USB_TYPE_VENDOR | USB_RECIP_DEVICE,
+ 				val, index, NULL, 0);
+ }
  
- 	/* With MPOL_MF_MOVE, we migrate only unshared hugepage. */
- 	if (flags & (MPOL_MF_MOVE_ALL) ||
--	    (flags & MPOL_MF_MOVE && page_mapcount(page) == 1)) {
-+	    (flags & MPOL_MF_MOVE && page_mapcount(page) == 1 &&
-+	     !hugetlb_pmd_shared(pte))) {
- 		if (isolate_hugetlb(page, qp->pagelist) &&
- 			(flags & MPOL_MF_STRICT))
- 			/*
--- 
-2.39.0
-
 
 
