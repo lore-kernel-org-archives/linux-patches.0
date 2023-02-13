@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A56AA8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:53:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2AC50C433EF;
-	Mon, 13 Feb 2023 14:53:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424C78F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:53:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB855C43442;
+	Mon, 13 Feb 2023 14:53:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300018;
-	bh=843X6a0S1AGREtOdyWikWFETqQ88Wk6pBu5A/EAcnIQ=;
+	s=korg; t=1676300021;
+	bh=oRYX2FFDP9YTBJ9yerdneP3yI6aEBn2JjzKPnA+Q2VQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GFUG7LI+/Y7SjDnj28rawg+PDJfvqDKMqSSpeAZ4+VxoKwnK5xbbgGiOXIER+OWl6
-	 y100FBpCR9UkEpH1Zb4No8FtEVr6NdJYzejfhltvNH26IXANQ+2erquTUF0DkCUHGl
-	 zMcHo/flaMX+w9BbUC3x+Ixq9Ey3oFC3w/X5/jPA=
+	b=wT87Y4aGkSOEorlnbD01HG3gPcGIWLGGqYO+freAE6R94S1u+80W1uYkwiWn5J/FU
+	 vo7Z8Tu6+gLVJ4CanFeVvhgSBZXyrDFhAmODHLi9WJLaPZV5jpQ9nhCBRE9+orOS2F
+	 i4Xw2SjYBvSsAMkJjhfoZpQaAyj4g6bfPshKI/mQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>,
-	Jiri Pirko <jiri@nvidia.com>,
-	Michal Simek <michal.simek@amd.com>,
-	Claudiu Beznea <claudiu.beznea@microchip.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	"Herton R. Krzesinski" <herton@redhat.com>,
+	Carlos ODonell <carlos@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 027/114] net: macb: Perform zynqmp dynamic configuration only for SGMII interface
-Date: Mon, 13 Feb 2023 15:47:42 +0100
-Message-Id: <20230213144743.547561425@linuxfoundation.org>
+Subject: [PATCH 6.1 033/114] uapi: add missing ip/ipv6 header dependencies for linux/stddef.h
+Date: Mon, 13 Feb 2023 15:47:48 +0100
+Message-Id: <20230213144743.866203617@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -38,76 +36,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
+From: Herton R. Krzesinski <herton@redhat.com>
 
-[ Upstream commit c9011b028e956c3b6baa6f131d9eec43e4e52020 ]
+[ Upstream commit 03702d4d29be4e2510ec80b248dbbde4e57030d9 ]
 
-In zynqmp platforms where firmware supports dynamic SGMII configuration
-but has other non-SGMII ethernet devices, it fails them with no packets
-received at the RX interface.
+Since commit 58e0be1ef6118 ("net: use struct_group to copy ip/ipv6
+header addresses"), ip and ipv6 headers started to use the __struct_group
+definition, which is defined at include/uapi/linux/stddef.h. However,
+linux/stddef.h isn't explicitly included in include/uapi/linux/{ip,ipv6}.h,
+which breaks build of xskxceiver bpf selftest if you install the uapi
+headers in the system:
 
-To fix this behaviour perform SGMII dynamic configuration only
-for the SGMII phy interface.
+$ make V=1 xskxceiver -C tools/testing/selftests/bpf
+...
+make: Entering directory '(...)/tools/testing/selftests/bpf'
+gcc -g -O0 -rdynamic -Wall -Werror (...)
+In file included from xskxceiver.c:79:
+/usr/include/linux/ip.h:103:9: error: expected specifier-qualifier-list before ‘__struct_group’
+  103 |         __struct_group(/* no tag */, addrs, /* no attrs */,
+      |         ^~~~~~~~~~~~~~
+...
 
-Fixes: 32cee7818111 ("net: macb: Add zynqmp SGMII dynamic configuration support")
-Signed-off-by: Radhey Shyam Pandey <radhey.shyam.pandey@amd.com>
-Reviewed-by: Jiri Pirko <jiri@nvidia.com>
-Reported-by: Michal Simek <michal.simek@amd.com>
-Tested-by: Michal Simek <michal.simek@amd.com>
-Reviewed-by: Claudiu Beznea <claudiu.beznea@microchip.com>
-Link: https://lore.kernel.org/r/1675340779-27499-1-git-send-email-radhey.shyam.pandey@amd.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Include the missing <linux/stddef.h> dependency in ip.h and do the
+same for the ipv6.h header.
+
+Fixes: 58e0be1ef611 ("net: use struct_group to copy ip/ipv6 header addresses")
+Signed-off-by: Herton R. Krzesinski <herton@redhat.com>
+Reviewed-by: Carlos O'Donell <carlos@redhat.com>
+Tested-by: Carlos O'Donell <carlos@redhat.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/cadence/macb_main.c | 31 ++++++++++++------------
- 1 file changed, 16 insertions(+), 15 deletions(-)
+ include/uapi/linux/ip.h   | 1 +
+ include/uapi/linux/ipv6.h | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/drivers/net/ethernet/cadence/macb_main.c b/drivers/net/ethernet/cadence/macb_main.c
-index 300f47ca42e3e..e255780f3867c 100644
---- a/drivers/net/ethernet/cadence/macb_main.c
-+++ b/drivers/net/ethernet/cadence/macb_main.c
-@@ -4614,25 +4614,26 @@ static int init_reset_optional(struct platform_device *pdev)
- 		if (ret)
- 			return dev_err_probe(&pdev->dev, ret,
- 					     "failed to init SGMII PHY\n");
--	}
+diff --git a/include/uapi/linux/ip.h b/include/uapi/linux/ip.h
+index 874a92349bf5b..283dec7e36451 100644
+--- a/include/uapi/linux/ip.h
++++ b/include/uapi/linux/ip.h
+@@ -18,6 +18,7 @@
+ #ifndef _UAPI_LINUX_IP_H
+ #define _UAPI_LINUX_IP_H
+ #include <linux/types.h>
++#include <linux/stddef.h>
+ #include <asm/byteorder.h>
  
--	ret = zynqmp_pm_is_function_supported(PM_IOCTL, IOCTL_SET_GEM_CONFIG);
--	if (!ret) {
--		u32 pm_info[2];
-+		ret = zynqmp_pm_is_function_supported(PM_IOCTL, IOCTL_SET_GEM_CONFIG);
-+		if (!ret) {
-+			u32 pm_info[2];
-+
-+			ret = of_property_read_u32_array(pdev->dev.of_node, "power-domains",
-+							 pm_info, ARRAY_SIZE(pm_info));
-+			if (ret) {
-+				dev_err(&pdev->dev, "Failed to read power management information\n");
-+				goto err_out_phy_exit;
-+			}
-+			ret = zynqmp_pm_set_gem_config(pm_info[1], GEM_CONFIG_FIXED, 0);
-+			if (ret)
-+				goto err_out_phy_exit;
+ #define IPTOS_TOS_MASK		0x1E
+diff --git a/include/uapi/linux/ipv6.h b/include/uapi/linux/ipv6.h
+index 81f4243bebb1c..53326dfc59ecb 100644
+--- a/include/uapi/linux/ipv6.h
++++ b/include/uapi/linux/ipv6.h
+@@ -4,6 +4,7 @@
  
--		ret = of_property_read_u32_array(pdev->dev.of_node, "power-domains",
--						 pm_info, ARRAY_SIZE(pm_info));
--		if (ret) {
--			dev_err(&pdev->dev, "Failed to read power management information\n");
--			goto err_out_phy_exit;
-+			ret = zynqmp_pm_set_gem_config(pm_info[1], GEM_CONFIG_SGMII_MODE, 1);
-+			if (ret)
-+				goto err_out_phy_exit;
- 		}
--		ret = zynqmp_pm_set_gem_config(pm_info[1], GEM_CONFIG_FIXED, 0);
--		if (ret)
--			goto err_out_phy_exit;
+ #include <linux/libc-compat.h>
+ #include <linux/types.h>
++#include <linux/stddef.h>
+ #include <linux/in6.h>
+ #include <asm/byteorder.h>
  
--		ret = zynqmp_pm_set_gem_config(pm_info[1], GEM_CONFIG_SGMII_MODE, 1);
--		if (ret)
--			goto err_out_phy_exit;
- 	}
- 
- 	/* Fully reset controller at hardware level if mapped in device tree */
 -- 
 2.39.0
 
