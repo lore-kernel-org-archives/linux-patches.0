@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938238F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:01:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 184F2C433D2;
-	Mon, 13 Feb 2023 15:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47A6F8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:01:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4318C4339B;
+	Mon, 13 Feb 2023 15:01:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300474;
-	bh=YEgG1VneZh2cBGZx1SBpRwTxscs2Bnk6RpjVhYmHlMk=;
+	s=korg; t=1676300477;
+	bh=xsed+Pw3QOdieEWBApozWLW52qilzTOEGbX19aVoxcU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CYYPwkWaBU/O6kVqmq7P4gpP7xzJhvgGXQMwD0wpc0adVYD5piROAj3laR0T7Y9ay
-	 d4tDFXExTtqpM4iiqUwcmRqueXmMnp0gxkTG+g7ME2kKzU5Kzu4x/9pAK4JtJ4prgt
-	 vPzNbt4OhSFgAcQ+emH4HTv6aqdW6OlAUNMmxHhE=
+	b=gSnDISB7cVicEoi1jGD91LUgBi4iBeDZfHYBDUmqZHDkF6hMsEfnB/xuOkF6RZjWd
+	 PzJEhFPSMblwheiMhRCPV9aS1tc5zsjO0w4xwHKyqM/GT+wRDI3HIqOgppzuKbpIpQ
+	 h7CMRBbyWofh4lRBxyKGQKQ24UnegfoiHCrk7Gr8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tom Rix <trix@redhat.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Sasha Neftin <sasha.neftin@intel.com>,
-	Naama Meir <naamax.meir@linux.intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+9981a614060dcee6eeca@syzkaller.appspotmail.com,
+	Ziyang Xuan <william.xuanziyang@huawei.com>,
+	Oleksij Rempel <o.rempel@pengutronix.de>,
+	Marc Kleine-Budde <mkl@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 027/139] igc: return an error if the mac type is unknown in igc_ptp_systim_to_hwtstamp()
-Date: Mon, 13 Feb 2023 15:49:32 +0100
-Message-Id: <20230213144747.073833325@linuxfoundation.org>
+Subject: [PATCH 5.10 028/139] can: j1939: fix errant WARN_ON_ONCE in j1939_session_deactivate
+Date: Mon, 13 Feb 2023 15:49:33 +0100
+Message-Id: <20230213144747.129014314@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -39,73 +37,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tom Rix <trix@redhat.com>
+From: Ziyang Xuan <william.xuanziyang@huawei.com>
 
-[ Upstream commit a2df8463e15c10a8a882090f3d7a760fdb7b189d ]
+[ Upstream commit d0553680f94c49bbe0e39eb50d033ba563b4212d ]
 
-clang static analysis reports
-drivers/net/ethernet/intel/igc/igc_ptp.c:673:3: warning: The left operand of
-  '+' is a garbage value [core.UndefinedBinaryOperatorResult]
-   ktime_add_ns(shhwtstamps.hwtstamp, adjust);
-   ^            ~~~~~~~~~~~~~~~~~~~~
+The conclusion "j1939_session_deactivate() should be called with a
+session ref-count of at least 2" is incorrect. In some concurrent
+scenarios, j1939_session_deactivate can be called with the session
+ref-count less than 2. But there is not any problem because it
+will check the session active state before session putting in
+j1939_session_deactivate_locked().
 
-igc_ptp_systim_to_hwtstamp() silently returns without setting the hwtstamp
-if the mac type is unknown.  This should be treated as an error.
+Here is the concurrent scenario of the problem reported by syzbot
+and my reproduction log.
 
-Fixes: 81b055205e8b ("igc: Add support for RX timestamping")
-Signed-off-by: Tom Rix <trix@redhat.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Acked-by: Sasha Neftin <sasha.neftin@intel.com>
-Tested-by: Naama Meir <naamax.meir@linux.intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20230131215437.1528994-1-anthony.l.nguyen@intel.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+        cpu0                            cpu1
+                                j1939_xtp_rx_eoma
+j1939_xtp_rx_abort_one
+                                j1939_session_get_by_addr [kref == 2]
+j1939_session_get_by_addr [kref == 3]
+j1939_session_deactivate [kref == 2]
+j1939_session_put [kref == 1]
+				j1939_session_completed
+				j1939_session_deactivate
+				WARN_ON_ONCE(kref < 2)
+
+=====================================================
+WARNING: CPU: 1 PID: 21 at net/can/j1939/transport.c:1088 j1939_session_deactivate+0x5f/0x70
+CPU: 1 PID: 21 Comm: ksoftirqd/1 Not tainted 5.14.0-rc7+ #32
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS 1.13.0-1ubuntu1 04/01/2014
+RIP: 0010:j1939_session_deactivate+0x5f/0x70
+Call Trace:
+ j1939_session_deactivate_activate_next+0x11/0x28
+ j1939_xtp_rx_eoma+0x12a/0x180
+ j1939_tp_recv+0x4a2/0x510
+ j1939_can_recv+0x226/0x380
+ can_rcv_filter+0xf8/0x220
+ can_receive+0x102/0x220
+ ? process_backlog+0xf0/0x2c0
+ can_rcv+0x53/0xf0
+ __netif_receive_skb_one_core+0x67/0x90
+ ? process_backlog+0x97/0x2c0
+ __netif_receive_skb+0x22/0x80
+
+Fixes: 0c71437dd50d ("can: j1939: j1939_session_deactivate(): clarify lifetime of session object")
+Reported-by: syzbot+9981a614060dcee6eeca@syzkaller.appspotmail.com
+Signed-off-by: Ziyang Xuan <william.xuanziyang@huawei.com>
+Acked-by: Oleksij Rempel <o.rempel@pengutronix.de>
+Link: https://lore.kernel.org/all/20210906094200.95868-1-william.xuanziyang@huawei.com
+Signed-off-by: Marc Kleine-Budde <mkl@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/igc/igc_ptp.c | 14 +++++++++-----
- 1 file changed, 9 insertions(+), 5 deletions(-)
+ net/can/j1939/transport.c | 4 ----
+ 1 file changed, 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igc/igc_ptp.c b/drivers/net/ethernet/intel/igc/igc_ptp.c
-index 4ab46eee3d93..ef53f7665b58 100644
---- a/drivers/net/ethernet/intel/igc/igc_ptp.c
-+++ b/drivers/net/ethernet/intel/igc/igc_ptp.c
-@@ -134,10 +134,12 @@ static int igc_ptp_feature_enable_i225(struct ptp_clock_info *ptp,
-  *
-  * We need to convert the system time value stored in the RX/TXSTMP registers
-  * into a hwtstamp which can be used by the upper level timestamping functions.
-+ *
-+ * Returns 0 on success.
-  **/
--static void igc_ptp_systim_to_hwtstamp(struct igc_adapter *adapter,
--				       struct skb_shared_hwtstamps *hwtstamps,
--				       u64 systim)
-+static int igc_ptp_systim_to_hwtstamp(struct igc_adapter *adapter,
-+				      struct skb_shared_hwtstamps *hwtstamps,
-+				      u64 systim)
- {
- 	switch (adapter->hw.mac.type) {
- 	case igc_i225:
-@@ -147,8 +149,9 @@ static void igc_ptp_systim_to_hwtstamp(struct igc_adapter *adapter,
- 						systim & 0xFFFFFFFF);
- 		break;
- 	default:
--		break;
-+		return -EINVAL;
- 	}
-+	return 0;
- }
+diff --git a/net/can/j1939/transport.c b/net/can/j1939/transport.c
+index 78f6a9110699..57d6aac7f435 100644
+--- a/net/can/j1939/transport.c
++++ b/net/can/j1939/transport.c
+@@ -1087,10 +1087,6 @@ static bool j1939_session_deactivate(struct j1939_session *session)
+ 	bool active;
  
- /**
-@@ -372,7 +375,8 @@ static void igc_ptp_tx_hwtstamp(struct igc_adapter *adapter)
+ 	j1939_session_list_lock(priv);
+-	/* This function should be called with a session ref-count of at
+-	 * least 2.
+-	 */
+-	WARN_ON_ONCE(kref_read(&session->kref) < 2);
+ 	active = j1939_session_deactivate_locked(session);
+ 	j1939_session_list_unlock(priv);
  
- 	regval = rd32(IGC_TXSTMPL);
- 	regval |= (u64)rd32(IGC_TXSTMPH) << 32;
--	igc_ptp_systim_to_hwtstamp(adapter, &shhwtstamps, regval);
-+	if (igc_ptp_systim_to_hwtstamp(adapter, &shhwtstamps, regval))
-+		return;
- 
- 	switch (adapter->link_speed) {
- 	case SPEED_10:
 -- 
 2.39.0
 
