@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 707CA8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:00:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EAC9AC433EF;
-	Mon, 13 Feb 2023 15:00:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A4378F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:00:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8D027C433EF;
+	Mon, 13 Feb 2023 15:00:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300428;
-	bh=7b4NyyW9QPvJkIDtUQM9CO5MCIUG2WnjN5VJEe44Maw=;
+	s=korg; t=1676300430;
+	bh=f45WUkwGNtqtUx+HVK9pbccNDaNswPloenrScoEI6B8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nT/0rz1tV4PEYWLZAD75begH1FP45Ma66LpVaEoU0RRK5DOsp7O1j1/w8wiIiSO2U
-	 ENRYO0njTp6/n6N5jsAGBNT5Y2oYJg+h/SW0Gifembypst+DB26FVx1y9sY9OXPf04
-	 WDF35a6AoUYXaIMqxZoyXQwqloFEXiCuFofalzQI=
+	b=lUoAFoHVGT2UssVLiZs44+30sSwYDb+/rMaAev7uKOl1YNUFneXZoYvWmr1/Hmos+
+	 210uHXWG/gD+jK5Gz70S/tnOpJ/7Avyv9/0DWO18E517zDU8ZwVD4M+IZ1D5lfkz3/
+	 l2+4u56AR+XzZs/B9NisqgtuS8IlxZen9Y7uszrA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Chaignon <paul@isovalent.com>,
-	Alexei Starovoitov <ast@kernel.org>
-Subject: [PATCH 5.10 003/139] bpf: Fix incorrect state pruning for <8B spill/fill
-Date: Mon, 13 Feb 2023 15:49:08 +0100
-Message-Id: <20230213144745.882491330@linuxfoundation.org>
+	Kajol Jain <kjain@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.10 004/139] powerpc/imc-pmu: Revert nest_init_lock to being a mutex
+Date: Mon, 13 Feb 2023 15:49:09 +0100
+Message-Id: <20230213144745.932229845@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -34,88 +34,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Chaignon <paul@isovalent.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 345e004d023343d38088fdfea39688aa11e06ccf upstream.
+commit ad53db4acb415976761d7302f5b02e97f2bd097e upstream.
 
-Commit 354e8f1970f8 ("bpf: Support <8-byte scalar spill and refill")
-introduced support in the verifier to track <8B spill/fills of scalars.
-The backtracking logic for the precision bit was however skipping
-spill/fills of less than 8B. That could cause state pruning to consider
-two states equivalent when they shouldn't be.
+The recent commit 76d588dddc45 ("powerpc/imc-pmu: Fix use of mutex in
+IRQs disabled section") fixed warnings (and possible deadlocks) in the
+IMC PMU driver by converting the locking to use spinlocks.
 
-As an example, consider the following bytecode snippet:
+It also converted the init-time nest_init_lock to a spinlock, even
+though it's not used at runtime in IRQ disabled sections or while
+holding other spinlocks.
 
-  0:  r7 = r1
-  1:  call bpf_get_prandom_u32
-  2:  r6 = 2
-  3:  if r0 == 0 goto pc+1
-  4:  r6 = 3
-  ...
-  8: [state pruning point]
-  ...
-  /* u32 spill/fill */
-  10: *(u32 *)(r10 - 8) = r6
-  11: r8 = *(u32 *)(r10 - 8)
-  12: r0 = 0
-  13: if r8 == 3 goto pc+1
-  14: r0 = 1
-  15: exit
+This leads to warnings such as:
 
-The verifier first walks the path with R6=3. Given the support for <8B
-spill/fills, at instruction 13, it knows the condition is true and skips
-instruction 14. At that point, the backtracking logic kicks in but stops
-at the fill instruction since it only propagates the precision bit for
-8B spill/fill. When the verifier then walks the path with R6=2, it will
-consider it safe at instruction 8 because R6 is not marked as needing
-precision. Instruction 14 is thus never walked and is then incorrectly
-removed as 'dead code'.
+  BUG: sleeping function called from invalid context at include/linux/percpu-rwsem.h:49
+  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 1, name: swapper/0
+  preempt_count: 1, expected: 0
+  CPU: 7 PID: 1 Comm: swapper/0 Not tainted 6.2.0-rc2-14719-gf12cd06109f4-dirty #1
+  Hardware name: Mambo,Simulated-System POWER9 0x4e1203 opal:v6.6.6 PowerNV
+  Call Trace:
+    dump_stack_lvl+0x74/0xa8 (unreliable)
+    __might_resched+0x178/0x1a0
+    __cpuhp_setup_state+0x64/0x1e0
+    init_imc_pmu+0xe48/0x1250
+    opal_imc_counters_probe+0x30c/0x6a0
+    platform_probe+0x78/0x110
+    really_probe+0x104/0x420
+    __driver_probe_device+0xb0/0x170
+    driver_probe_device+0x58/0x180
+    __driver_attach+0xd8/0x250
+    bus_for_each_dev+0xb4/0x140
+    driver_attach+0x34/0x50
+    bus_add_driver+0x1e8/0x2d0
+    driver_register+0xb4/0x1c0
+    __platform_driver_register+0x38/0x50
+    opal_imc_driver_init+0x2c/0x40
+    do_one_initcall+0x80/0x360
+    kernel_init_freeable+0x310/0x3b8
+    kernel_init+0x30/0x1a0
+    ret_from_kernel_thread+0x5c/0x64
 
-It's also possible to lead the verifier to accept e.g. an out-of-bound
-memory access instead of causing an incorrect dead code elimination.
+Fix it by converting nest_init_lock back to a mutex, so that we can call
+sleeping functions while holding it. There is no interaction between
+nest_init_lock and the runtime spinlocks used by the actual PMU routines.
 
-This regression was found via Cilium's bpf-next CI where it was causing
-a conntrack map update to be silently skipped because the code had been
-removed by the verifier.
-
-This commit fixes it by enabling support for <8B spill/fills in the
-bactracking logic. In case of a <8B spill/fill, the full 8B stack slot
-will be marked as needing precision. Then, in __mark_chain_precision,
-any tracked register spilled in a marked slot will itself be marked as
-needing precision, regardless of the spill size. This logic makes two
-assumptions: (1) only 8B-aligned spill/fill are tracked and (2) spilled
-registers are only tracked if the spill and fill sizes are equal. Commit
-ef979017b837 ("bpf: selftest: Add verifier tests for <8-byte scalar
-spill and refill") covers the first assumption and the next commit in
-this patchset covers the second.
-
-Fixes: 354e8f1970f8 ("bpf: Support <8-byte scalar spill and refill")
-Signed-off-by: Paul Chaignon <paul@isovalent.com>
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Fixes: 76d588dddc45 ("powerpc/imc-pmu: Fix use of mutex in IRQs disabled section")
+Tested-by: Kajol Jain<kjain@linux.ibm.com>
+Reviewed-by: Kajol Jain<kjain@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20230130014401.540543-1-mpe@ellerman.id.au
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- kernel/bpf/verifier.c |    4 ----
- 1 file changed, 4 deletions(-)
+ arch/powerpc/perf/imc-pmu.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/kernel/bpf/verifier.c
-+++ b/kernel/bpf/verifier.c
-@@ -1876,8 +1876,6 @@ static int backtrack_insn(struct bpf_ver
- 		 */
- 		if (insn->src_reg != BPF_REG_FP)
- 			return 0;
--		if (BPF_SIZE(insn->code) != BPF_DW)
--			return 0;
+--- a/arch/powerpc/perf/imc-pmu.c
++++ b/arch/powerpc/perf/imc-pmu.c
+@@ -21,7 +21,7 @@
+  * Used to avoid races in counting the nest-pmu units during hotplug
+  * register and unregister
+  */
+-static DEFINE_SPINLOCK(nest_init_lock);
++static DEFINE_MUTEX(nest_init_lock);
+ static DEFINE_PER_CPU(struct imc_pmu_ref *, local_nest_imc_refc);
+ static struct imc_pmu **per_nest_pmu_arr;
+ static cpumask_t nest_imc_cpumask;
+@@ -1621,7 +1621,7 @@ static void imc_common_mem_free(struct i
+ static void imc_common_cpuhp_mem_free(struct imc_pmu *pmu_ptr)
+ {
+ 	if (pmu_ptr->domain == IMC_DOMAIN_NEST) {
+-		spin_lock(&nest_init_lock);
++		mutex_lock(&nest_init_lock);
+ 		if (nest_pmus == 1) {
+ 			cpuhp_remove_state(CPUHP_AP_PERF_POWERPC_NEST_IMC_ONLINE);
+ 			kfree(nest_imc_refc);
+@@ -1631,7 +1631,7 @@ static void imc_common_cpuhp_mem_free(st
  
- 		/* dreg = *(u64 *)[fp - off] was a fill from the stack.
- 		 * that [fp - off] slot contains scalar that needs to be
-@@ -1900,8 +1898,6 @@ static int backtrack_insn(struct bpf_ver
- 		/* scalars can only be spilled into stack */
- 		if (insn->dst_reg != BPF_REG_FP)
- 			return 0;
--		if (BPF_SIZE(insn->code) != BPF_DW)
--			return 0;
- 		spi = (-insn->off - 1) / BPF_REG_SIZE;
- 		if (spi >= 64) {
- 			verbose(env, "BUG spi %d\n", spi);
+ 		if (nest_pmus > 0)
+ 			nest_pmus--;
+-		spin_unlock(&nest_init_lock);
++		mutex_unlock(&nest_init_lock);
+ 	}
+ 
+ 	/* Free core_imc memory */
+@@ -1788,11 +1788,11 @@ int init_imc_pmu(struct device_node *par
+ 		* rest. To handle the cpuhotplug callback unregister, we track
+ 		* the number of nest pmus in "nest_pmus".
+ 		*/
+-		spin_lock(&nest_init_lock);
++		mutex_lock(&nest_init_lock);
+ 		if (nest_pmus == 0) {
+ 			ret = init_nest_pmu_ref();
+ 			if (ret) {
+-				spin_unlock(&nest_init_lock);
++				mutex_unlock(&nest_init_lock);
+ 				kfree(per_nest_pmu_arr);
+ 				per_nest_pmu_arr = NULL;
+ 				goto err_free_mem;
+@@ -1800,7 +1800,7 @@ int init_imc_pmu(struct device_node *par
+ 			/* Register for cpu hotplug notification. */
+ 			ret = nest_pmu_cpumask_init();
+ 			if (ret) {
+-				spin_unlock(&nest_init_lock);
++				mutex_unlock(&nest_init_lock);
+ 				kfree(nest_imc_refc);
+ 				kfree(per_nest_pmu_arr);
+ 				per_nest_pmu_arr = NULL;
+@@ -1808,7 +1808,7 @@ int init_imc_pmu(struct device_node *par
+ 			}
+ 		}
+ 		nest_pmus++;
+-		spin_unlock(&nest_init_lock);
++		mutex_unlock(&nest_init_lock);
+ 		break;
+ 	case IMC_DOMAIN_CORE:
+ 		ret = core_imc_pmu_cpumask_init();
 
 
