@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AE4938F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:57:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 358EBC433D2;
-	Mon, 13 Feb 2023 14:57:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 48E098F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:57:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2E05C433EF;
+	Mon, 13 Feb 2023 14:57:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300261;
-	bh=QNMksrNKLYiQPW1L4vfbMWQonxHqhjY3tYMB8uB52Rk=;
+	s=korg; t=1676300264;
+	bh=mulZKyhUf7POD4ptCOWdAzBQIfJzTiocSRIhJEZUm3A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0C2o+5nCFH81Gm8wvSUFWWk4wBfZsW7RqozXdS7vcgZE9gdHirop9Vflmhi9i/z3+
-	 8tiak4cdPc8jzFdQX1K0RNouLihBLcCrwViOPojOsPmw3n+/c9qTClw7PA2qR7uBs5
-	 yWlz+o58/jNxKsDlGI+rgAzeWlGvsZ/tuf83T3DQ=
+	b=LfY2vaQXskncgyTKFyV3kEM/ny0ySpiPVcSjdi1AuO2K5DEwhBNFjB40nsV8bLdqK
+	 e8Y+KpaH/88tAr7u0jP/agpOWi6Ei89TaYBxdnWmB1EdcWRFsESTN+CRBPk9oxXXLh
+	 yzBjX/LADTvmse+JTSjj70SsrCjqDVs1QP8huvfw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Elvis Angelaccio <elvis.angelaccio@kde.org>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.15 11/67] ALSA: hda/realtek: Enable mute/micmute LEDs on HP Elitebook, 645 G9
-Date: Mon, 13 Feb 2023 15:48:52 +0100
-Message-Id: <20230213144732.851070096@linuxfoundation.org>
+	mhiramat@kernel.org,
+	mchehab@kernel.org,
+	linux-edac@vger.kernel.org,
+	Shiju Jose <shiju.jose@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.15 12/67] tracing: Fix poll() and select() do not work on per_cpu trace_pipe and trace_pipe_raw
+Date: Mon, 13 Feb 2023 15:48:53 +0100
+Message-Id: <20230213144732.893606073@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -34,37 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Elvis Angelaccio <elvis.angelaccio@kde.org>
+From: Shiju Jose <shiju.jose@huawei.com>
 
-commit 9a6804aa1c92cd28e89e746ace44d5ba101db76c upstream.
+commit 3e46d910d8acf94e5360126593b68bf4fee4c4a1 upstream.
 
-The HP Elitebook 645 G9 laptop (with motherboard model 89D2) uses the
-ALC236 codec and requires the alc236_fixup_hp_mute_led_micmute_vref
-fixup in order to enable mute/micmute LEDs.
+poll() and select() on per_cpu trace_pipe and trace_pipe_raw do not work
+since kernel 6.1-rc6. This issue is seen after the commit
+42fb0a1e84ff525ebe560e2baf9451ab69127e2b ("tracing/ring-buffer: Have
+polling block on watermark").
 
-Note: the alc236_fixup_hp_gpio_led fixup, which is used by the Elitebook
-640 G9, does not work with the 645 G9.
+This issue is firstly detected and reported, when testing the CXL error
+events in the rasdaemon and also erified using the test application for poll()
+and select().
 
-[ rearranged the entry in SSID order -- tiwai ]
+This issue occurs for the per_cpu case, when calling the ring_buffer_poll_wait(),
+in kernel/trace/ring_buffer.c, with the buffer_percent > 0 and then wait until the
+percentage of pages are available. The default value set for the buffer_percent is 50
+in the kernel/trace/trace.c.
 
-Signed-off-by: Elvis Angelaccio <elvis.angelaccio@kde.org>
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/4055cb48-e228-8a13-524d-afbb7aaafebe@kde.org
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+As a fix, allow userspace application could set buffer_percent as 0 through
+the buffer_percent_fops, so that the task will wake up as soon as data is added
+to any of the specific cpu buffer.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230202182309.742-2-shiju.jose@huawei.com
+
+Cc: <mhiramat@kernel.org>
+Cc: <mchehab@kernel.org>
+Cc: <linux-edac@vger.kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 42fb0a1e84ff5 ("tracing/ring-buffer: Have polling block on watermark")
+Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    1 +
- 1 file changed, 1 insertion(+)
+ kernel/trace/trace.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -9072,6 +9072,7 @@ static const struct snd_pci_quirk alc269
- 	SND_PCI_QUIRK(0x103c, 0x89aa, "HP EliteBook 630 G9", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x89c3, "HP", ALC285_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x89ca, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
-+	SND_PCI_QUIRK(0x103c, 0x89d3, "HP EliteBook 645 G9 (MB 89D2)", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
- 	SND_PCI_QUIRK(0x103c, 0x8a78, "HP Dev One", ALC285_FIXUP_HP_LIMIT_INT_MIC_BOOST),
- 	SND_PCI_QUIRK(0x103c, 0x8aa0, "HP ProBook 440 G9 (MB 8A9E)", ALC236_FIXUP_HP_GPIO_LED),
- 	SND_PCI_QUIRK(0x103c, 0x8aa3, "HP ProBook 450 G9 (MB 8AA1)", ALC236_FIXUP_HP_GPIO_LED),
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9089,9 +9089,6 @@ buffer_percent_write(struct file *filp,
+ 	if (val > 100)
+ 		return -EINVAL;
+ 
+-	if (!val)
+-		val = 1;
+-
+ 	tr->buffer_percent = val;
+ 
+ 	(*ppos)++;
 
 
