@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C8478F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:53:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E72C6C433D2;
-	Mon, 13 Feb 2023 14:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 064B18F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:54:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 80D30C433D2;
+	Mon, 13 Feb 2023 14:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300039;
-	bh=YCvuw+pXr4ef5gb+FobQg0K/sQBUL4P0Z4m3TQYHKfg=;
+	s=korg; t=1676300041;
+	bh=yNhaBNpkBy+X/0ebLwxQL2wxf2clS3WJ8h+jXXyC/3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bN26oAv2YegYE38pJk6yL+4kwcWfVKR8fxJDJFbZB2ElXRdcuQU6wb+tsX8cCvovz
-	 rLZ+jInWdNPkUzlCt4CyT28Ya13Ko+sRK/BMmGA8ayQjwQcoslNSArWeIMABGmmqJi
-	 nlswsVuIsr9Sk63KDOlBf+uNbmS69PamDIYtf0Ug=
+	b=V+gZpgAopJewcf9DPAiL7P+mS93CD12RptNklxJXzyEKGSp7ImBQCgE7hHZcmzmUS
+	 jt/PY9OWH6hXubKJIibu6r9qKs1faIV0Rpm/pSrh8owifwzvj8lAsrQCKnfQ95sAO+
+	 7Cw1kjQriBEv0CGiHYkl5K7S8aFmJ90DT4uFOKmI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anirudh Venkataramanan <anirudh.venkataramanan@intel.com>,
-	Marcin Szycik <marcin.szycik@linux.intel.com>,
-	Jakub Andrysiak <jakub.andrysiak@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
+	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
+	Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/114] ice: Do not use WQ_MEM_RECLAIM flag for workqueue
-Date: Mon, 13 Feb 2023 15:47:55 +0100
-Message-Id: <20230213144744.210873811@linuxfoundation.org>
+Subject: [PATCH 6.1 036/114] drm/i915: Dont do the WM0->WM1 copy w/a if WM1 is already enabled
+Date: Mon, 13 Feb 2023 15:47:51 +0100
+Message-Id: <20230213144744.016345273@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -38,109 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anirudh Venkataramanan <anirudh.venkataramanan@intel.com>
+From: Ville Syrjälä <ville.syrjala@linux.intel.com>
 
-[ Upstream commit 4d159f7884f78b1aacb99b4fc37d1e3cb1194e39 ]
+[ Upstream commit 90d5e8301ac24550be80d193aa5582cab56c29fc ]
 
-When both ice and the irdma driver are loaded, a warning in
-check_flush_dependency is being triggered. This is due to ice driver
-workqueue being allocated with the WQ_MEM_RECLAIM flag and the irdma one
-is not.
+Due to a workaround we have to make sure the WM1 watermarks block/lines
+values are sensible even when WM1 is disabled. To that end we copy those
+values from WM0.
 
-According to kernel documentation, this flag should be set if the
-workqueue will be involved in the kernel's memory reclamation flow.
-Since it is not, there is no need for the ice driver's WQ to have this
-flag set so remove it.
+However since we now keep each wm level enabled on a per-plane basis
+it doesn't seem necessary to do that copy when we already have an
+enabled WM1 on the current plane. That is, we might be in a situation
+where another plane can only do WM0 (and thus needs the copy) but
+the current plane's WM1 is still perfectly valid (ie. fits into the
+current DDB allocation).
 
-Example trace:
+Skipping the copy could avoid reprogramming the plane's registers
+needlessly in some cases.
 
-[  +0.000004] workqueue: WQ_MEM_RECLAIM ice:ice_service_task [ice] is flushing !WQ_MEM_RECLAIM infiniband:0x0
-[  +0.000139] WARNING: CPU: 0 PID: 728 at kernel/workqueue.c:2632 check_flush_dependency+0x178/0x1a0
-[  +0.000011] Modules linked in: bonding tls xt_CHECKSUM xt_MASQUERADE xt_conntrack ipt_REJECT nf_reject_ipv4 nft_compat nft_cha
-in_nat nf_nat nf_conntrack nf_defrag_ipv6 nf_defrag_ipv4 nf_tables nfnetlink bridge stp llc rfkill vfat fat intel_rapl_msr intel
-_rapl_common isst_if_common skx_edac nfit libnvdimm x86_pkg_temp_thermal intel_powerclamp coretemp kvm_intel kvm irqbypass crct1
-0dif_pclmul crc32_pclmul ghash_clmulni_intel rapl intel_cstate rpcrdma sunrpc rdma_ucm ib_srpt ib_isert iscsi_target_mod target_
-core_mod ib_iser libiscsi scsi_transport_iscsi rdma_cm ib_cm iw_cm iTCO_wdt iTCO_vendor_support ipmi_ssif irdma mei_me ib_uverbs
-ib_core intel_uncore joydev pcspkr i2c_i801 acpi_ipmi mei lpc_ich i2c_smbus intel_pch_thermal ioatdma ipmi_si acpi_power_meter
-acpi_pad xfs libcrc32c sd_mod t10_pi crc64_rocksoft crc64 sg ahci ixgbe libahci ice i40e igb crc32c_intel mdio i2c_algo_bit liba
-ta dca wmi dm_mirror dm_region_hash dm_log dm_mod ipmi_devintf ipmi_msghandler fuse
-[  +0.000161]  [last unloaded: bonding]
-[  +0.000006] CPU: 0 PID: 728 Comm: kworker/0:2 Tainted: G S                 6.2.0-rc2_next-queue-13jan-00458-gc20aabd57164 #1
-[  +0.000006] Hardware name: Intel Corporation S2600WFT/S2600WFT, BIOS SE5C620.86B.02.01.0010.010620200716 01/06/2020
-[  +0.000003] Workqueue: ice ice_service_task [ice]
-[  +0.000127] RIP: 0010:check_flush_dependency+0x178/0x1a0
-[  +0.000005] Code: 89 8e 02 01 e8 49 3d 40 00 49 8b 55 18 48 8d 8d d0 00 00 00 48 8d b3 d0 00 00 00 4d 89 e0 48 c7 c7 e0 3b 08
-9f e8 bb d3 07 01 <0f> 0b e9 be fe ff ff 80 3d 24 89 8e 02 00 0f 85 6b ff ff ff e9 06
-[  +0.000004] RSP: 0018:ffff88810a39f990 EFLAGS: 00010282
-[  +0.000005] RAX: 0000000000000000 RBX: ffff888141bc2400 RCX: 0000000000000000
-[  +0.000004] RDX: 0000000000000001 RSI: dffffc0000000000 RDI: ffffffffa1213a80
-[  +0.000003] RBP: ffff888194bf3400 R08: ffffed117b306112 R09: ffffed117b306112
-[  +0.000003] R10: ffff888bd983088b R11: ffffed117b306111 R12: 0000000000000000
-[  +0.000003] R13: ffff888111f84d00 R14: ffff88810a3943ac R15: ffff888194bf3400
-[  +0.000004] FS:  0000000000000000(0000) GS:ffff888bd9800000(0000) knlGS:0000000000000000
-[  +0.000003] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-[  +0.000003] CR2: 000056035b208b60 CR3: 000000017795e005 CR4: 00000000007706f0
-[  +0.000003] DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-[  +0.000003] DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-[  +0.000002] PKRU: 55555554
-[  +0.000003] Call Trace:
-[  +0.000002]  <TASK>
-[  +0.000003]  __flush_workqueue+0x203/0x840
-[  +0.000006]  ? mutex_unlock+0x84/0xd0
-[  +0.000008]  ? __pfx_mutex_unlock+0x10/0x10
-[  +0.000004]  ? __pfx___flush_workqueue+0x10/0x10
-[  +0.000006]  ? mutex_lock+0xa3/0xf0
-[  +0.000005]  ib_cache_cleanup_one+0x39/0x190 [ib_core]
-[  +0.000174]  __ib_unregister_device+0x84/0xf0 [ib_core]
-[  +0.000094]  ib_unregister_device+0x25/0x30 [ib_core]
-[  +0.000093]  irdma_ib_unregister_device+0x97/0xc0 [irdma]
-[  +0.000064]  ? __pfx_irdma_ib_unregister_device+0x10/0x10 [irdma]
-[  +0.000059]  ? up_write+0x5c/0x90
-[  +0.000005]  irdma_remove+0x36/0x90 [irdma]
-[  +0.000062]  auxiliary_bus_remove+0x32/0x50
-[  +0.000007]  device_release_driver_internal+0xfa/0x1c0
-[  +0.000005]  bus_remove_device+0x18a/0x260
-[  +0.000007]  device_del+0x2e5/0x650
-[  +0.000005]  ? __pfx_device_del+0x10/0x10
-[  +0.000003]  ? mutex_unlock+0x84/0xd0
-[  +0.000004]  ? __pfx_mutex_unlock+0x10/0x10
-[  +0.000004]  ? _raw_spin_unlock+0x18/0x40
-[  +0.000005]  ice_unplug_aux_dev+0x52/0x70 [ice]
-[  +0.000160]  ice_service_task+0x1309/0x14f0 [ice]
-[  +0.000134]  ? __pfx___schedule+0x10/0x10
-[  +0.000006]  process_one_work+0x3b1/0x6c0
-[  +0.000008]  worker_thread+0x69/0x670
-[  +0.000005]  ? __kthread_parkme+0xec/0x110
-[  +0.000007]  ? __pfx_worker_thread+0x10/0x10
-[  +0.000005]  kthread+0x17f/0x1b0
-[  +0.000005]  ? __pfx_kthread+0x10/0x10
-[  +0.000004]  ret_from_fork+0x29/0x50
-[  +0.000009]  </TASK>
-
-Fixes: 940b61af02f4 ("ice: Initialize PF and setup miscellaneous interrupt")
-Signed-off-by: Anirudh Venkataramanan <anirudh.venkataramanan@intel.com>
-Signed-off-by: Marcin Szycik <marcin.szycik@linux.intel.com>
-Tested-by: Jakub Andrysiak <jakub.andrysiak@intel.com>
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Fixes: a301cb0fca2d ("drm/i915: Keep plane watermarks enabled more aggressively")
+Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230131002127.29305-1-ville.syrjala@linux.intel.com
+Reviewed-by: Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+(cherry picked from commit c580c2d27ac8754cc6f01da1d715b7272f5f9cbb)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/i915/display/skl_watermark.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/intel/ice/ice_main.c b/drivers/net/ethernet/intel/ice/ice_main.c
-index 1ac5f0018c7eb..333582dabba16 100644
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -5518,7 +5518,7 @@ static int __init ice_module_init(void)
- 	pr_info("%s\n", ice_driver_string);
- 	pr_info("%s\n", ice_copyright);
+diff --git a/drivers/gpu/drm/i915/display/skl_watermark.c b/drivers/gpu/drm/i915/display/skl_watermark.c
+index 18178b01375e4..a7adf02476f6a 100644
+--- a/drivers/gpu/drm/i915/display/skl_watermark.c
++++ b/drivers/gpu/drm/i915/display/skl_watermark.c
+@@ -1587,7 +1587,8 @@ skl_crtc_allocate_plane_ddb(struct intel_atomic_state *state,
+ 				skl_check_wm_level(&wm->wm[level], ddb);
  
--	ice_wq = alloc_workqueue("%s", WQ_MEM_RECLAIM, 0, KBUILD_MODNAME);
-+	ice_wq = alloc_workqueue("%s", 0, 0, KBUILD_MODNAME);
- 	if (!ice_wq) {
- 		pr_err("Failed to create workqueue\n");
- 		return -ENOMEM;
+ 			if (icl_need_wm1_wa(i915, plane_id) &&
+-			    level == 1 && wm->wm[0].enable) {
++			    level == 1 && !wm->wm[level].enable &&
++			    wm->wm[0].enable) {
+ 				wm->wm[level].blocks = wm->wm[0].blocks;
+ 				wm->wm[level].lines = wm->wm[0].lines;
+ 				wm->wm[level].ignore_lines = wm->wm[0].ignore_lines;
 -- 
 2.39.0
 
