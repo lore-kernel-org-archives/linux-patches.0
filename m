@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F313F8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:55:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B9DAC4339B;
-	Mon, 13 Feb 2023 14:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8D7A08F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:55:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1158CC433EF;
+	Mon, 13 Feb 2023 14:55:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300103;
-	bh=p5Rovouv9TkL97MHJnaSG5S3dzTb/gfGEqkYG4wHRGQ=;
+	s=korg; t=1676300106;
+	bh=/Dw1ASoOGVCVb9d+SSG14LxpzJ2J+3lzrQq2vb7mbPw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=p7fPkWVWqZzUp3gCIq4VPKlyGD42UFmcHuBN82YN3oOoXOeK8DOlfuZxy81xYUeX2
-	 EyrUp1gz88DsoU85rdl8vn3ywc+2laKCL3qC5XXmwOy03rjj0LYwVPByDa/PjM+kA0
-	 Pubm70YFMo3zlVStrwilWP3Dz3Y3wTTYxEBBQCJM=
+	b=MNsckgzSnrNXcuS+k/lg3sayj4fJIbO2EO9XgFCusO4/Xsek9xBKSFc97c9n+qtFS
+	 DoR3P8H7FtU1PHPB0RSEXqtuXExWNGkBZm5Gn1vJznq46PosOO4soXME/jrLK0lBQ1
+	 fo2zvUPQBFFoFMvPp5JrCSFb0ctAWEQpTgfn4BkY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangbin Liu <liuhangbin@gmail.com>,
-	Petr Machata <petrm@nvidia.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	Daniel Beer <daniel.beer@igorinstitute.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 060/114] selftests: forwarding: lib: quote the sysctl values
-Date: Mon, 13 Feb 2023 15:48:15 +0100
-Message-Id: <20230213144745.328069293@linuxfoundation.org>
+Subject: [PATCH 6.1 066/114] ASoC: tas5805m: rework to avoid scheduling while atomic.
+Date: Mon, 13 Feb 2023 15:48:21 +0100
+Message-Id: <20230213144745.651128322@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -36,44 +35,278 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangbin Liu <liuhangbin@gmail.com>
+From: Daniel Beer <daniel.beer@igorinstitute.com>
 
-[ Upstream commit 3a082086aa200852545cf15159213582c0c80eba ]
+[ Upstream commit 147323792693bf013f60dca160be1d32bd4d180a ]
 
-When set/restore sysctl value, we should quote the value as some keys
-may have multi values, e.g. net.ipv4.ping_group_range
+There's some setup we need to do in order to get the DSP initialized,
+and this can't be done until a bit-clock is ready. In an earlier version
+of this driver, this work was done in a DAPM callback.
 
-Fixes: f5ae57784ba8 ("selftests: forwarding: lib: Add sysctl_set(), sysctl_restore()")
-Signed-off-by: Hangbin Liu <liuhangbin@gmail.com>
-Reviewed-by: Petr Machata <petrm@nvidia.com>
-Link: https://lore.kernel.org/r/20230208032110.879205-1-liuhangbin@gmail.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+The DAPM callback doesn't guarantee that the bit-clock is running, so
+the work was moved instead to the trigger callback. Unfortunately this
+callback runs in atomic context, and the setup code needs to do I2C
+transactions.
+
+Here we use a work_struct to kick off the setup in a thread instead.
+
+Fixes: ec45268467f4 ("ASoC: add support for TAS5805M digital amplifier")
+Signed-off-by: Daniel Beer <daniel.beer@igorinstitute.com>
+Link: https://lore.kernel.org/r/85d8ba405cb009a7a3249b556dc8f3bdb1754fdf.1675497326.git.daniel.beer@igorinstitute.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/forwarding/lib.sh | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ sound/soc/codecs/tas5805m.c | 128 ++++++++++++++++++++++++------------
+ 1 file changed, 87 insertions(+), 41 deletions(-)
 
-diff --git a/tools/testing/selftests/net/forwarding/lib.sh b/tools/testing/selftests/net/forwarding/lib.sh
-index 3ffb9d6c09504..f4721f1b2886b 100755
---- a/tools/testing/selftests/net/forwarding/lib.sh
-+++ b/tools/testing/selftests/net/forwarding/lib.sh
-@@ -906,14 +906,14 @@ sysctl_set()
- 	local value=$1; shift
+diff --git a/sound/soc/codecs/tas5805m.c b/sound/soc/codecs/tas5805m.c
+index beb4ec629a03c..6e2edf045446e 100644
+--- a/sound/soc/codecs/tas5805m.c
++++ b/sound/soc/codecs/tas5805m.c
+@@ -154,6 +154,7 @@ static const uint32_t tas5805m_volume[] = {
+ #define TAS5805M_VOLUME_MIN	0
  
- 	SYSCTL_ORIG[$key]=$(sysctl -n $key)
--	sysctl -qw $key=$value
-+	sysctl -qw $key="$value"
+ struct tas5805m_priv {
++	struct i2c_client		*i2c;
+ 	struct regulator		*pvdd;
+ 	struct gpio_desc		*gpio_pdn_n;
+ 
+@@ -165,6 +166,9 @@ struct tas5805m_priv {
+ 	int				vol[2];
+ 	bool				is_powered;
+ 	bool				is_muted;
++
++	struct work_struct		work;
++	struct mutex			lock;
+ };
+ 
+ static void set_dsp_scale(struct regmap *rm, int offset, int vol)
+@@ -181,13 +185,11 @@ static void set_dsp_scale(struct regmap *rm, int offset, int vol)
+ 	regmap_bulk_write(rm, offset, v, ARRAY_SIZE(v));
  }
  
- sysctl_restore()
+-static void tas5805m_refresh(struct snd_soc_component *component)
++static void tas5805m_refresh(struct tas5805m_priv *tas5805m)
  {
- 	local key=$1; shift
+-	struct tas5805m_priv *tas5805m =
+-		snd_soc_component_get_drvdata(component);
+ 	struct regmap *rm = tas5805m->regmap;
  
--	sysctl -qw $key=${SYSCTL_ORIG["$key"]}
-+	sysctl -qw $key="${SYSCTL_ORIG[$key]}"
+-	dev_dbg(component->dev, "refresh: is_muted=%d, vol=%d/%d\n",
++	dev_dbg(&tas5805m->i2c->dev, "refresh: is_muted=%d, vol=%d/%d\n",
+ 		tas5805m->is_muted, tas5805m->vol[0], tas5805m->vol[1]);
+ 
+ 	regmap_write(rm, REG_PAGE, 0x00);
+@@ -226,8 +228,11 @@ static int tas5805m_vol_get(struct snd_kcontrol *kcontrol,
+ 	struct tas5805m_priv *tas5805m =
+ 		snd_soc_component_get_drvdata(component);
+ 
++	mutex_lock(&tas5805m->lock);
+ 	ucontrol->value.integer.value[0] = tas5805m->vol[0];
+ 	ucontrol->value.integer.value[1] = tas5805m->vol[1];
++	mutex_unlock(&tas5805m->lock);
++
+ 	return 0;
  }
  
- forwarding_enable()
+@@ -243,11 +248,13 @@ static int tas5805m_vol_put(struct snd_kcontrol *kcontrol,
+ 		snd_soc_kcontrol_component(kcontrol);
+ 	struct tas5805m_priv *tas5805m =
+ 		snd_soc_component_get_drvdata(component);
++	int ret = 0;
+ 
+ 	if (!(volume_is_valid(ucontrol->value.integer.value[0]) &&
+ 	      volume_is_valid(ucontrol->value.integer.value[1])))
+ 		return -EINVAL;
+ 
++	mutex_lock(&tas5805m->lock);
+ 	if (tas5805m->vol[0] != ucontrol->value.integer.value[0] ||
+ 	    tas5805m->vol[1] != ucontrol->value.integer.value[1]) {
+ 		tas5805m->vol[0] = ucontrol->value.integer.value[0];
+@@ -256,11 +263,12 @@ static int tas5805m_vol_put(struct snd_kcontrol *kcontrol,
+ 			tas5805m->vol[0], tas5805m->vol[1],
+ 			tas5805m->is_powered);
+ 		if (tas5805m->is_powered)
+-			tas5805m_refresh(component);
+-		return 1;
++			tas5805m_refresh(tas5805m);
++		ret = 1;
+ 	}
++	mutex_unlock(&tas5805m->lock);
+ 
+-	return 0;
++	return ret;
+ }
+ 
+ static const struct snd_kcontrol_new tas5805m_snd_controls[] = {
+@@ -294,54 +302,83 @@ static int tas5805m_trigger(struct snd_pcm_substream *substream, int cmd,
+ 	struct snd_soc_component *component = dai->component;
+ 	struct tas5805m_priv *tas5805m =
+ 		snd_soc_component_get_drvdata(component);
+-	struct regmap *rm = tas5805m->regmap;
+-	unsigned int chan, global1, global2;
+ 
+ 	switch (cmd) {
+ 	case SNDRV_PCM_TRIGGER_START:
+ 	case SNDRV_PCM_TRIGGER_RESUME:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
+-		dev_dbg(component->dev, "DSP startup\n");
+-
+-		/* We mustn't issue any I2C transactions until the I2S
+-		 * clock is stable. Furthermore, we must allow a 5ms
+-		 * delay after the first set of register writes to
+-		 * allow the DSP to boot before configuring it.
+-		 */
+-		usleep_range(5000, 10000);
+-		send_cfg(rm, dsp_cfg_preboot,
+-			ARRAY_SIZE(dsp_cfg_preboot));
+-		usleep_range(5000, 15000);
+-		send_cfg(rm, tas5805m->dsp_cfg_data,
+-			tas5805m->dsp_cfg_len);
+-
+-		tas5805m->is_powered = true;
+-		tas5805m_refresh(component);
++		dev_dbg(component->dev, "clock start\n");
++		schedule_work(&tas5805m->work);
+ 		break;
+ 
+ 	case SNDRV_PCM_TRIGGER_STOP:
+ 	case SNDRV_PCM_TRIGGER_SUSPEND:
+ 	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+-		dev_dbg(component->dev, "DSP shutdown\n");
++		break;
+ 
+-		tas5805m->is_powered = false;
++	default:
++		return -EINVAL;
++	}
+ 
+-		regmap_write(rm, REG_PAGE, 0x00);
+-		regmap_write(rm, REG_BOOK, 0x00);
++	return 0;
++}
+ 
+-		regmap_read(rm, REG_CHAN_FAULT, &chan);
+-		regmap_read(rm, REG_GLOBAL_FAULT1, &global1);
+-		regmap_read(rm, REG_GLOBAL_FAULT2, &global2);
++static void do_work(struct work_struct *work)
++{
++	struct tas5805m_priv *tas5805m =
++	       container_of(work, struct tas5805m_priv, work);
++	struct regmap *rm = tas5805m->regmap;
+ 
+-		dev_dbg(component->dev,
+-			"fault regs: CHAN=%02x, GLOBAL1=%02x, GLOBAL2=%02x\n",
+-			chan, global1, global2);
++	dev_dbg(&tas5805m->i2c->dev, "DSP startup\n");
+ 
+-		regmap_write(rm, REG_DEVICE_CTRL_2, DCTRL2_MODE_HIZ);
+-		break;
++	mutex_lock(&tas5805m->lock);
++	/* We mustn't issue any I2C transactions until the I2S
++	 * clock is stable. Furthermore, we must allow a 5ms
++	 * delay after the first set of register writes to
++	 * allow the DSP to boot before configuring it.
++	 */
++	usleep_range(5000, 10000);
++	send_cfg(rm, dsp_cfg_preboot, ARRAY_SIZE(dsp_cfg_preboot));
++	usleep_range(5000, 15000);
++	send_cfg(rm, tas5805m->dsp_cfg_data, tas5805m->dsp_cfg_len);
++
++	tas5805m->is_powered = true;
++	tas5805m_refresh(tas5805m);
++	mutex_unlock(&tas5805m->lock);
++}
+ 
+-	default:
+-		return -EINVAL;
++static int tas5805m_dac_event(struct snd_soc_dapm_widget *w,
++			      struct snd_kcontrol *kcontrol, int event)
++{
++	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
++	struct tas5805m_priv *tas5805m =
++		snd_soc_component_get_drvdata(component);
++	struct regmap *rm = tas5805m->regmap;
++
++	if (event & SND_SOC_DAPM_PRE_PMD) {
++		unsigned int chan, global1, global2;
++
++		dev_dbg(component->dev, "DSP shutdown\n");
++		cancel_work_sync(&tas5805m->work);
++
++		mutex_lock(&tas5805m->lock);
++		if (tas5805m->is_powered) {
++			tas5805m->is_powered = false;
++
++			regmap_write(rm, REG_PAGE, 0x00);
++			regmap_write(rm, REG_BOOK, 0x00);
++
++			regmap_read(rm, REG_CHAN_FAULT, &chan);
++			regmap_read(rm, REG_GLOBAL_FAULT1, &global1);
++			regmap_read(rm, REG_GLOBAL_FAULT2, &global2);
++
++			dev_dbg(component->dev, "fault regs: CHAN=%02x, "
++				"GLOBAL1=%02x, GLOBAL2=%02x\n",
++				chan, global1, global2);
++
++			regmap_write(rm, REG_DEVICE_CTRL_2, DCTRL2_MODE_HIZ);
++		}
++		mutex_unlock(&tas5805m->lock);
+ 	}
+ 
+ 	return 0;
+@@ -354,7 +391,8 @@ static const struct snd_soc_dapm_route tas5805m_audio_map[] = {
+ 
+ static const struct snd_soc_dapm_widget tas5805m_dapm_widgets[] = {
+ 	SND_SOC_DAPM_AIF_IN("DAC IN", "Playback", 0, SND_SOC_NOPM, 0, 0),
+-	SND_SOC_DAPM_DAC("DAC", NULL, SND_SOC_NOPM, 0, 0),
++	SND_SOC_DAPM_DAC_E("DAC", NULL, SND_SOC_NOPM, 0, 0,
++		tas5805m_dac_event, SND_SOC_DAPM_PRE_PMD),
+ 	SND_SOC_DAPM_OUTPUT("OUT")
+ };
+ 
+@@ -375,11 +413,14 @@ static int tas5805m_mute(struct snd_soc_dai *dai, int mute, int direction)
+ 	struct tas5805m_priv *tas5805m =
+ 		snd_soc_component_get_drvdata(component);
+ 
++	mutex_lock(&tas5805m->lock);
+ 	dev_dbg(component->dev, "set mute=%d (is_powered=%d)\n",
+ 		mute, tas5805m->is_powered);
++
+ 	tas5805m->is_muted = mute;
+ 	if (tas5805m->is_powered)
+-		tas5805m_refresh(component);
++		tas5805m_refresh(tas5805m);
++	mutex_unlock(&tas5805m->lock);
+ 
+ 	return 0;
+ }
+@@ -434,6 +475,7 @@ static int tas5805m_i2c_probe(struct i2c_client *i2c)
+ 	if (!tas5805m)
+ 		return -ENOMEM;
+ 
++	tas5805m->i2c = i2c;
+ 	tas5805m->pvdd = devm_regulator_get(dev, "pvdd");
+ 	if (IS_ERR(tas5805m->pvdd)) {
+ 		dev_err(dev, "failed to get pvdd supply: %ld\n",
+@@ -507,6 +549,9 @@ static int tas5805m_i2c_probe(struct i2c_client *i2c)
+ 	gpiod_set_value(tas5805m->gpio_pdn_n, 1);
+ 	usleep_range(10000, 15000);
+ 
++	INIT_WORK(&tas5805m->work, do_work);
++	mutex_init(&tas5805m->lock);
++
+ 	/* Don't register through devm. We need to be able to unregister
+ 	 * the component prior to deasserting PDN#
+ 	 */
+@@ -527,6 +572,7 @@ static void tas5805m_i2c_remove(struct i2c_client *i2c)
+ 	struct device *dev = &i2c->dev;
+ 	struct tas5805m_priv *tas5805m = dev_get_drvdata(dev);
+ 
++	cancel_work_sync(&tas5805m->work);
+ 	snd_soc_unregister_component(dev);
+ 	gpiod_set_value(tas5805m->gpio_pdn_n, 0);
+ 	usleep_range(10000, 15000);
 -- 
 2.39.0
 
