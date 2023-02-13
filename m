@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1EE2B8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:57:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 99352C433EF;
-	Mon, 13 Feb 2023 14:57:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B23388F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:57:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 38C6BC433D2;
+	Mon, 13 Feb 2023 14:57:10 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300228;
-	bh=GWRFKRHFcodxBQqpcZTC+QrSsFzGS/5aWqNuFBdy96Y=;
+	s=korg; t=1676300230;
+	bh=Hkx8/qx5/TOUzgIyU0M9AD20QuW7FfZS1los6aRa73Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MIdOSv+SlrlEzQKN3MES7Fg+XJin1LXyJ7hoKygYDlNk2pH7VORR7Ltp1nfIZFs/P
-	 dQQqPsD0+cfmFNocemFCXhetz+Oua33KFgE3wk/SHoXApbuRHEJmL6uflXSBAxvNYZ
-	 7PAEgU66Ir6R+LR5mD/nvpq5u2n3E0xjdkrESNVo=
+	b=eO0TXMwAbYFO4AjEDcREe3yun6YRbI8Tn3/MdYO2/lzlc+6u02AcsFOW4iLuo/aWE
+	 Oz3DqXu+o/NLB17HIO5Tpy8/+9H+TZnPZv5P2oq11fRq2jc3AQBXu0uSIHQWH+Azsj
+	 +RwLv5luTiDMlmjBrdrXARzNE3d0Bkz9KteDLZQ8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthew Auld <matthew.auld@intel.com>,
-	Tvrtko Ursulin <tvrtko.ursulin@intel.com>,
-	Aravind Iddamsetty <aravind.iddamsetty@intel.com>,
-	Andrzej Hajda <andrzej.hajda@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.1 113/114] drm/i915: Initialize the obj flags for shmem objects
-Date: Mon, 13 Feb 2023 15:49:08 +0100
-Message-Id: <20230213144748.075100320@linuxfoundation.org>
+	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+	Guchun Chen <guchun.chen@amd.com>,
+	Luben Tuikov <luben.tuikov@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 108/114] drm/amdgpu/fence: Fix oops due to non-matching drm_sched init/fini
+Date: Mon, 13 Feb 2023 15:49:03 +0100
+Message-Id: <20230213144747.804028610@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -37,42 +38,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Aravind Iddamsetty <aravind.iddamsetty@intel.com>
+From: Guilherme G. Piccoli <gpiccoli@igalia.com>
 
-commit 44e4c5684fcc82d8f099656c4ea39d9571e2a8ac upstream.
+commit 5ad7bbf3dba5c4a684338df1f285080f2588b535 upstream.
 
-Obj flags for shmem objects is not being set correctly. Fixes in setting
-BO_ALLOC_USER flag which applies to shmem objs as well.
+Currently amdgpu calls drm_sched_fini() from the fence driver sw fini
+routine - such function is expected to be called only after the
+respective init function - drm_sched_init() - was executed successfully.
 
-v2: Add fixes tag (Tvrtko, Matt A)
+Happens that we faced a driver probe failure in the Steam Deck
+recently, and the function drm_sched_fini() was called even without
+its counter-part had been previously called, causing the following oops:
 
-Fixes: 13d29c823738 ("drm/i915/ehl: unconditionally flush the pages on acquire")
-Cc: <stable@vger.kernel.org> # v5.15+
-Cc: Matthew Auld <matthew.auld@intel.com>
-Cc: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-Reviewed-by: Matthew Auld <matthew.auld@intel.com>
-Signed-off-by: Aravind Iddamsetty <aravind.iddamsetty@intel.com>
-Reviewed-by: Andrzej Hajda <andrzej.hajda@intel.com>
-Signed-off-by: Tvrtko Ursulin <tvrtko.ursulin@intel.com>
-[tursulin: Grouped all tags together.]
-Link: https://patchwork.freedesktop.org/patch/msgid/20230203135205.4051149-1-aravind.iddamsetty@intel.com
-(cherry picked from commit bca0d1d3ceeb07be45a51c0fa4d57a0ce31b6aed)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+amdgpu: probe of 0000:04:00.0 failed with error -110
+BUG: kernel NULL pointer dereference, address: 0000000000000090
+PGD 0 P4D 0
+Oops: 0002 [#1] PREEMPT SMP NOPTI
+CPU: 0 PID: 609 Comm: systemd-udevd Not tainted 6.2.0-rc3-gpiccoli #338
+Hardware name: Valve Jupiter/Jupiter, BIOS F7A0113 11/04/2022
+RIP: 0010:drm_sched_fini+0x84/0xa0 [gpu_sched]
+[...]
+Call Trace:
+ <TASK>
+ amdgpu_fence_driver_sw_fini+0xc8/0xd0 [amdgpu]
+ amdgpu_device_fini_sw+0x2b/0x3b0 [amdgpu]
+ amdgpu_driver_release_kms+0x16/0x30 [amdgpu]
+ devm_drm_dev_init_release+0x49/0x70
+ [...]
+
+To prevent that, check if the drm_sched was properly initialized for a
+given ring before calling its fini counter-part.
+
+Notice ideally we'd use sched.ready for that; such field is set as the latest
+thing on drm_sched_init(). But amdgpu seems to "override" the meaning of such
+field - in the above oops for example, it was a GFX ring causing the crash, and
+the sched.ready field was set to true in the ring init routine, regardless of
+the state of the DRM scheduler. Hence, we ended-up using sched.ops as per
+Christian's suggestion [0], and also removed the no_scheduler check [1].
+
+[0] https://lore.kernel.org/amd-gfx/984ee981-2906-0eaf-ccec-9f80975cb136@amd.com/
+[1] https://lore.kernel.org/amd-gfx/cd0e2994-f85f-d837-609f-7056d5fb7231@amd.com/
+
+Fixes: 067f44c8b459 ("drm/amdgpu: avoid over-handle of fence driver fini in s3 test (v2)")
+Suggested-by: Christian König <christian.koenig@amd.com>
+Cc: Guchun Chen <guchun.chen@amd.com>
+Cc: Luben Tuikov <luben.tuikov@amd.com>
+Cc: Mario Limonciello <mario.limonciello@amd.com>
+Reviewed-by: Luben Tuikov <luben.tuikov@amd.com>
+Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gem/i915_gem_shmem.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c |    8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-+++ b/drivers/gpu/drm/i915/gem/i915_gem_shmem.c
-@@ -579,7 +579,7 @@ static int shmem_object_init(struct inte
- 	mapping_set_gfp_mask(mapping, mask);
- 	GEM_BUG_ON(!(mapping_gfp_mask(mapping) & __GFP_RECLAIM));
+--- a/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
++++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c
+@@ -564,7 +564,13 @@ void amdgpu_fence_driver_sw_fini(struct
+ 		if (!ring || !ring->fence_drv.initialized)
+ 			continue;
  
--	i915_gem_object_init(obj, &i915_gem_shmem_ops, &lock_class, 0);
-+	i915_gem_object_init(obj, &i915_gem_shmem_ops, &lock_class, flags);
- 	obj->mem_flags |= I915_BO_FLAG_STRUCT_PAGE;
- 	obj->write_domain = I915_GEM_DOMAIN_CPU;
- 	obj->read_domains = I915_GEM_DOMAIN_CPU;
+-		if (!ring->no_scheduler)
++		/*
++		 * Notice we check for sched.ops since there's some
++		 * override on the meaning of sched.ready by amdgpu.
++		 * The natural check would be sched.ready, which is
++		 * set as drm_sched_init() finishes...
++		 */
++		if (ring->sched.ops)
+ 			drm_sched_fini(&ring->sched);
+ 
+ 		for (j = 0; j <= ring->fence_drv.num_fences_mask; ++j)
 
 
