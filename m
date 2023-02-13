@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CD8E98F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:01:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54325C433D2;
-	Mon, 13 Feb 2023 15:01:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 621FD8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:01:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC502C433D2;
+	Mon, 13 Feb 2023 15:01:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300505;
-	bh=Mso5bHWrvExVPkkjPfCbOZK65aGcToKFk2Jy9IWc+T4=;
+	s=korg; t=1676300508;
+	bh=Wq7XP/5rXPr00TAp0Kl/fvlUuyHohjj4CMzCBbpExfo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tGkN/GyhbQ32XVqCaMNGK8oqEWlHITc+Y61CjUBCqJR7zSwPxmvk+BLk2RjGcuRtC
-	 KTbpoF5uEhvMBVCjF0UohHXvGxEiv3JFKJseskq4Q6W6UvUWqOOKUd+RLQ2rIrnIVx
-	 KICMeSqJ7sYyB1GPYxkXvKhxtEfXjoUIpzqgb7DE=
+	b=kRi4bsftnGo6r+iGbMlmmVUcYjdvUhnPQNLOGODNaFn095Erq05aT9qNDjtbpUIYz
+	 3vNRxQTeye9aEPtdwe1ansDcNU+VOtloXzKh4N9TVVK9BkDDlly4TXe3hYwT8nGvDM
+	 j67k3NrR/XeuJMgj31FF3FTPLnpZI6OVQvcr0DvE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+04c21ed96d861dccc5cd@syzkaller.appspotmail.com,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Pierluigi Passaro <pierluigi.p@variscite.com>,
+	Fabio Estevam <festevam@gmail.com>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 011/139] bpf, sockmap: Check for any of tcp_bpf_prots when cloning a listener
-Date: Mon, 13 Feb 2023 15:49:16 +0100
-Message-Id: <20230213144746.241729725@linuxfoundation.org>
+Subject: [PATCH 5.10 012/139] arm64: dts: imx8mm: Fix pad control for UART1_DTE_RX
+Date: Mon, 13 Feb 2023 15:49:17 +0100
+Message-Id: <20230213144746.313124098@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -37,100 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Sitnicki <jakub@cloudflare.com>
+From: Pierluigi Passaro <pierluigi.p@variscite.com>
 
-[ Upstream commit ddce1e091757d0259107c6c0c7262df201de2b66 ]
+[ Upstream commit 47123900f3e4a7f769631d6ec15abf44086276f6 ]
 
-A listening socket linked to a sockmap has its sk_prot overridden. It
-points to one of the struct proto variants in tcp_bpf_prots. The variant
-depends on the socket's family and which sockmap programs are attached.
+According section
+    8.2.5.313 Select Input Register (IOMUXC_UART1_RXD_SELECT_INPUT)
+of 
+    i.MX 8M Mini Applications Processor Reference Manual, Rev. 3, 11/2020
+the required setting for this specific pin configuration is "1"
 
-A child socket cloned from a TCP listener initially inherits their sk_prot.
-But before cloning is finished, we restore the child's proto to the
-listener's original non-tcp_bpf_prots one. This happens in
-tcp_create_openreq_child -> tcp_bpf_clone.
-
-Today, in tcp_bpf_clone we detect if the child's proto should be restored
-by checking only for the TCP_BPF_BASE proto variant. This is not
-correct. The sk_prot of listening socket linked to a sockmap can point to
-to any variant in tcp_bpf_prots.
-
-If the listeners sk_prot happens to be not the TCP_BPF_BASE variant, then
-the child socket unintentionally is left if the inherited sk_prot by
-tcp_bpf_clone.
-
-This leads to issues like infinite recursion on close [1], because the
-child state is otherwise not set up for use with tcp_bpf_prot operations.
-
-Adjust the check in tcp_bpf_clone to detect all of tcp_bpf_prots variants.
-
-Note that it wouldn't be sufficient to check the socket state when
-overriding the sk_prot in tcp_bpf_update_proto in order to always use the
-TCP_BPF_BASE variant for listening sockets. Since commit
-b8b8315e39ff ("bpf, sockmap: Remove unhash handler for BPF sockmap usage")
-it is possible for a socket to transition to TCP_LISTEN state while already
-linked to a sockmap, e.g. connect() -> insert into map ->
-connect(AF_UNSPEC) -> listen().
-
-[1]: https://lore.kernel.org/all/00000000000073b14905ef2e7401@google.com/
-
-Fixes: e80251555f0b ("tcp_bpf: Don't let child socket inherit parent protocol ops on copy")
-Reported-by: syzbot+04c21ed96d861dccc5cd@syzkaller.appspotmail.com
-Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20230113-sockmap-fix-v2-2-1e0ee7ac2f90@cloudflare.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Pierluigi Passaro <pierluigi.p@variscite.com>
+Reviewed-by: Fabio Estevam <festevam@gmail.com>
+Fixes: c1c9d41319c3 ("dt-bindings: imx: Add pinctrl binding doc for imx8mm")
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/util_macros.h | 12 ++++++++++++
- net/ipv4/tcp_bpf.c          |  4 ++--
- 2 files changed, 14 insertions(+), 2 deletions(-)
+ arch/arm64/boot/dts/freescale/imx8mm-pinfunc.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/linux/util_macros.h b/include/linux/util_macros.h
-index 72299f261b25..43db6e47503c 100644
---- a/include/linux/util_macros.h
-+++ b/include/linux/util_macros.h
-@@ -38,4 +38,16 @@
-  */
- #define find_closest_descending(x, a, as) __find_closest(x, a, as, >=)
- 
-+/**
-+ * is_insidevar - check if the @ptr points inside the @var memory range.
-+ * @ptr:	the pointer to a memory address.
-+ * @var:	the variable which address and size identify the memory range.
-+ *
-+ * Evaluates to true if the address in @ptr lies within the memory
-+ * range allocated to @var.
-+ */
-+#define is_insidevar(ptr, var)						\
-+	((uintptr_t)(ptr) >= (uintptr_t)(var) &&			\
-+	 (uintptr_t)(ptr) <  (uintptr_t)(var) + sizeof(var))
-+
- #endif
-diff --git a/net/ipv4/tcp_bpf.c b/net/ipv4/tcp_bpf.c
-index 6a1685461f89..926e29e84b40 100644
---- a/net/ipv4/tcp_bpf.c
-+++ b/net/ipv4/tcp_bpf.c
-@@ -6,6 +6,7 @@
- #include <linux/bpf.h>
- #include <linux/init.h>
- #include <linux/wait.h>
-+#include <linux/util_macros.h>
- 
- #include <net/inet_common.h>
- #include <net/tls.h>
-@@ -642,10 +643,9 @@ struct proto *tcp_bpf_get_proto(struct sock *sk, struct sk_psock *psock)
-  */
- void tcp_bpf_clone(const struct sock *sk, struct sock *newsk)
- {
--	int family = sk->sk_family == AF_INET6 ? TCP_BPF_IPV6 : TCP_BPF_IPV4;
- 	struct proto *prot = newsk->sk_prot;
- 
--	if (prot == &tcp_bpf_prots[family][TCP_BPF_BASE])
-+	if (is_insidevar(prot, tcp_bpf_prots))
- 		newsk->sk_prot = sk->sk_prot_creator;
- }
- #endif /* CONFIG_BPF_STREAM_PARSER */
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm-pinfunc.h b/arch/arm64/boot/dts/freescale/imx8mm-pinfunc.h
+index a003e6af3353..56271abfb7e0 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm-pinfunc.h
++++ b/arch/arm64/boot/dts/freescale/imx8mm-pinfunc.h
+@@ -601,7 +601,7 @@
+ #define MX8MM_IOMUXC_UART1_RXD_GPIO5_IO22                                   0x234 0x49C 0x000 0x5 0x0
+ #define MX8MM_IOMUXC_UART1_RXD_TPSMP_HDATA24                                0x234 0x49C 0x000 0x7 0x0
+ #define MX8MM_IOMUXC_UART1_TXD_UART1_DCE_TX                                 0x238 0x4A0 0x000 0x0 0x0
+-#define MX8MM_IOMUXC_UART1_TXD_UART1_DTE_RX                                 0x238 0x4A0 0x4F4 0x0 0x0
++#define MX8MM_IOMUXC_UART1_TXD_UART1_DTE_RX                                 0x238 0x4A0 0x4F4 0x0 0x1
+ #define MX8MM_IOMUXC_UART1_TXD_ECSPI3_MOSI                                  0x238 0x4A0 0x000 0x1 0x0
+ #define MX8MM_IOMUXC_UART1_TXD_GPIO5_IO23                                   0x238 0x4A0 0x000 0x5 0x0
+ #define MX8MM_IOMUXC_UART1_TXD_TPSMP_HDATA25                                0x238 0x4A0 0x000 0x7 0x0
 -- 
 2.39.0
 
