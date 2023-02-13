@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC9998F58
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:04:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72572C433D2;
-	Mon, 13 Feb 2023 15:04:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 874248F58
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:04:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055F9C433D2;
+	Mon, 13 Feb 2023 15:04:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300673;
-	bh=7Zh6+6uu1xARXr1+iq9wDoel6vMURA8Hu632DijSVJA=;
+	s=korg; t=1676300676;
+	bh=FZzoMnOlpcxDKbEVXGJYAUK5Dlgt85gtXOLgSBoQ8KQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U3IGas7tJcAUAQX7nrSrihSB/VZYWRAqpRz7Bfw28f/95MhWDQOAVEGDWK2I7Mxeg
-	 0XhoyF72i6h4yDweL7kSkG6BHSU6kfKVWsQfEThuLHSfn93q33gHUibHInSIs26Nvp
-	 SpiGUsfeaHZ9gsPq1wJpd1qshyVS86vTg8qZBaws=
+	b=SRE7jIYJLt7K4aH3n76Ctg2H+OdOSdLmqrFpFcsxeOS6iZ4smiIL8f3T81v3C7vKf
+	 R/ihREC9LPrMMJ15Snc4jyN9/2y7U8ufQKaePE5a46abyzngjDPftXDVa2zMPju3s5
+	 s4wRexfkKV1O8wnCv2kyVnR5adW2BZQhfxxkbeZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Carlos Song <carlos.song@nxp.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 066/139] iio: imu: fxos8700: fix map label of channel type to MAGN sensor
-Date: Mon, 13 Feb 2023 15:50:11 +0100
-Message-Id: <20230213144749.264293810@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.10 098/139] btrfs: limit device extents to the device size
+Date: Mon, 13 Feb 2023 15:50:43 +0100
+Message-Id: <20230213144751.013957462@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -35,37 +34,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Carlos Song <carlos.song@nxp.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 429e1e8ec696e0e7a0742904e3dc2f83b7b23dfb upstream.
+commit 3c538de0f2a74d50aff7278c092f88ae59cee688 upstream.
 
-FXOS8700 is an IMU sensor with ACCEL sensor and MAGN sensor.
-Sensor type is indexed by corresponding channel type in a switch.
-IIO_ANGL_VEL channel type mapped to MAGN sensor has caused confusion.
+There was a recent regression in btrfs/177 that started happening with
+the size class patches ("btrfs: introduce size class to block group
+allocator").  This however isn't a regression introduced by those
+patches, but rather the bug was uncovered by a change in behavior in
+these patches.  The patches triggered more chunk allocations in the
+^free-space-tree case, which uncovered a race with device shrink.
 
-Fix the mapping label of "IIO_MAGN" channel type instead of
-"IIO_ANGL_VEL" channel type to MAGN sensor.
+The problem is we will set the device total size to the new size, and
+use this to find a hole for a device extent.  However during shrink we
+may have device extents allocated past this range, so we could
+potentially find a hole in a range past our new shrink size.  We don't
+actually limit our found extent to the device size anywhere, we assume
+that we will not find a hole past our device size.  This isn't true with
+shrink as we're relocating block groups and thus creating holes past the
+device size.
 
-Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
-Signed-off-by: Carlos Song <carlos.song@nxp.com>
-Link: https://lore.kernel.org/r/20221208071911.2405922-2-carlos.song@nxp.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Fix this by making sure we do not search past the new device size, and
+if we wander into any device extents that start after our device size
+simply break from the loop and use whatever hole we've already found.
+
+CC: stable@vger.kernel.org # 4.14+
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/imu/fxos8700_core.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/volumes.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/iio/imu/fxos8700_core.c
-+++ b/drivers/iio/imu/fxos8700_core.c
-@@ -320,7 +320,7 @@ static enum fxos8700_sensor fxos8700_to_
- 	switch (iio_type) {
- 	case IIO_ACCEL:
- 		return FXOS8700_ACCEL;
--	case IIO_ANGL_VEL:
-+	case IIO_MAGN:
- 		return FXOS8700_MAGN;
- 	default:
- 		return -EINVAL;
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -1580,7 +1580,7 @@ again:
+ 			goto out;
+ 	}
+ 
+-	while (1) {
++	while (search_start < search_end) {
+ 		l = path->nodes[0];
+ 		slot = path->slots[0];
+ 		if (slot >= btrfs_header_nritems(l)) {
+@@ -1603,6 +1603,9 @@ again:
+ 		if (key.type != BTRFS_DEV_EXTENT_KEY)
+ 			goto next;
+ 
++		if (key.offset > search_end)
++			break;
++
+ 		if (key.offset > search_start) {
+ 			hole_size = key.offset - search_start;
+ 			dev_extent_hole_check(device, &search_start, &hole_size,
+@@ -1663,6 +1666,7 @@ next:
+ 	else
+ 		ret = 0;
+ 
++	ASSERT(max_hole_start + max_hole_size <= search_end);
+ out:
+ 	btrfs_free_path(path);
+ 	*start = max_hole_start;
 
 
