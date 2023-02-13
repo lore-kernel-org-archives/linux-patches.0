@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 202878F58
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:05:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 923F4C433EF;
-	Mon, 13 Feb 2023 15:05:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB58E8F58
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:05:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329FFC433EF;
+	Mon, 13 Feb 2023 15:05:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300756;
-	bh=UTiNo5Antlr8IhouoiYLDPulwfrEup9AcyMwlVRyLgk=;
+	s=korg; t=1676300759;
+	bh=2zNLX0ijebtAXd5hCYPMb3WozFN8jSX0cC42PPZCE/A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iqWxbrBtZYjHZGKoARsF1vxcv+tBQgCXtVHo/Ns8/SNiNYg70nsLU3yCzSZ/PMZrU
-	 +sIyKkfF/jX33xtl4RHIL9WoF54RveM9C8VWu3x1qZTNwFlI4jjIyI2xBEseog0gFn
-	 y2gIZDH1+rVrs6YxIVMO870xk4DkCZEGkgs6qsjI=
+	b=VNDgFlIg03gG6U6cFUg4ckHeyrPeJCmrOexJScnIqZ5KIzJe46p8yFilHk0ayhd7U
+	 b4kYdrRl2w+1xPluicNGoo2yDZ4Rv3HB2O+n6OOKjM1hR3vcBZI3Rwo1mRZ3wPdNK/
+	 EiJMhlyso/btWy1clyHKORB5Ayyu0mvHBrL6SSD8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	"David S. Miller" <davem@davemloft.net>,
-	syzbot+2a0e7abd24f1eb90ce25@syzkaller.appspotmail.com
-Subject: [PATCH 5.10 129/139] net: USB: Fix wrong-direction WARNING in plusb.c
-Date: Mon, 13 Feb 2023 15:51:14 +0100
-Message-Id: <20230213144752.774373838@linuxfoundation.org>
+	Andrew Morton <akpm@linux-foundation.org>,
+	Chunwei Chen <david.chen@nutanix.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.10 138/139] Fix page corruption caused by racy check in __free_pages
+Date: Mon, 13 Feb 2023 15:51:23 +0100
+Message-Id: <20230213144753.312051685@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -35,76 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: David Chen <david.chen@nutanix.com>
 
-commit 811d581194f7412eda97acc03d17fc77824b561f upstream.
+commit 462a8e08e0e6287e5ce13187257edbf24213ed03 upstream.
 
-The syzbot fuzzer detected a bug in the plusb network driver: A
-zero-length control-OUT transfer was treated as a read instead of a
-write.  In modern kernels this error provokes a WARNING:
+When we upgraded our kernel, we started seeing some page corruption like
+the following consistently:
 
-usb 1-1: BOGUS control dir, pipe 80000280 doesn't match bRequestType c0
-WARNING: CPU: 0 PID: 4645 at drivers/usb/core/urb.c:411
-usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
-Modules linked in:
-CPU: 1 PID: 4645 Comm: dhcpcd Not tainted
-6.2.0-rc6-syzkaller-00050-g9f266ccaa2f5 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google
-01/12/2023
-RIP: 0010:usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
-...
-Call Trace:
- <TASK>
- usb_start_wait_urb+0x101/0x4b0 drivers/usb/core/message.c:58
- usb_internal_control_msg drivers/usb/core/message.c:102 [inline]
- usb_control_msg+0x320/0x4a0 drivers/usb/core/message.c:153
- __usbnet_read_cmd+0xb9/0x390 drivers/net/usb/usbnet.c:2010
- usbnet_read_cmd+0x96/0xf0 drivers/net/usb/usbnet.c:2068
- pl_vendor_req drivers/net/usb/plusb.c:60 [inline]
- pl_set_QuickLink_features drivers/net/usb/plusb.c:75 [inline]
- pl_reset+0x2f/0xf0 drivers/net/usb/plusb.c:85
- usbnet_open+0xcc/0x5d0 drivers/net/usb/usbnet.c:889
- __dev_open+0x297/0x4d0 net/core/dev.c:1417
- __dev_change_flags+0x587/0x750 net/core/dev.c:8530
- dev_change_flags+0x97/0x170 net/core/dev.c:8602
- devinet_ioctl+0x15a2/0x1d70 net/ipv4/devinet.c:1147
- inet_ioctl+0x33f/0x380 net/ipv4/af_inet.c:979
- sock_do_ioctl+0xcc/0x230 net/socket.c:1169
- sock_ioctl+0x1f8/0x680 net/socket.c:1286
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x197/0x210 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
+  BUG: Bad page state in process ganesha.nfsd  pfn:1304ca
+  page:0000000022261c55 refcount:0 mapcount:-128 mapping:0000000000000000 index:0x0 pfn:0x1304ca
+  flags: 0x17ffffc0000000()
+  raw: 0017ffffc0000000 ffff8a513ffd4c98 ffffeee24b35ec08 0000000000000000
+  raw: 0000000000000000 0000000000000001 00000000ffffff7f 0000000000000000
+  page dumped because: nonzero mapcount
+  CPU: 0 PID: 15567 Comm: ganesha.nfsd Kdump: loaded Tainted: P    B      O      5.10.158-1.nutanix.20221209.el7.x86_64 #1
+  Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 04/05/2016
+  Call Trace:
+   dump_stack+0x74/0x96
+   bad_page.cold+0x63/0x94
+   check_new_page_bad+0x6d/0x80
+   rmqueue+0x46e/0x970
+   get_page_from_freelist+0xcb/0x3f0
+   ? _cond_resched+0x19/0x40
+   __alloc_pages_nodemask+0x164/0x300
+   alloc_pages_current+0x87/0xf0
+   skb_page_frag_refill+0x84/0x110
+   ...
 
-The fix is to call usbnet_write_cmd() instead of usbnet_read_cmd() and
-remove the USB_DIR_IN flag.
+Sometimes, it would also show up as corruption in the free list pointer
+and cause crashes.
 
-Reported-and-tested-by: syzbot+2a0e7abd24f1eb90ce25@syzkaller.appspotmail.com
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: 090ffa9d0e90 ("[PATCH] USB: usbnet (9/9) module for pl2301/2302 cables")
-CC: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/00000000000052099f05f3b3e298@google.com/
-Signed-off-by: David S. Miller <davem@davemloft.net>
+After bisecting the issue, we found the issue started from commit
+e320d3012d25 ("mm/page_alloc.c: fix freeing non-compound pages"):
+
+	if (put_page_testzero(page))
+		free_the_page(page, order);
+	else if (!PageHead(page))
+		while (order-- > 0)
+			free_the_page(page + (1 << order), order);
+
+So the problem is the check PageHead is racy because at this point we
+already dropped our reference to the page.  So even if we came in with
+compound page, the page can already be freed and PageHead can return
+false and we will end up freeing all the tail pages causing double free.
+
+Fixes: e320d3012d25 ("mm/page_alloc.c: fix freeing non-compound pages")
+Link: https://lore.kernel.org/lkml/BYAPR02MB448855960A9656EEA81141FC94D99@BYAPR02MB4488.namprd02.prod.outlook.com/
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Chunwei Chen <david.chen@nutanix.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/plusb.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ mm/page_alloc.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/net/usb/plusb.c
-+++ b/drivers/net/usb/plusb.c
-@@ -57,9 +57,7 @@
- static inline int
- pl_vendor_req(struct usbnet *dev, u8 req, u8 val, u8 index)
- {
--	return usbnet_read_cmd(dev, req,
--				USB_DIR_IN | USB_TYPE_VENDOR |
--				USB_RECIP_DEVICE,
-+	return usbnet_write_cmd(dev, req, USB_TYPE_VENDOR | USB_RECIP_DEVICE,
- 				val, index, NULL, 0);
- }
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -5054,9 +5054,12 @@ static inline void free_the_page(struct
  
+ void __free_pages(struct page *page, unsigned int order)
+ {
++	/* get PageHead before we drop reference */
++	int head = PageHead(page);
++
+ 	if (put_page_testzero(page))
+ 		free_the_page(page, order);
+-	else if (!PageHead(page))
++	else if (!head)
+ 		while (order-- > 0)
+ 			free_the_page(page + (1 << order), order);
+ }
 
 
