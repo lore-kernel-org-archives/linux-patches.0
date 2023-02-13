@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AA68F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:01:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28549C433D2;
-	Mon, 13 Feb 2023 15:01:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 405758F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:02:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8368C4339C;
+	Mon, 13 Feb 2023 15:02:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300518;
-	bh=YhAdBqEzmhfd98K/RMO2qNZfKjTbaovRi+FWHgdKGxA=;
+	s=korg; t=1676300521;
+	bh=iqPn8JmXoS/0sFcZi3Dyclt1W/+0FNC0JBn358yZZDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w2g1jAGpEQz0EMoeUQy5wf2RffWxO+NyVssvzQGx6+l5pV5/Pl9YtRCcsVbwNjy+p
-	 la94v9OaRtdOyUJtRB9bM8r0vUtY7NgpvwKjFDUAsoskeuS9tmDcn6rXVfb/q/w5hH
-	 MV5qQKfrwWNH/yLWhSj+WcOVkAZkiVP/c7QehFjQ=
+	b=oVC06f6xMLwG0pwMsXbCE/4097zrNFzurJw4Uw2lb8I+wjry39PU9K6Saemkwi+Zo
+	 +phittTyCw6GAAbXVlfHy+f0HmGhjFVmo+Cl3Mryi/s6QFGz7O2q/csiyklbDWMmaU
+	 xuwb97RMWS89PXuulPkK4CCk26jfBx0z8HZrpgHI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bhaskar Upadhaya <bupadhaya@marvell.com>,
-	Igor Russkikh <irusskikh@marvell.com>,
-	Ariel Elior <aelior@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Wesley Cheng <wcheng@codeaurora.org>,
+	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
+	Bjorn Andersson <bjorn.andersson@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 037/139] qede: add netpoll support for qede driver
-Date: Mon, 13 Feb 2023 15:49:42 +0100
-Message-Id: <20230213144747.610907226@linuxfoundation.org>
+Subject: [PATCH 5.10 046/139] usb: dwc3: dwc3-qcom: Fix typo in the dwc3 vbus override API
+Date: Mon, 13 Feb 2023 15:49:51 +0100
+Message-Id: <20230213144748.123967486@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -37,37 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bhaskar Upadhaya <bupadhaya@marvell.com>
+From: Wesley Cheng <wcheng@codeaurora.org>
 
-[ Upstream commit 961aa716235f58088e99acafbe66027d678061ce ]
+[ Upstream commit 8e6cb5d27e8246d9c986ec162d066a502d2b602b ]
 
-handle netpoll case when qede_poll is called by
-netpoll layer with budget 0
+There was an extra character in the dwc3_qcom_vbus_override_enable()
+function.  Removed the extra character.
 
-Signed-off-by: Bhaskar Upadhaya <bupadhaya@marvell.com>
-Signed-off-by: Igor Russkikh <irusskikh@marvell.com>
-Signed-off-by: Ariel Elior <aelior@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 2ccce20d51fa ("qede: execute xdp_do_flush() before napi_complete_done()")
+Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
+Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Link: https://lore.kernel.org/r/20210704013314.200951-2-bryan.odonoghue@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: eb320f76e31d ("usb: dwc3: qcom: enable vbus override when in OTG dr-mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_fp.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/usb/dwc3/dwc3-qcom.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/net/ethernet/qlogic/qede/qede_fp.c b/drivers/net/ethernet/qlogic/qede/qede_fp.c
-index d210632676d3..5b1885c0a8bd 100644
---- a/drivers/net/ethernet/qlogic/qede/qede_fp.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_fp.c
-@@ -1456,7 +1456,8 @@ int qede_poll(struct napi_struct *napi, int budget)
- 	rx_work_done = (likely(fp->type & QEDE_FASTPATH_RX) &&
- 			qede_has_rx_work(fp->rxq)) ?
- 			qede_rx_int(fp, budget) : 0;
--	if (rx_work_done < budget) {
-+	/* Handle case where we are called by netpoll with a budget of 0 */
-+	if (rx_work_done < budget || !budget) {
- 		if (!qede_poll_is_more_work(fp)) {
- 			napi_complete_done(napi, rx_work_done);
+diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
+index 528e36cc58ea..c2662e3a5b84 100644
+--- a/drivers/usb/dwc3/dwc3-qcom.c
++++ b/drivers/usb/dwc3/dwc3-qcom.c
+@@ -115,7 +115,7 @@ static inline void dwc3_qcom_clrbits(void __iomem *base, u32 offset, u32 val)
+ 	readl(base + offset);
+ }
  
+-static void dwc3_qcom_vbus_overrride_enable(struct dwc3_qcom *qcom, bool enable)
++static void dwc3_qcom_vbus_override_enable(struct dwc3_qcom *qcom, bool enable)
+ {
+ 	if (enable) {
+ 		dwc3_qcom_setbits(qcom->qscratch_base, QSCRATCH_SS_PHY_CTRL,
+@@ -136,7 +136,7 @@ static int dwc3_qcom_vbus_notifier(struct notifier_block *nb,
+ 	struct dwc3_qcom *qcom = container_of(nb, struct dwc3_qcom, vbus_nb);
+ 
+ 	/* enable vbus override for device mode */
+-	dwc3_qcom_vbus_overrride_enable(qcom, event);
++	dwc3_qcom_vbus_override_enable(qcom, event);
+ 	qcom->mode = event ? USB_DR_MODE_PERIPHERAL : USB_DR_MODE_HOST;
+ 
+ 	return NOTIFY_DONE;
+@@ -148,7 +148,7 @@ static int dwc3_qcom_host_notifier(struct notifier_block *nb,
+ 	struct dwc3_qcom *qcom = container_of(nb, struct dwc3_qcom, host_nb);
+ 
+ 	/* disable vbus override in host mode */
+-	dwc3_qcom_vbus_overrride_enable(qcom, !event);
++	dwc3_qcom_vbus_override_enable(qcom, !event);
+ 	qcom->mode = event ? USB_DR_MODE_HOST : USB_DR_MODE_PERIPHERAL;
+ 
+ 	return NOTIFY_DONE;
+@@ -833,7 +833,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+ 
+ 	/* enable vbus override for device mode */
+ 	if (qcom->mode == USB_DR_MODE_PERIPHERAL)
+-		dwc3_qcom_vbus_overrride_enable(qcom, true);
++		dwc3_qcom_vbus_override_enable(qcom, true);
+ 
+ 	/* register extcon to override sw_vbus on Vbus change later */
+ 	ret = dwc3_qcom_register_extcon(qcom);
 -- 
 2.39.0
 
