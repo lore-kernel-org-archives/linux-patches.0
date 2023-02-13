@@ -1,236 +1,353 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E6C08F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:57:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E947AC433D2;
-	Mon, 13 Feb 2023 14:57:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CEBE8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:57:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7FFB3C433EF;
+	Mon, 13 Feb 2023 14:57:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300243;
-	bh=Z2Bzz69Yq77/4sUTL4JztDuef8lhfC0FwsuSg/n13jw=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UCu9wHbg5E+xdc2w0ypLhECSnxgC83mcjIHPwbTwZfJgf2U3lmhpLAOuVc4k9k92M
-	 bH01Wp2qzpLnK4cUzx2Mz6lLIhWGUrrUoOm/QT40cKCXX+Ch74FfUQ7IS7tTOconjW
-	 vVchRTo70++9LYAFXi4wP3vOwDg/hCyjWRtWOS+8=
+	s=korg; t=1676300246;
+	bh=HpRbbFtXBloG7Hm9BN5tkn3i1f0dT1AYWXDOeVR0iug=;
+	h=From:To:Cc:Subject:Date:From;
+	b=iNuLMfCm610Je9gSOcx8KtXFSga3I/F2hMlExxSNJMDuTyuUPOqaH1dHU4pYe+3Ys
+	 yTLym/KOJiHK/3MpLyeVjwLPcU5rRSlLSlr7LuMMtToAVp19aWYUNpMkeB5G13uPQ7
+	 dieQ5VsCtsvXRPJ5OdhqLKPViHvZaG7VnAxvXnGg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Huang Ying <ying.huang@intel.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Christoph Lameter <cl@linux.com>,
-	David Hildenbrand <david@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	kernel test robot <lkp@intel.com>
-Subject: [PATCH 5.15 04/67] mm/migration: return errno when isolate_huge_page failed
-Date: Mon, 13 Feb 2023 15:48:45 +0100
-Message-Id: <20230213144732.533780756@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 5.15 00/67] 5.15.94-rc1 review
+Date: Mon, 13 Feb 2023 15:48:41 +0100
+Message-Id: <20230213144732.336342050@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
-References: <20230213144732.336342050@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.94-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.15.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.15.94-rc1
+X-KernelTest-Deadline: 2023-02-15T14:47+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+This is the start of the stable review cycle for the 5.15.94 release.
+There are 67 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-[ Upstream commit 7ce82f4c3f3ead13a9d9498768e3b1a79975c4d8 ]
+Responses should be made by Wed, 15 Feb 2023 14:46:51 +0000.
+Anything received after that time might be too late.
 
-We might fail to isolate huge page due to e.g.  the page is under
-migration which cleared HPageMigratable.  We should return errno in this
-case rather than always return 1 which could confuse the user, i.e.  the
-caller might think all of the memory is migrated while the hugetlb page is
-left behind.  We make the prototype of isolate_huge_page consistent with
-isolate_lru_page as suggested by Huang Ying and rename isolate_huge_page
-to isolate_hugetlb as suggested by Muchun to improve the readability.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.94-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+and the diffstat can be found below.
 
-Link: https://lkml.kernel.org/r/20220530113016.16663-4-linmiaohe@huawei.com
-Fixes: e8db67eb0ded ("mm: migrate: move_pages() supports thp migration")
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Suggested-by: Huang Ying <ying.huang@intel.com>
-Reported-by: kernel test robot <lkp@intel.com> (build error)
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Peter Xu <peterx@redhat.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 73bdf65ea748 ("migrate: hugetlb: check for hugetlb shared PMD in node migration")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- include/linux/hugetlb.h |  6 +++---
- mm/gup.c                |  2 +-
- mm/hugetlb.c            | 11 +++++------
- mm/memory-failure.c     |  2 +-
- mm/memory_hotplug.c     |  2 +-
- mm/mempolicy.c          |  2 +-
- mm/migrate.c            |  7 ++++---
- 7 files changed, 16 insertions(+), 16 deletions(-)
+thanks,
 
-diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
-index cac25ad9d643f..f98d747f983b9 100644
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -166,7 +166,7 @@ bool hugetlb_reserve_pages(struct inode *inode, long from, long to,
- 						vm_flags_t vm_flags);
- long hugetlb_unreserve_pages(struct inode *inode, long start, long end,
- 						long freed);
--bool isolate_huge_page(struct page *page, struct list_head *list);
-+int isolate_hugetlb(struct page *page, struct list_head *list);
- int get_hwpoison_huge_page(struct page *page, bool *hugetlb);
- int get_huge_page_for_hwpoison(unsigned long pfn, int flags);
- void putback_active_hugepage(struct page *page);
-@@ -354,9 +354,9 @@ static inline pte_t *huge_pte_offset(struct mm_struct *mm, unsigned long addr,
- 	return NULL;
- }
- 
--static inline bool isolate_huge_page(struct page *page, struct list_head *list)
-+static inline int isolate_hugetlb(struct page *page, struct list_head *list)
- {
--	return false;
-+	return -EBUSY;
- }
- 
- static inline int get_hwpoison_huge_page(struct page *page, bool *hugetlb)
-diff --git a/mm/gup.c b/mm/gup.c
-index 2370565a81dc3..0a1839b325747 100644
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -1877,7 +1877,7 @@ static long check_and_migrate_movable_pages(unsigned long nr_pages,
- 		 */
- 		if (!is_pinnable_page(head)) {
- 			if (PageHuge(head)) {
--				if (!isolate_huge_page(head, &movable_page_list))
-+				if (isolate_hugetlb(head, &movable_page_list))
- 					isolation_error_count++;
- 			} else {
- 				if (!PageLRU(head) && drain_allow) {
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 8599f16d4aa4f..2f5c1b2456ef2 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -2656,8 +2656,7 @@ static int alloc_and_dissolve_huge_page(struct hstate *h, struct page *old_page,
- 		 * Fail with -EBUSY if not possible.
- 		 */
- 		spin_unlock_irq(&hugetlb_lock);
--		if (!isolate_huge_page(old_page, list))
--			ret = -EBUSY;
-+		ret = isolate_hugetlb(old_page, list);
- 		spin_lock_irq(&hugetlb_lock);
- 		goto free_new;
- 	} else if (!HPageFreed(old_page)) {
-@@ -2733,7 +2732,7 @@ int isolate_or_dissolve_huge_page(struct page *page, struct list_head *list)
- 	if (hstate_is_gigantic(h))
- 		return -ENOMEM;
- 
--	if (page_count(head) && isolate_huge_page(head, list))
-+	if (page_count(head) && !isolate_hugetlb(head, list))
- 		ret = 0;
- 	else if (!page_count(head))
- 		ret = alloc_and_dissolve_huge_page(h, head, list);
-@@ -6277,15 +6276,15 @@ follow_huge_pgd(struct mm_struct *mm, unsigned long address, pgd_t *pgd, int fla
- 	return pte_page(*(pte_t *)pgd) + ((address & ~PGDIR_MASK) >> PAGE_SHIFT);
- }
- 
--bool isolate_huge_page(struct page *page, struct list_head *list)
-+int isolate_hugetlb(struct page *page, struct list_head *list)
- {
--	bool ret = true;
-+	int ret = 0;
- 
- 	spin_lock_irq(&hugetlb_lock);
- 	if (!PageHeadHuge(page) ||
- 	    !HPageMigratable(page) ||
- 	    !get_page_unless_zero(page)) {
--		ret = false;
-+		ret = -EBUSY;
- 		goto unlock;
- 	}
- 	ClearHPageMigratable(page);
-diff --git a/mm/memory-failure.c b/mm/memory-failure.c
-index 2ad0f45800916..9f9dd968fbe3c 100644
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -2106,7 +2106,7 @@ static bool isolate_page(struct page *page, struct list_head *pagelist)
- 	bool lru = PageLRU(page);
- 
- 	if (PageHuge(page)) {
--		isolated = isolate_huge_page(page, pagelist);
-+		isolated = !isolate_hugetlb(page, pagelist);
- 	} else {
- 		if (lru)
- 			isolated = !isolate_lru_page(page);
-diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
-index 9fd0be32a281e..81f2a97c886c9 100644
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -1704,7 +1704,7 @@ do_migrate_range(unsigned long start_pfn, unsigned long end_pfn)
- 
- 		if (PageHuge(page)) {
- 			pfn = page_to_pfn(head) + compound_nr(head) - 1;
--			isolate_huge_page(head, &source);
-+			isolate_hugetlb(head, &source);
- 			continue;
- 		} else if (PageTransHuge(page))
- 			pfn = page_to_pfn(head) + thp_nr_pages(page) - 1;
-diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index 4472be6f123db..8687781b41c96 100644
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -604,7 +604,7 @@ static int queue_pages_hugetlb(pte_t *pte, unsigned long hmask,
- 	/* With MPOL_MF_MOVE, we migrate only unshared hugepage. */
- 	if (flags & (MPOL_MF_MOVE_ALL) ||
- 	    (flags & MPOL_MF_MOVE && page_mapcount(page) == 1)) {
--		if (!isolate_huge_page(page, qp->pagelist) &&
-+		if (isolate_hugetlb(page, qp->pagelist) &&
- 			(flags & MPOL_MF_STRICT))
- 			/*
- 			 * Failed to isolate page but allow migrating pages
-diff --git a/mm/migrate.c b/mm/migrate.c
-index 7da052c6cf1ea..dd50b1cc089e0 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -134,7 +134,7 @@ static void putback_movable_page(struct page *page)
-  *
-  * This function shall be used whenever the isolated pageset has been
-  * built from lru, balloon, hugetlbfs page. See isolate_migratepages_range()
-- * and isolate_huge_page().
-+ * and isolate_hugetlb().
-  */
- void putback_movable_pages(struct list_head *l)
- {
-@@ -1722,8 +1722,9 @@ static int add_page_for_migration(struct mm_struct *mm, unsigned long addr,
- 
- 	if (PageHuge(page)) {
- 		if (PageHead(page)) {
--			isolate_huge_page(page, pagelist);
--			err = 1;
-+			err = isolate_hugetlb(page, pagelist);
-+			if (!err)
-+				err = 1;
- 		}
- 	} else {
- 		struct page *head;
--- 
-2.39.0
+greg k-h
 
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.15.94-rc1
+
+Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+    nvmem: core: fix return value
+
+Ville Syrjälä <ville.syrjala@linux.intel.com>
+    drm/i915: Fix VBT DSI DVO port handling
+
+Aravind Iddamsetty <aravind.iddamsetty@intel.com>
+    drm/i915: Initialize the obj flags for shmem objects
+
+Guilherme G. Piccoli <gpiccoli@igalia.com>
+    drm/amdgpu/fence: Fix oops due to non-matching drm_sched init/fini
+
+David Chen <david.chen@nutanix.com>
+    Fix page corruption caused by racy check in __free_pages
+
+Heiner Kallweit <hkallweit1@gmail.com>
+    arm64: dts: meson-axg: Make mmc host controller interrupts level-sensitive
+
+Heiner Kallweit <hkallweit1@gmail.com>
+    arm64: dts: meson-g12-common: Make mmc host controller interrupts level-sensitive
+
+Heiner Kallweit <hkallweit1@gmail.com>
+    arm64: dts: meson-gx: Make mmc host controller interrupts level-sensitive
+
+Wander Lairson Costa <wander@redhat.com>
+    rtmutex: Ensure that the top waiter is always woken up
+
+Nicholas Piggin <npiggin@gmail.com>
+    powerpc/64s/interrupt: Fix interrupt exit race with security mitigation switch
+
+Guo Ren <guoren@linux.alibaba.com>
+    riscv: Fixup race condition on PG_dcache_clean in flush_icache_pte
+
+Xiubo Li <xiubli@redhat.com>
+    ceph: flush cap releases when the session is flushed
+
+Paul Cercueil <paul@crapouillou.net>
+    clk: ingenic: jz4760: Update M/N/OD calculation algorithm
+
+Prashant Malani <pmalani@chromium.org>
+    usb: typec: altmodes/displayport: Fix probe pin assign check
+
+Mark Pearson <mpearson-lenovo@squebb.ca>
+    usb: core: add quirk for Alcor Link AK9563 smartcard reader
+
+Anand Jain <anand.jain@oracle.com>
+    btrfs: free device in btrfs_close_devices for a single device filesystem
+
+Paolo Abeni <pabeni@redhat.com>
+    mptcp: be careful on subflow status propagation on errors
+
+Alan Stern <stern@rowland.harvard.edu>
+    net: USB: Fix wrong-direction WARNING in plusb.c
+
+ZhaoLong Wang <wangzhaolong1@huawei.com>
+    cifs: Fix use-after-free in rdata->read_into_pages()
+
+Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+    pinctrl: intel: Restore the pins that used to be in Direct IRQ mode
+
+Serge Semin <Sergey.Semin@baikalelectronics.ru>
+    spi: dw: Fix wrong FIFO level setting for long xfers
+
+Maxim Korotkov <korotkov.maxim.s@gmail.com>
+    pinctrl: single: fix potential NULL dereference
+
+Joel Stanley <joel@jms.id.au>
+    pinctrl: aspeed: Fix confusing types in return value
+
+Guodong Liu <Guodong.Liu@mediatek.com>
+    pinctrl: mediatek: Fix the drive register definition of some Pins
+
+Amadeusz Sławiński <amadeuszx.slawinski@linux.intel.com>
+    ASoC: topology: Return -ENOMEM on memory allocation failure
+
+Liu Shixin <liushixin2@huawei.com>
+    riscv: stacktrace: Fix missing the first frame
+
+Dan Carpenter <error27@gmail.com>
+    ALSA: pci: lx6464es: fix a debug loop
+
+Hangbin Liu <liuhangbin@gmail.com>
+    selftests: forwarding: lib: quote the sysctl values
+
+Pietro Borrello <borrello@diag.uniroma1.it>
+    rds: rds_rm_zerocopy_callback() use list_first_entry()
+
+Sasha Neftin <sasha.neftin@intel.com>
+    igc: Add ndo_tx_timeout support
+
+Shay Drory <shayd@nvidia.com>
+    net/mlx5: Serialize module cleanup with reload and remove
+
+Shay Drory <shayd@nvidia.com>
+    net/mlx5: fw_tracer, Zero consumer index when reloading the tracer
+
+Shay Drory <shayd@nvidia.com>
+    net/mlx5: fw_tracer, Clear load bit when freeing string DBs buffers
+
+Dragos Tatulea <dtatulea@nvidia.com>
+    net/mlx5e: IPoIB, Show unknown speed instead of error
+
+Vlad Buslov <vladbu@nvidia.com>
+    net/mlx5: Bridge, fix ageing of peer FDB entries
+
+Adham Faris <afaris@nvidia.com>
+    net/mlx5e: Update rx ring hw mtu upon each rx-fcs flag change
+
+Maxim Mikityanskiy <maximmi@nvidia.com>
+    net/mlx5e: Introduce the mlx5e_flush_rq function
+
+Maxim Mikityanskiy <maximmi@nvidia.com>
+    net/mlx5e: Move repeating clear_bit in mlx5e_rx_reporter_err_rq_cqe_recover
+
+Vladimir Oltean <vladimir.oltean@nxp.com>
+    net: mscc: ocelot: fix VCAP filters not matching on MAC with "protocol 802.1Q"
+
+Vladimir Oltean <vladimir.oltean@nxp.com>
+    net: dsa: mt7530: don't change PVC_EG_TAG when CPU port becomes VLAN-aware
+
+Anirudh Venkataramanan <anirudh.venkataramanan@intel.com>
+    ice: Do not use WQ_MEM_RECLAIM flag for workqueue
+
+Herton R. Krzesinski <herton@redhat.com>
+    uapi: add missing ip/ipv6 header dependencies for linux/stddef.h
+
+Neel Patel <neel.patel@amd.com>
+    ionic: clean interrupt before enabling queue to avoid credit race
+
+Heiner Kallweit <hkallweit1@gmail.com>
+    net: phy: meson-gxl: use MMD access dummy stubs for GXL, internal PHY
+
+Qi Zheng <zhengqi.arch@bytedance.com>
+    bonding: fix error checking in bond_debug_reregister()
+
+Clément Léger <clement.leger@bootlin.com>
+    net: phylink: move phy_device_free() to correctly release phy device
+
+Christian Hopps <chopps@chopps.org>
+    xfrm: fix bug with DSCP copy to v6 from v4 tunnel
+
+Yang Yingliang <yangyingliang@huawei.com>
+    RDMA/usnic: use iommu_map_atomic() under spin_lock()
+
+Nikita Zhandarovich <n.zhandarovich@fintech.ru>
+    RDMA/irdma: Fix potential NULL-ptr-dereference
+
+Dragos Tatulea <dtatulea@nvidia.com>
+    IB/IPoIB: Fix legacy IPoIB due to wrong number of queues
+
+Eric Dumazet <edumazet@google.com>
+    xfrm/compat: prevent potential spectre v1 gadget in xfrm_xlate32_attr()
+
+Dean Luick <dean.luick@cornelisnetworks.com>
+    IB/hfi1: Restore allocated resources on failed copyout
+
+Anastasia Belova <abelova@astralinux.ru>
+    xfrm: compat: change expression for switch in xfrm_xlate64
+
+Devid Antonio Filoni <devid.filoni@egluetechnologies.com>
+    can: j1939: do not wait 250 ms if the same addr was already claimed
+
+Mark Brown <broonie@kernel.org>
+    of/address: Return an error when no valid dma-ranges are found
+
+Shiju Jose <shiju.jose@huawei.com>
+    tracing: Fix poll() and select() do not work on per_cpu trace_pipe and trace_pipe_raw
+
+Elvis Angelaccio <elvis.angelaccio@kde.org>
+    ALSA: hda/realtek: Enable mute/micmute LEDs on HP Elitebook, 645 G9
+
+Guillaume Pinot <texitoi@texitoi.eu>
+    ALSA: hda/realtek: Fix the speaker output on Samsung Galaxy Book2 Pro 360
+
+Artemii Karasev <karasev@ispras.ru>
+    ALSA: emux: Avoid potential array out-of-bound in snd_emux_xg_control()
+
+Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+    ALSA: hda/realtek: Add Positivo N14KP6-TG
+
+Alexander Potapenko <glider@google.com>
+    btrfs: zlib: zero-initialize zlib workspace
+
+Josef Bacik <josef@toxicpanda.com>
+    btrfs: limit device extents to the device size
+
+Mike Kravetz <mike.kravetz@oracle.com>
+    migrate: hugetlb: check for hugetlb shared PMD in node migration
+
+Miaohe Lin <linmiaohe@huawei.com>
+    mm/migration: return errno when isolate_huge_page failed
+
+Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+    nvmem: core: fix registration vs use race
+
+Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+    nvmem: core: fix cleanup after dev_set_name()
+
+Gaosheng Cui <cuigaosheng1@huawei.com>
+    nvmem: core: add error handling for dev_set_name
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |  4 +-
+ arch/arm64/boot/dts/amlogic/meson-axg.dtsi         |  4 +-
+ arch/arm64/boot/dts/amlogic/meson-g12-common.dtsi  |  6 +-
+ arch/arm64/boot/dts/amlogic/meson-gx.dtsi          |  6 +-
+ arch/powerpc/kernel/interrupt.c                    |  6 +-
+ arch/riscv/kernel/stacktrace.c                     |  3 +-
+ arch/riscv/mm/cacheflush.c                         |  4 +-
+ drivers/clk/ingenic/jz4760-cgu.c                   | 18 ++--
+ drivers/gpu/drm/amd/amdgpu/amdgpu_fence.c          |  8 +-
+ drivers/gpu/drm/i915/display/intel_bios.c          | 33 +++++---
+ drivers/gpu/drm/i915/gem/i915_gem_shmem.c          |  2 +-
+ drivers/infiniband/hw/hfi1/file_ops.c              |  7 +-
+ drivers/infiniband/hw/irdma/cm.c                   |  3 +
+ drivers/infiniband/hw/usnic/usnic_uiom.c           |  8 +-
+ drivers/infiniband/ulp/ipoib/ipoib_main.c          |  8 ++
+ drivers/net/bonding/bond_debugfs.c                 |  2 +-
+ drivers/net/dsa/mt7530.c                           | 26 ++++--
+ drivers/net/ethernet/intel/ice/ice_main.c          |  2 +-
+ drivers/net/ethernet/intel/igc/igc_main.c          | 25 +++++-
+ .../ethernet/mellanox/mlx5/core/diag/fw_tracer.c   |  3 +-
+ drivers/net/ethernet/mellanox/mlx5/core/en.h       |  2 +-
+ .../ethernet/mellanox/mlx5/core/en/rep/bridge.c    |  4 -
+ .../ethernet/mellanox/mlx5/core/en/reporter_rx.c   | 30 +------
+ drivers/net/ethernet/mellanox/mlx5/core/en_main.c  | 98 ++++++++--------------
+ .../net/ethernet/mellanox/mlx5/core/esw/bridge.c   |  2 +-
+ .../ethernet/mellanox/mlx5/core/ipoib/ethtool.c    | 13 ++-
+ drivers/net/ethernet/mellanox/mlx5/core/main.c     | 14 ++--
+ drivers/net/ethernet/mscc/ocelot_flower.c          | 24 +++---
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c    | 15 +++-
+ drivers/net/phy/meson-gxl.c                        |  2 +
+ drivers/net/phy/phylink.c                          |  5 +-
+ drivers/net/usb/plusb.c                            |  4 +-
+ drivers/nvmem/core.c                               | 41 ++++-----
+ drivers/of/address.c                               | 21 +++--
+ drivers/pinctrl/aspeed/pinctrl-aspeed.c            |  2 +-
+ drivers/pinctrl/intel/pinctrl-intel.c              | 16 +++-
+ drivers/pinctrl/mediatek/pinctrl-mt8195.c          |  4 +-
+ drivers/pinctrl/pinctrl-single.c                   |  2 +
+ drivers/spi/spi-dw-core.c                          |  2 +-
+ drivers/usb/core/quirks.c                          |  3 +
+ drivers/usb/typec/altmodes/displayport.c           |  8 +-
+ fs/btrfs/volumes.c                                 | 22 ++++-
+ fs/btrfs/zlib.c                                    |  2 +-
+ fs/ceph/mds_client.c                               |  6 ++
+ fs/cifs/file.c                                     |  4 +-
+ include/linux/hugetlb.h                            |  6 +-
+ include/uapi/linux/ip.h                            |  1 +
+ include/uapi/linux/ipv6.h                          |  1 +
+ kernel/locking/rtmutex.c                           |  5 +-
+ kernel/trace/trace.c                               |  3 -
+ mm/gup.c                                           |  2 +-
+ mm/hugetlb.c                                       | 11 ++-
+ mm/memory-failure.c                                |  2 +-
+ mm/memory_hotplug.c                                |  2 +-
+ mm/mempolicy.c                                     |  5 +-
+ mm/migrate.c                                       |  7 +-
+ mm/page_alloc.c                                    |  5 +-
+ net/can/j1939/address-claim.c                      | 40 +++++++++
+ net/mptcp/subflow.c                                | 10 ++-
+ net/rds/message.c                                  |  6 +-
+ net/xfrm/xfrm_compat.c                             |  4 +-
+ net/xfrm/xfrm_input.c                              |  3 +-
+ sound/pci/hda/patch_realtek.c                      |  3 +
+ sound/pci/lx6464es/lx_core.c                       | 11 ++-
+ sound/soc/soc-topology.c                           |  8 +-
+ sound/synth/emux/emux_nrpn.c                       |  3 +
+ tools/testing/selftests/net/forwarding/lib.sh      |  4 +-
+ 67 files changed, 398 insertions(+), 268 deletions(-)
 
 
