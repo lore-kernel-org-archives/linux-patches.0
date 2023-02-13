@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A0748F58
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:05:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B51D7C4339B;
-	Mon, 13 Feb 2023 15:05:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7EBB8F58
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:05:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58355C433EF;
+	Mon, 13 Feb 2023 15:05:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300731;
-	bh=/aWwNfyOMzjChDgrqbft5LPepNjtNvhc3kebMgw7Sco=;
+	s=korg; t=1676300733;
+	bh=LiXL31F/8WWpWpMRndi9nRo3ujOw/bNaXdYzMYNfo54=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2hwFNaagFKPZQCjo9V5YhjwhMS/eXu27A6oPSDA0KP6hInZN/zm0VmAzb98tVj8ru
-	 ZTMknhyCJ+vGwz5XizqoYNjZj5MD5466sD3mDf9SBdEVI6OF1BbSLO82kPGN2gh9G/
-	 6HlE6PxuJOiAy66/JYRLWQSs0jznRmqY8YicnGPs=
+	b=zEmksRJXNEiotmrdCTnESOuMiBXnImr9GbyozGmMEuChuqIJpZ8+FagsGqRRIjS/3
+	 5ubvBsm/Cpq3YhFbgts7OwOtU3H0gBkwlTCnr5YPZDonX3B2yNoGUNWX6S7wYuDHxd
+	 F6+0vw6DeHMARvgmVt8RlskCXZI8xK31SAKNBVl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Nazarov <Sergey.Nazarov@baikalelectronics.ru>,
-	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 126/139] spi: dw: Fix wrong FIFO level setting for long xfers
-Date: Mon, 13 Feb 2023 15:51:11 +0100
-Message-Id: <20230213144752.587855280@linuxfoundation.org>
+	Edson Juliano Drosdeck <edson.drosdeck@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 100/139] ALSA: hda/realtek: Add Positivo N14KP6-TG
+Date: Mon, 13 Feb 2023 15:50:45 +0100
+Message-Id: <20230213144751.126475171@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -37,47 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+From: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
 
-[ Upstream commit c63b8fd14a7db719f8252038a790638728c4eb66 ]
+commit 88d18b8896bd98e636b632f805b7e84e61458255 upstream.
 
-Due to using the u16 type in the min_t() macros the SPI transfer length
-will be cast to word before participating in the conditional statement
-implied by the macro. Thus if the transfer length is greater than 64KB the
-Tx/Rx FIFO threshold level value will be determined by the leftover of the
-truncated after the type-case length. In the worst case it will cause the
-dramatical performance drop due to the "Tx FIFO Empty" or "Rx FIFO Full"
-interrupts triggered on each xfer word sent/received to/from the bus.
+Positivo N14KP6-TG (1c6c:1251)
+require quirk for enabling headset-mic
 
-The problem can be easily fixed by specifying the unsigned int type in the
-min_t() macros thus preventing the possible data loss.
-
-Fixes: ea11370fffdf ("spi: dw: get TX level without an additional variable")
-Reported-by: Sergey Nazarov <Sergey.Nazarov@baikalelectronics.ru>
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230113185942.2516-1-Sergey.Semin@baikalelectronics.ru
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Edson Juliano Drosdeck <edson.drosdeck@gmail.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230207183720.2519-1-edson.drosdeck@gmail.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-dw-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/spi/spi-dw-core.c b/drivers/spi/spi-dw-core.c
-index c33866f747dbe..aa116cee1fd8d 100644
---- a/drivers/spi/spi-dw-core.c
-+++ b/drivers/spi/spi-dw-core.c
-@@ -353,7 +353,7 @@ static void dw_spi_irq_setup(struct dw_spi *dws)
- 	 * will be adjusted at the final stage of the IRQ-based SPI transfer
- 	 * execution so not to lose the leftover of the incoming data.
- 	 */
--	level = min_t(u16, dws->fifo_len / 2, dws->tx_len);
-+	level = min_t(unsigned int, dws->fifo_len / 2, dws->tx_len);
- 	dw_writel(dws, DW_SPI_TXFTLR, level);
- 	dw_writel(dws, DW_SPI_RXFTLR, level - 1);
- 
--- 
-2.39.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9261,6 +9261,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x1b7d, 0xa831, "Ordissimo EVE2 ", ALC269VB_FIXUP_ORDISSIMO_EVE2), /* Also known as Malata PC-B1303 */
+ 	SND_PCI_QUIRK(0x1c06, 0x2013, "Lemote A1802", ALC269_FIXUP_LEMOTE_A1802),
+ 	SND_PCI_QUIRK(0x1c06, 0x2015, "Lemote A190X", ALC269_FIXUP_LEMOTE_A190X),
++	SND_PCI_QUIRK(0x1c6c, 0x1251, "Positivo N14KP6-TG", ALC288_FIXUP_DELL1_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1d05, 0x1132, "TongFang PHxTxX1", ALC256_FIXUP_SET_COEF_DEFAULTS),
+ 	SND_PCI_QUIRK(0x1d05, 0x1096, "TongFang GMxMRxx", ALC269_FIXUP_NO_SHUTUP),
+ 	SND_PCI_QUIRK(0x1d05, 0x1100, "TongFang GKxNRxx", ALC269_FIXUP_NO_SHUTUP),
 
 
