@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F1CF8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:00:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89AD7C433D2;
-	Mon, 13 Feb 2023 15:00:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99A48F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:00:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B6E7C433EF;
+	Mon, 13 Feb 2023 15:00:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300417;
-	bh=cJM5IBJ/p1rCrGqS+Sbe9IlFlpBfCSXEhD0W5cDRQzs=;
+	s=korg; t=1676300420;
+	bh=XXTKGH8M/OwP3Kl+fuwdhe76Hjlg+Oj8MDhYKHugdlM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0BeI85ZKx0bZTRRG2CZ9osLAtgHjVcbfKklaxL2ZNfr+h6NoVQq7UG2nHFyhPfFoz
-	 8EsxMymnVkU1pogt1k5ZQ4sIxnwHnzd++13M1jWlSBgZjEY9l5DHM49w2IszNcdlZ4
-	 8EEGksU9OIDU5853eM/hk0D9AOw8dahnOIJB1x70=
+	b=rIrMMaX8qDNm+WLmkNwaybpiY5KGrHBxxE+LrserTkQ6XmUr2XfMR54UWuDutIZtM
+	 i5VFkoGWtUgaydaiMMMGuu0kHSF4OUpBJJMcVftVL/2YqXk0uUpwoMgsRQiAiYjn1B
+	 7CbEfpw3dk2yIjZJy86IhFlS/0aEkzfnR4xNJhEY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Suti <peter.suti@streamunlimited.com>,
-	Vyacheslav Bocharov <adeep@lexina.in>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 5.15 62/67] arm64: dts: meson-axg: Make mmc host controller interrupts level-sensitive
-Date: Mon, 13 Feb 2023 15:49:43 +0100
-Message-Id: <20230213144735.351417836@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [PATCH 5.15 67/67] nvmem: core: fix return value
+Date: Mon, 13 Feb 2023 15:49:48 +0100
+Message-Id: <20230213144735.602745645@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -36,51 +36,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-commit d182bcf300772d8b2e5f43e47fa0ebda2b767cc4 upstream.
+commit 0c4862b1c1465e473bc961a02765490578bf5c20 upstream.
 
-The usage of edge-triggered interrupts lead to lost interrupts under load,
-see [0]. This was confirmed to be fixed by using level-triggered
-interrupts.
-The report was about SDIO. However, as the host controller is the same
-for SD and MMC, apply the change to all mmc controller instances.
+Dan Carpenter points out that the return code was not set in commit
+60c8b4aebd8e ("nvmem: core: fix cleanup after dev_set_name()"), but
+this is not the only issue - we also need to zero wp_gpio to prevent
+gpiod_put() being called on an error value.
 
-[0] https://www.spinics.net/lists/linux-mmc/msg73991.html
-
-Fixes: 221cf34bac54 ("ARM64: dts: meson-axg: enable the eMMC controller")
-Reported-by: Peter Suti <peter.suti@streamunlimited.com>
-Tested-by: Vyacheslav Bocharov <adeep@lexina.in>
-Tested-by: Peter Suti <peter.suti@streamunlimited.com>
+Fixes: 560181d3ace6 ("nvmem: core: fix cleanup after dev_set_name()")
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/c00655d3-02f8-6f5f-4239-ca2412420cad@gmail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230127104015.23839-10-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-axg.dtsi |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvmem/core.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-@@ -1885,7 +1885,7 @@
- 			sd_emmc_b: sd@5000 {
- 				compatible = "amlogic,meson-axg-mmc";
- 				reg = <0x0 0x5000 0x0 0x800>;
--				interrupts = <GIC_SPI 217 IRQ_TYPE_EDGE_RISING>;
-+				interrupts = <GIC_SPI 217 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 				clocks = <&clkc CLKID_SD_EMMC_B>,
- 					<&clkc CLKID_SD_EMMC_B_CLK0>,
-@@ -1897,7 +1897,7 @@
- 			sd_emmc_c: mmc@7000 {
- 				compatible = "amlogic,meson-axg-mmc";
- 				reg = <0x0 0x7000 0x0 0x800>;
--				interrupts = <GIC_SPI 218 IRQ_TYPE_EDGE_RISING>;
-+				interrupts = <GIC_SPI 218 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 				clocks = <&clkc CLKID_SD_EMMC_C>,
- 					<&clkc CLKID_SD_EMMC_C_CLK0>,
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -779,6 +779,7 @@ struct nvmem_device *nvmem_register(cons
+ 						    GPIOD_OUT_HIGH);
+ 	if (IS_ERR(nvmem->wp_gpio)) {
+ 		rval = PTR_ERR(nvmem->wp_gpio);
++		nvmem->wp_gpio = NULL;
+ 		goto err_put_device;
+ 	}
+ 
 
 
