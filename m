@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F41D28F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:59:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79F9BC433D2;
-	Mon, 13 Feb 2023 14:59:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE5F98F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:59:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44AFCC4339B;
+	Mon, 13 Feb 2023 14:59:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300364;
-	bh=mPBJ/ae8xZp0gVzYUwDu+Giinu8gHSQQz0no98AnQgU=;
+	s=korg; t=1676300367;
+	bh=gGrkoPG7eZlzk4P8vCjgfEw0jxjGzIy17upITtw5/vE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LyiQTPRXwuKtvtrBjYDZYp3Qw6dXIpaDIJzeCSuF9GGEORwXBNjVixn83gdNqyi6w
-	 y0yuIfbPtznPBgDJBK7z3/hAwQDhgklBI8NfHK02oO+aDzUulGoPo643tKUDBocL1m
-	 7/5LbIAN1x06LMkUy1Z0J4AeHeNdBJ6OpjsdBl2s=
+	b=rIs8pTIBBmPLVH0lAQXLYeDEFC9ksFSzS0uZJFVbydtqYKm77yO1wJ0Mcry9xBDpN
+	 JSNvbqnIm89cl25FsWrHdA/z/2LRBE5oOeAcv71JdABMWcvRoUSdRE0XdR3THqfBEA
+	 FU3nlN7teP6o34sCDyCYJDpKtPvwbTlttDf8GZP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sergey Nazarov <Sergey.Nazarov@baikalelectronics.ru>,
-	Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 47/67] spi: dw: Fix wrong FIFO level setting for long xfers
-Date: Mon, 13 Feb 2023 15:49:28 +0100
-Message-Id: <20230213144734.579471956@linuxfoundation.org>
+	Daan De Meyer <daandemeyer@fb.com>,
+	Josef Bacik <josef@toxicpanda.com>,
+	Anand Jain <anand.jain@oracle.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 5.15 52/67] btrfs: free device in btrfs_close_devices for a single device filesystem
+Date: Mon, 13 Feb 2023 15:49:33 +0100
+Message-Id: <20230213144734.861686734@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -37,47 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+From: Anand Jain <anand.jain@oracle.com>
 
-[ Upstream commit c63b8fd14a7db719f8252038a790638728c4eb66 ]
+commit 5f58d783fd7823b2c2d5954d1126e702f94bfc4c upstream.
 
-Due to using the u16 type in the min_t() macros the SPI transfer length
-will be cast to word before participating in the conditional statement
-implied by the macro. Thus if the transfer length is greater than 64KB the
-Tx/Rx FIFO threshold level value will be determined by the leftover of the
-truncated after the type-case length. In the worst case it will cause the
-dramatical performance drop due to the "Tx FIFO Empty" or "Rx FIFO Full"
-interrupts triggered on each xfer word sent/received to/from the bus.
+We have this check to make sure we don't accidentally add older devices
+that may have disappeared and re-appeared with an older generation from
+being added to an fs_devices (such as a replace source device). This
+makes sense, we don't want stale disks in our file system. However for
+single disks this doesn't really make sense.
 
-The problem can be easily fixed by specifying the unsigned int type in the
-min_t() macros thus preventing the possible data loss.
+I've seen this in testing, but I was provided a reproducer from a
+project that builds btrfs images on loopback devices. The loopback
+device gets cached with the new generation, and then if it is re-used to
+generate a new file system we'll fail to mount it because the new fs is
+"older" than what we have in cache.
 
-Fixes: ea11370fffdf ("spi: dw: get TX level without an additional variable")
-Reported-by: Sergey Nazarov <Sergey.Nazarov@baikalelectronics.ru>
-Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Link: https://lore.kernel.org/r/20230113185942.2516-1-Sergey.Semin@baikalelectronics.ru
-Signed-off-by: Mark Brown <broonie@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fix this by freeing the cache when closing the device for a single device
+filesystem. This will ensure that the mount command passed device path is
+scanned successfully during the next mount.
+
+CC: stable@vger.kernel.org # 5.10+
+Reported-by: Daan De Meyer <daandemeyer@fb.com>
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: Anand Jain <anand.jain@oracle.com>
+Reviewed-by: David Sterba <dsterba@suse.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/spi/spi-dw-core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/volumes.c |   16 +++++++++++++++-
+ 1 file changed, 15 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/spi/spi-dw-core.c b/drivers/spi/spi-dw-core.c
-index a305074c482e8..59e22c6b4b201 100644
---- a/drivers/spi/spi-dw-core.c
-+++ b/drivers/spi/spi-dw-core.c
-@@ -357,7 +357,7 @@ static void dw_spi_irq_setup(struct dw_spi *dws)
- 	 * will be adjusted at the final stage of the IRQ-based SPI transfer
- 	 * execution so not to lose the leftover of the incoming data.
- 	 */
--	level = min_t(u16, dws->fifo_len / 2, dws->tx_len);
-+	level = min_t(unsigned int, dws->fifo_len / 2, dws->tx_len);
- 	dw_writel(dws, DW_SPI_TXFTLR, level);
- 	dw_writel(dws, DW_SPI_RXFTLR, level - 1);
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -409,6 +409,7 @@ void btrfs_free_device(struct btrfs_devi
+ static void free_fs_devices(struct btrfs_fs_devices *fs_devices)
+ {
+ 	struct btrfs_device *device;
++
+ 	WARN_ON(fs_devices->opened);
+ 	while (!list_empty(&fs_devices->devices)) {
+ 		device = list_entry(fs_devices->devices.next,
+@@ -1221,9 +1222,22 @@ void btrfs_close_devices(struct btrfs_fs
  
--- 
-2.39.0
-
+ 	mutex_lock(&uuid_mutex);
+ 	close_fs_devices(fs_devices);
+-	if (!fs_devices->opened)
++	if (!fs_devices->opened) {
+ 		list_splice_init(&fs_devices->seed_list, &list);
+ 
++		/*
++		 * If the struct btrfs_fs_devices is not assembled with any
++		 * other device, it can be re-initialized during the next mount
++		 * without the needing device-scan step. Therefore, it can be
++		 * fully freed.
++		 */
++		if (fs_devices->num_devices == 1) {
++			list_del(&fs_devices->fs_list);
++			free_fs_devices(fs_devices);
++		}
++	}
++
++
+ 	list_for_each_entry_safe(fs_devices, tmp, &list, seed_list) {
+ 		close_fs_devices(fs_devices);
+ 		list_del(&fs_devices->seed_list);
 
 
