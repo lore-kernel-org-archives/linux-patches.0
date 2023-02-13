@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE9ED8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:02:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54476C4339B;
-	Mon, 13 Feb 2023 15:02:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6714F8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:02:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF776C433EF;
+	Mon, 13 Feb 2023 15:02:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300523;
-	bh=xm+RTfCGslX5k8R/88Gsgop2I4G/V+3XxYNjVYGvIZ8=;
+	s=korg; t=1676300526;
+	bh=nOc4u7D8CJfgZJ0zWGiCyCS5aVR2eYayZBXM2A5xPP0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Kt7laihzxcwWFpsmu8WBn0b5/A8RPDtida+VMIRFQW5BstlRpd/XhbM6w5lSHmkbg
-	 kMrahlOLdG8nFrMpn04JFI85N/8L5STIUO+Wx2JYceTl7G/N09R4HfD0q9LjF8h5s7
-	 OdOvVhOvql6w+n90MF29oOGXTp0B36TZWnEiuFmw=
+	b=mmEfLPxF+5cLmS4nfoxHqwlQkGoIPmXQijQLExyj2HPEGd5iFHgHIVF0LjuoSME0U
+	 Zrhdoci8SraaxmaMb8v/+29mZaxL7fnx+uZM9DH4h23d+gybtYDkZODesU71eo/q06
+	 aKdKFqACiiT5NOMEHqwqiC2FkiecTEcl8IAIqrmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Neil Armstrong <neil.armstrong@linaro.org>,
+	John Keeping <john@metanate.com>,
+	Udipto Goswami <quic_ugoswami@quicinc.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 047/139] usb: dwc3: qcom: enable vbus override when in OTG dr-mode
-Date: Mon, 13 Feb 2023 15:49:52 +0100
-Message-Id: <20230213144748.188028223@linuxfoundation.org>
+Subject: [PATCH 5.10 048/139] usb: gadget: f_fs: Fix unbalanced spinlock in __ffs_ep0_queue_wait
+Date: Mon, 13 Feb 2023 15:49:53 +0100
+Message-Id: <20230213144748.234638992@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -35,37 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Neil Armstrong <neil.armstrong@linaro.org>
+From: Udipto Goswami <quic_ugoswami@quicinc.com>
 
-[ Upstream commit eb320f76e31dc835b9f57f04af1a2353b13bb7d8 ]
+[ Upstream commit 921deb9da15851425ccbb6ee409dc2fd8fbdfe6b ]
 
-With vbus override enabled when in OTG dr_mode, Host<->Peripheral
-switch now works on SM8550, otherwise the DWC3 seems to be stuck
-in Host mode only.
+__ffs_ep0_queue_wait executes holding the spinlock of &ffs->ev.waitq.lock
+and unlocks it after the assignments to usb_request are done.
+However in the code if the request is already NULL we bail out returning
+-EINVAL but never unlocked the spinlock.
 
-Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
-Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/20230123-topic-sm8550-upstream-dwc3-qcom-otg-v2-1-2d400e598463@linaro.org
+Fix this by adding spin_unlock_irq &ffs->ev.waitq.lock before returning.
+
+Fixes: 6a19da111057 ("usb: gadget: f_fs: Prevent race during ffs_ep0_queue_wait")
+Reviewed-by: John Keeping <john@metanate.com>
+Signed-off-by: Udipto Goswami <quic_ugoswami@quicinc.com>
+Link: https://lore.kernel.org/r/20230124091149.18647-1-quic_ugoswami@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/usb/gadget/function/f_fs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index c2662e3a5b84..dac13fe97811 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -832,7 +832,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 	qcom->mode = usb_get_dr_mode(&qcom->dwc3->dev);
+diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
+index 94000fd190e5..8c48c9f801be 100644
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -278,8 +278,10 @@ static int __ffs_ep0_queue_wait(struct ffs_data *ffs, char *data, size_t len)
+ 	struct usb_request *req = ffs->ep0req;
+ 	int ret;
  
- 	/* enable vbus override for device mode */
--	if (qcom->mode == USB_DR_MODE_PERIPHERAL)
-+	if (qcom->mode != USB_DR_MODE_HOST)
- 		dwc3_qcom_vbus_override_enable(qcom, true);
+-	if (!req)
++	if (!req) {
++		spin_unlock_irq(&ffs->ev.waitq.lock);
+ 		return -EINVAL;
++	}
  
- 	/* register extcon to override sw_vbus on Vbus change later */
+ 	req->zero     = len < le16_to_cpu(ffs->ev.setup.wLength);
+ 
 -- 
 2.39.0
 
