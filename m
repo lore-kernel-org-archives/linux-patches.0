@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5AF8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:01:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F3B2C433EF;
-	Mon, 13 Feb 2023 15:01:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 750318F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:01:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EED55C433D2;
+	Mon, 13 Feb 2023 15:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300466;
-	bh=+hoUKtyQQs93+XIhEBfSYCitFULRI/YKwOtWvZUUf2I=;
+	s=korg; t=1676300469;
+	bh=m+TNEsz8dbJ0d15DKk4YxJBuspM3Jw4BWIo5z3wKX5E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fYndZaIAdfm0rQuiN8LaEV6kYxHzUO3fdrIBBvd1Jb6+XQB1C18K5QGm8WJpL2BUb
-	 8VyNaiSI4N7+AP3nTP2+Ei87YoX8exS43MS+FKB2AD93JcLVucAdDu/RiqnDVfKAQD
-	 H7jcsUFbOBAHSHXP+qrseizXY2/vEkoKEGBmzPWo=
+	b=UDw653z6oOMlPxRvLoLmPUwHQZlRbzsqtO7N4CRPcLrHRSv4ViNktUHSF0NcUj1yE
+	 uSaL3qiedQ/vSd/e7uTGcweBtfU+sGv+xtl55bXOPwbh3v7IB84fo4Dr/vG7QNMP20
+	 kYbYBAuBob8EAZwQY0E2v4grhfl/EQ2AmKHNg6Rc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christophe Leroy <christophe.leroy@csgroup.eu>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	syzbot+082fa4af80a5bb1a9843@syzkaller.appspotmail.com,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 007/139] powerpc/bpf: Change register numbering for bpf_set/is_seen_register()
-Date: Mon, 13 Feb 2023 15:49:12 +0100
-Message-Id: <20230213144746.063364820@linuxfoundation.org>
+Subject: [PATCH 5.10 025/139] squashfs: harden sanity check in squashfs_read_xattr_id_table
+Date: Mon, 13 Feb 2023 15:49:30 +0100
+Message-Id: <20230213144746.974747059@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -35,86 +38,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christophe Leroy <christophe.leroy@csgroup.eu>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit ed573b57e77a7860fe4026e1700faa2f6938caf1 ]
+[ Upstream commit 72e544b1b28325fe78a4687b980871a7e4101f76 ]
 
-Instead of using BPF register number as input in functions
-bpf_set_seen_register() and bpf_is_seen_register(), use
-CPU register number directly.
+While mounting a corrupted filesystem, a signed integer '*xattr_ids' can
+become less than zero.  This leads to the incorrect computation of 'len'
+and 'indexes' values which can cause null-ptr-deref in copy_bio_to_actor()
+or out-of-bounds accesses in the next sanity checks inside
+squashfs_read_xattr_id_table().
 
-Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/0cd2506f598e7095ea43e62dca1f472de5474a0d.1616430991.git.christophe.leroy@csgroup.eu
-Stable-dep-of: 71f656a50176 ("bpf: Fix to preserve reg parent/live fields when copying range info")
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+
+Link: https://lkml.kernel.org/r/20230117105226.329303-2-pchelkin@ispras.ru
+Fixes: 506220d2ba21 ("squashfs: add more sanity checks in xattr id lookup")
+Reported-by: <syzbot+082fa4af80a5bb1a9843@syzkaller.appspotmail.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Cc: Phillip Lougher <phillip@squashfs.org.uk>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/net/bpf_jit_comp64.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+ fs/squashfs/xattr_id.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/net/bpf_jit_comp64.c b/arch/powerpc/net/bpf_jit_comp64.c
-index 0d47514e8870..7da59ddc90dd 100644
---- a/arch/powerpc/net/bpf_jit_comp64.c
-+++ b/arch/powerpc/net/bpf_jit_comp64.c
-@@ -32,12 +32,12 @@ static inline void bpf_flush_icache(void *start, void *end)
+diff --git a/fs/squashfs/xattr_id.c b/fs/squashfs/xattr_id.c
+index 087cab8c78f4..f6d78cbc3e74 100644
+--- a/fs/squashfs/xattr_id.c
++++ b/fs/squashfs/xattr_id.c
+@@ -76,7 +76,7 @@ __le64 *squashfs_read_xattr_id_table(struct super_block *sb, u64 table_start,
+ 	/* Sanity check values */
  
- static inline bool bpf_is_seen_register(struct codegen_context *ctx, int i)
- {
--	return (ctx->seen & (1 << (31 - b2p[i])));
-+	return ctx->seen & (1 << (31 - i));
- }
+ 	/* there is always at least one xattr id */
+-	if (*xattr_ids == 0)
++	if (*xattr_ids <= 0)
+ 		return ERR_PTR(-EINVAL);
  
- static inline void bpf_set_seen_register(struct codegen_context *ctx, int i)
- {
--	ctx->seen |= (1 << (31 - b2p[i]));
-+	ctx->seen |= 1 << (31 - i);
- }
- 
- static inline bool bpf_has_stack_frame(struct codegen_context *ctx)
-@@ -48,7 +48,7 @@ static inline bool bpf_has_stack_frame(struct codegen_context *ctx)
- 	 * - the bpf program uses its stack area
- 	 * The latter condition is deduced from the usage of BPF_REG_FP
- 	 */
--	return ctx->seen & SEEN_FUNC || bpf_is_seen_register(ctx, BPF_REG_FP);
-+	return ctx->seen & SEEN_FUNC || bpf_is_seen_register(ctx, b2p[BPF_REG_FP]);
- }
- 
- /*
-@@ -125,11 +125,11 @@ static void bpf_jit_build_prologue(u32 *image, struct codegen_context *ctx)
- 	 * in the protected zone below the previous stack frame
- 	 */
- 	for (i = BPF_REG_6; i <= BPF_REG_10; i++)
--		if (bpf_is_seen_register(ctx, i))
-+		if (bpf_is_seen_register(ctx, b2p[i]))
- 			PPC_BPF_STL(b2p[i], 1, bpf_jit_stack_offsetof(ctx, b2p[i]));
- 
- 	/* Setup frame pointer to point to the bpf stack area */
--	if (bpf_is_seen_register(ctx, BPF_REG_FP))
-+	if (bpf_is_seen_register(ctx, b2p[BPF_REG_FP]))
- 		EMIT(PPC_RAW_ADDI(b2p[BPF_REG_FP], 1,
- 				STACK_FRAME_MIN_SIZE + ctx->stack_size));
- }
-@@ -140,7 +140,7 @@ static void bpf_jit_emit_common_epilogue(u32 *image, struct codegen_context *ctx
- 
- 	/* Restore NVRs */
- 	for (i = BPF_REG_6; i <= BPF_REG_10; i++)
--		if (bpf_is_seen_register(ctx, i))
-+		if (bpf_is_seen_register(ctx, b2p[i]))
- 			PPC_BPF_LL(b2p[i], 1, bpf_jit_stack_offsetof(ctx, b2p[i]));
- 
- 	/* Tear down our stack frame */
-@@ -356,9 +356,9 @@ static int bpf_jit_build_body(struct bpf_prog *fp, u32 *image,
- 		 * any issues.
- 		 */
- 		if (dst_reg >= BPF_PPC_NVR_MIN && dst_reg < 32)
--			bpf_set_seen_register(ctx, insn[i].dst_reg);
-+			bpf_set_seen_register(ctx, dst_reg);
- 		if (src_reg >= BPF_PPC_NVR_MIN && src_reg < 32)
--			bpf_set_seen_register(ctx, insn[i].src_reg);
-+			bpf_set_seen_register(ctx, src_reg);
- 
- 		switch (code) {
- 		/*
+ 	len = SQUASHFS_XATTR_BLOCK_BYTES(*xattr_ids);
 -- 
 2.39.0
 
