@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A26148F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:56:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A69AC433EF;
-	Mon, 13 Feb 2023 14:56:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4327C8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:56:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBCE2C433EF;
+	Mon, 13 Feb 2023 14:56:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300212;
-	bh=Tihgh/mylCqlA7TzAXHgKBJZFsdP2JWzcIoW0QcXx48=;
+	s=korg; t=1676300215;
+	bh=Tp2of6tq/lUCyKjK9q4fvLzPjfn3UdsHzU/B/eyiWiw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jb7kMfj9+JtBQ133CZBGc/eVe58DI7E+W+fUF+jqf0lW8wJXzW85yjFoCYWvyITzP
-	 l1WfCo3/2f+/DpMN5YJRFm2FwPWZvZyMA4nMiv71tJ6yaHYawUW5XnQ3P8V1CyeQ+G
-	 l/26+vxQw3x3suGVULIqQ+fIpH0MOOx1PKC9DG/g=
+	b=kzqFmr7j/8O+r68gQs6G6MVngC9TaLM/huXJonlcGO8v4gTNl9iAWAsqNeSCmecoA
+	 xsighFhlXlqMKb/YSOKs2z4EYKS06jJlh8ImdIN6/N7sZtnnN5fz3Uvdw7cF2YBtDD
+	 bCWs+0XI7GC4/bm/CGI0kb/mTWpaNNHl8doA2NfA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Evan Quan <evan.quan@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Guchun Chen <guchun.chen@amd.com>
-Subject: [PATCH 6.1 107/114] drm/amd/pm: bump SMU 13.0.7 driver_if header version
-Date: Mon, 13 Feb 2023 15:49:02 +0100
-Message-Id: <20230213144747.739802174@linuxfoundation.org>
+	Andrew Morton <akpm@linux-foundation.org>,
+	Chunwei Chen <david.chen@nutanix.com>,
+	Vlastimil Babka <vbabka@suse.cz>,
+	"Matthew Wilcox (Oracle)" <willy@infradead.org>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 103/114] Fix page corruption caused by racy check in __free_pages
+Date: Mon, 13 Feb 2023 15:48:58 +0100
+Message-Id: <20230213144747.515324484@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -35,78 +37,78 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Evan Quan <evan.quan@amd.com>
+From: David Chen <david.chen@nutanix.com>
 
-commit dc38b996db968f51f0fe45845a519c5cd7f6bd04 upstream.
+commit 462a8e08e0e6287e5ce13187257edbf24213ed03 upstream.
 
-This can suppress the warning caused by version mismatch.
+When we upgraded our kernel, we started seeing some page corruption like
+the following consistently:
 
-Signed-off-by: Evan Quan <evan.quan@amd.com>
-Acked-by: Alex Deucher <alexander.deucher@amd.com>
-Acked-by: Guchun Chen <guchun.chen@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.x
+  BUG: Bad page state in process ganesha.nfsd  pfn:1304ca
+  page:0000000022261c55 refcount:0 mapcount:-128 mapping:0000000000000000 index:0x0 pfn:0x1304ca
+  flags: 0x17ffffc0000000()
+  raw: 0017ffffc0000000 ffff8a513ffd4c98 ffffeee24b35ec08 0000000000000000
+  raw: 0000000000000000 0000000000000001 00000000ffffff7f 0000000000000000
+  page dumped because: nonzero mapcount
+  CPU: 0 PID: 15567 Comm: ganesha.nfsd Kdump: loaded Tainted: P    B      O      5.10.158-1.nutanix.20221209.el7.x86_64 #1
+  Hardware name: VMware, Inc. VMware Virtual Platform/440BX Desktop Reference Platform, BIOS 6.00 04/05/2016
+  Call Trace:
+   dump_stack+0x74/0x96
+   bad_page.cold+0x63/0x94
+   check_new_page_bad+0x6d/0x80
+   rmqueue+0x46e/0x970
+   get_page_from_freelist+0xcb/0x3f0
+   ? _cond_resched+0x19/0x40
+   __alloc_pages_nodemask+0x164/0x300
+   alloc_pages_current+0x87/0xf0
+   skb_page_frag_refill+0x84/0x110
+   ...
+
+Sometimes, it would also show up as corruption in the free list pointer
+and cause crashes.
+
+After bisecting the issue, we found the issue started from commit
+e320d3012d25 ("mm/page_alloc.c: fix freeing non-compound pages"):
+
+	if (put_page_testzero(page))
+		free_the_page(page, order);
+	else if (!PageHead(page))
+		while (order-- > 0)
+			free_the_page(page + (1 << order), order);
+
+So the problem is the check PageHead is racy because at this point we
+already dropped our reference to the page.  So even if we came in with
+compound page, the page can already be freed and PageHead can return
+false and we will end up freeing all the tail pages causing double free.
+
+Fixes: e320d3012d25 ("mm/page_alloc.c: fix freeing non-compound pages")
+Link: https://lore.kernel.org/lkml/BYAPR02MB448855960A9656EEA81141FC94D99@BYAPR02MB4488.namprd02.prod.outlook.com/
+Cc: Andrew Morton <akpm@linux-foundation.org>
+Cc: stable@vger.kernel.org
+Signed-off-by: Chunwei Chen <david.chen@nutanix.com>
+Reviewed-by: Vlastimil Babka <vbabka@suse.cz>
+Reviewed-by: Matthew Wilcox (Oracle) <willy@infradead.org>
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- .../inc/pmfw_if/smu13_driver_if_v13_0_7.h     | 29 ++++++++++---------
- drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h  |  2 +-
- 2 files changed, 16 insertions(+), 15 deletions(-)
+ mm/page_alloc.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu13_driver_if_v13_0_7.h b/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu13_driver_if_v13_0_7.h
-index d6b13933a98f..48a3a3952ceb 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu13_driver_if_v13_0_7.h
-+++ b/drivers/gpu/drm/amd/pm/swsmu/inc/pmfw_if/smu13_driver_if_v13_0_7.h
-@@ -113,20 +113,21 @@
- #define NUM_FEATURES                          64
- 
- #define ALLOWED_FEATURE_CTRL_DEFAULT 0xFFFFFFFFFFFFFFFFULL
--#define ALLOWED_FEATURE_CTRL_SCPM        (1 << FEATURE_DPM_GFXCLK_BIT) | \
--                                         (1 << FEATURE_DPM_GFX_POWER_OPTIMIZER_BIT) | \
--                                         (1 << FEATURE_DPM_UCLK_BIT) | \
--                                         (1 << FEATURE_DPM_FCLK_BIT) | \
--                                         (1 << FEATURE_DPM_SOCCLK_BIT) | \
--                                         (1 << FEATURE_DPM_MP0CLK_BIT) | \
--                                         (1 << FEATURE_DPM_LINK_BIT) | \
--                                         (1 << FEATURE_DPM_DCN_BIT) | \
--                                         (1 << FEATURE_DS_GFXCLK_BIT) | \
--                                         (1 << FEATURE_DS_SOCCLK_BIT) | \
--                                         (1 << FEATURE_DS_FCLK_BIT) | \
--                                         (1 << FEATURE_DS_LCLK_BIT) | \
--                                         (1 << FEATURE_DS_DCFCLK_BIT) | \
--                                         (1 << FEATURE_DS_UCLK_BIT)
-+#define ALLOWED_FEATURE_CTRL_SCPM	((1 << FEATURE_DPM_GFXCLK_BIT) | \
-+					(1 << FEATURE_DPM_GFX_POWER_OPTIMIZER_BIT) | \
-+					(1 << FEATURE_DPM_UCLK_BIT) | \
-+					(1 << FEATURE_DPM_FCLK_BIT) | \
-+					(1 << FEATURE_DPM_SOCCLK_BIT) | \
-+					(1 << FEATURE_DPM_MP0CLK_BIT) | \
-+					(1 << FEATURE_DPM_LINK_BIT) | \
-+					(1 << FEATURE_DPM_DCN_BIT) | \
-+					(1 << FEATURE_DS_GFXCLK_BIT) | \
-+					(1 << FEATURE_DS_SOCCLK_BIT) | \
-+					(1 << FEATURE_DS_FCLK_BIT) | \
-+					(1 << FEATURE_DS_LCLK_BIT) | \
-+					(1 << FEATURE_DS_DCFCLK_BIT) | \
-+					(1 << FEATURE_DS_UCLK_BIT) | \
-+					(1ULL << FEATURE_DS_VCN_BIT))
- 
- //For use with feature control messages
- typedef enum {
-diff --git a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
-index d9c4821bcfc8..992163e66f7b 100644
---- a/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
-+++ b/drivers/gpu/drm/amd/pm/swsmu/inc/smu_v13_0.h
-@@ -32,7 +32,7 @@
- #define SMU13_DRIVER_IF_VERSION_SMU_V13_0_4 0x07
- #define SMU13_DRIVER_IF_VERSION_SMU_V13_0_5 0x04
- #define SMU13_DRIVER_IF_VERSION_SMU_V13_0_0_10 0x32
--#define SMU13_DRIVER_IF_VERSION_SMU_V13_0_7 0x35
-+#define SMU13_DRIVER_IF_VERSION_SMU_V13_0_7 0x37
- #define SMU13_DRIVER_IF_VERSION_SMU_V13_0_10 0x1D
- 
- #define SMU13_MODE1_RESET_WAIT_TIME_IN_MS 500  //500ms
--- 
-2.39.1
-
+--- a/mm/page_alloc.c
++++ b/mm/page_alloc.c
+@@ -5640,9 +5640,12 @@ EXPORT_SYMBOL(get_zeroed_page);
+  */
+ void __free_pages(struct page *page, unsigned int order)
+ {
++	/* get PageHead before we drop reference */
++	int head = PageHead(page);
++
+ 	if (put_page_testzero(page))
+ 		free_the_page(page, order);
+-	else if (!PageHead(page))
++	else if (!head)
+ 		while (order-- > 0)
+ 			free_the_page(page + (1 << order), order);
+ }
 
 
