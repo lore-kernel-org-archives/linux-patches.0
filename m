@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 445968F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:57:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2869C433EF;
-	Mon, 13 Feb 2023 14:57:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE5258F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:57:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D11C433D2;
+	Mon, 13 Feb 2023 14:57:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300233;
-	bh=OBxZm3ZDl2Q56oH8pQ3V/48q6acdgNfKIbrsZ3J5P2w=;
+	s=korg; t=1676300235;
+	bh=JIu7zxAwS854SWrFOG1FGxIAQmIy/tyUzOdOHQFY4Vo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ClA8U6cL/loQO0QsU2rDn0ECZ6aP4/izDOMfMgjrz66enQzaG3leD+dRfAUvj+Sdi
-	 Rlr/4ryteOfHosaj1hFNpkHsA4vWiBDgtWecranujf2fNa9xYLHBDtyGFFh6OkCnsT
-	 oNYPfIYyCmrLBskEq/oDws8N+nB0SZcR7SnzH7HA=
+	b=hF00DZgJ64ti/Uo85epdI9GiWDT0XdsZSsV3OANn+mF3YtgmfNpdemLsS4ZD5h4l3
+	 8q6hFBJEOntpn4jjBh4FR9jYL9IBneJCmXayT04C+v3dkl6+6DI2v0lbPqECOgwqes
+	 eV+ld6+mQwJL0hiU8uc4I8aZT5J0ymmkHAbvBxxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Ville=20Syrj=C3=A4l=C3=A4?= <ville.syrjala@linux.intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.1 114/114] drm/i915: Fix VBT DSI DVO port handling
-Date: Mon, 13 Feb 2023 15:49:09 +0100
-Message-Id: <20230213144748.128769395@linuxfoundation.org>
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 01/67] nvmem: core: add error handling for dev_set_name
+Date: Mon, 13 Feb 2023 15:48:42 +0100
+Message-Id: <20230213144732.405052845@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
-References: <20230213144742.219399167@linuxfoundation.org>
+In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
+References: <20230213144732.336342050@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,86 +37,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ville Syrjälä <ville.syrjala@linux.intel.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-commit 6a7ff131f17f44c593173c5ee30e2c03ef211685 upstream.
+[ Upstream commit 5544e90c81261e82e02bbf7c6015a4b9c8c825ef ]
 
-Turns out modern (icl+) VBTs still declare their DSI ports
-as MIPI-A and MIPI-C despite the PHYs now being A and B.
-Remap appropriately to allow the panels declared as MIPI-C
-to work.
+The type of return value of dev_set_name is int, which may return
+wrong result, so we add error handling for it to reclaim memory
+of nvmem resource, and return early when an error occurs.
 
-Cc: stable@vger.kernel.org
-Closes: https://gitlab.freedesktop.org/drm/intel/-/issues/8016
-Signed-off-by: Ville Syrjälä <ville.syrjala@linux.intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230207064337.18697-2-ville.syrjala@linux.intel.com
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-(cherry picked from commit 118b5c136c04da705b274b0d39982bb8b7430fc5)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20220916122100.170016-4-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: ab3428cfd9aa ("nvmem: core: fix registration vs use race")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/display/intel_bios.c |   33 ++++++++++++++++++++----------
- 1 file changed, 23 insertions(+), 10 deletions(-)
+ drivers/nvmem/core.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/i915/display/intel_bios.c
-+++ b/drivers/gpu/drm/i915/display/intel_bios.c
-@@ -2466,6 +2466,22 @@ static enum port dvo_port_to_port(struct
- 					  dvo_port);
- }
+diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
+index ee86022c4f2b8..51bec9f8a3bf9 100644
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -804,18 +804,24 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
  
-+static enum port
-+dsi_dvo_port_to_port(struct drm_i915_private *i915, u8 dvo_port)
-+{
-+	switch (dvo_port) {
-+	case DVO_PORT_MIPIA:
-+		return PORT_A;
-+	case DVO_PORT_MIPIC:
-+		if (DISPLAY_VER(i915) >= 11)
-+			return PORT_B;
-+		else
-+			return PORT_C;
-+	default:
-+		return PORT_NONE;
-+	}
-+}
-+
- static int parse_bdb_230_dp_max_link_rate(const int vbt_max_link_rate)
- {
- 	switch (vbt_max_link_rate) {
-@@ -3406,19 +3422,16 @@ bool intel_bios_is_dsi_present(struct dr
- 
- 		dvo_port = child->dvo_port;
- 
--		if (dvo_port == DVO_PORT_MIPIA ||
--		    (dvo_port == DVO_PORT_MIPIB && DISPLAY_VER(i915) >= 11) ||
--		    (dvo_port == DVO_PORT_MIPIC && DISPLAY_VER(i915) < 11)) {
--			if (port)
--				*port = dvo_port - DVO_PORT_MIPIA;
--			return true;
--		} else if (dvo_port == DVO_PORT_MIPIB ||
--			   dvo_port == DVO_PORT_MIPIC ||
--			   dvo_port == DVO_PORT_MIPID) {
-+		if (dsi_dvo_port_to_port(i915, dvo_port) == PORT_NONE) {
- 			drm_dbg_kms(&i915->drm,
- 				    "VBT has unsupported DSI port %c\n",
- 				    port_name(dvo_port - DVO_PORT_MIPIA));
-+			continue;
- 		}
-+
-+		if (port)
-+			*port = dsi_dvo_port_to_port(i915, dvo_port);
-+		return true;
+ 	switch (config->id) {
+ 	case NVMEM_DEVID_NONE:
+-		dev_set_name(&nvmem->dev, "%s", config->name);
++		rval = dev_set_name(&nvmem->dev, "%s", config->name);
+ 		break;
+ 	case NVMEM_DEVID_AUTO:
+-		dev_set_name(&nvmem->dev, "%s%d", config->name, nvmem->id);
++		rval = dev_set_name(&nvmem->dev, "%s%d", config->name, nvmem->id);
+ 		break;
+ 	default:
+-		dev_set_name(&nvmem->dev, "%s%d",
++		rval = dev_set_name(&nvmem->dev, "%s%d",
+ 			     config->name ? : "nvmem",
+ 			     config->name ? config->id : nvmem->id);
+ 		break;
  	}
  
- 	return false;
-@@ -3503,7 +3516,7 @@ bool intel_bios_get_dsc_params(struct in
- 		if (!(child->device_type & DEVICE_TYPE_MIPI_OUTPUT))
- 			continue;
++	if (rval) {
++		ida_free(&nvmem_ida, nvmem->id);
++		kfree(nvmem);
++		return ERR_PTR(rval);
++	}
++
+ 	nvmem->read_only = device_property_present(config->dev, "read-only") ||
+ 			   config->read_only || !nvmem->reg_write;
  
--		if (child->dvo_port - DVO_PORT_MIPIA == encoder->port) {
-+		if (dsi_dvo_port_to_port(i915, child->dvo_port) == encoder->port) {
- 			if (!devdata->dsc)
- 				return false;
- 
+-- 
+2.39.0
+
 
 
