@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128CF8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:01:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E48DC433EF;
-	Mon, 13 Feb 2023 15:01:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5AA68F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:01:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28549C433D2;
+	Mon, 13 Feb 2023 15:01:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300515;
-	bh=2KDB3hH6Kax/j8BC4BeR0hgfemHR9L4AytwYlyHqHhI=;
+	s=korg; t=1676300518;
+	bh=YhAdBqEzmhfd98K/RMO2qNZfKjTbaovRi+FWHgdKGxA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mjVtcXkmBvYbor7OxjlNnqSKpd+4BWmDkNeR3Ym9mLjk3oSddLX9iiJ62NWe90UkF
-	 8HuYpueRCBBL+ulaMAnKCyURBmgMjezx5w42KePUkq7/ftIXxcy50Ihrdn0hE6yRTz
-	 4a9b1XEi7Tu/FDxr4JfeDY3zrhtDrifzTsrY3pgw=
+	b=w2g1jAGpEQz0EMoeUQy5wf2RffWxO+NyVssvzQGx6+l5pV5/Pl9YtRCcsVbwNjy+p
+	 la94v9OaRtdOyUJtRB9bM8r0vUtY7NgpvwKjFDUAsoskeuS9tmDcn6rXVfb/q/w5hH
+	 MV5qQKfrwWNH/yLWhSj+WcOVkAZkiVP/c7QehFjQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hao Sun <sunhao.th@gmail.com>,
-	Yonghong Song <yhs@fb.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Bhaskar Upadhaya <bupadhaya@marvell.com>,
+	Igor Russkikh <irusskikh@marvell.com>,
+	Ariel Elior <aelior@marvell.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 005/139] bpf: Fix a possible task gone issue with bpf_send_signal[_thread]() helpers
-Date: Mon, 13 Feb 2023 15:49:10 +0100
-Message-Id: <20230213144745.978002832@linuxfoundation.org>
+Subject: [PATCH 5.10 037/139] qede: add netpoll support for qede driver
+Date: Mon, 13 Feb 2023 15:49:42 +0100
+Message-Id: <20230213144747.610907226@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -36,52 +37,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yonghong Song <yhs@fb.com>
+From: Bhaskar Upadhaya <bupadhaya@marvell.com>
 
-[ Upstream commit bdb7fdb0aca8b96cef9995d3a57e251c2289322f ]
+[ Upstream commit 961aa716235f58088e99acafbe66027d678061ce ]
 
-In current bpf_send_signal() and bpf_send_signal_thread() helper
-implementation, irq_work is used to handle nmi context. Hao Sun
-reported in [1] that the current task at the entry of the helper
-might be gone during irq_work callback processing. To fix the issue,
-a reference is acquired for the current task before enqueuing into
-the irq_work so that the queued task is still available during
-irq_work callback processing.
+handle netpoll case when qede_poll is called by
+netpoll layer with budget 0
 
-  [1] https://lore.kernel.org/bpf/20230109074425.12556-1-sunhao.th@gmail.com/
-
-Fixes: 8b401f9ed244 ("bpf: implement bpf_send_signal() helper")
-Tested-by: Hao Sun <sunhao.th@gmail.com>
-Reported-by: Hao Sun <sunhao.th@gmail.com>
-Signed-off-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/r/20230118204815.3331855-1-yhs@fb.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Bhaskar Upadhaya <bupadhaya@marvell.com>
+Signed-off-by: Igor Russkikh <irusskikh@marvell.com>
+Signed-off-by: Ariel Elior <aelior@marvell.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 2ccce20d51fa ("qede: execute xdp_do_flush() before napi_complete_done()")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- kernel/trace/bpf_trace.c | 3 ++-
+ drivers/net/ethernet/qlogic/qede/qede_fp.c | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
-index ab4f51716645..94e51d36fb49 100644
---- a/kernel/trace/bpf_trace.c
-+++ b/kernel/trace/bpf_trace.c
-@@ -1055,6 +1055,7 @@ static void do_bpf_send_signal(struct irq_work *entry)
+diff --git a/drivers/net/ethernet/qlogic/qede/qede_fp.c b/drivers/net/ethernet/qlogic/qede/qede_fp.c
+index d210632676d3..5b1885c0a8bd 100644
+--- a/drivers/net/ethernet/qlogic/qede/qede_fp.c
++++ b/drivers/net/ethernet/qlogic/qede/qede_fp.c
+@@ -1456,7 +1456,8 @@ int qede_poll(struct napi_struct *napi, int budget)
+ 	rx_work_done = (likely(fp->type & QEDE_FASTPATH_RX) &&
+ 			qede_has_rx_work(fp->rxq)) ?
+ 			qede_rx_int(fp, budget) : 0;
+-	if (rx_work_done < budget) {
++	/* Handle case where we are called by netpoll with a budget of 0 */
++	if (rx_work_done < budget || !budget) {
+ 		if (!qede_poll_is_more_work(fp)) {
+ 			napi_complete_done(napi, rx_work_done);
  
- 	work = container_of(entry, struct send_signal_irq_work, irq_work);
- 	group_send_sig_info(work->sig, SEND_SIG_PRIV, work->task, work->type);
-+	put_task_struct(work->task);
- }
- 
- static int bpf_send_signal_common(u32 sig, enum pid_type type)
-@@ -1091,7 +1092,7 @@ static int bpf_send_signal_common(u32 sig, enum pid_type type)
- 		 * to the irq_work. The current task may change when queued
- 		 * irq works get executed.
- 		 */
--		work->task = current;
-+		work->task = get_task_struct(current);
- 		work->sig = sig;
- 		work->type = type;
- 		irq_work_queue(&work->irq_work);
 -- 
 2.39.0
 
