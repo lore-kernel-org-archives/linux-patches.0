@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F26318F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:53:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7720EC433D2;
-	Mon, 13 Feb 2023 14:53:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845FB8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:53:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0D01DC433D2;
+	Mon, 13 Feb 2023 14:53:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300028;
-	bh=GyCGdW6FD89Vetw074HgGvNGB19z9svlks6wk0wps5Y=;
+	s=korg; t=1676300031;
+	bh=wTQfEyiRhG8w2HrFmdpNdGjnM88fpsxaOqfmnq1X89M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qPrntCzwLgCJ6t2VLFewk4GWhRopPKRemH7orAIRuwVaWIjmiF/FwLSSfQVOFpoMJ
-	 gccZZ2HVLwR9zPIcMvrM3tMhz0PSw2Ffxc3Gwvktr+MqHeSzTLKHghG5TVH6aTPq01
-	 eW/eZyqGKVopjnWROtvrlciw4MSCyue3NogLI9w0=
+	b=mF0k8xsmYtJ8Dun9JEebCB8FILA5KaZtbz5jAUtI/YuM5aUlS3XxHbfm8EVCyGkdJ
+	 rE8Yeoh01LazJ6iV/Dypo+0eNm9Ycr8c2n1GeW5jajj3F68EFzCF+7bIJn9jZOkInc
+	 8fqrP+ku5I5v1GuAzd6Th/X8UAbpUvAWtuNZEyr0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Douglas Anderson <dianders@chromium.org>,
-	Konrad Dybcio <konrad.dybcio@linaro.org>,
-	Manivannan Sadhasivam <mani@kernel.org>,
-	Viresh Kumar <viresh.kumar@linaro.org>,
+	Ryan Neph <ryanneph@chromium.org>,
+	Rob Clark <robdclark@gmail.com>,
+	Dmitry Osipenko <dmitry.osipenko@collabora.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 032/114] cpufreq: qcom-hw: Fix cpufreq_driver->get() for non-LMH systems
-Date: Mon, 13 Feb 2023 15:47:47 +0100
-Message-Id: <20230213144743.824867875@linuxfoundation.org>
+Subject: [PATCH 6.1 037/114] drm/virtio: exbuf->fence_fd unmodified on interrupted wait
+Date: Mon, 13 Feb 2023 15:47:52 +0100
+Message-Id: <20230213144744.058712134@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -37,96 +36,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Douglas Anderson <dianders@chromium.org>
+From: Ryan Neph <ryanneph@chromium.org>
 
-[ Upstream commit 51be2fffd65d9f9cb427030ab0ee85d791b4437d ]
+[ Upstream commit 8f20660f053cefd4693e69cfff9cf58f4f7c4929 ]
 
-On a sc7180-based Chromebook, when I go to
-/sys/devices/system/cpu/cpu0/cpufreq I can see:
+An interrupted dma_fence_wait() becomes an -ERESTARTSYS returned
+to userspace ioctl(DRM_IOCTL_VIRTGPU_EXECBUFFER) calls, prompting to
+retry the ioctl(), but the passed exbuf->fence_fd has been reset to -1,
+making the retry attempt fail at sync_file_get_fence().
 
-  cpuinfo_cur_freq:2995200
-  cpuinfo_max_freq:1804800
-  scaling_available_frequencies:300000 576000 ... 1708800 1804800
-  scaling_cur_freq:1804800
-  scaling_max_freq:1804800
+The uapi for DRM_IOCTL_VIRTGPU_EXECBUFFER is changed to retain the
+passed value for exbuf->fence_fd when returning anything besides a
+successful result from the ioctl.
 
-As you can see the `cpuinfo_cur_freq` is bogus. It turns out that this
-bogus info started showing up as of commit c72cf0cb1d77 ("cpufreq:
-qcom-hw: Fix the frequency returned by cpufreq_driver->get()"). That
-commit seems to assume that everyone is on the LMH bandwagon, but
-sc7180 isn't.
-
-Let's go back to the old code in the case where LMH isn't used.
-
-Fixes: c72cf0cb1d77 ("cpufreq: qcom-hw: Fix the frequency returned by cpufreq_driver->get()")
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@linaro.org>
-Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-[ Viresh: Fixed the 'fixes' tag ]
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
+Fixes: 2cd7b6f08bc4 ("drm/virtio: add in/out fence support for explicit synchronization")
+Signed-off-by: Ryan Neph <ryanneph@chromium.org>
+Reviewed-by: Rob Clark <robdclark@gmail.com>
+Reviewed-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230203233345.2477767-1-ryanneph@chromium.org
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/cpufreq/qcom-cpufreq-hw.c | 24 +++++++++++++-----------
- 1 file changed, 13 insertions(+), 11 deletions(-)
+ drivers/gpu/drm/virtio/virtgpu_ioctl.c | 5 +----
+ include/uapi/drm/virtgpu_drm.h         | 1 +
+ 2 files changed, 2 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index 3c623a0bc147f..d10bf7635a0d5 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -137,40 +137,42 @@ static unsigned long qcom_lmh_get_throttle_freq(struct qcom_cpufreq_data *data)
- 	return lval * xo_rate;
- }
+diff --git a/drivers/gpu/drm/virtio/virtgpu_ioctl.c b/drivers/gpu/drm/virtio/virtgpu_ioctl.c
+index 9f4a90493aeac..da45215a933d0 100644
+--- a/drivers/gpu/drm/virtio/virtgpu_ioctl.c
++++ b/drivers/gpu/drm/virtio/virtgpu_ioctl.c
+@@ -126,7 +126,6 @@ static int virtio_gpu_execbuffer_ioctl(struct drm_device *dev, void *data,
+ 	void __user *user_bo_handles = NULL;
+ 	struct virtio_gpu_object_array *buflist = NULL;
+ 	struct sync_file *sync_file;
+-	int in_fence_fd = exbuf->fence_fd;
+ 	int out_fence_fd = -1;
+ 	void *buf;
+ 	uint64_t fence_ctx;
+@@ -152,13 +151,11 @@ static int virtio_gpu_execbuffer_ioctl(struct drm_device *dev, void *data,
+ 		ring_idx = exbuf->ring_idx;
+ 	}
  
--/* Get the current frequency of the CPU (after throttling) */
--static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
-+/* Get the frequency requested by the cpufreq core for the CPU */
-+static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
- {
- 	struct qcom_cpufreq_data *data;
-+	const struct qcom_cpufreq_soc_data *soc_data;
- 	struct cpufreq_policy *policy;
-+	unsigned int index;
+-	exbuf->fence_fd = -1;
+-
+ 	virtio_gpu_create_context(dev, file);
+ 	if (exbuf->flags & VIRTGPU_EXECBUF_FENCE_FD_IN) {
+ 		struct dma_fence *in_fence;
  
- 	policy = cpufreq_cpu_get_raw(cpu);
- 	if (!policy)
- 		return 0;
+-		in_fence = sync_file_get_fence(in_fence_fd);
++		in_fence = sync_file_get_fence(exbuf->fence_fd);
  
- 	data = policy->driver_data;
-+	soc_data = data->soc_data;
+ 		if (!in_fence)
+ 			return -EINVAL;
+diff --git a/include/uapi/drm/virtgpu_drm.h b/include/uapi/drm/virtgpu_drm.h
+index 0512fde5e6978..7b158fcb02b45 100644
+--- a/include/uapi/drm/virtgpu_drm.h
++++ b/include/uapi/drm/virtgpu_drm.h
+@@ -64,6 +64,7 @@ struct drm_virtgpu_map {
+ 	__u32 pad;
+ };
  
--	return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
-+	index = readl_relaxed(data->base + soc_data->reg_perf_state);
-+	index = min(index, LUT_MAX_ENTRIES - 1);
-+
-+	return policy->freq_table[index].frequency;
- }
- 
--/* Get the frequency requested by the cpufreq core for the CPU */
--static unsigned int qcom_cpufreq_get_freq(unsigned int cpu)
-+static unsigned int qcom_cpufreq_hw_get(unsigned int cpu)
- {
- 	struct qcom_cpufreq_data *data;
--	const struct qcom_cpufreq_soc_data *soc_data;
- 	struct cpufreq_policy *policy;
--	unsigned int index;
- 
- 	policy = cpufreq_cpu_get_raw(cpu);
- 	if (!policy)
- 		return 0;
- 
- 	data = policy->driver_data;
--	soc_data = data->soc_data;
- 
--	index = readl_relaxed(data->base + soc_data->reg_perf_state);
--	index = min(index, LUT_MAX_ENTRIES - 1);
-+	if (data->throttle_irq >= 0)
-+		return qcom_lmh_get_throttle_freq(data) / HZ_PER_KHZ;
- 
--	return policy->freq_table[index].frequency;
-+	return qcom_cpufreq_get_freq(cpu);
- }
- 
- static unsigned int qcom_cpufreq_hw_fast_switch(struct cpufreq_policy *policy,
++/* fence_fd is modified on success if VIRTGPU_EXECBUF_FENCE_FD_OUT flag is set. */
+ struct drm_virtgpu_execbuffer {
+ 	__u32 flags;
+ 	__u32 size;
 -- 
 2.39.0
 
