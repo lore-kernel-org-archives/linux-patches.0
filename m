@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 557208F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A950FC433EF;
-	Mon, 13 Feb 2023 14:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED208F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DCAC433EF;
+	Mon, 13 Feb 2023 14:58:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300313;
-	bh=UZOGAcmGTBilaFJYTy3xPYlOlNLCDmANFpbGsrIFXIg=;
+	s=korg; t=1676300315;
+	bh=MeqTT5Tr9yBIUsl0AhWpvLtyFh2uzbODEUB/vzeICgc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CbA97ZvAQm9utkCo4IX1hvpdbVWo/lvMrkGn7CcR5UZ3qkQh9qYht1p/Ps7Y+JubM
-	 V/40+wuKnusG8tClaPcbLAKRtl9QjO535qpcDza2Cq7skt3uIktf4vmTXh1woEa/Q7
-	 Dp5gpIoYipbo/8//FSsqC/chcMuky2pdlIpo+ax0=
+	b=RztpTa+OaBwX3NLD8YtZzPst9BnhPRw47QpiPEFPl8yxAmjAurZwmd7h6HZBQs3hE
+	 2PZFFstyHqWxFpAfPRNxxBalY8qWYeH/bji5uJE/dB+hU3GgVn9OeEXA/WY0Y7hSxU
+	 HtgiP/2CVHJ56rGOvxL+edtQ95RhQuH3YLRwpCdY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Mikityanskiy <maximmi@nvidia.com>,
+	Adham Faris <afaris@nvidia.com>,
 	Tariq Toukan <tariqt@nvidia.com>,
 	Saeed Mahameed <saeedm@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 31/67] net/mlx5e: Introduce the mlx5e_flush_rq function
-Date: Mon, 13 Feb 2023 15:49:12 +0100
-Message-Id: <20230213144733.859833406@linuxfoundation.org>
+Subject: [PATCH 5.15 32/67] net/mlx5e: Update rx ring hw mtu upon each rx-fcs flag change
+Date: Mon, 13 Feb 2023 15:49:13 +0100
+Message-Id: <20230213144733.901766861@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -37,126 +36,163 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Mikityanskiy <maximmi@nvidia.com>
+From: Adham Faris <afaris@nvidia.com>
 
-[ Upstream commit d9ba64deb2f1ad58eb3067c7485518f3e96559ee ]
+[ Upstream commit 1e66220948df815d7b37e0ff8b4627ce10433738 ]
 
-Add a function to flush an RQ: clean up descriptors, release pages and
-reset the RQ. This procedure is used by the recovery flow, and it will
-also be used in a following commit to free some memory when switching a
-channel to the XSK mode.
+rq->hw_mtu is used in function en_rx.c/mlx5e_skb_from_cqe_mpwrq_linear()
+to catch oversized packets. If FCS is concatenated to the end of the
+packet then the check should be updated accordingly.
 
-Signed-off-by: Maxim Mikityanskiy <maximmi@nvidia.com>
+Rx rings initialization (mlx5e_init_rxq_rq()) invoked for every new set
+of channels, as part of mlx5e_safe_switch_params(), unknowingly if it
+runs with default configuration or not. Current rq->hw_mtu
+initialization assumes default configuration and ignores
+params->scatter_fcs_en flag state.
+Fix this, by accounting for params->scatter_fcs_en flag state during
+rq->hw_mtu initialization.
+
+In addition, updating rq->hw_mtu value during ingress traffic might
+lead to packets drop and oversize_pkts_sw_drop counter increase with no
+good reason. Hence we remove this optimization and switch the set of
+channels with a new one, to make sure we don't get false positives on
+the oversize_pkts_sw_drop counter.
+
+Fixes: 102722fc6832 ("net/mlx5e: Add support for RXFCS feature flag")
+Signed-off-by: Adham Faris <afaris@nvidia.com>
 Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
 Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Stable-dep-of: 1e66220948df ("net/mlx5e: Update rx ring hw mtu upon each rx-fcs flag change")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/mellanox/mlx5/core/en.h  |  2 +-
- .../mellanox/mlx5/core/en/reporter_rx.c       | 23 +--------------
- .../net/ethernet/mellanox/mlx5/core/en_main.c | 28 ++++++++++++++++++-
- 3 files changed, 29 insertions(+), 24 deletions(-)
+ .../net/ethernet/mellanox/mlx5/core/en_main.c | 86 ++++---------------
+ 1 file changed, 15 insertions(+), 71 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en.h b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-index c22a38e5337b2..c822c3ac0544b 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en.h
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en.h
-@@ -1002,7 +1002,7 @@ void mlx5e_activate_priv_channels(struct mlx5e_priv *priv);
- void mlx5e_deactivate_priv_channels(struct mlx5e_priv *priv);
- int mlx5e_ptp_rx_manage_fs_ctx(struct mlx5e_priv *priv, void *ctx);
- 
--int mlx5e_modify_rq_state(struct mlx5e_rq *rq, int curr_state, int next_state);
-+int mlx5e_flush_rq(struct mlx5e_rq *rq, int curr_state);
- void mlx5e_activate_rq(struct mlx5e_rq *rq);
- void mlx5e_deactivate_rq(struct mlx5e_rq *rq);
- void mlx5e_activate_icosq(struct mlx5e_icosq *icosq);
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c
-index 0f1dbad7c9f1a..899a9a73eef68 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en/reporter_rx.c
-@@ -129,34 +129,13 @@ static int mlx5e_rx_reporter_err_icosq_cqe_recover(void *ctx)
- 	return err;
+diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+index 866242ac72c29..f1dd966e2bdbf 100644
+--- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
++++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
+@@ -392,7 +392,8 @@ static int mlx5e_init_rxq_rq(struct mlx5e_channel *c, struct mlx5e_params *param
+ 	rq->icosq        = &c->icosq;
+ 	rq->ix           = c->ix;
+ 	rq->mdev         = mdev;
+-	rq->hw_mtu       = MLX5E_SW2HW_MTU(params, params->sw_mtu);
++	rq->hw_mtu =
++		MLX5E_SW2HW_MTU(params, params->sw_mtu) - ETH_FCS_LEN * !params->scatter_fcs_en;
+ 	rq->xdpsq        = &c->rq_xdpsq;
+ 	rq->stats        = &c->priv->channel_stats[c->ix].rq;
+ 	rq->ptp_cyc2time = mlx5_rq_ts_translator(mdev);
+@@ -727,35 +728,6 @@ int mlx5e_flush_rq(struct mlx5e_rq *rq, int curr_state)
+ 	return mlx5e_rq_to_ready(rq, curr_state);
  }
  
--static int mlx5e_rq_to_ready(struct mlx5e_rq *rq, int curr_state)
+-static int mlx5e_modify_rq_scatter_fcs(struct mlx5e_rq *rq, bool enable)
 -{
--	struct net_device *dev = rq->netdev;
+-	struct mlx5_core_dev *mdev = rq->mdev;
+-
+-	void *in;
+-	void *rqc;
+-	int inlen;
 -	int err;
 -
--	err = mlx5e_modify_rq_state(rq, curr_state, MLX5_RQC_STATE_RST);
--	if (err) {
--		netdev_err(dev, "Failed to move rq 0x%x to reset\n", rq->rqn);
--		return err;
--	}
--	err = mlx5e_modify_rq_state(rq, MLX5_RQC_STATE_RST, MLX5_RQC_STATE_RDY);
--	if (err) {
--		netdev_err(dev, "Failed to move rq 0x%x to ready\n", rq->rqn);
--		return err;
+-	inlen = MLX5_ST_SZ_BYTES(modify_rq_in);
+-	in = kvzalloc(inlen, GFP_KERNEL);
+-	if (!in)
+-		return -ENOMEM;
+-
+-	rqc = MLX5_ADDR_OF(modify_rq_in, in, ctx);
+-
+-	MLX5_SET(modify_rq_in, in, rq_state, MLX5_RQC_STATE_RDY);
+-	MLX5_SET64(modify_rq_in, in, modify_bitmask,
+-		   MLX5_MODIFY_RQ_IN_MODIFY_BITMASK_SCATTER_FCS);
+-	MLX5_SET(rqc, rqc, scatter_fcs, enable);
+-	MLX5_SET(rqc, rqc, state, MLX5_RQC_STATE_RDY);
+-
+-	err = mlx5_core_modify_rq(mdev, rq->rqn, in);
+-
+-	kvfree(in);
+-
+-	return err;
+-}
+-
+ static int mlx5e_modify_rq_vsd(struct mlx5e_rq *rq, bool vsd)
+ {
+ 	struct mlx5_core_dev *mdev = rq->mdev;
+@@ -2876,20 +2848,6 @@ static void mlx5e_cleanup_nic_tx(struct mlx5e_priv *priv)
+ 	mlx5e_destroy_tises(priv);
+ }
+ 
+-static int mlx5e_modify_channels_scatter_fcs(struct mlx5e_channels *chs, bool enable)
+-{
+-	int err = 0;
+-	int i;
+-
+-	for (i = 0; i < chs->num; i++) {
+-		err = mlx5e_modify_rq_scatter_fcs(&chs->c[i]->rq, enable);
+-		if (err)
+-			return err;
 -	}
 -
 -	return 0;
 -}
 -
- static int mlx5e_rx_reporter_err_rq_cqe_recover(void *ctx)
+ static int mlx5e_modify_channels_vsd(struct mlx5e_channels *chs, bool vsd)
  {
- 	struct mlx5e_rq *rq = ctx;
+ 	int err;
+@@ -3401,41 +3359,27 @@ static int mlx5e_set_rx_port_ts(struct mlx5_core_dev *mdev, bool enable)
+ 	return mlx5_set_ports_check(mdev, in, sizeof(in));
+ }
+ 
++static int mlx5e_set_rx_port_ts_wrap(struct mlx5e_priv *priv, void *ctx)
++{
++	struct mlx5_core_dev *mdev = priv->mdev;
++	bool enable = *(bool *)ctx;
++
++	return mlx5e_set_rx_port_ts(mdev, enable);
++}
++
+ static int set_feature_rx_fcs(struct net_device *netdev, bool enable)
+ {
+ 	struct mlx5e_priv *priv = netdev_priv(netdev);
+ 	struct mlx5e_channels *chs = &priv->channels;
+-	struct mlx5_core_dev *mdev = priv->mdev;
++	struct mlx5e_params new_params;
  	int err;
  
- 	mlx5e_deactivate_rq(rq);
--	mlx5e_free_rx_descs(rq);
+ 	mutex_lock(&priv->state_lock);
+ 
+-	if (enable) {
+-		err = mlx5e_set_rx_port_ts(mdev, false);
+-		if (err)
+-			goto out;
 -
--	err = mlx5e_rq_to_ready(rq, MLX5_RQC_STATE_ERR);
-+	err = mlx5e_flush_rq(rq, MLX5_RQC_STATE_ERR);
- 	clear_bit(MLX5E_RQ_STATE_RECOVERING, &rq->state);
- 	if (err)
- 		return err;
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index be19f5cf9d150..866242ac72c29 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -672,7 +672,7 @@ int mlx5e_create_rq(struct mlx5e_rq *rq, struct mlx5e_rq_param *param)
+-		chs->params.scatter_fcs_en = true;
+-		err = mlx5e_modify_channels_scatter_fcs(chs, true);
+-		if (err) {
+-			chs->params.scatter_fcs_en = false;
+-			mlx5e_set_rx_port_ts(mdev, true);
+-		}
+-	} else {
+-		chs->params.scatter_fcs_en = false;
+-		err = mlx5e_modify_channels_scatter_fcs(chs, false);
+-		if (err) {
+-			chs->params.scatter_fcs_en = true;
+-			goto out;
+-		}
+-		err = mlx5e_set_rx_port_ts(mdev, true);
+-		if (err) {
+-			mlx5_core_warn(mdev, "Failed to set RX port timestamp %d\n", err);
+-			err = 0;
+-		}
+-	}
+-
+-out:
++	new_params = chs->params;
++	new_params.scatter_fcs_en = enable;
++	err = mlx5e_safe_switch_params(priv, &new_params, mlx5e_set_rx_port_ts_wrap,
++				       &new_params.scatter_fcs_en, true);
+ 	mutex_unlock(&priv->state_lock);
  	return err;
  }
- 
--int mlx5e_modify_rq_state(struct mlx5e_rq *rq, int curr_state, int next_state)
-+static int mlx5e_modify_rq_state(struct mlx5e_rq *rq, int curr_state, int next_state)
- {
- 	struct mlx5_core_dev *mdev = rq->mdev;
- 
-@@ -701,6 +701,32 @@ int mlx5e_modify_rq_state(struct mlx5e_rq *rq, int curr_state, int next_state)
- 	return err;
- }
- 
-+static int mlx5e_rq_to_ready(struct mlx5e_rq *rq, int curr_state)
-+{
-+	struct net_device *dev = rq->netdev;
-+	int err;
-+
-+	err = mlx5e_modify_rq_state(rq, curr_state, MLX5_RQC_STATE_RST);
-+	if (err) {
-+		netdev_err(dev, "Failed to move rq 0x%x to reset\n", rq->rqn);
-+		return err;
-+	}
-+	err = mlx5e_modify_rq_state(rq, MLX5_RQC_STATE_RST, MLX5_RQC_STATE_RDY);
-+	if (err) {
-+		netdev_err(dev, "Failed to move rq 0x%x to ready\n", rq->rqn);
-+		return err;
-+	}
-+
-+	return 0;
-+}
-+
-+int mlx5e_flush_rq(struct mlx5e_rq *rq, int curr_state)
-+{
-+	mlx5e_free_rx_descs(rq);
-+
-+	return mlx5e_rq_to_ready(rq, curr_state);
-+}
-+
- static int mlx5e_modify_rq_scatter_fcs(struct mlx5e_rq *rq, bool enable)
- {
- 	struct mlx5_core_dev *mdev = rq->mdev;
 -- 
 2.39.0
 
