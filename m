@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5CD3A8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:00:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B2AA0C433D2;
-	Mon, 13 Feb 2023 15:00:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A0178F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:00:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7A74BC433D2;
+	Mon, 13 Feb 2023 15:00:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300454;
-	bh=vFGH+8NCVnnXTeqHbBOjKmZepuPN3zt68N+5jGyeDgk=;
+	s=korg; t=1676300459;
+	bh=eQ6m5MksM5xD3jyQcWn7negpAGUN8T8KkDH+N0f906s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DxHolhPRE0P4WiXn29GIaZpUtL5w7/jFCJ+/s++SyDPmNt4LzDaa2UBx/ojW75gVt
-	 /5pxwQjJsGOvH9m1nHi4Jn/saSkScorimGVEgXKoLYsx24DmdX5vj/1c8Qlo3wcYHs
-	 WNNpbK8KyMWFduYTu7+VI6pXkMvxnRFx/aLlxRjQ=
+	b=J/MWJ1dUj3jyI61BBzh+4vBE7RLyI9hreUnCGS8KCCItFNTcu5nSlF9QOEmbWTEVP
+	 RA+BBDHt6jGealk3YIne5JXs/LJohXjia/84DhJltt5nnnQxjp614n7mnX988KNBUf
+	 KRDECl7ttl+5f5gKPqEyZCcCfg8qyOaKuwE/KSjc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tianhao Zhao <tizhao@redhat.com>,
-	=?UTF-8?q?=C3=8D=C3=B1igo=20Huguet?= <ihuguet@redhat.com>,
-	Martin Habets <habetsm.xilinx@gmail.com>,
+	Andre Kalb <andre.kalb@sma.de>,
+	Simon Horman <simon.horman@corigine.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 021/139] sfc: correctly advertise tunneled IPv6 segmentation
-Date: Mon, 13 Feb 2023 15:49:26 +0100
-Message-Id: <20230213144746.764210155@linuxfoundation.org>
+Subject: [PATCH 5.10 022/139] net: phy: dp83822: Fix null pointer access on DP83825/DP83826 devices
+Date: Mon, 13 Feb 2023 15:49:27 +0100
+Message-Id: <20230213144746.815463306@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -37,48 +36,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Íñigo Huguet <ihuguet@redhat.com>
+From: Andre Kalb <andre.kalb@sma.de>
 
-[ Upstream commit ffffd2454a7a1bc9f7242b12c4cc0b05c12692b4 ]
+[ Upstream commit 422ae7d9c7221e8d4c8526d0f54106307d69d2dc ]
 
-Recent sfc NICs are TSO capable for some tunnel protocols. However, it
-was not working properly because the feature was not advertised in
-hw_enc_features, but in hw_features only.
+The probe() function is only used for the DP83822 PHY, leaving the
+private data pointer uninitialized for the smaller DP83825/26 models.
+While all uses of the private data structure are hidden in 82822 specific
+callbacks, configuring the interrupt is shared across all models.
+This causes a NULL pointer dereference on the smaller PHYs as it accesses
+the private data unchecked. Verifying the pointer avoids that.
 
-Setting up a GENEVE tunnel and using iperf3 to send IPv4 and IPv6 traffic
-to the tunnel show, with tcpdump, that the IPv4 packets still had ~64k
-size but the IPv6 ones had only ~1500 bytes (they had been segmented by
-software, not offloaded). With this patch segmentation is offloaded as
-expected and the traffic is correctly received at the other end.
-
-Fixes: 24b2c3751aa3 ("sfc: advertise encapsulated offloads on EF10")
-Reported-by: Tianhao Zhao <tizhao@redhat.com>
-Signed-off-by: Íñigo Huguet <ihuguet@redhat.com>
-Acked-by: Martin Habets <habetsm.xilinx@gmail.com>
-Link: https://lore.kernel.org/r/20230125143513.25841-1-ihuguet@redhat.com
+Fixes: 5dc39fd5ef35 ("net: phy: DP83822: Add ability to advertise Fiber connection")
+Signed-off-by: Andre Kalb <andre.kalb@sma.de>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/Y9FzniUhUtbaGKU7@pc6682
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/sfc/efx.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/phy/dp83822.c | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/ethernet/sfc/efx.c b/drivers/net/ethernet/sfc/efx.c
-index 718308076341..29c8d2c99004 100644
---- a/drivers/net/ethernet/sfc/efx.c
-+++ b/drivers/net/ethernet/sfc/efx.c
-@@ -1047,8 +1047,11 @@ static int efx_pci_probe_post_io(struct efx_nic *efx)
- 	/* Determine netdevice features */
- 	net_dev->features |= (efx->type->offload_features | NETIF_F_SG |
- 			      NETIF_F_TSO | NETIF_F_RXCSUM | NETIF_F_RXALL);
--	if (efx->type->offload_features & (NETIF_F_IPV6_CSUM | NETIF_F_HW_CSUM))
-+	if (efx->type->offload_features & (NETIF_F_IPV6_CSUM | NETIF_F_HW_CSUM)) {
- 		net_dev->features |= NETIF_F_TSO6;
-+		if (efx_has_cap(efx, TX_TSO_V2_ENCAP))
-+			net_dev->hw_enc_features |= NETIF_F_TSO6;
-+	}
- 	/* Check whether device supports TSO */
- 	if (!efx->type->tso_versions || !efx->type->tso_versions(efx))
- 		net_dev->features &= ~NETIF_F_ALL_TSO;
+diff --git a/drivers/net/phy/dp83822.c b/drivers/net/phy/dp83822.c
+index db651649e0b8..81412999445d 100644
+--- a/drivers/net/phy/dp83822.c
++++ b/drivers/net/phy/dp83822.c
+@@ -247,7 +247,8 @@ static int dp83822_config_intr(struct phy_device *phydev)
+ 				DP83822_ENERGY_DET_INT_EN |
+ 				DP83822_LINK_QUAL_INT_EN);
+ 
+-		if (!dp83822->fx_enabled)
++		/* Private data pointer is NULL on DP83825/26 */
++		if (!dp83822 || !dp83822->fx_enabled)
+ 			misr_status |= DP83822_ANEG_COMPLETE_INT_EN |
+ 				       DP83822_DUP_MODE_CHANGE_INT_EN |
+ 				       DP83822_SPEED_CHANGED_INT_EN;
+@@ -267,7 +268,8 @@ static int dp83822_config_intr(struct phy_device *phydev)
+ 				DP83822_PAGE_RX_INT_EN |
+ 				DP83822_EEE_ERROR_CHANGE_INT_EN);
+ 
+-		if (!dp83822->fx_enabled)
++		/* Private data pointer is NULL on DP83825/26 */
++		if (!dp83822 || !dp83822->fx_enabled)
+ 			misr_status |= DP83822_ANEG_ERR_INT_EN |
+ 				       DP83822_WOL_PKT_INT_EN;
+ 
 -- 
 2.39.0
 
