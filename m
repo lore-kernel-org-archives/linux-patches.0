@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA8378F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:59:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1A14C433D2;
-	Mon, 13 Feb 2023 14:59:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30BA38F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:59:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACFCEC433D2;
+	Mon, 13 Feb 2023 14:59:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300375;
-	bh=ymx/KVjlvPR1PgNJ2dutXtAwc/uINXNTi0oCV538hPM=;
+	s=korg; t=1676300378;
+	bh=euOhVgYGuI8oZbdL2rie3QqxtQf/rzPsyBUWRRycc2w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dVcsLendBzwRiBKPTUxLq+/CbtjLYUonA/7YIrCTGhdCE3Nx1UWqMCDennJ1zLGhn
-	 uaR72kInIev9lgNhENxQSeHi5pDL1TdTCIhZ8qe9oSLtpgjYetAFayKB/7FgfIzWX1
-	 4IAlzrnHBh5hKcOc0OVPcibuQB+UAgsfJvimDCRo=
+	b=DWR5JqU2vgyfWAg93irEi5zwKvn33y0zoLvPVfYyiyfKbHuPEu9i+oewIFLsbzhHS
+	 PbDEfVZEvprfO4j2Dq44rg7TOWHNxjJlSNpRp/khiyFBDhK9GzaLttJHHuIRLy8e2s
+	 7qp/JwEFvM2vUNwtds8k0aZVFckiIf+tucY3obUg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Cercueil <paul@crapouillou.net>,
-	Stephen Boyd <sboyd@kernel.org>
-Subject: [PATCH 5.15 55/67] clk: ingenic: jz4760: Update M/N/OD calculation algorithm
-Date: Mon, 13 Feb 2023 15:49:36 +0100
-Message-Id: <20230213144734.997035467@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 51/67] mptcp: be careful on subflow status propagation on errors
+Date: Mon, 13 Feb 2023 15:49:32 +0100
+Message-Id: <20230213144734.812602154@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -34,82 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Cercueil <paul@crapouillou.net>
+From: Paolo Abeni <pabeni@redhat.com>
 
-commit ecfb9f404771dde909ce7743df954370933c3be2 upstream.
+commit 1249db44a102d9d3541ed7798d4b01ffdcf03524 upstream.
 
-The previous algorithm was pretty broken.
+Currently the subflow error report callback unconditionally
+propagates the fallback subflow status to the owning msk.
 
-- The inner loop had a '(m > m_max)' condition, and the value of 'm'
-  would increase in each iteration;
+If the msk is already orphaned, the above prevents the code
+from correctly tracking the msk moving to the TCP_CLOSE state
+and doing the appropriate cleanup.
 
-- Each iteration would actually multiply 'm' by two, so it is not needed
-  to re-compute the whole equation at each iteration;
+All the above causes increasing memory usage over time and
+sporadic self-tests failures.
 
-- It would loop until (m & 1) == 0, which means it would loop at most
-  once.
+There is a great deal of infrastructure trying to propagate
+correctly the fallback subflow status to the owning mptcp socket,
+e.g. via mptcp_subflow_eof() and subflow_sched_work_if_closed():
+in the error propagation path we need only to cope with unorphaned
+sockets.
 
-- The outer loop would divide the 'n' value by two at the end of each
-  iteration. This meant that for a 12 MHz parent clock and a 1.2 GHz
-  requested clock, it would first try n=12, then n=6, then n=3, then
-  n=1, none of which would work; the only valid value is n=2 in this
-  case.
-
-Simplify this algorithm with a single for loop, which decrements 'n'
-after each iteration, addressing all of the above problems.
-
-Fixes: bdbfc029374f ("clk: ingenic: Add support for the JZ4760")
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Paul Cercueil <paul@crapouillou.net>
-Link: https://lore.kernel.org/r/20221214123704.7305-1-paul@crapouillou.net
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Closes: https://github.com/multipath-tcp/mptcp_net-next/issues/339
+Fixes: 15cc10453398 ("mptcp: deliver ssk errors to msk")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/ingenic/jz4760-cgu.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ net/mptcp/subflow.c |   10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/ingenic/jz4760-cgu.c b/drivers/clk/ingenic/jz4760-cgu.c
-index ecd395ac8a28..e407f00bd594 100644
---- a/drivers/clk/ingenic/jz4760-cgu.c
-+++ b/drivers/clk/ingenic/jz4760-cgu.c
-@@ -58,7 +58,7 @@ jz4760_cgu_calc_m_n_od(const struct ingenic_cgu_pll_info *pll_info,
- 		       unsigned long rate, unsigned long parent_rate,
- 		       unsigned int *pm, unsigned int *pn, unsigned int *pod)
- {
--	unsigned int m, n, od, m_max = (1 << pll_info->m_bits) - 2;
-+	unsigned int m, n, od, m_max = (1 << pll_info->m_bits) - 1;
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1284,6 +1284,7 @@ void __mptcp_error_report(struct sock *s
+ 	mptcp_for_each_subflow(msk, subflow) {
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+ 		int err = sock_error(ssk);
++		int ssk_state;
  
- 	/* The frequency after the N divider must be between 1 and 50 MHz. */
- 	n = parent_rate / (1 * MHZ);
-@@ -66,19 +66,17 @@ jz4760_cgu_calc_m_n_od(const struct ingenic_cgu_pll_info *pll_info,
- 	/* The N divider must be >= 2. */
- 	n = clamp_val(n, 2, 1 << pll_info->n_bits);
+ 		if (!err)
+ 			continue;
+@@ -1294,7 +1295,14 @@ void __mptcp_error_report(struct sock *s
+ 		if (sk->sk_state != TCP_SYN_SENT && !__mptcp_check_fallback(msk))
+ 			continue;
  
--	for (;; n >>= 1) {
--		od = (unsigned int)-1;
-+	rate /= MHZ;
-+	parent_rate /= MHZ;
+-		inet_sk_state_store(sk, inet_sk_state_load(ssk));
++		/* We need to propagate only transition to CLOSE state.
++		 * Orphaned socket will see such state change via
++		 * subflow_sched_work_if_closed() and that path will properly
++		 * destroy the msk as needed.
++		 */
++		ssk_state = inet_sk_state_load(ssk);
++		if (ssk_state == TCP_CLOSE && !sock_flag(sk, SOCK_DEAD))
++			inet_sk_state_store(sk, ssk_state);
+ 		sk->sk_err = -err;
  
--		do {
--			m = (rate / MHZ) * (1 << ++od) * n / (parent_rate / MHZ);
--		} while ((m > m_max || m & 1) && (od < 4));
--
--		if (od < 4 && m >= 4 && m <= m_max)
--			break;
-+	for (m = m_max; m >= m_max && n >= 2; n--) {
-+		m = rate * n / parent_rate;
-+		od = m & 1;
-+		m <<= od;
- 	}
- 
- 	*pm = m;
--	*pn = n;
-+	*pn = n + 1;
- 	*pod = 1 << od;
- }
- 
--- 
-2.39.1
-
+ 		/* This barrier is coupled with smp_rmb() in mptcp_poll() */
 
 
