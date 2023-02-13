@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 424C78F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:53:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BB855C43442;
-	Mon, 13 Feb 2023 14:53:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C75EC8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:53:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 514E8C433EF;
+	Mon, 13 Feb 2023 14:53:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300021;
-	bh=oRYX2FFDP9YTBJ9yerdneP3yI6aEBn2JjzKPnA+Q2VQ=;
+	s=korg; t=1676300023;
+	bh=hgQPDfxDuqH9PPSbIf5ZCKywezKNqskkVopiWAgPIKY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wT87Y4aGkSOEorlnbD01HG3gPcGIWLGGqYO+freAE6R94S1u+80W1uYkwiWn5J/FU
-	 vo7Z8Tu6+gLVJ4CanFeVvhgSBZXyrDFhAmODHLi9WJLaPZV5jpQ9nhCBRE9+orOS2F
-	 i4Xw2SjYBvSsAMkJjhfoZpQaAyj4g6bfPshKI/mQ=
+	b=nRjbqwELwEG/NrIZkqfAp/pYl5no6wzS8VudWogkRtA6gJGBSI8c56SWNpUDwoAm/
+	 zLUfDepopwsqEtfoIYfddqOsO58ZTXdLTeHz1BRjsc4vAZk+n4ZoFsXABe5+fKCg5R
+	 I1eKVf+vtd6/u320jy9F9JQNKpEwlzJqCkg4PHc8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Herton R. Krzesinski" <herton@redhat.com>,
-	Carlos ODonell <carlos@redhat.com>,
+	Casper Andersson <casper.casan@gmail.com>,
+	Horatiu Vultur <horatiu.vultur@microchip.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 033/114] uapi: add missing ip/ipv6 header dependencies for linux/stddef.h
-Date: Mon, 13 Feb 2023 15:47:48 +0100
-Message-Id: <20230213144743.866203617@linuxfoundation.org>
+Subject: [PATCH 6.1 034/114] net: microchip: sparx5: fix PTP init/deinit not checking all ports
+Date: Mon, 13 Feb 2023 15:47:49 +0100
+Message-Id: <20230213144743.914798814@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -36,65 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herton R. Krzesinski <herton@redhat.com>
+From: Casper Andersson <casper.casan@gmail.com>
 
-[ Upstream commit 03702d4d29be4e2510ec80b248dbbde4e57030d9 ]
+[ Upstream commit d7d94b2612f5dc25d61dc7bf58aafe7b31f40191 ]
 
-Since commit 58e0be1ef6118 ("net: use struct_group to copy ip/ipv6
-header addresses"), ip and ipv6 headers started to use the __struct_group
-definition, which is defined at include/uapi/linux/stddef.h. However,
-linux/stddef.h isn't explicitly included in include/uapi/linux/{ip,ipv6}.h,
-which breaks build of xskxceiver bpf selftest if you install the uapi
-headers in the system:
+Check all ports instead of just port_count ports. PTP init was only
+checking ports 0 to port_count. If the hardware ports are not mapped
+starting from 0 then they would be missed, e.g. if only ports 20-30 were
+mapped it would attempt to init ports 0-10, resulting in NULL pointers
+when attempting to timestamp. Now it will init all mapped ports.
 
-$ make V=1 xskxceiver -C tools/testing/selftests/bpf
-...
-make: Entering directory '(...)/tools/testing/selftests/bpf'
-gcc -g -O0 -rdynamic -Wall -Werror (...)
-In file included from xskxceiver.c:79:
-/usr/include/linux/ip.h:103:9: error: expected specifier-qualifier-list before ‘__struct_group’
-  103 |         __struct_group(/* no tag */, addrs, /* no attrs */,
-      |         ^~~~~~~~~~~~~~
-...
-
-Include the missing <linux/stddef.h> dependency in ip.h and do the
-same for the ipv6.h header.
-
-Fixes: 58e0be1ef611 ("net: use struct_group to copy ip/ipv6 header addresses")
-Signed-off-by: Herton R. Krzesinski <herton@redhat.com>
-Reviewed-by: Carlos O'Donell <carlos@redhat.com>
-Tested-by: Carlos O'Donell <carlos@redhat.com>
+Fixes: 70dfe25cd866 ("net: sparx5: Update extraction/injection for timestamping")
+Signed-off-by: Casper Andersson <casper.casan@gmail.com>
+Reviewed-by: Horatiu Vultur <horatiu.vultur@microchip.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/uapi/linux/ip.h   | 1 +
- include/uapi/linux/ipv6.h | 1 +
- 2 files changed, 2 insertions(+)
+ drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/include/uapi/linux/ip.h b/include/uapi/linux/ip.h
-index 874a92349bf5b..283dec7e36451 100644
---- a/include/uapi/linux/ip.h
-+++ b/include/uapi/linux/ip.h
-@@ -18,6 +18,7 @@
- #ifndef _UAPI_LINUX_IP_H
- #define _UAPI_LINUX_IP_H
- #include <linux/types.h>
-+#include <linux/stddef.h>
- #include <asm/byteorder.h>
+diff --git a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
+index 0ed1ea7727c54..69e76634f9aa8 100644
+--- a/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
++++ b/drivers/net/ethernet/microchip/sparx5/sparx5_ptp.c
+@@ -633,7 +633,7 @@ int sparx5_ptp_init(struct sparx5 *sparx5)
+ 	/* Enable master counters */
+ 	spx5_wr(PTP_PTP_DOM_CFG_PTP_ENA_SET(0x7), sparx5, PTP_PTP_DOM_CFG);
  
- #define IPTOS_TOS_MASK		0x1E
-diff --git a/include/uapi/linux/ipv6.h b/include/uapi/linux/ipv6.h
-index 81f4243bebb1c..53326dfc59ecb 100644
---- a/include/uapi/linux/ipv6.h
-+++ b/include/uapi/linux/ipv6.h
-@@ -4,6 +4,7 @@
+-	for (i = 0; i < sparx5->port_count; i++) {
++	for (i = 0; i < SPX5_PORTS; i++) {
+ 		port = sparx5->ports[i];
+ 		if (!port)
+ 			continue;
+@@ -649,7 +649,7 @@ void sparx5_ptp_deinit(struct sparx5 *sparx5)
+ 	struct sparx5_port *port;
+ 	int i;
  
- #include <linux/libc-compat.h>
- #include <linux/types.h>
-+#include <linux/stddef.h>
- #include <linux/in6.h>
- #include <asm/byteorder.h>
- 
+-	for (i = 0; i < sparx5->port_count; i++) {
++	for (i = 0; i < SPX5_PORTS; i++) {
+ 		port = sparx5->ports[i];
+ 		if (!port)
+ 			continue;
 -- 
 2.39.0
 
