@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A33A8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:02:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91D8AC433D2;
-	Mon, 13 Feb 2023 15:02:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D6BA8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:02:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24F6BC4339C;
+	Mon, 13 Feb 2023 15:02:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300565;
-	bh=iUrqqy/r2mKWdnOJficXoLwV2cpR7Umu9Z0q8nrtkyM=;
+	s=korg; t=1676300568;
+	bh=Xt3IOYl9LSvImaehPZVqaYjoAJmamT99nIBsGcHE3nw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SZrLROLVA0Xzg1Nc2NYfd0F5mrCRGwe4KPOjmCpIRE3UKzoAyCv+Q8UTGPt13YMyY
-	 FY1UtJSGAcvmuq0xspKxEeZaGo5VBsgQm+BkfskMNmCdfaY3O72yGnvssZFGaZLnYn
-	 cH28njUGA85ktGLLDU28X5P1yDsxuBhdAegt8dFw=
+	b=YtVrnuVPhT9FAbBIhxeZAIRuza7uA7MH0nqAzWq8EEeBR8TJftO2fR8SgcAYuIAKT
+	 5yIPcYXCkxRLs0xszAQng+/ksbV567/hIfpOncbvPTpHAk/r2teL/dCR9LdOrNNSjW
+	 tL7tjLoyyrMW0iTtdtOoppkrZkIC5h+CK9i/+1KE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
+	Carlos Song <carlos.song@nxp.com>,
 	Stable@vger.kernel.org,
 	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.10 062/139] iio:adc:twl6030: Enable measurements of VUSB, VBAT and others
-Date: Mon, 13 Feb 2023 15:50:07 +0100
-Message-Id: <20230213144749.029714120@linuxfoundation.org>
+Subject: [PATCH 5.10 063/139] iio: imu: fxos8700: fix ACCEL measurement range selection
+Date: Mon, 13 Feb 2023 15:50:08 +0100
+Message-Id: <20230213144749.090755140@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -35,70 +35,102 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Carlos Song <carlos.song@nxp.com>
 
-commit f804bd0dc28683a93a60f271aaefb2fc5b0853dd upstream.
+commit 9d61c1820598a5ea474576ed55318a6dadee37ed upstream.
 
-Some inputs need to be wired up to produce proper measurements,
-without this change only near zero values are reported.
+When device is in active mode, it fails to set an ACCEL full-scale
+range(2g/4g/8g) in FXOS8700_XYZ_DATA_CFG. This is not align with the
+datasheet, but it is a fxos8700 chip behavior.
 
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Fixes: 1696f36482e70 ("iio: twl6030-gpadc: TWL6030, TWL6032 GPADC driver")
-Link: https://lore.kernel.org/r/20221201181635.3522962-1-andreas@kemnade.info
+Keep the device in standby mode before setting ACCEL full-scale range
+into FXOS8700_XYZ_DATA_CFG in chip initialization phase and setting
+scale phase.
+
+Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Link: https://lore.kernel.org/r/20221208071911.2405922-6-carlos.song@nxp.com
 Cc: <Stable@vger.kernel.org>
 Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/twl6030-gpadc.c |   32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ drivers/iio/imu/fxos8700_core.c |   41 +++++++++++++++++++++++++++++++++-------
+ 1 file changed, 34 insertions(+), 7 deletions(-)
 
---- a/drivers/iio/adc/twl6030-gpadc.c
-+++ b/drivers/iio/adc/twl6030-gpadc.c
-@@ -57,6 +57,18 @@
- #define TWL6030_GPADCS				BIT(1)
- #define TWL6030_GPADCR				BIT(0)
+--- a/drivers/iio/imu/fxos8700_core.c
++++ b/drivers/iio/imu/fxos8700_core.c
+@@ -345,7 +345,8 @@ static int fxos8700_set_active_mode(stru
+ static int fxos8700_set_scale(struct fxos8700_data *data,
+ 			      enum fxos8700_sensor t, int uscale)
+ {
+-	int i;
++	int i, ret, val;
++	bool active_mode;
+ 	static const int scale_num = ARRAY_SIZE(fxos8700_accel_scale);
+ 	struct device *dev = regmap_get_device(data->regmap);
  
-+#define USB_VBUS_CTRL_SET			0x04
-+#define USB_ID_CTRL_SET				0x06
-+
-+#define TWL6030_MISC1				0xE4
-+#define VBUS_MEAS				0x01
-+#define ID_MEAS					0x01
-+
-+#define VAC_MEAS                0x04
-+#define VBAT_MEAS               0x02
-+#define BB_MEAS                 0x01
-+
-+
- /**
-  * struct twl6030_chnl_calib - channel calibration
-  * @gain:		slope coefficient for ideal curve
-@@ -927,6 +939,26 @@ static int twl6030_gpadc_probe(struct pl
- 		return ret;
+@@ -354,6 +355,25 @@ static int fxos8700_set_scale(struct fxo
+ 		return -EINVAL;
  	}
  
-+	ret = twl_i2c_write_u8(TWL_MODULE_USB, VBUS_MEAS, USB_VBUS_CTRL_SET);
-+	if (ret < 0) {
-+		dev_err(dev, "failed to wire up inputs\n");
++	/*
++	 * When device is in active mode, it failed to set an ACCEL
++	 * full-scale range(2g/4g/8g) in FXOS8700_XYZ_DATA_CFG.
++	 * This is not align with the datasheet, but it is a fxos8700
++	 * chip behavier. Set the device in standby mode before setting
++	 * an ACCEL full-scale range.
++	 */
++	ret = regmap_read(data->regmap, FXOS8700_CTRL_REG1, &val);
++	if (ret)
 +		return ret;
++
++	active_mode = val & FXOS8700_ACTIVE;
++	if (active_mode) {
++		ret = regmap_write(data->regmap, FXOS8700_CTRL_REG1,
++				   val & ~FXOS8700_ACTIVE);
++		if (ret)
++			return ret;
 +	}
 +
-+	ret = twl_i2c_write_u8(TWL_MODULE_USB, ID_MEAS, USB_ID_CTRL_SET);
-+	if (ret < 0) {
-+		dev_err(dev, "failed to wire up inputs\n");
+ 	for (i = 0; i < scale_num; i++)
+ 		if (fxos8700_accel_scale[i].uscale == uscale)
+ 			break;
+@@ -361,8 +381,12 @@ static int fxos8700_set_scale(struct fxo
+ 	if (i == scale_num)
+ 		return -EINVAL;
+ 
+-	return regmap_write(data->regmap, FXOS8700_XYZ_DATA_CFG,
++	ret = regmap_write(data->regmap, FXOS8700_XYZ_DATA_CFG,
+ 			    fxos8700_accel_scale[i].bits);
++	if (ret)
 +		return ret;
-+	}
-+
-+	ret = twl_i2c_write_u8(TWL6030_MODULE_ID0,
-+				VBAT_MEAS | BB_MEAS | BB_MEAS,
-+				TWL6030_MISC1);
-+	if (ret < 0) {
-+		dev_err(dev, "failed to wire up inputs\n");
-+		return ret;
-+	}
-+
- 	indio_dev->name = DRIVER_NAME;
- 	indio_dev->info = &twl6030_gpadc_iio_info;
- 	indio_dev->modes = INDIO_DIRECT_MODE;
++	return regmap_write(data->regmap, FXOS8700_CTRL_REG1,
++				  active_mode);
+ }
+ 
+ static int fxos8700_get_scale(struct fxos8700_data *data,
+@@ -592,14 +616,17 @@ static int fxos8700_chip_init(struct fxo
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Max ODR (800Hz individual or 400Hz hybrid), active mode */
+-	ret = regmap_write(data->regmap, FXOS8700_CTRL_REG1,
+-			   FXOS8700_CTRL_ODR_MAX | FXOS8700_ACTIVE);
++	/*
++	 * Set max full-scale range (+/-8G) for ACCEL sensor in chip
++	 * initialization then activate the device.
++	 */
++	ret = regmap_write(data->regmap, FXOS8700_XYZ_DATA_CFG, MODE_8G);
+ 	if (ret)
+ 		return ret;
+ 
+-	/* Set for max full-scale range (+/-8G) */
+-	return regmap_write(data->regmap, FXOS8700_XYZ_DATA_CFG, MODE_8G);
++	/* Max ODR (800Hz individual or 400Hz hybrid), active mode */
++	return regmap_write(data->regmap, FXOS8700_CTRL_REG1,
++			   FXOS8700_CTRL_ODR_MAX | FXOS8700_ACTIVE);
+ }
+ 
+ static void fxos8700_chip_uninit(void *data)
 
 
