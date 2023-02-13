@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 398A38F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:53:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B211AC4339B;
-	Mon, 13 Feb 2023 14:53:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EAC158F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:53:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71473C4339C;
+	Mon, 13 Feb 2023 14:53:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676299992;
-	bh=G51K7x/kDqa36i3xosmRM5c83YASFZgEZ0GkOPhNMOU=;
+	s=korg; t=1676299994;
+	bh=kqsj8GBwo3z2c6F2QSkJYt1xH92vpxSTSaPaCIOJuf8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BVu8jnTBf1JlySIwW+qR1x74VACbuK4NSpzM2jKlY69i1oyJankXTuj2Eo1yH4Stb
-	 95j8wWtKGG6K2t8lAltz+blZ4+MOZpP55otRbtu8y6JtSZwsSRA1dm8fNokVLAtHOO
-	 VvGC6sWtNb2Wf+ZJOchJeginbhEDqL1k/9lYh6bw=
+	b=xiIkul4D586e+razfWNlE+BnLQGmr2JbMi9eWTYOmPlGJxiodDBqXXeo44q7rJmP8
+	 Y0avWynZb4AoQ0JTsciqg7Fgv8emCWrwMGpyIwcO55g7uXmLMUlj9Ok7K2Nquc9Rko
+	 PJYy1VV5n73hKY9jTTr7thCLT6f1W5kycXKIPafk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Eric Dumazet <edumazet@google.com>,
+	Dmitry Safonov <dima@arista.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/114] RDMA/usnic: use iommu_map_atomic() under spin_lock()
-Date: Mon, 13 Feb 2023 15:47:37 +0100
-Message-Id: <20230213144743.299900079@linuxfoundation.org>
+Subject: [PATCH 6.1 018/114] xfrm/compat: prevent potential spectre v1 gadget in xfrm_xlate32_attr()
+Date: Mon, 13 Feb 2023 15:47:33 +0100
+Message-Id: <20230213144743.109212162@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144742.219399167@linuxfoundation.org>
 References: <20230213144742.219399167@linuxfoundation.org>
@@ -35,49 +36,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Eric Dumazet <edumazet@google.com>
 
-[ Upstream commit b7e08a5a63a11627601915473c3b569c1f6c6c06 ]
+[ Upstream commit b6ee896385380aa621102e8ea402ba12db1cabff ]
 
-usnic_uiom_map_sorted_intervals() is called under spin_lock(), iommu_map()
-might sleep, use iommu_map_atomic() to avoid potential sleep in atomic
-context.
+  int type = nla_type(nla);
 
-Fixes: e3cf00d0a87f ("IB/usnic: Add Cisco VIC low-level hardware driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20230129093757.637354-1-yangyingliang@huawei.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+  if (type > XFRMA_MAX) {
+            return -EOPNOTSUPP;
+  }
+
+@type is then used as an array index and can be used
+as a Spectre v1 gadget.
+
+  if (nla_len(nla) < compat_policy[type].len) {
+
+array_index_nospec() can be used to prevent leaking
+content of kernel memory to malicious users.
+
+Fixes: 5106f4a8acff ("xfrm/compat: Add 32=>64-bit messages translator")
+Signed-off-by: Eric Dumazet <edumazet@google.com>
+Cc: Dmitry Safonov <dima@arista.com>
+Cc: Steffen Klassert <steffen.klassert@secunet.com>
+Reviewed-by: Dmitry Safonov <dima@arista.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/usnic/usnic_uiom.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/xfrm/xfrm_compat.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/infiniband/hw/usnic/usnic_uiom.c b/drivers/infiniband/hw/usnic/usnic_uiom.c
-index 67923ced6e2d1..b343f6f1bda57 100644
---- a/drivers/infiniband/hw/usnic/usnic_uiom.c
-+++ b/drivers/infiniband/hw/usnic/usnic_uiom.c
-@@ -277,8 +277,8 @@ static int usnic_uiom_map_sorted_intervals(struct list_head *intervals,
- 				size = pa_end - pa_start + PAGE_SIZE;
- 				usnic_dbg("va 0x%lx pa %pa size 0x%zx flags 0x%x",
- 					va_start, &pa_start, size, flags);
--				err = iommu_map(pd->domain, va_start, pa_start,
--							size, flags);
-+				err = iommu_map_atomic(pd->domain, va_start,
-+						       pa_start, size, flags);
- 				if (err) {
- 					usnic_err("Failed to map va 0x%lx pa %pa size 0x%zx with err %d\n",
- 						va_start, &pa_start, size, err);
-@@ -294,8 +294,8 @@ static int usnic_uiom_map_sorted_intervals(struct list_head *intervals,
- 				size = pa - pa_start + PAGE_SIZE;
- 				usnic_dbg("va 0x%lx pa %pa size 0x%zx flags 0x%x\n",
- 					va_start, &pa_start, size, flags);
--				err = iommu_map(pd->domain, va_start, pa_start,
--						size, flags);
-+				err = iommu_map_atomic(pd->domain, va_start,
-+						       pa_start, size, flags);
- 				if (err) {
- 					usnic_err("Failed to map va 0x%lx pa %pa size 0x%zx with err %d\n",
- 						va_start, &pa_start, size, err);
+diff --git a/net/xfrm/xfrm_compat.c b/net/xfrm/xfrm_compat.c
+index 12405aa5bce84..8cbf45a8bcdc2 100644
+--- a/net/xfrm/xfrm_compat.c
++++ b/net/xfrm/xfrm_compat.c
+@@ -5,6 +5,7 @@
+  * Based on code and translator idea by: Florian Westphal <fw@strlen.de>
+  */
+ #include <linux/compat.h>
++#include <linux/nospec.h>
+ #include <linux/xfrm.h>
+ #include <net/xfrm.h>
+ 
+@@ -437,6 +438,7 @@ static int xfrm_xlate32_attr(void *dst, const struct nlattr *nla,
+ 		NL_SET_ERR_MSG(extack, "Bad attribute");
+ 		return -EOPNOTSUPP;
+ 	}
++	type = array_index_nospec(type, XFRMA_MAX + 1);
+ 	if (nla_len(nla) < compat_policy[type].len) {
+ 		NL_SET_ERR_MSG(extack, "Attribute bad length");
+ 		return -EOPNOTSUPP;
 -- 
 2.39.0
 
