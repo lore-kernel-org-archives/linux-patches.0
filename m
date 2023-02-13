@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 554858F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15EEC433EF;
-	Mon, 13 Feb 2023 14:58:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C750D8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 50130C433D2;
+	Mon, 13 Feb 2023 14:58:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300295;
-	bh=l5w8aGc2uijod/aRcxK5DaJQ6aqrKb4fHIJGLXiU63s=;
+	s=korg; t=1676300297;
+	bh=46LCEg4+Xyit3h+BCpu6GHwpj0KKJuJj6jTqB1ArxD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TjTsPP1zs5pB/QWmrstw55kRnNMDZRMNnvByzNBvujgSBxVgwsPKa/MeKxP91e7Gx
-	 21yvNa+60VRBgKZW0FEfns0CtRJUiiMtmFrizDqhV6tnu4eI7rLQgJv0QJToyWi4Gm
-	 cYhUKuAHbgiYvmkvm/BRTOv4u3MpTNmYiTswM7u0=
+	b=bU2FRwRiVMC1bRxZ+Oi6FohWllvpwWMt2ROryqqmAjm0evQjm8kqmj2Qzd+SM3WC8
+	 8C/7KnlurvwHQbsruW/RKN1re80/uCcOlPYaUeClMKeA50EAV3RYNx51Kw0BDhCcUv
+	 Sqhkj7XVkiO5QAOVWtKCouRgOT+Kvrvhq1dj0q8E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
+	Neel Patel <neel.patel@amd.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
 	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 24/67] net: phy: meson-gxl: use MMD access dummy stubs for GXL, internal PHY
-Date: Mon, 13 Feb 2023 15:49:05 +0100
-Message-Id: <20230213144733.513609705@linuxfoundation.org>
+Subject: [PATCH 5.15 25/67] ionic: clean interrupt before enabling queue to avoid credit race
+Date: Mon, 13 Feb 2023 15:49:06 +0100
+Message-Id: <20230213144733.564211030@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -36,38 +37,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Neel Patel <neel.patel@amd.com>
 
-[ Upstream commit 69ff53e4a4c9498eeed7d1441f68a1481dc69251 ]
+[ Upstream commit e8797a058466b60fc5a3291b92430c93ba90eaff ]
 
-Jerome provided the information that also the GXL internal PHY doesn't
-support MMD register access and EEE. MMD reads return 0xffff, what
-results in e.g. completely wrong ethtool --show-eee output.
-Therefore use the MMD dummy stubs.
+Clear the interrupt credits before enabling the queue rather
+than after to be sure that the enabled queue starts at 0 and
+that we don't wipe away possible credits after enabling the
+queue.
 
-Fixes: d853d145ea3e ("net: phy: add an option to disable EEE advertisement")
-Suggested-by: Jerome Brunet <jbrunet@baylibre.com>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/84432fe4-0be4-bc82-4e5c-557206b40f56@gmail.com
+Fixes: 0f3154e6bcb3 ("ionic: Add Tx and Rx handling")
+Signed-off-by: Neel Patel <neel.patel@amd.com>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/phy/meson-gxl.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/meson-gxl.c b/drivers/net/phy/meson-gxl.c
-index 5e41658b1e2fa..a6015cd03bff8 100644
---- a/drivers/net/phy/meson-gxl.c
-+++ b/drivers/net/phy/meson-gxl.c
-@@ -261,6 +261,8 @@ static struct phy_driver meson_gxl_phy[] = {
- 		.handle_interrupt = meson_gxl_handle_interrupt,
- 		.suspend        = genphy_suspend,
- 		.resume         = genphy_resume,
-+		.read_mmd	= genphy_read_mmd_unsupported,
-+		.write_mmd	= genphy_write_mmd_unsupported,
- 	}, {
- 		PHY_ID_MATCH_EXACT(0x01803301),
- 		.name		= "Meson G12A Internal PHY",
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+index 886c997a3ad14..6fbd2a51d66ce 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+@@ -268,6 +268,7 @@ static int ionic_qcq_enable(struct ionic_qcq *qcq)
+ 			.oper = IONIC_Q_ENABLE,
+ 		},
+ 	};
++	int ret;
+ 
+ 	idev = &lif->ionic->idev;
+ 	dev = lif->ionic->dev;
+@@ -275,16 +276,24 @@ static int ionic_qcq_enable(struct ionic_qcq *qcq)
+ 	dev_dbg(dev, "q_enable.index %d q_enable.qtype %d\n",
+ 		ctx.cmd.q_control.index, ctx.cmd.q_control.type);
+ 
++	if (qcq->flags & IONIC_QCQ_F_INTR)
++		ionic_intr_clean(idev->intr_ctrl, qcq->intr.index);
++
++	ret = ionic_adminq_post_wait(lif, &ctx);
++	if (ret)
++		return ret;
++
++	if (qcq->napi.poll)
++		napi_enable(&qcq->napi);
++
+ 	if (qcq->flags & IONIC_QCQ_F_INTR) {
+ 		irq_set_affinity_hint(qcq->intr.vector,
+ 				      &qcq->intr.affinity_mask);
+-		napi_enable(&qcq->napi);
+-		ionic_intr_clean(idev->intr_ctrl, qcq->intr.index);
+ 		ionic_intr_mask(idev->intr_ctrl, qcq->intr.index,
+ 				IONIC_INTR_MASK_CLEAR);
+ 	}
+ 
+-	return ionic_adminq_post_wait(lif, &ctx);
++	return 0;
+ }
+ 
+ static int ionic_qcq_disable(struct ionic_qcq *qcq, bool send_to_hw)
 -- 
 2.39.0
 
