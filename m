@@ -1,38 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA9E08F58
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:04:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29BBBC433D2;
-	Mon, 13 Feb 2023 15:04:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D6288F58
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:04:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 893C4C433D2;
+	Mon, 13 Feb 2023 15:04:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300655;
-	bh=YFM794ua60Sc4I6fn6q3CT7SFcwrBnr84LSgSI1G0WQ=;
+	s=korg; t=1676300660;
+	bh=Co39vqHw1caTdOO0x1RYgwYCTJJk5eaLWGt6vCErSVk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NMagBCJAkQjbHtlR0DhLXiohwpR2Azw9tVW4+g3B+w9VQ+CLNRR+lHLJ+tXhYu+o7
-	 rGw6aUPtu1teC/OEB9jwQEvz0yKXw+4CDQ5kSCzGYIAaVvjxgB8C17gjI/UlUeXnNc
-	 fORspayqMPZoKzVL7d1PMAPD2PRo7jaIWYKHAOt8=
+	b=Jmop9geGW868I35X0sjOEXOY+97olTLXPjeY35oI0MulEUQ5bveYg+6AFygRY3iT0
+	 HD92ZxmHKOQDfmWq3CfaUQgeBj+dUGHaIx8rDE6JaJdVnYo89sB6OYPnKSWtT8Cpf9
+	 TLbAt2grF/Xtwv7kQsaRtZxccuzbDJPSxugI6BHg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miaohe Lin <linmiaohe@huawei.com>,
-	Huang Ying <ying.huang@intel.com>,
-	Alistair Popple <apopple@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Christoph Lameter <cl@linux.com>,
-	David Hildenbrand <david@redhat.com>,
-	David Howells <dhowells@redhat.com>,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Oscar Salvador <osalvador@suse.de>,
-	Peter Xu <peterx@redhat.com>,
-	Andrew Morton <akpm@linux-foundation.org>,
-	Sasha Levin <sashal@kernel.org>,
-	kernel test robot <lkp@intel.com>
-Subject: [PATCH 5.10 096/139] mm/migration: return errno when isolate_huge_page failed
-Date: Mon, 13 Feb 2023 15:50:41 +0100
-Message-Id: <20230213144750.896188566@linuxfoundation.org>
+	Carlos Song <carlos.song@nxp.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.10 071/139] iio: imu: fxos8700: fix MAGN sensor scale and unit
+Date: Mon, 13 Feb 2023 15:50:16 +0100
+Message-Id: <20230213144749.567348831@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -46,171 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miaohe Lin <linmiaohe@huawei.com>
+From: Carlos Song <carlos.song@nxp.com>
 
-[ Upstream commit 7ce82f4c3f3ead13a9d9498768e3b1a79975c4d8 ]
+commit 2acd031347f645871959a799238a7caf6803aa18 upstream.
 
-We might fail to isolate huge page due to e.g.  the page is under
-migration which cleared HPageMigratable.  We should return errno in this
-case rather than always return 1 which could confuse the user, i.e.  the
-caller might think all of the memory is migrated while the hugetlb page is
-left behind.  We make the prototype of isolate_huge_page consistent with
-isolate_lru_page as suggested by Huang Ying and rename isolate_huge_page
-to isolate_hugetlb as suggested by Muchun to improve the readability.
++/-1200uT is a MAGN sensor full measurement range. Magnetometer scale
+is the magnetic sensitivity parameter. It is referenced as 0.1uT
+according to datasheet and magnetometer channel unit is Gauss in
+sysfs-bus-iio documentation. Gauss and uTesla unit conversion
+relationship as follows: 0.1uT = 0.001Gs.
 
-Link: https://lkml.kernel.org/r/20220530113016.16663-4-linmiaohe@huawei.com
-Fixes: e8db67eb0ded ("mm: migrate: move_pages() supports thp migration")
-Signed-off-by: Miaohe Lin <linmiaohe@huawei.com>
-Suggested-by: Huang Ying <ying.huang@intel.com>
-Reported-by: kernel test robot <lkp@intel.com> (build error)
-Cc: Alistair Popple <apopple@nvidia.com>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Christoph Lameter <cl@linux.com>
-Cc: David Hildenbrand <david@redhat.com>
-Cc: David Howells <dhowells@redhat.com>
-Cc: Mike Kravetz <mike.kravetz@oracle.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Oscar Salvador <osalvador@suse.de>
-Cc: Peter Xu <peterx@redhat.com>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Stable-dep-of: 73bdf65ea748 ("migrate: hugetlb: check for hugetlb shared PMD in node migration")
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Set magnetometer scale and available magnetometer scale as fixed 0.001Gs.
+
+Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Link: https://lore.kernel.org/r/20230118074227.1665098-5-carlos.song@nxp.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/hugetlb.h | 6 +++---
- mm/gup.c                | 2 +-
- mm/hugetlb.c            | 6 +++---
- mm/memory-failure.c     | 2 +-
- mm/memory_hotplug.c     | 2 +-
- mm/mempolicy.c          | 2 +-
- mm/migrate.c            | 7 ++++---
- 7 files changed, 14 insertions(+), 13 deletions(-)
+ drivers/iio/imu/fxos8700_core.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/include/linux/hugetlb.h b/include/linux/hugetlb.h
-index a18fc8e5a3ddb..c0ba379574a46 100644
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -145,7 +145,7 @@ int hugetlb_reserve_pages(struct inode *inode, long from, long to,
- 						vm_flags_t vm_flags);
- long hugetlb_unreserve_pages(struct inode *inode, long start, long end,
- 						long freed);
--bool isolate_huge_page(struct page *page, struct list_head *list);
-+int isolate_hugetlb(struct page *page, struct list_head *list);
- void putback_active_hugepage(struct page *page);
- void move_hugetlb_state(struct page *oldpage, struct page *newpage, int reason);
- void free_huge_page(struct page *page);
-@@ -326,9 +326,9 @@ static inline pte_t *huge_pte_offset(struct mm_struct *mm, unsigned long addr,
- 	return NULL;
- }
+--- a/drivers/iio/imu/fxos8700_core.c
++++ b/drivers/iio/imu/fxos8700_core.c
+@@ -351,7 +351,7 @@ static int fxos8700_set_scale(struct fxo
+ 	struct device *dev = regmap_get_device(data->regmap);
  
--static inline bool isolate_huge_page(struct page *page, struct list_head *list)
-+static inline int isolate_hugetlb(struct page *page, struct list_head *list)
- {
--	return false;
-+	return -EBUSY;
- }
- 
- static inline void putback_active_hugepage(struct page *page)
-diff --git a/mm/gup.c b/mm/gup.c
-index 6d5e4fd55d320..11307a8b20d58 100644
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -1627,7 +1627,7 @@ static long check_and_migrate_cma_pages(struct mm_struct *mm,
- 		 */
- 		if (is_migrate_cma_page(head)) {
- 			if (PageHuge(head)) {
--				if (!isolate_huge_page(head, &cma_page_list))
-+				if (isolate_hugetlb(head, &cma_page_list))
- 					isolation_error_count++;
- 			} else {
- 				if (!PageLRU(head) && drain_allow) {
-diff --git a/mm/hugetlb.c b/mm/hugetlb.c
-index 3499b3803384b..81949f6d29af5 100644
---- a/mm/hugetlb.c
-+++ b/mm/hugetlb.c
-@@ -5655,14 +5655,14 @@ follow_huge_pgd(struct mm_struct *mm, unsigned long address, pgd_t *pgd, int fla
- 	return pte_page(*(pte_t *)pgd) + ((address & ~PGDIR_MASK) >> PAGE_SHIFT);
- }
- 
--bool isolate_huge_page(struct page *page, struct list_head *list)
-+int isolate_hugetlb(struct page *page, struct list_head *list)
- {
--	bool ret = true;
-+	int ret = 0;
- 
- 	spin_lock(&hugetlb_lock);
- 	if (!PageHeadHuge(page) || !page_huge_active(page) ||
- 	    !get_page_unless_zero(page)) {
--		ret = false;
-+		ret = -EBUSY;
- 		goto unlock;
+ 	if (t == FXOS8700_MAGN) {
+-		dev_err(dev, "Magnetometer scale is locked at 1200uT\n");
++		dev_err(dev, "Magnetometer scale is locked at 0.001Gs\n");
+ 		return -EINVAL;
  	}
- 	clear_page_huge_active(page);
-diff --git a/mm/memory-failure.c b/mm/memory-failure.c
-index aef267c6a7246..b21dd4a793926 100644
---- a/mm/memory-failure.c
-+++ b/mm/memory-failure.c
-@@ -1763,7 +1763,7 @@ static bool isolate_page(struct page *page, struct list_head *pagelist)
- 	bool lru = PageLRU(page);
  
- 	if (PageHuge(page)) {
--		isolated = isolate_huge_page(page, pagelist);
-+		isolated = !isolate_hugetlb(page, pagelist);
- 	} else {
- 		if (lru)
- 			isolated = !isolate_lru_page(page);
-diff --git a/mm/memory_hotplug.c b/mm/memory_hotplug.c
-index 6275b1c05f111..f0633f9a91166 100644
---- a/mm/memory_hotplug.c
-+++ b/mm/memory_hotplug.c
-@@ -1288,7 +1288,7 @@ do_migrate_range(unsigned long start_pfn, unsigned long end_pfn)
+@@ -396,7 +396,7 @@ static int fxos8700_get_scale(struct fxo
+ 	static const int scale_num = ARRAY_SIZE(fxos8700_accel_scale);
  
- 		if (PageHuge(page)) {
- 			pfn = page_to_pfn(head) + compound_nr(head) - 1;
--			isolate_huge_page(head, &source);
-+			isolate_hugetlb(head, &source);
- 			continue;
- 		} else if (PageTransHuge(page))
- 			pfn = page_to_pfn(head) + thp_nr_pages(page) - 1;
-diff --git a/mm/mempolicy.c b/mm/mempolicy.c
-index f9f47449e8dda..59d72b121346f 100644
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -623,7 +623,7 @@ static int queue_pages_hugetlb(pte_t *pte, unsigned long hmask,
- 	/* With MPOL_MF_MOVE, we migrate only unshared hugepage. */
- 	if (flags & (MPOL_MF_MOVE_ALL) ||
- 	    (flags & MPOL_MF_MOVE && page_mapcount(page) == 1)) {
--		if (!isolate_huge_page(page, qp->pagelist) &&
-+		if (isolate_hugetlb(page, qp->pagelist) &&
- 			(flags & MPOL_MF_STRICT))
- 			/*
- 			 * Failed to isolate page but allow migrating pages
-diff --git a/mm/migrate.c b/mm/migrate.c
-index b716b8fa2c3ff..fcb7eb6a6ecae 100644
---- a/mm/migrate.c
-+++ b/mm/migrate.c
-@@ -164,7 +164,7 @@ void putback_movable_page(struct page *page)
-  *
-  * This function shall be used whenever the isolated pageset has been
-  * built from lru, balloon, hugetlbfs page. See isolate_migratepages_range()
-- * and isolate_huge_page().
-+ * and isolate_hugetlb().
-  */
- void putback_movable_pages(struct list_head *l)
- {
-@@ -1657,8 +1657,9 @@ static int add_page_for_migration(struct mm_struct *mm, unsigned long addr,
+ 	if (t == FXOS8700_MAGN) {
+-		*uscale = 1200; /* Magnetometer is locked at 1200uT */
++		*uscale = 1000; /* Magnetometer is locked at 0.001Gs */
+ 		return 0;
+ 	}
  
- 	if (PageHuge(page)) {
- 		if (PageHead(page)) {
--			isolate_huge_page(page, pagelist);
--			err = 1;
-+			err = isolate_hugetlb(page, pagelist);
-+			if (!err)
-+				err = 1;
- 		}
- 	} else {
- 		struct page *head;
--- 
-2.39.0
-
+@@ -588,7 +588,7 @@ static IIO_CONST_ATTR(in_accel_sampling_
+ static IIO_CONST_ATTR(in_magn_sampling_frequency_available,
+ 		      "1.5625 6.25 12.5 50 100 200 400 800");
+ static IIO_CONST_ATTR(in_accel_scale_available, "0.000244 0.000488 0.000976");
+-static IIO_CONST_ATTR(in_magn_scale_available, "0.000001200");
++static IIO_CONST_ATTR(in_magn_scale_available, "0.001000");
+ 
+ static struct attribute *fxos8700_attrs[] = {
+ 	&iio_const_attr_in_accel_sampling_frequency_available.dev_attr.attr,
 
 
