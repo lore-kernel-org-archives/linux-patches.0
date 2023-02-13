@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6A2B68F58
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:05:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4A68C433EF;
-	Mon, 13 Feb 2023 15:05:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0BC5B8F58
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:05:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C300C4339B;
+	Mon, 13 Feb 2023 15:05:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300736;
-	bh=LZwQWR/4sFlVCZklViry1Gt46Guk5CkphDHZRb6Ba9w=;
+	s=korg; t=1676300738;
+	bh=B13805gmhGPOmN6wVSEdk+PBO4qrsLdTpxK+F9q3AEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oPzA4BShqWXGvNnoR6etGj3GN+Wy53zI+PSk3ZgkzNNhjMCzwwCoqY0toPTdZkzTN
-	 kpg44l0rC+cb1c1Gv4loHIaXVXQP2olMIkHsvivcjH404KnCgViPxehFrquTniKKmX
-	 8bMZk1EiFtddzIx8XuhdJlNhS4y6Gloo1xMF/kDQ=
+	b=A+dtINtVG/48EUxO7S+z6ziZ/UbqkTTEYwOs6rlvZ9lL74hMX7bFBBjnPsRWA+nAt
+	 qm/AMqNvj6ZsNlbhrI1suJYexGos0oN4jUiaZA9rkIWXrme5R7/pzuJCjXUPXQy42V
+	 uvNm/GwKIojQNURRb3bL3F7d0Ith8PjanAotghWs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Minter <jimminter@microsoft.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 127/139] pinctrl: intel: Restore the pins that used to be in Direct IRQ mode
-Date: Mon, 13 Feb 2023 15:51:12 +0100
-Message-Id: <20230213144752.649589674@linuxfoundation.org>
+	Artemii Karasev <karasev@ispras.ru>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.10 101/139] ALSA: emux: Avoid potential array out-of-bound in snd_emux_xg_control()
+Date: Mon, 13 Feb 2023 15:50:46 +0100
+Message-Id: <20230213144751.181585592@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -37,69 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Artemii Karasev <karasev@ispras.ru>
 
-[ Upstream commit a8520be3ffef3d25b53bf171a7ebe17ee0154175 ]
+commit 6a32425f953b955b4ff82f339d01df0b713caa5d upstream.
 
-If the firmware mangled the register contents too much,
-check the saved value for the Direct IRQ mode. If it
-matches, we will restore the pin state.
+snd_emux_xg_control() can be called with an argument 'param' greater
+than size of 'control' array. It may lead to accessing 'control'
+array at a wrong index.
 
-Reported-by: Jim Minter <jimminter@microsoft.com>
-Fixes: 6989ea4881c8 ("pinctrl: intel: Save and restore pins in "direct IRQ" mode")
-Tested-by: Jim Minter <jimminter@microsoft.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://lore.kernel.org/r/20230206141558.20916-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Artemii Karasev <karasev@ispras.ru>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230207132026.2870-1-karasev@ispras.ru
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/intel/pinctrl-intel.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ sound/synth/emux/emux_nrpn.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/pinctrl/intel/pinctrl-intel.c b/drivers/pinctrl/intel/pinctrl-intel.c
-index db9087c129c0d..2ef9e2d8fd9c5 100644
---- a/drivers/pinctrl/intel/pinctrl-intel.c
-+++ b/drivers/pinctrl/intel/pinctrl-intel.c
-@@ -1606,6 +1606,12 @@ const struct intel_pinctrl_soc_data *intel_pinctrl_get_soc_data(struct platform_
- EXPORT_SYMBOL_GPL(intel_pinctrl_get_soc_data);
- 
- #ifdef CONFIG_PM_SLEEP
-+static bool __intel_gpio_is_direct_irq(u32 value)
-+{
-+	return (value & PADCFG0_GPIROUTIOXAPIC) && (value & PADCFG0_GPIOTXDIS) &&
-+	       (__intel_gpio_get_gpio_mode(value) == PADCFG0_PMODE_GPIO);
-+}
-+
- static bool intel_pinctrl_should_save(struct intel_pinctrl *pctrl, unsigned int pin)
+--- a/sound/synth/emux/emux_nrpn.c
++++ b/sound/synth/emux/emux_nrpn.c
+@@ -349,6 +349,9 @@ int
+ snd_emux_xg_control(struct snd_emux_port *port, struct snd_midi_channel *chan,
+ 		    int param)
  {
- 	const struct pin_desc *pd = pin_desc_get(pctrl->pctldev, pin);
-@@ -1639,8 +1645,7 @@ static bool intel_pinctrl_should_save(struct intel_pinctrl *pctrl, unsigned int
- 	 * See https://bugzilla.kernel.org/show_bug.cgi?id=214749.
- 	 */
- 	value = readl(intel_get_padcfg(pctrl, pin, PADCFG0));
--	if ((value & PADCFG0_GPIROUTIOXAPIC) && (value & PADCFG0_GPIOTXDIS) &&
--	    (__intel_gpio_get_gpio_mode(value) == PADCFG0_PMODE_GPIO))
-+	if (__intel_gpio_is_direct_irq(value))
- 		return true;
- 
- 	return false;
-@@ -1770,7 +1775,12 @@ int intel_pinctrl_resume_noirq(struct device *dev)
- 	for (i = 0; i < pctrl->soc->npins; i++) {
- 		const struct pinctrl_pin_desc *desc = &pctrl->soc->pins[i];
- 
--		if (!intel_pinctrl_should_save(pctrl, desc->number))
-+		if (!(intel_pinctrl_should_save(pctrl, desc->number) ||
-+		      /*
-+		       * If the firmware mangled the register contents too much,
-+		       * check the saved value for the Direct IRQ mode.
-+		       */
-+		      __intel_gpio_is_direct_irq(pads[i].padcfg0)))
- 			continue;
- 
- 		intel_restore_padcfg(pctrl, desc->number, PADCFG0, pads[i].padcfg0);
--- 
-2.39.0
-
++	if (param >= ARRAY_SIZE(chan->control))
++		return -EINVAL;
++
+ 	return send_converted_effect(xg_effects, ARRAY_SIZE(xg_effects),
+ 				     port, chan, param,
+ 				     chan->control[param],
 
 
