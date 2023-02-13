@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 063C68F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:01:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F14CC433EF;
-	Mon, 13 Feb 2023 15:01:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0C708F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:01:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D7F2C433EF;
+	Mon, 13 Feb 2023 15:01:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300497;
-	bh=6NuMmj1RiefcyWRk2AEGn54/hm5WojU7bHPFv3PJ5NM=;
+	s=korg; t=1676300500;
+	bh=/VudQlAzgWCtDMR0lTL5qBFqSCWeMhUohVtTyvwBpLs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yigVOF+6ciFWoSmACarrQpBCywZKZOXDA1Ilyk5VMBnpNAtOIMX2HuMd3oxVReNzG
-	 Y2oNppFbkHcL/E6WokruHaxsMY2K0YvnRHLaIgADmUIKSpbkl6Z5c95FXxQSG/KQgS
-	 uKGd+XO61Ab36bfYfMq1B+H6qPxMnAIcKD29oFJ8=
+	b=Wcy7Ahs32P1HpfbTtW3hNz09J0wTsfiqzf9Y4rdhGBpge8eBokJ3WUM0i2fNUEUzT
+	 1Vt1GKedsof26lmvxtA/2nJqHtFK6qrJg0JGlfOKU19G7iKe45EO+qOeEketcVqR8B
+	 +HnqCSCu2fclmevBOnBpYkmrCBuoN+5G7yrHnS2o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Martin KaFai Lau <kafai@fb.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 035/139] net: openvswitch: fix flow memory leak in ovs_flow_cmd_new
-Date: Mon, 13 Feb 2023 15:49:40 +0100
-Message-Id: <20230213144747.509164607@linuxfoundation.org>
+Subject: [PATCH 5.10 009/139] bpf: Support <8-byte scalar spill and refill
+Date: Mon, 13 Feb 2023 15:49:14 +0100
+Message-Id: <20230213144746.148641459@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -38,110 +35,214 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Martin KaFai Lau <kafai@fb.com>
 
-[ Upstream commit 0c598aed445eb45b0ee7ba405f7ece99ee349c30 ]
+[ Upstream commit 354e8f1970f821d4952458f77b1ab6c3eb24d530 ]
 
-Syzkaller reports a memory leak of new_flow in ovs_flow_cmd_new() as it is
-not freed when an allocation of a key fails.
+The verifier currently does not save the reg state when
+spilling <8byte bounded scalar to the stack.  The bpf program
+will be incorrectly rejected when this scalar is refilled to
+the reg and then used to offset into a packet header.
+The later patch has a simplified bpf prog from a real use case
+to demonstrate this case.  The current work around is
+to reparse the packet again such that this offset scalar
+is close to where the packet data will be accessed to
+avoid the spill.  Thus, the header is parsed twice.
 
-BUG: memory leak
-unreferenced object 0xffff888116668000 (size 632):
-  comm "syz-executor231", pid 1090, jiffies 4294844701 (age 18.871s)
-  hex dump (first 32 bytes):
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
-  backtrace:
-    [<00000000defa3494>] kmem_cache_zalloc include/linux/slab.h:654 [inline]
-    [<00000000defa3494>] ovs_flow_alloc+0x19/0x180 net/openvswitch/flow_table.c:77
-    [<00000000c67d8873>] ovs_flow_cmd_new+0x1de/0xd40 net/openvswitch/datapath.c:957
-    [<0000000010a539a8>] genl_family_rcv_msg_doit+0x22d/0x330 net/netlink/genetlink.c:739
-    [<00000000dff3302d>] genl_family_rcv_msg net/netlink/genetlink.c:783 [inline]
-    [<00000000dff3302d>] genl_rcv_msg+0x328/0x590 net/netlink/genetlink.c:800
-    [<000000000286dd87>] netlink_rcv_skb+0x153/0x430 net/netlink/af_netlink.c:2515
-    [<0000000061fed410>] genl_rcv+0x24/0x40 net/netlink/genetlink.c:811
-    [<000000009dc0f111>] netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
-    [<000000009dc0f111>] netlink_unicast+0x545/0x7f0 net/netlink/af_netlink.c:1339
-    [<000000004a5ee816>] netlink_sendmsg+0x8e7/0xde0 net/netlink/af_netlink.c:1934
-    [<00000000482b476f>] sock_sendmsg_nosec net/socket.c:651 [inline]
-    [<00000000482b476f>] sock_sendmsg+0x152/0x190 net/socket.c:671
-    [<00000000698574ba>] ____sys_sendmsg+0x70a/0x870 net/socket.c:2356
-    [<00000000d28d9e11>] ___sys_sendmsg+0xf3/0x170 net/socket.c:2410
-    [<0000000083ba9120>] __sys_sendmsg+0xe5/0x1b0 net/socket.c:2439
-    [<00000000c00628f8>] do_syscall_64+0x30/0x40 arch/x86/entry/common.c:46
-    [<000000004abfdcf4>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
+The llvm patch [1] will align the <8bytes spill to
+the 8-byte stack address.  This can simplify the verifier
+support by avoiding to store multiple reg states for
+each 8 byte stack slot.
 
-To fix this the patch rearranges the goto labels to reflect the order of
-object allocations and adds appropriate goto statements on the error
-paths.
+This patch changes the verifier to save the reg state when
+spilling <8bytes scalar to the stack.  This reg state saving
+is limited to spill aligned to the 8-byte stack address.
+The current refill logic has already called coerce_reg_to_size(),
+so coerce_reg_to_size() is not called on state->stack[spi].spilled_ptr
+during spill.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
+When refilling in check_stack_read_fixed_off(),  it checks
+the refill size is the same as the number of bytes marked with
+STACK_SPILL before restoring the reg state.  When restoring
+the reg state to state->regs[dst_regno], it needs
+to avoid the state->regs[dst_regno].subreg_def being
+over written because it has been marked by the check_reg_arg()
+earlier [check_mem_access() is called after check_reg_arg() in
+do_check()].  Reordering check_mem_access() and check_reg_arg()
+will need a lot of changes in test_verifier's tests because
+of the difference in verifier's error message.  Thus, the
+patch here is to save the state->regs[dst_regno].subreg_def
+first in check_stack_read_fixed_off().
 
-Fixes: 68bb10101e6b ("openvswitch: Fix flow lookup to use unmasked key")
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Link: https://lore.kernel.org/r/20230201210218.361970-1-pchelkin@ispras.ru
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+There are cases that the verifier needs to scrub the spilled slot
+from STACK_SPILL to STACK_MISC.  After this patch the spill is not always
+in 8 bytes now, so it can no longer assume the other 7 bytes are always
+marked as STACK_SPILL.  In particular, the scrub needs to avoid marking
+an uninitialized byte from STACK_INVALID to STACK_MISC.  Otherwise, the
+verifier will incorrectly accept bpf program reading uninitialized bytes
+from the stack.  A new helper scrub_spilled_slot() is created for this
+purpose.
+
+[1]: https://reviews.llvm.org/D109073
+
+Signed-off-by: Martin KaFai Lau <kafai@fb.com>
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Link: https://lore.kernel.org/bpf/20210922004941.625398-1-kafai@fb.com
+Stable-dep-of: 71f656a50176 ("bpf: Fix to preserve reg parent/live fields when copying range info")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/openvswitch/datapath.c | 12 ++++++------
- 1 file changed, 6 insertions(+), 6 deletions(-)
+ kernel/bpf/verifier.c |   67 ++++++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 52 insertions(+), 15 deletions(-)
 
-diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
-index 435f7f1be614..b625ab5e9a43 100644
---- a/net/openvswitch/datapath.c
-+++ b/net/openvswitch/datapath.c
-@@ -964,14 +964,14 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 	key = kzalloc(sizeof(*key), GFP_KERNEL);
- 	if (!key) {
- 		error = -ENOMEM;
--		goto err_kfree_key;
-+		goto err_kfree_flow;
- 	}
- 
- 	ovs_match_init(&match, key, false, &mask);
- 	error = ovs_nla_get_match(net, &match, a[OVS_FLOW_ATTR_KEY],
- 				  a[OVS_FLOW_ATTR_MASK], log);
- 	if (error)
--		goto err_kfree_flow;
-+		goto err_kfree_key;
- 
- 	ovs_flow_mask_key(&new_flow->key, key, true, &mask);
- 
-@@ -979,14 +979,14 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 	error = ovs_nla_get_identifier(&new_flow->id, a[OVS_FLOW_ATTR_UFID],
- 				       key, log);
- 	if (error)
--		goto err_kfree_flow;
-+		goto err_kfree_key;
- 
- 	/* Validate actions. */
- 	error = ovs_nla_copy_actions(net, a[OVS_FLOW_ATTR_ACTIONS],
- 				     &new_flow->key, &acts, log);
- 	if (error) {
- 		OVS_NLERR(log, "Flow actions may not be safe on all matching packets.");
--		goto err_kfree_flow;
-+		goto err_kfree_key;
- 	}
- 
- 	reply = ovs_flow_cmd_alloc_info(acts, &new_flow->id, info, false,
-@@ -1086,10 +1086,10 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
- 	kfree_skb(reply);
- err_kfree_acts:
- 	ovs_nla_free_flow_actions(acts);
--err_kfree_flow:
--	ovs_flow_free(new_flow, false);
- err_kfree_key:
- 	kfree(key);
-+err_kfree_flow:
-+	ovs_flow_free(new_flow, false);
- error:
- 	return error;
+--- a/kernel/bpf/verifier.c
++++ b/kernel/bpf/verifier.c
+@@ -570,6 +570,12 @@ static bool is_spilled_reg(const struct
+ 	return stack->slot_type[BPF_REG_SIZE - 1] == STACK_SPILL;
  }
--- 
-2.39.0
-
+ 
++static void scrub_spilled_slot(u8 *stype)
++{
++	if (*stype != STACK_INVALID)
++		*stype = STACK_MISC;
++}
++
+ static void print_verifier_state(struct bpf_verifier_env *env,
+ 				 const struct bpf_func_state *state)
+ {
+@@ -2269,15 +2275,21 @@ static bool __is_pointer_value(bool allo
+ }
+ 
+ static void save_register_state(struct bpf_func_state *state,
+-				int spi, struct bpf_reg_state *reg)
++				int spi, struct bpf_reg_state *reg,
++				int size)
+ {
+ 	int i;
+ 
+ 	state->stack[spi].spilled_ptr = *reg;
+-	state->stack[spi].spilled_ptr.live |= REG_LIVE_WRITTEN;
++	if (size == BPF_REG_SIZE)
++		state->stack[spi].spilled_ptr.live |= REG_LIVE_WRITTEN;
+ 
+-	for (i = 0; i < BPF_REG_SIZE; i++)
+-		state->stack[spi].slot_type[i] = STACK_SPILL;
++	for (i = BPF_REG_SIZE; i > BPF_REG_SIZE - size; i--)
++		state->stack[spi].slot_type[i - 1] = STACK_SPILL;
++
++	/* size < 8 bytes spill */
++	for (; i; i--)
++		scrub_spilled_slot(&state->stack[spi].slot_type[i - 1]);
+ }
+ 
+ /* check_stack_{read,write}_fixed_off functions track spill/fill of registers,
+@@ -2327,7 +2339,7 @@ static int check_stack_write_fixed_off(s
+ 			env->insn_aux_data[insn_idx].sanitize_stack_spill = true;
+ 	}
+ 
+-	if (reg && size == BPF_REG_SIZE && register_is_bounded(reg) &&
++	if (reg && !(off % BPF_REG_SIZE) && register_is_bounded(reg) &&
+ 	    !register_is_null(reg) && env->bpf_capable) {
+ 		if (dst_reg != BPF_REG_FP) {
+ 			/* The backtracking logic can only recognize explicit
+@@ -2340,7 +2352,7 @@ static int check_stack_write_fixed_off(s
+ 			if (err)
+ 				return err;
+ 		}
+-		save_register_state(state, spi, reg);
++		save_register_state(state, spi, reg, size);
+ 	} else if (reg && is_spillable_regtype(reg->type)) {
+ 		/* register containing pointer is being spilled into stack */
+ 		if (size != BPF_REG_SIZE) {
+@@ -2352,7 +2364,7 @@ static int check_stack_write_fixed_off(s
+ 			verbose(env, "cannot spill pointers to stack into stack frame of the caller\n");
+ 			return -EINVAL;
+ 		}
+-		save_register_state(state, spi, reg);
++		save_register_state(state, spi, reg, size);
+ 	} else {
+ 		u8 type = STACK_MISC;
+ 
+@@ -2361,7 +2373,7 @@ static int check_stack_write_fixed_off(s
+ 		/* Mark slots as STACK_MISC if they belonged to spilled ptr. */
+ 		if (is_spilled_reg(&state->stack[spi]))
+ 			for (i = 0; i < BPF_REG_SIZE; i++)
+-				state->stack[spi].slot_type[i] = STACK_MISC;
++				scrub_spilled_slot(&state->stack[spi].slot_type[i]);
+ 
+ 		/* only mark the slot as written if all 8 bytes were written
+ 		 * otherwise read propagation may incorrectly stop too soon
+@@ -2568,23 +2580,50 @@ static int check_stack_read_fixed_off(st
+ 	struct bpf_func_state *state = vstate->frame[vstate->curframe];
+ 	int i, slot = -off - 1, spi = slot / BPF_REG_SIZE;
+ 	struct bpf_reg_state *reg;
+-	u8 *stype;
++	u8 *stype, type;
+ 
+ 	stype = reg_state->stack[spi].slot_type;
+ 	reg = &reg_state->stack[spi].spilled_ptr;
+ 
+ 	if (is_spilled_reg(&reg_state->stack[spi])) {
+ 		if (size != BPF_REG_SIZE) {
++			u8 scalar_size = 0;
++
+ 			if (reg->type != SCALAR_VALUE) {
+ 				verbose_linfo(env, env->insn_idx, "; ");
+ 				verbose(env, "invalid size of register fill\n");
+ 				return -EACCES;
+ 			}
+-			if (dst_regno >= 0) {
++
++			mark_reg_read(env, reg, reg->parent, REG_LIVE_READ64);
++			if (dst_regno < 0)
++				return 0;
++
++			for (i = BPF_REG_SIZE; i > 0 && stype[i - 1] == STACK_SPILL; i--)
++				scalar_size++;
++
++			if (!(off % BPF_REG_SIZE) && size == scalar_size) {
++				/* The earlier check_reg_arg() has decided the
++				 * subreg_def for this insn.  Save it first.
++				 */
++				s32 subreg_def = state->regs[dst_regno].subreg_def;
++
++				state->regs[dst_regno] = *reg;
++				state->regs[dst_regno].subreg_def = subreg_def;
++			} else {
++				for (i = 0; i < size; i++) {
++					type = stype[(slot - i) % BPF_REG_SIZE];
++					if (type == STACK_SPILL)
++						continue;
++					if (type == STACK_MISC)
++						continue;
++					verbose(env, "invalid read from stack off %d+%d size %d\n",
++						off, i, size);
++					return -EACCES;
++				}
+ 				mark_reg_unknown(env, state->regs, dst_regno);
+-				state->regs[dst_regno].live |= REG_LIVE_WRITTEN;
+ 			}
+-			mark_reg_read(env, reg, reg->parent, REG_LIVE_READ64);
++			state->regs[dst_regno].live |= REG_LIVE_WRITTEN;
+ 			return 0;
+ 		}
+ 		for (i = 1; i < BPF_REG_SIZE; i++) {
+@@ -2615,8 +2654,6 @@ static int check_stack_read_fixed_off(st
+ 		}
+ 		mark_reg_read(env, reg, reg->parent, REG_LIVE_READ64);
+ 	} else {
+-		u8 type;
+-
+ 		for (i = 0; i < size; i++) {
+ 			type = stype[(slot - i) % BPF_REG_SIZE];
+ 			if (type == STACK_MISC)
+@@ -4102,7 +4139,7 @@ static int check_stack_range_initialized
+ 			if (clobber) {
+ 				__mark_reg_unknown(env, &state->stack[spi].spilled_ptr);
+ 				for (j = 0; j < BPF_REG_SIZE; j++)
+-					state->stack[spi].slot_type[j] = STACK_MISC;
++					scrub_spilled_slot(&state->stack[spi].slot_type[j]);
+ 			}
+ 			goto mark;
+ 		}
 
 
