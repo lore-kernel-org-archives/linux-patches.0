@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 818AB8F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:01:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06FD0C433EF;
-	Mon, 13 Feb 2023 15:01:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 128CF8F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:01:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E48DC433EF;
+	Mon, 13 Feb 2023 15:01:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300513;
-	bh=RTlzIJ7ithYxqaG4vqA3vheAE5Id9UhCHac8qKjbXkM=;
+	s=korg; t=1676300515;
+	bh=2KDB3hH6Kax/j8BC4BeR0hgfemHR9L4AytwYlyHqHhI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=hQUhhktdzOaKd+O0D9+LZg2nDzeQL53js7KyTiWgbrwytAGryjliPPzY88Jimll4u
-	 T52qzU/0TLvcO9Bz40Blvjp/CInA91B8rZjyy54e+YedjH77ZPQ7t1YK8m77+hzzA5
-	 XM8pB9I7Z0AfXf2jxWuhttJ32bA5SMnoirl2/Bs8=
+	b=mjVtcXkmBvYbor7OxjlNnqSKpd+4BWmDkNeR3Ym9mLjk3oSddLX9iiJ62NWe90UkF
+	 8HuYpueRCBBL+ulaMAnKCyURBmgMjezx5w42KePUkq7/ftIXxcy50Ihrdn0hE6yRTz
+	 4a9b1XEi7Tu/FDxr4JfeDY3zrhtDrifzTsrY3pgw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Martin Wilck <mwilck@suse.com>,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
+	Hao Sun <sunhao.th@gmail.com>,
+	Yonghong Song <yhs@fb.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 014/139] scsi: Revert "scsi: core: map PQ=1, PDT=other values to SCSI_SCAN_TARGET_PRESENT"
-Date: Mon, 13 Feb 2023 15:49:19 +0100
-Message-Id: <20230213144746.421099202@linuxfoundation.org>
+Subject: [PATCH 5.10 005/139] bpf: Fix a possible task gone issue with bpf_send_signal[_thread]() helpers
+Date: Mon, 13 Feb 2023 15:49:10 +0100
+Message-Id: <20230213144745.978002832@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -37,53 +36,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin K. Petersen <martin.petersen@oracle.com>
+From: Yonghong Song <yhs@fb.com>
 
-[ Upstream commit 15600159bcc6abbeae6b33a849bef90dca28b78f ]
+[ Upstream commit bdb7fdb0aca8b96cef9995d3a57e251c2289322f ]
 
-This reverts commit 948e922fc44611ee2de0c89583ca958cb5307d36.
+In current bpf_send_signal() and bpf_send_signal_thread() helper
+implementation, irq_work is used to handle nmi context. Hao Sun
+reported in [1] that the current task at the entry of the helper
+might be gone during irq_work callback processing. To fix the issue,
+a reference is acquired for the current task before enqueuing into
+the irq_work so that the queued task is still available during
+irq_work callback processing.
 
-Not all targets that return PQ=1 and PDT=0 should be ignored. While
-the SCSI spec is vague in this department, there appears to be a
-critical mass of devices which rely on devices being accessible with
-this combination of reported values.
+  [1] https://lore.kernel.org/bpf/20230109074425.12556-1-sunhao.th@gmail.com/
 
-Fixes: 948e922fc446 ("scsi: core: map PQ=1, PDT=other values to SCSI_SCAN_TARGET_PRESENT")
-Link: https://lore.kernel.org/r/yq1lelrleqr.fsf@ca-mkp.ca.oracle.com
-Acked-by: Bart Van Assche <bvanassche@acm.org>
-Acked-by: Martin Wilck <mwilck@suse.com>
-Acked-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Fixes: 8b401f9ed244 ("bpf: implement bpf_send_signal() helper")
+Tested-by: Hao Sun <sunhao.th@gmail.com>
+Reported-by: Hao Sun <sunhao.th@gmail.com>
+Signed-off-by: Yonghong Song <yhs@fb.com>
+Link: https://lore.kernel.org/r/20230118204815.3331855-1-yhs@fb.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/scsi_scan.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ kernel/trace/bpf_trace.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
-index 8e474b145249..6f7c4d41c51d 100644
---- a/drivers/scsi/scsi_scan.c
-+++ b/drivers/scsi/scsi_scan.c
-@@ -1129,8 +1129,7 @@ static int scsi_probe_and_add_lun(struct scsi_target *starget,
- 	 * that no LUN is present, so don't add sdev in these cases.
- 	 * Two specific examples are:
- 	 * 1) NetApp targets: return PQ=1, PDT=0x1f
--	 * 2) IBM/2145 targets: return PQ=1, PDT=0
--	 * 3) USB UFI: returns PDT=0x1f, with the PQ bits being "reserved"
-+	 * 2) USB UFI: returns PDT=0x1f, with the PQ bits being "reserved"
- 	 *    in the UFI 1.0 spec (we cannot rely on reserved bits).
- 	 *
- 	 * References:
-@@ -1144,8 +1143,8 @@ static int scsi_probe_and_add_lun(struct scsi_target *starget,
- 	 * PDT=00h Direct-access device (floppy)
- 	 * PDT=1Fh none (no FDD connected to the requested logical unit)
- 	 */
--	if (((result[0] >> 5) == 1 ||
--	    (starget->pdt_1f_for_no_lun && (result[0] & 0x1f) == 0x1f)) &&
-+	if (((result[0] >> 5) == 1 || starget->pdt_1f_for_no_lun) &&
-+	    (result[0] & 0x1f) == 0x1f &&
- 	    !scsi_is_wlun(lun)) {
- 		SCSI_LOG_SCAN_BUS(3, sdev_printk(KERN_INFO, sdev,
- 					"scsi scan: peripheral device type"
+diff --git a/kernel/trace/bpf_trace.c b/kernel/trace/bpf_trace.c
+index ab4f51716645..94e51d36fb49 100644
+--- a/kernel/trace/bpf_trace.c
++++ b/kernel/trace/bpf_trace.c
+@@ -1055,6 +1055,7 @@ static void do_bpf_send_signal(struct irq_work *entry)
+ 
+ 	work = container_of(entry, struct send_signal_irq_work, irq_work);
+ 	group_send_sig_info(work->sig, SEND_SIG_PRIV, work->task, work->type);
++	put_task_struct(work->task);
+ }
+ 
+ static int bpf_send_signal_common(u32 sig, enum pid_type type)
+@@ -1091,7 +1092,7 @@ static int bpf_send_signal_common(u32 sig, enum pid_type type)
+ 		 * to the irq_work. The current task may change when queued
+ 		 * irq works get executed.
+ 		 */
+-		work->task = current;
++		work->task = get_task_struct(current);
+ 		work->sig = sig;
+ 		work->type = type;
+ 		irq_work_queue(&work->irq_work);
 -- 
 2.39.0
 
