@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ED208F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 62DCAC433EF;
-	Mon, 13 Feb 2023 14:58:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8A0D08F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 14:58:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 11D26C433EF;
+	Mon, 13 Feb 2023 14:58:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300315;
-	bh=MeqTT5Tr9yBIUsl0AhWpvLtyFh2uzbODEUB/vzeICgc=;
+	s=korg; t=1676300318;
+	bh=zgBfq7s1Cxit47btw0Uli2ILQbpP6G3PcYn3JgUGv7c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RztpTa+OaBwX3NLD8YtZzPst9BnhPRw47QpiPEFPl8yxAmjAurZwmd7h6HZBQs3hE
-	 2PZFFstyHqWxFpAfPRNxxBalY8qWYeH/bji5uJE/dB+hU3GgVn9OeEXA/WY0Y7hSxU
-	 HtgiP/2CVHJ56rGOvxL+edtQ95RhQuH3YLRwpCdY=
+	b=Khc3HoWAJ04fDEnpiHTyCmV6L8DMLRpg+27YdEgS/AwKV0STTg//mr3pUoTnSaf81
+	 dU3O3DiYOdHddq3GtxxgNj3iDcXUU+jAlXbtLQlgIMPu0Tq+K5yq6O/D3pGaurW9Cg
+	 +CYyknCcu5hhE5a1EV0CxG+Oz+KHTps9WuwQwrBY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Adham Faris <afaris@nvidia.com>,
-	Tariq Toukan <tariqt@nvidia.com>,
-	Saeed Mahameed <saeedm@nvidia.com>,
+	Frank Wunderlich <frank-w@public-files.de>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	=?UTF-8?q?Ar=C4=B1n=C3=A7=20=C3=9CNAL?= <arinc.unal@arinc9.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 32/67] net/mlx5e: Update rx ring hw mtu upon each rx-fcs flag change
-Date: Mon, 13 Feb 2023 15:49:13 +0100
-Message-Id: <20230213144733.901766861@linuxfoundation.org>
+Subject: [PATCH 5.15 28/67] net: dsa: mt7530: dont change PVC_EG_TAG when CPU port becomes VLAN-aware
+Date: Mon, 13 Feb 2023 15:49:09 +0100
+Message-Id: <20230213144733.704951997@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144732.336342050@linuxfoundation.org>
 References: <20230213144732.336342050@linuxfoundation.org>
@@ -36,163 +38,104 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Adham Faris <afaris@nvidia.com>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit 1e66220948df815d7b37e0ff8b4627ce10433738 ]
+[ Upstream commit 0b6d6425103a676e2b6a81f3fd35d7ea4f9b90ec ]
 
-rq->hw_mtu is used in function en_rx.c/mlx5e_skb_from_cqe_mpwrq_linear()
-to catch oversized packets. If FCS is concatenated to the end of the
-packet then the check should be updated accordingly.
+Frank reports that in a mt7530 setup where some ports are standalone and
+some are in a VLAN-aware bridge, 8021q uppers of the standalone ports
+lose their VLAN tag on xmit, as seen by the link partner.
 
-Rx rings initialization (mlx5e_init_rxq_rq()) invoked for every new set
-of channels, as part of mlx5e_safe_switch_params(), unknowingly if it
-runs with default configuration or not. Current rq->hw_mtu
-initialization assumes default configuration and ignores
-params->scatter_fcs_en flag state.
-Fix this, by accounting for params->scatter_fcs_en flag state during
-rq->hw_mtu initialization.
+This seems to occur because once the other ports join the VLAN-aware
+bridge, mt7530_port_vlan_filtering() also calls
+mt7530_port_set_vlan_aware(ds, cpu_dp->index), and this affects the way
+that the switch processes the traffic of the standalone port.
 
-In addition, updating rq->hw_mtu value during ingress traffic might
-lead to packets drop and oversize_pkts_sw_drop counter increase with no
-good reason. Hence we remove this optimization and switch the set of
-channels with a new one, to make sure we don't get false positives on
-the oversize_pkts_sw_drop counter.
+Relevant is the PVC_EG_TAG bit. The MT7530 documentation says about it:
 
-Fixes: 102722fc6832 ("net/mlx5e: Add support for RXFCS feature flag")
-Signed-off-by: Adham Faris <afaris@nvidia.com>
-Reviewed-by: Tariq Toukan <tariqt@nvidia.com>
-Signed-off-by: Saeed Mahameed <saeedm@nvidia.com>
+EG_TAG: Incoming Port Egress Tag VLAN Attribution
+0: disabled (system default)
+1: consistent (keep the original ingress tag attribute)
+
+My interpretation is that this setting applies on the ingress port, and
+"disabled" is basically the normal behavior, where the egress tag format
+of the packet (tagged or untagged) is decided by the VLAN table
+(MT7530_VLAN_EGRESS_UNTAG or MT7530_VLAN_EGRESS_TAG).
+
+But there is also an option of overriding the system default behavior,
+and for the egress tagging format of packets to be decided not by the
+VLAN table, but simply by copying the ingress tag format (if ingress was
+tagged, egress is tagged; if ingress was untagged, egress is untagged;
+aka "consistent). This is useful in 2 scenarios:
+
+- VLAN-unaware bridge ports will always encounter a miss in the VLAN
+  table. They should forward a packet as-is, though. So we use
+  "consistent" there. See commit e045124e9399 ("net: dsa: mt7530: fix
+  tagged frames pass-through in VLAN-unaware mode").
+
+- Traffic injected from the CPU port. The operating system is in god
+  mode; if it wants a packet to exit as VLAN-tagged, it sends it as
+  VLAN-tagged. Otherwise it sends it as VLAN-untagged*.
+
+*This is true only if we don't consider the bridge TX forwarding offload
+feature, which mt7530 doesn't support.
+
+So for now, make the CPU port always stay in "consistent" mode to allow
+software VLANs to be forwarded to their egress ports with the VLAN tag
+intact, and not stripped.
+
+Link: https://lore.kernel.org/netdev/trinity-e6294d28-636c-4c40-bb8b-b523521b00be-1674233135062@3c-app-gmx-bs36/
+Fixes: e045124e9399 ("net: dsa: mt7530: fix tagged frames pass-through in VLAN-unaware mode")
+Reported-by: Frank Wunderlich <frank-w@public-files.de>
+Tested-by: Frank Wunderlich <frank-w@public-files.de>
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Tested-by: Arınç ÜNAL <arinc.unal@arinc9.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20230205140713.1609281-1-vladimir.oltean@nxp.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/mellanox/mlx5/core/en_main.c | 86 ++++---------------
- 1 file changed, 15 insertions(+), 71 deletions(-)
+ drivers/net/dsa/mt7530.c | 26 +++++++++++++++++++-------
+ 1 file changed, 19 insertions(+), 7 deletions(-)
 
-diff --git a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-index 866242ac72c29..f1dd966e2bdbf 100644
---- a/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-+++ b/drivers/net/ethernet/mellanox/mlx5/core/en_main.c
-@@ -392,7 +392,8 @@ static int mlx5e_init_rxq_rq(struct mlx5e_channel *c, struct mlx5e_params *param
- 	rq->icosq        = &c->icosq;
- 	rq->ix           = c->ix;
- 	rq->mdev         = mdev;
--	rq->hw_mtu       = MLX5E_SW2HW_MTU(params, params->sw_mtu);
-+	rq->hw_mtu =
-+		MLX5E_SW2HW_MTU(params, params->sw_mtu) - ETH_FCS_LEN * !params->scatter_fcs_en;
- 	rq->xdpsq        = &c->rq_xdpsq;
- 	rq->stats        = &c->priv->channel_stats[c->ix].rq;
- 	rq->ptp_cyc2time = mlx5_rq_ts_translator(mdev);
-@@ -727,35 +728,6 @@ int mlx5e_flush_rq(struct mlx5e_rq *rq, int curr_state)
- 	return mlx5e_rq_to_ready(rq, curr_state);
- }
- 
--static int mlx5e_modify_rq_scatter_fcs(struct mlx5e_rq *rq, bool enable)
--{
--	struct mlx5_core_dev *mdev = rq->mdev;
--
--	void *in;
--	void *rqc;
--	int inlen;
--	int err;
--
--	inlen = MLX5_ST_SZ_BYTES(modify_rq_in);
--	in = kvzalloc(inlen, GFP_KERNEL);
--	if (!in)
--		return -ENOMEM;
--
--	rqc = MLX5_ADDR_OF(modify_rq_in, in, ctx);
--
--	MLX5_SET(modify_rq_in, in, rq_state, MLX5_RQC_STATE_RDY);
--	MLX5_SET64(modify_rq_in, in, modify_bitmask,
--		   MLX5_MODIFY_RQ_IN_MODIFY_BITMASK_SCATTER_FCS);
--	MLX5_SET(rqc, rqc, scatter_fcs, enable);
--	MLX5_SET(rqc, rqc, state, MLX5_RQC_STATE_RDY);
--
--	err = mlx5_core_modify_rq(mdev, rq->rqn, in);
--
--	kvfree(in);
--
--	return err;
--}
--
- static int mlx5e_modify_rq_vsd(struct mlx5e_rq *rq, bool vsd)
- {
- 	struct mlx5_core_dev *mdev = rq->mdev;
-@@ -2876,20 +2848,6 @@ static void mlx5e_cleanup_nic_tx(struct mlx5e_priv *priv)
- 	mlx5e_destroy_tises(priv);
- }
- 
--static int mlx5e_modify_channels_scatter_fcs(struct mlx5e_channels *chs, bool enable)
--{
--	int err = 0;
--	int i;
--
--	for (i = 0; i < chs->num; i++) {
--		err = mlx5e_modify_rq_scatter_fcs(&chs->c[i]->rq, enable);
--		if (err)
--			return err;
+diff --git a/drivers/net/dsa/mt7530.c b/drivers/net/dsa/mt7530.c
+index 704ba461a6000..c1505de23957f 100644
+--- a/drivers/net/dsa/mt7530.c
++++ b/drivers/net/dsa/mt7530.c
+@@ -1290,14 +1290,26 @@ mt7530_port_set_vlan_aware(struct dsa_switch *ds, int port)
+ 		if (!priv->ports[port].pvid)
+ 			mt7530_rmw(priv, MT7530_PVC_P(port), ACC_FRM_MASK,
+ 				   MT7530_VLAN_ACC_TAGGED);
 -	}
--
--	return 0;
--}
--
- static int mlx5e_modify_channels_vsd(struct mlx5e_channels *chs, bool vsd)
- {
- 	int err;
-@@ -3401,41 +3359,27 @@ static int mlx5e_set_rx_port_ts(struct mlx5_core_dev *mdev, bool enable)
- 	return mlx5_set_ports_check(mdev, in, sizeof(in));
+ 
+-	/* Set the port as a user port which is to be able to recognize VID
+-	 * from incoming packets before fetching entry within the VLAN table.
+-	 */
+-	mt7530_rmw(priv, MT7530_PVC_P(port), VLAN_ATTR_MASK | PVC_EG_TAG_MASK,
+-		   VLAN_ATTR(MT7530_VLAN_USER) |
+-		   PVC_EG_TAG(MT7530_VLAN_EG_DISABLED));
++		/* Set the port as a user port which is to be able to recognize
++		 * VID from incoming packets before fetching entry within the
++		 * VLAN table.
++		 */
++		mt7530_rmw(priv, MT7530_PVC_P(port),
++			   VLAN_ATTR_MASK | PVC_EG_TAG_MASK,
++			   VLAN_ATTR(MT7530_VLAN_USER) |
++			   PVC_EG_TAG(MT7530_VLAN_EG_DISABLED));
++	} else {
++		/* Also set CPU ports to the "user" VLAN port attribute, to
++		 * allow VLAN classification, but keep the EG_TAG attribute as
++		 * "consistent" (i.o.w. don't change its value) for packets
++		 * received by the switch from the CPU, so that tagged packets
++		 * are forwarded to user ports as tagged, and untagged as
++		 * untagged.
++		 */
++		mt7530_rmw(priv, MT7530_PVC_P(port), VLAN_ATTR_MASK,
++			   VLAN_ATTR(MT7530_VLAN_USER));
++	}
  }
  
-+static int mlx5e_set_rx_port_ts_wrap(struct mlx5e_priv *priv, void *ctx)
-+{
-+	struct mlx5_core_dev *mdev = priv->mdev;
-+	bool enable = *(bool *)ctx;
-+
-+	return mlx5e_set_rx_port_ts(mdev, enable);
-+}
-+
- static int set_feature_rx_fcs(struct net_device *netdev, bool enable)
- {
- 	struct mlx5e_priv *priv = netdev_priv(netdev);
- 	struct mlx5e_channels *chs = &priv->channels;
--	struct mlx5_core_dev *mdev = priv->mdev;
-+	struct mlx5e_params new_params;
- 	int err;
- 
- 	mutex_lock(&priv->state_lock);
- 
--	if (enable) {
--		err = mlx5e_set_rx_port_ts(mdev, false);
--		if (err)
--			goto out;
--
--		chs->params.scatter_fcs_en = true;
--		err = mlx5e_modify_channels_scatter_fcs(chs, true);
--		if (err) {
--			chs->params.scatter_fcs_en = false;
--			mlx5e_set_rx_port_ts(mdev, true);
--		}
--	} else {
--		chs->params.scatter_fcs_en = false;
--		err = mlx5e_modify_channels_scatter_fcs(chs, false);
--		if (err) {
--			chs->params.scatter_fcs_en = true;
--			goto out;
--		}
--		err = mlx5e_set_rx_port_ts(mdev, true);
--		if (err) {
--			mlx5_core_warn(mdev, "Failed to set RX port timestamp %d\n", err);
--			err = 0;
--		}
--	}
--
--out:
-+	new_params = chs->params;
-+	new_params.scatter_fcs_en = enable;
-+	err = mlx5e_safe_switch_params(priv, &new_params, mlx5e_set_rx_port_ts_wrap,
-+				       &new_params.scatter_fcs_en, true);
- 	mutex_unlock(&priv->state_lock);
- 	return err;
- }
+ static void
 -- 
 2.39.0
 
