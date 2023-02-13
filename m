@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2F2978F57
-	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:03:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AA3E4C433EF;
-	Mon, 13 Feb 2023 15:03:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD2028F57
+	for <patches@lists.linux.dev>; Mon, 13 Feb 2023 15:03:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42322C4339B;
+	Mon, 13 Feb 2023 15:03:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676300594;
-	bh=NaqXkfFZtpoDH9Rm1mz+i9p6uXwYGnK7GsGYT4K3MM0=;
+	s=korg; t=1676300596;
+	bh=E/2uAleW193iYSoF3EWEG2aHf0e9jDEeAf7JcQHrP8c=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zMW/iRGox8ojVHk6rJesGMvlVfwFf6QB+7xgajvIferjKd4xR/d9P6kv9rjc5F/YG
-	 6pSuiyHlnkeH39FfdnNu+nF96L+oGtNFfDfeYDKU8nfjCh1Bp8d72nWAxpZqm0Vwpn
-	 WkDDbyAJaLG/HjddzKoXcSr8FYROIs1zwjhHipIY=
+	b=g3GLtv7LHoPXVQHsexX3hRllSZSmjSbqdFxPbkjLe/UU7ySx990BoivaFdlwqwc/J
+	 a6vWCm8fdZO3CkVvOHerJA3y6asUlWOz8Wn0s9MC/04L593juqCEkMJKw4fQheW16s
+	 yVyd+UsbbfIzj80GSdUFOhdOEaqjZUZOteCXqeTU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Anton Gusev <aagusev@ispras.ru>,
-	Ard Biesheuvel <ardb@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 036/139] efi: fix potential NULL deref in efi_mem_reserve_persistent
-Date: Mon, 13 Feb 2023 15:49:41 +0100
-Message-Id: <20230213144747.561289739@linuxfoundation.org>
+	Carlos Song <carlos.song@nxp.com>,
+	Stable@vger.kernel.org,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Subject: [PATCH 5.10 067/139] iio: imu: fxos8700: fix swapped ACCEL and MAGN channels readback
+Date: Mon, 13 Feb 2023 15:50:12 +0100
+Message-Id: <20230213144749.323735916@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.1
 In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
 References: <20230213144745.696901179@linuxfoundation.org>
@@ -35,42 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Anton Gusev <aagusev@ispras.ru>
+From: Carlos Song <carlos.song@nxp.com>
 
-[ Upstream commit 966d47e1f27c45507c5df82b2a2157e5a4fd3909 ]
+commit c68b44bc7d9b1469774a1c985ee71d2cbc5ebef5 upstream.
 
-When iterating on a linked list, a result of memremap is dereferenced
-without checking it for NULL.
+Because ACCEL and MAGN channels data register base address is
+swapped the accelerometer and magnetometer channels readback is
+swapped.
 
-This patch adds a check that falls back on allocating a new page in
-case memremap doesn't succeed.
-
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Fixes: 18df7577adae ("efi/memreserve: deal with memreserve entries in unmapped memory")
-Signed-off-by: Anton Gusev <aagusev@ispras.ru>
-[ardb: return -ENOMEM instead of breaking out of the loop]
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 84e5ddd5c46e ("iio: imu: Add support for the FXOS8700 IMU")
+Signed-off-by: Carlos Song <carlos.song@nxp.com>
+Link: https://lore.kernel.org/r/20221208071911.2405922-3-carlos.song@nxp.com
+Cc: <Stable@vger.kernel.org>
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/efi.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/iio/imu/fxos8700_core.c |   17 +++++++++++++++--
+ 1 file changed, 15 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/firmware/efi/efi.c b/drivers/firmware/efi/efi.c
-index a2765d668856..332739f3eded 100644
---- a/drivers/firmware/efi/efi.c
-+++ b/drivers/firmware/efi/efi.c
-@@ -950,6 +950,8 @@ int __ref efi_mem_reserve_persistent(phys_addr_t addr, u64 size)
- 	/* first try to find a slot in an existing linked list entry */
- 	for (prsv = efi_memreserve_root->next; prsv; ) {
- 		rsv = memremap(prsv, sizeof(*rsv), MEMREMAP_WB);
-+		if (!rsv)
-+			return -ENOMEM;
- 		index = atomic_fetch_add_unless(&rsv->count, 1, rsv->size);
- 		if (index < rsv->size) {
- 			rsv->entry[index].base = addr;
--- 
-2.39.0
-
+--- a/drivers/iio/imu/fxos8700_core.c
++++ b/drivers/iio/imu/fxos8700_core.c
+@@ -420,9 +420,22 @@ static int fxos8700_get_data(struct fxos
+ 	u8 base, reg;
+ 	s16 tmp;
+ 	int ret;
+-	enum fxos8700_sensor type = fxos8700_to_sensor(chan_type);
+ 
+-	base = type ? FXOS8700_OUT_X_MSB : FXOS8700_M_OUT_X_MSB;
++	/*
++	 * Different register base addresses varies with channel types.
++	 * This bug hasn't been noticed before because using an enum is
++	 * really hard to read. Use an a switch statement to take over that.
++	 */
++	switch (chan_type) {
++	case IIO_ACCEL:
++		base = FXOS8700_OUT_X_MSB;
++		break;
++	case IIO_MAGN:
++		base = FXOS8700_M_OUT_X_MSB;
++		break;
++	default:
++		return -EINVAL;
++	}
+ 
+ 	/* Block read 6 bytes of device output registers to avoid data loss */
+ 	ret = regmap_bulk_read(data->regmap, base, data->buf,
 
 
