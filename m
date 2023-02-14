@@ -1,88 +1,104 @@
-Received: from mail-oi1-f178.google.com (mail-oi1-f178.google.com [209.85.167.178])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1486BC5C2
-	for <patches@lists.linux.dev>; Tue, 14 Feb 2023 17:59:51 +0000 (UTC)
-Received: by mail-oi1-f178.google.com with SMTP id c15so13657442oic.8
-        for <patches@lists.linux.dev>; Tue, 14 Feb 2023 09:59:51 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=s8UzaNfEND0jC/yceoLp3a3whXWdJFqcFdLGizTIhz8=;
-        b=qshxiKxdLxeJ4PeuqXQwrO4EnYS1plQsrkAk8SmkJWBw7LoV3iEQ5oOGGppWMzhD4+
-         hUw4KAMZuo+I8oBH46g31MescWFDI5Q3PEhN8FZoLEEptiQLlXCEe4AD3uyVBt1aMmTo
-         W6iOboHuKRxGbL6OV1nwRA1eNbiFmyj1rLPiLzBWLJSYDpxmzrCaDts0NC45VhIbTmlC
-         etGgvIFTc2Wjg2J2Pym04AGJTTNJFDHi1ZFK2zeb1l9kP4XZ/clUV1ppiw3NnnFDnuGR
-         ee+Ef2o9NaHsZRDy6CAwzQaewZKvBmTIc8yQtXsntl/sOX77KkQ5+byBb7btA4v88LAB
-         GNRw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:references:cc:to:from
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=s8UzaNfEND0jC/yceoLp3a3whXWdJFqcFdLGizTIhz8=;
-        b=dlTjqtKET6TBzPUW5PbE8ca8+mvbUqpuLBpONXyBqlt7y0TaEZaeRP5oFhSJNR677c
-         02qNQ6k3Oz32KHMsuYi7mPjZUAFbQTxBKyaYixfJA6RExm72wMEKYSTmkxXajpBjuYli
-         vpPV07a1pYmWsvACtHM/zAaHmK2/DRjLP0iL2oOWINzTFVmR4pXw5SQcPoK3kWzwtDak
-         TfP8Xhp351601fYlhpEBXf0cSB7q6l8R8A0XmpAKZAu9pZoEMfFldB6VcruK/afuYh3S
-         1PnT5aZbv+/oEBEZmYvTP5xDvDAuJ4y+kXPsyWfJDPv6QvX3g4H9Crb5rX3Dh9MCtFeK
-         yI5g==
-X-Gm-Message-State: AO0yUKUsfJQr3j65zxh72CJ06vwEcrvF6ms2GLrRfiYlxf8FCcXk6P1P
-	GAOeb4q2GIw5DISAxrD1Hp8=
-X-Google-Smtp-Source: AK7set+LDbBvPDey+JSMgLvJmB8fr2skkFW5Kqo8WzDl5uM3H7YthXP1/bXbT2bsHmtgU+Mba/Egrg==
-X-Received: by 2002:a05:6808:5c8:b0:360:d307:c23c with SMTP id d8-20020a05680805c800b00360d307c23cmr199708oij.25.1676397591064;
-        Tue, 14 Feb 2023 09:59:51 -0800 (PST)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id g1-20020a0568080dc100b0037d8bffbe76sm3032484oic.57.2023.02.14.09.59.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 14 Feb 2023 09:59:50 -0800 (PST)
-Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <710c0c7b-0920-8ea5-98e9-d3f07ab82f56@roeck-us.net>
-Date: Tue, 14 Feb 2023 09:59:48 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F0F74BA54
+	for <patches@lists.linux.dev>; Tue, 14 Feb 2023 18:05:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B98EC433D2;
+	Tue, 14 Feb 2023 18:05:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1676397957;
+	bh=ajGubc1kY8DFkYzYD33Z4hJeWOf1B5NLSFL083RoSWA=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=ABTWzuzPj76+c4v5DNoWfG8JTh2aT21Vvq04CHrXk1SyL+toT5gHqjCvYVcj64qq8
+	 yxuBIJSw8JLKEogTOrGgnTMsQCtHQlAFFcCoArw/hUynkYybfOlMrx6Zy1lXHJ5wYH
+	 i6+jrjWA298l/L2iyVCuUwrn4zEZFissqnFoZi8M=
+Date: Tue, 14 Feb 2023 19:05:55 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Guenter Roeck <linux@roeck-us.net>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 000/139] 5.10.168-rc1 review
+Message-ID: <Y+vNg6Dy3zUJ7pjp@kroah.com>
+References: <20230213144745.696901179@linuxfoundation.org>
+ <05984672-d897-6050-3e8b-3e7984c81bd9@roeck-us.net>
+ <1cd10087-87fe-048e-c9ed-0a5d32c50764@roeck-us.net>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.4.2
-Subject: Re: [PATCH 5.10 000/139] 5.10.168-rc1 review
-Content-Language: en-US
-From: Guenter Roeck <linux@roeck-us.net>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230213144745.696901179@linuxfoundation.org>
- <7106f107-061d-231d-fb09-bf4832e2a5a0@roeck-us.net>
-In-Reply-To: <7106f107-061d-231d-fb09-bf4832e2a5a0@roeck-us.net>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <1cd10087-87fe-048e-c9ed-0a5d32c50764@roeck-us.net>
 
-On 2/14/23 09:04, Guenter Roeck wrote:
-> On 2/13/23 06:49, Greg Kroah-Hartman wrote:
->> This is the start of the stable review cycle for the 5.10.168 release.
->> There are 139 patches in this series, all will be posted as a response
->> to this one.Â  If anyone has any issues with these being applied, please
->> let me know.
->>
->> Responses should be made by Wed, 15 Feb 2023 14:46:51 +0000.
->> Anything received after that time might be too late.
->>
-> 
-> We don't know the reason/cause yet, but Chromebooks with arm64 CPU
-> no longer boot with this merge applied to chromeos-5.10. We'll revert
-> the nvmem patches and try again. If that doesn't help we'll need
-> to bisect which will take some time.
-> 
+On Tue, Feb 14, 2023 at 09:51:39AM -0800, Guenter Roeck wrote:
+> On 2/14/23 09:15, Guenter Roeck wrote:
+> > On 2/13/23 06:49, Greg Kroah-Hartman wrote:
+> > > This is the start of the stable review cycle for the 5.10.168 release.
+> > > There are 139 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > > 
+> > > Responses should be made by Wed, 15 Feb 2023 14:46:51 +0000.
+> > > Anything received after that time might be too late.
+> > > 
+> > 
+> > Seen with several x86_64 boot tests during reboot:
+> > 
+> > [   13.465146] ------------[ cut here ]------------
+> > [   13.465644] list_del corruption. prev->next should be ffff9836448a5008, but was ffff9836448a2010
+> > ILLOPC: ffffffffae597813: 0f 0b
+> > [   13.466452] WARNING: CPU: 0 PID: 302 at lib/list_debug.c:59 __list_del_entry_valid+0xb3/0xe0
+> > [   13.466710] Modules linked in:
+> > [   13.467103] CPU: 0 PID: 302 Comm: init Not tainted 5.10.168-rc1+ #1
+> > [   13.467281] Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+> > [   13.467545] RIP: 0010:__list_del_entry_valid+0xb3/0xe0
+> > [   13.468234] Code: cc cc cc 4c 89 c2 48 c7 c7 f8 c6 82 af e8 ad c9 8e 00 0f 0b 31 c0 c3 cc cc cc cc 4c 89 c2 48 c7 c7 30 c7 82 af e8 95 c9 8e 00 <0f> 0b 31 c0 c3 cc cc cc cc 4c 89 c6 48 c7 c7 70 c7 82 af e8 7d c9
+> > [   13.468694] RSP: 0018:ffff9f160017bde0 EFLAGS: 00000282
+> > [   13.469076] RAX: 0000000000000000 RBX: ffff9836448a5008 RCX: 0000000000000006
+> > [   13.469297] RDX: 0000000000000000 RSI: 0000000000000000 RDI: ffffffffae0e03dd
+> > [   13.469494] RBP: ffff98364482c2f0 R08: 0000000000000001 R09: 0000000000000001
+> > [   13.469699] R10: 0000000000000001 R11: ffffffffafa6f3e0 R12: ffff9836448a5000
+> > [   13.469974] R13: ffff9836448a3910 R14: 00000000fee1dead R15: 0000000000000000
+> > [   13.470122] FS:  00007ff4118d7b28(0000) GS:ffff98365f600000(0000) knlGS:0000000000000000
+> > [   13.470230] CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> > [   13.470311] CR2: 00007fd877982830 CR3: 0000000005218000 CR4: 00000000001506f0
+> > [   13.470438] Call Trace:
+> > [   13.470532]  device_shutdown+0xae/0x1c0
+> > [   13.470610]  __do_sys_reboot.cold+0x2f/0x5b
+> > [   13.470675]  ? __lock_acquire+0x5bd/0x2640
+> > [   13.470777]  ? lock_acquire+0xc6/0x2b0
+> > [   13.470934]  ? lockdep_hardirqs_on_prepare+0xdc/0x1a0
+> > [   13.471015]  ? syscall_enter_from_user_mode+0x1d/0x50
+> > [   13.471101]  do_syscall_64+0x33/0x40
+> > [   13.471162]  entry_SYSCALL_64_after_hwframe+0x61/0xc6
+> > [   13.471313] RIP: 0033:0x7ff411860aa6
+> > [   13.471437] Code: ff 5a c3 48 63 ff b8 bb 00 00 00 0f 05 48 89 c7 e9 95 e9 ff ff 48 63 d7 bf ad de e1 fe 50 be 69 19 12 28 b8 a9 00 00 00 0f 05 <48> 89 c7 e8 78 e9 ff ff 5a c3 49 89 ca 50 48 63 d2 4d 63 c0 b8 d8
+> > [   13.471627] RSP: 002b:00007ffd01d415e0 EFLAGS: 00000246 ORIG_RAX: 00000000000000a9
+> > [   13.471741] RAX: ffffffffffffffda RBX: 000000000000000f RCX: 00007ff411860aa6
+> > [   13.471899] RDX: 0000000001234567 RSI: 0000000028121969 RDI: 00000000fee1dead
+> > [   13.472008] RBP: 0000000001234567 R08: 0000000000000000 R09: 0000000000000000
+> > [   13.472099] R10: 0000000000000000 R11: 0000000000000246 R12: 0000000000000000
+> > [   13.472185] R13: 00007ffd01d417a8 R14: 00007ff4118d7b28 R15: 0000000000000000
+> > [   13.472384] irq event stamp: 479
+> > [   13.472453] hardirqs last  enabled at (487): [<ffffffffae0e03dd>] console_unlock+0x4dd/0x5e0
+> > [   13.472560] hardirqs last disabled at (494): [<ffffffffae0e0334>] console_unlock+0x434/0x5e0
+> > [   13.472666] softirqs last  enabled at (242): [<ffffffffaf000fe2>] asm_call_irq_on_stack+0x12/0x20
+> > [   13.472775] softirqs last disabled at (237): [<ffffffffaf000fe2>] asm_call_irq_on_stack+0x12/0x20
+> > [   13.472964] ---[ end trace 34290884cd36b277 ]---
+> > 
+> > Currently bisecting.
+> > 
+> Reverting the nvmem patches fixed this problem.
 
-This is also caused by the nvmem problem.
+nvmem patches are now dropped and a -rc2 is pushed out.
 
-Guenter
+thanks,
 
+greg k-h
