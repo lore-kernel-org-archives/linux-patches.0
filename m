@@ -1,205 +1,106 @@
-Received: from mail-vs1-f52.google.com (mail-vs1-f52.google.com [209.85.217.52])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 182E227721
-	for <patches@lists.linux.dev>; Tue, 14 Feb 2023 13:21:13 +0000 (UTC)
-Received: by mail-vs1-f52.google.com with SMTP id e20so252659vso.6
-        for <patches@lists.linux.dev>; Tue, 14 Feb 2023 05:21:13 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1676380873;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=EmsTFYMpVQ0UZlUAV3mNl4dHsMwWm8lE6OUikZcSOmM=;
-        b=kSOXmsCVmYmCcuSrXE/wwiUEkDxHGX/UE+iBd7yTgqnkguLfKUPg+qn/dtrvTnp6kI
-         RZBDAaiWi1mrQrNq7tWSO9G7M12dU63i5yMx2WBkNoY/ARWGreflnjQVNDgBedHAqhPV
-         mXWLHR74OAdwcQRKMwbrfem5ZXePNAMRZsBm8v40WuxGpp0h8/UU+r4EmZBjIKq/zkmo
-         sYysI5sCz8INXivVA5THxzH4A2Ppb4+y0+5AmlElULORyf0fIF0JHfhnjmUAtyLcfDqV
-         EUwT475BUrXe32WWvpJZevDts4H2KsiULJIua0Pu58uxfyovV1QTJ1FWfHIp4KQWowtp
-         N1Eg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1676380873;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=EmsTFYMpVQ0UZlUAV3mNl4dHsMwWm8lE6OUikZcSOmM=;
-        b=y8C/mNSkMZyEt7Ey5nSdHgS/FNG5voqYz646d+fxmu7/TaEeYI5SaThjG5bsz1gaz8
-         PZy9ng9W3xEG+HLV45M3hfbLqfmiAb1I+/yMh9tRvp1drwzxES+a3Bh5uSQTGYHqZVOS
-         D1xdxmq41kvjcvChf/Tje6rMQo+OnKY+DqNkD6guLBQrMeCjrOJCx06ZxQt44+PR9Se7
-         QYfK0ZqMW/sc8BBjxXJkLaT00E9tzbZFTdV6jgQ0BJ4WyRelHxpOe0zIvbChz+hQZuU1
-         3sGD2tQNrCbwchzTLlXjiBKSH1ykALesbkEniwsUAYOQNZhL/ISLf/+E0F7sJhjsfnXi
-         Ohdw==
-X-Gm-Message-State: AO0yUKUHgjI//0Q9p0XjgnJM/qVfC7VWW0fE34iiNNADTFXybj+aUNN+
-	kwm127ARvTik9CbC974ngDG9A0E1a6f9lSSfr5t/s5NZAa1s1HZC
-X-Google-Smtp-Source: AK7set9cdoywccEgw20B1asvJX2xthwXPZ+9tykC1LIzVkIQQRSKmZhJz8+N/PUqJIAejaLqhnL46JX8HySJtHsZ2Ts=
-X-Received: by 2002:a05:6102:7d6:b0:412:23d9:be84 with SMTP id
- y22-20020a05610207d600b0041223d9be84mr419951vsg.29.1676380872731; Tue, 14 Feb
- 2023 05:21:12 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E772569
+	for <patches@lists.linux.dev>; Tue, 14 Feb 2023 14:53:21 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
+	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
+	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
+	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
+	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+	bh=8nirUzhxnwPz0ltUeGC4XuwloH3sTsVtJi6Zvkm0JSo=; b=OoWMEM0HhgAxM/PYrsAKNwPjz0
+	srnxi167O6k+YJzLwYlkM0oqjPgyua1qqOuOMnSbRLAOCfBnfnusy5fT5Yaf0Tencoo7VULvFNzpV
+	lKxb48JukR2TJ9H4EjjkRQzOr91TwM5XkFMnkGhSAMUi1ZTBzOc6N098CSCidjFhb97rnMIImRYL8
+	MRGu06MHT+rRWGOz93DzkeLOS3i+vxBZEEPxDVRqfClm/n1u99sWF/f09JkSMAFg2ftLxSa+sRwwB
+	o/bqYWG7Ka+dBD6+it1c622mryIK5RN3gN2MiK7ib6ey3ArNL4hY7W4nzi+2wZuR91a8HrKVK8ci8
+	q6cT5t8w==;
+Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:55690)
+	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+	(Exim 4.94.2)
+	(envelope-from <linux@armlinux.org.uk>)
+	id 1pRwgG-0005c3-DE; Tue, 14 Feb 2023 14:53:16 +0000
+Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
+	(envelope-from <linux@shell.armlinux.org.uk>)
+	id 1pRwgD-000401-Ge; Tue, 14 Feb 2023 14:53:13 +0000
+Date: Tue, 14 Feb 2023 14:53:13 +0000
+From: "Russell King (Oracle)" <linux@armlinux.org.uk>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Florian Fainelli <f.fainelli@gmail.com>, stable@vger.kernel.org,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 000/139] 5.10.168-rc1 review
+Message-ID: <Y+ugWb4vsEyvd9W0@shell.armlinux.org.uk>
+References: <20230213144745.696901179@linuxfoundation.org>
+ <cc3f4cfb-adbc-c3b7-1c21-bb28e98499d8@gmail.com>
+ <Y+soPsujgwChdgr7@kroah.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230213144745.696901179@linuxfoundation.org> <cc3f4cfb-adbc-c3b7-1c21-bb28e98499d8@gmail.com>
- <CA+G9fYvz7_C8ugBPkx5uf_2LBhsGytXnhG3JC4EYb0CEkFb+Jg@mail.gmail.com>
-In-Reply-To: <CA+G9fYvz7_C8ugBPkx5uf_2LBhsGytXnhG3JC4EYb0CEkFb+Jg@mail.gmail.com>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 14 Feb 2023 18:51:01 +0530
-Message-ID: <CA+G9fYsTyg_kXBizEi+DOhKkkwm0fx9DdbHFmMy-rYx6Kg5Bhw@mail.gmail.com>
-Subject: Re: [PATCH 5.10 000/139] 5.10.168-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Florian Fainelli <f.fainelli@gmail.com>, 
-	rmk+kernel@armlinux.org.uk
-Cc: stable@vger.kernel.org, 
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, 
-	rwarsow@gmx.de, christophe.kerello@foss.st.com, Arnd Bergmann <arnd@arndb.de>, 
-	Anders Roxell <anders.roxell@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <Y+soPsujgwChdgr7@kroah.com>
+Sender: Russell King (Oracle) <linux@armlinux.org.uk>
 
-On Tue, 14 Feb 2023 at 14:46, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
->
-> Hi Greg and Florian,
->
-> On Tue, 14 Feb 2023 at 01:20, Florian Fainelli <f.fainelli@gmail.com> wrote:
-> >
+On Tue, Feb 14, 2023 at 07:20:46AM +0100, Greg Kroah-Hartman wrote:
+> On Mon, Feb 13, 2023 at 11:50:24AM -0800, Florian Fainelli wrote:
 > > On 2/13/23 06:49, Greg Kroah-Hartman wrote:
 > > > This is the start of the stable review cycle for the 5.10.168 release.
 > > > There are 139 patches in this series, all will be posted as a response
 > > > to this one.  If anyone has any issues with these being applied, please
 > > > let me know.
-> > >
+> > > 
 > > > Responses should be made by Wed, 15 Feb 2023 14:46:51 +0000.
 > > > Anything received after that time might be too late.
-> > >
+> > > 
 > > > The whole patch series can be found in one patch at:
-> > >       https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.168-rc1.gz
+> > > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.168-rc1.gz
 > > > or in the git tree and branch at:
-> > >       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
 > > > and the diffstat can be found below.
-> > >
+> > > 
 > > > thanks,
-> > >
+> > > 
 > > > greg k-h
-> >
+> > 
 > > There is a regression coming from:
-> >
+> > 
 > > nvmem: core: fix registration vs use race
-> >
+> > 
 > > which causes the following to happen for MTD devices:
-> >
-> > [    6.031640] kobject_add_internal failed for mtd0 with -EEXIST, don't
-> > try to register things with the same name in the same directory.
+> > 
+> > [    6.031640] kobject_add_internal failed for mtd0 with -EEXIST, don't try
+> > to register things with the same name in the same directory.
 > > [    7.846965] spi-nor: probe of spi0.0 failed with error -17
-> >
+> > 
 > > attached is a full log with the call trace. This does not happen with
-> > v6.2-rc8 where the MTD partitions are successfully registered.qfprom
->
-> Like said above,
-> [    5.965191] kobject_add_internal failed for qfprom0 with -EEXIST,
-> don't try to register things with the same name in the same directory.
-> [    5.969110] qcom,qfprom: probe of 5c000.qfprom failed with error -17
->
-> Following kernel crash noticed on arm64 Qcom dragonboard 410c
-> device.
->
-> We will bisect this problem and get back to you soon.
+> > v6.2-rc8 where the MTD partitions are successfully registered.
+> 
+> Can you use `git bisect` to find the offending commit?
 
-Our bisection found this as the first bad commit and reverting this patch
-solved the reported problem.
+The reason for this is because, due to how my patch series was
+backported, you have ended up with nvmem_register() initialising
+its embedded device, and then calling device_add() on it _twice_.
 
-first bad commit: [a4aee79941de8559ce6e28d47fad22efc89bfe92]
-       nvmem: core: fix registration vs use race
+Basically, the backport of:
 
+	"nvmem: core: fix registration vs use race"
 
-> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
->
-> [    0.000000] Booting Linux on physical CPU 0x0000000000 [0x410fd030]
-> [    0.000000] Linux version 5.10.168-rc1 (tuxmake@tuxmake)
-> (aarch64-linux-gnu-gcc (Debian 11.3.0-11) 11.3.0, GNU ld (GNU Binutils
-> for Debian) 2.40) #1 SMP PREEMPT @1676300748
-> [    0.000000] Machine model: Qualcomm Technologies, Inc. APQ 8016 SBC
-> ..
-> [    5.808975] usbhid: USB HID core driver
-> [    5.827592] genirq: irq_chip msmgpio did not update eff. affinity
-> mask of irq 75
-> [    5.845725] sysfs: cannot create duplicate filename
-> '/devices/platform/soc/5c000.qfprom/qfprom0'
-> [    5.845994] CPU: 2 PID: 1 Comm: swapper/0 Not tainted 5.10.168-rc1 #1
-> [    5.853735] Hardware name: Qualcomm Technologies, Inc. APQ 8016 SBC (DT)
-> [    5.860077] Call trace:
-> [    5.866760]  dump_backtrace+0x0/0x1f0
-> [    5.868952]  show_stack+0x20/0x30
-> [    5.872766]  dump_stack+0x110/0x160
-> [    5.876068]  sysfs_warn_dup+0x6c/0x90
-> [    5.879371]  sysfs_create_dir_ns+0xf0/0x110
-> [    5.883201]  kobject_add_internal+0xa0/0x324
-> [    5.887195]  kobject_add+0x94/0x10c
-> [    5.891693]  device_add+0xfc/0x780
-> [    5.894902]  nvmem_register+0x6fc/0x930
-> [    5.898383]  devm_nvmem_register+0x4c/0x94
-> [    5.902121]  qfprom_probe+0x1e0/0x29c
-> [    5.906279]  platform_drv_probe+0x5c/0xb4
-> [    5.910021]  really_probe+0xf8/0x52c
-> [    5.914004]  driver_probe_device+0xfc/0x170
-> [    5.917663]  device_driver_attach+0xd0/0xe0
-> [    5.921567]  __driver_attach+0xd4/0x194
-> [    5.925729]  bus_for_each_dev+0x78/0xdc
-> [    5.929546]  driver_attach+0x2c/0x40
-> [    5.933361]  bus_add_driver+0x154/0x254
-> [    5.937183]  driver_register+0x80/0x13c
-> [    5.940745]  __platform_driver_register+0x50/0x5c
-> [    5.944583]  qfprom_driver_init+0x24/0x30
-> [    5.949428]  do_one_initcall+0x8c/0x470
-> [    5.953419]  kernel_init_freeable+0x320/0x38c
-> [    5.957077]  kernel_init+0x1c/0x128
-> [    5.961570]  ret_from_fork+0x10/0x30
-> [    5.965191] kobject_add_internal failed for qfprom0 with -EEXIST,
-> don't try to register things with the same name in the same directory.
-> [    5.969110] qcom,qfprom: probe of 5c000.qfprom failed with error -17
-> [    6.000014] netem: version 1.3
-> [    6.000346] ipip: IPv4 and MPLS over IPv4 tunneling driver
-> [    6.005040] gre: GRE over IPv4 demultiplexor driver
-> [    6.007652] ip_gre: GRE over IPv4 tunneling driver
-> [    6.018597] IPv4 over IPsec tunneling driver
-> [    6.024506] NET: Registered protocol family 10
-> [    6.031635] Segment Routing with IPv6
-> [    6.036627] ip6_gre: GRE over IPv6 tunneling driver
-> [    6.039047] NET: Registered protocol family 17
-> [    6.042070] 8021q: 802.1Q VLAN Support v1.8
-> [    6.045837] 9pnet: Installing 9P2000 support
-> [    6.049608] Key type dns_resolver registered
-> [    6.055585] registered taskstats version 1
-> [    6.057828] Loading compiled-in X.509 certificates
-> [    6.393191] debugfs: Directory '4a9000.thermal-sensor' with parent
-> 'tsens' already present!
->
->
-> please refer following link for more details on boot and test logs,
-> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10.167-140-g65fa84413c15/testrun/14762346/suite/log-parser-test/test/check-kernel-exception/log
-> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10.167-140-g65fa84413c15/testrun/14762346/suite/log-parser-test/test/check-kernel-exception/details/
->
-> metadata:
->   git_ref: linux-5.10.y
->   git_repo: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
->   git_sha: 65fa84413c15ee131ad4b76077c48f0603d1d8ec
->   git_describe: v5.10.167-140-g65fa84413c15
->   kernel_version: 5.10.168-rc1
->   kernel-config:
-> https://storage.tuxsuite.com/public/linaro/lkft/builds/2LglWCZtZStAHvQWoY1YTAIT2ws/config
->   build-url: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc/-/pipelines/776087062
->   artifact-location:
-> https://storage.tuxsuite.com/public/linaro/lkft/builds/2LglWCZtZStAHvQWoY1YTAIT2ws
->   toolchain: gcc-11
->
+is broken, because the original patch _moved_ the device_add() and
+that has not been carried forward to whatever got applied to stable
+trees.
 
-- Naresh
+It looks like the 5.15-stable version of this patch was correct.
 
-> --
-> Linaro LKFT
-> https://lkft.linaro.org
->
-> > --
-> > Florian
+Maybe whoever tried to fixup the failure needs to try again?
+
+-- 
+RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
+FTTP is here! 40Mbps down 10Mbps up. Decent connectivity at last!
