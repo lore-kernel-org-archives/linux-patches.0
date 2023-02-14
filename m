@@ -1,132 +1,83 @@
-Received: from pandora.armlinux.org.uk (pandora.armlinux.org.uk [78.32.30.218])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f49.google.com (mail-oa1-f49.google.com [209.85.160.49])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE31A2907
-	for <patches@lists.linux.dev>; Tue, 14 Feb 2023 15:39:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-	d=armlinux.org.uk; s=pandora-2019; h=Sender:In-Reply-To:Content-Type:
-	MIME-Version:References:Message-ID:Subject:Cc:To:From:Date:Reply-To:
-	Content-Transfer-Encoding:Content-ID:Content-Description:Resent-Date:
-	Resent-From:Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:
-	List-Help:List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=TbTmBsVhLS3xTFi9MDeIoKuL1H6cXmj+Hl0VBWR0AgA=; b=b389amDwLf74veKQIEV7laNsXJ
-	C8OENdXsTGBTwPScLOmeZp3pxphLKJOs/AxjWYk406uXq1Opl6V+YvxtLbZOUGbGEVcOmZ13gAp/Y
-	Lw43QtLL91qDnbGCDKCBboBkf9GvM/1/rVQqCq0RMBcoPEDjPjWKVTmNyAS1NUeQUTZ1NEeOxf/E5
-	IaJiTnnyjrZOx4EzNXMoSOUi7Yv1HXcIgp9RH65BVpia2wCeJxsf6sLk8zoLXBIqaDsEaa9kSddUx
-	erV6mTSF6ATLibeKzcl82w2424Kj/xk4R+gVvROqLnhwkcpVykEssdrpOhKuwP/RiCVnmc+X2eS1Q
-	1Z23J35A==;
-Received: from shell.armlinux.org.uk ([fd8f:7570:feb6:1:5054:ff:fe00:4ec]:48864)
-	by pandora.armlinux.org.uk with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
-	(Exim 4.94.2)
-	(envelope-from <linux@armlinux.org.uk>)
-	id 1pRxPM-0005gl-Bs; Tue, 14 Feb 2023 15:39:52 +0000
-Received: from linux by shell.armlinux.org.uk with local (Exim 4.94.2)
-	(envelope-from <linux@shell.armlinux.org.uk>)
-	id 1pRxPK-000427-I1; Tue, 14 Feb 2023 15:39:50 +0000
-Date: Tue, 14 Feb 2023 15:39:50 +0000
-From: "Russell King (Oracle)" <linux@armlinux.org.uk>
-To: Sasha Levin <sashal@kernel.org>
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	Florian Fainelli <f.fainelli@gmail.com>, stable@vger.kernel.org,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.10 000/139] 5.10.168-rc1 review
-Message-ID: <Y+urRgBmITDFjI8o@shell.armlinux.org.uk>
-References: <20230213144745.696901179@linuxfoundation.org>
- <cc3f4cfb-adbc-c3b7-1c21-bb28e98499d8@gmail.com>
- <Y+soPsujgwChdgr7@kroah.com>
- <Y+ugWb4vsEyvd9W0@shell.armlinux.org.uk>
- <Y+ukMhMS7DvuFLOJ@sashalap>
- <Y+uoAEzpM588j/lw@shell.armlinux.org.uk>
- <Y+upu2+mLUG9R6+/@sashalap>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3528BA54
+	for <patches@lists.linux.dev>; Tue, 14 Feb 2023 17:04:09 +0000 (UTC)
+Received: by mail-oa1-f49.google.com with SMTP id 586e51a60fabf-16ab8581837so19731026fac.4
+        for <patches@lists.linux.dev>; Tue, 14 Feb 2023 09:04:09 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=drKO7idz8bniLU0+VGX8stsZ83xhPx1+n6mCtJ3J9lg=;
+        b=Dp++Qy93JEem3uE1Pm6TIbd/dOGt62NimziMjkxuvubeWRWW4Fv2lIaiX0e6yM7yst
+         dqOcWk1qDMryUzJr4GWbLPxJeon4FvGg3X+JMgepL1Z1invh8HDEAk+t7+Dj7SF7LHf5
+         +NzE5phsyJW3U6uuOYovmTu4zJQW4vDMWLfP7JMcDdsfbD0dEcRTTaFk+Il2f9MzQVJx
+         zG3iz1Jbso1NGQ7XecaDCfJL3t9nZjkjLr9vkd5e4SFrm66MSxvVXWbKTwN8JLqn+GvL
+         SmES3K0SK/r8X/u5VFLGv5ot0RwFu1CB68XdjVXspMlkP+teBWZ0b7d4BAF0fa9krxDg
+         SJVQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=drKO7idz8bniLU0+VGX8stsZ83xhPx1+n6mCtJ3J9lg=;
+        b=wo5culHjiyBDBYaeDskzw3RHO8pc4kfh6/l6eMqsGMY2i8KvxC40sbJ8AbiPMVO2Bf
+         1LMG40ZWF/RGNd1zPhecVBQVFkLMCXjryE0UVNmgOptADYqkrjononJE8cpbyupKKIRa
+         AUTVt0GCmFEr3dPKaSjaAGvry4vJOlEU7FgNPIU0cgdJY0xOD7B1BOGnq2jaUfeK1LUJ
+         +nTgmKhxGVn8APO0AkmoV6wQBCB18LnSMA9AL8QgEqPeV8SA9Rj4kEIurUl4csjkjgYD
+         m9SNvAd+jGm8Hb7YFDPniJMrMhSWDH0NZkUbwi1tjntzoDJMoaPs8RrzoqJ+bRhF9CGW
+         3WKw==
+X-Gm-Message-State: AO0yUKXwAImTAc+4qvMQMnLvMwey6eu+8t7D8FPh4TvXp7vmsjXvjuL0
+	YXhOxq6riizYla8irTdqgZY=
+X-Google-Smtp-Source: AK7set8H552uknuiozheWOs5ix1vqMmOfTiBiJSx4JpmFJ7lcKyF3b9y4uGTNscTAKvbHaSPFuUwSA==
+X-Received: by 2002:a05:6870:80d1:b0:16e:223b:1922 with SMTP id r17-20020a05687080d100b0016e223b1922mr1455479oab.15.1676394248976;
+        Tue, 14 Feb 2023 09:04:08 -0800 (PST)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id q1-20020a056870e60100b00163b85ef1bfsm6038319oag.35.2023.02.14.09.04.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 14 Feb 2023 09:04:08 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <7106f107-061d-231d-fb09-bf4832e2a5a0@roeck-us.net>
+Date: Tue, 14 Feb 2023 09:04:05 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <Y+upu2+mLUG9R6+/@sashalap>
-Sender: Russell King (Oracle) <linux@armlinux.org.uk>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.4.2
+Subject: Re: [PATCH 5.10 000/139] 5.10.168-rc1 review
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
+ patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+ jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+ srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230213144745.696901179@linuxfoundation.org>
+From: Guenter Roeck <linux@roeck-us.net>
+In-Reply-To: <20230213144745.696901179@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Tue, Feb 14, 2023 at 10:33:15AM -0500, Sasha Levin wrote:
-> On Tue, Feb 14, 2023 at 03:25:52PM +0000, Russell King (Oracle) wrote:
-> > On Tue, Feb 14, 2023 at 10:09:38AM -0500, Sasha Levin wrote:
-> > > On Tue, Feb 14, 2023 at 02:53:13PM +0000, Russell King (Oracle) wrote:
-> > > > On Tue, Feb 14, 2023 at 07:20:46AM +0100, Greg Kroah-Hartman wrote:
-> > > > > On Mon, Feb 13, 2023 at 11:50:24AM -0800, Florian Fainelli wrote:
-> > > > > > On 2/13/23 06:49, Greg Kroah-Hartman wrote:
-> > > > > > > This is the start of the stable review cycle for the 5.10.168 release.
-> > > > > > > There are 139 patches in this series, all will be posted as a response
-> > > > > > > to this one.  If anyone has any issues with these being applied, please
-> > > > > > > let me know.
-> > > > > > >
-> > > > > > > Responses should be made by Wed, 15 Feb 2023 14:46:51 +0000.
-> > > > > > > Anything received after that time might be too late.
-> > > > > > >
-> > > > > > > The whole patch series can be found in one patch at:
-> > > > > > > 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.168-rc1.gz
-> > > > > > > or in the git tree and branch at:
-> > > > > > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-> > > > > > > and the diffstat can be found below.
-> > > > > > >
-> > > > > > > thanks,
-> > > > > > >
-> > > > > > > greg k-h
-> > > > > >
-> > > > > > There is a regression coming from:
-> > > > > >
-> > > > > > nvmem: core: fix registration vs use race
-> > > > > >
-> > > > > > which causes the following to happen for MTD devices:
-> > > > > >
-> > > > > > [    6.031640] kobject_add_internal failed for mtd0 with -EEXIST, don't try
-> > > > > > to register things with the same name in the same directory.
-> > > > > > [    7.846965] spi-nor: probe of spi0.0 failed with error -17
-> > > > > >
-> > > > > > attached is a full log with the call trace. This does not happen with
-> > > > > > v6.2-rc8 where the MTD partitions are successfully registered.
-> > > > >
-> > > > > Can you use `git bisect` to find the offending commit?
-> > > >
-> > > > The reason for this is because, due to how my patch series was
-> > > > backported, you have ended up with nvmem_register() initialising
-> > > > its embedded device, and then calling device_add() on it _twice_.
-> > > >
-> > > > Basically, the backport of:
-> > > >
-> > > > 	"nvmem: core: fix registration vs use race"
-> > > >
-> > > > is broken, because the original patch _moved_ the device_add() and
-> > > > that has not been carried forward to whatever got applied to stable
-> > > > trees.
-> > > >
-> > > > It looks like the 5.15-stable version of this patch was correct.
-> > > >
-> > > > Maybe whoever tried to fixup the failure needs to try again?
-> > > 
-> > > I've dropped the backport series from both 5.15 and 5.10.
-> > 
-> > So you've dropped what looks to be a perfectly good backport in 5.15,
-> > and all of the 5.10 despite it just being the last patch which is the
-> > problem. Sounds like a total over-reaction to me.
+On 2/13/23 06:49, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.168 release.
+> There are 139 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> The context is that we want to get the releases out today, and neither
-> of us will have time to verify that we did the right thing in 5.15 in
-> the next few hours.
+> Responses should be made by Wed, 15 Feb 2023 14:46:51 +0000.
+> Anything received after that time might be too late.
 > 
-> I'm just defering it to the next release cycle which is probably a few
-> days away, not completely throwing it away.... why is it such a big
-> deal?
 
-Maybe because you didn't explain that it was being dropped
-_temporarily_?
+We don't know the reason/cause yet, but Chromebooks with arm64 CPU
+no longer boot with this merge applied to chromeos-5.10. We'll revert
+the nvmem patches and try again. If that doesn't help we'll need
+to bisect which will take some time.
 
--- 
-RMK's Patch system: https://www.armlinux.org.uk/developer/patches/
-FTTP is here! 40Mbps down 10Mbps up. Decent connectivity at last!
+Guenter
+
