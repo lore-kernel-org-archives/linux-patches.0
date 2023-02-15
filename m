@@ -1,102 +1,77 @@
-Received: from mail-wr1-f41.google.com (mail-wr1-f41.google.com [209.85.221.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from szxga02-in.huawei.com (szxga02-in.huawei.com [45.249.212.188])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 411F03C1E
-	for <patches@lists.linux.dev>; Wed, 15 Feb 2023 10:01:34 +0000 (UTC)
-Received: by mail-wr1-f41.google.com with SMTP id m10so9555871wrn.4
-        for <patches@lists.linux.dev>; Wed, 15 Feb 2023 02:01:34 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=0O5OE1pYPf4Bdxg8Thv2IJmSFslR0r4iXq6hhQFPsQo=;
-        b=KzdJLQ9yPDlXF96+31EwfJ15d7GWeppPU2bcWbiye8OU1ANGa/s5JxHn+oYTd3j/Yd
-         9gmPURkg0vkYa83IjBoBKQBZnPWguVscDRUj1vOpqktIzY78UPqTTi+pZnPCR85uxjoK
-         Bh9rlMg/lzyMCy41s/85kS3a37kFDH6eaE5xvOCwMH+CO0gA/fy0ZptoeUi7LyjIaldZ
-         fMERgJYu/7xMUCVwQo0cwDD6qK9atVSdWvruNj7rlW2w99oPt8KGZjbyng5Hpkq2fkpO
-         BX3Ldx71gk1axXGm36btQcFoDQGuWhcx6yu0OA7xNUZbJ9XzS7y8ysZSAWgXAaD0P2zg
-         94lQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=0O5OE1pYPf4Bdxg8Thv2IJmSFslR0r4iXq6hhQFPsQo=;
-        b=rGwkZP6bYNqyCEZPZBY0OWjTigGNauovr6OVTP9ZN2C10MfLNTL4rfpu9yBRfBHd1h
-         u/MySQJ0jU8xlPuykGG2pgtE3+o/p4ZA6DhJl6hJ2pWK5/oy7zy+AUqV6bV3xe2985Yl
-         8PsVCtwR199MZecmLuBo44GaPrOuS3yVnnUSk90jg5+rYekPcqKOC+wFynvB/zV1zexS
-         Cx2qOmBePwCr+pX+blu/aSxa3UpXtvw4NxffYyjAiBeRhQj+Sajt9NFTe8j69oJQUmYx
-         MqIHUsAITBVUmCT1msFv4lGkwz8B7KpSNrPCQDw4Yws7qCJwDW/oHs+95msDwZUOyM2P
-         n75A==
-X-Gm-Message-State: AO0yUKVI5EAzL2n+Cmj8Zq772RS7q0TCMM9EOyrlEcFZ9+lQj7QhjSy8
-	J3YXs3+n/BBQFKr3fJK6A/k=
-X-Google-Smtp-Source: AK7set/syKP1KgtfZs0bsclPc0Y/kqWZICD77fWgN6l+GOibI6M9i43aofOjR0wF6puzx4glJuFFUw==
-X-Received: by 2002:adf:fc10:0:b0:2c5:465d:c1ab with SMTP id i16-20020adffc10000000b002c5465dc1abmr971373wrr.51.1676455292352;
-        Wed, 15 Feb 2023 02:01:32 -0800 (PST)
-Received: from debian ([167.98.27.226])
-        by smtp.gmail.com with ESMTPSA id h12-20020adff4cc000000b002be505ab59asm15344981wrp.97.2023.02.15.02.01.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Feb 2023 02:01:32 -0800 (PST)
-Date: Wed, 15 Feb 2023 10:01:30 +0000
-From: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: Re: [PATCH 5.10 000/134] 5.10.168-rc2 review
-Message-ID: <Y+ytehE6Kv5moEou@debian>
-References: <20230214172549.450713187@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3955B7C
+	for <patches@lists.linux.dev>; Wed, 15 Feb 2023 10:58:20 +0000 (UTC)
+Received: from kwepemm600011.china.huawei.com (unknown [172.30.72.53])
+	by szxga02-in.huawei.com (SkyGuard) with ESMTP id 4PGw3J6p47zRrxc;
+	Wed, 15 Feb 2023 18:55:40 +0800 (CST)
+Received: from [10.67.111.59] (10.67.111.59) by kwepemm600011.china.huawei.com
+ (7.193.23.229) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.17; Wed, 15 Feb
+ 2023 18:58:14 +0800
+Message-ID: <e1daca8f-46d5-d5b0-8152-23b172d5e63a@huawei.com>
+Date: Wed, 15 Feb 2023 18:58:13 +0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230214172549.450713187@linuxfoundation.org>
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.2
+From: heyuqiang <heyuqiang1@huawei.com>
+Subject: Re: [PATCH 5.10 88/91] arm64/kexec: Test page size support with new
+ TGRAN range values
+Reply-To: <20221102022057.553634951@linuxfoundation.org>
+To: <gregkh@linuxfoundation.org>, <anshuman.khandual@arm.com>,
+	<catalin.marinas@arm.com>, <james.morse@arm.com>,
+	<linux-arm-kernel@lists.infradead.org>, <linux-kernel@vger.kernel.org>,
+	<patches@lists.linux.dev>, <stable@vger.kernel.org>, <will@kernel.org>,
+	<yuzenghui@huawei.com>
+CC: <nixiaoming@huawei.com>, <lijiahuan5@huawei.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.67.111.59]
+X-ClientProxiedBy: dggems701-chm.china.huawei.com (10.3.19.178) To
+ kwepemm600011.china.huawei.com (7.193.23.229)
+X-CFilter-Loop: Reflected
 
-Hi Greg,
+There is an error
 
-On Tue, Feb 14, 2023 at 06:41:06PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.10.168 release.
-> There are 134 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Thu, 16 Feb 2023 17:25:19 +0000.
-> Anything received after that time might be too late.
+tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git 
+master
+head: c911f03f8d444e623724fddd82b07a7e1af42338
+commit: d5924531dd8ad012ad13eb4d6a5e120c3dadfc05 arm64/kexec: Test page 
+size support with new TGRAN range values
+# 
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d5924531dd8ad012ad13eb4d6a5e120c3dadfc05
 
-My builds have tested f90240a238a9 v5.10.168-rc3 but I am not seeing
-any mail for that, bit confused now.
+When I compile the ko file, I add [-Werror=type-limits] compilation 
+options, an error is reported during compilation.
 
-The result is for v5.10.168-rc3.
+The log is as follows:
 
-Build test (gcc version 11.3.1 20230210):
-mips: 63 configs -> no failure
-arm: 104 configs -> no failure
-arm64: 3 configs -> no failure
-x86_64: 4 configs -> no failure
-alpha allmodconfig -> no failure
-powerpc allmodconfig -> no failure
-riscv allmodconfig -> no failure
-s390 allmodconfig -> no failure
-xtensa allmodconfig -> no failure
+./arch/arm64/include/asm/cpufeature.h: In function 
+‘system_supports_4kb_granule’:
+./arch/arm64/include/asm/cpufeature.h:653:14: error:
+comparison of unsigned expression >= 0 is always true [-Werror=type-limits]
+return (val >= ID_AA64MMFR0_TGRAN4_SUPPORTED_MIN) &&
+^~
+./arch/arm64/include/asm/cpufeature.h: In function 
+‘system_supports_64kb_granule’:
+./arch/arm64/include/asm/cpufeature.h:666:14: error:
+comparison of unsigned expression >= 0 is always true [-Werror=type-limits]
+return (val >= ID_AA64MMFR0_TGRAN64_SUPPORTED_MIN) &&
+^~
 
-Boot test:
-x86_64: Booted on my test laptop. No regression.
-x86_64: Booted on qemu. No regression. [1]
-arm64: Booted on rpi4b (4GB model). No regression. [2]
+"val" variable type is "u32"
+"#define ID_AA64MMFR0_TGRAN4_SUPPORTED_MIN 0x0"
+"#define ID_AA64MMFR0_TGRAN64_SUPPORTED_MIN 0x0"
+comparison of val >= 0 is always true.
 
-[1]. https://openqa.qa.codethink.co.uk/tests/2868
-[2]. https://openqa.qa.codethink.co.uk/tests/2869
+If you fix the issue, kindly add following tag where applicable
+Reported-by: heyuqiang <heyuqiang1@huawei.com>
 
+Thanks
 
-Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
-
--- 
-Regards
-Sudip
