@@ -1,195 +1,108 @@
-Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4027B
-	for <patches@lists.linux.dev>; Wed, 15 Feb 2023 16:58:48 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1676480328; x=1708016328;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to;
-  bh=YKF6ZvLA3d1uM5u+HATdtClSHQTuSkgIY/ovoaUK2AI=;
-  b=TdeooCgMuwu19ZBSgfZVEWY0YA6cKCkQfn9js77W2somSZU4ttcFB3cb
-   XU+Cs72dn+ABp1mSQQDEHee573FW8Q5rxf99j4K131YGwBjAClacR4vhc
-   kAAqD4JleerV2sOP2L0IYoNTlZDNeihb7WtNen/M0BZiWR0qh+9q7gAAL
-   d8rOjKWi3u5m9P7QCbM8UokQnyillAGfK9BO6OU+YAzDt5A5xmxime4Qj
-   uquw2Owp6DhsPKLF0RiKGFe3nnW1tVjNq/4p865Xv1UWJRJ55AWdiXDaw
-   1PJ5HS0aXm+QzYZGEIjATI9WZbTS+/YCOQXcmyZMyPsEtpXg9+mrrwNs8
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10622"; a="311845725"
-X-IronPort-AV: E=Sophos;i="5.97,300,1669104000"; 
-   d="scan'208";a="311845725"
-Received: from orsmga001.jf.intel.com ([10.7.209.18])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2023 08:58:46 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10622"; a="702139634"
-X-IronPort-AV: E=Sophos;i="5.97,300,1669104000"; 
-   d="scan'208";a="702139634"
-Received: from chakanog-mobl.amr.corp.intel.com (HELO [10.209.64.107]) ([10.209.64.107])
-  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2023 08:58:45 -0800
-Content-Type: multipart/mixed; boundary="------------2vfOd79GQan17WCFyyEr3R4L"
-Message-ID: <a24c65f8-978d-8968-7874-6b83e14b01ba@intel.com>
-Date: Wed, 15 Feb 2023 08:58:45 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3E707B;
+	Wed, 15 Feb 2023 17:12:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1323DC433D2;
+	Wed, 15 Feb 2023 17:12:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1676481148;
+	bh=MnTXXCrHB8q0dm2TiMdq46pcPd1e+WyWRchO1UVIneM=;
+	h=From:Date:Subject:To:Cc:From;
+	b=gErMUGavKVhpeh61yCAbqALnRBmTxJvZ72Au68l86Fezdkm8wLEDM6pFITxISAz6o
+	 +zsH1JFWOB+tg3EYzrqltMaLmlXNXO3osAJ/3rMjEyJMVM/3rEpupBGxdN74ew63V2
+	 QQrljTw9WqaAzI+zfgxuIoIkF9gHWxApqBXJiOGp1xwwrWbCvN4m2R82zomqZ3W5Ur
+	 px0muhmpjRk7VUxr/IV84YfwU7kVU+1+QlcfVQrIe4C7Yv8wrZCVQ7cqLlEY6KzAK2
+	 SUDamUI0eJdFWKeNofWuJmd15TnCsX6x48PA/ElFHGmqmFDQJ+79FNU/+XPnrQO9F/
+	 VX30YfAM384iQ==
+From: Nathan Chancellor <nathan@kernel.org>
+Date: Wed, 15 Feb 2023 10:12:12 -0700
+Subject: [PATCH] macintosh: windfarm: Use unsigned type for 1-bit bitfields
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2 4/7] platform/x86/intel/ifs: Implement Array BIST test
-Content-Language: en-US
-To: Jithu Joseph <jithu.joseph@intel.com>, hdegoede@redhat.com,
- markgross@kernel.org
-Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
- dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
- gregkh@linuxfoundation.org, rostedt@goodmis.org, ashok.raj@intel.com,
- tony.luck@intel.com, linux-kernel@vger.kernel.org,
- platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
- ravi.v.shankar@intel.com, thiago.macieira@intel.com,
- athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
-References: <20230131234302.3997223-1-jithu.joseph@intel.com>
- <20230214234426.344960-1-jithu.joseph@intel.com>
- <20230214234426.344960-5-jithu.joseph@intel.com>
-From: Dave Hansen <dave.hansen@intel.com>
-In-Reply-To: <20230214234426.344960-5-jithu.joseph@intel.com>
-
-This is a multi-part message in MIME format.
---------------2vfOd79GQan17WCFyyEr3R4L
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
+Message-Id: <20230215-windfarm-wsingle-bit-bitfield-constant-conversion-v1-1-26415072e855@kernel.org>
+X-B4-Tracking: v=1; b=H4sIAGsS7WMC/x2OwQqDMBBEf0X23AVNbA/9ldJDNBtd0LXsBi2I/
+ 96kh4EZhnnMCUbKZPBsTlDa2XiTErpbA+McZCLkWDK41vnWdXc8WGIKuuJhLNNCOHCuSkxLxHE
+ Ty0FyNTtppaF3faL4IOd7B4U7BCsrDTLOlbwGy6S1+Cgl/v7PvN7X9QO+MPwNnAAAAA==
+To: mpe@ellerman.id.au, benh@kernel.crashing.org
+Cc: linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev, 
+ Nathan Chancellor <nathan@kernel.org>
+X-Mailer: b4 0.12.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2498; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=MnTXXCrHB8q0dm2TiMdq46pcPd1e+WyWRchO1UVIneM=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDMlvhar1c1ZPa7g0ZXWNysufTnWLfOMOLJF790ivuTjgh
+ 7/SzUmHO0pZGMQ4GGTFFFmqH6seNzScc5bxxqlJMHNYmUCGMHBxCsBETLgY/ik7v7EsmLOS0Xs7
+ 14LFp7nnaDEoz2QUFSlrkt2ny3K2rI2R4ejNOSxll69yq7Srct7dmHH4S5hrlpzXz55D924E6d0
+ 9zgsA
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
-On 2/14/23 15:44, Jithu Joseph wrote:
-> +/* MSR_ARRAY_BIST bit fields */
-> +union ifs_array {
-> +	u64	data;
-> +	struct {
-> +		u32	array_bitmask		:32;
-> +		u32	array_bank		:16;
-> +		u32	rsvd			:15;
-> +		u32	ctrl_result		:1;
-> +	};
-> +};
+Clang warns:
 
-Wow, after all that, the bitfield remains!  Even the totally unnecessary
-parts, like the 32-bit wide bitfield in the 32-bit value.  The *LEAST*
-you can do is this:
+  drivers/macintosh/windfarm_lm75_sensor.c:63:14: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
+                  lm->inited = 1;
+                             ^ ~
 
-	struct ifs_array {
-		u32	array_bitmask;
-		u16	array_bank
-		u16	rsvd			:15;
-		u16	ctrl_result		:1;
-	};
+  drivers/macintosh/windfarm_smu_sensors.c:356:19: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
+                  pow->fake_volts = 1;
+                                  ^ ~
+  drivers/macintosh/windfarm_smu_sensors.c:368:18: error: implicit truncation from 'int' to a one-bit wide bit-field changes value from 1 to -1 [-Werror,-Wsingle-bit-bitfield-constant-conversion]
+                  pow->quadratic = 1;
+                                 ^ ~
 
-to at least minimize the *ENTIRELY* unnecessary bitfields.  I'm also not
-quite sure why I'm going to the trouble of writing another one of these
-things since the last set of things I suggested were not incorporated.
-Or, what the obsession is with u32.
+There is no bug here since no code checks the actual value of these
+fields, just whether or not they are zero (boolean context), but this
+can be easily fixed by switching to an unsigned type.
 
-I also think the union is a bit silly.  You could literally just do:
+Signed-off-by: Nathan Chancellor <nathan@kernel.org>
+---
+ drivers/macintosh/windfarm_lm75_sensor.c | 4 ++--
+ drivers/macintosh/windfarm_smu_sensors.c | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-	msrvals[0] = (u64 *)&activate;
-or
-	memcpy(&msrvals[0], &activate, sizeof(activate));
+diff --git a/drivers/macintosh/windfarm_lm75_sensor.c b/drivers/macintosh/windfarm_lm75_sensor.c
+index 24f0a444d312..9c6febce2376 100644
+--- a/drivers/macintosh/windfarm_lm75_sensor.c
++++ b/drivers/macintosh/windfarm_lm75_sensor.c
+@@ -33,8 +33,8 @@
+ #endif
+ 
+ struct wf_lm75_sensor {
+-	int			ds1775 : 1;
+-	int			inited : 1;
++	unsigned int		ds1775 : 1;
++	unsigned int		inited : 1;
+ 	struct i2c_client	*i2c;
+ 	struct wf_sensor	sens;
+ };
+diff --git a/drivers/macintosh/windfarm_smu_sensors.c b/drivers/macintosh/windfarm_smu_sensors.c
+index 00c6fe25fcba..2bdb73b34d29 100644
+--- a/drivers/macintosh/windfarm_smu_sensors.c
++++ b/drivers/macintosh/windfarm_smu_sensors.c
+@@ -274,8 +274,8 @@ struct smu_cpu_power_sensor {
+ 	struct list_head	link;
+ 	struct wf_sensor	*volts;
+ 	struct wf_sensor	*amps;
+-	int			fake_volts : 1;
+-	int			quadratic : 1;
++	unsigned int		fake_volts : 1;
++	unsigned int		quadratic : 1;
+ 	struct wf_sensor	sens;
+ };
+ #define to_smu_cpu_power(c) container_of(c, struct smu_cpu_power_sensor, sens)
 
-and probably end up with exactly the same instructions.  There's no type
-safety here either way.  The cast, for instance, at least makes the lack
-of type safety obvious.
+---
+base-commit: ceaa837f96adb69c0df0397937cd74991d5d821a
+change-id: 20230215-windfarm-wsingle-bit-bitfield-constant-conversion-324fed6e2342
 
-> +static void ifs_array_test_core(int cpu, struct device *dev)
-> +{
-> +	union ifs_array activate, status = {0};
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
 
-So, 'status' here is initialized to 0.  But, 'activate'... hmmm
-
-Here's 1 of the 4 fields getting initialized:
-
-> +	activate.array_bitmask = ~0U;
-> +	timeout = jiffies + HZ / 2;
-> +
-> +	do {
-> +		if (time_after(jiffies, timeout)) {
-> +			timed_out = true;
-> +			break;
-> +		}
-> +
-> +		msrvals[0] = activate.data;
-
-and then the *WHOLE* union is read here.  What *is* the uninitialized
-member behavior of a bitfield?  I actually haven't the foggiest idea
-since I never use them.  Is there some subtly C voodoo that initializes
-the other 3 fields?
-
-BTW, ifs_test_core() seems to be doing basically the same thing with
-ifs_status.
-
-> +		atomic_set(&array_cpus_out, 0);
-> +		stop_core_cpuslocked(cpu, do_array_test, msrvals);
-> +		status.data = msrvals[1];
-> +
-> +		if (status.ctrl_result)
-> +			break;
-> +
-> +		activate.array_bitmask = status.array_bitmask;
-> +		activate.array_bank = status.array_bank;
-> +
-> +	} while (status.array_bitmask);
-> +
-> +	ifsd->scan_details = status.data;
-
-Beautiful.  It passes raw MSR values back out to userspace in sysfs.
-
-OK, so all this union.data nonsense is to, in the end, pass two MSR
-values through an array over to the do_array_test() function. That
-function, in the end, just does:
-
-+	if (cpu == first) {
-+		wrmsrl(MSR_ARRAY_BIST, msrs[0]);
-+		/* Pass back the result of the test */
-+		rdmsrl(MSR_ARRAY_BIST, msrs[1]);
-+	}
-
-with them.  It doesn't even reuse msrs[0].  It also doesn't bother to
-even give them symbolic names, like command and result.  The msrs[]
-values are also totally hard coded.
-
-I'd probably do something like the attached patch.  It gets rid of
-'data' and uses sane types for the bitfield.  It does away with separate
-variables and munging into/out of the msr[] array and just passes a
-single command struct to the work function.  It doesn't have any
-uninitialized structure/bitfield fields.
-
-Oh, and it's less code.
-
-> +	if (status.ctrl_result)
-> +		ifsd->status = SCAN_TEST_FAIL;
-> +	else if (timed_out || status.array_bitmask)
-> +		ifsd->status = SCAN_NOT_TESTED;
-> +	else
-> +		ifsd->status = SCAN_TEST_PASS;
-> +}
-> +
->  /*
->   * Initiate per core test. It wakes up work queue threads on the target cpu and
->   * its sibling cpu. Once all sibling threads wake up, the scan test gets executed and
-> @@ -253,6 +341,8 @@ int do_core_test(int cpu, struct device *dev)
->  		ifs_test_core(cpu, dev);
->  		break;
->  	case IFS_ARRAY:
-> +		ifs_array_test_core(cpu, dev);
-> +		break;
->  	default:
->  		return -EINVAL;
->  	}
-
---------------2vfOd79GQan17WCFyyEr3R4L
-Content-Type: text/x-patch; charset=UTF-8; name="ifs-fun.patch"
-Content-Disposition: attachment; filename="ifs-fun.patch"
-Content-Transfer-Encoding: base64
-
-IGlmcy5oICAgICB8ICAgMTMgKysrKystLS0tLS0tLQogcnVudGVzdC5jIHwgICAzNCArKysr
-KysrKysrKysrKystLS0tLS0tLS0tLS0tLS0tLS0tCiAyIGZpbGVzIGNoYW5nZWQsIDIwIGlu
-c2VydGlvbnMoKyksIDI3IGRlbGV0aW9ucygtKQo=
-
---------------2vfOd79GQan17WCFyyEr3R4L--
