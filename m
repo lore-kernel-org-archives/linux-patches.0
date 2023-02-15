@@ -1,86 +1,82 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pf1-f172.google.com (mail-pf1-f172.google.com [209.85.210.172])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 830C810786;
-	Wed, 15 Feb 2023 18:41:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9E63C4339E;
-	Wed, 15 Feb 2023 18:41:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1676486488;
-	bh=fc+5seqhTO5BvvY3isnCsCZbytpHZYKbkp6X0pw+tz0=;
-	h=From:Date:Subject:References:In-Reply-To:To:Cc:From;
-	b=KwKxexKOjWpIM62ogFQODLQ1bQsNzLet37om+7MP+97xaJyIyy2vgnIwKvqGHgSum
-	 AK1HlTcMi+AvC332r/QIwE+/49lsjRtJJSV4BIXQMrnonWfh+22HtMsqqs7j8kwYyW
-	 w1EKs81R8h99F0BIHuSoZfDAmS6VE5JSMLdZ+IFrjA4FhQ/WlqFpzGOvDUzu4ZTqOq
-	 FYLfMowZLmq29qGViyPSz7myGFzjL33q7gGLhZfuv3GDwHSYvo80FQH+P2N8ItH8t1
-	 EkSsDc48uZakeV8iEsThXGc2ro9ZjG3icqKXOi2XHl4Nf9kwmXsGAq9DohtR+CUXdi
-	 ndi0MW4G87mvA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Wed, 15 Feb 2023 11:41:17 -0700
-Subject: [PATCH 3/3] powerpc: Allow CONFIG_PPC64_BIG_ENDIAN_ELF_ABI_V2 with
- ld.lld 15+
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 674BBC5D8
+	for <patches@lists.linux.dev>; Wed, 15 Feb 2023 19:03:58 +0000 (UTC)
+Received: by mail-pf1-f172.google.com with SMTP id j184so8479381pfg.10
+        for <patches@lists.linux.dev>; Wed, 15 Feb 2023 11:03:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=6JQaHVGzKqqN/rCfFJ1z8PwWnyDbd3wsfGz9fkN1qoc=;
+        b=GCO968mmt3mnc3Z/hiDLjNxUcwosT+FFnenFoUEKMoMQqJVeaDBsV7lAX7MH2lUYzc
+         iFpu+qHshJAWp9ZhMyuG1P8zDKAxT7FLnI6aXShOxIReFTIgaBqhmTjBByFcDs7x/Roo
+         El3xBLAvEMP02c90zlKc4FYaR59ja8Z3gBR/Aq17/ET+HEGstVCoxBFLcJjwrMHpYUze
+         1D7rzENumYM7erA4gh3P5Cqh3+jiqUja3CRmhLFYyTa8Ihk45/berp/8ralnz+vAfzOy
+         tH851wnCcbsW3Eo4Nf1FYzjOmTlYwupAvoyl8O6m1T9hKbobZOwjWCckSzfa1psH+ful
+         HyPg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=6JQaHVGzKqqN/rCfFJ1z8PwWnyDbd3wsfGz9fkN1qoc=;
+        b=XKxs+Sg2lPwSZrwVYV5xHha4V4L35OsInihaV2bp88aOAKjATEgBYPCvp91txgz2BI
+         qkTLnl+Mma5A3ECZZLG+O+gOn4Ym+tyQr8Rxa5zEWbHTnGmd4Aj6RORX2SZ2syuFd0XD
+         dfQmmVN/7GgjeVJmN2OsTquOtdFgoMxHX96lMRcPqwsYs4EbW5sz6amH6ErTktqqaRN3
+         4YeF7Wrr4YT/TKdTVTs6nj1+622DcUhKIxvcdBrvkD2aUzXRwBpE12IOZX+KB95XgKtK
+         WUGVP+NNHFvTEpSEFZsAvruA2aFtaxgI83gL22kDk/JEndlkDdnpmRvgdKk7DdQ5DKvW
+         whcw==
+X-Gm-Message-State: AO0yUKUOFiYI1D4MDcHPg9qZSjq5eUfdwmVyHTLAmGeiQhggGO4urPdt
+	gun0AAbTctOUgIV8NZzSPhD9GrBcMPlw5FszYb8=
+X-Google-Smtp-Source: AK7set+EOaHXrqqUKR4rzgfzoqZlIV0XPvx+6ZUhukUamfJDXPHbqKwUAfa7PuuS8Rzu4DqyZip61l+ZEWDD+QAg/o4=
+X-Received: by 2002:a62:1dd2:0:b0:599:234e:7e82 with SMTP id
+ d201-20020a621dd2000000b00599234e7e82mr554552pfd.53.1676487837796; Wed, 15
+ Feb 2023 11:03:57 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230118-ppc64-elfv2-llvm-v1-3-b9e2ec9da11d@kernel.org>
-References: <20230118-ppc64-elfv2-llvm-v1-0-b9e2ec9da11d@kernel.org>
-In-Reply-To: <20230118-ppc64-elfv2-llvm-v1-0-b9e2ec9da11d@kernel.org>
-To: mpe@ellerman.id.au
-Cc: npiggin@gmail.com, christophe.leroy@csgroup.eu, erhard_f@mailbox.org, 
- nathan@kernel.org, ndesaulniers@google.com, trix@redhat.com, 
- linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org, 
- llvm@lists.linux.dev, patches@lists.linux.dev
-X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1504; i=nathan@kernel.org;
- h=from:subject:message-id; bh=fc+5seqhTO5BvvY3isnCsCZbytpHZYKbkp6X0pw+tz0=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDMlv1UPn3nmjdiU36FOT54YGk9jbwdOfzrpwQ4Lldo2jh
- aTmydrijlIWBjEOBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjAR3mCG/xFvgraEdZq6CVXX
- CPptLaiNF2zQ335f/duS/6bbGRO9lRgZHkb0V30yMWtbK9nNreCq1Vi8e/3F+z8LMgqXK/R7Bzh
- zAwA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+References: <20230214172549.450713187@linuxfoundation.org>
+In-Reply-To: <20230214172549.450713187@linuxfoundation.org>
+From: Allen Pais <stable.kernel.dev@gmail.com>
+Date: Wed, 15 Feb 2023 11:03:46 -0800
+Message-ID: <CAJq+SaC52Y8ZgQQwoZ0Wzj-JHUtC1rJNQkQNKt=-8kFRkOXELw@mail.gmail.com>
+Subject: Re: [PATCH 5.10 000/134] 5.10.168-rc2 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 
-Commit 5017b4594672 ("powerpc/64: Option to build big-endian with ELFv2
-ABI") restricted the ELFv2 ABI configuration such that it can only be
-selected when linking with ld.bfd, due to lack of testing with LLVM.
+> This is the start of the stable review cycle for the 5.10.168 release.
+> There are 134 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Thu, 16 Feb 2023 17:25:19 +0000.
+> Anything received after that time might be too late.
+>
+> The whole patch series can be found in one patch at:
+>         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.168-rc2.gz
+> or in the git tree and branch at:
+>         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+>
+> thanks,
+>
+> greg k-h
+>
 
-ld.lld can link ELFv2 kernels without any issues; in fact, it is the
-only ABI that ld.lld supports, as ELFv1 is not supported in ld.lld.
+Compiled and booted on my x86_64 and ARM64 test systems. No errors or
+regressions.
 
-As this has not seen a ton of real world testing yet, be conservative
-and only allow this option to be selected with the latest stable release
-of LLVM (15.x) and newer.
+Tested-by: Allen Pais <apais@linux.microsoft.com>
 
-While in the area, remove 'default n', as it is unnecessary to specify
-it explicitly since all boolean/tristate configuration symbols default
-to n.
-
-Tested-by: "Erhard F." <erhard_f@mailbox.org
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
- arch/powerpc/Kconfig | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
-
-diff --git a/arch/powerpc/Kconfig b/arch/powerpc/Kconfig
-index b8c4ac56bddc..f9f13029c98a 100644
---- a/arch/powerpc/Kconfig
-+++ b/arch/powerpc/Kconfig
-@@ -603,8 +603,7 @@ config PPC64_BIG_ENDIAN_ELF_ABI_V2
- 	bool "Build big-endian kernel using ELF ABI V2 (EXPERIMENTAL)"
- 	depends on PPC64 && CPU_BIG_ENDIAN
- 	depends on CC_HAS_ELFV2
--	depends on LD_IS_BFD && LD_VERSION >= 22400
--	default n
-+	depends on LD_VERSION >= 22400 || LLD_VERSION >= 150000
- 	help
- 	  This builds the kernel image using the "Power Architecture 64-Bit ELF
- 	  V2 ABI Specification", which has a reduced stack overhead and faster
-
--- 
-2.39.2
-
+Thanks.
