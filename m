@@ -1,192 +1,82 @@
-Received: from mga04.intel.com (mga04.intel.com [192.55.52.120])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1DA717B
-	for <patches@lists.linux.dev>; Wed, 15 Feb 2023 17:44:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1676483089; x=1708019089;
-  h=message-id:date:subject:to:cc:references:from:
-   in-reply-to:content-transfer-encoding:mime-version;
-  bh=tncO0kQPchMftI++YegBdRpLQNYFZ/c1qmeFGp9o59w=;
-  b=SvYsFClZpQSB3ehwMK0Cs6VqBtDTsxujFPIeyXCPPDudCN5mwCR6D6iy
-   knugcxW5N0fqKFGyoCfvqtWpR7nGdEhozc7Z1DNNnMKJfPY1/VESkCkc1
-   eibw7LYRpENE1R1/ifAdm2TCc4Ttgoudrt6NBg7anH+9Tzk4slG6lGGKw
-   Bu8iiHrn2dEAHYeEqQiDjAzawVkMsV47w5LsOc+P6q5wRVOOOEkgYwbnX
-   GzMFdHsoGI8POyAk5bEk4utJf+VI0+v6Do1AuL71wEGFOcql55bptahpJ
-   VsBGTDNE8SDCm3aDwVCQSLzoz8oNv7URJXdRDnnAs/A14xr1NBCRMxt7f
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10622"; a="330127443"
-X-IronPort-AV: E=Sophos;i="5.97,300,1669104000"; 
-   d="scan'208";a="330127443"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2023 09:44:47 -0800
-X-ExtLoop1: 1
-X-IronPort-AV: E=McAfee;i="6500,9779,10622"; a="669724101"
-X-IronPort-AV: E=Sophos;i="5.97,300,1669104000"; 
-   d="scan'208";a="669724101"
-Received: from orsmsx601.amr.corp.intel.com ([10.22.229.14])
-  by orsmga002.jf.intel.com with ESMTP; 15 Feb 2023 09:44:44 -0800
-Received: from orsmsx612.amr.corp.intel.com (10.22.229.25) by
- ORSMSX601.amr.corp.intel.com (10.22.229.14) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.16; Wed, 15 Feb 2023 09:44:44 -0800
-Received: from orsmsx610.amr.corp.intel.com (10.22.229.23) by
- ORSMSX612.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.16; Wed, 15 Feb 2023 09:44:43 -0800
-Received: from ORSEDG601.ED.cps.intel.com (10.7.248.6) by
- orsmsx610.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.16 via Frontend Transport; Wed, 15 Feb 2023 09:44:43 -0800
-Received: from NAM10-MW2-obe.outbound.protection.outlook.com (104.47.55.101)
- by edgegateway.intel.com (134.134.137.102) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.1.2507.16; Wed, 15 Feb 2023 09:44:43 -0800
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=XZMdUKvMaFvVs6w9wMKjVLyLTNmO0Oq2MtU7VK4FU8SDkJSwsTC9GlvopJo2YhnB9MdZZce57pQebidD6g71SOzk8w+gkND+Jn8Cersv5Ov5Xg8gkiiHm1IiftNZmNDIvA3McsEdN0f9TTXlLHqOO2KFKTjInHjJqzeAXe3IfyA8XoKc/iuIOkETJuS/WmzTHhlSpvrHZDT+QrM6XVOXgWi9ruiM5O5nllU0KAhYxeIP4T1hULxEbPC9shJZzhwC7lKFHlBMjLfflwnDsk85VuQIPoF1XrtKUR1DE0MuM0xN3jRKxcMp6rKMR+oz5VgD0DvmxP+OdWH9aqty3sRMtg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=kp22xg6OPAxVIrcfk/KzXX13mLwYfMCG7nv6a2qjVR4=;
- b=RDxSsvt6NB4b+05mgimB0jBvCaA7BMTPB/2a0NpK1eO+HEctKAIqFE9ioPk/JHqelt6TpKxoGuRa1cu5RJjmMONJ4K5DDPSGuuYg/lhPPiKcA+irKaRe1U8qpYxrra6ucItJzNX3VRujmnmKu/BKAn4jf9fjL979IE1efJAd6EAxpKOk2DuTGjg6uBbu2T3aWpvOdNAYMagj3dK083AJPSU/Q8z1NArs0dc3C3LVwviS5fzjlEYuVbkEUhjP+ObCGV4jfdPG6aAFFUInND1SZpSGKFzCUnBahxU+P/AwIhGCQAHbyjbAoZqpSd9Y9CCxMMS2zMy2OlTZ4vwsl7teBA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from BYAPR11MB3768.namprd11.prod.outlook.com (2603:10b6:a03:fa::20)
- by PH7PR11MB5888.namprd11.prod.outlook.com (2603:10b6:510:137::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6086.24; Wed, 15 Feb
- 2023 17:44:42 +0000
-Received: from BYAPR11MB3768.namprd11.prod.outlook.com
- ([fe80::b387:57c:7240:8b72]) by BYAPR11MB3768.namprd11.prod.outlook.com
- ([fe80::b387:57c:7240:8b72%5]) with mapi id 15.20.6086.026; Wed, 15 Feb 2023
- 17:44:42 +0000
-Message-ID: <e2cd922a-0a5e-c1ef-3fe7-2347f3b062d1@intel.com>
-Date: Wed, 15 Feb 2023 09:44:39 -0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.2
-Subject: Re: [PATCH v2 4/7] platform/x86/intel/ifs: Implement Array BIST test
-Content-Language: en-US
-To: Dave Hansen <dave.hansen@intel.com>, <hdegoede@redhat.com>,
-	<markgross@kernel.org>
-CC: <tglx@linutronix.de>, <mingo@redhat.com>, <bp@alien8.de>,
-	<dave.hansen@linux.intel.com>, <x86@kernel.org>, <hpa@zytor.com>,
-	<gregkh@linuxfoundation.org>, <rostedt@goodmis.org>, <ashok.raj@intel.com>,
-	<tony.luck@intel.com>, <linux-kernel@vger.kernel.org>,
-	<platform-driver-x86@vger.kernel.org>, <patches@lists.linux.dev>,
-	<ravi.v.shankar@intel.com>, <thiago.macieira@intel.com>,
-	<athenas.jimenez.gonzalez@intel.com>, <sohil.mehta@intel.com>
-References: <20230131234302.3997223-1-jithu.joseph@intel.com>
- <20230214234426.344960-1-jithu.joseph@intel.com>
- <20230214234426.344960-5-jithu.joseph@intel.com>
- <a24c65f8-978d-8968-7874-6b83e14b01ba@intel.com>
-From: "Joseph, Jithu" <jithu.joseph@intel.com>
-In-Reply-To: <a24c65f8-978d-8968-7874-6b83e14b01ba@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: BYAPR01CA0046.prod.exchangelabs.com (2603:10b6:a03:94::23)
- To BYAPR11MB3768.namprd11.prod.outlook.com (2603:10b6:a03:fa::20)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AB793C39;
+	Wed, 15 Feb 2023 18:41:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 687FEC433EF;
+	Wed, 15 Feb 2023 18:41:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1676486486;
+	bh=jdvkUbDeD0+NjKmqBpzFb3SJxoDKFX9S+eNEcnraNH4=;
+	h=From:Subject:Date:To:Cc:From;
+	b=PDt6O2zX0ayjES6ktMzzKb5kguyA1gM3lcFdMyIAKSrpr753+jnhbXBD035CjrB+d
+	 dZpYWfnFBbXKdyKFZd2BzlRgI8UyjfyU/7epoHMBblzNdNS/382sV1CEOg6h1hq2pS
+	 ckEWIEm9XoBW72njizL2GTHFhL7ofcx7t7SWsMAlAn6Uhb2yskSV6am4gAhGSB1y7f
+	 BaV7lU+A646s3/btf83QsZ0fIzt4Wm8mwwtHJseJJNzIKCAMRJla2/6c2BFd0amEdW
+	 7V0PYMPEjBNdRSg6n7W+lDZs7hrMTsoBt5kSFO/tW+CnmcJcaCHpPCIfmxVyxKRwob
+	 pfn1toSYhmE1w==
+From: Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 0/3] Allow CONFIG_PPC64_BIG_ENDIAN_ELF_ABI_V2 with ld.lld
+ 15+
+Date: Wed, 15 Feb 2023 11:41:14 -0700
+Message-Id: <20230118-ppc64-elfv2-llvm-v1-0-b9e2ec9da11d@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BYAPR11MB3768:EE_|PH7PR11MB5888:EE_
-X-MS-Office365-Filtering-Correlation-Id: e7c14fa2-1024-40d9-17dc-08db0f7c512a
-X-LD-Processed: 46c98d88-e344-4ed4-8496-4ed7712e255d,ExtAddr
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: jHzZStmK/LkjEgvzvsJb6meiRSSZ7yplHi8IR68QFyovHM3ygmWiTwHdnfoxQk7e1ODzHDXTrkVS20oMMpN3kkjyzPtLPI3+yz0j9eu4eJ9mnIFjLt2g2tgiwlLyiQb/gG+nsfQ+NC2zJWcKHMZv+D6wzA9TrB7/l8ZX/P8rxdsS+Bl2Gr48K/9bB2/V/96A4fNJ9Jw+iVqFtldBqPgRA1mtunIqmk/4fSzk/lXXHAXIZEu7qVE3nRWH1brZPDsTV/PF1k/7Yhzlsc3edjkh7xESkq1xKWRfCaIaVi49BP4eu0YZJLkn8Nv2ZwUF4SqD1CZWxtCFrSu1JcoCFd01c0frm8kUg/9WVo+ryRCRewmq1gtYzBaQGhXXofY/FV72xG23ZcpMh/UYP4X1jXhJtNGv31mVsetewwM9F7tO8Ui64X06OqMy6TGR2MR78OGHz4kA2w/iUWSdfcWg56SuFjtyt2xgyk9DPwML6bvACHnk5+XmPtSykMLjZ+S0TUpc+uIpSpwyW7ig5ILlkBSpjhTreOEBhFwbMAejLzRbT9ReCIbyaVUCFWBGJru6ynbGMJlDh15he+il+lYQCeNF3w+s/ElttwihX+eoL9b42zUnhmTFw2bPIbWCmFZ5MqVhakh3nEeSKbnnWekgZ3bP+ytcz43K5N4L2KH/iTPH5u+AORNhKI/rqfxI4kvc+T8Sg2dKD3HTyO/exlEY6UcGLiFqT3tyBJmVeio+4maDK5s=
-X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BYAPR11MB3768.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(376002)(346002)(39860400002)(396003)(366004)(136003)(451199018)(86362001)(2906002)(31696002)(6506007)(36756003)(478600001)(2616005)(6512007)(26005)(186003)(6486002)(53546011)(5660300002)(8936002)(7416002)(41300700001)(6666004)(316002)(66556008)(66476007)(4744005)(66946007)(8676002)(4326008)(38100700002)(82960400001)(83380400001)(31686004)(43740500002)(45980500001);DIR:OUT;SFP:1102;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dWFybG9mVDB0SHZsVVRZdlU5dGZEMHpFSVdaZFBxK2FGQ21DZFhyNTJJalpa?=
- =?utf-8?B?Mi9tTE5rUFM4NmdkWTVXOTlMMkE5QVZ5RVJsK1I1TC9pVzgvYkh4cVl4YjBr?=
- =?utf-8?B?ZnlYK1ZFT3NaRWdaYVprUGZZVk5ybHovWDR5QW9BdVB4LzJ1MnV5RmtnOVlE?=
- =?utf-8?B?OFhYS0Y2eUhCWkdva1ZoeGlmVGVScEpMMmQ0dEZ3ak5LNnFlU2ovWXF4eWlB?=
- =?utf-8?B?YVhvUUNqOEw2OWFJZ1RGbWlJdmgzRkZYSU9TOHdYVlhHaVpLR092WnhEb2pa?=
- =?utf-8?B?anJQcFl3TDR3bmp1N1Erdnk3bHVQN2xPVTVuSm9hUlNvbEtwTjRhcjVnSG50?=
- =?utf-8?B?MGlZZG5TWlo3K0VsUEp0U0lselZJV1lDT3lvaFcxdGVLWXhsaEd2Q0F6SW9V?=
- =?utf-8?B?cUl5WU1LaXFlRUZ4S3N4dTUzMUFScjlmeWs1cHUrZTdlVHR5enM3L0lSdXpl?=
- =?utf-8?B?a0owMm1LbitCaU40UysvdjN3Z0tMWUtMb0c4TzJNc0wzcGRHTkVxWnFlT21B?=
- =?utf-8?B?Sm5WOGxjcjdpMUVuYXBSOStHUm41VXArSXVsSkN6KzU2R0ZTSHVjQkVGd2xl?=
- =?utf-8?B?VENJbXVMNHk3Rm5mdHRYdVVmOVNuOTE0ZE9hTkQxTkcwSkNqNHc5UzhYNTBS?=
- =?utf-8?B?ZWpSazhIckNHa2RTWXl1bFRtbG1vMFNNc24zS2ZkcnI0NUl4elhiZFhEWEJn?=
- =?utf-8?B?M3BKcjlqYlVCaDB4aDdrVTgwbUNKRXVjN3pIcWhDVGdXenlSdmswQkFWblVS?=
- =?utf-8?B?RHM3VXhCRktRZ0Ztd1lUQ08zcU1BbGJSYytBRE01cFA1c2l0QkhzNUZ0cTJE?=
- =?utf-8?B?YkllZkhjWmtZMk9zdVAxVEVJRk1wa2Nac1NkVURiVUwzZzFEWXdYMHdBUlBz?=
- =?utf-8?B?V21mTGdkcTVXS2NDUUQ4OEFFTnZJY0IybmE0cDZUQ0VidEl3U3hwSGNqNnVH?=
- =?utf-8?B?dWpnNUdFazZGNExORFZDaFArdlVuSG1WY0xHejZPdlJYQjlZeURtTXE2YzNO?=
- =?utf-8?B?U3NDcEkySUY0WU9WM2wrWDgwTk1BMGhBcE5xSWtzTDYyaEprbFM1UHYrSWFZ?=
- =?utf-8?B?YUpyQTExa2NQTlRzbXIwUlQ1ZnBSd2F4ZWFDYXJ0clNRNzlZNUh5M0pyWHVB?=
- =?utf-8?B?djM2N0Q4SkZCWE5nMldvcEdpenROR3FyU1VHYmdVOThKclFrREFHaSt0ZERh?=
- =?utf-8?B?QlFMRkoxQVNINDZ4ODZOTFoyVDgwWkZON3dSQUo0dnRRZ2VFQzZmOHJpT2lp?=
- =?utf-8?B?WThBN25lL2V0c25qSUF4cWU2YUdCMFFubk9zOFEzUWpORTY4d1lKMTBqQStP?=
- =?utf-8?B?SlZqK1E5dXhneVNPWGJzNE4yLzVDQmVBN1hWNlRxSnBFTGxEVHZYS3Q2c3E4?=
- =?utf-8?B?OElDUFFKZ1RXalFXZDBUY3BIbWVmdW52SmxyMWNVTGZpOTRTQTd2RHROdTFU?=
- =?utf-8?B?YXd5eDlZSlBTSnFkNW16MlZrOFpiemZvSTNScW9HY0c1RGdVYmdXS3dMbVZL?=
- =?utf-8?B?THZabzRpR0NNbDAxTGUyK2ppbGdzN3V4UmF3RG5oZTJXcUhNZjMrcGpmdHYx?=
- =?utf-8?B?NUxaYXBkYjZuRzBRVE45VXlRQ0k3SEFveitzbEVkYVhxclNnM3RSazZYT044?=
- =?utf-8?B?dEVkbDZoMitFcXZYS3FPaHBRNCsxUVVoa3FBVHZHL291NStRd2xkeEU5NU52?=
- =?utf-8?B?Z0paNGt6a1FkQzlWNFV3UnZLRU05SjVmS3QreGZ1WlpZVGpua3lrdmlkOGM2?=
- =?utf-8?B?ZGNwYnd4Tk9DZzlIdEt2MTFyVFhZcy9jSEJlK0N6SzNadkRZVHlwMFFiVllR?=
- =?utf-8?B?YjAreDdFdzJ0Uk41aEF5ZlU0V0FUbmlXRXUyb2RwaTBsa3R1ZkphZHBiY25i?=
- =?utf-8?B?UEw2d0VmV2hTMFovRFg5c3dRWGYvY0NoazluQUpwSE9EbHdLRVZRUnovL2Ur?=
- =?utf-8?B?Q2xPbVdXTGxTRGFGNE1wZjluNlZucVYyTFZUSHBKNWh1Nm4vYWNQZXZPdGZ5?=
- =?utf-8?B?eGVkenRUcXFQejg0SEVjQzFrOWlXZjRmRHNuOWVKVDNLNVhreEZQNEpqQWJD?=
- =?utf-8?B?aUxkcUhmcU13VTluVnZqalRvb2l3bnpoVWZlb0o1ekRLV1JxZDNJZmJkTU9I?=
- =?utf-8?B?aW01eUcvNkxIeHhmSnpLNEVqUHZCMHphdkkzU25UNEsxL3pMajlEeGpmY0Jl?=
- =?utf-8?B?blE9PQ==?=
-X-MS-Exchange-CrossTenant-Network-Message-Id: e7c14fa2-1024-40d9-17dc-08db0f7c512a
-X-MS-Exchange-CrossTenant-AuthSource: BYAPR11MB3768.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Feb 2023 17:44:41.7318
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: jofk9IfRPInN9mKYuJ7YtjYHOir/wrDZCHAiQICpc9lqRCanM5wmvdRRS8U36aDv/NVuAGwzO/kd1foAFMhBnA==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB5888
-X-OriginatorOrg: intel.com
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAEon7WMC/x2NywrDIBAAfyXsuQtqSvr4ldLDatZGMFZ2ixRC/
+ r2mx2EYZgNlSaxwHzYQbknTu3SwpwHCQuXFmObO4IwbjbVXrDVMZ+Qcm8Oc24rjjWcK08VHQ9A
+ zT8rohUpYjnAl/bAcogrH9P2/Hs99/wG6U831ewAAAA==
+To: mpe@ellerman.id.au
+Cc: npiggin@gmail.com, christophe.leroy@csgroup.eu, erhard_f@mailbox.org, 
+ nathan@kernel.org, ndesaulniers@google.com, trix@redhat.com, 
+ linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org, 
+ llvm@lists.linux.dev, patches@lists.linux.dev
+X-Mailer: b4 0.12.1
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1319; i=nathan@kernel.org;
+ h=from:subject:message-id; bh=jdvkUbDeD0+NjKmqBpzFb3SJxoDKFX9S+eNEcnraNH4=;
+ b=owGbwMvMwCEmm602sfCA1DTG02pJDMlv1UPOxtVaN/z3qfsy05LNTCRq2ycBTRbuiE729ZnVz
+ Ck9/R0dpSwMYhwMsmKKLNWPVY8bGs45y3jj1CSYOaxMIEMYuDgFYCKxRxgZJrgdiSo786p/9oc3
+ O8X/rOv+Kf0gyefDienPg7cy2e1cZMPI0LJ57/R2oc8n/VivJmyZEp43LWBun5W4cIXZ9DrvjHd
+ ezAA=
+X-Developer-Key: i=nathan@kernel.org; a=openpgp;
+ fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
 
+Currently, CONFIG_PPC64_BIG_ENDIAN_ELF_ABI_V2 is not selectable with
+ld.lld because of an explicit dependency on GNU ld, due to lack of
+testing with LLVM.
 
+Erhard was kind enough to test this option on his hardware with LLVM 15,
+which ran without any issues. This should not be too surprising, as
+ld.lld does not have support for the ELFv1 ABI, only ELFv2, so it should
+have decent support. With this series, big endian kernels can be built
+with LLVM=1.
 
-On 2/15/2023 8:58 AM, Dave Hansen wrote:
-> On 2/14/23 15:44, Jithu Joseph wrote:
-...
-> 
->> +static void ifs_array_test_core(int cpu, struct device *dev)
->> +{
->> +	union ifs_array activate, status = {0};
-> 
-> So, 'status' here is initialized to 0.  But, 'activate'... hmmm
-> 
-> Here's 1 of the 4 fields getting initialized:
-> 
->> +	activate.array_bitmask = ~0U;
->> +	timeout = jiffies + HZ / 2;
->> +
->> +	do {
->> +		if (time_after(jiffies, timeout)) {
->> +			timed_out = true;
->> +			break;
->> +		}
->> +
->> +		msrvals[0] = activate.data;
-> 
-> and then the *WHOLE* union is read here.  What *is* the uninitialized
-> member behavior of a bitfield?  I actually haven't the foggiest idea
-> since I never use them.  Is there some subtly C voodoo that initializes
-> the other 3 fields?
+This has seen our basic set of powerpc configurations with clang-15,
+clang-16, and clang-17 but I will never be opposed to more testing :)
 
-Thanks for pointing the mistake Dave. I see the bug w.r.t not initializing activate to
-zero.
+The first two patches fix a couple of issues I noticed while build
+testing and the final patch actually allows the option to be selected.
 
-Thanks Dave for the proposed patch . Let me get back after taking a detailed look
+---
+Nathan Chancellor (3):
+      powerpc/boot: Only use '-mabi=elfv2' with CONFIG_PPC64_BOOT_WRAPPER
+      powerpc: Fix use of '-mabi=elfv2' with clang
+      powerpc: Allow CONFIG_PPC64_BIG_ENDIAN_ELF_ABI_V2 with ld.lld 15+
 
-Jithu
+ arch/powerpc/Kconfig       | 3 +--
+ arch/powerpc/Makefile      | 4 +---
+ arch/powerpc/boot/Makefile | 6 +++---
+ 3 files changed, 5 insertions(+), 8 deletions(-)
+---
+base-commit: 5dc4c995db9eb45f6373a956eb1f69460e69e6d4
+change-id: 20230118-ppc64-elfv2-llvm-39edac67bf0a
+
+Best regards,
+-- 
+Nathan Chancellor <nathan@kernel.org>
+
