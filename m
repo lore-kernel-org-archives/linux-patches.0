@@ -1,110 +1,83 @@
-Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f45.google.com (mail-oa1-f45.google.com [209.85.160.45])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3BF2C5D2
-	for <patches@lists.linux.dev>; Tue, 14 Feb 2023 23:45:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1676418359; x=1707954359;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version:content-transfer-encoding;
-  bh=eiS3IxaAsk6x7BayF1DCQxveYExshrK1kKyFW8zL/CQ=;
-  b=hp3GBOYZqwZ3M6mPyYU86CkDWifK7aevTJV4n52mu0YSqmcJESltHjpg
-   U00N6YESJvCTosSEPuM9EVuK8u9ECZ6Oc8eYDGvfZylx36S7tMyOa5/MI
-   NtdVxV/gY4ufK1o4QqGM9qy1pt1Cm5GfEt/9W8UV3alA1mnCxUwc6RWsy
-   mgU5EHLmRE/RbVhUMYBJxm3D/oRCtVEVHP4R6N5Ja3YFjbB/oGqGkeO/r
-   8MwUBARMuTaXt1faeHXotPlQAUM435DY5SDRK3Cr779p2VgI8tAXgdvdN
-   B5f19DtKhR70HtybFLfNW4NMX5UDgRjaonl2i3pGoPLy3GdxmEAPbKjUy
-   Q==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10621"; a="417523058"
-X-IronPort-AV: E=Sophos;i="5.97,298,1669104000"; 
-   d="scan'208";a="417523058"
-Received: from orsmga002.jf.intel.com ([10.7.209.21])
-  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2023 15:45:59 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10621"; a="669391026"
-X-IronPort-AV: E=Sophos;i="5.97,298,1669104000"; 
-   d="scan'208";a="669391026"
-Received: from jithujos.sc.intel.com ([172.25.103.66])
-  by orsmga002-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Feb 2023 15:45:58 -0800
-From: Jithu Joseph <jithu.joseph@intel.com>
-To: hdegoede@redhat.com,
-	markgross@kernel.org
-Cc: tglx@linutronix.de,
-	mingo@redhat.com,
-	bp@alien8.de,
-	dave.hansen@linux.intel.com,
-	x86@kernel.org,
-	hpa@zytor.com,
-	gregkh@linuxfoundation.org,
-	rostedt@goodmis.org,
-	jithu.joseph@intel.com,
-	ashok.raj@intel.com,
-	tony.luck@intel.com,
-	linux-kernel@vger.kernel.org,
-	platform-driver-x86@vger.kernel.org,
-	patches@lists.linux.dev,
-	ravi.v.shankar@intel.com,
-	thiago.macieira@intel.com,
-	athenas.jimenez.gonzalez@intel.com,
-	sohil.mehta@intel.com
-Subject: [PATCH v2 7/7] Documentation/ABI: Update IFS ABI doc
-Date: Tue, 14 Feb 2023 15:44:26 -0800
-Message-Id: <20230214234426.344960-8-jithu.joseph@intel.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20230214234426.344960-1-jithu.joseph@intel.com>
-References: <20230131234302.3997223-1-jithu.joseph@intel.com>
- <20230214234426.344960-1-jithu.joseph@intel.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD20B7C
+	for <patches@lists.linux.dev>; Wed, 15 Feb 2023 04:17:20 +0000 (UTC)
+Received: by mail-oa1-f45.google.com with SMTP id 586e51a60fabf-16debd2786aso11740111fac.7
+        for <patches@lists.linux.dev>; Tue, 14 Feb 2023 20:17:20 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=xmVeJ55I3Amn4MeSLLrEqjAfEnFaFqqmJFVHznJhXDg=;
+        b=f0JQ8yzg+FPR5y3CaNNne8QhAd3lAC+Iilmkc/1qKFQTVBnRvohkiTN/g+NPgq0Xz1
+         9D/AruKAIVYyH6eQMAt3KOsjYJDlzJKisFMpwfFA3ZkKBrySd1D6r50TnpU+1DYDQMhU
+         HTY/kh7NQ2N99B2VXolM/BaAF5uCePH0rJi5DR4vF3ANxwwnMU0MsrkyeLbZJ9shFQkD
+         p+a3x4w9MUXBQdKGtJ+fBOhybW5arybnxQL5cC6MZL4StEjiLu2s4bkg8jB9OteGxdPg
+         ANdpvz12ub8F7pCYPMzncSWFQUQe/2u6J+lT534u39ulfGTjd3B5CPSi2rXD1mEzF7IG
+         ICFA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=xmVeJ55I3Amn4MeSLLrEqjAfEnFaFqqmJFVHznJhXDg=;
+        b=03SAiZpvL+7717m9CuByI5ysKkzi5anrDH5q7gu4whf5nt5snQ0lwivSF/o+QLXVAz
+         i8qgK00PemIgLj7H+X1MZ3oVCIHATP7nYdJdVTy2z0RqVxpdnp4RTdE0bNooyOTgyfwo
+         TmYix2mFrqY663bxLD7gqrZ9vNW9DF2kwnxR9cJ9xUki9IXaR2qA3996vFi6AA5rc2vh
+         lGpI9Tj39tltetI38rQJD+FlZb4KqKKKBEgifZxULBKuWclWsbbCKwyvo6ZV8T5S1c+n
+         83j/3GwbzVD0qhlwS0Ec7rKEm2JP3/IIXBYxBdHDzZTR6KY8+qgu+1Za/ZBcY/6fqbPs
+         VZIQ==
+X-Gm-Message-State: AO0yUKVlcQezQHjiCSh5xNQUAWL7D2MlZcZKlbtSdjaG8OiBgcUILcS0
+	5KoVK4tnMCQ2WE1M1qvi4a4=
+X-Google-Smtp-Source: AK7set9YxmE76VEtlEwSGDhLhrdacS37IAlGfOJedC4/nE6qBvViit+FXiWz6r49rMj3U8quEpIkWw==
+X-Received: by 2002:a05:6870:20c:b0:16d:d985:3363 with SMTP id j12-20020a056870020c00b0016dd9853363mr401941oad.36.1676434639838;
+        Tue, 14 Feb 2023 20:17:19 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id ds41-20020a0568705b2900b0016db8833b2dsm5181674oab.52.2023.02.14.20.17.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 14 Feb 2023 20:17:19 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Date: Tue, 14 Feb 2023 20:17:17 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 000/134] 5.10.168-rc2 review
+Message-ID: <20230215041717.GA1237270@roeck-us.net>
+References: <20230214172549.450713187@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230214172549.450713187@linuxfoundation.org>
 
-Array BIST test doesn't need an IFS test image to operate unlike
-the SCAN test. Consequently current_batch and image_version
-files are not applicable for Array BIST IFS device instance,
-clarify this in the ABI doc.
+On Tue, Feb 14, 2023 at 06:41:06PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.168 release.
+> There are 134 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 16 Feb 2023 17:25:19 +0000.
+> Anything received after that time might be too late.
+> 
 
-Also given that multiple tests are supported, take the opportunity
-to generalize descriptions wherever applicable.
+For v5.10.167-133-gf90240a:
 
-Signed-off-by: Jithu Joseph <jithu.joseph@intel.com>
-Reviewed-by: Tony Luck <tony.luck@intel.com>
----
- Documentation/ABI/testing/sysfs-platform-intel-ifs | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+Build results:
+	total: 162 pass: 162 fail: 0
+Qemu test results:
+	total: 478 pass: 478 fail: 0
 
-diff --git a/Documentation/ABI/testing/sysfs-platform-intel-ifs b/Documentation/ABI/testing/sysfs-platform-intel-ifs
-index 55991983d0d0..c0cc5ef0739a 100644
---- a/Documentation/ABI/testing/sysfs-platform-intel-ifs
-+++ b/Documentation/ABI/testing/sysfs-platform-intel-ifs
-@@ -21,15 +21,16 @@ Date:		Nov 16 2022
- KernelVersion:	6.2
- Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
- Description:	Additional information regarding the last test. The details file reports
--		the hex value of the SCAN_STATUS MSR. Note that the error_code field
-+		the hex value of the STATUS MSR for this test. Note that the error_code field
- 		may contain driver defined software code not defined in the Intel SDM.
- 
- What:		/sys/devices/virtual/misc/intel_ifs_<N>/image_version
- Date:		Nov 16 2022
- KernelVersion:	6.2
- Contact:	"Jithu Joseph" <jithu.joseph@intel.com>
--Description:	Version (hexadecimal) of loaded IFS binary image. If no scan image
--		is loaded reports "none".
-+Description:	Version (hexadecimal) of loaded IFS test image. If no test image
-+		is loaded reports "none". Only present for device instances where a test image
-+		is applicable.
- 
- What:		/sys/devices/virtual/misc/intel_ifs_<N>/current_batch
- Date:		Nov 16 2022
-@@ -39,3 +40,4 @@ Description:	Write a number less than or equal to 0xff to load an IFS test image
- 		The number written treated as the 2 digit suffix in the following file name:
- 		/lib/firmware/intel/ifs_<N>/ff-mm-ss-02x.scan
- 		Reading the file will provide the suffix of the currently loaded IFS test image.
-+		This file is present only for device instances where a test image is applicable.
--- 
-2.25.1
+Tested-by: Guenter Roeck <linux@roeck-us.net>
 
+Guenter
