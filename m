@@ -1,33 +1,45 @@
-Received: from mga07.intel.com (mga07.intel.com [134.134.136.100])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f176.google.com (mail-pl1-f176.google.com [209.85.214.176])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2BF5D2E1
-	for <patches@lists.linux.dev>; Wed, 15 Feb 2023 20:26:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1676492805; x=1708028805;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=WF3CaZbwQ4TXLGhrjWkUVfdj5s5xigdAxwgewUYHvoA=;
-  b=OxTVqxbajfMW3zlneRNat+aLU7u8sfZH9RzkdV0Ajm3GcsQXF44VFZ55
-   7t97B3O1Kj5PBxCGiBkTRe2GcosOtc3yxEYG+CpCvIGuvXOVJT7fVnmB0
-   PsKTffTcOTkQdyAavXoNw5k6JnvSBEeo9V8fKhh6vq/xvuddZH2dr4pq8
-   vEsi72jkUaupf5uR3WXZSpPFVH9P9Xg+7V/6YKBYkPoaaSNE3Au4Vffk4
-   u1MCU4AVIlPNH4dh9DsPNA4GwIXxXUJ/N6I5hPq9DqsrQ+0alfzQCbOlf
-   0ce9uVdIKKD27gzbmbYl0T/1hekRDN3kSchMeKnBMLnYi+1Wmk01md5Dc
-   w==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10622"; a="396171990"
-X-IronPort-AV: E=Sophos;i="5.97,300,1669104000"; 
-   d="scan'208";a="396171990"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga105.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2023 12:26:45 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10622"; a="758614547"
-X-IronPort-AV: E=Sophos;i="5.97,300,1669104000"; 
-   d="scan'208";a="758614547"
-Received: from chakanog-mobl.amr.corp.intel.com (HELO [10.209.64.107]) ([10.209.64.107])
-  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2023 12:26:44 -0800
-Message-ID: <b67d2125-4075-4eac-4cad-8e315b866144@intel.com>
-Date: Wed, 15 Feb 2023 12:26:43 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26F4ED2E1
+	for <patches@lists.linux.dev>; Wed, 15 Feb 2023 20:28:16 +0000 (UTC)
+Received: by mail-pl1-f176.google.com with SMTP id v23so21480526plo.1
+        for <patches@lists.linux.dev>; Wed, 15 Feb 2023 12:28:16 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=iCF0rShrhjTZo+vj/lM4nPombRJwd5wcu/hQkQwVY84=;
+        b=c2p5Krc70fvqhISDXFNzyaE5N6FxoPIdUBrzskIjfAgdw7PFPikWZjqL1dFIR648bh
+         FRvsx7cpoVo7B4ne5ApyWokvYH3K/BeQoq7a6lzlL9/BpwL02XHBrByZv8p/7YzLvD2A
+         oPcX4RJN+CobB7Pf1OA9GwJRfVLfJOG28RAk2YslI+pAxHb1yfUxUFVTehJcjWBTmDsh
+         48fmZbh3rRHVnUb/XRaT8/6MjtShZtrxhU2uiIK0yk17Bvr7471+icgu91/eIGH35nYO
+         Wm01vrqEUEjRpoc/RqMoa69kLnzkwcfShOsP3LkpgHU+eTWKIxX+7wRoI4WwRgsgVtK1
+         x6sA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:in-reply-to:from:references:cc:to
+         :content-language:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=iCF0rShrhjTZo+vj/lM4nPombRJwd5wcu/hQkQwVY84=;
+        b=yEcCpGl07CVE4oHwWm3K9freLWdCggYGkbmPenihSUaVRvgfh3IH9k2HcJfhsz6RuI
+         +GmzPwger7DUCi2RTbnG/urQZrsl2CsFA9PP3uOyvk2rWla89S+JzsfPRL8QeFhl/Daw
+         eXaSxTe91YXi93gUqTfK3/yWOrX2sepjf1IQJMsd3BWeZBnc85QIpoI4KEm2mzz8Lvkx
+         OBa3tU5Ry0vdq+979irEuG+qyV7+fdgNP5D0HIrms39i+qUlP72GK1qnk7p89P1Vi6zD
+         pVrt7tefu5XzGoMWt4PW2+Jje/VhaGKYP8z4tWrWh6zh2V5Vrk2mzQ7iZfEIE5o8pJKD
+         w83A==
+X-Gm-Message-State: AO0yUKVw+KxoX/CNgNl2Yz6vbL/TUxGjhvNq1QHbvdSkUsz24NxOP1Ps
+	Kh+fHAQEDA4cKtSMcbpzc/A=
+X-Google-Smtp-Source: AK7set/5mlHCZ1a8WvZxsf5np8fWLUT0k4t+PtpGK2rLJWs1iplHzlICGCdFH6Fg2mXvhMt2AStaoA==
+X-Received: by 2002:a17:902:e882:b0:199:2a4f:be84 with SMTP id w2-20020a170902e88200b001992a4fbe84mr3903580plg.58.1676492895516;
+        Wed, 15 Feb 2023 12:28:15 -0800 (PST)
+Received: from [10.67.48.245] ([192.19.223.252])
+        by smtp.googlemail.com with ESMTPSA id ik6-20020a170902ab0600b00192a04bc620sm8608294plb.295.2023.02.15.12.28.13
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 15 Feb 2023 12:28:14 -0800 (PST)
+Message-ID: <3937ce28-e15d-1d40-caf4-b35ad6d5b0fa@gmail.com>
+Date: Wed, 15 Feb 2023 12:28:12 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,31 +47,44 @@ List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.6.1
-Subject: Re: [PATCH v2 4/7] platform/x86/intel/ifs: Implement Array BIST test
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 5.10 000/134] 5.10.168-rc2 review
 Content-Language: en-US
-To: "Joseph, Jithu" <jithu.joseph@intel.com>, hdegoede@redhat.com,
- markgross@kernel.org
-Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
- dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
- gregkh@linuxfoundation.org, rostedt@goodmis.org, ashok.raj@intel.com,
- tony.luck@intel.com, linux-kernel@vger.kernel.org,
- platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
- ravi.v.shankar@intel.com, thiago.macieira@intel.com,
- athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
-References: <20230131234302.3997223-1-jithu.joseph@intel.com>
- <20230214234426.344960-1-jithu.joseph@intel.com>
- <20230214234426.344960-5-jithu.joseph@intel.com>
- <a24c65f8-978d-8968-7874-6b83e14b01ba@intel.com>
- <d9d18954-8434-4c85-88b8-8e1d99cd6a4b@intel.com>
- <dd501d6a-e7e9-be82-24fb-33b18fb6192b@intel.com>
-From: Dave Hansen <dave.hansen@intel.com>
-In-Reply-To: <dd501d6a-e7e9-be82-24fb-33b18fb6192b@intel.com>
-Content-Type: text/plain; charset=UTF-8
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+References: <20230214172549.450713187@linuxfoundation.org>
+From: Florian Fainelli <f.fainelli@gmail.com>
+In-Reply-To: <20230214172549.450713187@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 2/15/23 12:22, Joseph, Jithu wrote:
-> 		trace_ifs_array(cpu, *((u64 *)&before), *((u64 *)&command));
+On 2/14/23 09:41, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.10.168 release.
+> There are 134 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Thu, 16 Feb 2023 17:25:19 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.168-rc2.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
+> and the diffstat can be found below.
+> 
+> thanks,
+> 
+> greg k-h
 
-Uhh, you control the types in the tracepoint.  Just make them compatible
-so you don't need casts.
+On ARCH_BRCMSTB using 32-bit and 64-bit kernels, build tested on 
+BMIPS_GENERIC:
+
+Tested-by: Florian Fainelli <f.fainelli@gmail.com>
+-- 
+Florian
+
