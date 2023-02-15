@@ -1,71 +1,195 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from mga17.intel.com (mga17.intel.com [192.55.52.151])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449437B
-	for <patches@lists.linux.dev>; Wed, 15 Feb 2023 16:56:47 +0000 (UTC)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id EF7151C0AAC; Wed, 15 Feb 2023 17:56:38 +0100 (CET)
-Date: Wed, 15 Feb 2023 17:56:38 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.10 000/134] 5.10.168-rc2 review
-Message-ID: <Y+0Oxi3j+ix0QSMC@duo.ucw.cz>
-References: <20230214172549.450713187@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E4027B
+	for <patches@lists.linux.dev>; Wed, 15 Feb 2023 16:58:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1676480328; x=1708016328;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to;
+  bh=YKF6ZvLA3d1uM5u+HATdtClSHQTuSkgIY/ovoaUK2AI=;
+  b=TdeooCgMuwu19ZBSgfZVEWY0YA6cKCkQfn9js77W2somSZU4ttcFB3cb
+   XU+Cs72dn+ABp1mSQQDEHee573FW8Q5rxf99j4K131YGwBjAClacR4vhc
+   kAAqD4JleerV2sOP2L0IYoNTlZDNeihb7WtNen/M0BZiWR0qh+9q7gAAL
+   d8rOjKWi3u5m9P7QCbM8UokQnyillAGfK9BO6OU+YAzDt5A5xmxime4Qj
+   uquw2Owp6DhsPKLF0RiKGFe3nnW1tVjNq/4p865Xv1UWJRJ55AWdiXDaw
+   1PJ5HS0aXm+QzYZGEIjATI9WZbTS+/YCOQXcmyZMyPsEtpXg9+mrrwNs8
+   g==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10622"; a="311845725"
+X-IronPort-AV: E=Sophos;i="5.97,300,1669104000"; 
+   d="scan'208";a="311845725"
+Received: from orsmga001.jf.intel.com ([10.7.209.18])
+  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2023 08:58:46 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10622"; a="702139634"
+X-IronPort-AV: E=Sophos;i="5.97,300,1669104000"; 
+   d="scan'208";a="702139634"
+Received: from chakanog-mobl.amr.corp.intel.com (HELO [10.209.64.107]) ([10.209.64.107])
+  by orsmga001-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 15 Feb 2023 08:58:45 -0800
+Content-Type: multipart/mixed; boundary="------------2vfOd79GQan17WCFyyEr3R4L"
+Message-ID: <a24c65f8-978d-8968-7874-6b83e14b01ba@intel.com>
+Date: Wed, 15 Feb 2023 08:58:45 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="TgFN2bL5klN5LmOv"
-Content-Disposition: inline
-In-Reply-To: <20230214172549.450713187@linuxfoundation.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.6.1
+Subject: Re: [PATCH v2 4/7] platform/x86/intel/ifs: Implement Array BIST test
+Content-Language: en-US
+To: Jithu Joseph <jithu.joseph@intel.com>, hdegoede@redhat.com,
+ markgross@kernel.org
+Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+ dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+ gregkh@linuxfoundation.org, rostedt@goodmis.org, ashok.raj@intel.com,
+ tony.luck@intel.com, linux-kernel@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+ ravi.v.shankar@intel.com, thiago.macieira@intel.com,
+ athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
+References: <20230131234302.3997223-1-jithu.joseph@intel.com>
+ <20230214234426.344960-1-jithu.joseph@intel.com>
+ <20230214234426.344960-5-jithu.joseph@intel.com>
+From: Dave Hansen <dave.hansen@intel.com>
+In-Reply-To: <20230214234426.344960-5-jithu.joseph@intel.com>
 
+This is a multi-part message in MIME format.
+--------------2vfOd79GQan17WCFyyEr3R4L
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
---TgFN2bL5klN5LmOv
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 2/14/23 15:44, Jithu Joseph wrote:
+> +/* MSR_ARRAY_BIST bit fields */
+> +union ifs_array {
+> +	u64	data;
+> +	struct {
+> +		u32	array_bitmask		:32;
+> +		u32	array_bank		:16;
+> +		u32	rsvd			:15;
+> +		u32	ctrl_result		:1;
+> +	};
+> +};
 
-Hi!
+Wow, after all that, the bitfield remains!  Even the totally unnecessary
+parts, like the 32-bit wide bitfield in the 32-bit value.  The *LEAST*
+you can do is this:
 
-> This is the start of the stable review cycle for the 5.10.168 release.
-> There are 134 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+	struct ifs_array {
+		u32	array_bitmask;
+		u16	array_bank
+		u16	rsvd			:15;
+		u16	ctrl_result		:1;
+	};
 
-CIP testing did not find any problems here:
+to at least minimize the *ENTIRELY* unnecessary bitfields.  I'm also not
+quite sure why I'm going to the trouble of writing another one of these
+things since the last set of things I suggested were not incorporated.
+Or, what the obsession is with u32.
 
-https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
-5.10.y
+I also think the union is a bit silly.  You could literally just do:
 
-Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+	msrvals[0] = (u64 *)&activate;
+or
+	memcpy(&msrvals[0], &activate, sizeof(activate));
 
-Revision tested was f90240a238a9. I can't find 5.10.168-rc2 anywhere
-to verify it matches. Please mention sha hash in the release
-announcement.
+and probably end up with exactly the same instructions.  There's no type
+safety here either way.  The cast, for instance, at least makes the lack
+of type safety obvious.
 
-Best regards,
-                                                                Pavel
---=20
-DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+> +static void ifs_array_test_core(int cpu, struct device *dev)
+> +{
+> +	union ifs_array activate, status = {0};
 
---TgFN2bL5klN5LmOv
-Content-Type: application/pgp-signature; name="signature.asc"
+So, 'status' here is initialized to 0.  But, 'activate'... hmmm
 
------BEGIN PGP SIGNATURE-----
+Here's 1 of the 4 fields getting initialized:
 
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY+0OxgAKCRAw5/Bqldv6
-8oXzAKC7urD1JIJhDYbpwEKEuovcDc+1zACfXFSbtK4Cd3SpJLVZBEWlPWeQSkU=
-=cVzQ
------END PGP SIGNATURE-----
+> +	activate.array_bitmask = ~0U;
+> +	timeout = jiffies + HZ / 2;
+> +
+> +	do {
+> +		if (time_after(jiffies, timeout)) {
+> +			timed_out = true;
+> +			break;
+> +		}
+> +
+> +		msrvals[0] = activate.data;
 
---TgFN2bL5klN5LmOv--
+and then the *WHOLE* union is read here.  What *is* the uninitialized
+member behavior of a bitfield?  I actually haven't the foggiest idea
+since I never use them.  Is there some subtly C voodoo that initializes
+the other 3 fields?
+
+BTW, ifs_test_core() seems to be doing basically the same thing with
+ifs_status.
+
+> +		atomic_set(&array_cpus_out, 0);
+> +		stop_core_cpuslocked(cpu, do_array_test, msrvals);
+> +		status.data = msrvals[1];
+> +
+> +		if (status.ctrl_result)
+> +			break;
+> +
+> +		activate.array_bitmask = status.array_bitmask;
+> +		activate.array_bank = status.array_bank;
+> +
+> +	} while (status.array_bitmask);
+> +
+> +	ifsd->scan_details = status.data;
+
+Beautiful.  It passes raw MSR values back out to userspace in sysfs.
+
+OK, so all this union.data nonsense is to, in the end, pass two MSR
+values through an array over to the do_array_test() function. That
+function, in the end, just does:
+
++	if (cpu == first) {
++		wrmsrl(MSR_ARRAY_BIST, msrs[0]);
++		/* Pass back the result of the test */
++		rdmsrl(MSR_ARRAY_BIST, msrs[1]);
++	}
+
+with them.  It doesn't even reuse msrs[0].  It also doesn't bother to
+even give them symbolic names, like command and result.  The msrs[]
+values are also totally hard coded.
+
+I'd probably do something like the attached patch.  It gets rid of
+'data' and uses sane types for the bitfield.  It does away with separate
+variables and munging into/out of the msr[] array and just passes a
+single command struct to the work function.  It doesn't have any
+uninitialized structure/bitfield fields.
+
+Oh, and it's less code.
+
+> +	if (status.ctrl_result)
+> +		ifsd->status = SCAN_TEST_FAIL;
+> +	else if (timed_out || status.array_bitmask)
+> +		ifsd->status = SCAN_NOT_TESTED;
+> +	else
+> +		ifsd->status = SCAN_TEST_PASS;
+> +}
+> +
+>  /*
+>   * Initiate per core test. It wakes up work queue threads on the target cpu and
+>   * its sibling cpu. Once all sibling threads wake up, the scan test gets executed and
+> @@ -253,6 +341,8 @@ int do_core_test(int cpu, struct device *dev)
+>  		ifs_test_core(cpu, dev);
+>  		break;
+>  	case IFS_ARRAY:
+> +		ifs_array_test_core(cpu, dev);
+> +		break;
+>  	default:
+>  		return -EINVAL;
+>  	}
+
+--------------2vfOd79GQan17WCFyyEr3R4L
+Content-Type: text/x-patch; charset=UTF-8; name="ifs-fun.patch"
+Content-Disposition: attachment; filename="ifs-fun.patch"
+Content-Transfer-Encoding: base64
+
+IGlmcy5oICAgICB8ICAgMTMgKysrKystLS0tLS0tLQogcnVudGVzdC5jIHwgICAzNCArKysr
+KysrKysrKysrKystLS0tLS0tLS0tLS0tLS0tLS0tCiAyIGZpbGVzIGNoYW5nZWQsIDIwIGlu
+c2VydGlvbnMoKyksIDI3IGRlbGV0aW9ucygtKQo=
+
+--------------2vfOd79GQan17WCFyyEr3R4L--
