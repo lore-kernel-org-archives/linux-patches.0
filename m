@@ -1,84 +1,71 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 436357C
-	for <patches@lists.linux.dev>; Wed, 15 Feb 2023 11:41:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EEC5C433EF;
-	Wed, 15 Feb 2023 11:41:57 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676461317;
-	bh=SWJlG8P6p6sS5hqYjQmZBGBDQEFTQITPRH6dSryBgpw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=YScuwj+rpZ+NvsZH0JsuUlQ+5HNXT5EBVkV4j80X9GAFlSMZqMEtQPElrt6fLkWh7
-	 K7J3u6WZAB/y8WGYiEoY8YfsHWvA4GTG+OfAnOgygs6t6MCJ4/Pc7xlkV7CBiUnZDh
-	 OBe1ejWe0KJp/SaiLKWO0kw7d0o0IDl5UI0XTGpY=
-Date: Wed, 15 Feb 2023 12:41:55 +0100
-From: Greg KH <gregkh@linuxfoundation.org>
-To: heyuqiang <heyuqiang1@huawei.com>
-Cc: anshuman.khandual@arm.com, catalin.marinas@arm.com, james.morse@arm.com,
-	linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-	patches@lists.linux.dev, stable@vger.kernel.org, will@kernel.org,
-	yuzenghui@huawei.com, nixiaoming@huawei.com, lijiahuan5@huawei.com
-Subject: Re: [PATCH 5.10 88/91] arm64/kexec: Test page size support with new
- TGRAN range values
-Message-ID: <Y+zFA1JuAcjhAogm@kroah.com>
-References: <e1daca8f-46d5-d5b0-8152-23b172d5e63a@huawei.com>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 449437B
+	for <patches@lists.linux.dev>; Wed, 15 Feb 2023 16:56:47 +0000 (UTC)
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id EF7151C0AAC; Wed, 15 Feb 2023 17:56:38 +0100 (CET)
+Date: Wed, 15 Feb 2023 17:56:38 +0100
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 000/134] 5.10.168-rc2 review
+Message-ID: <Y+0Oxi3j+ix0QSMC@duo.ucw.cz>
+References: <20230214172549.450713187@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="TgFN2bL5klN5LmOv"
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <e1daca8f-46d5-d5b0-8152-23b172d5e63a@huawei.com>
+In-Reply-To: <20230214172549.450713187@linuxfoundation.org>
 
-On Wed, Feb 15, 2023 at 06:58:13PM +0800, heyuqiang wrote:
-> There is an error
-> 
-> tree: https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
-> master
-> head: c911f03f8d444e623724fddd82b07a7e1af42338
-> commit: d5924531dd8ad012ad13eb4d6a5e120c3dadfc05 arm64/kexec: Test page size
-> support with new TGRAN range values
-> # https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?id=d5924531dd8ad012ad13eb4d6a5e120c3dadfc05
-> 
-> When I compile the ko file, I add [-Werror=type-limits] compilation options,
-> an error is reported during compilation.
 
-Why add that option?  Is that a valid option for the 5.10.y kernel?  Is
-this something new?
+--TgFN2bL5klN5LmOv
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-And note, you are responding to a commit from last November, with no
-context at all.  Is this an issue in Linus's tree too?
+Hi!
 
-> 
-> The log is as follows:
-> 
-> ./arch/arm64/include/asm/cpufeature.h: In function
-> ‘system_supports_4kb_granule’:
-> ./arch/arm64/include/asm/cpufeature.h:653:14: error:
-> comparison of unsigned expression >= 0 is always true [-Werror=type-limits]
-> return (val >= ID_AA64MMFR0_TGRAN4_SUPPORTED_MIN) &&
-> ^~
-> ./arch/arm64/include/asm/cpufeature.h: In function
-> ‘system_supports_64kb_granule’:
-> ./arch/arm64/include/asm/cpufeature.h:666:14: error:
-> comparison of unsigned expression >= 0 is always true [-Werror=type-limits]
-> return (val >= ID_AA64MMFR0_TGRAN64_SUPPORTED_MIN) &&
-> ^~
-> 
-> "val" variable type is "u32"
-> "#define ID_AA64MMFR0_TGRAN4_SUPPORTED_MIN 0x0"
-> "#define ID_AA64MMFR0_TGRAN64_SUPPORTED_MIN 0x0"
-> comparison of val >= 0 is always true.
-> 
-> If you fix the issue, kindly add following tag where applicable
-> Reported-by: heyuqiang <heyuqiang1@huawei.com>
+> This is the start of the stable review cycle for the 5.10.168 release.
+> There are 134 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Please provide a valid fix for this if you wish for it to be resolved.
+CIP testing did not find any problems here:
 
-thanks,
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+5.10.y
 
-greg k-h
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+
+Revision tested was f90240a238a9. I can't find 5.10.168-rc2 anywhere
+to verify it matches. Please mention sha hash in the release
+announcement.
+
+Best regards,
+                                                                Pavel
+--=20
+DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--TgFN2bL5klN5LmOv
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY+0OxgAKCRAw5/Bqldv6
+8oXzAKC7urD1JIJhDYbpwEKEuovcDc+1zACfXFSbtK4Cd3SpJLVZBEWlPWeQSkU=
+=cVzQ
+-----END PGP SIGNATURE-----
+
+--TgFN2bL5klN5LmOv--
