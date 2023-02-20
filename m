@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C93963B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:46:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1E4BC433EF;
-	Mon, 20 Feb 2023 13:46:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9B7063B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:46:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 503D1C433EF;
+	Mon, 20 Feb 2023 13:46:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900817;
-	bh=8hRCDvWrHjQaw+mLJCbtZcE2R4q5fq8DiJjB7kBomkg=;
+	s=korg; t=1676900819;
+	bh=UTiNo5Antlr8IhouoiYLDPulwfrEup9AcyMwlVRyLgk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Hy7iKZRokEgsP9tf01CrlOY3gShKRRChMliA450GBBv1QMiIEcnzk2R7pMp10JnFo
-	 78Laos8/wlvUvNsnbIeeytAW0zvMrU1LeswnOEDOZM1yOJzi/m/7BsVR7rwwNlt26g
-	 vZajSchxx6CGOUoIPykC9ANd32QrFrq8/IG7FJTA=
+	b=er6F8XZNo5VYaFZT/Ozxw6MqFQZDXiR+UFFoSvy6SnZIDjleSrFfcDZST3KMb+F1k
+	 L5V1khP8I+G4tCHIygyMmZz4kFZBgvvn3JmzVfcRV4ii+Vh5gMQWgiBHmoBGEb0V5/
+	 XY1kIFTkY5H195RvTcdS5e1mwCfsLkrQDiWZOmzU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jerome Brunet <jbrunet@baylibre.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 071/156] net: phy: meson-gxl: use MMD access dummy stubs for GXL, internal PHY
-Date: Mon, 20 Feb 2023 14:35:15 +0100
-Message-Id: <20230220133605.342208478@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	"David S. Miller" <davem@davemloft.net>,
+	syzbot+2a0e7abd24f1eb90ce25@syzkaller.appspotmail.com
+Subject: [PATCH 5.4 080/156] net: USB: Fix wrong-direction WARNING in plusb.c
+Date: Mon, 20 Feb 2023 14:35:24 +0100
+Message-Id: <20230220133605.757563591@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -36,40 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-[ Upstream commit 69ff53e4a4c9498eeed7d1441f68a1481dc69251 ]
+commit 811d581194f7412eda97acc03d17fc77824b561f upstream.
 
-Jerome provided the information that also the GXL internal PHY doesn't
-support MMD register access and EEE. MMD reads return 0xffff, what
-results in e.g. completely wrong ethtool --show-eee output.
-Therefore use the MMD dummy stubs.
+The syzbot fuzzer detected a bug in the plusb network driver: A
+zero-length control-OUT transfer was treated as a read instead of a
+write.  In modern kernels this error provokes a WARNING:
 
-Fixes: d853d145ea3e ("net: phy: add an option to disable EEE advertisement")
-Suggested-by: Jerome Brunet <jbrunet@baylibre.com>
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/84432fe4-0be4-bc82-4e5c-557206b40f56@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+usb 1-1: BOGUS control dir, pipe 80000280 doesn't match bRequestType c0
+WARNING: CPU: 0 PID: 4645 at drivers/usb/core/urb.c:411
+usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
+Modules linked in:
+CPU: 1 PID: 4645 Comm: dhcpcd Not tainted
+6.2.0-rc6-syzkaller-00050-g9f266ccaa2f5 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google
+01/12/2023
+RIP: 0010:usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
+...
+Call Trace:
+ <TASK>
+ usb_start_wait_urb+0x101/0x4b0 drivers/usb/core/message.c:58
+ usb_internal_control_msg drivers/usb/core/message.c:102 [inline]
+ usb_control_msg+0x320/0x4a0 drivers/usb/core/message.c:153
+ __usbnet_read_cmd+0xb9/0x390 drivers/net/usb/usbnet.c:2010
+ usbnet_read_cmd+0x96/0xf0 drivers/net/usb/usbnet.c:2068
+ pl_vendor_req drivers/net/usb/plusb.c:60 [inline]
+ pl_set_QuickLink_features drivers/net/usb/plusb.c:75 [inline]
+ pl_reset+0x2f/0xf0 drivers/net/usb/plusb.c:85
+ usbnet_open+0xcc/0x5d0 drivers/net/usb/usbnet.c:889
+ __dev_open+0x297/0x4d0 net/core/dev.c:1417
+ __dev_change_flags+0x587/0x750 net/core/dev.c:8530
+ dev_change_flags+0x97/0x170 net/core/dev.c:8602
+ devinet_ioctl+0x15a2/0x1d70 net/ipv4/devinet.c:1147
+ inet_ioctl+0x33f/0x380 net/ipv4/af_inet.c:979
+ sock_do_ioctl+0xcc/0x230 net/socket.c:1169
+ sock_ioctl+0x1f8/0x680 net/socket.c:1286
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:870 [inline]
+ __se_sys_ioctl fs/ioctl.c:856 [inline]
+ __x64_sys_ioctl+0x197/0x210 fs/ioctl.c:856
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+The fix is to call usbnet_write_cmd() instead of usbnet_read_cmd() and
+remove the USB_DIR_IN flag.
+
+Reported-and-tested-by: syzbot+2a0e7abd24f1eb90ce25@syzkaller.appspotmail.com
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 090ffa9d0e90 ("[PATCH] USB: usbnet (9/9) module for pl2301/2302 cables")
+CC: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/00000000000052099f05f3b3e298@google.com/
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/phy/meson-gxl.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/net/usb/plusb.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/net/phy/meson-gxl.c b/drivers/net/phy/meson-gxl.c
-index f7a9e6599a642..39151ec6f65e2 100644
---- a/drivers/net/phy/meson-gxl.c
-+++ b/drivers/net/phy/meson-gxl.c
-@@ -235,6 +235,8 @@ static struct phy_driver meson_gxl_phy[] = {
- 		.config_intr	= meson_gxl_config_intr,
- 		.suspend        = genphy_suspend,
- 		.resume         = genphy_resume,
-+		.read_mmd	= genphy_read_mmd_unsupported,
-+		.write_mmd	= genphy_write_mmd_unsupported,
- 	}, {
- 		PHY_ID_MATCH_EXACT(0x01803301),
- 		.name		= "Meson G12A Internal PHY",
--- 
-2.39.0
-
+--- a/drivers/net/usb/plusb.c
++++ b/drivers/net/usb/plusb.c
+@@ -57,9 +57,7 @@
+ static inline int
+ pl_vendor_req(struct usbnet *dev, u8 req, u8 val, u8 index)
+ {
+-	return usbnet_read_cmd(dev, req,
+-				USB_DIR_IN | USB_TYPE_VENDOR |
+-				USB_RECIP_DEVICE,
++	return usbnet_write_cmd(dev, req, USB_TYPE_VENDOR | USB_RECIP_DEVICE,
+ 				val, index, NULL, 0);
+ }
+ 
 
 
