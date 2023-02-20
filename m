@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 33D6663BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:01:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AF796C433EF;
-	Mon, 20 Feb 2023 14:01:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C68BE63BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:01:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 25FBCC433D2;
+	Mon, 20 Feb 2023 14:01:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901684;
-	bh=IfcDuylq71Attqv3xBHz2BA5wAfyJyyxl64jYW2wtYc=;
+	s=korg; t=1676901686;
+	bh=vBQtwtA44ZLZdnrsPpUnyz7hR51nBMoW1LZyI2yW48Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EizncGLXsQTbIWkpyCwVFX/TmJlP38+fGVnkFq6KSbzbF8Uz2onrqarspau8wZfLW
-	 TRygsLuERMy311Kbw/nPAOPgt4semX/PieUU0ChGFRSkIfQnLhHP5DiFjiHP+yTDOo
-	 YRyea2HogboEoI7ibZ3mvJm/Lr6lbFurSwP8YBzI=
+	b=zYXPBWWletlDf6JvYVTFK7nuPaxH1PpSUlHi73OZAUuL4aXmOZC6unQSzjNu4Bdcd
+	 /+Npr0fY9UHHh0m20zBBC6Y0MX95dUnEHXSc4FoG+MHBOTt7ePwIZMA+qiLWsnYZcj
+	 Lq8aInSGCdZ5ulR55h0qwoXzsyBP881iqbhUIKsI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jianfeng Gao <jianfeng.gao@intel.com>,
-	Andrew Cooper <Andrew.Cooper3@citrix.com>,
-	Peter Zijlstra <peterz@infradead.org>,
-	Kan Liang <kan.liang@linux.intel.com>,
-	Andi Kleen <ak@linux.intel.com>,
 	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 6.1 112/118] KVM: x86/pmu: Disable vPMU support on hybrid CPUs (host PMUs)
-Date: Mon, 20 Feb 2023 14:37:08 +0100
-Message-Id: <20230220133604.879910136@linuxfoundation.org>
+	Paolo Bonzini <pbonzini@redhat.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Ingo Molnar <mingo@redhat.com>,
+	Borislav Petkov <bp@alien8.de>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	x86@kernel.org,
+	"H. Peter Anvin" <hpa@zytor.com>,
+	stable <stable@kernel.org>,
+	Xingyuan Mo <hdthky0@gmail.com>
+Subject: [PATCH 6.1 113/118] kvm: initialize all of the kvm_debugregs structure before sending it to userspace
+Date: Mon, 20 Feb 2023 14:37:09 +0100
+Message-Id: <20230220133604.922764270@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -39,87 +42,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <seanjc@google.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 4d7404e5ee0066e9a9e8268675de8a273b568b08 upstream.
+commit 2c10b61421a28e95a46ab489fd56c0f442ff6952 upstream.
 
-Disable KVM support for virtualizing PMUs on hosts with hybrid PMUs until
-KVM gains a sane way to enumeration the hybrid vPMU to userspace and/or
-gains a mechanism to let userspace opt-in to the dangers of exposing a
-hybrid vPMU to KVM guests.  Virtualizing a hybrid PMU, or at least part of
-a hybrid PMU, is possible, but it requires careful, deliberate
-configuration from userspace.
+When calling the KVM_GET_DEBUGREGS ioctl, on some configurations, there
+might be some unitialized portions of the kvm_debugregs structure that
+could be copied to userspace.  Prevent this as is done in the other kvm
+ioctls, by setting the whole structure to 0 before copying anything into
+it.
 
-E.g. to expose full functionality, vCPUs need to be pinned to pCPUs to
-prevent migrating a vCPU between a big core and a little core, userspace
-must enumerate a reasonable topology to the guest, and guest CPUID must be
-curated per vCPU to enumerate accurate vPMU capabilities.
+Bonus is that this reduces the lines of code as the explicit flag
+setting and reserved space zeroing out can be removed.
 
-The last point is especially problematic, as KVM doesn't control which
-pCPU it runs on when enumerating KVM's vPMU capabilities to userspace,
-i.e. userspace can't rely on KVM_GET_SUPPORTED_CPUID in it's current form.
-
-Alternatively, userspace could enable vPMU support by enumerating the
-set of features that are common and coherent across all cores, e.g. by
-filtering PMU events and restricting guest capabilities.  But again, that
-requires userspace to take action far beyond reflecting KVM's supported
-feature set into the guest.
-
-For now, simply disable vPMU support on hybrid CPUs to avoid inducing
-seemingly random #GPs in guests, and punt support for hybrid CPUs to a
-future enabling effort.
-
-Reported-by: Jianfeng Gao <jianfeng.gao@intel.com>
-Cc: stable@vger.kernel.org
-Cc: Andrew Cooper <Andrew.Cooper3@citrix.com>
-Cc: Peter Zijlstra <peterz@infradead.org>
-Cc: Kan Liang <kan.liang@linux.intel.com>
-Cc: Andi Kleen <ak@linux.intel.com>
-Link: https://lore.kernel.org/all/20220818181530.2355034-1-kan.liang@linux.intel.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Message-Id: <20230208204230.1360502-2-seanjc@google.com>
+Cc: Sean Christopherson <seanjc@google.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Thomas Gleixner <tglx@linutronix.de>
+Cc: Ingo Molnar <mingo@redhat.com>
+Cc: Borislav Petkov <bp@alien8.de>
+Cc: Dave Hansen <dave.hansen@linux.intel.com>
+Cc: <x86@kernel.org>
+Cc: "H. Peter Anvin" <hpa@zytor.com>
+Cc: stable <stable@kernel.org>
+Reported-by: Xingyuan Mo <hdthky0@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Message-Id: <20230214103304.3689213-1-gregkh@linuxfoundation.org>
+Tested-by: Xingyuan Mo <hdthky0@gmail.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/pmu.h |   26 +++++++++++++++++++-------
- 1 file changed, 19 insertions(+), 7 deletions(-)
+ arch/x86/kvm/x86.c |    3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/arch/x86/kvm/pmu.h
-+++ b/arch/x86/kvm/pmu.h
-@@ -164,15 +164,27 @@ static inline void kvm_init_pmu_capabili
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -5250,12 +5250,11 @@ static void kvm_vcpu_ioctl_x86_get_debug
  {
- 	bool is_intel = boot_cpu_data.x86_vendor == X86_VENDOR_INTEL;
+ 	unsigned long val;
  
--	perf_get_x86_pmu_capability(&kvm_pmu_cap);
--
--	 /*
--	  * For Intel, only support guest architectural pmu
--	  * on a host with architectural pmu.
--	  */
--	if ((is_intel && !kvm_pmu_cap.version) || !kvm_pmu_cap.num_counters_gp)
-+	/*
-+	 * Hybrid PMUs don't play nice with virtualization without careful
-+	 * configuration by userspace, and KVM's APIs for reporting supported
-+	 * vPMU features do not account for hybrid PMUs.  Disable vPMU support
-+	 * for hybrid PMUs until KVM gains a way to let userspace opt-in.
-+	 */
-+	if (cpu_feature_enabled(X86_FEATURE_HYBRID_CPU))
- 		enable_pmu = false;
++	memset(dbgregs, 0, sizeof(*dbgregs));
+ 	memcpy(dbgregs->db, vcpu->arch.db, sizeof(vcpu->arch.db));
+ 	kvm_get_dr(vcpu, 6, &val);
+ 	dbgregs->dr6 = val;
+ 	dbgregs->dr7 = vcpu->arch.dr7;
+-	dbgregs->flags = 0;
+-	memset(&dbgregs->reserved, 0, sizeof(dbgregs->reserved));
+ }
  
-+	if (enable_pmu) {
-+		perf_get_x86_pmu_capability(&kvm_pmu_cap);
-+
-+		/*
-+		 * For Intel, only support guest architectural pmu
-+		 * on a host with architectural pmu.
-+		 */
-+		if ((is_intel && !kvm_pmu_cap.version) ||
-+		    !kvm_pmu_cap.num_counters_gp)
-+			enable_pmu = false;
-+	}
-+
- 	if (!enable_pmu) {
- 		memset(&kvm_pmu_cap, 0, sizeof(kvm_pmu_cap));
- 		return;
+ static int kvm_vcpu_ioctl_x86_set_debugregs(struct kvm_vcpu *vcpu,
 
 
