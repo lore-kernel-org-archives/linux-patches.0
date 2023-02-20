@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63BA363B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:53:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD405C433D2;
-	Mon, 20 Feb 2023 13:53:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DD363B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:53:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8B2C4339B;
+	Mon, 20 Feb 2023 13:53:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901187;
-	bh=NXVTRYFMDHQcZuEjpnGmbq4UB6wgycTk9jV1D9WkAac=;
+	s=korg; t=1676901189;
+	bh=CKXPtMPsyjxt5m/mjliJGJhzn1rjocrOsDVJj7es5YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gxNuDf+zwrXdwoop9zY7LnTNrCHRcmrD18+YKZbUnz0waoBfMd7wVhZFiW9jk43N+
-	 IBIRUwLxSXwxb+vlMtUxdt/gu1mgras5ei7gNd5rVYjoH2OBa+fM9+NnTIQUGx7KXI
-	 FdzvBF3GOuNYG1nPjJRSU9V2SgonY0070VWiBBBI=
+	b=jioy+IO1rOUmi7XFtYL90+sOGnnNtFv/cUWn6WuqTcbfaZobJHEjo3yM1IrOiAlci
+	 fMdxKA7CzPPpsssM6eHWqnRwntWacxRb9PJEWS1kcq9yOFwVQpInnB01+4W1GNQe56
+	 coFisdYByyDjEXz3Yo0KG8cOqJlwmciSrrh7zSPs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Dave Chinner <dchinner@redhat.com>,
-	Dave Chinner <david@fromorbit.com>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 33/83] xfs: dont leak btree cursor when insrec fails after a split
-Date: Mon, 20 Feb 2023 14:36:06 +0100
-Message-Id: <20230220133554.814652941@linuxfoundation.org>
+	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.15 34/83] mptcp: do not wait for bare sockets timeout
+Date: Mon, 20 Feb 2023 14:36:07 +0100
+Message-Id: <20230220133554.844189134@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -38,96 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Darrick J. Wong <djwong@kernel.org>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit a54f78def73d847cb060b18c4e4a3d1d26c9ca6d ]
+commit d4e85922e3e7ef2071f91f65e61629b60f3a9cf4 upstream.
 
-The recent patch to improve btree cycle checking caused a regression
-when I rebased the in-memory btree branch atop the 5.19 for-next branch,
-because in-memory short-pointer btrees do not have AG numbers.  This
-produced the following complaint from kmemleak:
+If the peer closes all the existing subflows for a given
+mptcp socket and later the application closes it, the current
+implementation let it survive until the timewait timeout expires.
 
-unreferenced object 0xffff88803d47dde8 (size 264):
-  comm "xfs_io", pid 4889, jiffies 4294906764 (age 24.072s)
-  hex dump (first 32 bytes):
-    90 4d 0b 0f 80 88 ff ff 00 a0 bd 05 80 88 ff ff  .M..............
-    e0 44 3a a0 ff ff ff ff 00 df 08 06 80 88 ff ff  .D:.............
-  backtrace:
-    [<ffffffffa0388059>] xfbtree_dup_cursor+0x49/0xc0 [xfs]
-    [<ffffffffa029887b>] xfs_btree_dup_cursor+0x3b/0x200 [xfs]
-    [<ffffffffa029af5d>] __xfs_btree_split+0x6ad/0x820 [xfs]
-    [<ffffffffa029b130>] xfs_btree_split+0x60/0x110 [xfs]
-    [<ffffffffa029f6da>] xfs_btree_make_block_unfull+0x19a/0x1f0 [xfs]
-    [<ffffffffa029fada>] xfs_btree_insrec+0x3aa/0x810 [xfs]
-    [<ffffffffa029fff3>] xfs_btree_insert+0xb3/0x240 [xfs]
-    [<ffffffffa02cb729>] xfs_rmap_insert+0x99/0x200 [xfs]
-    [<ffffffffa02cf142>] xfs_rmap_map_shared+0x192/0x5f0 [xfs]
-    [<ffffffffa02cf60b>] xfs_rmap_map_raw+0x6b/0x90 [xfs]
-    [<ffffffffa0384a85>] xrep_rmap_stash+0xd5/0x1d0 [xfs]
-    [<ffffffffa0384dc0>] xrep_rmap_visit_bmbt+0xa0/0xf0 [xfs]
-    [<ffffffffa0384fb6>] xrep_rmap_scan_iext+0x56/0xa0 [xfs]
-    [<ffffffffa03850d8>] xrep_rmap_scan_ifork+0xd8/0x160 [xfs]
-    [<ffffffffa0385195>] xrep_rmap_scan_inode+0x35/0x80 [xfs]
-    [<ffffffffa03852ee>] xrep_rmap_find_rmaps+0x10e/0x270 [xfs]
+While the above is allowed by the protocol specification it
+consumes resources for almost no reason and additionally
+causes sporadic self-tests failures.
 
-I noticed that xfs_btree_insrec has a bunch of debug code that return
-out of the function immediately, without freeing the "new" btree cursor
-that can be returned when _make_block_unfull calls xfs_btree_split.  Fix
-the error return in this function to free the btree cursor.
+Let's move the mptcp socket to the TCP_CLOSE state when there are
+no alive subflows at close time, so that the allocated resources
+will be freed immediately.
 
-Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Signed-off-by: Dave Chinner <david@fromorbit.com>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: e16163b6e2b7 ("mptcp: refactor shutdown and close")
+Cc: stable@vger.kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
 ---
- fs/xfs/libxfs/xfs_btree.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ net/mptcp/protocol.c |    9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/fs/xfs/libxfs/xfs_btree.c b/fs/xfs/libxfs/xfs_btree.c
-index 482a4ccc65682..dffe4ca584935 100644
---- a/fs/xfs/libxfs/xfs_btree.c
-+++ b/fs/xfs/libxfs/xfs_btree.c
-@@ -3266,7 +3266,7 @@ xfs_btree_insrec(
- 	struct xfs_btree_block	*block;	/* btree block */
- 	struct xfs_buf		*bp;	/* buffer for block */
- 	union xfs_btree_ptr	nptr;	/* new block ptr */
--	struct xfs_btree_cur	*ncur;	/* new btree cursor */
-+	struct xfs_btree_cur	*ncur = NULL;	/* new btree cursor */
- 	union xfs_btree_key	nkey;	/* new block key */
- 	union xfs_btree_key	*lkey;
- 	int			optr;	/* old key/record index */
-@@ -3346,7 +3346,7 @@ xfs_btree_insrec(
- #ifdef DEBUG
- 	error = xfs_btree_check_block(cur, block, level, bp);
- 	if (error)
--		return error;
-+		goto error0;
- #endif
+--- a/net/mptcp/protocol.c
++++ b/net/mptcp/protocol.c
+@@ -2726,6 +2726,7 @@ static void mptcp_close(struct sock *sk,
+ {
+ 	struct mptcp_subflow_context *subflow;
+ 	bool do_cancel_work = false;
++	int subflows_alive = 0;
  
- 	/*
-@@ -3366,7 +3366,7 @@ xfs_btree_insrec(
- 		for (i = numrecs - ptr; i >= 0; i--) {
- 			error = xfs_btree_debug_check_ptr(cur, pp, i, level);
- 			if (error)
--				return error;
-+				goto error0;
- 		}
+ 	lock_sock(sk);
+ 	sk->sk_shutdown = SHUTDOWN_MASK;
+@@ -2747,11 +2748,19 @@ cleanup:
+ 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
+ 		bool slow = lock_sock_fast_nested(ssk);
  
- 		xfs_btree_shift_keys(cur, kp, 1, numrecs - ptr + 1);
-@@ -3451,6 +3451,8 @@ xfs_btree_insrec(
- 	return 0;
++		subflows_alive += ssk->sk_state != TCP_CLOSE;
++
+ 		sock_orphan(ssk);
+ 		unlock_sock_fast(ssk, slow);
+ 	}
+ 	sock_orphan(sk);
  
- error0:
-+	if (ncur)
-+		xfs_btree_del_cursor(ncur, error);
- 	return error;
- }
- 
--- 
-2.39.0
-
++	/* all the subflows are closed, only timeout can change the msk
++	 * state, let's not keep resources busy for no reasons
++	 */
++	if (subflows_alive == 0)
++		inet_sk_state_store(sk, TCP_CLOSE);
++
+ 	sock_hold(sk);
+ 	pr_debug("msk=%p state=%d", sk, sk->sk_state);
+ 	if (sk->sk_state == TCP_CLOSE) {
 
 
