@@ -1,32 +1,37 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA9FC63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:54:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 734A7C433EF;
-	Mon, 20 Feb 2023 13:54:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 88B4E63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:54:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 112A6C433EF;
+	Mon, 20 Feb 2023 13:54:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901262;
-	bh=rtM/YGm7KDZpXx2PWPrGhPYxlwWzddRfNVwcSPA+Z+4=;
+	s=korg; t=1676901265;
+	bh=J08X2vmLDjJwWn1JAxUk9hEAOF6ohBaK+5k8gOt95zc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xb0bnaMXIUlDhf6Mg5XLVESU/mT7L0myYcH8AvVfS3D4YG1KVk+WUpoWOCiOlEbU2
-	 fqhVQq5iFsK/G8pUddyGwjLLp/v7mFDUTQ3Y9fX0tXqVSNDmqQwdWo/ZNoSTZNrxtT
-	 H4ikg0ltLixJ3QtQT7zGlYxQl+Kdv4We7XztXsTo=
+	b=XpQywIFBgEiiJXzqyh9eDjZnB0He8SRTW3XCFhBMnnF4BuzIjGuL9CXW3+6IOPmDu
+	 gB4RZ4rgwpM/Fp2ZtpjcpHtqLimt6GOssDS8zaGjzAKhqsZOZh7YBk32QMnRJD75co
+	 Qe1Elnh6gkFqAwThx7iD+8/V33PtDkHhzNsQ2FB4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vignesh Raghavendra <vigneshr@ti.com>,
-	Siddharth Vadapalli <s-vadapalli@ti.com>,
-	Roger Quadros <rogerq@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 58/83] net: ethernet: ti: am65-cpsw: Add RX DMA Channel Teardown Quirk
-Date: Mon, 20 Feb 2023 14:36:31 +0100
-Message-Id: <20230220133555.686369903@linuxfoundation.org>
+	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
+	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
+	=?UTF-8?q?P=C3=A9ter=20Ujfalusi?= <peter.ujfalusi@linux.intel.com>,
+	Bard Liao <yung-chuan.liao@linux.intel.com>,
+	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 01/57] ASoC: Intel: sof_rt5682: always set dpcm_capture for amplifiers
+Date: Mon, 20 Feb 2023 14:36:09 +0100
+Message-Id: <20230220133549.413563806@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
-References: <20230220133553.669025851@linuxfoundation.org>
+In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
+References: <20230220133549.360169435@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,82 +41,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Siddharth Vadapalli <s-vadapalli@ti.com>
+From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-commit 0ed577e7e8e508c24e22ba07713ecc4903e147c3 upstream.
+[ Upstream commit 324f065cdbaba1b879a63bf07e61ca156b789537 ]
 
-In TI's AM62x/AM64x SoCs, successful teardown of RX DMA Channel raises an
-interrupt. The process of servicing this interrupt involves flushing all
-pending RX DMA descriptors and clearing the teardown completion marker
-(TDCM). The am65_cpsw_nuss_rx_packets() function invoked from the RX
-NAPI callback services the interrupt. Thus, it is necessary to wait for
-this handler to run, drain all packets and clear TDCM, before calling
-napi_disable() in am65_cpsw_nuss_common_stop() function post channel
-teardown. If napi_disable() executes before ensuring that TDCM is
-cleared, the TDCM remains set when the interfaces are down, resulting in
-an interrupt storm when the interfaces are brought up again.
+The amplifier may provide hardware support for I/V feedback, or
+alternatively the firmware may generate an echo reference attached to
+the SSP and dailink used for the amplifier.
 
-Since the interrupt raised to indicate the RX DMA Channel teardown is
-specific to the AM62x and AM64x SoCs, add a quirk for it.
+To avoid any issues with invalid/NULL substreams in the latter case,
+always unconditionally set dpcm_capture.
 
-Fixes: 4f7cce272403 ("net: ethernet: ti: am65-cpsw: add support for am64x cpsw3g")
-Co-developed-by: Vignesh Raghavendra <vigneshr@ti.com>
-Signed-off-by: Vignesh Raghavendra <vigneshr@ti.com>
-Signed-off-by: Siddharth Vadapalli <s-vadapalli@ti.com>
-Reviewed-by: Roger Quadros <rogerq@kernel.org>
-Link: https://lore.kernel.org/r/20230209084432.189222-1-s-vadapalli@ti.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://github.com/thesofproject/linux/issues/4083
+Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
+Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
+Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
+Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
+Link: https://lore.kernel.org/r/20230119163459.2235843-2-kai.vehmanen@linux.intel.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/ti/am65-cpsw-nuss.c |   12 +++++++++++-
- drivers/net/ethernet/ti/am65-cpsw-nuss.h |    1 +
- 2 files changed, 12 insertions(+), 1 deletion(-)
+ sound/soc/intel/boards/sof_rt5682.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.c
-@@ -564,7 +564,15 @@ static int am65_cpsw_nuss_common_stop(st
- 		k3_udma_glue_disable_tx_chn(common->tx_chns[i].tx_chn);
- 	}
- 
-+	reinit_completion(&common->tdown_complete);
- 	k3_udma_glue_tdown_rx_chn(common->rx_chns.rx_chn, true);
+diff --git a/sound/soc/intel/boards/sof_rt5682.c b/sound/soc/intel/boards/sof_rt5682.c
+index 1f94fa5a15db6..5883d1fa3b7ed 100644
+--- a/sound/soc/intel/boards/sof_rt5682.c
++++ b/sound/soc/intel/boards/sof_rt5682.c
+@@ -704,6 +704,9 @@ static struct snd_soc_dai_link *sof_card_dai_links_create(struct device *dev,
+ 		links[id].num_platforms = ARRAY_SIZE(platform_component);
+ 		links[id].nonatomic = true;
+ 		links[id].dpcm_playback = 1;
++		/* feedback stream or firmware-generated echo reference */
++		links[id].dpcm_capture = 1;
 +
-+	if (common->pdata.quirks & AM64_CPSW_QUIRK_DMA_RX_TDOWN_IRQ) {
-+		i = wait_for_completion_timeout(&common->tdown_complete, msecs_to_jiffies(1000));
-+		if (!i)
-+			dev_err(common->dev, "rx teardown timeout\n");
-+	}
-+
- 	napi_disable(&common->napi_rx);
- 
- 	for (i = 0; i < AM65_CPSW_MAX_RX_FLOWS; i++)
-@@ -786,6 +794,8 @@ static int am65_cpsw_nuss_rx_packets(str
- 
- 	if (cppi5_desc_is_tdcm(desc_dma)) {
- 		dev_dbg(dev, "%s RX tdown flow: %u\n", __func__, flow_idx);
-+		if (common->pdata.quirks & AM64_CPSW_QUIRK_DMA_RX_TDOWN_IRQ)
-+			complete(&common->tdown_complete);
- 		return 0;
- 	}
- 
-@@ -2609,7 +2619,7 @@ static const struct am65_cpsw_pdata j721
- };
- 
- static const struct am65_cpsw_pdata am64x_cpswxg_pdata = {
--	.quirks = 0,
-+	.quirks = AM64_CPSW_QUIRK_DMA_RX_TDOWN_IRQ,
- 	.ale_dev_id = "am64-cpswxg",
- 	.fdqring_mode = K3_RINGACC_RING_MODE_RING,
- };
---- a/drivers/net/ethernet/ti/am65-cpsw-nuss.h
-+++ b/drivers/net/ethernet/ti/am65-cpsw-nuss.h
-@@ -84,6 +84,7 @@ struct am65_cpsw_rx_chn {
- };
- 
- #define AM65_CPSW_QUIRK_I2027_NO_TX_CSUM BIT(0)
-+#define AM64_CPSW_QUIRK_DMA_RX_TDOWN_IRQ BIT(1)
- 
- struct am65_cpsw_pdata {
- 	u32	quirks;
+ 		links[id].no_pcm = 1;
+ 		links[id].cpus = &cpus[id];
+ 		links[id].num_cpus = 1;
+-- 
+2.39.0
+
 
 
