@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EFAD663BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:59:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C5FEC433EF;
-	Mon, 20 Feb 2023 13:59:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AF4963BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:59:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 010E4C433EF;
+	Mon, 20 Feb 2023 13:59:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901556;
-	bh=LIeNS+U7qNPIdfoEBkFXTuqkckUAEoi5zbDgutwik40=;
+	s=korg; t=1676901559;
+	bh=4KLMRmXFwHw9jfP/NyiuIHUrBIS0EUbyrDRrdI25NpA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kh3sSIWT0WJV7N19ueYFAfE89kcZCc0OmkRvRZTKjyAg1Mp1wMsLd1gOXWOHi/3Me
-	 BrT1TqMlhLwbO0p2eJuxqhpGWjN++3fZUGesNuIWNT3hqe9ve2aRuOGMdYEsoPaNtl
-	 fofCR46+y1b4IWlCW1BAFJqcGuAZKSa8WaSFg4JE=
+	b=YxtfzegcaJ94SomR16GLTvqLr6/jCddHv6Umi2tk8mblw0Vq+0KiwBNKOccrJxDA7
+	 wmGfh0SaQM4i4a+z/3S2lrKp9efGNiNPpqx7tvFC32aPV00xF+GIQcNCSydYQhE0aK
+	 BFuAmn8cm5MlanQpE+sgaG62p1IfznQ5p+7CyEP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
+	Alvin Lee <Alvin.Lee2@amd.com>,
 	Alex Hung <alex.hung@amd.com>,
-	Daniel Miess <Daniel.Miess@amd.com>,
+	George Shen <george.shen@amd.com>,
 	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 034/118] drm/amd/display: Adjust downscaling limits for dcn314
-Date: Mon, 20 Feb 2023 14:35:50 +0100
-Message-Id: <20230220133601.791831664@linuxfoundation.org>
+Subject: [PATCH 6.1 035/118] drm/amd/display: Unassign does_plane_fit_in_mall function from dcn3.2
+Date: Mon, 20 Feb 2023 14:35:51 +0100
+Message-Id: <20230220133601.831941764@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -38,52 +38,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Daniel Miess <Daniel.Miess@amd.com>
+From: George Shen <george.shen@amd.com>
 
-[ Upstream commit dd2db2dc4bd298f33dea50c80c3c11bee4e3b0a4 ]
+[ Upstream commit 275d8a1db261a1272a818d40ebc61b3b865b60e5 ]
 
 [Why]
-Lower max_downscale_ratio and ARGB888 downscale factor
-to prevent cases where underflow may occur on dcn314
+The hwss function does_plane_fit_in_mall not applicable to dcn3.2 asics.
+Using it with dcn3.2 can result in undefined behaviour.
 
 [How]
-Set max_downscale_ratio to 400 and ARGB downscale factor
-to 250 for dcn314
+Assign the function pointer to NULL.
 
-Reviewed-by: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
+Reviewed-by: Alvin Lee <Alvin.Lee2@amd.com>
 Acked-by: Alex Hung <alex.hung@amd.com>
-Signed-off-by: Daniel Miess <Daniel.Miess@amd.com>
+Signed-off-by: George Shen <george.shen@amd.com>
 Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dcn32/dcn32_init.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
-index 9066c511a0529..c80c8c8f51e97 100644
---- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_resource.c
-@@ -871,8 +871,9 @@ static const struct dc_plane_cap plane_cap = {
- 	},
- 
- 	// 6:1 downscaling ratio: 1000/6 = 166.666
-+	// 4:1 downscaling ratio for ARGB888 to prevent underflow during P010 playback: 1000/4 = 250
- 	.max_downscale_factor = {
--			.argb8888 = 167,
-+			.argb8888 = 250,
- 			.nv12 = 167,
- 			.fp16 = 167
- 	},
-@@ -1755,7 +1756,7 @@ static bool dcn314_resource_construct(
- 	pool->base.underlay_pipe_index = NO_UNDERLAY_PIPE;
- 	pool->base.pipe_count = pool->base.res_cap->num_timing_generator;
- 	pool->base.mpcc_count = pool->base.res_cap->num_timing_generator;
--	dc->caps.max_downscale_ratio = 600;
-+	dc->caps.max_downscale_ratio = 400;
- 	dc->caps.i2c_speed_in_khz = 100;
- 	dc->caps.i2c_speed_in_khz_hdcp = 100;
- 	dc->caps.max_cursor_size = 256;
+diff --git a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_init.c b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_init.c
+index 45a949ba6f3f3..7b7f0e6b2a2ff 100644
+--- a/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_init.c
++++ b/drivers/gpu/drm/amd/display/dc/dcn32/dcn32_init.c
+@@ -94,7 +94,7 @@ static const struct hw_sequencer_funcs dcn32_funcs = {
+ 	.get_vupdate_offset_from_vsync = dcn10_get_vupdate_offset_from_vsync,
+ 	.calc_vupdate_position = dcn10_calc_vupdate_position,
+ 	.apply_idle_power_optimizations = dcn32_apply_idle_power_optimizations,
+-	.does_plane_fit_in_mall = dcn30_does_plane_fit_in_mall,
++	.does_plane_fit_in_mall = NULL,
+ 	.set_backlight_level = dcn21_set_backlight_level,
+ 	.set_abm_immediate_disable = dcn21_set_abm_immediate_disable,
+ 	.hardware_release = dcn30_hardware_release,
 -- 
 2.39.0
 
