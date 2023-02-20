@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085E363B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854A4C433D2;
-	Mon, 20 Feb 2023 13:58:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C61D563B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23F9DC4339B;
+	Mon, 20 Feb 2023 13:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901496;
-	bh=SKxwpuPeFrsjkmrCHmg8BLPyCcp6Jy8418OHhjLGp5M=;
+	s=korg; t=1676901499;
+	bh=AiUFxwgP6JG71yEWTBEA9ukmIi5IsJRhe5/HEhzoA5s=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Bl0XX0WimTxt7/K1ru+0l5txiTnv10hGONk6vaZW+9wDkQzE+Kpd1q/Sg8RjLIt52
-	 9iHgFxl+ZP0mqaZrLfk/WJsXBZ2Un/rx3osd725i+1wJlWHcVzh2mvc2ToME/9zXNq
-	 +wZwSn2YR70HqtF0HjJUXkM3EKQkaBeC6Hzi0QgY=
+	b=btlbThGf20e+SmMby0uHF4YlB7dPh6WbL5wsZlak+bvH7OZlxKTH9bkVxVFPuWOv3
+	 BKAi36EIv3d/73sdRaPAP25Cb4mj7UeKVN+BpPp+PPGXQnRo+skbfwPMSG8KPwdk16
+	 zEW3DIsE5D3wytQ9vbsQ1txh8GcyElxWq90Pyzqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
+	Xiubo Li <xiubli@redhat.com>,
+	Venky Shankar <vshankar@redhat.com>,
+	Ilya Dryomov <idryomov@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 040/118] platform/x86: touchscreen_dmi: Add Chuwi Vi8 (CWI501) DMI match
-Date: Mon, 20 Feb 2023 14:35:56 +0100
-Message-Id: <20230220133602.048950900@linuxfoundation.org>
+Subject: [PATCH 6.1 041/118] ceph: move mount state enum to super.h
+Date: Mon, 20 Feb 2023 14:35:57 +0100
+Message-Id: <20230220133602.079935725@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -34,41 +36,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Xiubo Li <xiubli@redhat.com>
 
-[ Upstream commit eecf2acd4a580e9364e5087daf0effca60a240b7 ]
+[ Upstream commit b38b17b6a01ca4e738af097a1529910646ef4270 ]
 
-Add a DMI match for the CWI501 version of the Chuwi Vi8 tablet,
-pointing to the same chuwi_vi8_data as the existing CWI506 version
-DMI match.
+These flags are only used in ceph filesystem in fs/ceph, so just
+move it to the place it should be.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230202103413.331459-1-hdegoede@redhat.com
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Venky Shankar <vshankar@redhat.com>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/ceph/super.h              | 10 ++++++++++
+ include/linux/ceph/libceph.h | 10 ----------
+ 2 files changed, 10 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index f00995390fdfe..13802a3c3591d 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -1097,6 +1097,15 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_BIOS_DATE, "05/07/2016"),
- 		},
- 	},
-+	{
-+		/* Chuwi Vi8 (CWI501) */
-+		.driver_data = (void *)&chuwi_vi8_data,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Insyde"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "i86"),
-+			DMI_MATCH(DMI_BIOS_VERSION, "CHUWI.W86JLBNR01"),
-+		},
-+	},
- 	{
- 		/* Chuwi Vi8 (CWI506) */
- 		.driver_data = (void *)&chuwi_vi8_data,
+diff --git a/fs/ceph/super.h b/fs/ceph/super.h
+index ae4126f634101..735279b2ceb55 100644
+--- a/fs/ceph/super.h
++++ b/fs/ceph/super.h
+@@ -100,6 +100,16 @@ struct ceph_mount_options {
+ 	char *mon_addr;
+ };
+ 
++/* mount state */
++enum {
++	CEPH_MOUNT_MOUNTING,
++	CEPH_MOUNT_MOUNTED,
++	CEPH_MOUNT_UNMOUNTING,
++	CEPH_MOUNT_UNMOUNTED,
++	CEPH_MOUNT_SHUTDOWN,
++	CEPH_MOUNT_RECOVER,
++};
++
+ #define CEPH_ASYNC_CREATE_CONFLICT_BITS 8
+ 
+ struct ceph_fs_client {
+diff --git a/include/linux/ceph/libceph.h b/include/linux/ceph/libceph.h
+index 00af2c98da75a..4497d0a6772cd 100644
+--- a/include/linux/ceph/libceph.h
++++ b/include/linux/ceph/libceph.h
+@@ -99,16 +99,6 @@ struct ceph_options {
+ 
+ #define CEPH_AUTH_NAME_DEFAULT   "guest"
+ 
+-/* mount state */
+-enum {
+-	CEPH_MOUNT_MOUNTING,
+-	CEPH_MOUNT_MOUNTED,
+-	CEPH_MOUNT_UNMOUNTING,
+-	CEPH_MOUNT_UNMOUNTED,
+-	CEPH_MOUNT_SHUTDOWN,
+-	CEPH_MOUNT_RECOVER,
+-};
+-
+ static inline unsigned long ceph_timeout_jiffies(unsigned long timeout)
+ {
+ 	return timeout ?: MAX_SCHEDULE_TIMEOUT;
 -- 
 2.39.0
 
