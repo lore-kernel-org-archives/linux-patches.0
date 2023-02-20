@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C67DC63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:50:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4FBB4C433EF;
-	Mon, 20 Feb 2023 13:50:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBAE263B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:50:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76D36C433D2;
+	Mon, 20 Feb 2023 13:50:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901022;
-	bh=oHgcWu/dOATSK/GoxVWdu8Flaf2aB6BR8awNd7JS4XY=;
+	s=korg; t=1676901027;
+	bh=RiEeSUvFkY3kOEeY2GLpWPlwhdvURfzsd7JvUKii6BE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SBlgfWuyqhM1XkUTFYki+tSxOyGkL/h1cqovbglQE2vR94xJSefmQ2yQhyvVfkiin
-	 oscbtllIrnNbjdK2iI6ZxBpfN20Uqsekh4p1IoBYQIPzsepzfmyCtquldAFidMCCg1
-	 slB+TCNn4qvXKMHOKUo8u36yAX3UhbEdQpMyQI1Q=
+	b=c6QPUPSOyw1X/kaLDKysJdTr9cWZKU8zJGVdM+3hRXjmyY0VfauN89+PLiP56Av7e
+	 2T+fVXQPzHG++dLPYprjJqPknnoeClbKF5ZpcA7/9p5eN/6Q2acaAzmSfToqADMXrn
+	 E7WWlbCRHlw+MF759hTrbQfdSA7TzXXEMpVIhq14=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qian Cai <cai@lca.pw>,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Jerry Snitselaar <jsnitsel@redhat.com>,
-	Joerg Roedel <jroedel@suse.de>
-Subject: [PATCH 5.4 156/156] iommu/amd: Pass gfp flags to iommu_map_page() in amd_iommu_map()
-Date: Mon, 20 Feb 2023 14:36:40 +0100
-Message-Id: <20230220133609.183427426@linuxfoundation.org>
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 137/156] revert "squashfs: harden sanity check in squashfs_read_xattr_id_table"
+Date: Mon, 20 Feb 2023 14:36:21 +0100
+Message-Id: <20230220133608.338567616@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -36,35 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joerg Roedel <jroedel@suse.de>
+From: Andrew Morton <akpm@linux-foundation.org>
 
-commit 3057fb9377eb5e73386dd0d8804bf72bdd23e391 upstream.
+commit a5b21d8d791cd4db609d0bbcaa9e0c7e019888d1 upstream.
 
-A recent commit added a gfp parameter to amd_iommu_map() to make it
-callable from atomic context, but forgot to pass it down to
-iommu_map_page() and left GFP_KERNEL there. This caused
-sleep-while-atomic warnings and needs to be fixed.
+This fix was nacked by Philip, for reasons identified in the email linked
+below.
 
-Reported-by: Qian Cai <cai@lca.pw>
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Fixes: 781ca2de89ba ("iommu: Add gfp parameter to iommu_ops::map")
-Reviewed-by: Jerry Snitselaar <jsnitsel@redhat.com>
-Signed-off-by: Joerg Roedel <jroedel@suse.de>
+Link: https://lkml.kernel.org/r/68f15d67-8945-2728-1f17-5b53a80ec52d@squashfs.org.uk
+Fixes: 72e544b1b28325 ("squashfs: harden sanity check in squashfs_read_xattr_id_table")
+Cc: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Cc: Fedor Pchelkin <pchelkin@ispras.ru>
+Cc: Phillip Lougher <phillip@squashfs.org.uk>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iommu/amd_iommu.c |    2 +-
+ fs/squashfs/xattr_id.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/iommu/amd_iommu.c
-+++ b/drivers/iommu/amd_iommu.c
-@@ -3114,7 +3114,7 @@ static int amd_iommu_map(struct iommu_do
- 		prot |= IOMMU_PROT_IW;
+--- a/fs/squashfs/xattr_id.c
++++ b/fs/squashfs/xattr_id.c
+@@ -76,7 +76,7 @@ __le64 *squashfs_read_xattr_id_table(str
+ 	/* Sanity check values */
  
- 	mutex_lock(&domain->api_lock);
--	ret = iommu_map_page(domain, iova, paddr, page_size, prot, GFP_KERNEL);
-+	ret = iommu_map_page(domain, iova, paddr, page_size, prot, gfp);
- 	mutex_unlock(&domain->api_lock);
+ 	/* there is always at least one xattr id */
+-	if (*xattr_ids <= 0)
++	if (*xattr_ids == 0)
+ 		return ERR_PTR(-EINVAL);
  
- 	domain_flush_np_cache(domain, iova, page_size);
+ 	len = SQUASHFS_XATTR_BLOCK_BYTES(*xattr_ids);
 
 
