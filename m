@@ -1,26 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE5363B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4E9C433D2;
-	Mon, 20 Feb 2023 13:55:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A22663BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CD918C433EF;
+	Mon, 20 Feb 2023 13:55:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901307;
-	bh=wA2zi/bTstxOd1k4hToa8X/bVQN088ya/FlEjtV3bOs=;
+	s=korg; t=1676901312;
+	bh=zuOjhZLA9qpE78QW/bT9u6cbEkNpK4ZB27I1xgCffh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=B5vNfX84RTkbsCAy5b6YKNoXQw10pPuUhffZcOfVnSNCbuL26e1rFrSiAoKuMjIpb
-	 BAMnDePZY2P0myLtc75NsMMvs5s7vcXeKWf+heMVkDwsxxUQhjLVh3HFfhbiMnybMt
-	 r5Bk7Gl2IZpmX4AvqTB51Qf3wNVNkyiPs9CnA73s=
+	b=NFfdIxCaxz7QJjyOpqf+BpiYM0SzEMtp826ItHLvd07Jcv4GIZBej4xQTKMzcE9Kd
+	 9EsPkNkG8GJHovq7JC6NMk9uWaYHV/rrM1eFwg0w3PSkw1P/Ma4gZVfO8LG/8rgwUq
+	 j9a07ioMq5Ks91qLDK9s/C5IMBJ3biIUjll5Oy7c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kailang Yang <kailang@realtek.com>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 25/57] ALSA: hda/realtek - fixed wrong gpio assigned
-Date: Mon, 20 Feb 2023 14:36:33 +0100
-Message-Id: <20230220133550.230421066@linuxfoundation.org>
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Jesper Juhl <jesperjuhl76@gmail.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Andi Kleen <ak@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.10 27/57] hugetlb: check for undefined shift on 32 bit architectures
+Date: Mon, 20 Feb 2023 14:36:35 +0100
+Message-Id: <20230220133550.295960415@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -34,32 +41,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kailang Yang <kailang@realtek.com>
+From: Mike Kravetz <mike.kravetz@oracle.com>
 
-commit 2bdccfd290d421b50df4ec6a68d832dad1310748 upstream.
+commit ec4288fe63966b26d53907212ecd05dfa81dd2cc upstream.
 
-GPIO2 PIN use for output. Mask Dir and Data need to assign for 0x4. Not 0x3.
-This fixed was for Lenovo Desktop(0x17aa1056). GPIO2 use for AMP enable.
+Users can specify the hugetlb page size in the mmap, shmget and
+memfd_create system calls.  This is done by using 6 bits within the flags
+argument to encode the base-2 logarithm of the desired page size.  The
+routine hstate_sizelog() uses the log2 value to find the corresponding
+hugetlb hstate structure.  Converting the log2 value (page_size_log) to
+potential hugetlb page size is the simple statement:
 
-Signed-off-by: Kailang Yang <kailang@realtek.com>
+	1UL << page_size_log
+
+Because only 6 bits are used for page_size_log, the left shift can not be
+greater than 63.  This is fine on 64 bit architectures where a long is 64
+bits.  However, if a value greater than 31 is passed on a 32 bit
+architecture (where long is 32 bits) the shift will result in undefined
+behavior.  This was generally not an issue as the result of the undefined
+shift had to exactly match hugetlb page size to proceed.
+
+Recent improvements in runtime checking have resulted in this undefined
+behavior throwing errors such as reported below.
+
+Fix by comparing page_size_log to BITS_PER_LONG before doing shift.
+
+Link: https://lkml.kernel.org/r/20230216013542.138708-1-mike.kravetz@oracle.com
+Link: https://lore.kernel.org/lkml/CA+G9fYuei_Tr-vN9GS7SfFyU1y9hNysnf=PB7kT0=yv4MiPgVg@mail.gmail.com/
+Fixes: 42d7395feb56 ("mm: support more pagesizes for MAP_HUGETLB/SHM_HUGETLB")
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Reviewed-by: Jesper Juhl <jesperjuhl76@gmail.com>
+Acked-by: Muchun Song <songmuchun@bytedance.com>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Anders Roxell <anders.roxell@linaro.org>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Sasha Levin <sashal@kernel.org>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/8d02bb9ac8134f878cd08607fdf088fd@realtek.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_realtek.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/hugetlb.h |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_realtek.c
-+++ b/sound/pci/hda/patch_realtek.c
-@@ -827,7 +827,7 @@ do_sku:
- 			alc_setup_gpio(codec, 0x02);
- 			break;
- 		case 7:
--			alc_setup_gpio(codec, 0x03);
-+			alc_setup_gpio(codec, 0x04);
- 			break;
- 		case 5:
- 		default:
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -542,7 +542,10 @@ static inline struct hstate *hstate_size
+ 	if (!page_size_log)
+ 		return &default_hstate;
+ 
+-	return size_to_hstate(1UL << page_size_log);
++	if (page_size_log < BITS_PER_LONG)
++		return size_to_hstate(1UL << page_size_log);
++
++	return NULL;
+ }
+ 
+ static inline struct hstate *hstate_vma(struct vm_area_struct *vma)
 
 
