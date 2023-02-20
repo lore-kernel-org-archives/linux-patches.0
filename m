@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8545B63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:50:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0B493C433EF;
-	Mon, 20 Feb 2023 13:50:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19C5263B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:50:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 961BEC433D2;
+	Mon, 20 Feb 2023 13:50:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901030;
-	bh=Hwd4Kdhr447c4CYLzHm93c/n/0Kd5UM+aWfm8zj5SUA=;
+	s=korg; t=1676901032;
+	bh=9UbrwpKXZlR+8JDKfzG5Nt3iXh1quS0sWl4rbZlify0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FhaBAB7cCwtTQqc+LXofXOMhG7FkSJkRlSdXFfxW7BdkvtjDg1ePQIIbSqRxYZcsn
-	 rRjXqf6ZxJH6Hh3SWIfTDPijcuQfbxstZrmEdEkJzkNCTuvwvdUEJzwif9LsJte6Gn
-	 +3MD2OnMQXZnDQfnptwOINV/bjhqoYyhCxTYEywk=
+	b=L2QabQNMM1x1+4ZqOdfAEg0ydQbEGoaPedSBZ/PMHGam9bB2XrV5f+kBtmjvzLdL0
+	 XnoVAJ/GQLyempKrOdxM+UA5UikiWA/E9Pl5SAskYp61+Lw+1nUn52GMtk7DVVZNSs
+	 Dzgq5+P27TLVfeLOqCstGaMHBsbZe89LnRq5labk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Alexander Duyck <alexanderduyck@fb.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
 	Chandan Kumar Rout <chandanx.rout@intel.com>
-Subject: [PATCH 5.4 138/156] ixgbe: allow to increase MTU to 3K with XDP enabled
-Date: Mon, 20 Feb 2023 14:36:22 +0100
-Message-Id: <20230220133608.389185063@linuxfoundation.org>
+Subject: [PATCH 5.4 139/156] i40e: add double of VLAN header when computing the max MTU
+Date: Mon, 20 Feb 2023 14:36:23 +0100
+Message-Id: <20230220133608.437396177@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -38,72 +38,31 @@ Content-Transfer-Encoding: 8bit
 
 From: Jason Xing <kernelxing@tencent.com>
 
-commit f9cd6a4418bac6a046ee78382423b1ae7565fb24 upstream.
+commit ce45ffb815e8e238f05de1630be3969b6bb15e4e upstream.
 
-Recently I encountered one case where I cannot increase the MTU size
-directly from 1500 to a much bigger value with XDP enabled if the
-server is equipped with IXGBE card, which happened on thousands of
-servers in production environment. After applying the current patch,
-we can set the maximum MTU size to 3K.
+Include the second VLAN HLEN into account when computing the maximum
+MTU size as other drivers do.
 
-This patch follows the behavior of changing MTU as i40e/ice does.
-
-[1] commit 23b44513c3e6 ("ice: allow 3k MTU for XDP")
-[2] commit 0c8493d90b6b ("i40e: add XDP support for pass and drop actions")
-
-Fixes: fabf1bce103a ("ixgbe: Prevent unsupported configurations with XDP")
+Fixes: 0c8493d90b6b ("i40e: add XDP support for pass and drop actions")
 Signed-off-by: Jason Xing <kernelxing@tencent.com>
 Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
 Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe_main.c |   25 ++++++++++++++++---------
- 1 file changed, 16 insertions(+), 9 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-@@ -6722,6 +6722,18 @@ static void ixgbe_free_all_rx_resources(
- }
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -2702,7 +2702,7 @@ static int i40e_change_mtu(struct net_de
+ 	struct i40e_pf *pf = vsi->back;
  
- /**
-+ * ixgbe_max_xdp_frame_size - returns the maximum allowed frame size for XDP
-+ * @adapter: device handle, pointer to adapter
-+ */
-+static int ixgbe_max_xdp_frame_size(struct ixgbe_adapter *adapter)
-+{
-+	if (PAGE_SIZE >= 8192 || adapter->flags2 & IXGBE_FLAG2_RX_LEGACY)
-+		return IXGBE_RXBUFFER_2K;
-+	else
-+		return IXGBE_RXBUFFER_3K;
-+}
-+
-+/**
-  * ixgbe_change_mtu - Change the Maximum Transfer Unit
-  * @netdev: network interface device structure
-  * @new_mtu: new value for maximum frame size
-@@ -6732,18 +6744,13 @@ static int ixgbe_change_mtu(struct net_d
- {
- 	struct ixgbe_adapter *adapter = netdev_priv(netdev);
+ 	if (i40e_enabled_xdp_vsi(vsi)) {
+-		int frame_size = new_mtu + ETH_HLEN + ETH_FCS_LEN + VLAN_HLEN;
++		int frame_size = new_mtu + I40E_PACKET_HDR_PAD;
  
--	if (adapter->xdp_prog) {
-+	if (ixgbe_enabled_xdp_adapter(adapter)) {
- 		int new_frame_size = new_mtu + ETH_HLEN + ETH_FCS_LEN +
- 				     VLAN_HLEN;
--		int i;
--
--		for (i = 0; i < adapter->num_rx_queues; i++) {
--			struct ixgbe_ring *ring = adapter->rx_ring[i];
- 
--			if (new_frame_size > ixgbe_rx_bufsz(ring)) {
--				e_warn(probe, "Requested MTU size is not supported with XDP\n");
--				return -EINVAL;
--			}
-+		if (new_frame_size > ixgbe_max_xdp_frame_size(adapter)) {
-+			e_warn(probe, "Requested MTU size is not supported with XDP\n");
-+			return -EINVAL;
- 		}
- 	}
- 
+ 		if (frame_size > i40e_max_xdp_frame_size(vsi))
+ 			return -EINVAL;
 
 
