@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C6B363B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16699C433EF;
-	Mon, 20 Feb 2023 13:55:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1FE5363B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9B4E9C433D2;
+	Mon, 20 Feb 2023 13:55:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901304;
-	bh=9eT7avHzFOEmxvF8DAfzPfX/oCbZhcUvmJW7SUtsEsw=;
+	s=korg; t=1676901307;
+	bh=wA2zi/bTstxOd1k4hToa8X/bVQN088ya/FlEjtV3bOs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fFt4HbhdJOnlbmuKTWRn/rqA8VQxTyinBZM4AC+8PNayPcwJ2sYFfWN/l2pg28EIM
-	 AAWfdCoZ6l9on0QoWAAgjFYQ+ohRfuvISEDUIiQXouI5sTemYHv6FNvjxDEyxGOjNZ
-	 t/tYX492hOELC9jB3G8R03MC3V/8khQARY/va9S0=
+	b=B5vNfX84RTkbsCAy5b6YKNoXQw10pPuUhffZcOfVnSNCbuL26e1rFrSiAoKuMjIpb
+	 BAMnDePZY2P0myLtc75NsMMvs5s7vcXeKWf+heMVkDwsxxUQhjLVh3HFfhbiMnybMt
+	 r5Bk7Gl2IZpmX4AvqTB51Qf3wNVNkyiPs9CnA73s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bo Liu <bo.liu@senarytech.com>,
+	Kailang Yang <kailang@realtek.com>,
 	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.10 24/57] ALSA: hda/conexant: add a new hda codec SN6180
-Date: Mon, 20 Feb 2023 14:36:32 +0100
-Message-Id: <20230220133550.200346445@linuxfoundation.org>
+Subject: [PATCH 5.10 25/57] ALSA: hda/realtek - fixed wrong gpio assigned
+Date: Mon, 20 Feb 2023 14:36:33 +0100
+Message-Id: <20230220133550.230421066@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -34,31 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bo Liu <bo.liu@senarytech.com>
+From: Kailang Yang <kailang@realtek.com>
 
-commit 18d7e16c917a08f08778ecf2b780d63648d5d923 upstream.
+commit 2bdccfd290d421b50df4ec6a68d832dad1310748 upstream.
 
-The current kernel does not support the SN6180 codec chip.
-Add the SN6180 codec configuration item to kernel.
+GPIO2 PIN use for output. Mask Dir and Data need to assign for 0x4. Not 0x3.
+This fixed was for Lenovo Desktop(0x17aa1056). GPIO2 use for AMP enable.
 
-Signed-off-by: Bo Liu <bo.liu@senarytech.com>
+Signed-off-by: Kailang Yang <kailang@realtek.com>
 Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/1675908828-1012-1-git-send-email-bo.liu@senarytech.com
+Link: https://lore.kernel.org/r/8d02bb9ac8134f878cd08607fdf088fd@realtek.com
 Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/patch_conexant.c |    1 +
- 1 file changed, 1 insertion(+)
+ sound/pci/hda/patch_realtek.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/pci/hda/patch_conexant.c
-+++ b/sound/pci/hda/patch_conexant.c
-@@ -1117,6 +1117,7 @@ static const struct hda_device_id snd_hd
- 	HDA_CODEC_ENTRY(0x14f11f86, "CX8070", patch_conexant_auto),
- 	HDA_CODEC_ENTRY(0x14f12008, "CX8200", patch_conexant_auto),
- 	HDA_CODEC_ENTRY(0x14f120d0, "CX11970", patch_conexant_auto),
-+	HDA_CODEC_ENTRY(0x14f120d1, "SN6180", patch_conexant_auto),
- 	HDA_CODEC_ENTRY(0x14f15045, "CX20549 (Venice)", patch_conexant_auto),
- 	HDA_CODEC_ENTRY(0x14f15047, "CX20551 (Waikiki)", patch_conexant_auto),
- 	HDA_CODEC_ENTRY(0x14f15051, "CX20561 (Hermosa)", patch_conexant_auto),
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -827,7 +827,7 @@ do_sku:
+ 			alc_setup_gpio(codec, 0x02);
+ 			break;
+ 		case 7:
+-			alc_setup_gpio(codec, 0x03);
++			alc_setup_gpio(codec, 0x04);
+ 			break;
+ 		case 5:
+ 		default:
 
 
