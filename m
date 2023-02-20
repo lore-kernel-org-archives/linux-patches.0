@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DE2063B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7EC3C433EF;
-	Mon, 20 Feb 2023 13:49:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B636863B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1669CC433D2;
+	Mon, 20 Feb 2023 13:49:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900981;
-	bh=cflMtuHm1s3zWKgNMyEiB268gQATvl2GHfWqz6u4KUE=;
+	s=korg; t=1676900983;
+	bh=wGwVzkJwFalgr9Z1sts/r+o5YSLXxZMIYjMk+Y4lXg0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=UZVyWE7BefDDOIq8Nw1tgN1X4nIZQTPsW9kL2I4vCB2Xd/zZrFiqKxH05xb/0jkkR
-	 UgoZFG+arh+34TKrwmUo1g2Re+af0Ye7wbzdK3v8wute6m7GsiM4q1ANX7aaMI3p4X
-	 5dPZ/AeEwZ2Z15xuaGykhrI2mVJSdmO9+F7NB7pQ=
+	b=KBojZkpBtuW6sWeTibcV7IqTFLtXkR4N+LFdwiPQS8GLn8OuCm3G4w3ABX5ch4lKg
+	 y0PGj6wRTuFUvr5fQi7mPc9Tzy4Krx7vssZMNLjaotfX6oJ+XGUGu5baVsyAke5iM6
+	 9Qn1WACrBpGaVSX+CHjKF16gf8DeqQV9nwOW7Bvo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Brian Foster <bfoster@redhat.com>,
-	"Darrick J. Wong" <darrick.wong@oracle.com>,
-	Chandan Babu R <chandan.babu@oracle.com>,
-	"Darrick J. Wong" <djwong@kernel.org>
-Subject: [PATCH 5.4 102/156] xfs: remove the xfs_efi_log_item_t typedef
-Date: Mon, 20 Feb 2023 14:35:46 +0100
-Message-Id: <20230220133606.755774836@linuxfoundation.org>
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Naresh Kamboju <naresh.kamboju@linaro.org>,
+	Jesper Juhl <jesperjuhl76@gmail.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Linux Kernel Functional Testing <lkft@linaro.org>,
+	Anders Roxell <anders.roxell@linaro.org>,
+	Andi Kleen <ak@linux.intel.com>,
+	Sasha Levin <sashal@kernel.org>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 134/156] hugetlb: check for undefined shift on 32 bit architectures
+Date: Mon, 20 Feb 2023 14:36:18 +0100
+Message-Id: <20230220133608.199970772@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -37,105 +41,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: Mike Kravetz <mike.kravetz@oracle.com>
 
-commit 82ff450b2d936d778361a1de43eb078cc043c7fe upstream.
+commit ec4288fe63966b26d53907212ecd05dfa81dd2cc upstream.
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
-Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
-Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
+Users can specify the hugetlb page size in the mmap, shmget and
+memfd_create system calls.  This is done by using 6 bits within the flags
+argument to encode the base-2 logarithm of the desired page size.  The
+routine hstate_sizelog() uses the log2 value to find the corresponding
+hugetlb hstate structure.  Converting the log2 value (page_size_log) to
+potential hugetlb page size is the simple statement:
+
+	1UL << page_size_log
+
+Because only 6 bits are used for page_size_log, the left shift can not be
+greater than 63.  This is fine on 64 bit architectures where a long is 64
+bits.  However, if a value greater than 31 is passed on a 32 bit
+architecture (where long is 32 bits) the shift will result in undefined
+behavior.  This was generally not an issue as the result of the undefined
+shift had to exactly match hugetlb page size to proceed.
+
+Recent improvements in runtime checking have resulted in this undefined
+behavior throwing errors such as reported below.
+
+Fix by comparing page_size_log to BITS_PER_LONG before doing shift.
+
+Link: https://lkml.kernel.org/r/20230216013542.138708-1-mike.kravetz@oracle.com
+Link: https://lore.kernel.org/lkml/CA+G9fYuei_Tr-vN9GS7SfFyU1y9hNysnf=PB7kT0=yv4MiPgVg@mail.gmail.com/
+Fixes: 42d7395feb56 ("mm: support more pagesizes for MAP_HUGETLB/SHM_HUGETLB")
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Reviewed-by: Jesper Juhl <jesperjuhl76@gmail.com>
+Acked-by: Muchun Song <songmuchun@bytedance.com>
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Anders Roxell <anders.roxell@linaro.org>
+Cc: Andi Kleen <ak@linux.intel.com>
+Cc: Sasha Levin <sashal@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_extfree_item.c |    2 +-
- fs/xfs/xfs_extfree_item.h |   10 +++++-----
- fs/xfs/xfs_log_recover.c  |    4 ++--
- fs/xfs/xfs_super.c        |    2 +-
- 4 files changed, 9 insertions(+), 9 deletions(-)
+ include/linux/hugetlb.h |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/fs/xfs/xfs_extfree_item.c
-+++ b/fs/xfs/xfs_extfree_item.c
-@@ -161,7 +161,7 @@ xfs_efi_init(
+--- a/include/linux/hugetlb.h
++++ b/include/linux/hugetlb.h
+@@ -397,7 +397,10 @@ static inline struct hstate *hstate_size
+ 	if (!page_size_log)
+ 		return &default_hstate;
  
- 	ASSERT(nextents > 0);
- 	if (nextents > XFS_EFI_MAX_FAST_EXTENTS) {
--		size = (uint)(sizeof(xfs_efi_log_item_t) +
-+		size = (uint)(sizeof(struct xfs_efi_log_item) +
- 			((nextents - 1) * sizeof(xfs_extent_t)));
- 		efip = kmem_zalloc(size, 0);
- 	} else {
---- a/fs/xfs/xfs_extfree_item.h
-+++ b/fs/xfs/xfs_extfree_item.h
-@@ -50,13 +50,13 @@ struct kmem_zone;
-  * of commit failure or log I/O errors. Note that the EFD is not inserted in the
-  * AIL, so at this point both the EFI and EFD are freed.
-  */
--typedef struct xfs_efi_log_item {
-+struct xfs_efi_log_item {
- 	struct xfs_log_item	efi_item;
- 	atomic_t		efi_refcount;
- 	atomic_t		efi_next_extent;
- 	unsigned long		efi_flags;	/* misc flags */
- 	xfs_efi_log_format_t	efi_format;
--} xfs_efi_log_item_t;
-+};
+-	return size_to_hstate(1UL << page_size_log);
++	if (page_size_log < BITS_PER_LONG)
++		return size_to_hstate(1UL << page_size_log);
++
++	return NULL;
+ }
  
- /*
-  * This is the "extent free done" log item.  It is used to log
-@@ -65,7 +65,7 @@ typedef struct xfs_efi_log_item {
-  */
- typedef struct xfs_efd_log_item {
- 	struct xfs_log_item	efd_item;
--	xfs_efi_log_item_t	*efd_efip;
-+	struct xfs_efi_log_item *efd_efip;
- 	uint			efd_next_extent;
- 	xfs_efd_log_format_t	efd_format;
- } xfs_efd_log_item_t;
-@@ -78,10 +78,10 @@ typedef struct xfs_efd_log_item {
- extern struct kmem_zone	*xfs_efi_zone;
- extern struct kmem_zone	*xfs_efd_zone;
- 
--xfs_efi_log_item_t	*xfs_efi_init(struct xfs_mount *, uint);
-+struct xfs_efi_log_item	*xfs_efi_init(struct xfs_mount *, uint);
- int			xfs_efi_copy_format(xfs_log_iovec_t *buf,
- 					    xfs_efi_log_format_t *dst_efi_fmt);
--void			xfs_efi_item_free(xfs_efi_log_item_t *);
-+void			xfs_efi_item_free(struct xfs_efi_log_item *);
- void			xfs_efi_release(struct xfs_efi_log_item *);
- 
- int			xfs_efi_recover(struct xfs_mount *mp,
---- a/fs/xfs/xfs_log_recover.c
-+++ b/fs/xfs/xfs_log_recover.c
-@@ -3384,7 +3384,7 @@ xlog_recover_efd_pass2(
- 	struct xlog_recover_item	*item)
- {
- 	xfs_efd_log_format_t	*efd_formatp;
--	xfs_efi_log_item_t	*efip = NULL;
-+	struct xfs_efi_log_item	*efip = NULL;
- 	struct xfs_log_item	*lip;
- 	uint64_t		efi_id;
- 	struct xfs_ail_cursor	cur;
-@@ -3405,7 +3405,7 @@ xlog_recover_efd_pass2(
- 	lip = xfs_trans_ail_cursor_first(ailp, &cur, 0);
- 	while (lip != NULL) {
- 		if (lip->li_type == XFS_LI_EFI) {
--			efip = (xfs_efi_log_item_t *)lip;
-+			efip = (struct xfs_efi_log_item *)lip;
- 			if (efip->efi_format.efi_id == efi_id) {
- 				/*
- 				 * Drop the EFD reference to the EFI. This
---- a/fs/xfs/xfs_super.c
-+++ b/fs/xfs/xfs_super.c
-@@ -1920,7 +1920,7 @@ xfs_init_zones(void)
- 	if (!xfs_efd_zone)
- 		goto out_destroy_buf_item_zone;
- 
--	xfs_efi_zone = kmem_zone_init((sizeof(xfs_efi_log_item_t) +
-+	xfs_efi_zone = kmem_zone_init((sizeof(struct xfs_efi_log_item) +
- 			((XFS_EFI_MAX_FAST_EXTENTS - 1) *
- 				sizeof(xfs_extent_t))), "xfs_efi_item");
- 	if (!xfs_efi_zone)
+ static inline struct hstate *hstate_vma(struct vm_area_struct *vma)
 
 
