@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E67863B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A1DAC433D2;
-	Mon, 20 Feb 2023 13:57:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D152863B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A96C433EF;
+	Mon, 20 Feb 2023 13:57:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901457;
-	bh=YPi+RDyIP261whjr1SIMnIPIUEssDHEyvCcUPAkby70=;
+	s=korg; t=1676901460;
+	bh=roMVyCeTwlxU9CK+65juiWQC6lSxkp+XDcq85zYy9A0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EOXnjtnjbOHCsDn7CV7jXp+NVlhnP8fz+6OF68+S6Uumtb9NOBTNkQYVzpEAPmEPV
-	 VI4RIGbzpG83A96dvssglQ+g6LjdGSrngghyy3r8Vc5MjNh1CD18txhqilfSrjnBqZ
-	 h8cqFF31YknBBA768dlXVMeWbP6Rt7I19S/xjF74=
+	b=cQxqsXJST03w9E+Kc4Mf5rd/Quefjy8AgJKiAtPRCOb2/nfTBgqtuWr5ObX+foWH7
+	 NSuoT2mAVc4GW3DcMNhgA4aN1HSRIcZ+oLwCgROhdN8kN/ubE8UpPq2EHGz1cYG8ns
+	 mqZ1kChsuLmvxKr4/vJbqA7JhChXOEwNIjb1Uqf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nicholas Piggin <npiggin@gmail.com>,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Jingbo Xu <jefflexu@linux.alibaba.com>,
+	Hou Tao <houtao1@huawei.com>,
+	David Howells <dhowells@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 024/118] powerpc/64: Fix perf profiling asynchronous interrupt handlers
-Date: Mon, 20 Feb 2023 14:35:40 +0100
-Message-Id: <20230220133601.403392060@linuxfoundation.org>
+Subject: [PATCH 6.1 025/118] fscache: Use clear_and_wake_up_bit() in fscache_create_volume_work()
+Date: Mon, 20 Feb 2023 14:35:41 +0100
+Message-Id: <20230220133601.441009966@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -35,156 +37,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Piggin <npiggin@gmail.com>
+From: Hou Tao <houtao1@huawei.com>
 
-[ Upstream commit c28548012ee2bac55772ef7685138bd1124b80c3 ]
+[ Upstream commit 3288666c72568fe1cc7f5c5ae33dfd3ab18004c8 ]
 
-Interrupt entry sets the soft mask to IRQS_ALL_DISABLED to match the
-hard irq disabled state. So when should_hard_irq_enable() returns true
-because we want PMI interrupts in irq handlers, MSR[EE] is enabled but
-PMIs just get soft-masked. Fix this by clearing IRQS_PMI_DISABLED before
-enabling MSR[EE].
+fscache_create_volume_work() uses wake_up_bit() to wake up the processes
+which are waiting for the completion of volume creation. According to
+comments in wake_up_bit() and waitqueue_active(), an extra smp_mb() is
+needed to guarantee the memory order between FSCACHE_VOLUME_CREATING
+flag and waitqueue_active() before invoking wake_up_bit().
 
-This also tidies some of the warnings, no need to duplicate them in
-both should_hard_irq_enable() and do_hard_irq_enable().
+Fixing it by using clear_and_wake_up_bit() to add the missing memory
+barrier.
 
-Signed-off-by: Nicholas Piggin <npiggin@gmail.com>
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230121100156.2824054-1-npiggin@gmail.com
+Reviewed-by: Jingbo Xu <jefflexu@linux.alibaba.com>
+Signed-off-by: Hou Tao <houtao1@huawei.com>
+Signed-off-by: David Howells <dhowells@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Link: https://lore.kernel.org/r/20230113115211.2895845-3-houtao@huaweicloud.com/ # v3
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/include/asm/hw_irq.h | 41 ++++++++++++++++++++++---------
- arch/powerpc/kernel/dbell.c       |  2 +-
- arch/powerpc/kernel/irq.c         |  2 +-
- arch/powerpc/kernel/time.c        |  2 +-
- 4 files changed, 32 insertions(+), 15 deletions(-)
+ fs/fscache/volume.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/arch/powerpc/include/asm/hw_irq.h b/arch/powerpc/include/asm/hw_irq.h
-index 0b7d01d408ac8..eb6d094083fd6 100644
---- a/arch/powerpc/include/asm/hw_irq.h
-+++ b/arch/powerpc/include/asm/hw_irq.h
-@@ -173,6 +173,15 @@ static inline notrace unsigned long irq_soft_mask_or_return(unsigned long mask)
- 	return flags;
+diff --git a/fs/fscache/volume.c b/fs/fscache/volume.c
+index 903af9d85f8b9..cdf991bdd9def 100644
+--- a/fs/fscache/volume.c
++++ b/fs/fscache/volume.c
+@@ -280,8 +280,7 @@ static void fscache_create_volume_work(struct work_struct *work)
+ 	fscache_end_cache_access(volume->cache,
+ 				 fscache_access_acquire_volume_end);
+ 
+-	clear_bit_unlock(FSCACHE_VOLUME_CREATING, &volume->flags);
+-	wake_up_bit(&volume->flags, FSCACHE_VOLUME_CREATING);
++	clear_and_wake_up_bit(FSCACHE_VOLUME_CREATING, &volume->flags);
+ 	fscache_put_volume(volume, fscache_volume_put_create_work);
  }
  
-+static inline notrace unsigned long irq_soft_mask_andc_return(unsigned long mask)
-+{
-+	unsigned long flags = irq_soft_mask_return();
-+
-+	irq_soft_mask_set(flags & ~mask);
-+
-+	return flags;
-+}
-+
- static inline unsigned long arch_local_save_flags(void)
- {
- 	return irq_soft_mask_return();
-@@ -331,10 +340,11 @@ bool power_pmu_wants_prompt_pmi(void);
-  * is a different soft-masked interrupt pending that requires hard
-  * masking.
-  */
--static inline bool should_hard_irq_enable(void)
-+static inline bool should_hard_irq_enable(struct pt_regs *regs)
- {
- 	if (IS_ENABLED(CONFIG_PPC_IRQ_SOFT_MASK_DEBUG)) {
--		WARN_ON(irq_soft_mask_return() == IRQS_ENABLED);
-+		WARN_ON(irq_soft_mask_return() != IRQS_ALL_DISABLED);
-+		WARN_ON(!(get_paca()->irq_happened & PACA_IRQ_HARD_DIS));
- 		WARN_ON(mfmsr() & MSR_EE);
- 	}
- 
-@@ -347,8 +357,17 @@ static inline bool should_hard_irq_enable(void)
- 	 *
- 	 * TODO: Add test for 64e
- 	 */
--	if (IS_ENABLED(CONFIG_PPC_BOOK3S_64) && !power_pmu_wants_prompt_pmi())
--		return false;
-+	if (IS_ENABLED(CONFIG_PPC_BOOK3S_64)) {
-+		if (!power_pmu_wants_prompt_pmi())
-+			return false;
-+		/*
-+		 * If PMIs are disabled then IRQs should be disabled as well,
-+		 * so we shouldn't see this condition, check for it just in
-+		 * case because we are about to enable PMIs.
-+		 */
-+		if (WARN_ON_ONCE(regs->softe & IRQS_PMI_DISABLED))
-+			return false;
-+	}
- 
- 	if (get_paca()->irq_happened & PACA_IRQ_MUST_HARD_MASK)
- 		return false;
-@@ -358,18 +377,16 @@ static inline bool should_hard_irq_enable(void)
- 
- /*
-  * Do the hard enabling, only call this if should_hard_irq_enable is true.
-+ * This allows PMI interrupts to profile irq handlers.
-  */
- static inline void do_hard_irq_enable(void)
- {
--	if (IS_ENABLED(CONFIG_PPC_IRQ_SOFT_MASK_DEBUG)) {
--		WARN_ON(irq_soft_mask_return() == IRQS_ENABLED);
--		WARN_ON(get_paca()->irq_happened & PACA_IRQ_MUST_HARD_MASK);
--		WARN_ON(mfmsr() & MSR_EE);
--	}
- 	/*
--	 * This allows PMI interrupts (and watchdog soft-NMIs) through.
--	 * There is no other reason to enable this way.
-+	 * Asynch interrupts come in with IRQS_ALL_DISABLED,
-+	 * PACA_IRQ_HARD_DIS, and MSR[EE]=0.
- 	 */
-+	if (IS_ENABLED(CONFIG_PPC_BOOK3S_64))
-+		irq_soft_mask_andc_return(IRQS_PMI_DISABLED);
- 	get_paca()->irq_happened &= ~PACA_IRQ_HARD_DIS;
- 	__hard_irq_enable();
- }
-@@ -452,7 +469,7 @@ static inline bool arch_irq_disabled_regs(struct pt_regs *regs)
- 	return !(regs->msr & MSR_EE);
- }
- 
--static __always_inline bool should_hard_irq_enable(void)
-+static __always_inline bool should_hard_irq_enable(struct pt_regs *regs)
- {
- 	return false;
- }
-diff --git a/arch/powerpc/kernel/dbell.c b/arch/powerpc/kernel/dbell.c
-index f55c6fb34a3a0..5712dd846263c 100644
---- a/arch/powerpc/kernel/dbell.c
-+++ b/arch/powerpc/kernel/dbell.c
-@@ -27,7 +27,7 @@ DEFINE_INTERRUPT_HANDLER_ASYNC(doorbell_exception)
- 
- 	ppc_msgsync();
- 
--	if (should_hard_irq_enable())
-+	if (should_hard_irq_enable(regs))
- 		do_hard_irq_enable();
- 
- 	kvmppc_clear_host_ipi(smp_processor_id());
-diff --git a/arch/powerpc/kernel/irq.c b/arch/powerpc/kernel/irq.c
-index 9ede61a5a469e..55142ff649f3f 100644
---- a/arch/powerpc/kernel/irq.c
-+++ b/arch/powerpc/kernel/irq.c
-@@ -238,7 +238,7 @@ static void __do_irq(struct pt_regs *regs, unsigned long oldsp)
- 	irq = static_call(ppc_get_irq)();
- 
- 	/* We can hard enable interrupts now to allow perf interrupts */
--	if (should_hard_irq_enable())
-+	if (should_hard_irq_enable(regs))
- 		do_hard_irq_enable();
- 
- 	/* And finally process it */
-diff --git a/arch/powerpc/kernel/time.c b/arch/powerpc/kernel/time.c
-index a2ab397065c66..f157552d79b38 100644
---- a/arch/powerpc/kernel/time.c
-+++ b/arch/powerpc/kernel/time.c
-@@ -533,7 +533,7 @@ DEFINE_INTERRUPT_HANDLER_ASYNC(timer_interrupt)
- 	}
- 
- 	/* Conditionally hard-enable interrupts. */
--	if (should_hard_irq_enable()) {
-+	if (should_hard_irq_enable(regs)) {
- 		/*
- 		 * Ensure a positive value is written to the decrementer, or
- 		 * else some CPUs will continue to take decrementer exceptions.
 -- 
 2.39.0
 
