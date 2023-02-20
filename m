@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 917B563B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:45:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AC6CC433D2;
-	Mon, 20 Feb 2023 13:45:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2A27963B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:45:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8113C433D2;
+	Mon, 20 Feb 2023 13:45:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900749;
-	bh=03QAcOCBgNp3AxJ7/han5iJA3UzFMJhITnmGtKM4sKM=;
+	s=korg; t=1676900752;
+	bh=sqx9z1rEq095s/gqVNiH8K2wev99MeDWzq+IkIdiJb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r9vcHyi3Pm7Ycw/F+YTD6yYWP9SlO755xojb3v4hATqLARF5yq9SPe68cYE1cRJW2
-	 s+BFSEWHg1swS6Y+3UsK3AncTjbMGLF6cQ06u4u7GyRdllDoJ3wJV+bjsT4QVpv62q
-	 l/R9YeF7Nf5Sw1fDwA4OZ3szlEzE22CHLkWXYWCk=
+	b=vOENnBwBXxLgD3CGitXJZ/pBsxa8mRmodM1TntgjjbGIt6vRkxPvbJ/e48K8JXLNx
+	 dnLc2JT4dBrqApwFW+24K3xqQxOIidoHkiNKwVTKirfK5obCHCKuR8ZpUWUuA9twdm
+	 yiPZpPkMMrdOo+qpiCZ/N6iSt5HYx6qrxOOaywKA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gilles BULOZ <gilles.buloz@kontron.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 5.4 054/156] serial: 8250_dma: Fix DMA Rx rearm race
-Date: Mon, 20 Feb 2023 14:34:58 +0100
-Message-Id: <20230220133604.608378525@linuxfoundation.org>
+	Kajol Jain <kjain@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH 5.4 055/156] powerpc/imc-pmu: Revert nest_init_lock to being a mutex
+Date: Mon, 20 Feb 2023 14:34:59 +0100
+Message-Id: <20230220133604.649355821@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -34,85 +34,121 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Michael Ellerman <mpe@ellerman.id.au>
 
-commit 57e9af7831dcf211c5c689c2a6f209f4abdf0bce upstream.
+commit ad53db4acb415976761d7302f5b02e97f2bd097e upstream.
 
-As DMA Rx can be completed from two places, it is possible that DMA Rx
-completes before DMA completion callback had a chance to complete it.
-Once the previous DMA Rx has been completed, a new one can be started
-on the next UART interrupt. The following race is possible
-(uart_unlock_and_check_sysrq_irqrestore() replaced with
-spin_unlock_irqrestore() for simplicity/clarity):
+The recent commit 76d588dddc45 ("powerpc/imc-pmu: Fix use of mutex in
+IRQs disabled section") fixed warnings (and possible deadlocks) in the
+IMC PMU driver by converting the locking to use spinlocks.
 
-CPU0					CPU1
-					dma_rx_complete()
-serial8250_handle_irq()
-  spin_lock_irqsave(&port->lock)
-  handle_rx_dma()
-    serial8250_rx_dma_flush()
-      __dma_rx_complete()
-        dma->rx_running = 0
-        // Complete DMA Rx
-  spin_unlock_irqrestore(&port->lock)
+It also converted the init-time nest_init_lock to a spinlock, even
+though it's not used at runtime in IRQ disabled sections or while
+holding other spinlocks.
 
-serial8250_handle_irq()
-  spin_lock_irqsave(&port->lock)
-  handle_rx_dma()
-    serial8250_rx_dma()
-      dma->rx_running = 1
-      // Setup a new DMA Rx
-  spin_unlock_irqrestore(&port->lock)
+This leads to warnings such as:
 
-					  spin_lock_irqsave(&port->lock)
-					  // sees dma->rx_running = 1
-					  __dma_rx_complete()
-					    dma->rx_running = 0
-					    // Incorrectly complete
-					    // running DMA Rx
+  BUG: sleeping function called from invalid context at include/linux/percpu-rwsem.h:49
+  in_atomic(): 1, irqs_disabled(): 0, non_block: 0, pid: 1, name: swapper/0
+  preempt_count: 1, expected: 0
+  CPU: 7 PID: 1 Comm: swapper/0 Not tainted 6.2.0-rc2-14719-gf12cd06109f4-dirty #1
+  Hardware name: Mambo,Simulated-System POWER9 0x4e1203 opal:v6.6.6 PowerNV
+  Call Trace:
+    dump_stack_lvl+0x74/0xa8 (unreliable)
+    __might_resched+0x178/0x1a0
+    __cpuhp_setup_state+0x64/0x1e0
+    init_imc_pmu+0xe48/0x1250
+    opal_imc_counters_probe+0x30c/0x6a0
+    platform_probe+0x78/0x110
+    really_probe+0x104/0x420
+    __driver_probe_device+0xb0/0x170
+    driver_probe_device+0x58/0x180
+    __driver_attach+0xd8/0x250
+    bus_for_each_dev+0xb4/0x140
+    driver_attach+0x34/0x50
+    bus_add_driver+0x1e8/0x2d0
+    driver_register+0xb4/0x1c0
+    __platform_driver_register+0x38/0x50
+    opal_imc_driver_init+0x2c/0x40
+    do_one_initcall+0x80/0x360
+    kernel_init_freeable+0x310/0x3b8
+    kernel_init+0x30/0x1a0
+    ret_from_kernel_thread+0x5c/0x64
 
-This race seems somewhat theoretical to occur for real but handle it
-correctly regardless. Check what is the DMA status before complething
-anything in __dma_rx_complete().
+Fix it by converting nest_init_lock back to a mutex, so that we can call
+sleeping functions while holding it. There is no interaction between
+nest_init_lock and the runtime spinlocks used by the actual PMU routines.
 
-Reported-by: Gilles BULOZ <gilles.buloz@kontron.com>
-Tested-by: Gilles BULOZ <gilles.buloz@kontron.com>
-Fixes: 9ee4b83e51f7 ("serial: 8250: Add support for dmaengine")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230130114841.25749-3-ilpo.jarvinen@linux.intel.com
+Fixes: 76d588dddc45 ("powerpc/imc-pmu: Fix use of mutex in IRQs disabled section")
+Tested-by: Kajol Jain<kjain@linux.ibm.com>
+Reviewed-by: Kajol Jain<kjain@linux.ibm.com>
+Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
+Link: https://lore.kernel.org/r/20230130014401.540543-1-mpe@ellerman.id.au
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_dma.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ arch/powerpc/perf/imc-pmu.c |   14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_dma.c
-+++ b/drivers/tty/serial/8250/8250_dma.c
-@@ -46,15 +46,23 @@ static void __dma_rx_complete(void *para
- 	struct uart_8250_dma	*dma = p->dma;
- 	struct tty_port		*tty_port = &p->port.state->port;
- 	struct dma_tx_state	state;
-+	enum dma_status		dma_status;
- 	int			count;
+--- a/arch/powerpc/perf/imc-pmu.c
++++ b/arch/powerpc/perf/imc-pmu.c
+@@ -21,7 +21,7 @@
+  * Used to avoid races in counting the nest-pmu units during hotplug
+  * register and unregister
+  */
+-static DEFINE_SPINLOCK(nest_init_lock);
++static DEFINE_MUTEX(nest_init_lock);
+ static DEFINE_PER_CPU(struct imc_pmu_ref *, local_nest_imc_refc);
+ static struct imc_pmu **per_nest_pmu_arr;
+ static cpumask_t nest_imc_cpumask;
+@@ -1605,7 +1605,7 @@ static void imc_common_mem_free(struct i
+ static void imc_common_cpuhp_mem_free(struct imc_pmu *pmu_ptr)
+ {
+ 	if (pmu_ptr->domain == IMC_DOMAIN_NEST) {
+-		spin_lock(&nest_init_lock);
++		mutex_lock(&nest_init_lock);
+ 		if (nest_pmus == 1) {
+ 			cpuhp_remove_state(CPUHP_AP_PERF_POWERPC_NEST_IMC_ONLINE);
+ 			kfree(nest_imc_refc);
+@@ -1615,7 +1615,7 @@ static void imc_common_cpuhp_mem_free(st
  
--	dma->rx_running = 0;
--	dmaengine_tx_status(dma->rxchan, dma->rx_cookie, &state);
-+	/*
-+	 * New DMA Rx can be started during the completion handler before it
-+	 * could acquire port's lock and it might still be ongoing. Don't to
-+	 * anything in such case.
-+	 */
-+	dma_status = dmaengine_tx_status(dma->rxchan, dma->rx_cookie, &state);
-+	if (dma_status == DMA_IN_PROGRESS)
-+		return;
+ 		if (nest_pmus > 0)
+ 			nest_pmus--;
+-		spin_unlock(&nest_init_lock);
++		mutex_unlock(&nest_init_lock);
+ 	}
  
- 	count = dma->rx_size - state.residue;
- 
- 	tty_insert_flip_string(tty_port, dma->rx_buf, count);
- 	p->port.icount.rx += count;
-+	dma->rx_running = 0;
- 
- 	tty_flip_buffer_push(tty_port);
- }
+ 	/* Free core_imc memory */
+@@ -1772,11 +1772,11 @@ int init_imc_pmu(struct device_node *par
+ 		* rest. To handle the cpuhotplug callback unregister, we track
+ 		* the number of nest pmus in "nest_pmus".
+ 		*/
+-		spin_lock(&nest_init_lock);
++		mutex_lock(&nest_init_lock);
+ 		if (nest_pmus == 0) {
+ 			ret = init_nest_pmu_ref();
+ 			if (ret) {
+-				spin_unlock(&nest_init_lock);
++				mutex_unlock(&nest_init_lock);
+ 				kfree(per_nest_pmu_arr);
+ 				per_nest_pmu_arr = NULL;
+ 				goto err_free_mem;
+@@ -1784,7 +1784,7 @@ int init_imc_pmu(struct device_node *par
+ 			/* Register for cpu hotplug notification. */
+ 			ret = nest_pmu_cpumask_init();
+ 			if (ret) {
+-				spin_unlock(&nest_init_lock);
++				mutex_unlock(&nest_init_lock);
+ 				kfree(nest_imc_refc);
+ 				kfree(per_nest_pmu_arr);
+ 				per_nest_pmu_arr = NULL;
+@@ -1792,7 +1792,7 @@ int init_imc_pmu(struct device_node *par
+ 			}
+ 		}
+ 		nest_pmus++;
+-		spin_unlock(&nest_init_lock);
++		mutex_unlock(&nest_init_lock);
+ 		break;
+ 	case IMC_DOMAIN_CORE:
+ 		ret = core_imc_pmu_cpumask_init();
 
 
