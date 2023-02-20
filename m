@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4611A63BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:59:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFC9CC4339B;
-	Mon, 20 Feb 2023 13:59:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D4FD263BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:59:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E22AC4339E;
+	Mon, 20 Feb 2023 13:59:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901585;
-	bh=hpX5RhqmE8LsUZC3W8HZj54TpXjhg0t0DD4ui0J6Ebc=;
+	s=korg; t=1676901587;
+	bh=WLeVnjX2y/ODLfADCWtvGi+4QoumTJsU8a45lfc24C0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yOybwMIXlL9djtAfuz5j7NRqYi51DbnDauhKVmRlcIFYZjI5Uw0ynqFqmHglLhpY1
-	 9Hlx5fJ3HcLH0sUyF6N8k9NJ4E9EOFcK+mcCA7zANO9k2lfsasIgHYHpnpSooilIS6
-	 BkCfYmtU6zvcIaXi8Cdp/S+9eGgn+nCrKIn5avQo=
+	b=CAkKjburUP4/nx+oElcxKRYVYWhiE1lthpzSN0CU9qVFcy1nqo/DiURFd2W6mHhYo
+	 08CZdYAAXkWjyNd4mzFR7gn5ctT/XhH7SR3DnZ6qwgoPEMgNF5xvVERNmOLdd0P3V5
+	 mqnqlk9PCvLOMVCHJ/fyTrYm8BiJZxI2vba9Y4CI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geert Uytterhoeven <geert@linux-m68k.org>,
-	Al Viro <viro@zeniv.linux.org.uk>
-Subject: [PATCH 6.1 074/118] coredump: Move dump_emit_page() to kill unused warning
-Date: Mon, 20 Feb 2023 14:36:30 +0100
-Message-Id: <20230220133603.381642402@linuxfoundation.org>
+	Aaron Thompson <dev@aaront.org>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>
+Subject: [PATCH 6.1 075/118] Revert "mm: Always release pages to the buddy allocator in memblock_free_late()."
+Date: Mon, 20 Feb 2023 14:36:31 +0100
+Message-Id: <20230220133603.416644763@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -34,90 +34,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Geert Uytterhoeven <geert@linux-m68k.org>
+From: Aaron Thompson <dev@aaront.org>
 
-commit 9c7417b5ec440242bb5b64521acd53d4e19130c1 upstream.
+commit 647037adcad00f2bab8828d3d41cd0553d41f3bd upstream.
 
-If CONFIG_ELF_CORE is not set:
+This reverts commit 115d9d77bb0f9152c60b6e8646369fa7f6167593.
 
-    fs/coredump.c:835:12: error: ‘dump_emit_page’ defined but not used [-Werror=unused-function]
-      835 | static int dump_emit_page(struct coredump_params *cprm, struct page *page)
-          |            ^~~~~~~~~~~~~~
+The pages being freed by memblock_free_late() have already been
+initialized, but if they are in the deferred init range,
+__free_one_page() might access nearby uninitialized pages when trying to
+coalesce buddies. This can, for example, trigger this BUG:
 
-Fix this by moving dump_emit_page() inside the existing section
-protected by #ifdef CONFIG_ELF_CORE.
+  BUG: unable to handle page fault for address: ffffe964c02580c8
+  RIP: 0010:__list_del_entry_valid+0x3f/0x70
+   <TASK>
+   __free_one_page+0x139/0x410
+   __free_pages_ok+0x21d/0x450
+   memblock_free_late+0x8c/0xb9
+   efi_free_boot_services+0x16b/0x25c
+   efi_enter_virtual_mode+0x403/0x446
+   start_kernel+0x678/0x714
+   secondary_startup_64_no_verify+0xd2/0xdb
+   </TASK>
 
-Fixes: 06bbaa6dc53cb720 ("[coredump] don't use __kernel_write() on kmap_local_page()")
-Signed-off-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+A proper fix will be more involved so revert this change for the time
+being.
+
+Fixes: 115d9d77bb0f ("mm: Always release pages to the buddy allocator in memblock_free_late().")
+Signed-off-by: Aaron Thompson <dev@aaront.org>
+Link: https://lore.kernel.org/r/20230207082151.1303-1-dev@aaront.org
+Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/coredump.c |   48 ++++++++++++++++++++++++------------------------
- 1 file changed, 24 insertions(+), 24 deletions(-)
+ mm/memblock.c                     |    8 +-------
+ tools/testing/memblock/internal.h |    4 ----
+ 2 files changed, 1 insertion(+), 11 deletions(-)
 
---- a/fs/coredump.c
-+++ b/fs/coredump.c
-@@ -831,6 +831,30 @@ static int __dump_skip(struct coredump_p
+--- a/mm/memblock.c
++++ b/mm/memblock.c
+@@ -1640,13 +1640,7 @@ void __init memblock_free_late(phys_addr
+ 	end = PFN_DOWN(base + size);
+ 
+ 	for (; cursor < end; cursor++) {
+-		/*
+-		 * Reserved pages are always initialized by the end of
+-		 * memblock_free_all() (by memmap_init() and, if deferred
+-		 * initialization is enabled, memmap_init_reserved_pages()), so
+-		 * these pages can be released directly to the buddy allocator.
+-		 */
+-		__free_pages_core(pfn_to_page(cursor), 0);
++		memblock_free_pages(pfn_to_page(cursor), cursor, 0);
+ 		totalram_pages_inc();
  	}
  }
+--- a/tools/testing/memblock/internal.h
++++ b/tools/testing/memblock/internal.h
+@@ -15,10 +15,6 @@ bool mirrored_kernelcore = false;
  
-+int dump_emit(struct coredump_params *cprm, const void *addr, int nr)
-+{
-+	if (cprm->to_skip) {
-+		if (!__dump_skip(cprm, cprm->to_skip))
-+			return 0;
-+		cprm->to_skip = 0;
-+	}
-+	return __dump_emit(cprm, addr, nr);
-+}
-+EXPORT_SYMBOL(dump_emit);
-+
-+void dump_skip_to(struct coredump_params *cprm, unsigned long pos)
-+{
-+	cprm->to_skip = pos - cprm->pos;
-+}
-+EXPORT_SYMBOL(dump_skip_to);
-+
-+void dump_skip(struct coredump_params *cprm, size_t nr)
-+{
-+	cprm->to_skip += nr;
-+}
-+EXPORT_SYMBOL(dump_skip);
-+
-+#ifdef CONFIG_ELF_CORE
- static int dump_emit_page(struct coredump_params *cprm, struct page *page)
- {
- 	struct bio_vec bvec = {
-@@ -864,30 +888,6 @@ static int dump_emit_page(struct coredum
- 	return 1;
- }
+ struct page {};
  
--int dump_emit(struct coredump_params *cprm, const void *addr, int nr)
+-void __free_pages_core(struct page *page, unsigned int order)
 -{
--	if (cprm->to_skip) {
--		if (!__dump_skip(cprm, cprm->to_skip))
--			return 0;
--		cprm->to_skip = 0;
--	}
--	return __dump_emit(cprm, addr, nr);
 -}
--EXPORT_SYMBOL(dump_emit);
 -
--void dump_skip_to(struct coredump_params *cprm, unsigned long pos)
--{
--	cprm->to_skip = pos - cprm->pos;
--}
--EXPORT_SYMBOL(dump_skip_to);
--
--void dump_skip(struct coredump_params *cprm, size_t nr)
--{
--	cprm->to_skip += nr;
--}
--EXPORT_SYMBOL(dump_skip);
--
--#ifdef CONFIG_ELF_CORE
- int dump_user_range(struct coredump_params *cprm, unsigned long start,
- 		    unsigned long len)
+ void memblock_free_pages(struct page *page, unsigned long pfn,
+ 			 unsigned int order)
  {
 
 
