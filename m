@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 472FC63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:50:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1259C433D2;
-	Mon, 20 Feb 2023 13:50:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6205763BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:50:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DD244C4339B;
+	Mon, 20 Feb 2023 13:50:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901020;
-	bh=Lo9K4Oj/uKQmnA9GNGvASbRgCynWGiaDXIZ8tmik8ns=;
+	s=korg; t=1676901025;
+	bh=QHxUkiFZJVVlK/8ceOzkd2zhME6SGmkPGRYz4skPD3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=HHPGU765N7Qi7sOPP8KF87+ME8tl/O//2pfU58RtMe3Dynq30soqGO7LYumX/94CP
-	 b1ZxJwVuu5ORIU/A35D0qhY7s/lc4ceXu9Z3c/e7T73TG+EPSr9GdwT6BYrdYvfHIy
-	 MfdDtxqaGULvjyuTBiTq5Bc7ff6CcRzUWKRpbCW4=
+	b=sTf8fai0i9T1QNwvjNDjBPkUxHTxPKvWW6b4Wp/do4TDZMMCEpxwg64DfzxOMLC7v
+	 SkGkXCvphEFTWvUbyeUM69S4oNU4mY8CUHpHAajsASzIl6wEi0XIP93NNXljPhOTWX
+	 s/5i7b+sHclAbK5ta+SmcTOdtMRSzwMcF8Ch6iZU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kees Cook <keescook@chromium.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 155/156] net: sched: sch: Fix off by one in htb_activate_prios()
-Date: Mon, 20 Feb 2023 14:36:39 +0100
-Message-Id: <20230220133609.140985189@linuxfoundation.org>
+	Felix Riemann <felix.riemann@sma.de>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.4 136/156] net: Fix unwanted sign extension in netdev_stats_to_stats64()
+Date: Mon, 20 Feb 2023 14:36:20 +0100
+Message-Id: <20230220133608.291694955@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -36,33 +35,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Felix Riemann <felix.riemann@sma.de>
 
-commit 9cec2aaffe969f2a3e18b5ec105fc20bb908e475 upstream.
+commit 9b55d3f0a69af649c62cbc2633e6d695bb3cc583 upstream.
 
-The > needs be >= to prevent an out of bounds access.
+When converting net_device_stats to rtnl_link_stats64 sign extension
+is triggered on ILP32 machines as 6c1c509778 changed the previous
+"ulong -> u64" conversion to "long -> u64" by accessing the
+net_device_stats fields through a (signed) atomic_long_t.
 
-Fixes: de5ca4c3852f ("net: sched: sch: Bounds check priority")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/Y+D+KN18FQI2DKLq@kili
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+This causes for example the received bytes counter to jump to 16EiB after
+having received 2^31 bytes. Casting the atomic value to "unsigned long"
+beforehand converting it into u64 avoids this.
+
+Fixes: 6c1c5097781f ("net: add atomic_long_t to net_device_stats fields")
+Signed-off-by: Felix Riemann <felix.riemann@sma.de>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_htb.c |    2 +-
+ net/core/dev.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sched/sch_htb.c
-+++ b/net/sched/sch_htb.c
-@@ -407,7 +407,7 @@ static void htb_activate_prios(struct ht
- 		while (m) {
- 			unsigned int prio = ffz(~m);
+--- a/net/core/dev.c
++++ b/net/core/dev.c
+@@ -9467,7 +9467,7 @@ void netdev_stats_to_stats64(struct rtnl
  
--			if (WARN_ON_ONCE(prio > ARRAY_SIZE(p->inner.clprio)))
-+			if (WARN_ON_ONCE(prio >= ARRAY_SIZE(p->inner.clprio)))
- 				break;
- 			m &= ~(1 << prio);
- 
+ 	BUILD_BUG_ON(n > sizeof(*stats64) / sizeof(u64));
+ 	for (i = 0; i < n; i++)
+-		dst[i] = atomic_long_read(&src[i]);
++		dst[i] = (unsigned long)atomic_long_read(&src[i]);
+ 	/* zero out counters that only exist in rtnl_link_stats64 */
+ 	memset((char *)stats64 + n * sizeof(u64), 0,
+ 	       sizeof(*stats64) - n * sizeof(u64));
 
 
