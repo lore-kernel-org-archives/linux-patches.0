@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE14C63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B45C433EF;
-	Mon, 20 Feb 2023 13:55:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7469F63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F101EC433EF;
+	Mon, 20 Feb 2023 13:55:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901335;
-	bh=YWED7BKr75/WFBur95Zx0AtVxFD19dmzh5P3McXo8+U=;
+	s=korg; t=1676901338;
+	bh=o3pnVhfKfzU+4Kbw4i2qXhEWM1kYCZA8HFMNQuPgKSE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Eh56BdocwtCZT8zmVxP0cytfm2XlTms9eNaS1h5d+KlSH6YFvoeI+QpU0uXYhD4Xo
-	 jMJhqxr5CcDNRT0CdrgSyfIlTeLyAYGO0XDRKNKBmOAr81keZ1EwMYAYt19aofguFF
-	 V41HUDZH/BUO9IyLE5UG532abAVhJQmCSZ2j0DOI=
+	b=wz5Oaf7s1DlttxsT8Xii3F65MmlPbRKkVU5/aJXRyhU/97vvxl/nrp4BXQZzo5Enf
+	 JVkJrDxXdkaqvnu/31opfnyNrPHQYBQfi6FOsU0eWWoLXX9Va1Bhv35PwvQVho+zr6
+	 gLfbNFA402b8q1IULm6ah+aP74dDY1yLDNSdoWpA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	valis <sec@valis.email>,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 35/57] net/sched: tcindex: update imperfect hash filters respecting rcu
-Date: Mon, 20 Feb 2023 14:36:43 +0100
-Message-Id: <20230220133550.574690693@linuxfoundation.org>
+Subject: [PATCH 5.10 36/57] dccp/tcp: Avoid negative sk_forward_alloc by ipv6_pinfo.pktoptions.
+Date: Mon, 20 Feb 2023 14:36:44 +0100
+Message-Id: <20230220133550.603742539@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -36,101 +35,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit ee059170b1f7e94e55fa6cadee544e176a6e59c2 upstream.
+commit ca43ccf41224b023fc290073d5603a755fd12eed upstream.
 
-The imperfect hash area can be updated while packets are traversing,
-which will cause a use-after-free when 'tcf_exts_exec()' is called
-with the destroyed tcf_ext.
+Eric Dumazet pointed out [0] that when we call skb_set_owner_r()
+for ipv6_pinfo.pktoptions, sk_rmem_schedule() has not been called,
+resulting in a negative sk_forward_alloc.
 
-CPU 0:               CPU 1:
-tcindex_set_parms    tcindex_classify
-tcindex_lookup
-                     tcindex_lookup
-tcf_exts_change
-                     tcf_exts_exec [UAF]
+We add a new helper which clones a skb and sets its owner only
+when sk_rmem_schedule() succeeds.
 
-Stop operating on the shared area directly, by using a local copy,
-and update the filter with 'rcu_replace_pointer()'. Delete the old
-filter version only after a rcu grace period elapsed.
+Note that we move skb_set_owner_r() forward in (dccp|tcp)_v6_do_rcv()
+because tcp_send_synack() can make sk_forward_alloc negative before
+ipv6_opt_accepted() in the crossed SYN-ACK or self-connect() cases.
 
-Fixes: 9b0d4446b569 ("net: sched: avoid atomic swap in tcf_exts_change")
-Reported-by: valis <sec@valis.email>
-Suggested-by: valis <sec@valis.email>
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Link: https://lore.kernel.org/r/20230209143739.279867-1-pctammela@mojatatu.com
+[0]: https://lore.kernel.org/netdev/CANn89iK9oc20Jdi_41jb9URdF210r7d1Y-+uypbMSbOfY6jqrg@mail.gmail.com/
+
+Fixes: 323fbd0edf3f ("net: dccp: Add handling of IPV6_PKTOPTIONS to dccp_v6_do_rcv()")
+Fixes: 3df80d9320bc ("[DCCP]: Introduce DCCPv6")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/cls_tcindex.c |   34 ++++++++++++++++++++++++++++++----
- 1 file changed, 30 insertions(+), 4 deletions(-)
+ include/net/sock.h  |   13 +++++++++++++
+ net/dccp/ipv6.c     |    7 ++-----
+ net/ipv6/tcp_ipv6.c |   10 +++-------
+ 3 files changed, 18 insertions(+), 12 deletions(-)
 
---- a/net/sched/cls_tcindex.c
-+++ b/net/sched/cls_tcindex.c
-@@ -12,6 +12,7 @@
- #include <linux/errno.h>
- #include <linux/slab.h>
- #include <linux/refcount.h>
-+#include <linux/rcupdate.h>
- #include <net/act_api.h>
- #include <net/netlink.h>
- #include <net/pkt_cls.h>
-@@ -338,6 +339,7 @@ tcindex_set_parms(struct net *net, struc
- 	struct tcf_result cr = {};
- 	int err, balloc = 0;
- 	struct tcf_exts e;
-+	bool update_h = false;
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2243,6 +2243,19 @@ static inline __must_check bool skb_set_
+ 	return false;
+ }
  
- 	err = tcf_exts_init(&e, net, TCA_TCINDEX_ACT, TCA_TCINDEX_POLICE);
- 	if (err < 0)
-@@ -455,10 +457,13 @@ tcindex_set_parms(struct net *net, struc
- 		}
++static inline struct sk_buff *skb_clone_and_charge_r(struct sk_buff *skb, struct sock *sk)
++{
++	skb = skb_clone(skb, sk_gfp_mask(sk, GFP_ATOMIC));
++	if (skb) {
++		if (sk_rmem_schedule(sk, skb, skb->truesize)) {
++			skb_set_owner_r(skb, sk);
++			return skb;
++		}
++		__kfree_skb(skb);
++	}
++	return NULL;
++}
++
+ void sk_reset_timer(struct sock *sk, struct timer_list *timer,
+ 		    unsigned long expires);
+ 
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -541,11 +541,9 @@ static struct sock *dccp_v6_request_recv
+ 	*own_req = inet_ehash_nolisten(newsk, req_to_sk(req_unhash), NULL);
+ 	/* Clone pktoptions received with SYN, if we own the req */
+ 	if (*own_req && ireq->pktopts) {
+-		newnp->pktoptions = skb_clone(ireq->pktopts, GFP_ATOMIC);
++		newnp->pktoptions = skb_clone_and_charge_r(ireq->pktopts, newsk);
+ 		consume_skb(ireq->pktopts);
+ 		ireq->pktopts = NULL;
+-		if (newnp->pktoptions)
+-			skb_set_owner_r(newnp->pktoptions, newsk);
  	}
  
--	if (cp->perfect)
-+	if (cp->perfect) {
- 		r = cp->perfect + handle;
--	else
--		r = tcindex_lookup(cp, handle) ? : &new_filter_result;
-+	} else {
-+		/* imperfect area is updated in-place using rcu */
-+		update_h = !!tcindex_lookup(cp, handle);
-+		r = &new_filter_result;
-+	}
+ 	return newsk;
+@@ -605,7 +603,7 @@ static int dccp_v6_do_rcv(struct sock *s
+ 					       --ANK (980728)
+ 	 */
+ 	if (np->rxopt.all)
+-		opt_skb = skb_clone(skb, GFP_ATOMIC);
++		opt_skb = skb_clone_and_charge_r(skb, sk);
  
- 	if (r == &new_filter_result) {
- 		f = kzalloc(sizeof(*f), GFP_KERNEL);
-@@ -484,7 +489,28 @@ tcindex_set_parms(struct net *net, struc
+ 	if (sk->sk_state == DCCP_OPEN) { /* Fast path */
+ 		if (dccp_rcv_established(sk, skb, dccp_hdr(skb), skb->len))
+@@ -669,7 +667,6 @@ ipv6_pktoptions:
+ 			np->flow_label = ip6_flowlabel(ipv6_hdr(opt_skb));
+ 		if (ipv6_opt_accepted(sk, opt_skb,
+ 				      &DCCP_SKB_CB(opt_skb)->header.h6)) {
+-			skb_set_owner_r(opt_skb, sk);
+ 			memmove(IP6CB(opt_skb),
+ 				&DCCP_SKB_CB(opt_skb)->header.h6,
+ 				sizeof(struct inet6_skb_parm));
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1406,14 +1406,11 @@ static struct sock *tcp_v6_syn_recv_sock
  
- 	rcu_assign_pointer(tp->root, cp);
+ 		/* Clone pktoptions received with SYN, if we own the req */
+ 		if (ireq->pktopts) {
+-			newnp->pktoptions = skb_clone(ireq->pktopts,
+-						      sk_gfp_mask(sk, GFP_ATOMIC));
++			newnp->pktoptions = skb_clone_and_charge_r(ireq->pktopts, newsk);
+ 			consume_skb(ireq->pktopts);
+ 			ireq->pktopts = NULL;
+-			if (newnp->pktoptions) {
++			if (newnp->pktoptions)
+ 				tcp_v6_restore_cb(newnp->pktoptions);
+-				skb_set_owner_r(newnp->pktoptions, newsk);
+-			}
+ 		}
+ 	} else {
+ 		if (!req_unhash && found_dup_sk) {
+@@ -1481,7 +1478,7 @@ static int tcp_v6_do_rcv(struct sock *sk
+ 					       --ANK (980728)
+ 	 */
+ 	if (np->rxopt.all)
+-		opt_skb = skb_clone(skb, sk_gfp_mask(sk, GFP_ATOMIC));
++		opt_skb = skb_clone_and_charge_r(skb, sk);
  
--	if (r == &new_filter_result) {
-+	if (update_h) {
-+		struct tcindex_filter __rcu **fp;
-+		struct tcindex_filter *cf;
-+
-+		f->result.res = r->res;
-+		tcf_exts_change(&f->result.exts, &r->exts);
-+
-+		/* imperfect area bucket */
-+		fp = cp->h + (handle % cp->hash);
-+
-+		/* lookup the filter, guaranteed to exist */
-+		for (cf = rcu_dereference_bh_rtnl(*fp); cf;
-+		     fp = &cf->next, cf = rcu_dereference_bh_rtnl(*fp))
-+			if (cf->key == handle)
-+				break;
-+
-+		f->next = cf->next;
-+
-+		cf = rcu_replace_pointer(*fp, f, 1);
-+		tcf_exts_get_net(&cf->result.exts);
-+		tcf_queue_work(&cf->rwork, tcindex_destroy_fexts_work);
-+	} else if (r == &new_filter_result) {
- 		struct tcindex_filter *nfp;
- 		struct tcindex_filter __rcu **fp;
- 
+ 	if (sk->sk_state == TCP_ESTABLISHED) { /* Fast path */
+ 		struct dst_entry *dst;
+@@ -1563,7 +1560,6 @@ ipv6_pktoptions:
+ 		if (np->repflow)
+ 			np->flow_label = ip6_flowlabel(ipv6_hdr(opt_skb));
+ 		if (ipv6_opt_accepted(sk, opt_skb, &TCP_SKB_CB(opt_skb)->header.h6)) {
+-			skb_set_owner_r(opt_skb, sk);
+ 			tcp_v6_restore_cb(opt_skb);
+ 			opt_skb = xchg(&np->pktoptions, opt_skb);
+ 		} else {
 
 
