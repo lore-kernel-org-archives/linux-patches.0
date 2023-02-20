@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EBA1463B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:56:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 71010C433D2;
-	Mon, 20 Feb 2023 13:56:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A692963B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:56:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06600C4339B;
+	Mon, 20 Feb 2023 13:56:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901392;
-	bh=GqKcTgJxgu3baZPW6wFl+pbBvEwfQfrTF6fLPb0V6HE=;
+	s=korg; t=1676901395;
+	bh=fFtkZF7CpstAVH9uQ3Y3CDNG5D+I4ARPy4fEaER/TkM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mDqeBJcky2hTRo+kz4gX6CjAYURcI6MzkEPDbadpgHc15mJaohezsctWVnC1qZBhe
-	 ehPPDovVkpITbXsbEk5hMX8z2grV7b3lDzoX4wTB3YUqsSQ8PDWeG7u8GJ3ua1g2bz
-	 wIaQLCVmP8nyFwwO8M2izru6LNvTdhguzqsv8/oA=
+	b=vhNLwhab4ZZCYNn1zmNQzcwlwLo9OOqimlxwI1Hjxb9zHcU/MO89o5SrXDEKlq4DF
+	 C1BmKI9b4zxYLHodH/5yH5cq01WVewqR+h4ThYP4YkWS8IlXxTQDISjHj+4ze29z2H
+	 Z3gFL8TxLDLlBsUpfWbZLQr3Uza5mb3O7FbxqF3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>,
+	Baowen Zheng <baowen.zheng@corigine.com>,
+	Louis Peens <louis.peens@corigine.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 48/57] drm/i915/gen11: Wa_1408615072/Wa_1407596294 should be on GT list
-Date: Mon, 20 Feb 2023 14:36:56 +0100
-Message-Id: <20230220133551.048848396@linuxfoundation.org>
+Subject: [PATCH 5.10 49/57] flow_offload: fill flags to action structure
+Date: Mon, 20 Feb 2023 14:36:57 +0100
+Message-Id: <20230220133551.079059726@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -36,61 +38,219 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Baowen Zheng <baowen.zheng@corigine.com>
 
-[ Upstream commit d5a1224aa68c8b124a4c5c390186e571815ed390 ]
+[ Upstream commit 40bd094d65fc9f83941b024cde7c24516f036879 ]
 
-The UNSLICE_UNIT_LEVEL_CLKGATE register programmed by this workaround
-has 'BUS' style reset, indicating that it does not lose its value on
-engine resets.  Furthermore, this register is part of the GT forcewake
-domain rather than the RENDER domain, so it should not be impacted by
-RCS engine resets.  As such, we should implement this on the GT
-workaround list rather than an engine list.
+Fill flags to action structure to allow user control if
+the action should be offloaded to hardware or not.
 
-Bspec: 19219
-Fixes: 3551ff928744 ("drm/i915/gen11: Moving WAs to rcs_engine_wa_init()")
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230201222831.608281-2-matthew.d.roper@intel.com
-(cherry picked from commit 5f21dc07b52eb54a908e66f5d6e05a87bcb5b049)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Baowen Zheng <baowen.zheng@corigine.com>
+Signed-off-by: Louis Peens <louis.peens@corigine.com>
+Signed-off-by: Simon Horman <simon.horman@corigine.com>
+Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: 21c167aa0ba9 ("net/sched: act_ctinfo: use percpu stats")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/i915/gt/intel_workarounds.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ net/sched/act_bpf.c      | 2 +-
+ net/sched/act_connmark.c | 2 +-
+ net/sched/act_ctinfo.c   | 2 +-
+ net/sched/act_gate.c     | 2 +-
+ net/sched/act_ife.c      | 2 +-
+ net/sched/act_ipt.c      | 2 +-
+ net/sched/act_mpls.c     | 2 +-
+ net/sched/act_nat.c      | 2 +-
+ net/sched/act_pedit.c    | 2 +-
+ net/sched/act_police.c   | 2 +-
+ net/sched/act_sample.c   | 2 +-
+ net/sched/act_simple.c   | 2 +-
+ net/sched/act_skbedit.c  | 2 +-
+ net/sched/act_skbmod.c   | 2 +-
+ 14 files changed, 14 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/i915/gt/intel_workarounds.c b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-index 5c92789504d01..ae5cf2b55e159 100644
---- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
-+++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-@@ -1212,6 +1212,13 @@ icl_gt_workarounds_init(struct drm_i915_private *i915, struct i915_wa_list *wal)
- 		    GAMT_CHKN_BIT_REG,
- 		    GAMT_CHKN_DISABLE_L3_COH_PIPE);
+diff --git a/net/sched/act_bpf.c b/net/sched/act_bpf.c
+index a4c7ba35a3438..78f1cd70c8d19 100644
+--- a/net/sched/act_bpf.c
++++ b/net/sched/act_bpf.c
+@@ -307,7 +307,7 @@ static int tcf_bpf_init(struct net *net, struct nlattr *nla,
+ 	ret = tcf_idr_check_alloc(tn, &index, act, bind);
+ 	if (!ret) {
+ 		ret = tcf_idr_create(tn, index, est, act,
+-				     &act_bpf_ops, bind, true, 0);
++				     &act_bpf_ops, bind, true, flags);
+ 		if (ret < 0) {
+ 			tcf_idr_cleanup(tn, index);
+ 			return ret;
+diff --git a/net/sched/act_connmark.c b/net/sched/act_connmark.c
+index 31d268eedf3f9..b6576a250e851 100644
+--- a/net/sched/act_connmark.c
++++ b/net/sched/act_connmark.c
+@@ -124,7 +124,7 @@ static int tcf_connmark_init(struct net *net, struct nlattr *nla,
+ 	ret = tcf_idr_check_alloc(tn, &index, a, bind);
+ 	if (!ret) {
+ 		ret = tcf_idr_create(tn, index, est, a,
+-				     &act_connmark_ops, bind, false, 0);
++				     &act_connmark_ops, bind, false, flags);
+ 		if (ret) {
+ 			tcf_idr_cleanup(tn, index);
+ 			return ret;
+diff --git a/net/sched/act_ctinfo.c b/net/sched/act_ctinfo.c
+index 06c74f22ab98b..9bde94e7bb939 100644
+--- a/net/sched/act_ctinfo.c
++++ b/net/sched/act_ctinfo.c
+@@ -212,7 +212,7 @@ static int tcf_ctinfo_init(struct net *net, struct nlattr *nla,
+ 	err = tcf_idr_check_alloc(tn, &index, a, bind);
+ 	if (!err) {
+ 		ret = tcf_idr_create(tn, index, est, a,
+-				     &act_ctinfo_ops, bind, false, 0);
++				     &act_ctinfo_ops, bind, false, flags);
+ 		if (ret) {
+ 			tcf_idr_cleanup(tn, index);
+ 			return ret;
+diff --git a/net/sched/act_gate.c b/net/sched/act_gate.c
+index a78cb79657182..0e7568a06351b 100644
+--- a/net/sched/act_gate.c
++++ b/net/sched/act_gate.c
+@@ -357,7 +357,7 @@ static int tcf_gate_init(struct net *net, struct nlattr *nla,
  
-+	/*
-+	 * Wa_1408615072:icl,ehl  (vsunit)
-+	 * Wa_1407596294:icl,ehl  (hsunit)
-+	 */
-+	wa_write_or(wal, UNSLICE_UNIT_LEVEL_CLKGATE,
-+		    VSUNIT_CLKGATE_DIS | HSUNIT_CLKGATE_DIS);
-+
- 	/* Wa_1407352427:icl,ehl */
- 	wa_write_or(wal, UNSLICE_UNIT_LEVEL_CLKGATE2,
- 		    PSDUNIT_CLKGATE_DIS);
-@@ -1825,13 +1832,6 @@ rcs_engine_wa_init(struct intel_engine_cs *engine, struct i915_wa_list *wal)
- 		wa_masked_en(wal, GEN9_CSFE_CHICKEN1_RCS,
- 			     GEN11_ENABLE_32_PLANE_MODE);
+ 	if (!err) {
+ 		ret = tcf_idr_create(tn, index, est, a,
+-				     &act_gate_ops, bind, false, 0);
++				     &act_gate_ops, bind, false, flags);
+ 		if (ret) {
+ 			tcf_idr_cleanup(tn, index);
+ 			return ret;
+diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
+index a2ddea04183af..99548b2a1bc83 100644
+--- a/net/sched/act_ife.c
++++ b/net/sched/act_ife.c
+@@ -553,7 +553,7 @@ static int tcf_ife_init(struct net *net, struct nlattr *nla,
  
--		/*
--		 * Wa_1408615072:icl,ehl  (vsunit)
--		 * Wa_1407596294:icl,ehl  (hsunit)
--		 */
--		wa_write_or(wal, UNSLICE_UNIT_LEVEL_CLKGATE,
--			    VSUNIT_CLKGATE_DIS | HSUNIT_CLKGATE_DIS);
--
- 		/*
- 		 * Wa_1408767742:icl[a2..forever],ehl[all]
- 		 * Wa_1605460711:icl[a0..c0]
+ 	if (!exists) {
+ 		ret = tcf_idr_create(tn, index, est, a, &act_ife_ops,
+-				     bind, true, 0);
++				     bind, true, flags);
+ 		if (ret) {
+ 			tcf_idr_cleanup(tn, index);
+ 			kfree(p);
+diff --git a/net/sched/act_ipt.c b/net/sched/act_ipt.c
+index 8dc3bec0d3258..080f2952cd536 100644
+--- a/net/sched/act_ipt.c
++++ b/net/sched/act_ipt.c
+@@ -144,7 +144,7 @@ static int __tcf_ipt_init(struct net *net, unsigned int id, struct nlattr *nla,
+ 
+ 	if (!exists) {
+ 		ret = tcf_idr_create(tn, index, est, a, ops, bind,
+-				     false, 0);
++				     false, flags);
+ 		if (ret) {
+ 			tcf_idr_cleanup(tn, index);
+ 			return ret;
+diff --git a/net/sched/act_mpls.c b/net/sched/act_mpls.c
+index 09799412b2489..47b963ded4e43 100644
+--- a/net/sched/act_mpls.c
++++ b/net/sched/act_mpls.c
+@@ -254,7 +254,7 @@ static int tcf_mpls_init(struct net *net, struct nlattr *nla,
+ 
+ 	if (!exists) {
+ 		ret = tcf_idr_create(tn, index, est, a,
+-				     &act_mpls_ops, bind, true, 0);
++				     &act_mpls_ops, bind, true, flags);
+ 		if (ret) {
+ 			tcf_idr_cleanup(tn, index);
+ 			return ret;
+diff --git a/net/sched/act_nat.c b/net/sched/act_nat.c
+index 1ebd2a86d980f..8466dc25fe397 100644
+--- a/net/sched/act_nat.c
++++ b/net/sched/act_nat.c
+@@ -61,7 +61,7 @@ static int tcf_nat_init(struct net *net, struct nlattr *nla, struct nlattr *est,
+ 	err = tcf_idr_check_alloc(tn, &index, a, bind);
+ 	if (!err) {
+ 		ret = tcf_idr_create(tn, index, est, a,
+-				     &act_nat_ops, bind, false, 0);
++				     &act_nat_ops, bind, false, flags);
+ 		if (ret) {
+ 			tcf_idr_cleanup(tn, index);
+ 			return ret;
+diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
+index 0d5463ddfd62f..db0d3bff19eba 100644
+--- a/net/sched/act_pedit.c
++++ b/net/sched/act_pedit.c
+@@ -189,7 +189,7 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
+ 	err = tcf_idr_check_alloc(tn, &index, a, bind);
+ 	if (!err) {
+ 		ret = tcf_idr_create(tn, index, est, a,
+-				     &act_pedit_ops, bind, false, 0);
++				     &act_pedit_ops, bind, false, flags);
+ 		if (ret) {
+ 			tcf_idr_cleanup(tn, index);
+ 			goto out_free;
+diff --git a/net/sched/act_police.c b/net/sched/act_police.c
+index 3807335889590..c30cd3ecb3911 100644
+--- a/net/sched/act_police.c
++++ b/net/sched/act_police.c
+@@ -87,7 +87,7 @@ static int tcf_police_init(struct net *net, struct nlattr *nla,
+ 
+ 	if (!exists) {
+ 		ret = tcf_idr_create(tn, index, NULL, a,
+-				     &act_police_ops, bind, true, 0);
++				     &act_police_ops, bind, true, flags);
+ 		if (ret) {
+ 			tcf_idr_cleanup(tn, index);
+ 			return ret;
+diff --git a/net/sched/act_sample.c b/net/sched/act_sample.c
+index 3ebf9ede3cf10..2f0e98bcf4945 100644
+--- a/net/sched/act_sample.c
++++ b/net/sched/act_sample.c
+@@ -69,7 +69,7 @@ static int tcf_sample_init(struct net *net, struct nlattr *nla,
+ 
+ 	if (!exists) {
+ 		ret = tcf_idr_create(tn, index, est, a,
+-				     &act_sample_ops, bind, true, 0);
++				     &act_sample_ops, bind, true, flags);
+ 		if (ret) {
+ 			tcf_idr_cleanup(tn, index);
+ 			return ret;
+diff --git a/net/sched/act_simple.c b/net/sched/act_simple.c
+index a4f3d0f0daa96..b9bbc87a87c5b 100644
+--- a/net/sched/act_simple.c
++++ b/net/sched/act_simple.c
+@@ -128,7 +128,7 @@ static int tcf_simp_init(struct net *net, struct nlattr *nla,
+ 
+ 	if (!exists) {
+ 		ret = tcf_idr_create(tn, index, est, a,
+-				     &act_simp_ops, bind, false, 0);
++				     &act_simp_ops, bind, false, flags);
+ 		if (ret) {
+ 			tcf_idr_cleanup(tn, index);
+ 			return ret;
+diff --git a/net/sched/act_skbedit.c b/net/sched/act_skbedit.c
+index e5f3fb8b00e32..a5661f2d93e99 100644
+--- a/net/sched/act_skbedit.c
++++ b/net/sched/act_skbedit.c
+@@ -176,7 +176,7 @@ static int tcf_skbedit_init(struct net *net, struct nlattr *nla,
+ 
+ 	if (!exists) {
+ 		ret = tcf_idr_create(tn, index, est, a,
+-				     &act_skbedit_ops, bind, true, 0);
++				     &act_skbedit_ops, bind, true, act_flags);
+ 		if (ret) {
+ 			tcf_idr_cleanup(tn, index);
+ 			return ret;
+diff --git a/net/sched/act_skbmod.c b/net/sched/act_skbmod.c
+index 8d17a543cc9fe..aa98dcac94b95 100644
+--- a/net/sched/act_skbmod.c
++++ b/net/sched/act_skbmod.c
+@@ -147,7 +147,7 @@ static int tcf_skbmod_init(struct net *net, struct nlattr *nla,
+ 
+ 	if (!exists) {
+ 		ret = tcf_idr_create(tn, index, est, a,
+-				     &act_skbmod_ops, bind, true, 0);
++				     &act_skbmod_ops, bind, true, flags);
+ 		if (ret) {
+ 			tcf_idr_cleanup(tn, index);
+ 			return ret;
 -- 
 2.39.0
 
