@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 440C163B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:54:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BF9B9C4339B;
-	Mon, 20 Feb 2023 13:54:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C922C63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:54:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5128AC433EF;
+	Mon, 20 Feb 2023 13:54:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901255;
-	bh=FntsTjS6KzvFxhI+Qkx8ysn7afY08OckJfovuC6D8TM=;
+	s=korg; t=1676901257;
+	bh=H8OqdR/D+WGyk/EDdIiOIwwV0OAKftcqpqZB6PFoxYg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bBCF4sCgqeHRzkevmPrd0NXUWdyE+lBXLGaZJuAf+K1hCSS/CWFP35krIevBSzh3y
-	 q6JxGe5aISUuErJX7noS6NfBR5A8l7iWY+UZ7QY8zQoR2HJffragvEVQZnPvive9fb
-	 uS0exq0o787hu9kq9ZvOUl2efyrSQsmat1j/TvZQ=
+	b=LvgN19PP3NgsIRMKgxh+dBS7yZjO/cAMmFB0BCg2pN35rfkAywrEpn1E/mCxam5zk
+	 QeA99Kjghyk/4CbOX8SFaU7ZFeWCIkjVB/31SFEfqUMNjBQRkWYtwaxnJYA4Vfu3la
+	 4w7xOjAtHwFaEl/tt/1Ym25v8ejJuxMT/IGyspl8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongguang Gao <hongguang.gao@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 65/83] bnxt_en: Fix mqprio and XDP ring checking logic
-Date: Mon, 20 Feb 2023 14:36:38 +0100
-Message-Id: <20230220133555.934147054@linuxfoundation.org>
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 5.15 66/83] net: stmmac: Restrict warning on disabling DMA store and fwd mode
+Date: Mon, 20 Feb 2023 14:36:39 +0100
+Message-Id: <20230220133555.964113837@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -35,47 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-commit 2038cc592811209de20c4e094ca08bfb1e6fbc6c upstream.
+commit 05d7623a892a9da62da0e714428e38f09e4a64d8 upstream.
 
-In bnxt_reserve_rings(), there is logic to check that the number of TX
-rings reserved is enough to cover all the mqprio TCs, but it fails to
-account for the TX XDP rings.  So the check will always fail if there
-are mqprio TCs and TX XDP rings.  As a result, the driver always fails
-to initialize after the XDP program is attached and the device will be
-brought down.  A subsequent ifconfig up will also fail because the
-number of TX rings is set to an inconsistent number.  Fix the check to
-properly account for TX XDP rings.  If the check fails, set the number
-of TX rings back to a consistent number after calling netdev_reset_tc().
+When setting 'snps,force_thresh_dma_mode' DT property, the following
+warning is always emitted, regardless the status of force_sf_dma_mode:
 
-Fixes: 674f50a5b026 ("bnxt_en: Implement new method to reserve rings.")
-Reviewed-by: Hongguang Gao <hongguang.gao@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+dwmac-starfive 10020000.ethernet: force_sf_dma_mode is ignored if force_thresh_dma_mode is set.
+
+Do not print the rather misleading message when DMA store and forward
+mode is already disabled.
+
+Fixes: e2a240c7d3bc ("driver:net:stmmac: Disable DMA store and forward mode if platform data force_thresh_dma_mode is set.")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://lore.kernel.org/r/20230210202126.877548-1-cristian.ciocaltea@collabora.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -9023,10 +9023,14 @@ int bnxt_reserve_rings(struct bnxt *bp,
- 		netdev_err(bp->dev, "ring reservation/IRQ init failure rc: %d\n", rc);
- 		return rc;
- 	}
--	if (tcs && (bp->tx_nr_rings_per_tc * tcs != bp->tx_nr_rings)) {
-+	if (tcs && (bp->tx_nr_rings_per_tc * tcs !=
-+		    bp->tx_nr_rings - bp->tx_nr_rings_xdp)) {
- 		netdev_err(bp->dev, "tx ring reservation failure\n");
- 		netdev_reset_tc(bp->dev);
--		bp->tx_nr_rings_per_tc = bp->tx_nr_rings;
-+		if (bp->tx_nr_rings_xdp)
-+			bp->tx_nr_rings_per_tc = bp->tx_nr_rings_xdp;
-+		else
-+			bp->tx_nr_rings_per_tc = bp->tx_nr_rings;
- 		return -ENOMEM;
- 	}
- 	return 0;
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+@@ -558,7 +558,7 @@ stmmac_probe_config_dt(struct platform_d
+ 	dma_cfg->mixed_burst = of_property_read_bool(np, "snps,mixed-burst");
+ 
+ 	plat->force_thresh_dma_mode = of_property_read_bool(np, "snps,force_thresh_dma_mode");
+-	if (plat->force_thresh_dma_mode) {
++	if (plat->force_thresh_dma_mode && plat->force_sf_dma_mode) {
+ 		plat->force_sf_dma_mode = 0;
+ 		dev_warn(&pdev->dev,
+ 			 "force_sf_dma_mode is ignored if force_thresh_dma_mode is set.\n");
 
 
