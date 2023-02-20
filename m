@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E795663BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:01:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7085BC433D2;
-	Mon, 20 Feb 2023 14:01:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6C463BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:01:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072D9C433D2;
+	Mon, 20 Feb 2023 14:01:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901709;
-	bh=xLf0J+MCYRq9h+spwn2axntoR/uSx5GImkZpmuYlXgA=;
+	s=korg; t=1676901712;
+	bh=g/f6NHbYkEwX10UaZMVsEuFIrY5AM9iwEsKQfm98TBM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Me/swY2RFqvnSGccT/nxvFdydVigOX8STZO1MyFJ2EP1DHRZa/PSQXdQFfIeuxPRY
-	 zjHPoq3x1IAe+byRZ0EevBwsKCtCoTvtT+ofVJrNFGgowoU5+R70h5UGD5kcYIPY5n
-	 LVthYNsIOdS+L4M2mMQHNLgPKjo4CboYT4VMPuvg=
+	b=jLBKduQxTONNApoaEbuQs3vg0QEkoDxkbYmqJsR2bnhqfQoSHr28n12KhKPWwfCgv
+	 cVDTHzt9oLf2AXMTH0ax7b7AuKVgPF8H+3oVB46dm963XkCsphZjpV7cJEBLtMwqPx
+	 n5+P0lknsuazmZteTOR0SB/ObDdcXCTG+4nwqebE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lianhui tang <bluetlh@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 099/118] net: mpls: fix stale pointer if allocation fails during device rename
-Date: Mon, 20 Feb 2023 14:36:55 +0100
-Message-Id: <20230220133604.362830749@linuxfoundation.org>
+	Mateusz Palczewski <mateusz.palczewski@intel.com>,
+	Jamie Bainbridge <jbainbri@redhat.com>,
+	Corinna Vinschen <vinschen@redhat.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 100/118] igb: conditionalize I2C bit banging on external thermal sensor support
+Date: Mon, 20 Feb 2023 14:36:56 +0100
+Message-Id: <20230220133604.404557420@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -35,54 +37,147 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Corinna Vinschen <vinschen@redhat.com>
 
-commit fda6c89fe3d9aca073495a664e1d5aea28cd4377 upstream.
+commit 5d54cb1767e06025819daa6769e0f18dcbc60936 upstream.
 
-lianhui reports that when MPLS fails to register the sysctl table
-under new location (during device rename) the old pointers won't
-get overwritten and may be freed again (double free).
+Commit a97f8783a937 ("igb: unbreak I2C bit-banging on i350") introduced
+code to change I2C settings to bit banging unconditionally.
 
-Handle this gracefully. The best option would be unregistering
-the MPLS from the device completely on failure, but unfortunately
-mpls_ifdown() can fail. So failing fully is also unreliable.
+However, this patch introduced a regression:  On an Intel S2600CWR
+Server Board with three NICs:
 
-Another option is to register the new table first then only
-remove old one if the new one succeeds. That requires more
-code, changes order of notifications and two tables may be
-visible at the same time.
+- 1x dual-port copper
+  Intel I350 Gigabit Network Connection [8086:1521] (rev 01)
+  fw 1.63, 0x80000dda
 
-sysctl point is not used in the rest of the code - set to NULL
-on failures and skip unregister if already NULL.
+- 2x quad-port SFP+ with copper SFP Avago ABCU-5700RZ
+  Intel I350 Gigabit Fiber Network Connection [8086:1522] (rev 01)
+  fw 1.52.0
 
-Reported-by: lianhui tang <bluetlh@gmail.com>
-Fixes: 0fae3bf018d9 ("mpls: handle device renames for per-device sysctls")
+the SFP NICs no longer get link at all.  Reverting commit a97f8783a937
+or switching to the Intel out-of-tree driver both fix the problem.
+
+Per the igb out-of-tree driver, I2C bit banging on i350 depends on
+support for an external thermal sensor (ETS).  However, commit
+a97f8783a937 added bit banging unconditionally.  Additionally, the
+out-of-tree driver always calls init_thermal_sensor_thresh on probe,
+while our driver only calls init_thermal_sensor_thresh only in
+igb_reset(), and only if an ETS is present, ignoring the internal
+thermal sensor.  The affected SFPs don't provide an ETS.  Per Intel,
+the behaviour is a result of i350 firmware requirements.
+
+This patch fixes the problem by aligning the behaviour to the
+out-of-tree driver:
+
+- split igb_init_i2c() into two functions:
+  - igb_init_i2c() only performs the basic I2C initialization.
+  - igb_set_i2c_bb() makes sure that E1000_CTRL_I2C_ENA is set
+    and enables bit-banging.
+
+- igb_probe() only calls igb_set_i2c_bb() if an ETS is present.
+
+- igb_probe() calls init_thermal_sensor_thresh() unconditionally.
+
+- igb_reset() aligns its behaviour to igb_probe(), i. e., call
+  igb_set_i2c_bb() if an ETS is present and call
+  init_thermal_sensor_thresh() unconditionally.
+
+Fixes: a97f8783a937 ("igb: unbreak I2C bit-banging on i350")
+Tested-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
+Co-developed-by: Jamie Bainbridge <jbainbri@redhat.com>
+Signed-off-by: Jamie Bainbridge <jbainbri@redhat.com>
+Signed-off-by: Corinna Vinschen <vinschen@redhat.com>
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Link: https://lore.kernel.org/r/20230214185549.1306522-1-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mpls/af_mpls.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/ethernet/intel/igb/igb_main.c | 42 +++++++++++++++++------
+ 1 file changed, 32 insertions(+), 10 deletions(-)
 
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -1428,6 +1428,7 @@ static int mpls_dev_sysctl_register(stru
- free:
- 	kfree(table);
- out:
-+	mdev->sysctl = NULL;
- 	return -ENOBUFS;
+diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
+index d8e3048b93dd..b5b443883da9 100644
+--- a/drivers/net/ethernet/intel/igb/igb_main.c
++++ b/drivers/net/ethernet/intel/igb/igb_main.c
+@@ -2256,6 +2256,30 @@ static void igb_enable_mas(struct igb_adapter *adapter)
+ 	}
  }
  
-@@ -1437,6 +1438,9 @@ static void mpls_dev_sysctl_unregister(s
- 	struct net *net = dev_net(dev);
- 	struct ctl_table *table;
- 
-+	if (!mdev->sysctl)
-+		return;
++#ifdef CONFIG_IGB_HWMON
++/**
++ *  igb_set_i2c_bb - Init I2C interface
++ *  @hw: pointer to hardware structure
++ **/
++static void igb_set_i2c_bb(struct e1000_hw *hw)
++{
++	u32 ctrl_ext;
++	s32 i2cctl;
 +
- 	table = mdev->sysctl->ctl_table_arg;
- 	unregister_net_sysctl_table(mdev->sysctl);
- 	kfree(table);
++	ctrl_ext = rd32(E1000_CTRL_EXT);
++	ctrl_ext |= E1000_CTRL_I2C_ENA;
++	wr32(E1000_CTRL_EXT, ctrl_ext);
++	wrfl();
++
++	i2cctl = rd32(E1000_I2CPARAMS);
++	i2cctl |= E1000_I2CBB_EN
++		| E1000_I2C_CLK_OE_N
++		| E1000_I2C_DATA_OE_N;
++	wr32(E1000_I2CPARAMS, i2cctl);
++	wrfl();
++}
++#endif
++
+ void igb_reset(struct igb_adapter *adapter)
+ {
+ 	struct pci_dev *pdev = adapter->pdev;
+@@ -2400,7 +2424,8 @@ void igb_reset(struct igb_adapter *adapter)
+ 			 * interface.
+ 			 */
+ 			if (adapter->ets)
+-				mac->ops.init_thermal_sensor_thresh(hw);
++				igb_set_i2c_bb(hw);
++			mac->ops.init_thermal_sensor_thresh(hw);
+ 		}
+ 	}
+ #endif
+@@ -3117,21 +3142,12 @@ static void igb_init_mas(struct igb_adapter *adapter)
+  **/
+ static s32 igb_init_i2c(struct igb_adapter *adapter)
+ {
+-	struct e1000_hw *hw = &adapter->hw;
+ 	s32 status = 0;
+-	s32 i2cctl;
+ 
+ 	/* I2C interface supported on i350 devices */
+ 	if (adapter->hw.mac.type != e1000_i350)
+ 		return 0;
+ 
+-	i2cctl = rd32(E1000_I2CPARAMS);
+-	i2cctl |= E1000_I2CBB_EN
+-		| E1000_I2C_CLK_OUT | E1000_I2C_CLK_OE_N
+-		| E1000_I2C_DATA_OUT | E1000_I2C_DATA_OE_N;
+-	wr32(E1000_I2CPARAMS, i2cctl);
+-	wrfl();
+-
+ 	/* Initialize the i2c bus which is controlled by the registers.
+ 	 * This bus will use the i2c_algo_bit structure that implements
+ 	 * the protocol through toggling of the 4 bits in the register.
+@@ -3521,6 +3537,12 @@ static int igb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
+ 			adapter->ets = true;
+ 		else
+ 			adapter->ets = false;
++		/* Only enable I2C bit banging if an external thermal
++		 * sensor is supported.
++		 */
++		if (adapter->ets)
++			igb_set_i2c_bb(hw);
++		hw->mac.ops.init_thermal_sensor_thresh(hw);
+ 		if (igb_sysfs_init(adapter))
+ 			dev_err(&pdev->dev,
+ 				"failed to allocate sysfs resources\n");
+-- 
+2.39.1
+
 
 
