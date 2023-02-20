@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B56263B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A549EC433EF;
-	Mon, 20 Feb 2023 13:57:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B953663B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3F94FC4339B;
+	Mon, 20 Feb 2023 13:57:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901429;
-	bh=AaIeNztZETm3XHMGdo+mMQ5+5jHu/pRFxpqdKXj9vvY=;
+	s=korg; t=1676901431;
+	bh=2KHn4SYMmwidIr5JYfKHTCQ0IIRhcvyKS7hBDZnQ3hQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=l9Pp00M+VoReSHgJd+7Q4dlt7a1iwiCkutw+CaXtwWmhul61u9858H/qllS45smJU
-	 0SNkFE0Dq1aDbJUML5J+x2GqFM1yVbC6KH/04JumHsbpQ1TuRmjjqthvztrRZV/QSE
-	 8+DuYNI8xkFisiv5ok/zr+WjYEgVGHbIazu5nXNs=
+	b=HCrUq7ZAEDfFJaqMCn3ZtTsCQZN69RiLonEj8dJKpfzXVVKdyOBAHrc90/zDjqVfd
+	 XTOZykDhpD23IEV10SB7oVcUnCrg9YYp+kyJ7Vk6RFmw08Id61LfHIWCel3AqYv/rv
+	 hk5Zj+Vt6RoQtC9iF9eVnd+mD5+Q/QW8KymGmHTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eduard Zingerman <eddyz87@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Takashi Iwai <tiwai@suse.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Takashi Iwai <tiwai@suse.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 014/118] selftests/bpf: Verify copy_register_state() preserves parent/live fields
-Date: Mon, 20 Feb 2023 14:35:30 +0100
-Message-Id: <20230220133600.977627419@linuxfoundation.org>
+Subject: [PATCH 6.1 015/118] ALSA: hda: Do not unset preset when cleaning up codec
+Date: Mon, 20 Feb 2023 14:35:31 +0100
+Message-Id: <20230220133601.017003834@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -35,65 +36,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eduard Zingerman <eddyz87@gmail.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-[ Upstream commit b9fa9bc839291020b362ab5392e5f18ba79657ac ]
+[ Upstream commit 87978e6ad45a16835cc58234451111091be3c59a ]
 
-A testcase to check that verifier.c:copy_register_state() preserves
-register parentage chain and livness information.
+Several functions that take part in codec's initialization and removal
+are re-used by ASoC codec drivers implementations. Drivers mimic the
+behavior of hda_codec_driver_probe/remove() found in
+sound/pci/hda/hda_bind.c with their component->probe/remove() instead.
 
-Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
-Link: https://lore.kernel.org/r/20230106142214.1040390-3-eddyz87@gmail.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+One of the reasons for that is the expectation of
+snd_hda_codec_device_new() to receive a valid pointer to an instance of
+struct snd_card. This expectation can be met only once sound card
+components probing commences.
+
+As ASoC sound card may be unbound without codec device being actually
+removed from the system, unsetting ->preset in
+snd_hda_codec_cleanup_for_unbind() interferes with module unload -> load
+scenario causing null-ptr-deref. Preset is assigned only once, during
+device/driver matching whereas ASoC codec driver's module reloading may
+occur several times throughout the lifetime of an audio stack.
+
+Suggested-by: Takashi Iwai <tiwai@suse.com>
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://lore.kernel.org/r/20230119143235.1159814-1-cezary.rojewski@intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/bpf/verifier/search_pruning.c   | 36 +++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ sound/pci/hda/hda_bind.c  | 2 ++
+ sound/pci/hda/hda_codec.c | 1 -
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/bpf/verifier/search_pruning.c b/tools/testing/selftests/bpf/verifier/search_pruning.c
-index 68b14fdfebdb1..d63fd8991b03a 100644
---- a/tools/testing/selftests/bpf/verifier/search_pruning.c
-+++ b/tools/testing/selftests/bpf/verifier/search_pruning.c
-@@ -225,3 +225,39 @@
- 	.result_unpriv = ACCEPT,
- 	.insn_processed = 15,
- },
-+/* The test performs a conditional 64-bit write to a stack location
-+ * fp[-8], this is followed by an unconditional 8-bit write to fp[-8],
-+ * then data is read from fp[-8]. This sequence is unsafe.
-+ *
-+ * The test would be mistakenly marked as safe w/o dst register parent
-+ * preservation in verifier.c:copy_register_state() function.
-+ *
-+ * Note the usage of BPF_F_TEST_STATE_FREQ to force creation of the
-+ * checkpoint state after conditional 64-bit assignment.
-+ */
-+{
-+	"write tracking and register parent chain bug",
-+	.insns = {
-+	/* r6 = ktime_get_ns() */
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	BPF_MOV64_REG(BPF_REG_6, BPF_REG_0),
-+	/* r0 = ktime_get_ns() */
-+	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
-+	/* if r0 > r6 goto +1 */
-+	BPF_JMP_REG(BPF_JGT, BPF_REG_0, BPF_REG_6, 1),
-+	/* *(u64 *)(r10 - 8) = 0xdeadbeef */
-+	BPF_ST_MEM(BPF_DW, BPF_REG_FP, -8, 0xdeadbeef),
-+	/* r1 = 42 */
-+	BPF_MOV64_IMM(BPF_REG_1, 42),
-+	/* *(u8 *)(r10 - 8) = r1 */
-+	BPF_STX_MEM(BPF_B, BPF_REG_FP, BPF_REG_1, -8),
-+	/* r2 = *(u64 *)(r10 - 8) */
-+	BPF_LDX_MEM(BPF_DW, BPF_REG_2, BPF_REG_FP, -8),
-+	/* exit(0) */
-+	BPF_MOV64_IMM(BPF_REG_0, 0),
-+	BPF_EXIT_INSN(),
-+	},
-+	.flags = BPF_F_TEST_STATE_FREQ,
-+	.errstr = "invalid read from stack off -8+1 size 8",
-+	.result = REJECT,
-+},
+diff --git a/sound/pci/hda/hda_bind.c b/sound/pci/hda/hda_bind.c
+index 1a868dd9dc4b6..890c2f7c33fc2 100644
+--- a/sound/pci/hda/hda_bind.c
++++ b/sound/pci/hda/hda_bind.c
+@@ -144,6 +144,7 @@ static int hda_codec_driver_probe(struct device *dev)
+ 
+  error:
+ 	snd_hda_codec_cleanup_for_unbind(codec);
++	codec->preset = NULL;
+ 	return err;
+ }
+ 
+@@ -166,6 +167,7 @@ static int hda_codec_driver_remove(struct device *dev)
+ 	if (codec->patch_ops.free)
+ 		codec->patch_ops.free(codec);
+ 	snd_hda_codec_cleanup_for_unbind(codec);
++	codec->preset = NULL;
+ 	module_put(dev->driver->owner);
+ 	return 0;
+ }
+diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
+index edd653ece70d7..ac1cc7c5290e3 100644
+--- a/sound/pci/hda/hda_codec.c
++++ b/sound/pci/hda/hda_codec.c
+@@ -795,7 +795,6 @@ void snd_hda_codec_cleanup_for_unbind(struct hda_codec *codec)
+ 	snd_array_free(&codec->cvt_setups);
+ 	snd_array_free(&codec->spdif_out);
+ 	snd_array_free(&codec->verbs);
+-	codec->preset = NULL;
+ 	codec->follower_dig_outs = NULL;
+ 	codec->spdif_status_reset = 0;
+ 	snd_array_free(&codec->mixers);
 -- 
 2.39.0
 
