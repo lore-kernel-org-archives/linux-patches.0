@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A1FB63BD
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:59:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 20DE0C4339B;
-	Mon, 20 Feb 2023 13:59:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2636A63BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:59:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F345C4339B;
+	Mon, 20 Feb 2023 13:59:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901546;
-	bh=rEmNlg9Pb5gEY0lFuUhUUM+5ORgqsXHqwJoigvhaVvA=;
+	s=korg; t=1676901549;
+	bh=ppxyXvM1RtZA8O+zbZe1DiAvDN7Ji5RszCir4ckcyFY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ct9zSd+YjwYVIZS8h1VBfk6KoiQZXBSdtwEYqR69qfzveKr90X+ABPLVDyQs2a3TK
-	 PVmkD4p0FOTvnFVVjJow83KSRVTpGYCg1bl74SRbjTQoggncHAorR8zf1roVfezY6x
-	 QKb2XrvJI4ibFnZqkJEM1IqhOrIRhJSnJqsxPJMQ=
+	b=evPGliaUUEALMhde/keWifX63t0Mq2ColnnKl8MwvtI0Dgmd8NVkDyBEVN7pTpvjH
+	 DGzna1SQ+0sP7ucTGiuol2mOTuAVtgLTY3NTXvBzBQ23KGFGHbdReo01UWIneKDpyW
+	 WwmlxodS2Lzh5xi9s3emtadtmcZDh2bpvLZqUMK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 058/118] mmc: mmc_spi: fix error handling in mmc_spi_probe()
-Date: Mon, 20 Feb 2023 14:36:14 +0100
-Message-Id: <20230220133602.767385745@linuxfoundation.org>
+	Jason Montleon <jmontleo@redhat.com>,
+	Cezary Rojewski <cezary.rojewski@intel.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 059/118] ALSA: hda: Fix codec device field initializan
+Date: Mon, 20 Feb 2023 14:36:15 +0100
+Message-Id: <20230220133602.799819031@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -34,64 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Cezary Rojewski <cezary.rojewski@intel.com>
 
-commit cf4c9d2ac1e42c7d18b921bec39486896645b714 upstream.
+commit 3af4a4f7a20c94009adba65764fa5a0269d70a82 upstream.
 
-If mmc_add_host() fails, it doesn't need to call mmc_remove_host(),
-or it will cause null-ptr-deref, because of deleting a not added
-device in mmc_remove_host().
+Commit f2bd1c5ae2cb ("ALSA: hda: Fix page fault in
+snd_hda_codec_shutdown()") relocated initialization of several codec
+device fields. Due to differences between codec_exec_verb() and
+snd_hdac_bus_exec_bus() in how they handle VERB execution - the latter
+does not touch PM - assigning ->exec_verb to codec_exec_verb() causes PM
+to be engaged before it is configured for the device. Configuration of
+PM for the ASoC HDAudio sound card is done with snd_hda_set_power_save()
+during skl_hda_audio_probe() whereas the assignment happens early, in
+snd_hda_codec_device_init().
 
-To fix this, goto label 'fail_glue_init', if mmc_add_host() fails,
-and change the label 'fail_add_host' to 'fail_gpiod_request'.
+Revert to previous behavior to avoid problems caused by too early PM
+manipulation.
 
-Fixes: 15a0580ced08 ("mmc_spi host driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230131013835.3564011-1-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Suggested-by: Jason Montleon <jmontleo@redhat.com>
+Link: https://lore.kernel.org/regressions/CALFERdzKUodLsm6=Ub3g2+PxpNpPtPq3bGBLbff=eZr9_S=YVA@mail.gmail.com
+Fixes: f2bd1c5ae2cb ("ALSA: hda: Fix page fault in snd_hda_codec_shutdown()")
+Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
+Link: https://lore.kernel.org/r/20230210165541.3543604-1-cezary.rojewski@intel.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/mmc_spi.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ sound/pci/hda/hda_codec.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/mmc/host/mmc_spi.c
-+++ b/drivers/mmc/host/mmc_spi.c
-@@ -1437,7 +1437,7 @@ static int mmc_spi_probe(struct spi_devi
+diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
+index ac1cc7c5290e..2e728aad6771 100644
+--- a/sound/pci/hda/hda_codec.c
++++ b/sound/pci/hda/hda_codec.c
+@@ -927,7 +927,6 @@ snd_hda_codec_device_init(struct hda_bus *bus, unsigned int codec_addr,
+ 	codec->depop_delay = -1;
+ 	codec->fixup_id = HDA_FIXUP_ID_NOT_SET;
+ 	codec->core.dev.release = snd_hda_codec_dev_release;
+-	codec->core.exec_verb = codec_exec_verb;
+ 	codec->core.type = HDA_DEV_LEGACY;
  
- 	status = mmc_add_host(mmc);
- 	if (status != 0)
--		goto fail_add_host;
-+		goto fail_glue_init;
+ 	mutex_init(&codec->spdif_mutex);
+@@ -998,6 +997,7 @@ int snd_hda_codec_device_new(struct hda_bus *bus, struct snd_card *card,
+ 	if (snd_BUG_ON(codec_addr > HDA_MAX_CODEC_ADDRESS))
+ 		return -EINVAL;
  
- 	/*
- 	 * Index 0 is card detect
-@@ -1445,7 +1445,7 @@ static int mmc_spi_probe(struct spi_devi
- 	 */
- 	status = mmc_gpiod_request_cd(mmc, NULL, 0, false, 1000);
- 	if (status == -EPROBE_DEFER)
--		goto fail_add_host;
-+		goto fail_gpiod_request;
- 	if (!status) {
- 		/*
- 		 * The platform has a CD GPIO signal that may support
-@@ -1460,7 +1460,7 @@ static int mmc_spi_probe(struct spi_devi
- 	/* Index 1 is write protect/read only */
- 	status = mmc_gpiod_request_ro(mmc, NULL, 1, 0);
- 	if (status == -EPROBE_DEFER)
--		goto fail_add_host;
-+		goto fail_gpiod_request;
- 	if (!status)
- 		has_ro = true;
++	codec->core.exec_verb = codec_exec_verb;
+ 	codec->card = card;
+ 	codec->addr = codec_addr;
  
-@@ -1474,7 +1474,7 @@ static int mmc_spi_probe(struct spi_devi
- 				? ", cd polling" : "");
- 	return 0;
- 
--fail_add_host:
-+fail_gpiod_request:
- 	mmc_remove_host(mmc);
- fail_glue_init:
- 	mmc_spi_dma_free(host);
+-- 
+2.39.1
+
 
 
