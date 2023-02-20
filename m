@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6F9963B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E014C433D2;
-	Mon, 20 Feb 2023 13:47:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91E2963B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 19EF7C433D2;
+	Mon, 20 Feb 2023 13:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900853;
-	bh=mh7J86w+v1MchqBoAyvDfaq2ERmrfcmmke6W2ZVt6nI=;
+	s=korg; t=1676900856;
+	bh=mM94gfvrqTRHIIsgSEPorfBSaCF8o7xCtNAVmysAXPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bIzNquQJiE8QwOs0t2HQy0EY66/kFKjMYFN+S0ZPpG08wYe8Tfll9XSXyOHCEXOxX
-	 gweQQqxQ4ZNBmQTCXq55HmwIZA3qcFkx0Lxqc6SaAh3dM23n8S/4Z+siVQCqdj9q26
-	 hqxX7MgMCtFoIExSHN/9wzdCfKhdGOCX6c+KQXz0=
+	b=NhOrhNuMaUX756Kqk17GMsfGq4CjSOQczXKjbWQahffxWkvJTPVm18wJWPSXGcQI6
+	 xi1gE/PHSuCVtfXYh9l1B9dQHtXGQzekU+Gt4xaxkKZK8sW3ZwWkx84M/kJMD6YvSU
+	 db/DxAe4clID02lcxNEgYC6di6bjiM+4Lt8B2fFI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Charles Keepax <ckeepax@opensource.cirrus.com>,
-	Mark Brown <broonie@kernel.org>,
+	Shunsuke Mie <mie@igel.co.jp>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 092/156] ASoC: cs42l56: fix DT probe
-Date: Mon, 20 Feb 2023 14:35:36 +0100
-Message-Id: <20230220133606.276159747@linuxfoundation.org>
+Subject: [PATCH 5.4 093/156] tools/virtio: fix the vringh test for virtio ring changes
+Date: Mon, 20 Feb 2023 14:35:37 +0100
+Message-Id: <20230220133606.326775706@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -36,54 +35,146 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Shunsuke Mie <mie@igel.co.jp>
 
-[ Upstream commit e18c6da62edc780e4f4f3c9ce07bdacd69505182 ]
+[ Upstream commit 3f7b75abf41cc4143aa295f62acbb060a012868d ]
 
-While looking through legacy platform data users, I noticed that
-the DT probing never uses data from the DT properties, as the
-platform_data structure gets overwritten directly after it
-is initialized.
+Fix the build caused by missing kmsan_handle_dma() and is_power_of_2() that
+are used in drivers/virtio/virtio_ring.c.
 
-There have never been any boards defining the platform_data in
-the mainline kernel either, so this driver so far only worked
-with patched kernels or with the default values.
-
-For the benefit of possible downstream users, fix the DT probe
-by no longer overwriting the data.
-
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20230126162203.2986339-1-arnd@kernel.org
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Shunsuke Mie <mie@igel.co.jp>
+Message-Id: <20230110034310.779744-1-mie@igel.co.jp>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/codecs/cs42l56.c | 6 ------
- 1 file changed, 6 deletions(-)
+ tools/virtio/linux/bug.h         |  8 +++-----
+ tools/virtio/linux/build_bug.h   |  7 +++++++
+ tools/virtio/linux/cpumask.h     |  7 +++++++
+ tools/virtio/linux/gfp.h         |  7 +++++++
+ tools/virtio/linux/kernel.h      |  1 +
+ tools/virtio/linux/kmsan.h       | 12 ++++++++++++
+ tools/virtio/linux/scatterlist.h |  1 +
+ tools/virtio/linux/topology.h    |  7 +++++++
+ 8 files changed, 45 insertions(+), 5 deletions(-)
+ create mode 100644 tools/virtio/linux/build_bug.h
+ create mode 100644 tools/virtio/linux/cpumask.h
+ create mode 100644 tools/virtio/linux/gfp.h
+ create mode 100644 tools/virtio/linux/kmsan.h
+ create mode 100644 tools/virtio/linux/topology.h
 
-diff --git a/sound/soc/codecs/cs42l56.c b/sound/soc/codecs/cs42l56.c
-index 8be7d83f0ce9a..732405587c5a4 100644
---- a/sound/soc/codecs/cs42l56.c
-+++ b/sound/soc/codecs/cs42l56.c
-@@ -1192,18 +1192,12 @@ static int cs42l56_i2c_probe(struct i2c_client *i2c_client,
- 	if (pdata) {
- 		cs42l56->pdata = *pdata;
- 	} else {
--		pdata = devm_kzalloc(&i2c_client->dev, sizeof(*pdata),
--				     GFP_KERNEL);
--		if (!pdata)
--			return -ENOMEM;
--
- 		if (i2c_client->dev.of_node) {
- 			ret = cs42l56_handle_of_data(i2c_client,
- 						     &cs42l56->pdata);
- 			if (ret != 0)
- 				return ret;
- 		}
--		cs42l56->pdata = *pdata;
- 	}
+diff --git a/tools/virtio/linux/bug.h b/tools/virtio/linux/bug.h
+index b14c2c3b6b857..74aef964f5099 100644
+--- a/tools/virtio/linux/bug.h
++++ b/tools/virtio/linux/bug.h
+@@ -1,11 +1,9 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+-#ifndef BUG_H
+-#define BUG_H
++#ifndef _LINUX_BUG_H
++#define _LINUX_BUG_H
  
- 	if (cs42l56->pdata.gpio_nreset) {
+ #define BUG_ON(__BUG_ON_cond) assert(!(__BUG_ON_cond))
+ 
+-#define BUILD_BUG_ON(x)
+-
+ #define BUG() abort()
+ 
+-#endif /* BUG_H */
++#endif /* _LINUX_BUG_H */
+diff --git a/tools/virtio/linux/build_bug.h b/tools/virtio/linux/build_bug.h
+new file mode 100644
+index 0000000000000..cdbb75e28a604
+--- /dev/null
++++ b/tools/virtio/linux/build_bug.h
+@@ -0,0 +1,7 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _LINUX_BUILD_BUG_H
++#define _LINUX_BUILD_BUG_H
++
++#define BUILD_BUG_ON(x)
++
++#endif	/* _LINUX_BUILD_BUG_H */
+diff --git a/tools/virtio/linux/cpumask.h b/tools/virtio/linux/cpumask.h
+new file mode 100644
+index 0000000000000..307da69d6b26c
+--- /dev/null
++++ b/tools/virtio/linux/cpumask.h
+@@ -0,0 +1,7 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _LINUX_CPUMASK_H
++#define _LINUX_CPUMASK_H
++
++#include <linux/kernel.h>
++
++#endif /* _LINUX_CPUMASK_H */
+diff --git a/tools/virtio/linux/gfp.h b/tools/virtio/linux/gfp.h
+new file mode 100644
+index 0000000000000..43d146f236f14
+--- /dev/null
++++ b/tools/virtio/linux/gfp.h
+@@ -0,0 +1,7 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef __LINUX_GFP_H
++#define __LINUX_GFP_H
++
++#include <linux/topology.h>
++
++#endif
+diff --git a/tools/virtio/linux/kernel.h b/tools/virtio/linux/kernel.h
+index 6683b4a70b059..3325cdf229410 100644
+--- a/tools/virtio/linux/kernel.h
++++ b/tools/virtio/linux/kernel.h
+@@ -10,6 +10,7 @@
+ #include <stdarg.h>
+ 
+ #include <linux/compiler.h>
++#include <linux/log2.h>
+ #include <linux/types.h>
+ #include <linux/printk.h>
+ #include <linux/bug.h>
+diff --git a/tools/virtio/linux/kmsan.h b/tools/virtio/linux/kmsan.h
+new file mode 100644
+index 0000000000000..272b5aa285d5a
+--- /dev/null
++++ b/tools/virtio/linux/kmsan.h
+@@ -0,0 +1,12 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _LINUX_KMSAN_H
++#define _LINUX_KMSAN_H
++
++#include <linux/gfp.h>
++
++inline void kmsan_handle_dma(struct page *page, size_t offset, size_t size,
++			     enum dma_data_direction dir)
++{
++}
++
++#endif /* _LINUX_KMSAN_H */
+diff --git a/tools/virtio/linux/scatterlist.h b/tools/virtio/linux/scatterlist.h
+index 369ee308b6686..74d9e1825748e 100644
+--- a/tools/virtio/linux/scatterlist.h
++++ b/tools/virtio/linux/scatterlist.h
+@@ -2,6 +2,7 @@
+ #ifndef SCATTERLIST_H
+ #define SCATTERLIST_H
+ #include <linux/kernel.h>
++#include <linux/bug.h>
+ 
+ struct scatterlist {
+ 	unsigned long	page_link;
+diff --git a/tools/virtio/linux/topology.h b/tools/virtio/linux/topology.h
+new file mode 100644
+index 0000000000000..910794afb993a
+--- /dev/null
++++ b/tools/virtio/linux/topology.h
+@@ -0,0 +1,7 @@
++/* SPDX-License-Identifier: GPL-2.0 */
++#ifndef _LINUX_TOPOLOGY_H
++#define _LINUX_TOPOLOGY_H
++
++#include <linux/cpumask.h>
++
++#endif /* _LINUX_TOPOLOGY_H */
 -- 
 2.39.0
 
