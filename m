@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0979663B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E74C433EF;
-	Mon, 20 Feb 2023 13:38:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 959EA63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1ADD8C433EF;
+	Mon, 20 Feb 2023 13:38:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900298;
-	bh=kLaTJhX3urRDXYqFYP4cTPQXfCyVgrQug/XKbORdWm4=;
+	s=korg; t=1676900301;
+	bh=fRdjYOQIsq/naUQkRlYLfe2DyB7bbnLqVgAvLHCRASs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qYlkX89qYHZnaQ7XxG+vPC1vc50ch2mpyF9UlhYYx6h7FFF1CQmdydJZUlVg2ltnI
-	 QFI2TWsJfFX6boi6dK629gGhEWjoUMqv5jB05KW1g+DD1gn/442VBkH9RKEvfBF/zg
-	 iEjKTXrzOT7sk4oj9J9esxP9kcy/6gkoTW//Kmt8=
+	b=N+LkCHOuo8Cw2CuSj67uHYtlNec9VimST9PtsOXeRHRYut1K2qS+auYl0SjZO90g9
+	 CToZSgiphYjERSugzQnsGaiOoTG+WmKQX0J2zhx7d8Ly4E9gftYSei5lTkmuuZAf2T
+	 hXZ0zxjGgVZ9mUR3Xh9Ao+JknaZJBECiHdbimJbU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gilles BULOZ <gilles.buloz@kontron.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 4.14 25/53] serial: 8250_dma: Fix DMA Rx rearm race
-Date: Mon, 20 Feb 2023 14:35:51 +0100
-Message-Id: <20230220133549.071198887@linuxfoundation.org>
+	Josef Bacik <josef@toxicpanda.com>,
+	David Sterba <dsterba@suse.com>
+Subject: [PATCH 4.14 26/53] btrfs: limit device extents to the device size
+Date: Mon, 20 Feb 2023 14:35:52 +0100
+Message-Id: <20230220133549.110342664@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
 References: <20230220133548.158615609@linuxfoundation.org>
@@ -34,85 +34,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Josef Bacik <josef@toxicpanda.com>
 
-commit 57e9af7831dcf211c5c689c2a6f209f4abdf0bce upstream.
+commit 3c538de0f2a74d50aff7278c092f88ae59cee688 upstream.
 
-As DMA Rx can be completed from two places, it is possible that DMA Rx
-completes before DMA completion callback had a chance to complete it.
-Once the previous DMA Rx has been completed, a new one can be started
-on the next UART interrupt. The following race is possible
-(uart_unlock_and_check_sysrq_irqrestore() replaced with
-spin_unlock_irqrestore() for simplicity/clarity):
+There was a recent regression in btrfs/177 that started happening with
+the size class patches ("btrfs: introduce size class to block group
+allocator").  This however isn't a regression introduced by those
+patches, but rather the bug was uncovered by a change in behavior in
+these patches.  The patches triggered more chunk allocations in the
+^free-space-tree case, which uncovered a race with device shrink.
 
-CPU0					CPU1
-					dma_rx_complete()
-serial8250_handle_irq()
-  spin_lock_irqsave(&port->lock)
-  handle_rx_dma()
-    serial8250_rx_dma_flush()
-      __dma_rx_complete()
-        dma->rx_running = 0
-        // Complete DMA Rx
-  spin_unlock_irqrestore(&port->lock)
+The problem is we will set the device total size to the new size, and
+use this to find a hole for a device extent.  However during shrink we
+may have device extents allocated past this range, so we could
+potentially find a hole in a range past our new shrink size.  We don't
+actually limit our found extent to the device size anywhere, we assume
+that we will not find a hole past our device size.  This isn't true with
+shrink as we're relocating block groups and thus creating holes past the
+device size.
 
-serial8250_handle_irq()
-  spin_lock_irqsave(&port->lock)
-  handle_rx_dma()
-    serial8250_rx_dma()
-      dma->rx_running = 1
-      // Setup a new DMA Rx
-  spin_unlock_irqrestore(&port->lock)
+Fix this by making sure we do not search past the new device size, and
+if we wander into any device extents that start after our device size
+simply break from the loop and use whatever hole we've already found.
 
-					  spin_lock_irqsave(&port->lock)
-					  // sees dma->rx_running = 1
-					  __dma_rx_complete()
-					    dma->rx_running = 0
-					    // Incorrectly complete
-					    // running DMA Rx
-
-This race seems somewhat theoretical to occur for real but handle it
-correctly regardless. Check what is the DMA status before complething
-anything in __dma_rx_complete().
-
-Reported-by: Gilles BULOZ <gilles.buloz@kontron.com>
-Tested-by: Gilles BULOZ <gilles.buloz@kontron.com>
-Fixes: 9ee4b83e51f7 ("serial: 8250: Add support for dmaengine")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230130114841.25749-3-ilpo.jarvinen@linux.intel.com
+CC: stable@vger.kernel.org # 4.14+
+Signed-off-by: Josef Bacik <josef@toxicpanda.com>
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_dma.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ fs/btrfs/volumes.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/serial/8250/8250_dma.c
-+++ b/drivers/tty/serial/8250/8250_dma.c
-@@ -52,15 +52,23 @@ static void __dma_rx_complete(void *para
- 	struct uart_8250_dma	*dma = p->dma;
- 	struct tty_port		*tty_port = &p->port.state->port;
- 	struct dma_tx_state	state;
-+	enum dma_status		dma_status;
- 	int			count;
+--- a/fs/btrfs/volumes.c
++++ b/fs/btrfs/volumes.c
+@@ -1397,7 +1397,7 @@ again:
+ 			goto out;
+ 	}
  
--	dma->rx_running = 0;
--	dmaengine_tx_status(dma->rxchan, dma->rx_cookie, &state);
-+	/*
-+	 * New DMA Rx can be started during the completion handler before it
-+	 * could acquire port's lock and it might still be ongoing. Don't to
-+	 * anything in such case.
-+	 */
-+	dma_status = dmaengine_tx_status(dma->rxchan, dma->rx_cookie, &state);
-+	if (dma_status == DMA_IN_PROGRESS)
-+		return;
+-	while (1) {
++	while (search_start < search_end) {
+ 		l = path->nodes[0];
+ 		slot = path->slots[0];
+ 		if (slot >= btrfs_header_nritems(l)) {
+@@ -1420,6 +1420,9 @@ again:
+ 		if (key.type != BTRFS_DEV_EXTENT_KEY)
+ 			goto next;
  
- 	count = dma->rx_size - state.residue;
++		if (key.offset > search_end)
++			break;
++
+ 		if (key.offset > search_start) {
+ 			hole_size = key.offset - search_start;
  
- 	tty_insert_flip_string(tty_port, dma->rx_buf, count);
- 	p->port.icount.rx += count;
-+	dma->rx_running = 0;
+@@ -1494,6 +1497,7 @@ next:
+ 	else
+ 		ret = 0;
  
- 	tty_flip_buffer_push(tty_port);
- }
++	ASSERT(max_hole_start + max_hole_size <= search_end);
+ out:
+ 	btrfs_free_path(path);
+ 	*start = max_hole_start;
 
 
