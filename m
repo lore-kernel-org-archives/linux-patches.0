@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9403D63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 05F15C433EF;
-	Mon, 20 Feb 2023 13:55:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CD063B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934C4C433D2;
+	Mon, 20 Feb 2023 13:55:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901356;
-	bh=te7zXP6EkKtX6jk73NehfKyQ+gwhPqK+3RHycD9r2Ro=;
+	s=korg; t=1676901358;
+	bh=H6WClBhaOmnPGQ+namoQkb5VssSkQFJ8BD7wGkIhsBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QEzvQlwsWZijBQLO9T1amtA8QDZ0k2c49p9GOHaO8yfLvY7x0nLeOocvgcbzGj1ok
-	 u/Bqiqmt7/rdkivi9Zsl2qBK6Knt1OOVTiQBGlzE9s1AjXhWU4vbbvKsaURqQjXvTr
-	 GlTwOIFPtKLfumm2Iao5rojvwg2FyCvQa5BjtPRI=
+	b=L18IgpP5ymAFjrYLR4ZJD0KMXBdLf+eXKIL9CqSJ5CSIHemH2nct8Ljcp5GIa6vVC
+	 j5bfB1pUmM23edyFakQpPjhpV3I4sUEf5Nx85wjASOJsnRiGxtxJqFrnV5Fh4cXd2X
+	 ccXWFubK53Vp0PPx6yfLeMz9cn3eTLLcrsqZq3+I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>
-Subject: [PATCH 5.10 43/57] ixgbe: add double of VLAN header when computing the max MTU
-Date: Mon, 20 Feb 2023 14:36:51 +0100
-Message-Id: <20230220133550.861833630@linuxfoundation.org>
+	Heiko Carstens <hca@linux.ibm.com>,
+	Sven Schnelle <svens@linux.ibm.com>,
+	Sumanth Korikkar <sumanthk@linux.ibm.com>
+Subject: [PATCH 5.10 17/57] [PATCH v2 1/1] s390/signal: fix endless loop in do_signal
+Date: Mon, 20 Feb 2023 14:36:25 +0100
+Message-Id: <20230220133549.972747392@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -36,46 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Sumanth Korikkar <sumanthk@linux.ibm.com>
 
-commit 0967bf837784a11c65d66060623a74e65211af0b upstream.
+No upstream commit exists: the problem addressed here is that 'commit
+75309018a24d ("s390: add support for TIF_NOTIFY_SIGNAL")' was backported
+to 5.10. This commit is broken, but nobody noticed upstream, since
+shortly after s390 converted to generic entry with 'commit 56e62a737028
+("s390: convert to generic entry")', which implicitly fixed the problem
+outlined below.
 
-Include the second VLAN HLEN into account when computing the maximum
-MTU size as other drivers do.
+Thread flag is set to TIF_NOTIFY_SIGNAL for io_uring work.  The io work
+user or syscall calls do_signal when either one of the TIF_SIGPENDING or
+TIF_NOTIFY_SIGNAL flag is set.  However, do_signal does consider only
+TIF_SIGPENDING signal and ignores TIF_NOTIFY_SIGNAL condition.  This
+means get_signal is never invoked  for TIF_NOTIFY_SIGNAL and hence the
+flag is not cleared, which results in an endless do_signal loop.
 
-Fixes: fabf1bce103a ("ixgbe: Prevent unsupported configurations with XDP")
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Reference: 'commit 788d0824269b ("io_uring: import 5.15-stable io_uring")'
+Fixes: 75309018a24d ("s390: add support for TIF_NOTIFY_SIGNAL")
+Cc: stable@vger.kernel.org  # 5.10.162
+Acked-by: Heiko Carstens <hca@linux.ibm.com>
+Acked-by: Sven Schnelle <svens@linux.ibm.com>
+Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ixgbe/ixgbe.h      |    2 ++
- drivers/net/ethernet/intel/ixgbe/ixgbe_main.c |    3 +--
- 2 files changed, 3 insertions(+), 2 deletions(-)
+ arch/s390/kernel/signal.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe.h
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe.h
-@@ -67,6 +67,8 @@
- #define IXGBE_RXBUFFER_4K    4096
- #define IXGBE_MAX_RXBUFFER  16384  /* largest size for a single descriptor */
+--- a/arch/s390/kernel/signal.c
++++ b/arch/s390/kernel/signal.c
+@@ -472,7 +472,7 @@ void do_signal(struct pt_regs *regs)
+ 	current->thread.system_call =
+ 		test_pt_regs_flag(regs, PIF_SYSCALL) ? regs->int_code : 0;
  
-+#define IXGBE_PKT_HDR_PAD   (ETH_HLEN + ETH_FCS_LEN + (VLAN_HLEN * 2))
-+
- /* Attempt to maximize the headroom available for incoming frames.  We
-  * use a 2K buffer for receives and need 1536/1534 to store the data for
-  * the frame.  This leaves us with 512 bytes of room.  From that we need
---- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-+++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
-@@ -6752,8 +6752,7 @@ static int ixgbe_change_mtu(struct net_d
- 	struct ixgbe_adapter *adapter = netdev_priv(netdev);
- 
- 	if (ixgbe_enabled_xdp_adapter(adapter)) {
--		int new_frame_size = new_mtu + ETH_HLEN + ETH_FCS_LEN +
--				     VLAN_HLEN;
-+		int new_frame_size = new_mtu + IXGBE_PKT_HDR_PAD;
- 
- 		if (new_frame_size > ixgbe_max_xdp_frame_size(adapter)) {
- 			e_warn(probe, "Requested MTU size is not supported with XDP\n");
+-	if (test_thread_flag(TIF_SIGPENDING) && get_signal(&ksig)) {
++	if (get_signal(&ksig)) {
+ 		/* Whee!  Actually deliver the signal.  */
+ 		if (current->thread.system_call) {
+ 			regs->int_code = current->thread.system_call;
 
 
