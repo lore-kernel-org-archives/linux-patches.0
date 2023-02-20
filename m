@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E5E63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:56:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0756C4339B;
-	Mon, 20 Feb 2023 13:56:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385B463B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:56:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8BEBFC433EF;
+	Mon, 20 Feb 2023 13:56:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901382;
-	bh=gg9l30VrfRNfwS+vaKboHqt5P7651ME5d+Nd4lXgvxE=;
+	s=korg; t=1676901385;
+	bh=EdLLzfipr8enHf/NYK4avEko70jsQeKRumPFACQ1QbA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=uut3P8yfWi5FVZWsoCYncqkcbGcmkMXLP6BZzrfDOTW1RdNnubdUIWJvx/PowbXwo
-	 RS1KJYDiaQwyclaS9nM/VW7ma6ft/tOPcpFXQAXV6tv7ndjLzSIHqeVTwncxntkxDg
-	 Inmy6CBTgSQu1CwCvlHC/7OPyJ1mV9ZjTE1Kw7LU=
+	b=B8IhEkR+Qzm029G0xTxBkReATeb6V/xgiY5+Z+RMwS/Zv7Qtml7eOnKb0QTfF/hlX
+	 e86Oi2EdRKzJQJgLc3xilAmoA3g4/n5c99BYbL46yRFmF4BqXmiuO3r2xHE12oSvHD
+	 EugAu7GDV6NZrVy+sRzYN3AuUHbG5LHonBbV8kCQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	John Harrison <John.C.Harrison@Intel.com>,
+	Raviteja Goud Talla <ravitejax.goud.talla@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 14/57] nvmem: core: fix cleanup after dev_set_name()
-Date: Mon, 20 Feb 2023 14:36:22 +0100
-Message-Id: <20230220133549.870438112@linuxfoundation.org>
+Subject: [PATCH 5.10 47/57] drm/i915/gen11: Moving WAs to icl_gt_workarounds_init()
+Date: Mon, 20 Feb 2023 14:36:55 +0100
+Message-Id: <20230220133551.019919308@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -37,95 +35,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Raviteja Goud Talla <ravitejax.goud.talla@intel.com>
 
-[ Upstream commit 560181d3ace61825f4ca9dd3481d6c0ee6709fa8 ]
+[ Upstream commit 67b858dd89932086ae0ee2d0ce4dd070a2c88bb3 ]
 
-If dev_set_name() fails, we leak nvmem->wp_gpio as the cleanup does not
-put this. While a minimal fix for this would be to add the gpiod_put()
-call, we can do better if we split device_register(), and use the
-tested nvmem_release() cleanup code by initialising the device early,
-and putting the device.
+Bspec page says "Reset: BUS", Accordingly moving w/a's:
+Wa_1407352427,Wa_1406680159 to proper function icl_gt_workarounds_init()
+Which will resolve guc enabling error
 
-This results in a slightly larger fix, but results in clear code.
+v2:
+  - Previous patch rev2 was created by email client which caused the
+    Build failure, This v2 is to resolve the previous broken series
 
-Note: this patch depends on "nvmem: core: initialise nvmem->id early"
-and "nvmem: core: remove nvmem_config wp_gpio".
-
-Fixes: 5544e90c8126 ("nvmem: core: add error handling for dev_set_name")
-Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-[Srini: Fixed subject line and error code handing with wp_gpio while applying.]
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230127104015.23839-6-srinivas.kandagatla@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: ab3428cfd9aa ("nvmem: core: fix registration vs use race")
+Reviewed-by: John Harrison <John.C.Harrison@Intel.com>
+Signed-off-by: Raviteja Goud Talla <ravitejax.goud.talla@intel.com>
+Signed-off-by: John Harrison <John.C.Harrison@Intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20211203145603.4006937-1-ravitejax.goud.talla@intel.com
+Stable-dep-of: d5a1224aa68c ("drm/i915/gen11: Wa_1408615072/Wa_1407596294 should be on GT list")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/core.c | 22 ++++++++++------------
- 1 file changed, 10 insertions(+), 12 deletions(-)
+ drivers/gpu/drm/i915/gt/intel_workarounds.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
-index 38c05fce7d740..de356cdde4ce8 100644
---- a/drivers/nvmem/core.c
-+++ b/drivers/nvmem/core.c
-@@ -627,14 +627,18 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
+diff --git a/drivers/gpu/drm/i915/gt/intel_workarounds.c b/drivers/gpu/drm/i915/gt/intel_workarounds.c
+index 4a3bde7c9f217..5c92789504d01 100644
+--- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
++++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
+@@ -1212,6 +1212,15 @@ icl_gt_workarounds_init(struct drm_i915_private *i915, struct i915_wa_list *wal)
+ 		    GAMT_CHKN_BIT_REG,
+ 		    GAMT_CHKN_DISABLE_L3_COH_PIPE);
  
- 	nvmem->id = rval;
- 
-+	nvmem->dev.type = &nvmem_provider_type;
-+	nvmem->dev.bus = &nvmem_bus_type;
-+	nvmem->dev.parent = config->dev;
++	/* Wa_1407352427:icl,ehl */
++	wa_write_or(wal, UNSLICE_UNIT_LEVEL_CLKGATE2,
++		    PSDUNIT_CLKGATE_DIS);
 +
-+	device_initialize(&nvmem->dev);
++	/* Wa_1406680159:icl,ehl */
++	wa_write_or(wal,
++		    SUBSLICE_UNIT_LEVEL_CLKGATE,
++		    GWUNIT_CLKGATE_DIS);
 +
- 	if (!config->ignore_wp)
- 		nvmem->wp_gpio = gpiod_get_optional(config->dev, "wp",
- 						    GPIOD_OUT_HIGH);
- 	if (IS_ERR(nvmem->wp_gpio)) {
--		ida_free(&nvmem_ida, nvmem->id);
- 		rval = PTR_ERR(nvmem->wp_gpio);
--		kfree(nvmem);
--		return ERR_PTR(rval);
-+		goto err_put_device;
- 	}
+ 	/* Wa_1607087056:icl,ehl,jsl */
+ 	if (IS_ICELAKE(i915) ||
+ 	    IS_EHL_REVID(i915, EHL_REVID_A0, EHL_REVID_A0)) {
+@@ -1823,15 +1832,6 @@ rcs_engine_wa_init(struct intel_engine_cs *engine, struct i915_wa_list *wal)
+ 		wa_write_or(wal, UNSLICE_UNIT_LEVEL_CLKGATE,
+ 			    VSUNIT_CLKGATE_DIS | HSUNIT_CLKGATE_DIS);
  
- 	kref_init(&nvmem->refcnt);
-@@ -646,9 +650,6 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
- 	nvmem->stride = config->stride ?: 1;
- 	nvmem->word_size = config->word_size ?: 1;
- 	nvmem->size = config->size;
--	nvmem->dev.type = &nvmem_provider_type;
--	nvmem->dev.bus = &nvmem_bus_type;
--	nvmem->dev.parent = config->dev;
- 	nvmem->root_only = config->root_only;
- 	nvmem->priv = config->priv;
- 	nvmem->type = config->type;
-@@ -671,11 +672,8 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
- 		break;
- 	}
- 
--	if (rval) {
--		ida_free(&nvmem_ida, nvmem->id);
--		kfree(nvmem);
--		return ERR_PTR(rval);
--	}
-+	if (rval)
-+		goto err_put_device;
- 
- 	nvmem->read_only = device_property_present(config->dev, "read-only") ||
- 			   config->read_only || !nvmem->reg_write;
-@@ -686,7 +684,7 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
- 
- 	dev_dbg(&nvmem->dev, "Registering nvmem device %s\n", config->name);
- 
--	rval = device_register(&nvmem->dev);
-+	rval = device_add(&nvmem->dev);
- 	if (rval)
- 		goto err_put_device;
- 
+-		/* Wa_1407352427:icl,ehl */
+-		wa_write_or(wal, UNSLICE_UNIT_LEVEL_CLKGATE2,
+-			    PSDUNIT_CLKGATE_DIS);
+-
+-		/* Wa_1406680159:icl,ehl */
+-		wa_write_or(wal,
+-			    SUBSLICE_UNIT_LEVEL_CLKGATE,
+-			    GWUNIT_CLKGATE_DIS);
+-
+ 		/*
+ 		 * Wa_1408767742:icl[a2..forever],ehl[all]
+ 		 * Wa_1605460711:icl[a0..c0]
 -- 
 2.39.0
 
