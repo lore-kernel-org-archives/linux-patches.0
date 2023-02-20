@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B88B63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A77A9C433EF;
-	Mon, 20 Feb 2023 13:57:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D7D63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CBE7C433EF;
+	Mon, 20 Feb 2023 13:57:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901471;
-	bh=jD0r6D3ptcJMgMOSGbo3BBIdZWxVXUrTY/Hn+enSM/U=;
+	s=korg; t=1676901473;
+	bh=g0alahQXIccgaTxo57XE7sliBK9bf/QuHrP4Km4ph1w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kSYRooi0zTMFiAM0N+sGc7QJPpHpGa18yYfIEY0btzJwK413xieR34rB0f6KnLGkn
-	 QLjMplpA9dDI4AL8d4v7VT89kOVJUaegyXvvZPKxXsUNpdbNjxnQXlD3pDJzR9+Q17
-	 t777+euIluvuvmUPE8BP3EaHVlK2U4PALW4WFGCY=
+	b=nSM5LoMNjJXjitYOzgU2GDAf6LYMRtm8CibplaAGSn5MiH6Gdjr6B+/zOnmpWQ8MM
+	 F1u80Ki1np9AUaGtqyuPL5hxXWH2oIlB1yQ2QBFy6Q15n1bHBkuBo9rRKpkKTNOhwJ
+	 F5CgpOrWipgZs4ru1dpKPcIHaqyGfzzgCrRRKOOk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Egorenkov <egorenar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	Paolo Abeni <pabeni@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 029/118] s390/decompressor: specify __decompress() buf len to avoid overflow
-Date: Mon, 20 Feb 2023 14:35:45 +0100
-Message-Id: <20230220133601.599609480@linuxfoundation.org>
+Subject: [PATCH 6.1 003/118] mptcp: deduplicate error paths on endpoint creation
+Date: Mon, 20 Feb 2023 14:35:19 +0100
+Message-Id: <20230220133600.537802253@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -36,45 +36,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 7ab41c2c08a32132ba8c14624910e2fe8ce4ba4b ]
+[ Upstream commit 976d302fb6165ad620778d7ba834cde6e3fe9f9f ]
 
-Historically calls to __decompress() didn't specify "out_len" parameter
-on many architectures including s390, expecting that no writes beyond
-uncompressed kernel image are performed. This has changed since commit
-2aa14b1ab2c4 ("zstd: import usptream v1.5.2") which includes zstd library
-commit 6a7ede3dfccb ("Reduce size of dctx by reutilizing dst buffer
-(#2751)"). Now zstd decompression code might store literal buffer in
-the unwritten portion of the destination buffer. Since "out_len" is
-not set, it is considered to be unlimited and hence free to use for
-optimization needs. On s390 this might corrupt initrd or ipl report
-which are often placed right after the decompressor buffer. Luckily the
-size of uncompressed kernel image is already known to the decompressor,
-so to avoid the problem simply specify it in the "out_len" parameter.
+When endpoint creation fails, we need to free the newly allocated
+entry and eventually destroy the paired mptcp listener socket.
 
-Link: https://github.com/facebook/zstd/commit/6a7ede3dfccb
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Tested-by: Alexander Egorenkov <egorenar@linux.ibm.com>
-Link: https://lore.kernel.org/r/patch-1.thread-41c676.git-41c676c2d153.your-ad-here.call-01675030179-ext-9637@work.hours
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Consolidate such action in a single point let all the errors path
+reach it.
+
+Reviewed-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Stable-dep-of: ad2171009d96 ("mptcp: fix locking for in-kernel listener creation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/decompressor.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/mptcp/pm_netlink.c | 35 +++++++++++++----------------------
+ 1 file changed, 13 insertions(+), 22 deletions(-)
 
-diff --git a/arch/s390/boot/decompressor.c b/arch/s390/boot/decompressor.c
-index e27c2140d6206..623f6775d01d7 100644
---- a/arch/s390/boot/decompressor.c
-+++ b/arch/s390/boot/decompressor.c
-@@ -80,6 +80,6 @@ void *decompress_kernel(void)
- 	void *output = (void *)decompress_offset;
+diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
+index 9813ed0fde9bd..fdf2ee29f7623 100644
+--- a/net/mptcp/pm_netlink.c
++++ b/net/mptcp/pm_netlink.c
+@@ -1003,16 +1003,12 @@ static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
+ 		return err;
  
- 	__decompress(_compressed_start, _compressed_end - _compressed_start,
--		     NULL, NULL, output, 0, NULL, error);
-+		     NULL, NULL, output, vmlinux.image_size, NULL, error);
- 	return output;
+ 	msk = mptcp_sk(entry->lsk->sk);
+-	if (!msk) {
+-		err = -EINVAL;
+-		goto out;
+-	}
++	if (!msk)
++		return -EINVAL;
+ 
+ 	ssock = __mptcp_nmpc_socket(msk);
+-	if (!ssock) {
+-		err = -EINVAL;
+-		goto out;
+-	}
++	if (!ssock)
++		return -EINVAL;
+ 
+ 	mptcp_info2sockaddr(&entry->addr, &addr, entry->addr.family);
+ #if IS_ENABLED(CONFIG_MPTCP_IPV6)
+@@ -1022,20 +1018,16 @@ static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
+ 	err = kernel_bind(ssock, (struct sockaddr *)&addr, addrlen);
+ 	if (err) {
+ 		pr_warn("kernel_bind error, err=%d", err);
+-		goto out;
++		return err;
+ 	}
+ 
+ 	err = kernel_listen(ssock, backlog);
+ 	if (err) {
+ 		pr_warn("kernel_listen error, err=%d", err);
+-		goto out;
++		return err;
+ 	}
+ 
+ 	return 0;
+-
+-out:
+-	sock_release(entry->lsk);
+-	return err;
  }
+ 
+ int mptcp_pm_nl_get_local_id(struct mptcp_sock *msk, struct sock_common *skc)
+@@ -1327,7 +1319,7 @@ static int mptcp_nl_cmd_add_addr(struct sk_buff *skb, struct genl_info *info)
+ 		return -EINVAL;
+ 	}
+ 
+-	entry = kmalloc(sizeof(*entry), GFP_KERNEL_ACCOUNT);
++	entry = kzalloc(sizeof(*entry), GFP_KERNEL_ACCOUNT);
+ 	if (!entry) {
+ 		GENL_SET_ERR_MSG(info, "can't allocate addr");
+ 		return -ENOMEM;
+@@ -1338,22 +1330,21 @@ static int mptcp_nl_cmd_add_addr(struct sk_buff *skb, struct genl_info *info)
+ 		ret = mptcp_pm_nl_create_listen_socket(skb->sk, entry);
+ 		if (ret) {
+ 			GENL_SET_ERR_MSG(info, "create listen socket error");
+-			kfree(entry);
+-			return ret;
++			goto out_free;
+ 		}
+ 	}
+ 	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry);
+ 	if (ret < 0) {
+ 		GENL_SET_ERR_MSG(info, "too many addresses or duplicate one");
+-		if (entry->lsk)
+-			sock_release(entry->lsk);
+-		kfree(entry);
+-		return ret;
++		goto out_free;
+ 	}
+ 
+ 	mptcp_nl_add_subflow_or_signal_addr(sock_net(skb->sk));
+-
+ 	return 0;
++
++out_free:
++	__mptcp_pm_release_addr_entry(entry);
++	return ret;
+ }
+ 
+ int mptcp_pm_get_flags_and_ifindex_by_id(struct mptcp_sock *msk, unsigned int id,
 -- 
 2.39.0
 
