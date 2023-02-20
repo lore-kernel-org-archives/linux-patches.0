@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A692963B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:56:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 06600C4339B;
-	Mon, 20 Feb 2023 13:56:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04E8863B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:56:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81F1DC4339C;
+	Mon, 20 Feb 2023 13:56:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901395;
-	bh=fFtkZF7CpstAVH9uQ3Y3CDNG5D+I4ARPy4fEaER/TkM=;
+	s=korg; t=1676901397;
+	bh=ibmDf64zmZ+kVCRc5Kd7KaLvZ0pAUQL460Zuqyp9dJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vhNLwhab4ZZCYNn1zmNQzcwlwLo9OOqimlxwI1Hjxb9zHcU/MO89o5SrXDEKlq4DF
-	 C1BmKI9b4zxYLHodH/5yH5cq01WVewqR+h4ThYP4YkWS8IlXxTQDISjHj+4ze29z2H
-	 Z3gFL8TxLDLlBsUpfWbZLQr3Uza5mb3O7FbxqF3c=
+	b=HhhKKe4znsXNL9RiR4BBquc78bst1w8IybxrpAZz4oIuhKOtfDOlLKW60Z8YeLf1S
+	 UNn49Qfzs7ZaKCqhA99eN/bV0tgWt6of5iFINKvAGd2/8vtykGnsGwhpmsPD3gMzF9
+	 rioIWqvwgB+9w6lkLw8a806OOz53BASFMmqzCu/Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Baowen Zheng <baowen.zheng@corigine.com>,
-	Louis Peens <louis.peens@corigine.com>,
-	Simon Horman <simon.horman@corigine.com>,
 	Jamal Hadi Salim <jhs@mojatatu.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Pedro Tammela <pctammela@mojatatu.com>,
+	Larysa Zaremba <larysa.zaremba@intel.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 49/57] flow_offload: fill flags to action structure
-Date: Mon, 20 Feb 2023 14:36:57 +0100
-Message-Id: <20230220133551.079059726@linuxfoundation.org>
+Subject: [PATCH 5.10 50/57] net/sched: act_ctinfo: use percpu stats
+Date: Mon, 20 Feb 2023 14:36:58 +0100
+Message-Id: <20230220133551.109125946@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -38,216 +37,60 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Baowen Zheng <baowen.zheng@corigine.com>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-[ Upstream commit 40bd094d65fc9f83941b024cde7c24516f036879 ]
+[ Upstream commit 21c167aa0ba943a7cac2f6969814f83bb701666b ]
 
-Fill flags to action structure to allow user control if
-the action should be offloaded to hardware or not.
+The tc action act_ctinfo was using shared stats, fix it to use percpu stats
+since bstats_update() must be called with locks or with a percpu pointer argument.
 
-Signed-off-by: Baowen Zheng <baowen.zheng@corigine.com>
-Signed-off-by: Louis Peens <louis.peens@corigine.com>
-Signed-off-by: Simon Horman <simon.horman@corigine.com>
-Acked-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: 21c167aa0ba9 ("net/sched: act_ctinfo: use percpu stats")
+tdc results:
+1..12
+ok 1 c826 - Add ctinfo action with default setting
+ok 2 0286 - Add ctinfo action with dscp
+ok 3 4938 - Add ctinfo action with valid cpmark and zone
+ok 4 7593 - Add ctinfo action with drop control
+ok 5 2961 - Replace ctinfo action zone and action control
+ok 6 e567 - Delete ctinfo action with valid index
+ok 7 6a91 - Delete ctinfo action with invalid index
+ok 8 5232 - List ctinfo actions
+ok 9 7702 - Flush ctinfo actions
+ok 10 3201 - Add ctinfo action with duplicate index
+ok 11 8295 - Add ctinfo action with invalid index
+ok 12 3964 - Replace ctinfo action with invalid goto_chain control
+
+Fixes: 24ec483cec98 ("net: sched: Introduce act_ctinfo action")
+Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
+Link: https://lore.kernel.org/r/20230210200824.444856-1-pctammela@mojatatu.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/act_bpf.c      | 2 +-
- net/sched/act_connmark.c | 2 +-
- net/sched/act_ctinfo.c   | 2 +-
- net/sched/act_gate.c     | 2 +-
- net/sched/act_ife.c      | 2 +-
- net/sched/act_ipt.c      | 2 +-
- net/sched/act_mpls.c     | 2 +-
- net/sched/act_nat.c      | 2 +-
- net/sched/act_pedit.c    | 2 +-
- net/sched/act_police.c   | 2 +-
- net/sched/act_sample.c   | 2 +-
- net/sched/act_simple.c   | 2 +-
- net/sched/act_skbedit.c  | 2 +-
- net/sched/act_skbmod.c   | 2 +-
- 14 files changed, 14 insertions(+), 14 deletions(-)
+ net/sched/act_ctinfo.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/net/sched/act_bpf.c b/net/sched/act_bpf.c
-index a4c7ba35a3438..78f1cd70c8d19 100644
---- a/net/sched/act_bpf.c
-+++ b/net/sched/act_bpf.c
-@@ -307,7 +307,7 @@ static int tcf_bpf_init(struct net *net, struct nlattr *nla,
- 	ret = tcf_idr_check_alloc(tn, &index, act, bind);
- 	if (!ret) {
- 		ret = tcf_idr_create(tn, index, est, act,
--				     &act_bpf_ops, bind, true, 0);
-+				     &act_bpf_ops, bind, true, flags);
- 		if (ret < 0) {
- 			tcf_idr_cleanup(tn, index);
- 			return ret;
-diff --git a/net/sched/act_connmark.c b/net/sched/act_connmark.c
-index 31d268eedf3f9..b6576a250e851 100644
---- a/net/sched/act_connmark.c
-+++ b/net/sched/act_connmark.c
-@@ -124,7 +124,7 @@ static int tcf_connmark_init(struct net *net, struct nlattr *nla,
- 	ret = tcf_idr_check_alloc(tn, &index, a, bind);
- 	if (!ret) {
- 		ret = tcf_idr_create(tn, index, est, a,
--				     &act_connmark_ops, bind, false, 0);
-+				     &act_connmark_ops, bind, false, flags);
- 		if (ret) {
- 			tcf_idr_cleanup(tn, index);
- 			return ret;
 diff --git a/net/sched/act_ctinfo.c b/net/sched/act_ctinfo.c
-index 06c74f22ab98b..9bde94e7bb939 100644
+index 9bde94e7bb939..5aa005835c066 100644
 --- a/net/sched/act_ctinfo.c
 +++ b/net/sched/act_ctinfo.c
-@@ -212,7 +212,7 @@ static int tcf_ctinfo_init(struct net *net, struct nlattr *nla,
+@@ -92,7 +92,7 @@ static int tcf_ctinfo_act(struct sk_buff *skb, const struct tc_action *a,
+ 	cp = rcu_dereference_bh(ca->params);
+ 
+ 	tcf_lastuse_update(&ca->tcf_tm);
+-	bstats_update(&ca->tcf_bstats, skb);
++	tcf_action_update_bstats(&ca->common, skb);
+ 	action = READ_ONCE(ca->tcf_action);
+ 
+ 	wlen = skb_network_offset(skb);
+@@ -211,8 +211,8 @@ static int tcf_ctinfo_init(struct net *net, struct nlattr *nla,
+ 	index = actparm->index;
  	err = tcf_idr_check_alloc(tn, &index, a, bind);
  	if (!err) {
- 		ret = tcf_idr_create(tn, index, est, a,
--				     &act_ctinfo_ops, bind, false, 0);
-+				     &act_ctinfo_ops, bind, false, flags);
- 		if (ret) {
- 			tcf_idr_cleanup(tn, index);
- 			return ret;
-diff --git a/net/sched/act_gate.c b/net/sched/act_gate.c
-index a78cb79657182..0e7568a06351b 100644
---- a/net/sched/act_gate.c
-+++ b/net/sched/act_gate.c
-@@ -357,7 +357,7 @@ static int tcf_gate_init(struct net *net, struct nlattr *nla,
- 
- 	if (!err) {
- 		ret = tcf_idr_create(tn, index, est, a,
--				     &act_gate_ops, bind, false, 0);
-+				     &act_gate_ops, bind, false, flags);
- 		if (ret) {
- 			tcf_idr_cleanup(tn, index);
- 			return ret;
-diff --git a/net/sched/act_ife.c b/net/sched/act_ife.c
-index a2ddea04183af..99548b2a1bc83 100644
---- a/net/sched/act_ife.c
-+++ b/net/sched/act_ife.c
-@@ -553,7 +553,7 @@ static int tcf_ife_init(struct net *net, struct nlattr *nla,
- 
- 	if (!exists) {
- 		ret = tcf_idr_create(tn, index, est, a, &act_ife_ops,
--				     bind, true, 0);
-+				     bind, true, flags);
- 		if (ret) {
- 			tcf_idr_cleanup(tn, index);
- 			kfree(p);
-diff --git a/net/sched/act_ipt.c b/net/sched/act_ipt.c
-index 8dc3bec0d3258..080f2952cd536 100644
---- a/net/sched/act_ipt.c
-+++ b/net/sched/act_ipt.c
-@@ -144,7 +144,7 @@ static int __tcf_ipt_init(struct net *net, unsigned int id, struct nlattr *nla,
- 
- 	if (!exists) {
- 		ret = tcf_idr_create(tn, index, est, a, ops, bind,
--				     false, 0);
-+				     false, flags);
- 		if (ret) {
- 			tcf_idr_cleanup(tn, index);
- 			return ret;
-diff --git a/net/sched/act_mpls.c b/net/sched/act_mpls.c
-index 09799412b2489..47b963ded4e43 100644
---- a/net/sched/act_mpls.c
-+++ b/net/sched/act_mpls.c
-@@ -254,7 +254,7 @@ static int tcf_mpls_init(struct net *net, struct nlattr *nla,
- 
- 	if (!exists) {
- 		ret = tcf_idr_create(tn, index, est, a,
--				     &act_mpls_ops, bind, true, 0);
-+				     &act_mpls_ops, bind, true, flags);
- 		if (ret) {
- 			tcf_idr_cleanup(tn, index);
- 			return ret;
-diff --git a/net/sched/act_nat.c b/net/sched/act_nat.c
-index 1ebd2a86d980f..8466dc25fe397 100644
---- a/net/sched/act_nat.c
-+++ b/net/sched/act_nat.c
-@@ -61,7 +61,7 @@ static int tcf_nat_init(struct net *net, struct nlattr *nla, struct nlattr *est,
- 	err = tcf_idr_check_alloc(tn, &index, a, bind);
- 	if (!err) {
- 		ret = tcf_idr_create(tn, index, est, a,
--				     &act_nat_ops, bind, false, 0);
-+				     &act_nat_ops, bind, false, flags);
- 		if (ret) {
- 			tcf_idr_cleanup(tn, index);
- 			return ret;
-diff --git a/net/sched/act_pedit.c b/net/sched/act_pedit.c
-index 0d5463ddfd62f..db0d3bff19eba 100644
---- a/net/sched/act_pedit.c
-+++ b/net/sched/act_pedit.c
-@@ -189,7 +189,7 @@ static int tcf_pedit_init(struct net *net, struct nlattr *nla,
- 	err = tcf_idr_check_alloc(tn, &index, a, bind);
- 	if (!err) {
- 		ret = tcf_idr_create(tn, index, est, a,
--				     &act_pedit_ops, bind, false, 0);
-+				     &act_pedit_ops, bind, false, flags);
- 		if (ret) {
- 			tcf_idr_cleanup(tn, index);
- 			goto out_free;
-diff --git a/net/sched/act_police.c b/net/sched/act_police.c
-index 3807335889590..c30cd3ecb3911 100644
---- a/net/sched/act_police.c
-+++ b/net/sched/act_police.c
-@@ -87,7 +87,7 @@ static int tcf_police_init(struct net *net, struct nlattr *nla,
- 
- 	if (!exists) {
- 		ret = tcf_idr_create(tn, index, NULL, a,
--				     &act_police_ops, bind, true, 0);
-+				     &act_police_ops, bind, true, flags);
- 		if (ret) {
- 			tcf_idr_cleanup(tn, index);
- 			return ret;
-diff --git a/net/sched/act_sample.c b/net/sched/act_sample.c
-index 3ebf9ede3cf10..2f0e98bcf4945 100644
---- a/net/sched/act_sample.c
-+++ b/net/sched/act_sample.c
-@@ -69,7 +69,7 @@ static int tcf_sample_init(struct net *net, struct nlattr *nla,
- 
- 	if (!exists) {
- 		ret = tcf_idr_create(tn, index, est, a,
--				     &act_sample_ops, bind, true, 0);
-+				     &act_sample_ops, bind, true, flags);
- 		if (ret) {
- 			tcf_idr_cleanup(tn, index);
- 			return ret;
-diff --git a/net/sched/act_simple.c b/net/sched/act_simple.c
-index a4f3d0f0daa96..b9bbc87a87c5b 100644
---- a/net/sched/act_simple.c
-+++ b/net/sched/act_simple.c
-@@ -128,7 +128,7 @@ static int tcf_simp_init(struct net *net, struct nlattr *nla,
- 
- 	if (!exists) {
- 		ret = tcf_idr_create(tn, index, est, a,
--				     &act_simp_ops, bind, false, 0);
-+				     &act_simp_ops, bind, false, flags);
- 		if (ret) {
- 			tcf_idr_cleanup(tn, index);
- 			return ret;
-diff --git a/net/sched/act_skbedit.c b/net/sched/act_skbedit.c
-index e5f3fb8b00e32..a5661f2d93e99 100644
---- a/net/sched/act_skbedit.c
-+++ b/net/sched/act_skbedit.c
-@@ -176,7 +176,7 @@ static int tcf_skbedit_init(struct net *net, struct nlattr *nla,
- 
- 	if (!exists) {
- 		ret = tcf_idr_create(tn, index, est, a,
--				     &act_skbedit_ops, bind, true, 0);
-+				     &act_skbedit_ops, bind, true, act_flags);
- 		if (ret) {
- 			tcf_idr_cleanup(tn, index);
- 			return ret;
-diff --git a/net/sched/act_skbmod.c b/net/sched/act_skbmod.c
-index 8d17a543cc9fe..aa98dcac94b95 100644
---- a/net/sched/act_skbmod.c
-+++ b/net/sched/act_skbmod.c
-@@ -147,7 +147,7 @@ static int tcf_skbmod_init(struct net *net, struct nlattr *nla,
- 
- 	if (!exists) {
- 		ret = tcf_idr_create(tn, index, est, a,
--				     &act_skbmod_ops, bind, true, 0);
-+				     &act_skbmod_ops, bind, true, flags);
+-		ret = tcf_idr_create(tn, index, est, a,
+-				     &act_ctinfo_ops, bind, false, flags);
++		ret = tcf_idr_create_from_flags(tn, index, est, a,
++						&act_ctinfo_ops, bind, flags);
  		if (ret) {
  			tcf_idr_cleanup(tn, index);
  			return ret;
