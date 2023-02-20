@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3762E63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3429C4339C;
-	Mon, 20 Feb 2023 13:38:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA5AB63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54E75C4339B;
+	Mon, 20 Feb 2023 13:38:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900333;
-	bh=HgpoZ5h70eDNZPNYBIuEjekilY4rvuSw4OUtj5h9VvI=;
+	s=korg; t=1676900335;
+	bh=TVXu72QWCQEKyMJ0dLk4bEo3umWtSUYyTMVkiICVXkQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ck6npnNWhkKVO9++MYWRBZoTcmXwANvD7o6vweSxwYdLE/Kut5dvzlysrcrqL5Urb
-	 1/09EVPzezx3c3LweZuFAFdHQGoylXqPmIjbRO8dXb75Mp1g21ftmi/K5cU/pCgod+
-	 6WflYGL0faF1A5K26jmLOk1ulPF3CtiTBDBfYS5s=
+	b=U5ZSidjUwe/bd5njnsEbVInrS09ed5o9XFgnHoyCc6KYrSICIniklN2f1kQ3PEfq8
+	 Jaj1rjzGKQdSNthGpQ0XfZlOLtrtbpVJuuViZOF4SgHCp2xz8bGrAFKuoDMQfSqHoK
+	 gOBY8R7tw1l0PHUJRhalVTyXP0XjnRcpsdo4bf1o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	"David S. Miller" <davem@davemloft.net>,
-	syzbot+2a0e7abd24f1eb90ce25@syzkaller.appspotmail.com
-Subject: [PATCH 4.14 31/53] net: USB: Fix wrong-direction WARNING in plusb.c
-Date: Mon, 20 Feb 2023 14:35:57 +0100
-Message-Id: <20230220133549.290884068@linuxfoundation.org>
+	Bo Liu <bo.liu@senarytech.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.14 40/53] ALSA: hda/conexant: add a new hda codec SN6180
+Date: Mon, 20 Feb 2023 14:36:06 +0100
+Message-Id: <20230220133549.595455622@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
 References: <20230220133548.158615609@linuxfoundation.org>
@@ -35,76 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Bo Liu <bo.liu@senarytech.com>
 
-commit 811d581194f7412eda97acc03d17fc77824b561f upstream.
+commit 18d7e16c917a08f08778ecf2b780d63648d5d923 upstream.
 
-The syzbot fuzzer detected a bug in the plusb network driver: A
-zero-length control-OUT transfer was treated as a read instead of a
-write.  In modern kernels this error provokes a WARNING:
+The current kernel does not support the SN6180 codec chip.
+Add the SN6180 codec configuration item to kernel.
 
-usb 1-1: BOGUS control dir, pipe 80000280 doesn't match bRequestType c0
-WARNING: CPU: 0 PID: 4645 at drivers/usb/core/urb.c:411
-usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
-Modules linked in:
-CPU: 1 PID: 4645 Comm: dhcpcd Not tainted
-6.2.0-rc6-syzkaller-00050-g9f266ccaa2f5 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google
-01/12/2023
-RIP: 0010:usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
-...
-Call Trace:
- <TASK>
- usb_start_wait_urb+0x101/0x4b0 drivers/usb/core/message.c:58
- usb_internal_control_msg drivers/usb/core/message.c:102 [inline]
- usb_control_msg+0x320/0x4a0 drivers/usb/core/message.c:153
- __usbnet_read_cmd+0xb9/0x390 drivers/net/usb/usbnet.c:2010
- usbnet_read_cmd+0x96/0xf0 drivers/net/usb/usbnet.c:2068
- pl_vendor_req drivers/net/usb/plusb.c:60 [inline]
- pl_set_QuickLink_features drivers/net/usb/plusb.c:75 [inline]
- pl_reset+0x2f/0xf0 drivers/net/usb/plusb.c:85
- usbnet_open+0xcc/0x5d0 drivers/net/usb/usbnet.c:889
- __dev_open+0x297/0x4d0 net/core/dev.c:1417
- __dev_change_flags+0x587/0x750 net/core/dev.c:8530
- dev_change_flags+0x97/0x170 net/core/dev.c:8602
- devinet_ioctl+0x15a2/0x1d70 net/ipv4/devinet.c:1147
- inet_ioctl+0x33f/0x380 net/ipv4/af_inet.c:979
- sock_do_ioctl+0xcc/0x230 net/socket.c:1169
- sock_ioctl+0x1f8/0x680 net/socket.c:1286
- vfs_ioctl fs/ioctl.c:51 [inline]
- __do_sys_ioctl fs/ioctl.c:870 [inline]
- __se_sys_ioctl fs/ioctl.c:856 [inline]
- __x64_sys_ioctl+0x197/0x210 fs/ioctl.c:856
- do_syscall_x64 arch/x86/entry/common.c:50 [inline]
- do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
- entry_SYSCALL_64_after_hwframe+0x63/0xcd
-
-The fix is to call usbnet_write_cmd() instead of usbnet_read_cmd() and
-remove the USB_DIR_IN flag.
-
-Reported-and-tested-by: syzbot+2a0e7abd24f1eb90ce25@syzkaller.appspotmail.com
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-Fixes: 090ffa9d0e90 ("[PATCH] USB: usbnet (9/9) module for pl2301/2302 cables")
-CC: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/00000000000052099f05f3b3e298@google.com/
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Bo Liu <bo.liu@senarytech.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/1675908828-1012-1-git-send-email-bo.liu@senarytech.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/plusb.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ sound/pci/hda/patch_conexant.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/usb/plusb.c
-+++ b/drivers/net/usb/plusb.c
-@@ -69,9 +69,7 @@
- static inline int
- pl_vendor_req(struct usbnet *dev, u8 req, u8 val, u8 index)
- {
--	return usbnet_read_cmd(dev, req,
--				USB_DIR_IN | USB_TYPE_VENDOR |
--				USB_RECIP_DEVICE,
-+	return usbnet_write_cmd(dev, req, USB_TYPE_VENDOR | USB_RECIP_DEVICE,
- 				val, index, NULL, 0);
- }
- 
+--- a/sound/pci/hda/patch_conexant.c
++++ b/sound/pci/hda/patch_conexant.c
+@@ -1136,6 +1136,7 @@ static const struct hda_device_id snd_hd
+ 	HDA_CODEC_ENTRY(0x14f11f86, "CX8070", patch_conexant_auto),
+ 	HDA_CODEC_ENTRY(0x14f12008, "CX8200", patch_conexant_auto),
+ 	HDA_CODEC_ENTRY(0x14f120d0, "CX11970", patch_conexant_auto),
++	HDA_CODEC_ENTRY(0x14f120d1, "SN6180", patch_conexant_auto),
+ 	HDA_CODEC_ENTRY(0x14f15045, "CX20549 (Venice)", patch_conexant_auto),
+ 	HDA_CODEC_ENTRY(0x14f15047, "CX20551 (Waikiki)", patch_conexant_auto),
+ 	HDA_CODEC_ENTRY(0x14f15051, "CX20561 (Hermosa)", patch_conexant_auto),
 
 
