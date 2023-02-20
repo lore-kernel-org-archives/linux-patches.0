@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B8EDF63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:56:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B7F4C4339B;
-	Mon, 20 Feb 2023 13:56:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6073963B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:56:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DA85CC433EF;
+	Mon, 20 Feb 2023 13:56:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901374;
-	bh=93cCSeq00rS3kKJpXVdRqspW8MAzvrhLVMPqZfC9XrY=;
+	s=korg; t=1676901377;
+	bh=Yqiww24vyslxWBV24mbfxdsoWun78E6/17Pg1Q0eWoY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yRqEhH7qTbHFkV4CAQC9WhsHyeccQnmiY9ZTLagZ7aM/69rASxxnXjdXyrX7iJHH6
-	 XOmtQvsELNKl4dDK1lKPuJAWkRHObMZu59J6M9KK3vk4tzwq+zbH/ceZWnly5T61B/
-	 Ww6cgFNy0faUV3dLe7zMpmCSFvL7OHkyli0KkkTU=
+	b=jQF6sigMhawL/bG78mwrvTtouOssec86U5yycoF4iBM9AvkEMOF6KFBItcBVhzKJS
+	 dv5DnCtl7pDXIoEcJiLHi+SPotFA5tyMpMd/4p7q87qI8SAv5ONcacX5PWPxGhsz4q
+	 qjfquPL4rhxp+Pifx01X0idF6YOJUN+xcpjR5GMs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Cercueil <paul@crapouillou.net>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 21/57] mmc: jz4740: Work around bug on JZ4760(B)
-Date: Mon, 20 Feb 2023 14:36:29 +0100
-Message-Id: <20230220133550.099182379@linuxfoundation.org>
+Subject: [PATCH 5.10 22/57] mmc: sdio: fix possible resource leaks in some error paths
+Date: Mon, 20 Feb 2023 14:36:30 +0100
+Message-Id: <20230220133550.130422822@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -34,44 +34,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Cercueil <paul@crapouillou.net>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 3f18c5046e633cc4bbad396b74c05d46d353033d upstream.
+commit 605d9fb9556f8f5fb4566f4df1480f280f308ded upstream.
 
-On JZ4760 and JZ4760B, SD cards fail to run if the maximum clock
-rate is set to 50 MHz, even though the controller officially does
-support it.
+If sdio_add_func() or sdio_init_func() fails, sdio_remove_func() can
+not release the resources, because the sdio function is not presented
+in these two cases, it won't call of_node_put() or put_device().
 
-Until the actual bug is found and fixed, limit the maximum clock rate to
-24 MHz.
+To fix these leaks, make sdio_func_present() only control whether
+device_del() needs to be called or not, then always call of_node_put()
+and put_device().
 
-Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+In error case in sdio_init_func(), the reference of 'card->dev' is
+not get, to avoid redundant put in sdio_free_func_cis(), move the
+get_device() to sdio_alloc_func() and put_device() to sdio_release_func(),
+it can keep the get/put function be balanced.
+
+Without this patch, while doing fault inject test, it can get the
+following leak reports, after this fix, the leak is gone.
+
+unreferenced object 0xffff888112514000 (size 2048):
+  comm "kworker/3:2", pid 65, jiffies 4294741614 (age 124.774s)
+  hex dump (first 32 bytes):
+    00 e0 6f 12 81 88 ff ff 60 58 8d 06 81 88 ff ff  ..o.....`X......
+    10 40 51 12 81 88 ff ff 10 40 51 12 81 88 ff ff  .@Q......@Q.....
+  backtrace:
+    [<000000009e5931da>] kmalloc_trace+0x21/0x110
+    [<000000002f839ccb>] mmc_alloc_card+0x38/0xb0 [mmc_core]
+    [<0000000004adcbf6>] mmc_sdio_init_card+0xde/0x170 [mmc_core]
+    [<000000007538fea0>] mmc_attach_sdio+0xcb/0x1b0 [mmc_core]
+    [<00000000d4fdeba7>] mmc_rescan+0x54a/0x640 [mmc_core]
+
+unreferenced object 0xffff888112511000 (size 2048):
+  comm "kworker/3:2", pid 65, jiffies 4294741623 (age 124.766s)
+  hex dump (first 32 bytes):
+    00 40 51 12 81 88 ff ff e0 58 8d 06 81 88 ff ff  .@Q......X......
+    10 10 51 12 81 88 ff ff 10 10 51 12 81 88 ff ff  ..Q.......Q.....
+  backtrace:
+    [<000000009e5931da>] kmalloc_trace+0x21/0x110
+    [<00000000fcbe706c>] sdio_alloc_func+0x35/0x100 [mmc_core]
+    [<00000000c68f4b50>] mmc_attach_sdio.cold.18+0xb1/0x395 [mmc_core]
+    [<00000000d4fdeba7>] mmc_rescan+0x54a/0x640 [mmc_core]
+
+Fixes: 3d10a1ba0d37 ("sdio: fix reference counting in sdio_remove_func()")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230131210229.68129-1-paul@crapouillou.net
+Link: https://lore.kernel.org/r/20230130125808.3471254-1-yangyingliang@huawei.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/jz4740_mmc.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/mmc/core/sdio_bus.c |   17 ++++++++++++++---
+ drivers/mmc/core/sdio_cis.c |   12 ------------
+ 2 files changed, 14 insertions(+), 15 deletions(-)
 
---- a/drivers/mmc/host/jz4740_mmc.c
-+++ b/drivers/mmc/host/jz4740_mmc.c
-@@ -1041,6 +1041,16 @@ static int jz4740_mmc_probe(struct platf
- 	mmc->ops = &jz4740_mmc_ops;
- 	if (!mmc->f_max)
- 		mmc->f_max = JZ_MMC_CLK_RATE;
-+
+--- a/drivers/mmc/core/sdio_bus.c
++++ b/drivers/mmc/core/sdio_bus.c
+@@ -295,6 +295,12 @@ static void sdio_release_func(struct dev
+ 	if (!(func->card->quirks & MMC_QUIRK_NONSTD_SDIO))
+ 		sdio_free_func_cis(func);
+ 
 +	/*
-+	 * There seems to be a problem with this driver on the JZ4760 and
-+	 * JZ4760B SoCs. There, when using the maximum rate supported (50 MHz),
-+	 * the communication fails with many SD cards.
-+	 * Until this bug is sorted out, limit the maximum rate to 24 MHz.
++	 * We have now removed the link to the tuples in the
++	 * card structure, so remove the reference.
 +	 */
-+	if (host->version == JZ_MMC_JZ4760 && mmc->f_max > JZ_MMC_CLK_RATE)
-+		mmc->f_max = JZ_MMC_CLK_RATE;
++	put_device(&func->card->dev);
 +
- 	mmc->f_min = mmc->f_max / 128;
- 	mmc->ocr_avail = MMC_VDD_32_33 | MMC_VDD_33_34;
+ 	kfree(func->info);
+ 	kfree(func->tmpbuf);
+ 	kfree(func);
+@@ -325,6 +331,12 @@ struct sdio_func *sdio_alloc_func(struct
+ 
+ 	device_initialize(&func->dev);
+ 
++	/*
++	 * We may link to tuples in the card structure,
++	 * we need make sure we have a reference to it.
++	 */
++	get_device(&func->card->dev);
++
+ 	func->dev.parent = &card->dev;
+ 	func->dev.bus = &sdio_bus_type;
+ 	func->dev.release = sdio_release_func;
+@@ -378,10 +390,9 @@ int sdio_add_func(struct sdio_func *func
+  */
+ void sdio_remove_func(struct sdio_func *func)
+ {
+-	if (!sdio_func_present(func))
+-		return;
++	if (sdio_func_present(func))
++		device_del(&func->dev);
+ 
+-	device_del(&func->dev);
+ 	of_node_put(func->dev.of_node);
+ 	put_device(&func->dev);
+ }
+--- a/drivers/mmc/core/sdio_cis.c
++++ b/drivers/mmc/core/sdio_cis.c
+@@ -392,12 +392,6 @@ int sdio_read_func_cis(struct sdio_func
+ 		return ret;
+ 
+ 	/*
+-	 * Since we've linked to tuples in the card structure,
+-	 * we must make sure we have a reference to it.
+-	 */
+-	get_device(&func->card->dev);
+-
+-	/*
+ 	 * Vendor/device id is optional for function CIS, so
+ 	 * copy it from the card structure as needed.
+ 	 */
+@@ -422,11 +416,5 @@ void sdio_free_func_cis(struct sdio_func
+ 	}
+ 
+ 	func->tuples = NULL;
+-
+-	/*
+-	 * We have now removed the link to the tuples in the
+-	 * card structure, so remove the reference.
+-	 */
+-	put_device(&func->card->dev);
+ }
  
 
 
