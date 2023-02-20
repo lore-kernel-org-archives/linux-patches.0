@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29FA963B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C57C433EF;
-	Mon, 20 Feb 2023 13:43:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E7D63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E50CC433EF;
+	Mon, 20 Feb 2023 13:43:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900581;
-	bh=LWUxjaIczzGXGkXwUrZecSLxJ9jOhjSSGOaQZ/Oajw4=;
+	s=korg; t=1676900584;
+	bh=x/C2/aEnXLov8gi5+SSH/+uIM06q0NoA3tH4t1jt48w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tvRM4OvKuryF221CpXAUP9+nE2qub5/QLY7AtHCAQvdf5R+/oK7dzKLLvuLIbXFz5
-	 y690vCmjhN/ug9Al86TLCVR6v08FbVw7RaMAQ4P/cCgUOyHRGtYm3/pu0Zrv61ltK2
-	 xakoIl0mucZEHqkJupa4ZhqDaOfojo720sgorY8Y=
+	b=iKm8f8ChAB1eV3o2lJPhA4xlVLuespSLxy1BzptXrlN6quER3FixI7ADLJXVoK7OM
+	 ssqIPjZA3+TH5jhBTXs6oAil2vbz+Fkm6ZAKrmKYqDcrcFBSaZKQcm6OM1Imnz14Lu
+	 TKlOPnR0W8bpWr7lEqHQv2RXRx5JZZHBXoiOrbfg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Stanley <joel@jms.id.au>,
-	Andrew Jeffery <andrew@aj.id.au>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 52/89] pinctrl: aspeed: Fix confusing types in return value
-Date: Mon, 20 Feb 2023 14:35:51 +0100
-Message-Id: <20230220133554.972711498@linuxfoundation.org>
+	Miko Larsson <mikoxyzzz@gmail.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	syzbot+cd80c5ef5121bfe85b55@syzkaller.appspotmail.com
+Subject: [PATCH 4.19 79/89] net/usb: kalmia: Dont pass act_len in usb_bulk_msg error path
+Date: Mon, 20 Feb 2023 14:36:18 +0100
+Message-Id: <20230220133555.948814017@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -36,38 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joel Stanley <joel@jms.id.au>
+From: Miko Larsson <mikoxyzzz@gmail.com>
 
-[ Upstream commit 287a344a11f1ebd31055cf9b22c88d7005f108d7 ]
+commit c68f345b7c425b38656e1791a0486769a8797016 upstream.
 
-The function signature is int, but we return a bool. Instead return a
-negative errno as the kerneldoc suggests.
+syzbot reported that act_len in kalmia_send_init_packet() is
+uninitialized when passing it to the first usb_bulk_msg error path. Jiri
+Pirko noted that it's pointless to pass it in the error path, and that
+the value that would be printed in the second error path would be the
+value of act_len from the first call to usb_bulk_msg.[1]
 
-Fixes: 4d3d0e4272d8 ("pinctrl: Add core support for Aspeed SoCs")
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
-Link: https://lore.kernel.org/r/20230119231856.52014-1-joel@jms.id.au
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+With this in mind, let's just not pass act_len to the usb_bulk_msg error
+paths.
+
+1: https://lore.kernel.org/lkml/Y9pY61y1nwTuzMOa@nanopsycho/
+
+Fixes: d40261236e8e ("net/usb: Add Samsung Kalmia driver for Samsung GT-B3730")
+Reported-and-tested-by: syzbot+cd80c5ef5121bfe85b55@syzkaller.appspotmail.com
+Signed-off-by: Miko Larsson <mikoxyzzz@gmail.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/aspeed/pinctrl-aspeed.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/usb/kalmia.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed.c b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
-index 8dec302dc067a..a95289b5e6bf2 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed.c
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
-@@ -295,7 +295,7 @@ static int aspeed_disable_sig(const struct aspeed_sig_expr **exprs,
- 	int ret = 0;
+--- a/drivers/net/usb/kalmia.c
++++ b/drivers/net/usb/kalmia.c
+@@ -69,8 +69,8 @@ kalmia_send_init_packet(struct usbnet *d
+ 		init_msg, init_msg_len, &act_len, KALMIA_USB_TIMEOUT);
+ 	if (status != 0) {
+ 		netdev_err(dev->net,
+-			"Error sending init packet. Status %i, length %i\n",
+-			status, act_len);
++			"Error sending init packet. Status %i\n",
++			status);
+ 		return status;
+ 	}
+ 	else if (act_len != init_msg_len) {
+@@ -87,8 +87,8 @@ kalmia_send_init_packet(struct usbnet *d
  
- 	if (!exprs)
--		return true;
-+		return -EINVAL;
- 
- 	while (*exprs && !ret) {
- 		ret = aspeed_sig_expr_disable(*exprs, maps);
--- 
-2.39.0
-
+ 	if (status != 0)
+ 		netdev_err(dev->net,
+-			"Error receiving init result. Status %i, length %i\n",
+-			status, act_len);
++			"Error receiving init result. Status %i\n",
++			status);
+ 	else if (act_len != expected_len)
+ 		netdev_err(dev->net, "Unexpected init result length: %i\n",
+ 			act_len);
 
 
