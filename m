@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87FFA63BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:59:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0DA02C433D2;
-	Mon, 20 Feb 2023 13:59:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1700463BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:59:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9284AC433D2;
+	Mon, 20 Feb 2023 13:59:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901595;
-	bh=HRST84SWVS9PGipPeDRXh2QU9h3jwN4zpqXUouakz24=;
+	s=korg; t=1676901597;
+	bh=oqiT5wxPtZsbZmtJ5ApI5pO5NWyVhndGcNGQBGQ/niY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oAXYmu5kP21iA7sYV7Z/ZL2brg0T6RnOd4hRHq3re9kn/aS3gvkbRNeTe7rPV1U11
-	 rtOkyzEML2GUzVTizihzCI6KbB/CfYEcfjvWHNP/pTP0sSzaDCfu321t6hF7W4yYvC
-	 tEooaLg7E1bz6KawRp/q77r0rVU2uC8/s+qY+EPo=
+	b=YtsnocPDWRxYSOFfP4PiJIJh1OIRSVDp0budRPdsRrB/899PPbW+hqMuyGGUeCMly
+	 cSie5WI4IXPoW7PiPdF+1+yhth6bR166hpADryDJs/WUc+WzYN/XepEj4V1jxpcRKl
+	 tchOQ/vd3sWoo9J0gEJtoFtFCoeaw4NAyTGljFlA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dom Cobley <popcornmix@gmail.com>,
+	Dave Stevenson <dave.stevenson@raspberrypi.com>,
 	Maxime Ripard <maxime@cerno.tech>
-Subject: [PATCH 6.1 078/118] drm/vc4: crtc: Increase setup cost in core clock calculation to handle extreme reduced blanking
-Date: Mon, 20 Feb 2023 14:36:34 +0100
-Message-Id: <20230220133603.537090925@linuxfoundation.org>
+Subject: [PATCH 6.1 079/118] drm/vc4: Fix YUV plane handling when planes are in different buffers
+Date: Mon, 20 Feb 2023 14:36:35 +0100
+Message-Id: <20230220133603.574607411@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -34,43 +34,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dom Cobley <popcornmix@gmail.com>
+From: Dave Stevenson <dave.stevenson@raspberrypi.com>
 
-commit 247a631f9c0ffb37ed0786a94cb4c5f2b6fc7ab1 upstream.
+commit 6b77b16de75a6efc0870b1fa467209387cbee8f3 upstream.
 
-The formula that determines the core clock requirement based on pixel
-clock and blanking has been determined experimentally to minimise the
-clock while supporting all modes we've seen.
+YUV images can either be presented as one allocation with offsets
+for the different planes, or multiple allocations with 0 offsets.
 
-A new reduced blanking mode (4kp60 at 533MHz rather than the standard
-594MHz) has been seen that doesn't produce a high enough clock and
-results in "flip_done timed out" error.
+The driver only ever calls drm_fb_[dma|cma]_get_gem_obj with plane
+index 0, therefore any application using the second approach was
+incorrectly rendered.
 
-Increase the setup cost in the formula to make this work. The result is
-a reduced blanking mode increases by up to 7MHz while leaving the
-standard timing
-mode untouched
+Correctly determine the address for each plane, removing the
+assumption that the base address is the same for each.
 
-Link: https://github.com/raspberrypi/linux/issues/4446
-Fixes: 16e101051f32 ("drm/vc4: Increase the core clock based on HVS load")
-Signed-off-by: Dom Cobley <popcornmix@gmail.com>
+Fixes: fc04023fafec ("drm/vc4: Add support for YUV planes.")
+Signed-off-by: Dave Stevenson <dave.stevenson@raspberrypi.com>
 Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230127145558.446123-1-maxime@cerno.tech
+Link: https://patchwork.freedesktop.org/patch/msgid/20230127155708.454704-1-maxime@cerno.tech
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/vc4/vc4_crtc.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/vc4/vc4_plane.c |    6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
 
---- a/drivers/gpu/drm/vc4/vc4_crtc.c
-+++ b/drivers/gpu/drm/vc4/vc4_crtc.c
-@@ -711,7 +711,7 @@ static int vc4_crtc_atomic_check(struct
- 		struct vc4_encoder *vc4_encoder = to_vc4_encoder(encoder);
+--- a/drivers/gpu/drm/vc4/vc4_plane.c
++++ b/drivers/gpu/drm/vc4/vc4_plane.c
+@@ -340,7 +340,7 @@ static int vc4_plane_setup_clipping_and_
+ {
+ 	struct vc4_plane_state *vc4_state = to_vc4_plane_state(state);
+ 	struct drm_framebuffer *fb = state->fb;
+-	struct drm_gem_dma_object *bo = drm_fb_dma_get_gem_obj(fb, 0);
++	struct drm_gem_dma_object *bo;
+ 	int num_planes = fb->format->num_planes;
+ 	struct drm_crtc_state *crtc_state;
+ 	u32 h_subsample = fb->format->hsub;
+@@ -359,8 +359,10 @@ static int vc4_plane_setup_clipping_and_
+ 	if (ret)
+ 		return ret;
  
- 		if (vc4_encoder->type == VC4_ENCODER_TYPE_HDMI0) {
--			vc4_state->hvs_load = max(mode->clock * mode->hdisplay / mode->htotal + 1000,
-+			vc4_state->hvs_load = max(mode->clock * mode->hdisplay / mode->htotal + 8000,
- 						  mode->clock * 9 / 10) * 1000;
- 		} else {
- 			vc4_state->hvs_load = mode->clock * 1000;
+-	for (i = 0; i < num_planes; i++)
++	for (i = 0; i < num_planes; i++) {
++		bo = drm_fb_dma_get_gem_obj(fb, i);
+ 		vc4_state->offsets[i] = bo->dma_addr + fb->offsets[i];
++	}
+ 
+ 	/*
+ 	 * We don't support subpixel source positioning for scaling,
 
 
