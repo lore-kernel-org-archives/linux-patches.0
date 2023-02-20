@@ -1,31 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 59F1C63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4450C433D2;
-	Mon, 20 Feb 2023 13:43:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDDCE63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758DEC4339E;
+	Mon, 20 Feb 2023 13:43:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900629;
-	bh=mVCdkabdKOaTLeyFv6moz+bacYl4P20BEdXlYxAkIDc=;
+	s=korg; t=1676900631;
+	bh=Gra5ErS4X0GNbZsEVC8ttmGP+ep9iw21Wvq0/qZPMaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u5UoZX/My0LVJxj6aoxJpd4wFYaxeKCI7MpnmNw6MFjVHJeWkItAGsDEXg1teBfG8
-	 MueOO+e+TESY13kPg0PxwX60NWIG+a76778cCLGunR+Jr/AQJgELOAKQwn9SdHpgdO
-	 obuTXxyQPsRCMtudbxY5ZIgymRlUQpUGSHcCT/cg=
+	b=ogFKlcv7+lsOuxLF/ek66pK/U7KLoz2bg0c2YETA1zFut4q4BEKCoErQZEFTSXUbU
+	 A0JS8ypMuGkfxhxVMPgQJW/TM2MAgawIXgqjOEpmMhImSVmj0DoXM6rzJpIsdl6Zra
+	 VQExplpLMjsF+SXWxGrUKIZ6f0Tp0ofWiN7b5Itc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hongguang Gao <hongguang.gao@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 81/89] bnxt_en: Fix mqprio and XDP ring checking logic
-Date: Mon, 20 Feb 2023 14:36:20 +0100
-Message-Id: <20230220133556.024556416@linuxfoundation.org>
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 001/156] firewire: fix memory leak for payload of request subaction to IEC 61883-1 FCP region
+Date: Mon, 20 Feb 2023 14:34:05 +0100
+Message-Id: <20230220133602.565463379@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
-References: <20230220133553.066768704@linuxfoundation.org>
+In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
+References: <20230220133602.515342638@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,47 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Chan <michael.chan@broadcom.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-commit 2038cc592811209de20c4e094ca08bfb1e6fbc6c upstream.
+commit 531390a243ef47448f8bad01c186c2787666bf4d upstream.
 
-In bnxt_reserve_rings(), there is logic to check that the number of TX
-rings reserved is enough to cover all the mqprio TCs, but it fails to
-account for the TX XDP rings.  So the check will always fail if there
-are mqprio TCs and TX XDP rings.  As a result, the driver always fails
-to initialize after the XDP program is attached and the device will be
-brought down.  A subsequent ifconfig up will also fail because the
-number of TX rings is set to an inconsistent number.  Fix the check to
-properly account for TX XDP rings.  If the check fails, set the number
-of TX rings back to a consistent number after calling netdev_reset_tc().
+This patch is fix for Linux kernel v2.6.33 or later.
 
-Fixes: 674f50a5b026 ("bnxt_en: Implement new method to reserve rings.")
-Reviewed-by: Hongguang Gao <hongguang.gao@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+For request subaction to IEC 61883-1 FCP region, Linux FireWire subsystem
+have had an issue of use-after-free. The subsystem allows multiple
+user space listeners to the region, while data of the payload was likely
+released before the listeners execute read(2) to access to it for copying
+to user space.
+
+The issue was fixed by a commit 281e20323ab7 ("firewire: core: fix
+use-after-free regression in FCP handler"). The object of payload is
+duplicated in kernel space for each listener. When the listener executes
+ioctl(2) with FW_CDEV_IOC_SEND_RESPONSE request, the object is going to
+be released.
+
+However, it causes memory leak since the commit relies on call of
+release_request() in drivers/firewire/core-cdev.c. Against the
+expectation, the function is never called due to the design of
+release_client_resource(). The function delegates release task
+to caller when called with non-NULL fourth argument. The implementation
+of ioctl_send_response() is the case. It should release the object
+explicitly.
+
+This commit fixes the bug.
+
+Cc: <stable@vger.kernel.org>
+Fixes: 281e20323ab7 ("firewire: core: fix use-after-free regression in FCP handler")
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Link: https://lore.kernel.org/r/20230117090610.93792-2-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bnxt/bnxt.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
+ drivers/firewire/core-cdev.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -6118,10 +6118,14 @@ int bnxt_reserve_rings(struct bnxt *bp)
- 		netdev_err(bp->dev, "ring reservation/IRQ init failure rc: %d\n", rc);
- 		return rc;
- 	}
--	if (tcs && (bp->tx_nr_rings_per_tc * tcs != bp->tx_nr_rings)) {
-+	if (tcs && (bp->tx_nr_rings_per_tc * tcs !=
-+		    bp->tx_nr_rings - bp->tx_nr_rings_xdp)) {
- 		netdev_err(bp->dev, "tx ring reservation failure\n");
- 		netdev_reset_tc(bp->dev);
--		bp->tx_nr_rings_per_tc = bp->tx_nr_rings;
-+		if (bp->tx_nr_rings_xdp)
-+			bp->tx_nr_rings_per_tc = bp->tx_nr_rings_xdp;
-+		else
-+			bp->tx_nr_rings_per_tc = bp->tx_nr_rings;
- 		return -ENOMEM;
- 	}
- 	bp->num_stat_ctxs = bp->cp_nr_rings;
+--- a/drivers/firewire/core-cdev.c
++++ b/drivers/firewire/core-cdev.c
+@@ -818,8 +818,10 @@ static int ioctl_send_response(struct cl
+ 
+ 	r = container_of(resource, struct inbound_transaction_resource,
+ 			 resource);
+-	if (is_fcp_request(r->request))
++	if (is_fcp_request(r->request)) {
++		kfree(r->data);
+ 		goto out;
++	}
+ 
+ 	if (a->length != fw_get_response_length(r->request)) {
+ 		ret = -EINVAL;
 
 
