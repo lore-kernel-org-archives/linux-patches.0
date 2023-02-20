@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2682463B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:54:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A429DC433D2;
-	Mon, 20 Feb 2023 13:54:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1765563B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:54:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553CCC433D2;
+	Mon, 20 Feb 2023 13:54:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901242;
-	bh=85VMH/1lZVswfIyXaXbLNR+c6CWzvM7lOPM8oTT+CeI=;
+	s=korg; t=1676901244;
+	bh=ieOt7ms19XhO0Vg+VRLL4c+qI6OOJIHZi6OESk7/lhk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pPXOrcwxH4MZHYd8TlLtlOHHObWMz571sfWl0C44CIYTIuEZ4PuyttUh7bBmR/BdK
-	 0BU4ikrYejeg/k0QEYVzKbCKGyZ/K2C+uaZa1xa3+dETlDaAaxXHJD5xroqALVTuc7
-	 FnEXBU7Ri5jNYycLfud0z2MqtNaxmvKlBlgVJHEA=
+	b=GHoA/oMEjOabT7GxucBFYSb7+wzDXfQuk8y+HbM+LhXhPL2ZodwnpE3otJ06RBr/G
+	 ORwJHCiNR5TBNLEI3p/eTc+HZwCAWsSx/s0ww9TMsAPxtOwxxTlEUG6dGL+qJ9JL5V
+	 7NdroN+seftSp1Uhvpv0hDfo+/tYZ81DqIKgye+Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arnd Bergmann <arnd@arndb.de>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 5.15 83/83] platform/x86/amd: pmc: add CONFIG_SERIO dependency
-Date: Mon, 20 Feb 2023 14:36:56 +0100
-Message-Id: <20230220133556.648532475@linuxfoundation.org>
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 61/83] dccp/tcp: Avoid negative sk_forward_alloc by ipv6_pinfo.pktoptions.
+Date: Mon, 20 Feb 2023 14:36:34 +0100
+Message-Id: <20230220133555.798291835@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -34,37 +35,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit abce209d18fd26e865b2406cc68819289db973f9 upstream.
+commit ca43ccf41224b023fc290073d5603a755fd12eed upstream.
 
-Using the serio subsystem now requires the code to be reachable:
+Eric Dumazet pointed out [0] that when we call skb_set_owner_r()
+for ipv6_pinfo.pktoptions, sk_rmem_schedule() has not been called,
+resulting in a negative sk_forward_alloc.
 
-x86_64-linux-ld: drivers/platform/x86/amd/pmc.o: in function `amd_pmc_suspend_handler':
-pmc.c:(.text+0x86c): undefined reference to `serio_bus'
+We add a new helper which clones a skb and sets its owner only
+when sk_rmem_schedule() succeeds.
 
-Add the usual dependency: as other users of serio use 'select'
-rather than 'depends on', use the same here.
+Note that we move skb_set_owner_r() forward in (dccp|tcp)_v6_do_rcv()
+because tcp_send_synack() can make sk_forward_alloc negative before
+ipv6_opt_accepted() in the crossed SYN-ACK or self-connect() cases.
 
-Fixes: 8e60615e8932 ("platform/x86/amd: pmc: Disable IRQ1 wakeup for RN/CZN")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-Link: https://lore.kernel.org/r/20230127093950.2368575-1-arnd@kernel.org
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+[0]: https://lore.kernel.org/netdev/CANn89iK9oc20Jdi_41jb9URdF210r7d1Y-+uypbMSbOfY6jqrg@mail.gmail.com/
+
+Fixes: 323fbd0edf3f ("net: dccp: Add handling of IPV6_PKTOPTIONS to dccp_v6_do_rcv()")
+Fixes: 3df80d9320bc ("[DCCP]: Introduce DCCPv6")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ include/net/sock.h  |   13 +++++++++++++
+ net/dccp/ipv6.c     |    7 ++-----
+ net/ipv6/tcp_ipv6.c |   10 +++-------
+ 3 files changed, 18 insertions(+), 12 deletions(-)
 
---- a/drivers/platform/x86/Kconfig
-+++ b/drivers/platform/x86/Kconfig
-@@ -171,6 +171,7 @@ config ACER_WMI
- config AMD_PMC
- 	tristate "AMD SoC PMC driver"
- 	depends on ACPI && PCI
-+	select SERIO
- 	help
- 	  The driver provides support for AMD Power Management Controller
- 	  primarily responsible for S2Idle transactions that are driven from
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2315,6 +2315,19 @@ static inline __must_check bool skb_set_
+ 	return false;
+ }
+ 
++static inline struct sk_buff *skb_clone_and_charge_r(struct sk_buff *skb, struct sock *sk)
++{
++	skb = skb_clone(skb, sk_gfp_mask(sk, GFP_ATOMIC));
++	if (skb) {
++		if (sk_rmem_schedule(sk, skb, skb->truesize)) {
++			skb_set_owner_r(skb, sk);
++			return skb;
++		}
++		__kfree_skb(skb);
++	}
++	return NULL;
++}
++
+ static inline void skb_prepare_for_gro(struct sk_buff *skb)
+ {
+ 	if (skb->destructor != sock_wfree) {
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -551,11 +551,9 @@ static struct sock *dccp_v6_request_recv
+ 	*own_req = inet_ehash_nolisten(newsk, req_to_sk(req_unhash), NULL);
+ 	/* Clone pktoptions received with SYN, if we own the req */
+ 	if (*own_req && ireq->pktopts) {
+-		newnp->pktoptions = skb_clone(ireq->pktopts, GFP_ATOMIC);
++		newnp->pktoptions = skb_clone_and_charge_r(ireq->pktopts, newsk);
+ 		consume_skb(ireq->pktopts);
+ 		ireq->pktopts = NULL;
+-		if (newnp->pktoptions)
+-			skb_set_owner_r(newnp->pktoptions, newsk);
+ 	}
+ 
+ 	return newsk;
+@@ -615,7 +613,7 @@ static int dccp_v6_do_rcv(struct sock *s
+ 					       --ANK (980728)
+ 	 */
+ 	if (np->rxopt.all)
+-		opt_skb = skb_clone(skb, GFP_ATOMIC);
++		opt_skb = skb_clone_and_charge_r(skb, sk);
+ 
+ 	if (sk->sk_state == DCCP_OPEN) { /* Fast path */
+ 		if (dccp_rcv_established(sk, skb, dccp_hdr(skb), skb->len))
+@@ -679,7 +677,6 @@ ipv6_pktoptions:
+ 			np->flow_label = ip6_flowlabel(ipv6_hdr(opt_skb));
+ 		if (ipv6_opt_accepted(sk, opt_skb,
+ 				      &DCCP_SKB_CB(opt_skb)->header.h6)) {
+-			skb_set_owner_r(opt_skb, sk);
+ 			memmove(IP6CB(opt_skb),
+ 				&DCCP_SKB_CB(opt_skb)->header.h6,
+ 				sizeof(struct inet6_skb_parm));
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1429,14 +1429,11 @@ static struct sock *tcp_v6_syn_recv_sock
+ 
+ 		/* Clone pktoptions received with SYN, if we own the req */
+ 		if (ireq->pktopts) {
+-			newnp->pktoptions = skb_clone(ireq->pktopts,
+-						      sk_gfp_mask(sk, GFP_ATOMIC));
++			newnp->pktoptions = skb_clone_and_charge_r(ireq->pktopts, newsk);
+ 			consume_skb(ireq->pktopts);
+ 			ireq->pktopts = NULL;
+-			if (newnp->pktoptions) {
++			if (newnp->pktoptions)
+ 				tcp_v6_restore_cb(newnp->pktoptions);
+-				skb_set_owner_r(newnp->pktoptions, newsk);
+-			}
+ 		}
+ 	} else {
+ 		if (!req_unhash && found_dup_sk) {
+@@ -1506,7 +1503,7 @@ static int tcp_v6_do_rcv(struct sock *sk
+ 					       --ANK (980728)
+ 	 */
+ 	if (np->rxopt.all)
+-		opt_skb = skb_clone(skb, sk_gfp_mask(sk, GFP_ATOMIC));
++		opt_skb = skb_clone_and_charge_r(skb, sk);
+ 
+ 	if (sk->sk_state == TCP_ESTABLISHED) { /* Fast path */
+ 		struct dst_entry *dst;
+@@ -1590,7 +1587,6 @@ ipv6_pktoptions:
+ 		if (np->repflow)
+ 			np->flow_label = ip6_flowlabel(ipv6_hdr(opt_skb));
+ 		if (ipv6_opt_accepted(sk, opt_skb, &TCP_SKB_CB(opt_skb)->header.h6)) {
+-			skb_set_owner_r(opt_skb, sk);
+ 			tcp_v6_restore_cb(opt_skb);
+ 			opt_skb = xchg(&np->pktoptions, opt_skb);
+ 		} else {
 
 
