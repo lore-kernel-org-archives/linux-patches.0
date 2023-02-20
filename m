@@ -1,29 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DFB63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329F5C433A0;
-	Mon, 20 Feb 2023 13:47:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C85963B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A9AC433D2;
+	Mon, 20 Feb 2023 13:47:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900845;
-	bh=HxlNTcBirh4p2GeC0VF4PPIcSdLRuz3zxy211PcUy+M=;
+	s=korg; t=1676900848;
+	bh=9In/DZN978t1MAQ5alfdS1aVD9vZaZYZUUfq0Me2QTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r43+DaGpHWaL4bkp8HKKvt5dEbOs2MJhe6DMdE2z2/rIkgbqMAj2/Xfe45QvKaXsv
-	 Vk4+G1hUKlHuTkeEExQ3hx801tsUEtfpShJgp5LtsxM+4fBWznWXjPi7Dq5MUPMYkk
-	 oUK8qGrZIAQ/AdwjBfQwGF5WbMMr3uzWrcX1QOOs=
+	b=K5xqTTYgGFuvpC+bNl/BTEfxZpuDynsKgRG1o0A/cTTtLXZoKuzJt+B7cXFfa/zhg
+	 9tCDCuobOPTovxGuMMJ7nrOW3xJ3apiNQoU0QOrJYTTu59+FzPFvtddbCYh2F+jeJx
+	 2/FShDS1YRH1hSDTXofE4Sv2l6EjqNXdles6+T4A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neel Patel <neel.patel@amd.com>,
-	Shannon Nelson <shannon.nelson@amd.com>,
-	Leon Romanovsky <leonro@nvidia.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 072/156] ionic: clean interrupt before enabling queue to avoid credit race
-Date: Mon, 20 Feb 2023 14:35:16 +0100
-Message-Id: <20230220133605.383715800@linuxfoundation.org>
+	Mike Kravetz <mike.kravetz@oracle.com>,
+	Peter Xu <peterx@redhat.com>,
+	David Hildenbrand <david@redhat.com>,
+	James Houghton <jthoughton@google.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Michal Hocko <mhocko@suse.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Naoya Horiguchi <naoya.horiguchi@linux.dev>,
+	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
+	Yang Shi <shy828301@gmail.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 090/156] migrate: hugetlb: check for hugetlb shared PMD in node migration
+Date: Mon, 20 Feb 2023 14:35:34 +0100
+Message-Id: <20230220133606.190601278@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -37,67 +43,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Neel Patel <neel.patel@amd.com>
+From: Mike Kravetz <mike.kravetz@oracle.com>
 
-[ Upstream commit e8797a058466b60fc5a3291b92430c93ba90eaff ]
+commit 73bdf65ea74857d7fb2ec3067a3cec0e261b1462 upstream.
 
-Clear the interrupt credits before enabling the queue rather
-than after to be sure that the enabled queue starts at 0 and
-that we don't wipe away possible credits after enabling the
-queue.
+migrate_pages/mempolicy semantics state that CAP_SYS_NICE is required to
+move pages shared with another process to a different node.  page_mapcount
+> 1 is being used to determine if a hugetlb page is shared.  However, a
+hugetlb page will have a mapcount of 1 if mapped by multiple processes via
+a shared PMD.  As a result, hugetlb pages shared by multiple processes and
+mapped with a shared PMD can be moved by a process without CAP_SYS_NICE.
 
-Fixes: 0f3154e6bcb3 ("ionic: Add Tx and Rx handling")
-Signed-off-by: Neel Patel <neel.patel@amd.com>
-Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
-Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+To fix, check for a shared PMD if mapcount is 1.  If a shared PMD is found
+consider the page shared.
+
+Link: https://lkml.kernel.org/r/20230126222721.222195-3-mike.kravetz@oracle.com
+Fixes: e2d8cf405525 ("migrate: add hugepage migration code to migrate_pages()")
+Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
+Acked-by: Peter Xu <peterx@redhat.com>
+Acked-by: David Hildenbrand <david@redhat.com>
+Cc: James Houghton <jthoughton@google.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Michal Hocko <mhocko@suse.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Naoya Horiguchi <naoya.horiguchi@linux.dev>
+Cc: Vishal Moola (Oracle) <vishal.moola@gmail.com>
+Cc: Yang Shi <shy828301@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/pensando/ionic/ionic_lif.c | 15 ++++++++++++---
- 1 file changed, 12 insertions(+), 3 deletions(-)
+ mm/mempolicy.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-index f9c303d76658a..d0841836cf705 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
-@@ -190,6 +190,7 @@ static int ionic_qcq_enable(struct ionic_qcq *qcq)
- 			.oper = IONIC_Q_ENABLE,
- 		},
- 	};
-+	int ret;
- 
- 	idev = &lif->ionic->idev;
- 	dev = lif->ionic->dev;
-@@ -197,16 +198,24 @@ static int ionic_qcq_enable(struct ionic_qcq *qcq)
- 	dev_dbg(dev, "q_enable.index %d q_enable.qtype %d\n",
- 		ctx.cmd.q_control.index, ctx.cmd.q_control.type);
- 
-+	if (qcq->flags & IONIC_QCQ_F_INTR)
-+		ionic_intr_clean(idev->intr_ctrl, qcq->intr.index);
-+
-+	ret = ionic_adminq_post_wait(lif, &ctx);
-+	if (ret)
-+		return ret;
-+
-+	if (qcq->napi.poll)
-+		napi_enable(&qcq->napi);
-+
- 	if (qcq->flags & IONIC_QCQ_F_INTR) {
- 		irq_set_affinity_hint(qcq->intr.vector,
- 				      &qcq->intr.affinity_mask);
--		napi_enable(&qcq->napi);
--		ionic_intr_clean(idev->intr_ctrl, qcq->intr.index);
- 		ionic_intr_mask(idev->intr_ctrl, qcq->intr.index,
- 				IONIC_INTR_MASK_CLEAR);
- 	}
- 
--	return ionic_adminq_post_wait(lif, &ctx);
-+	return 0;
- }
- 
- static int ionic_qcq_disable(struct ionic_qcq *qcq)
--- 
-2.39.0
-
+--- a/mm/mempolicy.c
++++ b/mm/mempolicy.c
+@@ -571,7 +571,8 @@ static int queue_pages_hugetlb(pte_t *pt
+ 		goto unlock;
+ 	/* With MPOL_MF_MOVE, we migrate only unshared hugepage. */
+ 	if (flags & (MPOL_MF_MOVE_ALL) ||
+-	    (flags & MPOL_MF_MOVE && page_mapcount(page) == 1))
++	    (flags & MPOL_MF_MOVE && page_mapcount(page) == 1 &&
++	     !hugetlb_pmd_shared(pte)))
+ 		isolate_huge_page(page, qp->pagelist);
+ unlock:
+ 	spin_unlock(ptl);
 
 
