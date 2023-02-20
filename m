@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5047563B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:41:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A3603C433EF;
-	Mon, 20 Feb 2023 13:41:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA4B163B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:41:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DB18C433EF;
+	Mon, 20 Feb 2023 13:41:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900495;
-	bh=ajj83f9+ELHNoozrWSpbI6Bbm11cWGoPv67RrFru4SM=;
+	s=korg; t=1676900497;
+	bh=3YA1cYvi95M4vnbDdWGKJkq432QkVDK4VS3Onenko7Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LB22A6B+4FPer7jRVXohHoK+ROtI44IPpbG6k1NWgWHyTaChvTBa1/3iRzgYWD3XT
-	 OTp2EhEQRvoc9rzEf3ECdnX3iDj7nFxPLGLgcfnW0qXRST3BRlo4D4Ez+ajBoHNMb3
-	 YKJKEIaFd5YHw/rQ72u5WdSf6GMqkF/JOaWCDmC4=
+	b=EGgsXyIK37/xTGqiOmVf1lNYwfxMVNtL/Pyh+3+xri1irpUalbHrAOfem+NFOpjIy
+	 t7UoqvuRUgLXjfdZDo3JM2GDCpnAn/RO3WPX8FZExnPHvaaghIuZC2KvtYPhWC2mi2
+	 wyYaeXKITHo+RrCuklHGFXwKWOsn8F9KfYj9hRHE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiner Kallweit <hkallweit1@gmail.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Florian Fainelli <f.fainelli@gmail.com>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 46/89] net: phy: add macros for PHYID matching
-Date: Mon, 20 Feb 2023 14:35:45 +0100
-Message-Id: <20230220133554.758402527@linuxfoundation.org>
+Subject: [PATCH 4.19 47/89] net: phy: meson-gxl: add g12a support
+Date: Mon, 20 Feb 2023 14:35:46 +0100
+Message-Id: <20230220133554.788326637@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -35,36 +36,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Jerome Brunet <jbrunet@baylibre.com>
 
-[ Upstream commit aa2af2eb447c9a21c8c9e8d2336672bb620cf900 ]
+[ Upstream commit 5c3407abb3382fb0621a503662d00495f7ab65c4 ]
 
-Add macros for PHYID matching to be used in PHY driver configs.
-By using these macros some boilerplate code can be avoided.
+The g12a SoC family uses the type of internal PHY that was used on the
+gxl family. The quirks of gxl family, like the LPA register corruption,
+appear to have been resolved on this new SoC generation.
 
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Jerome Brunet <jbrunet@baylibre.com>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Stable-dep-of: 69ff53e4a4c9 ("net: phy: meson-gxl: use MMD access dummy stubs for GXL, internal PHY")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/phy.h | 4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/net/phy/meson-gxl.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/include/linux/phy.h b/include/linux/phy.h
-index 42766e7179d38..86a3792c568c2 100644
---- a/include/linux/phy.h
-+++ b/include/linux/phy.h
-@@ -667,6 +667,10 @@ struct phy_driver {
- #define PHY_ANY_ID "MATCH ANY PHY"
- #define PHY_ANY_UID 0xffffffff
+diff --git a/drivers/net/phy/meson-gxl.c b/drivers/net/phy/meson-gxl.c
+index 7ceebbc4bcc21..e061dfa34ae0d 100644
+--- a/drivers/net/phy/meson-gxl.c
++++ b/drivers/net/phy/meson-gxl.c
+@@ -246,11 +246,22 @@ static struct phy_driver meson_gxl_phy[] = {
+ 		.config_intr	= meson_gxl_config_intr,
+ 		.suspend        = genphy_suspend,
+ 		.resume         = genphy_resume,
++	}, {
++		PHY_ID_MATCH_EXACT(0x01803301),
++		.name		= "Meson G12A Internal PHY",
++		.features	= PHY_BASIC_FEATURES,
++		.flags		= PHY_IS_INTERNAL,
++		.soft_reset     = genphy_soft_reset,
++		.ack_interrupt	= meson_gxl_ack_interrupt,
++		.config_intr	= meson_gxl_config_intr,
++		.suspend        = genphy_suspend,
++		.resume         = genphy_resume,
+ 	},
+ };
  
-+#define PHY_ID_MATCH_EXACT(id) .phy_id = (id), .phy_id_mask = GENMASK(31, 0)
-+#define PHY_ID_MATCH_MODEL(id) .phy_id = (id), .phy_id_mask = GENMASK(31, 4)
-+#define PHY_ID_MATCH_VENDOR(id) .phy_id = (id), .phy_id_mask = GENMASK(31, 10)
-+
- /* A Structure for boards to register fixups with the PHY Lib */
- struct phy_fixup {
- 	struct list_head list;
+ static struct mdio_device_id __maybe_unused meson_gxl_tbl[] = {
+ 	{ 0x01814400, 0xfffffff0 },
++	{ PHY_ID_MATCH_VENDOR(0x01803301) },
+ 	{ }
+ };
+ 
 -- 
 2.39.0
 
