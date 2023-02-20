@@ -1,29 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C234663B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C165C433EF;
-	Mon, 20 Feb 2023 13:58:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6744A63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E22DFC433EF;
+	Mon, 20 Feb 2023 13:58:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901512;
-	bh=dKm4+i288vmyET0T/ytqj+p+gKmXN7S4Rb6+w17rqVo=;
+	s=korg; t=1676901515;
+	bh=LjnptQC/m9gst/345v1qhBUFZbG3h7rSVOpc8+YXL8Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YYKDa7tS9uqVYaB6WDWfnUyKK24Zh8vX60ID36uoji6aSkgw3V1935OOAQB+9bHmA
-	 iAZNTGc1MzsotCkyEqZ8CKlzPQJ5ihJMgW6rnwEB0zf4NdfMJ4sFfecvvdOvMpmof8
-	 V9MnY11aLnEj7dHLBj3C+A9ko+4WhdrE8MFvuz4U=
+	b=1lW+j4ZtjTReX7x+qdt6LnLrd+/uoxmPSLAbn4Gtd1FgzyUcfpq7N5Q69FoNrt3QV
+	 pjQ801kmVtEtMolZlMOWFuZSy9EGUipI6x5Jb+rzz8vKG26PpIl+UwYAdgJdiniS8P
+	 uEBrZ0ZhOrqOj3VV8fdYBYkF3/2iZiL/6p6sC4Vg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Qi Zheng <zhengqi.arch@bytedance.com>,
-	Roman Gushchin <roman.gushchin@linux.dev>,
-	Kent Overstreet <kent.overstreet@gmail.com>,
-	Muchun Song <songmuchun@bytedance.com>,
+	Seth Jenkins <sethjenkins@google.com>,
+	Jeff Moyer <jmoyer@redhat.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Benjamin LaHaise <bcrl@kvack.org>,
+	Jann Horn <jannh@google.com>,
+	Pavel Emelyanov <xemul@parallels.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 046/118] mm: shrinkers: fix deadlock in shrinker debugfs
-Date: Mon, 20 Feb 2023 14:36:02 +0100
-Message-Id: <20230220133602.274842332@linuxfoundation.org>
+Subject: [PATCH 6.1 047/118] aio: fix mremap after fork null-deref
+Date: Mon, 20 Feb 2023 14:36:03 +0100
+Message-Id: <20230220133602.319103879@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -37,128 +39,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Qi Zheng <zhengqi.arch@bytedance.com>
+From: Seth Jenkins <sethjenkins@google.com>
 
-commit badc28d4924bfed73efc93f716a0c3aa3afbdf6f upstream.
+commit 81e9d6f8647650a7bead74c5f926e29970e834d1 upstream.
 
-The debugfs_remove_recursive() is invoked by unregister_shrinker(), which
-is holding the write lock of shrinker_rwsem.  It will waits for the
-handler of debugfs file complete.  The handler also needs to hold the read
-lock of shrinker_rwsem to do something.  So it may cause the following
-deadlock:
+Commit e4a0d3e720e7 ("aio: Make it possible to remap aio ring") introduced
+a null-deref if mremap is called on an old aio mapping after fork as
+mm->ioctx_table will be set to NULL.
 
- 	CPU0				CPU1
-
-debugfs_file_get()
-shrinker_debugfs_count_show()/shrinker_debugfs_scan_write()
-
-     				unregister_shrinker()
-				--> down_write(&shrinker_rwsem);
-				    debugfs_remove_recursive()
-					// wait for (A)
-				    --> wait_for_completion();
-
-    // wait for (B)
---> down_read_killable(&shrinker_rwsem)
-debugfs_file_put() -- (A)
-
-				    up_write() -- (B)
-
-The down_read_killable() can be killed, so that the above deadlock can be
-recovered.  But it still requires an extra kill action, otherwise it will
-block all subsequent shrinker-related operations, so it's better to fix
-it.
-
-[akpm@linux-foundation.org: fix CONFIG_SHRINKER_DEBUG=n stub]
-Link: https://lkml.kernel.org/r/20230202105612.64641-1-zhengqi.arch@bytedance.com
-Fixes: 5035ebc644ae ("mm: shrinkers: introduce debugfs interface for memory shrinkers")
-Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
-Reviewed-by: Roman Gushchin <roman.gushchin@linux.dev>
-Cc: Kent Overstreet <kent.overstreet@gmail.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
+[jmoyer@redhat.com: fix 80 column issue]
+Link: https://lkml.kernel.org/r/x49sffq4nvg.fsf@segfault.boston.devel.redhat.com
+Fixes: e4a0d3e720e7 ("aio: Make it possible to remap aio ring")
+Signed-off-by: Seth Jenkins <sethjenkins@google.com>
+Signed-off-by: Jeff Moyer <jmoyer@redhat.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Benjamin LaHaise <bcrl@kvack.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pavel Emelyanov <xemul@parallels.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/shrinker.h |    5 +++--
- mm/shrinker_debug.c      |   13 ++++++++-----
- mm/vmscan.c              |    6 +++++-
- 3 files changed, 16 insertions(+), 8 deletions(-)
+ fs/aio.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/include/linux/shrinker.h
-+++ b/include/linux/shrinker.h
-@@ -104,7 +104,7 @@ extern void synchronize_shrinkers(void);
- 
- #ifdef CONFIG_SHRINKER_DEBUG
- extern int shrinker_debugfs_add(struct shrinker *shrinker);
--extern void shrinker_debugfs_remove(struct shrinker *shrinker);
-+extern struct dentry *shrinker_debugfs_remove(struct shrinker *shrinker);
- extern int __printf(2, 3) shrinker_debugfs_rename(struct shrinker *shrinker,
- 						  const char *fmt, ...);
- #else /* CONFIG_SHRINKER_DEBUG */
-@@ -112,8 +112,9 @@ static inline int shrinker_debugfs_add(s
- {
- 	return 0;
- }
--static inline void shrinker_debugfs_remove(struct shrinker *shrinker)
-+static inline struct dentry *shrinker_debugfs_remove(struct shrinker *shrinker)
- {
-+	return NULL;
- }
- static inline __printf(2, 3)
- int shrinker_debugfs_rename(struct shrinker *shrinker, const char *fmt, ...)
---- a/mm/shrinker_debug.c
-+++ b/mm/shrinker_debug.c
-@@ -246,18 +246,21 @@ int shrinker_debugfs_rename(struct shrin
- }
- EXPORT_SYMBOL(shrinker_debugfs_rename);
- 
--void shrinker_debugfs_remove(struct shrinker *shrinker)
-+struct dentry *shrinker_debugfs_remove(struct shrinker *shrinker)
- {
-+	struct dentry *entry = shrinker->debugfs_entry;
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -361,6 +361,9 @@ static int aio_ring_mremap(struct vm_are
+ 	spin_lock(&mm->ioctx_lock);
+ 	rcu_read_lock();
+ 	table = rcu_dereference(mm->ioctx_table);
++	if (!table)
++		goto out_unlock;
 +
- 	lockdep_assert_held(&shrinker_rwsem);
+ 	for (i = 0; i < table->nr; i++) {
+ 		struct kioctx *ctx;
  
- 	kfree_const(shrinker->name);
- 	shrinker->name = NULL;
+@@ -374,6 +377,7 @@ static int aio_ring_mremap(struct vm_are
+ 		}
+ 	}
  
--	if (!shrinker->debugfs_entry)
--		return;
-+	if (entry) {
-+		ida_free(&shrinker_debugfs_ida, shrinker->debugfs_id);
-+		shrinker->debugfs_entry = NULL;
-+	}
- 
--	debugfs_remove_recursive(shrinker->debugfs_entry);
--	ida_free(&shrinker_debugfs_ida, shrinker->debugfs_id);
-+	return entry;
- }
- 
- static int __init shrinker_debugfs_init(void)
---- a/mm/vmscan.c
-+++ b/mm/vmscan.c
-@@ -740,6 +740,8 @@ EXPORT_SYMBOL(register_shrinker);
-  */
- void unregister_shrinker(struct shrinker *shrinker)
- {
-+	struct dentry *debugfs_entry;
-+
- 	if (!(shrinker->flags & SHRINKER_REGISTERED))
- 		return;
- 
-@@ -748,9 +750,11 @@ void unregister_shrinker(struct shrinker
- 	shrinker->flags &= ~SHRINKER_REGISTERED;
- 	if (shrinker->flags & SHRINKER_MEMCG_AWARE)
- 		unregister_memcg_shrinker(shrinker);
--	shrinker_debugfs_remove(shrinker);
-+	debugfs_entry = shrinker_debugfs_remove(shrinker);
- 	up_write(&shrinker_rwsem);
- 
-+	debugfs_remove_recursive(debugfs_entry);
-+
- 	kfree(shrinker->nr_deferred);
- 	shrinker->nr_deferred = NULL;
- }
++out_unlock:
+ 	rcu_read_unlock();
+ 	spin_unlock(&mm->ioctx_lock);
+ 	return res;
 
 
