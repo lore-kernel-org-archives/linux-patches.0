@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DBB6363B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:48:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DF97C433D2;
-	Mon, 20 Feb 2023 13:48:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7C4EE63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:48:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 048F5C433D2;
+	Mon, 20 Feb 2023 13:48:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900924;
-	bh=RJD+ppTFd42OpbNqKJRVSeW43QkcMihbQvAfH5fczNU=;
+	s=korg; t=1676900927;
+	bh=NdlFc37fIqCsGHwmsrLsjhh3YIRzfTeyR/CYcgD3aTg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O5ZS4XgAyGVQHTAtyA75yLMuhZnw517NjCjrqN8fKOkvBLD/0kd7KbM8hK07oGBiO
-	 yBWCkq5gpHVfyJ6ZwY2/k2uHZ5bUvhQXOdG8aqgM8ONPc4MPHJ9by0NNaK5jHnHgcY
-	 yaalPWOd2lNdOxCyf9r7VFgc1ntanhjhaHKUW1to=
+	b=uPyS2cAcE3eWxcjVFdUrMoo+3UQUORReFu+CNCF5kpPJKttKAfMuvlVUJ+UmMDBE4
+	 IRTdtv0Zah1vizhHpWpwZ9VIw0aDgt2n4ECIqtcmXMbftMEVNLDsKrOvkt50dt1WRi
+	 jAx5zsFqHOwvtCt5YzymuZCXm6tavaK2uK0EVQmw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Brian Foster <bfoster@redhat.com>,
 	Chandan Babu R <chandan.babu@oracle.com>,
 	"Darrick J. Wong" <djwong@kernel.org>
-Subject: [PATCH 5.4 120/156] xfs: expose the log push threshold
-Date: Mon, 20 Feb 2023 14:36:04 +0100
-Message-Id: <20230220133607.582829054@linuxfoundation.org>
+Subject: [PATCH 5.4 121/156] xfs: only relog deferred intent items if free space in the log gets low
+Date: Mon, 20 Feb 2023 14:36:05 +0100
+Message-Id: <20230220133607.622586357@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -38,14 +38,14 @@ Content-Transfer-Encoding: 8bit
 
 From: "Darrick J. Wong" <darrick.wong@oracle.com>
 
-commit ed1575daf71e4e21d8ae735b6e687c95454aaa17 upstream.
+commit 74f4d6a1e065c92428c5b588099e307a582d79d9 upstream.
 
-Separate the computation of the log push threshold and the push logic in
-xlog_grant_push_ail.  This enables higher level code to determine (for
-example) that it is holding on to a logged intent item and the log is so
-busy that it is more than 75% full.  In that case, it would be desirable
-to move the log item towards the head to release the tail, which we will
-cover in the next patch.
+Now that we have the ability to ask the log how far the tail needs to be
+pushed to maintain its free space targets, augment the decision to relog
+an intent item so that we only do it if the log has hit the 75% full
+threshold.  There's no point in relogging an intent into the same
+checkpoint, and there's no need to relog if there's plenty of free space
+in the log.
 
 Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
 Reviewed-by: Brian Foster <bfoster@redhat.com>
@@ -53,98 +53,41 @@ Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_icreate_item.c |    1 +
- fs/xfs/xfs_log.c          |   40 ++++++++++++++++++++++++++++++----------
- fs/xfs/xfs_log.h          |    2 ++
- 3 files changed, 33 insertions(+), 10 deletions(-)
+ fs/xfs/libxfs/xfs_defer.c |   16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
---- a/fs/xfs/xfs_icreate_item.c
-+++ b/fs/xfs/xfs_icreate_item.c
-@@ -10,6 +10,7 @@
- #include "xfs_trans.h"
- #include "xfs_trans_priv.h"
- #include "xfs_icreate_item.h"
-+#include "xfs_log_priv.h"
- #include "xfs_log.h"
- 
- kmem_zone_t	*xfs_icreate_zone;		/* inode create item zone */
---- a/fs/xfs/xfs_log.c
-+++ b/fs/xfs/xfs_log.c
-@@ -1537,14 +1537,14 @@ xlog_commit_record(
- }
- 
- /*
-- * Push on the buffer cache code if we ever use more than 75% of the on-disk
-- * log space.  This code pushes on the lsn which would supposedly free up
-- * the 25% which we want to leave free.  We may need to adopt a policy which
-- * pushes on an lsn which is further along in the log once we reach the high
-- * water mark.  In this manner, we would be creating a low water mark.
-+ * Compute the LSN that we'd need to push the log tail towards in order to have
-+ * (a) enough on-disk log space to log the number of bytes specified, (b) at
-+ * least 25% of the log space free, and (c) at least 256 blocks free.  If the
-+ * log free space already meets all three thresholds, this function returns
-+ * NULLCOMMITLSN.
-  */
--STATIC void
--xlog_grant_push_ail(
-+xfs_lsn_t
-+xlog_grant_push_threshold(
- 	struct xlog	*log,
- 	int		need_bytes)
+--- a/fs/xfs/libxfs/xfs_defer.c
++++ b/fs/xfs/libxfs/xfs_defer.c
+@@ -372,7 +372,10 @@ xfs_defer_relog(
+ 	struct xfs_trans		**tpp,
+ 	struct list_head		*dfops)
  {
-@@ -1570,7 +1570,7 @@ xlog_grant_push_ail(
- 	free_threshold = max(free_threshold, (log->l_logBBsize >> 2));
- 	free_threshold = max(free_threshold, 256);
- 	if (free_blocks >= free_threshold)
--		return;
-+		return NULLCOMMITLSN;
- 
- 	xlog_crack_atomic_lsn(&log->l_tail_lsn, &threshold_cycle,
- 						&threshold_block);
-@@ -1590,13 +1590,33 @@ xlog_grant_push_ail(
- 	if (XFS_LSN_CMP(threshold_lsn, last_sync_lsn) > 0)
- 		threshold_lsn = last_sync_lsn;
- 
-+	return threshold_lsn;
-+}
++	struct xlog			*log = (*tpp)->t_mountp->m_log;
+ 	struct xfs_defer_pending	*dfp;
++	xfs_lsn_t			threshold_lsn = NULLCOMMITLSN;
 +
-+/*
-+ * Push the tail of the log if we need to do so to maintain the free log space
-+ * thresholds set out by xlog_grant_push_threshold.  We may need to adopt a
-+ * policy which pushes on an lsn which is further along in the log once we
-+ * reach the high water mark.  In this manner, we would be creating a low water
-+ * mark.
-+ */
-+STATIC void
-+xlog_grant_push_ail(
-+	struct xlog	*log,
-+	int		need_bytes)
-+{
-+	xfs_lsn_t	threshold_lsn;
-+
-+	threshold_lsn = xlog_grant_push_threshold(log, need_bytes);
-+	if (threshold_lsn == NULLCOMMITLSN || XLOG_FORCED_SHUTDOWN(log))
-+		return;
-+
- 	/*
- 	 * Get the transaction layer to kick the dirty buffers out to
- 	 * disk asynchronously. No point in trying to do this if
- 	 * the filesystem is shutting down.
- 	 */
--	if (!XLOG_FORCED_SHUTDOWN(log))
--		xfs_ail_push(log->l_ailp, threshold_lsn);
-+	xfs_ail_push(log->l_ailp, threshold_lsn);
- }
  
- /*
---- a/fs/xfs/xfs_log.h
-+++ b/fs/xfs/xfs_log.h
-@@ -146,4 +146,6 @@ void	xfs_log_quiesce(struct xfs_mount *m
- bool	xfs_log_check_lsn(struct xfs_mount *, xfs_lsn_t);
- bool	xfs_log_in_recovery(struct xfs_mount *);
+ 	ASSERT((*tpp)->t_flags & XFS_TRANS_PERM_LOG_RES);
  
-+xfs_lsn_t xlog_grant_push_threshold(struct xlog *log, int need_bytes);
+@@ -388,6 +391,19 @@ xfs_defer_relog(
+ 		    xfs_log_item_in_current_chkpt(dfp->dfp_intent))
+ 			continue;
+ 
++		/*
++		 * Figure out where we need the tail to be in order to maintain
++		 * the minimum required free space in the log.  Only sample
++		 * the log threshold once per call.
++		 */
++		if (threshold_lsn == NULLCOMMITLSN) {
++			threshold_lsn = xlog_grant_push_threshold(log, 0);
++			if (threshold_lsn == NULLCOMMITLSN)
++				break;
++		}
++		if (XFS_LSN_CMP(dfp->dfp_intent->li_lsn, threshold_lsn) >= 0)
++			continue;
 +
- #endif	/* __XFS_LOG_H__ */
+ 		trace_xfs_defer_relog_intent((*tpp)->t_mountp, dfp);
+ 		XFS_STATS_INC((*tpp)->t_mountp, defer_relog);
+ 		dfp->dfp_intent = xfs_trans_item_relog(dfp->dfp_intent, *tpp);
 
 
