@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781C163BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:59:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A99C433EF;
-	Mon, 20 Feb 2023 13:59:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12BAD63BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:59:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E13CC4339B;
+	Mon, 20 Feb 2023 13:59:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901541;
-	bh=ILzq3KjZW16H9CbPuuxC0FsIcoDFocNISTA57GaE1V8=;
+	s=korg; t=1676901543;
+	bh=iUfkVhYoh91qGHvjz7u1H9iZZFdULvqBTYODq/zFPBg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1X1dY1zc1VaAua94KXW+V01dEA4H860+IxH7KH3y1Oe7wV3bv9uyuKpgMEh6Nk90V
-	 I1iogovOIAfgNLxZL1u/InqwTJT5cj+u19EvhbfFsdLYAQG6xbel2N1Q1XyJ7xYpNi
-	 ndrsdJGXfFiHgMBfxMjMdmzGACDDjWljDyXPngZc=
+	b=16XaGRSYRo4rD6Tsgp9OTzZgtnyvIHz2B6vkMpayNRWdyg+F4s7TmnXy1UJRmbnIu
+	 i0q/mDmNEWFiVARQaZPOZoO5Oe5mKMfHOhHcu3iBNfutb8H/DyizRJ2i/n/oljKcr9
+	 5YnA5M9V/5Jyo/idxBiea3MkOMDd5ASaKZBLH0FI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Geraldo Nascimento <geraldogabriel@gmail.com>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
+	Yang Yingliang <yangyingliang@huawei.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 056/118] mmc: meson-gx: fix SDIO mode if cap_sdio_irq isnt set
-Date: Mon, 20 Feb 2023 14:36:12 +0100
-Message-Id: <20230220133602.687847279@linuxfoundation.org>
+Subject: [PATCH 6.1 057/118] mmc: sdio: fix possible resource leaks in some error paths
+Date: Mon, 20 Feb 2023 14:36:13 +0100
+Message-Id: <20230220133602.726753857@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -35,84 +34,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 6ea6b95a7e3ec2015954cb514ee9dbc6dc80ec8f upstream.
+commit 605d9fb9556f8f5fb4566f4df1480f280f308ded upstream.
 
-Some SDIO WiFi modules stopped working after SDIO interrupt mode
-was added if cap_sdio_irq isn't set in device tree. This patch was
-confirmed to fix the issue.
+If sdio_add_func() or sdio_init_func() fails, sdio_remove_func() can
+not release the resources, because the sdio function is not presented
+in these two cases, it won't call of_node_put() or put_device().
 
-Fixes: 066ecde6d826 ("mmc: meson-gx: add SDIO interrupt support")
-Reported-by: Geraldo Nascimento <geraldogabriel@gmail.com>
-Tested-by: Geraldo Nascimento <geraldogabriel@gmail.com>
+To fix these leaks, make sdio_func_present() only control whether
+device_del() needs to be called or not, then always call of_node_put()
+and put_device().
+
+In error case in sdio_init_func(), the reference of 'card->dev' is
+not get, to avoid redundant put in sdio_free_func_cis(), move the
+get_device() to sdio_alloc_func() and put_device() to sdio_release_func(),
+it can keep the get/put function be balanced.
+
+Without this patch, while doing fault inject test, it can get the
+following leak reports, after this fix, the leak is gone.
+
+unreferenced object 0xffff888112514000 (size 2048):
+  comm "kworker/3:2", pid 65, jiffies 4294741614 (age 124.774s)
+  hex dump (first 32 bytes):
+    00 e0 6f 12 81 88 ff ff 60 58 8d 06 81 88 ff ff  ..o.....`X......
+    10 40 51 12 81 88 ff ff 10 40 51 12 81 88 ff ff  .@Q......@Q.....
+  backtrace:
+    [<000000009e5931da>] kmalloc_trace+0x21/0x110
+    [<000000002f839ccb>] mmc_alloc_card+0x38/0xb0 [mmc_core]
+    [<0000000004adcbf6>] mmc_sdio_init_card+0xde/0x170 [mmc_core]
+    [<000000007538fea0>] mmc_attach_sdio+0xcb/0x1b0 [mmc_core]
+    [<00000000d4fdeba7>] mmc_rescan+0x54a/0x640 [mmc_core]
+
+unreferenced object 0xffff888112511000 (size 2048):
+  comm "kworker/3:2", pid 65, jiffies 4294741623 (age 124.766s)
+  hex dump (first 32 bytes):
+    00 40 51 12 81 88 ff ff e0 58 8d 06 81 88 ff ff  .@Q......X......
+    10 10 51 12 81 88 ff ff 10 10 51 12 81 88 ff ff  ..Q.......Q.....
+  backtrace:
+    [<000000009e5931da>] kmalloc_trace+0x21/0x110
+    [<00000000fcbe706c>] sdio_alloc_func+0x35/0x100 [mmc_core]
+    [<00000000c68f4b50>] mmc_attach_sdio.cold.18+0xb1/0x395 [mmc_core]
+    [<00000000d4fdeba7>] mmc_rescan+0x54a/0x640 [mmc_core]
+
+Fixes: 3d10a1ba0d37 ("sdio: fix reference counting in sdio_remove_func()")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
 Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Link: https://lore.kernel.org/r/816cba9f-ff92-31a2-60f0-aca542d1d13e@gmail.com
+Link: https://lore.kernel.org/r/20230130125808.3471254-1-yangyingliang@huawei.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/meson-gx-mmc.c |   23 +++++++++++++----------
- 1 file changed, 13 insertions(+), 10 deletions(-)
+ drivers/mmc/core/sdio_bus.c |   17 ++++++++++++++---
+ drivers/mmc/core/sdio_cis.c |   12 ------------
+ 2 files changed, 14 insertions(+), 15 deletions(-)
 
---- a/drivers/mmc/host/meson-gx-mmc.c
-+++ b/drivers/mmc/host/meson-gx-mmc.c
-@@ -435,7 +435,8 @@ static int meson_mmc_clk_init(struct mes
- 	clk_reg |= FIELD_PREP(CLK_CORE_PHASE_MASK, CLK_PHASE_180);
- 	clk_reg |= FIELD_PREP(CLK_TX_PHASE_MASK, CLK_PHASE_0);
- 	clk_reg |= FIELD_PREP(CLK_RX_PHASE_MASK, CLK_PHASE_0);
--	clk_reg |= CLK_IRQ_SDIO_SLEEP(host);
-+	if (host->mmc->caps & MMC_CAP_SDIO_IRQ)
-+		clk_reg |= CLK_IRQ_SDIO_SLEEP(host);
- 	writel(clk_reg, host->regs + SD_EMMC_CLOCK);
+--- a/drivers/mmc/core/sdio_bus.c
++++ b/drivers/mmc/core/sdio_bus.c
+@@ -294,6 +294,12 @@ static void sdio_release_func(struct dev
+ 	if (!(func->card->quirks & MMC_QUIRK_NONSTD_SDIO))
+ 		sdio_free_func_cis(func);
  
- 	/* get the mux parents */
-@@ -948,16 +949,18 @@ static irqreturn_t meson_mmc_irq(int irq
++	/*
++	 * We have now removed the link to the tuples in the
++	 * card structure, so remove the reference.
++	 */
++	put_device(&func->card->dev);
++
+ 	kfree(func->info);
+ 	kfree(func->tmpbuf);
+ 	kfree(func);
+@@ -324,6 +330,12 @@ struct sdio_func *sdio_alloc_func(struct
+ 
+ 	device_initialize(&func->dev);
+ 
++	/*
++	 * We may link to tuples in the card structure,
++	 * we need make sure we have a reference to it.
++	 */
++	get_device(&func->card->dev);
++
+ 	func->dev.parent = &card->dev;
+ 	func->dev.bus = &sdio_bus_type;
+ 	func->dev.release = sdio_release_func;
+@@ -377,10 +389,9 @@ int sdio_add_func(struct sdio_func *func
+  */
+ void sdio_remove_func(struct sdio_func *func)
  {
- 	struct meson_host *host = dev_id;
- 	struct mmc_command *cmd;
--	u32 status, raw_status;
-+	u32 status, raw_status, irq_mask = IRQ_EN_MASK;
- 	irqreturn_t ret = IRQ_NONE;
+-	if (!sdio_func_present(func))
+-		return;
++	if (sdio_func_present(func))
++		device_del(&func->dev);
  
-+	if (host->mmc->caps & MMC_CAP_SDIO_IRQ)
-+		irq_mask |= IRQ_SDIO;
- 	raw_status = readl(host->regs + SD_EMMC_STATUS);
--	status = raw_status & (IRQ_EN_MASK | IRQ_SDIO);
-+	status = raw_status & irq_mask;
+-	device_del(&func->dev);
+ 	of_node_put(func->dev.of_node);
+ 	put_device(&func->dev);
+ }
+--- a/drivers/mmc/core/sdio_cis.c
++++ b/drivers/mmc/core/sdio_cis.c
+@@ -404,12 +404,6 @@ int sdio_read_func_cis(struct sdio_func
+ 		return ret;
  
- 	if (!status) {
- 		dev_dbg(host->dev,
--			"Unexpected IRQ! irq_en 0x%08lx - status 0x%08x\n",
--			 IRQ_EN_MASK | IRQ_SDIO, raw_status);
-+			"Unexpected IRQ! irq_en 0x%08x - status 0x%08x\n",
-+			 irq_mask, raw_status);
- 		return IRQ_NONE;
+ 	/*
+-	 * Since we've linked to tuples in the card structure,
+-	 * we must make sure we have a reference to it.
+-	 */
+-	get_device(&func->card->dev);
+-
+-	/*
+ 	 * Vendor/device id is optional for function CIS, so
+ 	 * copy it from the card structure as needed.
+ 	 */
+@@ -434,11 +428,5 @@ void sdio_free_func_cis(struct sdio_func
  	}
  
-@@ -1204,6 +1207,11 @@ static int meson_mmc_probe(struct platfo
- 		goto free_host;
- 	}
- 
-+	mmc->caps |= MMC_CAP_CMD23;
-+
-+	if (mmc->caps & MMC_CAP_SDIO_IRQ)
-+		mmc->caps2 |= MMC_CAP2_SDIO_IRQ_NOTHREAD;
-+
- 	host->data = (struct meson_mmc_data *)
- 		of_device_get_match_data(&pdev->dev);
- 	if (!host->data) {
-@@ -1277,11 +1285,6 @@ static int meson_mmc_probe(struct platfo
- 
- 	spin_lock_init(&host->lock);
- 
--	mmc->caps |= MMC_CAP_CMD23;
+ 	func->tuples = NULL;
 -
--	if (mmc->caps & MMC_CAP_SDIO_IRQ)
--		mmc->caps2 |= MMC_CAP2_SDIO_IRQ_NOTHREAD;
--
- 	if (host->dram_access_quirk) {
- 		/* Limit segments to 1 due to low available sram memory */
- 		mmc->max_segs = 1;
+-	/*
+-	 * We have now removed the link to the tuples in the
+-	 * card structure, so remove the reference.
+-	 */
+-	put_device(&func->card->dev);
+ }
+ 
 
 
