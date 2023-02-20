@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 273D063B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8AE8EC433D2;
-	Mon, 20 Feb 2023 13:58:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E3463B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A05C433D2;
+	Mon, 20 Feb 2023 13:58:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901517;
-	bh=I5xRH2qrYlHm87/6xUB5Y8i+Y4zJ2WUuZn9ylKcm5VA=;
+	s=korg; t=1676901520;
+	bh=A1rHhgCDYcjlK0P9Bd2sogSfqi1pJSAYtQMcdBDLSTU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wdkYEXtajconnpP4DHhrVZa63/j1ZrpNYwY7v1t8Ze0g0ZJKr/JavGxL8kg5ZD4U+
-	 fVoF7k6NPLd2uT/Gi7rlETUN8gvmLni/m6uKkfMltFwV0NNCqLTf95FG5Eee1vVxs1
-	 gCVoWgWr/qrKsJqi+u7QNfyLY/tAstmlQIqjnzOM=
+	b=Gznxuo4nD+r+Ph/s8W7IbvktDQkbenf3WPUQloHnVvJmIfe/gN0D0FWNE7hG4vEKO
+	 UDS238A6T4KVRQ7WBFDcwf83QzJQKwtwKUgEKAwYZSf6ETZHOvwjkeWzj5MGf+XAOj
+	 P3FldeSaSOQ0RLBi4jI5owGm5UaXy81dMplRTmIU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ronak Doshi <doshir@vmware.com>,
-	Peng Li <lpeng@vmware.com>,
-	Guolin Yang <gyang@vmware.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 048/118] vmxnet3: move rss code block under eop descriptor
-Date: Mon, 20 Feb 2023 14:36:04 +0100
-Message-Id: <20230220133602.351145047@linuxfoundation.org>
+	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Miko Larsson <mikoxyzzz@gmail.com>,
+	Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 6.1 049/118] fbdev: Fix invalid page access after closing deferred I/O devices
+Date: Mon, 20 Feb 2023 14:36:05 +0100
+Message-Id: <20230220133602.401057630@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -36,96 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ronak Doshi <doshir@vmware.com>
+From: Takashi Iwai <tiwai@suse.de>
 
-commit ec76d0c2da5c6dfb6a33f1545cc15997013923da upstream.
+commit 3efc61d95259956db25347e2a9562c3e54546e20 upstream.
 
-Commit b3973bb40041 ("vmxnet3: set correct hash type based on
-rss information") added hashType information into skb. However,
-rssType field is populated for eop descriptor. This can lead
-to incorrectly reporting of hashType for packets which use
-multiple rx descriptors. Multiple rx descriptors are used
-for Jumbo frame or LRO packets, which can hit this issue.
+When a fbdev with deferred I/O is once opened and closed, the dirty
+pages still remain queued in the pageref list, and eventually later
+those may be processed in the delayed work.  This may lead to a
+corruption of pages, hitting an Oops.
 
-This patch moves the RSS codeblock under eop descritor.
+This patch makes sure to cancel the delayed work and clean up the
+pageref list at closing the device for addressing the bug.  A part of
+the cleanup code is factored out as a new helper function that is
+called from the common fb_release().
 
-Cc: stable@vger.kernel.org
-Fixes: b3973bb40041 ("vmxnet3: set correct hash type based on rss information")
-Signed-off-by: Ronak Doshi <doshir@vmware.com>
-Acked-by: Peng Li <lpeng@vmware.com>
-Acked-by: Guolin Yang <gyang@vmware.com>
-Link: https://lore.kernel.org/r/20230208223900.5794-1-doshir@vmware.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Reviewed-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Tested-by: Miko Larsson <mikoxyzzz@gmail.com>
+Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
+Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
+Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230129082856.22113-1-tiwai@suse.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/vmxnet3/vmxnet3_drv.c |   50 +++++++++++++++++++-------------------
- 1 file changed, 25 insertions(+), 25 deletions(-)
+ drivers/video/fbdev/core/fb_defio.c |   10 +++++++++-
+ drivers/video/fbdev/core/fbmem.c    |    4 ++++
+ include/linux/fb.h                  |    1 +
+ 3 files changed, 14 insertions(+), 1 deletion(-)
 
---- a/drivers/net/vmxnet3/vmxnet3_drv.c
-+++ b/drivers/net/vmxnet3/vmxnet3_drv.c
-@@ -1546,31 +1546,6 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx
- 				rxd->len = rbi->len;
- 			}
+--- a/drivers/video/fbdev/core/fb_defio.c
++++ b/drivers/video/fbdev/core/fb_defio.c
+@@ -313,7 +313,7 @@ void fb_deferred_io_open(struct fb_info
+ }
+ EXPORT_SYMBOL_GPL(fb_deferred_io_open);
  
--#ifdef VMXNET3_RSS
--			if (rcd->rssType != VMXNET3_RCD_RSS_TYPE_NONE &&
--			    (adapter->netdev->features & NETIF_F_RXHASH)) {
--				enum pkt_hash_types hash_type;
--
--				switch (rcd->rssType) {
--				case VMXNET3_RCD_RSS_TYPE_IPV4:
--				case VMXNET3_RCD_RSS_TYPE_IPV6:
--					hash_type = PKT_HASH_TYPE_L3;
--					break;
--				case VMXNET3_RCD_RSS_TYPE_TCPIPV4:
--				case VMXNET3_RCD_RSS_TYPE_TCPIPV6:
--				case VMXNET3_RCD_RSS_TYPE_UDPIPV4:
--				case VMXNET3_RCD_RSS_TYPE_UDPIPV6:
--					hash_type = PKT_HASH_TYPE_L4;
--					break;
--				default:
--					hash_type = PKT_HASH_TYPE_L3;
--					break;
--				}
--				skb_set_hash(ctx->skb,
--					     le32_to_cpu(rcd->rssHash),
--					     hash_type);
--			}
--#endif
- 			skb_record_rx_queue(ctx->skb, rq->qid);
- 			skb_put(ctx->skb, rcd->len);
- 
-@@ -1653,6 +1628,31 @@ vmxnet3_rq_rx_complete(struct vmxnet3_rx
- 			u32 mtu = adapter->netdev->mtu;
- 			skb->len += skb->data_len;
- 
-+#ifdef VMXNET3_RSS
-+			if (rcd->rssType != VMXNET3_RCD_RSS_TYPE_NONE &&
-+			    (adapter->netdev->features & NETIF_F_RXHASH)) {
-+				enum pkt_hash_types hash_type;
+-void fb_deferred_io_cleanup(struct fb_info *info)
++void fb_deferred_io_release(struct fb_info *info)
+ {
+ 	struct fb_deferred_io *fbdefio = info->fbdefio;
+ 	struct page *page;
+@@ -327,6 +327,14 @@ void fb_deferred_io_cleanup(struct fb_in
+ 		page = fb_deferred_io_page(info, i);
+ 		page->mapping = NULL;
+ 	}
++}
++EXPORT_SYMBOL_GPL(fb_deferred_io_release);
 +
-+				switch (rcd->rssType) {
-+				case VMXNET3_RCD_RSS_TYPE_IPV4:
-+				case VMXNET3_RCD_RSS_TYPE_IPV6:
-+					hash_type = PKT_HASH_TYPE_L3;
-+					break;
-+				case VMXNET3_RCD_RSS_TYPE_TCPIPV4:
-+				case VMXNET3_RCD_RSS_TYPE_TCPIPV6:
-+				case VMXNET3_RCD_RSS_TYPE_UDPIPV4:
-+				case VMXNET3_RCD_RSS_TYPE_UDPIPV6:
-+					hash_type = PKT_HASH_TYPE_L4;
-+					break;
-+				default:
-+					hash_type = PKT_HASH_TYPE_L3;
-+					break;
-+				}
-+				skb_set_hash(skb,
-+					     le32_to_cpu(rcd->rssHash),
-+					     hash_type);
-+			}
++void fb_deferred_io_cleanup(struct fb_info *info)
++{
++	struct fb_deferred_io *fbdefio = info->fbdefio;
++
++	fb_deferred_io_release(info);
+ 
+ 	kvfree(info->pagerefs);
+ 	mutex_destroy(&fbdefio->lock);
+--- a/drivers/video/fbdev/core/fbmem.c
++++ b/drivers/video/fbdev/core/fbmem.c
+@@ -1453,6 +1453,10 @@ __releases(&info->lock)
+ 	struct fb_info * const info = file->private_data;
+ 
+ 	lock_fb_info(info);
++#if IS_ENABLED(CONFIG_FB_DEFERRED_IO)
++	if (info->fbdefio)
++		fb_deferred_io_release(info);
 +#endif
- 			vmxnet3_rx_csum(adapter, skb,
- 					(union Vmxnet3_GenericDesc *)rcd);
- 			skb->protocol = eth_type_trans(skb, adapter->netdev);
+ 	if (info->fbops->fb_release)
+ 		info->fbops->fb_release(info,1);
+ 	module_put(info->fbops->owner);
+--- a/include/linux/fb.h
++++ b/include/linux/fb.h
+@@ -662,6 +662,7 @@ extern int  fb_deferred_io_init(struct f
+ extern void fb_deferred_io_open(struct fb_info *info,
+ 				struct inode *inode,
+ 				struct file *file);
++extern void fb_deferred_io_release(struct fb_info *info);
+ extern void fb_deferred_io_cleanup(struct fb_info *info);
+ extern int fb_deferred_io_fsync(struct file *file, loff_t start,
+ 				loff_t end, int datasync);
 
 
