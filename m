@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B17D63BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:01:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F5AC433EF;
-	Mon, 20 Feb 2023 14:01:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 14B6A63BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:01:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B401C433EF;
+	Mon, 20 Feb 2023 14:01:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901676;
-	bh=cbOjMZmyVbRTZ3QQUl5lkKQ+MYwMIWfGu3PIuK6tN1E=;
+	s=korg; t=1676901678;
+	bh=qqbqvoE5dcMvJcbgsGX8q+nccpr7Jk1NAlTUICLs1Qw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S2kBrprxJLKsPGoKzByK3LZ2TrJRFfn6vMzWf0BNTXd99Z8E+YYSUsSeorVb5z3PH
-	 aq7L2uWjmR6LQ8lyTClgJZKsesg1X1FJcFOZJQnugzwf786mJZkxVMJ0RflGV89yQf
-	 Yhm3a13EgH+L6gQG2LLCOc5lsCQiNiP3/rMe7HUc=
+	b=MJiLvO/ss/SwcIXVzGVIJtJJT9O8Lh1d2b6S91HRUa3eoNYOU5S0XCG1x0cM/cBoz
+	 6wamgCCt9wNEBC1s5VUnO2rz9isfDb9Yo6nyLC7oun1H4DRSQfR+/KI0BHNNiPNDLI
+	 1bZ5UoPOmVuMltW6EkEYju2nsa87hsNYXYC9/7tk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Chaitanya Kulkarni <kch@nvidia.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 109/118] nvme-tcp: stop auth work after tearing down queues in error recovery
-Date: Mon, 20 Feb 2023 14:37:05 +0100
-Message-Id: <20230220133604.760554807@linuxfoundation.org>
+Subject: [PATCH 6.1 110/118] nvme-rdma: stop auth work after tearing down queues in error recovery
+Date: Mon, 20 Feb 2023 14:37:06 +0100
+Message-Id: <20230220133604.799992082@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -38,7 +38,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit 1f1a4f89562d3b33b6ca4fc8a4f3bd4cd35ab4ea ]
+[ Upstream commit 91c11d5f32547a08d462934246488fe72f3d44c3 ]
 
 when starting error recovery there might be a authentication work
 running, and it involves I/O commands. Given the controller is tearing
@@ -54,28 +54,27 @@ Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/tcp.c | 2 +-
+ drivers/nvme/host/rdma.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
-index 4c052c261517e..1dc7c733c7e39 100644
---- a/drivers/nvme/host/tcp.c
-+++ b/drivers/nvme/host/tcp.c
-@@ -2128,7 +2128,6 @@ static void nvme_tcp_error_recovery_work(struct work_struct *work)
- 				struct nvme_tcp_ctrl, err_work);
- 	struct nvme_ctrl *ctrl = &tcp_ctrl->ctrl;
+diff --git a/drivers/nvme/host/rdma.c b/drivers/nvme/host/rdma.c
+index 6f918e61b6aef..80383213b8828 100644
+--- a/drivers/nvme/host/rdma.c
++++ b/drivers/nvme/host/rdma.c
+@@ -1154,13 +1154,13 @@ static void nvme_rdma_error_recovery_work(struct work_struct *work)
+ 	struct nvme_rdma_ctrl *ctrl = container_of(work,
+ 			struct nvme_rdma_ctrl, err_work);
  
--	nvme_auth_stop(ctrl);
- 	nvme_stop_keep_alive(ctrl);
- 	flush_work(&ctrl->async_event_work);
- 	nvme_tcp_teardown_io_queues(ctrl, false);
-@@ -2136,6 +2135,7 @@ static void nvme_tcp_error_recovery_work(struct work_struct *work)
- 	nvme_start_queues(ctrl);
- 	nvme_tcp_teardown_admin_queue(ctrl, false);
- 	nvme_start_admin_queue(ctrl);
-+	nvme_auth_stop(ctrl);
+-	nvme_auth_stop(&ctrl->ctrl);
+ 	nvme_stop_keep_alive(&ctrl->ctrl);
+ 	flush_work(&ctrl->ctrl.async_event_work);
+ 	nvme_rdma_teardown_io_queues(ctrl, false);
+ 	nvme_start_queues(&ctrl->ctrl);
+ 	nvme_rdma_teardown_admin_queue(ctrl, false);
+ 	nvme_start_admin_queue(&ctrl->ctrl);
++	nvme_auth_stop(&ctrl->ctrl);
  
- 	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_CONNECTING)) {
+ 	if (!nvme_change_ctrl_state(&ctrl->ctrl, NVME_CTRL_CONNECTING)) {
  		/* state change failure is ok if we started ctrl delete */
 -- 
 2.39.0
