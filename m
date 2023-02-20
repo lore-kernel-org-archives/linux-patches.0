@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0DE1563B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 76BE9C433EF;
-	Mon, 20 Feb 2023 13:49:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F7DD63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 16ABCC433EF;
+	Mon, 20 Feb 2023 13:49:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900988;
-	bh=NZiF6uuU/REmkP9MqhQkEhocj4JvOaNOBWSK4F77vlo=;
+	s=korg; t=1676900991;
+	bh=tcAq0bjUedtBqsVWrXmYURWkPEyh7aU/H/BiuugyaEc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nKT4A1EzJLPCV4wH/KvANBL8YlQ6Xgow8SRmr/bSuHB7+JH9TQHmVRi+tKB0PdGaV
-	 L9iK0KCdRHFOwAA7Js+W7N7H2HN2EE0mmLQ54a56XKMTwytzF1fzOVY6R1avshiRi/
-	 8MM9G2+TclCu/D49Zj1QOnWXnXx2Ab7tFExoNuJQ=
+	b=Vd/SqClW8WmLU+cPzDUsFHZendcLw4+M9RNDub9O8kbEX0uJ+jFBbeO+CMLGy6EH4
+	 PX8S0fMaOAyE7OdPyQs5Oirx1C0WJv5iwYcV7ON1UqjS6IA+1epbffRfCosKqz8X9n
+	 cbfEMysG2sTwENp0ZLuZOYOz9qYDo1OMMqLInNA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Zink <j.zink@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 144/156] net: stmmac: fix order of dwmac5 FlexPPS parametrization sequence
-Date: Mon, 20 Feb 2023 14:36:28 +0100
-Message-Id: <20230220133608.650223287@linuxfoundation.org>
+	Hongguang Gao <hongguang.gao@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 5.4 145/156] bnxt_en: Fix mqprio and XDP ring checking logic
+Date: Mon, 20 Feb 2023 14:36:29 +0100
+Message-Id: <20230220133608.689640932@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -34,61 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Zink <j.zink@pengutronix.de>
+From: Michael Chan <michael.chan@broadcom.com>
 
-commit 4562c65ec852067c6196abdcf2d925f08841dcbc upstream.
+commit 2038cc592811209de20c4e094ca08bfb1e6fbc6c upstream.
 
-So far changing the period by just setting new period values while
-running did not work.
+In bnxt_reserve_rings(), there is logic to check that the number of TX
+rings reserved is enough to cover all the mqprio TCs, but it fails to
+account for the TX XDP rings.  So the check will always fail if there
+are mqprio TCs and TX XDP rings.  As a result, the driver always fails
+to initialize after the XDP program is attached and the device will be
+brought down.  A subsequent ifconfig up will also fail because the
+number of TX rings is set to an inconsistent number.  Fix the check to
+properly account for TX XDP rings.  If the check fails, set the number
+of TX rings back to a consistent number after calling netdev_reset_tc().
 
-The order as indicated by the publicly available reference manual of the i.MX8MP [1]
-indicates a sequence:
-
- * initiate the programming sequence
- * set the values for PPS period and start time
- * start the pulse train generation.
-
-This is currently not used in dwmac5_flex_pps_config(), which instead does:
-
- * initiate the programming sequence and immediately start the pulse train generation
- * set the values for PPS period and start time
-
-This caused the period values written not to take effect until the FlexPPS output was
-disabled and re-enabled again.
-
-This patch fix the order and allows the period to be set immediately.
-
-[1] https://www.nxp.com/webapp/Download?colCode=IMX8MPRM
-
-Fixes: 9a8a02c9d46d ("net: stmmac: Add Flexible PPS support")
-Signed-off-by: Johannes Zink <j.zink@pengutronix.de>
-Link: https://lore.kernel.org/r/20230210143937.3427483-1-j.zink@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 674f50a5b026 ("bnxt_en: Implement new method to reserve rings.")
+Reviewed-by: Hongguang Gao <hongguang.gao@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac5.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
-@@ -520,9 +520,9 @@ int dwmac5_flex_pps_config(void __iomem
- 		return 0;
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -8205,10 +8205,14 @@ int bnxt_reserve_rings(struct bnxt *bp,
+ 		netdev_err(bp->dev, "ring reservation/IRQ init failure rc: %d\n", rc);
+ 		return rc;
  	}
- 
--	val |= PPSCMDx(index, 0x2);
- 	val |= TRGTMODSELx(index, 0x2);
- 	val |= PPSEN0;
-+	writel(val, ioaddr + MAC_PPS_CONTROL);
- 
- 	writel(cfg->start.tv_sec, ioaddr + MAC_PPSx_TARGET_TIME_SEC(index));
- 
-@@ -547,6 +547,7 @@ int dwmac5_flex_pps_config(void __iomem
- 	writel(period - 1, ioaddr + MAC_PPSx_WIDTH(index));
- 
- 	/* Finally, activate it */
-+	val |= PPSCMDx(index, 0x2);
- 	writel(val, ioaddr + MAC_PPS_CONTROL);
+-	if (tcs && (bp->tx_nr_rings_per_tc * tcs != bp->tx_nr_rings)) {
++	if (tcs && (bp->tx_nr_rings_per_tc * tcs !=
++		    bp->tx_nr_rings - bp->tx_nr_rings_xdp)) {
+ 		netdev_err(bp->dev, "tx ring reservation failure\n");
+ 		netdev_reset_tc(bp->dev);
+-		bp->tx_nr_rings_per_tc = bp->tx_nr_rings;
++		if (bp->tx_nr_rings_xdp)
++			bp->tx_nr_rings_per_tc = bp->tx_nr_rings_xdp;
++		else
++			bp->tx_nr_rings_per_tc = bp->tx_nr_rings;
+ 		return -ENOMEM;
+ 	}
  	return 0;
- }
 
 
