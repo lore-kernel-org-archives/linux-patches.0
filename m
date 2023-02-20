@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C1063B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31B4C433EF;
-	Mon, 20 Feb 2023 13:55:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D7FB863B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5DAD1C433EF;
+	Mon, 20 Feb 2023 13:55:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901325;
-	bh=YZEp75CmabuM/Vbc1uSQ9PkkggNBkFBWRqmEqEp9hq0=;
+	s=korg; t=1676901327;
+	bh=0BtGHP8qzGehECo05LflpqYz0qT/laFPyp8/43S/GMA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GlvG1FSS2UdazJn8nW41l+hfpmDZsAuHnunTZhF771x2+KQH4MallYMtjn1mHnnxj
-	 srUbQxk9LUOHKrkt4YcMPvvTaOei56a2pdeP3wkRiVaWzHvdEr42rvJ4lkpFlve6uu
-	 rWvsknzK2ODOj4ZZ2bYwRdF2lfu5QiPX0N/0A4T8=
+	b=fziYJNQukXhh3BGhrao5CD0XgmugfV2cqwKmjtTp7dSKqGP8HQNr7mloOnF7jE5iP
+	 OYLZaqnU6NKj+ECA9HJPVKWL0TLCvfbis+JKgVpstaliKPz+bIp5qWl4nppa97VinY
+	 OelWfXEfmeUkES9K8HhTSuYimuvDUmuI7ACWiHvg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jason Xing <kernelxing@tencent.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Chandan Kumar Rout <chandanx.rout@intel.com>
-Subject: [PATCH 5.10 32/57] i40e: add double of VLAN header when computing the max MTU
-Date: Mon, 20 Feb 2023 14:36:40 +0100
-Message-Id: <20230220133550.472562882@linuxfoundation.org>
+	Jon Mason <jdmason@kudzu.us>,
+	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
+	Florian Fainelli <f.fainelli@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 33/57] net: bgmac: fix BCM5358 support by setting correct flags
+Date: Mon, 20 Feb 2023 14:36:41 +0100
+Message-Id: <20230220133550.503497257@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -36,33 +36,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason Xing <kernelxing@tencent.com>
+From: Rafał Miłecki <rafal@milecki.pl>
 
-commit ce45ffb815e8e238f05de1630be3969b6bb15e4e upstream.
+commit d61615c366a489646a1bfe5b33455f916762d5f4 upstream.
 
-Include the second VLAN HLEN into account when computing the maximum
-MTU size as other drivers do.
+Code blocks handling BCMA_CHIP_ID_BCM5357 and BCMA_CHIP_ID_BCM53572 were
+incorrectly unified. Chip package values are not unique and cannot be
+checked independently. They are meaningful only in a context of a given
+chip.
 
-Fixes: 0c8493d90b6b ("i40e: add XDP support for pass and drop actions")
-Signed-off-by: Jason Xing <kernelxing@tencent.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
-Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Packages BCM5358 and BCM47188 share the same value but then belong to
+different chips. Code unification resulted in treating BCM5358 as
+BCM47188 and broke its initialization.
+
+Link: https://github.com/openwrt/openwrt/issues/8278
+Fixes: cb1b0f90acfe ("net: ethernet: bgmac: unify code of the same family")
+Cc: Jon Mason <jdmason@kudzu.us>
+Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
+Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
+Link: https://lore.kernel.org/r/20230208091637.16291-1-zajec5@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/i40e/i40e_main.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bgmac-bcma.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/net/ethernet/intel/i40e/i40e_main.c
-+++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
-@@ -2788,7 +2788,7 @@ static int i40e_change_mtu(struct net_de
- 	struct i40e_pf *pf = vsi->back;
- 
- 	if (i40e_enabled_xdp_vsi(vsi)) {
--		int frame_size = new_mtu + ETH_HLEN + ETH_FCS_LEN + VLAN_HLEN;
-+		int frame_size = new_mtu + I40E_PACKET_HDR_PAD;
- 
- 		if (frame_size > i40e_max_xdp_frame_size(vsi))
- 			return -EINVAL;
+--- a/drivers/net/ethernet/broadcom/bgmac-bcma.c
++++ b/drivers/net/ethernet/broadcom/bgmac-bcma.c
+@@ -228,12 +228,12 @@ static int bgmac_probe(struct bcma_devic
+ 		bgmac->feature_flags |= BGMAC_FEAT_CLKCTLST;
+ 		bgmac->feature_flags |= BGMAC_FEAT_FLW_CTRL1;
+ 		bgmac->feature_flags |= BGMAC_FEAT_SW_TYPE_PHY;
+-		if (ci->pkg == BCMA_PKG_ID_BCM47188 ||
+-		    ci->pkg == BCMA_PKG_ID_BCM47186) {
++		if ((ci->id == BCMA_CHIP_ID_BCM5357 && ci->pkg == BCMA_PKG_ID_BCM47186) ||
++		    (ci->id == BCMA_CHIP_ID_BCM53572 && ci->pkg == BCMA_PKG_ID_BCM47188)) {
+ 			bgmac->feature_flags |= BGMAC_FEAT_SW_TYPE_RGMII;
+ 			bgmac->feature_flags |= BGMAC_FEAT_IOST_ATTACHED;
+ 		}
+-		if (ci->pkg == BCMA_PKG_ID_BCM5358)
++		if (ci->id == BCMA_CHIP_ID_BCM5357 && ci->pkg == BCMA_PKG_ID_BCM5358)
+ 			bgmac->feature_flags |= BGMAC_FEAT_SW_TYPE_EPHYRMII;
+ 		break;
+ 	case BCMA_CHIP_ID_BCM53573:
 
 
