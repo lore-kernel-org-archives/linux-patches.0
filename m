@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6272E63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7D86C433D2;
-	Mon, 20 Feb 2023 13:57:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFAA63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EF9C433EF;
+	Mon, 20 Feb 2023 13:57:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901450;
-	bh=cGkWrstXeteITJ8X8M0J1S+FTKotpSNO5vfR6lbgVxU=;
+	s=korg; t=1676901452;
+	bh=Un6JpB0UHci0qIBH1D+no3jpcc+8i6GyZ7154XvIZjU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XiXIBV1G2A3/xJR3rgqJAmRxDAeYHwPygTpcCcVwva2ANvsgDGLV3bB1UypboePT5
-	 P0hZTboq5z8lvs2Bdk0xNO7ji7g5gVXpDrN63r1K9AB1arejV44ZfF85McaQGWUjPB
-	 lTGOOCewTLz0NJ3kn3VKOwUTzw+Fig3/Dc7PQfcc=
+	b=O57ESA0vHX5+JjrR4IF2wwduK2GQ7vlVRkijri+qEgSQyPYK3gJBXkGpSsKdq1khb
+	 LiZBNAfHPw+aI9Tn7y33IH8hlx54pG6OoUuv/ub8ccjeEOlyWaPQbTkSQvWw1bJdZ8
+	 XDmsMrvQ/mnOq2JezLmkByNJcx7bVvdLDTdVsLuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <v4bel@theori.io>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Andrei Gherzan <andrei.gherzan@canonical.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 021/118] net/rose: Fix to not accept on connected socket
-Date: Mon, 20 Feb 2023 14:35:37 +0100
-Message-Id: <20230220133601.274937306@linuxfoundation.org>
+Subject: [PATCH 6.1 022/118] selftest: net: Improve IPV6_TCLASS/IPV6_HOPLIMIT tests apparmor compatibility
+Date: Mon, 20 Feb 2023 14:35:38 +0100
+Message-Id: <20230220133601.313432606@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -36,61 +35,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hyunwoo Kim <v4bel@theori.io>
+From: Andrei Gherzan <andrei.gherzan@canonical.com>
 
-[ Upstream commit 14caefcf9837a2be765a566005ad82cd0d2a429f ]
+[ Upstream commit a6efc42a86c0c87cfe2f1c3d1f09a4c9b13ba890 ]
 
-If you call listen() and accept() on an already connect()ed
-rose socket, accept() can successfully connect.
-This is because when the peer socket sends data to sendmsg,
-the skb with its own sk stored in the connected socket's
-sk->sk_receive_queue is connected, and rose_accept() dequeues
-the skb waiting in the sk->sk_receive_queue.
+"tcpdump" is used to capture traffic in these tests while using a random,
+temporary and not suffixed file for it. This can interfere with apparmor
+configuration where the tool is only allowed to read from files with
+'known' extensions.
 
-This creates a child socket with the sk of the parent
-rose socket, which can cause confusion.
+The MINE type application/vnd.tcpdump.pcap was registered with IANA for
+pcap files and .pcap is the extension that is both most common but also
+aligned with standard apparmor configurations. See TCPDUMP(8) for more
+details.
 
-Fix rose_listen() to return -EINVAL if the socket has
-already been successfully connected, and add lock_sock
-to prevent this issue.
+This improves compatibility with standard apparmor configurations by
+using ".pcap" as the file extension for the tests' temporary files.
 
-Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
-Reviewed-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Link: https://lore.kernel.org/r/20230125105944.GA133314@ubuntu
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Andrei Gherzan <andrei.gherzan@canonical.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/rose/af_rose.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ tools/testing/selftests/net/cmsg_ipv6.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rose/af_rose.c b/net/rose/af_rose.c
-index 36fefc3957d77..ca2b17f32670d 100644
---- a/net/rose/af_rose.c
-+++ b/net/rose/af_rose.c
-@@ -488,6 +488,12 @@ static int rose_listen(struct socket *sock, int backlog)
+diff --git a/tools/testing/selftests/net/cmsg_ipv6.sh b/tools/testing/selftests/net/cmsg_ipv6.sh
+index 2d89cb0ad2889..330d0b1ceced3 100755
+--- a/tools/testing/selftests/net/cmsg_ipv6.sh
++++ b/tools/testing/selftests/net/cmsg_ipv6.sh
+@@ -6,7 +6,7 @@ ksft_skip=4
+ NS=ns
+ IP6=2001:db8:1::1/64
+ TGT6=2001:db8:1::2
+-TMPF=`mktemp`
++TMPF=$(mktemp --suffix ".pcap")
+ 
+ cleanup()
  {
- 	struct sock *sk = sock->sk;
- 
-+	lock_sock(sk);
-+	if (sock->state != SS_UNCONNECTED) {
-+		release_sock(sk);
-+		return -EINVAL;
-+	}
-+
- 	if (sk->sk_state != TCP_LISTEN) {
- 		struct rose_sock *rose = rose_sk(sk);
- 
-@@ -497,8 +503,10 @@ static int rose_listen(struct socket *sock, int backlog)
- 		memset(rose->dest_digis, 0, AX25_ADDR_LEN * ROSE_MAX_DIGIS);
- 		sk->sk_max_ack_backlog = backlog;
- 		sk->sk_state           = TCP_LISTEN;
-+		release_sock(sk);
- 		return 0;
- 	}
-+	release_sock(sk);
- 
- 	return -EOPNOTSUPP;
- }
 -- 
 2.39.0
 
