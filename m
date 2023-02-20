@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F2363B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9438FC433EF;
-	Mon, 20 Feb 2023 13:51:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A99DF63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 33AF4C433EF;
+	Mon, 20 Feb 2023 13:51:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901087;
-	bh=cvcivxIL80FFiIQlJ5LTpUr9MREuDHyJz6RC1Xq1ey0=;
+	s=korg; t=1676901090;
+	bh=mTMw2/JR+uBsDK/x5+T4kQ8CxEQgO2/uPV8SNawSnb8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YgTYKnXqcHUvmkElU+4SWeF8zefAzMWkWqTP6iZvgiOpfM7btODq8ZjG7RlrP/3As
-	 5DCTcdt0DVWj11evCN0BvxVNoTrOgcyw5DIK7VzfbxXnFgdfmuEqh5aFIPwpjTNIVO
-	 qfrnUsY/Znw9+6aCmBO9j7aBfUBb69IcVaQSFW80=
+	b=yvAknBDbvP4FS+clH8g+mOneiaWpwzcFFcLljt8dJIbHGktgRofH1j5HDmvQbnfDC
+	 zasyY3ihs+grnJAIRu89xWg0M9F3oeyzZGNNVy96CoX24q9Ut2Y3xq2+boBXcVaYJ/
+	 vXT4E4DTRVcunjbO3UvXO/C1rQmwmMYCtPN6Fwy0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -22,9 +22,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Dave Chinner <david@fromorbit.com>,
 	Leah Rumancik <leah.rumancik@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 24/83] xfs: zero inode fork buffer at allocation
-Date: Mon, 20 Feb 2023 14:35:57 +0100
-Message-Id: <20230220133554.537432194@linuxfoundation.org>
+Subject: [PATCH 5.15 25/83] xfs: fix potential log item leak
+Date: Mon, 20 Feb 2023 14:35:58 +0100
+Message-Id: <20230220133554.571228412@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -40,13 +40,28 @@ Content-Transfer-Encoding: 8bit
 
 From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit cb512c921639613ce03f87e62c5e93ed9fe8c84d ]
+[ Upstream commit c230a4a85bcdbfc1a7415deec6caf04e8fca1301 ]
 
-When we first allocate or resize an inline inode fork, we round up
-the allocation to 4 byte alingment to make journal alignment
-constraints. We don't clear the unused bytes, so we can copy up to
-three uninitialised bytes into the journal. Zero those bytes so we
-only ever copy zeros into the journal.
+Ever since we added shadown format buffers to the log items, log
+items need to handle the item being released with shadow buffers
+attached. Due to the fact this requirement was added at the same
+time we added new rmap/reflink intents, we missed the cleanup of
+those items.
+
+In theory, this means shadow buffers can be leaked in a very small
+window when a shutdown is initiated. Testing with KASAN shows this
+leak does not happen in practice - we haven't identified a single
+leak in several years of shutdown testing since ~v4.8 kernels.
+
+However, the intent whiteout cleanup mechanism results in every
+cancelled intent in exactly the same state as this tiny race window
+creates and so if intents down clean up shadow buffers on final
+release we will leak the shadow buffer for just about every intent
+we create.
+
+Hence we start with this patch to close this condition off and
+ensure that when whiteouts start to be used we don't leak lots of
+memory.
 
 Signed-off-by: Dave Chinner <dchinner@redhat.com>
 Reviewed-by: Darrick J. Wong <djwong@kernel.org>
@@ -56,40 +71,82 @@ Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/xfs/libxfs/xfs_inode_fork.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ fs/xfs/xfs_bmap_item.c     | 2 ++
+ fs/xfs/xfs_icreate_item.c  | 1 +
+ fs/xfs/xfs_refcount_item.c | 2 ++
+ fs/xfs/xfs_rmap_item.c     | 2 ++
+ 4 files changed, 7 insertions(+)
 
-diff --git a/fs/xfs/libxfs/xfs_inode_fork.c b/fs/xfs/libxfs/xfs_inode_fork.c
-index 1d174909f9bdf..20095233d7bc0 100644
---- a/fs/xfs/libxfs/xfs_inode_fork.c
-+++ b/fs/xfs/libxfs/xfs_inode_fork.c
-@@ -50,8 +50,13 @@ xfs_init_local_fork(
- 		mem_size++;
+diff --git a/fs/xfs/xfs_bmap_item.c b/fs/xfs/xfs_bmap_item.c
+index 03159970133ff..51ffdec5e4faa 100644
+--- a/fs/xfs/xfs_bmap_item.c
++++ b/fs/xfs/xfs_bmap_item.c
+@@ -39,6 +39,7 @@ STATIC void
+ xfs_bui_item_free(
+ 	struct xfs_bui_log_item	*buip)
+ {
++	kmem_free(buip->bui_item.li_lv_shadow);
+ 	kmem_cache_free(xfs_bui_zone, buip);
+ }
  
- 	if (size) {
-+		/*
-+		 * As we round up the allocation here, we need to ensure the
-+		 * bytes we don't copy data into are zeroed because the log
-+		 * vectors still copy them into the journal.
-+		 */
- 		real_size = roundup(mem_size, 4);
--		ifp->if_u1.if_data = kmem_alloc(real_size, KM_NOFS);
-+		ifp->if_u1.if_data = kmem_zalloc(real_size, KM_NOFS);
- 		memcpy(ifp->if_u1.if_data, data, size);
- 		if (zero_terminate)
- 			ifp->if_u1.if_data[size] = '\0';
-@@ -500,10 +505,11 @@ xfs_idata_realloc(
- 	/*
- 	 * For inline data, the underlying buffer must be a multiple of 4 bytes
- 	 * in size so that it can be logged and stay on word boundaries.
--	 * We enforce that here.
-+	 * We enforce that here, and use __GFP_ZERO to ensure that size
-+	 * extensions always zero the unused roundup area.
- 	 */
- 	ifp->if_u1.if_data = krealloc(ifp->if_u1.if_data, roundup(new_size, 4),
--				      GFP_NOFS | __GFP_NOFAIL);
-+				      GFP_NOFS | __GFP_NOFAIL | __GFP_ZERO);
- 	ifp->if_bytes = new_size;
+@@ -198,6 +199,7 @@ xfs_bud_item_release(
+ 	struct xfs_bud_log_item	*budp = BUD_ITEM(lip);
+ 
+ 	xfs_bui_release(budp->bud_buip);
++	kmem_free(budp->bud_item.li_lv_shadow);
+ 	kmem_cache_free(xfs_bud_zone, budp);
+ }
+ 
+diff --git a/fs/xfs/xfs_icreate_item.c b/fs/xfs/xfs_icreate_item.c
+index 017904a34c023..c265ae20946d5 100644
+--- a/fs/xfs/xfs_icreate_item.c
++++ b/fs/xfs/xfs_icreate_item.c
+@@ -63,6 +63,7 @@ STATIC void
+ xfs_icreate_item_release(
+ 	struct xfs_log_item	*lip)
+ {
++	kmem_free(ICR_ITEM(lip)->ic_item.li_lv_shadow);
+ 	kmem_cache_free(xfs_icreate_zone, ICR_ITEM(lip));
+ }
+ 
+diff --git a/fs/xfs/xfs_refcount_item.c b/fs/xfs/xfs_refcount_item.c
+index 46904b793bd48..8ef842d17916a 100644
+--- a/fs/xfs/xfs_refcount_item.c
++++ b/fs/xfs/xfs_refcount_item.c
+@@ -35,6 +35,7 @@ STATIC void
+ xfs_cui_item_free(
+ 	struct xfs_cui_log_item	*cuip)
+ {
++	kmem_free(cuip->cui_item.li_lv_shadow);
+ 	if (cuip->cui_format.cui_nextents > XFS_CUI_MAX_FAST_EXTENTS)
+ 		kmem_free(cuip);
+ 	else
+@@ -204,6 +205,7 @@ xfs_cud_item_release(
+ 	struct xfs_cud_log_item	*cudp = CUD_ITEM(lip);
+ 
+ 	xfs_cui_release(cudp->cud_cuip);
++	kmem_free(cudp->cud_item.li_lv_shadow);
+ 	kmem_cache_free(xfs_cud_zone, cudp);
+ }
+ 
+diff --git a/fs/xfs/xfs_rmap_item.c b/fs/xfs/xfs_rmap_item.c
+index 5f06959804678..15e7b01740a77 100644
+--- a/fs/xfs/xfs_rmap_item.c
++++ b/fs/xfs/xfs_rmap_item.c
+@@ -35,6 +35,7 @@ STATIC void
+ xfs_rui_item_free(
+ 	struct xfs_rui_log_item	*ruip)
+ {
++	kmem_free(ruip->rui_item.li_lv_shadow);
+ 	if (ruip->rui_format.rui_nextents > XFS_RUI_MAX_FAST_EXTENTS)
+ 		kmem_free(ruip);
+ 	else
+@@ -227,6 +228,7 @@ xfs_rud_item_release(
+ 	struct xfs_rud_log_item	*rudp = RUD_ITEM(lip);
+ 
+ 	xfs_rui_release(rudp->rud_ruip);
++	kmem_free(rudp->rud_item.li_lv_shadow);
+ 	kmem_cache_free(xfs_rud_zone, rudp);
  }
  
 -- 
