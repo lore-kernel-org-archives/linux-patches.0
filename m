@@ -1,35 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C85963B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C7A9AC433D2;
-	Mon, 20 Feb 2023 13:47:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 407DC63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B916FC4339B;
+	Mon, 20 Feb 2023 13:47:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900848;
-	bh=9In/DZN978t1MAQ5alfdS1aVD9vZaZYZUUfq0Me2QTg=;
+	s=korg; t=1676900851;
+	bh=z6P+nbavqPCCSnqZJNVDs0VWHj0jFLX6EBinl3xYbdc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K5xqTTYgGFuvpC+bNl/BTEfxZpuDynsKgRG1o0A/cTTtLXZoKuzJt+B7cXFfa/zhg
-	 9tCDCuobOPTovxGuMMJ7nrOW3xJ3apiNQoU0QOrJYTTu59+FzPFvtddbCYh2F+jeJx
-	 2/FShDS1YRH1hSDTXofE4Sv2l6EjqNXdles6+T4A=
+	b=KgtEjmhcwM0PZz14nSZe+f+FybJxQSB29YUb6xytYNyDwHNecem0JxbjMHlF+eAms
+	 2hvjJcJviYi0RrdLT0iI6Vv2I3kyXHJSwsKQzfZnfO1z3TPr308FTytKDE9mGTA38m
+	 EjZ+CGKUWU4I30f/mir7lYbk52v66l4MVqko6tM0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Peter Xu <peterx@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
-	James Houghton <jthoughton@google.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Naoya Horiguchi <naoya.horiguchi@linux.dev>,
-	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
-	Yang Shi <shy828301@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 090/156] migrate: hugetlb: check for hugetlb shared PMD in node migration
-Date: Mon, 20 Feb 2023 14:35:34 +0100
-Message-Id: <20230220133606.190601278@linuxfoundation.org>
+	Eduard Zingerman <eddyz87@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 091/156] selftests/bpf: Verify copy_register_state() preserves parent/live fields
+Date: Mon, 20 Feb 2023 14:35:35 +0100
+Message-Id: <20230220133606.225685089@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -43,50 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Kravetz <mike.kravetz@oracle.com>
+From: Eduard Zingerman <eddyz87@gmail.com>
 
-commit 73bdf65ea74857d7fb2ec3067a3cec0e261b1462 upstream.
+[ Upstream commit b9fa9bc839291020b362ab5392e5f18ba79657ac ]
 
-migrate_pages/mempolicy semantics state that CAP_SYS_NICE is required to
-move pages shared with another process to a different node.  page_mapcount
-> 1 is being used to determine if a hugetlb page is shared.  However, a
-hugetlb page will have a mapcount of 1 if mapped by multiple processes via
-a shared PMD.  As a result, hugetlb pages shared by multiple processes and
-mapped with a shared PMD can be moved by a process without CAP_SYS_NICE.
+A testcase to check that verifier.c:copy_register_state() preserves
+register parentage chain and livness information.
 
-To fix, check for a shared PMD if mapcount is 1.  If a shared PMD is found
-consider the page shared.
-
-Link: https://lkml.kernel.org/r/20230126222721.222195-3-mike.kravetz@oracle.com
-Fixes: e2d8cf405525 ("migrate: add hugepage migration code to migrate_pages()")
-Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
-Acked-by: Peter Xu <peterx@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: James Houghton <jthoughton@google.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Naoya Horiguchi <naoya.horiguchi@linux.dev>
-Cc: Vishal Moola (Oracle) <vishal.moola@gmail.com>
-Cc: Yang Shi <shy828301@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Eduard Zingerman <eddyz87@gmail.com>
+Link: https://lore.kernel.org/r/20230106142214.1040390-3-eddyz87@gmail.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mempolicy.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ .../selftests/bpf/verifier/search_pruning.c   | 36 +++++++++++++++++++
+ 1 file changed, 36 insertions(+)
 
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -571,7 +571,8 @@ static int queue_pages_hugetlb(pte_t *pt
- 		goto unlock;
- 	/* With MPOL_MF_MOVE, we migrate only unshared hugepage. */
- 	if (flags & (MPOL_MF_MOVE_ALL) ||
--	    (flags & MPOL_MF_MOVE && page_mapcount(page) == 1))
-+	    (flags & MPOL_MF_MOVE && page_mapcount(page) == 1 &&
-+	     !hugetlb_pmd_shared(pte)))
- 		isolate_huge_page(page, qp->pagelist);
- unlock:
- 	spin_unlock(ptl);
+diff --git a/tools/testing/selftests/bpf/verifier/search_pruning.c b/tools/testing/selftests/bpf/verifier/search_pruning.c
+index 7e50cb80873a5..7e36078f8f482 100644
+--- a/tools/testing/selftests/bpf/verifier/search_pruning.c
++++ b/tools/testing/selftests/bpf/verifier/search_pruning.c
+@@ -154,3 +154,39 @@
+ 	.result_unpriv = ACCEPT,
+ 	.insn_processed = 15,
+ },
++/* The test performs a conditional 64-bit write to a stack location
++ * fp[-8], this is followed by an unconditional 8-bit write to fp[-8],
++ * then data is read from fp[-8]. This sequence is unsafe.
++ *
++ * The test would be mistakenly marked as safe w/o dst register parent
++ * preservation in verifier.c:copy_register_state() function.
++ *
++ * Note the usage of BPF_F_TEST_STATE_FREQ to force creation of the
++ * checkpoint state after conditional 64-bit assignment.
++ */
++{
++	"write tracking and register parent chain bug",
++	.insns = {
++	/* r6 = ktime_get_ns() */
++	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
++	BPF_MOV64_REG(BPF_REG_6, BPF_REG_0),
++	/* r0 = ktime_get_ns() */
++	BPF_EMIT_CALL(BPF_FUNC_ktime_get_ns),
++	/* if r0 > r6 goto +1 */
++	BPF_JMP_REG(BPF_JGT, BPF_REG_0, BPF_REG_6, 1),
++	/* *(u64 *)(r10 - 8) = 0xdeadbeef */
++	BPF_ST_MEM(BPF_DW, BPF_REG_FP, -8, 0xdeadbeef),
++	/* r1 = 42 */
++	BPF_MOV64_IMM(BPF_REG_1, 42),
++	/* *(u8 *)(r10 - 8) = r1 */
++	BPF_STX_MEM(BPF_B, BPF_REG_FP, BPF_REG_1, -8),
++	/* r2 = *(u64 *)(r10 - 8) */
++	BPF_LDX_MEM(BPF_DW, BPF_REG_2, BPF_REG_FP, -8),
++	/* exit(0) */
++	BPF_MOV64_IMM(BPF_REG_0, 0),
++	BPF_EXIT_INSN(),
++	},
++	.flags = BPF_F_TEST_STATE_FREQ,
++	.errstr = "invalid read from stack off -8+1 size 8",
++	.result = REJECT,
++},
+-- 
+2.39.0
+
 
 
