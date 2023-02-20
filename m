@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE95563B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:24 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 75283C433EF;
-	Mon, 20 Feb 2023 13:57:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A585463B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0791BC433A0;
+	Mon, 20 Feb 2023 13:57:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901444;
-	bh=UKI7qk1JBJixYFVxGWD0KILYZS8i/mygS2GNMpIlC+k=;
+	s=korg; t=1676901447;
+	bh=YbHyk0Yj5v83mAWPoPN0CrKwF2Uiw38KjLu6b9b2vaY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RDIPqBGdzbtvQ7DKGHsBfvfrdSgcXm3QlkW8aooCjBwpsUG7aXAemM/RdcCUFe0Am
-	 ruAUBe5/ahLfZUnXDaoGxDiBU8M9Q3lhYGswWD6SZ2dRwyDJkj6Mg5U3DpGGRQMhrG
-	 C/lh2MlBa67jaX0mw3IJdMb/ranGGfaPM8GF2HT0=
+	b=by2l9203CBt8KLyA1dBEv+iGx5D9dorRoQETlKYLwf4nOmCG2KlnkAbH3mtcMuKYg
+	 ppkWX/X18ZzGD9jz8kvZG1zWEcZm2BwI6Kcu4bJhMXBq6XzfuTD+qKbanenocDD9LD
+	 J6ntnHLREflzk9a1E37ulEMOLHAF0x+Yybygq+k4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	"David S. Miller" <davem@davemloft.net>,
+	Tanmay Bhushan <007047221b@gmail.com>,
+	"Michael S. Tsirkin" <mst@redhat.com>,
+	Jason Wang <jasowang@redhat.com>,
+	Zhu Lingshan <lingshan.zhu@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 002/118] mptcp: fix locking for setsockopt corner-case
-Date: Mon, 20 Feb 2023 14:35:18 +0100
-Message-Id: <20230220133600.497450353@linuxfoundation.org>
+Subject: [PATCH 6.1 020/118] vdpa: ifcvf: Do proper cleanup if IFCVF init fails
+Date: Mon, 20 Feb 2023 14:35:36 +0100
+Message-Id: <20230220133601.223778811@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -36,53 +37,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Tanmay Bhushan <007047221b@gmail.com>
 
-[ Upstream commit 21e43569685de4ad773fb060c11a15f3fd5e7ac4 ]
+[ Upstream commit 6b04456e248761cf68f562f2fd7c04e591fcac94 ]
 
-We need to call the __mptcp_nmpc_socket(), and later subflow socket
-access under the msk socket lock, or e.g. a racing connect() could
-change the socket status under the hood, with unexpected results.
+ifcvf_mgmt_dev leaks memory if it is not freed before
+returning. Call is made to correct return statement
+so memory does not leak. ifcvf_init_hw does not take
+care of this so it is needed to do it here.
 
-Fixes: 54635bd04701 ("mptcp: add TCP_FASTOPEN_CONNECT socket option")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Tanmay Bhushan <007047221b@gmail.com>
+Message-Id: <772e9fe133f21fa78fb98a2ebe8969efbbd58e3c.camel@gmail.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Acked-by: Jason Wang <jasowang@redhat.com>
+Acked-by: Zhu Lingshan <lingshan.zhu@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/sockopt.c | 11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ drivers/vdpa/ifcvf/ifcvf_main.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/mptcp/sockopt.c b/net/mptcp/sockopt.c
-index 8d3b09d75c3ae..696ba398d699a 100644
---- a/net/mptcp/sockopt.c
-+++ b/net/mptcp/sockopt.c
-@@ -772,14 +772,21 @@ static int mptcp_setsockopt_sol_tcp_defer(struct mptcp_sock *msk, sockptr_t optv
- static int mptcp_setsockopt_first_sf_only(struct mptcp_sock *msk, int level, int optname,
- 					  sockptr_t optval, unsigned int optlen)
- {
-+	struct sock *sk = (struct sock *)msk;
- 	struct socket *sock;
-+	int ret = -EINVAL;
+diff --git a/drivers/vdpa/ifcvf/ifcvf_main.c b/drivers/vdpa/ifcvf/ifcvf_main.c
+index f9c0044c6442e..44b29289aa193 100644
+--- a/drivers/vdpa/ifcvf/ifcvf_main.c
++++ b/drivers/vdpa/ifcvf/ifcvf_main.c
+@@ -849,7 +849,7 @@ static int ifcvf_probe(struct pci_dev *pdev, const struct pci_device_id *id)
+ 	ret = ifcvf_init_hw(vf, pdev);
+ 	if (ret) {
+ 		IFCVF_ERR(pdev, "Failed to init IFCVF hw\n");
+-		return ret;
++		goto err;
+ 	}
  
- 	/* Limit to first subflow, before the connection establishment */
-+	lock_sock(sk);
- 	sock = __mptcp_nmpc_socket(msk);
- 	if (!sock)
--		return -EINVAL;
-+		goto unlock;
- 
--	return tcp_setsockopt(sock->sk, level, optname, optval, optlen);
-+	ret = tcp_setsockopt(sock->sk, level, optname, optval, optlen);
-+
-+unlock:
-+	release_sock(sk);
-+	return ret;
- }
- 
- static int mptcp_setsockopt_sol_tcp(struct mptcp_sock *msk, int optname,
+ 	for (i = 0; i < vf->nr_vring; i++)
 -- 
 2.39.0
 
