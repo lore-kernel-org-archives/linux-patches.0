@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F2DD363B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:53:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7B8B2C4339B;
-	Mon, 20 Feb 2023 13:53:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90F5D63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:53:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1AD5FC433D2;
+	Mon, 20 Feb 2023 13:53:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901189;
-	bh=CKXPtMPsyjxt5m/mjliJGJhzn1rjocrOsDVJj7es5YE=;
+	s=korg; t=1676901192;
+	bh=Y/SJT7ZPzet7n6iUujN7E0T24syAivYUtJwYYNzRf1M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jioy+IO1rOUmi7XFtYL90+sOGnnNtFv/cUWn6WuqTcbfaZobJHEjo3yM1IrOiAlci
-	 fMdxKA7CzPPpsssM6eHWqnRwntWacxRb9PJEWS1kcq9yOFwVQpInnB01+4W1GNQe56
-	 coFisdYByyDjEXz3Yo0KG8cOqJlwmciSrrh7zSPs=
+	b=aQcU+Z4aCd08/YZrzYTTxhbRqAW1JGrMoUlxseMGquQCSIQkWQildhRxESYFy5cj6
+	 t9ta61mvJW2DPpwbl/qGNGZxkwe28MpZswNfvVGYjDzJKLUzCvSEyH51QlqiksRinI
+	 IyZ8uNfPU/sSaQJmbF4C0LmEHCNiIdJfRbwLDR9I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paolo Abeni <pabeni@redhat.com>,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 34/83] mptcp: do not wait for bare sockets timeout
-Date: Mon, 20 Feb 2023 14:36:07 +0100
-Message-Id: <20230220133554.844189134@linuxfoundation.org>
+	Seth Jenkins <sethjenkins@google.com>,
+	Jeff Moyer <jmoyer@redhat.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Benjamin LaHaise <bcrl@kvack.org>,
+	Jann Horn <jannh@google.com>,
+	Pavel Emelyanov <xemul@parallels.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 35/83] aio: fix mremap after fork null-deref
+Date: Mon, 20 Feb 2023 14:36:08 +0100
+Message-Id: <20230220133554.893034323@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -35,64 +39,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paolo Abeni <pabeni@redhat.com>
+From: Seth Jenkins <sethjenkins@google.com>
 
-commit d4e85922e3e7ef2071f91f65e61629b60f3a9cf4 upstream.
+commit 81e9d6f8647650a7bead74c5f926e29970e834d1 upstream.
 
-If the peer closes all the existing subflows for a given
-mptcp socket and later the application closes it, the current
-implementation let it survive until the timewait timeout expires.
+Commit e4a0d3e720e7 ("aio: Make it possible to remap aio ring") introduced
+a null-deref if mremap is called on an old aio mapping after fork as
+mm->ioctx_table will be set to NULL.
 
-While the above is allowed by the protocol specification it
-consumes resources for almost no reason and additionally
-causes sporadic self-tests failures.
-
-Let's move the mptcp socket to the TCP_CLOSE state when there are
-no alive subflows at close time, so that the allocated resources
-will be freed immediately.
-
-Fixes: e16163b6e2b7 ("mptcp: refactor shutdown and close")
-Cc: stable@vger.kernel.org
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+[jmoyer@redhat.com: fix 80 column issue]
+Link: https://lkml.kernel.org/r/x49sffq4nvg.fsf@segfault.boston.devel.redhat.com
+Fixes: e4a0d3e720e7 ("aio: Make it possible to remap aio ring")
+Signed-off-by: Seth Jenkins <sethjenkins@google.com>
+Signed-off-by: Jeff Moyer <jmoyer@redhat.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Benjamin LaHaise <bcrl@kvack.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pavel Emelyanov <xemul@parallels.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
 ---
- net/mptcp/protocol.c |    9 +++++++++
- 1 file changed, 9 insertions(+)
+ fs/aio.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/net/mptcp/protocol.c
-+++ b/net/mptcp/protocol.c
-@@ -2726,6 +2726,7 @@ static void mptcp_close(struct sock *sk,
- {
- 	struct mptcp_subflow_context *subflow;
- 	bool do_cancel_work = false;
-+	int subflows_alive = 0;
- 
- 	lock_sock(sk);
- 	sk->sk_shutdown = SHUTDOWN_MASK;
-@@ -2747,11 +2748,19 @@ cleanup:
- 		struct sock *ssk = mptcp_subflow_tcp_sock(subflow);
- 		bool slow = lock_sock_fast_nested(ssk);
- 
-+		subflows_alive += ssk->sk_state != TCP_CLOSE;
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -334,6 +334,9 @@ static int aio_ring_mremap(struct vm_are
+ 	spin_lock(&mm->ioctx_lock);
+ 	rcu_read_lock();
+ 	table = rcu_dereference(mm->ioctx_table);
++	if (!table)
++		goto out_unlock;
 +
- 		sock_orphan(ssk);
- 		unlock_sock_fast(ssk, slow);
+ 	for (i = 0; i < table->nr; i++) {
+ 		struct kioctx *ctx;
+ 
+@@ -347,6 +350,7 @@ static int aio_ring_mremap(struct vm_are
+ 		}
  	}
- 	sock_orphan(sk);
  
-+	/* all the subflows are closed, only timeout can change the msk
-+	 * state, let's not keep resources busy for no reasons
-+	 */
-+	if (subflows_alive == 0)
-+		inet_sk_state_store(sk, TCP_CLOSE);
-+
- 	sock_hold(sk);
- 	pr_debug("msk=%p state=%d", sk, sk->sk_state);
- 	if (sk->sk_state == TCP_CLOSE) {
++out_unlock:
+ 	rcu_read_unlock();
+ 	spin_unlock(&mm->ioctx_lock);
+ 	return res;
 
 
