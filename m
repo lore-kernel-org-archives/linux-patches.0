@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 338AD63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AFEBAC433D2;
-	Mon, 20 Feb 2023 13:47:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82B4863BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5E94C4339E;
+	Mon, 20 Feb 2023 13:47:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900867;
-	bh=wPOAHH7kPtHNJZ7UF+2yhWXL7e/2Pv2JX/TDaRVF0PA=;
+	s=korg; t=1676900872;
+	bh=/mukto2j2nSeTv6EEtdXDT4SqsEjEIbq7z9v3LUtSbM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u2y3xYn+5N/2XRclKTS8tN6lBjzCTgP2Bq20XF4g1kgfE1M88y0hqMEQS94+n05Zl
-	 7/PNwSTrNuqxFujV6t+I/kSxoawC9RYKbt7sqEOoorYvfV7rVQ/na9SCBv36uzZR56
-	 MGHJnAk1nFKUwMBI3YR/eeud7K37Us6dJG7GOq3A=
+	b=aSSg2WTBYM9/r/02SPairqbqp/aKEoOA3GtT92LY/N8c4YCV4qpOCeXAbegcWGA0m
+	 5AdLFsd1RU7osazXAFDqVoumcLHyP2ECX23iLbAmgV74HL0GJkwDtIou1cIR5p6Ihj
+	 3Kl3tuAdcs5ntHpHeK2XRjRluN2kkSxhAjO4RkXc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Egorenkov <egorenar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 097/156] s390/decompressor: specify __decompress() buf len to avoid overflow
-Date: Mon, 20 Feb 2023 14:35:41 +0100
-Message-Id: <20230220133606.521525294@linuxfoundation.org>
+	Seth Jenkins <sethjenkins@google.com>,
+	Jeff Moyer <jmoyer@redhat.com>,
+	Alexander Viro <viro@zeniv.linux.org.uk>,
+	Benjamin LaHaise <bcrl@kvack.org>,
+	Jann Horn <jannh@google.com>,
+	Pavel Emelyanov <xemul@parallels.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 099/156] aio: fix mremap after fork null-deref
+Date: Mon, 20 Feb 2023 14:35:43 +0100
+Message-Id: <20230220133606.614121242@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -36,47 +39,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Seth Jenkins <sethjenkins@google.com>
 
-[ Upstream commit 7ab41c2c08a32132ba8c14624910e2fe8ce4ba4b ]
+commit 81e9d6f8647650a7bead74c5f926e29970e834d1 upstream.
 
-Historically calls to __decompress() didn't specify "out_len" parameter
-on many architectures including s390, expecting that no writes beyond
-uncompressed kernel image are performed. This has changed since commit
-2aa14b1ab2c4 ("zstd: import usptream v1.5.2") which includes zstd library
-commit 6a7ede3dfccb ("Reduce size of dctx by reutilizing dst buffer
-(#2751)"). Now zstd decompression code might store literal buffer in
-the unwritten portion of the destination buffer. Since "out_len" is
-not set, it is considered to be unlimited and hence free to use for
-optimization needs. On s390 this might corrupt initrd or ipl report
-which are often placed right after the decompressor buffer. Luckily the
-size of uncompressed kernel image is already known to the decompressor,
-so to avoid the problem simply specify it in the "out_len" parameter.
+Commit e4a0d3e720e7 ("aio: Make it possible to remap aio ring") introduced
+a null-deref if mremap is called on an old aio mapping after fork as
+mm->ioctx_table will be set to NULL.
 
-Link: https://github.com/facebook/zstd/commit/6a7ede3dfccb
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Tested-by: Alexander Egorenkov <egorenar@linux.ibm.com>
-Link: https://lore.kernel.org/r/patch-1.thread-41c676.git-41c676c2d153.your-ad-here.call-01675030179-ext-9637@work.hours
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+[jmoyer@redhat.com: fix 80 column issue]
+Link: https://lkml.kernel.org/r/x49sffq4nvg.fsf@segfault.boston.devel.redhat.com
+Fixes: e4a0d3e720e7 ("aio: Make it possible to remap aio ring")
+Signed-off-by: Seth Jenkins <sethjenkins@google.com>
+Signed-off-by: Jeff Moyer <jmoyer@redhat.com>
+Cc: Alexander Viro <viro@zeniv.linux.org.uk>
+Cc: Benjamin LaHaise <bcrl@kvack.org>
+Cc: Jann Horn <jannh@google.com>
+Cc: Pavel Emelyanov <xemul@parallels.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/boot/compressed/decompressor.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/aio.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/arch/s390/boot/compressed/decompressor.c b/arch/s390/boot/compressed/decompressor.c
-index 45046630c56ac..c42ab33bd4524 100644
---- a/arch/s390/boot/compressed/decompressor.c
-+++ b/arch/s390/boot/compressed/decompressor.c
-@@ -80,6 +80,6 @@ void *decompress_kernel(void)
- 	void *output = (void *)decompress_offset;
+--- a/fs/aio.c
++++ b/fs/aio.c
+@@ -336,6 +336,9 @@ static int aio_ring_mremap(struct vm_are
+ 	spin_lock(&mm->ioctx_lock);
+ 	rcu_read_lock();
+ 	table = rcu_dereference(mm->ioctx_table);
++	if (!table)
++		goto out_unlock;
++
+ 	for (i = 0; i < table->nr; i++) {
+ 		struct kioctx *ctx;
  
- 	__decompress(_compressed_start, _compressed_end - _compressed_start,
--		     NULL, NULL, output, 0, NULL, error);
-+		     NULL, NULL, output, vmlinux.image_size, NULL, error);
- 	return output;
- }
--- 
-2.39.0
-
+@@ -349,6 +352,7 @@ static int aio_ring_mremap(struct vm_are
+ 		}
+ 	}
+ 
++out_unlock:
+ 	rcu_read_unlock();
+ 	spin_unlock(&mm->ioctx_lock);
+ 	return res;
 
 
