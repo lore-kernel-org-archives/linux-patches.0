@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E85FB63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:48:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6F517C433D2;
-	Mon, 20 Feb 2023 13:48:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8DEF63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:48:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A26EC433D2;
+	Mon, 20 Feb 2023 13:48:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900895;
-	bh=c+yS2TBHXU5XUhMB+YoItG+6sz8IGvLxU5mx7Rgrc9E=;
+	s=korg; t=1676900898;
+	bh=djkS+fw6pffDl6zyDCj0Ly/uhMddCt4GfjwcvfoIPp4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aT1aYK2SwEtooXZd392x1fjmP3ioJzSccadqES310U1B21itFf1gNdJwnbApWrpVN
-	 +MazWT6oIPEaj2eSO0bW5Bdz3wcgusqObcw0gOoLWZNb2yausYbwKdDV/D2nJ90qyk
-	 3Og8XxHi2WxQO24ZE1ZfFKC8JNOBWG1Qg1OiRsgU=
+	b=JTcOZ3VYnIbQAokqX3gYweqv2Gl/r2UegB88QczC1ejwx0akpgjSvsYB2+OYE9A1D
+	 Og/2CYBWJ78/4t9M0f9dUgCvXDT8LCxInVfmJqCzWkJzrLgWRpl4/04sf5yBTYrqV8
+	 7DB6iIICsg+jRsRp3HNWQsjFKutI8ItXopk0UeSo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Minter <jimminter@microsoft.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Qi Zheng <zhengqi.arch@bytedance.com>,
+	Jay Vosburgh <jay.vosburgh@canonical.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 079/156] pinctrl: intel: Restore the pins that used to be in Direct IRQ mode
-Date: Mon, 20 Feb 2023 14:35:23 +0100
-Message-Id: <20230220133605.706367895@linuxfoundation.org>
+Subject: [PATCH 5.4 070/156] bonding: fix error checking in bond_debug_reregister()
+Date: Mon, 20 Feb 2023 14:35:14 +0100
+Message-Id: <20230220133605.292035618@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -37,67 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Qi Zheng <zhengqi.arch@bytedance.com>
 
-[ Upstream commit a8520be3ffef3d25b53bf171a7ebe17ee0154175 ]
+[ Upstream commit cbe83191d40d8925b7a99969d037d2a0caf69294 ]
 
-If the firmware mangled the register contents too much,
-check the saved value for the Direct IRQ mode. If it
-matches, we will restore the pin state.
+Since commit ff9fb72bc077 ("debugfs: return error values,
+not NULL") changed return value of debugfs_rename() in
+error cases from %NULL to %ERR_PTR(-ERROR), we should
+also check error values instead of NULL.
 
-Reported-by: Jim Minter <jimminter@microsoft.com>
-Fixes: 6989ea4881c8 ("pinctrl: intel: Save and restore pins in "direct IRQ" mode")
-Tested-by: Jim Minter <jimminter@microsoft.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://lore.kernel.org/r/20230206141558.20916-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Fixes: ff9fb72bc077 ("debugfs: return error values, not NULL")
+Signed-off-by: Qi Zheng <zhengqi.arch@bytedance.com>
+Acked-by: Jay Vosburgh <jay.vosburgh@canonical.com>
+Link: https://lore.kernel.org/r/20230202093256.32458-1-zhengqi.arch@bytedance.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/intel/pinctrl-intel.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/net/bonding/bond_debugfs.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/intel/pinctrl-intel.c b/drivers/pinctrl/intel/pinctrl-intel.c
-index e0cb76f7e5407..32c6326337f73 100644
---- a/drivers/pinctrl/intel/pinctrl-intel.c
-+++ b/drivers/pinctrl/intel/pinctrl-intel.c
-@@ -1510,6 +1510,12 @@ int intel_pinctrl_probe_by_uid(struct platform_device *pdev)
- EXPORT_SYMBOL_GPL(intel_pinctrl_probe_by_uid);
+diff --git a/drivers/net/bonding/bond_debugfs.c b/drivers/net/bonding/bond_debugfs.c
+index f3f86ef68ae0c..8b6cf2bf9025a 100644
+--- a/drivers/net/bonding/bond_debugfs.c
++++ b/drivers/net/bonding/bond_debugfs.c
+@@ -76,7 +76,7 @@ void bond_debug_reregister(struct bonding *bond)
  
- #ifdef CONFIG_PM_SLEEP
-+static bool __intel_gpio_is_direct_irq(u32 value)
-+{
-+	return (value & PADCFG0_GPIROUTIOXAPIC) && (value & PADCFG0_GPIOTXDIS) &&
-+	       (__intel_gpio_get_gpio_mode(value) == PADCFG0_PMODE_GPIO);
-+}
-+
- static bool intel_pinctrl_should_save(struct intel_pinctrl *pctrl, unsigned int pin)
- {
- 	const struct pin_desc *pd = pin_desc_get(pctrl->pctldev, pin);
-@@ -1543,8 +1549,7 @@ static bool intel_pinctrl_should_save(struct intel_pinctrl *pctrl, unsigned int
- 	 * See https://bugzilla.kernel.org/show_bug.cgi?id=214749.
- 	 */
- 	value = readl(intel_get_padcfg(pctrl, pin, PADCFG0));
--	if ((value & PADCFG0_GPIROUTIOXAPIC) && (value & PADCFG0_GPIOTXDIS) &&
--	    (__intel_gpio_get_gpio_mode(value) == PADCFG0_PMODE_GPIO))
-+	if (__intel_gpio_is_direct_irq(value))
- 		return true;
- 
- 	return false;
-@@ -1656,7 +1661,12 @@ int intel_pinctrl_resume_noirq(struct device *dev)
- 		void __iomem *padcfg;
- 		u32 val;
- 
--		if (!intel_pinctrl_should_save(pctrl, desc->number))
-+		if (!(intel_pinctrl_should_save(pctrl, desc->number) ||
-+		      /*
-+		       * If the firmware mangled the register contents too much,
-+		       * check the saved value for the Direct IRQ mode.
-+		       */
-+		      __intel_gpio_is_direct_irq(pads[i].padcfg0)))
- 			continue;
- 
- 		padcfg = intel_get_padcfg(pctrl, desc->number, PADCFG0);
+ 	d = debugfs_rename(bonding_debug_root, bond->debug_dir,
+ 			   bonding_debug_root, bond->dev->name);
+-	if (d) {
++	if (!IS_ERR(d)) {
+ 		bond->debug_dir = d;
+ 	} else {
+ 		netdev_warn(bond->dev, "failed to reregister, so just unregister old one\n");
 -- 
 2.39.0
 
