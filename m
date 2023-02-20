@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 450A463B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C157EC433D2;
-	Mon, 20 Feb 2023 13:51:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D71A963B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C0C6C433D2;
+	Mon, 20 Feb 2023 13:51:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901093;
-	bh=NA8eaa3N6WiAed1UFZNfCwa2C1XGd/4k4g+Ho2x+GBM=;
+	s=korg; t=1676901095;
+	bh=YZBQsxnwoPa/p8Zp/+6TVx/q1nqcMmpnG85ZFtgp79k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Rtz7r1H+fPKtXjfRe9oKY9x8WITe9jS6LUG3eAHaM1FLZ8+PNpeNrN9fYa4ruf1RX
-	 fDsITBQV5XhIBITLW0n/uQOJoIolkCt8LO78RY8dBKDfsEeRBJQ2hL8D9K8B5Z6QEB
-	 JEdZf40ytx2f8GoXiRkniSYMMh/dDeYEAFVe3ub4=
+	b=fKsIgDGMxtVzD0uAlXcRSKEnUcacxQMSvCWXJ9crt/JeNdvxklZ3dRgneGs/MdBm1
+	 tLc92D1jTcJF8oYvppt4skh6cQEpfmGvh6tVPctNg90socAgKckUJ7JJMfimqoi4Yx
+	 XCehB5pUuuvNGhFRtLt+VkpJ+xZNHoV7O/vfI+eM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guo Ren <guoren@linux.alibaba.com>,
-	Guo Ren <guoren@kernel.org>,
-	Bjorn Topel <bjorn.topel@gmail.com>,
-	=?UTF-8?q?Bj=C3=B6rn=20T=C3=B6pel?= <bjorn@kernel.org>,
-	Palmer Dabbelt <palmer@rivosinc.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 03/83] riscv: kprobe: Fixup misaligned load text
-Date: Mon, 20 Feb 2023 14:35:36 +0100
-Message-Id: <20230220133553.792226107@linuxfoundation.org>
+Subject: [PATCH 5.15 04/83] ACPI / x86: Add support for LPS0 callback handler
+Date: Mon, 20 Feb 2023 14:35:37 +0100
+Message-Id: <20230220133553.822998004@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -38,53 +36,129 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guo Ren <guoren@linux.alibaba.com>
+From: Mario Limonciello <mario.limonciello@amd.com>
 
-[ Upstream commit eb7423273cc9922ee2d05bf660c034d7d515bb91 ]
+[ Upstream commit 20e1d6402a71dba7ad2b81f332a3c14c7d3b939b ]
 
-The current kprobe would cause a misaligned load for the probe point.
-This patch fixup it with two half-word loads instead.
+Currenty the latest thing run during a suspend to idle attempt is
+the LPS0 `prepare_late` callback and the earliest thing is the
+`resume_early` callback.
 
-Fixes: c22b0bcb1dd0 ("riscv: Add kprobes supported")
-Signed-off-by: Guo Ren <guoren@linux.alibaba.com>
-Signed-off-by: Guo Ren <guoren@kernel.org>
-Link: https://lore.kernel.org/linux-riscv/878rhig9zj.fsf@all.your.base.are.belong.to.us/
-Reported-by: Bjorn Topel <bjorn.topel@gmail.com>
-Reviewed-by: Björn Töpel <bjorn@kernel.org>
-Link: https://lore.kernel.org/r/20230204063531.740220-1-guoren@kernel.org
-Cc: stable@vger.kernel.org
-Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
+There is a desire for the `amd-pmc` driver to suspend later in the
+suspend process (ideally the very last thing), so create a callback
+that it or any other driver can hook into to do this.
+
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
+Acked-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Link: https://lore.kernel.org/r/20220317141445.6498-1-mario.limonciello@amd.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Stable-dep-of: 8e60615e8932 ("platform/x86/amd: pmc: Disable IRQ1 wakeup for RN/CZN")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/riscv/kernel/probes/kprobes.c | 8 +++++---
- 1 file changed, 5 insertions(+), 3 deletions(-)
+ drivers/acpi/x86/s2idle.c | 40 +++++++++++++++++++++++++++++++++++++++
+ include/linux/acpi.h      | 10 +++++++++-
+ 2 files changed, 49 insertions(+), 1 deletion(-)
 
-diff --git a/arch/riscv/kernel/probes/kprobes.c b/arch/riscv/kernel/probes/kprobes.c
-index b53aa0209e079..7548b1d62509c 100644
---- a/arch/riscv/kernel/probes/kprobes.c
-+++ b/arch/riscv/kernel/probes/kprobes.c
-@@ -65,16 +65,18 @@ static bool __kprobes arch_check_kprobe(struct kprobe *p)
+diff --git a/drivers/acpi/x86/s2idle.c b/drivers/acpi/x86/s2idle.c
+index 2af1ae1721021..4a11a38764321 100644
+--- a/drivers/acpi/x86/s2idle.c
++++ b/drivers/acpi/x86/s2idle.c
+@@ -86,6 +86,8 @@ struct lpi_device_constraint_amd {
+ 	int min_dstate;
+ };
  
- int __kprobes arch_prepare_kprobe(struct kprobe *p)
++static LIST_HEAD(lps0_s2idle_devops_head);
++
+ static struct lpi_constraints *lpi_constraints_table;
+ static int lpi_constraints_table_size;
+ static int rev_id;
+@@ -434,6 +436,8 @@ static struct acpi_scan_handler lps0_handler = {
+ 
+ int acpi_s2idle_prepare_late(void)
  {
--	unsigned long probe_addr = (unsigned long)p->addr;
-+	u16 *insn = (u16 *)p->addr;
++	struct acpi_s2idle_dev_ops *handler;
++
+ 	if (!lps0_device_handle || sleep_no_lps0)
+ 		return 0;
  
--	if (probe_addr & 0x1)
-+	if ((unsigned long)insn & 0x1)
- 		return -EILSEQ;
+@@ -464,14 +468,26 @@ int acpi_s2idle_prepare_late(void)
+ 		acpi_sleep_run_lps0_dsm(ACPI_LPS0_MS_ENTRY,
+ 				lps0_dsm_func_mask_microsoft, lps0_dsm_guid_microsoft);
+ 	}
++
++	list_for_each_entry(handler, &lps0_s2idle_devops_head, list_node) {
++		if (handler->prepare)
++			handler->prepare();
++	}
++
+ 	return 0;
+ }
  
- 	if (!arch_check_kprobe(p))
- 		return -EILSEQ;
+ void acpi_s2idle_restore_early(void)
+ {
++	struct acpi_s2idle_dev_ops *handler;
++
+ 	if (!lps0_device_handle || sleep_no_lps0)
+ 		return;
  
- 	/* copy instruction */
--	p->opcode = *p->addr;
-+	p->opcode = (kprobe_opcode_t)(*insn++);
-+	if (GET_INSN_LENGTH(p->opcode) == 4)
-+		p->opcode |= (kprobe_opcode_t)(*insn) << 16;
++	list_for_each_entry(handler, &lps0_s2idle_devops_head, list_node)
++		if (handler->restore)
++			handler->restore();
++
+ 	/* Modern standby exit */
+ 	if (lps0_dsm_func_mask_microsoft > 0)
+ 		acpi_sleep_run_lps0_dsm(ACPI_LPS0_MS_EXIT,
+@@ -514,4 +530,28 @@ void acpi_s2idle_setup(void)
+ 	s2idle_set_ops(&acpi_s2idle_ops_lps0);
+ }
  
- 	/* decode instruction */
- 	switch (riscv_probe_decode_insn(p->addr, &p->ainsn.api)) {
++int acpi_register_lps0_dev(struct acpi_s2idle_dev_ops *arg)
++{
++	if (!lps0_device_handle || sleep_no_lps0)
++		return -ENODEV;
++
++	lock_system_sleep();
++	list_add(&arg->list_node, &lps0_s2idle_devops_head);
++	unlock_system_sleep();
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(acpi_register_lps0_dev);
++
++void acpi_unregister_lps0_dev(struct acpi_s2idle_dev_ops *arg)
++{
++	if (!lps0_device_handle || sleep_no_lps0)
++		return;
++
++	lock_system_sleep();
++	list_del(&arg->list_node);
++	unlock_system_sleep();
++}
++EXPORT_SYMBOL_GPL(acpi_unregister_lps0_dev);
++
+ #endif /* CONFIG_SUSPEND */
+diff --git a/include/linux/acpi.h b/include/linux/acpi.h
+index 6224b1e32681c..2d7df5cea2494 100644
+--- a/include/linux/acpi.h
++++ b/include/linux/acpi.h
+@@ -1005,7 +1005,15 @@ void acpi_os_set_prepare_extended_sleep(int (*func)(u8 sleep_state,
+ 
+ acpi_status acpi_os_prepare_extended_sleep(u8 sleep_state,
+ 					   u32 val_a, u32 val_b);
+-
++#ifdef CONFIG_X86
++struct acpi_s2idle_dev_ops {
++	struct list_head list_node;
++	void (*prepare)(void);
++	void (*restore)(void);
++};
++int acpi_register_lps0_dev(struct acpi_s2idle_dev_ops *arg);
++void acpi_unregister_lps0_dev(struct acpi_s2idle_dev_ops *arg);
++#endif /* CONFIG_X86 */
+ #ifndef CONFIG_IA64
+ void arch_reserve_mem_area(acpi_physical_address addr, size_t size);
+ #else
 -- 
 2.39.0
 
