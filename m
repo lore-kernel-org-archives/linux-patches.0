@@ -1,35 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4068863B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:42:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94700C4339B;
-	Mon, 20 Feb 2023 13:42:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05ADA63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:42:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AE26C4339B;
+	Mon, 20 Feb 2023 13:42:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900537;
-	bh=9In/DZN978t1MAQ5alfdS1aVD9vZaZYZUUfq0Me2QTg=;
+	s=korg; t=1676900539;
+	bh=sbmjl7ztF6Ua+/t9QmN41jrbGtE5gH5IK6zXP5ztTGY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Mtk7tFA4oSp3f8PpadZuYXOUjdi6de9pcjRZNSYX/tEYoHEZXmOBnIcSV+M3iGUns
-	 +2uG1v0YCqaiYyYKZSAXHPMEnGNO9msLg31ZYZJpECcR2n8Nj5f4D1YD1nZai+B95O
-	 ZYu60eGdaguxOrsu0jsTNVon43SK+GCGw4d+QYi4=
+	b=TAFS4onxHrtq5nxlk8Ttda7h18utaYcfTgx0uPoNYzP6P0PdrAGoHDU4R0BDkyVR+
+	 sSqyTqzHXVrXw5y3cmh4h2wAT/TvYpxvlxuYyP4JkuDyUgpnlsy/Be4N/nOW9H+t6k
+	 P20ejJhXCYcAEfI6iYFIQbJ5IcXFPpJDI+oO8pno=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Peter Xu <peterx@redhat.com>,
-	David Hildenbrand <david@redhat.com>,
-	James Houghton <jthoughton@google.com>,
-	Matthew Wilcox <willy@infradead.org>,
-	Michal Hocko <mhocko@suse.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Naoya Horiguchi <naoya.horiguchi@linux.dev>,
-	"Vishal Moola (Oracle)" <vishal.moola@gmail.com>,
-	Yang Shi <shy828301@gmail.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.19 63/89] migrate: hugetlb: check for hugetlb shared PMD in node migration
-Date: Mon, 20 Feb 2023 14:36:02 +0100
-Message-Id: <20230220133555.358447487@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 64/89] ASoC: cs42l56: fix DT probe
+Date: Mon, 20 Feb 2023 14:36:03 +0100
+Message-Id: <20230220133555.388839947@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -43,50 +36,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Kravetz <mike.kravetz@oracle.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 73bdf65ea74857d7fb2ec3067a3cec0e261b1462 upstream.
+[ Upstream commit e18c6da62edc780e4f4f3c9ce07bdacd69505182 ]
 
-migrate_pages/mempolicy semantics state that CAP_SYS_NICE is required to
-move pages shared with another process to a different node.  page_mapcount
-> 1 is being used to determine if a hugetlb page is shared.  However, a
-hugetlb page will have a mapcount of 1 if mapped by multiple processes via
-a shared PMD.  As a result, hugetlb pages shared by multiple processes and
-mapped with a shared PMD can be moved by a process without CAP_SYS_NICE.
+While looking through legacy platform data users, I noticed that
+the DT probing never uses data from the DT properties, as the
+platform_data structure gets overwritten directly after it
+is initialized.
 
-To fix, check for a shared PMD if mapcount is 1.  If a shared PMD is found
-consider the page shared.
+There have never been any boards defining the platform_data in
+the mainline kernel either, so this driver so far only worked
+with patched kernels or with the default values.
 
-Link: https://lkml.kernel.org/r/20230126222721.222195-3-mike.kravetz@oracle.com
-Fixes: e2d8cf405525 ("migrate: add hugepage migration code to migrate_pages()")
-Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
-Acked-by: Peter Xu <peterx@redhat.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Cc: James Houghton <jthoughton@google.com>
-Cc: Matthew Wilcox <willy@infradead.org>
-Cc: Michal Hocko <mhocko@suse.com>
-Cc: Muchun Song <songmuchun@bytedance.com>
-Cc: Naoya Horiguchi <naoya.horiguchi@linux.dev>
-Cc: Vishal Moola (Oracle) <vishal.moola@gmail.com>
-Cc: Yang Shi <shy828301@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+For the benefit of possible downstream users, fix the DT probe
+by no longer overwriting the data.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20230126162203.2986339-1-arnd@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- mm/mempolicy.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ sound/soc/codecs/cs42l56.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
---- a/mm/mempolicy.c
-+++ b/mm/mempolicy.c
-@@ -571,7 +571,8 @@ static int queue_pages_hugetlb(pte_t *pt
- 		goto unlock;
- 	/* With MPOL_MF_MOVE, we migrate only unshared hugepage. */
- 	if (flags & (MPOL_MF_MOVE_ALL) ||
--	    (flags & MPOL_MF_MOVE && page_mapcount(page) == 1))
-+	    (flags & MPOL_MF_MOVE && page_mapcount(page) == 1 &&
-+	     !hugetlb_pmd_shared(pte)))
- 		isolate_huge_page(page, qp->pagelist);
- unlock:
- 	spin_unlock(ptl);
+diff --git a/sound/soc/codecs/cs42l56.c b/sound/soc/codecs/cs42l56.c
+index deaad703a7dbf..a4826a7d0a98c 100644
+--- a/sound/soc/codecs/cs42l56.c
++++ b/sound/soc/codecs/cs42l56.c
+@@ -1204,18 +1204,12 @@ static int cs42l56_i2c_probe(struct i2c_client *i2c_client,
+ 	if (pdata) {
+ 		cs42l56->pdata = *pdata;
+ 	} else {
+-		pdata = devm_kzalloc(&i2c_client->dev, sizeof(*pdata),
+-				     GFP_KERNEL);
+-		if (!pdata)
+-			return -ENOMEM;
+-
+ 		if (i2c_client->dev.of_node) {
+ 			ret = cs42l56_handle_of_data(i2c_client,
+ 						     &cs42l56->pdata);
+ 			if (ret != 0)
+ 				return ret;
+ 		}
+-		cs42l56->pdata = *pdata;
+ 	}
+ 
+ 	if (cs42l56->pdata.gpio_nreset) {
+-- 
+2.39.0
+
 
 
