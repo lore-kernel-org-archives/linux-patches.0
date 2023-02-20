@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99E3463B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 24A05C433D2;
-	Mon, 20 Feb 2023 13:58:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C75263B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E1BC4339B;
+	Mon, 20 Feb 2023 13:58:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901520;
-	bh=A1rHhgCDYcjlK0P9Bd2sogSfqi1pJSAYtQMcdBDLSTU=;
+	s=korg; t=1676901523;
+	bh=Rq4n8uSGL6HKdp05k/r4meCtbqJ+11BI6aGjnZHod8g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Gznxuo4nD+r+Ph/s8W7IbvktDQkbenf3WPUQloHnVvJmIfe/gN0D0FWNE7hG4vEKO
-	 UDS238A6T4KVRQ7WBFDcwf83QzJQKwtwKUgEKAwYZSf6ETZHOvwjkeWzj5MGf+XAOj
-	 P3FldeSaSOQ0RLBi4jI5owGm5UaXy81dMplRTmIU=
+	b=o5cIpU1nYeAowxrkf11Gx0NfRJKFGu9sI6HUfW+PytmvjaB7Er8+yJDXTBcVBpRLV
+	 MDYJhvhunUQIYsnzeeEOVFqH3pHY+nZYOazqC+l1wdl7eKAvmhgeEmj27ikByho9Zu
+	 Yt5OiBfqGeezDrJx3omAEzO1Bteyl/+/UjvQRoA4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Miko Larsson <mikoxyzzz@gmail.com>,
-	Thomas Zimmermann <tzimmermann@suse.de>
-Subject: [PATCH 6.1 049/118] fbdev: Fix invalid page access after closing deferred I/O devices
-Date: Mon, 20 Feb 2023 14:36:05 +0100
-Message-Id: <20230220133602.401057630@linuxfoundation.org>
+	Maurizio Lombardi <mlombard@redhat.com>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 032/118] nvme: clear the request_queue pointers on failure in nvme_alloc_io_tag_set
+Date: Mon, 20 Feb 2023 14:35:48 +0100
+Message-Id: <20230220133601.711413753@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -36,83 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takashi Iwai <tiwai@suse.de>
+From: Maurizio Lombardi <mlombard@redhat.com>
 
-commit 3efc61d95259956db25347e2a9562c3e54546e20 upstream.
+[ Upstream commit 6fbf13c0e24fd86ab2e4477cd8484a485b687421 ]
 
-When a fbdev with deferred I/O is once opened and closed, the dirty
-pages still remain queued in the pageref list, and eventually later
-those may be processed in the delayed work.  This may lead to a
-corruption of pages, hitting an Oops.
+In nvme_alloc_io_tag_set(), the connect_q pointer should be set to NULL
+in case of error to avoid potential invalid pointer dereferences.
 
-This patch makes sure to cancel the delayed work and clean up the
-pageref list at closing the device for addressing the bug.  A part of
-the cleanup code is factored out as a new helper function that is
-called from the common fb_release().
-
-Reviewed-by: Patrik Jakobsson <patrik.r.jakobsson@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Tested-by: Miko Larsson <mikoxyzzz@gmail.com>
-Fixes: 56c134f7f1b5 ("fbdev: Track deferred-I/O pages in pageref struct")
-Reviewed-by: Thomas Zimmermann <tzimmermann@suse.de>
-Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230129082856.22113-1-tiwai@suse.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fb_defio.c |   10 +++++++++-
- drivers/video/fbdev/core/fbmem.c    |    4 ++++
- include/linux/fb.h                  |    1 +
- 3 files changed, 14 insertions(+), 1 deletion(-)
+ drivers/nvme/host/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/video/fbdev/core/fb_defio.c
-+++ b/drivers/video/fbdev/core/fb_defio.c
-@@ -313,7 +313,7 @@ void fb_deferred_io_open(struct fb_info
+diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
+index e189ce17deb3e..5acc9ae225df3 100644
+--- a/drivers/nvme/host/core.c
++++ b/drivers/nvme/host/core.c
+@@ -4933,6 +4933,7 @@ int nvme_alloc_io_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
+ 
+ out_free_tag_set:
+ 	blk_mq_free_tag_set(set);
++	ctrl->connect_q = NULL;
+ 	return ret;
  }
- EXPORT_SYMBOL_GPL(fb_deferred_io_open);
- 
--void fb_deferred_io_cleanup(struct fb_info *info)
-+void fb_deferred_io_release(struct fb_info *info)
- {
- 	struct fb_deferred_io *fbdefio = info->fbdefio;
- 	struct page *page;
-@@ -327,6 +327,14 @@ void fb_deferred_io_cleanup(struct fb_in
- 		page = fb_deferred_io_page(info, i);
- 		page->mapping = NULL;
- 	}
-+}
-+EXPORT_SYMBOL_GPL(fb_deferred_io_release);
-+
-+void fb_deferred_io_cleanup(struct fb_info *info)
-+{
-+	struct fb_deferred_io *fbdefio = info->fbdefio;
-+
-+	fb_deferred_io_release(info);
- 
- 	kvfree(info->pagerefs);
- 	mutex_destroy(&fbdefio->lock);
---- a/drivers/video/fbdev/core/fbmem.c
-+++ b/drivers/video/fbdev/core/fbmem.c
-@@ -1453,6 +1453,10 @@ __releases(&info->lock)
- 	struct fb_info * const info = file->private_data;
- 
- 	lock_fb_info(info);
-+#if IS_ENABLED(CONFIG_FB_DEFERRED_IO)
-+	if (info->fbdefio)
-+		fb_deferred_io_release(info);
-+#endif
- 	if (info->fbops->fb_release)
- 		info->fbops->fb_release(info,1);
- 	module_put(info->fbops->owner);
---- a/include/linux/fb.h
-+++ b/include/linux/fb.h
-@@ -662,6 +662,7 @@ extern int  fb_deferred_io_init(struct f
- extern void fb_deferred_io_open(struct fb_info *info,
- 				struct inode *inode,
- 				struct file *file);
-+extern void fb_deferred_io_release(struct fb_info *info);
- extern void fb_deferred_io_cleanup(struct fb_info *info);
- extern int fb_deferred_io_fsync(struct file *file, loff_t start,
- 				loff_t end, int datasync);
+ EXPORT_SYMBOL_GPL(nvme_alloc_io_tag_set);
+-- 
+2.39.0
+
 
 
