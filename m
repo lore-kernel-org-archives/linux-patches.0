@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E639363BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6C658C433EF;
-	Mon, 20 Feb 2023 13:58:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 781C163BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:59:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A99C433EF;
+	Mon, 20 Feb 2023 13:59:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901538;
-	bh=WFWFEqbwYDhovhRzvINfurSA2RPOXvEef9O4DzZK0mk=;
+	s=korg; t=1676901541;
+	bh=ILzq3KjZW16H9CbPuuxC0FsIcoDFocNISTA57GaE1V8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ohT2UlaxgSAERcPjAlIYDc4z4Cwuna16dqwDFIQfId3IoR0oUdzYg8Um/q775DllS
-	 myoy4JHwwC2eFsfimvyhWIiTfIS0sVXxVH+HOZwnbgxIQw6QhlR+NfQVfyLL/Igwsj
-	 Ki0yJNyYOdliFogXUn3Ishm64S75Jox2LJvkmIXA=
+	b=1X1dY1zc1VaAua94KXW+V01dEA4H860+IxH7KH3y1Oe7wV3bv9uyuKpgMEh6Nk90V
+	 I1iogovOIAfgNLxZL1u/InqwTJT5cj+u19EvhbfFsdLYAQG6xbel2N1Q1XyJ7xYpNi
+	 ndrsdJGXfFiHgMBfxMjMdmzGACDDjWljDyXPngZc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Paul Cercueil <paul@crapouillou.net>,
+	Geraldo Nascimento <geraldogabriel@gmail.com>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 6.1 055/118] mmc: jz4740: Work around bug on JZ4760(B)
-Date: Mon, 20 Feb 2023 14:36:11 +0100
-Message-Id: <20230220133602.654475729@linuxfoundation.org>
+Subject: [PATCH 6.1 056/118] mmc: meson-gx: fix SDIO mode if cap_sdio_irq isnt set
+Date: Mon, 20 Feb 2023 14:36:12 +0100
+Message-Id: <20230220133602.687847279@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -34,44 +35,84 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Paul Cercueil <paul@crapouillou.net>
+From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit 3f18c5046e633cc4bbad396b74c05d46d353033d upstream.
+commit 6ea6b95a7e3ec2015954cb514ee9dbc6dc80ec8f upstream.
 
-On JZ4760 and JZ4760B, SD cards fail to run if the maximum clock
-rate is set to 50 MHz, even though the controller officially does
-support it.
+Some SDIO WiFi modules stopped working after SDIO interrupt mode
+was added if cap_sdio_irq isn't set in device tree. This patch was
+confirmed to fix the issue.
 
-Until the actual bug is found and fixed, limit the maximum clock rate to
-24 MHz.
-
-Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+Fixes: 066ecde6d826 ("mmc: meson-gx: add SDIO interrupt support")
+Reported-by: Geraldo Nascimento <geraldogabriel@gmail.com>
+Tested-by: Geraldo Nascimento <geraldogabriel@gmail.com>
 Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230131210229.68129-1-paul@crapouillou.net
+Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
+Link: https://lore.kernel.org/r/816cba9f-ff92-31a2-60f0-aca542d1d13e@gmail.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/host/jz4740_mmc.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/mmc/host/meson-gx-mmc.c |   23 +++++++++++++----------
+ 1 file changed, 13 insertions(+), 10 deletions(-)
 
---- a/drivers/mmc/host/jz4740_mmc.c
-+++ b/drivers/mmc/host/jz4740_mmc.c
-@@ -1053,6 +1053,16 @@ static int jz4740_mmc_probe(struct platf
- 	mmc->ops = &jz4740_mmc_ops;
- 	if (!mmc->f_max)
- 		mmc->f_max = JZ_MMC_CLK_RATE;
-+
-+	/*
-+	 * There seems to be a problem with this driver on the JZ4760 and
-+	 * JZ4760B SoCs. There, when using the maximum rate supported (50 MHz),
-+	 * the communication fails with many SD cards.
-+	 * Until this bug is sorted out, limit the maximum rate to 24 MHz.
-+	 */
-+	if (host->version == JZ_MMC_JZ4760 && mmc->f_max > JZ_MMC_CLK_RATE)
-+		mmc->f_max = JZ_MMC_CLK_RATE;
-+
- 	mmc->f_min = mmc->f_max / 128;
- 	mmc->ocr_avail = MMC_VDD_32_33 | MMC_VDD_33_34;
+--- a/drivers/mmc/host/meson-gx-mmc.c
++++ b/drivers/mmc/host/meson-gx-mmc.c
+@@ -435,7 +435,8 @@ static int meson_mmc_clk_init(struct mes
+ 	clk_reg |= FIELD_PREP(CLK_CORE_PHASE_MASK, CLK_PHASE_180);
+ 	clk_reg |= FIELD_PREP(CLK_TX_PHASE_MASK, CLK_PHASE_0);
+ 	clk_reg |= FIELD_PREP(CLK_RX_PHASE_MASK, CLK_PHASE_0);
+-	clk_reg |= CLK_IRQ_SDIO_SLEEP(host);
++	if (host->mmc->caps & MMC_CAP_SDIO_IRQ)
++		clk_reg |= CLK_IRQ_SDIO_SLEEP(host);
+ 	writel(clk_reg, host->regs + SD_EMMC_CLOCK);
  
+ 	/* get the mux parents */
+@@ -948,16 +949,18 @@ static irqreturn_t meson_mmc_irq(int irq
+ {
+ 	struct meson_host *host = dev_id;
+ 	struct mmc_command *cmd;
+-	u32 status, raw_status;
++	u32 status, raw_status, irq_mask = IRQ_EN_MASK;
+ 	irqreturn_t ret = IRQ_NONE;
+ 
++	if (host->mmc->caps & MMC_CAP_SDIO_IRQ)
++		irq_mask |= IRQ_SDIO;
+ 	raw_status = readl(host->regs + SD_EMMC_STATUS);
+-	status = raw_status & (IRQ_EN_MASK | IRQ_SDIO);
++	status = raw_status & irq_mask;
+ 
+ 	if (!status) {
+ 		dev_dbg(host->dev,
+-			"Unexpected IRQ! irq_en 0x%08lx - status 0x%08x\n",
+-			 IRQ_EN_MASK | IRQ_SDIO, raw_status);
++			"Unexpected IRQ! irq_en 0x%08x - status 0x%08x\n",
++			 irq_mask, raw_status);
+ 		return IRQ_NONE;
+ 	}
+ 
+@@ -1204,6 +1207,11 @@ static int meson_mmc_probe(struct platfo
+ 		goto free_host;
+ 	}
+ 
++	mmc->caps |= MMC_CAP_CMD23;
++
++	if (mmc->caps & MMC_CAP_SDIO_IRQ)
++		mmc->caps2 |= MMC_CAP2_SDIO_IRQ_NOTHREAD;
++
+ 	host->data = (struct meson_mmc_data *)
+ 		of_device_get_match_data(&pdev->dev);
+ 	if (!host->data) {
+@@ -1277,11 +1285,6 @@ static int meson_mmc_probe(struct platfo
+ 
+ 	spin_lock_init(&host->lock);
+ 
+-	mmc->caps |= MMC_CAP_CMD23;
+-
+-	if (mmc->caps & MMC_CAP_SDIO_IRQ)
+-		mmc->caps2 |= MMC_CAP2_SDIO_IRQ_NOTHREAD;
+-
+ 	if (host->dram_access_quirk) {
+ 		/* Limit segments to 1 due to low available sram memory */
+ 		mmc->max_segs = 1;
 
 
