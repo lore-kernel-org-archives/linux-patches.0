@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6AE63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52715C433EF;
-	Mon, 20 Feb 2023 13:51:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAD563B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2097C433D2;
+	Mon, 20 Feb 2023 13:51:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901066;
-	bh=hUPAz7/Vrxl4ojlvrN3CtHPIGvlkHC4PrRoeJ8keh+8=;
+	s=korg; t=1676901069;
+	bh=DKpBkqc//T4XWv4uVVRlyIOwxgWQf2JMLxMRR2dnKCo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zEnb/HJR8uJLoiH0ZbUjQvnElTNJASBmFb35kEXI27jq/PP/yiLPNNLMj/PjzDQFf
-	 HTVaopgez1zDwetEza5yqxR7ljEQ4pBCJlPFdopUgTmxYWUITyialXJo6KWBCpx9Nn
-	 llB8lyHMPNTql+095ZiJ1+OQCWieqsKXF8JV44lQ=
+	b=mZQcCxvam0fK98mRoWDfxuxRh3HE5sXnMZECcFQNHbHP/ohCjWuvlsKm5xjnS4FAo
+	 2p4Rqiyw4iJX8VwOE3O98dGludDQjYyYJa3YaJnxF2140PQLgZysLpcCWx9pRuF1J2
+	 eyBXdfWNqMokb7OGT2MLdNBApoYg4saP+wmNQOEI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Engel <Amit.Engel@dell.com>,
-	James Smart <jsmart2021@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Aurabindo Pillai <aurabindo.pillai@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 17/83] nvme-fc: fix a missing queue put in nvmet_fc_ls_create_association
-Date: Mon, 20 Feb 2023 14:35:50 +0100
-Message-Id: <20230220133554.303859497@linuxfoundation.org>
+Subject: [PATCH 5.15 18/83] drm/amd/display: Properly handle additional cases where DCN is not supported
+Date: Mon, 20 Feb 2023 14:35:51 +0100
+Message-Id: <20230220133554.338372931@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -36,39 +35,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amit Engel <Amit.Engel@dell.com>
+From: Alex Deucher <alexander.deucher@amd.com>
 
-[ Upstream commit 0cab4404874f2de52617de8400c844891c6ea1ce ]
+[ Upstream commit 6fc547a5a2ef5ce05b16924106663ab92f8f87a7 ]
 
-As part of nvmet_fc_ls_create_association there is a case where
-nvmet_fc_alloc_target_queue fails right after a new association with an
-admin queue is created. In this case, no one releases the get taken in
-nvmet_fc_alloc_target_assoc.  This fix is adding the missing put.
+There could be boards with DCN listed in IP discovery, but no
+display hardware actually wired up.  In this case the vbios
+display table will not be populated.  Detect this case and
+skip loading DM when we detect it.
 
-Signed-off-by: Amit Engel <Amit.Engel@dell.com>
-Reviewed-by: James Smart <jsmart2021@gmail.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+v2: Mark DCN as harvested as well so other display checks
+elsewhere in the driver are handled properly.
+
+Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
+Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 11 +++++++++++
+ 1 file changed, 11 insertions(+)
 
-diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index c43bc5e1c7a28..00a2a591f5c1f 100644
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -1685,8 +1685,10 @@ nvmet_fc_ls_create_association(struct nvmet_fc_tgtport *tgtport,
- 		else {
- 			queue = nvmet_fc_alloc_target_queue(iod->assoc, 0,
- 					be16_to_cpu(rqst->assoc_cmd.sqsize));
--			if (!queue)
-+			if (!queue) {
- 				ret = VERR_QUEUE_ALLOC_FAIL;
-+				nvmet_fc_tgt_a_put(iod->assoc);
-+			}
- 		}
- 	}
+diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+index e9797439bb0eb..3f325e1e440c9 100644
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -4428,6 +4428,17 @@ DEVICE_ATTR_WO(s3_debug);
+ static int dm_early_init(void *handle)
+ {
+ 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
++	struct amdgpu_mode_info *mode_info = &adev->mode_info;
++	struct atom_context *ctx = mode_info->atom_context;
++	int index = GetIndexIntoMasterTable(DATA, Object_Header);
++	u16 data_offset;
++
++	/* if there is no object header, skip DM */
++	if (!amdgpu_atom_parse_data_header(ctx, index, NULL, NULL, NULL, &data_offset)) {
++		adev->harvest_ip_mask |= AMD_HARVEST_IP_DMU_MASK;
++		dev_info(adev->dev, "No object header, skipping DM\n");
++		return -ENOENT;
++	}
  
+ 	switch (adev->asic_type) {
+ #if defined(CONFIG_DRM_AMD_DC_SI)
 -- 
 2.39.0
 
