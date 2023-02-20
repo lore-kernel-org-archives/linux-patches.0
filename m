@@ -1,33 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B636863B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1669CC433D2;
-	Mon, 20 Feb 2023 13:49:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5782763B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D30C7C433EF;
+	Mon, 20 Feb 2023 13:49:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900983;
-	bh=wGwVzkJwFalgr9Z1sts/r+o5YSLXxZMIYjMk+Y4lXg0=;
+	s=korg; t=1676900986;
+	bh=QYOMXxW6MI0jTvO1e9bAtG5DCvXWueu5rx02ZljLFUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KBojZkpBtuW6sWeTibcV7IqTFLtXkR4N+LFdwiPQS8GLn8OuCm3G4w3ABX5ch4lKg
-	 y0PGj6wRTuFUvr5fQi7mPc9Tzy4Krx7vssZMNLjaotfX6oJ+XGUGu5baVsyAke5iM6
-	 9Qn1WACrBpGaVSX+CHjKF16gf8DeqQV9nwOW7Bvo=
+	b=n7XmIaIXY/cQC+JlAboOdcE6NIhCH3j0Ode2NHfXKkK6zq0erTSDW1ms0bGkkN1Sy
+	 WXHUHO47O9+/sH/lidGcPm9LNwynMb1LGfF92aNPrSC/KlJkB2LwoGaqw91J1y4yGo
+	 OqjQMQ0S35FGgeqizMxCVEdnvwp9hMoAY34wcZ3A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Jesper Juhl <jesperjuhl76@gmail.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Andi Kleen <ak@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.4 134/156] hugetlb: check for undefined shift on 32 bit architectures
-Date: Mon, 20 Feb 2023 14:36:18 +0100
-Message-Id: <20230220133608.199970772@linuxfoundation.org>
+	Miko Larsson <mikoxyzzz@gmail.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	syzbot+cd80c5ef5121bfe85b55@syzkaller.appspotmail.com
+Subject: [PATCH 5.4 143/156] net/usb: kalmia: Dont pass act_len in usb_bulk_msg error path
+Date: Mon, 20 Feb 2023 14:36:27 +0100
+Message-Id: <20230220133608.601746136@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -41,63 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Kravetz <mike.kravetz@oracle.com>
+From: Miko Larsson <mikoxyzzz@gmail.com>
 
-commit ec4288fe63966b26d53907212ecd05dfa81dd2cc upstream.
+commit c68f345b7c425b38656e1791a0486769a8797016 upstream.
 
-Users can specify the hugetlb page size in the mmap, shmget and
-memfd_create system calls.  This is done by using 6 bits within the flags
-argument to encode the base-2 logarithm of the desired page size.  The
-routine hstate_sizelog() uses the log2 value to find the corresponding
-hugetlb hstate structure.  Converting the log2 value (page_size_log) to
-potential hugetlb page size is the simple statement:
+syzbot reported that act_len in kalmia_send_init_packet() is
+uninitialized when passing it to the first usb_bulk_msg error path. Jiri
+Pirko noted that it's pointless to pass it in the error path, and that
+the value that would be printed in the second error path would be the
+value of act_len from the first call to usb_bulk_msg.[1]
 
-	1UL << page_size_log
+With this in mind, let's just not pass act_len to the usb_bulk_msg error
+paths.
 
-Because only 6 bits are used for page_size_log, the left shift can not be
-greater than 63.  This is fine on 64 bit architectures where a long is 64
-bits.  However, if a value greater than 31 is passed on a 32 bit
-architecture (where long is 32 bits) the shift will result in undefined
-behavior.  This was generally not an issue as the result of the undefined
-shift had to exactly match hugetlb page size to proceed.
+1: https://lore.kernel.org/lkml/Y9pY61y1nwTuzMOa@nanopsycho/
 
-Recent improvements in runtime checking have resulted in this undefined
-behavior throwing errors such as reported below.
-
-Fix by comparing page_size_log to BITS_PER_LONG before doing shift.
-
-Link: https://lkml.kernel.org/r/20230216013542.138708-1-mike.kravetz@oracle.com
-Link: https://lore.kernel.org/lkml/CA+G9fYuei_Tr-vN9GS7SfFyU1y9hNysnf=PB7kT0=yv4MiPgVg@mail.gmail.com/
-Fixes: 42d7395feb56 ("mm: support more pagesizes for MAP_HUGETLB/SHM_HUGETLB")
-Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Reviewed-by: Jesper Juhl <jesperjuhl76@gmail.com>
-Acked-by: Muchun Song <songmuchun@bytedance.com>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: Anders Roxell <anders.roxell@linaro.org>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Sasha Levin <sashal@kernel.org>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: d40261236e8e ("net/usb: Add Samsung Kalmia driver for Samsung GT-B3730")
+Reported-and-tested-by: syzbot+cd80c5ef5121bfe85b55@syzkaller.appspotmail.com
+Signed-off-by: Miko Larsson <mikoxyzzz@gmail.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/hugetlb.h |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ drivers/net/usb/kalmia.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -397,7 +397,10 @@ static inline struct hstate *hstate_size
- 	if (!page_size_log)
- 		return &default_hstate;
+--- a/drivers/net/usb/kalmia.c
++++ b/drivers/net/usb/kalmia.c
+@@ -65,8 +65,8 @@ kalmia_send_init_packet(struct usbnet *d
+ 		init_msg, init_msg_len, &act_len, KALMIA_USB_TIMEOUT);
+ 	if (status != 0) {
+ 		netdev_err(dev->net,
+-			"Error sending init packet. Status %i, length %i\n",
+-			status, act_len);
++			"Error sending init packet. Status %i\n",
++			status);
+ 		return status;
+ 	}
+ 	else if (act_len != init_msg_len) {
+@@ -83,8 +83,8 @@ kalmia_send_init_packet(struct usbnet *d
  
--	return size_to_hstate(1UL << page_size_log);
-+	if (page_size_log < BITS_PER_LONG)
-+		return size_to_hstate(1UL << page_size_log);
-+
-+	return NULL;
- }
- 
- static inline struct hstate *hstate_vma(struct vm_area_struct *vma)
+ 	if (status != 0)
+ 		netdev_err(dev->net,
+-			"Error receiving init result. Status %i, length %i\n",
+-			status, act_len);
++			"Error receiving init result. Status %i\n",
++			status);
+ 	else if (act_len != expected_len)
+ 		netdev_err(dev->net, "Unexpected init result length: %i\n",
+ 			act_len);
 
 
