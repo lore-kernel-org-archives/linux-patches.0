@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C7CE063B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:41:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E55EC433EF;
-	Mon, 20 Feb 2023 13:41:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D0863B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:41:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2CFDC433D2;
+	Mon, 20 Feb 2023 13:41:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900471;
-	bh=exfcoHHmAdRE9ytBwWK8vYWP0M1lrOlnNwQl50Fbtrs=;
+	s=korg; t=1676900474;
+	bh=lIOIFA4RlelFtkAg8LTm4Hg6ZEK6qEPzbDtU4fswp58=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IiqSPDuUCbkGb7r5W/lACGsXpVZSQ/J/6qvxzVumv3YbqVwe2lcRhlqMjTUZs9FJq
-	 hbDM3UlRv9yJG4GVKTHi23sveIzhLGjpgjuleKdEquAkQoDTet3IscJqxJ4+jo18im
-	 r9AhoLMlRNTHB7JbFdnbjsAxP4U8/P167HXugn0s=
+	b=arPr4T5Wb004rQdbOaFenY5W0NhqG1G2/CvR8sSo7s2d9aKx40h0glUKwiI+nH4cM
+	 0UFoPZmr/+km+GXVTTSAVR0qPVXH/TnYnh3fucxEOnc5RFxDRU3w7FRL6ewWjukTyr
+	 DK30GYK1viOeg70/H25UwxG18fkYoqpxuHdJD6S4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Mattijs Korpershoek <mkorpershoek@baylibre.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 20/89] Input: i8042 - add Clevo PCX0DX to i8042 quirk table
-Date: Mon, 20 Feb 2023 14:35:19 +0100
-Message-Id: <20230220133553.854475436@linuxfoundation.org>
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	syzbot+082fa4af80a5bb1a9843@syzkaller.appspotmail.com,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.19 38/89] Squashfs: fix handling and sanity checking of xattr_ids count
+Date: Mon, 20 Feb 2023 14:35:37 +0100
+Message-Id: <20230220133554.481121439@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -37,44 +37,143 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: Phillip Lougher <phillip@squashfs.org.uk>
 
-[ Upstream commit 9c445d2637c938a800fcc8b5f0b10e60c94460c7 ]
+commit f65c4bbbd682b0877b669828b4e033b8d5d0a2dc upstream.
 
-The Clevo PCX0DX/TUXEDO XP1511, need quirks for the keyboard to not be
-occasionally unresponsive after resume.
+A Sysbot [1] corrupted filesystem exposes two flaws in the handling and
+sanity checking of the xattr_ids count in the filesystem.  Both of these
+flaws cause computation overflow due to incorrect typing.
 
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Cc: stable@vger.kernel.org
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Mattijs Korpershoek <mkorpershoek@baylibre.com>
-Link: https://lore.kernel.org/r/20230110134524.553620-1-wse@tuxedocomputers.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+In the corrupted filesystem the xattr_ids value is 4294967071, which
+stored in a signed variable becomes the negative number -225.
+
+Flaw 1 (64-bit systems only):
+
+The signed integer xattr_ids variable causes sign extension.
+
+This causes variable overflow in the SQUASHFS_XATTR_*(A) macros.  The
+variable is first multiplied by sizeof(struct squashfs_xattr_id) where the
+type of the sizeof operator is "unsigned long".
+
+On a 64-bit system this is 64-bits in size, and causes the negative number
+to be sign extended and widened to 64-bits and then become unsigned.  This
+produces the very large number 18446744073709548016 or 2^64 - 3600.  This
+number when rounded up by SQUASHFS_METADATA_SIZE - 1 (8191 bytes) and
+divided by SQUASHFS_METADATA_SIZE overflows and produces a length of 0
+(stored in len).
+
+Flaw 2 (32-bit systems only):
+
+On a 32-bit system the integer variable is not widened by the unsigned
+long type of the sizeof operator (32-bits), and the signedness of the
+variable has no effect due it always being treated as unsigned.
+
+The above corrupted xattr_ids value of 4294967071, when multiplied
+overflows and produces the number 4294963696 or 2^32 - 3400.  This number
+when rounded up by SQUASHFS_METADATA_SIZE - 1 (8191 bytes) and divided by
+SQUASHFS_METADATA_SIZE overflows again and produces a length of 0.
+
+The effect of the 0 length computation:
+
+In conjunction with the corrupted xattr_ids field, the filesystem also has
+a corrupted xattr_table_start value, where it matches the end of
+filesystem value of 850.
+
+This causes the following sanity check code to fail because the
+incorrectly computed len of 0 matches the incorrect size of the table
+reported by the superblock (0 bytes).
+
+    len = SQUASHFS_XATTR_BLOCK_BYTES(*xattr_ids);
+    indexes = SQUASHFS_XATTR_BLOCKS(*xattr_ids);
+
+    /*
+     * The computed size of the index table (len bytes) should exactly
+     * match the table start and end points
+    */
+    start = table_start + sizeof(*id_table);
+    end = msblk->bytes_used;
+
+    if (len != (end - start))
+            return ERR_PTR(-EINVAL);
+
+Changing the xattr_ids variable to be "usigned int" fixes the flaw on a
+64-bit system.  This relies on the fact the computation is widened by the
+unsigned long type of the sizeof operator.
+
+Casting the variable to u64 in the above macro fixes this flaw on a 32-bit
+system.
+
+It also means 64-bit systems do not implicitly rely on the type of the
+sizeof operator to widen the computation.
+
+[1] https://lore.kernel.org/lkml/000000000000cd44f005f1a0f17f@google.com/
+
+Link: https://lkml.kernel.org/r/20230127061842.10965-1-phillip@squashfs.org.uk
+Fixes: 506220d2ba21 ("squashfs: add more sanity checks in xattr id lookup")
+Signed-off-by: Phillip Lougher <phillip@squashfs.org.uk>
+Reported-by: <syzbot+082fa4af80a5bb1a9843@syzkaller.appspotmail.com>
+Cc: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Cc: Fedor Pchelkin <pchelkin@ispras.ru>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/input/serio/i8042-x86ia64io.h | 7 +++++++
- 1 file changed, 7 insertions(+)
+ fs/squashfs/squashfs_fs.h    |    2 +-
+ fs/squashfs/squashfs_fs_sb.h |    2 +-
+ fs/squashfs/xattr.h          |    4 ++--
+ fs/squashfs/xattr_id.c       |    2 +-
+ 4 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/drivers/input/serio/i8042-x86ia64io.h b/drivers/input/serio/i8042-x86ia64io.h
-index 95968a2d14cc..b2ab20c16cc7 100644
---- a/drivers/input/serio/i8042-x86ia64io.h
-+++ b/drivers/input/serio/i8042-x86ia64io.h
-@@ -1173,6 +1173,13 @@ static const struct dmi_system_id i8042_dmi_quirk_table[] __initconst = {
- 		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
- 					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
- 	},
-+	{
-+		.matches = {
-+			DMI_MATCH(DMI_BOARD_NAME, "PCX0DX"),
-+		},
-+		.driver_data = (void *)(SERIO_QUIRK_NOMUX | SERIO_QUIRK_RESET_ALWAYS |
-+					SERIO_QUIRK_NOLOOP | SERIO_QUIRK_NOPNP)
-+	},
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_BOARD_NAME, "X170SM"),
--- 
-2.39.0
-
+--- a/fs/squashfs/squashfs_fs.h
++++ b/fs/squashfs/squashfs_fs.h
+@@ -196,7 +196,7 @@ static inline int squashfs_block_size(__
+ #define SQUASHFS_ID_BLOCK_BYTES(A)	(SQUASHFS_ID_BLOCKS(A) *\
+ 					sizeof(u64))
+ /* xattr id lookup table defines */
+-#define SQUASHFS_XATTR_BYTES(A)		((A) * sizeof(struct squashfs_xattr_id))
++#define SQUASHFS_XATTR_BYTES(A)		(((u64) (A)) * sizeof(struct squashfs_xattr_id))
+ 
+ #define SQUASHFS_XATTR_BLOCK(A)		(SQUASHFS_XATTR_BYTES(A) / \
+ 					SQUASHFS_METADATA_SIZE)
+--- a/fs/squashfs/squashfs_fs_sb.h
++++ b/fs/squashfs/squashfs_fs_sb.h
+@@ -76,7 +76,7 @@ struct squashfs_sb_info {
+ 	long long				bytes_used;
+ 	unsigned int				inodes;
+ 	unsigned int				fragments;
+-	int					xattr_ids;
++	unsigned int				xattr_ids;
+ 	unsigned int				ids;
+ };
+ #endif
+--- a/fs/squashfs/xattr.h
++++ b/fs/squashfs/xattr.h
+@@ -23,12 +23,12 @@
+ 
+ #ifdef CONFIG_SQUASHFS_XATTR
+ extern __le64 *squashfs_read_xattr_id_table(struct super_block *, u64,
+-		u64 *, int *);
++		u64 *, unsigned int *);
+ extern int squashfs_xattr_lookup(struct super_block *, unsigned int, int *,
+ 		unsigned int *, unsigned long long *);
+ #else
+ static inline __le64 *squashfs_read_xattr_id_table(struct super_block *sb,
+-		u64 start, u64 *xattr_table_start, int *xattr_ids)
++		u64 start, u64 *xattr_table_start, unsigned int *xattr_ids)
+ {
+ 	struct squashfs_xattr_id_table *id_table;
+ 
+--- a/fs/squashfs/xattr_id.c
++++ b/fs/squashfs/xattr_id.c
+@@ -69,7 +69,7 @@ int squashfs_xattr_lookup(struct super_b
+  * Read uncompressed xattr id lookup table indexes from disk into memory
+  */
+ __le64 *squashfs_read_xattr_id_table(struct super_block *sb, u64 table_start,
+-		u64 *xattr_table_start, int *xattr_ids)
++		u64 *xattr_table_start, unsigned int *xattr_ids)
+ {
+ 	struct squashfs_sb_info *msblk = sb->s_fs_info;
+ 	unsigned int len, indexes;
 
 
