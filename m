@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B08463B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A61AFC433EF;
-	Mon, 20 Feb 2023 13:43:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45AC63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1C5C433EF;
+	Mon, 20 Feb 2023 13:43:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900603;
-	bh=vBfjCfwD5QJdaB4qc1I+JgrFCUdQDbDeZlwXuZA4dZg=;
+	s=korg; t=1676900605;
+	bh=cs8jPymyYZtHyjrx1lbbV2DScK85AhymKEFm3xd94tk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VgWYfu/dXVMuObviOFLPx1LLVqazCNPZqoYJ6tIfg0ft43Klpc3h0sFz0xBEoIGw6
-	 Kya7vEKCBZiFcutcui1QN7FMAMu05T5FskMQKRtt0n0GCdrmZWCZ94MBbj2DWvaF8N
-	 EnrfJi96FuzxFaOmI17kinhkblUzlAvIn1rOSyqA=
+	b=OoaS7XExVxZUppcmpp8WC0eNn/qaXIMx3tciRi6WwJunDri35cwwhFhctC2/xHqPQ
+	 41nfb9OG+pu2Y4TGBpuWuQ6zOr4927kv45dMcB7AIvbNVd7if8fOXsb0dXIaMAkuUf
+	 dFr3GyAYWIPlWrd8ltst0bkibskCAMHX0/Mc62cY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diana Zigterman <dzigterman@chromium.org>,
-	Prashant Malani <pmalani@chromium.org>
-Subject: [PATCH 4.19 58/89] usb: typec: altmodes/displayport: Fix probe pin assign check
-Date: Mon, 20 Feb 2023 14:35:57 +0100
-Message-Id: <20230220133555.185791137@linuxfoundation.org>
+	Willem de Bruijn <willemb@google.com>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 49/89] rds: rds_rm_zerocopy_callback() use list_first_entry()
+Date: Mon, 20 Feb 2023 14:35:48 +0100
+Message-Id: <20230220133554.861854439@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -34,48 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prashant Malani <pmalani@chromium.org>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-commit 54e5c00a4eb0a4c663445b245f641bbfab142430 upstream.
+[ Upstream commit f753a68980cf4b59a80fe677619da2b1804f526d ]
 
-While checking Pin Assignments of the port and partner during probe, we
-don't take into account whether the peripheral is a plug or receptacle.
+rds_rm_zerocopy_callback() uses list_entry() on the head of a list
+causing a type confusion.
+Use list_first_entry() to actually access the first element of the
+rs_zcookie_queue list.
 
-This manifests itself in a mode entry failure on certain docks and
-dongles with captive cables. For instance, the Startech.com Type-C to DP
-dongle (Model #CDP2DP) advertises its DP VDO as 0x405. This would fail
-the Pin Assignment compatibility check, despite it supporting
-Pin Assignment C as a UFP.
-
-Update the check to use the correct DP Pin Assign macros that
-take the peripheral's receptacle bit into account.
-
-Fixes: c1e5c2f0cb8a ("usb: typec: altmodes/displayport: correct pin assignment for UFP receptacles")
-Cc: stable@vger.kernel.org
-Reported-by: Diana Zigterman <dzigterman@chromium.org>
-Signed-off-by: Prashant Malani <pmalani@chromium.org>
-Link: https://lore.kernel.org/r/20230208205318.131385-1-pmalani@chromium.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 9426bbc6de99 ("rds: use list structure to track information for zerocopy completion notification")
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Link: https://lore.kernel.org/r/20230202-rds-zerocopy-v3-1-83b0df974f9a@diag.uniroma1.it
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/typec/altmodes/displayport.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/rds/message.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/typec/altmodes/displayport.c
-+++ b/drivers/usb/typec/altmodes/displayport.c
-@@ -526,10 +526,10 @@ static int dp_altmode_probe(struct typec
- 	/* FIXME: Port can only be DFP_U. */
- 
- 	/* Make sure we have compatiple pin configurations */
--	if (!(DP_CAP_DFP_D_PIN_ASSIGN(port->vdo) &
--	      DP_CAP_UFP_D_PIN_ASSIGN(alt->vdo)) &&
--	    !(DP_CAP_UFP_D_PIN_ASSIGN(port->vdo) &
--	      DP_CAP_DFP_D_PIN_ASSIGN(alt->vdo)))
-+	if (!(DP_CAP_PIN_ASSIGN_DFP_D(port->vdo) &
-+	      DP_CAP_PIN_ASSIGN_UFP_D(alt->vdo)) &&
-+	    !(DP_CAP_PIN_ASSIGN_UFP_D(port->vdo) &
-+	      DP_CAP_PIN_ASSIGN_DFP_D(alt->vdo)))
- 		return -ENODEV;
- 
- 	ret = sysfs_create_group(&alt->dev.kobj, &dp_altmode_group);
+diff --git a/net/rds/message.c b/net/rds/message.c
+index 4b00b1152a5f0..309b54cc62ae3 100644
+--- a/net/rds/message.c
++++ b/net/rds/message.c
+@@ -104,9 +104,9 @@ static void rds_rm_zerocopy_callback(struct rds_sock *rs,
+ 	spin_lock_irqsave(&q->lock, flags);
+ 	head = &q->zcookie_head;
+ 	if (!list_empty(head)) {
+-		info = list_entry(head, struct rds_msg_zcopy_info,
+-				  rs_zcookie_next);
+-		if (info && rds_zcookie_add(info, cookie)) {
++		info = list_first_entry(head, struct rds_msg_zcopy_info,
++					rs_zcookie_next);
++		if (rds_zcookie_add(info, cookie)) {
+ 			spin_unlock_irqrestore(&q->lock, flags);
+ 			kfree(rds_info_from_znotifier(znotif));
+ 			/* caller invokes rds_wake_sk_sleep() */
+-- 
+2.39.0
+
 
 
