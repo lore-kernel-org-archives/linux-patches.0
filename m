@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BFD963B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A7848C433EF;
-	Mon, 20 Feb 2023 13:47:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DFB63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 329F5C433A0;
+	Mon, 20 Feb 2023 13:47:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900843;
-	bh=sWrzaTy5oBQmKcfHRoKHv9wRU/DFswLyPV83a2VfGRE=;
+	s=korg; t=1676900845;
+	bh=HxlNTcBirh4p2GeC0VF4PPIcSdLRuz3zxy211PcUy+M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZCmh0bUfi08ThX/eZkFjhhhgQzm9CUZ9GvQr4iIedLey9MMwim+yJE1TAgUjpfvzF
-	 nhDBJlnG7C9+52mnO4e8h6eKR569bvawCyG92izhvLFhqFfe4cGX7cVvs5cCQXOCR6
-	 /P3H8RNaZi7+E07fBMOScmN819WzV27mFSJAVuIE=
+	b=r43+DaGpHWaL4bkp8HKKvt5dEbOs2MJhe6DMdE2z2/rIkgbqMAj2/Xfe45QvKaXsv
+	 Vk4+G1hUKlHuTkeEExQ3hx801tsUEtfpShJgp5LtsxM+4fBWznWXjPi7Dq5MUPMYkk
+	 oUK8qGrZIAQ/AdwjBfQwGF5WbMMr3uzWrcX1QOOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	David Ahern <dsahern@gmail.com>
-Subject: [PATCH 5.4 089/156] bpf: Always return target ifindex in bpf_fib_lookup
-Date: Mon, 20 Feb 2023 14:35:33 +0100
-Message-Id: <20230220133606.142490825@linuxfoundation.org>
+	Neel Patel <neel.patel@amd.com>,
+	Shannon Nelson <shannon.nelson@amd.com>,
+	Leon Romanovsky <leonro@nvidia.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 072/156] ionic: clean interrupt before enabling queue to avoid credit race
+Date: Mon, 20 Feb 2023 14:35:16 +0100
+Message-Id: <20230220133605.383715800@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -35,55 +37,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Toke Høiland-Jørgensen <toke@redhat.com>
+From: Neel Patel <neel.patel@amd.com>
 
-commit d1c362e1dd68a421cf9033404cf141a4ab734a5d upstream.
+[ Upstream commit e8797a058466b60fc5a3291b92430c93ba90eaff ]
 
-The bpf_fib_lookup() helper performs a neighbour lookup for the destination
-IP and returns BPF_FIB_LKUP_NO_NEIGH if this fails, with the expectation
-that the BPF program will pass the packet up the stack in this case.
-However, with the addition of bpf_redirect_neigh() that can be used instead
-to perform the neighbour lookup, at the cost of a bit of duplicated work.
+Clear the interrupt credits before enabling the queue rather
+than after to be sure that the enabled queue starts at 0 and
+that we don't wipe away possible credits after enabling the
+queue.
 
-For that we still need the target ifindex, and since bpf_fib_lookup()
-already has that at the time it performs the neighbour lookup, there is
-really no reason why it can't just return it in any case. So let's just
-always return the ifindex if the FIB lookup itself succeeds.
-
-Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Cc: David Ahern <dsahern@gmail.com>
-Link: https://lore.kernel.org/bpf/20201009184234.134214-1-toke@redhat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 0f3154e6bcb3 ("ionic: Add Tx and Rx handling")
+Signed-off-by: Neel Patel <neel.patel@amd.com>
+Signed-off-by: Shannon Nelson <shannon.nelson@amd.com>
+Reviewed-by: Leon Romanovsky <leonro@nvidia.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/filter.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/pensando/ionic/ionic_lif.c | 15 ++++++++++++---
+ 1 file changed, 12 insertions(+), 3 deletions(-)
 
---- a/net/core/filter.c
-+++ b/net/core/filter.c
-@@ -4617,7 +4617,6 @@ static int bpf_fib_set_fwd_params(struct
- 	memcpy(params->smac, dev->dev_addr, ETH_ALEN);
- 	params->h_vlan_TCI = 0;
- 	params->h_vlan_proto = 0;
--	params->ifindex = dev->ifindex;
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_lif.c b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+index f9c303d76658a..d0841836cf705 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_lif.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_lif.c
+@@ -190,6 +190,7 @@ static int ionic_qcq_enable(struct ionic_qcq *qcq)
+ 			.oper = IONIC_Q_ENABLE,
+ 		},
+ 	};
++	int ret;
  
- 	return 0;
+ 	idev = &lif->ionic->idev;
+ 	dev = lif->ionic->dev;
+@@ -197,16 +198,24 @@ static int ionic_qcq_enable(struct ionic_qcq *qcq)
+ 	dev_dbg(dev, "q_enable.index %d q_enable.qtype %d\n",
+ 		ctx.cmd.q_control.index, ctx.cmd.q_control.type);
+ 
++	if (qcq->flags & IONIC_QCQ_F_INTR)
++		ionic_intr_clean(idev->intr_ctrl, qcq->intr.index);
++
++	ret = ionic_adminq_post_wait(lif, &ctx);
++	if (ret)
++		return ret;
++
++	if (qcq->napi.poll)
++		napi_enable(&qcq->napi);
++
+ 	if (qcq->flags & IONIC_QCQ_F_INTR) {
+ 		irq_set_affinity_hint(qcq->intr.vector,
+ 				      &qcq->intr.affinity_mask);
+-		napi_enable(&qcq->napi);
+-		ionic_intr_clean(idev->intr_ctrl, qcq->intr.index);
+ 		ionic_intr_mask(idev->intr_ctrl, qcq->intr.index,
+ 				IONIC_INTR_MASK_CLEAR);
+ 	}
+ 
+-	return ionic_adminq_post_wait(lif, &ctx);
++	return 0;
  }
-@@ -4714,6 +4713,7 @@ static int bpf_ipv4_fib_lookup(struct ne
- 	dev = nhc->nhc_dev;
  
- 	params->rt_metric = res.fi->fib_priority;
-+	params->ifindex = dev->ifindex;
- 
- 	/* xdp and cls_bpf programs are run in RCU-bh so
- 	 * rcu_read_lock_bh is not needed here
-@@ -4839,6 +4839,7 @@ static int bpf_ipv6_fib_lookup(struct ne
- 
- 	dev = res.nh->fib_nh_dev;
- 	params->rt_metric = res.f6i->fib6_metric;
-+	params->ifindex = dev->ifindex;
- 
- 	/* xdp and cls_bpf programs are run in RCU-bh so rcu_read_lock_bh is
- 	 * not needed here.
+ static int ionic_qcq_disable(struct ionic_qcq *qcq)
+-- 
+2.39.0
+
 
 
