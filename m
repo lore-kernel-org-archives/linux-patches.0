@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8128C63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D434CC433D2;
-	Mon, 20 Feb 2023 13:51:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17F2363B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9438FC433EF;
+	Mon, 20 Feb 2023 13:51:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901085;
-	bh=cPrTXOixXNlXzQjvmoHKk3/430NvEe6M0hbeedBPQPs=;
+	s=korg; t=1676901087;
+	bh=cvcivxIL80FFiIQlJ5LTpUr9MREuDHyJz6RC1Xq1ey0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fZr9YrmZt9YaNR5cfxcMjzZ0WCZNaQSI5q/Y1zX+RCpupOuXZc6VGlgaimwbKmXNc
-	 DamtTdRdpPBc5GnLP5ef8SR7YrNoBhAT4YAhT2U1CNckPvYKDG2pBj1Y54tPW6kmM3
-	 QMtYvHgu8T4rHqfD6phSFxv3L2RtyEXRC13Tiykc=
+	b=YgTYKnXqcHUvmkElU+4SWeF8zefAzMWkWqTP6iZvgiOpfM7btODq8ZjG7RlrP/3As
+	 5DCTcdt0DVWj11evCN0BvxVNoTrOgcyw5DIK7VzfbxXnFgdfmuEqh5aFIPwpjTNIVO
+	 qfrnUsY/Znw9+6aCmBO9j7aBfUBb69IcVaQSFW80=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <lkp@intel.com>,
-	Dan Carpenter <error27@gmail.com>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Dave Chinner <dchinner@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Allison Henderson <allison.henderson@oracle.com>,
+	Dave Chinner <david@fromorbit.com>,
+	Leah Rumancik <leah.rumancik@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 23/83] nvmem: core: fix return value
-Date: Mon, 20 Feb 2023 14:35:56 +0100
-Message-Id: <20230220133554.506411228@linuxfoundation.org>
+Subject: [PATCH 5.15 24/83] xfs: zero inode fork buffer at allocation
+Date: Mon, 20 Feb 2023 14:35:57 +0100
+Message-Id: <20230220133554.537432194@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -37,39 +38,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+From: Dave Chinner <dchinner@redhat.com>
 
-[ Upstream commit 0c4862b1c1465e473bc961a02765490578bf5c20 ]
+[ Upstream commit cb512c921639613ce03f87e62c5e93ed9fe8c84d ]
 
-Dan Carpenter points out that the return code was not set in commit
-60c8b4aebd8e ("nvmem: core: fix cleanup after dev_set_name()"), but
-this is not the only issue - we also need to zero wp_gpio to prevent
-gpiod_put() being called on an error value.
+When we first allocate or resize an inline inode fork, we round up
+the allocation to 4 byte alingment to make journal alignment
+constraints. We don't clear the unused bytes, so we can copy up to
+three uninitialised bytes into the journal. Zero those bytes so we
+only ever copy zeros into the journal.
 
-Fixes: 560181d3ace6 ("nvmem: core: fix cleanup after dev_set_name()")
-Cc: stable@vger.kernel.org
-Reported-by: kernel test robot <lkp@intel.com>
-Reported-by: Dan Carpenter <error27@gmail.com>
-Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230127104015.23839-10-srinivas.kandagatla@linaro.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Allison Henderson <allison.henderson@oracle.com>
+Signed-off-by: Dave Chinner <david@fromorbit.com>
+Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/core.c | 1 +
- 1 file changed, 1 insertion(+)
+ fs/xfs/libxfs/xfs_inode_fork.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
-index 6a74e38746057..47c1487dcf8cc 100644
---- a/drivers/nvmem/core.c
-+++ b/drivers/nvmem/core.c
-@@ -779,6 +779,7 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
- 						    GPIOD_OUT_HIGH);
- 	if (IS_ERR(nvmem->wp_gpio)) {
- 		rval = PTR_ERR(nvmem->wp_gpio);
-+		nvmem->wp_gpio = NULL;
- 		goto err_put_device;
- 	}
+diff --git a/fs/xfs/libxfs/xfs_inode_fork.c b/fs/xfs/libxfs/xfs_inode_fork.c
+index 1d174909f9bdf..20095233d7bc0 100644
+--- a/fs/xfs/libxfs/xfs_inode_fork.c
++++ b/fs/xfs/libxfs/xfs_inode_fork.c
+@@ -50,8 +50,13 @@ xfs_init_local_fork(
+ 		mem_size++;
+ 
+ 	if (size) {
++		/*
++		 * As we round up the allocation here, we need to ensure the
++		 * bytes we don't copy data into are zeroed because the log
++		 * vectors still copy them into the journal.
++		 */
+ 		real_size = roundup(mem_size, 4);
+-		ifp->if_u1.if_data = kmem_alloc(real_size, KM_NOFS);
++		ifp->if_u1.if_data = kmem_zalloc(real_size, KM_NOFS);
+ 		memcpy(ifp->if_u1.if_data, data, size);
+ 		if (zero_terminate)
+ 			ifp->if_u1.if_data[size] = '\0';
+@@ -500,10 +505,11 @@ xfs_idata_realloc(
+ 	/*
+ 	 * For inline data, the underlying buffer must be a multiple of 4 bytes
+ 	 * in size so that it can be logged and stay on word boundaries.
+-	 * We enforce that here.
++	 * We enforce that here, and use __GFP_ZERO to ensure that size
++	 * extensions always zero the unused roundup area.
+ 	 */
+ 	ifp->if_u1.if_data = krealloc(ifp->if_u1.if_data, roundup(new_size, 4),
+-				      GFP_NOFS | __GFP_NOFAIL);
++				      GFP_NOFS | __GFP_NOFAIL | __GFP_ZERO);
+ 	ifp->if_bytes = new_size;
+ }
  
 -- 
 2.39.0
