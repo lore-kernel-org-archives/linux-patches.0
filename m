@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBDB63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1A6C433EF;
-	Mon, 20 Feb 2023 13:43:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08D6463B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5C9A2C433D2;
+	Mon, 20 Feb 2023 13:43:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900587;
-	bh=NZiF6uuU/REmkP9MqhQkEhocj4JvOaNOBWSK4F77vlo=;
+	s=korg; t=1676900589;
+	bh=nN02dx8EUmPqdf/Tj+8zHwrkU3dOjsHLm0/0c90w2YE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aJ8euRrcNR2pX9FjCSXR4BJ+BQe8IlZevI7y4gdzP9kvFejNTOx3QT54OLFQfq5yF
-	 5o4sJZlgMZ++IRkEzWQwzn5OZ/OrEGL9rFdZtVDRxKKndD8RbkwaYGLkB5gvN1jHOe
-	 pLUisryT8ZTOrfkVI367fksPdyacIsKTt9MjN/KI=
+	b=BzGVJAjedlMDz+nsWOMeQFn+5lsDxb2TYejFsPI9kekRp5X/GgRhjJKR9IVmUwta5
+	 CVWSPtYeeeBVrJ7z4AxPRJjmPECL+DC6rHt8I3rp2OMyP4I3wPHTNZcvPcCVDostA2
+	 6aWay9uMNVeEdyR+mT2mhYM6R1JM/r0Vvh/DTx9o=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Zink <j.zink@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.19 80/89] net: stmmac: fix order of dwmac5 FlexPPS parametrization sequence
-Date: Mon, 20 Feb 2023 14:36:19 +0100
-Message-Id: <20230220133555.988475170@linuxfoundation.org>
+	Maxim Korotkov <korotkov.maxim.s@gmail.com>,
+	Tony Lindgren <tony@atomide.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 53/89] pinctrl: single: fix potential NULL dereference
+Date: Mon, 20 Feb 2023 14:35:52 +0100
+Message-Id: <20230220133555.003341595@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -34,61 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Zink <j.zink@pengutronix.de>
+From: Maxim Korotkov <korotkov.maxim.s@gmail.com>
 
-commit 4562c65ec852067c6196abdcf2d925f08841dcbc upstream.
+[ Upstream commit d2d73e6d4822140445ad4a7b1c6091e0f5fe703b ]
 
-So far changing the period by just setting new period values while
-running did not work.
+Added checking of pointer "function" in pcs_set_mux().
+pinmux_generic_get_function() can return NULL and the pointer
+"function" was dereferenced without checking against NULL.
 
-The order as indicated by the publicly available reference manual of the i.MX8MP [1]
-indicates a sequence:
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
 
- * initiate the programming sequence
- * set the values for PPS period and start time
- * start the pulse train generation.
-
-This is currently not used in dwmac5_flex_pps_config(), which instead does:
-
- * initiate the programming sequence and immediately start the pulse train generation
- * set the values for PPS period and start time
-
-This caused the period values written not to take effect until the FlexPPS output was
-disabled and re-enabled again.
-
-This patch fix the order and allows the period to be set immediately.
-
-[1] https://www.nxp.com/webapp/Download?colCode=IMX8MPRM
-
-Fixes: 9a8a02c9d46d ("net: stmmac: Add Flexible PPS support")
-Signed-off-by: Johannes Zink <j.zink@pengutronix.de>
-Link: https://lore.kernel.org/r/20230210143937.3427483-1-j.zink@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 571aec4df5b7 ("pinctrl: single: Use generic pinmux helpers for managing functions")
+Signed-off-by: Maxim Korotkov <korotkov.maxim.s@gmail.com>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20221118104332.943-1-korotkov.maxim.s@gmail.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac5.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-single.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
-@@ -520,9 +520,9 @@ int dwmac5_flex_pps_config(void __iomem
+diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
+index 2b50030ad97e0..4143cafbf7e73 100644
+--- a/drivers/pinctrl/pinctrl-single.c
++++ b/drivers/pinctrl/pinctrl-single.c
+@@ -345,6 +345,8 @@ static int pcs_set_mux(struct pinctrl_dev *pctldev, unsigned fselector,
+ 	if (!pcs->fmask)
  		return 0;
- 	}
- 
--	val |= PPSCMDx(index, 0x2);
- 	val |= TRGTMODSELx(index, 0x2);
- 	val |= PPSEN0;
-+	writel(val, ioaddr + MAC_PPS_CONTROL);
- 
- 	writel(cfg->start.tv_sec, ioaddr + MAC_PPSx_TARGET_TIME_SEC(index));
- 
-@@ -547,6 +547,7 @@ int dwmac5_flex_pps_config(void __iomem
- 	writel(period - 1, ioaddr + MAC_PPSx_WIDTH(index));
- 
- 	/* Finally, activate it */
-+	val |= PPSCMDx(index, 0x2);
- 	writel(val, ioaddr + MAC_PPS_CONTROL);
- 	return 0;
- }
+ 	function = pinmux_generic_get_function(pctldev, fselector);
++	if (!function)
++		return -EINVAL;
+ 	func = function->data;
+ 	if (!func)
+ 		return -EINVAL;
+-- 
+2.39.0
+
 
 
