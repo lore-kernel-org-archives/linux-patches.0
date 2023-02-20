@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4010B63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:52:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BD5CBC433D2;
-	Mon, 20 Feb 2023 13:52:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F5D163B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:52:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA714C433D2;
+	Mon, 20 Feb 2023 13:52:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901163;
-	bh=tS3Dpnw4Tx4Yhk3jexrVbEFIOFLxLrRmSiNjFaY7tjY=;
+	s=korg; t=1676901166;
+	bh=RiEeSUvFkY3kOEeY2GLpWPlwhdvURfzsd7JvUKii6BE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=scM92rXfey5A7FCkxi1YYJLYCyacsLk8uvrQCu0dmYkiUfvCaMkfv6/9iJ3G07coH
-	 hL4hK3Npn4hozA5EWiOrhH14UGyEZexs3mkRHHhMnA5vN+IPbEh0fdfYiV/dzE8y6W
-	 pU92bnqjvNlCeR8LoWcOHqJn4qsmQ9wwjzWCHwqc=
+	b=IbebfVQ1fWr6D1bXONicXFi0cO4JEn5J84GoGaXpCr2fsCV3DnSb2DX7riip2/w5r
+	 Ibqb27QXUWWnSZXHGGzJ4+0THHcZkOA45vzpb1aDSDR0mSEaHoXGUlshKEKRJwZdea
+	 PKvtSZqsB3SRjH8goj7CcW2DHUPwVQITuGlVek/Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Felix Riemann <felix.riemann@sma.de>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.15 53/83] net: Fix unwanted sign extension in netdev_stats_to_stats64()
-Date: Mon, 20 Feb 2023 14:36:26 +0100
-Message-Id: <20230220133555.523277845@linuxfoundation.org>
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.15 54/83] revert "squashfs: harden sanity check in squashfs_read_xattr_id_table"
+Date: Mon, 20 Feb 2023 14:36:27 +0100
+Message-Id: <20230220133555.561460117@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -35,38 +36,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Felix Riemann <felix.riemann@sma.de>
+From: Andrew Morton <akpm@linux-foundation.org>
 
-commit 9b55d3f0a69af649c62cbc2633e6d695bb3cc583 upstream.
+commit a5b21d8d791cd4db609d0bbcaa9e0c7e019888d1 upstream.
 
-When converting net_device_stats to rtnl_link_stats64 sign extension
-is triggered on ILP32 machines as 6c1c509778 changed the previous
-"ulong -> u64" conversion to "long -> u64" by accessing the
-net_device_stats fields through a (signed) atomic_long_t.
+This fix was nacked by Philip, for reasons identified in the email linked
+below.
 
-This causes for example the received bytes counter to jump to 16EiB after
-having received 2^31 bytes. Casting the atomic value to "unsigned long"
-beforehand converting it into u64 avoids this.
-
-Fixes: 6c1c5097781f ("net: add atomic_long_t to net_device_stats fields")
-Signed-off-by: Felix Riemann <felix.riemann@sma.de>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Link: https://lkml.kernel.org/r/68f15d67-8945-2728-1f17-5b53a80ec52d@squashfs.org.uk
+Fixes: 72e544b1b28325 ("squashfs: harden sanity check in squashfs_read_xattr_id_table")
+Cc: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Cc: Fedor Pchelkin <pchelkin@ispras.ru>
+Cc: Phillip Lougher <phillip@squashfs.org.uk>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/dev.c |    2 +-
+ fs/squashfs/xattr_id.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/core/dev.c
-+++ b/net/core/dev.c
-@@ -10646,7 +10646,7 @@ void netdev_stats_to_stats64(struct rtnl
+--- a/fs/squashfs/xattr_id.c
++++ b/fs/squashfs/xattr_id.c
+@@ -76,7 +76,7 @@ __le64 *squashfs_read_xattr_id_table(str
+ 	/* Sanity check values */
  
- 	BUILD_BUG_ON(n > sizeof(*stats64) / sizeof(u64));
- 	for (i = 0; i < n; i++)
--		dst[i] = atomic_long_read(&src[i]);
-+		dst[i] = (unsigned long)atomic_long_read(&src[i]);
- 	/* zero out counters that only exist in rtnl_link_stats64 */
- 	memset((char *)stats64 + n * sizeof(u64), 0,
- 	       sizeof(*stats64) - n * sizeof(u64));
+ 	/* there is always at least one xattr id */
+-	if (*xattr_ids <= 0)
++	if (*xattr_ids == 0)
+ 		return ERR_PTR(-EINVAL);
+ 
+ 	len = SQUASHFS_XATTR_BLOCK_BYTES(*xattr_ids);
 
 
