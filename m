@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A36FD63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:50:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F478C433EF;
-	Mon, 20 Feb 2023 13:50:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34CAA63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:50:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B47A3C433EF;
+	Mon, 20 Feb 2023 13:50:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901056;
-	bh=Ypu/Ws6xo20+WSJL7m/mvLk6h6EMP60FSYtmpN2s/yI=;
+	s=korg; t=1676901059;
+	bh=fmwrvlSnzYMpOU6Bb/kbeD5NAHZC6hAf1LWtjxppyh8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MzErtfjufM2ykloVw3zQb57Yt+r55lmmI4rRe69w5QZeDm6A3jcss99aiymswr2Qi
-	 +LaWoNwBEVmFoSmCy+e7r+EYr5+w/gmg2xNlKcX8gjLZpiLkV9qS/e2BsnUfvf1A54
-	 2CI0fNLKE6RHteJvxJCkk5TkpxzQCiyFUwIzNDrQ=
+	b=Npm9rOE3bfM7aVirB+pXvDbLOpNd77f7QJriyPg14Pp28WddIViRm89XQUveUPLAX
+	 zHLQXCqx4Kawt07blEq3ZyaGSnzfQneeK1/j0TLJfW6jmAfIJfb5oycGnSZFi6/yXO
+	 DxKPjC93CN2z9YXSxGDRLhTqFHNFHZSC7Q8tmdsQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Konovalov <andrey.konovalov@linaro.org>,
-	"David S. Miller" <davem@davemloft.net>,
+	Ben Skeggs <bskeggs@redhat.com>,
+	Lyude Paul <lyude@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 13/83] net: stmmac: do not stop RX_CLK in Rx LPI state for qcs404 SoC
-Date: Mon, 20 Feb 2023 14:35:46 +0100
-Message-Id: <20230220133554.170368642@linuxfoundation.org>
+Subject: [PATCH 5.15 14/83] drm/nouveau/devinit/tu102-: wait for GFW_BOOT_PROGRESS == COMPLETED
+Date: Mon, 20 Feb 2023 14:35:47 +0100
+Message-Id: <20230220133554.203248517@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -35,65 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrey Konovalov <andrey.konovalov@linaro.org>
+From: Ben Skeggs <bskeggs@redhat.com>
 
-[ Upstream commit 54aa39a513dbf2164ca462a19f04519b2407a224 ]
+[ Upstream commit d22915d22ded21fd5b24b60d174775789f173997 ]
 
-Currently in phy_init_eee() the driver unconditionally configures the PHY
-to stop RX_CLK after entering Rx LPI state. This causes an LPI interrupt
-storm on my qcs404-base board.
+Starting from Turing, the driver is no longer responsible for initiating
+DEVINIT when required as the GPU started loading a FW image from ROM and
+executing DEVINIT itself after power-on.
 
-Change the PHY initialization so that for "qcom,qcs404-ethqos" compatible
-device RX_CLK continues to run even in Rx LPI state.
+However - we apparently still need to wait for it to complete.
 
-Signed-off-by: Andrey Konovalov <andrey.konovalov@linaro.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This should correct some issues with runpm on some systems, where we get
+control of the HW before it's been fully reinitialised after resume from
+suspend.
+
+Signed-off-by: Ben Skeggs <bskeggs@redhat.com>
+Reviewed-by: Lyude Paul <lyude@redhat.com>
+Signed-off-by: Lyude Paul <lyude@redhat.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230130223715.1831509-1-bskeggs@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 2 ++
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c       | 3 ++-
- include/linux/stmmac.h                                  | 1 +
- 3 files changed, 5 insertions(+), 1 deletion(-)
+ .../drm/nouveau/nvkm/subdev/devinit/tu102.c   | 23 +++++++++++++++++++
+ 1 file changed, 23 insertions(+)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index 6b1d9e8879f46..d0c7f22a4e55a 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -505,6 +505,8 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 	plat_dat->has_gmac4 = 1;
- 	plat_dat->pmt = 1;
- 	plat_dat->tso_en = of_property_read_bool(np, "snps,tso");
-+	if (of_device_is_compatible(np, "qcom,qcs404-ethqos"))
-+		plat_dat->rx_clk_runs_in_lpi = 1;
+diff --git a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/tu102.c b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/tu102.c
+index 634f64f88fc8b..81a1ad2c88a7e 100644
+--- a/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/tu102.c
++++ b/drivers/gpu/drm/nouveau/nvkm/subdev/devinit/tu102.c
+@@ -65,10 +65,33 @@ tu102_devinit_pll_set(struct nvkm_devinit *init, u32 type, u32 freq)
+ 	return ret;
+ }
  
- 	ret = stmmac_dvr_probe(&pdev->dev, plat_dat, &stmmac_res);
- 	if (ret)
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 4191502d6472f..d56f65338ea66 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -1174,7 +1174,8 @@ static void stmmac_mac_link_up(struct phylink_config *config,
- 
- 	stmmac_mac_set(priv, priv->ioaddr, true);
- 	if (phy && priv->dma_cap.eee) {
--		priv->eee_active = phy_init_eee(phy, 1) >= 0;
-+		priv->eee_active =
-+			phy_init_eee(phy, !priv->plat->rx_clk_runs_in_lpi) >= 0;
- 		priv->eee_enabled = stmmac_eee_init(priv);
- 		priv->tx_lpi_enabled = priv->eee_enabled;
- 		stmmac_set_eee_pls(priv, priv->hw, true);
-diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
-index 48d015ed21752..cc338c6c74954 100644
---- a/include/linux/stmmac.h
-+++ b/include/linux/stmmac.h
-@@ -251,6 +251,7 @@ struct plat_stmmacenet_data {
- 	int rss_en;
- 	int mac_port_sel_speed;
- 	bool en_tx_lpi_clockgating;
-+	bool rx_clk_runs_in_lpi;
- 	int has_xgmac;
- 	bool vlan_fail_q_en;
- 	u8 vlan_fail_q;
++static int
++tu102_devinit_wait(struct nvkm_device *device)
++{
++	unsigned timeout = 50 + 2000;
++
++	do {
++		if (nvkm_rd32(device, 0x118128) & 0x00000001) {
++			if ((nvkm_rd32(device, 0x118234) & 0x000000ff) == 0xff)
++				return 0;
++		}
++
++		usleep_range(1000, 2000);
++	} while (timeout--);
++
++	return -ETIMEDOUT;
++}
++
+ int
+ tu102_devinit_post(struct nvkm_devinit *base, bool post)
+ {
+ 	struct nv50_devinit *init = nv50_devinit(base);
++	int ret;
++
++	ret = tu102_devinit_wait(init->base.subdev.device);
++	if (ret)
++		return ret;
++
+ 	gm200_devinit_preos(init, post);
+ 	return 0;
+ }
 -- 
 2.39.0
 
