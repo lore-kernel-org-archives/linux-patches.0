@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2269263BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA51C433D2;
-	Mon, 20 Feb 2023 13:58:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C2FE163BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 49062C4339B;
+	Mon, 20 Feb 2023 13:58:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901531;
-	bh=wGkW8T3g7BgS6r/3kEN8kmhQTQ84eeVyAd1XCaMk0V8=;
+	s=korg; t=1676901533;
+	bh=H55/Ryaf3b36bZ0CSG+pxFpvsm0Iwt2EmiPiN1occ/w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cFEcgkRzP48IBg4A/WM2DYCiL8ZAasMzQIt7GgrLlHg4081hoI2eQGbEEEuytSY71
-	 VwUxl0jZse2UDvjV8tW/6QjdM9C5z4A8YbnWO+ypVb074lfECiFLAEqnIe2puF6bPL
-	 +Eu+mT3EPh/T5/+THKfo5A0LNTDQ5QFVZru08Gz4=
+	b=qDbQMSI5BYYCUSW1y2nXZ75Rabi3qgMm2gLNnxNQUpbzCPgXFqnzNqmbKCIYGuFeQ
+	 WB5Oegf1mUJEugsma8zzXyJg+bFrXSym9bx3Fedmd0egaBwZwQ7BaGc3m6kARDLlv1
+	 eXs1689flat7l4v6pVrwyx0gjh3z7nXz+Kv0E/MI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Li <sunpeng.li@amd.com>,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 6.1 052/118] drm/amd/display: Fail atomic_check early on normalize_zpos error
-Date: Mon, 20 Feb 2023 14:36:08 +0100
-Message-Id: <20230220133602.532609305@linuxfoundation.org>
+	Zack Rusin <zackr@vmware.com>,
+	Maaz Mombasawala <mombasawalam@vmware.com>,
+	Martin Krastev <krastevm@vmware.com>
+Subject: [PATCH 6.1 053/118] drm/vmwgfx: Stop accessing buffer objects which failed init
+Date: Mon, 20 Feb 2023 14:36:09 +0100
+Message-Id: <20230220133602.581304005@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -36,44 +35,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leo Li <sunpeng.li@amd.com>
+From: Zack Rusin <zackr@vmware.com>
 
-commit 2a00299e7447395d0898e7c6214817c06a61a8e8 upstream.
+commit 1a6897921f52ceb2c8665ef826e405bd96385159 upstream.
 
-[Why]
+ttm_bo_init_reserved on failure puts the buffer object back which
+causes it to be deleted, but kfree was still being called on the same
+buffer in vmw_bo_create leading to a double free.
 
-drm_atomic_normalize_zpos() can return an error code when there's
-modeset lock contention. This was being ignored.
+After the double free the vmw_gem_object_create_with_handle was
+setting the gem function objects before checking the return status
+of vmw_bo_create leading to null pointer access.
 
-[How]
+Fix the entire path by relaying on ttm_bo_init_reserved to delete the
+buffer objects on failure and making sure the return status is checked
+before setting the gem function objects on the buffer object.
 
-Bail out of atomic check if normalize_zpos() returns an error.
-
-Fixes: b261509952bc ("drm/amd/display: Fix double cursor on non-video RGB MPO")
-Signed-off-by: Leo Li <sunpeng.li@amd.com>
-Tested-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Reviewed-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Signed-off-by: Zack Rusin <zackr@vmware.com>
+Fixes: 8afa13a0583f ("drm/vmwgfx: Implement DRIVER_GEM")
+Reviewed-by: Maaz Mombasawala <mombasawalam@vmware.com>
+Reviewed-by: Martin Krastev <krastevm@vmware.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20230208180050.2093426-1-zack@kde.org
+(cherry picked from commit 36d421e632e9a0e8375eaed0143551a34d81a7e3)
+Cc: <stable@vger.kernel.org> # v5.17+
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/vmwgfx/vmwgfx_bo.c  | 4 +++-
+ drivers/gpu/drm/vmwgfx/vmwgfx_gem.c | 4 ++--
+ 2 files changed, 5 insertions(+), 3 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -9556,7 +9556,11 @@ static int amdgpu_dm_atomic_check(struct
- 	 * `dcn10_can_pipe_disable_cursor`). By now, all modified planes are in
- 	 * atomic state, so call drm helper to normalize zpos.
- 	 */
--	drm_atomic_normalize_zpos(dev, state);
-+	ret = drm_atomic_normalize_zpos(dev, state);
-+	if (ret) {
-+		drm_dbg(dev, "drm_atomic_normalize_zpos() failed\n");
-+		goto fail;
-+	}
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
+index aa1cd5126a32..53da183e2bfe 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_bo.c
+@@ -462,6 +462,9 @@ int vmw_bo_create(struct vmw_private *vmw,
+ 		return -ENOMEM;
+ 	}
  
- 	/* Remove exiting planes if they are modified */
- 	for_each_oldnew_plane_in_state_reverse(state, plane, old_plane_state, new_plane_state, i) {
++	/*
++	 * vmw_bo_init will delete the *p_bo object if it fails
++	 */
+ 	ret = vmw_bo_init(vmw, *p_bo, size,
+ 			  placement, interruptible, pin,
+ 			  bo_free);
+@@ -470,7 +473,6 @@ int vmw_bo_create(struct vmw_private *vmw,
+ 
+ 	return ret;
+ out_error:
+-	kfree(*p_bo);
+ 	*p_bo = NULL;
+ 	return ret;
+ }
+diff --git a/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c b/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
+index ce609e7d758f..83d8f18cc16f 100644
+--- a/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
++++ b/drivers/gpu/drm/vmwgfx/vmwgfx_gem.c
+@@ -146,11 +146,11 @@ int vmw_gem_object_create_with_handle(struct vmw_private *dev_priv,
+ 				    &vmw_sys_placement :
+ 				    &vmw_vram_sys_placement,
+ 			    true, false, &vmw_gem_destroy, p_vbo);
+-
+-	(*p_vbo)->base.base.funcs = &vmw_gem_object_funcs;
+ 	if (ret != 0)
+ 		goto out_no_bo;
+ 
++	(*p_vbo)->base.base.funcs = &vmw_gem_object_funcs;
++
+ 	ret = drm_gem_handle_create(filp, &(*p_vbo)->base.base, handle);
+ 	/* drop reference from allocate - handle holds it now */
+ 	drm_gem_object_put(&(*p_vbo)->base.base);
+-- 
+2.39.1
+
 
 
