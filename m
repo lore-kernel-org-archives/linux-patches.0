@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CAD563B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E2097C433D2;
-	Mon, 20 Feb 2023 13:51:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 25B6D63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A213CC433D2;
+	Mon, 20 Feb 2023 13:51:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901069;
-	bh=DKpBkqc//T4XWv4uVVRlyIOwxgWQf2JMLxMRR2dnKCo=;
+	s=korg; t=1676901072;
+	bh=naImJaZsiojPbuOfCQcRFmzenQ6rb8bPJhVkAssPUXw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mZQcCxvam0fK98mRoWDfxuxRh3HE5sXnMZECcFQNHbHP/ohCjWuvlsKm5xjnS4FAo
-	 2p4Rqiyw4iJX8VwOE3O98dGludDQjYyYJa3YaJnxF2140PQLgZysLpcCWx9pRuF1J2
-	 eyBXdfWNqMokb7OGT2MLdNBApoYg4saP+wmNQOEI=
+	b=XY4xeOgA1TC+gSUdmInrMV7vIt4KxAer56EtB2OnuroYUlRTcW9+gvQPRLmDp4hR0
+	 5x+9fZXRrDcdwaGxwxs/UW7Ht5KevRg0uTUPYiPVrg3MEu5fa+0BCUQukgNefkNvRa
+	 NqzgKHZka8lWGsYokoyjGORXxC8rg5VurNiG0epg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Aurabindo Pillai <aurabindo.pillai@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 18/83] drm/amd/display: Properly handle additional cases where DCN is not supported
-Date: Mon, 20 Feb 2023 14:35:51 +0100
-Message-Id: <20230220133554.338372931@linuxfoundation.org>
+Subject: [PATCH 5.15 19/83] platform/x86: touchscreen_dmi: Add Chuwi Vi8 (CWI501) DMI match
+Date: Mon, 20 Feb 2023 14:35:52 +0100
+Message-Id: <20230220133554.370648588@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -35,48 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alex Deucher <alexander.deucher@amd.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 6fc547a5a2ef5ce05b16924106663ab92f8f87a7 ]
+[ Upstream commit eecf2acd4a580e9364e5087daf0effca60a240b7 ]
 
-There could be boards with DCN listed in IP discovery, but no
-display hardware actually wired up.  In this case the vbios
-display table will not be populated.  Detect this case and
-skip loading DM when we detect it.
+Add a DMI match for the CWI501 version of the Chuwi Vi8 tablet,
+pointing to the same chuwi_vi8_data as the existing CWI506 version
+DMI match.
 
-v2: Mark DCN as harvested as well so other display checks
-elsewhere in the driver are handled properly.
-
-Cc: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Reviewed-by: Aurabindo Pillai <aurabindo.pillai@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230202103413.331459-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/platform/x86/touchscreen_dmi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-index e9797439bb0eb..3f325e1e440c9 100644
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -4428,6 +4428,17 @@ DEVICE_ATTR_WO(s3_debug);
- static int dm_early_init(void *handle)
- {
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
-+	struct amdgpu_mode_info *mode_info = &adev->mode_info;
-+	struct atom_context *ctx = mode_info->atom_context;
-+	int index = GetIndexIntoMasterTable(DATA, Object_Header);
-+	u16 data_offset;
-+
-+	/* if there is no object header, skip DM */
-+	if (!amdgpu_atom_parse_data_header(ctx, index, NULL, NULL, NULL, &data_offset)) {
-+		adev->harvest_ip_mask |= AMD_HARVEST_IP_DMU_MASK;
-+		dev_info(adev->dev, "No object header, skipping DM\n");
-+		return -ENOENT;
-+	}
- 
- 	switch (adev->asic_type) {
- #if defined(CONFIG_DRM_AMD_DC_SI)
+diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
+index 93671037fd598..69ba2c5182610 100644
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -1073,6 +1073,15 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
+ 			DMI_MATCH(DMI_BIOS_DATE, "05/07/2016"),
+ 		},
+ 	},
++	{
++		/* Chuwi Vi8 (CWI501) */
++		.driver_data = (void *)&chuwi_vi8_data,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Insyde"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "i86"),
++			DMI_MATCH(DMI_BIOS_VERSION, "CHUWI.W86JLBNR01"),
++		},
++	},
+ 	{
+ 		/* Chuwi Vi8 (CWI506) */
+ 		.driver_data = (void *)&chuwi_vi8_data,
 -- 
 2.39.0
 
