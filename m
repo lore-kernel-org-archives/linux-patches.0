@@ -1,32 +1,32 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4070163B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:39:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE586C433D2;
-	Mon, 20 Feb 2023 13:39:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB11963B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:39:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 546C6C433EF;
+	Mon, 20 Feb 2023 13:39:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900393;
-	bh=DdAmIOowhHFvIdzxNQVgLdrhkliURmESF2Z5JYEpE/s=;
+	s=korg; t=1676900395;
+	bh=IOcoKcqYYvMeIQ7nWC+9Cm7lHhuFrtsr6IJcTloQWoU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a5hYGPGbBoyB0Cb4sGUxUNlx3gU/IHFBGEUrnr90maq5VLg0aBSBbv0YX8wI9fkjA
-	 l2AgaQ35df+pA3F34mAcyIqORc2i8IF+dXo1e5rmAL476/e7oNn4h0ncv5nwkPh0ww
-	 dzA5DX19zntb3nigr6DyuqGtgQQZCyPgrfvWzIJQ=
+	b=ClCSMQVqtrJRkQok0DJ0DZnyql4x5qKposzxEY4drSw8im+YUXVSOqxFrfiq/srVA
+	 apwFN7LBhys08VW4218+W9cGxXf493HTa0jsCTYeuD6EsbB9MWlISMGuHxS68sNWkG
+	 w7GSPM7tqLJjMtkqbmYlwU/u1JElLUl4rn7aghrc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maxim Korotkov <korotkov.maxim.s@gmail.com>,
-	Tony Lindgren <tony@atomide.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 30/53] pinctrl: single: fix potential NULL dereference
-Date: Mon, 20 Feb 2023 14:35:56 +0100
-Message-Id: <20230220133549.250865926@linuxfoundation.org>
+	Takashi Sakamoto <o-takashi@sakamocchi.jp>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 4.19 01/89] firewire: fix memory leak for payload of request subaction to IEC 61883-1 FCP region
+Date: Mon, 20 Feb 2023 14:35:00 +0100
+Message-Id: <20230220133553.119596508@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
-References: <20230220133548.158615609@linuxfoundation.org>
+In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
+References: <20230220133553.066768704@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,41 +36,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maxim Korotkov <korotkov.maxim.s@gmail.com>
+From: Takashi Sakamoto <o-takashi@sakamocchi.jp>
 
-[ Upstream commit d2d73e6d4822140445ad4a7b1c6091e0f5fe703b ]
+commit 531390a243ef47448f8bad01c186c2787666bf4d upstream.
 
-Added checking of pointer "function" in pcs_set_mux().
-pinmux_generic_get_function() can return NULL and the pointer
-"function" was dereferenced without checking against NULL.
+This patch is fix for Linux kernel v2.6.33 or later.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+For request subaction to IEC 61883-1 FCP region, Linux FireWire subsystem
+have had an issue of use-after-free. The subsystem allows multiple
+user space listeners to the region, while data of the payload was likely
+released before the listeners execute read(2) to access to it for copying
+to user space.
 
-Fixes: 571aec4df5b7 ("pinctrl: single: Use generic pinmux helpers for managing functions")
-Signed-off-by: Maxim Korotkov <korotkov.maxim.s@gmail.com>
-Reviewed-by: Tony Lindgren <tony@atomide.com>
-Link: https://lore.kernel.org/r/20221118104332.943-1-korotkov.maxim.s@gmail.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+The issue was fixed by a commit 281e20323ab7 ("firewire: core: fix
+use-after-free regression in FCP handler"). The object of payload is
+duplicated in kernel space for each listener. When the listener executes
+ioctl(2) with FW_CDEV_IOC_SEND_RESPONSE request, the object is going to
+be released.
+
+However, it causes memory leak since the commit relies on call of
+release_request() in drivers/firewire/core-cdev.c. Against the
+expectation, the function is never called due to the design of
+release_client_resource(). The function delegates release task
+to caller when called with non-NULL fourth argument. The implementation
+of ioctl_send_response() is the case. It should release the object
+explicitly.
+
+This commit fixes the bug.
+
+Cc: <stable@vger.kernel.org>
+Fixes: 281e20323ab7 ("firewire: core: fix use-after-free regression in FCP handler")
+Signed-off-by: Takashi Sakamoto <o-takashi@sakamocchi.jp>
+Link: https://lore.kernel.org/r/20230117090610.93792-2-o-takashi@sakamocchi.jp
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/pinctrl-single.c | 2 ++
- 1 file changed, 2 insertions(+)
+ drivers/firewire/core-cdev.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
-index d633737a3bf95..44936fca576ed 100644
---- a/drivers/pinctrl/pinctrl-single.c
-+++ b/drivers/pinctrl/pinctrl-single.c
-@@ -339,6 +339,8 @@ static int pcs_set_mux(struct pinctrl_dev *pctldev, unsigned fselector,
- 	if (!pcs->fmask)
- 		return 0;
- 	function = pinmux_generic_get_function(pctldev, fselector);
-+	if (!function)
-+		return -EINVAL;
- 	func = function->data;
- 	if (!func)
- 		return -EINVAL;
--- 
-2.39.0
-
+--- a/drivers/firewire/core-cdev.c
++++ b/drivers/firewire/core-cdev.c
+@@ -831,8 +831,10 @@ static int ioctl_send_response(struct cl
+ 
+ 	r = container_of(resource, struct inbound_transaction_resource,
+ 			 resource);
+-	if (is_fcp_request(r->request))
++	if (is_fcp_request(r->request)) {
++		kfree(r->data);
+ 		goto out;
++	}
+ 
+ 	if (a->length != fw_get_response_length(r->request)) {
+ 		ret = -EINVAL;
 
 
