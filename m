@@ -1,31 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 592EA63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:39:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D4000C433EF;
-	Mon, 20 Feb 2023 13:39:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 220C463B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:39:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 72332C433EF;
+	Mon, 20 Feb 2023 13:39:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900385;
-	bh=Tc2eBLjq4GbZ0hezjYUmysnEKwUod06dHLQ6yDdiHAE=;
+	s=korg; t=1676900388;
+	bh=NEOwVndLnbZZBmbOXpKeLgQsmHk4tPs1HHT8GqvoVZ0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=dNaMRZz/EZtNrfnEnDZ/+kaLZg8P8E4miLE5ADNoWSh+5xhP1PrZJjR8yhgAzafc7
-	 PwuE2r9ElwTtpqPm8ygC6ZZepqOeCI+0F4ft7CZE8FVbxQzZ1tRepCOCtI8fxQjSGS
-	 LjiauugKdjzagP2IevQJ33J9KvN+Lb7uza0L+Qes=
+	b=PgSSMcE4Ty7R6Crha6xDLHDQC+fytHznQMVdfh2rLJUEBRGyN/TQJcvhRUaAbiYl6
+	 s04DIe00JbPQgQG3akr4ksROBY+FSL/b6bsYxqUEn0IaK07ebOUX2g1turyuYN+Qse
+	 3BlLz8jmgo/jiEO5+J1MBtoc0Pa/otpqYfeGM71g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seth Jenkins <sethjenkins@google.com>,
-	Jeff Moyer <jmoyer@redhat.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Benjamin LaHaise <bcrl@kvack.org>,
-	Jann Horn <jannh@google.com>,
-	Pavel Emelyanov <xemul@parallels.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 4.14 37/53] aio: fix mremap after fork null-deref
-Date: Mon, 20 Feb 2023 14:36:03 +0100
-Message-Id: <20230220133549.497592906@linuxfoundation.org>
+	Michael Nies <michael.nies@netclusive.com>,
+	YingChi Long <me@inclyc.cn>,
+	Borislav Petkov <bp@suse.de>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 4.14 38/53] Revert "x86/fpu: Use _Alignof to avoid undefined behavior in TYPE_ALIGN"
+Date: Mon, 20 Feb 2023 14:36:04 +0100
+Message-Id: <20230220133549.532754726@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
 References: <20230220133548.158615609@linuxfoundation.org>
@@ -39,49 +37,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Seth Jenkins <sethjenkins@google.com>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 81e9d6f8647650a7bead74c5f926e29970e834d1 upstream.
+This reverts commit 67c6d79777cf5d3165d6d2e2d7c5e37333d1a76e which is
+commit 55228db2697c09abddcb9487c3d9fa5854a932cd upstream.
 
-Commit e4a0d3e720e7 ("aio: Make it possible to remap aio ring") introduced
-a null-deref if mremap is called on an old aio mapping after fork as
-mm->ioctx_table will be set to NULL.
+_Alignof is not in the gcc version that the 4.14.y kernel still
+supports (3.2), so this change needs to be reverted as it breaks the
+build on those older compiler versions.
 
-[jmoyer@redhat.com: fix 80 column issue]
-Link: https://lkml.kernel.org/r/x49sffq4nvg.fsf@segfault.boston.devel.redhat.com
-Fixes: e4a0d3e720e7 ("aio: Make it possible to remap aio ring")
-Signed-off-by: Seth Jenkins <sethjenkins@google.com>
-Signed-off-by: Jeff Moyer <jmoyer@redhat.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Benjamin LaHaise <bcrl@kvack.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pavel Emelyanov <xemul@parallels.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Reported-by: Michael Nies <michael.nies@netclusive.com>
+Link: https://lore.kernel.org/r/HE1PR0902MB188277E37DED663AE440510BE1D99@HE1PR0902MB1882.eurprd09.prod.outlook.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217013
+Cc: YingChi Long <me@inclyc.cn>
+Cc: Borislav Petkov <bp@suse.de>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/aio.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/x86/kernel/fpu/init.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -328,6 +328,9 @@ static int aio_ring_mremap(struct vm_are
- 	spin_lock(&mm->ioctx_lock);
- 	rcu_read_lock();
- 	table = rcu_dereference(mm->ioctx_table);
-+	if (!table)
-+		goto out_unlock;
+--- a/arch/x86/kernel/fpu/init.c
++++ b/arch/x86/kernel/fpu/init.c
+@@ -138,6 +138,9 @@ static void __init fpu__init_system_gene
+ unsigned int fpu_kernel_xstate_size;
+ EXPORT_SYMBOL_GPL(fpu_kernel_xstate_size);
+ 
++/* Get alignment of the TYPE. */
++#define TYPE_ALIGN(TYPE) offsetof(struct { char x; TYPE test; }, test)
 +
- 	for (i = 0; i < table->nr; i++) {
- 		struct kioctx *ctx;
+ /*
+  * Enforce that 'MEMBER' is the last field of 'TYPE'.
+  *
+@@ -145,8 +148,8 @@ EXPORT_SYMBOL_GPL(fpu_kernel_xstate_size
+  * because that's how C aligns structs.
+  */
+ #define CHECK_MEMBER_AT_END_OF(TYPE, MEMBER) \
+-	BUILD_BUG_ON(sizeof(TYPE) !=         \
+-		     ALIGN(offsetofend(TYPE, MEMBER), _Alignof(TYPE)))
++	BUILD_BUG_ON(sizeof(TYPE) != ALIGN(offsetofend(TYPE, MEMBER), \
++					   TYPE_ALIGN(TYPE)))
  
-@@ -341,6 +344,7 @@ static int aio_ring_mremap(struct vm_are
- 		}
- 	}
- 
-+out_unlock:
- 	rcu_read_unlock();
- 	spin_unlock(&mm->ioctx_lock);
- 	return res;
+ /*
+  * We append the 'struct fpu' to the task_struct:
 
 
