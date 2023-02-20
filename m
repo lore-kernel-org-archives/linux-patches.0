@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D3AF363B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:44:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BC71C4339B;
-	Mon, 20 Feb 2023 13:44:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6FD3E63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:44:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB7B4C4339B;
+	Mon, 20 Feb 2023 13:44:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900647;
-	bh=vDbuqz9+bsmcjTO77g9sdoxuYfP3zEE3hy8Gg98Yylw=;
+	s=korg; t=1676900650;
+	bh=HIknskYPa/Ba2/x4sv35oqZnRKagxd7936BqMdJ+D1I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=C3uVeckTGhKMli0Bj8JsVEmMD9cchvZnxdr/Wno0kJ5XPjILnIdJmoC3xAx9Fl7Xl
-	 jRDuksJ1Qa3LjNgNYC2FJbtbXmkXli2p97SXFx4kZRGl520HHTeoq3Fn+ydkNxAQvS
-	 TiDFWfBMU1GS6dMzpiDAHQsiV8MSP33o708V1Z/M=
+	b=nrf+C2gMVWnwAeOFSj+1UfhUbfUPNPQPKcNJcCO6GIkdmzhxr91cLDdRbpLe78V3t
+	 e9MFVTb6QtYgyMtbftQP9AqKbYGWgo6GnA5RXmumsFNxAK2/uIRBkbFUzaMHWLGo7r
+	 vRKlb4d5pQKfjSh2YJnqlwKuEAtu0K9kBs/SYK3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Al Viro <viro@zeniv.linux.org.uk>,
+	Andrei Gherzan <andrei.gherzan@canonical.com>,
+	Willem de Bruijn <willemb@google.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 007/156] WRITE is "data source", not destination...
-Date: Mon, 20 Feb 2023 14:34:11 +0100
-Message-Id: <20230220133602.778836116@linuxfoundation.org>
+Subject: [PATCH 5.4 016/156] selftests: net: udpgso_bench_rx: Fix used uninitialized compiler warning
+Date: Mon, 20 Feb 2023 14:34:20 +0100
+Message-Id: <20230220133603.131989800@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -34,47 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Al Viro <viro@zeniv.linux.org.uk>
+From: Andrei Gherzan <andrei.gherzan@canonical.com>
 
-[ Upstream commit 974c36fb828aeae7b4f9063f94860ae6c5633efd ]
+[ Upstream commit c03c80e3a03ffb4f790901d60797e9810539d946 ]
 
-Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
+This change fixes the following compiler warning:
+
+/usr/include/x86_64-linux-gnu/bits/error.h:40:5: warning: ‘gso_size’ may
+be used uninitialized [-Wmaybe-uninitialized]
+   40 |     __error_noreturn (__status, __errnum, __format,
+   __va_arg_pack ());
+         |
+	 ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+	 udpgso_bench_rx.c: In function ‘main’:
+	 udpgso_bench_rx.c:253:23: note: ‘gso_size’ was declared here
+	   253 |         int ret, len, gso_size, budget = 256;
+
+Fixes: 3327a9c46352 ("selftests: add functionals test for UDP GRO")
+Signed-off-by: Andrei Gherzan <andrei.gherzan@canonical.com>
+Reviewed-by: Willem de Bruijn <willemb@google.com>
+Link: https://lore.kernel.org/r/20230201001612.515730-1-andrei.gherzan@canonical.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/fsi/fsi-sbefifo.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ tools/testing/selftests/net/udpgso_bench_rx.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/fsi/fsi-sbefifo.c b/drivers/fsi/fsi-sbefifo.c
-index c8ccc99e214f..84a60d2d8e8a 100644
---- a/drivers/fsi/fsi-sbefifo.c
-+++ b/drivers/fsi/fsi-sbefifo.c
-@@ -640,7 +640,7 @@ static void sbefifo_collect_async_ffdc(struct sbefifo *sbefifo)
- 	}
-         ffdc_iov.iov_base = ffdc;
- 	ffdc_iov.iov_len = SBEFIFO_MAX_FFDC_SIZE;
--        iov_iter_kvec(&ffdc_iter, WRITE, &ffdc_iov, 1, SBEFIFO_MAX_FFDC_SIZE);
-+        iov_iter_kvec(&ffdc_iter, READ, &ffdc_iov, 1, SBEFIFO_MAX_FFDC_SIZE);
- 	cmd[0] = cpu_to_be32(2);
- 	cmd[1] = cpu_to_be32(SBEFIFO_CMD_GET_SBE_FFDC);
- 	rc = sbefifo_do_command(sbefifo, cmd, 2, &ffdc_iter);
-@@ -737,7 +737,7 @@ int sbefifo_submit(struct device *dev, const __be32 *command, size_t cmd_len,
- 	rbytes = (*resp_len) * sizeof(__be32);
- 	resp_iov.iov_base = response;
- 	resp_iov.iov_len = rbytes;
--        iov_iter_kvec(&resp_iter, WRITE, &resp_iov, 1, rbytes);
-+        iov_iter_kvec(&resp_iter, READ, &resp_iov, 1, rbytes);
+diff --git a/tools/testing/selftests/net/udpgso_bench_rx.c b/tools/testing/selftests/net/udpgso_bench_rx.c
+index 6a193425c367..d0895bd1933f 100644
+--- a/tools/testing/selftests/net/udpgso_bench_rx.c
++++ b/tools/testing/selftests/net/udpgso_bench_rx.c
+@@ -250,7 +250,7 @@ static int recv_msg(int fd, char *buf, int len, int *gso_size)
+ static void do_flush_udp(int fd)
+ {
+ 	static char rbuf[ETH_MAX_MTU];
+-	int ret, len, gso_size, budget = 256;
++	int ret, len, gso_size = 0, budget = 256;
  
- 	/* Perform the command */
- 	mutex_lock(&sbefifo->lock);
-@@ -817,7 +817,7 @@ static ssize_t sbefifo_user_read(struct file *file, char __user *buf,
- 	/* Prepare iov iterator */
- 	resp_iov.iov_base = buf;
- 	resp_iov.iov_len = len;
--	iov_iter_init(&resp_iter, WRITE, &resp_iov, 1, len);
-+	iov_iter_init(&resp_iter, READ, &resp_iov, 1, len);
- 
- 	/* Perform the command */
- 	mutex_lock(&sbefifo->lock);
+ 	len = cfg_read_all ? sizeof(rbuf) : 0;
+ 	while (budget--) {
 -- 
 2.39.0
 
