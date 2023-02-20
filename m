@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3770763BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:02:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B4314C4339B;
-	Mon, 20 Feb 2023 14:01:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0AF63BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:02:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C5BC433D2;
+	Mon, 20 Feb 2023 14:02:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901720;
-	bh=UobgU1u2xjHZS2i6OkH6ox/yg1WnWL5G/tc/9T1nlcw=;
+	s=korg; t=1676901722;
+	bh=a/UiooHYDOpNciVZOA7OSu8FGgn+oFJk1uIh2EFUeyc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1IZBH4bFVTlqiVrxx2trrklp1NmA0554vthC1mCM8b+CZS5CvryAABRC1eeKRWCTs
-	 NtFGpp1tLNeOZ8neayOsIAo3dBadG5B77Ax6w0XgzMt0n7s8OlnlfUUR2E9DtORAQC
-	 Qt+no+LkJqOyl1mvM4uLuFOJCdfnJcGxnYPKsRBk=
+	b=Y6/GRvM/Em6Eh99OJNEsv/Ex4M2igrHIieQl7Go5swNnhNI66KQUWsiZ1iSIlhiFN
+	 pJU7nlNXHhESxec0a4HjsntVl/1inbc2XZJiPwKfJFeiOFumCHFzU5G14+A5hguDQS
+	 JBPMzRxRSjViPpAynCQu9qiu0EklLK5GMIVShGBo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Guillaume Nault <gnault@redhat.com>,
-	Eric Dumazet <edumazet@google.com>,
-	David Ahern <dsahern@kernel.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 103/118] ipv6: Fix datagram socket connection with DSCP.
-Date: Mon, 20 Feb 2023 14:36:59 +0100
-Message-Id: <20230220133604.525557479@linuxfoundation.org>
+	Hongguang Gao <hongguang.gao@broadcom.com>,
+	Michael Chan <michael.chan@broadcom.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 094/118] bnxt_en: Fix mqprio and XDP ring checking logic
+Date: Mon, 20 Feb 2023 14:36:50 +0100
+Message-Id: <20230220133604.150116718@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -36,47 +35,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Guillaume Nault <gnault@redhat.com>
+From: Michael Chan <michael.chan@broadcom.com>
 
-commit e010ae08c71fda8be3d6bda256837795a0b3ea41 upstream.
+commit 2038cc592811209de20c4e094ca08bfb1e6fbc6c upstream.
 
-Take into account the IPV6_TCLASS socket option (DSCP) in
-ip6_datagram_flow_key_init(). Otherwise fib6_rule_match() can't
-properly match the DSCP value, resulting in invalid route lookup.
+In bnxt_reserve_rings(), there is logic to check that the number of TX
+rings reserved is enough to cover all the mqprio TCs, but it fails to
+account for the TX XDP rings.  So the check will always fail if there
+are mqprio TCs and TX XDP rings.  As a result, the driver always fails
+to initialize after the XDP program is attached and the device will be
+brought down.  A subsequent ifconfig up will also fail because the
+number of TX rings is set to an inconsistent number.  Fix the check to
+properly account for TX XDP rings.  If the check fails, set the number
+of TX rings back to a consistent number after calling netdev_reset_tc().
 
-For example:
-
-  ip route add unreachable table main 2001:db8::10/124
-
-  ip route add table 100 2001:db8::10/124 dev eth0
-  ip -6 rule add dsfield 0x04 table 100
-
-  echo test | socat - UDP6:[2001:db8::11]:54321,ipv6-tclass=0x04
-
-Without this patch, socat fails at connect() time ("No route to host")
-because the fib-rule doesn't jump to table 100 and the lookup ends up
-being done in the main table.
-
-Fixes: 2cc67cc731d9 ("[IPV6] ROUTE: Routing by Traffic Class.")
-Signed-off-by: Guillaume Nault <gnault@redhat.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Reviewed-by: David Ahern <dsahern@kernel.org>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: 674f50a5b026 ("bnxt_en: Implement new method to reserve rings.")
+Reviewed-by: Hongguang Gao <hongguang.gao@broadcom.com>
+Signed-off-by: Michael Chan <michael.chan@broadcom.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/datagram.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/broadcom/bnxt/bnxt.c |    8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
---- a/net/ipv6/datagram.c
-+++ b/net/ipv6/datagram.c
-@@ -51,7 +51,7 @@ static void ip6_datagram_flow_key_init(s
- 	fl6->flowi6_mark = sk->sk_mark;
- 	fl6->fl6_dport = inet->inet_dport;
- 	fl6->fl6_sport = inet->inet_sport;
--	fl6->flowlabel = np->flow_label;
-+	fl6->flowlabel = ip6_make_flowinfo(np->tclass, np->flow_label);
- 	fl6->flowi6_uid = sk->sk_uid;
- 
- 	if (!oif)
+--- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
++++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
+@@ -9239,10 +9239,14 @@ int bnxt_reserve_rings(struct bnxt *bp,
+ 		netdev_err(bp->dev, "ring reservation/IRQ init failure rc: %d\n", rc);
+ 		return rc;
+ 	}
+-	if (tcs && (bp->tx_nr_rings_per_tc * tcs != bp->tx_nr_rings)) {
++	if (tcs && (bp->tx_nr_rings_per_tc * tcs !=
++		    bp->tx_nr_rings - bp->tx_nr_rings_xdp)) {
+ 		netdev_err(bp->dev, "tx ring reservation failure\n");
+ 		netdev_reset_tc(bp->dev);
+-		bp->tx_nr_rings_per_tc = bp->tx_nr_rings;
++		if (bp->tx_nr_rings_xdp)
++			bp->tx_nr_rings_per_tc = bp->tx_nr_rings_xdp;
++		else
++			bp->tx_nr_rings_per_tc = bp->tx_nr_rings;
+ 		return -ENOMEM;
+ 	}
+ 	return 0;
 
 
