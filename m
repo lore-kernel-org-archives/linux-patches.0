@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 08C5363B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8448FC433EF;
-	Mon, 20 Feb 2023 13:43:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC00063B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4101CC4339B;
+	Mon, 20 Feb 2023 13:43:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900610;
-	bh=mwvEm0S1Y8h54lbKKHhHxpPZ0bkHcAhMHwzrAKFbxwU=;
+	s=korg; t=1676900613;
+	bh=H6FNyVee5d76mOPMh4TulnDjjnnVRhJChcRNi+nmo6o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=NcnI084ux90KSDbY3EKFSOhUCqwuQd8PpsBkf4ycwiiN21I1yLc7FOWSrSMysyONO
-	 /zmjTAApneUNXzauw08HGsw8vaGl3H+H1PFm+wxi+KNq7i/rANDpXVzCgokgZFUeoG
-	 QAv3vIKsvfaPzueYlLJfNv5AoOyJrLu/KbPqCZ68=
+	b=Ec6dCH9DWzmlwqalazm6VhnlHF1PoneJx6jMojDLQsI9weUclFFSTlYb5mScl+FCe
+	 /Dv5/SejQSJFKYvTG2j15wPp8+gYbrzCR43FbKrj+Jsj6gpltCV6upYz/RkIh8ha3U
+	 toQWGtF1qiG1/1fZgTWt9stAomYwWDD82PB81Q24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	lianhui tang <bluetlh@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 4.19 83/89] net: mpls: fix stale pointer if allocation fails during device rename
-Date: Mon, 20 Feb 2023 14:36:22 +0100
-Message-Id: <20230220133556.091525446@linuxfoundation.org>
+	Guillaume Nault <gnault@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 84/89] ipv6: Fix datagram socket connection with DSCP.
+Date: Mon, 20 Feb 2023 14:36:23 +0100
+Message-Id: <20230220133556.132108514@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -35,54 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Kicinski <kuba@kernel.org>
+From: Guillaume Nault <gnault@redhat.com>
 
-commit fda6c89fe3d9aca073495a664e1d5aea28cd4377 upstream.
+commit e010ae08c71fda8be3d6bda256837795a0b3ea41 upstream.
 
-lianhui reports that when MPLS fails to register the sysctl table
-under new location (during device rename) the old pointers won't
-get overwritten and may be freed again (double free).
+Take into account the IPV6_TCLASS socket option (DSCP) in
+ip6_datagram_flow_key_init(). Otherwise fib6_rule_match() can't
+properly match the DSCP value, resulting in invalid route lookup.
 
-Handle this gracefully. The best option would be unregistering
-the MPLS from the device completely on failure, but unfortunately
-mpls_ifdown() can fail. So failing fully is also unreliable.
+For example:
 
-Another option is to register the new table first then only
-remove old one if the new one succeeds. That requires more
-code, changes order of notifications and two tables may be
-visible at the same time.
+  ip route add unreachable table main 2001:db8::10/124
 
-sysctl point is not used in the rest of the code - set to NULL
-on failures and skip unregister if already NULL.
+  ip route add table 100 2001:db8::10/124 dev eth0
+  ip -6 rule add dsfield 0x04 table 100
 
-Reported-by: lianhui tang <bluetlh@gmail.com>
-Fixes: 0fae3bf018d9 ("mpls: handle device renames for per-device sysctls")
+  echo test | socat - UDP6:[2001:db8::11]:54321,ipv6-tclass=0x04
+
+Without this patch, socat fails at connect() time ("No route to host")
+because the fib-rule doesn't jump to table 100 and the lookup ends up
+being done in the main table.
+
+Fixes: 2cc67cc731d9 ("[IPV6] ROUTE: Routing by Traffic Class.")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mpls/af_mpls.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/ipv6/datagram.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/mpls/af_mpls.c
-+++ b/net/mpls/af_mpls.c
-@@ -1375,6 +1375,7 @@ static int mpls_dev_sysctl_register(stru
- free:
- 	kfree(table);
- out:
-+	mdev->sysctl = NULL;
- 	return -ENOBUFS;
- }
+--- a/net/ipv6/datagram.c
++++ b/net/ipv6/datagram.c
+@@ -54,7 +54,7 @@ static void ip6_datagram_flow_key_init(s
+ 	fl6->flowi6_mark = sk->sk_mark;
+ 	fl6->fl6_dport = inet->inet_dport;
+ 	fl6->fl6_sport = inet->inet_sport;
+-	fl6->flowlabel = np->flow_label;
++	fl6->flowlabel = ip6_make_flowinfo(np->tclass, np->flow_label);
+ 	fl6->flowi6_uid = sk->sk_uid;
  
-@@ -1384,6 +1385,9 @@ static void mpls_dev_sysctl_unregister(s
- 	struct net *net = dev_net(dev);
- 	struct ctl_table *table;
- 
-+	if (!mdev->sysctl)
-+		return;
-+
- 	table = mdev->sysctl->ctl_table_arg;
- 	unregister_net_sysctl_table(mdev->sysctl);
- 	kfree(table);
+ 	if (!fl6->flowi6_oif)
 
 
