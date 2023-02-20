@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 960E163B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:48:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1585DC433EF;
-	Mon, 20 Feb 2023 13:48:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58ED063B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:48:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA20EC433D2;
+	Mon, 20 Feb 2023 13:48:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900932;
-	bh=y6BrrmqMxEtX/nV7V9XLxSRpo7BPPYHK1/LEjIpeV1A=;
+	s=korg; t=1676900935;
+	bh=b933uSUCoOik2IkDp5DeHXO2VvvYctMvwIOh4fjTYgU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bNkjWoNuVyNCpTKCx9GcUhJ2EDY7CbA0M2OsZ0yD4ttcCn8cAkxx8w66qQlU1jY7q
-	 4aTAETO9x40JleK7Dt0AmdQsUfPaBFx5VEqPlaP7MvDBzWiNQK/3fMZslwtjuY7O62
-	 4Qem/8bgAnr9EsjNG1HYX0TluvUggS8Q9lF0/zwI=
+	b=biCqxDNzbdvGckooJLP7UP6mvtNLVgb/0tOwEJtAvlStjOupXT3MNr2ILlgrIVPk/
+	 jIcpx6/yQQ6q801KIZg3GHKMGqKJ5m56HtBwTC0ZvHafTue9oxDrlriubi6GQ+F2Qt
+	 HA7gtsXGyFmI0ugIO1+9bG5lCwtaR4RbIYcdRswk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Chandan Babu R <chandanrlinux@gmail.com>,
 	Chandan Babu R <chandan.babu@oracle.com>,
 	"Darrick J. Wong" <djwong@kernel.org>
-Subject: [PATCH 5.4 122/156] xfs: fix missing CoW blocks writeback conversion retry
-Date: Mon, 20 Feb 2023 14:36:06 +0100
-Message-Id: <20230220133607.664815635@linuxfoundation.org>
+Subject: [PATCH 5.4 123/156] xfs: ensure inobt record walks always make forward progress
+Date: Mon, 20 Feb 2023 14:36:07 +0100
+Message-Id: <20230220133607.709941685@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -38,67 +38,137 @@ Content-Transfer-Encoding: 8bit
 
 From: "Darrick J. Wong" <darrick.wong@oracle.com>
 
-commit c2f09217a4305478c55adc9a98692488dd19cd32 upstream.
+commit 27c14b5daa82861220d6fa6e27b51f05f21ffaa7 upstream.
 
-[ Set xfs_writepage_ctx->fork to XFS_DATA_FORK since 5.4.y tracks current
-  extent's fork in this variable ]
+[ In xfs_iwalk_ag(), Replace a call to XFS_IS_CORRUPT() with a call to
+  ASSERT() ]
 
-In commit 7588cbeec6df, we tried to fix a race stemming from the lack of
-coordination between higher level code that wants to allocate and remap
-CoW fork extents into the data fork.  Christoph cites as examples the
-always_cow mode, and a directio write completion racing with writeback.
+The aim of the inode btree record iterator function is to call a
+callback on every record in the btree.  To avoid having to tear down and
+recreate the inode btree cursor around every callback, it caches a
+certain number of records in a memory buffer.  After each batch of
+callback invocations, we have to perform a btree lookup to find the
+next record after where we left off.
 
-According to the comments before the goto retry, we want to restart the
-lookup to catch the extent in the data fork, but we don't actually reset
-whichfork or cow_fsb, which means the second try executes using stale
-information.  Up until now I think we've gotten lucky that either
-there's something left in the CoW fork to cause cow_fsb to be reset, or
-either data/cow fork sequence numbers have advanced enough to force a
-fresh lookup from the data fork.  However, if we reach the retry with an
-empty stable CoW fork and a stable data fork, neither of those things
-happens.  The retry foolishly re-calls xfs_convert_blocks on the CoW
-fork which fails again.  This time, we toss the write.
+However, if the keys of the inode btree are corrupt, the lookup might
+put us in the wrong part of the inode btree, causing the walk function
+to loop forever.  Therefore, we add extra cursor tracking to make sure
+that we never go backwards neither when performing the lookup nor when
+jumping to the next inobt record.  This also fixes an off by one error
+where upon resume the lookup should have been for the inode /after/ the
+point at which we stopped.
 
-I've recently been working on extending reflink to the realtime device.
-When the realtime extent size is larger than a single block, we have to
-force the page cache to CoW the entire rt extent if a write (or
-fallocate) are not aligned with the rt extent size.  The strategy I've
-chosen to deal with this is derived from Dave's blocksize > pagesize
-series: dirtying around the write range, and ensuring that writeback
-always starts mapping on an rt extent boundary.  This has brought this
-race front and center, since generic/522 blows up immediately.
+Found by fuzzing xfs/460 with keys[2].startino = ones causing bulkstat
+and quotacheck to hang.
 
-However, I'm pretty sure this is a bug outright, independent of that.
-
-Fixes: 7588cbeec6df ("xfs: retry COW fork delalloc conversion when no extent was found")
+Fixes: a211432c27ff ("xfs: create simplified inode walk function")
 Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Chandan Babu R <chandanrlinux@gmail.com>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_aops.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ fs/xfs/xfs_iwalk.c |   27 ++++++++++++++++++++++++---
+ 1 file changed, 24 insertions(+), 3 deletions(-)
 
---- a/fs/xfs/xfs_aops.c
-+++ b/fs/xfs/xfs_aops.c
-@@ -495,7 +495,7 @@ xfs_map_blocks(
- 	ssize_t			count = i_blocksize(inode);
- 	xfs_fileoff_t		offset_fsb = XFS_B_TO_FSBT(mp, offset);
- 	xfs_fileoff_t		end_fsb = XFS_B_TO_FSB(mp, offset + count);
--	xfs_fileoff_t		cow_fsb = NULLFILEOFF;
-+	xfs_fileoff_t		cow_fsb;
- 	struct xfs_bmbt_irec	imap;
- 	struct xfs_iext_cursor	icur;
- 	int			retries = 0;
-@@ -529,6 +529,8 @@ xfs_map_blocks(
- 	 * landed in a hole and we skip the block.
- 	 */
- retry:
-+	cow_fsb = NULLFILEOFF;
-+	wpc->fork = XFS_DATA_FORK;
- 	xfs_ilock(ip, XFS_ILOCK_SHARED);
- 	ASSERT(ip->i_d.di_format != XFS_DINODE_FMT_BTREE ||
- 	       (ip->i_df.if_flags & XFS_IFEXTENTS));
+--- a/fs/xfs/xfs_iwalk.c
++++ b/fs/xfs/xfs_iwalk.c
+@@ -55,6 +55,9 @@ struct xfs_iwalk_ag {
+ 	/* Where do we start the traversal? */
+ 	xfs_ino_t			startino;
+ 
++	/* What was the last inode number we saw when iterating the inobt? */
++	xfs_ino_t			lastino;
++
+ 	/* Array of inobt records we cache. */
+ 	struct xfs_inobt_rec_incore	*recs;
+ 
+@@ -300,6 +303,9 @@ xfs_iwalk_ag_start(
+ 		return error;
+ 	XFS_WANT_CORRUPTED_RETURN(mp, *has_more == 1);
+ 
++	iwag->lastino = XFS_AGINO_TO_INO(mp, agno,
++				irec->ir_startino + XFS_INODES_PER_CHUNK - 1);
++
+ 	/*
+ 	 * If the LE lookup yielded an inobt record before the cursor position,
+ 	 * skip it and see if there's another one after it.
+@@ -346,15 +352,17 @@ xfs_iwalk_run_callbacks(
+ 	struct xfs_mount		*mp = iwag->mp;
+ 	struct xfs_trans		*tp = iwag->tp;
+ 	struct xfs_inobt_rec_incore	*irec;
+-	xfs_agino_t			restart;
++	xfs_agino_t			next_agino;
+ 	int				error;
+ 
++	next_agino = XFS_INO_TO_AGINO(mp, iwag->lastino) + 1;
++
+ 	ASSERT(iwag->nr_recs > 0);
+ 
+ 	/* Delete cursor but remember the last record we cached... */
+ 	xfs_iwalk_del_inobt(tp, curpp, agi_bpp, 0);
+ 	irec = &iwag->recs[iwag->nr_recs - 1];
+-	restart = irec->ir_startino + XFS_INODES_PER_CHUNK - 1;
++	ASSERT(next_agino == irec->ir_startino + XFS_INODES_PER_CHUNK);
+ 
+ 	error = xfs_iwalk_ag_recs(iwag);
+ 	if (error)
+@@ -371,7 +379,7 @@ xfs_iwalk_run_callbacks(
+ 	if (error)
+ 		return error;
+ 
+-	return xfs_inobt_lookup(*curpp, restart, XFS_LOOKUP_GE, has_more);
++	return xfs_inobt_lookup(*curpp, next_agino, XFS_LOOKUP_GE, has_more);
+ }
+ 
+ /* Walk all inodes in a single AG, from @iwag->startino to the end of the AG. */
+@@ -395,6 +403,7 @@ xfs_iwalk_ag(
+ 
+ 	while (!error && has_more) {
+ 		struct xfs_inobt_rec_incore	*irec;
++		xfs_ino_t			rec_fsino;
+ 
+ 		cond_resched();
+ 		if (xfs_pwork_want_abort(&iwag->pwork))
+@@ -406,6 +415,15 @@ xfs_iwalk_ag(
+ 		if (error || !has_more)
+ 			break;
+ 
++		/* Make sure that we always move forward. */
++		rec_fsino = XFS_AGINO_TO_INO(mp, agno, irec->ir_startino);
++		if (iwag->lastino != NULLFSINO && iwag->lastino >= rec_fsino) {
++			ASSERT(iwag->lastino < rec_fsino);
++			error = -EFSCORRUPTED;
++			goto out;
++		}
++		iwag->lastino = rec_fsino + XFS_INODES_PER_CHUNK - 1;
++
+ 		/* No allocated inodes in this chunk; skip it. */
+ 		if (iwag->skip_empty && irec->ir_freecount == irec->ir_count) {
+ 			error = xfs_btree_increment(cur, 0, &has_more);
+@@ -534,6 +552,7 @@ xfs_iwalk(
+ 		.trim_start	= 1,
+ 		.skip_empty	= 1,
+ 		.pwork		= XFS_PWORK_SINGLE_THREADED,
++		.lastino	= NULLFSINO,
+ 	};
+ 	xfs_agnumber_t		agno = XFS_INO_TO_AGNO(mp, startino);
+ 	int			error;
+@@ -622,6 +641,7 @@ xfs_iwalk_threaded(
+ 		iwag->data = data;
+ 		iwag->startino = startino;
+ 		iwag->sz_recs = xfs_iwalk_prefetch(inode_records);
++		iwag->lastino = NULLFSINO;
+ 		xfs_pwork_queue(&pctl, &iwag->pwork);
+ 		startino = XFS_AGINO_TO_INO(mp, agno + 1, 0);
+ 		if (flags & XFS_INOBT_WALK_SAME_AG)
+@@ -695,6 +715,7 @@ xfs_inobt_walk(
+ 		.startino	= startino,
+ 		.sz_recs	= xfs_inobt_walk_prefetch(inobt_records),
+ 		.pwork		= XFS_PWORK_SINGLE_THREADED,
++		.lastino	= NULLFSINO,
+ 	};
+ 	xfs_agnumber_t		agno = XFS_INO_TO_AGNO(mp, startino);
+ 	int			error;
 
 
