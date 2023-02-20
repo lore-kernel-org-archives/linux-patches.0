@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4848363B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C1DC1C433D2;
-	Mon, 20 Feb 2023 13:38:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0891563B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CD76C4339B;
+	Mon, 20 Feb 2023 13:38:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900325;
-	bh=H++bLpgSQ3LW38jFWQWLP+we9kkB45v6L+5nzrE2P3k=;
+	s=korg; t=1676900327;
+	bh=nFL98HanffDr/9tMYNjucP1NEOPJIbYQ6Acved+q6Sk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BgPH8L8LrTw7z5PChAHCZbLgFjxJNln+KL2qONJEtkevHlmicQUsA8TpZu8Jk3iMk
-	 IkeijKCXt4UBkzSYrWRTaer+K2w3m3tuubU4nfzllui2jA68NzsreZp24IGIyYFINP
-	 71ZUpLUyYS90nUhR9kGfMrUX5tE4OLgVQM4iW/C0=
+	b=kiCxP17dOO279DrcPrHAJrfTRFggLO/ErfkmL5vvoJ8nCIHVcHJlm7z1XseuwL3Kx
+	 2uChrpY8Zhoe3o7iXUIHH/vd/DzZ9f0Wl25zmBeCXHDHFy+z/U2MFL8E/zSHwtysSU
+	 7dogT8D5/IqYNe77C1hWzLInD4ra4JCagsGFWlhE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Mike Christie <michael.christie@oracle.com>,
+	Lee Duncan <lduncan@suse.com>,
+	Ding Hui <dinghui@sangfor.com.cn>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 08/53] scsi: target: core: Fix warning on RT kernels
-Date: Mon, 20 Feb 2023 14:35:34 +0100
-Message-Id: <20230220133548.476073916@linuxfoundation.org>
+Subject: [PATCH 4.14 09/53] scsi: iscsi_tcp: Fix UAF during login when accessing the shost ipaddress
+Date: Mon, 20 Feb 2023 14:35:35 +0100
+Message-Id: <20230220133548.514792185@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
 References: <20230220133548.158615609@linuxfoundation.org>
@@ -36,38 +37,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Mike Christie <michael.christie@oracle.com>
 
-[ Upstream commit 84ed64b1a7a7fcd507598dee7708c1f225123711 ]
+[ Upstream commit f484a794e4ee2a9ce61f52a78e810ac45f3fe3b3 ]
 
-Calling spin_lock_irqsave() does not disable the interrupts on realtime
-kernels, remove the warning and replace assert_spin_locked() with
-lockdep_assert_held().
+If during iscsi_sw_tcp_session_create() iscsi_tcp_r2tpool_alloc() fails,
+userspace could be accessing the host's ipaddress attr. If we then free the
+session via iscsi_session_teardown() while userspace is still accessing the
+session we will hit a use after free bug.
 
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Link: https://lore.kernel.org/r/20230110125310.55884-1-mlombard@redhat.com
+Set the tcp_sw_host->session after we have completed session creation and
+can no longer fail.
+
+Link: https://lore.kernel.org/r/20230117193937.21244-3-michael.christie@oracle.com
+Signed-off-by: Mike Christie <michael.christie@oracle.com>
+Reviewed-by: Lee Duncan <lduncan@suse.com>
+Acked-by: Ding Hui <dinghui@sangfor.com.cn>
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/target/target_core_tmr.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/scsi/iscsi_tcp.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/target/target_core_tmr.c b/drivers/target/target_core_tmr.c
-index 9c7bc1ca341a..e72bfb10a3f0 100644
---- a/drivers/target/target_core_tmr.c
-+++ b/drivers/target/target_core_tmr.c
-@@ -114,8 +114,8 @@ static bool __target_check_io_state(struct se_cmd *se_cmd,
+diff --git a/drivers/scsi/iscsi_tcp.c b/drivers/scsi/iscsi_tcp.c
+index e3ca16043f9a..9161fe8fba88 100644
+--- a/drivers/scsi/iscsi_tcp.c
++++ b/drivers/scsi/iscsi_tcp.c
+@@ -773,7 +773,7 @@ static int iscsi_sw_tcp_host_get_param(struct Scsi_Host *shost,
+ 				       enum iscsi_host_param param, char *buf)
  {
- 	struct se_session *sess = se_cmd->se_sess;
+ 	struct iscsi_sw_tcp_host *tcp_sw_host = iscsi_host_priv(shost);
+-	struct iscsi_session *session = tcp_sw_host->session;
++	struct iscsi_session *session;
+ 	struct iscsi_conn *conn;
+ 	struct iscsi_tcp_conn *tcp_conn;
+ 	struct iscsi_sw_tcp_conn *tcp_sw_conn;
+@@ -782,6 +782,7 @@ static int iscsi_sw_tcp_host_get_param(struct Scsi_Host *shost,
  
--	assert_spin_locked(&sess->sess_cmd_lock);
--	WARN_ON_ONCE(!irqs_disabled());
-+	lockdep_assert_held(&sess->sess_cmd_lock);
+ 	switch (param) {
+ 	case ISCSI_HOST_PARAM_IPADDRESS:
++		session = tcp_sw_host->session;
+ 		if (!session)
+ 			return -ENOTCONN;
+ 
+@@ -870,12 +871,14 @@ iscsi_sw_tcp_session_create(struct iscsi_endpoint *ep, uint16_t cmds_max,
+ 	if (!cls_session)
+ 		goto remove_host;
+ 	session = cls_session->dd_data;
+-	tcp_sw_host = iscsi_host_priv(shost);
+-	tcp_sw_host->session = session;
+ 
+ 	shost->can_queue = session->scsi_cmds_max;
+ 	if (iscsi_tcp_r2tpool_alloc(session))
+ 		goto remove_session;
 +
- 	/*
- 	 * If command already reached CMD_T_COMPLETE state within
- 	 * target_complete_cmd() or CMD_T_FABRIC_STOP due to shutdown,
++	/* We are now fully setup so expose the session to sysfs. */
++	tcp_sw_host = iscsi_host_priv(shost);
++	tcp_sw_host->session = session;
+ 	return cls_session;
+ 
+ remove_session:
 -- 
 2.39.0
 
