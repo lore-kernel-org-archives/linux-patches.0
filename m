@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7D5063BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:00:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2ADEBC4339C;
-	Mon, 20 Feb 2023 14:00:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3933F63BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:00:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B6C97C4339E;
+	Mon, 20 Feb 2023 14:00:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901600;
-	bh=3bPGYyvttL/rWtNsh9tUXp6e/7uCaol6vXcxGvSCnsw=;
+	s=korg; t=1676901603;
+	bh=XXlbk3WDPGB58e5sC4aR1PCh1B2pxHCCrRIj7oECMJ8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BzYn+qKtS4gv7hFe6IOxbRdtxn7ZVP4Ez7ifpOYhpntR5oGQXXSTLqN6+VoLSUVxa
-	 4Rhv6Yn1rZqXIx05y5JDEHZVEYH45apMYuG1Rk6sGHa24zRcs0aQIKW2l9483r8KgZ
-	 NR/AlAkDRnL/YTsVXNcXxReRuB02d77uE8cmKS8I=
+	b=xC5Fb2ZOcRSDlJP4hCdIi2BXEoRNCuWQ/Gvg4gCtc6emOCYPlhBR0G5LJHhJMFie6
+	 qnTlPMNSfikNctN++6+8BEuP78c74E4nKkq7zdwL3cbwDCzA30bR/g97bAWSjmPjzr
+	 csqGtqIMr1ROjYMOuWIMcW5D4WRGiCiapsp8u0BI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matt Roper <matthew.d.roper@intel.com>,
-	Gustavo Sousa <gustavo.sousa@intel.com>,
-	Rodrigo Vivi <rodrigo.vivi@intel.com>
-Subject: [PATCH 6.1 080/118] drm/i915/gen11: Wa_1408615072/Wa_1407596294 should be on GT list
-Date: Mon, 20 Feb 2023 14:36:36 +0100
-Message-Id: <20230220133603.606943038@linuxfoundation.org>
+	Andy Chi <andy.chi@canonical.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 063/118] ALSA: hda/realtek: Enable mute/micmute LEDs and speaker support for HP Laptops
+Date: Mon, 20 Feb 2023 14:36:19 +0100
+Message-Id: <20230220133602.959329240@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -35,58 +34,36 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matt Roper <matthew.d.roper@intel.com>
+From: Andy Chi <andy.chi@canonical.com>
 
-commit d5a1224aa68c8b124a4c5c390186e571815ed390 upstream.
+commit 9251584af09285133bec0595e5c7218fe2e595c9 upstream.
 
-The UNSLICE_UNIT_LEVEL_CLKGATE register programmed by this workaround
-has 'BUS' style reset, indicating that it does not lose its value on
-engine resets.  Furthermore, this register is part of the GT forcewake
-domain rather than the RENDER domain, so it should not be impacted by
-RCS engine resets.  As such, we should implement this on the GT
-workaround list rather than an engine list.
+On HP Laptops, requires the ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED quirk to
+make its audio LEDs and speaker work.
 
-Bspec: 19219
-Fixes: 3551ff928744 ("drm/i915/gen11: Moving WAs to rcs_engine_wa_init()")
-Signed-off-by: Matt Roper <matthew.d.roper@intel.com>
-Reviewed-by: Gustavo Sousa <gustavo.sousa@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230201222831.608281-2-matthew.d.roper@intel.com
-(cherry picked from commit 5f21dc07b52eb54a908e66f5d6e05a87bcb5b049)
-Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
+Signed-off-by: Andy Chi <andy.chi@canonical.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230214140432.39654-1-andy.chi@canonical.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/i915/gt/intel_workarounds.c |   14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ sound/pci/hda/patch_realtek.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/gpu/drm/i915/gt/intel_workarounds.c
-+++ b/drivers/gpu/drm/i915/gt/intel_workarounds.c
-@@ -1249,6 +1249,13 @@ icl_gt_workarounds_init(struct intel_gt
- 		    GAMT_CHKN_BIT_REG,
- 		    GAMT_CHKN_DISABLE_L3_COH_PIPE);
- 
-+	/*
-+	 * Wa_1408615072:icl,ehl  (vsunit)
-+	 * Wa_1407596294:icl,ehl  (hsunit)
-+	 */
-+	wa_write_or(wal, UNSLICE_UNIT_LEVEL_CLKGATE,
-+		    VSUNIT_CLKGATE_DIS | HSUNIT_CLKGATE_DIS);
-+
- 	/* Wa_1407352427:icl,ehl */
- 	wa_write_or(wal, UNSLICE_UNIT_LEVEL_CLKGATE2,
- 		    PSDUNIT_CLKGATE_DIS);
-@@ -2369,13 +2376,6 @@ rcs_engine_wa_init(struct intel_engine_c
- 			     GEN11_ENABLE_32_PLANE_MODE);
- 
- 		/*
--		 * Wa_1408615072:icl,ehl  (vsunit)
--		 * Wa_1407596294:icl,ehl  (hsunit)
--		 */
--		wa_write_or(wal, UNSLICE_UNIT_LEVEL_CLKGATE,
--			    VSUNIT_CLKGATE_DIS | HSUNIT_CLKGATE_DIS);
--
--		/*
- 		 * Wa_1408767742:icl[a2..forever],ehl[all]
- 		 * Wa_1605460711:icl[a0..c0]
- 		 */
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9432,6 +9432,12 @@ static const struct snd_pci_quirk alc269
+ 	 SND_PCI_QUIRK(0x103c, 0x8abb, "HP ZBook Firefly 14 G9", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ad1, "HP EliteBook 840 14 inch G9 Notebook PC", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8ad2, "HP EliteBook 860 16 inch G9 Notebook PC", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8b42, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8b43, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8b44, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8b45, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8b46, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8b47, "HP", ALC245_FIXUP_CS35L41_SPI_2_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b5d, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8b5e, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8b7a, "HP", ALC236_FIXUP_HP_GPIO_LED),
 
 
