@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F5163B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8244BC433D2;
-	Mon, 20 Feb 2023 13:47:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DD963B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2045DC433D2;
+	Mon, 20 Feb 2023 13:47:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900824;
-	bh=v7PgzbYcV9XVcNe49KNTK6Fgd0pCctyWGcZZLuv4D7E=;
+	s=korg; t=1676900827;
+	bh=T7bJcgL7Vv7I+m+R2pPFFP8QnhMDNSKDKSDfgEe+/WM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jxKRqkFmiQr5jxUMVEEFjawA/vTxwOqD/p5vyYtF5DMCCojvt8mEOgSSG7dLcLp4p
-	 RqGaw7keTLr07Wi3CtLXgj/DAPAcpx5Pz0BrxxNccOJDt8Ln6I/qJvngQQc7C8OhDW
-	 tpmbl0dURkpKoe89u2u+/Lg0ZPJaPlLP6NuqyNvM=
+	b=ym9hT8XgQu61vk0OqkOYDRn5tnwozVhmIFr6ZVbkscyB6da6OWS6HM5wM7f2lKUJt
+	 ihFW9Euy3ak8HVHxybBPYAg5YwclzA3HOmbTAimSFglYA1/4iVixoR/INyWJ+HWonB
+	 PT1t0YWdRSyCdTdCRLrKJAt6gA92Cv3crpyRlcLY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Diana Zigterman <dzigterman@chromium.org>,
-	Prashant Malani <pmalani@chromium.org>
-Subject: [PATCH 5.4 082/156] usb: typec: altmodes/displayport: Fix probe pin assign check
-Date: Mon, 20 Feb 2023 14:35:26 +0100
-Message-Id: <20230220133605.839825190@linuxfoundation.org>
+	Xiubo Li <xiubli@redhat.com>,
+	Venky Shankar <vshankar@redhat.com>,
+	Jeff Layton <jlayton@kernel.org>,
+	Ilya Dryomov <idryomov@gmail.com>
+Subject: [PATCH 5.4 083/156] ceph: flush cap releases when the session is flushed
+Date: Mon, 20 Feb 2023 14:35:27 +0100
+Message-Id: <20230220133605.880447467@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -34,48 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prashant Malani <pmalani@chromium.org>
+From: Xiubo Li <xiubli@redhat.com>
 
-commit 54e5c00a4eb0a4c663445b245f641bbfab142430 upstream.
+commit e7d84c6a1296d059389f7342d9b4b7defb518d3a upstream.
 
-While checking Pin Assignments of the port and partner during probe, we
-don't take into account whether the peripheral is a plug or receptacle.
+MDS expects the completed cap release prior to responding to the
+session flush for cache drop.
 
-This manifests itself in a mode entry failure on certain docks and
-dongles with captive cables. For instance, the Startech.com Type-C to DP
-dongle (Model #CDP2DP) advertises its DP VDO as 0x405. This would fail
-the Pin Assignment compatibility check, despite it supporting
-Pin Assignment C as a UFP.
-
-Update the check to use the correct DP Pin Assign macros that
-take the peripheral's receptacle bit into account.
-
-Fixes: c1e5c2f0cb8a ("usb: typec: altmodes/displayport: correct pin assignment for UFP receptacles")
 Cc: stable@vger.kernel.org
-Reported-by: Diana Zigterman <dzigterman@chromium.org>
-Signed-off-by: Prashant Malani <pmalani@chromium.org>
-Link: https://lore.kernel.org/r/20230208205318.131385-1-pmalani@chromium.org
+Link: http://tracker.ceph.com/issues/38009
+Signed-off-by: Xiubo Li <xiubli@redhat.com>
+Reviewed-by: Venky Shankar <vshankar@redhat.com>
+Reviewed-by: Jeff Layton <jlayton@kernel.org>
+Signed-off-by: Ilya Dryomov <idryomov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/typec/altmodes/displayport.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ fs/ceph/mds_client.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
 
---- a/drivers/usb/typec/altmodes/displayport.c
-+++ b/drivers/usb/typec/altmodes/displayport.c
-@@ -522,10 +522,10 @@ int dp_altmode_probe(struct typec_altmod
- 	/* FIXME: Port can only be DFP_U. */
+--- a/fs/ceph/mds_client.c
++++ b/fs/ceph/mds_client.c
+@@ -3151,6 +3151,12 @@ static void handle_session(struct ceph_m
+ 		break;
  
- 	/* Make sure we have compatiple pin configurations */
--	if (!(DP_CAP_DFP_D_PIN_ASSIGN(port->vdo) &
--	      DP_CAP_UFP_D_PIN_ASSIGN(alt->vdo)) &&
--	    !(DP_CAP_UFP_D_PIN_ASSIGN(port->vdo) &
--	      DP_CAP_DFP_D_PIN_ASSIGN(alt->vdo)))
-+	if (!(DP_CAP_PIN_ASSIGN_DFP_D(port->vdo) &
-+	      DP_CAP_PIN_ASSIGN_UFP_D(alt->vdo)) &&
-+	    !(DP_CAP_PIN_ASSIGN_UFP_D(port->vdo) &
-+	      DP_CAP_PIN_ASSIGN_DFP_D(alt->vdo)))
- 		return -ENODEV;
+ 	case CEPH_SESSION_FLUSHMSG:
++		/* flush cap releases */
++		spin_lock(&session->s_cap_lock);
++		if (session->s_num_cap_releases)
++			ceph_flush_cap_releases(mdsc, session);
++		spin_unlock(&session->s_cap_lock);
++
+ 		send_flushmsg_ack(mdsc, session, seq);
+ 		break;
  
- 	ret = sysfs_create_group(&alt->dev.kobj, &dp_altmode_group);
 
 
