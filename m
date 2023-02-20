@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7131263BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:59:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D1E20C433EF;
-	Mon, 20 Feb 2023 13:59:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 108C963BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:59:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E05EC433EF;
+	Mon, 20 Feb 2023 13:59:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901572;
-	bh=MpCiOHqhya3aRizMfpaodbu0HD3zzhJeJesP8MeQfOQ=;
+	s=korg; t=1676901574;
+	bh=6bNGLLIFAyJ2o+yBC5Mx3Zf+M1nAK2tYdZS2wdQiQN0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ile9k+Q81P76ZZ+sP1b20A/LF76EBJbmc2UXyKKOk5yre/S9GmBUd3VItOq3EeOFB
-	 1+V53RDxcssGdtt00XE6VDHbZxIHynHeiGb1MhffC+gcCfsmLoSnnXa0ep2/QPSoNz
-	 hHL7lyL7u4NOMNLKU7jvEYLKAEVNyLLfwy+vdtDs=
+	b=S0mtgUWuAFQvReH+/g0o8Ywgya37iE/sQ3mNTc5jqb0KJ6ugpsiafNYQBh6GLIZcY
+	 rhugkAzvZhoyfgl5h83OuOC4dzOyhoABr2h+oNY+Qd4EqRISnGQge/hYPYgvLOwu9+
+	 g6BrPZNCm/VcCziJh4wum0ZwuJoEudOWwDu2z1sA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Engel <Amit.Engel@dell.com>,
-	James Smart <jsmart2021@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 030/118] nvme-fc: fix a missing queue put in nvmet_fc_ls_create_association
-Date: Mon, 20 Feb 2023 14:35:46 +0100
-Message-Id: <20230220133601.638793387@linuxfoundation.org>
+	Andy Chi <andy.chi@canonical.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.1 062/118] ALSA: hda/realtek: fix mute/micmute LEDs dont work for a HP platform.
+Date: Mon, 20 Feb 2023 14:36:18 +0100
+Message-Id: <20230220133602.911858284@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -36,41 +34,31 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amit Engel <Amit.Engel@dell.com>
+From: Andy Chi <andy.chi@canonical.com>
 
-[ Upstream commit 0cab4404874f2de52617de8400c844891c6ea1ce ]
+commit 5007b848ff2234ff7ea55755cb315766888988da upstream.
 
-As part of nvmet_fc_ls_create_association there is a case where
-nvmet_fc_alloc_target_queue fails right after a new association with an
-admin queue is created. In this case, no one releases the get taken in
-nvmet_fc_alloc_target_assoc.  This fix is adding the missing put.
+There is a HP platform needs ALC236_FIXUP_HP_GPIO_LED quirk to
+make mic-mute/audio-mute working.
 
-Signed-off-by: Amit Engel <Amit.Engel@dell.com>
-Reviewed-by: James Smart <jsmart2021@gmail.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Andy Chi <andy.chi@canonical.com>
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230214035853.31217-1-andy.chi@canonical.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/nvme/target/fc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index ab2627e17bb97..1ab6601fdd5cf 100644
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -1685,8 +1685,10 @@ nvmet_fc_ls_create_association(struct nvmet_fc_tgtport *tgtport,
- 		else {
- 			queue = nvmet_fc_alloc_target_queue(iod->assoc, 0,
- 					be16_to_cpu(rqst->assoc_cmd.sqsize));
--			if (!queue)
-+			if (!queue) {
- 				ret = VERR_QUEUE_ALLOC_FAIL;
-+				nvmet_fc_tgt_a_put(iod->assoc);
-+			}
- 		}
- 	}
- 
--- 
-2.39.0
-
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -9436,6 +9436,7 @@ static const struct snd_pci_quirk alc269
+ 	SND_PCI_QUIRK(0x103c, 0x8b5e, "HP", ALC236_FIXUP_HP_MUTE_LED_MICMUTE_VREF),
+ 	SND_PCI_QUIRK(0x103c, 0x8b7a, "HP", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b7d, "HP", ALC236_FIXUP_HP_GPIO_LED),
++	SND_PCI_QUIRK(0x103c, 0x8b87, "HP", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b8a, "HP", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b8b, "HP", ALC236_FIXUP_HP_GPIO_LED),
+ 	SND_PCI_QUIRK(0x103c, 0x8b8d, "HP", ALC236_FIXUP_HP_GPIO_LED),
 
 
