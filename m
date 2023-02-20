@@ -1,27 +1,36 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F033C63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 79314C433D2;
-	Mon, 20 Feb 2023 13:47:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9828863B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E79E2C433D2;
+	Mon, 20 Feb 2023 13:47:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900861;
-	bh=iv5B47pNe86/2rxKzaoSgXckV5rpV41e5bD7FuJX/aQ=;
+	s=korg; t=1676900864;
+	bh=iRRaVW8waMS3swKNOM/fpWoKvde37F2jbZWpvCGZsz8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CEe4BtebGpdTo9tl+RsMosEoJjqfKTaIQzcgqEKLdwxljLpDUEA7txnlF5qo8e3yQ
-	 6dEKcOALrx32uNk/E+4uNN0BZ+bjbmcQS7tKM8FsyXAQLfJ2Vfg5IywWDA422yzPJ2
-	 EYi5T65vnbUIQQAVALpqDtrs7eQ/R4/fou2bB3n4=
+	b=iSoNdRkfYS1+Q2sd5CCjrnBpV1jUAXnhfjlg+4gTkqdwBaaZFOXrb/nDxwNMxpcW4
+	 52P7nhYidX9MCc0Ln3ddSMeZ9+BTJloIthDkJciBQT4CTsCSqMu3bvj6XvwKW0hNAo
+	 5yScoWXvhggnbYqXWFDkb9ETeftYxvkKHZvKzsJE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrey Konovalov <andrey.konovalov@linaro.org>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>,
+	Jiri Pirko <jiri@resnulli.us>,
 	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Paolo Abeni <pabeni@redhat.com>,
+	netdev@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	Cong Wang <cong.wang@bytedance.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 095/156] net: stmmac: do not stop RX_CLK in Rx LPI state for qcs404 SoC
-Date: Mon, 20 Feb 2023 14:35:39 +0100
-Message-Id: <20230220133606.429652992@linuxfoundation.org>
+Subject: [PATCH 5.4 096/156] net: sched: sch: Bounds check priority
+Date: Mon, 20 Feb 2023 14:35:40 +0100
+Message-Id: <20230220133606.471631231@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -35,65 +44,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrey Konovalov <andrey.konovalov@linaro.org>
+From: Kees Cook <keescook@chromium.org>
 
-[ Upstream commit 54aa39a513dbf2164ca462a19f04519b2407a224 ]
+[ Upstream commit de5ca4c3852f896cacac2bf259597aab5e17d9e3 ]
 
-Currently in phy_init_eee() the driver unconditionally configures the PHY
-to stop RX_CLK after entering Rx LPI state. This causes an LPI interrupt
-storm on my qcs404-base board.
+Nothing was explicitly bounds checking the priority index used to access
+clpriop[]. WARN and bail out early if it's pathological. Seen with GCC 13:
 
-Change the PHY initialization so that for "qcom,qcs404-ethqos" compatible
-device RX_CLK continues to run even in Rx LPI state.
+../net/sched/sch_htb.c: In function 'htb_activate_prios':
+../net/sched/sch_htb.c:437:44: warning: array subscript [0, 31] is outside array bounds of 'struct htb_prio[8]' [-Warray-bounds=]
+  437 |                         if (p->inner.clprio[prio].feed.rb_node)
+      |                             ~~~~~~~~~~~~~~~^~~~~~
+../net/sched/sch_htb.c:131:41: note: while referencing 'clprio'
+  131 |                         struct htb_prio clprio[TC_HTB_NUMPRIO];
+      |                                         ^~~~~~
 
-Signed-off-by: Andrey Konovalov <andrey.konovalov@linaro.org>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+Cc: Cong Wang <xiyou.wangcong@gmail.com>
+Cc: Jiri Pirko <jiri@resnulli.us>
+Cc: "David S. Miller" <davem@davemloft.net>
+Cc: Eric Dumazet <edumazet@google.com>
+Cc: Jakub Kicinski <kuba@kernel.org>
+Cc: Paolo Abeni <pabeni@redhat.com>
+Cc: netdev@vger.kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Cong Wang <cong.wang@bytedance.com>
+Link: https://lore.kernel.org/r/20230127224036.never.561-kees@kernel.org
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 2 ++
- drivers/net/ethernet/stmicro/stmmac/stmmac_main.c       | 3 ++-
- include/linux/stmmac.h                                  | 1 +
- 3 files changed, 5 insertions(+), 1 deletion(-)
+ net/sched/sch_htb.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-index bfc4a92f1d92b..78be62ecc9a9a 100644
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
-@@ -505,6 +505,8 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
- 	plat_dat->has_gmac4 = 1;
- 	plat_dat->pmt = 1;
- 	plat_dat->tso_en = of_property_read_bool(np, "snps,tso");
-+	if (of_device_is_compatible(np, "qcom,qcs404-ethqos"))
-+		plat_dat->rx_clk_runs_in_lpi = 1;
+diff --git a/net/sched/sch_htb.c b/net/sched/sch_htb.c
+index 8184c87da8bec..e635713cb41dd 100644
+--- a/net/sched/sch_htb.c
++++ b/net/sched/sch_htb.c
+@@ -405,7 +405,10 @@ static void htb_activate_prios(struct htb_sched *q, struct htb_class *cl)
+ 	while (cl->cmode == HTB_MAY_BORROW && p && mask) {
+ 		m = mask;
+ 		while (m) {
+-			int prio = ffz(~m);
++			unsigned int prio = ffz(~m);
++
++			if (WARN_ON_ONCE(prio > ARRAY_SIZE(p->inner.clprio)))
++				break;
+ 			m &= ~(1 << prio);
  
- 	ret = stmmac_dvr_probe(&pdev->dev, plat_dat, &stmmac_res);
- 	if (ret)
-diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-index 3079e52546663..6a3b0f76d9729 100644
---- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
-@@ -932,7 +932,8 @@ static void stmmac_mac_link_up(struct phylink_config *config,
- 
- 	stmmac_mac_set(priv, priv->ioaddr, true);
- 	if (phy && priv->dma_cap.eee) {
--		priv->eee_active = phy_init_eee(phy, 1) >= 0;
-+		priv->eee_active =
-+			phy_init_eee(phy, !priv->plat->rx_clk_runs_in_lpi) >= 0;
- 		priv->eee_enabled = stmmac_eee_init(priv);
- 		stmmac_set_eee_pls(priv, priv->hw, true);
- 	}
-diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
-index 0b35747c9837a..88b107e20fc7c 100644
---- a/include/linux/stmmac.h
-+++ b/include/linux/stmmac.h
-@@ -178,6 +178,7 @@ struct plat_stmmacenet_data {
- 	int rss_en;
- 	int mac_port_sel_speed;
- 	bool en_tx_lpi_clockgating;
-+	bool rx_clk_runs_in_lpi;
- 	int has_xgmac;
- 	bool sph_disable;
- };
+ 			if (p->inner.clprio[prio].feed.rb_node)
 -- 
 2.39.0
 
