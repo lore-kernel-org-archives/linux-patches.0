@@ -1,34 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEB9463B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:50:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1D958C433EF;
-	Mon, 20 Feb 2023 13:50:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5668B63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:50:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D467BC433EF;
+	Mon, 20 Feb 2023 13:50:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901009;
-	bh=+iqTeL3cDJaa3hEzcRuZuEksB8evryCKe+Mu9Fp7Xdw=;
+	s=korg; t=1676901012;
+	bh=yg3+SjJt2gvNjSYWiRmZEDVHuicaqA6D4QZosUCxDds=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0fbNyegFgam+BHrbR+tYrgDekR0A8GqLy1C1rPYn9RHe00BMdMjT/iAnqkP+b2DmH
-	 QdW34t21oTn2RDCsNWpoYiKVIIY0zHI6bqAxZqCGPDyV0lkpJXYr76p3NcS0S3fcFZ
-	 qsM4aW3jdxHPPZyR2X0d2sOreZPBOVJ3XA89XKCU=
+	b=oxk4M4pf3GtD6XAvehGYIBJXrIKoRVMekWHSdL4IejEtFeHhijRw1pXs2bnq3h5jk
+	 lVT2t7POIpY9skQf9sszckzije3A7+3O6USXzEj2UhJEtlW6dslnD6lg5TvgIuXT2O
+	 +Z9wSZrBB3aCYSL8QAAaDjx4+9ZFahgAbsaE/RWQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	stable <stable@kernel.org>,
-	Xingyuan Mo <hdthky0@gmail.com>
-Subject: [PATCH 5.4 152/156] kvm: initialize all of the kvm_debugregs structure before sending it to userspace
-Date: Mon, 20 Feb 2023 14:36:36 +0100
-Message-Id: <20230220133609.003326741@linuxfoundation.org>
+	Aaron Thompson <dev@aaront.org>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>
+Subject: [PATCH 5.4 135/156] Revert "mm: Always release pages to the buddy allocator in memblock_free_late()."
+Date: Mon, 20 Feb 2023 14:36:19 +0100
+Message-Id: <20230220133608.249658545@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -42,53 +34,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Aaron Thompson <dev@aaront.org>
 
-commit 2c10b61421a28e95a46ab489fd56c0f442ff6952 upstream.
+commit 647037adcad00f2bab8828d3d41cd0553d41f3bd upstream.
 
-When calling the KVM_GET_DEBUGREGS ioctl, on some configurations, there
-might be some unitialized portions of the kvm_debugregs structure that
-could be copied to userspace.  Prevent this as is done in the other kvm
-ioctls, by setting the whole structure to 0 before copying anything into
-it.
+This reverts commit 115d9d77bb0f9152c60b6e8646369fa7f6167593.
 
-Bonus is that this reduces the lines of code as the explicit flag
-setting and reserved space zeroing out can be removed.
+The pages being freed by memblock_free_late() have already been
+initialized, but if they are in the deferred init range,
+__free_one_page() might access nearby uninitialized pages when trying to
+coalesce buddies. This can, for example, trigger this BUG:
 
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: <x86@kernel.org>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: stable <stable@kernel.org>
-Reported-by: Xingyuan Mo <hdthky0@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Message-Id: <20230214103304.3689213-1-gregkh@linuxfoundation.org>
-Tested-by: Xingyuan Mo <hdthky0@gmail.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+  BUG: unable to handle page fault for address: ffffe964c02580c8
+  RIP: 0010:__list_del_entry_valid+0x3f/0x70
+   <TASK>
+   __free_one_page+0x139/0x410
+   __free_pages_ok+0x21d/0x450
+   memblock_free_late+0x8c/0xb9
+   efi_free_boot_services+0x16b/0x25c
+   efi_enter_virtual_mode+0x403/0x446
+   start_kernel+0x678/0x714
+   secondary_startup_64_no_verify+0xd2/0xdb
+   </TASK>
+
+A proper fix will be more involved so revert this change for the time
+being.
+
+Fixes: 115d9d77bb0f ("mm: Always release pages to the buddy allocator in memblock_free_late().")
+Signed-off-by: Aaron Thompson <dev@aaront.org>
+Link: https://lore.kernel.org/r/20230207082151.1303-1-dev@aaront.org
+Signed-off-by: Mike Rapoport (IBM) <rppt@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ mm/memblock.c |    8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -3948,12 +3948,11 @@ static void kvm_vcpu_ioctl_x86_get_debug
- {
- 	unsigned long val;
+--- a/mm/memblock.c
++++ b/mm/memblock.c
+@@ -1546,13 +1546,7 @@ void __init __memblock_free_late(phys_ad
+ 	end = PFN_DOWN(base + size);
  
-+	memset(dbgregs, 0, sizeof(*dbgregs));
- 	memcpy(dbgregs->db, vcpu->arch.db, sizeof(vcpu->arch.db));
- 	kvm_get_dr(vcpu, 6, &val);
- 	dbgregs->dr6 = val;
- 	dbgregs->dr7 = vcpu->arch.dr7;
--	dbgregs->flags = 0;
--	memset(&dbgregs->reserved, 0, sizeof(dbgregs->reserved));
+ 	for (; cursor < end; cursor++) {
+-		/*
+-		 * Reserved pages are always initialized by the end of
+-		 * memblock_free_all() (by memmap_init() and, if deferred
+-		 * initialization is enabled, memmap_init_reserved_pages()), so
+-		 * these pages can be released directly to the buddy allocator.
+-		 */
+-		__free_pages_core(pfn_to_page(cursor), 0);
++		memblock_free_pages(pfn_to_page(cursor), cursor, 0);
+ 		totalram_pages_inc();
+ 	}
  }
- 
- static int kvm_vcpu_ioctl_x86_set_debugregs(struct kvm_vcpu *vcpu,
 
 
