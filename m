@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C45AC63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4C1C5C433EF;
-	Mon, 20 Feb 2023 13:43:25 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 693CC63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:28 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E0E29C433D2;
+	Mon, 20 Feb 2023 13:43:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900605;
-	bh=cs8jPymyYZtHyjrx1lbbV2DScK85AhymKEFm3xd94tk=;
+	s=korg; t=1676900608;
+	bh=UkU42FwtnoqM34MiFodoP+gigTYxMOJjHXJ86iLa1Vw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OoaS7XExVxZUppcmpp8WC0eNn/qaXIMx3tciRi6WwJunDri35cwwhFhctC2/xHqPQ
-	 41nfb9OG+pu2Y4TGBpuWuQ6zOr4927kv45dMcB7AIvbNVd7if8fOXsb0dXIaMAkuUf
-	 dFr3GyAYWIPlWrd8ltst0bkibskCAMHX0/Mc62cY=
+	b=L54BK4cWDUMG7mldiEMpGyQJYUZ+5e4+QuulUKPmX6RpILFTrlsE5qGm3b3KHmGwE
+	 2K4fgNKCrislJpXrqeM+/sfAgKgxMZiM5w56sECj8jCI6QO4vuhInjslE1mIEUOM14
+	 b60czd4FE+iLJYJoi1FjTjg1a2FtzPQf8dpMeNAM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Willem de Bruijn <willemb@google.com>,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Paolo Abeni <pabeni@redhat.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 49/89] rds: rds_rm_zerocopy_callback() use list_first_entry()
-Date: Mon, 20 Feb 2023 14:35:48 +0100
-Message-Id: <20230220133554.861854439@linuxfoundation.org>
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 4.19 82/89] net: stmmac: Restrict warning on disabling DMA store and fwd mode
+Date: Mon, 20 Feb 2023 14:36:21 +0100
+Message-Id: <20230220133556.055964788@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -36,44 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-[ Upstream commit f753a68980cf4b59a80fe677619da2b1804f526d ]
+commit 05d7623a892a9da62da0e714428e38f09e4a64d8 upstream.
 
-rds_rm_zerocopy_callback() uses list_entry() on the head of a list
-causing a type confusion.
-Use list_first_entry() to actually access the first element of the
-rs_zcookie_queue list.
+When setting 'snps,force_thresh_dma_mode' DT property, the following
+warning is always emitted, regardless the status of force_sf_dma_mode:
 
-Fixes: 9426bbc6de99 ("rds: use list structure to track information for zerocopy completion notification")
-Reviewed-by: Willem de Bruijn <willemb@google.com>
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Link: https://lore.kernel.org/r/20230202-rds-zerocopy-v3-1-83b0df974f9a@diag.uniroma1.it
+dwmac-starfive 10020000.ethernet: force_sf_dma_mode is ignored if force_thresh_dma_mode is set.
+
+Do not print the rather misleading message when DMA store and forward
+mode is already disabled.
+
+Fixes: e2a240c7d3bc ("driver:net:stmmac: Disable DMA store and forward mode if platform data force_thresh_dma_mode is set.")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://lore.kernel.org/r/20230210202126.877548-1-cristian.ciocaltea@collabora.com
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/rds/message.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/rds/message.c b/net/rds/message.c
-index 4b00b1152a5f0..309b54cc62ae3 100644
---- a/net/rds/message.c
-+++ b/net/rds/message.c
-@@ -104,9 +104,9 @@ static void rds_rm_zerocopy_callback(struct rds_sock *rs,
- 	spin_lock_irqsave(&q->lock, flags);
- 	head = &q->zcookie_head;
- 	if (!list_empty(head)) {
--		info = list_entry(head, struct rds_msg_zcopy_info,
--				  rs_zcookie_next);
--		if (info && rds_zcookie_add(info, cookie)) {
-+		info = list_first_entry(head, struct rds_msg_zcopy_info,
-+					rs_zcookie_next);
-+		if (rds_zcookie_add(info, cookie)) {
- 			spin_unlock_irqrestore(&q->lock, flags);
- 			kfree(rds_info_from_znotifier(znotif));
- 			/* caller invokes rds_wake_sk_sleep() */
--- 
-2.39.0
-
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+@@ -518,7 +518,7 @@ stmmac_probe_config_dt(struct platform_d
+ 	dma_cfg->mixed_burst = of_property_read_bool(np, "snps,mixed-burst");
+ 
+ 	plat->force_thresh_dma_mode = of_property_read_bool(np, "snps,force_thresh_dma_mode");
+-	if (plat->force_thresh_dma_mode) {
++	if (plat->force_thresh_dma_mode && plat->force_sf_dma_mode) {
+ 		plat->force_sf_dma_mode = 0;
+ 		pr_warn("force_sf_dma_mode is ignored if force_thresh_dma_mode is set.");
+ 	}
 
 
