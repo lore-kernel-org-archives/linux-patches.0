@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7617363B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:42:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ED7E1C433EF;
-	Mon, 20 Feb 2023 13:42:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 29FA963B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85C57C433EF;
+	Mon, 20 Feb 2023 13:43:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900579;
-	bh=d41fPHWjaK0u0dTdU2pleFYLT5vlHdjSoBdZColWu7A=;
+	s=korg; t=1676900581;
+	bh=LWUxjaIczzGXGkXwUrZecSLxJ9jOhjSSGOaQZ/Oajw4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=eAtpg9MVa7VEMp0US5ugw6WeRGdUOWME7C6w0pFYZmjVflKIH+zRtYq17nfHEbHIq
-	 JMx9OSjdTEMmOHJ92mJtbn4dJMUSb8NJ6D4iv20ZmXfFOkOs0wLOis9I5gHQtE3a1X
-	 vkqgMAm3Oc/QqeQbJI6IdeeeVxtvPG1oa6qM0LB4=
+	b=tvRM4OvKuryF221CpXAUP9+nE2qub5/QLY7AtHCAQvdf5R+/oK7dzKLLvuLIbXFz5
+	 y690vCmjhN/ug9Al86TLCVR6v08FbVw7RaMAQ4P/cCgUOyHRGtYm3/pu0Zrv61ltK2
+	 xakoIl0mucZEHqkJupa4ZhqDaOfojo720sgorY8Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.19 78/89] dccp/tcp: Avoid negative sk_forward_alloc by ipv6_pinfo.pktoptions.
-Date: Mon, 20 Feb 2023 14:36:17 +0100
-Message-Id: <20230220133555.908947194@linuxfoundation.org>
+	Joel Stanley <joel@jms.id.au>,
+	Andrew Jeffery <andrew@aj.id.au>,
+	Linus Walleij <linus.walleij@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 52/89] pinctrl: aspeed: Fix confusing types in return value
+Date: Mon, 20 Feb 2023 14:35:51 +0100
+Message-Id: <20230220133554.972711498@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -35,125 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Joel Stanley <joel@jms.id.au>
 
-commit ca43ccf41224b023fc290073d5603a755fd12eed upstream.
+[ Upstream commit 287a344a11f1ebd31055cf9b22c88d7005f108d7 ]
 
-Eric Dumazet pointed out [0] that when we call skb_set_owner_r()
-for ipv6_pinfo.pktoptions, sk_rmem_schedule() has not been called,
-resulting in a negative sk_forward_alloc.
+The function signature is int, but we return a bool. Instead return a
+negative errno as the kerneldoc suggests.
 
-We add a new helper which clones a skb and sets its owner only
-when sk_rmem_schedule() succeeds.
-
-Note that we move skb_set_owner_r() forward in (dccp|tcp)_v6_do_rcv()
-because tcp_send_synack() can make sk_forward_alloc negative before
-ipv6_opt_accepted() in the crossed SYN-ACK or self-connect() cases.
-
-[0]: https://lore.kernel.org/netdev/CANn89iK9oc20Jdi_41jb9URdF210r7d1Y-+uypbMSbOfY6jqrg@mail.gmail.com/
-
-Fixes: 323fbd0edf3f ("net: dccp: Add handling of IPV6_PKTOPTIONS to dccp_v6_do_rcv()")
-Fixes: 3df80d9320bc ("[DCCP]: Introduce DCCPv6")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 4d3d0e4272d8 ("pinctrl: Add core support for Aspeed SoCs")
+Signed-off-by: Joel Stanley <joel@jms.id.au>
+Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
+Link: https://lore.kernel.org/r/20230119231856.52014-1-joel@jms.id.au
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/net/sock.h  |   13 +++++++++++++
- net/dccp/ipv6.c     |    7 ++-----
- net/ipv6/tcp_ipv6.c |   10 +++-------
- 3 files changed, 18 insertions(+), 12 deletions(-)
+ drivers/pinctrl/aspeed/pinctrl-aspeed.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2134,6 +2134,19 @@ static inline void skb_set_owner_r(struc
- 	sk_mem_charge(sk, skb->truesize);
- }
+diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed.c b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
+index 8dec302dc067a..a95289b5e6bf2 100644
+--- a/drivers/pinctrl/aspeed/pinctrl-aspeed.c
++++ b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
+@@ -295,7 +295,7 @@ static int aspeed_disable_sig(const struct aspeed_sig_expr **exprs,
+ 	int ret = 0;
  
-+static inline struct sk_buff *skb_clone_and_charge_r(struct sk_buff *skb, struct sock *sk)
-+{
-+	skb = skb_clone(skb, sk_gfp_mask(sk, GFP_ATOMIC));
-+	if (skb) {
-+		if (sk_rmem_schedule(sk, skb, skb->truesize)) {
-+			skb_set_owner_r(skb, sk);
-+			return skb;
-+		}
-+		__kfree_skb(skb);
-+	}
-+	return NULL;
-+}
-+
- void sk_reset_timer(struct sock *sk, struct timer_list *timer,
- 		    unsigned long expires);
+ 	if (!exprs)
+-		return true;
++		return -EINVAL;
  
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -541,11 +541,9 @@ static struct sock *dccp_v6_request_recv
- 	*own_req = inet_ehash_nolisten(newsk, req_to_sk(req_unhash), NULL);
- 	/* Clone pktoptions received with SYN, if we own the req */
- 	if (*own_req && ireq->pktopts) {
--		newnp->pktoptions = skb_clone(ireq->pktopts, GFP_ATOMIC);
-+		newnp->pktoptions = skb_clone_and_charge_r(ireq->pktopts, newsk);
- 		consume_skb(ireq->pktopts);
- 		ireq->pktopts = NULL;
--		if (newnp->pktoptions)
--			skb_set_owner_r(newnp->pktoptions, newsk);
- 	}
- 
- 	return newsk;
-@@ -605,7 +603,7 @@ static int dccp_v6_do_rcv(struct sock *s
- 					       --ANK (980728)
- 	 */
- 	if (np->rxopt.all)
--		opt_skb = skb_clone(skb, GFP_ATOMIC);
-+		opt_skb = skb_clone_and_charge_r(skb, sk);
- 
- 	if (sk->sk_state == DCCP_OPEN) { /* Fast path */
- 		if (dccp_rcv_established(sk, skb, dccp_hdr(skb), skb->len))
-@@ -669,7 +667,6 @@ ipv6_pktoptions:
- 			np->flow_label = ip6_flowlabel(ipv6_hdr(opt_skb));
- 		if (ipv6_opt_accepted(sk, opt_skb,
- 				      &DCCP_SKB_CB(opt_skb)->header.h6)) {
--			skb_set_owner_r(opt_skb, sk);
- 			memmove(IP6CB(opt_skb),
- 				&DCCP_SKB_CB(opt_skb)->header.h6,
- 				sizeof(struct inet6_skb_parm));
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1268,14 +1268,11 @@ static struct sock *tcp_v6_syn_recv_sock
- 
- 		/* Clone pktoptions received with SYN, if we own the req */
- 		if (ireq->pktopts) {
--			newnp->pktoptions = skb_clone(ireq->pktopts,
--						      sk_gfp_mask(sk, GFP_ATOMIC));
-+			newnp->pktoptions = skb_clone_and_charge_r(ireq->pktopts, newsk);
- 			consume_skb(ireq->pktopts);
- 			ireq->pktopts = NULL;
--			if (newnp->pktoptions) {
-+			if (newnp->pktoptions)
- 				tcp_v6_restore_cb(newnp->pktoptions);
--				skb_set_owner_r(newnp->pktoptions, newsk);
--			}
- 		}
- 	} else {
- 		if (!req_unhash && found_dup_sk) {
-@@ -1343,7 +1340,7 @@ static int tcp_v6_do_rcv(struct sock *sk
- 					       --ANK (980728)
- 	 */
- 	if (np->rxopt.all)
--		opt_skb = skb_clone(skb, sk_gfp_mask(sk, GFP_ATOMIC));
-+		opt_skb = skb_clone_and_charge_r(skb, sk);
- 
- 	if (sk->sk_state == TCP_ESTABLISHED) { /* Fast path */
- 		struct dst_entry *dst;
-@@ -1425,7 +1422,6 @@ ipv6_pktoptions:
- 		if (np->repflow)
- 			np->flow_label = ip6_flowlabel(ipv6_hdr(opt_skb));
- 		if (ipv6_opt_accepted(sk, opt_skb, &TCP_SKB_CB(opt_skb)->header.h6)) {
--			skb_set_owner_r(opt_skb, sk);
- 			tcp_v6_restore_cb(opt_skb);
- 			opt_skb = xchg(&np->pktoptions, opt_skb);
- 		} else {
+ 	while (*exprs && !ret) {
+ 		ret = aspeed_sig_expr_disable(*exprs, maps);
+-- 
+2.39.0
+
 
 
