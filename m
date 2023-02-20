@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B024563BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 383E9C433EF;
-	Mon, 20 Feb 2023 13:51:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0F263B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C572CC4339B;
+	Mon, 20 Feb 2023 13:51:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901116;
-	bh=ux566SMcxf5tinG2b7keNJbkGbj86VcKuIV+OtvWxq8=;
+	s=korg; t=1676901119;
+	bh=DyfMsKxO7PzLaLXkYzrXcYrQ21wzF822oqmwtjjaNI4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=umxf/Z3elHeeW8IUg0PjL66+RFu754q/0dsreRlTTU8mtzZoOxcgdFmDdK1BD9br/
-	 P3Un5YC/Zki7NOPt8B2CR/IAotwpZC6Y7NwTrjoP1nULbUNxnfVahLfqj4+WpDzWk9
-	 SQriE1ChW/0iS1Qp33Q3S5UN6UGtcX2HuqvddFi4=
+	b=Ts9FzucwG7d3Un9qbeUkFzzgLGe2htPdlSeZXllztsW7EM8TR3nD2bJbAbXm+m+L0
+	 q5G6AOOQEEvf9yazQAjwb+phpGiqUEaWQvsVhIcHpKJpAIyJeLayEhp62Hx10qrF8C
+	 UqvsBFNnlHteMLxm8jFf8vDouuprWzQmtBINoGQU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Leo Li <sunpeng.li@amd.com>,
-	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
-	Hamza Mahfooz <hamza.mahfooz@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>
-Subject: [PATCH 5.15 36/83] drm/amd/display: Fail atomic_check early on normalize_zpos error
-Date: Mon, 20 Feb 2023 14:36:09 +0100
-Message-Id: <20230220133554.922991644@linuxfoundation.org>
+	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
+	Sanket Goswami <Sanket.Goswami@amd.com>,
+	Mario Limonciello <mario.limonciello@amd.com>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 5.15 37/83] platform/x86: amd-pmc: Export Idlemask values based on the APU
+Date: Mon, 20 Feb 2023 14:36:10 +0100
+Message-Id: <20230220133554.953960850@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -36,44 +36,156 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Leo Li <sunpeng.li@amd.com>
+From: Sanket Goswami <Sanket.Goswami@amd.com>
 
-commit 2a00299e7447395d0898e7c6214817c06a61a8e8 upstream.
+commit f6045de1f53268131ea75a99b210b869dcc150b2 upstream.
 
-[Why]
+IdleMask is the metric used by the PM firmware to know the status of each
+of the Hardware IP blocks monitored by the PM firmware.
 
-drm_atomic_normalize_zpos() can return an error code when there's
-modeset lock contention. This was being ignored.
+Knowing this value is key to get the information of s2idle suspend/resume
+status. This value is mapped to PMC scratch registers, retrieve them
+accordingly based on the CPU family and the underlying firmware support.
 
-[How]
-
-Bail out of atomic check if normalize_zpos() returns an error.
-
-Fixes: b261509952bc ("drm/amd/display: Fix double cursor on non-video RGB MPO")
-Signed-off-by: Leo Li <sunpeng.li@amd.com>
-Tested-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
-Reviewed-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org
+Co-developed-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Signed-off-by: Sanket Goswami <Sanket.Goswami@amd.com>
+Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
+Link: https://lore.kernel.org/r/20210916124002.2529-1-Sanket.Goswami@amd.com
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+ drivers/platform/x86/amd-pmc.c |   76 +++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 76 insertions(+)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -10889,7 +10889,11 @@ static int amdgpu_dm_atomic_check(struct
- 	 * `dcn10_can_pipe_disable_cursor`). By now, all modified planes are in
- 	 * atomic state, so call drm helper to normalize zpos.
- 	 */
--	drm_atomic_normalize_zpos(dev, state);
-+	ret = drm_atomic_normalize_zpos(dev, state);
-+	if (ret) {
-+		drm_dbg(dev, "drm_atomic_normalize_zpos() failed\n");
-+		goto fail;
-+	}
+--- a/drivers/platform/x86/amd-pmc.c
++++ b/drivers/platform/x86/amd-pmc.c
+@@ -29,6 +29,10 @@
+ #define AMD_PMC_REGISTER_RESPONSE	0x980
+ #define AMD_PMC_REGISTER_ARGUMENT	0x9BC
  
- 	/* Remove exiting planes if they are modified */
- 	for_each_oldnew_plane_in_state_reverse(state, plane, old_plane_state, new_plane_state, i) {
++/* PMC Scratch Registers */
++#define AMD_PMC_SCRATCH_REG_CZN		0x94
++#define AMD_PMC_SCRATCH_REG_YC		0xD14
++
+ /* Base address of SMU for mapping physical address to virtual address */
+ #define AMD_PMC_SMU_INDEX_ADDRESS	0xB8
+ #define AMD_PMC_SMU_INDEX_DATA		0xBC
+@@ -110,6 +114,10 @@ struct amd_pmc_dev {
+ 	u32 base_addr;
+ 	u32 cpu_id;
+ 	u32 active_ips;
++/* SMU version information */
++	u16 major;
++	u16 minor;
++	u16 rev;
+ 	struct device *dev;
+ 	struct mutex lock; /* generic mutex lock */
+ #if IS_ENABLED(CONFIG_DEBUG_FS)
+@@ -201,6 +209,66 @@ static int s0ix_stats_show(struct seq_fi
+ }
+ DEFINE_SHOW_ATTRIBUTE(s0ix_stats);
+ 
++static int amd_pmc_get_smu_version(struct amd_pmc_dev *dev)
++{
++	int rc;
++	u32 val;
++
++	rc = amd_pmc_send_cmd(dev, 0, &val, SMU_MSG_GETSMUVERSION, 1);
++	if (rc)
++		return rc;
++
++	dev->major = (val >> 16) & GENMASK(15, 0);
++	dev->minor = (val >> 8) & GENMASK(7, 0);
++	dev->rev = (val >> 0) & GENMASK(7, 0);
++
++	dev_dbg(dev->dev, "SMU version is %u.%u.%u\n", dev->major, dev->minor, dev->rev);
++
++	return 0;
++}
++
++static int amd_pmc_idlemask_read(struct amd_pmc_dev *pdev, struct device *dev,
++				 struct seq_file *s)
++{
++	u32 val;
++
++	switch (pdev->cpu_id) {
++	case AMD_CPU_ID_CZN:
++		val = amd_pmc_reg_read(pdev, AMD_PMC_SCRATCH_REG_CZN);
++		break;
++	case AMD_CPU_ID_YC:
++		val = amd_pmc_reg_read(pdev, AMD_PMC_SCRATCH_REG_YC);
++		break;
++	default:
++		return -EINVAL;
++	}
++
++	if (dev)
++		dev_dbg(pdev->dev, "SMU idlemask s0i3: 0x%x\n", val);
++
++	if (s)
++		seq_printf(s, "SMU idlemask : 0x%x\n", val);
++
++	return 0;
++}
++
++static int amd_pmc_idlemask_show(struct seq_file *s, void *unused)
++{
++	struct amd_pmc_dev *dev = s->private;
++	int rc;
++
++	if (dev->major > 56 || (dev->major >= 55 && dev->minor >= 37)) {
++		rc = amd_pmc_idlemask_read(dev, NULL, s);
++		if (rc)
++			return rc;
++	} else {
++		seq_puts(s, "Unsupported SMU version for Idlemask\n");
++	}
++
++	return 0;
++}
++DEFINE_SHOW_ATTRIBUTE(amd_pmc_idlemask);
++
+ static void amd_pmc_dbgfs_unregister(struct amd_pmc_dev *dev)
+ {
+ 	debugfs_remove_recursive(dev->dbgfs_dir);
+@@ -213,6 +281,8 @@ static void amd_pmc_dbgfs_register(struc
+ 			    &smu_fw_info_fops);
+ 	debugfs_create_file("s0ix_stats", 0644, dev->dbgfs_dir, dev,
+ 			    &s0ix_stats_fops);
++	debugfs_create_file("amd_pmc_idlemask", 0644, dev->dbgfs_dir, dev,
++			    &amd_pmc_idlemask_fops);
+ }
+ #else
+ static inline void amd_pmc_dbgfs_register(struct amd_pmc_dev *dev)
+@@ -349,6 +419,8 @@ static int __maybe_unused amd_pmc_suspen
+ 	amd_pmc_send_cmd(pdev, 0, NULL, SMU_MSG_LOG_RESET, 0);
+ 	amd_pmc_send_cmd(pdev, 0, NULL, SMU_MSG_LOG_START, 0);
+ 
++	/* Dump the IdleMask before we send hint to SMU */
++	amd_pmc_idlemask_read(pdev, dev, NULL);
+ 	msg = amd_pmc_get_os_hint(pdev);
+ 	rc = amd_pmc_send_cmd(pdev, 1, NULL, msg, 0);
+ 	if (rc)
+@@ -371,6 +443,9 @@ static int __maybe_unused amd_pmc_resume
+ 	if (rc)
+ 		dev_err(pdev->dev, "resume failed\n");
+ 
++	/* Dump the IdleMask to see the blockers */
++	amd_pmc_idlemask_read(pdev, dev, NULL);
++
+ 	return 0;
+ }
+ 
+@@ -458,6 +533,7 @@ static int amd_pmc_probe(struct platform
+ 	if (err)
+ 		dev_err(dev->dev, "SMU debugging info not supported on this platform\n");
+ 
++	amd_pmc_get_smu_version(dev);
+ 	platform_set_drvdata(pdev, dev);
+ 	amd_pmc_dbgfs_register(dev);
+ 	return 0;
 
 
