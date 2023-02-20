@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id ED37A63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:41:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 77CE6C433D2;
-	Mon, 20 Feb 2023 13:41:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8AE9863B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:41:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1023BC433D2;
+	Mon, 20 Feb 2023 13:41:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900489;
-	bh=z/96+ovYQqvzl3gQWrPZ70bGG7adaQMdM7McEvC9CCU=;
+	s=korg; t=1676900492;
+	bh=j0L8rB2HOaJLiJP0lMRf1a8F+oUEvnYpO+PVGHR3H3k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w9lJXLSNV5o5Rv0hlFf6kp/nTNUp4pwxGISyHHucYGe+TOmT+VKmjQgCjoe0z5NVy
-	 x6RKLoApTtBp+XsQ82DlWw5BOWZLXE8ArbwJVQNDuKBucVtayN9vsM0Fs5RzcHfz/U
-	 y+QkYAfADcMEmjCds5Mic/ghsQCblncH7iZrSVCk=
+	b=fEo/T2JmwfORwuYWTNIAER1YXYuuSPPqgYNanlXu8eBrv+qq6BPMtOVlDQSIvCpjN
+	 Hcy2VGHInuXBW+VZjdK/re2KaBQpZElFx9lOglUGDaLiAspqm7i4u0wEzNqbNtSj2a
+	 0bTAX+DLwNmZ+iXyfr0OgOSGpwHIbERSq2gewlCU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artemii Karasev <karasev@ispras.ru>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 4.19 44/89] ALSA: emux: Avoid potential array out-of-bound in snd_emux_xg_control()
-Date: Mon, 20 Feb 2023 14:35:43 +0100
-Message-Id: <20230220133554.686689973@linuxfoundation.org>
+	Dean Luick <dean.luick@cornelisnetworks.com>,
+	Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 45/89] IB/hfi1: Restore allocated resources on failed copyout
+Date: Mon, 20 Feb 2023 14:35:44 +0100
+Message-Id: <20230220133554.718045987@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -34,37 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Artemii Karasev <karasev@ispras.ru>
+From: Dean Luick <dean.luick@cornelisnetworks.com>
 
-commit 6a32425f953b955b4ff82f339d01df0b713caa5d upstream.
+[ Upstream commit 6601fc0d15ffc20654e39486f9bef35567106d68 ]
 
-snd_emux_xg_control() can be called with an argument 'param' greater
-than size of 'control' array. It may lead to accessing 'control'
-array at a wrong index.
+Fix a resource leak if an error occurs.
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
-
-Signed-off-by: Artemii Karasev <karasev@ispras.ru>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230207132026.2870-1-karasev@ispras.ru
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: f404ca4c7ea8 ("IB/hfi1: Refactor hfi_user_exp_rcv_setup() IOCTL")
+Signed-off-by: Dean Luick <dean.luick@cornelisnetworks.com>
+Signed-off-by: Dennis Dalessandro <dennis.dalessandro@cornelisnetworks.com>
+Link: https://lore.kernel.org/r/167354736291.2132367.10894218740150168180.stgit@awfm-02.cornelisnetworks.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/synth/emux/emux_nrpn.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/infiniband/hw/hfi1/file_ops.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/sound/synth/emux/emux_nrpn.c
-+++ b/sound/synth/emux/emux_nrpn.c
-@@ -363,6 +363,9 @@ int
- snd_emux_xg_control(struct snd_emux_port *port, struct snd_midi_channel *chan,
- 		    int param)
- {
-+	if (param >= ARRAY_SIZE(chan->control))
-+		return -EINVAL;
+diff --git a/drivers/infiniband/hw/hfi1/file_ops.c b/drivers/infiniband/hw/hfi1/file_ops.c
+index be31faf6cc620..071d39c614b21 100644
+--- a/drivers/infiniband/hw/hfi1/file_ops.c
++++ b/drivers/infiniband/hw/hfi1/file_ops.c
+@@ -1361,12 +1361,15 @@ static int user_exp_rcv_setup(struct hfi1_filedata *fd, unsigned long arg,
+ 		addr = arg + offsetof(struct hfi1_tid_info, tidcnt);
+ 		if (copy_to_user((void __user *)addr, &tinfo.tidcnt,
+ 				 sizeof(tinfo.tidcnt)))
+-			return -EFAULT;
++			ret = -EFAULT;
+ 
+ 		addr = arg + offsetof(struct hfi1_tid_info, length);
+-		if (copy_to_user((void __user *)addr, &tinfo.length,
++		if (!ret && copy_to_user((void __user *)addr, &tinfo.length,
+ 				 sizeof(tinfo.length)))
+ 			ret = -EFAULT;
 +
- 	return send_converted_effect(xg_effects, ARRAY_SIZE(xg_effects),
- 				     port, chan, param,
- 				     chan->control[param],
++		if (ret)
++			hfi1_user_exp_rcv_invalid(fd, &tinfo);
+ 	}
+ 
+ 	return ret;
+-- 
+2.39.0
+
 
 
