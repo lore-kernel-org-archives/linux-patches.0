@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F78963B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ACF06C433EF;
-	Mon, 20 Feb 2023 13:55:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C1063B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C31B4C433EF;
+	Mon, 20 Feb 2023 13:55:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901320;
-	bh=RiEeSUvFkY3kOEeY2GLpWPlwhdvURfzsd7JvUKii6BE=;
+	s=korg; t=1676901325;
+	bh=YZEp75CmabuM/Vbc1uSQ9PkkggNBkFBWRqmEqEp9hq0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wh+6NxKF3zSUCxPktbhMxqH8h9RmjcI2rZtN+fcigsA9c4E37RyLI7v1fjUSpeyHS
-	 2spRQt81EUhfUbl0OxcR2IXIDCJ82FRuv5IId0Bm7ZY7cAYa9Rrn1h+YgIxjiMO4MI
-	 PFTpKPBvJVimvGILyQxjZo7mSZ4JnbFrK8ZBb/58=
+	b=GlvG1FSS2UdazJn8nW41l+hfpmDZsAuHnunTZhF771x2+KQH4MallYMtjn1mHnnxj
+	 srUbQxk9LUOHKrkt4YcMPvvTaOei56a2pdeP3wkRiVaWzHvdEr42rvJ4lkpFlve6uu
+	 rWvsknzK2ODOj4ZZ2bYwRdF2lfu5QiPX0N/0A4T8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 30/57] revert "squashfs: harden sanity check in squashfs_read_xattr_id_table"
-Date: Mon, 20 Feb 2023 14:36:38 +0100
-Message-Id: <20230220133550.412743919@linuxfoundation.org>
+	Jason Xing <kernelxing@tencent.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Chandan Kumar Rout <chandanx.rout@intel.com>
+Subject: [PATCH 5.10 32/57] i40e: add double of VLAN header when computing the max MTU
+Date: Mon, 20 Feb 2023 14:36:40 +0100
+Message-Id: <20230220133550.472562882@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -36,34 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrew Morton <akpm@linux-foundation.org>
+From: Jason Xing <kernelxing@tencent.com>
 
-commit a5b21d8d791cd4db609d0bbcaa9e0c7e019888d1 upstream.
+commit ce45ffb815e8e238f05de1630be3969b6bb15e4e upstream.
 
-This fix was nacked by Philip, for reasons identified in the email linked
-below.
+Include the second VLAN HLEN into account when computing the maximum
+MTU size as other drivers do.
 
-Link: https://lkml.kernel.org/r/68f15d67-8945-2728-1f17-5b53a80ec52d@squashfs.org.uk
-Fixes: 72e544b1b28325 ("squashfs: harden sanity check in squashfs_read_xattr_id_table")
-Cc: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Cc: Fedor Pchelkin <pchelkin@ispras.ru>
-Cc: Phillip Lougher <phillip@squashfs.org.uk>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 0c8493d90b6b ("i40e: add XDP support for pass and drop actions")
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/squashfs/xattr_id.c |    2 +-
+ drivers/net/ethernet/intel/i40e/i40e_main.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/fs/squashfs/xattr_id.c
-+++ b/fs/squashfs/xattr_id.c
-@@ -76,7 +76,7 @@ __le64 *squashfs_read_xattr_id_table(str
- 	/* Sanity check values */
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -2788,7 +2788,7 @@ static int i40e_change_mtu(struct net_de
+ 	struct i40e_pf *pf = vsi->back;
  
- 	/* there is always at least one xattr id */
--	if (*xattr_ids <= 0)
-+	if (*xattr_ids == 0)
- 		return ERR_PTR(-EINVAL);
+ 	if (i40e_enabled_xdp_vsi(vsi)) {
+-		int frame_size = new_mtu + ETH_HLEN + ETH_FCS_LEN + VLAN_HLEN;
++		int frame_size = new_mtu + I40E_PACKET_HDR_PAD;
  
- 	len = SQUASHFS_XATTR_BLOCK_BYTES(*xattr_ids);
+ 		if (frame_size > i40e_max_xdp_frame_size(vsi))
+ 			return -EINVAL;
 
 
