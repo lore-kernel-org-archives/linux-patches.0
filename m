@@ -1,27 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CFBFC63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58305C433EF;
-	Mon, 20 Feb 2023 13:49:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6207963B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DFAD2C4339E;
+	Mon, 20 Feb 2023 13:49:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900940;
-	bh=oZbuw7XOVCV8hqAFawFuMbPxoMSD2pS1WA+DqCiMQpc=;
+	s=korg; t=1676900943;
+	bh=bO9tk2O6Ds6dPv3/exzNEz2Is8co/RwC5mnOg6Uj+LQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DuQgPI2CIoqLu2+Eqqz6ZB4Aaf9sZlqJoKQuMLev/XHmemZwdvBUO1FqUo8X+cwXY
-	 3NSmWeQ1CgatWoL7PU/6Tv3rZKBgAPsztHekTM8+excmSVs7jSjLnRTe/Mm7PDyYT/
-	 5VZ05i0P0f/KySeyzvqf1vBqZh/I1lyqzg+BUqnc=
+	b=GRwHaUJDoCyGwFDDUKa0IsKwLWq9uI253Flaubnrh5HsjdyrGMqLmcGXTa0u0qYez
+	 gyZAdNztJ8qiu66eriAP6SpG8kTvz7K2vWwHV/2AHJeVeI7VnqHb/k1Yw33vysppLA
+	 2jcvgLs9jIPgqhJ2BgrhvH1TtpzgTQoIosz9jfCA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Brian Foster <bfoster@redhat.com>,
+	Gao Xiang <hsiangkao@redhat.com>,
+	Allison Henderson <allison.henderson@oracle.com>,
+	"Darrick J. Wong" <darrick.wong@oracle.com>,
+	Bill ODonnell <billodo@redhat.com>,
 	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <dchinner@redhat.com>,
 	Chandan Babu R <chandan.babu@oracle.com>
-Subject: [PATCH 5.4 125/156] xfs: prevent UAF in xfs_log_item_in_current_chkpt
-Date: Mon, 20 Feb 2023 14:36:09 +0100
-Message-Id: <20230220133607.790401025@linuxfoundation.org>
+Subject: [PATCH 5.4 126/156] xfs: sync lazy sb accounting on quiesce of read-only mounts
+Date: Mon, 20 Feb 2023 14:36:10 +0100
+Message-Id: <20230220133607.839612832@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -35,159 +39,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: "Darrick J. Wong" <djwong@kernel.org>
+From: Brian Foster <bfoster@redhat.com>
 
-commit f8d92a66e810acbef6ddbc0bd0cbd9b117ce8acd upstream.
+commit 50d25484bebe94320c49dd1347d3330c7063bbdb upstream.
 
-[ Continue to interpret xfs_log_item->li_seq as an LSN rather than a CIL sequence
-  number. ]
+[ Modify xfs_log_unmount_write() to return zero when the log is in a read-only
+state ]
 
-While I was running with KASAN and lockdep enabled, I stumbled upon an
-KASAN report about a UAF to a freed CIL checkpoint.  Looking at the
-comment for xfs_log_item_in_current_chkpt, it seems pretty obvious to me
-that the original patch to xfs_defer_finish_noroll should have done
-something to lock the CIL to prevent it from switching the CIL contexts
-while the predicate runs.
+xfs_log_sbcount() syncs the superblock specifically to accumulate
+the in-core percpu superblock counters and commit them to disk. This
+is required to maintain filesystem consistency across quiesce
+(freeze, read-only mount/remount) or unmount when lazy superblock
+accounting is enabled because individual transactions do not update
+the superblock directly.
 
-For upper level code that needs to know if a given log item is new
-enough not to need relogging, add a new wrapper that takes the CIL
-context lock long enough to sample the current CIL context.  This is
-kind of racy in that the CIL can switch the contexts immediately after
-sampling, but that's ok because the consequence is that the defer ops
-code is a little slow to relog items.
+This mechanism works as expected for writable mounts, but
+xfs_log_sbcount() skips the update for read-only mounts. Read-only
+mounts otherwise still allow log recovery and write out an unmount
+record during log quiesce. If a read-only mount performs log
+recovery, it can modify the in-core superblock counters and write an
+unmount record when the filesystem unmounts without ever syncing the
+in-core counters. This leaves the filesystem with a clean log but in
+an inconsistent state with regard to lazy sb counters.
 
- ==================================================================
- BUG: KASAN: use-after-free in xfs_log_item_in_current_chkpt+0x139/0x160 [xfs]
- Read of size 8 at addr ffff88804ea5f608 by task fsstress/527999
+Update xfs_log_sbcount() to use the same logic
+xfs_log_unmount_write() uses to determine when to write an unmount
+record. This ensures that lazy accounting is always synced before
+the log is cleaned. Refactor this logic into a new helper to
+distinguish between a writable filesystem and a writable log.
+Specifically, the log is writable unless the filesystem is mounted
+with the norecovery mount option, the underlying log device is
+read-only, or the filesystem is shutdown. Drop the freeze state
+check because the update is already allowed during the freezing
+process and no context calls this function on an already frozen fs.
+Also, retain the shutdown check in xfs_log_unmount_write() to catch
+the case where the preceding log force might have triggered a
+shutdown.
 
- CPU: 1 PID: 527999 Comm: fsstress Tainted: G      D      5.16.0-rc4-xfsx #rc4
- Call Trace:
-  <TASK>
-  dump_stack_lvl+0x45/0x59
-  print_address_description.constprop.0+0x1f/0x140
-  kasan_report.cold+0x83/0xdf
-  xfs_log_item_in_current_chkpt+0x139/0x160
-  xfs_defer_finish_noroll+0x3bb/0x1e30
-  __xfs_trans_commit+0x6c8/0xcf0
-  xfs_reflink_remap_extent+0x66f/0x10e0
-  xfs_reflink_remap_blocks+0x2dd/0xa90
-  xfs_file_remap_range+0x27b/0xc30
-  vfs_dedupe_file_range_one+0x368/0x420
-  vfs_dedupe_file_range+0x37c/0x5d0
-  do_vfs_ioctl+0x308/0x1260
-  __x64_sys_ioctl+0xa1/0x170
-  do_syscall_64+0x35/0x80
-  entry_SYSCALL_64_after_hwframe+0x44/0xae
- RIP: 0033:0x7f2c71a2950b
- Code: 0f 1e fa 48 8b 05 85 39 0d 00 64 c7 00 26 00 00 00 48 c7 c0 ff ff
-ff ff c3 66 0f 1f 44 00 00 f3 0f 1e fa b8 10 00 00 00 0f 05 <48> 3d 01
-f0 ff ff 73 01 c3 48 8b 0d 55 39 0d 00 f7 d8 64 89 01 48
- RSP: 002b:00007ffe8c0e03c8 EFLAGS: 00000246 ORIG_RAX: 0000000000000010
- RAX: ffffffffffffffda RBX: 00005600862a8740 RCX: 00007f2c71a2950b
- RDX: 00005600862a7be0 RSI: 00000000c0189436 RDI: 0000000000000004
- RBP: 000000000000000b R08: 0000000000000027 R09: 0000000000000003
- R10: 0000000000000000 R11: 0000000000000246 R12: 000000000000005a
- R13: 00005600862804a8 R14: 0000000000016000 R15: 00005600862a8a20
-  </TASK>
-
- Allocated by task 464064:
-  kasan_save_stack+0x1e/0x50
-  __kasan_kmalloc+0x81/0xa0
-  kmem_alloc+0xcd/0x2c0 [xfs]
-  xlog_cil_ctx_alloc+0x17/0x1e0 [xfs]
-  xlog_cil_push_work+0x141/0x13d0 [xfs]
-  process_one_work+0x7f6/0x1380
-  worker_thread+0x59d/0x1040
-  kthread+0x3b0/0x490
-  ret_from_fork+0x1f/0x30
-
- Freed by task 51:
-  kasan_save_stack+0x1e/0x50
-  kasan_set_track+0x21/0x30
-  kasan_set_free_info+0x20/0x30
-  __kasan_slab_free+0xed/0x130
-  slab_free_freelist_hook+0x7f/0x160
-  kfree+0xde/0x340
-  xlog_cil_committed+0xbfd/0xfe0 [xfs]
-  xlog_cil_process_committed+0x103/0x1c0 [xfs]
-  xlog_state_do_callback+0x45d/0xbd0 [xfs]
-  xlog_ioend_work+0x116/0x1c0 [xfs]
-  process_one_work+0x7f6/0x1380
-  worker_thread+0x59d/0x1040
-  kthread+0x3b0/0x490
-  ret_from_fork+0x1f/0x30
-
- Last potentially related work creation:
-  kasan_save_stack+0x1e/0x50
-  __kasan_record_aux_stack+0xb7/0xc0
-  insert_work+0x48/0x2e0
-  __queue_work+0x4e7/0xda0
-  queue_work_on+0x69/0x80
-  xlog_cil_push_now.isra.0+0x16b/0x210 [xfs]
-  xlog_cil_force_seq+0x1b7/0x850 [xfs]
-  xfs_log_force_seq+0x1c7/0x670 [xfs]
-  xfs_file_fsync+0x7c1/0xa60 [xfs]
-  __x64_sys_fsync+0x52/0x80
-  do_syscall_64+0x35/0x80
-  entry_SYSCALL_64_after_hwframe+0x44/0xae
-
- The buggy address belongs to the object at ffff88804ea5f600
-  which belongs to the cache kmalloc-256 of size 256
- The buggy address is located 8 bytes inside of
-  256-byte region [ffff88804ea5f600, ffff88804ea5f700)
- The buggy address belongs to the page:
- page:ffffea00013a9780 refcount:1 mapcount:0 mapping:0000000000000000 index:0xffff88804ea5ea00 pfn:0x4ea5e
- head:ffffea00013a9780 order:1 compound_mapcount:0
- flags: 0x4fff80000010200(slab|head|node=1|zone=1|lastcpupid=0xfff)
- raw: 04fff80000010200 ffffea0001245908 ffffea00011bd388 ffff888004c42b40
- raw: ffff88804ea5ea00 0000000000100009 00000001ffffffff 0000000000000000
- page dumped because: kasan: bad access detected
-
- Memory state around the buggy address:
-  ffff88804ea5f500: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
-  ffff88804ea5f580: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- >ffff88804ea5f600: fa fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-                       ^
-  ffff88804ea5f680: fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb fb
-  ffff88804ea5f700: fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc fc
- ==================================================================
-
-Fixes: 4e919af7827a ("xfs: periodically relog deferred intent items")
+Signed-off-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Gao Xiang <hsiangkao@redhat.com>
+Reviewed-by: Allison Henderson <allison.henderson@oracle.com>
+Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
+Reviewed-by: Bill O'Donnell <billodo@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_log_cil.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ fs/xfs/xfs_log.c   |   28 ++++++++++++++++++++--------
+ fs/xfs/xfs_log.h   |    1 +
+ fs/xfs/xfs_mount.c |    3 +--
+ 3 files changed, 22 insertions(+), 10 deletions(-)
 
---- a/fs/xfs/xfs_log_cil.c
-+++ b/fs/xfs/xfs_log_cil.c
-@@ -1178,21 +1178,19 @@ out_shutdown:
-  */
- bool
- xfs_log_item_in_current_chkpt(
--	struct xfs_log_item *lip)
-+	struct xfs_log_item	*lip)
- {
--	struct xfs_cil_ctx *ctx;
-+	struct xfs_cil		*cil = lip->li_mountp->m_log->l_cilp;
- 
- 	if (list_empty(&lip->li_cil))
- 		return false;
- 
--	ctx = lip->li_mountp->m_log->l_cilp->xc_ctx;
--
- 	/*
- 	 * li_seq is written on the first commit of a log item to record the
- 	 * first checkpoint it is written to. Hence if it is different to the
- 	 * current sequence, we're in a new checkpoint.
- 	 */
--	if (XFS_LSN_CMP(lip->li_seq, ctx->sequence) != 0)
-+	if (XFS_LSN_CMP(lip->li_seq, READ_ONCE(cil->xc_current_sequence)) != 0)
- 		return false;
- 	return true;
+--- a/fs/xfs/xfs_log.c
++++ b/fs/xfs/xfs_log.c
+@@ -369,6 +369,25 @@ xlog_tic_add_region(xlog_ticket_t *tic,
+ 	tic->t_res_num++;
  }
+ 
++bool
++xfs_log_writable(
++	struct xfs_mount	*mp)
++{
++	/*
++	 * Never write to the log on norecovery mounts, if the block device is
++	 * read-only, or if the filesystem is shutdown. Read-only mounts still
++	 * allow internal writes for log recovery and unmount purposes, so don't
++	 * restrict that case here.
++	 */
++	if (mp->m_flags & XFS_MOUNT_NORECOVERY)
++		return false;
++	if (xfs_readonly_buftarg(mp->m_log->l_targ))
++		return false;
++	if (XFS_FORCED_SHUTDOWN(mp))
++		return false;
++	return true;
++}
++
+ /*
+  * Replenish the byte reservation required by moving the grant write head.
+  */
+@@ -895,15 +914,8 @@ xfs_log_unmount_write(xfs_mount_t *mp)
+ #endif
+ 	int		 error;
+ 
+-	/*
+-	 * Don't write out unmount record on norecovery mounts or ro devices.
+-	 * Or, if we are doing a forced umount (typically because of IO errors).
+-	 */
+-	if (mp->m_flags & XFS_MOUNT_NORECOVERY ||
+-	    xfs_readonly_buftarg(log->l_targ)) {
+-		ASSERT(mp->m_flags & XFS_MOUNT_RDONLY);
++	if (!xfs_log_writable(mp))
+ 		return 0;
+-	}
+ 
+ 	error = xfs_log_force(mp, XFS_LOG_SYNC);
+ 	ASSERT(error || !(XLOG_FORCED_SHUTDOWN(log)));
+--- a/fs/xfs/xfs_log.h
++++ b/fs/xfs/xfs_log.h
+@@ -132,6 +132,7 @@ int	  xfs_log_reserve(struct xfs_mount *
+ int	  xfs_log_regrant(struct xfs_mount *mp, struct xlog_ticket *tic);
+ void      xfs_log_unmount(struct xfs_mount *mp);
+ int	  xfs_log_force_umount(struct xfs_mount *mp, int logerror);
++bool	xfs_log_writable(struct xfs_mount *mp);
+ 
+ struct xlog_ticket *xfs_log_ticket_get(struct xlog_ticket *ticket);
+ void	  xfs_log_ticket_put(struct xlog_ticket *ticket);
+--- a/fs/xfs/xfs_mount.c
++++ b/fs/xfs/xfs_mount.c
+@@ -1218,8 +1218,7 @@ xfs_fs_writable(
+ int
+ xfs_log_sbcount(xfs_mount_t *mp)
+ {
+-	/* allow this to proceed during the freeze sequence... */
+-	if (!xfs_fs_writable(mp, SB_FREEZE_COMPLETE))
++	if (!xfs_log_writable(mp))
+ 		return 0;
+ 
+ 	/*
 
 
