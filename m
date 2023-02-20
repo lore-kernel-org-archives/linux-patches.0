@@ -1,81 +1,68 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE0AF63BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:02:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 44C5BC433D2;
-	Mon, 20 Feb 2023 14:02:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901722;
-	bh=a/UiooHYDOpNciVZOA7OSu8FGgn+oFJk1uIh2EFUeyc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Y6/GRvM/Em6Eh99OJNEsv/Ex4M2igrHIieQl7Go5swNnhNI66KQUWsiZ1iSIlhiFN
-	 pJU7nlNXHhESxec0a4HjsntVl/1inbc2XZJiPwKfJFeiOFumCHFzU5G14+A5hguDQS
-	 JBPMzRxRSjViPpAynCQu9qiu0EklLK5GMIVShGBo=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	Hongguang Gao <hongguang.gao@broadcom.com>,
-	Michael Chan <michael.chan@broadcom.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 6.1 094/118] bnxt_en: Fix mqprio and XDP ring checking logic
-Date: Mon, 20 Feb 2023 14:36:50 +0100
-Message-Id: <20230220133604.150116718@linuxfoundation.org>
-X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
-References: <20230220133600.368809650@linuxfoundation.org>
-User-Agent: quilt/0.67
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989AC6D39;
+	Mon, 20 Feb 2023 15:51:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996B5C433D2;
+	Mon, 20 Feb 2023 15:51:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1676908269;
+	bh=wOTNmM/rz3jrTV1ds+AgaiAA4vZjdn8ItdA+1UsLrJw=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=IX7T7SfZfHgBLjetbffAQXt+9NN7ezi0KNeduFGeldn/T/vtz1g2Su9/Wi7bjPAbw
+	 KTZo5fECYY4Mo4rGRSdrbSoG1duju0nd3Go6FA9S7nRjcoud2BHiBXH0WS1POJxfpl
+	 pluLPBJD+VEWJIXp9l4yAWxQcHJftXjBMbCqjMWKmSBDqb4dxj1QKX94FgzDf63qSr
+	 k8wXWwdEAlW19pBHJli0Ek46N4YFCXE9liCaosUgOyk2N1VNKbn/FA5HXXttAZAChP
+	 /zWOVBCApciID7bjFxrlIjYSgOavfwtBo4Xblhv9DYDb0QS1cIV936kQ4GmDqk5TlO
+	 a0SViTeqjgLgQ==
+Date: Mon, 20 Feb 2023 08:51:06 -0700
+From: Nathan Chancellor <nathan@kernel.org>
+To: Michael Ellerman <mpe@ellerman.id.au>
+Cc: npiggin@gmail.com, christophe.leroy@csgroup.eu, erhard_f@mailbox.org,
+	ndesaulniers@google.com, trix@redhat.com,
+	linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org,
+	llvm@lists.linux.dev, patches@lists.linux.dev
+Subject: Re: [PATCH 0/3] Allow CONFIG_PPC64_BIG_ENDIAN_ELF_ABI_V2 with ld.lld
+ 15+
+Message-ID: <Y/OW6mRi3qDpVQkc@dev-arch.thelio-3990X>
+References: <20230118-ppc64-elfv2-llvm-v1-0-b9e2ec9da11d@kernel.org>
+ <87wn4cyifp.fsf@mpe.ellerman.id.au>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87wn4cyifp.fsf@mpe.ellerman.id.au>
 
-From: Michael Chan <michael.chan@broadcom.com>
+On Mon, Feb 20, 2023 at 05:11:54PM +1100, Michael Ellerman wrote:
+> Nathan Chancellor <nathan@kernel.org> writes:
+> > Currently, CONFIG_PPC64_BIG_ENDIAN_ELF_ABI_V2 is not selectable with
+> > ld.lld because of an explicit dependency on GNU ld, due to lack of
+> > testing with LLVM.
+> >
+> > Erhard was kind enough to test this option on his hardware with LLVM 15,
+> > which ran without any issues. This should not be too surprising, as
+> > ld.lld does not have support for the ELFv1 ABI, only ELFv2, so it should
+> > have decent support. With this series, big endian kernels can be built
+> > with LLVM=1.
+> >
+> > This has seen our basic set of powerpc configurations with clang-15,
+> > clang-16, and clang-17 but I will never be opposed to more testing :)
+> >
+> > The first two patches fix a couple of issues I noticed while build
+> > testing and the final patch actually allows the option to be selected.
+> 
+> Thanks for this.
+> 
+> I thought about applying this last week but decided not to. I'll plan to
+> pick it up for 6.4.
 
-commit 2038cc592811209de20c4e094ca08bfb1e6fbc6c upstream.
+No worries, I sent this much later in the development cycle than I had
+initially intended, so I figured that 6.3 was a long shot anyways. Plus
+more soak time is never a bad thing :)
 
-In bnxt_reserve_rings(), there is logic to check that the number of TX
-rings reserved is enough to cover all the mqprio TCs, but it fails to
-account for the TX XDP rings.  So the check will always fail if there
-are mqprio TCs and TX XDP rings.  As a result, the driver always fails
-to initialize after the XDP program is attached and the device will be
-brought down.  A subsequent ifconfig up will also fail because the
-number of TX rings is set to an inconsistent number.  Fix the check to
-properly account for TX XDP rings.  If the check fails, set the number
-of TX rings back to a consistent number after calling netdev_reset_tc().
-
-Fixes: 674f50a5b026 ("bnxt_en: Implement new method to reserve rings.")
-Reviewed-by: Hongguang Gao <hongguang.gao@broadcom.com>
-Signed-off-by: Michael Chan <michael.chan@broadcom.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/net/ethernet/broadcom/bnxt/bnxt.c |    8 ++++++--
- 1 file changed, 6 insertions(+), 2 deletions(-)
-
---- a/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-+++ b/drivers/net/ethernet/broadcom/bnxt/bnxt.c
-@@ -9239,10 +9239,14 @@ int bnxt_reserve_rings(struct bnxt *bp,
- 		netdev_err(bp->dev, "ring reservation/IRQ init failure rc: %d\n", rc);
- 		return rc;
- 	}
--	if (tcs && (bp->tx_nr_rings_per_tc * tcs != bp->tx_nr_rings)) {
-+	if (tcs && (bp->tx_nr_rings_per_tc * tcs !=
-+		    bp->tx_nr_rings - bp->tx_nr_rings_xdp)) {
- 		netdev_err(bp->dev, "tx ring reservation failure\n");
- 		netdev_reset_tc(bp->dev);
--		bp->tx_nr_rings_per_tc = bp->tx_nr_rings;
-+		if (bp->tx_nr_rings_xdp)
-+			bp->tx_nr_rings_per_tc = bp->tx_nr_rings_xdp;
-+		else
-+			bp->tx_nr_rings_per_tc = bp->tx_nr_rings;
- 		return -ENOMEM;
- 	}
- 	return 0;
-
-
+Thanks for taking the initial look, cheers!
+Nathan
