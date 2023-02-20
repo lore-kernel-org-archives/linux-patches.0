@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16F9D63BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:59:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 91504C433EF;
-	Mon, 20 Feb 2023 13:59:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A570863BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:59:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2B062C43442;
+	Mon, 20 Feb 2023 13:59:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901579;
-	bh=VggQe6XIzkvZUU0GcnuQDlaxkGBO8ax39sAdfkODASs=;
+	s=korg; t=1676901582;
+	bh=CnNDBsju5D2uzWzFIKuWM8hecqUDq8p+RDPq//03iQc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qPuHuNYJWgH1oi3VFG9S5ZYI6Uxnso5OOYKMMTGKeFEPlV1dXNfQ+ePzEtW/lcsTy
-	 Hn1/W8dae2yEAyCUDNeQM+lP8Vnzvd2rM73Hth2yEG1MMhn0bLpPnMLx6qLFZxAwOH
-	 nVNJ5xGAKt6Ecd2Dz1pB9Ka++Ake5Si/irFuKdH0=
+	b=1pIyobQNw5KyGi36o+jrq0UpnqFHRkpp3fVNU7633FpVZ+Ig2tWkQwm5yZASDPc+b
+	 tV+9UYk4DShAUjCTvzgS3mSdn8uIKXe9WPWHTdRwb6cIwv4XPrgxGywCJ0hqOxIIhk
+	 FBOfdCNuOgw8YWDB+HGapjqC36IfyghHpHvqWNQQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>,
-	Bartosz Golaszewski <bartosz.golaszewski@linaro.org>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Subject: [PATCH 6.1 072/118] gpio: sim: fix a memory leak
-Date: Mon, 20 Feb 2023 14:36:28 +0100
-Message-Id: <20230220133603.312930951@linuxfoundation.org>
+	syzbot+6cd18e123583550cf469@syzkaller.appspotmail.com,
+	Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>,
+	"Peter Zijlstra (Intel)" <peterz@infradead.org>
+Subject: [PATCH 6.1 073/118] freezer,umh: Fix call_usermode_helper_exec() vs SIGKILL
+Date: Mon, 20 Feb 2023 14:36:29 +0100
+Message-Id: <20230220133603.349883651@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -35,32 +35,70 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
+From: Peter Zijlstra <peterz@infradead.org>
 
-commit 79eeab1d85e0fee4c0bc36f3b6ddf3920f39f74b upstream.
+commit eedeb787ebb53de5c5dcf7b7b39d01bf1b0f037d upstream.
 
-Fix an inverted logic bug in gpio_sim_remove_hogs() that leads to GPIO
-hog structures never being freed.
+Tetsuo-San noted that commit f5d39b020809 ("freezer,sched: Rewrite
+core freezer logic") broke call_usermodehelper_exec() for the KILLABLE
+case.
 
-Fixes: cb8c474e79be ("gpio: sim: new testing module")
-Reported-by: Mirsad Goran Todorovac <mirsad.todorovac@alu.unizg.hr>
-Signed-off-by: Bartosz Golaszewski <bartosz.golaszewski@linaro.org>
-Reviewed-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Specifically it was missed that the second, unconditional,
+wait_for_completion() was not optional and ensures the on-stack
+completion is unused before going out-of-scope.
+
+Fixes: f5d39b020809 ("freezer,sched: Rewrite core freezer logic")
+Reported-by: syzbot+6cd18e123583550cf469@syzkaller.appspotmail.com
+Reported-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Debugged-by: Tetsuo Handa <penguin-kernel@I-love.SAKURA.ne.jp>
+Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
+Link: https://lkml.kernel.org/r/Y90ar35uKQoUrLEK@hirez.programming.kicks-ass.net
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpio/gpio-sim.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/umh.c | 20 +++++++++++++-------
+ 1 file changed, 13 insertions(+), 7 deletions(-)
 
---- a/drivers/gpio/gpio-sim.c
-+++ b/drivers/gpio/gpio-sim.c
-@@ -732,7 +732,7 @@ static void gpio_sim_remove_hogs(struct
+diff --git a/kernel/umh.c b/kernel/umh.c
+index 850631518665..fbf872c624cb 100644
+--- a/kernel/umh.c
++++ b/kernel/umh.c
+@@ -438,21 +438,27 @@ int call_usermodehelper_exec(struct subprocess_info *sub_info, int wait)
+ 	if (wait == UMH_NO_WAIT)	/* task has freed sub_info */
+ 		goto unlock;
  
- 	gpiod_remove_hogs(dev->hogs);
+-	if (wait & UMH_KILLABLE)
+-		state |= TASK_KILLABLE;
+-
+ 	if (wait & UMH_FREEZABLE)
+ 		state |= TASK_FREEZABLE;
  
--	for (hog = dev->hogs; !hog->chip_label; hog++) {
-+	for (hog = dev->hogs; hog->chip_label; hog++) {
- 		kfree(hog->chip_label);
- 		kfree(hog->line_name);
+-	retval = wait_for_completion_state(&done, state);
+-	if (!retval)
+-		goto wait_done;
+-
+ 	if (wait & UMH_KILLABLE) {
++		retval = wait_for_completion_state(&done, state | TASK_KILLABLE);
++		if (!retval)
++			goto wait_done;
++
+ 		/* umh_complete() will see NULL and free sub_info */
+ 		if (xchg(&sub_info->complete, NULL))
+ 			goto unlock;
++
++		/*
++		 * fallthrough; in case of -ERESTARTSYS now do uninterruptible
++		 * wait_for_completion_state(). Since umh_complete() shall call
++		 * complete() in a moment if xchg() above returned NULL, this
++		 * uninterruptible wait_for_completion_state() will not block
++		 * SIGKILL'ed processes for long.
++		 */
  	}
++	wait_for_completion_state(&done, state);
+ 
+ wait_done:
+ 	retval = sub_info->retval;
+-- 
+2.39.1
+
 
 
