@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B579263BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:00:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3DB8CC4339B;
-	Mon, 20 Feb 2023 14:00:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 564BC63BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:00:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D0CDFC433D2;
+	Mon, 20 Feb 2023 14:00:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901634;
-	bh=qOc9EsmfiWGGlU/1zEt8Swa7ffWNzvORTOV+CXaIt7o=;
+	s=korg; t=1676901637;
+	bh=oLcRIn3TJsyjkUWLg52UIrePt94uabO3gFWCjh3Ut4w=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0/+knQGJHMYC8C7Op93CDJrI5vL/1jotqwAKeqdTsaH3KVntI9bWCT/fdy7QqWW2h
-	 Po4+U3IVAPDH8UpBPrEr499Hm8miqmdm58AK+TslHPmO60j1jfSqJaI+oPETAWnhru
-	 7dvxLzkzamQrsNo3QTMzUof4n9qZBC7nALJksquI=
+	b=gjTGcfnAz1DKHbVD5RzVDPmi348aB6n2FGqD5A9crht8MurRy5C3/C+6E9S5DTls7
+	 I88tMw9b6eP+ihR3nbGQDzYvzNdFcKMI/fj5DCx30WvkrJlab6I80lGYyJvoSyFX9t
+	 8Y8WgU5lFffF63/IqeJrw3O0hxGNvg/KyRpD3yOs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	Larysa Zaremba <larysa.zaremba@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 091/118] net/sched: act_ctinfo: use percpu stats
-Date: Mon, 20 Feb 2023 14:36:47 +0100
-Message-Id: <20230220133604.040609451@linuxfoundation.org>
+	Hangyu Hua <hbh25y@gmail.com>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	"David S. Miller" <davem@davemloft.net>
+Subject: [PATCH 6.1 092/118] net: openvswitch: fix possible memory leak in ovs_meter_cmd_set()
+Date: Mon, 20 Feb 2023 14:36:48 +0100
+Message-Id: <20230220133604.080343375@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -36,60 +36,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Hangyu Hua <hbh25y@gmail.com>
 
-commit 21c167aa0ba943a7cac2f6969814f83bb701666b upstream.
+commit 2fa28f5c6fcbfc794340684f36d2581b4f2d20b5 upstream.
 
-The tc action act_ctinfo was using shared stats, fix it to use percpu stats
-since bstats_update() must be called with locks or with a percpu pointer argument.
+old_meter needs to be free after it is detached regardless of whether
+the new meter is successfully attached.
 
-tdc results:
-1..12
-ok 1 c826 - Add ctinfo action with default setting
-ok 2 0286 - Add ctinfo action with dscp
-ok 3 4938 - Add ctinfo action with valid cpmark and zone
-ok 4 7593 - Add ctinfo action with drop control
-ok 5 2961 - Replace ctinfo action zone and action control
-ok 6 e567 - Delete ctinfo action with valid index
-ok 7 6a91 - Delete ctinfo action with invalid index
-ok 8 5232 - List ctinfo actions
-ok 9 7702 - Flush ctinfo actions
-ok 10 3201 - Add ctinfo action with duplicate index
-ok 11 8295 - Add ctinfo action with invalid index
-ok 12 3964 - Replace ctinfo action with invalid goto_chain control
-
-Fixes: 24ec483cec98 ("net: sched: Introduce act_ctinfo action")
-Reviewed-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reviewed-by: Larysa Zaremba <larysa.zaremba@intel.com>
-Link: https://lore.kernel.org/r/20230210200824.444856-1-pctammela@mojatatu.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: c7c4c44c9a95 ("net: openvswitch: expand the meters supported number")
+Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
+Acked-by: Eelco Chaudron <echaudro@redhat.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/act_ctinfo.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ net/openvswitch/meter.c |    4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/net/sched/act_ctinfo.c
-+++ b/net/sched/act_ctinfo.c
-@@ -91,7 +91,7 @@ static int tcf_ctinfo_act(struct sk_buff
- 	cp = rcu_dereference_bh(ca->params);
+--- a/net/openvswitch/meter.c
++++ b/net/openvswitch/meter.c
+@@ -449,7 +449,7 @@ static int ovs_meter_cmd_set(struct sk_b
  
- 	tcf_lastuse_update(&ca->tcf_tm);
--	bstats_update(&ca->tcf_bstats, skb);
-+	tcf_action_update_bstats(&ca->common, skb);
- 	action = READ_ONCE(ca->tcf_action);
+ 	err = attach_meter(meter_tbl, meter);
+ 	if (err)
+-		goto exit_unlock;
++		goto exit_free_old_meter;
  
- 	wlen = skb_network_offset(skb);
-@@ -210,8 +210,8 @@ static int tcf_ctinfo_init(struct net *n
- 	index = actparm->index;
- 	err = tcf_idr_check_alloc(tn, &index, a, bind);
- 	if (!err) {
--		ret = tcf_idr_create(tn, index, est, a,
--				     &act_ctinfo_ops, bind, false, flags);
-+		ret = tcf_idr_create_from_flags(tn, index, est, a,
-+						&act_ctinfo_ops, bind, flags);
- 		if (ret) {
- 			tcf_idr_cleanup(tn, index);
- 			return ret;
+ 	ovs_unlock();
+ 
+@@ -472,6 +472,8 @@ static int ovs_meter_cmd_set(struct sk_b
+ 	genlmsg_end(reply, ovs_reply_header);
+ 	return genlmsg_reply(reply, info);
+ 
++exit_free_old_meter:
++	ovs_meter_free(old_meter);
+ exit_unlock:
+ 	ovs_unlock();
+ 	nlmsg_free(reply);
 
 
