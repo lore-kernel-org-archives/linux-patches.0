@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A09963B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D35A9C433D2;
-	Mon, 20 Feb 2023 13:43:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E7A0863B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6E1D3C433D2;
+	Mon, 20 Feb 2023 13:43:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900595;
-	bh=55pvcCvWvUieAFlIV5D+mq7qbwla3bDfxNmApJKYhSE=;
+	s=korg; t=1676900597;
+	bh=HgpoZ5h70eDNZPNYBIuEjekilY4rvuSw4OUtj5h9VvI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=09KnocWyNt3v1HWNwBX4sXQAJV2ywdDCJYnu3Tv+R9q1O4zRkEynRin78WQEGo5EI
-	 MzYmiKjaZ5w3VW2FuJuZvYWuDvRvjJ9Iem9Y0MCeozidC3944JbWjLY9h3+hgYB1sp
-	 q/dzZJBSdIr4YZT6ZlePHJRQFMgJ+NI0gWruKN+s=
+	b=NXTE/qLASw8MnKUVt5QeFEDXz/SK3hEjGHWlFNfIheKWQBpe4B4gB8IpCz6shfsW7
+	 GqTBGt0I98RqzcDHaHzJl6nk4HIU81is7z3TVG1F+T1NyNFcPyKt35C8awRgUVTlnR
+	 q4vu2SWHwe948LCT3cKuen9zF242raZepCa9+BiA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jim Minter <jimminter@microsoft.com>,
-	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
-	Mika Westerberg <mika.westerberg@linux.intel.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 55/89] pinctrl: intel: Restore the pins that used to be in Direct IRQ mode
-Date: Mon, 20 Feb 2023 14:35:54 +0100
-Message-Id: <20230220133555.074474472@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	"David S. Miller" <davem@davemloft.net>,
+	syzbot+2a0e7abd24f1eb90ce25@syzkaller.appspotmail.com
+Subject: [PATCH 4.19 56/89] net: USB: Fix wrong-direction WARNING in plusb.c
+Date: Mon, 20 Feb 2023 14:35:55 +0100
+Message-Id: <20230220133555.113407230@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -37,69 +35,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-[ Upstream commit a8520be3ffef3d25b53bf171a7ebe17ee0154175 ]
+commit 811d581194f7412eda97acc03d17fc77824b561f upstream.
 
-If the firmware mangled the register contents too much,
-check the saved value for the Direct IRQ mode. If it
-matches, we will restore the pin state.
+The syzbot fuzzer detected a bug in the plusb network driver: A
+zero-length control-OUT transfer was treated as a read instead of a
+write.  In modern kernels this error provokes a WARNING:
 
-Reported-by: Jim Minter <jimminter@microsoft.com>
-Fixes: 6989ea4881c8 ("pinctrl: intel: Save and restore pins in "direct IRQ" mode")
-Tested-by: Jim Minter <jimminter@microsoft.com>
-Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
-Acked-by: Mika Westerberg <mika.westerberg@linux.intel.com>
-Link: https://lore.kernel.org/r/20230206141558.20916-1-andriy.shevchenko@linux.intel.com
-Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+usb 1-1: BOGUS control dir, pipe 80000280 doesn't match bRequestType c0
+WARNING: CPU: 0 PID: 4645 at drivers/usb/core/urb.c:411
+usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
+Modules linked in:
+CPU: 1 PID: 4645 Comm: dhcpcd Not tainted
+6.2.0-rc6-syzkaller-00050-g9f266ccaa2f5 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google
+01/12/2023
+RIP: 0010:usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
+...
+Call Trace:
+ <TASK>
+ usb_start_wait_urb+0x101/0x4b0 drivers/usb/core/message.c:58
+ usb_internal_control_msg drivers/usb/core/message.c:102 [inline]
+ usb_control_msg+0x320/0x4a0 drivers/usb/core/message.c:153
+ __usbnet_read_cmd+0xb9/0x390 drivers/net/usb/usbnet.c:2010
+ usbnet_read_cmd+0x96/0xf0 drivers/net/usb/usbnet.c:2068
+ pl_vendor_req drivers/net/usb/plusb.c:60 [inline]
+ pl_set_QuickLink_features drivers/net/usb/plusb.c:75 [inline]
+ pl_reset+0x2f/0xf0 drivers/net/usb/plusb.c:85
+ usbnet_open+0xcc/0x5d0 drivers/net/usb/usbnet.c:889
+ __dev_open+0x297/0x4d0 net/core/dev.c:1417
+ __dev_change_flags+0x587/0x750 net/core/dev.c:8530
+ dev_change_flags+0x97/0x170 net/core/dev.c:8602
+ devinet_ioctl+0x15a2/0x1d70 net/ipv4/devinet.c:1147
+ inet_ioctl+0x33f/0x380 net/ipv4/af_inet.c:979
+ sock_do_ioctl+0xcc/0x230 net/socket.c:1169
+ sock_ioctl+0x1f8/0x680 net/socket.c:1286
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:870 [inline]
+ __se_sys_ioctl fs/ioctl.c:856 [inline]
+ __x64_sys_ioctl+0x197/0x210 fs/ioctl.c:856
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+The fix is to call usbnet_write_cmd() instead of usbnet_read_cmd() and
+remove the USB_DIR_IN flag.
+
+Reported-and-tested-by: syzbot+2a0e7abd24f1eb90ce25@syzkaller.appspotmail.com
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 090ffa9d0e90 ("[PATCH] USB: usbnet (9/9) module for pl2301/2302 cables")
+CC: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/00000000000052099f05f3b3e298@google.com/
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/pinctrl/intel/pinctrl-intel.c | 16 +++++++++++++---
- 1 file changed, 13 insertions(+), 3 deletions(-)
+ drivers/net/usb/plusb.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/drivers/pinctrl/intel/pinctrl-intel.c b/drivers/pinctrl/intel/pinctrl-intel.c
-index 198121bd89bbf..b786d9797f404 100644
---- a/drivers/pinctrl/intel/pinctrl-intel.c
-+++ b/drivers/pinctrl/intel/pinctrl-intel.c
-@@ -1432,6 +1432,12 @@ int intel_pinctrl_probe(struct platform_device *pdev,
- EXPORT_SYMBOL_GPL(intel_pinctrl_probe);
- 
- #ifdef CONFIG_PM_SLEEP
-+static bool __intel_gpio_is_direct_irq(u32 value)
-+{
-+	return (value & PADCFG0_GPIROUTIOXAPIC) && (value & PADCFG0_GPIOTXDIS) &&
-+	       (__intel_gpio_get_gpio_mode(value) == PADCFG0_PMODE_GPIO);
-+}
-+
- static bool intel_pinctrl_should_save(struct intel_pinctrl *pctrl, unsigned int pin)
+--- a/drivers/net/usb/plusb.c
++++ b/drivers/net/usb/plusb.c
+@@ -69,9 +69,7 @@
+ static inline int
+ pl_vendor_req(struct usbnet *dev, u8 req, u8 val, u8 index)
  {
- 	const struct pin_desc *pd = pin_desc_get(pctrl->pctldev, pin);
-@@ -1465,8 +1471,7 @@ static bool intel_pinctrl_should_save(struct intel_pinctrl *pctrl, unsigned int
- 	 * See https://bugzilla.kernel.org/show_bug.cgi?id=214749.
- 	 */
- 	value = readl(intel_get_padcfg(pctrl, pin, PADCFG0));
--	if ((value & PADCFG0_GPIROUTIOXAPIC) && (value & PADCFG0_GPIOTXDIS) &&
--	    (__intel_gpio_get_gpio_mode(value) == PADCFG0_PMODE_GPIO))
-+	if (__intel_gpio_is_direct_irq(value))
- 		return true;
+-	return usbnet_read_cmd(dev, req,
+-				USB_DIR_IN | USB_TYPE_VENDOR |
+-				USB_RECIP_DEVICE,
++	return usbnet_write_cmd(dev, req, USB_TYPE_VENDOR | USB_RECIP_DEVICE,
+ 				val, index, NULL, 0);
+ }
  
- 	return false;
-@@ -1551,7 +1556,12 @@ int intel_pinctrl_resume(struct device *dev)
- 		void __iomem *padcfg;
- 		u32 val;
- 
--		if (!intel_pinctrl_should_save(pctrl, desc->number))
-+		if (!(intel_pinctrl_should_save(pctrl, desc->number) ||
-+		      /*
-+		       * If the firmware mangled the register contents too much,
-+		       * check the saved value for the Direct IRQ mode.
-+		       */
-+		      __intel_gpio_is_direct_irq(pads[i].padcfg0)))
- 			continue;
- 
- 		padcfg = intel_get_padcfg(pctrl, desc->number, PADCFG0);
--- 
-2.39.0
-
 
 
