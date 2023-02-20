@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EDB863B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8C906C433D2;
-	Mon, 20 Feb 2023 13:57:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9D5063B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 538FAC433EF;
+	Mon, 20 Feb 2023 13:57:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901436;
-	bh=icBDK9poSHMYJuqLBCfD/3moZ5k58dcCgjeRRPeU0YE=;
+	s=korg; t=1676901439;
+	bh=DVjmWlmCwv9TD+taSPBJEaoZBEgQjmneEUDXNNTh/GQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tsPgkda6Bua/yZNzNcts8di+K9J+YTWmrWPpHEyDhtYJjqe73bLxHv+5SLbn5stdV
-	 kyDX91nsS8lMQ2d5GwY/0Sf7f3kF/VBw/SUNZ0AT4Q8QCmknf4f/thVgr5i1Y4GCqM
-	 BSU1CLU0rfWgSZ1Q6Kd2C6cWiLT3qFP8cyYpNmt0=
+	b=RslXkM3JwPsGEU5y7K4rZPxa1P11gCjH5vzKF9ofOgHvur4qnA18sOm4CWoFG3DWz
+	 VrHOWH3dHFSgm9YvCrx/UsCsMpB6KeYP1qqG5vrwO8ZZkbpXhEsEr4uKxHsok4K6aK
+	 Hyb0CqbUylFQIYfkjZtDpIrbToj2hxGfkuoAk05E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Sitnicki <jakub@cloudflare.com>,
-	John Fastabend <john.fastabend@gmail.com>,
-	Alexei Starovoitov <ast@kernel.org>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Charles Keepax <ckeepax@opensource.cirrus.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 017/118] bpf, sockmap: Dont let sock_map_{close,destroy,unhash} call itself
-Date: Mon, 20 Feb 2023 14:35:33 +0100
-Message-Id: <20230220133601.100157878@linuxfoundation.org>
+Subject: [PATCH 6.1 018/118] ASoC: cs42l56: fix DT probe
+Date: Mon, 20 Feb 2023 14:35:34 +0100
+Message-Id: <20230220133601.151005525@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -37,115 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jakub Sitnicki <jakub@cloudflare.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-[ Upstream commit 5b4a79ba65a1ab479903fff2e604865d229b70a9 ]
+[ Upstream commit e18c6da62edc780e4f4f3c9ce07bdacd69505182 ]
 
-sock_map proto callbacks should never call themselves by design. Protect
-against bugs like [1] and break out of the recursive loop to avoid a stack
-overflow in favor of a resource leak.
+While looking through legacy platform data users, I noticed that
+the DT probing never uses data from the DT properties, as the
+platform_data structure gets overwritten directly after it
+is initialized.
 
-[1] https://lore.kernel.org/all/00000000000073b14905ef2e7401@google.com/
+There have never been any boards defining the platform_data in
+the mainline kernel either, so this driver so far only worked
+with patched kernels or with the default values.
 
-Suggested-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
-Acked-by: John Fastabend <john.fastabend@gmail.com>
-Link: https://lore.kernel.org/r/20230113-sockmap-fix-v2-1-1e0ee7ac2f90@cloudflare.com
-Signed-off-by: Alexei Starovoitov <ast@kernel.org>
+For the benefit of possible downstream users, fix the DT probe
+by no longer overwriting the data.
+
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20230126162203.2986339-1-arnd@kernel.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/sock_map.c | 61 +++++++++++++++++++++++++--------------------
- 1 file changed, 34 insertions(+), 27 deletions(-)
+ sound/soc/codecs/cs42l56.c | 6 ------
+ 1 file changed, 6 deletions(-)
 
-diff --git a/net/core/sock_map.c b/net/core/sock_map.c
-index 22fa2c5bc6ec9..a68a7290a3b2b 100644
---- a/net/core/sock_map.c
-+++ b/net/core/sock_map.c
-@@ -1569,15 +1569,16 @@ void sock_map_unhash(struct sock *sk)
- 	psock = sk_psock(sk);
- 	if (unlikely(!psock)) {
- 		rcu_read_unlock();
--		if (sk->sk_prot->unhash)
--			sk->sk_prot->unhash(sk);
--		return;
-+		saved_unhash = READ_ONCE(sk->sk_prot)->unhash;
-+	} else {
-+		saved_unhash = psock->saved_unhash;
-+		sock_map_remove_links(sk, psock);
-+		rcu_read_unlock();
- 	}
+diff --git a/sound/soc/codecs/cs42l56.c b/sound/soc/codecs/cs42l56.c
+index 26066682c983e..3b0e715549c9c 100644
+--- a/sound/soc/codecs/cs42l56.c
++++ b/sound/soc/codecs/cs42l56.c
+@@ -1191,18 +1191,12 @@ static int cs42l56_i2c_probe(struct i2c_client *i2c_client)
+ 	if (pdata) {
+ 		cs42l56->pdata = *pdata;
+ 	} else {
+-		pdata = devm_kzalloc(&i2c_client->dev, sizeof(*pdata),
+-				     GFP_KERNEL);
+-		if (!pdata)
+-			return -ENOMEM;
 -
--	saved_unhash = psock->saved_unhash;
--	sock_map_remove_links(sk, psock);
--	rcu_read_unlock();
--	saved_unhash(sk);
-+	if (WARN_ON_ONCE(saved_unhash == sock_map_unhash))
-+		return;
-+	if (saved_unhash)
-+		saved_unhash(sk);
- }
- EXPORT_SYMBOL_GPL(sock_map_unhash);
+ 		if (i2c_client->dev.of_node) {
+ 			ret = cs42l56_handle_of_data(i2c_client,
+ 						     &cs42l56->pdata);
+ 			if (ret != 0)
+ 				return ret;
+ 		}
+-		cs42l56->pdata = *pdata;
+ 	}
  
-@@ -1590,17 +1591,18 @@ void sock_map_destroy(struct sock *sk)
- 	psock = sk_psock_get(sk);
- 	if (unlikely(!psock)) {
- 		rcu_read_unlock();
--		if (sk->sk_prot->destroy)
--			sk->sk_prot->destroy(sk);
--		return;
-+		saved_destroy = READ_ONCE(sk->sk_prot)->destroy;
-+	} else {
-+		saved_destroy = psock->saved_destroy;
-+		sock_map_remove_links(sk, psock);
-+		rcu_read_unlock();
-+		sk_psock_stop(psock);
-+		sk_psock_put(sk, psock);
- 	}
--
--	saved_destroy = psock->saved_destroy;
--	sock_map_remove_links(sk, psock);
--	rcu_read_unlock();
--	sk_psock_stop(psock);
--	sk_psock_put(sk, psock);
--	saved_destroy(sk);
-+	if (WARN_ON_ONCE(saved_destroy == sock_map_destroy))
-+		return;
-+	if (saved_destroy)
-+		saved_destroy(sk);
- }
- EXPORT_SYMBOL_GPL(sock_map_destroy);
- 
-@@ -1615,16 +1617,21 @@ void sock_map_close(struct sock *sk, long timeout)
- 	if (unlikely(!psock)) {
- 		rcu_read_unlock();
- 		release_sock(sk);
--		return sk->sk_prot->close(sk, timeout);
-+		saved_close = READ_ONCE(sk->sk_prot)->close;
-+	} else {
-+		saved_close = psock->saved_close;
-+		sock_map_remove_links(sk, psock);
-+		rcu_read_unlock();
-+		sk_psock_stop(psock);
-+		release_sock(sk);
-+		cancel_work_sync(&psock->work);
-+		sk_psock_put(sk, psock);
- 	}
--
--	saved_close = psock->saved_close;
--	sock_map_remove_links(sk, psock);
--	rcu_read_unlock();
--	sk_psock_stop(psock);
--	release_sock(sk);
--	cancel_work_sync(&psock->work);
--	sk_psock_put(sk, psock);
-+	/* Make sure we do not recurse. This is a bug.
-+	 * Leak the socket instead of crashing on a stack overflow.
-+	 */
-+	if (WARN_ON_ONCE(saved_close == sock_map_close))
-+		return;
- 	saved_close(sk, timeout);
- }
- EXPORT_SYMBOL_GPL(sock_map_close);
+ 	if (cs42l56->pdata.gpio_nreset) {
 -- 
 2.39.0
 
