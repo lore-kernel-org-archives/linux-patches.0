@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6353F63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:41:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF1FDC433D2;
-	Mon, 20 Feb 2023 13:41:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06ED263B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:41:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 839A9C433EF;
+	Mon, 20 Feb 2023 13:41:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900508;
-	bh=h4TouaqaRVhHXSxgxA+VwQ4JlQtxe0goMILlS6sE13U=;
+	s=korg; t=1676900510;
+	bh=goGnLmRxLB7q/czn7RZTMv7Z9BN6AQMdMoIZPzL+GRY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2VCC1ypFEFlSC2CtVOf1kc+WT2u3HjcqKfPlA9KjSof4C/cDdk7kjNngZsyQ8XC79
-	 nHnhe9q7+GMyohwjJEOyD6vq56ugplm3g3Fj+laYienaYUUwlbOZmFmdo6qc2u1YOe
-	 NzUS/Tu4P3uLiLmAGbQ0QrB5T/HRlDfAaI5W0b+I=
+	b=OxsSyjOSM/YA6hqk8t/wlRzsh5UmJwZhwEpio2eZ7VsyGCS5BIisRFMs+BHLV2aOH
+	 qGuT2PxYZkAHzY9MRaJNEUJdqnh6B4mruk9RHhpy5UyUGituC5zfL0hpV7+CEmatem
+	 zfOSoRWst+K184bBhO08oGpDdaWPh0GT883BUId4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <sean.j.christopherson@intel.com>,
+	Alexander Graf <graf@amazon.de>,
+	Hendrik Borghorst <hborghor@amazon.de>,
+	Jim Mattson <jmattson@google.com>,
+	Alexander Graf <graf@amazon.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 23/89] KVM: VMX: Move caching of MSR_IA32_XSS to hardware_setup()
-Date: Mon, 20 Feb 2023 14:35:22 +0100
-Message-Id: <20230220133553.985538065@linuxfoundation.org>
+Subject: [PATCH 4.19 24/89] KVM: x86/vmx: Do not skip segment attributes if unusable bit is set
+Date: Mon, 20 Feb 2023 14:35:23 +0100
+Message-Id: <20230220133554.017365065@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -35,46 +38,89 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Christopherson <sean.j.christopherson@intel.com>
+From: Hendrik Borghorst <hborghor@amazon.de>
 
-[ Upstream commit 71d9409e20934e16f2d2ea88f0d1fb9851a7da3b ]
+[ Upstream commit a44b331614e6f7e63902ed7dff7adc8c85edd8bc ]
 
-MSR_IA32_XSS has no relation to the VMCS whatsoever, it doesn't belong
-in setup_vmcs_config() and its reference to host_xss prevents moving
-setup_vmcs_config() to a dedicated file.
+When serializing and deserializing kvm_sregs, attributes of the segment
+descriptors are stored by user space. For unusable segments,
+vmx_segment_access_rights skips all attributes and sets them to 0.
 
-Signed-off-by: Sean Christopherson <sean.j.christopherson@intel.com>
+This means we zero out the DPL (Descriptor Privilege Level) for unusable
+entries.
+
+Unusable segments are - contrary to their name - usable in 64bit mode and
+are used by guests to for example create a linear map through the
+NULL selector.
+
+VMENTER checks if SS.DPL is correct depending on the CS segment type.
+For types 9 (Execute Only) and 11 (Execute Read), CS.DPL must be equal to
+SS.DPL [1].
+
+We have seen real world guests setting CS to a usable segment with DPL=3
+and SS to an unusable segment with DPL=3. Once we go through an sregs
+get/set cycle, SS.DPL turns to 0. This causes the virtual machine to crash
+reproducibly.
+
+This commit changes the attribute logic to always preserve attributes for
+unusable segments. According to [2] SS.DPL is always saved on VM exits,
+regardless of the unusable bit so user space applications should have saved
+the information on serialization correctly.
+
+[3] specifies that besides SS.DPL the rest of the attributes of the
+descriptors are undefined after VM entry if unusable bit is set. So, there
+should be no harm in setting them all to the previous state.
+
+[1] Intel SDM Vol 3C 26.3.1.2 Checks on Guest Segment Registers
+[2] Intel SDM Vol 3C 27.3.2 Saving Segment Registers and Descriptor-Table
+Registers
+[3] Intel SDM Vol 3C 26.3.2.2 Loading Guest Segment Registers and
+Descriptor-Table Registers
+
+Cc: Alexander Graf <graf@amazon.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Hendrik Borghorst <hborghor@amazon.de>
+Reviewed-by: Jim Mattson <jmattson@google.com>
+Reviewed-by: Alexander Graf <graf@amazon.com>
+Message-Id: <20221114164823.69555-1-hborghor@amazon.de>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-Stable-dep-of: a44b331614e6 ("KVM: x86/vmx: Do not skip segment attributes if unusable bit is set")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/vmx.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/kvm/vmx/vmx.c | 21 +++++++++------------
+ 1 file changed, 9 insertions(+), 12 deletions(-)
 
 diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index f8ad29968e85..5c4d2758b1d9 100644
+index 5c4d2758b1d9..ec821a5d131a 100644
 --- a/arch/x86/kvm/vmx/vmx.c
 +++ b/arch/x86/kvm/vmx/vmx.c
-@@ -4740,9 +4740,6 @@ static __init int setup_vmcs_config(struct vmcs_config *vmcs_conf)
- 		}
- 	}
+@@ -5521,18 +5521,15 @@ static u32 vmx_segment_access_rights(struct kvm_segment *var)
+ {
+ 	u32 ar;
  
--	if (boot_cpu_has(X86_FEATURE_XSAVES))
--		rdmsrl(MSR_IA32_XSS, host_xss);
--
- 	return 0;
+-	if (var->unusable || !var->present)
+-		ar = 1 << 16;
+-	else {
+-		ar = var->type & 15;
+-		ar |= (var->s & 1) << 4;
+-		ar |= (var->dpl & 3) << 5;
+-		ar |= (var->present & 1) << 7;
+-		ar |= (var->avl & 1) << 12;
+-		ar |= (var->l & 1) << 13;
+-		ar |= (var->db & 1) << 14;
+-		ar |= (var->g & 1) << 15;
+-	}
++	ar = var->type & 15;
++	ar |= (var->s & 1) << 4;
++	ar |= (var->dpl & 3) << 5;
++	ar |= (var->present & 1) << 7;
++	ar |= (var->avl & 1) << 12;
++	ar |= (var->l & 1) << 13;
++	ar |= (var->db & 1) << 14;
++	ar |= (var->g & 1) << 15;
++	ar |= (var->unusable || !var->present) << 16;
+ 
+ 	return ar;
  }
- 
-@@ -7957,6 +7954,9 @@ static __init int hardware_setup(void)
- 		WARN_ONCE(host_bndcfgs, "KVM: BNDCFGS in host will be lost");
- 	}
- 
-+	if (boot_cpu_has(X86_FEATURE_XSAVES))
-+		rdmsrl(MSR_IA32_XSS, host_xss);
-+
- 	if (!cpu_has_vmx_vpid() || !cpu_has_vmx_invvpid() ||
- 		!(cpu_has_vmx_invvpid_single() || cpu_has_vmx_invvpid_global()))
- 		enable_vpid = 0;
 -- 
 2.39.0
 
