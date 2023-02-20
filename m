@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3190563B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:48:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854A8C433EF;
-	Mon, 20 Feb 2023 13:48:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFC4C63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:48:39 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 45FD1C433EF;
+	Mon, 20 Feb 2023 13:48:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900917;
-	bh=MEFrPiU613INO0nQ/hsZZT8xsVmmKuiC45NHXIKvUQM=;
+	s=korg; t=1676900919;
+	bh=iJYM0UtZVZx6hdT4Km/vi+dI50lih13TKUoq3lv1fUQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Xk9IvaqwuHx9JdLR40815G+LUCvVJMDfsQFmZy8N3OG8JO6BTnZazPX87l7hpgaGw
-	 Erzd/C6QFSr+TfkoY6jjZJ1qNXTt1Ia2t7WtJYidiERxLys3dVeWxltvtXobMuGFim
-	 5vhgs+bUxbs/e6cKWGSBm33Ue1U8czFzQ+4AORPY=
+	b=yF2iqOD8JIhpfFJy/2N3HG8XDdU+zT+qtYXXqTmSdnHYol0FIZ3ua//CFTG3LTvPF
+	 Q9OOIDb9RHM+WC5qlx93tEk5FjAVLl4oE6vkfa+VyJk90UhhI+SNbNg/ZooGz0uLM7
+	 pv+lBXVMnsJ96IahqF3Xxw+R2JGJe9D1RiKif3Qo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
+	Dave Chinner <dchinner@redhat.com>,
 	Brian Foster <bfoster@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
 	Chandan Babu R <chandan.babu@oracle.com>,
 	"Darrick J. Wong" <djwong@kernel.org>
-Subject: [PATCH 5.4 117/156] xfs: fix an incore inode UAF in xfs_bui_recover
-Date: Mon, 20 Feb 2023 14:36:01 +0100
-Message-Id: <20230220133607.450378664@linuxfoundation.org>
+Subject: [PATCH 5.4 118/156] xfs: change the order in which child and parent defer ops are finished
+Date: Mon, 20 Feb 2023 14:36:02 +0100
+Message-Id: <20230220133607.491450738@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -39,246 +39,211 @@ Content-Transfer-Encoding: 8bit
 
 From: "Darrick J. Wong" <darrick.wong@oracle.com>
 
-commit ff4ab5e02a0447dd1e290883eb6cd7d94848e590 upstream.
+commit 27dada070d59c28a441f1907d2cec891b17dcb26 upstream.
 
-In xfs_bui_item_recover, there exists a use-after-free bug with regards
-to the inode that is involved in the bmap replay operation.  If the
-mapping operation does not complete, we call xfs_bmap_unmap_extent to
-create a deferred op to finish the unmapping work, and we retain a
-pointer to the incore inode.
+The defer ops code has been finishing items in the wrong order -- if a
+top level defer op creates items A and B, and finishing item A creates
+more defer ops A1 and A2, we'll put the new items on the end of the
+chain and process them in the order A B A1 A2.  This is kind of weird,
+since it's convenient for programmers to be able to think of A and B as
+an ordered sequence where all the sub-tasks for A must finish before we
+move on to B, e.g. A A1 A2 D.
 
-Unfortunately, the very next thing we do is commit the transaction and
-drop the inode.  If reclaim tears down the inode before we try to finish
-the defer ops, we dereference garbage and blow up.  Therefore, create a
-way to join inodes to the defer ops freezer so that we can maintain the
-xfs_inode reference until we're done with the inode.
+Right now, our log intent items are not so complex that this matters,
+but this will become important for the atomic extent swapping patchset.
+In order to maintain correct reference counting of extents, we have to
+unmap and remap extents in that order, and we want to complete that work
+before moving on to the next range that the user wants to swap.  This
+patch fixes defer ops to satsify that requirement.
 
-Note: This imposes the requirement that there be enough memory to keep
-every incore inode in memory throughout recovery.
+The primary symptom of the incorrect order was noticed in an early
+performance analysis of the atomic extent swap code.  An astonishingly
+large number of deferred work items accumulated when userspace requested
+an atomic update of two very fragmented files.  The cause of this was
+traced to the same ordering bug in the inner loop of
+xfs_defer_finish_noroll.
+
+If the ->finish_item method of a deferred operation queues new deferred
+operations, those new deferred ops are appended to the tail of the
+pending work list.  To illustrate, say that a caller creates a
+transaction t0 with four deferred operations D0-D3.  The first thing
+defer ops does is roll the transaction to t1, leaving us with:
+
+t1: D0(t0), D1(t0), D2(t0), D3(t0)
+
+Let's say that finishing each of D0-D3 will create two new deferred ops.
+After finish D0 and roll, we'll have the following chain:
+
+t2: D1(t0), D2(t0), D3(t0), d4(t1), d5(t1)
+
+d4 and d5 were logged to t1.  Notice that while we're about to start
+work on D1, we haven't actually completed all the work implied by D0
+being finished.  So far we've been careful (or lucky) to structure the
+dfops callers such that D1 doesn't depend on d4 or d5 being finished,
+but this is a potential logic bomb.
+
+There's a second problem lurking.  Let's see what happens as we finish
+D1-D3:
+
+t3: D2(t0), D3(t0), d4(t1), d5(t1), d6(t2), d7(t2)
+t4: D3(t0), d4(t1), d5(t1), d6(t2), d7(t2), d8(t3), d9(t3)
+t5: d4(t1), d5(t1), d6(t2), d7(t2), d8(t3), d9(t3), d10(t4), d11(t4)
+
+Let's say that d4-d11 are simple work items that don't queue any other
+operations, which means that we can complete each d4 and roll to t6:
+
+t6: d5(t1), d6(t2), d7(t2), d8(t3), d9(t3), d10(t4), d11(t4)
+t7: d6(t2), d7(t2), d8(t3), d9(t3), d10(t4), d11(t4)
+...
+t11: d10(t4), d11(t4)
+t12: d11(t4)
+<done>
+
+When we try to roll to transaction #12, we're holding defer op d11,
+which we logged way back in t4.  This means that the tail of the log is
+pinned at t4.  If the log is very small or there are a lot of other
+threads updating metadata, this means that we might have wrapped the log
+and cannot get roll to t11 because there isn't enough space left before
+we'd run into t4.
+
+Let's shift back to the original failure.  I mentioned before that I
+discovered this flaw while developing the atomic file update code.  In
+that scenario, we have a defer op (D0) that finds a range of file blocks
+to remap, creates a handful of new defer ops to do that, and then asks
+to be continued with however much work remains.
+
+So, D0 is the original swapext deferred op.  The first thing defer ops
+does is rolls to t1:
+
+t1: D0(t0)
+
+We try to finish D0, logging d1 and d2 in the process, but can't get all
+the work done.  We log a done item and a new intent item for the work
+that D0 still has to do, and roll to t2:
+
+t2: D0'(t1), d1(t1), d2(t1)
+
+We roll and try to finish D0', but still can't get all the work done, so
+we log a done item and a new intent item for it, requeue D0 a second
+time, and roll to t3:
+
+t3: D0''(t2), d1(t1), d2(t1), d3(t2), d4(t2)
+
+If it takes 48 more rolls to complete D0, then we'll finally dispense
+with D0 in t50:
+
+t50: D<fifty primes>(t49), d1(t1), ..., d102(t50)
+
+We then try to roll again to get a chain like this:
+
+t51: d1(t1), d2(t1), ..., d101(t50), d102(t50)
+...
+t152: d102(t50)
+<done>
+
+Notice that in rolling to transaction #51, we're holding on to a log
+intent item for d1 that was logged in transaction #1.  This means that
+the tail of the log is pinned at t1.  If the log is very small or there
+are a lot of other threads updating metadata, this means that we might
+have wrapped the log and cannot roll to t51 because there isn't enough
+space left before we'd run into t1.  This is of course problem #2 again.
+
+But notice the third problem with this scenario: we have 102 defer ops
+tied to this transaction!  Each of these items are backed by pinned
+kernel memory, which means that we risk OOM if the chains get too long.
+
+Yikes.  Problem #1 is a subtle logic bomb that could hit someone in the
+future; problem #2 applies (rarely) to the current upstream, and problem
+
+This is not how incremental deferred operations were supposed to work.
+The dfops design of logging in the same transaction an intent-done item
+and a new intent item for the work remaining was to make it so that we
+only have to juggle enough deferred work items to finish that one small
+piece of work.  Deferred log item recovery will find that first
+unfinished work item and restart it, no matter how many other intent
+items might follow it in the log.  Therefore, it's ok to put the new
+intents at the start of the dfops chain.
+
+For the first example, the chains look like this:
+
+t2: d4(t1), d5(t1), D1(t0), D2(t0), D3(t0)
+t3: d5(t1), D1(t0), D2(t0), D3(t0)
+...
+t9: d9(t7), D3(t0)
+t10: D3(t0)
+t11: d10(t10), d11(t10)
+t12: d11(t10)
+
+For the second example, the chains look like this:
+
+t1: D0(t0)
+t2: d1(t1), d2(t1), D0'(t1)
+t3: d2(t1), D0'(t1)
+t4: D0'(t1)
+t5: d1(t4), d2(t4), D0''(t4)
+...
+t148: D0<50 primes>(t147)
+t149: d101(t148), d102(t148)
+t150: d102(t148)
+<done>
+
+This actually sucks more for pinning the log tail (we try to roll to t10
+while holding an intent item that was logged in t1) but we've solved
+problem #1.  We've also reduced the maximum chain length from:
+
+    sum(all the new items) + nr_original_items
+
+to:
+
+    max(new items that each original item creates) + nr_original_items
+
+This solves problem #3 by sharply reducing the number of defer ops that
+can be attached to a transaction at any given time.  The change makes
+the problem of log tail pinning worse, but is improvement we need to
+solve problem #2.  Actually solving #2, however, is left to the next
+patch.
+
+Note that a subsequent analysis of some hard-to-trigger reflink and COW
+livelocks on extremely fragmented filesystems (or systems running a lot
+of IO threads) showed the same symptoms -- uncomfortably large numbers
+of incore deferred work items and occasional stalls in the transaction
+grant code while waiting for log reservations.  I think this patch and
+the next one will also solve these problems.
+
+As originally written, the code used list_splice_tail_init instead of
+list_splice_init, so change that, and leave a short comment explaining
+our actions.
 
 Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
 Reviewed-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_defer.c  |   43 ++++++++++++++++++++++++++++++++++++++-----
- fs/xfs/libxfs/xfs_defer.h  |   11 +++++++++--
- fs/xfs/xfs_bmap_item.c     |    7 +++++--
- fs/xfs/xfs_extfree_item.c  |    2 +-
- fs/xfs/xfs_log_recover.c   |    7 ++++++-
- fs/xfs/xfs_refcount_item.c |    2 +-
- fs/xfs/xfs_rmap_item.c     |    2 +-
- 7 files changed, 61 insertions(+), 13 deletions(-)
+ fs/xfs/libxfs/xfs_defer.c |   11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
 
 --- a/fs/xfs/libxfs/xfs_defer.c
 +++ b/fs/xfs/libxfs/xfs_defer.c
-@@ -16,6 +16,7 @@
- #include "xfs_inode.h"
- #include "xfs_inode_item.h"
- #include "xfs_trace.h"
-+#include "xfs_icache.h"
+@@ -431,8 +431,17 @@ xfs_defer_finish_noroll(
  
- /*
-  * Deferred Operations in XFS
-@@ -567,10 +568,14 @@ xfs_defer_move(
-  * deferred ops state is transferred to the capture structure and the
-  * transaction is then ready for the caller to commit it.  If there are no
-  * intent items to capture, this function returns NULL.
-+ *
-+ * If capture_ip is not NULL, the capture structure will obtain an extra
-+ * reference to the inode.
-  */
- static struct xfs_defer_capture *
- xfs_defer_ops_capture(
--	struct xfs_trans		*tp)
-+	struct xfs_trans		*tp,
-+	struct xfs_inode		*capture_ip)
- {
- 	struct xfs_defer_capture	*dfc;
+ 	/* Until we run out of pending work to finish... */
+ 	while (!list_empty(&dop_pending) || !list_empty(&(*tp)->t_dfops)) {
++		/*
++		 * Deferred items that are created in the process of finishing
++		 * other deferred work items should be queued at the head of
++		 * the pending list, which puts them ahead of the deferred work
++		 * that was created by the caller.  This keeps the number of
++		 * pending work items to a minimum, which decreases the amount
++		 * of time that any one intent item can stick around in memory,
++		 * pinning the log tail.
++		 */
+ 		xfs_defer_create_intents(*tp);
+-		list_splice_tail_init(&(*tp)->t_dfops, &dop_pending);
++		list_splice_init(&(*tp)->t_dfops, &dop_pending);
  
-@@ -596,6 +601,15 @@ xfs_defer_ops_capture(
- 	/* Preserve the log reservation size. */
- 	dfc->dfc_logres = tp->t_log_res;
- 
-+	/*
-+	 * Grab an extra reference to this inode and attach it to the capture
-+	 * structure.
-+	 */
-+	if (capture_ip) {
-+		ihold(VFS_I(capture_ip));
-+		dfc->dfc_capture_ip = capture_ip;
-+	}
-+
- 	return dfc;
- }
- 
-@@ -606,24 +620,33 @@ xfs_defer_ops_release(
- 	struct xfs_defer_capture	*dfc)
- {
- 	xfs_defer_cancel_list(mp, &dfc->dfc_dfops);
-+	if (dfc->dfc_capture_ip)
-+		xfs_irele(dfc->dfc_capture_ip);
- 	kmem_free(dfc);
- }
- 
- /*
-  * Capture any deferred ops and commit the transaction.  This is the last step
-- * needed to finish a log intent item that we recovered from the log.
-+ * needed to finish a log intent item that we recovered from the log.  If any
-+ * of the deferred ops operate on an inode, the caller must pass in that inode
-+ * so that the reference can be transferred to the capture structure.  The
-+ * caller must hold ILOCK_EXCL on the inode, and must unlock it before calling
-+ * xfs_defer_ops_continue.
-  */
- int
- xfs_defer_ops_capture_and_commit(
- 	struct xfs_trans		*tp,
-+	struct xfs_inode		*capture_ip,
- 	struct list_head		*capture_list)
- {
- 	struct xfs_mount		*mp = tp->t_mountp;
- 	struct xfs_defer_capture	*dfc;
- 	int				error;
- 
-+	ASSERT(!capture_ip || xfs_isilocked(capture_ip, XFS_ILOCK_EXCL));
-+
- 	/* If we don't capture anything, commit transaction and exit. */
--	dfc = xfs_defer_ops_capture(tp);
-+	dfc = xfs_defer_ops_capture(tp, capture_ip);
- 	if (!dfc)
- 		return xfs_trans_commit(tp);
- 
-@@ -640,16 +663,26 @@ xfs_defer_ops_capture_and_commit(
- 
- /*
-  * Attach a chain of captured deferred ops to a new transaction and free the
-- * capture structure.
-+ * capture structure.  If an inode was captured, it will be passed back to the
-+ * caller with ILOCK_EXCL held and joined to the transaction with lockflags==0.
-+ * The caller now owns the inode reference.
-  */
- void
- xfs_defer_ops_continue(
- 	struct xfs_defer_capture	*dfc,
--	struct xfs_trans		*tp)
-+	struct xfs_trans		*tp,
-+	struct xfs_inode		**captured_ipp)
- {
- 	ASSERT(tp->t_flags & XFS_TRANS_PERM_LOG_RES);
- 	ASSERT(!(tp->t_flags & XFS_TRANS_DIRTY));
- 
-+	/* Lock and join the captured inode to the new transaction. */
-+	if (dfc->dfc_capture_ip) {
-+		xfs_ilock(dfc->dfc_capture_ip, XFS_ILOCK_EXCL);
-+		xfs_trans_ijoin(tp, dfc->dfc_capture_ip, 0);
-+	}
-+	*captured_ipp = dfc->dfc_capture_ip;
-+
- 	/* Move captured dfops chain and state to the transaction. */
- 	list_splice_init(&dfc->dfc_dfops, &tp->t_dfops);
- 	tp->t_flags |= dfc->dfc_tpflags;
---- a/fs/xfs/libxfs/xfs_defer.h
-+++ b/fs/xfs/libxfs/xfs_defer.h
-@@ -80,6 +80,12 @@ struct xfs_defer_capture {
- 
- 	/* Log reservation saved from the transaction. */
- 	unsigned int		dfc_logres;
-+
-+	/*
-+	 * An inode reference that must be maintained to complete the deferred
-+	 * work.
-+	 */
-+	struct xfs_inode	*dfc_capture_ip;
- };
- 
- /*
-@@ -87,8 +93,9 @@ struct xfs_defer_capture {
-  * This doesn't normally happen except log recovery.
-  */
- int xfs_defer_ops_capture_and_commit(struct xfs_trans *tp,
--		struct list_head *capture_list);
--void xfs_defer_ops_continue(struct xfs_defer_capture *d, struct xfs_trans *tp);
-+		struct xfs_inode *capture_ip, struct list_head *capture_list);
-+void xfs_defer_ops_continue(struct xfs_defer_capture *d, struct xfs_trans *tp,
-+		struct xfs_inode **captured_ipp);
- void xfs_defer_ops_release(struct xfs_mount *mp, struct xfs_defer_capture *d);
- 
- #endif /* __XFS_DEFER_H__ */
---- a/fs/xfs/xfs_bmap_item.c
-+++ b/fs/xfs/xfs_bmap_item.c
-@@ -528,8 +528,11 @@ xfs_bui_recover(
- 	}
- 
- 	set_bit(XFS_BUI_RECOVERED, &buip->bui_flags);
--	/* Commit transaction, which frees the transaction. */
--	error = xfs_defer_ops_capture_and_commit(tp, capture_list);
-+	/*
-+	 * Commit transaction, which frees the transaction and saves the inode
-+	 * for later replay activities.
-+	 */
-+	error = xfs_defer_ops_capture_and_commit(tp, ip, capture_list);
- 	if (error)
- 		goto err_unlock;
- 
---- a/fs/xfs/xfs_extfree_item.c
-+++ b/fs/xfs/xfs_extfree_item.c
-@@ -639,7 +639,7 @@ xfs_efi_recover(
- 
- 	set_bit(XFS_EFI_RECOVERED, &efip->efi_flags);
- 
--	return xfs_defer_ops_capture_and_commit(tp, capture_list);
-+	return xfs_defer_ops_capture_and_commit(tp, NULL, capture_list);
- 
- abort_error:
- 	xfs_trans_cancel(tp);
---- a/fs/xfs/xfs_log_recover.c
-+++ b/fs/xfs/xfs_log_recover.c
-@@ -4766,6 +4766,7 @@ xlog_finish_defer_ops(
- {
- 	struct xfs_defer_capture *dfc, *next;
- 	struct xfs_trans	*tp;
-+	struct xfs_inode	*ip;
- 	int			error = 0;
- 
- 	list_for_each_entry_safe(dfc, next, capture_list, dfc_list) {
-@@ -4791,9 +4792,13 @@ xlog_finish_defer_ops(
- 		 * from recovering a single intent item.
- 		 */
- 		list_del_init(&dfc->dfc_list);
--		xfs_defer_ops_continue(dfc, tp);
-+		xfs_defer_ops_continue(dfc, tp, &ip);
- 
- 		error = xfs_trans_commit(tp);
-+		if (ip) {
-+			xfs_iunlock(ip, XFS_ILOCK_EXCL);
-+			xfs_irele(ip);
-+		}
+ 		error = xfs_defer_trans_roll(tp);
  		if (error)
- 			return error;
- 	}
---- a/fs/xfs/xfs_refcount_item.c
-+++ b/fs/xfs/xfs_refcount_item.c
-@@ -569,7 +569,7 @@ xfs_cui_recover(
- 
- 	xfs_refcount_finish_one_cleanup(tp, rcur, error);
- 	set_bit(XFS_CUI_RECOVERED, &cuip->cui_flags);
--	return xfs_defer_ops_capture_and_commit(tp, capture_list);
-+	return xfs_defer_ops_capture_and_commit(tp, NULL, capture_list);
- 
- abort_error:
- 	xfs_refcount_finish_one_cleanup(tp, rcur, error);
---- a/fs/xfs/xfs_rmap_item.c
-+++ b/fs/xfs/xfs_rmap_item.c
-@@ -593,7 +593,7 @@ xfs_rui_recover(
- 
- 	xfs_rmap_finish_one_cleanup(tp, rcur, error);
- 	set_bit(XFS_RUI_RECOVERED, &ruip->rui_flags);
--	return xfs_defer_ops_capture_and_commit(tp, capture_list);
-+	return xfs_defer_ops_capture_and_commit(tp, NULL, capture_list);
- 
- abort_error:
- 	xfs_rmap_finish_one_cleanup(tp, rcur, error);
 
 
