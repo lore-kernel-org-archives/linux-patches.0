@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 09BB863BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:00:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 689A0C433EF;
-	Mon, 20 Feb 2023 14:00:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6CEC763BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:00:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E81D4C4339B;
+	Mon, 20 Feb 2023 14:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901639;
-	bh=poceO0hDaDSSEdVBSTJ02Ot/K1XSx+iEzkbT/G3F/nk=;
+	s=korg; t=1676901642;
+	bh=bMFfOd/8kmoVEJG3kl4sxmv4d5YwfpyXqjkKVhpLECc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=u1cEDq8JH7fjY+7thpImYg0zTRBlH2vueHEeT1M5D5GVEh3eUf3JJeGXjobZhIddo
-	 n+XLZmlHKUy1AwYkXmw6+c7Vw3ZcGOF+bxZhFYv+sYA6XxpNhr7Nea5EBES4SJyyxj
-	 rVTiL/CUtRI7f9uH0QG28RGBb3KJbyZAqoMHKT6s=
+	b=GH2Pgn2NcV3YEs/M4NJ6B08SOEM6QxuPzWmaGBl4yq1nXiwY6u7bNYNzpErwSCMK1
+	 XY/kutxSnzoFO5+alkKJEUfelW91+PgRs/8DrlzR0b6jycsTxaUKtyPf84WSic15Wv
+	 R6nTh423XvsmtoxfL4bpREqdO5fAmXHNN0iiupYI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Johannes Zink <j.zink@pengutronix.de>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 093/118] net: stmmac: fix order of dwmac5 FlexPPS parametrization sequence
-Date: Mon, 20 Feb 2023 14:36:49 +0100
-Message-Id: <20230220133604.118516257@linuxfoundation.org>
+	Patrick McLean <chutzpah@gentoo.org>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Subject: [PATCH 6.1 065/118] ata: libata-core: Disable READ LOG DMA EXT for Samsung MZ7LH
+Date: Mon, 20 Feb 2023 14:36:21 +0100
+Message-Id: <20230220133603.029430013@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -34,61 +34,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Johannes Zink <j.zink@pengutronix.de>
+From: Patrick McLean <chutzpah@gentoo.org>
 
-commit 4562c65ec852067c6196abdcf2d925f08841dcbc upstream.
+commit ead089577e0f55b238f980d9f62eaa90b7b64672 upstream.
 
-So far changing the period by just setting new period values while
-running did not work.
+Samsung MZ7LH drives are spewing messages like this in to dmesg with AMD
+SATA controllers:
 
-The order as indicated by the publicly available reference manual of the i.MX8MP [1]
-indicates a sequence:
+ata1.00: exception Emask 0x0 SAct 0x7e0000 SErr 0x0 action 0x6 frozen
+ata1.00: failed command: SEND FPDMA QUEUED
+ata1.00: cmd 64/01:88:00:00:00/00:00:00:00:00/a0 tag 17 ncq dma 512 out
+         res 40/00:01:01:4f:c2/00:00:00:00:00/00 Emask
+         0x4 (timeout)
 
- * initiate the programming sequence
- * set the values for PPS period and start time
- * start the pulse train generation.
+Since this was seen previously with SSD 840 EVO drives in
+https://bugzilla.kernel.org/show_bug.cgi?id=203475 let's add the same
+fix for these drives as the EVOs have, since they likely have very
+similar firmwares.
 
-This is currently not used in dwmac5_flex_pps_config(), which instead does:
-
- * initiate the programming sequence and immediately start the pulse train generation
- * set the values for PPS period and start time
-
-This caused the period values written not to take effect until the FlexPPS output was
-disabled and re-enabled again.
-
-This patch fix the order and allows the period to be set immediately.
-
-[1] https://www.nxp.com/webapp/Download?colCode=IMX8MPRM
-
-Fixes: 9a8a02c9d46d ("net: stmmac: Add Flexible PPS support")
-Signed-off-by: Johannes Zink <j.zink@pengutronix.de>
-Link: https://lore.kernel.org/r/20230210143937.3427483-1-j.zink@pengutronix.de
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Patrick McLean <chutzpah@gentoo.org>
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/stmicro/stmmac/dwmac5.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/ata/libata-core.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
-+++ b/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
-@@ -541,9 +541,9 @@ int dwmac5_flex_pps_config(void __iomem
- 		return 0;
- 	}
+--- a/drivers/ata/libata-core.c
++++ b/drivers/ata/libata-core.c
+@@ -4044,6 +4044,9 @@ static const struct ata_blacklist_entry
+ 	{ "Samsung SSD 870*",		NULL,	ATA_HORKAGE_NO_NCQ_TRIM |
+ 						ATA_HORKAGE_ZERO_AFTER_TRIM |
+ 						ATA_HORKAGE_NO_NCQ_ON_ATI },
++	{ "SAMSUNG*MZ7LH*",		NULL,	ATA_HORKAGE_NO_NCQ_TRIM |
++						ATA_HORKAGE_ZERO_AFTER_TRIM |
++						ATA_HORKAGE_NO_NCQ_ON_ATI, },
+ 	{ "FCCT*M500*",			NULL,	ATA_HORKAGE_NO_NCQ_TRIM |
+ 						ATA_HORKAGE_ZERO_AFTER_TRIM },
  
--	val |= PPSCMDx(index, 0x2);
- 	val |= TRGTMODSELx(index, 0x2);
- 	val |= PPSEN0;
-+	writel(val, ioaddr + MAC_PPS_CONTROL);
- 
- 	writel(cfg->start.tv_sec, ioaddr + MAC_PPSx_TARGET_TIME_SEC(index));
- 
-@@ -568,6 +568,7 @@ int dwmac5_flex_pps_config(void __iomem
- 	writel(period - 1, ioaddr + MAC_PPSx_WIDTH(index));
- 
- 	/* Finally, activate it */
-+	val |= PPSCMDx(index, 0x2);
- 	writel(val, ioaddr + MAC_PPS_CONTROL);
- 	return 0;
- }
 
 
