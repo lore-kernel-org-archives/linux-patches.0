@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A4E7D63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E50CC433EF;
-	Mon, 20 Feb 2023 13:43:04 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3EBDB63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:43:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BA1A6C433EF;
+	Mon, 20 Feb 2023 13:43:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900584;
-	bh=x/C2/aEnXLov8gi5+SSH/+uIM06q0NoA3tH4t1jt48w=;
+	s=korg; t=1676900587;
+	bh=NZiF6uuU/REmkP9MqhQkEhocj4JvOaNOBWSK4F77vlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iKm8f8ChAB1eV3o2lJPhA4xlVLuespSLxy1BzptXrlN6quER3FixI7ADLJXVoK7OM
-	 ssqIPjZA3+TH5jhBTXs6oAil2vbz+Fkm6ZAKrmKYqDcrcFBSaZKQcm6OM1Imnz14Lu
-	 TKlOPnR0W8bpWr7lEqHQv2RXRx5JZZHBXoiOrbfg=
+	b=aJ8euRrcNR2pX9FjCSXR4BJ+BQe8IlZevI7y4gdzP9kvFejNTOx3QT54OLFQfq5yF
+	 5o4sJZlgMZ++IRkEzWQwzn5OZ/OrEGL9rFdZtVDRxKKndD8RbkwaYGLkB5gvN1jHOe
+	 pLUisryT8ZTOrfkVI367fksPdyacIsKTt9MjN/KI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miko Larsson <mikoxyzzz@gmail.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	syzbot+cd80c5ef5121bfe85b55@syzkaller.appspotmail.com
-Subject: [PATCH 4.19 79/89] net/usb: kalmia: Dont pass act_len in usb_bulk_msg error path
-Date: Mon, 20 Feb 2023 14:36:18 +0100
-Message-Id: <20230220133555.948814017@linuxfoundation.org>
+	Johannes Zink <j.zink@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.19 80/89] net: stmmac: fix order of dwmac5 FlexPPS parametrization sequence
+Date: Mon, 20 Feb 2023 14:36:19 +0100
+Message-Id: <20230220133555.988475170@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -36,54 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miko Larsson <mikoxyzzz@gmail.com>
+From: Johannes Zink <j.zink@pengutronix.de>
 
-commit c68f345b7c425b38656e1791a0486769a8797016 upstream.
+commit 4562c65ec852067c6196abdcf2d925f08841dcbc upstream.
 
-syzbot reported that act_len in kalmia_send_init_packet() is
-uninitialized when passing it to the first usb_bulk_msg error path. Jiri
-Pirko noted that it's pointless to pass it in the error path, and that
-the value that would be printed in the second error path would be the
-value of act_len from the first call to usb_bulk_msg.[1]
+So far changing the period by just setting new period values while
+running did not work.
 
-With this in mind, let's just not pass act_len to the usb_bulk_msg error
-paths.
+The order as indicated by the publicly available reference manual of the i.MX8MP [1]
+indicates a sequence:
 
-1: https://lore.kernel.org/lkml/Y9pY61y1nwTuzMOa@nanopsycho/
+ * initiate the programming sequence
+ * set the values for PPS period and start time
+ * start the pulse train generation.
 
-Fixes: d40261236e8e ("net/usb: Add Samsung Kalmia driver for Samsung GT-B3730")
-Reported-and-tested-by: syzbot+cd80c5ef5121bfe85b55@syzkaller.appspotmail.com
-Signed-off-by: Miko Larsson <mikoxyzzz@gmail.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+This is currently not used in dwmac5_flex_pps_config(), which instead does:
+
+ * initiate the programming sequence and immediately start the pulse train generation
+ * set the values for PPS period and start time
+
+This caused the period values written not to take effect until the FlexPPS output was
+disabled and re-enabled again.
+
+This patch fix the order and allows the period to be set immediately.
+
+[1] https://www.nxp.com/webapp/Download?colCode=IMX8MPRM
+
+Fixes: 9a8a02c9d46d ("net: stmmac: Add Flexible PPS support")
+Signed-off-by: Johannes Zink <j.zink@pengutronix.de>
+Link: https://lore.kernel.org/r/20230210143937.3427483-1-j.zink@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/kalmia.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac5.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/drivers/net/usb/kalmia.c
-+++ b/drivers/net/usb/kalmia.c
-@@ -69,8 +69,8 @@ kalmia_send_init_packet(struct usbnet *d
- 		init_msg, init_msg_len, &act_len, KALMIA_USB_TIMEOUT);
- 	if (status != 0) {
- 		netdev_err(dev->net,
--			"Error sending init packet. Status %i, length %i\n",
--			status, act_len);
-+			"Error sending init packet. Status %i\n",
-+			status);
- 		return status;
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
+@@ -520,9 +520,9 @@ int dwmac5_flex_pps_config(void __iomem
+ 		return 0;
  	}
- 	else if (act_len != init_msg_len) {
-@@ -87,8 +87,8 @@ kalmia_send_init_packet(struct usbnet *d
  
- 	if (status != 0)
- 		netdev_err(dev->net,
--			"Error receiving init result. Status %i, length %i\n",
--			status, act_len);
-+			"Error receiving init result. Status %i\n",
-+			status);
- 	else if (act_len != expected_len)
- 		netdev_err(dev->net, "Unexpected init result length: %i\n",
- 			act_len);
+-	val |= PPSCMDx(index, 0x2);
+ 	val |= TRGTMODSELx(index, 0x2);
+ 	val |= PPSEN0;
++	writel(val, ioaddr + MAC_PPS_CONTROL);
+ 
+ 	writel(cfg->start.tv_sec, ioaddr + MAC_PPSx_TARGET_TIME_SEC(index));
+ 
+@@ -547,6 +547,7 @@ int dwmac5_flex_pps_config(void __iomem
+ 	writel(period - 1, ioaddr + MAC_PPSx_WIDTH(index));
+ 
+ 	/* Finally, activate it */
++	val |= PPSCMDx(index, 0x2);
+ 	writel(val, ioaddr + MAC_PPS_CONTROL);
+ 	return 0;
+ }
 
 
