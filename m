@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5583063B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13A7C433EF;
-	Mon, 20 Feb 2023 13:49:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 05F0463B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 822FBC433D2;
+	Mon, 20 Feb 2023 13:49:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900973;
-	bh=18vrFJHS/eJo2Ai4VxeYJUNrh/K1loikG4WPYnK21ks=;
+	s=korg; t=1676900975;
+	bh=p55ZTF4Iwp26ooJ8EbcFtwScvMeFE2MwUSBQqRxkIXo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OLhbxg0+eoynMV6qSFz2B4K15FrHATDXaSjRRUWIhd+oatpEZZb6zByoEmYPr/8RS
-	 kosdy40nrQmI92iM7nOGTp9lPBQMbx7muE0U5ikdu/IpHZVm8+jFQNe+U4raaRSDY+
-	 Yt46kF9TqZLp2g93boGnzVihXpZj5mg8Zk8pM8eY=
+	b=rb+K8DEOs+VaSsxSx3GUueb+ojvdKRrWDjvmnznbZ2IapDJHTuFXvdKgapxqkMATM
+	 tn95V1nihT0FjEkzQtomiEDHpokqEaFVsZg9nlBpV2XwPL3Dlj4BTx7bShlfPEfCvS
+	 PxhN4zZ9FY9bDCcP1Wu21trmJeJSLz84SIusTTBI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Christoph Hellwig <hch@lst.de>,
-	Brian Foster <bfoster@redhat.com>,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Dave Chinner <dchinner@redhat.com>,
 	Chandan Babu R <chandan.babu@oracle.com>,
 	"Darrick J. Wong" <djwong@kernel.org>
-Subject: [PATCH 5.4 109/156] xfs: refactor xfs_defer_finish_noroll
-Date: Mon, 20 Feb 2023 14:35:53 +0100
-Message-Id: <20230220133607.069980582@linuxfoundation.org>
+Subject: [PATCH 5.4 110/156] xfs: log new intent items created as part of finishing recovered intent items
+Date: Mon, 20 Feb 2023 14:35:54 +0100
+Message-Id: <20230220133607.120846480@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -37,187 +37,127 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Christoph Hellwig <hch@lst.de>
+From: "Darrick J. Wong" <darrick.wong@oracle.com>
 
-commit bb47d79750f1a68a75d4c7defc2da934ba31de14 upstream.
+commit 93293bcbde93567efaf4e6bcd58cad270e1fcbf5 upstream.
 
-Split out a helper that operates on a single xfs_defer_pending structure
-to untangle the code.
+[Slightly edit fs/xfs/xfs_bmap_item.c & fs/xfs/xfs_refcount_item.c to resolve
+merge conflicts]
 
-Signed-off-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
-Reviewed-by: Darrick J. Wong <darrick.wong@oracle.com>
+During a code inspection, I found a serious bug in the log intent item
+recovery code when an intent item cannot complete all the work and
+decides to requeue itself to get that done.  When this happens, the
+item recovery creates a new incore deferred op representing the
+remaining work and attaches it to the transaction that it allocated.  At
+the end of _item_recover, it moves the entire chain of deferred ops to
+the dummy parent_tp that xlog_recover_process_intents passed to it, but
+fail to log a new intent item for the remaining work before committing
+the transaction for the single unit of work.
+
+xlog_finish_defer_ops logs those new intent items once recovery has
+finished dealing with the intent items that it recovered, but this isn't
+sufficient.  If the log is forced to disk after a recovered log item
+decides to requeue itself and the system goes down before we call
+xlog_finish_defer_ops, the second log recovery will never see the new
+intent item and therefore has no idea that there was more work to do.
+It will finish recovery leaving the filesystem in a corrupted state.
+
+The same logic applies to /any/ deferred ops added during intent item
+recovery, not just the one handling the remaining work.
+
 Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_defer.c |  128 +++++++++++++++++++++-------------------------
- 1 file changed, 59 insertions(+), 69 deletions(-)
+ fs/xfs/libxfs/xfs_defer.c  |   26 ++++++++++++++++++++++++--
+ fs/xfs/libxfs/xfs_defer.h  |    6 ++++++
+ fs/xfs/xfs_bmap_item.c     |    2 +-
+ fs/xfs/xfs_refcount_item.c |    2 +-
+ 4 files changed, 32 insertions(+), 4 deletions(-)
 
 --- a/fs/xfs/libxfs/xfs_defer.c
 +++ b/fs/xfs/libxfs/xfs_defer.c
-@@ -360,6 +360,53 @@ xfs_defer_cancel_list(
+@@ -186,8 +186,9 @@ xfs_defer_create_intent(
+ {
+ 	const struct xfs_defer_op_type	*ops = defer_op_types[dfp->dfp_type];
+ 
+-	dfp->dfp_intent = ops->create_intent(tp, &dfp->dfp_work,
+-			dfp->dfp_count, sort);
++	if (!dfp->dfp_intent)
++		dfp->dfp_intent = ops->create_intent(tp, &dfp->dfp_work,
++						     dfp->dfp_count, sort);
  }
  
  /*
-+ * Log an intent-done item for the first pending intent, and finish the work
-+ * items.
-+ */
-+static int
-+xfs_defer_finish_one(
-+	struct xfs_trans		*tp,
-+	struct xfs_defer_pending	*dfp)
-+{
-+	const struct xfs_defer_op_type	*ops = defer_op_types[dfp->dfp_type];
-+	void				*state = NULL;
-+	struct list_head		*li, *n;
-+	int				error;
-+
-+	trace_xfs_defer_pending_finish(tp->t_mountp, dfp);
-+
-+	dfp->dfp_done = ops->create_done(tp, dfp->dfp_intent, dfp->dfp_count);
-+	list_for_each_safe(li, n, &dfp->dfp_work) {
-+		list_del(li);
-+		dfp->dfp_count--;
-+		error = ops->finish_item(tp, li, dfp->dfp_done, &state);
-+		if (error == -EAGAIN) {
-+			/*
-+			 * Caller wants a fresh transaction; put the work item
-+			 * back on the list and log a new log intent item to
-+			 * replace the old one.  See "Requesting a Fresh
-+			 * Transaction while Finishing Deferred Work" above.
-+			 */
-+			list_add(li, &dfp->dfp_work);
-+			dfp->dfp_count++;
-+			dfp->dfp_done = NULL;
-+			xfs_defer_create_intent(tp, dfp, false);
-+		}
-+
-+		if (error)
-+			goto out;
-+	}
-+
-+	/* Done with the dfp, free it. */
-+	list_del(&dfp->dfp_list);
-+	kmem_free(dfp);
-+out:
-+	if (ops->finish_cleanup)
-+		ops->finish_cleanup(tp, state, error);
-+	return error;
-+}
+@@ -390,6 +391,7 @@ xfs_defer_finish_one(
+ 			list_add(li, &dfp->dfp_work);
+ 			dfp->dfp_count++;
+ 			dfp->dfp_done = NULL;
++			dfp->dfp_intent = NULL;
+ 			xfs_defer_create_intent(tp, dfp, false);
+ 		}
+ 
+@@ -552,3 +554,23 @@ xfs_defer_move(
+ 
+ 	xfs_defer_reset(stp);
+ }
 +
 +/*
-  * Finish all the pending work.  This involves logging intent items for
-  * any work items that wandered in since the last transaction roll (if
-  * one has even happened), rolling the transaction, and finishing the
-@@ -372,11 +419,7 @@ xfs_defer_finish_noroll(
- 	struct xfs_trans		**tp)
- {
- 	struct xfs_defer_pending	*dfp;
--	struct list_head		*li;
--	struct list_head		*n;
--	void				*state;
- 	int				error = 0;
--	const struct xfs_defer_op_type	*ops;
- 	LIST_HEAD(dop_pending);
++ * Prepare a chain of fresh deferred ops work items to be completed later.  Log
++ * recovery requires the ability to put off until later the actual finishing
++ * work so that it can process unfinished items recovered from the log in
++ * correct order.
++ *
++ * Create and log intent items for all the work that we're capturing so that we
++ * can be assured that the items will get replayed if the system goes down
++ * before log recovery gets a chance to finish the work it put off.  Then we
++ * move the chain from stp to dtp.
++ */
++void
++xfs_defer_capture(
++	struct xfs_trans	*dtp,
++	struct xfs_trans	*stp)
++{
++	xfs_defer_create_intents(stp);
++	xfs_defer_move(dtp, stp);
++}
+--- a/fs/xfs/libxfs/xfs_defer.h
++++ b/fs/xfs/libxfs/xfs_defer.h
+@@ -61,4 +61,10 @@ extern const struct xfs_defer_op_type xf
+ extern const struct xfs_defer_op_type xfs_extent_free_defer_type;
+ extern const struct xfs_defer_op_type xfs_agfl_free_defer_type;
  
- 	ASSERT((*tp)->t_flags & XFS_TRANS_PERM_LOG_RES);
-@@ -385,83 +428,30 @@ xfs_defer_finish_noroll(
- 
- 	/* Until we run out of pending work to finish... */
- 	while (!list_empty(&dop_pending) || !list_empty(&(*tp)->t_dfops)) {
--		/* log intents and pull in intake items */
- 		xfs_defer_create_intents(*tp);
- 		list_splice_tail_init(&(*tp)->t_dfops, &dop_pending);
- 
--		/*
--		 * Roll the transaction.
--		 */
- 		error = xfs_defer_trans_roll(tp);
- 		if (error)
--			goto out;
-+			goto out_shutdown;
- 
--		/* Log an intent-done item for the first pending item. */
- 		dfp = list_first_entry(&dop_pending, struct xfs_defer_pending,
- 				       dfp_list);
--		ops = defer_op_types[dfp->dfp_type];
--		trace_xfs_defer_pending_finish((*tp)->t_mountp, dfp);
--		dfp->dfp_done = ops->create_done(*tp, dfp->dfp_intent,
--				dfp->dfp_count);
--
--		/* Finish the work items. */
--		state = NULL;
--		list_for_each_safe(li, n, &dfp->dfp_work) {
--			list_del(li);
--			dfp->dfp_count--;
--			error = ops->finish_item(*tp, li, dfp->dfp_done,
--					&state);
--			if (error == -EAGAIN) {
--				/*
--				 * Caller wants a fresh transaction;
--				 * put the work item back on the list
--				 * and jump out.
--				 */
--				list_add(li, &dfp->dfp_work);
--				dfp->dfp_count++;
--				break;
--			} else if (error) {
--				/*
--				 * Clean up after ourselves and jump out.
--				 * xfs_defer_cancel will take care of freeing
--				 * all these lists and stuff.
--				 */
--				if (ops->finish_cleanup)
--					ops->finish_cleanup(*tp, state, error);
--				goto out;
--			}
--		}
--		if (error == -EAGAIN) {
--			/*
--			 * Caller wants a fresh transaction, so log a new log
--			 * intent item to replace the old one and roll the
--			 * transaction.  See "Requesting a Fresh Transaction
--			 * while Finishing Deferred Work" above.
--			 */
--			dfp->dfp_done = NULL;
--			xfs_defer_create_intent(*tp, dfp, false);
--		} else {
--			/* Done with the dfp, free it. */
--			list_del(&dfp->dfp_list);
--			kmem_free(dfp);
--		}
--
--		if (ops->finish_cleanup)
--			ops->finish_cleanup(*tp, state, error);
--	}
--
--out:
--	if (error) {
--		xfs_defer_trans_abort(*tp, &dop_pending);
--		xfs_force_shutdown((*tp)->t_mountp, SHUTDOWN_CORRUPT_INCORE);
--		trace_xfs_defer_finish_error(*tp, error);
--		xfs_defer_cancel_list((*tp)->t_mountp, &dop_pending);
--		xfs_defer_cancel(*tp);
--		return error;
-+		error = xfs_defer_finish_one(*tp, dfp);
-+		if (error && error != -EAGAIN)
-+			goto out_shutdown;
++/*
++ * Functions to capture a chain of deferred operations and continue them later.
++ * This doesn't normally happen except log recovery.
++ */
++void xfs_defer_capture(struct xfs_trans *dtp, struct xfs_trans *stp);
++
+ #endif /* __XFS_DEFER_H__ */
+--- a/fs/xfs/xfs_bmap_item.c
++++ b/fs/xfs/xfs_bmap_item.c
+@@ -541,7 +541,7 @@ xfs_bui_recover(
  	}
  
- 	trace_xfs_defer_finish_done(*tp, _RET_IP_);
- 	return 0;
-+
-+out_shutdown:
-+	xfs_defer_trans_abort(*tp, &dop_pending);
-+	xfs_force_shutdown((*tp)->t_mountp, SHUTDOWN_CORRUPT_INCORE);
-+	trace_xfs_defer_finish_error(*tp, error);
-+	xfs_defer_cancel_list((*tp)->t_mountp, &dop_pending);
-+	xfs_defer_cancel(*tp);
-+	return error;
- }
+ 	set_bit(XFS_BUI_RECOVERED, &buip->bui_flags);
+-	xfs_defer_move(parent_tp, tp);
++	xfs_defer_capture(parent_tp, tp);
+ 	error = xfs_trans_commit(tp);
+ 	xfs_iunlock(ip, XFS_ILOCK_EXCL);
+ 	xfs_irele(ip);
+--- a/fs/xfs/xfs_refcount_item.c
++++ b/fs/xfs/xfs_refcount_item.c
+@@ -574,7 +574,7 @@ xfs_cui_recover(
  
- int
+ 	xfs_refcount_finish_one_cleanup(tp, rcur, error);
+ 	set_bit(XFS_CUI_RECOVERED, &cuip->cui_flags);
+-	xfs_defer_move(parent_tp, tp);
++	xfs_defer_capture(parent_tp, tp);
+ 	error = xfs_trans_commit(tp);
+ 	return error;
+ 
 
 
