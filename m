@@ -1,307 +1,110 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9AA3063B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC682C4339B;
-	Mon, 20 Feb 2023 13:38:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3762E63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:53 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3429C4339C;
+	Mon, 20 Feb 2023 13:38:52 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900330;
-	bh=GJotXh7E41FCQF2jKGsXkJ1pPwsA6zcVLbi/ja49ess=;
-	h=From:To:Cc:Subject:Date:From;
-	b=b+Qm8zGsfELmHOV/lHwSidvP+f2nFWdVZ1/2zs04LlIUdBqIWBvgc7eJmBCsrnPhU
-	 1F/8YqcpCImvLozXzJTY4bw2d6F9fCnTuE5cl4WzPEqam1MIef0RmlPlzkcVcyqkPr
-	 jFy13DHoEqOS4VLfwgnVXnrDj2TtBG8nlW8mpJVw=
+	s=korg; t=1676900333;
+	bh=HgpoZ5h70eDNZPNYBIuEjekilY4rvuSw4OUtj5h9VvI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=ck6npnNWhkKVO9++MYWRBZoTcmXwANvD7o6vweSxwYdLE/Kut5dvzlysrcrqL5Urb
+	 1/09EVPzezx3c3LweZuFAFdHQGoylXqPmIjbRO8dXb75Mp1g21ftmi/K5cU/pCgod+
+	 6WflYGL0faF1A5K26jmLOk1ulPF3CtiTBDBfYS5s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 4.14 00/53] 4.14.306-rc1 review
-Date: Mon, 20 Feb 2023 14:35:26 +0100
-Message-Id: <20230220133548.158615609@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	"David S. Miller" <davem@davemloft.net>,
+	syzbot+2a0e7abd24f1eb90ce25@syzkaller.appspotmail.com
+Subject: [PATCH 4.14 31/53] net: USB: Fix wrong-direction WARNING in plusb.c
+Date: Mon, 20 Feb 2023 14:35:57 +0100
+Message-Id: <20230220133549.290884068@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
+References: <20230220133548.158615609@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.306-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-4.14.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 4.14.306-rc1
-X-KernelTest-Deadline: 2023-02-22T13:35+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 4.14.306 release.
-There are 53 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Alan Stern <stern@rowland.harvard.edu>
 
-Responses should be made by Wed, 22 Feb 2023 13:35:35 +0000.
-Anything received after that time might be too late.
+commit 811d581194f7412eda97acc03d17fc77824b561f upstream.
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.306-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
-and the diffstat can be found below.
+The syzbot fuzzer detected a bug in the plusb network driver: A
+zero-length control-OUT transfer was treated as a read instead of a
+write.  In modern kernels this error provokes a WARNING:
 
-thanks,
+usb 1-1: BOGUS control dir, pipe 80000280 doesn't match bRequestType c0
+WARNING: CPU: 0 PID: 4645 at drivers/usb/core/urb.c:411
+usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
+Modules linked in:
+CPU: 1 PID: 4645 Comm: dhcpcd Not tainted
+6.2.0-rc6-syzkaller-00050-g9f266ccaa2f5 #0
+Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google
+01/12/2023
+RIP: 0010:usb_submit_urb+0x14a7/0x1880 drivers/usb/core/urb.c:411
+...
+Call Trace:
+ <TASK>
+ usb_start_wait_urb+0x101/0x4b0 drivers/usb/core/message.c:58
+ usb_internal_control_msg drivers/usb/core/message.c:102 [inline]
+ usb_control_msg+0x320/0x4a0 drivers/usb/core/message.c:153
+ __usbnet_read_cmd+0xb9/0x390 drivers/net/usb/usbnet.c:2010
+ usbnet_read_cmd+0x96/0xf0 drivers/net/usb/usbnet.c:2068
+ pl_vendor_req drivers/net/usb/plusb.c:60 [inline]
+ pl_set_QuickLink_features drivers/net/usb/plusb.c:75 [inline]
+ pl_reset+0x2f/0xf0 drivers/net/usb/plusb.c:85
+ usbnet_open+0xcc/0x5d0 drivers/net/usb/usbnet.c:889
+ __dev_open+0x297/0x4d0 net/core/dev.c:1417
+ __dev_change_flags+0x587/0x750 net/core/dev.c:8530
+ dev_change_flags+0x97/0x170 net/core/dev.c:8602
+ devinet_ioctl+0x15a2/0x1d70 net/ipv4/devinet.c:1147
+ inet_ioctl+0x33f/0x380 net/ipv4/af_inet.c:979
+ sock_do_ioctl+0xcc/0x230 net/socket.c:1169
+ sock_ioctl+0x1f8/0x680 net/socket.c:1286
+ vfs_ioctl fs/ioctl.c:51 [inline]
+ __do_sys_ioctl fs/ioctl.c:870 [inline]
+ __se_sys_ioctl fs/ioctl.c:856 [inline]
+ __x64_sys_ioctl+0x197/0x210 fs/ioctl.c:856
+ do_syscall_x64 arch/x86/entry/common.c:50 [inline]
+ do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+ entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-greg k-h
+The fix is to call usbnet_write_cmd() instead of usbnet_read_cmd() and
+remove the USB_DIR_IN flag.
 
--------------
-Pseudo-Shortlog of commits:
+Reported-and-tested-by: syzbot+2a0e7abd24f1eb90ce25@syzkaller.appspotmail.com
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+Fixes: 090ffa9d0e90 ("[PATCH] USB: usbnet (9/9) module for pl2301/2302 cables")
+CC: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/00000000000052099f05f3b3e298@google.com/
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/net/usb/plusb.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 4.14.306-rc1
-
-Ryusuke Konishi <konishi.ryusuke@gmail.com>
-    nilfs2: fix underflow in second superblock position calculations
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    kvm: initialize all of the kvm_debugregs structure before sending it to userspace
-
-Natalia Petrova <n.petrova@fintech.ru>
-    i40e: Add checking for null for nlmsg_find_attr()
-
-Guillaume Nault <gnault@redhat.com>
-    ipv6: Fix tcp socket connection with DSCP.
-
-Guillaume Nault <gnault@redhat.com>
-    ipv6: Fix datagram socket connection with DSCP.
-
-Jakub Kicinski <kuba@kernel.org>
-    net: mpls: fix stale pointer if allocation fails during device rename
-
-Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-    net: stmmac: Restrict warning on disabling DMA store and fwd mode
-
-Miko Larsson <mikoxyzzz@gmail.com>
-    net/usb: kalmia: Don't pass act_len in usb_bulk_msg error path
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    dccp/tcp: Avoid negative sk_forward_alloc by ipv6_pinfo.pktoptions.
-
-Rafał Miłecki <rafal@milecki.pl>
-    net: bgmac: fix BCM5358 support by setting correct flags
-
-Jason Xing <kernelxing@tencent.com>
-    i40e: add double of VLAN header when computing the max MTU
-
-Andrew Morton <akpm@linux-foundation.org>
-    revert "squashfs: harden sanity check in squashfs_read_xattr_id_table"
-
-Mike Kravetz <mike.kravetz@oracle.com>
-    hugetlb: check for undefined shift on 32 bit architectures
-
-Bo Liu <bo.liu@senarytech.com>
-    ALSA: hda/conexant: add a new hda codec SN6180
-
-Yang Yingliang <yangyingliang@huawei.com>
-    mmc: sdio: fix possible resource leaks in some error paths
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Revert "x86/fpu: Use _Alignof to avoid undefined behavior in TYPE_ALIGN"
-
-Seth Jenkins <sethjenkins@google.com>
-    aio: fix mremap after fork null-deref
-
-Amit Engel <Amit.Engel@dell.com>
-    nvme-fc: fix a missing queue put in nvmet_fc_ls_create_association
-
-Hyunwoo Kim <v4bel@theori.io>
-    net/rose: Fix to not accept on connected socket
-
-Shunsuke Mie <mie@igel.co.jp>
-    tools/virtio: fix the vringh test for virtio ring changes
-
-Mike Kravetz <mike.kravetz@oracle.com>
-    migrate: hugetlb: check for hugetlb shared PMD in node migration
-
-Mark Pearson <mpearson-lenovo@squebb.ca>
-    usb: core: add quirk for Alcor Link AK9563 smartcard reader
-
-Alan Stern <stern@rowland.harvard.edu>
-    net: USB: Fix wrong-direction WARNING in plusb.c
-
-Maxim Korotkov <korotkov.maxim.s@gmail.com>
-    pinctrl: single: fix potential NULL dereference
-
-Joel Stanley <joel@jms.id.au>
-    pinctrl: aspeed: Fix confusing types in return value
-
-Dan Carpenter <error27@gmail.com>
-    ALSA: pci: lx6464es: fix a debug loop
-
-Artemii Karasev <karasev@ispras.ru>
-    ALSA: emux: Avoid potential array out-of-bound in snd_emux_xg_control()
-
-Josef Bacik <josef@toxicpanda.com>
-    btrfs: limit device extents to the device size
-
-Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-    serial: 8250_dma: Fix DMA Rx rearm race
-
-Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-    serial: 8250_dma: Fix DMA Rx completion race
-
-Phillip Lougher <phillip@squashfs.org.uk>
-    Squashfs: fix handling and sanity checking of xattr_ids count
-
-Longlong Xia <xialonglong1@huawei.com>
-    mm/swapfile: add cond_resched() in get_swap_pages()
-
-Mike Kravetz <mike.kravetz@oracle.com>
-    mm: hugetlb: proc: check for hugetlb shared PMD in /proc/PID/smaps
-
-Helge Deller <deller@gmx.de>
-    parisc: Wire up PTRACE_GETREGS/PTRACE_SETREGS for compat case
-
-Helge Deller <deller@gmx.de>
-    parisc: Fix return code of pdc_iodc_print()
-
-Andreas Kemnade <andreas@kemnade.info>
-    iio:adc:twl6030: Enable measurements of VUSB, VBAT and others
-
-Xiongfeng Wang <wangxiongfeng2@huawei.com>
-    iio: adc: berlin2-adc: Add missing of_node_put() in error path
-
-Dmitry Perchanov <dmitry.perchanov@intel.com>
-    iio: hid: fix the retval in accel_3d_capture_sample
-
-Ard Biesheuvel <ardb@kernel.org>
-    efi: Accept version 2 of memory attributes table
-
-Alexander Egorenkov <egorenar@linux.ibm.com>
-    watchdog: diag288_wdt: fix __diag288() inline assembly
-
-Alexander Egorenkov <egorenar@linux.ibm.com>
-    watchdog: diag288_wdt: do not use stack buffers for hardware data
-
-Samuel Thibault <samuel.thibault@ens-lyon.org>
-    fbcon: Check font dimension limits
-
-Udipto Goswami <quic_ugoswami@quicinc.com>
-    usb: gadget: f_fs: Fix unbalanced spinlock in __ffs_ep0_queue_wait
-
-Hyunwoo Kim <v4bel@theori.io>
-    net/x25: Fix to not accept on connected socket
-
-Mike Christie <michael.christie@oracle.com>
-    scsi: iscsi_tcp: Fix UAF during login when accessing the shost ipaddress
-
-Maurizio Lombardi <mlombard@redhat.com>
-    scsi: target: core: Fix warning on RT kernels
-
-Fedor Pchelkin <pchelkin@ispras.ru>
-    net: openvswitch: fix flow memory leak in ovs_flow_cmd_new
-
-Xin Long <lucien.xin@gmail.com>
-    sctp: do not check hb_timer.expires when resetting hb_timer
-
-Fedor Pchelkin <pchelkin@ispras.ru>
-    squashfs: harden sanity check in squashfs_read_xattr_id_table
-
-Hyunwoo Kim <v4bel@theori.io>
-    netrom: Fix use-after-free caused by accept on already connected socket
-
-Artemii Karasev <karasev@ispras.ru>
-    ALSA: hda/via: Avoid potential array out-of-bound in add_secret_dac_path()
-
-Yuan Can <yuancan@huawei.com>
-    bus: sunxi-rsb: Fix error handling in sunxi_rsb_init()
-
-Takashi Sakamoto <o-takashi@sakamocchi.jp>
-    firewire: fix memory leak for payload of request subaction to IEC 61883-1 FCP region
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |  4 +--
- arch/parisc/kernel/firmware.c                      |  5 ++--
- arch/parisc/kernel/ptrace.c                        | 15 ++++++++--
- arch/x86/kernel/fpu/init.c                         |  7 +++--
- arch/x86/kvm/x86.c                                 |  3 +-
- drivers/bus/sunxi-rsb.c                            |  8 +++++-
- drivers/firewire/core-cdev.c                       |  4 ++-
- drivers/firmware/efi/memattr.c                     |  2 +-
- drivers/iio/accel/hid-sensor-accel-3d.c            |  1 +
- drivers/iio/adc/berlin2-adc.c                      |  4 ++-
- drivers/iio/adc/twl6030-gpadc.c                    | 32 ++++++++++++++++++++++
- drivers/mmc/core/sdio_bus.c                        | 17 ++++++++++--
- drivers/mmc/core/sdio_cis.c                        | 12 --------
- drivers/net/ethernet/broadcom/bgmac-bcma.c         |  6 ++--
- drivers/net/ethernet/intel/i40e/i40e_main.c        |  4 ++-
- .../net/ethernet/stmicro/stmmac/stmmac_platform.c  |  2 +-
- drivers/net/usb/kalmia.c                           |  8 +++---
- drivers/net/usb/plusb.c                            |  4 +--
- drivers/nvme/target/fc.c                           |  4 ++-
- drivers/pinctrl/aspeed/pinctrl-aspeed.c            |  2 +-
- drivers/pinctrl/pinctrl-single.c                   |  2 ++
- drivers/scsi/iscsi_tcp.c                           |  9 ++++--
- drivers/target/target_core_tmr.c                   |  4 +--
- drivers/tty/serial/8250/8250_dma.c                 | 26 ++++++++++++++++--
- drivers/usb/core/quirks.c                          |  3 ++
- drivers/usb/gadget/function/f_fs.c                 |  4 ++-
- drivers/video/fbdev/core/fbcon.c                   |  7 +++--
- drivers/watchdog/diag288_wdt.c                     | 15 ++++++++--
- fs/aio.c                                           |  4 +++
- fs/btrfs/volumes.c                                 |  6 +++-
- fs/nilfs2/ioctl.c                                  |  7 +++++
- fs/nilfs2/super.c                                  |  9 ++++++
- fs/nilfs2/the_nilfs.c                              |  8 +++++-
- fs/proc/task_mmu.c                                 |  4 +--
- fs/squashfs/squashfs_fs.h                          |  2 +-
- fs/squashfs/squashfs_fs_sb.h                       |  2 +-
- fs/squashfs/xattr.h                                |  4 +--
- fs/squashfs/xattr_id.c                             |  2 +-
- include/linux/hugetlb.h                            | 18 +++++++++++-
- include/net/sock.h                                 | 13 +++++++++
- mm/mempolicy.c                                     |  3 +-
- mm/swapfile.c                                      |  1 +
- net/dccp/ipv6.c                                    |  7 ++---
- net/ipv6/datagram.c                                |  2 +-
- net/ipv6/tcp_ipv6.c                                | 11 +++-----
- net/mpls/af_mpls.c                                 |  4 +++
- net/netrom/af_netrom.c                             |  5 ++++
- net/openvswitch/datapath.c                         | 12 ++++----
- net/rose/af_rose.c                                 |  8 ++++++
- net/sctp/transport.c                               |  4 +--
- net/x25/af_x25.c                                   |  6 ++++
- sound/pci/hda/patch_conexant.c                     |  1 +
- sound/pci/hda/patch_via.c                          |  3 ++
- sound/pci/lx6464es/lx_core.c                       | 11 ++++----
- sound/synth/emux/emux_nrpn.c                       |  3 ++
- tools/virtio/linux/bug.h                           |  8 ++----
- tools/virtio/linux/build_bug.h                     |  7 +++++
- tools/virtio/linux/cpumask.h                       |  7 +++++
- tools/virtio/linux/gfp.h                           |  7 +++++
- tools/virtio/linux/kernel.h                        |  1 +
- tools/virtio/linux/kmsan.h                         | 12 ++++++++
- tools/virtio/linux/scatterlist.h                   |  1 +
- tools/virtio/linux/topology.h                      |  7 +++++
- 63 files changed, 322 insertions(+), 102 deletions(-)
+--- a/drivers/net/usb/plusb.c
++++ b/drivers/net/usb/plusb.c
+@@ -69,9 +69,7 @@
+ static inline int
+ pl_vendor_req(struct usbnet *dev, u8 req, u8 val, u8 index)
+ {
+-	return usbnet_read_cmd(dev, req,
+-				USB_DIR_IN | USB_TYPE_VENDOR |
+-				USB_RECIP_DEVICE,
++	return usbnet_write_cmd(dev, req, USB_TYPE_VENDOR | USB_RECIP_DEVICE,
+ 				val, index, NULL, 0);
+ }
+ 
 
 
