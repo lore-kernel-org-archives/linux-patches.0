@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B6D7D63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3CBE7C433EF;
-	Mon, 20 Feb 2023 13:57:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49CB463B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C58BCC433EF;
+	Mon, 20 Feb 2023 13:57:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901473;
-	bh=g0alahQXIccgaTxo57XE7sliBK9bf/QuHrP4Km4ph1w=;
+	s=korg; t=1676901476;
+	bh=M5TyjJgO94QADkNo/updKqfNf+Z9O1PEHDp9P6Wgc6I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=nSM5LoMNjJXjitYOzgU2GDAf6LYMRtm8CibplaAGSn5MiH6Gdjr6B+/zOnmpWQ8MM
-	 F1u80Ki1np9AUaGtqyuPL5hxXWH2oIlB1yQ2QBFy6Q15n1bHBkuBo9rRKpkKTNOhwJ
-	 F5CgpOrWipgZs4ru1dpKPcIHaqyGfzzgCrRRKOOk=
+	b=VRWuECaaO7o0M4M3QA0kOKObBte45NPdkyekXgu0sujS5iMsfAfNFYqkfTQJs8q5k
+	 U57Ckxxtioyl5l2QcnfLbxuy18Q55w7lCxtu8D+DQ0WMRkm8JpD9l2vAcQLNCUsacZ
+	 wQQ3oDQahsOjw9xEFmFTC2azr0hnDOzdsF0w78mE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mat Martineau <mathew.j.martineau@linux.intel.com>,
 	Paolo Abeni <pabeni@redhat.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 003/118] mptcp: deduplicate error paths on endpoint creation
-Date: Mon, 20 Feb 2023 14:35:19 +0100
-Message-Id: <20230220133600.537802253@linuxfoundation.org>
+Subject: [PATCH 6.1 004/118] mptcp: fix locking for in-kernel listener creation
+Date: Mon, 20 Feb 2023 14:35:20 +0100
+Message-Id: <20230220133600.576591331@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -38,110 +38,75 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Abeni <pabeni@redhat.com>
 
-[ Upstream commit 976d302fb6165ad620778d7ba834cde6e3fe9f9f ]
+[ Upstream commit ad2171009d968104ccda9dc517f5a3ba891515db ]
 
-When endpoint creation fails, we need to free the newly allocated
-entry and eventually destroy the paired mptcp listener socket.
+For consistency, in mptcp_pm_nl_create_listen_socket(), we need to
+call the __mptcp_nmpc_socket() under the msk socket lock.
 
-Consolidate such action in a single point let all the errors path
-reach it.
+Note that as a side effect, mptcp_subflow_create_socket() needs a
+'nested' lockdep annotation, as it will acquire the subflow (kernel)
+socket lock under the in-kernel listener msk socket lock.
 
-Reviewed-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+The current lack of locking is almost harmless, because the relevant
+socket is not exposed to the user space, but in future we will add
+more complexity to the mentioned helper, let's play safe.
+
+Fixes: 1729cf186d8a ("mptcp: create the listening socket for new port")
+Cc: stable@vger.kernel.org
 Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Reviewed-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
 Signed-off-by: David S. Miller <davem@davemloft.net>
-Stable-dep-of: ad2171009d96 ("mptcp: fix locking for in-kernel listener creation")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/mptcp/pm_netlink.c | 35 +++++++++++++----------------------
- 1 file changed, 13 insertions(+), 22 deletions(-)
+ net/mptcp/pm_netlink.c | 10 ++++++----
+ net/mptcp/subflow.c    |  2 +-
+ 2 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/net/mptcp/pm_netlink.c b/net/mptcp/pm_netlink.c
-index 9813ed0fde9bd..fdf2ee29f7623 100644
+index fdf2ee29f7623..5e38a0abbabae 100644
 --- a/net/mptcp/pm_netlink.c
 +++ b/net/mptcp/pm_netlink.c
-@@ -1003,16 +1003,12 @@ static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
+@@ -992,8 +992,8 @@ static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
+ {
+ 	int addrlen = sizeof(struct sockaddr_in);
+ 	struct sockaddr_storage addr;
+-	struct mptcp_sock *msk;
+ 	struct socket *ssock;
++	struct sock *newsk;
+ 	int backlog = 1024;
+ 	int err;
+ 
+@@ -1002,11 +1002,13 @@ static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
+ 	if (err)
  		return err;
  
- 	msk = mptcp_sk(entry->lsk->sk);
--	if (!msk) {
--		err = -EINVAL;
--		goto out;
--	}
-+	if (!msk)
-+		return -EINVAL;
- 
- 	ssock = __mptcp_nmpc_socket(msk);
--	if (!ssock) {
--		err = -EINVAL;
--		goto out;
--	}
-+	if (!ssock)
-+		return -EINVAL;
- 
- 	mptcp_info2sockaddr(&entry->addr, &addr, entry->addr.family);
- #if IS_ENABLED(CONFIG_MPTCP_IPV6)
-@@ -1022,20 +1018,16 @@ static int mptcp_pm_nl_create_listen_socket(struct sock *sk,
- 	err = kernel_bind(ssock, (struct sockaddr *)&addr, addrlen);
- 	if (err) {
- 		pr_warn("kernel_bind error, err=%d", err);
--		goto out;
-+		return err;
- 	}
- 
- 	err = kernel_listen(ssock, backlog);
- 	if (err) {
- 		pr_warn("kernel_listen error, err=%d", err);
--		goto out;
-+		return err;
- 	}
- 
- 	return 0;
--
--out:
--	sock_release(entry->lsk);
--	return err;
- }
- 
- int mptcp_pm_nl_get_local_id(struct mptcp_sock *msk, struct sock_common *skc)
-@@ -1327,7 +1319,7 @@ static int mptcp_nl_cmd_add_addr(struct sk_buff *skb, struct genl_info *info)
+-	msk = mptcp_sk(entry->lsk->sk);
+-	if (!msk)
++	newsk = entry->lsk->sk;
++	if (!newsk)
  		return -EINVAL;
- 	}
  
--	entry = kmalloc(sizeof(*entry), GFP_KERNEL_ACCOUNT);
-+	entry = kzalloc(sizeof(*entry), GFP_KERNEL_ACCOUNT);
- 	if (!entry) {
- 		GENL_SET_ERR_MSG(info, "can't allocate addr");
- 		return -ENOMEM;
-@@ -1338,22 +1330,21 @@ static int mptcp_nl_cmd_add_addr(struct sk_buff *skb, struct genl_info *info)
- 		ret = mptcp_pm_nl_create_listen_socket(skb->sk, entry);
- 		if (ret) {
- 			GENL_SET_ERR_MSG(info, "create listen socket error");
--			kfree(entry);
--			return ret;
-+			goto out_free;
- 		}
- 	}
- 	ret = mptcp_pm_nl_append_new_local_addr(pernet, entry);
- 	if (ret < 0) {
- 		GENL_SET_ERR_MSG(info, "too many addresses or duplicate one");
--		if (entry->lsk)
--			sock_release(entry->lsk);
--		kfree(entry);
--		return ret;
-+		goto out_free;
- 	}
+-	ssock = __mptcp_nmpc_socket(msk);
++	lock_sock(newsk);
++	ssock = __mptcp_nmpc_socket(mptcp_sk(newsk));
++	release_sock(newsk);
+ 	if (!ssock)
+ 		return -EINVAL;
  
- 	mptcp_nl_add_subflow_or_signal_addr(sock_net(skb->sk));
--
- 	return 0;
-+
-+out_free:
-+	__mptcp_pm_release_addr_entry(entry);
-+	return ret;
- }
+diff --git a/net/mptcp/subflow.c b/net/mptcp/subflow.c
+index 929b0ee8b3d5f..c4971bc42f60f 100644
+--- a/net/mptcp/subflow.c
++++ b/net/mptcp/subflow.c
+@@ -1631,7 +1631,7 @@ int mptcp_subflow_create_socket(struct sock *sk, unsigned short family,
+ 	if (err)
+ 		return err;
  
- int mptcp_pm_get_flags_and_ifindex_by_id(struct mptcp_sock *msk, unsigned int id,
+-	lock_sock(sf->sk);
++	lock_sock_nested(sf->sk, SINGLE_DEPTH_NESTING);
+ 
+ 	/* the newly created socket has to be in the same cgroup as its parent */
+ 	mptcp_attach_cgroup(sk, sf->sk);
 -- 
 2.39.0
 
