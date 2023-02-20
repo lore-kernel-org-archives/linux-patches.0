@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D178D63BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:00:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54D7BC433EF;
-	Mon, 20 Feb 2023 14:00:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6714E63BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:00:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E1FABC433A0;
+	Mon, 20 Feb 2023 14:00:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901605;
-	bh=RVAmsKFFqi1nPo2mQN1wZxx/J0Rv7F0X8WDNwR/eqQ4=;
+	s=korg; t=1676901608;
+	bh=i55OZUVORmFuumFjV7MZdYbTAg1yw9HhJyz9DbeehO8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SiyJ/5LAPPU0QIa6wapOybr3zz9rLrwTGpohNkcEGFaPlOBAT/ng10VNinUdGXXHF
-	 6DEqye847YboJbfakPCY1y/FMjEZxGETWq3NXu/tx7Nac32p9qulU7YwCwa4mRj3mc
-	 zEQrudPNRfR2xAWALJPISSxgbZUD7t/8L/sy9tZo=
+	b=EguLVoNFzGzTuk9GOsI28+OcHTjPvjzXLPea36vnTtdEwiYMPUiqKKX936d7UiHo8
+	 qvyFNI17GEgnSHrpqHt6hfDkRyKKA8Bj2dzQHVjEYpq749z+sIrxzT0vlnMSqOjx3+
+	 SS4vmNvoCycZJIKo31rtigTzy4vpr3ngRHBU3kAQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jesse Brandeburg <jesse.brandeburg@intel.com>,
-	Rafal Romanowski <rafal.romanowski@intel.com>,
-	Tony Nguyen <anthony.l.nguyen@intel.com>
-Subject: [PATCH 6.1 081/118] ice: fix lost multicast packets in promisc mode
-Date: Mon, 20 Feb 2023 14:36:37 +0100
-Message-Id: <20230220133603.646792610@linuxfoundation.org>
+	Jason Xing <kernelxing@tencent.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Chandan Kumar Rout <chandanx.rout@intel.com>
+Subject: [PATCH 6.1 082/118] ixgbe: allow to increase MTU to 3K with XDP enabled
+Date: Mon, 20 Feb 2023 14:36:38 +0100
+Message-Id: <20230220133603.685011722@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -35,99 +36,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jesse Brandeburg <jesse.brandeburg@intel.com>
+From: Jason Xing <kernelxing@tencent.com>
 
-commit 43fbca02c2ddc39ff5879b6f3a4a097b1ba02098 upstream.
+commit f9cd6a4418bac6a046ee78382423b1ae7565fb24 upstream.
 
-There was a problem reported to us where the addition of a VF with an IPv6
-address ending with a particular sequence would cause the parent device on
-the PF to no longer be able to respond to neighbor discovery packets.
+Recently I encountered one case where I cannot increase the MTU size
+directly from 1500 to a much bigger value with XDP enabled if the
+server is equipped with IXGBE card, which happened on thousands of
+servers in production environment. After applying the current patch,
+we can set the maximum MTU size to 3K.
 
-In this case, we had an ovs-bridge device living on top of a VLAN, which
-was on top of a PF, and it would not be able to talk anymore (the neighbor
-entry would expire and couldn't be restored).
+This patch follows the behavior of changing MTU as i40e/ice does.
 
-The root cause of the issue is that if the PF is asked to be in IFF_PROMISC
-mode (promiscuous mode) and it had an ipv6 address that needed the
-33:33:ff:00:00:04 multicast address to work, then when the VF was added
-with the need for the same multicast address, the VF would steal all the
-traffic destined for that address.
+[1] commit 23b44513c3e6 ("ice: allow 3k MTU for XDP")
+[2] commit 0c8493d90b6b ("i40e: add XDP support for pass and drop actions")
 
-The ice driver didn't auto-subscribe a request of IFF_PROMISC to the
-"multicast replication from other port's traffic" meaning that it won't get
-for instance, packets with an exact destination in the VF, as above.
-
-The VF's IPv6 address, which adds a "perfect filter" for 33:33:ff:00:00:04,
-results in no packets for that multicast address making it to the PF (which
-is in promisc but NOT "multicast replication").
-
-The fix is to enable "multicast promiscuous" whenever the driver is asked
-to enable IFF_PROMISC, and make sure to disable it when appropriate.
-
-Fixes: e94d44786693 ("ice: Implement filter sync, NDO operations and bump version")
-Signed-off-by: Jesse Brandeburg <jesse.brandeburg@intel.com>
-Tested-by: Rafal Romanowski <rafal.romanowski@intel.com>
+Fixes: fabf1bce103a ("ixgbe: Prevent unsupported configurations with XDP")
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/ice/ice_main.c |   26 ++++++++++++++++++++++++++
- 1 file changed, 26 insertions(+)
+ drivers/net/ethernet/intel/ixgbe/ixgbe_main.c |   25 ++++++++++++++++---------
+ 1 file changed, 16 insertions(+), 9 deletions(-)
 
---- a/drivers/net/ethernet/intel/ice/ice_main.c
-+++ b/drivers/net/ethernet/intel/ice/ice_main.c
-@@ -270,6 +270,8 @@ static int ice_set_promisc(struct ice_vs
- 	if (status && status != -EEXIST)
- 		return status;
- 
-+	netdev_dbg(vsi->netdev, "set promisc filter bits for VSI %i: 0x%x\n",
-+		   vsi->vsi_num, promisc_m);
- 	return 0;
+--- a/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
++++ b/drivers/net/ethernet/intel/ixgbe/ixgbe_main.c
+@@ -6778,6 +6778,18 @@ static void ixgbe_free_all_rx_resources(
  }
  
-@@ -295,6 +297,8 @@ static int ice_clear_promisc(struct ice_
- 						    promisc_m, 0);
- 	}
- 
-+	netdev_dbg(vsi->netdev, "clear promisc filter bits for VSI %i: 0x%x\n",
-+		   vsi->vsi_num, promisc_m);
- 	return status;
- }
- 
-@@ -423,6 +427,16 @@ static int ice_vsi_sync_fltr(struct ice_
- 				}
- 				err = 0;
- 				vlan_ops->dis_rx_filtering(vsi);
+ /**
++ * ixgbe_max_xdp_frame_size - returns the maximum allowed frame size for XDP
++ * @adapter: device handle, pointer to adapter
++ */
++static int ixgbe_max_xdp_frame_size(struct ixgbe_adapter *adapter)
++{
++	if (PAGE_SIZE >= 8192 || adapter->flags2 & IXGBE_FLAG2_RX_LEGACY)
++		return IXGBE_RXBUFFER_2K;
++	else
++		return IXGBE_RXBUFFER_3K;
++}
 +
-+				/* promiscuous mode implies allmulticast so
-+				 * that VSIs that are in promiscuous mode are
-+				 * subscribed to multicast packets coming to
-+				 * the port
-+				 */
-+				err = ice_set_promisc(vsi,
-+						      ICE_MCAST_PROMISC_BITS);
-+				if (err)
-+					goto out_promisc;
- 			}
- 		} else {
- 			/* Clear Rx filter to remove traffic from wire */
-@@ -439,6 +453,18 @@ static int ice_vsi_sync_fltr(struct ice_
- 				    NETIF_F_HW_VLAN_CTAG_FILTER)
- 					vlan_ops->ena_rx_filtering(vsi);
- 			}
-+
-+			/* disable allmulti here, but only if allmulti is not
-+			 * still enabled for the netdev
-+			 */
-+			if (!(vsi->current_netdev_flags & IFF_ALLMULTI)) {
-+				err = ice_clear_promisc(vsi,
-+							ICE_MCAST_PROMISC_BITS);
-+				if (err) {
-+					netdev_err(netdev, "Error %d clearing multicast promiscuous on VSI %i\n",
-+						   err, vsi->vsi_num);
-+				}
-+			}
++/**
+  * ixgbe_change_mtu - Change the Maximum Transfer Unit
+  * @netdev: network interface device structure
+  * @new_mtu: new value for maximum frame size
+@@ -6788,18 +6800,13 @@ static int ixgbe_change_mtu(struct net_d
+ {
+ 	struct ixgbe_adapter *adapter = netdev_priv(netdev);
+ 
+-	if (adapter->xdp_prog) {
++	if (ixgbe_enabled_xdp_adapter(adapter)) {
+ 		int new_frame_size = new_mtu + ETH_HLEN + ETH_FCS_LEN +
+ 				     VLAN_HLEN;
+-		int i;
+-
+-		for (i = 0; i < adapter->num_rx_queues; i++) {
+-			struct ixgbe_ring *ring = adapter->rx_ring[i];
+ 
+-			if (new_frame_size > ixgbe_rx_bufsz(ring)) {
+-				e_warn(probe, "Requested MTU size is not supported with XDP\n");
+-				return -EINVAL;
+-			}
++		if (new_frame_size > ixgbe_max_xdp_frame_size(adapter)) {
++			e_warn(probe, "Requested MTU size is not supported with XDP\n");
++			return -EINVAL;
  		}
  	}
- 	goto exit;
+ 
 
 
