@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7782963B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:42:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2130C433D2;
-	Mon, 20 Feb 2023 13:42:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E4863B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:42:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9077FC433EF;
+	Mon, 20 Feb 2023 13:42:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900529;
-	bh=iVLaPrrAtLncA5DCrBy6aOY4qfYEJ52v4Rh803WZSQk=;
+	s=korg; t=1676900531;
+	bh=4/tkSQJO3lWcJmMbE9sT1bUdQJHfWF/r39Ft6JeAMF4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fUeM0oCctUHrNNUpIMt9zFwWc1bnE3jH8ESvywCN/kC7sYJk91KaQO3Nj4qBMyGP+
-	 qdqrYi0voJB92U8Hcm0XlY1KWQ3WANlCm/M3lOTq0VlMTYT2TThaEAcCHYTwx/5kJN
-	 vysn/u3K3BrYBSGmP/hGcJqTK4SYGc+ts/1o9Zow=
+	b=KH56Zj0uhroBG96F+DdTTzSIkuKmQ7qzzLzqLXFz+axpDrs3eDkf/qX8VDssrjBnA
+	 H8c4DacxDV/tk5otCtZdiR1C2WZNoUubmT5fbg70T5y/eVzERfnJ+xWTQrwrR7W2HU
+	 INQ5vJqEM7yonCoGmtFltJZznhZD/E0UpGMIUzxY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Peter Suti <peter.suti@streamunlimited.com>,
+	Vyacheslav Bocharov <adeep@lexina.in>,
 	Heiner Kallweit <hkallweit1@gmail.com>,
 	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 4.19 60/89] arm64: dts: meson-gx: Make mmc host controller interrupts level-sensitive
-Date: Mon, 20 Feb 2023 14:35:59 +0100
-Message-Id: <20230220133555.250248093@linuxfoundation.org>
+Subject: [PATCH 4.19 61/89] arm64: dts: meson-axg: Make mmc host controller interrupts level-sensitive
+Date: Mon, 20 Feb 2023 14:36:00 +0100
+Message-Id: <20230220133555.294878857@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -36,7 +38,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Heiner Kallweit <hkallweit1@gmail.com>
 
-commit 66e45351f7d6798751f98001d1fcd572024d87f0 upstream.
+commit d182bcf300772d8b2e5f43e47fa0ebda2b767cc4 upstream.
 
 The usage of edge-triggered interrupts lead to lost interrupts under load,
 see [0]. This was confirmed to be fixed by using level-triggered
@@ -46,43 +48,39 @@ for SD and MMC, apply the change to all mmc controller instances.
 
 [0] https://www.spinics.net/lists/linux-mmc/msg73991.html
 
-Fixes: ef8d2ffedf18 ("ARM64: dts: meson-gxbb: add MMC support")
+Fixes: 221cf34bac54 ("ARM64: dts: meson-axg: enable the eMMC controller")
+Reported-by: Peter Suti <peter.suti@streamunlimited.com>
+Tested-by: Vyacheslav Bocharov <adeep@lexina.in>
+Tested-by: Peter Suti <peter.suti@streamunlimited.com>
 Cc: stable@vger.kernel.org
 Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
 Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/76e042e0-a610-5ed5-209f-c4d7f879df44@gmail.com
+Link: https://lore.kernel.org/r/c00655d3-02f8-6f5f-4239-ca2412420cad@gmail.com
 Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-gx.dtsi |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/amlogic/meson-axg.dtsi |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-gx.dtsi
-@@ -470,21 +470,21 @@
- 			sd_emmc_a: mmc@70000 {
- 				compatible = "amlogic,meson-gx-mmc", "amlogic,meson-gxbb-mmc";
- 				reg = <0x0 0x70000 0x0 0x800>;
--				interrupts = <GIC_SPI 216 IRQ_TYPE_EDGE_RISING>;
-+				interrupts = <GIC_SPI 216 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 			};
- 
- 			sd_emmc_b: mmc@72000 {
- 				compatible = "amlogic,meson-gx-mmc", "amlogic,meson-gxbb-mmc";
- 				reg = <0x0 0x72000 0x0 0x800>;
+--- a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
++++ b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
+@@ -167,7 +167,7 @@
+ 			sd_emmc_b: sd@5000 {
+ 				compatible = "amlogic,meson-axg-mmc";
+ 				reg = <0x0 0x5000 0x0 0x800>;
 -				interrupts = <GIC_SPI 217 IRQ_TYPE_EDGE_RISING>;
 +				interrupts = <GIC_SPI 217 IRQ_TYPE_LEVEL_HIGH>;
  				status = "disabled";
- 			};
- 
- 			sd_emmc_c: mmc@74000 {
- 				compatible = "amlogic,meson-gx-mmc", "amlogic,meson-gxbb-mmc";
- 				reg = <0x0 0x74000 0x0 0x800>;
+ 				clocks = <&clkc CLKID_SD_EMMC_B>,
+ 					<&clkc CLKID_SD_EMMC_B_CLK0>,
+@@ -179,7 +179,7 @@
+ 			sd_emmc_c: mmc@7000 {
+ 				compatible = "amlogic,meson-axg-mmc";
+ 				reg = <0x0 0x7000 0x0 0x800>;
 -				interrupts = <GIC_SPI 218 IRQ_TYPE_EDGE_RISING>;
 +				interrupts = <GIC_SPI 218 IRQ_TYPE_LEVEL_HIGH>;
  				status = "disabled";
- 			};
- 		};
+ 				clocks = <&clkc CLKID_SD_EMMC_C>,
+ 					<&clkc CLKID_SD_EMMC_C_CLK0>,
 
 
