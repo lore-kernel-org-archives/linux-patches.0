@@ -1,33 +1,38 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 17A4D63BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:01:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 687F6C4339B;
-	Mon, 20 Feb 2023 14:01:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B510363BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:01:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1273DC4339B;
+	Mon, 20 Feb 2023 14:01:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901665;
-	bh=sjgsz3c8n70ksdfQZ9ZS5upurlZUOxiLckSJ6GVoooA=;
+	s=korg; t=1676901668;
+	bh=zrGoJVqkNW6P6S0nFa0ohHG8qteJSMg9elOhcc7gsMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wV6CvF/GE2nVV9Wkjs9hrFTujeIgs/9E2gxg6oU5WgOUa2jxlq1HgjfPI141o7Bry
-	 V9E0flu2aGvv7ZwH5RbgHRRgJ92IBpbkxhk764K2ys+i69ej3txHCf8DoIMrnCihe8
-	 8UPwwmi5cyBqsewG/SR6IjVbC7NUfyanRT9tgjQg=
+	b=wmFAeOVHRtVl4VtPFjEA9oXd5cwhB7xpsqzifUARqtw5DuY78ZfVHiu4kFGV2GHTh
+	 U9DTWE/7nbphlzlu2MXsatTW+guVgdnyFz9efrS7WE/GnQCxGxsKbHsKA9y8Ls/mdc
+	 Gbv0adVCtxSVbRwXOBX+QwJuYsZ8xyEbcgBXj9Z8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>,
-	Alistair Popple <apopple@nvidia.com>,
+	Arnd Bergmann <arnd@arndb.de>,
+	Michal Hocko <mhocko@suse.com>,
+	Pasha Tatashin <pasha.tatashin@soleen.com>,
+	Alexander Duyck <alexander.h.duyck@linux.intel.com>,
+	Alexander Potapenko <glider@google.com>,
+	Alex Sierra <alex.sierra@amd.com>,
 	David Hildenbrand <david@redhat.com>,
-	Baolin Wang <baolin.wang@linux.alibaba.com>,
-	Andrew Yang <andrew.yang@mediatek.com>,
-	Chinwen Chang <chinwen.chang@mediatek.com>,
+	Hugh Dickins <hughd@google.com>,
 	John Hubbard <jhubbard@nvidia.com>,
-	Matthias Brugger <matthias.bgg@gmail.com>,
+	"Liam R. Howlett" <Liam.Howlett@Oracle.com>,
+	Matthew Wilcox <willy@infradead.org>,
+	Naoya Horiguchi <naoya.horiguchi@nec.com>,
+	Suren Baghdasaryan <surenb@google.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 105/118] mm/gup: add folio to list when folio_isolate_lru() succeed
-Date: Mon, 20 Feb 2023 14:37:01 +0100
-Message-Id: <20230220133604.597795638@linuxfoundation.org>
+Subject: [PATCH 6.1 106/118] mm: extend max struct page size for kmsan
+Date: Mon, 20 Feb 2023 14:37:02 +0100
+Message-Id: <20230220133604.638626624@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -41,39 +46,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit aa1e6a932ca652a50a5df458399724a80459f521 upstream.
+commit 3770e52fd4ec40ebee16ba19ad6c09dc0b52739b upstream.
 
-If we call folio_isolate_lru() successfully, we will get return value 0.
-We need to add this folio to the movable_pages_list.
+After x86 enabled support for KMSAN, it has become possible to have larger
+'struct page' than was expected when commit 5470dea49f53 ("mm: use
+mm_zero_struct_page from SPARC on all 64b architectures") was merged:
 
-Link: https://lkml.kernel.org/r/20230131063206.28820-1-Kuan-Ying.Lee@mediatek.com
-Fixes: 67e139b02d99 ("mm/gup.c: refactor check_and_migrate_movable_pages()")
-Signed-off-by: Kuan-Ying Lee <Kuan-Ying.Lee@mediatek.com>
-Reviewed-by: Alistair Popple <apopple@nvidia.com>
-Acked-by: David Hildenbrand <david@redhat.com>
-Reviewed-by: Baolin Wang <baolin.wang@linux.alibaba.com>
-Cc: Andrew Yang <andrew.yang@mediatek.com>
-Cc: Chinwen Chang <chinwen.chang@mediatek.com>
+include/linux/mm.h:156:10: warning: no case matching constant switch condition '96'
+        switch (sizeof(struct page)) {
+
+Extend the maximum accordingly.
+
+Link: https://lkml.kernel.org/r/20230130130739.563628-1-arnd@kernel.org
+Fixes: 5470dea49f53 ("mm: use mm_zero_struct_page from SPARC on all 64b architectures")
+Fixes: 4ca8cc8d1bbe ("x86: kmsan: enable KMSAN builds for x86")
+Fixes: f80be4571b19 ("kmsan: add KMSAN runtime core")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Reviewed-by: Pasha Tatashin <pasha.tatashin@soleen.com>
+Cc: Alexander Duyck <alexander.h.duyck@linux.intel.com>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Alex Sierra <alex.sierra@amd.com>
+Cc: David Hildenbrand <david@redhat.com>
+Cc: Hugh Dickins <hughd@google.com>
 Cc: John Hubbard <jhubbard@nvidia.com>
-Cc: Matthias Brugger <matthias.bgg@gmail.com>
+Cc: Liam R. Howlett <Liam.Howlett@Oracle.com>
+Cc: Matthew Wilcox <willy@infradead.org>
+Cc: Naoya Horiguchi <naoya.horiguchi@nec.com>
+Cc: Suren Baghdasaryan <surenb@google.com>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- mm/gup.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ include/linux/mm.h |   12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
---- a/mm/gup.c
-+++ b/mm/gup.c
-@@ -1978,7 +1978,7 @@ static unsigned long collect_longterm_un
- 			drain_allow = false;
- 		}
+--- a/include/linux/mm.h
++++ b/include/linux/mm.h
+@@ -136,7 +136,7 @@ extern int mmap_rnd_compat_bits __read_m
+  * define their own version of this macro in <asm/pgtable.h>
+  */
+ #if BITS_PER_LONG == 64
+-/* This function must be updated when the size of struct page grows above 80
++/* This function must be updated when the size of struct page grows above 96
+  * or reduces below 56. The idea that compiler optimizes out switch()
+  * statement, and only leaves move/store instructions. Also the compiler can
+  * combine write statements if they are both assignments and can be reordered,
+@@ -147,12 +147,18 @@ static inline void __mm_zero_struct_page
+ {
+ 	unsigned long *_pp = (void *)page;
  
--		if (!folio_isolate_lru(folio))
-+		if (folio_isolate_lru(folio))
- 			continue;
+-	 /* Check that struct page is either 56, 64, 72, or 80 bytes */
++	 /* Check that struct page is either 56, 64, 72, 80, 88 or 96 bytes */
+ 	BUILD_BUG_ON(sizeof(struct page) & 7);
+ 	BUILD_BUG_ON(sizeof(struct page) < 56);
+-	BUILD_BUG_ON(sizeof(struct page) > 80);
++	BUILD_BUG_ON(sizeof(struct page) > 96);
  
- 		list_add_tail(&folio->lru, movable_page_list);
+ 	switch (sizeof(struct page)) {
++	case 96:
++		_pp[11] = 0;
++		fallthrough;
++	case 88:
++		_pp[10] = 0;
++		fallthrough;
+ 	case 80:
+ 		_pp[9] = 0;
+ 		fallthrough;
 
 
