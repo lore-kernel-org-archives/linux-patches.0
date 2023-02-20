@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 546C863B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:45:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D01C0C4339C;
-	Mon, 20 Feb 2023 13:45:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E092863B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:45:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B6BCC4339B;
+	Mon, 20 Feb 2023 13:45:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900718;
-	bh=m+TNEsz8dbJ0d15DKk4YxJBuspM3Jw4BWIo5z3wKX5E=;
+	s=korg; t=1676900720;
+	bh=8hRMQ6bZQJsw02+QUUXFgA84wnwQFFFcs0e9GmSIC4k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YUkbYO5vXWvwIvRSFGlkfHBp3uMkE7We0VgBLv9hxW1FllFBXuzqLj2LzcJsCM/Pu
-	 ex3op/kQQ/KixX/FSn2cyHuH9Iu1tv+R6x9WWbGwvnYI6eUpl3MTOdntH+MtmUSEIH
-	 BdMaZQLCGCmg8Ep+oPze1DcW4m6C9x5lxE+/HzXU=
+	b=AznMI/+YrIl8jCKX+Ehiij+tHZMcjoXKN/qYIxYX2zznivStSKmH79SGLvxnSpUej
+	 1IrqBwm6QFM//xz72hdvpnKXhx9XFbGuZJiXkEgJVJF4XcUhBAWhWK/esPPmz5humq
+	 fz6ftNa7pmdeanwPyuiDeCSClyedJoXgZajlminY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+082fa4af80a5bb1a9843@syzkaller.appspotmail.com,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Heiner Kallweit <hkallweit1@gmail.com>,
+	Chris Healy <healych@amazon.com>,
+	Jerome Brunet <jbrunet@baylibre.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 012/156] squashfs: harden sanity check in squashfs_read_xattr_id_table
-Date: Mon, 20 Feb 2023 14:34:16 +0100
-Message-Id: <20230220133602.982253043@linuxfoundation.org>
+Subject: [PATCH 5.4 013/156] net: phy: meson-gxl: Add generic dummy stubs for MMD register access
+Date: Mon, 20 Feb 2023 14:34:17 +0100
+Message-Id: <20230220133603.021263041@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -38,43 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Fedor Pchelkin <pchelkin@ispras.ru>
+From: Chris Healy <healych@amazon.com>
 
-[ Upstream commit 72e544b1b28325fe78a4687b980871a7e4101f76 ]
+[ Upstream commit afc2336f89dc0fc0ef25b92366814524b0fd90fb ]
 
-While mounting a corrupted filesystem, a signed integer '*xattr_ids' can
-become less than zero.  This leads to the incorrect computation of 'len'
-and 'indexes' values which can cause null-ptr-deref in copy_bio_to_actor()
-or out-of-bounds accesses in the next sanity checks inside
-squashfs_read_xattr_id_table().
+The Meson G12A Internal PHY does not support standard IEEE MMD extended
+register access, therefore add generic dummy stubs to fail the read and
+write MMD calls. This is necessary to prevent the core PHY code from
+erroneously believing that EEE is supported by this PHY even though this
+PHY does not support EEE, as MMD register access returns all FFFFs.
 
-Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
-
-Link: https://lkml.kernel.org/r/20230117105226.329303-2-pchelkin@ispras.ru
-Fixes: 506220d2ba21 ("squashfs: add more sanity checks in xattr id lookup")
-Reported-by: <syzbot+082fa4af80a5bb1a9843@syzkaller.appspotmail.com>
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
-Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Cc: Phillip Lougher <phillip@squashfs.org.uk>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 5c3407abb338 ("net: phy: meson-gxl: add g12a support")
+Reviewed-by: Heiner Kallweit <hkallweit1@gmail.com>
+Signed-off-by: Chris Healy <healych@amazon.com>
+Reviewed-by: Jerome Brunet <jbrunet@baylibre.com>
+Link: https://lore.kernel.org/r/20230130231402.471493-1-cphealy@gmail.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/squashfs/xattr_id.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/phy/meson-gxl.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/fs/squashfs/xattr_id.c b/fs/squashfs/xattr_id.c
-index 087cab8c78f4..f6d78cbc3e74 100644
---- a/fs/squashfs/xattr_id.c
-+++ b/fs/squashfs/xattr_id.c
-@@ -76,7 +76,7 @@ __le64 *squashfs_read_xattr_id_table(struct super_block *sb, u64 table_start,
- 	/* Sanity check values */
+diff --git a/drivers/net/phy/meson-gxl.c b/drivers/net/phy/meson-gxl.c
+index e8f2ca625837..f7a9e6599a64 100644
+--- a/drivers/net/phy/meson-gxl.c
++++ b/drivers/net/phy/meson-gxl.c
+@@ -245,6 +245,8 @@ static struct phy_driver meson_gxl_phy[] = {
+ 		.config_intr	= meson_gxl_config_intr,
+ 		.suspend        = genphy_suspend,
+ 		.resume         = genphy_resume,
++		.read_mmd	= genphy_read_mmd_unsupported,
++		.write_mmd	= genphy_write_mmd_unsupported,
+ 	},
+ };
  
- 	/* there is always at least one xattr id */
--	if (*xattr_ids == 0)
-+	if (*xattr_ids <= 0)
- 		return ERR_PTR(-EINVAL);
- 
- 	len = SQUASHFS_XATTR_BLOCK_BYTES(*xattr_ids);
 -- 
 2.39.0
 
