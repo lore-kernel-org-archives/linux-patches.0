@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FE863BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:01:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 618DBC433D2;
-	Mon, 20 Feb 2023 14:01:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B17D63BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:01:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 03F5AC433EF;
+	Mon, 20 Feb 2023 14:01:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901673;
-	bh=7a7EM5tcmNZqOYHTP081vg2IuOgo7CkIh76mgXzFgsA=;
+	s=korg; t=1676901676;
+	bh=cbOjMZmyVbRTZ3QQUl5lkKQ+MYwMIWfGu3PIuK6tN1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=PbaRR+WZnQfbDIWPK6IHqzYIy7v6Ux1qVJMmBJlZCSCW3Yv3odnJ3BbiSyVlPbtJ/
-	 0YZvxSYpnVq4q9khQrSTZToPU65VKyQjuJZyF6nRwqNuRL32hK3KOEenduOpJeQTeg
-	 Us0oI4D8JMDUXVloIfYyVYgTVFgzYAOcINGkEh0s=
+	b=S2kBrprxJLKsPGoKzByK3LZ2TrJRFfn6vMzWf0BNTXd99Z8E+YYSUsSeorVb5z3PH
+	 aq7L2uWjmR6LQ8lyTClgJZKsesg1X1FJcFOZJQnugzwf786mJZkxVMJ0RflGV89yQf
+	 Yhm3a13EgH+L6gQG2LLCOc5lsCQiNiP3/rMe7HUc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jamal Hadi Salim <jhs@mojatatu.com>,
-	Pedro Tammela <pctammela@mojatatu.com>,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <kch@nvidia.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 108/118] net/sched: tcindex: search key must be 16 bits
-Date: Mon, 20 Feb 2023 14:37:04 +0100
-Message-Id: <20230220133604.729393584@linuxfoundation.org>
+Subject: [PATCH 6.1 109/118] nvme-tcp: stop auth work after tearing down queues in error recovery
+Date: Mon, 20 Feb 2023 14:37:05 +0100
+Message-Id: <20230220133604.760554807@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -38,79 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pedro Tammela <pctammela@mojatatu.com>
+From: Sagi Grimberg <sagi@grimberg.me>
 
-[ Upstream commit 42018a322bd453e38b3ffee294982243e50a484f ]
+[ Upstream commit 1f1a4f89562d3b33b6ca4fc8a4f3bd4cd35ab4ea ]
 
-Syzkaller found an issue where a handle greater than 16 bits would trigger
-a null-ptr-deref in the imperfect hash area update.
+when starting error recovery there might be a authentication work
+running, and it involves I/O commands. Given the controller is tearing
+down there is no chance for the I/O to complete other than timing out
+which may unnecessarily take a full io timeout.
 
-general protection fault, probably for non-canonical address
-0xdffffc0000000015: 0000 [#1] PREEMPT SMP KASAN
-KASAN: null-ptr-deref in range [0x00000000000000a8-0x00000000000000af]
-CPU: 0 PID: 5070 Comm: syz-executor456 Not tainted
-6.2.0-rc7-syzkaller-00112-gc68f345b7c42 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine,
-BIOS Google 01/21/2023
-RIP: 0010:tcindex_set_parms+0x1a6a/0x2990 net/sched/cls_tcindex.c:509
-Code: 01 e9 e9 fe ff ff 4c 8b bd 28 fe ff ff e8 0e 57 7d f9 48 8d bb
-a8 00 00 00 48 b8 00 00 00 00 00 fc ff df 48 89 fa 48 c1 ea 03 <80> 3c
-02 00 0f 85 94 0c 00 00 48 8b 85 f8 fd ff ff 48 8b 9b a8 00
-RSP: 0018:ffffc90003d3ef88 EFLAGS: 00010202
-RAX: dffffc0000000000 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: 0000000000000015 RSI: ffffffff8803a102 RDI: 00000000000000a8
-RBP: ffffc90003d3f1d8 R08: 0000000000000001 R09: 0000000000000000
-R10: 0000000000000001 R11: 0000000000000000 R12: ffff88801e2b10a8
-R13: dffffc0000000000 R14: 0000000000030000 R15: ffff888017b3be00
-FS: 00005555569af300(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
-CS: 0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 000056041c6d2000 CR3: 000000002bfca000 CR4: 00000000003506f0
-DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
-DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
-Call Trace:
-<TASK>
-tcindex_change+0x1ea/0x320 net/sched/cls_tcindex.c:572
-tc_new_tfilter+0x96e/0x2220 net/sched/cls_api.c:2155
-rtnetlink_rcv_msg+0x959/0xca0 net/core/rtnetlink.c:6132
-netlink_rcv_skb+0x165/0x440 net/netlink/af_netlink.c:2574
-netlink_unicast_kernel net/netlink/af_netlink.c:1339 [inline]
-netlink_unicast+0x547/0x7f0 net/netlink/af_netlink.c:1365
-netlink_sendmsg+0x91b/0xe10 net/netlink/af_netlink.c:1942
-sock_sendmsg_nosec net/socket.c:714 [inline]
-sock_sendmsg+0xd3/0x120 net/socket.c:734
-____sys_sendmsg+0x334/0x8c0 net/socket.c:2476
-___sys_sendmsg+0x110/0x1b0 net/socket.c:2530
-__sys_sendmmsg+0x18f/0x460 net/socket.c:2616
-__do_sys_sendmmsg net/socket.c:2645 [inline]
-__se_sys_sendmmsg net/socket.c:2642 [inline]
-__x64_sys_sendmmsg+0x9d/0x100 net/socket.c:2642
-do_syscall_x64 arch/x86/entry/common.c:50 [inline]
-do_syscall_64+0x39/0xb0 arch/x86/entry/common.c:80
+So first tear down the queues, fail/cancel all inflight I/O (including
+potentially authentication) and only then stop authentication. This
+ensures that failover is not stalled due to blocked authentication I/O.
 
-Fixes: ee059170b1f7 ("net/sched: tcindex: update imperfect hash filters respecting rcu")
-Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
-Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/cls_tcindex.c | 2 +-
+ drivers/nvme/host/tcp.c | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sched/cls_tcindex.c b/net/sched/cls_tcindex.c
-index 4422b711af081..eea8e185fcdb2 100644
---- a/net/sched/cls_tcindex.c
-+++ b/net/sched/cls_tcindex.c
-@@ -502,7 +502,7 @@ tcindex_set_parms(struct net *net, struct tcf_proto *tp, unsigned long base,
- 		/* lookup the filter, guaranteed to exist */
- 		for (cf = rcu_dereference_bh_rtnl(*fp); cf;
- 		     fp = &cf->next, cf = rcu_dereference_bh_rtnl(*fp))
--			if (cf->key == handle)
-+			if (cf->key == (u16)handle)
- 				break;
+diff --git a/drivers/nvme/host/tcp.c b/drivers/nvme/host/tcp.c
+index 4c052c261517e..1dc7c733c7e39 100644
+--- a/drivers/nvme/host/tcp.c
++++ b/drivers/nvme/host/tcp.c
+@@ -2128,7 +2128,6 @@ static void nvme_tcp_error_recovery_work(struct work_struct *work)
+ 				struct nvme_tcp_ctrl, err_work);
+ 	struct nvme_ctrl *ctrl = &tcp_ctrl->ctrl;
  
- 		f->next = cf->next;
+-	nvme_auth_stop(ctrl);
+ 	nvme_stop_keep_alive(ctrl);
+ 	flush_work(&ctrl->async_event_work);
+ 	nvme_tcp_teardown_io_queues(ctrl, false);
+@@ -2136,6 +2135,7 @@ static void nvme_tcp_error_recovery_work(struct work_struct *work)
+ 	nvme_start_queues(ctrl);
+ 	nvme_tcp_teardown_admin_queue(ctrl, false);
+ 	nvme_start_admin_queue(ctrl);
++	nvme_auth_stop(ctrl);
+ 
+ 	if (!nvme_change_ctrl_state(ctrl, NVME_CTRL_CONNECTING)) {
+ 		/* state change failure is ok if we started ctrl delete */
 -- 
 2.39.0
 
