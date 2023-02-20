@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3291063B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:52:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AECE5C433D2;
-	Mon, 20 Feb 2023 13:52:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BDB3863B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:52:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 471CEC433D2;
+	Mon, 20 Feb 2023 13:52:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901132;
-	bh=qsSyVfGk9HdlGff1u6FAHqgarxKPt7MtAhc7w8HxzUY=;
+	s=korg; t=1676901134;
+	bh=3Y8qy98gXGKY7SO4Q9Rxz7d639z5USHwunjSng+lVHo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=geE/2l0r6zwrZpAfAQxU1Y0pjHgP7JY0HKFhlkzmgxPFElYmaSsFSkjOn5p/CTUc+
-	 rqsNEn627KJGHaOOBGC7JCxEY27TBT2rqR4qZzVKcZT/6et1iY5kqSrwK0+CkbTBm5
-	 /9WWHJ/LFgNoOByf/8ZsWSAUsOcAREYqvH9w7KIA=
+	b=bkbKn42UxbKPA+roC0VUYllZpaLuWMVo+VEu8l1GMSzL7+qET3QnIElfkPPZ3Km/5
+	 vi4hznsCHUJMgY6cfB0oqhR/gD5pIQsNJ+pGmoeYkS4UdNSgXfspwK/iSb38YPdue3
+	 sVuzlfTgiQ/nXZhORHElmtKIiwRMXjHgefVQO16E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Winter <winter@winter.cafe>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>
-Subject: [PATCH 5.15 42/83] tcp: Fix listen() regression in 5.15.88.
-Date: Mon, 20 Feb 2023 14:36:15 +0100
-Message-Id: <20230220133555.140865685@linuxfoundation.org>
+	Paul Cercueil <paul@crapouillou.net>,
+	Ulf Hansson <ulf.hansson@linaro.org>
+Subject: [PATCH 5.15 43/83] mmc: jz4740: Work around bug on JZ4760(B)
+Date: Mon, 20 Feb 2023 14:36:16 +0100
+Message-Id: <20230220133555.181986090@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -34,36 +34,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Paul Cercueil <paul@crapouillou.net>
 
-When we backport dadd0dcaa67d ("net/ulp: prevent ULP without clone op from
-entering the LISTEN status"), we have accidentally backported a part of
-7a7160edf1bf ("net: Return errno in sk->sk_prot->get_port().") and removed
-err = -EADDRINUSE in inet_csk_listen_start().
+commit 3f18c5046e633cc4bbad396b74c05d46d353033d upstream.
 
-Thus, listen() no longer returns -EADDRINUSE even if ->get_port() failed
-as reported in [0].
+On JZ4760 and JZ4760B, SD cards fail to run if the maximum clock
+rate is set to 50 MHz, even though the controller officially does
+support it.
 
-We set -EADDRINUSE to err just before ->get_port() to fix the regression.
+Until the actual bug is found and fixed, limit the maximum clock rate to
+24 MHz.
 
-[0]: https://lore.kernel.org/stable/EF8A45D0-768A-4CD5-9A8A-0FA6E610ABF7@winter.cafe/
-
-Reported-by: Winter <winter@winter.cafe>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Signed-off-by: Paul Cercueil <paul@crapouillou.net>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230131210229.68129-1-paul@crapouillou.net
+Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv4/inet_connection_sock.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/mmc/host/jz4740_mmc.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/net/ipv4/inet_connection_sock.c
-+++ b/net/ipv4/inet_connection_sock.c
-@@ -1070,6 +1070,7 @@ int inet_csk_listen_start(struct sock *s
- 	 * It is OK, because this socket enters to hash table only
- 	 * after validation is complete.
- 	 */
-+	err = -EADDRINUSE;
- 	inet_sk_state_store(sk, TCP_LISTEN);
- 	if (!sk->sk_prot->get_port(sk, inet->inet_num)) {
- 		inet->inet_sport = htons(inet->inet_num);
+--- a/drivers/mmc/host/jz4740_mmc.c
++++ b/drivers/mmc/host/jz4740_mmc.c
+@@ -1038,6 +1038,16 @@ static int jz4740_mmc_probe(struct platf
+ 	mmc->ops = &jz4740_mmc_ops;
+ 	if (!mmc->f_max)
+ 		mmc->f_max = JZ_MMC_CLK_RATE;
++
++	/*
++	 * There seems to be a problem with this driver on the JZ4760 and
++	 * JZ4760B SoCs. There, when using the maximum rate supported (50 MHz),
++	 * the communication fails with many SD cards.
++	 * Until this bug is sorted out, limit the maximum rate to 24 MHz.
++	 */
++	if (host->version == JZ_MMC_JZ4760 && mmc->f_max > JZ_MMC_CLK_RATE)
++		mmc->f_max = JZ_MMC_CLK_RATE;
++
+ 	mmc->f_min = mmc->f_max / 128;
+ 	mmc->ocr_avail = MMC_VDD_32_33 | MMC_VDD_33_34;
+ 
 
 
