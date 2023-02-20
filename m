@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1E563B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:53:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E488CC433D2;
-	Mon, 20 Feb 2023 13:53:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2682463B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:54:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A429DC433D2;
+	Mon, 20 Feb 2023 13:54:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901239;
-	bh=aML26oZ34ikXf0VDcOrKjwMUxcqeUXxSKuWmja9cbEg=;
+	s=korg; t=1676901242;
+	bh=85VMH/1lZVswfIyXaXbLNR+c6CWzvM7lOPM8oTT+CeI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b6daRmY3F6BZmXqdms/hUK3LRvhNbIUfGcv9oXf62L+yDDB5Y3IONKWukb2IYgwDZ
-	 p9yOt5w5LMuPKFFZH/YaV7KAGh0htj5LrZKo0H/kV7IDkH7oySPtWQbSwZ630vU7qA
-	 ua5q4KIrOES62sPRfeCA2BJv5ROill6fX8omxGVU=
+	b=pPXOrcwxH4MZHYd8TlLtlOHHObWMz571sfWl0C44CIYTIuEZ4PuyttUh7bBmR/BdK
+	 0BU4ikrYejeg/k0QEYVzKbCKGyZ/K2C+uaZa1xa3+dETlDaAaxXHJD5xroqALVTuc7
+	 FnEXBU7Ri5jNYycLfud0z2MqtNaxmvKlBlgVJHEA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	Kees Cook <keescook@chromium.org>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 82/83] net: sched: sch: Fix off by one in htb_activate_prios()
-Date: Mon, 20 Feb 2023 14:36:55 +0100
-Message-Id: <20230220133556.604507547@linuxfoundation.org>
+	Arnd Bergmann <arnd@arndb.de>,
+	Hans de Goede <hdegoede@redhat.com>
+Subject: [PATCH 5.15 83/83] platform/x86/amd: pmc: add CONFIG_SERIO dependency
+Date: Mon, 20 Feb 2023 14:36:56 +0100
+Message-Id: <20230220133556.648532475@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -36,33 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Arnd Bergmann <arnd@arndb.de>
 
-commit 9cec2aaffe969f2a3e18b5ec105fc20bb908e475 upstream.
+commit abce209d18fd26e865b2406cc68819289db973f9 upstream.
 
-The > needs be >= to prevent an out of bounds access.
+Using the serio subsystem now requires the code to be reachable:
 
-Fixes: de5ca4c3852f ("net: sched: sch: Bounds check priority")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Kees Cook <keescook@chromium.org>
-Link: https://lore.kernel.org/r/Y+D+KN18FQI2DKLq@kili
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+x86_64-linux-ld: drivers/platform/x86/amd/pmc.o: in function `amd_pmc_suspend_handler':
+pmc.c:(.text+0x86c): undefined reference to `serio_bus'
+
+Add the usual dependency: as other users of serio use 'select'
+rather than 'depends on', use the same here.
+
+Fixes: 8e60615e8932 ("platform/x86/amd: pmc: Disable IRQ1 wakeup for RN/CZN")
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Link: https://lore.kernel.org/r/20230127093950.2368575-1-arnd@kernel.org
+Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sched/sch_htb.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/platform/x86/Kconfig |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/sched/sch_htb.c
-+++ b/net/sched/sch_htb.c
-@@ -429,7 +429,7 @@ static void htb_activate_prios(struct ht
- 		while (m) {
- 			unsigned int prio = ffz(~m);
- 
--			if (WARN_ON_ONCE(prio > ARRAY_SIZE(p->inner.clprio)))
-+			if (WARN_ON_ONCE(prio >= ARRAY_SIZE(p->inner.clprio)))
- 				break;
- 			m &= ~(1 << prio);
- 
+--- a/drivers/platform/x86/Kconfig
++++ b/drivers/platform/x86/Kconfig
+@@ -171,6 +171,7 @@ config ACER_WMI
+ config AMD_PMC
+ 	tristate "AMD SoC PMC driver"
+ 	depends on ACPI && PCI
++	select SERIO
+ 	help
+ 	  The driver provides support for AMD Power Management Controller
+ 	  primarily responsible for S2Idle transactions that are driven from
 
 
