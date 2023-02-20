@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AEB363B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:52:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3FF7AC433EF;
-	Mon, 20 Feb 2023 13:52:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0B6C63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:52:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02A75C433EF;
+	Mon, 20 Feb 2023 13:52:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901176;
-	bh=0BtGHP8qzGehECo05LflpqYz0qT/laFPyp8/43S/GMA=;
+	s=korg; t=1676901179;
+	bh=PuxJDn9p9JUf8AINQVmne9TbRT/2P3mBoX46UnJg8zM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N081ayEDhfYrToJj7Gk/TDwkhMBqOKyalAL++k8OwxMyre9awCYDFVS2JoC8arlMu
-	 VBppEOfh37eiHnYRWB7yTkhp/57UxRCpiizJ/L2G2nlIeZhCd56/V0wNpCs0RkJ0UT
-	 JM09tKsnLFkjhTkGGtu8A2TvWmc5pCfPjQSMg2NY=
+	b=qF5BTYEP0BMPJLP9T1uo55BoI/PxHu4JtNcs62XVH1eb1u8NNoUNt8ufoZjfmNLcA
+	 2msikAlShwdSZ/ctsf8o45I2TImEbZEcJj34XCA0AHm7WmLcl3ax+FLlBzGJ1FcELr
+	 3AtHR5PzjGY4Z4pxgalcEytX2NAQ7KuRG8rBCfN0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Mason <jdmason@kudzu.us>,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <f.fainelli@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.15 57/83] net: bgmac: fix BCM5358 support by setting correct flags
-Date: Mon, 20 Feb 2023 14:36:30 +0100
-Message-Id: <20230220133555.656235062@linuxfoundation.org>
+	Dave Chinner <dchinner@redhat.com>,
+	"Darrick J. Wong" <djwong@kernel.org>,
+	Christoph Hellwig <hch@lst.de>,
+	Dave Chinner <david@fromorbit.com>,
+	Leah Rumancik <leah.rumancik@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 30/83] xfs: dont assert fail on perag references on teardown
+Date: Mon, 20 Feb 2023 14:36:03 +0100
+Message-Id: <20230220133554.723916261@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -36,48 +38,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Dave Chinner <dchinner@redhat.com>
 
-commit d61615c366a489646a1bfe5b33455f916762d5f4 upstream.
+[ Upstream commit 5b55cbc2d72632e874e50d2e36bce608e55aaaea ]
 
-Code blocks handling BCMA_CHIP_ID_BCM5357 and BCMA_CHIP_ID_BCM53572 were
-incorrectly unified. Chip package values are not unique and cannot be
-checked independently. They are meaningful only in a context of a given
-chip.
+Not fatal, the assert is there to catch developer attention. I'm
+seeing this occasionally during recoveryloop testing after a
+shutdown, and I don't want this to stop an overnight recoveryloop
+run as it is currently doing.
 
-Packages BCM5358 and BCM47188 share the same value but then belong to
-different chips. Code unification resulted in treating BCM5358 as
-BCM47188 and broke its initialization.
+Convert the ASSERT to a XFS_IS_CORRUPT() check so it will dump a
+corruption report into the log and cause a test failure that way,
+but it won't stop the machine dead.
 
-Link: https://github.com/openwrt/openwrt/issues/8278
-Fixes: cb1b0f90acfe ("net: ethernet: bgmac: unify code of the same family")
-Cc: Jon Mason <jdmason@kudzu.us>
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230208091637.16291-1-zajec5@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Dave Chinner <dchinner@redhat.com>
+Reviewed-by: Darrick J. Wong <djwong@kernel.org>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Dave Chinner <david@fromorbit.com>
+Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
+Acked-by: Darrick J. Wong <djwong@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/broadcom/bgmac-bcma.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ fs/xfs/libxfs/xfs_ag.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
---- a/drivers/net/ethernet/broadcom/bgmac-bcma.c
-+++ b/drivers/net/ethernet/broadcom/bgmac-bcma.c
-@@ -228,12 +228,12 @@ static int bgmac_probe(struct bcma_devic
- 		bgmac->feature_flags |= BGMAC_FEAT_CLKCTLST;
- 		bgmac->feature_flags |= BGMAC_FEAT_FLW_CTRL1;
- 		bgmac->feature_flags |= BGMAC_FEAT_SW_TYPE_PHY;
--		if (ci->pkg == BCMA_PKG_ID_BCM47188 ||
--		    ci->pkg == BCMA_PKG_ID_BCM47186) {
-+		if ((ci->id == BCMA_CHIP_ID_BCM5357 && ci->pkg == BCMA_PKG_ID_BCM47186) ||
-+		    (ci->id == BCMA_CHIP_ID_BCM53572 && ci->pkg == BCMA_PKG_ID_BCM47188)) {
- 			bgmac->feature_flags |= BGMAC_FEAT_SW_TYPE_RGMII;
- 			bgmac->feature_flags |= BGMAC_FEAT_IOST_ATTACHED;
- 		}
--		if (ci->pkg == BCMA_PKG_ID_BCM5358)
-+		if (ci->id == BCMA_CHIP_ID_BCM5357 && ci->pkg == BCMA_PKG_ID_BCM5358)
- 			bgmac->feature_flags |= BGMAC_FEAT_SW_TYPE_EPHYRMII;
- 		break;
- 	case BCMA_CHIP_ID_BCM53573:
+diff --git a/fs/xfs/libxfs/xfs_ag.c b/fs/xfs/libxfs/xfs_ag.c
+index 005abfd9fd347..aff6fb5281f63 100644
+--- a/fs/xfs/libxfs/xfs_ag.c
++++ b/fs/xfs/libxfs/xfs_ag.c
+@@ -173,7 +173,6 @@ __xfs_free_perag(
+ 	struct xfs_perag *pag = container_of(head, struct xfs_perag, rcu_head);
+ 
+ 	ASSERT(!delayed_work_pending(&pag->pag_blockgc_work));
+-	ASSERT(atomic_read(&pag->pag_ref) == 0);
+ 	kmem_free(pag);
+ }
+ 
+@@ -192,7 +191,7 @@ xfs_free_perag(
+ 		pag = radix_tree_delete(&mp->m_perag_tree, agno);
+ 		spin_unlock(&mp->m_perag_lock);
+ 		ASSERT(pag);
+-		ASSERT(atomic_read(&pag->pag_ref) == 0);
++		XFS_IS_CORRUPT(pag->pag_mount, atomic_read(&pag->pag_ref) != 0);
+ 
+ 		cancel_delayed_work_sync(&pag->pag_blockgc_work);
+ 		xfs_iunlink_destroy(pag);
+-- 
+2.39.0
+
 
 
