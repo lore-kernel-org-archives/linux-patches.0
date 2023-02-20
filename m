@@ -1,31 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 813B763BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:52:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 055FCC433EF;
-	Mon, 20 Feb 2023 13:52:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C76863B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:52:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B61ABC433D2;
+	Mon, 20 Feb 2023 13:52:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901171;
-	bh=fRaTsy8T/K1Kqw3KuvFw7NcE6kjQ1T/Ube78iGCrQyY=;
+	s=korg; t=1676901174;
+	bh=7xMc3RJxFtWjrgtqHUhB50rds6MMaZPcxFpD72iq618=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=U2XN/P1QL5dE1Qt5t46jd6qpulcQ/f0oR1d/zXRy3HsCBthEjS35h40foWhpfw4V8
-	 lSp56+YV/A8uG6oKx/ldIIjO/Zk6WrrRMJTnROc/uvgSxJDua2H/fJp8K022NGwiVT
-	 fJSeF6QG/vhF0rl9MrFDg7MYobk3M8tMJwkjERss=
+	b=2WR5NltUGnFJQNhnnB3+WMnfOryApoA8O2fimlj2L+p8gZ/iNfVt9jolI7gzeEBiB
+	 Lw9LekE2Ymqr67tazvgdOE3POb+xetL7P4nmnA29hWprTX/nmzr+LlF+Qp24gHRWim
+	 1MsYfH32/V0qOAM/f/ZvF+VClnrye6dO4iqKVDeA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	kernel test robot <oliver.sang@intel.com>,
-	Dave Chinner <dchinner@redhat.com>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Christoph Hellwig <hch@lst.de>,
-	Dave Chinner <david@fromorbit.com>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 29/83] xfs: avoid unnecessary runtime sibling pointer endian conversions
-Date: Mon, 20 Feb 2023 14:36:02 +0100
-Message-Id: <20230220133554.692656858@linuxfoundation.org>
+	Jason Xing <kernelxing@tencent.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	Tony Nguyen <anthony.l.nguyen@intel.com>,
+	Chandan Kumar Rout <chandanx.rout@intel.com>
+Subject: [PATCH 5.15 56/83] i40e: add double of VLAN header when computing the max MTU
+Date: Mon, 20 Feb 2023 14:36:29 +0100
+Message-Id: <20230220133555.625385726@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -39,165 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Jason Xing <kernelxing@tencent.com>
 
-[ Upstream commit 5672225e8f2a872a22b0cecedba7a6644af1fb84 ]
+commit ce45ffb815e8e238f05de1630be3969b6bb15e4e upstream.
 
-Commit dc04db2aa7c9 has caused a small aim7 regression, showing a
-small increase in CPU usage in __xfs_btree_check_sblock() as a
-result of the extra checking.
+Include the second VLAN HLEN into account when computing the maximum
+MTU size as other drivers do.
 
-This is likely due to the endian conversion of the sibling poitners
-being unconditional instead of relying on the compiler to endian
-convert the NULL pointer at compile time and avoiding the runtime
-conversion for this common case.
-
-Rework the checks so that endian conversion of the sibling pointers
-is only done if they are not null as the original code did.
-
-.... and these need to be "inline" because the compiler completely
-fails to inline them automatically like it should be doing.
-
-$ size fs/xfs/libxfs/xfs_btree.o*
-   text	   data	    bss	    dec	    hex	filename
-  51874	    240	      0	  52114	   cb92 fs/xfs/libxfs/xfs_btree.o.orig
-  51562	    240	      0	  51802	   ca5a fs/xfs/libxfs/xfs_btree.o.inline
-
-Just when you think the tools have advanced sufficiently we don't
-have to care about stuff like this anymore, along comes a reminder
-that *our tools still suck*.
-
-Fixes: dc04db2aa7c9 ("xfs: detect self referencing btree sibling pointers")
-Reported-by: kernel test robot <oliver.sang@intel.com>
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Signed-off-by: Dave Chinner <david@fromorbit.com>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 0c8493d90b6b ("i40e: add XDP support for pass and drop actions")
+Signed-off-by: Jason Xing <kernelxing@tencent.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Tested-by: Chandan Kumar Rout <chandanx.rout@intel.com> (A Contingent Worker at Intel)
+Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_btree.c | 47 +++++++++++++++++++++++++++------------
- 1 file changed, 33 insertions(+), 14 deletions(-)
+ drivers/net/ethernet/intel/i40e/i40e_main.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/fs/xfs/libxfs/xfs_btree.c b/fs/xfs/libxfs/xfs_btree.c
-index 5bec048343b0c..b4b5bf4bfed7f 100644
---- a/fs/xfs/libxfs/xfs_btree.c
-+++ b/fs/xfs/libxfs/xfs_btree.c
-@@ -51,16 +51,31 @@ xfs_btree_magic(
- 	return magic;
- }
+--- a/drivers/net/ethernet/intel/i40e/i40e_main.c
++++ b/drivers/net/ethernet/intel/i40e/i40e_main.c
+@@ -2789,7 +2789,7 @@ static int i40e_change_mtu(struct net_de
+ 	struct i40e_pf *pf = vsi->back;
  
--static xfs_failaddr_t
-+/*
-+ * These sibling pointer checks are optimised for null sibling pointers. This
-+ * happens a lot, and we don't need to byte swap at runtime if the sibling
-+ * pointer is NULL.
-+ *
-+ * These are explicitly marked at inline because the cost of calling them as
-+ * functions instead of inlining them is about 36 bytes extra code per call site
-+ * on x86-64. Yes, gcc-11 fails to inline them, and explicit inlining of these
-+ * two sibling check functions reduces the compiled code size by over 300
-+ * bytes.
-+ */
-+static inline xfs_failaddr_t
- xfs_btree_check_lblock_siblings(
- 	struct xfs_mount	*mp,
- 	struct xfs_btree_cur	*cur,
- 	int			level,
- 	xfs_fsblock_t		fsb,
--	xfs_fsblock_t		sibling)
-+	__be64			dsibling)
- {
--	if (sibling == NULLFSBLOCK)
-+	xfs_fsblock_t		sibling;
-+
-+	if (dsibling == cpu_to_be64(NULLFSBLOCK))
- 		return NULL;
-+
-+	sibling = be64_to_cpu(dsibling);
- 	if (sibling == fsb)
- 		return __this_address;
- 	if (level >= 0) {
-@@ -74,17 +89,21 @@ xfs_btree_check_lblock_siblings(
- 	return NULL;
- }
+ 	if (i40e_enabled_xdp_vsi(vsi)) {
+-		int frame_size = new_mtu + ETH_HLEN + ETH_FCS_LEN + VLAN_HLEN;
++		int frame_size = new_mtu + I40E_PACKET_HDR_PAD;
  
--static xfs_failaddr_t
-+static inline xfs_failaddr_t
- xfs_btree_check_sblock_siblings(
- 	struct xfs_mount	*mp,
- 	struct xfs_btree_cur	*cur,
- 	int			level,
- 	xfs_agnumber_t		agno,
- 	xfs_agblock_t		agbno,
--	xfs_agblock_t		sibling)
-+	__be32			dsibling)
- {
--	if (sibling == NULLAGBLOCK)
-+	xfs_agblock_t		sibling;
-+
-+	if (dsibling == cpu_to_be32(NULLAGBLOCK))
- 		return NULL;
-+
-+	sibling = be32_to_cpu(dsibling);
- 	if (sibling == agbno)
- 		return __this_address;
- 	if (level >= 0) {
-@@ -136,10 +155,10 @@ __xfs_btree_check_lblock(
- 		fsb = XFS_DADDR_TO_FSB(mp, xfs_buf_daddr(bp));
- 
- 	fa = xfs_btree_check_lblock_siblings(mp, cur, level, fsb,
--			be64_to_cpu(block->bb_u.l.bb_leftsib));
-+			block->bb_u.l.bb_leftsib);
- 	if (!fa)
- 		fa = xfs_btree_check_lblock_siblings(mp, cur, level, fsb,
--				be64_to_cpu(block->bb_u.l.bb_rightsib));
-+				block->bb_u.l.bb_rightsib);
- 	return fa;
- }
- 
-@@ -204,10 +223,10 @@ __xfs_btree_check_sblock(
- 	}
- 
- 	fa = xfs_btree_check_sblock_siblings(mp, cur, level, agno, agbno,
--			be32_to_cpu(block->bb_u.s.bb_leftsib));
-+			block->bb_u.s.bb_leftsib);
- 	if (!fa)
- 		fa = xfs_btree_check_sblock_siblings(mp, cur, level, agno,
--				 agbno, be32_to_cpu(block->bb_u.s.bb_rightsib));
-+				 agbno, block->bb_u.s.bb_rightsib);
- 	return fa;
- }
- 
-@@ -4517,10 +4536,10 @@ xfs_btree_lblock_verify(
- 	/* sibling pointer verification */
- 	fsb = XFS_DADDR_TO_FSB(mp, xfs_buf_daddr(bp));
- 	fa = xfs_btree_check_lblock_siblings(mp, NULL, -1, fsb,
--			be64_to_cpu(block->bb_u.l.bb_leftsib));
-+			block->bb_u.l.bb_leftsib);
- 	if (!fa)
- 		fa = xfs_btree_check_lblock_siblings(mp, NULL, -1, fsb,
--				be64_to_cpu(block->bb_u.l.bb_rightsib));
-+				block->bb_u.l.bb_rightsib);
- 	return fa;
- }
- 
-@@ -4574,10 +4593,10 @@ xfs_btree_sblock_verify(
- 	agno = xfs_daddr_to_agno(mp, xfs_buf_daddr(bp));
- 	agbno = xfs_daddr_to_agbno(mp, xfs_buf_daddr(bp));
- 	fa = xfs_btree_check_sblock_siblings(mp, NULL, -1, agno, agbno,
--			be32_to_cpu(block->bb_u.s.bb_leftsib));
-+			block->bb_u.s.bb_leftsib);
- 	if (!fa)
- 		fa = xfs_btree_check_sblock_siblings(mp, NULL, -1, agno, agbno,
--				be32_to_cpu(block->bb_u.s.bb_rightsib));
-+				block->bb_u.s.bb_rightsib);
- 	return fa;
- }
- 
--- 
-2.39.0
-
+ 		if (frame_size > i40e_max_xdp_frame_size(vsi))
+ 			return -EINVAL;
 
 
