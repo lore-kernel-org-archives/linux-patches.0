@@ -1,34 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 856A163B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:39:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D8C87C433D2;
-	Mon, 20 Feb 2023 13:39:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2DAFC63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:39:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A94C4C433D2;
+	Mon, 20 Feb 2023 13:39:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900369;
-	bh=4dibTPoNrfBO62JdrMS09h4uxoPpveEGNo4QwMa82yc=;
+	s=korg; t=1676900372;
+	bh=PbSeR52XQQKUNO2gFpbi9bJaeOUDw9v8q2xKkMBEx3g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=c8yEGAsR+3XpRkFb5r35dSIB90RibHEDUXKP4CSCltoCJGjkq0G2M1jLsNM/gzka3
-	 cp+2kV2qTMNoruoauNSa3KYzK35C4xMJD1e1e2sORDmvZDmZh28Dw819A9ojWRc0Rf
-	 wXz/t0Thmz5ktuZzD4w7f1ExNIoAnDb5VRgb3tzo=
+	b=VB21bJraXCBM88Hv6Po5OiVVdA1zmoQaotjt3hqwTWF2HNrYL6chXTn8vBAR9KGM5
+	 2mVJ75sl7ai5bBRXSJqvBaY6GMo08CMDBcDGnkiOdqN1CWG0kw9JI5ru5cOOWFHG3x
+	 mX44sIqe3vu6Dx9ZOU5moyuQDsEA3n2icKF/3+8k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Paolo Bonzini <pbonzini@redhat.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Ingo Molnar <mingo@redhat.com>,
-	Borislav Petkov <bp@alien8.de>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	x86@kernel.org,
-	"H. Peter Anvin" <hpa@zytor.com>,
-	stable <stable@kernel.org>,
-	Xingyuan Mo <hdthky0@gmail.com>
-Subject: [PATCH 4.14 52/53] kvm: initialize all of the kvm_debugregs structure before sending it to userspace
-Date: Mon, 20 Feb 2023 14:36:18 +0100
-Message-Id: <20230220133550.018235571@linuxfoundation.org>
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+f0c4082ce5ebebdac63b@syzkaller.appspotmail.com,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 4.14 53/53] nilfs2: fix underflow in second superblock position calculations
+Date: Mon, 20 Feb 2023 14:36:19 +0100
+Message-Id: <20230220133550.061458424@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
 References: <20230220133548.158615609@linuxfoundation.org>
@@ -42,53 +35,135 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit 2c10b61421a28e95a46ab489fd56c0f442ff6952 upstream.
+commit 99b9402a36f0799f25feee4465bfa4b8dfa74b4d upstream.
 
-When calling the KVM_GET_DEBUGREGS ioctl, on some configurations, there
-might be some unitialized portions of the kvm_debugregs structure that
-could be copied to userspace.  Prevent this as is done in the other kvm
-ioctls, by setting the whole structure to 0 before copying anything into
-it.
+Macro NILFS_SB2_OFFSET_BYTES, which computes the position of the second
+superblock, underflows when the argument device size is less than 4096
+bytes.  Therefore, when using this macro, it is necessary to check in
+advance that the device size is not less than a lower limit, or at least
+that underflow does not occur.
 
-Bonus is that this reduces the lines of code as the explicit flag
-setting and reserved space zeroing out can be removed.
+The current nilfs2 implementation lacks this check, causing out-of-bound
+block access when mounting devices smaller than 4096 bytes:
 
-Cc: Sean Christopherson <seanjc@google.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Thomas Gleixner <tglx@linutronix.de>
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: Borislav Petkov <bp@alien8.de>
-Cc: Dave Hansen <dave.hansen@linux.intel.com>
-Cc: <x86@kernel.org>
-Cc: "H. Peter Anvin" <hpa@zytor.com>
-Cc: stable <stable@kernel.org>
-Reported-by: Xingyuan Mo <hdthky0@gmail.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Message-Id: <20230214103304.3689213-1-gregkh@linuxfoundation.org>
-Tested-by: Xingyuan Mo <hdthky0@gmail.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+ I/O error, dev loop0, sector 36028797018963960 op 0x0:(READ) flags 0x0
+ phys_seg 1 prio class 2
+ NILFS (loop0): unable to read secondary superblock (blocksize = 1024)
+
+In addition, when trying to resize the filesystem to a size below 4096
+bytes, this underflow occurs in nilfs_resize_fs(), passing a huge number
+of segments to nilfs_sufile_resize(), corrupting parameters such as the
+number of segments in superblocks.  This causes excessive loop iterations
+in nilfs_sufile_resize() during a subsequent resize ioctl, causing
+semaphore ns_segctor_sem to block for a long time and hang the writer
+thread:
+
+ INFO: task segctord:5067 blocked for more than 143 seconds.
+      Not tainted 6.2.0-rc8-syzkaller-00015-gf6feea56f66d #0
+ "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+ task:segctord        state:D stack:23456 pid:5067  ppid:2
+ flags:0x00004000
+ Call Trace:
+  <TASK>
+  context_switch kernel/sched/core.c:5293 [inline]
+  __schedule+0x1409/0x43f0 kernel/sched/core.c:6606
+  schedule+0xc3/0x190 kernel/sched/core.c:6682
+  rwsem_down_write_slowpath+0xfcf/0x14a0 kernel/locking/rwsem.c:1190
+  nilfs_transaction_lock+0x25c/0x4f0 fs/nilfs2/segment.c:357
+  nilfs_segctor_thread_construct fs/nilfs2/segment.c:2486 [inline]
+  nilfs_segctor_thread+0x52f/0x1140 fs/nilfs2/segment.c:2570
+  kthread+0x270/0x300 kernel/kthread.c:376
+  ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
+  </TASK>
+ ...
+ Call Trace:
+  <TASK>
+  folio_mark_accessed+0x51c/0xf00 mm/swap.c:515
+  __nilfs_get_page_block fs/nilfs2/page.c:42 [inline]
+  nilfs_grab_buffer+0x3d3/0x540 fs/nilfs2/page.c:61
+  nilfs_mdt_submit_block+0xd7/0x8f0 fs/nilfs2/mdt.c:121
+  nilfs_mdt_read_block+0xeb/0x430 fs/nilfs2/mdt.c:176
+  nilfs_mdt_get_block+0x12d/0xbb0 fs/nilfs2/mdt.c:251
+  nilfs_sufile_get_segment_usage_block fs/nilfs2/sufile.c:92 [inline]
+  nilfs_sufile_truncate_range fs/nilfs2/sufile.c:679 [inline]
+  nilfs_sufile_resize+0x7a3/0x12b0 fs/nilfs2/sufile.c:777
+  nilfs_resize_fs+0x20c/0xed0 fs/nilfs2/super.c:422
+  nilfs_ioctl_resize fs/nilfs2/ioctl.c:1033 [inline]
+  nilfs_ioctl+0x137c/0x2440 fs/nilfs2/ioctl.c:1301
+  ...
+
+This fixes these issues by inserting appropriate minimum device size
+checks or anti-underflow checks, depending on where the macro is used.
+
+Link: https://lkml.kernel.org/r/0000000000004e1dfa05f4a48e6b@google.com
+Link: https://lkml.kernel.org/r/20230214224043.24141-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: <syzbot+f0c4082ce5ebebdac63b@syzkaller.appspotmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kvm/x86.c |    3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ fs/nilfs2/ioctl.c     |    7 +++++++
+ fs/nilfs2/super.c     |    9 +++++++++
+ fs/nilfs2/the_nilfs.c |    8 +++++++-
+ 3 files changed, 23 insertions(+), 1 deletion(-)
 
---- a/arch/x86/kvm/x86.c
-+++ b/arch/x86/kvm/x86.c
-@@ -3419,12 +3419,11 @@ static void kvm_vcpu_ioctl_x86_get_debug
+--- a/fs/nilfs2/ioctl.c
++++ b/fs/nilfs2/ioctl.c
+@@ -1144,7 +1144,14 @@ static int nilfs_ioctl_set_alloc_range(s
+ 
+ 	minseg = range[0] + segbytes - 1;
+ 	do_div(minseg, segbytes);
++
++	if (range[1] < 4096)
++		goto out;
++
+ 	maxseg = NILFS_SB2_OFFSET_BYTES(range[1]);
++	if (maxseg < segbytes)
++		goto out;
++
+ 	do_div(maxseg, segbytes);
+ 	maxseg--;
+ 
+--- a/fs/nilfs2/super.c
++++ b/fs/nilfs2/super.c
+@@ -421,6 +421,15 @@ int nilfs_resize_fs(struct super_block *
+ 		goto out;
+ 
+ 	/*
++	 * Prevent underflow in second superblock position calculation.
++	 * The exact minimum size check is done in nilfs_sufile_resize().
++	 */
++	if (newsize < 4096) {
++		ret = -ENOSPC;
++		goto out;
++	}
++
++	/*
+ 	 * Write lock is required to protect some functions depending
+ 	 * on the number of segments, the number of reserved segments,
+ 	 * and so forth.
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -526,9 +526,15 @@ static int nilfs_load_super_block(struct
  {
- 	unsigned long val;
+ 	struct nilfs_super_block **sbp = nilfs->ns_sbp;
+ 	struct buffer_head **sbh = nilfs->ns_sbh;
+-	u64 sb2off = NILFS_SB2_OFFSET_BYTES(nilfs->ns_bdev->bd_inode->i_size);
++	u64 sb2off, devsize = nilfs->ns_bdev->bd_inode->i_size;
+ 	int valid[2], swp = 0;
  
-+	memset(dbgregs, 0, sizeof(*dbgregs));
- 	memcpy(dbgregs->db, vcpu->arch.db, sizeof(vcpu->arch.db));
- 	kvm_get_dr(vcpu, 6, &val);
- 	dbgregs->dr6 = val;
- 	dbgregs->dr7 = vcpu->arch.dr7;
--	dbgregs->flags = 0;
--	memset(&dbgregs->reserved, 0, sizeof(dbgregs->reserved));
- }
- 
- static int kvm_vcpu_ioctl_x86_set_debugregs(struct kvm_vcpu *vcpu,
++	if (devsize < NILFS_SEG_MIN_BLOCKS * NILFS_MIN_BLOCK_SIZE + 4096) {
++		nilfs_msg(sb, KERN_ERR, "device size too small");
++		return -EINVAL;
++	}
++	sb2off = NILFS_SB2_OFFSET_BYTES(devsize);
++
+ 	sbp[0] = nilfs_read_super_block(sb, NILFS_SB_OFFSET_BYTES, blocksize,
+ 					&sbh[0]);
+ 	sbp[1] = nilfs_read_super_block(sb, sb2off, blocksize, &sbh[1]);
 
 
