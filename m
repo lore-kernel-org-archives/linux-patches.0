@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DCFAA63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63EF9C433EF;
-	Mon, 20 Feb 2023 13:57:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 794A563B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:57:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 02AC7C433EF;
+	Mon, 20 Feb 2023 13:57:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901452;
-	bh=Un6JpB0UHci0qIBH1D+no3jpcc+8i6GyZ7154XvIZjU=;
+	s=korg; t=1676901455;
+	bh=H6C+4vrhtGEElUVrGafR8vgBWxmAKGYPNQIs9NU39OU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=O57ESA0vHX5+JjrR4IF2wwduK2GQ7vlVRkijri+qEgSQyPYK3gJBXkGpSsKdq1khb
-	 LiZBNAfHPw+aI9Tn7y33IH8hlx54pG6OoUuv/ub8ccjeEOlyWaPQbTkSQvWw1bJdZ8
-	 XDmsMrvQ/mnOq2JezLmkByNJcx7bVvdLDTdVsLuY=
+	b=etMrx4+KuJUkl8cjnNQWy6GEOKpuq1XebeTA/t0L3X/2YLELWvtKzmtGbNhswoySF
+	 +1AYu8b3kW55teXB/NPRTE60k9eIC16+ZHOgrmw/R1Xa3e/+PgPaOwFtvEcCKzL3XG
+	 jle+XIRg6woNR6fS72VCeJbJ6KJQQJrgwNnxvj7Q=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andrei Gherzan <andrei.gherzan@canonical.com>,
+	Andrey Konovalov <andrey.konovalov@linaro.org>,
 	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 022/118] selftest: net: Improve IPV6_TCLASS/IPV6_HOPLIMIT tests apparmor compatibility
-Date: Mon, 20 Feb 2023 14:35:38 +0100
-Message-Id: <20230220133601.313432606@linuxfoundation.org>
+Subject: [PATCH 6.1 023/118] net: stmmac: do not stop RX_CLK in Rx LPI state for qcs404 SoC
+Date: Mon, 20 Feb 2023 14:35:39 +0100
+Message-Id: <20230220133601.354318482@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -35,43 +35,65 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andrei Gherzan <andrei.gherzan@canonical.com>
+From: Andrey Konovalov <andrey.konovalov@linaro.org>
 
-[ Upstream commit a6efc42a86c0c87cfe2f1c3d1f09a4c9b13ba890 ]
+[ Upstream commit 54aa39a513dbf2164ca462a19f04519b2407a224 ]
 
-"tcpdump" is used to capture traffic in these tests while using a random,
-temporary and not suffixed file for it. This can interfere with apparmor
-configuration where the tool is only allowed to read from files with
-'known' extensions.
+Currently in phy_init_eee() the driver unconditionally configures the PHY
+to stop RX_CLK after entering Rx LPI state. This causes an LPI interrupt
+storm on my qcs404-base board.
 
-The MINE type application/vnd.tcpdump.pcap was registered with IANA for
-pcap files and .pcap is the extension that is both most common but also
-aligned with standard apparmor configurations. See TCPDUMP(8) for more
-details.
+Change the PHY initialization so that for "qcom,qcs404-ethqos" compatible
+device RX_CLK continues to run even in Rx LPI state.
 
-This improves compatibility with standard apparmor configurations by
-using ".pcap" as the file extension for the tests' temporary files.
-
-Signed-off-by: Andrei Gherzan <andrei.gherzan@canonical.com>
+Signed-off-by: Andrey Konovalov <andrey.konovalov@linaro.org>
 Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/net/cmsg_ipv6.sh | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c | 2 ++
+ drivers/net/ethernet/stmicro/stmmac/stmmac_main.c       | 3 ++-
+ include/linux/stmmac.h                                  | 1 +
+ 3 files changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/cmsg_ipv6.sh b/tools/testing/selftests/net/cmsg_ipv6.sh
-index 2d89cb0ad2889..330d0b1ceced3 100755
---- a/tools/testing/selftests/net/cmsg_ipv6.sh
-+++ b/tools/testing/selftests/net/cmsg_ipv6.sh
-@@ -6,7 +6,7 @@ ksft_skip=4
- NS=ns
- IP6=2001:db8:1::1/64
- TGT6=2001:db8:1::2
--TMPF=`mktemp`
-+TMPF=$(mktemp --suffix ".pcap")
+diff --git a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+index 835caa15d55ff..732774645c1a6 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac-qcom-ethqos.c
+@@ -560,6 +560,8 @@ static int qcom_ethqos_probe(struct platform_device *pdev)
+ 	plat_dat->has_gmac4 = 1;
+ 	plat_dat->pmt = 1;
+ 	plat_dat->tso_en = of_property_read_bool(np, "snps,tso");
++	if (of_device_is_compatible(np, "qcom,qcs404-ethqos"))
++		plat_dat->rx_clk_runs_in_lpi = 1;
  
- cleanup()
- {
+ 	ret = stmmac_dvr_probe(&pdev->dev, plat_dat, &stmmac_res);
+ 	if (ret)
+diff --git a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+index 4bba0444c764a..84e1740b12f1b 100644
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_main.c
+@@ -1077,7 +1077,8 @@ static void stmmac_mac_link_up(struct phylink_config *config,
+ 
+ 	stmmac_mac_set(priv, priv->ioaddr, true);
+ 	if (phy && priv->dma_cap.eee) {
+-		priv->eee_active = phy_init_eee(phy, 1) >= 0;
++		priv->eee_active =
++			phy_init_eee(phy, !priv->plat->rx_clk_runs_in_lpi) >= 0;
+ 		priv->eee_enabled = stmmac_eee_init(priv);
+ 		priv->tx_lpi_enabled = priv->eee_enabled;
+ 		stmmac_set_eee_pls(priv, priv->hw, true);
+diff --git a/include/linux/stmmac.h b/include/linux/stmmac.h
+index fb2e88614f5d1..313edd19bf545 100644
+--- a/include/linux/stmmac.h
++++ b/include/linux/stmmac.h
+@@ -252,6 +252,7 @@ struct plat_stmmacenet_data {
+ 	int rss_en;
+ 	int mac_port_sel_speed;
+ 	bool en_tx_lpi_clockgating;
++	bool rx_clk_runs_in_lpi;
+ 	int has_xgmac;
+ 	bool vlan_fail_q_en;
+ 	u8 vlan_fail_q;
 -- 
 2.39.0
 
