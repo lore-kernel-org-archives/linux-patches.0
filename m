@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EC4A263B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:56:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7334EC4339B;
-	Mon, 20 Feb 2023 13:56:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 72E5E63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:56:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F0756C4339B;
+	Mon, 20 Feb 2023 13:56:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901379;
-	bh=5m6ay+M1RVz5QPQeKK4I0nWxBdUbvV9XsOBb8xw5HBs=;
+	s=korg; t=1676901382;
+	bh=gg9l30VrfRNfwS+vaKboHqt5P7651ME5d+Nd4lXgvxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LLc/GYd8ZCcaxtauHP63d3mUiLPw2k1f5DqZT1lQSxql9yrMDGjMEl3aLu9J0yekm
-	 w0zEDwG8+aPuJLIA1ZhTaoukSD3B59hcuqBnuqKulv52LXu7sxRi5BTJqDlKljSpVd
-	 i8Wij0fxuQcl1R++ETvlx0Krq/7WR/Pqdekjum7s=
+	b=uut3P8yfWi5FVZWsoCYncqkcbGcmkMXLP6BZzrfDOTW1RdNnubdUIWJvx/PowbXwo
+	 RS1KJYDiaQwyclaS9nM/VW7ma6ft/tOPcpFXQAXV6tv7ndjLzSIHqeVTwncxntkxDg
+	 Inmy6CBTgSQu1CwCvlHC/7OPyJ1mV9ZjTE1Kw7LU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.10 23/57] mmc: mmc_spi: fix error handling in mmc_spi_probe()
-Date: Mon, 20 Feb 2023 14:36:31 +0100
-Message-Id: <20230220133550.160547462@linuxfoundation.org>
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 14/57] nvmem: core: fix cleanup after dev_set_name()
+Date: Mon, 20 Feb 2023 14:36:22 +0100
+Message-Id: <20230220133549.870438112@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -34,64 +37,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-commit cf4c9d2ac1e42c7d18b921bec39486896645b714 upstream.
+[ Upstream commit 560181d3ace61825f4ca9dd3481d6c0ee6709fa8 ]
 
-If mmc_add_host() fails, it doesn't need to call mmc_remove_host(),
-or it will cause null-ptr-deref, because of deleting a not added
-device in mmc_remove_host().
+If dev_set_name() fails, we leak nvmem->wp_gpio as the cleanup does not
+put this. While a minimal fix for this would be to add the gpiod_put()
+call, we can do better if we split device_register(), and use the
+tested nvmem_release() cleanup code by initialising the device early,
+and putting the device.
 
-To fix this, goto label 'fail_glue_init', if mmc_add_host() fails,
-and change the label 'fail_add_host' to 'fail_gpiod_request'.
+This results in a slightly larger fix, but results in clear code.
 
-Fixes: 15a0580ced08 ("mmc_spi host driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Cc:stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230131013835.3564011-1-yangyingliang@huawei.com
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
+Note: this patch depends on "nvmem: core: initialise nvmem->id early"
+and "nvmem: core: remove nvmem_config wp_gpio".
+
+Fixes: 5544e90c8126 ("nvmem: core: add error handling for dev_set_name")
+Cc: stable@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
+Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+[Srini: Fixed subject line and error code handing with wp_gpio while applying.]
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20230127104015.23839-6-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: ab3428cfd9aa ("nvmem: core: fix registration vs use race")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/mmc/host/mmc_spi.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/nvmem/core.c | 22 ++++++++++------------
+ 1 file changed, 10 insertions(+), 12 deletions(-)
 
---- a/drivers/mmc/host/mmc_spi.c
-+++ b/drivers/mmc/host/mmc_spi.c
-@@ -1450,7 +1450,7 @@ static int mmc_spi_probe(struct spi_devi
+diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
+index 38c05fce7d740..de356cdde4ce8 100644
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -627,14 +627,18 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
  
- 	status = mmc_add_host(mmc);
- 	if (status != 0)
--		goto fail_add_host;
-+		goto fail_glue_init;
+ 	nvmem->id = rval;
  
- 	/*
- 	 * Index 0 is card detect
-@@ -1458,7 +1458,7 @@ static int mmc_spi_probe(struct spi_devi
- 	 */
- 	status = mmc_gpiod_request_cd(mmc, NULL, 0, false, 1000);
- 	if (status == -EPROBE_DEFER)
--		goto fail_add_host;
-+		goto fail_gpiod_request;
- 	if (!status) {
- 		/*
- 		 * The platform has a CD GPIO signal that may support
-@@ -1473,7 +1473,7 @@ static int mmc_spi_probe(struct spi_devi
- 	/* Index 1 is write protect/read only */
- 	status = mmc_gpiod_request_ro(mmc, NULL, 1, 0);
- 	if (status == -EPROBE_DEFER)
--		goto fail_add_host;
-+		goto fail_gpiod_request;
- 	if (!status)
- 		has_ro = true;
++	nvmem->dev.type = &nvmem_provider_type;
++	nvmem->dev.bus = &nvmem_bus_type;
++	nvmem->dev.parent = config->dev;
++
++	device_initialize(&nvmem->dev);
++
+ 	if (!config->ignore_wp)
+ 		nvmem->wp_gpio = gpiod_get_optional(config->dev, "wp",
+ 						    GPIOD_OUT_HIGH);
+ 	if (IS_ERR(nvmem->wp_gpio)) {
+-		ida_free(&nvmem_ida, nvmem->id);
+ 		rval = PTR_ERR(nvmem->wp_gpio);
+-		kfree(nvmem);
+-		return ERR_PTR(rval);
++		goto err_put_device;
+ 	}
  
-@@ -1487,7 +1487,7 @@ static int mmc_spi_probe(struct spi_devi
- 				? ", cd polling" : "");
- 	return 0;
+ 	kref_init(&nvmem->refcnt);
+@@ -646,9 +650,6 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
+ 	nvmem->stride = config->stride ?: 1;
+ 	nvmem->word_size = config->word_size ?: 1;
+ 	nvmem->size = config->size;
+-	nvmem->dev.type = &nvmem_provider_type;
+-	nvmem->dev.bus = &nvmem_bus_type;
+-	nvmem->dev.parent = config->dev;
+ 	nvmem->root_only = config->root_only;
+ 	nvmem->priv = config->priv;
+ 	nvmem->type = config->type;
+@@ -671,11 +672,8 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
+ 		break;
+ 	}
  
--fail_add_host:
-+fail_gpiod_request:
- 	mmc_remove_host(mmc);
- fail_glue_init:
- 	mmc_spi_dma_free(host);
+-	if (rval) {
+-		ida_free(&nvmem_ida, nvmem->id);
+-		kfree(nvmem);
+-		return ERR_PTR(rval);
+-	}
++	if (rval)
++		goto err_put_device;
+ 
+ 	nvmem->read_only = device_property_present(config->dev, "read-only") ||
+ 			   config->read_only || !nvmem->reg_write;
+@@ -686,7 +684,7 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
+ 
+ 	dev_dbg(&nvmem->dev, "Registering nvmem device %s\n", config->name);
+ 
+-	rval = device_register(&nvmem->dev);
++	rval = device_add(&nvmem->dev);
+ 	if (rval)
+ 		goto err_put_device;
+ 
+-- 
+2.39.0
+
 
 
