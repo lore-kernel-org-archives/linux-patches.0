@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 464B863BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:39:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C00A7C433EF;
-	Mon, 20 Feb 2023 13:39:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBCDF46BE
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:39:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5471DC433EF;
+	Mon, 20 Feb 2023 13:39:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900346;
-	bh=I8LpnJ/B/pnVg6TGyc/coTgz6+1sLvY2PDQ6njJ69B8=;
+	s=korg; t=1676900348;
+	bh=YKCBvW2+De0M88ujx1D6kNHX1coGlX2wrQ3gKyFDd+Q=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RCgvdyqUBKvUL9ZiitD/7XmXM4HlnncZnU/8KNV2UJFCDH8e2xq16MlNwZ6Rf5yM/
-	 CxBhplMCndCuCdY6LBVJMjr62xkgRGD49FOdsAHJBsyImaz7Vu0x/41N5nmz2GfQl/
-	 vs9qu3s3zObPkhEghaHxHFEMtu0CytEVsOLOJj5g=
+	b=k3u+yj6NTtbHIvFRgsjV3bIgw/NfJJ9ijObSCYJFYHHWZ5fdCntonq7Y/o0YFg2iB
+	 X8ig5guSIsySk6ntOaZ+p1M34zJpJ9iGzK5cItB4l0I/nYrz29p+XGGIX9T4mdnT0a
+	 5TQUe/owB50pHi70buvCuHcZvcoGqSAP1dEoAEpk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jon Mason <jdmason@kudzu.us>,
-	=?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <rafal@milecki.pl>,
-	Florian Fainelli <f.fainelli@gmail.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 4.14 44/53] net: bgmac: fix BCM5358 support by setting correct flags
-Date: Mon, 20 Feb 2023 14:36:10 +0100
-Message-Id: <20230220133549.737806933@linuxfoundation.org>
+Subject: [PATCH 4.14 45/53] dccp/tcp: Avoid negative sk_forward_alloc by ipv6_pinfo.pktoptions.
+Date: Mon, 20 Feb 2023 14:36:11 +0100
+Message-Id: <20230220133549.776182474@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
 References: <20230220133548.158615609@linuxfoundation.org>
@@ -36,48 +35,125 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rafał Miłecki <rafal@milecki.pl>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-commit d61615c366a489646a1bfe5b33455f916762d5f4 upstream.
+commit ca43ccf41224b023fc290073d5603a755fd12eed upstream.
 
-Code blocks handling BCMA_CHIP_ID_BCM5357 and BCMA_CHIP_ID_BCM53572 were
-incorrectly unified. Chip package values are not unique and cannot be
-checked independently. They are meaningful only in a context of a given
-chip.
+Eric Dumazet pointed out [0] that when we call skb_set_owner_r()
+for ipv6_pinfo.pktoptions, sk_rmem_schedule() has not been called,
+resulting in a negative sk_forward_alloc.
 
-Packages BCM5358 and BCM47188 share the same value but then belong to
-different chips. Code unification resulted in treating BCM5358 as
-BCM47188 and broke its initialization.
+We add a new helper which clones a skb and sets its owner only
+when sk_rmem_schedule() succeeds.
 
-Link: https://github.com/openwrt/openwrt/issues/8278
-Fixes: cb1b0f90acfe ("net: ethernet: bgmac: unify code of the same family")
-Cc: Jon Mason <jdmason@kudzu.us>
-Signed-off-by: Rafał Miłecki <rafal@milecki.pl>
-Reviewed-by: Florian Fainelli <f.fainelli@gmail.com>
-Link: https://lore.kernel.org/r/20230208091637.16291-1-zajec5@gmail.com
+Note that we move skb_set_owner_r() forward in (dccp|tcp)_v6_do_rcv()
+because tcp_send_synack() can make sk_forward_alloc negative before
+ipv6_opt_accepted() in the crossed SYN-ACK or self-connect() cases.
+
+[0]: https://lore.kernel.org/netdev/CANn89iK9oc20Jdi_41jb9URdF210r7d1Y-+uypbMSbOfY6jqrg@mail.gmail.com/
+
+Fixes: 323fbd0edf3f ("net: dccp: Add handling of IPV6_PKTOPTIONS to dccp_v6_do_rcv()")
+Fixes: 3df80d9320bc ("[DCCP]: Introduce DCCPv6")
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/broadcom/bgmac-bcma.c |    6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ include/net/sock.h  |   13 +++++++++++++
+ net/dccp/ipv6.c     |    7 ++-----
+ net/ipv6/tcp_ipv6.c |   10 +++-------
+ 3 files changed, 18 insertions(+), 12 deletions(-)
 
---- a/drivers/net/ethernet/broadcom/bgmac-bcma.c
-+++ b/drivers/net/ethernet/broadcom/bgmac-bcma.c
-@@ -222,12 +222,12 @@ static int bgmac_probe(struct bcma_devic
- 		bgmac->feature_flags |= BGMAC_FEAT_CLKCTLST;
- 		bgmac->feature_flags |= BGMAC_FEAT_FLW_CTRL1;
- 		bgmac->feature_flags |= BGMAC_FEAT_SW_TYPE_PHY;
--		if (ci->pkg == BCMA_PKG_ID_BCM47188 ||
--		    ci->pkg == BCMA_PKG_ID_BCM47186) {
-+		if ((ci->id == BCMA_CHIP_ID_BCM5357 && ci->pkg == BCMA_PKG_ID_BCM47186) ||
-+		    (ci->id == BCMA_CHIP_ID_BCM53572 && ci->pkg == BCMA_PKG_ID_BCM47188)) {
- 			bgmac->feature_flags |= BGMAC_FEAT_SW_TYPE_RGMII;
- 			bgmac->feature_flags |= BGMAC_FEAT_IOST_ATTACHED;
+--- a/include/net/sock.h
++++ b/include/net/sock.h
+@@ -2049,6 +2049,19 @@ static inline void skb_set_owner_r(struc
+ 	sk_mem_charge(sk, skb->truesize);
+ }
+ 
++static inline struct sk_buff *skb_clone_and_charge_r(struct sk_buff *skb, struct sock *sk)
++{
++	skb = skb_clone(skb, sk_gfp_mask(sk, GFP_ATOMIC));
++	if (skb) {
++		if (sk_rmem_schedule(sk, skb, skb->truesize)) {
++			skb_set_owner_r(skb, sk);
++			return skb;
++		}
++		__kfree_skb(skb);
++	}
++	return NULL;
++}
++
+ void sk_reset_timer(struct sock *sk, struct timer_list *timer,
+ 		    unsigned long expires);
+ 
+--- a/net/dccp/ipv6.c
++++ b/net/dccp/ipv6.c
+@@ -541,11 +541,9 @@ static struct sock *dccp_v6_request_recv
+ 	*own_req = inet_ehash_nolisten(newsk, req_to_sk(req_unhash), NULL);
+ 	/* Clone pktoptions received with SYN, if we own the req */
+ 	if (*own_req && ireq->pktopts) {
+-		newnp->pktoptions = skb_clone(ireq->pktopts, GFP_ATOMIC);
++		newnp->pktoptions = skb_clone_and_charge_r(ireq->pktopts, newsk);
+ 		consume_skb(ireq->pktopts);
+ 		ireq->pktopts = NULL;
+-		if (newnp->pktoptions)
+-			skb_set_owner_r(newnp->pktoptions, newsk);
+ 	}
+ 
+ 	return newsk;
+@@ -605,7 +603,7 @@ static int dccp_v6_do_rcv(struct sock *s
+ 					       --ANK (980728)
+ 	 */
+ 	if (np->rxopt.all)
+-		opt_skb = skb_clone(skb, GFP_ATOMIC);
++		opt_skb = skb_clone_and_charge_r(skb, sk);
+ 
+ 	if (sk->sk_state == DCCP_OPEN) { /* Fast path */
+ 		if (dccp_rcv_established(sk, skb, dccp_hdr(skb), skb->len))
+@@ -669,7 +667,6 @@ ipv6_pktoptions:
+ 			np->flow_label = ip6_flowlabel(ipv6_hdr(opt_skb));
+ 		if (ipv6_opt_accepted(sk, opt_skb,
+ 				      &DCCP_SKB_CB(opt_skb)->header.h6)) {
+-			skb_set_owner_r(opt_skb, sk);
+ 			memmove(IP6CB(opt_skb),
+ 				&DCCP_SKB_CB(opt_skb)->header.h6,
+ 				sizeof(struct inet6_skb_parm));
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -1242,14 +1242,11 @@ static struct sock *tcp_v6_syn_recv_sock
+ 
+ 		/* Clone pktoptions received with SYN, if we own the req */
+ 		if (ireq->pktopts) {
+-			newnp->pktoptions = skb_clone(ireq->pktopts,
+-						      sk_gfp_mask(sk, GFP_ATOMIC));
++			newnp->pktoptions = skb_clone_and_charge_r(ireq->pktopts, newsk);
+ 			consume_skb(ireq->pktopts);
+ 			ireq->pktopts = NULL;
+-			if (newnp->pktoptions) {
++			if (newnp->pktoptions)
+ 				tcp_v6_restore_cb(newnp->pktoptions);
+-				skb_set_owner_r(newnp->pktoptions, newsk);
+-			}
  		}
--		if (ci->pkg == BCMA_PKG_ID_BCM5358)
-+		if (ci->id == BCMA_CHIP_ID_BCM5357 && ci->pkg == BCMA_PKG_ID_BCM5358)
- 			bgmac->feature_flags |= BGMAC_FEAT_SW_TYPE_EPHYRMII;
- 		break;
- 	case BCMA_CHIP_ID_BCM53573:
+ 	} else {
+ 		if (!req_unhash && found_dup_sk) {
+@@ -1317,7 +1314,7 @@ static int tcp_v6_do_rcv(struct sock *sk
+ 					       --ANK (980728)
+ 	 */
+ 	if (np->rxopt.all)
+-		opt_skb = skb_clone(skb, sk_gfp_mask(sk, GFP_ATOMIC));
++		opt_skb = skb_clone_and_charge_r(skb, sk);
+ 
+ 	if (sk->sk_state == TCP_ESTABLISHED) { /* Fast path */
+ 		struct dst_entry *dst;
+@@ -1399,7 +1396,6 @@ ipv6_pktoptions:
+ 		if (np->repflow)
+ 			np->flow_label = ip6_flowlabel(ipv6_hdr(opt_skb));
+ 		if (ipv6_opt_accepted(sk, opt_skb, &TCP_SKB_CB(opt_skb)->header.h6)) {
+-			skb_set_owner_r(opt_skb, sk);
+ 			tcp_v6_restore_cb(opt_skb);
+ 			opt_skb = xchg(&np->pktoptions, opt_skb);
+ 		} else {
 
 
