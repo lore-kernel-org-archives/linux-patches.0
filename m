@@ -1,29 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7D6C463BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:01:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 072D9C433D2;
-	Mon, 20 Feb 2023 14:01:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1845B63BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:01:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96595C433EF;
+	Mon, 20 Feb 2023 14:01:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901712;
-	bh=g/f6NHbYkEwX10UaZMVsEuFIrY5AM9iwEsKQfm98TBM=;
+	s=korg; t=1676901714;
+	bh=tQkWk6xkAz+VRLI1xUIXWeDsryammfjeZRF5MLhpuwI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jLBKduQxTONNApoaEbuQs3vg0QEkoDxkbYmqJsR2bnhqfQoSHr28n12KhKPWwfCgv
-	 cVDTHzt9oLf2AXMTH0ax7b7AuKVgPF8H+3oVB46dm963XkCsphZjpV7cJEBLtMwqPx
-	 n5+P0lknsuazmZteTOR0SB/ObDdcXCTG+4nwqebE=
+	b=VZLWZS61kFFdnF4sTzJLdxKxLc7A4I73lUxtQ5N3LdDRM4QXVOAi1fnW5qvK8Ia3A
+	 o5oTUG4hexbo28tvkJVlPAhgsP5UOqqh1aCZNmMM60nsnKUXlCwi9jbCBT2UC57ii4
+	 8N1aOOR+DEZ3o9PNIMQZxxBrRhyJ3ZrR9qI60FK8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mateusz Palczewski <mateusz.palczewski@intel.com>,
-	Jamie Bainbridge <jbainbri@redhat.com>,
-	Corinna Vinschen <vinschen@redhat.com>,
+	Matt Corallo <ntp-lists@mattcorallo.com>,
+	Miroslav Lichvar <mlichvar@redhat.com>,
+	Jacob Keller <jacob.e.keller@intel.com>,
 	Tony Nguyen <anthony.l.nguyen@intel.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 100/118] igb: conditionalize I2C bit banging on external thermal sensor support
-Date: Mon, 20 Feb 2023 14:36:56 +0100
-Message-Id: <20230220133604.404557420@linuxfoundation.org>
+	Jakub Kicinski <kuba@kernel.org>,
+	Gurucharan G <gurucharanx.g@intel.com>
+Subject: [PATCH 6.1 101/118] igb: Fix PPS input and output using 3rd and 4th SDP
+Date: Mon, 20 Feb 2023 14:36:57 +0100
+Message-Id: <20230220133604.446214632@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -37,147 +38,75 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Corinna Vinschen <vinschen@redhat.com>
+From: Miroslav Lichvar <mlichvar@redhat.com>
 
-commit 5d54cb1767e06025819daa6769e0f18dcbc60936 upstream.
+commit 207ce626add80ddd941f62fc2fe5d77586e0801b upstream.
 
-Commit a97f8783a937 ("igb: unbreak I2C bit-banging on i350") introduced
-code to change I2C settings to bit banging unconditionally.
+Fix handling of the tsync interrupt to compare the pin number with
+IGB_N_SDP instead of IGB_N_EXTTS/IGB_N_PEROUT and fix the indexing to
+the perout array.
 
-However, this patch introduced a regression:  On an Intel S2600CWR
-Server Board with three NICs:
-
-- 1x dual-port copper
-  Intel I350 Gigabit Network Connection [8086:1521] (rev 01)
-  fw 1.63, 0x80000dda
-
-- 2x quad-port SFP+ with copper SFP Avago ABCU-5700RZ
-  Intel I350 Gigabit Fiber Network Connection [8086:1522] (rev 01)
-  fw 1.52.0
-
-the SFP NICs no longer get link at all.  Reverting commit a97f8783a937
-or switching to the Intel out-of-tree driver both fix the problem.
-
-Per the igb out-of-tree driver, I2C bit banging on i350 depends on
-support for an external thermal sensor (ETS).  However, commit
-a97f8783a937 added bit banging unconditionally.  Additionally, the
-out-of-tree driver always calls init_thermal_sensor_thresh on probe,
-while our driver only calls init_thermal_sensor_thresh only in
-igb_reset(), and only if an ETS is present, ignoring the internal
-thermal sensor.  The affected SFPs don't provide an ETS.  Per Intel,
-the behaviour is a result of i350 firmware requirements.
-
-This patch fixes the problem by aligning the behaviour to the
-out-of-tree driver:
-
-- split igb_init_i2c() into two functions:
-  - igb_init_i2c() only performs the basic I2C initialization.
-  - igb_set_i2c_bb() makes sure that E1000_CTRL_I2C_ENA is set
-    and enables bit-banging.
-
-- igb_probe() only calls igb_set_i2c_bb() if an ETS is present.
-
-- igb_probe() calls init_thermal_sensor_thresh() unconditionally.
-
-- igb_reset() aligns its behaviour to igb_probe(), i. e., call
-  igb_set_i2c_bb() if an ETS is present and call
-  init_thermal_sensor_thresh() unconditionally.
-
-Fixes: a97f8783a937 ("igb: unbreak I2C bit-banging on i350")
-Tested-by: Mateusz Palczewski <mateusz.palczewski@intel.com>
-Co-developed-by: Jamie Bainbridge <jbainbri@redhat.com>
-Signed-off-by: Jamie Bainbridge <jbainbri@redhat.com>
-Signed-off-by: Corinna Vinschen <vinschen@redhat.com>
+Fixes: cf99c1dd7b77 ("igb: move PEROUT and EXTTS isr logic to separate functions")
+Reported-by: Matt Corallo <ntp-lists@mattcorallo.com>
+Signed-off-by: Miroslav Lichvar <mlichvar@redhat.com>
+Reviewed-by: Jacob Keller <jacob.e.keller@intel.com>
+Tested-by: Gurucharan G <gurucharanx.g@intel.com> (A Contingent worker at Intel)
 Signed-off-by: Tony Nguyen <anthony.l.nguyen@intel.com>
-Link: https://lore.kernel.org/r/20230214185549.1306522-1-anthony.l.nguyen@intel.com
+Link: https://lore.kernel.org/r/20230213185822.3960072-1-anthony.l.nguyen@intel.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/intel/igb/igb_main.c | 42 +++++++++++++++++------
- 1 file changed, 32 insertions(+), 10 deletions(-)
+ drivers/net/ethernet/intel/igb/igb_main.c |   12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/net/ethernet/intel/igb/igb_main.c b/drivers/net/ethernet/intel/igb/igb_main.c
-index d8e3048b93dd..b5b443883da9 100644
 --- a/drivers/net/ethernet/intel/igb/igb_main.c
 +++ b/drivers/net/ethernet/intel/igb/igb_main.c
-@@ -2256,6 +2256,30 @@ static void igb_enable_mas(struct igb_adapter *adapter)
+@@ -6816,7 +6816,7 @@ static void igb_perout(struct igb_adapte
+ 	struct timespec64 ts;
+ 	u32 tsauxc;
+ 
+-	if (pin < 0 || pin >= IGB_N_PEROUT)
++	if (pin < 0 || pin >= IGB_N_SDP)
+ 		return;
+ 
+ 	spin_lock(&adapter->tmreg_lock);
+@@ -6824,7 +6824,7 @@ static void igb_perout(struct igb_adapte
+ 	if (hw->mac.type == e1000_82580 ||
+ 	    hw->mac.type == e1000_i354 ||
+ 	    hw->mac.type == e1000_i350) {
+-		s64 ns = timespec64_to_ns(&adapter->perout[pin].period);
++		s64 ns = timespec64_to_ns(&adapter->perout[tsintr_tt].period);
+ 		u32 systiml, systimh, level_mask, level, rem;
+ 		u64 systim, now;
+ 
+@@ -6872,8 +6872,8 @@ static void igb_perout(struct igb_adapte
+ 		ts.tv_nsec = (u32)systim;
+ 		ts.tv_sec  = ((u32)(systim >> 32)) & 0xFF;
+ 	} else {
+-		ts = timespec64_add(adapter->perout[pin].start,
+-				    adapter->perout[pin].period);
++		ts = timespec64_add(adapter->perout[tsintr_tt].start,
++				    adapter->perout[tsintr_tt].period);
  	}
+ 
+ 	/* u32 conversion of tv_sec is safe until y2106 */
+@@ -6882,7 +6882,7 @@ static void igb_perout(struct igb_adapte
+ 	tsauxc = rd32(E1000_TSAUXC);
+ 	tsauxc |= TSAUXC_EN_TT0;
+ 	wr32(E1000_TSAUXC, tsauxc);
+-	adapter->perout[pin].start = ts;
++	adapter->perout[tsintr_tt].start = ts;
+ 
+ 	spin_unlock(&adapter->tmreg_lock);
  }
+@@ -6896,7 +6896,7 @@ static void igb_extts(struct igb_adapter
+ 	struct ptp_clock_event event;
+ 	struct timespec64 ts;
  
-+#ifdef CONFIG_IGB_HWMON
-+/**
-+ *  igb_set_i2c_bb - Init I2C interface
-+ *  @hw: pointer to hardware structure
-+ **/
-+static void igb_set_i2c_bb(struct e1000_hw *hw)
-+{
-+	u32 ctrl_ext;
-+	s32 i2cctl;
-+
-+	ctrl_ext = rd32(E1000_CTRL_EXT);
-+	ctrl_ext |= E1000_CTRL_I2C_ENA;
-+	wr32(E1000_CTRL_EXT, ctrl_ext);
-+	wrfl();
-+
-+	i2cctl = rd32(E1000_I2CPARAMS);
-+	i2cctl |= E1000_I2CBB_EN
-+		| E1000_I2C_CLK_OE_N
-+		| E1000_I2C_DATA_OE_N;
-+	wr32(E1000_I2CPARAMS, i2cctl);
-+	wrfl();
-+}
-+#endif
-+
- void igb_reset(struct igb_adapter *adapter)
- {
- 	struct pci_dev *pdev = adapter->pdev;
-@@ -2400,7 +2424,8 @@ void igb_reset(struct igb_adapter *adapter)
- 			 * interface.
- 			 */
- 			if (adapter->ets)
--				mac->ops.init_thermal_sensor_thresh(hw);
-+				igb_set_i2c_bb(hw);
-+			mac->ops.init_thermal_sensor_thresh(hw);
- 		}
- 	}
- #endif
-@@ -3117,21 +3142,12 @@ static void igb_init_mas(struct igb_adapter *adapter)
-  **/
- static s32 igb_init_i2c(struct igb_adapter *adapter)
- {
--	struct e1000_hw *hw = &adapter->hw;
- 	s32 status = 0;
--	s32 i2cctl;
+-	if (pin < 0 || pin >= IGB_N_EXTTS)
++	if (pin < 0 || pin >= IGB_N_SDP)
+ 		return;
  
- 	/* I2C interface supported on i350 devices */
- 	if (adapter->hw.mac.type != e1000_i350)
- 		return 0;
- 
--	i2cctl = rd32(E1000_I2CPARAMS);
--	i2cctl |= E1000_I2CBB_EN
--		| E1000_I2C_CLK_OUT | E1000_I2C_CLK_OE_N
--		| E1000_I2C_DATA_OUT | E1000_I2C_DATA_OE_N;
--	wr32(E1000_I2CPARAMS, i2cctl);
--	wrfl();
--
- 	/* Initialize the i2c bus which is controlled by the registers.
- 	 * This bus will use the i2c_algo_bit structure that implements
- 	 * the protocol through toggling of the 4 bits in the register.
-@@ -3521,6 +3537,12 @@ static int igb_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 			adapter->ets = true;
- 		else
- 			adapter->ets = false;
-+		/* Only enable I2C bit banging if an external thermal
-+		 * sensor is supported.
-+		 */
-+		if (adapter->ets)
-+			igb_set_i2c_bb(hw);
-+		hw->mac.ops.init_thermal_sensor_thresh(hw);
- 		if (igb_sysfs_init(adapter))
- 			dev_err(&pdev->dev,
- 				"failed to allocate sysfs resources\n");
--- 
-2.39.1
-
+ 	if (hw->mac.type == e1000_82580 ||
 
 
