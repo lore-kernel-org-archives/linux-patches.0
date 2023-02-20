@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2BBD363B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE690C433D2;
-	Mon, 20 Feb 2023 13:51:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E9A5A63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4AAEDC433EF;
+	Mon, 20 Feb 2023 13:51:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901106;
-	bh=oePXfbpF/+zX1IsYlzhJ0N2jEXssdJojoV7L75QJXMQ=;
+	s=korg; t=1676901108;
+	bh=i+O2QE7ECDHdDy0YYxQm3+SVGfxD/NJ028txP+HoMKM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h0V07w3rHe1WPUGnRuHRHkLUuLIIHIflGxF3n+JdhebZTIELuo0PM+/u+clqXUCEX
-	 00JQYHwOsGowei9cO6ueBf9OyE+0HqGiwT8OatPYaJ9gMimVXq++P+vQBiSmmybPdY
-	 7mVFmwqmY/4xV6YeW6+CuVhQ+T8/Y/RLQ6cVM0/o=
+	b=uZCMMq3aa9yWWLemGi+/kfHOmY87ow/HdrSwePpK+GPgD7wf7WKRtECKGSfALOtsr
+	 2+ltxxMCCC55TgzH36g7kApDoDEAhtv6SQqZ0fgjnX5Kkbhcp/Zw6OxLWQMqQdvqv/
+	 vw2IyOX05xEPRXSOF+TAgWELHIZgjtUINbCmnqg0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takashi Iwai <tiwai@suse.com>,
-	Cezary Rojewski <cezary.rojewski@intel.com>,
-	Takashi Iwai <tiwai@suse.de>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Sitnicki <jakub@cloudflare.com>,
+	John Fastabend <john.fastabend@gmail.com>,
+	Alexei Starovoitov <ast@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 08/83] ALSA: hda: Do not unset preset when cleaning up codec
-Date: Mon, 20 Feb 2023 14:35:41 +0100
-Message-Id: <20230220133553.983964965@linuxfoundation.org>
+Subject: [PATCH 5.15 09/83] bpf, sockmap: Dont let sock_map_{close,destroy,unhash} call itself
+Date: Mon, 20 Feb 2023 14:35:42 +0100
+Message-Id: <20230220133554.018002701@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -36,69 +37,115 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Cezary Rojewski <cezary.rojewski@intel.com>
+From: Jakub Sitnicki <jakub@cloudflare.com>
 
-[ Upstream commit 87978e6ad45a16835cc58234451111091be3c59a ]
+[ Upstream commit 5b4a79ba65a1ab479903fff2e604865d229b70a9 ]
 
-Several functions that take part in codec's initialization and removal
-are re-used by ASoC codec drivers implementations. Drivers mimic the
-behavior of hda_codec_driver_probe/remove() found in
-sound/pci/hda/hda_bind.c with their component->probe/remove() instead.
+sock_map proto callbacks should never call themselves by design. Protect
+against bugs like [1] and break out of the recursive loop to avoid a stack
+overflow in favor of a resource leak.
 
-One of the reasons for that is the expectation of
-snd_hda_codec_device_new() to receive a valid pointer to an instance of
-struct snd_card. This expectation can be met only once sound card
-components probing commences.
+[1] https://lore.kernel.org/all/00000000000073b14905ef2e7401@google.com/
 
-As ASoC sound card may be unbound without codec device being actually
-removed from the system, unsetting ->preset in
-snd_hda_codec_cleanup_for_unbind() interferes with module unload -> load
-scenario causing null-ptr-deref. Preset is assigned only once, during
-device/driver matching whereas ASoC codec driver's module reloading may
-occur several times throughout the lifetime of an audio stack.
-
-Suggested-by: Takashi Iwai <tiwai@suse.com>
-Signed-off-by: Cezary Rojewski <cezary.rojewski@intel.com>
-Link: https://lore.kernel.org/r/20230119143235.1159814-1-cezary.rojewski@intel.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Suggested-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jakub Sitnicki <jakub@cloudflare.com>
+Acked-by: John Fastabend <john.fastabend@gmail.com>
+Link: https://lore.kernel.org/r/20230113-sockmap-fix-v2-1-1e0ee7ac2f90@cloudflare.com
+Signed-off-by: Alexei Starovoitov <ast@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/pci/hda/hda_bind.c  | 2 ++
- sound/pci/hda/hda_codec.c | 1 -
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ net/core/sock_map.c | 61 +++++++++++++++++++++++++--------------------
+ 1 file changed, 34 insertions(+), 27 deletions(-)
 
-diff --git a/sound/pci/hda/hda_bind.c b/sound/pci/hda/hda_bind.c
-index 7af2515735957..8e35009ec25cb 100644
---- a/sound/pci/hda/hda_bind.c
-+++ b/sound/pci/hda/hda_bind.c
-@@ -144,6 +144,7 @@ static int hda_codec_driver_probe(struct device *dev)
- 
-  error:
- 	snd_hda_codec_cleanup_for_unbind(codec);
-+	codec->preset = NULL;
- 	return err;
+diff --git a/net/core/sock_map.c b/net/core/sock_map.c
+index ae6013a8bce53..86b4e8909ad1e 100644
+--- a/net/core/sock_map.c
++++ b/net/core/sock_map.c
+@@ -1514,15 +1514,16 @@ void sock_map_unhash(struct sock *sk)
+ 	psock = sk_psock(sk);
+ 	if (unlikely(!psock)) {
+ 		rcu_read_unlock();
+-		if (sk->sk_prot->unhash)
+-			sk->sk_prot->unhash(sk);
+-		return;
++		saved_unhash = READ_ONCE(sk->sk_prot)->unhash;
++	} else {
++		saved_unhash = psock->saved_unhash;
++		sock_map_remove_links(sk, psock);
++		rcu_read_unlock();
+ 	}
+-
+-	saved_unhash = psock->saved_unhash;
+-	sock_map_remove_links(sk, psock);
+-	rcu_read_unlock();
+-	saved_unhash(sk);
++	if (WARN_ON_ONCE(saved_unhash == sock_map_unhash))
++		return;
++	if (saved_unhash)
++		saved_unhash(sk);
  }
+ EXPORT_SYMBOL_GPL(sock_map_unhash);
  
-@@ -166,6 +167,7 @@ static int hda_codec_driver_remove(struct device *dev)
- 	if (codec->patch_ops.free)
- 		codec->patch_ops.free(codec);
- 	snd_hda_codec_cleanup_for_unbind(codec);
-+	codec->preset = NULL;
- 	module_put(dev->driver->owner);
- 	return 0;
+@@ -1535,17 +1536,18 @@ void sock_map_destroy(struct sock *sk)
+ 	psock = sk_psock_get(sk);
+ 	if (unlikely(!psock)) {
+ 		rcu_read_unlock();
+-		if (sk->sk_prot->destroy)
+-			sk->sk_prot->destroy(sk);
+-		return;
++		saved_destroy = READ_ONCE(sk->sk_prot)->destroy;
++	} else {
++		saved_destroy = psock->saved_destroy;
++		sock_map_remove_links(sk, psock);
++		rcu_read_unlock();
++		sk_psock_stop(psock);
++		sk_psock_put(sk, psock);
+ 	}
+-
+-	saved_destroy = psock->saved_destroy;
+-	sock_map_remove_links(sk, psock);
+-	rcu_read_unlock();
+-	sk_psock_stop(psock);
+-	sk_psock_put(sk, psock);
+-	saved_destroy(sk);
++	if (WARN_ON_ONCE(saved_destroy == sock_map_destroy))
++		return;
++	if (saved_destroy)
++		saved_destroy(sk);
  }
-diff --git a/sound/pci/hda/hda_codec.c b/sound/pci/hda/hda_codec.c
-index f552785d301e0..19be60bb57810 100644
---- a/sound/pci/hda/hda_codec.c
-+++ b/sound/pci/hda/hda_codec.c
-@@ -791,7 +791,6 @@ void snd_hda_codec_cleanup_for_unbind(struct hda_codec *codec)
- 	snd_array_free(&codec->cvt_setups);
- 	snd_array_free(&codec->spdif_out);
- 	snd_array_free(&codec->verbs);
--	codec->preset = NULL;
- 	codec->follower_dig_outs = NULL;
- 	codec->spdif_status_reset = 0;
- 	snd_array_free(&codec->mixers);
+ EXPORT_SYMBOL_GPL(sock_map_destroy);
+ 
+@@ -1560,16 +1562,21 @@ void sock_map_close(struct sock *sk, long timeout)
+ 	if (unlikely(!psock)) {
+ 		rcu_read_unlock();
+ 		release_sock(sk);
+-		return sk->sk_prot->close(sk, timeout);
++		saved_close = READ_ONCE(sk->sk_prot)->close;
++	} else {
++		saved_close = psock->saved_close;
++		sock_map_remove_links(sk, psock);
++		rcu_read_unlock();
++		sk_psock_stop(psock);
++		release_sock(sk);
++		cancel_work_sync(&psock->work);
++		sk_psock_put(sk, psock);
+ 	}
+-
+-	saved_close = psock->saved_close;
+-	sock_map_remove_links(sk, psock);
+-	rcu_read_unlock();
+-	sk_psock_stop(psock);
+-	release_sock(sk);
+-	cancel_work_sync(&psock->work);
+-	sk_psock_put(sk, psock);
++	/* Make sure we do not recurse. This is a bug.
++	 * Leak the socket instead of crashing on a stack overflow.
++	 */
++	if (WARN_ON_ONCE(saved_close == sock_map_close))
++		return;
+ 	saved_close(sk, timeout);
+ }
+ EXPORT_SYMBOL_GPL(sock_map_close);
 -- 
 2.39.0
 
