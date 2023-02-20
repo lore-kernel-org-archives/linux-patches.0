@@ -1,25 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4138163B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:45:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95CFC433D2;
-	Mon, 20 Feb 2023 13:45:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEC6163B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:45:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5693FC433EF;
+	Mon, 20 Feb 2023 13:45:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900731;
-	bh=UOOkRQP3xdihmk2mxo/A8RZ5+6uk72dVJDxpNLg40sU=;
+	s=korg; t=1676900733;
+	bh=s/dABznhPGdGB3hSc6fT0vUgKN0BrLzWFpbmb61dNRI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=R+76jolzkNDsUrR11MobBXsnoPar+hLdv+5+qbj0xf9HbHaJwGuGoKe24nN9td6S5
-	 zhYfmN0nWR+wSLXepbqcuNUCO/PQjR+4OyqdT7YiRRUbPZZevbR3K7QscPL4+bEWQo
-	 1LsvIJ2hoAwTUjuhV7QtfL2HCtqk9h791p+SyHBs=
+	b=tKqQ0Shn6GCEhD4+z1YdthyyHrqEo+M2qjg1e5qP70JNXv5ONh1lOtm8c+6ldk9Yu
+	 rDiWSza2L5xFDRZHGuT5oHVtExztKhC3Nl8ocXr36EIl9DSupmXU9BuFlDEw+kCqWh
+	 fAVvH48IcC2a5UlYqtSevBkIERElmOrolX21KwVk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ard Biesheuvel <ardb@kernel.org>
-Subject: [PATCH 5.4 039/156] efi: Accept version 2 of memory attributes table
-Date: Mon, 20 Feb 2023 14:34:43 +0100
-Message-Id: <20230220133604.016903583@linuxfoundation.org>
+	Longlong Xia <xialonglong1@huawei.com>,
+	"Huang, Ying" <ying.huang@intel.com>,
+	Chen Wandun <chenwandun@huawei.com>,
+	Kefeng Wang <wangkefeng.wang@huawei.com>,
+	Nanyong Sun <sunnanyong@huawei.com>,
+	Hugh Dickins <hughd@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 5.4 048/156] mm/swapfile: add cond_resched() in get_swap_pages()
+Date: Mon, 20 Feb 2023 14:34:52 +0100
+Message-Id: <20230220133604.357142434@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -33,32 +39,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ard Biesheuvel <ardb@kernel.org>
+From: Longlong Xia <xialonglong1@huawei.com>
 
-commit 636ab417a7aec4ee993916e688eb5c5977570836 upstream.
+commit 7717fc1a12f88701573f9ed897cc4f6699c661e3 upstream.
 
-UEFI v2.10 introduces version 2 of the memory attributes table, which
-turns the reserved field into a flags field, but is compatible with
-version 1 in all other respects. So let's not complain about version 2
-if we encounter it.
+The softlockup still occurs in get_swap_pages() under memory pressure.  64
+CPU cores, 64GB memory, and 28 zram devices, the disksize of each zram
+device is 50MB with same priority as si.  Use the stress-ng tool to
+increase memory pressure, causing the system to oom frequently.
 
+The plist_for_each_entry_safe() loops in get_swap_pages() could reach tens
+of thousands of times to find available space (extreme case:
+cond_resched() is not called in scan_swap_map_slots()).  Let's add
+cond_resched() into get_swap_pages() when failed to find available space
+to avoid softlockup.
+
+Link: https://lkml.kernel.org/r/20230128094757.1060525-1-xialonglong1@huawei.com
+Signed-off-by: Longlong Xia <xialonglong1@huawei.com>
+Reviewed-by: "Huang, Ying" <ying.huang@intel.com>
+Cc: Chen Wandun <chenwandun@huawei.com>
+Cc: Huang Ying <ying.huang@intel.com>
+Cc: Kefeng Wang <wangkefeng.wang@huawei.com>
+Cc: Nanyong Sun <sunnanyong@huawei.com>
+Cc: Hugh Dickins <hughd@google.com>
 Cc: <stable@vger.kernel.org>
-Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/firmware/efi/memattr.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/swapfile.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/firmware/efi/memattr.c
-+++ b/drivers/firmware/efi/memattr.c
-@@ -32,7 +32,7 @@ int __init efi_memattr_init(void)
- 		return -ENOMEM;
- 	}
+--- a/mm/swapfile.c
++++ b/mm/swapfile.c
+@@ -1061,6 +1061,7 @@ start_over:
+ 			goto check_out;
+ 		pr_debug("scan_swap_map of si %d failed to find offset\n",
+ 			si->type);
++		cond_resched();
  
--	if (tbl->version > 1) {
-+	if (tbl->version > 2) {
- 		pr_warn("Unexpected EFI Memory Attributes table version %d\n",
- 			tbl->version);
- 		goto unmap;
+ 		spin_lock(&swap_avail_lock);
+ nextsi:
 
 
