@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BCC5D63BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:01:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 465E7C433EF;
-	Mon, 20 Feb 2023 14:01:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F67D63BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:01:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DB67CC433EF;
+	Mon, 20 Feb 2023 14:01:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901704;
-	bh=OrqMO5f59f298dIkvzPlOFncHG/doW3AZg1/fBYg3OI=;
+	s=korg; t=1676901707;
+	bh=jmb8EOHrGLpjFoT+w709u7XwQTNBnJU+UM0zIiYSFmE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=fQXEEfBrMT/+QKmp2vroX0+DYt2EUAfw00SB5vAoZHYY48gBsHrkAjZ9UCiCYNuv2
-	 g+7tDBT5B3nHSk1jctQn/WFrlshkRcuTlHHrw82TVVRvwmTgMGCMkfGGT1r76TqCDr
-	 Eh+SZPB1uXjw2JQjsTeBRlnzroFqSUo84orBpO7A=
+	b=qq04gRjuTfK80bQaUGSFwO/znb3E3+gl7n38DMiBzrqRsSx3hECHnRjA0XT9L3EEs
+	 rzl8yJdEc8kwCB+CANxJwdbSs0tLZcurWLpFdmt8MwVLOL5iPA2yfIf1x4zdrmtBqG
+	 2QFTz6+Gz6A+fDEZ6d2VLHia2l0PunjYOtvIhFGE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Erin MacNeil <lnx.erin@gmail.com>,
-	Alexander Lobakin <alexandr.lobakin@intel.com>,
+	syzbot+d43608d061e8847ec9f3@syzkaller.appspotmail.com,
+	Jon Maloy <jmaloy@redhat.com>,
+	Tung Nguyen <tung.q.nguyen@dektech.com.au>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 6.1 097/118] net: use a bounce buffer for copying skb->mark
-Date: Mon, 20 Feb 2023 14:36:53 +0100
-Message-Id: <20230220133604.269565695@linuxfoundation.org>
+Subject: [PATCH 6.1 098/118] tipc: fix kernel warning when sending SYN message
+Date: Mon, 20 Feb 2023 14:36:54 +0100
+Message-Id: <20230220133604.314511548@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -37,100 +36,68 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Eric Dumazet <edumazet@google.com>
+From: Tung Nguyen <tung.q.nguyen@dektech.com.au>
 
-commit 2558b8039d059342197610498c8749ad294adee5 upstream.
+commit 11a4d6f67cf55883dc78e31c247d1903ed7feccc upstream.
 
-syzbot found arm64 builds would crash in sock_recv_mark()
-when CONFIG_HARDENED_USERCOPY=y
+When sending a SYN message, this kernel stack trace is observed:
 
-x86 and powerpc are not detecting the issue because
-they define user_access_begin.
-This will be handled in a different patch,
-because a check_object_size() is missing.
+...
+[   13.396352] RIP: 0010:_copy_from_iter+0xb4/0x550
+...
+[   13.398494] Call Trace:
+[   13.398630]  <TASK>
+[   13.398630]  ? __alloc_skb+0xed/0x1a0
+[   13.398630]  tipc_msg_build+0x12c/0x670 [tipc]
+[   13.398630]  ? shmem_add_to_page_cache.isra.71+0x151/0x290
+[   13.398630]  __tipc_sendmsg+0x2d1/0x710 [tipc]
+[   13.398630]  ? tipc_connect+0x1d9/0x230 [tipc]
+[   13.398630]  ? __local_bh_enable_ip+0x37/0x80
+[   13.398630]  tipc_connect+0x1d9/0x230 [tipc]
+[   13.398630]  ? __sys_connect+0x9f/0xd0
+[   13.398630]  __sys_connect+0x9f/0xd0
+[   13.398630]  ? preempt_count_add+0x4d/0xa0
+[   13.398630]  ? fpregs_assert_state_consistent+0x22/0x50
+[   13.398630]  __x64_sys_connect+0x16/0x20
+[   13.398630]  do_syscall_64+0x42/0x90
+[   13.398630]  entry_SYSCALL_64_after_hwframe+0x63/0xcd
 
-Only data from skb->cb[] can be copied directly to/from user space,
-as explained in commit 79a8a642bf05 ("net: Whitelist
-the skbuff_head_cache "cb" field")
+It is because commit a41dad905e5a ("iov_iter: saner checks for attempt
+to copy to/from iterator") has introduced sanity check for copying
+from/to iov iterator. Lacking of copy direction from the iterator
+viewpoint would lead to kernel stack trace like above.
 
-syzbot report was:
-usercopy: Kernel memory exposure attempt detected from SLUB object 'skbuff_head_cache' (offset 168, size 4)!
-------------[ cut here ]------------
-kernel BUG at mm/usercopy.c:102 !
-Internal error: Oops - BUG: 00000000f2000800 [#1] PREEMPT SMP
-Modules linked in:
-CPU: 0 PID: 4410 Comm: syz-executor533 Not tainted 6.2.0-rc7-syzkaller-17907-g2d3827b3f393 #0
-Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 01/21/2023
-pstate: 60400005 (nZCv daif +PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-pc : usercopy_abort+0x90/0x94 mm/usercopy.c:90
-lr : usercopy_abort+0x90/0x94 mm/usercopy.c:90
-sp : ffff80000fb9b9a0
-x29: ffff80000fb9b9b0 x28: ffff0000c6073400 x27: 0000000020001a00
-x26: 0000000000000014 x25: ffff80000cf52000 x24: fffffc0000000000
-x23: 05ffc00000000200 x22: fffffc000324bf80 x21: ffff0000c92fe1a8
-x20: 0000000000000001 x19: 0000000000000004 x18: 0000000000000000
-x17: 656a626f2042554c x16: ffff0000c6073dd0 x15: ffff80000dbd2118
-x14: ffff0000c6073400 x13: 00000000ffffffff x12: ffff0000c6073400
-x11: ff808000081bbb4c x10: 0000000000000000 x9 : 7b0572d7cc0ccf00
-x8 : 7b0572d7cc0ccf00 x7 : ffff80000bf650d4 x6 : 0000000000000000
-x5 : 0000000000000001 x4 : 0000000000000001 x3 : 0000000000000000
-x2 : ffff0001fefbff08 x1 : 0000000100000000 x0 : 000000000000006c
-Call trace:
-usercopy_abort+0x90/0x94 mm/usercopy.c:90
-__check_heap_object+0xa8/0x100 mm/slub.c:4761
-check_heap_object mm/usercopy.c:196 [inline]
-__check_object_size+0x208/0x6b8 mm/usercopy.c:251
-check_object_size include/linux/thread_info.h:199 [inline]
-__copy_to_user include/linux/uaccess.h:115 [inline]
-put_cmsg+0x408/0x464 net/core/scm.c:238
-sock_recv_mark net/socket.c:975 [inline]
-__sock_recv_cmsgs+0x1fc/0x248 net/socket.c:984
-sock_recv_cmsgs include/net/sock.h:2728 [inline]
-packet_recvmsg+0x2d8/0x678 net/packet/af_packet.c:3482
-____sys_recvmsg+0x110/0x3a0
-___sys_recvmsg net/socket.c:2737 [inline]
-__sys_recvmsg+0x194/0x210 net/socket.c:2767
-__do_sys_recvmsg net/socket.c:2777 [inline]
-__se_sys_recvmsg net/socket.c:2774 [inline]
-__arm64_sys_recvmsg+0x2c/0x3c net/socket.c:2774
-__invoke_syscall arch/arm64/kernel/syscall.c:38 [inline]
-invoke_syscall+0x64/0x178 arch/arm64/kernel/syscall.c:52
-el0_svc_common+0xbc/0x180 arch/arm64/kernel/syscall.c:142
-do_el0_svc+0x48/0x110 arch/arm64/kernel/syscall.c:193
-el0_svc+0x58/0x14c arch/arm64/kernel/entry-common.c:637
-el0t_64_sync_handler+0x84/0xf0 arch/arm64/kernel/entry-common.c:655
-el0t_64_sync+0x190/0x194 arch/arm64/kernel/entry.S:591
-Code: 91388800 aa0903e1 f90003e8 94e6d752 (d4210000)
+This commit fixes this issue by initializing the iov iterator with
+the correct copy direction when sending SYN or ACK without data.
 
-Fixes: 6fd1d51cfa25 ("net: SO_RCVMARK socket option for SO_MARK with recvmsg()")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Signed-off-by: Eric Dumazet <edumazet@google.com>
-Cc: Erin MacNeil <lnx.erin@gmail.com>
-Reviewed-by: Alexander Lobakin <alexandr.lobakin@intel.com>
-Link: https://lore.kernel.org/r/20230213160059.3829741-1-edumazet@google.com
+Fixes: f25dcc7687d4 ("tipc: tipc ->sendmsg() conversion")
+Reported-by: syzbot+d43608d061e8847ec9f3@syzkaller.appspotmail.com
+Acked-by: Jon Maloy <jmaloy@redhat.com>
+Signed-off-by: Tung Nguyen <tung.q.nguyen@dektech.com.au>
+Link: https://lore.kernel.org/r/20230214012606.5804-1-tung.q.nguyen@dektech.com.au
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/socket.c |    9 ++++++---
- 1 file changed, 6 insertions(+), 3 deletions(-)
+ net/tipc/socket.c |    2 ++
+ 1 file changed, 2 insertions(+)
 
---- a/net/socket.c
-+++ b/net/socket.c
-@@ -971,9 +971,12 @@ static inline void sock_recv_drops(struc
- static void sock_recv_mark(struct msghdr *msg, struct sock *sk,
- 			   struct sk_buff *skb)
- {
--	if (sock_flag(sk, SOCK_RCVMARK) && skb)
--		put_cmsg(msg, SOL_SOCKET, SO_MARK, sizeof(__u32),
--			 &skb->mark);
-+	if (sock_flag(sk, SOCK_RCVMARK) && skb) {
-+		/* We must use a bounce buffer for CONFIG_HARDENED_USERCOPY=y */
-+		__u32 mark = skb->mark;
-+
-+		put_cmsg(msg, SOL_SOCKET, SO_MARK, sizeof(__u32), &mark);
-+	}
- }
+--- a/net/tipc/socket.c
++++ b/net/tipc/socket.c
+@@ -2614,6 +2614,7 @@ static int tipc_connect(struct socket *s
+ 		/* Send a 'SYN-' to destination */
+ 		m.msg_name = dest;
+ 		m.msg_namelen = destlen;
++		iov_iter_kvec(&m.msg_iter, ITER_SOURCE, NULL, 0, 0);
  
- void __sock_recv_cmsgs(struct msghdr *msg, struct sock *sk,
+ 		/* If connect is in non-blocking case, set MSG_DONTWAIT to
+ 		 * indicate send_msg() is never blocked.
+@@ -2776,6 +2777,7 @@ static int tipc_accept(struct socket *so
+ 		__skb_queue_head(&new_sk->sk_receive_queue, buf);
+ 		skb_set_owner_r(buf, new_sk);
+ 	}
++	iov_iter_kvec(&m.msg_iter, ITER_SOURCE, NULL, 0, 0);
+ 	__tipc_sendstream(new_sock, &m, 0);
+ 	release_sock(new_sk);
+ exit:
 
 
