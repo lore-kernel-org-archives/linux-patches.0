@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16CD063B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934C4C433D2;
-	Mon, 20 Feb 2023 13:55:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A5C8E63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:56:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2E2C9C433EF;
+	Mon, 20 Feb 2023 13:56:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901358;
-	bh=H6WClBhaOmnPGQ+namoQkb5VssSkQFJ8BD7wGkIhsBg=;
+	s=korg; t=1676901361;
+	bh=dT7EBSURRzzMVlLZCuTB/CTUsIy5XhZ4w6EQ7uZwwgI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L18IgpP5ymAFjrYLR4ZJD0KMXBdLf+eXKIL9CqSJ5CSIHemH2nct8Ljcp5GIa6vVC
-	 j5bfB1pUmM23edyFakQpPjhpV3I4sUEf5Nx85wjASOJsnRiGxtxJqFrnV5Fh4cXd2X
-	 ccXWFubK53Vp0PPx6yfLeMz9cn3eTLLcrsqZq3+I=
+	b=d9QPrC/GNmiZ5uUAFS3BhVo4Fa3bXSOA4BRENN+M4HJ5OmoXTnp0b/Ga8okqwMJA4
+	 JYj0SCI29Ap4s3d0z2YbeG+yGyHnJ8HJ7uEPoCoHSbumlZA25YjikyH6pR/OHfclmI
+	 ubJmLD9B5M18AXNJ6ZV/IpfjrIRi5/2EqEF2sgZw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heiko Carstens <hca@linux.ibm.com>,
-	Sven Schnelle <svens@linux.ibm.com>,
-	Sumanth Korikkar <sumanthk@linux.ibm.com>
-Subject: [PATCH 5.10 17/57] [PATCH v2 1/1] s390/signal: fix endless loop in do_signal
-Date: Mon, 20 Feb 2023 14:36:25 +0100
-Message-Id: <20230220133549.972747392@linuxfoundation.org>
+	Guillaume Nault <gnault@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 44/57] ipv6: Fix datagram socket connection with DSCP.
+Date: Mon, 20 Feb 2023 14:36:52 +0100
+Message-Id: <20230220133550.893662341@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -35,43 +36,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sumanth Korikkar <sumanthk@linux.ibm.com>
+From: Guillaume Nault <gnault@redhat.com>
 
-No upstream commit exists: the problem addressed here is that 'commit
-75309018a24d ("s390: add support for TIF_NOTIFY_SIGNAL")' was backported
-to 5.10. This commit is broken, but nobody noticed upstream, since
-shortly after s390 converted to generic entry with 'commit 56e62a737028
-("s390: convert to generic entry")', which implicitly fixed the problem
-outlined below.
+commit e010ae08c71fda8be3d6bda256837795a0b3ea41 upstream.
 
-Thread flag is set to TIF_NOTIFY_SIGNAL for io_uring work.  The io work
-user or syscall calls do_signal when either one of the TIF_SIGPENDING or
-TIF_NOTIFY_SIGNAL flag is set.  However, do_signal does consider only
-TIF_SIGPENDING signal and ignores TIF_NOTIFY_SIGNAL condition.  This
-means get_signal is never invoked  for TIF_NOTIFY_SIGNAL and hence the
-flag is not cleared, which results in an endless do_signal loop.
+Take into account the IPV6_TCLASS socket option (DSCP) in
+ip6_datagram_flow_key_init(). Otherwise fib6_rule_match() can't
+properly match the DSCP value, resulting in invalid route lookup.
 
-Reference: 'commit 788d0824269b ("io_uring: import 5.15-stable io_uring")'
-Fixes: 75309018a24d ("s390: add support for TIF_NOTIFY_SIGNAL")
-Cc: stable@vger.kernel.org  # 5.10.162
-Acked-by: Heiko Carstens <hca@linux.ibm.com>
-Acked-by: Sven Schnelle <svens@linux.ibm.com>
-Signed-off-by: Sumanth Korikkar <sumanthk@linux.ibm.com>
+For example:
+
+  ip route add unreachable table main 2001:db8::10/124
+
+  ip route add table 100 2001:db8::10/124 dev eth0
+  ip -6 rule add dsfield 0x04 table 100
+
+  echo test | socat - UDP6:[2001:db8::11]:54321,ipv6-tclass=0x04
+
+Without this patch, socat fails at connect() time ("No route to host")
+because the fib-rule doesn't jump to table 100 and the lookup ends up
+being done in the main table.
+
+Fixes: 2cc67cc731d9 ("[IPV6] ROUTE: Routing by Traffic Class.")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/s390/kernel/signal.c |    2 +-
+ net/ipv6/datagram.c |    2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/arch/s390/kernel/signal.c
-+++ b/arch/s390/kernel/signal.c
-@@ -472,7 +472,7 @@ void do_signal(struct pt_regs *regs)
- 	current->thread.system_call =
- 		test_pt_regs_flag(regs, PIF_SYSCALL) ? regs->int_code : 0;
+--- a/net/ipv6/datagram.c
++++ b/net/ipv6/datagram.c
+@@ -51,7 +51,7 @@ static void ip6_datagram_flow_key_init(s
+ 	fl6->flowi6_mark = sk->sk_mark;
+ 	fl6->fl6_dport = inet->inet_dport;
+ 	fl6->fl6_sport = inet->inet_sport;
+-	fl6->flowlabel = np->flow_label;
++	fl6->flowlabel = ip6_make_flowinfo(np->tclass, np->flow_label);
+ 	fl6->flowi6_uid = sk->sk_uid;
  
--	if (test_thread_flag(TIF_SIGPENDING) && get_signal(&ksig)) {
-+	if (get_signal(&ksig)) {
- 		/* Whee!  Actually deliver the signal.  */
- 		if (current->thread.system_call) {
- 			regs->int_code = current->thread.system_call;
+ 	if (!fl6->flowi6_oif)
 
 
