@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B60E63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:42:36 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87072C4339E;
-	Mon, 20 Feb 2023 13:42:35 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A475663B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:42:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C1F9C433D2;
+	Mon, 20 Feb 2023 13:42:38 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900555;
-	bh=mgdY70ZZpTjAYXJ9RpOyDE9YTF1lswzIECogCx/sFo8=;
+	s=korg; t=1676900558;
+	bh=GeOdsghwt0sP1aMTsUVwep3X6R0jlPuPxsCNWBTH28I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rzluP4z+TVRBOu3fZ183R91ddPr4ex9SLwNuvHdtbyZXDeyPzfxIXvgV+Lvj1dSXO
-	 FS/I4kEiM7FiA+aQKeV9UIuXkIqokjb0iDnX6F/eKrJ83zyCSMgQ+oQlpcEqcABHBN
-	 jNDXknOs8vBPfDSWKpb6zsDbZOTB8ZGYH9Hs9wV8=
+	b=AM4Mzs9TP+tFpuhszPCtYK70AopM5X4kfED6crof2A6q5lQbmIdVRJD0UkExRNd8X
+	 6mh/xZ9dmDnjxftUyRR+X7cGlyPNt3bamgnp7+T3K53wP5NhbU5oZLbWkF+7r2nVyL
+	 DPvdZWX8yrFn+etfybm28gbBLcGpg1BsLnpn7iDo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shell Chen <xierch@gmail.com>,
-	Florian Westphal <fw@strlen.de>,
-	Qingfang DENG <dqfext@gmail.com>
-Subject: [PATCH 4.19 69/89] netfilter: nft_tproxy: restrict to prerouting hook
-Date: Mon, 20 Feb 2023 14:36:08 +0100
-Message-Id: <20230220133555.564125191@linuxfoundation.org>
+	Michael Nies <michael.nies@netclusive.com>,
+	YingChi Long <me@inclyc.cn>,
+	Borislav Petkov <bp@suse.de>,
+	Nick Desaulniers <ndesaulniers@google.com>,
+	Nathan Chancellor <nathan@kernel.org>
+Subject: [PATCH 4.19 70/89] Revert "x86/fpu: Use _Alignof to avoid undefined behavior in TYPE_ALIGN"
+Date: Mon, 20 Feb 2023 14:36:09 +0100
+Message-Id: <20230220133555.594592089@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -35,45 +37,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Westphal <fw@strlen.de>
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 
-commit 18bbc3213383a82b05383827f4b1b882e3f0a5a5 upstream.
+This reverts commit a00d020f18dbe0666e221d929846f1b591b27c20 which is
+commit 55228db2697c09abddcb9487c3d9fa5854a932cd upstream.
 
-TPROXY is only allowed from prerouting, but nft_tproxy doesn't check this.
-This fixes a crash (null dereference) when using tproxy from e.g. output.
+_Alignof is not in the gcc version that the 4.19.y kernel still
+supports (4.6), so this change needs to be reverted as it breaks the
+build on those older compiler versions.
 
-Fixes: 4ed8eb6570a4 ("netfilter: nf_tables: Add native tproxy support")
-Reported-by: Shell Chen <xierch@gmail.com>
-Signed-off-by: Florian Westphal <fw@strlen.de>
-Signed-off-by: Qingfang DENG <dqfext@gmail.com>
+Reported-by: Michael Nies <michael.nies@netclusive.com>
+Link: https://lore.kernel.org/r/HE1PR0902MB188277E37DED663AE440510BE1D99@HE1PR0902MB1882.eurprd09.prod.outlook.com
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217013
+Cc: YingChi Long <me@inclyc.cn>
+Cc: Borislav Petkov <bp@suse.de>
+Cc: Nick Desaulniers <ndesaulniers@google.com>
+Cc: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/netfilter/nft_tproxy.c |    8 ++++++++
- 1 file changed, 8 insertions(+)
+ arch/x86/kernel/fpu/init.c |    7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
---- a/net/netfilter/nft_tproxy.c
-+++ b/net/netfilter/nft_tproxy.c
-@@ -289,6 +289,13 @@ static int nft_tproxy_dump(struct sk_buf
- 	return 0;
- }
+--- a/arch/x86/kernel/fpu/init.c
++++ b/arch/x86/kernel/fpu/init.c
+@@ -138,6 +138,9 @@ static void __init fpu__init_system_gene
+ unsigned int fpu_kernel_xstate_size;
+ EXPORT_SYMBOL_GPL(fpu_kernel_xstate_size);
  
-+static int nft_tproxy_validate(const struct nft_ctx *ctx,
-+			       const struct nft_expr *expr,
-+			       const struct nft_data **data)
-+{
-+	return nft_chain_validate_hooks(ctx->chain, 1 << NF_INET_PRE_ROUTING);
-+}
++/* Get alignment of the TYPE. */
++#define TYPE_ALIGN(TYPE) offsetof(struct { char x; TYPE test; }, test)
 +
- static struct nft_expr_type nft_tproxy_type;
- static const struct nft_expr_ops nft_tproxy_ops = {
- 	.type		= &nft_tproxy_type,
-@@ -296,6 +303,7 @@ static const struct nft_expr_ops nft_tpr
- 	.eval		= nft_tproxy_eval,
- 	.init		= nft_tproxy_init,
- 	.dump		= nft_tproxy_dump,
-+	.validate	= nft_tproxy_validate,
- };
+ /*
+  * Enforce that 'MEMBER' is the last field of 'TYPE'.
+  *
+@@ -145,8 +148,8 @@ EXPORT_SYMBOL_GPL(fpu_kernel_xstate_size
+  * because that's how C aligns structs.
+  */
+ #define CHECK_MEMBER_AT_END_OF(TYPE, MEMBER) \
+-	BUILD_BUG_ON(sizeof(TYPE) !=         \
+-		     ALIGN(offsetofend(TYPE, MEMBER), _Alignof(TYPE)))
++	BUILD_BUG_ON(sizeof(TYPE) != ALIGN(offsetofend(TYPE, MEMBER), \
++					   TYPE_ALIGN(TYPE)))
  
- static struct nft_expr_type nft_tproxy_type __read_mostly = {
+ /*
+  * We append the 'struct fpu' to the task_struct:
 
 
