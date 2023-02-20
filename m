@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B5B63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:54:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E940C433EF;
-	Mon, 20 Feb 2023 13:54:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A9463B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:54:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B75C433D2;
+	Mon, 20 Feb 2023 13:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901268;
-	bh=Q4fIJrB9ze0H6fdtNt/wHdDiReKz63ks7CkDFg4tGNs=;
+	s=korg; t=1676901270;
+	bh=eYVsuz7yIS4jkNG98M87pZNda/oClfDzRcrDjEc1DpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M4j8ZpBxguHky8LEgLnvVXhff2KxYJKZSsvuFXB7aMf/1lTV7yU6N1yEU6vaAlOte
-	 yynUU4/GfEmoO7yo0wd4N9BURK7e3nw8ft+qR7N+JWybPczL2Syua01xMtMYfRe6iJ
-	 cRbLgvgG1cfdQp+nhY37grwxTIg4oIMAdkj75YV8=
+	b=Zy1vJGVZwXQuCCkJKu9YR46VqrB0LRE2f/uFHx+AWg/dfSp2f731KKKm7FP94OFpK
+	 daCicHxYKp4c0Zgk1dz2rJIELdlq/qlSSMolTSzFRKqEwqQbldqXRl8dxh2vOM1Sz2
+	 +nU7UoxzmOSTz/VDp9bfCILvD5RtuPCeBisi7t1s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Amit Engel <Amit.Engel@dell.com>,
-	James Smart <jsmart2021@gmail.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 10/57] nvme-fc: fix a missing queue put in nvmet_fc_ls_create_association
-Date: Mon, 20 Feb 2023 14:36:18 +0100
-Message-Id: <20230220133549.721644720@linuxfoundation.org>
+Subject: [PATCH 5.10 11/57] platform/x86: touchscreen_dmi: Add Chuwi Vi8 (CWI501) DMI match
+Date: Mon, 20 Feb 2023 14:36:19 +0100
+Message-Id: <20230220133549.758101692@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -36,39 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Amit Engel <Amit.Engel@dell.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit 0cab4404874f2de52617de8400c844891c6ea1ce ]
+[ Upstream commit eecf2acd4a580e9364e5087daf0effca60a240b7 ]
 
-As part of nvmet_fc_ls_create_association there is a case where
-nvmet_fc_alloc_target_queue fails right after a new association with an
-admin queue is created. In this case, no one releases the get taken in
-nvmet_fc_alloc_target_assoc.  This fix is adding the missing put.
+Add a DMI match for the CWI501 version of the Chuwi Vi8 tablet,
+pointing to the same chuwi_vi8_data as the existing CWI506 version
+DMI match.
 
-Signed-off-by: Amit Engel <Amit.Engel@dell.com>
-Reviewed-by: James Smart <jsmart2021@gmail.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230202103413.331459-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/target/fc.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/x86/touchscreen_dmi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
-index 640031cbda7cc..46fc44ce86712 100644
---- a/drivers/nvme/target/fc.c
-+++ b/drivers/nvme/target/fc.c
-@@ -1675,8 +1675,10 @@ nvmet_fc_ls_create_association(struct nvmet_fc_tgtport *tgtport,
- 		else {
- 			queue = nvmet_fc_alloc_target_queue(iod->assoc, 0,
- 					be16_to_cpu(rqst->assoc_cmd.sqsize));
--			if (!queue)
-+			if (!queue) {
- 				ret = VERR_QUEUE_ALLOC_FAIL;
-+				nvmet_fc_tgt_a_put(iod->assoc);
-+			}
- 		}
- 	}
- 
+diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
+index bc26acace2c30..b96fbc8dba09d 100644
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -1030,6 +1030,15 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
+ 			DMI_MATCH(DMI_BIOS_DATE, "05/07/2016"),
+ 		},
+ 	},
++	{
++		/* Chuwi Vi8 (CWI501) */
++		.driver_data = (void *)&chuwi_vi8_data,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Insyde"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "i86"),
++			DMI_MATCH(DMI_BIOS_VERSION, "CHUWI.W86JLBNR01"),
++		},
++	},
+ 	{
+ 		/* Chuwi Vi8 (CWI506) */
+ 		.driver_data = (void *)&chuwi_vi8_data,
 -- 
 2.39.0
 
