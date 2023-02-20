@@ -1,26 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9883363B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:41:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F8B8C433D2;
-	Mon, 20 Feb 2023 13:41:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 35A6063B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:41:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B15A5C433EF;
+	Mon, 20 Feb 2023 13:41:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900479;
-	bh=PBoBEufJuI6OMTUtBJCuSuB5teAbeuZWM19mjwXNq/8=;
+	s=korg; t=1676900482;
+	bh=wkoPyxKt6DXotv4X9bXJr15HY2B8eSdYA+vfj3db58g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MGH5yLIKN1M4QZOTGmRRM7Iur1rMN6yeLynYwHEBiHUsevJrygQtX+iqj2UOPcaOz
-	 ntzQbhq7DJSkyWSer+043nvjbcPipJ1xPA3g2MCPjaqxmsOdDISZ5+BgTVhhTaGQ/+
-	 zDXk11vrVHcnQO0UCkM3H91WLqFueB4hIg0NjSHQ=
+	b=XrJO2Cn064oog6pAfpCfIGO6m+IuoZXb+6UL+uNAqQ3MXU8AdJ87QZSHNOQ4wa2Nm
+	 HvoysSqzq7OfZOx0VbdUW7Rstzp7fOcs9R1g+ujWT7bL03PsD7kLWrqprillDEZf2D
+	 LOIxWWsJY6JM5aIPjG3B7xuTNjL64DBCa2qWFAPc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Gilles BULOZ <gilles.buloz@kontron.com>,
-	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 4.19 40/89] serial: 8250_dma: Fix DMA Rx rearm race
-Date: Mon, 20 Feb 2023 14:35:39 +0100
-Message-Id: <20230220133554.548298319@linuxfoundation.org>
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: [PATCH 4.19 41/89] thermal: intel: int340x: Add locking to int340x_thermal_get_trip_type()
+Date: Mon, 20 Feb 2023 14:35:40 +0100
+Message-Id: <20230220133554.583501168@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -34,85 +33,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-commit 57e9af7831dcf211c5c689c2a6f209f4abdf0bce upstream.
+commit acd7e9ee57c880b99671dd99680cb707b7b5b0ee upstream.
 
-As DMA Rx can be completed from two places, it is possible that DMA Rx
-completes before DMA completion callback had a chance to complete it.
-Once the previous DMA Rx has been completed, a new one can be started
-on the next UART interrupt. The following race is possible
-(uart_unlock_and_check_sysrq_irqrestore() replaced with
-spin_unlock_irqrestore() for simplicity/clarity):
+In order to prevent int340x_thermal_get_trip_type() from possibly
+racing with int340x_thermal_read_trips() invoked by int3403_notify()
+add locking to it in analogy with int340x_thermal_get_trip_temp().
 
-CPU0					CPU1
-					dma_rx_complete()
-serial8250_handle_irq()
-  spin_lock_irqsave(&port->lock)
-  handle_rx_dma()
-    serial8250_rx_dma_flush()
-      __dma_rx_complete()
-        dma->rx_running = 0
-        // Complete DMA Rx
-  spin_unlock_irqrestore(&port->lock)
-
-serial8250_handle_irq()
-  spin_lock_irqsave(&port->lock)
-  handle_rx_dma()
-    serial8250_rx_dma()
-      dma->rx_running = 1
-      // Setup a new DMA Rx
-  spin_unlock_irqrestore(&port->lock)
-
-					  spin_lock_irqsave(&port->lock)
-					  // sees dma->rx_running = 1
-					  __dma_rx_complete()
-					    dma->rx_running = 0
-					    // Incorrectly complete
-					    // running DMA Rx
-
-This race seems somewhat theoretical to occur for real but handle it
-correctly regardless. Check what is the DMA status before complething
-anything in __dma_rx_complete().
-
-Reported-by: Gilles BULOZ <gilles.buloz@kontron.com>
-Tested-by: Gilles BULOZ <gilles.buloz@kontron.com>
-Fixes: 9ee4b83e51f7 ("serial: 8250: Add support for dmaengine")
-Cc: stable@vger.kernel.org
-Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230130114841.25749-3-ilpo.jarvinen@linux.intel.com
+Fixes: 6757a7abe47b ("thermal: intel: int340x: Protect trip temperature from concurrent updates")
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_dma.c |   12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ drivers/thermal/int340x_thermal/int340x_thermal_zone.c |   10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
 
---- a/drivers/tty/serial/8250/8250_dma.c
-+++ b/drivers/tty/serial/8250/8250_dma.c
-@@ -48,15 +48,23 @@ static void __dma_rx_complete(void *para
- 	struct uart_8250_dma	*dma = p->dma;
- 	struct tty_port		*tty_port = &p->port.state->port;
- 	struct dma_tx_state	state;
-+	enum dma_status		dma_status;
- 	int			count;
+--- a/drivers/thermal/int340x_thermal/int340x_thermal_zone.c
++++ b/drivers/thermal/int340x_thermal/int340x_thermal_zone.c
+@@ -89,11 +89,13 @@ static int int340x_thermal_get_trip_type
+ 					 enum thermal_trip_type *type)
+ {
+ 	struct int34x_thermal_zone *d = zone->devdata;
+-	int i;
++	int i, ret = 0;
  
--	dma->rx_running = 0;
--	dmaengine_tx_status(dma->rxchan, dma->rx_cookie, &state);
-+	/*
-+	 * New DMA Rx can be started during the completion handler before it
-+	 * could acquire port's lock and it might still be ongoing. Don't to
-+	 * anything in such case.
-+	 */
-+	dma_status = dmaengine_tx_status(dma->rxchan, dma->rx_cookie, &state);
-+	if (dma_status == DMA_IN_PROGRESS)
-+		return;
+ 	if (d->override_ops && d->override_ops->get_trip_type)
+ 		return d->override_ops->get_trip_type(zone, trip, type);
  
- 	count = dma->rx_size - state.residue;
++	mutex_lock(&d->trip_mutex);
++
+ 	if (trip < d->aux_trip_nr)
+ 		*type = THERMAL_TRIP_PASSIVE;
+ 	else if (trip == d->crt_trip_id)
+@@ -111,10 +113,12 @@ static int int340x_thermal_get_trip_type
+ 			}
+ 		}
+ 		if (i == INT340X_THERMAL_MAX_ACT_TRIP_COUNT)
+-			return -EINVAL;
++			ret = -EINVAL;
+ 	}
  
- 	tty_insert_flip_string(tty_port, dma->rx_buf, count);
- 	p->port.icount.rx += count;
-+	dma->rx_running = 0;
- 
- 	tty_flip_buffer_push(tty_port);
+-	return 0;
++	mutex_unlock(&d->trip_mutex);
++
++	return ret;
  }
+ 
+ static int int340x_thermal_set_trip_temp(struct thermal_zone_device *zone,
 
 
