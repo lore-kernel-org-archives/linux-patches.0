@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7469F63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F101EC433EF;
-	Mon, 20 Feb 2023 13:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 234AA63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F433C433D2;
+	Mon, 20 Feb 2023 13:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901338;
-	bh=o3pnVhfKfzU+4Kbw4i2qXhEWM1kYCZA8HFMNQuPgKSE=;
+	s=korg; t=1676901341;
+	bh=QYOMXxW6MI0jTvO1e9bAtG5DCvXWueu5rx02ZljLFUo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=wz5Oaf7s1DlttxsT8Xii3F65MmlPbRKkVU5/aJXRyhU/97vvxl/nrp4BXQZzo5Enf
-	 JVkJrDxXdkaqvnu/31opfnyNrPHQYBQfi6FOsU0eWWoLXX9Va1Bhv35PwvQVho+zr6
-	 gLfbNFA402b8q1IULm6ah+aP74dDY1yLDNSdoWpA=
+	b=jm7Ssh7pj11b09lTg/5o3Lk8aLlqv4eeDJHHmJNU5Xg0AO99XejC7XdeApcKwo+Fc
+	 MeoGqb1seHtqJqyrPUPXzdhmCQpexRCXsu+jKfEFLIkJCO5uEYfCeI4QDWBcVyv1wK
+	 rTtb6XVuujHSZm68ZfJXJXsIxP5aVlMkRBl8BB0Y=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 36/57] dccp/tcp: Avoid negative sk_forward_alloc by ipv6_pinfo.pktoptions.
-Date: Mon, 20 Feb 2023 14:36:44 +0100
-Message-Id: <20230220133550.603742539@linuxfoundation.org>
+	Miko Larsson <mikoxyzzz@gmail.com>,
+	Alexander Duyck <alexanderduyck@fb.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	syzbot+cd80c5ef5121bfe85b55@syzkaller.appspotmail.com
+Subject: [PATCH 5.10 37/57] net/usb: kalmia: Dont pass act_len in usb_bulk_msg error path
+Date: Mon, 20 Feb 2023 14:36:45 +0100
+Message-Id: <20230220133550.643970789@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -35,125 +36,54 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Miko Larsson <mikoxyzzz@gmail.com>
 
-commit ca43ccf41224b023fc290073d5603a755fd12eed upstream.
+commit c68f345b7c425b38656e1791a0486769a8797016 upstream.
 
-Eric Dumazet pointed out [0] that when we call skb_set_owner_r()
-for ipv6_pinfo.pktoptions, sk_rmem_schedule() has not been called,
-resulting in a negative sk_forward_alloc.
+syzbot reported that act_len in kalmia_send_init_packet() is
+uninitialized when passing it to the first usb_bulk_msg error path. Jiri
+Pirko noted that it's pointless to pass it in the error path, and that
+the value that would be printed in the second error path would be the
+value of act_len from the first call to usb_bulk_msg.[1]
 
-We add a new helper which clones a skb and sets its owner only
-when sk_rmem_schedule() succeeds.
+With this in mind, let's just not pass act_len to the usb_bulk_msg error
+paths.
 
-Note that we move skb_set_owner_r() forward in (dccp|tcp)_v6_do_rcv()
-because tcp_send_synack() can make sk_forward_alloc negative before
-ipv6_opt_accepted() in the crossed SYN-ACK or self-connect() cases.
+1: https://lore.kernel.org/lkml/Y9pY61y1nwTuzMOa@nanopsycho/
 
-[0]: https://lore.kernel.org/netdev/CANn89iK9oc20Jdi_41jb9URdF210r7d1Y-+uypbMSbOfY6jqrg@mail.gmail.com/
-
-Fixes: 323fbd0edf3f ("net: dccp: Add handling of IPV6_PKTOPTIONS to dccp_v6_do_rcv()")
-Fixes: 3df80d9320bc ("[DCCP]: Introduce DCCPv6")
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Fixes: d40261236e8e ("net/usb: Add Samsung Kalmia driver for Samsung GT-B3730")
+Reported-and-tested-by: syzbot+cd80c5ef5121bfe85b55@syzkaller.appspotmail.com
+Signed-off-by: Miko Larsson <mikoxyzzz@gmail.com>
+Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/net/sock.h  |   13 +++++++++++++
- net/dccp/ipv6.c     |    7 ++-----
- net/ipv6/tcp_ipv6.c |   10 +++-------
- 3 files changed, 18 insertions(+), 12 deletions(-)
+ drivers/net/usb/kalmia.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/include/net/sock.h
-+++ b/include/net/sock.h
-@@ -2243,6 +2243,19 @@ static inline __must_check bool skb_set_
- 	return false;
- }
- 
-+static inline struct sk_buff *skb_clone_and_charge_r(struct sk_buff *skb, struct sock *sk)
-+{
-+	skb = skb_clone(skb, sk_gfp_mask(sk, GFP_ATOMIC));
-+	if (skb) {
-+		if (sk_rmem_schedule(sk, skb, skb->truesize)) {
-+			skb_set_owner_r(skb, sk);
-+			return skb;
-+		}
-+		__kfree_skb(skb);
-+	}
-+	return NULL;
-+}
-+
- void sk_reset_timer(struct sock *sk, struct timer_list *timer,
- 		    unsigned long expires);
- 
---- a/net/dccp/ipv6.c
-+++ b/net/dccp/ipv6.c
-@@ -541,11 +541,9 @@ static struct sock *dccp_v6_request_recv
- 	*own_req = inet_ehash_nolisten(newsk, req_to_sk(req_unhash), NULL);
- 	/* Clone pktoptions received with SYN, if we own the req */
- 	if (*own_req && ireq->pktopts) {
--		newnp->pktoptions = skb_clone(ireq->pktopts, GFP_ATOMIC);
-+		newnp->pktoptions = skb_clone_and_charge_r(ireq->pktopts, newsk);
- 		consume_skb(ireq->pktopts);
- 		ireq->pktopts = NULL;
--		if (newnp->pktoptions)
--			skb_set_owner_r(newnp->pktoptions, newsk);
+--- a/drivers/net/usb/kalmia.c
++++ b/drivers/net/usb/kalmia.c
+@@ -65,8 +65,8 @@ kalmia_send_init_packet(struct usbnet *d
+ 		init_msg, init_msg_len, &act_len, KALMIA_USB_TIMEOUT);
+ 	if (status != 0) {
+ 		netdev_err(dev->net,
+-			"Error sending init packet. Status %i, length %i\n",
+-			status, act_len);
++			"Error sending init packet. Status %i\n",
++			status);
+ 		return status;
  	}
+ 	else if (act_len != init_msg_len) {
+@@ -83,8 +83,8 @@ kalmia_send_init_packet(struct usbnet *d
  
- 	return newsk;
-@@ -605,7 +603,7 @@ static int dccp_v6_do_rcv(struct sock *s
- 					       --ANK (980728)
- 	 */
- 	if (np->rxopt.all)
--		opt_skb = skb_clone(skb, GFP_ATOMIC);
-+		opt_skb = skb_clone_and_charge_r(skb, sk);
- 
- 	if (sk->sk_state == DCCP_OPEN) { /* Fast path */
- 		if (dccp_rcv_established(sk, skb, dccp_hdr(skb), skb->len))
-@@ -669,7 +667,6 @@ ipv6_pktoptions:
- 			np->flow_label = ip6_flowlabel(ipv6_hdr(opt_skb));
- 		if (ipv6_opt_accepted(sk, opt_skb,
- 				      &DCCP_SKB_CB(opt_skb)->header.h6)) {
--			skb_set_owner_r(opt_skb, sk);
- 			memmove(IP6CB(opt_skb),
- 				&DCCP_SKB_CB(opt_skb)->header.h6,
- 				sizeof(struct inet6_skb_parm));
---- a/net/ipv6/tcp_ipv6.c
-+++ b/net/ipv6/tcp_ipv6.c
-@@ -1406,14 +1406,11 @@ static struct sock *tcp_v6_syn_recv_sock
- 
- 		/* Clone pktoptions received with SYN, if we own the req */
- 		if (ireq->pktopts) {
--			newnp->pktoptions = skb_clone(ireq->pktopts,
--						      sk_gfp_mask(sk, GFP_ATOMIC));
-+			newnp->pktoptions = skb_clone_and_charge_r(ireq->pktopts, newsk);
- 			consume_skb(ireq->pktopts);
- 			ireq->pktopts = NULL;
--			if (newnp->pktoptions) {
-+			if (newnp->pktoptions)
- 				tcp_v6_restore_cb(newnp->pktoptions);
--				skb_set_owner_r(newnp->pktoptions, newsk);
--			}
- 		}
- 	} else {
- 		if (!req_unhash && found_dup_sk) {
-@@ -1481,7 +1478,7 @@ static int tcp_v6_do_rcv(struct sock *sk
- 					       --ANK (980728)
- 	 */
- 	if (np->rxopt.all)
--		opt_skb = skb_clone(skb, sk_gfp_mask(sk, GFP_ATOMIC));
-+		opt_skb = skb_clone_and_charge_r(skb, sk);
- 
- 	if (sk->sk_state == TCP_ESTABLISHED) { /* Fast path */
- 		struct dst_entry *dst;
-@@ -1563,7 +1560,6 @@ ipv6_pktoptions:
- 		if (np->repflow)
- 			np->flow_label = ip6_flowlabel(ipv6_hdr(opt_skb));
- 		if (ipv6_opt_accepted(sk, opt_skb, &TCP_SKB_CB(opt_skb)->header.h6)) {
--			skb_set_owner_r(opt_skb, sk);
- 			tcp_v6_restore_cb(opt_skb);
- 			opt_skb = xchg(&np->pktoptions, opt_skb);
- 		} else {
+ 	if (status != 0)
+ 		netdev_err(dev->net,
+-			"Error receiving init result. Status %i, length %i\n",
+-			status, act_len);
++			"Error receiving init result. Status %i\n",
++			status);
+ 	else if (act_len != expected_len)
+ 		netdev_err(dev->net, "Unexpected init result length: %i\n",
+ 			act_len);
 
 
