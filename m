@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8A9463B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:54:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36B75C433D2;
-	Mon, 20 Feb 2023 13:54:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7098D63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:54:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDCDC433D2;
+	Mon, 20 Feb 2023 13:54:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901270;
-	bh=eYVsuz7yIS4jkNG98M87pZNda/oClfDzRcrDjEc1DpY=;
+	s=korg; t=1676901273;
+	bh=CMZfIyw3TnPoFT4KtOz91YCqECrmo7vGeSulbne+whI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Zy1vJGVZwXQuCCkJKu9YR46VqrB0LRE2f/uFHx+AWg/dfSp2f731KKKm7FP94OFpK
-	 daCicHxYKp4c0Zgk1dz2rJIELdlq/qlSSMolTSzFRKqEwqQbldqXRl8dxh2vOM1Sz2
-	 +nU7UoxzmOSTz/VDp9bfCILvD5RtuPCeBisi7t1s=
+	b=g7Q7z25oz1pFL3I6lRgsAydx7ZDjWv8vjbqlNLehq/LcEKBhOPPAbuEVUELUMwhk5
+	 xqermQox7epqTTU1H0JvTnGejIadM94hUPr3MpFHu4jIbPRmWUXAnrtOt+NyAZlzXs
+	 HodHRDmjxG4mbFaK+1m6zfo9fzMxKHfDBoeMzu9E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
+	Gaosheng Cui <cuigaosheng1@huawei.com>,
+	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 11/57] platform/x86: touchscreen_dmi: Add Chuwi Vi8 (CWI501) DMI match
-Date: Mon, 20 Feb 2023 14:36:19 +0100
-Message-Id: <20230220133549.758101692@linuxfoundation.org>
+Subject: [PATCH 5.10 12/57] nvmem: core: add error handling for dev_set_name
+Date: Mon, 20 Feb 2023 14:36:20 +0100
+Message-Id: <20230220133549.799129848@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -34,41 +35,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Gaosheng Cui <cuigaosheng1@huawei.com>
 
-[ Upstream commit eecf2acd4a580e9364e5087daf0effca60a240b7 ]
+[ Upstream commit 5544e90c81261e82e02bbf7c6015a4b9c8c825ef ]
 
-Add a DMI match for the CWI501 version of the Chuwi Vi8 tablet,
-pointing to the same chuwi_vi8_data as the existing CWI506 version
-DMI match.
+The type of return value of dev_set_name is int, which may return
+wrong result, so we add error handling for it to reclaim memory
+of nvmem resource, and return early when an error occurs.
 
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20230202103413.331459-1-hdegoede@redhat.com
+Signed-off-by: Gaosheng Cui <cuigaosheng1@huawei.com>
+Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Link: https://lore.kernel.org/r/20220916122100.170016-4-srinivas.kandagatla@linaro.org
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Stable-dep-of: ab3428cfd9aa ("nvmem: core: fix registration vs use race")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/platform/x86/touchscreen_dmi.c | 9 +++++++++
- 1 file changed, 9 insertions(+)
+ drivers/nvmem/core.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
-index bc26acace2c30..b96fbc8dba09d 100644
---- a/drivers/platform/x86/touchscreen_dmi.c
-+++ b/drivers/platform/x86/touchscreen_dmi.c
-@@ -1030,6 +1030,15 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
- 			DMI_MATCH(DMI_BIOS_DATE, "05/07/2016"),
- 		},
- 	},
-+	{
-+		/* Chuwi Vi8 (CWI501) */
-+		.driver_data = (void *)&chuwi_vi8_data,
-+		.matches = {
-+			DMI_MATCH(DMI_SYS_VENDOR, "Insyde"),
-+			DMI_MATCH(DMI_PRODUCT_NAME, "i86"),
-+			DMI_MATCH(DMI_BIOS_VERSION, "CHUWI.W86JLBNR01"),
-+		},
-+	},
- 	{
- 		/* Chuwi Vi8 (CWI506) */
- 		.driver_data = (void *)&chuwi_vi8_data,
+diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
+index 48fbe49e3772b..9da4edbabfe75 100644
+--- a/drivers/nvmem/core.c
++++ b/drivers/nvmem/core.c
+@@ -661,18 +661,24 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
+ 
+ 	switch (config->id) {
+ 	case NVMEM_DEVID_NONE:
+-		dev_set_name(&nvmem->dev, "%s", config->name);
++		rval = dev_set_name(&nvmem->dev, "%s", config->name);
+ 		break;
+ 	case NVMEM_DEVID_AUTO:
+-		dev_set_name(&nvmem->dev, "%s%d", config->name, nvmem->id);
++		rval = dev_set_name(&nvmem->dev, "%s%d", config->name, nvmem->id);
+ 		break;
+ 	default:
+-		dev_set_name(&nvmem->dev, "%s%d",
++		rval = dev_set_name(&nvmem->dev, "%s%d",
+ 			     config->name ? : "nvmem",
+ 			     config->name ? config->id : nvmem->id);
+ 		break;
+ 	}
+ 
++	if (rval) {
++		ida_free(&nvmem_ida, nvmem->id);
++		kfree(nvmem);
++		return ERR_PTR(rval);
++	}
++
+ 	nvmem->read_only = device_property_present(config->dev, "read-only") ||
+ 			   config->read_only || !nvmem->reg_write;
+ 
 -- 
 2.39.0
 
