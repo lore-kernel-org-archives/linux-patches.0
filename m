@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8174663BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:00:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0AD77C433D2;
-	Mon, 20 Feb 2023 14:00:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 24B9163BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:00:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E5DEC433D2;
+	Mon, 20 Feb 2023 14:00:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901629;
-	bh=QYOMXxW6MI0jTvO1e9bAtG5DCvXWueu5rx02ZljLFUo=;
+	s=korg; t=1676901632;
+	bh=BeQzhAygK/0+taI2usxd4/6EDpkOrj3G1OySmVwa3qs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MFPHpQxEkISrHqCkrCkNyJh+iIo9HRZZRMt+zQEKPrJ5NAOf0h8ElRHlHRVWkwbSH
-	 hNZp3dEefliVCfGFL+q+uN5FQzxqOEPEhHDjtES46c4a6B6EdNOhZVrlqL+bDAw5E9
-	 8K5oRU+l3wS6JK7TvaCDeqH66xkeNC0ryzGOmRig=
+	b=Puy7yCpeQxA9prqo7eZpxk2oU2DkHPUhF/6dGrReKbUHSWVbHTUsTQbNxtO4ddZPJ
+	 FUNjOWkUvFrek0jiOZs/OZqV57CzDfJ+2lMlmcAglD+JlVFPR3WmiOUEVrzth7n4U9
+	 3D88TYp1ytDVTvBO5xvGkUE4IAv73Y1rr25zvKGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miko Larsson <mikoxyzzz@gmail.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	syzbot+cd80c5ef5121bfe85b55@syzkaller.appspotmail.com
-Subject: [PATCH 6.1 090/118] net/usb: kalmia: Dont pass act_len in usb_bulk_msg error path
-Date: Mon, 20 Feb 2023 14:36:46 +0100
-Message-Id: <20230220133603.996543754@linuxfoundation.org>
+	Simon Gaiser <simon@invisiblethingslab.com>,
+	Damien Le Moal <damien.lemoal@opensource.wdc.com>
+Subject: [PATCH 6.1 064/118] ata: ahci: Add Tiger Lake UP{3,4} AHCI controller
+Date: Mon, 20 Feb 2023 14:36:20 +0100
+Message-Id: <20230220133602.990902082@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -36,54 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miko Larsson <mikoxyzzz@gmail.com>
+From: Simon Gaiser <simon@invisiblethingslab.com>
 
-commit c68f345b7c425b38656e1791a0486769a8797016 upstream.
+commit 104ff59af73aba524e57ae0fef70121643ff270e upstream.
 
-syzbot reported that act_len in kalmia_send_init_packet() is
-uninitialized when passing it to the first usb_bulk_msg error path. Jiri
-Pirko noted that it's pointless to pass it in the error path, and that
-the value that would be printed in the second error path would be the
-value of act_len from the first call to usb_bulk_msg.[1]
+Mark the Tiger Lake UP{3,4} AHCI controller as "low_power". This enables
+S0ix to work out of the box. Otherwise this isn't working unless the
+user manually sets /sys/class/scsi_host/*/link_power_management_policy.
 
-With this in mind, let's just not pass act_len to the usb_bulk_msg error
-paths.
+Intel lists a total of 4 SATA controller IDs in [1] for those mobile
+PCHs. This commit just adds the "AHCI" variant since I only tested
+those.
 
-1: https://lore.kernel.org/lkml/Y9pY61y1nwTuzMOa@nanopsycho/
+[1]: https://cdrdv2.intel.com/v1/dl/getContent/631119
 
-Fixes: d40261236e8e ("net/usb: Add Samsung Kalmia driver for Samsung GT-B3730")
-Reported-and-tested-by: syzbot+cd80c5ef5121bfe85b55@syzkaller.appspotmail.com
-Signed-off-by: Miko Larsson <mikoxyzzz@gmail.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Simon Gaiser <simon@invisiblethingslab.com>
+CC: stable@vger.kernel.org
+Signed-off-by: Damien Le Moal <damien.lemoal@opensource.wdc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/kalmia.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/ata/ahci.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/net/usb/kalmia.c
-+++ b/drivers/net/usb/kalmia.c
-@@ -65,8 +65,8 @@ kalmia_send_init_packet(struct usbnet *d
- 		init_msg, init_msg_len, &act_len, KALMIA_USB_TIMEOUT);
- 	if (status != 0) {
- 		netdev_err(dev->net,
--			"Error sending init packet. Status %i, length %i\n",
--			status, act_len);
-+			"Error sending init packet. Status %i\n",
-+			status);
- 		return status;
- 	}
- 	else if (act_len != init_msg_len) {
-@@ -83,8 +83,8 @@ kalmia_send_init_packet(struct usbnet *d
+--- a/drivers/ata/ahci.c
++++ b/drivers/ata/ahci.c
+@@ -422,6 +422,7 @@ static const struct pci_device_id ahci_p
+ 	{ PCI_VDEVICE(INTEL, 0x34d3), board_ahci_low_power }, /* Ice Lake LP AHCI */
+ 	{ PCI_VDEVICE(INTEL, 0x02d3), board_ahci_low_power }, /* Comet Lake PCH-U AHCI */
+ 	{ PCI_VDEVICE(INTEL, 0x02d7), board_ahci_low_power }, /* Comet Lake PCH RAID */
++	{ PCI_VDEVICE(INTEL, 0xa0d3), board_ahci_low_power }, /* Tiger Lake UP{3,4} AHCI */
  
- 	if (status != 0)
- 		netdev_err(dev->net,
--			"Error receiving init result. Status %i, length %i\n",
--			status, act_len);
-+			"Error receiving init result. Status %i\n",
-+			status);
- 	else if (act_len != expected_len)
- 		netdev_err(dev->net, "Unexpected init result length: %i\n",
- 			act_len);
+ 	/* JMicron 360/1/3/5/6, match class to avoid IDE function */
+ 	{ PCI_VENDOR_ID_JMICRON, PCI_ANY_ID, PCI_ANY_ID, PCI_ANY_ID,
 
 
