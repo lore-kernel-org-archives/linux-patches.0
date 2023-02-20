@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA25663B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:39:21 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BCC2C433EF;
-	Mon, 20 Feb 2023 13:39:21 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5F8BD63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:39:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE748C433EF;
+	Mon, 20 Feb 2023 13:39:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900361;
-	bh=raKm7d1i05TtGQ+T20xZSIPa5jEmuMULSkGn4+t/fNE=;
+	s=korg; t=1676900364;
+	bh=gnfPGIBf8HQY1BWsNQx0oxx+OH7pE9hPsNRjYz8x/po=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wp8wfifitT0wBdAZ6ATz/jt3faWldgRN7TN83BRUL2cxkGOgYG+qevHwOHFVFk4mU
-	 Y4LGFAnfhBLr/6ve8Li+1fVdyHT5wxr/ETbcD56oc3z410t56Q3vBOACWFB0gei8Sx
-	 QEl9R1iBqDts1qr8yqzDc63yVbHPO9qlayhz2lR0=
+	b=038GXCJWLdbY6M338/UTJmOeEVIDvS7HixjlIG0vrpll5DTT0Ft2acLYo1bzCY+Rr
+	 w/EQDUVVxgvYGXjnBRvTSKBATVq6lroIp2jQ7S7qZaoobTOfZ0Ed8XOGowudvPXvV1
+	 JRoQc668N06WIxqOC/W+x1CA8lia9p9hwfA2e/lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miroslav Zatko <mzatko@mirexoft.com>,
-	Dennis Wassenberg <dennis.wassenberg@secunet.com>,
-	Mark Pearson <mpearson-lenovo@squebb.ca>
-Subject: [PATCH 4.14 32/53] usb: core: add quirk for Alcor Link AK9563 smartcard reader
-Date: Mon, 20 Feb 2023 14:35:58 +0100
-Message-Id: <20230220133549.320752439@linuxfoundation.org>
+	Guillaume Nault <gnault@redhat.com>,
+	Eric Dumazet <edumazet@google.com>,
+	David Ahern <dsahern@kernel.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 4.14 50/53] ipv6: Fix tcp socket connection with DSCP.
+Date: Mon, 20 Feb 2023 14:36:16 +0100
+Message-Id: <20230220133549.950894862@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
 References: <20230220133548.158615609@linuxfoundation.org>
@@ -35,38 +36,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mark Pearson <mpearson-lenovo@squebb.ca>
+From: Guillaume Nault <gnault@redhat.com>
 
-commit 303e724d7b1e1a0a93daf0b1ab5f7c4f53543b34 upstream.
+commit 8230680f36fd1525303d1117768c8852314c488c upstream.
 
-The Alcor Link AK9563 smartcard reader used on some Lenovo platforms
-doesn't work. If LPM is enabled the reader will provide an invalid
-usb config descriptor. Added quirk to disable LPM.
+Take into account the IPV6_TCLASS socket option (DSCP) in
+tcp_v6_connect(). Otherwise fib6_rule_match() can't properly
+match the DSCP value, resulting in invalid route lookup.
 
-Verified fix on Lenovo P16 G1 and T14 G3
+For example:
 
-Tested-by: Miroslav Zatko <mzatko@mirexoft.com>
-Tested-by: Dennis Wassenberg <dennis.wassenberg@secunet.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Dennis Wassenberg <dennis.wassenberg@secunet.com>
-Signed-off-by: Mark Pearson <mpearson-lenovo@squebb.ca>
-Link: https://lore.kernel.org/r/20230208181223.1092654-1-mpearson-lenovo@squebb.ca
+  ip route add unreachable table main 2001:db8::10/124
+
+  ip route add table 100 2001:db8::10/124 dev eth0
+  ip -6 rule add dsfield 0x04 table 100
+
+  echo test | socat - TCP6:[2001:db8::11]:54321,ipv6-tclass=0x04
+
+Without this patch, socat fails at connect() time ("No route to host")
+because the fib-rule doesn't jump to table 100 and the lookup ends up
+being done in the main table.
+
+Fixes: 2cc67cc731d9 ("[IPV6] ROUTE: Routing by Traffic Class.")
+Signed-off-by: Guillaume Nault <gnault@redhat.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Reviewed-by: David Ahern <dsahern@kernel.org>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/quirks.c |    3 +++
- 1 file changed, 3 insertions(+)
+ net/ipv6/tcp_ipv6.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/usb/core/quirks.c
-+++ b/drivers/usb/core/quirks.c
-@@ -340,6 +340,9 @@ static const struct usb_device_id usb_qu
- 	/* DJI CineSSD */
- 	{ USB_DEVICE(0x2ca3, 0x0031), .driver_info = USB_QUIRK_NO_LPM },
- 
-+	/* Alcor Link AK9563 SC Reader used in 2022 Lenovo ThinkPads */
-+	{ USB_DEVICE(0x2ce3, 0x9563), .driver_info = USB_QUIRK_NO_LPM },
-+
- 	/* DELL USB GEN2 */
- 	{ USB_DEVICE(0x413c, 0xb062), .driver_info = USB_QUIRK_NO_LPM | USB_QUIRK_RESET_RESUME },
- 
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -241,6 +241,7 @@ static int tcp_v6_connect(struct sock *s
+ 	fl6.flowi6_proto = IPPROTO_TCP;
+ 	fl6.daddr = sk->sk_v6_daddr;
+ 	fl6.saddr = saddr ? *saddr : np->saddr;
++	fl6.flowlabel = ip6_make_flowinfo(np->tclass, np->flow_label);
+ 	fl6.flowi6_oif = sk->sk_bound_dev_if;
+ 	fl6.flowi6_mark = sk->sk_mark;
+ 	fl6.fl6_dport = usin->sin6_port;
 
 
