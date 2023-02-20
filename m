@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 754B363B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:16 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EFB6AC4339C;
-	Mon, 20 Feb 2023 13:38:15 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0979663B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 85E74C433EF;
+	Mon, 20 Feb 2023 13:38:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900296;
-	bh=3VIOme9LouuV3uL7WUR/mz+jvuBQ8e8KdyrPgdYYMjM=;
+	s=korg; t=1676900298;
+	bh=kLaTJhX3urRDXYqFYP4cTPQXfCyVgrQug/XKbORdWm4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zcqHl8cw0WsIMnQVMBBvPYbXTh+9AkpzPmIjoWWRwxYp14EHmQDAPdMgFa8nh3TKG
-	 8aZg7zdd0R/8dK0azA6U7nkgwA1+g02EeWpKOXfcRsEhHoP3CaCWohdBZ2DeBheoEb
-	 gOIzkUn4hzm2+vojeBRq7coGOjE8TpmTnx3QBrok=
+	b=qYlkX89qYHZnaQ7XxG+vPC1vc50ch2mpyF9UlhYYx6h7FFF1CQmdydJZUlVg2ltnI
+	 QFI2TWsJfFX6boi6dK629gGhEWjoUMqv5jB05KW1g+DD1gn/442VBkH9RKEvfBF/zg
+	 iEjKTXrzOT7sk4oj9J9esxP9kcy/6gkoTW//Kmt8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Gilles BULOZ <gilles.buloz@kontron.com>,
 	=?UTF-8?q?Ilpo=20J=C3=A4rvinen?= <ilpo.jarvinen@linux.intel.com>
-Subject: [PATCH 4.14 24/53] serial: 8250_dma: Fix DMA Rx completion race
-Date: Mon, 20 Feb 2023 14:35:50 +0100
-Message-Id: <20230220133549.029752084@linuxfoundation.org>
+Subject: [PATCH 4.14 25/53] serial: 8250_dma: Fix DMA Rx rearm race
+Date: Mon, 20 Feb 2023 14:35:51 +0100
+Message-Id: <20230220133549.071198887@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
 References: <20230220133548.158615609@linuxfoundation.org>
@@ -36,59 +36,83 @@ Content-Transfer-Encoding: 8bit
 
 From: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
 
-commit 31352811e13dc2313f101b890fd4b1ce760b5fe7 upstream.
+commit 57e9af7831dcf211c5c689c2a6f209f4abdf0bce upstream.
 
-__dma_rx_complete() is called from two places:
-  - Through the DMA completion callback dma_rx_complete()
-  - From serial8250_rx_dma_flush() after IIR_RLSI or IIR_RX_TIMEOUT
-The former does not hold port's lock during __dma_rx_complete() which
-allows these two to race and potentially insert the same data twice.
+As DMA Rx can be completed from two places, it is possible that DMA Rx
+completes before DMA completion callback had a chance to complete it.
+Once the previous DMA Rx has been completed, a new one can be started
+on the next UART interrupt. The following race is possible
+(uart_unlock_and_check_sysrq_irqrestore() replaced with
+spin_unlock_irqrestore() for simplicity/clarity):
 
-Extend port's lock coverage in dma_rx_complete() to prevent the race
-and check if the DMA Rx is still pending completion before calling
-into __dma_rx_complete().
+CPU0					CPU1
+					dma_rx_complete()
+serial8250_handle_irq()
+  spin_lock_irqsave(&port->lock)
+  handle_rx_dma()
+    serial8250_rx_dma_flush()
+      __dma_rx_complete()
+        dma->rx_running = 0
+        // Complete DMA Rx
+  spin_unlock_irqrestore(&port->lock)
+
+serial8250_handle_irq()
+  spin_lock_irqsave(&port->lock)
+  handle_rx_dma()
+    serial8250_rx_dma()
+      dma->rx_running = 1
+      // Setup a new DMA Rx
+  spin_unlock_irqrestore(&port->lock)
+
+					  spin_lock_irqsave(&port->lock)
+					  // sees dma->rx_running = 1
+					  __dma_rx_complete()
+					    dma->rx_running = 0
+					    // Incorrectly complete
+					    // running DMA Rx
+
+This race seems somewhat theoretical to occur for real but handle it
+correctly regardless. Check what is the DMA status before complething
+anything in __dma_rx_complete().
 
 Reported-by: Gilles BULOZ <gilles.buloz@kontron.com>
 Tested-by: Gilles BULOZ <gilles.buloz@kontron.com>
 Fixes: 9ee4b83e51f7 ("serial: 8250: Add support for dmaengine")
 Cc: stable@vger.kernel.org
 Signed-off-by: Ilpo Järvinen <ilpo.jarvinen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230130114841.25749-2-ilpo.jarvinen@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/20230130114841.25749-3-ilpo.jarvinen@linux.intel.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/tty/serial/8250/8250_dma.c |   14 +++++++++++++-
- 1 file changed, 13 insertions(+), 1 deletion(-)
+ drivers/tty/serial/8250/8250_dma.c |   12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
 
 --- a/drivers/tty/serial/8250/8250_dma.c
 +++ b/drivers/tty/serial/8250/8250_dma.c
-@@ -65,6 +65,18 @@ static void __dma_rx_complete(void *para
+@@ -52,15 +52,23 @@ static void __dma_rx_complete(void *para
+ 	struct uart_8250_dma	*dma = p->dma;
+ 	struct tty_port		*tty_port = &p->port.state->port;
+ 	struct dma_tx_state	state;
++	enum dma_status		dma_status;
+ 	int			count;
+ 
+-	dma->rx_running = 0;
+-	dmaengine_tx_status(dma->rxchan, dma->rx_cookie, &state);
++	/*
++	 * New DMA Rx can be started during the completion handler before it
++	 * could acquire port's lock and it might still be ongoing. Don't to
++	 * anything in such case.
++	 */
++	dma_status = dmaengine_tx_status(dma->rxchan, dma->rx_cookie, &state);
++	if (dma_status == DMA_IN_PROGRESS)
++		return;
+ 
+ 	count = dma->rx_size - state.residue;
+ 
+ 	tty_insert_flip_string(tty_port, dma->rx_buf, count);
+ 	p->port.icount.rx += count;
++	dma->rx_running = 0;
+ 
  	tty_flip_buffer_push(tty_port);
  }
- 
-+static void dma_rx_complete(void *param)
-+{
-+	struct uart_8250_port *p = param;
-+	struct uart_8250_dma *dma = p->dma;
-+	unsigned long flags;
-+
-+	spin_lock_irqsave(&p->port.lock, flags);
-+	if (dma->rx_running)
-+		__dma_rx_complete(p);
-+	spin_unlock_irqrestore(&p->port.lock, flags);
-+}
-+
- int serial8250_tx_dma(struct uart_8250_port *p)
- {
- 	struct uart_8250_dma		*dma = p->dma;
-@@ -130,7 +142,7 @@ int serial8250_rx_dma(struct uart_8250_p
- 		return -EBUSY;
- 
- 	dma->rx_running = 1;
--	desc->callback = __dma_rx_complete;
-+	desc->callback = dma_rx_complete;
- 	desc->callback_param = p;
- 
- 	dma->rx_cookie = dmaengine_submit(desc);
 
 
