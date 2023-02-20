@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6969E46BE
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:39:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E813BC433EF;
-	Mon, 20 Feb 2023 13:39:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 100C763B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:39:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A0FDC433EF;
+	Mon, 20 Feb 2023 13:39:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900351;
-	bh=x/C2/aEnXLov8gi5+SSH/+uIM06q0NoA3tH4t1jt48w=;
+	s=korg; t=1676900353;
+	bh=oAGJePHO/fBfg/QG7Bnu4cunVAZopBMGnv6XkuroDmU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IXuA4arQ2oaaaoHRvyBL6EcfgGZgyeqa/vukvSRTs5LxJiMSFNvYUJJJEcIc1zq5w
-	 dBhVMXJBuf9rcdZawiIFKJvX8q5i8sPL+2b42EphNCjfmlbkICgVPI68dWSbFzf9IO
-	 qBzgASBVJyZGsD9U8dWiWA22m1qyLVoXHhCeEb8k=
+	b=s+LErPHoNJ/p1wPqoUN2BMOF/PMweZaZx/KqZk1Rw8/HGU+7y1nZbf9KjpSdJTZuo
+	 LiwKeOWuzLDJiXwZ37A+syXQibl8BIfzNuituw0cNirk+32/2iRXfKc+HmsBK0DRTf
+	 UzwEPFZVXReP5c5Mpv1KNx4g1WP56vRU7PNCyZqw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miko Larsson <mikoxyzzz@gmail.com>,
-	Alexander Duyck <alexanderduyck@fb.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	syzbot+cd80c5ef5121bfe85b55@syzkaller.appspotmail.com
-Subject: [PATCH 4.14 46/53] net/usb: kalmia: Dont pass act_len in usb_bulk_msg error path
-Date: Mon, 20 Feb 2023 14:36:12 +0100
-Message-Id: <20230220133549.815747228@linuxfoundation.org>
+	Cristian Ciocaltea <cristian.ciocaltea@collabora.com>,
+	Paolo Abeni <pabeni@redhat.com>
+Subject: [PATCH 4.14 47/53] net: stmmac: Restrict warning on disabling DMA store and fwd mode
+Date: Mon, 20 Feb 2023 14:36:13 +0100
+Message-Id: <20230220133549.845543810@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
 References: <20230220133548.158615609@linuxfoundation.org>
@@ -36,54 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miko Larsson <mikoxyzzz@gmail.com>
+From: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
 
-commit c68f345b7c425b38656e1791a0486769a8797016 upstream.
+commit 05d7623a892a9da62da0e714428e38f09e4a64d8 upstream.
 
-syzbot reported that act_len in kalmia_send_init_packet() is
-uninitialized when passing it to the first usb_bulk_msg error path. Jiri
-Pirko noted that it's pointless to pass it in the error path, and that
-the value that would be printed in the second error path would be the
-value of act_len from the first call to usb_bulk_msg.[1]
+When setting 'snps,force_thresh_dma_mode' DT property, the following
+warning is always emitted, regardless the status of force_sf_dma_mode:
 
-With this in mind, let's just not pass act_len to the usb_bulk_msg error
-paths.
+dwmac-starfive 10020000.ethernet: force_sf_dma_mode is ignored if force_thresh_dma_mode is set.
 
-1: https://lore.kernel.org/lkml/Y9pY61y1nwTuzMOa@nanopsycho/
+Do not print the rather misleading message when DMA store and forward
+mode is already disabled.
 
-Fixes: d40261236e8e ("net/usb: Add Samsung Kalmia driver for Samsung GT-B3730")
-Reported-and-tested-by: syzbot+cd80c5ef5121bfe85b55@syzkaller.appspotmail.com
-Signed-off-by: Miko Larsson <mikoxyzzz@gmail.com>
-Reviewed-by: Alexander Duyck <alexanderduyck@fb.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: e2a240c7d3bc ("driver:net:stmmac: Disable DMA store and forward mode if platform data force_thresh_dma_mode is set.")
+Signed-off-by: Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
+Link: https://lore.kernel.org/r/20230210202126.877548-1-cristian.ciocaltea@collabora.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/usb/kalmia.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/usb/kalmia.c
-+++ b/drivers/net/usb/kalmia.c
-@@ -69,8 +69,8 @@ kalmia_send_init_packet(struct usbnet *d
- 		init_msg, init_msg_len, &act_len, KALMIA_USB_TIMEOUT);
- 	if (status != 0) {
- 		netdev_err(dev->net,
--			"Error sending init packet. Status %i, length %i\n",
--			status, act_len);
-+			"Error sending init packet. Status %i\n",
-+			status);
- 		return status;
- 	}
- 	else if (act_len != init_msg_len) {
-@@ -87,8 +87,8 @@ kalmia_send_init_packet(struct usbnet *d
+--- a/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
++++ b/drivers/net/ethernet/stmicro/stmmac/stmmac_platform.c
+@@ -500,7 +500,7 @@ stmmac_probe_config_dt(struct platform_d
+ 	dma_cfg->mixed_burst = of_property_read_bool(np, "snps,mixed-burst");
  
- 	if (status != 0)
- 		netdev_err(dev->net,
--			"Error receiving init result. Status %i, length %i\n",
--			status, act_len);
-+			"Error receiving init result. Status %i\n",
-+			status);
- 	else if (act_len != expected_len)
- 		netdev_err(dev->net, "Unexpected init result length: %i\n",
- 			act_len);
+ 	plat->force_thresh_dma_mode = of_property_read_bool(np, "snps,force_thresh_dma_mode");
+-	if (plat->force_thresh_dma_mode) {
++	if (plat->force_thresh_dma_mode && plat->force_sf_dma_mode) {
+ 		plat->force_sf_dma_mode = 0;
+ 		pr_warn("force_sf_dma_mode is ignored if force_thresh_dma_mode is set.");
+ 	}
 
 
