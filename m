@@ -1,35 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92C963B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2373C433EF;
-	Mon, 20 Feb 2023 13:58:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40F4463B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94D08C433EF;
+	Mon, 20 Feb 2023 13:58:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901507;
-	bh=OaGcZqtCGf8QpY1qbUdDqpyvg51wOsiit+x0t6xMToc=;
+	s=korg; t=1676901510;
+	bh=gVYggOtdEE5UXegcs5xAgjlk0X8w1j6jsMTqID/cYzo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZGi+NwVCF8hZdi6H4dPta8zkCunqnLUhHq6hay2ewh2UhWqH+Av7vqOmPIVav1P9v
-	 ryl6REdyIbzqlOqESLNwkNXN7Uwy+x1DSOSUkV3t79f5uzjBqRpTYb4wJ/cW9+TKGt
-	 CL7ygP5m0m8TI3JnsJPWOSX/b6BbEsUAq/in+zh4=
+	b=YHsO2Ju1/OmijJiT3TREgxr+CfAwYutkY9WySatXhRwfdGje5/3xApr8scFzAPPME
+	 DZQB8M0vsYYt45yXKW6Trlp2EsjjJn9TNyA4AiJROGVRBr3L9hURj05kCoQO8MKUHo
+	 Md3kabfXDfTmCOERhTNOK/RgQgcyBuANIpj33nNo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
-	"Mike Rapoport (IBM)" <rppt@kernel.org>,
-	Catalin Marinas <catalin.marinas@arm.com>,
-	Frank Rowand <frowand.list@gmail.com>,
-	"Kirill A. Shutemov" <kirill.shtuemov@linux.intel.com>,
-	Nick Kossifidis <mick@ics.forth.gr>,
-	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
-	Rob Herring <robh@kernel.org>,
-	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
-	Saravana Kannan <saravanak@google.com>,
+	Christophe Leroy <christophe.leroy@csgroup.eu>,
+	Nathan Lynch <nathanl@linux.ibm.com>,
+	Michael Ellerman <mpe@ellerman.id.au>,
+	Alexander Potapenko <glider@google.com>,
+	Andrey Konovalov <andreyknvl@gmail.com>,
+	Andrey Ryabinin <ryabinin.a.a@gmail.com>,
+	Dmitry Vyukov <dvyukov@google.com>,
+	Vincenzo Frascino <vincenzo.frascino@arm.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 044/118] of: reserved_mem: Have kmemleak ignore dynamically allocated reserved mem
-Date: Mon, 20 Feb 2023 14:36:00 +0100
-Message-Id: <20230220133602.203847396@linuxfoundation.org>
+Subject: [PATCH 6.1 045/118] kasan: fix Oops due to missing calls to kasan_arch_is_ready()
+Date: Mon, 20 Feb 2023 14:36:01 +0100
+Message-Id: <20230220133602.241243283@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -43,97 +41,165 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Isaac J. Manjarres <isaacmanjarres@google.com>
+From: Christophe Leroy <christophe.leroy@csgroup.eu>
 
-commit ce4d9a1ea35ac5429e822c4106cb2859d5c71f3e upstream.
+commit 55d77bae73426237b3c74c1757a894b056550dff upstream.
 
-Patch series "Fix kmemleak crashes when scanning CMA regions", v2.
+On powerpc64, you can build a kernel with KASAN as soon as you build it
+with RADIX MMU support.  However if the CPU doesn't have RADIX MMU, KASAN
+isn't enabled at init and the following Oops is encountered.
 
-When trying to boot a device with an ARM64 kernel with the following
-config options enabled:
+  [    0.000000][    T0] KASAN not enabled as it requires radix!
 
-CONFIG_DEBUG_PAGEALLOC=y
-CONFIG_DEBUG_PAGEALLOC_ENABLE_DEFAULT=y
-CONFIG_DEBUG_KMEMLEAK=y
+  [    4.484295][   T26] BUG: Unable to handle kernel data access at 0xc00e000000804a04
+  [    4.485270][   T26] Faulting instruction address: 0xc00000000062ec6c
+  [    4.485748][   T26] Oops: Kernel access of bad area, sig: 11 [#1]
+  [    4.485920][   T26] BE PAGE_SIZE=64K MMU=Hash SMP NR_CPUS=2048 NUMA pSeries
+  [    4.486259][   T26] Modules linked in:
+  [    4.486637][   T26] CPU: 0 PID: 26 Comm: kworker/u2:2 Not tainted 6.2.0-rc3-02590-gf8a023b0a805 #249
+  [    4.486907][   T26] Hardware name: IBM pSeries (emulated by qemu) POWER9 (raw) 0x4e1200 0xf000005 of:SLOF,HEAD pSeries
+  [    4.487445][   T26] Workqueue: eval_map_wq .tracer_init_tracefs_work_func
+  [    4.488744][   T26] NIP:  c00000000062ec6c LR: c00000000062bb84 CTR: c0000000002ebcd0
+  [    4.488867][   T26] REGS: c0000000049175c0 TRAP: 0380   Not tainted  (6.2.0-rc3-02590-gf8a023b0a805)
+  [    4.489028][   T26] MSR:  8000000002009032 <SF,VEC,EE,ME,IR,DR,RI>  CR: 44002808  XER: 00000000
+  [    4.489584][   T26] CFAR: c00000000062bb80 IRQMASK: 0
+  [    4.489584][   T26] GPR00: c0000000005624d4 c000000004917860 c000000001cfc000 1800000000804a04
+  [    4.489584][   T26] GPR04: c0000000003a2650 0000000000000cc0 c00000000000d3d8 c00000000000d3d8
+  [    4.489584][   T26] GPR08: c0000000049175b0 a80e000000000000 0000000000000000 0000000017d78400
+  [    4.489584][   T26] GPR12: 0000000044002204 c000000003790000 c00000000435003c c0000000043f1c40
+  [    4.489584][   T26] GPR16: c0000000043f1c68 c0000000043501a0 c000000002106138 c0000000043f1c08
+  [    4.489584][   T26] GPR20: c0000000043f1c10 c0000000043f1c20 c000000004146c40 c000000002fdb7f8
+  [    4.489584][   T26] GPR24: c000000002fdb834 c000000003685e00 c000000004025030 c000000003522e90
+  [    4.489584][   T26] GPR28: 0000000000000cc0 c0000000003a2650 c000000004025020 c000000004025020
+  [    4.491201][   T26] NIP [c00000000062ec6c] .kasan_byte_accessible+0xc/0x20
+  [    4.491430][   T26] LR [c00000000062bb84] .__kasan_check_byte+0x24/0x90
+  [    4.491767][   T26] Call Trace:
+  [    4.491941][   T26] [c000000004917860] [c00000000062ae70] .__kasan_kmalloc+0xc0/0x110 (unreliable)
+  [    4.492270][   T26] [c0000000049178f0] [c0000000005624d4] .krealloc+0x54/0x1c0
+  [    4.492453][   T26] [c000000004917990] [c0000000003a2650] .create_trace_option_files+0x280/0x530
+  [    4.492613][   T26] [c000000004917a90] [c000000002050d90] .tracer_init_tracefs_work_func+0x274/0x2c0
+  [    4.492771][   T26] [c000000004917b40] [c0000000001f9948] .process_one_work+0x578/0x9f0
+  [    4.492927][   T26] [c000000004917c30] [c0000000001f9ebc] .worker_thread+0xfc/0x950
+  [    4.493084][   T26] [c000000004917d60] [c00000000020be84] .kthread+0x1a4/0x1b0
+  [    4.493232][   T26] [c000000004917e10] [c00000000000d3d8] .ret_from_kernel_thread+0x58/0x60
+  [    4.495642][   T26] Code: 60000000 7cc802a6 38a00000 4bfffc78 60000000 7cc802a6 38a00001 4bfffc68 60000000 3d20a80e 7863e8c2 792907c6 <7c6348ae> 20630007 78630fe0 68630001
+  [    4.496704][   T26] ---[ end trace 0000000000000000 ]---
 
-a crash is encountered when kmemleak starts to scan the list of gray
-or allocated objects that it maintains. Upon closer inspection, it was
-observed that these page-faults always occurred when kmemleak attempted
-to scan a CMA region.
+The Oops is due to kasan_byte_accessible() not checking the readiness of
+KASAN.  Add missing call to kasan_arch_is_ready() and bail out when not
+ready.  The same problem is observed with ____kasan_kfree_large() so fix
+it the same.
 
-At the moment, kmemleak is made aware of CMA regions that are specified
-through the devicetree to be dynamically allocated within a range of
-addresses. However, kmemleak should not need to scan CMA regions or any
-reserved memory region, as those regions can be used for DMA transfers
-between drivers and peripherals, and thus wouldn't contain anything
-useful for kmemleak.
+Also, as KASAN is not available and no shadow area is allocated for linear
+memory mapping, there is no point in allocating shadow mem for vmalloc
+memory as shown below in /sys/kernel/debug/kernel_page_tables
 
-Additionally, since CMA regions are unmapped from the kernel's address
-space when they are freed to the buddy allocator at boot when
-CONFIG_DEBUG_PAGEALLOC is enabled, kmemleak shouldn't attempt to access
-those memory regions, as that will trigger a crash. Thus, kmemleak
-should ignore all dynamically allocated reserved memory regions.
+  ---[ kasan shadow mem start ]---
+  0xc00f000000000000-0xc00f00000006ffff  0x00000000040f0000       448K         r  w       pte  valid  present        dirty  accessed
+  0xc00f000000860000-0xc00f00000086ffff  0x000000000ac10000        64K         r  w       pte  valid  present        dirty  accessed
+  0xc00f3ffffffe0000-0xc00f3fffffffffff  0x0000000004d10000       128K         r  w       pte  valid  present        dirty  accessed
+  ---[ kasan shadow mem end ]---
 
+So, also verify KASAN readiness before allocating and poisoning
+shadow mem for VMAs.
 
-This patch (of 1):
-
-Currently, kmemleak ignores dynamically allocated reserved memory regions
-that don't have a kernel mapping.  However, regions that do retain a
-kernel mapping (e.g.  CMA regions) do get scanned by kmemleak.
-
-This is not ideal for two reasons:
-
-1  kmemleak works by scanning memory regions for pointers to allocated
-   objects to determine if those objects have been leaked or not.
-   However, reserved memory regions can be used between drivers and
-   peripherals for DMA transfers, and thus, would not contain pointers to
-   allocated objects, making it unnecessary for kmemleak to scan these
-   reserved memory regions.
-
-2  When CONFIG_DEBUG_PAGEALLOC is enabled, along with kmemleak, the
-   CMA reserved memory regions are unmapped from the kernel's address
-   space when they are freed to buddy at boot.  These CMA reserved regions
-   are still tracked by kmemleak, however, and when kmemleak attempts to
-   scan them, a crash will happen, as accessing the CMA region will result
-   in a page-fault, since the regions are unmapped.
-
-Thus, use kmemleak_ignore_phys() for all dynamically allocated reserved
-memory regions, instead of those that do not have a kernel mapping
-associated with them.
-
-Link: https://lkml.kernel.org/r/20230208232001.2052777-1-isaacmanjarres@google.com
-Link: https://lkml.kernel.org/r/20230208232001.2052777-2-isaacmanjarres@google.com
-Fixes: a7259df76702 ("memblock: make memblock_find_in_range method private")
-Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
-Acked-by: Mike Rapoport (IBM) <rppt@kernel.org>
-Acked-by: Catalin Marinas <catalin.marinas@arm.com>
-Cc: Frank Rowand <frowand.list@gmail.com>
-Cc: Kirill A. Shutemov <kirill.shtuemov@linux.intel.com>
-Cc: Nick Kossifidis <mick@ics.forth.gr>
-Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
-Cc: Rob Herring <robh@kernel.org>
-Cc: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
-Cc: Saravana Kannan <saravanak@google.com>
-Cc: <stable@vger.kernel.org>	[5.15+]
+Link: https://lkml.kernel.org/r/150768c55722311699fdcf8f5379e8256749f47d.1674716617.git.christophe.leroy@csgroup.eu
+Fixes: 41b7a347bf14 ("powerpc: Book3S 64-bit outline-only KASAN support")
+Signed-off-by: Christophe Leroy <christophe.leroy@csgroup.eu>
+Reported-by: Nathan Lynch <nathanl@linux.ibm.com>
+Suggested-by: Michael Ellerman <mpe@ellerman.id.au>
+Cc: Alexander Potapenko <glider@google.com>
+Cc: Andrey Konovalov <andreyknvl@gmail.com>
+Cc: Andrey Ryabinin <ryabinin.a.a@gmail.com>
+Cc: Dmitry Vyukov <dvyukov@google.com>
+Cc: Vincenzo Frascino <vincenzo.frascino@arm.com>
+Cc: <stable@vger.kernel.org>	[5.19+]
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/of/of_reserved_mem.c |    3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ mm/kasan/common.c  |  3 +++
+ mm/kasan/generic.c |  7 ++++++-
+ mm/kasan/shadow.c  | 12 ++++++++++++
+ 3 files changed, 21 insertions(+), 1 deletion(-)
 
---- a/drivers/of/of_reserved_mem.c
-+++ b/drivers/of/of_reserved_mem.c
-@@ -48,9 +48,10 @@ static int __init early_init_dt_alloc_re
- 		err = memblock_mark_nomap(base, size);
- 		if (err)
- 			memblock_phys_free(base, size);
--		kmemleak_ignore_phys(base);
- 	}
+diff --git a/mm/kasan/common.c b/mm/kasan/common.c
+index 833bf2cfd2a3..21e66d7f261d 100644
+--- a/mm/kasan/common.c
++++ b/mm/kasan/common.c
+@@ -246,6 +246,9 @@ bool __kasan_slab_free(struct kmem_cache *cache, void *object,
  
-+	kmemleak_ignore_phys(base);
+ static inline bool ____kasan_kfree_large(void *ptr, unsigned long ip)
+ {
++	if (!kasan_arch_is_ready())
++		return false;
 +
- 	return err;
- }
+ 	if (ptr != page_address(virt_to_head_page(ptr))) {
+ 		kasan_report_invalid_free(ptr, ip, KASAN_REPORT_INVALID_FREE);
+ 		return true;
+diff --git a/mm/kasan/generic.c b/mm/kasan/generic.c
+index b076f597a378..cb762982c8ba 100644
+--- a/mm/kasan/generic.c
++++ b/mm/kasan/generic.c
+@@ -191,7 +191,12 @@ bool kasan_check_range(unsigned long addr, size_t size, bool write,
  
+ bool kasan_byte_accessible(const void *addr)
+ {
+-	s8 shadow_byte = READ_ONCE(*(s8 *)kasan_mem_to_shadow(addr));
++	s8 shadow_byte;
++
++	if (!kasan_arch_is_ready())
++		return true;
++
++	shadow_byte = READ_ONCE(*(s8 *)kasan_mem_to_shadow(addr));
+ 
+ 	return shadow_byte >= 0 && shadow_byte < KASAN_GRANULE_SIZE;
+ }
+diff --git a/mm/kasan/shadow.c b/mm/kasan/shadow.c
+index 2fba1f51f042..15cfb34d16a1 100644
+--- a/mm/kasan/shadow.c
++++ b/mm/kasan/shadow.c
+@@ -291,6 +291,9 @@ int kasan_populate_vmalloc(unsigned long addr, unsigned long size)
+ 	unsigned long shadow_start, shadow_end;
+ 	int ret;
+ 
++	if (!kasan_arch_is_ready())
++		return 0;
++
+ 	if (!is_vmalloc_or_module_addr((void *)addr))
+ 		return 0;
+ 
+@@ -459,6 +462,9 @@ void kasan_release_vmalloc(unsigned long start, unsigned long end,
+ 	unsigned long region_start, region_end;
+ 	unsigned long size;
+ 
++	if (!kasan_arch_is_ready())
++		return;
++
+ 	region_start = ALIGN(start, KASAN_MEMORY_PER_SHADOW_PAGE);
+ 	region_end = ALIGN_DOWN(end, KASAN_MEMORY_PER_SHADOW_PAGE);
+ 
+@@ -502,6 +508,9 @@ void *__kasan_unpoison_vmalloc(const void *start, unsigned long size,
+ 	 * with setting memory tags, so the KASAN_VMALLOC_INIT flag is ignored.
+ 	 */
+ 
++	if (!kasan_arch_is_ready())
++		return (void *)start;
++
+ 	if (!is_vmalloc_or_module_addr(start))
+ 		return (void *)start;
+ 
+@@ -524,6 +533,9 @@ void *__kasan_unpoison_vmalloc(const void *start, unsigned long size,
+  */
+ void __kasan_poison_vmalloc(const void *start, unsigned long size)
+ {
++	if (!kasan_arch_is_ready())
++		return;
++
+ 	if (!is_vmalloc_or_module_addr(start))
+ 		return;
+ 
+-- 
+2.39.1
+
 
 
