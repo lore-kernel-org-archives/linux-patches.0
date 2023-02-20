@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0E3FC63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:46:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 655EFC433D2;
-	Mon, 20 Feb 2023 13:46:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785D863B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:46:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F412DC433EF;
+	Mon, 20 Feb 2023 13:46:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900789;
-	bh=WFgLCuryaOcR9O+fGLnRQ083XnmusI91EmrDq6UbRgc=;
+	s=korg; t=1676900792;
+	bh=stIUensT46J/sC1j7FEd69USTsmHgo5usqX2GDKwgMs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lcIRUd/m9siPGQCEFcH+5Odd7aVI0YzNlrih8UKRp2A+04UCXEGp3mJKpQ7gGnPlD
-	 e1bGPIAyOG380ed4QAPKPObGBNH+VTSkH1EdUJZN874HD4BENtXxwuvgpek6g84noD
-	 LmWjN/LZX1f8hZFpUcJ2Y9lAot9FdIVdWBhUk4xs=
+	b=J+4YMzVBFjaEewCEq1DXqpM6Paz1LLUUaDmaQ4ZUfn6rQtyN+nvU5DcieG1T0AQ09
+	 n14l8yoKL/n2L8oUzxCoyZ4TDofj0WMCH25kysGQHXMXA5SYihQIbBffl87q18LzVf
+	 9sMcCZCZLqLepmvntvXuZXIsXEUlWlgbF50T/mfY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xiongfeng Wang <wangxiongfeng2@huawei.com>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 5.4 041/156] iio: adc: berlin2-adc: Add missing of_node_put() in error path
-Date: Mon, 20 Feb 2023 14:34:45 +0100
-Message-Id: <20230220133604.097723301@linuxfoundation.org>
+	Yang Yingliang <yangyingliang@huawei.com>,
+	Leon Romanovsky <leon@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.4 068/156] RDMA/usnic: use iommu_map_atomic() under spin_lock()
+Date: Mon, 20 Feb 2023 14:35:12 +0100
+Message-Id: <20230220133605.202304752@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -35,37 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xiongfeng Wang <wangxiongfeng2@huawei.com>
+From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit cbd3a0153cd18a2cbef6bf3cf31bb406c3fc9f55 upstream.
+[ Upstream commit b7e08a5a63a11627601915473c3b569c1f6c6c06 ]
 
-of_get_parent() will return a device_node pointer with refcount
-incremented. We need to use of_node_put() on it when done. Add the
-missing of_node_put() in the error path of berlin2_adc_probe();
+usnic_uiom_map_sorted_intervals() is called under spin_lock(), iommu_map()
+might sleep, use iommu_map_atomic() to avoid potential sleep in atomic
+context.
 
-Fixes: 70f1937911ca ("iio: adc: add support for Berlin")
-Signed-off-by: Xiongfeng Wang <wangxiongfeng2@huawei.com>
-Link: https://lore.kernel.org/r/20221129020316.191731-1-wangxiongfeng2@huawei.com
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: e3cf00d0a87f ("IB/usnic: Add Cisco VIC low-level hardware driver")
+Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
+Link: https://lore.kernel.org/r/20230129093757.637354-1-yangyingliang@huawei.com
+Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/iio/adc/berlin2-adc.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/infiniband/hw/usnic/usnic_uiom.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/iio/adc/berlin2-adc.c
-+++ b/drivers/iio/adc/berlin2-adc.c
-@@ -289,8 +289,10 @@ static int berlin2_adc_probe(struct plat
- 	int ret;
- 
- 	indio_dev = devm_iio_device_alloc(&pdev->dev, sizeof(*priv));
--	if (!indio_dev)
-+	if (!indio_dev) {
-+		of_node_put(parent_np);
- 		return -ENOMEM;
-+	}
- 
- 	priv = iio_priv(indio_dev);
- 	platform_set_drvdata(pdev, indio_dev);
+diff --git a/drivers/infiniband/hw/usnic/usnic_uiom.c b/drivers/infiniband/hw/usnic/usnic_uiom.c
+index 62e6ffa9ad78e..1d060ae47933e 100644
+--- a/drivers/infiniband/hw/usnic/usnic_uiom.c
++++ b/drivers/infiniband/hw/usnic/usnic_uiom.c
+@@ -281,8 +281,8 @@ static int usnic_uiom_map_sorted_intervals(struct list_head *intervals,
+ 				size = pa_end - pa_start + PAGE_SIZE;
+ 				usnic_dbg("va 0x%lx pa %pa size 0x%zx flags 0x%x",
+ 					va_start, &pa_start, size, flags);
+-				err = iommu_map(pd->domain, va_start, pa_start,
+-							size, flags);
++				err = iommu_map_atomic(pd->domain, va_start,
++						       pa_start, size, flags);
+ 				if (err) {
+ 					usnic_err("Failed to map va 0x%lx pa %pa size 0x%zx with err %d\n",
+ 						va_start, &pa_start, size, err);
+@@ -298,8 +298,8 @@ static int usnic_uiom_map_sorted_intervals(struct list_head *intervals,
+ 				size = pa - pa_start + PAGE_SIZE;
+ 				usnic_dbg("va 0x%lx pa %pa size 0x%zx flags 0x%x\n",
+ 					va_start, &pa_start, size, flags);
+-				err = iommu_map(pd->domain, va_start, pa_start,
+-						size, flags);
++				err = iommu_map_atomic(pd->domain, va_start,
++						       pa_start, size, flags);
+ 				if (err) {
+ 					usnic_err("Failed to map va 0x%lx pa %pa size 0x%zx with err %d\n",
+ 						va_start, &pa_start, size, err);
+-- 
+2.39.0
+
 
 
