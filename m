@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2C94D63BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:46:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8681EC4339B;
-	Mon, 20 Feb 2023 13:46:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C2863B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:46:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41540C433D2;
+	Mon, 20 Feb 2023 13:46:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900770;
-	bh=X06EfXfhJ/oRYJPRcyxk1IxZu+aN9IzGFiIP+CG2Qng=;
+	s=korg; t=1676900773;
+	bh=B13805gmhGPOmN6wVSEdk+PBO4qrsLdTpxK+F9q3AEs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J0Jrve9/BU1zMbxyCDdKAumzF+FfC/wQl4TVQjwqqHTVww31SVkuRdUeaLZW31jxZ
-	 fhZWY6wuqd4XU0hzubpIAXDXlmBcsxLkXJiDMVwLL9ag7PIbph1x4WkcHGvoFYz0eY
-	 QRltJbufpzR25wgyxKYGCTiMVbDgYkNVo5L42CPQ=
+	b=S3J0eoJTTYkyBAaJ8I1Kpeajcdrwr3STMCwQc289icR/VRvd3N0DMaCCUSKKAwHpl
+	 1iLP7VNgxT7YhKRxQzJmqIJBjx6GRd/n+7HNLqR5+KWIC65sveP/5hYNSCxHE9Tfds
+	 55qdHUBtNYBu/6Gw3Cb6rhpkBpNL5TO4aCh9bTkc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+14d9e7602ebdf7ec0a60@syzkaller.appspotmail.com,
-	Alexander Potapenko <glider@google.com>,
-	David Sterba <dsterba@suse.com>
-Subject: [PATCH 5.4 061/156] btrfs: zlib: zero-initialize zlib workspace
-Date: Mon, 20 Feb 2023 14:35:05 +0100
-Message-Id: <20230220133604.893948351@linuxfoundation.org>
+	Artemii Karasev <karasev@ispras.ru>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 5.4 062/156] ALSA: emux: Avoid potential array out-of-bound in snd_emux_xg_control()
+Date: Mon, 20 Feb 2023 14:35:06 +0100
+Message-Id: <20230220133604.936845316@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -35,36 +34,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alexander Potapenko <glider@google.com>
+From: Artemii Karasev <karasev@ispras.ru>
 
-commit eadd7deca0ad8a83edb2b894d8326c78e78635d6 upstream.
+commit 6a32425f953b955b4ff82f339d01df0b713caa5d upstream.
 
-KMSAN reports uses of uninitialized memory in zlib's longest_match()
-called on memory originating from zlib_alloc_workspace().
-This issue is known by zlib maintainers and is claimed to be harmless,
-but to be on the safe side we'd better initialize the memory.
+snd_emux_xg_control() can be called with an argument 'param' greater
+than size of 'control' array. It may lead to accessing 'control'
+array at a wrong index.
 
-Link: https://zlib.net/zlib_faq.html#faq36
-Reported-by: syzbot+14d9e7602ebdf7ec0a60@syzkaller.appspotmail.com
-CC: stable@vger.kernel.org # 5.4+
-Signed-off-by: Alexander Potapenko <glider@google.com>
-Reviewed-by: David Sterba <dsterba@suse.com>
-Signed-off-by: David Sterba <dsterba@suse.com>
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Signed-off-by: Artemii Karasev <karasev@ispras.ru>
+Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
+Cc: <stable@vger.kernel.org>
+Link: https://lore.kernel.org/r/20230207132026.2870-1-karasev@ispras.ru
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/btrfs/zlib.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ sound/synth/emux/emux_nrpn.c |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/btrfs/zlib.c
-+++ b/fs/btrfs/zlib.c
-@@ -74,7 +74,7 @@ static struct list_head *zlib_alloc_work
- 
- 	workspacesize = max(zlib_deflate_workspacesize(MAX_WBITS, MAX_MEM_LEVEL),
- 			zlib_inflate_workspacesize());
--	workspace->strm.workspace = kvmalloc(workspacesize, GFP_KERNEL);
-+	workspace->strm.workspace = kvzalloc(workspacesize, GFP_KERNEL);
- 	workspace->level = level;
- 	workspace->buf = kmalloc(PAGE_SIZE, GFP_KERNEL);
- 	if (!workspace->strm.workspace || !workspace->buf)
+--- a/sound/synth/emux/emux_nrpn.c
++++ b/sound/synth/emux/emux_nrpn.c
+@@ -349,6 +349,9 @@ int
+ snd_emux_xg_control(struct snd_emux_port *port, struct snd_midi_channel *chan,
+ 		    int param)
+ {
++	if (param >= ARRAY_SIZE(chan->control))
++		return -EINVAL;
++
+ 	return send_converted_effect(xg_effects, ARRAY_SIZE(xg_effects),
+ 				     port, chan, param,
+ 				     chan->control[param],
 
 
