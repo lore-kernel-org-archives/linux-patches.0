@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F86A63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26DB8C433D2;
-	Mon, 20 Feb 2023 13:37:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D48663B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9971C433D2;
+	Mon, 20 Feb 2023 13:38:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900280;
-	bh=V0SzFyq0MH3ytVl5/P65voB+LvKwGIsuXktgN4BiHjs=;
+	s=korg; t=1676900283;
+	bh=W48JW8SGQpmmpjj3KFiSG+ufrG0SIWY/T3msLhP+P3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ppihxhBbc8VCKBRhK1OCzdkHNJKkhoXqefa3JMllTCvHDe/Mcl+mR9konTYT8c3Ln
-	 k1+HNO2iPdDdLUfEBrXM2/AFpn3j0PXOGALICB+xXKGDc9mBsLUgCQKn8Gb4mJMVgY
-	 MuUaUm6EWyaR52fy4n1v2dUzi/4BYX3mGAwfsGUU=
+	b=kbrnfyqd6AntfeRSDqdlUN6yqCy4Gg/AAMcbEpmGKrrkqJOU84n+GPWhaqkJUXKGe
+	 Bq4CKCkmJ3w9nypZ8XgThD27sGBCWtM6bsyhQTAmdFPdJ/DeIPO4B+V0Oof/0lmW1o
+	 0zrHiQ9dt+ZMOCA6GB+kf9qPW81Bi3Rk/Gm/Kj9k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 4.14 19/53] parisc: Fix return code of pdc_iodc_print()
-Date: Mon, 20 Feb 2023 14:35:45 +0100
-Message-Id: <20230220133548.852227673@linuxfoundation.org>
+	Yuan Can <yuancan@huawei.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 02/53] bus: sunxi-rsb: Fix error handling in sunxi_rsb_init()
+Date: Mon, 20 Feb 2023 14:35:28 +0100
+Message-Id: <20230220133548.258767532@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
 References: <20230220133548.158615609@linuxfoundation.org>
@@ -33,47 +35,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Helge Deller <deller@gmx.de>
+From: Yuan Can <yuancan@huawei.com>
 
-commit 5d1335dabb3c493a3d6d5b233953b6ac7b6c1ff2 upstream.
+[ Upstream commit f71eaf2708be7831428eacae7db25d8ec6b8b4c5 ]
 
-There is an off-by-one if the printed string includes a new-line
-char.
+The sunxi_rsb_init() returns the platform_driver_register() directly
+without checking its return value, if platform_driver_register() failed,
+the sunxi_rsb_bus is not unregistered.
+Fix by unregister sunxi_rsb_bus when platform_driver_register() failed.
 
-Cc: stable@vger.kernel.org
-Signed-off-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: d787dcdb9c8f ("bus: sunxi-rsb: Add driver for Allwinner Reduced Serial Bus")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://lore.kernel.org/r/20221123094200.12036-1-yuancan@huawei.com
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/parisc/kernel/firmware.c |    5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ drivers/bus/sunxi-rsb.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
---- a/arch/parisc/kernel/firmware.c
-+++ b/arch/parisc/kernel/firmware.c
-@@ -1197,7 +1197,7 @@ static char __attribute__((aligned(64)))
-  */
- int pdc_iodc_print(const unsigned char *str, unsigned count)
- {
--	unsigned int i;
-+	unsigned int i, found = 0;
- 	unsigned long flags;
+diff --git a/drivers/bus/sunxi-rsb.c b/drivers/bus/sunxi-rsb.c
+index d3fb350dc9ee..bf4db708f0bd 100644
+--- a/drivers/bus/sunxi-rsb.c
++++ b/drivers/bus/sunxi-rsb.c
+@@ -783,7 +783,13 @@ static int __init sunxi_rsb_init(void)
+ 		return ret;
+ 	}
  
- 	for (i = 0; i < count;) {
-@@ -1206,6 +1206,7 @@ int pdc_iodc_print(const unsigned char *
- 			iodc_dbuf[i+0] = '\r';
- 			iodc_dbuf[i+1] = '\n';
- 			i += 2;
-+			found = 1;
- 			goto print;
- 		default:
- 			iodc_dbuf[i] = str[i];
-@@ -1222,7 +1223,7 @@ print:
-                     __pa(iodc_retbuf), 0, __pa(iodc_dbuf), i, 0);
-         spin_unlock_irqrestore(&pdc_lock, flags);
- 
--	return i;
-+	return i - found;
+-	return platform_driver_register(&sunxi_rsb_driver);
++	ret = platform_driver_register(&sunxi_rsb_driver);
++	if (ret) {
++		bus_unregister(&sunxi_rsb_bus);
++		return ret;
++	}
++
++	return 0;
  }
+ module_init(sunxi_rsb_init);
  
- #if !defined(BOOTLOADER)
+-- 
+2.39.0
+
 
 
