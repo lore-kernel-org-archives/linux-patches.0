@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C275063B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48971C433EF;
-	Mon, 20 Feb 2023 13:51:22 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8128C63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D434CC433D2;
+	Mon, 20 Feb 2023 13:51:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901082;
-	bh=7aHALmnk5uz72Iz6GsbJOHKw0/VNMhGX48ucC7TgtRY=;
+	s=korg; t=1676901085;
+	bh=cPrTXOixXNlXzQjvmoHKk3/430NvEe6M0hbeedBPQPs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DF8AQDrGkt9OWKIYBk6it4oHYPvET8zY2pLu6+DDhRJCExlbjefh1Cn2s7pOGJDrU
-	 Pluv6LHWoXQOWP/uriqIcacOcp2XpdnjGGgbMl7SMSR61QTqngHftu6o6Dc4SapoED
-	 cqdVZa8onT1vuLWEMXwMqrrNTzCT3K38pN52SVbo=
+	b=fZr9YrmZt9YaNR5cfxcMjzZ0WCZNaQSI5q/Y1zX+RCpupOuXZc6VGlgaimwbKmXNc
+	 DamtTdRdpPBc5GnLP5ef8SR7YrNoBhAT4YAhT2U1CNckPvYKDG2pBj1Y54tPW6kmM3
+	 QMtYvHgu8T4rHqfD6phSFxv3L2RtyEXRC13Tiykc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	kernel test robot <lkp@intel.com>,
+	Dan Carpenter <error27@gmail.com>,
 	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
 	Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 22/83] nvmem: core: fix registration vs use race
-Date: Mon, 20 Feb 2023 14:35:55 +0100
-Message-Id: <20230220133554.475199455@linuxfoundation.org>
+Subject: [PATCH 5.15 23/83] nvmem: core: fix return value
+Date: Mon, 20 Feb 2023 14:35:56 +0100
+Message-Id: <20230220133554.506411228@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -37,82 +39,37 @@ Content-Transfer-Encoding: 8bit
 
 From: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 
-[ Upstream commit ab3428cfd9aa2f3463ee4b2909b5bb2193bd0c4a ]
+[ Upstream commit 0c4862b1c1465e473bc961a02765490578bf5c20 ]
 
-The i.MX6 CPU frequency driver sometimes fails to register at boot time
-due to nvmem_cell_read_u32() sporadically returning -ENOENT.
+Dan Carpenter points out that the return code was not set in commit
+60c8b4aebd8e ("nvmem: core: fix cleanup after dev_set_name()"), but
+this is not the only issue - we also need to zero wp_gpio to prevent
+gpiod_put() being called on an error value.
 
-This happens because there is a window where __nvmem_device_get() in
-of_nvmem_cell_get() is able to return the nvmem device, but as cells
-have been setup, nvmem_find_cell_entry_by_node() returns NULL.
-
-The occurs because the nvmem core registration code violates one of the
-fundamental principles of kernel programming: do not publish data
-structures before their setup is complete.
-
-Fix this by making nvmem core code conform with this principle.
-
-Fixes: eace75cfdcf7 ("nvmem: Add a simple NVMEM framework for nvmem providers")
+Fixes: 560181d3ace6 ("nvmem: core: fix cleanup after dev_set_name()")
 Cc: stable@vger.kernel.org
+Reported-by: kernel test robot <lkp@intel.com>
+Reported-by: Dan Carpenter <error27@gmail.com>
 Signed-off-by: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
 Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Link: https://lore.kernel.org/r/20230127104015.23839-7-srinivas.kandagatla@linaro.org
+Link: https://lore.kernel.org/r/20230127104015.23839-10-srinivas.kandagatla@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvmem/core.c | 18 ++++++++----------
- 1 file changed, 8 insertions(+), 10 deletions(-)
+ drivers/nvmem/core.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/drivers/nvmem/core.c b/drivers/nvmem/core.c
-index f06b65f0d410b..6a74e38746057 100644
+index 6a74e38746057..47c1487dcf8cc 100644
 --- a/drivers/nvmem/core.c
 +++ b/drivers/nvmem/core.c
-@@ -827,22 +827,16 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
- 	nvmem->dev.groups = nvmem_dev_groups;
- #endif
- 
--	dev_dbg(&nvmem->dev, "Registering nvmem device %s\n", config->name);
--
--	rval = device_add(&nvmem->dev);
--	if (rval)
--		goto err_put_device;
--
- 	if (nvmem->nkeepout) {
- 		rval = nvmem_validate_keepouts(nvmem);
- 		if (rval)
--			goto err_device_del;
-+			goto err_put_device;
+@@ -779,6 +779,7 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
+ 						    GPIOD_OUT_HIGH);
+ 	if (IS_ERR(nvmem->wp_gpio)) {
+ 		rval = PTR_ERR(nvmem->wp_gpio);
++		nvmem->wp_gpio = NULL;
+ 		goto err_put_device;
  	}
- 
- 	if (config->compat) {
- 		rval = nvmem_sysfs_setup_compat(nvmem, config);
- 		if (rval)
--			goto err_device_del;
-+			goto err_put_device;
- 	}
- 
- 	if (config->cells) {
-@@ -859,6 +853,12 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
- 	if (rval)
- 		goto err_remove_cells;
- 
-+	dev_dbg(&nvmem->dev, "Registering nvmem device %s\n", config->name);
-+
-+	rval = device_add(&nvmem->dev);
-+	if (rval)
-+		goto err_remove_cells;
-+
- 	blocking_notifier_call_chain(&nvmem_notifier, NVMEM_ADD, nvmem);
- 
- 	return nvmem;
-@@ -867,8 +867,6 @@ struct nvmem_device *nvmem_register(const struct nvmem_config *config)
- 	nvmem_device_remove_all_cells(nvmem);
- 	if (config->compat)
- 		nvmem_sysfs_remove_compat(nvmem, config);
--err_device_del:
--	device_del(&nvmem->dev);
- err_put_device:
- 	put_device(&nvmem->dev);
  
 -- 
 2.39.0
