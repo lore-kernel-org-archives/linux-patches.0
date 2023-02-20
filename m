@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4539063B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:48:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7EFC433D2;
-	Mon, 20 Feb 2023 13:48:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CCBC763B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:48:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51E82C433EF;
+	Mon, 20 Feb 2023 13:48:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900909;
-	bh=58hEnuvL5xJ1u3CRIRgsTnT8+r56GxNDzMJJVJx0I5Q=;
+	s=korg; t=1676900911;
+	bh=w4b+MsLaJtVCanV2PokX/sI2wZvFFsRc3kdRc9MHhx0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Wzf+E3+hby18pQFXgoYYRjpWvfMYZmv7Mu0s+W+OtlRSBvKxa28Twzz3WQDS+4zjw
-	 eXEWCEBSuyPgXnsbkLBMHM590Oq73X0LZASkP/XuJ2pwkZpT9XMbT16bcUFlxMJA7j
-	 S8CYs0XaPESVNmKL6pqxalmUyleRjAPwVHjjNCpc=
+	b=AqKR3kJ4P1K2xf/meMAdwP46WWNuHRJ6dFlJ1zURLX1GgV8tH7ioqgHZSQYpjsfW6
+	 AyMIODDbxcpfxKwXFaAHcStBo/wNo4z4FSwu1vvXOz6ei9jV1h1VDDRrJbLqBrBhBU
+	 nwGXAWjRilbajy7tvERc9I4cB1O1JJ0ebU05UqV4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
-	Brian Foster <bfoster@redhat.com>,
+	Dave Chinner <dchinner@redhat.com>,
 	Christoph Hellwig <hch@lst.de>,
 	Chandan Babu R <chandan.babu@oracle.com>,
 	"Darrick J. Wong" <djwong@kernel.org>
-Subject: [PATCH 5.4 114/156] xfs: xfs_defer_capture should absorb remaining transaction reservation
-Date: Mon, 20 Feb 2023 14:35:58 +0100
-Message-Id: <20230220133607.313268132@linuxfoundation.org>
+Subject: [PATCH 5.4 115/156] xfs: clean up bmap intent item recovery checking
+Date: Mon, 20 Feb 2023 14:35:59 +0100
+Message-Id: <20230220133607.358484751@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -39,78 +39,95 @@ Content-Transfer-Encoding: 8bit
 
 From: "Darrick J. Wong" <darrick.wong@oracle.com>
 
-commit 929b92f64048d90d23e40a59c47adf59f5026903 upstream.
+commit 919522e89f8e71fc6a8f8abe17be4011573c6ea0 upstream.
 
-When xfs_defer_capture extracts the deferred ops and transaction state
-from a transaction, it should record the transaction reservation type
-from the old transaction so that when we continue the dfops chain, we
-still use the same reservation parameters.
-
-Doing this means that the log item recovery functions get to determine
-the transaction reservation instead of abusing tr_itruncate in yet
-another part of xfs.
+The bmap intent item checking code in xfs_bui_item_recover is spread all
+over the function.  We should check the recovered log item at the top
+before we allocate any resources or do anything else, so do that.
 
 Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
-Reviewed-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Dave Chinner <dchinner@redhat.com>
 Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_defer.c |    3 +++
- fs/xfs/libxfs/xfs_defer.h |    3 +++
- fs/xfs/xfs_log_recover.c  |   17 ++++++++++++++---
- 3 files changed, 20 insertions(+), 3 deletions(-)
+ fs/xfs/xfs_bmap_item.c |   38 ++++++++++++--------------------------
+ 1 file changed, 12 insertions(+), 26 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_defer.c
-+++ b/fs/xfs/libxfs/xfs_defer.c
-@@ -593,6 +593,9 @@ xfs_defer_ops_capture(
- 	dfc->dfc_blkres = tp->t_blk_res - tp->t_blk_res_used;
- 	dfc->dfc_rtxres = tp->t_rtx_res - tp->t_rtx_res_used;
+--- a/fs/xfs/xfs_bmap_item.c
++++ b/fs/xfs/xfs_bmap_item.c
+@@ -434,9 +434,7 @@ xfs_bui_recover(
+ 	xfs_fsblock_t			startblock_fsb;
+ 	xfs_fsblock_t			inode_fsb;
+ 	xfs_filblks_t			count;
+-	bool				op_ok;
+ 	struct xfs_bud_log_item		*budp;
+-	enum xfs_bmap_intent_type	type;
+ 	int				whichfork;
+ 	xfs_exntst_t			state;
+ 	struct xfs_trans		*tp;
+@@ -462,16 +460,19 @@ xfs_bui_recover(
+ 			   XFS_FSB_TO_DADDR(mp, bmap->me_startblock));
+ 	inode_fsb = XFS_BB_TO_FSB(mp, XFS_FSB_TO_DADDR(mp,
+ 			XFS_INO_TO_FSB(mp, bmap->me_owner)));
+-	switch (bmap->me_flags & XFS_BMAP_EXTENT_TYPE_MASK) {
++	state = (bmap->me_flags & XFS_BMAP_EXTENT_UNWRITTEN) ?
++			XFS_EXT_UNWRITTEN : XFS_EXT_NORM;
++	whichfork = (bmap->me_flags & XFS_BMAP_EXTENT_ATTR_FORK) ?
++			XFS_ATTR_FORK : XFS_DATA_FORK;
++	bui_type = bmap->me_flags & XFS_BMAP_EXTENT_TYPE_MASK;
++	switch (bui_type) {
+ 	case XFS_BMAP_MAP:
+ 	case XFS_BMAP_UNMAP:
+-		op_ok = true;
+ 		break;
+ 	default:
+-		op_ok = false;
+-		break;
++		return -EFSCORRUPTED;
+ 	}
+-	if (!op_ok || startblock_fsb == 0 ||
++	if (startblock_fsb == 0 ||
+ 	    bmap->me_len == 0 ||
+ 	    inode_fsb == 0 ||
+ 	    startblock_fsb >= mp->m_sb.sb_dblocks ||
+@@ -502,32 +503,17 @@ xfs_bui_recover(
+ 	if (VFS_I(ip)->i_nlink == 0)
+ 		xfs_iflags_set(ip, XFS_IRECOVERY);
  
-+	/* Preserve the log reservation size. */
-+	dfc->dfc_logres = tp->t_log_res;
-+
- 	return dfc;
- }
+-	/* Process deferred bmap item. */
+-	state = (bmap->me_flags & XFS_BMAP_EXTENT_UNWRITTEN) ?
+-			XFS_EXT_UNWRITTEN : XFS_EXT_NORM;
+-	whichfork = (bmap->me_flags & XFS_BMAP_EXTENT_ATTR_FORK) ?
+-			XFS_ATTR_FORK : XFS_DATA_FORK;
+-	bui_type = bmap->me_flags & XFS_BMAP_EXTENT_TYPE_MASK;
+-	switch (bui_type) {
+-	case XFS_BMAP_MAP:
+-	case XFS_BMAP_UNMAP:
+-		type = bui_type;
+-		break;
+-	default:
+-		XFS_ERROR_REPORT(__func__, XFS_ERRLEVEL_LOW, mp);
+-		error = -EFSCORRUPTED;
+-		goto err_inode;
+-	}
+ 	xfs_trans_ijoin(tp, ip, 0);
  
---- a/fs/xfs/libxfs/xfs_defer.h
-+++ b/fs/xfs/libxfs/xfs_defer.h
-@@ -77,6 +77,9 @@ struct xfs_defer_capture {
- 	/* Block reservations for the data and rt devices. */
- 	unsigned int		dfc_blkres;
- 	unsigned int		dfc_rtxres;
-+
-+	/* Log reservation saved from the transaction. */
-+	unsigned int		dfc_logres;
- };
+ 	count = bmap->me_len;
+-	error = xfs_trans_log_finish_bmap_update(tp, budp, type, ip, whichfork,
+-			bmap->me_startoff, bmap->me_startblock, &count, state);
++	error = xfs_trans_log_finish_bmap_update(tp, budp, bui_type, ip,
++			whichfork, bmap->me_startoff, bmap->me_startblock,
++			&count, state);
+ 	if (error)
+ 		goto err_inode;
  
- /*
---- a/fs/xfs/xfs_log_recover.c
-+++ b/fs/xfs/xfs_log_recover.c
-@@ -4769,9 +4769,20 @@ xlog_finish_defer_ops(
- 	int			error = 0;
- 
- 	list_for_each_entry_safe(dfc, next, capture_list, dfc_list) {
--		error = xfs_trans_alloc(mp, &M_RES(mp)->tr_itruncate,
--				dfc->dfc_blkres, dfc->dfc_rtxres,
--				XFS_TRANS_RESERVE, &tp);
-+		struct xfs_trans_res	resv;
-+
-+		/*
-+		 * Create a new transaction reservation from the captured
-+		 * information.  Set logcount to 1 to force the new transaction
-+		 * to regrant every roll so that we can make forward progress
-+		 * in recovery no matter how full the log might be.
-+		 */
-+		resv.tr_logres = dfc->dfc_logres;
-+		resv.tr_logcount = 1;
-+		resv.tr_logflags = XFS_TRANS_PERM_LOG_RES;
-+
-+		error = xfs_trans_alloc(mp, &resv, dfc->dfc_blkres,
-+				dfc->dfc_rtxres, XFS_TRANS_RESERVE, &tp);
- 		if (error)
- 			return error;
- 
+ 	if (count > 0) {
+-		ASSERT(type == XFS_BMAP_UNMAP);
++		ASSERT(bui_type == XFS_BMAP_UNMAP);
+ 		irec.br_startblock = bmap->me_startblock;
+ 		irec.br_blockcount = count;
+ 		irec.br_startoff = bmap->me_startoff;
 
 
