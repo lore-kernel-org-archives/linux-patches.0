@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B48763B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E640C433EF;
-	Mon, 20 Feb 2023 13:55:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE14C63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 57B45C433EF;
+	Mon, 20 Feb 2023 13:55:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901333;
-	bh=viNjHuWFMEtdbL6gqWaL7GvAryIKcU5xm0+XTmXTk2I=;
+	s=korg; t=1676901335;
+	bh=YWED7BKr75/WFBur95Zx0AtVxFD19dmzh5P3McXo8+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pH2r4XPm9JTXL9+0PHoTNYbREHmuby1QcMx/9uxePp1yU+9J5yY7PAoXZWkmIb6yx
-	 aUv/RpvEy5MlGFQ9hMV34vtISwzVFL/rEpVbBTJn+HwI49MyKpcdbrwWKeGviTzCI4
-	 KsY8TioSK3srYD4Jg7qvvV6gi/tP01JnkWSovxIg=
+	b=Eh56BdocwtCZT8zmVxP0cytfm2XlTms9eNaS1h5d+KlSH6YFvoeI+QpU0uXYhD4Xo
+	 jMJhqxr5CcDNRT0CdrgSyfIlTeLyAYGO0XDRKNKBmOAr81keZ1EwMYAYt19aofguFF
+	 V41HUDZH/BUO9IyLE5UG532abAVhJQmCSZ2j0DOI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Xin Long <lucien.xin@gmail.com>,
+	valis <sec@valis.email>,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Pedro Tammela <pctammela@mojatatu.com>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 34/57] sctp: sctp_sock_filter(): avoid list_entry() on possibly empty list
-Date: Mon, 20 Feb 2023 14:36:42 +0100
-Message-Id: <20230220133550.535166459@linuxfoundation.org>
+Subject: [PATCH 5.10 35/57] net/sched: tcindex: update imperfect hash filters respecting rcu
+Date: Mon, 20 Feb 2023 14:36:43 +0100
+Message-Id: <20230220133550.574690693@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -35,37 +36,101 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Pedro Tammela <pctammela@mojatatu.com>
 
-commit a1221703a0f75a9d81748c516457e0fc76951496 upstream.
+commit ee059170b1f7e94e55fa6cadee544e176a6e59c2 upstream.
 
-Use list_is_first() to check whether tsp->asoc matches the first
-element of ep->asocs, as the list is not guaranteed to have an entry.
+The imperfect hash area can be updated while packets are traversing,
+which will cause a use-after-free when 'tcf_exts_exec()' is called
+with the destroyed tcf_ext.
 
-Fixes: 8f840e47f190 ("sctp: add the sctp_diag.c file")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Acked-by: Xin Long <lucien.xin@gmail.com>
-Link: https://lore.kernel.org/r/20230208-sctp-filter-v2-1-6e1f4017f326@diag.uniroma1.it
+CPU 0:               CPU 1:
+tcindex_set_parms    tcindex_classify
+tcindex_lookup
+                     tcindex_lookup
+tcf_exts_change
+                     tcf_exts_exec [UAF]
+
+Stop operating on the shared area directly, by using a local copy,
+and update the filter with 'rcu_replace_pointer()'. Delete the old
+filter version only after a rcu grace period elapsed.
+
+Fixes: 9b0d4446b569 ("net: sched: avoid atomic swap in tcf_exts_change")
+Reported-by: valis <sec@valis.email>
+Suggested-by: valis <sec@valis.email>
+Signed-off-by: Jamal Hadi Salim <jhs@mojatatu.com>
+Signed-off-by: Pedro Tammela <pctammela@mojatatu.com>
+Link: https://lore.kernel.org/r/20230209143739.279867-1-pctammela@mojatatu.com
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/sctp/diag.c |    4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ net/sched/cls_tcindex.c |   34 ++++++++++++++++++++++++++++++----
+ 1 file changed, 30 insertions(+), 4 deletions(-)
 
---- a/net/sctp/diag.c
-+++ b/net/sctp/diag.c
-@@ -349,11 +349,9 @@ static int sctp_sock_filter(struct sctp_
- 	struct sctp_comm_param *commp = p;
- 	struct sock *sk = ep->base.sk;
- 	const struct inet_diag_req_v2 *r = commp->r;
--	struct sctp_association *assoc =
--		list_entry(ep->asocs.next, struct sctp_association, asocs);
+--- a/net/sched/cls_tcindex.c
++++ b/net/sched/cls_tcindex.c
+@@ -12,6 +12,7 @@
+ #include <linux/errno.h>
+ #include <linux/slab.h>
+ #include <linux/refcount.h>
++#include <linux/rcupdate.h>
+ #include <net/act_api.h>
+ #include <net/netlink.h>
+ #include <net/pkt_cls.h>
+@@ -338,6 +339,7 @@ tcindex_set_parms(struct net *net, struc
+ 	struct tcf_result cr = {};
+ 	int err, balloc = 0;
+ 	struct tcf_exts e;
++	bool update_h = false;
  
- 	/* find the ep only once through the transports by this condition */
--	if (tsp->asoc != assoc)
-+	if (!list_is_first(&tsp->asoc->asocs, &ep->asocs))
- 		return 0;
+ 	err = tcf_exts_init(&e, net, TCA_TCINDEX_ACT, TCA_TCINDEX_POLICE);
+ 	if (err < 0)
+@@ -455,10 +457,13 @@ tcindex_set_parms(struct net *net, struc
+ 		}
+ 	}
  
- 	if (r->sdiag_family != AF_UNSPEC && sk->sk_family != r->sdiag_family)
+-	if (cp->perfect)
++	if (cp->perfect) {
+ 		r = cp->perfect + handle;
+-	else
+-		r = tcindex_lookup(cp, handle) ? : &new_filter_result;
++	} else {
++		/* imperfect area is updated in-place using rcu */
++		update_h = !!tcindex_lookup(cp, handle);
++		r = &new_filter_result;
++	}
+ 
+ 	if (r == &new_filter_result) {
+ 		f = kzalloc(sizeof(*f), GFP_KERNEL);
+@@ -484,7 +489,28 @@ tcindex_set_parms(struct net *net, struc
+ 
+ 	rcu_assign_pointer(tp->root, cp);
+ 
+-	if (r == &new_filter_result) {
++	if (update_h) {
++		struct tcindex_filter __rcu **fp;
++		struct tcindex_filter *cf;
++
++		f->result.res = r->res;
++		tcf_exts_change(&f->result.exts, &r->exts);
++
++		/* imperfect area bucket */
++		fp = cp->h + (handle % cp->hash);
++
++		/* lookup the filter, guaranteed to exist */
++		for (cf = rcu_dereference_bh_rtnl(*fp); cf;
++		     fp = &cf->next, cf = rcu_dereference_bh_rtnl(*fp))
++			if (cf->key == handle)
++				break;
++
++		f->next = cf->next;
++
++		cf = rcu_replace_pointer(*fp, f, 1);
++		tcf_exts_get_net(&cf->result.exts);
++		tcf_queue_work(&cf->rwork, tcindex_destroy_fexts_work);
++	} else if (r == &new_filter_result) {
+ 		struct tcindex_filter *nfp;
+ 		struct tcindex_filter __rcu **fp;
+ 
 
 
