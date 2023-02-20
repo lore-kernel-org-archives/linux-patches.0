@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7769B63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F10CAC4339B;
-	Mon, 20 Feb 2023 13:58:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 085E363B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854A4C433D2;
+	Mon, 20 Feb 2023 13:58:16 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901494;
-	bh=PR/EohbDIxEQmBUHz8lHyT1xIeNdyOWaRKch9tCK5AM=;
+	s=korg; t=1676901496;
+	bh=SKxwpuPeFrsjkmrCHmg8BLPyCcp6Jy8418OHhjLGp5M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ch5YqrOrgLCuq4ay9zuWXpjIw2Vkb4bsL2eOMPUM2V0REpU6a6yptmONb99Euat4z
-	 Fe1NZsAP04ssR4QD3NMgYBstraxUE3l6oC6TbqMxi8Iia5Obm+8d+fl79H8s08ZZ0f
-	 ixp1CQ0PiJJxjjCDPvwfRaRLSZDyRwb1FJHPH4tk=
+	b=Bl0XX0WimTxt7/K1ru+0l5txiTnv10hGONk6vaZW+9wDkQzE+Kpd1q/Sg8RjLIt52
+	 9iHgFxl+ZP0mqaZrLfk/WJsXBZ2Un/rx3osd725i+1wJlWHcVzh2mvc2ToME/9zXNq
+	 +wZwSn2YR70HqtF0HjJUXkM3EKQkaBeC6Hzi0QgY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Maurizio Lombardi <mlombard@redhat.com>,
-	Keith Busch <kbusch@kernel.org>,
-	Chaitanya Kulkarni <kch@nvidia.com>,
-	Christoph Hellwig <hch@lst.de>,
+	Hans de Goede <hdegoede@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 031/118] nvme: clear the request_queue pointers on failure in nvme_alloc_admin_tag_set
-Date: Mon, 20 Feb 2023 14:35:47 +0100
-Message-Id: <20230220133601.669667832@linuxfoundation.org>
+Subject: [PATCH 6.1 040/118] platform/x86: touchscreen_dmi: Add Chuwi Vi8 (CWI501) DMI match
+Date: Mon, 20 Feb 2023 14:35:56 +0100
+Message-Id: <20230220133602.048950900@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -37,45 +34,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Maurizio Lombardi <mlombard@redhat.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-[ Upstream commit fd62678ab55cb01e11a404d302cdade222bf4022 ]
+[ Upstream commit eecf2acd4a580e9364e5087daf0effca60a240b7 ]
 
-If nvme_alloc_admin_tag_set() fails, the admin_q and fabrics_q pointers
-are left with an invalid, non-NULL value. Other functions may then check
-the pointers and dereference them, e.g. in
+Add a DMI match for the CWI501 version of the Chuwi Vi8 tablet,
+pointing to the same chuwi_vi8_data as the existing CWI506 version
+DMI match.
 
-  nvme_probe() -> out_disable: -> nvme_dev_remove_admin().
-
-Fix the bug by setting admin_q and fabrics_q to NULL in case of error.
-
-Also use the set variable to free the tag_set as ctrl->admin_tagset isn't
-initialized yet.
-
-Signed-off-by: Maurizio Lombardi <mlombard@redhat.com>
-Reviewed-by: Keith Busch <kbusch@kernel.org>
-Reviewed-by: Chaitanya Kulkarni <kch@nvidia.com>
-Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Link: https://lore.kernel.org/r/20230202103413.331459-1-hdegoede@redhat.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/nvme/host/core.c | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/platform/x86/touchscreen_dmi.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
 
-diff --git a/drivers/nvme/host/core.c b/drivers/nvme/host/core.c
-index 25ade4ce8e0a7..e189ce17deb3e 100644
---- a/drivers/nvme/host/core.c
-+++ b/drivers/nvme/host/core.c
-@@ -4881,7 +4881,9 @@ int nvme_alloc_admin_tag_set(struct nvme_ctrl *ctrl, struct blk_mq_tag_set *set,
- out_cleanup_admin_q:
- 	blk_mq_destroy_queue(ctrl->admin_q);
- out_free_tagset:
--	blk_mq_free_tag_set(ctrl->admin_tagset);
-+	blk_mq_free_tag_set(set);
-+	ctrl->admin_q = NULL;
-+	ctrl->fabrics_q = NULL;
- 	return ret;
- }
- EXPORT_SYMBOL_GPL(nvme_alloc_admin_tag_set);
+diff --git a/drivers/platform/x86/touchscreen_dmi.c b/drivers/platform/x86/touchscreen_dmi.c
+index f00995390fdfe..13802a3c3591d 100644
+--- a/drivers/platform/x86/touchscreen_dmi.c
++++ b/drivers/platform/x86/touchscreen_dmi.c
+@@ -1097,6 +1097,15 @@ const struct dmi_system_id touchscreen_dmi_table[] = {
+ 			DMI_MATCH(DMI_BIOS_DATE, "05/07/2016"),
+ 		},
+ 	},
++	{
++		/* Chuwi Vi8 (CWI501) */
++		.driver_data = (void *)&chuwi_vi8_data,
++		.matches = {
++			DMI_MATCH(DMI_SYS_VENDOR, "Insyde"),
++			DMI_MATCH(DMI_PRODUCT_NAME, "i86"),
++			DMI_MATCH(DMI_BIOS_VERSION, "CHUWI.W86JLBNR01"),
++		},
++	},
+ 	{
+ 		/* Chuwi Vi8 (CWI506) */
+ 		.driver_data = (void *)&chuwi_vi8_data,
 -- 
 2.39.0
 
