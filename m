@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5D48663B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9971C433D2;
-	Mon, 20 Feb 2023 13:38:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04A6563B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E08DC433EF;
+	Mon, 20 Feb 2023 13:38:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900283;
-	bh=W48JW8SGQpmmpjj3KFiSG+ufrG0SIWY/T3msLhP+P3I=;
+	s=korg; t=1676900285;
+	bh=D37mau1JN34QeCDam5wjYP9EcF7jV589I/nDhrOW1pU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=kbrnfyqd6AntfeRSDqdlUN6yqCy4Gg/AAMcbEpmGKrrkqJOU84n+GPWhaqkJUXKGe
-	 Bq4CKCkmJ3w9nypZ8XgThD27sGBCWtM6bsyhQTAmdFPdJ/DeIPO4B+V0Oof/0lmW1o
-	 0zrHiQ9dt+ZMOCA6GB+kf9qPW81Bi3Rk/Gm/Kj9k=
+	b=QdV65pwmyHAmRi9RHP70Q3JKItV/ThmMo/jQdxXNoronTmnMwMWxV3WOUsTJUk994
+	 uy13J96yWFkpVCr9vKpIN9S23MGMW75Cv6JopOnwHP8nnyIQb8Nl2N8ezPtVoQK1PM
+	 PW0UUQ2n23ArcpbzyKCHnDOIY376IgFaaWIPT7cw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yuan Can <yuancan@huawei.com>,
-	Jernej Skrabec <jernej.skrabec@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 02/53] bus: sunxi-rsb: Fix error handling in sunxi_rsb_init()
-Date: Mon, 20 Feb 2023 14:35:28 +0100
-Message-Id: <20230220133548.258767532@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 4.14 20/53] parisc: Wire up PTRACE_GETREGS/PTRACE_SETREGS for compat case
+Date: Mon, 20 Feb 2023 14:35:46 +0100
+Message-Id: <20230220133548.888211098@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
 References: <20230220133548.158615609@linuxfoundation.org>
@@ -35,46 +33,64 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yuan Can <yuancan@huawei.com>
+From: Helge Deller <deller@gmx.de>
 
-[ Upstream commit f71eaf2708be7831428eacae7db25d8ec6b8b4c5 ]
+commit 316f1f42b5cc1d95124c1f0387c867c1ba7b6d0e upstream.
 
-The sunxi_rsb_init() returns the platform_driver_register() directly
-without checking its return value, if platform_driver_register() failed,
-the sunxi_rsb_bus is not unregistered.
-Fix by unregister sunxi_rsb_bus when platform_driver_register() failed.
+Wire up the missing ptrace requests PTRACE_GETREGS, PTRACE_SETREGS,
+PTRACE_GETFPREGS and PTRACE_SETFPREGS when running 32-bit applications
+on 64-bit kernels.
 
-Fixes: d787dcdb9c8f ("bus: sunxi-rsb: Add driver for Allwinner Reduced Serial Bus")
-Signed-off-by: Yuan Can <yuancan@huawei.com>
-Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Link: https://lore.kernel.org/r/20221123094200.12036-1-yuancan@huawei.com
-Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+Cc: stable@vger.kernel.org # 4.7+
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/bus/sunxi-rsb.c | 8 +++++++-
- 1 file changed, 7 insertions(+), 1 deletion(-)
+ arch/parisc/kernel/ptrace.c |   15 +++++++++++++--
+ 1 file changed, 13 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/bus/sunxi-rsb.c b/drivers/bus/sunxi-rsb.c
-index d3fb350dc9ee..bf4db708f0bd 100644
---- a/drivers/bus/sunxi-rsb.c
-+++ b/drivers/bus/sunxi-rsb.c
-@@ -783,7 +783,13 @@ static int __init sunxi_rsb_init(void)
- 		return ret;
- 	}
+--- a/arch/parisc/kernel/ptrace.c
++++ b/arch/parisc/kernel/ptrace.c
+@@ -132,6 +132,12 @@ long arch_ptrace(struct task_struct *chi
+ 	unsigned long tmp;
+ 	long ret = -EIO;
  
--	return platform_driver_register(&sunxi_rsb_driver);
-+	ret = platform_driver_register(&sunxi_rsb_driver);
-+	if (ret) {
-+		bus_unregister(&sunxi_rsb_bus);
-+		return ret;
-+	}
++	unsigned long user_regs_struct_size = sizeof(struct user_regs_struct);
++#ifdef CONFIG_64BIT
++	if (is_compat_task())
++		user_regs_struct_size /= 2;
++#endif
 +
-+	return 0;
- }
- module_init(sunxi_rsb_init);
+ 	switch (request) {
  
--- 
-2.39.0
-
+ 	/* Read the word at location addr in the USER area.  For ptraced
+@@ -187,14 +193,14 @@ long arch_ptrace(struct task_struct *chi
+ 		return copy_regset_to_user(child,
+ 					   task_user_regset_view(current),
+ 					   REGSET_GENERAL,
+-					   0, sizeof(struct user_regs_struct),
++					   0, user_regs_struct_size,
+ 					   datap);
+ 
+ 	case PTRACE_SETREGS:	/* Set all gp regs in the child. */
+ 		return copy_regset_from_user(child,
+ 					     task_user_regset_view(current),
+ 					     REGSET_GENERAL,
+-					     0, sizeof(struct user_regs_struct),
++					     0, user_regs_struct_size,
+ 					     datap);
+ 
+ 	case PTRACE_GETFPREGS:	/* Get the child FPU state. */
+@@ -308,6 +314,11 @@ long compat_arch_ptrace(struct task_stru
+ 			}
+ 		}
+ 		break;
++	case PTRACE_GETREGS:
++	case PTRACE_SETREGS:
++	case PTRACE_GETFPREGS:
++	case PTRACE_SETFPREGS:
++		return arch_ptrace(child, request, addr, data);
+ 
+ 	default:
+ 		ret = compat_ptrace_request(child, request, addr, data);
 
 
