@@ -1,31 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A7E1663B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:56:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29F73C433D2;
-	Mon, 20 Feb 2023 13:56:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D53A63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:56:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B8707C433D2;
+	Mon, 20 Feb 2023 13:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901413;
-	bh=GJe8duji54QuB9VRZfPtrERwrTqL5KN3QCIUjlASOSQ=;
+	s=korg; t=1676901416;
+	bh=ify962k9Ex3CzpzEjlgxJLlMVG3xqeCPArw3zlWclaQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MVJnsERYT84SzCnqeBuTQiseUSJYimm0GJbRnQYET1svlypQcLqqiodAcOk5ulosc
-	 Jdsg+ehBLey+6XFA96hebXTuXhVe6+IfJPTAwExWod4j74QzzyJW65AxLn0NR/VInq
-	 Fs3dAdvUasmjyEW7/CHYOJ3Ay/aX+V1tX4USTI9E=
+	b=H3yYHF6E1qN1u345Ro66vKTqhqXX3W0Lmj/Gxy8xQGEX8CWyeYqVYlDSx30oyLPWw
+	 vBA6f/pM1BhQzajgt4C5D63uOS/6t8l5Yocqu4M/gQuBoKF3azYj7T9DfjQVLg7NC8
+	 Y8OnaLkP1XJUlZIT1GO+AgToL/rue7QePeA39vtQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
-	syzbot+f0c4082ce5ebebdac63b@syzkaller.appspotmail.com,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 46/57] nilfs2: fix underflow in second superblock position calculations
-Date: Mon, 20 Feb 2023 14:36:54 +0100
-Message-Id: <20230220133550.981309758@linuxfoundation.org>
+	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Paolo Abeni <pabeni@redhat.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 001/118] mptcp: sockopt: make tcp_fastopen_connect generic
+Date: Mon, 20 Feb 2023 14:35:17 +0100
+Message-Id: <20230220133600.455498243@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
-References: <20230220133549.360169435@linuxfoundation.org>
+In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
+References: <20230220133600.368809650@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,136 +38,66 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+From: Matthieu Baerts <matthieu.baerts@tessares.net>
 
-commit 99b9402a36f0799f25feee4465bfa4b8dfa74b4d upstream.
+[ Upstream commit d3d429047cc66ff49780c93e4fccd9527723d385 ]
 
-Macro NILFS_SB2_OFFSET_BYTES, which computes the position of the second
-superblock, underflows when the argument device size is less than 4096
-bytes.  Therefore, when using this macro, it is necessary to check in
-advance that the device size is not less than a lower limit, or at least
-that underflow does not occur.
+There are other socket options that need to act only on the first
+subflow, e.g. all TCP_FASTOPEN* socket options.
 
-The current nilfs2 implementation lacks this check, causing out-of-bound
-block access when mounting devices smaller than 4096 bytes:
+This is similar to the getsockopt version.
 
- I/O error, dev loop0, sector 36028797018963960 op 0x0:(READ) flags 0x0
- phys_seg 1 prio class 2
- NILFS (loop0): unable to read secondary superblock (blocksize = 1024)
+In the next commit, this new mptcp_setsockopt_first_sf_only() helper is
+used by other another option.
 
-In addition, when trying to resize the filesystem to a size below 4096
-bytes, this underflow occurs in nilfs_resize_fs(), passing a huge number
-of segments to nilfs_sufile_resize(), corrupting parameters such as the
-number of segments in superblocks.  This causes excessive loop iterations
-in nilfs_sufile_resize() during a subsequent resize ioctl, causing
-semaphore ns_segctor_sem to block for a long time and hang the writer
-thread:
-
- INFO: task segctord:5067 blocked for more than 143 seconds.
-      Not tainted 6.2.0-rc8-syzkaller-00015-gf6feea56f66d #0
- "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
- task:segctord        state:D stack:23456 pid:5067  ppid:2
- flags:0x00004000
- Call Trace:
-  <TASK>
-  context_switch kernel/sched/core.c:5293 [inline]
-  __schedule+0x1409/0x43f0 kernel/sched/core.c:6606
-  schedule+0xc3/0x190 kernel/sched/core.c:6682
-  rwsem_down_write_slowpath+0xfcf/0x14a0 kernel/locking/rwsem.c:1190
-  nilfs_transaction_lock+0x25c/0x4f0 fs/nilfs2/segment.c:357
-  nilfs_segctor_thread_construct fs/nilfs2/segment.c:2486 [inline]
-  nilfs_segctor_thread+0x52f/0x1140 fs/nilfs2/segment.c:2570
-  kthread+0x270/0x300 kernel/kthread.c:376
-  ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
-  </TASK>
- ...
- Call Trace:
-  <TASK>
-  folio_mark_accessed+0x51c/0xf00 mm/swap.c:515
-  __nilfs_get_page_block fs/nilfs2/page.c:42 [inline]
-  nilfs_grab_buffer+0x3d3/0x540 fs/nilfs2/page.c:61
-  nilfs_mdt_submit_block+0xd7/0x8f0 fs/nilfs2/mdt.c:121
-  nilfs_mdt_read_block+0xeb/0x430 fs/nilfs2/mdt.c:176
-  nilfs_mdt_get_block+0x12d/0xbb0 fs/nilfs2/mdt.c:251
-  nilfs_sufile_get_segment_usage_block fs/nilfs2/sufile.c:92 [inline]
-  nilfs_sufile_truncate_range fs/nilfs2/sufile.c:679 [inline]
-  nilfs_sufile_resize+0x7a3/0x12b0 fs/nilfs2/sufile.c:777
-  nilfs_resize_fs+0x20c/0xed0 fs/nilfs2/super.c:422
-  nilfs_ioctl_resize fs/nilfs2/ioctl.c:1033 [inline]
-  nilfs_ioctl+0x137c/0x2440 fs/nilfs2/ioctl.c:1301
-  ...
-
-This fixes these issues by inserting appropriate minimum device size
-checks or anti-underflow checks, depending on where the macro is used.
-
-Link: https://lkml.kernel.org/r/0000000000004e1dfa05f4a48e6b@google.com
-Link: https://lkml.kernel.org/r/20230214224043.24141-1-konishi.ryusuke@gmail.com
-Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Reported-by: <syzbot+f0c4082ce5ebebdac63b@syzkaller.appspotmail.com>
-Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-
+Reviewed-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
+Signed-off-by: Mat Martineau <mathew.j.martineau@linux.intel.com>
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+Stable-dep-of: 21e43569685d ("mptcp: fix locking for setsockopt corner-case")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nilfs2/ioctl.c     |    7 +++++++
- fs/nilfs2/super.c     |    9 +++++++++
- fs/nilfs2/the_nilfs.c |    8 +++++++-
- 3 files changed, 23 insertions(+), 1 deletion(-)
+ net/mptcp/sockopt.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
---- a/fs/nilfs2/ioctl.c
-+++ b/fs/nilfs2/ioctl.c
-@@ -1129,7 +1129,14 @@ static int nilfs_ioctl_set_alloc_range(s
+diff --git a/net/mptcp/sockopt.c b/net/mptcp/sockopt.c
+index c7cb68c725b29..8d3b09d75c3ae 100644
+--- a/net/mptcp/sockopt.c
++++ b/net/mptcp/sockopt.c
+@@ -769,17 +769,17 @@ static int mptcp_setsockopt_sol_tcp_defer(struct mptcp_sock *msk, sockptr_t optv
+ 	return tcp_setsockopt(listener->sk, SOL_TCP, TCP_DEFER_ACCEPT, optval, optlen);
+ }
  
- 	minseg = range[0] + segbytes - 1;
- 	do_div(minseg, segbytes);
-+
-+	if (range[1] < 4096)
-+		goto out;
-+
- 	maxseg = NILFS_SB2_OFFSET_BYTES(range[1]);
-+	if (maxseg < segbytes)
-+		goto out;
-+
- 	do_div(maxseg, segbytes);
- 	maxseg--;
- 
---- a/fs/nilfs2/super.c
-+++ b/fs/nilfs2/super.c
-@@ -409,6 +409,15 @@ int nilfs_resize_fs(struct super_block *
- 		goto out;
- 
- 	/*
-+	 * Prevent underflow in second superblock position calculation.
-+	 * The exact minimum size check is done in nilfs_sufile_resize().
-+	 */
-+	if (newsize < 4096) {
-+		ret = -ENOSPC;
-+		goto out;
-+	}
-+
-+	/*
- 	 * Write lock is required to protect some functions depending
- 	 * on the number of segments, the number of reserved segments,
- 	 * and so forth.
---- a/fs/nilfs2/the_nilfs.c
-+++ b/fs/nilfs2/the_nilfs.c
-@@ -544,9 +544,15 @@ static int nilfs_load_super_block(struct
+-static int mptcp_setsockopt_sol_tcp_fastopen_connect(struct mptcp_sock *msk, sockptr_t optval,
+-						     unsigned int optlen)
++static int mptcp_setsockopt_first_sf_only(struct mptcp_sock *msk, int level, int optname,
++					  sockptr_t optval, unsigned int optlen)
  {
- 	struct nilfs_super_block **sbp = nilfs->ns_sbp;
- 	struct buffer_head **sbh = nilfs->ns_sbh;
--	u64 sb2off = NILFS_SB2_OFFSET_BYTES(nilfs->ns_bdev->bd_inode->i_size);
-+	u64 sb2off, devsize = nilfs->ns_bdev->bd_inode->i_size;
- 	int valid[2], swp = 0;
+ 	struct socket *sock;
  
-+	if (devsize < NILFS_SEG_MIN_BLOCKS * NILFS_MIN_BLOCK_SIZE + 4096) {
-+		nilfs_err(sb, "device size too small");
-+		return -EINVAL;
-+	}
-+	sb2off = NILFS_SB2_OFFSET_BYTES(devsize);
-+
- 	sbp[0] = nilfs_read_super_block(sb, NILFS_SB_OFFSET_BYTES, blocksize,
- 					&sbh[0]);
- 	sbp[1] = nilfs_read_super_block(sb, sb2off, blocksize, &sbh[1]);
+-	/* Limit to first subflow */
++	/* Limit to first subflow, before the connection establishment */
+ 	sock = __mptcp_nmpc_socket(msk);
+ 	if (!sock)
+ 		return -EINVAL;
+ 
+-	return tcp_setsockopt(sock->sk, SOL_TCP, TCP_FASTOPEN_CONNECT, optval, optlen);
++	return tcp_setsockopt(sock->sk, level, optname, optval, optlen);
+ }
+ 
+ static int mptcp_setsockopt_sol_tcp(struct mptcp_sock *msk, int optname,
+@@ -811,7 +811,8 @@ static int mptcp_setsockopt_sol_tcp(struct mptcp_sock *msk, int optname,
+ 	case TCP_DEFER_ACCEPT:
+ 		return mptcp_setsockopt_sol_tcp_defer(msk, optval, optlen);
+ 	case TCP_FASTOPEN_CONNECT:
+-		return mptcp_setsockopt_sol_tcp_fastopen_connect(msk, optval, optlen);
++		return mptcp_setsockopt_first_sf_only(msk, SOL_TCP, optname,
++						      optval, optlen);
+ 	}
+ 
+ 	return -EOPNOTSUPP;
+-- 
+2.39.0
+
 
 
