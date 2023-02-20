@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6272B63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:42:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DC986C433D2;
-	Mon, 20 Feb 2023 13:42:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B60E63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:42:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 87072C4339E;
+	Mon, 20 Feb 2023 13:42:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900553;
-	bh=MEpeniDZwoSaV2xAjDmu2ZkFj1SCvu4vIGyWhgcp/Y4=;
+	s=korg; t=1676900555;
+	bh=mgdY70ZZpTjAYXJ9RpOyDE9YTF1lswzIECogCx/sFo8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MlyTeGzhMWFbv0aLJ5ZMCgH6/AVsCxLU0LfOxMlvOnHS8zhlc8I01pwHXBuHFwLYt
-	 y18iI/RFhuOmnjk5AvuBhFT9A7twbBMDHyVFvwaJRd7LCGZUgPsgk5nyH8uAS82j0b
-	 SMRQVDPa8RjMeI/+zLZNBX+8PsOeqU/jXe828GcM=
+	b=rzluP4z+TVRBOu3fZ183R91ddPr4ex9SLwNuvHdtbyZXDeyPzfxIXvgV+Lvj1dSXO
+	 FS/I4kEiM7FiA+aQKeV9UIuXkIqokjb0iDnX6F/eKrJ83zyCSMgQ+oQlpcEqcABHBN
+	 jNDXknOs8vBPfDSWKpb6zsDbZOTB8ZGYH9Hs9wV8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <error27@gmail.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 51/89] ALSA: pci: lx6464es: fix a debug loop
-Date: Mon, 20 Feb 2023 14:35:50 +0100
-Message-Id: <20230220133554.923679420@linuxfoundation.org>
+	Shell Chen <xierch@gmail.com>,
+	Florian Westphal <fw@strlen.de>,
+	Qingfang DENG <dqfext@gmail.com>
+Subject: [PATCH 4.19 69/89] netfilter: nft_tproxy: restrict to prerouting hook
+Date: Mon, 20 Feb 2023 14:36:08 +0100
+Message-Id: <20230220133555.564125191@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -35,52 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Carpenter <error27@gmail.com>
+From: Florian Westphal <fw@strlen.de>
 
-[ Upstream commit 5dac9f8dc25fefd9d928b98f6477ff3daefd73e3 ]
+commit 18bbc3213383a82b05383827f4b1b882e3f0a5a5 upstream.
 
-This loop accidentally reuses the "i" iterator for both the inside and
-the outside loop.  The value of MAX_STREAM_BUFFER is 5.  I believe that
-chip->rmh.stat_len is in the 2-12 range.  If the value of .stat_len is
-4 or more then it will loop exactly one time, but if it's less then it
-is a forever loop.
+TPROXY is only allowed from prerouting, but nft_tproxy doesn't check this.
+This fixes a crash (null dereference) when using tproxy from e.g. output.
 
-It looks like it was supposed to combined into one loop where
-conditions are checked.
-
-Fixes: 8e6320064c33 ("ALSA: lx_core: Remove useless #if 0 .. #endif")
-Signed-off-by: Dan Carpenter <error27@gmail.com>
-Link: https://lore.kernel.org/r/Y9jnJTis/mRFJAQp@kili
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 4ed8eb6570a4 ("netfilter: nf_tables: Add native tproxy support")
+Reported-by: Shell Chen <xierch@gmail.com>
+Signed-off-by: Florian Westphal <fw@strlen.de>
+Signed-off-by: Qingfang DENG <dqfext@gmail.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/lx6464es/lx_core.c | 11 +++++------
- 1 file changed, 5 insertions(+), 6 deletions(-)
+ net/netfilter/nft_tproxy.c |    8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/sound/pci/lx6464es/lx_core.c b/sound/pci/lx6464es/lx_core.c
-index a80684bdc30d6..46f5362096710 100644
---- a/sound/pci/lx6464es/lx_core.c
-+++ b/sound/pci/lx6464es/lx_core.c
-@@ -508,12 +508,11 @@ int lx_buffer_ask(struct lx6464es *chip, u32 pipe, int is_capture,
- 		dev_dbg(chip->card->dev,
- 			"CMD_08_ASK_BUFFERS: needed %d, freed %d\n",
- 			    *r_needed, *r_freed);
--		for (i = 0; i < MAX_STREAM_BUFFER; ++i) {
--			for (i = 0; i != chip->rmh.stat_len; ++i)
--				dev_dbg(chip->card->dev,
--					"  stat[%d]: %x, %x\n", i,
--					    chip->rmh.stat[i],
--					    chip->rmh.stat[i] & MASK_DATA_SIZE);
-+		for (i = 0; i < MAX_STREAM_BUFFER && i < chip->rmh.stat_len;
-+		     ++i) {
-+			dev_dbg(chip->card->dev, "  stat[%d]: %x, %x\n", i,
-+				chip->rmh.stat[i],
-+				chip->rmh.stat[i] & MASK_DATA_SIZE);
- 		}
- 	}
+--- a/net/netfilter/nft_tproxy.c
++++ b/net/netfilter/nft_tproxy.c
+@@ -289,6 +289,13 @@ static int nft_tproxy_dump(struct sk_buf
+ 	return 0;
+ }
  
--- 
-2.39.0
-
++static int nft_tproxy_validate(const struct nft_ctx *ctx,
++			       const struct nft_expr *expr,
++			       const struct nft_data **data)
++{
++	return nft_chain_validate_hooks(ctx->chain, 1 << NF_INET_PRE_ROUTING);
++}
++
+ static struct nft_expr_type nft_tproxy_type;
+ static const struct nft_expr_ops nft_tproxy_ops = {
+ 	.type		= &nft_tproxy_type,
+@@ -296,6 +303,7 @@ static const struct nft_expr_ops nft_tpr
+ 	.eval		= nft_tproxy_eval,
+ 	.init		= nft_tproxy_init,
+ 	.dump		= nft_tproxy_dump,
++	.validate	= nft_tproxy_validate,
+ };
+ 
+ static struct nft_expr_type nft_tproxy_type __read_mostly = {
 
 
