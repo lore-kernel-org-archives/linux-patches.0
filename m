@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 484BC63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C5881C433D2;
-	Mon, 20 Feb 2023 13:51:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA6AE63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:06 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 52715C433EF;
+	Mon, 20 Feb 2023 13:51:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901064;
-	bh=UjbjQ8Yer2dYefk720z6z+rFveRSZQ0hi4knrXkKSYY=;
+	s=korg; t=1676901066;
+	bh=hUPAz7/Vrxl4ojlvrN3CtHPIGvlkHC4PrRoeJ8keh+8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Grwr+IHKUNgQyaeMZJHE6KY1y1wkbJ6IVP5k8h57kOdDQyZRXbS3aX9TjiOF44Nnt
-	 DpbnvRsUHpIPdJeydIeohlZgmrc1QTDKcUwNLJP5A++uojrwnHAqUMMsaZc0Q0tQS8
-	 sRy4HSMlv+6TIxvdjv42UdkLnGeSC6umuQW5/Nuk=
+	b=zEnb/HJR8uJLoiH0ZbUjQvnElTNJASBmFb35kEXI27jq/PP/yiLPNNLMj/PjzDQFf
+	 HTVaopgez1zDwetEza5yqxR7ljEQ4pBCJlPFdopUgTmxYWUITyialXJo6KWBCpx9Nn
+	 llB8lyHMPNTql+095ZiJ1+OQCWieqsKXF8JV44lQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vasily Gorbik <gor@linux.ibm.com>,
-	Alexander Egorenkov <egorenar@linux.ibm.com>,
-	Heiko Carstens <hca@linux.ibm.com>,
+	Amit Engel <Amit.Engel@dell.com>,
+	James Smart <jsmart2021@gmail.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 16/83] s390/decompressor: specify __decompress() buf len to avoid overflow
-Date: Mon, 20 Feb 2023 14:35:49 +0100
-Message-Id: <20230220133554.274344932@linuxfoundation.org>
+Subject: [PATCH 5.15 17/83] nvme-fc: fix a missing queue put in nvmet_fc_ls_create_association
+Date: Mon, 20 Feb 2023 14:35:50 +0100
+Message-Id: <20230220133554.303859497@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -36,45 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vasily Gorbik <gor@linux.ibm.com>
+From: Amit Engel <Amit.Engel@dell.com>
 
-[ Upstream commit 7ab41c2c08a32132ba8c14624910e2fe8ce4ba4b ]
+[ Upstream commit 0cab4404874f2de52617de8400c844891c6ea1ce ]
 
-Historically calls to __decompress() didn't specify "out_len" parameter
-on many architectures including s390, expecting that no writes beyond
-uncompressed kernel image are performed. This has changed since commit
-2aa14b1ab2c4 ("zstd: import usptream v1.5.2") which includes zstd library
-commit 6a7ede3dfccb ("Reduce size of dctx by reutilizing dst buffer
-(#2751)"). Now zstd decompression code might store literal buffer in
-the unwritten portion of the destination buffer. Since "out_len" is
-not set, it is considered to be unlimited and hence free to use for
-optimization needs. On s390 this might corrupt initrd or ipl report
-which are often placed right after the decompressor buffer. Luckily the
-size of uncompressed kernel image is already known to the decompressor,
-so to avoid the problem simply specify it in the "out_len" parameter.
+As part of nvmet_fc_ls_create_association there is a case where
+nvmet_fc_alloc_target_queue fails right after a new association with an
+admin queue is created. In this case, no one releases the get taken in
+nvmet_fc_alloc_target_assoc.  This fix is adding the missing put.
 
-Link: https://github.com/facebook/zstd/commit/6a7ede3dfccb
-Signed-off-by: Vasily Gorbik <gor@linux.ibm.com>
-Tested-by: Alexander Egorenkov <egorenar@linux.ibm.com>
-Link: https://lore.kernel.org/r/patch-1.thread-41c676.git-41c676c2d153.your-ad-here.call-01675030179-ext-9637@work.hours
-Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
+Signed-off-by: Amit Engel <Amit.Engel@dell.com>
+Reviewed-by: James Smart <jsmart2021@gmail.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/s390/boot/compressed/decompressor.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/nvme/target/fc.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/s390/boot/compressed/decompressor.c b/arch/s390/boot/compressed/decompressor.c
-index e27c2140d6206..623f6775d01d7 100644
---- a/arch/s390/boot/compressed/decompressor.c
-+++ b/arch/s390/boot/compressed/decompressor.c
-@@ -80,6 +80,6 @@ void *decompress_kernel(void)
- 	void *output = (void *)decompress_offset;
+diff --git a/drivers/nvme/target/fc.c b/drivers/nvme/target/fc.c
+index c43bc5e1c7a28..00a2a591f5c1f 100644
+--- a/drivers/nvme/target/fc.c
++++ b/drivers/nvme/target/fc.c
+@@ -1685,8 +1685,10 @@ nvmet_fc_ls_create_association(struct nvmet_fc_tgtport *tgtport,
+ 		else {
+ 			queue = nvmet_fc_alloc_target_queue(iod->assoc, 0,
+ 					be16_to_cpu(rqst->assoc_cmd.sqsize));
+-			if (!queue)
++			if (!queue) {
+ 				ret = VERR_QUEUE_ALLOC_FAIL;
++				nvmet_fc_tgt_a_put(iod->assoc);
++			}
+ 		}
+ 	}
  
- 	__decompress(_compressed_start, _compressed_end - _compressed_start,
--		     NULL, NULL, output, 0, NULL, error);
-+		     NULL, NULL, output, vmlinux.image_size, NULL, error);
- 	return output;
- }
 -- 
 2.39.0
 
