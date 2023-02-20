@@ -1,26 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B5C2863B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:46:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 41540C433D2;
-	Mon, 20 Feb 2023 13:46:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5AC1F63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:46:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D329DC4339C;
+	Mon, 20 Feb 2023 13:46:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900773;
-	bh=B13805gmhGPOmN6wVSEdk+PBO4qrsLdTpxK+F9q3AEs=;
+	s=korg; t=1676900776;
+	bh=IIAZkeSpEKS2KPTxBOcC+lHxfz0OjPj0TExQ7GtJOlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S3J0eoJTTYkyBAaJ8I1Kpeajcdrwr3STMCwQc289icR/VRvd3N0DMaCCUSKKAwHpl
-	 1iLP7VNgxT7YhKRxQzJmqIJBjx6GRd/n+7HNLqR5+KWIC65sveP/5hYNSCxHE9Tfds
-	 55qdHUBtNYBu/6Gw3Cb6rhpkBpNL5TO4aCh9bTkc=
+	b=EiwCTSGV9XSZiocjWRMQQ/uVnxP+la+RGFQQptkzP9I+6xa+zayKl1uxcy0GX3cVj
+	 gPdS27aKzP8ycwDSc6HZLt/H6kCBLMEa33hEk65GbeEDND5OK/U8SM0lC/Go1lqlgT
+	 fzmVw1Ygp3VI5mPjqhlylZ7TSn4dIecT2bzvZMJQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artemii Karasev <karasev@ispras.ru>,
-	Takashi Iwai <tiwai@suse.de>
-Subject: [PATCH 5.4 062/156] ALSA: emux: Avoid potential array out-of-bound in snd_emux_xg_control()
-Date: Mon, 20 Feb 2023 14:35:06 +0100
-Message-Id: <20230220133604.936845316@linuxfoundation.org>
+	mhiramat@kernel.org,
+	mchehab@kernel.org,
+	linux-edac@vger.kernel.org,
+	Shiju Jose <shiju.jose@huawei.com>,
+	"Steven Rostedt (Google)" <rostedt@goodmis.org>
+Subject: [PATCH 5.4 063/156] tracing: Fix poll() and select() do not work on per_cpu trace_pipe and trace_pipe_raw
+Date: Mon, 20 Feb 2023 14:35:07 +0100
+Message-Id: <20230220133604.973586507@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -34,37 +37,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Artemii Karasev <karasev@ispras.ru>
+From: Shiju Jose <shiju.jose@huawei.com>
 
-commit 6a32425f953b955b4ff82f339d01df0b713caa5d upstream.
+commit 3e46d910d8acf94e5360126593b68bf4fee4c4a1 upstream.
 
-snd_emux_xg_control() can be called with an argument 'param' greater
-than size of 'control' array. It may lead to accessing 'control'
-array at a wrong index.
+poll() and select() on per_cpu trace_pipe and trace_pipe_raw do not work
+since kernel 6.1-rc6. This issue is seen after the commit
+42fb0a1e84ff525ebe560e2baf9451ab69127e2b ("tracing/ring-buffer: Have
+polling block on watermark").
 
-Found by Linux Verification Center (linuxtesting.org) with SVACE.
+This issue is firstly detected and reported, when testing the CXL error
+events in the rasdaemon and also erified using the test application for poll()
+and select().
 
-Signed-off-by: Artemii Karasev <karasev@ispras.ru>
-Fixes: 1da177e4c3f4 ("Linux-2.6.12-rc2")
-Cc: <stable@vger.kernel.org>
-Link: https://lore.kernel.org/r/20230207132026.2870-1-karasev@ispras.ru
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
+This issue occurs for the per_cpu case, when calling the ring_buffer_poll_wait(),
+in kernel/trace/ring_buffer.c, with the buffer_percent > 0 and then wait until the
+percentage of pages are available. The default value set for the buffer_percent is 50
+in the kernel/trace/trace.c.
+
+As a fix, allow userspace application could set buffer_percent as 0 through
+the buffer_percent_fops, so that the task will wake up as soon as data is added
+to any of the specific cpu buffer.
+
+Link: https://lore.kernel.org/linux-trace-kernel/20230202182309.742-2-shiju.jose@huawei.com
+
+Cc: <mhiramat@kernel.org>
+Cc: <mchehab@kernel.org>
+Cc: <linux-edac@vger.kernel.org>
+Cc: stable@vger.kernel.org
+Fixes: 42fb0a1e84ff5 ("tracing/ring-buffer: Have polling block on watermark")
+Signed-off-by: Shiju Jose <shiju.jose@huawei.com>
+Signed-off-by: Steven Rostedt (Google) <rostedt@goodmis.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/synth/emux/emux_nrpn.c |    3 +++
- 1 file changed, 3 insertions(+)
+ kernel/trace/trace.c |    3 ---
+ 1 file changed, 3 deletions(-)
 
---- a/sound/synth/emux/emux_nrpn.c
-+++ b/sound/synth/emux/emux_nrpn.c
-@@ -349,6 +349,9 @@ int
- snd_emux_xg_control(struct snd_emux_port *port, struct snd_midi_channel *chan,
- 		    int param)
- {
-+	if (param >= ARRAY_SIZE(chan->control))
-+		return -EINVAL;
-+
- 	return send_converted_effect(xg_effects, ARRAY_SIZE(xg_effects),
- 				     port, chan, param,
- 				     chan->control[param],
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -8298,9 +8298,6 @@ buffer_percent_write(struct file *filp,
+ 	if (val > 100)
+ 		return -EINVAL;
+ 
+-	if (!val)
+-		val = 1;
+-
+ 	tr->buffer_percent = val;
+ 
+ 	(*ppos)++;
 
 
