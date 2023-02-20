@@ -1,33 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0DF563BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:00:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 202C4C433EF;
-	Mon, 20 Feb 2023 14:00:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8167263BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 14:00:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D3A42C433EF;
+	Mon, 20 Feb 2023 14:00:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901647;
-	bh=CyA6CwzRLi+DUIhpkw7WO91KVuXYq7Lx4JCa/25qgrw=;
+	s=korg; t=1676901650;
+	bh=h4iUspdhKC+C7daK/gVJO2mqmy7HaU5PfOoLsU3GZxE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FbgJTDnKUXNp7F/lK6PGajKzelFFqdtymK4VaTJEHEPi1qSiU1SM5uPfuZQQy88Y9
-	 XYe44GlZsrx+YajN7W5/9ud4WTubxDBxztec0LtGe9mPlDamV9jE6Mp+9ZmeauDCa5
-	 RsnJk1l4JxK6x5+yhRc9jQM276d8mKe7MGL0Qgzw=
+	b=Bjd2UnVPjgJSC31JHEVOSEKcl4uAhqJRLDOVqOM/cWacZWVD7PNsVfq3T/O5RDdOy
+	 pIBjkZGXDpuJCV4Zn+xJp9mseyn2+UzOYJVsKGE2lqq/6k7Y9agiJuRPE6d4maChhB
+	 ZrLgQXWbJ/Lr/9rzwayy4XawmoCUgJVUomGC2gFA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mike Kravetz <mike.kravetz@oracle.com>,
-	Naresh Kamboju <naresh.kamboju@linaro.org>,
-	Jesper Juhl <jesperjuhl76@gmail.com>,
-	Muchun Song <songmuchun@bytedance.com>,
-	Linux Kernel Functional Testing <lkft@linaro.org>,
-	Anders Roxell <anders.roxell@linaro.org>,
-	Andi Kleen <ak@linux.intel.com>,
-	Sasha Levin <sashal@kernel.org>,
+	Ryusuke Konishi <konishi.ryusuke@gmail.com>,
+	syzbot+f0c4082ce5ebebdac63b@syzkaller.appspotmail.com,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.1 067/118] hugetlb: check for undefined shift on 32 bit architectures
-Date: Mon, 20 Feb 2023 14:36:23 +0100
-Message-Id: <20230220133603.113440131@linuxfoundation.org>
+Subject: [PATCH 6.1 068/118] nilfs2: fix underflow in second superblock position calculations
+Date: Mon, 20 Feb 2023 14:36:24 +0100
+Message-Id: <20230220133603.146345315@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -41,63 +35,135 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mike Kravetz <mike.kravetz@oracle.com>
+From: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 
-commit ec4288fe63966b26d53907212ecd05dfa81dd2cc upstream.
+commit 99b9402a36f0799f25feee4465bfa4b8dfa74b4d upstream.
 
-Users can specify the hugetlb page size in the mmap, shmget and
-memfd_create system calls.  This is done by using 6 bits within the flags
-argument to encode the base-2 logarithm of the desired page size.  The
-routine hstate_sizelog() uses the log2 value to find the corresponding
-hugetlb hstate structure.  Converting the log2 value (page_size_log) to
-potential hugetlb page size is the simple statement:
+Macro NILFS_SB2_OFFSET_BYTES, which computes the position of the second
+superblock, underflows when the argument device size is less than 4096
+bytes.  Therefore, when using this macro, it is necessary to check in
+advance that the device size is not less than a lower limit, or at least
+that underflow does not occur.
 
-	1UL << page_size_log
+The current nilfs2 implementation lacks this check, causing out-of-bound
+block access when mounting devices smaller than 4096 bytes:
 
-Because only 6 bits are used for page_size_log, the left shift can not be
-greater than 63.  This is fine on 64 bit architectures where a long is 64
-bits.  However, if a value greater than 31 is passed on a 32 bit
-architecture (where long is 32 bits) the shift will result in undefined
-behavior.  This was generally not an issue as the result of the undefined
-shift had to exactly match hugetlb page size to proceed.
+ I/O error, dev loop0, sector 36028797018963960 op 0x0:(READ) flags 0x0
+ phys_seg 1 prio class 2
+ NILFS (loop0): unable to read secondary superblock (blocksize = 1024)
 
-Recent improvements in runtime checking have resulted in this undefined
-behavior throwing errors such as reported below.
+In addition, when trying to resize the filesystem to a size below 4096
+bytes, this underflow occurs in nilfs_resize_fs(), passing a huge number
+of segments to nilfs_sufile_resize(), corrupting parameters such as the
+number of segments in superblocks.  This causes excessive loop iterations
+in nilfs_sufile_resize() during a subsequent resize ioctl, causing
+semaphore ns_segctor_sem to block for a long time and hang the writer
+thread:
 
-Fix by comparing page_size_log to BITS_PER_LONG before doing shift.
+ INFO: task segctord:5067 blocked for more than 143 seconds.
+      Not tainted 6.2.0-rc8-syzkaller-00015-gf6feea56f66d #0
+ "echo 0 > /proc/sys/kernel/hung_task_timeout_secs" disables this message.
+ task:segctord        state:D stack:23456 pid:5067  ppid:2
+ flags:0x00004000
+ Call Trace:
+  <TASK>
+  context_switch kernel/sched/core.c:5293 [inline]
+  __schedule+0x1409/0x43f0 kernel/sched/core.c:6606
+  schedule+0xc3/0x190 kernel/sched/core.c:6682
+  rwsem_down_write_slowpath+0xfcf/0x14a0 kernel/locking/rwsem.c:1190
+  nilfs_transaction_lock+0x25c/0x4f0 fs/nilfs2/segment.c:357
+  nilfs_segctor_thread_construct fs/nilfs2/segment.c:2486 [inline]
+  nilfs_segctor_thread+0x52f/0x1140 fs/nilfs2/segment.c:2570
+  kthread+0x270/0x300 kernel/kthread.c:376
+  ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:308
+  </TASK>
+ ...
+ Call Trace:
+  <TASK>
+  folio_mark_accessed+0x51c/0xf00 mm/swap.c:515
+  __nilfs_get_page_block fs/nilfs2/page.c:42 [inline]
+  nilfs_grab_buffer+0x3d3/0x540 fs/nilfs2/page.c:61
+  nilfs_mdt_submit_block+0xd7/0x8f0 fs/nilfs2/mdt.c:121
+  nilfs_mdt_read_block+0xeb/0x430 fs/nilfs2/mdt.c:176
+  nilfs_mdt_get_block+0x12d/0xbb0 fs/nilfs2/mdt.c:251
+  nilfs_sufile_get_segment_usage_block fs/nilfs2/sufile.c:92 [inline]
+  nilfs_sufile_truncate_range fs/nilfs2/sufile.c:679 [inline]
+  nilfs_sufile_resize+0x7a3/0x12b0 fs/nilfs2/sufile.c:777
+  nilfs_resize_fs+0x20c/0xed0 fs/nilfs2/super.c:422
+  nilfs_ioctl_resize fs/nilfs2/ioctl.c:1033 [inline]
+  nilfs_ioctl+0x137c/0x2440 fs/nilfs2/ioctl.c:1301
+  ...
 
-Link: https://lkml.kernel.org/r/20230216013542.138708-1-mike.kravetz@oracle.com
-Link: https://lore.kernel.org/lkml/CA+G9fYuei_Tr-vN9GS7SfFyU1y9hNysnf=PB7kT0=yv4MiPgVg@mail.gmail.com/
-Fixes: 42d7395feb56 ("mm: support more pagesizes for MAP_HUGETLB/SHM_HUGETLB")
-Signed-off-by: Mike Kravetz <mike.kravetz@oracle.com>
-Reported-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Reviewed-by: Jesper Juhl <jesperjuhl76@gmail.com>
-Acked-by: Muchun Song <songmuchun@bytedance.com>
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Tested-by: Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc: Anders Roxell <anders.roxell@linaro.org>
-Cc: Andi Kleen <ak@linux.intel.com>
-Cc: Sasha Levin <sashal@kernel.org>
+This fixes these issues by inserting appropriate minimum device size
+checks or anti-underflow checks, depending on where the macro is used.
+
+Link: https://lkml.kernel.org/r/0000000000004e1dfa05f4a48e6b@google.com
+Link: https://lkml.kernel.org/r/20230214224043.24141-1-konishi.ryusuke@gmail.com
+Signed-off-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
+Reported-by: <syzbot+f0c4082ce5ebebdac63b@syzkaller.appspotmail.com>
+Tested-by: Ryusuke Konishi <konishi.ryusuke@gmail.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/hugetlb.h |    5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ fs/nilfs2/ioctl.c     |    7 +++++++
+ fs/nilfs2/super.c     |    9 +++++++++
+ fs/nilfs2/the_nilfs.c |    8 +++++++-
+ 3 files changed, 23 insertions(+), 1 deletion(-)
 
---- a/include/linux/hugetlb.h
-+++ b/include/linux/hugetlb.h
-@@ -753,7 +753,10 @@ static inline struct hstate *hstate_size
- 	if (!page_size_log)
- 		return &default_hstate;
+--- a/fs/nilfs2/ioctl.c
++++ b/fs/nilfs2/ioctl.c
+@@ -1114,7 +1114,14 @@ static int nilfs_ioctl_set_alloc_range(s
  
--	return size_to_hstate(1UL << page_size_log);
-+	if (page_size_log < BITS_PER_LONG)
-+		return size_to_hstate(1UL << page_size_log);
+ 	minseg = range[0] + segbytes - 1;
+ 	do_div(minseg, segbytes);
 +
-+	return NULL;
- }
++	if (range[1] < 4096)
++		goto out;
++
+ 	maxseg = NILFS_SB2_OFFSET_BYTES(range[1]);
++	if (maxseg < segbytes)
++		goto out;
++
+ 	do_div(maxseg, segbytes);
+ 	maxseg--;
  
- static inline struct hstate *hstate_vma(struct vm_area_struct *vma)
+--- a/fs/nilfs2/super.c
++++ b/fs/nilfs2/super.c
+@@ -409,6 +409,15 @@ int nilfs_resize_fs(struct super_block *
+ 		goto out;
+ 
+ 	/*
++	 * Prevent underflow in second superblock position calculation.
++	 * The exact minimum size check is done in nilfs_sufile_resize().
++	 */
++	if (newsize < 4096) {
++		ret = -ENOSPC;
++		goto out;
++	}
++
++	/*
+ 	 * Write lock is required to protect some functions depending
+ 	 * on the number of segments, the number of reserved segments,
+ 	 * and so forth.
+--- a/fs/nilfs2/the_nilfs.c
++++ b/fs/nilfs2/the_nilfs.c
+@@ -544,9 +544,15 @@ static int nilfs_load_super_block(struct
+ {
+ 	struct nilfs_super_block **sbp = nilfs->ns_sbp;
+ 	struct buffer_head **sbh = nilfs->ns_sbh;
+-	u64 sb2off = NILFS_SB2_OFFSET_BYTES(bdev_nr_bytes(nilfs->ns_bdev));
++	u64 sb2off, devsize = bdev_nr_bytes(nilfs->ns_bdev);
+ 	int valid[2], swp = 0;
+ 
++	if (devsize < NILFS_SEG_MIN_BLOCKS * NILFS_MIN_BLOCK_SIZE + 4096) {
++		nilfs_err(sb, "device size too small");
++		return -EINVAL;
++	}
++	sb2off = NILFS_SB2_OFFSET_BYTES(devsize);
++
+ 	sbp[0] = nilfs_read_super_block(sb, NILFS_SB_OFFSET_BYTES, blocksize,
+ 					&sbh[0]);
+ 	sbp[1] = nilfs_read_super_block(sb, sb2off, blocksize, &sbh[1]);
 
 
