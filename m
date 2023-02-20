@@ -1,29 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 980C763B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:45:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F463C433EF;
-	Mon, 20 Feb 2023 13:45:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4138163B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:45:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B95CFC433D2;
+	Mon, 20 Feb 2023 13:45:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900728;
-	bh=kfeAjWwLvkv/qfCtu53zFjw1aFdm0tT3YcVzAvASiSQ=;
+	s=korg; t=1676900731;
+	bh=UOOkRQP3xdihmk2mxo/A8RZ5+6uk72dVJDxpNLg40sU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OGv3SqHYKDgjDwdgABinZTVeYfvYwlQ16oH4LFBxnBgAnvHtBtKMIWvcbChNvn9iy
-	 0mipFNyE+aQn0lXv7z7dFlJHMUlIt1WZ/vr85Gl0ToJ3XjFNg+DjfmaZjKvfLbaSfK
-	 gzVsmHnAaBVjOGzyPw1oxPsINJMCy376BGY4CW+M=
+	b=R+76jolzkNDsUrR11MobBXsnoPar+hLdv+5+qbj0xf9HbHaJwGuGoKe24nN9td6S5
+	 zhYfmN0nWR+wSLXepbqcuNUCO/PQjR+4OyqdT7YiRRUbPZZevbR3K7QscPL4+bEWQo
+	 1LsvIJ2hoAwTUjuhV7QtfL2HCtqk9h791p+SyHBs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bart Van Assche <bvanassche@acm.org>,
-	Martin Wilck <mwilck@suse.com>,
-	Hannes Reinecke <hare@suse.de>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 006/156] scsi: Revert "scsi: core: map PQ=1, PDT=other values to SCSI_SCAN_TARGET_PRESENT"
-Date: Mon, 20 Feb 2023 14:34:10 +0100
-Message-Id: <20230220133602.742754272@linuxfoundation.org>
+	Ard Biesheuvel <ardb@kernel.org>
+Subject: [PATCH 5.4 039/156] efi: Accept version 2 of memory attributes table
+Date: Mon, 20 Feb 2023 14:34:43 +0100
+Message-Id: <20230220133604.016903583@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -37,55 +33,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Martin K. Petersen <martin.petersen@oracle.com>
+From: Ard Biesheuvel <ardb@kernel.org>
 
-[ Upstream commit 15600159bcc6abbeae6b33a849bef90dca28b78f ]
+commit 636ab417a7aec4ee993916e688eb5c5977570836 upstream.
 
-This reverts commit 948e922fc44611ee2de0c89583ca958cb5307d36.
+UEFI v2.10 introduces version 2 of the memory attributes table, which
+turns the reserved field into a flags field, but is compatible with
+version 1 in all other respects. So let's not complain about version 2
+if we encounter it.
 
-Not all targets that return PQ=1 and PDT=0 should be ignored. While
-the SCSI spec is vague in this department, there appears to be a
-critical mass of devices which rely on devices being accessible with
-this combination of reported values.
-
-Fixes: 948e922fc446 ("scsi: core: map PQ=1, PDT=other values to SCSI_SCAN_TARGET_PRESENT")
-Link: https://lore.kernel.org/r/yq1lelrleqr.fsf@ca-mkp.ca.oracle.com
-Acked-by: Bart Van Assche <bvanassche@acm.org>
-Acked-by: Martin Wilck <mwilck@suse.com>
-Acked-by: Hannes Reinecke <hare@suse.de>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/scsi_scan.c | 7 +++----
- 1 file changed, 3 insertions(+), 4 deletions(-)
+ drivers/firmware/efi/memattr.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/scsi/scsi_scan.c b/drivers/scsi/scsi_scan.c
-index 3fd109fd9335..d236322ced30 100644
---- a/drivers/scsi/scsi_scan.c
-+++ b/drivers/scsi/scsi_scan.c
-@@ -1130,8 +1130,7 @@ static int scsi_probe_and_add_lun(struct scsi_target *starget,
- 	 * that no LUN is present, so don't add sdev in these cases.
- 	 * Two specific examples are:
- 	 * 1) NetApp targets: return PQ=1, PDT=0x1f
--	 * 2) IBM/2145 targets: return PQ=1, PDT=0
--	 * 3) USB UFI: returns PDT=0x1f, with the PQ bits being "reserved"
-+	 * 2) USB UFI: returns PDT=0x1f, with the PQ bits being "reserved"
- 	 *    in the UFI 1.0 spec (we cannot rely on reserved bits).
- 	 *
- 	 * References:
-@@ -1145,8 +1144,8 @@ static int scsi_probe_and_add_lun(struct scsi_target *starget,
- 	 * PDT=00h Direct-access device (floppy)
- 	 * PDT=1Fh none (no FDD connected to the requested logical unit)
- 	 */
--	if (((result[0] >> 5) == 1 ||
--	    (starget->pdt_1f_for_no_lun && (result[0] & 0x1f) == 0x1f)) &&
-+	if (((result[0] >> 5) == 1 || starget->pdt_1f_for_no_lun) &&
-+	    (result[0] & 0x1f) == 0x1f &&
- 	    !scsi_is_wlun(lun)) {
- 		SCSI_LOG_SCAN_BUS(3, sdev_printk(KERN_INFO, sdev,
- 					"scsi scan: peripheral device type"
--- 
-2.39.0
-
+--- a/drivers/firmware/efi/memattr.c
++++ b/drivers/firmware/efi/memattr.c
+@@ -32,7 +32,7 @@ int __init efi_memattr_init(void)
+ 		return -ENOMEM;
+ 	}
+ 
+-	if (tbl->version > 1) {
++	if (tbl->version > 2) {
+ 		pr_warn("Unexpected EFI Memory Attributes table version %d\n",
+ 			tbl->version);
+ 		goto unmap;
 
 
