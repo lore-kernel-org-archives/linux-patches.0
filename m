@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3404063B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:53:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ADE97C433EF;
-	Mon, 20 Feb 2023 13:53:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9A0363B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:53:17 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4257EC433EF;
+	Mon, 20 Feb 2023 13:53:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901195;
-	bh=8EE43zvpSRjdiTlF9uhdglv+RXgGlE0oQvRVXAt1SdI=;
+	s=korg; t=1676901197;
+	bh=CBExR8AHEmCoIjSQLDPHYCrxhewByaO9AoeOQU4oNjg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=IgaS5KyTVZnNAJ48TqPRzSMoHcJZdhGrGYkM1scDfxNlPrJGxCDStFXn53AN5Q6Z3
-	 ezQLMGjrmsMq51H2Y6RNl6LVHh3h6QDVftl/y86rsznHDx09sFA73SIBdD7Oy7V8ZE
-	 CEJUH1KlQiK7nypYUHOHLw7fXpCW3V2QsYsBKLgE=
+	b=z7ZXfNumGDD4A+9OtICkF6r7BepyHgwYpyQO9ngcuMKfwn407M8Kr+6b02netPlRo
+	 o6xPfizU9Wc4V2zYyL6MI2VKHEJ4MHwYZhUzUwb/ewMADji5lSGqi42zShe73fsAB9
+	 4l8/rTWdQKVFlCWcwCa2chFU4zrNRAvccD3ajJV0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Chinner <dchinner@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
-	"Darrick J. Wong" <djwong@kernel.org>,
-	Dave Chinner <david@fromorbit.com>,
-	Leah Rumancik <leah.rumancik@gmail.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 26/83] xfs: detect self referencing btree sibling pointers
-Date: Mon, 20 Feb 2023 14:35:59 +0100
-Message-Id: <20230220133554.601578231@linuxfoundation.org>
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 59/83] sctp: sctp_sock_filter(): avoid list_entry() on possibly empty list
+Date: Mon, 20 Feb 2023 14:36:32 +0100
+Message-Id: <20230220133555.728508212@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -38,241 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Chinner <dchinner@redhat.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit dc04db2aa7c9307e740d6d0e173085301c173b1a ]
+commit a1221703a0f75a9d81748c516457e0fc76951496 upstream.
 
-To catch the obvious graph cycle problem and hence potential endless
-looping.
+Use list_is_first() to check whether tsp->asoc matches the first
+element of ep->asocs, as the list is not guaranteed to have an entry.
 
-Signed-off-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
-Reviewed-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Dave Chinner <david@fromorbit.com>
-Signed-off-by: Leah Rumancik <leah.rumancik@gmail.com>
-Acked-by: Darrick J. Wong <djwong@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: 8f840e47f190 ("sctp: add the sctp_diag.c file")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/20230208-sctp-filter-v2-1-6e1f4017f326@diag.uniroma1.it
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_btree.c | 140 ++++++++++++++++++++++++++++----------
- 1 file changed, 105 insertions(+), 35 deletions(-)
+ net/sctp/diag.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/fs/xfs/libxfs/xfs_btree.c b/fs/xfs/libxfs/xfs_btree.c
-index 2983954817135..5bec048343b0c 100644
---- a/fs/xfs/libxfs/xfs_btree.c
-+++ b/fs/xfs/libxfs/xfs_btree.c
-@@ -51,6 +51,52 @@ xfs_btree_magic(
- 	return magic;
- }
+--- a/net/sctp/diag.c
++++ b/net/sctp/diag.c
+@@ -343,11 +343,9 @@ static int sctp_sock_filter(struct sctp_
+ 	struct sctp_comm_param *commp = p;
+ 	struct sock *sk = ep->base.sk;
+ 	const struct inet_diag_req_v2 *r = commp->r;
+-	struct sctp_association *assoc =
+-		list_entry(ep->asocs.next, struct sctp_association, asocs);
  
-+static xfs_failaddr_t
-+xfs_btree_check_lblock_siblings(
-+	struct xfs_mount	*mp,
-+	struct xfs_btree_cur	*cur,
-+	int			level,
-+	xfs_fsblock_t		fsb,
-+	xfs_fsblock_t		sibling)
-+{
-+	if (sibling == NULLFSBLOCK)
-+		return NULL;
-+	if (sibling == fsb)
-+		return __this_address;
-+	if (level >= 0) {
-+		if (!xfs_btree_check_lptr(cur, sibling, level + 1))
-+			return __this_address;
-+	} else {
-+		if (!xfs_verify_fsbno(mp, sibling))
-+			return __this_address;
-+	}
-+
-+	return NULL;
-+}
-+
-+static xfs_failaddr_t
-+xfs_btree_check_sblock_siblings(
-+	struct xfs_mount	*mp,
-+	struct xfs_btree_cur	*cur,
-+	int			level,
-+	xfs_agnumber_t		agno,
-+	xfs_agblock_t		agbno,
-+	xfs_agblock_t		sibling)
-+{
-+	if (sibling == NULLAGBLOCK)
-+		return NULL;
-+	if (sibling == agbno)
-+		return __this_address;
-+	if (level >= 0) {
-+		if (!xfs_btree_check_sptr(cur, sibling, level + 1))
-+			return __this_address;
-+	} else {
-+		if (!xfs_verify_agbno(mp, agno, sibling))
-+			return __this_address;
-+	}
-+	return NULL;
-+}
-+
- /*
-  * Check a long btree block header.  Return the address of the failing check,
-  * or NULL if everything is ok.
-@@ -65,6 +111,8 @@ __xfs_btree_check_lblock(
- 	struct xfs_mount	*mp = cur->bc_mp;
- 	xfs_btnum_t		btnum = cur->bc_btnum;
- 	int			crc = xfs_has_crc(mp);
-+	xfs_failaddr_t		fa;
-+	xfs_fsblock_t		fsb = NULLFSBLOCK;
+ 	/* find the ep only once through the transports by this condition */
+-	if (tsp->asoc != assoc)
++	if (!list_is_first(&tsp->asoc->asocs, &ep->asocs))
+ 		return 0;
  
- 	if (crc) {
- 		if (!uuid_equal(&block->bb_u.l.bb_uuid, &mp->m_sb.sb_meta_uuid))
-@@ -83,16 +131,16 @@ __xfs_btree_check_lblock(
- 	if (be16_to_cpu(block->bb_numrecs) >
- 	    cur->bc_ops->get_maxrecs(cur, level))
- 		return __this_address;
--	if (block->bb_u.l.bb_leftsib != cpu_to_be64(NULLFSBLOCK) &&
--	    !xfs_btree_check_lptr(cur, be64_to_cpu(block->bb_u.l.bb_leftsib),
--			level + 1))
--		return __this_address;
--	if (block->bb_u.l.bb_rightsib != cpu_to_be64(NULLFSBLOCK) &&
--	    !xfs_btree_check_lptr(cur, be64_to_cpu(block->bb_u.l.bb_rightsib),
--			level + 1))
--		return __this_address;
- 
--	return NULL;
-+	if (bp)
-+		fsb = XFS_DADDR_TO_FSB(mp, xfs_buf_daddr(bp));
-+
-+	fa = xfs_btree_check_lblock_siblings(mp, cur, level, fsb,
-+			be64_to_cpu(block->bb_u.l.bb_leftsib));
-+	if (!fa)
-+		fa = xfs_btree_check_lblock_siblings(mp, cur, level, fsb,
-+				be64_to_cpu(block->bb_u.l.bb_rightsib));
-+	return fa;
- }
- 
- /* Check a long btree block header. */
-@@ -130,6 +178,9 @@ __xfs_btree_check_sblock(
- 	struct xfs_mount	*mp = cur->bc_mp;
- 	xfs_btnum_t		btnum = cur->bc_btnum;
- 	int			crc = xfs_has_crc(mp);
-+	xfs_failaddr_t		fa;
-+	xfs_agblock_t		agbno = NULLAGBLOCK;
-+	xfs_agnumber_t		agno = NULLAGNUMBER;
- 
- 	if (crc) {
- 		if (!uuid_equal(&block->bb_u.s.bb_uuid, &mp->m_sb.sb_meta_uuid))
-@@ -146,16 +197,18 @@ __xfs_btree_check_sblock(
- 	if (be16_to_cpu(block->bb_numrecs) >
- 	    cur->bc_ops->get_maxrecs(cur, level))
- 		return __this_address;
--	if (block->bb_u.s.bb_leftsib != cpu_to_be32(NULLAGBLOCK) &&
--	    !xfs_btree_check_sptr(cur, be32_to_cpu(block->bb_u.s.bb_leftsib),
--			level + 1))
--		return __this_address;
--	if (block->bb_u.s.bb_rightsib != cpu_to_be32(NULLAGBLOCK) &&
--	    !xfs_btree_check_sptr(cur, be32_to_cpu(block->bb_u.s.bb_rightsib),
--			level + 1))
--		return __this_address;
- 
--	return NULL;
-+	if (bp) {
-+		agbno = xfs_daddr_to_agbno(mp, xfs_buf_daddr(bp));
-+		agno = xfs_daddr_to_agno(mp, xfs_buf_daddr(bp));
-+	}
-+
-+	fa = xfs_btree_check_sblock_siblings(mp, cur, level, agno, agbno,
-+			be32_to_cpu(block->bb_u.s.bb_leftsib));
-+	if (!fa)
-+		fa = xfs_btree_check_sblock_siblings(mp, cur, level, agno,
-+				 agbno, be32_to_cpu(block->bb_u.s.bb_rightsib));
-+	return fa;
- }
- 
- /* Check a short btree block header. */
-@@ -4265,6 +4318,21 @@ xfs_btree_visit_block(
- 	if (xfs_btree_ptr_is_null(cur, &rptr))
- 		return -ENOENT;
- 
-+	/*
-+	 * We only visit blocks once in this walk, so we have to avoid the
-+	 * internal xfs_btree_lookup_get_block() optimisation where it will
-+	 * return the same block without checking if the right sibling points
-+	 * back to us and creates a cyclic reference in the btree.
-+	 */
-+	if (cur->bc_flags & XFS_BTREE_LONG_PTRS) {
-+		if (be64_to_cpu(rptr.l) == XFS_DADDR_TO_FSB(cur->bc_mp,
-+							xfs_buf_daddr(bp)))
-+			return -EFSCORRUPTED;
-+	} else {
-+		if (be32_to_cpu(rptr.s) == xfs_daddr_to_agbno(cur->bc_mp,
-+							xfs_buf_daddr(bp)))
-+			return -EFSCORRUPTED;
-+	}
- 	return xfs_btree_lookup_get_block(cur, level, &rptr, &block);
- }
- 
-@@ -4439,20 +4507,21 @@ xfs_btree_lblock_verify(
- {
- 	struct xfs_mount	*mp = bp->b_mount;
- 	struct xfs_btree_block	*block = XFS_BUF_TO_BLOCK(bp);
-+	xfs_fsblock_t		fsb;
-+	xfs_failaddr_t		fa;
- 
- 	/* numrecs verification */
- 	if (be16_to_cpu(block->bb_numrecs) > max_recs)
- 		return __this_address;
- 
- 	/* sibling pointer verification */
--	if (block->bb_u.l.bb_leftsib != cpu_to_be64(NULLFSBLOCK) &&
--	    !xfs_verify_fsbno(mp, be64_to_cpu(block->bb_u.l.bb_leftsib)))
--		return __this_address;
--	if (block->bb_u.l.bb_rightsib != cpu_to_be64(NULLFSBLOCK) &&
--	    !xfs_verify_fsbno(mp, be64_to_cpu(block->bb_u.l.bb_rightsib)))
--		return __this_address;
--
--	return NULL;
-+	fsb = XFS_DADDR_TO_FSB(mp, xfs_buf_daddr(bp));
-+	fa = xfs_btree_check_lblock_siblings(mp, NULL, -1, fsb,
-+			be64_to_cpu(block->bb_u.l.bb_leftsib));
-+	if (!fa)
-+		fa = xfs_btree_check_lblock_siblings(mp, NULL, -1, fsb,
-+				be64_to_cpu(block->bb_u.l.bb_rightsib));
-+	return fa;
- }
- 
- /**
-@@ -4493,7 +4562,9 @@ xfs_btree_sblock_verify(
- {
- 	struct xfs_mount	*mp = bp->b_mount;
- 	struct xfs_btree_block	*block = XFS_BUF_TO_BLOCK(bp);
--	xfs_agblock_t		agno;
-+	xfs_agnumber_t		agno;
-+	xfs_agblock_t		agbno;
-+	xfs_failaddr_t		fa;
- 
- 	/* numrecs verification */
- 	if (be16_to_cpu(block->bb_numrecs) > max_recs)
-@@ -4501,14 +4572,13 @@ xfs_btree_sblock_verify(
- 
- 	/* sibling pointer verification */
- 	agno = xfs_daddr_to_agno(mp, xfs_buf_daddr(bp));
--	if (block->bb_u.s.bb_leftsib != cpu_to_be32(NULLAGBLOCK) &&
--	    !xfs_verify_agbno(mp, agno, be32_to_cpu(block->bb_u.s.bb_leftsib)))
--		return __this_address;
--	if (block->bb_u.s.bb_rightsib != cpu_to_be32(NULLAGBLOCK) &&
--	    !xfs_verify_agbno(mp, agno, be32_to_cpu(block->bb_u.s.bb_rightsib)))
--		return __this_address;
--
--	return NULL;
-+	agbno = xfs_daddr_to_agbno(mp, xfs_buf_daddr(bp));
-+	fa = xfs_btree_check_sblock_siblings(mp, NULL, -1, agno, agbno,
-+			be32_to_cpu(block->bb_u.s.bb_leftsib));
-+	if (!fa)
-+		fa = xfs_btree_check_sblock_siblings(mp, NULL, -1, agno, agbno,
-+				be32_to_cpu(block->bb_u.s.bb_rightsib));
-+	return fa;
- }
- 
- /*
--- 
-2.39.0
-
+ 	if (r->sdiag_family != AF_UNSPEC && sk->sk_family != r->sdiag_family)
 
 
