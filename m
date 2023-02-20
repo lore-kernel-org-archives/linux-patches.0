@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BFDA063B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:48:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 35A00C4339C;
-	Mon, 20 Feb 2023 13:48:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5C13463B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:48:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D590BC4339B;
+	Mon, 20 Feb 2023 13:48:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900890;
-	bh=ti1BVA11oLCMABVGyXO76jwSKPpEoAzvWVdIcdiy4NE=;
+	s=korg; t=1676900893;
+	bh=G7Cye4Lq69XXqMBIFME//ldGe1ciOJjCaAvD8cwSjo4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=M0RebeQODKemZCGgjR1iWUJyZ2A3Ffok6ojNNj4WFgTkSsJLPG3gUfNtN9Gd+EP7X
-	 NZ5CejJWw2G4SQxmps/Jbgej7BKvfNYug5356EVrIk5pDWroAvoQpjFf2EeppcDceR
-	 dJ84NXtxnAzqbZLSCGbYbF5n271hRqBoFl+J99tk=
+	b=KQOPZ1QUUJhjSGr8PVF1jgGhghDJVZ6T+mcotJ0r56bsralW7EMo13fQ4Ame7i2W7
+	 OQ2rO/Wms14g+qEPU349XRiTc9fr/u501BpvBIbwCwgUd3b3Sce6O/73o/qTQEBZDE
+	 0p3wf9IGau+gi5/WAs/amUxvtboctFG2kT6ukKP4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Stanley <joel@jms.id.au>,
-	Andrew Jeffery <andrew@aj.id.au>,
+	Maxim Korotkov <korotkov.maxim.s@gmail.com>,
+	Tony Lindgren <tony@atomide.com>,
 	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 077/156] pinctrl: aspeed: Fix confusing types in return value
-Date: Mon, 20 Feb 2023 14:35:21 +0100
-Message-Id: <20230220133605.618047893@linuxfoundation.org>
+Subject: [PATCH 5.4 078/156] pinctrl: single: fix potential NULL dereference
+Date: Mon, 20 Feb 2023 14:35:22 +0100
+Message-Id: <20230220133605.656404884@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -36,36 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Joel Stanley <joel@jms.id.au>
+From: Maxim Korotkov <korotkov.maxim.s@gmail.com>
 
-[ Upstream commit 287a344a11f1ebd31055cf9b22c88d7005f108d7 ]
+[ Upstream commit d2d73e6d4822140445ad4a7b1c6091e0f5fe703b ]
 
-The function signature is int, but we return a bool. Instead return a
-negative errno as the kerneldoc suggests.
+Added checking of pointer "function" in pcs_set_mux().
+pinmux_generic_get_function() can return NULL and the pointer
+"function" was dereferenced without checking against NULL.
 
-Fixes: 4d3d0e4272d8 ("pinctrl: Add core support for Aspeed SoCs")
-Signed-off-by: Joel Stanley <joel@jms.id.au>
-Reviewed-by: Andrew Jeffery <andrew@aj.id.au>
-Link: https://lore.kernel.org/r/20230119231856.52014-1-joel@jms.id.au
+Found by Linux Verification Center (linuxtesting.org) with SVACE.
+
+Fixes: 571aec4df5b7 ("pinctrl: single: Use generic pinmux helpers for managing functions")
+Signed-off-by: Maxim Korotkov <korotkov.maxim.s@gmail.com>
+Reviewed-by: Tony Lindgren <tony@atomide.com>
+Link: https://lore.kernel.org/r/20221118104332.943-1-korotkov.maxim.s@gmail.com
 Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/pinctrl/aspeed/pinctrl-aspeed.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/pinctrl-single.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/pinctrl/aspeed/pinctrl-aspeed.c b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
-index 22aca6d182c0c..2c1e799b029e7 100644
---- a/drivers/pinctrl/aspeed/pinctrl-aspeed.c
-+++ b/drivers/pinctrl/aspeed/pinctrl-aspeed.c
-@@ -115,7 +115,7 @@ static int aspeed_disable_sig(struct aspeed_pinmux_data *ctx,
- 	int ret = 0;
- 
- 	if (!exprs)
--		return true;
+diff --git a/drivers/pinctrl/pinctrl-single.c b/drivers/pinctrl/pinctrl-single.c
+index 20c89023d312e..ce5be6f0b7aac 100644
+--- a/drivers/pinctrl/pinctrl-single.c
++++ b/drivers/pinctrl/pinctrl-single.c
+@@ -345,6 +345,8 @@ static int pcs_set_mux(struct pinctrl_dev *pctldev, unsigned fselector,
+ 	if (!pcs->fmask)
+ 		return 0;
+ 	function = pinmux_generic_get_function(pctldev, fselector);
++	if (!function)
 +		return -EINVAL;
- 
- 	while (*exprs && !ret) {
- 		ret = aspeed_sig_expr_disable(ctx, *exprs);
+ 	func = function->data;
+ 	if (!func)
+ 		return -EINVAL;
 -- 
 2.39.0
 
