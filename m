@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CC3DD63BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:37:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 365C4C433EF;
-	Mon, 20 Feb 2023 13:37:40 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1B5B263B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:37:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 93B63C433D2;
+	Mon, 20 Feb 2023 13:37:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900260;
-	bh=YOO3r9P01S6KEDPqSTcICQG15oAn0bWtpVziynhoghc=;
+	s=korg; t=1676900257;
+	bh=Fp4CDM/Vi32XOlKYEzOCY/jpwLd7fMdnKlIzOGdRO90=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LoVyTBXQ0oCf52Nep2YUq0ffkDy/F6DsFkkZPkN6lblFdH3qwMcFHHutUov01XXgE
-	 veli2tq1t20A1nNVgq9rX7FwULfHrLvs/e0+K64KpTkjgd3HGGkOLZH9quJUDPhXmd
-	 JBSJvEKYL3CMIfJQ0Mgw+iAyel/G7Rgb9xkeN+Eg=
+	b=N0Smrn8LWbMGSQcSJdXfDz6FA6She7JVBWJQzdr1EMCppSAMPp2LJ+/RIHPxCz/Hl
+	 eiMbpA763uDxRncSzKdnSD6GsoVKoE5rBhDVbqbF3oK3SIN0Seswi6h30Uh1FlT2nd
+	 L3jaoYQf6o7VCgcvTHG/N58221MeLgJrB0E0qySY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sanan Hasanov <sanan.hasanov@Knights.ucf.edu>,
-	Samuel Thibault <samuel.thibault@ens-lyon.org>,
-	Miko Larsson <mikoxyzzz@gmail.com>,
-	Helge Deller <deller@gmx.de>
-Subject: [PATCH 4.14 12/53] fbcon: Check font dimension limits
-Date: Mon, 20 Feb 2023 14:35:38 +0100
-Message-Id: <20230220133548.612096145@linuxfoundation.org>
+	John Keeping <john@metanate.com>,
+	Udipto Goswami <quic_ugoswami@quicinc.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 11/53] usb: gadget: f_fs: Fix unbalanced spinlock in __ffs_ep0_queue_wait
+Date: Mon, 20 Feb 2023 14:35:37 +0100
+Message-Id: <20230220133548.581647976@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
 References: <20230220133548.158615609@linuxfoundation.org>
@@ -36,50 +35,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Samuel Thibault <samuel.thibault@ens-lyon.org>
+From: Udipto Goswami <quic_ugoswami@quicinc.com>
 
-commit 2b09d5d364986f724f17001ccfe4126b9b43a0be upstream.
+[ Upstream commit 921deb9da15851425ccbb6ee409dc2fd8fbdfe6b ]
 
-blit_x and blit_y are u32, so fbcon currently cannot support fonts
-larger than 32x32.
+__ffs_ep0_queue_wait executes holding the spinlock of &ffs->ev.waitq.lock
+and unlocks it after the assignments to usb_request are done.
+However in the code if the request is already NULL we bail out returning
+-EINVAL but never unlocked the spinlock.
 
-The 32x32 case also needs shifting an unsigned int, to properly set bit
-31, otherwise we get "UBSAN: shift-out-of-bounds in fbcon_set_font",
-as reported on:
+Fix this by adding spin_unlock_irq &ffs->ev.waitq.lock before returning.
 
-http://lore.kernel.org/all/IA1PR07MB98308653E259A6F2CE94A4AFABCE9@IA1PR07MB9830.namprd07.prod.outlook.com
-Kernel Branch: 6.2.0-rc5-next-20230124
-Kernel config: https://drive.google.com/file/d/1F-LszDAizEEH0ZX0HcSR06v5q8FPl2Uv/view?usp=sharing
-Reproducer: https://drive.google.com/file/d/1mP1jcLBY7vWCNM60OMf-ogw-urQRjNrm/view?usp=sharing
-
-Reported-by: Sanan Hasanov <sanan.hasanov@Knights.ucf.edu>
-Signed-off-by: Samuel Thibault <samuel.thibault@ens-lyon.org>
-Fixes: 2d2699d98492 ("fbcon: font setting should check limitation of driver")
-Cc: stable@vger.kernel.org
-Tested-by: Miko Larsson <mikoxyzzz@gmail.com>
-Reviewed-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Fixes: 6a19da111057 ("usb: gadget: f_fs: Prevent race during ffs_ep0_queue_wait")
+Reviewed-by: John Keeping <john@metanate.com>
+Signed-off-by: Udipto Goswami <quic_ugoswami@quicinc.com>
+Link: https://lore.kernel.org/r/20230124091149.18647-1-quic_ugoswami@quicinc.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/video/fbdev/core/fbcon.c |    7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ drivers/usb/gadget/function/f_fs.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
---- a/drivers/video/fbdev/core/fbcon.c
-+++ b/drivers/video/fbdev/core/fbcon.c
-@@ -2450,9 +2450,12 @@ static int fbcon_set_font(struct vc_data
- 	    h > FBCON_SWAP(info->var.rotate, info->var.yres, info->var.xres))
- 		return -EINVAL;
+diff --git a/drivers/usb/gadget/function/f_fs.c b/drivers/usb/gadget/function/f_fs.c
+index 946cf039eddd..ba9af04ad37a 100644
+--- a/drivers/usb/gadget/function/f_fs.c
++++ b/drivers/usb/gadget/function/f_fs.c
+@@ -274,8 +274,10 @@ static int __ffs_ep0_queue_wait(struct ffs_data *ffs, char *data, size_t len)
+ 	struct usb_request *req = ffs->ep0req;
+ 	int ret;
  
-+	if (font->width > 32 || font->height > 32)
-+		return -EINVAL;
-+
- 	/* Make sure drawing engine can handle the font */
--	if (!(info->pixmap.blit_x & (1 << (font->width - 1))) ||
--	    !(info->pixmap.blit_y & (1 << (font->height - 1))))
-+	if (!(info->pixmap.blit_x & BIT(font->width - 1)) ||
-+	    !(info->pixmap.blit_y & BIT(font->height - 1)))
+-	if (!req)
++	if (!req) {
++		spin_unlock_irq(&ffs->ev.waitq.lock);
  		return -EINVAL;
++	}
  
- 	/* Make sure driver can handle the font length */
+ 	req->zero     = len < le16_to_cpu(ffs->ev.setup.wLength);
+ 
+-- 
+2.39.0
+
 
 
