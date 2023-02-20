@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6E9F663B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:48:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EC958C433EF;
-	Mon, 20 Feb 2023 13:48:33 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3190563B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:48:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 854A8C433EF;
+	Mon, 20 Feb 2023 13:48:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900914;
-	bh=Jppj5QP2ywOl0V0YLDbBQHJOfMK+dyKMYVkjO2SHzYY=;
+	s=korg; t=1676900917;
+	bh=MEFrPiU613INO0nQ/hsZZT8xsVmmKuiC45NHXIKvUQM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=XCfdfjtS4AbXGX/rEpg/joej8RfrbOjwHfdEvYzAGuvQejqVZtKhrNX8gg1Qna1hH
-	 1nwzyepmr+dCb+Mjqqr9ZGZ6CBqGVgHwoeD4RJRxxV53Vu2yXcfBSJ7G3G1eyL173d
-	 rmniqhacqw+ZGWl6a6ihu15VmW/+h/K0yDze1DEE=
+	b=Xk9IvaqwuHx9JdLR40815G+LUCvVJMDfsQFmZy8N3OG8JO6BTnZazPX87l7hpgaGw
+	 Erzd/C6QFSr+TfkoY6jjZJ1qNXTt1Ia2t7WtJYidiERxLys3dVeWxltvtXobMuGFim
+	 5vhgs+bUxbs/e6cKWGSBm33Ue1U8czFzQ+4AORPY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
-	Dave Chinner <dchinner@redhat.com>,
-	Christoph Hellwig <hch@lst.de>,
 	Brian Foster <bfoster@redhat.com>,
+	Christoph Hellwig <hch@lst.de>,
 	Chandan Babu R <chandan.babu@oracle.com>,
 	"Darrick J. Wong" <djwong@kernel.org>
-Subject: [PATCH 5.4 116/156] xfs: clean up xfs_bui_item_recover iget/trans_alloc/ilock ordering
-Date: Mon, 20 Feb 2023 14:36:00 +0100
-Message-Id: <20230220133607.399106289@linuxfoundation.org>
+Subject: [PATCH 5.4 117/156] xfs: fix an incore inode UAF in xfs_bui_recover
+Date: Mon, 20 Feb 2023 14:36:01 +0100
+Message-Id: <20230220133607.450378664@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -40,103 +39,246 @@ Content-Transfer-Encoding: 8bit
 
 From: "Darrick J. Wong" <darrick.wong@oracle.com>
 
-commit 64a3f3315bc60f710a0a25c1798ac0ea58c6fa1f upstream.
+commit ff4ab5e02a0447dd1e290883eb6cd7d94848e590 upstream.
 
-In most places in XFS, we have a specific order in which we gather
-resources: grab the inode, allocate a transaction, then lock the inode.
-xfs_bui_item_recover doesn't do it in that order, so fix it to be more
-consistent.  This also makes the error bailout code a bit less weird.
+In xfs_bui_item_recover, there exists a use-after-free bug with regards
+to the inode that is involved in the bmap replay operation.  If the
+mapping operation does not complete, we call xfs_bmap_unmap_extent to
+create a deferred op to finish the unmapping work, and we retain a
+pointer to the incore inode.
+
+Unfortunately, the very next thing we do is commit the transaction and
+drop the inode.  If reclaim tears down the inode before we try to finish
+the defer ops, we dereference garbage and blow up.  Therefore, create a
+way to join inodes to the defer ops freezer so that we can maintain the
+xfs_inode reference until we're done with the inode.
+
+Note: This imposes the requirement that there be enough memory to keep
+every incore inode in memory throughout recovery.
 
 Signed-off-by: Darrick J. Wong <darrick.wong@oracle.com>
-Reviewed-by: Dave Chinner <dchinner@redhat.com>
-Reviewed-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Brian Foster <bfoster@redhat.com>
+Reviewed-by: Christoph Hellwig <hch@lst.de>
 Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/xfs_bmap_item.c |   38 ++++++++++++++++++++++++--------------
- 1 file changed, 24 insertions(+), 14 deletions(-)
+ fs/xfs/libxfs/xfs_defer.c  |   43 ++++++++++++++++++++++++++++++++++++++-----
+ fs/xfs/libxfs/xfs_defer.h  |   11 +++++++++--
+ fs/xfs/xfs_bmap_item.c     |    7 +++++--
+ fs/xfs/xfs_extfree_item.c  |    2 +-
+ fs/xfs/xfs_log_recover.c   |    7 ++++++-
+ fs/xfs/xfs_refcount_item.c |    2 +-
+ fs/xfs/xfs_rmap_item.c     |    2 +-
+ 7 files changed, 61 insertions(+), 13 deletions(-)
 
+--- a/fs/xfs/libxfs/xfs_defer.c
++++ b/fs/xfs/libxfs/xfs_defer.c
+@@ -16,6 +16,7 @@
+ #include "xfs_inode.h"
+ #include "xfs_inode_item.h"
+ #include "xfs_trace.h"
++#include "xfs_icache.h"
+ 
+ /*
+  * Deferred Operations in XFS
+@@ -567,10 +568,14 @@ xfs_defer_move(
+  * deferred ops state is transferred to the capture structure and the
+  * transaction is then ready for the caller to commit it.  If there are no
+  * intent items to capture, this function returns NULL.
++ *
++ * If capture_ip is not NULL, the capture structure will obtain an extra
++ * reference to the inode.
+  */
+ static struct xfs_defer_capture *
+ xfs_defer_ops_capture(
+-	struct xfs_trans		*tp)
++	struct xfs_trans		*tp,
++	struct xfs_inode		*capture_ip)
+ {
+ 	struct xfs_defer_capture	*dfc;
+ 
+@@ -596,6 +601,15 @@ xfs_defer_ops_capture(
+ 	/* Preserve the log reservation size. */
+ 	dfc->dfc_logres = tp->t_log_res;
+ 
++	/*
++	 * Grab an extra reference to this inode and attach it to the capture
++	 * structure.
++	 */
++	if (capture_ip) {
++		ihold(VFS_I(capture_ip));
++		dfc->dfc_capture_ip = capture_ip;
++	}
++
+ 	return dfc;
+ }
+ 
+@@ -606,24 +620,33 @@ xfs_defer_ops_release(
+ 	struct xfs_defer_capture	*dfc)
+ {
+ 	xfs_defer_cancel_list(mp, &dfc->dfc_dfops);
++	if (dfc->dfc_capture_ip)
++		xfs_irele(dfc->dfc_capture_ip);
+ 	kmem_free(dfc);
+ }
+ 
+ /*
+  * Capture any deferred ops and commit the transaction.  This is the last step
+- * needed to finish a log intent item that we recovered from the log.
++ * needed to finish a log intent item that we recovered from the log.  If any
++ * of the deferred ops operate on an inode, the caller must pass in that inode
++ * so that the reference can be transferred to the capture structure.  The
++ * caller must hold ILOCK_EXCL on the inode, and must unlock it before calling
++ * xfs_defer_ops_continue.
+  */
+ int
+ xfs_defer_ops_capture_and_commit(
+ 	struct xfs_trans		*tp,
++	struct xfs_inode		*capture_ip,
+ 	struct list_head		*capture_list)
+ {
+ 	struct xfs_mount		*mp = tp->t_mountp;
+ 	struct xfs_defer_capture	*dfc;
+ 	int				error;
+ 
++	ASSERT(!capture_ip || xfs_isilocked(capture_ip, XFS_ILOCK_EXCL));
++
+ 	/* If we don't capture anything, commit transaction and exit. */
+-	dfc = xfs_defer_ops_capture(tp);
++	dfc = xfs_defer_ops_capture(tp, capture_ip);
+ 	if (!dfc)
+ 		return xfs_trans_commit(tp);
+ 
+@@ -640,16 +663,26 @@ xfs_defer_ops_capture_and_commit(
+ 
+ /*
+  * Attach a chain of captured deferred ops to a new transaction and free the
+- * capture structure.
++ * capture structure.  If an inode was captured, it will be passed back to the
++ * caller with ILOCK_EXCL held and joined to the transaction with lockflags==0.
++ * The caller now owns the inode reference.
+  */
+ void
+ xfs_defer_ops_continue(
+ 	struct xfs_defer_capture	*dfc,
+-	struct xfs_trans		*tp)
++	struct xfs_trans		*tp,
++	struct xfs_inode		**captured_ipp)
+ {
+ 	ASSERT(tp->t_flags & XFS_TRANS_PERM_LOG_RES);
+ 	ASSERT(!(tp->t_flags & XFS_TRANS_DIRTY));
+ 
++	/* Lock and join the captured inode to the new transaction. */
++	if (dfc->dfc_capture_ip) {
++		xfs_ilock(dfc->dfc_capture_ip, XFS_ILOCK_EXCL);
++		xfs_trans_ijoin(tp, dfc->dfc_capture_ip, 0);
++	}
++	*captured_ipp = dfc->dfc_capture_ip;
++
+ 	/* Move captured dfops chain and state to the transaction. */
+ 	list_splice_init(&dfc->dfc_dfops, &tp->t_dfops);
+ 	tp->t_flags |= dfc->dfc_tpflags;
+--- a/fs/xfs/libxfs/xfs_defer.h
++++ b/fs/xfs/libxfs/xfs_defer.h
+@@ -80,6 +80,12 @@ struct xfs_defer_capture {
+ 
+ 	/* Log reservation saved from the transaction. */
+ 	unsigned int		dfc_logres;
++
++	/*
++	 * An inode reference that must be maintained to complete the deferred
++	 * work.
++	 */
++	struct xfs_inode	*dfc_capture_ip;
+ };
+ 
+ /*
+@@ -87,8 +93,9 @@ struct xfs_defer_capture {
+  * This doesn't normally happen except log recovery.
+  */
+ int xfs_defer_ops_capture_and_commit(struct xfs_trans *tp,
+-		struct list_head *capture_list);
+-void xfs_defer_ops_continue(struct xfs_defer_capture *d, struct xfs_trans *tp);
++		struct xfs_inode *capture_ip, struct list_head *capture_list);
++void xfs_defer_ops_continue(struct xfs_defer_capture *d, struct xfs_trans *tp,
++		struct xfs_inode **captured_ipp);
+ void xfs_defer_ops_release(struct xfs_mount *mp, struct xfs_defer_capture *d);
+ 
+ #endif /* __XFS_DEFER_H__ */
 --- a/fs/xfs/xfs_bmap_item.c
 +++ b/fs/xfs/xfs_bmap_item.c
-@@ -22,6 +22,7 @@
- #include "xfs_bmap_btree.h"
- #include "xfs_trans_space.h"
- #include "xfs_error.h"
-+#include "xfs_quota.h"
- 
- kmem_zone_t	*xfs_bui_zone;
- kmem_zone_t	*xfs_bud_zone;
-@@ -488,21 +489,26 @@ xfs_bui_recover(
- 		return -EFSCORRUPTED;
- 	}
- 
--	error = xfs_trans_alloc(mp, &M_RES(mp)->tr_itruncate,
--			XFS_EXTENTADD_SPACE_RES(mp, XFS_DATA_FORK), 0, 0, &tp);
-+	/* Grab the inode. */
-+	error = xfs_iget(mp, NULL, bmap->me_owner, 0, 0, &ip);
- 	if (error)
- 		return error;
- 
--	budp = xfs_trans_get_bud(tp, buip);
--
--	/* Grab the inode. */
--	error = xfs_iget(mp, tp, bmap->me_owner, 0, XFS_ILOCK_EXCL, &ip);
-+	error = xfs_qm_dqattach(ip);
- 	if (error)
--		goto err_inode;
-+		goto err_rele;
- 
- 	if (VFS_I(ip)->i_nlink == 0)
- 		xfs_iflags_set(ip, XFS_IRECOVERY);
- 
-+	/* Allocate transaction and do the work. */
-+	error = xfs_trans_alloc(mp, &M_RES(mp)->tr_itruncate,
-+			XFS_EXTENTADD_SPACE_RES(mp, XFS_DATA_FORK), 0, 0, &tp);
-+	if (error)
-+		goto err_rele;
-+
-+	budp = xfs_trans_get_bud(tp, buip);
-+	xfs_ilock(ip, XFS_ILOCK_EXCL);
- 	xfs_trans_ijoin(tp, ip, 0);
- 
- 	count = bmap->me_len;
-@@ -510,7 +516,7 @@ xfs_bui_recover(
- 			whichfork, bmap->me_startoff, bmap->me_startblock,
- 			&count, state);
- 	if (error)
--		goto err_inode;
-+		goto err_cancel;
- 
- 	if (count > 0) {
- 		ASSERT(bui_type == XFS_BMAP_UNMAP);
-@@ -522,16 +528,20 @@ xfs_bui_recover(
+@@ -528,8 +528,11 @@ xfs_bui_recover(
  	}
  
  	set_bit(XFS_BUI_RECOVERED, &buip->bui_flags);
-+	/* Commit transaction, which frees the transaction. */
- 	error = xfs_defer_ops_capture_and_commit(tp, capture_list);
-+	if (error)
-+		goto err_unlock;
-+
- 	xfs_iunlock(ip, XFS_ILOCK_EXCL);
- 	xfs_irele(ip);
--	return error;
-+	return 0;
+-	/* Commit transaction, which frees the transaction. */
+-	error = xfs_defer_ops_capture_and_commit(tp, capture_list);
++	/*
++	 * Commit transaction, which frees the transaction and saves the inode
++	 * for later replay activities.
++	 */
++	error = xfs_defer_ops_capture_and_commit(tp, ip, capture_list);
+ 	if (error)
+ 		goto err_unlock;
  
--err_inode:
-+err_cancel:
+--- a/fs/xfs/xfs_extfree_item.c
++++ b/fs/xfs/xfs_extfree_item.c
+@@ -639,7 +639,7 @@ xfs_efi_recover(
+ 
+ 	set_bit(XFS_EFI_RECOVERED, &efip->efi_flags);
+ 
+-	return xfs_defer_ops_capture_and_commit(tp, capture_list);
++	return xfs_defer_ops_capture_and_commit(tp, NULL, capture_list);
+ 
+ abort_error:
  	xfs_trans_cancel(tp);
--	if (ip) {
--		xfs_iunlock(ip, XFS_ILOCK_EXCL);
--		xfs_irele(ip);
--	}
-+err_unlock:
-+	xfs_iunlock(ip, XFS_ILOCK_EXCL);
-+err_rele:
-+	xfs_irele(ip);
- 	return error;
- }
+--- a/fs/xfs/xfs_log_recover.c
++++ b/fs/xfs/xfs_log_recover.c
+@@ -4766,6 +4766,7 @@ xlog_finish_defer_ops(
+ {
+ 	struct xfs_defer_capture *dfc, *next;
+ 	struct xfs_trans	*tp;
++	struct xfs_inode	*ip;
+ 	int			error = 0;
+ 
+ 	list_for_each_entry_safe(dfc, next, capture_list, dfc_list) {
+@@ -4791,9 +4792,13 @@ xlog_finish_defer_ops(
+ 		 * from recovering a single intent item.
+ 		 */
+ 		list_del_init(&dfc->dfc_list);
+-		xfs_defer_ops_continue(dfc, tp);
++		xfs_defer_ops_continue(dfc, tp, &ip);
+ 
+ 		error = xfs_trans_commit(tp);
++		if (ip) {
++			xfs_iunlock(ip, XFS_ILOCK_EXCL);
++			xfs_irele(ip);
++		}
+ 		if (error)
+ 			return error;
+ 	}
+--- a/fs/xfs/xfs_refcount_item.c
++++ b/fs/xfs/xfs_refcount_item.c
+@@ -569,7 +569,7 @@ xfs_cui_recover(
+ 
+ 	xfs_refcount_finish_one_cleanup(tp, rcur, error);
+ 	set_bit(XFS_CUI_RECOVERED, &cuip->cui_flags);
+-	return xfs_defer_ops_capture_and_commit(tp, capture_list);
++	return xfs_defer_ops_capture_and_commit(tp, NULL, capture_list);
+ 
+ abort_error:
+ 	xfs_refcount_finish_one_cleanup(tp, rcur, error);
+--- a/fs/xfs/xfs_rmap_item.c
++++ b/fs/xfs/xfs_rmap_item.c
+@@ -593,7 +593,7 @@ xfs_rui_recover(
+ 
+ 	xfs_rmap_finish_one_cleanup(tp, rcur, error);
+ 	set_bit(XFS_RUI_RECOVERED, &ruip->rui_flags);
+-	return xfs_defer_ops_capture_and_commit(tp, capture_list);
++	return xfs_defer_ops_capture_and_commit(tp, NULL, capture_list);
+ 
+ abort_error:
+ 	xfs_rmap_finish_one_cleanup(tp, rcur, error);
 
 
