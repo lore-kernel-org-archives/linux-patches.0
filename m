@@ -1,30 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB4B63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DF9C433EF;
-	Mon, 20 Feb 2023 13:38:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A55A163B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CE38C433EF;
+	Mon, 20 Feb 2023 13:38:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900317;
-	bh=0kcqojmEZ309t71xizM8PrsJiaoyHNud+3yHVa+U/+Y=;
+	s=korg; t=1676900322;
+	bh=lL62LyL89KofKHD6pgwXyWL1AU8/tTDue89uBhJQSZY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1peCrw6w66V9lCgK6E6o8Srglw1qcBR1afv/lRIKdu3ZdhiJ0Hh0hiWVuO0PDk6cs
-	 Iw22OEsQqxXKLfPQ5P4ADp1hFWrUofUw2NEHawcW3g5PUTMFS8ZwyAJnNcjWxKBk/b
-	 7OB57dBElamBEdE3RGOh8KoOoo7Z+kEAyY7WiKyE=
+	b=MIMz/+3yNULbre3d1oDj2bOsw1oFXrBqePkene5LkeN4gSrN2JAQu4Dqk82E3jsiw
+	 Tw6YQZ0Cpom1gI0Jh36UWvdIexyaS9YyvvmrXqWBBGR6XC/sCKwVQpXXe4ZYjBuXN9
+	 YgbH+CfBNL4PVGU33GVd37cx4XbhVxhYS6DQn8Xc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+082fa4af80a5bb1a9843@syzkaller.appspotmail.com,
 	Fedor Pchelkin <pchelkin@ispras.ru>,
 	Alexey Khoroshilov <khoroshilov@ispras.ru>,
-	Phillip Lougher <phillip@squashfs.org.uk>,
-	Andrew Morton <akpm@linux-foundation.org>,
+	Eelco Chaudron <echaudro@redhat.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 05/53] squashfs: harden sanity check in squashfs_read_xattr_id_table
-Date: Mon, 20 Feb 2023 14:35:31 +0100
-Message-Id: <20230220133548.362178304@linuxfoundation.org>
+Subject: [PATCH 4.14 07/53] net: openvswitch: fix flow memory leak in ovs_flow_cmd_new
+Date: Mon, 20 Feb 2023 14:35:33 +0100
+Message-Id: <20230220133548.440527348@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
 References: <20230220133548.158615609@linuxfoundation.org>
@@ -40,41 +40,106 @@ Content-Transfer-Encoding: 8bit
 
 From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 72e544b1b28325fe78a4687b980871a7e4101f76 ]
+[ Upstream commit 0c598aed445eb45b0ee7ba405f7ece99ee349c30 ]
 
-While mounting a corrupted filesystem, a signed integer '*xattr_ids' can
-become less than zero.  This leads to the incorrect computation of 'len'
-and 'indexes' values which can cause null-ptr-deref in copy_bio_to_actor()
-or out-of-bounds accesses in the next sanity checks inside
-squashfs_read_xattr_id_table().
+Syzkaller reports a memory leak of new_flow in ovs_flow_cmd_new() as it is
+not freed when an allocation of a key fails.
+
+BUG: memory leak
+unreferenced object 0xffff888116668000 (size 632):
+  comm "syz-executor231", pid 1090, jiffies 4294844701 (age 18.871s)
+  hex dump (first 32 bytes):
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+  backtrace:
+    [<00000000defa3494>] kmem_cache_zalloc include/linux/slab.h:654 [inline]
+    [<00000000defa3494>] ovs_flow_alloc+0x19/0x180 net/openvswitch/flow_table.c:77
+    [<00000000c67d8873>] ovs_flow_cmd_new+0x1de/0xd40 net/openvswitch/datapath.c:957
+    [<0000000010a539a8>] genl_family_rcv_msg_doit+0x22d/0x330 net/netlink/genetlink.c:739
+    [<00000000dff3302d>] genl_family_rcv_msg net/netlink/genetlink.c:783 [inline]
+    [<00000000dff3302d>] genl_rcv_msg+0x328/0x590 net/netlink/genetlink.c:800
+    [<000000000286dd87>] netlink_rcv_skb+0x153/0x430 net/netlink/af_netlink.c:2515
+    [<0000000061fed410>] genl_rcv+0x24/0x40 net/netlink/genetlink.c:811
+    [<000000009dc0f111>] netlink_unicast_kernel net/netlink/af_netlink.c:1313 [inline]
+    [<000000009dc0f111>] netlink_unicast+0x545/0x7f0 net/netlink/af_netlink.c:1339
+    [<000000004a5ee816>] netlink_sendmsg+0x8e7/0xde0 net/netlink/af_netlink.c:1934
+    [<00000000482b476f>] sock_sendmsg_nosec net/socket.c:651 [inline]
+    [<00000000482b476f>] sock_sendmsg+0x152/0x190 net/socket.c:671
+    [<00000000698574ba>] ____sys_sendmsg+0x70a/0x870 net/socket.c:2356
+    [<00000000d28d9e11>] ___sys_sendmsg+0xf3/0x170 net/socket.c:2410
+    [<0000000083ba9120>] __sys_sendmsg+0xe5/0x1b0 net/socket.c:2439
+    [<00000000c00628f8>] do_syscall_64+0x30/0x40 arch/x86/entry/common.c:46
+    [<000000004abfdcf4>] entry_SYSCALL_64_after_hwframe+0x61/0xc6
+
+To fix this the patch rearranges the goto labels to reflect the order of
+object allocations and adds appropriate goto statements on the error
+paths.
 
 Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-Link: https://lkml.kernel.org/r/20230117105226.329303-2-pchelkin@ispras.ru
-Fixes: 506220d2ba21 ("squashfs: add more sanity checks in xattr id lookup")
-Reported-by: <syzbot+082fa4af80a5bb1a9843@syzkaller.appspotmail.com>
+Fixes: 68bb10101e6b ("openvswitch: Fix flow lookup to use unmasked key")
 Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
 Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
-Cc: Phillip Lougher <phillip@squashfs.org.uk>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Acked-by: Eelco Chaudron <echaudro@redhat.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Link: https://lore.kernel.org/r/20230201210218.361970-1-pchelkin@ispras.ru
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/squashfs/xattr_id.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/openvswitch/datapath.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/fs/squashfs/xattr_id.c b/fs/squashfs/xattr_id.c
-index 7f718d2bf357..0c0d7882bcca 100644
---- a/fs/squashfs/xattr_id.c
-+++ b/fs/squashfs/xattr_id.c
-@@ -89,7 +89,7 @@ __le64 *squashfs_read_xattr_id_table(struct super_block *sb, u64 table_start,
- 	/* Sanity check values */
+diff --git a/net/openvswitch/datapath.c b/net/openvswitch/datapath.c
+index 8598bc101244..3ae4ccb9895d 100644
+--- a/net/openvswitch/datapath.c
++++ b/net/openvswitch/datapath.c
+@@ -961,14 +961,14 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	key = kzalloc(sizeof(*key), GFP_KERNEL);
+ 	if (!key) {
+ 		error = -ENOMEM;
+-		goto err_kfree_key;
++		goto err_kfree_flow;
+ 	}
  
- 	/* there is always at least one xattr id */
--	if (*xattr_ids == 0)
-+	if (*xattr_ids <= 0)
- 		return ERR_PTR(-EINVAL);
+ 	ovs_match_init(&match, key, false, &mask);
+ 	error = ovs_nla_get_match(net, &match, a[OVS_FLOW_ATTR_KEY],
+ 				  a[OVS_FLOW_ATTR_MASK], log);
+ 	if (error)
+-		goto err_kfree_flow;
++		goto err_kfree_key;
  
- 	len = SQUASHFS_XATTR_BLOCK_BYTES(*xattr_ids);
+ 	ovs_flow_mask_key(&new_flow->key, key, true, &mask);
+ 
+@@ -976,14 +976,14 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	error = ovs_nla_get_identifier(&new_flow->id, a[OVS_FLOW_ATTR_UFID],
+ 				       key, log);
+ 	if (error)
+-		goto err_kfree_flow;
++		goto err_kfree_key;
+ 
+ 	/* Validate actions. */
+ 	error = ovs_nla_copy_actions(net, a[OVS_FLOW_ATTR_ACTIONS],
+ 				     &new_flow->key, &acts, log);
+ 	if (error) {
+ 		OVS_NLERR(log, "Flow actions may not be safe on all matching packets.");
+-		goto err_kfree_flow;
++		goto err_kfree_key;
+ 	}
+ 
+ 	reply = ovs_flow_cmd_alloc_info(acts, &new_flow->id, info, false,
+@@ -1083,10 +1083,10 @@ static int ovs_flow_cmd_new(struct sk_buff *skb, struct genl_info *info)
+ 	kfree_skb(reply);
+ err_kfree_acts:
+ 	ovs_nla_free_flow_actions(acts);
+-err_kfree_flow:
+-	ovs_flow_free(new_flow, false);
+ err_kfree_key:
+ 	kfree(key);
++err_kfree_flow:
++	ovs_flow_free(new_flow, false);
+ error:
+ 	return error;
+ }
 -- 
 2.39.0
 
