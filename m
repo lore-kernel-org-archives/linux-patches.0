@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C6EE463B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:53:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4F3F6C433D2;
-	Mon, 20 Feb 2023 13:53:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6B1E563B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:53:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E488CC433D2;
+	Mon, 20 Feb 2023 13:53:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901236;
-	bh=no4cdOodLPhePDBbb8ecaOeVYSnr/IvRvC8q+0Gr2Nc=;
+	s=korg; t=1676901239;
+	bh=aML26oZ34ikXf0VDcOrKjwMUxcqeUXxSKuWmja9cbEg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=roViAkVgUjCUw9SCghzXD1pfHqeyEyehz3R02QN1zzsUegUzw5eSmEQLKjhoNri5J
-	 /ekPB7/maPwoIUDPAllQCyCKT6afeyaEOfFQ+bfmKCjdEVpDCtY2KKEd+3KqgQ6Yck
-	 LT8Cpl4ASB2cSDzctKYS5wBGv3y93v4OvtUGBjYQ=
+	b=b6daRmY3F6BZmXqdms/hUK3LRvhNbIUfGcv9oXf62L+yDDB5Y3IONKWukb2IYgwDZ
+	 p9yOt5w5LMuPKFFZH/YaV7KAGh0htj5LrZKo0H/kV7IDkH7oySPtWQbSwZ630vU7qA
+	 ua5q4KIrOES62sPRfeCA2BJv5ROill6fX8omxGVU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-	Ranjani Sridharan <ranjani.sridharan@linux.intel.com>,
-	Rander Wang <rander.wang@intel.com>,
-	Bard Liao <yung-chuan.liao@linux.intel.com>,
-	Peter Ujfalusi <peter.ujfalusi@linux.intel.com>,
-	Mark Brown <broonie@kernel.org>
-Subject: [PATCH 5.15 81/83] ASoC: SOF: Intel: hda-dai: fix possible stream_tag leak
-Date: Mon, 20 Feb 2023 14:36:54 +0100
-Message-Id: <20230220133556.564379786@linuxfoundation.org>
+	Dan Carpenter <error27@gmail.com>,
+	Simon Horman <simon.horman@corigine.com>,
+	Kees Cook <keescook@chromium.org>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.15 82/83] net: sched: sch: Fix off by one in htb_activate_prios()
+Date: Mon, 20 Feb 2023 14:36:55 +0100
+Message-Id: <20230220133556.604507547@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -38,59 +36,33 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+From: Dan Carpenter <error27@gmail.com>
 
-commit 1f810d2b6b2fbdc5279644d8b2c140b1f7c9d43d upstream.
+commit 9cec2aaffe969f2a3e18b5ec105fc20bb908e475 upstream.
 
-The HDaudio stream allocation is done first, and in a second step the
-LOSIDV parameter is programmed for the multi-link used by a codec.
+The > needs be >= to prevent an out of bounds access.
 
-This leads to a possible stream_tag leak, e.g. if a DisplayAudio link
-is not used. This would happen when a non-Intel graphics card is used
-and userspace unconditionally uses the Intel Display Audio PCMs without
-checking if they are connected to a receiver with jack controls.
-
-We should first check that there is a valid multi-link entry to
-configure before allocating a stream_tag. This change aligns the
-dma_assign and dma_cleanup phases.
-
-Complements: b0cd60f3e9f5 ("ALSA/ASoC: hda: clarify bus_get_link() and bus_link_get() helpers")
-Link: https://github.com/thesofproject/linux/issues/4151
-Signed-off-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
-Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
-Reviewed-by: Rander Wang <rander.wang@intel.com>
-Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
-Signed-off-by: Peter Ujfalusi <peter.ujfalusi@linux.intel.com>
-Link: https://lore.kernel.org/r/20230216162340.19480-1-peter.ujfalusi@linux.intel.com
-Signed-off-by: Mark Brown <broonie@kernel.org>
+Fixes: de5ca4c3852f ("net: sched: sch: Bounds check priority")
+Signed-off-by: Dan Carpenter <error27@gmail.com>
+Reviewed-by: Simon Horman <simon.horman@corigine.com>
+Reviewed-by: Kees Cook <keescook@chromium.org>
+Link: https://lore.kernel.org/r/Y+D+KN18FQI2DKLq@kili
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/soc/sof/intel/hda-dai.c |    8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/sched/sch_htb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/sound/soc/sof/intel/hda-dai.c
-+++ b/sound/soc/sof/intel/hda-dai.c
-@@ -212,6 +212,10 @@ static int hda_link_hw_params(struct snd
- 	int stream_tag;
- 	int ret;
+--- a/net/sched/sch_htb.c
++++ b/net/sched/sch_htb.c
+@@ -429,7 +429,7 @@ static void htb_activate_prios(struct ht
+ 		while (m) {
+ 			unsigned int prio = ffz(~m);
  
-+	link = snd_hdac_ext_bus_get_link(bus, codec_dai->component->name);
-+	if (!link)
-+		return -EINVAL;
-+
- 	/* get stored dma data if resuming from system suspend */
- 	link_dev = snd_soc_dai_get_dma_data(dai, substream);
- 	if (!link_dev) {
-@@ -232,10 +236,6 @@ static int hda_link_hw_params(struct snd
- 	if (ret < 0)
- 		return ret;
- 
--	link = snd_hdac_ext_bus_get_link(bus, codec_dai->component->name);
--	if (!link)
--		return -EINVAL;
--
- 	/* set the hdac_stream in the codec dai */
- 	snd_soc_dai_set_stream(codec_dai, hdac_stream(link_dev), substream->stream);
+-			if (WARN_ON_ONCE(prio > ARRAY_SIZE(p->inner.clprio)))
++			if (WARN_ON_ONCE(prio >= ARRAY_SIZE(p->inner.clprio)))
+ 				break;
+ 			m &= ~(1 << prio);
  
 
 
