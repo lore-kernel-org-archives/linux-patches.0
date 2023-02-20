@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 785D863B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:46:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F412DC433EF;
-	Mon, 20 Feb 2023 13:46:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A7C363B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:46:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BAFC433EF;
+	Mon, 20 Feb 2023 13:46:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900792;
-	bh=stIUensT46J/sC1j7FEd69USTsmHgo5usqX2GDKwgMs=;
+	s=korg; t=1676900794;
+	bh=sjjvzl52zYqSDB625U4onxPmGf5PMlSIDqywr2iwUuQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=J+4YMzVBFjaEewCEq1DXqpM6Paz1LLUUaDmaQ4ZUfn6rQtyN+nvU5DcieG1T0AQ09
-	 n14l8yoKL/n2L8oUzxCoyZ4TDofj0WMCH25kysGQHXMXA5SYihQIbBffl87q18LzVf
-	 9sMcCZCZLqLepmvntvXuZXIsXEUlWlgbF50T/mfY=
+	b=QFsrIhu3IHea0h77zoEXDcSZyPXSHaPlgrnEUKu6DxQpT7WqU7tUpXWb4g/qiT7Ma
+	 /u4Z8V9P15oolLh4SB68F3kXL3dY+qmSi1qxE7uuBK7FQN9e+qN8wm4akw1GdQED+c
+	 ItnsVUwkGUr0DHeQws/WxK7/NIMGuF6e3wRupvSw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yang Yingliang <yangyingliang@huawei.com>,
-	Leon Romanovsky <leon@kernel.org>,
+	Christian Hopps <chopps@chopps.org>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 068/156] RDMA/usnic: use iommu_map_atomic() under spin_lock()
-Date: Mon, 20 Feb 2023 14:35:12 +0100
-Message-Id: <20230220133605.202304752@linuxfoundation.org>
+Subject: [PATCH 5.4 069/156] xfrm: fix bug with DSCP copy to v6 from v4 tunnel
+Date: Mon, 20 Feb 2023 14:35:13 +0100
+Message-Id: <20230220133605.250817223@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -35,49 +36,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yang Yingliang <yangyingliang@huawei.com>
+From: Christian Hopps <chopps@chopps.org>
 
-[ Upstream commit b7e08a5a63a11627601915473c3b569c1f6c6c06 ]
+[ Upstream commit 6028da3f125fec34425dbd5fec18e85d372b2af6 ]
 
-usnic_uiom_map_sorted_intervals() is called under spin_lock(), iommu_map()
-might sleep, use iommu_map_atomic() to avoid potential sleep in atomic
-context.
+When copying the DSCP bits for decap-dscp into IPv6 don't assume the
+outer encap is always IPv6. Instead, as with the inner IPv4 case, copy
+the DSCP bits from the correctly saved "tos" value in the control block.
 
-Fixes: e3cf00d0a87f ("IB/usnic: Add Cisco VIC low-level hardware driver")
-Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Link: https://lore.kernel.org/r/20230129093757.637354-1-yangyingliang@huawei.com
-Signed-off-by: Leon Romanovsky <leon@kernel.org>
+Fixes: 227620e29509 ("[IPSEC]: Separate inner/outer mode processing on input")
+Signed-off-by: Christian Hopps <chopps@chopps.org>
+Acked-by: Herbert Xu <herbert@gondor.apana.org.au>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/hw/usnic/usnic_uiom.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ net/xfrm/xfrm_input.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/drivers/infiniband/hw/usnic/usnic_uiom.c b/drivers/infiniband/hw/usnic/usnic_uiom.c
-index 62e6ffa9ad78e..1d060ae47933e 100644
---- a/drivers/infiniband/hw/usnic/usnic_uiom.c
-+++ b/drivers/infiniband/hw/usnic/usnic_uiom.c
-@@ -281,8 +281,8 @@ static int usnic_uiom_map_sorted_intervals(struct list_head *intervals,
- 				size = pa_end - pa_start + PAGE_SIZE;
- 				usnic_dbg("va 0x%lx pa %pa size 0x%zx flags 0x%x",
- 					va_start, &pa_start, size, flags);
--				err = iommu_map(pd->domain, va_start, pa_start,
--							size, flags);
-+				err = iommu_map_atomic(pd->domain, va_start,
-+						       pa_start, size, flags);
- 				if (err) {
- 					usnic_err("Failed to map va 0x%lx pa %pa size 0x%zx with err %d\n",
- 						va_start, &pa_start, size, err);
-@@ -298,8 +298,8 @@ static int usnic_uiom_map_sorted_intervals(struct list_head *intervals,
- 				size = pa - pa_start + PAGE_SIZE;
- 				usnic_dbg("va 0x%lx pa %pa size 0x%zx flags 0x%x\n",
- 					va_start, &pa_start, size, flags);
--				err = iommu_map(pd->domain, va_start, pa_start,
--						size, flags);
-+				err = iommu_map_atomic(pd->domain, va_start,
-+						       pa_start, size, flags);
- 				if (err) {
- 					usnic_err("Failed to map va 0x%lx pa %pa size 0x%zx with err %d\n",
- 						va_start, &pa_start, size, err);
+diff --git a/net/xfrm/xfrm_input.c b/net/xfrm/xfrm_input.c
+index e120df0a6da13..4d8d7cf3d1994 100644
+--- a/net/xfrm/xfrm_input.c
++++ b/net/xfrm/xfrm_input.c
+@@ -274,8 +274,7 @@ static int xfrm6_remove_tunnel_encap(struct xfrm_state *x, struct sk_buff *skb)
+ 		goto out;
+ 
+ 	if (x->props.flags & XFRM_STATE_DECAP_DSCP)
+-		ipv6_copy_dscp(ipv6_get_dsfield(ipv6_hdr(skb)),
+-			       ipipv6_hdr(skb));
++		ipv6_copy_dscp(XFRM_MODE_SKB_CB(skb)->tos, ipipv6_hdr(skb));
+ 	if (!(x->props.flags & XFRM_STATE_NOECN))
+ 		ipip6_ecn_decapsulate(skb);
+ 
 -- 
 2.39.0
 
