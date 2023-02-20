@@ -1,26 +1,35 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15ECD63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E493C433D2;
-	Mon, 20 Feb 2023 13:58:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A92C963B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2373C433EF;
+	Mon, 20 Feb 2023 13:58:26 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901504;
-	bh=d6CZ0p2XaEvVvvGGWfez04ihZMUA05AWaNwyxxw+U9c=;
+	s=korg; t=1676901507;
+	bh=OaGcZqtCGf8QpY1qbUdDqpyvg51wOsiit+x0t6xMToc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z2wjACq6rOWHrcufhyUr90GeKtb1NKGOkYxPQjcxRygUslueOd7sjWE3dvFgIPuDn
-	 V6mGmBa/ewPxPypMRVnDfUrTYUwlbeMCODPI9hjQb6VxgCz05Js+a9GSbxX+B3hYuD
-	 +ttILj9BBpiaDPkH/hrdYhLHMzozqnFPxP9BP45s=
+	b=ZGi+NwVCF8hZdi6H4dPta8zkCunqnLUhHq6hay2ewh2UhWqH+Av7vqOmPIVav1P9v
+	 ryl6REdyIbzqlOqESLNwkNXN7Uwy+x1DSOSUkV3t79f5uzjBqRpTYb4wJ/cW9+TKGt
+	 CL7ygP5m0m8TI3JnsJPWOSX/b6BbEsUAq/in+zh4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Matthieu Baerts <matthieu.baerts@tessares.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 043/118] selftests: mptcp: userspace: fix v4-v6 test in v6.1
-Date: Mon, 20 Feb 2023 14:35:59 +0100
-Message-Id: <20230220133602.161204340@linuxfoundation.org>
+	"Isaac J. Manjarres" <isaacmanjarres@google.com>,
+	"Mike Rapoport (IBM)" <rppt@kernel.org>,
+	Catalin Marinas <catalin.marinas@arm.com>,
+	Frank Rowand <frowand.list@gmail.com>,
+	"Kirill A. Shutemov" <kirill.shtuemov@linux.intel.com>,
+	Nick Kossifidis <mick@ics.forth.gr>,
+	"Rafael J. Wysocki" <rafael.j.wysocki@intel.com>,
+	Rob Herring <robh@kernel.org>,
+	"Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+	Saravana Kannan <saravanak@google.com>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.1 044/118] of: reserved_mem: Have kmemleak ignore dynamically allocated reserved mem
+Date: Mon, 20 Feb 2023 14:36:00 +0100
+Message-Id: <20230220133602.203847396@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -34,67 +43,97 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Matthieu Baerts <matthieu.baerts@tessares.net>
+From: Isaac J. Manjarres <isaacmanjarres@google.com>
 
-The commit 4656d72c1efa ("selftests: mptcp: userspace: validate v4-v6 subflows mix")
-has been backported to v6.1.8 without any conflicts. But it looks like
-it was depending on a previous one:
+commit ce4d9a1ea35ac5429e822c4106cb2859d5c71f3e upstream.
 
-  commit 1cc94ac1af4b ("selftests: mptcp: make evts global in userspace_pm")
+Patch series "Fix kmemleak crashes when scanning CMA regions", v2.
 
-Without it, the test fails with:
+When trying to boot a device with an ARM64 kernel with the following
+config options enabled:
 
-  ./userspace_pm.sh: line 788: : No such file or directory
-  # ADD_ADDR4 id:14 10.0.2.1 (ns1) => ns2, reuse port        [FAIL]
-  sed: can't read : No such file or directory
+CONFIG_DEBUG_PAGEALLOC=y
+CONFIG_DEBUG_PAGEALLOC_ENABLE_DEFAULT=y
+CONFIG_DEBUG_KMEMLEAK=y
 
-This dependence refactors the way the monitoring files are being
-created: only once for all the different sub-tests instead of per
-sub-test.
+a crash is encountered when kmemleak starts to scan the list of gray
+or allocated objects that it maintains. Upon closer inspection, it was
+observed that these page-faults always occurred when kmemleak attempted
+to scan a CMA region.
 
-It is probably better to avoid backporting the refactoring. That is why
-the new sub-test has been adapted to work using the previous way that is
-still in place here in v6.1: the monitoring is started at the beginning
-of each sub-test and the created file is removed at the end.
+At the moment, kmemleak is made aware of CMA regions that are specified
+through the devicetree to be dynamically allocated within a range of
+addresses. However, kmemleak should not need to scan CMA regions or any
+reserved memory region, as those regions can be used for DMA transfers
+between drivers and peripherals, and thus wouldn't contain anything
+useful for kmemleak.
 
-Fixes: f59549814a64 ("selftests: mptcp: userspace: validate v4-v6 subflows mix")
-Signed-off-by: Matthieu Baerts <matthieu.baerts@tessares.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Additionally, since CMA regions are unmapped from the kernel's address
+space when they are freed to the buddy allocator at boot when
+CONFIG_DEBUG_PAGEALLOC is enabled, kmemleak shouldn't attempt to access
+those memory regions, as that will trigger a crash. Thus, kmemleak
+should ignore all dynamically allocated reserved memory regions.
+
+
+This patch (of 1):
+
+Currently, kmemleak ignores dynamically allocated reserved memory regions
+that don't have a kernel mapping.  However, regions that do retain a
+kernel mapping (e.g.  CMA regions) do get scanned by kmemleak.
+
+This is not ideal for two reasons:
+
+1  kmemleak works by scanning memory regions for pointers to allocated
+   objects to determine if those objects have been leaked or not.
+   However, reserved memory regions can be used between drivers and
+   peripherals for DMA transfers, and thus, would not contain pointers to
+   allocated objects, making it unnecessary for kmemleak to scan these
+   reserved memory regions.
+
+2  When CONFIG_DEBUG_PAGEALLOC is enabled, along with kmemleak, the
+   CMA reserved memory regions are unmapped from the kernel's address
+   space when they are freed to buddy at boot.  These CMA reserved regions
+   are still tracked by kmemleak, however, and when kmemleak attempts to
+   scan them, a crash will happen, as accessing the CMA region will result
+   in a page-fault, since the regions are unmapped.
+
+Thus, use kmemleak_ignore_phys() for all dynamically allocated reserved
+memory regions, instead of those that do not have a kernel mapping
+associated with them.
+
+Link: https://lkml.kernel.org/r/20230208232001.2052777-1-isaacmanjarres@google.com
+Link: https://lkml.kernel.org/r/20230208232001.2052777-2-isaacmanjarres@google.com
+Fixes: a7259df76702 ("memblock: make memblock_find_in_range method private")
+Signed-off-by: Isaac J. Manjarres <isaacmanjarres@google.com>
+Acked-by: Mike Rapoport (IBM) <rppt@kernel.org>
+Acked-by: Catalin Marinas <catalin.marinas@arm.com>
+Cc: Frank Rowand <frowand.list@gmail.com>
+Cc: Kirill A. Shutemov <kirill.shtuemov@linux.intel.com>
+Cc: Nick Kossifidis <mick@ics.forth.gr>
+Cc: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
+Cc: Rob Herring <robh@kernel.org>
+Cc: Russell King (Oracle) <rmk+kernel@armlinux.org.uk>
+Cc: Saravana Kannan <saravanak@google.com>
+Cc: <stable@vger.kernel.org>	[5.15+]
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/net/mptcp/userspace_pm.sh | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/of/of_reserved_mem.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/net/mptcp/userspace_pm.sh b/tools/testing/selftests/net/mptcp/userspace_pm.sh
-index 0040e3bc7b16e..ad6547c79b831 100755
---- a/tools/testing/selftests/net/mptcp/userspace_pm.sh
-+++ b/tools/testing/selftests/net/mptcp/userspace_pm.sh
-@@ -778,6 +778,14 @@ test_subflows()
+--- a/drivers/of/of_reserved_mem.c
++++ b/drivers/of/of_reserved_mem.c
+@@ -48,9 +48,10 @@ static int __init early_init_dt_alloc_re
+ 		err = memblock_mark_nomap(base, size);
+ 		if (err)
+ 			memblock_phys_free(base, size);
+-		kmemleak_ignore_phys(base);
+ 	}
  
- test_subflows_v4_v6_mix()
- {
-+	local client_evts
-+	client_evts=$(mktemp)
-+	# Capture events on the network namespace running the client
-+	:>"$client_evts"
-+	ip netns exec "$ns2" ./pm_nl_ctl events >> "$client_evts" 2>&1 &
-+	evts_pid=$!
-+	sleep 0.5
++	kmemleak_ignore_phys(base);
 +
- 	# Attempt to add a listener at 10.0.2.1:<subflow-port>
- 	ip netns exec "$ns1" ./pm_nl_ctl listen 10.0.2.1\
- 	   $app6_port > /dev/null 2>&1 &
-@@ -820,6 +828,9 @@ test_subflows_v4_v6_mix()
- 	ip netns exec "$ns1" ./pm_nl_ctl rem id $server_addr_id token\
- 	   "$server6_token" > /dev/null 2>&1
- 	sleep 0.5
-+
-+	kill_wait $evts_pid
-+	rm -f "$client_evts"
+ 	return err;
  }
  
- test_prio()
--- 
-2.39.0
-
 
 
