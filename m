@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13E4863B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:42:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9077FC433EF;
-	Mon, 20 Feb 2023 13:42:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AD3D163B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:42:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 28742C433D2;
+	Mon, 20 Feb 2023 13:42:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900531;
-	bh=4/tkSQJO3lWcJmMbE9sT1bUdQJHfWF/r39Ft6JeAMF4=;
+	s=korg; t=1676900534;
+	bh=yP50BR0ig4/lVQ9anDF9lxOqUsFyEn6FuCOxhbWvJC4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KH56Zj0uhroBG96F+DdTTzSIkuKmQ7qzzLzqLXFz+axpDrs3eDkf/qX8VDssrjBnA
-	 H8c4DacxDV/tk5otCtZdiR1C2WZNoUubmT5fbg70T5y/eVzERfnJ+xWTQrwrR7W2HU
-	 INQ5vJqEM7yonCoGmtFltJZznhZD/E0UpGMIUzxY=
+	b=oEDcB2pyk4tHr5/+M8Blp+t2oX/XJmUhI535WS0shk1sf+cLjTFhF/X2zqgUXXnCm
+	 7pzucnLUUELqUdJlAaiCtSCkQpdVKTubN305b60ugqJ+5hrrs6LeJDHkX4vKb3V2eb
+	 Y8v51RloHELChmOqigKWZkk5AJOwLUFaqSVMhJAo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Suti <peter.suti@streamunlimited.com>,
-	Vyacheslav Bocharov <adeep@lexina.in>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 4.19 61/89] arm64: dts: meson-axg: Make mmc host controller interrupts level-sensitive
-Date: Mon, 20 Feb 2023 14:36:00 +0100
-Message-Id: <20230220133555.294878857@linuxfoundation.org>
+	=?UTF-8?q?Toke=20H=C3=B8iland-J=C3=B8rgensen?= <toke@redhat.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
+	David Ahern <dsahern@gmail.com>
+Subject: [PATCH 4.19 62/89] bpf: Always return target ifindex in bpf_fib_lookup
+Date: Mon, 20 Feb 2023 14:36:01 +0100
+Message-Id: <20230220133555.324166482@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -36,51 +35,55 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Toke Høiland-Jørgensen <toke@redhat.com>
 
-commit d182bcf300772d8b2e5f43e47fa0ebda2b767cc4 upstream.
+commit d1c362e1dd68a421cf9033404cf141a4ab734a5d upstream.
 
-The usage of edge-triggered interrupts lead to lost interrupts under load,
-see [0]. This was confirmed to be fixed by using level-triggered
-interrupts.
-The report was about SDIO. However, as the host controller is the same
-for SD and MMC, apply the change to all mmc controller instances.
+The bpf_fib_lookup() helper performs a neighbour lookup for the destination
+IP and returns BPF_FIB_LKUP_NO_NEIGH if this fails, with the expectation
+that the BPF program will pass the packet up the stack in this case.
+However, with the addition of bpf_redirect_neigh() that can be used instead
+to perform the neighbour lookup, at the cost of a bit of duplicated work.
 
-[0] https://www.spinics.net/lists/linux-mmc/msg73991.html
+For that we still need the target ifindex, and since bpf_fib_lookup()
+already has that at the time it performs the neighbour lookup, there is
+really no reason why it can't just return it in any case. So let's just
+always return the ifindex if the FIB lookup itself succeeds.
 
-Fixes: 221cf34bac54 ("ARM64: dts: meson-axg: enable the eMMC controller")
-Reported-by: Peter Suti <peter.suti@streamunlimited.com>
-Tested-by: Vyacheslav Bocharov <adeep@lexina.in>
-Tested-by: Peter Suti <peter.suti@streamunlimited.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/c00655d3-02f8-6f5f-4239-ca2412420cad@gmail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Toke Høiland-Jørgensen <toke@redhat.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Cc: David Ahern <dsahern@gmail.com>
+Link: https://lore.kernel.org/bpf/20201009184234.134214-1-toke@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-axg.dtsi |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ net/core/filter.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-@@ -167,7 +167,7 @@
- 			sd_emmc_b: sd@5000 {
- 				compatible = "amlogic,meson-axg-mmc";
- 				reg = <0x0 0x5000 0x0 0x800>;
--				interrupts = <GIC_SPI 217 IRQ_TYPE_EDGE_RISING>;
-+				interrupts = <GIC_SPI 217 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 				clocks = <&clkc CLKID_SD_EMMC_B>,
- 					<&clkc CLKID_SD_EMMC_B_CLK0>,
-@@ -179,7 +179,7 @@
- 			sd_emmc_c: mmc@7000 {
- 				compatible = "amlogic,meson-axg-mmc";
- 				reg = <0x0 0x7000 0x0 0x800>;
--				interrupts = <GIC_SPI 218 IRQ_TYPE_EDGE_RISING>;
-+				interrupts = <GIC_SPI 218 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 				clocks = <&clkc CLKID_SD_EMMC_C>,
- 					<&clkc CLKID_SD_EMMC_C_CLK0>,
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -4235,7 +4235,6 @@ static int bpf_fib_set_fwd_params(struct
+ 	memcpy(params->smac, dev->dev_addr, ETH_ALEN);
+ 	params->h_vlan_TCI = 0;
+ 	params->h_vlan_proto = 0;
+-	params->ifindex = dev->ifindex;
+ 
+ 	return 0;
+ }
+@@ -4333,6 +4332,7 @@ static int bpf_ipv4_fib_lookup(struct ne
+ 		params->ipv4_dst = nh->nh_gw;
+ 
+ 	params->rt_metric = res.fi->fib_priority;
++	params->ifindex = dev->ifindex;
+ 
+ 	/* xdp and cls_bpf programs are run in RCU-bh so
+ 	 * rcu_read_lock_bh is not needed here
+@@ -4447,6 +4447,7 @@ static int bpf_ipv6_fib_lookup(struct ne
+ 
+ 	dev = f6i->fib6_nh.nh_dev;
+ 	params->rt_metric = f6i->fib6_metric;
++	params->ifindex = dev->ifindex;
+ 
+ 	/* xdp and cls_bpf programs are run in RCU-bh so rcu_read_lock_bh is
+ 	 * not needed here. Can not use __ipv6_neigh_lookup_noref here
 
 
