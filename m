@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6AA8763B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:38 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9105C433D2;
-	Mon, 20 Feb 2023 13:51:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EF45463B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 758B9C433D2;
+	Mon, 20 Feb 2023 13:51:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901098;
-	bh=hq6nmMg5CiRsVDfcKqX5x6arJmJVCZ1gJxMc4loHpAY=;
+	s=korg; t=1676901100;
+	bh=lfuAHYzrt2sPHR3hAQMkks3VM6Ap55lxyshqk6d3UY4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x+zmjk38i7F/lVhvOw//5r3kPuA4zKbnVTyRv/6g7ANEE+gcfgelisydyjIOagCOR
-	 nZhWUWBP05kE5MMvoRAffYBlcTNZHXWJETXXVJJZR+aMbt9rFGjB3OPvC3d/2+hHVu
-	 XmdrOAOX5XNAQmriq9B9pwpS0FvroLEwiGl2dqoA=
+	b=14doBM3eUhsw5CNu7L+Fn8Aq2AzKkkgjAAJR2s7LocrnZjRaEM7/eDAnCg461+DPe
+	 JhBewwoE502asweyXrr3latP6U6FagDNIUrufAQV3KTMquQRtOJ8hmdo/QgY4YhZwo
+	 luBaK2UZES47HbzEmpkq+DO4SYyrQI2kjmBRewl4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -23,9 +23,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Kai Vehmanen <kai.vehmanen@linux.intel.com>,
 	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 05/83] ASoC: Intel: sof_rt5682: always set dpcm_capture for amplifiers
-Date: Mon, 20 Feb 2023 14:35:38 +0100
-Message-Id: <20230220133553.873523402@linuxfoundation.org>
+Subject: [PATCH 5.15 06/83] ASoC: Intel: sof_cs42l42: always set dpcm_capture for amplifiers
+Date: Mon, 20 Feb 2023 14:35:39 +0100
+Message-Id: <20230220133553.905512982@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -41,7 +41,7 @@ Content-Transfer-Encoding: 8bit
 
 From: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
 
-[ Upstream commit 324f065cdbaba1b879a63bf07e61ca156b789537 ]
+[ Upstream commit e0a52220344ab7defe25b9cdd58fe1dc1122e67c ]
 
 The amplifier may provide hardware support for I/V feedback, or
 alternatively the firmware may generate an echo reference attached to
@@ -56,36 +56,27 @@ Reviewed-by: Ranjani Sridharan <ranjani.sridharan@linux.intel.com>
 Reviewed-by: Péter Ujfalusi <peter.ujfalusi@linux.intel.com>
 Reviewed-by: Bard Liao <yung-chuan.liao@linux.intel.com>
 Signed-off-by: Kai Vehmanen <kai.vehmanen@linux.intel.com>
-Link: https://lore.kernel.org/r/20230119163459.2235843-2-kai.vehmanen@linux.intel.com
+Link: https://lore.kernel.org/r/20230119163459.2235843-3-kai.vehmanen@linux.intel.com
 Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- sound/soc/intel/boards/sof_rt5682.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ sound/soc/intel/boards/sof_cs42l42.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/sound/soc/intel/boards/sof_rt5682.c b/sound/soc/intel/boards/sof_rt5682.c
-index f096bd6d69be7..d0ce2f06b30c6 100644
---- a/sound/soc/intel/boards/sof_rt5682.c
-+++ b/sound/soc/intel/boards/sof_rt5682.c
-@@ -737,8 +737,6 @@ static struct snd_soc_dai_link *sof_card_dai_links_create(struct device *dev,
- 			links[id].num_codecs = ARRAY_SIZE(max_98373_components);
- 			links[id].init = max_98373_spk_codec_init;
- 			links[id].ops = &max_98373_ops;
--			/* feedback stream */
--			links[id].dpcm_capture = 1;
- 		} else if (sof_rt5682_quirk &
- 				SOF_MAX98360A_SPEAKER_AMP_PRESENT) {
- 			max_98360a_dai_link(&links[id]);
-@@ -751,6 +749,9 @@ static struct snd_soc_dai_link *sof_card_dai_links_create(struct device *dev,
- 		links[id].platforms = platform_component;
- 		links[id].num_platforms = ARRAY_SIZE(platform_component);
- 		links[id].dpcm_playback = 1;
-+		/* feedback stream or firmware-generated echo reference */
-+		links[id].dpcm_capture = 1;
+diff --git a/sound/soc/intel/boards/sof_cs42l42.c b/sound/soc/intel/boards/sof_cs42l42.c
+index ce78c18798876..8061082d9fbf3 100644
+--- a/sound/soc/intel/boards/sof_cs42l42.c
++++ b/sound/soc/intel/boards/sof_cs42l42.c
+@@ -311,6 +311,9 @@ static int create_spk_amp_dai_links(struct device *dev,
+ 	links[*id].platforms = platform_component;
+ 	links[*id].num_platforms = ARRAY_SIZE(platform_component);
+ 	links[*id].dpcm_playback = 1;
++	/* firmware-generated echo reference */
++	links[*id].dpcm_capture = 1;
 +
- 		links[id].no_pcm = 1;
- 		links[id].cpus = &cpus[id];
- 		links[id].num_cpus = 1;
+ 	links[*id].no_pcm = 1;
+ 	links[*id].cpus = &cpus[*id];
+ 	links[*id].num_cpus = 1;
 -- 
 2.39.0
 
