@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8BFC263B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:44:33 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 15004C433D2;
-	Mon, 20 Feb 2023 13:44:32 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2528163B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:44:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FC97C433EF;
+	Mon, 20 Feb 2023 13:44:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900673;
-	bh=6n+PAexPKhG9Y9b7aiGaDzJOSZd6jfnkPNkyYiANTdw=;
+	s=korg; t=1676900676;
+	bh=vgMO7lVtdQSJLcKHa1eOQvEygF/EXTj+RsFJNRIGta0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=oyZ//GvVwSzMjPT0yVONNN3RXqEx7TdIxKK/ZXb5skrOtx75ySfFPkT/0oGVZc9em
-	 cx+ll67H1aNIMPnCk5l3u1a+Ld9dTM8cEV0R2sUf8u+t8x+n7za9TZ35vqBCUz7HKf
-	 WLH/1/cyXuhu7JfKBofeb3RadMqDlfnTVCnzUEdY=
+	b=MYJkmkTSgSUtjk/cxkh14v7dmA62LuQZnh09ZOCjtQuayuhlQzyjLjUVSruCSLl1p
+	 WMydKW+xExmnGo8Hy8nrwuBLAkkvUQd2aVPCt56t9vUWsrt+aUsa2rIKeiuek7mubL
+	 kl7pNjWKc9MhTHBM9YCIarPuWTiEZn2wzjEwxwuY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Randy Dunlap <rdunlap@infradead.org>,
-	Wolfram Sang <wsa@kernel.org>,
+	Al Viro <viro@zeniv.linux.org.uk>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 025/156] i2c: rk3x: fix a bunch of kernel-doc warnings
-Date: Mon, 20 Feb 2023 14:34:29 +0100
-Message-Id: <20230220133603.479261770@linuxfoundation.org>
+Subject: [PATCH 5.4 008/156] fix iov_iter_bvec() "direction" argument
+Date: Mon, 20 Feb 2023 14:34:12 +0100
+Message-Id: <20230220133602.818386351@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -35,178 +34,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Randy Dunlap <rdunlap@infradead.org>
+From: Al Viro <viro@zeniv.linux.org.uk>
 
-[ Upstream commit 0582d984793d30442da88fe458674502bad1ad29 ]
+[ Upstream commit b676668d99155e6859d99bbf2df18b3f03851902 ]
 
-Fix multiple W=1 kernel-doc warnings in i2c-rk3x.c:
-
-drivers/i2c/busses/i2c-rk3x.c:83: warning: missing initial short description on line:
- * struct i2c_spec_values:
-drivers/i2c/busses/i2c-rk3x.c:139: warning: missing initial short description on line:
- * struct rk3x_i2c_calced_timings:
-drivers/i2c/busses/i2c-rk3x.c:162: warning: missing initial short description on line:
- * struct rk3x_i2c_soc_data:
-drivers/i2c/busses/i2c-rk3x.c:242: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
- * Generate a START condition, which triggers a REG_INT_START interrupt.
-drivers/i2c/busses/i2c-rk3x.c:261: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
- * Generate a STOP condition, which triggers a REG_INT_STOP interrupt.
-drivers/i2c/busses/i2c-rk3x.c:304: warning: expecting prototype for Setup a read according to i2c(). Prototype was for rk3x_i2c_prepare_read() instead
-drivers/i2c/busses/i2c-rk3x.c:335: warning: expecting prototype for Fill the transmit buffer with data from i2c(). Prototype was for rk3x_i2c_fill_transmit_buf() instead
-drivers/i2c/busses/i2c-rk3x.c:535: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
- * Get timing values of I2C specification
-drivers/i2c/busses/i2c-rk3x.c:552: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
- * Calculate divider values for desired SCL frequency
-drivers/i2c/busses/i2c-rk3x.c:713: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
- * Calculate timing values for desired SCL frequency
-drivers/i2c/busses/i2c-rk3x.c:963: warning: This comment starts with '/**', but isn't a kernel-doc comment. Refer Documentation/doc-guide/kernel-doc.rst
- * Setup I2C registers for an I2C operation specified by msgs, num.
-
-Signed-off-by: Randy Dunlap <rdunlap@infradead.org>
-Signed-off-by: Wolfram Sang <wsa@kernel.org>
+Signed-off-by: Al Viro <viro@zeniv.linux.org.uk>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/i2c/busses/i2c-rk3x.c | 44 +++++++++++++++++------------------
- 1 file changed, 22 insertions(+), 22 deletions(-)
+ drivers/target/target_core_file.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/i2c/busses/i2c-rk3x.c b/drivers/i2c/busses/i2c-rk3x.c
-index 1107a5e7229e..ac3ae14a4c07 100644
---- a/drivers/i2c/busses/i2c-rk3x.c
-+++ b/drivers/i2c/busses/i2c-rk3x.c
-@@ -79,7 +79,7 @@ enum {
- #define DEFAULT_SCL_RATE  (100 * 1000) /* Hz */
+diff --git a/drivers/target/target_core_file.c b/drivers/target/target_core_file.c
+index 7143d03f0e02..18fbbe510d01 100644
+--- a/drivers/target/target_core_file.c
++++ b/drivers/target/target_core_file.c
+@@ -340,7 +340,7 @@ static int fd_do_rw(struct se_cmd *cmd, struct file *fd,
+ 		len += sg->length;
+ 	}
  
- /**
-- * struct i2c_spec_values:
-+ * struct i2c_spec_values - I2C specification values for various modes
-  * @min_hold_start_ns: min hold time (repeated) START condition
-  * @min_low_ns: min LOW period of the SCL clock
-  * @min_high_ns: min HIGH period of the SCL cloc
-@@ -135,7 +135,7 @@ static const struct i2c_spec_values fast_mode_plus_spec = {
- };
+-	iov_iter_bvec(&iter, READ, bvec, sgl_nents, len);
++	iov_iter_bvec(&iter, is_write, bvec, sgl_nents, len);
+ 	if (is_write)
+ 		ret = vfs_iter_write(fd, &iter, &pos, 0);
+ 	else
+@@ -477,7 +477,7 @@ fd_execute_write_same(struct se_cmd *cmd)
+ 		len += se_dev->dev_attrib.block_size;
+ 	}
  
- /**
-- * struct rk3x_i2c_calced_timings:
-+ * struct rk3x_i2c_calced_timings - calculated V1 timings
-  * @div_low: Divider output for low
-  * @div_high: Divider output for high
-  * @tuning: Used to adjust setup/hold data time,
-@@ -158,7 +158,7 @@ enum rk3x_i2c_state {
- };
+-	iov_iter_bvec(&iter, READ, bvec, nolb, len);
++	iov_iter_bvec(&iter, WRITE, bvec, nolb, len);
+ 	ret = vfs_iter_write(fd_dev->fd_file, &iter, &pos, 0);
  
- /**
-- * struct rk3x_i2c_soc_data:
-+ * struct rk3x_i2c_soc_data - SOC-specific data
-  * @grf_offset: offset inside the grf regmap for setting the i2c type
-  * @calc_timings: Callback function for i2c timing information calculated
-  */
-@@ -238,7 +238,8 @@ static inline void rk3x_i2c_clean_ipd(struct rk3x_i2c *i2c)
- }
- 
- /**
-- * Generate a START condition, which triggers a REG_INT_START interrupt.
-+ * rk3x_i2c_start - Generate a START condition, which triggers a REG_INT_START interrupt.
-+ * @i2c: target controller data
-  */
- static void rk3x_i2c_start(struct rk3x_i2c *i2c)
- {
-@@ -257,8 +258,8 @@ static void rk3x_i2c_start(struct rk3x_i2c *i2c)
- }
- 
- /**
-- * Generate a STOP condition, which triggers a REG_INT_STOP interrupt.
-- *
-+ * rk3x_i2c_stop - Generate a STOP condition, which triggers a REG_INT_STOP interrupt.
-+ * @i2c: target controller data
-  * @error: Error code to return in rk3x_i2c_xfer
-  */
- static void rk3x_i2c_stop(struct rk3x_i2c *i2c, int error)
-@@ -297,7 +298,8 @@ static void rk3x_i2c_stop(struct rk3x_i2c *i2c, int error)
- }
- 
- /**
-- * Setup a read according to i2c->msg
-+ * rk3x_i2c_prepare_read - Setup a read according to i2c->msg
-+ * @i2c: target controller data
-  */
- static void rk3x_i2c_prepare_read(struct rk3x_i2c *i2c)
- {
-@@ -328,7 +330,8 @@ static void rk3x_i2c_prepare_read(struct rk3x_i2c *i2c)
- }
- 
- /**
-- * Fill the transmit buffer with data from i2c->msg
-+ * rk3x_i2c_fill_transmit_buf - Fill the transmit buffer with data from i2c->msg
-+ * @i2c: target controller data
-  */
- static void rk3x_i2c_fill_transmit_buf(struct rk3x_i2c *i2c)
- {
-@@ -531,11 +534,10 @@ static irqreturn_t rk3x_i2c_irq(int irqno, void *dev_id)
- }
- 
- /**
-- * Get timing values of I2C specification
-- *
-+ * rk3x_i2c_get_spec - Get timing values of I2C specification
-  * @speed: Desired SCL frequency
-  *
-- * Returns: Matched i2c spec values.
-+ * Return: Matched i2c_spec_values.
-  */
- static const struct i2c_spec_values *rk3x_i2c_get_spec(unsigned int speed)
- {
-@@ -548,13 +550,12 @@ static const struct i2c_spec_values *rk3x_i2c_get_spec(unsigned int speed)
- }
- 
- /**
-- * Calculate divider values for desired SCL frequency
-- *
-+ * rk3x_i2c_v0_calc_timings - Calculate divider values for desired SCL frequency
-  * @clk_rate: I2C input clock rate
-  * @t: Known I2C timing information
-  * @t_calc: Caculated rk3x private timings that would be written into regs
-  *
-- * Returns: 0 on success, -EINVAL if the goal SCL rate is too slow. In that case
-+ * Return: %0 on success, -%EINVAL if the goal SCL rate is too slow. In that case
-  * a best-effort divider value is returned in divs. If the target rate is
-  * too high, we silently use the highest possible rate.
-  */
-@@ -709,13 +710,12 @@ static int rk3x_i2c_v0_calc_timings(unsigned long clk_rate,
- }
- 
- /**
-- * Calculate timing values for desired SCL frequency
-- *
-+ * rk3x_i2c_v1_calc_timings - Calculate timing values for desired SCL frequency
-  * @clk_rate: I2C input clock rate
-  * @t: Known I2C timing information
-  * @t_calc: Caculated rk3x private timings that would be written into regs
-  *
-- * Returns: 0 on success, -EINVAL if the goal SCL rate is too slow. In that case
-+ * Return: %0 on success, -%EINVAL if the goal SCL rate is too slow. In that case
-  * a best-effort divider value is returned in divs. If the target rate is
-  * too high, we silently use the highest possible rate.
-  * The following formulas are v1's method to calculate timings.
-@@ -959,14 +959,14 @@ static int rk3x_i2c_clk_notifier_cb(struct notifier_block *nb, unsigned long
- }
- 
- /**
-- * Setup I2C registers for an I2C operation specified by msgs, num.
-- *
-- * Must be called with i2c->lock held.
-- *
-+ * rk3x_i2c_setup - Setup I2C registers for an I2C operation specified by msgs, num.
-+ * @i2c: target controller data
-  * @msgs: I2C msgs to process
-  * @num: Number of msgs
-  *
-- * returns: Number of I2C msgs processed or negative in case of error
-+ * Must be called with i2c->lock held.
-+ *
-+ * Return: Number of I2C msgs processed or negative in case of error
-  */
- static int rk3x_i2c_setup(struct rk3x_i2c *i2c, struct i2c_msg *msgs, int num)
- {
+ 	kfree(bvec);
 -- 
 2.39.0
 
