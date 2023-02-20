@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BBA6963B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 417CAC433D2;
-	Mon, 20 Feb 2023 13:49:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A4263B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE39DC433D2;
+	Mon, 20 Feb 2023 13:49:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900967;
-	bh=RaZxpoy1KaqAhMlEBDC8UsgbHzscJue7dF5Pn5quo6I=;
+	s=korg; t=1676900970;
+	bh=/7tSQCEA221aoHBe6sQP+vviUDpDj6VtXr4Ku3KffTc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=01xGfMXBdVMPiGc7C5LvKw0+lrV1LdFL0fofLy79BY+2e2D1J/xgQbpV6EjMEY2MP
-	 Z7hwT0TP5Q7kZo1lPRkYPWBz2zIwllHj12IjAzYAbcwJr3BnEC/LmkJ4OLCEFctWYV
-	 NzK2Rqw/VFe1v8Is6tJsuPmFMfAYkG0gMmuWNUok=
+	b=LE0Npl+HM/3QwAufzzqm83QuU7x84HUaTAIKnr29K/v4ISMAbTE9SFe7unYOAYH8S
+	 y2VqEul09U6UNrodJYG6tBUXj/inHGAgRvfoqBP34OdINXlpjZqajfNqWCOhPcH1W+
+	 vsYSna4P++pWXQhdNGf230oPA+TOlFnHQgaAImj8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
 	Chandan Babu R <chandan.babu@oracle.com>,
 	"Darrick J. Wong" <djwong@kernel.org>
-Subject: [PATCH 5.4 107/156] xfs: merge the ->diff_items defer op into ->create_intent
-Date: Mon, 20 Feb 2023 14:35:51 +0100
-Message-Id: <20230220133606.980959374@linuxfoundation.org>
+Subject: [PATCH 5.4 108/156] xfs: turn dfp_intent into a xfs_log_item
+Date: Mon, 20 Feb 2023 14:35:52 +0100
+Message-Id: <20230220133607.025471779@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -39,10 +39,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-commit d367a868e46b025a8ced8e00ef2b3a3c2f3bf732 upstream.
+commit 13a8333339072b8654c1d2c75550ee9f41ee15de upstream.
 
-This avoids a per-item indirect call, and also simplifies the interface
-a bit.
+All defer op instance place their own extension of the log item into
+the dfp_intent field.  Replace that with a xfs_log_item to improve type
+safety and make the code easier to follow.
 
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Brian Foster <bfoster@redhat.com>
@@ -52,167 +53,219 @@ Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_defer.c  |    5 +----
- fs/xfs/libxfs/xfs_defer.h  |    3 +--
- fs/xfs/xfs_bmap_item.c     |    9 ++++++---
- fs/xfs/xfs_extfree_item.c  |    7 ++++---
- fs/xfs/xfs_refcount_item.c |    6 ++++--
- fs/xfs/xfs_rmap_item.c     |    6 ++++--
- 6 files changed, 20 insertions(+), 16 deletions(-)
+ fs/xfs/libxfs/xfs_defer.h  |   11 ++++++-----
+ fs/xfs/xfs_bmap_item.c     |   12 ++++++------
+ fs/xfs/xfs_extfree_item.c  |   12 ++++++------
+ fs/xfs/xfs_refcount_item.c |   12 ++++++------
+ fs/xfs/xfs_rmap_item.c     |   12 ++++++------
+ 5 files changed, 30 insertions(+), 29 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_defer.c
-+++ b/fs/xfs/libxfs/xfs_defer.c
-@@ -186,11 +186,8 @@ xfs_defer_create_intent(
- {
- 	const struct xfs_defer_op_type	*ops = defer_op_types[dfp->dfp_type];
- 
--	if (sort)
--		list_sort(tp->t_mountp, &dfp->dfp_work, ops->diff_items);
--
- 	dfp->dfp_intent = ops->create_intent(tp, &dfp->dfp_work,
--			dfp->dfp_count);
-+			dfp->dfp_count, sort);
- }
- 
- /*
 --- a/fs/xfs/libxfs/xfs_defer.h
 +++ b/fs/xfs/libxfs/xfs_defer.h
-@@ -49,9 +49,8 @@ struct xfs_defer_op_type {
+@@ -28,7 +28,7 @@ enum xfs_defer_ops_type {
+ struct xfs_defer_pending {
+ 	struct list_head		dfp_list;	/* pending items */
+ 	struct list_head		dfp_work;	/* work items */
+-	void				*dfp_intent;	/* log intent item */
++	struct xfs_log_item		*dfp_intent;	/* log intent item */
+ 	void				*dfp_done;	/* log done item */
+ 	unsigned int			dfp_count;	/* # extent items */
+ 	enum xfs_defer_ops_type		dfp_type;
+@@ -43,14 +43,15 @@ void xfs_defer_move(struct xfs_trans *dt
+ 
+ /* Description of a deferred type. */
+ struct xfs_defer_op_type {
+-	void (*abort_intent)(void *);
+-	void *(*create_done)(struct xfs_trans *, void *, unsigned int);
++	struct xfs_log_item *(*create_intent)(struct xfs_trans *tp,
++			struct list_head *items, unsigned int count, bool sort);
++	void (*abort_intent)(struct xfs_log_item *intent);
++	void *(*create_done)(struct xfs_trans *tp, struct xfs_log_item *intent,
++			unsigned int count);
+ 	int (*finish_item)(struct xfs_trans *, struct list_head *, void *,
  			void **);
  	void (*finish_cleanup)(struct xfs_trans *, void *, int);
  	void (*cancel_item)(struct list_head *);
--	int (*diff_items)(void *, struct list_head *, struct list_head *);
- 	void *(*create_intent)(struct xfs_trans *tp, struct list_head *items,
--			unsigned int count);
-+			unsigned int count, bool sort);
+-	void *(*create_intent)(struct xfs_trans *tp, struct list_head *items,
+-			unsigned int count, bool sort);
  	unsigned int		max_items;
  };
  
 --- a/fs/xfs/xfs_bmap_item.c
 +++ b/fs/xfs/xfs_bmap_item.c
-@@ -334,14 +334,18 @@ STATIC void *
+@@ -330,7 +330,7 @@ xfs_bmap_update_log_item(
+ 			bmap->bi_bmap.br_state);
+ }
+ 
+-STATIC void *
++static struct xfs_log_item *
  xfs_bmap_update_create_intent(
  	struct xfs_trans		*tp,
  	struct list_head		*items,
--	unsigned int			count)
-+	unsigned int			count,
-+	bool				sort)
- {
--	struct xfs_bui_log_item		*buip = xfs_bui_init(tp->t_mountp);
-+	struct xfs_mount		*mp = tp->t_mountp;
-+	struct xfs_bui_log_item		*buip = xfs_bui_init(mp);
- 	struct xfs_bmap_intent		*bmap;
- 
- 	ASSERT(count == XFS_BUI_MAX_FAST_EXTENTS);
- 
- 	xfs_trans_add_item(tp, &buip->bui_item);
-+	if (sort)
-+		list_sort(mp, items, xfs_bmap_update_diff_items);
+@@ -348,17 +348,17 @@ xfs_bmap_update_create_intent(
+ 		list_sort(mp, items, xfs_bmap_update_diff_items);
  	list_for_each_entry(bmap, items, bi_list)
  		xfs_bmap_update_log_item(tp, buip, bmap);
- 	return buip;
-@@ -408,7 +412,6 @@ xfs_bmap_update_cancel_item(
+-	return buip;
++	return &buip->bui_item;
+ }
  
- const struct xfs_defer_op_type xfs_bmap_update_defer_type = {
- 	.max_items	= XFS_BUI_MAX_FAST_EXTENTS,
--	.diff_items	= xfs_bmap_update_diff_items,
- 	.create_intent	= xfs_bmap_update_create_intent,
- 	.abort_intent	= xfs_bmap_update_abort_intent,
- 	.create_done	= xfs_bmap_update_create_done,
+ /* Get an BUD so we can process all the deferred rmap updates. */
+ STATIC void *
+ xfs_bmap_update_create_done(
+ 	struct xfs_trans		*tp,
+-	void				*intent,
++	struct xfs_log_item		*intent,
+ 	unsigned int			count)
+ {
+-	return xfs_trans_get_bud(tp, intent);
++	return xfs_trans_get_bud(tp, BUI_ITEM(intent));
+ }
+ 
+ /* Process a deferred rmap update. */
+@@ -394,9 +394,9 @@ xfs_bmap_update_finish_item(
+ /* Abort all pending BUIs. */
+ STATIC void
+ xfs_bmap_update_abort_intent(
+-	void				*intent)
++	struct xfs_log_item		*intent)
+ {
+-	xfs_bui_release(intent);
++	xfs_bui_release(BUI_ITEM(intent));
+ }
+ 
+ /* Cancel a deferred rmap update. */
 --- a/fs/xfs/xfs_extfree_item.c
 +++ b/fs/xfs/xfs_extfree_item.c
-@@ -441,7 +441,8 @@ STATIC void *
+@@ -437,7 +437,7 @@ xfs_extent_free_log_item(
+ 	extp->ext_len = free->xefi_blockcount;
+ }
+ 
+-STATIC void *
++static struct xfs_log_item *
  xfs_extent_free_create_intent(
  	struct xfs_trans		*tp,
  	struct list_head		*items,
--	unsigned int			count)
-+	unsigned int			count,
-+	bool				sort)
- {
- 	struct xfs_mount		*mp = tp->t_mountp;
- 	struct xfs_efi_log_item		*efip = xfs_efi_init(mp, count);
-@@ -450,6 +451,8 @@ xfs_extent_free_create_intent(
- 	ASSERT(count > 0);
- 
- 	xfs_trans_add_item(tp, &efip->efi_item);
-+	if (sort)
-+		list_sort(mp, items, xfs_extent_free_diff_items);
+@@ -455,17 +455,17 @@ xfs_extent_free_create_intent(
+ 		list_sort(mp, items, xfs_extent_free_diff_items);
  	list_for_each_entry(free, items, xefi_list)
  		xfs_extent_free_log_item(tp, efip, free);
- 	return efip;
-@@ -506,7 +509,6 @@ xfs_extent_free_cancel_item(
+-	return efip;
++	return &efip->efi_item;
+ }
  
- const struct xfs_defer_op_type xfs_extent_free_defer_type = {
- 	.max_items	= XFS_EFI_MAX_FAST_EXTENTS,
--	.diff_items	= xfs_extent_free_diff_items,
- 	.create_intent	= xfs_extent_free_create_intent,
- 	.abort_intent	= xfs_extent_free_abort_intent,
- 	.create_done	= xfs_extent_free_create_done,
-@@ -571,7 +573,6 @@ xfs_agfl_free_finish_item(
- /* sub-type with special handling for AGFL deferred frees */
- const struct xfs_defer_op_type xfs_agfl_free_defer_type = {
- 	.max_items	= XFS_EFI_MAX_FAST_EXTENTS,
--	.diff_items	= xfs_extent_free_diff_items,
- 	.create_intent	= xfs_extent_free_create_intent,
- 	.abort_intent	= xfs_extent_free_abort_intent,
- 	.create_done	= xfs_extent_free_create_done,
+ /* Get an EFD so we can process all the free extents. */
+ STATIC void *
+ xfs_extent_free_create_done(
+ 	struct xfs_trans		*tp,
+-	void				*intent,
++	struct xfs_log_item		*intent,
+ 	unsigned int			count)
+ {
+-	return xfs_trans_get_efd(tp, intent, count);
++	return xfs_trans_get_efd(tp, EFI_ITEM(intent), count);
+ }
+ 
+ /* Process a free extent. */
+@@ -491,9 +491,9 @@ xfs_extent_free_finish_item(
+ /* Abort all pending EFIs. */
+ STATIC void
+ xfs_extent_free_abort_intent(
+-	void				*intent)
++	struct xfs_log_item		*intent)
+ {
+-	xfs_efi_release(intent);
++	xfs_efi_release(EFI_ITEM(intent));
+ }
+ 
+ /* Cancel a free extent. */
 --- a/fs/xfs/xfs_refcount_item.c
 +++ b/fs/xfs/xfs_refcount_item.c
-@@ -333,7 +333,8 @@ STATIC void *
+@@ -329,7 +329,7 @@ xfs_refcount_update_log_item(
+ 	xfs_trans_set_refcount_flags(ext, refc->ri_type);
+ }
+ 
+-STATIC void *
++static struct xfs_log_item *
  xfs_refcount_update_create_intent(
  	struct xfs_trans		*tp,
  	struct list_head		*items,
--	unsigned int			count)
-+	unsigned int			count,
-+	bool				sort)
- {
- 	struct xfs_mount		*mp = tp->t_mountp;
- 	struct xfs_cui_log_item		*cuip = xfs_cui_init(mp, count);
-@@ -342,6 +343,8 @@ xfs_refcount_update_create_intent(
- 	ASSERT(count > 0);
- 
- 	xfs_trans_add_item(tp, &cuip->cui_item);
-+	if (sort)
-+		list_sort(mp, items, xfs_refcount_update_diff_items);
+@@ -347,17 +347,17 @@ xfs_refcount_update_create_intent(
+ 		list_sort(mp, items, xfs_refcount_update_diff_items);
  	list_for_each_entry(refc, items, ri_list)
  		xfs_refcount_update_log_item(tp, cuip, refc);
- 	return cuip;
-@@ -422,7 +425,6 @@ xfs_refcount_update_cancel_item(
+-	return cuip;
++	return &cuip->cui_item;
+ }
  
- const struct xfs_defer_op_type xfs_refcount_update_defer_type = {
- 	.max_items	= XFS_CUI_MAX_FAST_EXTENTS,
--	.diff_items	= xfs_refcount_update_diff_items,
- 	.create_intent	= xfs_refcount_update_create_intent,
- 	.abort_intent	= xfs_refcount_update_abort_intent,
- 	.create_done	= xfs_refcount_update_create_done,
+ /* Get an CUD so we can process all the deferred refcount updates. */
+ STATIC void *
+ xfs_refcount_update_create_done(
+ 	struct xfs_trans		*tp,
+-	void				*intent,
++	struct xfs_log_item		*intent,
+ 	unsigned int			count)
+ {
+-	return xfs_trans_get_cud(tp, intent);
++	return xfs_trans_get_cud(tp, CUI_ITEM(intent));
+ }
+ 
+ /* Process a deferred refcount update. */
+@@ -407,9 +407,9 @@ xfs_refcount_update_finish_cleanup(
+ /* Abort all pending CUIs. */
+ STATIC void
+ xfs_refcount_update_abort_intent(
+-	void				*intent)
++	struct xfs_log_item		*intent)
+ {
+-	xfs_cui_release(intent);
++	xfs_cui_release(CUI_ITEM(intent));
+ }
+ 
+ /* Cancel a deferred refcount update. */
 --- a/fs/xfs/xfs_rmap_item.c
 +++ b/fs/xfs/xfs_rmap_item.c
-@@ -385,7 +385,8 @@ STATIC void *
+@@ -381,7 +381,7 @@ xfs_rmap_update_log_item(
+ 			rmap->ri_bmap.br_state);
+ }
+ 
+-STATIC void *
++static struct xfs_log_item *
  xfs_rmap_update_create_intent(
  	struct xfs_trans		*tp,
  	struct list_head		*items,
--	unsigned int			count)
-+	unsigned int			count,
-+	bool				sort)
- {
- 	struct xfs_mount		*mp = tp->t_mountp;
- 	struct xfs_rui_log_item		*ruip = xfs_rui_init(mp, count);
-@@ -394,6 +395,8 @@ xfs_rmap_update_create_intent(
- 	ASSERT(count > 0);
- 
- 	xfs_trans_add_item(tp, &ruip->rui_item);
-+	if (sort)
-+		list_sort(mp, items, xfs_rmap_update_diff_items);
+@@ -399,17 +399,17 @@ xfs_rmap_update_create_intent(
+ 		list_sort(mp, items, xfs_rmap_update_diff_items);
  	list_for_each_entry(rmap, items, ri_list)
  		xfs_rmap_update_log_item(tp, ruip, rmap);
- 	return ruip;
-@@ -466,7 +469,6 @@ xfs_rmap_update_cancel_item(
+-	return ruip;
++	return &ruip->rui_item;
+ }
  
- const struct xfs_defer_op_type xfs_rmap_update_defer_type = {
- 	.max_items	= XFS_RUI_MAX_FAST_EXTENTS,
--	.diff_items	= xfs_rmap_update_diff_items,
- 	.create_intent	= xfs_rmap_update_create_intent,
- 	.abort_intent	= xfs_rmap_update_abort_intent,
- 	.create_done	= xfs_rmap_update_create_done,
+ /* Get an RUD so we can process all the deferred rmap updates. */
+ STATIC void *
+ xfs_rmap_update_create_done(
+ 	struct xfs_trans		*tp,
+-	void				*intent,
++	struct xfs_log_item		*intent,
+ 	unsigned int			count)
+ {
+-	return xfs_trans_get_rud(tp, intent);
++	return xfs_trans_get_rud(tp, RUI_ITEM(intent));
+ }
+ 
+ /* Process a deferred rmap update. */
+@@ -451,9 +451,9 @@ xfs_rmap_update_finish_cleanup(
+ /* Abort all pending RUIs. */
+ STATIC void
+ xfs_rmap_update_abort_intent(
+-	void				*intent)
++	struct xfs_log_item	*intent)
+ {
+-	xfs_rui_release(intent);
++	xfs_rui_release(RUI_ITEM(intent));
+ }
+ 
+ /* Cancel a deferred rmap update. */
 
 
