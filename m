@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 02A8663B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7AA10C433EF;
-	Mon, 20 Feb 2023 13:49:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EC2263B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1614DC433D2;
+	Mon, 20 Feb 2023 13:49:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900951;
-	bh=OKz2nLCJ0BZpV+X9fcCZEheSDM+KLG8wtY5yRhthFgQ=;
+	s=korg; t=1676900954;
+	bh=fBdbItXesamawB7FaHpxM6X9MEhryq0ALpylqO/1AgM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LER/mqZIxDKhRkpD0qE5QDe9B9fLI9/B0313KSnVEFSH3OZ3demZ3b0Mz2G6WZ7rr
-	 7SDTU0NfO5zgf57TUy6l4mT+9vm9HoEkFBAH40GHyqUU11odx3s0OjQs3xQN40oEO/
-	 JBwVXj7O/ZZfz9gpmySK0ye/tz2zvE5bfu1jgNdU=
+	b=v5tpSaQQYnlC1X2E4OkPaK5KpxRvMZKe43bGHgZs/tNQta4lzODslmHXt9x5O0rZ9
+	 gVTpo5ph1ff9ymj4iCEY3E7y01BBRuYJ39b8q7o+n6E8ug8B8luuCViVFMmGtOWyi2
+	 6EAyvFqryj7og63cFA+j/00DkNHm7JkN+mAtJSbs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yang Yingliang <yangyingliang@huawei.com>,
 	Ulf Hansson <ulf.hansson@linaro.org>
-Subject: [PATCH 5.4 129/156] mmc: sdio: fix possible resource leaks in some error paths
-Date: Mon, 20 Feb 2023 14:36:13 +0100
-Message-Id: <20230220133607.976904753@linuxfoundation.org>
+Subject: [PATCH 5.4 130/156] mmc: mmc_spi: fix error handling in mmc_spi_probe()
+Date: Mon, 20 Feb 2023 14:36:14 +0100
+Message-Id: <20230220133608.016440636@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -36,125 +36,62 @@ Content-Transfer-Encoding: 8bit
 
 From: Yang Yingliang <yangyingliang@huawei.com>
 
-commit 605d9fb9556f8f5fb4566f4df1480f280f308ded upstream.
+commit cf4c9d2ac1e42c7d18b921bec39486896645b714 upstream.
 
-If sdio_add_func() or sdio_init_func() fails, sdio_remove_func() can
-not release the resources, because the sdio function is not presented
-in these two cases, it won't call of_node_put() or put_device().
+If mmc_add_host() fails, it doesn't need to call mmc_remove_host(),
+or it will cause null-ptr-deref, because of deleting a not added
+device in mmc_remove_host().
 
-To fix these leaks, make sdio_func_present() only control whether
-device_del() needs to be called or not, then always call of_node_put()
-and put_device().
+To fix this, goto label 'fail_glue_init', if mmc_add_host() fails,
+and change the label 'fail_add_host' to 'fail_gpiod_request'.
 
-In error case in sdio_init_func(), the reference of 'card->dev' is
-not get, to avoid redundant put in sdio_free_func_cis(), move the
-get_device() to sdio_alloc_func() and put_device() to sdio_release_func(),
-it can keep the get/put function be balanced.
-
-Without this patch, while doing fault inject test, it can get the
-following leak reports, after this fix, the leak is gone.
-
-unreferenced object 0xffff888112514000 (size 2048):
-  comm "kworker/3:2", pid 65, jiffies 4294741614 (age 124.774s)
-  hex dump (first 32 bytes):
-    00 e0 6f 12 81 88 ff ff 60 58 8d 06 81 88 ff ff  ..o.....`X......
-    10 40 51 12 81 88 ff ff 10 40 51 12 81 88 ff ff  .@Q......@Q.....
-  backtrace:
-    [<000000009e5931da>] kmalloc_trace+0x21/0x110
-    [<000000002f839ccb>] mmc_alloc_card+0x38/0xb0 [mmc_core]
-    [<0000000004adcbf6>] mmc_sdio_init_card+0xde/0x170 [mmc_core]
-    [<000000007538fea0>] mmc_attach_sdio+0xcb/0x1b0 [mmc_core]
-    [<00000000d4fdeba7>] mmc_rescan+0x54a/0x640 [mmc_core]
-
-unreferenced object 0xffff888112511000 (size 2048):
-  comm "kworker/3:2", pid 65, jiffies 4294741623 (age 124.766s)
-  hex dump (first 32 bytes):
-    00 40 51 12 81 88 ff ff e0 58 8d 06 81 88 ff ff  .@Q......X......
-    10 10 51 12 81 88 ff ff 10 10 51 12 81 88 ff ff  ..Q.......Q.....
-  backtrace:
-    [<000000009e5931da>] kmalloc_trace+0x21/0x110
-    [<00000000fcbe706c>] sdio_alloc_func+0x35/0x100 [mmc_core]
-    [<00000000c68f4b50>] mmc_attach_sdio.cold.18+0xb1/0x395 [mmc_core]
-    [<00000000d4fdeba7>] mmc_rescan+0x54a/0x640 [mmc_core]
-
-Fixes: 3d10a1ba0d37 ("sdio: fix reference counting in sdio_remove_func()")
+Fixes: 15a0580ced08 ("mmc_spi host driver")
 Signed-off-by: Yang Yingliang <yangyingliang@huawei.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230130125808.3471254-1-yangyingliang@huawei.com
+Cc:stable@vger.kernel.org
+Link: https://lore.kernel.org/r/20230131013835.3564011-1-yangyingliang@huawei.com
 Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mmc/core/sdio_bus.c |   17 ++++++++++++++---
- drivers/mmc/core/sdio_cis.c |   12 ------------
- 2 files changed, 14 insertions(+), 15 deletions(-)
+ drivers/mmc/host/mmc_spi.c |    8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
---- a/drivers/mmc/core/sdio_bus.c
-+++ b/drivers/mmc/core/sdio_bus.c
-@@ -269,6 +269,12 @@ static void sdio_release_func(struct dev
- 	if (!(func->card->quirks & MMC_QUIRK_NONSTD_SDIO))
- 		sdio_free_func_cis(func);
+--- a/drivers/mmc/host/mmc_spi.c
++++ b/drivers/mmc/host/mmc_spi.c
+@@ -1420,7 +1420,7 @@ static int mmc_spi_probe(struct spi_devi
  
-+	/*
-+	 * We have now removed the link to the tuples in the
-+	 * card structure, so remove the reference.
-+	 */
-+	put_device(&func->card->dev);
-+
- 	kfree(func->info);
- 	kfree(func->tmpbuf);
- 	kfree(func);
-@@ -299,6 +305,12 @@ struct sdio_func *sdio_alloc_func(struct
- 
- 	device_initialize(&func->dev);
- 
-+	/*
-+	 * We may link to tuples in the card structure,
-+	 * we need make sure we have a reference to it.
-+	 */
-+	get_device(&func->card->dev);
-+
- 	func->dev.parent = &card->dev;
- 	func->dev.bus = &sdio_bus_type;
- 	func->dev.release = sdio_release_func;
-@@ -352,10 +364,9 @@ int sdio_add_func(struct sdio_func *func
-  */
- void sdio_remove_func(struct sdio_func *func)
- {
--	if (!sdio_func_present(func))
--		return;
-+	if (sdio_func_present(func))
-+		device_del(&func->dev);
- 
--	device_del(&func->dev);
- 	of_node_put(func->dev.of_node);
- 	put_device(&func->dev);
- }
---- a/drivers/mmc/core/sdio_cis.c
-+++ b/drivers/mmc/core/sdio_cis.c
-@@ -384,12 +384,6 @@ int sdio_read_func_cis(struct sdio_func
- 		return ret;
+ 	status = mmc_add_host(mmc);
+ 	if (status != 0)
+-		goto fail_add_host;
++		goto fail_glue_init;
  
  	/*
--	 * Since we've linked to tuples in the card structure,
--	 * we must make sure we have a reference to it.
--	 */
--	get_device(&func->card->dev);
--
--	/*
- 	 * Vendor/device id is optional for function CIS, so
- 	 * copy it from the card structure as needed.
+ 	 * Index 0 is card detect
+@@ -1428,7 +1428,7 @@ static int mmc_spi_probe(struct spi_devi
  	 */
-@@ -414,11 +408,5 @@ void sdio_free_func_cis(struct sdio_func
- 	}
+ 	status = mmc_gpiod_request_cd(mmc, NULL, 0, false, 1, NULL);
+ 	if (status == -EPROBE_DEFER)
+-		goto fail_add_host;
++		goto fail_gpiod_request;
+ 	if (!status) {
+ 		/*
+ 		 * The platform has a CD GPIO signal that may support
+@@ -1443,7 +1443,7 @@ static int mmc_spi_probe(struct spi_devi
+ 	/* Index 1 is write protect/read only */
+ 	status = mmc_gpiod_request_ro(mmc, NULL, 1, 0, NULL);
+ 	if (status == -EPROBE_DEFER)
+-		goto fail_add_host;
++		goto fail_gpiod_request;
+ 	if (!status)
+ 		has_ro = true;
  
- 	func->tuples = NULL;
--
--	/*
--	 * We have now removed the link to the tuples in the
--	 * card structure, so remove the reference.
--	 */
--	put_device(&func->card->dev);
- }
+@@ -1457,7 +1457,7 @@ static int mmc_spi_probe(struct spi_devi
+ 				? ", cd polling" : "");
+ 	return 0;
  
+-fail_add_host:
++fail_gpiod_request:
+ 	mmc_remove_host(mmc);
+ fail_glue_init:
+ 	if (host->dma_dev)
 
 
