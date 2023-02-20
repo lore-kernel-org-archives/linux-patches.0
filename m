@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 45C5963B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:40:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C3F6FC433D2;
-	Mon, 20 Feb 2023 13:40:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1131263B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:40:09 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 654CBC433EF;
+	Mon, 20 Feb 2023 13:40:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900406;
-	bh=HTuqdd9OGGU6Cz+MUQeRKhOrCT3xznQCojLGmo7hxqE=;
+	s=korg; t=1676900408;
+	bh=jNGEkXRbkuvvdvl4ygRjrt41uFP4Z9LLt8WZH4EscHw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xHsrdoKlt8XHSFCdv92SJIvsSaVSisAltQdzaRW/JfhvQC8EevCqbh1ZDNz2b+fUK
-	 UP58ivPwgYTweykspA8KOYfGcyak9LpZzVlOXHU8NN0NvzKWUwEZinBWHvAWNSczlw
-	 zBkl9bsHhpHGHUQSKkAQEQEQ5nLL2t6m5Zt+QLpw=
+	b=mVLkqkrYXQ5aw0K91SG2bW/2SpS7F6PhThoXH3CkadvZOVr6anTjXEkQZ23y4ORQW
+	 XM1qM7ZPWr538PZulX1p/PlWFLRojTTbbSfZ6z1YdtZpjpoD6DYQ5fOEpl2eFerq5t
+	 V2bwK8bHUmoEykO78EgX6na1e5OPwE+xdGdr4Kxk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wesley Cheng <wcheng@codeaurora.org>,
 	Bryan ODonoghue <bryan.odonoghue@linaro.org>,
-	Bjorn Andersson <bjorn.andersson@linaro.org>,
+	Neil Armstrong <neil.armstrong@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 13/89] usb: dwc3: dwc3-qcom: Fix typo in the dwc3 vbus override API
-Date: Mon, 20 Feb 2023 14:35:12 +0100
-Message-Id: <20230220133553.571160976@linuxfoundation.org>
+Subject: [PATCH 4.19 14/89] usb: dwc3: qcom: enable vbus override when in OTG dr-mode
+Date: Mon, 20 Feb 2023 14:35:13 +0100
+Message-Id: <20230220133553.621383596@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -36,64 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wesley Cheng <wcheng@codeaurora.org>
+From: Neil Armstrong <neil.armstrong@linaro.org>
 
-[ Upstream commit 8e6cb5d27e8246d9c986ec162d066a502d2b602b ]
+[ Upstream commit eb320f76e31dc835b9f57f04af1a2353b13bb7d8 ]
 
-There was an extra character in the dwc3_qcom_vbus_override_enable()
-function.  Removed the extra character.
+With vbus override enabled when in OTG dr_mode, Host<->Peripheral
+switch now works on SM8550, otherwise the DWC3 seems to be stuck
+in Host mode only.
 
-Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
-Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Link: https://lore.kernel.org/r/20210704013314.200951-2-bryan.odonoghue@linaro.org
+Fixes: a4333c3a6ba9 ("usb: dwc3: Add Qualcomm DWC3 glue driver")
+Reviewed-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Link: https://lore.kernel.org/r/20230123-topic-sm8550-upstream-dwc3-qcom-otg-v2-1-2d400e598463@linaro.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Stable-dep-of: eb320f76e31d ("usb: dwc3: qcom: enable vbus override when in OTG dr-mode")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-qcom.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ drivers/usb/dwc3/dwc3-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 9d5320562e81..07135be83593 100644
+index 07135be83593..58e1bc3a77d8 100644
 --- a/drivers/usb/dwc3/dwc3-qcom.c
 +++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -85,7 +85,7 @@ static inline void dwc3_qcom_clrbits(void __iomem *base, u32 offset, u32 val)
- 	readl(base + offset);
- }
- 
--static void dwc3_qcom_vbus_overrride_enable(struct dwc3_qcom *qcom, bool enable)
-+static void dwc3_qcom_vbus_override_enable(struct dwc3_qcom *qcom, bool enable)
- {
- 	if (enable) {
- 		dwc3_qcom_setbits(qcom->qscratch_base, QSCRATCH_SS_PHY_CTRL,
-@@ -106,7 +106,7 @@ static int dwc3_qcom_vbus_notifier(struct notifier_block *nb,
- 	struct dwc3_qcom *qcom = container_of(nb, struct dwc3_qcom, vbus_nb);
+@@ -512,7 +512,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
+ 	qcom->mode = usb_get_dr_mode(&qcom->dwc3->dev);
  
  	/* enable vbus override for device mode */
--	dwc3_qcom_vbus_overrride_enable(qcom, event);
-+	dwc3_qcom_vbus_override_enable(qcom, event);
- 	qcom->mode = event ? USB_DR_MODE_PERIPHERAL : USB_DR_MODE_HOST;
- 
- 	return NOTIFY_DONE;
-@@ -118,7 +118,7 @@ static int dwc3_qcom_host_notifier(struct notifier_block *nb,
- 	struct dwc3_qcom *qcom = container_of(nb, struct dwc3_qcom, host_nb);
- 
- 	/* disable vbus override in host mode */
--	dwc3_qcom_vbus_overrride_enable(qcom, !event);
-+	dwc3_qcom_vbus_override_enable(qcom, !event);
- 	qcom->mode = event ? USB_DR_MODE_HOST : USB_DR_MODE_PERIPHERAL;
- 
- 	return NOTIFY_DONE;
-@@ -513,7 +513,7 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 
- 	/* enable vbus override for device mode */
- 	if (qcom->mode == USB_DR_MODE_PERIPHERAL)
--		dwc3_qcom_vbus_overrride_enable(qcom, true);
-+		dwc3_qcom_vbus_override_enable(qcom, true);
+-	if (qcom->mode == USB_DR_MODE_PERIPHERAL)
++	if (qcom->mode != USB_DR_MODE_HOST)
+ 		dwc3_qcom_vbus_override_enable(qcom, true);
  
  	/* register extcon to override sw_vbus on Vbus change later */
- 	ret = dwc3_qcom_register_extcon(qcom);
 -- 
 2.39.0
 
