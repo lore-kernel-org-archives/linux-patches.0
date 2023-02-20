@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1E91863BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97BF0C433D2;
-	Mon, 20 Feb 2023 13:38:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8CB4B63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:38:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13DF9C433EF;
+	Mon, 20 Feb 2023 13:38:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900320;
-	bh=XpOmjL4rZAZF3gpGNKAk3Yqsv8PYa6+k6gWhY78I28g=;
+	s=korg; t=1676900317;
+	bh=0kcqojmEZ309t71xizM8PrsJiaoyHNud+3yHVa+U/+Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=daXGOzx2M8b0TvW+Ef/e5bkr934uKn1gscalnTLGPu1PQldv8a4/m7ygv30s42kmY
-	 PEVUfwMWsL9fFKZRjl38gvqIWevr33zYlDWOezb7MAHVzOjyQ7i8Dj5Fo3k+HgPk1m
-	 cq6MZy8IIId/Rkonq07CrL6eHGD1ZWYGiv9uAUu8=
+	b=1peCrw6w66V9lCgK6E6o8Srglw1qcBR1afv/lRIKdu3ZdhiJ0Hh0hiWVuO0PDk6cs
+	 Iw22OEsQqxXKLfPQ5P4ADp1hFWrUofUw2NEHawcW3g5PUTMFS8ZwyAJnNcjWxKBk/b
+	 7OB57dBElamBEdE3RGOh8KoOoo7Z+kEAyY7WiKyE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Xin Long <lucien.xin@gmail.com>,
-	Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	syzbot+082fa4af80a5bb1a9843@syzkaller.appspotmail.com,
+	Fedor Pchelkin <pchelkin@ispras.ru>,
+	Alexey Khoroshilov <khoroshilov@ispras.ru>,
+	Phillip Lougher <phillip@squashfs.org.uk>,
+	Andrew Morton <akpm@linux-foundation.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 06/53] sctp: do not check hb_timer.expires when resetting hb_timer
-Date: Mon, 20 Feb 2023 14:35:32 +0100
-Message-Id: <20230220133548.393857156@linuxfoundation.org>
+Subject: [PATCH 4.14 05/53] squashfs: harden sanity check in squashfs_read_xattr_id_table
+Date: Mon, 20 Feb 2023 14:35:31 +0100
+Message-Id: <20230220133548.362178304@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
 References: <20230220133548.158615609@linuxfoundation.org>
@@ -36,51 +38,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Xin Long <lucien.xin@gmail.com>
+From: Fedor Pchelkin <pchelkin@ispras.ru>
 
-[ Upstream commit 8f35ae17ef565a605de5f409e04bcd49a55d7646 ]
+[ Upstream commit 72e544b1b28325fe78a4687b980871a7e4101f76 ]
 
-It tries to avoid the frequently hb_timer refresh in commit ba6f5e33bdbb
-("sctp: avoid refreshing heartbeat timer too often"), and it only allows
-mod_timer when the new expires is after hb_timer.expires. It means even
-a much shorter interval for hb timer gets applied, it will have to wait
-until the current hb timer to time out.
+While mounting a corrupted filesystem, a signed integer '*xattr_ids' can
+become less than zero.  This leads to the incorrect computation of 'len'
+and 'indexes' values which can cause null-ptr-deref in copy_bio_to_actor()
+or out-of-bounds accesses in the next sanity checks inside
+squashfs_read_xattr_id_table().
 
-In sctp_do_8_2_transport_strike(), when a transport enters PF state, it
-expects to update the hb timer to resend a heartbeat every rto after
-calling sctp_transport_reset_hb_timer(), which will not work as the
-change mentioned above.
+Found by Linux Verification Center (linuxtesting.org) with Syzkaller.
 
-The frequently hb_timer refresh was caused by sctp_transport_reset_timers()
-called in sctp_outq_flush() and it was already removed in the commit above.
-So we don't have to check hb_timer.expires when resetting hb_timer as it is
-now not called very often.
-
-Fixes: ba6f5e33bdbb ("sctp: avoid refreshing heartbeat timer too often")
-Signed-off-by: Xin Long <lucien.xin@gmail.com>
-Acked-by: Marcelo Ricardo Leitner <marcelo.leitner@gmail.com>
-Link: https://lore.kernel.org/r/d958c06985713ec84049a2d5664879802710179a.1675095933.git.lucien.xin@gmail.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Link: https://lkml.kernel.org/r/20230117105226.329303-2-pchelkin@ispras.ru
+Fixes: 506220d2ba21 ("squashfs: add more sanity checks in xattr id lookup")
+Reported-by: <syzbot+082fa4af80a5bb1a9843@syzkaller.appspotmail.com>
+Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+Signed-off-by: Alexey Khoroshilov <khoroshilov@ispras.ru>
+Cc: Phillip Lougher <phillip@squashfs.org.uk>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sctp/transport.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ fs/squashfs/xattr_id.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/net/sctp/transport.c b/net/sctp/transport.c
-index af56651169b2..79d2aa44c6e5 100644
---- a/net/sctp/transport.c
-+++ b/net/sctp/transport.c
-@@ -210,9 +210,7 @@ void sctp_transport_reset_hb_timer(struct sctp_transport *transport)
+diff --git a/fs/squashfs/xattr_id.c b/fs/squashfs/xattr_id.c
+index 7f718d2bf357..0c0d7882bcca 100644
+--- a/fs/squashfs/xattr_id.c
++++ b/fs/squashfs/xattr_id.c
+@@ -89,7 +89,7 @@ __le64 *squashfs_read_xattr_id_table(struct super_block *sb, u64 table_start,
+ 	/* Sanity check values */
  
- 	/* When a data chunk is sent, reset the heartbeat interval.  */
- 	expires = jiffies + sctp_transport_timeout(transport);
--	if ((time_before(transport->hb_timer.expires, expires) ||
--	     !timer_pending(&transport->hb_timer)) &&
--	    !mod_timer(&transport->hb_timer,
-+	if (!mod_timer(&transport->hb_timer,
- 		       expires + prandom_u32_max(transport->rto)))
- 		sctp_transport_hold(transport);
- }
+ 	/* there is always at least one xattr id */
+-	if (*xattr_ids == 0)
++	if (*xattr_ids <= 0)
+ 		return ERR_PTR(-EINVAL);
+ 
+ 	len = SQUASHFS_XATTR_BLOCK_BYTES(*xattr_ids);
 -- 
 2.39.0
 
