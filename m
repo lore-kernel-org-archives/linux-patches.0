@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D61563B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:40:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9365CC433EF;
-	Mon, 20 Feb 2023 13:40:16 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A536063B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:40:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D221C4339B;
+	Mon, 20 Feb 2023 13:40:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900416;
-	bh=IaVt5b25gIrCUtj8xEAjg82lbocUKKdnMK8t1dnvfl4=;
+	s=korg; t=1676900419;
+	bh=W48JW8SGQpmmpjj3KFiSG+ufrG0SIWY/T3msLhP+P3I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ToyXxm8/R9XfxF0XCgDMdGXHwLoEEcpjX22ebIc5aVxXA3ZNLygHQbu2VqRfKs4lA
-	 qRiBbKBT8W3oelV2FSfh9AMWzkYwgMnTJdu3P3Uj9mhMwh2okoLtPK7Hl7445MmYnl
-	 mhmnxYdbjqITF48LM2sQRNzZhDwIlm0MwBhThuNk=
+	b=XEcVbv2N8LeFdTmMTBz7X3NjvK0pUVJHNNPkRihtPgafO3LdoSqxXArLTKdC8oKrZ
+	 iqEHDvNV2N7dAc+cwhX44oDeNC1aSWGJjcb9WGHxUiY6KFd3tGMGstbj1Ynj0DYuSz
+	 z2GDR3BzEsD5sfCChMxRoymJ6jIBQvWxAh7YGWPo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Werner Sembach <wse@tuxedocomputers.com>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+	Yuan Can <yuancan@huawei.com>,
+	Jernej Skrabec <jernej.skrabec@gmail.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 17/89] Input: i8042 - move __initconst to fix code styling warning
-Date: Mon, 20 Feb 2023 14:35:16 +0100
-Message-Id: <20230220133553.736348270@linuxfoundation.org>
+Subject: [PATCH 4.19 02/89] bus: sunxi-rsb: Fix error handling in sunxi_rsb_init()
+Date: Mon, 20 Feb 2023 14:35:01 +0100
+Message-Id: <20230220133553.162427263@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -36,36 +35,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Werner Sembach <wse@tuxedocomputers.com>
+From: Yuan Can <yuancan@huawei.com>
 
-[ Upstream commit 95a9916c909f0b1d95e24b4232b4bc38ff755415 ]
+[ Upstream commit f71eaf2708be7831428eacae7db25d8ec6b8b4c5 ]
 
-Move __intconst from before i8042_dmi_laptop_table[] to after it for
-consistent code styling.
+The sunxi_rsb_init() returns the platform_driver_register() directly
+without checking its return value, if platform_driver_register() failed,
+the sunxi_rsb_bus is not unregistered.
+Fix by unregister sunxi_rsb_bus when platform_driver_register() failed.
 
-Signed-off-by: Werner Sembach <wse@tuxedocomputers.com>
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
-Link: https://lore.kernel.org/r/20220629112725.12922-2-wse@tuxedocomputers.com
-Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Stable-dep-of: 9c445d2637c9 ("Input: i8042 - add Clevo PCX0DX to i8042 quirk table")
+Fixes: d787dcdb9c8f ("bus: sunxi-rsb: Add driver for Allwinner Reduced Serial Bus")
+Signed-off-by: Yuan Can <yuancan@huawei.com>
+Reviewed-by: Jernej Skrabec <jernej.skrabec@gmail.com>
+Link: https://lore.kernel.org/r/20221123094200.12036-1-yuancan@huawei.com
+Signed-off-by: Jernej Skrabec <jernej.skrabec@gmail.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/input/serio/i8042-x86ia64io.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/bus/sunxi-rsb.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/input/serio/i8042-x86ia64io.h b/drivers/input/serio/i8042-x86ia64io.h
-index ee0b0a7237ad..27405c8d850a 100644
---- a/drivers/input/serio/i8042-x86ia64io.h
-+++ b/drivers/input/serio/i8042-x86ia64io.h
-@@ -795,7 +795,7 @@ static const struct dmi_system_id __initconst i8042_dmi_nopnp_table[] = {
- 	{ }
- };
+diff --git a/drivers/bus/sunxi-rsb.c b/drivers/bus/sunxi-rsb.c
+index d3fb350dc9ee..bf4db708f0bd 100644
+--- a/drivers/bus/sunxi-rsb.c
++++ b/drivers/bus/sunxi-rsb.c
+@@ -783,7 +783,13 @@ static int __init sunxi_rsb_init(void)
+ 		return ret;
+ 	}
  
--static const struct dmi_system_id __initconst i8042_dmi_laptop_table[] = {
-+static const struct dmi_system_id i8042_dmi_laptop_table[] __initconst = {
- 	{
- 		.matches = {
- 			DMI_MATCH(DMI_CHASSIS_TYPE, "8"), /* Portable */
+-	return platform_driver_register(&sunxi_rsb_driver);
++	ret = platform_driver_register(&sunxi_rsb_driver);
++	if (ret) {
++		bus_unregister(&sunxi_rsb_bus);
++		return ret;
++	}
++
++	return 0;
+ }
+ module_init(sunxi_rsb_init);
+ 
 -- 
 2.39.0
 
