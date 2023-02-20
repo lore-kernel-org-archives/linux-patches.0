@@ -1,68 +1,68 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 989AC6D39;
-	Mon, 20 Feb 2023 15:51:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 996B5C433D2;
-	Mon, 20 Feb 2023 15:51:08 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1676908269;
-	bh=wOTNmM/rz3jrTV1ds+AgaiAA4vZjdn8ItdA+1UsLrJw=;
-	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-	b=IX7T7SfZfHgBLjetbffAQXt+9NN7ezi0KNeduFGeldn/T/vtz1g2Su9/Wi7bjPAbw
-	 KTZo5fECYY4Mo4rGRSdrbSoG1duju0nd3Go6FA9S7nRjcoud2BHiBXH0WS1POJxfpl
-	 pluLPBJD+VEWJIXp9l4yAWxQcHJftXjBMbCqjMWKmSBDqb4dxj1QKX94FgzDf63qSr
-	 k8wXWwdEAlW19pBHJli0Ek46N4YFCXE9liCaosUgOyk2N1VNKbn/FA5HXXttAZAChP
-	 /zWOVBCApciID7bjFxrlIjYSgOavfwtBo4Xblhv9DYDb0QS1cIV936kQ4GmDqk5TlO
-	 a0SViTeqjgLgQ==
-Date: Mon, 20 Feb 2023 08:51:06 -0700
-From: Nathan Chancellor <nathan@kernel.org>
-To: Michael Ellerman <mpe@ellerman.id.au>
-Cc: npiggin@gmail.com, christophe.leroy@csgroup.eu, erhard_f@mailbox.org,
-	ndesaulniers@google.com, trix@redhat.com,
-	linuxppc-dev@lists.ozlabs.org, linux-kernel@vger.kernel.org,
-	llvm@lists.linux.dev, patches@lists.linux.dev
-Subject: Re: [PATCH 0/3] Allow CONFIG_PPC64_BIG_ENDIAN_ELF_ABI_V2 with ld.lld
- 15+
-Message-ID: <Y/OW6mRi3qDpVQkc@dev-arch.thelio-3990X>
-References: <20230118-ppc64-elfv2-llvm-v1-0-b9e2ec9da11d@kernel.org>
- <87wn4cyifp.fsf@mpe.ellerman.id.au>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 16FC28497
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 19:06:01 +0000 (UTC)
+Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
+	id 06F3F1C0E4B; Mon, 20 Feb 2023 20:05:54 +0100 (CET)
+Date: Mon, 20 Feb 2023 20:05:53 +0100
+From: Pavel Machek <pavel@denx.de>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.10 00/57] 5.10.169-rc1 review
+Message-ID: <Y/PEkWGdh3PJgDtV@duo.ucw.cz>
+References: <20230220133549.360169435@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha1;
+	protocol="application/pgp-signature"; boundary="5sUFAuXLzn+jaMi2"
+Content-Disposition: inline
+In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
+
+
+--5sUFAuXLzn+jaMi2
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87wn4cyifp.fsf@mpe.ellerman.id.au>
+Content-Transfer-Encoding: quoted-printable
 
-On Mon, Feb 20, 2023 at 05:11:54PM +1100, Michael Ellerman wrote:
-> Nathan Chancellor <nathan@kernel.org> writes:
-> > Currently, CONFIG_PPC64_BIG_ENDIAN_ELF_ABI_V2 is not selectable with
-> > ld.lld because of an explicit dependency on GNU ld, due to lack of
-> > testing with LLVM.
-> >
-> > Erhard was kind enough to test this option on his hardware with LLVM 15,
-> > which ran without any issues. This should not be too surprising, as
-> > ld.lld does not have support for the ELFv1 ABI, only ELFv2, so it should
-> > have decent support. With this series, big endian kernels can be built
-> > with LLVM=1.
-> >
-> > This has seen our basic set of powerpc configurations with clang-15,
-> > clang-16, and clang-17 but I will never be opposed to more testing :)
-> >
-> > The first two patches fix a couple of issues I noticed while build
-> > testing and the final patch actually allows the option to be selected.
-> 
-> Thanks for this.
-> 
-> I thought about applying this last week but decided not to. I'll plan to
-> pick it up for 6.4.
+Hi!
 
-No worries, I sent this much later in the development cycle than I had
-initially intended, so I figured that 6.3 was a long shot anyways. Plus
-more soak time is never a bad thing :)
+> This is the start of the stable review cycle for the 5.10.169 release.
+> There are 57 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 
-Thanks for taking the initial look, cheers!
-Nathan
+CIP testing did not find any problems here:
+
+https://gitlab.com/cip-project/cip-testing/linux-stable-rc-ci/-/tree/linux-=
+5.10.y
+
+Tested-by: Pavel Machek (CIP) <pavel@denx.de>
+
+Best regards,
+                                                                Pavel
+
+--=20
+DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
+HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
+
+--5sUFAuXLzn+jaMi2
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY/PEkQAKCRAw5/Bqldv6
+8ghYAJ9eiRG2T3Juvwzk2PykuG4n9J3fHQCfWOG1k7RqezAfhjZWRTo6bE6Qu9s=
+=6BKC
+-----END PGP SIGNATURE-----
+
+--5sUFAuXLzn+jaMi2--
