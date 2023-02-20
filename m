@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A1B8463B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29072C433EF;
-	Mon, 20 Feb 2023 13:55:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3D95F63BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B500FC433D2;
+	Mon, 20 Feb 2023 13:55:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901343;
-	bh=HGXOPkJV5VI+3Fy/YNsHIQd8deUfwoH/F63MFBoZN8A=;
+	s=korg; t=1676901346;
+	bh=NZiF6uuU/REmkP9MqhQkEhocj4JvOaNOBWSK4F77vlo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FbUKlZCdy7In52afv3kzIh3SJT+BxJCRueKhzcQyGXnxMX4JZTVphQdnY6Bihh88L
-	 EaOAduMSgspYpAQWSfE3Kk8mU6JFjKZVBszgE3Z4WCiwlu0O6dTjWJr5c9ZyjANZDj
-	 DTzxyUdTJwo6vGtmnz+VbbYW2WPg9GIsrmipu8iY=
+	b=TyMS4aXGtRLTIT1b8ceo7e2eEkkh89KCOZ+w+59F/j3tzZyV1iWUNikcawALF/J03
+	 OC2fXddH3riQJnXJuAWpEkiOr9erzEo8mbJF1KjSH2JnOK+4vZUa9chcI7eUqJOvAg
+	 /f6WlyhDddmoH4y0Jv4R6q58f4mAupDMUBdIO+RE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hangyu Hua <hbh25y@gmail.com>,
-	Eelco Chaudron <echaudro@redhat.com>,
-	Simon Horman <simon.horman@corigine.com>,
-	"David S. Miller" <davem@davemloft.net>
-Subject: [PATCH 5.10 38/57] net: openvswitch: fix possible memory leak in ovs_meter_cmd_set()
-Date: Mon, 20 Feb 2023 14:36:46 +0100
-Message-Id: <20230220133550.683682522@linuxfoundation.org>
+	Johannes Zink <j.zink@pengutronix.de>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 39/57] net: stmmac: fix order of dwmac5 FlexPPS parametrization sequence
+Date: Mon, 20 Feb 2023 14:36:47 +0100
+Message-Id: <20230220133550.724168831@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -36,42 +34,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hangyu Hua <hbh25y@gmail.com>
+From: Johannes Zink <j.zink@pengutronix.de>
 
-commit 2fa28f5c6fcbfc794340684f36d2581b4f2d20b5 upstream.
+commit 4562c65ec852067c6196abdcf2d925f08841dcbc upstream.
 
-old_meter needs to be free after it is detached regardless of whether
-the new meter is successfully attached.
+So far changing the period by just setting new period values while
+running did not work.
 
-Fixes: c7c4c44c9a95 ("net: openvswitch: expand the meters supported number")
-Signed-off-by: Hangyu Hua <hbh25y@gmail.com>
-Acked-by: Eelco Chaudron <echaudro@redhat.com>
-Reviewed-by: Simon Horman <simon.horman@corigine.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+The order as indicated by the publicly available reference manual of the i.MX8MP [1]
+indicates a sequence:
+
+ * initiate the programming sequence
+ * set the values for PPS period and start time
+ * start the pulse train generation.
+
+This is currently not used in dwmac5_flex_pps_config(), which instead does:
+
+ * initiate the programming sequence and immediately start the pulse train generation
+ * set the values for PPS period and start time
+
+This caused the period values written not to take effect until the FlexPPS output was
+disabled and re-enabled again.
+
+This patch fix the order and allows the period to be set immediately.
+
+[1] https://www.nxp.com/webapp/Download?colCode=IMX8MPRM
+
+Fixes: 9a8a02c9d46d ("net: stmmac: Add Flexible PPS support")
+Signed-off-by: Johannes Zink <j.zink@pengutronix.de>
+Link: https://lore.kernel.org/r/20230210143937.3427483-1-j.zink@pengutronix.de
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/openvswitch/meter.c |    4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ drivers/net/ethernet/stmicro/stmmac/dwmac5.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/net/openvswitch/meter.c
-+++ b/net/openvswitch/meter.c
-@@ -450,7 +450,7 @@ static int ovs_meter_cmd_set(struct sk_b
+--- a/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
++++ b/drivers/net/ethernet/stmicro/stmmac/dwmac5.c
+@@ -520,9 +520,9 @@ int dwmac5_flex_pps_config(void __iomem
+ 		return 0;
+ 	}
  
- 	err = attach_meter(meter_tbl, meter);
- 	if (err)
--		goto exit_unlock;
-+		goto exit_free_old_meter;
+-	val |= PPSCMDx(index, 0x2);
+ 	val |= TRGTMODSELx(index, 0x2);
+ 	val |= PPSEN0;
++	writel(val, ioaddr + MAC_PPS_CONTROL);
  
- 	ovs_unlock();
+ 	writel(cfg->start.tv_sec, ioaddr + MAC_PPSx_TARGET_TIME_SEC(index));
  
-@@ -473,6 +473,8 @@ static int ovs_meter_cmd_set(struct sk_b
- 	genlmsg_end(reply, ovs_reply_header);
- 	return genlmsg_reply(reply, info);
+@@ -547,6 +547,7 @@ int dwmac5_flex_pps_config(void __iomem
+ 	writel(period - 1, ioaddr + MAC_PPSx_WIDTH(index));
  
-+exit_free_old_meter:
-+	ovs_meter_free(old_meter);
- exit_unlock:
- 	ovs_unlock();
- 	nlmsg_free(reply);
+ 	/* Finally, activate it */
++	val |= PPSCMDx(index, 0x2);
+ 	writel(val, ioaddr + MAC_PPS_CONTROL);
+ 	return 0;
+ }
 
 
