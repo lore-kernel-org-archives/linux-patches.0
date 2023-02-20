@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66A4263B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE39DC433D2;
-	Mon, 20 Feb 2023 13:49:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5583063B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:49:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D13A7C433EF;
+	Mon, 20 Feb 2023 13:49:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900970;
-	bh=/7tSQCEA221aoHBe6sQP+vviUDpDj6VtXr4Ku3KffTc=;
+	s=korg; t=1676900973;
+	bh=18vrFJHS/eJo2Ai4VxeYJUNrh/K1loikG4WPYnK21ks=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=LE0Npl+HM/3QwAufzzqm83QuU7x84HUaTAIKnr29K/v4ISMAbTE9SFe7unYOAYH8S
-	 y2VqEul09U6UNrodJYG6tBUXj/inHGAgRvfoqBP34OdINXlpjZqajfNqWCOhPcH1W+
-	 vsYSna4P++pWXQhdNGf230oPA+TOlFnHQgaAImj8=
+	b=OLhbxg0+eoynMV6qSFz2B4K15FrHATDXaSjRRUWIhd+oatpEZZb6zByoEmYPr/8RS
+	 kosdy40nrQmI92iM7nOGTp9lPBQMbx7muE0U5ikdu/IpHZVm8+jFQNe+U4raaRSDY+
+	 Yt46kF9TqZLp2g93boGnzVihXpZj5mg8Zk8pM8eY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -21,9 +21,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	"Darrick J. Wong" <darrick.wong@oracle.com>,
 	Chandan Babu R <chandan.babu@oracle.com>,
 	"Darrick J. Wong" <djwong@kernel.org>
-Subject: [PATCH 5.4 108/156] xfs: turn dfp_intent into a xfs_log_item
-Date: Mon, 20 Feb 2023 14:35:52 +0100
-Message-Id: <20230220133607.025471779@linuxfoundation.org>
+Subject: [PATCH 5.4 109/156] xfs: refactor xfs_defer_finish_noroll
+Date: Mon, 20 Feb 2023 14:35:53 +0100
+Message-Id: <20230220133607.069980582@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -39,11 +39,10 @@ Content-Transfer-Encoding: 8bit
 
 From: Christoph Hellwig <hch@lst.de>
 
-commit 13a8333339072b8654c1d2c75550ee9f41ee15de upstream.
+commit bb47d79750f1a68a75d4c7defc2da934ba31de14 upstream.
 
-All defer op instance place their own extension of the log item into
-the dfp_intent field.  Replace that with a xfs_log_item to improve type
-safety and make the code easier to follow.
+Split out a helper that operates on a single xfs_defer_pending structure
+to untangle the code.
 
 Signed-off-by: Christoph Hellwig <hch@lst.de>
 Reviewed-by: Brian Foster <bfoster@redhat.com>
@@ -53,219 +52,172 @@ Signed-off-by: Chandan Babu R <chandan.babu@oracle.com>
 Acked-by: Darrick J. Wong <djwong@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/xfs/libxfs/xfs_defer.h  |   11 ++++++-----
- fs/xfs/xfs_bmap_item.c     |   12 ++++++------
- fs/xfs/xfs_extfree_item.c  |   12 ++++++------
- fs/xfs/xfs_refcount_item.c |   12 ++++++------
- fs/xfs/xfs_rmap_item.c     |   12 ++++++------
- 5 files changed, 30 insertions(+), 29 deletions(-)
+ fs/xfs/libxfs/xfs_defer.c |  128 +++++++++++++++++++++-------------------------
+ 1 file changed, 59 insertions(+), 69 deletions(-)
 
---- a/fs/xfs/libxfs/xfs_defer.h
-+++ b/fs/xfs/libxfs/xfs_defer.h
-@@ -28,7 +28,7 @@ enum xfs_defer_ops_type {
- struct xfs_defer_pending {
- 	struct list_head		dfp_list;	/* pending items */
- 	struct list_head		dfp_work;	/* work items */
--	void				*dfp_intent;	/* log intent item */
-+	struct xfs_log_item		*dfp_intent;	/* log intent item */
- 	void				*dfp_done;	/* log done item */
- 	unsigned int			dfp_count;	/* # extent items */
- 	enum xfs_defer_ops_type		dfp_type;
-@@ -43,14 +43,15 @@ void xfs_defer_move(struct xfs_trans *dt
- 
- /* Description of a deferred type. */
- struct xfs_defer_op_type {
--	void (*abort_intent)(void *);
--	void *(*create_done)(struct xfs_trans *, void *, unsigned int);
-+	struct xfs_log_item *(*create_intent)(struct xfs_trans *tp,
-+			struct list_head *items, unsigned int count, bool sort);
-+	void (*abort_intent)(struct xfs_log_item *intent);
-+	void *(*create_done)(struct xfs_trans *tp, struct xfs_log_item *intent,
-+			unsigned int count);
- 	int (*finish_item)(struct xfs_trans *, struct list_head *, void *,
- 			void **);
- 	void (*finish_cleanup)(struct xfs_trans *, void *, int);
- 	void (*cancel_item)(struct list_head *);
--	void *(*create_intent)(struct xfs_trans *tp, struct list_head *items,
--			unsigned int count, bool sort);
- 	unsigned int		max_items;
- };
- 
---- a/fs/xfs/xfs_bmap_item.c
-+++ b/fs/xfs/xfs_bmap_item.c
-@@ -330,7 +330,7 @@ xfs_bmap_update_log_item(
- 			bmap->bi_bmap.br_state);
+--- a/fs/xfs/libxfs/xfs_defer.c
++++ b/fs/xfs/libxfs/xfs_defer.c
+@@ -360,6 +360,53 @@ xfs_defer_cancel_list(
  }
  
--STATIC void *
-+static struct xfs_log_item *
- xfs_bmap_update_create_intent(
- 	struct xfs_trans		*tp,
- 	struct list_head		*items,
-@@ -348,17 +348,17 @@ xfs_bmap_update_create_intent(
- 		list_sort(mp, items, xfs_bmap_update_diff_items);
- 	list_for_each_entry(bmap, items, bi_list)
- 		xfs_bmap_update_log_item(tp, buip, bmap);
--	return buip;
-+	return &buip->bui_item;
- }
- 
- /* Get an BUD so we can process all the deferred rmap updates. */
- STATIC void *
- xfs_bmap_update_create_done(
- 	struct xfs_trans		*tp,
--	void				*intent,
-+	struct xfs_log_item		*intent,
- 	unsigned int			count)
+ /*
++ * Log an intent-done item for the first pending intent, and finish the work
++ * items.
++ */
++static int
++xfs_defer_finish_one(
++	struct xfs_trans		*tp,
++	struct xfs_defer_pending	*dfp)
++{
++	const struct xfs_defer_op_type	*ops = defer_op_types[dfp->dfp_type];
++	void				*state = NULL;
++	struct list_head		*li, *n;
++	int				error;
++
++	trace_xfs_defer_pending_finish(tp->t_mountp, dfp);
++
++	dfp->dfp_done = ops->create_done(tp, dfp->dfp_intent, dfp->dfp_count);
++	list_for_each_safe(li, n, &dfp->dfp_work) {
++		list_del(li);
++		dfp->dfp_count--;
++		error = ops->finish_item(tp, li, dfp->dfp_done, &state);
++		if (error == -EAGAIN) {
++			/*
++			 * Caller wants a fresh transaction; put the work item
++			 * back on the list and log a new log intent item to
++			 * replace the old one.  See "Requesting a Fresh
++			 * Transaction while Finishing Deferred Work" above.
++			 */
++			list_add(li, &dfp->dfp_work);
++			dfp->dfp_count++;
++			dfp->dfp_done = NULL;
++			xfs_defer_create_intent(tp, dfp, false);
++		}
++
++		if (error)
++			goto out;
++	}
++
++	/* Done with the dfp, free it. */
++	list_del(&dfp->dfp_list);
++	kmem_free(dfp);
++out:
++	if (ops->finish_cleanup)
++		ops->finish_cleanup(tp, state, error);
++	return error;
++}
++
++/*
+  * Finish all the pending work.  This involves logging intent items for
+  * any work items that wandered in since the last transaction roll (if
+  * one has even happened), rolling the transaction, and finishing the
+@@ -372,11 +419,7 @@ xfs_defer_finish_noroll(
+ 	struct xfs_trans		**tp)
  {
--	return xfs_trans_get_bud(tp, intent);
-+	return xfs_trans_get_bud(tp, BUI_ITEM(intent));
+ 	struct xfs_defer_pending	*dfp;
+-	struct list_head		*li;
+-	struct list_head		*n;
+-	void				*state;
+ 	int				error = 0;
+-	const struct xfs_defer_op_type	*ops;
+ 	LIST_HEAD(dop_pending);
+ 
+ 	ASSERT((*tp)->t_flags & XFS_TRANS_PERM_LOG_RES);
+@@ -385,83 +428,30 @@ xfs_defer_finish_noroll(
+ 
+ 	/* Until we run out of pending work to finish... */
+ 	while (!list_empty(&dop_pending) || !list_empty(&(*tp)->t_dfops)) {
+-		/* log intents and pull in intake items */
+ 		xfs_defer_create_intents(*tp);
+ 		list_splice_tail_init(&(*tp)->t_dfops, &dop_pending);
+ 
+-		/*
+-		 * Roll the transaction.
+-		 */
+ 		error = xfs_defer_trans_roll(tp);
+ 		if (error)
+-			goto out;
++			goto out_shutdown;
+ 
+-		/* Log an intent-done item for the first pending item. */
+ 		dfp = list_first_entry(&dop_pending, struct xfs_defer_pending,
+ 				       dfp_list);
+-		ops = defer_op_types[dfp->dfp_type];
+-		trace_xfs_defer_pending_finish((*tp)->t_mountp, dfp);
+-		dfp->dfp_done = ops->create_done(*tp, dfp->dfp_intent,
+-				dfp->dfp_count);
+-
+-		/* Finish the work items. */
+-		state = NULL;
+-		list_for_each_safe(li, n, &dfp->dfp_work) {
+-			list_del(li);
+-			dfp->dfp_count--;
+-			error = ops->finish_item(*tp, li, dfp->dfp_done,
+-					&state);
+-			if (error == -EAGAIN) {
+-				/*
+-				 * Caller wants a fresh transaction;
+-				 * put the work item back on the list
+-				 * and jump out.
+-				 */
+-				list_add(li, &dfp->dfp_work);
+-				dfp->dfp_count++;
+-				break;
+-			} else if (error) {
+-				/*
+-				 * Clean up after ourselves and jump out.
+-				 * xfs_defer_cancel will take care of freeing
+-				 * all these lists and stuff.
+-				 */
+-				if (ops->finish_cleanup)
+-					ops->finish_cleanup(*tp, state, error);
+-				goto out;
+-			}
+-		}
+-		if (error == -EAGAIN) {
+-			/*
+-			 * Caller wants a fresh transaction, so log a new log
+-			 * intent item to replace the old one and roll the
+-			 * transaction.  See "Requesting a Fresh Transaction
+-			 * while Finishing Deferred Work" above.
+-			 */
+-			dfp->dfp_done = NULL;
+-			xfs_defer_create_intent(*tp, dfp, false);
+-		} else {
+-			/* Done with the dfp, free it. */
+-			list_del(&dfp->dfp_list);
+-			kmem_free(dfp);
+-		}
+-
+-		if (ops->finish_cleanup)
+-			ops->finish_cleanup(*tp, state, error);
+-	}
+-
+-out:
+-	if (error) {
+-		xfs_defer_trans_abort(*tp, &dop_pending);
+-		xfs_force_shutdown((*tp)->t_mountp, SHUTDOWN_CORRUPT_INCORE);
+-		trace_xfs_defer_finish_error(*tp, error);
+-		xfs_defer_cancel_list((*tp)->t_mountp, &dop_pending);
+-		xfs_defer_cancel(*tp);
+-		return error;
++		error = xfs_defer_finish_one(*tp, dfp);
++		if (error && error != -EAGAIN)
++			goto out_shutdown;
+ 	}
+ 
+ 	trace_xfs_defer_finish_done(*tp, _RET_IP_);
+ 	return 0;
++
++out_shutdown:
++	xfs_defer_trans_abort(*tp, &dop_pending);
++	xfs_force_shutdown((*tp)->t_mountp, SHUTDOWN_CORRUPT_INCORE);
++	trace_xfs_defer_finish_error(*tp, error);
++	xfs_defer_cancel_list((*tp)->t_mountp, &dop_pending);
++	xfs_defer_cancel(*tp);
++	return error;
  }
  
- /* Process a deferred rmap update. */
-@@ -394,9 +394,9 @@ xfs_bmap_update_finish_item(
- /* Abort all pending BUIs. */
- STATIC void
- xfs_bmap_update_abort_intent(
--	void				*intent)
-+	struct xfs_log_item		*intent)
- {
--	xfs_bui_release(intent);
-+	xfs_bui_release(BUI_ITEM(intent));
- }
- 
- /* Cancel a deferred rmap update. */
---- a/fs/xfs/xfs_extfree_item.c
-+++ b/fs/xfs/xfs_extfree_item.c
-@@ -437,7 +437,7 @@ xfs_extent_free_log_item(
- 	extp->ext_len = free->xefi_blockcount;
- }
- 
--STATIC void *
-+static struct xfs_log_item *
- xfs_extent_free_create_intent(
- 	struct xfs_trans		*tp,
- 	struct list_head		*items,
-@@ -455,17 +455,17 @@ xfs_extent_free_create_intent(
- 		list_sort(mp, items, xfs_extent_free_diff_items);
- 	list_for_each_entry(free, items, xefi_list)
- 		xfs_extent_free_log_item(tp, efip, free);
--	return efip;
-+	return &efip->efi_item;
- }
- 
- /* Get an EFD so we can process all the free extents. */
- STATIC void *
- xfs_extent_free_create_done(
- 	struct xfs_trans		*tp,
--	void				*intent,
-+	struct xfs_log_item		*intent,
- 	unsigned int			count)
- {
--	return xfs_trans_get_efd(tp, intent, count);
-+	return xfs_trans_get_efd(tp, EFI_ITEM(intent), count);
- }
- 
- /* Process a free extent. */
-@@ -491,9 +491,9 @@ xfs_extent_free_finish_item(
- /* Abort all pending EFIs. */
- STATIC void
- xfs_extent_free_abort_intent(
--	void				*intent)
-+	struct xfs_log_item		*intent)
- {
--	xfs_efi_release(intent);
-+	xfs_efi_release(EFI_ITEM(intent));
- }
- 
- /* Cancel a free extent. */
---- a/fs/xfs/xfs_refcount_item.c
-+++ b/fs/xfs/xfs_refcount_item.c
-@@ -329,7 +329,7 @@ xfs_refcount_update_log_item(
- 	xfs_trans_set_refcount_flags(ext, refc->ri_type);
- }
- 
--STATIC void *
-+static struct xfs_log_item *
- xfs_refcount_update_create_intent(
- 	struct xfs_trans		*tp,
- 	struct list_head		*items,
-@@ -347,17 +347,17 @@ xfs_refcount_update_create_intent(
- 		list_sort(mp, items, xfs_refcount_update_diff_items);
- 	list_for_each_entry(refc, items, ri_list)
- 		xfs_refcount_update_log_item(tp, cuip, refc);
--	return cuip;
-+	return &cuip->cui_item;
- }
- 
- /* Get an CUD so we can process all the deferred refcount updates. */
- STATIC void *
- xfs_refcount_update_create_done(
- 	struct xfs_trans		*tp,
--	void				*intent,
-+	struct xfs_log_item		*intent,
- 	unsigned int			count)
- {
--	return xfs_trans_get_cud(tp, intent);
-+	return xfs_trans_get_cud(tp, CUI_ITEM(intent));
- }
- 
- /* Process a deferred refcount update. */
-@@ -407,9 +407,9 @@ xfs_refcount_update_finish_cleanup(
- /* Abort all pending CUIs. */
- STATIC void
- xfs_refcount_update_abort_intent(
--	void				*intent)
-+	struct xfs_log_item		*intent)
- {
--	xfs_cui_release(intent);
-+	xfs_cui_release(CUI_ITEM(intent));
- }
- 
- /* Cancel a deferred refcount update. */
---- a/fs/xfs/xfs_rmap_item.c
-+++ b/fs/xfs/xfs_rmap_item.c
-@@ -381,7 +381,7 @@ xfs_rmap_update_log_item(
- 			rmap->ri_bmap.br_state);
- }
- 
--STATIC void *
-+static struct xfs_log_item *
- xfs_rmap_update_create_intent(
- 	struct xfs_trans		*tp,
- 	struct list_head		*items,
-@@ -399,17 +399,17 @@ xfs_rmap_update_create_intent(
- 		list_sort(mp, items, xfs_rmap_update_diff_items);
- 	list_for_each_entry(rmap, items, ri_list)
- 		xfs_rmap_update_log_item(tp, ruip, rmap);
--	return ruip;
-+	return &ruip->rui_item;
- }
- 
- /* Get an RUD so we can process all the deferred rmap updates. */
- STATIC void *
- xfs_rmap_update_create_done(
- 	struct xfs_trans		*tp,
--	void				*intent,
-+	struct xfs_log_item		*intent,
- 	unsigned int			count)
- {
--	return xfs_trans_get_rud(tp, intent);
-+	return xfs_trans_get_rud(tp, RUI_ITEM(intent));
- }
- 
- /* Process a deferred rmap update. */
-@@ -451,9 +451,9 @@ xfs_rmap_update_finish_cleanup(
- /* Abort all pending RUIs. */
- STATIC void
- xfs_rmap_update_abort_intent(
--	void				*intent)
-+	struct xfs_log_item	*intent)
- {
--	xfs_rui_release(intent);
-+	xfs_rui_release(RUI_ITEM(intent));
- }
- 
- /* Cancel a deferred rmap update. */
+ int
 
 
