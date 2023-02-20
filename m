@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B2B963BB
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C38A3C433D2;
-	Mon, 20 Feb 2023 13:58:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2269263BB
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:58:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9FA51C433D2;
+	Mon, 20 Feb 2023 13:58:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901528;
-	bh=azmU+k7UJ/E/AQqp94kZ+3zJYdz7y8e/T458A9QYbOI=;
+	s=korg; t=1676901531;
+	bh=wGkW8T3g7BgS6r/3kEN8kmhQTQ84eeVyAd1XCaMk0V8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=2U2y+z4+NyWOGp/RogJe7PYOIIFweVdGLpZ1GGQMX3q82/49olLZnciqZNAEWWqbb
-	 p7vNGCIXobKCkpeQ55Y/Spq6IPL13KLDJwwZ7VfCK5BiWXQFNOcPGJp/u2Bsc+7Ud4
-	 kfpzSu0ELLYJ6gLSIdwiGXORCd4ntNDIHMJpTScE=
+	b=cFEcgkRzP48IBg4A/WM2DYCiL8ZAasMzQIt7GgrLlHg4081hoI2eQGbEEEuytSY71
+	 VwUxl0jZse2UDvjV8tW/6QjdM9C5z4A8YbnWO+ypVb074lfECiFLAEqnIe2puF6bPL
+	 +Eu+mT3EPh/T5/+THKfo5A0LNTDQ5QFVZru08Gz4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	jfalempe@redhat.com,
-	Jack Xiao <Jack.Xiao@amd.com>,
-	=?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-	Feifei Xu <Feifei.Xu@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	Evan Quan <evan.quan@amd.com>
-Subject: [PATCH 6.1 051/118] drm/amd/amdgpu: fix warning during suspend
-Date: Mon, 20 Feb 2023 14:36:07 +0100
-Message-Id: <20230220133602.499529823@linuxfoundation.org>
+	Leo Li <sunpeng.li@amd.com>,
+	Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>,
+	Hamza Mahfooz <hamza.mahfooz@amd.com>,
+	Alex Deucher <alexander.deucher@amd.com>
+Subject: [PATCH 6.1 052/118] drm/amd/display: Fail atomic_check early on normalize_zpos error
+Date: Mon, 20 Feb 2023 14:36:08 +0100
+Message-Id: <20230220133602.532609305@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 References: <20230220133600.368809650@linuxfoundation.org>
@@ -38,50 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jack Xiao <Jack.Xiao@amd.com>
+From: Leo Li <sunpeng.li@amd.com>
 
-commit 8f32378986218812083b127da5ba42d48297d7c4 upstream.
+commit 2a00299e7447395d0898e7c6214817c06a61a8e8 upstream.
 
-Freeing memory was warned during suspend.
-Move the self test out of suspend.
+[Why]
 
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2151825
-Cc: jfalempe@redhat.com
-Signed-off-by: Jack Xiao <Jack.Xiao@amd.com>
-Reviewed-by: Christian König <christian.koenig@amd.com>
-Reviewed-by: Feifei Xu <Feifei.Xu@amd.com>
-Reviewed-and-tested-by: Evan Quan <evan.quan@amd.com>
-Tested-by: Jocelyn Falempe <jfalempe@redhat.com>
+drm_atomic_normalize_zpos() can return an error code when there's
+modeset lock contention. This was being ignored.
+
+[How]
+
+Bail out of atomic check if normalize_zpos() returns an error.
+
+Fixes: b261509952bc ("drm/amd/display: Fix double cursor on non-video RGB MPO")
+Signed-off-by: Leo Li <sunpeng.li@amd.com>
+Tested-by: Mikhail Gavrilov <mikhail.v.gavrilov@gmail.com>
+Reviewed-by: Hamza Mahfooz <hamza.mahfooz@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: stable@vger.kernel.org # 6.1.x
+Cc: stable@vger.kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c |    3 +++
- drivers/gpu/drm/amd/amdgpu/mes_v11_0.c     |    2 +-
- 2 files changed, 4 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4248,6 +4248,9 @@ int amdgpu_device_resume(struct drm_devi
- #endif
- 	adev->in_suspend = false;
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -9556,7 +9556,11 @@ static int amdgpu_dm_atomic_check(struct
+ 	 * `dcn10_can_pipe_disable_cursor`). By now, all modified planes are in
+ 	 * atomic state, so call drm helper to normalize zpos.
+ 	 */
+-	drm_atomic_normalize_zpos(dev, state);
++	ret = drm_atomic_normalize_zpos(dev, state);
++	if (ret) {
++		drm_dbg(dev, "drm_atomic_normalize_zpos() failed\n");
++		goto fail;
++	}
  
-+	if (adev->enable_mes)
-+		amdgpu_mes_self_test(adev);
-+
- 	if (amdgpu_acpi_smart_shift_update(dev, AMDGPU_SS_DEV_D0))
- 		DRM_WARN("smart shift update failed\n");
- 
---- a/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-+++ b/drivers/gpu/drm/amd/amdgpu/mes_v11_0.c
-@@ -1339,7 +1339,7 @@ static int mes_v11_0_late_init(void *han
- 	struct amdgpu_device *adev = (struct amdgpu_device *)handle;
- 
- 	/* it's only intended for use in mes_self_test case, not for s0ix and reset */
--	if (!amdgpu_in_reset(adev) && !adev->in_s0ix &&
-+	if (!amdgpu_in_reset(adev) && !adev->in_s0ix && !adev->in_suspend &&
- 	    (adev->ip_versions[GC_HWIP][0] != IP_VERSION(11, 0, 3)))
- 		amdgpu_mes_self_test(adev);
- 
+ 	/* Remove exiting planes if they are modified */
+ 	for_each_oldnew_plane_in_state_reverse(state, plane, old_plane_state, new_plane_state, i) {
 
 
