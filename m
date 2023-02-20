@@ -1,31 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7738463B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2448C433D2;
-	Mon, 20 Feb 2023 13:55:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B48763B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:55:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E640C433EF;
+	Mon, 20 Feb 2023 13:55:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901330;
-	bh=4HuyXhxITt/AAtNq3OFduDmq8003PaZHslla+WPOwqo=;
+	s=korg; t=1676901333;
+	bh=viNjHuWFMEtdbL6gqWaL7GvAryIKcU5xm0+XTmXTk2I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=G/i414U8kLLPxdcGMelTWd2K1d+Dp0Bk/dxx22E7XKxwmCglK3g1yiOJIm5j/+sEd
-	 5gP/XLjnm4CygbtgjqUh+d+3IMQb4H/Dt4/9kI4FOI2xAqOuSvwAGCP5qM8bR+c6tx
-	 p9UiMdkiZDxQHyyMsf2mCh3OQnsWQzqF2v/UdVTk=
+	b=pH2r4XPm9JTXL9+0PHoTNYbREHmuby1QcMx/9uxePp1yU+9J5yY7PAoXZWkmIb6yx
+	 aUv/RpvEy5MlGFQ9hMV34vtISwzVFL/rEpVbBTJn+HwI49MyKpcdbrwWKeGviTzCI4
+	 KsY8TioSK3srYD4Jg7qvvV6gi/tP01JnkWSovxIg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Seth Jenkins <sethjenkins@google.com>,
-	Jeff Moyer <jmoyer@redhat.com>,
-	Alexander Viro <viro@zeniv.linux.org.uk>,
-	Benjamin LaHaise <bcrl@kvack.org>,
-	Jann Horn <jannh@google.com>,
-	Pavel Emelyanov <xemul@parallels.com>,
-	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 5.10 16/57] aio: fix mremap after fork null-deref
-Date: Mon, 20 Feb 2023 14:36:24 +0100
-Message-Id: <20230220133549.942246955@linuxfoundation.org>
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Xin Long <lucien.xin@gmail.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 5.10 34/57] sctp: sctp_sock_filter(): avoid list_entry() on possibly empty list
+Date: Mon, 20 Feb 2023 14:36:42 +0100
+Message-Id: <20230220133550.535166459@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
 References: <20230220133549.360169435@linuxfoundation.org>
@@ -39,49 +35,37 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Seth Jenkins <sethjenkins@google.com>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-commit 81e9d6f8647650a7bead74c5f926e29970e834d1 upstream.
+commit a1221703a0f75a9d81748c516457e0fc76951496 upstream.
 
-Commit e4a0d3e720e7 ("aio: Make it possible to remap aio ring") introduced
-a null-deref if mremap is called on an old aio mapping after fork as
-mm->ioctx_table will be set to NULL.
+Use list_is_first() to check whether tsp->asoc matches the first
+element of ep->asocs, as the list is not guaranteed to have an entry.
 
-[jmoyer@redhat.com: fix 80 column issue]
-Link: https://lkml.kernel.org/r/x49sffq4nvg.fsf@segfault.boston.devel.redhat.com
-Fixes: e4a0d3e720e7 ("aio: Make it possible to remap aio ring")
-Signed-off-by: Seth Jenkins <sethjenkins@google.com>
-Signed-off-by: Jeff Moyer <jmoyer@redhat.com>
-Cc: Alexander Viro <viro@zeniv.linux.org.uk>
-Cc: Benjamin LaHaise <bcrl@kvack.org>
-Cc: Jann Horn <jannh@google.com>
-Cc: Pavel Emelyanov <xemul@parallels.com>
-Cc: <stable@vger.kernel.org>
-Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
+Fixes: 8f840e47f190 ("sctp: add the sctp_diag.c file")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Acked-by: Xin Long <lucien.xin@gmail.com>
+Link: https://lore.kernel.org/r/20230208-sctp-filter-v2-1-6e1f4017f326@diag.uniroma1.it
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/aio.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/sctp/diag.c |    4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
---- a/fs/aio.c
-+++ b/fs/aio.c
-@@ -335,6 +335,9 @@ static int aio_ring_mremap(struct vm_are
- 	spin_lock(&mm->ioctx_lock);
- 	rcu_read_lock();
- 	table = rcu_dereference(mm->ioctx_table);
-+	if (!table)
-+		goto out_unlock;
-+
- 	for (i = 0; i < table->nr; i++) {
- 		struct kioctx *ctx;
+--- a/net/sctp/diag.c
++++ b/net/sctp/diag.c
+@@ -349,11 +349,9 @@ static int sctp_sock_filter(struct sctp_
+ 	struct sctp_comm_param *commp = p;
+ 	struct sock *sk = ep->base.sk;
+ 	const struct inet_diag_req_v2 *r = commp->r;
+-	struct sctp_association *assoc =
+-		list_entry(ep->asocs.next, struct sctp_association, asocs);
  
-@@ -348,6 +351,7 @@ static int aio_ring_mremap(struct vm_are
- 		}
- 	}
+ 	/* find the ep only once through the transports by this condition */
+-	if (tsp->asoc != assoc)
++	if (!list_is_first(&tsp->asoc->asocs, &ep->asocs))
+ 		return 0;
  
-+out_unlock:
- 	rcu_read_unlock();
- 	spin_unlock(&mm->ioctx_lock);
- 	return res;
+ 	if (r->sdiag_family != AF_UNSPEC && sk->sk_family != r->sdiag_family)
 
 
