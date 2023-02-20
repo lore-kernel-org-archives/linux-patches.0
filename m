@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0ADEF63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:40:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8645BC433D2;
-	Mon, 20 Feb 2023 13:40:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC52663B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:40:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1DF6DC433D2;
+	Mon, 20 Feb 2023 13:40:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900400;
-	bh=EPTn8O+W9FKdSwBQm8cf1uuYZqyWDXkvTKEHGB5MubY=;
+	s=korg; t=1676900403;
+	bh=sxgSfA1i2cTOt1jlI9pwIPaZUJgX8V76Y+0rQ35juww=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S0I8heIrr8GEGBj0zew1iRlqPoY3+fSr/gjr867qMgrSoA9Q+IYeTdj2cVaFWATSY
-	 BM4sqxFyjjP9UDM68K01POlfvS16ENq9qUt4nvZZ5tncEQ0Mo8D8eNgUvi7E3QqfO3
-	 IeLe4Gw6TisfkkBRDJMsxiZh45hyS3eI3L1c/nhk=
+	b=btlRGHnIVwRsgcaL/hwn5VtJZh6JPuUuwJDfzZeYHmGZilAyDHNuksuRKijQAQ50X
+	 WJl8qvcFnfcIm3dn7MIXEEyz12qh1yD2Y+XEjO6z4JEJkoxkwtvZJLUw3ITU7RrKsT
+	 4S6wumFDfx0ohB/mfpcydz9kBy5YozOqWGpQEer4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hyunwoo Kim <v4bel@theori.io>,
-	"David S. Miller" <davem@davemloft.net>,
+	Olivier Moysan <olivier.moysan@foss.st.com>,
+	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.19 11/89] net/x25: Fix to not accept on connected socket
-Date: Mon, 20 Feb 2023 14:35:10 +0100
-Message-Id: <20230220133553.484123795@linuxfoundation.org>
+Subject: [PATCH 4.19 12/89] iio: adc: stm32-dfsdm: fill module aliases
+Date: Mon, 20 Feb 2023 14:35:11 +0100
+Message-Id: <20230220133553.532897423@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -35,45 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hyunwoo Kim <v4bel@theori.io>
+From: Olivier Moysan <olivier.moysan@foss.st.com>
 
-[ Upstream commit f2b0b5210f67c56a3bcdf92ff665fb285d6e0067 ]
+[ Upstream commit cc3304052a89ab6ac887ed9224420a27e3d354e1 ]
 
-When listen() and accept() are called on an x25 socket
-that connect() succeeds, accept() succeeds immediately.
-This is because x25_connect() queues the skb to
-sk->sk_receive_queue, and x25_accept() dequeues it.
+When STM32 DFSDM driver is built as module, no modalias information
+is available. This prevents module to be loaded by udev.
+Add MODULE_DEVICE_TABLE() to fill module aliases.
 
-This creates a child socket with the sk of the parent
-x25 socket, which can cause confusion.
-
-Fix x25_listen() to return -EINVAL if the socket has
-already been successfully connect()ed to avoid this issue.
-
-Signed-off-by: Hyunwoo Kim <v4bel@theori.io>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Fixes: e2e6771c6462 ("IIO: ADC: add STM32 DFSDM sigma delta ADC support")
+Signed-off-by: Olivier Moysan <olivier.moysan@foss.st.com>
+Link: https://lore.kernel.org/r/20221202152848.45585-1-olivier.moysan@foss.st.com
+Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/x25/af_x25.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/iio/adc/stm32-dfsdm-adc.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/net/x25/af_x25.c b/net/x25/af_x25.c
-index 77d8adb27ec7..9d0328bb30ca 100644
---- a/net/x25/af_x25.c
-+++ b/net/x25/af_x25.c
-@@ -497,6 +497,12 @@ static int x25_listen(struct socket *sock, int backlog)
- 	int rc = -EOPNOTSUPP;
+diff --git a/drivers/iio/adc/stm32-dfsdm-adc.c b/drivers/iio/adc/stm32-dfsdm-adc.c
+index 1c492a7f4587..bb90b22b809c 100644
+--- a/drivers/iio/adc/stm32-dfsdm-adc.c
++++ b/drivers/iio/adc/stm32-dfsdm-adc.c
+@@ -1099,6 +1099,7 @@ static const struct of_device_id stm32_dfsdm_adc_match[] = {
+ 	},
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, stm32_dfsdm_adc_match);
  
- 	lock_sock(sk);
-+	if (sock->state != SS_UNCONNECTED) {
-+		rc = -EINVAL;
-+		release_sock(sk);
-+		return rc;
-+	}
-+
- 	if (sk->sk_state != TCP_LISTEN) {
- 		memset(&x25_sk(sk)->dest_addr, 0, X25_ADDR_LEN);
- 		sk->sk_max_ack_backlog = backlog;
+ static int stm32_dfsdm_adc_probe(struct platform_device *pdev)
+ {
 -- 
 2.39.0
 
