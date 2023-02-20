@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0A89D63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8991FC433D2;
-	Mon, 20 Feb 2023 13:47:17 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9F0ED63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:47:20 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 26155C4339B;
+	Mon, 20 Feb 2023 13:47:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900837;
-	bh=4ctmASc/+2JR47zSznn55yZeUKXCAMfa3I++ikvF9Wk=;
+	s=korg; t=1676900840;
+	bh=TXbY8fDjGP/B03F/arkzREE5WK0zH8dzFLt0hzG0tD8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RSLTmdI/GolXyCFPZqlI60yoRvBhrqo/lW5sazmKUM+CCTiznB+M9CxV8zOuJ58J6
-	 Voi75MqQJJtyp3N0AqYlru4wxZbLD2xEctBOzkNQKLn8WNEEbXySmjrCu8Ruh3QkeX
-	 s9EduSnyOlN/rha3kMMXxRHsmYFp4BTB/0RkPGDU=
+	b=NNFxPqnyorez8s/EkRCqa+GGpy7cm6Q4U+oi8XUMmJIZngIAk8Aht69/cWjjXS4/l
+	 rqYiM7m7XXQu8ONa3icBi0acYLvST/x/tVZgMsqP0Fra0nyigwSBJjAoLUNQcevWkd
+	 DPF5+8iFOmWyXSGh+tn2v2unbWIbivhtfDoSed3M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Peter Suti <peter.suti@streamunlimited.com>,
-	Vyacheslav Bocharov <adeep@lexina.in>,
-	Heiner Kallweit <hkallweit1@gmail.com>,
-	Neil Armstrong <neil.armstrong@linaro.org>
-Subject: [PATCH 5.4 087/156] arm64: dts: meson-axg: Make mmc host controller interrupts level-sensitive
-Date: Mon, 20 Feb 2023 14:35:31 +0100
-Message-Id: <20230220133606.051153000@linuxfoundation.org>
+	Andy Shevchenko <andriy.shevchenko@linux.intel.com>,
+	Keith Busch <kbusch@kernel.org>,
+	Sagi Grimberg <sagi@grimberg.me>,
+	Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>,
+	Christoph Hellwig <hch@lst.de>,
+	Gwendal Grignou <gwendal@chromium.org>
+Subject: [PATCH 5.4 088/156] nvme-pci: Move enumeration by class to be last in the table
+Date: Mon, 20 Feb 2023 14:35:32 +0100
+Message-Id: <20230220133606.091480110@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -36,51 +38,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heiner Kallweit <hkallweit1@gmail.com>
+From: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
 
-commit d182bcf300772d8b2e5f43e47fa0ebda2b767cc4 upstream.
+commit 0b85f59d30b91bd2b93ea7ef0816a4b7e7039e8c upstream.
 
-The usage of edge-triggered interrupts lead to lost interrupts under load,
-see [0]. This was confirmed to be fixed by using level-triggered
-interrupts.
-The report was about SDIO. However, as the host controller is the same
-for SD and MMC, apply the change to all mmc controller instances.
+It's unusual that we have enumeration by class in the middle of the table.
+It might potentially be problematic in the future if we add another entry
+after it.
 
-[0] https://www.spinics.net/lists/linux-mmc/msg73991.html
+So, move class matching entry to be the last in the ID table.
 
-Fixes: 221cf34bac54 ("ARM64: dts: meson-axg: enable the eMMC controller")
-Reported-by: Peter Suti <peter.suti@streamunlimited.com>
-Tested-by: Vyacheslav Bocharov <adeep@lexina.in>
-Tested-by: Peter Suti <peter.suti@streamunlimited.com>
-Cc: stable@vger.kernel.org
-Signed-off-by: Heiner Kallweit <hkallweit1@gmail.com>
-Acked-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://lore.kernel.org/r/c00655d3-02f8-6f5f-4239-ca2412420cad@gmail.com
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
+Signed-off-by: Andy Shevchenko <andriy.shevchenko@linux.intel.com>
+Reviewed-by: Keith Busch <kbusch@kernel.org>
+Reviewed-by: Sagi Grimberg <sagi@grimberg.me>
+Reviewed-by: Chaitanya Kulkarni <chaitanya.kulkarni@wdc.com>
+Signed-off-by: Christoph Hellwig <hch@lst.de>
+Signed-off-by: Gwendal Grignou <gwendal@chromium.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/amlogic/meson-axg.dtsi |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/nvme/host/pci.c |    3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
---- a/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-+++ b/arch/arm64/boot/dts/amlogic/meson-axg.dtsi
-@@ -1705,7 +1705,7 @@
- 			sd_emmc_b: sd@5000 {
- 				compatible = "amlogic,meson-axg-mmc";
- 				reg = <0x0 0x5000 0x0 0x800>;
--				interrupts = <GIC_SPI 217 IRQ_TYPE_EDGE_RISING>;
-+				interrupts = <GIC_SPI 217 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 				clocks = <&clkc CLKID_SD_EMMC_B>,
- 					<&clkc CLKID_SD_EMMC_B_CLK0>,
-@@ -1717,7 +1717,7 @@
- 			sd_emmc_c: mmc@7000 {
- 				compatible = "amlogic,meson-axg-mmc";
- 				reg = <0x0 0x7000 0x0 0x800>;
--				interrupts = <GIC_SPI 218 IRQ_TYPE_EDGE_RISING>;
-+				interrupts = <GIC_SPI 218 IRQ_TYPE_LEVEL_HIGH>;
- 				status = "disabled";
- 				clocks = <&clkc CLKID_SD_EMMC_C>,
- 					<&clkc CLKID_SD_EMMC_C_CLK0>,
+--- a/drivers/nvme/host/pci.c
++++ b/drivers/nvme/host/pci.c
+@@ -3199,7 +3199,6 @@ static const struct pci_device_id nvme_i
+ 				NVME_QUIRK_IGNORE_DEV_SUBNQN, },
+ 	{ PCI_DEVICE(0x1c5c, 0x1504),   /* SK Hynix PC400 */
+ 		.driver_data = NVME_QUIRK_DISABLE_WRITE_ZEROES, },
+-	{ PCI_DEVICE_CLASS(PCI_CLASS_STORAGE_EXPRESS, 0xffffff) },
+ 	{ PCI_DEVICE(0x2646, 0x2263),   /* KINGSTON A2000 NVMe SSD  */
+ 		.driver_data = NVME_QUIRK_NO_DEEPEST_PS, },
+ 	{ PCI_DEVICE(PCI_VENDOR_ID_APPLE, 0x2001),
+@@ -3209,6 +3208,8 @@ static const struct pci_device_id nvme_i
+ 		.driver_data = NVME_QUIRK_SINGLE_VECTOR |
+ 				NVME_QUIRK_128_BYTES_SQES |
+ 				NVME_QUIRK_SHARED_TAGS },
++
++	{ PCI_DEVICE_CLASS(PCI_CLASS_STORAGE_EXPRESS, 0xffffff) },
+ 	{ 0, }
+ };
+ MODULE_DEVICE_TABLE(pci, nvme_id_table);
 
 
