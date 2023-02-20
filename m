@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0EF8B63B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:50:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8B872C433EF;
-	Mon, 20 Feb 2023 13:50:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A28DD63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:50:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2600AC433D2;
+	Mon, 20 Feb 2023 13:50:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901001;
-	bh=2++DwZjzESuKxlAlrBKx3NBQ54U/RB0K4MHbaipGxew=;
+	s=korg; t=1676901004;
+	bh=P4Cr3lOuiAs9Yp1sNoWbomSBpHWr0eJFuCUyNcxmlD0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VLd2Hm3ZteFTodvVIXLiQqdgn48p2ztYkfZFUOYvzomIs1UK5xBnz7ZKKwp7od5qd
-	 +Kaympm2SmKIWN0jvv8vbWSHwiJh05+zZyuwjMSdBKPxiYNgG+KP5EbKQzeX9hibpI
-	 LXzkPj9LU7IlN+xfBDuxlEyawHnRpUVBd+/6gFjw=
+	b=lZcJNFNXhYrLboG6Lb7HqeFzih3IKHrmzHs0NSKt9h9XP0YYxC3xJdd3wu2b+PXAW
+	 c8cMyChU+P0SCq54Vv4nIheiLP5ua4GccY7nq6BsrEWl/9xKr9g50YtzA0JzBugCHM
+	 33VQwBrJluRWhMSkllxpM8ZpST0Mu/mt4hvRIoak=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Eric Dumazet <edumazet@google.com>,
 	David Ahern <dsahern@kernel.org>,
 	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 149/156] ipv6: Fix datagram socket connection with DSCP.
-Date: Mon, 20 Feb 2023 14:36:33 +0100
-Message-Id: <20230220133608.866997994@linuxfoundation.org>
+Subject: [PATCH 5.4 150/156] ipv6: Fix tcp socket connection with DSCP.
+Date: Mon, 20 Feb 2023 14:36:34 +0100
+Message-Id: <20230220133608.911454308@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133602.515342638@linuxfoundation.org>
 References: <20230220133602.515342638@linuxfoundation.org>
@@ -38,11 +38,11 @@ Content-Transfer-Encoding: 8bit
 
 From: Guillaume Nault <gnault@redhat.com>
 
-commit e010ae08c71fda8be3d6bda256837795a0b3ea41 upstream.
+commit 8230680f36fd1525303d1117768c8852314c488c upstream.
 
 Take into account the IPV6_TCLASS socket option (DSCP) in
-ip6_datagram_flow_key_init(). Otherwise fib6_rule_match() can't
-properly match the DSCP value, resulting in invalid route lookup.
+tcp_v6_connect(). Otherwise fib6_rule_match() can't properly
+match the DSCP value, resulting in invalid route lookup.
 
 For example:
 
@@ -51,7 +51,7 @@ For example:
   ip route add table 100 2001:db8::10/124 dev eth0
   ip -6 rule add dsfield 0x04 table 100
 
-  echo test | socat - UDP6:[2001:db8::11]:54321,ipv6-tclass=0x04
+  echo test | socat - TCP6:[2001:db8::11]:54321,ipv6-tclass=0x04
 
 Without this patch, socat fails at connect() time ("No route to host")
 because the fib-rule doesn't jump to table 100 and the lookup ends up
@@ -64,19 +64,18 @@ Reviewed-by: David Ahern <dsahern@kernel.org>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/ipv6/datagram.c |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/ipv6/tcp_ipv6.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/net/ipv6/datagram.c
-+++ b/net/ipv6/datagram.c
-@@ -50,7 +50,7 @@ static void ip6_datagram_flow_key_init(s
- 	fl6->flowi6_mark = sk->sk_mark;
- 	fl6->fl6_dport = inet->inet_dport;
- 	fl6->fl6_sport = inet->inet_sport;
--	fl6->flowlabel = np->flow_label;
-+	fl6->flowlabel = ip6_make_flowinfo(np->tclass, np->flow_label);
- 	fl6->flowi6_uid = sk->sk_uid;
- 
- 	if (!fl6->flowi6_oif)
+--- a/net/ipv6/tcp_ipv6.c
++++ b/net/ipv6/tcp_ipv6.c
+@@ -264,6 +264,7 @@ static int tcp_v6_connect(struct sock *s
+ 	fl6.flowi6_proto = IPPROTO_TCP;
+ 	fl6.daddr = sk->sk_v6_daddr;
+ 	fl6.saddr = saddr ? *saddr : np->saddr;
++	fl6.flowlabel = ip6_make_flowinfo(np->tclass, np->flow_label);
+ 	fl6.flowi6_oif = sk->sk_bound_dev_if;
+ 	fl6.flowi6_mark = sk->sk_mark;
+ 	fl6.fl6_dport = usin->sin6_port;
 
 
