@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E0F263B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:51:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C572CC4339B;
-	Mon, 20 Feb 2023 13:51:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DA72C63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:52:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5D878C433D2;
+	Mon, 20 Feb 2023 13:52:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676901119;
-	bh=DyfMsKxO7PzLaLXkYzrXcYrQ21wzF822oqmwtjjaNI4=;
+	s=korg; t=1676901121;
+	bh=gqYkmnDNnQnevRTuXG+xfYb13EEBZYs7FTvB7P3+pDU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ts9FzucwG7d3Un9qbeUkFzzgLGe2htPdlSeZXllztsW7EM8TR3nD2bJbAbXm+m+L0
-	 q5G6AOOQEEvf9yazQAjwb+phpGiqUEaWQvsVhIcHpKJpAIyJeLayEhp62Hx10qrF8C
-	 UqvsBFNnlHteMLxm8jFf8vDouuprWzQmtBINoGQU=
+	b=1Gx+qWq1GAOaugTQ4mIsIBEoN7lshuWUwqeQnnoQ3/Cy4Wxxej99vxuoCLYevR/XZ
+	 6+Df1/d+BBABvMUOxh/ht7zx5XJhPU9GSY+zz6P+j5RHXidY2bpNxS865WKBOiULDZ
+	 6moqPadUGocR3u9wCxvgZ5f1e7NDlEE12i8ZTIeo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
 	Sanket Goswami <Sanket.Goswami@amd.com>,
-	Mario Limonciello <mario.limonciello@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 5.15 37/83] platform/x86: amd-pmc: Export Idlemask values based on the APU
-Date: Mon, 20 Feb 2023 14:36:10 +0100
-Message-Id: <20230220133554.953960850@linuxfoundation.org>
+	Nathan Chancellor <nathan@kernel.org>,
+	Hans de Goede <hdegoede@redhat.com>,
+	Mario Limonciello <mario.limonciello@amd.com>
+Subject: [PATCH 5.15 38/83] platform/x86: amd-pmc: Fix compilation when CONFIG_DEBUGFS is disabled
+Date: Mon, 20 Feb 2023 14:36:11 +0100
+Message-Id: <20230220133554.985627111@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 References: <20230220133553.669025851@linuxfoundation.org>
@@ -36,57 +37,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sanket Goswami <Sanket.Goswami@amd.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit f6045de1f53268131ea75a99b210b869dcc150b2 upstream.
+commit 40635cd32f0d83573a558dc30e9ba3469e769249 upstream.
 
-IdleMask is the metric used by the PM firmware to know the status of each
-of the Hardware IP blocks monitored by the PM firmware.
+The amd_pmc_get_smu_version() and amd_pmc_idlemask_read() functions are
+used in the probe / suspend/resume code, so they are also used when
+CONFIG_DEBUGFS is disabled, move them outside of the #ifdef CONFIG_DEBUGFS
+block.
 
-Knowing this value is key to get the information of s2idle suspend/resume
-status. This value is mapped to PMC scratch registers, retrieve them
-accordingly based on the CPU family and the underlying firmware support.
+Note this purely moves the code to above the #ifdef CONFIG_DEBUGFS,
+the code is completely unchanged.
 
-Co-developed-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Signed-off-by: Sanket Goswami <Sanket.Goswami@amd.com>
-Reviewed-by: Mario Limonciello <mario.limonciello@amd.com>
-Link: https://lore.kernel.org/r/20210916124002.2529-1-Sanket.Goswami@amd.com
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
+Fixes: f6045de1f532 ("platform/x86: amd-pmc: Export Idlemask values based on the APU")
+Cc: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+Cc: Sanket Goswami <Sanket.Goswami@amd.com>
+Reported-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Mario Limonciello <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd-pmc.c |   76 +++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 76 insertions(+)
+ drivers/platform/x86/amd-pmc.c |   86 ++++++++++++++++++++---------------------
+ 1 file changed, 43 insertions(+), 43 deletions(-)
 
 --- a/drivers/platform/x86/amd-pmc.c
 +++ b/drivers/platform/x86/amd-pmc.c
-@@ -29,6 +29,10 @@
- #define AMD_PMC_REGISTER_RESPONSE	0x980
- #define AMD_PMC_REGISTER_ARGUMENT	0x9BC
- 
-+/* PMC Scratch Registers */
-+#define AMD_PMC_SCRATCH_REG_CZN		0x94
-+#define AMD_PMC_SCRATCH_REG_YC		0xD14
-+
- /* Base address of SMU for mapping physical address to virtual address */
- #define AMD_PMC_SMU_INDEX_ADDRESS	0xB8
- #define AMD_PMC_SMU_INDEX_DATA		0xBC
-@@ -110,6 +114,10 @@ struct amd_pmc_dev {
- 	u32 base_addr;
- 	u32 cpu_id;
- 	u32 active_ips;
-+/* SMU version information */
-+	u16 major;
-+	u16 minor;
-+	u16 rev;
- 	struct device *dev;
- 	struct mutex lock; /* generic mutex lock */
- #if IS_ENABLED(CONFIG_DEBUG_FS)
-@@ -201,6 +209,66 @@ static int s0ix_stats_show(struct seq_fi
- }
- DEFINE_SHOW_ATTRIBUTE(s0ix_stats);
+@@ -155,6 +155,49 @@ struct smu_metrics {
+ 	u64 timecondition_notmet_totaltime[SOC_SUBSYSTEM_IP_MAX];
+ } __packed;
  
 +static int amd_pmc_get_smu_version(struct amd_pmc_dev *dev)
 +{
@@ -131,61 +109,58 @@ Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 +	return 0;
 +}
 +
-+static int amd_pmc_idlemask_show(struct seq_file *s, void *unused)
-+{
-+	struct amd_pmc_dev *dev = s->private;
-+	int rc;
-+
-+	if (dev->major > 56 || (dev->major >= 55 && dev->minor >= 37)) {
-+		rc = amd_pmc_idlemask_read(dev, NULL, s);
-+		if (rc)
-+			return rc;
-+	} else {
-+		seq_puts(s, "Unsupported SMU version for Idlemask\n");
-+	}
-+
-+	return 0;
-+}
-+DEFINE_SHOW_ATTRIBUTE(amd_pmc_idlemask);
-+
- static void amd_pmc_dbgfs_unregister(struct amd_pmc_dev *dev)
+ #ifdef CONFIG_DEBUG_FS
+ static int smu_fw_info_show(struct seq_file *s, void *unused)
  {
- 	debugfs_remove_recursive(dev->dbgfs_dir);
-@@ -213,6 +281,8 @@ static void amd_pmc_dbgfs_register(struc
- 			    &smu_fw_info_fops);
- 	debugfs_create_file("s0ix_stats", 0644, dev->dbgfs_dir, dev,
- 			    &s0ix_stats_fops);
-+	debugfs_create_file("amd_pmc_idlemask", 0644, dev->dbgfs_dir, dev,
-+			    &amd_pmc_idlemask_fops);
+@@ -209,49 +252,6 @@ static int s0ix_stats_show(struct seq_fi
  }
- #else
- static inline void amd_pmc_dbgfs_register(struct amd_pmc_dev *dev)
-@@ -349,6 +419,8 @@ static int __maybe_unused amd_pmc_suspen
- 	amd_pmc_send_cmd(pdev, 0, NULL, SMU_MSG_LOG_RESET, 0);
- 	amd_pmc_send_cmd(pdev, 0, NULL, SMU_MSG_LOG_START, 0);
+ DEFINE_SHOW_ATTRIBUTE(s0ix_stats);
  
-+	/* Dump the IdleMask before we send hint to SMU */
-+	amd_pmc_idlemask_read(pdev, dev, NULL);
- 	msg = amd_pmc_get_os_hint(pdev);
- 	rc = amd_pmc_send_cmd(pdev, 1, NULL, msg, 0);
- 	if (rc)
-@@ -371,6 +443,9 @@ static int __maybe_unused amd_pmc_resume
- 	if (rc)
- 		dev_err(pdev->dev, "resume failed\n");
- 
-+	/* Dump the IdleMask to see the blockers */
-+	amd_pmc_idlemask_read(pdev, dev, NULL);
-+
- 	return 0;
- }
- 
-@@ -458,6 +533,7 @@ static int amd_pmc_probe(struct platform
- 	if (err)
- 		dev_err(dev->dev, "SMU debugging info not supported on this platform\n");
- 
-+	amd_pmc_get_smu_version(dev);
- 	platform_set_drvdata(pdev, dev);
- 	amd_pmc_dbgfs_register(dev);
- 	return 0;
+-static int amd_pmc_get_smu_version(struct amd_pmc_dev *dev)
+-{
+-	int rc;
+-	u32 val;
+-
+-	rc = amd_pmc_send_cmd(dev, 0, &val, SMU_MSG_GETSMUVERSION, 1);
+-	if (rc)
+-		return rc;
+-
+-	dev->major = (val >> 16) & GENMASK(15, 0);
+-	dev->minor = (val >> 8) & GENMASK(7, 0);
+-	dev->rev = (val >> 0) & GENMASK(7, 0);
+-
+-	dev_dbg(dev->dev, "SMU version is %u.%u.%u\n", dev->major, dev->minor, dev->rev);
+-
+-	return 0;
+-}
+-
+-static int amd_pmc_idlemask_read(struct amd_pmc_dev *pdev, struct device *dev,
+-				 struct seq_file *s)
+-{
+-	u32 val;
+-
+-	switch (pdev->cpu_id) {
+-	case AMD_CPU_ID_CZN:
+-		val = amd_pmc_reg_read(pdev, AMD_PMC_SCRATCH_REG_CZN);
+-		break;
+-	case AMD_CPU_ID_YC:
+-		val = amd_pmc_reg_read(pdev, AMD_PMC_SCRATCH_REG_YC);
+-		break;
+-	default:
+-		return -EINVAL;
+-	}
+-
+-	if (dev)
+-		dev_dbg(pdev->dev, "SMU idlemask s0i3: 0x%x\n", val);
+-
+-	if (s)
+-		seq_printf(s, "SMU idlemask : 0x%x\n", val);
+-
+-	return 0;
+-}
+-
+ static int amd_pmc_idlemask_show(struct seq_file *s, void *unused)
+ {
+ 	struct amd_pmc_dev *dev = s->private;
 
 
