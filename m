@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4592163B8
-	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:40:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0CCDC4339B;
-	Mon, 20 Feb 2023 13:40:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EB50C63B8
+	for <patches@lists.linux.dev>; Mon, 20 Feb 2023 13:40:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 54362C433EF;
+	Mon, 20 Feb 2023 13:40:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1676900456;
-	bh=CCTUfMzG7mhS8tCKJ0v7RdtVumVn6FgmPm+lpGXi61A=;
+	s=korg; t=1676900458;
+	bh=V0SzFyq0MH3ytVl5/P65voB+LvKwGIsuXktgN4BiHjs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=L6ZRL6XembOZCFRNqNF+BHjZsDRMj+CFUaQXfljGQx8bHXqcf26pIvYIgS87Ywswn
-	 rbfQ+Y9PxoYEp2CPm3wpo/Hsi9/1alUWvFIVz8jsxxMFz7IToBUhfhqs9BO24n5kzf
-	 eee8HrAjvqe862ko4hyQwUgE5h+/q3MBfcfw22Y4=
+	b=ZDtpHZZeXvQ/Vei6idQ7M05vn1VS95WWYYoxyB9zgeORqaBc+4ANcltjrVq7jg7oQ
+	 z6Rx88BBQbSR9pGRP4wdVHErVbVtYDdk+fo9edSTsBIasw1X3pFu2vYw2Qa4TjK1yf
+	 l5RZk6si1bVK0hLLKejeE11tmNwXCgcKnBf7uL00=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andreas Kemnade <andreas@kemnade.info>,
-	Stable@vger.kernel.org,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Subject: [PATCH 4.19 32/89] iio:adc:twl6030: Enable measurements of VUSB, VBAT and others
-Date: Mon, 20 Feb 2023 14:35:31 +0100
-Message-Id: <20230220133554.285928403@linuxfoundation.org>
+	Helge Deller <deller@gmx.de>
+Subject: [PATCH 4.19 33/89] parisc: Fix return code of pdc_iodc_print()
+Date: Mon, 20 Feb 2023 14:35:32 +0100
+Message-Id: <20230220133554.319290205@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
 References: <20230220133553.066768704@linuxfoundation.org>
@@ -35,70 +33,47 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Andreas Kemnade <andreas@kemnade.info>
+From: Helge Deller <deller@gmx.de>
 
-commit f804bd0dc28683a93a60f271aaefb2fc5b0853dd upstream.
+commit 5d1335dabb3c493a3d6d5b233953b6ac7b6c1ff2 upstream.
 
-Some inputs need to be wired up to produce proper measurements,
-without this change only near zero values are reported.
+There is an off-by-one if the printed string includes a new-line
+char.
 
-Signed-off-by: Andreas Kemnade <andreas@kemnade.info>
-Fixes: 1696f36482e70 ("iio: twl6030-gpadc: TWL6030, TWL6032 GPADC driver")
-Link: https://lore.kernel.org/r/20221201181635.3522962-1-andreas@kemnade.info
-Cc: <Stable@vger.kernel.org>
-Signed-off-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
+Cc: stable@vger.kernel.org
+Signed-off-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/iio/adc/twl6030-gpadc.c |   32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
+ arch/parisc/kernel/firmware.c |    5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
---- a/drivers/iio/adc/twl6030-gpadc.c
-+++ b/drivers/iio/adc/twl6030-gpadc.c
-@@ -71,6 +71,18 @@
- #define TWL6030_GPADCS				BIT(1)
- #define TWL6030_GPADCR				BIT(0)
+--- a/arch/parisc/kernel/firmware.c
++++ b/arch/parisc/kernel/firmware.c
+@@ -1197,7 +1197,7 @@ static char __attribute__((aligned(64)))
+  */
+ int pdc_iodc_print(const unsigned char *str, unsigned count)
+ {
+-	unsigned int i;
++	unsigned int i, found = 0;
+ 	unsigned long flags;
  
-+#define USB_VBUS_CTRL_SET			0x04
-+#define USB_ID_CTRL_SET				0x06
-+
-+#define TWL6030_MISC1				0xE4
-+#define VBUS_MEAS				0x01
-+#define ID_MEAS					0x01
-+
-+#define VAC_MEAS                0x04
-+#define VBAT_MEAS               0x02
-+#define BB_MEAS                 0x01
-+
-+
- /**
-  * struct twl6030_chnl_calib - channel calibration
-  * @gain:		slope coefficient for ideal curve
-@@ -943,6 +955,26 @@ static int twl6030_gpadc_probe(struct pl
- 		return ret;
- 	}
+ 	for (i = 0; i < count;) {
+@@ -1206,6 +1206,7 @@ int pdc_iodc_print(const unsigned char *
+ 			iodc_dbuf[i+0] = '\r';
+ 			iodc_dbuf[i+1] = '\n';
+ 			i += 2;
++			found = 1;
+ 			goto print;
+ 		default:
+ 			iodc_dbuf[i] = str[i];
+@@ -1222,7 +1223,7 @@ print:
+                     __pa(iodc_retbuf), 0, __pa(iodc_dbuf), i, 0);
+         spin_unlock_irqrestore(&pdc_lock, flags);
  
-+	ret = twl_i2c_write_u8(TWL_MODULE_USB, VBUS_MEAS, USB_VBUS_CTRL_SET);
-+	if (ret < 0) {
-+		dev_err(dev, "failed to wire up inputs\n");
-+		return ret;
-+	}
-+
-+	ret = twl_i2c_write_u8(TWL_MODULE_USB, ID_MEAS, USB_ID_CTRL_SET);
-+	if (ret < 0) {
-+		dev_err(dev, "failed to wire up inputs\n");
-+		return ret;
-+	}
-+
-+	ret = twl_i2c_write_u8(TWL6030_MODULE_ID0,
-+				VBAT_MEAS | BB_MEAS | BB_MEAS,
-+				TWL6030_MISC1);
-+	if (ret < 0) {
-+		dev_err(dev, "failed to wire up inputs\n");
-+		return ret;
-+	}
-+
- 	indio_dev->name = DRIVER_NAME;
- 	indio_dev->dev.parent = dev;
- 	indio_dev->info = &twl6030_gpadc_iio_info;
+-	return i;
++	return i - found;
+ }
+ 
+ #if !defined(BOOTLOADER)
 
 
