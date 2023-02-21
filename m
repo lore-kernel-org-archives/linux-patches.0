@@ -1,105 +1,99 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from mail-wm1-f46.google.com (mail-wm1-f46.google.com [209.85.128.46])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D0512F31
-	for <patches@lists.linux.dev>; Tue, 21 Feb 2023 14:40:27 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 19FC15C77D;
-	Tue, 21 Feb 2023 14:33:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1676989983; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=eP5ocU6XXUYDRuHy9gjU+cH8b1jImnrk7y/3atb8yAk=;
-	b=2qX1BYT41Z5HLGBg+ZOFUSWk/W4yYC4+qRWmYA89gjUPOyUzYXzWfnrPKenl98Q5EXKwQ/
-	BpUYtE3YEvnu5Vyk/D3GgYN0JX61w+jvifITQrNGiuajK+7cRKFdT8l2EIAMO0TZtGxPAK
-	YYEg0hDLW81GWo/EHqXr/7nsjd/pI0M=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1676989983;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 content-transfer-encoding:content-transfer-encoding;
-	bh=eP5ocU6XXUYDRuHy9gjU+cH8b1jImnrk7y/3atb8yAk=;
-	b=Md3SGknNU1/bhKHlAq+TS8xJ5ojRG8s8wheQHY1rKc/qxMFy98dYcQ4g+GxdZurd+ZIUBO
-	/TsJ2YMFlwdCRZDg==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id E909713223;
-	Tue, 21 Feb 2023 14:33:02 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id dEZROB7W9GN6VAAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Tue, 21 Feb 2023 14:33:02 +0000
-Message-ID: <0d7dde0e-ac9d-620a-cfe8-7897ed53be60@suse.cz>
-Date: Tue, 21 Feb 2023 15:33:02 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B9AA62F31
+	for <patches@lists.linux.dev>; Tue, 21 Feb 2023 14:55:50 +0000 (UTC)
+Received: by mail-wm1-f46.google.com with SMTP id iv11-20020a05600c548b00b003dc52fed235so3235642wmb.1
+        for <patches@lists.linux.dev>; Tue, 21 Feb 2023 06:55:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=8vYRFHb5gDoOeQ2hkB+dfrhYaR6Ydea8qkg1cZhOWzc=;
+        b=lvxEljblJo9Jo181FYE8il3d92+hS0T8dT8u9x0DYyJStvlwt2pKXD6zPrqJUACQ3F
+         tSBwjvhf6nFjb3FVoSPs3yP1CmG5vr5yOLUx8X+C3hVu0ZZFTQeKbORg9ERmPomKvKxE
+         g6aTjUN5lcPsFXdRCOC34vXqAfeix3awzqB3rwYZArkSVIJGQbcl7+f3Oo9n8he0E98p
+         ewcfFdI8swRlRNuCYP+6KuTUu92zTP/naZk+rvUyM9Dr2cd9eHmvzSpALbGahrw+wcyD
+         P/moPXt7+3Zv2PCC2O1iGd7OGRNf/KWjaDNNE+Y7O7fPHk0uTAN2TOB3yWTB/NhxSskm
+         XZig==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=8vYRFHb5gDoOeQ2hkB+dfrhYaR6Ydea8qkg1cZhOWzc=;
+        b=F8Ww1sFGTJ/BCVA0yCa/WNVS6ufhheyb3lGoI9cyiVKYiUm9ozt7b0xbDKYXFWKRRJ
+         salKir92Iu7xgPckYjEctcunPmciZE7sJGgpGbqTEu+tCngEdJGQle7pZbc9vR4Y1cY2
+         Ah/r8ER2zQ922dofoDi76wu92dAnmxMozQoL3odjlGYe60VpzKXWo7oiG4Z0NNVlwjN4
+         ahPL9gIL11vvz1snxpWQyr7YkRRVaRRCwTCEhMo72+u1FRyt168dnmlg3JbhClaGi3d5
+         jtMn3IR1wJECtbOhOLTBHQBbv7gcWuxVZWHJuzSvxqqaqYRmGIYaed7pIGbg2vlEcKAr
+         KT7A==
+X-Gm-Message-State: AO0yUKW214/r/5pQz2CjDKqDuMqGABF+SMjGz30evT9UE68jAJBxYwr4
+	RM4KPsT+PL9k6w8kO2//nZhjKYjX2bw=
+X-Google-Smtp-Source: AK7set/MZNh28mUW9Q1w3BRd3cchiTogA9C/ej/PjXNZC4RJo8QJtcCwQ3D1mrJLg9RW6seDVj6hyQ==
+X-Received: by 2002:a05:600c:1616:b0:3e0:1a9:b1d7 with SMTP id m22-20020a05600c161600b003e001a9b1d7mr3017853wmn.19.1676991348802;
+        Tue, 21 Feb 2023 06:55:48 -0800 (PST)
+Received: from debian ([63.135.72.41])
+        by smtp.gmail.com with ESMTPSA id o11-20020a05600c510b00b003e1f2e43a1csm4670984wms.48.2023.02.21.06.55.48
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 21 Feb 2023 06:55:48 -0800 (PST)
+Date: Tue, 21 Feb 2023 14:55:46 +0000
+From: "Sudip Mukherjee (Codethink)" <sudipm.mukherjee@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com, srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 000/118] 6.1.13-rc1 review
+Message-ID: <Y/Tbcr5YIocnnFQB@debian>
+References: <20230220133600.368809650@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-From: Vlastimil Babka <vbabka@suse.cz>
-Subject: [GIT PULL] slab updates for 6.3-rc1
-To: Linus Torvalds <torvalds@linux-foundation.org>
-Cc: David Rientjes <rientjes@google.com>, Joonsoo Kim
- <iamjoonsoo.kim@lge.com>, Christoph Lameter <cl@linux.com>,
- Pekka Enberg <penberg@kernel.org>, Andrew Morton
- <akpm@linux-foundation.org>, "linux-mm@kvack.org" <linux-mm@kvack.org>,
- LKML <linux-kernel@vger.kernel.org>, patches@lists.linux.dev,
- Roman Gushchin <roman.gushchin@linux.dev>,
- Hyeonggon Yoo <42.hyeyoo@gmail.com>
-Content-Language: en-US
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
 
-Linus,
+Hi Greg,
 
-please pull the latest slab updates from:
+On Mon, Feb 20, 2023 at 02:35:16PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.13 release.
+> There are 118 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Wed, 22 Feb 2023 13:35:35 +0000.
+> Anything received after that time might be too late.
 
-  git://git.kernel.org/pub/scm/linux/kernel/git/vbabka/slab.git tags/slab-for-6.3
+Build test (gcc version 12.2.1 20230210):
+mips: 52 configs -> no failure
+arm: 100 configs -> no failure
+arm64: 3 configs -> no failure
+x86_64: 4 configs -> no failure
+alpha allmodconfig -> no failure
+csky allmodconfig -> no failure
+powerpc allmodconfig -> no failure
+riscv allmodconfig -> no failure
+s390 allmodconfig -> no failure
+xtensa allmodconfig -> no failure
 
-This time it's just a bunch of smaller cleanups and fixes for SLAB and SLUB:
+Boot test:
+x86_64: Booted on my test laptop. No regression.
+x86_64: Booted on qemu. No regression. [1]
+arm64: Booted on rpi4b (4GB model). No regression. [2]
+mips: Booted on ci20 board. No regression. [3]
 
-- Make it possible to use kmem_cache_alloc_bulk() early in boot when
-  interrupts are not yet enabled, as code doing that started to appear via
-  new maple tree users (by Thomas Gleixner).
+[1]. https://openqa.qa.codethink.co.uk/tests/2908
+[2]. https://openqa.qa.codethink.co.uk/tests/2911
+[3]. https://openqa.qa.codethink.co.uk/tests/2913
 
-- Fix debugfs-related memory leak in SLUB (by Greg Kroah-Hartman).
+Tested-by: Sudip Mukherjee <sudip.mukherjee@codethink.co.uk>
 
-- Use the standard idiom to get head page of folio (by SeongJae Park)
-
-- Simplify and inline is_debug_pagealloc_cache() in SLAB (by lvqian)
-
-- Remove unused variable in SLAB (by Gou Hao)
-
-----------------------------------------------------------------
-Gou Hao (1):
-      mm/slab: remove unused slab_early_init
-
-Greg Kroah-Hartman (1):
-      mm/slub: fix memory leak with using debugfs_lookup()
-
-SeongJae Park (1):
-      mm/sl{a,u}b: fix wrong usages of folio_page() for getting head pages
-
-Thomas Gleixner (1):
-      mm, slab/slub: Ensure kmem_cache_alloc_bulk() is available early
-
-Vlastimil Babka (2):
-      Merge branch 'slab/for-6.3/cleanups' into slab/for-linus
-      Merge branch 'slab/for-6.3/fixes' into slab/for-linus
-
-lvqian (1):
-      mm/slab.c: cleanup is_debug_pagealloc_cache()
-
- mm/slab.c | 34 +++++++++++++++-------------------
- mm/slub.c | 13 +++++++------
- 2 files changed, 22 insertions(+), 25 deletions(-)
-
+-- 
+Regards
+Sudip
