@@ -1,224 +1,91 @@
-Received: from mail-vk1-f181.google.com (mail-vk1-f181.google.com [209.85.221.181])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 304F0110D
-	for <patches@lists.linux.dev>; Tue, 21 Feb 2023 08:04:08 +0000 (UTC)
-Received: by mail-vk1-f181.google.com with SMTP id w126so1971394vkb.1
-        for <patches@lists.linux.dev>; Tue, 21 Feb 2023 00:04:07 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google; t=1676966647;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=HmfqPmpMWyaMOcuYahSH/dCv2pAEW8+BXkyBTQ15vt0=;
-        b=oMIiqrvOFzGZlxiCakUf/YAbSwsGpp5dp7Fjk/ebmejBIv6llCgF6JFEMdaYGds+Jw
-         NoPRMv7pDthBtfifjrrs7aLB9LqHzWfwvWHVKqNWY0iZ/sUtGx4ppgpmYxf7bszfNrsH
-         dd+/hiI0hibMXLQuUROjl25CBDeM5pPstFbYgzvTK5C0irp4DpmTFtSRMneFc+gZm+0S
-         SbMspbTXQWtDJO0oiquH8jl7IRKfA9/g1muBlYX5P+0rXN/fk+MVbIWj6rH8jLvRw4h7
-         O/BDL5GEpkJIdpNl6+iD89EGUkPOcvdygdtiUxGYNEtKfEfSoaqkgOmufsSmII8MayyJ
-         hupA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1676966647;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=HmfqPmpMWyaMOcuYahSH/dCv2pAEW8+BXkyBTQ15vt0=;
-        b=40phbNdQMBZgUZAMfth8gHANHuapJHQPFUkNFbjyTzMNwvJBrfOfU2XY6TUMWuFfil
-         W+AbT0sVlIfumhgpDn1QnaN2kPlpCJCKRflC7tSPEEPUCdHAVSwGZN/izWlj83MNUbuA
-         ddDIf2qtBK262C66K5QqlWsVs5/X6ZrwBKKdT8TXQGbZIcsL5tfouCTZ6uTG3/Sr3wyD
-         F0KoGOswL+FgoZ2kRabUilxEEmMJzDSuJ6uu2xB1tNaJFm4gcUawsq8wXk5klCGlKi35
-         OVhGiz2vVg6p7wSB1Gx73kfczuteMJGegaP/UQQIwJl2P8TJtxuJR9tt5TVpwFxC4KaM
-         8LjQ==
-X-Gm-Message-State: AO0yUKV5AlaPnqUj4L6ur90BaoIC+AZLISQ2A0mEqQ8rGbUJ9NWsJXC8
-	b+P+vWJuZbmRHCti7MG8dQ9Pks/lPezAzgRVRcoIqg==
-X-Google-Smtp-Source: AK7set8yw25wraGSsxotVN40tBfgg33dL0WV5vojf1INXxEKrrvzXg7y3UeuYDxKCrT2dXOHll6aSF8wF7mpeGdEoVw=
-X-Received: by 2002:a1f:2305:0:b0:40e:eec8:6523 with SMTP id
- j5-20020a1f2305000000b0040eeec86523mr316005vkj.43.1676966646867; Tue, 21 Feb
- 2023 00:04:06 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1BACD1390
+	for <patches@lists.linux.dev>; Tue, 21 Feb 2023 08:41:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3D4DFC433D2;
+	Tue, 21 Feb 2023 08:41:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1676968897;
+	bh=57nqzfGVuxrkqL24yI5SeHglbUx3waJxyAiXPHGLbdc=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=lHzC4OLEFGIys80zD/pQCH2fuDiUdlnvsl3GLh0UfFR/Pdv61iMbueMHz5AsKJFr3
+	 famEkZo1wBPAq7Bl84fd18R5R/MxRCZpaFBB+xyBKza9LcoPcVzKkXzMDzll/89kqb
+	 GXuDmcoFEZBUHfjsSN8oCzD00nZF2GYYleBUfehw=
+Date: Tue, 21 Feb 2023 09:41:35 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Paolo Abeni <pabeni@redhat.com>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	Jamal Hadi Salim <jhs@mojatatu.com>,
+	Cong Wang <xiyou.wangcong@gmail.com>, Jiri Pirko <jiri@resnulli.us>,
+	"David S. Miller" <davem@davemloft.net>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>, netdev@vger.kernel.org,
+	Kees Cook <keescook@chromium.org>,
+	Simon Horman <simon.horman@corigine.com>,
+	Cong Wang <cong.wang@bytedance.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: Re: [PATCH 5.4 096/156] net: sched: sch: Bounds check priority
+Message-ID: <Y/SDvySpXrsemVpH@kroah.com>
+References: <20230220133602.515342638@linuxfoundation.org>
+ <20230220133606.471631231@linuxfoundation.org>
+ <1bfe95ba03a58d773f50a628b9fb5e007dd124ad.camel@redhat.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230220133549.360169435@linuxfoundation.org>
-In-Reply-To: <20230220133549.360169435@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Tue, 21 Feb 2023 13:33:55 +0530
-Message-ID: <CA+G9fYuYzuHXG9+MZofYziim-nXq6TCUtJ-GdoE5Jue-P1cQqg@mail.gmail.com>
-Subject: Re: [PATCH 5.10 00/57] 5.10.169-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1bfe95ba03a58d773f50a628b9fb5e007dd124ad.camel@redhat.com>
 
-On Mon, 20 Feb 2023 at 19:25, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 5.10.169 release.
-> There are 57 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 22 Feb 2023 13:35:35 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-=
-5.10.169-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-5.10.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Tue, Feb 21, 2023 at 08:45:18AM +0100, Paolo Abeni wrote:
+> Hello,
+> 
+> On Mon, 2023-02-20 at 14:35 +0100, Greg Kroah-Hartman wrote:
+> > From: Kees Cook <keescook@chromium.org>
+> > 
+> > [ Upstream commit de5ca4c3852f896cacac2bf259597aab5e17d9e3 ]
+> > 
+> > Nothing was explicitly bounds checking the priority index used to access
+> > clpriop[]. WARN and bail out early if it's pathological. Seen with GCC 13:
+> > 
+> > ../net/sched/sch_htb.c: In function 'htb_activate_prios':
+> > ../net/sched/sch_htb.c:437:44: warning: array subscript [0, 31] is outside array bounds of 'struct htb_prio[8]' [-Warray-bounds=]
+> >   437 |                         if (p->inner.clprio[prio].feed.rb_node)
+> >       |                             ~~~~~~~~~~~~~~~^~~~~~
+> > ../net/sched/sch_htb.c:131:41: note: while referencing 'clprio'
+> >   131 |                         struct htb_prio clprio[TC_HTB_NUMPRIO];
+> >       |                                         ^~~~~~
+> > 
+> > Cc: Jamal Hadi Salim <jhs@mojatatu.com>
+> > Cc: Cong Wang <xiyou.wangcong@gmail.com>
+> > Cc: Jiri Pirko <jiri@resnulli.us>
+> > Cc: "David S. Miller" <davem@davemloft.net>
+> > Cc: Eric Dumazet <edumazet@google.com>
+> > Cc: Jakub Kicinski <kuba@kernel.org>
+> > Cc: Paolo Abeni <pabeni@redhat.com>
+> > Cc: netdev@vger.kernel.org
+> > Signed-off-by: Kees Cook <keescook@chromium.org>
+> > Reviewed-by: Simon Horman <simon.horman@corigine.com>
+> > Reviewed-by: Cong Wang <cong.wang@bytedance.com>
+> > Link: https://lore.kernel.org/r/20230127224036.never.561-kees@kernel.org
+> > Signed-off-by: Paolo Abeni <pabeni@redhat.com>
+> > Signed-off-by: Sasha Levin <sashal@kernel.org>
+> 
+> This one has a follow-up which I don't see among the patches reaching
+> the netdev ML:
+> 
+> commit 9cec2aaffe969f2a3e18b5ec105fc20bb908e475
+> Author: Dan Carpenter <error27@gmail.com>
+> Date:   Mon Feb 6 16:18:32 2023 +0300
+> 
+>     net: sched: sch: Fix off by one in htb_activate_prios()
 
+This too is in the queue for 5.4 and newer kernels, are you sure you
+didn't miss that in this series?
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+thanks,
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
-
-## Build
-* kernel: 5.10.169-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-5.10.y
-* git commit: 7d11e4c4fc56eb25c5b41da93748dbcf21956316
-* git describe: v5.10.168-58-g7d11e4c4fc56
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-5.10.y/build/v5.10=
-.168-58-g7d11e4c4fc56
-
-## Test Regressions (compared to v5.10.168)
-
-## Metric Regressions (compared to v5.10.168)
-
-## Test Fixes (compared to v5.10.168)
-
-## Metric Fixes (compared to v5.10.168)
-
-## Test result summary
-total: 156525, pass: 130423, fail: 3439, skip: 22346, xfail: 317
-
-## Build Summary
-* arc: 5 total, 5 passed, 0 failed
-* arm: 149 total, 148 passed, 1 failed
-* arm64: 49 total, 46 passed, 3 failed
-* i386: 39 total, 37 passed, 2 failed
-* mips: 31 total, 29 passed, 2 failed
-* parisc: 8 total, 8 passed, 0 failed
-* powerpc: 32 total, 25 passed, 7 failed
-* riscv: 16 total, 11 passed, 5 failed
-* s390: 16 total, 16 passed, 0 failed
-* sh: 14 total, 12 passed, 2 failed
-* sparc: 8 total, 8 passed, 0 failed
-* x86_64: 42 total, 40 passed, 2 failed
-
-## Test suites summary
-* boot
-* fwts
-* igt-gpu-tools
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-vm
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libgpiod
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-open-posix-tests
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* packetdrill
-* perf
-* rcutorture
-* v4l2-compliance
-* vdso
-
---
-Linaro LKFT
-https://lkft.linaro.org
+greg k-h
