@@ -1,102 +1,97 @@
-Received: from progateway7-pub.mail.pro1.eigbox.com (gproxy5-pub.mail.unifiedlayer.com [67.222.38.55])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f179.google.com (mail-pl1-f179.google.com [209.85.214.179])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AF053ED3
-	for <patches@lists.linux.dev>; Tue, 21 Feb 2023 03:16:39 +0000 (UTC)
-Received: from cmgw12.mail.unifiedlayer.com (unknown [10.0.90.127])
-	by progateway7.mail.pro1.eigbox.com (Postfix) with ESMTP id 0BA89100471C7
-	for <patches@lists.linux.dev>; Tue, 21 Feb 2023 03:16:30 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id UJ8npGilOrt2IUJ8np4Zja; Tue, 21 Feb 2023 03:16:30 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=EfEN/NqC c=1 sm=1 tr=0 ts=63f4378e
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=m04uMKEZRckA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=uxFE05t1smjoYJzm71MA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=Un9x076h/rn4fMIFmEZ4fxZnFLRkkfrjeVzUKu+mjWc=; b=blNg9OUflKIMeTIGRTjD8WTFXe
-	Sx0EUJHryYdkplO3VKTS0BuFHsaGLWE4Sz/PlRQc8/Z0uKweEP0AJmFNOSorKrsiSxz/WULzSbKYR
-	jAEzd1g9AjWuO+BjU6zQ9quVYRLLgs1gmsTAyRpw4ui1endiZvrDg0tjA1QUV8vWmCTkyM1caI8fJ
-	NwbFdqkMupaRvtpjWCZiTdLych8tH/2fDOYkHk/7rn/LC+cS2F5+1kAoKgpH22MTlRoL1+zUideOU
-	lwRvXXyCTha+I5d44w47c64IjSSLfwEHrJwE/O6u+JOxqWkYMJpDNOHZf/aSkHRAeMAbOqoM4IR/q
-	rQGDtFrg==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:54774 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1pUJ8m-002nQW-AG;
-	Mon, 20 Feb 2023 20:16:28 -0700
-Subject: Re: [PATCH 6.1 000/118] 6.1.13-rc1 review
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7FBB610EB
+	for <patches@lists.linux.dev>; Tue, 21 Feb 2023 04:10:27 +0000 (UTC)
+Received: by mail-pl1-f179.google.com with SMTP id ky4so4834556plb.3
+        for <patches@lists.linux.dev>; Mon, 20 Feb 2023 20:10:27 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+        bh=lXyOh2O1dEJnjqw0oc/4l4klbePXdkEgK9fd88+a/14=;
+        b=GZVuSZKwNkP6wAXsWXjVlb2muEXBGY9KNOS40zvN1LlFahjUvM+aVuaBRBoLuWbvTl
+         Nn1AqEmsqPbsjG1eUpwBWZ0rI1VTfnZjnk78xnMNkxm2n+EQjhIDU575N/6mL+Zb0+8Z
+         TTwvp/SXd4fa/LphYvilqnSnSVljNMhTdEZZAif0BYLcmrG55W/eMleJkLXH55J2INP7
+         0DFr5ffeSC/Ilvp6iavY6pLoLJUO8+JC/p6oTqGmyhvnW+FSTZCnome5gcIWqZorUufo
+         G0fErA/qlrr4khbUQy4FXhSt+NcwBiuJ8KF4HXJqP4nLvFCPhrdVxNdvAFX48ixmoEa/
+         iKwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=lXyOh2O1dEJnjqw0oc/4l4klbePXdkEgK9fd88+a/14=;
+        b=7/E5tged7iNhR1n/8c4prX5eKI4QfVXA6RZONrTtUOnNY6ZfchDBUwQDcim2zJavaI
+         cgyavjh60BWzlEu72Bv/mbQZg+jt/JiTMAyl0UfazwK9BNMrl4LvqBF+VlbUvywYUf+I
+         6qHjhYSdVp2lLnBAvozGnyAn0t+5t1tMHstzMEOISINQBjCfDalhA5RmyPtKNz4vMArU
+         JcWz13WbIHKgTvK2/KEDf7ILUY5Oo2SvNeXRwDqibPsyXvv7fyX7zjUXa6vo5Gcf4nAA
+         oTLKVdL2cUHHRMwBTTtpX1vUbOa/73rsz9z4T0/VLjWd3r2M5a25oow21Yo/45+vF+yp
+         pv/g==
+X-Gm-Message-State: AO0yUKUsumBtW4wmYiyiH7+fILIRYFu8SI7QQl9wKG2u4iL5SiQ0NDWd
+	N/JCCXLMWNYe9ns6hVwSSQU=
+X-Google-Smtp-Source: AK7set/7F2MOp2QnZqhMrucReUtUIlX6KUK5DW0wQnKJWjeznQmP3a00u2fH3Uwms5eN+oHRr4T4nQ==
+X-Received: by 2002:a17:902:e5d1:b0:19a:b4f1:a847 with SMTP id u17-20020a170902e5d100b0019ab4f1a847mr3143353plf.8.1676952626812;
+        Mon, 20 Feb 2023 20:10:26 -0800 (PST)
+Received: from debian.me (subs09b-223-255-225-230.three.co.id. [223.255.225.230])
+        by smtp.gmail.com with ESMTPSA id c4-20020a170902c1c400b0019a88c1cf63sm108073plc.180.2023.02.20.20.10.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Feb 2023 20:10:26 -0800 (PST)
+Received: by debian.me (Postfix, from userid 1000)
+	id EB7E5100981; Tue, 21 Feb 2023 11:10:21 +0700 (WIB)
+Date: Tue, 21 Feb 2023 11:10:21 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
 To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
 Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230220133600.368809650@linuxfoundation.org>
-In-Reply-To: <20230220133600.368809650@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <fad3fedf-2422-fb7e-7a96-ba1ce6b46b78@w6rz.net>
-Date: Mon, 20 Feb 2023 19:16:23 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 5.15 00/83] 5.15.95-rc1 review
+Message-ID: <Y/RELV4ktxMGtBEn@debian.me>
+References: <20230220133553.669025851@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1pUJ8m-002nQW-AG
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:54774
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: multipart/signed; micalg=pgp-sha512;
+	protocol="application/pgp-signature"; boundary="HK7sqjx6A7ub8tOC"
+Content-Disposition: inline
+In-Reply-To: <20230220133553.669025851@linuxfoundation.org>
 
-On 2/20/23 5:35 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.13 release.
-> There are 118 patches in this series, all will be posted as a response
+
+--HK7sqjx6A7ub8tOC
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+
+On Mon, Feb 20, 2023 at 02:35:33PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 5.15.95 release.
+> There are 83 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->
-> Responses should be made by Wed, 22 Feb 2023 13:35:35 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.13-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+>=20
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
+powerpc (ps3_defconfig, GCC 12.2.0).
 
-Tested-by: Ron Economos <re@w6rz.net>
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
+--=20
+An old man doll... just what I always wanted! - Clara
+
+--HK7sqjx6A7ub8tOC
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY/REIQAKCRD2uYlJVVFO
+o9e4AQDf2EDmOgDW9C8nNuVq2MwBbyrBWCn/2qhVvJ1axc0I/gEA5IFoszDSs0Ps
+SqfrQOgTCChE1yLceiroWVWQ7ONAJQ8=
+=/vMq
+-----END PGP SIGNATURE-----
+
+--HK7sqjx6A7ub8tOC--
