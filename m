@@ -1,76 +1,67 @@
-Received: from mga09.intel.com (mga09.intel.com [134.134.136.24])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 55B19A92D
-	for <patches@lists.linux.dev>; Wed, 22 Feb 2023 22:29:04 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
-  t=1677104944; x=1708640944;
-  h=message-id:date:mime-version:subject:to:cc:references:
-   from:in-reply-to:content-transfer-encoding;
-  bh=tb0CU1hOIcF8YfLnEGDkQsq99wv6qzkZVCjQBnACc0s=;
-  b=gfm9OcsUGi1BHbQN32X/VpkUhIyCtGXeL0nDWpUkycHdxYOZXGvXjN4p
-   a+WB8ahH+1W5I4KLndfKBmpVVm+qu0BeIA8xBCCB/lbSAV1IDQCCk8HOC
-   AfWqtSBaElGycYnDw/0CiXegXyiRHbl+taoU9+h6XV2pi9nWuQZdlyLuC
-   PLj9qG8pK+CruNqPQNRyWgRBAYpZ/seo2M3tlRp++pj58w7xcdOOsTQeL
-   NZxOAVf7vrqLaub14FHodEkw78zpnqdYFOpNAAaWnktxICNzB29Peyujs
-   nHoWU3mhbdh4O1CFh4NmdBDOdOS2UiiEKnM5fK241C6EeNA+WVMIxC76Y
-   g==;
-X-IronPort-AV: E=McAfee;i="6500,9779,10629"; a="334418934"
-X-IronPort-AV: E=Sophos;i="5.97,319,1669104000"; 
-   d="scan'208";a="334418934"
-Received: from orsmga007.jf.intel.com ([10.7.209.58])
-  by orsmga102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Feb 2023 14:28:56 -0800
-X-IronPort-AV: E=McAfee;i="6500,9779,10629"; a="665511550"
-X-IronPort-AV: E=Sophos;i="5.97,319,1669104000"; 
-   d="scan'208";a="665511550"
-Received: from tzinser-mobl.amr.corp.intel.com (HELO [10.209.49.182]) ([10.209.49.182])
-  by orsmga007-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Feb 2023 14:28:56 -0800
-Message-ID: <8fb5ebbf-d468-169d-5603-b267e7b42516@intel.com>
-Date: Wed, 22 Feb 2023 14:28:55 -0800
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 770DA10E6
+	for <patches@lists.linux.dev>; Wed, 22 Feb 2023 22:36:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0432EC433EF;
+	Wed, 22 Feb 2023 22:36:55 +0000 (UTC)
+Date: Wed, 22 Feb 2023 17:36:54 -0500
+From: Steven Rostedt <rostedt@goodmis.org>
+To: Dave Hansen <dave.hansen@intel.com>
+Cc: "Joseph, Jithu" <jithu.joseph@intel.com>, hdegoede@redhat.com,
+ markgross@kernel.org, tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+ dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+ gregkh@linuxfoundation.org, ashok.raj@intel.com, tony.luck@intel.com,
+ linux-kernel@vger.kernel.org, platform-driver-x86@vger.kernel.org,
+ patches@lists.linux.dev, ravi.v.shankar@intel.com,
+ thiago.macieira@intel.com, athenas.jimenez.gonzalez@intel.com,
+ sohil.mehta@intel.com
+Subject: Re: [PATCH v2 4/7] platform/x86/intel/ifs: Implement Array BIST
+ test
+Message-ID: <20230222173654.275a2c78@gandalf.local.home>
+In-Reply-To: <8fb5ebbf-d468-169d-5603-b267e7b42516@intel.com>
+References: <20230131234302.3997223-1-jithu.joseph@intel.com>
+	<20230214234426.344960-1-jithu.joseph@intel.com>
+	<20230214234426.344960-5-jithu.joseph@intel.com>
+	<a24c65f8-978d-8968-7874-6b83e14b01ba@intel.com>
+	<d9d18954-8434-4c85-88b8-8e1d99cd6a4b@intel.com>
+	<dd501d6a-e7e9-be82-24fb-33b18fb6192b@intel.com>
+	<b67d2125-4075-4eac-4cad-8e315b866144@intel.com>
+	<5d57f42a-1bfc-5e6a-bb49-556ecb7402af@intel.com>
+	<9c55a34b-c17e-2a62-9989-902ce940dde5@intel.com>
+	<42ac85ea-0ffe-55fc-57c2-6f4555e8dc5b@intel.com>
+	<8fb5ebbf-d468-169d-5603-b267e7b42516@intel.com>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-pc-linux-gnu)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH v2 4/7] platform/x86/intel/ifs: Implement Array BIST test
-Content-Language: en-US
-To: "Joseph, Jithu" <jithu.joseph@intel.com>, hdegoede@redhat.com,
- markgross@kernel.org
-Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
- dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
- gregkh@linuxfoundation.org, rostedt@goodmis.org, ashok.raj@intel.com,
- tony.luck@intel.com, linux-kernel@vger.kernel.org,
- platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
- ravi.v.shankar@intel.com, thiago.macieira@intel.com,
- athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
-References: <20230131234302.3997223-1-jithu.joseph@intel.com>
- <20230214234426.344960-1-jithu.joseph@intel.com>
- <20230214234426.344960-5-jithu.joseph@intel.com>
- <a24c65f8-978d-8968-7874-6b83e14b01ba@intel.com>
- <d9d18954-8434-4c85-88b8-8e1d99cd6a4b@intel.com>
- <dd501d6a-e7e9-be82-24fb-33b18fb6192b@intel.com>
- <b67d2125-4075-4eac-4cad-8e315b866144@intel.com>
- <5d57f42a-1bfc-5e6a-bb49-556ecb7402af@intel.com>
- <9c55a34b-c17e-2a62-9989-902ce940dde5@intel.com>
- <42ac85ea-0ffe-55fc-57c2-6f4555e8dc5b@intel.com>
-From: Dave Hansen <dave.hansen@intel.com>
-In-Reply-To: <42ac85ea-0ffe-55fc-57c2-6f4555e8dc5b@intel.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset=US-ASCII
 Content-Transfer-Encoding: 7bit
 
-On 2/22/23 14:07, Joseph, Jithu wrote:
-> Since the trace has to be explicitly enabled (I thought it is okay to
-> add a more convenient custom one only to be enabled for detailed
-> analysis when required).
+On Wed, 22 Feb 2023 14:28:55 -0800
+Dave Hansen <dave.hansen@intel.com> wrote:
 
-	man perf-script
+> On 2/22/23 14:07, Joseph, Jithu wrote:
+> > Since the trace has to be explicitly enabled (I thought it is okay to
+> > add a more convenient custom one only to be enabled for detailed
+> > analysis when required).  
+> 
+> 	man perf-script
 
-You should be able to write one to do exactly what you need in about 10
-minutes.  No new tracepoints, no new kernel code to maintain.  Knock
-yourself out with whatever conveniences you want.  Just do it in userspace.
+Or do it in C with tracefs :-)
 
-I still think this patch should go away.
+  https://www.trace-cmd.org/Documentation/libtracefs/
+
+-- Steve
+
+
+> 
+> You should be able to write one to do exactly what you need in about 10
+> minutes.  No new tracepoints, no new kernel code to maintain.  Knock
+> yourself out with whatever conveniences you want.  Just do it in userspace.
+> 
+> I still think this patch should go away.
+
