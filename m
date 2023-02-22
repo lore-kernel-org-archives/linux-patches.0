@@ -1,67 +1,77 @@
-Received: from jabberwock.ucw.cz (jabberwock.ucw.cz [46.255.230.98])
+Received: from mga03.intel.com (mga03.intel.com [134.134.136.65])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E88E42F3F
-	for <patches@lists.linux.dev>; Wed, 22 Feb 2023 14:43:08 +0000 (UTC)
-Received: by jabberwock.ucw.cz (Postfix, from userid 1017)
-	id 1164A1C0AAC; Wed, 22 Feb 2023 15:43:01 +0100 (CET)
-Date: Wed, 22 Feb 2023 15:43:00 +0100
-From: Pavel Machek <pavel@denx.de>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, toke@redhat.com,
-	daniel@iogearbox.net, dsahern@gmail.com
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 4.19 00/89] 4.19.273-rc1 review
-Message-ID: <Y/Yp9PPbY99p+i8X@duo.ucw.cz>
-References: <20230220133553.066768704@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E828A29A8
+	for <patches@lists.linux.dev>; Wed, 22 Feb 2023 20:12:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1677096778; x=1708632778;
+  h=message-id:date:mime-version:subject:to:cc:references:
+   from:in-reply-to:content-transfer-encoding;
+  bh=v93VOV+gt3R5T1tPMwoB5pb0cOgtbnAz2F53IOxXfXs=;
+  b=ELV6pX3W3Qaz0Bd4hfa3oZbwrvukvUN/URqbzICJcx3f9AyTDs9Yve6l
+   qa6WZTL2nRkYNPh+/4780AGldLPfFopRaPtzkegr6lkgeS9jwIFQPWX6T
+   IpnQO6aumdJWt9f2GLOOLzbS6dLclTsHwU/zKVdjbOIyFyJTKXbG3qFWt
+   l41IE2eZqIngzuTx5lIGSLdCr9HyVGD94irgN5vg4MZfbTxGUsd0LW4P4
+   XLrUyx4Xfuj3FRwQLU/QH5+HfhnsYH9i5z28CVrT1OVuTOc2TL1qXiXTf
+   1BokwxT82SuKqgtXkqeTU1Mm5nw0s1TYxMmeME5mUtX0+H59hiwi9ZabB
+   w==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10629"; a="335234871"
+X-IronPort-AV: E=Sophos;i="5.97,319,1669104000"; 
+   d="scan'208";a="335234871"
+Received: from fmsmga004.fm.intel.com ([10.253.24.48])
+  by orsmga103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Feb 2023 12:12:58 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10629"; a="740973058"
+X-IronPort-AV: E=Sophos;i="5.97,319,1669104000"; 
+   d="scan'208";a="740973058"
+Received: from tzinser-mobl.amr.corp.intel.com (HELO [10.209.49.182]) ([10.209.49.182])
+  by fmsmga004-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 22 Feb 2023 12:12:56 -0800
+Message-ID: <9c55a34b-c17e-2a62-9989-902ce940dde5@intel.com>
+Date: Wed, 22 Feb 2023 12:12:55 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha1;
-	protocol="application/pgp-signature"; boundary="s/7m1nmvh2r3HdAv"
-Content-Disposition: inline
-In-Reply-To: <20230220133553.066768704@linuxfoundation.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH v2 4/7] platform/x86/intel/ifs: Implement Array BIST test
+Content-Language: en-US
+To: "Joseph, Jithu" <jithu.joseph@intel.com>, hdegoede@redhat.com,
+ markgross@kernel.org
+Cc: tglx@linutronix.de, mingo@redhat.com, bp@alien8.de,
+ dave.hansen@linux.intel.com, x86@kernel.org, hpa@zytor.com,
+ gregkh@linuxfoundation.org, rostedt@goodmis.org, ashok.raj@intel.com,
+ tony.luck@intel.com, linux-kernel@vger.kernel.org,
+ platform-driver-x86@vger.kernel.org, patches@lists.linux.dev,
+ ravi.v.shankar@intel.com, thiago.macieira@intel.com,
+ athenas.jimenez.gonzalez@intel.com, sohil.mehta@intel.com
+References: <20230131234302.3997223-1-jithu.joseph@intel.com>
+ <20230214234426.344960-1-jithu.joseph@intel.com>
+ <20230214234426.344960-5-jithu.joseph@intel.com>
+ <a24c65f8-978d-8968-7874-6b83e14b01ba@intel.com>
+ <d9d18954-8434-4c85-88b8-8e1d99cd6a4b@intel.com>
+ <dd501d6a-e7e9-be82-24fb-33b18fb6192b@intel.com>
+ <b67d2125-4075-4eac-4cad-8e315b866144@intel.com>
+ <5d57f42a-1bfc-5e6a-bb49-556ecb7402af@intel.com>
+From: Dave Hansen <dave.hansen@intel.com>
+In-Reply-To: <5d57f42a-1bfc-5e6a-bb49-556ecb7402af@intel.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
+On 2/15/23 13:13, Joseph, Jithu wrote:
+>  And for the last argument, we need to dump the whole 64 bits within "command"
+> into trace output . 
 
---s/7m1nmvh2r3HdAv
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+No, no you don't.
 
-Hi!
+Just split it up in to human-readable logical pieces.  You don't need to
+dump the whole 'command'.  If you want to trace the completion mask,
+then extract the mask and print *that* with a proper field name.
 
-> This is the start of the stable review cycle for the 4.19.273 release.
-> There are 89 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+I actually really think this tracing should go away, *ESPECIALLY* if you
+insist on dumping out raw, non-human-readable MSR values.
 
-> Toke H=F8iland-J=F8rgensen <toke@redhat.com>
->     bpf: Always return target ifindex in bpf_fib_lookup
-
-Changelog talks about bpf_redirect_neigh but we don't have that in
-4.19. It is not clear what bug this fixes. Do we need it in 4.19?
-
-Best regards,
-								Pavel
---=20
-DENX Software Engineering GmbH,      Managing Director: Wolfgang Denk
-HRB 165235 Munich, Office: Kirchenstr.5, D-82194 Groebenzell, Germany
-
---s/7m1nmvh2r3HdAv
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iF0EABECAB0WIQRPfPO7r0eAhk010v0w5/Bqldv68gUCY/Yp9AAKCRAw5/Bqldv6
-8jw/AJ0RCtiGX/QXR7TGDEenQZjX620okACgnw96PaeuUBJAYVq7cLYOdZajkM0=
-=SmSR
------END PGP SIGNATURE-----
-
---s/7m1nmvh2r3HdAv--
+I say NAK on the tracing.  You haven't convinced me that it's necessary
+on top of what we have today (MSR tracing).
