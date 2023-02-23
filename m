@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6D9EC2584
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:09:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E817EC433EF;
-	Thu, 23 Feb 2023 13:09:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0AC3C2584
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:09:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84416C433D2;
+	Thu, 23 Feb 2023 13:09:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157787;
-	bh=m5w68lAElSkqotMfgm3dTzokS3uk62zy1nIRDv311sE=;
+	s=korg; t=1677157789;
+	bh=Znq77NldJrO5mrL9Y1tVbdJWOciLYeWwe9GclaI+pJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=gbCvSTAxAjWvzahkW78EzvdC6VakORkvv7sWu3FYGYHopTFmOurtSNcPONcdGiLXG
-	 g3hdQN7giuCmZqP8csDgNpvmdB5pdpa5I/pgjbAY7aRypO1DzPudIQZo4t3Cg+DOz9
-	 WdaTn+bAW56sKjO6d9CwAkHZsgBrq5aByxWNnQ7k=
+	b=HV17t3EK9uiqCZgKBvoKHs3Db6++WseN48JaJDVpE70z+td+/uZ8QlP+rdKlDMfPB
+	 1sEtvw79pspj1R6279+7BuBWQbQXJUXGB4/mM26WozNeU+LrBxhB4bdlSN9qF2Kmxu
+	 tj2Tz8Mf27GjIzefg39b/fe1Wdqo1UP8NUTk5TS8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Anderson <sean.anderson@seco.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Rahul Tanwar <rtanwar@maxlinear.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 09/46] powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
-Date: Thu, 23 Feb 2023 14:06:16 +0100
-Message-Id: <20230223130431.968277420@linuxfoundation.org>
+Subject: [PATCH 6.1 10/46] clk: mxl: syscon_node_to_regmap() returns error pointers
+Date: Thu, 23 Feb 2023 14:06:17 +0100
+Message-Id: <20230223130432.017184720@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130431.553657459@linuxfoundation.org>
 References: <20230223130431.553657459@linuxfoundation.org>
@@ -35,140 +36,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Anderson <sean.anderson@seco.com>
+From: Rahul Tanwar <rtanwar@maxlinear.com>
 
-[ Upstream commit 36926a7d70c2d462fca1ed85bfee000d17fd8662 ]
+[ Upstream commit 7256d1f4618b40792d1e9b9b6cb1406a13cad2dd ]
 
-On the T208X SoCs, MAC1 and MAC2 support XGMII. Add some new MAC dtsi
-fragments, and mark the QMAN ports as 10G.
+Commit 036177310bac ("clk: mxl: Switch from direct readl/writel based IO
+to regmap based IO") introduced code resulting in below warning issued
+by the smatch static checker.
 
-Fixes: da414bb923d9 ("powerpc/mpc85xx: Add FSL QorIQ DPAA FMan support to the SoC device tree(s)")
-Signed-off-by: Sean Anderson <sean.anderson@seco.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+  drivers/clk/x86/clk-lgm.c:441 lgm_cgu_probe() warn: passing zero to 'PTR_ERR'
+
+Fix the warning by replacing incorrect IS_ERR_OR_NULL() with IS_ERR().
+
+Fixes: 036177310bac ("clk: mxl: Switch from direct readl/writel based IO to regmap based IO")
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Rahul Tanwar <rtanwar@maxlinear.com>
+Link: https://lore.kernel.org/r/49e339d4739e4ae4c92b00c1b2918af0755d4122.1666695221.git.rtanwar@maxlinear.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi     | 44 +++++++++++++++++++
- .../boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi     | 44 +++++++++++++++++++
- arch/powerpc/boot/dts/fsl/t2081si-post.dtsi   |  4 +-
- 3 files changed, 90 insertions(+), 2 deletions(-)
- create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
- create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
+ drivers/clk/x86/clk-lgm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
-new file mode 100644
-index 0000000000000..437dab3fc0176
---- /dev/null
-+++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
-@@ -0,0 +1,44 @@
-+// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
-+/*
-+ * QorIQ FMan v3 10g port #2 device tree stub [ controller @ offset 0x400000 ]
-+ *
-+ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
-+ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
-+ */
-+
-+fman@400000 {
-+	fman0_rx_0x08: port@88000 {
-+		cell-index = <0x8>;
-+		compatible = "fsl,fman-v3-port-rx";
-+		reg = <0x88000 0x1000>;
-+		fsl,fman-10g-port;
-+	};
-+
-+	fman0_tx_0x28: port@a8000 {
-+		cell-index = <0x28>;
-+		compatible = "fsl,fman-v3-port-tx";
-+		reg = <0xa8000 0x1000>;
-+		fsl,fman-10g-port;
-+	};
-+
-+	ethernet@e0000 {
-+		cell-index = <0>;
-+		compatible = "fsl,fman-memac";
-+		reg = <0xe0000 0x1000>;
-+		fsl,fman-ports = <&fman0_rx_0x08 &fman0_tx_0x28>;
-+		ptp-timer = <&ptp_timer0>;
-+		pcsphy-handle = <&pcsphy0>;
-+	};
-+
-+	mdio@e1000 {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
-+		reg = <0xe1000 0x1000>;
-+		fsl,erratum-a011043; /* must ignore read errors */
-+
-+		pcsphy0: ethernet-phy@0 {
-+			reg = <0x0>;
-+		};
-+	};
-+};
-diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
-new file mode 100644
-index 0000000000000..ad116b17850a8
---- /dev/null
-+++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
-@@ -0,0 +1,44 @@
-+// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
-+/*
-+ * QorIQ FMan v3 10g port #3 device tree stub [ controller @ offset 0x400000 ]
-+ *
-+ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
-+ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
-+ */
-+
-+fman@400000 {
-+	fman0_rx_0x09: port@89000 {
-+		cell-index = <0x9>;
-+		compatible = "fsl,fman-v3-port-rx";
-+		reg = <0x89000 0x1000>;
-+		fsl,fman-10g-port;
-+	};
-+
-+	fman0_tx_0x29: port@a9000 {
-+		cell-index = <0x29>;
-+		compatible = "fsl,fman-v3-port-tx";
-+		reg = <0xa9000 0x1000>;
-+		fsl,fman-10g-port;
-+	};
-+
-+	ethernet@e2000 {
-+		cell-index = <1>;
-+		compatible = "fsl,fman-memac";
-+		reg = <0xe2000 0x1000>;
-+		fsl,fman-ports = <&fman0_rx_0x09 &fman0_tx_0x29>;
-+		ptp-timer = <&ptp_timer0>;
-+		pcsphy-handle = <&pcsphy1>;
-+	};
-+
-+	mdio@e3000 {
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
-+		reg = <0xe3000 0x1000>;
-+		fsl,erratum-a011043; /* must ignore read errors */
-+
-+		pcsphy1: ethernet-phy@0 {
-+			reg = <0x0>;
-+		};
-+	};
-+};
-diff --git a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
-index ecbb447920bc6..74e17e134387d 100644
---- a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
-+++ b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
-@@ -609,8 +609,8 @@
- /include/ "qoriq-bman1.dtsi"
+diff --git a/drivers/clk/x86/clk-lgm.c b/drivers/clk/x86/clk-lgm.c
+index 4de77b2c750d3..f69455dd1c980 100644
+--- a/drivers/clk/x86/clk-lgm.c
++++ b/drivers/clk/x86/clk-lgm.c
+@@ -436,7 +436,7 @@ static int lgm_cgu_probe(struct platform_device *pdev)
+ 	ctx->clk_data.num = CLK_NR_CLKS;
  
- /include/ "qoriq-fman3-0.dtsi"
--/include/ "qoriq-fman3-0-1g-0.dtsi"
--/include/ "qoriq-fman3-0-1g-1.dtsi"
-+/include/ "qoriq-fman3-0-10g-2.dtsi"
-+/include/ "qoriq-fman3-0-10g-3.dtsi"
- /include/ "qoriq-fman3-0-1g-2.dtsi"
- /include/ "qoriq-fman3-0-1g-3.dtsi"
- /include/ "qoriq-fman3-0-1g-4.dtsi"
+ 	ctx->membase = syscon_node_to_regmap(np);
+-	if (IS_ERR_OR_NULL(ctx->membase)) {
++	if (IS_ERR(ctx->membase)) {
+ 		dev_err(dev, "Failed to get clk CGU iomem\n");
+ 		return PTR_ERR(ctx->membase);
+ 	}
 -- 
 2.39.0
 
