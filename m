@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E81A0257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:09:18 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6DFBBC433EF;
-	Thu, 23 Feb 2023 13:09:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7AC9E257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:09:21 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01024C433EF;
+	Thu, 23 Feb 2023 13:09:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157758;
-	bh=uTeTyuwhcHdkjXqTS5ZRiyWM/jfsu/3UvxskIw3TQLM=;
+	s=korg; t=1677157761;
+	bh=AYvWR9DrrHG6D8cu3z5XsXKiXVI7D/7g0Gmoh2kX+VQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Phts4BtoDgmYFSgOo24DCWHudV/6JJGLctEMQ/CX6fN8ykWeKG45dqvmDnhrJdAwt
-	 VWudcGWsGrug81Ys2kzojgvpeoHebzLwyl0gCOzZLnT0L3s5qLTiA9jclGCwH4hrtQ
-	 giHIqkenM2hRgxsVnMoX3FM1Hq6bxmmAFmqJ0wsA=
+	b=Swx0R+WNMIQRyg4W+FBfT8BdLhNEuWXy9rvjEU3N2kraqzqMjebTN6Tz8ewPSYue1
+	 CuBDuNlviudB6r1O1ubOXTiB+3r02sRdOUGelBte/UA3hXkUeEtIR7DLPRd26wr7GT
+	 lk/ZgKAkD9BDII+Uk1q3Di2kpVqGvd3aFN9OkBwE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
 	Yu Xiao <yu.xiao@corigine.com>,
-	Louis Peens <louis.peens@corigine.com>,
 	Simon Horman <simon.horman@corigine.com>,
-	Alexander Lobakin <alexandr.lobakin@intel.com>,
-	Paolo Abeni <pabeni@redhat.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 27/46] nfp: ethtool: support reporting link modes
-Date: Thu, 23 Feb 2023 14:06:34 +0100
-Message-Id: <20230223130432.835825803@linuxfoundation.org>
+Subject: [PATCH 6.1 28/46] nfp: ethtool: fix the bug of setting unsupported port speed
+Date: Thu, 23 Feb 2023 14:06:35 +0100
+Message-Id: <20230223130432.876619065@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130431.553657459@linuxfoundation.org>
 References: <20230223130431.553657459@linuxfoundation.org>
@@ -40,291 +38,296 @@ Content-Transfer-Encoding: 8bit
 
 From: Yu Xiao <yu.xiao@corigine.com>
 
-[ Upstream commit a61474c41e8c530c54a26db4f5434f050ef7718d ]
+[ Upstream commit 821de68c1f9c0236b0b9c10834cda900ae9b443c ]
 
-Add support for reporting link modes,
-including `Supported link modes` and `Advertised link modes`,
-via ethtool $DEV.
+Unsupported port speed can be set and cause error. Now fixing it
+and return an error if setting unsupported speed.
 
-A new command `SPCODE_READ_MEDIA` is added to read info from
-management firmware. Also, the mapping table `nfp_eth_media_table`
-associates the link modes between NFP and kernel. Both of them
-help to support this ability.
+This fix depends on the following, which was included in v6.2-rc1:
+commit a61474c41e8c ("nfp: ethtool: support reporting link modes").
 
+Fixes: 7c698737270f ("nfp: add support for .set_link_ksettings()")
 Signed-off-by: Yu Xiao <yu.xiao@corigine.com>
-Reviewed-by: Louis Peens <louis.peens@corigine.com>
 Signed-off-by: Simon Horman <simon.horman@corigine.com>
-Reviewed-by: Alexander Lobakin <alexandr.lobakin@intel.com>
-Link: https://lore.kernel.org/r/20221125113030.141642-1-simon.horman@corigine.com
-Signed-off-by: Paolo Abeni <pabeni@redhat.com>
-Stable-dep-of: 821de68c1f9c ("nfp: ethtool: fix the bug of setting unsupported port speed")
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/ethernet/netronome/nfp/nfp_main.h |  1 +
- .../ethernet/netronome/nfp/nfp_net_ethtool.c  | 73 +++++++++++++++++++
- .../ethernet/netronome/nfp/nfpcore/nfp_nsp.c  | 17 +++++
- .../ethernet/netronome/nfp/nfpcore/nfp_nsp.h  | 56 ++++++++++++++
- .../netronome/nfp/nfpcore/nfp_nsp_eth.c       | 26 +++++++
- 5 files changed, 173 insertions(+)
+ .../ethernet/netronome/nfp/nfp_net_ethtool.c  | 194 ++++++++++++++----
+ drivers/net/ethernet/netronome/nfp/nfp_port.h |  12 ++
+ 2 files changed, 170 insertions(+), 36 deletions(-)
 
-diff --git a/drivers/net/ethernet/netronome/nfp/nfp_main.h b/drivers/net/ethernet/netronome/nfp/nfp_main.h
-index afd3edfa24283..b9266cf72a172 100644
---- a/drivers/net/ethernet/netronome/nfp/nfp_main.h
-+++ b/drivers/net/ethernet/netronome/nfp/nfp_main.h
-@@ -28,6 +28,7 @@ struct nfp_hwinfo;
- struct nfp_mip;
- struct nfp_net;
- struct nfp_nsp_identify;
-+struct nfp_eth_media_buf;
- struct nfp_port;
- struct nfp_rtsym;
- struct nfp_rtsym_table;
 diff --git a/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c b/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
-index 991059d6cb32e..377c3b1185ee0 100644
+index 377c3b1185ee0..af376b9000677 100644
 --- a/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
 +++ b/drivers/net/ethernet/netronome/nfp/nfp_net_ethtool.c
-@@ -293,6 +293,76 @@ nfp_net_set_fec_link_mode(struct nfp_eth_table_port *eth_port,
+@@ -293,35 +293,131 @@ nfp_net_set_fec_link_mode(struct nfp_eth_table_port *eth_port,
  	}
  }
  
-+static const u16 nfp_eth_media_table[] = {
-+	[NFP_MEDIA_1000BASE_CX]		= ETHTOOL_LINK_MODE_1000baseKX_Full_BIT,
-+	[NFP_MEDIA_1000BASE_KX]		= ETHTOOL_LINK_MODE_1000baseKX_Full_BIT,
-+	[NFP_MEDIA_10GBASE_KX4]		= ETHTOOL_LINK_MODE_10000baseKX4_Full_BIT,
-+	[NFP_MEDIA_10GBASE_KR]		= ETHTOOL_LINK_MODE_10000baseKR_Full_BIT,
-+	[NFP_MEDIA_10GBASE_CX4]		= ETHTOOL_LINK_MODE_10000baseKX4_Full_BIT,
-+	[NFP_MEDIA_10GBASE_CR]		= ETHTOOL_LINK_MODE_10000baseCR_Full_BIT,
-+	[NFP_MEDIA_10GBASE_SR]		= ETHTOOL_LINK_MODE_10000baseSR_Full_BIT,
-+	[NFP_MEDIA_10GBASE_ER]		= ETHTOOL_LINK_MODE_10000baseER_Full_BIT,
-+	[NFP_MEDIA_25GBASE_KR]		= ETHTOOL_LINK_MODE_25000baseKR_Full_BIT,
-+	[NFP_MEDIA_25GBASE_KR_S]	= ETHTOOL_LINK_MODE_25000baseKR_Full_BIT,
-+	[NFP_MEDIA_25GBASE_CR]		= ETHTOOL_LINK_MODE_25000baseCR_Full_BIT,
-+	[NFP_MEDIA_25GBASE_CR_S]	= ETHTOOL_LINK_MODE_25000baseCR_Full_BIT,
-+	[NFP_MEDIA_25GBASE_SR]		= ETHTOOL_LINK_MODE_25000baseSR_Full_BIT,
-+	[NFP_MEDIA_40GBASE_CR4]		= ETHTOOL_LINK_MODE_40000baseCR4_Full_BIT,
-+	[NFP_MEDIA_40GBASE_KR4]		= ETHTOOL_LINK_MODE_40000baseKR4_Full_BIT,
-+	[NFP_MEDIA_40GBASE_SR4]		= ETHTOOL_LINK_MODE_40000baseSR4_Full_BIT,
-+	[NFP_MEDIA_40GBASE_LR4]		= ETHTOOL_LINK_MODE_40000baseLR4_Full_BIT,
-+	[NFP_MEDIA_50GBASE_KR]		= ETHTOOL_LINK_MODE_50000baseKR_Full_BIT,
-+	[NFP_MEDIA_50GBASE_SR]		= ETHTOOL_LINK_MODE_50000baseSR_Full_BIT,
-+	[NFP_MEDIA_50GBASE_CR]		= ETHTOOL_LINK_MODE_50000baseCR_Full_BIT,
-+	[NFP_MEDIA_50GBASE_LR]		= ETHTOOL_LINK_MODE_50000baseLR_ER_FR_Full_BIT,
-+	[NFP_MEDIA_50GBASE_ER]		= ETHTOOL_LINK_MODE_50000baseLR_ER_FR_Full_BIT,
-+	[NFP_MEDIA_50GBASE_FR]		= ETHTOOL_LINK_MODE_50000baseLR_ER_FR_Full_BIT,
-+	[NFP_MEDIA_100GBASE_KR4]	= ETHTOOL_LINK_MODE_100000baseKR4_Full_BIT,
-+	[NFP_MEDIA_100GBASE_SR4]	= ETHTOOL_LINK_MODE_100000baseSR4_Full_BIT,
-+	[NFP_MEDIA_100GBASE_CR4]	= ETHTOOL_LINK_MODE_100000baseCR4_Full_BIT,
-+	[NFP_MEDIA_100GBASE_KP4]	= ETHTOOL_LINK_MODE_100000baseKR4_Full_BIT,
-+	[NFP_MEDIA_100GBASE_CR10]	= ETHTOOL_LINK_MODE_100000baseCR4_Full_BIT,
+-static const u16 nfp_eth_media_table[] = {
+-	[NFP_MEDIA_1000BASE_CX]		= ETHTOOL_LINK_MODE_1000baseKX_Full_BIT,
+-	[NFP_MEDIA_1000BASE_KX]		= ETHTOOL_LINK_MODE_1000baseKX_Full_BIT,
+-	[NFP_MEDIA_10GBASE_KX4]		= ETHTOOL_LINK_MODE_10000baseKX4_Full_BIT,
+-	[NFP_MEDIA_10GBASE_KR]		= ETHTOOL_LINK_MODE_10000baseKR_Full_BIT,
+-	[NFP_MEDIA_10GBASE_CX4]		= ETHTOOL_LINK_MODE_10000baseKX4_Full_BIT,
+-	[NFP_MEDIA_10GBASE_CR]		= ETHTOOL_LINK_MODE_10000baseCR_Full_BIT,
+-	[NFP_MEDIA_10GBASE_SR]		= ETHTOOL_LINK_MODE_10000baseSR_Full_BIT,
+-	[NFP_MEDIA_10GBASE_ER]		= ETHTOOL_LINK_MODE_10000baseER_Full_BIT,
+-	[NFP_MEDIA_25GBASE_KR]		= ETHTOOL_LINK_MODE_25000baseKR_Full_BIT,
+-	[NFP_MEDIA_25GBASE_KR_S]	= ETHTOOL_LINK_MODE_25000baseKR_Full_BIT,
+-	[NFP_MEDIA_25GBASE_CR]		= ETHTOOL_LINK_MODE_25000baseCR_Full_BIT,
+-	[NFP_MEDIA_25GBASE_CR_S]	= ETHTOOL_LINK_MODE_25000baseCR_Full_BIT,
+-	[NFP_MEDIA_25GBASE_SR]		= ETHTOOL_LINK_MODE_25000baseSR_Full_BIT,
+-	[NFP_MEDIA_40GBASE_CR4]		= ETHTOOL_LINK_MODE_40000baseCR4_Full_BIT,
+-	[NFP_MEDIA_40GBASE_KR4]		= ETHTOOL_LINK_MODE_40000baseKR4_Full_BIT,
+-	[NFP_MEDIA_40GBASE_SR4]		= ETHTOOL_LINK_MODE_40000baseSR4_Full_BIT,
+-	[NFP_MEDIA_40GBASE_LR4]		= ETHTOOL_LINK_MODE_40000baseLR4_Full_BIT,
+-	[NFP_MEDIA_50GBASE_KR]		= ETHTOOL_LINK_MODE_50000baseKR_Full_BIT,
+-	[NFP_MEDIA_50GBASE_SR]		= ETHTOOL_LINK_MODE_50000baseSR_Full_BIT,
+-	[NFP_MEDIA_50GBASE_CR]		= ETHTOOL_LINK_MODE_50000baseCR_Full_BIT,
+-	[NFP_MEDIA_50GBASE_LR]		= ETHTOOL_LINK_MODE_50000baseLR_ER_FR_Full_BIT,
+-	[NFP_MEDIA_50GBASE_ER]		= ETHTOOL_LINK_MODE_50000baseLR_ER_FR_Full_BIT,
+-	[NFP_MEDIA_50GBASE_FR]		= ETHTOOL_LINK_MODE_50000baseLR_ER_FR_Full_BIT,
+-	[NFP_MEDIA_100GBASE_KR4]	= ETHTOOL_LINK_MODE_100000baseKR4_Full_BIT,
+-	[NFP_MEDIA_100GBASE_SR4]	= ETHTOOL_LINK_MODE_100000baseSR4_Full_BIT,
+-	[NFP_MEDIA_100GBASE_CR4]	= ETHTOOL_LINK_MODE_100000baseCR4_Full_BIT,
+-	[NFP_MEDIA_100GBASE_KP4]	= ETHTOOL_LINK_MODE_100000baseKR4_Full_BIT,
+-	[NFP_MEDIA_100GBASE_CR10]	= ETHTOOL_LINK_MODE_100000baseCR4_Full_BIT,
++static const struct nfp_eth_media_link_mode {
++	u16 ethtool_link_mode;
++	u16 speed;
++} nfp_eth_media_table[NFP_MEDIA_LINK_MODES_NUMBER] = {
++	[NFP_MEDIA_1000BASE_CX] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_1000baseKX_Full_BIT,
++		.speed			= NFP_SPEED_1G,
++	},
++	[NFP_MEDIA_1000BASE_KX] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_1000baseKX_Full_BIT,
++		.speed			= NFP_SPEED_1G,
++	},
++	[NFP_MEDIA_10GBASE_KX4] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_10000baseKX4_Full_BIT,
++		.speed			= NFP_SPEED_10G,
++	},
++	[NFP_MEDIA_10GBASE_KR] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_10000baseKR_Full_BIT,
++		.speed			= NFP_SPEED_10G,
++	},
++	[NFP_MEDIA_10GBASE_CX4] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_10000baseKX4_Full_BIT,
++		.speed			= NFP_SPEED_10G,
++	},
++	[NFP_MEDIA_10GBASE_CR] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_10000baseCR_Full_BIT,
++		.speed			= NFP_SPEED_10G,
++	},
++	[NFP_MEDIA_10GBASE_SR] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_10000baseSR_Full_BIT,
++		.speed			= NFP_SPEED_10G,
++	},
++	[NFP_MEDIA_10GBASE_ER] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_10000baseER_Full_BIT,
++		.speed			= NFP_SPEED_10G,
++	},
++	[NFP_MEDIA_25GBASE_KR] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_25000baseKR_Full_BIT,
++		.speed			= NFP_SPEED_25G,
++	},
++	[NFP_MEDIA_25GBASE_KR_S] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_25000baseKR_Full_BIT,
++		.speed			= NFP_SPEED_25G,
++	},
++	[NFP_MEDIA_25GBASE_CR] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_25000baseCR_Full_BIT,
++		.speed			= NFP_SPEED_25G,
++	},
++	[NFP_MEDIA_25GBASE_CR_S] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_25000baseCR_Full_BIT,
++		.speed			= NFP_SPEED_25G,
++	},
++	[NFP_MEDIA_25GBASE_SR] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_25000baseSR_Full_BIT,
++		.speed			= NFP_SPEED_25G,
++	},
++	[NFP_MEDIA_40GBASE_CR4] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_40000baseCR4_Full_BIT,
++		.speed			= NFP_SPEED_40G,
++	},
++	[NFP_MEDIA_40GBASE_KR4] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_40000baseKR4_Full_BIT,
++		.speed			= NFP_SPEED_40G,
++	},
++	[NFP_MEDIA_40GBASE_SR4] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_40000baseSR4_Full_BIT,
++		.speed			= NFP_SPEED_40G,
++	},
++	[NFP_MEDIA_40GBASE_LR4] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_40000baseLR4_Full_BIT,
++		.speed			= NFP_SPEED_40G,
++	},
++	[NFP_MEDIA_50GBASE_KR] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_50000baseKR_Full_BIT,
++		.speed			= NFP_SPEED_50G,
++	},
++	[NFP_MEDIA_50GBASE_SR] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_50000baseSR_Full_BIT,
++		.speed			= NFP_SPEED_50G,
++	},
++	[NFP_MEDIA_50GBASE_CR] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_50000baseCR_Full_BIT,
++		.speed			= NFP_SPEED_50G,
++	},
++	[NFP_MEDIA_50GBASE_LR] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_50000baseLR_ER_FR_Full_BIT,
++		.speed			= NFP_SPEED_50G,
++	},
++	[NFP_MEDIA_50GBASE_ER] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_50000baseLR_ER_FR_Full_BIT,
++		.speed			= NFP_SPEED_50G,
++	},
++	[NFP_MEDIA_50GBASE_FR] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_50000baseLR_ER_FR_Full_BIT,
++		.speed			= NFP_SPEED_50G,
++	},
++	[NFP_MEDIA_100GBASE_KR4] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_100000baseKR4_Full_BIT,
++		.speed			= NFP_SPEED_100G,
++	},
++	[NFP_MEDIA_100GBASE_SR4] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_100000baseSR4_Full_BIT,
++		.speed			= NFP_SPEED_100G,
++	},
++	[NFP_MEDIA_100GBASE_CR4] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_100000baseCR4_Full_BIT,
++		.speed			= NFP_SPEED_100G,
++	},
++	[NFP_MEDIA_100GBASE_KP4] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_100000baseKR4_Full_BIT,
++		.speed			= NFP_SPEED_100G,
++	},
++	[NFP_MEDIA_100GBASE_CR10] = {
++		.ethtool_link_mode	= ETHTOOL_LINK_MODE_100000baseCR4_Full_BIT,
++		.speed			= NFP_SPEED_100G,
++	},
 +};
 +
-+static void nfp_add_media_link_mode(struct nfp_port *port,
-+				    struct nfp_eth_table_port *eth_port,
-+				    struct ethtool_link_ksettings *cmd)
-+{
-+	u64 supported_modes[2], advertised_modes[2];
-+	struct nfp_eth_media_buf ethm = {
-+		.eth_index = eth_port->eth_index,
-+	};
-+	struct nfp_cpp *cpp = port->app->cpp;
-+
-+	if (nfp_eth_read_media(cpp, &ethm))
-+		return;
-+
-+	for (u32 i = 0; i < 2; i++) {
-+		supported_modes[i] = le64_to_cpu(ethm.supported_modes[i]);
-+		advertised_modes[i] = le64_to_cpu(ethm.advertised_modes[i]);
++static const unsigned int nfp_eth_speed_map[NFP_SUP_SPEED_NUMBER] = {
++	[NFP_SPEED_1G]		= SPEED_1000,
++	[NFP_SPEED_10G]		= SPEED_10000,
++	[NFP_SPEED_25G]		= SPEED_25000,
++	[NFP_SPEED_40G]		= SPEED_40000,
++	[NFP_SPEED_50G]		= SPEED_50000,
++	[NFP_SPEED_100G]	= SPEED_100000,
+ };
+ 
+ static void nfp_add_media_link_mode(struct nfp_port *port,
+@@ -334,8 +430,12 @@ static void nfp_add_media_link_mode(struct nfp_port *port,
+ 	};
+ 	struct nfp_cpp *cpp = port->app->cpp;
+ 
+-	if (nfp_eth_read_media(cpp, &ethm))
++	if (nfp_eth_read_media(cpp, &ethm)) {
++		bitmap_fill(port->speed_bitmap, NFP_SUP_SPEED_NUMBER);
+ 		return;
 +	}
 +
-+	for (u32 i = 0; i < NFP_MEDIA_LINK_MODES_NUMBER; i++) {
-+		if (i < 64) {
-+			if (supported_modes[0] & BIT_ULL(i))
-+				__set_bit(nfp_eth_media_table[i],
-+					  cmd->link_modes.supported);
++	bitmap_zero(port->speed_bitmap, NFP_SUP_SPEED_NUMBER);
+ 
+ 	for (u32 i = 0; i < 2; i++) {
+ 		supported_modes[i] = le64_to_cpu(ethm.supported_modes[i]);
+@@ -344,20 +444,26 @@ static void nfp_add_media_link_mode(struct nfp_port *port,
+ 
+ 	for (u32 i = 0; i < NFP_MEDIA_LINK_MODES_NUMBER; i++) {
+ 		if (i < 64) {
+-			if (supported_modes[0] & BIT_ULL(i))
+-				__set_bit(nfp_eth_media_table[i],
++			if (supported_modes[0] & BIT_ULL(i)) {
++				__set_bit(nfp_eth_media_table[i].ethtool_link_mode,
+ 					  cmd->link_modes.supported);
++				__set_bit(nfp_eth_media_table[i].speed,
++					  port->speed_bitmap);
++			}
+ 
+ 			if (advertised_modes[0] & BIT_ULL(i))
+-				__set_bit(nfp_eth_media_table[i],
++				__set_bit(nfp_eth_media_table[i].ethtool_link_mode,
+ 					  cmd->link_modes.advertising);
+ 		} else {
+-			if (supported_modes[1] & BIT_ULL(i - 64))
+-				__set_bit(nfp_eth_media_table[i],
++			if (supported_modes[1] & BIT_ULL(i - 64)) {
++				__set_bit(nfp_eth_media_table[i].ethtool_link_mode,
+ 					  cmd->link_modes.supported);
++				__set_bit(nfp_eth_media_table[i].speed,
++					  port->speed_bitmap);
++			}
+ 
+ 			if (advertised_modes[1] & BIT_ULL(i - 64))
+-				__set_bit(nfp_eth_media_table[i],
++				__set_bit(nfp_eth_media_table[i].ethtool_link_mode,
+ 					  cmd->link_modes.advertising);
+ 		}
+ 	}
+@@ -468,6 +574,22 @@ nfp_net_set_link_ksettings(struct net_device *netdev,
+ 
+ 	if (cmd->base.speed != SPEED_UNKNOWN) {
+ 		u32 speed = cmd->base.speed / eth_port->lanes;
++		bool is_supported = false;
 +
-+			if (advertised_modes[0] & BIT_ULL(i))
-+				__set_bit(nfp_eth_media_table[i],
-+					  cmd->link_modes.advertising);
-+		} else {
-+			if (supported_modes[1] & BIT_ULL(i - 64))
-+				__set_bit(nfp_eth_media_table[i],
-+					  cmd->link_modes.supported);
-+
-+			if (advertised_modes[1] & BIT_ULL(i - 64))
-+				__set_bit(nfp_eth_media_table[i],
-+					  cmd->link_modes.advertising);
++		for (u32 i = 0; i < NFP_SUP_SPEED_NUMBER; i++) {
++			if (cmd->base.speed == nfp_eth_speed_map[i] &&
++			    test_bit(i, port->speed_bitmap)) {
++				is_supported = true;
++				break;
++			}
 +		}
-+	}
-+}
++
++		if (!is_supported) {
++			netdev_err(netdev, "Speed %u is not supported.\n",
++				   cmd->base.speed);
++			err = -EINVAL;
++			goto err_bad_set;
++		}
+ 
+ 		if (req_aneg) {
+ 			netdev_err(netdev, "Speed changing is not allowed when working on autoneg mode.\n");
+diff --git a/drivers/net/ethernet/netronome/nfp/nfp_port.h b/drivers/net/ethernet/netronome/nfp/nfp_port.h
+index 6793cdf9ff115..c31812287ded1 100644
+--- a/drivers/net/ethernet/netronome/nfp/nfp_port.h
++++ b/drivers/net/ethernet/netronome/nfp/nfp_port.h
+@@ -38,6 +38,16 @@ enum nfp_port_flags {
+ 	NFP_PORT_CHANGED = 0,
+ };
+ 
++enum {
++	NFP_SPEED_1G,
++	NFP_SPEED_10G,
++	NFP_SPEED_25G,
++	NFP_SPEED_40G,
++	NFP_SPEED_50G,
++	NFP_SPEED_100G,
++	NFP_SUP_SPEED_NUMBER
++};
 +
  /**
-  * nfp_net_get_link_ksettings - Get Link Speed settings
-  * @netdev:	network interface device structure
-@@ -311,6 +381,8 @@ nfp_net_get_link_ksettings(struct net_device *netdev,
- 	u16 sts;
- 
- 	/* Init to unknowns */
-+	ethtool_link_ksettings_zero_link_mode(cmd, supported);
-+	ethtool_link_ksettings_zero_link_mode(cmd, advertising);
- 	ethtool_link_ksettings_add_link_mode(cmd, supported, FIBRE);
- 	cmd->base.port = PORT_OTHER;
- 	cmd->base.speed = SPEED_UNKNOWN;
-@@ -321,6 +393,7 @@ nfp_net_get_link_ksettings(struct net_device *netdev,
- 	if (eth_port) {
- 		ethtool_link_ksettings_add_link_mode(cmd, supported, Pause);
- 		ethtool_link_ksettings_add_link_mode(cmd, advertising, Pause);
-+		nfp_add_media_link_mode(port, eth_port, cmd);
- 		if (eth_port->supp_aneg) {
- 			ethtool_link_ksettings_add_link_mode(cmd, supported, Autoneg);
- 			if (eth_port->aneg == NFP_ANEG_AUTO) {
-diff --git a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_nsp.c b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_nsp.c
-index 730fea214b8ab..7136bc48530ba 100644
---- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_nsp.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_nsp.c
-@@ -100,6 +100,7 @@ enum nfp_nsp_cmd {
- 	SPCODE_FW_LOADED	= 19, /* Is application firmware loaded */
- 	SPCODE_VERSIONS		= 21, /* Report FW versions */
- 	SPCODE_READ_SFF_EEPROM	= 22, /* Read module EEPROM */
-+	SPCODE_READ_MEDIA	= 23, /* Get either the supported or advertised media for a port */
- };
- 
- struct nfp_nsp_dma_buf {
-@@ -1100,4 +1101,20 @@ int nfp_nsp_read_module_eeprom(struct nfp_nsp *state, int eth_index,
- 	kfree(buf);
- 
- 	return ret;
-+};
-+
-+int nfp_nsp_read_media(struct nfp_nsp *state, void *buf, unsigned int size)
-+{
-+	struct nfp_nsp_command_buf_arg media = {
-+		{
-+			.code		= SPCODE_READ_MEDIA,
-+			.option		= size,
-+		},
-+		.in_buf		= buf,
-+		.in_size	= size,
-+		.out_buf	= buf,
-+		.out_size	= size,
-+	};
-+
-+	return nfp_nsp_command_buf(state, &media);
- }
-diff --git a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_nsp.h b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_nsp.h
-index 992d72ac98d38..8f5cab0032d08 100644
---- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_nsp.h
-+++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_nsp.h
-@@ -65,6 +65,11 @@ static inline bool nfp_nsp_has_read_module_eeprom(struct nfp_nsp *state)
- 	return nfp_nsp_get_abi_ver_minor(state) > 28;
- }
- 
-+static inline bool nfp_nsp_has_read_media(struct nfp_nsp *state)
-+{
-+	return nfp_nsp_get_abi_ver_minor(state) > 33;
-+}
-+
- enum nfp_eth_interface {
- 	NFP_INTERFACE_NONE	= 0,
- 	NFP_INTERFACE_SFP	= 1,
-@@ -97,6 +102,47 @@ enum nfp_eth_fec {
- 	NFP_FEC_DISABLED_BIT,
- };
- 
-+/* link modes about RJ45 haven't been used, so there's no mapping to them */
-+enum nfp_ethtool_link_mode_list {
-+	NFP_MEDIA_W0_RJ45_10M,
-+	NFP_MEDIA_W0_RJ45_10M_HD,
-+	NFP_MEDIA_W0_RJ45_100M,
-+	NFP_MEDIA_W0_RJ45_100M_HD,
-+	NFP_MEDIA_W0_RJ45_1G,
-+	NFP_MEDIA_W0_RJ45_2P5G,
-+	NFP_MEDIA_W0_RJ45_5G,
-+	NFP_MEDIA_W0_RJ45_10G,
-+	NFP_MEDIA_1000BASE_CX,
-+	NFP_MEDIA_1000BASE_KX,
-+	NFP_MEDIA_10GBASE_KX4,
-+	NFP_MEDIA_10GBASE_KR,
-+	NFP_MEDIA_10GBASE_CX4,
-+	NFP_MEDIA_10GBASE_CR,
-+	NFP_MEDIA_10GBASE_SR,
-+	NFP_MEDIA_10GBASE_ER,
-+	NFP_MEDIA_25GBASE_KR,
-+	NFP_MEDIA_25GBASE_KR_S,
-+	NFP_MEDIA_25GBASE_CR,
-+	NFP_MEDIA_25GBASE_CR_S,
-+	NFP_MEDIA_25GBASE_SR,
-+	NFP_MEDIA_40GBASE_CR4,
-+	NFP_MEDIA_40GBASE_KR4,
-+	NFP_MEDIA_40GBASE_SR4,
-+	NFP_MEDIA_40GBASE_LR4,
-+	NFP_MEDIA_50GBASE_KR,
-+	NFP_MEDIA_50GBASE_SR,
-+	NFP_MEDIA_50GBASE_CR,
-+	NFP_MEDIA_50GBASE_LR,
-+	NFP_MEDIA_50GBASE_ER,
-+	NFP_MEDIA_50GBASE_FR,
-+	NFP_MEDIA_100GBASE_KR4,
-+	NFP_MEDIA_100GBASE_SR4,
-+	NFP_MEDIA_100GBASE_CR4,
-+	NFP_MEDIA_100GBASE_KP4,
-+	NFP_MEDIA_100GBASE_CR10,
-+	NFP_MEDIA_LINK_MODES_NUMBER
-+};
-+
- #define NFP_FEC_AUTO		BIT(NFP_FEC_AUTO_BIT)
- #define NFP_FEC_BASER		BIT(NFP_FEC_BASER_BIT)
- #define NFP_FEC_REED_SOLOMON	BIT(NFP_FEC_REED_SOLOMON_BIT)
-@@ -256,6 +302,16 @@ enum nfp_nsp_sensor_id {
- int nfp_hwmon_read_sensor(struct nfp_cpp *cpp, enum nfp_nsp_sensor_id id,
- 			  long *val);
- 
-+struct nfp_eth_media_buf {
-+	u8 eth_index;
-+	u8 reserved[7];
-+	__le64 supported_modes[2];
-+	__le64 advertised_modes[2];
-+};
-+
-+int nfp_nsp_read_media(struct nfp_nsp *state, void *buf, unsigned int size);
-+int nfp_eth_read_media(struct nfp_cpp *cpp, struct nfp_eth_media_buf *ethm);
-+
- #define NFP_NSP_VERSION_BUFSZ	1024 /* reasonable size, not in the ABI */
- 
- enum nfp_nsp_versions {
-diff --git a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_nsp_eth.c b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_nsp_eth.c
-index bb64efec4c46b..570ac1bb2122f 100644
---- a/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_nsp_eth.c
-+++ b/drivers/net/ethernet/netronome/nfp/nfpcore/nfp_nsp_eth.c
-@@ -647,3 +647,29 @@ int __nfp_eth_set_split(struct nfp_nsp *nsp, unsigned int lanes)
- 	return NFP_ETH_SET_BIT_CONFIG(nsp, NSP_ETH_RAW_PORT, NSP_ETH_PORT_LANES,
- 				      lanes, NSP_ETH_CTRL_SET_LANES);
- }
-+
-+int nfp_eth_read_media(struct nfp_cpp *cpp, struct nfp_eth_media_buf *ethm)
-+{
-+	struct nfp_nsp *nsp;
-+	int ret;
-+
-+	nsp = nfp_nsp_open(cpp);
-+	if (IS_ERR(nsp)) {
-+		nfp_err(cpp, "Failed to access the NSP: %pe\n", nsp);
-+		return PTR_ERR(nsp);
-+	}
-+
-+	if (!nfp_nsp_has_read_media(nsp)) {
-+		nfp_warn(cpp, "Reading media link modes not supported. Please update flash\n");
-+		ret = -EOPNOTSUPP;
-+		goto exit_close_nsp;
-+	}
-+
-+	ret = nfp_nsp_read_media(nsp, ethm, sizeof(*ethm));
-+	if (ret)
-+		nfp_err(cpp, "Reading media link modes failed: %pe\n", ERR_PTR(ret));
-+
-+exit_close_nsp:
-+	nfp_nsp_close(nsp);
-+	return ret;
-+}
+  * struct nfp_port - structure representing NFP port
+  * @netdev:	backpointer to associated netdev
+@@ -52,6 +62,7 @@ enum nfp_port_flags {
+  * @eth_forced:	for %NFP_PORT_PHYS_PORT port is forced UP or DOWN, don't change
+  * @eth_port:	for %NFP_PORT_PHYS_PORT translated ETH Table port entry
+  * @eth_stats:	for %NFP_PORT_PHYS_PORT MAC stats if available
++ * @speed_bitmap:	for %NFP_PORT_PHYS_PORT supported speed bitmap
+  * @pf_id:	for %NFP_PORT_PF_PORT, %NFP_PORT_VF_PORT ID of the PCI PF (0-3)
+  * @vf_id:	for %NFP_PORT_VF_PORT ID of the PCI VF within @pf_id
+  * @pf_split:	for %NFP_PORT_PF_PORT %true if PCI PF has more than one vNIC
+@@ -78,6 +89,7 @@ struct nfp_port {
+ 			bool eth_forced;
+ 			struct nfp_eth_table_port *eth_port;
+ 			u8 __iomem *eth_stats;
++			DECLARE_BITMAP(speed_bitmap, NFP_SUP_SPEED_NUMBER);
+ 		};
+ 		/* NFP_PORT_PF_PORT, NFP_PORT_VF_PORT */
+ 		struct {
 -- 
 2.39.0
 
