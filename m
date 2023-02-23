@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B643D257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E03CC4339B;
-	Thu, 23 Feb 2023 13:08:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3F7B2584
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 69068C433A1;
+	Thu, 23 Feb 2023 13:08:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157688;
-	bh=Znq77NldJrO5mrL9Y1tVbdJWOciLYeWwe9GclaI+pJI=;
+	s=korg; t=1677157693;
+	bh=nuXBpjN0+FM5m6pnYloD74h1/K0FANNEJ1GJ8NPEm+I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=aVAcq2hEeWUlBH/Ez6U5lcsMsLpbpugzstxaV9K90w1F6Z//krF1Y1uWK/7RdsbU8
-	 yeK9QCzg+S8gFmvCF619BLAOcL4Z3APtC0BR2r8rCEvWJ2/DfDrpjJIsH/ygTBan7d
-	 A8ldZzq/pt87HVMgLwqsgbiR9li9KlBIbCxmwAg8=
+	b=zCq/EBVOdAcdkeRZGBghkleT95gzWExaBg5ifhNhYhyZeFs8ey4yZgEKuAieoUkhC
+	 U19A7dPTeC7xQNfrTzjWWjLIfr88pAAdkFnnmBdtRqlq9vHmNOD4jOeVUpF9OIwxL3
+	 y4sXm68qNDwsPNI9O/jmtU1B6yZi/vFJ0HEeFQ24=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Carpenter <dan.carpenter@oracle.com>,
-	Rahul Tanwar <rtanwar@maxlinear.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 08/25] clk: mxl: syscon_node_to_regmap() returns error pointers
-Date: Thu, 23 Feb 2023 14:06:25 +0100
-Message-Id: <20230223130427.172374955@linuxfoundation.org>
+Subject: [PATCH 5.10 10/25] KVM: x86: Fail emulation during EMULTYPE_SKIP on any exception
+Date: Thu, 23 Feb 2023 14:06:27 +0100
+Message-Id: <20230223130427.256441750@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130426.817998725@linuxfoundation.org>
 References: <20230223130426.817998725@linuxfoundation.org>
@@ -36,41 +34,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rahul Tanwar <rtanwar@maxlinear.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit 7256d1f4618b40792d1e9b9b6cb1406a13cad2dd ]
+[ Upstream commit 17122c06b86c9f77f45b86b8e62c3ed440847a59 ]
 
-Commit 036177310bac ("clk: mxl: Switch from direct readl/writel based IO
-to regmap based IO") introduced code resulting in below warning issued
-by the smatch static checker.
+Treat any exception during instruction decode for EMULTYPE_SKIP as a
+"full" emulation failure, i.e. signal failure instead of queuing the
+exception.  When decoding purely to skip an instruction, KVM and/or the
+CPU has already done some amount of emulation that cannot be unwound,
+e.g. on an EPT misconfig VM-Exit KVM has already processeed the emulated
+MMIO.  KVM already does this if a #UD is encountered, but not for other
+exceptions, e.g. if a #PF is encountered during fetch.
 
-  drivers/clk/x86/clk-lgm.c:441 lgm_cgu_probe() warn: passing zero to 'PTR_ERR'
+In SVM's soft-injection use case, queueing the exception is particularly
+problematic as queueing exceptions while injecting events can put KVM
+into an infinite loop due to bailing from VM-Enter to service the newly
+pending exception.  E.g. multiple warnings to detect such behavior fire:
 
-Fix the warning by replacing incorrect IS_ERR_OR_NULL() with IS_ERR().
+  ------------[ cut here ]------------
+  WARNING: CPU: 3 PID: 1017 at arch/x86/kvm/x86.c:9873 kvm_arch_vcpu_ioctl_run+0x1de5/0x20a0 [kvm]
+  Modules linked in: kvm_amd ccp kvm irqbypass
+  CPU: 3 PID: 1017 Comm: svm_nested_soft Not tainted 6.0.0-rc1+ #220
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:kvm_arch_vcpu_ioctl_run+0x1de5/0x20a0 [kvm]
+  Call Trace:
+   kvm_vcpu_ioctl+0x223/0x6d0 [kvm]
+   __x64_sys_ioctl+0x85/0xc0
+   do_syscall_64+0x2b/0x50
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+  ---[ end trace 0000000000000000 ]---
+  ------------[ cut here ]------------
+  WARNING: CPU: 3 PID: 1017 at arch/x86/kvm/x86.c:9987 kvm_arch_vcpu_ioctl_run+0x12a3/0x20a0 [kvm]
+  Modules linked in: kvm_amd ccp kvm irqbypass
+  CPU: 3 PID: 1017 Comm: svm_nested_soft Tainted: G        W          6.0.0-rc1+ #220
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:kvm_arch_vcpu_ioctl_run+0x12a3/0x20a0 [kvm]
+  Call Trace:
+   kvm_vcpu_ioctl+0x223/0x6d0 [kvm]
+   __x64_sys_ioctl+0x85/0xc0
+   do_syscall_64+0x2b/0x50
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+  ---[ end trace 0000000000000000 ]---
 
-Fixes: 036177310bac ("clk: mxl: Switch from direct readl/writel based IO to regmap based IO")
-Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
-Signed-off-by: Rahul Tanwar <rtanwar@maxlinear.com>
-Link: https://lore.kernel.org/r/49e339d4739e4ae4c92b00c1b2918af0755d4122.1666695221.git.rtanwar@maxlinear.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Fixes: 6ea6e84309ca ("KVM: x86: inject exceptions produced by x86_decode_insn")
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20220930233632.1725475-1-seanjc@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/x86/clk-lgm.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/x86/kvm/x86.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/clk/x86/clk-lgm.c b/drivers/clk/x86/clk-lgm.c
-index 4de77b2c750d3..f69455dd1c980 100644
---- a/drivers/clk/x86/clk-lgm.c
-+++ b/drivers/clk/x86/clk-lgm.c
-@@ -436,7 +436,7 @@ static int lgm_cgu_probe(struct platform_device *pdev)
- 	ctx->clk_data.num = CLK_NR_CLKS;
- 
- 	ctx->membase = syscon_node_to_regmap(np);
--	if (IS_ERR_OR_NULL(ctx->membase)) {
-+	if (IS_ERR(ctx->membase)) {
- 		dev_err(dev, "Failed to get clk CGU iomem\n");
- 		return PTR_ERR(ctx->membase);
- 	}
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 554d37873c253..0ccc8d1b972c9 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -7534,7 +7534,9 @@ int x86_emulate_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
+ 						  write_fault_to_spt,
+ 						  emulation_type))
+ 				return 1;
+-			if (ctxt->have_exception) {
++
++			if (ctxt->have_exception &&
++			    !(emulation_type & EMULTYPE_SKIP)) {
+ 				/*
+ 				 * #UD should result in just EMULATION_FAILED, and trap-like
+ 				 * exception should not be encountered during decode.
 -- 
 2.39.0
 
