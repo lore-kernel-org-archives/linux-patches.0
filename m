@@ -1,32 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D924C257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:26 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5A08EC433EF;
-	Thu, 23 Feb 2023 13:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 66D2A257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E5430C433EF;
+	Thu, 23 Feb 2023 13:08:28 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157706;
-	bh=FqFJWUAzxIajb3kN1r86rt4j4/zmmP/0XqtS3nOLSfA=;
+	s=korg; t=1677157709;
+	bh=rekeavdwujp1WWCkzH5G6l9JbuSauzkF+AdoyKWGXUk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k9EQfMSgA4j6rcc5skEp9g1mEAXq/hd7g3Y4KS8mXHjm0a+h8Jcx70Eyv3787FgNP
-	 rQnfmUO4eKvtWm5zSJxyExIG+HMPhtLMDBlA42RyPqIrhTWivKF6E09Q2AVwerQ9eV
-	 nyZv5O1TlPiJoCnHAUaxcxd8ET2m2KqzPiYxHqcM=
+	b=q/82nSUn+vEOdrajJUe8OJfwJKQiHpTOgEMUxaM0P725szXqNPj1NZUzSnYlvKDwV
+	 EQzwi/tS0eBGnaD8b8jZJk4Ff5PdC6NIFzk0J3zKg5pV1yIqmnAXO2+9NpH46+Teh1
+	 fe+gIEmH0VXumVN4vPLjMQZU1Xgp5mP8t4cpA4lY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi xin Zhu <yzhu@maxlinear.com>,
-	Rahul Tanwar <rtanwar@maxlinear.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Lucas Stach <l.stach@pengutronix.de>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 05/25] clk: mxl: Add option to override gate clks
-Date: Thu, 23 Feb 2023 14:06:22 +0100
-Message-Id: <20230223130427.024627546@linuxfoundation.org>
+Subject: [PATCH 6.1 01/46] drm/etnaviv: dont truncate physical page address
+Date: Thu, 23 Feb 2023 14:06:08 +0100
+Message-Id: <20230223130431.632783144@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230223130426.817998725@linuxfoundation.org>
-References: <20230223130426.817998725@linuxfoundation.org>
+In-Reply-To: <20230223130431.553657459@linuxfoundation.org>
+References: <20230223130431.553657459@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -36,71 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rahul Tanwar <rtanwar@maxlinear.com>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-[ Upstream commit a5d49bd369b8588c0ee9d4d0a2c0160558a3ab69 ]
+[ Upstream commit d37c120b73128690434cc093952439eef9d56af1 ]
 
-In MxL's LGM SoC, gate clocks can be controlled either from CGU clk driver
-i.e. this driver or directly from power management driver/daemon. It is
-dependent on the power policy/profile requirements of the end product.
+While the interface for the MMU mapping takes phys_addr_t to hold a
+full 64bit address when necessary and MMUv2 is able to map physical
+addresses with up to 40bit, etnaviv_iommu_map() truncates the address
+to 32bits. Fix this by using the correct type.
 
-To support such use cases, provide option to override gate clks enable/disable
-by adding a flag GATE_CLK_HW which controls if these gate clks are controlled
-by HW i.e. this driver or overridden in order to allow it to be controlled
-by power profiles instead.
-
-Reviewed-by: Yi xin Zhu <yzhu@maxlinear.com>
-Signed-off-by: Rahul Tanwar <rtanwar@maxlinear.com>
-Link: https://lore.kernel.org/r/bdc9c89317b5d338a6c4f1d49386b696e947a672.1665642720.git.rtanwar@maxlinear.com
-[sboyd@kernel.org: Add braces on many line if-else]
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: 106ef3bda210 ("clk: mxl: Fix a clk entry by adding relevant flags")
+Fixes: 931e97f3afd8 ("drm/etnaviv: mmuv2: support 40 bit phys address")
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/x86/clk-cgu.c | 16 +++++++++++++++-
- drivers/clk/x86/clk-cgu.h |  1 +
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/etnaviv/etnaviv_mmu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/clk/x86/clk-cgu.c b/drivers/clk/x86/clk-cgu.c
-index 1f7e93de67bc0..4278a687076c9 100644
---- a/drivers/clk/x86/clk-cgu.c
-+++ b/drivers/clk/x86/clk-cgu.c
-@@ -354,8 +354,22 @@ int lgm_clk_register_branches(struct lgm_clk_provider *ctx,
- 			hw = lgm_clk_register_fixed_factor(ctx, list);
- 			break;
- 		case CLK_TYPE_GATE:
--			hw = lgm_clk_register_gate(ctx, list);
-+			if (list->gate_flags & GATE_CLK_HW) {
-+				hw = lgm_clk_register_gate(ctx, list);
-+			} else {
-+				/*
-+				 * GATE_CLKs can be controlled either from
-+				 * CGU clk driver i.e. this driver or directly
-+				 * from power management driver/daemon. It is
-+				 * dependent on the power policy/profile requirements
-+				 * of the end product. To override control of gate
-+				 * clks from this driver, provide NULL for this index
-+				 * of gate clk provider.
-+				 */
-+				hw = NULL;
-+			}
- 			break;
-+
- 		default:
- 			dev_err(ctx->dev, "invalid clk type\n");
- 			return -EINVAL;
-diff --git a/drivers/clk/x86/clk-cgu.h b/drivers/clk/x86/clk-cgu.h
-index 0aa0f35d63a0b..73ce84345f81e 100644
---- a/drivers/clk/x86/clk-cgu.h
-+++ b/drivers/clk/x86/clk-cgu.h
-@@ -197,6 +197,7 @@ struct lgm_clk_branch {
- /* clock flags definition */
- #define CLOCK_FLAG_VAL_INIT	BIT(16)
- #define MUX_CLK_SW		BIT(17)
-+#define GATE_CLK_HW		BIT(18)
+diff --git a/drivers/gpu/drm/etnaviv/etnaviv_mmu.c b/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
+index 55479cb8b1ac3..67bdce5326c6e 100644
+--- a/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
++++ b/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
+@@ -80,10 +80,10 @@ static int etnaviv_iommu_map(struct etnaviv_iommu_context *context, u32 iova,
+ 		return -EINVAL;
  
- #define LGM_MUX(_id, _name, _pdata, _f, _reg,		\
- 		_shift, _width, _cf, _v)		\
+ 	for_each_sgtable_dma_sg(sgt, sg, i) {
+-		u32 pa = sg_dma_address(sg) - sg->offset;
++		phys_addr_t pa = sg_dma_address(sg) - sg->offset;
+ 		size_t bytes = sg_dma_len(sg) + sg->offset;
+ 
+-		VERB("map[%d]: %08x %08x(%zx)", i, iova, pa, bytes);
++		VERB("map[%d]: %08x %pap(%zx)", i, iova, &pa, bytes);
+ 
+ 		ret = etnaviv_context_map(context, da, pa, bytes, prot);
+ 		if (ret)
 -- 
 2.39.0
 
