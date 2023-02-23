@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CDF2257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:06 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A6E71C433D2;
-	Thu, 23 Feb 2023 13:08:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B643D257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3E03CC4339B;
+	Thu, 23 Feb 2023 13:08:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157686;
-	bh=M3KBs2vihfY/j5VnFf6x4IcXApcccRYauglzSv1bjsY=;
+	s=korg; t=1677157688;
+	bh=Znq77NldJrO5mrL9Y1tVbdJWOciLYeWwe9GclaI+pJI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DRcdv/435+M3uvov4B//F/BA5gE8mgbgVfbhNRaR+Ev3XkERZXkwqVvtaXvgxDs9X
-	 wBi+jIiQJzjHHbIuN385nNmiqjdW4Mii7BC7MFHFjIqpf9m3iW5Vp5MtCaPsWFCMe5
-	 cPWYputyjXhL+5P9GZxKq3P3//wqD/UWPDPOHyL4=
+	b=aVAcq2hEeWUlBH/Ez6U5lcsMsLpbpugzstxaV9K90w1F6Z//krF1Y1uWK/7RdsbU8
+	 yeK9QCzg+S8gFmvCF619BLAOcL4Z3APtC0BR2r8rCEvWJ2/DfDrpjJIsH/ygTBan7d
+	 A8ldZzq/pt87HVMgLwqsgbiR9li9KlBIbCxmwAg8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>,
-	Vinicius Costa Gomes <vinicius.gomes@intel.com>,
-	Vladimir Oltean <vladimir.oltean@nxp.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 25/25] Revert "net/sched: taprio: make qdisc_leaf() see the per-netdev-queue pfifo child qdiscs"
-Date: Thu, 23 Feb 2023 14:06:42 +0100
-Message-Id: <20230223130427.931918059@linuxfoundation.org>
+	Dan Carpenter <dan.carpenter@oracle.com>,
+	Rahul Tanwar <rtanwar@maxlinear.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 08/25] clk: mxl: syscon_node_to_regmap() returns error pointers
+Date: Thu, 23 Feb 2023 14:06:25 +0100
+Message-Id: <20230223130427.172374955@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130426.817998725@linuxfoundation.org>
 References: <20230223130426.817998725@linuxfoundation.org>
@@ -36,195 +36,43 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vladimir Oltean <vladimir.oltean@nxp.com>
+From: Rahul Tanwar <rtanwar@maxlinear.com>
 
-commit af7b29b1deaac6da3bb7637f0e263dfab7bfc7a3 upstream.
+[ Upstream commit 7256d1f4618b40792d1e9b9b6cb1406a13cad2dd ]
 
-taprio_attach() has this logic at the end, which should have been
-removed with the blamed patch (which is now being reverted):
+Commit 036177310bac ("clk: mxl: Switch from direct readl/writel based IO
+to regmap based IO") introduced code resulting in below warning issued
+by the smatch static checker.
 
-	/* access to the child qdiscs is not needed in offload mode */
-	if (FULL_OFFLOAD_IS_ENABLED(q->flags)) {
-		kfree(q->qdiscs);
-		q->qdiscs = NULL;
-	}
+  drivers/clk/x86/clk-lgm.c:441 lgm_cgu_probe() warn: passing zero to 'PTR_ERR'
 
-because otherwise, we make use of q->qdiscs[] even after this array was
-deallocated, namely in taprio_leaf(). Therefore, whenever one would try
-to attach a valid child qdisc to a fully offloaded taprio root, one
-would immediately dereference a NULL pointer.
+Fix the warning by replacing incorrect IS_ERR_OR_NULL() with IS_ERR().
 
-$ tc qdisc replace dev eno0 handle 8001: parent root taprio \
-	num_tc 8 \
-	map 0 1 2 3 4 5 6 7 \
-	queues 1@0 1@1 1@2 1@3 1@4 1@5 1@6 1@7 \
-	max-sdu 0 0 0 0 0 200 0 0 \
-	base-time 200 \
-	sched-entry S 80 20000 \
-	sched-entry S a0 20000 \
-	sched-entry S 5f 60000 \
-	flags 2
-$ max_frame_size=1500
-$ data_rate_kbps=20000
-$ port_transmit_rate_kbps=1000000
-$ idleslope=$data_rate_kbps
-$ sendslope=$(($idleslope - $port_transmit_rate_kbps))
-$ locredit=$(($max_frame_size * $sendslope / $port_transmit_rate_kbps))
-$ hicredit=$(($max_frame_size * $idleslope / $port_transmit_rate_kbps))
-$ tc qdisc replace dev eno0 parent 8001:7 cbs \
-	idleslope $idleslope \
-	sendslope $sendslope \
-	hicredit $hicredit \
-	locredit $locredit \
-	offload 0
-
-Unable to handle kernel NULL pointer dereference at virtual address 0000000000000030
-pc : taprio_leaf+0x28/0x40
-lr : qdisc_leaf+0x3c/0x60
-Call trace:
- taprio_leaf+0x28/0x40
- tc_modify_qdisc+0xf0/0x72c
- rtnetlink_rcv_msg+0x12c/0x390
- netlink_rcv_skb+0x5c/0x130
- rtnetlink_rcv+0x1c/0x2c
-
-The solution is not as obvious as the problem. The code which deallocates
-q->qdiscs[] is in fact copied and pasted from mqprio, which also
-deallocates the array in mqprio_attach() and never uses it afterwards.
-
-Therefore, the identical cleanup logic of priv->qdiscs[] that
-mqprio_destroy() has is deceptive because it will never take place at
-qdisc_destroy() time, but just at raw ops->destroy() time (otherwise
-said, priv->qdiscs[] do not last for the entire lifetime of the mqprio
-root), but rather, this is just the twisted way in which the Qdisc API
-understands error path cleanup should be done (Qdisc_ops :: destroy() is
-called even when Qdisc_ops :: init() never succeeded).
-
-Side note, in fact this is also what the comment in mqprio_init() says:
-
-	/* pre-allocate qdisc, attachment can't fail */
-
-Or reworded, mqprio's priv->qdiscs[] scheme is only meant to serve as
-data passing between Qdisc_ops :: init() and Qdisc_ops :: attach().
-
-[ this comment was also copied and pasted into the initial taprio
-  commit, even though taprio_attach() came way later ]
-
-The problem is that taprio also makes extensive use of the q->qdiscs[]
-array in the software fast path (taprio_enqueue() and taprio_dequeue()),
-but it does not keep a reference of its own on q->qdiscs[i] (you'd think
-that since it creates these Qdiscs, it holds the reference, but nope,
-this is not completely true).
-
-To understand the difference between taprio_destroy() and mqprio_destroy()
-one must look before commit 13511704f8d7 ("net: taprio offload: enforce
-qdisc to netdev queue mapping"), because that just muddied the waters.
-
-In the "original" taprio design, taprio always attached itself (the root
-Qdisc) to all netdev TX queues, so that dev_qdisc_enqueue() would go
-through taprio_enqueue().
-
-It also called qdisc_refcount_inc() on itself for as many times as there
-were netdev TX queues, in order to counter-balance what tc_get_qdisc()
-does when destroying a Qdisc (simplified for brevity below):
-
-	if (n->nlmsg_type == RTM_DELQDISC)
-		err = qdisc_graft(dev, parent=NULL, new=NULL, q, extack);
-
-qdisc_graft(where "new" is NULL so this deletes the Qdisc):
-
-	for (i = 0; i < num_q; i++) {
-		struct netdev_queue *dev_queue;
-
-		dev_queue = netdev_get_tx_queue(dev, i);
-
-		old = dev_graft_qdisc(dev_queue, new);
-		if (new && i > 0)
-			qdisc_refcount_inc(new);
-
-		qdisc_put(old);
-		~~~~~~~~~~~~~~
-		this decrements taprio's refcount once for each TX queue
-	}
-
-	notify_and_destroy(net, skb, n, classid,
-			   rtnl_dereference(dev->qdisc), new);
-			   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			   and this finally decrements it to zero,
-			   making qdisc_put() call qdisc_destroy()
-
-The q->qdiscs[] created using qdisc_create_dflt() (or their
-replacements, if taprio_graft() was ever to get called) were then
-privately freed by taprio_destroy().
-
-This is still what is happening after commit 13511704f8d7 ("net: taprio
-offload: enforce qdisc to netdev queue mapping"), but only for software
-mode.
-
-In full offload mode, the per-txq "qdisc_put(old)" calls from
-qdisc_graft() now deallocate the child Qdiscs rather than decrement
-taprio's refcount. So when notify_and_destroy(taprio) finally calls
-taprio_destroy(), the difference is that the child Qdiscs were already
-deallocated.
-
-And this is exactly why the taprio_attach() comment "access to the child
-qdiscs is not needed in offload mode" is deceptive too. Not only the
-q->qdiscs[] array is not needed, but it is also necessary to get rid of
-it as soon as possible, because otherwise, we will also call qdisc_put()
-on the child Qdiscs in qdisc_destroy() -> taprio_destroy(), and this
-will cause a nasty use-after-free/refcount-saturate/whatever.
-
-In short, the problem is that since the blamed commit, taprio_leaf()
-needs q->qdiscs[] to not be freed by taprio_attach(), while qdisc_destroy()
--> taprio_destroy() does need q->qdiscs[] to be freed by taprio_attach()
-for full offload. Fixing one problem triggers the other.
-
-All of this can be solved by making taprio keep its q->qdiscs[i] with a
-refcount elevated at 2 (in offloaded mode where they are attached to the
-netdev TX queues), both in taprio_attach() and in taprio_graft(). The
-generic qdisc_graft() would just decrement the child qdiscs' refcounts
-to 1, and taprio_destroy() would give them the final coup de grace.
-
-However the rabbit hole of changes is getting quite deep, and the
-complexity increases. The blamed commit was supposed to be a bug fix in
-the first place, and the bug it addressed is not so significant so as to
-justify further rework in stable trees. So I'd rather just revert it.
-I don't know enough about multi-queue Qdisc design to make a proper
-judgement right now regarding what is/isn't idiomatic use of Qdisc
-concepts in taprio. I will try to study the problem more and come with a
-different solution in net-next.
-
-Fixes: 1461d212ab27 ("net/sched: taprio: make qdisc_leaf() see the per-netdev-queue pfifo child qdiscs")
-Reported-by: Muhammad Husaini Zulkifli <muhammad.husaini.zulkifli@intel.com>
-Reported-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
-Reviewed-by: Vinicius Costa Gomes <vinicius.gomes@intel.com>
-Link: https://lore.kernel.org/r/20221004220100.1650558-1-vladimir.oltean@nxp.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: 036177310bac ("clk: mxl: Switch from direct readl/writel based IO to regmap based IO")
+Reported-by: Dan Carpenter <dan.carpenter@oracle.com>
+Signed-off-by: Rahul Tanwar <rtanwar@maxlinear.com>
+Link: https://lore.kernel.org/r/49e339d4739e4ae4c92b00c1b2918af0755d4122.1666695221.git.rtanwar@maxlinear.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/sched/sch_taprio.c |    8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ drivers/clk/x86/clk-lgm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/net/sched/sch_taprio.c
-+++ b/net/sched/sch_taprio.c
-@@ -1906,14 +1906,12 @@ start_error:
+diff --git a/drivers/clk/x86/clk-lgm.c b/drivers/clk/x86/clk-lgm.c
+index 4de77b2c750d3..f69455dd1c980 100644
+--- a/drivers/clk/x86/clk-lgm.c
++++ b/drivers/clk/x86/clk-lgm.c
+@@ -436,7 +436,7 @@ static int lgm_cgu_probe(struct platform_device *pdev)
+ 	ctx->clk_data.num = CLK_NR_CLKS;
  
- static struct Qdisc *taprio_leaf(struct Qdisc *sch, unsigned long cl)
- {
--	struct taprio_sched *q = qdisc_priv(sch);
--	struct net_device *dev = qdisc_dev(sch);
--	unsigned int ntx = cl - 1;
-+	struct netdev_queue *dev_queue = taprio_queue_get(sch, cl);
- 
--	if (ntx >= dev->num_tx_queues)
-+	if (!dev_queue)
- 		return NULL;
- 
--	return q->qdiscs[ntx];
-+	return dev_queue->qdisc_sleeping;
- }
- 
- static unsigned long taprio_find(struct Qdisc *sch, u32 classid)
+ 	ctx->membase = syscon_node_to_regmap(np);
+-	if (IS_ERR_OR_NULL(ctx->membase)) {
++	if (IS_ERR(ctx->membase)) {
+ 		dev_err(dev, "Failed to get clk CGU iomem\n");
+ 		return PTR_ERR(ctx->membase);
+ 	}
+-- 
+2.39.0
+
 
 
