@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 37E762584
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:12:02 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B1D13C433D2;
-	Thu, 23 Feb 2023 13:12:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D758F2584
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:12:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5CEC4C433EF;
+	Thu, 23 Feb 2023 13:12:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157922;
-	bh=4NpeXNkKztQgWnBJ1Mp2MpHtHvx/y+0D/p6NCQ0XCk8=;
+	s=korg; t=1677157924;
+	bh=Vdj7COWgsmffgml7LP3Sgxoo+HJuXuTalqEHCG9V6B0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cMx4a97G2MK/SuHz4iVP/0TuRg6dc6hlsMzPqH5ZwYFLVAMIwTRmu/yBen7jGnmUf
-	 J7NcjoEEJDuDBrQ7rG80m4Nbh8o5Eur8qIIIvEqrWLRt5FualDj3RRYQpH4l5fo9hu
-	 4ttnL4lRa/bYP36JBGUVNhJIWRZnLVfEDDV+Sp6c=
+	b=GUp/OTZzTQF2HdrgXd0NlZhjrz6JWplDRQmVIhIJs7DlvI3xaIA04fSvhXX9kdnte
+	 m1rrD9CMk/bQgLQz3/F8G6/paX+JtOWUHOl/m7pjfOWpTqUQuHD+Ybe6CHaupjvulY
+	 2lHzOV8Z5CUmaLSHzl1bSKwVYGulSkiw6Gz+vVdI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ankit Nautiyal <ankit.k.nautiyal@intel.com>,
-	Uma Shankar <uma.shankar@intel.com>,
-	Jani Nikula <jani.nikula@intel.com>,
-	Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+	Yi xin Zhu <yzhu@maxlinear.com>,
+	Rahul Tanwar <rtanwar@maxlinear.com>,
+	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 03/36] drm/edid: Fix minimum bpc supported with DSC1.2 for HDMI sink
-Date: Thu, 23 Feb 2023 14:06:39 +0100
-Message-Id: <20230223130429.236181780@linuxfoundation.org>
+Subject: [PATCH 5.15 04/36] clk: mxl: Switch from direct readl/writel based IO to regmap based IO
+Date: Thu, 23 Feb 2023 14:06:40 +0100
+Message-Id: <20230223130429.277358829@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130429.072633724@linuxfoundation.org>
 References: <20230223130429.072633724@linuxfoundation.org>
@@ -37,46 +36,243 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+From: Rahul Tanwar <rtanwar@maxlinear.com>
 
-[ Upstream commit 18feaf6d0784dcba888859109676adf1e0260dfd ]
+[ Upstream commit 036177310bac5534de44ff6a7b60a4d2c0b6567c ]
 
-HF-VSDB/SCDB has bits to advertise support for 16, 12 and 10 bpc.
-If none of the bits are set, the minimum bpc supported with DSC is 8.
+Earlier version of driver used direct io remapped register read
+writes using readl/writel. But we need secure boot access which
+is only possible when registers are read & written using regmap.
+This is because the security bus/hook is written & coupled only
+with regmap layer.
 
-This patch corrects the min bpc supported to be 8, instead of 0.
+Switch the driver from direct readl/writel based register accesses
+to regmap based register accesses.
 
-Fixes: 76ee7b905678 ("drm/edid: Parse DSC1.2 cap fields from HFVSDB block")
-Cc: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Cc: Uma Shankar <uma.shankar@intel.com>
-Cc: Jani Nikula <jani.nikula@intel.com>
-Cc: Maarten Lankhorst <maarten.lankhorst@linux.intel.com>
+Additionally, update the license headers to latest status.
 
-v2: s/DSC1.2/DSC 1.2
-
-Signed-off-by: Ankit Nautiyal <ankit.k.nautiyal@intel.com>
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-Signed-off-by: Jani Nikula <jani.nikula@intel.com>
-Link: https://patchwork.freedesktop.org/patch/msgid/20220916100551.2531750-2-ankit.k.nautiyal@intel.com
+Reviewed-by: Yi xin Zhu <yzhu@maxlinear.com>
+Signed-off-by: Rahul Tanwar <rtanwar@maxlinear.com>
+Link: https://lore.kernel.org/r/2610331918206e0e3bd18babb39393a558fb34f9.1665642720.git.rtanwar@maxlinear.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: 106ef3bda210 ("clk: mxl: Fix a clk entry by adding relevant flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/drm_edid.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ drivers/clk/x86/Kconfig       |  5 +++--
+ drivers/clk/x86/clk-cgu-pll.c | 10 +++++----
+ drivers/clk/x86/clk-cgu.c     |  5 +++--
+ drivers/clk/x86/clk-cgu.h     | 38 +++++++++++++++++++----------------
+ drivers/clk/x86/clk-lgm.c     | 13 ++++++++----
+ 5 files changed, 42 insertions(+), 29 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
-index 6ab048ba8021c..d940c76419c5a 100644
---- a/drivers/gpu/drm/drm_edid.c
-+++ b/drivers/gpu/drm/drm_edid.c
-@@ -4942,7 +4942,8 @@ static void drm_parse_hdmi_forum_vsdb(struct drm_connector *connector,
- 			else if (hf_vsdb[11] & DRM_EDID_DSC_10BPC)
- 				hdmi_dsc->bpc_supported = 10;
- 			else
--				hdmi_dsc->bpc_supported = 0;
-+				/* Supports min 8 BPC if DSC 1.2 is supported*/
-+				hdmi_dsc->bpc_supported = 8;
+diff --git a/drivers/clk/x86/Kconfig b/drivers/clk/x86/Kconfig
+index 69642e15fcc1f..ced99e082e3dd 100644
+--- a/drivers/clk/x86/Kconfig
++++ b/drivers/clk/x86/Kconfig
+@@ -1,8 +1,9 @@
+ # SPDX-License-Identifier: GPL-2.0-only
+ config CLK_LGM_CGU
+ 	depends on OF && HAS_IOMEM && (X86 || COMPILE_TEST)
++	select MFD_SYSCON
+ 	select OF_EARLY_FLATTREE
+ 	bool "Clock driver for Lightning Mountain(LGM) platform"
+ 	help
+-	  Clock Generation Unit(CGU) driver for Intel Lightning Mountain(LGM)
+-	  network processor SoC.
++	  Clock Generation Unit(CGU) driver for MaxLinear's x86 based
++	  Lightning Mountain(LGM) network processor SoC.
+diff --git a/drivers/clk/x86/clk-cgu-pll.c b/drivers/clk/x86/clk-cgu-pll.c
+index 3179557b5f784..c83083affe88e 100644
+--- a/drivers/clk/x86/clk-cgu-pll.c
++++ b/drivers/clk/x86/clk-cgu-pll.c
+@@ -1,8 +1,9 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
++ * Copyright (C) 2020-2022 MaxLinear, Inc.
+  * Copyright (C) 2020 Intel Corporation.
+- * Zhu YiXin <yixin.zhu@intel.com>
+- * Rahul Tanwar <rahul.tanwar@intel.com>
++ * Zhu Yixin <yzhu@maxlinear.com>
++ * Rahul Tanwar <rtanwar@maxlinear.com>
+  */
  
- 			dsc_max_frl_rate = (hf_vsdb[12] & DRM_EDID_DSC_MAX_FRL_RATE_MASK) >> 4;
- 			drm_get_max_frl_rate(dsc_max_frl_rate, &hdmi_dsc->max_lanes,
+ #include <linux/clk-provider.h>
+@@ -76,8 +77,9 @@ static int lgm_pll_enable(struct clk_hw *hw)
+ 
+ 	spin_lock_irqsave(&pll->lock, flags);
+ 	lgm_set_clk_val(pll->membase, pll->reg, 0, 1, 1);
+-	ret = readl_poll_timeout_atomic(pll->membase + pll->reg,
+-					val, (val & 0x1), 1, 100);
++	ret = regmap_read_poll_timeout_atomic(pll->membase, pll->reg,
++					      val, (val & 0x1), 1, 100);
++
+ 	spin_unlock_irqrestore(&pll->lock, flags);
+ 
+ 	return ret;
+diff --git a/drivers/clk/x86/clk-cgu.c b/drivers/clk/x86/clk-cgu.c
+index 33de600e0c38e..f5f30a18f4869 100644
+--- a/drivers/clk/x86/clk-cgu.c
++++ b/drivers/clk/x86/clk-cgu.c
+@@ -1,8 +1,9 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
++ * Copyright (C) 2020-2022 MaxLinear, Inc.
+  * Copyright (C) 2020 Intel Corporation.
+- * Zhu YiXin <yixin.zhu@intel.com>
+- * Rahul Tanwar <rahul.tanwar@intel.com>
++ * Zhu Yixin <yzhu@maxlinear.com>
++ * Rahul Tanwar <rtanwar@maxlinear.com>
+  */
+ #include <linux/clk-provider.h>
+ #include <linux/device.h>
+diff --git a/drivers/clk/x86/clk-cgu.h b/drivers/clk/x86/clk-cgu.h
+index 4e22bfb223128..dbcb664687975 100644
+--- a/drivers/clk/x86/clk-cgu.h
++++ b/drivers/clk/x86/clk-cgu.h
+@@ -1,18 +1,19 @@
+ /* SPDX-License-Identifier: GPL-2.0 */
+ /*
+- * Copyright(c) 2020 Intel Corporation.
+- * Zhu YiXin <yixin.zhu@intel.com>
+- * Rahul Tanwar <rahul.tanwar@intel.com>
++ * Copyright (C) 2020-2022 MaxLinear, Inc.
++ * Copyright (C) 2020 Intel Corporation.
++ * Zhu Yixin <yzhu@maxlinear.com>
++ * Rahul Tanwar <rtanwar@maxlinear.com>
+  */
+ 
+ #ifndef __CLK_CGU_H
+ #define __CLK_CGU_H
+ 
+-#include <linux/io.h>
++#include <linux/regmap.h>
+ 
+ struct lgm_clk_mux {
+ 	struct clk_hw hw;
+-	void __iomem *membase;
++	struct regmap *membase;
+ 	unsigned int reg;
+ 	u8 shift;
+ 	u8 width;
+@@ -22,7 +23,7 @@ struct lgm_clk_mux {
+ 
+ struct lgm_clk_divider {
+ 	struct clk_hw hw;
+-	void __iomem *membase;
++	struct regmap *membase;
+ 	unsigned int reg;
+ 	u8 shift;
+ 	u8 width;
+@@ -35,7 +36,7 @@ struct lgm_clk_divider {
+ 
+ struct lgm_clk_ddiv {
+ 	struct clk_hw hw;
+-	void __iomem *membase;
++	struct regmap *membase;
+ 	unsigned int reg;
+ 	u8 shift0;
+ 	u8 width0;
+@@ -53,7 +54,7 @@ struct lgm_clk_ddiv {
+ 
+ struct lgm_clk_gate {
+ 	struct clk_hw hw;
+-	void __iomem *membase;
++	struct regmap *membase;
+ 	unsigned int reg;
+ 	u8 shift;
+ 	unsigned long flags;
+@@ -77,7 +78,7 @@ enum lgm_clk_type {
+  * @clk_data: array of hw clocks and clk number.
+  */
+ struct lgm_clk_provider {
+-	void __iomem *membase;
++	struct regmap *membase;
+ 	struct device_node *np;
+ 	struct device *dev;
+ 	struct clk_hw_onecell_data clk_data;
+@@ -92,7 +93,7 @@ enum pll_type {
+ 
+ struct lgm_clk_pll {
+ 	struct clk_hw hw;
+-	void __iomem *membase;
++	struct regmap *membase;
+ 	unsigned int reg;
+ 	unsigned long flags;
+ 	enum pll_type type;
+@@ -300,29 +301,32 @@ struct lgm_clk_branch {
+ 		.div = _d,					\
+ 	}
+ 
+-static inline void lgm_set_clk_val(void __iomem *membase, u32 reg,
++static inline void lgm_set_clk_val(struct regmap *membase, u32 reg,
+ 				   u8 shift, u8 width, u32 set_val)
+ {
+ 	u32 mask = (GENMASK(width - 1, 0) << shift);
+-	u32 regval;
+ 
+-	regval = readl(membase + reg);
+-	regval = (regval & ~mask) | ((set_val << shift) & mask);
+-	writel(regval, membase + reg);
++	regmap_update_bits(membase, reg, mask, set_val << shift);
+ }
+ 
+-static inline u32 lgm_get_clk_val(void __iomem *membase, u32 reg,
++static inline u32 lgm_get_clk_val(struct regmap *membase, u32 reg,
+ 				  u8 shift, u8 width)
+ {
+ 	u32 mask = (GENMASK(width - 1, 0) << shift);
+ 	u32 val;
+ 
+-	val = readl(membase + reg);
++	if (regmap_read(membase, reg, &val)) {
++		WARN_ONCE(1, "Failed to read clk reg: 0x%x\n", reg);
++		return 0;
++	}
++
+ 	val = (val & mask) >> shift;
+ 
+ 	return val;
+ }
+ 
++
++
+ int lgm_clk_register_branches(struct lgm_clk_provider *ctx,
+ 			      const struct lgm_clk_branch *list,
+ 			      unsigned int nr_clk);
+diff --git a/drivers/clk/x86/clk-lgm.c b/drivers/clk/x86/clk-lgm.c
+index 020f4e83a5ccb..4fa2bcaf71c89 100644
+--- a/drivers/clk/x86/clk-lgm.c
++++ b/drivers/clk/x86/clk-lgm.c
+@@ -1,10 +1,12 @@
+ // SPDX-License-Identifier: GPL-2.0
+ /*
++ * Copyright (C) 2020-2022 MaxLinear, Inc.
+  * Copyright (C) 2020 Intel Corporation.
+- * Zhu YiXin <yixin.zhu@intel.com>
+- * Rahul Tanwar <rahul.tanwar@intel.com>
++ * Zhu Yixin <yzhu@maxlinear.com>
++ * Rahul Tanwar <rtanwar@maxlinear.com>
+  */
+ #include <linux/clk-provider.h>
++#include <linux/mfd/syscon.h>
+ #include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <dt-bindings/clock/intel,lgm-clk.h>
+@@ -433,9 +435,12 @@ static int lgm_cgu_probe(struct platform_device *pdev)
+ 
+ 	ctx->clk_data.num = CLK_NR_CLKS;
+ 
+-	ctx->membase = devm_platform_ioremap_resource(pdev, 0);
+-	if (IS_ERR(ctx->membase))
++	ctx->membase = syscon_node_to_regmap(np);
++	if (IS_ERR_OR_NULL(ctx->membase)) {
++		dev_err(dev, "Failed to get clk CGU iomem\n");
+ 		return PTR_ERR(ctx->membase);
++	}
++
+ 
+ 	ctx->np = np;
+ 	ctx->dev = dev;
 -- 
 2.39.0
 
