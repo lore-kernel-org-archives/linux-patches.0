@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D50C42584
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:10:23 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5AB41C433EF;
-	Thu, 23 Feb 2023 13:10:23 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75D152584
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:10:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EDDFDC4339C;
+	Thu, 23 Feb 2023 13:10:25 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157823;
-	bh=bMRStiFKZUzQKYrgCEwgaerU4Zt+YsJtE/ShtITSsQU=;
+	s=korg; t=1677157826;
+	bh=wWuF2RiU/Jx4joPyaylmuwmJNQqnww36DoAq1HiYwck=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=m2kMjzk9uCHpgqBR1kjRtQEYxBL2lD4RrGIPjgKVNOretaEBmj5c3u5Vl+5bk5w/2
-	 iTQONshFsh7ckHMIVWfFS8qkmvUxksGrAWkh/ElbK6+8pMjZRXmsY7YcmQs66iyCP1
-	 kNwM3dHru1YLOOByFOfFwwaFNYVaAt1PB4qCrh7U=
+	b=hgXveUz7Mg2KxNBrqf6Lc5xkrmbOg8Et04qjCKQ69BZH6NsJlJyHyZfjgb4DZnz/g
+	 57mAveO97Bebh2BxZ265CGT1JmTJ/Hu5uFgjtabxthBzx6WMqYCB6o+jWqjZX7pt+P
+	 QhR/Gy9I7v7Yt0C6qAPzc5Tsjus3SArLU64I2Lzs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Shyam Sundar S K <Shyam-sundar.S-k@amd.com>,
-	Hans de Goede <hdegoede@redhat.com>
-Subject: [PATCH 6.1 43/46] platform/x86/amd/pmf: Add depends on CONFIG_POWER_SUPPLY
-Date: Thu, 23 Feb 2023 14:06:50 +0100
-Message-Id: <20230223130433.597538359@linuxfoundation.org>
+	Hans de Goede <hdegoede@redhat.com>,
+	Daniel Dadap <ddadap@nvidia.com>
+Subject: [PATCH 6.1 44/46] platform/x86: nvidia-wmi-ec-backlight: Add force module parameter
+Date: Thu, 23 Feb 2023 14:06:51 +0100
+Message-Id: <20230223130433.646965185@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130431.553657459@linuxfoundation.org>
 References: <20230223130431.553657459@linuxfoundation.org>
@@ -34,43 +34,58 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+From: Hans de Goede <hdegoede@redhat.com>
 
-commit 3004e8d2a0a98bbf4223ae146464fadbff68bf78 upstream.
+commit 0d9bdd8a550170306c2021b8d6766c5343b870c2 upstream.
 
-It is reported that amd_pmf driver is missing "depends on" for
-CONFIG_POWER_SUPPLY causing the following build error.
+On some Lenovo Legion models, the backlight might be driven by either
+one of nvidia_wmi_ec_backlight or amdgpu_bl0 at different times.
 
-ld: drivers/platform/x86/amd/pmf/core.o: in function `amd_pmf_remove':
-core.c:(.text+0x10): undefined reference to `power_supply_unreg_notifier'
-ld: drivers/platform/x86/amd/pmf/core.o: in function `amd_pmf_probe':
-core.c:(.text+0x38f): undefined reference to `power_supply_reg_notifier'
-make[1]: *** [scripts/Makefile.vmlinux:34: vmlinux] Error 1
-make: *** [Makefile:1248: vmlinux] Error 2
+When the Nvidia WMI EC backlight interface reports the backlight is
+controlled by the EC, the current backlight handling only registers
+nvidia_wmi_ec_backlight (and registers no other backlight interfaces).
 
-Add this to the Kconfig file.
+This hides (never registers) the amdgpu_bl0 interface, where as prior
+to 6.1.4 users would have both nvidia_wmi_ec_backlight and amdgpu_bl0
+and could work around things in userspace.
 
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217028
-Fixes: c5258d39fc4c ("platform/x86/amd/pmf: Add helper routine to update SPS thermals")
-Signed-off-by: Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
-Link: https://lore.kernel.org/r/20230213121457.1764463-1-Shyam-sundar.S-k@amd.com
+Add a force module parameter which can be used with acpi_backlight=native
+to restore the old behavior as a workound (for now) by passing:
+
+"acpi_backlight=native nvidia-wmi-ec-backlight.force=1"
+
+Fixes: 8d0ca287fd8c ("platform/x86: nvidia-wmi-ec-backlight: Use acpi_video_get_backlight_type()")
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217026
 Cc: stable@vger.kernel.org
-Reviewed-by: Hans de Goede <hdegoede@redhat.com>
 Signed-off-by: Hans de Goede <hdegoede@redhat.com>
+Reviewed-by: Daniel Dadap <ddadap@nvidia.com>
+Link: https://lore.kernel.org/r/20230217144208.5721-1-hdegoede@redhat.com
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/platform/x86/amd/pmf/Kconfig |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/platform/x86/nvidia-wmi-ec-backlight.c |    6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
---- a/drivers/platform/x86/amd/pmf/Kconfig
-+++ b/drivers/platform/x86/amd/pmf/Kconfig
-@@ -6,6 +6,7 @@
- config AMD_PMF
- 	tristate "AMD Platform Management Framework"
- 	depends on ACPI && PCI
-+	depends on POWER_SUPPLY
- 	select ACPI_PLATFORM_PROFILE
- 	help
- 	  This driver provides support for the AMD Platform Management Framework.
+--- a/drivers/platform/x86/nvidia-wmi-ec-backlight.c
++++ b/drivers/platform/x86/nvidia-wmi-ec-backlight.c
+@@ -12,6 +12,10 @@
+ #include <linux/wmi.h>
+ #include <acpi/video.h>
+ 
++static bool force;
++module_param(force, bool, 0444);
++MODULE_PARM_DESC(force, "Force loading (disable acpi_backlight=xxx checks");
++
+ /**
+  * wmi_brightness_notify() - helper function for calling WMI-wrapped ACPI method
+  * @w:    Pointer to the struct wmi_device identified by %WMI_BRIGHTNESS_GUID
+@@ -91,7 +95,7 @@ static int nvidia_wmi_ec_backlight_probe
+ 	int ret;
+ 
+ 	/* drivers/acpi/video_detect.c also checks that SOURCE == EC */
+-	if (acpi_video_get_backlight_type() != acpi_backlight_nvidia_wmi_ec)
++	if (!force && acpi_video_get_backlight_type() != acpi_backlight_nvidia_wmi_ec)
+ 		return -ENODEV;
+ 
+ 	/*
 
 
