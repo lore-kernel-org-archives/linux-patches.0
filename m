@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A52FB257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:09:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2C087C433EF;
-	Thu, 23 Feb 2023 13:09:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 60292257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:09:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BC7F1C433EF;
+	Thu, 23 Feb 2023 13:09:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157740;
-	bh=Xb9zjsWuD2iVWJym7BTZ016iPYFtkt2DOwnW1iLojmw=;
+	s=korg; t=1677157743;
+	bh=BLm+F0XesTUSK7UoaRjs/EUOmdazv4Ng2o1cH0ZbzMw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qgpAP/61QcQ+moVMN9Zc/MdGL76al+v3LsTdCJXczUgX4U1JPQ7r1cpUNBRJVqxMP
-	 jdBKJkzGeN+qvy78/iMBZF4xOzsfz6qyNHkcyFJZGDdSla4OM4OdYQgXYkVS5t3565
-	 u01oMuoslhZKYBfXKLj+ZcruH0oLilXFBEEtLAgc=
+	b=MkQlrFemhxK08zhWSoRo9GYnh37r1iqi2JfPcLTAoOvpf9hattnJ2zkWIw8hAuI1o
+	 MX6yQh9aIW0QDGumFiIBrYMuegRM08XvxvsbCzzDCOsderEo6AIulicB9UUXE/ju3q
+	 ij2IkxDRVAwnjZMTM8jagCjyfPhI9i6xy0Grh1wo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Camelia Alexandra Groza <camelia.groza@nxp.com>,
-	Sean Anderson <sean.anderson@seco.com>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Daniel Golle <daniel@makrotopia.org>,
+	Ricardo Ribalda <ribalda@chromium.org>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 21/46] powerpc: dts: t208x: Disable 10G on MAC1 and MAC2
-Date: Thu, 23 Feb 2023 14:06:28 +0100
-Message-Id: <20230223130432.542344039@linuxfoundation.org>
+Subject: [PATCH 6.1 22/46] spi: mediatek: Enable irq before the spi registration
+Date: Thu, 23 Feb 2023 14:06:29 +0100
+Message-Id: <20230223130432.593273942@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130431.553657459@linuxfoundation.org>
 References: <20230223130431.553657459@linuxfoundation.org>
@@ -36,49 +36,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sean Anderson <sean.anderson@seco.com>
+From: Ricardo Ribalda <ribalda@chromium.org>
 
-[ Upstream commit 8d8bee13ae9e316443c6666286360126a19c8d94 ]
+[ Upstream commit b24cded8c065d7cef8690b2c7b82b828cce57708 ]
 
-There aren't enough resources to run these ports at 10G speeds. Disable
-10G for these ports, reverting to the previous speed.
+If the irq is enabled after the spi si registered, there can be a race
+with the initialization of the devices on the spi bus.
 
-Fixes: 36926a7d70c2 ("powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G")
-Reported-by: Camelia Alexandra Groza <camelia.groza@nxp.com>
-Signed-off-by: Sean Anderson <sean.anderson@seco.com>
-Reviewed-by: Camelia Groza <camelia.groza@nxp.com>
-Tested-by: Camelia Groza <camelia.groza@nxp.com>
-Link: https://lore.kernel.org/r/20221216172937.2960054-1-sean.anderson@seco.com
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Eg:
+mtk-spi 1100a000.spi: spi-mem transfer timeout
+spi-nor: probe of spi0.0 failed with error -110
+Unable to handle kernel NULL pointer dereference at virtual address
+0000000000000010
+...
+Call trace:
+ mtk_spi_can_dma+0x0/0x2c
+
+Fixes: c6f7874687f7 ("spi: mediatek: Enable irq when pdata is ready")
+Reported-by: Daniel Golle <daniel@makrotopia.org>
+Signed-off-by: Ricardo Ribalda <ribalda@chromium.org>
+Tested-by: Daniel Golle <daniel@makrotopia.org>
+Link: https://lore.kernel.org/r/20221225-mtk-spi-fixes-v1-0-bb6c14c232f8@chromium.org
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/boot/dts/fsl/t2081si-post.dtsi | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ drivers/spi/spi-mt65xx.c | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
 
-diff --git a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
-index 74e17e134387d..27714dc2f04a5 100644
---- a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
-+++ b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
-@@ -659,3 +659,19 @@
- 		interrupts = <16 2 1 9>;
- 	};
- };
+diff --git a/drivers/spi/spi-mt65xx.c b/drivers/spi/spi-mt65xx.c
+index 6de8360e5c2a9..9eab6c20dbc56 100644
+--- a/drivers/spi/spi-mt65xx.c
++++ b/drivers/spi/spi-mt65xx.c
+@@ -1253,6 +1253,11 @@ static int mtk_spi_probe(struct platform_device *pdev)
+ 		dev_notice(dev, "SPI dma_set_mask(%d) failed, ret:%d\n",
+ 			   addr_bits, ret);
+ 
++	ret = devm_request_irq(dev, irq, mtk_spi_interrupt,
++			       IRQF_TRIGGER_NONE, dev_name(dev), master);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to register irq\n");
 +
-+&fman0_rx_0x08 {
-+	/delete-property/ fsl,fman-10g-port;
-+};
-+
-+&fman0_tx_0x28 {
-+	/delete-property/ fsl,fman-10g-port;
-+};
-+
-+&fman0_rx_0x09 {
-+	/delete-property/ fsl,fman-10g-port;
-+};
-+
-+&fman0_tx_0x29 {
-+	/delete-property/ fsl,fman-10g-port;
-+};
+ 	pm_runtime_enable(dev);
+ 
+ 	ret = devm_spi_register_master(dev, master);
+@@ -1261,13 +1266,6 @@ static int mtk_spi_probe(struct platform_device *pdev)
+ 		return dev_err_probe(dev, ret, "failed to register master\n");
+ 	}
+ 
+-	ret = devm_request_irq(dev, irq, mtk_spi_interrupt,
+-			       IRQF_TRIGGER_NONE, dev_name(dev), master);
+-	if (ret) {
+-		pm_runtime_disable(dev);
+-		return dev_err_probe(dev, ret, "failed to register irq\n");
+-	}
+-
+ 	return 0;
+ }
+ 
 -- 
 2.39.0
 
