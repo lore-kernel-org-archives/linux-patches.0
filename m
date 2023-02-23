@@ -1,45 +1,47 @@
-Received: from mail-pl1-f181.google.com (mail-pl1-f181.google.com [209.85.214.181])
+Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 929442F2A
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 17:23:20 +0000 (UTC)
-Received: by mail-pl1-f181.google.com with SMTP id s5so13758027plg.0
-        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 09:23:20 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75B4C2F2A
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 17:31:04 +0000 (UTC)
+Received: by mail-il1-f171.google.com with SMTP id u6so5579061ilk.12
+        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 09:31:04 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=4X9XPUluho+I4U2YTl0MMSfrwa5zdjEgqCMtE8mvXv0=;
-        b=gh+VZGdKAHENF5w1fy6caNEhvYRPbgD+mn/rC0Kyl8Regya2mBoyKQoD4ZQoPQK06Z
-         jCtwhGwbsRibxW9U2oIbd5nnuY1oN76EnBddzfQLvP1vcZfXcwaEzKJoeF61+6rUTPz0
-         k9CMne/R1oS4lkKKKJ9ZjYE/2IEPf0PydUhXU0hUWa5pnuo9obox8Ba1vsckhxqu8J44
-         2T0q13SG3oegxDDZfn+feYdLaTPx4fXZYb9TC3RaaCR1SMqwzdq8flGQHQsCSLHVwTHx
-         EPjUShnrWecq/MJcrqAY14q6xY3PIp/GjGjyM/yMZQiZxeMwoKEAiymQcB7pzNoCt2UM
-         Urlg==
+         :sender:from:to:cc:subject:date:message-id:reply-to;
+        bh=4+n5maBm19ijOUWMlLkRAAT2cHaeu2CizSqx/+2ysvQ=;
+        b=mYEW8MOtUe2vgI43aBQRNSI0XiKiGPLn+NI1lVY2wuTH5rDT00ejDKts6v7GUFFlxK
+         bdx+wtGnd40oKfiN6+9SxleClAgQlsEsHMh35/2g6rj/q/ukPHoOeAmCB0+RACvxX8hJ
+         O3X8GwOKtolTSB4t63ERs4wyAFJzH7alk6p+XYvd+ytLmZw/Thv28PPSs4FKB9mPjN3f
+         kVgT2cgpa4J0r9dAj+1okvUFc43ti0/aHMjT4N1t6CsgvvdwNNHcjzcLO0R8G+seon3J
+         sH6xczvVs3HVAuIfomSHoW5PW1LDfPutcTcnyzJlvxiN+MX24sDlDQHE1E8TQi5CDJAe
+         TCMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=4X9XPUluho+I4U2YTl0MMSfrwa5zdjEgqCMtE8mvXv0=;
-        b=ZwutuJYgn+XL7XWTgDXxIkglm6HXxwnwAGaV27pNR6a3BnzUKzgk7lsO1ddApFCKfV
-         5Jx06yw7+pSfpZ5SMbJeH1T8qQ1UopVWgz91FXp5FqkDTjeosmWPsq8K6NNZFIRIG70i
-         FhIP9eOOo4lEG33sJaXIrLrnTrGz+q/nNKjrbm5hcJ0vPMBm+dPw7JW+kjoQ1qeY/GQw
-         5kMfKvkXsVQhgUVAEwGpdNyk3T4zQ5pD48vfouro7mRulsr19HWkF7AsAbh0qr61Yb72
-         CBkgIQ2vJ0rgCYpcg6R5FPc01NEipM/SwEBrSoNgIJGHw/M77C+52p1+0SJbmT1tAkE/
-         SS3g==
-X-Gm-Message-State: AO0yUKXTDC+msYVejjhjNiqzns0YoP5rkIWdgdt8eHma72qt3i7G/OMX
-	9GOmS6rrJBtzRJInuxml5AE=
-X-Google-Smtp-Source: AK7set/K4BBwjvU55dIu+6lZsRHoNjZpmTcK22Pfl06vnIwEZdIRSLiFDIZGZcdH13Kd98nUMMz50g==
-X-Received: by 2002:a17:902:e1cc:b0:19c:9420:6236 with SMTP id t12-20020a170902e1cc00b0019c94206236mr7798946pla.22.1677172999883;
-        Thu, 23 Feb 2023 09:23:19 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id x20-20020a170902ea9400b0019cbabf127dsm1941061plb.182.2023.02.23.09.23.18
+         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=4+n5maBm19ijOUWMlLkRAAT2cHaeu2CizSqx/+2ysvQ=;
+        b=T6o4OpBnNDKCrxbK1WgnIdw5xot7GBwD7tbCC1tHYFy8S92Cw+YvEhGM1dc8sSjIbM
+         yqfKa3t84AxUcY1r5MQnLVnZ7ti6j6RCzcpMFtYEIe/Jopom71dHqZZ8X85xTiYAbEma
+         b8sPlbRDOOfP///z6ARrUjgxlFCElB/Wey/CSpw9Y9kNVuv8uemSYXmWaD/24A6eHFlb
+         siUMFODEULAYSg1SP7MIAHs1Xu6dbEpbXmnHUvWteIEJmL5X7xHQQC0TdmG6Y2wvAH5Z
+         j9WuiqkBGOLX1cKU500HpVks/2ERiUdL3CIXAZH0IFIUTQFuksbov0Rfb8O3SJmZU8JX
+         Z8dQ==
+X-Gm-Message-State: AO0yUKW9h9TdrjntzgReEaVmHkbCIQN09vY1t+evGQDTJWx6Kf0HrN/f
+	FfnW70Qlm3LDkPrFtT5YIvs=
+X-Google-Smtp-Source: AK7set/Aq8T7UiZIBQo/J34rkNRvZlstU1hzYah+NudNHk3QZrLEGEVCG1YBdhcITS2hmxt3idILzQ==
+X-Received: by 2002:a05:6e02:1d1c:b0:313:cb9e:8026 with SMTP id i28-20020a056e021d1c00b00313cb9e8026mr11584453ila.11.1677173463505;
+        Thu, 23 Feb 2023 09:31:03 -0800 (PST)
+Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id l11-20020a02a88b000000b003ba4aea63d1sm2171417jam.117.2023.02.23.09.31.01
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 09:23:19 -0800 (PST)
-Message-ID: <6c19502d-4303-fb8f-f2b7-9061a04b9a15@gmail.com>
-Date: Thu, 23 Feb 2023 09:23:17 -0800
+        Thu, 23 Feb 2023 09:31:02 -0800 (PST)
+Sender: Guenter Roeck <groeck7@gmail.com>
+Message-ID: <cfd03ee0-b47a-644d-4364-79601025f35f@roeck-us.net>
+Date: Thu, 23 Feb 2023 09:30:59 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,43 +50,60 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.7.1
-Subject: Re: [PATCH 5.4 00/19] 5.4.233-rc2 review
+Subject: Re: [PATCH 5.15 00/37] 5.15.96-rc2 review
 Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+ linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+ akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230223141539.591151658@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230223141539.591151658@linuxfoundation.org>
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de
+References: <20230223141542.672463796@linuxfoundation.org>
+ <adc1b0b7-f837-fbb4-332b-4ce18fc55709@roeck-us.net>
+ <Y/eVSi4ZTcOmPBTv@kroah.com>
+From: Guenter Roeck <linux@roeck-us.net>
+In-Reply-To: <Y/eVSi4ZTcOmPBTv@kroah.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 2/23/23 06:16, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.4.233 release.
-> There are 19 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
+On 2/23/23 08:33, Greg Kroah-Hartman wrote:
+> On Thu, Feb 23, 2023 at 07:36:39AM -0800, Guenter Roeck wrote:
+>> On 2/23/23 06:16, Greg Kroah-Hartman wrote:
+>>> This is the start of the stable review cycle for the 5.15.96 release.
+>>> There are 37 patches in this series, all will be posted as a response
+>>> to this one.  If anyone has any issues with these being applied, please
+>>> let me know.
+>>>
+>>> Responses should be made by Sat, 25 Feb 2023 14:15:30 +0000.
+>>> Anything received after that time might be too late.
+>>>
+>>
+>>
+>> $ git describe
+>> v5.15.95-38-gd6f4f9746d40
+>> groeck@server:~/src/linux-stable$ !ls
+>> ls -l scripts/pahole-version.sh
+>> -rw-rw-r-- 1 groeck groeck 269 Feb 23 07:33 scripts/pahole-version.sh
+>>
+>> This results in:
+>>
+>> make[1]: Entering directory '/tmp/buildbot-builddir'
+>> scripts/pahole-flags.sh: 10: /opt/buildbot/slave/stable-queue-5.15/build/scripts/pahole-version.sh: Permission denied
+>> scripts/pahole-flags.sh: 12: [: Illegal number:
+>> scripts/pahole-flags.sh: 16: [: Illegal number:
+>> scripts/pahole-flags.sh: 20: [: Illegal number:
+>>
+>> and all builds fail for me.
 > 
-> Responses should be made by Sat, 25 Feb 2023 14:15:30 +0000.
-> Anything received after that time might be too late.
+> This is a fun thing, the patch shows it being set to 0755, so `git am`
+> should be doing the right thing here.  Let me dig to see if I can change
+> something in my scripts to resolve this...
 > 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.233-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit kernels, build tested on 
-BMIPS_GENERIC:
+This isn't the first time this happens. I seem to recall that you mentioned
+some time ago that whatever you use to apply patches (quilt ?) doesn't
+handle executable permission bits correctly.
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+Guenter
 
