@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2372E257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 802ADC433D2;
-	Thu, 23 Feb 2023 13:08:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 966B5257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E468C433D2;
+	Thu, 23 Feb 2023 13:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157680;
-	bh=i37TLvNnEmaCtvbJVQ4tQ0P92FxYaxj2ZY3IXFgPfzI=;
+	s=korg; t=1677157683;
+	bh=m5w68lAElSkqotMfgm3dTzokS3uk62zy1nIRDv311sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=RaykJ4AtYiTulG1VGseFV0Y+1ttJMbIowNGJIaw8O/WOWbDeyE7Zidvuss3zWRAxM
-	 v9sRE6/qHDIQUcuAQ01nig94//DMR8/ua15eYxKELgJugfDq1ybY8z+QwKbBkrEmrU
-	 /9ZgtkQQa2eF6F2GbD8Naou8OT68V2PU0Rh+oPg8=
+	b=fo3LAL8dffLM2RgAFPdW1VjLh6v7lsLISjCaFfO5itwzGo1WU7d0i1ilCIMqVg51v
+	 4jp+ZOc+BmiA/lrOpsgYUmcMB8JrBlZOpYEfE+yacswx9Ny2A79Hlf6LwyZ3J1Cj6Q
+	 MwRN0YSlnfnMsP0WeHxsECpHIn327McZFOV/Jm/8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Theodore Tso <tytso@mit.edu>,
-	Eric Biggers <ebiggers@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 5.10 24/25] ext4: Fix function prototype mismatch for ext4_feat_ktype
-Date: Thu, 23 Feb 2023 14:06:41 +0100
-Message-Id: <20230223130427.880094473@linuxfoundation.org>
+	Sean Anderson <sean.anderson@seco.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 07/25] powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
+Date: Thu, 23 Feb 2023 14:06:24 +0100
+Message-Id: <20230223130427.125362681@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130426.817998725@linuxfoundation.org>
 References: <20230223130426.817998725@linuxfoundation.org>
@@ -38,74 +35,142 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Sean Anderson <sean.anderson@seco.com>
 
-commit 118901ad1f25d2334255b3d50512fa20591531cd upstream.
+[ Upstream commit 36926a7d70c2d462fca1ed85bfee000d17fd8662 ]
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed.
+On the T208X SoCs, MAC1 and MAC2 support XGMII. Add some new MAC dtsi
+fragments, and mark the QMAN ports as 10G.
 
-ext4_feat_ktype was setting the "release" handler to "kfree", which
-doesn't have a matching function prototype. Add a simple wrapper
-with the correct prototype.
-
-This was found as a result of Clang's new -Wcast-function-type-strict
-flag, which is more sensitive than the simpler -Wcast-function-type,
-which only checks for type width mismatches.
-
-Note that this code is only reached when ext4 is a loadable module and
-it is being unloaded:
-
- CFI failure at kobject_put+0xbb/0x1b0 (target: kfree+0x0/0x180; expected type: 0x7c4aa698)
- ...
- RIP: 0010:kobject_put+0xbb/0x1b0
- ...
- Call Trace:
-  <TASK>
-  ext4_exit_sysfs+0x14/0x60 [ext4]
-  cleanup_module+0x67/0xedb [ext4]
-
-Fixes: b99fee58a20a ("ext4: create ext4_feat kobject dynamically")
-Cc: Theodore Ts'o <tytso@mit.edu>
-Cc: Eric Biggers <ebiggers@kernel.org>
-Cc: stable@vger.kernel.org
-Build-tested-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20230103234616.never.915-kees@kernel.org
-Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20230104210908.gonna.388-kees@kernel.org
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Fixes: da414bb923d9 ("powerpc/mpc85xx: Add FSL QorIQ DPAA FMan support to the SoC device tree(s)")
+Signed-off-by: Sean Anderson <sean.anderson@seco.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/ext4/sysfs.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ .../boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi     | 44 +++++++++++++++++++
+ .../boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi     | 44 +++++++++++++++++++
+ arch/powerpc/boot/dts/fsl/t2081si-post.dtsi   |  4 +-
+ 3 files changed, 90 insertions(+), 2 deletions(-)
+ create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
+ create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
 
---- a/fs/ext4/sysfs.c
-+++ b/fs/ext4/sysfs.c
-@@ -487,6 +487,11 @@ static void ext4_sb_release(struct kobje
- 	complete(&sbi->s_kobj_unregister);
- }
- 
-+static void ext4_feat_release(struct kobject *kobj)
-+{
-+	kfree(kobj);
-+}
+diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
+new file mode 100644
+index 0000000000000..437dab3fc0176
+--- /dev/null
++++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
+@@ -0,0 +1,44 @@
++// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
++/*
++ * QorIQ FMan v3 10g port #2 device tree stub [ controller @ offset 0x400000 ]
++ *
++ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
++ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
++ */
 +
- static const struct sysfs_ops ext4_attr_ops = {
- 	.show	= ext4_attr_show,
- 	.store	= ext4_attr_store,
-@@ -501,7 +506,7 @@ static struct kobj_type ext4_sb_ktype =
- static struct kobj_type ext4_feat_ktype = {
- 	.default_groups = ext4_feat_groups,
- 	.sysfs_ops	= &ext4_attr_ops,
--	.release	= (void (*)(struct kobject *))kfree,
-+	.release	= ext4_feat_release,
- };
++fman@400000 {
++	fman0_rx_0x08: port@88000 {
++		cell-index = <0x8>;
++		compatible = "fsl,fman-v3-port-rx";
++		reg = <0x88000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	fman0_tx_0x28: port@a8000 {
++		cell-index = <0x28>;
++		compatible = "fsl,fman-v3-port-tx";
++		reg = <0xa8000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	ethernet@e0000 {
++		cell-index = <0>;
++		compatible = "fsl,fman-memac";
++		reg = <0xe0000 0x1000>;
++		fsl,fman-ports = <&fman0_rx_0x08 &fman0_tx_0x28>;
++		ptp-timer = <&ptp_timer0>;
++		pcsphy-handle = <&pcsphy0>;
++	};
++
++	mdio@e1000 {
++		#address-cells = <1>;
++		#size-cells = <0>;
++		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
++		reg = <0xe1000 0x1000>;
++		fsl,erratum-a011043; /* must ignore read errors */
++
++		pcsphy0: ethernet-phy@0 {
++			reg = <0x0>;
++		};
++	};
++};
+diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
+new file mode 100644
+index 0000000000000..ad116b17850a8
+--- /dev/null
++++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
+@@ -0,0 +1,44 @@
++// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
++/*
++ * QorIQ FMan v3 10g port #3 device tree stub [ controller @ offset 0x400000 ]
++ *
++ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
++ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
++ */
++
++fman@400000 {
++	fman0_rx_0x09: port@89000 {
++		cell-index = <0x9>;
++		compatible = "fsl,fman-v3-port-rx";
++		reg = <0x89000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	fman0_tx_0x29: port@a9000 {
++		cell-index = <0x29>;
++		compatible = "fsl,fman-v3-port-tx";
++		reg = <0xa9000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	ethernet@e2000 {
++		cell-index = <1>;
++		compatible = "fsl,fman-memac";
++		reg = <0xe2000 0x1000>;
++		fsl,fman-ports = <&fman0_rx_0x09 &fman0_tx_0x29>;
++		ptp-timer = <&ptp_timer0>;
++		pcsphy-handle = <&pcsphy1>;
++	};
++
++	mdio@e3000 {
++		#address-cells = <1>;
++		#size-cells = <0>;
++		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
++		reg = <0xe3000 0x1000>;
++		fsl,erratum-a011043; /* must ignore read errors */
++
++		pcsphy1: ethernet-phy@0 {
++			reg = <0x0>;
++		};
++	};
++};
+diff --git a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
+index ecbb447920bc6..74e17e134387d 100644
+--- a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
++++ b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
+@@ -609,8 +609,8 @@
+ /include/ "qoriq-bman1.dtsi"
  
- static struct kobject *ext4_root;
+ /include/ "qoriq-fman3-0.dtsi"
+-/include/ "qoriq-fman3-0-1g-0.dtsi"
+-/include/ "qoriq-fman3-0-1g-1.dtsi"
++/include/ "qoriq-fman3-0-10g-2.dtsi"
++/include/ "qoriq-fman3-0-10g-3.dtsi"
+ /include/ "qoriq-fman3-0-1g-2.dtsi"
+ /include/ "qoriq-fman3-0-1g-3.dtsi"
+ /include/ "qoriq-fman3-0-1g-4.dtsi"
+-- 
+2.39.0
+
 
 
