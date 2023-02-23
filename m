@@ -1,188 +1,110 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73819257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:07:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6134C4339C;
-	Thu, 23 Feb 2023 13:07:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2BF257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:07:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FAE7C433D2;
+	Thu, 23 Feb 2023 13:07:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157652;
-	bh=nyEKPaXhLqAuYQUVG6BtDo90wVCUecximN2tLaxL/VU=;
-	h=From:To:Cc:Subject:Date:From;
-	b=hnlzhAhChBTywmPnWYUbISlqIZ73kBebCMMnJ9U6TulACcCgCmShPJq8Bt8axz6X0
-	 NDEpOhY7FeSKVzluDeRwbAaPzF4O9Z+PcDVS6rS5g3OGjRppckWi6TjZ/WGsTMg95+
-	 Zbc95wWA9P/KFiTqAmit5Or9HGjMZg0+5PMmAbb4=
+	s=korg; t=1677157654;
+	bh=c9jDw8CVB+jrwKJzBQNMG5sLSYowvlAiVEjGt6z+yiI=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=VUtG2TQRlvZfpQlbt/vgKMkxKHHC7S3ANIBD1Aj260ov+kJjEayDOmtc8FiwNel7K
+	 eqYXwour6FIAJY7wU54GQ10u5dE1wD3dEGxWwDSjyvt+6ScZFSglBpkiSifYv1XoEf
+	 f8zJBnmqWWNKZ8ybNyv3QnCOItsrap70GtB0mxGU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 5.10 00/25] 5.10.170-rc1 review
-Date: Thu, 23 Feb 2023 14:06:17 +0100
-Message-Id: <20230223130426.817998725@linuxfoundation.org>
+	Yi xin Zhu <yzhu@maxlinear.com>,
+	Rahul Tanwar <rtanwar@maxlinear.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 06/25] clk: mxl: Fix a clk entry by adding relevant flags
+Date: Thu, 23 Feb 2023 14:06:23 +0100
+Message-Id: <20230223130427.073204777@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230223130426.817998725@linuxfoundation.org>
+References: <20230223130426.817998725@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.170-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.10.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.10.170-rc1
-X-KernelTest-Deadline: 2023-02-25T13:04+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.10.170 release.
-There are 25 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Rahul Tanwar <rtanwar@maxlinear.com>
 
-Responses should be made by Sat, 25 Feb 2023 13:04:16 +0000.
-Anything received after that time might be too late.
+[ Upstream commit 106ef3bda21006fe37b62c85931230a6355d78d3 ]
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.170-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-and the diffstat can be found below.
+One of the clock entry "dcl" clk has some HW limitations. One is that
+its rate can only by changed by changing its parent clk's rate & two is
+that HW does not support enable/disable for this clk.
 
-thanks,
+Handle above two limitations by adding relevant flags. Add standard flag
+CLK_SET_RATE_PARENT to handle rate change and add driver internal flag
+DIV_CLK_NO_MASK to handle enable/disable.
 
-greg k-h
+Fixes: d058fd9e8984 ("clk: intel: Add CGU clock driver for a new SoC")
+Reviewed-by: Yi xin Zhu <yzhu@maxlinear.com>
+Signed-off-by: Rahul Tanwar <rtanwar@maxlinear.com>
+Link: https://lore.kernel.org/r/a4770e7225f8a0c03c8ab2ba80434a4e8e9afb17.1665642720.git.rtanwar@maxlinear.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/clk/x86/clk-cgu.c | 5 +++--
+ drivers/clk/x86/clk-cgu.h | 1 +
+ drivers/clk/x86/clk-lgm.c | 4 ++--
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
--------------
-Pseudo-Shortlog of commits:
+diff --git a/drivers/clk/x86/clk-cgu.c b/drivers/clk/x86/clk-cgu.c
+index 4278a687076c9..89b53f280aee0 100644
+--- a/drivers/clk/x86/clk-cgu.c
++++ b/drivers/clk/x86/clk-cgu.c
+@@ -164,8 +164,9 @@ static int lgm_clk_divider_enable_disable(struct clk_hw *hw, int enable)
+ {
+ 	struct lgm_clk_divider *div = to_lgm_clk_divider(hw);
+ 
+-	lgm_set_clk_val(div->membase, div->reg, div->shift_gate,
+-			div->width_gate, enable);
++	if (div->flags != DIV_CLK_NO_MASK)
++		lgm_set_clk_val(div->membase, div->reg, div->shift_gate,
++				div->width_gate, enable);
+ 	return 0;
+ }
+ 
+diff --git a/drivers/clk/x86/clk-cgu.h b/drivers/clk/x86/clk-cgu.h
+index 73ce84345f81e..bcaf8aec94e5d 100644
+--- a/drivers/clk/x86/clk-cgu.h
++++ b/drivers/clk/x86/clk-cgu.h
+@@ -198,6 +198,7 @@ struct lgm_clk_branch {
+ #define CLOCK_FLAG_VAL_INIT	BIT(16)
+ #define MUX_CLK_SW		BIT(17)
+ #define GATE_CLK_HW		BIT(18)
++#define DIV_CLK_NO_MASK		BIT(19)
+ 
+ #define LGM_MUX(_id, _name, _pdata, _f, _reg,		\
+ 		_shift, _width, _cf, _v)		\
+diff --git a/drivers/clk/x86/clk-lgm.c b/drivers/clk/x86/clk-lgm.c
+index e312af42e97ae..4de77b2c750d3 100644
+--- a/drivers/clk/x86/clk-lgm.c
++++ b/drivers/clk/x86/clk-lgm.c
+@@ -255,8 +255,8 @@ static const struct lgm_clk_branch lgm_branch_clks[] = {
+ 	LGM_FIXED(LGM_CLK_SLIC, "slic", NULL, 0, CGU_IF_CLK1,
+ 		  8, 2, CLOCK_FLAG_VAL_INIT, 8192000, 2),
+ 	LGM_FIXED(LGM_CLK_DOCSIS, "v_docsis", NULL, 0, 0, 0, 0, 0, 16000000, 0),
+-	LGM_DIV(LGM_CLK_DCL, "dcl", "v_ifclk", 0, CGU_PCMCR,
+-		25, 3, 0, 0, 0, 0, dcl_div),
++	LGM_DIV(LGM_CLK_DCL, "dcl", "v_ifclk", CLK_SET_RATE_PARENT, CGU_PCMCR,
++		25, 3, 0, 0, DIV_CLK_NO_MASK, 0, dcl_div),
+ 	LGM_MUX(LGM_CLK_PCM, "pcm", pcm_p, 0, CGU_C55_PCMCR,
+ 		0, 1, CLK_MUX_ROUND_CLOSEST, 0),
+ 	LGM_FIXED_FACTOR(LGM_CLK_DDR_PHY, "ddr_phy", "ddr",
+-- 
+2.39.0
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.10.170-rc1
-
-Vladimir Oltean <vladimir.oltean@nxp.com>
-    Revert "net/sched: taprio: make qdisc_leaf() see the per-netdev-queue pfifo child qdiscs"
-
-Kees Cook <keescook@chromium.org>
-    ext4: Fix function prototype mismatch for ext4_feat_ktype
-
-Paul Moore <paul@paul-moore.com>
-    audit: update the mailing list in MAINTAINERS
-
-Lukas Wunner <lukas@wunner.de>
-    wifi: mwifiex: Add missing compatible string for SD8787
-
-Zhang Wensheng <zhangwensheng5@huawei.com>
-    nbd: fix possible overflow on 'first_minor' in nbd_dev_add()
-
-Yu Kuai <yukuai3@huawei.com>
-    nbd: fix possible overflow for 'first_minor' in nbd_dev_add()
-
-Yu Kuai <yukuai3@huawei.com>
-    nbd: fix max value for 'first_minor'
-
-Wen Yang <wenyang.linux@foxmail.com>
-    Revert "Revert "block: nbd: add sanity check for first_minor""
-
-Dave Hansen <dave.hansen@linux.intel.com>
-    uaccess: Add speculation barrier to copy_from_user()
-
-Pavel Skripkin <paskripkin@gmail.com>
-    mac80211: mesh: embedd mesh_paths and mpp_paths into ieee80211_if_mesh
-
-Zheng Wang <zyytlz.wz@163.com>
-    drm/i915/gvt: fix double free bug in split_2MB_gtt_entry
-
-Sean Anderson <sean.anderson@seco.com>
-    powerpc: dts: t208x: Disable 10G on MAC1 and MAC2
-
-Marc Kleine-Budde <mkl@pengutronix.de>
-    can: kvaser_usb: hydra: help gcc-13 to figure out cmd_len
-
-Jim Mattson <jmattson@google.com>
-    KVM: VMX: Execute IBPB on emulated VM-exit when guest has IBRS
-
-Sean Christopherson <seanjc@google.com>
-    KVM: SVM: Skip WRMSR fastpath on VM-Exit if next RIP isn't valid
-
-Sean Christopherson <seanjc@google.com>
-    KVM: x86: Fail emulation during EMULTYPE_SKIP on any exception
-
-Jason A. Donenfeld <Jason@zx2c4.com>
-    random: always mix cycle counter in add_latent_entropy()
-
-Rahul Tanwar <rtanwar@maxlinear.com>
-    clk: mxl: syscon_node_to_regmap() returns error pointers
-
-Sean Anderson <sean.anderson@seco.com>
-    powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
-
-Rahul Tanwar <rtanwar@maxlinear.com>
-    clk: mxl: Fix a clk entry by adding relevant flags
-
-Rahul Tanwar <rtanwar@maxlinear.com>
-    clk: mxl: Add option to override gate clks
-
-Rahul Tanwar <rtanwar@maxlinear.com>
-    clk: mxl: Remove redundant spinlocks
-
-Rahul Tanwar <rtanwar@maxlinear.com>
-    clk: mxl: Switch from direct readl/writel based IO to regmap based IO
-
-Bitterblue Smith <rtl8821cerfe2@gmail.com>
-    wifi: rtl8xxxu: gen2: Turn on the rate control
-
-Lucas Stach <l.stach@pengutronix.de>
-    drm/etnaviv: don't truncate physical page address
-
-
--------------
-
-Diffstat:
-
- MAINTAINERS                                        |   2 +-
- Makefile                                           |   4 +-
- arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi |  44 +++++++++
- arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi |  44 +++++++++
- arch/powerpc/boot/dts/fsl/t2081si-post.dtsi        |  20 +++-
- arch/x86/kvm/svm/svm.c                             |  10 +-
- arch/x86/kvm/vmx/nested.c                          |  11 +++
- arch/x86/kvm/vmx/vmx.c                             |   6 +-
- arch/x86/kvm/x86.c                                 |   4 +-
- drivers/block/nbd.c                                |  13 ++-
- drivers/clk/x86/Kconfig                            |   5 +-
- drivers/clk/x86/clk-cgu-pll.c                      |  23 ++---
- drivers/clk/x86/clk-cgu.c                          | 106 ++++++---------------
- drivers/clk/x86/clk-cgu.h                          |  46 ++++-----
- drivers/clk/x86/clk-lgm.c                          |  18 ++--
- drivers/gpu/drm/etnaviv/etnaviv_mmu.c              |   4 +-
- drivers/gpu/drm/i915/gvt/gtt.c                     |  17 +++-
- drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c  |  33 +++++--
- drivers/net/wireless/marvell/mwifiex/sdio.c        |   1 +
- .../net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c  |   8 +-
- fs/ext4/sysfs.c                                    |   7 +-
- include/linux/nospec.h                             |   4 +
- include/linux/random.h                             |   6 +-
- kernel/bpf/core.c                                  |   2 -
- lib/usercopy.c                                     |   7 ++
- net/mac80211/ieee80211_i.h                         |  24 ++++-
- net/mac80211/mesh.h                                |  22 +----
- net/mac80211/mesh_pathtbl.c                        |  89 ++++++-----------
- net/sched/sch_taprio.c                             |   8 +-
- 29 files changed, 339 insertions(+), 249 deletions(-)
 
 
