@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9EB2F258F
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:12:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 272C8C433EF;
-	Thu, 23 Feb 2023 13:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0F12F2592
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:12:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 895BFC433EF;
+	Thu, 23 Feb 2023 13:12:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157948;
-	bh=3iwinffmvL1HpY/O0e5w/9MKwVPpjlypDTtI5PrmMEo=;
+	s=korg; t=1677157953;
+	bh=YqEBlt/MwKgkt5hBPcSbLX8BvVJ17z6Du0Wacpcd00I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=cgXAbVM2IplI+EnKP62ZvUU5arZaUd8kNkvdNm3xtbyvis9blOJf5YZ1ADENnn1sQ
-	 iTlzOKocVri7tcU7iEXBn64b1SaaPjkP8Vkws2TcfillsjlcSIVCmiF+lfp4XVW8h3
-	 qr9y5FVjeGje6IzLQ/rJWPeUrIl1iZyq+WpAsQf0=
+	b=SQDqtrXz/VtHinDfD44A/Qxul5C+ApGMPYaz9ryTOPfIEJBnWTFNwK40psbhT0A2s
+	 VQ301jGvi1I4MCqMJzbtYNU5vcb49QeU8VHQOYiTU4JoHR2LDp4I0blYGu8s6koH4m
+	 urdO3YLLMMYq7mEuUsstWMrDBBVrf/X7Ibx+wTYs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
+To: stable@vger.kernel.org,
+	lee@kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Nathan Chancellor <nathan@kernel.org>,
-	Daniel Borkmann <daniel@iogearbox.net>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	Matthias Maennich <maennich@google.com>
-Subject: [PATCH 5.15 35/36] lib/Kconfig.debug: Allow BTF + DWARF5 with pahole 1.21+
-Date: Thu, 23 Feb 2023 14:07:11 +0100
-Message-Id: <20230223130430.666971176@linuxfoundation.org>
+	Todd Kjos <tkjos@google.com>,
+	stable <stable@kernel.org>,
+	Alessandro Astone <ales.astone@gmail.com>,
+	Carlos Llamas <cmllamas@google.com>
+Subject: [PATCH 5.15 26/36] binder: Address corner cases in deferred copy and fixup
+Date: Thu, 23 Feb 2023 14:07:02 +0100
+Message-Id: <20230223130430.273689449@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130429.072633724@linuxfoundation.org>
 References: <20230223130429.072633724@linuxfoundation.org>
@@ -36,40 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nathan Chancellor <nathan@kernel.org>
+From: Alessandro Astone <ales.astone@gmail.com>
 
-commit 42d9b379e3e1790eafb87c799c9edfd0b37a37c7 upstream.
+commit 2d1746e3fda0c3612143d7c06f8e1d1830c13e23 upstream.
 
-Commit 98cd6f521f10 ("Kconfig: allow explicit opt in to DWARF v5")
-prevented CONFIG_DEBUG_INFO_DWARF5 from being selected when
-CONFIG_DEBUG_INFO_BTF is enabled because pahole had issues with clang's
-DWARF5 info. This was resolved by [1], which is in pahole v1.21.
+When handling BINDER_TYPE_FDA object we are pushing a parent fixup
+with a certain skip_size but no scatter-gather copy object, since
+the copy is handled standalone.
+If BINDER_TYPE_FDA is the last children the scatter-gather copy
+loop will never stop to skip it, thus we are left with an item in
+the parent fixup list. This will trigger the BUG_ON().
 
-Allow DEBUG_INFO_DWARF5 to be selected with DEBUG_INFO_BTF when using
-pahole v1.21 or newer.
+This is reproducible in android when playing a video.
+We receive a transaction that looks like this:
+    obj[0] BINDER_TYPE_PTR, parent
+    obj[1] BINDER_TYPE_PTR, child
+    obj[2] BINDER_TYPE_PTR, child
+    obj[3] BINDER_TYPE_FDA, child
 
-[1]: https://git.kernel.org/pub/scm/devel/pahole/pahole.git/commit/?id=7d8e829f636f47aba2e1b6eda57e74d8e31f733c
-
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
-Acked-by: Andrii Nakryiko <andrii@kernel.org>
-Link: https://lore.kernel.org/bpf/20220201205624.652313-6-nathan@kernel.org
-Signed-off-by: Matthias Maennich <maennich@google.com>
+Fixes: 09184ae9b575 ("binder: defer copies of pre-patched txn data")
+Acked-by: Todd Kjos <tkjos@google.com>
+Cc: stable <stable@kernel.org>
+Signed-off-by: Alessandro Astone <ales.astone@gmail.com>
+Link: https://lore.kernel.org/r/20220415120015.52684-2-ales.astone@gmail.com
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Carlos Llamas <cmllamas@google.com>
+Signed-off-by: Lee Jones <lee@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- lib/Kconfig.debug |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/android/binder.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/lib/Kconfig.debug
-+++ b/lib/Kconfig.debug
-@@ -302,7 +302,7 @@ config DEBUG_INFO_DWARF4
- config DEBUG_INFO_DWARF5
- 	bool "Generate DWARF Version 5 debuginfo"
- 	depends on !CC_IS_CLANG || AS_IS_LLVM || (AS_IS_GNU && AS_VERSION >= 23502 && AS_HAS_NON_CONST_LEB128)
--	depends on !DEBUG_INFO_BTF
-+	depends on !DEBUG_INFO_BTF || PAHOLE_VERSION >= 121
- 	help
- 	  Generate DWARF v5 debug info. Requires binutils 2.35.2, gcc 5.0+ (gcc
- 	  5.0+ accepts the -gdwarf-5 flag but only had partial support for some
+--- a/drivers/android/binder.c
++++ b/drivers/android/binder.c
+@@ -2331,6 +2331,7 @@ static int binder_do_deferred_txn_copies
+ {
+ 	int ret = 0;
+ 	struct binder_sg_copy *sgc, *tmpsgc;
++	struct binder_ptr_fixup *tmppf;
+ 	struct binder_ptr_fixup *pf =
+ 		list_first_entry_or_null(pf_head, struct binder_ptr_fixup,
+ 					 node);
+@@ -2385,7 +2386,11 @@ static int binder_do_deferred_txn_copies
+ 		list_del(&sgc->node);
+ 		kfree(sgc);
+ 	}
+-	BUG_ON(!list_empty(pf_head));
++	list_for_each_entry_safe(pf, tmppf, pf_head, node) {
++		BUG_ON(pf->skip_size == 0);
++		list_del(&pf->node);
++		kfree(pf);
++	}
+ 	BUG_ON(!list_empty(sgc_head));
+ 
+ 	return ret > 0 ? -EINVAL : ret;
 
 
