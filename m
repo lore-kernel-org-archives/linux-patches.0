@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2BF257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:07:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8FAE7C433D2;
-	Thu, 23 Feb 2023 13:07:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A791F257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:07:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3211FC433D2;
+	Thu, 23 Feb 2023 13:07:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157654;
-	bh=c9jDw8CVB+jrwKJzBQNMG5sLSYowvlAiVEjGt6z+yiI=;
+	s=korg; t=1677157657;
+	bh=V9ADNiQtkRZJqaxuelui4sLd0GEDURHiUWI6bejGCPM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=VUtG2TQRlvZfpQlbt/vgKMkxKHHC7S3ANIBD1Aj260ov+kJjEayDOmtc8FiwNel7K
-	 eqYXwour6FIAJY7wU54GQ10u5dE1wD3dEGxWwDSjyvt+6ScZFSglBpkiSifYv1XoEf
-	 f8zJBnmqWWNKZ8ybNyv3QnCOItsrap70GtB0mxGU=
+	b=JG68Uc/FBRvoWoETOL3R4/1bCq2PQ7t1m2vmhaXI0/Ekv6VlaO70b5KK67tlACWhi
+	 EnjDzdEFLHkufJ/ddmAAhTpEJIiAqU2uSlhVpmub2vlOqzi60t81QWYP6F90kmpuAk
+	 QzcBDmPYmhctS1cxhYWnDYNCv66rRLvLBoKfp1kg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi xin Zhu <yzhu@maxlinear.com>,
-	Rahul Tanwar <rtanwar@maxlinear.com>,
-	Stephen Boyd <sboyd@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 06/25] clk: mxl: Fix a clk entry by adding relevant flags
-Date: Thu, 23 Feb 2023 14:06:23 +0100
-Message-Id: <20230223130427.073204777@linuxfoundation.org>
+	Zheng Wang <zyytlz.wz@163.com>,
+	Zhenyu Wang <zhenyuw@linux.intel.com>,
+	Ovidiu Panait <ovidiu.panait@eng.windriver.com>
+Subject: [PATCH 5.10 15/25] drm/i915/gvt: fix double free bug in split_2MB_gtt_entry
+Date: Thu, 23 Feb 2023 14:06:32 +0100
+Message-Id: <20230223130427.471351316@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130426.817998725@linuxfoundation.org>
 References: <20230223130426.817998725@linuxfoundation.org>
@@ -36,75 +35,63 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rahul Tanwar <rtanwar@maxlinear.com>
+From: Zheng Wang <zyytlz.wz@163.com>
 
-[ Upstream commit 106ef3bda21006fe37b62c85931230a6355d78d3 ]
+commit 4a61648af68f5ba4884f0e3b494ee1cabc4b6620 upstream.
 
-One of the clock entry "dcl" clk has some HW limitations. One is that
-its rate can only by changed by changing its parent clk's rate & two is
-that HW does not support enable/disable for this clk.
+If intel_gvt_dma_map_guest_page failed, it will call
+ppgtt_invalidate_spt, which will finally free the spt.
+But the caller function ppgtt_populate_spt_by_guest_entry
+does not notice that, it will free spt again in its error
+path.
 
-Handle above two limitations by adding relevant flags. Add standard flag
-CLK_SET_RATE_PARENT to handle rate change and add driver internal flag
-DIV_CLK_NO_MASK to handle enable/disable.
+Fix this by canceling the mapping of DMA address and freeing sub_spt.
+Besides, leave the handle of spt destroy to caller function instead
+of callee function when error occurs.
 
-Fixes: d058fd9e8984 ("clk: intel: Add CGU clock driver for a new SoC")
-Reviewed-by: Yi xin Zhu <yzhu@maxlinear.com>
-Signed-off-by: Rahul Tanwar <rtanwar@maxlinear.com>
-Link: https://lore.kernel.org/r/a4770e7225f8a0c03c8ab2ba80434a4e8e9afb17.1665642720.git.rtanwar@maxlinear.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b901b252b6cf ("drm/i915/gvt: Add 2M huge gtt support")
+Signed-off-by: Zheng Wang <zyytlz.wz@163.com>
+Reviewed-by: Zhenyu Wang <zhenyuw@linux.intel.com>
+Signed-off-by: Zhenyu Wang <zhenyuw@linux.intel.com>
+Link: http://patchwork.freedesktop.org/patch/msgid/20221229165641.1192455-1-zyytlz.wz@163.com
+Signed-off-by: Ovidiu Panait <ovidiu.panait@eng.windriver.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/clk/x86/clk-cgu.c | 5 +++--
- drivers/clk/x86/clk-cgu.h | 1 +
- drivers/clk/x86/clk-lgm.c | 4 ++--
- 3 files changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/i915/gvt/gtt.c |   17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/clk/x86/clk-cgu.c b/drivers/clk/x86/clk-cgu.c
-index 4278a687076c9..89b53f280aee0 100644
---- a/drivers/clk/x86/clk-cgu.c
-+++ b/drivers/clk/x86/clk-cgu.c
-@@ -164,8 +164,9 @@ static int lgm_clk_divider_enable_disable(struct clk_hw *hw, int enable)
- {
- 	struct lgm_clk_divider *div = to_lgm_clk_divider(hw);
+--- a/drivers/gpu/drm/i915/gvt/gtt.c
++++ b/drivers/gpu/drm/i915/gvt/gtt.c
+@@ -1192,10 +1192,8 @@ static int split_2MB_gtt_entry(struct in
+ 	for_each_shadow_entry(sub_spt, &sub_se, sub_index) {
+ 		ret = intel_gvt_hypervisor_dma_map_guest_page(vgpu,
+ 				start_gfn + sub_index, PAGE_SIZE, &dma_addr);
+-		if (ret) {
+-			ppgtt_invalidate_spt(spt);
+-			return ret;
+-		}
++		if (ret)
++			goto err;
+ 		sub_se.val64 = se->val64;
  
--	lgm_set_clk_val(div->membase, div->reg, div->shift_gate,
--			div->width_gate, enable);
-+	if (div->flags != DIV_CLK_NO_MASK)
-+		lgm_set_clk_val(div->membase, div->reg, div->shift_gate,
-+				div->width_gate, enable);
+ 		/* Copy the PAT field from PDE. */
+@@ -1214,6 +1212,17 @@ static int split_2MB_gtt_entry(struct in
+ 	ops->set_pfn(se, sub_spt->shadow_page.mfn);
+ 	ppgtt_set_shadow_entry(spt, se, index);
  	return 0;
++err:
++	/* Cancel the existing addess mappings of DMA addr. */
++	for_each_present_shadow_entry(sub_spt, &sub_se, sub_index) {
++		gvt_vdbg_mm("invalidate 4K entry\n");
++		ppgtt_invalidate_pte(sub_spt, &sub_se);
++	}
++	/* Release the new allocated spt. */
++	trace_spt_change(sub_spt->vgpu->id, "release", sub_spt,
++		sub_spt->guest_page.gfn, sub_spt->shadow_page.type);
++	ppgtt_free_spt(sub_spt);
++	return ret;
  }
  
-diff --git a/drivers/clk/x86/clk-cgu.h b/drivers/clk/x86/clk-cgu.h
-index 73ce84345f81e..bcaf8aec94e5d 100644
---- a/drivers/clk/x86/clk-cgu.h
-+++ b/drivers/clk/x86/clk-cgu.h
-@@ -198,6 +198,7 @@ struct lgm_clk_branch {
- #define CLOCK_FLAG_VAL_INIT	BIT(16)
- #define MUX_CLK_SW		BIT(17)
- #define GATE_CLK_HW		BIT(18)
-+#define DIV_CLK_NO_MASK		BIT(19)
- 
- #define LGM_MUX(_id, _name, _pdata, _f, _reg,		\
- 		_shift, _width, _cf, _v)		\
-diff --git a/drivers/clk/x86/clk-lgm.c b/drivers/clk/x86/clk-lgm.c
-index e312af42e97ae..4de77b2c750d3 100644
---- a/drivers/clk/x86/clk-lgm.c
-+++ b/drivers/clk/x86/clk-lgm.c
-@@ -255,8 +255,8 @@ static const struct lgm_clk_branch lgm_branch_clks[] = {
- 	LGM_FIXED(LGM_CLK_SLIC, "slic", NULL, 0, CGU_IF_CLK1,
- 		  8, 2, CLOCK_FLAG_VAL_INIT, 8192000, 2),
- 	LGM_FIXED(LGM_CLK_DOCSIS, "v_docsis", NULL, 0, 0, 0, 0, 0, 16000000, 0),
--	LGM_DIV(LGM_CLK_DCL, "dcl", "v_ifclk", 0, CGU_PCMCR,
--		25, 3, 0, 0, 0, 0, dcl_div),
-+	LGM_DIV(LGM_CLK_DCL, "dcl", "v_ifclk", CLK_SET_RATE_PARENT, CGU_PCMCR,
-+		25, 3, 0, 0, DIV_CLK_NO_MASK, 0, dcl_div),
- 	LGM_MUX(LGM_CLK_PCM, "pcm", pcm_p, 0, CGU_C55_PCMCR,
- 		0, 1, CLK_MUX_ROUND_CLOSEST, 0),
- 	LGM_FIXED_FACTOR(LGM_CLK_DDR_PHY, "ddr_phy", "ddr",
--- 
-2.39.0
-
+ static int split_64KB_gtt_entry(struct intel_vgpu *vgpu,
 
 
