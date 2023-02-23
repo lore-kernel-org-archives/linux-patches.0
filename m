@@ -1,160 +1,81 @@
-Received: from mail-il1-f175.google.com (mail-il1-f175.google.com [209.85.166.175])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AB6DB29AD
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 16:18:11 +0000 (UTC)
-Received: by mail-il1-f175.google.com with SMTP id z5so2126390ilq.0
-        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 08:18:11 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=W7ieouCKWdhpuzaMjYjba2gKOz+Qqhrfpk7U3BSTOec=;
-        b=No6oKmfN4x6eJuUxjeg+awuo12e0WHfh/o+SY7h8nvNY5mihD6tx+PByXEq8TXcUFv
-         p/AQtsWPFO1Oh5/nYjJwspByaFBaXrGOHX0OZp+LYGXypYnHP/KOkJG0YnALaVzOp5O8
-         /aqh6TC0HgBkV5syOKaGqznjtsV73tEHk9eb0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=W7ieouCKWdhpuzaMjYjba2gKOz+Qqhrfpk7U3BSTOec=;
-        b=QV2hfawVM4sR5tIkS0jv61+C1Dg+4BRzqhNSFSYmXnk42Tjf54O1yq3o8mjSEWvS9s
-         euYpkRUTAxImZm0EAsbTWcMwY1At7WK2/8X/YlcMYRW3MFpRBQlXlR87SYhx50rvhUkA
-         0r9w5aKZACqwXW2hmCp6IhHxrZCM5eWuV/aAkMJGeX50wm7in6K5IpWsvuHGuDjhzHOb
-         uT9t2KCqZwn0eoSIL5q0Mjr0nQZcwVurtIcfKw90yACG5AcE61TbvHGSZCryBqEZHBww
-         p4yw+GMc87iUOaPumAeQ/7PzmlXK5qhytPGFyjGKK7tq+nayCPM42hxXhf3Kap6ZD70+
-         yOwQ==
-X-Gm-Message-State: AO0yUKUpqCR6RmhTwW0NBbYlwjtdoSG/Cc8l2RF81USNrSwz29KGhUjJ
-	oQBOnOVSjZk/1aNDw+H0lhwm/w==
-X-Google-Smtp-Source: AK7set8qhFbJuco+MFTgNVRUaFsTJ95/BcGOdXwLieY1yZ/ZZdlBgdiqTnYID406G66YejOhPIBrcA==
-X-Received: by 2002:a05:6e02:1051:b0:317:4fc:a70c with SMTP id p17-20020a056e02105100b0031704fca70cmr862681ilj.0.1677169090588;
-        Thu, 23 Feb 2023 08:18:10 -0800 (PST)
-Received: from [192.168.1.128] ([38.15.45.1])
-        by smtp.gmail.com with ESMTPSA id m18-20020a056e020df200b00315785bfabfsm3546590ilj.47.2023.02.23.08.18.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 08:18:10 -0800 (PST)
-Message-ID: <b1552656-7af0-42cf-017e-df919b0d0585@linuxfoundation.org>
-Date: Thu, 23 Feb 2023 09:18:09 -0700
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C2541365
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 16:31:25 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B0B2C433EF;
+	Thu, 23 Feb 2023 16:31:24 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1677169884;
+	bh=IoOpMdJMMufC5j2/gAEF1pE3PIHEhES/laRJlr0+P9Y=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=H2X3EmqlSd4LpquhLHf2QltIctwsZvWBJt3/UAib6EyF977ytLFXNlHFwbs/2gI5K
+	 ewLA4mCCNI8nVBgCLlOP9UR+gk0P8GzcBmtS+pgW4UJyF4tTK0nLfLoT0eIPrZhXxr
+	 th879Smnp3bpY740pxvReHidnPSUw0eQpB0QO4P4=
+Date: Thu, 23 Feb 2023 17:31:22 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: Conor Dooley <conor.dooley@microchip.com>, stable@vger.kernel.org,
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 00/46] 6.1.14-rc1 review
+Message-ID: <Y/eU2oQ3qhpEeV+R@kroah.com>
+References: <20230223130431.553657459@linuxfoundation.org>
+ <Y/d5KdOfh5rXUeqk@wendy>
+ <CA+G9fYsG8t1qO6MzJ=OYmegDwXCePafWbYjCc=JgiF3Mk5yQxg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 5.15 00/37] 5.15.96-rc2 review
-Content-Language: en-US
-To: Naresh Kamboju <naresh.kamboju@linaro.org>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
- Nathan Chancellor <nathan@kernel.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
- linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
- akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de, llvm@lists.linux.dev,
- Shuah Khan <skhan@linuxfoundation.org>
-References: <20230223141542.672463796@linuxfoundation.org>
- <CA+G9fYuhcaYO1m29-9vQr-HK7_xJYouAAkM=ouMYzOBk+otCVg@mail.gmail.com>
- <d8032a63-64e2-0769-55d7-60f9b2f46a01@linuxfoundation.org>
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <d8032a63-64e2-0769-55d7-60f9b2f46a01@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+G9fYsG8t1qO6MzJ=OYmegDwXCePafWbYjCc=JgiF3Mk5yQxg@mail.gmail.com>
 
-On 2/23/23 08:45, Shuah Khan wrote:
-> On 2/23/23 08:40, Naresh Kamboju wrote:
->> On Thu, 23 Feb 2023 at 19:46, Greg Kroah-Hartman
->> <gregkh@linuxfoundation.org> wrote:
->>>
->>> This is the start of the stable review cycle for the 5.15.96 release.
->>> There are 37 patches in this series, all will be posted as a response
->>> to this one.  If anyone has any issues with these being applied, please
->>> let me know.
->>>
->>> Responses should be made by Sat, 25 Feb 2023 14:15:30 +0000.
->>> Anything received after that time might be too late.
->>>
->>> The whole patch series can be found in one patch at:
->>>          https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.96-rc2.gz
->>> or in the git tree and branch at:
->>>          git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
->>> and the diffstat can be found below.
->>>
->>> thanks,
->>>
->>> greg k-h
->>
->> Following build warnings / error notices on 5.15-rc2
->> anyone see these build issues ?
->>
->> scripts/pahole-flags.sh: 10: scripts/pahole-version.sh: Permission denied
->> scripts/pahole-flags.sh: 12: [: Illegal number:
->> scripts/pahole-flags.sh: 16: [: Illegal number:
->> scripts/pahole-flags.sh: 20: [: Illegal number:
->> scripts/pahole-flags.sh: 10: scripts/pahole-version.sh: Permission denied
->> scripts/pahole-flags.sh: 12: [: Illegal number:
->> scripts/pahole-flags.sh: 16: [: Illegal number:
->> scripts/pahole-flags.sh: 20: [: Illegal number:
->> scripts/pahole-flags.sh: 10: scripts/pahole-version.sh: Permission denied
->> scripts/pahole-flags.sh: 12: [: Illegal number:
->> scripts/pahole-flags.sh: 16: [: Illegal number:
->> scripts/pahole-flags.sh: 20: [: Illegal number:
->> sh: 1: scripts/pahole-version.sh: Permission denied
->> init/Kconfig:97: syntax error
->> init/Kconfig:96: invalid statement
->> make[2]: *** [scripts/kconfig/Makefile:87: defconfig] Error 1
->>
->>
->> Need to bisect
->> -- 
->>
->> commit 54fab3cc806aec70d7ce8440e511d56bd53a4081
->> Author: Nathan Chancellor <nathan@kernel.org>
->> Date:   Tue Feb 1 13:56:21 2022 -0700
->>
->>      kbuild: Add CONFIG_PAHOLE_VERSION
->>
->>      commit 613fe169237785a4bb1d06397b52606b2967da53 upstream.
->>
->>      There are a few different places where pahole's version is turned into a
->>      three digit form with the exact same command. Move this command into
->>      scripts/pahole-version.sh to reduce the amount of duplication across the
->>      tree.
->>
->>      Create CONFIG_PAHOLE_VERSION so the version code can be used in Kconfig
->>      to enable and disable configuration options based on the pahole version,
->>      which is already done in a couple of places.
->>
->>      Signed-off-by: Nathan Chancellor <nathan@kernel.org>
->>
->> -- 
->> ls -l   scripts/pahole*.sh
->> -rwxr-xr-x 1 naresh naresh 610 Feb 23 21:03 scripts/pahole-flags.sh
->> -rw-r--r-- 1 naresh naresh 269 Feb 23 21:03 scripts/pahole-version.sh
->>
->>
->>
->> -- 
->> Linaro LKFT
->> https://lkft.linaro.org
->>
-> +1 seeing the same:
+On Thu, Feb 23, 2023 at 08:08:43PM +0530, Naresh Kamboju wrote:
+> On Thu, 23 Feb 2023 at 20:03, Conor Dooley <conor.dooley@microchip.com> wrote:
+> >
+> > On Thu, Feb 23, 2023 at 02:06:07PM +0100, Greg Kroah-Hartman wrote:
+> > > This is the start of the stable review cycle for the 6.1.14 release.
+> > > There are 46 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, please
+> > > let me know.
+> > >
+> > > Responses should be made by Sat, 25 Feb 2023 13:04:16 +0000.
+> > > Anything received after that time might be too late.
+> > >
+> > > The whole patch series can be found in one patch at:
+> > >       https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.14-rc1.gz
+> > > or in the git tree and branch at:
+> > >       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > > and the diffstat can be found below.
+> >
+> > > Dave Hansen <dave.hansen@linux.intel.com>
+> > >     uaccess: Add speculation barrier to copy_from_user()
+> >
+> > This breaks the build for me on RISC-V, you need to take f3dd0c53370e
+> > ("bpf: add missing header file include") from Linus' tree.
+> > It was broken in mainline too, so it is probably broken everywhere you
+> > backported it :(
 > 
-> ./scripts/pahole-flags.sh: 10: ./scripts/pahole-version.sh: Permission denied
-> ./scripts/pahole-flags.sh: 12: [: Illegal number:
-> ./scripts/pahole-flags.sh: 16: [: Illegal number:
-> ./scripts/pahole-flags.sh: 20: [: Illegal number:
+> Thanks for your report.
 > 
+> I do see arm and arm64 build breaks with following build warnings / errors:
 > 
+> kernel/bpf/core.c: In function '___bpf_prog_run':
+> kernel/bpf/core.c:1911:17: error: implicit declaration of function
+> 'barrier_nospec' [-Werror=implicit-function-declaration]
+>  1911 |                 barrier_nospec();
+>       |                 ^~~~~~~~~~~~~~
+> cc1: some warnings being treated as errors
 
-Okay figured out problem now. scripts/pahole-version.sh isn't executable.
-Once I made that change make is working now:
-
-chmod +x scripts/pahole-version.sh
+Should all be fixed up in the -rc2 releases.
 
 thanks,
--- Shuah
+
+greg k-h
