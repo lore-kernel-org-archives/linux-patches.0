@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40ACD2584
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:11:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BBB2BC4339B;
-	Thu, 23 Feb 2023 13:11:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CB0C52584
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:11:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 541F3C4339B;
+	Thu, 23 Feb 2023 13:11:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157870;
-	bh=uVog4+eLQsf9qeofd22iYzE0CERGuqS/2mxtMUTXyYM=;
+	s=korg; t=1677157872;
+	bh=ZaHNhBnKKXPiLRFFCtHO8LU6lhILjz58VZP7gBb+c74=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QsAf8YID2ta+2l2GdG9cMT9uf+fgwMCxnhMIjWhZ2HLwHt1+Q7wbhyitYlTptbMF7
-	 HAj9Fw18oQaxc4V+Dpfpx0ksMarlPPpF5pbfC1fFaEJnkeLqul03yLhZuRtLA1dVSP
-	 MMuqaF/d9nyjdppw9cDD7yqCBYSbBYCiMGXqYIf4=
+	b=k6xACUDKdV/hDy2eajkJ/BkPDjMFJ4tIx9+7IB3RrKJoQKLwT3SfhfC8JnxriIj6q
+	 7+Gq8amPWpHVY65aUS6/iuY2b78gjoa5A2t9zUL2/AwLjzJG5jM9vq4bWzN2KeFa0S
+	 /TV3qlnnfHhQNxfEn4EmZ4NzzXKV3b9nsmR9trMQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Matt Ranostay <mranostay@ti.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 5.4 16/18] wifi: mwifiex: Add missing compatible string for SD8787
-Date: Thu, 23 Feb 2023 14:07:01 +0100
-Message-Id: <20230223130426.298798258@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>,
+	Eric Biggers <ebiggers@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Eric Biggers <ebiggers@google.com>
+Subject: [PATCH 5.4 17/18] ext4: Fix function prototype mismatch for ext4_feat_ktype
+Date: Thu, 23 Feb 2023 14:07:02 +0100
+Message-Id: <20230223130426.340058228@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130425.680784802@linuxfoundation.org>
 References: <20230223130425.680784802@linuxfoundation.org>
@@ -35,34 +38,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Kees Cook <keescook@chromium.org>
 
-commit 36dd7a4c6226133b0b7aa92b8e604e688d958d0c upstream.
+commit 118901ad1f25d2334255b3d50512fa20591531cd upstream.
 
-Commit e3fffc1f0b47 ("devicetree: document new marvell-8xxx and
-pwrseq-sd8787 options") documented a compatible string for SD8787 in
-the devicetree bindings, but neglected to add it to the mwifiex driver.
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed.
 
-Fixes: e3fffc1f0b47 ("devicetree: document new marvell-8xxx and pwrseq-sd8787 options")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org # v4.11+
-Cc: Matt Ranostay <mranostay@ti.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/320de5005ff3b8fd76be2d2b859fd021689c3681.1674827105.git.lukas@wunner.de
+ext4_feat_ktype was setting the "release" handler to "kfree", which
+doesn't have a matching function prototype. Add a simple wrapper
+with the correct prototype.
+
+This was found as a result of Clang's new -Wcast-function-type-strict
+flag, which is more sensitive than the simpler -Wcast-function-type,
+which only checks for type width mismatches.
+
+Note that this code is only reached when ext4 is a loadable module and
+it is being unloaded:
+
+ CFI failure at kobject_put+0xbb/0x1b0 (target: kfree+0x0/0x180; expected type: 0x7c4aa698)
+ ...
+ RIP: 0010:kobject_put+0xbb/0x1b0
+ ...
+ Call Trace:
+  <TASK>
+  ext4_exit_sysfs+0x14/0x60 [ext4]
+  cleanup_module+0x67/0xedb [ext4]
+
+Fixes: b99fee58a20a ("ext4: create ext4_feat kobject dynamically")
+Cc: Theodore Ts'o <tytso@mit.edu>
+Cc: Eric Biggers <ebiggers@kernel.org>
+Cc: stable@vger.kernel.org
+Build-tested-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20230103234616.never.915-kees@kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20230104210908.gonna.388-kees@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sdio.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ext4/sysfs.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/sdio.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sdio.c
-@@ -58,6 +58,7 @@ static struct memory_type_mapping mem_ty
+--- a/fs/ext4/sysfs.c
++++ b/fs/ext4/sysfs.c
+@@ -383,6 +383,11 @@ static void ext4_sb_release(struct kobje
+ 	complete(&sbi->s_kobj_unregister);
+ }
+ 
++static void ext4_feat_release(struct kobject *kobj)
++{
++	kfree(kobj);
++}
++
+ static const struct sysfs_ops ext4_attr_ops = {
+ 	.show	= ext4_attr_show,
+ 	.store	= ext4_attr_store,
+@@ -397,7 +402,7 @@ static struct kobj_type ext4_sb_ktype =
+ static struct kobj_type ext4_feat_ktype = {
+ 	.default_groups = ext4_feat_groups,
+ 	.sysfs_ops	= &ext4_attr_ops,
+-	.release	= (void (*)(struct kobject *))kfree,
++	.release	= ext4_feat_release,
  };
  
- static const struct of_device_id mwifiex_sdio_of_match_table[] = {
-+	{ .compatible = "marvell,sd8787" },
- 	{ .compatible = "marvell,sd8897" },
- 	{ .compatible = "marvell,sd8997" },
- 	{ }
+ static struct kobject *ext4_root;
 
 
