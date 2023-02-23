@@ -1,105 +1,115 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93EB257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:04:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FFFDC433A1;
-	Thu, 23 Feb 2023 13:04:46 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617B0257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:04:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AEAC433A0;
+	Thu, 23 Feb 2023 13:04:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157487;
-	bh=pRjeYyqkRsD7ib1XC5C/RYZbGtt+Xc4I9KqSKFMrI/w=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YpDZfNDUkpOPcuMyHBVh9XH5P87pov1sBiqJzDZ0Ub/5ZPAgbho6Dht+E76wt2CFp
-	 IulyhqFs7o3Tb8prqV+1RwRvOzF1gqmXtNRHerozIJDuBUfr506Q3xHkZUM2FX4jGF
-	 VzP3msHPBCLUkp1znxGV2pWj4YuWSgEdiYUj9P2c=
+	s=korg; t=1677157490;
+	bh=B7K2Hp17wxTx3rvm6GO2NIiUGJOTXFTwJZ4BbXeLqCs=;
+	h=From:To:Cc:Subject:Date:From;
+	b=LxSASbfyio+gz2pTGJZzeEkRyYZ1o9qsowqRws44J8c8QaPdF0r4Qb3ucujdJF9Ir
+	 yPJDzNXeGY4lEu/souiNcSvuat0l84Se1W5iH48J6fr42RzbOxkrTTmsVdO/gaV+Ec
+	 GDtEqK4Z1gi6Bg7vpFUoqIouX+5eWKOYA9WbgsdM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 4.14 1/7] wifi: rtl8xxxu: gen2: Turn on the rate control
-Date: Thu, 23 Feb 2023 14:04:38 +0100
-Message-Id: <20230223130423.438223497@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 4.14 0/7] 4.14.307-rc1 review
+Date: Thu, 23 Feb 2023 14:04:37 +0100
+Message-Id: <20230223130423.369876969@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230223130423.369876969@linuxfoundation.org>
-References: <20230223130423.369876969@linuxfoundation.org>
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.307-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-4.14.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 4.14.307-rc1
+X-KernelTest-Deadline: 2023-02-25T13:04+00:00
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+This is the start of the stable review cycle for the 4.14.307 release.
+There are 7 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-[ Upstream commit 791082ec0ab843e0be07c8ce3678e4c2afd2e33d ]
+Responses should be made by Sat, 25 Feb 2023 13:04:16 +0000.
+Anything received after that time might be too late.
 
-Re-enable the function rtl8xxxu_gen2_report_connect.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.307-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
+and the diffstat can be found below.
 
-It informs the firmware when connecting to a network. This makes the
-firmware enable the rate control, which makes the upload faster.
+thanks,
 
-It also informs the firmware when disconnecting from a network. In the
-past this made reconnecting impossible because it was sending the
-auth on queue 0x7 (TXDESC_QUEUE_VO) instead of queue 0x12
-(TXDESC_QUEUE_MGNT):
+greg k-h
 
-wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 1/3)
-wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 2/3)
-wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 3/3)
-wlp0s20f0u3: authentication with 90:55:de:__:__:__ timed out
+-------------
+Pseudo-Shortlog of commits:
 
-Probably the firmware disables the unnecessary TX queues when it
-knows it's disconnected.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 4.14.307-rc1
 
-However, this was fixed in commit edd5747aa12e ("wifi: rtl8xxxu: Fix
-skb misuse in TX queue selection").
+Lukas Wunner <lukas@wunner.de>
+    wifi: mwifiex: Add missing compatible string for SD8787
 
-Fixes: c59f13bbead4 ("rtl8xxxu: Work around issue with 8192eu and 8723bu devices not reconnecting")
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/43200afc-0c65-ee72-48f8-231edd1df493@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+Dave Hansen <dave.hansen@linux.intel.com>
+    uaccess: Add speculation barrier to copy_from_user()
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-index a287c28b38b5d..f7c879a7a1be3 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -4375,12 +4375,9 @@ void rtl8xxxu_gen1_report_connect(struct rtl8xxxu_priv *priv,
- void rtl8xxxu_gen2_report_connect(struct rtl8xxxu_priv *priv,
- 				  u8 macid, bool connect)
- {
--#ifdef RTL8XXXU_GEN2_REPORT_CONNECT
- 	/*
--	 * Barry Day reports this causes issues with 8192eu and 8723bu
--	 * devices reconnecting. The reason for this is unclear, but
--	 * until it is better understood, leave the code in place but
--	 * disabled, so it is not lost.
-+	 * The firmware turns on the rate control when it knows it's
-+	 * connected to a network.
- 	 */
- 	struct h2c_cmd h2c;
- 
-@@ -4393,7 +4390,6 @@ void rtl8xxxu_gen2_report_connect(struct rtl8xxxu_priv *priv,
- 		h2c.media_status_rpt.parm &= ~BIT(0);
- 
- 	rtl8xxxu_gen2_h2c_cmd(priv, &h2c, sizeof(h2c.media_status_rpt));
--#endif
- }
- 
- void rtl8xxxu_gen1_init_aggregation(struct rtl8xxxu_priv *priv)
--- 
-2.39.0
+Thomas Gleixner <tglx@linutronix.de>
+    alarmtimer: Prevent starvation by small intervals and SIG_IGN
 
+Sean Anderson <sean.anderson@seco.com>
+    powerpc: dts: t208x: Disable 10G on MAC1 and MAC2
+
+Jason A. Donenfeld <Jason@zx2c4.com>
+    random: always mix cycle counter in add_latent_entropy()
+
+Sean Anderson <sean.anderson@seco.com>
+    powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
+
+Bitterblue Smith <rtl8821cerfe2@gmail.com>
+    wifi: rtl8xxxu: gen2: Turn on the rate control
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |  4 +-
+ arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi | 44 ++++++++++++++++++++++
+ arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi | 44 ++++++++++++++++++++++
+ arch/powerpc/boot/dts/fsl/t2081si-post.dtsi        | 20 +++++++++-
+ drivers/net/wireless/marvell/mwifiex/sdio.c        |  1 +
+ .../net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c  |  8 +---
+ include/linux/nospec.h                             |  4 ++
+ include/linux/random.h                             |  6 +--
+ kernel/time/alarmtimer.c                           | 33 ++++++++++++++--
+ lib/usercopy.c                                     |  7 ++++
+ 10 files changed, 154 insertions(+), 17 deletions(-)
 
 
