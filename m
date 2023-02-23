@@ -1,27 +1,25 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66222589
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:07:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F97C4339B;
-	Thu, 23 Feb 2023 13:07:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 645EA257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:07:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDABBC433D2;
+	Thu, 23 Feb 2023 13:07:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157675;
-	bh=LEV9EJzGjWl5bqmd8gKvZW97vEYWcui7Qi40BCVlsK4=;
+	s=korg; t=1677157678;
+	bh=IHGHq7o3RdIFyabZDAY0oXamIhW2ibTQzXDyEA2cSf0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=h0bJqmOQ/PqKdj2UckrI2duPVDP5BOn345RxAYS3MkNGJq+Ijttp/83xcrw7IBoX7
-	 cBLYPeRxa63A5QiIwv8TQouj77gu8SGrCmD2V2rky5OQmN5CVN0FP6ISNuDUq8yR4v
-	 w0XQ1iJwbmHxBG0AFel7cteKVtkXPUr3BZn7wVKc=
+	b=gwxqpORuppuH/zC1Kj4bQEQbAICIyGql2ev9rs5PsPJCYM1C8WsoOFAAQryU1OFF0
+	 wjhodSp13OUuKD7RpHGQ2zHb1YCa7hdPIWFXkjCj2mJ4E7rI70vTyyiRarrg4mfYoX
+	 fdO5PA9kMhByDNclvL1nIdCxa8ugbnSgocR4iisI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Matt Ranostay <mranostay@ti.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 5.10 22/25] wifi: mwifiex: Add missing compatible string for SD8787
-Date: Thu, 23 Feb 2023 14:06:39 +0100
-Message-Id: <20230223130427.784887755@linuxfoundation.org>
+	Paul Moore <paul@paul-moore.com>
+Subject: [PATCH 5.10 23/25] audit: update the mailing list in MAINTAINERS
+Date: Thu, 23 Feb 2023 14:06:40 +0100
+Message-Id: <20230223130427.830990355@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130426.817998725@linuxfoundation.org>
 References: <20230223130426.817998725@linuxfoundation.org>
@@ -35,34 +33,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Paul Moore <paul@paul-moore.com>
 
-commit 36dd7a4c6226133b0b7aa92b8e604e688d958d0c upstream.
+commit 6c6cd913accd77008f74a1a9d57b816db3651daa upstream.
 
-Commit e3fffc1f0b47 ("devicetree: document new marvell-8xxx and
-pwrseq-sd8787 options") documented a compatible string for SD8787 in
-the devicetree bindings, but neglected to add it to the mwifiex driver.
+We've moved the upstream Linux Kernel audit subsystem discussions to
+a new mailing list, this patch updates the MAINTAINERS info with the
+new list address.
 
-Fixes: e3fffc1f0b47 ("devicetree: document new marvell-8xxx and pwrseq-sd8787 options")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org # v4.11+
-Cc: Matt Ranostay <mranostay@ti.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/320de5005ff3b8fd76be2d2b859fd021689c3681.1674827105.git.lukas@wunner.de
+Marking this for stable inclusion to help speed uptake of the new
+list across all of the supported kernel releases.  This is a doc only
+patch so the risk should be close to nil.
+
+Cc: stable@vger.kernel.org
+Signed-off-by: Paul Moore <paul@paul-moore.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sdio.c |    1 +
- 1 file changed, 1 insertion(+)
+ MAINTAINERS |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/sdio.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sdio.c
-@@ -485,6 +485,7 @@ static struct memory_type_mapping mem_ty
- };
- 
- static const struct of_device_id mwifiex_sdio_of_match_table[] = {
-+	{ .compatible = "marvell,sd8787" },
- 	{ .compatible = "marvell,sd8897" },
- 	{ .compatible = "marvell,sd8997" },
- 	{ }
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3001,7 +3001,7 @@ F:	drivers/net/ieee802154/atusb.h
+ AUDIT SUBSYSTEM
+ M:	Paul Moore <paul@paul-moore.com>
+ M:	Eric Paris <eparis@redhat.com>
+-L:	linux-audit@redhat.com (moderated for non-subscribers)
++L:	audit@vger.kernel.org
+ S:	Supported
+ W:	https://github.com/linux-audit
+ T:	git git://git.kernel.org/pub/scm/linux/kernel/git/pcmoore/audit.git
 
 
