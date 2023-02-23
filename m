@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADCC2584
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:10:41 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F802C433D2;
-	Thu, 23 Feb 2023 13:10:41 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5EB2584
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:10:44 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1FEBC433D2;
+	Thu, 23 Feb 2023 13:10:43 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157841;
-	bh=upiZyjBW7Zqpirs8njROxyMEciquxpbVo6QLpLFYd9U=;
+	s=korg; t=1677157844;
+	bh=ou+M19fX2+wZ6xz96RPzOfydbn3RAfH+wtL/CRNbaYo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vTgw+dc+bxznQel+nGepcbH9Ffcs4d99jT+bZbuKro6Me52FFJJlGF8t5mSMiZEvc
-	 p1wLjC28seFZfvmmBGM4SULXDsInk+NZbxhEOn4khwZK/3i+JblT4S/951h/CzHK8+
-	 BiUdyCgHgZ/S0XsER8cPIaK93HGRh6iGyTos/+bQ=
+	b=r3Lzfb1RIiRfVeV4XoBTNXh8F1i863U8luPJMbSkmDgTdHbDGuSd6S7BW5I8xeKW5
+	 xCdeJRHDRi2Ph8CZiSPOYt0Ah3eWQxAbm6maDS0SgsNqxta7p2HiMUD4cFV/Nglp50
+	 ec3MR++9TsJTzIYv3aWlxMW00DzuKeUpBjftf2Lw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 04/18] drm/etnaviv: dont truncate physical page address
-Date: Thu, 23 Feb 2023 14:06:49 +0100
-Message-Id: <20230223130425.859805488@linuxfoundation.org>
+Subject: [PATCH 5.4 05/18] wifi: rtl8xxxu: gen2: Turn on the rate control
+Date: Thu, 23 Feb 2023 14:06:50 +0100
+Message-Id: <20230223130425.890209141@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130425.680784802@linuxfoundation.org>
 References: <20230223130425.680784802@linuxfoundation.org>
@@ -35,40 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit d37c120b73128690434cc093952439eef9d56af1 ]
+[ Upstream commit 791082ec0ab843e0be07c8ce3678e4c2afd2e33d ]
 
-While the interface for the MMU mapping takes phys_addr_t to hold a
-full 64bit address when necessary and MMUv2 is able to map physical
-addresses with up to 40bit, etnaviv_iommu_map() truncates the address
-to 32bits. Fix this by using the correct type.
+Re-enable the function rtl8xxxu_gen2_report_connect.
 
-Fixes: 931e97f3afd8 ("drm/etnaviv: mmuv2: support 40 bit phys address")
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+It informs the firmware when connecting to a network. This makes the
+firmware enable the rate control, which makes the upload faster.
+
+It also informs the firmware when disconnecting from a network. In the
+past this made reconnecting impossible because it was sending the
+auth on queue 0x7 (TXDESC_QUEUE_VO) instead of queue 0x12
+(TXDESC_QUEUE_MGNT):
+
+wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 1/3)
+wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 2/3)
+wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 3/3)
+wlp0s20f0u3: authentication with 90:55:de:__:__:__ timed out
+
+Probably the firmware disables the unnecessary TX queues when it
+knows it's disconnected.
+
+However, this was fixed in commit edd5747aa12e ("wifi: rtl8xxxu: Fix
+skb misuse in TX queue selection").
+
+Fixes: c59f13bbead4 ("rtl8xxxu: Work around issue with 8192eu and 8723bu devices not reconnecting")
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/43200afc-0c65-ee72-48f8-231edd1df493@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_mmu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_mmu.c b/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
-index 9ba2fe48228f1..44fbc0a123bf3 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
-@@ -80,10 +80,10 @@ static int etnaviv_iommu_map(struct etnaviv_iommu_context *context, u32 iova,
- 		return -EINVAL;
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+index 4a81e810a0ce3..0bc747489c55a 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -4372,12 +4372,9 @@ void rtl8xxxu_gen1_report_connect(struct rtl8xxxu_priv *priv,
+ void rtl8xxxu_gen2_report_connect(struct rtl8xxxu_priv *priv,
+ 				  u8 macid, bool connect)
+ {
+-#ifdef RTL8XXXU_GEN2_REPORT_CONNECT
+ 	/*
+-	 * Barry Day reports this causes issues with 8192eu and 8723bu
+-	 * devices reconnecting. The reason for this is unclear, but
+-	 * until it is better understood, leave the code in place but
+-	 * disabled, so it is not lost.
++	 * The firmware turns on the rate control when it knows it's
++	 * connected to a network.
+ 	 */
+ 	struct h2c_cmd h2c;
  
- 	for_each_sgtable_dma_sg(sgt, sg, i) {
--		u32 pa = sg_dma_address(sg) - sg->offset;
-+		phys_addr_t pa = sg_dma_address(sg) - sg->offset;
- 		size_t bytes = sg_dma_len(sg) + sg->offset;
+@@ -4390,7 +4387,6 @@ void rtl8xxxu_gen2_report_connect(struct rtl8xxxu_priv *priv,
+ 		h2c.media_status_rpt.parm &= ~BIT(0);
  
--		VERB("map[%d]: %08x %08x(%zx)", i, iova, pa, bytes);
-+		VERB("map[%d]: %08x %pap(%zx)", i, iova, &pa, bytes);
+ 	rtl8xxxu_gen2_h2c_cmd(priv, &h2c, sizeof(h2c.media_status_rpt));
+-#endif
+ }
  
- 		ret = etnaviv_context_map(context, da, pa, bytes, prot);
- 		if (ret)
+ void rtl8xxxu_gen1_init_aggregation(struct rtl8xxxu_priv *priv)
 -- 
 2.39.0
 
