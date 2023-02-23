@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2AA7257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5BD2AC433D2;
-	Thu, 23 Feb 2023 13:08:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 64137257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DF668C4339B;
+	Thu, 23 Feb 2023 13:08:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157719;
-	bh=+CZ6D1oD5mEXQwJdkneqyYH5PmO9976T5pjm1J+Itig=;
+	s=korg; t=1677157722;
+	bh=+W1Ge8Ze4YYE7880ic/HREieSuP7YSkUNuVa0TfZL1A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=a7DGiWD+Qh7/QMwQJs5lplKyMA2gTtbt7kPP9Hk3Yf2Tp3rD94egfWSv7gufksUTM
-	 gQfJ5Shkd7BoQaS4OTEiMjJtH4uLVf1hWpvUPnP+PtK9pY/SBr9WplCbzdaKn6LRDz
-	 sMdXm3VmyUn1bP0qIoR+xz3xc1ENK2BABj2nrpkw=
+	b=cvL4cW0M3KbUy+8UZLJdz7/0+Et1MAizzOAx/nUHHc7dVlhugQTIuu7JEJu4e1JSU
+	 SCFi8/chnHus0rwfuGlcABYBNloK3d1ZuZnItlCVCapTbohzMvexw9hTZEWsgjWOhK
+	 L3wH9eZQlHwg1iaQk1NJOnuidDLLFYMyIZ+GWJm8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -19,9 +19,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Jie Zhan <zhanjie9@hisilicon.com>,
 	"Martin K. Petersen" <martin.petersen@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 13/46] scsi: libsas: Add smp_ata_check_ready_type()
-Date: Thu, 23 Feb 2023 14:06:20 +0100
-Message-Id: <20230223130432.160001107@linuxfoundation.org>
+Subject: [PATCH 6.1 14/46] scsi: hisi_sas: Fix SATA devices missing issue during I_T nexus reset
+Date: Thu, 23 Feb 2023 14:06:21 +0100
+Message-Id: <20230223130432.208456010@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130431.553657459@linuxfoundation.org>
 References: <20230223130431.553657459@linuxfoundation.org>
@@ -37,111 +37,72 @@ Content-Transfer-Encoding: 8bit
 
 From: Jie Zhan <zhanjie9@hisilicon.com>
 
-[ Upstream commit 9181ce3cb5d96f0ee28246a857ca651830fa3746 ]
+[ Upstream commit 3c2673a09cf1181318c07b7dbc1bc532ba3d33e3 ]
 
-Create function smp_ata_check_ready_type() for LLDDs to wait for SATA
-devices to come up after a link reset.
+SATA devices on an expander may be removed and not be found again when I_T
+nexus reset and revalidation are processed simultaneously.
 
+The issue comes from:
+
+ - Revalidation can remove SATA devices in link reset, e.g. in
+   hisi_sas_clear_nexus_ha().
+
+ - However, hisi_sas_debug_I_T_nexus_reset() polls the state of a SATA
+   device on an expander after sending link_reset, where it calls:
+    hisi_sas_debug_I_T_nexus_reset
+     sas_ata_wait_after_reset
+      ata_wait_after_reset
+       ata_wait_ready
+        smp_ata_check_ready
+         sas_ex_phy_discover
+          sas_ex_phy_discover_helper
+           sas_set_ex_phy
+
+   The ex_phy's change count is updated in sas_set_ex_phy(), so SATA
+   devices after a link reset may not be found later through revalidation.
+
+A similar issue was reported in:
+commit 0f3fce5cc77e ("[SCSI] libsas: fix ata_eh clobbering ex_phys via
+smp_ata_check_ready")
+commit 87c8331fcf72 ("[SCSI] libsas: prevent domain rediscovery competing
+with ata error handling").
+
+To address this issue, in hisi_sas_debug_I_T_nexus_reset(), we now call
+smp_ata_check_ready_type() that only polls the device type while not
+updating the ex_phy's data of libsas.
+
+Fixes: 71453bd9d1bf ("scsi: hisi_sas: Use sas_ata_wait_after_reset() in IT nexus reset")
 Signed-off-by: Jie Zhan <zhanjie9@hisilicon.com>
-Link: https://lore.kernel.org/r/20221118083714.4034612-4-zhanjie9@hisilicon.com
+Link: https://lore.kernel.org/r/20221118083714.4034612-5-zhanjie9@hisilicon.com
 Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
-Stable-dep-of: 3c2673a09cf1 ("scsi: hisi_sas: Fix SATA devices missing issue during I_T nexus reset")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/scsi/libsas/sas_ata.c      | 25 +++++++++++++++++++++++++
- drivers/scsi/libsas/sas_expander.c |  4 ++--
- drivers/scsi/libsas/sas_internal.h |  2 ++
- include/scsi/sas_ata.h             |  6 ++++++
- 4 files changed, 35 insertions(+), 2 deletions(-)
+ drivers/scsi/hisi_sas/hisi_sas_main.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/scsi/libsas/sas_ata.c b/drivers/scsi/libsas/sas_ata.c
-index d35c9296f7388..2fd55ef9ffca5 100644
---- a/drivers/scsi/libsas/sas_ata.c
-+++ b/drivers/scsi/libsas/sas_ata.c
-@@ -287,6 +287,31 @@ static int sas_ata_clear_pending(struct domain_device *dev, struct ex_phy *phy)
- 		return 1;
- }
+diff --git a/drivers/scsi/hisi_sas/hisi_sas_main.c b/drivers/scsi/hisi_sas/hisi_sas_main.c
+index 02fa3c00dcccf..a8142e2b96435 100644
+--- a/drivers/scsi/hisi_sas/hisi_sas_main.c
++++ b/drivers/scsi/hisi_sas/hisi_sas_main.c
+@@ -1708,13 +1708,15 @@ static int hisi_sas_debug_I_T_nexus_reset(struct domain_device *device)
+ 		return rc;
+ 	}
  
-+int smp_ata_check_ready_type(struct ata_link *link)
-+{
-+	struct domain_device *dev = link->ap->private_data;
-+	struct sas_phy *phy = sas_get_local_phy(dev);
-+	struct domain_device *ex_dev = dev->parent;
-+	enum sas_device_type type = SAS_PHY_UNUSED;
-+	u8 sas_addr[SAS_ADDR_SIZE];
-+	int res;
++	/* Remote phy */
+ 	if (rc)
+ 		return rc;
+ 
+-	/* Remote phy */
+ 	if (dev_is_sata(device)) {
+-		rc = sas_ata_wait_after_reset(device,
+-					HISI_SAS_WAIT_PHYUP_TIMEOUT);
++		struct ata_link *link = &device->sata_dev.ap->link;
 +
-+	res = sas_get_phy_attached_dev(ex_dev, phy->number, sas_addr, &type);
-+	sas_put_local_phy(phy);
-+	if (res)
-+		return res;
-+
-+	switch (type) {
-+	case SAS_SATA_PENDING:
-+		return 0;
-+	case SAS_END_DEVICE:
-+		return 1;
-+	default:
-+		return -ENODEV;
-+	}
-+}
-+EXPORT_SYMBOL_GPL(smp_ata_check_ready_type);
-+
- static int smp_ata_check_ready(struct ata_link *link)
- {
- 	int res;
-diff --git a/drivers/scsi/libsas/sas_expander.c b/drivers/scsi/libsas/sas_expander.c
-index 5ce2518301040..63a23251fb1d8 100644
---- a/drivers/scsi/libsas/sas_expander.c
-+++ b/drivers/scsi/libsas/sas_expander.c
-@@ -1693,8 +1693,8 @@ static int sas_get_phy_change_count(struct domain_device *dev,
- 	return res;
- }
- 
--static int sas_get_phy_attached_dev(struct domain_device *dev, int phy_id,
--				    u8 *sas_addr, enum sas_device_type *type)
-+int sas_get_phy_attached_dev(struct domain_device *dev, int phy_id,
-+			     u8 *sas_addr, enum sas_device_type *type)
- {
- 	int res;
- 	struct smp_disc_resp *disc_resp;
-diff --git a/drivers/scsi/libsas/sas_internal.h b/drivers/scsi/libsas/sas_internal.h
-index 8d0ad3abc7b5c..a94bd0790b055 100644
---- a/drivers/scsi/libsas/sas_internal.h
-+++ b/drivers/scsi/libsas/sas_internal.h
-@@ -84,6 +84,8 @@ struct domain_device *sas_ex_to_ata(struct domain_device *ex_dev, int phy_id);
- int sas_ex_phy_discover(struct domain_device *dev, int single);
- int sas_get_report_phy_sata(struct domain_device *dev, int phy_id,
- 			    struct smp_rps_resp *rps_resp);
-+int sas_get_phy_attached_dev(struct domain_device *dev, int phy_id,
-+			     u8 *sas_addr, enum sas_device_type *type);
- int sas_try_ata_reset(struct asd_sas_phy *phy);
- void sas_hae_reset(struct work_struct *work);
- 
-diff --git a/include/scsi/sas_ata.h b/include/scsi/sas_ata.h
-index a1df4f9d57a31..ec646217e7f6e 100644
---- a/include/scsi/sas_ata.h
-+++ b/include/scsi/sas_ata.h
-@@ -35,6 +35,7 @@ void sas_ata_end_eh(struct ata_port *ap);
- int sas_execute_ata_cmd(struct domain_device *device, u8 *fis,
- 			int force_phy_id);
- int sas_ata_wait_after_reset(struct domain_device *dev, unsigned long deadline);
-+int smp_ata_check_ready_type(struct ata_link *link);
- #else
- 
- 
-@@ -98,6 +99,11 @@ static inline int sas_ata_wait_after_reset(struct domain_device *dev,
- {
- 	return -ETIMEDOUT;
- }
-+
-+static inline int smp_ata_check_ready_type(struct ata_link *link)
-+{
-+	return 0;
-+}
- #endif
- 
- #endif /* _SAS_ATA_H_ */
++		rc = ata_wait_after_reset(link, HISI_SAS_WAIT_PHYUP_TIMEOUT,
++					  smp_ata_check_ready_type);
+ 	} else {
+ 		msleep(2000);
+ 	}
 -- 
 2.39.0
 
