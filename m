@@ -1,163 +1,166 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90EDA2584
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:10:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C565BC433EF;
-	Thu, 23 Feb 2023 13:10:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1CBC52584
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:11:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 934CBC433D2;
+	Thu, 23 Feb 2023 13:10:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157857;
-	bh=RYMjiUWgnei9/khPLBWszbj6G7CuwBOisJlG7Mn32NY=;
-	h=From:To:Cc:Subject:Date:From;
-	b=abQeIQ/Jvt88FJ83PAf389GjWevLXIHygYBFTCcilJocn/rOzgBZlHIHqHUx0NnDM
-	 Spj84mdfddtWrXuwsQcHdcvcU+aOnbPiyx1J5wg1xsaR9h0j38/vOf9voZqCOjkylX
-	 gqt0XsrqU/N+fQQDoVRvRUD0A05tlntuhDbgADz0=
+	s=korg; t=1677157859;
+	bh=oaWBmdUg2SRESnKZzyQhxN2kd8ZUWWz2scxi1QduOYQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=dlD3ryLk8h4ObnEgaD5iTb/YLOWUElPR5VgRkDQtbX1lMhsGnTkSgSwI97xA2BfXp
+	 s51xReByXBuNHn9UVGq8lHnOiWZd95rVKsRourCr3i8hFw/eAw7qzn6XRRtmwvJTOL
+	 36y++VF4yXpFkFUnoZr59u8WVN9mbf0kEt7JzRWc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 5.4 00/18] 5.4.233-rc1 review
-Date: Thu, 23 Feb 2023 14:06:45 +0100
-Message-Id: <20230223130425.680784802@linuxfoundation.org>
+	syzbot+b9564ba6e8e00694511b@syzkaller.appspotmail.com,
+	Thomas Gleixner <tglx@linutronix.de>,
+	John Stultz <jstultz@google.com>
+Subject: [PATCH 5.4 12/18] alarmtimer: Prevent starvation by small intervals and SIG_IGN
+Date: Thu, 23 Feb 2023 14:06:57 +0100
+Message-Id: <20230223130426.142932593@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230223130425.680784802@linuxfoundation.org>
+References: <20230223130425.680784802@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.233-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.4.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.4.233-rc1
-X-KernelTest-Deadline: 2023-02-25T13:04+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.4.233 release.
-There are 18 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Thomas Gleixner <tglx@linutronix.de>
 
-Responses should be made by Sat, 25 Feb 2023 13:04:16 +0000.
-Anything received after that time might be too late.
+commit d125d1349abeb46945dc5e98f7824bf688266f13 upstream.
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.233-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-and the diffstat can be found below.
+syzbot reported a RCU stall which is caused by setting up an alarmtimer
+with a very small interval and ignoring the signal. The reproducer arms the
+alarm timer with a relative expiry of 8ns and an interval of 9ns. Not a
+problem per se, but that's an issue when the signal is ignored because then
+the timer is immediately rearmed because there is no way to delay that
+rearming to the signal delivery path.  See posix_timer_fn() and commit
+58229a189942 ("posix-timers: Prevent softirq starvation by small intervals
+and SIG_IGN") for details.
 
-thanks,
+The reproducer does not set SIG_IGN explicitely, but it sets up the timers
+signal with SIGCONT. That has the same effect as explicitely setting
+SIG_IGN for a signal as SIGCONT is ignored if there is no handler set and
+the task is not ptraced.
 
-greg k-h
+The log clearly shows that:
 
--------------
-Pseudo-Shortlog of commits:
+   [pid  5102] --- SIGCONT {si_signo=SIGCONT, si_code=SI_TIMER, si_timerid=0, si_overrun=316014, si_int=0, si_ptr=NULL} ---
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.4.233-rc1
+It works because the tasks are traced and therefore the signal is queued so
+the tracer can see it, which delays the restart of the timer to the signal
+delivery path. But then the tracer is killed:
 
-Vladimir Oltean <vladimir.oltean@nxp.com>
-    Revert "net/sched: taprio: make qdisc_leaf() see the per-netdev-queue pfifo child qdiscs"
+   [pid  5087] kill(-5102, SIGKILL <unfinished ...>
+   ...
+   ./strace-static-x86_64: Process 5107 detached
 
-Kees Cook <keescook@chromium.org>
-    ext4: Fix function prototype mismatch for ext4_feat_ktype
+and after it's gone the stall can be observed:
 
-Lukas Wunner <lukas@wunner.de>
-    wifi: mwifiex: Add missing compatible string for SD8787
+   syzkaller login: [   79.439102][    C0] hrtimer: interrupt took 68471 ns
+   [  184.460538][    C1] rcu: INFO: rcu_preempt detected stalls on CPUs/tasks:
+   ...
+   [  184.658237][    C1] rcu: Stack dump where RCU GP kthread last ran:
+   [  184.664574][    C1] Sending NMI from CPU 1 to CPUs 0:
+   [  184.669821][    C0] NMI backtrace for cpu 0
+   [  184.669831][    C0] CPU: 0 PID: 5108 Comm: syz-executor192 Not tainted 6.2.0-rc6-next-20230203-syzkaller #0
+   ...
+   [  184.670036][    C0] Call Trace:
+   [  184.670041][    C0]  <IRQ>
+   [  184.670045][    C0]  alarmtimer_fired+0x327/0x670
 
-Dave Hansen <dave.hansen@linux.intel.com>
-    uaccess: Add speculation barrier to copy_from_user()
+posix_timer_fn() prevents that by checking whether the interval for
+timers which have the signal ignored is smaller than a jiffie and
+artifically delay it by shifting the next expiry out by a jiffie. That's
+accurate vs. the overrun accounting, but slightly inaccurate
+vs. timer_gettimer(2).
 
-Pavel Skripkin <paskripkin@gmail.com>
-    mac80211: mesh: embedd mesh_paths and mpp_paths into ieee80211_if_mesh
+The comment in that function says what needs to be done and there was a fix
+available for the regular userspace induced SIG_IGN mechanism, but that did
+not work due to the implicit ignore for SIGCONT and similar signals. This
+needs to be worked on, but for now the only available workaround is to do
+exactly what posix_timer_fn() does:
 
-Zheng Wang <zyytlz.wz@163.com>
-    drm/i915/gvt: fix double free bug in split_2MB_gtt_entry
+Increase the interval of self-rearming timers, which have their signal
+ignored, to at least a jiffie.
 
-Thomas Gleixner <tglx@linutronix.de>
-    alarmtimer: Prevent starvation by small intervals and SIG_IGN
+Interestingly this has been fixed before via commit ff86bf0c65f1
+("alarmtimer: Rate limit periodic intervals") already, but that fix got
+lost in a later rework.
 
-Sean Anderson <sean.anderson@seco.com>
-    powerpc: dts: t208x: Disable 10G on MAC1 and MAC2
+Reported-by: syzbot+b9564ba6e8e00694511b@syzkaller.appspotmail.com
+Fixes: f2c45807d399 ("alarmtimer: Switch over to generic set/get/rearm routine")
+Signed-off-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: John Stultz <jstultz@google.com>
+Cc: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/87k00q1no2.ffs@tglx
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ kernel/time/alarmtimer.c |   33 +++++++++++++++++++++++++++++----
+ 1 file changed, 29 insertions(+), 4 deletions(-)
 
-Marc Kleine-Budde <mkl@pengutronix.de>
-    can: kvaser_usb: hydra: help gcc-13 to figure out cmd_len
-
-Jim Mattson <jmattson@google.com>
-    KVM: VMX: Execute IBPB on emulated VM-exit when guest has IBRS
-
-Sean Christopherson <seanjc@google.com>
-    KVM: x86: Fail emulation during EMULTYPE_SKIP on any exception
-
-Jason A. Donenfeld <Jason@zx2c4.com>
-    random: always mix cycle counter in add_latent_entropy()
-
-Sean Anderson <sean.anderson@seco.com>
-    powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
-
-Bitterblue Smith <rtl8821cerfe2@gmail.com>
-    wifi: rtl8xxxu: gen2: Turn on the rate control
-
-Lucas Stach <l.stach@pengutronix.de>
-    drm/etnaviv: don't truncate physical page address
-
-Marek Szyprowski <m.szyprowski@samsung.com>
-    drm: etnaviv: fix common struct sg_table related issues
-
-Marek Szyprowski <m.szyprowski@samsung.com>
-    scatterlist: add generic wrappers for iterating over sgtable objects
-
-Marek Szyprowski <m.szyprowski@samsung.com>
-    dma-mapping: add generic helpers for mapping sgtable objects
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |  4 +-
- arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi | 44 +++++++++++
- arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi | 44 +++++++++++
- arch/powerpc/boot/dts/fsl/t2081si-post.dtsi        | 20 ++++-
- arch/x86/kvm/vmx/nested.c                          | 11 +++
- arch/x86/kvm/vmx/vmx.c                             |  6 +-
- arch/x86/kvm/x86.c                                 |  4 +-
- drivers/gpu/drm/etnaviv/etnaviv_gem.c              | 12 ++-
- drivers/gpu/drm/etnaviv/etnaviv_mmu.c              | 19 ++---
- drivers/gpu/drm/i915/gvt/gtt.c                     | 17 ++++-
- drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c  | 33 +++++---
- drivers/net/wireless/marvell/mwifiex/sdio.c        |  1 +
- .../net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c  |  8 +-
- fs/ext4/sysfs.c                                    |  7 +-
- include/linux/dma-mapping.h                        | 80 +++++++++++++++++++
- include/linux/nospec.h                             |  4 +
- include/linux/random.h                             |  6 +-
- include/linux/scatterlist.h                        | 50 +++++++++++-
- kernel/bpf/core.c                                  |  2 -
- kernel/time/alarmtimer.c                           | 33 +++++++-
- lib/usercopy.c                                     |  7 ++
- net/mac80211/ieee80211_i.h                         | 24 +++++-
- net/mac80211/mesh.h                                | 22 +-----
- net/mac80211/mesh_pathtbl.c                        | 89 ++++++++--------------
- net/sched/sch_taprio.c                             |  8 +-
- 25 files changed, 410 insertions(+), 145 deletions(-)
+--- a/kernel/time/alarmtimer.c
++++ b/kernel/time/alarmtimer.c
+@@ -479,11 +479,35 @@ u64 alarm_forward(struct alarm *alarm, k
+ }
+ EXPORT_SYMBOL_GPL(alarm_forward);
+ 
+-u64 alarm_forward_now(struct alarm *alarm, ktime_t interval)
++static u64 __alarm_forward_now(struct alarm *alarm, ktime_t interval, bool throttle)
+ {
+ 	struct alarm_base *base = &alarm_bases[alarm->type];
++	ktime_t now = base->gettime();
++
++	if (IS_ENABLED(CONFIG_HIGH_RES_TIMERS) && throttle) {
++		/*
++		 * Same issue as with posix_timer_fn(). Timers which are
++		 * periodic but the signal is ignored can starve the system
++		 * with a very small interval. The real fix which was
++		 * promised in the context of posix_timer_fn() never
++		 * materialized, but someone should really work on it.
++		 *
++		 * To prevent DOS fake @now to be 1 jiffie out which keeps
++		 * the overrun accounting correct but creates an
++		 * inconsistency vs. timer_gettime(2).
++		 */
++		ktime_t kj = NSEC_PER_SEC / HZ;
++
++		if (interval < kj)
++			now = ktime_add(now, kj);
++	}
++
++	return alarm_forward(alarm, now, interval);
++}
+ 
+-	return alarm_forward(alarm, base->gettime(), interval);
++u64 alarm_forward_now(struct alarm *alarm, ktime_t interval)
++{
++	return __alarm_forward_now(alarm, interval, false);
+ }
+ EXPORT_SYMBOL_GPL(alarm_forward_now);
+ 
+@@ -557,9 +581,10 @@ static enum alarmtimer_restart alarm_han
+ 	if (posix_timer_event(ptr, si_private) && ptr->it_interval) {
+ 		/*
+ 		 * Handle ignored signals and rearm the timer. This will go
+-		 * away once we handle ignored signals proper.
++		 * away once we handle ignored signals proper. Ensure that
++		 * small intervals cannot starve the system.
+ 		 */
+-		ptr->it_overrun += alarm_forward_now(alarm, ptr->it_interval);
++		ptr->it_overrun += __alarm_forward_now(alarm, ptr->it_interval, true);
+ 		++ptr->it_requeue_pending;
+ 		ptr->it_active = 1;
+ 		result = ALARMTIMER_RESTART;
 
 
