@@ -1,45 +1,45 @@
-Received: from mail-lf1-f42.google.com (mail-lf1-f42.google.com [209.85.167.42])
+Received: from mail-ed1-f52.google.com (mail-ed1-f52.google.com [209.85.208.52])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D762EAD26
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 21:24:49 +0000 (UTC)
-Received: by mail-lf1-f42.google.com with SMTP id bi9so1327204lfb.2
-        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:24:49 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71FD4AD26
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 21:40:02 +0000 (UTC)
+Received: by mail-ed1-f52.google.com with SMTP id h16so47591529edz.10
+        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:40:02 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linux-foundation.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=o5EaUMxUu98mAPL68+dXX7WmuwtBVQHznLgjebwlQ4I=;
-        b=Pl3dZ9xTbzURMJzx/eGGIQXnmfoYM03pN0WhMPpwPgnrLPDyz+genkT2s+ds1BpkV6
-         twgQRI8jT/MQAGxLGHvJ8M2g8/XP/ZqA8moBtTkD1S/r7vQSfaSuRiHAxK/lkLQc1hyl
-         4pyuSAjtf+qu+jr1Ej+LvtHyHtN7af3Z5Hg1Y=
+        bh=eu4dlgDvM7BF/2CvEqDDQA7UHs/G9uWjlrCzs/6VT/8=;
+        b=OBJUot5ArA8AuZr5Am1iNpiGcg163grwYHt/S/lfdzEng2GEOmwCK61b4pdn9e1Rvz
+         9ZdxgOBLRiDoqtPUUEXz/Z1CFCLXAhoMCcyW2xMALKstCSjCh62EgVAkaFd3JSDOIfp4
+         63bQ2FerOD+OayzoALa+Mh6V67wCIFrWQjsEw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=o5EaUMxUu98mAPL68+dXX7WmuwtBVQHznLgjebwlQ4I=;
-        b=Y3COmVyvNIc9s9xG4HfkRZBJbD7g9MOe5hsOo2M8ZeJg9t6fX4SDWKCPdh7k9eIXd/
-         HVmQ6E3Mz3IzSXuz2VYKWEtRIna+7I+BcPT/MO5VUrA8yPmH4UZOcT4MmswCAa96T7Hu
-         yEE0tq540aiVwGzDRzUJoRy8JJq76fqZ09MO/7pLxwbIsow/eHU3q9RLyy2WT1C0pwC2
-         wZLzLsSBLMe9aLCyA0AGOsfj1LeQiUOtsd1MSW0/1bRSCzNhbjNOfHWZWdR5pftzlZKJ
-         KdOFVsyd5JYlNA04D7poVe35SeGwNhjekG8c8Rw2N1dT8Mi917o9NK7ZVI0LexM94L/i
-         UhKA==
-X-Gm-Message-State: AO0yUKVuX17Xy0Hu2VlLvuYXoBbjyFMHUZ6XWMfl1WRtaBV+MyB5ypzE
-	TA+Exx6B1xeja7WuBeLkA+LBinSjG33nSslCNETBbw==
-X-Google-Smtp-Source: AK7set+lUT7S3Asj/CZvEsOX/OED1QSsPG85klzou6N6oqsOxEiksFpwbdMTdrbC/CdZE6s9WcS5tQ==
-X-Received: by 2002:a19:a404:0:b0:4db:183c:479 with SMTP id q4-20020a19a404000000b004db183c0479mr4562765lfc.32.1677187487471;
-        Thu, 23 Feb 2023 13:24:47 -0800 (PST)
-Received: from mail-lj1-f175.google.com (mail-lj1-f175.google.com. [209.85.208.175])
-        by smtp.gmail.com with ESMTPSA id n12-20020a2e904c000000b002945bbb83b9sm851369ljg.89.2023.02.23.13.24.47
+        bh=eu4dlgDvM7BF/2CvEqDDQA7UHs/G9uWjlrCzs/6VT/8=;
+        b=jHJ9ZnyOvpTz9comA9UBwW7UDWHxHFAl/kuAtWIxcdWxq6IzhQfw88/j0FldT8SWRZ
+         /MzG3KMboqpx3yqoxlNRHNTU2ZW22nygtKTGnsSvKHNHaUSUZOvH3OVruRc3ZVao3tRs
+         EXM5bAYHoTPWdALlLCMhVN5DiAunK2GeUZmSQmomaawmVC7HoY9TRDL6iFopp4E3Hcy/
+         uWt+HmKSiQCQH86/grfwQcS843I9MdibgJpCt3dn53H4a66MhOh4DKdh0p51eRfsHW8u
+         gCIrDrdeJdtCkWGfZJh8rdjo7PSMAB4P3m089+LhqYXmXC3P+FnLAIwmwBHHECm395Op
+         Hvnw==
+X-Gm-Message-State: AO0yUKUQTtFr7AZ/FKW/YiJKI81eEg6VSN+2qrnJfVEXSWgTKK1mQIq0
+	olls/pD7rvmJICXiIfJIJctXQROsl+A2LtdTl+FnFw==
+X-Google-Smtp-Source: AK7set8+sjSQctBtN5FpJw/4KD1+RFdn02SkI5QUeiU4k2aVl0MaLXfrGilbbBzUX61QTmFf58Pacg==
+X-Received: by 2002:a17:906:f8cf:b0:8b1:78b8:4208 with SMTP id lh15-20020a170906f8cf00b008b178b84208mr22483220ejb.1.1677188400291;
+        Thu, 23 Feb 2023 13:40:00 -0800 (PST)
+Received: from mail-ed1-f44.google.com (mail-ed1-f44.google.com. [209.85.208.44])
+        by smtp.gmail.com with ESMTPSA id b19-20020a170906491300b008e267d7ec18sm3268714ejq.50.2023.02.23.13.39.59
         for <patches@lists.linux.dev>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 13:24:47 -0800 (PST)
-Received: by mail-lj1-f175.google.com with SMTP id b13so13173463ljf.6
-        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:24:47 -0800 (PST)
-X-Received: by 2002:a17:906:8508:b0:8d0:2c55:1aa with SMTP id
- i8-20020a170906850800b008d02c5501aamr7232357ejx.0.1677187129340; Thu, 23 Feb
- 2023 13:18:49 -0800 (PST)
+        Thu, 23 Feb 2023 13:39:59 -0800 (PST)
+Received: by mail-ed1-f44.google.com with SMTP id ec43so46895784edb.8
+        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:39:59 -0800 (PST)
+X-Received: by 2002:a17:907:988c:b0:877:747e:f076 with SMTP id
+ ja12-20020a170907988c00b00877747ef076mr9516620ejc.0.1677188399093; Thu, 23
+ Feb 2023 13:39:59 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -48,43 +48,38 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20230223141542.672463796@linuxfoundation.org> <adc1b0b7-f837-fbb4-332b-4ce18fc55709@roeck-us.net>
  <Y/eVSi4ZTcOmPBTv@kroah.com> <cfd03ee0-b47a-644d-4364-79601025f35f@roeck-us.net>
- <CAHk-=whCG1zudvDsqdFo89pHARvDv4=r6vaZ8GWc_Q9amxBM6Q@mail.gmail.com> <Y/fC3d3RqoeawG0Y@dev-arch.thelio-3990X>
-In-Reply-To: <Y/fC3d3RqoeawG0Y@dev-arch.thelio-3990X>
+ <CAHk-=whCG1zudvDsqdFo89pHARvDv4=r6vaZ8GWc_Q9amxBM6Q@mail.gmail.com>
+ <Y/fC3d3RqoeawG0Y@dev-arch.thelio-3990X> <CAHk-=whkNnShBugM01Kzcypkp+f-uHeBWuAgtUiMpiSZuW+QDQ@mail.gmail.com>
+ <Y/fZbQEEPBNZQ2w7@kroah.com>
+In-Reply-To: <Y/fZbQEEPBNZQ2w7@kroah.com>
 From: Linus Torvalds <torvalds@linux-foundation.org>
-Date: Thu, 23 Feb 2023 13:18:31 -0800
-X-Gmail-Original-Message-ID: <CAHk-=whkNnShBugM01Kzcypkp+f-uHeBWuAgtUiMpiSZuW+QDQ@mail.gmail.com>
-Message-ID: <CAHk-=whkNnShBugM01Kzcypkp+f-uHeBWuAgtUiMpiSZuW+QDQ@mail.gmail.com>
+Date: Thu, 23 Feb 2023 13:39:42 -0800
+X-Gmail-Original-Message-ID: <CAHk-=whiuJH_DYQZw1hPtibDQZcNy8QYf1cZJCsezuPobSXCKw@mail.gmail.com>
+Message-ID: <CAHk-=whiuJH_DYQZw1hPtibDQZcNy8QYf1cZJCsezuPobSXCKw@mail.gmail.com>
 Subject: Re: [PATCH 5.15 00/37] 5.15.96-rc2 review
-To: Nathan Chancellor <nathan@kernel.org>
-Cc: Guenter Roeck <linux@roeck-us.net>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	stable@vger.kernel.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: Nathan Chancellor <nathan@kernel.org>, Guenter Roeck <linux@roeck-us.net>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
 	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org, 
 	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com, 
 	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net, 
 	rwarsow@gmx.de
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, Feb 23, 2023 at 11:47 AM Nathan Chancellor <nathan@kernel.org> wrote:
+On Thu, Feb 23, 2023 at 1:24 PM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> I can send a patch unless you want to take those changes directly, you
-> have half a commit message there already I think :)
+> Quilt should be depending on patch here, I think it's something in my
+> set of "turn this series of patches into a mbox, split the mbox up into
+> patches" sequence that is causing the problem.
 
-Not being one of those old fogeys myself, I don't feel hugely motivated to care.
+Well, it might also be that quilt just re-generates the patch with
+'diff', and then in the process loses the information again.
 
-In fact, I think GNU patch implemented the git patch format extensions
-more than a decade ago, so we might even simply decide that it's past
-time to even worry about this at all.
+We can happily continue to support the "we lost the executable bit",
+since it sounds like Nathan is willing to cook up a patch.
 
-In fact, with all the base infrastructure supporting git patches, I'm
-not quite sure just _how_ quilt is able to apply patches without
-dealing with mode bits.
+I'm just too lazy and personally unaffected to care (and too busy with
+merges - excuses, excuses).
 
-Does quilt parse the patches and actively remove those lines before
-applying them? Or does quilt have some actual built-in patch
-application code that doesn't depend on GNU patch?
-
-(Side note: GNU patch may support git patches, but I don't think GNU
-diffutils will generate them, so I guess not all base infrastructure
-supports that fancy new "mode" line)
-
-             Linus
+            Linus
