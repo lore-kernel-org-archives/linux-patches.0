@@ -1,33 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B1A3E2584
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:11:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A7D1C433EF;
-	Thu, 23 Feb 2023 13:11:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 43C5F2584
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:11:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE8BCC433D2;
+	Thu, 23 Feb 2023 13:11:22 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157880;
-	bh=ofoMvBg1C00GPgC1hsSUmL2KFRVARo3odgsODRHhjOs=;
+	s=korg; t=1677157883;
+	bh=60ZF3qwHgY5n8GYM8lY2Wr1z1mMvQ8sc5JEY6YBajKo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EPYHQX3wZ5HoWRkPOhtr+6/hPY/2lphkrYye+wYNRvxaLr+wx60lsLAYVhCrWYNfK
-	 u75To1OWBJC8VOW8nzDUkSVO74VvGGQVZGrb0yYMWIvWljPVovpgaq1dYTEl9jON7a
-	 Aph35sWrusMkUVZNNxVOH3uWYd+qbwQafiizrRtk=
+	b=GEN/RpPmsGtzCNxlECUvfWX6R39YHgTFxw2JqD/tnPWhc8zTinGfirEp8HQ9stc6/
+	 +geLfZRSkTBLdoP/Wmozm/RjqpS5/CsJBOwOBYmjxLbjeOgAuiMrtBxB1KTdtBJSs9
+	 gs0PrhZ5JXA8+Rn3xFpYKp2NBrxwDX+9qmZgRwf0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lucas Stach <l.stach@pengutronix.de>,
-	Philipp Zabel <p.zabel@pengutronix.de>,
+	Dominik Brodowski <linux@dominikbrodowski.net>,
+	PaX Team <pageexec@freemail.hu>,
+	Emese Revfy <re.emese@gmail.com>,
+	"Jason A. Donenfeld" <Jason@zx2c4.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 01/36] drm/etnaviv: dont truncate physical page address
-Date: Thu, 23 Feb 2023 14:06:37 +0100
-Message-Id: <20230223130429.138180744@linuxfoundation.org>
+Subject: [PATCH 5.15 10/36] random: always mix cycle counter in add_latent_entropy()
+Date: Thu, 23 Feb 2023 14:06:46 +0100
+Message-Id: <20230223130429.548342879@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130429.072633724@linuxfoundation.org>
 References: <20230223130429.072633724@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,40 +37,59 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lucas Stach <l.stach@pengutronix.de>
+From: Jason A. Donenfeld <Jason@zx2c4.com>
 
-[ Upstream commit d37c120b73128690434cc093952439eef9d56af1 ]
+[ Upstream commit d7bf7f3b813e3755226bcb5114ad2ac477514ebf ]
 
-While the interface for the MMU mapping takes phys_addr_t to hold a
-full 64bit address when necessary and MMUv2 is able to map physical
-addresses with up to 40bit, etnaviv_iommu_map() truncates the address
-to 32bits. Fix this by using the correct type.
+add_latent_entropy() is called every time a process forks, in
+kernel_clone(). This in turn calls add_device_randomness() using the
+latent entropy global state. add_device_randomness() does two things:
 
-Fixes: 931e97f3afd8 ("drm/etnaviv: mmuv2: support 40 bit phys address")
-Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
-Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
+   2) Mixes into the input pool the latent entropy argument passed; and
+   1) Mixes in a cycle counter, a sort of measurement of when the event
+      took place, the high precision bits of which are presumably
+      difficult to predict.
+
+(2) is impossible without CONFIG_GCC_PLUGIN_LATENT_ENTROPY=y. But (1) is
+always possible. However, currently CONFIG_GCC_PLUGIN_LATENT_ENTROPY=n
+disables both (1) and (2), instead of just (2).
+
+This commit causes the CONFIG_GCC_PLUGIN_LATENT_ENTROPY=n case to still
+do (1) by passing NULL (len 0) to add_device_randomness() when add_latent_
+entropy() is called.
+
+Cc: Dominik Brodowski <linux@dominikbrodowski.net>
+Cc: PaX Team <pageexec@freemail.hu>
+Cc: Emese Revfy <re.emese@gmail.com>
+Fixes: 38addce8b600 ("gcc-plugins: Add latent_entropy plugin")
+Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_mmu.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ include/linux/random.h | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_mmu.c b/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
-index aabb997a74eb4..2de806173b3aa 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
-@@ -80,10 +80,10 @@ static int etnaviv_iommu_map(struct etnaviv_iommu_context *context, u32 iova,
- 		return -EINVAL;
+diff --git a/include/linux/random.h b/include/linux/random.h
+index 3feafab498ad9..ed75fb2b0ca94 100644
+--- a/include/linux/random.h
++++ b/include/linux/random.h
+@@ -19,14 +19,14 @@ void add_input_randomness(unsigned int type, unsigned int code,
+ void add_interrupt_randomness(int irq) __latent_entropy;
+ void add_hwgenerator_randomness(const void *buf, size_t len, size_t entropy);
  
- 	for_each_sgtable_dma_sg(sgt, sg, i) {
--		u32 pa = sg_dma_address(sg) - sg->offset;
-+		phys_addr_t pa = sg_dma_address(sg) - sg->offset;
- 		size_t bytes = sg_dma_len(sg) + sg->offset;
+-#if defined(LATENT_ENTROPY_PLUGIN) && !defined(__CHECKER__)
+ static inline void add_latent_entropy(void)
+ {
++#if defined(LATENT_ENTROPY_PLUGIN) && !defined(__CHECKER__)
+ 	add_device_randomness((const void *)&latent_entropy, sizeof(latent_entropy));
+-}
+ #else
+-static inline void add_latent_entropy(void) { }
++	add_device_randomness(NULL, 0);
+ #endif
++}
  
--		VERB("map[%d]: %08x %08x(%zx)", i, iova, pa, bytes);
-+		VERB("map[%d]: %08x %pap(%zx)", i, iova, &pa, bytes);
- 
- 		ret = etnaviv_context_map(context, da, pa, bytes, prot);
- 		if (ret)
+ void get_random_bytes(void *buf, size_t len);
+ size_t __must_check get_random_bytes_arch(void *buf, size_t len);
 -- 
 2.39.0
 
