@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12A28257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8A758C4339B;
-	Thu, 23 Feb 2023 13:08:18 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BE4B2584
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B71D2C433EF;
+	Thu, 23 Feb 2023 13:08:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157698;
-	bh=hqsQ5pMGTpw+QYH/sOkWGd5iFKNvryT76ja1AWBnEQM=;
+	s=korg; t=1677157704;
+	bh=Xb9zjsWuD2iVWJym7BTZ016iPYFtkt2DOwnW1iLojmw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=g1Pjv4iKNTyAoYLzO3UyhTfhkW3RUdaGvCjrF7ArfBBYMcKucI5zOxzfOSMF4zUeJ
-	 LAMy4MCc4QPnax7GoBBx3y5R4V+tYdTzmEP3Qj8KTvw2G5OixzGoCg0bH1rMDGIsgX
-	 FGxxlfzWpm9OxKiUSHZ6rYEpe9bwl7MV6I9hBsOw=
+	b=HjWPsjSzyS1GXOzQTg63Wgyvk0aqLK2cOb5o270L8syi91noJ0GenyuVnIIYlDHx1
+	 zVUP5RyjRKcs+EdgN2AVq1e+H+WAwAArW7fJm2dXF3RmDMDbV5h17jpW/Up6aVZNt1
+	 M/px1JUEKzfTlRwA1kg0C7s6pBNr3j6gmrOOtp2c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Jim Mattson <jmattson@google.com>,
+	Camelia Alexandra Groza <camelia.groza@nxp.com>,
+	Sean Anderson <sean.anderson@seco.com>,
+	Jakub Kicinski <kuba@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 12/25] KVM: VMX: Execute IBPB on emulated VM-exit when guest has IBRS
-Date: Thu, 23 Feb 2023 14:06:29 +0100
-Message-Id: <20230223130427.332442868@linuxfoundation.org>
+Subject: [PATCH 5.10 14/25] powerpc: dts: t208x: Disable 10G on MAC1 and MAC2
+Date: Thu, 23 Feb 2023 14:06:31 +0100
+Message-Id: <20230223130427.424357222@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130426.817998725@linuxfoundation.org>
 References: <20230223130426.817998725@linuxfoundation.org>
@@ -35,88 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jim Mattson <jmattson@google.com>
+From: Sean Anderson <sean.anderson@seco.com>
 
-[ Upstream commit 2e7eab81425ad6c875f2ed47c0ce01e78afc38a5 ]
+[ Upstream commit 8d8bee13ae9e316443c6666286360126a19c8d94 ]
 
-According to Intel's document on Indirect Branch Restricted
-Speculation, "Enabling IBRS does not prevent software from controlling
-the predicted targets of indirect branches of unrelated software
-executed later at the same predictor mode (for example, between two
-different user applications, or two different virtual machines). Such
-isolation can be ensured through use of the Indirect Branch Predictor
-Barrier (IBPB) command." This applies to both basic and enhanced IBRS.
+There aren't enough resources to run these ports at 10G speeds. Disable
+10G for these ports, reverting to the previous speed.
 
-Since L1 and L2 VMs share hardware predictor modes (guest-user and
-guest-kernel), hardware IBRS is not sufficient to virtualize
-IBRS. (The way that basic IBRS is implemented on pre-eIBRS parts,
-hardware IBRS is actually sufficient in practice, even though it isn't
-sufficient architecturally.)
-
-For virtual CPUs that support IBRS, add an indirect branch prediction
-barrier on emulated VM-exit, to ensure that the predicted targets of
-indirect branches executed in L1 cannot be controlled by software that
-was executed in L2.
-
-Since we typically don't intercept guest writes to IA32_SPEC_CTRL,
-perform the IBPB at emulated VM-exit regardless of the current
-IA32_SPEC_CTRL.IBRS value, even though the IBPB could technically be
-deferred until L1 sets IA32_SPEC_CTRL.IBRS, if IA32_SPEC_CTRL.IBRS is
-clear at emulated VM-exit.
-
-This is CVE-2022-2196.
-
-Fixes: 5c911beff20a ("KVM: nVMX: Skip IBPB when switching between vmcs01 and vmcs02")
-Cc: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Jim Mattson <jmattson@google.com>
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Link: https://lore.kernel.org/r/20221019213620.1953281-3-jmattson@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
+Fixes: 36926a7d70c2 ("powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G")
+Reported-by: Camelia Alexandra Groza <camelia.groza@nxp.com>
+Signed-off-by: Sean Anderson <sean.anderson@seco.com>
+Reviewed-by: Camelia Groza <camelia.groza@nxp.com>
+Tested-by: Camelia Groza <camelia.groza@nxp.com>
+Link: https://lore.kernel.org/r/20221216172937.2960054-1-sean.anderson@seco.com
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/vmx/nested.c | 11 +++++++++++
- arch/x86/kvm/vmx/vmx.c    |  6 ++++--
- 2 files changed, 15 insertions(+), 2 deletions(-)
+ arch/powerpc/boot/dts/fsl/t2081si-post.dtsi | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index f15ddf58a5bcd..91371b01eae0c 100644
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -4556,6 +4556,17 @@ void nested_vmx_vmexit(struct kvm_vcpu *vcpu, u32 vm_exit_reason,
- 
- 	vmx_switch_vmcs(vcpu, &vmx->vmcs01);
- 
-+	/*
-+	 * If IBRS is advertised to the vCPU, KVM must flush the indirect
-+	 * branch predictors when transitioning from L2 to L1, as L1 expects
-+	 * hardware (KVM in this case) to provide separate predictor modes.
-+	 * Bare metal isolates VMX root (host) from VMX non-root (guest), but
-+	 * doesn't isolate different VMCSs, i.e. in this case, doesn't provide
-+	 * separate modes for L2 vs L1.
-+	 */
-+	if (guest_cpuid_has(vcpu, X86_FEATURE_SPEC_CTRL))
-+		indirect_branch_prediction_barrier();
+diff --git a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
+index 74e17e134387d..27714dc2f04a5 100644
+--- a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
++++ b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
+@@ -659,3 +659,19 @@
+ 		interrupts = <16 2 1 9>;
+ 	};
+ };
 +
- 	/* Update any VMCS fields that might have changed while L2 ran */
- 	vmcs_write32(VM_EXIT_MSR_LOAD_COUNT, vmx->msr_autoload.host.nr);
- 	vmcs_write32(VM_ENTRY_MSR_LOAD_COUNT, vmx->msr_autoload.guest.nr);
-diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index 8f7152e158e28..c37cbd3fdd852 100644
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -1431,8 +1431,10 @@ void vmx_vcpu_load_vmcs(struct kvm_vcpu *vcpu, int cpu,
- 
- 		/*
- 		 * No indirect branch prediction barrier needed when switching
--		 * the active VMCS within a guest, e.g. on nested VM-Enter.
--		 * The L1 VMM can protect itself with retpolines, IBPB or IBRS.
-+		 * the active VMCS within a vCPU, unless IBRS is advertised to
-+		 * the vCPU.  To minimize the number of IBPBs executed, KVM
-+		 * performs IBPB on nested VM-Exit (a single nested transition
-+		 * may switch the active VMCS multiple times).
- 		 */
- 		if (!buddy || WARN_ON_ONCE(buddy->vmcs != prev))
- 			indirect_branch_prediction_barrier();
++&fman0_rx_0x08 {
++	/delete-property/ fsl,fman-10g-port;
++};
++
++&fman0_tx_0x28 {
++	/delete-property/ fsl,fman-10g-port;
++};
++
++&fman0_rx_0x09 {
++	/delete-property/ fsl,fman-10g-port;
++};
++
++&fman0_tx_0x29 {
++	/delete-property/ fsl,fman-10g-port;
++};
 -- 
 2.39.0
 
