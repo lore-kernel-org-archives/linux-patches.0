@@ -1,76 +1,105 @@
-Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0BA10F6
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 02:55:18 +0000 (UTC)
-Received: by mail-pj1-f51.google.com with SMTP id x20-20020a17090a8a9400b00233ba727724so2899481pjn.1
-        for <patches@lists.linux.dev>; Wed, 22 Feb 2023 18:55:18 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=sladewatkins.net; s=googled;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=XQPHO+gl/DhYC4r22uP7h9xL0tCG9iAevyTPVtriPQo=;
-        b=Ffzo03v+l25EXyWJifw244XNhDz8wJghOb7k4p1ylBpVzAQQ1mUmUN4ZX7d9fSyhjZ
-         N1wUjMyk73kCrZtbKAuYc0AbzVdWH0+DQdTnLSKNaOFffc8tG6sR1p02579PPIbzSPxN
-         MvU7odQaG0VUedi0VCGmQwSJ+J30gQZvnM8KB2qc0K4mdl6U48lLX9LbVz3qW23wGVfv
-         RPzc9+ITya5C4t1bJFimdoWHUmieuiVHEBFpHlZ3AHF8BdvHD0/C6MCkulAKgCR9nrae
-         LjIlK4JS24XDnSWjzllL2ZNxAITY0l8EkZgPbxk9tO0ohsGK4TRd+DNU7HVWDLWUsVTl
-         /WOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=XQPHO+gl/DhYC4r22uP7h9xL0tCG9iAevyTPVtriPQo=;
-        b=105GNsSei3TkACoXhrI1a+y+nb0d0VQc4WzFxj7el3VYvN5V9iVx8rzCV48QnZZOyu
-         DBTVo7ZRXt/ogpOxKeT4OSKOJfgiikvzNbKBGTHIxv5tTHRXmdZn0IpBwvGYqfignl4z
-         BShtE3klC72/gu9CvP68zdpO+zJUql+9hqztUMHGqdsZt0iNN/KwrcolV54M0bX/fJdA
-         iMAzLJVti5nBqq5Zn4aiNBzaqvOWE8p0Dvmklk58iuxW12oZ3ej7CZmWQq9eWdkWbfPv
-         lajXXqo4omaUGpNm175g4ZfwrrILoJ+9uY1PT805/Ncees2oeLgE5eZb0Rc+6tbxcIUA
-         JTvw==
-X-Gm-Message-State: AO0yUKUSJ7KAGQovuUeTDjNtvar6ZwSorp3CHmDTp9ucszon5ggUCWv9
-	jWS4nyLykNcXeRR9KNvnqU67gvplT0FDF4fG+xw5NA==
-X-Google-Smtp-Source: AK7set+sXcdhmJLQhp1HnsxoaWEiNvC2w5ODsm67G7ZcQMIsy1veA0VxS0igMXfb2hiUE1B6yJbPUxrsOn16CMsbPJI=
-X-Received: by 2002:a17:90a:df12:b0:234:889e:d88d with SMTP id
- gp18-20020a17090adf1200b00234889ed88dmr130880pjb.5.1677120918304; Wed, 22 Feb
- 2023 18:55:18 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E93EB257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:04:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FFFDC433A1;
+	Thu, 23 Feb 2023 13:04:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1677157487;
+	bh=pRjeYyqkRsD7ib1XC5C/RYZbGtt+Xc4I9KqSKFMrI/w=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=YpDZfNDUkpOPcuMyHBVh9XH5P87pov1sBiqJzDZ0Ub/5ZPAgbho6Dht+E76wt2CFp
+	 IulyhqFs7o3Tb8prqV+1RwRvOzF1gqmXtNRHerozIJDuBUfr506Q3xHkZUM2FX4jGF
+	 VzP3msHPBCLUkp1znxGV2pWj4YuWSgEdiYUj9P2c=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	patches@lists.linux.dev,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 1/7] wifi: rtl8xxxu: gen2: Turn on the rate control
+Date: Thu, 23 Feb 2023 14:04:38 +0100
+Message-Id: <20230223130423.438223497@linuxfoundation.org>
+X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230223130423.369876969@linuxfoundation.org>
+References: <20230223130423.369876969@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230220133548.158615609@linuxfoundation.org>
-In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
-From: Slade Watkins <srw@sladewatkins.net>
-Date: Wed, 22 Feb 2023 21:55:08 -0500
-Message-ID: <CA+pv=HP1Jv8m_eSv=h6fKFE-ynkgHCdWNB1dnmFZUqsrcGN5cg@mail.gmail.com>
-Subject: Re: [PATCH 4.14 00/53] 4.14.306-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Mon, Feb 20, 2023 at 8:38 AM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 4.14.306 release.
-> There are 53 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Wed, 22 Feb 2023 13:35:35 +0000.
-> Anything received after that time might be too late.
->
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-4.14.306-rc1 compiled and booted on my x86_64 test system. No errors
-or regressions.
+[ Upstream commit 791082ec0ab843e0be07c8ce3678e4c2afd2e33d ]
 
-Tested-by: Slade Watkins <srw@sladewatkins.net>
+Re-enable the function rtl8xxxu_gen2_report_connect.
 
-Thanks,
--- Slade
+It informs the firmware when connecting to a network. This makes the
+firmware enable the rate control, which makes the upload faster.
+
+It also informs the firmware when disconnecting from a network. In the
+past this made reconnecting impossible because it was sending the
+auth on queue 0x7 (TXDESC_QUEUE_VO) instead of queue 0x12
+(TXDESC_QUEUE_MGNT):
+
+wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 1/3)
+wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 2/3)
+wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 3/3)
+wlp0s20f0u3: authentication with 90:55:de:__:__:__ timed out
+
+Probably the firmware disables the unnecessary TX queues when it
+knows it's disconnected.
+
+However, this was fixed in commit edd5747aa12e ("wifi: rtl8xxxu: Fix
+skb misuse in TX queue selection").
+
+Fixes: c59f13bbead4 ("rtl8xxxu: Work around issue with 8192eu and 8723bu devices not reconnecting")
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/43200afc-0c65-ee72-48f8-231edd1df493@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+index a287c28b38b5d..f7c879a7a1be3 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -4375,12 +4375,9 @@ void rtl8xxxu_gen1_report_connect(struct rtl8xxxu_priv *priv,
+ void rtl8xxxu_gen2_report_connect(struct rtl8xxxu_priv *priv,
+ 				  u8 macid, bool connect)
+ {
+-#ifdef RTL8XXXU_GEN2_REPORT_CONNECT
+ 	/*
+-	 * Barry Day reports this causes issues with 8192eu and 8723bu
+-	 * devices reconnecting. The reason for this is unclear, but
+-	 * until it is better understood, leave the code in place but
+-	 * disabled, so it is not lost.
++	 * The firmware turns on the rate control when it knows it's
++	 * connected to a network.
+ 	 */
+ 	struct h2c_cmd h2c;
+ 
+@@ -4393,7 +4390,6 @@ void rtl8xxxu_gen2_report_connect(struct rtl8xxxu_priv *priv,
+ 		h2c.media_status_rpt.parm &= ~BIT(0);
+ 
+ 	rtl8xxxu_gen2_h2c_cmd(priv, &h2c, sizeof(h2c.media_status_rpt));
+-#endif
+ }
+ 
+ void rtl8xxxu_gen1_init_aggregation(struct rtl8xxxu_priv *priv)
+-- 
+2.39.0
+
+
+
