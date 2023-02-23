@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4B87B257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C63F3C433D2;
-	Thu, 23 Feb 2023 13:08:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7754C257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 00272C4339B;
+	Thu, 23 Feb 2023 13:08:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157691;
-	bh=878Rw47iu6RQG3Da9JcbHNzvPoMnzPg/Ai2tnAh1K6g=;
+	s=korg; t=1677157696;
+	bh=V1cgL4/ztt7zVfBt9Z2BIvtH29Uxko/sW17CkowPIRA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=N0pOrnbkUVTvpVCV/AAwhfMC3MVvkDeeN60QCSnrtNpxAVUBuRctQHoN0CQw/awp5
-	 9kqZMzy6QGdOmaFY+wPCWhvD278y2IoR+Skjhr8Uy1GzKVGajCaEsJQtkY6suSUcDq
-	 lteVPTsnFRqMxWPJ2EKUUCpTjvbv7IwO+30TLPAc=
+	b=ka6pmZEI9ursf/kYdNwyvZAIm7WxSKQSacv3uXebI7nyqi7xMCNLCfrTl7EQy1w3Y
+	 gUmfiERHbU63IfVzqGkvIaobAth6XZu6QLOD3zTlKA3zO+AuqY3XxpJ/FkYE4CmdkU
+	 /qGOjdoN5NQa6IqOwuOcQRuKV4xoDevrdBM66kJ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dominik Brodowski <linux@dominikbrodowski.net>,
-	PaX Team <pageexec@freemail.hu>,
-	Emese Revfy <re.emese@gmail.com>,
-	"Jason A. Donenfeld" <Jason@zx2c4.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.10 09/25] random: always mix cycle counter in add_latent_entropy()
-Date: Thu, 23 Feb 2023 14:06:26 +0100
-Message-Id: <20230223130427.214749094@linuxfoundation.org>
+Subject: [PATCH 5.10 11/25] KVM: SVM: Skip WRMSR fastpath on VM-Exit if next RIP isnt valid
+Date: Thu, 23 Feb 2023 14:06:28 +0100
+Message-Id: <20230223130427.294953360@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130426.817998725@linuxfoundation.org>
 References: <20230223130426.817998725@linuxfoundation.org>
@@ -37,59 +34,92 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jason A. Donenfeld <Jason@zx2c4.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit d7bf7f3b813e3755226bcb5114ad2ac477514ebf ]
+[ Upstream commit 5c30e8101e8d5d020b1d7119117889756a6ed713 ]
 
-add_latent_entropy() is called every time a process forks, in
-kernel_clone(). This in turn calls add_device_randomness() using the
-latent entropy global state. add_device_randomness() does two things:
+Skip the WRMSR fastpath in SVM's VM-Exit handler if the next RIP isn't
+valid, e.g. because KVM is running with nrips=false.  SVM must decode and
+emulate to skip the WRMSR if the CPU doesn't provide the next RIP.
+Getting the instruction bytes to decode the WRMSR requires reading guest
+memory, which in turn means dereferencing memslots, and that isn't safe
+because KVM doesn't hold SRCU when the fastpath runs.
 
-   2) Mixes into the input pool the latent entropy argument passed; and
-   1) Mixes in a cycle counter, a sort of measurement of when the event
-      took place, the high precision bits of which are presumably
-      difficult to predict.
+Don't bother trying to enable the fastpath for this case, e.g. by doing
+only the WRMSR and leaving the "skip" until later.  NRIPS is supported on
+all modern CPUs (KVM has considered making it mandatory), and the next
+RIP will be valid the vast, vast majority of the time.
 
-(2) is impossible without CONFIG_GCC_PLUGIN_LATENT_ENTROPY=y. But (1) is
-always possible. However, currently CONFIG_GCC_PLUGIN_LATENT_ENTROPY=n
-disables both (1) and (2), instead of just (2).
+  =============================
+  WARNING: suspicious RCU usage
+  6.0.0-smp--4e557fcd3d80-skip #13 Tainted: G           O
+  -----------------------------
+  include/linux/kvm_host.h:954 suspicious rcu_dereference_check() usage!
 
-This commit causes the CONFIG_GCC_PLUGIN_LATENT_ENTROPY=n case to still
-do (1) by passing NULL (len 0) to add_device_randomness() when add_latent_
-entropy() is called.
+  other info that might help us debug this:
 
-Cc: Dominik Brodowski <linux@dominikbrodowski.net>
-Cc: PaX Team <pageexec@freemail.hu>
-Cc: Emese Revfy <re.emese@gmail.com>
-Fixes: 38addce8b600 ("gcc-plugins: Add latent_entropy plugin")
-Signed-off-by: Jason A. Donenfeld <Jason@zx2c4.com>
+  rcu_scheduler_active = 2, debug_locks = 1
+  1 lock held by stable/206475:
+   #0: ffff9d9dfebcc0f0 (&vcpu->mutex){+.+.}-{3:3}, at: kvm_vcpu_ioctl+0x8b/0x620 [kvm]
+
+  stack backtrace:
+  CPU: 152 PID: 206475 Comm: stable Tainted: G           O       6.0.0-smp--4e557fcd3d80-skip #13
+  Hardware name: Google, Inc. Arcadia_IT_80/Arcadia_IT_80, BIOS 10.48.0 01/27/2022
+  Call Trace:
+   <TASK>
+   dump_stack_lvl+0x69/0xaa
+   dump_stack+0x10/0x12
+   lockdep_rcu_suspicious+0x11e/0x130
+   kvm_vcpu_gfn_to_memslot+0x155/0x190 [kvm]
+   kvm_vcpu_gfn_to_hva_prot+0x18/0x80 [kvm]
+   paging64_walk_addr_generic+0x183/0x450 [kvm]
+   paging64_gva_to_gpa+0x63/0xd0 [kvm]
+   kvm_fetch_guest_virt+0x53/0xc0 [kvm]
+   __do_insn_fetch_bytes+0x18b/0x1c0 [kvm]
+   x86_decode_insn+0xf0/0xef0 [kvm]
+   x86_emulate_instruction+0xba/0x790 [kvm]
+   kvm_emulate_instruction+0x17/0x20 [kvm]
+   __svm_skip_emulated_instruction+0x85/0x100 [kvm_amd]
+   svm_skip_emulated_instruction+0x13/0x20 [kvm_amd]
+   handle_fastpath_set_msr_irqoff+0xae/0x180 [kvm]
+   svm_vcpu_run+0x4b8/0x5a0 [kvm_amd]
+   vcpu_enter_guest+0x16ca/0x22f0 [kvm]
+   kvm_arch_vcpu_ioctl_run+0x39d/0x900 [kvm]
+   kvm_vcpu_ioctl+0x538/0x620 [kvm]
+   __se_sys_ioctl+0x77/0xc0
+   __x64_sys_ioctl+0x1d/0x20
+   do_syscall_64+0x3d/0x80
+   entry_SYSCALL_64_after_hwframe+0x63/0xcd
+
+Fixes: 404d5d7bff0d ("KVM: X86: Introduce more exit_fastpath_completion enum values")
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20220930234031.1732249-1-seanjc@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- include/linux/random.h | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/kvm/svm/svm.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
 
-diff --git a/include/linux/random.h b/include/linux/random.h
-index 917470c4490ac..ed2bac6c7a8ac 100644
---- a/include/linux/random.h
-+++ b/include/linux/random.h
-@@ -19,14 +19,14 @@ void add_input_randomness(unsigned int type, unsigned int code,
- void add_interrupt_randomness(int irq) __latent_entropy;
- void add_hwgenerator_randomness(const void *buf, size_t len, size_t entropy);
+diff --git a/arch/x86/kvm/svm/svm.c b/arch/x86/kvm/svm/svm.c
+index c34ba034ca111..5775983fec56e 100644
+--- a/arch/x86/kvm/svm/svm.c
++++ b/arch/x86/kvm/svm/svm.c
+@@ -3480,8 +3480,14 @@ static void svm_cancel_injection(struct kvm_vcpu *vcpu)
  
--#if defined(LATENT_ENTROPY_PLUGIN) && !defined(__CHECKER__)
- static inline void add_latent_entropy(void)
+ static fastpath_t svm_exit_handlers_fastpath(struct kvm_vcpu *vcpu)
  {
-+#if defined(LATENT_ENTROPY_PLUGIN) && !defined(__CHECKER__)
- 	add_device_randomness((const void *)&latent_entropy, sizeof(latent_entropy));
--}
- #else
--static inline void add_latent_entropy(void) { }
-+	add_device_randomness(NULL, 0);
- #endif
-+}
+-	if (to_svm(vcpu)->vmcb->control.exit_code == SVM_EXIT_MSR &&
+-	    to_svm(vcpu)->vmcb->control.exit_info_1)
++	struct vmcb_control_area *control = &to_svm(vcpu)->vmcb->control;
++
++	/*
++	 * Note, the next RIP must be provided as SRCU isn't held, i.e. KVM
++	 * can't read guest memory (dereference memslots) to decode the WRMSR.
++	 */
++	if (control->exit_code == SVM_EXIT_MSR && control->exit_info_1 &&
++	    nrips && control->next_rip)
+ 		return handle_fastpath_set_msr_irqoff(vcpu);
  
- void get_random_bytes(void *buf, size_t len);
- size_t __must_check get_random_bytes_arch(void *buf, size_t len);
+ 	return EXIT_FASTPATH_NONE;
 -- 
 2.39.0
 
