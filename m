@@ -1,91 +1,132 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9A8B7257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:06:09 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0445FC433EF;
-	Thu, 23 Feb 2023 13:06:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 133C7257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:06:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 671CDC4339B;
+	Thu, 23 Feb 2023 13:06:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157569;
-	bh=wWuF2RiU/Jx4joPyaylmuwmJNQqnww36DoAq1HiYwck=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=x1B9eTA6sVSlbSkXc9AevL2DW80/GoijLitupimIHoXsr+LI3vtsN2ugFQBsSxhFd
-	 AVpl1IFFWzXJmfN0WAuSbwib1LZbM7AFWx2TcWCRtfNvhCn8WQTARO5uaOU8y+ZXSq
-	 mNWqmjuBOu9JeeIYjtN/8rRe6Lm7wThqIDpcw2j8=
+	s=korg; t=1677157571;
+	bh=G5aqBteG6fQ/gaR2l1YmJbm2vwdmlTnnXrKPXVp2bhU=;
+	h=From:To:Cc:Subject:Date:From;
+	b=BJ5u8NLmh5IInuZKWM9xTBVLx2znvDhxvgoP38fKYv/E6nhHo+PnQ9amC0KJGRhf0
+	 a+Ztl3sqk5wyTmhBsoA1iMC0B+zyoCoZqwunsh+YLOYkoHQtessuFVjCi8X+j8hyce
+	 N64kaJYZEyWhcONB3+Z7enBCaki/NUFvFpP3Vgog=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hans de Goede <hdegoede@redhat.com>,
-	Daniel Dadap <ddadap@nvidia.com>
-Subject: [PATCH 6.2 09/11] platform/x86: nvidia-wmi-ec-backlight: Add force module parameter
-Date: Thu, 23 Feb 2023 14:05:03 +0100
-Message-Id: <20230223130426.552183775@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 6.2 00/11] 6.2.1-rc1 review
+Date: Thu, 23 Feb 2023 14:04:54 +0100
+Message-Id: <20230223130426.170746546@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230223130426.170746546@linuxfoundation.org>
-References: <20230223130426.170746546@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.1-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.2.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.2.1-rc1
+X-KernelTest-Deadline: 2023-02-25T13:04+00:00
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+This is the start of the stable review cycle for the 6.2.1 release.
+There are 11 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit 0d9bdd8a550170306c2021b8d6766c5343b870c2 upstream.
+Responses should be made by Sat, 25 Feb 2023 13:04:16 +0000.
+Anything received after that time might be too late.
 
-On some Lenovo Legion models, the backlight might be driven by either
-one of nvidia_wmi_ec_backlight or amdgpu_bl0 at different times.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.1-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
+and the diffstat can be found below.
 
-When the Nvidia WMI EC backlight interface reports the backlight is
-controlled by the EC, the current backlight handling only registers
-nvidia_wmi_ec_backlight (and registers no other backlight interfaces).
+thanks,
 
-This hides (never registers) the amdgpu_bl0 interface, where as prior
-to 6.1.4 users would have both nvidia_wmi_ec_backlight and amdgpu_bl0
-and could work around things in userspace.
+greg k-h
 
-Add a force module parameter which can be used with acpi_backlight=native
-to restore the old behavior as a workound (for now) by passing:
+-------------
+Pseudo-Shortlog of commits:
 
-"acpi_backlight=native nvidia-wmi-ec-backlight.force=1"
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.2.1-rc1
 
-Fixes: 8d0ca287fd8c ("platform/x86: nvidia-wmi-ec-backlight: Use acpi_video_get_backlight_type()")
-Link: https://bugzilla.kernel.org/show_bug.cgi?id=217026
-Cc: stable@vger.kernel.org
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Reviewed-by: Daniel Dadap <ddadap@nvidia.com>
-Link: https://lore.kernel.org/r/20230217144208.5721-1-hdegoede@redhat.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/platform/x86/nvidia-wmi-ec-backlight.c |    6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Eric Biggers <ebiggers@google.com>
+    randstruct: disable Clang 15 support
 
---- a/drivers/platform/x86/nvidia-wmi-ec-backlight.c
-+++ b/drivers/platform/x86/nvidia-wmi-ec-backlight.c
-@@ -12,6 +12,10 @@
- #include <linux/wmi.h>
- #include <acpi/video.h>
- 
-+static bool force;
-+module_param(force, bool, 0444);
-+MODULE_PARM_DESC(force, "Force loading (disable acpi_backlight=xxx checks");
-+
- /**
-  * wmi_brightness_notify() - helper function for calling WMI-wrapped ACPI method
-  * @w:    Pointer to the struct wmi_device identified by %WMI_BRIGHTNESS_GUID
-@@ -91,7 +95,7 @@ static int nvidia_wmi_ec_backlight_probe
- 	int ret;
- 
- 	/* drivers/acpi/video_detect.c also checks that SOURCE == EC */
--	if (acpi_video_get_backlight_type() != acpi_backlight_nvidia_wmi_ec)
-+	if (!force && acpi_video_get_backlight_type() != acpi_backlight_nvidia_wmi_ec)
- 		return -ENODEV;
- 
- 	/*
+Kees Cook <keescook@chromium.org>
+    ext4: Fix function prototype mismatch for ext4_feat_ktype
+
+Hans de Goede <hdegoede@redhat.com>
+    platform/x86: nvidia-wmi-ec-backlight: Add force module parameter
+
+Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+    platform/x86/amd/pmf: Add depends on CONFIG_POWER_SUPPLY
+
+Paul Moore <paul@paul-moore.com>
+    audit: update the mailing list in MAINTAINERS
+
+Lukas Wunner <lukas@wunner.de>
+    wifi: mwifiex: Add missing compatible string for SD8787
+
+Benjamin Tissoires <benjamin.tissoires@redhat.com>
+    HID: mcp-2221: prevent UAF in delayed work
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/static_call: Add support for Jcc tail-calls
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/alternatives: Teach text_poke_bp() to patch Jcc.d32 instructions
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/alternatives: Introduce int3_emulate_jcc()
+
+Dave Hansen <dave.hansen@linux.intel.com>
+    uaccess: Add speculation barrier to copy_from_user()
+
+
+-------------
+
+Diffstat:
+
+ MAINTAINERS                                    |  2 +-
+ Makefile                                       |  4 +-
+ arch/x86/include/asm/text-patching.h           | 31 +++++++++++++
+ arch/x86/kernel/alternative.c                  | 62 +++++++++++++++++++-------
+ arch/x86/kernel/kprobes/core.c                 | 38 ++++------------
+ arch/x86/kernel/static_call.c                  | 50 +++++++++++++++++++--
+ drivers/hid/hid-mcp2221.c                      |  3 ++
+ drivers/net/wireless/marvell/mwifiex/sdio.c    |  1 +
+ drivers/platform/x86/amd/pmf/Kconfig           |  1 +
+ drivers/platform/x86/nvidia-wmi-ec-backlight.c |  6 ++-
+ fs/ext4/sysfs.c                                |  7 ++-
+ include/linux/nospec.h                         |  4 ++
+ kernel/bpf/core.c                              |  2 -
+ lib/usercopy.c                                 |  7 +++
+ security/Kconfig.hardening                     |  3 ++
+ 15 files changed, 166 insertions(+), 55 deletions(-)
 
 
