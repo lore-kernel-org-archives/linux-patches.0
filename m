@@ -1,45 +1,42 @@
-Received: from mail-pj1-f50.google.com (mail-pj1-f50.google.com [209.85.216.50])
+Received: from mail-io1-f47.google.com (mail-io1-f47.google.com [209.85.166.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AA84AD26
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 22:25:46 +0000 (UTC)
-Received: by mail-pj1-f50.google.com with SMTP id qi12-20020a17090b274c00b002341621377cso847426pjb.2
-        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 14:25:46 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 63630AD20
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 23:32:00 +0000 (UTC)
+Received: by mail-io1-f47.google.com with SMTP id e17so2233881iot.1
+        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 15:32:00 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=linuxfoundation.org; s=google; t=1677195119;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :from:to:cc:subject:date:message-id:reply-to;
-        bh=rjj3snMpxZB2TRf050gHgvkyriwKTyczDaG6fgrNL/c=;
-        b=bVHd1RSNG5SuUmtpJ0EPODD/jURN/Khhs6pYxikjWpkwxBOHWujluJ3ZskB8bygbth
-         PFr8gRn3hbG8JoisOn9r9ZHFF9t/54QDTEx7unR3E1r1EGa3htXMarBzmcFnVOLLsRrj
-         obIZzkeeFH+3fPnjii1089Y1an1l4bTFiVDVQgYM6mWuRG+nJOxAPafuqD/Zrz1I1who
-         e4VEL9ir7Qh/oPwZSOrCkz7yImlNa9xTACmKshxGeRg3CsEJWb6Rz55ZgnrewjlC5YaK
-         LSv1VgnhkB8qwBu4zXqhk7tF7slEE9YSxu5w2f+H2Ia5mwIcSAx5SR6AMRoJ/j3Q959H
-         61lA==
+        bh=zyIeyBryi+yhauAhwwFawA2z6cP5sXH4pUcK8IFs2AE=;
+        b=bPy644GfIaOOOc10/Rs26frvMcI3dhK1RUvMhRPlw2m8VdbASF4Kibt63D3DVCP9PG
+         U1pMP1jrme+ifTk2eWfkwxSHPrO/rYvXvj96PStwL3Fob+ynXmOFg4JeY780tcd+NORt
+         Snl/oc/4qk8UwRIxa7b7P56EFYHiyuc7bCfA8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
+        d=1e100.net; s=20210112; t=1677195119;
         h=content-transfer-encoding:in-reply-to:from:references:cc:to
          :content-language:subject:user-agent:mime-version:date:message-id
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=rjj3snMpxZB2TRf050gHgvkyriwKTyczDaG6fgrNL/c=;
-        b=DVdn8UOvVkjvgDYLmLwdoUKfPVnHMFB4sUOZjr4iABBvo1dqM+b69xBsRuNUeUlAwZ
-         XtUL0p/cJaxx3Wdw/qVzubmuPr/DQpx27SEGa1ahiah2knu9F4W1/FnFjoYHBM4il17+
-         rJb8DUcdiALmA7fZgd32KmbDgjDmP5muTR4Z0psW0LrvOxWDqN6NZ0lVYx+x2zDVe9qe
-         AH6cCMfHIn9m7WfCtFOFukZd3oMkEuRuiIZoRdK8sXY7TQ6nVSRDhhnYfTfCevqqj+/D
-         iFuSb7FcP8vPktmcY7VdDqMUFQxqZGHI0uOGEo3lLTCtH0K4OWBFoGn26Oi0usuVFUG6
-         y2tw==
-X-Gm-Message-State: AO0yUKVYIMH8h5oy4KN89sVUjSOD/0Eb21TT/0J121Kq/mhzArR5gYyR
-	oFeKFdeF2ki9MQUZAB0rXdU=
-X-Google-Smtp-Source: AK7set/pU1PTFiTw6yudCDS+Er13fStt9pnicY4aT3l0MFg815gT5EYNWEtUXWxCPRcjymPiOnT/YQ==
-X-Received: by 2002:a17:90a:199:b0:234:b23:ead3 with SMTP id 25-20020a17090a019900b002340b23ead3mr14228561pjc.3.1677191145493;
-        Thu, 23 Feb 2023 14:25:45 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id ji10-20020a170903324a00b00198f256a192sm7862497plb.171.2023.02.23.14.25.43
+        bh=zyIeyBryi+yhauAhwwFawA2z6cP5sXH4pUcK8IFs2AE=;
+        b=6X+bbcoaXuVlHR19BkgKim2ycZ3OaW4tOSWNzg1Ckeb/vAMjDK4zJekIhwxROeq+GS
+         xQpYb4OK1FE7WeJl8wNCcOHTort4J2iFijVTDTkCWN7sa7NbbDhZFYmzYEyldLO3W8++
+         zrwEvhMij4Gl8qmsgc6qqa8ETH3pHNg8hiPPVuHqYauA5rUISNXEDAUCDPSPkNfGg7pb
+         3HGGAP7QPhb7Em+9bsqUXjO2k/xhb0llCMDSE6W5oghdkrGZ+ybGrIP7eUaod/OLmOyf
+         JLqSSWExsqvJUmFB0SYx4I+QYT4j+aefKenbrDxMsT9gNazbD5dwZRZCcXiAqo2JCSLI
+         N+JA==
+X-Gm-Message-State: AO0yUKUu1lVSed+YeNwCvs3xDx0ceD3Ynx/xYPeh5ndkTNmBmtUF8+Zh
+	s2tB3RERO4xBIB8c/K4jRFhIOA==
+X-Google-Smtp-Source: AK7set/hXUVxXyif8mLIBAsHQeDvpW1mt0LvgboM2uPhHYzyJVXPgi311z0/1ab41iGINi5AYCk+Sw==
+X-Received: by 2002:a6b:8d45:0:b0:746:190a:138f with SMTP id p66-20020a6b8d45000000b00746190a138fmr7395194iod.2.1677195119341;
+        Thu, 23 Feb 2023 15:31:59 -0800 (PST)
+Received: from [192.168.1.128] ([38.15.45.1])
+        by smtp.gmail.com with ESMTPSA id 14-20020a5ea50e000000b0073fe9d412fasm3304295iog.33.2023.02.23.15.31.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 14:25:44 -0800 (PST)
-Message-ID: <b24ddcf2-0f9d-f96a-7a6a-8bdbc0904600@gmail.com>
-Date: Thu, 23 Feb 2023 14:25:42 -0800
+        Thu, 23 Feb 2023 15:31:58 -0800 (PST)
+Message-ID: <e78f73df-e62b-a33c-77c8-75d1f946f6ad@linuxfoundation.org>
+Date: Thu, 23 Feb 2023 16:31:57 -0700
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,14 +52,15 @@ Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
  torvalds@linux-foundation.org, akpm@linux-foundation.org,
  linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
  lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
+ rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
 References: <20230223141539.893173089@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
+From: Shuah Khan <skhan@linuxfoundation.org>
 In-Reply-To: <20230223141539.893173089@linuxfoundation.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
-On 2/23/23 06:16, Greg Kroah-Hartman wrote:
+On 2/23/23 07:16, Greg Kroah-Hartman wrote:
 > This is the start of the stable review cycle for the 6.2.1 release.
 > There are 12 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
@@ -80,11 +78,11 @@ On 2/23/23 06:16, Greg Kroah-Hartman wrote:
 > thanks,
 > 
 > greg k-h
+> 
 
-On ARCH_BRCMSTB using 32-bit and 64-bit kernels, build tested on 
-BMIPS_GENERIC:
+Compiled and booted on my test system. No dmesg regressions.
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
--- 
-Florian
+Tested-by: Shuah Khan <skhan@linuxfoundation.org>
 
+thanks,
+-- Shuah
