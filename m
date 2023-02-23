@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A62C5257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:47 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2CB64C433D2;
-	Thu, 23 Feb 2023 13:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 513F1257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id CC220C433EF;
+	Thu, 23 Feb 2023 13:08:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157727;
-	bh=H6LqI9TaAog05LfXaZ26vJ7XtvPdxR/V69FAfYpQRgg=;
+	s=korg; t=1677157730;
+	bh=SY2GhAQocyNXrOGENTv9K3Q4LDz1V57bI63siJoWnrk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=xFQW2R1VxoL3tKADVP3LPt6Qyxnnga9MwFdhXiHQ+AX4e4STpeZaMJw3ppRKjrlU6
-	 U2lV9KKG5cIEIXs4AzSSi7duXBrF+KqfszEhMPjEaIdpxgS6KqXnSj2mPXEg5ax5UY
-	 QrwxhbV+62BZG9wKRYhVfiBh24Jrjqw3CL0j3K1U=
+	b=Aae0fI42qCXgt1xYOIUFVd8OSCCDYVComEb5rtYDcdtDxbFUmu9Qe3rNrds5iAGTa
+	 kgytfh99rCIqMP6eJmp5k/KZ0ATZqzswauhzeg4Kx1r/BxaNSCiGrMf+YF9oczF6qH
+	 o7yhi91msb4lLmLmGBfMg39R/diywTKn4+RD71bk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jonathan Cameron <Jonathan.Cameron@huawei.com>,
-	Yicong Yang <yangyicong@hisilicon.com>,
-	Will Deacon <will@kernel.org>,
+	Sean Christopherson <seanjc@google.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 16/46] docs: perf: Fix PMU instance name of hisi-pcie-pmu
-Date: Thu, 23 Feb 2023 14:06:23 +0100
-Message-Id: <20230223130432.302523447@linuxfoundation.org>
+Subject: [PATCH 6.1 17/46] KVM: x86: Fail emulation during EMULTYPE_SKIP on any exception
+Date: Thu, 23 Feb 2023 14:06:24 +0100
+Message-Id: <20230223130432.341358924@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130431.553657459@linuxfoundation.org>
 References: <20230223130431.553657459@linuxfoundation.org>
@@ -36,92 +34,71 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Yicong Yang <yangyicong@hisilicon.com>
+From: Sean Christopherson <seanjc@google.com>
 
-[ Upstream commit eb79f12b4c41dd2403a0d16772ee72fcd6416015 ]
+[ Upstream commit 17122c06b86c9f77f45b86b8e62c3ed440847a59 ]
 
-The PMU instance will be called hisi_pcie<sicl>_core<core> rather than
-hisi_pcie<sicl>_<core>. Fix this in the documentation.
+Treat any exception during instruction decode for EMULTYPE_SKIP as a
+"full" emulation failure, i.e. signal failure instead of queuing the
+exception.  When decoding purely to skip an instruction, KVM and/or the
+CPU has already done some amount of emulation that cannot be unwound,
+e.g. on an EPT misconfig VM-Exit KVM has already processeed the emulated
+MMIO.  KVM already does this if a #UD is encountered, but not for other
+exceptions, e.g. if a #PF is encountered during fetch.
 
-Fixes: c8602008e247 ("docs: perf: Add description for HiSilicon PCIe PMU driver")
-Reviewed-by: Jonathan Cameron <Jonathan.Cameron@huawei.com>
-Signed-off-by: Yicong Yang <yangyicong@hisilicon.com>
-Link: https://lore.kernel.org/r/20221117084136.53572-3-yangyicong@huawei.com
-Signed-off-by: Will Deacon <will@kernel.org>
+In SVM's soft-injection use case, queueing the exception is particularly
+problematic as queueing exceptions while injecting events can put KVM
+into an infinite loop due to bailing from VM-Enter to service the newly
+pending exception.  E.g. multiple warnings to detect such behavior fire:
+
+  ------------[ cut here ]------------
+  WARNING: CPU: 3 PID: 1017 at arch/x86/kvm/x86.c:9873 kvm_arch_vcpu_ioctl_run+0x1de5/0x20a0 [kvm]
+  Modules linked in: kvm_amd ccp kvm irqbypass
+  CPU: 3 PID: 1017 Comm: svm_nested_soft Not tainted 6.0.0-rc1+ #220
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:kvm_arch_vcpu_ioctl_run+0x1de5/0x20a0 [kvm]
+  Call Trace:
+   kvm_vcpu_ioctl+0x223/0x6d0 [kvm]
+   __x64_sys_ioctl+0x85/0xc0
+   do_syscall_64+0x2b/0x50
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+  ---[ end trace 0000000000000000 ]---
+  ------------[ cut here ]------------
+  WARNING: CPU: 3 PID: 1017 at arch/x86/kvm/x86.c:9987 kvm_arch_vcpu_ioctl_run+0x12a3/0x20a0 [kvm]
+  Modules linked in: kvm_amd ccp kvm irqbypass
+  CPU: 3 PID: 1017 Comm: svm_nested_soft Tainted: G        W          6.0.0-rc1+ #220
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS 0.0.0 02/06/2015
+  RIP: 0010:kvm_arch_vcpu_ioctl_run+0x12a3/0x20a0 [kvm]
+  Call Trace:
+   kvm_vcpu_ioctl+0x223/0x6d0 [kvm]
+   __x64_sys_ioctl+0x85/0xc0
+   do_syscall_64+0x2b/0x50
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+  ---[ end trace 0000000000000000 ]---
+
+Fixes: 6ea6e84309ca ("KVM: x86: inject exceptions produced by x86_decode_insn")
+Signed-off-by: Sean Christopherson <seanjc@google.com>
+Link: https://lore.kernel.org/r/20220930233632.1725475-1-seanjc@google.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../admin-guide/perf/hisi-pcie-pmu.rst        | 22 +++++++++----------
- 1 file changed, 11 insertions(+), 11 deletions(-)
+ arch/x86/kvm/x86.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/admin-guide/perf/hisi-pcie-pmu.rst b/Documentation/admin-guide/perf/hisi-pcie-pmu.rst
-index 294ebbdb22af8..bbe66480ff851 100644
---- a/Documentation/admin-guide/perf/hisi-pcie-pmu.rst
-+++ b/Documentation/admin-guide/perf/hisi-pcie-pmu.rst
-@@ -15,10 +15,10 @@ HiSilicon PCIe PMU driver
- The PCIe PMU driver registers a perf PMU with the name of its sicl-id and PCIe
- Core id.::
- 
--  /sys/bus/event_source/hisi_pcie<sicl>_<core>
-+  /sys/bus/event_source/hisi_pcie<sicl>_core<core>
- 
- PMU driver provides description of available events and filter options in sysfs,
--see /sys/bus/event_source/devices/hisi_pcie<sicl>_<core>.
-+see /sys/bus/event_source/devices/hisi_pcie<sicl>_core<core>.
- 
- The "format" directory describes all formats of the config (events) and config1
- (filter options) fields of the perf_event_attr structure. The "events" directory
-@@ -33,13 +33,13 @@ monitored by PMU.
- Example usage of perf::
- 
-   $# perf list
--  hisi_pcie0_0/rx_mwr_latency/ [kernel PMU event]
--  hisi_pcie0_0/rx_mwr_cnt/ [kernel PMU event]
-+  hisi_pcie0_core0/rx_mwr_latency/ [kernel PMU event]
-+  hisi_pcie0_core0/rx_mwr_cnt/ [kernel PMU event]
-   ------------------------------------------
- 
--  $# perf stat -e hisi_pcie0_0/rx_mwr_latency/
--  $# perf stat -e hisi_pcie0_0/rx_mwr_cnt/
--  $# perf stat -g -e hisi_pcie0_0/rx_mwr_latency/ -e hisi_pcie0_0/rx_mwr_cnt/
-+  $# perf stat -e hisi_pcie0_core0/rx_mwr_latency/
-+  $# perf stat -e hisi_pcie0_core0/rx_mwr_cnt/
-+  $# perf stat -g -e hisi_pcie0_core0/rx_mwr_latency/ -e hisi_pcie0_core0/rx_mwr_cnt/
- 
- The current driver does not support sampling. So "perf record" is unsupported.
- Also attach to a task is unsupported for PCIe PMU.
-@@ -64,7 +64,7 @@ bit8 is set, port=0x100; if these two Root Ports are both monitored, port=0x101.
- 
- Example usage of perf::
- 
--  $# perf stat -e hisi_pcie0_0/rx_mwr_latency,port=0x1/ sleep 5
-+  $# perf stat -e hisi_pcie0_core0/rx_mwr_latency,port=0x1/ sleep 5
- 
- -bdf
- 
-@@ -76,7 +76,7 @@ For example, "bdf=0x3900" means BDF of target Endpoint is 0000:39:00.0.
- 
- Example usage of perf::
- 
--  $# perf stat -e hisi_pcie0_0/rx_mrd_flux,bdf=0x3900/ sleep 5
-+  $# perf stat -e hisi_pcie0_core0/rx_mrd_flux,bdf=0x3900/ sleep 5
- 
- 2. Trigger filter
- Event statistics start when the first time TLP length is greater/smaller
-@@ -90,7 +90,7 @@ means start when TLP length < condition.
- 
- Example usage of perf::
- 
--  $# perf stat -e hisi_pcie0_0/rx_mrd_flux,trig_len=0x4,trig_mode=1/ sleep 5
-+  $# perf stat -e hisi_pcie0_core0/rx_mrd_flux,trig_len=0x4,trig_mode=1/ sleep 5
- 
- 3. Threshold filter
- Counter counts when TLP length within the specified range. You can set the
-@@ -103,4 +103,4 @@ when TLP length < threshold.
- 
- Example usage of perf::
- 
--  $# perf stat -e hisi_pcie0_0/rx_mrd_flux,thr_len=0x4,thr_mode=1/ sleep 5
-+  $# perf stat -e hisi_pcie0_core0/rx_mrd_flux,thr_len=0x4,thr_mode=1/ sleep 5
+diff --git a/arch/x86/kvm/x86.c b/arch/x86/kvm/x86.c
+index 05ca303d7fd98..68827b8dc37a5 100644
+--- a/arch/x86/kvm/x86.c
++++ b/arch/x86/kvm/x86.c
+@@ -8860,7 +8860,9 @@ int x86_emulate_instruction(struct kvm_vcpu *vcpu, gpa_t cr2_or_gpa,
+ 						  write_fault_to_spt,
+ 						  emulation_type))
+ 				return 1;
+-			if (ctxt->have_exception) {
++
++			if (ctxt->have_exception &&
++			    !(emulation_type & EMULTYPE_SKIP)) {
+ 				/*
+ 				 * #UD should result in just EMULATION_FAILED, and trap-like
+ 				 * exception should not be encountered during decode.
 -- 
 2.39.0
 
