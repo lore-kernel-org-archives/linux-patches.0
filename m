@@ -1,31 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9D53E257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:05:08 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1A13AC433EF;
-	Thu, 23 Feb 2023 13:05:07 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D41DE257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:05:11 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F84FC4339B;
+	Thu, 23 Feb 2023 13:05:11 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157508;
-	bh=uVog4+eLQsf9qeofd22iYzE0CERGuqS/2mxtMUTXyYM=;
+	s=korg; t=1677157511;
+	bh=eSMNC0aXVDgmON888ywKNSXrlDJ0GfnVY50N37/JDRs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=b7kpnxr0JK4lxU2RsXNvSmTdEb5Wly+U9NEFkYUJKPKsvn6LSOTq8TCPCuhdlydWu
-	 Z9VEAkNm9D3hFoL0hjqcEg0BEpoSoesYlUuiGYJi0W404mL6GjN/WxBJwjwfnlYrWY
-	 eYUm2i3gzqvwcL3Bj3wJb97Z1wkjgzu8cTIwgJXI=
+	b=v5HflS6Wh0W+4HIsSyo3NWAskWfIzx+pUJAxU/qBM6d3zWL56c2xqA6jZQpn6EBLv
+	 b+cgU2TvAeStGq2va6fRepMaTn8o/CzT6hF/LsTVn+57Y/aBcRfVgsH2u22GGL/gvx
+	 5SGDozgJYNrayVb6YwTWdMlwfG/Q4nsUsWa4AUrY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Lukas Wunner <lukas@wunner.de>,
-	Matt Ranostay <mranostay@ti.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 4.14 7/7] wifi: mwifiex: Add missing compatible string for SD8787
-Date: Thu, 23 Feb 2023 14:04:44 +0100
-Message-Id: <20230223130423.703465192@linuxfoundation.org>
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Kalle Valo <kvalo@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 01/11] wifi: rtl8xxxu: gen2: Turn on the rate control
+Date: Thu, 23 Feb 2023 14:04:42 +0100
+Message-Id: <20230223130424.140631927@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230223130423.369876969@linuxfoundation.org>
-References: <20230223130423.369876969@linuxfoundation.org>
+In-Reply-To: <20230223130424.079732181@linuxfoundation.org>
+References: <20230223130424.079732181@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -35,34 +37,69 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Lukas Wunner <lukas@wunner.de>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-commit 36dd7a4c6226133b0b7aa92b8e604e688d958d0c upstream.
+[ Upstream commit 791082ec0ab843e0be07c8ce3678e4c2afd2e33d ]
 
-Commit e3fffc1f0b47 ("devicetree: document new marvell-8xxx and
-pwrseq-sd8787 options") documented a compatible string for SD8787 in
-the devicetree bindings, but neglected to add it to the mwifiex driver.
+Re-enable the function rtl8xxxu_gen2_report_connect.
 
-Fixes: e3fffc1f0b47 ("devicetree: document new marvell-8xxx and pwrseq-sd8787 options")
-Signed-off-by: Lukas Wunner <lukas@wunner.de>
-Cc: stable@vger.kernel.org # v4.11+
-Cc: Matt Ranostay <mranostay@ti.com>
+It informs the firmware when connecting to a network. This makes the
+firmware enable the rate control, which makes the upload faster.
+
+It also informs the firmware when disconnecting from a network. In the
+past this made reconnecting impossible because it was sending the
+auth on queue 0x7 (TXDESC_QUEUE_VO) instead of queue 0x12
+(TXDESC_QUEUE_MGNT):
+
+wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 1/3)
+wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 2/3)
+wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 3/3)
+wlp0s20f0u3: authentication with 90:55:de:__:__:__ timed out
+
+Probably the firmware disables the unnecessary TX queues when it
+knows it's disconnected.
+
+However, this was fixed in commit edd5747aa12e ("wifi: rtl8xxxu: Fix
+skb misuse in TX queue selection").
+
+Fixes: c59f13bbead4 ("rtl8xxxu: Work around issue with 8192eu and 8723bu devices not reconnecting")
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/320de5005ff3b8fd76be2d2b859fd021689c3681.1674827105.git.lukas@wunner.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Link: https://lore.kernel.org/r/43200afc-0c65-ee72-48f8-231edd1df493@gmail.com
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/marvell/mwifiex/sdio.c |    1 +
- 1 file changed, 1 insertion(+)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
---- a/drivers/net/wireless/marvell/mwifiex/sdio.c
-+++ b/drivers/net/wireless/marvell/mwifiex/sdio.c
-@@ -58,6 +58,7 @@ static struct memory_type_mapping mem_ty
- };
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+index c3c8382dd0ba2..e5aac9694ade2 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -4375,12 +4375,9 @@ void rtl8xxxu_gen1_report_connect(struct rtl8xxxu_priv *priv,
+ void rtl8xxxu_gen2_report_connect(struct rtl8xxxu_priv *priv,
+ 				  u8 macid, bool connect)
+ {
+-#ifdef RTL8XXXU_GEN2_REPORT_CONNECT
+ 	/*
+-	 * Barry Day reports this causes issues with 8192eu and 8723bu
+-	 * devices reconnecting. The reason for this is unclear, but
+-	 * until it is better understood, leave the code in place but
+-	 * disabled, so it is not lost.
++	 * The firmware turns on the rate control when it knows it's
++	 * connected to a network.
+ 	 */
+ 	struct h2c_cmd h2c;
  
- static const struct of_device_id mwifiex_sdio_of_match_table[] = {
-+	{ .compatible = "marvell,sd8787" },
- 	{ .compatible = "marvell,sd8897" },
- 	{ .compatible = "marvell,sd8997" },
- 	{ }
+@@ -4393,7 +4390,6 @@ void rtl8xxxu_gen2_report_connect(struct rtl8xxxu_priv *priv,
+ 		h2c.media_status_rpt.parm &= ~BIT(0);
+ 
+ 	rtl8xxxu_gen2_h2c_cmd(priv, &h2c, sizeof(h2c.media_status_rpt));
+-#endif
+ }
+ 
+ void rtl8xxxu_gen1_init_aggregation(struct rtl8xxxu_priv *priv)
+-- 
+2.39.0
+
 
 
