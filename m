@@ -1,166 +1,99 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.153.233])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 854A528EF
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 14:16:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id D714EC433EF;
-	Thu, 23 Feb 2023 14:16:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677161799;
-	bh=SoSwmoIvYg/L/9E7YuHCt4JBrqlK5lDrA/iZqrpuzw0=;
-	h=From:To:Cc:Subject:Date:From;
-	b=ot4Sjnkh8enFm+EhPoijJwJGPxYxxSCg0/N2kMMPXIgr76lLLKBHCqqmHqz/jDZtO
-	 ybxRBCvKa+ph9h9YOnO0QHGQnJQAqSBKBcAEMWYtNFanWYqZ/dahsSaq8wMCRBxX2q
-	 iFEmoBI9/dWL4+CcCatL2MMCrjd9Cp+VtF1z8Dek=
-From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To: stable@vger.kernel.org
-Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 5.4 00/19] 5.4.233-rc2 review
-Date: Thu, 23 Feb 2023 15:16:36 +0100
-Message-Id: <20230223141539.591151658@linuxfoundation.org>
-X-Mailer: git-send-email 2.39.2
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 311BD1FBA
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 14:33:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1677162830; x=1708698830;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=TdcLlbwPrbAqnbdqrVt/ZtbrBIOSSfvtTcMwq+CpbUo=;
+  b=GZjPste/cBo9MYduFAwg4zIgtZcVgdzAsRTPiE1W1XASHed7/jbwoiQA
+   AAnjj4+m4cvHXPMVt27kxYPukQwYsxZbqt1ZAWVoAF3yBbajrGPwFbiT/
+   mxctU++CcVeyTRVvVBxyCd953GBo3MYcoP8fgME3wq7NGVOcMelTFYvRY
+   Y5rvBP3wf3AfPXhvGajDUCzwRM6xjDEx4o13nIx+8WLQaK09bvSK10r61
+   vo/+EmX0A2Lv/VpNaIh4y4YKZu5PiayBsSCLtmyK15tavjRx7MBCBodb4
+   43Cli0+76VZCVgyZq+SUO+fZlU4pwZhZ1qPD6kuhloyEWyxPPDJC0OHbK
+   w==;
+X-IronPort-AV: E=Sophos;i="5.97,320,1669100400"; 
+   d="asc'?scan'208";a="213363677"
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa1.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 23 Feb 2023 07:33:43 -0700
+Received: from chn-vm-ex02.mchp-main.com (10.10.87.72) by
+ chn-vm-ex02.mchp-main.com (10.10.87.72) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.16; Thu, 23 Feb 2023 07:33:42 -0700
+Received: from wendy (10.10.115.15) by chn-vm-ex02.mchp-main.com
+ (10.10.85.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.16 via Frontend
+ Transport; Thu, 23 Feb 2023 07:33:40 -0700
+Date: Thu, 23 Feb 2023 14:33:13 +0000
+From: Conor Dooley <conor.dooley@microchip.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
+	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
+	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
+	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
+	<srw@sladewatkins.net>, <rwarsow@gmx.de>
+Subject: Re: [PATCH 6.1 00/46] 6.1.14-rc1 review
+Message-ID: <Y/d5KdOfh5rXUeqk@wendy>
+References: <20230223130431.553657459@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.233-rc2.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.4.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.4.233-rc2
-X-KernelTest-Deadline: 2023-02-25T14:15+00:00
-Content-Transfer-Encoding: 8bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="y89pGdxxUDHJUbhU"
+Content-Disposition: inline
+In-Reply-To: <20230223130431.553657459@linuxfoundation.org>
 
-This is the start of the stable review cycle for the 5.4.233 release.
-There are 19 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+--y89pGdxxUDHJUbhU
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Responses should be made by Sat, 25 Feb 2023 14:15:30 +0000.
-Anything received after that time might be too late.
+On Thu, Feb 23, 2023 at 02:06:07PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.14 release.
+> There are 46 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>=20
+> Responses should be made by Sat, 25 Feb 2023 13:04:16 +0000.
+> Anything received after that time might be too late.
+>=20
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.14-=
+rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
+ linux-6.1.y
+> and the diffstat can be found below.
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.233-rc2.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-and the diffstat can be found below.
+> Dave Hansen <dave.hansen@linux.intel.com>
+>     uaccess: Add speculation barrier to copy_from_user()
 
-thanks,
+This breaks the build for me on RISC-V, you need to take f3dd0c53370e
+("bpf: add missing header file include") from Linus' tree.
+It was broken in mainline too, so it is probably broken everywhere you
+backported it :(
 
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.4.233-rc2
-
-Linus Torvalds <torvalds@linux-foundation.org>
-    bpf: add missing header file include
-
-Vladimir Oltean <vladimir.oltean@nxp.com>
-    Revert "net/sched: taprio: make qdisc_leaf() see the per-netdev-queue pfifo child qdiscs"
-
-Kees Cook <keescook@chromium.org>
-    ext4: Fix function prototype mismatch for ext4_feat_ktype
-
-Lukas Wunner <lukas@wunner.de>
-    wifi: mwifiex: Add missing compatible string for SD8787
-
-Dave Hansen <dave.hansen@linux.intel.com>
-    uaccess: Add speculation barrier to copy_from_user()
-
-Pavel Skripkin <paskripkin@gmail.com>
-    mac80211: mesh: embedd mesh_paths and mpp_paths into ieee80211_if_mesh
-
-Zheng Wang <zyytlz.wz@163.com>
-    drm/i915/gvt: fix double free bug in split_2MB_gtt_entry
-
-Thomas Gleixner <tglx@linutronix.de>
-    alarmtimer: Prevent starvation by small intervals and SIG_IGN
-
-Sean Anderson <sean.anderson@seco.com>
-    powerpc: dts: t208x: Disable 10G on MAC1 and MAC2
-
-Marc Kleine-Budde <mkl@pengutronix.de>
-    can: kvaser_usb: hydra: help gcc-13 to figure out cmd_len
-
-Jim Mattson <jmattson@google.com>
-    KVM: VMX: Execute IBPB on emulated VM-exit when guest has IBRS
-
-Sean Christopherson <seanjc@google.com>
-    KVM: x86: Fail emulation during EMULTYPE_SKIP on any exception
-
-Jason A. Donenfeld <Jason@zx2c4.com>
-    random: always mix cycle counter in add_latent_entropy()
-
-Sean Anderson <sean.anderson@seco.com>
-    powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
-
-Bitterblue Smith <rtl8821cerfe2@gmail.com>
-    wifi: rtl8xxxu: gen2: Turn on the rate control
-
-Lucas Stach <l.stach@pengutronix.de>
-    drm/etnaviv: don't truncate physical page address
-
-Marek Szyprowski <m.szyprowski@samsung.com>
-    drm: etnaviv: fix common struct sg_table related issues
-
-Marek Szyprowski <m.szyprowski@samsung.com>
-    scatterlist: add generic wrappers for iterating over sgtable objects
-
-Marek Szyprowski <m.szyprowski@samsung.com>
-    dma-mapping: add generic helpers for mapping sgtable objects
+Thanks,
+Conor.
 
 
--------------
+--y89pGdxxUDHJUbhU
+Content-Type: application/pgp-signature; name="signature.asc"
 
-Diffstat:
+-----BEGIN PGP SIGNATURE-----
 
- Makefile                                           |  4 +-
- arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi | 44 +++++++++++
- arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi | 44 +++++++++++
- arch/powerpc/boot/dts/fsl/t2081si-post.dtsi        | 20 ++++-
- arch/x86/kvm/vmx/nested.c                          | 11 +++
- arch/x86/kvm/vmx/vmx.c                             |  6 +-
- arch/x86/kvm/x86.c                                 |  4 +-
- drivers/gpu/drm/etnaviv/etnaviv_gem.c              | 12 ++-
- drivers/gpu/drm/etnaviv/etnaviv_mmu.c              | 19 ++---
- drivers/gpu/drm/i915/gvt/gtt.c                     | 17 ++++-
- drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c  | 33 +++++---
- drivers/net/wireless/marvell/mwifiex/sdio.c        |  1 +
- .../net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c  |  8 +-
- fs/ext4/sysfs.c                                    |  7 +-
- include/linux/dma-mapping.h                        | 80 +++++++++++++++++++
- include/linux/nospec.h                             |  4 +
- include/linux/random.h                             |  6 +-
- include/linux/scatterlist.h                        | 50 +++++++++++-
- kernel/bpf/core.c                                  |  3 +-
- kernel/time/alarmtimer.c                           | 33 +++++++-
- lib/usercopy.c                                     |  7 ++
- net/mac80211/ieee80211_i.h                         | 24 +++++-
- net/mac80211/mesh.h                                | 22 +-----
- net/mac80211/mesh_pathtbl.c                        | 89 ++++++++--------------
- net/sched/sch_taprio.c                             |  8 +-
- 25 files changed, 411 insertions(+), 145 deletions(-)
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCY/d5HgAKCRB4tDGHoIJi
+0oPNAQCHF1hz7H+ejba8MQkummME6T5j0mlx07U1M6JjNEx+XQD/RYtmDiPzp6pW
+gI2X3S3tPZ56lpCyy098jne0tTMBaQ4=
+=n2Cu
+-----END PGP SIGNATURE-----
 
-
+--y89pGdxxUDHJUbhU--
