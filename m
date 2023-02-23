@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DF4F2584
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:11:46 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 23ED2C433D2;
-	Thu, 23 Feb 2023 13:11:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F4582584
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:11:49 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAAD9C4339B;
+	Thu, 23 Feb 2023 13:11:48 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157906;
-	bh=/IJVFuwJ+G1RXNs+h+WJlikb8W9ISDdwMOwuPkXl+Nc=;
+	s=korg; t=1677157909;
+	bh=7jxKKtyJ7kM/gAdl0rgmVHVyRp0IQzTuAI2o2iyUy/8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Qvr7Osob3TBM/P2Js5pL8ZNHOUzD67n/Y8X0SjjCMlc4fRyTcPsT7hJmAXX3b5byJ
-	 3BfCvYYDlkBZNwQOVQTCJR0tH5CdJz/XqNuAVcET6pd6zSVQEAAV2fx9raoT3JbkDl
-	 GpdIpqC+pE7JomFlYEo0mQzLl62iWc6SAl9/rOlc=
+	b=mSsJhlW2lR5Jc5xkvR9FtKvW1iiCt1JtFTtnbvYVABHlVdMjU2bINIvrr1h7OxGkz
+	 y2UqoNmC67NanLmucj7Z3WP9Nq6pJYws53pnyT4hdogXra/RpSzEESdOI40gcu0qYB
+	 UPCvVOM3Feg3a5aedEs/3ee2/PFpveAHrZBezAvU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michael Ellerman <mpe@ellerman.id.au>,
+	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
+	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 19/36] powerpc/64s/radix: Fix crash with unaligned relocated kernel
-Date: Thu, 23 Feb 2023 14:06:55 +0100
-Message-Id: <20230223130429.963495386@linuxfoundation.org>
+Subject: [PATCH 5.15 02/36] wifi: rtl8xxxu: gen2: Turn on the rate control
+Date: Thu, 23 Feb 2023 14:06:38 +0100
+Message-Id: <20230223130429.187533490@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130429.072633724@linuxfoundation.org>
 References: <20230223130429.072633724@linuxfoundation.org>
@@ -34,110 +35,67 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Michael Ellerman <mpe@ellerman.id.au>
+From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
 
-[ Upstream commit 98d0219e043e09013e883eacde3b93e0b2bf944d ]
+[ Upstream commit 791082ec0ab843e0be07c8ce3678e4c2afd2e33d ]
 
-If a relocatable kernel is loaded at an address that is not 2MB aligned
-and told not to relocate to zero, the kernel can crash due to
-mark_rodata_ro() incorrectly changing some read-write data to read-only.
+Re-enable the function rtl8xxxu_gen2_report_connect.
 
-Scenarios where the misalignment can occur are when the kernel is
-loaded by kdump or using the RELOCATABLE_TEST config option.
+It informs the firmware when connecting to a network. This makes the
+firmware enable the rate control, which makes the upload faster.
 
-Example crash with the kernel loaded at 5MB:
+It also informs the firmware when disconnecting from a network. In the
+past this made reconnecting impossible because it was sending the
+auth on queue 0x7 (TXDESC_QUEUE_VO) instead of queue 0x12
+(TXDESC_QUEUE_MGNT):
 
-  Run /sbin/init as init process
-  BUG: Unable to handle kernel data access on write at 0xc000000000452000
-  Faulting instruction address: 0xc0000000005b6730
-  Oops: Kernel access of bad area, sig: 11 [#1]
-  LE PAGE_SIZE=64K MMU=Radix SMP NR_CPUS=2048 NUMA pSeries
-  CPU: 1 PID: 1 Comm: init Not tainted 6.2.0-rc1-00011-g349188be4841 #166
-  Hardware name: IBM pSeries (emulated by qemu) POWER9 (raw) 0x4e1202 0xf000005 of:SLOF,git-5b4c5a hv:linux,kvm pSeries
-  NIP:  c0000000005b6730 LR: c000000000ae9ab8 CTR: 0000000000000380
-  REGS: c000000004503250 TRAP: 0300   Not tainted  (6.2.0-rc1-00011-g349188be4841)
-  MSR:  8000000000009033 <SF,EE,ME,IR,DR,RI,LE>  CR: 44288480  XER: 00000000
-  CFAR: c0000000005b66ec DAR: c000000000452000 DSISR: 0a000000 IRQMASK: 0
-  ...
-  NIP memset+0x68/0x104
-  LR  zero_user_segments.constprop.0+0xa8/0xf0
-  Call Trace:
-    ext4_mpage_readpages+0x7f8/0x830
-    ext4_readahead+0x48/0x60
-    read_pages+0xb8/0x380
-    page_cache_ra_unbounded+0x19c/0x250
-    filemap_fault+0x58c/0xae0
-    __do_fault+0x60/0x100
-    __handle_mm_fault+0x1230/0x1a40
-    handle_mm_fault+0x120/0x300
-    ___do_page_fault+0x20c/0xa80
-    do_page_fault+0x30/0xc0
-    data_access_common_virt+0x210/0x220
+wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 1/3)
+wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 2/3)
+wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 3/3)
+wlp0s20f0u3: authentication with 90:55:de:__:__:__ timed out
 
-This happens because mark_rodata_ro() tries to change permissions on the
-range _stext..__end_rodata, but _stext sits in the middle of the 2MB
-page from 4MB to 6MB:
+Probably the firmware disables the unnecessary TX queues when it
+knows it's disconnected.
 
-  radix-mmu: Mapped 0x0000000000000000-0x0000000000200000 with 2.00 MiB pages (exec)
-  radix-mmu: Mapped 0x0000000000200000-0x0000000000400000 with 2.00 MiB pages
-  radix-mmu: Mapped 0x0000000000400000-0x0000000002400000 with 2.00 MiB pages (exec)
+However, this was fixed in commit edd5747aa12e ("wifi: rtl8xxxu: Fix
+skb misuse in TX queue selection").
 
-The logic that changes the permissions assumes the linear mapping was
-split correctly at boot, so it marks the entire 2MB page read-only. That
-leads to the write fault above.
-
-To fix it, the boot time mapping logic needs to consider that if the
-kernel is running at a non-zero address then _stext is a boundary where
-it must split the mapping.
-
-That leads to the mapping being split correctly, allowing the rodata
-permission change to take happen correctly, with no spillover:
-
-  radix-mmu: Mapped 0x0000000000000000-0x0000000000200000 with 2.00 MiB pages (exec)
-  radix-mmu: Mapped 0x0000000000200000-0x0000000000400000 with 2.00 MiB pages
-  radix-mmu: Mapped 0x0000000000400000-0x0000000000500000 with 64.0 KiB pages
-  radix-mmu: Mapped 0x0000000000500000-0x0000000000600000 with 64.0 KiB pages (exec)
-  radix-mmu: Mapped 0x0000000000600000-0x0000000002400000 with 2.00 MiB pages (exec)
-
-If the kernel is loaded at a 2MB aligned address, the mapping continues
-to use 2MB pages as before:
-
-  radix-mmu: Mapped 0x0000000000000000-0x0000000000200000 with 2.00 MiB pages (exec)
-  radix-mmu: Mapped 0x0000000000200000-0x0000000000400000 with 2.00 MiB pages
-  radix-mmu: Mapped 0x0000000000400000-0x0000000002c00000 with 2.00 MiB pages (exec)
-  radix-mmu: Mapped 0x0000000002c00000-0x0000000100000000 with 2.00 MiB pages
-
-Fixes: c55d7b5e6426 ("powerpc: Remove STRICT_KERNEL_RWX incompatibility with RELOCATABLE")
-Signed-off-by: Michael Ellerman <mpe@ellerman.id.au>
-Link: https://lore.kernel.org/r/20230110124753.1325426-1-mpe@ellerman.id.au
-Stable-dep-of: 111bcb373853 ("powerpc/64s/radix: Fix RWX mapping with relocated kernel")
+Fixes: c59f13bbead4 ("rtl8xxxu: Work around issue with 8192eu and 8723bu devices not reconnecting")
+Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/43200afc-0c65-ee72-48f8-231edd1df493@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/powerpc/mm/book3s64/radix_pgtable.c | 11 +++++++++++
- 1 file changed, 11 insertions(+)
+ drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
 
-diff --git a/arch/powerpc/mm/book3s64/radix_pgtable.c b/arch/powerpc/mm/book3s64/radix_pgtable.c
-index 52e27fd995da7..b848f9e9f6335 100644
---- a/arch/powerpc/mm/book3s64/radix_pgtable.c
-+++ b/arch/powerpc/mm/book3s64/radix_pgtable.c
-@@ -260,6 +260,17 @@ print_mapping(unsigned long start, unsigned long end, unsigned long size, bool e
- static unsigned long next_boundary(unsigned long addr, unsigned long end)
+diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+index 7370d92a3bdad..3d3fa2b616a86 100644
+--- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
++++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
+@@ -4369,12 +4369,9 @@ void rtl8xxxu_gen1_report_connect(struct rtl8xxxu_priv *priv,
+ void rtl8xxxu_gen2_report_connect(struct rtl8xxxu_priv *priv,
+ 				  u8 macid, bool connect)
  {
- #ifdef CONFIG_STRICT_KERNEL_RWX
-+	unsigned long stext_phys;
-+
-+	stext_phys = __pa_symbol(_stext);
-+
-+	// Relocatable kernel running at non-zero real address
-+	if (stext_phys != 0) {
-+		// Start of relocated kernel text is a rodata boundary
-+		if (addr < stext_phys)
-+			return stext_phys;
-+	}
-+
- 	if (addr < __pa_symbol(__srwx_boundary))
- 		return __pa_symbol(__srwx_boundary);
- #endif
+-#ifdef RTL8XXXU_GEN2_REPORT_CONNECT
+ 	/*
+-	 * Barry Day reports this causes issues with 8192eu and 8723bu
+-	 * devices reconnecting. The reason for this is unclear, but
+-	 * until it is better understood, leave the code in place but
+-	 * disabled, so it is not lost.
++	 * The firmware turns on the rate control when it knows it's
++	 * connected to a network.
+ 	 */
+ 	struct h2c_cmd h2c;
+ 
+@@ -4387,7 +4384,6 @@ void rtl8xxxu_gen2_report_connect(struct rtl8xxxu_priv *priv,
+ 		h2c.media_status_rpt.parm &= ~BIT(0);
+ 
+ 	rtl8xxxu_gen2_h2c_cmd(priv, &h2c, sizeof(h2c.media_status_rpt));
+-#endif
+ }
+ 
+ void rtl8xxxu_gen1_init_aggregation(struct rtl8xxxu_priv *priv)
 -- 
 2.39.0
 
