@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 31F03257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:07:53 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AC7A3C433EF;
-	Thu, 23 Feb 2023 13:07:52 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C66222589
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:07:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48F97C4339B;
+	Thu, 23 Feb 2023 13:07:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157673;
-	bh=DledWV+MFoFCrspI9jfSlBT+lVZ32TzypVojq5oCp0g=;
+	s=korg; t=1677157675;
+	bh=LEV9EJzGjWl5bqmd8gKvZW97vEYWcui7Qi40BCVlsK4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DzsL93/gvcLTeDYEjOe331B7YOtyEzpR5rppxeWbGyUHz184Uqs2wo1fvOjShrDZG
-	 LqcwUNEp66kOvn1Gv0/5ir6mu9cwI35KkZBmmjWN63osKO4hHXxM4znLu7co6ERLFE
-	 muimxswk43/DZ2Yuo5gWe1jiqX+n5iPgSWUMf0as=
+	b=h0bJqmOQ/PqKdj2UckrI2duPVDP5BOn345RxAYS3MkNGJq+Ijttp/83xcrw7IBoX7
+	 cBLYPeRxa63A5QiIwv8TQouj77gu8SGrCmD2V2rky5OQmN5CVN0FP6ISNuDUq8yR4v
+	 w0XQ1iJwbmHxBG0AFel7cteKVtkXPUr3BZn7wVKc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Wensheng <zhangwensheng5@huawei.com>,
-	Yu Kuai <yukuai3@huawei.com>,
-	Josef Bacik <josef@toxicpanda.com>,
-	Jens Axboe <axboe@kernel.dk>,
-	Wen Yang <wenyang.linux@foxmail.com>
-Subject: [PATCH 5.10 21/25] nbd: fix possible overflow on first_minor in nbd_dev_add()
-Date: Thu, 23 Feb 2023 14:06:38 +0100
-Message-Id: <20230223130427.743152940@linuxfoundation.org>
+	Lukas Wunner <lukas@wunner.de>,
+	Matt Ranostay <mranostay@ti.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 5.10 22/25] wifi: mwifiex: Add missing compatible string for SD8787
+Date: Thu, 23 Feb 2023 14:06:39 +0100
+Message-Id: <20230223130427.784887755@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130426.817998725@linuxfoundation.org>
 References: <20230223130426.817998725@linuxfoundation.org>
@@ -37,69 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Zhang Wensheng <zhangwensheng5@huawei.com>
+From: Lukas Wunner <lukas@wunner.de>
 
-commit 858f1bf65d3d9c00b5e2d8ca87dc79ed88267c98 upstream.
+commit 36dd7a4c6226133b0b7aa92b8e604e688d958d0c upstream.
 
-When 'index' is a big numbers, it may become negative which forced
-to 'int'. then 'index << part_shift' might overflow to a positive
-value that is not greater than '0xfffff', then sysfs might complains
-about duplicate creation. Because of this, move the 'index' judgment
-to the front will fix it and be better.
+Commit e3fffc1f0b47 ("devicetree: document new marvell-8xxx and
+pwrseq-sd8787 options") documented a compatible string for SD8787 in
+the devicetree bindings, but neglected to add it to the mwifiex driver.
 
-Fixes: b0d9111a2d53 ("nbd: use an idr to keep track of nbd devices")
-Fixes: 940c264984fd ("nbd: fix possible overflow for 'first_minor' in nbd_dev_add()")
-Signed-off-by: Zhang Wensheng <zhangwensheng5@huawei.com>
-Signed-off-by: Yu Kuai <yukuai3@huawei.com>
-Reviewed-by: Josef Bacik <josef@toxicpanda.com>
-Link: https://lore.kernel.org/r/20220521073749.3146892-6-yukuai3@huawei.com
-Signed-off-by: Jens Axboe <axboe@kernel.dk>
-Signed-off-by: Wen Yang <wenyang.linux@foxmail.com>
+Fixes: e3fffc1f0b47 ("devicetree: document new marvell-8xxx and pwrseq-sd8787 options")
+Signed-off-by: Lukas Wunner <lukas@wunner.de>
+Cc: stable@vger.kernel.org # v4.11+
+Cc: Matt Ranostay <mranostay@ti.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/320de5005ff3b8fd76be2d2b859fd021689c3681.1674827105.git.lukas@wunner.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/nbd.c |   23 ++++++++++++-----------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/net/wireless/marvell/mwifiex/sdio.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/block/nbd.c
-+++ b/drivers/block/nbd.c
-@@ -1771,17 +1771,7 @@ static int nbd_dev_add(int index)
- 	refcount_set(&nbd->refs, 1);
- 	INIT_LIST_HEAD(&nbd->list);
- 	disk->major = NBD_MAJOR;
--
--	/* Too big first_minor can cause duplicate creation of
--	 * sysfs files/links, since index << part_shift might overflow, or
--	 * MKDEV() expect that the max bits of first_minor is 20.
--	 */
- 	disk->first_minor = index << part_shift;
--	if (disk->first_minor < index || disk->first_minor > MINORMASK) {
--		err = -EINVAL;
--		goto out_free_idr;
--	}
--
- 	disk->fops = &nbd_fops;
- 	disk->private_data = nbd;
- 	sprintf(disk->disk_name, "nbd%d", index);
-@@ -1875,8 +1865,19 @@ static int nbd_genl_connect(struct sk_bu
- 	if (!netlink_capable(skb, CAP_SYS_ADMIN))
- 		return -EPERM;
+--- a/drivers/net/wireless/marvell/mwifiex/sdio.c
++++ b/drivers/net/wireless/marvell/mwifiex/sdio.c
+@@ -485,6 +485,7 @@ static struct memory_type_mapping mem_ty
+ };
  
--	if (info->attrs[NBD_ATTR_INDEX])
-+	if (info->attrs[NBD_ATTR_INDEX]) {
- 		index = nla_get_u32(info->attrs[NBD_ATTR_INDEX]);
-+
-+		/*
-+		 * Too big first_minor can cause duplicate creation of
-+		 * sysfs files/links, since index << part_shift might overflow, or
-+		 * MKDEV() expect that the max bits of first_minor is 20.
-+		 */
-+		if (index < 0 || index > MINORMASK >> part_shift) {
-+			printk(KERN_ERR "nbd: illegal input index %d\n", index);
-+			return -EINVAL;
-+		}
-+	}
- 	if (!info->attrs[NBD_ATTR_SOCKETS]) {
- 		printk(KERN_ERR "nbd: must specify at least one socket\n");
- 		return -EINVAL;
+ static const struct of_device_id mwifiex_sdio_of_match_table[] = {
++	{ .compatible = "marvell,sd8787" },
+ 	{ .compatible = "marvell,sd8897" },
+ 	{ .compatible = "marvell,sd8997" },
+ 	{ }
 
 
