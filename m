@@ -1,36 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F50F257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:05:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 17110C433D2;
-	Thu, 23 Feb 2023 13:05:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 26CAF257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:05:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A5921C4339C;
+	Thu, 23 Feb 2023 13:05:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157543;
-	bh=80JMmiRuXfseAo3ocy8lW/uEqpR8lr9TwQczSCVw+Tg=;
+	s=korg; t=1677157546;
+	bh=z730S/5vXkO8OQA9zIOEJ1EJTdJgIRPQix+LqlfHysE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=OnJMCX3ACrdtSSh133aLpu0jTQTw0SexeGt+X4tzLo3AXC59FHI4S4tFgksSuJt81
-	 VqH70zaC3qax59ixUck0uEzpSSRIvOjw6CVrVHvOHw4Di4zkvGs6JXs9nSIShlTzwD
-	 IPp0CivkCdZ3qYNeYHKozgq6DjU0UejLLaywy6Eo=
+	b=sPqeACXXLZkcg8smM97JWAl3djZjj3vOfgKy/yxx+JhC4JEMay5JmXwLGJTjfy8NY
+	 whxb+YRA6+e2DZ7dgRqj0mcG1UWpijBkKLT/mYaBjgjC/JusYuzsdZjPNn18LyzIse
+	 64Kj5YeyOA35npgajU4LpOO42VvW+i3h/IcD+cUY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jordy Zomer <jordyzomer@google.com>,
-	Linus Torvalds <torvalds@linuxfoundation.org>,
-	Dave Hansen <dave.hansen@linux.intel.com>,
-	Thomas Gleixner <tglx@linutronix.de>,
-	Linus Torvalds <torvalds@linux-foundation.org>,
-	Daniel Borkmann <daniel@iogearbox.net>
-Subject: [PATCH 6.2 01/11] uaccess: Add speculation barrier to copy_from_user()
-Date: Thu, 23 Feb 2023 14:04:55 +0100
-Message-Id: <20230223130426.229532388@linuxfoundation.org>
+	Theodore Tso <tytso@mit.edu>,
+	Eric Biggers <ebiggers@kernel.org>,
+	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Nathan Chancellor <nathan@kernel.org>,
+	Kees Cook <keescook@chromium.org>,
+	Eric Biggers <ebiggers@google.com>
+Subject: [PATCH 6.2 10/11] ext4: Fix function prototype mismatch for ext4_feat_ktype
+Date: Thu, 23 Feb 2023 14:05:04 +0100
+Message-Id: <20230223130426.593865540@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130426.170746546@linuxfoundation.org>
 References: <20230223130426.170746546@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -40,106 +38,74 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dave Hansen <dave.hansen@linux.intel.com>
+From: Kees Cook <keescook@chromium.org>
 
-commit 74e19ef0ff8061ef55957c3abd71614ef0f42f47 upstream.
+commit 118901ad1f25d2334255b3d50512fa20591531cd upstream.
 
-The results of "access_ok()" can be mis-speculated.  The result is that
-you can end speculatively:
+With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
+indirect call targets are validated against the expected function
+pointer prototype to make sure the call target is valid to help mitigate
+ROP attacks. If they are not identical, there is a failure at run time,
+which manifests as either a kernel panic or thread getting killed.
 
-	if (access_ok(from, size))
-		// Right here
+ext4_feat_ktype was setting the "release" handler to "kfree", which
+doesn't have a matching function prototype. Add a simple wrapper
+with the correct prototype.
 
-even for bad from/size combinations.  On first glance, it would be ideal
-to just add a speculation barrier to "access_ok()" so that its results
-can never be mis-speculated.
+This was found as a result of Clang's new -Wcast-function-type-strict
+flag, which is more sensitive than the simpler -Wcast-function-type,
+which only checks for type width mismatches.
 
-But there are lots of system calls just doing access_ok() via
-"copy_to_user()" and friends (example: fstat() and friends).  Those are
-generally not problematic because they do not _consume_ data from
-userspace other than the pointer.  They are also very quick and common
-system calls that should not be needlessly slowed down.
+Note that this code is only reached when ext4 is a loadable module and
+it is being unloaded:
 
-"copy_from_user()" on the other hand uses a user-controller pointer and
-is frequently followed up with code that might affect caches.  Take
-something like this:
+ CFI failure at kobject_put+0xbb/0x1b0 (target: kfree+0x0/0x180; expected type: 0x7c4aa698)
+ ...
+ RIP: 0010:kobject_put+0xbb/0x1b0
+ ...
+ Call Trace:
+  <TASK>
+  ext4_exit_sysfs+0x14/0x60 [ext4]
+  cleanup_module+0x67/0xedb [ext4]
 
-	if (!copy_from_user(&kernelvar, uptr, size))
-		do_something_with(kernelvar);
-
-If userspace passes in an evil 'uptr' that *actually* points to a kernel
-addresses, and then do_something_with() has cache (or other)
-side-effects, it could allow userspace to infer kernel data values.
-
-Add a barrier to the common copy_from_user() code to prevent
-mis-speculated values which happen after the copy.
-
-Also add a stub for architectures that do not define barrier_nospec().
-This makes the macro usable in generic code.
-
-Since the barrier is now usable in generic code, the x86 #ifdef in the
-BPF code can also go away.
-
-Reported-by: Jordy Zomer <jordyzomer@google.com>
-Suggested-by: Linus Torvalds <torvalds@linuxfoundation.org>
-Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
-Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
-Acked-by: Daniel Borkmann <daniel@iogearbox.net>   # BPF bits
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: b99fee58a20a ("ext4: create ext4_feat kobject dynamically")
+Cc: Theodore Ts'o <tytso@mit.edu>
+Cc: Eric Biggers <ebiggers@kernel.org>
+Cc: stable@vger.kernel.org
+Build-tested-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Reviewed-by: Nathan Chancellor <nathan@kernel.org>
+Link: https://lore.kernel.org/r/20230103234616.never.915-kees@kernel.org
+Signed-off-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: Eric Biggers <ebiggers@google.com>
+Link: https://lore.kernel.org/r/20230104210908.gonna.388-kees@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- include/linux/nospec.h |    4 ++++
- kernel/bpf/core.c      |    2 --
- lib/usercopy.c         |    7 +++++++
- 3 files changed, 11 insertions(+), 2 deletions(-)
+ fs/ext4/sysfs.c |    7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
---- a/include/linux/nospec.h
-+++ b/include/linux/nospec.h
-@@ -11,6 +11,10 @@
+--- a/fs/ext4/sysfs.c
++++ b/fs/ext4/sysfs.c
+@@ -491,6 +491,11 @@ static void ext4_sb_release(struct kobje
+ 	complete(&sbi->s_kobj_unregister);
+ }
  
- struct task_struct;
- 
-+#ifndef barrier_nospec
-+# define barrier_nospec() do { } while (0)
-+#endif
++static void ext4_feat_release(struct kobject *kobj)
++{
++	kfree(kobj);
++}
 +
- /**
-  * array_index_mask_nospec() - generate a ~0 mask when index < size, 0 otherwise
-  * @index: array element index
---- a/kernel/bpf/core.c
-+++ b/kernel/bpf/core.c
-@@ -1910,9 +1910,7 @@ out:
- 		 * reuse preexisting logic from Spectre v1 mitigation that
- 		 * happens to produce the required code on x86 for v4 as well.
- 		 */
--#ifdef CONFIG_X86
- 		barrier_nospec();
--#endif
- 		CONT;
- #define LDST(SIZEOP, SIZE)						\
- 	STX_MEM_##SIZEOP:						\
---- a/lib/usercopy.c
-+++ b/lib/usercopy.c
-@@ -3,6 +3,7 @@
- #include <linux/fault-inject-usercopy.h>
- #include <linux/instrumented.h>
- #include <linux/uaccess.h>
-+#include <linux/nospec.h>
+ static const struct sysfs_ops ext4_attr_ops = {
+ 	.show	= ext4_attr_show,
+ 	.store	= ext4_attr_store,
+@@ -505,7 +510,7 @@ static struct kobj_type ext4_sb_ktype =
+ static struct kobj_type ext4_feat_ktype = {
+ 	.default_groups = ext4_feat_groups,
+ 	.sysfs_ops	= &ext4_attr_ops,
+-	.release	= (void (*)(struct kobject *))kfree,
++	.release	= ext4_feat_release,
+ };
  
- /* out-of-line parts */
- 
-@@ -12,6 +13,12 @@ unsigned long _copy_from_user(void *to,
- 	unsigned long res = n;
- 	might_fault();
- 	if (!should_fail_usercopy() && likely(access_ok(from, n))) {
-+		/*
-+		 * Ensure that bad access_ok() speculation will not
-+		 * lead to nasty side effects *after* the copy is
-+		 * finished:
-+		 */
-+		barrier_nospec();
- 		instrument_copy_from_user_before(to, from, n);
- 		res = raw_copy_from_user(to, from, n);
- 		instrument_copy_from_user_after(to, from, n, res);
+ void ext4_notify_error_sysfs(struct ext4_sb_info *sbi)
 
 
