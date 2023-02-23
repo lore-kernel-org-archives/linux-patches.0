@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CA07F2584
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:09:57 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 539E3C4339B;
-	Thu, 23 Feb 2023 13:09:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 705172584
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:10:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EB761C4339C;
+	Thu, 23 Feb 2023 13:09:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157797;
-	bh=zbqhN8Yqsagql4T0X8kc+vTS7MzfsioNpCwXxlDpKA0=;
+	s=korg; t=1677157800;
+	bh=alp6LnZDwW0F9N2Wwpx0lHRTbOzOhSR0KbgS06IvbHU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Jq62sCHtMPUk/5UcWJMVC0N9zqjgpueIDy1hkMZS/1ymDZMtuPmBbZ+T+J8ZqV6A3
-	 jwqV7+QRou2wonzV6I8UGDy/AP/WUTNyoEFoNIEGOhFvmSE2Q4ZRNVgXveSl6H+ASS
-	 twBVOYhEe3qW2R5rljWKZo8SYoSF8dRGl7/kGFKo=
+	b=JbyDL8RMPyKsvP6GxsoJ8uWh+McgSdHSEE3mphbymbBVbxtFKvmg095i+jSfIkoGa
+	 mrMLqrRQDavhyBagVV0LuyQ63Oor0Uobz4eS6QRmPKMXWopq9s4Tgi/Rx2t+HxvY6X
+	 JFFpyw1RtGvS6lfxQ2509UdrS+QAtt03B6XzK0II=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Kalle Valo <kvalo@kernel.org>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 03/46] wifi: rtl8xxxu: gen2: Turn on the rate control
-Date: Thu, 23 Feb 2023 14:06:10 +0100
-Message-Id: <20230223130431.713895102@linuxfoundation.org>
+	Dennis Gilmore <dennis@ausil.us>,
+	Ard Biesheuvel <ardb@kernel.org>,
+	Masahiro Yamada <masahiroy@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>,
+	Tom Saeger <tom.saeger@oracle.com>
+Subject: [PATCH 6.1 36/46] arch: fix broken BuildID for arm64 and riscv
+Date: Thu, 23 Feb 2023 14:06:43 +0100
+Message-Id: <20230223130433.279768155@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130431.553657459@linuxfoundation.org>
 References: <20230223130431.553657459@linuxfoundation.org>
@@ -35,69 +37,56 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Masahiro Yamada <masahiroy@kernel.org>
 
-[ Upstream commit 791082ec0ab843e0be07c8ce3678e4c2afd2e33d ]
+commit 99cb0d917ffa1ab628bb67364ca9b162c07699b1 upstream.
 
-Re-enable the function rtl8xxxu_gen2_report_connect.
+Dennis Gilmore reports that the BuildID is missing in the arm64 vmlinux
+since commit 994b7ac1697b ("arm64: remove special treatment for the
+link order of head.o").
 
-It informs the firmware when connecting to a network. This makes the
-firmware enable the rate control, which makes the upload faster.
+The issue is that the type of .notes section, which contains the BuildID,
+changed from NOTES to PROGBITS.
 
-It also informs the firmware when disconnecting from a network. In the
-past this made reconnecting impossible because it was sending the
-auth on queue 0x7 (TXDESC_QUEUE_VO) instead of queue 0x12
-(TXDESC_QUEUE_MGNT):
+Ard Biesheuvel figured out that whichever object gets linked first gets
+to decide the type of a section. The PROGBITS type is the result of the
+compiler emitting .note.GNU-stack as PROGBITS rather than NOTE.
 
-wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 1/3)
-wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 2/3)
-wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 3/3)
-wlp0s20f0u3: authentication with 90:55:de:__:__:__ timed out
+While Ard provided a fix for arm64, I want to fix this globally because
+the same issue is happening on riscv since commit 2348e6bf4421 ("riscv:
+remove special treatment for the link order of head.o"). This problem
+will happen in general for other architectures if they start to drop
+unneeded entries from scripts/head-object-list.txt.
 
-Probably the firmware disables the unnecessary TX queues when it
-knows it's disconnected.
+Discard .note.GNU-stack in include/asm-generic/vmlinux.lds.h.
 
-However, this was fixed in commit edd5747aa12e ("wifi: rtl8xxxu: Fix
-skb misuse in TX queue selection").
-
-Fixes: c59f13bbead4 ("rtl8xxxu: Work around issue with 8192eu and 8723bu devices not reconnecting")
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/43200afc-0c65-ee72-48f8-231edd1df493@gmail.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Link: https://lore.kernel.org/lkml/CAABkxwuQoz1CTbyb57n0ZX65eSYiTonFCU8-LCQc=74D=xE=rA@mail.gmail.com/
+Fixes: 994b7ac1697b ("arm64: remove special treatment for the link order of head.o")
+Fixes: 2348e6bf4421 ("riscv: remove special treatment for the link order of head.o")
+Reported-by: Dennis Gilmore <dennis@ausil.us>
+Suggested-by: Ard Biesheuvel <ardb@kernel.org>
+Signed-off-by: Masahiro Yamada <masahiroy@kernel.org>
+Acked-by: Palmer Dabbelt <palmer@rivosinc.com>
+Signed-off-by: Tom Saeger <tom.saeger@oracle.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ include/asm-generic/vmlinux.lds.h |    5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-index e9c1b62c9c3c2..e445084e358f9 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -4389,12 +4389,9 @@ void rtl8xxxu_gen1_report_connect(struct rtl8xxxu_priv *priv,
- void rtl8xxxu_gen2_report_connect(struct rtl8xxxu_priv *priv,
- 				  u8 macid, bool connect)
- {
--#ifdef RTL8XXXU_GEN2_REPORT_CONNECT
- 	/*
--	 * Barry Day reports this causes issues with 8192eu and 8723bu
--	 * devices reconnecting. The reason for this is unclear, but
--	 * until it is better understood, leave the code in place but
--	 * disabled, so it is not lost.
-+	 * The firmware turns on the rate control when it knows it's
-+	 * connected to a network.
- 	 */
- 	struct h2c_cmd h2c;
+--- a/include/asm-generic/vmlinux.lds.h
++++ b/include/asm-generic/vmlinux.lds.h
+@@ -929,7 +929,12 @@
+ #define PRINTK_INDEX
+ #endif
  
-@@ -4407,7 +4404,6 @@ void rtl8xxxu_gen2_report_connect(struct rtl8xxxu_priv *priv,
- 		h2c.media_status_rpt.parm &= ~BIT(0);
- 
- 	rtl8xxxu_gen2_h2c_cmd(priv, &h2c, sizeof(h2c.media_status_rpt));
--#endif
- }
- 
- void rtl8xxxu_gen1_init_aggregation(struct rtl8xxxu_priv *priv)
--- 
-2.39.0
-
++/*
++ * Discard .note.GNU-stack, which is emitted as PROGBITS by the compiler.
++ * Otherwise, the type of .notes section would become PROGBITS instead of NOTES.
++ */
+ #define NOTES								\
++	/DISCARD/ : { *(.note.GNU-stack) }				\
+ 	.notes : AT(ADDR(.notes) - LOAD_OFFSET) {			\
+ 		__start_notes = .;					\
+ 		KEEP(*(.note.*))					\
 
 
