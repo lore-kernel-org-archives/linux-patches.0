@@ -1,88 +1,76 @@
-Received: from mail-yw1-f173.google.com (mail-yw1-f173.google.com [209.85.128.173])
+Received: from mail-pj1-f51.google.com (mail-pj1-f51.google.com [209.85.216.51])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 032D315B7
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 02:11:01 +0000 (UTC)
-Received: by mail-yw1-f173.google.com with SMTP id 00721157ae682-536b7ffdd34so159604237b3.6
-        for <patches@lists.linux.dev>; Wed, 22 Feb 2023 18:11:01 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D0BA10F6
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 02:55:18 +0000 (UTC)
+Received: by mail-pj1-f51.google.com with SMTP id x20-20020a17090a8a9400b00233ba727724so2899481pjn.1
+        for <patches@lists.linux.dev>; Wed, 22 Feb 2023 18:55:18 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=sladewatkins.net; s=googled;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=agmt99ERP4Lf0P7eQYv1KVKMj6iSmC6cQgnmN8jVaT8=;
-        b=WZvGVnb+n+YRSIPY+/CTmrPz91UCo3sqyZ/dznec+MC+i4V9cCWSWBlKW4EgoThebN
-         mW0X9hiTrUKd2Fl+aU0bKGMtGGV6/B97QZ3tL8iPlDkhLGoSVuEceCK6YWTGMVUY7IjD
-         MSK4XIDFJyizrXC5JbI2ZfvodH4EuwHJIwUn2RvCpgwTqRNz7oFc3f9mtaV1wfGYP6kS
-         tixxSoP9J7YsihVBzmRJ7y/pHmmjJf7LZNyqkYPoaJHLOb1Iu+lYdc5+PqJcE0Gggtdr
-         JgQ/816rR88V4fv/WPmnt+dfyAICVmDoRoDxZIAQFXRZVjjfz+WJwOpjx48Eiu6H9XDT
-         c2+w==
+        bh=XQPHO+gl/DhYC4r22uP7h9xL0tCG9iAevyTPVtriPQo=;
+        b=Ffzo03v+l25EXyWJifw244XNhDz8wJghOb7k4p1ylBpVzAQQ1mUmUN4ZX7d9fSyhjZ
+         N1wUjMyk73kCrZtbKAuYc0AbzVdWH0+DQdTnLSKNaOFffc8tG6sR1p02579PPIbzSPxN
+         MvU7odQaG0VUedi0VCGmQwSJ+J30gQZvnM8KB2qc0K4mdl6U48lLX9LbVz3qW23wGVfv
+         RPzc9+ITya5C4t1bJFimdoWHUmieuiVHEBFpHlZ3AHF8BdvHD0/C6MCkulAKgCR9nrae
+         LjIlK4JS24XDnSWjzllL2ZNxAITY0l8EkZgPbxk9tO0ohsGK4TRd+DNU7HVWDLWUsVTl
+         /WOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=agmt99ERP4Lf0P7eQYv1KVKMj6iSmC6cQgnmN8jVaT8=;
-        b=nDyIi8b7JsrauwAalgN5I0fuZEAGMZxBap2WaObz0EAzqVhgwT7MhkOXdE/rAyw8I0
-         D3tz1JAC0sYKTLj/jcZav+De8dPuDq2X5WxGNm2BjNcleC32TgohjvtoGMfd1NjHkWUa
-         cgwz7/lSxB3W4yAor8cMMPJx9gNgOLZd0273vPvoFKuSQMHb5/KK74sxhHOJ52oeoEqs
-         1BdJVrCidR0XE1XSjkQ+Zf2cEaExGG8ZtNq+kfOVgo2iZVBLjI1TjO5rtFeLjLM2xktK
-         O0Rqbao3XR40kCUjTn+khGCLuPtIubg9imGAT5ei6SU4i/XkiytJBCj52etCAFK4Ny+L
-         0qRA==
-X-Gm-Message-State: AO0yUKUbSjN5mVW5wyHykfT2QLXdVCmFBNHbo7YTxYkUvJ1ZylTMWmrw
-	wIFVDzMiWMQVGE4fla0CLy2fN0J73ZUVa9B4UJ1W4Q==
-X-Google-Smtp-Source: AK7set9EP5ZbyAm7ORU/z9pS5I6CjY2Um0I5400dATxt8qpJFvve4/pI0e0j9SmFqqpSXv14xyD8Sh6ke7po12y3ISQ=
-X-Received: by 2002:a25:f203:0:b0:9f8:119a:6f9a with SMTP id
- i3-20020a25f203000000b009f8119a6f9amr1055636ybe.10.1677118260856; Wed, 22 Feb
- 2023 18:11:00 -0800 (PST)
+        bh=XQPHO+gl/DhYC4r22uP7h9xL0tCG9iAevyTPVtriPQo=;
+        b=105GNsSei3TkACoXhrI1a+y+nb0d0VQc4WzFxj7el3VYvN5V9iVx8rzCV48QnZZOyu
+         DBTVo7ZRXt/ogpOxKeT4OSKOJfgiikvzNbKBGTHIxv5tTHRXmdZn0IpBwvGYqfignl4z
+         BShtE3klC72/gu9CvP68zdpO+zJUql+9hqztUMHGqdsZt0iNN/KwrcolV54M0bX/fJdA
+         iMAzLJVti5nBqq5Zn4aiNBzaqvOWE8p0Dvmklk58iuxW12oZ3ej7CZmWQq9eWdkWbfPv
+         lajXXqo4omaUGpNm175g4ZfwrrILoJ+9uY1PT805/Ncees2oeLgE5eZb0Rc+6tbxcIUA
+         JTvw==
+X-Gm-Message-State: AO0yUKUSJ7KAGQovuUeTDjNtvar6ZwSorp3CHmDTp9ucszon5ggUCWv9
+	jWS4nyLykNcXeRR9KNvnqU67gvplT0FDF4fG+xw5NA==
+X-Google-Smtp-Source: AK7set+sXcdhmJLQhp1HnsxoaWEiNvC2w5ODsm67G7ZcQMIsy1veA0VxS0igMXfb2hiUE1B6yJbPUxrsOn16CMsbPJI=
+X-Received: by 2002:a17:90a:df12:b0:234:889e:d88d with SMTP id
+ gp18-20020a17090adf1200b00234889ed88dmr130880pjb.5.1677120918304; Wed, 22 Feb
+ 2023 18:55:18 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230223013847.1218900-1-sboyd@kernel.org>
-In-Reply-To: <20230223013847.1218900-1-sboyd@kernel.org>
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date: Thu, 23 Feb 2023 04:10:50 +0200
-Message-ID: <CAA8EJppgarZnGHEAfNwi768B_wz1jF0WEbTE2W1sWcs2nYRFPg@mail.gmail.com>
-Subject: Re: [PATCH] clk: qcom: apcs-msm8986: Include bitfield.h for FIELD_PREP
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, patches@lists.linux.dev
+References: <20230220133548.158615609@linuxfoundation.org>
+In-Reply-To: <20230220133548.158615609@linuxfoundation.org>
+From: Slade Watkins <srw@sladewatkins.net>
+Date: Wed, 22 Feb 2023 21:55:08 -0500
+Message-ID: <CA+pv=HP1Jv8m_eSv=h6fKFE-ynkgHCdWNB1dnmFZUqsrcGN5cg@mail.gmail.com>
+Subject: Re: [PATCH 4.14 00/53] 4.14.306-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de
 Content-Type: text/plain; charset="UTF-8"
 
-On Thu, 23 Feb 2023 at 03:38, Stephen Boyd <sboyd@kernel.org> wrote:
+On Mon, Feb 20, 2023 at 8:38 AM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
 >
-> Otherwise some configurations fail.
+> This is the start of the stable review cycle for the 4.14.306 release.
+> There are 53 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 >
-> Fixes: 027726365906 ("clk: qcom: add the driver for the MSM8996 APCS clocks")
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
-> ---
->  drivers/clk/qcom/apcs-msm8996.c | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/drivers/clk/qcom/apcs-msm8996.c b/drivers/clk/qcom/apcs-msm8996.c
-> index 7ec4022c5b43..3e91e9e6da74 100644
-> --- a/drivers/clk/qcom/apcs-msm8996.c
-> +++ b/drivers/clk/qcom/apcs-msm8996.c
-> @@ -7,6 +7,7 @@
->   */
->
->  #include <linux/bits.h>
-> +#include <linux/bitfield.h>
->  #include <linux/clk-provider.h>
->  #include <linux/delay.h>
->  #include <linux/module.h>
-> --
-> https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
-> https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+> Responses should be made by Wed, 22 Feb 2023 13:35:35 +0000.
+> Anything received after that time might be too late.
 >
 
+4.14.306-rc1 compiled and booted on my x86_64 test system. No errors
+or regressions.
 
--- 
-With best wishes
-Dmitry
+Tested-by: Slade Watkins <srw@sladewatkins.net>
+
+Thanks,
+-- Slade
