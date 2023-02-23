@@ -1,124 +1,163 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE2C42584
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:10:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 553DDC433D2;
-	Thu, 23 Feb 2023 13:10:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 90EDA2584
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:10:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C565BC433EF;
+	Thu, 23 Feb 2023 13:10:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157854;
-	bh=O7WQwTIduB3Ubz0pHwY2L3zr2n50GW60IyJhx8vM6v0=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=s5Sc60AWxwD/zBiHsSLAqkhpl3tNFyyazeu+zYfSSRO1VM1AvORQzs8eRMlCzdmzg
-	 u0wnbqES1Q7TeoDxf5EwoH5fzt5E+gGCBaV5Z/7WeS0ODD6HNLxzZi8F7FJi4NQqeD
-	 OU8YMX8J+z1P9uQMBrravyZy/OMZ3wOlDFbGONVA=
+	s=korg; t=1677157857;
+	bh=RYMjiUWgnei9/khPLBWszbj6G7CuwBOisJlG7Mn32NY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=abQeIQ/Jvt88FJ83PAf389GjWevLXIHygYBFTCcilJocn/rOzgBZlHIHqHUx0NnDM
+	 Spj84mdfddtWrXuwsQcHdcvcU+aOnbPiyx1J5wg1xsaR9h0j38/vOf9voZqCOjkylX
+	 gqt0XsrqU/N+fQQDoVRvRUD0A05tlntuhDbgADz0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sean Christopherson <seanjc@google.com>,
-	Jim Mattson <jmattson@google.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 09/18] KVM: VMX: Execute IBPB on emulated VM-exit when guest has IBRS
-Date: Thu, 23 Feb 2023 14:06:54 +0100
-Message-Id: <20230223130426.040985126@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 5.4 00/18] 5.4.233-rc1 review
+Date: Thu, 23 Feb 2023 14:06:45 +0100
+Message-Id: <20230223130425.680784802@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230223130425.680784802@linuxfoundation.org>
-References: <20230223130425.680784802@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.233-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.4.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.4.233-rc1
+X-KernelTest-Deadline: 2023-02-25T13:04+00:00
 Content-Transfer-Encoding: 8bit
 
-From: Jim Mattson <jmattson@google.com>
+This is the start of the stable review cycle for the 5.4.233 release.
+There are 18 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-[ Upstream commit 2e7eab81425ad6c875f2ed47c0ce01e78afc38a5 ]
+Responses should be made by Sat, 25 Feb 2023 13:04:16 +0000.
+Anything received after that time might be too late.
 
-According to Intel's document on Indirect Branch Restricted
-Speculation, "Enabling IBRS does not prevent software from controlling
-the predicted targets of indirect branches of unrelated software
-executed later at the same predictor mode (for example, between two
-different user applications, or two different virtual machines). Such
-isolation can be ensured through use of the Indirect Branch Predictor
-Barrier (IBPB) command." This applies to both basic and enhanced IBRS.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.233-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+and the diffstat can be found below.
 
-Since L1 and L2 VMs share hardware predictor modes (guest-user and
-guest-kernel), hardware IBRS is not sufficient to virtualize
-IBRS. (The way that basic IBRS is implemented on pre-eIBRS parts,
-hardware IBRS is actually sufficient in practice, even though it isn't
-sufficient architecturally.)
+thanks,
 
-For virtual CPUs that support IBRS, add an indirect branch prediction
-barrier on emulated VM-exit, to ensure that the predicted targets of
-indirect branches executed in L1 cannot be controlled by software that
-was executed in L2.
+greg k-h
 
-Since we typically don't intercept guest writes to IA32_SPEC_CTRL,
-perform the IBPB at emulated VM-exit regardless of the current
-IA32_SPEC_CTRL.IBRS value, even though the IBPB could technically be
-deferred until L1 sets IA32_SPEC_CTRL.IBRS, if IA32_SPEC_CTRL.IBRS is
-clear at emulated VM-exit.
+-------------
+Pseudo-Shortlog of commits:
 
-This is CVE-2022-2196.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.4.233-rc1
 
-Fixes: 5c911beff20a ("KVM: nVMX: Skip IBPB when switching between vmcs01 and vmcs02")
-Cc: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Jim Mattson <jmattson@google.com>
-Reviewed-by: Sean Christopherson <seanjc@google.com>
-Link: https://lore.kernel.org/r/20221019213620.1953281-3-jmattson@google.com
-Signed-off-by: Sean Christopherson <seanjc@google.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- arch/x86/kvm/vmx/nested.c | 11 +++++++++++
- arch/x86/kvm/vmx/vmx.c    |  6 ++++--
- 2 files changed, 15 insertions(+), 2 deletions(-)
+Vladimir Oltean <vladimir.oltean@nxp.com>
+    Revert "net/sched: taprio: make qdisc_leaf() see the per-netdev-queue pfifo child qdiscs"
 
-diff --git a/arch/x86/kvm/vmx/nested.c b/arch/x86/kvm/vmx/nested.c
-index 00f3336194a96..d3a8ee0ef988a 100644
---- a/arch/x86/kvm/vmx/nested.c
-+++ b/arch/x86/kvm/vmx/nested.c
-@@ -4118,6 +4118,17 @@ void nested_vmx_vmexit(struct kvm_vcpu *vcpu, u32 exit_reason,
- 
- 	vmx_switch_vmcs(vcpu, &vmx->vmcs01);
- 
-+	/*
-+	 * If IBRS is advertised to the vCPU, KVM must flush the indirect
-+	 * branch predictors when transitioning from L2 to L1, as L1 expects
-+	 * hardware (KVM in this case) to provide separate predictor modes.
-+	 * Bare metal isolates VMX root (host) from VMX non-root (guest), but
-+	 * doesn't isolate different VMCSs, i.e. in this case, doesn't provide
-+	 * separate modes for L2 vs L1.
-+	 */
-+	if (guest_cpuid_has(vcpu, X86_FEATURE_SPEC_CTRL))
-+		indirect_branch_prediction_barrier();
-+
- 	/* Update any VMCS fields that might have changed while L2 ran */
- 	vmcs_write32(VM_EXIT_MSR_LOAD_COUNT, vmx->msr_autoload.host.nr);
- 	vmcs_write32(VM_ENTRY_MSR_LOAD_COUNT, vmx->msr_autoload.guest.nr);
-diff --git a/arch/x86/kvm/vmx/vmx.c b/arch/x86/kvm/vmx/vmx.c
-index a8c8073654cf1..e6dd6a7e86893 100644
---- a/arch/x86/kvm/vmx/vmx.c
-+++ b/arch/x86/kvm/vmx/vmx.c
-@@ -1397,8 +1397,10 @@ void vmx_vcpu_load_vmcs(struct kvm_vcpu *vcpu, int cpu,
- 
- 		/*
- 		 * No indirect branch prediction barrier needed when switching
--		 * the active VMCS within a guest, e.g. on nested VM-Enter.
--		 * The L1 VMM can protect itself with retpolines, IBPB or IBRS.
-+		 * the active VMCS within a vCPU, unless IBRS is advertised to
-+		 * the vCPU.  To minimize the number of IBPBs executed, KVM
-+		 * performs IBPB on nested VM-Exit (a single nested transition
-+		 * may switch the active VMCS multiple times).
- 		 */
- 		if (!buddy || WARN_ON_ONCE(buddy->vmcs != prev))
- 			indirect_branch_prediction_barrier();
--- 
-2.39.0
+Kees Cook <keescook@chromium.org>
+    ext4: Fix function prototype mismatch for ext4_feat_ktype
 
+Lukas Wunner <lukas@wunner.de>
+    wifi: mwifiex: Add missing compatible string for SD8787
+
+Dave Hansen <dave.hansen@linux.intel.com>
+    uaccess: Add speculation barrier to copy_from_user()
+
+Pavel Skripkin <paskripkin@gmail.com>
+    mac80211: mesh: embedd mesh_paths and mpp_paths into ieee80211_if_mesh
+
+Zheng Wang <zyytlz.wz@163.com>
+    drm/i915/gvt: fix double free bug in split_2MB_gtt_entry
+
+Thomas Gleixner <tglx@linutronix.de>
+    alarmtimer: Prevent starvation by small intervals and SIG_IGN
+
+Sean Anderson <sean.anderson@seco.com>
+    powerpc: dts: t208x: Disable 10G on MAC1 and MAC2
+
+Marc Kleine-Budde <mkl@pengutronix.de>
+    can: kvaser_usb: hydra: help gcc-13 to figure out cmd_len
+
+Jim Mattson <jmattson@google.com>
+    KVM: VMX: Execute IBPB on emulated VM-exit when guest has IBRS
+
+Sean Christopherson <seanjc@google.com>
+    KVM: x86: Fail emulation during EMULTYPE_SKIP on any exception
+
+Jason A. Donenfeld <Jason@zx2c4.com>
+    random: always mix cycle counter in add_latent_entropy()
+
+Sean Anderson <sean.anderson@seco.com>
+    powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
+
+Bitterblue Smith <rtl8821cerfe2@gmail.com>
+    wifi: rtl8xxxu: gen2: Turn on the rate control
+
+Lucas Stach <l.stach@pengutronix.de>
+    drm/etnaviv: don't truncate physical page address
+
+Marek Szyprowski <m.szyprowski@samsung.com>
+    drm: etnaviv: fix common struct sg_table related issues
+
+Marek Szyprowski <m.szyprowski@samsung.com>
+    scatterlist: add generic wrappers for iterating over sgtable objects
+
+Marek Szyprowski <m.szyprowski@samsung.com>
+    dma-mapping: add generic helpers for mapping sgtable objects
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |  4 +-
+ arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi | 44 +++++++++++
+ arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi | 44 +++++++++++
+ arch/powerpc/boot/dts/fsl/t2081si-post.dtsi        | 20 ++++-
+ arch/x86/kvm/vmx/nested.c                          | 11 +++
+ arch/x86/kvm/vmx/vmx.c                             |  6 +-
+ arch/x86/kvm/x86.c                                 |  4 +-
+ drivers/gpu/drm/etnaviv/etnaviv_gem.c              | 12 ++-
+ drivers/gpu/drm/etnaviv/etnaviv_mmu.c              | 19 ++---
+ drivers/gpu/drm/i915/gvt/gtt.c                     | 17 ++++-
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c  | 33 +++++---
+ drivers/net/wireless/marvell/mwifiex/sdio.c        |  1 +
+ .../net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c  |  8 +-
+ fs/ext4/sysfs.c                                    |  7 +-
+ include/linux/dma-mapping.h                        | 80 +++++++++++++++++++
+ include/linux/nospec.h                             |  4 +
+ include/linux/random.h                             |  6 +-
+ include/linux/scatterlist.h                        | 50 +++++++++++-
+ kernel/bpf/core.c                                  |  2 -
+ kernel/time/alarmtimer.c                           | 33 +++++++-
+ lib/usercopy.c                                     |  7 ++
+ net/mac80211/ieee80211_i.h                         | 24 +++++-
+ net/mac80211/mesh.h                                | 22 +-----
+ net/mac80211/mesh_pathtbl.c                        | 89 ++++++++--------------
+ net/sched/sch_taprio.c                             |  8 +-
+ 25 files changed, 410 insertions(+), 145 deletions(-)
 
 
