@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10A07257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:09:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 89F96C433D2;
-	Thu, 23 Feb 2023 13:09:10 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AFB48257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:09:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 36A69C433EF;
+	Thu, 23 Feb 2023 13:09:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157750;
-	bh=wfyFCpqiKvgyqUXkHezD0XTK9T5ZtswDbi1NAjImbeo=;
+	s=korg; t=1677157753;
+	bh=L4upDBkMmALa/cWsFSeaYL6ZAig1trAUOlx9Jmo8zdY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zO1k2V3njZqfpt9zXXNK9+emiu5cVsTb30DtgoSsy3yRfnB47lteIe4a7Fvoqjf+r
-	 PcSkzeKLtFIvaJ3RG+TD/C94smK7eQ68Gs/SrYDi3M9z9c93IzjU7G435QYNgkNhjN
-	 MPiSw0AEsmyxXvN6uGXSjenMFGbjaYwYp+2qtbWs=
+	b=l3wn0rZOM37Jf6RJ/NIxL24m1XtvGdgHtjiiaR2czqCJ+H6VkxpWbyL377KDBvozo
+	 wvufwHusdhdZGEuttra1vl/4ILvXRRGQdO9eQ37/6L6RUu9ETDVdeB8pk8rsJtjL8j
+	 96N/tsCN3JkKzM3WtcrDlap9bWbuQ9IV6XXrZlvk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Michal Luczaj <mhal@rbox.co>,
-	David Woodhouse <dwmw@amazon.co.uk>,
+	Yu Zhang <yu.c.zhang@linux.intel.com>,
+	Sean Christopherson <seanjc@google.com>,
 	Paolo Bonzini <pbonzini@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 24/46] KVM: x86: fix deadlock for KVM_XEN_EVTCHN_RESET
-Date: Thu, 23 Feb 2023 14:06:31 +0100
-Message-Id: <20230223130432.693114154@linuxfoundation.org>
+Subject: [PATCH 6.1 25/46] selftests: kvm: move declaration at the beginning of main()
+Date: Thu, 23 Feb 2023 14:06:32 +0100
+Message-Id: <20230223130432.738580951@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130431.553657459@linuxfoundation.org>
 References: <20230223130431.553657459@linuxfoundation.org>
@@ -38,93 +38,54 @@ Content-Transfer-Encoding: 8bit
 
 From: Paolo Bonzini <pbonzini@redhat.com>
 
-[ Upstream commit a79b53aaaab53de017517bf9579b6106397a523c ]
+[ Upstream commit 50aa870ba2f7735f556e52d15f61cd0f359c4c0b ]
 
-While KVM_XEN_EVTCHN_RESET is usually called with no vCPUs running,
-if that happened it could cause a deadlock.  This is due to
-kvm_xen_eventfd_reset() doing a synchronize_srcu() inside
-a kvm->lock critical section.
+Placing a declaration of evt_reset is pedantically invalid
+according to the C standard.  While GCC does not really care
+and only warns with -Wpedantic, clang ignores the declaration
+altogether with an error:
 
-To avoid this, first collect all the evtchnfd objects in an
-array and free all of them once the kvm->lock critical section
-is over and th SRCU grace period has expired.
+x86_64/xen_shinfo_test.c:965:2: error: expected expression
+        struct kvm_xen_hvm_attr evt_reset = {
+        ^
+x86_64/xen_shinfo_test.c:969:38: error: use of undeclared identifier evt_reset
+        vm_ioctl(vm, KVM_XEN_HVM_SET_ATTR, &evt_reset);
+                                            ^
 
-Reported-by: Michal Luczaj <mhal@rbox.co>
-Cc: David Woodhouse <dwmw@amazon.co.uk>
+Reported-by: Yu Zhang <yu.c.zhang@linux.intel.com>
+Reported-by: Sean Christopherson <seanjc@google.com>
+Fixes: a79b53aaaab5 ("KVM: x86: fix deadlock for KVM_XEN_EVTCHN_RESET", 2022-12-28)
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kvm/xen.c                            | 30 +++++++++++++++++--
- .../selftests/kvm/x86_64/xen_shinfo_test.c    |  6 ++++
- 2 files changed, 33 insertions(+), 3 deletions(-)
+ tools/testing/selftests/kvm/x86_64/xen_shinfo_test.c | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
 
-diff --git a/arch/x86/kvm/xen.c b/arch/x86/kvm/xen.c
-index f3098c0e386a8..a58a426e6b1c0 100644
---- a/arch/x86/kvm/xen.c
-+++ b/arch/x86/kvm/xen.c
-@@ -1757,18 +1757,42 @@ static int kvm_xen_eventfd_deassign(struct kvm *kvm, u32 port)
- 
- static int kvm_xen_eventfd_reset(struct kvm *kvm)
- {
--	struct evtchnfd *evtchnfd;
-+	struct evtchnfd *evtchnfd, **all_evtchnfds;
- 	int i;
-+	int n = 0;
- 
- 	mutex_lock(&kvm->lock);
-+
-+	/*
-+	 * Because synchronize_srcu() cannot be called inside the
-+	 * critical section, first collect all the evtchnfd objects
-+	 * in an array as they are removed from evtchn_ports.
-+	 */
-+	idr_for_each_entry(&kvm->arch.xen.evtchn_ports, evtchnfd, i)
-+		n++;
-+
-+	all_evtchnfds = kmalloc_array(n, sizeof(struct evtchnfd *), GFP_KERNEL);
-+	if (!all_evtchnfds) {
-+		mutex_unlock(&kvm->lock);
-+		return -ENOMEM;
-+	}
-+
-+	n = 0;
- 	idr_for_each_entry(&kvm->arch.xen.evtchn_ports, evtchnfd, i) {
-+		all_evtchnfds[n++] = evtchnfd;
- 		idr_remove(&kvm->arch.xen.evtchn_ports, evtchnfd->send_port);
--		synchronize_srcu(&kvm->srcu);
-+	}
-+	mutex_unlock(&kvm->lock);
-+
-+	synchronize_srcu(&kvm->srcu);
-+
-+	while (n--) {
-+		evtchnfd = all_evtchnfds[n];
- 		if (!evtchnfd->deliver.port.port)
- 			eventfd_ctx_put(evtchnfd->deliver.eventfd.ctx);
- 		kfree(evtchnfd);
- 	}
--	mutex_unlock(&kvm->lock);
-+	kfree(all_evtchnfds);
- 
- 	return 0;
- }
 diff --git a/tools/testing/selftests/kvm/x86_64/xen_shinfo_test.c b/tools/testing/selftests/kvm/x86_64/xen_shinfo_test.c
-index 2a5727188c8d3..8383457e66990 100644
+index 8383457e66990..0668ec542cccd 100644
 --- a/tools/testing/selftests/kvm/x86_64/xen_shinfo_test.c
 +++ b/tools/testing/selftests/kvm/x86_64/xen_shinfo_test.c
-@@ -942,6 +942,12 @@ int main(int argc, char *argv[])
+@@ -428,6 +428,7 @@ static void *juggle_shinfo_state(void *arg)
+ int main(int argc, char *argv[])
+ {
+ 	struct timespec min_ts, max_ts, vm_ts;
++	struct kvm_xen_hvm_attr evt_reset;
+ 	struct kvm_vm *vm;
+ 	pthread_t thread;
+ 	bool verbose;
+@@ -942,10 +943,8 @@ int main(int argc, char *argv[])
  	}
  
   done:
-+	struct kvm_xen_hvm_attr evt_reset = {
-+		.type = KVM_XEN_ATTR_TYPE_EVTCHN,
-+		.u.evtchn.flags = KVM_XEN_EVTCHN_RESET,
-+	};
-+	vm_ioctl(vm, KVM_XEN_HVM_SET_ATTR, &evt_reset);
-+
- 	alarm(0);
- 	clock_gettime(CLOCK_REALTIME, &max_ts);
+-	struct kvm_xen_hvm_attr evt_reset = {
+-		.type = KVM_XEN_ATTR_TYPE_EVTCHN,
+-		.u.evtchn.flags = KVM_XEN_EVTCHN_RESET,
+-	};
++	evt_reset.type = KVM_XEN_ATTR_TYPE_EVTCHN;
++	evt_reset.u.evtchn.flags = KVM_XEN_EVTCHN_RESET;
+ 	vm_ioctl(vm, KVM_XEN_HVM_SET_ATTR, &evt_reset);
  
+ 	alarm(0);
 -- 
 2.39.0
 
