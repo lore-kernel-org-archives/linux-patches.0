@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D5B92584
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:10:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8853C433EF;
-	Thu, 23 Feb 2023 13:10:38 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DADCC2584
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:10:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5F802C433D2;
+	Thu, 23 Feb 2023 13:10:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157839;
-	bh=47HkybMTWGbrHjBWDzB0ADfym3Hk7+pHNCBXA7tawxM=;
+	s=korg; t=1677157841;
+	bh=upiZyjBW7Zqpirs8njROxyMEciquxpbVo6QLpLFYd9U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=YDjkujNkbAFfMMwol0bbXDx3FGjazwPZ981tv52nNusqux18eJHxqlcP6sp1vaVdT
-	 fofHlfRDeKZGjEwRFQm77wf70PyzCRVKDXqdYG9ZpjDnxKhyyTAV23xyP55pdelNNY
-	 eYC83WgKxVUV5cyPVLrZ1zaZhCYz8kxcILUAuS68=
+	b=vTgw+dc+bxznQel+nGepcbH9Ffcs4d99jT+bZbuKro6Me52FFJJlGF8t5mSMiZEvc
+	 p1wLjC28seFZfvmmBGM4SULXDsInk+NZbxhEOn4khwZK/3i+JblT4S/951h/CzHK8+
+	 BiUdyCgHgZ/S0XsER8cPIaK93HGRh6iGyTos/+bQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marek Szyprowski <m.szyprowski@samsung.com>,
-	Robin Murphy <robin.murphy@arm.com>,
 	Lucas Stach <l.stach@pengutronix.de>,
+	Philipp Zabel <p.zabel@pengutronix.de>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 03/18] drm: etnaviv: fix common struct sg_table related issues
-Date: Thu, 23 Feb 2023 14:06:48 +0100
-Message-Id: <20230223130425.829224326@linuxfoundation.org>
+Subject: [PATCH 5.4 04/18] drm/etnaviv: dont truncate physical page address
+Date: Thu, 23 Feb 2023 14:06:49 +0100
+Message-Id: <20230223130425.859805488@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130425.680784802@linuxfoundation.org>
 References: <20230223130425.680784802@linuxfoundation.org>
@@ -36,132 +35,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Marek Szyprowski <m.szyprowski@samsung.com>
+From: Lucas Stach <l.stach@pengutronix.de>
 
-[ Upstream commit 182354a526a0540c9197e03d9fce8a949ffd36ca ]
+[ Upstream commit d37c120b73128690434cc093952439eef9d56af1 ]
 
-The Documentation/DMA-API-HOWTO.txt states that the dma_map_sg() function
-returns the number of the created entries in the DMA address space.
-However the subsequent calls to the dma_sync_sg_for_{device,cpu}() and
-dma_unmap_sg must be called with the original number of the entries
-passed to the dma_map_sg().
+While the interface for the MMU mapping takes phys_addr_t to hold a
+full 64bit address when necessary and MMUv2 is able to map physical
+addresses with up to 40bit, etnaviv_iommu_map() truncates the address
+to 32bits. Fix this by using the correct type.
 
-struct sg_table is a common structure used for describing a non-contiguous
-memory buffer, used commonly in the DRM and graphics subsystems. It
-consists of a scatterlist with memory pages and DMA addresses (sgl entry),
-as well as the number of scatterlist entries: CPU pages (orig_nents entry)
-and DMA mapped pages (nents entry).
-
-It turned out that it was a common mistake to misuse nents and orig_nents
-entries, calling DMA-mapping functions with a wrong number of entries or
-ignoring the number of mapped entries returned by the dma_map_sg()
-function.
-
-To avoid such issues, lets use a common dma-mapping wrappers operating
-directly on the struct sg_table objects and use scatterlist page
-iterators where possible. This, almost always, hides references to the
-nents and orig_nents entries, making the code robust, easier to follow
-and copy/paste safe.
-
-Signed-off-by: Marek Szyprowski <m.szyprowski@samsung.com>
-Reviewed-by: Robin Murphy <robin.murphy@arm.com>
-Acked-by: Lucas Stach <l.stach@pengutronix.de>
-Stable-dep-of: d37c120b7312 ("drm/etnaviv: don't truncate physical page address")
+Fixes: 931e97f3afd8 ("drm/etnaviv: mmuv2: support 40 bit phys address")
+Signed-off-by: Lucas Stach <l.stach@pengutronix.de>
+Reviewed-by: Philipp Zabel <p.zabel@pengutronix.de>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/etnaviv/etnaviv_gem.c | 12 +++++-------
- drivers/gpu/drm/etnaviv/etnaviv_mmu.c | 15 ++++-----------
- 2 files changed, 9 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/etnaviv/etnaviv_mmu.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gem.c b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-index 519948637186e..5107a0f5bc7fe 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-@@ -27,7 +27,7 @@ static void etnaviv_gem_scatter_map(struct etnaviv_gem_object *etnaviv_obj)
- 	 * because display controller, GPU, etc. are not coherent.
- 	 */
- 	if (etnaviv_obj->flags & ETNA_BO_CACHE_MASK)
--		dma_map_sg(dev->dev, sgt->sgl, sgt->nents, DMA_BIDIRECTIONAL);
-+		dma_map_sgtable(dev->dev, sgt, DMA_BIDIRECTIONAL, 0);
- }
- 
- static void etnaviv_gem_scatterlist_unmap(struct etnaviv_gem_object *etnaviv_obj)
-@@ -51,7 +51,7 @@ static void etnaviv_gem_scatterlist_unmap(struct etnaviv_gem_object *etnaviv_obj
- 	 * discard those writes.
- 	 */
- 	if (etnaviv_obj->flags & ETNA_BO_CACHE_MASK)
--		dma_unmap_sg(dev->dev, sgt->sgl, sgt->nents, DMA_BIDIRECTIONAL);
-+		dma_unmap_sgtable(dev->dev, sgt, DMA_BIDIRECTIONAL, 0);
- }
- 
- /* called with etnaviv_obj->lock held */
-@@ -403,9 +403,8 @@ int etnaviv_gem_cpu_prep(struct drm_gem_object *obj, u32 op,
- 	}
- 
- 	if (etnaviv_obj->flags & ETNA_BO_CACHED) {
--		dma_sync_sg_for_cpu(dev->dev, etnaviv_obj->sgt->sgl,
--				    etnaviv_obj->sgt->nents,
--				    etnaviv_op_to_dma_dir(op));
-+		dma_sync_sgtable_for_cpu(dev->dev, etnaviv_obj->sgt,
-+					 etnaviv_op_to_dma_dir(op));
- 		etnaviv_obj->last_cpu_prep_op = op;
- 	}
- 
-@@ -420,8 +419,7 @@ int etnaviv_gem_cpu_fini(struct drm_gem_object *obj)
- 	if (etnaviv_obj->flags & ETNA_BO_CACHED) {
- 		/* fini without a prep is almost certainly a userspace error */
- 		WARN_ON(etnaviv_obj->last_cpu_prep_op == 0);
--		dma_sync_sg_for_device(dev->dev, etnaviv_obj->sgt->sgl,
--			etnaviv_obj->sgt->nents,
-+		dma_sync_sgtable_for_device(dev->dev, etnaviv_obj->sgt,
- 			etnaviv_op_to_dma_dir(etnaviv_obj->last_cpu_prep_op));
- 		etnaviv_obj->last_cpu_prep_op = 0;
- 	}
 diff --git a/drivers/gpu/drm/etnaviv/etnaviv_mmu.c b/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
-index 790cbb20aaeba..9ba2fe48228f1 100644
+index 9ba2fe48228f1..44fbc0a123bf3 100644
 --- a/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
 +++ b/drivers/gpu/drm/etnaviv/etnaviv_mmu.c
-@@ -73,13 +73,13 @@ static int etnaviv_iommu_map(struct etnaviv_iommu_context *context, u32 iova,
- 			     struct sg_table *sgt, unsigned len, int prot)
- {	struct scatterlist *sg;
- 	unsigned int da = iova;
--	unsigned int i, j;
-+	unsigned int i;
- 	int ret;
- 
- 	if (!context || !sgt)
+@@ -80,10 +80,10 @@ static int etnaviv_iommu_map(struct etnaviv_iommu_context *context, u32 iova,
  		return -EINVAL;
  
--	for_each_sg(sgt->sgl, sg, sgt->nents, i) {
-+	for_each_sgtable_dma_sg(sgt, sg, i) {
- 		u32 pa = sg_dma_address(sg) - sg->offset;
+ 	for_each_sgtable_dma_sg(sgt, sg, i) {
+-		u32 pa = sg_dma_address(sg) - sg->offset;
++		phys_addr_t pa = sg_dma_address(sg) - sg->offset;
  		size_t bytes = sg_dma_len(sg) + sg->offset;
  
-@@ -95,14 +95,7 @@ static int etnaviv_iommu_map(struct etnaviv_iommu_context *context, u32 iova,
- 	return 0;
+-		VERB("map[%d]: %08x %08x(%zx)", i, iova, pa, bytes);
++		VERB("map[%d]: %08x %pap(%zx)", i, iova, &pa, bytes);
  
- fail:
--	da = iova;
--
--	for_each_sg(sgt->sgl, sg, i, j) {
--		size_t bytes = sg_dma_len(sg) + sg->offset;
--
--		etnaviv_context_unmap(context, da, bytes);
--		da += bytes;
--	}
-+	etnaviv_context_unmap(context, iova, da - iova);
- 	return ret;
- }
- 
-@@ -113,7 +106,7 @@ static void etnaviv_iommu_unmap(struct etnaviv_iommu_context *context, u32 iova,
- 	unsigned int da = iova;
- 	int i;
- 
--	for_each_sg(sgt->sgl, sg, sgt->nents, i) {
-+	for_each_sgtable_dma_sg(sgt, sg, i) {
- 		size_t bytes = sg_dma_len(sg) + sg->offset;
- 
- 		etnaviv_context_unmap(context, da, bytes);
+ 		ret = etnaviv_context_map(context, da, pa, bytes, prot);
+ 		if (ret)
 -- 
 2.39.0
 
