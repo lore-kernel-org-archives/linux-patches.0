@@ -1,115 +1,176 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 617B0257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:04:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90AEAC433A0;
-	Thu, 23 Feb 2023 13:04:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A3280257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:04:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2A25DC433D2;
+	Thu, 23 Feb 2023 13:04:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157490;
-	bh=B7K2Hp17wxTx3rvm6GO2NIiUGJOTXFTwJZ4BbXeLqCs=;
-	h=From:To:Cc:Subject:Date:From;
-	b=LxSASbfyio+gz2pTGJZzeEkRyYZ1o9qsowqRws44J8c8QaPdF0r4Qb3ucujdJF9Ir
-	 yPJDzNXeGY4lEu/souiNcSvuat0l84Se1W5iH48J6fr42RzbOxkrTTmsVdO/gaV+Ec
-	 GDtEqK4Z1gi6Bg7vpFUoqIouX+5eWKOYA9WbgsdM=
+	s=korg; t=1677157495;
+	bh=ZTNR3Nqnliz9zdldPXZB0i6YJ60PUDDZB+8sDbj8nSQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=GPbTEuIYxJss1xOgeyCthIA8v/Ckxz5PYtJ9t6ftXfSZ70FC6OqBbziktNaY220ID
+	 qDySMf60Hraz8++I7M1c780rGQpa2fSJLy3e+xKhP8D4omZk7YAuL3F1jdw8RSL1wR
+	 HcpGYp1aM3kPD+HVcZhI3rmcwsMRopEsH/bKdaTs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 4.14 0/7] 4.14.307-rc1 review
-Date: Thu, 23 Feb 2023 14:04:37 +0100
-Message-Id: <20230223130423.369876969@linuxfoundation.org>
+	Sean Anderson <sean.anderson@seco.com>,
+	"David S. Miller" <davem@davemloft.net>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.14 2/7] powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
+Date: Thu, 23 Feb 2023 14:04:39 +0100
+Message-Id: <20230223130423.479963562@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230223130423.369876969@linuxfoundation.org>
+References: <20230223130423.369876969@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.307-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-4.14.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 4.14.307-rc1
-X-KernelTest-Deadline: 2023-02-25T13:04+00:00
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 4.14.307 release.
-There are 7 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Sean Anderson <sean.anderson@seco.com>
 
-Responses should be made by Sat, 25 Feb 2023 13:04:16 +0000.
-Anything received after that time might be too late.
+[ Upstream commit 36926a7d70c2d462fca1ed85bfee000d17fd8662 ]
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.14.307-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.14.y
-and the diffstat can be found below.
+On the T208X SoCs, MAC1 and MAC2 support XGMII. Add some new MAC dtsi
+fragments, and mark the QMAN ports as 10G.
 
-thanks,
+Fixes: da414bb923d9 ("powerpc/mpc85xx: Add FSL QorIQ DPAA FMan support to the SoC device tree(s)")
+Signed-off-by: Sean Anderson <sean.anderson@seco.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ .../boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi     | 44 +++++++++++++++++++
+ .../boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi     | 44 +++++++++++++++++++
+ arch/powerpc/boot/dts/fsl/t2081si-post.dtsi   |  4 +-
+ 3 files changed, 90 insertions(+), 2 deletions(-)
+ create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
+ create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
 
-greg k-h
+diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
+new file mode 100644
+index 0000000000000..437dab3fc0176
+--- /dev/null
++++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
+@@ -0,0 +1,44 @@
++// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
++/*
++ * QorIQ FMan v3 10g port #2 device tree stub [ controller @ offset 0x400000 ]
++ *
++ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
++ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
++ */
++
++fman@400000 {
++	fman0_rx_0x08: port@88000 {
++		cell-index = <0x8>;
++		compatible = "fsl,fman-v3-port-rx";
++		reg = <0x88000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	fman0_tx_0x28: port@a8000 {
++		cell-index = <0x28>;
++		compatible = "fsl,fman-v3-port-tx";
++		reg = <0xa8000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	ethernet@e0000 {
++		cell-index = <0>;
++		compatible = "fsl,fman-memac";
++		reg = <0xe0000 0x1000>;
++		fsl,fman-ports = <&fman0_rx_0x08 &fman0_tx_0x28>;
++		ptp-timer = <&ptp_timer0>;
++		pcsphy-handle = <&pcsphy0>;
++	};
++
++	mdio@e1000 {
++		#address-cells = <1>;
++		#size-cells = <0>;
++		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
++		reg = <0xe1000 0x1000>;
++		fsl,erratum-a011043; /* must ignore read errors */
++
++		pcsphy0: ethernet-phy@0 {
++			reg = <0x0>;
++		};
++	};
++};
+diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
+new file mode 100644
+index 0000000000000..ad116b17850a8
+--- /dev/null
++++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
+@@ -0,0 +1,44 @@
++// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
++/*
++ * QorIQ FMan v3 10g port #3 device tree stub [ controller @ offset 0x400000 ]
++ *
++ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
++ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
++ */
++
++fman@400000 {
++	fman0_rx_0x09: port@89000 {
++		cell-index = <0x9>;
++		compatible = "fsl,fman-v3-port-rx";
++		reg = <0x89000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	fman0_tx_0x29: port@a9000 {
++		cell-index = <0x29>;
++		compatible = "fsl,fman-v3-port-tx";
++		reg = <0xa9000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	ethernet@e2000 {
++		cell-index = <1>;
++		compatible = "fsl,fman-memac";
++		reg = <0xe2000 0x1000>;
++		fsl,fman-ports = <&fman0_rx_0x09 &fman0_tx_0x29>;
++		ptp-timer = <&ptp_timer0>;
++		pcsphy-handle = <&pcsphy1>;
++	};
++
++	mdio@e3000 {
++		#address-cells = <1>;
++		#size-cells = <0>;
++		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
++		reg = <0xe3000 0x1000>;
++		fsl,erratum-a011043; /* must ignore read errors */
++
++		pcsphy1: ethernet-phy@0 {
++			reg = <0x0>;
++		};
++	};
++};
+diff --git a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
+index a97296c64eb22..a3cee1acd7abd 100644
+--- a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
++++ b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
+@@ -631,8 +631,8 @@
+ /include/ "qoriq-bman1.dtsi"
+ 
+ /include/ "qoriq-fman3-0.dtsi"
+-/include/ "qoriq-fman3-0-1g-0.dtsi"
+-/include/ "qoriq-fman3-0-1g-1.dtsi"
++/include/ "qoriq-fman3-0-10g-2.dtsi"
++/include/ "qoriq-fman3-0-10g-3.dtsi"
+ /include/ "qoriq-fman3-0-1g-2.dtsi"
+ /include/ "qoriq-fman3-0-1g-3.dtsi"
+ /include/ "qoriq-fman3-0-1g-4.dtsi"
+-- 
+2.39.0
 
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 4.14.307-rc1
-
-Lukas Wunner <lukas@wunner.de>
-    wifi: mwifiex: Add missing compatible string for SD8787
-
-Dave Hansen <dave.hansen@linux.intel.com>
-    uaccess: Add speculation barrier to copy_from_user()
-
-Thomas Gleixner <tglx@linutronix.de>
-    alarmtimer: Prevent starvation by small intervals and SIG_IGN
-
-Sean Anderson <sean.anderson@seco.com>
-    powerpc: dts: t208x: Disable 10G on MAC1 and MAC2
-
-Jason A. Donenfeld <Jason@zx2c4.com>
-    random: always mix cycle counter in add_latent_entropy()
-
-Sean Anderson <sean.anderson@seco.com>
-    powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
-
-Bitterblue Smith <rtl8821cerfe2@gmail.com>
-    wifi: rtl8xxxu: gen2: Turn on the rate control
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |  4 +-
- arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi | 44 ++++++++++++++++++++++
- arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi | 44 ++++++++++++++++++++++
- arch/powerpc/boot/dts/fsl/t2081si-post.dtsi        | 20 +++++++++-
- drivers/net/wireless/marvell/mwifiex/sdio.c        |  1 +
- .../net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c  |  8 +---
- include/linux/nospec.h                             |  4 ++
- include/linux/random.h                             |  6 +--
- kernel/time/alarmtimer.c                           | 33 ++++++++++++++--
- lib/usercopy.c                                     |  7 ++++
- 10 files changed, 154 insertions(+), 17 deletions(-)
 
 
