@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68654257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:09:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BFAE7C4339C;
-	Thu, 23 Feb 2023 13:09:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B0B257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:09:31 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603DEC433EF;
+	Thu, 23 Feb 2023 13:09:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157769;
-	bh=dRZCnNtvwKEt8C+vjNI/er/QcjBov6VYOw+7CSl5K0s=;
+	s=korg; t=1677157771;
+	bh=SgOU6MwnHlIwgb3EVM0qw+ULm97psIIxrVtG0WEWJZw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BU2Owwgc8hVmcv71JKXAjKU/JX3UEbX+hGFNtizTTzUmq6tiiuva8iuU3QngOQK00
-	 15/brELhvCdeXO7gX22NHa+N8iKrWHgU/ZKoxHkObRtYTwAw3LquAn6eXyzahRn3sa
-	 6vhD0FC2jkyG5B01LyTm7e82XD3swUf01S0hX7pE=
+	b=vUrbUPJedyep/zSON1do8nkbd7XDy0pSmxYDyenOgWV8vKjSmJa+hUeKeuf5mj2TW
+	 C/GRVWOmz4EyRRFfYC0HsnqgO4iwNPa5SlRYbRSO4WswIjfFbVIdRDZK5DL1vTGTgx
+	 mCiyKGll4mtNVrC1gfJOEWBATFzPHDp8cc54jI5U=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	"Erhard F." <erhard_f@mailbox.org>,
 	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
 	Ingo Molnar <mingo@kernel.org>,
 	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
 	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.1 31/46] x86/alternatives: Teach text_poke_bp() to patch Jcc.d32 instructions
-Date: Thu, 23 Feb 2023 14:06:38 +0100
-Message-Id: <20230223130433.029351046@linuxfoundation.org>
+Subject: [PATCH 6.1 32/46] x86/static_call: Add support for Jcc tail-calls
+Date: Thu, 23 Feb 2023 14:06:39 +0100
+Message-Id: <20230223130433.082606881@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130431.553657459@linuxfoundation.org>
 References: <20230223130431.553657459@linuxfoundation.org>
@@ -38,183 +39,133 @@ Content-Transfer-Encoding: 8bit
 
 From: Peter Zijlstra <peterz@infradead.org>
 
-commit ac0ee0a9560c97fa5fe1409e450c2425d4ebd17a upstream.
+commit 923510c88d2b7d947c4217835fd9ca6bd65cc56c upstream.
 
-In order to re-write Jcc.d32 instructions text_poke_bp() needs to be
-taught about them.
+Clang likes to create conditional tail calls like:
 
-The biggest hurdle is that the whole machinery is currently made for 5
-byte instructions and extending this would grow struct text_poke_loc
-which is currently a nice 16 bytes and used in an array.
+  0000000000000350 <amd_pmu_add_event>:
+  350:       0f 1f 44 00 00          nopl   0x0(%rax,%rax,1) 351: R_X86_64_NONE      __fentry__-0x4
+  355:       48 83 bf 20 01 00 00 00         cmpq   $0x0,0x120(%rdi)
+  35d:       0f 85 00 00 00 00       jne    363 <amd_pmu_add_event+0x13>     35f: R_X86_64_PLT32     __SCT__amd_pmu_branch_add-0x4
+  363:       e9 00 00 00 00          jmp    368 <amd_pmu_add_event+0x18>     364: R_X86_64_PLT32     __x86_return_thunk-0x4
 
-However, since text_poke_loc contains a full copy of the (s32)
-displacement, it is possible to map the Jcc.d32 2 byte opcodes to
-Jcc.d8 1 byte opcode for the int3 emulation.
+Where 0x35d is a static call site that's turned into a conditional
+tail-call using the Jcc class of instructions.
 
-This then leaves the replacement bytes; fudge that by only storing the
-last 5 bytes and adding the rule that 'length == 6' instruction will
-be prefixed with a 0x0f byte.
+Teach the in-line static call text patching about this.
 
+Notably, since there is no conditional-ret, in that case patch the Jcc
+to point at an empty stub function that does the ret -- or the return
+thunk when needed.
+
+Reported-by: "Erhard F." <erhard_f@mailbox.org>
 Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
 Signed-off-by: Ingo Molnar <mingo@kernel.org>
 Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://lore.kernel.org/r/20230123210607.115718513@infradead.org
-[nathan: Introduce is_jcc32() as part of this change; upstream
-         introduced it in 3b6c1747da48]
+Link: https://lore.kernel.org/r/Y9Kdg9QjHkr9G5b5@hirez.programming.kicks-ass.net
+[nathan: Backport to 6.1:
+         - Use __x86_return_thunk instead of x86_return_thunk for func in
+           __static_call_transform()
+         - Remove ASM_FUNC_ALIGN in __static_call_return() asm, as call
+           depth tracking was merged in 6.2]
 Signed-off-by: Nathan Chancellor <nathan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/x86/kernel/alternative.c |   59 ++++++++++++++++++++++++++++++++++--------
- 1 file changed, 48 insertions(+), 11 deletions(-)
+ arch/x86/kernel/static_call.c |   49 +++++++++++++++++++++++++++++++++++++++---
+ 1 file changed, 46 insertions(+), 3 deletions(-)
 
---- a/arch/x86/kernel/alternative.c
-+++ b/arch/x86/kernel/alternative.c
-@@ -339,6 +339,12 @@ next:
- 	}
- }
- 
-+static inline bool is_jcc32(struct insn *insn)
-+{
-+	/* Jcc.d32 second opcode byte is in the range: 0x80-0x8f */
-+	return insn->opcode.bytes[0] == 0x0f && (insn->opcode.bytes[1] & 0xf0) == 0x80;
-+}
-+
- #if defined(CONFIG_RETPOLINE) && defined(CONFIG_OBJTOOL)
+--- a/arch/x86/kernel/static_call.c
++++ b/arch/x86/kernel/static_call.c
+@@ -9,6 +9,7 @@ enum insn_type {
+ 	NOP = 1,  /* site cond-call */
+ 	JMP = 2,  /* tramp / site tail-call */
+ 	RET = 3,  /* tramp / site cond-tail-call */
++	JCC = 4,
+ };
  
  /*
-@@ -427,8 +433,7 @@ static int patch_retpoline(void *addr, s
- 	 *   [ NOP ]
- 	 * 1:
- 	 */
--	/* Jcc.d32 second opcode byte is in the range: 0x80-0x8f */
--	if (op == 0x0f && (insn->opcode.bytes[1] & 0xf0) == 0x80) {
-+	if (is_jcc32(insn)) {
- 		cc = insn->opcode.bytes[1] & 0xf;
- 		cc ^= 1; /* invert condition */
+@@ -25,12 +26,39 @@ static const u8 xor5rax[] = { 0x2e, 0x2e
  
-@@ -1311,6 +1316,11 @@ void text_poke_sync(void)
- 	on_each_cpu(do_sync_core, NULL, 1);
- }
+ static const u8 retinsn[] = { RET_INSN_OPCODE, 0xcc, 0xcc, 0xcc, 0xcc };
  
-+/*
-+ * NOTE: crazy scheme to allow patching Jcc.d32 but not increase the size of
-+ * this thing. When len == 6 everything is prefixed with 0x0f and we map
-+ * opcode to Jcc.d8, using len to distinguish.
-+ */
- struct text_poke_loc {
- 	/* addr := _stext + rel_addr */
- 	s32 rel_addr;
-@@ -1432,6 +1442,10 @@ noinstr int poke_int3_handler(struct pt_
- 		int3_emulate_jmp(regs, (long)ip + tp->disp);
- 		break;
- 
-+	case 0x70 ... 0x7f: /* Jcc */
-+		int3_emulate_jcc(regs, tp->opcode & 0xf, (long)ip, tp->disp);
-+		break;
++static u8 __is_Jcc(u8 *insn) /* Jcc.d32 */
++{
++	u8 ret = 0;
 +
- 	default:
- 		BUG();
- 	}
-@@ -1505,16 +1519,26 @@ static void text_poke_bp_batch(struct te
- 	 * Second step: update all but the first byte of the patched range.
- 	 */
- 	for (do_sync = 0, i = 0; i < nr_entries; i++) {
--		u8 old[POKE_MAX_OPCODE_SIZE] = { tp[i].old, };
-+		u8 old[POKE_MAX_OPCODE_SIZE+1] = { tp[i].old, };
-+		u8 _new[POKE_MAX_OPCODE_SIZE+1];
-+		const u8 *new = tp[i].text;
- 		int len = tp[i].len;
- 
- 		if (len - INT3_INSN_SIZE > 0) {
- 			memcpy(old + INT3_INSN_SIZE,
- 			       text_poke_addr(&tp[i]) + INT3_INSN_SIZE,
- 			       len - INT3_INSN_SIZE);
-+
-+			if (len == 6) {
-+				_new[0] = 0x0f;
-+				memcpy(_new + 1, new, 5);
-+				new = _new;
-+			}
-+
- 			text_poke(text_poke_addr(&tp[i]) + INT3_INSN_SIZE,
--				  (const char *)tp[i].text + INT3_INSN_SIZE,
-+				  new + INT3_INSN_SIZE,
- 				  len - INT3_INSN_SIZE);
-+
- 			do_sync++;
- 		}
- 
-@@ -1542,8 +1566,7 @@ static void text_poke_bp_batch(struct te
- 		 * The old instruction is recorded so that the event can be
- 		 * processed forwards or backwards.
- 		 */
--		perf_event_text_poke(text_poke_addr(&tp[i]), old, len,
--				     tp[i].text, len);
-+		perf_event_text_poke(text_poke_addr(&tp[i]), old, len, new, len);
- 	}
- 
- 	if (do_sync) {
-@@ -1560,10 +1583,15 @@ static void text_poke_bp_batch(struct te
- 	 * replacing opcode.
- 	 */
- 	for (do_sync = 0, i = 0; i < nr_entries; i++) {
--		if (tp[i].text[0] == INT3_INSN_OPCODE)
-+		u8 byte = tp[i].text[0];
-+
-+		if (tp[i].len == 6)
-+			byte = 0x0f;
-+
-+		if (byte == INT3_INSN_OPCODE)
- 			continue;
- 
--		text_poke(text_poke_addr(&tp[i]), tp[i].text, INT3_INSN_SIZE);
-+		text_poke(text_poke_addr(&tp[i]), &byte, INT3_INSN_SIZE);
- 		do_sync++;
- 	}
- 
-@@ -1581,9 +1609,11 @@ static void text_poke_loc_init(struct te
- 			       const void *opcode, size_t len, const void *emulate)
- {
- 	struct insn insn;
--	int ret, i;
-+	int ret, i = 0;
- 
--	memcpy((void *)tp->text, opcode, len);
-+	if (len == 6)
-+		i = 1;
-+	memcpy((void *)tp->text, opcode+i, len-i);
- 	if (!emulate)
- 		emulate = opcode;
- 
-@@ -1594,6 +1624,13 @@ static void text_poke_loc_init(struct te
- 	tp->len = len;
- 	tp->opcode = insn.opcode.bytes[0];
- 
-+	if (is_jcc32(&insn)) {
-+		/*
-+		 * Map Jcc.d32 onto Jcc.d8 and use len to distinguish.
-+		 */
-+		tp->opcode = insn.opcode.bytes[1] - 0x10;
++	if (insn[0] == 0x0f) {
++		u8 tmp = insn[1];
++		if ((tmp & 0xf0) == 0x80)
++			ret = tmp;
 +	}
 +
- 	switch (tp->opcode) {
- 	case RET_INSN_OPCODE:
- 	case JMP32_INSN_OPCODE:
-@@ -1610,7 +1647,6 @@ static void text_poke_loc_init(struct te
- 		BUG_ON(len != insn.length);
- 	};
++	return ret;
++}
++
++extern void __static_call_return(void);
++
++asm (".global __static_call_return\n\t"
++     ".type __static_call_return, @function\n\t"
++     "__static_call_return:\n\t"
++     ANNOTATE_NOENDBR
++     ANNOTATE_RETPOLINE_SAFE
++     "ret; int3\n\t"
++     ".size __static_call_return, . - __static_call_return \n\t");
++
+ static void __ref __static_call_transform(void *insn, enum insn_type type,
+ 					  void *func, bool modinit)
+ {
+ 	const void *emulate = NULL;
+ 	int size = CALL_INSN_SIZE;
+ 	const void *code;
++	u8 op, buf[6];
++
++	if ((type == JMP || type == RET) && (op = __is_Jcc(insn)))
++		type = JCC;
  
--
- 	switch (tp->opcode) {
- 	case INT3_INSN_OPCODE:
- 	case RET_INSN_OPCODE:
-@@ -1619,6 +1655,7 @@ static void text_poke_loc_init(struct te
- 	case CALL_INSN_OPCODE:
- 	case JMP32_INSN_OPCODE:
- 	case JMP8_INSN_OPCODE:
-+	case 0x70 ... 0x7f: /* Jcc */
- 		tp->disp = insn.immediate.value;
+ 	switch (type) {
+ 	case CALL:
+@@ -56,6 +84,20 @@ static void __ref __static_call_transfor
+ 		else
+ 			code = &retinsn;
  		break;
++
++	case JCC:
++		if (!func) {
++			func = __static_call_return;
++			if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
++				func = __x86_return_thunk;
++		}
++
++		buf[0] = 0x0f;
++		__text_gen_insn(buf+1, op, insn+1, func, 5);
++		code = buf;
++		size = 6;
++
++		break;
+ 	}
  
+ 	if (memcmp(insn, code, size) == 0)
+@@ -67,9 +109,9 @@ static void __ref __static_call_transfor
+ 	text_poke_bp(insn, code, size, emulate);
+ }
+ 
+-static void __static_call_validate(void *insn, bool tail, bool tramp)
++static void __static_call_validate(u8 *insn, bool tail, bool tramp)
+ {
+-	u8 opcode = *(u8 *)insn;
++	u8 opcode = insn[0];
+ 
+ 	if (tramp && memcmp(insn+5, tramp_ud, 3)) {
+ 		pr_err("trampoline signature fail");
+@@ -78,7 +120,8 @@ static void __static_call_validate(void
+ 
+ 	if (tail) {
+ 		if (opcode == JMP32_INSN_OPCODE ||
+-		    opcode == RET_INSN_OPCODE)
++		    opcode == RET_INSN_OPCODE ||
++		    __is_Jcc(insn))
+ 			return;
+ 	} else {
+ 		if (opcode == CALL_INSN_OPCODE ||
 
 
