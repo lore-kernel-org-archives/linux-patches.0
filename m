@@ -1,17 +1,17 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 49DD3258F
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:12:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9D6FAC4339B;
-	Thu, 23 Feb 2023 13:12:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E35ED258F
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:12:12 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 67E42C433D2;
+	Thu, 23 Feb 2023 13:12:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157930;
-	bh=FqFJWUAzxIajb3kN1r86rt4j4/zmmP/0XqtS3nOLSfA=;
+	s=korg; t=1677157932;
+	bh=c9jDw8CVB+jrwKJzBQNMG5sLSYowvlAiVEjGt6z+yiI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=0Wyq+OjVvzF6b3fdRRZFc9nJURaoN6CnixP3tHWVI5WGmWUlibtcK14a9lmqdsmZR
-	 mL8EN1EtHkzdsvgsw7vlCCcDTqMo9epB6l1G4VJsip9AmLrl8oCyZOKJjGjCR4u3k9
-	 7HPVcAILYiGgfKsGjHQlAgmS8jrxeZm0KxPckfDE=
+	b=Lu5fCe4kjr2yJGyMffv7D6Xtb1To6qoPXX6e5Jl9I3tG+uhgHObEXjSdHumYzw7Pk
+	 oUgoTGZvwEGX4AX5TGlQvOPy6W3v9909JC7mA7xqm/jh+iqE3sH3OGo3hkHqtPitew
+	 WfpEg08hxLC/dA1sS4JCqeYqRSzIsy0MJa9XH5Ac=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -20,9 +20,9 @@ Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	Rahul Tanwar <rtanwar@maxlinear.com>,
 	Stephen Boyd <sboyd@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 06/36] clk: mxl: Add option to override gate clks
-Date: Thu, 23 Feb 2023 14:06:42 +0100
-Message-Id: <20230223130429.373321252@linuxfoundation.org>
+Subject: [PATCH 5.15 07/36] clk: mxl: Fix a clk entry by adding relevant flags
+Date: Thu, 23 Feb 2023 14:06:43 +0100
+Message-Id: <20230223130429.412986124@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130429.072633724@linuxfoundation.org>
 References: <20230223130429.072633724@linuxfoundation.org>
@@ -38,69 +38,71 @@ Content-Transfer-Encoding: 8bit
 
 From: Rahul Tanwar <rtanwar@maxlinear.com>
 
-[ Upstream commit a5d49bd369b8588c0ee9d4d0a2c0160558a3ab69 ]
+[ Upstream commit 106ef3bda21006fe37b62c85931230a6355d78d3 ]
 
-In MxL's LGM SoC, gate clocks can be controlled either from CGU clk driver
-i.e. this driver or directly from power management driver/daemon. It is
-dependent on the power policy/profile requirements of the end product.
+One of the clock entry "dcl" clk has some HW limitations. One is that
+its rate can only by changed by changing its parent clk's rate & two is
+that HW does not support enable/disable for this clk.
 
-To support such use cases, provide option to override gate clks enable/disable
-by adding a flag GATE_CLK_HW which controls if these gate clks are controlled
-by HW i.e. this driver or overridden in order to allow it to be controlled
-by power profiles instead.
+Handle above two limitations by adding relevant flags. Add standard flag
+CLK_SET_RATE_PARENT to handle rate change and add driver internal flag
+DIV_CLK_NO_MASK to handle enable/disable.
 
+Fixes: d058fd9e8984 ("clk: intel: Add CGU clock driver for a new SoC")
 Reviewed-by: Yi xin Zhu <yzhu@maxlinear.com>
 Signed-off-by: Rahul Tanwar <rtanwar@maxlinear.com>
-Link: https://lore.kernel.org/r/bdc9c89317b5d338a6c4f1d49386b696e947a672.1665642720.git.rtanwar@maxlinear.com
-[sboyd@kernel.org: Add braces on many line if-else]
+Link: https://lore.kernel.org/r/a4770e7225f8a0c03c8ab2ba80434a4e8e9afb17.1665642720.git.rtanwar@maxlinear.com
 Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: 106ef3bda210 ("clk: mxl: Fix a clk entry by adding relevant flags")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/x86/clk-cgu.c | 16 +++++++++++++++-
- drivers/clk/x86/clk-cgu.h |  1 +
- 2 files changed, 16 insertions(+), 1 deletion(-)
+ drivers/clk/x86/clk-cgu.c | 5 +++--
+ drivers/clk/x86/clk-cgu.h | 1 +
+ drivers/clk/x86/clk-lgm.c | 4 ++--
+ 3 files changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/drivers/clk/x86/clk-cgu.c b/drivers/clk/x86/clk-cgu.c
-index 1f7e93de67bc0..4278a687076c9 100644
+index 4278a687076c9..89b53f280aee0 100644
 --- a/drivers/clk/x86/clk-cgu.c
 +++ b/drivers/clk/x86/clk-cgu.c
-@@ -354,8 +354,22 @@ int lgm_clk_register_branches(struct lgm_clk_provider *ctx,
- 			hw = lgm_clk_register_fixed_factor(ctx, list);
- 			break;
- 		case CLK_TYPE_GATE:
--			hw = lgm_clk_register_gate(ctx, list);
-+			if (list->gate_flags & GATE_CLK_HW) {
-+				hw = lgm_clk_register_gate(ctx, list);
-+			} else {
-+				/*
-+				 * GATE_CLKs can be controlled either from
-+				 * CGU clk driver i.e. this driver or directly
-+				 * from power management driver/daemon. It is
-+				 * dependent on the power policy/profile requirements
-+				 * of the end product. To override control of gate
-+				 * clks from this driver, provide NULL for this index
-+				 * of gate clk provider.
-+				 */
-+				hw = NULL;
-+			}
- 			break;
-+
- 		default:
- 			dev_err(ctx->dev, "invalid clk type\n");
- 			return -EINVAL;
+@@ -164,8 +164,9 @@ static int lgm_clk_divider_enable_disable(struct clk_hw *hw, int enable)
+ {
+ 	struct lgm_clk_divider *div = to_lgm_clk_divider(hw);
+ 
+-	lgm_set_clk_val(div->membase, div->reg, div->shift_gate,
+-			div->width_gate, enable);
++	if (div->flags != DIV_CLK_NO_MASK)
++		lgm_set_clk_val(div->membase, div->reg, div->shift_gate,
++				div->width_gate, enable);
+ 	return 0;
+ }
+ 
 diff --git a/drivers/clk/x86/clk-cgu.h b/drivers/clk/x86/clk-cgu.h
-index 0aa0f35d63a0b..73ce84345f81e 100644
+index 73ce84345f81e..bcaf8aec94e5d 100644
 --- a/drivers/clk/x86/clk-cgu.h
 +++ b/drivers/clk/x86/clk-cgu.h
-@@ -197,6 +197,7 @@ struct lgm_clk_branch {
- /* clock flags definition */
+@@ -198,6 +198,7 @@ struct lgm_clk_branch {
  #define CLOCK_FLAG_VAL_INIT	BIT(16)
  #define MUX_CLK_SW		BIT(17)
-+#define GATE_CLK_HW		BIT(18)
+ #define GATE_CLK_HW		BIT(18)
++#define DIV_CLK_NO_MASK		BIT(19)
  
  #define LGM_MUX(_id, _name, _pdata, _f, _reg,		\
  		_shift, _width, _cf, _v)		\
+diff --git a/drivers/clk/x86/clk-lgm.c b/drivers/clk/x86/clk-lgm.c
+index e312af42e97ae..4de77b2c750d3 100644
+--- a/drivers/clk/x86/clk-lgm.c
++++ b/drivers/clk/x86/clk-lgm.c
+@@ -255,8 +255,8 @@ static const struct lgm_clk_branch lgm_branch_clks[] = {
+ 	LGM_FIXED(LGM_CLK_SLIC, "slic", NULL, 0, CGU_IF_CLK1,
+ 		  8, 2, CLOCK_FLAG_VAL_INIT, 8192000, 2),
+ 	LGM_FIXED(LGM_CLK_DOCSIS, "v_docsis", NULL, 0, 0, 0, 0, 0, 16000000, 0),
+-	LGM_DIV(LGM_CLK_DCL, "dcl", "v_ifclk", 0, CGU_PCMCR,
+-		25, 3, 0, 0, 0, 0, dcl_div),
++	LGM_DIV(LGM_CLK_DCL, "dcl", "v_ifclk", CLK_SET_RATE_PARENT, CGU_PCMCR,
++		25, 3, 0, 0, DIV_CLK_NO_MASK, 0, dcl_div),
+ 	LGM_MUX(LGM_CLK_PCM, "pcm", pcm_p, 0, CGU_C55_PCMCR,
+ 		0, 1, CLK_MUX_ROUND_CLOSEST, 0),
+ 	LGM_FIXED_FACTOR(LGM_CLK_DDR_PHY, "ddr_phy", "ddr",
 -- 
 2.39.0
 
