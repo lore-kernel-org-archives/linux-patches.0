@@ -1,103 +1,104 @@
-Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 934F328ED
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 14:38:55 +0000 (UTC)
-Received: by mail-vs1-f45.google.com with SMTP id f23so15445183vsa.13
-        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 06:38:55 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=KRU/Mil2/Cn0wlylXq7PWdU4aS/7MOdCPh+sd7lM4Ek=;
-        b=TlOYWovu1/4C3AH4v6gHtFk48F5kE+WGwULXVqbuZNwoavh9mn7xMAQoA5rd165aTb
-         FradEzbYegmFDHFW58C6UbWIPYD+0TgRN5OGuHtBEL/DFodZL3G7pcG2pSWDiy4kscLd
-         8v9ml5l+lCmW9K/bZE+Z9s5KxmVxSQ1oScLZTIOR93BytwVhOBpk9q+WnxPYTVSArdkB
-         SESzfiMRZXuepaj4hxogoHdQiauAPe8TsFKGM3Mxw6+wLzRQ1kOBR/QZTxDPNok0Cnaz
-         uv5AvTjLJ9qDdKsc4Lqafnw4FODpO7fowDs35KVCMNfGmMW5pEi6Djva9E3IhIG7r/0q
-         HTgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=KRU/Mil2/Cn0wlylXq7PWdU4aS/7MOdCPh+sd7lM4Ek=;
-        b=wjEP4jfKZcXjkbSCUnQZS5njwQrBh+taYAL1sm3NZiKOymFyRMfn5D1TJw3qgrjd+1
-         Q4RLEEKHK2WMtPoGlBK2yi/cgaaXFy1pfJjfCVykl923ZJdPnVLGT8np11kU1Dkn91nM
-         714PgkhIKAR2ptqRoDswLKOo5R0NegMlsNp0fB/XVpbbciIsdJ7i7rQ/kFPeUO2J481N
-         2bjk0DCVxOrHAvzioF/wIwpdFCBXH8CMpIJBU5E+Q4ovZ/BZ9SWGpgdWB8+UV9LzuaQ8
-         cZN7793hKCH7X13bLOLock9fYZsqj8j06r0lVIxWXC+8YGFbe5G/dRhOowZbMiG/cvK+
-         k4CA==
-X-Gm-Message-State: AO0yUKVf2DMk+ww4e6PTpugUsKCKiemEw/sE4bBhvZJyT0xpVKutaBD2
-	8ppL/rAjzV8ZfHFyPMVxFHcRmERKFsdcc/O46rJV6g==
-X-Google-Smtp-Source: AK7set92kDhiLsYT2rc8uVgLLx9awLk+m8hYTvq/N4btKS5iC8vlmSaqeDDCSSg5WGfEss/5zbmtqhFO9CIwNrCBeiw=
-X-Received: by 2002:a05:6102:1161:b0:41f:2138:41eb with SMTP id
- k1-20020a056102116100b0041f213841ebmr538860vsg.28.1677163134299; Thu, 23 Feb
- 2023 06:38:54 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0B4528ED
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 14:42:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1677163367; x=1708699367;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=EbDA6i5W8/Ks2Oq6NeDB98gZwwYHaiY1VdNVTzntjoU=;
+  b=NAUKmYza9wL+FFbE/APXY1zdpDdqR6CL+WnnyA4B8//ZALDcj1Kq5QBl
+   uuilS/IS/ALdUKvAxltgafAIiTQqhVFDMhZhs2pnx3MSYIIn/irOmLdal
+   GN2xF3E1wCpIOdvsgcJWxIqwBHhFnApJg/gDaTJcsZz95r3DX2b/BT1HN
+   aoW9NlIcp3PdwDGvdCrtUSh3xDUMpZFZAO+3dX1M+QClLIc7PnPOr15/E
+   PR+mt5VVSdW7aL640c4OFcZ1R4ep41PeBC2KApWQMe3ocCxoZmOA9fthp
+   1wPasZyiN40ODWHPXZPcgevMmA8zgXJcyk4OtBEmyqfLUM5/Q1C36FRvU
+   A==;
+X-IronPort-AV: E=Sophos;i="5.97,320,1669100400"; 
+   d="asc'?scan'208";a="138728596"
+Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
+  by esa6.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 23 Feb 2023 07:41:37 -0700
+Received: from chn-vm-ex02.mchp-main.com (10.10.85.144) by
+ chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2507.16; Thu, 23 Feb 2023 07:41:37 -0700
+Received: from wendy (10.10.115.15) by chn-vm-ex02.mchp-main.com
+ (10.10.85.144) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.16 via Frontend
+ Transport; Thu, 23 Feb 2023 07:41:35 -0700
+Date: Thu, 23 Feb 2023 14:41:08 +0000
+From: Conor Dooley <conor.dooley@microchip.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
+	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
+	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
+	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
+	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
+	<srw@sladewatkins.net>, <rwarsow@gmx.de>
+Subject: Re: [PATCH 6.1 00/46] 6.1.14-rc1 review
+Message-ID: <Y/d7BERK7on0BCdn@wendy>
+References: <20230223130431.553657459@linuxfoundation.org>
+ <Y/d5KdOfh5rXUeqk@wendy>
+ <Y/d6QnQrVMK8DHUK@kroah.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230223130431.553657459@linuxfoundation.org> <Y/d5KdOfh5rXUeqk@wendy>
-In-Reply-To: <Y/d5KdOfh5rXUeqk@wendy>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 23 Feb 2023 20:08:43 +0530
-Message-ID: <CA+G9fYsG8t1qO6MzJ=OYmegDwXCePafWbYjCc=JgiF3Mk5yQxg@mail.gmail.com>
-Subject: Re: [PATCH 6.1 00/46] 6.1.14-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Conor Dooley <conor.dooley@microchip.com>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; micalg=pgp-sha256;
+	protocol="application/pgp-signature"; boundary="k1PtNLss35S7tRv2"
+Content-Disposition: inline
+In-Reply-To: <Y/d6QnQrVMK8DHUK@kroah.com>
 
-On Thu, 23 Feb 2023 at 20:03, Conor Dooley <conor.dooley@microchip.com> wrote:
->
-> On Thu, Feb 23, 2023 at 02:06:07PM +0100, Greg Kroah-Hartman wrote:
-> > This is the start of the stable review cycle for the 6.1.14 release.
-> > There are 46 patches in this series, all will be posted as a response
-> > to this one.  If anyone has any issues with these being applied, please
-> > let me know.
-> >
-> > Responses should be made by Sat, 25 Feb 2023 13:04:16 +0000.
-> > Anything received after that time might be too late.
-> >
-> > The whole patch series can be found in one patch at:
-> >       https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.14-rc1.gz
-> > or in the git tree and branch at:
-> >       git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > and the diffstat can be found below.
->
-> > Dave Hansen <dave.hansen@linux.intel.com>
-> >     uaccess: Add speculation barrier to copy_from_user()
->
-> This breaks the build for me on RISC-V, you need to take f3dd0c53370e
-> ("bpf: add missing header file include") from Linus' tree.
-> It was broken in mainline too, so it is probably broken everywhere you
-> backported it :(
+--k1PtNLss35S7tRv2
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks for your report.
+On Thu, Feb 23, 2023 at 03:37:54PM +0100, Greg Kroah-Hartman wrote:
+> On Thu, Feb 23, 2023 at 02:33:13PM +0000, Conor Dooley wrote:
+> > On Thu, Feb 23, 2023 at 02:06:07PM +0100, Greg Kroah-Hartman wrote:
+> > > This is the start of the stable review cycle for the 6.1.14 release.
+> > > There are 46 patches in this series, all will be posted as a response
+> > > to this one.  If anyone has any issues with these being applied, plea=
+se
+> > > let me know.
+> > >=20
+> > > Responses should be made by Sat, 25 Feb 2023 13:04:16 +0000.
+> > > Anything received after that time might be too late.
+> > >=20
+> > > The whole patch series can be found in one patch at:
+> > > 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1=
+=2E14-rc1.gz
+> > > or in the git tree and branch at:
+> > > 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc=
+=2Egit linux-6.1.y
+> > > and the diffstat can be found below.
+> >=20
+> > > Dave Hansen <dave.hansen@linux.intel.com>
+> > >     uaccess: Add speculation barrier to copy_from_user()
+> >=20
+> > This breaks the build for me on RISC-V, you need to take f3dd0c53370e
+> > ("bpf: add missing header file include") from Linus' tree.
+> > It was broken in mainline too, so it is probably broken everywhere you
+> > backported it :(
+>=20
+> Already fixed up and in -rc2.
 
-I do see arm and arm64 build breaks with following build warnings / errors:
+Cool, I'll go restart my CI jobs then. Thanks.
 
-kernel/bpf/core.c: In function '___bpf_prog_run':
-kernel/bpf/core.c:1911:17: error: implicit declaration of function
-'barrier_nospec' [-Werror=implicit-function-declaration]
- 1911 |                 barrier_nospec();
-      |                 ^~~~~~~~~~~~~~
-cc1: some warnings being treated as errors
+--k1PtNLss35S7tRv2
+Content-Type: application/pgp-signature; name="signature.asc"
 
->
-> Thanks,
-> Conor.
->
+-----BEGIN PGP SIGNATURE-----
 
-- Naresh
+iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCY/d7BAAKCRB4tDGHoIJi
+0gp4AQDiJObDn5QPwIS5KeggKGrf7gUi3W7G0JzsWLZu3/tCyAEA6mBgJqi0yVe6
+Kcbi/A+QqyrOl7kXAmb1YgzsK547SAg=
+=p7ri
+-----END PGP SIGNATURE-----
 
---
-Linaro LKFT
-https://lkft.linaro.org
+--k1PtNLss35S7tRv2--
