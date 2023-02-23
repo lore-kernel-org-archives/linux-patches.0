@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A5EB2584
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:10:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id F1FEBC433D2;
-	Thu, 23 Feb 2023 13:10:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 078EA2584
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:10:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 84BC3C433EF;
+	Thu, 23 Feb 2023 13:10:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157844;
-	bh=ou+M19fX2+wZ6xz96RPzOfydbn3RAfH+wtL/CRNbaYo=;
+	s=korg; t=1677157846;
+	bh=m5w68lAElSkqotMfgm3dTzokS3uk62zy1nIRDv311sE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=r3Lzfb1RIiRfVeV4XoBTNXh8F1i863U8luPJMbSkmDgTdHbDGuSd6S7BW5I8xeKW5
-	 xCdeJRHDRi2Ph8CZiSPOYt0Ah3eWQxAbm6maDS0SgsNqxta7p2HiMUD4cFV/Nglp50
-	 ec3MR++9TsJTzIYv3aWlxMW00DzuKeUpBjftf2Lw=
+	b=bnteZLE2dx8TLdrOtYdjEkzj3g6u5xLPptR9E0DuemytdxwIqGA7EYz3/jzSEKrrN
+	 NksZKC/s11JXM/RBodOiQbQ9EBBOwUXpEwEm5kA7/9zaZH2s2Zljc9k+UNZAQfegOK
+	 e+ub++U5Gi8RF6vQ5OsXp/HSPS6vkfhwRYsGgUwU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bitterblue Smith <rtl8821cerfe2@gmail.com>,
-	Kalle Valo <kvalo@kernel.org>,
+	Sean Anderson <sean.anderson@seco.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 05/18] wifi: rtl8xxxu: gen2: Turn on the rate control
-Date: Thu, 23 Feb 2023 14:06:50 +0100
-Message-Id: <20230223130425.890209141@linuxfoundation.org>
+Subject: [PATCH 5.4 06/18] powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
+Date: Thu, 23 Feb 2023 14:06:51 +0100
+Message-Id: <20230223130425.936289132@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130425.680784802@linuxfoundation.org>
 References: <20230223130425.680784802@linuxfoundation.org>
@@ -35,67 +35,140 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bitterblue Smith <rtl8821cerfe2@gmail.com>
+From: Sean Anderson <sean.anderson@seco.com>
 
-[ Upstream commit 791082ec0ab843e0be07c8ce3678e4c2afd2e33d ]
+[ Upstream commit 36926a7d70c2d462fca1ed85bfee000d17fd8662 ]
 
-Re-enable the function rtl8xxxu_gen2_report_connect.
+On the T208X SoCs, MAC1 and MAC2 support XGMII. Add some new MAC dtsi
+fragments, and mark the QMAN ports as 10G.
 
-It informs the firmware when connecting to a network. This makes the
-firmware enable the rate control, which makes the upload faster.
-
-It also informs the firmware when disconnecting from a network. In the
-past this made reconnecting impossible because it was sending the
-auth on queue 0x7 (TXDESC_QUEUE_VO) instead of queue 0x12
-(TXDESC_QUEUE_MGNT):
-
-wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 1/3)
-wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 2/3)
-wlp0s20f0u3: send auth to 90:55:de:__:__:__ (try 3/3)
-wlp0s20f0u3: authentication with 90:55:de:__:__:__ timed out
-
-Probably the firmware disables the unnecessary TX queues when it
-knows it's disconnected.
-
-However, this was fixed in commit edd5747aa12e ("wifi: rtl8xxxu: Fix
-skb misuse in TX queue selection").
-
-Fixes: c59f13bbead4 ("rtl8xxxu: Work around issue with 8192eu and 8723bu devices not reconnecting")
-Signed-off-by: Bitterblue Smith <rtl8821cerfe2@gmail.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/43200afc-0c65-ee72-48f8-231edd1df493@gmail.com
+Fixes: da414bb923d9 ("powerpc/mpc85xx: Add FSL QorIQ DPAA FMan support to the SoC device tree(s)")
+Signed-off-by: Sean Anderson <sean.anderson@seco.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+ .../boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi     | 44 +++++++++++++++++++
+ .../boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi     | 44 +++++++++++++++++++
+ arch/powerpc/boot/dts/fsl/t2081si-post.dtsi   |  4 +-
+ 3 files changed, 90 insertions(+), 2 deletions(-)
+ create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
+ create mode 100644 arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
 
-diff --git a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-index 4a81e810a0ce3..0bc747489c55a 100644
---- a/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-+++ b/drivers/net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c
-@@ -4372,12 +4372,9 @@ void rtl8xxxu_gen1_report_connect(struct rtl8xxxu_priv *priv,
- void rtl8xxxu_gen2_report_connect(struct rtl8xxxu_priv *priv,
- 				  u8 macid, bool connect)
- {
--#ifdef RTL8XXXU_GEN2_REPORT_CONNECT
- 	/*
--	 * Barry Day reports this causes issues with 8192eu and 8723bu
--	 * devices reconnecting. The reason for this is unclear, but
--	 * until it is better understood, leave the code in place but
--	 * disabled, so it is not lost.
-+	 * The firmware turns on the rate control when it knows it's
-+	 * connected to a network.
- 	 */
- 	struct h2c_cmd h2c;
+diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
+new file mode 100644
+index 0000000000000..437dab3fc0176
+--- /dev/null
++++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi
+@@ -0,0 +1,44 @@
++// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
++/*
++ * QorIQ FMan v3 10g port #2 device tree stub [ controller @ offset 0x400000 ]
++ *
++ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
++ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
++ */
++
++fman@400000 {
++	fman0_rx_0x08: port@88000 {
++		cell-index = <0x8>;
++		compatible = "fsl,fman-v3-port-rx";
++		reg = <0x88000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	fman0_tx_0x28: port@a8000 {
++		cell-index = <0x28>;
++		compatible = "fsl,fman-v3-port-tx";
++		reg = <0xa8000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	ethernet@e0000 {
++		cell-index = <0>;
++		compatible = "fsl,fman-memac";
++		reg = <0xe0000 0x1000>;
++		fsl,fman-ports = <&fman0_rx_0x08 &fman0_tx_0x28>;
++		ptp-timer = <&ptp_timer0>;
++		pcsphy-handle = <&pcsphy0>;
++	};
++
++	mdio@e1000 {
++		#address-cells = <1>;
++		#size-cells = <0>;
++		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
++		reg = <0xe1000 0x1000>;
++		fsl,erratum-a011043; /* must ignore read errors */
++
++		pcsphy0: ethernet-phy@0 {
++			reg = <0x0>;
++		};
++	};
++};
+diff --git a/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
+new file mode 100644
+index 0000000000000..ad116b17850a8
+--- /dev/null
++++ b/arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi
+@@ -0,0 +1,44 @@
++// SPDX-License-Identifier: BSD-3-Clause OR GPL-2.0-or-later
++/*
++ * QorIQ FMan v3 10g port #3 device tree stub [ controller @ offset 0x400000 ]
++ *
++ * Copyright 2022 Sean Anderson <sean.anderson@seco.com>
++ * Copyright 2012 - 2015 Freescale Semiconductor Inc.
++ */
++
++fman@400000 {
++	fman0_rx_0x09: port@89000 {
++		cell-index = <0x9>;
++		compatible = "fsl,fman-v3-port-rx";
++		reg = <0x89000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	fman0_tx_0x29: port@a9000 {
++		cell-index = <0x29>;
++		compatible = "fsl,fman-v3-port-tx";
++		reg = <0xa9000 0x1000>;
++		fsl,fman-10g-port;
++	};
++
++	ethernet@e2000 {
++		cell-index = <1>;
++		compatible = "fsl,fman-memac";
++		reg = <0xe2000 0x1000>;
++		fsl,fman-ports = <&fman0_rx_0x09 &fman0_tx_0x29>;
++		ptp-timer = <&ptp_timer0>;
++		pcsphy-handle = <&pcsphy1>;
++	};
++
++	mdio@e3000 {
++		#address-cells = <1>;
++		#size-cells = <0>;
++		compatible = "fsl,fman-memac-mdio", "fsl,fman-xmdio";
++		reg = <0xe3000 0x1000>;
++		fsl,erratum-a011043; /* must ignore read errors */
++
++		pcsphy1: ethernet-phy@0 {
++			reg = <0x0>;
++		};
++	};
++};
+diff --git a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
+index ecbb447920bc6..74e17e134387d 100644
+--- a/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
++++ b/arch/powerpc/boot/dts/fsl/t2081si-post.dtsi
+@@ -609,8 +609,8 @@
+ /include/ "qoriq-bman1.dtsi"
  
-@@ -4390,7 +4387,6 @@ void rtl8xxxu_gen2_report_connect(struct rtl8xxxu_priv *priv,
- 		h2c.media_status_rpt.parm &= ~BIT(0);
- 
- 	rtl8xxxu_gen2_h2c_cmd(priv, &h2c, sizeof(h2c.media_status_rpt));
--#endif
- }
- 
- void rtl8xxxu_gen1_init_aggregation(struct rtl8xxxu_priv *priv)
+ /include/ "qoriq-fman3-0.dtsi"
+-/include/ "qoriq-fman3-0-1g-0.dtsi"
+-/include/ "qoriq-fman3-0-1g-1.dtsi"
++/include/ "qoriq-fman3-0-10g-2.dtsi"
++/include/ "qoriq-fman3-0-10g-3.dtsi"
+ /include/ "qoriq-fman3-0-1g-2.dtsi"
+ /include/ "qoriq-fman3-0-1g-3.dtsi"
+ /include/ "qoriq-fman3-0-1g-4.dtsi"
 -- 
 2.39.0
 
