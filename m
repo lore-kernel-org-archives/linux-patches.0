@@ -1,28 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B2FF257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:07:40 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B7164C433EF;
-	Thu, 23 Feb 2023 13:07:39 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DB5B9257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:07:42 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 5E40EC433EF;
+	Thu, 23 Feb 2023 13:07:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157660;
-	bh=ZCtzKAbs6Da0WVk5izSxXVn9E2rdi+4yWpWLebfSt9k=;
+	s=korg; t=1677157662;
+	bh=DQ+J1U135HUGQ3eerR5gcZP3LetbmKABKaw1U2rYH/E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bkGXXs/bxhtz8vI6j3D05+YfnU9VNghNGh6Wi8MWSYjTSJ2+m8wFwoDgVM0/RqbsU
-	 zhwdR5pGwS7boj+mZcYMHvmjCZSDWhphPVX4/J3lYCKr3Lm18F/dmlEKpWIi9O0e79
-	 HCMU1sqwq3H2lxFAGebn3fkQkBSFpIjUAJz77Vkg=
+	b=uWhmzbJnJGILaq9t70INVLq8JXDUz32hOF9MUAF4r5AAXn6yba3otQySsFccbz86A
+	 v/jQkBB+joMkyvnH+q3gUPpX1Fg038A/MIBv9J7KJUb+jqPs9S8REqkICsBx685kGM
+	 /JKSlzHKett58bjg5Wntgm0QCC5qXfnxfruBnyGQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pavel Skripkin <paskripkin@gmail.com>,
-	Johannes Berg <johannes.berg@intel.com>,
-	Fedor Pchelkin <pchelkin@ispras.ru>,
-	syzbot+860268315ba86ea6b96b@syzkaller.appspotmail.com
-Subject: [PATCH 5.10 16/25] mac80211: mesh: embedd mesh_paths and mpp_paths into ieee80211_if_mesh
-Date: Thu, 23 Feb 2023 14:06:33 +0100
-Message-Id: <20230223130427.522942125@linuxfoundation.org>
+	Jordy Zomer <jordyzomer@google.com>,
+	Linus Torvalds <torvalds@linuxfoundation.org>,
+	Dave Hansen <dave.hansen@linux.intel.com>,
+	Thomas Gleixner <tglx@linutronix.de>,
+	Linus Torvalds <torvalds@linux-foundation.org>,
+	Daniel Borkmann <daniel@iogearbox.net>
+Subject: [PATCH 5.10 17/25] uaccess: Add speculation barrier to copy_from_user()
+Date: Thu, 23 Feb 2023 14:06:34 +0100
+Message-Id: <20230223130427.564312062@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130426.817998725@linuxfoundation.org>
 References: <20230223130426.817998725@linuxfoundation.org>
@@ -36,328 +38,106 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pavel Skripkin <paskripkin@gmail.com>
+From: Dave Hansen <dave.hansen@linux.intel.com>
 
-commit 8b5cb7e41d9d77ffca036b0239177de123394a55 upstream.
+commit 74e19ef0ff8061ef55957c3abd71614ef0f42f47 upstream.
 
-Syzbot hit NULL deref in rhashtable_free_and_destroy(). The problem was
-in mesh_paths and mpp_paths being NULL.
+The results of "access_ok()" can be mis-speculated.  The result is that
+you can end speculatively:
 
-mesh_pathtbl_init() could fail in case of memory allocation failure, but
-nobody cared, since ieee80211_mesh_init_sdata() returns void. It led to
-leaving 2 pointers as NULL. Syzbot has found null deref on exit path,
-but it could happen anywhere else, because code assumes these pointers are
-valid.
+	if (access_ok(from, size))
+		// Right here
 
-Since all ieee80211_*_setup_sdata functions are void and do not fail,
-let's embedd mesh_paths and mpp_paths into parent struct to avoid
-adding error handling on higher levels and follow the pattern of others
-setup_sdata functions
+even for bad from/size combinations.  On first glance, it would be ideal
+to just add a speculation barrier to "access_ok()" so that its results
+can never be mis-speculated.
 
-Fixes: 60854fd94573 ("mac80211: mesh: convert path table to rhashtable")
-Reported-and-tested-by: syzbot+860268315ba86ea6b96b@syzkaller.appspotmail.com
-Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
-Link: https://lore.kernel.org/r/20211230195547.23977-1-paskripkin@gmail.com
-Signed-off-by: Johannes Berg <johannes.berg@intel.com>
-[pchelkin@ispras.ru: adapt a comment spell fixing issue]
-Signed-off-by: Fedor Pchelkin <pchelkin@ispras.ru>
+But there are lots of system calls just doing access_ok() via
+"copy_to_user()" and friends (example: fstat() and friends).  Those are
+generally not problematic because they do not _consume_ data from
+userspace other than the pointer.  They are also very quick and common
+system calls that should not be needlessly slowed down.
+
+"copy_from_user()" on the other hand uses a user-controller pointer and
+is frequently followed up with code that might affect caches.  Take
+something like this:
+
+	if (!copy_from_user(&kernelvar, uptr, size))
+		do_something_with(kernelvar);
+
+If userspace passes in an evil 'uptr' that *actually* points to a kernel
+addresses, and then do_something_with() has cache (or other)
+side-effects, it could allow userspace to infer kernel data values.
+
+Add a barrier to the common copy_from_user() code to prevent
+mis-speculated values which happen after the copy.
+
+Also add a stub for architectures that do not define barrier_nospec().
+This makes the macro usable in generic code.
+
+Since the barrier is now usable in generic code, the x86 #ifdef in the
+BPF code can also go away.
+
+Reported-by: Jordy Zomer <jordyzomer@google.com>
+Suggested-by: Linus Torvalds <torvalds@linuxfoundation.org>
+Signed-off-by: Dave Hansen <dave.hansen@linux.intel.com>
+Reviewed-by: Thomas Gleixner <tglx@linutronix.de>
+Acked-by: Daniel Borkmann <daniel@iogearbox.net>   # BPF bits
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/mac80211/ieee80211_i.h  |   24 ++++++++++-
- net/mac80211/mesh.h         |   22 ----------
- net/mac80211/mesh_pathtbl.c |   91 +++++++++++++++-----------------------------
- 3 files changed, 55 insertions(+), 82 deletions(-)
+ include/linux/nospec.h |    4 ++++
+ kernel/bpf/core.c      |    2 --
+ lib/usercopy.c         |    7 +++++++
+ 3 files changed, 11 insertions(+), 2 deletions(-)
 
---- a/net/mac80211/ieee80211_i.h
-+++ b/net/mac80211/ieee80211_i.h
-@@ -644,6 +644,26 @@ struct mesh_csa_settings {
- 	struct cfg80211_csa_settings settings;
- };
+--- a/include/linux/nospec.h
++++ b/include/linux/nospec.h
+@@ -11,6 +11,10 @@
  
-+/**
-+ * struct mesh_table
-+ *
-+ * @known_gates: list of known mesh gates and their mpaths by the station. The
-+ * gate's mpath may or may not be resolved and active.
-+ * @gates_lock: protects updates to known_gates
-+ * @rhead: the rhashtable containing struct mesh_paths, keyed by dest addr
-+ * @walk_head: linked list containing all mesh_path objects
-+ * @walk_lock: lock protecting walk_head
-+ * @entries: number of entries in the table
-+ */
-+struct mesh_table {
-+	struct hlist_head known_gates;
-+	spinlock_t gates_lock;
-+	struct rhashtable rhead;
-+	struct hlist_head walk_head;
-+	spinlock_t walk_lock;
-+	atomic_t entries;		/* Up to MAX_MESH_NEIGHBOURS */
-+};
+ struct task_struct;
+ 
++#ifndef barrier_nospec
++# define barrier_nospec() do { } while (0)
++#endif
 +
- struct ieee80211_if_mesh {
- 	struct timer_list housekeeping_timer;
- 	struct timer_list mesh_path_timer;
-@@ -718,8 +738,8 @@ struct ieee80211_if_mesh {
- 	/* offset from skb->data while building IE */
- 	int meshconf_offset;
- 
--	struct mesh_table *mesh_paths;
--	struct mesh_table *mpp_paths; /* Store paths for MPP&MAP */
-+	struct mesh_table mesh_paths;
-+	struct mesh_table mpp_paths; /* Store paths for MPP&MAP */
- 	int mesh_paths_generation;
- 	int mpp_paths_generation;
- };
---- a/net/mac80211/mesh.h
-+++ b/net/mac80211/mesh.h
-@@ -127,26 +127,6 @@ struct mesh_path {
- 	u32 path_change_count;
- };
- 
--/**
-- * struct mesh_table
-- *
-- * @known_gates: list of known mesh gates and their mpaths by the station. The
-- * gate's mpath may or may not be resolved and active.
-- * @gates_lock: protects updates to known_gates
-- * @rhead: the rhashtable containing struct mesh_paths, keyed by dest addr
-- * @walk_head: linked list containging all mesh_path objects
-- * @walk_lock: lock protecting walk_head
-- * @entries: number of entries in the table
-- */
--struct mesh_table {
--	struct hlist_head known_gates;
--	spinlock_t gates_lock;
--	struct rhashtable rhead;
--	struct hlist_head walk_head;
--	spinlock_t walk_lock;
--	atomic_t entries;		/* Up to MAX_MESH_NEIGHBOURS */
--};
--
- /* Recent multicast cache */
- /* RMC_BUCKETS must be a power of 2, maximum 256 */
- #define RMC_BUCKETS		256
-@@ -308,7 +288,7 @@ int mesh_path_error_tx(struct ieee80211_
- void mesh_path_assign_nexthop(struct mesh_path *mpath, struct sta_info *sta);
- void mesh_path_flush_pending(struct mesh_path *mpath);
- void mesh_path_tx_pending(struct mesh_path *mpath);
--int mesh_pathtbl_init(struct ieee80211_sub_if_data *sdata);
-+void mesh_pathtbl_init(struct ieee80211_sub_if_data *sdata);
- void mesh_pathtbl_unregister(struct ieee80211_sub_if_data *sdata);
- int mesh_path_del(struct ieee80211_sub_if_data *sdata, const u8 *addr);
- void mesh_path_timer(struct timer_list *t);
---- a/net/mac80211/mesh_pathtbl.c
-+++ b/net/mac80211/mesh_pathtbl.c
-@@ -47,32 +47,24 @@ static void mesh_path_rht_free(void *ptr
- 	mesh_path_free_rcu(tbl, mpath);
- }
- 
--static struct mesh_table *mesh_table_alloc(void)
-+static void mesh_table_init(struct mesh_table *tbl)
- {
--	struct mesh_table *newtbl;
--
--	newtbl = kmalloc(sizeof(struct mesh_table), GFP_ATOMIC);
--	if (!newtbl)
--		return NULL;
--
--	INIT_HLIST_HEAD(&newtbl->known_gates);
--	INIT_HLIST_HEAD(&newtbl->walk_head);
--	atomic_set(&newtbl->entries,  0);
--	spin_lock_init(&newtbl->gates_lock);
--	spin_lock_init(&newtbl->walk_lock);
--	if (rhashtable_init(&newtbl->rhead, &mesh_rht_params)) {
--		kfree(newtbl);
--		return NULL;
--	}
--
--	return newtbl;
-+	INIT_HLIST_HEAD(&tbl->known_gates);
-+	INIT_HLIST_HEAD(&tbl->walk_head);
-+	atomic_set(&tbl->entries,  0);
-+	spin_lock_init(&tbl->gates_lock);
-+	spin_lock_init(&tbl->walk_lock);
-+
-+	/* rhashtable_init() may fail only in case of wrong
-+	 * mesh_rht_params
-+	 */
-+	WARN_ON(rhashtable_init(&tbl->rhead, &mesh_rht_params));
- }
- 
- static void mesh_table_free(struct mesh_table *tbl)
- {
- 	rhashtable_free_and_destroy(&tbl->rhead,
- 				    mesh_path_rht_free, tbl);
--	kfree(tbl);
- }
- 
  /**
-@@ -238,13 +230,13 @@ static struct mesh_path *mpath_lookup(st
- struct mesh_path *
- mesh_path_lookup(struct ieee80211_sub_if_data *sdata, const u8 *dst)
- {
--	return mpath_lookup(sdata->u.mesh.mesh_paths, dst, sdata);
-+	return mpath_lookup(&sdata->u.mesh.mesh_paths, dst, sdata);
- }
+  * array_index_mask_nospec() - generate a ~0 mask when index < size, 0 otherwise
+  * @index: array element index
+--- a/kernel/bpf/core.c
++++ b/kernel/bpf/core.c
+@@ -1642,9 +1642,7 @@ out:
+ 		 * reuse preexisting logic from Spectre v1 mitigation that
+ 		 * happens to produce the required code on x86 for v4 as well.
+ 		 */
+-#ifdef CONFIG_X86
+ 		barrier_nospec();
+-#endif
+ 		CONT;
+ #define LDST(SIZEOP, SIZE)						\
+ 	STX_MEM_##SIZEOP:						\
+--- a/lib/usercopy.c
++++ b/lib/usercopy.c
+@@ -3,6 +3,7 @@
+ #include <linux/fault-inject-usercopy.h>
+ #include <linux/instrumented.h>
+ #include <linux/uaccess.h>
++#include <linux/nospec.h>
  
- struct mesh_path *
- mpp_path_lookup(struct ieee80211_sub_if_data *sdata, const u8 *dst)
- {
--	return mpath_lookup(sdata->u.mesh.mpp_paths, dst, sdata);
-+	return mpath_lookup(&sdata->u.mesh.mpp_paths, dst, sdata);
- }
+ /* out-of-line parts */
  
- static struct mesh_path *
-@@ -281,7 +273,7 @@ __mesh_path_lookup_by_idx(struct mesh_ta
- struct mesh_path *
- mesh_path_lookup_by_idx(struct ieee80211_sub_if_data *sdata, int idx)
- {
--	return __mesh_path_lookup_by_idx(sdata->u.mesh.mesh_paths, idx);
-+	return __mesh_path_lookup_by_idx(&sdata->u.mesh.mesh_paths, idx);
- }
- 
- /**
-@@ -296,7 +288,7 @@ mesh_path_lookup_by_idx(struct ieee80211
- struct mesh_path *
- mpp_path_lookup_by_idx(struct ieee80211_sub_if_data *sdata, int idx)
- {
--	return __mesh_path_lookup_by_idx(sdata->u.mesh.mpp_paths, idx);
-+	return __mesh_path_lookup_by_idx(&sdata->u.mesh.mpp_paths, idx);
- }
- 
- /**
-@@ -309,7 +301,7 @@ int mesh_path_add_gate(struct mesh_path
- 	int err;
- 
- 	rcu_read_lock();
--	tbl = mpath->sdata->u.mesh.mesh_paths;
-+	tbl = &mpath->sdata->u.mesh.mesh_paths;
- 
- 	spin_lock_bh(&mpath->state_lock);
- 	if (mpath->is_gate) {
-@@ -418,7 +410,7 @@ struct mesh_path *mesh_path_add(struct i
- 	if (!new_mpath)
- 		return ERR_PTR(-ENOMEM);
- 
--	tbl = sdata->u.mesh.mesh_paths;
-+	tbl = &sdata->u.mesh.mesh_paths;
- 	spin_lock_bh(&tbl->walk_lock);
- 	mpath = rhashtable_lookup_get_insert_fast(&tbl->rhead,
- 						  &new_mpath->rhash,
-@@ -460,7 +452,7 @@ int mpp_path_add(struct ieee80211_sub_if
- 		return -ENOMEM;
- 
- 	memcpy(new_mpath->mpp, mpp, ETH_ALEN);
--	tbl = sdata->u.mesh.mpp_paths;
-+	tbl = &sdata->u.mesh.mpp_paths;
- 
- 	spin_lock_bh(&tbl->walk_lock);
- 	ret = rhashtable_lookup_insert_fast(&tbl->rhead,
-@@ -489,7 +481,7 @@ int mpp_path_add(struct ieee80211_sub_if
- void mesh_plink_broken(struct sta_info *sta)
- {
- 	struct ieee80211_sub_if_data *sdata = sta->sdata;
--	struct mesh_table *tbl = sdata->u.mesh.mesh_paths;
-+	struct mesh_table *tbl = &sdata->u.mesh.mesh_paths;
- 	static const u8 bcast[ETH_ALEN] = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff};
- 	struct mesh_path *mpath;
- 
-@@ -548,7 +540,7 @@ static void __mesh_path_del(struct mesh_
- void mesh_path_flush_by_nexthop(struct sta_info *sta)
- {
- 	struct ieee80211_sub_if_data *sdata = sta->sdata;
--	struct mesh_table *tbl = sdata->u.mesh.mesh_paths;
-+	struct mesh_table *tbl = &sdata->u.mesh.mesh_paths;
- 	struct mesh_path *mpath;
- 	struct hlist_node *n;
- 
-@@ -563,7 +555,7 @@ void mesh_path_flush_by_nexthop(struct s
- static void mpp_flush_by_proxy(struct ieee80211_sub_if_data *sdata,
- 			       const u8 *proxy)
- {
--	struct mesh_table *tbl = sdata->u.mesh.mpp_paths;
-+	struct mesh_table *tbl = &sdata->u.mesh.mpp_paths;
- 	struct mesh_path *mpath;
- 	struct hlist_node *n;
- 
-@@ -597,8 +589,8 @@ static void table_flush_by_iface(struct
-  */
- void mesh_path_flush_by_iface(struct ieee80211_sub_if_data *sdata)
- {
--	table_flush_by_iface(sdata->u.mesh.mesh_paths);
--	table_flush_by_iface(sdata->u.mesh.mpp_paths);
-+	table_flush_by_iface(&sdata->u.mesh.mesh_paths);
-+	table_flush_by_iface(&sdata->u.mesh.mpp_paths);
- }
- 
- /**
-@@ -644,7 +636,7 @@ int mesh_path_del(struct ieee80211_sub_i
- 	/* flush relevant mpp entries first */
- 	mpp_flush_by_proxy(sdata, addr);
- 
--	err = table_path_del(sdata->u.mesh.mesh_paths, sdata, addr);
-+	err = table_path_del(&sdata->u.mesh.mesh_paths, sdata, addr);
- 	sdata->u.mesh.mesh_paths_generation++;
- 	return err;
- }
-@@ -682,7 +674,7 @@ int mesh_path_send_to_gates(struct mesh_
- 	struct mesh_path *gate;
- 	bool copy = false;
- 
--	tbl = sdata->u.mesh.mesh_paths;
-+	tbl = &sdata->u.mesh.mesh_paths;
- 
- 	rcu_read_lock();
- 	hlist_for_each_entry_rcu(gate, &tbl->known_gates, gate_list) {
-@@ -762,29 +754,10 @@ void mesh_path_fix_nexthop(struct mesh_p
- 	mesh_path_tx_pending(mpath);
- }
- 
--int mesh_pathtbl_init(struct ieee80211_sub_if_data *sdata)
-+void mesh_pathtbl_init(struct ieee80211_sub_if_data *sdata)
- {
--	struct mesh_table *tbl_path, *tbl_mpp;
--	int ret;
--
--	tbl_path = mesh_table_alloc();
--	if (!tbl_path)
--		return -ENOMEM;
--
--	tbl_mpp = mesh_table_alloc();
--	if (!tbl_mpp) {
--		ret = -ENOMEM;
--		goto free_path;
--	}
--
--	sdata->u.mesh.mesh_paths = tbl_path;
--	sdata->u.mesh.mpp_paths = tbl_mpp;
--
--	return 0;
--
--free_path:
--	mesh_table_free(tbl_path);
--	return ret;
-+	mesh_table_init(&sdata->u.mesh.mesh_paths);
-+	mesh_table_init(&sdata->u.mesh.mpp_paths);
- }
- 
- static
-@@ -806,12 +779,12 @@ void mesh_path_tbl_expire(struct ieee802
- 
- void mesh_path_expire(struct ieee80211_sub_if_data *sdata)
- {
--	mesh_path_tbl_expire(sdata, sdata->u.mesh.mesh_paths);
--	mesh_path_tbl_expire(sdata, sdata->u.mesh.mpp_paths);
-+	mesh_path_tbl_expire(sdata, &sdata->u.mesh.mesh_paths);
-+	mesh_path_tbl_expire(sdata, &sdata->u.mesh.mpp_paths);
- }
- 
- void mesh_pathtbl_unregister(struct ieee80211_sub_if_data *sdata)
- {
--	mesh_table_free(sdata->u.mesh.mesh_paths);
--	mesh_table_free(sdata->u.mesh.mpp_paths);
-+	mesh_table_free(&sdata->u.mesh.mesh_paths);
-+	mesh_table_free(&sdata->u.mesh.mpp_paths);
- }
+@@ -12,6 +13,12 @@ unsigned long _copy_from_user(void *to,
+ 	unsigned long res = n;
+ 	might_fault();
+ 	if (!should_fail_usercopy() && likely(access_ok(from, n))) {
++		/*
++		 * Ensure that bad access_ok() speculation will not
++		 * lead to nasty side effects *after* the copy is
++		 * finished:
++		 */
++		barrier_nospec();
+ 		instrument_copy_from_user(to, from, n);
+ 		res = raw_copy_from_user(to, from, n);
+ 	}
 
 
