@@ -1,182 +1,279 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F38EC257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 78B8CC433EF;
-	Thu, 23 Feb 2023 13:08:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8F6D6257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:08:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E24B1C433D2;
+	Thu, 23 Feb 2023 13:08:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157711;
-	bh=MGNsK6zZy3ok90/ZEAvCkY4/OD+NDlBWY8tF19C2WBc=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=k7vRRvMsuXgDuzpNQJ17xwv1KB33EJ3lcSfp+XtNLtefmF0ZTI47hEbt9pMoGWCjD
-	 aWp+l/1S5zKSU0L99rtbKUezi5Er6315x1vDee43Fh0sU1Vl8mVLQCzb2PF+9N+DaX
-	 YUljLlt0U+6stgW0eX4/fjUxDtM7cdni3kl8Nkh0=
+	s=korg; t=1677157714;
+	bh=7vmswi1pV/dUWUIMSvx/xBGdkN0n+ukIvXfZ76sofPg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=pDLK4/p/SWG0x489bN+ugyb51NuhmCkmbmsgMWSsCk8XWF7c7ehCjD5lzZ9UnPsqG
+	 PeBPp5EsLTfDPkOym+MFXTMCRFTUdw5UkS4xNQnD9j7Y20DZ8pEkfNllwSWWlhPcn6
+	 XmVeQLWXU92v82FmKWrl6b1RaFK6Ypf3tnOf55w0=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Wen Gong <quic_wgong@quicinc.com>,
-	Kalle Valo <quic_kvalo@quicinc.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 02/46] wifi: ath11k: fix warning in dma_free_coherent() of memory chunks while recovery
-Date: Thu, 23 Feb 2023 14:06:09 +0100
-Message-Id: <20230223130431.672795702@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 6.1 00/46] 6.1.14-rc1 review
+Date: Thu, 23 Feb 2023 14:06:07 +0100
+Message-Id: <20230223130431.553657459@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230223130431.553657459@linuxfoundation.org>
-References: <20230223130431.553657459@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.14-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.1.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.1.14-rc1
+X-KernelTest-Deadline: 2023-02-25T13:04+00:00
 Content-Transfer-Encoding: 8bit
 
-From: Wen Gong <quic_wgong@quicinc.com>
+This is the start of the stable review cycle for the 6.1.14 release.
+There are 46 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-[ Upstream commit f74878433d5ade360447da5d92e9c2e535780d80 ]
+Responses should be made by Sat, 25 Feb 2023 13:04:16 +0000.
+Anything received after that time might be too late.
 
-Commit 26f3a021b37c ("ath11k: allocate smaller chunks of memory for
-firmware") and commit f6f92968e1e5 ("ath11k: qmi: try to allocate a
-big block of DMA memory first") change ath11k to allocate the memory
-chunks for target twice while wlan load. It fails for the 1st time
-because of large memory and then changed to allocate many small chunks
-for the 2nd time sometimes as below log.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.14-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+and the diffstat can be found below.
 
-1st time failed:
-[10411.640620] ath11k_pci 0000:05:00.0: qmi firmware request memory request
-[10411.640625] ath11k_pci 0000:05:00.0: qmi mem seg type 1 size 6881280
-[10411.640630] ath11k_pci 0000:05:00.0: qmi mem seg type 4 size 3784704
-[10411.640658] ath11k_pci 0000:05:00.0: qmi dma allocation failed (6881280 B type 1), will try later with small size
-[10411.640671] ath11k_pci 0000:05:00.0: qmi delays mem_request 2
-[10411.640677] ath11k_pci 0000:05:00.0: qmi respond memory request delayed 1
-2nd time success:
-[10411.642004] ath11k_pci 0000:05:00.0: qmi firmware request memory request
-[10411.642008] ath11k_pci 0000:05:00.0: qmi mem seg type 1 size 524288
-[10411.642012] ath11k_pci 0000:05:00.0: qmi mem seg type 1 size 524288
-[10411.642014] ath11k_pci 0000:05:00.0: qmi mem seg type 1 size 524288
-[10411.642016] ath11k_pci 0000:05:00.0: qmi mem seg type 1 size 524288
-[10411.642018] ath11k_pci 0000:05:00.0: qmi mem seg type 1 size 524288
-[10411.642020] ath11k_pci 0000:05:00.0: qmi mem seg type 1 size 524288
-[10411.642022] ath11k_pci 0000:05:00.0: qmi mem seg type 1 size 524288
-[10411.642024] ath11k_pci 0000:05:00.0: qmi mem seg type 1 size 524288
-[10411.642027] ath11k_pci 0000:05:00.0: qmi mem seg type 1 size 524288
-[10411.642029] ath11k_pci 0000:05:00.0: qmi mem seg type 1 size 524288
-[10411.642031] ath11k_pci 0000:05:00.0: qmi mem seg type 1 size 458752
-[10411.642033] ath11k_pci 0000:05:00.0: qmi mem seg type 1 size 131072
-[10411.642035] ath11k_pci 0000:05:00.0: qmi mem seg type 4 size 524288
-[10411.642037] ath11k_pci 0000:05:00.0: qmi mem seg type 4 size 524288
-[10411.642039] ath11k_pci 0000:05:00.0: qmi mem seg type 4 size 524288
-[10411.642041] ath11k_pci 0000:05:00.0: qmi mem seg type 4 size 524288
-[10411.642043] ath11k_pci 0000:05:00.0: qmi mem seg type 4 size 524288
-[10411.642045] ath11k_pci 0000:05:00.0: qmi mem seg type 4 size 524288
-[10411.642047] ath11k_pci 0000:05:00.0: qmi mem seg type 4 size 491520
-[10411.642049] ath11k_pci 0000:05:00.0: qmi mem seg type 1 size 524288
+thanks,
 
-And then commit 5962f370ce41 ("ath11k: Reuse the available memory after
-firmware reload") skip the ath11k_qmi_free_resource() which frees the
-memory chunks while recovery, after that, when run recovery test on
-WCN6855, a warning happened every time as below and finally leads fail
-for recovery.
+greg k-h
 
-[  159.570318] BUG: Bad page state in process kworker/u16:5  pfn:33300
-[  159.570320] page:0000000096ffdbb9 refcount:1 mapcount:0 mapping:0000000000000000 index:0x0 pfn:0x33300
-[  159.570324] flags: 0xfffffc0000000(node=0|zone=1|lastcpupid=0x1fffff)
-[  159.570329] raw: 000fffffc0000000 0000000000000000 dead000000000122 0000000000000000
-[  159.570332] raw: 0000000000000000 0000000000000000 00000001ffffffff 0000000000000000
-[  159.570334] page dumped because: nonzero _refcount
-[  159.570440]  firewire_ohci syscopyarea sysfillrect psmouse sdhci_pci ahci sysimgblt firewire_core fb_sys_fops libahci crc_itu_t cqhci drm sdhci e1000e wmi video
-[  159.570460] CPU: 2 PID: 217 Comm: kworker/u16:5 Kdump: loaded Tainted: G    B             5.19.0-rc1-wt-ath+ #3
-[  159.570465] Hardware name: LENOVO 418065C/418065C, BIOS 83ET63WW (1.33 ) 07/29/2011
-[  159.570467] Workqueue: qmi_msg_handler qmi_data_ready_work [qmi_helpers]
-[  159.570475] Call Trace:
-[  159.570476]  <TASK>
-[  159.570478]  dump_stack_lvl+0x49/0x5f
-[  159.570486]  dump_stack+0x10/0x12
-[  159.570493]  bad_page+0xab/0xf0
-[  159.570502]  check_free_page_bad+0x66/0x70
-[  159.570511]  __free_pages_ok+0x530/0x9a0
-[  159.570517]  ? __dev_printk+0x58/0x6b
-[  159.570525]  ? _dev_printk+0x56/0x72
-[  159.570534]  ? qmi_decode+0x119/0x470 [qmi_helpers]
-[  159.570543]  __free_pages+0x91/0xd0
-[  159.570548]  dma_free_contiguous+0x50/0x60
-[  159.570556]  dma_direct_free+0xe5/0x140
-[  159.570564]  dma_free_attrs+0x35/0x50
-[  159.570570]  ath11k_qmi_msg_mem_request_cb+0x2ae/0x3c0 [ath11k]
-[  159.570620]  qmi_invoke_handler+0xac/0xe0 [qmi_helpers]
-[  159.570630]  qmi_handle_message+0x6d/0x180 [qmi_helpers]
-[  159.570643]  qmi_data_ready_work+0x2ca/0x440 [qmi_helpers]
-[  159.570656]  process_one_work+0x227/0x440
-[  159.570667]  worker_thread+0x31/0x3d0
-[  159.570676]  ? process_one_work+0x440/0x440
-[  159.570685]  kthread+0xfe/0x130
-[  159.570692]  ? kthread_complete_and_exit+0x20/0x20
-[  159.570701]  ret_from_fork+0x22/0x30
-[  159.570712]  </TASK>
+-------------
+Pseudo-Shortlog of commits:
 
-The reason is because when wlan start to recovery, the type, size and
-count is not same for the 1st and 2nd QMI_WLFW_REQUEST_MEM_IND message,
-Then it leads the parameter size is not correct for the dma_free_coherent().
-For the chunk[1], the actual dma size is 524288 which allocate in the
-2nd time of the initial wlan load phase, and the size which pass to
-dma_free_coherent() is 3784704 which is got in the 1st time of recovery
-phase, then warning above happened.
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.1.14-rc1
 
-Change to use prev_size of struct target_mem_chunk for the paramter of
-dma_free_coherent() since prev_size is the real size of last load/recovery.
-Also change to check both type and size of struct target_mem_chunk to
-reuse the memory to avoid mismatch buffer size for target. Then the
-warning disappear and recovery success. When the 1st QMI_WLFW_REQUEST_MEM_IND
-for recovery arrived, the trunk[0] is freed in ath11k_qmi_alloc_target_mem_chunk()
-and then dma_alloc_coherent() failed caused by large size, and then
-trunk[1] is freed in ath11k_qmi_free_target_mem_chunk(), the left 18
-trunks will be reuse for the 2nd QMI_WLFW_REQUEST_MEM_IND message.
+Eric Biggers <ebiggers@google.com>
+    randstruct: disable Clang 15 support
 
-Tested-on: WCN6855 hw2.0 PCI WLAN.HSP.1.1-03125-QCAHSPSWPL_V1_V2_SILICONZ_LITE-3
+Kees Cook <keescook@chromium.org>
+    ext4: Fix function prototype mismatch for ext4_feat_ktype
 
-Fixes: 5962f370ce41 ("ath11k: Reuse the available memory after firmware reload")
-Signed-off-by: Wen Gong <quic_wgong@quicinc.com>
-Signed-off-by: Kalle Valo <quic_kvalo@quicinc.com>
-Link: https://lore.kernel.org/r/20220928073832.16251-1-quic_wgong@quicinc.com
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- drivers/net/wireless/ath/ath11k/qmi.c | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+Hans de Goede <hdegoede@redhat.com>
+    platform/x86: nvidia-wmi-ec-backlight: Add force module parameter
 
-diff --git a/drivers/net/wireless/ath/ath11k/qmi.c b/drivers/net/wireless/ath/ath11k/qmi.c
-index 7cc5fa3251521..381c6b390dd78 100644
---- a/drivers/net/wireless/ath/ath11k/qmi.c
-+++ b/drivers/net/wireless/ath/ath11k/qmi.c
-@@ -1964,7 +1964,7 @@ static void ath11k_qmi_free_target_mem_chunk(struct ath11k_base *ab)
- 			continue;
- 
- 		dma_free_coherent(ab->dev,
--				  ab->qmi.target_mem[i].size,
-+				  ab->qmi.target_mem[i].prev_size,
- 				  ab->qmi.target_mem[i].vaddr,
- 				  ab->qmi.target_mem[i].paddr);
- 		ab->qmi.target_mem[i].vaddr = NULL;
-@@ -1985,12 +1985,12 @@ static int ath11k_qmi_alloc_target_mem_chunk(struct ath11k_base *ab)
- 		 * in such case, no need to allocate memory for FW again.
- 		 */
- 		if (chunk->vaddr) {
--			if (chunk->prev_type == chunk->type ||
-+			if (chunk->prev_type == chunk->type &&
- 			    chunk->prev_size == chunk->size)
- 				continue;
- 
- 			/* cannot reuse the existing chunk */
--			dma_free_coherent(ab->dev, chunk->size,
-+			dma_free_coherent(ab->dev, chunk->prev_size,
- 					  chunk->vaddr, chunk->paddr);
- 			chunk->vaddr = NULL;
- 		}
--- 
-2.39.0
+Shyam Sundar S K <Shyam-sundar.S-k@amd.com>
+    platform/x86/amd/pmf: Add depends on CONFIG_POWER_SUPPLY
 
+Paul Moore <paul@paul-moore.com>
+    audit: update the mailing list in MAINTAINERS
+
+Lukas Wunner <lukas@wunner.de>
+    wifi: mwifiex: Add missing compatible string for SD8787
+
+Tom Saeger <tom.saeger@oracle.com>
+    sh: define RUNTIME_DISCARD_EXIT
+
+Masahiro Yamada <masahiroy@kernel.org>
+    s390: define RUNTIME_DISCARD_EXIT to fix link error with GNU ld < 2.36
+
+Michael Ellerman <mpe@ellerman.id.au>
+    powerpc/vmlinux.lds: Don't discard .rela* for relocatable builds
+
+Michael Ellerman <mpe@ellerman.id.au>
+    powerpc/vmlinux.lds: Define RUNTIME_DISCARD_EXIT
+
+Masahiro Yamada <masahiroy@kernel.org>
+    arch: fix broken BuildID for arm64 and riscv
+
+Masahiro Yamada <masahiroy@kernel.org>
+    arm64: remove special treatment for the link order of head.o
+
+Jisheng Zhang <jszhang@kernel.org>
+    riscv: remove special treatment for the link order of head.o
+
+Shengyu Qu <wiagn233@outlook.com>
+    Bluetooth: btusb: Add more device IDs for WCN6855
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/static_call: Add support for Jcc tail-calls
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/alternatives: Teach text_poke_bp() to patch Jcc.d32 instructions
+
+Peter Zijlstra <peterz@infradead.org>
+    x86/alternatives: Introduce int3_emulate_jcc()
+
+Dave Hansen <dave.hansen@linux.intel.com>
+    uaccess: Add speculation barrier to copy_from_user()
+
+Yu Xiao <yu.xiao@corigine.com>
+    nfp: ethtool: fix the bug of setting unsupported port speed
+
+Yu Xiao <yu.xiao@corigine.com>
+    nfp: ethtool: support reporting link modes
+
+Michael Ellerman <mpe@ellerman.id.au>
+    powerpc/64s/radix: Fix RWX mapping with relocated kernel
+
+Paolo Bonzini <pbonzini@redhat.com>
+    selftests: kvm: move declaration at the beginning of main()
+
+Paolo Bonzini <pbonzini@redhat.com>
+    KVM: x86: fix deadlock for KVM_XEN_EVTCHN_RESET
+
+Lucas De Marchi <lucas.demarchi@intel.com>
+    drm/i915: Remove __maybe_unused from mtl_info
+
+Ricardo Ribalda <ribalda@chromium.org>
+    spi: mediatek: Enable irq before the spi registration
+
+Sean Anderson <sean.anderson@seco.com>
+    powerpc: dts: t208x: Disable 10G on MAC1 and MAC2
+
+Marc Kleine-Budde <mkl@pengutronix.de>
+    can: kvaser_usb: hydra: help gcc-13 to figure out cmd_len
+
+Jim Mattson <jmattson@google.com>
+    KVM: VMX: Execute IBPB on emulated VM-exit when guest has IBRS
+
+Sean Christopherson <seanjc@google.com>
+    KVM: SVM: Skip WRMSR fastpath on VM-Exit if next RIP isn't valid
+
+Sean Christopherson <seanjc@google.com>
+    KVM: x86: Fail emulation during EMULTYPE_SKIP on any exception
+
+Yicong Yang <yangyicong@hisilicon.com>
+    docs: perf: Fix PMU instance name of hisi-pcie-pmu
+
+Ricardo Ribalda <ribalda@chromium.org>
+    spi: mediatek: Enable irq when pdata is ready
+
+Jie Zhan <zhanjie9@hisilicon.com>
+    scsi: hisi_sas: Fix SATA devices missing issue during I_T nexus reset
+
+Jie Zhan <zhanjie9@hisilicon.com>
+    scsi: libsas: Add smp_ata_check_ready_type()
+
+Jason A. Donenfeld <Jason@zx2c4.com>
+    random: always mix cycle counter in add_latent_entropy()
+
+Suren Baghdasaryan <surenb@google.com>
+    sched/psi: Stop relying on timer_pending() for poll_work rescheduling
+
+Rahul Tanwar <rtanwar@maxlinear.com>
+    clk: mxl: syscon_node_to_regmap() returns error pointers
+
+Sean Anderson <sean.anderson@seco.com>
+    powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
+
+Rahul Tanwar <rtanwar@maxlinear.com>
+    clk: mxl: Fix a clk entry by adding relevant flags
+
+Rahul Tanwar <rtanwar@maxlinear.com>
+    clk: mxl: Add option to override gate clks
+
+Rahul Tanwar <rtanwar@maxlinear.com>
+    clk: mxl: Remove redundant spinlocks
+
+Rahul Tanwar <rtanwar@maxlinear.com>
+    clk: mxl: Switch from direct readl/writel based IO to regmap based IO
+
+Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+    drm/edid: Fix minimum bpc supported with DSC1.2 for HDMI sink
+
+Bitterblue Smith <rtl8821cerfe2@gmail.com>
+    wifi: rtl8xxxu: gen2: Turn on the rate control
+
+Wen Gong <quic_wgong@quicinc.com>
+    wifi: ath11k: fix warning in dma_free_coherent() of memory chunks while recovery
+
+Lucas Stach <l.stach@pengutronix.de>
+    drm/etnaviv: don't truncate physical page address
+
+
+-------------
+
+Diffstat:
+
+ Documentation/admin-guide/perf/hisi-pcie-pmu.rst   |  22 +--
+ MAINTAINERS                                        |   2 +-
+ Makefile                                           |   4 +-
+ arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi |  44 +++++
+ arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi |  44 +++++
+ arch/powerpc/boot/dts/fsl/t2081si-post.dtsi        |  20 ++-
+ arch/powerpc/kernel/vmlinux.lds.S                  |   6 +-
+ arch/powerpc/mm/book3s64/radix_pgtable.c           |  13 ++
+ arch/s390/kernel/vmlinux.lds.S                     |   2 +
+ arch/sh/kernel/vmlinux.lds.S                       |   1 +
+ arch/x86/include/asm/text-patching.h               |  31 ++++
+ arch/x86/kernel/alternative.c                      |  59 +++++--
+ arch/x86/kernel/kprobes/core.c                     |  38 +---
+ arch/x86/kernel/static_call.c                      |  49 +++++-
+ arch/x86/kvm/svm/svm.c                             |  10 +-
+ arch/x86/kvm/vmx/nested.c                          |  11 ++
+ arch/x86/kvm/vmx/vmx.c                             |   6 +-
+ arch/x86/kvm/x86.c                                 |   4 +-
+ arch/x86/kvm/xen.c                                 |  30 +++-
+ drivers/bluetooth/btusb.c                          |  84 +++++++++
+ drivers/clk/x86/Kconfig                            |   5 +-
+ drivers/clk/x86/clk-cgu-pll.c                      |  23 +--
+ drivers/clk/x86/clk-cgu.c                          | 106 ++++-------
+ drivers/clk/x86/clk-cgu.h                          |  46 ++---
+ drivers/clk/x86/clk-lgm.c                          |  18 +-
+ drivers/gpu/drm/drm_edid.c                         |   3 +-
+ drivers/gpu/drm/etnaviv/etnaviv_mmu.c              |   4 +-
+ drivers/gpu/drm/i915/i915_pci.c                    |   1 -
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c  |  33 +++-
+ drivers/net/ethernet/netronome/nfp/nfp_main.h      |   1 +
+ .../net/ethernet/netronome/nfp/nfp_net_ethtool.c   | 195 +++++++++++++++++++++
+ drivers/net/ethernet/netronome/nfp/nfp_port.h      |  12 ++
+ .../net/ethernet/netronome/nfp/nfpcore/nfp_nsp.c   |  17 ++
+ .../net/ethernet/netronome/nfp/nfpcore/nfp_nsp.h   |  56 ++++++
+ .../ethernet/netronome/nfp/nfpcore/nfp_nsp_eth.c   |  26 +++
+ drivers/net/wireless/ath/ath11k/qmi.c              |   6 +-
+ drivers/net/wireless/marvell/mwifiex/sdio.c        |   1 +
+ .../net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c  |   8 +-
+ drivers/platform/x86/amd/pmf/Kconfig               |   1 +
+ drivers/platform/x86/nvidia-wmi-ec-backlight.c     |   6 +-
+ drivers/scsi/hisi_sas/hisi_sas_main.c              |   8 +-
+ drivers/scsi/libsas/sas_ata.c                      |  25 +++
+ drivers/scsi/libsas/sas_expander.c                 |   4 +-
+ drivers/scsi/libsas/sas_internal.h                 |   2 +
+ drivers/spi/spi-mt65xx.c                           |  10 +-
+ fs/ext4/sysfs.c                                    |   7 +-
+ include/asm-generic/vmlinux.lds.h                  |   5 +
+ include/linux/nospec.h                             |   4 +
+ include/linux/psi_types.h                          |   1 +
+ include/linux/random.h                             |   6 +-
+ include/scsi/sas_ata.h                             |   6 +
+ kernel/bpf/core.c                                  |   2 -
+ kernel/sched/psi.c                                 |  62 +++++--
+ lib/usercopy.c                                     |   7 +
+ scripts/head-object-list.txt                       |   2 -
+ security/Kconfig.hardening                         |   3 +
+ .../testing/selftests/kvm/x86_64/xen_shinfo_test.c |   5 +
+ 57 files changed, 962 insertions(+), 245 deletions(-)
 
 
