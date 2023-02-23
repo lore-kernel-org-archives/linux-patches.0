@@ -1,30 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CDB257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:07:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id ECB22C433D2;
-	Thu, 23 Feb 2023 13:07:44 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 10E2C257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:07:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 898A2C4339C;
+	Thu, 23 Feb 2023 13:07:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157665;
-	bh=d1xfaDcy+MagVCnP94QkBQvaUatNfXgfVuwxlr7hOEw=;
+	s=korg; t=1677157667;
+	bh=+vzHs0CQPVIfw082TyBxGEZC1LLGnSLAg759kIH/oAU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Z8b97bbQHQlVVjEm9iiF36Ck4evS7C7OsR6QLeO73Ty2yguqLqmui9+AsSlGG4stp
-	 NE6nJ1a36Xmw2IJRoSDtJNhDqUx/GYrRK/cq7J+GOKU2cB12Dm2hnmYAumPG/Z6EdU
-	 k0Eet+NkAC+G+iGvbkCb+m93CFLpZjcp4fQ/VsM0=
+	b=2YHnuoOuRQgLPoCqVmY2eMsurSU/QAxcK6ObU33MDeuPAoM67D5f//OwKEwDWfOGh
+	 RpYkTh24ySUYl0lf7JTCdc0u5uytj1665w24QeBZbMCX+rkp5cCdI2FRen7Z6QsBjO
+	 BIsPY+DZ50vN7DazCVkR2HQ573epV5I3JzI/O92g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Joel Stanley <joel@jms.id.au>,
-	Christoph Hellwig <hch@lst.de>,
-	Pavel Skripkin <paskripkin@gmail.com>,
+	Yu Kuai <yukuai3@huawei.com>,
+	Josef Bacik <josef@toxicpanda.com>,
 	Jens Axboe <axboe@kernel.dk>,
-	Sasha Levin <sashal@kernel.org>,
 	Wen Yang <wenyang.linux@foxmail.com>
-Subject: [PATCH 5.10 18/25] Revert "Revert "block: nbd: add sanity check for first_minor""
-Date: Thu, 23 Feb 2023 14:06:35 +0100
-Message-Id: <20230223130427.598666155@linuxfoundation.org>
+Subject: [PATCH 5.10 19/25] nbd: fix max value for first_minor
+Date: Thu, 23 Feb 2023 14:06:36 +0100
+Message-Id: <20230223130427.650259573@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130426.817998725@linuxfoundation.org>
 References: <20230223130426.817998725@linuxfoundation.org>
@@ -38,46 +36,62 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Wen Yang <wenyang.linux@foxmail.com>
+From: Yu Kuai <yukuai3@huawei.com>
 
-This reverts commit 0daa75bf750c400af0a0127fae37cd959d36dee7.
+commit e4c4871a73944353ea23e319de27ef73ce546623 upstream.
 
-These problems such as:
-https://lore.kernel.org/all/CACPK8XfUWoOHr-0RwRoYoskia4fbAbZ7DYf5wWBnv6qUnGq18w@mail.gmail.com/
-It was introduced by introduced by commit b1a811633f73 ("block: nbd: add sanity check for first_minor")
-and has been have been fixed by commit e4c4871a7394 ("nbd: fix max value for 'first_minor'").
+commit b1a811633f73 ("block: nbd: add sanity check for first_minor")
+checks that 'first_minor' should not be greater than 0xff, which is
+wrong. Whitout the commit, the details that when user pass 0x100000,
+it ends up create sysfs dir "/sys/block/43:0" are as follows:
 
-Cc: Joel Stanley <joel@jms.id.au>
-Cc: Christoph Hellwig <hch@lst.de>
-Cc: Pavel Skripkin <paskripkin@gmail.com>
-Cc: Jens Axboe <axboe@kernel.dk>
-Cc: Sasha Levin <sashal@kernel.org>
-Cc: stable@vger.kernel.org # v5.10+
+nbd_dev_add
+ disk->first_minor = index << part_shift
+  -> default part_shift is 5, first_minor is 0x2000000
+  device_add_disk
+   ddev->devt = MKDEV(disk->major, disk->first_minor)
+    -> (0x2b << 20) | (0x2000000) = 0x2b00000
+   device_add
+    device_create_sys_dev_entry
+	 format_dev_t
+	  sprintf(buffer, "%u:%u", MAJOR(dev), MINOR(dev));
+	   -> got 43:0
+	  sysfs_create_link -> /sys/block/43:0
+
+By the way, with the wrong fix, when part_shift is the default value,
+only 8 ndb devices can be created since 8 << 5 is greater than 0xff.
+
+Since the max bits for 'first_minor' should be the same as what
+MKDEV() does, which is 20. Change the upper bound of 'first_minor'
+from 0xff to 0xfffff.
+
+Fixes: b1a811633f73 ("block: nbd: add sanity check for first_minor")
+Signed-off-by: Yu Kuai <yukuai3@huawei.com>
+Reviewed-by: Josef Bacik <josef@toxicpanda.com>
+Link: https://lore.kernel.org/r/20211102015237.2309763-2-yebin10@huawei.com
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
 Signed-off-by: Wen Yang <wenyang.linux@foxmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/block/nbd.c |   10 ++++++++++
- 1 file changed, 10 insertions(+)
+ drivers/block/nbd.c |    6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 --- a/drivers/block/nbd.c
 +++ b/drivers/block/nbd.c
-@@ -1771,7 +1771,17 @@ static int nbd_dev_add(int index)
- 	refcount_set(&nbd->refs, 1);
- 	INIT_LIST_HEAD(&nbd->list);
+@@ -1773,11 +1773,11 @@ static int nbd_dev_add(int index)
  	disk->major = NBD_MAJOR;
-+
-+	/* Too big first_minor can cause duplicate creation of
-+	 * sysfs files/links, since first_minor will be truncated to
-+	 * byte in __device_add_disk().
-+	 */
+ 
+ 	/* Too big first_minor can cause duplicate creation of
+-	 * sysfs files/links, since first_minor will be truncated to
+-	 * byte in __device_add_disk().
++	 * sysfs files/links, since MKDEV() expect that the max bits of
++	 * first_minor is 20.
+ 	 */
  	disk->first_minor = index << part_shift;
-+	if (disk->first_minor > 0xff) {
-+		err = -EINVAL;
-+		goto out_free_idr;
-+	}
-+
- 	disk->fops = &nbd_fops;
- 	disk->private_data = nbd;
- 	sprintf(disk->disk_name, "nbd%d", index);
+-	if (disk->first_minor > 0xff) {
++	if (disk->first_minor > MINORMASK) {
+ 		err = -EINVAL;
+ 		goto out_free_idr;
+ 	}
 
 
