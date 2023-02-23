@@ -1,70 +1,66 @@
-Received: from mail-qv1-f42.google.com (mail-qv1-f42.google.com [209.85.219.42])
+Received: from mail-oa1-f54.google.com (mail-oa1-f54.google.com [209.85.160.54])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47F81AD26
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 21:54:14 +0000 (UTC)
-Received: by mail-qv1-f42.google.com with SMTP id op8so12722512qvb.11
-        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:54:14 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1423EAD26
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 22:02:50 +0000 (UTC)
+Received: by mail-oa1-f54.google.com with SMTP id 586e51a60fabf-17235c8dab9so13434796fac.7
+        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 14:02:50 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=mhDdt0fMRr1vot8arPkCNh+wXMPBtnxO+GXM3kSrfBE=;
-        b=PISFKTE8TM6sQSy1pBwZQI3u/FYQ14vkOaC/RCP1BrAipVymVttA0bLTmJjirxfNrX
-         5o8h95DpGXbCuVOFh5tziZ+NXPrX71dUMKRzGEkobDZBbA9JLfjoWXaNJJEO53RcxY7v
-         fm6zQHfxKYLvHNA47/9eR4LRs89UcMrAGBfWZL1nqOAquJrumq3aL1Mg/glmVNG6zsJV
-         kRNV+w2DSoJtKyUA6GTXqZ/HiAa2PMDNL1s5aKqF+1gfb/QOqKGXf2uoUttcXRYCgzEE
-         LVglo9IJJFOWySdneEpSw6VWeLHI8zsZyC3ojV6mS4Jy5Ws827yvaxd4Wek9sJ+dZgKp
-         Y6KQ==
+        d=linuxtx.org; s=google;
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=zvydFY35LBk7rNt/h/MORLJxZ1FtIClaMPSTPLJ7SNg=;
+        b=KUIF198p+AdXAtvQeCvgTKWPFoCDz6ym9UfJ08/eDhIdUXH1weWTAel5gYLAJGVzB4
+         YxJGbtz+2mOSKs1BNs9viRlAO28jj+9km++q9doTo7ECpTvViBjDwQM4CDN2PPGhOL48
+         IgXa22NAI+kXDrCjnzmPfMeDTxDbYakFePYnQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=mhDdt0fMRr1vot8arPkCNh+wXMPBtnxO+GXM3kSrfBE=;
-        b=QmikZ7QrfTM6FsavqIQbKt6O7kXlNb/lxItdnaW0qufCRW2tp5oEuGue0eobm1PjQm
-         8m44o8s9LTyCzg2gucTzXh6kiN3L9O+tM5JscP9G7U6vOYalNDO5OUv95Es7cuZifFGT
-         t85HpfnJmJz/I9tcaPSdKppLOm4LiB/fEQxhs+ONl5Wl/LwL6qThtIUoxFj+lreNmVyg
-         23/12MOW4OZSBkUMlJk00loD+yvm5B9gOR6yvz8GqRsFt0rIwdOnAXgC0YN4VjEZSV1J
-         zx7aNQ6MNZjK1SaHDJY3yiWoF/H7w9kg+V3dEIL9LnSHO6yK/crIgsxwpQ12bHqx147G
-         yM9w==
-X-Gm-Message-State: AO0yUKXSKND7fHYgW/MhahNThVOGlCyoWeaLi6d95RBRtY/uAGEeoXVr
-	MfNYzAbnUAJ7I1NgtBw/aig=
-X-Google-Smtp-Source: AK7set+8DThh2Mijo2u7YMM3UZhA44f0vpc4gUZlHdvfSjAp1w1r64513HiUfo8NsrWaPkl3D+3lQA==
-X-Received: by 2002:a05:6214:528b:b0:56e:982c:30 with SMTP id kj11-20020a056214528b00b0056e982c0030mr27247064qvb.16.1677189253033;
-        Thu, 23 Feb 2023 13:54:13 -0800 (PST)
-Received: from [10.67.48.245] ([192.19.223.252])
-        by smtp.googlemail.com with ESMTPSA id d191-20020a3768c8000000b0073b4d8cb4a5sm5489949qkc.60.2023.02.23.13.54.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 13:54:12 -0800 (PST)
-Message-ID: <ceea2630-7c1e-6fde-cf2f-d4e36e292e59@gmail.com>
-Date: Thu, 23 Feb 2023 13:54:09 -0800
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=zvydFY35LBk7rNt/h/MORLJxZ1FtIClaMPSTPLJ7SNg=;
+        b=huQxMhYXBROA9d47goeQPJaRiA5RaTh+PKlojSx2S7QTRPw7GQQeyrcarLCfEl9uOO
+         lkzWZUL4kn3+WlhM+Hpd/S0FQPQ2YIZnF9G1lnl/1LzdaK3ef7SwtGhX1uGQqDYQ9tIt
+         JpOB4c6A/o+tsL8OqaY7gSzy3Cs7AumkXIOWDQb3qSxkEs6yXRDVaBVXmR12vuCd2Z3p
+         BANRFvB9gM2MmOoktcY4oK1Sf/Xowuv3pbvGXtC27HzGsaHxEsJANCPyzgj1ootDLk/G
+         wDVqF835K/Q2Y2zeSz7LfCsTDqA5RRMp+FBShdNFJeRhgepHGt/pab1sH4Fdgd7FRA8q
+         XqcA==
+X-Gm-Message-State: AO0yUKW3/hofQ4qG5ZXONPoqz9tAl9zR1IV5KNnjgAb/xLYvMVNWnXlx
+	hJoHD++VopRSR0lAxq/hvUGP6w==
+X-Google-Smtp-Source: AK7set/772vBfteGrWHqqXY5znI9DFjNRUvpnHi3krCHidb/B5GX2FvQtSkW1ApRhVNF64BPpRj2AA==
+X-Received: by 2002:a05:6871:b25:b0:16d:dd7a:d13d with SMTP id fq37-20020a0568710b2500b0016ddd7ad13dmr12604155oab.3.1677189770061;
+        Thu, 23 Feb 2023 14:02:50 -0800 (PST)
+Received: from fedora64.linuxtx.org (99-47-93-78.lightspeed.rcsntx.sbcglobal.net. [99.47.93.78])
+        by smtp.gmail.com with ESMTPSA id r1-20020a4ae501000000b00524fe20aee5sm2924839oot.34.2023.02.23.14.02.49
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Feb 2023 14:02:49 -0800 (PST)
+Sender: Justin Forbes <jmforbes@linuxtx.org>
+Date: Thu, 23 Feb 2023 16:02:47 -0600
+From: Justin Forbes <jforbes@fedoraproject.org>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.2 00/12] 6.2.1-rc2 review
+Message-ID: <Y/fihxWNdr4ejNwe@fedora64.linuxtx.org>
+References: <20230223141539.893173089@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 5.15 00/37] 5.15.96-rc2 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230223141542.672463796@linuxfoundation.org>
-From: Florian Fainelli <f.fainelli@gmail.com>
-In-Reply-To: <20230223141542.672463796@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230223141539.893173089@linuxfoundation.org>
 
-On 2/23/23 06:16, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.96 release.
-> There are 37 patches in this series, all will be posted as a response
+On Thu, Feb 23, 2023 at 03:16:08PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.2.1 release.
+> There are 12 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
 > 
@@ -72,21 +68,16 @@ On 2/23/23 06:16, Greg Kroah-Hartman wrote:
 > Anything received after that time might be too late.
 > 
 > The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.96-rc2.gz
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.1-rc2.gz
 > or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
 > and the diffstat can be found below.
 > 
 > thanks,
 > 
 > greg k-h
 
-On ARCH_BRCMSTB using 32-bit and 64-bit kernels, build tested on 
-BMIPS_GENERIC:
+Tested rc2 against the Fedora build system (aarch64, ppc64le, s390x,
+x86_64), and boot tested x86_64. No regressions noted.
 
-Tested-by: Florian Fainelli <f.fainelli@gmail.com>
-
-with fixing the permissions of scripts/pahole-version.sh
--- 
-Florian
-
+Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
