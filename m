@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D8B0B257C
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:09:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 603DEC433EF;
-	Thu, 23 Feb 2023 13:09:31 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 71A83257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:09:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E9179C433EF;
+	Thu, 23 Feb 2023 13:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157771;
-	bh=SgOU6MwnHlIwgb3EVM0qw+ULm97psIIxrVtG0WEWJZw=;
+	s=korg; t=1677157774;
+	bh=sHpeTvxJ2hbd0m1Y4dPLVp6TbmXXDaERRH1DBBK2bMc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=vUrbUPJedyep/zSON1do8nkbd7XDy0pSmxYDyenOgWV8vKjSmJa+hUeKeuf5mj2TW
-	 C/GRVWOmz4EyRRFfYC0HsnqgO4iwNPa5SlRYbRSO4WswIjfFbVIdRDZK5DL1vTGTgx
-	 mCiyKGll4mtNVrC1gfJOEWBATFzPHDp8cc54jI5U=
+	b=xSTQXLc84GDPelNmSTU+bZEvUiPXjA2k/J6rSfm8G4FrntD/m89U8p6wEENvVOK0g
+	 OXFwBK5lViuxATFstl3y8HOqrgB5VQMVnHk6aVi+DiW0m8RvWa3/kHFb4DytyiRze1
+	 CFtGtp3tPCD8HsK2hFWWOJgtTmObqiRUSsjoX24I=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Erhard F." <erhard_f@mailbox.org>,
-	"Peter Zijlstra (Intel)" <peterz@infradead.org>,
-	Ingo Molnar <mingo@kernel.org>,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	Nathan Chancellor <nathan@kernel.org>
-Subject: [PATCH 6.1 32/46] x86/static_call: Add support for Jcc tail-calls
-Date: Thu, 23 Feb 2023 14:06:39 +0100
-Message-Id: <20230223130433.082606881@linuxfoundation.org>
+	Yi xin Zhu <yzhu@maxlinear.com>,
+	Rahul Tanwar <rtanwar@maxlinear.com>,
+	Stephen Boyd <sboyd@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 06/46] clk: mxl: Remove redundant spinlocks
+Date: Thu, 23 Feb 2023 14:06:13 +0100
+Message-Id: <20230223130431.839953890@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130431.553657459@linuxfoundation.org>
 References: <20230223130431.553657459@linuxfoundation.org>
@@ -37,135 +36,515 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Peter Zijlstra <peterz@infradead.org>
+From: Rahul Tanwar <rtanwar@maxlinear.com>
 
-commit 923510c88d2b7d947c4217835fd9ca6bd65cc56c upstream.
+[ Upstream commit eaabee88a88a26b108be8d120fc072dfaf462cef ]
 
-Clang likes to create conditional tail calls like:
+Patch 1/4 of this patch series switches from direct readl/writel
+based register access to regmap based register access. Instead
+of using direct readl/writel, regmap API's are used to read, write
+& read-modify-write clk registers. Regmap API's already use their
+own spinlocks to serialize the register accesses across multiple
+cores in which case additional driver spinlocks becomes redundant.
 
-  0000000000000350 <amd_pmu_add_event>:
-  350:       0f 1f 44 00 00          nopl   0x0(%rax,%rax,1) 351: R_X86_64_NONE      __fentry__-0x4
-  355:       48 83 bf 20 01 00 00 00         cmpq   $0x0,0x120(%rdi)
-  35d:       0f 85 00 00 00 00       jne    363 <amd_pmu_add_event+0x13>     35f: R_X86_64_PLT32     __SCT__amd_pmu_branch_add-0x4
-  363:       e9 00 00 00 00          jmp    368 <amd_pmu_add_event+0x18>     364: R_X86_64_PLT32     __x86_return_thunk-0x4
+Hence, remove redundant spinlocks from driver in this patch 2/4.
 
-Where 0x35d is a static call site that's turned into a conditional
-tail-call using the Jcc class of instructions.
-
-Teach the in-line static call text patching about this.
-
-Notably, since there is no conditional-ret, in that case patch the Jcc
-to point at an empty stub function that does the ret -- or the return
-thunk when needed.
-
-Reported-by: "Erhard F." <erhard_f@mailbox.org>
-Signed-off-by: Peter Zijlstra (Intel) <peterz@infradead.org>
-Signed-off-by: Ingo Molnar <mingo@kernel.org>
-Reviewed-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Link: https://lore.kernel.org/r/Y9Kdg9QjHkr9G5b5@hirez.programming.kicks-ass.net
-[nathan: Backport to 6.1:
-         - Use __x86_return_thunk instead of x86_return_thunk for func in
-           __static_call_transform()
-         - Remove ASM_FUNC_ALIGN in __static_call_return() asm, as call
-           depth tracking was merged in 6.2]
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Reviewed-by: Yi xin Zhu <yzhu@maxlinear.com>
+Signed-off-by: Rahul Tanwar <rtanwar@maxlinear.com>
+Link: https://lore.kernel.org/r/a8a02c8773b88924503a9fdaacd37dd2e6488bf3.1665642720.git.rtanwar@maxlinear.com
+Signed-off-by: Stephen Boyd <sboyd@kernel.org>
+Stable-dep-of: 106ef3bda210 ("clk: mxl: Fix a clk entry by adding relevant flags")
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/kernel/static_call.c |   49 +++++++++++++++++++++++++++++++++++++++---
- 1 file changed, 46 insertions(+), 3 deletions(-)
+ drivers/clk/x86/clk-cgu-pll.c | 13 ------
+ drivers/clk/x86/clk-cgu.c     | 80 ++++-------------------------------
+ drivers/clk/x86/clk-cgu.h     |  6 ---
+ drivers/clk/x86/clk-lgm.c     |  1 -
+ 4 files changed, 9 insertions(+), 91 deletions(-)
 
---- a/arch/x86/kernel/static_call.c
-+++ b/arch/x86/kernel/static_call.c
-@@ -9,6 +9,7 @@ enum insn_type {
- 	NOP = 1,  /* site cond-call */
- 	JMP = 2,  /* tramp / site tail-call */
- 	RET = 3,  /* tramp / site cond-tail-call */
-+	JCC = 4,
- };
- 
- /*
-@@ -25,12 +26,39 @@ static const u8 xor5rax[] = { 0x2e, 0x2e
- 
- static const u8 retinsn[] = { RET_INSN_OPCODE, 0xcc, 0xcc, 0xcc, 0xcc };
- 
-+static u8 __is_Jcc(u8 *insn) /* Jcc.d32 */
-+{
-+	u8 ret = 0;
-+
-+	if (insn[0] == 0x0f) {
-+		u8 tmp = insn[1];
-+		if ((tmp & 0xf0) == 0x80)
-+			ret = tmp;
-+	}
-+
-+	return ret;
-+}
-+
-+extern void __static_call_return(void);
-+
-+asm (".global __static_call_return\n\t"
-+     ".type __static_call_return, @function\n\t"
-+     "__static_call_return:\n\t"
-+     ANNOTATE_NOENDBR
-+     ANNOTATE_RETPOLINE_SAFE
-+     "ret; int3\n\t"
-+     ".size __static_call_return, . - __static_call_return \n\t");
-+
- static void __ref __static_call_transform(void *insn, enum insn_type type,
- 					  void *func, bool modinit)
+diff --git a/drivers/clk/x86/clk-cgu-pll.c b/drivers/clk/x86/clk-cgu-pll.c
+index c83083affe88e..409dbf55f4cae 100644
+--- a/drivers/clk/x86/clk-cgu-pll.c
++++ b/drivers/clk/x86/clk-cgu-pll.c
+@@ -41,13 +41,10 @@ static unsigned long lgm_pll_recalc_rate(struct clk_hw *hw, unsigned long prate)
  {
- 	const void *emulate = NULL;
- 	int size = CALL_INSN_SIZE;
- 	const void *code;
-+	u8 op, buf[6];
-+
-+	if ((type == JMP || type == RET) && (op = __is_Jcc(insn)))
-+		type = JCC;
+ 	struct lgm_clk_pll *pll = to_lgm_clk_pll(hw);
+ 	unsigned int div, mult, frac;
+-	unsigned long flags;
  
- 	switch (type) {
- 	case CALL:
-@@ -56,6 +84,20 @@ static void __ref __static_call_transfor
- 		else
- 			code = &retinsn;
- 		break;
-+
-+	case JCC:
-+		if (!func) {
-+			func = __static_call_return;
-+			if (cpu_feature_enabled(X86_FEATURE_RETHUNK))
-+				func = __x86_return_thunk;
-+		}
-+
-+		buf[0] = 0x0f;
-+		__text_gen_insn(buf+1, op, insn+1, func, 5);
-+		code = buf;
-+		size = 6;
-+
-+		break;
- 	}
+-	spin_lock_irqsave(&pll->lock, flags);
+ 	mult = lgm_get_clk_val(pll->membase, PLL_REF_DIV(pll->reg), 0, 12);
+ 	div = lgm_get_clk_val(pll->membase, PLL_REF_DIV(pll->reg), 18, 6);
+ 	frac = lgm_get_clk_val(pll->membase, pll->reg, 2, 24);
+-	spin_unlock_irqrestore(&pll->lock, flags);
  
- 	if (memcmp(insn, code, size) == 0)
-@@ -67,9 +109,9 @@ static void __ref __static_call_transfor
- 	text_poke_bp(insn, code, size, emulate);
+ 	if (pll->type == TYPE_LJPLL)
+ 		div *= 4;
+@@ -58,12 +55,9 @@ static unsigned long lgm_pll_recalc_rate(struct clk_hw *hw, unsigned long prate)
+ static int lgm_pll_is_enabled(struct clk_hw *hw)
+ {
+ 	struct lgm_clk_pll *pll = to_lgm_clk_pll(hw);
+-	unsigned long flags;
+ 	unsigned int ret;
+ 
+-	spin_lock_irqsave(&pll->lock, flags);
+ 	ret = lgm_get_clk_val(pll->membase, pll->reg, 0, 1);
+-	spin_unlock_irqrestore(&pll->lock, flags);
+ 
+ 	return ret;
+ }
+@@ -71,16 +65,13 @@ static int lgm_pll_is_enabled(struct clk_hw *hw)
+ static int lgm_pll_enable(struct clk_hw *hw)
+ {
+ 	struct lgm_clk_pll *pll = to_lgm_clk_pll(hw);
+-	unsigned long flags;
+ 	u32 val;
+ 	int ret;
+ 
+-	spin_lock_irqsave(&pll->lock, flags);
+ 	lgm_set_clk_val(pll->membase, pll->reg, 0, 1, 1);
+ 	ret = regmap_read_poll_timeout_atomic(pll->membase, pll->reg,
+ 					      val, (val & 0x1), 1, 100);
+ 
+-	spin_unlock_irqrestore(&pll->lock, flags);
+ 
+ 	return ret;
+ }
+@@ -88,11 +79,8 @@ static int lgm_pll_enable(struct clk_hw *hw)
+ static void lgm_pll_disable(struct clk_hw *hw)
+ {
+ 	struct lgm_clk_pll *pll = to_lgm_clk_pll(hw);
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&pll->lock, flags);
+ 	lgm_set_clk_val(pll->membase, pll->reg, 0, 1, 0);
+-	spin_unlock_irqrestore(&pll->lock, flags);
  }
  
--static void __static_call_validate(void *insn, bool tail, bool tramp)
-+static void __static_call_validate(u8 *insn, bool tail, bool tramp)
+ static const struct clk_ops lgm_pll_ops = {
+@@ -123,7 +111,6 @@ lgm_clk_register_pll(struct lgm_clk_provider *ctx,
+ 		return ERR_PTR(-ENOMEM);
+ 
+ 	pll->membase = ctx->membase;
+-	pll->lock = ctx->lock;
+ 	pll->reg = list->reg;
+ 	pll->flags = list->flags;
+ 	pll->type = list->type;
+diff --git a/drivers/clk/x86/clk-cgu.c b/drivers/clk/x86/clk-cgu.c
+index f5f30a18f4869..1f7e93de67bc0 100644
+--- a/drivers/clk/x86/clk-cgu.c
++++ b/drivers/clk/x86/clk-cgu.c
+@@ -25,14 +25,10 @@
+ static struct clk_hw *lgm_clk_register_fixed(struct lgm_clk_provider *ctx,
+ 					     const struct lgm_clk_branch *list)
  {
--	u8 opcode = *(u8 *)insn;
-+	u8 opcode = insn[0];
+-	unsigned long flags;
  
- 	if (tramp && memcmp(insn+5, tramp_ud, 3)) {
- 		pr_err("trampoline signature fail");
-@@ -78,7 +120,8 @@ static void __static_call_validate(void
+-	if (list->div_flags & CLOCK_FLAG_VAL_INIT) {
+-		spin_lock_irqsave(&ctx->lock, flags);
++	if (list->div_flags & CLOCK_FLAG_VAL_INIT)
+ 		lgm_set_clk_val(ctx->membase, list->div_off, list->div_shift,
+ 				list->div_width, list->div_val);
+-		spin_unlock_irqrestore(&ctx->lock, flags);
+-	}
  
- 	if (tail) {
- 		if (opcode == JMP32_INSN_OPCODE ||
--		    opcode == RET_INSN_OPCODE)
-+		    opcode == RET_INSN_OPCODE ||
-+		    __is_Jcc(insn))
- 			return;
- 	} else {
- 		if (opcode == CALL_INSN_OPCODE ||
+ 	return clk_hw_register_fixed_rate(NULL, list->name,
+ 					  list->parent_data[0].name,
+@@ -42,33 +38,27 @@ static struct clk_hw *lgm_clk_register_fixed(struct lgm_clk_provider *ctx,
+ static u8 lgm_clk_mux_get_parent(struct clk_hw *hw)
+ {
+ 	struct lgm_clk_mux *mux = to_lgm_clk_mux(hw);
+-	unsigned long flags;
+ 	u32 val;
+ 
+-	spin_lock_irqsave(&mux->lock, flags);
+ 	if (mux->flags & MUX_CLK_SW)
+ 		val = mux->reg;
+ 	else
+ 		val = lgm_get_clk_val(mux->membase, mux->reg, mux->shift,
+ 				      mux->width);
+-	spin_unlock_irqrestore(&mux->lock, flags);
+ 	return clk_mux_val_to_index(hw, NULL, mux->flags, val);
+ }
+ 
+ static int lgm_clk_mux_set_parent(struct clk_hw *hw, u8 index)
+ {
+ 	struct lgm_clk_mux *mux = to_lgm_clk_mux(hw);
+-	unsigned long flags;
+ 	u32 val;
+ 
+ 	val = clk_mux_index_to_val(NULL, mux->flags, index);
+-	spin_lock_irqsave(&mux->lock, flags);
+ 	if (mux->flags & MUX_CLK_SW)
+ 		mux->reg = val;
+ 	else
+ 		lgm_set_clk_val(mux->membase, mux->reg, mux->shift,
+ 				mux->width, val);
+-	spin_unlock_irqrestore(&mux->lock, flags);
+ 
+ 	return 0;
+ }
+@@ -91,7 +81,7 @@ static struct clk_hw *
+ lgm_clk_register_mux(struct lgm_clk_provider *ctx,
+ 		     const struct lgm_clk_branch *list)
+ {
+-	unsigned long flags, cflags = list->mux_flags;
++	unsigned long cflags = list->mux_flags;
+ 	struct device *dev = ctx->dev;
+ 	u8 shift = list->mux_shift;
+ 	u8 width = list->mux_width;
+@@ -112,7 +102,6 @@ lgm_clk_register_mux(struct lgm_clk_provider *ctx,
+ 	init.num_parents = list->num_parents;
+ 
+ 	mux->membase = ctx->membase;
+-	mux->lock = ctx->lock;
+ 	mux->reg = reg;
+ 	mux->shift = shift;
+ 	mux->width = width;
+@@ -124,11 +113,8 @@ lgm_clk_register_mux(struct lgm_clk_provider *ctx,
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
+-	if (cflags & CLOCK_FLAG_VAL_INIT) {
+-		spin_lock_irqsave(&mux->lock, flags);
++	if (cflags & CLOCK_FLAG_VAL_INIT)
+ 		lgm_set_clk_val(mux->membase, reg, shift, width, list->mux_val);
+-		spin_unlock_irqrestore(&mux->lock, flags);
+-	}
+ 
+ 	return hw;
+ }
+@@ -137,13 +123,10 @@ static unsigned long
+ lgm_clk_divider_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ {
+ 	struct lgm_clk_divider *divider = to_lgm_clk_divider(hw);
+-	unsigned long flags;
+ 	unsigned int val;
+ 
+-	spin_lock_irqsave(&divider->lock, flags);
+ 	val = lgm_get_clk_val(divider->membase, divider->reg,
+ 			      divider->shift, divider->width);
+-	spin_unlock_irqrestore(&divider->lock, flags);
+ 
+ 	return divider_recalc_rate(hw, parent_rate, val, divider->table,
+ 				   divider->flags, divider->width);
+@@ -164,7 +147,6 @@ lgm_clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+ 			 unsigned long prate)
+ {
+ 	struct lgm_clk_divider *divider = to_lgm_clk_divider(hw);
+-	unsigned long flags;
+ 	int value;
+ 
+ 	value = divider_get_val(rate, prate, divider->table,
+@@ -172,10 +154,8 @@ lgm_clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+ 	if (value < 0)
+ 		return value;
+ 
+-	spin_lock_irqsave(&divider->lock, flags);
+ 	lgm_set_clk_val(divider->membase, divider->reg,
+ 			divider->shift, divider->width, value);
+-	spin_unlock_irqrestore(&divider->lock, flags);
+ 
+ 	return 0;
+ }
+@@ -183,12 +163,9 @@ lgm_clk_divider_set_rate(struct clk_hw *hw, unsigned long rate,
+ static int lgm_clk_divider_enable_disable(struct clk_hw *hw, int enable)
+ {
+ 	struct lgm_clk_divider *div = to_lgm_clk_divider(hw);
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&div->lock, flags);
+ 	lgm_set_clk_val(div->membase, div->reg, div->shift_gate,
+ 			div->width_gate, enable);
+-	spin_unlock_irqrestore(&div->lock, flags);
+ 	return 0;
+ }
+ 
+@@ -214,7 +191,7 @@ static struct clk_hw *
+ lgm_clk_register_divider(struct lgm_clk_provider *ctx,
+ 			 const struct lgm_clk_branch *list)
+ {
+-	unsigned long flags, cflags = list->div_flags;
++	unsigned long cflags = list->div_flags;
+ 	struct device *dev = ctx->dev;
+ 	struct lgm_clk_divider *div;
+ 	struct clk_init_data init = {};
+@@ -237,7 +214,6 @@ lgm_clk_register_divider(struct lgm_clk_provider *ctx,
+ 	init.num_parents = 1;
+ 
+ 	div->membase = ctx->membase;
+-	div->lock = ctx->lock;
+ 	div->reg = reg;
+ 	div->shift = shift;
+ 	div->width = width;
+@@ -252,11 +228,8 @@ lgm_clk_register_divider(struct lgm_clk_provider *ctx,
+ 	if (ret)
+ 		return ERR_PTR(ret);
+ 
+-	if (cflags & CLOCK_FLAG_VAL_INIT) {
+-		spin_lock_irqsave(&div->lock, flags);
++	if (cflags & CLOCK_FLAG_VAL_INIT)
+ 		lgm_set_clk_val(div->membase, reg, shift, width, list->div_val);
+-		spin_unlock_irqrestore(&div->lock, flags);
+-	}
+ 
+ 	return hw;
+ }
+@@ -265,7 +238,6 @@ static struct clk_hw *
+ lgm_clk_register_fixed_factor(struct lgm_clk_provider *ctx,
+ 			      const struct lgm_clk_branch *list)
+ {
+-	unsigned long flags;
+ 	struct clk_hw *hw;
+ 
+ 	hw = clk_hw_register_fixed_factor(ctx->dev, list->name,
+@@ -274,12 +246,9 @@ lgm_clk_register_fixed_factor(struct lgm_clk_provider *ctx,
+ 	if (IS_ERR(hw))
+ 		return ERR_CAST(hw);
+ 
+-	if (list->div_flags & CLOCK_FLAG_VAL_INIT) {
+-		spin_lock_irqsave(&ctx->lock, flags);
++	if (list->div_flags & CLOCK_FLAG_VAL_INIT)
+ 		lgm_set_clk_val(ctx->membase, list->div_off, list->div_shift,
+ 				list->div_width, list->div_val);
+-		spin_unlock_irqrestore(&ctx->lock, flags);
+-	}
+ 
+ 	return hw;
+ }
+@@ -287,13 +256,10 @@ lgm_clk_register_fixed_factor(struct lgm_clk_provider *ctx,
+ static int lgm_clk_gate_enable(struct clk_hw *hw)
+ {
+ 	struct lgm_clk_gate *gate = to_lgm_clk_gate(hw);
+-	unsigned long flags;
+ 	unsigned int reg;
+ 
+-	spin_lock_irqsave(&gate->lock, flags);
+ 	reg = GATE_HW_REG_EN(gate->reg);
+ 	lgm_set_clk_val(gate->membase, reg, gate->shift, 1, 1);
+-	spin_unlock_irqrestore(&gate->lock, flags);
+ 
+ 	return 0;
+ }
+@@ -301,25 +267,19 @@ static int lgm_clk_gate_enable(struct clk_hw *hw)
+ static void lgm_clk_gate_disable(struct clk_hw *hw)
+ {
+ 	struct lgm_clk_gate *gate = to_lgm_clk_gate(hw);
+-	unsigned long flags;
+ 	unsigned int reg;
+ 
+-	spin_lock_irqsave(&gate->lock, flags);
+ 	reg = GATE_HW_REG_DIS(gate->reg);
+ 	lgm_set_clk_val(gate->membase, reg, gate->shift, 1, 1);
+-	spin_unlock_irqrestore(&gate->lock, flags);
+ }
+ 
+ static int lgm_clk_gate_is_enabled(struct clk_hw *hw)
+ {
+ 	struct lgm_clk_gate *gate = to_lgm_clk_gate(hw);
+ 	unsigned int reg, ret;
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&gate->lock, flags);
+ 	reg = GATE_HW_REG_STAT(gate->reg);
+ 	ret = lgm_get_clk_val(gate->membase, reg, gate->shift, 1);
+-	spin_unlock_irqrestore(&gate->lock, flags);
+ 
+ 	return ret;
+ }
+@@ -334,7 +294,7 @@ static struct clk_hw *
+ lgm_clk_register_gate(struct lgm_clk_provider *ctx,
+ 		      const struct lgm_clk_branch *list)
+ {
+-	unsigned long flags, cflags = list->gate_flags;
++	unsigned long cflags = list->gate_flags;
+ 	const char *pname = list->parent_data[0].name;
+ 	struct device *dev = ctx->dev;
+ 	u8 shift = list->gate_shift;
+@@ -355,7 +315,6 @@ lgm_clk_register_gate(struct lgm_clk_provider *ctx,
+ 	init.num_parents = pname ? 1 : 0;
+ 
+ 	gate->membase = ctx->membase;
+-	gate->lock = ctx->lock;
+ 	gate->reg = reg;
+ 	gate->shift = shift;
+ 	gate->flags = cflags;
+@@ -367,9 +326,7 @@ lgm_clk_register_gate(struct lgm_clk_provider *ctx,
+ 		return ERR_PTR(ret);
+ 
+ 	if (cflags & CLOCK_FLAG_VAL_INIT) {
+-		spin_lock_irqsave(&gate->lock, flags);
+ 		lgm_set_clk_val(gate->membase, reg, shift, 1, list->gate_val);
+-		spin_unlock_irqrestore(&gate->lock, flags);
+ 	}
+ 
+ 	return hw;
+@@ -444,24 +401,18 @@ lgm_clk_ddiv_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
+ static int lgm_clk_ddiv_enable(struct clk_hw *hw)
+ {
+ 	struct lgm_clk_ddiv *ddiv = to_lgm_clk_ddiv(hw);
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&ddiv->lock, flags);
+ 	lgm_set_clk_val(ddiv->membase, ddiv->reg, ddiv->shift_gate,
+ 			ddiv->width_gate, 1);
+-	spin_unlock_irqrestore(&ddiv->lock, flags);
+ 	return 0;
+ }
+ 
+ static void lgm_clk_ddiv_disable(struct clk_hw *hw)
+ {
+ 	struct lgm_clk_ddiv *ddiv = to_lgm_clk_ddiv(hw);
+-	unsigned long flags;
+ 
+-	spin_lock_irqsave(&ddiv->lock, flags);
+ 	lgm_set_clk_val(ddiv->membase, ddiv->reg, ddiv->shift_gate,
+ 			ddiv->width_gate, 0);
+-	spin_unlock_irqrestore(&ddiv->lock, flags);
+ }
+ 
+ static int
+@@ -498,32 +449,25 @@ lgm_clk_ddiv_set_rate(struct clk_hw *hw, unsigned long rate,
+ {
+ 	struct lgm_clk_ddiv *ddiv = to_lgm_clk_ddiv(hw);
+ 	u32 div, ddiv1, ddiv2;
+-	unsigned long flags;
+ 
+ 	div = DIV_ROUND_CLOSEST_ULL((u64)prate, rate);
+ 
+-	spin_lock_irqsave(&ddiv->lock, flags);
+ 	if (lgm_get_clk_val(ddiv->membase, ddiv->reg, ddiv->shift2, 1)) {
+ 		div = DIV_ROUND_CLOSEST_ULL((u64)div, 5);
+ 		div = div * 2;
+ 	}
+ 
+-	if (div <= 0) {
+-		spin_unlock_irqrestore(&ddiv->lock, flags);
++	if (div <= 0)
+ 		return -EINVAL;
+-	}
+ 
+-	if (lgm_clk_get_ddiv_val(div, &ddiv1, &ddiv2)) {
+-		spin_unlock_irqrestore(&ddiv->lock, flags);
++	if (lgm_clk_get_ddiv_val(div, &ddiv1, &ddiv2))
+ 		return -EINVAL;
+-	}
+ 
+ 	lgm_set_clk_val(ddiv->membase, ddiv->reg, ddiv->shift0, ddiv->width0,
+ 			ddiv1 - 1);
+ 
+ 	lgm_set_clk_val(ddiv->membase, ddiv->reg,  ddiv->shift1, ddiv->width1,
+ 			ddiv2 - 1);
+-	spin_unlock_irqrestore(&ddiv->lock, flags);
+ 
+ 	return 0;
+ }
+@@ -534,18 +478,15 @@ lgm_clk_ddiv_round_rate(struct clk_hw *hw, unsigned long rate,
+ {
+ 	struct lgm_clk_ddiv *ddiv = to_lgm_clk_ddiv(hw);
+ 	u32 div, ddiv1, ddiv2;
+-	unsigned long flags;
+ 	u64 rate64;
+ 
+ 	div = DIV_ROUND_CLOSEST_ULL((u64)*prate, rate);
+ 
+ 	/* if predivide bit is enabled, modify div by factor of 2.5 */
+-	spin_lock_irqsave(&ddiv->lock, flags);
+ 	if (lgm_get_clk_val(ddiv->membase, ddiv->reg, ddiv->shift2, 1)) {
+ 		div = div * 2;
+ 		div = DIV_ROUND_CLOSEST_ULL((u64)div, 5);
+ 	}
+-	spin_unlock_irqrestore(&ddiv->lock, flags);
+ 
+ 	if (div <= 0)
+ 		return *prate;
+@@ -559,12 +500,10 @@ lgm_clk_ddiv_round_rate(struct clk_hw *hw, unsigned long rate,
+ 	do_div(rate64, ddiv2);
+ 
+ 	/* if predivide bit is enabled, modify rounded rate by factor of 2.5 */
+-	spin_lock_irqsave(&ddiv->lock, flags);
+ 	if (lgm_get_clk_val(ddiv->membase, ddiv->reg, ddiv->shift2, 1)) {
+ 		rate64 = rate64 * 2;
+ 		rate64 = DIV_ROUND_CLOSEST_ULL(rate64, 5);
+ 	}
+-	spin_unlock_irqrestore(&ddiv->lock, flags);
+ 
+ 	return rate64;
+ }
+@@ -601,7 +540,6 @@ int lgm_clk_register_ddiv(struct lgm_clk_provider *ctx,
+ 		init.num_parents = 1;
+ 
+ 		ddiv->membase = ctx->membase;
+-		ddiv->lock = ctx->lock;
+ 		ddiv->reg = list->reg;
+ 		ddiv->shift0 = list->shift0;
+ 		ddiv->width0 = list->width0;
+diff --git a/drivers/clk/x86/clk-cgu.h b/drivers/clk/x86/clk-cgu.h
+index dbcb664687975..0aa0f35d63a0b 100644
+--- a/drivers/clk/x86/clk-cgu.h
++++ b/drivers/clk/x86/clk-cgu.h
+@@ -18,7 +18,6 @@ struct lgm_clk_mux {
+ 	u8 shift;
+ 	u8 width;
+ 	unsigned long flags;
+-	spinlock_t lock;
+ };
+ 
+ struct lgm_clk_divider {
+@@ -31,7 +30,6 @@ struct lgm_clk_divider {
+ 	u8 width_gate;
+ 	unsigned long flags;
+ 	const struct clk_div_table *table;
+-	spinlock_t lock;
+ };
+ 
+ struct lgm_clk_ddiv {
+@@ -49,7 +47,6 @@ struct lgm_clk_ddiv {
+ 	unsigned int mult;
+ 	unsigned int div;
+ 	unsigned long flags;
+-	spinlock_t lock;
+ };
+ 
+ struct lgm_clk_gate {
+@@ -58,7 +55,6 @@ struct lgm_clk_gate {
+ 	unsigned int reg;
+ 	u8 shift;
+ 	unsigned long flags;
+-	spinlock_t lock;
+ };
+ 
+ enum lgm_clk_type {
+@@ -82,7 +78,6 @@ struct lgm_clk_provider {
+ 	struct device_node *np;
+ 	struct device *dev;
+ 	struct clk_hw_onecell_data clk_data;
+-	spinlock_t lock;
+ };
+ 
+ enum pll_type {
+@@ -97,7 +92,6 @@ struct lgm_clk_pll {
+ 	unsigned int reg;
+ 	unsigned long flags;
+ 	enum pll_type type;
+-	spinlock_t lock;
+ };
+ 
+ /**
+diff --git a/drivers/clk/x86/clk-lgm.c b/drivers/clk/x86/clk-lgm.c
+index 4fa2bcaf71c89..e312af42e97ae 100644
+--- a/drivers/clk/x86/clk-lgm.c
++++ b/drivers/clk/x86/clk-lgm.c
+@@ -444,7 +444,6 @@ static int lgm_cgu_probe(struct platform_device *pdev)
+ 
+ 	ctx->np = np;
+ 	ctx->dev = dev;
+-	spin_lock_init(&ctx->lock);
+ 
+ 	ret = lgm_clk_register_plls(ctx, lgm_pll_clks,
+ 				    ARRAY_SIZE(lgm_pll_clks));
+-- 
+2.39.0
+
 
 
