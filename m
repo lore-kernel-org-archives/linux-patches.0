@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C87A62584
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:09:05 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4DCB5C4339B;
-	Thu, 23 Feb 2023 13:09:05 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 718FE257C
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:09:08 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E3237C433D2;
+	Thu, 23 Feb 2023 13:09:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157745;
-	bh=Vdj7COWgsmffgml7LP3Sgxoo+HJuXuTalqEHCG9V6B0=;
+	s=korg; t=1677157748;
+	bh=Ln/fP5or0UNHJ8oMz9pM+CTmTIv50zkcdRnZFFKAxKs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ckiPYaOEXnZ12WSBL2Deck2WdgBDHEpa0ug+qF60E2vRsUSgiIn/irv/ZY6YXkGuT
-	 WVVnqS03U+jNaX2qvuICQSfGDrMtbGadc39xfVfNLK0c7/kS4xrnehsihHtDP3s4PQ
-	 AedsvP4lWxZzvEWUdgAxBA25Z07CewpA7w644Myk=
+	b=PLLcwGu8abbcloVbH5BqKs3un3lnNwKY2+uND3K4GCQ64xrUvGA7lHZs+ls0s0ew6
+	 yERAxN7DqgDQz/xExA1sk5j0SDYAkeTUi2/fKOzGS0uSn2mFxKHqTg6Uusa7RSRokb
+	 TDOqXZ8QrHzg6zKXt9KhTqHXhkxMnLWbz/dG3Nk8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Yi xin Zhu <yzhu@maxlinear.com>,
-	Rahul Tanwar <rtanwar@maxlinear.com>,
-	Stephen Boyd <sboyd@kernel.org>,
+	Lucas De Marchi <lucas.demarchi@intel.com>,
+	Radhakrishna Sripada <radhakrishna.sripada@intel.com>,
+	Rodrigo Vivi <rodrigo.vivi@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 05/46] clk: mxl: Switch from direct readl/writel based IO to regmap based IO
-Date: Thu, 23 Feb 2023 14:06:12 +0100
-Message-Id: <20230223130431.790519084@linuxfoundation.org>
+Subject: [PATCH 6.1 23/46] drm/i915: Remove __maybe_unused from mtl_info
+Date: Thu, 23 Feb 2023 14:06:30 +0100
+Message-Id: <20230223130432.643981258@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130431.553657459@linuxfoundation.org>
 References: <20230223130431.553657459@linuxfoundation.org>
@@ -36,243 +36,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Rahul Tanwar <rtanwar@maxlinear.com>
+From: Lucas De Marchi <lucas.demarchi@intel.com>
 
-[ Upstream commit 036177310bac5534de44ff6a7b60a4d2c0b6567c ]
+[ Upstream commit fff758698842fb6722be37498d8773e0fb47f000 ]
 
-Earlier version of driver used direct io remapped register read
-writes using readl/writel. But we need secure boot access which
-is only possible when registers are read & written using regmap.
-This is because the security bus/hook is written & coupled only
-with regmap layer.
+The attribute __maybe_unused should remain only until the respective
+info is not in the pciidlist. The info can't be added together
+with its definition because that would cause the driver to automatically
+probe for the device, while it's still not ready for that. However once
+pciidlist contains it, the attribute can be removed.
 
-Switch the driver from direct readl/writel based register accesses
-to regmap based register accesses.
-
-Additionally, update the license headers to latest status.
-
-Reviewed-by: Yi xin Zhu <yzhu@maxlinear.com>
-Signed-off-by: Rahul Tanwar <rtanwar@maxlinear.com>
-Link: https://lore.kernel.org/r/2610331918206e0e3bd18babb39393a558fb34f9.1665642720.git.rtanwar@maxlinear.com
-Signed-off-by: Stephen Boyd <sboyd@kernel.org>
-Stable-dep-of: 106ef3bda210 ("clk: mxl: Fix a clk entry by adding relevant flags")
+Fixes: 7835303982d1 ("drm/i915/mtl: Add MeteorLake PCI IDs")
+Signed-off-by: Lucas De Marchi <lucas.demarchi@intel.com>
+Reviewed-by: Radhakrishna Sripada <radhakrishna.sripada@intel.com>
+Link: https://patchwork.freedesktop.org/patch/msgid/20221214194944.3670344-1-lucas.demarchi@intel.com
+(cherry picked from commit 50490ce05b7a50b0bd4108fa7d6db3ca2972fa83)
+Signed-off-by: Rodrigo Vivi <rodrigo.vivi@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/x86/Kconfig       |  5 +++--
- drivers/clk/x86/clk-cgu-pll.c | 10 +++++----
- drivers/clk/x86/clk-cgu.c     |  5 +++--
- drivers/clk/x86/clk-cgu.h     | 38 +++++++++++++++++++----------------
- drivers/clk/x86/clk-lgm.c     | 13 ++++++++----
- 5 files changed, 42 insertions(+), 29 deletions(-)
+ drivers/gpu/drm/i915/i915_pci.c | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/drivers/clk/x86/Kconfig b/drivers/clk/x86/Kconfig
-index 69642e15fcc1f..ced99e082e3dd 100644
---- a/drivers/clk/x86/Kconfig
-+++ b/drivers/clk/x86/Kconfig
-@@ -1,8 +1,9 @@
- # SPDX-License-Identifier: GPL-2.0-only
- config CLK_LGM_CGU
- 	depends on OF && HAS_IOMEM && (X86 || COMPILE_TEST)
-+	select MFD_SYSCON
- 	select OF_EARLY_FLATTREE
- 	bool "Clock driver for Lightning Mountain(LGM) platform"
- 	help
--	  Clock Generation Unit(CGU) driver for Intel Lightning Mountain(LGM)
--	  network processor SoC.
-+	  Clock Generation Unit(CGU) driver for MaxLinear's x86 based
-+	  Lightning Mountain(LGM) network processor SoC.
-diff --git a/drivers/clk/x86/clk-cgu-pll.c b/drivers/clk/x86/clk-cgu-pll.c
-index 3179557b5f784..c83083affe88e 100644
---- a/drivers/clk/x86/clk-cgu-pll.c
-+++ b/drivers/clk/x86/clk-cgu-pll.c
-@@ -1,8 +1,9 @@
- // SPDX-License-Identifier: GPL-2.0
- /*
-+ * Copyright (C) 2020-2022 MaxLinear, Inc.
-  * Copyright (C) 2020 Intel Corporation.
-- * Zhu YiXin <yixin.zhu@intel.com>
-- * Rahul Tanwar <rahul.tanwar@intel.com>
-+ * Zhu Yixin <yzhu@maxlinear.com>
-+ * Rahul Tanwar <rtanwar@maxlinear.com>
-  */
+diff --git a/drivers/gpu/drm/i915/i915_pci.c b/drivers/gpu/drm/i915/i915_pci.c
+index 34f2d9da201e2..fe4f279aaeb3e 100644
+--- a/drivers/gpu/drm/i915/i915_pci.c
++++ b/drivers/gpu/drm/i915/i915_pci.c
+@@ -1130,7 +1130,6 @@ static const struct intel_gt_definition xelpmp_extra_gt[] = {
+ 	{}
+ };
  
- #include <linux/clk-provider.h>
-@@ -76,8 +77,9 @@ static int lgm_pll_enable(struct clk_hw *hw)
- 
- 	spin_lock_irqsave(&pll->lock, flags);
- 	lgm_set_clk_val(pll->membase, pll->reg, 0, 1, 1);
--	ret = readl_poll_timeout_atomic(pll->membase + pll->reg,
--					val, (val & 0x1), 1, 100);
-+	ret = regmap_read_poll_timeout_atomic(pll->membase, pll->reg,
-+					      val, (val & 0x1), 1, 100);
-+
- 	spin_unlock_irqrestore(&pll->lock, flags);
- 
- 	return ret;
-diff --git a/drivers/clk/x86/clk-cgu.c b/drivers/clk/x86/clk-cgu.c
-index 33de600e0c38e..f5f30a18f4869 100644
---- a/drivers/clk/x86/clk-cgu.c
-+++ b/drivers/clk/x86/clk-cgu.c
-@@ -1,8 +1,9 @@
- // SPDX-License-Identifier: GPL-2.0
- /*
-+ * Copyright (C) 2020-2022 MaxLinear, Inc.
-  * Copyright (C) 2020 Intel Corporation.
-- * Zhu YiXin <yixin.zhu@intel.com>
-- * Rahul Tanwar <rahul.tanwar@intel.com>
-+ * Zhu Yixin <yzhu@maxlinear.com>
-+ * Rahul Tanwar <rtanwar@maxlinear.com>
-  */
- #include <linux/clk-provider.h>
- #include <linux/device.h>
-diff --git a/drivers/clk/x86/clk-cgu.h b/drivers/clk/x86/clk-cgu.h
-index 4e22bfb223128..dbcb664687975 100644
---- a/drivers/clk/x86/clk-cgu.h
-+++ b/drivers/clk/x86/clk-cgu.h
-@@ -1,18 +1,19 @@
- /* SPDX-License-Identifier: GPL-2.0 */
- /*
-- * Copyright(c) 2020 Intel Corporation.
-- * Zhu YiXin <yixin.zhu@intel.com>
-- * Rahul Tanwar <rahul.tanwar@intel.com>
-+ * Copyright (C) 2020-2022 MaxLinear, Inc.
-+ * Copyright (C) 2020 Intel Corporation.
-+ * Zhu Yixin <yzhu@maxlinear.com>
-+ * Rahul Tanwar <rtanwar@maxlinear.com>
-  */
- 
- #ifndef __CLK_CGU_H
- #define __CLK_CGU_H
- 
--#include <linux/io.h>
-+#include <linux/regmap.h>
- 
- struct lgm_clk_mux {
- 	struct clk_hw hw;
--	void __iomem *membase;
-+	struct regmap *membase;
- 	unsigned int reg;
- 	u8 shift;
- 	u8 width;
-@@ -22,7 +23,7 @@ struct lgm_clk_mux {
- 
- struct lgm_clk_divider {
- 	struct clk_hw hw;
--	void __iomem *membase;
-+	struct regmap *membase;
- 	unsigned int reg;
- 	u8 shift;
- 	u8 width;
-@@ -35,7 +36,7 @@ struct lgm_clk_divider {
- 
- struct lgm_clk_ddiv {
- 	struct clk_hw hw;
--	void __iomem *membase;
-+	struct regmap *membase;
- 	unsigned int reg;
- 	u8 shift0;
- 	u8 width0;
-@@ -53,7 +54,7 @@ struct lgm_clk_ddiv {
- 
- struct lgm_clk_gate {
- 	struct clk_hw hw;
--	void __iomem *membase;
-+	struct regmap *membase;
- 	unsigned int reg;
- 	u8 shift;
- 	unsigned long flags;
-@@ -77,7 +78,7 @@ enum lgm_clk_type {
-  * @clk_data: array of hw clocks and clk number.
-  */
- struct lgm_clk_provider {
--	void __iomem *membase;
-+	struct regmap *membase;
- 	struct device_node *np;
- 	struct device *dev;
- 	struct clk_hw_onecell_data clk_data;
-@@ -92,7 +93,7 @@ enum pll_type {
- 
- struct lgm_clk_pll {
- 	struct clk_hw hw;
--	void __iomem *membase;
-+	struct regmap *membase;
- 	unsigned int reg;
- 	unsigned long flags;
- 	enum pll_type type;
-@@ -300,29 +301,32 @@ struct lgm_clk_branch {
- 		.div = _d,					\
- 	}
- 
--static inline void lgm_set_clk_val(void __iomem *membase, u32 reg,
-+static inline void lgm_set_clk_val(struct regmap *membase, u32 reg,
- 				   u8 shift, u8 width, u32 set_val)
- {
- 	u32 mask = (GENMASK(width - 1, 0) << shift);
--	u32 regval;
- 
--	regval = readl(membase + reg);
--	regval = (regval & ~mask) | ((set_val << shift) & mask);
--	writel(regval, membase + reg);
-+	regmap_update_bits(membase, reg, mask, set_val << shift);
- }
- 
--static inline u32 lgm_get_clk_val(void __iomem *membase, u32 reg,
-+static inline u32 lgm_get_clk_val(struct regmap *membase, u32 reg,
- 				  u8 shift, u8 width)
- {
- 	u32 mask = (GENMASK(width - 1, 0) << shift);
- 	u32 val;
- 
--	val = readl(membase + reg);
-+	if (regmap_read(membase, reg, &val)) {
-+		WARN_ONCE(1, "Failed to read clk reg: 0x%x\n", reg);
-+		return 0;
-+	}
-+
- 	val = (val & mask) >> shift;
- 
- 	return val;
- }
- 
-+
-+
- int lgm_clk_register_branches(struct lgm_clk_provider *ctx,
- 			      const struct lgm_clk_branch *list,
- 			      unsigned int nr_clk);
-diff --git a/drivers/clk/x86/clk-lgm.c b/drivers/clk/x86/clk-lgm.c
-index 020f4e83a5ccb..4fa2bcaf71c89 100644
---- a/drivers/clk/x86/clk-lgm.c
-+++ b/drivers/clk/x86/clk-lgm.c
-@@ -1,10 +1,12 @@
- // SPDX-License-Identifier: GPL-2.0
- /*
-+ * Copyright (C) 2020-2022 MaxLinear, Inc.
-  * Copyright (C) 2020 Intel Corporation.
-- * Zhu YiXin <yixin.zhu@intel.com>
-- * Rahul Tanwar <rahul.tanwar@intel.com>
-+ * Zhu Yixin <yzhu@maxlinear.com>
-+ * Rahul Tanwar <rtanwar@maxlinear.com>
-  */
- #include <linux/clk-provider.h>
-+#include <linux/mfd/syscon.h>
- #include <linux/of.h>
- #include <linux/platform_device.h>
- #include <dt-bindings/clock/intel,lgm-clk.h>
-@@ -433,9 +435,12 @@ static int lgm_cgu_probe(struct platform_device *pdev)
- 
- 	ctx->clk_data.num = CLK_NR_CLKS;
- 
--	ctx->membase = devm_platform_ioremap_resource(pdev, 0);
--	if (IS_ERR(ctx->membase))
-+	ctx->membase = syscon_node_to_regmap(np);
-+	if (IS_ERR_OR_NULL(ctx->membase)) {
-+		dev_err(dev, "Failed to get clk CGU iomem\n");
- 		return PTR_ERR(ctx->membase);
-+	}
-+
- 
- 	ctx->np = np;
- 	ctx->dev = dev;
+-__maybe_unused
+ static const struct intel_device_info mtl_info = {
+ 	XE_HP_FEATURES,
+ 	XE_LPDP_FEATURES,
 -- 
 2.39.0
 
