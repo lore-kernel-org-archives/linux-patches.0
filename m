@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 06A712584
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:10:03 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7F567C433EF;
-	Thu, 23 Feb 2023 13:10:02 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A12532584
+	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 13:10:05 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2986EC433EF;
+	Thu, 23 Feb 2023 13:10:05 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677157802;
-	bh=z730S/5vXkO8OQA9zIOEJ1EJTdJgIRPQix+LqlfHysE=;
+	s=korg; t=1677157805;
+	bh=aNuDsi64DQXSou422APszZ8LlYS5mmSYl2i1XbUlqUY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=WH+CnaSUeVR+e59uLfzR+I9+m+brleOSxsxHHHQGS2GWymvSgxq0CeCQjBygiw8iD
-	 OZ4IWrUsT3JbYfml0dncrPLKeKLjRUM2ezuUvLZiI5Qg03cqjpP/Aznen1uzZ7v/Na
-	 nrKfreIcUjcPlzCQe2E90j2puzkVmVybTBxsDpy0=
+	b=vCJ0+D/0gzYPTfpLSKticT5VbZ+j00ml+MwpOLryHv2661ljvzoASCd+F7/UhUMsF
+	 2Hjkoxuj1d3x4hNI8qnQU22sa8h80LCpcRHgYC6xFjMWVg1NPhuE5Zo957YMHejGyt
+	 nZ9G31xLoVFL6Cg+akltJ+VFbb5GVnAXGrQgVH3c=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Theodore Tso <tytso@mit.edu>,
-	Eric Biggers <ebiggers@kernel.org>,
-	"Gustavo A. R. Silva" <gustavoars@kernel.org>,
+	Eric Biggers <ebiggers@google.com>,
+	Nick Desaulniers <ndesaulniers@google.com>,
 	Nathan Chancellor <nathan@kernel.org>,
-	Kees Cook <keescook@chromium.org>,
-	Eric Biggers <ebiggers@google.com>
-Subject: [PATCH 6.1 45/46] ext4: Fix function prototype mismatch for ext4_feat_ktype
-Date: Thu, 23 Feb 2023 14:06:52 +0100
-Message-Id: <20230223130433.686304168@linuxfoundation.org>
+	Bill Wendling <morbo@google.com>,
+	Kees Cook <keescook@chromium.org>
+Subject: [PATCH 6.1 46/46] randstruct: disable Clang 15 support
+Date: Thu, 23 Feb 2023 14:06:53 +0100
+Message-Id: <20230223130433.725408323@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230223130431.553657459@linuxfoundation.org>
 References: <20230223130431.553657459@linuxfoundation.org>
@@ -38,74 +37,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kees Cook <keescook@chromium.org>
+From: Eric Biggers <ebiggers@google.com>
 
-commit 118901ad1f25d2334255b3d50512fa20591531cd upstream.
+commit 78f7a3fd6dc66cb788c21d7705977ed13c879351 upstream.
 
-With clang's kernel control flow integrity (kCFI, CONFIG_CFI_CLANG),
-indirect call targets are validated against the expected function
-pointer prototype to make sure the call target is valid to help mitigate
-ROP attacks. If they are not identical, there is a failure at run time,
-which manifests as either a kernel panic or thread getting killed.
+The randstruct support released in Clang 15 is unsafe to use due to a
+bug that can cause miscompilations: "-frandomize-layout-seed
+inconsistently randomizes all-function-pointers structs"
+(https://github.com/llvm/llvm-project/issues/60349).  It has been fixed
+on the Clang 16 release branch, so add a Clang version check.
 
-ext4_feat_ktype was setting the "release" handler to "kfree", which
-doesn't have a matching function prototype. Add a simple wrapper
-with the correct prototype.
-
-This was found as a result of Clang's new -Wcast-function-type-strict
-flag, which is more sensitive than the simpler -Wcast-function-type,
-which only checks for type width mismatches.
-
-Note that this code is only reached when ext4 is a loadable module and
-it is being unloaded:
-
- CFI failure at kobject_put+0xbb/0x1b0 (target: kfree+0x0/0x180; expected type: 0x7c4aa698)
- ...
- RIP: 0010:kobject_put+0xbb/0x1b0
- ...
- Call Trace:
-  <TASK>
-  ext4_exit_sysfs+0x14/0x60 [ext4]
-  cleanup_module+0x67/0xedb [ext4]
-
-Fixes: b99fee58a20a ("ext4: create ext4_feat kobject dynamically")
-Cc: Theodore Ts'o <tytso@mit.edu>
-Cc: Eric Biggers <ebiggers@kernel.org>
+Fixes: 035f7f87b729 ("randstruct: Enable Clang support")
 Cc: stable@vger.kernel.org
-Build-tested-by: Gustavo A. R. Silva <gustavoars@kernel.org>
-Reviewed-by: Gustavo A. R. Silva <gustavoars@kernel.org>
+Signed-off-by: Eric Biggers <ebiggers@google.com>
+Acked-by: Nick Desaulniers <ndesaulniers@google.com>
 Reviewed-by: Nathan Chancellor <nathan@kernel.org>
-Link: https://lore.kernel.org/r/20230103234616.never.915-kees@kernel.org
+Reviewed-by: Bill Wendling <morbo@google.com>
 Signed-off-by: Kees Cook <keescook@chromium.org>
-Reviewed-by: Eric Biggers <ebiggers@google.com>
-Link: https://lore.kernel.org/r/20230104210908.gonna.388-kees@kernel.org
+Link: https://lore.kernel.org/r/20230208065133.220589-1-ebiggers@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/ext4/sysfs.c |    7 ++++++-
- 1 file changed, 6 insertions(+), 1 deletion(-)
+ security/Kconfig.hardening |    3 +++
+ 1 file changed, 3 insertions(+)
 
---- a/fs/ext4/sysfs.c
-+++ b/fs/ext4/sysfs.c
-@@ -491,6 +491,11 @@ static void ext4_sb_release(struct kobje
- 	complete(&sbi->s_kobj_unregister);
- }
+--- a/security/Kconfig.hardening
++++ b/security/Kconfig.hardening
+@@ -281,6 +281,9 @@ endmenu
  
-+static void ext4_feat_release(struct kobject *kobj)
-+{
-+	kfree(kobj);
-+}
-+
- static const struct sysfs_ops ext4_attr_ops = {
- 	.show	= ext4_attr_show,
- 	.store	= ext4_attr_store,
-@@ -505,7 +510,7 @@ static struct kobj_type ext4_sb_ktype =
- static struct kobj_type ext4_feat_ktype = {
- 	.default_groups = ext4_feat_groups,
- 	.sysfs_ops	= &ext4_attr_ops,
--	.release	= (void (*)(struct kobject *))kfree,
-+	.release	= ext4_feat_release,
- };
+ config CC_HAS_RANDSTRUCT
+ 	def_bool $(cc-option,-frandomize-layout-seed-file=/dev/null)
++	# Randstruct was first added in Clang 15, but it isn't safe to use until
++	# Clang 16 due to https://github.com/llvm/llvm-project/issues/60349
++	depends on !CC_IS_CLANG || CLANG_VERSION >= 160000
  
- void ext4_notify_error_sysfs(struct ext4_sb_info *sbi)
+ choice
+ 	prompt "Randomize layout of sensitive kernel structures"
 
 
