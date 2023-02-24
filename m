@@ -1,79 +1,80 @@
-Received: from mail-il1-f181.google.com (mail-il1-f181.google.com [209.85.166.181])
+Received: from mail-il1-f171.google.com (mail-il1-f171.google.com [209.85.166.171])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3A3F3D2F2
-	for <patches@lists.linux.dev>; Fri, 24 Feb 2023 04:27:13 +0000 (UTC)
-Received: by mail-il1-f181.google.com with SMTP id 4so2292128ilz.6
-        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 20:27:13 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DFC8917C7
+	for <patches@lists.linux.dev>; Fri, 24 Feb 2023 04:27:53 +0000 (UTC)
+Received: by mail-il1-f171.google.com with SMTP id h10so2439562ila.11
+        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 20:27:53 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:from:to:cc:subject:date:message-id:reply-to;
-        bh=t+DpcZDS2FvDgnuMoKZFyv7FRUek1ue38SSe6bohPe0=;
-        b=RU4EE9eHQ2IgOSNy4B0fyMUnX+s3TpS9bbx7ql0OKkQouTzemsqLnUYKSTFPURkNtK
-         OEuC1hR+r5Qc4XD3VLkoQQtZp1LqQBPVgOAVzmhMiv2yRElrAFsq6Vz4NyTmFU6wzB/q
-         0ORLASft8jUYOrvDVECBvopyvM2/zPVyrlyvn+6A5GUSRlL8T7dqrADhxrfMzR/qHaV+
-         9EpmyJ8yXsWh7vw+bEmRZmwTFYx57a+WUQm4ZrSvNIjhe3yPs2XMAH5R3OxBTNzm/vBu
-         bI006IFzP4nUKg6nn9otByoURZhobbqVSTRhnNiSZH/GH6LXww99jgQ1A4XeOkbvlv7r
-         Rb+Q==
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=risT/+NFrNokW9okfKt9oEpJJBiMyGhaOyPCfJWl8Fo=;
+        b=YL/E3YhhslYmqMR2rs8uxQILTQWm77SfoAKJy2P1D1agRcQ2lQAsRJNuxz9ZOioi33
+         NiLfTWI1OtoolRcLypxBsbDYOkhB40xhwsQxknOpYmdz+ccc7ttxonLrhNihLdG+3AW0
+         hVyLArJJIGMj+VxQllCKt6l8SDZt6XTzjTj1fOqnZ2JS2DiPjxVBI5GD9Kymm05KaXCQ
+         KonPqq9Yo8fntEEL3xgvEqec2Wwmul5E4ef/O2hJvYKCmhBMyMF4OTllrg73Ls+Fjbl5
+         kfS3v5J+9VoX4ehbl5SFd7rInAHxAtatg5sWhu4RoIX33F+knqhGjX8GJTSyAYns6YMD
+         nW8w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :sender:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=t+DpcZDS2FvDgnuMoKZFyv7FRUek1ue38SSe6bohPe0=;
-        b=165C9IeZkKwkkXtQ59qSFLyQ0/Bx6nHYfC7kNCf+IO7bJNA1WPJliQDikTJfZAmRqV
-         36HPEseGSSXUFSzCQC+J5ojAYt2bgXU/dQXWtbDoti8CC4Gv6yPNO8xKUo2REbeMo4NU
-         56d/DLJlXqXzqdkOBA5tVrFWOC1nD6mEztmR7zrEonygFSK//AXvmWb7KUWealMLGSB+
-         yZli9cmGiEAwObV94rE+iWADa+q49LB4t5mokIJvPcHyWgaVHZqQPUSMJwvKq/FW5jAl
-         XEJqJJ6RKeWgavYB3zx+AygASQ6v4i90IefP4Vxk4mBryz02HGrhRZCuZQsbdATk+6XQ
-         UeYA==
-X-Gm-Message-State: AO0yUKVQfDo/csfytUuGzCYRxnvH3qRQFSMorPUPiErAv2YCWkZQ3VoG
-	yrBQH5nYQeVp5kJhaS7J5jE=
-X-Google-Smtp-Source: AK7set+B1PgxUeVhk+CzJ4fyVf8B8ploSe4nm1k86TpZlF+Hcie3ifEl1mbTCuOVSXi/FEqcbcUmkA==
-X-Received: by 2002:a05:6e02:1988:b0:316:f93f:6baa with SMTP id g8-20020a056e02198800b00316f93f6baamr6387299ilf.31.1677212832290;
-        Thu, 23 Feb 2023 20:27:12 -0800 (PST)
-Received: from ?IPV6:2600:1700:e321:62f0:329c:23ff:fee3:9d7c? ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
-        by smtp.gmail.com with ESMTPSA id a9-20020a056e0208a900b0031578323bc5sm3305138ilt.56.2023.02.23.20.27.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 20:27:11 -0800 (PST)
+        h=in-reply-to:content-disposition:mime-version:references:message-id
+         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=risT/+NFrNokW9okfKt9oEpJJBiMyGhaOyPCfJWl8Fo=;
+        b=bFTAZzv5skrTkzqOwrHjlVNc7yLg+dOUhdwgjLfNAHD04Z/8HhFROO2u6ImlHCiOZI
+         iO+3CgHpkUpz50tE/UnOPnxxvYzP+41ZR/x7ovhURXFFUYO0bkfwM4ft+vwAYqCEZu4e
+         dQ8Yz1mCRH38UtpnICBURVMxUSbb8tNPw6PYG18NIKaWXk3Qk1oibbz7gDz96TX+NuFb
+         qI1xPCpXmqe4MZMkYpZp9UhKdKDy35DZLCKWiZWCoQp1xqgB3hwm2PQWncFTVa//ppuS
+         /c+LSuz6Lm4NXQ5CsFBuWD49U+GBs/TGXGNtEuGdNSwFtucw+cJLgmqYsgDHP63jtYiG
+         we+w==
+X-Gm-Message-State: AO0yUKXI7TbL+ocShmtzQsNRJvI5UrRWmXwIhbsYwHrpEn4XjwQkI9ov
+	aYrN/+2t5MQN5DvecORufBE=
+X-Google-Smtp-Source: AK7set9I4i9PTulcrnitqIM1/8bjmoNAOfnMLI4JRwl9pjBP86zab7XPyO07E5rQq3O7om9HeV4Hcg==
+X-Received: by 2002:a92:7510:0:b0:316:e941:24e3 with SMTP id q16-20020a927510000000b00316e94124e3mr4829083ilc.24.1677212873010;
+        Thu, 23 Feb 2023 20:27:53 -0800 (PST)
+Received: from server.roeck-us.net ([2600:1700:e321:62f0:329c:23ff:fee3:9d7c])
+        by smtp.gmail.com with ESMTPSA id u14-20020a02aa8e000000b0037477c3d04asm2588456jai.130.2023.02.23.20.27.52
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Feb 2023 20:27:52 -0800 (PST)
 Sender: Guenter Roeck <groeck7@gmail.com>
-Message-ID: <805e4f64-84d4-37a8-2529-8ed65395ab56@roeck-us.net>
-Date: Thu, 23 Feb 2023 20:27:09 -0800
+Date: Thu, 23 Feb 2023 20:27:51 -0800
+From: Guenter Roeck <linux@roeck-us.net>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 4.19 00/12] 4.19.274-rc2 review
+Message-ID: <20230224042751.GA1354431@roeck-us.net>
+References: <20230223141538.102388120@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 4.14 0/7] 4.14.307-rc1 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org, shuah@kernel.org,
- patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
- jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
- srw@sladewatkins.net, rwarsow@gmx.de
-References: <20230223130423.369876969@linuxfoundation.org>
-From: Guenter Roeck <linux@roeck-us.net>
-In-Reply-To: <20230223130423.369876969@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230223141538.102388120@linuxfoundation.org>
 
-On 2/23/23 05:04, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.14.307 release. There are 7 patches in this series, all will be posted as a response to this one.  If anyone has any issues with these being applied, please let me know.
+On Thu, Feb 23, 2023 at 03:15:58PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 4.19.274 release.
+> There are 12 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
 > 
-> Responses should be made by Sat, 25 Feb 2023 13:04:16 +0000. Anything received after that time might be too late.
+> Responses should be made by Sat, 25 Feb 2023 14:15:30 +0000.
+> Anything received after that time might be too late.
 > 
 
 Build results:
-	total: 168 pass: 168 fail: 0
+	total: 155 pass: 155 fail: 0
 Qemu test results:
-	total: 425 pass: 425 fail: 0
+	total: 426 pass: 426 fail: 0
 
 Tested-by: Guenter Roeck <linux@roeck-us.net>
 
