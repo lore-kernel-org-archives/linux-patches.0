@@ -1,88 +1,79 @@
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com [209.85.166.179])
+Received: from mail-pj1-f49.google.com (mail-pj1-f49.google.com [209.85.216.49])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 115BBAD20
-	for <patches@lists.linux.dev>; Thu, 23 Feb 2023 23:40:21 +0000 (UTC)
-Received: by mail-il1-f179.google.com with SMTP id l2so1315218ilg.7
-        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 15:40:21 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EED39D2E6
+	for <patches@lists.linux.dev>; Fri, 24 Feb 2023 03:42:24 +0000 (UTC)
+Received: by mail-pj1-f49.google.com with SMTP id u10so15164380pjc.5
+        for <patches@lists.linux.dev>; Thu, 23 Feb 2023 19:42:24 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxfoundation.org; s=google;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
-         :from:to:cc:subject:date:message-id:reply-to;
-        bh=SL0z9x2zUIufYQsB/HLcyg5XTH8HaFTQReJij2yCEP8=;
-        b=SJzCjQBQU9Z5SQNuvDZSHLS4thJUMrfncnBMPYjZ3APB5RlSqcj7ebGh+MjLUzWMTX
-         xnz1li7U6DY6lddE1ItjW5Qlzuod2X9K1C3sK6IeAtYhjKjFvdCxYJhiH23gKo5WlVHe
-         Ck+ZL4TAA6dC/7bJvunZ9WbtWpIG1QMT4lvY8=
+        d=gmail.com; s=20210112;
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date:from:to
+         :cc:subject:date:message-id:reply-to;
+        bh=Dm48pFZyVUakxJYWdujNt6jVqzb33IRoM5ttLAEElTc=;
+        b=NckyLiPi7//kP1eOXaMTWSJx6sObdjPdjQ5u87ghNeY1HoSDgB6HJCSb3b3DNmOzzb
+         S6adJSW7ggHTP78XJk20CzmhbUeO8fa7nVDiNBphzFhcMiGdF3dnJ8JJmVRSgtlm3XVT
+         IyWIBFMU99fyzWiONpRCKEBs1ZURWHjgO3krA6dwTz9jtPF5v/emVqHQ1fDiX7CX1/Dq
+         3Mo7YWEKfwFrR5aYBXnufS0BoXZSSKwLSlrkJ7kL0zm4D7DTz1xHk5qUfcT1n3YeB5HO
+         GI0TAGfRyD4ia0ElAxag/nQsV0z3/oDdCN1eMat5Q4oF9n7cd0LeuKJc+kTACtC7BUWU
+         f5uA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:in-reply-to:from:references:cc:to
-         :content-language:subject:user-agent:mime-version:date:message-id
+        h=in-reply-to:content-transfer-encoding:content-disposition
+         :mime-version:references:message-id:subject:cc:to:from:date
          :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=SL0z9x2zUIufYQsB/HLcyg5XTH8HaFTQReJij2yCEP8=;
-        b=sFgRKbs9HDw8fNnFHI+LrXnCHSPDDJUhRjGdzpps9EEh2WWQhpgxqZJ54wDRaa98VE
-         +iFkbTYbpvL7mca2cGVl8wy0eOPOA2ybMOOsj15wNxhHz8amZFmogPt9uOXfufUymLQm
-         vpZpGQoy4nBxt25uRXyDmUmgcxYD78PzeHSRysMyDHaPLWgPW/V5t+1MgLyZj2NI0eS6
-         TXX5hNmOzOjmekcijNqL6+3tuKxt1Ygbhxu1Y+pkppurWDUoi9rW5HgeXu9H6ydu01vY
-         lnJBQk984MBUqFIFyAd23x31UldZQDwK83k+iDhrfP4OwD0Y+FvGjIRt2U8DD6cPrz73
-         /Sgg==
-X-Gm-Message-State: AO0yUKW2BK2sELr+2nuYhxp9Hatz48RquKvztKAhVQIMPYlIc3V+Tb0e
-	6Mi5J/zndF/yUbJSwdBiTvVWvw==
-X-Google-Smtp-Source: AK7set+UY8OPToN1EOx5FzoLtfSuFrXICfON+YwtZjlyx391Os6zmh5lO/NypWAW1Ke38B3k4UckeQ==
-X-Received: by 2002:a05:6e02:17ca:b0:315:5436:a632 with SMTP id z10-20020a056e0217ca00b003155436a632mr9360401ilu.2.1677195621066;
-        Thu, 23 Feb 2023 15:40:21 -0800 (PST)
-Received: from [192.168.1.128] ([38.15.45.1])
-        by smtp.gmail.com with ESMTPSA id o24-20020a02cc38000000b003c4eb8f862fsm3123944jap.66.2023.02.23.15.40.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 23 Feb 2023 15:40:20 -0800 (PST)
-Message-ID: <e5155c9d-b142-fd3f-0198-3fe4db83b350@linuxfoundation.org>
-Date: Thu, 23 Feb 2023 16:40:19 -0700
+        bh=Dm48pFZyVUakxJYWdujNt6jVqzb33IRoM5ttLAEElTc=;
+        b=7o3lu+lGX+o+LbtLXrmw1v+YuR9omSGVEjaR92ro6fOJC0kZQqdhG+H4OAqYVpgN1h
+         G/V+N38xyctAPhqdBxwnbYUMquOVYWL1l67ItvpSRCceNooDYKQ1iKnwgkUoVe3kyljU
+         XnHZoYH1BHjb+q3LbbBMUppFCn18HZ+b135BeKBQEYVLcupXtvlv5Bxxive42/REVylA
+         wvCEQvSXgdfoBz55zC7wcoE7IJydQDRh+rjDNpl5cSh/4ebdgLxlWEKBVOU+m3qAmeoh
+         w/3Qf7B9Hl+B+who+5Fx+YdPIDIYpdToThAGDCikiqp3GEQ+PtHgBQyvB8mLoTHWLOLV
+         O5rw==
+X-Gm-Message-State: AO0yUKVDLbhMCv+PRoiVPPB2KVNFcSmWSjPKZoRH+1oL+e1zl/5n9x74
+	cRXO48qHQY73SzbTW52gHI0=
+X-Google-Smtp-Source: AK7set/EF7WV/kje5lDltcwnQzpGuNdswVxJYj8nhFHVGkSTqyQ4dhXgEe9H8jtZ2HyPzr3AXMBCvg==
+X-Received: by 2002:a17:90a:15:b0:237:161e:33bc with SMTP id 21-20020a17090a001500b00237161e33bcmr12796870pja.16.1677210144300;
+        Thu, 23 Feb 2023 19:42:24 -0800 (PST)
+Received: from debian.me (subs02-180-214-232-89.three.co.id. [180.214.232.89])
+        by smtp.gmail.com with ESMTPSA id x18-20020a17090abc9200b00233aacab89esm429235pjr.48.2023.02.23.19.42.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Feb 2023 19:42:23 -0800 (PST)
+Received: by debian.me (Postfix, from userid 1000)
+	id 171FD105EA5; Fri, 24 Feb 2023 10:42:17 +0700 (WIB)
+Date: Fri, 24 Feb 2023 10:42:17 +0700
+From: Bagas Sanjaya <bagasdotme@gmail.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org, akpm@linux-foundation.org,
+	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 00/47] 6.1.14-rc2 review
+Message-ID: <Y/gyGS08EIuFYxjH@debian.me>
+References: <20230223141545.280864003@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.7.1
-Subject: Re: [PATCH 4.19 00/12] 4.19.274-rc2 review
-Content-Language: en-US
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de, Shuah Khan <skhan@linuxfoundation.org>
-References: <20230223141538.102388120@linuxfoundation.org>
-From: Shuah Khan <skhan@linuxfoundation.org>
-In-Reply-To: <20230223141538.102388120@linuxfoundation.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20230223141545.280864003@linuxfoundation.org>
 
-On 2/23/23 07:15, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 4.19.274 release.
-> There are 12 patches in this series, all will be posted as a response
+On Thu, Feb 23, 2023 at 03:16:15PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.14 release.
+> There are 47 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
-> 
-> Responses should be made by Sat, 25 Feb 2023 14:15:30 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.274-rc2.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
-> 
+>=20
 
-Compiled and booted on my test system. No dmesg regressions.
+Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
+powerpc (ps3_defconfig, GCC 12.2.0).
 
-Tested-by: Shuah Khan <skhan@linuxfoundation.org>
+Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
 
-thanks,
--- Shuah
+--=20
+An old man doll... just what I always wanted! - Clara
