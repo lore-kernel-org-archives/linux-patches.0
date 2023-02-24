@@ -1,172 +1,231 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 676643C17
-	for <patches@lists.linux.dev>; Fri, 24 Feb 2023 10:00:52 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 531353438B;
-	Fri, 24 Feb 2023 10:00:42 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1677232842; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=U0wR3jwDHdRrK2cxRZw/xy12wIZu3wsnwhuoBXj0MMQ=;
-	b=KWXyMuNXAW1CBLQTUubfz3ZaB4JYVNhcclgO1jGZo5VjK6IDmNbuyTJUDOInBfy+/ZGReA
-	Y+HFC5k0Wq59VWumMLMp6pHq3RbsWuvQGG0vn2V82+czWBpqRgGUMY2x503sc+riFul2hW
-	56TNM/afvXjy39C5sTvBMDTsk9V5GCo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1677232842;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:
-	 content-transfer-encoding:content-transfer-encoding:
-	 in-reply-to:in-reply-to:references:references;
-	bh=U0wR3jwDHdRrK2cxRZw/xy12wIZu3wsnwhuoBXj0MMQ=;
-	b=f0IpufU3BmvceE+pCst74byvq0uqDgv/mlVa6jatNSqcFHEa2tIXy68JhhykiA7j/U+YuX
-	DMu+EH3Z7aJfuQDQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 3820713A3C;
-	Fri, 24 Feb 2023 10:00:42 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id eN3yDMqK+GPeTgAAMHmgww
-	(envelope-from <vbabka@suse.cz>); Fri, 24 Feb 2023 10:00:42 +0000
-From: Vlastimil Babka <vbabka@suse.cz>
-To: linux-mm@kvack.org,
-	"Liam R. Howlett" <Liam.Howlett@oracle.com>
-Cc: linux-kernel@vger.kernel.org,
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A78313C26
+	for <patches@lists.linux.dev>; Fri, 24 Feb 2023 10:23:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6226C433EF;
+	Fri, 24 Feb 2023 10:23:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1677234238;
+	bh=/LDpdEt5z1cDhpXuDNTrklSQQd2NDs7pu5+Mglt2kjY=;
+	h=From:To:Cc:Subject:Date:From;
+	b=mMHYq/BktRxdgwCZ0rSayLcV0s3M5kOxQNI7dfgbIhRMkK3XkfHh6py8YNy8F0Yga
+	 TKh/5GtDb2e0MyKa3xO6qRi6JEZf8ShkT27DOnAreKgrNRHCUGtrzwNgoCtZHRmvrF
+	 96SUvRdCIVxpNvfPigDD+fMbWjAKQ2P2a7SkYTfk=
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: stable@vger.kernel.org
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	maple-tree@lists.infradead.org,
-	Vlastimil Babka <vbabka@suse.cz>
-Subject: [RFC 09/11] mm/mmap/vma_merge: convert mergeability checks to return bool
-Date: Fri, 24 Feb 2023 11:00:20 +0100
-Message-Id: <20230224100022.11268-10-vbabka@suse.cz>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 5.15 00/37] 5.15.96-rc3 review
+Date: Fri, 24 Feb 2023 11:23:55 +0100
+Message-Id: <20230224102235.663354088@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230224100022.11268-1-vbabka@suse.cz>
-References: <20230224100022.11268-1-vbabka@suse.cz>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.96-rc3.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.15.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.15.96-rc3
+X-KernelTest-Deadline: 2023-02-26T10:23+00:00
 Content-Transfer-Encoding: 8bit
 
-The comments already mention returning 'true' so make the code match
-them.
+This is the start of the stable review cycle for the 5.15.96 release.
+There are 37 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
----
- mm/mmap.c | 40 ++++++++++++++++++++--------------------
- 1 file changed, 20 insertions(+), 20 deletions(-)
+Responses should be made by Sun, 26 Feb 2023 10:22:23 +0000.
+Anything received after that time might be too late.
 
-diff --git a/mm/mmap.c b/mm/mmap.c
-index 8c2bdf9e3f94..6e439806d4ac 100644
---- a/mm/mmap.c
-+++ b/mm/mmap.c
-@@ -744,10 +744,10 @@ int vma_shrink(struct vma_iterator *vmi, struct vm_area_struct *vma,
-  * If the vma has a ->close operation then the driver probably needs to release
-  * per-vma resources, so we don't attempt to merge those.
-  */
--static inline int is_mergeable_vma(struct vm_area_struct *vma,
--				   struct file *file, unsigned long vm_flags,
--				   struct vm_userfaultfd_ctx vm_userfaultfd_ctx,
--				   struct anon_vma_name *anon_name)
-+static inline bool is_mergeable_vma(struct vm_area_struct *vma,
-+				    struct file *file, unsigned long vm_flags,
-+				    struct vm_userfaultfd_ctx vm_userfaultfd_ctx,
-+				    struct anon_vma_name *anon_name)
- {
- 	/*
- 	 * VM_SOFTDIRTY should not prevent from VMA merging, if we
-@@ -758,21 +758,21 @@ static inline int is_mergeable_vma(struct vm_area_struct *vma,
- 	 * extended instead.
- 	 */
- 	if ((vma->vm_flags ^ vm_flags) & ~VM_SOFTDIRTY)
--		return 0;
-+		return false;
- 	if (vma->vm_file != file)
--		return 0;
-+		return false;
- 	if (vma->vm_ops && vma->vm_ops->close)
--		return 0;
-+		return false;
- 	if (!is_mergeable_vm_userfaultfd_ctx(vma, vm_userfaultfd_ctx))
--		return 0;
-+		return false;
- 	if (!anon_vma_name_eq(anon_vma_name(vma), anon_name))
--		return 0;
--	return 1;
-+		return false;
-+	return true;
- }
- 
--static inline int is_mergeable_anon_vma(struct anon_vma *anon_vma1,
--					struct anon_vma *anon_vma2,
--					struct vm_area_struct *vma)
-+static inline bool is_mergeable_anon_vma(struct anon_vma *anon_vma1,
-+					 struct anon_vma *anon_vma2,
-+					 struct vm_area_struct *vma)
- {
- 	/*
- 	 * The list_is_singular() test is to avoid merging VMA cloned from
-@@ -780,7 +780,7 @@ static inline int is_mergeable_anon_vma(struct anon_vma *anon_vma1,
- 	 */
- 	if ((!anon_vma1 || !anon_vma2) && (!vma ||
- 		list_is_singular(&vma->anon_vma_chain)))
--		return 1;
-+		return true;
- 	return anon_vma1 == anon_vma2;
- }
- 
-@@ -795,7 +795,7 @@ static inline int is_mergeable_anon_vma(struct anon_vma *anon_vma1,
-  * indices (16TB on ia32) because do_mmap() does not permit mmap's which
-  * wrap, nor mmaps which cover the final page at index -1UL.
-  */
--static int
-+static bool
- can_vma_merge_before(struct vm_area_struct *vma, unsigned long vm_flags,
- 		     struct anon_vma *anon_vma, struct file *file,
- 		     pgoff_t vm_pgoff,
-@@ -805,9 +805,9 @@ can_vma_merge_before(struct vm_area_struct *vma, unsigned long vm_flags,
- 	if (is_mergeable_vma(vma, file, vm_flags, vm_userfaultfd_ctx, anon_name) &&
- 	    is_mergeable_anon_vma(anon_vma, vma->anon_vma, vma)) {
- 		if (vma->vm_pgoff == vm_pgoff)
--			return 1;
-+			return true;
- 	}
--	return 0;
-+	return false;
- }
- 
- /*
-@@ -817,7 +817,7 @@ can_vma_merge_before(struct vm_area_struct *vma, unsigned long vm_flags,
-  * We cannot merge two vmas if they have differently assigned (non-NULL)
-  * anon_vmas, nor if same anon_vma is assigned but offsets incompatible.
-  */
--static int
-+static bool
- can_vma_merge_after(struct vm_area_struct *vma, unsigned long vm_flags,
- 		    struct anon_vma *anon_vma, struct file *file,
- 		    pgoff_t vm_pgoff,
-@@ -829,9 +829,9 @@ can_vma_merge_after(struct vm_area_struct *vma, unsigned long vm_flags,
- 		pgoff_t vm_pglen;
- 		vm_pglen = vma_pages(vma);
- 		if (vma->vm_pgoff + vm_pglen == vm_pgoff)
--			return 1;
-+			return true;
- 	}
--	return 0;
-+	return false;
- }
- 
- /*
--- 
-2.39.2
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.96-rc3.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
+and the diffstat can be found below.
+
+thanks,
+
+greg k-h
+
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.15.96-rc3
+
+Linus Torvalds <torvalds@linux-foundation.org>
+    bpf: add missing header file include
+
+Vladimir Oltean <vladimir.oltean@nxp.com>
+    Revert "net/sched: taprio: make qdisc_leaf() see the per-netdev-queue pfifo child qdiscs"
+
+Nathan Chancellor <nathan@kernel.org>
+    lib/Kconfig.debug: Allow BTF + DWARF5 with pahole 1.21+
+
+Nathan Chancellor <nathan@kernel.org>
+    lib/Kconfig.debug: Use CONFIG_PAHOLE_VERSION
+
+Nathan Chancellor <nathan@kernel.org>
+    scripts/pahole-flags.sh: Use pahole-version.sh
+
+Nathan Chancellor <nathan@kernel.org>
+    kbuild: Add CONFIG_PAHOLE_VERSION
+
+Kees Cook <keescook@chromium.org>
+    ext4: Fix function prototype mismatch for ext4_feat_ktype
+
+Paul Moore <paul@paul-moore.com>
+    audit: update the mailing list in MAINTAINERS
+
+Lukas Wunner <lukas@wunner.de>
+    wifi: mwifiex: Add missing compatible string for SD8787
+
+Zhang Wensheng <zhangwensheng5@huawei.com>
+    nbd: fix possible overflow on 'first_minor' in nbd_dev_add()
+
+Alessandro Astone <ales.astone@gmail.com>
+    binder: Gracefully handle BINDER_TYPE_FDA objects with num_fds=0
+
+Alessandro Astone <ales.astone@gmail.com>
+    binder: Address corner cases in deferred copy and fixup
+
+Arnd Bergmann <arnd@arndb.de>
+    binder: fix pointer cast warning
+
+Todd Kjos <tkjos@google.com>
+    binder: defer copies of pre-patched txn data
+
+Todd Kjos <tkjos@google.com>
+    binder: read pre-translated fds from sender buffer
+
+Dave Hansen <dave.hansen@linux.intel.com>
+    uaccess: Add speculation barrier to copy_from_user()
+
+Zheng Wang <zyytlz.wz@163.com>
+    drm/i915/gvt: fix double free bug in split_2MB_gtt_entry
+
+Michael Ellerman <mpe@ellerman.id.au>
+    powerpc/64s/radix: Fix RWX mapping with relocated kernel
+
+Michael Ellerman <mpe@ellerman.id.au>
+    powerpc/64s/radix: Fix crash with unaligned relocated kernel
+
+Michael Ellerman <mpe@ellerman.id.au>
+    powerpc/vmlinux.lds: Add an explicit symbol for the SRWX boundary
+
+Michael Ellerman <mpe@ellerman.id.au>
+    powerpc/vmlinux.lds: Ensure STRICT_ALIGN_SIZE is at least page aligned
+
+Christophe Leroy <christophe.leroy@csgroup.eu>
+    powerpc: use generic version of arch_is_kernel_initmem_freed()
+
+Sean Anderson <sean.anderson@seco.com>
+    powerpc: dts: t208x: Disable 10G on MAC1 and MAC2
+
+Marc Kleine-Budde <mkl@pengutronix.de>
+    can: kvaser_usb: hydra: help gcc-13 to figure out cmd_len
+
+Jim Mattson <jmattson@google.com>
+    KVM: VMX: Execute IBPB on emulated VM-exit when guest has IBRS
+
+Sean Christopherson <seanjc@google.com>
+    KVM: SVM: Skip WRMSR fastpath on VM-Exit if next RIP isn't valid
+
+Sean Christopherson <seanjc@google.com>
+    KVM: x86: Fail emulation during EMULTYPE_SKIP on any exception
+
+Jason A. Donenfeld <Jason@zx2c4.com>
+    random: always mix cycle counter in add_latent_entropy()
+
+Rahul Tanwar <rtanwar@maxlinear.com>
+    clk: mxl: syscon_node_to_regmap() returns error pointers
+
+Sean Anderson <sean.anderson@seco.com>
+    powerpc: dts: t208x: Mark MAC1 and MAC2 as 10G
+
+Rahul Tanwar <rtanwar@maxlinear.com>
+    clk: mxl: Fix a clk entry by adding relevant flags
+
+Rahul Tanwar <rtanwar@maxlinear.com>
+    clk: mxl: Add option to override gate clks
+
+Rahul Tanwar <rtanwar@maxlinear.com>
+    clk: mxl: Remove redundant spinlocks
+
+Rahul Tanwar <rtanwar@maxlinear.com>
+    clk: mxl: Switch from direct readl/writel based IO to regmap based IO
+
+Ankit Nautiyal <ankit.k.nautiyal@intel.com>
+    drm/edid: Fix minimum bpc supported with DSC1.2 for HDMI sink
+
+Bitterblue Smith <rtl8821cerfe2@gmail.com>
+    wifi: rtl8xxxu: gen2: Turn on the rate control
+
+Lucas Stach <l.stach@pengutronix.de>
+    drm/etnaviv: don't truncate physical page address
+
+
+-------------
+
+Diffstat:
+
+ MAINTAINERS                                        |   3 +-
+ Makefile                                           |   4 +-
+ arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-2.dtsi |  44 +++
+ arch/powerpc/boot/dts/fsl/qoriq-fman3-0-10g-3.dtsi |  44 +++
+ arch/powerpc/boot/dts/fsl/t2081si-post.dtsi        |  20 +-
+ arch/powerpc/include/asm/sections.h                |  14 +-
+ arch/powerpc/kernel/vmlinux.lds.S                  |  14 +-
+ arch/powerpc/mm/book3s32/mmu.c                     |   2 +-
+ arch/powerpc/mm/book3s64/radix_pgtable.c           |  28 +-
+ arch/x86/kvm/svm/svm.c                             |  10 +-
+ arch/x86/kvm/vmx/nested.c                          |  11 +
+ arch/x86/kvm/vmx/vmx.c                             |   6 +-
+ arch/x86/kvm/x86.c                                 |   4 +-
+ drivers/android/binder.c                           | 343 +++++++++++++++++++--
+ drivers/block/nbd.c                                |  23 +-
+ drivers/clk/x86/Kconfig                            |   5 +-
+ drivers/clk/x86/clk-cgu-pll.c                      |  23 +-
+ drivers/clk/x86/clk-cgu.c                          | 106 ++-----
+ drivers/clk/x86/clk-cgu.h                          |  46 +--
+ drivers/clk/x86/clk-lgm.c                          |  18 +-
+ drivers/gpu/drm/drm_edid.c                         |   3 +-
+ drivers/gpu/drm/etnaviv/etnaviv_mmu.c              |   4 +-
+ drivers/gpu/drm/i915/gvt/gtt.c                     |  17 +-
+ drivers/net/can/usb/kvaser_usb/kvaser_usb_hydra.c  |  33 +-
+ drivers/net/wireless/marvell/mwifiex/sdio.c        |   1 +
+ .../net/wireless/realtek/rtl8xxxu/rtl8xxxu_core.c  |   8 +-
+ fs/ext4/sysfs.c                                    |   7 +-
+ include/linux/nospec.h                             |   4 +
+ include/linux/random.h                             |   6 +-
+ init/Kconfig                                       |   4 +
+ kernel/bpf/core.c                                  |   3 +-
+ lib/Kconfig.debug                                  |   4 +-
+ lib/usercopy.c                                     |   7 +
+ net/sched/sch_taprio.c                             |   8 +-
+ scripts/pahole-flags.sh                            |   2 +-
+ scripts/pahole-version.sh                          |  13 +
+ 36 files changed, 661 insertions(+), 231 deletions(-)
+
 
