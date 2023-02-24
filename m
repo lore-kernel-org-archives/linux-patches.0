@@ -1,41 +1,41 @@
 Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 208743C10
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7DE7D3C17
 	for <patches@lists.linux.dev>; Fri, 24 Feb 2023 10:00:49 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id 3470733FFB;
-	Fri, 24 Feb 2023 10:00:41 +0000 (UTC)
+	by smtp-out1.suse.de (Postfix) with ESMTPS id 1BA443413E;
+	Fri, 24 Feb 2023 10:00:42 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
-	t=1677232841; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+	t=1677232842; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=bQMJWpenP6OEu3AR0STwSIwzPSjq3AkhCnZCUwU4em4=;
-	b=eOJS6frdV5UgXb66LQirAS9ZQ/sN6R7VVfUyUQO93GuJ7YDYy+gCcVKQpNK3ME6ofsbj+u
-	qNoA75ZP+SCcWx6iNzv+kDslqOfh6KioPYBLkFW6Vm5wsP0uKlXfxMhG+f33PGKL2I+nON
-	vlLQQ7NCxHTEb09vqsuUXAqKdYuwsts=
+	bh=X/29+kAqWfgwFrv7r8G7PU+eQXJAc+t/i9BDpOhdUqo=;
+	b=GUdLjF+LpY1y3M8epywaWI0F7OGdErHQpjG3C3UJ57SxBWGh5lQqUIgyJz1ZXFz7HGul6U
+	YdT3mNbbl5CbcI3IOjgeASIChvKtj0p2Z7t9MMVuei4ZL06tfqL5irEuQ46ZoPdTJoQ/xD
+	0CiYLVJ+8Cc9p6IxbllmJpCSksrJuTg=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
-	s=susede2_ed25519; t=1677232841;
+	s=susede2_ed25519; t=1677232842;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=bQMJWpenP6OEu3AR0STwSIwzPSjq3AkhCnZCUwU4em4=;
-	b=8uSvZSyN2Kf6MO7A0WVXIqBZpcPjWwSrokqUDvePSMNZCMXdTvp4Mz2BcsSD0D1/fRbS9I
-	yWrCVUnAmFfSuECg==
+	bh=X/29+kAqWfgwFrv7r8G7PU+eQXJAc+t/i9BDpOhdUqo=;
+	b=FPIaDwkSVcr/iQcbq6I33RPPLmtpUTezoo/59nwdZCq9QD/8WIRT2tPTl2mqxcXSrvVbqY
+	C/fopAhRFlSI8YBA==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 1B8B213A3C;
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 021D113A3C;
 	Fri, 24 Feb 2023 10:00:41 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id qEYfBsmK+GPeTgAAMHmgww
+	id wCRdO8mK+GPeTgAAMHmgww
 	(envelope-from <vbabka@suse.cz>); Fri, 24 Feb 2023 10:00:41 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: linux-mm@kvack.org,
@@ -44,9 +44,9 @@ Cc: linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	maple-tree@lists.infradead.org,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [RFC 01/11] mm/mremap: fix dup_anon_vma() in vma_merge() case 4
-Date: Fri, 24 Feb 2023 11:00:12 +0100
-Message-Id: <20230224100022.11268-2-vbabka@suse.cz>
+Subject: [RFC 07/11] mm/mmap/vma_merge: set mid to NULL if not applicable
+Date: Fri, 24 Feb 2023 11:00:18 +0100
+Message-Id: <20230224100022.11268-8-vbabka@suse.cz>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230224100022.11268-1-vbabka@suse.cz>
 References: <20230224100022.11268-1-vbabka@suse.cz>
@@ -58,32 +58,87 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In case 4, we are shrinking 'prev' (PPPP in the comment) and expanding
-'mid' (NNNN). So we need to make sure 'mid' clones the anon_vma from
-'prev', if it doesn't have any. After commit 0503ea8f5ba7 ("mm/mmap:
-remove __vma_adjust()") we can fail to do that due to wrong parameters
-for dup_anon_vma(). The call is a no-op because res == next, adjust ==
-mid and mid == next. Fix it.
+There are several places where we test if 'mid' is really the area NNNN
+in the diagram and the tests have two variants and are non-obvious to
+follow.  Instead, set 'mid' to NULL up-front if it's not the NNNN area,
+and simplify the tests.
 
-Fixes: 0503ea8f5ba7 ("mm/mmap: remove __vma_adjust()")
+Also update the description in comment accordingly.
+
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 ---
- mm/mmap.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ mm/mmap.c | 21 +++++++++++++--------
+ 1 file changed, 13 insertions(+), 8 deletions(-)
 
 diff --git a/mm/mmap.c b/mm/mmap.c
-index 20f21f0949dd..740b54be3ed4 100644
+index e7d497237f44..e05bbcaf7b61 100644
 --- a/mm/mmap.c
 +++ b/mm/mmap.c
-@@ -973,7 +973,7 @@ struct vm_area_struct *vma_merge(struct vma_iterator *vmi, struct mm_struct *mm,
- 			vma_end = addr;
- 			adjust = mid;
- 			adj_next = -(vma->vm_end - addr);
--			err = dup_anon_vma(res, adjust);
-+			err = dup_anon_vma(adjust, prev);
- 		} else {
- 			vma = next;			/* case 3 */
- 			vma_start = addr;
+@@ -848,10 +848,11 @@ can_vma_merge_after(struct vm_area_struct *vma, unsigned long vm_flags,
+  *
+  * The following mprotect cases have to be considered, where AAAA is
+  * the area passed down from mprotect_fixup, never extending beyond one
+- * vma, PPPPPP is the prev vma specified, and NNNNNN the next vma after:
++ * vma, PPPPPP is the prev vma specified, NNNN is a vma that overlaps
++ * the area AAAA and XXXXXX the next vma after AAAA:
+  *
+  *     AAAA             AAAA                   AAAA
+- *    PPPPPPNNNNNN    PPPPPPXXXXXX       PPPPPPNNNNNN
++ *    PPPPPPXXXXXX    PPPPPPXXXXXX       PPPPPPNNNNNN
+  *    cannot merge    might become       might become
+  *                    PPXXXXXXXXXX       PPPPPPPPPPNN
+  *    mmap, brk or    case 4 below       case 5 below
+@@ -879,9 +880,10 @@ can_vma_merge_after(struct vm_area_struct *vma, unsigned long vm_flags,
+  *
+  * In the code below:
+  * PPPP is represented by *prev
+- * NNNN is represented by *mid (and possibly equal to *next)
+- * XXXX is represented by *next or not represented at all.
+- * AAAA is not represented - it will be merged or the function will return NULL
++ * NNNN is represented by *mid or not represented at all (NULL)
++ * XXXX is represented by *next or not represented at all (NULL)
++ * AAAA is not represented - it will be merged and the vma containing the
++ *      area is returned, or the function will return NULL
+  */
+ struct vm_area_struct *vma_merge(struct vma_iterator *vmi, struct mm_struct *mm,
+ 			struct vm_area_struct *prev, unsigned long addr,
+@@ -918,6 +920,9 @@ struct vm_area_struct *vma_merge(struct vma_iterator *vmi, struct mm_struct *mm,
+ 	else
+ 		next = mid;
+ 
++	if (mid && end <= mid->vm_start)
++		mid = NULL;
++
+ 	/* verify some invariant that must be enforced by the caller */
+ 	VM_WARN_ON(prev && addr <= prev->vm_start);
+ 	VM_WARN_ON(mid && end > mid->vm_end);
+@@ -952,7 +957,7 @@ struct vm_area_struct *vma_merge(struct vma_iterator *vmi, struct mm_struct *mm,
+ 		remove = next;				/* case 1 */
+ 		vma_end = next->vm_end;
+ 		err = dup_anon_vma(prev, next);
+-		if (mid != next) {			/* case 6 */
++		if (mid) {				/* case 6 */
+ 			remove = mid;
+ 			remove2 = next;
+ 			if (!next->anon_vma)
+@@ -960,7 +965,7 @@ struct vm_area_struct *vma_merge(struct vma_iterator *vmi, struct mm_struct *mm,
+ 		}
+ 	} else if (merge_prev) {
+ 		err = 0;				/* case 2 */
+-		if (mid && end > mid->vm_start) {
++		if (mid) {
+ 			err = dup_anon_vma(prev, mid);
+ 			if (end == mid->vm_end) {	/* case 7 */
+ 				remove = mid;
+@@ -982,7 +987,7 @@ struct vm_area_struct *vma_merge(struct vma_iterator *vmi, struct mm_struct *mm,
+ 			vma_end = next->vm_end;
+ 			vma_pgoff = next->vm_pgoff;
+ 			err = 0;
+-			if (mid != next) {		/* case 8 */
++			if (mid) {			/* case 8 */
+ 				vma_pgoff = mid->vm_pgoff;
+ 				remove = mid;
+ 				err = dup_anon_vma(next, mid);
 -- 
 2.39.2
 
