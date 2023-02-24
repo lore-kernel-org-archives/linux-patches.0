@@ -1,41 +1,41 @@
 Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C24133D4
-	for <patches@lists.linux.dev>; Fri, 24 Feb 2023 10:00:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 82E7C33F7
+	for <patches@lists.linux.dev>; Fri, 24 Feb 2023 10:00:43 +0000 (UTC)
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 4F92520F48;
+	by smtp-out2.suse.de (Postfix) with ESMTPS id DAE8F5CF12;
 	Fri, 24 Feb 2023 10:00:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.cz; s=susede2_rsa;
 	t=1677232841; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=q9S49Vc4wP4VJtPP7U3rbG14z7j2ldE6Nx08zIq8xuM=;
-	b=Tr78MlmMX0kPXukyljCLGjQEOsVHnL+81aPOiUFNTmWYCtN1zBTbSUjhZHB9ftqgxh6RXx
-	1d0/JvrSAVchiVzVVqY7LrlbCuIfM7hCo7YET2cmVgKdBOi5Mit9xnCwUOptxBQxpHYzO7
-	lJ5n7/gPoks9SvnG4gspGm5J7AV8Jeg=
+	bh=NhRb7OEjq72gATHH+81L0Pb56Fl0vIOvf0iCMN4nYIU=;
+	b=fYzhrj11ULyuqhA8Sagent4MDSnhNWl8R2BrOZiOHNx9yAxGii4l3b/DU9FJdKVwZb0bd0
+	iZoKwF2poIHgvY3Skpdlp910KuW5uXp9V7NYki4j5qv1RkOA4dGJjqXKV/gBoDa4TRbGko
+	SzQxCkrn6JiYwn+wrf/fDRXMFA6rMNE=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.cz;
 	s=susede2_ed25519; t=1677232841;
 	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
 	 mime-version:mime-version:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=q9S49Vc4wP4VJtPP7U3rbG14z7j2ldE6Nx08zIq8xuM=;
-	b=vEOsnZ/8cVcvIWVnPLmyKr8eHtE0LGR1ZfQgvL9eEMW+pVrH2LB/t9GOljgkH4mRCNZsPk
-	eHM11z3C2OMk8TDA==
+	bh=NhRb7OEjq72gATHH+81L0Pb56Fl0vIOvf0iCMN4nYIU=;
+	b=pRm1v3KHo1fpox5NF177Fm9sTRwu/iI806K18nFWHsCXkfJoMqk6rxxwdLrBhH4l/+AfFj
+	F7wKC2QJ3L4tXBDA==
 Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
 	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
 	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
 	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 364B613246;
+	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id BD04413A3C;
 	Fri, 24 Feb 2023 10:00:41 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([192.168.254.65])
 	by imap2.suse-dmz.suse.de with ESMTPSA
-	id OMR0DMmK+GPeTgAAMHmgww
+	id CIaKLcmK+GPeTgAAMHmgww
 	(envelope-from <vbabka@suse.cz>); Fri, 24 Feb 2023 10:00:41 +0000
 From: Vlastimil Babka <vbabka@suse.cz>
 To: linux-mm@kvack.org,
@@ -44,9 +44,9 @@ Cc: linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	maple-tree@lists.infradead.org,
 	Vlastimil Babka <vbabka@suse.cz>
-Subject: [RFC 02/11] mm/mmap/vma_merge: use only primary pointers for preparing merge
-Date: Fri, 24 Feb 2023 11:00:13 +0100
-Message-Id: <20230224100022.11268-3-vbabka@suse.cz>
+Subject: [RFC 05/11] mm/mmap/vma_merge: use the proper vma pointer in case 4
+Date: Fri, 24 Feb 2023 11:00:16 +0100
+Message-Id: <20230224100022.11268-6-vbabka@suse.cz>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230224100022.11268-1-vbabka@suse.cz>
 References: <20230224100022.11268-1-vbabka@suse.cz>
@@ -58,62 +58,44 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-In the merging preparation part of vma_merge(), some vma pointer
-variables are assigned for later execution of the merge, but also read
-from in the block itself. The code is easier follow and check against
-the cases diagram in the comment if the code reads only from the
-"primary" vma variables prev, mid, next instead. No functional change.
+Almost all cases now use the 'next' pointer for the vma following
+the merged area, and the cases diagram shows it as XXXX. Case 4 is
+different as it uses 'mid' and NNNN, so change it for consistency. No
+functional change.
 
 Signed-off-by: Vlastimil Babka <vbabka@suse.cz>
 ---
- mm/mmap.c | 14 +++++++-------
- 1 file changed, 7 insertions(+), 7 deletions(-)
+ mm/mmap.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/mm/mmap.c b/mm/mmap.c
-index 740b54be3ed4..0a8b052e3022 100644
+index 704afa278a98..1e4be7174964 100644
 --- a/mm/mmap.c
 +++ b/mm/mmap.c
-@@ -950,16 +950,16 @@ struct vm_area_struct *vma_merge(struct vma_iterator *vmi, struct mm_struct *mm,
- 	    is_mergeable_anon_vma(prev->anon_vma, next->anon_vma, NULL)) {
- 		remove = mid;				/* case 1 */
- 		vma_end = next->vm_end;
--		err = dup_anon_vma(res, remove);
-+		err = dup_anon_vma(prev, mid);
- 		if (mid != next) {			/* case 6 */
- 			remove2 = next;
--			if (!remove->anon_vma)
--				err = dup_anon_vma(res, remove2);
-+			if (!mid->anon_vma)
-+				err = dup_anon_vma(prev, next);
- 		}
- 	} else if (merge_prev) {
- 		err = 0;				/* case 2 */
- 		if (mid && end > mid->vm_start) {
--			err = dup_anon_vma(res, mid);
-+			err = dup_anon_vma(prev, mid);
- 			if (end == mid->vm_end) {	/* case 7 */
- 				remove = mid;
- 			} else {			/* case 5 */
-@@ -972,8 +972,8 @@ struct vm_area_struct *vma_merge(struct vma_iterator *vmi, struct mm_struct *mm,
+@@ -851,9 +851,9 @@ can_vma_merge_after(struct vm_area_struct *vma, unsigned long vm_flags,
+  * vma, PPPPPP is the prev vma specified, and NNNNNN the next vma after:
+  *
+  *     AAAA             AAAA                   AAAA
+- *    PPPPPPNNNNNN    PPPPPPNNNNNN       PPPPPPNNNNNN
++ *    PPPPPPNNNNNN    PPPPPPXXXXXX       PPPPPPNNNNNN
+  *    cannot merge    might become       might become
+- *                    PPNNNNNNNNNN       PPPPPPPPPPNN
++ *                    PPXXXXXXXXXX       PPPPPPPPPPNN
+  *    mmap, brk or    case 4 below       case 5 below
+  *    mremap move:
+  *                        AAAA               AAAA
+@@ -972,9 +972,9 @@ struct vm_area_struct *vma_merge(struct vma_iterator *vmi, struct mm_struct *mm,
+ 		res = next;
  		if (prev && addr < prev->vm_end) {	/* case 4 */
  			vma_end = addr;
- 			adjust = mid;
--			adj_next = -(vma->vm_end - addr);
--			err = dup_anon_vma(adjust, prev);
-+			adj_next = -(prev->vm_end - addr);
-+			err = dup_anon_vma(mid, prev);
+-			adjust = mid;
++			adjust = next;
+ 			adj_next = -(prev->vm_end - addr);
+-			err = dup_anon_vma(mid, prev);
++			err = dup_anon_vma(next, prev);
  		} else {
  			vma = next;			/* case 3 */
  			vma_start = addr;
-@@ -982,7 +982,7 @@ struct vm_area_struct *vma_merge(struct vma_iterator *vmi, struct mm_struct *mm,
- 			err = 0;
- 			if (mid != next) {		/* case 8 */
- 				remove = mid;
--				err = dup_anon_vma(res, remove);
-+				err = dup_anon_vma(next, mid);
- 			}
- 		}
- 	}
 -- 
 2.39.2
 
