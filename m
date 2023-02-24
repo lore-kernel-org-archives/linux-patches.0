@@ -1,105 +1,75 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-pl1-f177.google.com (mail-pl1-f177.google.com [209.85.214.177])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CDBC4AD27;
-	Fri, 24 Feb 2023 17:25:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id EECF0C433D2;
-	Fri, 24 Feb 2023 17:25:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1677259544;
-	bh=1Jc9vNwUR+XMeD7GpSkEAOSGynbA0xd2bpZpKVdTI9Y=;
-	h=From:Date:Subject:To:Cc:From;
-	b=qEpRUW3Ilrs60YRelMRzQFPfBQ5k6v53s3ZljgkcdP7ijeleRN916L15HSgUJY7HC
-	 Xm6uFUg5fatX5FEPhFmCCh7rLp/apjRyghiiw+Dh65FSeeEkROKOlv7til8Q8g3K8X
-	 0/aXvXoaqYxk1gIzJ54VMMZ2hgNxdWKWbReQ7c0KH4/sy2JAPKncgBACw9GdRfhQl3
-	 38zHJ6SIZn9CYlyqGurK77IZTTYVs5x7cg/3i/xeoIFUku8FfH/BIXByjjPTF66rMZ
-	 CDjFY5v6FDMaX1H/mXFJGOogvx+eHrTTGSrHjY88WQZjHLPIYKacccif9gY1Dzygzm
-	 djBie254KO8QA==
-From: Nathan Chancellor <nathan@kernel.org>
-Date: Fri, 24 Feb 2023 10:25:12 -0700
-Subject: [PATCH] drm: omapdrm: Do not use helper unininitialized in
- omap_fbdev_init()
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6226AAD27
+	for <patches@lists.linux.dev>; Fri, 24 Feb 2023 17:51:08 +0000 (UTC)
+Received: by mail-pl1-f177.google.com with SMTP id h14so243120plf.10
+        for <patches@lists.linux.dev>; Fri, 24 Feb 2023 09:51:08 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=sladewatkins.net; s=googled;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=G41QfMy0gPOdytQyepHXV2zo+vejMnYEhBKv7ZyIXik=;
+        b=OW++KfGrEpGn8vfPq5A8i5xDwR1wegEp10vqA2beJ0n38XGSdpdZcqGu0X2rVQAwwY
+         3IKYYXXZLOQEm5t0q4hhnw6F0ultTbpUgxpQ9l5HJ3ZgyM3aDsLjs7/Sxg7Ptq8iND3u
+         +gQ3aaJc0gYc/o8GIj3EwijUYwxHy51GyJi64mBMnB+Uc2X/2wOxhuRtzoer6ApXVymW
+         ql0VLO7ksuxxCQKCkdRpoark2JDbFogCsTNYlgubSlNcKK+6u5JMbIA99Ydtx9VfMCWZ
+         POD1mEQC3mqCLnlsyYjTvidu1kw6jYWPKoPSyxOkwiYdQcj1GXNSfcBMPQWMvj9KlpaA
+         Z2kA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=G41QfMy0gPOdytQyepHXV2zo+vejMnYEhBKv7ZyIXik=;
+        b=ZkC5BefGRS0utQcjVLfYVuMoTQE7e0zSgd5z5yQx1p5gwWjnWtMAojlPTPU5OR9WnJ
+         hN84OMaNZWFSUus8AabbIAAIM32cu8erEAlkvHVj6QWhpZnQuJ63bD4N4YKiYxbnB9Pn
+         7oEcMbeqt4dJPKaibJ/h2z55l3JE/2LPv213gWKB5vqPFxnX6XXHZ6myKxdIliACRbPj
+         Q1Pa14HOHxuwC5ZGypnkaN2MbrFJGEvj7k/9s1m6d+LxCcze6NAkU198bdlJNnbshq9x
+         c7+7FNoB31UVWhUR/I8j0XmjM1ppOUDpqpmTLswtl15O1G9TKa5MxKZBFd8oNkVGiVCs
+         7Bqw==
+X-Gm-Message-State: AO0yUKWYLlFi1Y3xPPN1dQ/tHTfFo0VDRuwCyv96xWLJEITjkXR9T/7a
+	snwFqz1nWYMj8JkQ38QdlZDU4QCWW9eOWLIyCjGa4g==
+X-Google-Smtp-Source: AK7set8nd4ezLLCXVyqp2V+Mk/zCMObyIQmnH2HaXse63lHEHcKMPICs7gsTVmOJQoO1EkC22Z46WSTvGy/21ivZfVk=
+X-Received: by 2002:a17:90b:3e8b:b0:237:ae7c:1595 with SMTP id
+ rj11-20020a17090b3e8b00b00237ae7c1595mr270796pjb.2.1677261067487; Fri, 24 Feb
+ 2023 09:51:07 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20230224-omapdrm-wsometimes-uninitialized-v1-1-3fec8906ee3a@kernel.org>
-X-B4-Tracking: v=1; b=H4sIAPfy+GMC/x2NSQrDMAwAvxJ0rsFRN9qvlBzsWG4EtR0kd6Ehf
- 6/T4zAws4CSMClcuwWEXqxccoN+18E4uXwnw6ExoMW9RTyYktwcJJm3lkSVE6l5Zs5c2T34S8H
- YHo/xfLpg9B5axjsl48XlcdpCyWkl2cQsFPnzf9+Gdf0Bz9WWKYsAAAA=
-To: tomba@kernel.org, airlied@gmail.com, daniel@ffwll.ch, 
- javierm@redhat.com, tzimmermann@suse.de
-Cc: ndesaulniers@google.com, trix@redhat.com, 
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org, 
- llvm@lists.linux.dev, patches@lists.linux.dev, 
- kernel test robot <lkp@intel.com>, Nathan Chancellor <nathan@kernel.org>
-X-Mailer: b4 0.12.1
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2255; i=nathan@kernel.org;
- h=from:subject:message-id; bh=1Jc9vNwUR+XMeD7GpSkEAOSGynbA0xd2bpZpKVdTI9Y=;
- b=owGbwMvMwCEmm602sfCA1DTG02pJDMk/PosrTJlsFrnQpEPC7cOEO8f8ivZavhKWy98hGiB3t
- tJz5svujlIWBjEOBlkxRZbqx6rHDQ3nnGW8cWoSzBxWJpAhDFycAjCRo50MfyX8GIxNTdInH3/f
- LaKV1S9d80X+RPpUP3nFPpuOK11s/Az/Myr/up88mLCb4Z8xZ8i/8lnvfrmrC/efXFfA2L9FVD2
- JGQA=
-X-Developer-Key: i=nathan@kernel.org; a=openpgp;
- fpr=2437CB76E544CB6AB3D9DFD399739260CB6CB716
+References: <20230223130423.369876969@linuxfoundation.org>
+In-Reply-To: <20230223130423.369876969@linuxfoundation.org>
+From: Slade Watkins <srw@sladewatkins.net>
+Date: Fri, 24 Feb 2023 12:50:55 -0500
+Message-ID: <CA+pv=HPhxmBG37wsjeem80bAK9W9wATO4DbXx09JHHLYHSVnwA@mail.gmail.com>
+Subject: Re: [PATCH 4.14 0/7] 4.14.307-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	rwarsow@gmx.de
+Content-Type: text/plain; charset="UTF-8"
 
-Clang warns (or errors with CONFIG_WERROR):
+On Thu, Feb 23, 2023 at 8:04 AM Greg Kroah-Hartman
+<gregkh@linuxfoundation.org> wrote:
+>
+> This is the start of the stable review cycle for the 4.14.307 release.
+> There are 7 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+>
+> Responses should be made by Sat, 25 Feb 2023 13:04:16 +0000.
+> Anything received after that time might be too late.
 
-  ../drivers/gpu/drm/omapdrm/omap_fbdev.c:235:6: error: variable 'helper' is used uninitialized whenever 'if' condition is true [-Werror,-Wsometimes-uninitialized]
-          if (!fbdev)
-              ^~~~~~
-  ../drivers/gpu/drm/omapdrm/omap_fbdev.c:259:26: note: uninitialized use occurs here
-          drm_fb_helper_unprepare(helper);
-                                  ^~~~~~
-  ../drivers/gpu/drm/omapdrm/omap_fbdev.c:235:2: note: remove the 'if' if its condition is always false
-          if (!fbdev)
-          ^~~~~~~~~~~
-  ../drivers/gpu/drm/omapdrm/omap_fbdev.c:228:30: note: initialize the variable 'helper' to silence this warning
-          struct drm_fb_helper *helper;
-                                      ^
-                                       = NULL
-  1 error generated.
+4.14.307-rc1 compiled and booted on my x86_64 test system. No errors
+or regressions.
 
-Return early, as there is nothing for the function to do if memory
-cannot be allocated. There is no point in adding another label to just
-emit the warning at the end of the function in this case, as memory
-allocation failures are already logged.
+Tested-by: Slade Watkins <srw@sladewatkins.net>
 
-Fixes: 3fb1f62f80a1 ("drm/fb-helper: Remove drm_fb_helper_unprepare() from drm_fb_helper_fini()")
-Link: https://github.com/ClangBuiltLinux/linux/issues/1809
-Link: https://lore.kernel.org/oe-kbuild-all/202302250058.fYTe9aTP-lkp@intel.com/
-Reported-by: kernel test robot <lkp@intel.com>
-Signed-off-by: Nathan Chancellor <nathan@kernel.org>
----
-This is currently showing in mainline so I believe this should go to
-drm-misc-next-fixes.
----
- drivers/gpu/drm/omapdrm/omap_fbdev.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/omapdrm/omap_fbdev.c b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-index 84429728347f..a6c8542087ec 100644
---- a/drivers/gpu/drm/omapdrm/omap_fbdev.c
-+++ b/drivers/gpu/drm/omapdrm/omap_fbdev.c
-@@ -233,7 +233,7 @@ void omap_fbdev_init(struct drm_device *dev)
- 
- 	fbdev = kzalloc(sizeof(*fbdev), GFP_KERNEL);
- 	if (!fbdev)
--		goto fail;
-+		return;
- 
- 	INIT_WORK(&fbdev->work, pan_worker);
- 
-
----
-base-commit: e034b8a18d4badceecb672c58b488bad1e901d95
-change-id: 20230224-omapdrm-wsometimes-uninitialized-0125f7692fbb
-
-Best regards,
--- 
-Nathan Chancellor <nathan@kernel.org>
-
+Thanks,
+-- Slade
