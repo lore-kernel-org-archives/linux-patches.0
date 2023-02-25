@@ -1,97 +1,90 @@
-Received: from mail-pl1-f169.google.com (mail-pl1-f169.google.com [209.85.214.169])
+Received: from mail-pg1-f169.google.com (mail-pg1-f169.google.com [209.85.215.169])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7877ED312
-	for <patches@lists.linux.dev>; Sat, 25 Feb 2023 04:24:18 +0000 (UTC)
-Received: by mail-pl1-f169.google.com with SMTP id u14so1512085ple.7
-        for <patches@lists.linux.dev>; Fri, 24 Feb 2023 20:24:18 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 74A6A17E8
+	for <patches@lists.linux.dev>; Sat, 25 Feb 2023 05:14:42 +0000 (UTC)
+Received: by mail-pg1-f169.google.com with SMTP id z10so759705pgr.8
+        for <patches@lists.linux.dev>; Fri, 24 Feb 2023 21:14:42 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=heitbaum.com; s=google;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=OJU2kROOoIPQ44ETVMfvc0e0M4O9ezpagsF+vPoQNDI=;
-        b=ma85Dt+rXI7pIxydy+VtgeCbDlC2aO/yjCkqvNKE/GYrlqRmMJ3bLCMEd8ZtoM8qQe
-         3XMEXkM4VjVEfm/b1D/Aetb9b9v+kheXIF0QPc9kvt70WVLjAnnf9J/KzSU/Vu31EJMN
-         7dkuJ3mwlgnFFGSTskR1jouqI8GidDmcSdAeBe8DjcFMl9rQutebi8QcKrkJeVgjzE5w
-         WqJyQAkrwdYVETL4lg2Ps6rbCOgiuVoJqaZ47RaEzh4UGtOzjizz6Dfi+XU73w5ZYOgS
-         sF/MaM+MHDg8L1QqbL5UgScFnOvj8UXFUgqOMo+nXKyNJM1SEuHTnp0hAveOMddwBKUK
-         TdTg==
+        bh=X7+3E0JQU0FxnGZ5BiSmvm8Hsg7HD/6qbOk5w5ZRHjM=;
+        b=bp8w2aAldxm/p/OyqulRx8jUytLCNBv+0zrDx+48+YYCEIEgvcekPK+EOvzaMhXmdm
+         K2tIHohT8IF4hLdjyQ+6otPmdFxt/27jK3erFllZEVRwRrVX+F1NosY9FFIS8MLx4JtI
+         km+YcszsNlpD2cG9tCM8K3x6oreYS0/P/qUz8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=in-reply-to:content-disposition:mime-version:references:message-id
          :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=OJU2kROOoIPQ44ETVMfvc0e0M4O9ezpagsF+vPoQNDI=;
-        b=IMC6FjRSALJyM8z2ZhEeX4d76H03c/kLrmdb8X0TbTJcISaQXc4p23pHJmVRXiCnzu
-         T95ru6H8TsBQEUYxnimwtvaTg+au1kzSy8cJLlxcsOgJCHKD6AjsYoif0NcpHnNH49li
-         fF4l70L3pKqAFIJOo5e4E8NHx9GDl1iWVM3YTb+1ImSmGVT+QmBWJx47+0aydp5R7AA9
-         YAARGmCsEn+johjKwJ3qEDxcNdJNyaAbZWPvNdNIoy6osTudLWIOATjbXUZiHLOIiooV
-         C0tQCckUtZoOaFDATWkraI8uaUM7ymVyZjecL9aylO/eAmKmdoSdN3mGsOd/P4QCQtqP
-         BEJQ==
-X-Gm-Message-State: AO0yUKUhUnTKeaP/RSGBkgy8DFfzwiGT8SufKTjs+/yjIgjdE6uf/R/1
-	9Zo6Sb1dTn7CduR/m6GPREQ=
-X-Google-Smtp-Source: AK7set+PGV7PC4AM/gQz3u6x7AMiNlRF7EwfICAcrECVvng1a2dxWWSpLsfGfJLj2Tg1U4P9CLBldQ==
-X-Received: by 2002:a17:90b:1e02:b0:233:af77:c075 with SMTP id pg2-20020a17090b1e0200b00233af77c075mr18914834pjb.36.1677299057783;
-        Fri, 24 Feb 2023 20:24:17 -0800 (PST)
-Received: from debian.me (subs02-180-214-232-79.three.co.id. [180.214.232.79])
-        by smtp.gmail.com with ESMTPSA id g10-20020a17090a67ca00b00230b572e90csm374038pjm.35.2023.02.24.20.24.16
+        bh=X7+3E0JQU0FxnGZ5BiSmvm8Hsg7HD/6qbOk5w5ZRHjM=;
+        b=gU7J4emyOqK+GA1lMmbmyvNcD6oTis20SEriB5ZkJbv8DgMaYLmUnV0F2lHh2+2xfh
+         Vt0JxVFGVJPgFqFn625HvauiIO9byi07R/fPVArVFXxNHJl/R0cGkSkSJDoDO5MB2zfT
+         p/UnwbCqCUEXKyW6rUBWjBqK/cWSDR2KEzZ7pnSTavqpssFnQQ7DkwRoMMe6gCfjDSyE
+         l1TARgxcTRSiyZSUBzDm38m6VjzsGh01N9RX+4p6+wg5F7m/UdGK3gzWk7dnnrr6KD73
+         fVCYOFcTfQgjH9SBYl/b2nfqecFWBsFXwk5WYjjB+kTRnXKczHtrP3coi8XtlHM6v+g0
+         i0AQ==
+X-Gm-Message-State: AO0yUKWOf5c92P7Lp5OX9XjjI3ya3IrjD4WtYo7REyRjsCzDrHAmbv2x
+	4ORsOHrDpceCx8KEy05d0nJ6Mg==
+X-Google-Smtp-Source: AK7set8C3FnBa3BGaJvZ19hytTcjHR88q+nZp1elea7y2fP70VuzavEATg6qUnTZ4FAD1YUGwalOCw==
+X-Received: by 2002:a62:184f:0:b0:5a8:b705:4dd3 with SMTP id 76-20020a62184f000000b005a8b7054dd3mr16642468pfy.13.1677302081607;
+        Fri, 24 Feb 2023 21:14:41 -0800 (PST)
+Received: from 5d49c37e6aa9 (124-148-239-102.tpgi.com.au. [124.148.239.102])
+        by smtp.gmail.com with ESMTPSA id c1-20020aa78801000000b005d866d184b5sm404294pfo.46.2023.02.24.21.14.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Feb 2023 20:24:16 -0800 (PST)
-Received: by debian.me (Postfix, from userid 1000)
-	id CE633106473; Sat, 25 Feb 2023 11:24:12 +0700 (WIB)
-Date: Sat, 25 Feb 2023 11:24:12 +0700
-From: Bagas Sanjaya <bagasdotme@gmail.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org, akpm@linux-foundation.org,
-	linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
-	lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
-	f.fainelli@gmail.com, sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 5.15 00/37] 5.15.96-rc3 review
-Message-ID: <Y/mNbLJnHULALOUm@debian.me>
-References: <20230224102235.663354088@linuxfoundation.org>
+        Fri, 24 Feb 2023 21:14:40 -0800 (PST)
+Date: Sat, 25 Feb 2023 05:14:32 +0000
+From: Rudi Heitbaum <rudi@heitbaum.com>
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
+Subject: Re: [PATCH 6.1 00/47] 6.1.14-rc2 review
+Message-ID: <20230225051432.GA704396@5d49c37e6aa9>
+References: <20230223141545.280864003@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="2eysLsWwR/qUe1TR"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20230224102235.663354088@linuxfoundation.org>
+In-Reply-To: <20230223141545.280864003@linuxfoundation.org>
 
-
---2eysLsWwR/qUe1TR
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Fri, Feb 24, 2023 at 11:23:55AM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.96 release.
-> There are 37 patches in this series, all will be posted as a response
+On Thu, Feb 23, 2023 at 03:16:15PM +0100, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.14 release.
+> There are 47 patches in this series, all will be posted as a response
 > to this one.  If anyone has any issues with these being applied, please
 > let me know.
->=20
+> 
+> Responses should be made by Sat, 25 Feb 2023 14:15:30 +0000.
+> Anything received after that time might be too late.
 
-Successfully cross-compiled for arm64 (bcm2711_defconfig, GCC 10.2.0) and
-powerpc (ps3_defconfig, GCC 12.2.0).
+Hi Greg,
 
-Tested-by: Bagas Sanjaya <bagasdotme@gmail.com>
+6.1.14-rc2 tested.
 
---=20
-An old man doll... just what I always wanted! - Clara
+Run tested on:
+- Allwinner H6 (Tanix TX6)
+- Intel Alder Lake x86_64 (nuc12 i7-1260P)
 
---2eysLsWwR/qUe1TR
-Content-Type: application/pgp-signature; name="signature.asc"
+In addition - build tested for:
+- Allwinner A64
+- Allwinner H3
+- Allwinner H5
+- NXP iMX6
+- NXP iMX8
+- Qualcomm Dragonboard
+- Rockchip RK3288
+- Rockchip RK3328
+- Rockchip RK3399pro
+- Samsung Exynos
 
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQSSYQ6Cy7oyFNCHrUH2uYlJVVFOowUCY/mNYgAKCRD2uYlJVVFO
-o0O+AP0Z/B7hlIXv+rzD0Lv0JaqmOMR4pSN5wjBLP8A6zeVH4QEAj+Qv4n1MYMYa
-aM9vJ2oeaGjSVhQYFoSuyNwmR7ruRgo=
-=DYgO
------END PGP SIGNATURE-----
-
---2eysLsWwR/qUe1TR--
+Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
+--
+Rudi
