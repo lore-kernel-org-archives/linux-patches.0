@@ -1,161 +1,90 @@
-Received: from smtp-out2.suse.de (smtp-out2.suse.de [195.135.220.29])
+Received: from mail-pj1-f42.google.com (mail-pj1-f42.google.com [209.85.216.42])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 99DF9808;
-	Mon, 27 Feb 2023 09:01:58 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out2.suse.de (Postfix) with ESMTPS id 46B981F8D9;
-	Mon, 27 Feb 2023 09:01:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1677488511; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MqQ43OG15avgCT0fmGnm5bD0I8p/oLDbgvSGYXF/h1o=;
-	b=hlVYqgE90CjKvF6iD9xK7aQW29XOnA3ZzvzuKi+6W/2iUG2a14+F6u2s+8oDfOy7EDNDSC
-	LKu+TZmSsRN9mdCoz/lUMeNogDas7FTr+7ZNfHE1JC9SfGSUHbgiwzbr4HvVQeBebRlXc1
-	94QdU9/VShAC0vwVD6izokgJXUo5N1g=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1677488511;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=MqQ43OG15avgCT0fmGnm5bD0I8p/oLDbgvSGYXF/h1o=;
-	b=aPLeaAWRrWXDsJG2UAsh2HBmBbOmAwZDmz7+4Cq/zI76iGHq6E+QFVSXJziqs+6SFuT7EZ
-	kyZn/xylelTdgCBQ==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 0890013912;
-	Mon, 27 Feb 2023 09:01:51 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id Y78EAX9x/GMnSQAAMHmgww
-	(envelope-from <tzimmermann@suse.de>); Mon, 27 Feb 2023 09:01:51 +0000
-Message-ID: <21c1675f-4184-e6f9-c9da-06722d6d7a12@suse.de>
-Date: Mon, 27 Feb 2023 10:01:50 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DE6696AAE
+	for <patches@lists.linux.dev>; Mon, 27 Feb 2023 13:30:50 +0000 (UTC)
+Received: by mail-pj1-f42.google.com with SMTP id me6-20020a17090b17c600b0023816b0c7ceso2172856pjb.2
+        for <patches@lists.linux.dev>; Mon, 27 Feb 2023 05:30:50 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=nrlqkyNhx5Y9J/eloABTQEhuK4mEKVoWLJBJOEPVQu0=;
+        b=mQU8pset9BooU3jzDqbQhgS4BYtT04chvJX646MRug8Def2PUH67YE9LLRZZjtxvoD
+         6FnUwhoGoLGiTYUCCMEkd4JmJBsE+LslYcsK7xUe9t8MtYKAXHdUpk4CGxlIZbM1m3Dt
+         FZMeMU4UGstobcZBN3TJQ5d1hZzZtR/F0d6dqDPEFNCD6AwGN+ZCJjVQxKqFBCQWoCFp
+         j7M/xxiCgLQ+jcbD6kZqPpt0r9oZ+frd5oyfSIXHHB6/64KPvTb9wupL49KOCSsKlydB
+         xaEI7pz/vT6EFDi4smuf+uxt5hOvVs9VYsLzdqFePVEtRmDd3kDS09OLeV7TRdLrj/2F
+         YS3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=nrlqkyNhx5Y9J/eloABTQEhuK4mEKVoWLJBJOEPVQu0=;
+        b=6yR8EU+VFgUYlWWNLkyHsJVefLmLYUTIqw4szNUnq+bm5gJveoVXpBHqhMiRB0FuNB
+         iF+ypBrVX96v+moNac5kklQLgexJmaz5rQJwH8dI3IeWlqi6XJZsPf/ZFg/93bYXg643
+         E8y9WOPyEpbEFctv2YA7PRbHRQTIEx3FrKqI/aCPRFyK1vhKMUDc/o/96ObB9fiWdH0p
+         9RgPlP6R7wGAZGqSEnbVri1+Q/nFbSrrBAk6yNu+1RKhQVES73s0Fl8v8MiqSWz9O/sq
+         6KdwfMSJe7ErJ1Ga28MnofvVJbAzyijjErzUW4qsE+7DUCVGn8pc7Yx/oSIAAAkWvrKb
+         xi4Q==
+X-Gm-Message-State: AO0yUKUnQKv8w8MESRog+lkoxLyl2xM9b+d8xDCkwXMgflyo46cULf4I
+	58MoqnkRnAtsp/EOC5yErkfLRfitcO3Z2lbdaWMVHw==
+X-Google-Smtp-Source: AK7set+y9/1kpprFY1OXKEHgrB85hu8mL9Xs/CkAgyUFKPWIL513Klt7JDZqMu91zLA0aFlMVuNpZvdkd6ZWQ9+Xmps=
+X-Received: by 2002:a17:902:ab07:b0:19a:7e41:5a2c with SMTP id
+ ik7-20020a170902ab0700b0019a7e415a2cmr6144088plb.2.1677504649857; Mon, 27 Feb
+ 2023 05:30:49 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] drm: omapdrm: Do not use helper unininitialized in
- omap_fbdev_init()
-Content-Language: en-US
-To: Nathan Chancellor <nathan@kernel.org>, tomba@kernel.org,
- airlied@gmail.com, daniel@ffwll.ch, javierm@redhat.com
-Cc: ndesaulniers@google.com, trix@redhat.com,
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- llvm@lists.linux.dev, patches@lists.linux.dev,
- kernel test robot <lkp@intel.com>
-References: <20230224-omapdrm-wsometimes-uninitialized-v1-1-3fec8906ee3a@kernel.org>
-From: Thomas Zimmermann <tzimmermann@suse.de>
-In-Reply-To: <20230224-omapdrm-wsometimes-uninitialized-v1-1-3fec8906ee3a@kernel.org>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------q10EuzWHVcDjYqavMproQccF"
+References: <20230126184157.27626-1-tony.luck@intel.com> <20230126184157.27626-8-tony.luck@intel.com>
+In-Reply-To: <20230126184157.27626-8-tony.luck@intel.com>
+From: Peter Newman <peternewman@google.com>
+Date: Mon, 27 Feb 2023 14:30:38 +0100
+Message-ID: <CALPaoCgnOWLdEqKtonNeq+d_Fj0yr3Y7tgwwmAHmuhL5xBhqyg@mail.gmail.com>
+Subject: Re: [PATCH 7/7] x86/resctrl: Determine if Sub-NUMA Cluster is enabled
+ and initialize.
+To: Tony Luck <tony.luck@intel.com>
+Cc: Fenghua Yu <fenghua.yu@intel.com>, Reinette Chatre <reinette.chatre@intel.com>, 
+	Jonathan Corbet <corbet@lwn.net>, x86@kernel.org, Shaopeng Tan <tan.shaopeng@fujitsu.com>, 
+	James Morse <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>, 
+	Babu Moger <babu.moger@amd.com>, linux-kernel@vger.kernel.org, 
+	linux-doc@vger.kernel.org, patches@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------q10EuzWHVcDjYqavMproQccF
-Content-Type: multipart/mixed; boundary="------------HjzVTbLD5v5nBTUmqFGrZB7r";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Nathan Chancellor <nathan@kernel.org>, tomba@kernel.org,
- airlied@gmail.com, daniel@ffwll.ch, javierm@redhat.com
-Cc: ndesaulniers@google.com, trix@redhat.com,
- dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
- llvm@lists.linux.dev, patches@lists.linux.dev,
- kernel test robot <lkp@intel.com>
-Message-ID: <21c1675f-4184-e6f9-c9da-06722d6d7a12@suse.de>
-Subject: Re: [PATCH] drm: omapdrm: Do not use helper unininitialized in
- omap_fbdev_init()
-References: <20230224-omapdrm-wsometimes-uninitialized-v1-1-3fec8906ee3a@kernel.org>
-In-Reply-To: <20230224-omapdrm-wsometimes-uninitialized-v1-1-3fec8906ee3a@kernel.org>
+Hi Tony,
 
---------------HjzVTbLD5v5nBTUmqFGrZB7r
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+On Thu, Jan 26, 2023 at 7:42=E2=80=AFPM Tony Luck <tony.luck@intel.com> wro=
+te:
+> +static __init int find_snc_ways(void)
+> +{
+> +       unsigned long *node_caches;
+> +       int cpu, node, ret;
+> +
+> +       node_caches =3D kcalloc(BITS_TO_LONGS(nr_node_ids), sizeof(*node_=
+caches), GFP_KERNEL);
+> +       if (!node_caches)
+> +               return 1;
+> +
+> +       cpus_read_lock();
+> +       for_each_node(node) {
 
-SGkNCg0KQW0gMjQuMDIuMjMgdW0gMTg6MjUgc2NocmllYiBOYXRoYW4gQ2hhbmNlbGxvcjoN
-Cj4gQ2xhbmcgd2FybnMgKG9yIGVycm9ycyB3aXRoIENPTkZJR19XRVJST1IpOg0KPiANCj4g
-ICAgLi4vZHJpdmVycy9ncHUvZHJtL29tYXBkcm0vb21hcF9mYmRldi5jOjIzNTo2OiBlcnJv
-cjogdmFyaWFibGUgJ2hlbHBlcicgaXMgdXNlZCB1bmluaXRpYWxpemVkIHdoZW5ldmVyICdp
-ZicgY29uZGl0aW9uIGlzIHRydWUgWy1XZXJyb3IsLVdzb21ldGltZXMtdW5pbml0aWFsaXpl
-ZF0NCj4gICAgICAgICAgICBpZiAoIWZiZGV2KQ0KPiAgICAgICAgICAgICAgICBefn5+fn4N
-Cj4gICAgLi4vZHJpdmVycy9ncHUvZHJtL29tYXBkcm0vb21hcF9mYmRldi5jOjI1OToyNjog
-bm90ZTogdW5pbml0aWFsaXplZCB1c2Ugb2NjdXJzIGhlcmUNCj4gICAgICAgICAgICBkcm1f
-ZmJfaGVscGVyX3VucHJlcGFyZShoZWxwZXIpOw0KPiAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgIF5+fn5+fg0KPiAgICAuLi9kcml2ZXJzL2dwdS9kcm0vb21hcGRybS9v
-bWFwX2ZiZGV2LmM6MjM1OjI6IG5vdGU6IHJlbW92ZSB0aGUgJ2lmJyBpZiBpdHMgY29uZGl0
-aW9uIGlzIGFsd2F5cyBmYWxzZQ0KPiAgICAgICAgICAgIGlmICghZmJkZXYpDQo+ICAgICAg
-ICAgICAgXn5+fn5+fn5+fn4NCj4gICAgLi4vZHJpdmVycy9ncHUvZHJtL29tYXBkcm0vb21h
-cF9mYmRldi5jOjIyODozMDogbm90ZTogaW5pdGlhbGl6ZSB0aGUgdmFyaWFibGUgJ2hlbHBl
-cicgdG8gc2lsZW5jZSB0aGlzIHdhcm5pbmcNCj4gICAgICAgICAgICBzdHJ1Y3QgZHJtX2Zi
-X2hlbHBlciAqaGVscGVyOw0KPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAg
-ICAgICBeDQo+ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICA9IE5V
-TEwNCj4gICAgMSBlcnJvciBnZW5lcmF0ZWQuDQo+IA0KPiBSZXR1cm4gZWFybHksIGFzIHRo
-ZXJlIGlzIG5vdGhpbmcgZm9yIHRoZSBmdW5jdGlvbiB0byBkbyBpZiBtZW1vcnkNCj4gY2Fu
-bm90IGJlIGFsbG9jYXRlZC4gVGhlcmUgaXMgbm8gcG9pbnQgaW4gYWRkaW5nIGFub3RoZXIg
-bGFiZWwgdG8ganVzdA0KPiBlbWl0IHRoZSB3YXJuaW5nIGF0IHRoZSBlbmQgb2YgdGhlIGZ1
-bmN0aW9uIGluIHRoaXMgY2FzZSwgYXMgbWVtb3J5DQo+IGFsbG9jYXRpb24gZmFpbHVyZXMg
-YXJlIGFscmVhZHkgbG9nZ2VkLg0KPiANCj4gRml4ZXM6IDNmYjFmNjJmODBhMSAoImRybS9m
-Yi1oZWxwZXI6IFJlbW92ZSBkcm1fZmJfaGVscGVyX3VucHJlcGFyZSgpIGZyb20gZHJtX2Zi
-X2hlbHBlcl9maW5pKCkiKQ0KPiBMaW5rOiBodHRwczovL2dpdGh1Yi5jb20vQ2xhbmdCdWls
-dExpbnV4L2xpbnV4L2lzc3Vlcy8xODA5DQo+IExpbms6IGh0dHBzOi8vbG9yZS5rZXJuZWwu
-b3JnL29lLWtidWlsZC1hbGwvMjAyMzAyMjUwMDU4LmZZVGU5YVRQLWxrcEBpbnRlbC5jb20v
-DQo+IFJlcG9ydGVkLWJ5OiBrZXJuZWwgdGVzdCByb2JvdCA8bGtwQGludGVsLmNvbT4NCj4g
-U2lnbmVkLW9mZi1ieTogTmF0aGFuIENoYW5jZWxsb3IgPG5hdGhhbkBrZXJuZWwub3JnPg0K
-DQpSZXZpZXdlZC1ieTogVGhvbWFzIFppbW1lcm1hbm4gPHR6aW1tZXJtYW5uQHN1c2UuZGU+
-DQoNCj4gLS0tDQo+IFRoaXMgaXMgY3VycmVudGx5IHNob3dpbmcgaW4gbWFpbmxpbmUgc28g
-SSBiZWxpZXZlIHRoaXMgc2hvdWxkIGdvIHRvDQo+IGRybS1taXNjLW5leHQtZml4ZXMuDQoN
-ClRoaXMgdHJlZSBpcyBvbmx5IGFjdGl2ZSBmcm9tIC1yYzYgdG8gc29tZXRpbWUgZHVyaW5n
-IHRoZSBtZXJnZSB3aW5kb3cuIA0KSSdsbCBhZGQgeW91ciBwYXRjaCB0byBkcm0tbWlzYy1m
-aXhlcyBBU0FQLg0KDQpCZXN0IHJlZ2FyZHMNClRob21hcw0KDQo+IC0tLQ0KPiAgIGRyaXZl
-cnMvZ3B1L2RybS9vbWFwZHJtL29tYXBfZmJkZXYuYyB8IDIgKy0NCj4gICAxIGZpbGUgY2hh
-bmdlZCwgMSBpbnNlcnRpb24oKyksIDEgZGVsZXRpb24oLSkNCj4gDQo+IGRpZmYgLS1naXQg
-YS9kcml2ZXJzL2dwdS9kcm0vb21hcGRybS9vbWFwX2ZiZGV2LmMgYi9kcml2ZXJzL2dwdS9k
-cm0vb21hcGRybS9vbWFwX2ZiZGV2LmMNCj4gaW5kZXggODQ0Mjk3MjgzNDdmLi5hNmM4NTQy
-MDg3ZWMgMTAwNjQ0DQo+IC0tLSBhL2RyaXZlcnMvZ3B1L2RybS9vbWFwZHJtL29tYXBfZmJk
-ZXYuYw0KPiArKysgYi9kcml2ZXJzL2dwdS9kcm0vb21hcGRybS9vbWFwX2ZiZGV2LmMNCj4g
-QEAgLTIzMyw3ICsyMzMsNyBAQCB2b2lkIG9tYXBfZmJkZXZfaW5pdChzdHJ1Y3QgZHJtX2Rl
-dmljZSAqZGV2KQ0KPiAgIA0KPiAgIAlmYmRldiA9IGt6YWxsb2Moc2l6ZW9mKCpmYmRldiks
-IEdGUF9LRVJORUwpOw0KPiAgIAlpZiAoIWZiZGV2KQ0KPiAtCQlnb3RvIGZhaWw7DQo+ICsJ
-CXJldHVybjsNCj4gICANCj4gICAJSU5JVF9XT1JLKCZmYmRldi0+d29yaywgcGFuX3dvcmtl
-cik7DQo+ICAgDQo+IA0KPiAtLS0NCj4gYmFzZS1jb21taXQ6IGUwMzRiOGExOGQ0YmFkY2Vl
-Y2I2NzJjNThiNDg4YmFkMWU5MDFkOTUNCj4gY2hhbmdlLWlkOiAyMDIzMDIyNC1vbWFwZHJt
-LXdzb21ldGltZXMtdW5pbml0aWFsaXplZC0wMTI1Zjc2OTJmYmINCj4gDQo+IEJlc3QgcmVn
-YXJkcywNCg0KLS0gDQpUaG9tYXMgWmltbWVybWFubg0KR3JhcGhpY3MgRHJpdmVyIERldmVs
-b3Blcg0KU1VTRSBTb2Z0d2FyZSBTb2x1dGlvbnMgR2VybWFueSBHbWJIDQpNYXhmZWxkc3Ry
-LiA1LCA5MDQwOSBOw7xybmJlcmcsIEdlcm1hbnkNCihIUkIgMzY4MDksIEFHIE7DvHJuYmVy
-ZykNCkdlc2Now6RmdHNmw7xocmVyOiBJdm8gVG90ZXYNCg==
+Someone tried this patch on a machine with a CPU-less node...
 
---------------HjzVTbLD5v5nBTUmqFGrZB7r--
+We need to check for this:
 
---------------q10EuzWHVcDjYqavMproQccF
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
++               if (cpumask_empty(cpumask_of_node(node)))
++                       continue;
 
------BEGIN PGP SIGNATURE-----
+> +               cpu =3D cpumask_first(cpumask_of_node(node));
+> +               set_bit(get_cpu_cacheinfo_id(cpu, 3), node_caches);
+> +       }
+> +       cpus_read_unlock();
 
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmP8cX4FAwAAAAAACgkQlh/E3EQov+CP
-Lg/+O3KPvS14LZLKqprtUdbcMhI4wXFn4aIjXQtV9PWFCMknkXgtUR9ETCS3zdSCrAXJiMcKzJ8b
-qT46fwogMcM59Uopkl5d7GCicmVaOZXXX2nuN4ykumbTZyn6A8JhZSokpEG3fOFqAhl4qxChMheW
-xkwxjozljgOvkcOnrrRzuZ7FddSU1V2NkQPwsn5Pn9Izjy9xIrobS3XMbFysTSE4wXFmAXn3NiXq
-ggk3RU/8Ah3Z1pRnadkcW2weOysz24iu+eQ0cxTZWqT1b/MU0ckToiLLyM7LWq4wlI0rqADLOuN1
-yNLEEu7O/Bskr7OtLwbG1gm0zPcokeNq8WcoFNiroANSGoTsHxcuDecsd82+WoyP+bXYqqUJojDz
-jbgeVXQcaqOex5s+/ykbeRgHvlMFwZHHcSB6U2XoPYH9CHj96SngARpJtDhx4kuRHUHDi9laM9Qu
-UY2L/RC4cvNkbRiQw6Dk6xOPAk2vlXGeaCxt7nfD9q5NHJmpBDNgQPq3iR4xOsFXSlC6XzVy6vr5
-j9wmSKYpsr/ChdJ+AGw2z8RXS0IyAx74EgsjaNK4YPp2q3QYtwmqK7w2tqjqaLB0B6l4lWQ4qcvD
-saMy6AMzI0i0CQ/gWEoZ9TT91p7lwoD07uZIVD6DcFj58axck7lVzfMP+TMerwKIYyOXh81vFK4e
-t0I=
-=QygN
------END PGP SIGNATURE-----
-
---------------q10EuzWHVcDjYqavMproQccF--
+Thanks!
+-Peter
