@@ -1,156 +1,215 @@
-Received: from smtp-out1.suse.de (smtp-out1.suse.de [195.135.220.28])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from NAM02-SN1-obe.outbound.protection.outlook.com (mail-sn1nam02on2077.outbound.protection.outlook.com [40.107.96.77])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3273B2917;
-	Tue, 28 Feb 2023 09:14:31 +0000 (UTC)
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by smtp-out1.suse.de (Postfix) with ESMTPS id C724921A4B;
-	Tue, 28 Feb 2023 09:14:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-	t=1677575662; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=L+WXaR+5eyD3SgnEUW2jbzu4G0EEJxEV/thZNIYGSNM=;
-	b=Bw419Sm4w+33lRx7yoKfEdxwlbNEdrUBgIJLRE3zlPgkwj2fGC7OgtX+NOAoS/oKGXTuoj
-	Le3kTf9+xfDBBCYyz05qVz8ob1+xG6I6X7tbI6Z9PpuvA/FtpBtxDNc64ocBqViVlfQylW
-	wpozC0MjvwPIcii2ZY/N2z+ImjHJRm0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-	s=susede2_ed25519; t=1677575662;
-	h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-	 mime-version:mime-version:content-type:content-type:
-	 in-reply-to:in-reply-to:references:references;
-	bh=L+WXaR+5eyD3SgnEUW2jbzu4G0EEJxEV/thZNIYGSNM=;
-	b=6+ad0VPicC+f26+tj+7Hpcz6fZWR9kmW9Wbd+v9+EUnqIMuuWRi+wwKJld/6Yc07S25Crm
-	h+sKmPIo3VQGFqBw==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-	(No client certificate requested)
-	by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 8C38613440;
-	Tue, 28 Feb 2023 09:14:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-	by imap2.suse-dmz.suse.de with ESMTPSA
-	id THNMIe7F/WM9LgAAMHmgww
-	(envelope-from <tzimmermann@suse.de>); Tue, 28 Feb 2023 09:14:22 +0000
-Message-ID: <9c8401c1-8a32-2b3a-5323-3c0f9dad0457@suse.de>
-Date: Tue, 28 Feb 2023 10:14:22 +0100
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 884E93D74
+	for <patches@lists.linux.dev>; Tue, 28 Feb 2023 14:27:33 +0000 (UTC)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=EZFBFdk2TimdtVWd+NUjxb+rol2Yf/fmSbIPy5o94Q5f2TpZaIHa8iRhIgkOt+VfdLoKgFQDGnwjT4pxAH25parjTK/hOQ2PJBIv7C0t2P8m1XK2D8ZPfDwIlF2qWJKzAklFJxyMFy5X8vQcXGUs0Ot8Qy/FwtNcDVcC4B4ggjKBZY5Kvlc6DP72jXITI/j7xo8fgdFW1PIMvknXBpIyZCXO/tRSJYpDKMVQEzi89QWDgbtepKRcuPiE1mBwq9qaV43fTnP3DyOG6LjIIWWSHbsO4KSjy8jcUguY9y8SWPnbFeFN9XuPXrvCvXNuefdpiVFcYMXhRb4r2VjuFf6oDg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=NnZjSamqHAiO5Gx36Ojnued+2QUkgv7SDEM0QbBMMHk=;
+ b=KaYANnUsEYVkqkFv8Y7V/o4YfnxO0YdGtfFnpJ/MCYJ4OX9DQsK5glUbQ8mKbTz5b0LtV0Ugt9ytb9FrrO124Rj6N3/fY9D2jSaCf7YwCug47a5oLUgvJjjlNv47/a6j4r9Ydfjl+fVBUJucO0tCCqMX2JE+0rYXtKEgukUXlZqf8D3p3IhmShdQec7CqYfOSlCky/V3yJ1RyPaBhUBJrazK3kJFkl1u+AvgiS0dPMho+Cosaj5Kim6n/H/o/x8Edh/MstiP0GRZEGdwcF0clloGvlHvhz1lNalJnpKM+qiyRBzta4T3/QZJeSxWbDkv228TKaJFb+veYKJL5DNo2g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
+ header.d=amd.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=NnZjSamqHAiO5Gx36Ojnued+2QUkgv7SDEM0QbBMMHk=;
+ b=lXW/edZlqq2slhFPDX5to6YiSuooVy/3km2Un9SNR5I3Zlg42rIv3JZS3MsUvBSUlTlvTYu+yglQ0wc4J3nYh4dBv2Ez+lDjINmM8Wj2LcAeGdaBDaGUZ0rIWxRLnKbjZDy8S67yO+zId7V2yzUGirgqU28PMZjJguERelP+juE=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=amd.com;
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
+ by MN2PR12MB4256.namprd12.prod.outlook.com (2603:10b6:208:1d2::14) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6134.30; Tue, 28 Feb
+ 2023 14:27:31 +0000
+Received: from MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::3490:de56:de08:46f6]) by MW3PR12MB4553.namprd12.prod.outlook.com
+ ([fe80::3490:de56:de08:46f6%8]) with mapi id 15.20.6134.030; Tue, 28 Feb 2023
+ 14:27:30 +0000
+Message-ID: <82013563-f652-2dc3-c90e-89b19fea6b1d@amd.com>
+Date: Tue, 28 Feb 2023 08:27:26 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
+ Thunderbird/91.5.0
+Subject: Re: [PATCH 3/7] x86/resctrl: Add a new node-scoped resource to
+ rdt_resources_all[]
+To: Tony Luck <tony.luck@intel.com>, Fenghua Yu <fenghua.yu@intel.com>,
+ Reinette Chatre <reinette.chatre@intel.com>,
+ Peter Newman <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>,
+ "x86@kernel.org" <x86@kernel.org>
+Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
+ <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+ "patches@lists.linux.dev" <patches@lists.linux.dev>
+References: <20230126184157.27626-1-tony.luck@intel.com>
+ <20230126184157.27626-4-tony.luck@intel.com>
+Content-Language: en-US
+From: "Moger, Babu" <bmoger@amd.com>
+In-Reply-To: <20230126184157.27626-4-tony.luck@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: CH0PR13CA0025.namprd13.prod.outlook.com
+ (2603:10b6:610:b1::30) To MW3PR12MB4553.namprd12.prod.outlook.com
+ (2603:10b6:303:2c::19)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH] drm: omapdrm: Do not use helper unininitialized in
- omap_fbdev_init()
-Content-Language: en-US
-To: Nathan Chancellor <nathan@kernel.org>, tomba@kernel.org,
- airlied@gmail.com, daniel@ffwll.ch, javierm@redhat.com
-Cc: kernel test robot <lkp@intel.com>, trix@redhat.com, llvm@lists.linux.dev,
- ndesaulniers@google.com, linux-kernel@vger.kernel.org,
- dri-devel@lists.freedesktop.org, patches@lists.linux.dev
-References: <20230224-omapdrm-wsometimes-uninitialized-v1-1-3fec8906ee3a@kernel.org>
-From: Thomas Zimmermann <tzimmermann@suse.de>
-In-Reply-To: <20230224-omapdrm-wsometimes-uninitialized-v1-1-3fec8906ee3a@kernel.org>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="------------w0z6qTToscvskSOlLJqX5NRQ"
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|MN2PR12MB4256:EE_
+X-MS-Office365-Filtering-Correlation-Id: b096dc56-8241-4875-ead5-08db1997ecc8
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info:
+	0U3FTibRH87oBLhbKt/gXa5jTBmBM6o/1sartbztP1NiCJD9t69jpB5tm7sM/+zhS83FHiP8k7l89ZZvrJVrbZrBJMYyujXsy3kwVEDGf9G1+PIJA5Z+In+aZCYhcJ++3E4A+drYSs/TU9rNXDwHSUF3tSxYkcyBuamatiwG5CK29IQb9bKJ34B/YHfehwlNOQ3c5lq0xptguMp1aosodkhYdvjUnnf5GP6pcER5IWHzFk11LzSvuJRAEhox3K6kcjndZAaW7Zx+zn5IT4AVih92d3fHS7CdG1CVudgeEEEIYmQlWTL7FPnYQynRQyfk0OquHQbHOEauJVGKcojMby5ZHa1YE1fjrhSe6rv4I4K8xg1TtFT8hqx6pUWMZVfFlh+z3sCm4g724xOt+D9XnPRZ2nBnJZSJlSDluL/OiqyWsX8hECNRFHp6+EMCp6Lti8rkk6wanuphkAkaOeNzAsIvFrbArHlNzeku85FfmSqiNgidSWoreKNAWOZ88++jyol2uBhQS7ZNw8cf0MyZ4y91quboL0BGtziWjq5a0DVhGXHRLaExpHA9zat0e4isQ79znBCnmfnc3lS2rCsOhxz9Qlec45HYazRfeS04pVuXcQn+ccBZt9PeqUc2hNPnxf9Rwk0nUWhwl/2Jq2X/atpr73y8RCknFHPQbC4QE1Bc/saCJ3UrYV7bZC+UVfVFn09QywE/HAvHlrYNGDJnGbZ/1oSbMbUB7odEsP5FIxk=
+X-Forefront-Antispam-Report:
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW3PR12MB4553.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(376002)(346002)(366004)(396003)(136003)(39860400002)(451199018)(36756003)(54906003)(316002)(110136005)(83380400001)(6486002)(6666004)(478600001)(53546011)(2616005)(6512007)(6506007)(186003)(26005)(2906002)(8936002)(41300700001)(66556008)(31696002)(5660300002)(7416002)(66946007)(66476007)(8676002)(38100700002)(4326008)(31686004)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0:
+	=?utf-8?B?VG9uc3YyYXZSRXJua2Z4b1paMHRPeDdVMmhkRCt4aEhHMnlQV0NFYm0vNHRM?=
+ =?utf-8?B?VVJDbEg1TU80Y0JMM2YxUXNzWGxQSEo2ZmZtTnU2Snl0NnNsWXQ4T2VhcTAr?=
+ =?utf-8?B?R0FPdUhxR3JneGw5UXVxZHV5dmRrV0w4aThES3A0bEZKQllPL0Z2OGcwY012?=
+ =?utf-8?B?SEdEWjJvUTRBUmRQRERPcklUL2NZcHpJbzR4cmgvUzhUTFRYd1dubVo4OGg2?=
+ =?utf-8?B?R1kveGRxS0JrTGZ6Z3NPVFZtTGFQYXhVc3NLR3k3Q2xqaFFhM2JqanZoYlJL?=
+ =?utf-8?B?ZFo2cEZFRlBMdjhhMVJndjY3TC84ODZkK2JCQ2I1dHRENmRGSXd2MnJCUzNy?=
+ =?utf-8?B?aWJKa2wvaXNLZ2liekJDVWN2M1NveDdzWEs2alNRVHkyT0tlSWZPY1Rudnc5?=
+ =?utf-8?B?c0xuZThha2E3U0ludkpiSU5hSHZKbnA5TUdQZldGUGh4akVBOXdhZGRQdldJ?=
+ =?utf-8?B?K1NhUlkxcEtHNThNV1RyYURqb25DbnFsaFdZMW1CRzM5QzZ0RmtDaG8wSXVn?=
+ =?utf-8?B?NVorMUlxcmRWdHZVU3BldnAyQUpHUE93S2RCVENtQ0w1WWdvQ2NGR0grYXRD?=
+ =?utf-8?B?Z0U0MGRWeDh0aTNNZllESjNHcDF4dExmVW9uV1FpWU9sYnNHQ2ZLSnZMVXB5?=
+ =?utf-8?B?aWppVzV1WHFtdTlUUEpBTTZrMDRGRnJGMGhJR2o2QWt1VEV5UE1ranh0Mzcz?=
+ =?utf-8?B?ZlZFY3VWSXIzdkN0MnpnQnFCQVlaS1VyeTFtdDlXYWJjTlJ6NmJOQVhkT2h3?=
+ =?utf-8?B?eVA2SXlTVmU0Sy96NjdKMC9xZ0F1dEY1RE5WTENJV3AyZXFXR0VrYXdJTUVK?=
+ =?utf-8?B?QTFpUHk4WklJNHdqWFVpS1RWa1hFQysrUUpMOW40b2lqVlNyMzA4blRlZ2xq?=
+ =?utf-8?B?a0JWVWZ1QlBHU0k0MFd2STZ0VFpvcTF3WlVsVjQ1M01EZk9LYnRDVjhJVXlt?=
+ =?utf-8?B?ZjVFeENmUmM5cjNveGpTR0NMazJ1TXJyclFoTThWbU1VaWh4b0paREI4N3hM?=
+ =?utf-8?B?bHg2VW9uRTl2RmxueGtWOU5zQUd3MFNiTXBhOGk5SjZuL1cvVFFLSURsRFEx?=
+ =?utf-8?B?M0FqYW9NdXE3d3U0SVBIcFBySWc0WUZ2SXcyV1pSbENPUnNRSFZ3cWNSR0Fx?=
+ =?utf-8?B?emNmcVpvU2xvVU5wTFplUHpOZXVVeXl5VVN5QjdzNmszMjBhRlNvOWtvT2po?=
+ =?utf-8?B?aktXa1FxUjhIN3RUWm44RTFNaHJCRlVTd0xnTHV3QVVuemQ5SnlheDBFN1B0?=
+ =?utf-8?B?d3ppd0UyQUdQWDV5YjRsemdQZkhOSEpMYk5ySk96QkJ3K1RlakI1N093VFQ1?=
+ =?utf-8?B?R3lLaXRDZHR5Y2NGRFVCeEZSYklKRGZsSU9teEIrNzF0WjIrV1dYTUp4WnJj?=
+ =?utf-8?B?WTZreGlYTFErQXhjcWFCM2J5UGhuSjR3OFU1QkJwYXFPOFY3bmdBdFh4MjRm?=
+ =?utf-8?B?MURkQytaWVBzVkUrb1pEbFdoQ1doRHROUnVIOFV1dWd3WDhkNXg5ZW10bzJp?=
+ =?utf-8?B?L2xUTkxwVXIveVUyTFgxY3YyM1NQaERKdlg5SjF2Wk9wU0pHSEluMlB1cy9h?=
+ =?utf-8?B?dnZ2WkFmcHlEUkJlUWREVURheHJBcEdUNWd5Y3NYVVRzZXpDUm9OZ0Y3TEMr?=
+ =?utf-8?B?a3E2RkVIeEN1TVNJcVBPbStoWW1ud2ZvOHBpTHplajcvZVRGdFlzWnBVMWtJ?=
+ =?utf-8?B?NUNCaUN6NmsvOHRjVS8xQm93cFFYOXZsNkgxSzU5SVAxMnlYelprK0t2bG1C?=
+ =?utf-8?B?VGlVbDQrY2QwVkRudnV3WWZzTG40QXQwQ0YzQU1PbWZJWENocGVrSzQ4Lyt0?=
+ =?utf-8?B?WklzV0dJUER3OHd0K2lNY2ZjUXl5THA2U3pxM3M2Z1A4MHVxdHViSUg2VWYy?=
+ =?utf-8?B?WFFHcmVwUVg3N3NzUFl2NEFSYnlTMW1JOVlkcGp4WmNVOUNpSEh5RDZaTnNs?=
+ =?utf-8?B?Z2FpWm15a0toamNJK25BeldLempaam9rbDVpTjBqMVdyZEpMM255OGlaa3RS?=
+ =?utf-8?B?RFhTbzc0QTNseFo3OUQ0WDRNN1NKci9VTEpVcGFEanhoQWlrKzVCb3QvUHgz?=
+ =?utf-8?B?alllTm50WnovdkZHQkkvTWRMKzVOSEJiK1FOcFRHc2twUkMrOUo5Y0QxTUNl?=
+ =?utf-8?Q?4OCR2c9v/UQWSQnnMHwYFLsDb?=
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: b096dc56-8241-4875-ead5-08db1997ecc8
+X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2023 14:27:30.8278
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: vBlYFEh0VXjJQ7W7NFAmiZlNa/QasDOI79/otj+xEPNxpt81cDfJ4rLguM+xCAtn
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4256
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---------------w0z6qTToscvskSOlLJqX5NRQ
-Content-Type: multipart/mixed; boundary="------------PyeezaLySjTJbky6LHg1ebue";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Nathan Chancellor <nathan@kernel.org>, tomba@kernel.org,
- airlied@gmail.com, daniel@ffwll.ch, javierm@redhat.com
-Cc: kernel test robot <lkp@intel.com>, trix@redhat.com, llvm@lists.linux.dev,
- ndesaulniers@google.com, linux-kernel@vger.kernel.org,
- dri-devel@lists.freedesktop.org, patches@lists.linux.dev
-Message-ID: <9c8401c1-8a32-2b3a-5323-3c0f9dad0457@suse.de>
-Subject: Re: [PATCH] drm: omapdrm: Do not use helper unininitialized in
- omap_fbdev_init()
-References: <20230224-omapdrm-wsometimes-uninitialized-v1-1-3fec8906ee3a@kernel.org>
-In-Reply-To: <20230224-omapdrm-wsometimes-uninitialized-v1-1-3fec8906ee3a@kernel.org>
+Hi Tony,
+Sorry for the late response. I was looking at your patches.
 
---------------PyeezaLySjTJbky6LHg1ebue
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: base64
+Do you really need a new resource [RDT_RESOURCE_NODE] to handle this 
+feature?
 
-QWRkZWQgdG8gZHJtLW1pc2MtbmV4dC1maXhlcy4NCg0KQW0gMjQuMDIuMjMgdW0gMTg6MjUg
-c2NocmllYiBOYXRoYW4gQ2hhbmNlbGxvcjoNCj4gQ2xhbmcgd2FybnMgKG9yIGVycm9ycyB3
-aXRoIENPTkZJR19XRVJST1IpOg0KPiANCj4gICAgLi4vZHJpdmVycy9ncHUvZHJtL29tYXBk
-cm0vb21hcF9mYmRldi5jOjIzNTo2OiBlcnJvcjogdmFyaWFibGUgJ2hlbHBlcicgaXMgdXNl
-ZCB1bmluaXRpYWxpemVkIHdoZW5ldmVyICdpZicgY29uZGl0aW9uIGlzIHRydWUgWy1XZXJy
-b3IsLVdzb21ldGltZXMtdW5pbml0aWFsaXplZF0NCj4gICAgICAgICAgICBpZiAoIWZiZGV2
-KQ0KPiAgICAgICAgICAgICAgICBefn5+fn4NCj4gICAgLi4vZHJpdmVycy9ncHUvZHJtL29t
-YXBkcm0vb21hcF9mYmRldi5jOjI1OToyNjogbm90ZTogdW5pbml0aWFsaXplZCB1c2Ugb2Nj
-dXJzIGhlcmUNCj4gICAgICAgICAgICBkcm1fZmJfaGVscGVyX3VucHJlcGFyZShoZWxwZXIp
-Ow0KPiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIF5+fn5+fg0KPiAgICAu
-Li9kcml2ZXJzL2dwdS9kcm0vb21hcGRybS9vbWFwX2ZiZGV2LmM6MjM1OjI6IG5vdGU6IHJl
-bW92ZSB0aGUgJ2lmJyBpZiBpdHMgY29uZGl0aW9uIGlzIGFsd2F5cyBmYWxzZQ0KPiAgICAg
-ICAgICAgIGlmICghZmJkZXYpDQo+ICAgICAgICAgICAgXn5+fn5+fn5+fn4NCj4gICAgLi4v
-ZHJpdmVycy9ncHUvZHJtL29tYXBkcm0vb21hcF9mYmRldi5jOjIyODozMDogbm90ZTogaW5p
-dGlhbGl6ZSB0aGUgdmFyaWFibGUgJ2hlbHBlcicgdG8gc2lsZW5jZSB0aGlzIHdhcm5pbmcN
-Cj4gICAgICAgICAgICBzdHJ1Y3QgZHJtX2ZiX2hlbHBlciAqaGVscGVyOw0KPiAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBeDQo+ICAgICAgICAgICAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICA9IE5VTEwNCj4gICAgMSBlcnJvciBnZW5lcmF0ZWQu
-DQo+IA0KPiBSZXR1cm4gZWFybHksIGFzIHRoZXJlIGlzIG5vdGhpbmcgZm9yIHRoZSBmdW5j
-dGlvbiB0byBkbyBpZiBtZW1vcnkNCj4gY2Fubm90IGJlIGFsbG9jYXRlZC4gVGhlcmUgaXMg
-bm8gcG9pbnQgaW4gYWRkaW5nIGFub3RoZXIgbGFiZWwgdG8ganVzdA0KPiBlbWl0IHRoZSB3
-YXJuaW5nIGF0IHRoZSBlbmQgb2YgdGhlIGZ1bmN0aW9uIGluIHRoaXMgY2FzZSwgYXMgbWVt
-b3J5DQo+IGFsbG9jYXRpb24gZmFpbHVyZXMgYXJlIGFscmVhZHkgbG9nZ2VkLg0KPiANCj4g
-Rml4ZXM6IDNmYjFmNjJmODBhMSAoImRybS9mYi1oZWxwZXI6IFJlbW92ZSBkcm1fZmJfaGVs
-cGVyX3VucHJlcGFyZSgpIGZyb20gZHJtX2ZiX2hlbHBlcl9maW5pKCkiKQ0KPiBMaW5rOiBo
-dHRwczovL2dpdGh1Yi5jb20vQ2xhbmdCdWlsdExpbnV4L2xpbnV4L2lzc3Vlcy8xODA5DQo+
-IExpbms6IGh0dHBzOi8vbG9yZS5rZXJuZWwub3JnL29lLWtidWlsZC1hbGwvMjAyMzAyMjUw
-MDU4LmZZVGU5YVRQLWxrcEBpbnRlbC5jb20vDQo+IFJlcG9ydGVkLWJ5OiBrZXJuZWwgdGVz
-dCByb2JvdCA8bGtwQGludGVsLmNvbT4NCj4gU2lnbmVkLW9mZi1ieTogTmF0aGFuIENoYW5j
-ZWxsb3IgPG5hdGhhbkBrZXJuZWwub3JnPg0KPiAtLS0NCj4gVGhpcyBpcyBjdXJyZW50bHkg
-c2hvd2luZyBpbiBtYWlubGluZSBzbyBJIGJlbGlldmUgdGhpcyBzaG91bGQgZ28gdG8NCj4g
-ZHJtLW1pc2MtbmV4dC1maXhlcy4NCj4gLS0tDQo+ICAgZHJpdmVycy9ncHUvZHJtL29tYXBk
-cm0vb21hcF9mYmRldi5jIHwgMiArLQ0KPiAgIDEgZmlsZSBjaGFuZ2VkLCAxIGluc2VydGlv
-bigrKSwgMSBkZWxldGlvbigtKQ0KPiANCj4gZGlmZiAtLWdpdCBhL2RyaXZlcnMvZ3B1L2Ry
-bS9vbWFwZHJtL29tYXBfZmJkZXYuYyBiL2RyaXZlcnMvZ3B1L2RybS9vbWFwZHJtL29tYXBf
-ZmJkZXYuYw0KPiBpbmRleCA4NDQyOTcyODM0N2YuLmE2Yzg1NDIwODdlYyAxMDA2NDQNCj4g
-LS0tIGEvZHJpdmVycy9ncHUvZHJtL29tYXBkcm0vb21hcF9mYmRldi5jDQo+ICsrKyBiL2Ry
-aXZlcnMvZ3B1L2RybS9vbWFwZHJtL29tYXBfZmJkZXYuYw0KPiBAQCAtMjMzLDcgKzIzMyw3
-IEBAIHZvaWQgb21hcF9mYmRldl9pbml0KHN0cnVjdCBkcm1fZGV2aWNlICpkZXYpDQo+ICAg
-DQo+ICAgCWZiZGV2ID0ga3phbGxvYyhzaXplb2YoKmZiZGV2KSwgR0ZQX0tFUk5FTCk7DQo+
-ICAgCWlmICghZmJkZXYpDQo+IC0JCWdvdG8gZmFpbDsNCj4gKwkJcmV0dXJuOw0KPiAgIA0K
-PiAgIAlJTklUX1dPUksoJmZiZGV2LT53b3JrLCBwYW5fd29ya2VyKTsNCj4gICANCj4gDQo+
-IC0tLQ0KPiBiYXNlLWNvbW1pdDogZTAzNGI4YTE4ZDRiYWRjZWVjYjY3MmM1OGI0ODhiYWQx
-ZTkwMWQ5NQ0KPiBjaGFuZ2UtaWQ6IDIwMjMwMjI0LW9tYXBkcm0td3NvbWV0aW1lcy11bmlu
-aXRpYWxpemVkLTAxMjVmNzY5MmZiYg0KPiANCj4gQmVzdCByZWdhcmRzLA0KDQotLSANClRo
-b21hcyBaaW1tZXJtYW5uDQpHcmFwaGljcyBEcml2ZXIgRGV2ZWxvcGVyDQpTVVNFIFNvZnR3
-YXJlIFNvbHV0aW9ucyBHZXJtYW55IEdtYkgNCk1heGZlbGRzdHIuIDUsIDkwNDA5IE7DvHJu
-YmVyZywgR2VybWFueQ0KKEhSQiAzNjgwOSwgQUcgTsO8cm5iZXJnKQ0KR2VzY2jDpGZ0c2bD
-vGhyZXI6IEl2byBUb3Rldg0K
+As far as I can see, all that matters is writing/reading the MSRs 
+IA32_PQR_ASSOC and IA32_QM_EVTSEL based on cpu index. I think that can 
+be done without having the new resource. Let me know if I have 
+misunderstood something.
 
---------------PyeezaLySjTJbky6LHg1ebue--
+Thanks
+Babu
 
---------------w0z6qTToscvskSOlLJqX5NRQ
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
 
------BEGIN PGP SIGNATURE-----
+> -----Original Message-----
+> From: Tony Luck <tony.luck@intel.com>
+> Sent: Thursday, January 26, 2023 12:42 PM
+> To: Fenghua Yu <fenghua.yu@intel.com>; Reinette Chatre
+> <reinette.chatre@intel.com>; Peter Newman <peternewman@google.com>;
+> Jonathan Corbet <corbet@lwn.net>; x86@kernel.org
+> Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>; James Morse
+> <james.morse@arm.com>; Jamie Iles <quic_jiles@quicinc.com>; Moger, Babu
+> <Babu.Moger@amd.com>; linux-kernel@vger.kernel.org; linux-
+> doc@vger.kernel.org; patches@lists.linux.dev; Tony Luck
+> <tony.luck@intel.com>
+> Subject: [PATCH 3/7] x86/resctrl: Add a new node-scoped resource to
+> rdt_resources_all[]
+> 
+> Add a placeholder in the array of struct rdt_hw_resource to be used for event
+> monitoring of systems with Sub-NUMA Cluster enabled.
+> 
+> Update get_domain_id() to handle SCOPE_NODE.
+> 
+> Signed-off-by: Tony Luck <tony.luck@intel.com>
+> ---
+>  arch/x86/kernel/cpu/resctrl/internal.h |  2 ++
+>  arch/x86/kernel/cpu/resctrl/core.c     | 12 ++++++++++++
+>  2 files changed, 14 insertions(+)
+> 
+> diff --git a/arch/x86/kernel/cpu/resctrl/internal.h
+> b/arch/x86/kernel/cpu/resctrl/internal.h
+> index 15cea517efaa..39a62babd60b 100644
+> --- a/arch/x86/kernel/cpu/resctrl/internal.h
+> +++ b/arch/x86/kernel/cpu/resctrl/internal.h
+> @@ -409,12 +409,14 @@ enum resctrl_res_level {
+>  	RDT_RESOURCE_L3,
+>  	RDT_RESOURCE_L2,
+>  	RDT_RESOURCE_MBA,
+> +	RDT_RESOURCE_NODE,
+> 
+>  	/* Must be the last */
+>  	RDT_NUM_RESOURCES,
+>  };
+> 
+>  enum resctrl_scope {
+> +	SCOPE_NODE,
+>  	SCOPE_L2_CACHE = 2,
+>  	SCOPE_L3_CACHE = 3
+>  };
+> diff --git a/arch/x86/kernel/cpu/resctrl/core.c
+> b/arch/x86/kernel/cpu/resctrl/core.c
+> index 6914232acf84..19be6fe42ef3 100644
+> --- a/arch/x86/kernel/cpu/resctrl/core.c
+> +++ b/arch/x86/kernel/cpu/resctrl/core.c
+> @@ -100,6 +100,16 @@ struct rdt_hw_resource rdt_resources_all[] = {
+>  			.fflags			= RFTYPE_RES_MB,
+>  		},
+>  	},
+> +	[RDT_RESOURCE_NODE] =
+> +	{
+> +		.r_resctrl = {
+> +			.rid			= RDT_RESOURCE_NODE,
+> +			.name			= "L3",
+> +			.scope			= SCOPE_NODE,
+> +			.domains		=
+> domain_init(RDT_RESOURCE_NODE),
+> +			.fflags			= RFTYPE_RES_MB,
+> +		},
+> +	},
+>  };
+> 
+>  /*
+> @@ -464,6 +474,8 @@ static int arch_domain_mbm_alloc(u32 num_rmid,
+> struct rdt_hw_domain *hw_dom)
+> 
+>  static int get_domain_id(int cpu, enum resctrl_scope scope)  {
+> +	if (scope == SCOPE_NODE)
+> +		return cpu_to_node(cpu);
+>  	return get_cpu_cacheinfo_id(cpu, scope);  }
+> 
+> --
+> 2.39.1
 
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmP9xe4FAwAAAAAACgkQlh/E3EQov+D/
-txAAjH/d4APMhjDTQWU+GhtyJgMQ5W8iYv4ZQNYL7O/wZKvi0GsY6gM+RVIzy0/OHGFVJI1hfQHl
-yvwjFrC2Uu161wJL1bMDifbSqfh5KZsR3NkXuODxcKtG+xXelw/McIXK9viAJvjDqDgcRRi88rIa
-VM0qfxCfsqW88p/EvbWQVfBljuMo7ON6v89S6q5IWb1QvvxvtGKJahUtUGc3/K7LxHgtotH7LJU6
-sz8EyRwudFZC7vko+zgwezVpgVNbbm7AzUGzNjq0CT5qtKWMUku5AtkPd3a8wEarvVGOjViC6Ez7
-S04sSutPWcy0J3TZ+rLRPhtCRiEr5pFc0mb5qSJasppL5/4SCzbPkTvg/06oUgSWAmRnm0A7cqt8
-DXwXsh2NU+oI58qPY33IWDLrwoemJod0cO7zYIXojoXccJZrLQPHcunqkrYqaBSm2FUSksAT8o0O
-M5WrEqFz7wsGvmAt0Y8OnHGBwRh+weyZz/7aFv2e8589RMwm/HnVjp9fgIrVedKLwQilGUj6MlQO
-RHotcxzWPkRtPQ4AdU0kiNM7L6Jgmc2zgc+mmxbMwaiOWWNOWymavynsdhSenqSicROHk1HJl3dP
-axUGVsdhYAyZDhaEwwpq+XmMYg4GnMjAF+8782rIy0T/wnq5DKjx323tCRRve+uOgAHou++uM9Xk
-jqE=
-=ZQmY
------END PGP SIGNATURE-----
-
---------------w0z6qTToscvskSOlLJqX5NRQ--
