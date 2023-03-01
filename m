@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4F65D847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:11:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CA6BEC433EF;
-	Wed,  1 Mar 2023 18:11:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D6B98847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:11:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 61BB6C433D2;
+	Wed,  1 Mar 2023 18:11:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694272;
-	bh=/7LYG/t2un+e+jyUyYoutBm1iPp3dYGtaK/RkiDv1hw=;
+	s=korg; t=1677694274;
+	bh=B+lJ34fJtr6JYae+SXPoMmqz5fHA87kogxqn90Yo0fw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=yFr4f73O5snQI2R+7m0KWP6PyaqnfPTbBYKQxTZyGsFP8SS3dNaKQe+cqtfVUcZND
-	 oZvzj9YOyz1ZfAPn39P8WZbeJaQVOhZ53s5wpyMe+c+cq75PfwmRxFA8H217S/Sq4W
-	 y3axRW7TxVXh/9aT7cWNVGySr1Yl1evYzD0hai+I=
+	b=WIYUkVYv710E7bLPUkgPUXU+FfraC3i8uKzjDYWZMXGh+c8n+ZbAgDerpPB5iBemy
+	 ZGHJ4pUAZ6PkdEYjsDGepOme6C16uSaIP5YHnwpNVrTyBcHNy3xaN8ZwsdyF5/Z2nb
+	 dlO5ZidT2a/9m3xywS5+wWdPQODuhZTglOHfZTL8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Takahiro Fujii <fujii@xaxxi.net>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 05/22] HID: elecom: add support for TrackBall 056E:011C
-Date: Wed,  1 Mar 2023 19:08:38 +0100
-Message-Id: <20230301180652.887484282@linuxfoundation.org>
+Subject: [PATCH 5.15 06/22] ACPI: NFIT: fix a potential deadlock during NFIT teardown
+Date: Wed,  1 Mar 2023 19:08:39 +0100
+Message-Id: <20230301180652.918994976@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180652.658125575@linuxfoundation.org>
 References: <20230301180652.658125575@linuxfoundation.org>
@@ -35,104 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Takahiro Fujii <fujii@xaxxi.net>
+From: Vishal Verma <vishal.l.verma@intel.com>
 
-[ Upstream commit 29f316a1d7e0a570be9a47fa283ece53a67cebb7 ]
+[ Upstream commit fb6df4366f86dd252bfa3049edffa52d17e7b895 ]
 
-Make function buttons on ELECOM M-HT1DRBK trackball mouse work. This model
-has two devices with different device IDs (010D and 011C). Both of
-them misreports the number of buttons as 5 in the report descriptor, even
-though they have 8 buttons. hid-elecom overwrites the report to fix them,
-but supports only on 010D and does not work on 011C. This patch fixes
-011C in the similar way but with specialized position parameters.
-In fact, it is sufficient to rewrite only 17th byte (05 -> 08). However I
-followed the existing way.
+Lockdep reports that acpi_nfit_shutdown() may deadlock against an
+opportune acpi_nfit_scrub(). acpi_nfit_scrub () is run from inside a
+'work' and therefore has already acquired workqueue-internal locks. It
+also acquiires acpi_desc->init_mutex. acpi_nfit_shutdown() first
+acquires init_mutex, and was subsequently attempting to cancel any
+pending workqueue items. This reversed locking order causes a potential
+deadlock:
 
-Signed-off-by: Takahiro Fujii <fujii@xaxxi.net>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+    ======================================================
+    WARNING: possible circular locking dependency detected
+    6.2.0-rc3 #116 Tainted: G           O     N
+    ------------------------------------------------------
+    libndctl/1958 is trying to acquire lock:
+    ffff888129b461c0 ((work_completion)(&(&acpi_desc->dwork)->work)){+.+.}-{0:0}, at: __flush_work+0x43/0x450
+
+    but task is already holding lock:
+    ffff888129b460e8 (&acpi_desc->init_mutex){+.+.}-{3:3}, at: acpi_nfit_shutdown+0x87/0xd0 [nfit]
+
+    which lock already depends on the new lock.
+
+    ...
+
+    Possible unsafe locking scenario:
+
+          CPU0                    CPU1
+          ----                    ----
+     lock(&acpi_desc->init_mutex);
+                                  lock((work_completion)(&(&acpi_desc->dwork)->work));
+                                  lock(&acpi_desc->init_mutex);
+     lock((work_completion)(&(&acpi_desc->dwork)->work));
+
+    *** DEADLOCK ***
+
+Since the workqueue manipulation is protected by its own internal locking,
+the cancellation of pending work doesn't need to be done under
+acpi_desc->init_mutex. Move cancel_delayed_work_sync() outside the
+init_mutex to fix the deadlock. Any work that starts after
+acpi_nfit_shutdown() drops the lock will see ARS_CANCEL, and the
+cancel_delayed_work_sync() will safely flush it out.
+
+Reported-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
+Link: https://lore.kernel.org/r/20230112-acpi_nfit_lockdep-v1-1-660be4dd10be@intel.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-elecom.c | 16 ++++++++++++++--
- drivers/hid/hid-ids.h    |  3 ++-
- drivers/hid/hid-quirks.c |  3 ++-
- 3 files changed, 18 insertions(+), 4 deletions(-)
+ drivers/acpi/nfit/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-elecom.c b/drivers/hid/hid-elecom.c
-index e59e9911fc370..4fa45ee77503b 100644
---- a/drivers/hid/hid-elecom.c
-+++ b/drivers/hid/hid-elecom.c
-@@ -12,6 +12,7 @@
-  *  Copyright (c) 2017 Alex Manoussakis <amanou@gnu.org>
-  *  Copyright (c) 2017 Tomasz Kramkowski <tk@the-tk.com>
-  *  Copyright (c) 2020 YOSHIOKA Takuma <lo48576@hard-wi.red>
-+ *  Copyright (c) 2022 Takahiro Fujii <fujii@xaxxi.net>
-  */
+diff --git a/drivers/acpi/nfit/core.c b/drivers/acpi/nfit/core.c
+index 7dd80acf92c78..2575d6c51f898 100644
+--- a/drivers/acpi/nfit/core.c
++++ b/drivers/acpi/nfit/core.c
+@@ -3676,8 +3676,8 @@ void acpi_nfit_shutdown(void *data)
  
- /*
-@@ -89,7 +90,7 @@ static __u8 *elecom_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 	case USB_DEVICE_ID_ELECOM_M_DT1URBK:
- 	case USB_DEVICE_ID_ELECOM_M_DT1DRBK:
- 	case USB_DEVICE_ID_ELECOM_M_HT1URBK:
--	case USB_DEVICE_ID_ELECOM_M_HT1DRBK:
-+	case USB_DEVICE_ID_ELECOM_M_HT1DRBK_010D:
- 		/*
- 		 * Report descriptor format:
- 		 * 12: button bit count
-@@ -99,6 +100,16 @@ static __u8 *elecom_report_fixup(struct hid_device *hdev, __u8 *rdesc,
- 		 */
- 		mouse_button_fixup(hdev, rdesc, *rsize, 12, 30, 14, 20, 8);
- 		break;
-+	case USB_DEVICE_ID_ELECOM_M_HT1DRBK_011C:
-+		/*
-+		 * Report descriptor format:
-+		 * 22: button bit count
-+		 * 30: padding bit count
-+		 * 24: button report size
-+		 * 16: button usage maximum
-+		 */
-+		mouse_button_fixup(hdev, rdesc, *rsize, 22, 30, 24, 16, 8);
-+		break;
- 	}
- 	return rdesc;
- }
-@@ -112,7 +123,8 @@ static const struct hid_device_id elecom_devices[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1URBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1URBK) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1DRBK) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1DRBK_010D) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1DRBK_011C) },
- 	{ }
- };
- MODULE_DEVICE_TABLE(hid, elecom_devices);
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index fa1aa22547ea7..b153ddc3319e8 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -410,7 +410,8 @@
- #define USB_DEVICE_ID_ELECOM_M_DT1URBK	0x00fe
- #define USB_DEVICE_ID_ELECOM_M_DT1DRBK	0x00ff
- #define USB_DEVICE_ID_ELECOM_M_HT1URBK	0x010c
--#define USB_DEVICE_ID_ELECOM_M_HT1DRBK	0x010d
-+#define USB_DEVICE_ID_ELECOM_M_HT1DRBK_010D	0x010d
-+#define USB_DEVICE_ID_ELECOM_M_HT1DRBK_011C	0x011c
+ 	mutex_lock(&acpi_desc->init_mutex);
+ 	set_bit(ARS_CANCEL, &acpi_desc->scrub_flags);
+-	cancel_delayed_work_sync(&acpi_desc->dwork);
+ 	mutex_unlock(&acpi_desc->init_mutex);
++	cancel_delayed_work_sync(&acpi_desc->dwork);
  
- #define USB_VENDOR_ID_DREAM_CHEEKY	0x1d34
- #define USB_DEVICE_ID_DREAM_CHEEKY_WN	0x0004
-diff --git a/drivers/hid/hid-quirks.c b/drivers/hid/hid-quirks.c
-index 184029cad014f..4a8c32148e58f 100644
---- a/drivers/hid/hid-quirks.c
-+++ b/drivers/hid/hid-quirks.c
-@@ -381,7 +381,8 @@ static const struct hid_device_id hid_have_special_driver[] = {
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1URBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_DT1DRBK) },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1URBK) },
--	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1DRBK) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1DRBK_010D) },
-+	{ HID_USB_DEVICE(USB_VENDOR_ID_ELECOM, USB_DEVICE_ID_ELECOM_M_HT1DRBK_011C) },
- #endif
- #if IS_ENABLED(CONFIG_HID_ELO)
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELO, 0x0009) },
+ 	/*
+ 	 * Bounce the nvdimm bus lock to make sure any in-flight
 -- 
 2.39.0
 
