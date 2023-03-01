@@ -1,30 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EA99F847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:13:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 70CEBC433D2;
-	Wed,  1 Mar 2023 18:13:01 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85E92847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:13:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 09364C4339C;
+	Wed,  1 Mar 2023 18:13:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694381;
-	bh=OrFODWod5r7AsMCEk2kWAYxiC5A3Fz0JuBQgIvS84Xw=;
+	s=korg; t=1677694384;
+	bh=UyE4sKSUMsJrrp3NWGbH3crkdho961pU+IqgYjZ0yrA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BIrK860Qqcxi8yT4mv0FfxejLcOJxLZj2lWAm4du+y8edKLE5brYvuKi4HPQvx3MG
-	 +85mrZaYLy0V2tR+tQZ8x2UMD0VMrFYyAY/wsaAzihzNSlXaLNG0U5gPiMQhA7ki+i
-	 mUYToq08q/js7rIhwJUO2T9VEkWPs55uu4JqKVoI=
+	b=M6m/hyvvpvqIsPjNE5YOGlg032hQwnRJMph3NcWjOmCtBoPZnYlbHssQA6TaB5Np1
+	 ZjMz20qCizoN3DMgunst/KGVZNlt3E8PGEwpuvDSO5T0QYbMukn4p70UlzxWq9DvLP
+	 W/iUYpVTWmPn/HA+0Lo579wTh5PGA4sdmrerG2UU=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Hansen Dsouza <hansen.dsouza@amd.com>,
-	Qingqing Zhuo <qingqing.zhuo@amd.com>,
-	Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
+	Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>,
+	Jasdeep Dhillon <jdhillon@amd.com>,
+	Stylon Wang <stylon.wang@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
-	"Limonciello, Mario" <Mario.Limonciello@amd.com>
-Subject: [PATCH 6.1 28/42] drm/amd/display: Move DCN314 DOMAIN power control to DMCUB
-Date: Wed,  1 Mar 2023 19:08:49 +0100
-Message-Id: <20230301180658.309176585@linuxfoundation.org>
+	"Limonciello, Mario" <mario.limonciello@amd.com>
+Subject: [PATCH 6.1 29/42] drm/amd/display: Fix race condition in DPIA AUX transfer
+Date: Wed,  1 Mar 2023 19:08:50 +0100
+Message-Id: <20230301180658.363778517@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180657.003689969@linuxfoundation.org>
 References: <20230301180657.003689969@linuxfoundation.org>
@@ -38,134 +37,299 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+From: Stylon Wang <stylon.wang@amd.com>
 
-commit e383b12709e32d6494c948422070c2464b637e44 upstream.
+commit ead08b95fa50f40618c72b93a849c4ae30c9cd50 upstream.
 
 [Why]
-DOMAIN power gating control is now required to be done via firmware
-due to interlock with other power features. This is to avoid
-intermittent issues in the LB memories.
+This fix was intended for improving on coding style but in the process
+uncovers a race condition, which explains why we are getting incorrect
+length in DPIA AUX replies. Due to the call path of DPIA AUX going from
+DC back to DM layer then again into DC and the added complexities on top
+of current DC AUX implementation, a proper fix to rely on current dc_lock
+to address the race condition is difficult without a major overhual
+on how DPIA AUX is implemented.
 
 [How]
-If the firmware supports the command then use the new firmware as
-the sequence can avoid potential display corruption issues.
+- Add a mutex dpia_aux_lock to protect DPIA AUX transfers
+- Remove DMUB_ASYNC_TO_SYNC_ACCESS_* codes and rely solely on
+  aux_return_code_type for error reporting and handling
+- Separate SET_CONFIG from DPIA AUX transfer because they have quiet
+  different processing logic
+- Remove unnecessary type casting to and from void * type
 
-The command will be ignored on firmware that does not support DOMAIN
-power control and the pipes will remain always on - frequent PG cycling
-can cause the issue to occur on the old sequence, so we should avoid it.
-
-Reviewed-by: Hansen Dsouza <hansen.dsouza@amd.com>
-Acked-by: Qingqing Zhuo <qingqing.zhuo@amd.com>
-Signed-off-by: Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
+Reviewed-by: Nicholas Kazlauskas <Nicholas.Kazlauskas@amd.com>
+Acked-by: Jasdeep Dhillon <jdhillon@amd.com>
+Signed-off-by: Stylon Wang <stylon.wang@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Limonciello, Mario" <Mario.Limonciello@amd.com>
+Cc: "Limonciello, Mario" <mario.limonciello@amd.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.c |   24 ++++++++++++++++++
- drivers/gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.h |    2 +
- drivers/gpu/drm/amd/display/dc/dcn314/dcn314_init.c  |    2 -
- drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h      |   25 +++++++++++++++++++
- 4 files changed, 52 insertions(+), 1 deletion(-)
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c         |  147 ++++++--------
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h         |   17 +
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c |   10 
+ 3 files changed, 89 insertions(+), 85 deletions(-)
 
---- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.c
-@@ -391,3 +391,27 @@ void dcn314_set_pixels_per_cycle(struct
- 		pipe_ctx->stream_res.stream_enc->funcs->set_input_mode(pipe_ctx->stream_res.stream_enc,
- 				pix_per_cycle);
- }
-+
-+void dcn314_hubp_pg_control(struct dce_hwseq *hws, unsigned int hubp_inst, bool power_on)
-+{
-+	struct dc_context *ctx = hws->ctx;
-+	union dmub_rb_cmd cmd;
-+
-+	if (hws->ctx->dc->debug.disable_hubp_power_gate)
-+		return;
-+
-+	PERF_TRACE();
-+
-+	memset(&cmd, 0, sizeof(cmd));
-+	cmd.domain_control.header.type = DMUB_CMD__VBIOS;
-+	cmd.domain_control.header.sub_type = DMUB_CMD__VBIOS_DOMAIN_CONTROL;
-+	cmd.domain_control.header.payload_bytes = sizeof(cmd.domain_control.data);
-+	cmd.domain_control.data.inst = hubp_inst;
-+	cmd.domain_control.data.power_gate = !power_on;
-+
-+	dc_dmub_srv_cmd_queue(ctx->dmub_srv, &cmd);
-+	dc_dmub_srv_cmd_execute(ctx->dmub_srv);
-+	dc_dmub_srv_wait_idle(ctx->dmub_srv);
-+
-+	PERF_TRACE();
-+}
---- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.h
-+++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.h
-@@ -41,4 +41,6 @@ unsigned int dcn314_calculate_dccg_k1_k2
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
+@@ -147,14 +147,6 @@ MODULE_FIRMWARE(FIRMWARE_NAVI12_DMCU);
+ /* Number of bytes in PSP footer for firmware. */
+ #define PSP_FOOTER_BYTES 0x100
  
- void dcn314_set_pixels_per_cycle(struct pipe_ctx *pipe_ctx);
- 
-+void dcn314_hubp_pg_control(struct dce_hwseq *hws, unsigned int hubp_inst, bool power_on);
-+
- #endif /* __DC_HWSS_DCN314_H__ */
---- a/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_init.c
-+++ b/drivers/gpu/drm/amd/display/dc/dcn314/dcn314_init.c
-@@ -137,7 +137,7 @@ static const struct hwseq_private_funcs
- 	.plane_atomic_disable = dcn20_plane_atomic_disable,
- 	.plane_atomic_power_down = dcn10_plane_atomic_power_down,
- 	.enable_power_gating_plane = dcn314_enable_power_gating_plane,
--	.hubp_pg_control = dcn31_hubp_pg_control,
-+	.hubp_pg_control = dcn314_hubp_pg_control,
- 	.program_all_writeback_pipes_in_tree = dcn30_program_all_writeback_pipes_in_tree,
- 	.update_odm = dcn314_update_odm,
- 	.dsc_pg_control = dcn314_dsc_pg_control,
---- a/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
-+++ b/drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h
-@@ -450,6 +450,10 @@ enum dmub_cmd_vbios_type {
- 	 * Query DP alt status on a transmitter.
- 	 */
- 	DMUB_CMD__VBIOS_TRANSMITTER_QUERY_DP_ALT  = 26,
-+	/**
-+	 * Controls domain power gating
-+	 */
-+	DMUB_CMD__VBIOS_DOMAIN_CONTROL = 28,
- };
- 
- //==============================================================================
-@@ -1192,6 +1196,23 @@ struct dmub_rb_cmd_dig1_transmitter_cont
- };
- 
+-/*
+- * DMUB Async to Sync Mechanism Status
+- */
+-#define DMUB_ASYNC_TO_SYNC_ACCESS_FAIL 1
+-#define DMUB_ASYNC_TO_SYNC_ACCESS_TIMEOUT 2
+-#define DMUB_ASYNC_TO_SYNC_ACCESS_SUCCESS 3
+-#define DMUB_ASYNC_TO_SYNC_ACCESS_INVALID 4
+-
  /**
-+ * struct dmub_rb_cmd_domain_control_data - Data for DOMAIN power control
-+ */
-+struct dmub_rb_cmd_domain_control_data {
-+	uint8_t inst : 6; /**< DOMAIN instance to control */
-+	uint8_t power_gate : 1; /**< 1=power gate, 0=power up */
-+	uint8_t reserved[3]; /**< Reserved for future use */
-+};
+  * DOC: overview
+  *
+@@ -1456,6 +1448,7 @@ static int amdgpu_dm_init(struct amdgpu_
+ 	memset(&init_params, 0, sizeof(init_params));
+ #endif
+ 
++	mutex_init(&adev->dm.dpia_aux_lock);
+ 	mutex_init(&adev->dm.dc_lock);
+ 	mutex_init(&adev->dm.audio_lock);
+ 	spin_lock_init(&adev->dm.vblank_lock);
+@@ -1814,6 +1807,7 @@ static void amdgpu_dm_fini(struct amdgpu
+ 
+ 	mutex_destroy(&adev->dm.audio_lock);
+ 	mutex_destroy(&adev->dm.dc_lock);
++	mutex_destroy(&adev->dm.dpia_aux_lock);
+ 
+ 	return;
+ }
+@@ -10198,91 +10192,92 @@ uint32_t dm_read_reg_func(const struct d
+ 	return value;
+ }
+ 
+-static int amdgpu_dm_set_dmub_async_sync_status(bool is_cmd_aux,
+-						struct dc_context *ctx,
+-						uint8_t status_type,
+-						uint32_t *operation_result)
++int amdgpu_dm_process_dmub_aux_transfer_sync(
++		struct dc_context *ctx,
++		unsigned int link_index,
++		struct aux_payload *payload,
++		enum aux_return_code_type *operation_result)
+ {
+ 	struct amdgpu_device *adev = ctx->driver_context;
+-	int return_status = -1;
+ 	struct dmub_notification *p_notify = adev->dm.dmub_notify;
++	int ret = -1;
+ 
+-	if (is_cmd_aux) {
+-		if (status_type == DMUB_ASYNC_TO_SYNC_ACCESS_SUCCESS) {
+-			return_status = p_notify->aux_reply.length;
+-			*operation_result = p_notify->result;
+-		} else if (status_type == DMUB_ASYNC_TO_SYNC_ACCESS_TIMEOUT) {
+-			*operation_result = AUX_RET_ERROR_TIMEOUT;
+-		} else if (status_type == DMUB_ASYNC_TO_SYNC_ACCESS_FAIL) {
+-			*operation_result = AUX_RET_ERROR_ENGINE_ACQUIRE;
+-		} else if (status_type == DMUB_ASYNC_TO_SYNC_ACCESS_INVALID) {
+-			*operation_result = AUX_RET_ERROR_INVALID_REPLY;
+-		} else {
+-			*operation_result = AUX_RET_ERROR_UNKNOWN;
++	mutex_lock(&adev->dm.dpia_aux_lock);
++	if (!dc_process_dmub_aux_transfer_async(ctx->dc, link_index, payload)) {
++		*operation_result = AUX_RET_ERROR_ENGINE_ACQUIRE;
++		goto out;
++ 	}
 +
-+/**
-+ * struct dmub_rb_cmd_domain_control - Controls DOMAIN power gating
-+ */
-+struct dmub_rb_cmd_domain_control {
-+	struct dmub_cmd_header header; /**< header */
-+	struct dmub_rb_cmd_domain_control_data data; /**< payload */
-+};
++	if (!wait_for_completion_timeout(&adev->dm.dmub_aux_transfer_done, 10 * HZ)) {
++		DRM_ERROR("wait_for_completion_timeout timeout!");
++		*operation_result = AUX_RET_ERROR_TIMEOUT;
++		goto out;
++	}
 +
-+/**
-  * DPIA tunnel command parameters.
-  */
- struct dmub_cmd_dig_dpia_control_data {
-@@ -3188,6 +3209,10 @@ union dmub_rb_cmd {
++	if (p_notify->result != AUX_RET_SUCCESS) {
++		/*
++		 * Transient states before tunneling is enabled could
++		 * lead to this error. We can ignore this for now.
++		 */
++		if (p_notify->result != AUX_RET_ERROR_PROTOCOL_ERROR) {
++			DRM_WARN("DPIA AUX failed on 0x%x(%d), error %d\n",
++					payload->address, payload->length,
++					p_notify->result);
+ 		}
+-	} else {
+-		if (status_type == DMUB_ASYNC_TO_SYNC_ACCESS_SUCCESS) {
+-			return_status = 0;
+-			*operation_result = p_notify->sc_status;
+-		} else {
+-			*operation_result = SET_CONFIG_UNKNOWN_ERROR;
++		*operation_result = AUX_RET_ERROR_INVALID_REPLY;
++		goto out;
++	}
++
++
++	payload->reply[0] = adev->dm.dmub_notify->aux_reply.command;
++	if (!payload->write && p_notify->aux_reply.length &&
++			(payload->reply[0] == AUX_TRANSACTION_REPLY_AUX_ACK)) {
++
++		if (payload->length != p_notify->aux_reply.length) {
++			DRM_WARN("invalid read length %d from DPIA AUX 0x%x(%d)!\n",
++				p_notify->aux_reply.length,
++					payload->address, payload->length);
++			*operation_result = AUX_RET_ERROR_INVALID_REPLY;
++			goto out;
+ 		}
++
++		memcpy(payload->data, p_notify->aux_reply.data,
++				p_notify->aux_reply.length);
+ 	}
+ 
+-	return return_status;
++	/* success */
++	ret = p_notify->aux_reply.length;
++	*operation_result = p_notify->result;
++out:
++	mutex_unlock(&adev->dm.dpia_aux_lock);
++	return ret;
+ }
+ 
+-int amdgpu_dm_process_dmub_aux_transfer_sync(bool is_cmd_aux, struct dc_context *ctx,
+-	unsigned int link_index, void *cmd_payload, void *operation_result)
++int amdgpu_dm_process_dmub_set_config_sync(
++		struct dc_context *ctx,
++		unsigned int link_index,
++		struct set_config_cmd_payload *payload,
++		enum set_config_status *operation_result)
+ {
+ 	struct amdgpu_device *adev = ctx->driver_context;
+-	int ret = 0;
++	bool is_cmd_complete;
++	int ret;
+ 
+-	if (is_cmd_aux) {
+-		dc_process_dmub_aux_transfer_async(ctx->dc,
+-			link_index, (struct aux_payload *)cmd_payload);
+-	} else if (dc_process_dmub_set_config_async(ctx->dc, link_index,
+-					(struct set_config_cmd_payload *)cmd_payload,
+-					adev->dm.dmub_notify)) {
+-		return amdgpu_dm_set_dmub_async_sync_status(is_cmd_aux,
+-					ctx, DMUB_ASYNC_TO_SYNC_ACCESS_SUCCESS,
+-					(uint32_t *)operation_result);
+-	}
++	mutex_lock(&adev->dm.dpia_aux_lock);
++	is_cmd_complete = dc_process_dmub_set_config_async(ctx->dc,
++			link_index, payload, adev->dm.dmub_notify);
+ 
+-	ret = wait_for_completion_timeout(&adev->dm.dmub_aux_transfer_done, 10 * HZ);
+-	if (ret == 0) {
++	if (is_cmd_complete || wait_for_completion_timeout(&adev->dm.dmub_aux_transfer_done, 10 * HZ)) {
++		ret = 0;
++		*operation_result = adev->dm.dmub_notify->sc_status;
++	} else {
+ 		DRM_ERROR("wait_for_completion_timeout timeout!");
+-		return amdgpu_dm_set_dmub_async_sync_status(is_cmd_aux,
+-				ctx, DMUB_ASYNC_TO_SYNC_ACCESS_TIMEOUT,
+-				(uint32_t *)operation_result);
+-	}
+-
+-	if (is_cmd_aux) {
+-		if (adev->dm.dmub_notify->result == AUX_RET_SUCCESS) {
+-			struct aux_payload *payload = (struct aux_payload *)cmd_payload;
+-
+-			payload->reply[0] = adev->dm.dmub_notify->aux_reply.command;
+-			if (!payload->write && adev->dm.dmub_notify->aux_reply.length &&
+-			    payload->reply[0] == AUX_TRANSACTION_REPLY_AUX_ACK) {
+-
+-				if (payload->length != adev->dm.dmub_notify->aux_reply.length) {
+-					DRM_WARN("invalid read from DPIA AUX %x(%d) got length %d!\n",
+-							payload->address, payload->length,
+-							adev->dm.dmub_notify->aux_reply.length);
+-					return amdgpu_dm_set_dmub_async_sync_status(is_cmd_aux, ctx,
+-							DMUB_ASYNC_TO_SYNC_ACCESS_INVALID,
+-							(uint32_t *)operation_result);
+-				}
+-
+-				memcpy(payload->data, adev->dm.dmub_notify->aux_reply.data,
+-				       adev->dm.dmub_notify->aux_reply.length);
+-			}
+-		}
++		ret = -1;
++		*operation_result = SET_CONFIG_UNKNOWN_ERROR;
+ 	}
+ 
+-	return amdgpu_dm_set_dmub_async_sync_status(is_cmd_aux,
+-			ctx, DMUB_ASYNC_TO_SYNC_ACCESS_SUCCESS,
+-			(uint32_t *)operation_result);
++	mutex_unlock(&adev->dm.dpia_aux_lock);
++	return ret;
+ }
+ 
+ /*
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h
+@@ -59,7 +59,9 @@
+ #include "signal_types.h"
+ #include "amdgpu_dm_crc.h"
+ struct aux_payload;
++struct set_config_cmd_payload;
+ enum aux_return_code_type;
++enum set_config_status;
+ 
+ /* Forward declarations */
+ struct amdgpu_device;
+@@ -549,6 +551,13 @@ struct amdgpu_display_manager {
+ 	 * occurred on certain intel platform
  	 */
- 	struct dmub_rb_cmd_dig1_transmitter_control dig1_transmitter_control;
- 	/**
-+	 * Definition of a DMUB_CMD__VBIOS_DOMAIN_CONTROL command.
-+	 */
-+	struct dmub_rb_cmd_domain_control domain_control;
+ 	bool aux_hpd_discon_quirk;
++
 +	/**
- 	 * Definition of a DMUB_CMD__PSR_SET_VERSION command.
- 	 */
- 	struct dmub_rb_cmd_psr_set_version psr_set_version;
++	 * @dpia_aux_lock:
++	 *
++	 * Guards access to DPIA AUX
++	 */
++	struct mutex dpia_aux_lock;
+ };
+ 
+ enum dsc_clock_force_state {
+@@ -792,9 +801,11 @@ void amdgpu_dm_update_connector_after_de
+ 
+ extern const struct drm_encoder_helper_funcs amdgpu_dm_encoder_helper_funcs;
+ 
+-int amdgpu_dm_process_dmub_aux_transfer_sync(bool is_cmd_aux,
+-					struct dc_context *ctx, unsigned int link_index,
+-					void *payload, void *operation_result);
++int amdgpu_dm_process_dmub_aux_transfer_sync(struct dc_context *ctx, unsigned int link_index,
++					struct aux_payload *payload, enum aux_return_code_type *operation_result);
++
++int amdgpu_dm_process_dmub_set_config_sync(struct dc_context *ctx, unsigned int link_index,
++					struct set_config_cmd_payload *payload, enum set_config_status *operation_result);
+ 
+ bool check_seamless_boot_capability(struct amdgpu_device *adev);
+ 
+--- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
++++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm_helpers.c
+@@ -844,9 +844,8 @@ int dm_helper_dmub_aux_transfer_sync(
+ 		struct aux_payload *payload,
+ 		enum aux_return_code_type *operation_result)
+ {
+-	return amdgpu_dm_process_dmub_aux_transfer_sync(true, ctx,
+-			link->link_index, (void *)payload,
+-			(void *)operation_result);
++	return amdgpu_dm_process_dmub_aux_transfer_sync(ctx, link->link_index, payload,
++			operation_result);
+ }
+ 
+ int dm_helpers_dmub_set_config_sync(struct dc_context *ctx,
+@@ -854,9 +853,8 @@ int dm_helpers_dmub_set_config_sync(stru
+ 		struct set_config_cmd_payload *payload,
+ 		enum set_config_status *operation_result)
+ {
+-	return amdgpu_dm_process_dmub_aux_transfer_sync(false, ctx,
+-			link->link_index, (void *)payload,
+-			(void *)operation_result);
++	return amdgpu_dm_process_dmub_set_config_sync(ctx, link->link_index, payload,
++			operation_result);
+ }
+ 
+ void dm_set_dcn_clocks(struct dc_context *ctx, struct dc_clocks *clks)
 
 
