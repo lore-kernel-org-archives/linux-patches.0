@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7A394847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:12:04 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 046D7C433D2;
-	Wed,  1 Mar 2023 18:12:03 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1F5F3847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:12:07 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9ABC3C433EF;
+	Wed,  1 Mar 2023 18:12:06 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694324;
-	bh=pTSRAXw7DYGKWZHU3UYXOHJQxgUkpC+l+eg/xofmgYo=;
+	s=korg; t=1677694327;
+	bh=se/Fx4rz2BZ2nlfkGZPZDiiRofWTYK5uf5Xbmg0VmRE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mBxlq58pLH8Fb++qN6pqR7XEXvDI8KA6xOQNUt8kvnZ9Hhn8OkjbGosJWSdcWizNb
-	 +FTvaQkPOC4fVC9rxLa/qPQjzMjicq02KIvq9Dz1Q00rfo4GyEcybt91UpkbiHEf1e
-	 5B93NYPI1i7RbWXRNEOypkJ1sstKfFDKjGJXUfLk=
+	b=VyP4aFxYzVPA0MmXQGOu3t8gtWh2mWEqnGWgS4YdzEJNw++ziXSbsbr3ZzbdPgigr
+	 x6ReW3YhZeg8FEgkkhbgS5cn217+BduuC+Rf38U09JNomwrhLPy5HSJckBz6sFVojW
+	 UKVEFwQJZ1YX17vVqsi9+HMyPTKlOAAH8OFQsUCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Luka Guzenko <l.guzenko@web.de>,
-	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+	Vladimir Oltean <vladimir.oltean@nxp.com>,
+	Paolo Abeni <pabeni@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 21/42] HID: Ignore battery for ELAN touchscreen 29DF on HP
-Date: Wed,  1 Mar 2023 19:08:42 +0100
-Message-Id: <20230301180658.012224300@linuxfoundation.org>
+Subject: [PATCH 6.1 22/42] selftests: ocelot: tc_flower_chains: make test_vlan_ingress_modify() more comprehensive
+Date: Wed,  1 Mar 2023 19:08:43 +0100
+Message-Id: <20230301180658.052399258@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180657.003689969@linuxfoundation.org>
 References: <20230301180657.003689969@linuxfoundation.org>
@@ -35,48 +35,41 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Luka Guzenko <l.guzenko@web.de>
+From: Vladimir Oltean <vladimir.oltean@nxp.com>
 
-[ Upstream commit ebebf05a4b06a1be49788ca0edf990de01c4b0d0 ]
+[ Upstream commit bbb253b206b9c417928a6c827d038e457f3012e9 ]
 
-The touchscreen reports a battery status of 0% and jumps to 1% when a
-stylus is used. The device ID was added and the battery ignore quirk was
-enabled for it.
+We have two IS1 filters of the OCELOT_VCAP_KEY_ANY key type (the one with
+"action vlan pop" and the one with "action vlan modify") and one of the
+OCELOT_VCAP_KEY_IPV4 key type (the one with "action skbedit priority").
+But we have no IS1 filter with the OCELOT_VCAP_KEY_ETYPE key type, and
+there was an uncaught breakage there.
 
-Signed-off-by: Luka Guzenko <l.guzenko@web.de>
-Link: https://lore.kernel.org/r/20230120223741.3007-1-l.guzenko@web.de
-Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
+To increase test coverage, convert one of the OCELOT_VCAP_KEY_ANY
+filters to OCELOT_VCAP_KEY_ETYPE, by making the filter also match on the
+MAC SA of the traffic sent by mausezahn, $h1_mac.
+
+Signed-off-by: Vladimir Oltean <vladimir.oltean@nxp.com>
+Link: https://lore.kernel.org/r/20230205192409.1796428-2-vladimir.oltean@nxp.com
+Signed-off-by: Paolo Abeni <pabeni@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h   | 1 +
- drivers/hid/hid-input.c | 2 ++
- 2 files changed, 3 insertions(+)
+ tools/testing/selftests/drivers/net/ocelot/tc_flower_chains.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index 46c0ce4203c08..9e36b4cd905ee 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -413,6 +413,7 @@
- #define I2C_DEVICE_ID_HP_ENVY_X360_15T_DR100	0x29CF
- #define I2C_DEVICE_ID_HP_ENVY_X360_EU0009NV	0x2CF9
- #define I2C_DEVICE_ID_HP_SPECTRE_X360_15	0x2817
-+#define I2C_DEVICE_ID_HP_SPECTRE_X360_13_AW0020NG  0x29DF
- #define I2C_DEVICE_ID_ASUS_TP420IA_TOUCHSCREEN 0x2BC8
- #define USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN	0x2544
- #define USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN	0x2706
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index 3736b0afbff73..7e94ca1822afb 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -386,6 +386,8 @@ static const struct hid_device_id hid_battery_quirks[] = {
- 	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_SPECTRE_X360_15),
- 	  HID_BATTERY_QUIRK_IGNORE },
-+	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_HP_SPECTRE_X360_13_AW0020NG),
-+	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_SURFACE_GO_TOUCHSCREEN),
- 	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_SURFACE_GO2_TOUCHSCREEN),
+diff --git a/tools/testing/selftests/drivers/net/ocelot/tc_flower_chains.sh b/tools/testing/selftests/drivers/net/ocelot/tc_flower_chains.sh
+index 9c79bbcce5a87..aff0a59f92d9a 100755
+--- a/tools/testing/selftests/drivers/net/ocelot/tc_flower_chains.sh
++++ b/tools/testing/selftests/drivers/net/ocelot/tc_flower_chains.sh
+@@ -246,7 +246,7 @@ test_vlan_ingress_modify()
+ 	bridge vlan add dev $swp2 vid 300
+ 
+ 	tc filter add dev $swp1 ingress chain $(IS1 2) pref 3 \
+-		protocol 802.1Q flower skip_sw vlan_id 200 \
++		protocol 802.1Q flower skip_sw vlan_id 200 src_mac $h1_mac \
+ 		action vlan modify id 300 \
+ 		action goto chain $(IS2 0 0)
+ 
 -- 
 2.39.0
 
