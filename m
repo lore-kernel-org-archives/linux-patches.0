@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 497A3847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:11:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B3196C433EF;
-	Wed,  1 Mar 2023 18:11:53 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BE4B9847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:11:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 437EAC433EF;
+	Wed,  1 Mar 2023 18:11:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694314;
-	bh=9lr9VmEQ1tDYtQIDjR6WwT25qs6IRWtWx8Qj9yDEzKg=;
+	s=korg; t=1677694316;
+	bh=31LUiSWRRqRWPJrcSH165zxbffsBpNzPCUysg4JzK1E=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=S6E5i26i1onCfmumEjPvKmnPB+zZqs5aziPQ4KMIjMTpCCyVylUNl3ln/mCkEatcH
-	 2l0NzgeE8imUflGYn18ELQ6vusV818mUN+Ge9/aLNNbnFLSnT+2VMA83iBpFF/89vR
-	 XiH3WwwA4VMPp3thfyyS/zUFedHQS6GwBPVIQQdw=
+	b=vhPnF4Z5kGycxcf7aIKEc3y1sidcjZFw68qiKAz/iKWLFub0NOXO6lN47GGG2yOx8
+	 xQRVFXSHKP0PBYrJSVGl4x9mC6zRcsSgnSUw3hezh08gFyUDlYlrNKZ1cTaWZIurEJ
+	 tCHbfZMHtyk1emxAqeRc3o1H+Pj6Zi3LrjxXrAmg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	"David S. Miller" <davem@davemloft.net>,
+	Xin Zhao <xnzhao@google.com>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 18/42] neigh: make sure used and confirmed times are valid
-Date: Wed,  1 Mar 2023 19:08:39 +0100
-Message-Id: <20230301180657.883885046@linuxfoundation.org>
+Subject: [PATCH 6.1 19/42] HID: core: Fix deadloop in hid_apply_multiplier.
+Date: Wed,  1 Mar 2023 19:08:40 +0100
+Message-Id: <20230301180657.925828018@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180657.003689969@linuxfoundation.org>
 References: <20230301180657.003689969@linuxfoundation.org>
@@ -36,94 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Xin Zhao <xnzhao@google.com>
 
-[ Upstream commit c1d2ecdf5e38e3489ce8328238b558b3b2866fe1 ]
+[ Upstream commit ea427a222d8bdf2bc1a8a6da3ebe247f7dced70c ]
 
-Entries can linger in cache without timer for days, thanks to
-the gc_thresh1 limit. As result, without traffic, the confirmed
-time can be outdated and to appear to be in the future. Later,
-on traffic, NUD_STALE entries can switch to NUD_DELAY and start
-the timer which can see the invalid confirmed time and wrongly
-switch to NUD_REACHABLE state instead of NUD_PROBE. As result,
-timer is set many days in the future. This is more visible on
-32-bit platforms, with higher HZ value.
+The initial value of hid->collection[].parent_idx if 0. When
+Report descriptor doesn't contain "HID Collection", the value
+remains as 0.
 
-Why this is a problem? While we expect unused entries to expire,
-such entries stay in REACHABLE state for too long, locked in
-cache. They are not expired normally, only when cache is full.
+In the meanwhile, when the Report descriptor fullfill
+all following conditions, it will trigger hid_apply_multiplier
+function call.
+1. Usage page is Generic Desktop Ctrls (0x01)
+2. Usage is RESOLUTION_MULTIPLIER (0x48)
+3. Contain any FEATURE items
 
-Problem and the wrong state change reported by Zhang Changzhong:
+The while loop in hid_apply_multiplier will search the top-most
+collection by searching parent_idx == -1. Because all parent_idx
+is 0. The loop will run forever.
 
-172.16.1.18 dev bond0 lladdr 0a:0e:0f:01:12:01 ref 1 used 350521/15994171/350520 probes 4 REACHABLE
+There is a Report Descriptor triggerring the deadloop
+0x05, 0x01,        // Usage Page (Generic Desktop Ctrls)
+0x09, 0x48,        // Usage (0x48)
+0x95, 0x01,        // Report Count (1)
+0x75, 0x08,        // Report Size (8)
+0xB1, 0x01,        // Feature
 
-350520 seconds have elapsed since this entry was last updated, but it is
-still in the REACHABLE state (base_reachable_time_ms is 30000),
-preventing lladdr from being updated through probe.
-
-Fix it by ensuring timer is started with valid used/confirmed
-times. Considering the valid time range is LONG_MAX jiffies,
-we try not to go too much in the past while we are in
-DELAY/PROBE state. There are also places that need
-used/updated times to be validated while timer is not running.
-
-Reported-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Tested-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Xin Zhao <xnzhao@google.com>
+Link: https://lore.kernel.org/r/20230130212947.1315941-1-xnzhao@google.com
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/core/neighbour.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ drivers/hid/hid-core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index 952a54763358e..bf081f62ae58b 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -269,7 +269,7 @@ static int neigh_forced_gc(struct neigh_table *tbl)
- 			    (n->nud_state == NUD_NOARP) ||
- 			    (tbl->is_multicast &&
- 			     tbl->is_multicast(n->primary_key)) ||
--			    time_after(tref, n->updated))
-+			    !time_in_range(n->updated, tref, jiffies))
- 				remove = true;
- 			write_unlock(&n->lock);
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index 3e1803592bd4a..5c72aef3d3dd5 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -1202,6 +1202,7 @@ int hid_open_report(struct hid_device *device)
+ 	__u8 *end;
+ 	__u8 *next;
+ 	int ret;
++	int i;
+ 	static int (*dispatch_type[])(struct hid_parser *parser,
+ 				      struct hid_item *item) = {
+ 		hid_parser_main,
+@@ -1252,6 +1253,8 @@ int hid_open_report(struct hid_device *device)
+ 		goto err;
+ 	}
+ 	device->collection_size = HID_DEFAULT_NUM_COLLECTIONS;
++	for (i = 0; i < HID_DEFAULT_NUM_COLLECTIONS; i++)
++		device->collection[i].parent_idx = -1;
  
-@@ -289,7 +289,17 @@ static int neigh_forced_gc(struct neigh_table *tbl)
- 
- static void neigh_add_timer(struct neighbour *n, unsigned long when)
- {
-+	/* Use safe distance from the jiffies - LONG_MAX point while timer
-+	 * is running in DELAY/PROBE state but still show to user space
-+	 * large times in the past.
-+	 */
-+	unsigned long mint = jiffies - (LONG_MAX - 86400 * HZ);
-+
- 	neigh_hold(n);
-+	if (!time_in_range(n->confirmed, mint, jiffies))
-+		n->confirmed = mint;
-+	if (time_before(n->used, n->confirmed))
-+		n->used = n->confirmed;
- 	if (unlikely(mod_timer(&n->timer, when))) {
- 		printk("NEIGH: BUG, double timer add, state is %x\n",
- 		       n->nud_state);
-@@ -1001,12 +1011,14 @@ static void neigh_periodic_work(struct work_struct *work)
- 				goto next_elt;
- 			}
- 
--			if (time_before(n->used, n->confirmed))
-+			if (time_before(n->used, n->confirmed) &&
-+			    time_is_before_eq_jiffies(n->confirmed))
- 				n->used = n->confirmed;
- 
- 			if (refcount_read(&n->refcnt) == 1 &&
- 			    (state == NUD_FAILED ||
--			     time_after(jiffies, n->used + NEIGH_VAR(n->parms, GC_STALETIME)))) {
-+			     !time_in_range_open(jiffies, n->used,
-+						 n->used + NEIGH_VAR(n->parms, GC_STALETIME)))) {
- 				*np = n->next;
- 				neigh_mark_dead(n);
- 				write_unlock(&n->lock);
+ 	ret = -EINVAL;
+ 	while ((next = fetch_item(start, end, &item)) != NULL) {
 -- 
 2.39.0
 
