@@ -1,30 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C656D847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:11:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E182C433D2;
-	Wed,  1 Mar 2023 18:11:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C5AA847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:11:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E6288C433EF;
+	Wed,  1 Mar 2023 18:11:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694287;
-	bh=ca897nOquxo7bD2GUSszpd6rq/ea5S6KTpY5NPjwRBs=;
+	s=korg; t=1677694290;
+	bh=FNUMdvdi3mJP+rFRsXs5GNThXOAU929tIeki5L3SV3o=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=trFXitFCQ4p5grtd6tSwLdyZJZ23mT+TODXyOeAVe++oyYzvVpIO/IYy9o6tgYXaT
-	 bNiS4Ke7p51jyF4LWK1ai/1OmyntA3DCNtSkTZXvCz0hp23Y/DE3OCUFUWrNSIcpmb
-	 hLkgu8dzxb6fLpyHSrZG5H175FOTrKyp5O+S2W+8=
+	b=K07f/xTAJP6jyN0lhZ7iNNTM7joPDqeqKZ0XHe11LWDQvEeq5qECFnMNRHcxQ0Q6v
+	 qo5COqre4ycXtTHA473mK5FpcpQeNvI4APMCL/2ZpSd71cgkY3vNP3vO1+DaHLYeOb
+	 +XD2XhD0TemICkE2EzEO/5Ch+oiTMLka2X5MI9zA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Troels Liebe Bentsen <troels@connectedcars.dk>
-Subject: [PATCH 5.15 22/22] USB: core: Dont hold device lock while reading the "descriptors" sysfs file
-Date: Wed,  1 Mar 2023 19:08:55 +0100
-Message-Id: <20230301180653.525401385@linuxfoundation.org>
+	Benedict Wong <benedictwong@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 6.1 01/42] Fix XFRM-I support for nested ESP tunnels
+Date: Wed,  1 Mar 2023 19:08:22 +0100
+Message-Id: <20230301180657.081986762@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230301180652.658125575@linuxfoundation.org>
-References: <20230301180652.658125575@linuxfoundation.org>
+In-Reply-To: <20230301180657.003689969@linuxfoundation.org>
+References: <20230301180657.003689969@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -34,72 +37,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Benedict Wong <benedictwong@google.com>
 
-commit 45bf39f8df7f05efb83b302c65ae3b9bc92b7065 upstream.
+[ Upstream commit b0355dbbf13c0052931dd14c38c789efed64d3de ]
 
-Ever since commit 83e83ecb79a8 ("usb: core: get config and string
-descriptors for unauthorized devices") was merged in 2013, there has
-been no mechanism for reallocating the rawdescriptors buffers in
-struct usb_device after the initial enumeration.  Before that commit,
-the buffers would be deallocated when a device was deauthorized and
-reallocated when it was authorized and enumerated.
+This change adds support for nested IPsec tunnels by ensuring that
+XFRM-I verifies existing policies before decapsulating a subsequent
+policies. Addtionally, this clears the secpath entries after policies
+are verified, ensuring that previous tunnels with no-longer-valid
+do not pollute subsequent policy checks.
 
-This means that the locking in the read_descriptors() routine is not
-needed, since the buffers it reads will never be reallocated while the
-routine is running.  This locking can interfere with user programs
-trying to read a hub's descriptors via sysfs while new child devices
-of the hub are being initialized, since the hub is locked during this
-procedure.
+This is necessary especially for nested tunnels, as the IP addresses,
+protocol and ports may all change, thus not matching the previous
+policies. In order to ensure that packets match the relevant inbound
+templates, the xfrm_policy_check should be done before handing off to
+the inner XFRM protocol to decrypt and decapsulate.
 
-Since the locking in read_descriptors() hasn't been needed for over
-nine years, we can remove it.
+Notably, raw ESP/AH packets did not perform policy checks inherently,
+whereas all other encapsulated packets (UDP, TCP encapsulated) do policy
+checks after calling xfrm_input handling in the respective encapsulation
+layer.
 
-Reported-and-tested-by: Troels Liebe Bentsen <troels@connectedcars.dk>
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-CC: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/Y9l+wDTRbuZABzsE@rowland.harvard.edu
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Test: Verified with additional Android Kernel Unit tests
+Signed-off-by: Benedict Wong <benedictwong@google.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/core/hub.c   |    5 ++---
- drivers/usb/core/sysfs.c |    5 -----
- 2 files changed, 2 insertions(+), 8 deletions(-)
+ net/xfrm/xfrm_interface.c | 54 ++++++++++++++++++++++++++++++++++++---
+ net/xfrm/xfrm_policy.c    |  3 +++
+ 2 files changed, 53 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -2382,9 +2382,8 @@ static int usb_enumerate_device_otg(stru
-  * usb_enumerate_device - Read device configs/intfs/otg (usbcore-internal)
-  * @udev: newly addressed device (in ADDRESS state)
-  *
-- * This is only called by usb_new_device() and usb_authorize_device()
-- * and FIXME -- all comments that apply to them apply here wrt to
-- * environment.
-+ * This is only called by usb_new_device() -- all comments that apply there
-+ * apply here wrt to environment.
-  *
-  * If the device is WUSB and not authorized, we don't attempt to read
-  * the string descriptors, as they will be errored out by the device
---- a/drivers/usb/core/sysfs.c
-+++ b/drivers/usb/core/sysfs.c
-@@ -868,11 +868,7 @@ read_descriptors(struct file *filp, stru
- 	size_t srclen, n;
- 	int cfgno;
- 	void *src;
--	int retval;
- 
--	retval = usb_lock_device_interruptible(udev);
--	if (retval < 0)
--		return -EINTR;
- 	/* The binary attribute begins with the device descriptor.
- 	 * Following that are the raw descriptor entries for all the
- 	 * configurations (config plus subsidiary descriptors).
-@@ -897,7 +893,6 @@ read_descriptors(struct file *filp, stru
- 			off -= srclen;
- 		}
- 	}
--	usb_unlock_device(udev);
- 	return count - nleft;
+diff --git a/net/xfrm/xfrm_interface.c b/net/xfrm/xfrm_interface.c
+index 5a67b120c4dbd..94a3609548b11 100644
+--- a/net/xfrm/xfrm_interface.c
++++ b/net/xfrm/xfrm_interface.c
+@@ -310,6 +310,52 @@ static void xfrmi_scrub_packet(struct sk_buff *skb, bool xnet)
+ 	skb->mark = 0;
  }
  
++static int xfrmi_input(struct sk_buff *skb, int nexthdr, __be32 spi,
++		       int encap_type, unsigned short family)
++{
++	struct sec_path *sp;
++
++	sp = skb_sec_path(skb);
++	if (sp && (sp->len || sp->olen) &&
++	    !xfrm_policy_check(NULL, XFRM_POLICY_IN, skb, family))
++		goto discard;
++
++	XFRM_SPI_SKB_CB(skb)->family = family;
++	if (family == AF_INET) {
++		XFRM_SPI_SKB_CB(skb)->daddroff = offsetof(struct iphdr, daddr);
++		XFRM_TUNNEL_SKB_CB(skb)->tunnel.ip4 = NULL;
++	} else {
++		XFRM_SPI_SKB_CB(skb)->daddroff = offsetof(struct ipv6hdr, daddr);
++		XFRM_TUNNEL_SKB_CB(skb)->tunnel.ip6 = NULL;
++	}
++
++	return xfrm_input(skb, nexthdr, spi, encap_type);
++discard:
++	kfree_skb(skb);
++	return 0;
++}
++
++static int xfrmi4_rcv(struct sk_buff *skb)
++{
++	return xfrmi_input(skb, ip_hdr(skb)->protocol, 0, 0, AF_INET);
++}
++
++static int xfrmi6_rcv(struct sk_buff *skb)
++{
++	return xfrmi_input(skb, skb_network_header(skb)[IP6CB(skb)->nhoff],
++			   0, 0, AF_INET6);
++}
++
++static int xfrmi4_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
++{
++	return xfrmi_input(skb, nexthdr, spi, encap_type, AF_INET);
++}
++
++static int xfrmi6_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
++{
++	return xfrmi_input(skb, nexthdr, spi, encap_type, AF_INET6);
++}
++
+ static int xfrmi_rcv_cb(struct sk_buff *skb, int err)
+ {
+ 	const struct xfrm_mode *inner_mode;
+@@ -937,8 +983,8 @@ static struct pernet_operations xfrmi_net_ops = {
+ };
+ 
+ static struct xfrm6_protocol xfrmi_esp6_protocol __read_mostly = {
+-	.handler	=	xfrm6_rcv,
+-	.input_handler	=	xfrm_input,
++	.handler	=	xfrmi6_rcv,
++	.input_handler	=	xfrmi6_input,
+ 	.cb_handler	=	xfrmi_rcv_cb,
+ 	.err_handler	=	xfrmi6_err,
+ 	.priority	=	10,
+@@ -988,8 +1034,8 @@ static struct xfrm6_tunnel xfrmi_ip6ip_handler __read_mostly = {
+ #endif
+ 
+ static struct xfrm4_protocol xfrmi_esp4_protocol __read_mostly = {
+-	.handler	=	xfrm4_rcv,
+-	.input_handler	=	xfrm_input,
++	.handler	=	xfrmi4_rcv,
++	.input_handler	=	xfrmi4_input,
+ 	.cb_handler	=	xfrmi_rcv_cb,
+ 	.err_handler	=	xfrmi4_err,
+ 	.priority	=	10,
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index 52538d5360673..7f49dab3b6b59 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -3670,6 +3670,9 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
+ 			goto reject;
+ 		}
+ 
++		if (if_id)
++			secpath_reset(skb);
++
+ 		xfrm_pols_put(pols, npols);
+ 		return 1;
+ 	}
+-- 
+2.39.0
+
 
 
