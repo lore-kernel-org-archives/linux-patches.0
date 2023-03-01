@@ -1,153 +1,167 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5774C847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:09:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9EABC433D2;
-	Wed,  1 Mar 2023 18:09:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 34665847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:09:38 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id AADB1C433D2;
+	Wed,  1 Mar 2023 18:09:37 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694170;
-	bh=0skYakOmKGdaRdC9U5BM4vWbQIEgEKrv7NVrg6Y8nIg=;
-	h=From:To:Cc:Subject:Date:From;
-	b=RVvCI6vgdFIsEWeS1DqYmtioQTD3A/ZgTUhiH24fOj+9IbJzhPvJvM/+hNJ0vsPuq
-	 kmBRgyWYgQcKbrmXz5DIxh++P8WYyMT+WpyFr3tIb0WN+IvYh8dxmqn5lU6VOX9alw
-	 VaMTe87T51rH6Xn3z5T7IH+qWySOqZxJJVldHJ8M=
+	s=korg; t=1677694178;
+	bh=AufyQJ5bQHeNvPWgyeK+ieVSshJJ13qq6zrSYpWWCzQ=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=UCfg8MdG20QbKsdiJ0T39QSmM6xwjVioNM3iy9Wm4HjEGs2n5Dt+inRa6owHrzNUu
+	 we4Yah57cZOT6q2sBGLLqg95c7TC9tFIaTvMPy/8eToS8Mng8NPQ8jztCEs4s/2PFB
+	 Q/LbyGuW0xnC0IIxIWt3WwviamSv26DXJ5IVeWaQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 6.2 00/16] 6.2.2-rc1 review
-Date: Wed,  1 Mar 2023 19:07:36 +0100
-Message-Id: <20230301180653.263532453@linuxfoundation.org>
+	Benedict Wong <benedictwong@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.10 01/19] Fix XFRM-I support for nested ESP tunnels
+Date: Wed,  1 Mar 2023 19:08:30 +0100
+Message-Id: <20230301180652.383841321@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230301180652.316428563@linuxfoundation.org>
+References: <20230301180652.316428563@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.2-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-6.2.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 6.2.2-rc1
-X-KernelTest-Deadline: 2023-03-03T18:06+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 6.2.2 release.
-There are 16 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Benedict Wong <benedictwong@google.com>
 
-Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
-Anything received after that time might be too late.
+[ Upstream commit b0355dbbf13c0052931dd14c38c789efed64d3de ]
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.2-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
-and the diffstat can be found below.
+This change adds support for nested IPsec tunnels by ensuring that
+XFRM-I verifies existing policies before decapsulating a subsequent
+policies. Addtionally, this clears the secpath entries after policies
+are verified, ensuring that previous tunnels with no-longer-valid
+do not pollute subsequent policy checks.
 
-thanks,
+This is necessary especially for nested tunnels, as the IP addresses,
+protocol and ports may all change, thus not matching the previous
+policies. In order to ensure that packets match the relevant inbound
+templates, the xfrm_policy_check should be done before handing off to
+the inner XFRM protocol to decrypt and decapsulate.
 
-greg k-h
+Notably, raw ESP/AH packets did not perform policy checks inherently,
+whereas all other encapsulated packets (UDP, TCP encapsulated) do policy
+checks after calling xfrm_input handling in the respective encapsulation
+layer.
 
--------------
-Pseudo-Shortlog of commits:
+Test: Verified with additional Android Kernel Unit tests
+Signed-off-by: Benedict Wong <benedictwong@google.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ net/xfrm/xfrm_interface.c | 54 ++++++++++++++++++++++++++++++++++++---
+ net/xfrm/xfrm_policy.c    |  3 +++
+ 2 files changed, 53 insertions(+), 4 deletions(-)
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 6.2.2-rc1
+diff --git a/net/xfrm/xfrm_interface.c b/net/xfrm/xfrm_interface.c
+index da518b4ca84c6..e4f21a6924153 100644
+--- a/net/xfrm/xfrm_interface.c
++++ b/net/xfrm/xfrm_interface.c
+@@ -207,6 +207,52 @@ static void xfrmi_scrub_packet(struct sk_buff *skb, bool xnet)
+ 	skb->mark = 0;
+ }
+ 
++static int xfrmi_input(struct sk_buff *skb, int nexthdr, __be32 spi,
++		       int encap_type, unsigned short family)
++{
++	struct sec_path *sp;
++
++	sp = skb_sec_path(skb);
++	if (sp && (sp->len || sp->olen) &&
++	    !xfrm_policy_check(NULL, XFRM_POLICY_IN, skb, family))
++		goto discard;
++
++	XFRM_SPI_SKB_CB(skb)->family = family;
++	if (family == AF_INET) {
++		XFRM_SPI_SKB_CB(skb)->daddroff = offsetof(struct iphdr, daddr);
++		XFRM_TUNNEL_SKB_CB(skb)->tunnel.ip4 = NULL;
++	} else {
++		XFRM_SPI_SKB_CB(skb)->daddroff = offsetof(struct ipv6hdr, daddr);
++		XFRM_TUNNEL_SKB_CB(skb)->tunnel.ip6 = NULL;
++	}
++
++	return xfrm_input(skb, nexthdr, spi, encap_type);
++discard:
++	kfree_skb(skb);
++	return 0;
++}
++
++static int xfrmi4_rcv(struct sk_buff *skb)
++{
++	return xfrmi_input(skb, ip_hdr(skb)->protocol, 0, 0, AF_INET);
++}
++
++static int xfrmi6_rcv(struct sk_buff *skb)
++{
++	return xfrmi_input(skb, skb_network_header(skb)[IP6CB(skb)->nhoff],
++			   0, 0, AF_INET6);
++}
++
++static int xfrmi4_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
++{
++	return xfrmi_input(skb, nexthdr, spi, encap_type, AF_INET);
++}
++
++static int xfrmi6_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
++{
++	return xfrmi_input(skb, nexthdr, spi, encap_type, AF_INET6);
++}
++
+ static int xfrmi_rcv_cb(struct sk_buff *skb, int err)
+ {
+ 	const struct xfrm_mode *inner_mode;
+@@ -780,8 +826,8 @@ static struct pernet_operations xfrmi_net_ops = {
+ };
+ 
+ static struct xfrm6_protocol xfrmi_esp6_protocol __read_mostly = {
+-	.handler	=	xfrm6_rcv,
+-	.input_handler	=	xfrm_input,
++	.handler	=	xfrmi6_rcv,
++	.input_handler	=	xfrmi6_input,
+ 	.cb_handler	=	xfrmi_rcv_cb,
+ 	.err_handler	=	xfrmi6_err,
+ 	.priority	=	10,
+@@ -831,8 +877,8 @@ static struct xfrm6_tunnel xfrmi_ip6ip_handler __read_mostly = {
+ #endif
+ 
+ static struct xfrm4_protocol xfrmi_esp4_protocol __read_mostly = {
+-	.handler	=	xfrm4_rcv,
+-	.input_handler	=	xfrm_input,
++	.handler	=	xfrmi4_rcv,
++	.input_handler	=	xfrmi4_input,
+ 	.cb_handler	=	xfrmi_rcv_cb,
+ 	.err_handler	=	xfrmi4_err,
+ 	.priority	=	10,
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index 0d12bdf59d4cc..d15aa62887de0 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -3710,6 +3710,9 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
+ 			goto reject;
+ 		}
+ 
++		if (if_id)
++			secpath_reset(skb);
++
+ 		xfrm_pols_put(pols, npols);
+ 		return 1;
+ 	}
+-- 
+2.39.0
 
-Alan Stern <stern@rowland.harvard.edu>
-    USB: core: Don't hold device lock while reading the "descriptors" sysfs file
-
-Saranya Gopal <saranya.gopal@intel.com>
-    usb: typec: pd: Remove usb_suspend_supported sysfs from sink PDO
-
-Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
-    arm64: dts: uniphier: Fix property name in PXs3 USB node
-
-Prashanth K <quic_prashk@quicinc.com>
-    usb: gadget: u_serial: Add null pointer check in gserial_resume
-
-Florian Zumbiehl <florz@florz.de>
-    USB: serial: option: add support for VW/Skoda "Carstick LTE"
-
-Heikki Krogerus <heikki.krogerus@linux.intel.com>
-    usb: dwc3: pci: add support for the Intel Meteor Lake-M
-
-Sascha Hauer <s.hauer@pengutronix.de>
-    wifi: rtw88: usb: drop now unnecessary URB size check
-
-Sascha Hauer <s.hauer@pengutronix.de>
-    wifi: rtw88: usb: send Zero length packets if necessary
-
-Sascha Hauer <s.hauer@pengutronix.de>
-    wifi: rtw88: usb: Set qsel correctly
-
-Carlos Llamas <cmllamas@google.com>
-    scripts/tags.sh: fix incompatibility with PCRE2
-
-Stylon Wang <stylon.wang@amd.com>
-    drm/amd/display: Properly reuse completion structure
-
-Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
-    drm/amd/display: Move DCN314 DOMAIN power control to DMCUB
-
-Thomas Weißschuh <linux@weissschuh.net>
-    vc_screen: don't clobber return value in vcs_read
-
-Martin KaFai Lau <martin.lau@kernel.org>
-    bpf: bpf_fib_lookup should not return neigh in NUD_FAILED state
-
-Herbert Xu <herbert@gondor.apana.org.au>
-    crypto: arm64/sm4-gcm - Fix possible crash in GCM cryption
-
-Vitaly Rodionov <vitalyr@opensource.cirrus.com>
-    ALSA: hda: cs35l41: Correct error condition handling
-
-
--------------
-
-Diffstat:
-
- Makefile                                           |  4 +-
- .../dts/socionext/uniphier-pxs3-ref-gadget0.dts    |  2 +-
- .../dts/socionext/uniphier-pxs3-ref-gadget1.dts    |  2 +-
- arch/arm64/crypto/sm4-ce-gcm-glue.c                | 51 +++++++++++-----------
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  |  3 ++
- .../gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.c   | 24 ++++++++++
- .../gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.h   |  2 +
- .../gpu/drm/amd/display/dc/dcn314/dcn314_init.c    |  2 +-
- drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h    | 25 +++++++++++
- drivers/net/wireless/realtek/rtw88/usb.c           | 18 ++------
- drivers/tty/vt/vc_screen.c                         |  7 +--
- drivers/usb/core/hub.c                             |  5 +--
- drivers/usb/core/sysfs.c                           |  5 ---
- drivers/usb/dwc3/dwc3-pci.c                        |  4 ++
- drivers/usb/gadget/function/u_serial.c             | 23 ++++++++--
- drivers/usb/serial/option.c                        |  4 ++
- drivers/usb/typec/pd.c                             |  1 -
- net/core/filter.c                                  |  4 +-
- scripts/tags.sh                                    |  2 +-
- sound/pci/hda/hda_cs_dsp_ctl.c                     |  4 +-
- 20 files changed, 125 insertions(+), 67 deletions(-)
 
 
