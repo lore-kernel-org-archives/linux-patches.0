@@ -1,140 +1,76 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B99847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:08:45 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115E9C433EF;
-	Wed,  1 Mar 2023 18:08:45 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB6E847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:08:48 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A73C433EF;
+	Wed,  1 Mar 2023 18:08:47 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694125;
-	bh=c+mLaaeyvvTWuLvHXDvvroqIw2vDVDdVbZEPSV7FdCk=;
-	h=From:To:Cc:Subject:Date:From;
-	b=SdPUx5LUcFheohZWf4na7K5Tl+wca9x77A9XiXSLm6j2QhZUlm96LhYK8Wp//nQql
-	 Y9bldJuS9xBak7GTGTke+w4EXYpZmwKWdwU+aC0oIhP8O+O5t4C3FU361jSz+vWtYM
-	 8gfxz6FdYpZK0P1/ZcmplEjvsx++YHPPsOTRPFoY=
+	s=korg; t=1677694128;
+	bh=QPcNFvGHkkNV4wKWo7XyJcP3fiArJMHCz3/xNZTjLzg=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=BQ0ujDyBeOIlnnNhLzOWUDeyhWloGXx7VctuO4pcVdtEwENd7ksTq6SXvIZRWiHYh
+	 Qbf06J2xsum8A/lKZXTweD41mrbHIopMa4Uf4YcfftGPi8UVo0cCKoEATh0KNZ3Mgw
+	 M2/u8qa+blKQ3y+IEa5LrwPgB9jLrAI5U+BO5k/E=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 5.4 00/13] 5.4.234-rc1 review
-Date: Wed,  1 Mar 2023 19:07:23 +0100
-Message-Id: <20230301180651.177668495@linuxfoundation.org>
+	Vitaly Rodionov <vitalyr@opensource.cirrus.com>,
+	Stefan Binding <sbinding@opensource.cirrus.com>,
+	Takashi Iwai <tiwai@suse.de>,
+	Richard Fitzgerald <rf@opensource.cirrus.com>
+Subject: [PATCH 6.2 01/16] ALSA: hda: cs35l41: Correct error condition handling
+Date: Wed,  1 Mar 2023 19:07:37 +0100
+Message-Id: <20230301180653.314613545@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230301180653.263532453@linuxfoundation.org>
+References: <20230301180653.263532453@linuxfoundation.org>
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.234-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.4.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.4.234-rc1
-X-KernelTest-Deadline: 2023-03-03T18:06+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.4.234 release.
-There are 13 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
 
-Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
-Anything received after that time might be too late.
+commit 943f4e64ee177cf44d7f2c235281fcda7c32bb28 upstream.
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.234-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
-and the diffstat can be found below.
+Function cs_dsp_coeff_write_ctrl() can return 3 possible values:
+0 - no change, 1 - value has changed and -1 - error, so positive value
+is not an error.
+Fixes: 7406bdbc4fb8 ("ASoC: wm_adsp: Return whether changed when writing controls")
 
-thanks,
+Signed-off-by: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
+Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
+Link: https://lore.kernel.org/r/20230213145008.1215849-2-sbinding@opensource.cirrus.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
+Cc: Richard Fitzgerald <rf@opensource.cirrus.com>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ sound/pci/hda/hda_cs_dsp_ctl.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-greg k-h
-
--------------
-Pseudo-Shortlog of commits:
-
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.4.234-rc1
-
-Alan Stern <stern@rowland.harvard.edu>
-    USB: core: Don't hold device lock while reading the "descriptors" sysfs file
-
-Florian Zumbiehl <florz@florz.de>
-    USB: serial: option: add support for VW/Skoda "Carstick LTE"
-
-Jiasheng Jiang <jiasheng@iscas.ac.cn>
-    dmaengine: sh: rcar-dmac: Check for error num after dma_set_max_seg_size
-
-Thomas Weißschuh <linux@weissschuh.net>
-    vc_screen: don't clobber return value in vcs_read
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    net: Remove WARN_ON_ONCE(sk->sk_forward_alloc) from sk_stream_kill_queues().
-
-Martin KaFai Lau <martin.lau@kernel.org>
-    bpf: bpf_fib_lookup should not return neigh in NUD_FAILED state
-
-Xin Zhao <xnzhao@google.com>
-    HID: core: Fix deadloop in hid_apply_multiplier.
-
-Julian Anastasov <ja@ssi.bg>
-    neigh: make sure used and confirmed times are valid
-
-Dean Luick <dean.luick@cornelisnetworks.com>
-    IB/hfi1: Assign npages earlier
-
-David Sterba <dsterba@suse.com>
-    btrfs: send: limit number of clones and allocated memory size
-
-Vishal Verma <vishal.l.verma@intel.com>
-    ACPI: NFIT: fix a potential deadlock during NFIT teardown
-
-Johan Jonker <jbx6244@gmail.com>
-    ARM: dts: rockchip: add power-domains property to dp node on rk3288
-
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-    arm64: dts: rockchip: drop unused LED mode property from rk3328-roc-cc
-
-
--------------
-
-Diffstat:
-
- Makefile                                       |  4 ++--
- arch/arm/boot/dts/rk3288.dtsi                  |  1 +
- arch/arm64/boot/dts/rockchip/rk3328-roc-cc.dts |  2 --
- drivers/acpi/nfit/core.c                       |  2 +-
- drivers/dma/sh/rcar-dmac.c                     |  5 ++++-
- drivers/hid/hid-core.c                         |  3 +++
- drivers/infiniband/hw/hfi1/user_exp_rcv.c      |  9 ++-------
- drivers/tty/vt/vc_screen.c                     |  7 ++++---
- drivers/usb/core/hub.c                         |  5 ++---
- drivers/usb/core/sysfs.c                       |  5 -----
- drivers/usb/serial/option.c                    |  4 ++++
- fs/btrfs/send.c                                |  6 +++---
- net/caif/caif_socket.c                         |  1 +
- net/core/filter.c                              |  4 ++--
- net/core/neighbour.c                           | 18 +++++++++++++++---
- net/core/stream.c                              |  1 -
- 16 files changed, 44 insertions(+), 33 deletions(-)
+--- a/sound/pci/hda/hda_cs_dsp_ctl.c
++++ b/sound/pci/hda/hda_cs_dsp_ctl.c
+@@ -218,10 +218,10 @@ int hda_cs_dsp_write_ctl(struct cs_dsp *
+ 	cs_ctl = cs_dsp_get_ctl(dsp, name, type, alg);
+ 	ret = cs_dsp_coeff_write_ctrl(cs_ctl, 0, buf, len);
+ 	mutex_unlock(&dsp->pwr_lock);
+-	if (ret)
++	if (ret < 0)
+ 		return ret;
+ 
+-	if (cs_ctl->flags & WMFW_CTL_FLAG_SYS)
++	if (ret == 0 || (cs_ctl->flags & WMFW_CTL_FLAG_SYS))
+ 		return 0;
+ 
+ 	ctl = cs_ctl->priv;
 
 
