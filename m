@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DF9847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:08:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E58FC433EF;
-	Wed,  1 Mar 2023 18:08:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 44916847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:09:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id BE701C433D2;
+	Wed,  1 Mar 2023 18:09:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694135;
-	bh=fML4Bsj97FBCWZenn6eZbnOIZ6XKRbVET63UOWWhLyE=;
+	s=korg; t=1677694141;
+	bh=RaZaytxB3/oi0P1WcP0Mo2lpdwiIdjxmV0Ul3ysEd78=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=pExKYY7u1RREBedrHuauRN9fD8TXLzUXn1+jpx0F4T4Ul/L8sJ+lA1KZutd/yeCkI
-	 FtusRRCFZInvH/XKSH0nrtRVkcr38TvD3tdzyD8EBC2VKKfUiBOLrB0BiPYfqugh+q
-	 gELnb23X35vQ94tiZFL6AYbr2544iBadMJFVHfNQ=
+	b=2EeWD7/FhN8DaDqpWx1xkULBvrwVvNtCERiA8ZIZcwp74STFwrrlgKIXFqShvV93J
+	 ctq1TTSDhIzuOO+H9xW9Xo4XqnpkS4xGDVSrNNL95dazKNXSsSGn9TQrbVbzkqvu7K
+	 grk30csEMecFAPgvwJxAVdLlgiBaFCblEc2cwids=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Zumbiehl <florz@florz.de>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 6.2 12/16] USB: serial: option: add support for VW/Skoda "Carstick LTE"
-Date: Wed,  1 Mar 2023 19:07:48 +0100
-Message-Id: <20230301180653.747983632@linuxfoundation.org>
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.2 14/16] arm64: dts: uniphier: Fix property name in PXs3 USB node
+Date: Wed,  1 Mar 2023 19:07:50 +0100
+Message-Id: <20230301180653.830035042@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180653.263532453@linuxfoundation.org>
 References: <20230301180653.263532453@linuxfoundation.org>
@@ -34,52 +34,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Zumbiehl <florz@florz.de>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-commit 617c331d91077f896111044628c096802551dc66 upstream.
+commit 2508d5efd7a588d07915a762e1731173854525f9 upstream.
 
-Add support for VW/Skoda "Carstick LTE"
+The property "snps,usb2_gadget_lpm_disable" is wrong.
+It should be fixed to "snps,usb2-gadget-lpm-disable".
 
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1c9e ProdID=7605 Rev=02.00
-S:  Manufacturer=USB Modem
-S:  Product=USB Modem
-C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#=0x0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#=0x1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#=0x2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#=0x3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-
-The stick has AT command interfaces on interfaces 1, 2, and 3, and does PPP
-on interface 3.
-
-Signed-off-by: Florian Zumbiehl <florz@florz.de>
 Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Fixes: 19fee1a1096d ("arm64: dts: uniphier: Add USB-device support for PXs3 reference board")
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Link: https://lore.kernel.org/r/20230207021429.28925-1-hayashi.kunihiko@socionext.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget0.dts |    2 +-
+ arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget1.dts |    2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -402,6 +402,8 @@ static void option_instat_callback(struc
- #define LONGCHEER_VENDOR_ID			0x1c9e
- 
- /* 4G Systems products */
-+/* This one was sold as the VW and Skoda "Carstick LTE" */
-+#define FOUR_G_SYSTEMS_PRODUCT_CARSTICK_LTE	0x7605
- /* This is the 4G XS Stick W14 a.k.a. Mobilcom Debitel Surf-Stick *
-  * It seems to contain a Qualcomm QSC6240/6290 chipset            */
- #define FOUR_G_SYSTEMS_PRODUCT_W14		0x9603
-@@ -1976,6 +1978,8 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(2) },
- 	{ USB_DEVICE(AIRPLUS_VENDOR_ID, AIRPLUS_PRODUCT_MCD650) },
- 	{ USB_DEVICE(TLAYTECH_VENDOR_ID, TLAYTECH_PRODUCT_TEU800) },
-+	{ USB_DEVICE(LONGCHEER_VENDOR_ID, FOUR_G_SYSTEMS_PRODUCT_CARSTICK_LTE),
-+	  .driver_info = RSVD(0) },
- 	{ USB_DEVICE(LONGCHEER_VENDOR_ID, FOUR_G_SYSTEMS_PRODUCT_W14),
- 	  .driver_info = NCTRL(0) | NCTRL(1) },
- 	{ USB_DEVICE(LONGCHEER_VENDOR_ID, FOUR_G_SYSTEMS_PRODUCT_W100),
+--- a/arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget0.dts
++++ b/arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget0.dts
+@@ -24,7 +24,7 @@
+ 	snps,dis_enblslpm_quirk;
+ 	snps,dis_u2_susphy_quirk;
+ 	snps,dis_u3_susphy_quirk;
+-	snps,usb2_gadget_lpm_disable;
++	snps,usb2-gadget-lpm-disable;
+ 	phy-names = "usb2-phy", "usb3-phy";
+ 	phys = <&usb0_hsphy0>, <&usb0_ssphy0>;
+ };
+--- a/arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget1.dts
++++ b/arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget1.dts
+@@ -24,7 +24,7 @@
+ 	snps,dis_enblslpm_quirk;
+ 	snps,dis_u2_susphy_quirk;
+ 	snps,dis_u3_susphy_quirk;
+-	snps,usb2_gadget_lpm_disable;
++	snps,usb2-gadget-lpm-disable;
+ 	phy-names = "usb2-phy", "usb3-phy";
+ 	phys = <&usb1_hsphy0>, <&usb1_ssphy0>;
+ };
 
 
