@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 971408484
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:08:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 211EEC4339B;
-	Wed,  1 Mar 2023 18:08:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 04DF9847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:08:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7E58FC433EF;
+	Wed,  1 Mar 2023 18:08:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694138;
-	bh=tFiD4QfyyY/N0PBAgfiM2pzh50//TNmaxGIulH5h6P8=;
+	s=korg; t=1677694135;
+	bh=fML4Bsj97FBCWZenn6eZbnOIZ6XKRbVET63UOWWhLyE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=mlog81i3O0u3oq72mAV08tBkbJ8zHHSqQRFsSlObzadzdOZZyvRD3pYwc5qaefnXL
-	 xzMwas4yS/2CYJHkc8prc9svLUz/HDOnz26szpabLgB0aDbJUO0hr6WWsliN4Puy2O
-	 OUIvTI7CKV/3nBeUCF1p2v5Jxld7SpWOGWu23TPY=
+	b=pExKYY7u1RREBedrHuauRN9fD8TXLzUXn1+jpx0F4T4Ul/L8sJ+lA1KZutd/yeCkI
+	 FtusRRCFZInvH/XKSH0nrtRVkcr38TvD3tdzyD8EBC2VKKfUiBOLrB0BiPYfqugh+q
+	 gELnb23X35vQ94tiZFL6AYbr2544iBadMJFVHfNQ=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Prashanth K <quic_prashk@quicinc.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.2 13/16] usb: gadget: u_serial: Add null pointer check in gserial_resume
-Date: Wed,  1 Mar 2023 19:07:49 +0100
-Message-Id: <20230301180653.789729977@linuxfoundation.org>
+	Florian Zumbiehl <florz@florz.de>,
+	Johan Hovold <johan@kernel.org>
+Subject: [PATCH 6.2 12/16] USB: serial: option: add support for VW/Skoda "Carstick LTE"
+Date: Wed,  1 Mar 2023 19:07:48 +0100
+Message-Id: <20230301180653.747983632@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180653.263532453@linuxfoundation.org>
 References: <20230301180653.263532453@linuxfoundation.org>
@@ -35,84 +34,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prashanth K <quic_prashk@quicinc.com>
+From: Florian Zumbiehl <florz@florz.de>
 
-commit 5ec63fdbca604568890c577753c6f66c5b3ef0b5 upstream.
+commit 617c331d91077f896111044628c096802551dc66 upstream.
 
-Consider a case where gserial_disconnect has already cleared
-gser->ioport. And if a wakeup interrupt triggers afterwards,
-gserial_resume gets called, which will lead to accessing of
-gser->ioport and thus causing null pointer dereference.Add
-a null pointer check to prevent this.
+Add support for VW/Skoda "Carstick LTE"
 
-Added a static spinlock to prevent gser->ioport from becoming
-null after the newly added check.
+D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
+P:  Vendor=1c9e ProdID=7605 Rev=02.00
+S:  Manufacturer=USB Modem
+S:  Product=USB Modem
+C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
+I:  If#=0x0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+I:  If#=0x1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+I:  If#=0x2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+I:  If#=0x3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
 
-Fixes: aba3a8d01d62 ("usb: gadget: u_serial: add suspend resume callbacks")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/1676309438-14922-1-git-send-email-quic_prashk@quicinc.com
+The stick has AT command interfaces on interfaces 1, 2, and 3, and does PPP
+on interface 3.
+
+Signed-off-by: Florian Zumbiehl <florz@florz.de>
+Cc: stable@vger.kernel.org
+Signed-off-by: Johan Hovold <johan@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_serial.c |   23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ drivers/usb/serial/option.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
---- a/drivers/usb/gadget/function/u_serial.c
-+++ b/drivers/usb/gadget/function/u_serial.c
-@@ -82,6 +82,9 @@
- #define WRITE_BUF_SIZE		8192		/* TX only */
- #define GS_CONSOLE_BUF_SIZE	8192
+--- a/drivers/usb/serial/option.c
++++ b/drivers/usb/serial/option.c
+@@ -402,6 +402,8 @@ static void option_instat_callback(struc
+ #define LONGCHEER_VENDOR_ID			0x1c9e
  
-+/* Prevents race conditions while accessing gser->ioport */
-+static DEFINE_SPINLOCK(serial_port_lock);
-+
- /* console info */
- struct gs_console {
- 	struct console		console;
-@@ -1375,8 +1378,10 @@ void gserial_disconnect(struct gserial *
- 	if (!port)
- 		return;
- 
-+	spin_lock_irqsave(&serial_port_lock, flags);
-+
- 	/* tell the TTY glue not to do I/O here any more */
--	spin_lock_irqsave(&port->port_lock, flags);
-+	spin_lock(&port->port_lock);
- 
- 	gs_console_disconnect(port);
- 
-@@ -1391,7 +1396,8 @@ void gserial_disconnect(struct gserial *
- 			tty_hangup(port->port.tty);
- 	}
- 	port->suspended = false;
--	spin_unlock_irqrestore(&port->port_lock, flags);
-+	spin_unlock(&port->port_lock);
-+	spin_unlock_irqrestore(&serial_port_lock, flags);
- 
- 	/* disable endpoints, aborting down any active I/O */
- 	usb_ep_disable(gser->out);
-@@ -1425,10 +1431,19 @@ EXPORT_SYMBOL_GPL(gserial_suspend);
- 
- void gserial_resume(struct gserial *gser)
- {
--	struct gs_port *port = gser->ioport;
-+	struct gs_port *port;
- 	unsigned long	flags;
- 
--	spin_lock_irqsave(&port->port_lock, flags);
-+	spin_lock_irqsave(&serial_port_lock, flags);
-+	port = gser->ioport;
-+
-+	if (!port) {
-+		spin_unlock_irqrestore(&serial_port_lock, flags);
-+		return;
-+	}
-+
-+	spin_lock(&port->port_lock);
-+	spin_unlock(&serial_port_lock);
- 	port->suspended = false;
- 	if (!port->start_delayed) {
- 		spin_unlock_irqrestore(&port->port_lock, flags);
+ /* 4G Systems products */
++/* This one was sold as the VW and Skoda "Carstick LTE" */
++#define FOUR_G_SYSTEMS_PRODUCT_CARSTICK_LTE	0x7605
+ /* This is the 4G XS Stick W14 a.k.a. Mobilcom Debitel Surf-Stick *
+  * It seems to contain a Qualcomm QSC6240/6290 chipset            */
+ #define FOUR_G_SYSTEMS_PRODUCT_W14		0x9603
+@@ -1976,6 +1978,8 @@ static const struct usb_device_id option
+ 	  .driver_info = RSVD(2) },
+ 	{ USB_DEVICE(AIRPLUS_VENDOR_ID, AIRPLUS_PRODUCT_MCD650) },
+ 	{ USB_DEVICE(TLAYTECH_VENDOR_ID, TLAYTECH_PRODUCT_TEU800) },
++	{ USB_DEVICE(LONGCHEER_VENDOR_ID, FOUR_G_SYSTEMS_PRODUCT_CARSTICK_LTE),
++	  .driver_info = RSVD(0) },
+ 	{ USB_DEVICE(LONGCHEER_VENDOR_ID, FOUR_G_SYSTEMS_PRODUCT_W14),
+ 	  .driver_info = NCTRL(0) | NCTRL(1) },
+ 	{ USB_DEVICE(LONGCHEER_VENDOR_ID, FOUR_G_SYSTEMS_PRODUCT_W100),
 
 
