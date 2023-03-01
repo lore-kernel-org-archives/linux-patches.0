@@ -1,139 +1,124 @@
-Received: from NAM02-DM3-obe.outbound.protection.outlook.com (mail-dm3nam02on2051.outbound.protection.outlook.com [40.107.95.51])
+Received: from mga05.intel.com (mga05.intel.com [192.55.52.43])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 91D4A3D79
-	for <patches@lists.linux.dev>; Tue, 28 Feb 2023 22:31:16 +0000 (UTC)
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=bTpTjtCJh4LIdKghXsY/KLGTyUUUU0IjwgSfTxNl2j5m5sFtZSjLkZn7X4lkgxJldPnaT5AG2Nq7yoctdnpmGZDabZpUZCmG+W3t7MrXWAqtbwI7eIJ16Ywg2yA4Ma8guGv1Cnj1rspxJZybkVI2iYnn+4gmtI02Hc9lG6bT+7tWtbiQVYBehFUj1drw7kad+Fz0pUS+yCVbsd38YE3fj4FMYZycJ8g+Fuhq9Udff2hiPy/Pu7W6MZZzbQBitrdyS7ZsaOsok40XAkXgB4pDSSecV8W6u61FcsFR2j2zGNjnugGoC83lyE0NirBmlBrKpKiAnHI1G6RKwaVKu3ePZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=wH2Td+bpfpPBp4FWtEUIwI3NnE0iwbP8rsdI35AuujY=;
- b=FhG6TUSZK9GEpD8Yx28cWNLjcA7AZfXpvPV1Uh40vZa5vBmd4LdY9kLz+OfU/r9w4cKE4Sdv/lV9Kng1A4MR/TBgfRBZoa5q1ODuUmV60UV2hM3fSiTfI1l1pxN8QudYmEG8du1dap6OZQstgSMIgBnFabdGRCw3GbNNHidw3Yi4GSoNeakkI+ubaXbgueOfc1JMDHfEt8Dizy2Oe1XQENltfUd+OhejI5RjeClxPt7FIvIfSXYb3VJCyGxH/pb2pXzYl+xAhfDVPE6ZrCsN//ZuJiqbOu6mTi+/aUM6Z+wdifkXsHq4ogEiI0YNDoxwYlz4Ei7aRtsP8+c9obK4ZA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=amd.com; dmarc=pass action=none header.from=amd.com; dkim=pass
- header.d=amd.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=wH2Td+bpfpPBp4FWtEUIwI3NnE0iwbP8rsdI35AuujY=;
- b=Yg0vkWf4GfSuu4e0TV3e7e175jerPC5VAN7FPW0zQPW7roF2rFzaLbjIqj7uJiu2umIRppEMWNPTfV4OL/50BGRhKQYMjA67D9b2LFOxTl08NMnoB8zts3pJw6NEE7aQ/iGvMXWG7Of+r+oF7W8QFZQOOtTMpZHzAUpNFJsqEGY=
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=amd.com;
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com (2603:10b6:303:2c::19)
- by DM4PR12MB7670.namprd12.prod.outlook.com (2603:10b6:8:105::16) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6134.30; Tue, 28 Feb
- 2023 22:31:14 +0000
-Received: from MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::3490:de56:de08:46f6]) by MW3PR12MB4553.namprd12.prod.outlook.com
- ([fe80::3490:de56:de08:46f6%8]) with mapi id 15.20.6134.030; Tue, 28 Feb 2023
- 22:31:13 +0000
-Message-ID: <11be067e-8d42-e10c-342c-4224ea546130@amd.com>
-Date: Tue, 28 Feb 2023 16:31:09 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.5.0
-Reply-To: babu.moger@amd.com
-Subject: Re: [PATCH 7/7] x86/resctrl: Determine if Sub-NUMA Cluster is enabled
- and initialize.
-Content-Language: en-US
-To: "Luck, Tony" <tony.luck@intel.com>,
- "babu.moger@amd.com" <babu.moger@amd.com>, "Yu, Fenghua"
- <fenghua.yu@intel.com>, "Chatre, Reinette" <reinette.chatre@intel.com>,
- Peter Newman <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>,
- "x86@kernel.org" <x86@kernel.org>
-Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>, James Morse
- <james.morse@arm.com>, Jamie Iles <quic_jiles@quicinc.com>,
- "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
- "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
- "patches@lists.linux.dev" <patches@lists.linux.dev>
-References: <20230126184157.27626-1-tony.luck@intel.com>
- <20230126184157.27626-8-tony.luck@intel.com>
- <85d7e70a-b9c8-6551-b1ac-229b51ee18d7@amd.com>
- <SJ1PR11MB60837729155ACDEB1C093DCFFCAC9@SJ1PR11MB6083.namprd11.prod.outlook.com>
-From: "Moger, Babu" <bmoger@amd.com>
-In-Reply-To: <SJ1PR11MB60837729155ACDEB1C093DCFFCAC9@SJ1PR11MB6083.namprd11.prod.outlook.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: CH0P223CA0003.NAMP223.PROD.OUTLOOK.COM
- (2603:10b6:610:116::15) To MW3PR12MB4553.namprd12.prod.outlook.com
- (2603:10b6:303:2c::19)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E4C2A7F0
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 02:01:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+  t=1677636071; x=1709172071;
+  h=from:to:cc:subject:date:message-id:in-reply-to:
+   references:mime-version:content-transfer-encoding;
+  bh=HpxabiM1acdSdwfWAu6jEfJlRvw6++g6eFsBCHiaOiM=;
+  b=bHlEysnrn/BYsuAitP5DOf+MZohNKhKfkEarupgTh4+guSOg033WFYtz
+   kS+dYcMu6GUab24iALPaOfsn3VDqtUTlTAKDoY+F8Rd5ttlhoOZO0S10J
+   luRlAxv5Osq7pURrIscJrdZss4rYA0ry5OB9uYxro8r7izb+FDl5aIp4v
+   rxVb9tRc7xwEymoepRELtxbEbyTO6QzLzzWS/OWS1L/+UNSzHtVl3lb2m
+   pemgAVWs2ltSA9N0epkS84K9nKoFdX5Qtc56jm6TBU03wyoB3AKmPSvDY
+   oxtX894W2P+K3NFFMkC2GhdVjdVwXV2Oueav7Ajq69qt8eTx8+YIOxXrk
+   A==;
+X-IronPort-AV: E=McAfee;i="6500,9779,10635"; a="420558400"
+X-IronPort-AV: E=Sophos;i="5.98,223,1673942400"; 
+   d="scan'208";a="420558400"
+Received: from orsmga008.jf.intel.com ([10.7.209.65])
+  by fmsmga105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2023 18:01:10 -0800
+X-IronPort-AV: E=McAfee;i="6500,9779,10635"; a="704639930"
+X-IronPort-AV: E=Sophos;i="5.98,223,1673942400"; 
+   d="scan'208";a="704639930"
+Received: from jithujos.sc.intel.com ([172.25.103.66])
+  by orsmga008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 28 Feb 2023 18:01:09 -0800
+From: Jithu Joseph <jithu.joseph@intel.com>
+To: hdegoede@redhat.com,
+	markgross@kernel.org
+Cc: tglx@linutronix.de,
+	mingo@redhat.com,
+	bp@alien8.de,
+	dave.hansen@linux.intel.com,
+	x86@kernel.org,
+	hpa@zytor.com,
+	gregkh@linuxfoundation.org,
+	rostedt@goodmis.org,
+	jithu.joseph@intel.com,
+	ashok.raj@intel.com,
+	tony.luck@intel.com,
+	linux-kernel@vger.kernel.org,
+	platform-driver-x86@vger.kernel.org,
+	patches@lists.linux.dev,
+	ravi.v.shankar@intel.com,
+	thiago.macieira@intel.com,
+	athenas.jimenez.gonzalez@intel.com,
+	sohil.mehta@intel.com
+Subject: [PATCH v3 0/8] Add Array BIST test support to IFS
+Date: Tue, 28 Feb 2023 17:59:34 -0800
+Message-Id: <20230301015942.462799-1-jithu.joseph@intel.com>
+X-Mailer: git-send-email 2.25.1
+In-Reply-To: <20230214234426.344960-1-jithu.joseph@intel.com>
+References: <20230214234426.344960-1-jithu.joseph@intel.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MW3PR12MB4553:EE_|DM4PR12MB7670:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8d98ed65-18b4-430b-c5d2-08db19db7f99
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info:
-	Mq+LANXa6DL34VgRPhN9D3arW0C81BR5S/uzF3yubkJxVqkC0kT+MAOmTGJApLYBsY8t2vmXAmYtR34Njpcu/WbtZsoQpcFAAQkRa7JxLirYMvjIrFbk++gQW6iOBUfJe7sZpoPbyS64hB46PyNa2dZDGqsSruQ72FPBtGS9iwN2NqeTUdWmQGVgurcttmnJm317mHHALrEZJdczxeX9mI1rUVcle0Q36lnxbFNMcm7Ufelz1fFXgPgOeBXMEyJGQuf7ecl5M+owhYFtTVCtKmp/PishYirmUxmucmW/ORHQMru9tDRVquu1Z9YQXK4ZrSOGLL9noGzXreamFv9WcR0eBVgO1nn0JZcf29jJttwktuF616Lg2/H+avaTj4ImUBZLxnM5/8VP2HVcaTCEd+iH7pX6dedfTUDowLglfjcA8Y1d9n1JGjyFhdY4daAmnS7Ub6yr9+qN9gARxzdaOQH174YONt/i4PsvM5AaPsaa4TyWAkXOKHY4Gh5YGMLFAJocebMuVxixw/G+CZl4EUvC/qM4hnh3q1EN4kSPN0+Aw9ULCDiMU8TyXr0EJ+h4nhYb0Z1JPbjD/UIWZL+3o+th1qWnn/Zs18i1TTthQLSiqfL5PXi9l/zl4AJqT/ZmyuDtOfL1Se3r594KTZSRfOlyfOWy9FIn8rF+magZSV7O0+Vh/WTRGv4vJ3xSde4GJCMH1N6qNiiUPZlglhD9AjqDjQZ4WxWna3BHq2Bd0in2KYH7wrB2sWdQFzlWic6b
-X-Forefront-Antispam-Report:
-	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MW3PR12MB4553.namprd12.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(4636009)(376002)(39860400002)(366004)(346002)(136003)(396003)(451199018)(31686004)(36756003)(66946007)(66476007)(66556008)(7416002)(41300700001)(5660300002)(8936002)(8676002)(31696002)(2906002)(4744005)(921005)(4326008)(38100700002)(6666004)(6486002)(54906003)(478600001)(316002)(110136005)(186003)(83380400001)(2616005)(26005)(6506007)(53546011)(6512007)(43740500002)(45980500001);DIR:OUT;SFP:1101;
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0:
-	=?utf-8?B?UTdrckt6ZkRuZldKNCtsMzF3UjZtMUlIcTZMNlhCYVlLcUkwR3gzYjZDTklH?=
- =?utf-8?B?TjlGWFlzVE5hcjduWDlFbkgyZmlSOXRrcEtMakUzcVViLzF2NUFXV3p2TmVk?=
- =?utf-8?B?ajBoMUtFZlM1WDdUaml3V0JzSUhsMFQxR1JIeHdtZnY2dWV4MXdndVluSmQ0?=
- =?utf-8?B?MEkvYzV4WXo5YzVWUVlzYzdIaXg2SWh3SzFGczJaQlkxQ3QxU0k2czR3K0xR?=
- =?utf-8?B?MTlKbXA3VEtSbWltUmhaZ2Rkajd3dWpwMmRNa1FDSE9IcnJnRk4yMENVK3Bl?=
- =?utf-8?B?VkNlVzBscWVMbTFMQ3FaM0xYTVhJWXUrNThJSW9rSWFldXN2V1pKSWtuR25n?=
- =?utf-8?B?TEl1VU5LRk5CM3ZnMkdYblFZYUF5dnRiZlR6QUZ4WGM3OTBaR3ViaXVoUlpY?=
- =?utf-8?B?SmVGRkszZC81YWQzb2JOY0lrRWNDYVlVUGVNMFAzT0U0NW5sWis2TzUyVUVq?=
- =?utf-8?B?cEc1ZGlJVjc3K1g5TEN1TUw2b3BDaVIyS3Y4Mk9DUERNcCtsQU1HUlB2U3k2?=
- =?utf-8?B?TmNHZUVUUkZoN3RpZW51RHQ2bGl6aENwNXM3R01UMm1ZRkNRTHYyUlVjLzdw?=
- =?utf-8?B?eXlLYmQzbzFyQ1F1ZDRtOHFaeVpjYUFIZ2trY3kxV3Y1dVQwakZucWg3cHFL?=
- =?utf-8?B?QnBPa0tFbW9WcWlSV0RNN3I3NDdzYkVhNkRmaUpxMnNkODN5QkUrU1MxM2Fs?=
- =?utf-8?B?U0pheFgzYlhhNWxaZWdac1BxbElZbXR3Y05MaTBoUUpaVi9zTHVRdlgvRHlZ?=
- =?utf-8?B?UXBRRkErTjJIRU1ET1o5MmtNVHp6SWZBaldkSlVOSk9BUHJ1Q2d1UUpBY2NC?=
- =?utf-8?B?QitVdnFpWUpzNlhKNFhXKytMbXZVWWZtSUcwMjlXb2pqdkhnNlVPTURzWVUx?=
- =?utf-8?B?WUErbUM2Tzc2Vnd2K1MzbE1TS0p6dnloNXNSOERvbVFUd1BxRm9XK0FNQ3E1?=
- =?utf-8?B?NzNRY1l0T3FTQlJLS1M1dFpxbEJNRnFSRExzaE9kL3dIaERNZ3BVcUlTbTFh?=
- =?utf-8?B?TzNoNzZaL1IvOFpvUDNScnNhazY0ZXBXelVxTlBmaVQ4TVJXU1ZBazdMQzdB?=
- =?utf-8?B?TkdOV1M2Y1FPSDkveHFjTmg4MHJOdWU3dlg4akt2Yjc4YkxWbHByVEN0NjJy?=
- =?utf-8?B?aVFzNDFtVXZOd0ZpbVZTMUpmTnc2TVduVHB2eUg5UHhJSG1yRXJPVEVSdW1S?=
- =?utf-8?B?bkNqZzNqc0V3Sk5BZGdxNmUwTVVValcwZFRhTGIyZ1dGdEdZQzhZc3FoM2dz?=
- =?utf-8?B?M1MxLzhDZHFZbDFPcnRKSUNSa0ZKUFA2Z2R4OUxDSU5HbEFwMFFQQ0ZPaTNP?=
- =?utf-8?B?SHU1YmJtbExWTS9KQm10TVBYaU52M093ZnJLUVVOdmYwWnJQRnRRaFlLeVdW?=
- =?utf-8?B?WDFEMGxpWHJ6NGdZOUwvOGl3VVJZQko5TXBYakJLUmcrSDA3UEhrT0VlRnFm?=
- =?utf-8?B?MUZQOFF1S0VRUnJRblh6U3RNcGowN3hOSUY4Unl1b1RZTGdwY21NK0E5SWpN?=
- =?utf-8?B?KzIwTUxNTjBYK05Kak5vQzBOMFl4UC8yMHl4bVFMWFFRQlVSRkhMQXp5bCt4?=
- =?utf-8?B?WDhUYUNJTFZJUzQyR3Vlc3ZlbWtpMURSdC9CcTl1dHlTbkdNY3dLbk82ellr?=
- =?utf-8?B?c2lPSDNkSVZuYzdmSHJ6d25KcVFaNHhQa3BMMWh1cHp5U0w4QVBPMUQrV29m?=
- =?utf-8?B?U0FuSTFQeU5ieEV4VVVNdjlWb09wM0xDcGFPUXRrRlJrWll2R09sY0wzWnB6?=
- =?utf-8?B?VFVJTERiQ0E0anFsc1VhZ2xYS3BVMzViZW82SlY2SzRKL00xVGVJZysydTRj?=
- =?utf-8?B?Nmlmc3hmNWhkK0NyVzFCcVVyTFJ3TWp1UVpNMVczQm00UmdnTU92Y2tjUXVx?=
- =?utf-8?B?UFlqeFg4WW5kcWpRaER1WmMrRHF4WEl6V3M4aDJRRklzeEQwL3RUMWYxcWhw?=
- =?utf-8?B?OVI4U3FDWVkrWTZCTW80c3FncStrRDZZT2dUenkyUDNBc3hjZnY1bE9ITTRR?=
- =?utf-8?B?N1NKOXAwMXJsV1FrWGxTWlpzL1dqR05kY2xsdTdPY25PNEl0WGFrUDFZZnJK?=
- =?utf-8?B?SFJOQnREUWVSK2ZydlNuOVhQc29IaVlJQjNwTDhNVVZHYStXWTBRT0NlZFJH?=
- =?utf-8?Q?0Re6tpsLDG00o9reUKqetLcwR?=
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8d98ed65-18b4-430b-c5d2-08db19db7f99
-X-MS-Exchange-CrossTenant-AuthSource: MW3PR12MB4553.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 28 Feb 2023 22:31:13.4407
- (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: K1qp9BO1+MyfBNoTFY/r+Z9aqTnJgg04hhFTYRpLKP6rSsa5+bEi0qdmo50Pyt7E
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB7670
+Content-Transfer-Encoding: 8bit
 
+Changes in v3
+ - GregKH 
+    -  Separating read-only fields from rw fields in
+       struct ifs_device (patch 1/8)
+    -  Remove the subdirectory intel_ifs/<n> for devicenode (patch 2/8)
+    -  Replaced an enum with #define (patch 4/8)
+ - Dave Hansen
+    - Remove tracing patch
+    - ifs_array_test_core() (patch 6/8)
+        - fix an initialization bug
+        - other suggested changes
+    - Use basic types in ifs_array for first two fields. (kept
+      the union to avoid type castings)
 
-On 2/28/2023 2:39 PM, Luck, Tony wrote:
-> Babu wrote:
->> I am thinking loud here. Have you thought of addressing this problem?
->> When a new monitor group is created, new RMID is assigned. This is done by alloc_rmid. It does not know about the rmid_offset details. This will allocate the one of the free RMIDs.
->> When CPUs are assigned to the group, then per cpu  pqr_state is updated. At that point, this RMID becomes default_rmid for that cpu.
-> Good point. This is a gap. I haven't handled assigning CPUs to resctrl groups when SNC is enabled.
+v2 submission:
+Link: https://lore.kernel.org/lkml/20230214234426.344960-1-jithu.joseph@intel.com/
 
-You may need to document it.
+Changes in v2
+ - remove duplicate initializations from ifs_array_test_core()
+   (Dave Hansen, patch 4/7)
+ - remove bit parsing from tracing fast path to tracing 
+   output (Steven Rostedt, patch 5/7)
+ - move "ATTRIBUTE_GROUPS(plat_ifs_array)" to core.c and remove
+   exporting function ifs_get_array_groups() (Greg KH, patch 3/7)
+ - Generalized doc and ABI doc (Greg KH, patches 6/7 and 7/7)
 
-Thanks
+v1 submission:
+Link: https://lore.kernel.org/lkml/20230131234302.3997223-1-jithu.joseph@intel.com/
 
-Babu
+Array BIST is a new type of core test introduced under the Intel Infield
+Scan (IFS) suite of tests.
+
+Emerald Rapids (EMR) is the first CPU to support Array BIST.
+Array BIST performs tests on some portions of the core logic such as
+caches and register files. These are different portions of the silicon
+compared to the parts tested by Scan at Field (SAF).
+
+Unlike SAF, Array BIST doesn't require any test content to be loaded.
+
+Jithu Joseph (8):
+  platform/x86/intel/ifs: Reorganize driver data
+  platform/x86/intel/ifs: IFS cleanup
+  x86/include/asm/msr-index.h: Add IFS Array test bits
+  platform/x86/intel/ifs: Introduce Array Scan test to IFS
+  platform/x86/intel/ifs: Sysfs interface for Array BIST
+  platform/x86/intel/ifs: Implement Array BIST test
+  platform/x86/intel/ifs: Update IFS doc
+  Documentation/ABI: Update IFS ABI doc
+
+ arch/x86/include/asm/msr-index.h              |  2 +
+ drivers/platform/x86/intel/ifs/ifs.h          | 62 +++++++++----
+ drivers/platform/x86/intel/ifs/core.c         | 92 ++++++++++++++-----
+ drivers/platform/x86/intel/ifs/load.c         |  8 +-
+ drivers/platform/x86/intel/ifs/runtest.c      | 91 +++++++++++++++++-
+ drivers/platform/x86/intel/ifs/sysfs.c        | 17 ++--
+ .../ABI/testing/sysfs-platform-intel-ifs      |  8 +-
+ 7 files changed, 221 insertions(+), 59 deletions(-)
+
+-- 
+2.25.1
 
