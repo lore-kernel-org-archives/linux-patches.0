@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9DAA0847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:07:49 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2697FC433AF;
-	Wed,  1 Mar 2023 18:07:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6085D847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:07:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D9416C433A1;
+	Wed,  1 Mar 2023 18:07:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694069;
-	bh=fML4Bsj97FBCWZenn6eZbnOIZ6XKRbVET63UOWWhLyE=;
+	s=korg; t=1677694072;
+	bh=DwLlw4b4LQBIKKrLUvIbqBC36a1MFqTGVEpMyAsyjd8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ucctn8r9F7mxlv4wEVBvgchaQUpjeMPuctg1HDEE9HLx+c5CgJgWACjBoZJZS+p36
-	 QAdbWYVyaNRFTFvozs8N0DXsmOdfDTCsCBzYnepTm6W4LH2/vw8ZOqyykTbHFQQUsU
-	 hPFrjmJefryhv7oXEAlRjnQNzLRzXErdxc37pfDk=
+	b=1inid+YlQGwDECyj0S3cenPr7uxOlzq7nv7iD+kEY171G6JBzV0Yg7nRs3z7BzQdA
+	 uRsBCKtN3D2OegTypQJxAGgRcRulRHPaGoH24ffYPo7eOG3QAWbsrOGKsuxPq7i88G
+	 jlH13iN45UqwT1TrMpUw7gjP83myXh+pNbip0znk=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Florian Zumbiehl <florz@florz.de>,
-	Johan Hovold <johan@kernel.org>
-Subject: [PATCH 4.19 8/9] USB: serial: option: add support for VW/Skoda "Carstick LTE"
-Date: Wed,  1 Mar 2023 19:07:24 +0100
-Message-Id: <20230301180650.708764239@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Troels Liebe Bentsen <troels@connectedcars.dk>
+Subject: [PATCH 4.19 9/9] USB: core: Dont hold device lock while reading the "descriptors" sysfs file
+Date: Wed,  1 Mar 2023 19:07:25 +0100
+Message-Id: <20230301180650.738792536@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180650.395562988@linuxfoundation.org>
 References: <20230301180650.395562988@linuxfoundation.org>
@@ -34,52 +34,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Florian Zumbiehl <florz@florz.de>
+From: Alan Stern <stern@rowland.harvard.edu>
 
-commit 617c331d91077f896111044628c096802551dc66 upstream.
+commit 45bf39f8df7f05efb83b302c65ae3b9bc92b7065 upstream.
 
-Add support for VW/Skoda "Carstick LTE"
+Ever since commit 83e83ecb79a8 ("usb: core: get config and string
+descriptors for unauthorized devices") was merged in 2013, there has
+been no mechanism for reallocating the rawdescriptors buffers in
+struct usb_device after the initial enumeration.  Before that commit,
+the buffers would be deallocated when a device was deauthorized and
+reallocated when it was authorized and enumerated.
 
-D:  Ver= 2.00 Cls=00(>ifc ) Sub=00 Prot=00 MxPS=64 #Cfgs=  1
-P:  Vendor=1c9e ProdID=7605 Rev=02.00
-S:  Manufacturer=USB Modem
-S:  Product=USB Modem
-C:  #Ifs= 4 Cfg#= 1 Atr=e0 MxPwr=500mA
-I:  If#=0x0 Alt= 0 #EPs= 2 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#=0x1 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#=0x2 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
-I:  If#=0x3 Alt= 0 #EPs= 3 Cls=ff(vend.) Sub=ff Prot=ff Driver=(none)
+This means that the locking in the read_descriptors() routine is not
+needed, since the buffers it reads will never be reallocated while the
+routine is running.  This locking can interfere with user programs
+trying to read a hub's descriptors via sysfs while new child devices
+of the hub are being initialized, since the hub is locked during this
+procedure.
 
-The stick has AT command interfaces on interfaces 1, 2, and 3, and does PPP
-on interface 3.
+Since the locking in read_descriptors() hasn't been needed for over
+nine years, we can remove it.
 
-Signed-off-by: Florian Zumbiehl <florz@florz.de>
-Cc: stable@vger.kernel.org
-Signed-off-by: Johan Hovold <johan@kernel.org>
+Reported-and-tested-by: Troels Liebe Bentsen <troels@connectedcars.dk>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+CC: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/Y9l+wDTRbuZABzsE@rowland.harvard.edu
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/serial/option.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ drivers/usb/core/hub.c   |    5 ++---
+ drivers/usb/core/sysfs.c |    5 -----
+ 2 files changed, 2 insertions(+), 8 deletions(-)
 
---- a/drivers/usb/serial/option.c
-+++ b/drivers/usb/serial/option.c
-@@ -402,6 +402,8 @@ static void option_instat_callback(struc
- #define LONGCHEER_VENDOR_ID			0x1c9e
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -2345,9 +2345,8 @@ static int usb_enumerate_device_otg(stru
+  * usb_enumerate_device - Read device configs/intfs/otg (usbcore-internal)
+  * @udev: newly addressed device (in ADDRESS state)
+  *
+- * This is only called by usb_new_device() and usb_authorize_device()
+- * and FIXME -- all comments that apply to them apply here wrt to
+- * environment.
++ * This is only called by usb_new_device() -- all comments that apply there
++ * apply here wrt to environment.
+  *
+  * If the device is WUSB and not authorized, we don't attempt to read
+  * the string descriptors, as they will be errored out by the device
+--- a/drivers/usb/core/sysfs.c
++++ b/drivers/usb/core/sysfs.c
+@@ -888,11 +888,7 @@ read_descriptors(struct file *filp, stru
+ 	size_t srclen, n;
+ 	int cfgno;
+ 	void *src;
+-	int retval;
  
- /* 4G Systems products */
-+/* This one was sold as the VW and Skoda "Carstick LTE" */
-+#define FOUR_G_SYSTEMS_PRODUCT_CARSTICK_LTE	0x7605
- /* This is the 4G XS Stick W14 a.k.a. Mobilcom Debitel Surf-Stick *
-  * It seems to contain a Qualcomm QSC6240/6290 chipset            */
- #define FOUR_G_SYSTEMS_PRODUCT_W14		0x9603
-@@ -1976,6 +1978,8 @@ static const struct usb_device_id option
- 	  .driver_info = RSVD(2) },
- 	{ USB_DEVICE(AIRPLUS_VENDOR_ID, AIRPLUS_PRODUCT_MCD650) },
- 	{ USB_DEVICE(TLAYTECH_VENDOR_ID, TLAYTECH_PRODUCT_TEU800) },
-+	{ USB_DEVICE(LONGCHEER_VENDOR_ID, FOUR_G_SYSTEMS_PRODUCT_CARSTICK_LTE),
-+	  .driver_info = RSVD(0) },
- 	{ USB_DEVICE(LONGCHEER_VENDOR_ID, FOUR_G_SYSTEMS_PRODUCT_W14),
- 	  .driver_info = NCTRL(0) | NCTRL(1) },
- 	{ USB_DEVICE(LONGCHEER_VENDOR_ID, FOUR_G_SYSTEMS_PRODUCT_W100),
+-	retval = usb_lock_device_interruptible(udev);
+-	if (retval < 0)
+-		return -EINTR;
+ 	/* The binary attribute begins with the device descriptor.
+ 	 * Following that are the raw descriptor entries for all the
+ 	 * configurations (config plus subsidiary descriptors).
+@@ -917,7 +913,6 @@ read_descriptors(struct file *filp, stru
+ 			off -= srclen;
+ 		}
+ 	}
+-	usb_unlock_device(udev);
+ 	return count - nleft;
+ }
+ 
 
 
