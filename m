@@ -1,66 +1,153 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C344C847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:09:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FDF1C433EF;
-	Wed,  1 Mar 2023 18:09:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5774C847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:09:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A9EABC433D2;
+	Wed,  1 Mar 2023 18:09:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694167;
-	bh=lHniOpzs4HdqPnBXOB8sQQfe0Waf7GG9+upik+/4H7M=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=KWY16IOpXBfTvvGcC5VENN9tqtbs9zdq8G5eeQbrxxsdrjR2EC5gDiILfRSYW5/ZJ
-	 ewp4nXtZzFrFU9qie3qCGaehCm7iZYJUPmbgIm6g/93/3U6GhYH0HjWlrzP3LvFUKY
-	 +fVpgrO0VoP5YSq8VPfFCBRjJNUyb2bneW/iygzs=
+	s=korg; t=1677694170;
+	bh=0skYakOmKGdaRdC9U5BM4vWbQIEgEKrv7NVrg6Y8nIg=;
+	h=From:To:Cc:Subject:Date:From;
+	b=RVvCI6vgdFIsEWeS1DqYmtioQTD3A/ZgTUhiH24fOj+9IbJzhPvJvM/+hNJ0vsPuq
+	 kmBRgyWYgQcKbrmXz5DIxh++P8WYyMT+WpyFr3tIb0WN+IvYh8dxmqn5lU6VOX9alw
+	 VaMTe87T51rH6Xn3z5T7IH+qWySOqZxJJVldHJ8M=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Sascha Hauer <s.hauer@pengutronix.de>,
-	Ping-Ke Shih <pkshih@realtek.com>,
-	Kalle Valo <kvalo@kernel.org>
-Subject: [PATCH 6.2 09/16] wifi: rtw88: usb: send Zero length packets if necessary
-Date: Wed,  1 Mar 2023 19:07:45 +0100
-Message-Id: <20230301180653.639532304@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 6.2 00/16] 6.2.2-rc1 review
+Date: Wed,  1 Mar 2023 19:07:36 +0100
+Message-Id: <20230301180653.263532453@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230301180653.263532453@linuxfoundation.org>
-References: <20230301180653.263532453@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.2-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-6.2.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 6.2.2-rc1
+X-KernelTest-Deadline: 2023-03-03T18:06+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Sascha Hauer <s.hauer@pengutronix.de>
+This is the start of the stable review cycle for the 6.2.2 release.
+There are 16 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit 07ce9fa6ab0e5e4cb5516a1f7c754ab2758fe5cd upstream.
+Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
+Anything received after that time might be too late.
 
-Zero length packets are necessary when sending URBs with size
-multiple of bulkout_size, otherwise the hardware just stalls.
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.2-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.2.y
+and the diffstat can be found below.
 
-Fixes: a82dfd33d1237 ("wifi: rtw88: Add common USB chip support")
-Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
-Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230210111632.1985205-3-s.hauer@pengutronix.de
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- drivers/net/wireless/realtek/rtw88/usb.c |    1 +
- 1 file changed, 1 insertion(+)
+thanks,
 
---- a/drivers/net/wireless/realtek/rtw88/usb.c
-+++ b/drivers/net/wireless/realtek/rtw88/usb.c
-@@ -271,6 +271,7 @@ static int rtw_usb_write_port(struct rtw
- 		return -ENOMEM;
- 
- 	usb_fill_bulk_urb(urb, usbd, pipe, skb->data, skb->len, cb, context);
-+	urb->transfer_flags |= URB_ZERO_PACKET;
- 	ret = usb_submit_urb(urb, GFP_ATOMIC);
- 
- 	usb_free_urb(urb);
+greg k-h
+
+-------------
+Pseudo-Shortlog of commits:
+
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 6.2.2-rc1
+
+Alan Stern <stern@rowland.harvard.edu>
+    USB: core: Don't hold device lock while reading the "descriptors" sysfs file
+
+Saranya Gopal <saranya.gopal@intel.com>
+    usb: typec: pd: Remove usb_suspend_supported sysfs from sink PDO
+
+Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+    arm64: dts: uniphier: Fix property name in PXs3 USB node
+
+Prashanth K <quic_prashk@quicinc.com>
+    usb: gadget: u_serial: Add null pointer check in gserial_resume
+
+Florian Zumbiehl <florz@florz.de>
+    USB: serial: option: add support for VW/Skoda "Carstick LTE"
+
+Heikki Krogerus <heikki.krogerus@linux.intel.com>
+    usb: dwc3: pci: add support for the Intel Meteor Lake-M
+
+Sascha Hauer <s.hauer@pengutronix.de>
+    wifi: rtw88: usb: drop now unnecessary URB size check
+
+Sascha Hauer <s.hauer@pengutronix.de>
+    wifi: rtw88: usb: send Zero length packets if necessary
+
+Sascha Hauer <s.hauer@pengutronix.de>
+    wifi: rtw88: usb: Set qsel correctly
+
+Carlos Llamas <cmllamas@google.com>
+    scripts/tags.sh: fix incompatibility with PCRE2
+
+Stylon Wang <stylon.wang@amd.com>
+    drm/amd/display: Properly reuse completion structure
+
+Nicholas Kazlauskas <nicholas.kazlauskas@amd.com>
+    drm/amd/display: Move DCN314 DOMAIN power control to DMCUB
+
+Thomas Weißschuh <linux@weissschuh.net>
+    vc_screen: don't clobber return value in vcs_read
+
+Martin KaFai Lau <martin.lau@kernel.org>
+    bpf: bpf_fib_lookup should not return neigh in NUD_FAILED state
+
+Herbert Xu <herbert@gondor.apana.org.au>
+    crypto: arm64/sm4-gcm - Fix possible crash in GCM cryption
+
+Vitaly Rodionov <vitalyr@opensource.cirrus.com>
+    ALSA: hda: cs35l41: Correct error condition handling
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                           |  4 +-
+ .../dts/socionext/uniphier-pxs3-ref-gadget0.dts    |  2 +-
+ .../dts/socionext/uniphier-pxs3-ref-gadget1.dts    |  2 +-
+ arch/arm64/crypto/sm4-ce-gcm-glue.c                | 51 +++++++++++-----------
+ drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c  |  3 ++
+ .../gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.c   | 24 ++++++++++
+ .../gpu/drm/amd/display/dc/dcn314/dcn314_hwseq.h   |  2 +
+ .../gpu/drm/amd/display/dc/dcn314/dcn314_init.c    |  2 +-
+ drivers/gpu/drm/amd/display/dmub/inc/dmub_cmd.h    | 25 +++++++++++
+ drivers/net/wireless/realtek/rtw88/usb.c           | 18 ++------
+ drivers/tty/vt/vc_screen.c                         |  7 +--
+ drivers/usb/core/hub.c                             |  5 +--
+ drivers/usb/core/sysfs.c                           |  5 ---
+ drivers/usb/dwc3/dwc3-pci.c                        |  4 ++
+ drivers/usb/gadget/function/u_serial.c             | 23 ++++++++--
+ drivers/usb/serial/option.c                        |  4 ++
+ drivers/usb/typec/pd.c                             |  1 -
+ net/core/filter.c                                  |  4 +-
+ scripts/tags.sh                                    |  2 +-
+ sound/pci/hda/hda_cs_dsp_ctl.c                     |  4 +-
+ 20 files changed, 125 insertions(+), 67 deletions(-)
 
 
