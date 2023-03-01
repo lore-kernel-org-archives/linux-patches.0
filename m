@@ -1,163 +1,87 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6C2F7847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:10:01 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2D52C433D2;
-	Wed,  1 Mar 2023 18:10:00 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 13A558484
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:10:04 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 90437C433A7;
+	Wed,  1 Mar 2023 18:10:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694201;
-	bh=phJJOaIMrRBvJAMZkjNY1dHfdR84It1s0uty7i2sixs=;
-	h=From:To:Cc:Subject:Date:From;
-	b=YIxhg4lpCElNIiMhZBaPYotTQz4ZEThY/Q7Hp9TTzi5xTT1L8P5cQIZyOECbouRRX
-	 lZAvDU4vbfTBW6Y7TSEwBYvFU+OLHuBmOPPgC3YkBQUcjIEm5tnFJpB8VzTClk/pgT
-	 Oj/ZraBzXedS3D5Y8oxeI9TXIbjiV/M3NZ2OCdTI=
+	s=korg; t=1677694203;
+	bh=/tqhBr78bcSui9bM1khBVdsrHGX3cKbNcIv3aXYs4sc=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=UN3+PFykBMi6fhsvbFmltYGJpHXttZNFh1WarPNZcdV4na95XHQAlQr50o2Bo8J6l
+	 ftAnEGLIHi4uu0ocgOvq0Xb1BHF7teGO+poDNKRWK4SciLF3lAyBuzrRnl1BybPttM
+	 vv0QDVVf2cOWnytxjwQAaAaDl3jrle/xG4n2ouq8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 5.10 00/19] 5.10.171-rc1 review
-Date: Wed,  1 Mar 2023 19:08:29 +0100
-Message-Id: <20230301180652.316428563@linuxfoundation.org>
+	Storm Dragon <stormdragon2976@gmail.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.10 11/19] vc_screen: dont clobber return value in vcs_read
+Date: Wed,  1 Mar 2023 19:08:40 +0100
+Message-Id: <20230301180652.795627238@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230301180652.316428563@linuxfoundation.org>
+References: <20230301180652.316428563@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.171-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.10.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.10.171-rc1
-X-KernelTest-Deadline: 2023-03-03T18:06+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.10.171 release.
-There are 19 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
-Anything received after that time might be too late.
+commit ae3419fbac845b4d3f3a9fae4cc80c68d82cdf6e upstream.
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.10.171-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.10.y
-and the diffstat can be found below.
+Commit 226fae124b2d ("vc_screen: move load of struct vc_data pointer in
+vcs_read() to avoid UAF") moved the call to vcs_vc() into the loop.
 
-thanks,
+While doing this it also moved the unconditional assignment of
 
-greg k-h
+	ret = -ENXIO;
 
--------------
-Pseudo-Shortlog of commits:
+This unconditional assignment was valid outside the loop but within it
+it clobbers the actual value of ret.
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.10.171-rc1
+To avoid this only assign "ret = -ENXIO" when actually needed.
 
-Alan Stern <stern@rowland.harvard.edu>
-    USB: core: Don't hold device lock while reading the "descriptors" sysfs file
+[ Also, the 'goto unlock_out" needs to be just a "break", so that it
+  does the right thing when it exits on later iterations when partial
+  success has happened - Linus ]
 
-Prashanth K <quic_prashk@quicinc.com>
-    usb: gadget: u_serial: Add null pointer check in gserial_resume
+Reported-by: Storm Dragon <stormdragon2976@gmail.com>
+Link: https://lore.kernel.org/lkml/Y%2FKS6vdql2pIsCiI@hotmail.com/
+Fixes: 226fae124b2d ("vc_screen: move load of struct vc_data pointer in vcs_read() to avoid UAF")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lore.kernel.org/lkml/64981d94-d00c-4b31-9063-43ad0a384bde@t-8ch.de/
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/tty/vt/vc_screen.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-Florian Zumbiehl <florz@florz.de>
-    USB: serial: option: add support for VW/Skoda "Carstick LTE"
-
-Dmitry Osipenko <dmitry.osipenko@collabora.com>
-    drm/virtio: Correct drm_gem_shmem_get_sg_table() error handling
-
-Miaoqian Lin <linmq006@gmail.com>
-    drm/virtio: Fix NULL vs IS_ERR checking in virtio_gpu_object_shmem_init
-
-Carlos Llamas <cmllamas@google.com>
-    scripts/tags.sh: fix incompatibility with PCRE2
-
-Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-    scripts/tags.sh: Invoke 'realpath' via 'xargs'
-
-David Sloan <david.sloan@eideticom.com>
-    md: Flush workqueue md_rdev_misc_wq in md_alloc()
-
-Thomas Weißschuh <linux@weissschuh.net>
-    vc_screen: don't clobber return value in vcs_read
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    net: Remove WARN_ON_ONCE(sk->sk_forward_alloc) from sk_stream_kill_queues().
-
-Martin KaFai Lau <martin.lau@kernel.org>
-    bpf: bpf_fib_lookup should not return neigh in NUD_FAILED state
-
-Xin Zhao <xnzhao@google.com>
-    HID: core: Fix deadloop in hid_apply_multiplier.
-
-Julian Anastasov <ja@ssi.bg>
-    neigh: make sure used and confirmed times are valid
-
-Dean Luick <dean.luick@cornelisnetworks.com>
-    IB/hfi1: Assign npages earlier
-
-David Sterba <dsterba@suse.com>
-    btrfs: send: limit number of clones and allocated memory size
-
-Vishal Verma <vishal.l.verma@intel.com>
-    ACPI: NFIT: fix a potential deadlock during NFIT teardown
-
-Johan Jonker <jbx6244@gmail.com>
-    ARM: dts: rockchip: add power-domains property to dp node on rk3288
-
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-    arm64: dts: rockchip: drop unused LED mode property from rk3328-roc-cc
-
-Benedict Wong <benedictwong@google.com>
-    Fix XFRM-I support for nested ESP tunnels
-
-
--------------
-
-Diffstat:
-
- Makefile                                       |  4 +-
- arch/arm/boot/dts/rk3288.dtsi                  |  1 +
- arch/arm64/boot/dts/rockchip/rk3328-roc-cc.dts |  2 -
- drivers/acpi/nfit/core.c                       |  2 +-
- drivers/gpu/drm/virtio/virtgpu_object.c        |  5 ++-
- drivers/hid/hid-core.c                         |  3 ++
- drivers/infiniband/hw/hfi1/user_exp_rcv.c      |  9 +----
- drivers/md/md.c                                |  1 +
- drivers/tty/vt/vc_screen.c                     |  7 ++--
- drivers/usb/core/hub.c                         |  5 +--
- drivers/usb/core/sysfs.c                       |  5 ---
- drivers/usb/gadget/function/u_serial.c         | 23 +++++++++--
- drivers/usb/serial/option.c                    |  4 ++
- fs/btrfs/send.c                                |  6 +--
- net/caif/caif_socket.c                         |  1 +
- net/core/filter.c                              |  4 +-
- net/core/neighbour.c                           | 18 +++++++--
- net/core/stream.c                              |  1 -
- net/xfrm/xfrm_interface.c                      | 54 ++++++++++++++++++++++++--
- net/xfrm/xfrm_policy.c                         |  3 ++
- scripts/tags.sh                                | 11 ++++--
- 21 files changed, 123 insertions(+), 46 deletions(-)
+--- a/drivers/tty/vt/vc_screen.c
++++ b/drivers/tty/vt/vc_screen.c
+@@ -403,10 +403,11 @@ vcs_read(struct file *file, char __user
+ 		unsigned int this_round, skip = 0;
+ 		int size;
+ 
+-		ret = -ENXIO;
+ 		vc = vcs_vc(inode, &viewed);
+-		if (!vc)
+-			goto unlock_out;
++		if (!vc) {
++			ret = -ENXIO;
++			break;
++		}
+ 
+ 		/* Check whether we are above size each round,
+ 		 * as copy_to_user at the end of this loop
 
 
