@@ -1,26 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BC87F847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:12:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 42B43C433D2;
-	Wed,  1 Mar 2023 18:12:56 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 58E04847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:12:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D5038C433EF;
+	Wed,  1 Mar 2023 18:12:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694376;
-	bh=H+vbaKlF3niASkEneadwpflGYI2XXmOl/UHe6nopHvM=;
+	s=korg; t=1677694379;
+	bh=/tqhBr78bcSui9bM1khBVdsrHGX3cKbNcIv3aXYs4sc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=lU9Ikr99lrv56kxpG2+AsApnyUpIucf5dYYf8Io4W2OReutjoLuWBwf7DZesVEoai
-	 nfFrfJJvp8pFA56qNK1DWoKyi7TDo77lear/YEIZh0ts1uth4DqD76UXwJ3eknDIsE
-	 /0acGPmtIOZSkFyt5njWdIg3QCU2wYGopE7S8XbM=
+	b=hanxDi2od6dQB2P5KyUs1vovf5+iZRgGtpgOsZzn83L3/jwQPqZgAl81LLkEQ+du/
+	 OgSgAeYqtMsi/dW5prFpY+QkkAh+wfnmxOkblDJq+Syw/3QNTIC5qGd/OBkJOKRzc9
+	 f/ma0enObsjeBcYDIFTAqyFRth3pYkYwuGTC0920=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alan Stern <stern@rowland.harvard.edu>,
-	Troels Liebe Bentsen <troels@connectedcars.dk>
-Subject: [PATCH 6.1 42/42] USB: core: Dont hold device lock while reading the "descriptors" sysfs file
-Date: Wed,  1 Mar 2023 19:09:03 +0100
-Message-Id: <20230301180658.935092474@linuxfoundation.org>
+	Storm Dragon <stormdragon2976@gmail.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 6.1 27/42] vc_screen: dont clobber return value in vcs_read
+Date: Wed,  1 Mar 2023 19:08:48 +0100
+Message-Id: <20230301180658.267236713@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180657.003689969@linuxfoundation.org>
 References: <20230301180657.003689969@linuxfoundation.org>
@@ -34,72 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Alan Stern <stern@rowland.harvard.edu>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-commit 45bf39f8df7f05efb83b302c65ae3b9bc92b7065 upstream.
+commit ae3419fbac845b4d3f3a9fae4cc80c68d82cdf6e upstream.
 
-Ever since commit 83e83ecb79a8 ("usb: core: get config and string
-descriptors for unauthorized devices") was merged in 2013, there has
-been no mechanism for reallocating the rawdescriptors buffers in
-struct usb_device after the initial enumeration.  Before that commit,
-the buffers would be deallocated when a device was deauthorized and
-reallocated when it was authorized and enumerated.
+Commit 226fae124b2d ("vc_screen: move load of struct vc_data pointer in
+vcs_read() to avoid UAF") moved the call to vcs_vc() into the loop.
 
-This means that the locking in the read_descriptors() routine is not
-needed, since the buffers it reads will never be reallocated while the
-routine is running.  This locking can interfere with user programs
-trying to read a hub's descriptors via sysfs while new child devices
-of the hub are being initialized, since the hub is locked during this
-procedure.
+While doing this it also moved the unconditional assignment of
 
-Since the locking in read_descriptors() hasn't been needed for over
-nine years, we can remove it.
+	ret = -ENXIO;
 
-Reported-and-tested-by: Troels Liebe Bentsen <troels@connectedcars.dk>
-Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
-CC: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/Y9l+wDTRbuZABzsE@rowland.harvard.edu
+This unconditional assignment was valid outside the loop but within it
+it clobbers the actual value of ret.
+
+To avoid this only assign "ret = -ENXIO" when actually needed.
+
+[ Also, the 'goto unlock_out" needs to be just a "break", so that it
+  does the right thing when it exits on later iterations when partial
+  success has happened - Linus ]
+
+Reported-by: Storm Dragon <stormdragon2976@gmail.com>
+Link: https://lore.kernel.org/lkml/Y%2FKS6vdql2pIsCiI@hotmail.com/
+Fixes: 226fae124b2d ("vc_screen: move load of struct vc_data pointer in vcs_read() to avoid UAF")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lore.kernel.org/lkml/64981d94-d00c-4b31-9063-43ad0a384bde@t-8ch.de/
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/core/hub.c   |    5 ++---
- drivers/usb/core/sysfs.c |    5 -----
- 2 files changed, 2 insertions(+), 8 deletions(-)
+ drivers/tty/vt/vc_screen.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
---- a/drivers/usb/core/hub.c
-+++ b/drivers/usb/core/hub.c
-@@ -2389,9 +2389,8 @@ static int usb_enumerate_device_otg(stru
-  * usb_enumerate_device - Read device configs/intfs/otg (usbcore-internal)
-  * @udev: newly addressed device (in ADDRESS state)
-  *
-- * This is only called by usb_new_device() and usb_authorize_device()
-- * and FIXME -- all comments that apply to them apply here wrt to
-- * environment.
-+ * This is only called by usb_new_device() -- all comments that apply there
-+ * apply here wrt to environment.
-  *
-  * If the device is WUSB and not authorized, we don't attempt to read
-  * the string descriptors, as they will be errored out by the device
---- a/drivers/usb/core/sysfs.c
-+++ b/drivers/usb/core/sysfs.c
-@@ -868,11 +868,7 @@ read_descriptors(struct file *filp, stru
- 	size_t srclen, n;
- 	int cfgno;
- 	void *src;
--	int retval;
+--- a/drivers/tty/vt/vc_screen.c
++++ b/drivers/tty/vt/vc_screen.c
+@@ -403,10 +403,11 @@ vcs_read(struct file *file, char __user
+ 		unsigned int this_round, skip = 0;
+ 		int size;
  
--	retval = usb_lock_device_interruptible(udev);
--	if (retval < 0)
--		return -EINTR;
- 	/* The binary attribute begins with the device descriptor.
- 	 * Following that are the raw descriptor entries for all the
- 	 * configurations (config plus subsidiary descriptors).
-@@ -897,7 +893,6 @@ read_descriptors(struct file *filp, stru
- 			off -= srclen;
- 		}
- 	}
--	usb_unlock_device(udev);
- 	return count - nleft;
- }
+-		ret = -ENXIO;
+ 		vc = vcs_vc(inode, &viewed);
+-		if (!vc)
+-			goto unlock_out;
++		if (!vc) {
++			ret = -ENXIO;
++			break;
++		}
  
+ 		/* Check whether we are above size each round,
+ 		 * as copy_to_user at the end of this loop
 
 
