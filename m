@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C760847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:10:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69C9C433EF;
-	Wed,  1 Mar 2023 18:10:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68017847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:10:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E607EC433D2;
+	Wed,  1 Mar 2023 18:10:34 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694230;
-	bh=poIkIYgz/XPHmp8iv8kF/HMBQWJucD1pFg/cdPeqn9k=;
+	s=korg; t=1677694235;
+	bh=wOf9TsCuyj5000zw3qgyvwtH59ys6dWVyqhYx7gD7x8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ZUSdA2vZV8Sk65Ir8ZyvBHws8fNq95XsN62p8o4frYTwgihSLQPq8cfTEXyQ7VqM1
-	 0nvx14rNBgcdZPauga3liENdWH1+4EoECNnOrdrK7l7OF25X5TVn7ENS6VjHCOonqc
-	 aUph4IyL0r1Bm4Iv7Zmx4l7TxjVnwRgLk/z4CElg=
+	b=XbApUdSrdUM3kXWYrT/uX/h6UpAeYe+f9Ce8+f5mVtktguDW/h+qCLGNTvmOTuFau
+	 Ez+8CiN+L5qdOpfS4t2OJPXNEsjrFSZF6J+GDf1jY6dmJRq5qxSldXjCg0FK8rfqdd
+	 zsKP/SwHhkMRJ7ja7alYbVESCYxkvbPbvDs9NZGY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neel Patel <neel@pensando.io>,
-	Shannon Nelson <snelson@pensando.io>,
-	Jakub Kicinski <kuba@kernel.org>,
+	Xin Zhao <xnzhao@google.com>,
+	Benjamin Tissoires <benjamin.tissoires@redhat.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 01/22] ionic: refactor use of ionic_rx_fill()
-Date: Wed,  1 Mar 2023 19:08:34 +0100
-Message-Id: <20230301180652.716575022@linuxfoundation.org>
+Subject: [PATCH 5.15 11/22] HID: core: Fix deadloop in hid_apply_multiplier.
+Date: Wed,  1 Mar 2023 19:08:44 +0100
+Message-Id: <20230301180653.103314349@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180652.658125575@linuxfoundation.org>
 References: <20230301180652.658125575@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,93 +35,61 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Neel Patel <neel@pensando.io>
+From: Xin Zhao <xnzhao@google.com>
 
-[ Upstream commit e55f0f5befc26e2ba6bb8c1f945ea8e37ee0e334 ]
+[ Upstream commit ea427a222d8bdf2bc1a8a6da3ebe247f7dced70c ]
 
-The same pre-work code is used before each call to
-ionic_rx_fill(), so bring it in and make it a part of
-the routine.
+The initial value of hid->collection[].parent_idx if 0. When
+Report descriptor doesn't contain "HID Collection", the value
+remains as 0.
 
-Signed-off-by: Neel Patel <neel@pensando.io>
-Signed-off-by: Shannon Nelson <snelson@pensando.io>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+In the meanwhile, when the Report descriptor fullfill
+all following conditions, it will trigger hid_apply_multiplier
+function call.
+1. Usage page is Generic Desktop Ctrls (0x01)
+2. Usage is RESOLUTION_MULTIPLIER (0x48)
+3. Contain any FEATURE items
+
+The while loop in hid_apply_multiplier will search the top-most
+collection by searching parent_idx == -1. Because all parent_idx
+is 0. The loop will run forever.
+
+There is a Report Descriptor triggerring the deadloop
+0x05, 0x01,        // Usage Page (Generic Desktop Ctrls)
+0x09, 0x48,        // Usage (0x48)
+0x95, 0x01,        // Report Count (1)
+0x75, 0x08,        // Report Size (8)
+0xB1, 0x01,        // Feature
+
+Signed-off-by: Xin Zhao <xnzhao@google.com>
+Link: https://lore.kernel.org/r/20230130212947.1315941-1-xnzhao@google.com
+Signed-off-by: Benjamin Tissoires <benjamin.tissoires@redhat.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../net/ethernet/pensando/ionic/ionic_txrx.c  | 23 ++++++++++---------
- 1 file changed, 12 insertions(+), 11 deletions(-)
+ drivers/hid/hid-core.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-index 37c39581b6599..376f97b4008bb 100644
---- a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-+++ b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
-@@ -353,16 +353,25 @@ void ionic_rx_fill(struct ionic_queue *q)
- 	struct ionic_rxq_sg_desc *sg_desc;
- 	struct ionic_rxq_sg_elem *sg_elem;
- 	struct ionic_buf_info *buf_info;
-+	unsigned int fill_threshold;
- 	struct ionic_rxq_desc *desc;
- 	unsigned int remain_len;
- 	unsigned int frag_len;
- 	unsigned int nfrags;
-+	unsigned int n_fill;
- 	unsigned int i, j;
- 	unsigned int len;
+diff --git a/drivers/hid/hid-core.c b/drivers/hid/hid-core.c
+index 2e475bd426b84..f1ea883db5de1 100644
+--- a/drivers/hid/hid-core.c
++++ b/drivers/hid/hid-core.c
+@@ -1197,6 +1197,7 @@ int hid_open_report(struct hid_device *device)
+ 	__u8 *end;
+ 	__u8 *next;
+ 	int ret;
++	int i;
+ 	static int (*dispatch_type[])(struct hid_parser *parser,
+ 				      struct hid_item *item) = {
+ 		hid_parser_main,
+@@ -1247,6 +1248,8 @@ int hid_open_report(struct hid_device *device)
+ 		goto err;
+ 	}
+ 	device->collection_size = HID_DEFAULT_NUM_COLLECTIONS;
++	for (i = 0; i < HID_DEFAULT_NUM_COLLECTIONS; i++)
++		device->collection[i].parent_idx = -1;
  
-+	n_fill = ionic_q_space_avail(q);
-+
-+	fill_threshold = min_t(unsigned int, IONIC_RX_FILL_THRESHOLD,
-+			       q->num_descs / IONIC_RX_FILL_DIV);
-+	if (n_fill < fill_threshold)
-+		return;
-+
- 	len = netdev->mtu + ETH_HLEN + VLAN_HLEN;
- 
--	for (i = ionic_q_space_avail(q); i; i--) {
-+	for (i = n_fill; i; i--) {
- 		nfrags = 0;
- 		remain_len = len;
- 		desc_info = &q->info[q->head_idx];
-@@ -518,7 +527,6 @@ int ionic_rx_napi(struct napi_struct *napi, int budget)
- 	struct ionic_cq *cq = napi_to_cq(napi);
- 	struct ionic_dev *idev;
- 	struct ionic_lif *lif;
--	u16 rx_fill_threshold;
- 	u32 work_done = 0;
- 	u32 flags = 0;
- 
-@@ -528,10 +536,7 @@ int ionic_rx_napi(struct napi_struct *napi, int budget)
- 	work_done = ionic_cq_service(cq, budget,
- 				     ionic_rx_service, NULL, NULL);
- 
--	rx_fill_threshold = min_t(u16, IONIC_RX_FILL_THRESHOLD,
--				  cq->num_descs / IONIC_RX_FILL_DIV);
--	if (work_done && ionic_q_space_avail(cq->bound_q) >= rx_fill_threshold)
--		ionic_rx_fill(cq->bound_q);
-+	ionic_rx_fill(cq->bound_q);
- 
- 	if (work_done < budget && napi_complete_done(napi, work_done)) {
- 		ionic_dim_update(qcq, IONIC_LIF_F_RX_DIM_INTR);
-@@ -559,7 +564,6 @@ int ionic_txrx_napi(struct napi_struct *napi, int budget)
- 	struct ionic_dev *idev;
- 	struct ionic_lif *lif;
- 	struct ionic_cq *txcq;
--	u16 rx_fill_threshold;
- 	u32 rx_work_done = 0;
- 	u32 tx_work_done = 0;
- 	u32 flags = 0;
-@@ -574,10 +578,7 @@ int ionic_txrx_napi(struct napi_struct *napi, int budget)
- 	rx_work_done = ionic_cq_service(rxcq, budget,
- 					ionic_rx_service, NULL, NULL);
- 
--	rx_fill_threshold = min_t(u16, IONIC_RX_FILL_THRESHOLD,
--				  rxcq->num_descs / IONIC_RX_FILL_DIV);
--	if (rx_work_done && ionic_q_space_avail(rxcq->bound_q) >= rx_fill_threshold)
--		ionic_rx_fill(rxcq->bound_q);
-+	ionic_rx_fill(rxcq->bound_q);
- 
- 	if (rx_work_done < budget && napi_complete_done(napi, rx_work_done)) {
- 		ionic_dim_update(qcq, 0);
+ 	ret = -EINVAL;
+ 	while ((next = fetch_item(start, end, &item)) != NULL) {
 -- 
 2.39.0
 
