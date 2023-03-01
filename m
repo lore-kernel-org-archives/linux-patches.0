@@ -1,28 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1AD28847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:08:35 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 94265C433EF;
-	Wed,  1 Mar 2023 18:08:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8C58E847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:08:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1033EC433EF;
+	Wed,  1 Mar 2023 18:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694114;
-	bh=3JNDDvg5tsQKKBDKhiJr00I79u0u4R4dRhHn+KwCTjs=;
+	s=korg; t=1677694120;
+	bh=dv0rXzxGx+tHLqwQM1k2jsdEdWLMfiNmzPIck9iTSHs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q+UAxk9VpZcxNbufA2w9IHQgBm6WG8dMcDafcFmd/4XQSk5wG/SkVMBvE/46qKgDC
-	 tLd0dzwiMeptY7n7/tFFLNH65BD/N6+QsFpNyC8eaLvGqTacEMOGTBEhsvzUjf7k3Q
-	 CHbNtJwdvmFe7Xw3Qt4ljnjjpqIX3GV2bP9dqaKg=
+	b=0X6J9jrIzGp7Z0HA5YPHwDE/RG87k+iE1T47eau3ft1RTvlWjIqeGNWkk/ZzGTbqJ
+	 RfTL4D/rfTJp1pg8Z8cgTh33KH2r2YQ/qK4tFHOmW3hnrxBNXYz1BG51vBxdOOAKzx
+	 4tYC/Xo3hp6Udt0XQ9elX7dSUt/wI4aa0NOMr7M4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Zhang Changzhong <zhangchangzhong@huawei.com>,
-	Julian Anastasov <ja@ssi.bg>,
-	"David S. Miller" <davem@davemloft.net>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 06/13] neigh: make sure used and confirmed times are valid
-Date: Wed,  1 Mar 2023 19:07:29 +0100
-Message-Id: <20230301180651.388552494@linuxfoundation.org>
+	Martin KaFai Lau <martin.lau@kernel.org>,
+	Daniel Borkmann <daniel@iogearbox.net>
+Subject: [PATCH 5.4 08/13] bpf: bpf_fib_lookup should not return neigh in NUD_FAILED state
+Date: Wed,  1 Mar 2023 19:07:31 +0100
+Message-Id: <20230301180651.469757001@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180651.177668495@linuxfoundation.org>
 References: <20230301180651.177668495@linuxfoundation.org>
@@ -36,96 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Julian Anastasov <ja@ssi.bg>
+From: Martin KaFai Lau <martin.lau@kernel.org>
 
-[ Upstream commit c1d2ecdf5e38e3489ce8328238b558b3b2866fe1 ]
+commit 1fe4850b34ab512ff911e2c035c75fb6438f7307 upstream.
 
-Entries can linger in cache without timer for days, thanks to
-the gc_thresh1 limit. As result, without traffic, the confirmed
-time can be outdated and to appear to be in the future. Later,
-on traffic, NUD_STALE entries can switch to NUD_DELAY and start
-the timer which can see the invalid confirmed time and wrongly
-switch to NUD_REACHABLE state instead of NUD_PROBE. As result,
-timer is set many days in the future. This is more visible on
-32-bit platforms, with higher HZ value.
+The bpf_fib_lookup() helper does not only look up the fib (ie. route)
+but it also looks up the neigh. Before returning the neigh, the helper
+does not check for NUD_VALID. When a neigh state (neigh->nud_state)
+is in NUD_FAILED, its dmac (neigh->ha) could be all zeros. The helper
+still returns SUCCESS instead of NO_NEIGH in this case. Because of the
+SUCCESS return value, the bpf prog directly uses the returned dmac
+and ends up filling all zero in the eth header.
 
-Why this is a problem? While we expect unused entries to expire,
-such entries stay in REACHABLE state for too long, locked in
-cache. They are not expired normally, only when cache is full.
+This patch checks for NUD_VALID and returns NO_NEIGH if the neigh is
+not valid.
 
-Problem and the wrong state change reported by Zhang Changzhong:
-
-172.16.1.18 dev bond0 lladdr 0a:0e:0f:01:12:01 ref 1 used 350521/15994171/350520 probes 4 REACHABLE
-
-350520 seconds have elapsed since this entry was last updated, but it is
-still in the REACHABLE state (base_reachable_time_ms is 30000),
-preventing lladdr from being updated through probe.
-
-Fix it by ensuring timer is started with valid used/confirmed
-times. Considering the valid time range is LONG_MAX jiffies,
-we try not to go too much in the past while we are in
-DELAY/PROBE state. There are also places that need
-used/updated times to be validated while timer is not running.
-
-Reported-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Signed-off-by: Julian Anastasov <ja@ssi.bg>
-Tested-by: Zhang Changzhong <zhangchangzhong@huawei.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230217004150.2980689-3-martin.lau@linux.dev
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- net/core/neighbour.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+ net/core/filter.c |    4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/net/core/neighbour.c b/net/core/neighbour.c
-index 67820219e3b60..ed754217cd1cc 100644
---- a/net/core/neighbour.c
-+++ b/net/core/neighbour.c
-@@ -242,7 +242,7 @@ static int neigh_forced_gc(struct neigh_table *tbl)
- 			    (n->nud_state == NUD_NOARP) ||
- 			    (tbl->is_multicast &&
- 			     tbl->is_multicast(n->primary_key)) ||
--			    time_after(tref, n->updated))
-+			    !time_in_range(n->updated, tref, jiffies))
- 				remove = true;
- 			write_unlock(&n->lock);
+--- a/net/core/filter.c
++++ b/net/core/filter.c
+@@ -4732,7 +4732,7 @@ static int bpf_ipv4_fib_lookup(struct ne
+ 		neigh = __ipv6_neigh_lookup_noref_stub(dev, dst);
+ 	}
  
-@@ -262,7 +262,17 @@ static int neigh_forced_gc(struct neigh_table *tbl)
+-	if (!neigh)
++	if (!neigh || !(neigh->nud_state & NUD_VALID))
+ 		return BPF_FIB_LKUP_RET_NO_NEIGH;
  
- static void neigh_add_timer(struct neighbour *n, unsigned long when)
- {
-+	/* Use safe distance from the jiffies - LONG_MAX point while timer
-+	 * is running in DELAY/PROBE state but still show to user space
-+	 * large times in the past.
-+	 */
-+	unsigned long mint = jiffies - (LONG_MAX - 86400 * HZ);
-+
- 	neigh_hold(n);
-+	if (!time_in_range(n->confirmed, mint, jiffies))
-+		n->confirmed = mint;
-+	if (time_before(n->used, n->confirmed))
-+		n->used = n->confirmed;
- 	if (unlikely(mod_timer(&n->timer, when))) {
- 		printk("NEIGH: BUG, double timer add, state is %x\n",
- 		       n->nud_state);
-@@ -948,12 +958,14 @@ static void neigh_periodic_work(struct work_struct *work)
- 				goto next_elt;
- 			}
+ 	return bpf_fib_set_fwd_params(params, neigh, dev);
+@@ -4845,7 +4845,7 @@ static int bpf_ipv6_fib_lookup(struct ne
+ 	 * not needed here.
+ 	 */
+ 	neigh = __ipv6_neigh_lookup_noref_stub(dev, dst);
+-	if (!neigh)
++	if (!neigh || !(neigh->nud_state & NUD_VALID))
+ 		return BPF_FIB_LKUP_RET_NO_NEIGH;
  
--			if (time_before(n->used, n->confirmed))
-+			if (time_before(n->used, n->confirmed) &&
-+			    time_is_before_eq_jiffies(n->confirmed))
- 				n->used = n->confirmed;
- 
- 			if (refcount_read(&n->refcnt) == 1 &&
- 			    (state == NUD_FAILED ||
--			     time_after(jiffies, n->used + NEIGH_VAR(n->parms, GC_STALETIME)))) {
-+			     !time_in_range_open(jiffies, n->used,
-+						 n->used + NEIGH_VAR(n->parms, GC_STALETIME)))) {
- 				*np = n->next;
- 				neigh_mark_dead(n);
- 				write_unlock(&n->lock);
--- 
-2.39.0
-
+ 	return bpf_fib_set_fwd_params(params, neigh, dev);
 
 
