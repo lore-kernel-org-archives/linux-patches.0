@@ -1,27 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E022847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:12:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 222E0C433EF;
-	Wed,  1 Mar 2023 18:12:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5A298484
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:12:35 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4890AC4339B;
+	Wed,  1 Mar 2023 18:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694350;
-	bh=/zloXCJRxoVTnh5ZAKvTgJOmkQBS8OVbWKrLyxTz0RA=;
+	s=korg; t=1677694355;
+	bh=wIk939JfTlK97gArnMz3NgZeHDyDPfghPLluI13E4NM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TiKf/cHBRExwic/Vg/BLBFR/0//n5qH2/UmU5f3mWac5y9mg0TTPF6MooZMqZ3mwJ
-	 UBJNaCWX9Pf/6fJ0P9oP90WqHMgYBSY/u7jZfZBaS8GsqHVGGfhdyvVVpgVvZBfp6j
-	 Gk7ZgQAStHDAWotbEiWPj512KHmCfvOJUztips/A=
+	b=ZlVXLl9ikp0JsWJXgfY+0o5iO6BIN6KqJ+xD7B7DqDE1bWnCfS3JQEhUvxaapGrFq
+	 ScB+wjcRZ4Ti4gMJAu7RAbjhRsP/lwUm0w5OIKpU5LIWP/eRovAEw8gQSP/PdvIqUw
+	 P0i8laPHehUxKVlbMEl2Me9IDb121hy3Clq5gCZ4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Williams <dan.j.williams@intel.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 09/42] ACPI: NFIT: fix a potential deadlock during NFIT teardown
-Date: Wed,  1 Mar 2023 19:08:30 +0100
-Message-Id: <20230301180657.451155483@linuxfoundation.org>
+	syzbot <syzkaller@googlegroups.com>,
+	Christoph Paasch <christophpaasch@icloud.com>,
+	Kuniyuki Iwashima <kuniyu@amazon.com>,
+	Eric Dumazet <edumazet@google.com>,
+	Jakub Kicinski <kuba@kernel.org>
+Subject: [PATCH 6.1 26/42] net: Remove WARN_ON_ONCE(sk->sk_forward_alloc) from sk_stream_kill_queues().
+Date: Wed,  1 Mar 2023 19:08:47 +0100
+Message-Id: <20230301180658.213536995@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180657.003689969@linuxfoundation.org>
 References: <20230301180657.003689969@linuxfoundation.org>
@@ -35,75 +37,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vishal Verma <vishal.l.verma@intel.com>
+From: Kuniyuki Iwashima <kuniyu@amazon.com>
 
-[ Upstream commit fb6df4366f86dd252bfa3049edffa52d17e7b895 ]
+commit 62ec33b44e0f7168ff2886520fec6fb62d03b5a3 upstream.
 
-Lockdep reports that acpi_nfit_shutdown() may deadlock against an
-opportune acpi_nfit_scrub(). acpi_nfit_scrub () is run from inside a
-'work' and therefore has already acquired workqueue-internal locks. It
-also acquiires acpi_desc->init_mutex. acpi_nfit_shutdown() first
-acquires init_mutex, and was subsequently attempting to cancel any
-pending workqueue items. This reversed locking order causes a potential
-deadlock:
+Christoph Paasch reported that commit b5fc29233d28 ("inet6: Remove
+inet6_destroy_sock() in sk->sk_prot->destroy().") started triggering
+WARN_ON_ONCE(sk->sk_forward_alloc) in sk_stream_kill_queues().  [0 - 2]
+Also, we can reproduce it by a program in [3].
 
-    ======================================================
-    WARNING: possible circular locking dependency detected
-    6.2.0-rc3 #116 Tainted: G           O     N
-    ------------------------------------------------------
-    libndctl/1958 is trying to acquire lock:
-    ffff888129b461c0 ((work_completion)(&(&acpi_desc->dwork)->work)){+.+.}-{0:0}, at: __flush_work+0x43/0x450
+In the commit, we delay freeing ipv6_pinfo.pktoptions from sk->destroy()
+to sk->sk_destruct(), so sk->sk_forward_alloc is no longer zero in
+inet_csk_destroy_sock().
 
-    but task is already holding lock:
-    ffff888129b460e8 (&acpi_desc->init_mutex){+.+.}-{3:3}, at: acpi_nfit_shutdown+0x87/0xd0 [nfit]
+The same check has been in inet_sock_destruct() from at least v2.6,
+we can just remove the WARN_ON_ONCE().  However, among the users of
+sk_stream_kill_queues(), only CAIF is not calling inet_sock_destruct().
+Thus, we add the same WARN_ON_ONCE() to caif_sock_destructor().
 
-    which lock already depends on the new lock.
+[0]: https://lore.kernel.org/netdev/39725AB4-88F1-41B3-B07F-949C5CAEFF4F@icloud.com/
+[1]: https://github.com/multipath-tcp/mptcp_net-next/issues/341
+[2]:
+WARNING: CPU: 0 PID: 3232 at net/core/stream.c:212 sk_stream_kill_queues+0x2f9/0x3e0
+Modules linked in:
+CPU: 0 PID: 3232 Comm: syz-executor.0 Not tainted 6.2.0-rc5ab24eb4698afbe147b424149c529e2a43ec24eb5 #2
+Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
+RIP: 0010:sk_stream_kill_queues+0x2f9/0x3e0
+Code: 03 0f b6 04 02 84 c0 74 08 3c 03 0f 8e ec 00 00 00 8b ab 08 01 00 00 e9 60 ff ff ff e8 d0 5f b6 fe 0f 0b eb 97 e8 c7 5f b6 fe <0f> 0b eb a0 e8 be 5f b6 fe 0f 0b e9 6a fe ff ff e8 02 07 e3 fe e9
+RSP: 0018:ffff88810570fc68 EFLAGS: 00010293
+RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
+RDX: ffff888101f38f40 RSI: ffffffff8285e529 RDI: 0000000000000005
+RBP: 0000000000000ce0 R08: 0000000000000005 R09: 0000000000000000
+R10: 0000000000000ce0 R11: 0000000000000001 R12: ffff8881009e9488
+R13: ffffffff84af2cc0 R14: 0000000000000000 R15: ffff8881009e9458
+FS:  00007f7fdfbd5800(0000) GS:ffff88811b600000(0000) knlGS:0000000000000000
+CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+CR2: 0000001b32923000 CR3: 00000001062fc006 CR4: 0000000000170ef0
+Call Trace:
+ <TASK>
+ inet_csk_destroy_sock+0x1a1/0x320
+ __tcp_close+0xab6/0xe90
+ tcp_close+0x30/0xc0
+ inet_release+0xe9/0x1f0
+ inet6_release+0x4c/0x70
+ __sock_release+0xd2/0x280
+ sock_close+0x15/0x20
+ __fput+0x252/0xa20
+ task_work_run+0x169/0x250
+ exit_to_user_mode_prepare+0x113/0x120
+ syscall_exit_to_user_mode+0x1d/0x40
+ do_syscall_64+0x48/0x90
+ entry_SYSCALL_64_after_hwframe+0x72/0xdc
+RIP: 0033:0x7f7fdf7ae28d
+Code: c1 20 00 00 75 10 b8 03 00 00 00 0f 05 48 3d 01 f0 ff ff 73 31 c3 48 83 ec 08 e8 ee fb ff ff 48 89 04 24 b8 03 00 00 00 0f 05 <48> 8b 3c 24 48 89 c2 e8 37 fc ff ff 48 89 d0 48 83 c4 08 48 3d 01
+RSP: 002b:00000000007dfbb0 EFLAGS: 00000293 ORIG_RAX: 0000000000000003
+RAX: 0000000000000000 RBX: 0000000000000004 RCX: 00007f7fdf7ae28d
+RDX: 0000000000000000 RSI: ffffffffffffffff RDI: 0000000000000003
+RBP: 0000000000000000 R08: 000000007f338e0f R09: 0000000000000e0f
+R10: 000000007f338e13 R11: 0000000000000293 R12: 00007f7fdefff000
+R13: 00007f7fdefffcd8 R14: 00007f7fdefffce0 R15: 00007f7fdefffcd8
+ </TASK>
 
-    ...
+[3]: https://lore.kernel.org/netdev/20230208004245.83497-1-kuniyu@amazon.com/
 
-    Possible unsafe locking scenario:
-
-          CPU0                    CPU1
-          ----                    ----
-     lock(&acpi_desc->init_mutex);
-                                  lock((work_completion)(&(&acpi_desc->dwork)->work));
-                                  lock(&acpi_desc->init_mutex);
-     lock((work_completion)(&(&acpi_desc->dwork)->work));
-
-    *** DEADLOCK ***
-
-Since the workqueue manipulation is protected by its own internal locking,
-the cancellation of pending work doesn't need to be done under
-acpi_desc->init_mutex. Move cancel_delayed_work_sync() outside the
-init_mutex to fix the deadlock. Any work that starts after
-acpi_nfit_shutdown() drops the lock will see ARS_CANCEL, and the
-cancel_delayed_work_sync() will safely flush it out.
-
-Reported-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
-Link: https://lore.kernel.org/r/20230112-acpi_nfit_lockdep-v1-1-660be4dd10be@intel.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+Fixes: b5fc29233d28 ("inet6: Remove inet6_destroy_sock() in sk->sk_prot->destroy().")
+Reported-by: syzbot <syzkaller@googlegroups.com>
+Reported-by: Christoph Paasch <christophpaasch@icloud.com>
+Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Jakub Kicinski <kuba@kernel.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/acpi/nfit/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ net/caif/caif_socket.c |    1 +
+ net/core/stream.c      |    1 -
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/acpi/nfit/core.c b/drivers/acpi/nfit/core.c
-index ae5f4acf26753..6d4ac934cd499 100644
---- a/drivers/acpi/nfit/core.c
-+++ b/drivers/acpi/nfit/core.c
-@@ -3297,8 +3297,8 @@ void acpi_nfit_shutdown(void *data)
+--- a/net/caif/caif_socket.c
++++ b/net/caif/caif_socket.c
+@@ -1015,6 +1015,7 @@ static void caif_sock_destructor(struct
+ 		return;
+ 	}
+ 	sk_stream_kill_queues(&cf_sk->sk);
++	WARN_ON_ONCE(sk->sk_forward_alloc);
+ 	caif_free_client(&cf_sk->layer);
+ }
  
- 	mutex_lock(&acpi_desc->init_mutex);
- 	set_bit(ARS_CANCEL, &acpi_desc->scrub_flags);
--	cancel_delayed_work_sync(&acpi_desc->dwork);
- 	mutex_unlock(&acpi_desc->init_mutex);
-+	cancel_delayed_work_sync(&acpi_desc->dwork);
+--- a/net/core/stream.c
++++ b/net/core/stream.c
+@@ -209,7 +209,6 @@ void sk_stream_kill_queues(struct sock *
+ 	sk_mem_reclaim_final(sk);
  
- 	/*
- 	 * Bounce the nvdimm bus lock to make sure any in-flight
--- 
-2.39.0
-
+ 	WARN_ON_ONCE(sk->sk_wmem_queued);
+-	WARN_ON_ONCE(sk->sk_forward_alloc);
+ 
+ 	/* It is _impossible_ for the backlog to contain anything
+ 	 * when we get here.  All user references to this socket
 
 
