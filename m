@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 15B47847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:12:28 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE54C433D2;
-	Wed,  1 Mar 2023 18:12:27 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E022847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:12:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 222E0C433EF;
+	Wed,  1 Mar 2023 18:12:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694347;
-	bh=Ul2cX6UrFT1clrRmeOIAg5WgxINYbCha8sI77awJEH0=;
+	s=korg; t=1677694350;
+	bh=/zloXCJRxoVTnh5ZAKvTgJOmkQBS8OVbWKrLyxTz0RA=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j/AuaJn5ngk5F7+qkMhbyCxltaRPvIobkDdvq9gj0NguiPI4yHhNhZ61r7Pzwic8Z
-	 SGBDUAsL/cikwugBlRvnEceNNuY0ProUz8yHPUUbo7B1UF/gbX9eTmbPUqygAdxVbG
-	 jG4pdSMrm3CN87y6JSgZj5XqxqwjnfLafMuV8TUI=
+	b=TiKf/cHBRExwic/Vg/BLBFR/0//n5qH2/UmU5f3mWac5y9mg0TTPF6MooZMqZ3mwJ
+	 UBJNaCWX9Pf/6fJ0P9oP90WqHMgYBSY/u7jZfZBaS8GsqHVGGfhdyvVVpgVvZBfp6j
+	 Gk7ZgQAStHDAWotbEiWPj512KHmCfvOJUztips/A=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Marco Rodolfi <marco.rodolfi@tuta.io>,
-	Jiri Kosina <jkosina@suse.cz>,
+	Dan Williams <dan.j.williams@intel.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 08/42] HID: Ignore battery for Elan touchscreen on Asus TP420IA
-Date: Wed,  1 Mar 2023 19:08:29 +0100
-Message-Id: <20230301180657.405911889@linuxfoundation.org>
+Subject: [PATCH 6.1 09/42] ACPI: NFIT: fix a potential deadlock during NFIT teardown
+Date: Wed,  1 Mar 2023 19:08:30 +0100
+Message-Id: <20230301180657.451155483@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180657.003689969@linuxfoundation.org>
 References: <20230301180657.003689969@linuxfoundation.org>
@@ -35,48 +35,73 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: marco.rodolfi@tuta.io <marco.rodolfi@tuta.io>
+From: Vishal Verma <vishal.l.verma@intel.com>
 
-[ Upstream commit cb963b2c011a62838852c902eccb3f72e5d3dbb6 ]
+[ Upstream commit fb6df4366f86dd252bfa3049edffa52d17e7b895 ]
 
-This device has a touchscreen thats report a battery even if it doesn't
-have one.
-Ask Linux to ignore the battery so it will not always report it as low.
+Lockdep reports that acpi_nfit_shutdown() may deadlock against an
+opportune acpi_nfit_scrub(). acpi_nfit_scrub () is run from inside a
+'work' and therefore has already acquired workqueue-internal locks. It
+also acquiires acpi_desc->init_mutex. acpi_nfit_shutdown() first
+acquires init_mutex, and was subsequently attempting to cancel any
+pending workqueue items. This reversed locking order causes a potential
+deadlock:
 
-[jkosina@suse.cz: fix whitespace damage]
-Signed-off-by: Marco Rodolfi <marco.rodolfi@tuta.io>
-Signed-off-by: Jiri Kosina <jkosina@suse.cz>
+    ======================================================
+    WARNING: possible circular locking dependency detected
+    6.2.0-rc3 #116 Tainted: G           O     N
+    ------------------------------------------------------
+    libndctl/1958 is trying to acquire lock:
+    ffff888129b461c0 ((work_completion)(&(&acpi_desc->dwork)->work)){+.+.}-{0:0}, at: __flush_work+0x43/0x450
+
+    but task is already holding lock:
+    ffff888129b460e8 (&acpi_desc->init_mutex){+.+.}-{3:3}, at: acpi_nfit_shutdown+0x87/0xd0 [nfit]
+
+    which lock already depends on the new lock.
+
+    ...
+
+    Possible unsafe locking scenario:
+
+          CPU0                    CPU1
+          ----                    ----
+     lock(&acpi_desc->init_mutex);
+                                  lock((work_completion)(&(&acpi_desc->dwork)->work));
+                                  lock(&acpi_desc->init_mutex);
+     lock((work_completion)(&(&acpi_desc->dwork)->work));
+
+    *** DEADLOCK ***
+
+Since the workqueue manipulation is protected by its own internal locking,
+the cancellation of pending work doesn't need to be done under
+acpi_desc->init_mutex. Move cancel_delayed_work_sync() outside the
+init_mutex to fix the deadlock. Any work that starts after
+acpi_nfit_shutdown() drops the lock will see ARS_CANCEL, and the
+cancel_delayed_work_sync() will safely flush it out.
+
+Reported-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
+Link: https://lore.kernel.org/r/20230112-acpi_nfit_lockdep-v1-1-660be4dd10be@intel.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hid/hid-ids.h   | 1 +
- drivers/hid/hid-input.c | 2 ++
- 2 files changed, 3 insertions(+)
+ drivers/acpi/nfit/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/hid/hid-ids.h b/drivers/hid/hid-ids.h
-index d01d798ebedca..46c0ce4203c08 100644
---- a/drivers/hid/hid-ids.h
-+++ b/drivers/hid/hid-ids.h
-@@ -413,6 +413,7 @@
- #define I2C_DEVICE_ID_HP_ENVY_X360_15T_DR100	0x29CF
- #define I2C_DEVICE_ID_HP_ENVY_X360_EU0009NV	0x2CF9
- #define I2C_DEVICE_ID_HP_SPECTRE_X360_15	0x2817
-+#define I2C_DEVICE_ID_ASUS_TP420IA_TOUCHSCREEN 0x2BC8
- #define USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN	0x2544
- #define USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN	0x2706
- #define I2C_DEVICE_ID_SURFACE_GO_TOUCHSCREEN	0x261A
-diff --git a/drivers/hid/hid-input.c b/drivers/hid/hid-input.c
-index 3ee5a9fea20e6..3736b0afbff73 100644
---- a/drivers/hid/hid-input.c
-+++ b/drivers/hid/hid-input.c
-@@ -370,6 +370,8 @@ static const struct hid_device_id hid_battery_quirks[] = {
- 	{ HID_BLUETOOTH_DEVICE(USB_VENDOR_ID_LOGITECH,
- 		USB_DEVICE_ID_LOGITECH_DINOVO_EDGE_KBD),
- 	  HID_BATTERY_QUIRK_IGNORE },
-+	{ HID_I2C_DEVICE(USB_VENDOR_ID_ELAN, I2C_DEVICE_ID_ASUS_TP420IA_TOUCHSCREEN),
-+	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550_TOUCHSCREEN),
- 	  HID_BATTERY_QUIRK_IGNORE },
- 	{ HID_USB_DEVICE(USB_VENDOR_ID_ELAN, USB_DEVICE_ID_ASUS_UX550VE_TOUCHSCREEN),
+diff --git a/drivers/acpi/nfit/core.c b/drivers/acpi/nfit/core.c
+index ae5f4acf26753..6d4ac934cd499 100644
+--- a/drivers/acpi/nfit/core.c
++++ b/drivers/acpi/nfit/core.c
+@@ -3297,8 +3297,8 @@ void acpi_nfit_shutdown(void *data)
+ 
+ 	mutex_lock(&acpi_desc->init_mutex);
+ 	set_bit(ARS_CANCEL, &acpi_desc->scrub_flags);
+-	cancel_delayed_work_sync(&acpi_desc->dwork);
+ 	mutex_unlock(&acpi_desc->init_mutex);
++	cancel_delayed_work_sync(&acpi_desc->dwork);
+ 
+ 	/*
+ 	 * Bounce the nvdimm bus lock to make sure any in-flight
 -- 
 2.39.0
 
