@@ -1,136 +1,140 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 28AC0847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:08:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1E24C4339B;
-	Wed,  1 Mar 2023 18:08:42 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B3B99847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:08:45 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 115E9C433EF;
+	Wed,  1 Mar 2023 18:08:45 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694123;
-	bh=c7ot3sSdNOVopSt2DM91FXrJbCi58aqgp1H+xfDdGBI=;
-	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FJZ19KD48SClpUk6D1T/bR2TOztr0MksJqqVektJYc/c/i8SrXZrukZFaqS5CVZd0
-	 D56U84J6z3kKUgW3ud54lF3B+jnxBz22KOUeD/W6nv9KMG86JoLmXsy9aYjBOLknL7
-	 Goswht+ZkUlQffBrcNt2pqROBjhPhpcREa+CQ00g=
+	s=korg; t=1677694125;
+	bh=c+mLaaeyvvTWuLvHXDvvroqIw2vDVDdVbZEPSV7FdCk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=SdPUx5LUcFheohZWf4na7K5Tl+wca9x77A9XiXSLm6j2QhZUlm96LhYK8Wp//nQql
+	 Y9bldJuS9xBak7GTGTke+w4EXYpZmwKWdwU+aC0oIhP8O+O5t4C3FU361jSz+vWtYM
+	 8gfxz6FdYpZK0P1/ZcmplEjvsx++YHPPsOTRPFoY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Christoph Paasch <christophpaasch@icloud.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.4 09/13] net: Remove WARN_ON_ONCE(sk->sk_forward_alloc) from sk_stream_kill_queues().
-Date: Wed,  1 Mar 2023 19:07:32 +0100
-Message-Id: <20230301180651.519041389@linuxfoundation.org>
+	linux-kernel@vger.kernel.org,
+	torvalds@linux-foundation.org,
+	akpm@linux-foundation.org,
+	linux@roeck-us.net,
+	shuah@kernel.org,
+	patches@kernelci.org,
+	lkft-triage@lists.linaro.org,
+	pavel@denx.de,
+	jonathanh@nvidia.com,
+	f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com,
+	srw@sladewatkins.net,
+	rwarsow@gmx.de
+Subject: [PATCH 5.4 00/13] 5.4.234-rc1 review
+Date: Wed,  1 Mar 2023 19:07:23 +0100
+Message-Id: <20230301180651.177668495@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230301180651.177668495@linuxfoundation.org>
-References: <20230301180651.177668495@linuxfoundation.org>
-User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
+X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.234-rc1.gz
+X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
+X-KernelTest-Branch: linux-5.4.y
+X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
+X-KernelTest-Version: 5.4.234-rc1
+X-KernelTest-Deadline: 2023-03-03T18:06+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+This is the start of the stable review cycle for the 5.4.234 release.
+There are 13 patches in this series, all will be posted as a response
+to this one.  If anyone has any issues with these being applied, please
+let me know.
 
-commit 62ec33b44e0f7168ff2886520fec6fb62d03b5a3 upstream.
+Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
+Anything received after that time might be too late.
 
-Christoph Paasch reported that commit b5fc29233d28 ("inet6: Remove
-inet6_destroy_sock() in sk->sk_prot->destroy().") started triggering
-WARN_ON_ONCE(sk->sk_forward_alloc) in sk_stream_kill_queues().  [0 - 2]
-Also, we can reproduce it by a program in [3].
+The whole patch series can be found in one patch at:
+	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.4.234-rc1.gz
+or in the git tree and branch at:
+	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.4.y
+and the diffstat can be found below.
 
-In the commit, we delay freeing ipv6_pinfo.pktoptions from sk->destroy()
-to sk->sk_destruct(), so sk->sk_forward_alloc is no longer zero in
-inet_csk_destroy_sock().
+thanks,
 
-The same check has been in inet_sock_destruct() from at least v2.6,
-we can just remove the WARN_ON_ONCE().  However, among the users of
-sk_stream_kill_queues(), only CAIF is not calling inet_sock_destruct().
-Thus, we add the same WARN_ON_ONCE() to caif_sock_destructor().
+greg k-h
 
-[0]: https://lore.kernel.org/netdev/39725AB4-88F1-41B3-B07F-949C5CAEFF4F@icloud.com/
-[1]: https://github.com/multipath-tcp/mptcp_net-next/issues/341
-[2]:
-WARNING: CPU: 0 PID: 3232 at net/core/stream.c:212 sk_stream_kill_queues+0x2f9/0x3e0
-Modules linked in:
-CPU: 0 PID: 3232 Comm: syz-executor.0 Not tainted 6.2.0-rc5ab24eb4698afbe147b424149c529e2a43ec24eb5 #2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-RIP: 0010:sk_stream_kill_queues+0x2f9/0x3e0
-Code: 03 0f b6 04 02 84 c0 74 08 3c 03 0f 8e ec 00 00 00 8b ab 08 01 00 00 e9 60 ff ff ff e8 d0 5f b6 fe 0f 0b eb 97 e8 c7 5f b6 fe <0f> 0b eb a0 e8 be 5f b6 fe 0f 0b e9 6a fe ff ff e8 02 07 e3 fe e9
-RSP: 0018:ffff88810570fc68 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: ffff888101f38f40 RSI: ffffffff8285e529 RDI: 0000000000000005
-RBP: 0000000000000ce0 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000000000ce0 R11: 0000000000000001 R12: ffff8881009e9488
-R13: ffffffff84af2cc0 R14: 0000000000000000 R15: ffff8881009e9458
-FS:  00007f7fdfbd5800(0000) GS:ffff88811b600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000001b32923000 CR3: 00000001062fc006 CR4: 0000000000170ef0
-Call Trace:
- <TASK>
- inet_csk_destroy_sock+0x1a1/0x320
- __tcp_close+0xab6/0xe90
- tcp_close+0x30/0xc0
- inet_release+0xe9/0x1f0
- inet6_release+0x4c/0x70
- __sock_release+0xd2/0x280
- sock_close+0x15/0x20
- __fput+0x252/0xa20
- task_work_run+0x169/0x250
- exit_to_user_mode_prepare+0x113/0x120
- syscall_exit_to_user_mode+0x1d/0x40
- do_syscall_64+0x48/0x90
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-RIP: 0033:0x7f7fdf7ae28d
-Code: c1 20 00 00 75 10 b8 03 00 00 00 0f 05 48 3d 01 f0 ff ff 73 31 c3 48 83 ec 08 e8 ee fb ff ff 48 89 04 24 b8 03 00 00 00 0f 05 <48> 8b 3c 24 48 89 c2 e8 37 fc ff ff 48 89 d0 48 83 c4 08 48 3d 01
-RSP: 002b:00000000007dfbb0 EFLAGS: 00000293 ORIG_RAX: 0000000000000003
-RAX: 0000000000000000 RBX: 0000000000000004 RCX: 00007f7fdf7ae28d
-RDX: 0000000000000000 RSI: ffffffffffffffff RDI: 0000000000000003
-RBP: 0000000000000000 R08: 000000007f338e0f R09: 0000000000000e0f
-R10: 000000007f338e13 R11: 0000000000000293 R12: 00007f7fdefff000
-R13: 00007f7fdefffcd8 R14: 00007f7fdefffce0 R15: 00007f7fdefffcd8
- </TASK>
+-------------
+Pseudo-Shortlog of commits:
 
-[3]: https://lore.kernel.org/netdev/20230208004245.83497-1-kuniyu@amazon.com/
+Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+    Linux 5.4.234-rc1
 
-Fixes: b5fc29233d28 ("inet6: Remove inet6_destroy_sock() in sk->sk_prot->destroy().")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Reported-by: Christoph Paasch <christophpaasch@icloud.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
----
- net/caif/caif_socket.c |    1 +
- net/core/stream.c      |    1 -
- 2 files changed, 1 insertion(+), 1 deletion(-)
+Alan Stern <stern@rowland.harvard.edu>
+    USB: core: Don't hold device lock while reading the "descriptors" sysfs file
 
---- a/net/caif/caif_socket.c
-+++ b/net/caif/caif_socket.c
-@@ -1022,6 +1022,7 @@ static void caif_sock_destructor(struct
- 		return;
- 	}
- 	sk_stream_kill_queues(&cf_sk->sk);
-+	WARN_ON(sk->sk_forward_alloc);
- 	caif_free_client(&cf_sk->layer);
- }
- 
---- a/net/core/stream.c
-+++ b/net/core/stream.c
-@@ -209,7 +209,6 @@ void sk_stream_kill_queues(struct sock *
- 	sk_mem_reclaim(sk);
- 
- 	WARN_ON(sk->sk_wmem_queued);
--	WARN_ON(sk->sk_forward_alloc);
- 
- 	/* It is _impossible_ for the backlog to contain anything
- 	 * when we get here.  All user references to this socket
+Florian Zumbiehl <florz@florz.de>
+    USB: serial: option: add support for VW/Skoda "Carstick LTE"
+
+Jiasheng Jiang <jiasheng@iscas.ac.cn>
+    dmaengine: sh: rcar-dmac: Check for error num after dma_set_max_seg_size
+
+Thomas Weißschuh <linux@weissschuh.net>
+    vc_screen: don't clobber return value in vcs_read
+
+Kuniyuki Iwashima <kuniyu@amazon.com>
+    net: Remove WARN_ON_ONCE(sk->sk_forward_alloc) from sk_stream_kill_queues().
+
+Martin KaFai Lau <martin.lau@kernel.org>
+    bpf: bpf_fib_lookup should not return neigh in NUD_FAILED state
+
+Xin Zhao <xnzhao@google.com>
+    HID: core: Fix deadloop in hid_apply_multiplier.
+
+Julian Anastasov <ja@ssi.bg>
+    neigh: make sure used and confirmed times are valid
+
+Dean Luick <dean.luick@cornelisnetworks.com>
+    IB/hfi1: Assign npages earlier
+
+David Sterba <dsterba@suse.com>
+    btrfs: send: limit number of clones and allocated memory size
+
+Vishal Verma <vishal.l.verma@intel.com>
+    ACPI: NFIT: fix a potential deadlock during NFIT teardown
+
+Johan Jonker <jbx6244@gmail.com>
+    ARM: dts: rockchip: add power-domains property to dp node on rk3288
+
+Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+    arm64: dts: rockchip: drop unused LED mode property from rk3328-roc-cc
+
+
+-------------
+
+Diffstat:
+
+ Makefile                                       |  4 ++--
+ arch/arm/boot/dts/rk3288.dtsi                  |  1 +
+ arch/arm64/boot/dts/rockchip/rk3328-roc-cc.dts |  2 --
+ drivers/acpi/nfit/core.c                       |  2 +-
+ drivers/dma/sh/rcar-dmac.c                     |  5 ++++-
+ drivers/hid/hid-core.c                         |  3 +++
+ drivers/infiniband/hw/hfi1/user_exp_rcv.c      |  9 ++-------
+ drivers/tty/vt/vc_screen.c                     |  7 ++++---
+ drivers/usb/core/hub.c                         |  5 ++---
+ drivers/usb/core/sysfs.c                       |  5 -----
+ drivers/usb/serial/option.c                    |  4 ++++
+ fs/btrfs/send.c                                |  6 +++---
+ net/caif/caif_socket.c                         |  1 +
+ net/core/filter.c                              |  4 ++--
+ net/core/neighbour.c                           | 18 +++++++++++++++---
+ net/core/stream.c                              |  1 -
+ 16 files changed, 44 insertions(+), 33 deletions(-)
 
 
