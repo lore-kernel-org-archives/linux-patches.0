@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B61A9847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:09:19 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C40DC433EF;
-	Wed,  1 Mar 2023 18:09:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 03FDF8484
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:09:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7DA02C4339B;
+	Wed,  1 Mar 2023 18:09:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694159;
-	bh=SGeZvXxVid3oFCksruJnbpOvkqzy8S1ahmZ+YWSsJ3w=;
+	s=korg; t=1677694164;
+	bh=Ke+r10CTL5F/VXt8sDTtW2FppD3NBjJx+JgTswWJUb4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JuF26BJkI796zNgQds3f2oqcFDZYIDC04lJpJ+hCt9IHnm1f7OOkteUCM8ASniIdD
-	 AGIgCcV5ziGQ38n5k40rnTv35EIl2FEGPK/Xm0Ma7ugJtxLvqVI09GV8LX2aj5xYeX
-	 XeR4hAEExnUOlXWl4b4sPE2A9vCnyZh5z7zYvRKQ=
+	b=yUpjOoxebIvX7yNJaygpeEGZZWwFMR89JxivbxWlLnv9h8GePvegZHDFBvNNlKYDD
+	 kIs5SIVo+0DubS004cRacJbtYET+1PzDqeqWRyfR1i+xQUFozA/VZZ9OMvfyI6sPss
+	 Z4rxXrGucHStwuStGO1ztUuhig3EyHQx9CHczxLg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Solomon Chiu <solomon.chiu@amd.com>,
-	Alan Liu <HaoPing.Liu@amd.com>,
-	Stylon Wang <stylon.wang@amd.com>,
-	Daniel Wheeler <daniel.wheeler@amd.com>,
-	Alex Deucher <alexander.deucher@amd.com>,
-	"Limonciello, Mario" <mario.limonciello@amd.com>
-Subject: [PATCH 6.2 06/16] drm/amd/display: Properly reuse completion structure
-Date: Wed,  1 Mar 2023 19:07:42 +0100
-Message-Id: <20230301180653.525477944@linuxfoundation.org>
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.2 08/16] wifi: rtw88: usb: Set qsel correctly
+Date: Wed,  1 Mar 2023 19:07:44 +0100
+Message-Id: <20230301180653.608343308@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180653.263532453@linuxfoundation.org>
 References: <20230301180653.263532453@linuxfoundation.org>
@@ -38,49 +35,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Stylon Wang <stylon.wang@amd.com>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-commit 0cf8307adbc6beb5ff3b8a76afedc6e4e0b536a9 upstream.
+commit 7869b834fb07c79933229840c98b02bbb7bd0d75 upstream.
 
-[Why]
-Connecting displays to TBT3 docks often produces invalid
-replies for DPIA AUX requests. It turns out the completion
-structure was not re-initialized before reusing it, resulting
-in immature wake up to completion.
+We have to extract qsel from the skb before doing skb_push() on it,
+otherwise qsel will always be 0.
 
-[How]
-Properly call reinit_completion() on reused completion structure.
-
-Cc: stable@vger.kernel.org
-Reviewed-by: Solomon Chiu <solomon.chiu@amd.com>
-Acked-by: Alan Liu <HaoPing.Liu@amd.com>
-Signed-off-by: Stylon Wang <stylon.wang@amd.com>
-Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
-Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
-Cc: "Limonciello, Mario" <mario.limonciello@amd.com>
+Fixes: a82dfd33d1237 ("wifi: rtw88: Add common USB chip support")
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230210111632.1985205-2-s.hauer@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c |    3 +++
- 1 file changed, 3 insertions(+)
+ drivers/net/wireless/realtek/rtw88/usb.c |    2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
---- a/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-+++ b/drivers/gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c
-@@ -10359,6 +10359,7 @@ int amdgpu_dm_process_dmub_aux_transfer_
- 	ret = p_notify->aux_reply.length;
- 	*operation_result = p_notify->result;
- out:
-+	reinit_completion(&adev->dm.dmub_aux_transfer_done);
- 	mutex_unlock(&adev->dm.dpia_aux_lock);
- 	return ret;
- }
-@@ -10386,6 +10387,8 @@ int amdgpu_dm_process_dmub_set_config_sy
- 		*operation_result = SET_CONFIG_UNKNOWN_ERROR;
- 	}
+--- a/drivers/net/wireless/realtek/rtw88/usb.c
++++ b/drivers/net/wireless/realtek/rtw88/usb.c
+@@ -471,9 +471,9 @@ static int rtw_usb_tx_write(struct rtw_d
+ 	u8 *pkt_desc;
+ 	int ep;
  
-+	if (!is_cmd_complete)
-+		reinit_completion(&adev->dm.dmub_aux_transfer_done);
- 	mutex_unlock(&adev->dm.dpia_aux_lock);
- 	return ret;
- }
++	pkt_info->qsel = rtw_usb_tx_queue_mapping_to_qsel(skb);
+ 	pkt_desc = skb_push(skb, chip->tx_pkt_desc_sz);
+ 	memset(pkt_desc, 0, chip->tx_pkt_desc_sz);
+-	pkt_info->qsel = rtw_usb_tx_queue_mapping_to_qsel(skb);
+ 	ep = qsel_to_ep(rtwusb, pkt_info->qsel);
+ 	rtw_tx_fill_tx_desc(pkt_info, skb);
+ 	rtw_tx_fill_txdesc_checksum(rtwdev, pkt_info, skb->data);
 
 
