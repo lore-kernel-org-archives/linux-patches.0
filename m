@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 54070847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:13:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id CE3C3C433EF;
-	Wed,  1 Mar 2023 18:13:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id DC342847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:13:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 63346C4339B;
+	Wed,  1 Mar 2023 18:13:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694392;
-	bh=PM7yIo6WWB961FSKIHXPIaFJQdskuFJ+i7dppETSpr4=;
+	s=korg; t=1677694394;
+	bh=TTVb/FAA0tZrNRdTGBMrBBucjEXf/rsl3YeQsmLViO4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=usJln/tkFuXKslAHVZvsF3BUEV4vI/orRc5txGmdkHbNulo1RSNvb0vggtjNgwHwG
-	 b6lhmUlQ1RCrPUNPRF8ifK1QP4/AHu7I4csfGxNc5P8FdBdNKCiA/abksmx92YxCR0
-	 CiW+9zbZUsSxjmUEfRPeFUpbwlDuCkUh7RXyGnC8=
+	b=n7FIZkiV9+NjjJCJl38N/bs5EsvbSXjRgBjh+thfzyFPK2HvNkmYwXFqYT9p6BakP
+	 Rq4I32HAD51pGVQ0IOD2HK7XcR7X+qM2DQ5FQpTdhi0ZldcHBrBvWKDU774+zlFgaW
+	 /Yst+NowgAvtEeyWkF5nc5bYEb7Td2UjeMQmAJoo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	stable <stable@kernel.org>,
-	Prashanth K <quic_prashk@quicinc.com>,
-	Alan Stern <stern@rowland.harvard.edu>
-Subject: [PATCH 6.1 32/42] usb: gadget: u_serial: Add null pointer check in gserial_resume
-Date: Wed,  1 Mar 2023 19:08:53 +0100
-Message-Id: <20230301180658.507070710@linuxfoundation.org>
+	Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+	Arnd Bergmann <arnd@arndb.de>
+Subject: [PATCH 6.1 33/42] arm64: dts: uniphier: Fix property name in PXs3 USB node
+Date: Wed,  1 Mar 2023 19:08:54 +0100
+Message-Id: <20230301180658.545313154@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180657.003689969@linuxfoundation.org>
 References: <20230301180657.003689969@linuxfoundation.org>
@@ -35,84 +34,52 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Prashanth K <quic_prashk@quicinc.com>
+From: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
 
-commit 5ec63fdbca604568890c577753c6f66c5b3ef0b5 upstream.
+commit 2508d5efd7a588d07915a762e1731173854525f9 upstream.
 
-Consider a case where gserial_disconnect has already cleared
-gser->ioport. And if a wakeup interrupt triggers afterwards,
-gserial_resume gets called, which will lead to accessing of
-gser->ioport and thus causing null pointer dereference.Add
-a null pointer check to prevent this.
+The property "snps,usb2_gadget_lpm_disable" is wrong.
+It should be fixed to "snps,usb2-gadget-lpm-disable".
 
-Added a static spinlock to prevent gser->ioport from becoming
-null after the newly added check.
-
-Fixes: aba3a8d01d62 ("usb: gadget: u_serial: add suspend resume callbacks")
-Cc: stable <stable@kernel.org>
-Signed-off-by: Prashanth K <quic_prashk@quicinc.com>
-Acked-by: Alan Stern <stern@rowland.harvard.edu>
-Link: https://lore.kernel.org/r/1676309438-14922-1-git-send-email-quic_prashk@quicinc.com
+Cc: stable@vger.kernel.org
+Fixes: 19fee1a1096d ("arm64: dts: uniphier: Add USB-device support for PXs3 reference board")
+Signed-off-by: Kunihiko Hayashi <hayashi.kunihiko@socionext.com>
+Link: https://lore.kernel.org/r/20230207021429.28925-1-hayashi.kunihiko@socionext.com
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/usb/gadget/function/u_serial.c |   23 +++++++++++++++++++----
- 1 file changed, 19 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget0.dts | 2 +-
+ arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget1.dts | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
---- a/drivers/usb/gadget/function/u_serial.c
-+++ b/drivers/usb/gadget/function/u_serial.c
-@@ -81,6 +81,9 @@
- #define WRITE_BUF_SIZE		8192		/* TX only */
- #define GS_CONSOLE_BUF_SIZE	8192
- 
-+/* Prevents race conditions while accessing gser->ioport */
-+static DEFINE_SPINLOCK(serial_port_lock);
-+
- /* console info */
- struct gs_console {
- 	struct console		console;
-@@ -1374,8 +1377,10 @@ void gserial_disconnect(struct gserial *
- 	if (!port)
- 		return;
- 
-+	spin_lock_irqsave(&serial_port_lock, flags);
-+
- 	/* tell the TTY glue not to do I/O here any more */
--	spin_lock_irqsave(&port->port_lock, flags);
-+	spin_lock(&port->port_lock);
- 
- 	gs_console_disconnect(port);
- 
-@@ -1390,7 +1395,8 @@ void gserial_disconnect(struct gserial *
- 			tty_hangup(port->port.tty);
- 	}
- 	port->suspended = false;
--	spin_unlock_irqrestore(&port->port_lock, flags);
-+	spin_unlock(&port->port_lock);
-+	spin_unlock_irqrestore(&serial_port_lock, flags);
- 
- 	/* disable endpoints, aborting down any active I/O */
- 	usb_ep_disable(gser->out);
-@@ -1424,10 +1430,19 @@ EXPORT_SYMBOL_GPL(gserial_suspend);
- 
- void gserial_resume(struct gserial *gser)
- {
--	struct gs_port *port = gser->ioport;
-+	struct gs_port *port;
- 	unsigned long	flags;
- 
--	spin_lock_irqsave(&port->port_lock, flags);
-+	spin_lock_irqsave(&serial_port_lock, flags);
-+	port = gser->ioport;
-+
-+	if (!port) {
-+		spin_unlock_irqrestore(&serial_port_lock, flags);
-+		return;
-+	}
-+
-+	spin_lock(&port->port_lock);
-+	spin_unlock(&serial_port_lock);
- 	port->suspended = false;
- 	if (!port->start_delayed) {
- 		spin_unlock_irqrestore(&port->port_lock, flags);
+diff --git a/arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget0.dts b/arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget0.dts
+index 7069f51bc120..99136adb1857 100644
+--- a/arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget0.dts
++++ b/arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget0.dts
+@@ -24,7 +24,7 @@
+ 	snps,dis_enblslpm_quirk;
+ 	snps,dis_u2_susphy_quirk;
+ 	snps,dis_u3_susphy_quirk;
+-	snps,usb2_gadget_lpm_disable;
++	snps,usb2-gadget-lpm-disable;
+ 	phy-names = "usb2-phy", "usb3-phy";
+ 	phys = <&usb0_hsphy0>, <&usb0_ssphy0>;
+ };
+diff --git a/arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget1.dts b/arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget1.dts
+index a3cfa8113ffb..4c960f455461 100644
+--- a/arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget1.dts
++++ b/arch/arm64/boot/dts/socionext/uniphier-pxs3-ref-gadget1.dts
+@@ -24,7 +24,7 @@
+ 	snps,dis_enblslpm_quirk;
+ 	snps,dis_u2_susphy_quirk;
+ 	snps,dis_u3_susphy_quirk;
+-	snps,usb2_gadget_lpm_disable;
++	snps,usb2-gadget-lpm-disable;
+ 	phy-names = "usb2-phy", "usb3-phy";
+ 	phys = <&usb1_hsphy0>, <&usb1_ssphy0>;
+ };
+-- 
+2.39.2
+
 
 
