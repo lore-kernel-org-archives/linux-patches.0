@@ -1,178 +1,105 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3B212847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:11:25 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8E70DC433EF;
-	Wed,  1 Mar 2023 18:11:24 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C656D847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:11:27 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4E182C433D2;
+	Wed,  1 Mar 2023 18:11:27 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694285;
-	bh=DAWGd67V7iFd+CjYIBrPhVp9zUPSIqgnmcIWQ1HsWcc=;
-	h=From:To:Cc:Subject:Date:From;
-	b=FamDpuBfWsOQTk8GKm8bZGuwF8oJqmzOGxGI9Q/VS3Us62ItLSog4SFW9B9aFfqoZ
-	 90TOqFTV2BzEOQEYJANM3bbGQjFK/XorgasZ/oMABZ/jP6q/rB9PJxT2LmQTPgmtcD
-	 bhz+E4KXcowAC/Hs1YrDmlvSzxqfRTW3N+SaaNRg=
+	s=korg; t=1677694287;
+	bh=ca897nOquxo7bD2GUSszpd6rq/ea5S6KTpY5NPjwRBs=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=trFXitFCQ4p5grtd6tSwLdyZJZ23mT+TODXyOeAVe++oyYzvVpIO/IYy9o6tgYXaT
+	 bNiS4Ke7p51jyF4LWK1ai/1OmyntA3DCNtSkTZXvCz0hp23Y/DE3OCUFUWrNSIcpmb
+	 hLkgu8dzxb6fLpyHSrZG5H175FOTrKyp5O+S2W+8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 5.15 00/22] 5.15.97-rc1 review
-Date: Wed,  1 Mar 2023 19:08:33 +0100
-Message-Id: <20230301180652.658125575@linuxfoundation.org>
+	Alan Stern <stern@rowland.harvard.edu>,
+	Troels Liebe Bentsen <troels@connectedcars.dk>
+Subject: [PATCH 5.15 22/22] USB: core: Dont hold device lock while reading the "descriptors" sysfs file
+Date: Wed,  1 Mar 2023 19:08:55 +0100
+Message-Id: <20230301180653.525401385@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230301180652.658125575@linuxfoundation.org>
+References: <20230301180652.658125575@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.97-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-5.15.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 5.15.97-rc1
-X-KernelTest-Deadline: 2023-03-03T18:06+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 5.15.97 release.
-There are 22 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Alan Stern <stern@rowland.harvard.edu>
 
-Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
-Anything received after that time might be too late.
+commit 45bf39f8df7f05efb83b302c65ae3b9bc92b7065 upstream.
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.97-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-and the diffstat can be found below.
+Ever since commit 83e83ecb79a8 ("usb: core: get config and string
+descriptors for unauthorized devices") was merged in 2013, there has
+been no mechanism for reallocating the rawdescriptors buffers in
+struct usb_device after the initial enumeration.  Before that commit,
+the buffers would be deallocated when a device was deauthorized and
+reallocated when it was authorized and enumerated.
 
-thanks,
+This means that the locking in the read_descriptors() routine is not
+needed, since the buffers it reads will never be reallocated while the
+routine is running.  This locking can interfere with user programs
+trying to read a hub's descriptors via sysfs while new child devices
+of the hub are being initialized, since the hub is locked during this
+procedure.
 
-greg k-h
+Since the locking in read_descriptors() hasn't been needed for over
+nine years, we can remove it.
 
--------------
-Pseudo-Shortlog of commits:
+Reported-and-tested-by: Troels Liebe Bentsen <troels@connectedcars.dk>
+Signed-off-by: Alan Stern <stern@rowland.harvard.edu>
+CC: stable@vger.kernel.org
+Link: https://lore.kernel.org/r/Y9l+wDTRbuZABzsE@rowland.harvard.edu
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+---
+ drivers/usb/core/hub.c   |    5 ++---
+ drivers/usb/core/sysfs.c |    5 -----
+ 2 files changed, 2 insertions(+), 8 deletions(-)
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 5.15.97-rc1
-
-Alan Stern <stern@rowland.harvard.edu>
-    USB: core: Don't hold device lock while reading the "descriptors" sysfs file
-
-Prashanth K <quic_prashk@quicinc.com>
-    usb: gadget: u_serial: Add null pointer check in gserial_resume
-
-Florian Zumbiehl <florz@florz.de>
-    USB: serial: option: add support for VW/Skoda "Carstick LTE"
-
-Heikki Krogerus <heikki.krogerus@linux.intel.com>
-    usb: dwc3: pci: add support for the Intel Meteor Lake-M
-
-Carlos Llamas <cmllamas@google.com>
-    scripts/tags.sh: fix incompatibility with PCRE2
-
-Cristian Ciocaltea <cristian.ciocaltea@collabora.com>
-    scripts/tags.sh: Invoke 'realpath' via 'xargs'
-
-Thomas Weißschuh <linux@weissschuh.net>
-    vc_screen: don't clobber return value in vcs_read
-
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    net: Remove WARN_ON_ONCE(sk->sk_forward_alloc) from sk_stream_kill_queues().
-
-Martin KaFai Lau <martin.lau@kernel.org>
-    bpf: bpf_fib_lookup should not return neigh in NUD_FAILED state
-
-Sergio Paracuellos <sergio.paracuellos@gmail.com>
-    staging: mt7621-dts: change palmbus address to lower case
-
-Kan Liang <kan.liang@linux.intel.com>
-    x86/cpu: Add Lunar Lake M
-
-Xin Zhao <xnzhao@google.com>
-    HID: core: Fix deadloop in hid_apply_multiplier.
-
-Julian Anastasov <ja@ssi.bg>
-    neigh: make sure used and confirmed times are valid
-
-Dean Luick <dean.luick@cornelisnetworks.com>
-    IB/hfi1: Assign npages earlier
-
-Jack Yu <jack.yu@realtek.com>
-    ASoC: rt715-sdca: fix clock stop prepare timeout issue
-
-David Sterba <dsterba@suse.com>
-    btrfs: send: limit number of clones and allocated memory size
-
-Vishal Verma <vishal.l.verma@intel.com>
-    ACPI: NFIT: fix a potential deadlock during NFIT teardown
-
-Takahiro Fujii <fujii@xaxxi.net>
-    HID: elecom: add support for TrackBall 056E:011C
-
-Johan Jonker <jbx6244@gmail.com>
-    ARM: dts: rockchip: add power-domains property to dp node on rk3288
-
-Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-    arm64: dts: rockchip: drop unused LED mode property from rk3328-roc-cc
-
-Benedict Wong <benedictwong@google.com>
-    Fix XFRM-I support for nested ESP tunnels
-
-Neel Patel <neel@pensando.io>
-    ionic: refactor use of ionic_rx_fill()
-
-
--------------
-
-Diffstat:
-
- Makefile                                         |  4 +-
- arch/arm/boot/dts/rk3288.dtsi                    |  1 +
- arch/arm64/boot/dts/rockchip/rk3328-roc-cc.dts   |  2 -
- arch/x86/include/asm/intel-family.h              |  2 +
- drivers/acpi/nfit/core.c                         |  2 +-
- drivers/hid/hid-core.c                           |  3 ++
- drivers/hid/hid-elecom.c                         | 16 ++++++-
- drivers/hid/hid-ids.h                            |  3 +-
- drivers/hid/hid-quirks.c                         |  3 +-
- drivers/infiniband/hw/hfi1/user_exp_rcv.c        |  9 +---
- drivers/net/ethernet/pensando/ionic/ionic_txrx.c | 23 +++++-----
- drivers/staging/mt7621-dts/gbpc1.dts             |  2 +-
- drivers/tty/vt/vc_screen.c                       |  7 +--
- drivers/usb/core/hub.c                           |  5 +--
- drivers/usb/core/sysfs.c                         |  5 ---
- drivers/usb/dwc3/dwc3-pci.c                      |  4 ++
- drivers/usb/gadget/function/u_serial.c           | 23 ++++++++--
- drivers/usb/serial/option.c                      |  4 ++
- fs/btrfs/send.c                                  |  6 +--
- net/caif/caif_socket.c                           |  1 +
- net/core/filter.c                                |  4 +-
- net/core/neighbour.c                             | 18 ++++++--
- net/core/stream.c                                |  1 -
- net/xfrm/xfrm_interface.c                        | 54 ++++++++++++++++++++++--
- net/xfrm/xfrm_policy.c                           |  3 ++
- scripts/tags.sh                                  | 11 +++--
- sound/soc/codecs/rt715-sdca-sdw.c                |  2 +-
- 27 files changed, 157 insertions(+), 61 deletions(-)
+--- a/drivers/usb/core/hub.c
++++ b/drivers/usb/core/hub.c
+@@ -2382,9 +2382,8 @@ static int usb_enumerate_device_otg(stru
+  * usb_enumerate_device - Read device configs/intfs/otg (usbcore-internal)
+  * @udev: newly addressed device (in ADDRESS state)
+  *
+- * This is only called by usb_new_device() and usb_authorize_device()
+- * and FIXME -- all comments that apply to them apply here wrt to
+- * environment.
++ * This is only called by usb_new_device() -- all comments that apply there
++ * apply here wrt to environment.
+  *
+  * If the device is WUSB and not authorized, we don't attempt to read
+  * the string descriptors, as they will be errored out by the device
+--- a/drivers/usb/core/sysfs.c
++++ b/drivers/usb/core/sysfs.c
+@@ -868,11 +868,7 @@ read_descriptors(struct file *filp, stru
+ 	size_t srclen, n;
+ 	int cfgno;
+ 	void *src;
+-	int retval;
+ 
+-	retval = usb_lock_device_interruptible(udev);
+-	if (retval < 0)
+-		return -EINTR;
+ 	/* The binary attribute begins with the device descriptor.
+ 	 * Following that are the raw descriptor entries for all the
+ 	 * configurations (config plus subsidiary descriptors).
+@@ -897,7 +893,6 @@ read_descriptors(struct file *filp, stru
+ 			off -= srclen;
+ 		}
+ 	}
+-	usb_unlock_device(udev);
+ 	return count - nleft;
+ }
+ 
 
 
