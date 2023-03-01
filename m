@@ -1,34 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4DB6E847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:08:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C8A73C433EF;
-	Wed,  1 Mar 2023 18:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D441F847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:08:50 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58147C433EF;
+	Wed,  1 Mar 2023 18:08:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694128;
-	bh=QPcNFvGHkkNV4wKWo7XyJcP3fiArJMHCz3/xNZTjLzg=;
+	s=korg; t=1677694130;
+	bh=m0shW6WaLT+TR50K0FG676x4YtadiBmJe7DU6Htwm7I=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=BQ0ujDyBeOIlnnNhLzOWUDeyhWloGXx7VctuO4pcVdtEwENd7ksTq6SXvIZRWiHYh
-	 Qbf06J2xsum8A/lKZXTweD41mrbHIopMa4Uf4YcfftGPi8UVo0cCKoEATh0KNZ3Mgw
-	 M2/u8qa+blKQ3y+IEa5LrwPgB9jLrAI5U+BO5k/E=
+	b=qB50QjDADf1W8TYFuYHPLZWJGvLUGn1st9ky6YNzlu/+hzaptdayTGdP0orhOF1zU
+	 0JTnByS9/lFjZC5ZHD4CN0IZ9Z+lGW3yV48/73w55meyUj2P1JG5mvsmYKVaZzWRdc
+	 CiF3GsG67dv5Csoa6ejkKOXuv4HADRxbJ/CzgEys=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Rodionov <vitalyr@opensource.cirrus.com>,
-	Stefan Binding <sbinding@opensource.cirrus.com>,
-	Takashi Iwai <tiwai@suse.de>,
-	Richard Fitzgerald <rf@opensource.cirrus.com>
-Subject: [PATCH 6.2 01/16] ALSA: hda: cs35l41: Correct error condition handling
-Date: Wed,  1 Mar 2023 19:07:37 +0100
-Message-Id: <20230301180653.314613545@linuxfoundation.org>
+	Sascha Hauer <s.hauer@pengutronix.de>,
+	Ping-Ke Shih <pkshih@realtek.com>,
+	Kalle Valo <kvalo@kernel.org>
+Subject: [PATCH 6.2 10/16] wifi: rtw88: usb: drop now unnecessary URB size check
+Date: Wed,  1 Mar 2023 19:07:46 +0100
+Message-Id: <20230301180653.670493262@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180653.263532453@linuxfoundation.org>
 References: <20230301180653.263532453@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -38,39 +35,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
+From: Sascha Hauer <s.hauer@pengutronix.de>
 
-commit 943f4e64ee177cf44d7f2c235281fcda7c32bb28 upstream.
+commit 462c8db6a01160836c68e262d25566f2447148d9 upstream.
 
-Function cs_dsp_coeff_write_ctrl() can return 3 possible values:
-0 - no change, 1 - value has changed and -1 - error, so positive value
-is not an error.
-Fixes: 7406bdbc4fb8 ("ASoC: wm_adsp: Return whether changed when writing controls")
+Now that we send URBs with the URB_ZERO_PACKET flag set we no longer
+need to make sure that the URB sizes are not multiple of the
+bulkout_size. Drop the check.
 
-Signed-off-by: Vitaly Rodionov <vitalyr@opensource.cirrus.com>
-Signed-off-by: Stefan Binding <sbinding@opensource.cirrus.com>
-Link: https://lore.kernel.org/r/20230213145008.1215849-2-sbinding@opensource.cirrus.com
-Signed-off-by: Takashi Iwai <tiwai@suse.de>
-Cc: Richard Fitzgerald <rf@opensource.cirrus.com>
+Signed-off-by: Sascha Hauer <s.hauer@pengutronix.de>
+Reviewed-by: Ping-Ke Shih <pkshih@realtek.com>
+Signed-off-by: Kalle Valo <kvalo@kernel.org>
+Link: https://lore.kernel.org/r/20230210111632.1985205-4-s.hauer@pengutronix.de
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- sound/pci/hda/hda_cs_dsp_ctl.c |    4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/net/wireless/realtek/rtw88/usb.c |   15 +--------------
+ 1 file changed, 1 insertion(+), 14 deletions(-)
 
---- a/sound/pci/hda/hda_cs_dsp_ctl.c
-+++ b/sound/pci/hda/hda_cs_dsp_ctl.c
-@@ -218,10 +218,10 @@ int hda_cs_dsp_write_ctl(struct cs_dsp *
- 	cs_ctl = cs_dsp_get_ctl(dsp, name, type, alg);
- 	ret = cs_dsp_coeff_write_ctrl(cs_ctl, 0, buf, len);
- 	mutex_unlock(&dsp->pwr_lock);
--	if (ret)
-+	if (ret < 0)
- 		return ret;
+--- a/drivers/net/wireless/realtek/rtw88/usb.c
++++ b/drivers/net/wireless/realtek/rtw88/usb.c
+@@ -414,24 +414,11 @@ static int rtw_usb_write_data_rsvd_page(
+ 					u32 size)
+ {
+ 	const struct rtw_chip_info *chip = rtwdev->chip;
+-	struct rtw_usb *rtwusb;
+ 	struct rtw_tx_pkt_info pkt_info = {0};
+-	u32 len, desclen;
+-
+-	rtwusb = rtw_get_usb_priv(rtwdev);
  
--	if (cs_ctl->flags & WMFW_CTL_FLAG_SYS)
-+	if (ret == 0 || (cs_ctl->flags & WMFW_CTL_FLAG_SYS))
- 		return 0;
+ 	pkt_info.tx_pkt_size = size;
+ 	pkt_info.qsel = TX_DESC_QSEL_BEACON;
+-
+-	desclen = chip->tx_pkt_desc_sz;
+-	len = desclen + size;
+-	if (len % rtwusb->bulkout_size == 0) {
+-		len += RTW_USB_PACKET_OFFSET_SZ;
+-		pkt_info.offset = desclen + RTW_USB_PACKET_OFFSET_SZ;
+-		pkt_info.pkt_offset = 1;
+-	} else {
+-		pkt_info.offset = desclen;
+-	}
++	pkt_info.offset = chip->tx_pkt_desc_sz;
  
- 	ctl = cs_ctl->priv;
+ 	return rtw_usb_write_data(rtwdev, &pkt_info, buf);
+ }
 
 
