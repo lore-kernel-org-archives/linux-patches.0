@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9CA61847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:07:44 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 004D8C433EF;
-	Wed,  1 Mar 2023 18:07:43 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 130CA847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:07:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8EBA6C4339B;
+	Wed,  1 Mar 2023 18:07:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694064;
-	bh=CPzi8NuZV/7dEES2pBqwDpcAm1p/eWn5KJ58NCYFIio=;
+	s=korg; t=1677694066;
+	bh=8LBZxdm372jxLC8ZhItmbl6QwtsaUE4WNTfcIL3TMt8=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=SNX1E64bPYI3FCTqz6lZgRMXDm0OEs7f8wObQwjV4qTKbXYTA+nBjJlxpJdOZ0Q+O
-	 fCbzsxMQSpEEdKXJwXSsmKTmEiJO+V6iw9uuewFQibwGZBHh/sOq1491szEz/fMu4X
-	 rgnE5nsGbMo61niH3kJi0F9dRW6SpS9O4sjRL4iY=
+	b=tdUQRg8rwiD2zPFTDrhcJbtBkc0mhrjOhkISdeNb2u4IQNGgNMUaWNqozWbQELEwp
+	 p2mGzYAOX8mNepg1oqppJMq17zYdKh72/64KVkFvSrliCLEDm6OonOXZTfEMnQbsDr
+	 fGSMyj+u/f0Ahb1UfwPbPaS0oj+h1OwCf4mBLjnc=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Storm Dragon <stormdragon2976@gmail.com>,
-	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
-	Linus Torvalds <torvalds@linux-foundation.org>
-Subject: [PATCH 4.19 6/9] vc_screen: dont clobber return value in vcs_read
-Date: Wed,  1 Mar 2023 19:07:22 +0100
-Message-Id: <20230301180650.648484787@linuxfoundation.org>
+	Geert Uytterhoeven <geert+renesas@glider.be>,
+	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
+	Vinod Koul <vkoul@kernel.org>,
+	"Nobuhiro Iwamatsu (CIP)" <nobuhiro1.iwamatsu@toshiba.co.jp>
+Subject: [PATCH 4.19 7/9] dmaengine: sh: rcar-dmac: Check for error num after dma_set_max_seg_size
+Date: Wed,  1 Mar 2023 19:07:23 +0100
+Message-Id: <20230301180650.679766964@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180650.395562988@linuxfoundation.org>
 References: <20230301180650.395562988@linuxfoundation.org>
@@ -35,53 +36,38 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thomas Weißschuh <linux@weissschuh.net>
+From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
 
-commit ae3419fbac845b4d3f3a9fae4cc80c68d82cdf6e upstream.
+commit da2ad87fba0891576aadda9161b8505fde81a84d upstream.
 
-Commit 226fae124b2d ("vc_screen: move load of struct vc_data pointer in
-vcs_read() to avoid UAF") moved the call to vcs_vc() into the loop.
+As the possible failure of the dma_set_max_seg_size(), it should be
+better to check the return value of the dma_set_max_seg_size().
 
-While doing this it also moved the unconditional assignment of
-
-	ret = -ENXIO;
-
-This unconditional assignment was valid outside the loop but within it
-it clobbers the actual value of ret.
-
-To avoid this only assign "ret = -ENXIO" when actually needed.
-
-[ Also, the 'goto unlock_out" needs to be just a "break", so that it
-  does the right thing when it exits on later iterations when partial
-  success has happened - Linus ]
-
-Reported-by: Storm Dragon <stormdragon2976@gmail.com>
-Link: https://lore.kernel.org/lkml/Y%2FKS6vdql2pIsCiI@hotmail.com/
-Fixes: 226fae124b2d ("vc_screen: move load of struct vc_data pointer in vcs_read() to avoid UAF")
-Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
-Link: https://lore.kernel.org/lkml/64981d94-d00c-4b31-9063-43ad0a384bde@t-8ch.de/
-Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Fixes: 97d49c59e219 ("dmaengine: rcar-dmac: set scatter/gather max segment size")
+Reported-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+Link: https://lore.kernel.org/r/20220111011239.452837-1-jiasheng@iscas.ac.cn
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Nobuhiro Iwamatsu (CIP) <nobuhiro1.iwamatsu@toshiba.co.jp>
 ---
- drivers/tty/vt/vc_screen.c |    7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ drivers/dma/sh/rcar-dmac.c |    5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
---- a/drivers/tty/vt/vc_screen.c
-+++ b/drivers/tty/vt/vc_screen.c
-@@ -266,10 +266,11 @@ vcs_read(struct file *file, char __user
- 		ssize_t orig_count;
- 		long p = pos;
- 
--		ret = -ENXIO;
- 		vc = vcs_vc(inode, &viewed);
--		if (!vc)
--			goto unlock_out;
-+		if (!vc) {
-+			ret = -ENXIO;
-+			break;
-+		}
- 
- 		/* Check whether we are above size each round,
- 		 * as copy_to_user at the end of this loop
+--- a/drivers/dma/sh/rcar-dmac.c
++++ b/drivers/dma/sh/rcar-dmac.c
+@@ -1816,7 +1816,10 @@ static int rcar_dmac_probe(struct platfo
+ 	dmac->dev = &pdev->dev;
+ 	platform_set_drvdata(pdev, dmac);
+ 	dmac->dev->dma_parms = &dmac->parms;
+-	dma_set_max_seg_size(dmac->dev, RCAR_DMATCR_MASK);
++	ret = dma_set_max_seg_size(dmac->dev, RCAR_DMATCR_MASK);
++	if (ret)
++		return ret;
++
+ 	ret = dma_set_mask_and_coherent(dmac->dev, DMA_BIT_MASK(40));
+ 	if (ret)
+ 		return ret;
 
 
