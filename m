@@ -1,33 +1,34 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 94D40847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:10:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E6CDC433D2;
-	Wed,  1 Mar 2023 18:10:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3C760847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:10:30 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id B69C9C433EF;
+	Wed,  1 Mar 2023 18:10:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694227;
-	bh=5FJnQp3d75w8RrzuqKlAa8GcvSkb38AjFy2CTJ1e4OI=;
+	s=korg; t=1677694230;
+	bh=poIkIYgz/XPHmp8iv8kF/HMBQWJucD1pFg/cdPeqn9k=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QaogV1YGo2mxodOe0/8W5ntTplYcnXXl61frbiOADUq9VZyfZfowweH8bH7aoYGMu
-	 uMRk0Eg4TP/z+6kXvNtD5vEDtvJIgG7hIJfHOgzPa6w6QvYBdfNa4tg2y2w7p7O8wT
-	 4+fLV0lu02L2LCBIBWWGzeWybvS13KInntF4ovL0=
+	b=ZUSdA2vZV8Sk65Ir8ZyvBHws8fNq95XsN62p8o4frYTwgihSLQPq8cfTEXyQ7VqM1
+	 0nvx14rNBgcdZPauga3liENdWH1+4EoECNnOrdrK7l7OF25X5TVn7ENS6VjHCOonqc
+	 aUph4IyL0r1Bm4Iv7Zmx4l7TxjVnwRgLk/z4CElg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot <syzkaller@googlegroups.com>,
-	Christoph Paasch <christophpaasch@icloud.com>,
-	Kuniyuki Iwashima <kuniyu@amazon.com>,
-	Eric Dumazet <edumazet@google.com>,
-	Jakub Kicinski <kuba@kernel.org>
-Subject: [PATCH 5.10 10/19] net: Remove WARN_ON_ONCE(sk->sk_forward_alloc) from sk_stream_kill_queues().
-Date: Wed,  1 Mar 2023 19:08:39 +0100
-Message-Id: <20230301180652.755381901@linuxfoundation.org>
+	Neel Patel <neel@pensando.io>,
+	Shannon Nelson <snelson@pensando.io>,
+	Jakub Kicinski <kuba@kernel.org>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 01/22] ionic: refactor use of ionic_rx_fill()
+Date: Wed,  1 Mar 2023 19:08:34 +0100
+Message-Id: <20230301180652.716575022@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
-In-Reply-To: <20230301180652.316428563@linuxfoundation.org>
-References: <20230301180652.316428563@linuxfoundation.org>
+In-Reply-To: <20230301180652.658125575@linuxfoundation.org>
+References: <20230301180652.658125575@linuxfoundation.org>
 User-Agent: quilt/0.67
+X-stable: review
+X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,100 +38,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Kuniyuki Iwashima <kuniyu@amazon.com>
+From: Neel Patel <neel@pensando.io>
 
-commit 62ec33b44e0f7168ff2886520fec6fb62d03b5a3 upstream.
+[ Upstream commit e55f0f5befc26e2ba6bb8c1f945ea8e37ee0e334 ]
 
-Christoph Paasch reported that commit b5fc29233d28 ("inet6: Remove
-inet6_destroy_sock() in sk->sk_prot->destroy().") started triggering
-WARN_ON_ONCE(sk->sk_forward_alloc) in sk_stream_kill_queues().  [0 - 2]
-Also, we can reproduce it by a program in [3].
+The same pre-work code is used before each call to
+ionic_rx_fill(), so bring it in and make it a part of
+the routine.
 
-In the commit, we delay freeing ipv6_pinfo.pktoptions from sk->destroy()
-to sk->sk_destruct(), so sk->sk_forward_alloc is no longer zero in
-inet_csk_destroy_sock().
-
-The same check has been in inet_sock_destruct() from at least v2.6,
-we can just remove the WARN_ON_ONCE().  However, among the users of
-sk_stream_kill_queues(), only CAIF is not calling inet_sock_destruct().
-Thus, we add the same WARN_ON_ONCE() to caif_sock_destructor().
-
-[0]: https://lore.kernel.org/netdev/39725AB4-88F1-41B3-B07F-949C5CAEFF4F@icloud.com/
-[1]: https://github.com/multipath-tcp/mptcp_net-next/issues/341
-[2]:
-WARNING: CPU: 0 PID: 3232 at net/core/stream.c:212 sk_stream_kill_queues+0x2f9/0x3e0
-Modules linked in:
-CPU: 0 PID: 3232 Comm: syz-executor.0 Not tainted 6.2.0-rc5ab24eb4698afbe147b424149c529e2a43ec24eb5 #2
-Hardware name: QEMU Standard PC (i440FX + PIIX, 1996), BIOS rel-1.13.0-0-gf21b5a4aeb02-prebuilt.qemu.org 04/01/2014
-RIP: 0010:sk_stream_kill_queues+0x2f9/0x3e0
-Code: 03 0f b6 04 02 84 c0 74 08 3c 03 0f 8e ec 00 00 00 8b ab 08 01 00 00 e9 60 ff ff ff e8 d0 5f b6 fe 0f 0b eb 97 e8 c7 5f b6 fe <0f> 0b eb a0 e8 be 5f b6 fe 0f 0b e9 6a fe ff ff e8 02 07 e3 fe e9
-RSP: 0018:ffff88810570fc68 EFLAGS: 00010293
-RAX: 0000000000000000 RBX: 0000000000000000 RCX: 0000000000000000
-RDX: ffff888101f38f40 RSI: ffffffff8285e529 RDI: 0000000000000005
-RBP: 0000000000000ce0 R08: 0000000000000005 R09: 0000000000000000
-R10: 0000000000000ce0 R11: 0000000000000001 R12: ffff8881009e9488
-R13: ffffffff84af2cc0 R14: 0000000000000000 R15: ffff8881009e9458
-FS:  00007f7fdfbd5800(0000) GS:ffff88811b600000(0000) knlGS:0000000000000000
-CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
-CR2: 0000001b32923000 CR3: 00000001062fc006 CR4: 0000000000170ef0
-Call Trace:
- <TASK>
- inet_csk_destroy_sock+0x1a1/0x320
- __tcp_close+0xab6/0xe90
- tcp_close+0x30/0xc0
- inet_release+0xe9/0x1f0
- inet6_release+0x4c/0x70
- __sock_release+0xd2/0x280
- sock_close+0x15/0x20
- __fput+0x252/0xa20
- task_work_run+0x169/0x250
- exit_to_user_mode_prepare+0x113/0x120
- syscall_exit_to_user_mode+0x1d/0x40
- do_syscall_64+0x48/0x90
- entry_SYSCALL_64_after_hwframe+0x72/0xdc
-RIP: 0033:0x7f7fdf7ae28d
-Code: c1 20 00 00 75 10 b8 03 00 00 00 0f 05 48 3d 01 f0 ff ff 73 31 c3 48 83 ec 08 e8 ee fb ff ff 48 89 04 24 b8 03 00 00 00 0f 05 <48> 8b 3c 24 48 89 c2 e8 37 fc ff ff 48 89 d0 48 83 c4 08 48 3d 01
-RSP: 002b:00000000007dfbb0 EFLAGS: 00000293 ORIG_RAX: 0000000000000003
-RAX: 0000000000000000 RBX: 0000000000000004 RCX: 00007f7fdf7ae28d
-RDX: 0000000000000000 RSI: ffffffffffffffff RDI: 0000000000000003
-RBP: 0000000000000000 R08: 000000007f338e0f R09: 0000000000000e0f
-R10: 000000007f338e13 R11: 0000000000000293 R12: 00007f7fdefff000
-R13: 00007f7fdefffcd8 R14: 00007f7fdefffce0 R15: 00007f7fdefffcd8
- </TASK>
-
-[3]: https://lore.kernel.org/netdev/20230208004245.83497-1-kuniyu@amazon.com/
-
-Fixes: b5fc29233d28 ("inet6: Remove inet6_destroy_sock() in sk->sk_prot->destroy().")
-Reported-by: syzbot <syzkaller@googlegroups.com>
-Reported-by: Christoph Paasch <christophpaasch@icloud.com>
-Signed-off-by: Kuniyuki Iwashima <kuniyu@amazon.com>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: Neel Patel <neel@pensando.io>
+Signed-off-by: Shannon Nelson <snelson@pensando.io>
 Signed-off-by: Jakub Kicinski <kuba@kernel.org>
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- net/caif/caif_socket.c |    1 +
- net/core/stream.c      |    1 -
- 2 files changed, 1 insertion(+), 1 deletion(-)
+ .../net/ethernet/pensando/ionic/ionic_txrx.c  | 23 ++++++++++---------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
---- a/net/caif/caif_socket.c
-+++ b/net/caif/caif_socket.c
-@@ -1020,6 +1020,7 @@ static void caif_sock_destructor(struct
- 		return;
- 	}
- 	sk_stream_kill_queues(&cf_sk->sk);
-+	WARN_ON(sk->sk_forward_alloc);
- 	caif_free_client(&cf_sk->layer);
- }
+diff --git a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
+index 37c39581b6599..376f97b4008bb 100644
+--- a/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
++++ b/drivers/net/ethernet/pensando/ionic/ionic_txrx.c
+@@ -353,16 +353,25 @@ void ionic_rx_fill(struct ionic_queue *q)
+ 	struct ionic_rxq_sg_desc *sg_desc;
+ 	struct ionic_rxq_sg_elem *sg_elem;
+ 	struct ionic_buf_info *buf_info;
++	unsigned int fill_threshold;
+ 	struct ionic_rxq_desc *desc;
+ 	unsigned int remain_len;
+ 	unsigned int frag_len;
+ 	unsigned int nfrags;
++	unsigned int n_fill;
+ 	unsigned int i, j;
+ 	unsigned int len;
  
---- a/net/core/stream.c
-+++ b/net/core/stream.c
-@@ -209,7 +209,6 @@ void sk_stream_kill_queues(struct sock *
- 	sk_mem_reclaim(sk);
++	n_fill = ionic_q_space_avail(q);
++
++	fill_threshold = min_t(unsigned int, IONIC_RX_FILL_THRESHOLD,
++			       q->num_descs / IONIC_RX_FILL_DIV);
++	if (n_fill < fill_threshold)
++		return;
++
+ 	len = netdev->mtu + ETH_HLEN + VLAN_HLEN;
  
- 	WARN_ON(sk->sk_wmem_queued);
--	WARN_ON(sk->sk_forward_alloc);
+-	for (i = ionic_q_space_avail(q); i; i--) {
++	for (i = n_fill; i; i--) {
+ 		nfrags = 0;
+ 		remain_len = len;
+ 		desc_info = &q->info[q->head_idx];
+@@ -518,7 +527,6 @@ int ionic_rx_napi(struct napi_struct *napi, int budget)
+ 	struct ionic_cq *cq = napi_to_cq(napi);
+ 	struct ionic_dev *idev;
+ 	struct ionic_lif *lif;
+-	u16 rx_fill_threshold;
+ 	u32 work_done = 0;
+ 	u32 flags = 0;
  
- 	/* It is _impossible_ for the backlog to contain anything
- 	 * when we get here.  All user references to this socket
+@@ -528,10 +536,7 @@ int ionic_rx_napi(struct napi_struct *napi, int budget)
+ 	work_done = ionic_cq_service(cq, budget,
+ 				     ionic_rx_service, NULL, NULL);
+ 
+-	rx_fill_threshold = min_t(u16, IONIC_RX_FILL_THRESHOLD,
+-				  cq->num_descs / IONIC_RX_FILL_DIV);
+-	if (work_done && ionic_q_space_avail(cq->bound_q) >= rx_fill_threshold)
+-		ionic_rx_fill(cq->bound_q);
++	ionic_rx_fill(cq->bound_q);
+ 
+ 	if (work_done < budget && napi_complete_done(napi, work_done)) {
+ 		ionic_dim_update(qcq, IONIC_LIF_F_RX_DIM_INTR);
+@@ -559,7 +564,6 @@ int ionic_txrx_napi(struct napi_struct *napi, int budget)
+ 	struct ionic_dev *idev;
+ 	struct ionic_lif *lif;
+ 	struct ionic_cq *txcq;
+-	u16 rx_fill_threshold;
+ 	u32 rx_work_done = 0;
+ 	u32 tx_work_done = 0;
+ 	u32 flags = 0;
+@@ -574,10 +578,7 @@ int ionic_txrx_napi(struct napi_struct *napi, int budget)
+ 	rx_work_done = ionic_cq_service(rxcq, budget,
+ 					ionic_rx_service, NULL, NULL);
+ 
+-	rx_fill_threshold = min_t(u16, IONIC_RX_FILL_THRESHOLD,
+-				  rxcq->num_descs / IONIC_RX_FILL_DIV);
+-	if (rx_work_done && ionic_q_space_avail(rxcq->bound_q) >= rx_fill_threshold)
+-		ionic_rx_fill(rxcq->bound_q);
++	ionic_rx_fill(rxcq->bound_q);
+ 
+ 	if (rx_work_done < budget && napi_complete_done(napi, rx_work_done)) {
+ 		ionic_dim_update(qcq, 0);
+-- 
+2.39.0
+
 
 
