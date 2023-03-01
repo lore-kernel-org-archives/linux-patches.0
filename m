@@ -1,124 +1,109 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 75AAF847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:07:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id A4630C433EF;
-	Wed,  1 Mar 2023 18:07:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 98FD4847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:07:36 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 18DC6C433EF;
+	Wed,  1 Mar 2023 18:07:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694051;
-	bh=2xZ4YeuJ9EEGFWMj4puv5RQQp1mmyde516STCcpad1k=;
-	h=From:To:Cc:Subject:Date:From;
-	b=r+ywjVm+11RKm51mZrFU/wmRdekTKJrwXnj4gn1v784OqrDlW7rYBHSAPinWk8JYx
-	 IIgMTqwrmrKMY6YEwvHwhuG6dbGyMiUT4XNMD4FQIilUijeuEB+HySxtNCznBOme8c
-	 HsW2LuY4P70N2eeBORCfs3M+w6roQsLCSr2bnlmk=
+	s=korg; t=1677694056;
+	bh=GQ08yFHf4pHxSA9s+q7OB5AMq+IQQ7ZJNCksR+Sqv0o=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=oZuhMhOiLT9EzdBxuUKPuERA4dxAHDF+gN0zXx/QN8ZyxP06mweiIZbgq9jFTQY2I
+	 XoLTsIJTRDdNBkM6ihCRu4g+QUTSzFhmFVtUtVVDc2Jq+F/JVZKIDdsSBFGomp4Seh
+	 Q8cASdCxyGBwyuVy2C7rEkIiKTTUfV2k7lIkqYXI=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org,
-	torvalds@linux-foundation.org,
-	akpm@linux-foundation.org,
-	linux@roeck-us.net,
-	shuah@kernel.org,
-	patches@kernelci.org,
-	lkft-triage@lists.linaro.org,
-	pavel@denx.de,
-	jonathanh@nvidia.com,
-	f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com,
-	srw@sladewatkins.net,
-	rwarsow@gmx.de
-Subject: [PATCH 4.19 0/9] 4.19.275-rc1 review
-Date: Wed,  1 Mar 2023 19:07:16 +0100
-Message-Id: <20230301180650.395562988@linuxfoundation.org>
+	Dan Williams <dan.j.williams@intel.com>,
+	Vishal Verma <vishal.l.verma@intel.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 4.19 2/9] ACPI: NFIT: fix a potential deadlock during NFIT teardown
+Date: Wed,  1 Mar 2023 19:07:18 +0100
+Message-Id: <20230301180650.488416072@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
+In-Reply-To: <20230301180650.395562988@linuxfoundation.org>
+References: <20230301180650.395562988@linuxfoundation.org>
+User-Agent: quilt/0.67
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
-X-KernelTest-Patch: http://kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.275-rc1.gz
-X-KernelTest-Tree: git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git
-X-KernelTest-Branch: linux-4.19.y
-X-KernelTest-Patches: git://git.kernel.org/pub/scm/linux/kernel/git/stable/stable-queue.git
-X-KernelTest-Version: 4.19.275-rc1
-X-KernelTest-Deadline: 2023-03-03T18:06+00:00
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-This is the start of the stable review cycle for the 4.19.275 release.
-There are 9 patches in this series, all will be posted as a response
-to this one.  If anyone has any issues with these being applied, please
-let me know.
+From: Vishal Verma <vishal.l.verma@intel.com>
 
-Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
-Anything received after that time might be too late.
+[ Upstream commit fb6df4366f86dd252bfa3049edffa52d17e7b895 ]
 
-The whole patch series can be found in one patch at:
-	https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-4.19.275-rc1.gz
-or in the git tree and branch at:
-	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-4.19.y
-and the diffstat can be found below.
+Lockdep reports that acpi_nfit_shutdown() may deadlock against an
+opportune acpi_nfit_scrub(). acpi_nfit_scrub () is run from inside a
+'work' and therefore has already acquired workqueue-internal locks. It
+also acquiires acpi_desc->init_mutex. acpi_nfit_shutdown() first
+acquires init_mutex, and was subsequently attempting to cancel any
+pending workqueue items. This reversed locking order causes a potential
+deadlock:
 
-thanks,
+    ======================================================
+    WARNING: possible circular locking dependency detected
+    6.2.0-rc3 #116 Tainted: G           O     N
+    ------------------------------------------------------
+    libndctl/1958 is trying to acquire lock:
+    ffff888129b461c0 ((work_completion)(&(&acpi_desc->dwork)->work)){+.+.}-{0:0}, at: __flush_work+0x43/0x450
 
-greg k-h
+    but task is already holding lock:
+    ffff888129b460e8 (&acpi_desc->init_mutex){+.+.}-{3:3}, at: acpi_nfit_shutdown+0x87/0xd0 [nfit]
 
--------------
-Pseudo-Shortlog of commits:
+    which lock already depends on the new lock.
 
-Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-    Linux 4.19.275-rc1
+    ...
 
-Alan Stern <stern@rowland.harvard.edu>
-    USB: core: Don't hold device lock while reading the "descriptors" sysfs file
+    Possible unsafe locking scenario:
 
-Florian Zumbiehl <florz@florz.de>
-    USB: serial: option: add support for VW/Skoda "Carstick LTE"
+          CPU0                    CPU1
+          ----                    ----
+     lock(&acpi_desc->init_mutex);
+                                  lock((work_completion)(&(&acpi_desc->dwork)->work));
+                                  lock(&acpi_desc->init_mutex);
+     lock((work_completion)(&(&acpi_desc->dwork)->work));
 
-Jiasheng Jiang <jiasheng@iscas.ac.cn>
-    dmaengine: sh: rcar-dmac: Check for error num after dma_set_max_seg_size
+    *** DEADLOCK ***
 
-Thomas Weißschuh <linux@weissschuh.net>
-    vc_screen: don't clobber return value in vcs_read
+Since the workqueue manipulation is protected by its own internal locking,
+the cancellation of pending work doesn't need to be done under
+acpi_desc->init_mutex. Move cancel_delayed_work_sync() outside the
+init_mutex to fix the deadlock. Any work that starts after
+acpi_nfit_shutdown() drops the lock will see ARS_CANCEL, and the
+cancel_delayed_work_sync() will safely flush it out.
 
-Kuniyuki Iwashima <kuniyu@amazon.com>
-    net: Remove WARN_ON_ONCE(sk->sk_forward_alloc) from sk_stream_kill_queues().
+Reported-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
+Link: https://lore.kernel.org/r/20230112-acpi_nfit_lockdep-v1-1-660be4dd10be@intel.com
+Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ drivers/acpi/nfit/core.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Dean Luick <dean.luick@cornelisnetworks.com>
-    IB/hfi1: Assign npages earlier
+diff --git a/drivers/acpi/nfit/core.c b/drivers/acpi/nfit/core.c
+index 58a756ca14d85..c2863eec0f241 100644
+--- a/drivers/acpi/nfit/core.c
++++ b/drivers/acpi/nfit/core.c
+@@ -3442,8 +3442,8 @@ void acpi_nfit_shutdown(void *data)
+ 
+ 	mutex_lock(&acpi_desc->init_mutex);
+ 	set_bit(ARS_CANCEL, &acpi_desc->scrub_flags);
+-	cancel_delayed_work_sync(&acpi_desc->dwork);
+ 	mutex_unlock(&acpi_desc->init_mutex);
++	cancel_delayed_work_sync(&acpi_desc->dwork);
+ 
+ 	/*
+ 	 * Bounce the nvdimm bus lock to make sure any in-flight
+-- 
+2.39.0
 
-David Sterba <dsterba@suse.com>
-    btrfs: send: limit number of clones and allocated memory size
-
-Vishal Verma <vishal.l.verma@intel.com>
-    ACPI: NFIT: fix a potential deadlock during NFIT teardown
-
-Johan Jonker <jbx6244@gmail.com>
-    ARM: dts: rockchip: add power-domains property to dp node on rk3288
-
-
--------------
-
-Diffstat:
-
- Makefile                                  | 4 ++--
- arch/arm/boot/dts/rk3288.dtsi             | 1 +
- drivers/acpi/nfit/core.c                  | 2 +-
- drivers/dma/sh/rcar-dmac.c                | 5 ++++-
- drivers/infiniband/hw/hfi1/user_exp_rcv.c | 9 ++-------
- drivers/tty/vt/vc_screen.c                | 7 ++++---
- drivers/usb/core/hub.c                    | 5 ++---
- drivers/usb/core/sysfs.c                  | 5 -----
- drivers/usb/serial/option.c               | 4 ++++
- fs/btrfs/send.c                           | 6 +++---
- net/caif/caif_socket.c                    | 1 +
- net/core/stream.c                         | 1 -
- 12 files changed, 24 insertions(+), 26 deletions(-)
 
 
