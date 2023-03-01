@@ -1,27 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3DEB6847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:08:27 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 708EEC4339B;
-	Wed,  1 Mar 2023 18:08:26 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BEDDE847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:08:29 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3A1EAC433EF;
+	Wed,  1 Mar 2023 18:08:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694107;
-	bh=zamaA9Vk1EzkiScf96QeTHqC+OYlLZY2JBcDp5P9DuU=;
+	s=korg; t=1677694109;
+	bh=pIDsHQIxAP8j2mYopzv7l61g1GseLYSPEJsRHssoCJs=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=jryWgMK0OmOe01HMe7gkU7tyuYqkU3jxXPnbow6PhYmbU0gGt0bVYKNrPj0EhFpzP
-	 FZVLccuIMWZZQqtRF1gxTuMqK1c30mW0WqczjDO5uUnWAKzPCL9zx1RBQjunQ+6BF3
-	 VwHGGOtF9s6Xc6lR363e+5XLFslNNrfZJGkRwRrU=
+	b=t1UgdRgRKUqteFAnpYPo59j8vbSIU62qiV4mtzW+u8GSZ8U1kGAK5gyh2ZgEbrZwU
+	 /qAY5vQ0aQYER/1JRIWSDPH+Yh2w3Tl+OGNwFCNoSBTfYY1JvyK9ySEfV5byrEGDNn
+	 uXClBp+jweAeadQFkpROpKdRYbedsr6ftPZ1Kpdo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dan Williams <dan.j.williams@intel.com>,
-	Vishal Verma <vishal.l.verma@intel.com>,
+	syzbot+4376a9a073770c173269@syzkaller.appspotmail.com,
+	David Sterba <dsterba@suse.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 03/13] ACPI: NFIT: fix a potential deadlock during NFIT teardown
-Date: Wed,  1 Mar 2023 19:07:26 +0100
-Message-Id: <20230301180651.294761437@linuxfoundation.org>
+Subject: [PATCH 5.4 04/13] btrfs: send: limit number of clones and allocated memory size
+Date: Wed,  1 Mar 2023 19:07:27 +0100
+Message-Id: <20230301180651.325879104@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180651.177668495@linuxfoundation.org>
 References: <20230301180651.177668495@linuxfoundation.org>
@@ -35,73 +35,42 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vishal Verma <vishal.l.verma@intel.com>
+From: David Sterba <dsterba@suse.com>
 
-[ Upstream commit fb6df4366f86dd252bfa3049edffa52d17e7b895 ]
+[ Upstream commit 33e17b3f5ab74af12aca58c515bc8424ff69a343 ]
 
-Lockdep reports that acpi_nfit_shutdown() may deadlock against an
-opportune acpi_nfit_scrub(). acpi_nfit_scrub () is run from inside a
-'work' and therefore has already acquired workqueue-internal locks. It
-also acquiires acpi_desc->init_mutex. acpi_nfit_shutdown() first
-acquires init_mutex, and was subsequently attempting to cancel any
-pending workqueue items. This reversed locking order causes a potential
-deadlock:
+The arg->clone_sources_count is u64 and can trigger a warning when a
+huge value is passed from user space and a huge array is allocated.
+Limit the allocated memory to 8MiB (can be increased if needed), which
+in turn limits the number of clone sources to 8M / sizeof(struct
+clone_root) = 8M / 40 = 209715.  Real world number of clones is from
+tens to hundreds, so this is future proof.
 
-    ======================================================
-    WARNING: possible circular locking dependency detected
-    6.2.0-rc3 #116 Tainted: G           O     N
-    ------------------------------------------------------
-    libndctl/1958 is trying to acquire lock:
-    ffff888129b461c0 ((work_completion)(&(&acpi_desc->dwork)->work)){+.+.}-{0:0}, at: __flush_work+0x43/0x450
-
-    but task is already holding lock:
-    ffff888129b460e8 (&acpi_desc->init_mutex){+.+.}-{3:3}, at: acpi_nfit_shutdown+0x87/0xd0 [nfit]
-
-    which lock already depends on the new lock.
-
-    ...
-
-    Possible unsafe locking scenario:
-
-          CPU0                    CPU1
-          ----                    ----
-     lock(&acpi_desc->init_mutex);
-                                  lock((work_completion)(&(&acpi_desc->dwork)->work));
-                                  lock(&acpi_desc->init_mutex);
-     lock((work_completion)(&(&acpi_desc->dwork)->work));
-
-    *** DEADLOCK ***
-
-Since the workqueue manipulation is protected by its own internal locking,
-the cancellation of pending work doesn't need to be done under
-acpi_desc->init_mutex. Move cancel_delayed_work_sync() outside the
-init_mutex to fix the deadlock. Any work that starts after
-acpi_nfit_shutdown() drops the lock will see ARS_CANCEL, and the
-cancel_delayed_work_sync() will safely flush it out.
-
-Reported-by: Dan Williams <dan.j.williams@intel.com>
-Signed-off-by: Vishal Verma <vishal.l.verma@intel.com>
-Link: https://lore.kernel.org/r/20230112-acpi_nfit_lockdep-v1-1-660be4dd10be@intel.com
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Reported-by: syzbot+4376a9a073770c173269@syzkaller.appspotmail.com
+Signed-off-by: David Sterba <dsterba@suse.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/acpi/nfit/core.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/btrfs/send.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/acpi/nfit/core.c b/drivers/acpi/nfit/core.c
-index 0fe4f3ed72ca4..793b8d9d749a0 100644
---- a/drivers/acpi/nfit/core.c
-+++ b/drivers/acpi/nfit/core.c
-@@ -3599,8 +3599,8 @@ void acpi_nfit_shutdown(void *data)
- 
- 	mutex_lock(&acpi_desc->init_mutex);
- 	set_bit(ARS_CANCEL, &acpi_desc->scrub_flags);
--	cancel_delayed_work_sync(&acpi_desc->dwork);
- 	mutex_unlock(&acpi_desc->init_mutex);
-+	cancel_delayed_work_sync(&acpi_desc->dwork);
- 
+diff --git a/fs/btrfs/send.c b/fs/btrfs/send.c
+index fb1996980d265..97417b5569a98 100644
+--- a/fs/btrfs/send.c
++++ b/fs/btrfs/send.c
+@@ -7347,10 +7347,10 @@ long btrfs_ioctl_send(struct file *mnt_file, struct btrfs_ioctl_send_args *arg)
  	/*
- 	 * Bounce the nvdimm bus lock to make sure any in-flight
+ 	 * Check that we don't overflow at later allocations, we request
+ 	 * clone_sources_count + 1 items, and compare to unsigned long inside
+-	 * access_ok.
++	 * access_ok. Also set an upper limit for allocation size so this can't
++	 * easily exhaust memory. Max number of clone sources is about 200K.
+ 	 */
+-	if (arg->clone_sources_count >
+-	    ULONG_MAX / sizeof(struct clone_root) - 1) {
++	if (arg->clone_sources_count > SZ_8M / sizeof(struct clone_root)) {
+ 		ret = -EINVAL;
+ 		goto out;
+ 	}
 -- 
 2.39.0
 
