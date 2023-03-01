@@ -1,33 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 820D3847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:08:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0A641C433D2;
-	Wed,  1 Mar 2023 18:07:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D2CD847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:08:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8B88C4339B;
+	Wed,  1 Mar 2023 18:08:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694080;
-	bh=/Eu3el75kgRtXRX2Zlm9rmFxrySZK+OuG+WTPbD8aAE=;
+	s=korg; t=1677694083;
+	bh=6a3DvynJx1rcCiVsBUeKrX/q9oIIXrZvoeeCv9ukjyY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=rm57G27ufKBp+yiAK+GU9vdECEUGY0zugJKfmylKZ2cGcTf8C1x1MrqORAQY5u33L
-	 YW8Gh0mvRb7iWpOgbixEBJZvEwCqYJmYM4nybrC0kWml2uauuOGgGvthoMW4JyCBdK
-	 E72L3izlUXYJ15GSmw5ezLo1/TlCnH0RtnIBl6so=
+	b=CQlRoKJKsN7tFTdWs6QCUXAG3H/f4BgsSZKYY+0Qe4gHgi7zWMdHhrNcF1WIr+8+l
+	 MBaQGaSF4+8mwUTfILns4y2KsDQ9/aCf3ndBQaKA/nSUbR6FgncqKkAw6qsdxtq6D5
+	 ZM9J1UFcyi5Kw/I6h4O7XkUCaCicMcFCljjUtIUo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Heiko Stuebner <heiko@sntech.de>,
-	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.4 01/13] arm64: dts: rockchip: drop unused LED mode property from rk3328-roc-cc
-Date: Wed,  1 Mar 2023 19:07:24 +0100
-Message-Id: <20230301180651.224603673@linuxfoundation.org>
+	Storm Dragon <stormdragon2976@gmail.com>,
+	=?UTF-8?q?Thomas=20Wei=C3=9Fschuh?= <linux@weissschuh.net>,
+	Linus Torvalds <torvalds@linux-foundation.org>
+Subject: [PATCH 5.4 10/13] vc_screen: dont clobber return value in vcs_read
+Date: Wed,  1 Mar 2023 19:07:33 +0100
+Message-Id: <20230301180651.569971762@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180651.177668495@linuxfoundation.org>
 References: <20230301180651.177668495@linuxfoundation.org>
 User-Agent: quilt/0.67
-X-stable: review
-X-Patchwork-Hint: ignore
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -37,44 +35,53 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Thomas Weißschuh <linux@weissschuh.net>
 
-[ Upstream commit 1692bffec674551163a7a4be32f59fdde04ecd27 ]
+commit ae3419fbac845b4d3f3a9fae4cc80c68d82cdf6e upstream.
 
-GPIO LEDs do not have a 'mode' property:
+Commit 226fae124b2d ("vc_screen: move load of struct vc_data pointer in
+vcs_read() to avoid UAF") moved the call to vcs_vc() into the loop.
 
-  rockchip/rk3328-roc-pc.dtb: leds: led-0: Unevaluated properties are not allowed ('mode' was unexpected)
+While doing this it also moved the unconditional assignment of
 
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Link: https://lore.kernel.org/r/20221125144135.477144-1-krzysztof.kozlowski@linaro.org
-Signed-off-by: Heiko Stuebner <heiko@sntech.de>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
+	ret = -ENXIO;
+
+This unconditional assignment was valid outside the loop but within it
+it clobbers the actual value of ret.
+
+To avoid this only assign "ret = -ENXIO" when actually needed.
+
+[ Also, the 'goto unlock_out" needs to be just a "break", so that it
+  does the right thing when it exits on later iterations when partial
+  success has happened - Linus ]
+
+Reported-by: Storm Dragon <stormdragon2976@gmail.com>
+Link: https://lore.kernel.org/lkml/Y%2FKS6vdql2pIsCiI@hotmail.com/
+Fixes: 226fae124b2d ("vc_screen: move load of struct vc_data pointer in vcs_read() to avoid UAF")
+Signed-off-by: Thomas Weißschuh <linux@weissschuh.net>
+Link: https://lore.kernel.org/lkml/64981d94-d00c-4b31-9063-43ad0a384bde@t-8ch.de/
+Signed-off-by: Linus Torvalds <torvalds@linux-foundation.org>
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/boot/dts/rockchip/rk3328-roc-cc.dts | 2 --
- 1 file changed, 2 deletions(-)
+ drivers/tty/vt/vc_screen.c |    7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/rockchip/rk3328-roc-cc.dts b/arch/arm64/boot/dts/rockchip/rk3328-roc-cc.dts
-index 6c3368f795ca3..fbd942b46c542 100644
---- a/arch/arm64/boot/dts/rockchip/rk3328-roc-cc.dts
-+++ b/arch/arm64/boot/dts/rockchip/rk3328-roc-cc.dts
-@@ -90,7 +90,6 @@ power {
- 			linux,default-trigger = "heartbeat";
- 			gpios = <&rk805 1 GPIO_ACTIVE_LOW>;
- 			default-state = "on";
--			mode = <0x23>;
- 		};
+--- a/drivers/tty/vt/vc_screen.c
++++ b/drivers/tty/vt/vc_screen.c
+@@ -284,10 +284,11 @@ vcs_read(struct file *file, char __user
+ 		ssize_t orig_count;
+ 		long p = pos;
  
- 		user {
-@@ -98,7 +97,6 @@ user {
- 			linux,default-trigger = "mmc1";
- 			gpios = <&rk805 0 GPIO_ACTIVE_LOW>;
- 			default-state = "off";
--			mode = <0x05>;
- 		};
- 	};
- };
--- 
-2.39.0
-
+-		ret = -ENXIO;
+ 		vc = vcs_vc(inode, &viewed);
+-		if (!vc)
+-			goto unlock_out;
++		if (!vc) {
++			ret = -ENXIO;
++			break;
++		}
+ 
+ 		/* Check whether we are above size each round,
+ 		 * as copy_to_user at the end of this loop
 
 
