@@ -1,25 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 84592847A
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:10:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 0EAB2C433EF;
-	Wed,  1 Mar 2023 18:10:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2B630847A
+	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 18:10:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A58FBC433D2;
+	Wed,  1 Mar 2023 18:10:58 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677694256;
-	bh=TcxT6ydK+LG8hGI8kWMGJrZ81DAxtHvPgugeWfJ3dz8=;
+	s=korg; t=1677694259;
+	bh=Opj6eH/PliGR/czkKYVyeh+3acJCOj17iG8oS3E6I+A=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=DoHQWrPBAsakxETyq6cyNs0RH7FimM/xGBMDzJ89iRh2uJh/gFJS2UgiM+5Bo/lrC
-	 c0/giJNYN2DlShuJijo+VIaWqeT3qdThgxokzK8wa9hn/kncS28GPNRJCqwlOjSfHR
-	 YLX02hr2AAVMNKUGvPIJdtar4TWs5EHhqipH9s2o=
+	b=wcvN10tISA9AWCvdx04ybF0Ye+kN003RUIpNdZEKUVXivOvmUPg3rhG+uAHxQmmuM
+	 wn/t9o80dfNnmFkiqOf/510wv7A0lmfjkXiTTuZTqXmj5yeEWVZp4daK68YwPbAun2
+	 HId8Kn9YVV1jrOjZ4AADi7SmFvh474C/me8CR2cM=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Subject: [PATCH 5.15 19/22] usb: dwc3: pci: add support for the Intel Meteor Lake-M
-Date: Wed,  1 Mar 2023 19:08:52 +0100
-Message-Id: <20230301180653.421656706@linuxfoundation.org>
+	Benedict Wong <benedictwong@google.com>,
+	Steffen Klassert <steffen.klassert@secunet.com>,
+	Sasha Levin <sashal@kernel.org>
+Subject: [PATCH 5.15 02/22] Fix XFRM-I support for nested ESP tunnels
+Date: Wed,  1 Mar 2023 19:08:35 +0100
+Message-Id: <20230301180652.768409077@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230301180652.658125575@linuxfoundation.org>
 References: <20230301180652.658125575@linuxfoundation.org>
@@ -33,40 +35,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Heikki Krogerus <heikki.krogerus@linux.intel.com>
+From: Benedict Wong <benedictwong@google.com>
 
-commit 8e5248c3a8778f3e394e9a19195bc7a48f567ca2 upstream.
+[ Upstream commit b0355dbbf13c0052931dd14c38c789efed64d3de ]
 
-This patch adds the necessary PCI IDs for Intel Meteor Lake-M
-devices.
+This change adds support for nested IPsec tunnels by ensuring that
+XFRM-I verifies existing policies before decapsulating a subsequent
+policies. Addtionally, this clears the secpath entries after policies
+are verified, ensuring that previous tunnels with no-longer-valid
+do not pollute subsequent policy checks.
 
-Signed-off-by: Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/20230215132711.35668-1-heikki.krogerus@linux.intel.com
-Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+This is necessary especially for nested tunnels, as the IP addresses,
+protocol and ports may all change, thus not matching the previous
+policies. In order to ensure that packets match the relevant inbound
+templates, the xfrm_policy_check should be done before handing off to
+the inner XFRM protocol to decrypt and decapsulate.
+
+Notably, raw ESP/AH packets did not perform policy checks inherently,
+whereas all other encapsulated packets (UDP, TCP encapsulated) do policy
+checks after calling xfrm_input handling in the respective encapsulation
+layer.
+
+Test: Verified with additional Android Kernel Unit tests
+Signed-off-by: Benedict Wong <benedictwong@google.com>
+Signed-off-by: Steffen Klassert <steffen.klassert@secunet.com>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/usb/dwc3/dwc3-pci.c |    4 ++++
- 1 file changed, 4 insertions(+)
+ net/xfrm/xfrm_interface.c | 54 ++++++++++++++++++++++++++++++++++++---
+ net/xfrm/xfrm_policy.c    |  3 +++
+ 2 files changed, 53 insertions(+), 4 deletions(-)
 
---- a/drivers/usb/dwc3/dwc3-pci.c
-+++ b/drivers/usb/dwc3/dwc3-pci.c
-@@ -45,6 +45,7 @@
- #define PCI_DEVICE_ID_INTEL_ADLS		0x7ae1
- #define PCI_DEVICE_ID_INTEL_RPL			0xa70e
- #define PCI_DEVICE_ID_INTEL_RPLS		0x7a61
-+#define PCI_DEVICE_ID_INTEL_MTLM		0x7eb1
- #define PCI_DEVICE_ID_INTEL_MTLP		0x7ec1
- #define PCI_DEVICE_ID_INTEL_MTL			0x7e7e
- #define PCI_DEVICE_ID_INTEL_TGL			0x9a15
-@@ -427,6 +428,9 @@ static const struct pci_device_id dwc3_p
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_RPLS),
- 	  (kernel_ulong_t) &dwc3_pci_intel_swnode, },
+diff --git a/net/xfrm/xfrm_interface.c b/net/xfrm/xfrm_interface.c
+index 1e8b26eecb3f8..694eec6ca147e 100644
+--- a/net/xfrm/xfrm_interface.c
++++ b/net/xfrm/xfrm_interface.c
+@@ -207,6 +207,52 @@ static void xfrmi_scrub_packet(struct sk_buff *skb, bool xnet)
+ 	skb->mark = 0;
+ }
  
-+	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_MTLM),
-+	  (kernel_ulong_t) &dwc3_pci_intel_swnode, },
++static int xfrmi_input(struct sk_buff *skb, int nexthdr, __be32 spi,
++		       int encap_type, unsigned short family)
++{
++	struct sec_path *sp;
 +
- 	{ PCI_VDEVICE(INTEL, PCI_DEVICE_ID_INTEL_MTLP),
- 	  (kernel_ulong_t) &dwc3_pci_intel_swnode, },
++	sp = skb_sec_path(skb);
++	if (sp && (sp->len || sp->olen) &&
++	    !xfrm_policy_check(NULL, XFRM_POLICY_IN, skb, family))
++		goto discard;
++
++	XFRM_SPI_SKB_CB(skb)->family = family;
++	if (family == AF_INET) {
++		XFRM_SPI_SKB_CB(skb)->daddroff = offsetof(struct iphdr, daddr);
++		XFRM_TUNNEL_SKB_CB(skb)->tunnel.ip4 = NULL;
++	} else {
++		XFRM_SPI_SKB_CB(skb)->daddroff = offsetof(struct ipv6hdr, daddr);
++		XFRM_TUNNEL_SKB_CB(skb)->tunnel.ip6 = NULL;
++	}
++
++	return xfrm_input(skb, nexthdr, spi, encap_type);
++discard:
++	kfree_skb(skb);
++	return 0;
++}
++
++static int xfrmi4_rcv(struct sk_buff *skb)
++{
++	return xfrmi_input(skb, ip_hdr(skb)->protocol, 0, 0, AF_INET);
++}
++
++static int xfrmi6_rcv(struct sk_buff *skb)
++{
++	return xfrmi_input(skb, skb_network_header(skb)[IP6CB(skb)->nhoff],
++			   0, 0, AF_INET6);
++}
++
++static int xfrmi4_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
++{
++	return xfrmi_input(skb, nexthdr, spi, encap_type, AF_INET);
++}
++
++static int xfrmi6_input(struct sk_buff *skb, int nexthdr, __be32 spi, int encap_type)
++{
++	return xfrmi_input(skb, nexthdr, spi, encap_type, AF_INET6);
++}
++
+ static int xfrmi_rcv_cb(struct sk_buff *skb, int err)
+ {
+ 	const struct xfrm_mode *inner_mode;
+@@ -774,8 +820,8 @@ static struct pernet_operations xfrmi_net_ops = {
+ };
  
+ static struct xfrm6_protocol xfrmi_esp6_protocol __read_mostly = {
+-	.handler	=	xfrm6_rcv,
+-	.input_handler	=	xfrm_input,
++	.handler	=	xfrmi6_rcv,
++	.input_handler	=	xfrmi6_input,
+ 	.cb_handler	=	xfrmi_rcv_cb,
+ 	.err_handler	=	xfrmi6_err,
+ 	.priority	=	10,
+@@ -825,8 +871,8 @@ static struct xfrm6_tunnel xfrmi_ip6ip_handler __read_mostly = {
+ #endif
+ 
+ static struct xfrm4_protocol xfrmi_esp4_protocol __read_mostly = {
+-	.handler	=	xfrm4_rcv,
+-	.input_handler	=	xfrm_input,
++	.handler	=	xfrmi4_rcv,
++	.input_handler	=	xfrmi4_input,
+ 	.cb_handler	=	xfrmi_rcv_cb,
+ 	.err_handler	=	xfrmi4_err,
+ 	.priority	=	10,
+diff --git a/net/xfrm/xfrm_policy.c b/net/xfrm/xfrm_policy.c
+index ba58b963f4827..0540e9f72b2fe 100644
+--- a/net/xfrm/xfrm_policy.c
++++ b/net/xfrm/xfrm_policy.c
+@@ -3669,6 +3669,9 @@ int __xfrm_policy_check(struct sock *sk, int dir, struct sk_buff *skb,
+ 			goto reject;
+ 		}
+ 
++		if (if_id)
++			secpath_reset(skb);
++
+ 		xfrm_pols_put(pols, npols);
+ 		return 1;
+ 	}
+-- 
+2.39.0
+
 
 
