@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9FE2ED522
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 20:29:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30707D525
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 20:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=wgFqT2w/eK3dzdLgYbGtjhgywFNrzKWQTAiGgoTWdic=; b=zuz/8Msfgxa1qz/+0bvXQ8D3Dp
-	E3r+AMFHIPNG69xjYkIr9FvCfgMSUDnVjlJT4SOx0FFzkxlUeu+75oiSFUOzzw/QtZi8iGr0sllE4
-	/BdnnxIPUFFxPl9MpfNst/iqR18werqw5FZ2dDHaUZ1Ooj9cCZLhyJPoVn+xk8AunsF3x7UMGgb9G
-	XPHI5mus6/eMOr8SqayIwWTq5KMJ3EynxiojmBY+kt8Q5rXJ3xVd54ebBq7uFJgZgjWXUwxJpzKdy
-	1P4naZHSWeF6x1Q9wk9JuoR8linxmXFjFNARUmAUNpYdIIdUlr3gyM+cQT1mytSJEYpjCSRuJQWJs
-	x/LSF5Pw==;
+	bh=xBLSlmQtAyz0qvRsNFvWuwWpKiVVHBEV1aJjBlE0tQE=; b=4T8dlcCaoBdPNTMUrPR4ZbnWKQ
+	U/IiQYDF39ySJMrN6t8k85pINxzuzMBynHpatoaVq6IXt382QmOz4MCgHXk4gQyssT+L2V6r2Xgp0
+	mHMRuBldnqbFgWlOBCQJ3Wr1Se7TbGQGcfyx4FUCT8tHP9Yz7384pJlViVAMhMm1yVlDrykvbhx8A
+	oDhxb2B5OrxGxRGCsnlNBqirlR8fG48v1/jZurECPr7nqG8Ax/uhyLvYwpFRcqf/eGQvfIOCYuLVY
+	kjnFShUFiauUdPpIKvVPSmPerkyLZy0SUhMx1g5sR934vN3pnwjtbVdx3dtsOvNTV+bIB+yvThhWJ
+	e44/VfRA==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pXpXS-003FxT-Kb; Thu, 02 Mar 2023 20:28:30 +0000
+	id 1pXpXR-003Fx9-Rz; Thu, 02 Mar 2023 20:28:29 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: ebiederm@xmission.com,
 	keescook@chromium.org,
@@ -46,9 +46,9 @@ Cc: j.granados@samsung.com,
 	linux-csky@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 11/11] proc_sysctl: deprecate register_sysctl_paths()
-Date: Thu,  2 Mar 2023 12:28:26 -0800
-Message-Id: <20230302202826.776286-12-mcgrof@kernel.org>
+Subject: [PATCH 01/11] proc_sysctl: update docs for __register_sysctl_table()
+Date: Thu,  2 Mar 2023 12:28:16 -0800
+Message-Id: <20230302202826.776286-2-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20230302202826.776286-1-mcgrof@kernel.org>
 References: <20230302202826.776286-1-mcgrof@kernel.org>
@@ -61,120 +61,67 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Now that all users are removed, drop the export for register_sysctl_paths()
+Update the docs for __register_sysctl_table() to make it clear no child
+entries can be passed. When the child is true these are non-leaf entries
+on the ctl table and sysctl treats these as directories. The point to
+__register_sysctl_table() is to deal only with directories not part of
+the ctl table where thay may riside, to be simple and avoid recursion.
+
+While at it, hint towards using long on extra1 and extra2 later.
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- fs/proc/proc_sysctl.c  | 30 +++++++++---------------------
- include/linux/sysctl.h | 11 -----------
- 2 files changed, 9 insertions(+), 32 deletions(-)
+ fs/proc/proc_sysctl.c | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
-index 15d5e02f1ec0..ff06434f7be1 100644
+index 5851eb5bc726..1df0beb50dbe 100644
 --- a/fs/proc/proc_sysctl.c
 +++ b/fs/proc/proc_sysctl.c
-@@ -1486,6 +1486,7 @@ static int count_subheaders(struct ctl_table *table)
- 	return nr_subheaders + has_files;
- }
- 
-+/* Note: this can recurse and call itself when dealing with subdirectories */
- static int register_leaf_sysctl_tables(const char *path, char *pos,
- 	struct ctl_table_header ***subheader, struct ctl_table_set *set,
- 	struct ctl_table *table)
-@@ -1571,9 +1572,10 @@ static int register_leaf_sysctl_tables(const char *path, char *pos,
-  * Register a sysctl table hierarchy. @table should be a filled in ctl_table
-  * array. A completely 0 filled entry terminates the table.
-  *
-- * See __register_sysctl_table for more details.
-+ * See __register_sysctl_table for more details. This routine can
-+ * recurse by having register_leaf_sysctl_tables() call itself.
-  */
--struct ctl_table_header *__register_sysctl_paths(
-+static struct ctl_table_header *__register_sysctl_paths(
- 	struct ctl_table_set *set,
- 	const struct ctl_path *path, struct ctl_table *table)
- {
-@@ -1613,6 +1615,7 @@ struct ctl_table_header *__register_sysctl_paths(
- 		subheader = subheaders;
- 		header->ctl_table_arg = ctl_table_arg;
- 
-+		/* this can recurse */
- 		if (register_leaf_sysctl_tables(new_path, pos, &subheader,
- 						set, table))
- 			goto err_register_leaves;
-@@ -1635,37 +1638,22 @@ struct ctl_table_header *__register_sysctl_paths(
- }
- 
- /**
-- * register_sysctl_paths - register a sysctl table hierarchy
-- * @path: The path to the directory the sysctl table is in.
-+ * register_sysctl_table - register a sysctl table hierarchy
-  * @table: the top-level table structure
-  *
-  * Register a sysctl table hierarchy. @table should be a filled in ctl_table
-  * array. A completely 0 filled entry terminates the table.
-  *
-  * See __register_sysctl_paths for more details.
-- */
--struct ctl_table_header *register_sysctl_paths(const struct ctl_path *path,
--						struct ctl_table *table)
--{
--	return __register_sysctl_paths(&sysctl_table_root.default_set,
--					path, table);
--}
--EXPORT_SYMBOL(register_sysctl_paths);
--
--/**
-- * register_sysctl_table - register a sysctl table hierarchy
+@@ -1287,7 +1287,7 @@ static int insert_links(struct ctl_table_header *head)
+  * __register_sysctl_table - register a leaf sysctl table
+  * @set: Sysctl tree to register on
+  * @path: The path to the directory the sysctl table is in.
 - * @table: the top-level table structure
-- *
-- * Register a sysctl table hierarchy. @table should be a filled in ctl_table
-- * array. A completely 0 filled entry terminates the table.
++ * @table: the top-level table structure without any child
   *
-- * See register_sysctl_paths for more details.
-+ * This is a deprecated compatibility wrapper. You should avoid adding new
-+ * users of this into the kernel.
-  */
- struct ctl_table_header *register_sysctl_table(struct ctl_table *table)
- {
- 	static const struct ctl_path null_path[] = { {} };
+  * Register a sysctl table hierarchy. @table should be a filled in ctl_table
+  * array. A completely 0 filled entry terminates the table.
+@@ -1308,9 +1308,12 @@ static int insert_links(struct ctl_table_header *head)
+  * proc_handler - the text handler routine (described below)
+  *
+  * extra1, extra2 - extra pointers usable by the proc handler routines
++ * XXX: we should eventually modify these to use long min / max [0]
++ * [0] https://lkml.kernel.org/87zgpte9o4.fsf@email.froward.int.ebiederm.org
+  *
+  * Leaf nodes in the sysctl tree will be represented by a single file
+- * under /proc; non-leaf nodes will be represented by directories.
++ * under /proc; non-leaf nodes (where child is not NULL) are not allowed,
++ * sysctl_check_table() verifies this.
+  *
+  * There must be a proc_handler routine for any terminal nodes.
+  * Several default handlers are available to cover common cases -
+@@ -1352,7 +1355,7 @@ struct ctl_table_header *__register_sysctl_table(
  
--	return register_sysctl_paths(null_path, table);
-+	return __register_sysctl_paths(&sysctl_table_root.default_set, null_path, table);
- }
- EXPORT_SYMBOL(register_sysctl_table);
+ 	spin_lock(&sysctl_lock);
+ 	dir = &set->dir;
+-	/* Reference moved down the diretory tree get_subdir */
++	/* Reference moved down the directory tree get_subdir */
+ 	dir->header.nreg++;
+ 	spin_unlock(&sysctl_lock);
  
-diff --git a/include/linux/sysctl.h b/include/linux/sysctl.h
-index 780690dc08cd..e8459fc56b50 100644
---- a/include/linux/sysctl.h
-+++ b/include/linux/sysctl.h
-@@ -221,13 +221,8 @@ extern void retire_sysctl_set(struct ctl_table_set *set);
- struct ctl_table_header *__register_sysctl_table(
- 	struct ctl_table_set *set,
- 	const char *path, struct ctl_table *table);
--struct ctl_table_header *__register_sysctl_paths(
--	struct ctl_table_set *set,
--	const struct ctl_path *path, struct ctl_table *table);
- struct ctl_table_header *register_sysctl(const char *path, struct ctl_table *table);
- struct ctl_table_header *register_sysctl_table(struct ctl_table * table);
--struct ctl_table_header *register_sysctl_paths(const struct ctl_path *path,
--						struct ctl_table *table);
+@@ -1369,6 +1372,11 @@ struct ctl_table_header *__register_sysctl_table(
+ 		if (namelen == 0)
+ 			continue;
  
- void unregister_sysctl_table(struct ctl_table_header * table);
- 
-@@ -277,12 +272,6 @@ static inline struct ctl_table_header *register_sysctl_mount_point(const char *p
- 	return NULL;
- }
- 
--static inline struct ctl_table_header *register_sysctl_paths(
--			const struct ctl_path *path, struct ctl_table *table)
--{
--	return NULL;
--}
--
- static inline struct ctl_table_header *register_sysctl(const char *path, struct ctl_table *table)
- {
- 	return NULL;
++		/*
++		 * namelen ensures if name is "foo/bar/yay" only foo is
++		 * registered first. We traverse as if using mkdir -p and
++		 * return a ctl_dir for the last directory entry.
++		 */
+ 		dir = get_subdir(dir, name, namelen);
+ 		if (IS_ERR(dir))
+ 			goto fail;
 -- 
 2.39.1
 
