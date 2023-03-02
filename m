@@ -1,188 +1,158 @@
-Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81B210FA
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 19:53:27 +0000 (UTC)
-Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-1720433ba75so637006fac.5
-        for <patches@lists.linux.dev>; Thu, 02 Mar 2023 11:53:27 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3E7A93A
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 20:02:59 +0000 (UTC)
+Received: by mail-vs1-f47.google.com with SMTP id d20so380284vsf.11
+        for <patches@lists.linux.dev>; Thu, 02 Mar 2023 12:02:59 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:from:to:cc:subject:date:message-id:reply-to;
+        bh=ytPEWIqhwaCarWJc5HTAE9DnXoPRR9+OJ57LsDquhy8=;
+        b=Yce9ojHEdVsInJzWr3wZCZrAHq+GwsLhfKhWAgWBe9rPqACHGlIwU00inP24k0sv3k
+         i0zj1pF+ZP8maq7o/Fv0gl/+7HDrfStCJA3LF9lVWmUSE+7ChVY7LR+3D+RNTeXJIfhv
+         DtpRIS9tJudFQcjjPgY7inCX0F4+dyABmSL62SGNhO5KoF7QlF97/qByL3/UAHGrU6uN
+         q20kW3Xfc6SNIzI1ngDOrj2EfALoh7rsdaJmq610WALbpxEYS9XJBDvPW+iUPHzF1Ut0
+         1VxfvPP2dhQVsm/BtXBTDXkLIh+52xnjrew33YdWNttOHO67qyA0VUr+7Hl+6UuzdUka
+         CKjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=f95O1774ZoBykD/usZaosY+efoKseNjJy4cpA8XSzCQ=;
-        b=R4hqN0g0GE8Tbgy7f6JX/1kh3786XwE0oH7sRql2WaS6xgsl+Tef7tK2HMSKhcbN4i
-         AeENneQ12ZKTSV/2tjicbm8GaoSawJjciMuaxdP/T1b35AIeLw9ItnZZP8F+5jKxdP5C
-         w8oJ7g4A1G3aMgv+Zv4FUFP8cdsWkz44HS3UDPVPkImZ2F9YRKfDaInZNbGftSLluPmc
-         UOWx4UZDK/VsUPLbxmfGe4oIepBiF5O1pYIGOpHh36rUxNBa6IQUEkdLMtX/3FbWOa6a
-         IoHeFEGQVxqXppHzkeuy59G7F48jkD2monsN+1CySgHoPgLVyeSEcIoBe/YSu+ko5nDe
-         s+Tw==
-X-Gm-Message-State: AO0yUKU7c0X9bwt+MyRNXcICO8j8d+CRlNvqu39teDM3K+7GwiFl/q+J
-	TIAU2GlyCO5H35ZGQDuHBJB/R8nbh6ihEA==
-X-Google-Smtp-Source: AK7set8X20OhtL4WcIzo1V181NAtqZX72IK5quJBx4AOwHEcOnrneezyp9xtewok9g5ml4v2VpF5Pg==
-X-Received: by 2002:a05:6870:3486:b0:176:308b:5398 with SMTP id n6-20020a056870348600b00176308b5398mr3096492oah.51.1677786806649;
-        Thu, 02 Mar 2023 11:53:26 -0800 (PST)
-Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com. [209.85.161.41])
-        by smtp.gmail.com with ESMTPSA id i17-20020a056870d41100b001723f29f6e2sm237119oag.37.2023.03.02.11.53.26
-        for <patches@lists.linux.dev>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 02 Mar 2023 11:53:26 -0800 (PST)
-Received: by mail-oo1-f41.google.com with SMTP id c184-20020a4a4fc1000000b005250b2dc0easo102386oob.2
-        for <patches@lists.linux.dev>; Thu, 02 Mar 2023 11:53:26 -0800 (PST)
-X-Received: by 2002:a81:ad1b:0:b0:52f:1c23:ef1 with SMTP id
- l27-20020a81ad1b000000b0052f1c230ef1mr7066170ywh.5.1677786463634; Thu, 02 Mar
- 2023 11:47:43 -0800 (PST)
+        h=cc:to:subject:message-id:date:from:in-reply-to:references
+         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
+         :reply-to;
+        bh=ytPEWIqhwaCarWJc5HTAE9DnXoPRR9+OJ57LsDquhy8=;
+        b=1sn0ZlFWmHeOJcB6hwpLmF74ST8gamWryIVWcgPA0DQjLTe4ny+U0K5V7pcOg60fzq
+         q3hT5u2aqlJGRCVpGqV5VmoJhmNzuJp3fRxGBKXLvIhYhVUa9pR6jJhB9Pdo1Di2ZmHI
+         9INv7zV0EPmcHZqA8tI2xb08WhFSHv0lhZLIEMcpjxjeK+GGkXWm6xYo2Nz9C1RYp29B
+         jEj/QjGH8tnWZih2vIS/g3WPVxGjAL7O5QjOsk4aDkfLSojq6p2id8p67HIslqn8u0as
+         UdYCQ0sgCtVX8Uf12K8kwMJQoz6fhSEnCR+gN6Iqq681PQX5n2drBf4vfD/wnxK3wen5
+         DEyA==
+X-Gm-Message-State: AO0yUKUOtlSfZZ8puKsAqUzQ7ulpQJPFKgWE8hzIwNxNoV2cWum+VNgh
+	sHbnKKdS/a6NpmNl/lKnNag6obkrla77TjjdbdZ1kA==
+X-Google-Smtp-Source: AK7set+eVyokK1v5FAUJHHwSpcbcC+NkbL9iwTxddN0InqDlQuz/M6pEyf0rzQmaP/Vf/VhSyBB3gxvQhFmom/1DaHo=
+X-Received: by 2002:a67:a641:0:b0:411:c62b:6bf0 with SMTP id
+ r1-20020a67a641000000b00411c62b6bf0mr7584347vsh.3.1677787378333; Thu, 02 Mar
+ 2023 12:02:58 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230302013822.1808711-1-sboyd@kernel.org> <CABVgOSnpMNCtEEsJV28OzUoxdDuiT4a2T0avP0AYf9xFW1jxrw@mail.gmail.com>
- <CAL_JsqJMd3Fi0ZBObdyE1VDKTH1_+smuGDymHnKOkVH2HB3jJQ@mail.gmail.com> <3759b28cca7ab751296d4dd83f2dcc51.sboyd@kernel.org>
-In-Reply-To: <3759b28cca7ab751296d4dd83f2dcc51.sboyd@kernel.org>
-From: Geert Uytterhoeven <geert@linux-m68k.org>
-Date: Thu, 2 Mar 2023 20:47:32 +0100
-X-Gmail-Original-Message-ID: <CAMuHMdXDx6ChRj4xvWbQgcdJd0CGFi-RXySXr=M8QhBkA7YiGw@mail.gmail.com>
-Message-ID: <CAMuHMdXDx6ChRj4xvWbQgcdJd0CGFi-RXySXr=M8QhBkA7YiGw@mail.gmail.com>
-Subject: Re: [PATCH 0/8] clk: Add kunit tests for fixed rate and parent data
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: David Gow <davidgow@google.com>, Rob Herring <robh+dt@kernel.org>, 
-	Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
-	Brendan Higgins <brendan.higgins@linux.dev>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
-	"Rafael J . Wysocki" <rafael@kernel.org>, Richard Weinberger <richard@nod.at>, 
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>, Johannes Berg <johannes@sipsolutions.net>, 
-	Vincent Whitchurch <vincent.whitchurch@axis.com>, Frank Rowand <frowand.list@gmail.com>, 
-	Christian Marangi <ansuelsmth@gmail.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, 
-	linux-um@lists.infradead.org, linux-kselftest@vger.kernel.org, 
-	kunit-dev@googlegroups.com
+References: <20230301180657.003689969@linuxfoundation.org> <CA+G9fYtDGpgT4dckXD-y-N92nqUxuvue_7AtDdBcHrbOMsDZLg@mail.gmail.com>
+ <ZAB6pP3MNy152f+7@kroah.com> <CA+G9fYsHbQyQFp+vMnmFKDSQxrmj-VKsexWq-aayxgrY+0O7KQ@mail.gmail.com>
+In-Reply-To: <CA+G9fYsHbQyQFp+vMnmFKDSQxrmj-VKsexWq-aayxgrY+0O7KQ@mail.gmail.com>
+From: Naresh Kamboju <naresh.kamboju@linaro.org>
+Date: Fri, 3 Mar 2023 01:32:47 +0530
+Message-ID: <CA+G9fYsn+AhWTFA+ZJmfFsM71WGLPOFemZp_vhFMMLUcgcAXKg@mail.gmail.com>
+Subject: Re: [PATCH 6.1 00/42] 6.1.15-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
+	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
+	srw@sladewatkins.net, rwarsow@gmx.de, mptcp@lists.linux.dev, 
+	Florian Westphal <fw@strlen.de>, Mat Martineau <mathew.j.martineau@linux.intel.com>, 
+	Matthieu Baerts <matthieu.baerts@tessares.net>, Anders Roxell <anders.roxell@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-Hi Stephen,
-
-On Thu, Mar 2, 2023 at 8:28=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> wrot=
-e:
-> Quoting Rob Herring (2023-03-02 09:32:09)
-> > On Thu, Mar 2, 2023 at 2:14=E2=80=AFAM David Gow <davidgow@google.com> =
-wrote:
-> > > On Thu, 2 Mar 2023 at 09:38, Stephen Boyd <sboyd@kernel.org> wrote:
-> > > > This patch series adds unit tests for the clk fixed rate basic type=
- and
-> > > > the clk registration functions that use struct clk_parent_data. To =
-get
-> > > > there, we add support for loading a DTB into the UML kernel that's
-> > > > running the unit tests along with probing platform drivers to bind =
-to
-> > > > device nodes specified in DT.
-> > > >
-> > > > With this series, we're able to exercise some of the code in the co=
-mmon
-> > > > clk framework that uses devicetree lookups to find parents and the =
-fixed
-> > > > rate clk code that scans devicetree directly and creates clks. Plea=
-se
-> > > > review.
-> > > >
-> > >
-> > > Thanks Stephen -- this is really neat!
-> > >
-> > > This works well here, and I love all of the tests for the
-> > > KUnit/device-tree integration as well.
-> > >
-> > > I'm still looking through the details of it (alas, I've mostly lived
-> > > in x86-land, so my device-tree knowledge is, uh, spotty to say the
-> > > least), but apart from possibly renaming some things or similarly
-> > > minor tweaks, I've not got any real suggestions thus far.
-> > >
-> > > I do wonder whether we'll want, on the KUnit side, to have some way o=
-f
-> > > supporting KUnit device trees on non-UML architecctures (e.g., if we
-> > > need to test something architecture-specific, or on a big-endian
-> > > platform, etc), but I think that's a question for the future, rather
-> > > than something that affects this series.
+On Thu, 2 Mar 2023 at 16:30, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+>
+> On Thu, 2 Mar 2023 at 16:00, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
 > >
-> > I'll say that's a requirement. We should be able to structure the
-> > tests to not interfere with the running system's DT. The DT unittest
-> > does that.
+> > On Thu, Mar 02, 2023 at 03:49:31PM +0530, Naresh Kamboju wrote:
+> > > On Wed, 1 Mar 2023 at 23:42, Greg Kroah-Hartman
+> > > <gregkh@linuxfoundation.org> wrote:
+> > > >
+> > > > This is the start of the stable review cycle for the 6.1.15 release.
+> > > > There are 42 patches in this series, all will be posted as a response
+> > > > to this one.  If anyone has any issues with these being applied, please
+> > > > let me know.
+> > > >
+> > > > Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
+> > > > Anything received after that time might be too late.
+> > > >
+> > > > The whole patch series can be found in one patch at:
+> > > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.15-rc1.gz
+> > > > or in the git tree and branch at:
+> > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > > > and the diffstat can be found below.
+> > > >
+> > > > thanks,
+> > > >
+> > > > greg k-h
+> > >
+> > > Regression found on Linux version 6.1.15-rc1 on 32-bit arm x15 and i386.
+> > >
+> > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > >
+> > > ## Build
+> > > * kernel: 6.1.15-rc1
+> > > * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+> > > * git branch: linux-6.1.y
+> > > * git commit: b6150251d4ddf8a80510c185d839631e252e6317
+> > > * git describe: v6.1.14-43-gb6150251d4dd
+> > > * test details:
+> > > https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.14-43-gb6150251d4dd
+> > >
+> > > Regression test cases,
+> > > i386:
+> > > x15:
+> > >   * kselftest-net-mptcp/net_mptcp_mptcp_sockopt_sh
+> > >
+> > > # mptcp_sockopt: mptcp_sockopt.c:353: do_getsockopt_tcp_info:
+> > > Assertion `ti.d.size_user == sizeof(struct tcp_info)' failed.
+> > > # mptcp_sockopt: mptcp_sockopt.c:353: do_getsockopt_tcp_info:
+> > > Assertion `ti.d.size_user == sizeof(struct tcp_info)' failed.
+> > >
+> > > test log:
+> > > ----------
+> > >
+> > > # selftests: net/mptcp: mptcp_sockopt.sh
 >
-> That could be another choice in the unit test choice menu.
-> CONFIG_OF_KUNIT_NOT_UML that injects some built-in DTB overlay on an
-> architecture that wants to run tests.
-
-As long as you use compatible values that don't exist elsewhere,
-and don't overwrite anything, you can load your kunit test overlays
-on any running system that has DT support.
-
-> > As a side topic, Is anyone looking at getting UML to work on arm64?
-> > It's surprising how much x86 stuff there is which is I guess one
-> > reason it hasn't happened.
+> ....
 >
-> I've no idea but it would be nice indeed.
-
-I believe that's non-trivial. At least for arm32 (I didn't have any arm64
-systems last time I asked the experts).
-
-> > > Similarly, I wonder if there's something we could do with device tree
-> > > overlays, in order to make it possible for tests to swap nodes in and
-> > > out for testing.
+> > Nit, wrapping a log like this makes it hard to read, don't you think?
+>
+> Me either.
+> That is the reason I have shared "Assertion" above.
+>
 > >
-> > Yes, that's how the DT unittest works. But it is pretty much one big
-> > overlay (ignoring the overlay tests). It could probably be more
-> > modular where it is apply overlay, test, remove overlay, repeat.
+> > > # mptcp_sockopt: mptcp_sockopt.c:353: do_getsockopt_tcp_info:
+> > > Assertion `ti.d.size_user == sizeof(struct tcp_info)' failed.
+> > > # server killed by signal 6
+> > > #
+> > > # FAIL: SOL_MPTCP getsockopt
+> > > # PASS: TCP_INQ cmsg/ioctl -t tcp
+> > > # PASS: TCP_INQ cmsg/ioctl -6 -t tcp
+> > > # PASS: TCP_INQ cmsg/ioctl -r tcp
+> > > # PASS: TCP_INQ cmsg/ioctl -6 -r tcp
+> > > # PASS: TCP_INQ cmsg/ioctl -r tcp -t tcp
+> > > not ok 6 selftests: net/mptcp: mptcp_sockopt.sh # exit=1
+> >
+> > Any chance you can bisect?
 >
-> I didn't want to rely on the overlay code to inject DT nodes. Having
-> tests written for the fake KUnit machine is simple. It closely matches
-> how clk code probes the DTB and how nodes are created and populated on
-> the platform bus as devices. CLK_OF_DECLARE() would need the overlay to
-> be applied early too, which doesn't happen otherwise as far as I know.
+> We are running our bisection scripts.
 
-Don't all generic clock drivers also create a platform driver?
-At least drivers/clk/clk-fixed-factor.c does.
+We have tested with 6.1.14 kselftests source again and it passes.
+Now that we have upgraded to 6.2.1 kselftests source, we find that
+there is this problem reported. so, not a kernel regression.
 
-> But perhaps this design is too much of an end-to-end test and not a unit
-> test? In the spirit of unit testing we shouldn't care about how the node
-> is added to the live devicetree, just that there is a devicetree at all.
->
-> Supporting overlays to more easily test combinations sounds like a good
-> idea. Probably some kunit_*() prefixed functions could be used to
-> apply a test managed overlay and automatically remove it when the test
-> is over would work. The clk registration tests could use this API to
-> inject an overlay and then manually call the of_platform_populate()
-> function to create the platform device(s). The overlay could be built in
-> drivers/clk/ too and then probably some macroish function can find the
-> blob and apply it.
+Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
 
-No need to manually call of_platform_populate() to create the
-platform devices. That is taken care of automatically when applying
-an overlay.
-
-> Is there some way to delete the platform devices that we populate from
-> the overlay? I'd like the tests to be hermetic.
-
-Removing the overlay will delete the platform devices.
-
-All of that works if you have your own code to apply a DT overlay.
-The recent fw_devlinks patches did cause some regressions, cfr.
-https://lore.kernel.org/all/CAMuHMdXEnSD4rRJ-o90x4OprUacN_rJgyo8x6=3D9F9rZ+=
--KzjOg@mail.gmail.com
-
-P.S. Shameless plug: for loading overlays from userspace, there are
-     my overlay branches, cfr. https://elinux.org/R-Car/DT-Overlays
-
-Gr{oetje,eeting}s,
-
-                        Geert
+## Build
+* kernel: 6.1.15-rc1
+* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+* git branch: linux-6.1.y
+* git commit: b6150251d4ddf8a80510c185d839631e252e6317
+* git describe: v6.1.14-43-gb6150251d4dd
+* test details:
+https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.14-43-gb6150251d4dd
 
 
 --
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
-.org
-
-In personal conversations with technical people, I call myself a hacker. Bu=
-t
-when I'm talking to journalists I just say "programmer" or something like t=
-hat.
-                                -- Linus Torvalds
+Linaro LKFT
+https://lkft.linaro.org
