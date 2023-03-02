@@ -1,147 +1,188 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-oa1-f42.google.com (mail-oa1-f42.google.com [209.85.160.42])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BD5EE10FA
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 19:44:39 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 454DFC433EF;
-	Thu,  2 Mar 2023 19:44:39 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1677786279;
-	bh=Gg0MB69jq45zUDzbufKVzCb4e8QnQUlughxd29kp6D4=;
-	h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-	b=UF/A3cNrIHCjYUH8VfY/NK6UpVZIokCbrtWmA0U5IV3wIHe5pk73luJg1oh0zsOQd
-	 7JxdJ445auFN5T/F/vj1J5gd7cAsbz9Mq2s4jsmwzIMgimBw+VGjfWpbRESZAyDWvL
-	 j9GmxFoc+U3+M0qAgS43FDQDbe3PJ3A2lx0JR+Y/qroSv2U41EAit3wbqxG8fyD6cE
-	 mspGkwIZQy786bHnEiMq7JDm3/vyzhB+39wDVQPiqFcSfsXd/+FV4HCZHJxZMiuC0z
-	 mlISEufoYhbF200VNRCve2zyJhpeTmz/mVL17+PsdEUHsBreG7BEBMiTsl4sqZ/lCv
-	 wJbE8//XBcK4A==
-Message-ID: <093867df6137ad9e964b7dd90fb58f1a.sboyd@kernel.org>
-Content-Type: text/plain; charset="utf-8"
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D81B210FA
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 19:53:27 +0000 (UTC)
+Received: by mail-oa1-f42.google.com with SMTP id 586e51a60fabf-1720433ba75so637006fac.5
+        for <patches@lists.linux.dev>; Thu, 02 Mar 2023 11:53:27 -0800 (PST)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=f95O1774ZoBykD/usZaosY+efoKseNjJy4cpA8XSzCQ=;
+        b=R4hqN0g0GE8Tbgy7f6JX/1kh3786XwE0oH7sRql2WaS6xgsl+Tef7tK2HMSKhcbN4i
+         AeENneQ12ZKTSV/2tjicbm8GaoSawJjciMuaxdP/T1b35AIeLw9ItnZZP8F+5jKxdP5C
+         w8oJ7g4A1G3aMgv+Zv4FUFP8cdsWkz44HS3UDPVPkImZ2F9YRKfDaInZNbGftSLluPmc
+         UOWx4UZDK/VsUPLbxmfGe4oIepBiF5O1pYIGOpHh36rUxNBa6IQUEkdLMtX/3FbWOa6a
+         IoHeFEGQVxqXppHzkeuy59G7F48jkD2monsN+1CySgHoPgLVyeSEcIoBe/YSu+ko5nDe
+         s+Tw==
+X-Gm-Message-State: AO0yUKU7c0X9bwt+MyRNXcICO8j8d+CRlNvqu39teDM3K+7GwiFl/q+J
+	TIAU2GlyCO5H35ZGQDuHBJB/R8nbh6ihEA==
+X-Google-Smtp-Source: AK7set8X20OhtL4WcIzo1V181NAtqZX72IK5quJBx4AOwHEcOnrneezyp9xtewok9g5ml4v2VpF5Pg==
+X-Received: by 2002:a05:6870:3486:b0:176:308b:5398 with SMTP id n6-20020a056870348600b00176308b5398mr3096492oah.51.1677786806649;
+        Thu, 02 Mar 2023 11:53:26 -0800 (PST)
+Received: from mail-oo1-f41.google.com (mail-oo1-f41.google.com. [209.85.161.41])
+        by smtp.gmail.com with ESMTPSA id i17-20020a056870d41100b001723f29f6e2sm237119oag.37.2023.03.02.11.53.26
+        for <patches@lists.linux.dev>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Mar 2023 11:53:26 -0800 (PST)
+Received: by mail-oo1-f41.google.com with SMTP id c184-20020a4a4fc1000000b005250b2dc0easo102386oob.2
+        for <patches@lists.linux.dev>; Thu, 02 Mar 2023 11:53:26 -0800 (PST)
+X-Received: by 2002:a81:ad1b:0:b0:52f:1c23:ef1 with SMTP id
+ l27-20020a81ad1b000000b0052f1c230ef1mr7066170ywh.5.1677786463634; Thu, 02 Mar
+ 2023 11:47:43 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <CAL_JsqLVQVZhYTSZgrvA-V-xOUbiBdyDxqPOZk=89YS33EahBQ@mail.gmail.com>
-References: <20230302013822.1808711-1-sboyd@kernel.org> <CAL_JsqLVQVZhYTSZgrvA-V-xOUbiBdyDxqPOZk=89YS33EahBQ@mail.gmail.com>
+References: <20230302013822.1808711-1-sboyd@kernel.org> <CABVgOSnpMNCtEEsJV28OzUoxdDuiT4a2T0avP0AYf9xFW1jxrw@mail.gmail.com>
+ <CAL_JsqJMd3Fi0ZBObdyE1VDKTH1_+smuGDymHnKOkVH2HB3jJQ@mail.gmail.com> <3759b28cca7ab751296d4dd83f2dcc51.sboyd@kernel.org>
+In-Reply-To: <3759b28cca7ab751296d4dd83f2dcc51.sboyd@kernel.org>
+From: Geert Uytterhoeven <geert@linux-m68k.org>
+Date: Thu, 2 Mar 2023 20:47:32 +0100
+X-Gmail-Original-Message-ID: <CAMuHMdXDx6ChRj4xvWbQgcdJd0CGFi-RXySXr=M8QhBkA7YiGw@mail.gmail.com>
+Message-ID: <CAMuHMdXDx6ChRj4xvWbQgcdJd0CGFi-RXySXr=M8QhBkA7YiGw@mail.gmail.com>
 Subject: Re: [PATCH 0/8] clk: Add kunit tests for fixed rate and parent data
-From: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org, patches@lists.linux.dev, Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, Rafael J . Wysocki <rafael@kernel.org>, Richard Weinberger <richard@nod.at>, Anton Ivanov <anton.ivanov@cambridgegreys.com>, Johannes Berg <johannes@sipsolutions.net>, Vincent Whitchurch <vincent.whitchurch@axis.com>, Frank Rowand <frowand.list@gmail.com>, Christian Marangi <ansuelsmth@gmail.com>, Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, linux-um@lists.infradead.org, linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com
-To: Rob Herring <robh+dt@kernel.org>
-Date: Thu, 02 Mar 2023 11:44:37 -0800
-User-Agent: alot/0.10
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: David Gow <davidgow@google.com>, Rob Herring <robh+dt@kernel.org>, 
+	Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
+	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
+	Brendan Higgins <brendan.higgins@linux.dev>, Greg Kroah-Hartman <gregkh@linuxfoundation.org>, 
+	"Rafael J . Wysocki" <rafael@kernel.org>, Richard Weinberger <richard@nod.at>, 
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>, Johannes Berg <johannes@sipsolutions.net>, 
+	Vincent Whitchurch <vincent.whitchurch@axis.com>, Frank Rowand <frowand.list@gmail.com>, 
+	Christian Marangi <ansuelsmth@gmail.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, 
+	linux-um@lists.infradead.org, linux-kselftest@vger.kernel.org, 
+	kunit-dev@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Quoting Rob Herring (2023-03-02 09:13:59)
-> On Wed, Mar 1, 2023 at 7:38=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> wr=
-ote:
+Hi Stephen,
+
+On Thu, Mar 2, 2023 at 8:28=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> wrot=
+e:
+> Quoting Rob Herring (2023-03-02 09:32:09)
+> > On Thu, Mar 2, 2023 at 2:14=E2=80=AFAM David Gow <davidgow@google.com> =
+wrote:
+> > > On Thu, 2 Mar 2023 at 09:38, Stephen Boyd <sboyd@kernel.org> wrote:
+> > > > This patch series adds unit tests for the clk fixed rate basic type=
+ and
+> > > > the clk registration functions that use struct clk_parent_data. To =
+get
+> > > > there, we add support for loading a DTB into the UML kernel that's
+> > > > running the unit tests along with probing platform drivers to bind =
+to
+> > > > device nodes specified in DT.
+> > > >
+> > > > With this series, we're able to exercise some of the code in the co=
+mmon
+> > > > clk framework that uses devicetree lookups to find parents and the =
+fixed
+> > > > rate clk code that scans devicetree directly and creates clks. Plea=
+se
+> > > > review.
+> > > >
+> > >
+> > > Thanks Stephen -- this is really neat!
+> > >
+> > > This works well here, and I love all of the tests for the
+> > > KUnit/device-tree integration as well.
+> > >
+> > > I'm still looking through the details of it (alas, I've mostly lived
+> > > in x86-land, so my device-tree knowledge is, uh, spotty to say the
+> > > least), but apart from possibly renaming some things or similarly
+> > > minor tweaks, I've not got any real suggestions thus far.
+> > >
+> > > I do wonder whether we'll want, on the KUnit side, to have some way o=
+f
+> > > supporting KUnit device trees on non-UML architecctures (e.g., if we
+> > > need to test something architecture-specific, or on a big-endian
+> > > platform, etc), but I think that's a question for the future, rather
+> > > than something that affects this series.
 > >
-> > This patch series adds unit tests for the clk fixed rate basic type and
-> > the clk registration functions that use struct clk_parent_data. To get
-> > there, we add support for loading a DTB into the UML kernel that's
-> > running the unit tests along with probing platform drivers to bind to
-> > device nodes specified in DT.
+> > I'll say that's a requirement. We should be able to structure the
+> > tests to not interfere with the running system's DT. The DT unittest
+> > does that.
+>
+> That could be another choice in the unit test choice menu.
+> CONFIG_OF_KUNIT_NOT_UML that injects some built-in DTB overlay on an
+> architecture that wants to run tests.
+
+As long as you use compatible values that don't exist elsewhere,
+and don't overwrite anything, you can load your kunit test overlays
+on any running system that has DT support.
+
+> > As a side topic, Is anyone looking at getting UML to work on arm64?
+> > It's surprising how much x86 stuff there is which is I guess one
+> > reason it hasn't happened.
+>
+> I've no idea but it would be nice indeed.
+
+I believe that's non-trivial. At least for arm32 (I didn't have any arm64
+systems last time I asked the experts).
+
+> > > Similarly, I wonder if there's something we could do with device tree
+> > > overlays, in order to make it possible for tests to swap nodes in and
+> > > out for testing.
 > >
-> > With this series, we're able to exercise some of the code in the common
-> > clk framework that uses devicetree lookups to find parents and the fixed
-> > rate clk code that scans devicetree directly and creates clks. Please
-> > review.
-> >
-> > I Cced everyone to all the patches so they get the full context. I'm
-> > hoping I can take the whole pile through the clk tree as they almost all
-> > depend on each other. In the future I imagine it will be easy to add
-> > more test nodes to the clk.dtsi file and not need to go across various
-> > maintainer trees like this series does.
-> >
-> > Stephen Boyd (8):
-> >   dt-bindings: Add linux,kunit binding
-> >   of: Enable DTB loading on UML for KUnit tests
-> >   kunit: Add test managed platform_device/driver APIs
-> >   clk: Add test managed clk provider/consumer APIs
-> >   dt-bindings: kunit: Add fixed rate clk consumer test
-> >   clk: Add KUnit tests for clk fixed rate basic type
-> >   dt-bindings: clk: Add KUnit clk_parent_data test
-> >   clk: Add KUnit tests for clks registered with struct clk_parent_data
->=20
-> Good to see bindings for this. I've been meaning to do something about
-> the DT unittest ones being undocumented, but I hadn't really decided
-> whether it was worth writing schemas for them. The compatibles at
-> least show up with 'make dt_compatible_check'. Perhaps we want to just
-> define some vendor (not 'linux') that's an exception rather than
-> requiring schemas (actually, that already works for 'foo').
+> > Yes, that's how the DT unittest works. But it is pretty much one big
+> > overlay (ignoring the overlay tests). It could probably be more
+> > modular where it is apply overlay, test, remove overlay, repeat.
+>
+> I didn't want to rely on the overlay code to inject DT nodes. Having
+> tests written for the fake KUnit machine is simple. It closely matches
+> how clk code probes the DTB and how nodes are created and populated on
+> the platform bus as devices. CLK_OF_DECLARE() would need the overlay to
+> be applied early too, which doesn't happen otherwise as far as I know.
 
-Sure. Maybe "kunit" should be the vendor prefix? Or "dtbunit"?
+Don't all generic clock drivers also create a platform driver?
+At least drivers/clk/clk-fixed-factor.c does.
 
-> It's
-> likely that we want test DTs that fail normal checks and schemas get
-> in the way of that as we don't have a way to turn off checks.
+> But perhaps this design is too much of an end-to-end test and not a unit
+> test? In the spirit of unit testing we shouldn't care about how the node
+> is added to the live devicetree, just that there is a devicetree at all.
+>
+> Supporting overlays to more easily test combinations sounds like a good
+> idea. Probably some kunit_*() prefixed functions could be used to
+> apply a test managed overlay and automatically remove it when the test
+> is over would work. The clk registration tests could use this API to
+> inject an overlay and then manually call the of_platform_populate()
+> function to create the platform device(s). The overlay could be built in
+> drivers/clk/ too and then probably some macroish function can find the
+> blob and apply it.
 
-Having the schemas is nice to make sure tests that are expecting some
-binding are actually getting that. But supporting broken bindings is
-also important to test any error paths in functions that parse
-properties. Maybe we keep the schema and have it enforce that incorrect
-properties are being set?
+No need to manually call of_platform_populate() to create the
+platform devices. That is taken care of automatically when applying
+an overlay.
 
-Do we really need to test incorrect bindings? Doesn't the
-dt_bindings_check catch these problems so we don't have to write DTB
-verifiers in the kernel?
+> Is there some way to delete the platform devices that we populate from
+> the overlay? I'd like the tests to be hermetic.
 
->=20
-> We already have GPIO tests in the DT unittests, so why is clocks
-> different? Or should the GPIO tests be moved out (yes, please!)?
+Removing the overlay will delete the platform devices.
 
-Ah I didn't notice the GPIO tests in there. There are i2c tests too,
-right? All I can say is clks are using kunit, that's the difference ;-)
+All of that works if you have your own code to apply a DT overlay.
+The recent fw_devlinks patches did cause some regressions, cfr.
+https://lore.kernel.org/all/CAMuHMdXEnSD4rRJ-o90x4OprUacN_rJgyo8x6=3D9F9rZ+=
+-KzjOg@mail.gmail.com
 
->=20
-> What happens when/if the DT unittest is converted to kunit? I think
-> that would look confusing from the naming. My initial thought is
-> 'kunit' should be dropped from the naming of a lot of this. Note that
-> the original kunit submission converted the DT unittests. I would
-> still like to see that happen. Frank disagreed over what's a unit test
-> or not, then agreed, then didn't... I don't really care. If there's a
-> framework to use, then we should use it IMO.
+P.S. Shameless plug: for loading overlays from userspace, there are
+     my overlay branches, cfr. https://elinux.org/R-Car/DT-Overlays
 
-Honestly I don't want to get involved in migrating the existing DT
-unittest code to kunit. I'm aware that it was attempted years ago when
-kunit was introduced. Maybe if the overlay route works well enough I can
-completely sidestep introducing any code in drivers/of/ besides some
-kunit wrappers for this. I'll cross my fingers!
+Gr{oetje,eeting}s,
 
->=20
-> >
-> >  .../clock/linux,clk-kunit-parent-data.yaml    |  47 ++
-> >  .../kunit/linux,clk-kunit-fixed-rate.yaml     |  35 ++
-> >  .../bindings/kunit/linux,kunit.yaml           |  24 +
-> >  arch/um/kernel/dtb.c                          |  29 +-
-> >  drivers/clk/.kunitconfig                      |   3 +
-> >  drivers/clk/Kconfig                           |   7 +
-> >  drivers/clk/Makefile                          |   6 +
-> >  drivers/clk/clk-fixed-rate_test.c             | 296 ++++++++++++
-> >  drivers/clk/clk-kunit.c                       | 204 ++++++++
-> >  drivers/clk/clk-kunit.h                       |  28 ++
-> >  drivers/clk/clk_test.c                        | 456 +++++++++++++++++-
-> >  drivers/of/Kconfig                            |  26 +
-> >  drivers/of/Makefile                           |   1 +
-> >  drivers/of/kunit/.kunitconfig                 |   4 +
-> >  drivers/of/kunit/Makefile                     |   4 +
-> >  drivers/of/kunit/clk.dtsi                     |  30 ++
-> >  drivers/of/kunit/kunit.dtsi                   |   9 +
-> >  drivers/of/kunit/kunit.dtso                   |   4 +
-> >  drivers/of/kunit/uml_dtb_test.c               |  55 +++
-> >  include/kunit/platform_driver.h               |  15 +
-> >  lib/kunit/Makefile                            |   6 +
-> >  lib/kunit/platform_driver-test.c              | 107 ++++
-> >  lib/kunit/platform_driver.c                   | 207 ++++++++
->=20
-> Humm, we have DT platform driver unittests too. What's the difference?
+                        Geert
 
-Yes, I added unit tests for the kunit platform device/driver wrappers
-added in this series.
 
->=20
-> Anyways, that's all just my initial reaction from only halfway looking
-> at this. :)
+--
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k=
+.org
 
-Thanks for taking the time to review even halfway.
+In personal conversations with technical people, I call myself a hacker. Bu=
+t
+when I'm talking to journalists I just say "programmer" or something like t=
+hat.
+                                -- Linus Torvalds
