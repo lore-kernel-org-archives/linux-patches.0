@@ -1,121 +1,91 @@
-Received: from mail-pj1-f48.google.com (mail-pj1-f48.google.com [209.85.216.48])
+Received: from mail-qt1-f174.google.com (mail-qt1-f174.google.com [209.85.160.174])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A8664D53B
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 23:14:33 +0000 (UTC)
-Received: by mail-pj1-f48.google.com with SMTP id h17-20020a17090aea9100b0023739b10792so573146pjz.1
-        for <patches@lists.linux.dev>; Thu, 02 Mar 2023 15:14:33 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0A1BD53B
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 23:16:22 +0000 (UTC)
+Received: by mail-qt1-f174.google.com with SMTP id s12so1069537qtq.11
+        for <patches@lists.linux.dev>; Thu, 02 Mar 2023 15:16:22 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112; t=1677798873;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=dK5xBsNL80qIVhQ78+b+C534EV7ZA+MEtH4IecrU8fs=;
-        b=dQa60YkNB2aHmO2eQcUKKkWMpQNb0V1GmMgzCtjajumKPoUa34DT1KW4VyAmnDllnW
-         tBCca31eWsY8i/Th0ibNmqeeF5yKTzOum5xPC8aoXRqxuyQgj9C/JlnCifC4KCtAwKb8
-         v4pqyQ4ZiU+89CoZ5Y65rTyJozDPpo4HdJgXVwtmjxF22wLTfQyCouIvPQxV5uYQuCrw
-         P/jszesABAwdcZOuQmfKH1fSIxYPeLX27XyemZD3D40bp1QyeRTI9GkjDnwy80Yz6mZP
-         Y/v9wqkSOnnwI/cKXAGsP8HdbUugB3KtD44ZKRukUPs4uhA9J+HxV/G+qQp6JCvY/BCl
-         suAQ==
+        d=sladewatkins.net; s=googled; t=1677798981;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :from:to:cc:subject:date:message-id:reply-to;
+        bh=mxa28Y7hygfEshTx7Ke4jX3PSusIOBrq9MNBVDF6Qog=;
+        b=q7IORdgmqHSkayHK41XbJ+L8Ufh8e3bRUbyZvL/zxxvjCDQ/hFKZ65Ud5mao0IZHEv
+         rDQaIxts31qJ9c4PKj+s8UGGy5O0qOZCT2S6ZZNsJpCIy/7DQAwkYsOjYMfPd/YZrQdA
+         IXX16Kqi+ESCdBEdsR4qyaPxm4h8DQe82pJpuln71NzD7WEHjJVYnK2+SvmIsD2vbY7N
+         kguyhDIiODl/i6678FxwK+2BN77FfsFAL55bqXwLQDTdT8oLVEXo7K8gU55LyuHf0W8C
+         5pNrzDBsiPqaGcn40kcDJQAhslfkx2T+xjfC5Ih+/MDOPidFvt+KB/uz365HdaqKABxr
+         ekig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677798873;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=dK5xBsNL80qIVhQ78+b+C534EV7ZA+MEtH4IecrU8fs=;
-        b=Fc79mkKmJrSy0Nxpsp+kE4jHPcB4mp/HJpXTPjsi0lC8l3fVtPb5qCkMrTkbN56SZO
-         fytXQqvxOH+shCRj5IYVk17En+Y6YTCaB85qJnXkF5kTH9r7nFHWLotupsiXSUKujbVX
-         1Kl98L4fSip/v13MYdT4+OoAtkhmNt3GSUAgZrNn27lYPP67j6oZ9OpjmykOkDb0lPTg
-         s54YyVaohfk2fJiSohL3vUzqA8i0Z1zCHQMcbLpXKiDLCEVNsuVRw+Yut6R+GNde7AUi
-         jMLzDxE6j3k0m5rGRSxj/Vmo5IlM1nysZyW+ALcjwsnWviWbKs3RrT9w+O2/f3iJonL6
-         o1BQ==
-X-Gm-Message-State: AO0yUKXISarlwZ33d1YTenXCAj3bUzewn5D576idvPrLV0j6548kCYgR
-	pejvYKfuum3tQfTgC7iWwuwxj9yL2DoII1kWO2Q0SQ==
-X-Google-Smtp-Source: AK7set/wy4RYTpF9DE9+esAO3swTwx9AMlMSD7Y2MF1LhQ+HmQO3b//lY81QPmALZdw979D/M11S681c0YXmtKI/bVE=
-X-Received: by 2002:a17:903:2591:b0:19a:8bc7:d814 with SMTP id
- jb17-20020a170903259100b0019a8bc7d814mr4441125plb.13.1677798872570; Thu, 02
- Mar 2023 15:14:32 -0800 (PST)
+        d=1e100.net; s=20210112; t=1677798981;
+        h=content-transfer-encoding:in-reply-to:from:content-language
+         :references:cc:to:subject:user-agent:mime-version:date:message-id
+         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+        bh=mxa28Y7hygfEshTx7Ke4jX3PSusIOBrq9MNBVDF6Qog=;
+        b=kC6UrRQAA7KYDyZYvXFidqGu4P6htCWwyaSEcj5QQbwn8Jucs8p6tTraWJvyg05sSe
+         2LSfB3QO0gYX2pPc2/6ow0VaBZ8DcRXAO2+bF16gEnQb9/PU9lVPlkTz9Gwx4cY3bjZY
+         hh/3y53s93zT4cz4nLYPmSkLdjWUKkvI+enJvR4Qa15nML5hKZ1YC/uqGUlscQiz7gbB
+         NmZ74Fw3yW7T6C09VtHQuldnbOBbqahF+yInvo2moTdw8sl/tnDD1zbL6n7//1SogmnU
+         NjCm0roKH2/2cSiI2+rQ7m6Ov4kc9PoMinU5Oour6OERxva7TjEf6+r9mprdRTIXWJxS
+         8FNA==
+X-Gm-Message-State: AO0yUKWJx6MiUfq4gdCNbYsuvLjRoZMd3nMfFHggWwI7a9qtH7txpqJ8
+	ceEvMHdbBcaDswxSTxpkI90y3U7+/+QlVs845qlXmRX3/1Nz/hrI1U4lSAAKOld4C+SKRNyI9z2
+	PqUh+e/HEPAHv
+X-Google-Smtp-Source: AK7set+Ri5RAbc1MqQ7n0kSUkhtT9KGhkhT8DJQd1Ii6Na8chdKhNtTMQI8qkrzgOdcLT7TUReq+kg==
+X-Received: by 2002:a05:622a:c:b0:3b9:bc8c:c207 with SMTP id x12-20020a05622a000c00b003b9bc8cc207mr7514187qtw.18.1677798981464;
+        Thu, 02 Mar 2023 15:16:21 -0800 (PST)
+Received: from ghost.leviathan.sladewatkins.net (pool-108-44-32-49.albyny.fios.verizon.net. [108.44.32.49])
+        by smtp.gmail.com with ESMTPSA id t62-20020ae9df41000000b0073b7f2a0bcbsm584665qkf.36.2023.03.02.15.16.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 02 Mar 2023 15:16:21 -0800 (PST)
+Message-ID: <631f1536-ef72-2ff6-98db-02fc5b56eb34@sladewatkins.net>
+Date: Thu, 2 Mar 2023 18:16:19 -0500
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230302202826.776286-1-mcgrof@kernel.org> <20230302202826.776286-9-mcgrof@kernel.org>
-In-Reply-To: <20230302202826.776286-9-mcgrof@kernel.org>
-From: Jeff Xu <jeffxu@google.com>
-Date: Thu, 2 Mar 2023 15:13:54 -0800
-Message-ID: <CALmYWFucv6-9yfS=gamwSsqjgxSKZS0nvVjj_QfBmsLmQD5XOQ@mail.gmail.com>
-Subject: Re: [PATCH 08/11] kernel: pid_namespace: simplify sysctls with register_sysctl()
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com, 
-	john.johansen@canonical.com, paul@paul-moore.com, jmorris@namei.org, 
-	serge@hallyn.com, luto@amacapital.net, wad@chromium.org, 
-	dverkamp@chromium.org, paulmck@kernel.org, baihaowen@meizu.com, 
-	frederic@kernel.org, ebiggers@kernel.org, tytso@mit.edu, guoren@kernel.org, 
-	j.granados@samsung.com, zhangpeng362@huawei.com, tangmeng@uniontech.com, 
-	willy@infradead.org, nixiaoming@huawei.com, sujiaxun@uniontech.com, 
-	patches@lists.linux.dev, linux-fsdevel@vger.kernel.org, 
-	apparmor@lists.ubuntu.com, linux-security-module@vger.kernel.org, 
-	linux-csky@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 6.1 00/42] 6.1.15-rc1 review
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
+ torvalds@linux-foundation.org, akpm@linux-foundation.org,
+ linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
+ lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
+ f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, rwarsow@gmx.de
+References: <20230301180657.003689969@linuxfoundation.org>
+Content-Language: en-US, en-AU
+From: Slade Watkins <srw@sladewatkins.net>
+In-Reply-To: <20230301180657.003689969@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-SWM-Antispam: Scanned by proxmox-gateway.frozen.leviathan.sladewatkins.net
+X-SWM-Root-Server: frozen.leviathan.sladewatkins.net
+X-SWM-TLS-Policy-Status: enforced
+X-Gm-Spam: 0
+X-Gm-Phishy: 0
 
-On Thu, Mar 2, 2023 at 12:28=E2=80=AFPM Luis Chamberlain <mcgrof@kernel.org=
-> wrote:
->
-> register_sysctl_paths() is only required if your child (directories)
-> have entries and pid_namespace does not. So use register_sysctl_init()
-> instead where we don't care about the return value and use
-> register_sysctl() where we do.
->
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
-> ---
->  kernel/pid_namespace.c | 3 +--
->  kernel/pid_sysctl.h    | 3 +--
->  2 files changed, 2 insertions(+), 4 deletions(-)
->
-> diff --git a/kernel/pid_namespace.c b/kernel/pid_namespace.c
-> index 46e0d5a3f91f..b43eee07b00c 100644
-> --- a/kernel/pid_namespace.c
-> +++ b/kernel/pid_namespace.c
-> @@ -314,7 +314,6 @@ static struct ctl_table pid_ns_ctl_table[] =3D {
->         },
->         { }
->  };
-> -static struct ctl_path kern_path[] =3D { { .procname =3D "kernel", }, { =
-} };
->  #endif /* CONFIG_CHECKPOINT_RESTORE */
->
->  int reboot_pid_ns(struct pid_namespace *pid_ns, int cmd)
-> @@ -473,7 +472,7 @@ static __init int pid_namespaces_init(void)
->         pid_ns_cachep =3D KMEM_CACHE(pid_namespace, SLAB_PANIC | SLAB_ACC=
-OUNT);
->
->  #ifdef CONFIG_CHECKPOINT_RESTORE
-> -       register_sysctl_paths(kern_path, pid_ns_ctl_table);
-> +       register_sysctl_init("kernel", pid_ns_ctl_table);
->  #endif
->
->         register_pid_ns_sysctl_table_vm();
-> diff --git a/kernel/pid_sysctl.h b/kernel/pid_sysctl.h
-> index e22d072e1e24..d67a4d45bb42 100644
-> --- a/kernel/pid_sysctl.h
-> +++ b/kernel/pid_sysctl.h
-> @@ -46,10 +46,9 @@ static struct ctl_table pid_ns_ctl_table_vm[] =3D {
->         },
->         { }
->  };
-> -static struct ctl_path vm_path[] =3D { { .procname =3D "vm", }, { } };
->  static inline void register_pid_ns_sysctl_table_vm(void)
->  {
-> -       register_sysctl_paths(vm_path, pid_ns_ctl_table_vm);
-> +       register_sysctl("vm", pid_ns_ctl_table_vm);
->  }
->  #else
->  static inline void initialize_memfd_noexec_scope(struct pid_namespace *n=
-s) {}
-> --
-> 2.39.1
->
-Acked-by: Jeff Xu <jeffxu@google.com>
+On 3/1/23 13:08, Greg Kroah-Hartman wrote:
+> This is the start of the stable review cycle for the 6.1.15 release.
+> There are 42 patches in this series, all will be posted as a response
+> to this one.  If anyone has any issues with these being applied, please
+> let me know.
+> 
+> Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
+> Anything received after that time might be too late.
+> 
+> The whole patch series can be found in one patch at:
+> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.15-rc1.gz
+> or in the git tree and branch at:
+> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> and the diffstat can be found below.
+
+6.1.15-rc1 compiled and booted on my x86_64 test system. No errors or regressions.
+
+Tested-by: Slade Watkins <srw@sladewatkins.net>
+
+-- Slade
+
