@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF45D52C
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C94ED52E
 	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 20:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=MXqH7HxuGUp4vr/6baVHWsjCOA7cvGA5MJGn2lYMgHY=; b=Wn18YuHvszFD95jKeWngGibMfk
-	m0dkZQ/T4wh0lgQnmNyqnPNU8wiR3wNNIOFAQ/uJApiYoYiCX6W4rfGp9dazoMtM2bwoM+0WBiCNC
-	Zufdri5+sD3Q341upVXgIu1muzt5P4Jq3In7jEXridJQdLINYWC/lbJZRuwwbCAPQbiRw2Gifn7PV
-	5l4S/BZ9ufO6qSJiEuCDouaynQw+hbOCQIXagyqfer/Tf0CgxPlq9N55pKEXLUt0GgP9bjK+YI+um
-	6CZGflx9Hg4Q3sGl2wesUq57AAJ6djo3BjCYRDNYjrv49f8LE+JOOtmq1J70LFUnI4mMWXgd2vQ2k
-	0Y7scWbg==;
+	bh=dtfyNVshuDQIj+dlbLKUh3FrBpHjPuB+OiDl4kHMg0w=; b=y+/KNE5d+TW3hH8L9Iql5pMuDY
+	mtQ2q1980lq3pkwG/xQP1LmilCyPNzezGqF7q0DG5V7xsGEwDTYwL1JvJCDFTe/zRXH57HGHD5QW/
+	O8UeGtO2rrvC7q1JiYXTkhaSl2XwOkiMf9u7Bw475hl1I50DYfKypH7bafzPo/5auQO5nAWWpyMzo
+	gGUrJvFV6cuTyc3hE4lyn5hDmXOrOPtNk1IXXmXNQPVhLjpjwJ7GPmbWttNzvSv3PP/4O3nghH0oh
+	Q9RypKa5XuLJaNXMpBIQPO6xY6fjA5jHIzzVMBlTxnFZ6w8BOSv37SOKMsJSXJC05q7iNhPjFZil9
+	SHo+B+Mg==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pXpoc-003HXO-Df; Thu, 02 Mar 2023 20:46:14 +0000
+	id 1pXpoc-003HXY-T5; Thu, 02 Mar 2023 20:46:14 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: ebiederm@xmission.com,
 	keescook@chromium.org,
@@ -52,9 +52,9 @@ Cc: j.granados@samsung.com,
 	openipmi-developer@lists.sourceforge.net,
 	linux-kernel@vger.kernel.org,
 	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 2/7] ipmi: simplify sysctl registration
-Date: Thu,  2 Mar 2023 12:46:07 -0800
-Message-Id: <20230302204612.782387-3-mcgrof@kernel.org>
+Subject: [PATCH 7/7] xen: simplify sysctl registration for balloon
+Date: Thu,  2 Mar 2023 12:46:12 -0800
+Message-Id: <20230302204612.782387-8-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20230302204612.782387-1-mcgrof@kernel.org>
 References: <20230302204612.782387-1-mcgrof@kernel.org>
@@ -68,48 +68,52 @@ Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
 register_sysctl_table() is a deprecated compatibility wrapper.
-register_sysctl() can do the directory creation for you so just use
-that.
+register_sysctl_init() can do the directory creation for you so just
+use that.
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- drivers/char/ipmi/ipmi_poweroff.c | 16 +---------------
- 1 file changed, 1 insertion(+), 15 deletions(-)
+ drivers/xen/balloon.c | 20 +-------------------
+ 1 file changed, 1 insertion(+), 19 deletions(-)
 
-diff --git a/drivers/char/ipmi/ipmi_poweroff.c b/drivers/char/ipmi/ipmi_poweroff.c
-index 163ec9749e55..870659d91db2 100644
---- a/drivers/char/ipmi/ipmi_poweroff.c
-+++ b/drivers/char/ipmi/ipmi_poweroff.c
-@@ -659,20 +659,6 @@ static struct ctl_table ipmi_table[] = {
+diff --git a/drivers/xen/balloon.c b/drivers/xen/balloon.c
+index 617a7f4f07a8..586a1673459e 100644
+--- a/drivers/xen/balloon.c
++++ b/drivers/xen/balloon.c
+@@ -97,24 +97,6 @@ static struct ctl_table balloon_table[] = {
  	{ }
  };
  
--static struct ctl_table ipmi_dir_table[] = {
--	{ .procname	= "ipmi",
--	  .mode		= 0555,
--	  .child	= ipmi_table },
+-static struct ctl_table balloon_root[] = {
+-	{
+-		.procname	= "balloon",
+-		.mode		= 0555,
+-		.child		= balloon_table,
+-	},
 -	{ }
 -};
 -
--static struct ctl_table ipmi_root_table[] = {
--	{ .procname	= "dev",
--	  .mode		= 0555,
--	  .child	= ipmi_dir_table },
+-static struct ctl_table xen_root[] = {
+-	{
+-		.procname	= "xen",
+-		.mode		= 0555,
+-		.child		= balloon_root,
+-	},
 -	{ }
 -};
 -
- static struct ctl_table_header *ipmi_table_header;
- #endif /* CONFIG_PROC_FS */
+ #else
+ #define xen_hotplug_unpopulated 0
+ #endif
+@@ -747,7 +729,7 @@ static int __init balloon_init(void)
+ #ifdef CONFIG_XEN_BALLOON_MEMORY_HOTPLUG
+ 	set_online_page_callback(&xen_online_page);
+ 	register_memory_notifier(&xen_memory_nb);
+-	register_sysctl_table(xen_root);
++	register_sysctl_init("xen/balloon", balloon_table);
+ #endif
  
-@@ -689,7 +675,7 @@ static int __init ipmi_poweroff_init(void)
- 		pr_info("Power cycle is enabled\n");
- 
- #ifdef CONFIG_PROC_FS
--	ipmi_table_header = register_sysctl_table(ipmi_root_table);
-+	ipmi_table_header = register_sysctl("dev/ipmi", ipmi_table);
- 	if (!ipmi_table_header) {
- 		pr_err("Unable to register powercycle sysctl\n");
- 		rv = -ENOMEM;
+ 	balloon_add_regions();
 -- 
 2.39.1
 
