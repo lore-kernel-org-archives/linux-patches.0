@@ -1,134 +1,104 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 845CE8C11
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 17:14:12 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3C52CC433AA
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 17:14:12 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1677777252;
-	bh=sxh36iZQRth6PcbEK8rBaNdhPJuIjt084P0tIKyNndg=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=TAJj++imQypJWlswGfOoct5GpNWCJQsD7oCXqgQ+ZDG8uNTAaoEaYgHDCMmVXcK2X
-	 jB2C7tAJYpWiuL6YafBBMtsMVUYOCQrRTkfpoH2WH0W3qjbUP53Vj0Fw8x928o5+H0
-	 B3X0tkSkIQsoJKkhoOAQNwr3MaqnneespIRdTZKbtUtbpCq3wtLWfzBYaQCGuJznp5
-	 +2+jmuUHw6CUofbdurXFfoqeC+3fpZ523uvG5P3p8jI8KoD8MZuo1DwBAtxlhXwW0M
-	 i1AGLygTd9avSKC1IuYZNT7A91xL/Q075a1GwO/YFePebxenzP5rnDD7KFjGYoXuyQ
-	 w+gk9vEAOiauQ==
-Received: by mail-ua1-f46.google.com with SMTP id x40so6653092uaf.2
-        for <patches@lists.linux.dev>; Thu, 02 Mar 2023 09:14:12 -0800 (PST)
-X-Gm-Message-State: AO0yUKW+8hkbIziu5oA7BWy9zg3PBTzAjR1P+UAkl8J8TGsdtTx2qDuu
-	1FZQ5AHeS7dcLGhESu99SI4VdAnCQh9RtWaMaA==
-X-Google-Smtp-Source: AK7set/cWK8giFKY8fRLWeGOHTziXVw5azzC2FP84wrmvxubHnP5GVl40pOdsWrs8+z15dRYvJSehk78bGu43zZqZQU=
-X-Received: by 2002:a05:6122:b55:b0:40f:2033:6994 with SMTP id
- 21-20020a0561220b5500b0040f20336994mr6152564vko.2.1677777250943; Thu, 02 Mar
- 2023 09:14:10 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F6F8C11
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 17:16:50 +0000 (UTC)
+Received: from [192.168.2.216] (109-252-117-89.nat.spd-mgts.ru [109.252.117.89])
+	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+	(No client certificate requested)
+	(Authenticated sender: dmitry.osipenko)
+	by madras.collabora.co.uk (Postfix) with ESMTPSA id 701BC6602F64;
+	Thu,  2 Mar 2023 17:16:45 +0000 (GMT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
+	s=mail; t=1677777408;
+	bh=9+LsKOxASfHNgQnQTMd3imAcZuorrm+JG7Tg634FOpQ=;
+	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+	b=lv8cA+1K8lLWL+Hq3Il1En+EmYanRr3ngLoU7xULHJNRjXqCLJCAcSzT2kHPxWzKV
+	 7SODLXktKBo4B/tNN1kfY99kYLU3n2YtSuMRdOZwDf75MDKXfb9BLJwFNjIx5oJfu6
+	 kP7OVntfyOUiiM2LenxOejWBFkXou+ODfywxDjHQjsbER4JW3Ek0elAJds9vqY3GuW
+	 +q65ulD0gdYeRS2RQFA+HUT+v+QpTfcNN9H6Gvy26av8r/7jJyWWVemti1bIhjumbv
+	 zwHexHCF4b5jCGPTUaEpsgQViFHvs/aA4ujUd6p0dEhMi9yYTtTOU9DxYQvwBWTLhF
+	 SbibPjzT6Jnrw==
+Message-ID: <0c9d2708-cd94-7a68-4f55-02b5a41e073b@collabora.com>
+Date: Thu, 2 Mar 2023 20:16:35 +0300
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230302013822.1808711-1-sboyd@kernel.org>
-In-Reply-To: <20230302013822.1808711-1-sboyd@kernel.org>
-From: Rob Herring <robh+dt@kernel.org>
-Date: Thu, 2 Mar 2023 11:13:59 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqLVQVZhYTSZgrvA-V-xOUbiBdyDxqPOZk=89YS33EahBQ@mail.gmail.com>
-Message-ID: <CAL_JsqLVQVZhYTSZgrvA-V-xOUbiBdyDxqPOZk=89YS33EahBQ@mail.gmail.com>
-Subject: Re: [PATCH 0/8] clk: Add kunit tests for fixed rate and parent data
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
-	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
-	Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, 
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J . Wysocki" <rafael@kernel.org>, 
-	Richard Weinberger <richard@nod.at>, Anton Ivanov <anton.ivanov@cambridgegreys.com>, 
-	Johannes Berg <johannes@sipsolutions.net>, 
-	Vincent Whitchurch <vincent.whitchurch@axis.com>, Frank Rowand <frowand.list@gmail.com>, 
-	Christian Marangi <ansuelsmth@gmail.com>, 
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, 
-	linux-um@lists.infradead.org, linux-kselftest@vger.kernel.org, 
-	kunit-dev@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.8.0
+Subject: Re: [PATCH 5.10 16/19] drm/virtio: Correct
+ drm_gem_shmem_get_sg_table() error handling
+To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
+ Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Emil Velikov <emil.l.velikov@gmail.com>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ Ovidiu Panait <ovidiu.panait@windriver.com>,
+ Dan Carpenter <error27@gmail.com>, Darren Kenny <darren.kenny@oracle.com>,
+ Vegard Nossum <vegard.nossum@oracle.com>
+References: <20230301180652.316428563@linuxfoundation.org>
+ <20230301180652.989746215@linuxfoundation.org>
+ <78b78fd7-899c-aee8-4f82-f7e7dbc2f4c9@oracle.com>
+Content-Language: en-US
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+In-Reply-To: <78b78fd7-899c-aee8-4f82-f7e7dbc2f4c9@oracle.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-On Wed, Mar 1, 2023 at 7:38=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> wrot=
-e:
->
-> This patch series adds unit tests for the clk fixed rate basic type and
-> the clk registration functions that use struct clk_parent_data. To get
-> there, we add support for loading a DTB into the UML kernel that's
-> running the unit tests along with probing platform drivers to bind to
-> device nodes specified in DT.
->
-> With this series, we're able to exercise some of the code in the common
-> clk framework that uses devicetree lookups to find parents and the fixed
-> rate clk code that scans devicetree directly and creates clks. Please
-> review.
->
-> I Cced everyone to all the patches so they get the full context. I'm
-> hoping I can take the whole pile through the clk tree as they almost all
-> depend on each other. In the future I imagine it will be easy to add
-> more test nodes to the clk.dtsi file and not need to go across various
-> maintainer trees like this series does.
->
-> Stephen Boyd (8):
->   dt-bindings: Add linux,kunit binding
->   of: Enable DTB loading on UML for KUnit tests
->   kunit: Add test managed platform_device/driver APIs
->   clk: Add test managed clk provider/consumer APIs
->   dt-bindings: kunit: Add fixed rate clk consumer test
->   clk: Add KUnit tests for clk fixed rate basic type
->   dt-bindings: clk: Add KUnit clk_parent_data test
->   clk: Add KUnit tests for clks registered with struct clk_parent_data
+On 3/2/23 19:52, Harshit Mogalapalli wrote:
+> Hi,
+> 
+> On 01/03/23 11:38 pm, Greg Kroah-Hartman wrote:
+>> From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>
+>> commit 64b88afbd92fbf434759d1896a7cf705e1c00e79 upstream.
+>>
+>> Previous commit fixed checking of the ERR_PTR value returned by
+>> drm_gem_shmem_get_sg_table(), but it missed to zero out the shmem->pages,
+>> which will crash virtio_gpu_cleanup_object(). Add the missing zeroing of
+>> the shmem->pages.
+>>
+>> Fixes: c24968734abf ("drm/virtio: Fix NULL vs IS_ERR checking in
+>> virtio_gpu_object_shmem_init")
+>> Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
+>> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>> Link:
+>> https://urldefense.com/v3/__http://patchwork.freedesktop.org/patch/msgid/20220630200726.1884320-2-dmitry.osipenko@collabora.com__;!!ACWV5N9M2RV99hQ!KAxF_UJ7x6SleCxrpYd8Huyt4Zj4e08fd9IUL6fl1Wneipk6_LKBnYuqQ2LK0bnvWHC6dxungVXptuvz5-4QQ2zjcq_JT1ub$
+>> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+>> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+>> Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+>> ---
+>>   drivers/gpu/drm/virtio/virtgpu_object.c |    1 +
+>>   1 file changed, 1 insertion(+)
+>>
+>> --- a/drivers/gpu/drm/virtio/virtgpu_object.c
+>> +++ b/drivers/gpu/drm/virtio/virtgpu_object.c
+>> @@ -159,6 +159,7 @@ static int virtio_gpu_object_shmem_init(
+>>       shmem->pages = drm_gem_shmem_get_sg_table(&bo->base.base);
+>>       if (IS_ERR(shmem->pages)) {
+>>           drm_gem_shmem_unpin(&bo->base.base);
+>> +        shmem->pages = NULL;
+>>           return PTR_ERR(shmem->pages);
+>>       }
+> 
+> While doing static analysis with smatch on LTS-rc series I found this bug.
+> 
+> PTR_ERR(NULL) is 1/success, so we are returning success in this case,
+> which looks wrong.
+> 
+> Only 5.10.y and 5.15.y are effected. Upstream commit b5c9ed70d1a9
+> ("drm/virtio: Improve DMA API usage for shmem BOs")
+> deleted this code, is present in linux-6.1.y and
+> linux-6.2.y, so this problem is not in 6.1.y and 6.2.y stable releases.
+> 
+> I have prepared a patch for fixing this, will send it out.
 
-Good to see bindings for this. I've been meaning to do something about
-the DT unittest ones being undocumented, but I hadn't really decided
-whether it was worth writing schemas for them. The compatibles at
-least show up with 'make dt_compatible_check'. Perhaps we want to just
-define some vendor (not 'linux') that's an exception rather than
-requiring schemas (actually, that already works for 'foo'). It's
-likely that we want test DTs that fail normal checks and schemas get
-in the way of that as we don't have a way to turn off checks.
+Thanks, that's a good catch!
 
-We already have GPIO tests in the DT unittests, so why is clocks
-different? Or should the GPIO tests be moved out (yes, please!)?
+-- 
+Best regards,
+Dmitry
 
-What happens when/if the DT unittest is converted to kunit? I think
-that would look confusing from the naming. My initial thought is
-'kunit' should be dropped from the naming of a lot of this. Note that
-the original kunit submission converted the DT unittests. I would
-still like to see that happen. Frank disagreed over what's a unit test
-or not, then agreed, then didn't... I don't really care. If there's a
-framework to use, then we should use it IMO.
-
->
->  .../clock/linux,clk-kunit-parent-data.yaml    |  47 ++
->  .../kunit/linux,clk-kunit-fixed-rate.yaml     |  35 ++
->  .../bindings/kunit/linux,kunit.yaml           |  24 +
->  arch/um/kernel/dtb.c                          |  29 +-
->  drivers/clk/.kunitconfig                      |   3 +
->  drivers/clk/Kconfig                           |   7 +
->  drivers/clk/Makefile                          |   6 +
->  drivers/clk/clk-fixed-rate_test.c             | 296 ++++++++++++
->  drivers/clk/clk-kunit.c                       | 204 ++++++++
->  drivers/clk/clk-kunit.h                       |  28 ++
->  drivers/clk/clk_test.c                        | 456 +++++++++++++++++-
->  drivers/of/Kconfig                            |  26 +
->  drivers/of/Makefile                           |   1 +
->  drivers/of/kunit/.kunitconfig                 |   4 +
->  drivers/of/kunit/Makefile                     |   4 +
->  drivers/of/kunit/clk.dtsi                     |  30 ++
->  drivers/of/kunit/kunit.dtsi                   |   9 +
->  drivers/of/kunit/kunit.dtso                   |   4 +
->  drivers/of/kunit/uml_dtb_test.c               |  55 +++
->  include/kunit/platform_driver.h               |  15 +
->  lib/kunit/Makefile                            |   6 +
->  lib/kunit/platform_driver-test.c              | 107 ++++
->  lib/kunit/platform_driver.c                   | 207 ++++++++
-
-Humm, we have DT platform driver unittests too. What's the difference?
-
-Anyways, that's all just my initial reaction from only halfway looking
-at this. :)
-
-Rob
