@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 41F45D52A
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4EF45D52C
 	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 20:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
-	Content-ID:Content-Description:In-Reply-To:References;
-	bh=3oCwpVDu4xcBlhkNHBH3geMu/7Wx6m5tuk0CiJ937us=; b=oPfHzWkN8o7ub3rjHyZDbsPtuV
-	7OLcJfzIoHmz3hIhOOr5kBrnrOOjnqx+vnDYKGEwImYtId4tJmI3hI7TmpRvol1qy0/js0LDSCCef
-	uYyVFwuRIv+72rBzXJJL0naQqm1tyQKKt/2w75lq7w6OQGgJpvTeV7VQJ6LrUilaqMDLDtvyolKf8
-	0avj6KHqtDh0Bz8fQ0U6V+osbmh5p1GVtHHfZTjtL/mGvYZwDVOByysy24tuupVVhYrVm+iTXMJtH
-	iifnMDagP5WH4KcQAHvfQb48U1z36CnTuk+x2Iz2ihBwpYE8DEkqJb+70NXox4icRbETMcGAnJpzt
-	8LnDrLzQ==;
+	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
+	Reply-To:Content-Type:Content-ID:Content-Description;
+	bh=MXqH7HxuGUp4vr/6baVHWsjCOA7cvGA5MJGn2lYMgHY=; b=Wn18YuHvszFD95jKeWngGibMfk
+	m0dkZQ/T4wh0lgQnmNyqnPNU8wiR3wNNIOFAQ/uJApiYoYiCX6W4rfGp9dazoMtM2bwoM+0WBiCNC
+	Zufdri5+sD3Q341upVXgIu1muzt5P4Jq3In7jEXridJQdLINYWC/lbJZRuwwbCAPQbiRw2Gifn7PV
+	5l4S/BZ9ufO6qSJiEuCDouaynQw+hbOCQIXagyqfer/Tf0CgxPlq9N55pKEXLUt0GgP9bjK+YI+um
+	6CZGflx9Hg4Q3sGl2wesUq57AAJ6djo3BjCYRDNYjrv49f8LE+JOOtmq1J70LFUnI4mMWXgd2vQ2k
+	0Y7scWbg==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pXpoc-003HXK-7q; Thu, 02 Mar 2023 20:46:14 +0000
+	id 1pXpoc-003HXO-Df; Thu, 02 Mar 2023 20:46:14 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: ebiederm@xmission.com,
 	keescook@chromium.org,
@@ -52,10 +52,12 @@ Cc: j.granados@samsung.com,
 	openipmi-developer@lists.sourceforge.net,
 	linux-kernel@vger.kernel.org,
 	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 0/7] sysctl: slowly deprecate register_sysctl_table()
-Date: Thu,  2 Mar 2023 12:46:05 -0800
-Message-Id: <20230302204612.782387-1-mcgrof@kernel.org>
+Subject: [PATCH 2/7] ipmi: simplify sysctl registration
+Date: Thu,  2 Mar 2023 12:46:07 -0800
+Message-Id: <20230302204612.782387-3-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20230302204612.782387-1-mcgrof@kernel.org>
+References: <20230302204612.782387-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -65,63 +67,49 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-As the large array of sysctls in kernel/sysctl.c is reduced we get to
-the point of wanting to optimize how we register sysctls by only dealing
-with flat simple structures, with no subdirectories. In particular the
-last empty element should not be needed. We'll get there, and save some
-memory, but as we move forward that path will be come the more relevant
-path to use in the sysctl registration. It is much simpler as it avoids
-recursion.
+register_sysctl_table() is a deprecated compatibility wrapper.
+register_sysctl() can do the directory creation for you so just use
+that.
 
-Turns out we can also convert existing users of register_sysctl_table()
-which just need their subdirectories created for them. This effort
-addresses most users of register_sysctl_table() in drivers/ except
-parport -- that needs a bit more review.
-
-This is part of the process to deprecate older sysctl users which uses
-APIs which can incur recursion, but don't need it [0]. This is the
-second effort.
-
-Yes -- we'll get to the point *each* of these conversions means saving
-one empty syctl, but that change needs a bit more careful review before
-merging. But since these conversion are also deleting tables for
-subdirectories, the delta in size of the kernel should not incrase
-really.
-
-The most complex change is the sgi-xp change which does deal with
-a case where we have a subdirectory with an entry, I just split
-that in two registrations. No point in keeping recursion just for
-a few minor if we can simplify code around. More eyeballs / review /
-testing on that change is appreciated.
-
-Sending these out early so they can get tested properly early on
-linux-next. I'm happy to take these via sysctl-next [0] but since
-I don' think register_sysctl_table() will be nuked on v6.4 I think
-it's fine for each of these to go into each respective tree. I can
-pick up last stragglers on sysctl-next. If you want me to take this
-via sysctl-next too, just let me know and I'm happy to do that. Either
-way works.
-
-[0] https://lkml.kernel.org/r/20230302202826.776286-1-mcgrof@kernel.org
-
-Luis Chamberlain (7):
-  scsi: simplify sysctl registration with register_sysctl()
-  ipmi: simplify sysctl registration
-  hv: simplify sysctl registration
-  md: simplify sysctl registration
-  sgi-xp: simplify sysctl registration
-  tty: simplify sysctl registration
-  xen: simplify sysctl registration for balloon
-
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
  drivers/char/ipmi/ipmi_poweroff.c | 16 +---------------
- drivers/hv/vmbus_drv.c            | 11 +----------
- drivers/md/md.c                   | 22 +---------------------
- drivers/misc/sgi-xp/xpc_main.c    | 24 ++++++++++--------------
- drivers/scsi/scsi_sysctl.c        | 16 +---------------
- drivers/tty/tty_io.c              | 20 +-------------------
- drivers/xen/balloon.c             | 20 +-------------------
- 7 files changed, 16 insertions(+), 113 deletions(-)
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
+diff --git a/drivers/char/ipmi/ipmi_poweroff.c b/drivers/char/ipmi/ipmi_poweroff.c
+index 163ec9749e55..870659d91db2 100644
+--- a/drivers/char/ipmi/ipmi_poweroff.c
++++ b/drivers/char/ipmi/ipmi_poweroff.c
+@@ -659,20 +659,6 @@ static struct ctl_table ipmi_table[] = {
+ 	{ }
+ };
+ 
+-static struct ctl_table ipmi_dir_table[] = {
+-	{ .procname	= "ipmi",
+-	  .mode		= 0555,
+-	  .child	= ipmi_table },
+-	{ }
+-};
+-
+-static struct ctl_table ipmi_root_table[] = {
+-	{ .procname	= "dev",
+-	  .mode		= 0555,
+-	  .child	= ipmi_dir_table },
+-	{ }
+-};
+-
+ static struct ctl_table_header *ipmi_table_header;
+ #endif /* CONFIG_PROC_FS */
+ 
+@@ -689,7 +675,7 @@ static int __init ipmi_poweroff_init(void)
+ 		pr_info("Power cycle is enabled\n");
+ 
+ #ifdef CONFIG_PROC_FS
+-	ipmi_table_header = register_sysctl_table(ipmi_root_table);
++	ipmi_table_header = register_sysctl("dev/ipmi", ipmi_table);
+ 	if (!ipmi_table_header) {
+ 		pr_err("Unable to register powercycle sysctl\n");
+ 		rv = -ENOMEM;
 -- 
 2.39.1
 
