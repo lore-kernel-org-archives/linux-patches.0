@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 250338F49
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 17:40:32 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B366DC4339B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 73AEA8F4B
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 17:40:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10453C4339E
 	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 17:40:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1677778832;
-	bh=kE6a0+oZZ6YgDtqCzkJDrC8W3w1ykVhTzNzusBBmzwA=;
+	s=korg; t=1677778833;
+	bh=rneHHZqdlZq083XY/byM+L2OkuQ63XyWZGUM74hoORM=;
 	h=From:Date:Subject:References:In-Reply-To:To:From;
-	b=2gzFsTYIG8Uvlz+CvMB16aqLSzPpbKoqgrL9wtdpGtdBwX/8jYLyu1FoFvkHPxNaS
-	 TKXTyIPL14Mx//JoDw7hj9JIpYKX27snVKMInu2P5QSKgmUFUuTYGyczW0wOL+1/hk
-	 B83Tq5s0CHoteneBE9NaPGVB5VA0PZMgWbUoriEM=
+	b=zP69lIaY2TyaWYhCLKYVzRmLxjzDSRvO/e17UQqJNsF44AuuYrZrH9zn/k6lP5hRT
+	 HL1Oze19Hmi6V7Tt2lqwV9pEU78520fLWNyqn6hrM6zckCX1Eg/Qb6+gVkCstxmO4T
+	 M9finLa4fJvYLdNeEZpInLfHUaUsSEyviwIk54q0=
 From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
-Date: Thu, 02 Mar 2023 12:40:19 -0500
-Subject: [PATCH v13 2/3] Junk babootich
+Date: Thu, 02 Mar 2023 12:40:20 -0500
+Subject: [PATCH v13 3/3] Another commit
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -23,47 +23,39 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20220825-test-endpoint-send-2-v13-2-047ec9929bec@linuxfoundation.org>
+Message-Id: <20220825-test-endpoint-send-2-v13-3-047ec9929bec@linuxfoundation.org>
 References: <20220825-test-endpoint-send-2-v13-0-047ec9929bec@linuxfoundation.org>
 In-Reply-To: <20220825-test-endpoint-send-2-v13-0-047ec9929bec@linuxfoundation.org>
 To: patches@lists.linux.dev
 X-Mailer: b4 0.13-dev-14a61
-X-Developer-Signature: v=1; a=openpgp-sha256; l=665;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=631;
  i=konstantin@linuxfoundation.org; h=from:subject:message-id;
- bh=YOCWK2SYjo0JERkJzLLZbnCMPAPntxIgY9Mym0Fcknw=;
- b=owGbwMvMwCW27YjM47CUmTmMp9WSGFIY7vd3HY9RyXfw+n5vysoI7aaEz147uD/cntFXqOn9r
- Pz63RVuHaUsDGJcDLJiiixl+2I3BRU+9JBL7zGFmcPKBDKEgYtTACayLZzhv//bJPna6ZwHg91P
- 7dhtqnJx5oPA76siI1rtxIIOXA+Mm8jI8O960bN9Z/+e02rccPLPuxpV2W292ncmZqZr5RsF9bJ
- lMwEA
+ bh=rneHHZqdlZq083XY/byM+L2OkuQ63XyWZGUM74hoORM=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGFIY7vfv9OJrbIzJsNvAHfXM9NNd0Zkvr2pOb+Y4p+t0n
+ PvNwvY5HaUsDGJcDLJiiixl+2I3BRU+9JBL7zGFmcPKBDKEgYtTACYilsnI8GjhdUbnAoVmgRs3
+ p12fuFEhpXx62cYGl7f3dp2Mcct0+8LIsHpOnNl3zgcaL/sjw+8vj52Y6ppczrWr/+TJ8HyZtFQ
+ RdgA=
 X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
  fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-From: Konstantin Ryàbitsev <mricon@gmail.com>
+This is junkiest.
 
-This is junk.
-
-Cc: Will Deacon <will@kernel.org>
-Cc: Jernej Skrabec <jernej.skrabec@gmail.com>
 Cc: Bubba Babootich <devnull@kernel.org>
-Cc: stable@kernel.org
 Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 ---
- Makefile | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ README | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/Makefile b/Makefile
-index 952d354069a4..114b14101182 100644
---- a/Makefile
-+++ b/Makefile
-@@ -3,7 +3,7 @@ VERSION = 6
- PATCHLEVEL = 0
- SUBLEVEL = 0
- EXTRAVERSION = -rc3
--NAME = Hurr durr I'ma ninja sloth
-+NAME = Hurr durr I'ma ninja pirate
- 
- # *DOCUMENTATION*
- # To see a list of typical targets execute "make help"
+diff --git a/README b/README
+index 669ac7c32292..45a8981c222f 100644
+--- a/README
++++ b/README
+@@ -16,3 +16,5 @@ several of them using the Restructured Text markup notation.
+ Please read the Documentation/process/changes.rst file, as it contains the
+ requirements for building and running the kernel, and information about
+ the problems which may result by upgrading your kernel.
++
++I added this line and edited it.
 
 -- 
 2.39.2
