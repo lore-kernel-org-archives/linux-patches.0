@@ -1,227 +1,229 @@
-Received: from mail-ua1-f44.google.com (mail-ua1-f44.google.com [209.85.222.44])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from mx0a-00069f02.pphosted.com (mx0a-00069f02.pphosted.com [205.220.165.32])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D31F110B
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 16:11:38 +0000 (UTC)
-Received: by mail-ua1-f44.google.com with SMTP id m5so6504439uae.11
-        for <patches@lists.linux.dev>; Thu, 02 Mar 2023 08:11:38 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 132058C11
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 16:52:32 +0000 (UTC)
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+	by mx0b-00069f02.pphosted.com (8.17.1.19/8.17.1.19) with ESMTP id 322FCWp2005696;
+	Thu, 2 Mar 2023 16:52:27 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=message-id : date :
+ subject : to : cc : references : from : in-reply-to : content-type :
+ content-transfer-encoding : mime-version; s=corp-2022-7-12;
+ bh=teOUqXPH7J1tO2Kazo8iIqIohQy2xzD7FTkJeOoQqLg=;
+ b=2Qu71vkzIe8/a6cJEV8aq+gHwux5ZJu6m320a8GE0JlD9LGscVTRzjF3KBN6XeY8PM2N
+ G2+BYHv+N8DzD5ZnWvP1cghFFQxC6wD8cRJ8NVzPk8itaYMWL0s81lNhaNrEAdcv/p2J
+ 3jiTq/KjWGFZLc6sfC1dQMMgwTTk5Gno4KFjixBaRC+6ANjHoLxOsjYbWPdGrdI/P4Gg
+ TE97AlN9HUqYs+i3I0JcjLZTKXoaNqRtX2Zg6+XhpVrrkCyGGVlg8YGVi0z97w+LW3qG
+ N2a+M4+FfLy29Mz+mcOnzraxCR10i32JuIqhxI9+5tfiCjJYGbUzFg3OjwNVPvIl4D8b sw== 
+Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
+	by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 3nyb9amdrb-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 02 Mar 2023 16:52:27 +0000
+Received: from pps.filterd (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
+	by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.17.1.5/8.17.1.5) with ESMTP id 322FTxEv002280;
+	Thu, 2 Mar 2023 16:52:26 GMT
+Received: from nam10-dm6-obe.outbound.protection.outlook.com (mail-dm6nam10lp2109.outbound.protection.outlook.com [104.47.58.109])
+	by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id 3ny8sa24jh-1
+	(version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+	Thu, 02 Mar 2023 16:52:26 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=RNR1jGttoUl+tQi14gPyzq1Oh96ab8dcW3fI5oNDnkzU3qZ3XOdYBWC7xWeWty+jvghx6NEUXmCQqQLCFU0oT8j0ZP8WU2Psx2uKq8YHDaizKczrJS1KO6DJDusVMAIjmZXiMPCNT01JqZRxXzzWEhRodGtbWPtkvqkD6aXILSbfVIi6g6D+KGjvxcMqEQdhbTheuIzq13Zl4SP2awyWV7Yp0vdso4ARmqeRkm/VomWgoWeV8j7GUAlqYFBQ5MaJ06WchbLGO9o4qzNJjv2V5DjiMd98bqWxam4OWrH3rvaqDf00q1YfDSCFeG/9daY3JRLpZOE3+HYx67joca0JFA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=teOUqXPH7J1tO2Kazo8iIqIohQy2xzD7FTkJeOoQqLg=;
+ b=V6+5NgdoY9fT4Z0+lN45pRGthRyNi851oV7fDjDfSDvyNCiKq1Zq4jITx9YBNycyo989C2SP36+Vpg+Dm1VYDqnqfIoZ1VFi8Ydaqz6Gydlm/JIQIe7F2KEGmpFRM4Ul57eEa+oJZjAWC0cu1RJiaZ1gSPWAEfoYE2XbRvmgf+WiDeMUBdaQIhFi8kSRXzC6gYB8DkwubUUw443APQt2frIo9Btz4mLlp/0r4KJ3jgUhDx7t92lcyH7lbPK58ctJFvUeBWB4clSCL65HLwGX40z6zwJ6Ym67KAG1zcVtbbiFxLHAApbvUnqPnxk2AXz+kpyXmG/TF4SoYbAwnWm2yw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=zZoz+85clIdYHHRz4psRFE9FEccrG+YghRVv5XN9g1A=;
-        b=EOnQIcgrt+MkJMGUtXNGtauplLHtTY/RFGJ19kV8RLKYb+XFUJmuYMVV6uNCiKZK/s
-         ffa/T1C6Au9S49x6ier1rnQ+g9VXLdVXVyK6VGGVtzSoP/1a9+yIUf7tj/cCSZFpPqvB
-         L0e6AOuEeFP19DAsEJBfph+HVbLQ6rpJFuGiJ6lyvHayh830TOSlCQ/rBmKr+ePTh+Pp
-         KmwrusnbRjQKGcYkm2wdBhAJp3qTd7lG0dBrdkGzZxQJK/JmVKHcC3Js9c8vt2j18zp7
-         ZJzRMYdwz++e8PkWaVm9DwdPV/gIB8l3dGo/UdHjRvKlNsUysa6I4iDk6AKc7CgiNHj3
-         vl5Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=content-transfer-encoding:cc:to:subject:message-id:date:from
-         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=zZoz+85clIdYHHRz4psRFE9FEccrG+YghRVv5XN9g1A=;
-        b=vXv2EWyXWSSJY6SHTeVBu2bKMCp9CTVrsxXUmVvFn2IqQzChyIznEaqim6yNGphjoq
-         0WVHL2K2d3BLucvDJKnDQH0V4K6ZuZreJNK4bMb1VVE4IRA9YE3S8Gp7Z0QoeyIIWR7k
-         twufplkxKF4QQ1unpGDsOmHr41iXcALKkA2tNx2A6w1KkOaKHz/vQT3S4oGKbrd4Lk3R
-         9wmJndISf5yH1Aj+F+l44wvA8zFFwYNNYgkgcy5iH4eaqJzK5bBso78Hi3Kvpp0EBxQM
-         EEW5d+OoZgD7SbyB1sKTlFuUSkSsB+3FZCN8JEnT0T9LvaNktmhjYrqgVq6s3N9Z5y0G
-         MZCQ==
-X-Gm-Message-State: AO0yUKWBsVyDDGyp7LEllXyuB3njBYJN/MAZnWfoWA6wpJndpHYRqEcE
-	wX1Dx4YO1+qvVYWd3nPdnTFCZIjc7hXbGy8VW+NGDQ==
-X-Google-Smtp-Source: AK7set+APC/erYWnIFlBLm+w0FzkXpZEbNPzYiLTJCkP+8/yXdcXT3o/EZxxODpQa2TLZUX+bKBlBnKWGLiIPSYWSgU=
-X-Received: by 2002:ac5:c85c:0:b0:40e:fee9:667a with SMTP id
- g28-20020ac5c85c000000b0040efee9667amr5879630vkm.3.1677773496403; Thu, 02 Mar
- 2023 08:11:36 -0800 (PST)
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=teOUqXPH7J1tO2Kazo8iIqIohQy2xzD7FTkJeOoQqLg=;
+ b=uqvbruFt82KFKh4IpR/+084le1o+AmJpbx68VTngC5PDYo9y56BmuTLlwgTOs6O6TFLYd93TgksSj+fnnjXuZqLS7SvoQx/Ms5ua2DeW1wPfwW9xpO9P4ftkSL1fRJbkfoQtwXq13wNVfmQoxYjFWhoOaxVK0wJs1iPtveJt5iM=
+Received: from PH8PR10MB6290.namprd10.prod.outlook.com (2603:10b6:510:1c1::7)
+ by DM4PR10MB6159.namprd10.prod.outlook.com (2603:10b6:8:ba::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.6156.16; Thu, 2 Mar
+ 2023 16:52:22 +0000
+Received: from PH8PR10MB6290.namprd10.prod.outlook.com
+ ([fe80::ffeb:6d62:6636:6c38]) by PH8PR10MB6290.namprd10.prod.outlook.com
+ ([fe80::ffeb:6d62:6636:6c38%6]) with mapi id 15.20.6156.019; Thu, 2 Mar 2023
+ 16:52:22 +0000
+Message-ID: <78b78fd7-899c-aee8-4f82-f7e7dbc2f4c9@oracle.com>
+Date: Thu, 2 Mar 2023 22:22:11 +0530
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:102.0)
+ Gecko/20100101 Thunderbird/102.5.1
+Subject: Re: [PATCH 5.10 16/19] drm/virtio: Correct
+ drm_gem_shmem_get_sg_table() error handling
+Content-Language: en-US
+To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
+Cc: patches@lists.linux.dev, Emil Velikov <emil.l.velikov@gmail.com>,
+        Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+        Gerd Hoffmann <kraxel@redhat.com>,
+        Ovidiu Panait <ovidiu.panait@windriver.com>,
+        Dan Carpenter <error27@gmail.com>,
+        Darren Kenny <darren.kenny@oracle.com>,
+        Vegard Nossum <vegard.nossum@oracle.com>
+References: <20230301180652.316428563@linuxfoundation.org>
+ <20230301180652.989746215@linuxfoundation.org>
+From: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>
+In-Reply-To: <20230301180652.989746215@linuxfoundation.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SG2PR02CA0044.apcprd02.prod.outlook.com
+ (2603:1096:3:18::32) To PH8PR10MB6290.namprd10.prod.outlook.com
+ (2603:10b6:510:1c1::7)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230301180650.395562988@linuxfoundation.org>
-In-Reply-To: <20230301180650.395562988@linuxfoundation.org>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Thu, 2 Mar 2023 21:41:24 +0530
-Message-ID: <CA+G9fYu85a8sz8Xq7Bmnn3H8uq0+H+D41YUGFC4gVdo==68zXw@mail.gmail.com>
-Subject: Re: [PATCH 4.19 0/9] 4.19.275-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH8PR10MB6290:EE_|DM4PR10MB6159:EE_
+X-MS-Office365-Filtering-Correlation-Id: f4ee769f-6930-43da-5caa-08db1b3e7dfb
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 
+	hGdhBF8LjhwbHqCjDs8RaUS/BWPIFvvPoH8X8ow0Cmg47Ak0kvsn1aXG42QCyvmqkRij8sCx3nqkIqf/UjV91ieJRKbCGC09EIEXisX9CDlUazBHe+5EDNML3qW5NhbsmnhfN0NiDRepo9UAd2F1rfZilc4ab3nMK1C+zjKUo4z2Ap92u9Z3m9TDbHXclbaY9hgeeS6RcHdKUoSnO0cgNEFt5ii9jMoa12Rcknk/EjHRG8fA8wbCzdcvY80fzl1+hpKN1K0fKDqekyZbhqA+S9+9aQ3gtebcHZh8T6Ri8E3lCO5kbtdQakRMRFZXpcTpGTHUN1sPipDjaVt1lhIuZuaMkkQZK2YuKtsi/tveEaeFcCB5Ma3PD/V4HX53MgGPc3tEwYvtAc3wPgjc2dSnksRdcM10RE1arxUVvbm1iCKoBYXuhbZF3VgH0Osn/YJeS2rL5vv5DoXLXU7isTHEwb2rWi9ogo6EG0LCo0/a+zHH5kgS90VioXijmAcVQldObGWZQhsMq4K4b2DHov7C63FCl0iF2EjC3YZ8ZFRg4naTkt+7WtPguN+SzhLvb4Q8MLxaNApUJfhFAjdrIEingH+S8p6zQxhWWoLXkkZH7Li16R5/zFv7uEWoGhFu3YVGaTruK0L3bbmUSH9bn7enBgXh4/QyJ3xJFS0o4rk8NWTCXB2mPmqKmqLZGyZPrZrG
+X-Forefront-Antispam-Report: 
+	CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH8PR10MB6290.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(13230025)(396003)(346002)(39860400002)(366004)(136003)(376002)(451199018)(2906002)(5660300002)(38100700002)(2616005)(8936002)(36756003)(86362001)(31696002)(966005)(478600001)(6486002)(26005)(6512007)(186003)(41300700001)(6666004)(66946007)(107886003)(53546011)(6506007)(31686004)(316002)(54906003)(8676002)(66556008)(4326008)(66476007)(83380400001)(45980500001)(43740500002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 
+	=?utf-8?B?WEhTVlNNMThIT3RmVThEYWpXZ0JwUXg3cWQxcGtxcHVPOTd3ZlJ6MmZCVDJZ?=
+ =?utf-8?B?YUlBWFF5NFQ5Tm1VMThkc0E0N0g1azE5UTcrdE1CRFZyN2Z3WitXQU1IVE5w?=
+ =?utf-8?B?NXZuQWFoSzhQNkRzQmV6enoxMlB0RmxSeHNQbUs4Y21TNFUrMjhyeXFsbFRO?=
+ =?utf-8?B?L1IvK3Q0bDM4aVRYT3FkSTdBdnNYc1FaM3EwdGYxS25WZGYzQnBwQUMybGM2?=
+ =?utf-8?B?dWRCUXdHVjRlUDRtRFVkQ0g3SjU3ZU9KK1hkSm5yTENzcnl6bmJSRTVKbHRT?=
+ =?utf-8?B?Qzd0eWxLZjRCN2x3YjI2OW12cWU1clM2dzBuNmpNbHNNd0dCRVAwbFIzWUpD?=
+ =?utf-8?B?OWJyb0FjVm5VTytKZ1hUUnBrd01YQWVuUDFNa3hTVWRXVnVGdS9saTI3TjRF?=
+ =?utf-8?B?OWFtWTZDOGIxMnNyZHdzaEIzN1JsZWlHdnBtRGtnY3o3TVhSdkNQeW91WUhF?=
+ =?utf-8?B?aUZ0NEV5c2xTZkxUM0ZZNlRxTkpFU3Vib2JpT2l3c0owOGNhbzkzNDE3bGlx?=
+ =?utf-8?B?WkNQMXdHdzZJQzBJalhIMHdnS0p4dE9KRC9UejVrakZsOGRHa09GOXpwYVdx?=
+ =?utf-8?B?d0xBem5aZG5Dc0NRMWtvcXZkN3p0dGF6cTQxSFlmSUJTMDNtaXZGZGlEOUtM?=
+ =?utf-8?B?cGE1WVNlNHhtUU11cURsTURpd3I5aU1UeXQ5dzI5eXVhYXJEWjVWcGthV2Ny?=
+ =?utf-8?B?Sk5XSVI0Vm5oSW90bEp4ODZyVXVaT0NOcVhkM0t0SHpDU1UxdlhGWmdDNm9S?=
+ =?utf-8?B?TFdHdWgwa0lQdGRuemthWGpIYXJoMmtySlBxVjFsZGN3MXo1WDVQTjk1cHFx?=
+ =?utf-8?B?aGVqOXVsT01kK2JUcitHcDRaQmplbFQwOGY5RC9sSVZrUlJHWmU1eHorQVJF?=
+ =?utf-8?B?VndRQWl3YkpLNFR3UWkvay9ueGpQdVFpNzBHNUhibTZNMjVRakpDOWZ4V1Jr?=
+ =?utf-8?B?aFNCbmlWejR0cC9xbFVQSEFwcE5sbDhsWTFoNXgzQiswZldQOXhIN0JwanAw?=
+ =?utf-8?B?b2JEWlNtM2IybUg3QjIwMVVVK0FMeGMyNUJTT081NktJbnd3SFlQK1VXTjY5?=
+ =?utf-8?B?ZmpUSklNeWNPNExhWGRHQ1pHNHdZL1BOY2pmWEozOHZ1RFMyemNjU3JDeThY?=
+ =?utf-8?B?NEpkZjV5cmE0MytGZ1NadERhMlc3d1Uya3JsbVVJdGk0MXdMZUZZaGo3ampo?=
+ =?utf-8?B?T202a2RJTXJqOGpHd3pYTW93NnlLZXNiYmg4cmRWN25tUlZrblRoZjlncU0v?=
+ =?utf-8?B?Q3dOTU1GcDN2ZERROVFxNWJHV0Zoemcra1k1TUxZK3JKUU9GVzVkbTloNENu?=
+ =?utf-8?B?amV4OEZrVVNvanhMYnU3c2dOUVdLa2NFY1BqWk9QZmt2c0MrSDdhcjh0cTBS?=
+ =?utf-8?B?a3NVR0ZUZ0FiZkhxY3RaRmE0VWtaSUtNamRTbFRYdTNZKzIzRDdaWUNMR2gw?=
+ =?utf-8?B?bzhHTG1seGtBYVFPQzV3eENJa1hRaXFGMFpBRkp2ZU84L0w1UDB5MDVPQVZo?=
+ =?utf-8?B?ZUlsYVdYdmsraGtsUkMvd3R5RkJoVjRMMU12ekVPUENmVVh4SDFyUjd5RjVz?=
+ =?utf-8?B?OStmbk9KZ3g1VVFxMFl4d1BrSy9FaFVUeEJ0MjAxRGpRVktUMDNFYTNxWGxC?=
+ =?utf-8?B?VWF3eEhubzlEWEZka01zb3hjUThqRVBiZEQvSEtaRStaV0Q1VTRmUy9WUFRO?=
+ =?utf-8?B?UTRvWUdybVp1Yi9TUUVrbmRaM3NkSHFQb1RzK3F6ck5aMnlJb1pnanlaQjJG?=
+ =?utf-8?B?V2UzZHpsazhvM21oME5JOHJBUlNsS3h1N1o4UlgzV0FKZ0x0cFg1cGNGbWFx?=
+ =?utf-8?B?VUI0bDZ3Q0NwUEZFZngzb004R2RwSkR3a3BzNlo2dnQwQTFIbllrNTN3Y3VD?=
+ =?utf-8?B?YUx2U3F1T3hRK3d6ak1HWWdxY2IySjlQbWgvOHRSZ2p4eGd5aHJLYkNkSnYx?=
+ =?utf-8?B?b0R4djZsdUE0R2JTeGRjeWYwaGgweFM0cXpyeFZRWWJJR2ZmcXJwUnV5Uk5I?=
+ =?utf-8?B?RWxIUjkzTzVZVnlaVnAvQVhVQkZ4bzR2QmxpSEIzdVFhbHI4NEl3bVRadEVV?=
+ =?utf-8?B?MnlNL2svTHRXODk1UEt0dlFFYWU1OG1qRk5PQkQzTWtjemsvdWVsZjh6NFEy?=
+ =?utf-8?B?aHg0aXdtT0JCVzkwRkM0NHZoYkk5eHJaaW1Vc0hQYjJlV1Q0NENGZXhkd2h4?=
+ =?utf-8?Q?3J+eoDkADKFVQ9eHBppqb7o=3D?=
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-ExternalHop-MessageData-0: 
+	=?utf-8?B?MlVCOCtCbW1rUytMNnNYa0d5eXYrSms4Y3FGT1MzVVJrd0VkNEVnWkxNZTBa?=
+ =?utf-8?B?aTRad0NqTVhsQlZ2QVRVMXlRaEd5MnJDUko4OXR0SnFzdVJYeTk2RisyOWZU?=
+ =?utf-8?B?SDE4alllTGsyRTI2Z092WFNTZ2lwTjk2d2t5Nm5SanlyM0pBZDQxTUNKeE1r?=
+ =?utf-8?B?QTRhYTJyM2ltR1FRVzRCeHllVnNMSUFKYkJMTStESHZRem0xQnA0YUxpbkFG?=
+ =?utf-8?B?dnIzR0k3aWpjSnlqdVdGL3Foc1lELzdJaFhlQUZlOUJtZXlZTFdZQzEwNHpn?=
+ =?utf-8?B?V29sRXdXSVNEOW5UZ2wwb2QxSnc3Z0s3K1ZSb2s4Vk5GczFRQXJvbkwxR2th?=
+ =?utf-8?B?M0JCQU05elBPZzl4OVlGTk94VXZDdkliQmVvVlZjeHZ3L0V2NjErYlV0RjJZ?=
+ =?utf-8?B?T2hzVU4xMUMvV1gyMTlNS0hBdW1WNHN1cDV1MWZhK2IxVmVTVW9zQzNWN2Rn?=
+ =?utf-8?B?aVF6UUhXdWhCTlpkem9JNmJ1bHJ1WDgxSHRGUm5ncFRyMFpEcFRVRjN4d1Bs?=
+ =?utf-8?B?a1B3bTdDVFdZR2ZWWVo4ZXVWQ2dWTzB3Skg5cm5XSENiS2xRVWhFTnQvbk5s?=
+ =?utf-8?B?azZVNVh0bktrSWtNZzFCMC9xRU83SnloM0JPYVBRR0xIbE5kdGJzYW1JYVdn?=
+ =?utf-8?B?THNBMnhSZHBlYzZpZFpnd1hZU2ZDNHlDN1FhaWJ1OHU0OTc2SnU0MVZqSTNl?=
+ =?utf-8?B?YUN1SDVsLzZHSUtuR0gvSmJod21SNVFFZnQrckxrdlN5L1V4NkduQzBCdGRt?=
+ =?utf-8?B?eWxOa2hIamp0Y1RHS3lrQVZsUm80NW1rWVpDQmt1elFSWGxlZ0Rwa0g5ZnEv?=
+ =?utf-8?B?RjdQajJLNkNxaGFsZVRGSDBSajNYS3p1WFNTeHNCRFg3WmNjdlFGZ1lhN2Y0?=
+ =?utf-8?B?azR0NHFKc09kOWtDODJVQ0N0VjhzOXBRN05TQVo2bXRKd0duOVlZNXVJNFdx?=
+ =?utf-8?B?T0NGNkFtQThuY2ZFNHBBZFhkazJpZktRZ2tmTFJhY2F6dUJzRzJLWDQwWVB1?=
+ =?utf-8?B?VGdIMFZETjZ5VEtLUG9iTTBuNmowUDI0akRTYkxmbFlQa29LZG84bHdVcmZW?=
+ =?utf-8?B?Z3NjTXJJcHZFeGxXUTRKMnNLN3lPaS92RnBaSjZJTGI3YjNYQ1FVaXJQdVV1?=
+ =?utf-8?B?L0lUNEVjM1JQMHduM2toelBCZTllNjJjZTZJbDZkSGxXRjRtT05KejFiaEVM?=
+ =?utf-8?B?d3d6OXJYMW1rM2hQek9uL0JvTlVORW1YZHRsM1ZZQmhlMUovMGVtR3oyK3Nl?=
+ =?utf-8?B?My9ENmMxNUxvM1RsUE1rVVNxV1NWRDhDbi9iYmRyZ01yYlBBSWViYURhQTM2?=
+ =?utf-8?Q?IMIEVSxyaj268=3D?=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f4ee769f-6930-43da-5caa-08db1b3e7dfb
+X-MS-Exchange-CrossTenant-AuthSource: PH8PR10MB6290.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 02 Mar 2023 16:52:22.1416
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: 2cb18rRpR3zwwvxlT43L4NdAZrJgL3MJnIjV5PRl9s9cooxK5mygWdvcNmlpp690mIIhy1CrlImKG6DqqrwSLQuF24Zrdj0GQPhaqN0zMSk6L950fh1a0TPmY6S+tQ2L
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR10MB6159
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.219,Aquarius:18.0.942,Hydra:6.0.573,FMLib:17.11.170.22
+ definitions=2023-03-02_10,2023-03-02_02,2023-02-09_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 bulkscore=0
+ malwarescore=0 mlxlogscore=999 phishscore=0 spamscore=0 adultscore=0
+ mlxscore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2212070000 definitions=main-2303020146
+X-Proofpoint-GUID: AfqeVsqC_1RjlNq-YEk52HMC0LpCDNLf
+X-Proofpoint-ORIG-GUID: AfqeVsqC_1RjlNq-YEk52HMC0LpCDNLf
 
-On Wed, 1 Mar 2023 at 23:37, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> This is the start of the stable review cycle for the 4.19.275 release.
-> There are 9 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
->         https://www.kernel.org/pub/linux/kernel/v4.x/stable-review/patch-=
-4.19.275-rc1.gz
-> or in the git tree and branch at:
->         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable=
--rc.git linux-4.19.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+Hi,
 
-Results from Linaro=E2=80=99s test farm.
-No regressions on arm64, arm, x86_64, and i386.
+On 01/03/23 11:38 pm, Greg Kroah-Hartman wrote:
+> From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> 
+> commit 64b88afbd92fbf434759d1896a7cf705e1c00e79 upstream.
+> 
+> Previous commit fixed checking of the ERR_PTR value returned by
+> drm_gem_shmem_get_sg_table(), but it missed to zero out the shmem->pages,
+> which will crash virtio_gpu_cleanup_object(). Add the missing zeroing of
+> the shmem->pages.
+> 
+> Fixes: c24968734abf ("drm/virtio: Fix NULL vs IS_ERR checking in virtio_gpu_object_shmem_init")
+> Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
+> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+> Link: https://urldefense.com/v3/__http://patchwork.freedesktop.org/patch/msgid/20220630200726.1884320-2-dmitry.osipenko@collabora.com__;!!ACWV5N9M2RV99hQ!KAxF_UJ7x6SleCxrpYd8Huyt4Zj4e08fd9IUL6fl1Wneipk6_LKBnYuqQ2LK0bnvWHC6dxungVXptuvz5-4QQ2zjcq_JT1ub$
+> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
+> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
+> ---
+>   drivers/gpu/drm/virtio/virtgpu_object.c |    1 +
+>   1 file changed, 1 insertion(+)
+> 
+> --- a/drivers/gpu/drm/virtio/virtgpu_object.c
+> +++ b/drivers/gpu/drm/virtio/virtgpu_object.c
+> @@ -159,6 +159,7 @@ static int virtio_gpu_object_shmem_init(
+>   	shmem->pages = drm_gem_shmem_get_sg_table(&bo->base.base);
+>   	if (IS_ERR(shmem->pages)) {
+>   		drm_gem_shmem_unpin(&bo->base.base);
+> +		shmem->pages = NULL;
+>   		return PTR_ERR(shmem->pages);
+>   	}
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+While doing static analysis with smatch on LTS-rc series I found this bug.
 
-## Build
-* kernel: 4.19.275-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-4.19.y
-* git commit: c17367998a27f5908f6d793274690ef7f91fe0d3
-* git describe: v4.19.274-10-gc17367998a27
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-4.19.y/build/v4.19=
-.274-10-gc17367998a27
+PTR_ERR(NULL) is 1/success, so we are returning success in this case, 
+which looks wrong.
 
-## Test Regressions (compared to v4.19.274)
+Only 5.10.y and 5.15.y are effected. Upstream commit b5c9ed70d1a9 
+("drm/virtio: Improve DMA API usage for shmem BOs")
+deleted this code, is present in linux-6.1.y and
+linux-6.2.y, so this problem is not in 6.1.y and 6.2.y stable releases.
 
-## Metric Regressions (compared to v4.19.274)
+I have prepared a patch for fixing this, will send it out.
 
-## Test Fixes (compared to v4.19.274)
+Thanks,
+Harshit
 
-## Metric Fixes (compared to v4.19.274)
 
-## Test result summary
-total: 96256, pass: 72823, fail: 3436, skip: 19617, xfail: 380
-
-## Build Summary
-* arc: 10 total, 10 passed, 0 failed
-* arm: 201 total, 200 passed, 1 failed
-* arm64: 42 total, 41 passed, 1 failed
-* i386: 29 total, 28 passed, 1 failed
-* mips: 42 total, 42 passed, 0 failed
-* parisc: 12 total, 12 passed, 0 failed
-* powerpc: 51 total, 51 passed, 0 failed
-* s390: 15 total, 15 passed, 0 failed
-* sh: 24 total, 24 passed, 0 failed
-* sparc: 12 total, 12 passed, 0 failed
-* x86_64: 37 total, 36 passed, 1 failed
-
-## Test suites summary
-* boot
-* fwts
-* igt-gpu-tools
-* kselftest-android
-* kselftest-arm64
-* kselftest-breakpoints
-* kselftest-capabilities
-* kselftest-cgroup
-* kselftest-clone3
-* kselftest-core
-* kselftest-cpu-hotplug
-* kselftest-cpufreq
-* kselftest-drivers-dma-buf
-* kselftest-efivarfs
-* kselftest-filesystems
-* kselftest-filesystems-binderfs
-* kselftest-firmware
-* kselftest-fpu
-* kselftest-ftrace
-* kselftest-futex
-* kselftest-gpio
-* kselftest-intel_pstate
-* kselftest-ipc
-* kselftest-ir
-* kselftest-kcmp
-* kselftest-kexec
-* kselftest-kvm
-* kselftest-lib
-* kselftest-livepatch
-* kselftest-membarrier
-* kselftest-memfd
-* kselftest-memory-hotplug
-* kselftest-mincore
-* kselftest-mount
-* kselftest-mqueue
-* kselftest-net
-* kselftest-net-forwarding
-* kselftest-net-mptcp
-* kselftest-netfilter
-* kselftest-nsfs
-* kselftest-openat2
-* kselftest-pid_namespace
-* kselftest-pidfd
-* kselftest-proc
-* kselftest-pstore
-* kselftest-ptrace
-* kselftest-rseq
-* kselftest-rtc
-* kselftest-seccomp
-* kselftest-sigaltstack
-* kselftest-size
-* kselftest-splice
-* kselftest-static_keys
-* kselftest-sync
-* kselftest-sysctl
-* kselftest-tc-testing
-* kselftest-timens
-* kselftest-timers
-* kselftest-tmpfs
-* kselftest-tpm2
-* kselftest-user
-* kselftest-vm
-* kselftest-x86
-* kselftest-zram
-* kunit
-* kvm-unit-tests
-* libhugetlbfs
-* log-parser-boot
-* log-parser-test
-* ltp-cap_bounds
-* ltp-commands
-* ltp-containers
-* ltp-controllers
-* ltp-cpuhotplug
-* ltp-crypto
-* ltp-cve
-* ltp-dio
-* ltp-fcntl-locktests
-* ltp-filecaps
-* ltp-fs
-* ltp-fs_bind
-* ltp-fs_perms_simple
-* ltp-fsx
-* ltp-hugetlb
-* ltp-io
-* ltp-ipc
-* ltp-math
-* ltp-mm
-* ltp-nptl
-* ltp-open-posix-tests
-* ltp-pty
-* ltp-sched
-* ltp-securebits
-* ltp-smoke
-* ltp-syscalls
-* ltp-tracing
-* network-basic-tests
-* packetdrill
-* rcutorture
-* v4l2-compliance
-* vdso
-
---
-Linaro LKFT
-https://lkft.linaro.org
+>   
+> 
+> 
