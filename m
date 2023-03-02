@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D2A7010781
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 23:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5ACFA10784
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 23:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=Hpr/mKVZzGGQqVrubmxhAsrFv4PlfL2VXUxF3A6d69A=; b=hKi5B7rksyIKLYpIpojH3COwse
-	6yVboytacnRm0DNMUh5BKMfZwbdWYuNUklJLKFbD4wjEle33GCTpvZJdXbQPCk3hIf0DFStd9tL+t
-	jq4IAgiksjYqh8v8mIireTRU6LNVj2zfYQ9mtUda+GZCTq6XHxJgjkKPxVVTVA6t/x9znl5F31erd
-	JzgAsoy7GHNSk6QSSzDOJz7LMMAQ1DbbEpT234nu/jFOtmuCwstY5Gm50cCZVHGdz0FpM/qmB87KL
-	Z3RJNpaMrZyQyQJFwvIzGInyQpaIjBIYAAKuhUc2yvfiaKNxUBSuS7LOizfLNgOD6cguhCKiDt7p1
-	C3zX/D7w==;
+	bh=X3niQqWSDaRdijh0GPlKHY1yoysmmoQVBPzADYFTAAk=; b=A1T9i9l/KhB0qQZfQ43uw6v8kl
+	DTCTRWDp8ClUN+kK4tmCnmWxFQZNAu7/KlswhmxIBSNnubcoAF/0v32hcIh7vsx/2fYebdrGuOFfD
+	cAnCJAhSbnS1joVOILJsNws5NnKu+5mYSq1Eg2EeWdf/r2/gWG/2PiHtkicrXr4nv4g8KNvqyd+h5
+	zSb4BZm/8ekQ3nBFaKCQSpzvzbNAJor5LMWh0xvyjEChMKRIwSW6QtvSbE5HH6mk+eiwxMNN1wRYL
+	NN7yYd8Xgu8+6Yqm6vtCggq8UsMK7X8LuLapwpCc3bG7p2c7yZG4p+iTMZohqzaupylW/idKcbw0L
+	a/8QUp7w==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pXsL9-003j3M-8Z; Thu, 02 Mar 2023 23:27:59 +0000
+	id 1pXsL9-003j3I-3W; Thu, 02 Mar 2023 23:27:59 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: hughd@google.com,
 	akpm@linux-foundation.org,
@@ -30,9 +30,9 @@ Cc: linux-mm@kvack.org,
 	mcgrof@kernel.org,
 	patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 3/6] shmem: move reclaim check early on writepages()
-Date: Thu,  2 Mar 2023 15:27:55 -0800
-Message-Id: <20230302232758.888157-4-mcgrof@kernel.org>
+Subject: [PATCH 1/6] shmem: remove check for folio lock on writepage()
+Date: Thu,  2 Mar 2023 15:27:53 -0800
+Message-Id: <20230302232758.888157-2-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20230302232758.888157-1-mcgrof@kernel.org>
 References: <20230302232758.888157-1-mcgrof@kernel.org>
@@ -45,61 +45,30 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-i915_gem requires huge folios to be split when swapping.
-However we have  check for usage of writepages() to ensure
-it used only for swap purposes later. Avoid the splits if
-we're not being called for reclaim, even if they should in
-theory not happen.
+Matthew notes we should not need to check the folio lock
+on the writepage() callback so remove it. This sanity check
+has been lingering since linux-history days. We remove this
+as we tidy up the writepage() callback to make things a bit
+clearer.
 
-This makes the conditions easier to follow on shem_writepage().
-
+Suggested-by: Matthew Wilcox <willy@infradead.org>
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- mm/shmem.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ mm/shmem.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/mm/shmem.c b/mm/shmem.c
-index 2b9ff585a553..a5a6da51087e 100644
+index 1af85259b6fc..7fff1a3af092 100644
 --- a/mm/shmem.c
 +++ b/mm/shmem.c
-@@ -1340,6 +1340,18 @@ static int shmem_writepage(struct page *page, struct writeback_control *wbc)
- 	swp_entry_t swap;
- 	pgoff_t index;
+@@ -1354,7 +1354,6 @@ static int shmem_writepage(struct page *page, struct writeback_control *wbc)
+ 		folio_clear_dirty(folio);
+ 	}
  
-+	/*
-+	 * Our capabilities prevent regular writeback or sync from ever calling
-+	 * shmem_writepage; but a stacking filesystem might use ->writepage of
-+	 * its underlying filesystem, in which case tmpfs should write out to
-+	 * swap only in response to memory pressure, and not for the writeback
-+	 * threads or sync.
-+	 */
-+	if (!wbc->for_reclaim) {
-+		WARN_ON_ONCE(1);	/* Still happens? Tell us about it! */
-+		goto redirty;
-+	}
-+
- 	/*
- 	 * If /sys/kernel/mm/transparent_hugepage/shmem_enabled is "always" or
- 	 * "force", drivers/gpu/drm/i915/gem/i915_gem_shmem.c gets huge pages,
-@@ -1360,18 +1372,6 @@ static int shmem_writepage(struct page *page, struct writeback_control *wbc)
- 	if (!total_swap_pages)
- 		goto redirty;
- 
--	/*
--	 * Our capabilities prevent regular writeback or sync from ever calling
--	 * shmem_writepage; but a stacking filesystem might use ->writepage of
--	 * its underlying filesystem, in which case tmpfs should write out to
--	 * swap only in response to memory pressure, and not for the writeback
--	 * threads or sync.
--	 */
--	if (!wbc->for_reclaim) {
--		WARN_ON_ONCE(1);	/* Still happens? Tell us about it! */
--		goto redirty;
--	}
--
- 	/*
- 	 * This is somewhat ridiculous, but without plumbing a SWAP_MAP_FALLOC
- 	 * value into swapfile.c, the only way we can correctly account for a
+-	BUG_ON(!folio_test_locked(folio));
+ 	mapping = folio->mapping;
+ 	index = folio->index;
+ 	inode = mapping->host;
 -- 
 2.39.1
 
