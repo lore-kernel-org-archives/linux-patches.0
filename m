@@ -1,158 +1,161 @@
-Received: from mail-vs1-f47.google.com (mail-vs1-f47.google.com [209.85.217.47])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CE3E7A93A
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 20:02:59 +0000 (UTC)
-Received: by mail-vs1-f47.google.com with SMTP id d20so380284vsf.11
-        for <patches@lists.linux.dev>; Thu, 02 Mar 2023 12:02:59 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=ytPEWIqhwaCarWJc5HTAE9DnXoPRR9+OJ57LsDquhy8=;
-        b=Yce9ojHEdVsInJzWr3wZCZrAHq+GwsLhfKhWAgWBe9rPqACHGlIwU00inP24k0sv3k
-         i0zj1pF+ZP8maq7o/Fv0gl/+7HDrfStCJA3LF9lVWmUSE+7ChVY7LR+3D+RNTeXJIfhv
-         DtpRIS9tJudFQcjjPgY7inCX0F4+dyABmSL62SGNhO5KoF7QlF97/qByL3/UAHGrU6uN
-         q20kW3Xfc6SNIzI1ngDOrj2EfALoh7rsdaJmq610WALbpxEYS9XJBDvPW+iUPHzF1Ut0
-         1VxfvPP2dhQVsm/BtXBTDXkLIh+52xnjrew33YdWNttOHO67qyA0VUr+7Hl+6UuzdUka
-         CKjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=cc:to:subject:message-id:date:from:in-reply-to:references
-         :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=ytPEWIqhwaCarWJc5HTAE9DnXoPRR9+OJ57LsDquhy8=;
-        b=1sn0ZlFWmHeOJcB6hwpLmF74ST8gamWryIVWcgPA0DQjLTe4ny+U0K5V7pcOg60fzq
-         q3hT5u2aqlJGRCVpGqV5VmoJhmNzuJp3fRxGBKXLvIhYhVUa9pR6jJhB9Pdo1Di2ZmHI
-         9INv7zV0EPmcHZqA8tI2xb08WhFSHv0lhZLIEMcpjxjeK+GGkXWm6xYo2Nz9C1RYp29B
-         jEj/QjGH8tnWZih2vIS/g3WPVxGjAL7O5QjOsk4aDkfLSojq6p2id8p67HIslqn8u0as
-         UdYCQ0sgCtVX8Uf12K8kwMJQoz6fhSEnCR+gN6Iqq681PQX5n2drBf4vfD/wnxK3wen5
-         DEyA==
-X-Gm-Message-State: AO0yUKUOtlSfZZ8puKsAqUzQ7ulpQJPFKgWE8hzIwNxNoV2cWum+VNgh
-	sHbnKKdS/a6NpmNl/lKnNag6obkrla77TjjdbdZ1kA==
-X-Google-Smtp-Source: AK7set+eVyokK1v5FAUJHHwSpcbcC+NkbL9iwTxddN0InqDlQuz/M6pEyf0rzQmaP/Vf/VhSyBB3gxvQhFmom/1DaHo=
-X-Received: by 2002:a67:a641:0:b0:411:c62b:6bf0 with SMTP id
- r1-20020a67a641000000b00411c62b6bf0mr7584347vsh.3.1677787378333; Thu, 02 Mar
- 2023 12:02:58 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CF1F5A938
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 20:18:47 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 7C7CFC433EF
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 20:18:47 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1677788327;
+	bh=/Yn3UcMdQ1GXWH06I63xFkYGrZyXxsIhd8sDdU/N+rU=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=S3pI84K0PNBtKG1nQ9HGZ6kbE153E/SPIRWB3OJArdOlrjEGtVCXZ3xXkoOEj86On
+	 TxM99XZA4Mj88eHESIOKaet/GYTAVuYwP6NLi6JEayM2rWcTJsp3Kefqm9UGQDg681
+	 4p2iTjbJ1sc+bKGIknarjbzBDsubDF67/wgUez3qtElsuJFSxHyiQ1MdJ4vmsIbgXT
+	 ufMQpB3K2m2YZLE1n4IodBAM0uYyxQcKgdpWKKuy7uo1/n7xiYxc4HaKYo7tyN+YJP
+	 7WcTrrCyQYFTNy/Fie+Yl2vjzW1mtAnwhoJV+mmymjLkmlK+akoh1+AnsRKclhdZcS
+	 6UnxrOQTGDjGQ==
+Received: by mail-vs1-f41.google.com with SMTP id o6so423198vsq.10
+        for <patches@lists.linux.dev>; Thu, 02 Mar 2023 12:18:47 -0800 (PST)
+X-Gm-Message-State: AO0yUKWKsvitOf9R+uQT4lXrc8dhj0ICEwtXd1QK9kK2AseHEu+oKDiY
+	x+MFDVvY8tm5OLjnw+ChrmxP2NoTTm8ftuy8EA==
+X-Google-Smtp-Source: AK7set8CdZkV4nzAcxJAbmUjGudJ4PuiuPCHsE83ibLSseGKCb8fkRaEA/lrtnQAVCyfd8eCj0HxtuGm3QHjodqLBCw=
+X-Received: by 2002:a05:6102:184:b0:414:4ef2:b607 with SMTP id
+ r4-20020a056102018400b004144ef2b607mr7202543vsq.6.1677788326407; Thu, 02 Mar
+ 2023 12:18:46 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230301180657.003689969@linuxfoundation.org> <CA+G9fYtDGpgT4dckXD-y-N92nqUxuvue_7AtDdBcHrbOMsDZLg@mail.gmail.com>
- <ZAB6pP3MNy152f+7@kroah.com> <CA+G9fYsHbQyQFp+vMnmFKDSQxrmj-VKsexWq-aayxgrY+0O7KQ@mail.gmail.com>
-In-Reply-To: <CA+G9fYsHbQyQFp+vMnmFKDSQxrmj-VKsexWq-aayxgrY+0O7KQ@mail.gmail.com>
-From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Fri, 3 Mar 2023 01:32:47 +0530
-Message-ID: <CA+G9fYsn+AhWTFA+ZJmfFsM71WGLPOFemZp_vhFMMLUcgcAXKg@mail.gmail.com>
-Subject: Re: [PATCH 6.1 00/42] 6.1.15-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, mptcp@lists.linux.dev, 
-	Florian Westphal <fw@strlen.de>, Mat Martineau <mathew.j.martineau@linux.intel.com>, 
-	Matthieu Baerts <matthieu.baerts@tessares.net>, Anders Roxell <anders.roxell@linaro.org>
+References: <20230302013822.1808711-1-sboyd@kernel.org> <CAL_JsqLVQVZhYTSZgrvA-V-xOUbiBdyDxqPOZk=89YS33EahBQ@mail.gmail.com>
+ <093867df6137ad9e964b7dd90fb58f1a.sboyd@kernel.org>
+In-Reply-To: <093867df6137ad9e964b7dd90fb58f1a.sboyd@kernel.org>
+From: Rob Herring <robh+dt@kernel.org>
+Date: Thu, 2 Mar 2023 14:18:34 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqLdPWRLu8TNqCG+dw9Pz2cS798QwGX=C5X18KKqAXwjSQ@mail.gmail.com>
+Message-ID: <CAL_JsqLdPWRLu8TNqCG+dw9Pz2cS798QwGX=C5X18KKqAXwjSQ@mail.gmail.com>
+Subject: Re: [PATCH 0/8] clk: Add kunit tests for fixed rate and parent data
+To: Stephen Boyd <sboyd@kernel.org>
+Cc: Michael Turquette <mturquette@baylibre.com>, linux-kernel@vger.kernel.org, 
+	linux-clk@vger.kernel.org, patches@lists.linux.dev, 
+	Brendan Higgins <brendan.higgins@linux.dev>, David Gow <davidgow@google.com>, 
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>, "Rafael J . Wysocki" <rafael@kernel.org>, 
+	Richard Weinberger <richard@nod.at>, Anton Ivanov <anton.ivanov@cambridgegreys.com>, 
+	Johannes Berg <johannes@sipsolutions.net>, 
+	Vincent Whitchurch <vincent.whitchurch@axis.com>, Frank Rowand <frowand.list@gmail.com>, 
+	Christian Marangi <ansuelsmth@gmail.com>, 
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>, devicetree@vger.kernel.org, 
+	linux-um@lists.infradead.org, linux-kselftest@vger.kernel.org, 
+	kunit-dev@googlegroups.com
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-On Thu, 2 Mar 2023 at 16:30, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+On Thu, Mar 2, 2023 at 1:44=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> wrot=
+e:
 >
-> On Thu, 2 Mar 2023 at 16:00, Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
+> Quoting Rob Herring (2023-03-02 09:13:59)
+> > On Wed, Mar 1, 2023 at 7:38=E2=80=AFPM Stephen Boyd <sboyd@kernel.org> =
+wrote:
+> > >
+> > > This patch series adds unit tests for the clk fixed rate basic type a=
+nd
+> > > the clk registration functions that use struct clk_parent_data. To ge=
+t
+> > > there, we add support for loading a DTB into the UML kernel that's
+> > > running the unit tests along with probing platform drivers to bind to
+> > > device nodes specified in DT.
+> > >
+> > > With this series, we're able to exercise some of the code in the comm=
+on
+> > > clk framework that uses devicetree lookups to find parents and the fi=
+xed
+> > > rate clk code that scans devicetree directly and creates clks. Please
+> > > review.
+> > >
+> > > I Cced everyone to all the patches so they get the full context. I'm
+> > > hoping I can take the whole pile through the clk tree as they almost =
+all
+> > > depend on each other. In the future I imagine it will be easy to add
+> > > more test nodes to the clk.dtsi file and not need to go across variou=
+s
+> > > maintainer trees like this series does.
+> > >
+> > > Stephen Boyd (8):
+> > >   dt-bindings: Add linux,kunit binding
+> > >   of: Enable DTB loading on UML for KUnit tests
+> > >   kunit: Add test managed platform_device/driver APIs
+> > >   clk: Add test managed clk provider/consumer APIs
+> > >   dt-bindings: kunit: Add fixed rate clk consumer test
+> > >   clk: Add KUnit tests for clk fixed rate basic type
+> > >   dt-bindings: clk: Add KUnit clk_parent_data test
+> > >   clk: Add KUnit tests for clks registered with struct clk_parent_dat=
+a
 > >
-> > On Thu, Mar 02, 2023 at 03:49:31PM +0530, Naresh Kamboju wrote:
-> > > On Wed, 1 Mar 2023 at 23:42, Greg Kroah-Hartman
-> > > <gregkh@linuxfoundation.org> wrote:
-> > > >
-> > > > This is the start of the stable review cycle for the 6.1.15 release.
-> > > > There are 42 patches in this series, all will be posted as a response
-> > > > to this one.  If anyone has any issues with these being applied, please
-> > > > let me know.
-> > > >
-> > > > Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
-> > > > Anything received after that time might be too late.
-> > > >
-> > > > The whole patch series can be found in one patch at:
-> > > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.15-rc1.gz
-> > > > or in the git tree and branch at:
-> > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> > > > and the diffstat can be found below.
-> > > >
-> > > > thanks,
-> > > >
-> > > > greg k-h
-> > >
-> > > Regression found on Linux version 6.1.15-rc1 on 32-bit arm x15 and i386.
-> > >
-> > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > >
-> > > ## Build
-> > > * kernel: 6.1.15-rc1
-> > > * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-> > > * git branch: linux-6.1.y
-> > > * git commit: b6150251d4ddf8a80510c185d839631e252e6317
-> > > * git describe: v6.1.14-43-gb6150251d4dd
-> > > * test details:
-> > > https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.14-43-gb6150251d4dd
-> > >
-> > > Regression test cases,
-> > > i386:
-> > > x15:
-> > >   * kselftest-net-mptcp/net_mptcp_mptcp_sockopt_sh
-> > >
-> > > # mptcp_sockopt: mptcp_sockopt.c:353: do_getsockopt_tcp_info:
-> > > Assertion `ti.d.size_user == sizeof(struct tcp_info)' failed.
-> > > # mptcp_sockopt: mptcp_sockopt.c:353: do_getsockopt_tcp_info:
-> > > Assertion `ti.d.size_user == sizeof(struct tcp_info)' failed.
-> > >
-> > > test log:
-> > > ----------
-> > >
-> > > # selftests: net/mptcp: mptcp_sockopt.sh
+> > Good to see bindings for this. I've been meaning to do something about
+> > the DT unittest ones being undocumented, but I hadn't really decided
+> > whether it was worth writing schemas for them. The compatibles at
+> > least show up with 'make dt_compatible_check'. Perhaps we want to just
+> > define some vendor (not 'linux') that's an exception rather than
+> > requiring schemas (actually, that already works for 'foo').
 >
-> ....
->
-> > Nit, wrapping a log like this makes it hard to read, don't you think?
->
-> Me either.
-> That is the reason I have shared "Assertion" above.
->
-> >
-> > > # mptcp_sockopt: mptcp_sockopt.c:353: do_getsockopt_tcp_info:
-> > > Assertion `ti.d.size_user == sizeof(struct tcp_info)' failed.
-> > > # server killed by signal 6
-> > > #
-> > > # FAIL: SOL_MPTCP getsockopt
-> > > # PASS: TCP_INQ cmsg/ioctl -t tcp
-> > > # PASS: TCP_INQ cmsg/ioctl -6 -t tcp
-> > > # PASS: TCP_INQ cmsg/ioctl -r tcp
-> > > # PASS: TCP_INQ cmsg/ioctl -6 -r tcp
-> > > # PASS: TCP_INQ cmsg/ioctl -r tcp -t tcp
-> > > not ok 6 selftests: net/mptcp: mptcp_sockopt.sh # exit=1
-> >
-> > Any chance you can bisect?
->
-> We are running our bisection scripts.
+> Sure. Maybe "kunit" should be the vendor prefix? Or "dtbunit"?
 
-We have tested with 6.1.14 kselftests source again and it passes.
-Now that we have upgraded to 6.2.1 kselftests source, we find that
-there is this problem reported. so, not a kernel regression.
+We'd want to use the same thing on the DT unittests or anything else
+potentially. How about just 'test'?
 
-Tested-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > It's
+> > likely that we want test DTs that fail normal checks and schemas get
+> > in the way of that as we don't have a way to turn off checks.
+>
+> Having the schemas is nice to make sure tests that are expecting some
+> binding are actually getting that. But supporting broken bindings is
+> also important to test any error paths in functions that parse
+> properties. Maybe we keep the schema and have it enforce that incorrect
+> properties are being set?
 
-## Build
-* kernel: 6.1.15-rc1
-* git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
-* git branch: linux-6.1.y
-* git commit: b6150251d4ddf8a80510c185d839631e252e6317
-* git describe: v6.1.14-43-gb6150251d4dd
-* test details:
-https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.14-43-gb6150251d4dd
+I wasn't suggesting throwing them out. More why I hadn't written any I gues=
+s.
+
+> Do we really need to test incorrect bindings? Doesn't the
+> dt_bindings_check catch these problems so we don't have to write DTB
+> verifiers in the kernel?
+
+Fair enough. Using my frequently stated position against me. :)
+
+I do have a secret plan to implement (debug) type checks into the
+of_property_* APIs by extracting the type information from schemas
+into C.
 
 
---
-Linaro LKFT
-https://lkft.linaro.org
+> > We already have GPIO tests in the DT unittests, so why is clocks
+> > different? Or should the GPIO tests be moved out (yes, please!)?
+>
+> Ah I didn't notice the GPIO tests in there. There are i2c tests too,
+> right? All I can say is clks are using kunit, that's the difference ;-)
+
+Yeah, they should perhaps all move to the subsystems.
+
+> > What happens when/if the DT unittest is converted to kunit? I think
+> > that would look confusing from the naming. My initial thought is
+> > 'kunit' should be dropped from the naming of a lot of this. Note that
+> > the original kunit submission converted the DT unittests. I would
+> > still like to see that happen. Frank disagreed over what's a unit test
+> > or not, then agreed, then didn't... I don't really care. If there's a
+> > framework to use, then we should use it IMO.
+>
+> Honestly I don't want to get involved in migrating the existing DT
+> unittest code to kunit. I'm aware that it was attempted years ago when
+> kunit was introduced. Maybe if the overlay route works well enough I can
+> completely sidestep introducing any code in drivers/of/ besides some
+> kunit wrappers for this. I'll cross my fingers!
+
+Yeah, I wasn't expecting you to. I just want to make sure this meshes
+with any future conversion to kunit.
+
+There's also some plans to always populate the DT root node if not
+present. That may help here. Or not. There's been a few versions
+posted with Frank's in the last week or 2.
+
+Rob
