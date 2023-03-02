@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 30707D525
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 20:29:13 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4D010D52A
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 20:29:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=xBLSlmQtAyz0qvRsNFvWuwWpKiVVHBEV1aJjBlE0tQE=; b=4T8dlcCaoBdPNTMUrPR4ZbnWKQ
-	U/IiQYDF39ySJMrN6t8k85pINxzuzMBynHpatoaVq6IXt382QmOz4MCgHXk4gQyssT+L2V6r2Xgp0
-	mHMRuBldnqbFgWlOBCQJ3Wr1Se7TbGQGcfyx4FUCT8tHP9Yz7384pJlViVAMhMm1yVlDrykvbhx8A
-	oDhxb2B5OrxGxRGCsnlNBqirlR8fG48v1/jZurECPr7nqG8Ax/uhyLvYwpFRcqf/eGQvfIOCYuLVY
-	kjnFShUFiauUdPpIKvVPSmPerkyLZy0SUhMx1g5sR934vN3pnwjtbVdx3dtsOvNTV+bIB+yvThhWJ
-	e44/VfRA==;
+	bh=H2cUIW21WZq17g9O2oNgRsa778WFbjBOimotIrmyA/E=; b=nNmP8ACa3bYQFO+va5O1HA9FsY
+	7uEoxbwqkYk/qt113tW2SYA9YMG3a2AHu8L7Iv3iQ0EMlgc7BBKKyksmjuEvEnZO0sSPh+srw21Ed
+	92vGNiItW9t2AeJ5aH7Je//Kla0sYsQd6yw57DZXv4g5YLEqNM5fx8BqApdQ2WOzt1ETsFacehG28
+	1v5ozP5b85IjoFEOhl2RVeEKNDt9QH7O2q/lI+HC3DfepUovBBCkaCjB4ahImpZOYcj2qeiGF+SSR
+	bKm0l0YVBiFRo1VjmJYCVnVBvM6yvLikEV5zJHWv1DMHYb3GMsppkfKWHIApcwT0D+DZwuAqLb0xi
+	hYGi9dkg==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pXpXR-003Fx9-Rz; Thu, 02 Mar 2023 20:28:29 +0000
+	id 1pXpXS-003FxJ-9n; Thu, 02 Mar 2023 20:28:30 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: ebiederm@xmission.com,
 	keescook@chromium.org,
@@ -46,9 +46,9 @@ Cc: j.granados@samsung.com,
 	linux-csky@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 01/11] proc_sysctl: update docs for __register_sysctl_table()
-Date: Thu,  2 Mar 2023 12:28:16 -0800
-Message-Id: <20230302202826.776286-2-mcgrof@kernel.org>
+Subject: [PATCH 06/11] yama: simplfy sysctls with register_sysctl()
+Date: Thu,  2 Mar 2023 12:28:21 -0800
+Message-Id: <20230302202826.776286-7-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20230302202826.776286-1-mcgrof@kernel.org>
 References: <20230302202826.776286-1-mcgrof@kernel.org>
@@ -61,67 +61,40 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-Update the docs for __register_sysctl_table() to make it clear no child
-entries can be passed. When the child is true these are non-leaf entries
-on the ctl table and sysctl treats these as directories. The point to
-__register_sysctl_table() is to deal only with directories not part of
-the ctl table where thay may riside, to be simple and avoid recursion.
-
-While at it, hint towards using long on extra1 and extra2 later.
+register_sysctl_paths() is only need if you have directories with
+entries, simplify this by using register_sysctl().
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- fs/proc/proc_sysctl.c | 14 +++++++++++---
- 1 file changed, 11 insertions(+), 3 deletions(-)
+ security/yama/yama_lsm.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
-index 5851eb5bc726..1df0beb50dbe 100644
---- a/fs/proc/proc_sysctl.c
-+++ b/fs/proc/proc_sysctl.c
-@@ -1287,7 +1287,7 @@ static int insert_links(struct ctl_table_header *head)
-  * __register_sysctl_table - register a leaf sysctl table
-  * @set: Sysctl tree to register on
-  * @path: The path to the directory the sysctl table is in.
-- * @table: the top-level table structure
-+ * @table: the top-level table structure without any child
-  *
-  * Register a sysctl table hierarchy. @table should be a filled in ctl_table
-  * array. A completely 0 filled entry terminates the table.
-@@ -1308,9 +1308,12 @@ static int insert_links(struct ctl_table_header *head)
-  * proc_handler - the text handler routine (described below)
-  *
-  * extra1, extra2 - extra pointers usable by the proc handler routines
-+ * XXX: we should eventually modify these to use long min / max [0]
-+ * [0] https://lkml.kernel.org/87zgpte9o4.fsf@email.froward.int.ebiederm.org
-  *
-  * Leaf nodes in the sysctl tree will be represented by a single file
-- * under /proc; non-leaf nodes will be represented by directories.
-+ * under /proc; non-leaf nodes (where child is not NULL) are not allowed,
-+ * sysctl_check_table() verifies this.
-  *
-  * There must be a proc_handler routine for any terminal nodes.
-  * Several default handlers are available to cover common cases -
-@@ -1352,7 +1355,7 @@ struct ctl_table_header *__register_sysctl_table(
+diff --git a/security/yama/yama_lsm.c b/security/yama/yama_lsm.c
+index 06e226166aab..90dd012b0db5 100644
+--- a/security/yama/yama_lsm.c
++++ b/security/yama/yama_lsm.c
+@@ -447,12 +447,6 @@ static int yama_dointvec_minmax(struct ctl_table *table, int write,
  
- 	spin_lock(&sysctl_lock);
- 	dir = &set->dir;
--	/* Reference moved down the diretory tree get_subdir */
-+	/* Reference moved down the directory tree get_subdir */
- 	dir->header.nreg++;
- 	spin_unlock(&sysctl_lock);
+ static int max_scope = YAMA_SCOPE_NO_ATTACH;
  
-@@ -1369,6 +1372,11 @@ struct ctl_table_header *__register_sysctl_table(
- 		if (namelen == 0)
- 			continue;
- 
-+		/*
-+		 * namelen ensures if name is "foo/bar/yay" only foo is
-+		 * registered first. We traverse as if using mkdir -p and
-+		 * return a ctl_dir for the last directory entry.
-+		 */
- 		dir = get_subdir(dir, name, namelen);
- 		if (IS_ERR(dir))
- 			goto fail;
+-static struct ctl_path yama_sysctl_path[] = {
+-	{ .procname = "kernel", },
+-	{ .procname = "yama", },
+-	{ }
+-};
+-
+ static struct ctl_table yama_sysctl_table[] = {
+ 	{
+ 		.procname       = "ptrace_scope",
+@@ -467,7 +461,7 @@ static struct ctl_table yama_sysctl_table[] = {
+ };
+ static void __init yama_init_sysctl(void)
+ {
+-	if (!register_sysctl_paths(yama_sysctl_path, yama_sysctl_table))
++	if (!register_sysctl("kernel/yama", yama_sysctl_table))
+ 		panic("Yama: sysctl registration failed.\n");
+ }
+ #else
 -- 
 2.39.1
 
