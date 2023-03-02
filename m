@@ -1,104 +1,114 @@
-Received: from madras.collabora.co.uk (madras.collabora.co.uk [46.235.227.172])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 67F6F8C11
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 17:16:50 +0000 (UTC)
-Received: from [192.168.2.216] (109-252-117-89.nat.spd-mgts.ru [109.252.117.89])
-	(using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-	 key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
-	(No client certificate requested)
-	(Authenticated sender: dmitry.osipenko)
-	by madras.collabora.co.uk (Postfix) with ESMTPSA id 701BC6602F64;
-	Thu,  2 Mar 2023 17:16:45 +0000 (GMT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=collabora.com;
-	s=mail; t=1677777408;
-	bh=9+LsKOxASfHNgQnQTMd3imAcZuorrm+JG7Tg634FOpQ=;
-	h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
-	b=lv8cA+1K8lLWL+Hq3Il1En+EmYanRr3ngLoU7xULHJNRjXqCLJCAcSzT2kHPxWzKV
-	 7SODLXktKBo4B/tNN1kfY99kYLU3n2YtSuMRdOZwDf75MDKXfb9BLJwFNjIx5oJfu6
-	 kP7OVntfyOUiiM2LenxOejWBFkXou+ODfywxDjHQjsbER4JW3Ek0elAJds9vqY3GuW
-	 +q65ulD0gdYeRS2RQFA+HUT+v+QpTfcNN9H6Gvy26av8r/7jJyWWVemti1bIhjumbv
-	 zwHexHCF4b5jCGPTUaEpsgQViFHvs/aA4ujUd6p0dEhMi9yYTtTOU9DxYQvwBWTLhF
-	 SbibPjzT6Jnrw==
-Message-ID: <0c9d2708-cd94-7a68-4f55-02b5a41e073b@collabora.com>
-Date: Thu, 2 Mar 2023 20:16:35 +0300
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 19FBF8C11
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 17:26:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A54CFC433D2
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 17:26:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1677778006;
+	bh=Wc6+4WXmOEo8t6/KAvbIgNO3nCsai+TZxcWiFh9sr/c=;
+	h=From:Subject:Date:To:From;
+	b=II1w9B2LTb/8fW8Adqvopmj75aDJu8J24KXIYnBnrFfC+bea1SKqOIGXO9ZkjIQQC
+	 MKOusEaxjiErGQ8w8vyGTk2AZVsXmjZhBYvLWgfNjwbYQ9OxJ+LcWNu598ENQKDbnz
+	 b32JX9GrE7KzSNs1nrURuth8NQa9KhwlCCxiMqhw=
+From: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+Subject: [PATCH v12 0/3] Completely fake series, edited
+Date: Thu, 02 Mar 2023 12:26:31 -0500
+Message-Id: <20220825-test-endpoint-send-2-v12-0-9eb08a678d67@linuxfoundation.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
- Thunderbird/102.8.0
-Subject: Re: [PATCH 5.10 16/19] drm/virtio: Correct
- drm_gem_shmem_get_sg_table() error handling
-To: Harshit Mogalapalli <harshit.m.mogalapalli@oracle.com>,
- Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, Emil Velikov <emil.l.velikov@gmail.com>,
- Gerd Hoffmann <kraxel@redhat.com>,
- Ovidiu Panait <ovidiu.panait@windriver.com>,
- Dan Carpenter <error27@gmail.com>, Darren Kenny <darren.kenny@oracle.com>,
- Vegard Nossum <vegard.nossum@oracle.com>
-References: <20230301180652.316428563@linuxfoundation.org>
- <20230301180652.989746215@linuxfoundation.org>
- <78b78fd7-899c-aee8-4f82-f7e7dbc2f4c9@oracle.com>
-Content-Language: en-US
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-In-Reply-To: <78b78fd7-899c-aee8-4f82-f7e7dbc2f4c9@oracle.com>
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
+X-B4-Tracking: v=1; b=H4sIAEfcAGQC/43UzW6jMBAH8FeJONeRP7DH3lOklfoAvUY9+GNIX
+ FETAUGNqr57h6xWu9KWrk+AZf/898Dw3kw4ZpyaH7v3ZsQlT3ko9CDkw66JZ19OyHKigUZyKbm
+ Vms04zQxLugy5zGyiOyZZdFJ1GAVPPDS0NPgJWRh9iWdaXK59T4PnPM3DeLvvtQi6HP+jLoJxh
+ qAkhuh9a/2hz+X61g3XkvxMSffDeGqeiV5kDSeJU4lzLQWoVovD6dXnfh+H11+IqkEUIT5FH41
+ I2kn4MtPDroYxqJSGZJyLaftobU2qdj0ax04b1UXZum1O13CaONeCQh0tdOKbwpsazhBnHaCHJ
+ E2wsM1BDQfExeB88iEGm7ptzv7hHAehuJKwF8qBBtayl4sveToEf+tzGPH+Ifx+c/9MF19Ov+/
+ iakI7Ch2s5dKBo6qa7dCCV/UGX8EYPDhnTQf6G7Cu2dZuEwHXzgjgPP+7PT4+CLqM2OW3+9/i2
+ Dw9/lyLVXBOuNCETx612/BLBAAA
+To: patches@lists.linux.dev
+X-Mailer: b4 0.13-dev-14a61
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2342;
+ i=konstantin@linuxfoundation.org; h=from:subject:message-id;
+ bh=Wc6+4WXmOEo8t6/KAvbIgNO3nCsai+TZxcWiFh9sr/c=;
+ b=owGbwMvMwCW27YjM47CUmTmMp9WSGFIY7oRt+r3K/2pthNLXy0a31rk0JArfOTD5aIPj/uURZ
+ 8rkeS6/6ChlYRDjYpAVU2Qp2xe7KajwoYdceo8pzBxWJpAhDFycAjARO0VGhtNWHMt99M7b7Hry
+ hElLNuxtzZapu661v+p4F/7t/f4v9c4M/0NemTa4C4hOjrJxnbi8+9mSopoDpy82rN4z6YPRri8
+ yvBwA
+X-Developer-Key: i=konstantin@linuxfoundation.org; a=openpgp;
+ fpr=DE0E66E32F1FDD0902666B96E63EDCA9329DD07E
 
-On 3/2/23 19:52, Harshit Mogalapalli wrote:
-> Hi,
-> 
-> On 01/03/23 11:38 pm, Greg Kroah-Hartman wrote:
->> From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->>
->> commit 64b88afbd92fbf434759d1896a7cf705e1c00e79 upstream.
->>
->> Previous commit fixed checking of the ERR_PTR value returned by
->> drm_gem_shmem_get_sg_table(), but it missed to zero out the shmem->pages,
->> which will crash virtio_gpu_cleanup_object(). Add the missing zeroing of
->> the shmem->pages.
->>
->> Fixes: c24968734abf ("drm/virtio: Fix NULL vs IS_ERR checking in
->> virtio_gpu_object_shmem_init")
->> Reviewed-by: Emil Velikov <emil.l.velikov@gmail.com>
->> Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
->> Link:
->> https://urldefense.com/v3/__http://patchwork.freedesktop.org/patch/msgid/20220630200726.1884320-2-dmitry.osipenko@collabora.com__;!!ACWV5N9M2RV99hQ!KAxF_UJ7x6SleCxrpYd8Huyt4Zj4e08fd9IUL6fl1Wneipk6_LKBnYuqQ2LK0bnvWHC6dxungVXptuvz5-4QQ2zjcq_JT1ub$
->> Signed-off-by: Gerd Hoffmann <kraxel@redhat.com>
->> Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
->> Signed-off-by: Ovidiu Panait <ovidiu.panait@windriver.com>
->> ---
->>   drivers/gpu/drm/virtio/virtgpu_object.c |    1 +
->>   1 file changed, 1 insertion(+)
->>
->> --- a/drivers/gpu/drm/virtio/virtgpu_object.c
->> +++ b/drivers/gpu/drm/virtio/virtgpu_object.c
->> @@ -159,6 +159,7 @@ static int virtio_gpu_object_shmem_init(
->>       shmem->pages = drm_gem_shmem_get_sg_table(&bo->base.base);
->>       if (IS_ERR(shmem->pages)) {
->>           drm_gem_shmem_unpin(&bo->base.base);
->> +        shmem->pages = NULL;
->>           return PTR_ERR(shmem->pages);
->>       }
-> 
-> While doing static analysis with smatch on LTS-rc series I found this bug.
-> 
-> PTR_ERR(NULL) is 1/success, so we are returning success in this case,
-> which looks wrong.
-> 
-> Only 5.10.y and 5.15.y are effected. Upstream commit b5c9ed70d1a9
-> ("drm/virtio: Improve DMA API usage for shmem BOs")
-> deleted this code, is present in linux-6.1.y and
-> linux-6.2.y, so this problem is not in 6.1.y and 6.2.y stable releases.
-> 
-> I have prepared a patch for fixing this, will send it out.
+Another completely fake series to test b4 endpoint sending. Please
+ignore it -- it's a random set of patches that exists elsewhere. If you
+got this message, it means I screwed something up. :)
 
-Thanks, that's a good catch!
+Signed-off-by: Konstantin Ryabitsev <konstantin@linuxfoundation.org>
+---
+Changes in v12:
+- Changes to Cc trailers in individual patches
+- Link to v11: https://lore.kernel.org/r/20220825-test-endpoint-send-2-v11-0-1be3451b79a0@gmail.com
 
--- 
+Changes in v11:
+- Change commit author for testing reasons
+- Link to v10: https://lore.kernel.org/r/20220825-test-endpoint-send-2-v10-0-bcba79986f75@linuxfoundation.org
+
+Changes in v10:
+- No changes, just junk.
+- Link to v9: https://lore.kernel.org/r/20220825-test-endpoint-send-2-v9-0-b88029795c86@linuxfoundation.org
+
+Changes in v9:
+- No changes, just junk.
+- Link to v8: https://lore.kernel.org/r/20220907130327.139757-1-jpanis@baylibre.com
+
+Changes in v8:
+- No changes, just junk.
+- Link to v7: https://lore.kernel.org/r/20220825-test-endpoint-send-2-v7-0-cb9adabcb8df@linuxfoundation.org
+
+Changes in v7:
+- No changes, just junk
+- Link to v6: https://lore.kernel.org/r/20220825-test-endpoint-send-2-v6-0-897ea7d26b87@linuxfoundation.org
+
+Changes in v6:
+- No changes, just junk.
+- Link to v5: https://lore.kernel.org/r/20220825-test-endpoint-send-2-v5-0-9473e5c87f1a@linuxfoundation.org
+
+Changes in v5:
+- No changes, just junk.
+- Link to v4: https://lore.kernel.org/r/20220825-test-endpoint-send-2-v4-0-30ef563fc249@linuxfoundation.org
+
+Changes in v4:
+- Rebased on v6.0-rc3
+- Link to v3: https://lore.kernel.org/r/20220825-test-endpoint-send-2-v3-0-6e3357d699cd@linuxfoundation.org
+
+Changes in v2:
+- No changes
+- Link to v1: https://lore.kernel.org/r/20220825-test-endpoint-send-2-v1-0-e732ebcaa48a@linuxfoundation.org
+
+---
+Clément Péron (1):
+      arm64: defconfig: Enable devfreq cooling device
+
+Konstantin Ryabitsev (1):
+      Another commit
+
+Konstantin Ryàbitsev (1):
+      Junk babootich
+
+ Makefile                     | 2 +-
+ README                       | 2 ++
+ arch/arm64/configs/defconfig | 1 +
+ 3 files changed, 4 insertions(+), 1 deletion(-)
+---
+base-commit: b90cb1053190353cc30f0fef0ef1f378ccc063c5
+change-id: 20220825-test-endpoint-send-2-c923fec10d0b
+
 Best regards,
-Dmitry
+-- 
+Konstantin Ryabitsev <konstantin@linuxfoundation.org>
 
