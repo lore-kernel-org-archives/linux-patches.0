@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 27215D522
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 20:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97BCAD526
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 20:29:13 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=+Hoy53VeqZDOL/t9ch2P6jt/ahEQQ6UBHYjZPmP5kVI=; b=Pc795+UC8GmLBrVgybdkFp55Y8
-	315+vdPN8i3iM63aUS7f+Bs9nYk0siO1Smy4WXyTKX4WnXYTW317Ls+MdoHwjPtaJBBNrmkKmrRIZ
-	KHYF0wDjJ9lM0uHA+Yoa5IWrsNzTN0F5G24GFM0fnpK94APmt7QI6hLGYvl6S5RM9LQx7qtZzAJ1a
-	wo+xnJLrUNLJLtoY4EOjzj1p9mOCpV+GCulivVw8EcDbsAKVp7urur1hSh0wTy0UyyHkfajf7F0Yc
-	u6Y+2ntmlAtdyf/PeyB09Rnt5PWHWHN3RIoFE1e6NjYSeBtRijn7YFOFzIRKFO2ougvtK7txbQ6y2
-	piHryISw==;
+	bh=aQxjJTI+/dgkfmOIkPQGBpoNeT0L25JfaRzqJBNjzfI=; b=M9Ls3cLPjLxNw64e3/lgGKMi96
+	8TAGSLVibINE1yswDzR8JzobcbigsqbuREDkc+CYrF+RiHQSMgAmf6yrV1lO4kjZ2FzXnswl3+03A
+	fcXNLxcyw8wBceOCZgds3wn3ORO7gc72kXSfmwu1mIvI/VrkdFToLXMUmTN/4AFfj8FMxmgxKCTlW
+	a2hz5P4cP+sg7uV9qEpfkZGPF+NtATW9+gSwUB4XXxjdkzh/W3WwvSlZt9iJNRHdedq1LxFqmXf7F
+	v2p6ZK6mtaRZOj4/WdAkAizmAIpcCkvVRU8DvSY2i5CXtjK6tQvdpqTDANTTSQUtTD/eXXdsfuX5j
+	+pvTdI2g==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pXpXS-003FxL-Ca; Thu, 02 Mar 2023 20:28:30 +0000
+	id 1pXpXS-003FxF-4H; Thu, 02 Mar 2023 20:28:30 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: ebiederm@xmission.com,
 	keescook@chromium.org,
@@ -46,9 +46,9 @@ Cc: j.granados@samsung.com,
 	linux-csky@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 07/11] seccomp: simplify sysctls with register_sysctl_init()
-Date: Thu,  2 Mar 2023 12:28:22 -0800
-Message-Id: <20230302202826.776286-8-mcgrof@kernel.org>
+Subject: [PATCH 04/11] apparmor: simplify sysctls with register_sysctl_init()
+Date: Thu,  2 Mar 2023 12:28:19 -0800
+Message-Id: <20230302202826.776286-5-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20230302202826.776286-1-mcgrof@kernel.org>
 References: <20230302202826.776286-1-mcgrof@kernel.org>
@@ -61,48 +61,41 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-register_sysctl_paths() is only needed if you have childs (directories)
-with entries. Just use register_sysctl_init() as it also does the
-kmemleak check for you.
+Using register_sysctl_paths() is really only needed if you have
+subdirectories with entries. We can use the simple register_sysctl()
+instead.
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- kernel/seccomp.c | 15 +--------------
- 1 file changed, 1 insertion(+), 14 deletions(-)
+ security/apparmor/lsm.c | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
 
-diff --git a/kernel/seccomp.c b/kernel/seccomp.c
-index cebf26445f9e..d3e584065c7f 100644
---- a/kernel/seccomp.c
-+++ b/kernel/seccomp.c
-@@ -2368,12 +2368,6 @@ static int seccomp_actions_logged_handler(struct ctl_table *ro_table, int write,
- 	return ret;
+diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
+index d6cc4812ca53..47c7ec7e5a80 100644
+--- a/security/apparmor/lsm.c
++++ b/security/apparmor/lsm.c
+@@ -1764,11 +1764,6 @@ static int apparmor_dointvec(struct ctl_table *table, int write,
+ 	return proc_dointvec(table, write, buffer, lenp, ppos);
  }
  
--static struct ctl_path seccomp_sysctl_path[] = {
+-static struct ctl_path apparmor_sysctl_path[] = {
 -	{ .procname = "kernel", },
--	{ .procname = "seccomp", },
 -	{ }
 -};
 -
- static struct ctl_table seccomp_sysctl_table[] = {
+ static struct ctl_table apparmor_sysctl_table[] = {
  	{
- 		.procname	= "actions_avail",
-@@ -2392,14 +2386,7 @@ static struct ctl_table seccomp_sysctl_table[] = {
+ 		.procname       = "unprivileged_userns_apparmor_policy",
+@@ -1790,8 +1785,7 @@ static struct ctl_table apparmor_sysctl_table[] = {
  
- static int __init seccomp_sysctl_init(void)
+ static int __init apparmor_init_sysctl(void)
  {
--	struct ctl_table_header *hdr;
--
--	hdr = register_sysctl_paths(seccomp_sysctl_path, seccomp_sysctl_table);
--	if (!hdr)
--		pr_warn("sysctl registration failed\n");
--	else
--		kmemleak_not_leak(hdr);
--
-+	register_sysctl_init("kernel/seccomp", seccomp_sysctl_table);
- 	return 0;
+-	return register_sysctl_paths(apparmor_sysctl_path,
+-				     apparmor_sysctl_table) ? 0 : -ENOMEM;
++	return register_sysctl("kernel", apparmor_sysctl_table) ? 0 : -ENOMEM;
  }
- 
+ #else
+ static inline int apparmor_init_sysctl(void)
 -- 
 2.39.1
 
