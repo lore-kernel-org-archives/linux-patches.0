@@ -1,83 +1,124 @@
-Received: from mail-oa1-f41.google.com (mail-oa1-f41.google.com [209.85.160.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0C7C92F3E
-	for <patches@lists.linux.dev>; Wed,  1 Mar 2023 23:43:30 +0000 (UTC)
-Received: by mail-oa1-f41.google.com with SMTP id 586e51a60fabf-172afa7bee2so16340872fac.6
-        for <patches@lists.linux.dev>; Wed, 01 Mar 2023 15:43:30 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linuxtx.org; s=google;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:from:to:cc:subject:date:message-id
-         :reply-to;
-        bh=BhW2gSdbv5vMwTEl6x4Xp05rj+HEUyPIAacoa6OCF4k=;
-        b=E35mtK6/8sAjkRNZ2FP9bXdH50V4kdqOmdYviyhAKKLQXPgKfuRDUD8W3tIqkjbJoi
-         H85Bgi+n442XfOAms5NNRYP001Ea+Z/Qfq84NxUNF6SracCH4YCNxH2AbsPb+mPEClSH
-         HTfJBWINAC8ws2m/moqnXhbsKj9KPdqCITrxc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:sender:x-gm-message-state:from:to:cc
-         :subject:date:message-id:reply-to;
-        bh=BhW2gSdbv5vMwTEl6x4Xp05rj+HEUyPIAacoa6OCF4k=;
-        b=lJSV9oPKs2ZF81tI1zDsmw99GKeS2MCLCggz++qyoOKldALczm+Y9Hqr9qZYsqN2xF
-         cbPCErC46juk3YuNs92UoM7CCh0E+u0Gmf6Oyj3FLQcbrP9IooZ8NbjoFf3B8C7cKg7F
-         nQCO8Voq361Pph8XkgfGAO56ChlA60WuBPz42ldDtcS3JpPsdZb0r7hKWFX9CvWvT5qe
-         JG+PuWBOitVta4bs4ZU3dYCbkvnvQ1ZaBDTRKo/+I1r/Yu+9zEvI/oZtUOJ/Vk7KKXPG
-         m21+zX/20YWB9yBXR4CTNO5wMY/pmO85f08xgCWuywgyiXBN3r2x49k2/OzOW95p/nwc
-         lVmA==
-X-Gm-Message-State: AO0yUKV7oWiAMWx8FxP3Si8PtBcRk0M18PeHtVMKyc3GDdL8bIxcFUl3
-	fDpNMohQmmPXfYOoOrGs2Veuaw==
-X-Google-Smtp-Source: AK7set+978mFlFhzy0VxpuZmK0F+YK3Y1dBCQ1diTXwLhMGmdVcnUWQuvcCagDvjz5WXR5jfSlsqDA==
-X-Received: by 2002:a05:6870:c192:b0:16d:f28d:3094 with SMTP id h18-20020a056870c19200b0016df28d3094mr5022083oad.53.1677714209004;
-        Wed, 01 Mar 2023 15:43:29 -0800 (PST)
-Received: from fedora64.linuxtx.org (99-47-93-78.lightspeed.rcsntx.sbcglobal.net. [99.47.93.78])
-        by smtp.gmail.com with ESMTPSA id b5-20020a05687061c500b001435fe636f2sm4830336oah.53.2023.03.01.15.43.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 01 Mar 2023 15:43:28 -0800 (PST)
-Sender: Justin Forbes <jmforbes@linuxtx.org>
-Date: Wed, 1 Mar 2023 17:43:27 -0600
-From: Justin Forbes <jforbes@fedoraproject.org>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 00/42] 6.1.15-rc1 review
-Message-ID: <Y//jH9m03FZZzjpD@fedora64.linuxtx.org>
-References: <20230301180657.003689969@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EE78BEA1
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 01:38:23 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 04EACC433D2;
+	Thu,  2 Mar 2023 01:38:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1677721103;
+	bh=rKtcHDStlDpmev0wSqFyH2j1eZ3mNsvHeJTuTDd60rk=;
+	h=From:To:Cc:Subject:Date:From;
+	b=Oq0iRiKSGI3z/jJpMgBfNOss+Xzar8RB/Cw11ZHp3oGjPiMZ8vs68LTw4qreqA/VI
+	 BpgpwOQ7uCgJEavC3zsKuuWBqfeTXaf9ydAm/THAWCV3L/MnQaQRKF4K2PxQx38FMG
+	 jcAYlN7XG4iU1l4mUBLFCEkHlxhkRocvuUyFc+j6o0KrZPtq1MmHjxUqW90wYKbbFj
+	 I5Uj9I+R30xd5TSwLaH39w3rJcKu8h482yW5Uh/XW/XHjBt9QXk2l5oOjQujJuMQYg
+	 RXaTU21Its7pzaW8Z11gOGGd1A3RixrpdaW0goxxiLK0qu400p2dBU8NcuE0fOYvSB
+	 rCqxUyZLJZKUg==
+From: Stephen Boyd <sboyd@kernel.org>
+To: Michael Turquette <mturquette@baylibre.com>,
+	Stephen Boyd <sboyd@kernel.org>
+Cc: linux-kernel@vger.kernel.org,
+	linux-clk@vger.kernel.org,
+	patches@lists.linux.dev,
+	Brendan Higgins <brendan.higgins@linux.dev>,
+	David Gow <davidgow@google.com>,
+	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+	"Rafael J . Wysocki" <rafael@kernel.org>,
+	Richard Weinberger <richard@nod.at>,
+	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
+	Johannes Berg <johannes@sipsolutions.net>,
+	Vincent Whitchurch <vincent.whitchurch@axis.com>,
+	Rob Herring <robh+dt@kernel.org>,
+	Frank Rowand <frowand.list@gmail.com>,
+	Christian Marangi <ansuelsmth@gmail.com>,
+	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
+	devicetree@vger.kernel.org,
+	linux-um@lists.infradead.org,
+	linux-kselftest@vger.kernel.org,
+	kunit-dev@googlegroups.com
+Subject: [PATCH 0/8] clk: Add kunit tests for fixed rate and parent data
+Date: Wed,  1 Mar 2023 17:38:13 -0800
+Message-Id: <20230302013822.1808711-1-sboyd@kernel.org>
+X-Mailer: git-send-email 2.39.2.722.g9855ee24e9-goog
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230301180657.003689969@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
 
-On Wed, Mar 01, 2023 at 07:08:21PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.15 release.
-> There are 42 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
-> Anything received after that time might be too late.
-> 
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.15-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
-> and the diffstat can be found below.
-> 
-> thanks,
-> 
-> greg k-h
+This patch series adds unit tests for the clk fixed rate basic type and
+the clk registration functions that use struct clk_parent_data. To get
+there, we add support for loading a DTB into the UML kernel that's
+running the unit tests along with probing platform drivers to bind to
+device nodes specified in DT.
 
-Tested rc1 against the Fedora build system (aarch64, armv7, ppc64le,
-s390x, x86_64), and boot tested x86_64. No regressions noted.
+With this series, we're able to exercise some of the code in the common
+clk framework that uses devicetree lookups to find parents and the fixed
+rate clk code that scans devicetree directly and creates clks. Please
+review.
 
-Tested-by: Justin M. Forbes <jforbes@fedoraproject.org>
+I Cced everyone to all the patches so they get the full context. I'm
+hoping I can take the whole pile through the clk tree as they almost all
+depend on each other. In the future I imagine it will be easy to add
+more test nodes to the clk.dtsi file and not need to go across various
+maintainer trees like this series does.
+
+Stephen Boyd (8):
+  dt-bindings: Add linux,kunit binding
+  of: Enable DTB loading on UML for KUnit tests
+  kunit: Add test managed platform_device/driver APIs
+  clk: Add test managed clk provider/consumer APIs
+  dt-bindings: kunit: Add fixed rate clk consumer test
+  clk: Add KUnit tests for clk fixed rate basic type
+  dt-bindings: clk: Add KUnit clk_parent_data test
+  clk: Add KUnit tests for clks registered with struct clk_parent_data
+
+ .../clock/linux,clk-kunit-parent-data.yaml    |  47 ++
+ .../kunit/linux,clk-kunit-fixed-rate.yaml     |  35 ++
+ .../bindings/kunit/linux,kunit.yaml           |  24 +
+ arch/um/kernel/dtb.c                          |  29 +-
+ drivers/clk/.kunitconfig                      |   3 +
+ drivers/clk/Kconfig                           |   7 +
+ drivers/clk/Makefile                          |   6 +
+ drivers/clk/clk-fixed-rate_test.c             | 296 ++++++++++++
+ drivers/clk/clk-kunit.c                       | 204 ++++++++
+ drivers/clk/clk-kunit.h                       |  28 ++
+ drivers/clk/clk_test.c                        | 456 +++++++++++++++++-
+ drivers/of/Kconfig                            |  26 +
+ drivers/of/Makefile                           |   1 +
+ drivers/of/kunit/.kunitconfig                 |   4 +
+ drivers/of/kunit/Makefile                     |   4 +
+ drivers/of/kunit/clk.dtsi                     |  30 ++
+ drivers/of/kunit/kunit.dtsi                   |   9 +
+ drivers/of/kunit/kunit.dtso                   |   4 +
+ drivers/of/kunit/uml_dtb_test.c               |  55 +++
+ include/kunit/platform_driver.h               |  15 +
+ lib/kunit/Makefile                            |   6 +
+ lib/kunit/platform_driver-test.c              | 107 ++++
+ lib/kunit/platform_driver.c                   | 207 ++++++++
+ 23 files changed, 1599 insertions(+), 4 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/clock/linux,clk-kunit-parent-data.yaml
+ create mode 100644 Documentation/devicetree/bindings/kunit/linux,clk-kunit-fixed-rate.yaml
+ create mode 100644 Documentation/devicetree/bindings/kunit/linux,kunit.yaml
+ create mode 100644 drivers/clk/clk-fixed-rate_test.c
+ create mode 100644 drivers/clk/clk-kunit.c
+ create mode 100644 drivers/clk/clk-kunit.h
+ create mode 100644 drivers/of/kunit/.kunitconfig
+ create mode 100644 drivers/of/kunit/Makefile
+ create mode 100644 drivers/of/kunit/clk.dtsi
+ create mode 100644 drivers/of/kunit/kunit.dtsi
+ create mode 100644 drivers/of/kunit/kunit.dtso
+ create mode 100644 drivers/of/kunit/uml_dtb_test.c
+ create mode 100644 include/kunit/platform_driver.h
+ create mode 100644 lib/kunit/platform_driver-test.c
+ create mode 100644 lib/kunit/platform_driver.c
+
+
+base-commit: c9c3395d5e3dcc6daee66c6908354d47bf98cb0c
+-- 
+https://git.kernel.org/pub/scm/linux/kernel/git/clk/linux.git/
+https://git.kernel.org/pub/scm/linux/kernel/git/sboyd/spmi.git
+
