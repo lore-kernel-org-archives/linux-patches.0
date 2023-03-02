@@ -1,95 +1,170 @@
-Received: from esa.microchip.iphmx.com (esa.microchip.iphmx.com [68.232.154.123])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4E1D34C77
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 10:22:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1677752535; x=1709288535;
-  h=date:from:to:cc:subject:message-id:references:
-   mime-version:in-reply-to;
-  bh=9/FsjJQsJLPYNbPa7bC4QZ1Zjup5oogUxQ2o1INWtWs=;
-  b=tguDZ6tmt/l80jbXEkm+vqyMhWB4Nn+Nu0KrvTcNuXEwpmMnrWBPlPtl
-   sF6xhgy1y17RBtZTv9WtGdATx06nigBE8AlE4JhNt/H7S1tx/6c5xwK3/
-   7XiTG8RpVf27WKeFQ4E40bVFXCdWV9gWCK5bJYX3TLQYnkaUxeE9s8kJb
-   YIiVqAfaKxrosYVoPUqQRr27+pvEs9cyUi1kejnclRHURui1AmbARItPr
-   YMi8VnP4weIYSZEpqx2lFPU+htPej7rGLZL7uuAW0UBiB6wUz3sRX+Vjw
-   I05YVq6NGHFnEs5ElIaLhtxJUWxeBvQRM5HcbFccPOKfPKSFW4VcketeB
-   A==;
-X-IronPort-AV: E=Sophos;i="5.98,227,1673938800"; 
-   d="asc'?scan'208";a="199558519"
-Received: from unknown (HELO email.microchip.com) ([170.129.1.10])
-  by esa4.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 02 Mar 2023 03:22:07 -0700
-Received: from chn-vm-ex01.mchp-main.com (10.10.85.143) by
- chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2507.16; Thu, 2 Mar 2023 03:22:05 -0700
-Received: from wendy (10.10.115.15) by chn-vm-ex01.mchp-main.com
- (10.10.85.143) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.16 via Frontend
- Transport; Thu, 2 Mar 2023 03:22:02 -0700
-Date: Thu, 2 Mar 2023 10:21:35 +0000
-From: Conor Dooley <conor.dooley@microchip.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-CC: <stable@vger.kernel.org>, <patches@lists.linux.dev>,
-	<linux-kernel@vger.kernel.org>, <torvalds@linux-foundation.org>,
-	<akpm@linux-foundation.org>, <linux@roeck-us.net>, <shuah@kernel.org>,
-	<patches@kernelci.org>, <lkft-triage@lists.linaro.org>, <pavel@denx.de>,
-	<jonathanh@nvidia.com>, <f.fainelli@gmail.com>, <sudipm.mukherjee@gmail.com>,
-	<srw@sladewatkins.net>, <rwarsow@gmx.de>
-Subject: Re: [PATCH 6.2 00/16] 6.2.2-rc1 review
-Message-ID: <ZAB4r35HC1AB8QIV@wendy>
-References: <20230301180653.263532453@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id A0E4E4C77;
+	Thu,  2 Mar 2023 10:29:59 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D117BC433EF;
+	Thu,  2 Mar 2023 10:29:58 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1677752999;
+	bh=VvcAnQ+5Q4FRZDFzuGAf9xyjKRrbK5mQvXIVydLiOVo=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=Ts9RSQVZs75WtFtpUl4k/CkEqhJd+vGaa2xhEsIcF43LwKqWX2Di5vHzdhS+OSfr9
+	 4afjz9Q9yCG9KDzvenW7NfiIor5twdOilctuAgzBondmBt3zL9DKuHIxwvIo4fwZHP
+	 54ihnB9lmVpF+vHm7mlQKjkkjo/w051hISgLGfkk=
+Date: Thu, 2 Mar 2023 11:29:56 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	mptcp@lists.linux.dev, Florian Westphal <fw@strlen.de>,
+	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Anders Roxell <anders.roxell@linaro.org>
+Subject: Re: [PATCH 6.1 00/42] 6.1.15-rc1 review
+Message-ID: <ZAB6pP3MNy152f+7@kroah.com>
+References: <20230301180657.003689969@linuxfoundation.org>
+ <CA+G9fYtDGpgT4dckXD-y-N92nqUxuvue_7AtDdBcHrbOMsDZLg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-	protocol="application/pgp-signature"; boundary="Eu/98hARTQftF9Hy"
-Content-Disposition: inline
-In-Reply-To: <20230301180653.263532453@linuxfoundation.org>
-
---Eu/98hARTQftF9Hy
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <CA+G9fYtDGpgT4dckXD-y-N92nqUxuvue_7AtDdBcHrbOMsDZLg@mail.gmail.com>
 
-On Wed, Mar 01, 2023 at 07:07:36PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.2.2 release.
-> There are 16 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->=20
-> Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
-> Anything received after that time might be too late.
->=20
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.2.2-r=
-c1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git=
- linux-6.2.y
-> and the diffstat can be found below.
+On Thu, Mar 02, 2023 at 03:49:31PM +0530, Naresh Kamboju wrote:
+> On Wed, 1 Mar 2023 at 23:42, Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > This is the start of the stable review cycle for the 6.1.15 release.
+> > There are 42 patches in this series, all will be posted as a response
+> > to this one.  If anyone has any issues with these being applied, please
+> > let me know.
+> >
+> > Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
+> > Anything received after that time might be too late.
+> >
+> > The whole patch series can be found in one patch at:
+> >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.15-rc1.gz
+> > or in the git tree and branch at:
+> >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > and the diffstat can be found below.
+> >
+> > thanks,
+> >
+> > greg k-h
+> 
+> Regression found on Linux version 6.1.15-rc1 on 32-bit arm x15 and i386.
+> 
+> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> 
+> ## Build
+> * kernel: 6.1.15-rc1
+> * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+> * git branch: linux-6.1.y
+> * git commit: b6150251d4ddf8a80510c185d839631e252e6317
+> * git describe: v6.1.14-43-gb6150251d4dd
+> * test details:
+> https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.14-43-gb6150251d4dd
+> 
+> Regression test cases,
+> i386:
+> x15:
+>   * kselftest-net-mptcp/net_mptcp_mptcp_sockopt_sh
+> 
+> # mptcp_sockopt: mptcp_sockopt.c:353: do_getsockopt_tcp_info:
+> Assertion `ti.d.size_user == sizeof(struct tcp_info)' failed.
+> # mptcp_sockopt: mptcp_sockopt.c:353: do_getsockopt_tcp_info:
+> Assertion `ti.d.size_user == sizeof(struct tcp_info)' failed.
+> 
+> test log:
+> ----------
+> 
+> # selftests: net/mptcp: mptcp_sockopt.sh
+> [  918.263983] IPv6: ADDRCONF(NETDEV_CHANGE): ns1eth1: link becomes ready
+> [  918.398851] IPv6: ADDRCONF(NETDEV_CHANGE): ns1eth2: link becomes ready
+> [  918.538987] IPv6: ADDRCONF(NETDEV_CHANGE): ns1eth3: link becomes ready
+> [  918.678270] IPv6: ADDRCONF(NETDEV_CHANGE): ns1eth4: link becomes ready
+> [  918.800671] audit: type=1325 audit(1677748585.128:33): table=filter
+> family=2 entries=0 op=xt_register pid=18489 subj=kernel
+> comm=\"iptables\"
+> [  918.813228] audit: type=1300 audit(1677748585.128:33):
+> arch=40000003 syscall=102 success=yes exit=0 a0=f a1=bf94ed3c a2=40
+> a3=b7edfe3c items=0 ppid=18412 pid=18489 auid=4294967295 uid=0 gid=0
+> euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=ttyS0 ses=4294967295
+> comm=\"iptables\" exe=\"/usr/sbin/xtables-legacy-multi\" subj=kernel
+> key=(null)
+> [  918.842987] audit: type=1327 audit(1677748585.128:33):
+> proctitle=69707461626C6573002D41004F5554505554002D7000746370002D2D73796E002D6D006D61726B002D2D6D61726B0031002D6A00414343455054
+> [  918.859285] audit: type=1325 audit(1677748585.128:34): table=filter
+> family=2 entries=4 op=xt_replace pid=18489 subj=kernel
+> comm=\"iptables\"
+> [  918.871788] audit: type=1300 audit(1677748585.128:34):
+> arch=40000003 syscall=102 success=yes exit=0 a0=e a1=bf94ef64 a2=40
+> a3=b7edfe3c items=0 ppid=18412 pid=18489 auid=4294967295 uid=0 gid=0
+> euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=ttyS0 ses=4294967295
+> comm=\"iptables\" exe=\"/usr/sbin/xtables-legacy-multi\" subj=kernel
+> key=(null)
+> [  918.901496] audit: type=1327 audit(1677748585.128:34):
+> proctitle=69707461626C6573002D41004F5554505554002D7000746370002D2D73796E002D6D006D61726B002D2D6D61726B0031002D6A00414343455054
+> [  918.934555] audit: type=1325 audit(1677748585.262:35): table=filter
+> family=2 entries=5 op=xt_replace pid=18490 subj=kernel
+> comm=\"iptables\"
+> [  918.947242] audit: type=1300 audit(1677748585.262:35):
+> arch=40000003 syscall=102 success=yes exit=0 a0=e a1=bfc21cd4 a2=40
+> a3=b7f27e3c items=0 ppid=18412 pid=18490 auid=4294967295 uid=0 gid=0
+> euid=0 suid=0 fsuid=0 egid=0 sgid=0 fsgid=0 tty=ttyS0 ses=4294967295
+> comm=\"iptables\" exe=\"/usr/sbin/xtables-legacy-multi\" subj=kernel
+> key=(null)
+> [  918.976905] audit: type=1327 audit(1677748585.262:35):
+> proctitle=69707461626C6573002D41004F5554505554002D7000746370002D2D7463702D666C6167730052535400525354002D6D006D61726B002D2D6D61726B0030002D6A00414343455054
+> [  919.013445] audit: type=1325 audit(1677748585.341:36): table=filter
+> family=2 entries=6 op=xt_replace pid=18491 subj=kernel
+> comm=\"iptables\"
+> # Created /tmp/tmp.CG4evZjYl7 (size 1 KB) containing data sent by client
+> # Created /tmp/tmp.urARJfNrFp (size 1 KB) containing data sent by server
+> # PASS: all packets had packet mark set
+> # mptcp_[  944.426054] kauditd_printk_skb: 50 callbacks suppressed
+> sockopt: mptcp_s[  944.426057] audit: type=1701
+> audit(1677748610.753:53): auid=4294967295 uid=0 gid=0 ses=4294967295
+> subj=kernel pid=18532 comm=\"mptcp_sockopt\"
+> exe=\"/opt/kselftests/default-in-kernel/net/mptcp/mptcp_sockopt\"
+> sig=6 res=1
+> [  944.452415] audit: type=1701 audit(1677748610.753:54):
+> auid=4294967295 uid=0 gid=0 ses=4294967295 subj=kernel pid=18533
+> comm=\"mptcp_sockopt\"
+> exe=\"/opt/kselftests/default-in-kernel/net/mptcp/mptcp_sockopt\"
+> sig=6 res=1
+> ockopt.c:353: do_getsockopt_tcp_info: Assertion `ti.d.size_user ==
+> sizeof(struct tcp_info)' failed.
 
-My CI had an aneurysm while testing this rc, but I tested it locally and
-looks good. Hardware or bootloader issue perhaps!
-Tested-by: Conor Dooley <conor.dooley@microchip.com>
 
-Thanks,
-Conor.
+Nit, wrapping a log like this makes it hard to read, don't you think?
 
+> # mptcp_sockopt: mptcp_sockopt.c:353: do_getsockopt_tcp_info:
+> Assertion `ti.d.size_user == sizeof(struct tcp_info)' failed.
+> # server killed by signal 6
+> #
+> # FAIL: SOL_MPTCP getsockopt
+> # PASS: TCP_INQ cmsg/ioctl -t tcp
+> # PASS: TCP_INQ cmsg/ioctl -6 -t tcp
+> # PASS: TCP_INQ cmsg/ioctl -r tcp
+> # PASS: TCP_INQ cmsg/ioctl -6 -r tcp
+> # PASS: TCP_INQ cmsg/ioctl -r tcp -t tcp
+> not ok 6 selftests: net/mptcp: mptcp_sockopt.sh # exit=1
 
---Eu/98hARTQftF9Hy
-Content-Type: application/pgp-signature; name="signature.asc"
+Any chance you can bisect?
 
------BEGIN PGP SIGNATURE-----
+And is this an issue on 6.2 and/or Linus's tree?  I don't see any mptcp
+changes in this 6.1-rc cycle, they were in the last one...
 
-iHUEABYIAB0WIQRh246EGq/8RLhDjO14tDGHoIJi0gUCZAB4rgAKCRB4tDGHoIJi
-0hhUAQDf+1s/nY4eFWwJn6Hu/Ry88zPYxbvIxEAVZhuUuM758QEA8ui+xAHdjtwt
-Cm2l6aHuvtYvgIS57oGqYItqWRR6fAI=
-=ijQq
------END PGP SIGNATURE-----
+thanks,
 
---Eu/98hARTQftF9Hy--
+greg k-h
