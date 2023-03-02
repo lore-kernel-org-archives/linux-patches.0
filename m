@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0D0FD10783
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 23:28:08 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C48B510785
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 23:28:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
-	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
-	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=aVGWGg28pehMWy6o19l/TsZGWBXxeVmCZNXdGLwnZq4=; b=TlDiW9om0AtjuznlGSshw1b4sC
-	ghR2WXi7V+f5PZ1jG/o45vCIdVVPAervPRo0lvMQJdxtcovf9IN60XRQyXJ1TOSoZDYvbKBXbI/Wi
-	kuqHDamMQIx8Oh2hC1RmvcgDdngdxl8vCJelPxKnPdI6sZqCLJP7oKLTX7HCNfOVjJ+oJWhrHo56l
-	jIjCnoGvXoEsBAierza5C+Z0oTy0fXnLWb9sfdDC4drisylwEXR0+Vwcjgn7AYvnMbzbxgtrQjiQg
-	eoDfsRFufkoQ6AunUMT7LpC6d+FMUW/ESv6NhPIS/cqtmkwozQFqphCo+anHmfRTZfKqu4eV620Lr
-	q5ku9HZg==;
+	MIME-Version:Message-Id:Date:Subject:Cc:To:From:Reply-To:Content-Type:
+	Content-ID:Content-Description:In-Reply-To:References;
+	bh=8W0GXVgRuSB9B6rebynfjhy7dE20zjSrVQrM74z6Jks=; b=fsbQHlBuN24Stwq+YBoeoK7D2D
+	xa/36UVjFZQ+53YYTYfzpTGwzxM2v78TQZNvAZ6zy5RZLZskqbS74QYOwkr5QsOg93EcNTdyh2hzP
+	EdQvVZCGBmsu2JZgryEKE8jENfPsHxZBzKj4xDQzmcVcJEOI8XvSYh8kg9lS0f2HPTMcIz+BiSFXQ
+	CR3O5p5sCpe7pD8eNwWDWg30MKpvo494xBd2wY5gL1X9MafuTrO9KS+/aI/UWUrOGMYXxlZlIGujc
+	cjTp85aO+7bXzNUwc0iZxFhNih0RUqaCQN7DBfw8qH1i4Ku+3vlBt58EYExHXIYXoWiSc1/keVEbR
+	Jf9t6Y7Q==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pXsL9-003j3S-Gf; Thu, 02 Mar 2023 23:27:59 +0000
+	id 1pXsL9-003j3G-0d; Thu, 02 Mar 2023 23:27:59 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: hughd@google.com,
 	akpm@linux-foundation.org,
@@ -30,12 +30,10 @@ Cc: linux-mm@kvack.org,
 	mcgrof@kernel.org,
 	patches@lists.linux.dev,
 	linux-kernel@vger.kernel.org
-Subject: [PATCH 6/6] shmem: add support to ignore swap
-Date: Thu,  2 Mar 2023 15:27:58 -0800
-Message-Id: <20230302232758.888157-7-mcgrof@kernel.org>
+Subject: [PATCH 0/6] tmpfs: add the option to disable swap
+Date: Thu,  2 Mar 2023 15:27:52 -0800
+Message-Id: <20230302232758.888157-1-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.37.1
-In-Reply-To: <20230302232758.888157-1-mcgrof@kernel.org>
-References: <20230302232758.888157-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -45,200 +43,148 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-In doing experimentations with shmem having the option to avoid swap
-becomes a useful mechanism. One of the *raves* about brd over shmem is
-you can avoid swap, but that's not really a good reason to use brd if
-we can instead use shmem. Using brd has its own good reasons to exist,
-but just because "tmpfs" doesn't let you do that is not a great reason
-to avoid it if we can easily add support for it.
+After a couple of RFCs I think this is ready for PATCH form. Review
+is appreciated. Below the changes I also list the series of tests
+I performed to verify correctness. In short you either create a fs
+with swap or without, but if you can't change that option later.
+If we really wanted to, we could work on accepting this change on
+reconfigure (remount) but its not clear yet that is desirable so
+for now keep things simple.
 
-I don't add support for reconfiguring incompatible options, but if
-we really wanted to we can add support for that.
+Changes since last RFCv2:
 
-To avoid swap we use mapping_set_unevictable() upon inode creation,
-and put a WARN_ON_ONCE() stop-gap on writepages() for reclaim.
+  o Added Christian Brauner'd Acked-by for the noswap patch (the only
+    change in that patch is just the new shmem_show_options() change I
+    describe below).
+  o Embraced Yosry Ahmed's recommendation to use mapping_set_unevictable()
+    to at ensure the folios at least appear in the unevictable LRU.
+    Since that is the goal, this accomplishes what we want and the VM
+    takes care of things for us. The shem writepage() still uses a stop-gap
+    to ensure we don't get called for swap when its shmem uses
+    mapping_set_unevictable().
+  o I had evaluated using shmem_lock() instead of calling mapping_set_unevictable()
+    but upon my review this doesn't make much sense, as shmem_lock() was
+    designed to make use of the RLIMIT_MEMLOCK and this was designed for
+    files / IPC / unprivileged perf limits. If we were to use
+    shmem_lock() we'd bump the count on each new inode. Using
+    shmem_lock() would also complicate inode allocation on shmem as
+    we'd to unwind on failure from the user_shm_lock(). It would also
+    beg the question of when to capture a ucount for an inode, should we
+    just share one for the superblock at shmem_fill_super() or do we
+    really need to capture it at every single inode creation? In theory
+    we could end up with different limits. The simple solution is to
+    juse use mapping_set_unevictable() upon inode creation and be done
+    with it, as it cannot fail.
+  o Update the documentation for tmpfs before / after my patch to
+    reflect use cases a bit more clearly between ramfs, tmpfs and brd
+    ramdisks.
+  o I updated the shmem_show_options() to also reveal the noswap option
+    when its used.
+  o Address checkpatch style complaint with spaces before tabs on
+    shmem_fs.h.
 
-Acked-by: Christian Brauner <brauner@kernel.org>
-Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
----
- Documentation/filesystems/tmpfs.rst  |  9 ++++++---
- Documentation/mm/unevictable-lru.rst |  2 ++
+Chances since first RFC:
+
+  o Matthew suggested BUG_ON(!folio_test_locked(folio)) is not needed
+    on writepage() callback for shmem so just remove that.
+  o Based on Matthew's feedback the inode is set up early as it is not
+    reset in case we split the folio. So now we move all the variables
+    we can set up really early.
+  o shmem writepage() should only be issued on reclaim, so just move
+    the WARN_ON_ONCE(!wbc->for_reclaim) early so that the code and
+    expectations are easier to read. This also avoid the folio splitting
+    in case of that odd case.
+  o There are a few cases where the shmem writepage() could possibly
+    hit, but in the total_swap_pages we just bail out. We shouldn't be
+    splitting the folio then. Likewise for VM_LOCKED case. But for
+    a writepage() on a VM_LOCKED case is not expected so we want to
+    learn about it so add a WARN_ON_ONCE() on that condition.
+  o Based on Yosry Ahmed's feedback the patch which allows tmpfs to
+    disable swap now just uses mapping_set_unevictable() on inode
+    creation. In that case writepage() should not be called so we
+    augment the WARN_ON_ONCE() for writepage() for that case to ensure
+    that never happens.
+
+To test I've used kdevops [0] 8 vpcu 4 GiB libvirt guest on linux-next.
+
+I'm doing this work as part of future experimentation with tmpfs and the
+page cache, but given a common complaint found about tmpfs is the
+innability to work without the page cache I figured this might be useful
+to others. It turns out it is -- at least Christian Brauner indicates
+systemd uses ramfs for a few use-cases because they don't want to use
+swap and so having this option would let them move over to using tmpfs
+for those small use cases, see systemd-creds(1).
+
+To see if you hit swap:
+
+mkswap /dev/nvme2n1
+swapon /dev/nvme2n1
+free -h
+
+With swap - what we see today
+=============================
+mount -t tmpfs            -o size=5G           tmpfs /data-tmpfs/
+dd if=/dev/urandom of=/data-tmpfs/5g-rand2 bs=1G count=5
+free -h
+               total        used        free      shared  buff/cache   available
+Mem:           3.7Gi       2.6Gi       1.2Gi       2.2Gi       2.2Gi       1.2Gi
+Swap:           99Gi       2.8Gi        97Gi
+
+
+Without swap
+=============
+
+free -h
+               total        used        free      shared  buff/cache   available
+Mem:           3.7Gi       387Mi       3.4Gi       2.1Mi        57Mi       3.3Gi
+Swap:           99Gi          0B        99Gi
+mount -t tmpfs            -o size=5G -o noswap tmpfs /data-tmpfs/
+dd if=/dev/urandom of=/data-tmpfs/5g-rand2 bs=1G count=5
+free -h
+               total        used        free      shared  buff/cache   available
+Mem:           3.7Gi       2.6Gi       1.2Gi       2.3Gi       2.3Gi       1.1Gi
+Swap:           99Gi        21Mi        99Gi
+
+The mix and match remount testing
+=================================
+
+# Cannot disable swap after it was first enabled:
+mount -t tmpfs            -o size=5G           tmpfs /data-tmpfs/
+mount -t tmpfs -o remount -o size=5G -o noswap tmpfs /data-tmpfs/
+mount: /data-tmpfs: mount point not mounted or bad option.
+       dmesg(1) may have more information after failed mount system call.
+dmesg -c
+tmpfs: Cannot disable swap on remount
+
+# Remount with the same noswap option is OK:
+mount -t tmpfs            -o size=5G -o noswap tmpfs /data-tmpfs/
+mount -t tmpfs -o remount -o size=5G -o noswap tmpfs /data-tmpfs/
+dmesg -c
+
+# Trying to enable swap with a remount after it first disabled:
+mount -t tmpfs            -o size=5G -o noswap tmpfs /data-tmpfs/
+mount -t tmpfs -o remount -o size=5G           tmpfs /data-tmpfs/
+mount: /data-tmpfs: mount point not mounted or bad option.
+       dmesg(1) may have more information after failed mount system call.
+dmesg -c
+tmpfs: Cannot enable swap on remount if it was disabled on first mount
+
+[0] https://github.com/linux-kdevops/kdevops
+
+Luis Chamberlain (6):
+  shmem: remove check for folio lock on writepage()
+  shmem: set shmem_writepage() variables early
+  shmem: move reclaim check early on writepages()
+  shmem: skip page split if we're not reclaiming
+  shmem: update documentation
+  shmem: add support to ignore swap
+
+ Documentation/filesystems/tmpfs.rst  | 36 +++++++++-----
+ Documentation/mm/unevictable-lru.rst |  2 +
  include/linux/shmem_fs.h             |  1 +
- mm/shmem.c                           | 28 +++++++++++++++++++++++++++-
- 4 files changed, 36 insertions(+), 4 deletions(-)
+ mm/shmem.c                           | 70 +++++++++++++++++++---------
+ 4 files changed, 75 insertions(+), 34 deletions(-)
 
-diff --git a/Documentation/filesystems/tmpfs.rst b/Documentation/filesystems/tmpfs.rst
-index e77ebdacadd0..551b621f34d9 100644
---- a/Documentation/filesystems/tmpfs.rst
-+++ b/Documentation/filesystems/tmpfs.rst
-@@ -13,7 +13,8 @@ everything stored therein is lost.
- 
- tmpfs puts everything into the kernel internal caches and grows and
- shrinks to accommodate the files it contains and is able to swap
--unneeded pages out to swap space.
-+unneeded pages out to swap space, if swap was enabled for the tmpfs
-+filesystem.
- 
- tmpfs extends ramfs with a few userspace configurable options listed and
- explained further below, some of which can be reconfigured dynamically on the
-@@ -33,8 +34,8 @@ configured in size at initialization and you cannot dynamically resize them.
- Contrary to brd ramdisks, tmpfs has its own filesystem, it does not rely on the
- block layer at all.
- 
--Since tmpfs lives completely in the page cache and on swap, all tmpfs
--pages will be shown as "Shmem" in /proc/meminfo and "Shared" in
-+Since tmpfs lives completely in the page cache and on optionally on swap,
-+all tmpfs pages will be shown as "Shmem" in /proc/meminfo and "Shared" in
- free(1). Notice that these counters also include shared memory
- (shmem, see ipcs(1)). The most reliable way to get the count is
- using df(1) and du(1).
-@@ -83,6 +84,8 @@ nr_inodes  The maximum number of inodes for this instance. The default
-            is half of the number of your physical RAM pages, or (on a
-            machine with highmem) the number of lowmem RAM pages,
-            whichever is the lower.
-+noswap     Disables swap. Remounts must respect the original settings.
-+           By default swap is enabled.
- =========  ============================================================
- 
- These parameters accept a suffix k, m or g for kilo, mega and giga and
-diff --git a/Documentation/mm/unevictable-lru.rst b/Documentation/mm/unevictable-lru.rst
-index 92ac5dca420c..3cdcbb6e00a0 100644
---- a/Documentation/mm/unevictable-lru.rst
-+++ b/Documentation/mm/unevictable-lru.rst
-@@ -42,6 +42,8 @@ The unevictable list addresses the following classes of unevictable pages:
- 
-  * Those owned by ramfs.
- 
-+ * Those owned by tmpfs with the noswap option.
-+
-  * Those mapped into SHM_LOCK'd shared memory regions.
- 
-  * Those mapped into VM_LOCKED [mlock()ed] VMAs.
-diff --git a/include/linux/shmem_fs.h b/include/linux/shmem_fs.h
-index 103d1000a5a2..21989d4f8cbe 100644
---- a/include/linux/shmem_fs.h
-+++ b/include/linux/shmem_fs.h
-@@ -45,6 +45,7 @@ struct shmem_sb_info {
- 	kuid_t uid;		    /* Mount uid for root directory */
- 	kgid_t gid;		    /* Mount gid for root directory */
- 	bool full_inums;	    /* If i_ino should be uint or ino_t */
-+	bool noswap;		    /* ingores VM relcaim / swap requests */
- 	ino_t next_ino;		    /* The next per-sb inode number to use */
- 	ino_t __percpu *ino_batch;  /* The next per-cpu inode number to use */
- 	struct mempolicy *mpol;     /* default memory policy for mappings */
-diff --git a/mm/shmem.c b/mm/shmem.c
-index 6006dbb7dbcb..cd36cb3d974c 100644
---- a/mm/shmem.c
-+++ b/mm/shmem.c
-@@ -119,10 +119,12 @@ struct shmem_options {
- 	bool full_inums;
- 	int huge;
- 	int seen;
-+	bool noswap;
- #define SHMEM_SEEN_BLOCKS 1
- #define SHMEM_SEEN_INODES 2
- #define SHMEM_SEEN_HUGE 4
- #define SHMEM_SEEN_INUMS 8
-+#define SHMEM_SEEN_NOSWAP 16
- };
- 
- #ifdef CONFIG_TMPFS
-@@ -1337,6 +1339,7 @@ static int shmem_writepage(struct page *page, struct writeback_control *wbc)
- 	struct address_space *mapping = folio->mapping;
- 	struct inode *inode = mapping->host;
- 	struct shmem_inode_info *info = SHMEM_I(inode);
-+	struct shmem_sb_info *sbinfo = SHMEM_SB(inode->i_sb);
- 	swp_entry_t swap;
- 	pgoff_t index;
- 
-@@ -1352,7 +1355,7 @@ static int shmem_writepage(struct page *page, struct writeback_control *wbc)
- 		goto redirty;
- 	}
- 
--	if (WARN_ON_ONCE(info->flags & VM_LOCKED))
-+	if (WARN_ON_ONCE((info->flags & VM_LOCKED) || sbinfo->noswap))
- 		goto redirty;
- 
- 	if (!total_swap_pages)
-@@ -2489,6 +2492,8 @@ static struct inode *shmem_get_inode(struct mnt_idmap *idmap, struct super_block
- 			shmem_set_inode_flags(inode, info->fsflags);
- 		INIT_LIST_HEAD(&info->shrinklist);
- 		INIT_LIST_HEAD(&info->swaplist);
-+		if (sbinfo->noswap)
-+			mapping_set_unevictable(inode->i_mapping);
- 		simple_xattrs_init(&info->xattrs);
- 		cache_no_acl(inode);
- 		mapping_set_large_folios(inode->i_mapping);
-@@ -3576,6 +3581,7 @@ enum shmem_param {
- 	Opt_uid,
- 	Opt_inode32,
- 	Opt_inode64,
-+	Opt_noswap,
- };
- 
- static const struct constant_table shmem_param_enums_huge[] = {
-@@ -3597,6 +3603,7 @@ const struct fs_parameter_spec shmem_fs_parameters[] = {
- 	fsparam_u32   ("uid",		Opt_uid),
- 	fsparam_flag  ("inode32",	Opt_inode32),
- 	fsparam_flag  ("inode64",	Opt_inode64),
-+	fsparam_flag  ("noswap",	Opt_noswap),
- 	{}
- };
- 
-@@ -3680,6 +3687,10 @@ static int shmem_parse_one(struct fs_context *fc, struct fs_parameter *param)
- 		ctx->full_inums = true;
- 		ctx->seen |= SHMEM_SEEN_INUMS;
- 		break;
-+	case Opt_noswap:
-+		ctx->noswap = true;
-+		ctx->seen |= SHMEM_SEEN_NOSWAP;
-+		break;
- 	}
- 	return 0;
- 
-@@ -3778,6 +3789,14 @@ static int shmem_reconfigure(struct fs_context *fc)
- 		err = "Current inum too high to switch to 32-bit inums";
- 		goto out;
- 	}
-+	if ((ctx->seen & SHMEM_SEEN_NOSWAP) && ctx->noswap && !sbinfo->noswap) {
-+		err = "Cannot disable swap on remount";
-+		goto out;
-+	}
-+	if (!(ctx->seen & SHMEM_SEEN_NOSWAP) && !ctx->noswap && sbinfo->noswap) {
-+		err = "Cannot enable swap on remount if it was disabled on first mount";
-+		goto out;
-+	}
- 
- 	if (ctx->seen & SHMEM_SEEN_HUGE)
- 		sbinfo->huge = ctx->huge;
-@@ -3798,6 +3817,10 @@ static int shmem_reconfigure(struct fs_context *fc)
- 		sbinfo->mpol = ctx->mpol;	/* transfers initial ref */
- 		ctx->mpol = NULL;
- 	}
-+
-+	if (ctx->noswap)
-+		sbinfo->noswap = true;
-+
- 	raw_spin_unlock(&sbinfo->stat_lock);
- 	mpol_put(mpol);
- 	return 0;
-@@ -3852,6 +3875,8 @@ static int shmem_show_options(struct seq_file *seq, struct dentry *root)
- 		seq_printf(seq, ",huge=%s", shmem_format_huge(sbinfo->huge));
- #endif
- 	shmem_show_mpol(seq, sbinfo->mpol);
-+	if (sbinfo->noswap)
-+		seq_printf(seq, ",noswap");
- 	return 0;
- }
- 
-@@ -3895,6 +3920,7 @@ static int shmem_fill_super(struct super_block *sb, struct fs_context *fc)
- 			ctx->inodes = shmem_default_max_inodes();
- 		if (!(ctx->seen & SHMEM_SEEN_INUMS))
- 			ctx->full_inums = IS_ENABLED(CONFIG_TMPFS_INODE64);
-+		sbinfo->noswap = ctx->noswap;
- 	} else {
- 		sb->s_flags |= SB_NOUSER;
- 	}
 -- 
 2.39.1
 
