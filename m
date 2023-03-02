@@ -1,77 +1,151 @@
-Received: from mail-pj1-f41.google.com (mail-pj1-f41.google.com [209.85.216.41])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from smtp-relay-canonical-0.canonical.com (smtp-relay-canonical-0.canonical.com [185.125.188.120])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3978DA28
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 22:56:29 +0000 (UTC)
-Received: by mail-pj1-f41.google.com with SMTP id 6-20020a17090a190600b00237c5b6ecd7so4325781pjg.4
-        for <patches@lists.linux.dev>; Thu, 02 Mar 2023 14:56:29 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google; t=1677797788;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:from:to:cc:subject:date:message-id:reply-to;
-        bh=qXTwXNN5BPBJ/NZ3OYbXwmxOPd3hLZf5+C8HCX49djg=;
-        b=cPNPEoDiS/HfsiIItPLGT3E2KS7Pa2nDCzgKjzoBCNTmF5ovdMVml+ppsm005Cz2gc
-         pMD41ueS/rsqWBDjk0Ang+swrwWISO9NpTVI+XcAlfsXxlunEfDcOqSyRkjHfJ2N7W3M
-         nXhJv2G01aF56hxwfL9a8N8s/N1YUs1FWh6Ok=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677797788;
-        h=in-reply-to:content-disposition:mime-version:references:subject:cc
-         :to:from:date:message-id:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=qXTwXNN5BPBJ/NZ3OYbXwmxOPd3hLZf5+C8HCX49djg=;
-        b=yG6eamFf37bxOYQ3yvLX1E6qiBFdZp2mf/zPy+4+++IXCWFok4OkqGdedxmcca5cwf
-         CA38Rbmtc+PMTOmCDksemenwMl4mkEQkUEFVtgeTAzQY/Q2qNBJzcavS2k8M8DxUf9mw
-         fO432UC5r2lc9V+Cjrd3Sg82gPFWITYyrw6p55N3ezL7+o3NL7xwO1mpB+Adwj7+FKVV
-         dyqHXDijQGecR5RyR0Bv2SvV9/eYSX1l59zV8zwAQbJu1EG7lVt/SVWVuI60g7gxxZEN
-         WC7YG1jGi+deTTMjyOcl3dBJOWUvbClZJ8dI5Pezh713n3q9LNvob50s9h1GHAlN1NE2
-         uThA==
-X-Gm-Message-State: AO0yUKXG79SNOkKGUZuuSH1QYMYY/QYVEBVnJBk5roLUUMGMuPGI4JjO
-	Hx2K5qr0E92FeJQxPUEuM1Spzg==
-X-Google-Smtp-Source: AK7set+MdZhHyeith+B94HrQd6WpkfpBD5XCV21gXOzsSKhUw+dB78RFefTe7N6XbvDbdrdQDA//KA==
-X-Received: by 2002:a17:902:ec88:b0:19a:e762:a1af with SMTP id x8-20020a170902ec8800b0019ae762a1afmr3404427plg.33.1677797788585;
-        Thu, 02 Mar 2023 14:56:28 -0800 (PST)
-Received: from www.outflux.net (198-0-35-241-static.hfc.comcastbusiness.net. [198.0.35.241])
-        by smtp.gmail.com with ESMTPSA id b9-20020a170903228900b00198d7b52eefsm168326plh.257.2023.03.02.14.56.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Mar 2023 14:56:28 -0800 (PST)
-Message-ID: <6401299c.170a0220.3a2e.0b8a@mx.google.com>
-X-Google-Original-Message-ID: <202303021456.@keescook>
-Date: Thu, 2 Mar 2023 14:56:27 -0800
-From: Kees Cook <keescook@chromium.org>
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: ebiederm@xmission.com, yzaikin@google.com, john.johansen@canonical.com,
-	paul@paul-moore.com, jmorris@namei.org, serge@hallyn.com,
-	luto@amacapital.net, wad@chromium.org, dverkamp@chromium.org,
-	paulmck@kernel.org, baihaowen@meizu.com, frederic@kernel.org,
-	jeffxu@google.com, ebiggers@kernel.org, tytso@mit.edu,
-	guoren@kernel.org, j.granados@samsung.com, zhangpeng362@huawei.com,
-	tangmeng@uniontech.com, willy@infradead.org, nixiaoming@huawei.com,
-	sujiaxun@uniontech.com, patches@lists.linux.dev,
-	linux-fsdevel@vger.kernel.org, apparmor@lists.ubuntu.com,
-	linux-security-module@vger.kernel.org, linux-csky@vger.kernel.org,
-	linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 07/11] seccomp: simplify sysctls with
- register_sysctl_init()
-References: <20230302202826.776286-1-mcgrof@kernel.org>
- <20230302202826.776286-8-mcgrof@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 737B7A28
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 22:56:33 +0000 (UTC)
+Received: from [192.168.192.83] (unknown [50.47.134.245])
+	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+	 key-exchange X25519 server-signature RSA-PSS (2048 bits))
+	(No client certificate requested)
+	by smtp-relay-canonical-0.canonical.com (Postfix) with ESMTPSA id 419E23F301;
+	Thu,  2 Mar 2023 22:56:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+	s=20210705; t=1677797788;
+	bh=7bAi7GvlLZqPDpdIMXt0Yd4XZ6qIgEVOlEjLpx+UniI=;
+	h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+	 In-Reply-To:Content-Type;
+	b=JF0zItZu8a/QA+CEzhwTb0M4jJwxjdquCHP+lb8lwhiseRuxzR9VRYQcjbxN0cEe+
+	 qpMubuEgJq7A9WgWbB6zgOLQmiINIic57ynnFeUgSvCLcaSpVRWhVs1LYZgR8+c0u4
+	 4KWrQCKMwTF88x75z/mwqtccDRh/bRWkB3VAy0yh8oGLxxsaubAcybs6qs2lguX0L4
+	 LuSMDcJ4GhQL+lnM9+88jmrIQ1ajtPOwfpYpMnmg5Q9o4jngcYL/gqSDtViaaWR+NW
+	 QYgrY1PTAGS0HHLxZYM+E9YEC4J36i31Sm+Q8e9V8CQ3fRQyyeQEzVY+BrGofC8oTj
+	 tVOvO6YAWFmvA==
+Message-ID: <e97bf2c2-6879-de79-1e07-276bc2192d6e@canonical.com>
+Date: Thu, 2 Mar 2023 14:56:21 -0800
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230302202826.776286-8-mcgrof@kernel.org>
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
+ Thunderbird/102.7.1
+Subject: Re: [PATCH 02/11] proc_sysctl: move helper which creates required
+ subdirectories
+Content-Language: en-US
+To: Luis Chamberlain <mcgrof@kernel.org>, ebiederm@xmission.com,
+ keescook@chromium.org, yzaikin@google.com, paul@paul-moore.com,
+ jmorris@namei.org, serge@hallyn.com, luto@amacapital.net, wad@chromium.org,
+ dverkamp@chromium.org, paulmck@kernel.org, baihaowen@meizu.com,
+ frederic@kernel.org, jeffxu@google.com, ebiggers@kernel.org, tytso@mit.edu,
+ guoren@kernel.org
+Cc: j.granados@samsung.com, zhangpeng362@huawei.com, tangmeng@uniontech.com,
+ willy@infradead.org, nixiaoming@huawei.com, sujiaxun@uniontech.com,
+ patches@lists.linux.dev, linux-fsdevel@vger.kernel.org,
+ apparmor@lists.ubuntu.com, linux-security-module@vger.kernel.org,
+ linux-csky@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20230302202826.776286-1-mcgrof@kernel.org>
+ <20230302202826.776286-3-mcgrof@kernel.org>
+From: John Johansen <john.johansen@canonical.com>
+Organization: Canonical
+In-Reply-To: <20230302202826.776286-3-mcgrof@kernel.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 02, 2023 at 12:28:22PM -0800, Luis Chamberlain wrote:
-> register_sysctl_paths() is only needed if you have childs (directories)
-> with entries. Just use register_sysctl_init() as it also does the
-> kmemleak check for you.
+On 3/2/23 12:28, Luis Chamberlain wrote:
+> Move the code which creates the subdirectories for a ctl table
+> into a helper routine so to make it easier to review. Document
+> the goal.
+> 
+> This creates no functional changes.
 > 
 > Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 
-Acked-by: Kees Cook <keescook@chromium.org>
+Reviewed-by: John Johansen <john.johansen@canonical.com>
 
--- 
-Kees Cook
+> ---
+>   fs/proc/proc_sysctl.c | 56 ++++++++++++++++++++++++-------------------
+>   1 file changed, 32 insertions(+), 24 deletions(-)
+> 
+> diff --git a/fs/proc/proc_sysctl.c b/fs/proc/proc_sysctl.c
+> index 1df0beb50dbe..6b9b2694d430 100644
+> --- a/fs/proc/proc_sysctl.c
+> +++ b/fs/proc/proc_sysctl.c
+> @@ -1283,6 +1283,35 @@ static int insert_links(struct ctl_table_header *head)
+>   	return err;
+>   }
+>   
+> +/* Find the directory for the ctl_table. If one is not found create it. */
+> +static struct ctl_dir *sysctl_mkdir_p(struct ctl_dir *dir, const char *path)
+> +{
+> +	const char *name, *nextname;
+> +
+> +	for (name = path; name; name = nextname) {
+> +		int namelen;
+> +		nextname = strchr(name, '/');
+> +		if (nextname) {
+> +			namelen = nextname - name;
+> +			nextname++;
+> +		} else {
+> +			namelen = strlen(name);
+> +		}
+> +		if (namelen == 0)
+> +			continue;
+> +
+> +		/*
+> +		 * namelen ensures if name is "foo/bar/yay" only foo is
+> +		 * registered first. We traverse as if using mkdir -p and
+> +		 * return a ctl_dir for the last directory entry.
+> +		 */
+> +		dir = get_subdir(dir, name, namelen);
+> +		if (IS_ERR(dir))
+> +			break;
+> +	}
+> +	return dir;
+> +}
+> +
+>   /**
+>    * __register_sysctl_table - register a leaf sysctl table
+>    * @set: Sysctl tree to register on
+> @@ -1334,7 +1363,6 @@ struct ctl_table_header *__register_sysctl_table(
+>   {
+>   	struct ctl_table_root *root = set->dir.header.root;
+>   	struct ctl_table_header *header;
+> -	const char *name, *nextname;
+>   	struct ctl_dir *dir;
+>   	struct ctl_table *entry;
+>   	struct ctl_node *node;
+> @@ -1359,29 +1387,9 @@ struct ctl_table_header *__register_sysctl_table(
+>   	dir->header.nreg++;
+>   	spin_unlock(&sysctl_lock);
+>   
+> -	/* Find the directory for the ctl_table */
+> -	for (name = path; name; name = nextname) {
+> -		int namelen;
+> -		nextname = strchr(name, '/');
+> -		if (nextname) {
+> -			namelen = nextname - name;
+> -			nextname++;
+> -		} else {
+> -			namelen = strlen(name);
+> -		}
+> -		if (namelen == 0)
+> -			continue;
+> -
+> -		/*
+> -		 * namelen ensures if name is "foo/bar/yay" only foo is
+> -		 * registered first. We traverse as if using mkdir -p and
+> -		 * return a ctl_dir for the last directory entry.
+> -		 */
+> -		dir = get_subdir(dir, name, namelen);
+> -		if (IS_ERR(dir))
+> -			goto fail;
+> -	}
+> -
+> +	dir = sysctl_mkdir_p(dir, path);
+> +	if (IS_ERR(dir))
+> +		goto fail;
+>   	spin_lock(&sysctl_lock);
+>   	if (insert_header(dir, header))
+>   		goto fail_put_dir_locked;
+
