@@ -1,20 +1,20 @@
 Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 441ACD52B
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 22A93D529
 	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 20:46:49 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
 	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
 	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
 	Reply-To:Content-Type:Content-ID:Content-Description;
-	bh=b/ElRNVyLTcjLcjUYbTcuyx0KXFL0MQ9s53W3J7Nkdk=; b=JCk7vmd3WPk/eusfOMOFOK2REk
-	1XVuRYTKBgLvoHrvgM9QB8cHTbTgvan1wf+AtXio6deB/kkhZpQfQneT6nmVXKxIezrONKrOTELf3
-	rmCdFYzMHmg0TONwR5JS3VZ4zjWOMvXxjMFqyI6psWBRhwrNFSzKCozLL3Y7WMmT9MwO2epJUmMn1
-	nx1ETSbvwg/quZ3YXXD2gyOYG/pSUp1kP3DtHGRkmCdbO6zoWCzkVSo+qXR4XGbcXKmbNwBRWEY4U
-	V/tsgcudL0zXWPh1vuYy3EMUxTm83D/qlj7qqRLAlpw6hkLDL5UQ5XuwLQuQCuAhQx5o/qgOt8lew
-	PxDMLkug==;
+	bh=vfrPqlpwv8UtDJtEckddNe/7V4TGRdI///FWzG6Y790=; b=1CcCUGLBcs0TG5syyZ+Ce28wnZ
+	TxulkQAu2Jm0WRJA6sb0GzobJ5R2x0XtLkbJm7zUd+adTEbOuyDoBktLQaR6+NEjbd3hP800Zv4ab
+	CP94tMtVo225TVDQQpPfR4eKirU6KAgyGAv7UhKUNv+tsNT8dKsrw7xAeorlwpNtCx/ojqVajYfJ8
+	TyL5KCOZWwicnmes7WAvAKy3iK6h57YsUSyGiVJDO7nGE50XaEzfpHPHXTpGghPM2rtIyQHyCvtPl
+	lFxB/iKwkZSDU6fgE+Job9uIOTovRK96UQqV0J9jEUh9JHRAQp8aC/33h166ouZa/n2rgQvbbVdx6
+	eEuIbxjQ==;
 Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
-	id 1pXpoc-003HXW-Pv; Thu, 02 Mar 2023 20:46:14 +0000
+	id 1pXpoc-003HXM-Ao; Thu, 02 Mar 2023 20:46:14 +0000
 From: Luis Chamberlain <mcgrof@kernel.org>
 To: ebiederm@xmission.com,
 	keescook@chromium.org,
@@ -52,9 +52,9 @@ Cc: j.granados@samsung.com,
 	openipmi-developer@lists.sourceforge.net,
 	linux-kernel@vger.kernel.org,
 	Luis Chamberlain <mcgrof@kernel.org>
-Subject: [PATCH 6/7] tty: simplify sysctl registration
-Date: Thu,  2 Mar 2023 12:46:11 -0800
-Message-Id: <20230302204612.782387-7-mcgrof@kernel.org>
+Subject: [PATCH 1/7] scsi: simplify sysctl registration with register_sysctl()
+Date: Thu,  2 Mar 2023 12:46:06 -0800
+Message-Id: <20230302204612.782387-2-mcgrof@kernel.org>
 X-Mailer: git-send-email 2.37.1
 In-Reply-To: <20230302204612.782387-1-mcgrof@kernel.org>
 References: <20230302204612.782387-1-mcgrof@kernel.org>
@@ -68,51 +68,44 @@ Content-Transfer-Encoding: 8bit
 Sender: Luis Chamberlain <mcgrof@infradead.org>
 
 register_sysctl_table() is a deprecated compatibility wrapper.
-register_sysctl_init() can do the directory creation for you so just use
-that
+register_sysctl() can do the directory creation for you so just use that.
 
 Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 ---
- drivers/tty/tty_io.c | 20 +-------------------
- 1 file changed, 1 insertion(+), 19 deletions(-)
+ drivers/scsi/scsi_sysctl.c | 16 +---------------
+ 1 file changed, 1 insertion(+), 15 deletions(-)
 
-diff --git a/drivers/tty/tty_io.c b/drivers/tty/tty_io.c
-index 36fb945fdad4..766750e355ac 100644
---- a/drivers/tty/tty_io.c
-+++ b/drivers/tty/tty_io.c
-@@ -3614,31 +3614,13 @@ static struct ctl_table tty_table[] = {
+diff --git a/drivers/scsi/scsi_sysctl.c b/drivers/scsi/scsi_sysctl.c
+index 7259704a7f52..7f0914ea168f 100644
+--- a/drivers/scsi/scsi_sysctl.c
++++ b/drivers/scsi/scsi_sysctl.c
+@@ -21,25 +21,11 @@ static struct ctl_table scsi_table[] = {
  	{ }
  };
  
--static struct ctl_table tty_dir_table[] = {
--	{
--		.procname	= "tty",
--		.mode		= 0555,
--		.child		= tty_table,
--	},
+-static struct ctl_table scsi_dir_table[] = {
+-	{ .procname	= "scsi",
+-	  .mode		= 0555,
+-	  .child	= scsi_table },
 -	{ }
 -};
 -
--static struct ctl_table tty_root_table[] = {
--	{
--		.procname	= "dev",
--		.mode		= 0555,
--		.child		= tty_dir_table,
--	},
+-static struct ctl_table scsi_root_table[] = {
+-	{ .procname	= "dev",
+-	  .mode		= 0555,
+-	  .child	= scsi_dir_table },
 -	{ }
 -};
 -
- /*
-  * Ok, now we can initialize the rest of the tty devices and can count
-  * on memory allocations, interrupts etc..
-  */
- int __init tty_init(void)
+ static struct ctl_table_header *scsi_table_header;
+ 
+ int __init scsi_init_sysctl(void)
  {
--	register_sysctl_table(tty_root_table);
-+	register_sysctl_init("dev/tty", tty_table);
- 	cdev_init(&tty_cdev, &tty_fops);
- 	if (cdev_add(&tty_cdev, MKDEV(TTYAUX_MAJOR, 0), 1) ||
- 	    register_chrdev_region(MKDEV(TTYAUX_MAJOR, 0), 1, "/dev/tty") < 0)
+-	scsi_table_header = register_sysctl_table(scsi_root_table);
++	scsi_table_header = register_sysctl("dev/scsi", scsi_table);
+ 	if (!scsi_table_header)
+ 		return -ENOMEM;
+ 	return 0;
 -- 
 2.39.1
 
