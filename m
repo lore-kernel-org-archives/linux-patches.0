@@ -1,90 +1,92 @@
-Received: from mail-pj1-f53.google.com (mail-pj1-f53.google.com [209.85.216.53])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+Received: from bombadil.infradead.org (bombadil.infradead.org [198.137.202.133])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CEBE6D53B
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 23:25:57 +0000 (UTC)
-Received: by mail-pj1-f53.google.com with SMTP id kb15so773668pjb.1
-        for <patches@lists.linux.dev>; Thu, 02 Mar 2023 15:25:57 -0800 (PST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=heitbaum.com; s=google; t=1677799557;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
-        bh=EJebJkjcbH6lD9dZKQHxPTGnyvjfRr/WRlDMZGcswFY=;
-        b=WGeot1XIgZ2Pt2nVRmzXPAFnvh9xNUBiRlbjTx51Cyiy1dSh80xz389Doc7zl4qK+6
-         hOOeXnEuFF8M5eR9RToy9zoEq+iEUkmauHAFOO17XX6oQa5u3ZNfeJHkm8i3nZBRx2HN
-         vZHKbLoBZhUuA7jisrnjGqVjj53Jugynnm7EE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677799557;
-        h=in-reply-to:content-disposition:mime-version:references:message-id
-         :subject:cc:to:from:date:x-gm-message-state:from:to:cc:subject:date
-         :message-id:reply-to;
-        bh=EJebJkjcbH6lD9dZKQHxPTGnyvjfRr/WRlDMZGcswFY=;
-        b=RPTByh+Pv5X6Ufwl/szIlq3f7AO7M8zTamqOTiwvwqPzj1Z1j2dK/bf0NvIY52n7Jk
-         ftfkUIpva9c237qCQAHbJK0AmD+P1Ll+2e51kNrzFeGrPZeRCPYTIBNvIdv83ygeZrYH
-         QHMok28ujU/ENtKVNPsnklQNHV2SzFxeHUS+KnspPA60y7B+xOQmg+J2wCOebGKohUhB
-         /1pmLI64lUU/EiG5Tt/rQ43jVpWb7eQ878zXS1uDJTigr3wJ9Rji75PcK/vtZY6D5LIJ
-         wzbE5nDmi+ej6WhFUbZr/GoasoP9vUSrZ98YnbFC2XTLm8gOFtsW3IBakVzIMqVtsF4B
-         GF+g==
-X-Gm-Message-State: AO0yUKVMAwm1soyK6Vz/PkN4d3VfVgl9Lyz45YJVmKs9b08zz8mHlnMl
-	4o1pyiZ9oIZhlSfHfLPak/dDzQ==
-X-Google-Smtp-Source: AK7set9Yx25dOoCsYZOTUD2EIBEROIjWHDqCnvpz/1WDl/+CEOOyfaXgH3GSCQrEXWN3y/EdcG0B9w==
-X-Received: by 2002:a17:90b:1b4f:b0:237:c565:7bc6 with SMTP id nv15-20020a17090b1b4f00b00237c5657bc6mr12995431pjb.10.1677799556931;
-        Thu, 02 Mar 2023 15:25:56 -0800 (PST)
-Received: from f899b28bb789 (124-148-239-102.tpgi.com.au. [124.148.239.102])
-        by smtp.gmail.com with ESMTPSA id om9-20020a17090b3a8900b002339195a47bsm2081257pjb.53.2023.03.02.15.25.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Mar 2023 15:25:56 -0800 (PST)
-Date: Thu, 2 Mar 2023 23:25:45 +0000
-From: Rudi Heitbaum <rudi@heitbaum.com>
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev,
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
-	jonathanh@nvidia.com, f.fainelli@gmail.com,
-	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de
-Subject: Re: [PATCH 6.1 00/42] 6.1.15-rc1 review
-Message-ID: <20230302232545.GA1559@f899b28bb789>
-References: <20230301180657.003689969@linuxfoundation.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B642ED53B
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 23:28:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+	d=infradead.org; s=bombadil.20210309; h=Sender:Content-Transfer-Encoding:
+	MIME-Version:References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:
+	Reply-To:Content-Type:Content-ID:Content-Description;
+	bh=qG5U0uWPFmEbIzb8qGwDd3VP74J/BRogOkPK92T1eiw=; b=4Mn4cSCAgRAwfc+ofEk7syFvU4
+	lgI+PixYXC7I6rMVPFt85Y4M8oB/dWwp5q6YY7j/3hgM2uh2P7ZtiZ22ho1zzeWefT3wd+huLJpxd
+	mvGW2hfn1RtW61xAcyyeVfH9HN8JlRi29H3roFcGHcEC+b/G8QXX5LxaV7GoFHadburRxTnA/MMf9
+	+OPgxbeXJdcEcdQlRLQ0xbxT//SyOp14A7a7SO3dbpZWiKOO2+0j1sd9qtehWMvQZKVPoRxZhSOC9
+	XOO9h5XjMa5XF91JikH0HlR1tccdHYPW2mUwbxqK+PvPIFK+WTgqQha6vzzE6HKxjq0hmzN8pLejD
+	/ppNx6LQ==;
+Received: from mcgrof by bombadil.infradead.org with local (Exim 4.94.2 #2 (Red Hat Linux))
+	id 1pXsL9-003j3O-BB; Thu, 02 Mar 2023 23:27:59 +0000
+From: Luis Chamberlain <mcgrof@kernel.org>
+To: hughd@google.com,
+	akpm@linux-foundation.org,
+	willy@infradead.org,
+	brauner@kernel.org
+Cc: linux-mm@kvack.org,
+	p.raghav@samsung.com,
+	da.gomez@samsung.com,
+	a.manzanares@samsung.com,
+	dave@stgolabs.net,
+	yosryahmed@google.com,
+	keescook@chromium.org,
+	mcgrof@kernel.org,
+	patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org
+Subject: [PATCH 4/6] shmem: skip page split if we're not reclaiming
+Date: Thu,  2 Mar 2023 15:27:56 -0800
+Message-Id: <20230302232758.888157-5-mcgrof@kernel.org>
+X-Mailer: git-send-email 2.37.1
+In-Reply-To: <20230302232758.888157-1-mcgrof@kernel.org>
+References: <20230302232758.888157-1-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20230301180657.003689969@linuxfoundation.org>
+Content-Transfer-Encoding: 8bit
+Sender: Luis Chamberlain <mcgrof@infradead.org>
 
-On Wed, Mar 01, 2023 at 07:08:21PM +0100, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 6.1.15 release.
-> There are 42 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
-> 
-> Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
-> Anything received after that time might be too late.
+In theory when info->flags & VM_LOCKED we should not be getting
+shem_writepage() called so we should be verifying this with a
+WARN_ON_ONCE(). Since we should not be swapping then best to ensure
+we also don't do the folio split earlier too. So just move the check
+early to avoid folio splits in case its a dubious call.
 
-Hi Greg,
+We also have a similar early bail when !total_swap_pages so just move
+that earlier to avoid the possible folio split in the same situation.
 
-6.1.15-rc1 tested.
+Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+---
+ mm/shmem.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-Run tested on:
-- Allwinner H6 (Tanix TX6)
-- Intel Alder Lake x86_64 (nuc12 i7-1260P)
+diff --git a/mm/shmem.c b/mm/shmem.c
+index a5a6da51087e..6006dbb7dbcb 100644
+--- a/mm/shmem.c
++++ b/mm/shmem.c
+@@ -1352,6 +1352,12 @@ static int shmem_writepage(struct page *page, struct writeback_control *wbc)
+ 		goto redirty;
+ 	}
+ 
++	if (WARN_ON_ONCE(info->flags & VM_LOCKED))
++		goto redirty;
++
++	if (!total_swap_pages)
++		goto redirty;
++
+ 	/*
+ 	 * If /sys/kernel/mm/transparent_hugepage/shmem_enabled is "always" or
+ 	 * "force", drivers/gpu/drm/i915/gem/i915_gem_shmem.c gets huge pages,
+@@ -1367,10 +1373,6 @@ static int shmem_writepage(struct page *page, struct writeback_control *wbc)
+ 	}
+ 
+ 	index = folio->index;
+-	if (info->flags & VM_LOCKED)
+-		goto redirty;
+-	if (!total_swap_pages)
+-		goto redirty;
+ 
+ 	/*
+ 	 * This is somewhat ridiculous, but without plumbing a SWAP_MAP_FALLOC
+-- 
+2.39.1
 
-In addition - build tested for:
-- Allwinner A64
-- Allwinner H3
-- Allwinner H5
-- NXP iMX6
-- NXP iMX8
-- Qualcomm Dragonboard
-- Rockchip RK3288
-- Rockchip RK3328
-- Rockchip RK3399pro
-- Samsung Exynos
-
-Tested-by: Rudi Heitbaum <rudi@heitbaum.com>
---
-Rudi
