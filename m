@@ -1,119 +1,129 @@
-Received: from smtp-relay-internal-0.canonical.com (smtp-relay-internal-0.canonical.com [185.125.188.122])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mail-qt1-f173.google.com (mail-qt1-f173.google.com [209.85.160.173])
+	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C0712D524
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 20:48:14 +0000 (UTC)
-Received: from mail-oo1-f71.google.com (mail-oo1-f71.google.com [209.85.161.71])
-	(using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-	 key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-	(No client certificate requested)
-	by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 9640C3F144
-	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 20:42:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-	s=20210705; t=1677789742;
-	bh=VPNnC6C1cy3MGBtKJ7RY2J7qDK3sxM2tBtUziWuIYdg=;
-	h=Message-ID:Subject:From:To:Cc:Date:In-Reply-To:References:
-	 Content-Type:MIME-Version;
-	b=fR5ykiFqiJqksFR5sFlfm4Bmdx95y8ThEG9bxzb9ocgZm7JiSZs1wFab84mZmZ+Vn
-	 2ZFQAEWto8cb3rm9SAa/T9kds2vyfK3DbEcQt/ATL0WBqac3KLT+MqWjbS4DoWfIqk
-	 YsBSa96Hd91XXSMa7t/2PYedkgcb4XKztIJ4MS6vQY0lMhb9/KWYocm5wyzrR+l4MB
-	 SULOQn5t+TdskdpntxRp1iDHlNY5LSvKSTa334mmpIdePvmFZnyIwCTDN9/nLuha3G
-	 MRbxlkqfE2xglf2JCMr+YB2EqL00z41Cb9drxf+eRtJR5qngvmBuXdIN6X5k3AsGbf
-	 KPzUzkHKqPwsg==
-Received: by mail-oo1-f71.google.com with SMTP id y29-20020a4a651d000000b00525101290e7so280610ooc.12
-        for <patches@lists.linux.dev>; Thu, 02 Mar 2023 12:42:22 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2D09CD524
+	for <patches@lists.linux.dev>; Thu,  2 Mar 2023 22:17:58 +0000 (UTC)
+Received: by mail-qt1-f173.google.com with SMTP id d7so919721qtr.12
+        for <patches@lists.linux.dev>; Thu, 02 Mar 2023 14:17:58 -0800 (PST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112; t=1677795477;
+        h=in-reply-to:content-disposition:mime-version:references:reply-to
+         :message-id:subject:cc:to:from:date:sender:from:to:cc:subject:date
+         :message-id:reply-to;
+        bh=V0eFa8ILkm7saCjWoXNnQHqm1RHUvtu7xtFURhRmKWU=;
+        b=GWIdVRbSbgGAneugFpQgdh5lGR+K1O2RColDxiylPsGvgbxgTi3suTXXA6wFi8OCK0
+         VNr55Ah0Gc82W4FpWSTsMpjDZ1Erp/WmIRnZDS0YpniCm5SeKBzDA3FCJ8OcngRfT3am
+         LJR4Wv1lndNYH/Q/fwVcsuZerou4gr/yo1YSLP0kQcvMrmf2NmdjcDnwIAjLduXqmPNe
+         VlNJuhUG6Jamo98Ukf3GRQnXMF/KhWX9aS1xIH9/YtXknnp6o/3S59Xtp1bxusSnAubi
+         fOjhj1lJxSPeHuAjqExElFjdtMpPl+2YjDqfLqGQB/n6i2Ayg1FV3OBABQqVd1q1TZM5
+         StNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1677789740;
-        h=mime-version:user-agent:content-transfer-encoding:organization
-         :references:in-reply-to:date:cc:to:from:subject:message-id
-         :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
-        bh=VPNnC6C1cy3MGBtKJ7RY2J7qDK3sxM2tBtUziWuIYdg=;
-        b=7xWyuDmJaon57UXtdR6cN0anEjfjw3xKdgQacflVy+c90K7/GrIrfOavgkgYITVeha
-         gJXNtf7oYmwBo20mL1jRKp0I4oKeh/m53SsmwABK22dIQ/WX9zkc/x3ypSIsPndix1eW
-         8IrcK3b26WBXJVdChCBOi9ZSy/VQxH9yngVc+93Rnz1fp1HHA3SnBHIPom+8V3DOHgy7
-         7nDHrUtCaE7RiE1HZnZytaFKjxlB/Rl8KmuoEWzXT9Ar0g8Gw22CHns3JPyhurDb/rMP
-         +69RE8hy69QuShI5f0CEFgwUmHULc4PxBNFWEWTSq09Yx3Dj2McvCyd4DYj5b0xn5GT2
-         hZYQ==
-X-Gm-Message-State: AO0yUKULIK1liKd2jXMFUgIsHLJ3rBq3wCH8aQNaQs/vuVlPRmrlYK59
-	93rLgC+e4JnTooo2TWHpVVV3prasC9VBAlK14l02iLIX+Ynyl4v3+GWwXJPAmQpWCqxKE96HR5g
-	rfFx9dO52xh+YhFBd9ICvP2J7O8wIt7DO4KE=
-X-Received: by 2002:a9d:803:0:b0:690:d198:4d1e with SMTP id 3-20020a9d0803000000b00690d1984d1emr1669408oty.8.1677789740519;
-        Thu, 02 Mar 2023 12:42:20 -0800 (PST)
-X-Google-Smtp-Source: AK7set+mzZi4KGEKQQVH4HIHgt8mr09sF5ZEI/y0N5gvVHOM4lDo9PhDEhWGcQyAF/1JU7UCO5GrTA==
-X-Received: by 2002:a9d:803:0:b0:690:d198:4d1e with SMTP id 3-20020a9d0803000000b00690d1984d1emr1669391oty.8.1677789740223;
-        Thu, 02 Mar 2023 12:42:20 -0800 (PST)
-Received: from ?IPv6:2804:1b3:a7c3:d46d:73b6:f440:93a4:30? ([2804:1b3:a7c3:d46d:73b6:f440:93a4:30])
-        by smtp.gmail.com with ESMTPSA id d11-20020a9d72cb000000b0068bcef4f543sm327296otk.21.2023.03.02.12.42.09
+        d=1e100.net; s=20210112; t=1677795477;
+        h=in-reply-to:content-disposition:mime-version:references:reply-to
+         :message-id:subject:cc:to:from:date:sender:x-gm-message-state:from
+         :to:cc:subject:date:message-id:reply-to;
+        bh=V0eFa8ILkm7saCjWoXNnQHqm1RHUvtu7xtFURhRmKWU=;
+        b=dfYEBEdOHB0hjtIBYVxk9zWvu8i0+ZtO+YybLYHAxYw7WtiVfSC7Bst6NA53wuO/LB
+         F4doQnT50AvKaJq+kQ2rQcWYKOtI51CdvRqtWcofhSKaY6IudFjuX2MlasGh6UxiOdyQ
+         mk+sc1+Mm0SJDkvOO7AvALiPKgtI8uxk2EC8LSsN1rDEKSD/moEM8afzDAEEsXPpbTfh
+         yPlqpNpRo8gFwx6OE2B2JloIipw7ZWaPCppkeHDqr7/uUCfBFd4WSA+kcYK3HzTJo9HR
+         ROrv5Q1yrVo/88CBxP+HsBRPg4PYq67OtVSPySt+jjisGuR8tGshNtJnuz3oSHCLMooK
+         lFww==
+X-Gm-Message-State: AO0yUKUW2sptWF+2B5TkLvA+gpY9QIPoxcdUz3nJ60b9OE16Ws6uBhF5
+	DnoEA58r/rJ32LNmtYOgEw==
+X-Google-Smtp-Source: AK7set/y+bOjExP+nvbPQ/5QcDoAS99DJhG2vCN39iU8gau82df1z2MZqb9gk8YkNPi+sskmliPrlQ==
+X-Received: by 2002:ac8:5f47:0:b0:3bf:dd45:ed68 with SMTP id y7-20020ac85f47000000b003bfdd45ed68mr19008132qta.47.1677795476934;
+        Thu, 02 Mar 2023 14:17:56 -0800 (PST)
+Received: from serve.minyard.net ([47.184.176.248])
+        by smtp.gmail.com with ESMTPSA id w19-20020ac843d3000000b003bfbf3afe51sm468742qtn.93.2023.03.02.14.17.56
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Mar 2023 12:42:19 -0800 (PST)
-Message-ID: <c010472791aa57c8ea838b5e85780f5be98898d5.camel@canonical.com>
-Subject: Re: [PATCH 04/11] apparmor: simplify sysctls with
- register_sysctl_init()
-From: Georgia Garcia <georgia.garcia@canonical.com>
-To: Luis Chamberlain <mcgrof@kernel.org>, ebiederm@xmission.com, 
- keescook@chromium.org, yzaikin@google.com, john.johansen@canonical.com, 
- paul@paul-moore.com, jmorris@namei.org, serge@hallyn.com,
- luto@amacapital.net,  wad@chromium.org, dverkamp@chromium.org,
- paulmck@kernel.org, baihaowen@meizu.com,  frederic@kernel.org,
- jeffxu@google.com, ebiggers@kernel.org, tytso@mit.edu,  guoren@kernel.org
-Cc: j.granados@samsung.com, zhangpeng362@huawei.com, tangmeng@uniontech.com,
-  willy@infradead.org, nixiaoming@huawei.com, sujiaxun@uniontech.com, 
- patches@lists.linux.dev, linux-fsdevel@vger.kernel.org, 
- apparmor@lists.ubuntu.com, linux-security-module@vger.kernel.org, 
- linux-csky@vger.kernel.org, linux-kernel@vger.kernel.org
-Date: Thu, 02 Mar 2023 17:42:07 -0300
-In-Reply-To: <20230302202826.776286-5-mcgrof@kernel.org>
-References: <20230302202826.776286-1-mcgrof@kernel.org>
-	 <20230302202826.776286-5-mcgrof@kernel.org>
-Organization: Canonical
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.44.4-0ubuntu1 
+        Thu, 02 Mar 2023 14:17:56 -0800 (PST)
+Sender: Corey Minyard <tcminyard@gmail.com>
+Received: from minyard.net (unknown [IPv6:2001:470:b8f6:1b:9812:99fe:c8aa:e89a])
+	by serve.minyard.net (Postfix) with ESMTPSA id 2843A18000C;
+	Thu,  2 Mar 2023 22:17:55 +0000 (UTC)
+Date: Thu, 2 Mar 2023 16:17:53 -0600
+From: Corey Minyard <minyard@acm.org>
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com,
+	jejb@linux.ibm.com, martin.petersen@oracle.com, kys@microsoft.com,
+	haiyangz@microsoft.com, wei.liu@kernel.org, decui@microsoft.com,
+	song@kernel.org, robinmholt@gmail.com, steve.wahl@hpe.com,
+	mike.travis@hpe.com, arnd@arndb.de, gregkh@linuxfoundation.org,
+	jirislaby@kernel.org, jgross@suse.com, sstabellini@kernel.org,
+	oleksandr_tyshchenko@epam.com, xen-devel@lists.xenproject.org,
+	j.granados@samsung.com, zhangpeng362@huawei.com,
+	tangmeng@uniontech.com, willy@infradead.org, nixiaoming@huawei.com,
+	sujiaxun@uniontech.com, patches@lists.linux.dev,
+	linux-fsdevel@vger.kernel.org, apparmor@lists.ubuntu.com,
+	linux-raid@vger.kernel.org, linux-scsi@vger.kernel.org,
+	linux-hyperv@vger.kernel.org,
+	openipmi-developer@lists.sourceforge.net,
+	linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/7] ipmi: simplify sysctl registration
+Message-ID: <ZAEgkeb6E+k8PFZc@minyard.net>
+Reply-To: minyard@acm.org
+References: <20230302204612.782387-1-mcgrof@kernel.org>
+ <20230302204612.782387-3-mcgrof@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20230302204612.782387-3-mcgrof@kernel.org>
 
-On Thu, 2023-03-02 at 12:28 -0800, Luis Chamberlain wrote:
-> Using register_sysctl_paths() is really only needed if you have
-> subdirectories with entries. We can use the simple register_sysctl()
-> instead.
->=20
+On Thu, Mar 02, 2023 at 12:46:07PM -0800, Luis Chamberlain wrote:
+> register_sysctl_table() is a deprecated compatibility wrapper.
+> register_sysctl() can do the directory creation for you so just use
+> that.
+
+Thanks, I have included this in my tree for the next merge window.
+
+-corey
+
+> 
 > Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 > ---
->  security/apparmor/lsm.c | 8 +-------
->  1 file changed, 1 insertion(+), 7 deletions(-)
->=20
-> diff --git a/security/apparmor/lsm.c b/security/apparmor/lsm.c
-> index d6cc4812ca53..47c7ec7e5a80 100644
-> --- a/security/apparmor/lsm.c
-> +++ b/security/apparmor/lsm.c
-> @@ -1764,11 +1764,6 @@ static int apparmor_dointvec(struct ctl_table *tab=
-le, int write,
->  	return proc_dointvec(table, write, buffer, lenp, ppos);
->  }
-> =20
-> -static struct ctl_path apparmor_sysctl_path[] =3D {
-> -	{ .procname =3D "kernel", },
+>  drivers/char/ipmi/ipmi_poweroff.c | 16 +---------------
+>  1 file changed, 1 insertion(+), 15 deletions(-)
+> 
+> diff --git a/drivers/char/ipmi/ipmi_poweroff.c b/drivers/char/ipmi/ipmi_poweroff.c
+> index 163ec9749e55..870659d91db2 100644
+> --- a/drivers/char/ipmi/ipmi_poweroff.c
+> +++ b/drivers/char/ipmi/ipmi_poweroff.c
+> @@ -659,20 +659,6 @@ static struct ctl_table ipmi_table[] = {
+>  	{ }
+>  };
+>  
+> -static struct ctl_table ipmi_dir_table[] = {
+> -	{ .procname	= "ipmi",
+> -	  .mode		= 0555,
+> -	  .child	= ipmi_table },
 > -	{ }
 > -};
 > -
->  static struct ctl_table apparmor_sysctl_table[] =3D {
->  	{
->  		.procname       =3D "unprivileged_userns_apparmor_policy",
-> @@ -1790,8 +1785,7 @@ static struct ctl_table apparmor_sysctl_table[] =3D=
- {
-> =20
->  static int __init apparmor_init_sysctl(void)
->  {
-> -	return register_sysctl_paths(apparmor_sysctl_path,
-> -				     apparmor_sysctl_table) ? 0 : -ENOMEM;
-> +	return register_sysctl("kernel", apparmor_sysctl_table) ? 0 : -ENOMEM;
->  }
->  #else
->  static inline int apparmor_init_sysctl(void)
-
-Reviewed-by: Georgia Garcia <georgia.garcia@canonical.com>
-
+> -static struct ctl_table ipmi_root_table[] = {
+> -	{ .procname	= "dev",
+> -	  .mode		= 0555,
+> -	  .child	= ipmi_dir_table },
+> -	{ }
+> -};
+> -
+>  static struct ctl_table_header *ipmi_table_header;
+>  #endif /* CONFIG_PROC_FS */
+>  
+> @@ -689,7 +675,7 @@ static int __init ipmi_poweroff_init(void)
+>  		pr_info("Power cycle is enabled\n");
+>  
+>  #ifdef CONFIG_PROC_FS
+> -	ipmi_table_header = register_sysctl_table(ipmi_root_table);
+> +	ipmi_table_header = register_sysctl("dev/ipmi", ipmi_table);
+>  	if (!ipmi_table_header) {
+>  		pr_err("Unable to register powercycle sysctl\n");
+>  		rv = -ENOMEM;
+> -- 
+> 2.39.1
+> 
