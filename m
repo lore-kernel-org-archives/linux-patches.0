@@ -1,39 +1,39 @@
-Received: from mail-vs1-f53.google.com (mail-vs1-f53.google.com [209.85.217.53])
+Received: from mail-vs1-f45.google.com (mail-vs1-f45.google.com [209.85.217.45])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 07CF91C3C
-	for <patches@lists.linux.dev>; Fri,  3 Mar 2023 09:00:24 +0000 (UTC)
-Received: by mail-vs1-f53.google.com with SMTP id a3so1800436vsi.0
-        for <patches@lists.linux.dev>; Fri, 03 Mar 2023 01:00:24 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBF431FB6
+	for <patches@lists.linux.dev>; Fri,  3 Mar 2023 09:04:17 +0000 (UTC)
+Received: by mail-vs1-f45.google.com with SMTP id x14so1737381vso.9
+        for <patches@lists.linux.dev>; Fri, 03 Mar 2023 01:04:17 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:from:to:cc:subject:date:message-id:reply-to;
-        bh=JLsdOAyBgyezK1lgQkAs7g3tPEWRNLmT3YtzhsnA9Eo=;
-        b=Mpff6y11+tajpm4ENnXldBTwnQin3kMRQ35Jp+KKyWKE3NfomdkPgesXEPbzxVmb3u
-         DpgXevAA34AlBXahtjo6WUCEuc0td6jcwDxeUCPhUbCCFtpR+PkvzW0icD4vf7/AWRey
-         9AIPc/rC/r6s0rAz1FaWCORh33o7WCuFkL4KmhR7JwACpAHGeXhYVSo87DvTp0zFEuYh
-         f2nKjCneFaMk7SzKRGtTEC/P9aZfqdyF9d57k+kfQuoZtWMglWWouqW+wOgWUy5pqNiX
-         eRug/NxMn5OrbEQMJr5CL3aj5Dj3vZztlpRmdKpao6yd3yce8PdIq/K9LkCg/Im4QNxH
-         Z8Qw==
+        bh=Tz00Tqp2vtUy2svpLhqgrc/9lCdlqQYI0Iiyegg93jE=;
+        b=CPHtp3vSrP26nALKHfQarED/kNETYNYUQLVL0PuetjPrAthBn7Olz9gyYat9XJ/Jbc
+         uAqr5Q7NLdlz/6jnOJVPClXlOXQbDviCx0F+kz/x33pq/CXVGVylQGw6fOSmZk0nfpzy
+         m8ISNfilFU1VM2OH4H97LLa9J007eW0otluW1FX92zhrenCzENHK77Nfg72xLps4N/Gl
+         VTMVO+DpRHFMw+/Q1DfPq2YNddgxV+xRsrv/BL6PH+tg+WYErXo6SNVNs3OWtMQ1eVpg
+         iZUvflKKGakgtBkgo970lb6MLsxBbs/QGM408DHoY+zDfcWlF2iNiSWfcvQV6Cea5Hem
+         STYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=cc:to:subject:message-id:date:from:in-reply-to:references
          :mime-version:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=JLsdOAyBgyezK1lgQkAs7g3tPEWRNLmT3YtzhsnA9Eo=;
-        b=pe3LgbuFVBOLL+zbVTlAUudRNb4EuEmsdDlSqUO/Tz4YRvvUJqHktPctgfvfpjZoVO
-         BY3vMODvsfoFvo/gymCPmPexxt+MeSMbleRzGpc4I+1kQndt/MgTSzdb2vSfKKckwHRT
-         +y+bztOiVL4N4kGJQlHR6MWpEh7x3BtA+jA8QR6ltKkMs8r23OHf5/KNennPprsrkBhc
-         fT0aJB0KJxZ4BAJvZxYJAvTbEAk/no89HlTsADJJcuqBAQbtl+dkfi7kvF3wbqF8W7nk
-         jszos8G0un/0YZtDqINx7y4tGT9pba7AUKTzepN60DNSKBEboTgapQnQPJE/p//OQ3MZ
-         RFbQ==
-X-Gm-Message-State: AO0yUKUSvDtnUZSwy3MB9a5rH0dcHxvbjI6SY5iOT3lYG2mS0LylCz7/
-	h8g6F1I5atqgHluxbqFQga6GeKEYfvDC1cf6dMiaXQ==
-X-Google-Smtp-Source: AK7set/9X7i92FLRbTs4K8F7WILTtmVS53pxFldUzuXDJlvs6xFldr/xpFZjsZya7JsDSXEoQg7weJ37y8z0INCPtdU=
-X-Received: by 2002:a67:f58b:0:b0:411:c62b:6bf0 with SMTP id
- i11-20020a67f58b000000b00411c62b6bf0mr683428vso.3.1677834023770; Fri, 03 Mar
- 2023 01:00:23 -0800 (PST)
+        bh=Tz00Tqp2vtUy2svpLhqgrc/9lCdlqQYI0Iiyegg93jE=;
+        b=4jqulm2XSIhMF5YPSOWwsBa1j6wLqAWSr5PrT7GWCCp7l9kPTMr0HDniv/Ic9f6fHi
+         FSqqX8oAi2SRNodKopT+LZXyIZSjaqgwLyc6mUfKApWWhicf2RIyXFYnvdcf803k3rp7
+         pAWtmFOLrBwfDwo7Ibs9uPEf1r+Bdopl9aRrI7HHqvbJtBIQUrpdl5iVKehIpLWZXbHS
+         nlaVJHQnznCukQOCpSUXRMP3TgoJDgc5k+XAT+4GbtKWEg1eOdRb85EWJ3JKY3krBIHU
+         90e2tFSh13QLC8iaj193DxGC80Q05IzOfRtc4mqtUsdiN5mPVt5ISqffXJ8xHgH4POCc
+         YpQw==
+X-Gm-Message-State: AO0yUKVarJ2bxetXjTI94mXgSWwNYOze53UZq5xi4k3XlaZ9c0YN/W0W
+	4yXKzrTizL4OME7xFaBbQP8fIGm+obVk2ExU9oc9Fg==
+X-Google-Smtp-Source: AK7set8xJnpf1kTF5ZChezlWGbocRssXwa0E/otBhr1eDuSz97X8AuHW4Z/rfCNxFvtBeZ3CbxcRQAot48c8dRuVFmg=
+X-Received: by 2002:a67:cfc6:0:b0:402:999f:51dd with SMTP id
+ h6-20020a67cfc6000000b00402999f51ddmr683904vsm.3.1677834256581; Fri, 03 Mar
+ 2023 01:04:16 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -42,27 +42,29 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 References: <20230301180657.003689969@linuxfoundation.org> <CA+G9fYtDGpgT4dckXD-y-N92nqUxuvue_7AtDdBcHrbOMsDZLg@mail.gmail.com>
  <ZAB6pP3MNy152f+7@kroah.com> <CA+G9fYsHbQyQFp+vMnmFKDSQxrmj-VKsexWq-aayxgrY+0O7KQ@mail.gmail.com>
- <CA+G9fYsn+AhWTFA+ZJmfFsM71WGLPOFemZp_vhFMMLUcgcAXKg@mail.gmail.com> <ZAGbUsae7DHoI5k4@kroah.com>
-In-Reply-To: <ZAGbUsae7DHoI5k4@kroah.com>
+ <CA+G9fYsn+AhWTFA+ZJmfFsM71WGLPOFemZp_vhFMMLUcgcAXKg@mail.gmail.com> <9586d0f99e27483b600d8eb3b5c6635b50905d82.camel@redhat.com>
+In-Reply-To: <9586d0f99e27483b600d8eb3b5c6635b50905d82.camel@redhat.com>
 From: Naresh Kamboju <naresh.kamboju@linaro.org>
-Date: Fri, 3 Mar 2023 14:30:12 +0530
-Message-ID: <CA+G9fYsoEdhf09n-8eFzYPnsvDH=YryJ9rdsphZx8XQ3N3BbMw@mail.gmail.com>
+Date: Fri, 3 Mar 2023 14:34:05 +0530
+Message-ID: <CA+G9fYuLQEfeTjx52NxbXV5914YJQ2tVd8k4SJjrAryujPjnqA@mail.gmail.com>
 Subject: Re: [PATCH 6.1 00/42] 6.1.15-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc: stable@vger.kernel.org, patches@lists.linux.dev, 
-	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org, 
-	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org, 
-	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de, 
-	jonathanh@nvidia.com, f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, 
-	srw@sladewatkins.net, rwarsow@gmx.de, mptcp@lists.linux.dev, 
-	Florian Westphal <fw@strlen.de>, Mat Martineau <mathew.j.martineau@linux.intel.com>, 
+To: Paolo Abeni <pabeni@redhat.com>
+Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org, 
+	patches@lists.linux.dev, linux-kernel@vger.kernel.org, 
+	torvalds@linux-foundation.org, akpm@linux-foundation.org, linux@roeck-us.net, 
+	shuah@kernel.org, patches@kernelci.org, lkft-triage@lists.linaro.org, 
+	pavel@denx.de, jonathanh@nvidia.com, f.fainelli@gmail.com, 
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de, 
+	mptcp@lists.linux.dev, Florian Westphal <fw@strlen.de>, 
+	Mat Martineau <mathew.j.martineau@linux.intel.com>, 
 	Matthieu Baerts <matthieu.baerts@tessares.net>, Anders Roxell <anders.roxell@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
 
-On Fri, 3 Mar 2023 at 12:31, Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
+On Fri, 3 Mar 2023 at 13:34, Paolo Abeni <pabeni@redhat.com> wrote:
 >
-> On Fri, Mar 03, 2023 at 01:32:47AM +0530, Naresh Kamboju wrote:
+> Hello,
+>
+> On Fri, 2023-03-03 at 01:32 +0530, Naresh Kamboju wrote:
 > > On Thu, 2 Mar 2023 at 16:30, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
 > > >
 > > > On Thu, 2 Mar 2023 at 16:00, Greg Kroah-Hartman
@@ -146,14 +148,22 @@ On Fri, 3 Mar 2023 at 12:31, Greg Kroah-Hartman
 > > Now that we have upgraded to 6.2.1 kselftests source, we find that
 > > there is this problem reported. so, not a kernel regression.
 >
-> Where is this problem reported?
+> I read the above as you are running self-tests from 6.2.1 on top of an
+> older (6.1) kernel. Is that correct?
 
-We have been running most recent stable (6.2) selftest sources on
-older stable-rc branches ( 6.1 ... 4.14).
+correct.
 
-> Is this a 6.2 test checking for
-> something that is not in 6.1?
+> If so failures are expected;
 
-mptcp developers might have a better idea,
+Thanks for clarifying this.
+
+> please use the self-tests and kernel from the same release.
+>
+> Otherwise, could you please re-phrase the above?
+>
+> Thanks,
+>
+> Paolo
+>
 
 - Naresh
