@@ -1,131 +1,65 @@
-Received: from new1-smtp.messagingengine.com (new1-smtp.messagingengine.com [66.111.4.221])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C21D55387
-	for <patches@lists.linux.dev>; Fri,  3 Mar 2023 14:38:38 +0000 (UTC)
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.46])
-	by mailnew.nyi.internal (Postfix) with ESMTP id E05FF58209F;
-	Fri,  3 Mar 2023 09:38:37 -0500 (EST)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Fri, 03 Mar 2023 09:38:37 -0500
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=cc
-	:cc:content-type:content-type:date:date:from:from:in-reply-to
-	:in-reply-to:message-id:mime-version:references:reply-to:sender
-	:subject:subject:to:to; s=fm2; t=1677854317; x=1677861517; bh=fE
-	NpqGS/+8eA5DI/UUI0vpXheU20dTSblaG27LRs1wM=; b=TMhMKykfeOcON4SmqH
-	CiYcR4MIZ49Z7wHVFPQNZj3iGkQl9Ekns63B0lEoL+meNxR+1YZlErUd72YNzWtc
-	Tc3ckFkvLMeh9z5LY4PAFBAmSGhVbQXp133+eiQ6TbSr8c0f+rN06dClkyxbipje
-	G99ggeGVGmhkM+vYhAS0iTVg1hZFSEFrqGP0d9QqHjS8ElbKXMyT/CaVXWnxeQKB
-	/7z5ZnS1fBdEZ8W9XD7NfqLT4E50Bhdgu3yHMLuWpcq1zHML7Xkl6vuvxxwWr/x4
-	kTDHrA9LQ5EfKoXkh3mlh09MDR4S8hkgaXi2RK52pdw166eV5NR15Pqw78vYO19m
-	5pnA==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-	messagingengine.com; h=cc:cc:content-type:content-type:date:date
-	:feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
-	:message-id:mime-version:references:reply-to:sender:subject
-	:subject:to:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-	:x-sasl-enc; s=fm1; t=1677854317; x=1677861517; bh=fENpqGS/+8eA5
-	DI/UUI0vpXheU20dTSblaG27LRs1wM=; b=S5/UuJmbtsS/NWyXg3Ps3ypf5/t2J
-	P263Lmin6EpwJeGdsXY7ll3SIMZ13M5mt47W1zamhNF1Za+SwrlDllq7hyfWwIJF
-	E0BALtrYPdg8Wv2JEv+lAFvDlUAVZSUieuhgvoqF6K/ORnQdbKnsVLBgOQyVKQ/a
-	1bRA8NkMejJ9bonI4XKeyEv4VEZ41/TS2ho+dfe4t7NIkfh7iQQqDRSgiIxIFf3n
-	bEhBuSvaJ2jJnfAd1mf7eTwFir4izLMxvO6ovQo7kuJIcXJXDbPbT17X6F4IdV5F
-	eOuCDvuhjDUvFXQRMxhiGcGpV9+x4iWQj01t/RarVARG5rhzaclijqE5Q==
-X-ME-Sender: <xms:bQYCZBqQ_OWB-XfeAkakbJrvkOlAPPrdrOfjnoXZNzAAbN2ysnU5_g>
-    <xme:bQYCZDrT7oGvvXps_IIKr4EyvuOtztAVxEjjLij73_GjNwXm2pjPb8clAUw7L-et6
-    THtA9aJSxq4Fthg0Rc>
-X-ME-Received: <xmr:bQYCZONjTuFbLn6b407OWCuogFfuUAkjkP7v-oYKOzKLTSWSB0h0NQ7KAgDn2usbc1W11_Ho64ar_UqZQMVs_dWdJ1SZ2Tw>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvhedrudelledgieduucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvfevuffkfhggtggujgesghdtreertddtvdenucfhrhhomhepofgrgihi
-    mhgvucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrg
-    htthgvrhhnpeetfefffefgkedtfefgledugfdtjeefjedvtddtkeetieffjedvgfehheff
-    hfevudenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpe
-    hmrgigihhmvgestggvrhhnohdrthgvtghh
-X-ME-Proxy: <xmx:bQYCZM7lRZBpN1iCDRWpa8RRIEzCmsRX5qOpjq_60GBkK-GZLyuuIA>
-    <xmx:bQYCZA6xZfTwaBxJlNayuRLhTYG2SBHDQ-3PlQ-sVrUwaNBFfq_FGA>
-    <xmx:bQYCZEiTLUpDKCmsz6nBVCy-qKZZKeYrjzBlgrYQuNET0iH3p73yMg>
-    <xmx:bQYCZDPi_FBzF2yyIJcOR5G-ya25UwN715kOJpXal74DI6neV3tjeA>
-Feedback-ID: i8771445c:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 3 Mar 2023 09:38:36 -0500 (EST)
-Date: Fri, 3 Mar 2023 15:38:35 +0100
-From: Maxime Ripard <maxime@cerno.tech>
-To: Stephen Boyd <sboyd@kernel.org>
-Cc: Michael Turquette <mturquette@baylibre.com>,
-	linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-	patches@lists.linux.dev,
-	Brendan Higgins <brendan.higgins@linux.dev>,
-	David Gow <davidgow@google.com>,
-	Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-	"Rafael J . Wysocki" <rafael@kernel.org>,
-	Richard Weinberger <richard@nod.at>,
-	Anton Ivanov <anton.ivanov@cambridgegreys.com>,
-	Johannes Berg <johannes@sipsolutions.net>,
-	Vincent Whitchurch <vincent.whitchurch@axis.com>,
-	Rob Herring <robh+dt@kernel.org>,
-	Frank Rowand <frowand.list@gmail.com>,
-	Christian Marangi <ansuelsmth@gmail.com>,
-	Krzysztof Kozlowski <krzysztof.kozlowski+dt@linaro.org>,
-	devicetree@vger.kernel.org, linux-um@lists.infradead.org,
-	linux-kselftest@vger.kernel.org, kunit-dev@googlegroups.com
-Subject: Re: [PATCH 0/8] clk: Add kunit tests for fixed rate and parent data
-Message-ID: <20230303143835.hxvkujrdxh7345ah@houat>
-References: <20230302013822.1808711-1-sboyd@kernel.org>
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDADF8F53
+	for <patches@lists.linux.dev>; Fri,  3 Mar 2023 18:16:43 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E15CC4339C
+	for <patches@lists.linux.dev>; Fri,  3 Mar 2023 18:16:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+	s=k20201202; t=1677867403;
+	bh=z9o+Fj7F9hEekeJkNgNCjr/Inru7KzeAHF1ZoYV9Iio=;
+	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+	b=tIJ7IPJ4KHsGCVQmNJVMq0GTuDbB7zi4lEH2qhnGRtaBwTofmI+hMCDYpA9763zfj
+	 hnCWxc4EDetFEydMYfJYVCKCnuqX7lzBkQNF/3hHX/fFqg2w68Dz/J2NPZRFMC+ExQ
+	 nspd4IdvGbl0PjPL3X5dDPVxgtnZL8vGWmW4GwY5J2Ab+G4cboaTKsqbRv/CUgJjYd
+	 AlHYoz2pmiJ8UmkE+Tcrvn5IMXyPncF7oLw9cGdunMOy6vRssudSH3Yt9drtUnuDjJ
+	 Tu0KBhBdcw9N12uoTUkInH/QUAcuy6fCuLrl3Q9h0Y1mx8oQdTybds27iOc5OdWhww
+	 mcEJSCHEURnWg==
+Received: by mail-lf1-f49.google.com with SMTP id j11so4658797lfg.13
+        for <patches@lists.linux.dev>; Fri, 03 Mar 2023 10:16:43 -0800 (PST)
+X-Gm-Message-State: AO0yUKX4zUCq8w9u0thoUEoVoILYNWehtDXbV8OJXh65h00M5IgNpmbk
+	/0Dw8K080/V2wuD2mDOAu9zKi0rMF2mCXfMRxm0=
+X-Google-Smtp-Source: AK7set8+TKohTy6ON4qynrd6qM7FwtWsRtV8zfmEmFF5syO7UhwA/Y8VS4hyO7ZdSGW9G+CTTREWUsKalOtJ4y3BnUw=
+X-Received: by 2002:a05:6512:3c83:b0:4d8:86c2:75ea with SMTP id
+ h3-20020a0565123c8300b004d886c275eamr3273736lfv.3.1677867401669; Fri, 03 Mar
+ 2023 10:16:41 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-	protocol="application/pgp-signature"; boundary="zxhsbaoummc7j6bf"
-Content-Disposition: inline
-In-Reply-To: <20230302013822.1808711-1-sboyd@kernel.org>
+References: <20230302204612.782387-1-mcgrof@kernel.org> <20230302204612.782387-5-mcgrof@kernel.org>
+In-Reply-To: <20230302204612.782387-5-mcgrof@kernel.org>
+From: Song Liu <song@kernel.org>
+Date: Fri, 3 Mar 2023 10:16:29 -0800
+X-Gmail-Original-Message-ID: <CAPhsuW4k1hpLDWcQGCtEeR6LEgSboTY+tqbiPp+30_2T+rFezw@mail.gmail.com>
+Message-ID: <CAPhsuW4k1hpLDWcQGCtEeR6LEgSboTY+tqbiPp+30_2T+rFezw@mail.gmail.com>
+Subject: Re: [PATCH 4/7] md: simplify sysctl registration
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com, 
+	jejb@linux.ibm.com, martin.petersen@oracle.com, minyard@acm.org, 
+	kys@microsoft.com, haiyangz@microsoft.com, wei.liu@kernel.org, 
+	decui@microsoft.com, robinmholt@gmail.com, steve.wahl@hpe.com, 
+	mike.travis@hpe.com, arnd@arndb.de, gregkh@linuxfoundation.org, 
+	jirislaby@kernel.org, jgross@suse.com, sstabellini@kernel.org, 
+	oleksandr_tyshchenko@epam.com, xen-devel@lists.xenproject.org, 
+	j.granados@samsung.com, zhangpeng362@huawei.com, tangmeng@uniontech.com, 
+	willy@infradead.org, nixiaoming@huawei.com, sujiaxun@uniontech.com, 
+	patches@lists.linux.dev, linux-fsdevel@vger.kernel.org, 
+	apparmor@lists.ubuntu.com, linux-raid@vger.kernel.org, 
+	linux-scsi@vger.kernel.org, linux-hyperv@vger.kernel.org, 
+	openipmi-developer@lists.sourceforge.net, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 
+On Thu, Mar 2, 2023 at 12:46 PM Luis Chamberlain <mcgrof@kernel.org> wrote:
+>
+> register_sysctl_table() is a deprecated compatibility wrapper.
+> register_sysctl() can do the directory creation for you so just use
+> that.
+>
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 
---zxhsbaoummc7j6bf
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+Acked-by: Song Liu <song@kernel.org>
 
-Hi,
-
-On Wed, Mar 01, 2023 at 05:38:13PM -0800, Stephen Boyd wrote:
-> This patch series adds unit tests for the clk fixed rate basic type and
-> the clk registration functions that use struct clk_parent_data. To get
-> there, we add support for loading a DTB into the UML kernel that's
-> running the unit tests along with probing platform drivers to bind to
-> device nodes specified in DT.
->=20
-> With this series, we're able to exercise some of the code in the common
-> clk framework that uses devicetree lookups to find parents and the fixed
-> rate clk code that scans devicetree directly and creates clks. Please
-> review.
->=20
-> I Cced everyone to all the patches so they get the full context. I'm
-> hoping I can take the whole pile through the clk tree as they almost all
-> depend on each other. In the future I imagine it will be easy to add
-> more test nodes to the clk.dtsi file and not need to go across various
-> maintainer trees like this series does.
-
-That's really great, thanks!
-
-I wanted to have a look at how we could possibly do this for DRM, I
-guess I have a starting point now :)
-
-Maxime
-
---zxhsbaoummc7j6bf
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYKAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCZAIGawAKCRDj7w1vZxhR
-xS33AQD23xSdqBXlBOhJsMv6KYIZ12jQ2GO9rfSeTnQ8xbOokQD/bAnk3DyP7XE/
-fGO0wD2U0Tkw7bdC9RO2kuSjjCSIvgk=
-=gx7K
------END PGP SIGNATURE-----
-
---zxhsbaoummc7j6bf--
+Thanks!
