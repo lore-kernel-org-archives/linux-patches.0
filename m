@@ -1,65 +1,84 @@
-Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
-	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id EDADF8F53
-	for <patches@lists.linux.dev>; Fri,  3 Mar 2023 18:16:43 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9E15CC4339C
-	for <patches@lists.linux.dev>; Fri,  3 Mar 2023 18:16:43 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1677867403;
-	bh=z9o+Fj7F9hEekeJkNgNCjr/Inru7KzeAHF1ZoYV9Iio=;
-	h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-	b=tIJ7IPJ4KHsGCVQmNJVMq0GTuDbB7zi4lEH2qhnGRtaBwTofmI+hMCDYpA9763zfj
-	 hnCWxc4EDetFEydMYfJYVCKCnuqX7lzBkQNF/3hHX/fFqg2w68Dz/J2NPZRFMC+ExQ
-	 nspd4IdvGbl0PjPL3X5dDPVxgtnZL8vGWmW4GwY5J2Ab+G4cboaTKsqbRv/CUgJjYd
-	 AlHYoz2pmiJ8UmkE+Tcrvn5IMXyPncF7oLw9cGdunMOy6vRssudSH3Yt9drtUnuDjJ
-	 Tu0KBhBdcw9N12uoTUkInH/QUAcuy6fCuLrl3Q9h0Y1mx8oQdTybds27iOc5OdWhww
-	 mcEJSCHEURnWg==
-Received: by mail-lf1-f49.google.com with SMTP id j11so4658797lfg.13
-        for <patches@lists.linux.dev>; Fri, 03 Mar 2023 10:16:43 -0800 (PST)
-X-Gm-Message-State: AO0yUKX4zUCq8w9u0thoUEoVoILYNWehtDXbV8OJXh65h00M5IgNpmbk
-	/0Dw8K080/V2wuD2mDOAu9zKi0rMF2mCXfMRxm0=
-X-Google-Smtp-Source: AK7set8+TKohTy6ON4qynrd6qM7FwtWsRtV8zfmEmFF5syO7UhwA/Y8VS4hyO7ZdSGW9G+CTTREWUsKalOtJ4y3BnUw=
-X-Received: by 2002:a05:6512:3c83:b0:4d8:86c2:75ea with SMTP id
- h3-20020a0565123c8300b004d886c275eamr3273736lfv.3.1677867401669; Fri, 03 Mar
- 2023 10:16:41 -0800 (PST)
+Received: from foss.arm.com (foss.arm.com [217.140.110.172])
+	by smtp.subspace.kernel.org (Postfix) with ESMTP id 005CF1FB3
+	for <patches@lists.linux.dev>; Fri,  3 Mar 2023 18:33:13 +0000 (UTC)
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+	by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 43E1F143D;
+	Fri,  3 Mar 2023 10:33:54 -0800 (PST)
+Received: from [10.1.196.177] (eglon.cambridge.arm.com [10.1.196.177])
+	by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 52FBC3F93E;
+	Fri,  3 Mar 2023 10:33:08 -0800 (PST)
+Message-ID: <f0841866-315b-4727-0a6c-ec60d22ca29c@arm.com>
+Date: Fri, 3 Mar 2023 18:32:59 +0000
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-References: <20230302204612.782387-1-mcgrof@kernel.org> <20230302204612.782387-5-mcgrof@kernel.org>
-In-Reply-To: <20230302204612.782387-5-mcgrof@kernel.org>
-From: Song Liu <song@kernel.org>
-Date: Fri, 3 Mar 2023 10:16:29 -0800
-X-Gmail-Original-Message-ID: <CAPhsuW4k1hpLDWcQGCtEeR6LEgSboTY+tqbiPp+30_2T+rFezw@mail.gmail.com>
-Message-ID: <CAPhsuW4k1hpLDWcQGCtEeR6LEgSboTY+tqbiPp+30_2T+rFezw@mail.gmail.com>
-Subject: Re: [PATCH 4/7] md: simplify sysctl registration
-To: Luis Chamberlain <mcgrof@kernel.org>
-Cc: ebiederm@xmission.com, keescook@chromium.org, yzaikin@google.com, 
-	jejb@linux.ibm.com, martin.petersen@oracle.com, minyard@acm.org, 
-	kys@microsoft.com, haiyangz@microsoft.com, wei.liu@kernel.org, 
-	decui@microsoft.com, robinmholt@gmail.com, steve.wahl@hpe.com, 
-	mike.travis@hpe.com, arnd@arndb.de, gregkh@linuxfoundation.org, 
-	jirislaby@kernel.org, jgross@suse.com, sstabellini@kernel.org, 
-	oleksandr_tyshchenko@epam.com, xen-devel@lists.xenproject.org, 
-	j.granados@samsung.com, zhangpeng362@huawei.com, tangmeng@uniontech.com, 
-	willy@infradead.org, nixiaoming@huawei.com, sujiaxun@uniontech.com, 
-	patches@lists.linux.dev, linux-fsdevel@vger.kernel.org, 
-	apparmor@lists.ubuntu.com, linux-raid@vger.kernel.org, 
-	linux-scsi@vger.kernel.org, linux-hyperv@vger.kernel.org, 
-	openipmi-developer@lists.sourceforge.net, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+User-Agent: Mozilla/5.0 (X11; Linux aarch64; rv:91.0) Gecko/20100101
+ Thunderbird/91.13.0
+Subject: Re: [PATCH 5/7] x86/resctrl: Add a new "snc_ways" file to the
+ monitoring info directory.
+Content-Language: en-GB
+To: "Luck, Tony" <tony.luck@intel.com>, "Yu, Fenghua" <fenghua.yu@intel.com>,
+ "Chatre, Reinette" <reinette.chatre@intel.com>,
+ Peter Newman <peternewman@google.com>, Jonathan Corbet <corbet@lwn.net>,
+ "x86@kernel.org" <x86@kernel.org>
+Cc: Shaopeng Tan <tan.shaopeng@fujitsu.com>,
+ Jamie Iles <quic_jiles@quicinc.com>, Babu Moger <babu.moger@amd.com>,
+ "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+ "linux-doc@vger.kernel.org" <linux-doc@vger.kernel.org>,
+ "patches@lists.linux.dev" <patches@lists.linux.dev>
+References: <20230126184157.27626-1-tony.luck@intel.com>
+ <20230126184157.27626-6-tony.luck@intel.com>
+ <a95d0200-da28-4fbe-2bfe-ff948b4c2801@arm.com>
+ <SJ1PR11MB60837DC9C2E04AD3CBF3CA67FCAC9@SJ1PR11MB6083.namprd11.prod.outlook.com>
+From: James Morse <james.morse@arm.com>
+In-Reply-To: <SJ1PR11MB60837DC9C2E04AD3CBF3CA67FCAC9@SJ1PR11MB6083.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
 
-On Thu, Mar 2, 2023 at 12:46 PM Luis Chamberlain <mcgrof@kernel.org> wrote:
->
-> register_sysctl_table() is a deprecated compatibility wrapper.
-> register_sysctl() can do the directory creation for you so just use
-> that.
->
-> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+Hi Tony,
 
-Acked-by: Song Liu <song@kernel.org>
+On 28/02/2023 17:44, Luck, Tony wrote:
+>>> Make it easy for the user to tell if Sub-NUMA Cluster is enabled by
+>>> providing an info/ file.
+>>
+>> I think what this is conveying to user-space is 'domain_id_is_numa_node'.
+> 
+> That seems more architecturally neutral. I like it.
+> 
+>> Does user-space need to know the number of ways?
+> 
+> I don't know. Maybe some might. Perhaps there is some better name that
+> is architecturally neutral, but still has a numerical rather than boolean value?
 
-Thanks!
+If we don't know what user-space needs this for, I'd prefer we don't expose it. It'll be a
+problem in the future if there is no single number we can put there.
+
+I don't see what the difference between 2 and 4 would be used for when setting up resctrl,
+unless you are choosing which numa-nodes to spread tasks over ... but the numa distance
+would be a much better number to base that decision on.
+
+User-space is able to perform the same calculation to find the snc_ways using the
+cache/index stuff and node entries in sysfs.
+
+
+>> Will this always be a single number, or will it ever be possible to have an SNC=2 and
+>> SNC=1 package in the same system?
+> 
+> I sincerely hope that it is the same value across the system. Currently the
+> BIOS setup option to enable SNC doesn't have per-socket choices, it is
+> just an all-or-nothing choice. "2" isn't the only choice for number of SNC
+> nodes on a socket. "4" is (or will be) a choice.
+
+Yeah, in the arm world, partners get to make the decision on what is sane. Big-little
+means someone could do something that looks like SNC in on cluster, but not another.
+
+If we don't know what user-space needs it for, I'd prefer we don't expose it, just to
+avoid giving out rope to shoot ourselves in the foot with.
+
+
+Thanks,
+
+James
