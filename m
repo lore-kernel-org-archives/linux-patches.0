@@ -1,105 +1,134 @@
-Received: from qproxy1-pub.mail.unifiedlayer.com (qproxy1-pub.mail.unifiedlayer.com [173.254.64.10])
+Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3F1467E0
-	for <patches@lists.linux.dev>; Fri,  3 Mar 2023 06:31:25 +0000 (UTC)
-Received: from outbound-ss-761.bluehost.com (outbound-ss-761.bluehost.com [74.220.211.250])
-	by qproxy1.mail.unifiedlayer.com (Postfix) with ESMTP id 06ECF802BE9A
-	for <patches@lists.linux.dev>; Fri,  3 Mar 2023 06:31:18 +0000 (UTC)
-Received: from cmgw14.mail.unifiedlayer.com (unknown [10.0.90.129])
-	by progateway8.mail.pro1.eigbox.com (Postfix) with ESMTP id A24F010044465
-	for <patches@lists.linux.dev>; Fri,  3 Mar 2023 06:30:08 +0000 (UTC)
-Received: from box5620.bluehost.com ([162.241.219.59])
-	by cmsmtp with ESMTP
-	id XyvgpkBvGlQHiXyvgpMGNQ; Fri, 03 Mar 2023 06:30:08 +0000
-X-Authority-Reason: nr=8
-X-Authority-Analysis: v=2.4 cv=NPgQR22g c=1 sm=1 tr=0 ts=640193f0
- a=30941lsx5skRcbJ0JMGu9A==:117 a=30941lsx5skRcbJ0JMGu9A==:17
- a=dLZJa+xiwSxG16/P+YVxDGlgEgI=:19 a=IkcTkHD0fZMA:10:nop_charset_1
- a=k__wU0fu6RkA:10:nop_rcvd_month_year
- a=-Ou01B_BuAIA:10:endurance_base64_authed_username_1 a=VwQbUJbxAAAA:8
- a=HaFmDPmJAAAA:8 a=49j0FZ7RFL9ueZfULrUA:9 a=QEXdDO2ut3YA:10:nop_charset_2
- a=AjGcO6oz07-iQ99wixmX:22 a=nmWuMzfKamIsx3l42hEX:22
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=w6rz.net;
-	s=default; h=Content-Transfer-Encoding:Content-Type:MIME-Version:Date:
-	Message-ID:From:In-Reply-To:References:Cc:To:Subject:Sender:Reply-To:
-	Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender:
-	Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:
-	List-Subscribe:List-Post:List-Owner:List-Archive;
-	bh=O3hNsnRcHcmrHKJ81Ype8MvM9VzJLv3jdg6F3Aeoh8E=; b=Z7zrzcrJmDEs7oJaDnc8FiPiDR
-	AhIx4IGaXPBSp7HALzHTU4BiOrq8uywW65FBFZZ9O6I6fZWyjz/RNxJpgULlgLWNmM3zunWejd+r1
-	5ZLlc5bHj/SO/OrE0xVqE992iC8URILpYbirkaHtESLWnBJQcxMC9jDXIVrNU+bAmlD7iZgLwR/W/
-	+N4bh1iiCi/aeRvLXXKIFLh5e1+EyxeP5DpX/6GOk0FO4Z3IdnvG1oBmLw6jbJjg5ZP3tvQqHeWJ1
-	eCfoSaacwCzleoM3NXvwmUPXrrk6cYTgNgZjfnPVzFlGaIQDkR9GcjSz/fXcGAkwCsb7d25KjClnx
-	O2WlylvQ==;
-Received: from c-73-162-232-9.hsd1.ca.comcast.net ([73.162.232.9]:58872 helo=[10.0.1.47])
-	by box5620.bluehost.com with esmtpsa  (TLS1.2) tls TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-	(Exim 4.95)
-	(envelope-from <re@w6rz.net>)
-	id 1pXyvf-002nvr-Jk;
-	Thu, 02 Mar 2023 23:30:07 -0700
-Subject: Re: [PATCH 5.15 00/22] 5.15.97-rc1 review
-To: Greg Kroah-Hartman <gregkh@linuxfoundation.org>, stable@vger.kernel.org
-Cc: patches@lists.linux.dev, linux-kernel@vger.kernel.org,
- torvalds@linux-foundation.org, akpm@linux-foundation.org,
- linux@roeck-us.net, shuah@kernel.org, patches@kernelci.org,
- lkft-triage@lists.linaro.org, pavel@denx.de, jonathanh@nvidia.com,
- f.fainelli@gmail.com, sudipm.mukherjee@gmail.com, srw@sladewatkins.net,
- rwarsow@gmx.de
-References: <20230301180652.658125575@linuxfoundation.org>
-In-Reply-To: <20230301180652.658125575@linuxfoundation.org>
-From: Ron Economos <re@w6rz.net>
-Message-ID: <781059bd-45f0-e300-c01c-7978a8ded5ef@w6rz.net>
-Date: Thu, 2 Mar 2023 22:30:04 -0800
-User-Agent: Mozilla/5.0 (X11; Linux armv7l; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9E0501C38;
+	Fri,  3 Mar 2023 07:01:41 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C6FE9C433EF;
+	Fri,  3 Mar 2023 07:01:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+	s=korg; t=1677826901;
+	bh=7IsefbC3B8P/XH5T1+Xm5KfGsPeW+kju1yl0z8Zv4mU=;
+	h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+	b=w/QVsLNK+hqeBcAHRumCUiwDRGANnHt3/yshhAQ4/KkIAMTriF1BMufrcxAR6hBn/
+	 vhVV5hMm/oJ0U9unEAxKiS1gv5CxUo/SNCW89Vmy4PvwlIndzO1v2dY1oaR+K95J9l
+	 umYTLLkMHMaOJiRTheCh7UoGPnbP2RzRL16kDTa0=
+Date: Fri, 3 Mar 2023 08:01:38 +0100
+From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To: Naresh Kamboju <naresh.kamboju@linaro.org>
+Cc: stable@vger.kernel.org, patches@lists.linux.dev,
+	linux-kernel@vger.kernel.org, torvalds@linux-foundation.org,
+	akpm@linux-foundation.org, linux@roeck-us.net, shuah@kernel.org,
+	patches@kernelci.org, lkft-triage@lists.linaro.org, pavel@denx.de,
+	jonathanh@nvidia.com, f.fainelli@gmail.com,
+	sudipm.mukherjee@gmail.com, srw@sladewatkins.net, rwarsow@gmx.de,
+	mptcp@lists.linux.dev, Florian Westphal <fw@strlen.de>,
+	Mat Martineau <mathew.j.martineau@linux.intel.com>,
+	Matthieu Baerts <matthieu.baerts@tessares.net>,
+	Anders Roxell <anders.roxell@linaro.org>
+Subject: Re: [PATCH 6.1 00/42] 6.1.15-rc1 review
+Message-ID: <ZAGbUsae7DHoI5k4@kroah.com>
+References: <20230301180657.003689969@linuxfoundation.org>
+ <CA+G9fYtDGpgT4dckXD-y-N92nqUxuvue_7AtDdBcHrbOMsDZLg@mail.gmail.com>
+ <ZAB6pP3MNy152f+7@kroah.com>
+ <CA+G9fYsHbQyQFp+vMnmFKDSQxrmj-VKsexWq-aayxgrY+0O7KQ@mail.gmail.com>
+ <CA+G9fYsn+AhWTFA+ZJmfFsM71WGLPOFemZp_vhFMMLUcgcAXKg@mail.gmail.com>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
-X-AntiAbuse: This header was added to track abuse, please include it with any abuse report
-X-AntiAbuse: Primary Hostname - box5620.bluehost.com
-X-AntiAbuse: Original Domain - lists.linux.dev
-X-AntiAbuse: Originator/Caller UID/GID - [47 12] / [47 12]
-X-AntiAbuse: Sender Address Domain - w6rz.net
-X-BWhitelist: no
-X-Source-IP: 73.162.232.9
-X-Source-L: No
-X-Exim-ID: 1pXyvf-002nvr-Jk
-X-Source: 
-X-Source-Args: 
-X-Source-Dir: 
-X-Source-Sender: c-73-162-232-9.hsd1.ca.comcast.net ([10.0.1.47]) [73.162.232.9]:58872
-X-Source-Auth: re@w6rz.net
-X-Email-Count: 3
-X-Source-Cap: d3NpeHJ6bmU7d3NpeHJ6bmU7Ym94NTYyMC5ibHVlaG9zdC5jb20=
-X-Local-Domain: yes
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CA+G9fYsn+AhWTFA+ZJmfFsM71WGLPOFemZp_vhFMMLUcgcAXKg@mail.gmail.com>
 
-On 3/1/23 10:08 AM, Greg Kroah-Hartman wrote:
-> This is the start of the stable review cycle for the 5.15.97 release.
-> There are 22 patches in this series, all will be posted as a response
-> to this one.  If anyone has any issues with these being applied, please
-> let me know.
->
-> Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
-> Anything received after that time might be too late.
->
-> The whole patch series can be found in one patch at:
-> 	https://www.kernel.org/pub/linux/kernel/v5.x/stable-review/patch-5.15.97-rc1.gz
-> or in the git tree and branch at:
-> 	git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-5.15.y
-> and the diffstat can be found below.
->
-> thanks,
->
-> greg k-h
+On Fri, Mar 03, 2023 at 01:32:47AM +0530, Naresh Kamboju wrote:
+> On Thu, 2 Mar 2023 at 16:30, Naresh Kamboju <naresh.kamboju@linaro.org> wrote:
+> >
+> > On Thu, 2 Mar 2023 at 16:00, Greg Kroah-Hartman
+> > <gregkh@linuxfoundation.org> wrote:
+> > >
+> > > On Thu, Mar 02, 2023 at 03:49:31PM +0530, Naresh Kamboju wrote:
+> > > > On Wed, 1 Mar 2023 at 23:42, Greg Kroah-Hartman
+> > > > <gregkh@linuxfoundation.org> wrote:
+> > > > >
+> > > > > This is the start of the stable review cycle for the 6.1.15 release.
+> > > > > There are 42 patches in this series, all will be posted as a response
+> > > > > to this one.  If anyone has any issues with these being applied, please
+> > > > > let me know.
+> > > > >
+> > > > > Responses should be made by Fri, 03 Mar 2023 18:06:43 +0000.
+> > > > > Anything received after that time might be too late.
+> > > > >
+> > > > > The whole patch series can be found in one patch at:
+> > > > >         https://www.kernel.org/pub/linux/kernel/v6.x/stable-review/patch-6.1.15-rc1.gz
+> > > > > or in the git tree and branch at:
+> > > > >         git://git.kernel.org/pub/scm/linux/kernel/git/stable/linux-stable-rc.git linux-6.1.y
+> > > > > and the diffstat can be found below.
+> > > > >
+> > > > > thanks,
+> > > > >
+> > > > > greg k-h
+> > > >
+> > > > Regression found on Linux version 6.1.15-rc1 on 32-bit arm x15 and i386.
+> > > >
+> > > > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+> > > >
+> > > > ## Build
+> > > > * kernel: 6.1.15-rc1
+> > > > * git: https://gitlab.com/Linaro/lkft/mirrors/stable/linux-stable-rc
+> > > > * git branch: linux-6.1.y
+> > > > * git commit: b6150251d4ddf8a80510c185d839631e252e6317
+> > > > * git describe: v6.1.14-43-gb6150251d4dd
+> > > > * test details:
+> > > > https://qa-reports.linaro.org/lkft/linux-stable-rc-linux-6.1.y/build/v6.1.14-43-gb6150251d4dd
+> > > >
+> > > > Regression test cases,
+> > > > i386:
+> > > > x15:
+> > > >   * kselftest-net-mptcp/net_mptcp_mptcp_sockopt_sh
+> > > >
+> > > > # mptcp_sockopt: mptcp_sockopt.c:353: do_getsockopt_tcp_info:
+> > > > Assertion `ti.d.size_user == sizeof(struct tcp_info)' failed.
+> > > > # mptcp_sockopt: mptcp_sockopt.c:353: do_getsockopt_tcp_info:
+> > > > Assertion `ti.d.size_user == sizeof(struct tcp_info)' failed.
+> > > >
+> > > > test log:
+> > > > ----------
+> > > >
+> > > > # selftests: net/mptcp: mptcp_sockopt.sh
+> >
+> > ....
+> >
+> > > Nit, wrapping a log like this makes it hard to read, don't you think?
+> >
+> > Me either.
+> > That is the reason I have shared "Assertion" above.
+> >
+> > >
+> > > > # mptcp_sockopt: mptcp_sockopt.c:353: do_getsockopt_tcp_info:
+> > > > Assertion `ti.d.size_user == sizeof(struct tcp_info)' failed.
+> > > > # server killed by signal 6
+> > > > #
+> > > > # FAIL: SOL_MPTCP getsockopt
+> > > > # PASS: TCP_INQ cmsg/ioctl -t tcp
+> > > > # PASS: TCP_INQ cmsg/ioctl -6 -t tcp
+> > > > # PASS: TCP_INQ cmsg/ioctl -r tcp
+> > > > # PASS: TCP_INQ cmsg/ioctl -6 -r tcp
+> > > > # PASS: TCP_INQ cmsg/ioctl -r tcp -t tcp
+> > > > not ok 6 selftests: net/mptcp: mptcp_sockopt.sh # exit=1
+> > >
+> > > Any chance you can bisect?
+> >
+> > We are running our bisection scripts.
+> 
+> We have tested with 6.1.14 kselftests source again and it passes.
+> Now that we have upgraded to 6.2.1 kselftests source, we find that
+> there is this problem reported. so, not a kernel regression.
 
-Built and booted successfully on RISC-V RV64 (HiFive Unmatched).
+Where is this problem reported?  Is this a 6.2 test checking for
+something that is not in 6.1?
 
-Tested-by: Ron Economos <re@w6rz.net>
+thanks,
 
+greg k-h
