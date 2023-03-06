@@ -1,68 +1,139 @@
-Received: from mail-ed1-f42.google.com (mail-ed1-f42.google.com [209.85.208.42])
+Received: from mail-ed1-f53.google.com (mail-ed1-f53.google.com [209.85.208.53])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 40A316FC5
-	for <patches@lists.linux.dev>; Mon,  6 Mar 2023 19:35:45 +0000 (UTC)
-Received: by mail-ed1-f42.google.com with SMTP id cy23so43154718edb.12
-        for <patches@lists.linux.dev>; Mon, 06 Mar 2023 11:35:45 -0800 (PST)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 4232E6FC5
+	for <patches@lists.linux.dev>; Mon,  6 Mar 2023 19:49:43 +0000 (UTC)
+Received: by mail-ed1-f53.google.com with SMTP id g3so43560824eda.1
+        for <patches@lists.linux.dev>; Mon, 06 Mar 2023 11:49:43 -0800 (PST)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112; t=1678131343;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:from:to:cc:subject:date
+        d=google.com; s=20210112; t=1678132181;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:from:to:cc:subject:date
          :message-id:reply-to;
-        bh=t2FmQ1RxA+JCTff+KO7AZZBMrry2RXo2PGbyJ+O+NTU=;
-        b=IgkVBROv3k/h35WvaHptNCygGYO2EPnMtdR7pvqwoaJPJkuq35AReJMKjzOkyqo97k
-         d10hVnjL1TvevWflF2/XuEulOj95BSf5LalJSesE815fg8ZyfVk3aSx82rMkQ0rZd5te
-         r/rLj3dbOMZYOOMt2p23OUmY0uXawWA9eSMNNyR7GSfqOkOmwkKQI/CWhfdOBiMvCyI8
-         GdNclN5XHOebDQmAE3zJKeYV0RKZ+SJ5q7wrols86UlW66zwJPSE9qfoYzDu/qi3quKd
-         syFPy/kq2EjKRf6YXhxcN32eTugjJbC9lcj2BGpB0y+K0CIjBjwzIWfyOKqwDrRUJQk5
-         nlvA==
+        bh=vZ8HvqtIPLz0dPleZMUFGrq6mRjQgi/9JQx/mHQNyq0=;
+        b=kwhTl84xw1eEGSpRl4nINA+Fb8qaW+LVjaA8ygTrihkdAL6mhBe3a7ZAxhV4a4XYAt
+         LfUeTYmsw7/5A9B5IHXpimjSG+97CeqT+WyBHP23CjyPUipsVmwH7u9p0VQVBB+6nE3t
+         Yc72D0GAT5pxx1HAAGuqT41MPTC3kG0eF5Y6220o6a4wIMHHsXdZSs5uxAc8xYC0cNxX
+         leh0iHfa3+XV9sqnE2RSGzBGdl0PJgrwq2y/sxr2M5ic2hQ5INYHN5RTpBWgNFyB8Zgg
+         o27AdMVtQX7HTfO+bTHJC33p1IsxsMgYUgDxVCUNX9hKgoTulqRzwfypBaEhWbn6sMgj
+         PHcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678131343;
-        h=in-reply-to:references:from:subject:cc:to:message-id:date
-         :content-transfer-encoding:mime-version:x-gm-message-state:from:to
-         :cc:subject:date:message-id:reply-to;
-        bh=t2FmQ1RxA+JCTff+KO7AZZBMrry2RXo2PGbyJ+O+NTU=;
-        b=RD0mN02xOqKbXtIptEHNgpocH/hNonAd9QfNsZf+0zZW0tt4jTFRrSwWdY/XMyKelm
-         tbkTqtMnDEqHPRRHH0taSQ/tIhWNTnGvmDe1qD/fqif8mMhY/hK5HdggcTCOd69vsNyQ
-         DWBUWT/EoLL09OkTXFzCz+W4UffRJFgyJ2BxPET31/QYeAK9lUmd79ioykXMOe/9pGvr
-         +fKd0T4QpVJ+bLvR5n5W1UNjduDjYEMSRscI0Fn2ON4deujbR3hxkDXZ3b+JfaSjKUe+
-         dtNdRWyrspWXfsNE1jKJaF0Tfb/1Wd79Wrtr80ee+XNnOAa8e7JGJmIscHQAaFR2Ilc7
-         YVTA==
-X-Gm-Message-State: AO0yUKX2hjYwLX9Fka30wGrwoNL35NxtQig82G46OI7aiOb2GAfQfHiF
-	SzWZs21GN/c3m/Bn+F/yxq4=
-X-Google-Smtp-Source: AK7set9FnRqj4wdi7KpzxrX8+EYM492qvgHgKOc71WHv9TSs29+Ns28onXcJgUAKen//D1i8sXWMfg==
-X-Received: by 2002:a17:907:6da3:b0:878:50f7:a35a with SMTP id sb35-20020a1709076da300b0087850f7a35amr14881581ejc.72.1678131343499;
-        Mon, 06 Mar 2023 11:35:43 -0800 (PST)
-Received: from localhost (93-55-83-125.ip262.fastwebnet.it. [93.55.83.125])
-        by smtp.gmail.com with ESMTPSA id fw20-20020a170907501400b00914fec9f40esm558931ejc.71.2023.03.06.11.35.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Mar 2023 11:35:43 -0800 (PST)
+        d=1e100.net; s=20210112; t=1678132181;
+        h=content-transfer-encoding:cc:to:subject:message-id:date:from
+         :in-reply-to:references:mime-version:x-gm-message-state:from:to:cc
+         :subject:date:message-id:reply-to;
+        bh=vZ8HvqtIPLz0dPleZMUFGrq6mRjQgi/9JQx/mHQNyq0=;
+        b=x42AOA6I19F3I+qP4WRag4BrG6IdeulnjVY89qOB7TVRFbfPktV/ax8udglvzsOs0t
+         D7YxcZskdGw3KsxwQc054jgkbH2oXTH7vTbtB0nL6/ARcYbzdSSMqCKqED1CzDeb+f/E
+         yRmaLYSSccRbwfBf1pX0Iq7CNHvRFvWhsXxYc+rAFkXv/rZmbEM7IrW9XyXM95jHerYk
+         BI3yj7OnK/FnFaFcR18k8COtEU/Cx7WAdvulx6dqp4t24VHiPA/z1TOfo9TM4+OowHet
+         1ReAmqrJihG27eKK74QUioYOzyltmXqg3zIdT9HHvWwgT9uQNqmQ2hnN0my+9a2LAi7L
+         EzDw==
+X-Gm-Message-State: AO0yUKWhb/ChtybUZ/pjyWP/8c4hGigJSCb24Ea4RNmJNqUo2ZvPVRYL
+	Roxgp4aczX6z6G9GSMCCFf9DVO5q7gYOr4mpwBHPXg==
+X-Google-Smtp-Source: AK7set8FGULDLLQMph8YO2LW0ePc9c3mdTd9Jl/SBfqAol+1SKDU4JBVK3PEMnT68gWQb4UIIIsccIaFHO7iwyFD07E=
+X-Received: by 2002:a17:906:46d8:b0:87a:3b3f:b9da with SMTP id
+ k24-20020a17090646d800b0087a3b3fb9damr5926882ejs.10.1678132181333; Mon, 06
+ Mar 2023 11:49:41 -0800 (PST)
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
 List-Subscribe: <mailto:patches+subscribe@lists.linux.dev>
 List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
-Mime-Version: 1.0
+MIME-Version: 1.0
+References: <20230302232758.888157-1-mcgrof@kernel.org> <20230302232758.888157-4-mcgrof@kernel.org>
+In-Reply-To: <20230302232758.888157-4-mcgrof@kernel.org>
+From: Yosry Ahmed <yosryahmed@google.com>
+Date: Mon, 6 Mar 2023 11:49:05 -0800
+Message-ID: <CAJD7tkb6VMxWx9WCb6nKFvg_KeaJzo85=kgs7ZOaFptdn_kLDw@mail.gmail.com>
+Subject: Re: [PATCH 3/6] shmem: move reclaim check early on writepages()
+To: Luis Chamberlain <mcgrof@kernel.org>
+Cc: hughd@google.com, akpm@linux-foundation.org, willy@infradead.org, 
+	brauner@kernel.org, linux-mm@kvack.org, p.raghav@samsung.com, 
+	da.gomez@samsung.com, a.manzanares@samsung.com, dave@stgolabs.net, 
+	keescook@chromium.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Mon, 06 Mar 2023 20:35:41 +0100
-Message-Id: <CQZJWVOTWFL4.1PZ3DHSRFK0FJ@vincent-arch>
-To: "Miguel Ojeda" <ojeda@kernel.org>, "Jonathan Corbet" <corbet@lwn.net>
-Cc: <linux-doc@vger.kernel.org>, <rust-for-linux@vger.kernel.org>,
- <linux-kernel@vger.kernel.org>, <patches@lists.linux.dev>
-Subject: Re: [PATCH 1/2] docs: programming-language: remove mention of the
- Intel compiler
-From: "Vincenzo Palazzo" <vincenzopalazzodev@gmail.com>
-References: <20230306191712.230658-1-ojeda@kernel.org>
-In-Reply-To: <20230306191712.230658-1-ojeda@kernel.org>
 
-> The Intel compiler support has been removed in commit 95207db8166a
-> ("Remove Intel compiler support").
+On Thu, Mar 2, 2023 at 3:28=E2=80=AFPM Luis Chamberlain <mcgrof@kernel.org>=
+ wrote:
 >
-> Thus remove its mention in the Documentation too.
+> i915_gem requires huge folios to be split when swapping.
+> However we have  check for usage of writepages() to ensure
+> it used only for swap purposes later. Avoid the splits if
+> we're not being called for reclaim, even if they should in
+> theory not happen.
 >
-> Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
+> This makes the conditions easier to follow on shem_writepage().
+>
+> Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
+
+Nice cleanup.
+
+Reviewed-by: Yosry Ahmed <yosryahmed@google.com>
+
 > ---
-
-Reviewed-by: Vincenzo Palazzo <vincenzopalazzodev@gmail.com>
+>  mm/shmem.c | 24 ++++++++++++------------
+>  1 file changed, 12 insertions(+), 12 deletions(-)
+>
+> diff --git a/mm/shmem.c b/mm/shmem.c
+> index 2b9ff585a553..a5a6da51087e 100644
+> --- a/mm/shmem.c
+> +++ b/mm/shmem.c
+> @@ -1340,6 +1340,18 @@ static int shmem_writepage(struct page *page, stru=
+ct writeback_control *wbc)
+>         swp_entry_t swap;
+>         pgoff_t index;
+>
+> +       /*
+> +        * Our capabilities prevent regular writeback or sync from ever c=
+alling
+> +        * shmem_writepage; but a stacking filesystem might use ->writepa=
+ge of
+> +        * its underlying filesystem, in which case tmpfs should write ou=
+t to
+> +        * swap only in response to memory pressure, and not for the writ=
+eback
+> +        * threads or sync.
+> +        */
+> +       if (!wbc->for_reclaim) {
+> +               WARN_ON_ONCE(1);        /* Still happens? Tell us about i=
+t! */
+> +               goto redirty;
+> +       }
+> +
+>         /*
+>          * If /sys/kernel/mm/transparent_hugepage/shmem_enabled is "alway=
+s" or
+>          * "force", drivers/gpu/drm/i915/gem/i915_gem_shmem.c gets huge p=
+ages,
+> @@ -1360,18 +1372,6 @@ static int shmem_writepage(struct page *page, stru=
+ct writeback_control *wbc)
+>         if (!total_swap_pages)
+>                 goto redirty;
+>
+> -       /*
+> -        * Our capabilities prevent regular writeback or sync from ever c=
+alling
+> -        * shmem_writepage; but a stacking filesystem might use ->writepa=
+ge of
+> -        * its underlying filesystem, in which case tmpfs should write ou=
+t to
+> -        * swap only in response to memory pressure, and not for the writ=
+eback
+> -        * threads or sync.
+> -        */
+> -       if (!wbc->for_reclaim) {
+> -               WARN_ON_ONCE(1);        /* Still happens? Tell us about i=
+t! */
+> -               goto redirty;
+> -       }
+> -
+>         /*
+>          * This is somewhat ridiculous, but without plumbing a SWAP_MAP_F=
+ALLOC
+>          * value into swapfile.c, the only way we can correctly account f=
+or a
+> --
+> 2.39.1
+>
