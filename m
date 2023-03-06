@@ -1,52 +1,52 @@
 Received: from us-smtp-delivery-124.mimecast.com (us-smtp-delivery-124.mimecast.com [170.10.129.124])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7E79453A6
-	for <patches@lists.linux.dev>; Mon,  6 Mar 2023 14:02:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2607253A6
+	for <patches@lists.linux.dev>; Mon,  6 Mar 2023 14:05:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
-	s=mimecast20190719; t=1678111370;
+	s=mimecast20190719; t=1678111501;
 	h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
 	 to:to:cc:cc:mime-version:mime-version:content-type:content-type:
 	 content-transfer-encoding:content-transfer-encoding:
 	 in-reply-to:in-reply-to:references:references;
-	bh=7YJ33VBWjw2CT0ZZFr8RJg8K/VD7WeNxaY8vu7LGjb0=;
-	b=QgX6A6SdtzwVpNdMoIuPuVRFRaUIaFdCudcmqWwcijlIBSgHyhH1ff9zKGROgG8iQvn5Iq
-	zRI75CTB931r1RkW4Udwehx7DYk/EBhoOBRJOkeVgesDoNU29uVu4cXCuDl2cqM0tV2jMp
-	V4wAcHqGwNX1e1yyk2/XirFyj9iGjfk=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+	bh=MpjQI4eZNUyy1a8d8ToFfb8eUyexksQgeyNW7lbutB0=;
+	b=Xr+Qxkfq6t3RfHZrrgqWpLcfcgYL8gNUljwpdMH1O6MtWaLX/5oJD3z3Nw4WIK/plbAmnN
+	QVGC6YzmFwCWw4Ym9FcooXZTPVNOqUhmY0u/jIuxmqEgN6rv8z8GRf71U5BJHHECPKFLvM
+	aiM+WLvQNurH5daheyNx0Yq/eUhgK0o=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-149-NY5PdWzGPUupD0287wOHPg-1; Mon, 06 Mar 2023 09:02:49 -0500
-X-MC-Unique: NY5PdWzGPUupD0287wOHPg-1
-Received: by mail-wm1-f71.google.com with SMTP id k36-20020a05600c1ca400b003eac86e4387so6781577wms.8
-        for <patches@lists.linux.dev>; Mon, 06 Mar 2023 06:02:49 -0800 (PST)
+ us-mta-231-nNRyRa0KM4-hry6oQVEuIg-1; Mon, 06 Mar 2023 09:05:00 -0500
+X-MC-Unique: nNRyRa0KM4-hry6oQVEuIg-1
+Received: by mail-wr1-f71.google.com with SMTP id l14-20020a5d526e000000b002cd851d79b2so1489203wrc.5
+        for <patches@lists.linux.dev>; Mon, 06 Mar 2023 06:04:59 -0800 (PST)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112; t=1678111368;
+        d=1e100.net; s=20210112; t=1678111499;
         h=content-transfer-encoding:in-reply-to:organization:from:references
          :cc:to:content-language:subject:user-agent:mime-version:date
          :message-id:x-gm-message-state:from:to:cc:subject:date:message-id
          :reply-to;
-        bh=7YJ33VBWjw2CT0ZZFr8RJg8K/VD7WeNxaY8vu7LGjb0=;
-        b=LLA3D+hgGSFqi1UGw/FOuUgGkIVu9JGCbp70q8Y0b0L6MjxVICYjJXL7YkVSyUBRro
-         0HqBT6xVo8s0dgmBNNF8pXrEv4paPBbaA36wWCRQ180bn5UFviR1EXKTdXAM0IjXnbRw
-         P+BBMamm7I+9Gk68ltuCS7DqdmUfzcTU6gYRwN5oJhdx7y7Pe6SU0grmo7dv9Xhqruun
-         9DoM6tNT7mqGf3PwQqeATJY4Izws8owCF8iNraPyT/+p9jjUkE0ZFHLRDaWdc86356u1
-         U0nYef6p9XkvxH4QP/G9rbGwa/N/+O9tKvkqndLxwvvHQnbBZffGxd1u2OwzPHAP7EMs
-         Pw2w==
-X-Gm-Message-State: AO0yUKVQW8z/JJpm7BNMYUz5Yzvyt5VnM+WShS3siKMWiu5fq+DbFuWo
-	jU2D5ndjsi3RGqLqH1k52n880CJYRR4Nv/TGsllNNcAg/+pvIfdhyGbTfgmbzSb0In3FICHNWQE
-	kyK4peI96lmevw5WnRQ==
-X-Received: by 2002:a05:600c:4509:b0:3eb:399d:ab28 with SMTP id t9-20020a05600c450900b003eb399dab28mr9282562wmo.37.1678111368199;
-        Mon, 06 Mar 2023 06:02:48 -0800 (PST)
-X-Google-Smtp-Source: AK7set8UsnDqSBjgdWhLZMOVUCI8XxZWntH6OdOcD4b0pMNiP46MgSM5QIbPtcURKpqK/78/66kQ7g==
-X-Received: by 2002:a05:600c:4509:b0:3eb:399d:ab28 with SMTP id t9-20020a05600c450900b003eb399dab28mr9282511wmo.37.1678111367826;
-        Mon, 06 Mar 2023 06:02:47 -0800 (PST)
+        bh=MpjQI4eZNUyy1a8d8ToFfb8eUyexksQgeyNW7lbutB0=;
+        b=y/SvqNCGr64avxHEYliV1ydeWO4nunPZxDLWqtwbkdaX1d6H3EzvU0nokbeiWSdpG8
+         xDfDl2KjPvpvuI6PXSjodBfT57t2sV7hWlIdd5uBOZ6ysiRs1qx/93cSGeDz6Sv65Qei
+         oK6vPeCf7YMlc2eA7ud8LkXpqGzw6uJ/yaGRF7/qbX+Tofc21nFYfQ0FUEXndJY0dK2S
+         3jGeF10EalDiBM5TnpTa4ngkONctsR0HI9wLCA1O14PHnHm8g2W8XQyd2ZpwM8om39a4
+         odYSkgfJ2cEFL9j5CoSVomduaydFetHWu2HyMppmbPSit7XOGv+7QH7pmSvm7x3+wz/V
+         WCvw==
+X-Gm-Message-State: AO0yUKUee498X8YlQ4bNaci/ovuo5/xQ6d9IcSzpZ6g0bT5ddygrMQQO
+	3art8cHIOFy9o6F15cY8E5vE2usIXq8gCtN8LTYC3c8GGtbeF9r3n1Ip/EnmwbV/OlaywFmePO7
+	InNQCdnGVfVSYuWQENg==
+X-Received: by 2002:a05:600c:1990:b0:3e2:20c7:6553 with SMTP id t16-20020a05600c199000b003e220c76553mr9340865wmq.13.1678111498922;
+        Mon, 06 Mar 2023 06:04:58 -0800 (PST)
+X-Google-Smtp-Source: AK7set9t/0QaqgG9LAMjdWr1ncqogSGh8xkuI6ju2p3ppfz/c1knl1GVMAO3FPLfnnJj9dP9HbPRUA==
+X-Received: by 2002:a05:600c:1990:b0:3e2:20c7:6553 with SMTP id t16-20020a05600c199000b003e220c76553mr9340820wmq.13.1678111498605;
+        Mon, 06 Mar 2023 06:04:58 -0800 (PST)
 Received: from ?IPV6:2003:cb:c704:3500:b8a3:191c:eae:cc05? (p200300cbc7043500b8a3191c0eaecc05.dip0.t-ipconnect.de. [2003:cb:c704:3500:b8a3:191c:eae:cc05])
-        by smtp.gmail.com with ESMTPSA id p21-20020a05600c431500b003daf672a616sm10079911wme.22.2023.03.06.06.02.46
+        by smtp.gmail.com with ESMTPSA id y33-20020a05600c342100b003e21f20b646sm10432673wmp.21.2023.03.06.06.04.57
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 06 Mar 2023 06:02:47 -0800 (PST)
-Message-ID: <b8839e28-1189-bb2d-3afe-d21c2d0182c3@redhat.com>
-Date: Mon, 6 Mar 2023 15:02:46 +0100
+        Mon, 06 Mar 2023 06:04:58 -0800 (PST)
+Message-ID: <efae0531-7f72-a78c-07c9-82879adf5666@redhat.com>
+Date: Mon, 6 Mar 2023 15:04:57 +0100
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -55,17 +55,17 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:102.0) Gecko/20100101
  Thunderbird/102.8.0
-Subject: Re: [PATCH 4/6] shmem: skip page split if we're not reclaiming
+Subject: Re: [PATCH 5/6] shmem: update documentation
 To: Luis Chamberlain <mcgrof@kernel.org>, hughd@google.com,
  akpm@linux-foundation.org, willy@infradead.org, brauner@kernel.org
 Cc: linux-mm@kvack.org, p.raghav@samsung.com, da.gomez@samsung.com,
  a.manzanares@samsung.com, dave@stgolabs.net, yosryahmed@google.com,
  keescook@chromium.org, patches@lists.linux.dev, linux-kernel@vger.kernel.org
 References: <20230302232758.888157-1-mcgrof@kernel.org>
- <20230302232758.888157-5-mcgrof@kernel.org>
+ <20230302232758.888157-6-mcgrof@kernel.org>
 From: David Hildenbrand <david@redhat.com>
 Organization: Red Hat
-In-Reply-To: <20230302232758.888157-5-mcgrof@kernel.org>
+In-Reply-To: <20230302232758.888157-6-mcgrof@kernel.org>
 X-Mimecast-Spam-Score: 0
 X-Mimecast-Originator: redhat.com
 Content-Language: en-US
@@ -73,50 +73,37 @@ Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
 
 On 03.03.23 00:27, Luis Chamberlain wrote:
-> In theory when info->flags & VM_LOCKED we should not be getting
-> shem_writepage() called so we should be verifying this with a
-> WARN_ON_ONCE(). Since we should not be swapping then best to ensure
-> we also don't do the folio split earlier too. So just move the check
-> early to avoid folio splits in case its a dubious call.
-> 
-> We also have a similar early bail when !total_swap_pages so just move
-> that earlier to avoid the possible folio split in the same situation.
+> Update the docs to reflect a bit better why some folks prefer tmpfs
+> over ramfs and clarify a bit more about the difference between brd
+> ramdisks.
 > 
 > Signed-off-by: Luis Chamberlain <mcgrof@kernel.org>
 > ---
->   mm/shmem.c | 10 ++++++----
->   1 file changed, 6 insertions(+), 4 deletions(-)
+>   Documentation/filesystems/tmpfs.rst | 27 +++++++++++++++++++--------
+>   1 file changed, 19 insertions(+), 8 deletions(-)
 > 
-> diff --git a/mm/shmem.c b/mm/shmem.c
-> index a5a6da51087e..6006dbb7dbcb 100644
-> --- a/mm/shmem.c
-> +++ b/mm/shmem.c
-> @@ -1352,6 +1352,12 @@ static int shmem_writepage(struct page *page, struct writeback_control *wbc)
->   		goto redirty;
->   	}
+> diff --git a/Documentation/filesystems/tmpfs.rst b/Documentation/filesystems/tmpfs.rst
+> index 0408c245785e..e77ebdacadd0 100644
+> --- a/Documentation/filesystems/tmpfs.rst
+> +++ b/Documentation/filesystems/tmpfs.rst
+> @@ -13,14 +13,25 @@ everything stored therein is lost.
 >   
-> +	if (WARN_ON_ONCE(info->flags & VM_LOCKED))
-> +		goto redirty;
-> +
-> +	if (!total_swap_pages)
-> +		goto redirty;
-> +
->   	/*
->   	 * If /sys/kernel/mm/transparent_hugepage/shmem_enabled is "always" or
->   	 * "force", drivers/gpu/drm/i915/gem/i915_gem_shmem.c gets huge pages,
-> @@ -1367,10 +1373,6 @@ static int shmem_writepage(struct page *page, struct writeback_control *wbc)
->   	}
->   
->   	index = folio->index;
-> -	if (info->flags & VM_LOCKED)
-> -		goto redirty;
-> -	if (!total_swap_pages)
-> -		goto redirty;
->   
->   	/*
->   	 * This is somewhat ridiculous, but without plumbing a SWAP_MAP_FALLOC
+>   tmpfs puts everything into the kernel internal caches and grows and
+>   shrinks to accommodate the files it contains and is able to swap
+> -unneeded pages out to swap space. It has maximum size limits which can
+> -be adjusted on the fly via 'mount -o remount ...'
+> -
+> -If you compare it to ramfs (which was the template to create tmpfs)
+> -you gain swapping and limit checking. Another similar thing is the RAM
+> -disk (/dev/ram*), which simulates a fixed size hard disk in physical
+> -RAM, where you have to create an ordinary filesystem on top. Ramdisks
+> -cannot swap and you do not have the possibility to resize them.
+> +unneeded pages out to swap space.
 
-Acked-by: David Hildenbrand <david@redhat.com>
+I suppose, in contrast to ramfs, tmpfs also supports THP. Maybe worth 
+adding as well.
+
+Reviewed-by: David Hildenbrand <david@redhat.com>
 
 -- 
 Thanks,
