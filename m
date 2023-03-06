@@ -1,20 +1,20 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 658746FC5
-	for <patches@lists.linux.dev>; Mon,  6 Mar 2023 19:17:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6AE2CC433D2;
-	Mon,  6 Mar 2023 19:17:20 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 0B86E6FC5
+	for <patches@lists.linux.dev>; Mon,  6 Mar 2023 19:17:26 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E811C433D2;
+	Mon,  6 Mar 2023 19:17:24 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-	s=k20201202; t=1678130242;
-	bh=olF9iig+Tpza7YeougL8cnA1Y7s1DLREILbJ3Du94yo=;
-	h=From:To:Cc:Subject:Date:From;
-	b=r77Ongm6OktSZOy/HZAQKKcEEa2lo7ZzYUO0sDrbYFjsurv2KCBRMD2/oaMycATbF
-	 sAdSaEv6FM7P3RW6Yfk7B8+4qR/92XzVB5GjVGLXG6ar3u7Rx2y8P6ptpxedTTmNXw
-	 /KqhyCW4up7XqROrhUFqjNJ05gwKQXXobpn1PXxJP5utsF0anaP5u4Jn3pT0SUqF3a
-	 YlsVDyq4QE8cHlF0XSLfrMvq8uGbn246PN6cmhM59wYUdlcIKK/R6YOYU8g26CMccA
-	 0SrvEZajzXzIPmMIaaTsVMJ5aBc6gMTjLcDIvJMxmn/jKYcZML85uatTyxL5oegUx8
-	 QWplAtyeQAVOw==
+	s=k20201202; t=1678130246;
+	bh=zfeqXa4yi5h4NtK+t86GihYz4lj1WFK1jtkGq+VhM8w=;
+	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+	b=W/ZzcVmFDSRLmhGNOZ3jMTfF9EjUyeRSOMxUp2b/rZU7YskmcuMFsJHQYEN3CCU91
+	 vqkKjzKwT1gKJ0hInoylqpNPcPfmJUZNnjv3wSimz/psHY23Y/w8yu7eBMjRlFURUY
+	 WsOwbO4YHwzX9B855A8rxjAIS/y3DtlWiYXkvzSFiUVdnOvvvrnrVDquAkIZy5TN3L
+	 7V4xcyhIV6PM6dDJcLLCBoYvOZqF4TV5C0fFa7QrvEFu4p6x0zrkKqUXzK9yG2tYTb
+	 XMCiCj+t49hfyB3ZFAKSrmzCdbIlxhC/jPLw1pUoTUR3DsHPzMXwz5jHmzn96R+VsH
+	 3YRBJhdO8zWRw==
 From: Miguel Ojeda <ojeda@kernel.org>
 To: Jonathan Corbet <corbet@lwn.net>
 Cc: linux-doc@vger.kernel.org,
@@ -22,9 +22,11 @@ Cc: linux-doc@vger.kernel.org,
 	linux-kernel@vger.kernel.org,
 	patches@lists.linux.dev,
 	Miguel Ojeda <ojeda@kernel.org>
-Subject: [PATCH 1/2] docs: programming-language: remove mention of the Intel compiler
-Date: Mon,  6 Mar 2023 20:17:11 +0100
-Message-Id: <20230306191712.230658-1-ojeda@kernel.org>
+Subject: [PATCH 2/2] docs: programming-language: add Rust programming language section
+Date: Mon,  6 Mar 2023 20:17:12 +0100
+Message-Id: <20230306191712.230658-2-ojeda@kernel.org>
+In-Reply-To: <20230306191712.230658-1-ojeda@kernel.org>
+References: <20230306191712.230658-1-ojeda@kernel.org>
 Precedence: bulk
 X-Mailing-List: patches@lists.linux.dev
 List-Id: <patches.lists.linux.dev>
@@ -33,41 +35,54 @@ List-Unsubscribe: <mailto:patches+unsubscribe@lists.linux.dev>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 
-The Intel compiler support has been removed in commit 95207db8166a
-("Remove Intel compiler support").
+Following the C text in the file, add a mention about the Rust
+programming language, the currently supported compiler and
+the edition used (similar to the "dialect" mention for C).
 
-Thus remove its mention in the Documentation too.
+Similarly, add a mention about the unstable features used (similar
+to the "extensions" mentions for C).
+
+In addition, add some links to complement the information.
 
 Signed-off-by: Miguel Ojeda <ojeda@kernel.org>
 ---
- Documentation/process/programming-language.rst | 5 -----
- 1 file changed, 5 deletions(-)
+ .../process/programming-language.rst          | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
 
 diff --git a/Documentation/process/programming-language.rst b/Documentation/process/programming-language.rst
-index 5fc9160ca1fa..10dc772671d8 100644
+index 10dc772671d8..bc56dee6d0bc 100644
 --- a/Documentation/process/programming-language.rst
 +++ b/Documentation/process/programming-language.rst
-@@ -12,10 +12,6 @@ under ``-std=gnu11`` [gcc-c-dialect-options]_: the GNU dialect of ISO C11.
- This dialect contains many extensions to the language [gnu-extensions]_,
- and many of them are used within the kernel as a matter of course.
+@@ -31,6 +31,20 @@ in order to feature detect which ones can be used and/or to shorten the code.
  
--There is some support for compiling the kernel with ``icc`` [icc]_ for several
--of the architectures, although at the time of writing it is not completed,
--requiring third-party patches.
--
- Attributes
- ----------
+ Please refer to ``include/linux/compiler_attributes.h`` for more information.
  
-@@ -38,7 +34,6 @@ Please refer to ``include/linux/compiler_attributes.h`` for more information.
++Rust
++----
++
++The kernel has experimental support for the Rust programming language
++[rust-language]_ under ``CONFIG_RUST``. It is compiled with ``rustc`` [rustc]_
++under ``--edition=2021`` [rust-editions]_. Editions are a way to introduce
++small changes to the language that are not backwards compatible.
++
++On top of that, some unstable features [rust-unstable-features]_ are used in
++the kernel. Unstable features may change in the future, thus it is an important
++goal to reach a point where only stable features are used.
++
++Please refer to Documentation/rust/index.rst for more information.
++
  .. [c-language] http://www.open-std.org/jtc1/sc22/wg14/www/standards
  .. [gcc] https://gcc.gnu.org
  .. [clang] https://clang.llvm.org
--.. [icc] https://software.intel.com/en-us/c-compilers
- .. [gcc-c-dialect-options] https://gcc.gnu.org/onlinedocs/gcc/C-Dialect-Options.html
+@@ -38,4 +52,7 @@ Please refer to ``include/linux/compiler_attributes.h`` for more information.
  .. [gnu-extensions] https://gcc.gnu.org/onlinedocs/gcc/C-Extensions.html
  .. [gcc-attribute-syntax] https://gcc.gnu.org/onlinedocs/gcc/Attribute-Syntax.html
-
-base-commit: fe15c26ee26efa11741a7b632e9f23b01aca4cc6
+ .. [n2049] http://www.open-std.org/jtc1/sc22/wg14/www/docs/n2049.pdf
+-
++.. [rust-language] https://www.rust-lang.org
++.. [rustc] https://doc.rust-lang.org/rustc/
++.. [rust-editions] https://doc.rust-lang.org/edition-guide/editions/
++.. [rust-unstable-features] https://github.com/Rust-for-Linux/linux/issues/2
 -- 
 2.39.2
 
