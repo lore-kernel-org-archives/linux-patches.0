@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C9733BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:09:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2DF9BC433D2;
-	Tue,  7 Mar 2023 18:08:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 00A8EBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:09:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58F4EC433D2;
+	Tue,  7 Mar 2023 18:09:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212540;
-	bh=ZQzr3fJDqebKIaCfh8lomWLRUV84gCMR6jE489XSGeA=;
+	s=korg; t=1678212543;
+	bh=s+B3LnhsW5Uqu4KBKDffU/YnyS0l0TmXFRcnmdemX1Y=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=TirPnMigujzEvsfV+DKr0WUpPfC9+s8Aqv7HWmJsAnv6mhBccLlSECO/bOjMqM+rl
-	 93y9qyseF9ETLv3NtVXncYBMjsN/Zu4wGYHJd977taigNjQGsbduWsJjTanR6uMHJw
-	 aoyJYfosgN31mGxJM3xm2AptQvdgn8VtZs0JyZto=
+	b=QbKPPYgAW6aSVEKGXz3MMNcRireIVGFtbybyV6IGZE+9sjTRAh8MGjYen+Zhm54pY
+	 r6VxVET2UqcKCt+c60Kk5XGDuxarsrZRRD3qo1I3UHURKJ1SjTKOc0D+HCunqGSbpz
+	 AB290GgG8CJl3389kvV/UWnjaonGSLP5H/KNr53g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Pietro Borrello <borrello@diag.uniroma1.it>,
-	Eric Dumazet <edumazet@google.com>,
-	"David S. Miller" <davem@davemloft.net>,
+	Halil Pasic <pasic@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 209/885] tun: tun_chr_open(): correctly initialize socket uid
-Date: Tue,  7 Mar 2023 17:52:23 +0100
-Message-Id: <20230307170011.133396939@linuxfoundation.org>
+Subject: [PATCH 6.1 218/885] s390/ap: fix status returned by ap_aqic()
+Date: Tue,  7 Mar 2023 17:52:32 +0100
+Message-Id: <20230307170011.561962423@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,45 +37,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Pietro Borrello <borrello@diag.uniroma1.it>
+From: Halil Pasic <pasic@linux.ibm.com>
 
-[ Upstream commit a096ccca6e503a5c575717ff8a36ace27510ab0a ]
+[ Upstream commit 394740d7645ea767795074287769dd26dbd4d782 ]
 
-sock_init_data() assumes that the `struct socket` passed in input is
-contained in a `struct socket_alloc` allocated with sock_alloc().
-However, tun_chr_open() passes a `struct socket` embedded in a `struct
-tun_file` allocated with sk_alloc().
-This causes a type confusion when issuing a container_of() with
-SOCK_INODE() in sock_init_data() which results in assigning a wrong
-sk_uid to the `struct sock` in input.
-On default configuration, the type confused field overlaps with the
-high 4 bytes of `struct tun_struct __rcu *tun` of `struct tun_file`,
-NULL at the time of call, which makes the uid of all tun sockets 0,
-i.e., the root one.
-Fix the assignment by using sock_init_data_uid().
+There function ap_aqic() tries to grab the status from the
+wrong part of the register. Thus we always end up with
+zeros. Which is wrong, among others, because we detect
+failures via status.response_code.
 
-Fixes: 86741ec25462 ("net: core: Add a UID field to struct sock.")
-Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
-Reviewed-by: Eric Dumazet <edumazet@google.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
+Reported-by: Janosch Frank <frankja@linux.ibm.com>
+Fixes: 159491f3b509 ("s390/ap: rework assembler functions to use unions for in/out register variables")
+Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/tun.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/s390/include/asm/ap.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/net/tun.c b/drivers/net/tun.c
-index 24001112c3236..91d198aff2f9a 100644
---- a/drivers/net/tun.c
-+++ b/drivers/net/tun.c
-@@ -3449,7 +3449,7 @@ static int tun_chr_open(struct inode *inode, struct file * file)
- 	tfile->socket.file = file;
- 	tfile->socket.ops = &tun_socket_ops;
+diff --git a/arch/s390/include/asm/ap.h b/arch/s390/include/asm/ap.h
+index f508f5025e388..876afe46f316d 100644
+--- a/arch/s390/include/asm/ap.h
++++ b/arch/s390/include/asm/ap.h
+@@ -239,7 +239,10 @@ static inline struct ap_queue_status ap_aqic(ap_qid_t qid,
+ 	union {
+ 		unsigned long value;
+ 		struct ap_qirq_ctrl qirqctrl;
+-		struct ap_queue_status status;
++		struct {
++			u32 _pad;
++			struct ap_queue_status status;
++		};
+ 	} reg1;
+ 	unsigned long reg2 = pa_ind;
  
--	sock_init_data(&tfile->socket, &tfile->sk);
-+	sock_init_data_uid(&tfile->socket, &tfile->sk, inode->i_uid);
+@@ -253,7 +256,7 @@ static inline struct ap_queue_status ap_aqic(ap_qid_t qid,
+ 		"	lgr	%[reg1],1\n"		/* gr1 (status) into reg1 */
+ 		: [reg1] "+&d" (reg1)
+ 		: [reg0] "d" (reg0), [reg2] "d" (reg2)
+-		: "cc", "0", "1", "2");
++		: "cc", "memory", "0", "1", "2");
  
- 	tfile->sk.sk_write_space = tun_sock_write_space;
- 	tfile->sk.sk_sndbuf = INT_MAX;
+ 	return reg1.status;
+ }
 -- 
 2.39.2
 
