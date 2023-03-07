@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id CBABBBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 08867C4339C;
-	Tue,  7 Mar 2023 17:16:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E5BE6BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:17:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 4BA59C433D2;
+	Tue,  7 Mar 2023 17:17:03 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209420;
-	bh=GmB9KFYceQ46sbtpBtqOU8knNaz81MKg4wNl6eq06vg=;
+	s=korg; t=1678209423;
+	bh=22RhO7UPtlr+oCAFVwq8zNtDAAQZrq9bqtDoPexuugM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=do4ggWij27mGYvQRzWbw8uiy1r4RRjk9vwVha7sgzAwvu8k4du/V/i7nZmTrbb9pa
-	 cSotunS7fiNgA9/scP+aa0Z/c2uCcKaV6iBMoZlIqGl/0i+fsubEVYAPkuaUs7cSpq
-	 vhH/iN5HWpWe6i/+OkbDelqn3pqOWheSmD48br3o=
+	b=bagc/XqT1wjvgL+lCn9gSBFbijASanOYxLKXF9y8CpdgAVboSAWuSoOLBeQx98g8E
+	 GXkHVIVaLIUBI81HrlmbEn9TarqbCb0VQifnKWCN8Ozzan3qwoySA5Hl316EdZPSxL
+	 llqYDfkUbDS51QxC1S5mft7PD0okr82v3ywj+YZs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Tiezhu Yang <yangtiezhu@loongson.cn>,
-	Jiri Olsa <jolsa@kernel.org>,
-	Yonghong Song <yhs@fb.com>,
-	Martin KaFai Lau <martin.lau@kernel.org>,
+	Vladis Dronov <vdronov@redhat.com>,
+	Koba Ko <koba.ko@canonical.com>,
+	Tom Lendacky <thomas.lendacky@amd.com>,
+	Herbert Xu <herbert@gondor.apana.org.au>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0213/1001] selftests/bpf: Fix build errors if CONFIG_NF_CONNTRACK=m
-Date: Tue,  7 Mar 2023 17:49:45 +0100
-Message-Id: <20230307170031.130962167@linuxfoundation.org>
+Subject: [PATCH 6.2 0214/1001] crypto: ccp - Failure on re-initialization due to duplicate sysfs filename
+Date: Tue,  7 Mar 2023 17:49:46 +0100
+Message-Id: <20230307170031.170751396@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,79 +37,112 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Tiezhu Yang <yangtiezhu@loongson.cn>
+From: Koba Ko <koba.taiwan@gmail.com>
 
-[ Upstream commit 92afc5329a5b23d876b215b783d200352d5aaea6 ]
+[ Upstream commit 299bf602b3f92f1456aef59c6413591fb02e762a ]
 
-If CONFIG_NF_CONNTRACK=m, there are no definitions of NF_NAT_MANIP_SRC
-and NF_NAT_MANIP_DST in vmlinux.h, build test_bpf_nf.c failed.
+The following warning appears during the CCP module re-initialization:
 
-$ make -C tools/testing/selftests/bpf/
+[  140.965403] sysfs: cannot create duplicate filename
+'/devices/pci0000:00/0000:00:07.1/0000:03:00.2/dma/dma0chan0'
+[  140.975736] CPU: 0 PID: 388 Comm: kworker/0:2 Kdump: loaded Not
+tainted 6.2.0-0.rc2.18.eln124.x86_64 #1
+[  140.985185] Hardware name: HPE ProLiant DL325 Gen10/ProLiant DL325
+Gen10, BIOS A41 07/17/2020
+[  140.993761] Workqueue: events work_for_cpu_fn
+[  140.998151] Call Trace:
+[  141.000613]  <TASK>
+[  141.002726]  dump_stack_lvl+0x33/0x46
+[  141.006415]  sysfs_warn_dup.cold+0x17/0x23
+[  141.010542]  sysfs_create_dir_ns+0xba/0xd0
+[  141.014670]  kobject_add_internal+0xba/0x260
+[  141.018970]  kobject_add+0x81/0xb0
+[  141.022395]  device_add+0xdc/0x7e0
+[  141.025822]  ? complete_all+0x20/0x90
+[  141.029510]  __dma_async_device_channel_register+0xc9/0x130
+[  141.035119]  dma_async_device_register+0x19e/0x3b0
+[  141.039943]  ccp_dmaengine_register+0x334/0x3f0 [ccp]
+[  141.045042]  ccp5_init+0x662/0x6a0 [ccp]
+[  141.049000]  ? devm_kmalloc+0x40/0xd0
+[  141.052688]  ccp_dev_init+0xbb/0xf0 [ccp]
+[  141.056732]  ? __pci_set_master+0x56/0xd0
+[  141.060768]  sp_init+0x70/0x90 [ccp]
+[  141.064377]  sp_pci_probe+0x186/0x1b0 [ccp]
+[  141.068596]  local_pci_probe+0x41/0x80
+[  141.072374]  work_for_cpu_fn+0x16/0x20
+[  141.076145]  process_one_work+0x1c8/0x380
+[  141.080181]  worker_thread+0x1ab/0x380
+[  141.083953]  ? __pfx_worker_thread+0x10/0x10
+[  141.088250]  kthread+0xda/0x100
+[  141.091413]  ? __pfx_kthread+0x10/0x10
+[  141.095185]  ret_from_fork+0x2c/0x50
+[  141.098788]  </TASK>
+[  141.100996] kobject_add_internal failed for dma0chan0 with -EEXIST,
+don't try to register things with the same name in the same directory.
+[  141.113703] ccp 0000:03:00.2: ccp initialization failed
 
-  CLNG-BPF [test_maps] test_bpf_nf.bpf.o
-progs/test_bpf_nf.c:160:42: error: use of undeclared identifier 'NF_NAT_MANIP_SRC'
-                bpf_ct_set_nat_info(ct, &saddr, sport, NF_NAT_MANIP_SRC);
-                                                       ^
-progs/test_bpf_nf.c:163:42: error: use of undeclared identifier 'NF_NAT_MANIP_DST'
-                bpf_ct_set_nat_info(ct, &daddr, dport, NF_NAT_MANIP_DST);
-                                                       ^
-2 errors generated.
+The /dma/dma0chan0 sysfs file is not removed since dma_chan object
+has been released in ccp_dma_release() before releasing dma device.
+A correct procedure would be: release dma channels first => unregister
+dma device => release ccp dma object.
 
-Copy the definitions in include/net/netfilter/nf_nat.h to test_bpf_nf.c,
-in order to avoid redefinitions if CONFIG_NF_CONNTRACK=y, rename them with
-___local suffix. This is similar with commit 1058b6a78db2 ("selftests/bpf:
-Do not fail build if CONFIG_NF_CONNTRACK=m/n").
-
-Fixes: b06b45e82b59 ("selftests/bpf: add tests for bpf_ct_set_nat_info kfunc")
-Signed-off-by: Tiezhu Yang <yangtiezhu@loongson.cn>
-Acked-by: Jiri Olsa <jolsa@kernel.org>
-Tested-by: Jiri Olsa <jolsa@kernel.org>
-Acked-by: Yonghong Song <yhs@fb.com>
-Link: https://lore.kernel.org/r/1674028604-7113-1-git-send-email-yangtiezhu@loongson.cn
-Signed-off-by: Martin KaFai Lau <martin.lau@kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=216888
+Fixes: 68dbe80f5b51 ("crypto: ccp - Release dma channels before dmaengine unrgister")
+Tested-by: Vladis Dronov <vdronov@redhat.com>
+Signed-off-by: Koba Ko <koba.ko@canonical.com>
+Reviewed-by: Vladis Dronov <vdronov@redhat.com>
+Acked-by: Tom Lendacky <thomas.lendacky@amd.com>
+Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/progs/test_bpf_nf.c | 11 ++++++++---
- 1 file changed, 8 insertions(+), 3 deletions(-)
+ drivers/crypto/ccp/ccp-dmaengine.c | 21 +++++++++++++++++----
+ 1 file changed, 17 insertions(+), 4 deletions(-)
 
-diff --git a/tools/testing/selftests/bpf/progs/test_bpf_nf.c b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
-index 227e85e85ddaf..9fc603c9d673e 100644
---- a/tools/testing/selftests/bpf/progs/test_bpf_nf.c
-+++ b/tools/testing/selftests/bpf/progs/test_bpf_nf.c
-@@ -34,6 +34,11 @@ __be16 dport = 0;
- int test_exist_lookup = -ENOENT;
- u32 test_exist_lookup_mark = 0;
+diff --git a/drivers/crypto/ccp/ccp-dmaengine.c b/drivers/crypto/ccp/ccp-dmaengine.c
+index 9f753cb4f5f18..b386a7063818b 100644
+--- a/drivers/crypto/ccp/ccp-dmaengine.c
++++ b/drivers/crypto/ccp/ccp-dmaengine.c
+@@ -642,14 +642,26 @@ static void ccp_dma_release(struct ccp_device *ccp)
+ 		chan = ccp->ccp_dma_chan + i;
+ 		dma_chan = &chan->dma_chan;
  
-+enum nf_nat_manip_type___local {
-+	NF_NAT_MANIP_SRC___local,
-+	NF_NAT_MANIP_DST___local
-+};
+-		if (dma_chan->client_count)
+-			dma_release_channel(dma_chan);
+-
+ 		tasklet_kill(&chan->cleanup_tasklet);
+ 		list_del_rcu(&dma_chan->device_node);
+ 	}
+ }
+ 
++static void ccp_dma_release_channels(struct ccp_device *ccp)
++{
++	struct ccp_dma_chan *chan;
++	struct dma_chan *dma_chan;
++	unsigned int i;
 +
- struct nf_conn;
++	for (i = 0; i < ccp->cmd_q_count; i++) {
++		chan = ccp->ccp_dma_chan + i;
++		dma_chan = &chan->dma_chan;
++
++		if (dma_chan->client_count)
++			dma_release_channel(dma_chan);
++	}
++}
++
+ int ccp_dmaengine_register(struct ccp_device *ccp)
+ {
+ 	struct ccp_dma_chan *chan;
+@@ -770,8 +782,9 @@ void ccp_dmaengine_unregister(struct ccp_device *ccp)
+ 	if (!dmaengine)
+ 		return;
  
- struct bpf_ct_opts___local {
-@@ -58,7 +63,7 @@ int bpf_ct_change_timeout(struct nf_conn *, u32) __ksym;
- int bpf_ct_set_status(struct nf_conn *, u32) __ksym;
- int bpf_ct_change_status(struct nf_conn *, u32) __ksym;
- int bpf_ct_set_nat_info(struct nf_conn *, union nf_inet_addr *,
--			int port, enum nf_nat_manip_type) __ksym;
-+			int port, enum nf_nat_manip_type___local) __ksym;
+-	ccp_dma_release(ccp);
++	ccp_dma_release_channels(ccp);
+ 	dma_async_device_unregister(dma_dev);
++	ccp_dma_release(ccp);
  
- static __always_inline void
- nf_ct_test(struct nf_conn *(*lookup_fn)(void *, struct bpf_sock_tuple *, u32,
-@@ -157,10 +162,10 @@ nf_ct_test(struct nf_conn *(*lookup_fn)(void *, struct bpf_sock_tuple *, u32,
- 
- 		/* snat */
- 		saddr.ip = bpf_get_prandom_u32();
--		bpf_ct_set_nat_info(ct, &saddr, sport, NF_NAT_MANIP_SRC);
-+		bpf_ct_set_nat_info(ct, &saddr, sport, NF_NAT_MANIP_SRC___local);
- 		/* dnat */
- 		daddr.ip = bpf_get_prandom_u32();
--		bpf_ct_set_nat_info(ct, &daddr, dport, NF_NAT_MANIP_DST);
-+		bpf_ct_set_nat_info(ct, &daddr, dport, NF_NAT_MANIP_DST___local);
- 
- 		ct_ins = bpf_ct_insert_entry(ct);
- 		if (ct_ins) {
+ 	kmem_cache_destroy(ccp->dma_desc_cache);
+ 	kmem_cache_destroy(ccp->dma_cmd_cache);
 -- 
 2.39.2
 
