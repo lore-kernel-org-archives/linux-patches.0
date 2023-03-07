@@ -1,27 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9ECA9BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:10 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 029A8C433D2;
-	Tue,  7 Mar 2023 17:54:09 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 938C0BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:13 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id F2605C4339C;
+	Tue,  7 Mar 2023 17:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211650;
-	bh=BLrmSGmNFOA85oSVF5EnwnpeunuhM32kWsK+GjqsyTA=;
+	s=korg; t=1678211653;
+	bh=Ms3gbSBbMqCSWQcS8gEEyyvP3WZ+LWK6odpq2UfHPTM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=AhYbWJtbVZnWlh/Qw8A6k8ZxWi+2utJGoUb4zwFR8vhDdTmducj92NC1ZnXeLjzXJ
-	 Lq9X4xq7FZiPcqqXLPJccnb0/akWQQSMKr82bq9+y9t3qALW4soj8xIanYBxglapQt
-	 4eCvpvQ3rk2jZ/dyLezq9o32cxb3cS1no3Fpj7nI=
+	b=EVqOZbP1L029gswiGdH9OKriJJQIqWW2+B+RfzxBXSbRFVF8xgTk11mlYgeN+t/k1
+	 FUb0p38LvXewjwvxowtjGqRQRiXP7xc6aPUC41qB05OdfI0XYGHouv1GZAtKM1FmJm
+	 pcIOtQnIIQtrMLd/te8NCtOh98dUnExJGtnRX+fw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Alexander Stein <Alexander.Stein@tq-group.com>,
-	Louis Rannou <lrannou@baylibre.com>,
-	Tudor Ambarus <tudor.ambarus@linaro.org>
-Subject: [PATCH 6.2 0899/1001] mtd: spi-nor: Fix shift-out-of-bounds in spi_nor_set_erase_type
-Date: Tue,  7 Mar 2023 18:01:11 +0100
-Message-Id: <20230307170101.008011975@linuxfoundation.org>
+	=?UTF-8?q?=C5=81ukasz=20Stelmach?= <l.stelmach@samsung.com>,
+	Takashi Iwai <tiwai@suse.de>
+Subject: [PATCH 6.2 0890/1001] ALSA: hda/realtek: Add quirk for HP EliteDesk 800 G6 Tower PC
+Date: Tue,  7 Mar 2023 18:01:02 +0100
+Message-Id: <20230307170100.572071350@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,85 +34,32 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Louis Rannou <lrannou@baylibre.com>
+From: Łukasz Stelmach <l.stelmach@samsung.com>
 
-commit f0f0cfdc3a024e21161714f2e05f0df3b84d42ad upstream.
+commit ea24b9953bcd3889f77a66e7f1d7e86e995dd9c3 upstream.
 
-spi_nor_set_erase_type() was used either to set or to mask out an erase
-type. When we used it to mask out an erase type a shift-out-of-bounds
-was hit:
-UBSAN: shift-out-of-bounds in drivers/mtd/spi-nor/core.c:2237:24
-shift exponent 4294967295 is too large for 32-bit type 'int'
+HP EliteDesk 800 G6 Tower PC (103c:870c) requires a quirk for enabling
+headset-mic.
 
-The setting of the size_{shift, mask} and of the opcode are unnecessary
-when the erase size is zero, as throughout the code just the erase size
-is considered to determine whether an erase type is supported or not.
-Setting the opcode to 0xFF was wrong too as nobody guarantees that 0xFF
-is an unused opcode. Thus when masking out an erase type, just set the
-erase size to zero. This will fix the shift-out-of-bounds.
-
-Fixes: 5390a8df769e ("mtd: spi-nor: add support to non-uniform SFDP SPI NOR flash memories")
-Cc: stable@vger.kernel.org
-Reported-by: Alexander Stein <Alexander.Stein@tq-group.com>
-Signed-off-by: Louis Rannou <lrannou@baylibre.com>
-Tested-by: Alexander Stein <Alexander.Stein@tq-group.com>
-Link: https://lore.kernel.org/r/20230203070754.50677-1-tudor.ambarus@linaro.org
-[ta: refine changes, new commit message, fix compilation error]
-Signed-off-by: Tudor Ambarus <tudor.ambarus@linaro.org>
+Signed-off-by: Łukasz Stelmach <l.stelmach@samsung.com>
+Cc: <stable@vger.kernel.org>
+Link: https://bugzilla.kernel.org/show_bug.cgi?id=217008
+Link: https://lore.kernel.org/r/20230223074749.1026060-1-l.stelmach@samsung.com
+Signed-off-by: Takashi Iwai <tiwai@suse.de>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/mtd/spi-nor/core.c |    9 +++++++++
- drivers/mtd/spi-nor/core.h |    1 +
- drivers/mtd/spi-nor/sfdp.c |    4 ++--
- 3 files changed, 12 insertions(+), 2 deletions(-)
+ sound/pci/hda/patch_realtek.c |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/mtd/spi-nor/core.c
-+++ b/drivers/mtd/spi-nor/core.c
-@@ -2027,6 +2027,15 @@ void spi_nor_set_erase_type(struct spi_n
- }
- 
- /**
-+ * spi_nor_mask_erase_type() - mask out a SPI NOR erase type
-+ * @erase:	pointer to a structure that describes a SPI NOR erase type
-+ */
-+void spi_nor_mask_erase_type(struct spi_nor_erase_type *erase)
-+{
-+	erase->size = 0;
-+}
-+
-+/**
-  * spi_nor_init_uniform_erase_map() - Initialize uniform erase map
-  * @map:		the erase map of the SPI NOR
-  * @erase_mask:		bitmask encoding erase types that can erase the entire
---- a/drivers/mtd/spi-nor/core.h
-+++ b/drivers/mtd/spi-nor/core.h
-@@ -684,6 +684,7 @@ void spi_nor_set_pp_settings(struct spi_
- 
- void spi_nor_set_erase_type(struct spi_nor_erase_type *erase, u32 size,
- 			    u8 opcode);
-+void spi_nor_mask_erase_type(struct spi_nor_erase_type *erase);
- struct spi_nor_erase_region *
- spi_nor_region_next(struct spi_nor_erase_region *region);
- void spi_nor_init_uniform_erase_map(struct spi_nor_erase_map *map,
---- a/drivers/mtd/spi-nor/sfdp.c
-+++ b/drivers/mtd/spi-nor/sfdp.c
-@@ -875,7 +875,7 @@ static int spi_nor_init_non_uniform_eras
- 	 */
- 	for (i = 0; i < SNOR_ERASE_TYPE_MAX; i++)
- 		if (!(regions_erase_type & BIT(erase[i].idx)))
--			spi_nor_set_erase_type(&erase[i], 0, 0xFF);
-+			spi_nor_mask_erase_type(&erase[i]);
- 
- 	return 0;
- }
-@@ -1089,7 +1089,7 @@ static int spi_nor_parse_4bait(struct sp
- 			erase_type[i].opcode = (dwords[1] >>
- 						erase_type[i].idx * 8) & 0xFF;
- 		else
--			spi_nor_set_erase_type(&erase_type[i], 0u, 0xFF);
-+			spi_nor_mask_erase_type(&erase_type[i]);
- 	}
- 
- 	/*
+--- a/sound/pci/hda/patch_realtek.c
++++ b/sound/pci/hda/patch_realtek.c
+@@ -11617,6 +11617,7 @@ static const struct snd_pci_quirk alc662
+ 	SND_PCI_QUIRK(0x1028, 0x0698, "Dell", ALC668_FIXUP_DELL_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x1028, 0x069f, "Dell", ALC668_FIXUP_DELL_MIC_NO_PRESENCE),
+ 	SND_PCI_QUIRK(0x103c, 0x1632, "HP RP5800", ALC662_FIXUP_HP_RP5800),
++	SND_PCI_QUIRK(0x103c, 0x870c, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
+ 	SND_PCI_QUIRK(0x103c, 0x8719, "HP", ALC897_FIXUP_HP_HSMIC_VERB),
+ 	SND_PCI_QUIRK(0x103c, 0x873e, "HP", ALC671_FIXUP_HP_HEADSET_MIC2),
+ 	SND_PCI_QUIRK(0x103c, 0x877e, "HP 288 Pro G6", ALC671_FIXUP_HP_HEADSET_MIC2),
 
 
