@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id F1DFCBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 60160C433D2;
-	Tue,  7 Mar 2023 17:35:48 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 47C14BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:35:52 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A1083C433EF;
+	Tue,  7 Mar 2023 17:35:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210548;
-	bh=sz5f/jOud0QOTKrqeQMz8PfDtCGLIE8Ln89W4S6AlBE=;
+	s=korg; t=1678210552;
+	bh=sLfTNoFhbdLlSB+wZ1XKYVxRV1FYTt+K2o2LMzANZPE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=P3IRBIOsl+ZpQqK3T9FgJ+o2Xv/OKLLEdBkl+KYqesSq5m0sAkpQuC7tVBxuizWuU
-	 cnBqOe9NLFR2OSkZTk3CFHK5JZjYpBVqjHEvqqTeuAGyH4sRlrEQvCsmumvVCDVkv5
-	 inlnP7by18GcMsTQzWbtVlVVZgN+7B5K6Jgf5A9A=
+	b=YGweNjIZcWRGMcr6BFYycDcb4vHNQTuB729n+ON92ow19a/CRxuNKDb+6qIo3Pqo5
+	 fJ7z5x2Jk5Un8atUBaVsA178Gexgo4tpYexAi+I8cYskvZkVv9JAG+yqa/LZjBDnoK
+	 xXuqd6FiG1SOI97bAZRdZ4YAq4pVJUEz6za40yvw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Bob Pearson <rpearsonhpe@gmail.com>,
-	Daisuke Matsuda <matsuda-daisuke@fujitsu.com>,
+	Long Li <longli@microsoft.com>,
 	Jason Gunthorpe <jgg@nvidia.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0576/1001] Subject: RDMA/rxe: Handle zero length rdma
-Date: Tue,  7 Mar 2023 17:55:48 +0100
-Message-Id: <20230307170046.455669136@linuxfoundation.org>
+Subject: [PATCH 6.2 0577/1001] RDMA/mana_ib: Fix a bug when the PF indicates more entries for registering memory on first packet
+Date: Tue,  7 Mar 2023 17:55:49 +0100
+Message-Id: <20230307170046.506934840@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,195 +35,87 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Bob Pearson <rpearsonhpe@gmail.com>
+From: Long Li <longli@microsoft.com>
 
-[ Upstream commit 5ff31dfcd6d23f9c1bd5dd1a2c648ba499659357 ]
+[ Upstream commit 89d42b8c85b4c67d310c5ccaf491acbf71a260c3 ]
 
-Currently the rxe driver does not handle all cases of zero length rdma
-operations correctly. The client does not have to provide an rkey for zero
-length RDMA read or write operations so the rkey provided may be invalid
-and should not be used to lookup an mr.
+When registering memory in a large chunk that doesn't fit into a single PF
+message, the PF may return GDMA_STATUS_MORE_ENTRIES on the first message if
+there are more messages needed for registering more chunks.
 
-This patch corrects the driver to ignore the provided rkey if the reth
-length is zero for read or write operations and make sure to set the mr to
-NULL. In read_reply() if length is zero rxe_recheck_mr() is not
-called. Warnings are added in the routines in rxe_mr.c to catch NULL MRs
-when the length is non-zero.
+Fix the VF to make it process the correct return code.
 
-Fixes: 8700e3e7c485 ("Soft RoCE driver")
-Link: https://lore.kernel.org/r/20230202044240.6304-1-rpearsonhpe@gmail.com
-Signed-off-by: Bob Pearson <rpearsonhpe@gmail.com>
-Reviewed-by: Daisuke Matsuda <matsuda-daisuke@fujitsu.com>
+Fixes: 0266a177631d ("RDMA/mana_ib: Add a driver for Microsoft Azure Network Adapter")
+Link: https://lore.kernel.org/r/1676507522-21018-1-git-send-email-longli@linuxonhyperv.com
+Signed-off-by: Long Li <longli@microsoft.com>
 Signed-off-by: Jason Gunthorpe <jgg@nvidia.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/infiniband/sw/rxe/rxe_mr.c   |  7 ++++
- drivers/infiniband/sw/rxe/rxe_resp.c | 59 +++++++++++++++++++++-------
- 2 files changed, 51 insertions(+), 15 deletions(-)
+ drivers/infiniband/hw/mana/main.c | 22 ++++++++++++----------
+ 1 file changed, 12 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/infiniband/sw/rxe/rxe_mr.c b/drivers/infiniband/sw/rxe/rxe_mr.c
-index c80458634962c..5e9a03831bf9f 100644
---- a/drivers/infiniband/sw/rxe/rxe_mr.c
-+++ b/drivers/infiniband/sw/rxe/rxe_mr.c
-@@ -314,6 +314,9 @@ int rxe_mr_copy(struct rxe_mr *mr, u64 iova, void *addr,
- 	if (length == 0)
- 		return 0;
- 
-+	if (WARN_ON(!mr))
-+		return -EINVAL;
-+
- 	if (mr->ibmr.type == IB_MR_TYPE_DMA) {
- 		rxe_mr_copy_dma(mr, iova, addr, length, dir);
- 		return 0;
-@@ -432,6 +435,10 @@ int rxe_flush_pmem_iova(struct rxe_mr *mr, u64 iova, unsigned int length)
- 	int err;
- 	u8 *va;
- 
-+	/* mr must be valid even if length is zero */
-+	if (WARN_ON(!mr))
-+		return -EINVAL;
-+
- 	if (length == 0)
- 		return 0;
- 
-diff --git a/drivers/infiniband/sw/rxe/rxe_resp.c b/drivers/infiniband/sw/rxe/rxe_resp.c
-index cd2d88de287ca..0cc1ba91d48cc 100644
---- a/drivers/infiniband/sw/rxe/rxe_resp.c
-+++ b/drivers/infiniband/sw/rxe/rxe_resp.c
-@@ -420,13 +420,23 @@ static enum resp_states rxe_resp_check_length(struct rxe_qp *qp,
- 	return RESPST_CHK_RKEY;
- }
- 
-+/* if the reth length field is zero we can assume nothing
-+ * about the rkey value and should not validate or use it.
-+ * Instead set qp->resp.rkey to 0 which is an invalid rkey
-+ * value since the minimum index part is 1.
-+ */
- static void qp_resp_from_reth(struct rxe_qp *qp, struct rxe_pkt_info *pkt)
+diff --git a/drivers/infiniband/hw/mana/main.c b/drivers/infiniband/hw/mana/main.c
+index 8b3bc302d6f3a..7be4c3adb4e2b 100644
+--- a/drivers/infiniband/hw/mana/main.c
++++ b/drivers/infiniband/hw/mana/main.c
+@@ -249,7 +249,8 @@ static int
+ mana_ib_gd_first_dma_region(struct mana_ib_dev *dev,
+ 			    struct gdma_context *gc,
+ 			    struct gdma_create_dma_region_req *create_req,
+-			    size_t num_pages, mana_handle_t *gdma_region)
++			    size_t num_pages, mana_handle_t *gdma_region,
++			    u32 expected_status)
  {
-+	unsigned int length = reth_len(pkt);
+ 	struct gdma_create_dma_region_resp create_resp = {};
+ 	unsigned int create_req_msg_size;
+@@ -261,7 +262,7 @@ mana_ib_gd_first_dma_region(struct mana_ib_dev *dev,
+ 
+ 	err = mana_gd_send_request(gc, create_req_msg_size, create_req,
+ 				   sizeof(create_resp), &create_resp);
+-	if (err || create_resp.hdr.status) {
++	if (err || create_resp.hdr.status != expected_status) {
+ 		ibdev_dbg(&dev->ib_dev,
+ 			  "Failed to create DMA region: %d, 0x%x\n",
+ 			  err, create_resp.hdr.status);
+@@ -372,14 +373,21 @@ int mana_ib_gd_create_dma_region(struct mana_ib_dev *dev, struct ib_umem *umem,
+ 
+ 	page_addr_list = create_req->page_addr_list;
+ 	rdma_umem_for_each_dma_block(umem, &biter, page_sz) {
++		u32 expected_status = 0;
 +
- 	qp->resp.va = reth_va(pkt);
- 	qp->resp.offset = 0;
--	qp->resp.rkey = reth_rkey(pkt);
--	qp->resp.resid = reth_len(pkt);
--	qp->resp.length = reth_len(pkt);
-+	qp->resp.resid = length;
-+	qp->resp.length = length;
-+	if (pkt->mask & RXE_READ_OR_WRITE_MASK && length == 0)
-+		qp->resp.rkey = 0;
-+	else
-+		qp->resp.rkey = reth_rkey(pkt);
- }
+ 		page_addr_list[tail++] = rdma_block_iter_dma_address(&biter);
+ 		if (tail < num_pages_to_handle)
+ 			continue;
  
- static void qp_resp_from_atmeth(struct rxe_qp *qp, struct rxe_pkt_info *pkt)
-@@ -437,6 +447,10 @@ static void qp_resp_from_atmeth(struct rxe_qp *qp, struct rxe_pkt_info *pkt)
- 	qp->resp.resid = sizeof(u64);
- }
++		if (num_pages_processed + num_pages_to_handle <
++		    num_pages_total)
++			expected_status = GDMA_STATUS_MORE_ENTRIES;
++
+ 		if (!num_pages_processed) {
+ 			/* First create message */
+ 			err = mana_ib_gd_first_dma_region(dev, gc, create_req,
+-							  tail, gdma_region);
++							  tail, gdma_region,
++							  expected_status);
+ 			if (err)
+ 				goto out;
  
-+/* resolve the packet rkey to qp->resp.mr or set qp->resp.mr to NULL
-+ * if an invalid rkey is received or the rdma length is zero. For middle
-+ * or last packets use the stored value of mr.
-+ */
- static enum resp_states check_rkey(struct rxe_qp *qp,
- 				   struct rxe_pkt_info *pkt)
- {
-@@ -473,10 +487,12 @@ static enum resp_states check_rkey(struct rxe_qp *qp,
- 		return RESPST_EXECUTE;
- 	}
- 
--	/* A zero-byte op is not required to set an addr or rkey. See C9-88 */
-+	/* A zero-byte read or write op is not required to
-+	 * set an addr or rkey. See C9-88
-+	 */
- 	if ((pkt->mask & RXE_READ_OR_WRITE_MASK) &&
--	    (pkt->mask & RXE_RETH_MASK) &&
--	    reth_len(pkt) == 0) {
-+	    (pkt->mask & RXE_RETH_MASK) && reth_len(pkt) == 0) {
-+		qp->resp.mr = NULL;
- 		return RESPST_EXECUTE;
- 	}
- 
-@@ -555,6 +571,7 @@ static enum resp_states check_rkey(struct rxe_qp *qp,
- 	return RESPST_EXECUTE;
- 
- err:
-+	qp->resp.mr = NULL;
- 	if (mr)
- 		rxe_put(mr);
- 	if (mw)
-@@ -885,7 +902,11 @@ static enum resp_states read_reply(struct rxe_qp *qp,
- 	}
- 
- 	if (res->state == rdatm_res_state_new) {
--		if (!res->replay) {
-+		if (!res->replay || qp->resp.length == 0) {
-+			/* if length == 0 mr will be NULL (is ok)
-+			 * otherwise qp->resp.mr holds a ref on mr
-+			 * which we transfer to mr and drop below.
-+			 */
- 			mr = qp->resp.mr;
- 			qp->resp.mr = NULL;
+@@ -392,14 +400,8 @@ int mana_ib_gd_create_dma_region(struct mana_ib_dev *dev, struct ib_umem *umem,
+ 			page_addr_list = add_req->page_addr_list;
  		} else {
-@@ -899,6 +920,10 @@ static enum resp_states read_reply(struct rxe_qp *qp,
- 		else
- 			opcode = IB_OPCODE_RC_RDMA_READ_RESPONSE_FIRST;
- 	} else {
-+		/* re-lookup mr from rkey on all later packets.
-+		 * length will be non-zero. This can fail if someone
-+		 * modifies or destroys the mr since the first packet.
-+		 */
- 		mr = rxe_recheck_mr(qp, res->read.rkey);
- 		if (!mr)
- 			return RESPST_ERR_RKEY_VIOLATION;
-@@ -916,18 +941,16 @@ static enum resp_states read_reply(struct rxe_qp *qp,
- 	skb = prepare_ack_packet(qp, &ack_pkt, opcode, payload,
- 				 res->cur_psn, AETH_ACK_UNLIMITED);
- 	if (!skb) {
--		if (mr)
--			rxe_put(mr);
--		return RESPST_ERR_RNR;
-+		state = RESPST_ERR_RNR;
-+		goto err_out;
- 	}
- 
- 	err = rxe_mr_copy(mr, res->read.va, payload_addr(&ack_pkt),
- 			  payload, RXE_FROM_MR_OBJ);
--	if (mr)
--		rxe_put(mr);
- 	if (err) {
- 		kfree_skb(skb);
--		return RESPST_ERR_RKEY_VIOLATION;
-+		state = RESPST_ERR_RKEY_VIOLATION;
-+		goto err_out;
- 	}
- 
- 	if (bth_pad(&ack_pkt)) {
-@@ -936,9 +959,12 @@ static enum resp_states read_reply(struct rxe_qp *qp,
- 		memset(pad, 0, bth_pad(&ack_pkt));
- 	}
- 
-+	/* rxe_xmit_packet always consumes the skb */
- 	err = rxe_xmit_packet(qp, &ack_pkt, skb);
--	if (err)
--		return RESPST_ERR_RNR;
-+	if (err) {
-+		state = RESPST_ERR_RNR;
-+		goto err_out;
-+	}
- 
- 	res->read.va += payload;
- 	res->read.resid -= payload;
-@@ -955,6 +981,9 @@ static enum resp_states read_reply(struct rxe_qp *qp,
- 		state = RESPST_CLEANUP;
- 	}
- 
-+err_out:
-+	if (mr)
-+		rxe_put(mr);
- 	return state;
- }
- 
+ 			/* Subsequent create messages */
+-			u32 expected_s = 0;
+-
+-			if (num_pages_processed + num_pages_to_handle <
+-			    num_pages_total)
+-				expected_s = GDMA_STATUS_MORE_ENTRIES;
+-
+ 			err = mana_ib_gd_add_dma_region(dev, gc, add_req, tail,
+-							expected_s);
++							expected_status);
+ 			if (err)
+ 				break;
+ 		}
 -- 
 2.39.2
 
