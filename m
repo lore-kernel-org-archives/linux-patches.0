@@ -1,28 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 3BA74BA34
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:30:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 97853C433D2;
-	Tue,  7 Mar 2023 17:30:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 385E6BA34
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:30:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A15CCC433EF;
+	Tue,  7 Mar 2023 17:30:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210230;
-	bh=QgSKdgfyBaZC9v2Vz815Nf4v+VhdFygQ1/YbWpmzEww=;
+	s=korg; t=1678210233;
+	bh=5d1UJmkzChSsewOMxyTxtJOAHKFTH1VdiwOAAvOpKZ4=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=CSaKM3XYC2T7Qz5XFPy0d2As7tAQQ7+J44A8AJH/s2fDasvw+TwfCjh+gTNyloL8a
-	 TtttZZBHslUaySU2HpRSospUOJqWKwpbMrQw0EjH3dRgTiOxU2DtrY46tik18mgMbb
-	 ZyyquWlQyi/jIALKMkCSblJ8pyrCU3dg/Z7VjbY0=
+	b=hS92yqiRrlwU0lQFvxT7wAV2FoEEIl9uQzWO/P+dd2vaU1bOXsnbnwqtq2wFBA7vc
+	 J/W1kWB6mB8naBYOnqndutJ68veX2oynlsmMUvJciYNswUntM5RwzLioX7fTxR0byl
+	 /SB67iUOQpQVtaDmQTitZVfR/LzzbmFRCsMBX994=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>,
-	"Steven Rostedt (Google)" <rostedt@goodmis.org>,
-	Shuah Khan <skhan@linuxfoundation.org>,
+	"Paulo Alcantara (SUSE)" <pc@cjr.nz>,
+	Tom Talpey <tom@talpey.com>,
+	Zhang Xiaoxu <zhangxiaoxu5@huawei.com>,
+	Steve French <stfrench@microsoft.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0475/1001] selftests/ftrace: Fix bash specific "==" operator
-Date: Tue,  7 Mar 2023 17:54:07 +0100
-Message-Id: <20230307170042.011799541@linuxfoundation.org>
+Subject: [PATCH 6.2 0458/1001] cifs: Fix warning and UAF when destroy the MR list
+Date: Tue,  7 Mar 2023 17:53:50 +0100
+Message-Id: <20230307170041.250451555@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,42 +37,131 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+From: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
 
-[ Upstream commit 1e6b485c922fbedf41d5a9f4e6449c5aeb923a32 ]
+[ Upstream commit 3e161c2791f8e661eed24a2c624087084d910215 ]
 
-Since commit a1d6cd88c897 ("selftests/ftrace: event_triggers: wait
-longer for test_event_enable") introduced bash specific "=="
-comparation operator, that test will fail when we run it on a
-posix-shell. `checkbashisms` warned it as below.
+If the MR allocate failed, the MR recovery work not initialized
+and list not cleared. Then will be warning and UAF when release
+the MR:
 
-possible bashism in ftrace/func_event_triggers.tc line 45 (should be 'b = a'):
-        if [ "$e" == $val ]; then
+  WARNING: CPU: 4 PID: 824 at kernel/workqueue.c:3066 __flush_work.isra.0+0xf7/0x110
+  CPU: 4 PID: 824 Comm: mount.cifs Not tainted 6.1.0-rc5+ #82
+  RIP: 0010:__flush_work.isra.0+0xf7/0x110
+  Call Trace:
+   <TASK>
+   __cancel_work_timer+0x2ba/0x2e0
+   smbd_destroy+0x4e1/0x990
+   _smbd_get_connection+0x1cbd/0x2110
+   smbd_get_connection+0x21/0x40
+   cifs_get_tcp_session+0x8ef/0xda0
+   mount_get_conns+0x60/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-This replaces it with "=".
+  BUG: KASAN: use-after-free in smbd_destroy+0x4fc/0x990
+  Read of size 8 at addr ffff88810b156a08 by task mount.cifs/824
+  CPU: 4 PID: 824 Comm: mount.cifs Tainted: G        W          6.1.0-rc5+ #82
+  Call Trace:
+   dump_stack_lvl+0x34/0x44
+   print_report+0x171/0x472
+   kasan_report+0xad/0x130
+   smbd_destroy+0x4fc/0x990
+   _smbd_get_connection+0x1cbd/0x2110
+   smbd_get_connection+0x21/0x40
+   cifs_get_tcp_session+0x8ef/0xda0
+   mount_get_conns+0x60/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
 
-Fixes: a1d6cd88c897 ("selftests/ftrace: event_triggers: wait longer for test_event_enable")
-Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
-Reviewed-by: Steven Rostedt (Google) <rostedt@goodmis.org>
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+  Allocated by task 824:
+   kasan_save_stack+0x1e/0x40
+   kasan_set_track+0x21/0x30
+   __kasan_kmalloc+0x7a/0x90
+   _smbd_get_connection+0x1b6f/0x2110
+   smbd_get_connection+0x21/0x40
+   cifs_get_tcp_session+0x8ef/0xda0
+   mount_get_conns+0x60/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+  Freed by task 824:
+   kasan_save_stack+0x1e/0x40
+   kasan_set_track+0x21/0x30
+   kasan_save_free_info+0x2a/0x40
+   ____kasan_slab_free+0x143/0x1b0
+   __kmem_cache_free+0xc8/0x330
+   _smbd_get_connection+0x1c6a/0x2110
+   smbd_get_connection+0x21/0x40
+   cifs_get_tcp_session+0x8ef/0xda0
+   mount_get_conns+0x60/0x750
+   cifs_mount+0x103/0xd00
+   cifs_smb3_do_mount+0x1dd/0xcb0
+   smb3_get_tree+0x1d5/0x300
+   vfs_get_tree+0x41/0xf0
+   path_mount+0x9b3/0xdd0
+   __x64_sys_mount+0x190/0x1d0
+   do_syscall_64+0x35/0x80
+   entry_SYSCALL_64_after_hwframe+0x46/0xb0
+
+Let's initialize the MR recovery work before MR allocate to prevent
+the warning, remove the MRs from the list to prevent the UAF.
+
+Fixes: c7398583340a ("CIFS: SMBD: Implement RDMA memory registration")
+Acked-by: Paulo Alcantara (SUSE) <pc@cjr.nz>
+Reviewed-by: Tom Talpey <tom@talpey.com>
+Signed-off-by: Zhang Xiaoxu <zhangxiaoxu5@huawei.com>
+Signed-off-by: Steve French <stfrench@microsoft.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- .../selftests/ftrace/test.d/ftrace/func_event_triggers.tc       | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ fs/cifs/smbdirect.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-index 3eea2abf68f9e..2ad7d4b501cc1 100644
---- a/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-+++ b/tools/testing/selftests/ftrace/test.d/ftrace/func_event_triggers.tc
-@@ -42,7 +42,7 @@ test_event_enabled() {
+diff --git a/fs/cifs/smbdirect.c b/fs/cifs/smbdirect.c
+index 101dab87cad1a..cf923f211c512 100644
+--- a/fs/cifs/smbdirect.c
++++ b/fs/cifs/smbdirect.c
+@@ -2218,6 +2218,7 @@ static int allocate_mr_list(struct smbd_connection *info)
+ 	atomic_set(&info->mr_ready_count, 0);
+ 	atomic_set(&info->mr_used_count, 0);
+ 	init_waitqueue_head(&info->wait_for_mr_cleanup);
++	INIT_WORK(&info->mr_recovery_work, smbd_mr_recovery_work);
+ 	/* Allocate more MRs (2x) than hardware responder_resources */
+ 	for (i = 0; i < info->responder_resources * 2; i++) {
+ 		smbdirect_mr = kzalloc(sizeof(*smbdirect_mr), GFP_KERNEL);
+@@ -2245,13 +2246,13 @@ static int allocate_mr_list(struct smbd_connection *info)
+ 		list_add_tail(&smbdirect_mr->list, &info->mr_list);
+ 		atomic_inc(&info->mr_ready_count);
+ 	}
+-	INIT_WORK(&info->mr_recovery_work, smbd_mr_recovery_work);
+ 	return 0;
  
-     while [ $check_times -ne 0 ]; do
- 	e=`cat $EVENT_ENABLE`
--	if [ "$e" == $val ]; then
-+	if [ "$e" = $val ]; then
- 	    return 0
- 	fi
- 	sleep $SLEEP_TIME
+ out:
+ 	kfree(smbdirect_mr);
+ 
+ 	list_for_each_entry_safe(smbdirect_mr, tmp, &info->mr_list, list) {
++		list_del(&smbdirect_mr->list);
+ 		ib_dereg_mr(smbdirect_mr->mr);
+ 		kfree(smbdirect_mr->sgl);
+ 		kfree(smbdirect_mr);
 -- 
 2.39.2
 
