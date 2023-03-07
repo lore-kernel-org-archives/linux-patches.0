@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 2CA21BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:22:55 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 8599DC433EF;
-	Tue,  7 Mar 2023 17:22:54 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 23BBEBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:22:58 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 81021C433EF;
+	Tue,  7 Mar 2023 17:22:57 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209775;
-	bh=VsRbSgxvou9xvnNpau0YGMN5KrjpoyoKSC8c0ex4ASY=;
+	s=korg; t=1678209778;
+	bh=elTlS6OZ8Q7sYaextTko3o/z7ZV4jcPULcHMeR8P0xY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=EBnROrto0sE6fH5/paB4+NGtBTxj2it17scCT97ky/EWak6SX07teKqUL/pzzg53S
-	 bHMGE8HK07IZvrF7WaBxDkJo8BmgzgWn/kNfsvQV8edq5yO2ByyShivW/TTg2p+cz2
-	 KbeW58MtTbYCn6ZTn52dG8wjZY2N41Ndx3s9tJy8=
+	b=Z6nUeesPgr3Ilp3+e9yqzIGvHQk2N4TzvwaY5BFsMMMSRzeq2Ct6h3SPaE7DhxNlk
+	 mHB+pNYmW9USSf8o1ok0a7ntObTrMNdx3sDz1jfQRjdhzky1RblnvwZFqjka+Grkwq
+	 Aaibrjn5QGOaGI4hSeS3vpjSvvAUA+PFCv36iSjo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
-	Christian Lamparter <chunkeey@gmail.com>,
+	Eric Farman <farman@linux.ibm.com>,
+	Matthew Rosato <mjrosato@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0296/1001] crypto: crypto4xx - Call dma_unmap_page when done
-Date: Tue,  7 Mar 2023 17:51:08 +0100
-Message-Id: <20230307170034.431084587@linuxfoundation.org>
+Subject: [PATCH 6.2 0297/1001] vfio/ccw: remove WARN_ON during shutdown
+Date: Tue,  7 Mar 2023 17:51:09 +0100
+Message-Id: <20230307170034.473437171@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,62 +36,49 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Eric Farman <farman@linux.ibm.com>
 
-[ Upstream commit bcdda4301bdc4955d45f7e1ffefb6207967b067e ]
+[ Upstream commit 1c06bb87afb2d95b8e9f4f2e3d0d6772c68f3e76 ]
 
-In crypto4xx_cipher_done, we should be unmapping the dst page, not
-mapping it.
+The logic in vfio_ccw_sch_shutdown() always assumed that the input
+subchannel would point to a vfio_ccw_private struct, without checking
+that one exists. The blamed commit put in a check for this scenario,
+to prevent the possibility of a missing private.
 
-This was flagged by a sparse warning about the unused addr variable.
-While we're at it, also fix a sparse warning regarding the unused
-ctx variable in crypto4xx_ahash_done (by actually using it).
+The trouble is that check was put alongside a WARN_ON(), presuming
+that such a scenario would be a cause for concern. But this can be
+triggered by binding a subchannel to vfio-ccw, and rebooting the
+system before starting the mdev (via "mdevctl start" or similar)
+or after stopping it. In those cases, shutdown doesn't need to
+worry because either the private was never allocated, or it was
+cleaned up by vfio_ccw_mdev_remove().
 
-Fixes: 049359d65527 ("crypto: amcc - Add crypt4xx driver")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
-Tested-by: Christian Lamparter <chunkeey@gmail.com>
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Remove the WARN_ON() piece of this check, since there are plausible
+scenarios where private would be NULL in this path.
+
+Fixes: 9e6f07cd1eaa ("vfio/ccw: create a parent struct")
+Signed-off-by: Eric Farman <farman@linux.ibm.com>
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+Link: https://lore.kernel.org/r/20230210174227.2256424-1-farman@linux.ibm.com
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/crypto/amcc/crypto4xx_core.c | 10 ++++------
- 1 file changed, 4 insertions(+), 6 deletions(-)
+ drivers/s390/cio/vfio_ccw_drv.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/crypto/amcc/crypto4xx_core.c b/drivers/crypto/amcc/crypto4xx_core.c
-index 280f4b0e71334..50dc783821b69 100644
---- a/drivers/crypto/amcc/crypto4xx_core.c
-+++ b/drivers/crypto/amcc/crypto4xx_core.c
-@@ -522,7 +522,6 @@ static void crypto4xx_cipher_done(struct crypto4xx_device *dev,
- {
- 	struct skcipher_request *req;
- 	struct scatterlist *dst;
--	dma_addr_t addr;
+diff --git a/drivers/s390/cio/vfio_ccw_drv.c b/drivers/s390/cio/vfio_ccw_drv.c
+index 54aba7cceb33f..ff538a086fc77 100644
+--- a/drivers/s390/cio/vfio_ccw_drv.c
++++ b/drivers/s390/cio/vfio_ccw_drv.c
+@@ -225,7 +225,7 @@ static void vfio_ccw_sch_shutdown(struct subchannel *sch)
+ 	struct vfio_ccw_parent *parent = dev_get_drvdata(&sch->dev);
+ 	struct vfio_ccw_private *private = dev_get_drvdata(&parent->dev);
  
- 	req = skcipher_request_cast(pd_uinfo->async_req);
+-	if (WARN_ON(!private))
++	if (!private)
+ 		return;
  
-@@ -531,8 +530,8 @@ static void crypto4xx_cipher_done(struct crypto4xx_device *dev,
- 					  req->cryptlen, req->dst);
- 	} else {
- 		dst = pd_uinfo->dest_va;
--		addr = dma_map_page(dev->core_dev->device, sg_page(dst),
--				    dst->offset, dst->length, DMA_FROM_DEVICE);
-+		dma_unmap_page(dev->core_dev->device, pd->dest, dst->length,
-+			       DMA_FROM_DEVICE);
- 	}
- 
- 	if (pd_uinfo->sa_va->sa_command_0.bf.save_iv == SA_SAVE_IV) {
-@@ -557,10 +556,9 @@ static void crypto4xx_ahash_done(struct crypto4xx_device *dev,
- 	struct ahash_request *ahash_req;
- 
- 	ahash_req = ahash_request_cast(pd_uinfo->async_req);
--	ctx  = crypto_tfm_ctx(ahash_req->base.tfm);
-+	ctx = crypto_ahash_ctx(crypto_ahash_reqtfm(ahash_req));
- 
--	crypto4xx_copy_digest_to_dst(ahash_req->result, pd_uinfo,
--				     crypto_tfm_ctx(ahash_req->base.tfm));
-+	crypto4xx_copy_digest_to_dst(ahash_req->result, pd_uinfo, ctx);
- 	crypto4xx_ret_sg_desc(dev, pd_uinfo);
- 
- 	if (pd_uinfo->state & PD_ENTRY_BUSY)
+ 	vfio_ccw_fsm_event(private, VFIO_CCW_EVENT_CLOSE);
 -- 
 2.39.2
 
