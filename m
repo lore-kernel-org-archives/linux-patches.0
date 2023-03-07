@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1A21DBA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:07:52 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 74A8CC4339B;
-	Tue,  7 Mar 2023 18:07:51 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D5FEBBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:07:55 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 012E1C433A7;
+	Tue,  7 Mar 2023 18:07:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212471;
-	bh=BIhkWpejoZ3l+rZwaG1tUWyCBcb8lBzrRwfwYwceka4=;
+	s=korg; t=1678212475;
+	bh=QWEmMxkuvGLgluY3PuYXNmUEJIPRZp7ba5rvn9DpFoc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=j8tqWMi11fnLotDUWJjxY+0YShZWehV946oh62Z07CIQ0HcdDmRHPFI13NLbzamSH
-	 K6i6iWQPJFPZATyMtwdNKOZ7bNjc8MYBff796iV9xFUhJu21kSyZPpZfNvb9ufuydi
-	 ujofhlXjhY65s3zp78I+QxBDfndYvsRuTeCYByxQ=
+	b=GzLaKYOit0TWs2lS8fyjXAp6wA0WMxbB3GprBQK4coAdDWeHBAu7U4pYbe0kOcwl8
+	 bho5rzC2V+AKSNf942YEj7O75owxCAyuDtm2Q0qPeT9ZYbbPtAztbTBhe1k1nTVdzZ
+	 gM4qTvPCngR6NGVBH6HIEwvqvyij2x9iyTIK9hlY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Herbert Xu <herbert@gondor.apana.org.au>,
+	Sujuan Chen <sujuan.chen@mediatek.com>,
+	Ryder Lee <ryder.lee@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 177/885] crypto: seqiv - Handle EBUSY correctly
-Date: Tue,  7 Mar 2023 17:51:51 +0100
-Message-Id: <20230307170009.659496598@linuxfoundation.org>
+Subject: [PATCH 6.1 195/885] wifi: mt76: mt7915: fix WED TxS reporting
+Date: Tue,  7 Mar 2023 17:52:09 +0100
+Message-Id: <20230307170010.488601856@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -34,38 +36,35 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Herbert Xu <herbert@gondor.apana.org.au>
+From: Ryder Lee <ryder.lee@mediatek.com>
 
-[ Upstream commit 32e62025e5e52fbe4812ef044759de7010b15dbc ]
+[ Upstream commit 0d7084e209a9e2c924cb0d6e7f1f978db2a54127 ]
 
-As it is seqiv only handles the special return value of EINPROGERSS,
-which means that in all other cases it will free data related to the
-request.
+The previous commit forgot to remove a leftover check.
 
-However, as the caller of seqiv may specify MAY_BACKLOG, we also need
-to expect EBUSY and treat it in the same way.  Otherwise backlogged
-requests will trigger a use-after-free.
-
-Fixes: 0a270321dbf9 ("[CRYPTO] seqiv: Add Sequence Number IV Generator")
-Signed-off-by: Herbert Xu <herbert@gondor.apana.org.au>
+Fixes: 43eaa3689507 ("wifi: mt76: add PPDU based TxS support for WED device")
+Reported-By: Sujuan Chen <sujuan.chen@mediatek.com>
+Signed-off-by: Ryder Lee <ryder.lee@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- crypto/seqiv.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/net/wireless/mediatek/mt76/mt7915/mac.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/crypto/seqiv.c b/crypto/seqiv.c
-index 0899d527c2845..b1bcfe537daf1 100644
---- a/crypto/seqiv.c
-+++ b/crypto/seqiv.c
-@@ -23,7 +23,7 @@ static void seqiv_aead_encrypt_complete2(struct aead_request *req, int err)
- 	struct aead_request *subreq = aead_request_ctx(req);
- 	struct crypto_aead *geniv;
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+index e6bf6e04d4b9c..1f3b7e7f48d50 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mac.c
+@@ -997,9 +997,6 @@ static void mt7915_mac_add_txs(struct mt7915_dev *dev, void *data)
+ 	u16 wcidx;
+ 	u8 pid;
  
--	if (err == -EINPROGRESS)
-+	if (err == -EINPROGRESS || err == -EBUSY)
- 		return;
+-	if (le32_get_bits(txs_data[0], MT_TXS0_TXS_FORMAT) > 1)
+-		return;
+-
+ 	wcidx = le32_get_bits(txs_data[2], MT_TXS2_WCID);
+ 	pid = le32_get_bits(txs_data[3], MT_TXS3_PID);
  
- 	if (err)
 -- 
 2.39.2
 
