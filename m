@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B56E2BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:18:20 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3500BC4339B;
-	Tue,  7 Mar 2023 17:18:19 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 1D1F1BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:18:24 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 775AEC433A0;
+	Tue,  7 Mar 2023 17:18:23 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678209500;
-	bh=X5uNGRjQnyaQnUCgvth/WKUA002wPdyRQBNmA/ZXBsQ=;
+	s=korg; t=1678209504;
+	bh=JG5bjN08qGQAVUiT6fBjulGwx/mj3eOcOV6E0q3xiAM=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=iLwvUTBsDrlG3+9cByEe1teQHMUihXpGdClyB+VH/44atW5Pcb383USePLAM7s1YQ
-	 CkvlA3r12DeSsLRIxj0VLf7yezOHsab3+S7xGBxpBqwo8QquorQvbVRrMc6zlxt7n4
-	 +nu25evwFSOXbRN2gaKr+Hu6ad4/y8Nil6Kkv5Cw=
+	b=KfuIo8QoxM46x2k4QHPDDsPobaM+md62kyXReQL/dyJVX5JGx56xCEUDr9s1hVXkX
+	 3GmWI7/R5mSs/EkzZDVhB/VkK1k4BsuwbiWwKlxODcL3kaPrnhyIzQ3b/dDhm5TVqW
+	 zM/PiIOK7hEw5f+kxrwpxM9PVT1wmDcXoE+uO3SY=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Ashok Raj <ashok.raj@intel.com>,
-	"Borislav Petkov (AMD)" <bp@alien8.de>,
+	Ryder Lee <ryder.lee@mediatek.com>,
+	Howard Hsu <howard-yh.hsu@mediatek.com>,
+	Felix Fietkau <nbd@nbd.name>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0222/1001] x86/microcode: Check CPU capabilities after late microcode update correctly
-Date: Tue,  7 Mar 2023 17:49:54 +0100
-Message-Id: <20230307170031.516648457@linuxfoundation.org>
+Subject: [PATCH 6.2 0240/1001] wifi: mt76: mt7915: rework mt7915_thermal_temp_store()
+Date: Tue,  7 Mar 2023 17:50:12 +0100
+Message-Id: <20230307170032.240435116@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -35,148 +36,77 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ashok Raj <ashok.raj@intel.com>
+From: Howard Hsu <howard-yh.hsu@mediatek.com>
 
-[ Upstream commit c0dd9245aa9e25a697181f6085692272c9ec61bc ]
+[ Upstream commit ecaccdae7a7e8f76eeb6544295ca0593c2f65a33 ]
 
-The kernel caches each CPU's feature bits at boot in an x86_capability[]
-structure. However, the capabilities in the BSP's copy can be turned off
-as a result of certain command line parameters or configuration
-restrictions, for example the SGX bit. This can cause a mismatch when
-comparing the values before and after the microcode update.
+Call mt7915_mcu_set_thermal_protect() through
+mt7915_thermal_temp_store() to update firmware trigger/restore temp
+directly.
 
-Another example is X86_FEATURE_SRBDS_CTRL which gets added only after
-microcode update:
-
-#  --- cpuid.before	2023-01-21 14:54:15.652000747 +0100
-#  +++ cpuid.after	2023-01-21 14:54:26.632001024 +0100
-#  @@ -10,7 +10,7 @@ CPU:
-#      0x00000004 0x04: eax=0x00000000 ebx=0x00000000 ecx=0x00000000 edx=0x00000000
-#      0x00000005 0x00: eax=0x00000040 ebx=0x00000040 ecx=0x00000003 edx=0x11142120
-#      0x00000006 0x00: eax=0x000027f7 ebx=0x00000002 ecx=0x00000001 edx=0x00000000
-#  -   0x00000007 0x00: eax=0x00000000 ebx=0x029c6fbf ecx=0x40000000 edx=0xbc002400
-#  +   0x00000007 0x00: eax=0x00000000 ebx=0x029c6fbf ecx=0x40000000 edx=0xbc002e00
-  									     ^^^
-
-and which proves for a gazillionth time that late loading is a bad bad
-idea.
-
-microcode_check() is called after an update to report any previously
-cached CPUID bits which might have changed due to the update.
-
-Therefore, store the cached CPU caps before the update and compare them
-with the CPU caps after the microcode update has succeeded.
-
-Thus, the comparison is done between the CPUID *hardware* bits before
-and after the upgrade instead of using the cached, possibly runtime
-modified values in BSP's boot_cpu_data copy.
-
-As a result, false warnings about CPUID bits changes are avoided.
-
-  [ bp:
-  	- Massage.
-	- Add SRBDS_CTRL example.
-	- Add kernel-doc.
-	- Incorporate forgotten review feedback from dhansen.
-	]
-
-Fixes: 1008c52c09dc ("x86/CPU: Add a microcode loader callback")
-Signed-off-by: Ashok Raj <ashok.raj@intel.com>
-Signed-off-by: Borislav Petkov (AMD) <bp@alien8.de>
-Link: https://lore.kernel.org/r/20230109153555.4986-3-ashok.raj@intel.com
+Fixes: 02ee68b95d81 ("mt76: mt7915: add control knobs for thermal throttling")
+Reviewed-by: Ryder Lee <ryder.lee@mediatek.com>
+Signed-off-by: Howard Hsu <howard-yh.hsu@mediatek.com>
+Signed-off-by: Felix Fietkau <nbd@nbd.name>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/x86/include/asm/processor.h     |  1 +
- arch/x86/kernel/cpu/common.c         | 36 ++++++++++++++++++----------
- arch/x86/kernel/cpu/microcode/core.c |  6 +++++
- 3 files changed, 30 insertions(+), 13 deletions(-)
+ .../net/wireless/mediatek/mt76/mt7915/init.c   | 18 ++++++++++++++++--
+ .../net/wireless/mediatek/mt76/mt7915/mt7915.h |  3 +++
+ 2 files changed, 19 insertions(+), 2 deletions(-)
 
-diff --git a/arch/x86/include/asm/processor.h b/arch/x86/include/asm/processor.h
-index f256a4ddd25da..a77dee6a2bf2e 100644
---- a/arch/x86/include/asm/processor.h
-+++ b/arch/x86/include/asm/processor.h
-@@ -698,6 +698,7 @@ bool xen_set_default_idle(void);
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/init.c b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+index 4c351bfd4b270..a80ae31e7abff 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/init.c
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/init.c
+@@ -83,9 +83,23 @@ static ssize_t mt7915_thermal_temp_store(struct device *dev,
  
- void __noreturn stop_this_cpu(void *dummy);
- void microcode_check(struct cpuinfo_x86 *prev_info);
-+void store_cpu_caps(struct cpuinfo_x86 *info);
- 
- enum l1tf_mitigations {
- 	L1TF_MITIGATION_OFF,
-diff --git a/arch/x86/kernel/cpu/common.c b/arch/x86/kernel/cpu/common.c
-index cda7ded29213e..6a25e93f2a87c 100644
---- a/arch/x86/kernel/cpu/common.c
-+++ b/arch/x86/kernel/cpu/common.c
-@@ -2302,6 +2302,25 @@ void cpu_init_secondary(void)
- #endif
- 
- #ifdef CONFIG_MICROCODE_LATE_LOADING
-+/**
-+ * store_cpu_caps() - Store a snapshot of CPU capabilities
-+ * @curr_info: Pointer where to store it
-+ *
-+ * Returns: None
-+ */
-+void store_cpu_caps(struct cpuinfo_x86 *curr_info)
-+{
-+	/* Reload CPUID max function as it might've changed. */
-+	curr_info->cpuid_level = cpuid_eax(0);
+ 	mutex_lock(&phy->dev->mt76.mutex);
+ 	val = clamp_val(DIV_ROUND_CLOSEST(val, 1000), 60, 130);
 +
-+	/* Copy all capability leafs and pick up the synthetic ones. */
-+	memcpy(&curr_info->x86_capability, &boot_cpu_data.x86_capability,
-+	       sizeof(curr_info->x86_capability));
++	if ((i - 1 == MT7915_CRIT_TEMP_IDX &&
++	     val > phy->throttle_temp[MT7915_MAX_TEMP_IDX]) ||
++	    (i - 1 == MT7915_MAX_TEMP_IDX &&
++	     val < phy->throttle_temp[MT7915_CRIT_TEMP_IDX])) {
++		dev_err(phy->dev->mt76.dev,
++			"temp1_max shall be greater than temp1_crit.");
++		return -EINVAL;
++	}
 +
-+	/* Get the hardware CPUID leafs */
-+	get_cpu_cap(curr_info);
-+}
+ 	phy->throttle_temp[i - 1] = val;
+ 	mutex_unlock(&phy->dev->mt76.mutex);
+ 
++	ret = mt7915_mcu_set_thermal_protect(phy);
++	if (ret)
++		return ret;
 +
- /**
-  * microcode_check() - Check if any CPU capabilities changed after an update.
-  * @prev_info:	CPU capabilities stored before an update.
-@@ -2314,22 +2333,13 @@ void cpu_init_secondary(void)
-  */
- void microcode_check(struct cpuinfo_x86 *prev_info)
- {
--	perf_check_microcode();
--
--	/* Reload CPUID max function as it might've changed. */
--	prev_info->cpuid_level = cpuid_eax(0);
-+	struct cpuinfo_x86 curr_info;
+ 	return count;
+ }
  
--	/*
--	 * Copy all capability leafs to pick up the synthetic ones so that
--	 * memcmp() below doesn't fail on that. The ones coming from CPUID will
--	 * get overwritten in get_cpu_cap().
--	 */
--	memcpy(&prev_info->x86_capability, &boot_cpu_data.x86_capability,
--	       sizeof(prev_info->x86_capability));
-+	perf_check_microcode();
+@@ -195,8 +209,8 @@ static int mt7915_thermal_init(struct mt7915_phy *phy)
+ 		return PTR_ERR(hwmon);
  
--	get_cpu_cap(prev_info);
-+	store_cpu_caps(&curr_info);
+ 	/* initialize critical/maximum high temperature */
+-	phy->throttle_temp[0] = 110;
+-	phy->throttle_temp[1] = 120;
++	phy->throttle_temp[MT7915_CRIT_TEMP_IDX] = 110;
++	phy->throttle_temp[MT7915_MAX_TEMP_IDX] = 120;
  
--	if (!memcmp(&prev_info->x86_capability, &boot_cpu_data.x86_capability,
-+	if (!memcmp(&prev_info->x86_capability, &curr_info.x86_capability,
- 		    sizeof(prev_info->x86_capability)))
- 		return;
+ 	return 0;
+ }
+diff --git a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
+index 855779f86bde0..e58650bbbd14a 100644
+--- a/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
++++ b/drivers/net/wireless/mediatek/mt76/mt7915/mt7915.h
+@@ -70,6 +70,9 @@
  
-diff --git a/arch/x86/kernel/cpu/microcode/core.c b/arch/x86/kernel/cpu/microcode/core.c
-index b2068ce2c86bf..a25ba851a9208 100644
---- a/arch/x86/kernel/cpu/microcode/core.c
-+++ b/arch/x86/kernel/cpu/microcode/core.c
-@@ -446,6 +446,12 @@ static int microcode_reload_late(void)
- 	atomic_set(&late_cpus_in,  0);
- 	atomic_set(&late_cpus_out, 0);
+ #define MT7915_WED_RX_TOKEN_SIZE	12288
  
-+	/*
-+	 * Take a snapshot before the microcode update in order to compare and
-+	 * check whether any bits changed after an update.
-+	 */
-+	store_cpu_caps(&prev_info);
++#define MT7915_CRIT_TEMP_IDX		0
++#define MT7915_MAX_TEMP_IDX		1
 +
- 	ret = stop_machine_cpuslocked(__reload_late, NULL, cpu_online_mask);
- 	if (ret == 0)
- 		microcode_check(&prev_info);
+ struct mt7915_vif;
+ struct mt7915_sta;
+ struct mt7915_dfs_pulse;
 -- 
 2.39.2
 
