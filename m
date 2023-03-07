@@ -1,29 +1,29 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9C4C1BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:51:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1F809C4339B;
-	Tue,  7 Mar 2023 18:50:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 8EDA4BA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:51:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10E78C433A1;
+	Tue,  7 Mar 2023 18:51:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215060;
-	bh=Rth3ys//X/3BQOQQ9pX9iuhFpE6ggyVXiBSREELyUU4=;
+	s=korg; t=1678215063;
+	bh=AM1/GlzEmac11IRA1ziyHXEiFDmUmATfMpQy7ZOE2/g=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=GOHaNgUDspJ8EqIytGM5F2kNMGy0rcK9cjzx1bpw7WMtoo4U5wl0ZU19KLuIKDlz2
-	 oZ0wVASCWOdQHFNy+cdWad9XCQwD2BFud2ivXD1G6L1byz+Uh2w8I27pQNtb7Y+PI7
-	 vagChdRrVcNz2zr1uhcT5gSpTfW5u1d1MEYhdjOM=
+	b=OrP8uMG/2CDml+x40aagFHaArO6NULcRhXFtQ40srf51rg52V9r476T0XiAVNcczN
+	 cEah0thrNZs5ew1pPgoCJMh4YgLY7GXEcVWOFNgPa+MhrEhF+6UPV2sh5l8PRSm0c8
+	 5C7Do8v6mY51W1wUNY3IKdWHI2lA+6gTt07V2xKg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Andy Shevchenko <andy.shevchenko@gmail.com>,
-	Linus Walleij <linus.walleij@linaro.org>,
-	Hans de Goede <hdegoede@redhat.com>,
-	Lee Jones <lee@kernel.org>,
+	Halil Pasic <pasic@linux.ibm.com>,
+	Janosch Frank <frankja@linux.ibm.com>,
+	Harald Freudenberger <freude@linux.ibm.com>,
+	Heiko Carstens <hca@linux.ibm.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 121/567] leds: led-class: Add missing put_device() to led_put()
-Date: Tue,  7 Mar 2023 17:57:37 +0100
-Message-Id: <20230307165911.151561747@linuxfoundation.org>
+Subject: [PATCH 5.15 139/567] s390/ap: fix status returned by ap_aqic()
+Date: Tue,  7 Mar 2023 17:57:55 +0100
+Message-Id: <20230307165911.924850883@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -37,56 +37,50 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Hans de Goede <hdegoede@redhat.com>
+From: Halil Pasic <pasic@linux.ibm.com>
 
-[ Upstream commit 445110941eb94709216363f9d807d2508e64abd7 ]
+[ Upstream commit 394740d7645ea767795074287769dd26dbd4d782 ]
 
-led_put() is used to "undo" a successful of_led_get() call,
-of_led_get() uses class_find_device_by_of_node() which returns
-a reference to the device which must be free-ed with put_device()
-when the caller is done with it.
+There function ap_aqic() tries to grab the status from the
+wrong part of the register. Thus we always end up with
+zeros. Which is wrong, among others, because we detect
+failures via status.response_code.
 
-Add a put_device() call to led_put() to free the reference returned
-by class_find_device_by_of_node().
-
-And also add a put_device() in the error-exit case of try_module_get()
-failing.
-
-Fixes: 699a8c7c4bd3 ("leds: Add of_led_get() and led_put()")
-Reviewed-by: Andy Shevchenko <andy.shevchenko@gmail.com>
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-Signed-off-by: Hans de Goede <hdegoede@redhat.com>
-Signed-off-by: Lee Jones <lee@kernel.org>
-Link: https://lore.kernel.org/r/20230120114524.408368-2-hdegoede@redhat.com
+Signed-off-by: Halil Pasic <pasic@linux.ibm.com>
+Reported-by: Janosch Frank <frankja@linux.ibm.com>
+Fixes: 159491f3b509 ("s390/ap: rework assembler functions to use unions for in/out register variables")
+Reviewed-by: Harald Freudenberger <freude@linux.ibm.com>
+Signed-off-by: Heiko Carstens <hca@linux.ibm.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/leds/led-class.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/s390/include/asm/ap.h | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
 
-diff --git a/drivers/leds/led-class.c b/drivers/leds/led-class.c
-index f4bb02f6e0428..6e88df4c87fa8 100644
---- a/drivers/leds/led-class.c
-+++ b/drivers/leds/led-class.c
-@@ -241,8 +241,10 @@ struct led_classdev *of_led_get(struct device_node *np, int index)
+diff --git a/arch/s390/include/asm/ap.h b/arch/s390/include/asm/ap.h
+index 3afbee21dc1f1..8a8c0b157b551 100644
+--- a/arch/s390/include/asm/ap.h
++++ b/arch/s390/include/asm/ap.h
+@@ -236,7 +236,10 @@ static inline struct ap_queue_status ap_aqic(ap_qid_t qid,
+ 	union {
+ 		unsigned long value;
+ 		struct ap_qirq_ctrl qirqctrl;
+-		struct ap_queue_status status;
++		struct {
++			u32 _pad;
++			struct ap_queue_status status;
++		};
+ 	} reg1;
+ 	void *reg2 = ind;
  
- 	led_cdev = dev_get_drvdata(led_dev);
+@@ -250,7 +253,7 @@ static inline struct ap_queue_status ap_aqic(ap_qid_t qid,
+ 		"	lgr	%[reg1],1\n"   /* gr1 (status) into reg1 */
+ 		: [reg1] "+&d" (reg1)
+ 		: [reg0] "d" (reg0), [reg2] "d" (reg2)
+-		: "cc", "0", "1", "2");
++		: "cc", "memory", "0", "1", "2");
  
--	if (!try_module_get(led_cdev->dev->parent->driver->owner))
-+	if (!try_module_get(led_cdev->dev->parent->driver->owner)) {
-+		put_device(led_cdev->dev);
- 		return ERR_PTR(-ENODEV);
-+	}
- 
- 	return led_cdev;
+ 	return reg1.status;
  }
-@@ -255,6 +257,7 @@ EXPORT_SYMBOL_GPL(of_led_get);
- void led_put(struct led_classdev *led_cdev)
- {
- 	module_put(led_cdev->dev->parent->driver->owner);
-+	put_device(led_cdev->dev);
- }
- EXPORT_SYMBOL_GPL(led_put);
- 
 -- 
 2.39.2
 
