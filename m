@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 61DCCBA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:51:30 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id BAFD5C433D2;
-	Tue,  7 Mar 2023 17:51:29 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 6F7B7BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:51:33 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E4268C433EF;
+	Tue,  7 Mar 2023 17:51:32 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211490;
-	bh=BoTlvLsL48kvj8FHmLW/4o2SqJhwQeRNX2r8R2fqQKM=;
+	s=korg; t=1678211493;
+	bh=8iqDb8A50Fit+bU6TpV6GHH/ef8lYltVMLVwrAyQhpY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Ppzqfwidz/zisGC8LhDF4H6fFJDvAgawR4Qq4LUR/Up0osz9QMZRSVSi5h3LFPLd8
-	 KrJTIDTFVAiETNGHH8agtiBOvvn5zPJ4Y+8JhZbBSRVvyp4bdJeAOobe+/z/x+hu57
-	 4g52KJtk2ciGcDKbpJF/9I61RsBT+77dFZYRFWx0=
+	b=ciU8BEFzOVhezTZqpgkoRDGyWQn3dd90AbI5RINMQlI0Z8uQBDRLMBBB/KVprW7A3
+	 Dt9F6n0UOuLQPI0sqFVyv98VGR12JbHldRu4VqvggByr7Ix3boLv/onzUSUP0VQUrL
+	 xAh8dZHuHbdEdTqnTNO2CFBH/AvMI8VZ36prGido=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Shuah Khan <shuah@kernel.org>,
-	linux-kselftest@vger.kernel.org,
-	Ingo Molnar <mingo@redhat.com>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.2 0879/1001] selftests: seccomp: Fix incorrect kernel headers search path
-Date: Tue,  7 Mar 2023 18:00:51 +0100
-Message-Id: <20230307170100.055969201@linuxfoundation.org>
+	Hsin-Yi Wang <hsinyi@chromium.org>,
+	Mark-PK Tsai <mark-pk.tsai@mediatek.com>,
+	Johan Hovold <johan+linaro@kernel.org>,
+	Marc Zyngier <maz@kernel.org>
+Subject: [PATCH 6.2 0880/1001] irqdomain: Fix association race
+Date: Tue,  7 Mar 2023 18:00:52 +0100
+Message-Id: <20230307170100.103831574@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,34 +36,83 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+From: Johan Hovold <johan+linaro@kernel.org>
 
-commit 07d42dd854446ba3177ad7a217870a5b4edee165 upstream.
+commit b06730a571a9ff1ba5bd6b20bf9e50e5a12f1ec6 upstream.
 
-Use $(KHDR_INCLUDES) as lookup path for kernel headers. This prevents
-building against kernel headers from the build environment in scenarios
-where kernel headers are installed into a specific output directory
-(O=...).
+The sanity check for an already mapped virq is done outside of the
+irq_domain_mutex-protected section which means that an (unlikely) racing
+association may not be detected.
 
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: linux-kselftest@vger.kernel.org
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: <stable@vger.kernel.org>  # 5.18+
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+Fix this by factoring out the association implementation, which will
+also be used in a follow-on change to fix a shared-interrupt mapping
+race.
+
+Fixes: ddaf144c61da ("irqdomain: Refactor irq_domain_associate_many()")
+Cc: stable@vger.kernel.org      # 3.11
+Tested-by: Hsin-Yi Wang <hsinyi@chromium.org>
+Tested-by: Mark-PK Tsai <mark-pk.tsai@mediatek.com>
+Signed-off-by: Johan Hovold <johan+linaro@kernel.org>
+Signed-off-by: Marc Zyngier <maz@kernel.org>
+Link: https://lore.kernel.org/r/20230213104302.17307-2-johan+linaro@kernel.org
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/seccomp/Makefile |    2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ kernel/irq/irqdomain.c |   19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
 
---- a/tools/testing/selftests/seccomp/Makefile
-+++ b/tools/testing/selftests/seccomp/Makefile
-@@ -1,5 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0
--CFLAGS += -Wl,-no-as-needed -Wall -isystem ../../../../usr/include/
-+CFLAGS += -Wl,-no-as-needed -Wall $(KHDR_INCLUDES)
- LDFLAGS += -lpthread
- LDLIBS += -lcap
+--- a/kernel/irq/irqdomain.c
++++ b/kernel/irq/irqdomain.c
+@@ -559,8 +559,8 @@ static void irq_domain_disassociate(stru
+ 	irq_domain_clear_mapping(domain, hwirq);
+ }
  
+-int irq_domain_associate(struct irq_domain *domain, unsigned int virq,
+-			 irq_hw_number_t hwirq)
++static int irq_domain_associate_locked(struct irq_domain *domain, unsigned int virq,
++				       irq_hw_number_t hwirq)
+ {
+ 	struct irq_data *irq_data = irq_get_irq_data(virq);
+ 	int ret;
+@@ -573,7 +573,6 @@ int irq_domain_associate(struct irq_doma
+ 	if (WARN(irq_data->domain, "error: virq%i is already associated", virq))
+ 		return -EINVAL;
+ 
+-	mutex_lock(&irq_domain_mutex);
+ 	irq_data->hwirq = hwirq;
+ 	irq_data->domain = domain;
+ 	if (domain->ops->map) {
+@@ -590,7 +589,6 @@ int irq_domain_associate(struct irq_doma
+ 			}
+ 			irq_data->domain = NULL;
+ 			irq_data->hwirq = 0;
+-			mutex_unlock(&irq_domain_mutex);
+ 			return ret;
+ 		}
+ 
+@@ -601,12 +599,23 @@ int irq_domain_associate(struct irq_doma
+ 
+ 	domain->mapcount++;
+ 	irq_domain_set_mapping(domain, hwirq, irq_data);
+-	mutex_unlock(&irq_domain_mutex);
+ 
+ 	irq_clear_status_flags(virq, IRQ_NOREQUEST);
+ 
+ 	return 0;
+ }
++
++int irq_domain_associate(struct irq_domain *domain, unsigned int virq,
++			 irq_hw_number_t hwirq)
++{
++	int ret;
++
++	mutex_lock(&irq_domain_mutex);
++	ret = irq_domain_associate_locked(domain, virq, hwirq);
++	mutex_unlock(&irq_domain_mutex);
++
++	return ret;
++}
+ EXPORT_SYMBOL_GPL(irq_domain_associate);
+ 
+ void irq_domain_associate_many(struct irq_domain *domain, unsigned int irq_base,
 
 
