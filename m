@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C1E0CBA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:55:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 34AC0C433D2;
-	Tue,  7 Mar 2023 18:55:37 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B88FABA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:55:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29C7BC433EF;
+	Tue,  7 Mar 2023 18:55:40 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678215337;
-	bh=TRvTJsEQyGiWlfszlDkwsNJe3z+Ko2NyarF3FpQclyQ=;
+	s=korg; t=1678215340;
+	bh=bAuigzgwlgt9/l2dfN6ntLK7DUM/ckirQ4m/Znfd9Uc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=w1vzDRGLMX3DB9zTfKW+oIaVWD09/pAJfZGHXPX1KK4vPYnFPPSpR6nwb5tfr+IMW
-	 nvHuA1R01fHRZBemvWyXQQBPUWUEDVY5wkojaPeSfSK/gox+Po0164/Jz816GGHLOa
-	 Qi6Tj3296YcxAgcuYWgr2R3NMRGmQqa5NJVpZ6K8=
+	b=EHWOU65fRrUt1qOOvugcW4AlW0dWO2AxCeFSeaemBUJAvq/MKlGkP5ZdqwWDNPsx/
+	 7lOu/RqxSNtMrbyHcrEIqSaf+WtrbyYeGzd9f3j7hATIK7FuN+Dt2jdUBwv72IDaRc
+	 X/0S7Qz/009RAZEEPHS1JiFPw7c5UokWOuu8CG+g=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Neil Armstrong <neil.armstrong@linaro.org>,
-	Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+	Shengjiu Wang <shengjiu.wang@nxp.com>,
+	Iuliana Prodan <iuliana.prodan@nxp.com>,
+	Mark Brown <broonie@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 5.15 197/567] drm/bridge: lt9611: fix clock calculation
-Date: Tue,  7 Mar 2023 17:58:53 +0100
-Message-Id: <20230307165914.477911544@linuxfoundation.org>
+Subject: [PATCH 5.15 188/567] ASoC: fsl_sai: initialize is_dsp_mode flag
+Date: Tue,  7 Mar 2023 17:58:44 +0100
+Message-Id: <20230307165914.114142639@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307165905.838066027@linuxfoundation.org>
 References: <20230307165905.838066027@linuxfoundation.org>
@@ -35,104 +36,40 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From: Shengjiu Wang <shengjiu.wang@nxp.com>
 
-[ Upstream commit 2576eb26494eb0509dd9ceb0cd27771a7a5e3674 ]
+[ Upstream commit a23924b7dd7b748fff8e305e1daf590fed2af21b ]
 
-Instead of having several fixed values for the pcr register, calculate
-it before programming. This allows the bridge to support most of the
-display modes.
+Initialize is_dsp_mode flag in the beginning of function
+fsl_sai_set_dai_fmt_tr().
 
-Fixes: 23278bf54afe ("drm/bridge: Introduce LT9611 DSI to HDMI bridge")
-Reviewed-by: Neil Armstrong <neil.armstrong@linaro.org>
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Neil Armstrong <neil.armstrong@linaro.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20230118081658.2198520-6-dmitry.baryshkov@linaro.org
+When the DAIFMT is DAIFMT_DSP_B the first time, is_dsp_mode is
+true, then the second time DAIFMT is DAIFMT_I2S, is_dsp_mode
+still true, which is a wrong state. So need to initialize
+is_dsp_mode flag every time.
+
+Fixes: a3f7dcc9cc03 ("ASoC: fsl-sai: Add SND_SOC_DAIFMT_DSP_A/B support.")
+Signed-off-by: Shengjiu Wang <shengjiu.wang@nxp.com>
+Reviewed-by: Iuliana Prodan <iuliana.prodan@nxp.com>
+Link: https://lore.kernel.org/r/1673852874-32200-1-git-send-email-shengjiu.wang@nxp.com
+Signed-off-by: Mark Brown <broonie@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/bridge/lontium-lt9611.c | 32 +++++++++++--------------
- 1 file changed, 14 insertions(+), 18 deletions(-)
+ sound/soc/fsl/fsl_sai.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/drivers/gpu/drm/bridge/lontium-lt9611.c b/drivers/gpu/drm/bridge/lontium-lt9611.c
-index 4925566dfc54f..bb13511dd4263 100644
---- a/drivers/gpu/drm/bridge/lontium-lt9611.c
-+++ b/drivers/gpu/drm/bridge/lontium-lt9611.c
-@@ -190,8 +190,9 @@ static void lt9611_mipi_video_setup(struct lt9611 *lt9611,
- 	regmap_write(lt9611->regmap, 0x831b, (u8)(hsync_porch % 256));
- }
+diff --git a/sound/soc/fsl/fsl_sai.c b/sound/soc/fsl/fsl_sai.c
+index 5ec504ff060a5..6a12cbd43084b 100644
+--- a/sound/soc/fsl/fsl_sai.c
++++ b/sound/soc/fsl/fsl_sai.c
+@@ -231,6 +231,7 @@ static int fsl_sai_set_dai_fmt_tr(struct snd_soc_dai *cpu_dai,
+ 	if (!sai->is_lsb_first)
+ 		val_cr4 |= FSL_SAI_CR4_MF;
  
--static void lt9611_pcr_setup(struct lt9611 *lt9611, const struct drm_display_mode *mode)
-+static void lt9611_pcr_setup(struct lt9611 *lt9611, const struct drm_display_mode *mode, unsigned int postdiv)
- {
-+	unsigned int pcr_m = mode->clock * 5 * postdiv / 27000;
- 	const struct reg_sequence reg_cfg[] = {
- 		{ 0x830b, 0x01 },
- 		{ 0x830c, 0x10 },
-@@ -234,24 +235,14 @@ static void lt9611_pcr_setup(struct lt9611 *lt9611, const struct drm_display_mod
- 	else
- 		regmap_multi_reg_write(lt9611->regmap, reg_cfg, ARRAY_SIZE(reg_cfg));
- 
--	switch (mode->hdisplay) {
--	case 640:
--		regmap_write(lt9611->regmap, 0x8326, 0x14);
--		break;
--	case 1920:
--		regmap_write(lt9611->regmap, 0x8326, 0x37);
--		break;
--	case 3840:
--		regmap_write(lt9611->regmap, 0x8326, 0x37);
--		break;
--	}
-+	regmap_write(lt9611->regmap, 0x8326, pcr_m);
- 
- 	/* pcr rst */
- 	regmap_write(lt9611->regmap, 0x8011, 0x5a);
- 	regmap_write(lt9611->regmap, 0x8011, 0xfa);
- }
- 
--static int lt9611_pll_setup(struct lt9611 *lt9611, const struct drm_display_mode *mode)
-+static int lt9611_pll_setup(struct lt9611 *lt9611, const struct drm_display_mode *mode, unsigned int *postdiv)
- {
- 	unsigned int pclk = mode->clock;
- 	const struct reg_sequence reg_cfg[] = {
-@@ -269,12 +260,16 @@ static int lt9611_pll_setup(struct lt9611 *lt9611, const struct drm_display_mode
- 
- 	regmap_multi_reg_write(lt9611->regmap, reg_cfg, ARRAY_SIZE(reg_cfg));
- 
--	if (pclk > 150000)
-+	if (pclk > 150000) {
- 		regmap_write(lt9611->regmap, 0x812d, 0x88);
--	else if (pclk > 70000)
-+		*postdiv = 1;
-+	} else if (pclk > 70000) {
- 		regmap_write(lt9611->regmap, 0x812d, 0x99);
--	else
-+		*postdiv = 2;
-+	} else {
- 		regmap_write(lt9611->regmap, 0x812d, 0xaa);
-+		*postdiv = 4;
-+	}
- 
- 	/*
- 	 * first divide pclk by 2 first
-@@ -917,14 +912,15 @@ static void lt9611_bridge_mode_set(struct drm_bridge *bridge,
- {
- 	struct lt9611 *lt9611 = bridge_to_lt9611(bridge);
- 	struct hdmi_avi_infoframe avi_frame;
-+	unsigned int postdiv;
- 	int ret;
- 
- 	lt9611_bridge_pre_enable(bridge);
- 
- 	lt9611_mipi_input_digital(lt9611, mode);
--	lt9611_pll_setup(lt9611, mode);
-+	lt9611_pll_setup(lt9611, mode, &postdiv);
- 	lt9611_mipi_video_setup(lt9611, mode);
--	lt9611_pcr_setup(lt9611, mode);
-+	lt9611_pcr_setup(lt9611, mode, postdiv);
- 
- 	ret = drm_hdmi_avi_infoframe_from_display_mode(&avi_frame,
- 						       &lt9611->connector,
++	sai->is_dsp_mode = false;
+ 	/* DAI mode */
+ 	switch (fmt & SND_SOC_DAIFMT_FORMAT_MASK) {
+ 	case SND_SOC_DAIFMT_I2S:
 -- 
 2.39.2
 
