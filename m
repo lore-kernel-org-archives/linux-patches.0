@@ -1,27 +1,30 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C5C81AD5D
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:30:11 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 460AAC433D2;
-	Tue,  7 Mar 2023 18:30:11 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D237EAD5D
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:30:14 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 51326C433EF;
+	Tue,  7 Mar 2023 18:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678213811;
-	bh=VFABNXz6YJLwZi48r45C/u9aIofyAedZc1N3k3YN1v8=;
+	s=korg; t=1678213814;
+	bh=kMpV1bU0a6OCUyh8n5laN0AE9zA8KycxV71miZMvmcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=K4MZa+5EQ/7aKfRUs1pMvqyR2RrF3MElWitQ24iFc5ar/wA+Mg5ZQS0TZ1I9EApN4
-	 a+ULFHFwljNExTeIIhxWItd4b2ofaK2c7t3rXopi0AyfEE7ARkMH98wqindJcnI/BY
-	 CPZx2Ct2J4gBDPSkGlaimnT6Ds1cRUFJ6U1DUcNU=
+	b=skYUwP7Pv1cV5kQ7dYBm/Kxqx38KSGGVdOoqFfKnLwGO0QhIrUeyPO8fsHgITLPfC
+	 DyhBU9mUNV1w/J0qkEaEsKxjEH6UUr0GN4DJ8AA/+6n0NbguVC911WatWQS1jTxUyb
+	 Y1SXlD/38rrkCyl59lcitTFflSqu/7Nz3vhglPgE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Vitaly Prosyak <vitaly.prosyak@amd.com>,
+	Nevenko Stupar <Nevenko.Stupar@amd.com>,
+	Alex Hung <alex.hung@amd.com>,
+	Vladimir Stempen <vladimir.stempen@amd.com>,
+	Daniel Wheeler <daniel.wheeler@amd.com>,
 	Alex Deucher <alexander.deucher@amd.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 626/885] Revert "drm/amdgpu: TA unload messages are not actually sent to psp when amdgpu is uninstalled"
-Date: Tue,  7 Mar 2023 17:59:20 +0100
-Message-Id: <20230307170029.423030351@linuxfoundation.org>
+Subject: [PATCH 6.1 627/885] drm/amd/display: fix FCLK pstate change underflow
+Date: Tue,  7 Mar 2023 17:59:21 +0100
+Message-Id: <20230307170029.458679167@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,70 +38,46 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Vitaly Prosyak <vitaly.prosyak@amd.com>
+From: Vladimir Stempen <vladimir.stempen@amd.com>
 
-[ Upstream commit 39934d3ed5725c5e3570ed1b67f612f1ea60ce03 ]
+[ Upstream commit 972243f973eb0821084e5833d5f7f4ed025f42da ]
 
-This reverts commit fac53471d0ea9693d314aa2df08d62b2e7e3a0f8.
-The following change: move the drm_dev_unplug call after
-amdgpu_driver_unload_kms in amdgpu_pci_remove. The reason is
-the following: amdgpu_pci_remove calls drm_dev_unregister
-and it should be called first to ensure userspace can't access the
-device instance anymore. If we call drm_dev_unplug after
-amdgpu_driver_unload_kms then we observe IGT PCI software unplug
-test failure (kernel hung) for all ASICs. This is how this
-regression was found.
+[Why]
+Currently we set FCLK p-state change
+watermark calculated based on dummy
+p-state latency when UCLK p-state is
+not supported
 
-After this revert, the following commands do work not, but it would
-be fixed in the next commit:
- - sudo modprobe -r amdgpu
- - sudo modprobe amdgpu
+[How]
+Calculate FCLK p-state change watermark
+based on on FCLK pstate change latency
+in case UCLK p-state is not supported
 
-Signed-off-by: Vitaly Prosyak <vitaly.prosyak@amd.com>
-Reviewed-by Alex Deucher <alexander.deucher@amd.com>
+Reviewed-by: Nevenko Stupar <Nevenko.Stupar@amd.com>
+Acked-by: Alex Hung <alex.hung@amd.com>
+Signed-off-by: Vladimir Stempen <vladimir.stempen@amd.com>
+Tested-by: Daniel Wheeler <daniel.wheeler@amd.com>
 Signed-off-by: Alex Deucher <alexander.deucher@amd.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/amd/amdgpu/amdgpu_device.c | 3 ++-
- drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c    | 4 ++--
- 2 files changed, 4 insertions(+), 3 deletions(-)
+ drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-index a21b3f66fd708..824b0b356b3ce 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_device.c
-@@ -4012,7 +4012,8 @@ void amdgpu_device_fini_hw(struct amdgpu_device *adev)
- 
- 	amdgpu_gart_dummy_page_fini(adev);
- 
--	amdgpu_device_unmap_mmio(adev);
-+	if (drm_dev_is_unplugged(adev_to_drm(adev)))
-+		amdgpu_device_unmap_mmio(adev);
- 
- }
- 
-diff --git a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-index 2e5d78b6635c4..dfbeef2c4a9e2 100644
---- a/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-+++ b/drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c
-@@ -2226,6 +2226,8 @@ amdgpu_pci_remove(struct pci_dev *pdev)
- 	struct drm_device *dev = pci_get_drvdata(pdev);
- 	struct amdgpu_device *adev = drm_to_adev(dev);
- 
-+	drm_dev_unplug(dev);
-+
- 	if (adev->pm.rpm_mode != AMDGPU_RUNPM_NONE) {
- 		pm_runtime_get_sync(dev->dev);
- 		pm_runtime_forbid(dev->dev);
-@@ -2265,8 +2267,6 @@ amdgpu_pci_remove(struct pci_dev *pdev)
- 
- 	amdgpu_driver_unload_kms(dev);
- 
--	drm_dev_unplug(dev);
--
- 	/*
- 	 * Flush any in flight DMA operations from device.
- 	 * Clear the Bus Master Enable bit and then wait on the PCIe Device
+diff --git a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+index d90216d2fe3a8..04cc96e700981 100644
+--- a/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
++++ b/drivers/gpu/drm/amd/display/dc/dml/dcn32/dcn32_fpu.c
+@@ -1963,6 +1963,10 @@ void dcn32_calculate_wm_and_dlg_fpu(struct dc *dc, struct dc_state *context,
+ 		 */
+ 		context->bw_ctx.bw.dcn.watermarks.a = context->bw_ctx.bw.dcn.watermarks.c;
+ 		context->bw_ctx.bw.dcn.watermarks.a.cstate_pstate.pstate_change_ns = 0;
++		/* Calculate FCLK p-state change watermark based on FCLK pstate change latency in case
++		 * UCLK p-state is not supported, to avoid underflow in case FCLK pstate is supported
++		 */
++		context->bw_ctx.bw.dcn.watermarks.a.cstate_pstate.fclk_pstate_change_ns = get_fclk_watermark(&context->bw_ctx.dml, pipes, pipe_cnt) * 1000;
+ 	} else {
+ 		/* Set A:
+ 		 * All clocks min.
 -- 
 2.39.2
 
