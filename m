@@ -1,26 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 62376BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:53:58 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B181AC433EF;
-	Tue,  7 Mar 2023 17:53:57 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 68D93BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:01 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C2799C433AA;
+	Tue,  7 Mar 2023 17:54:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211638;
-	bh=If8t++W7o9jwDAXYCDe6bZ2uaq27PXPrAEmWO8iRs4o=;
+	s=korg; t=1678211641;
+	bh=t3xQDR4r0a/O2lHu8pZiswoxjt17Lh6WORp24in6MDI=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=Q077NvnTFXqqRbMuG3k89Yd3kzI5phf5j3Cj2WcN73T1SpOoa4de10RIJdQDBk//+
-	 NIqjHR9ShJiXw98rfRmEE2poE39BGNq3wdcc5842AJ4v1zcX+msU9wE6jbqLkeD4HZ
-	 Pz4Jrd/SijflaO6vBqPBkM/yxUOI0yRMAZh0pny0=
+	b=GD9UXxqhF9S+EfJXNG7ftYAtDm4GDV6w/iV1rGNg5LelFOGDmwOvgysRpLuDyrl8o
+	 WYx7MXaUD+nmugLftBNDrIETiHERE0tbM5s3VVAB6VgA/cbPQkLD+UxHBNlb3gxyoE
+	 lHtbh+aQCJwb+2uR/Dacpevd1QL0ARFNvVa5U9so=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dave Jiang <dave.jiang@intel.com>,
-	Dan Williams <dan.j.williams@intel.com>
-Subject: [PATCH 6.2 0895/1001] cxl/pmem: Fix nvdimm registration races
-Date: Tue,  7 Mar 2023 18:01:07 +0100
-Message-Id: <20230307170100.817078484@linuxfoundation.org>
+	"Stahl, Michael" <mstahl@moba.de>,
+	Dmitry Torokhov <dmitry.torokhov@gmail.com>
+Subject: [PATCH 6.2 0896/1001] Input: exc3000 - properly stop timer on shutdown
+Date: Tue,  7 Mar 2023 18:01:08 +0100
+Message-Id: <20230307170100.864912496@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,141 +34,48 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dan Williams <dan.j.williams@intel.com>
+From: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 
-commit f57aec443c24d2e8e1f3b5b4856aea12ddda4254 upstream.
+commit 79c81d137d36f9635bbcbc3916c0cccb418a61dd upstream.
 
-A loop of the form:
+We need to stop the timer on driver unbind or probe failures, otherwise
+we get UAF/Oops.
 
-    while true; do modprobe cxl_pci; modprobe -r cxl_pci; done
-
-...fails with the following crash signature:
-
-    BUG: kernel NULL pointer dereference, address: 0000000000000040
-    [..]
-    RIP: 0010:cxl_internal_send_cmd+0x5/0xb0 [cxl_core]
-    [..]
-    Call Trace:
-     <TASK>
-     cxl_pmem_ctl+0x121/0x240 [cxl_pmem]
-     nvdimm_get_config_data+0xd6/0x1a0 [libnvdimm]
-     nd_label_data_init+0x135/0x7e0 [libnvdimm]
-     nvdimm_probe+0xd6/0x1c0 [libnvdimm]
-     nvdimm_bus_probe+0x7a/0x1e0 [libnvdimm]
-     really_probe+0xde/0x380
-     __driver_probe_device+0x78/0x170
-     driver_probe_device+0x1f/0x90
-     __device_attach_driver+0x85/0x110
-     bus_for_each_drv+0x7d/0xc0
-     __device_attach+0xb4/0x1e0
-     bus_probe_device+0x9f/0xc0
-     device_add+0x445/0x9c0
-     nd_async_device_register+0xe/0x40 [libnvdimm]
-     async_run_entry_fn+0x30/0x130
-
-...namely that the bottom half of async nvdimm device registration runs
-after the CXL has already torn down the context that cxl_pmem_ctl()
-needs. Unlike the ACPI NFIT case that benefits from launching multiple
-nvdimm device registrations in parallel from those listed in the table,
-CXL is already marked PROBE_PREFER_ASYNCHRONOUS. So provide for a
-synchronous registration path to preclude this scenario.
-
-Fixes: 21083f51521f ("cxl/pmem: Register 'pmem' / cxl_nvdimm devices")
-Cc: <stable@vger.kernel.org>
-Reported-by: Dave Jiang <dave.jiang@intel.com>
-Signed-off-by: Dan Williams <dan.j.williams@intel.com>
+Fixes: 7e577a17f2ee ("Input: add I2C attached EETI EXC3000 multi touch driver")
+Reported-by: "Stahl, Michael" <mstahl@moba.de>
+Link: https://lore.kernel.org/r/Y9dK57BFqtlf8NmN@google.com
+Cc: stable@vger.kernel.org
+Signed-off-by: Dmitry Torokhov <dmitry.torokhov@gmail.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/cxl/pmem.c         |    1 +
- drivers/nvdimm/bus.c       |   19 ++++++++++++++++---
- drivers/nvdimm/dimm_devs.c |    5 ++++-
- drivers/nvdimm/nd-core.h   |    1 +
- include/linux/libnvdimm.h  |    3 +++
- 5 files changed, 25 insertions(+), 4 deletions(-)
+ drivers/input/touchscreen/exc3000.c |   10 ++++++++++
+ 1 file changed, 10 insertions(+)
 
---- a/drivers/cxl/pmem.c
-+++ b/drivers/cxl/pmem.c
-@@ -76,6 +76,7 @@ static int cxl_nvdimm_probe(struct devic
- 		return rc;
- 
- 	set_bit(NDD_LABELING, &flags);
-+	set_bit(NDD_REGISTER_SYNC, &flags);
- 	set_bit(ND_CMD_GET_CONFIG_SIZE, &cmd_mask);
- 	set_bit(ND_CMD_GET_CONFIG_DATA, &cmd_mask);
- 	set_bit(ND_CMD_SET_CONFIG_DATA, &cmd_mask);
---- a/drivers/nvdimm/bus.c
-+++ b/drivers/nvdimm/bus.c
-@@ -508,7 +508,7 @@ static void nd_async_device_unregister(v
- 	put_device(dev);
+--- a/drivers/input/touchscreen/exc3000.c
++++ b/drivers/input/touchscreen/exc3000.c
+@@ -109,6 +109,11 @@ static inline void exc3000_schedule_time
+ 	mod_timer(&data->timer, jiffies + msecs_to_jiffies(EXC3000_TIMEOUT_MS));
  }
  
--void nd_device_register(struct device *dev)
-+static void __nd_device_register(struct device *dev, bool sync)
- {
- 	if (!dev)
- 		return;
-@@ -531,11 +531,24 @@ void nd_device_register(struct device *d
- 	}
- 	get_device(dev);
- 
--	async_schedule_dev_domain(nd_async_device_register, dev,
--				  &nd_async_domain);
-+	if (sync)
-+		nd_async_device_register(dev, 0);
-+	else
-+		async_schedule_dev_domain(nd_async_device_register, dev,
-+					  &nd_async_domain);
++static void exc3000_shutdown_timer(void *timer)
++{
++	timer_shutdown_sync(timer);
 +}
 +
-+void nd_device_register(struct device *dev)
-+{
-+	__nd_device_register(dev, false);
- }
- EXPORT_SYMBOL(nd_device_register);
- 
-+void nd_device_register_sync(struct device *dev)
-+{
-+	__nd_device_register(dev, true);
-+}
-+
- void nd_device_unregister(struct device *dev, enum nd_async_mode mode)
+ static int exc3000_read_frame(struct exc3000_data *data, u8 *buf)
  {
- 	bool killed;
---- a/drivers/nvdimm/dimm_devs.c
-+++ b/drivers/nvdimm/dimm_devs.c
-@@ -624,7 +624,10 @@ struct nvdimm *__nvdimm_create(struct nv
- 	nvdimm->sec.ext_flags = nvdimm_security_flags(nvdimm, NVDIMM_MASTER);
- 	device_initialize(dev);
- 	lockdep_set_class(&dev->mutex, &nvdimm_key);
--	nd_device_register(dev);
-+	if (test_bit(NDD_REGISTER_SYNC, &flags))
-+		nd_device_register_sync(dev);
-+	else
-+		nd_device_register(dev);
+ 	struct i2c_client *client = data->client;
+@@ -386,6 +391,11 @@ static int exc3000_probe(struct i2c_clie
+ 	if (error)
+ 		return error;
  
- 	return nvdimm;
- }
---- a/drivers/nvdimm/nd-core.h
-+++ b/drivers/nvdimm/nd-core.h
-@@ -107,6 +107,7 @@ int nvdimm_bus_create_ndctl(struct nvdim
- void nvdimm_bus_destroy_ndctl(struct nvdimm_bus *nvdimm_bus);
- void nd_synchronize(void);
- void nd_device_register(struct device *dev);
-+void nd_device_register_sync(struct device *dev);
- struct nd_label_id;
- char *nd_label_gen_id(struct nd_label_id *label_id, const uuid_t *uuid,
- 		      u32 flags);
---- a/include/linux/libnvdimm.h
-+++ b/include/linux/libnvdimm.h
-@@ -41,6 +41,9 @@ enum {
- 	 */
- 	NDD_INCOHERENT = 7,
- 
-+	/* dimm provider wants synchronous registration by __nvdimm_create() */
-+	NDD_REGISTER_SYNC = 8,
++	error = devm_add_action_or_reset(&client->dev, exc3000_shutdown_timer,
++					 &data->timer);
++	if (error)
++		return error;
 +
- 	/* need to set a limit somewhere, but yes, this is likely overkill */
- 	ND_IOCTL_MAX_BUFLEN = SZ_4M,
- 	ND_CMD_MAX_ELEM = 5,
+ 	error = devm_request_threaded_irq(&client->dev, client->irq,
+ 					  NULL, exc3000_interrupt, IRQF_ONESHOT,
+ 					  client->name, data);
 
 
