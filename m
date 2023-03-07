@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95CABBA48
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:14:29 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E790C433EF;
-	Tue,  7 Mar 2023 18:14:28 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id C3D71BA48
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:14:32 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 29522C433EF;
+	Tue,  7 Mar 2023 18:14:31 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212869;
-	bh=bgJat9e200h2YSsyIdzGEs6f6MG3hxGIJfbxabKFI2M=;
+	s=korg; t=1678212872;
+	bh=rQ8K/nxpmkvedn/ysiWgrzDJ8ZECXdrkILNVFSxAcEk=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=igqvCew5DzzZGe+8+RZaRDyJN/87ZS6rkL1lFG/yknyQVyo42SGSwkrOYV84dIXC3
-	 Lxz43Ye9t+rapIAiWnfLw4TkI9ltMPnys9lhcLFcu6hYRU1Q5EbyxqO629VKjbl+0o
-	 8sv0Lwk/+0hYV46YYuuCueFdqhgg8hZ5ruwQiP8E=
+	b=kWE0uO3ZLf4ACDg2HilRdEEEOoR0Dv0BLR4mZBApoRWWaVb8F68h3HGPbF9qU6+Ev
+	 kQ07bgw/Isr20IioV/kAcmVY5dezyVw0cr2wVxLJRbzclltvukmr0No0zG1NMpl8P3
+	 aLKbHGYdiuKNHGbtPJmFWazzxyOIKWgMLLYaHoH4=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Miles Chen <miles.chen@mediatek.com>,
-	AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>,
+	Rob Clark <robdclark@chromium.org>,
 	Chun-Kuang Hu <chunkuang.hu@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 324/885] drm/mediatek: Use NULL instead of 0 for NULL pointer
-Date: Tue,  7 Mar 2023 17:54:18 +0100
-Message-Id: <20230307170016.250086110@linuxfoundation.org>
+Subject: [PATCH 6.1 325/885] drm/mediatek: Drop unbalanced obj unref
+Date: Tue,  7 Mar 2023 17:54:19 +0100
+Message-Id: <20230307170016.300046921@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,34 +35,34 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Miles Chen <miles.chen@mediatek.com>
+From: Rob Clark <robdclark@chromium.org>
 
-[ Upstream commit 4744cde06f57dd6fbaac468663b1fe2f653eaa16 ]
+[ Upstream commit 4deef811828e87e26a978d5d6433b261d4713849 ]
 
-Use NULL for NULL pointer to fix the following sparse warning:
-drivers/gpu/drm/mediatek/mtk_drm_gem.c:265:27: sparse: warning: Using plain integer as NULL pointer
+In the error path, mtk_drm_gem_object_mmap() is dropping an obj
+reference that it doesn't own.
 
-Fixes: 3df64d7b0a4f ("drm/mediatek: Implement gem prime vmap/vunmap function")
-Signed-off-by: Miles Chen <miles.chen@mediatek.com>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@collabora.com>
-Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20230111024443.24559-1-miles.chen@mediatek.com/
+Fixes: 119f5173628a ("drm/mediatek: Add DRM Driver for Mediatek SoC MT8173.")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Link: https://patchwork.kernel.org/project/linux-mediatek/patch/20230119231255.2883365-1-robdclark@gmail.com/
 Signed-off-by: Chun-Kuang Hu <chunkuang.hu@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/mediatek/mtk_drm_gem.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/mediatek/mtk_drm_gem.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/drivers/gpu/drm/mediatek/mtk_drm_gem.c b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-index 47e96b0289f98..06aadd5e7f5ba 100644
+index 06aadd5e7f5ba..6c204ccfb9ece 100644
 --- a/drivers/gpu/drm/mediatek/mtk_drm_gem.c
 +++ b/drivers/gpu/drm/mediatek/mtk_drm_gem.c
-@@ -262,6 +262,6 @@ void mtk_drm_gem_prime_vunmap(struct drm_gem_object *obj,
- 		return;
+@@ -164,8 +164,6 @@ static int mtk_drm_gem_object_mmap(struct drm_gem_object *obj,
  
- 	vunmap(vaddr);
--	mtk_gem->kvaddr = 0;
-+	mtk_gem->kvaddr = NULL;
- 	kfree(mtk_gem->pages);
+ 	ret = dma_mmap_attrs(priv->dma_dev, vma, mtk_gem->cookie,
+ 			     mtk_gem->dma_addr, obj->size, mtk_gem->dma_attrs);
+-	if (ret)
+-		drm_gem_vm_close(vma);
+ 
+ 	return ret;
  }
 -- 
 2.39.2
