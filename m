@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 97274BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:56:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1CDEBC433EF;
-	Tue,  7 Mar 2023 17:55:59 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 79FA6BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:56:03 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id E62D8C4339C;
+	Tue,  7 Mar 2023 17:56:02 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211760;
-	bh=qyS0z/UqbA9OrrWqUuYmYeMTglhcsQ3kXYVrP/qQlKk=;
+	s=korg; t=1678211763;
+	bh=f8D20QC3CJzX/ndMRx1yYHKDtzyAqslqUxzqFV+byVw=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=qAnxx5/jhenICzLVuuTh/zUML+qMJ14BlqB8pxd9Y+00P9kXlpe7hL3FZgrAO9skX
-	 qx4MYf5K7sxqRRU7GZh1hj5DYmlZ7JY/Y6gH8c26c2B2iZr/BJ68JODk3v1Pnp8/R7
-	 xGxiK4SrntVArEn4ACkZ9FP/RND6lQwInABX2O6M=
+	b=WZ2ga/11E+bYHWk20zYhG/c3ZTFYbCM7r3nqu82qk8d4ulSB6OE0OVU51VnCBAb95
+	 HMeC8TSgL+PT71tnnzOFxPaLI+SyDBljGnhhwXBxW9DVBC4KgHGpkXlheS6Erwl0DA
+	 CWpNP2g9CY8Ls4Rv5LXHX7GWIn5mtOMvy3qiliN8=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Arun Easi <aeasi@marvell.com>,
-	Nilesh Javali <njavali@marvell.com>,
-	Himanshu Madhani <himanshu.madhani@oracle.com>,
-	"Martin K. Petersen" <martin.petersen@oracle.com>
-Subject: [PATCH 6.2 0960/1001] scsi: qla2xxx: Fix DMA-API call trace on NVMe LS requests
-Date: Tue,  7 Mar 2023 18:02:12 +0100
-Message-Id: <20230307170103.849200352@linuxfoundation.org>
+	Conor Dooley <conor.dooley@microchip.com>,
+	Guo Ren <guoren@kernel.org>,
+	Palmer Dabbelt <palmer@rivosinc.com>
+Subject: [PATCH 6.2 0969/1001] RISC-V: add a spin_shadow_stack declaration
+Date: Tue,  7 Mar 2023 18:02:21 +0100
+Message-Id: <20230307170104.265482008@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,87 +35,39 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Arun Easi <aeasi@marvell.com>
+From: Conor Dooley <conor.dooley@microchip.com>
 
-commit c75e6aef5039830cce5d4cf764dd204522f89e6b upstream.
+commit eb9be8310c58c166f9fae3b71c0ad9d6741b4897 upstream.
 
-The following message and call trace was seen with debug kernels:
+The patchwork automation reported a sparse complaint that
+spin_shadow_stack was not declared and should be static:
+../arch/riscv/kernel/traps.c:335:15: warning: symbol 'spin_shadow_stack' was not declared. Should it be static?
 
-DMA-API: qla2xxx 0000:41:00.0: device driver failed to check map
-error [device address=0x00000002a3ff38d8] [size=1024 bytes] [mapped as
-single]
-WARNING: CPU: 0 PID: 2930 at kernel/dma/debug.c:1017
-	 check_unmap+0xf42/0x1990
+However, this is used in entry.S and therefore shouldn't be static.
+The same applies to the shadow_stack that this pseudo spinlock is
+trying to protect, so do like its charge and add a declaration to
+thread_info.h
 
-Call Trace:
-	debug_dma_unmap_page+0xc9/0x100
-	qla_nvme_ls_unmap+0x141/0x210 [qla2xxx]
-
-Remove DMA mapping from the driver altogether, as it is already done by FC
-layer. This prevents the warning.
-
-Fixes: c85ab7d9e27a ("scsi: qla2xxx: Fix missed DMA unmap for NVMe ls requests")
+Signed-off-by: Conor Dooley <conor.dooley@microchip.com>
+Fixes: 7e1864332fbc ("riscv: fix race when vmap stack overflow")
+Reviewed-by: Guo Ren <guoren@kernel.org>
+Link: https://lore.kernel.org/r/20230210185945.915806-1-conor@kernel.org
 Cc: stable@vger.kernel.org
-Signed-off-by: Arun Easi <aeasi@marvell.com>
-Signed-off-by: Nilesh Javali <njavali@marvell.com>
-Reviewed-by: Himanshu Madhani <himanshu.madhani@oracle.com>
-Signed-off-by: Martin K. Petersen <martin.petersen@oracle.com>
+Signed-off-by: Palmer Dabbelt <palmer@rivosinc.com>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/scsi/qla2xxx/qla_nvme.c |   19 +------------------
- 1 file changed, 1 insertion(+), 18 deletions(-)
+ arch/riscv/include/asm/thread_info.h |    1 +
+ 1 file changed, 1 insertion(+)
 
---- a/drivers/scsi/qla2xxx/qla_nvme.c
-+++ b/drivers/scsi/qla2xxx/qla_nvme.c
-@@ -170,18 +170,6 @@ out:
- 	qla2xxx_rel_qpair_sp(sp->qpair, sp);
- }
+--- a/arch/riscv/include/asm/thread_info.h
++++ b/arch/riscv/include/asm/thread_info.h
+@@ -43,6 +43,7 @@
+ #ifndef __ASSEMBLY__
  
--static void qla_nvme_ls_unmap(struct srb *sp, struct nvmefc_ls_req *fd)
--{
--	if (sp->flags & SRB_DMA_VALID) {
--		struct srb_iocb *nvme = &sp->u.iocb_cmd;
--		struct qla_hw_data *ha = sp->fcport->vha->hw;
--
--		dma_unmap_single(&ha->pdev->dev, nvme->u.nvme.cmd_dma,
--				 fd->rqstlen, DMA_TO_DEVICE);
--		sp->flags &= ~SRB_DMA_VALID;
--	}
--}
--
- static void qla_nvme_release_ls_cmd_kref(struct kref *kref)
- {
- 	struct srb *sp = container_of(kref, struct srb, cmd_kref);
-@@ -199,7 +187,6 @@ static void qla_nvme_release_ls_cmd_kref
+ extern long shadow_stack[SHADOW_OVERFLOW_STACK_SIZE / sizeof(long)];
++extern unsigned long spin_shadow_stack;
  
- 	fd = priv->fd;
- 
--	qla_nvme_ls_unmap(sp, fd);
- 	fd->done(fd, priv->comp_status);
- out:
- 	qla2x00_rel_sp(sp);
-@@ -365,13 +352,10 @@ static int qla_nvme_ls_req(struct nvme_f
- 	nvme->u.nvme.rsp_len = fd->rsplen;
- 	nvme->u.nvme.rsp_dma = fd->rspdma;
- 	nvme->u.nvme.timeout_sec = fd->timeout;
--	nvme->u.nvme.cmd_dma = dma_map_single(&ha->pdev->dev, fd->rqstaddr,
--	    fd->rqstlen, DMA_TO_DEVICE);
-+	nvme->u.nvme.cmd_dma = fd->rqstdma;
- 	dma_sync_single_for_device(&ha->pdev->dev, nvme->u.nvme.cmd_dma,
- 	    fd->rqstlen, DMA_TO_DEVICE);
- 
--	sp->flags |= SRB_DMA_VALID;
--
- 	rval = qla2x00_start_sp(sp);
- 	if (rval != QLA_SUCCESS) {
- 		ql_log(ql_log_warn, vha, 0x700e,
-@@ -379,7 +363,6 @@ static int qla_nvme_ls_req(struct nvme_f
- 		wake_up(&sp->nvme_ls_waitq);
- 		sp->priv = NULL;
- 		priv->sp = NULL;
--		qla_nvme_ls_unmap(sp, fd);
- 		qla2x00_rel_sp(sp);
- 		return rval;
- 	}
+ #include <asm/processor.h>
+ #include <asm/csr.h>
 
 
