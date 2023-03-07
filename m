@@ -1,29 +1,33 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BAF8CBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:47:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1FC82C433EF;
-	Tue,  7 Mar 2023 17:47:50 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BA223BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:47:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 01E72C433D2;
+	Tue,  7 Mar 2023 17:47:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211271;
-	bh=DV7mU1pwGhb/ojRJeXbCyHbWuzRtEhdUJc2RbMIhkEQ=;
+	s=korg; t=1678211274;
+	bh=5s41Ou5wHXW00sHFCrzuXX0PaP1OOK9Qr+OBvBX2YwU=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=tgeQ+wKj/eVVdhfkV5BYNz1m50wzXV8hl5+7FGgJdnlqY12PZjq4MdW8X7swgyyiu
-	 KXlTahUsI+CKtVz+GpMFzmV04QQyLXfejschdMq+y5GBbBYhLmpOMpj0oJijnCGKIs
-	 XaCqvvKHnpdi5C7v5NSUOjmxpnLsQdESNBubnNUA=
+	b=1xy3BJX1PMbbw1HdYgTX8nj8z92VgTeDNIAN6WTg8Bs+UzM4gTFNYMlUQRdVvbwBE
+	 EtFifMgnUkWcp+TGY578q94kzQG7DfW9rUuz1vw3t8Ih98vfaQhunmImiZwb48/Gok
+	 xX8/7WxLP7xXIYuVGJob5iJfVnKOLx+wh4C+KZqg=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	syzbot+5b04b49a7ec7226c7426@syzkaller.appspotmail.com,
-	Liu Shixin <liushixin2@huawei.com>,
-	"Fabio M. De Francesco" <fmdefrancesco@gmail.com>,
-	Viacheslav Dubeyko <slava@dubeyko.com>,
+	Heming Zhao <heming.zhao@suse.com>,
+	Joseph Qi <joseph.qi@linux.alibaba.com>,
+	Mark Fasheh <mark@fasheh.com>,
+	Joel Becker <jlbec@evilplan.org>,
+	Junxiao Bi <junxiao.bi@oracle.com>,
+	Changwei Ge <gechangwei@live.cn>,
+	Gang He <ghe@suse.com>,
+	Jun Piao <piaojun@huawei.com>,
 	Andrew Morton <akpm@linux-foundation.org>
-Subject: [PATCH 6.2 0791/1001] hfs: fix missing hfs_bnode_get() in __hfs_bnode_create
-Date: Tue,  7 Mar 2023 17:59:23 +0100
-Message-Id: <20230307170056.083173080@linuxfoundation.org>
+Subject: [PATCH 6.2 0809/1001] ocfs2: fix defrag path triggering jbd2 ASSERT
+Date: Tue,  7 Mar 2023 17:59:41 +0100
+Message-Id: <20230307170056.848990294@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,98 +41,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Liu Shixin <liushixin2@huawei.com>
+From: Heming Zhao via Ocfs2-devel <ocfs2-devel@oss.oracle.com>
 
-commit a9dc087fd3c484fd1ed18c5efb290efaaf44ce03 upstream.
+commit 60eed1e3d45045623e46944ebc7c42c30a4350f0 upstream.
 
-Syzbot found a kernel BUG in hfs_bnode_put():
+code path:
 
- kernel BUG at fs/hfs/bnode.c:466!
- invalid opcode: 0000 [#1] PREEMPT SMP KASAN
- CPU: 0 PID: 3634 Comm: kworker/u4:5 Not tainted 6.1.0-rc7-syzkaller-00190-g97ee9d1c1696 #0
- Hardware name: Google Google Compute Engine/Google Compute Engine, BIOS Google 10/26/2022
- Workqueue: writeback wb_workfn (flush-7:0)
- RIP: 0010:hfs_bnode_put+0x46f/0x480 fs/hfs/bnode.c:466
- Code: 8a 80 ff e9 73 fe ff ff 89 d9 80 e1 07 80 c1 03 38 c1 0f 8c a0 fe ff ff 48 89 df e8 db 8a 80 ff e9 93 fe ff ff e8 a1 68 2c ff <0f> 0b e8 9a 68 2c ff 0f 0b 0f 1f 84 00 00 00 00 00 55 41 57 41 56
- RSP: 0018:ffffc90003b4f258 EFLAGS: 00010293
- RAX: ffffffff825e318f RBX: 0000000000000000 RCX: ffff8880739dd7c0
- RDX: 0000000000000000 RSI: 0000000000000000 RDI: 0000000000000000
- RBP: ffffc90003b4f430 R08: ffffffff825e2d9b R09: ffffed10045157d1
- R10: ffffed10045157d1 R11: 1ffff110045157d0 R12: ffff8880228abe80
- R13: ffff88807016c000 R14: dffffc0000000000 R15: ffff8880228abe00
- FS:  0000000000000000(0000) GS:ffff8880b9800000(0000) knlGS:0000000000000000
- CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
- CR2: 00007fa6ebe88718 CR3: 000000001e93d000 CR4: 00000000003506f0
- DR0: 0000000000000000 DR1: 0000000000000000 DR2: 0000000000000000
- DR3: 0000000000000000 DR6: 00000000fffe0ff0 DR7: 0000000000000400
- Call Trace:
-  <TASK>
-  hfs_write_inode+0x1bc/0xb40
-  write_inode fs/fs-writeback.c:1440 [inline]
-  __writeback_single_inode+0x4d6/0x670 fs/fs-writeback.c:1652
-  writeback_sb_inodes+0xb3b/0x18f0 fs/fs-writeback.c:1878
-  __writeback_inodes_wb+0x125/0x420 fs/fs-writeback.c:1949
-  wb_writeback+0x440/0x7b0 fs/fs-writeback.c:2054
-  wb_check_start_all fs/fs-writeback.c:2176 [inline]
-  wb_do_writeback fs/fs-writeback.c:2202 [inline]
-  wb_workfn+0x827/0xef0 fs/fs-writeback.c:2235
-  process_one_work+0x877/0xdb0 kernel/workqueue.c:2289
-  worker_thread+0xb14/0x1330 kernel/workqueue.c:2436
-  kthread+0x266/0x300 kernel/kthread.c:376
-  ret_from_fork+0x1f/0x30 arch/x86/entry/entry_64.S:306
-  </TASK>
+ocfs2_ioctl_move_extents
+ ocfs2_move_extents
+  ocfs2_defrag_extent
+   __ocfs2_move_extent
+    + ocfs2_journal_access_di
+    + ocfs2_split_extent  //sub-paths call jbd2_journal_restart
+    + ocfs2_journal_dirty //crash by jbs2 ASSERT
 
-The BUG_ON() is triggered at here:
+crash stacks:
 
-/* Dispose of resources used by a node */
-void hfs_bnode_put(struct hfs_bnode *node)
-{
-	if (node) {
- 		<skipped>
- 		BUG_ON(!atomic_read(&node->refcnt)); <- we have issue here!!!!
- 		<skipped>
- 	}
-}
+PID: 11297  TASK: ffff974a676dcd00  CPU: 67  COMMAND: "defragfs.ocfs2"
+ #0 [ffffb25d8dad3900] machine_kexec at ffffffff8386fe01
+ #1 [ffffb25d8dad3958] __crash_kexec at ffffffff8395959d
+ #2 [ffffb25d8dad3a20] crash_kexec at ffffffff8395a45d
+ #3 [ffffb25d8dad3a38] oops_end at ffffffff83836d3f
+ #4 [ffffb25d8dad3a58] do_trap at ffffffff83833205
+ #5 [ffffb25d8dad3aa0] do_invalid_op at ffffffff83833aa6
+ #6 [ffffb25d8dad3ac0] invalid_op at ffffffff84200d18
+    [exception RIP: jbd2_journal_dirty_metadata+0x2ba]
+    RIP: ffffffffc09ca54a  RSP: ffffb25d8dad3b70  RFLAGS: 00010207
+    RAX: 0000000000000000  RBX: ffff9706eedc5248  RCX: 0000000000000000
+    RDX: 0000000000000001  RSI: ffff97337029ea28  RDI: ffff9706eedc5250
+    RBP: ffff9703c3520200   R8: 000000000f46b0b2   R9: 0000000000000000
+    R10: 0000000000000001  R11: 00000001000000fe  R12: ffff97337029ea28
+    R13: 0000000000000000  R14: ffff9703de59bf60  R15: ffff9706eedc5250
+    ORIG_RAX: ffffffffffffffff  CS: 0010  SS: 0018
+ #7 [ffffb25d8dad3ba8] ocfs2_journal_dirty at ffffffffc137fb95 [ocfs2]
+ #8 [ffffb25d8dad3be8] __ocfs2_move_extent at ffffffffc139a950 [ocfs2]
+ #9 [ffffb25d8dad3c80] ocfs2_defrag_extent at ffffffffc139b2d2 [ocfs2]
 
-By tracing the refcnt, I found the node is created by hfs_bmap_alloc()
-with refcnt 1.  Then the node is used by hfs_btree_write().  There is a
-missing of hfs_bnode_get() after find the node.  The issue happened in
-following path:
+Analysis
 
-<alloc>
- hfs_bmap_alloc
-   hfs_bnode_find
-     __hfs_bnode_create   <- allocate a new node with refcnt 1.
-   hfs_bnode_put          <- decrease the refcnt
+This bug has the same root cause of 'commit 7f27ec978b0e ("ocfs2: call
+ocfs2_journal_access_di() before ocfs2_journal_dirty() in
+ocfs2_write_end_nolock()")'.  For this bug, jbd2_journal_restart() is
+called by ocfs2_split_extent() during defragmenting.
 
-<write>
- hfs_btree_write
-   hfs_bnode_find
-     __hfs_bnode_create
-       hfs_bnode_findhash <- find the node without refcnt increased.
-   hfs_bnode_put	  <- trigger the BUG_ON() since refcnt is 0.
+How to fix
 
-Link: https://lkml.kernel.org/r/20221212021627.3766829-1-liushixin2@huawei.com
-Reported-by: syzbot+5b04b49a7ec7226c7426@syzkaller.appspotmail.com
-Signed-off-by: Liu Shixin <liushixin2@huawei.com>
-Cc: Fabio M. De Francesco <fmdefrancesco@gmail.com>
-Cc: Viacheslav Dubeyko <slava@dubeyko.com>
+For ocfs2_split_extent() can handle journal operations totally by itself.
+Caller doesn't need to call journal access/dirty pair, and caller only
+needs to call journal start/stop pair.  The fix method is to remove
+journal access/dirty from __ocfs2_move_extent().
+
+The discussion for this patch:
+https://oss.oracle.com/pipermail/ocfs2-devel/2023-February/000647.html
+
+Link: https://lkml.kernel.org/r/20230217003717.32469-1-heming.zhao@suse.com
+Signed-off-by: Heming Zhao <heming.zhao@suse.com>
+Reviewed-by: Joseph Qi <joseph.qi@linux.alibaba.com>
+Cc: Mark Fasheh <mark@fasheh.com>
+Cc: Joel Becker <jlbec@evilplan.org>
+Cc: Junxiao Bi <junxiao.bi@oracle.com>
+Cc: Changwei Ge <gechangwei@live.cn>
+Cc: Gang He <ghe@suse.com>
+Cc: Jun Piao <piaojun@huawei.com>
 Cc: <stable@vger.kernel.org>
 Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- fs/hfs/bnode.c |    1 +
- 1 file changed, 1 insertion(+)
+ fs/ocfs2/move_extents.c |   10 ----------
+ 1 file changed, 10 deletions(-)
 
---- a/fs/hfs/bnode.c
-+++ b/fs/hfs/bnode.c
-@@ -274,6 +274,7 @@ static struct hfs_bnode *__hfs_bnode_cre
- 		tree->node_hash[hash] = node;
- 		tree->node_hash_cnt++;
- 	} else {
-+		hfs_bnode_get(node2);
- 		spin_unlock(&tree->hash_lock);
- 		kfree(node);
- 		wait_event(node2->lock_wq, !test_bit(HFS_BNODE_NEW, &node2->flags));
+--- a/fs/ocfs2/move_extents.c
++++ b/fs/ocfs2/move_extents.c
+@@ -105,14 +105,6 @@ static int __ocfs2_move_extent(handle_t
+ 	 */
+ 	replace_rec.e_flags = ext_flags & ~OCFS2_EXT_REFCOUNTED;
+ 
+-	ret = ocfs2_journal_access_di(handle, INODE_CACHE(inode),
+-				      context->et.et_root_bh,
+-				      OCFS2_JOURNAL_ACCESS_WRITE);
+-	if (ret) {
+-		mlog_errno(ret);
+-		goto out;
+-	}
+-
+ 	ret = ocfs2_split_extent(handle, &context->et, path, index,
+ 				 &replace_rec, context->meta_ac,
+ 				 &context->dealloc);
+@@ -121,8 +113,6 @@ static int __ocfs2_move_extent(handle_t
+ 		goto out;
+ 	}
+ 
+-	ocfs2_journal_dirty(handle, context->et.et_root_bh);
+-
+ 	context->new_phys_cpos = new_p_cpos;
+ 
+ 	/*
 
 
