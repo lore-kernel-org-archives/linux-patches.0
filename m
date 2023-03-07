@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AA6FDBA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:15 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 10BBFC433EF;
-	Tue,  7 Mar 2023 17:29:14 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id BB536BA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:29:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 3099BC433EF;
+	Tue,  7 Mar 2023 17:29:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678210155;
-	bh=FSilbv4HR4QbEzADYQTTDeWnD1rrzZH60lJiXJawpoI=;
+	s=korg; t=1678210158;
+	bh=l7Z9bg4jndwu55P5yd249FYeJsfy6mqswdoxI3LJqDQ=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ys5A6FekhWPw4z5mQSSm+U7iGiCyaxNw5orTHbxkPixXLZx3lye3tu/jhNZGOt6yF
-	 0FK+FkzrC45eEJYK6XS7893FBqTLFWHMvmCK0TFb0qngef6HmYbg7CUXAp0KBCQyxf
-	 rYgbU7j/ISfrhym5yyRTxZHCv8mZBn1bUs+8gVW8=
+	b=a6z5928yL55STyWY8R5s2TbTXpjFVNrSo0LuPYNmawqi4KlhqKl04dXWJCfzzS2V5
+	 o3yMTwUiJMUlrg2L2d2aaHdHmf2GROhR/eJp/OjnzaoiQc5cMnvYc5085aNj6zwJIC
+	 tRF7F1PrnH7VRotleQBdKBQJ+P0++a3qmSllwM8s=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Dai Ngo <dai.ngo@oracle.com>,
+	Benjamin Coddington <bcodding@redhat.com>,
 	Jeff Layton <jlayton@kernel.org>,
 	Chuck Lever <chuck.lever@oracle.com>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0450/1001] NFSD: fix leaked reference count of nfsd4_ssc_umount_item
-Date: Tue,  7 Mar 2023 17:53:42 +0100
-Message-Id: <20230307170040.874749808@linuxfoundation.org>
+Subject: [PATCH 6.2 0451/1001] nfsd: fix race to check ls_layouts
+Date: Tue,  7 Mar 2023 17:53:43 +0100
+Message-Id: <20230307170040.921862442@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,52 +36,44 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Dai Ngo <dai.ngo@oracle.com>
+From: Benjamin Coddington <bcodding@redhat.com>
 
-[ Upstream commit 34e8f9ec4c9ac235f917747b23a200a5e0ec857b ]
+[ Upstream commit fb610c4dbc996415d57d7090957ecddd4fd64fb6 ]
 
-The reference count of nfsd4_ssc_umount_item is not decremented
-on error conditions. This prevents the laundromat from unmounting
-the vfsmount of the source file.
+Its possible for __break_lease to find the layout's lease before we've
+added the layout to the owner's ls_layouts list.  In that case, setting
+ls_recalled = true without actually recalling the layout will cause the
+server to never send a recall callback.
 
-This patch decrements the reference count of nfsd4_ssc_umount_item
-on error.
+Move the check for ls_layouts before setting ls_recalled.
 
-Fixes: f4e44b393389 ("NFSD: delay unmount source's export after inter-server copy completed.")
-Signed-off-by: Dai Ngo <dai.ngo@oracle.com>
+Fixes: c5c707f96fc9 ("nfsd: implement pNFS layout recalls")
+Signed-off-by: Benjamin Coddington <bcodding@redhat.com>
 Reviewed-by: Jeff Layton <jlayton@kernel.org>
 Signed-off-by: Chuck Lever <chuck.lever@oracle.com>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- fs/nfsd/nfs4proc.c | 12 ++++++++----
- 1 file changed, 8 insertions(+), 4 deletions(-)
+ fs/nfsd/nfs4layouts.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/fs/nfsd/nfs4proc.c b/fs/nfsd/nfs4proc.c
-index dbaf33398c827..e2dde8a1837be 100644
---- a/fs/nfsd/nfs4proc.c
-+++ b/fs/nfsd/nfs4proc.c
-@@ -1814,13 +1814,17 @@ nfsd4_copy(struct svc_rqst *rqstp, struct nfsd4_compound_state *cstate,
- out:
- 	return status;
- out_err:
-+	if (nfsd4_ssc_is_inter(copy)) {
-+		/*
-+		 * Source's vfsmount of inter-copy will be unmounted
-+		 * by the laundromat. Use copy instead of async_copy
-+		 * since async_copy->ss_nsui might not be set yet.
-+		 */
-+		refcount_dec(&copy->ss_nsui->nsui_refcnt);
-+	}
- 	if (async_copy)
- 		cleanup_async_copy(async_copy);
- 	status = nfserrno(-ENOMEM);
--	/*
--	 * source's vfsmount of inter-copy will be unmounted
--	 * by the laundromat
--	 */
- 	goto out;
- }
+diff --git a/fs/nfsd/nfs4layouts.c b/fs/nfsd/nfs4layouts.c
+index 3564d1c6f6104..e8a80052cb1ba 100644
+--- a/fs/nfsd/nfs4layouts.c
++++ b/fs/nfsd/nfs4layouts.c
+@@ -323,11 +323,11 @@ nfsd4_recall_file_layout(struct nfs4_layout_stateid *ls)
+ 	if (ls->ls_recalled)
+ 		goto out_unlock;
  
+-	ls->ls_recalled = true;
+-	atomic_inc(&ls->ls_stid.sc_file->fi_lo_recalls);
+ 	if (list_empty(&ls->ls_layouts))
+ 		goto out_unlock;
+ 
++	ls->ls_recalled = true;
++	atomic_inc(&ls->ls_stid.sc_file->fi_lo_recalls);
+ 	trace_nfsd_layout_recall(&ls->ls_stid.sc_stateid);
+ 
+ 	refcount_inc(&ls->ls_stid.sc_count);
 -- 
 2.39.2
 
