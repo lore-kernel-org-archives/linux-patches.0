@@ -1,29 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B0B01BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:02:34 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2F337C433A0;
-	Tue,  7 Mar 2023 18:02:34 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 87276BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:02:37 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 07439C433EF;
+	Tue,  7 Mar 2023 18:02:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212154;
-	bh=M7IfczXodcrT7t/Z05b9LHlutStZPQnkldW/g1OvM2U=;
+	s=korg; t=1678212157;
+	bh=UZxM7+bT71Dgy83bdohcWlm3OEw/8x0nTjlbBh/+eXc=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=zKnGvouFAQHHMZo8PhxRIWl262xIXb/MJ9u6H86cQ22XZ7lKcRCRy+2iwmKD7MLOI
-	 Pi6qB1+GiqbKBGH/p+sEb/QBtZ+DrcOBlNIRkptXqXlDzrFUs55WQoK38MzW+/CkRH
-	 fLlj2D8RDA7m/c3hb9SRQ4HAZJ8R8b8o7PyF8e9I=
+	b=x0i6OsAOQHFUYaVnhFcCPNomhENkPX+wrLaxAaJWfbe1vh4b+NcE3utJCPXtPFLbQ
+	 Z8ALA2k3rigUsa87ENZwXoQJLeI8JCbdwSzUwLb6Flrvzr4sFfJkloCpea3gj9oo66
+	 T6Lq9IhNdfj7HNslQYxnmTBr4yNqp1lgzc3ZwTjA=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>,
-	Luca Weiss <luca@z3ntu.xyz>,
-	Linus Walleij <linus.walleij@linaro.org>,
+	Konrad Dybcio <konrad.dybcio@linaro.org>,
 	Bjorn Andersson <andersson@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 095/885] arm64: dts: qcom: msm8953: correct TLMM gpio-ranges
-Date: Tue,  7 Mar 2023 17:50:29 +0100
-Message-Id: <20230307170005.961454367@linuxfoundation.org>
+Subject: [PATCH 6.1 096/885] arm64: dts: qcom: msm8992-*: Fix up comments
+Date: Tue,  7 Mar 2023 17:50:30 +0100
+Message-Id: <20230307170006.010256436@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,36 +35,138 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
+From: Konrad Dybcio <konrad.dybcio@linaro.org>
 
-[ Upstream commit a4fb71497df23cb0d02d70fa2b8f8786328e325d ]
+[ Upstream commit 290d43062d261cebd17ff590dc91f1d1e3fe6eed ]
 
-Correct the number of GPIOs in TLMM pin controller.
+Make sure all multiline C-style commends begin with just '/*' with
+the comment text starting on a new line.
 
-Fixes: 9fb08c801923 ("arm64: dts: qcom: Add MSM8953 device tree")
-Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>
-Reviewed-by: Luca Weiss <luca@z3ntu.xyz>
-Acked-by: Linus Walleij <linus.walleij@linaro.org>
+Also, trim off downstream regulator properties from comments to prevent
+them from accidentally landing into mainline one day..
+
+Signed-off-by: Konrad Dybcio <konrad.dybcio@linaro.org>
 Signed-off-by: Bjorn Andersson <andersson@kernel.org>
-Link: https://lore.kernel.org/r/20230202104452.299048-10-krzysztof.kozlowski@linaro.org
+Link: https://lore.kernel.org/r/20221107145522.6706-9-konrad.dybcio@linaro.org
+Stable-dep-of: 2866527093dd ("arm64: dts: qcom: msm8992-lg-bullhead: Enable regulators")
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/msm8953.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ .../dts/qcom/msm8992-lg-bullhead-rev-10.dts   |  3 +-
+ .../dts/qcom/msm8992-lg-bullhead-rev-101.dts  |  3 +-
+ .../boot/dts/qcom/msm8992-lg-bullhead.dtsi    | 41 ++++++++++---------
+ arch/arm64/boot/dts/qcom/msm8992.dtsi         |  3 +-
+ 4 files changed, 28 insertions(+), 22 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8953.dtsi b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-index 6b992a6d56c16..85a87d058f8ab 100644
---- a/arch/arm64/boot/dts/qcom/msm8953.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8953.dtsi
-@@ -455,7 +455,7 @@ tlmm: pinctrl@1000000 {
- 			reg = <0x1000000 0x300000>;
- 			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
- 			gpio-controller;
--			gpio-ranges = <&tlmm 0 0 155>;
-+			gpio-ranges = <&tlmm 0 0 142>;
- 			#gpio-cells = <2>;
- 			interrupt-controller;
- 			#interrupt-cells = <2>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts
+index 7e6bce4af4410..4159fc35571a6 100644
+--- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts
++++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-10.dts
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+-/* Copyright (c) Jean Thomas <virgule@jeanthomas.me>
++/*
++ * Copyright (c) Jean Thomas <virgule@jeanthomas.me>
+  */
+ 
+ /dts-v1/;
+diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dts
+index e6a5ebd30e2f5..ad9702dd171be 100644
+--- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dts
++++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead-rev-101.dts
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+-/* Copyright (c) Jean Thomas <virgule@jeanthomas.me>
++/*
++ * Copyright (c) Jean Thomas <virgule@jeanthomas.me>
+  */
+ 
+ /dts-v1/;
+diff --git a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
+index d1962dc24bb7e..db05dc3ba16df 100644
+--- a/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8992-lg-bullhead.dtsi
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+-/* Copyright (c) 2015, LGE Inc. All rights reserved.
++/*
++ * Copyright (c) 2015, LGE Inc. All rights reserved.
+  * Copyright (c) 2016, The Linux Foundation. All rights reserved.
+  * Copyright (c) 2021-2022, Petr Vorel <petr.vorel@gmail.com>
+  * Copyright (c) 2022, Dominik Kobinski <dominikkobinski314@gmail.com>
+@@ -250,9 +251,11 @@ pm8994_l25: l25 {
+ 		};
+ 
+ 		pm8994_l26: l26 {
+-			/* TODO: value from downstream
+-			regulator-min-microvolt = <987500>;
+-			fails to apply */
++			/*
++			 * TODO: value from downstream
++			 * regulator-min-microvolt = <987500>;
++			 * fails to apply
++			 */
+ 		};
+ 
+ 		pm8994_l27: l27 {
+@@ -266,19 +269,19 @@ pm8994_l28: l28 {
+ 		};
+ 
+ 		pm8994_l29: l29 {
+-			/* TODO: Unsupported voltage range.
+-			regulator-min-microvolt = <2800000>;
+-			regulator-max-microvolt = <2800000>;
+-			qcom,init-voltage = <2800000>;
+-			*/
++			/*
++			 * TODO: Unsupported voltage range.
++			 * regulator-min-microvolt = <2800000>;
++			 * regulator-max-microvolt = <2800000>;
++			 */
+ 		};
+ 
+ 		pm8994_l30: l30 {
+-			/* TODO: get this verified
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-			qcom,init-voltage = <1800000>;
+-			*/
++			/*
++			 * TODO: get this verified
++			 * regulator-min-microvolt = <1800000>;
++			 * regulator-max-microvolt = <1800000>;
++			 */
+ 		};
+ 
+ 		pm8994_l31: l31 {
+@@ -287,11 +290,11 @@ pm8994_l31: l31 {
+ 		};
+ 
+ 		pm8994_l32: l32 {
+-			/* TODO: get this verified
+-			regulator-min-microvolt = <1800000>;
+-			regulator-max-microvolt = <1800000>;
+-			qcom,init-voltage = <1800000>;
+-			*/
++			/*
++			 * TODO: get this verified
++			 * regulator-min-microvolt = <1800000>;
++			 * regulator-max-microvolt = <1800000>;
++			 */
+ 		};
+ 	};
+ 
+diff --git a/arch/arm64/boot/dts/qcom/msm8992.dtsi b/arch/arm64/boot/dts/qcom/msm8992.dtsi
+index f4be09fc1b151..02fc3795dbfd7 100644
+--- a/arch/arm64/boot/dts/qcom/msm8992.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8992.dtsi
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+-/* Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
++/*
++ * Copyright (c) 2013-2016, The Linux Foundation. All rights reserved.
+  */
+ 
+ #include "msm8994.dtsi"
 -- 
 2.39.2
 
