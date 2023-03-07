@@ -1,30 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 245CDBA3E
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 96586C433D2;
-	Tue,  7 Mar 2023 17:45:12 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 5B381BA3E
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:45:16 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id C0E79C433EF;
+	Tue,  7 Mar 2023 17:45:15 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211113;
-	bh=+IWnCY8nRXkgV2rY4QhoUp4clvCg11NoNmn48kCRs0A=;
+	s=korg; t=1678211116;
+	bh=H1skC8Zwy8xVR3c45srqI4khS48b6QVIskB2y+3yfHE=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=JWBzVk9f40pBbDbsu8Rjej7HEsadiFGRLOVaAFPJIs98N9ia6vYbRSXR48PJSoACY
-	 jweYpQAaQzjYWG0f0T7iD9Vmyp4Xf6soDl/WA43LOOss1Ljb5cy/fHPL9z+nIyjb8R
-	 yrFi61iiJaWiHkX2bmp4rIsb6nSt3kNBrnDmYeOM=
+	b=E7GLZZPCm7jvJogs1Yw6rdG2MIpKhatUniiyEANOEvXlt4Os8bsQg62QsBJ4jNOkN
+	 7NhuUtFxyd7HH8+e38tLrhjBfDACZ0a5FRnBsWZBi2x8QLXaqVstsmQINGrnq1OIH1
+	 T+rX8ubAXyi7JDrn0WXZ/PzZ2oX1HSEAMNZltlxs=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Denis Pauk <pauk.denis@gmail.com>,
-	Ahmad Khalifa <ahmad@khalifa.ws>,
-	Jeroen Beerstra <jeroen@beerstra.org>,
-	Slawomir Stepien <sst@poczta.fm>,
-	Guenter Roeck <linux@roeck-us.net>,
+	Claudiu Beznea <claudiu.beznea@microchip.com>,
+	Linus Walleij <linus.walleij@linaro.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0726/1001] hwmon: (nct6775) B650/B660/X670 ASUS boards support
-Date: Tue,  7 Mar 2023 17:58:18 +0100
-Message-Id: <20230307170053.210522282@linuxfoundation.org>
+Subject: [PATCH 6.2 0727/1001] pinctrl: at91: use devm_kasprintf() to avoid potential leaks
+Date: Tue,  7 Mar 2023 17:58:19 +0100
+Message-Id: <20230307170053.256272681@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -38,150 +35,51 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Denis Pauk <pauk.denis@gmail.com>
+From: Claudiu Beznea <claudiu.beznea@microchip.com>
 
-[ Upstream commit e2e09989ccc21ad428d6393450add78584b143bd ]
+[ Upstream commit 1c4e5c470a56f7f7c649c0c70e603abc1eab15c4 ]
 
-Boards such as:
-  "EX-B660M-V5 PRO D4",
-  "PRIME B650-PLUS",
-  "PRIME B650M-A",
-  "PRIME B650M-A AX",
-  "PRIME B650M-A II",
-  "PRIME B650M-A WIFI",
-  "PRIME B650M-A WIFI II",
-  "PRIME B660M-A D4",
-  "PRIME B660M-A WIFI D4",
-  "PRIME X670-P",
-  "PRIME X670-P WIFI",
-  "PRIME X670E-PRO WIFI",
-  "Pro B660M-C-D4",
-  "ProArt B660-CREATOR D4",
-  "ProArt X670E-CREATOR WIFI",
-  "ROG CROSSHAIR X670E EXTREME",
-  "ROG CROSSHAIR X670E GENE",
-  "ROG CROSSHAIR X670E HERO",
-  "ROG MAXIMUS XIII EXTREME GLACIAL",
-  "ROG MAXIMUS Z690 EXTREME",
-  "ROG MAXIMUS Z690 EXTREME GLACIAL",
-  "ROG STRIX B650-A GAMING WIFI",
-  "ROG STRIX B650E-E GAMING WIFI",
-  "ROG STRIX B650E-F GAMING WIFI",
-  "ROG STRIX B650E-I GAMING WIFI",
-  "ROG STRIX B660-A GAMING WIFI D4",
-  "ROG STRIX B660-F GAMING WIFI",
-  "ROG STRIX B660-G GAMING WIFI",
-  "ROG STRIX B660-I GAMING WIFI",
-  "ROG STRIX X670E-A GAMING WIFI",
-  "ROG STRIX X670E-E GAMING WIFI",
-  "ROG STRIX X670E-F GAMING WIFI",
-  "ROG STRIX X670E-I GAMING WIFI",
-  "ROG STRIX Z590-A GAMING WIFI II",
-  "ROG STRIX Z690-A GAMING WIFI D4",
-  "TUF GAMING B650-PLUS",
-  "TUF GAMING B650-PLUS WIFI",
-  "TUF GAMING B650M-PLUS",
-  "TUF GAMING B650M-PLUS WIFI",
-  "TUF GAMING B660M-PLUS WIFI",
-  "TUF GAMING X670E-PLUS",
-  "TUF GAMING X670E-PLUS WIFI",
-  "TUF GAMING Z590-PLUS WIFI",
-have got a NCT6799D chip, but by default there's no use of it
-because of resource conflict with WMI method.
+Use devm_kasprintf() instead of kasprintf() to avoid any potential
+leaks. At the moment drivers have no remove functionality thus
+there is no need for fixes tag.
 
-This commit adds such boards to the monitoring list with new ACPI device
-UID.
-
-BugLink: https://bugzilla.kernel.org/show_bug.cgi?id=204807
-Signed-off-by: Denis Pauk <pauk.denis@gmail.com>
-Co-developed-by: Ahmad Khalifa <ahmad@khalifa.ws>
-Signed-off-by: Ahmad Khalifa <ahmad@khalifa.ws>
-Tested-by: Jeroen Beerstra <jeroen@beerstra.org>
-Tested-by: Slawomir Stepien <sst@poczta.fm>
-Link: https://lore.kernel.org/r/20230111212241.7456-2-pauk.denis@gmail.com
-Signed-off-by: Guenter Roeck <linux@roeck-us.net>
+Signed-off-by: Claudiu Beznea <claudiu.beznea@microchip.com>
+Link: https://lore.kernel.org/r/20230203132714.1931596-1-claudiu.beznea@microchip.com
+Signed-off-by: Linus Walleij <linus.walleij@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/hwmon/nct6775-platform.c | 52 ++++++++++++++++++++++++++++++++
- 1 file changed, 52 insertions(+)
+ drivers/pinctrl/pinctrl-at91-pio4.c | 4 ++--
+ drivers/pinctrl/pinctrl-at91.c      | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/hwmon/nct6775-platform.c b/drivers/hwmon/nct6775-platform.c
-index e5d4a79cd5f7d..76c6b564d7fc4 100644
---- a/drivers/hwmon/nct6775-platform.c
-+++ b/drivers/hwmon/nct6775-platform.c
-@@ -114,6 +114,7 @@ struct nct6775_sio_data {
- #define ASUSWMI_UNSUPPORTED_METHOD	0xFFFFFFFE
- #define ASUSWMI_DEVICE_HID		"PNP0C14"
- #define ASUSWMI_DEVICE_UID		"ASUSWMI"
-+#define ASUSMSI_DEVICE_UID		"AsusMbSwInterface"
+diff --git a/drivers/pinctrl/pinctrl-at91-pio4.c b/drivers/pinctrl/pinctrl-at91-pio4.c
+index 39b233f73e132..373eed8bc4be9 100644
+--- a/drivers/pinctrl/pinctrl-at91-pio4.c
++++ b/drivers/pinctrl/pinctrl-at91-pio4.c
+@@ -1149,8 +1149,8 @@ static int atmel_pinctrl_probe(struct platform_device *pdev)
  
- #if IS_ENABLED(CONFIG_ACPI)
- /*
-@@ -1108,6 +1109,52 @@ static const char * const asus_wmi_boards[] = {
- 	"TUF GAMING Z490-PLUS (WI-FI)",
- };
+ 		pin_desc[i].number = i;
+ 		/* Pin naming convention: P(bank_name)(bank_pin_number). */
+-		pin_desc[i].name = kasprintf(GFP_KERNEL, "P%c%d",
+-					     bank + 'A', line);
++		pin_desc[i].name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "P%c%d",
++						  bank + 'A', line);
  
-+static const char * const asus_msi_boards[] = {
-+	"EX-B660M-V5 PRO D4",
-+	"PRIME B650-PLUS",
-+	"PRIME B650M-A",
-+	"PRIME B650M-A AX",
-+	"PRIME B650M-A II",
-+	"PRIME B650M-A WIFI",
-+	"PRIME B650M-A WIFI II",
-+	"PRIME B660M-A D4",
-+	"PRIME B660M-A WIFI D4",
-+	"PRIME X670-P",
-+	"PRIME X670-P WIFI",
-+	"PRIME X670E-PRO WIFI",
-+	"Pro B660M-C-D4",
-+	"ProArt B660-CREATOR D4",
-+	"ProArt X670E-CREATOR WIFI",
-+	"ROG CROSSHAIR X670E EXTREME",
-+	"ROG CROSSHAIR X670E GENE",
-+	"ROG CROSSHAIR X670E HERO",
-+	"ROG MAXIMUS XIII EXTREME GLACIAL",
-+	"ROG MAXIMUS Z690 EXTREME",
-+	"ROG MAXIMUS Z690 EXTREME GLACIAL",
-+	"ROG STRIX B650-A GAMING WIFI",
-+	"ROG STRIX B650E-E GAMING WIFI",
-+	"ROG STRIX B650E-F GAMING WIFI",
-+	"ROG STRIX B650E-I GAMING WIFI",
-+	"ROG STRIX B660-A GAMING WIFI D4",
-+	"ROG STRIX B660-F GAMING WIFI",
-+	"ROG STRIX B660-G GAMING WIFI",
-+	"ROG STRIX B660-I GAMING WIFI",
-+	"ROG STRIX X670E-A GAMING WIFI",
-+	"ROG STRIX X670E-E GAMING WIFI",
-+	"ROG STRIX X670E-F GAMING WIFI",
-+	"ROG STRIX X670E-I GAMING WIFI",
-+	"ROG STRIX Z590-A GAMING WIFI II",
-+	"ROG STRIX Z690-A GAMING WIFI D4",
-+	"TUF GAMING B650-PLUS",
-+	"TUF GAMING B650-PLUS WIFI",
-+	"TUF GAMING B650M-PLUS",
-+	"TUF GAMING B650M-PLUS WIFI",
-+	"TUF GAMING B660M-PLUS WIFI",
-+	"TUF GAMING X670E-PLUS",
-+	"TUF GAMING X670E-PLUS WIFI",
-+	"TUF GAMING Z590-PLUS WIFI",
-+};
-+
- #if IS_ENABLED(CONFIG_ACPI)
- /*
-  * Callback for acpi_bus_for_each_dev() to find the right device
-@@ -1171,6 +1218,11 @@ static int __init sensors_nct6775_platform_init(void)
- 				   board_name);
- 		if (err >= 0)
- 			access = nct6775_determine_access(ASUSWMI_DEVICE_UID);
-+
-+		err = match_string(asus_msi_boards, ARRAY_SIZE(asus_msi_boards),
-+				   board_name);
-+		if (err >= 0)
-+			access = nct6775_determine_access(ASUSMSI_DEVICE_UID);
+ 		group->name = group_names[i] = pin_desc[i].name;
+ 		group->pin = pin_desc[i].number;
+diff --git a/drivers/pinctrl/pinctrl-at91.c b/drivers/pinctrl/pinctrl-at91.c
+index 1e1813d7c5508..c405296e49896 100644
+--- a/drivers/pinctrl/pinctrl-at91.c
++++ b/drivers/pinctrl/pinctrl-at91.c
+@@ -1885,7 +1885,7 @@ static int at91_gpio_probe(struct platform_device *pdev)
  	}
  
- 	/*
+ 	for (i = 0; i < chip->ngpio; i++)
+-		names[i] = kasprintf(GFP_KERNEL, "pio%c%d", alias_idx + 'A', i);
++		names[i] = devm_kasprintf(&pdev->dev, GFP_KERNEL, "pio%c%d", alias_idx + 'A', i);
+ 
+ 	chip->names = (const char *const *)names;
+ 
 -- 
 2.39.2
 
