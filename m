@@ -1,27 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 85599BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:04:07 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id DE4E4C4339C;
-	Tue,  7 Mar 2023 18:04:06 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 95C4DBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:04:10 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id EF9DAC433A0;
+	Tue,  7 Mar 2023 18:04:09 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212247;
-	bh=2YKSoMO+LOdmd6bfdP1j342fCHRATHLvztW+3FHeze0=;
+	s=korg; t=1678212250;
+	bh=Zg4mtoMZ/nSmCrZSj0o+/6+e2B6YB4JBX3Ga5VZts+U=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=1jgVMZ5wGXfN1b33ZI13UKf4G5srVEJFEZ+muftrEtU8oE+zNj/h+k6o7PySJga3B
-	 2y3YXZHP7t3EBZBiip8hnntkQDqoGhCzLDkHLj8ITjvjyHaRfsfGevPkWdrHd57ocl
-	 fWmdAvYpNt4gadV4jH/hrkENUw5WfwzVo0C8U4so=
+	b=Fin8NfM9Utt50lb3v8oE7hPwg5fROVV8Z4WbAamryFxAuabgSFgx6eUwyYHsVV5xP
+	 LpoI7dGigJeXlf/JBoXICOOKtNPso+0H6R6ikFj3DW1zJ9E3lcRyw4cQJESy72nTbO
+	 MGrMxdoPjO+hr80aZbilNf1CEEnSbsbDPVZ4eX1k=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
+	Li Zetao <lizetao1@huawei.com>,
 	Ping-Ke Shih <pkshih@realtek.com>,
 	Kalle Valo <kvalo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 125/885] wifi: rtw89: 8852c: rfk: correct DPK settings
-Date: Tue,  7 Mar 2023 17:50:59 +0100
-Message-Id: <20230307170007.266643911@linuxfoundation.org>
+Subject: [PATCH 6.1 126/885] wifi: rtlwifi: Fix global-out-of-bounds bug in _rtl8812ae_phy_set_txpower_limit()
+Date: Tue,  7 Mar 2023 17:51:00 +0100
+Message-Id: <20230307170007.313610702@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -35,57 +36,155 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Ping-Ke Shih <pkshih@realtek.com>
+From: Li Zetao <lizetao1@huawei.com>
 
-[ Upstream commit 21b5f159a2ee47d30f418559f6ece0088c80199f ]
+[ Upstream commit 117dbeda22ec5ea0918254d03b540ef8b8a64d53 ]
 
-Some DPK settings are wrong, and causes bad TX performance occasionally.
-So, fix them by internal suggestions.
+There is a global-out-of-bounds reported by KASAN:
 
-Fixes: da4cea16cb13 ("rtw89: 8852c: rfk: add DPK")
-Signed-off-by: Ping-Ke Shih <pkshih@realtek.com>
+  BUG: KASAN: global-out-of-bounds in
+  _rtl8812ae_eq_n_byte.part.0+0x3d/0x84 [rtl8821ae]
+  Read of size 1 at addr ffffffffa0773c43 by task NetworkManager/411
+
+  CPU: 6 PID: 411 Comm: NetworkManager Tainted: G      D
+  6.1.0-rc8+ #144 e15588508517267d37
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009),
+  Call Trace:
+   <TASK>
+   ...
+   kasan_report+0xbb/0x1c0
+   _rtl8812ae_eq_n_byte.part.0+0x3d/0x84 [rtl8821ae]
+   rtl8821ae_phy_bb_config.cold+0x346/0x641 [rtl8821ae]
+   rtl8821ae_hw_init+0x1f5e/0x79b0 [rtl8821ae]
+   ...
+   </TASK>
+
+The root cause of the problem is that the comparison order of
+"prate_section" in _rtl8812ae_phy_set_txpower_limit() is wrong. The
+_rtl8812ae_eq_n_byte() is used to compare the first n bytes of the two
+strings from tail to head, which causes the problem. In the
+_rtl8812ae_phy_set_txpower_limit(), it was originally intended to meet
+this requirement by carefully designing the comparison order.
+For example, "pregulation" and "pbandwidth" are compared in order of
+length from small to large, first is 3 and last is 4. However, the
+comparison order of "prate_section" dose not obey such order requirement,
+therefore when "prate_section" is "HT", when comparing from tail to head,
+it will lead to access out of bounds in _rtl8812ae_eq_n_byte(). As
+mentioned above, the _rtl8812ae_eq_n_byte() has the same function as
+strcmp(), so just strcmp() is enough.
+
+Fix it by removing _rtl8812ae_eq_n_byte() and use strcmp() barely.
+Although it can be fixed by adjusting the comparison order of
+"prate_section", this may cause the value of "rate_section" to not be
+from 0 to 5. In addition, commit "21e4b0726dc6" not only moved driver
+from staging to regular tree, but also added setting txpower limit
+function during the driver config phase, so the problem was introduced
+by this commit.
+
+Fixes: 21e4b0726dc6 ("rtlwifi: rtl8821ae: Move driver from staging to regular tree")
+Signed-off-by: Li Zetao <lizetao1@huawei.com>
+Acked-by: Ping-Ke Shih <pkshih@realtek.com>
 Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20221209020940.9573-3-pkshih@realtek.com
+Link: https://lore.kernel.org/r/20221212025812.1541311-1-lizetao1@huawei.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/realtek/rtw89/reg.h          | 2 ++
- drivers/net/wireless/realtek/rtw89/rtw8852c_rfk.c | 9 ++++-----
- 2 files changed, 6 insertions(+), 5 deletions(-)
+ .../wireless/realtek/rtlwifi/rtl8821ae/phy.c  | 52 +++++++------------
+ 1 file changed, 20 insertions(+), 32 deletions(-)
 
-diff --git a/drivers/net/wireless/realtek/rtw89/reg.h b/drivers/net/wireless/realtek/rtw89/reg.h
-index ca20bb024b407..0291aff940166 100644
---- a/drivers/net/wireless/realtek/rtw89/reg.h
-+++ b/drivers/net/wireless/realtek/rtw89/reg.h
-@@ -3374,6 +3374,8 @@
- #define RR_TXRSV_GAPK BIT(19)
- #define RR_BIAS 0x5e
- #define RR_BIAS_GAPK BIT(19)
-+#define RR_TXAC 0x5f
-+#define RR_TXAC_IQG GENMASK(3, 0)
- #define RR_BIASA 0x60
- #define RR_BIASA_TXG GENMASK(15, 12)
- #define RR_BIASA_TXA GENMASK(19, 16)
-diff --git a/drivers/net/wireless/realtek/rtw89/rtw8852c_rfk.c b/drivers/net/wireless/realtek/rtw89/rtw8852c_rfk.c
-index 6387c834a73da..98428f17814f5 100644
---- a/drivers/net/wireless/realtek/rtw89/rtw8852c_rfk.c
-+++ b/drivers/net/wireless/realtek/rtw89/rtw8852c_rfk.c
-@@ -1873,12 +1873,11 @@ static void _dpk_rf_setting(struct rtw89_dev *rtwdev, u8 gain,
- 			       0x50101 | BIT(rtwdev->dbcc_en));
- 		rtw89_write_rf(rtwdev, path, RR_MOD_V1, RR_MOD_MASK, RF_DPK);
+diff --git a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
+index a29321e2fa72f..5323ead30db03 100644
+--- a/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
++++ b/drivers/net/wireless/realtek/rtlwifi/rtl8821ae/phy.c
+@@ -1598,18 +1598,6 @@ static bool _rtl8812ae_get_integer_from_string(const char *str, u8 *pint)
+ 	return true;
+ }
  
--		if (dpk->bp[path][kidx].band == RTW89_BAND_6G && dpk->bp[path][kidx].ch >= 161) {
-+		if (dpk->bp[path][kidx].band == RTW89_BAND_6G && dpk->bp[path][kidx].ch >= 161)
- 			rtw89_write_rf(rtwdev, path, RR_IQGEN, RR_IQGEN_BIAS, 0x8);
--			rtw89_write_rf(rtwdev, path, RR_LOGEN, RR_LOGEN_RPT, 0xd);
--		} else {
--			rtw89_write_rf(rtwdev, path, RR_LOGEN, RR_LOGEN_RPT, 0xd);
--		}
-+
-+		rtw89_write_rf(rtwdev, path, RR_LOGEN, RR_LOGEN_RPT, 0xd);
-+		rtw89_write_rf(rtwdev, path, RR_TXAC, RR_TXAC_IQG, 0x8);
+-static bool _rtl8812ae_eq_n_byte(const char *str1, const char *str2, u32 num)
+-{
+-	if (num == 0)
+-		return false;
+-	while (num > 0) {
+-		num--;
+-		if (str1[num] != str2[num])
+-			return false;
+-	}
+-	return true;
+-}
+-
+ static s8 _rtl8812ae_phy_get_chnl_idx_of_txpwr_lmt(struct ieee80211_hw *hw,
+ 					      u8 band, u8 channel)
+ {
+@@ -1659,42 +1647,42 @@ static void _rtl8812ae_phy_set_txpower_limit(struct ieee80211_hw *hw,
+ 	power_limit = power_limit > MAX_POWER_INDEX ?
+ 		      MAX_POWER_INDEX : power_limit;
  
- 		rtw89_write_rf(rtwdev, path, RR_RXA2, RR_RXA2_ATT, 0x0);
- 		rtw89_write_rf(rtwdev, path, RR_TXIQK, RR_TXIQK_ATT2, 0x3);
+-	if (_rtl8812ae_eq_n_byte(pregulation, "FCC", 3))
++	if (strcmp(pregulation, "FCC") == 0)
+ 		regulation = 0;
+-	else if (_rtl8812ae_eq_n_byte(pregulation, "MKK", 3))
++	else if (strcmp(pregulation, "MKK") == 0)
+ 		regulation = 1;
+-	else if (_rtl8812ae_eq_n_byte(pregulation, "ETSI", 4))
++	else if (strcmp(pregulation, "ETSI") == 0)
+ 		regulation = 2;
+-	else if (_rtl8812ae_eq_n_byte(pregulation, "WW13", 4))
++	else if (strcmp(pregulation, "WW13") == 0)
+ 		regulation = 3;
+ 
+-	if (_rtl8812ae_eq_n_byte(prate_section, "CCK", 3))
++	if (strcmp(prate_section, "CCK") == 0)
+ 		rate_section = 0;
+-	else if (_rtl8812ae_eq_n_byte(prate_section, "OFDM", 4))
++	else if (strcmp(prate_section, "OFDM") == 0)
+ 		rate_section = 1;
+-	else if (_rtl8812ae_eq_n_byte(prate_section, "HT", 2) &&
+-		 _rtl8812ae_eq_n_byte(prf_path, "1T", 2))
++	else if (strcmp(prate_section, "HT") == 0 &&
++		 strcmp(prf_path, "1T") == 0)
+ 		rate_section = 2;
+-	else if (_rtl8812ae_eq_n_byte(prate_section, "HT", 2) &&
+-		 _rtl8812ae_eq_n_byte(prf_path, "2T", 2))
++	else if (strcmp(prate_section, "HT") == 0 &&
++		 strcmp(prf_path, "2T") == 0)
+ 		rate_section = 3;
+-	else if (_rtl8812ae_eq_n_byte(prate_section, "VHT", 3) &&
+-		 _rtl8812ae_eq_n_byte(prf_path, "1T", 2))
++	else if (strcmp(prate_section, "VHT") == 0 &&
++		 strcmp(prf_path, "1T") == 0)
+ 		rate_section = 4;
+-	else if (_rtl8812ae_eq_n_byte(prate_section, "VHT", 3) &&
+-		 _rtl8812ae_eq_n_byte(prf_path, "2T", 2))
++	else if (strcmp(prate_section, "VHT") == 0 &&
++		 strcmp(prf_path, "2T") == 0)
+ 		rate_section = 5;
+ 
+-	if (_rtl8812ae_eq_n_byte(pbandwidth, "20M", 3))
++	if (strcmp(pbandwidth, "20M") == 0)
+ 		bandwidth = 0;
+-	else if (_rtl8812ae_eq_n_byte(pbandwidth, "40M", 3))
++	else if (strcmp(pbandwidth, "40M") == 0)
+ 		bandwidth = 1;
+-	else if (_rtl8812ae_eq_n_byte(pbandwidth, "80M", 3))
++	else if (strcmp(pbandwidth, "80M") == 0)
+ 		bandwidth = 2;
+-	else if (_rtl8812ae_eq_n_byte(pbandwidth, "160M", 4))
++	else if (strcmp(pbandwidth, "160M") == 0)
+ 		bandwidth = 3;
+ 
+-	if (_rtl8812ae_eq_n_byte(pband, "2.4G", 4)) {
++	if (strcmp(pband, "2.4G") == 0) {
+ 		ret = _rtl8812ae_phy_get_chnl_idx_of_txpwr_lmt(hw,
+ 							       BAND_ON_2_4G,
+ 							       channel);
+@@ -1718,7 +1706,7 @@ static void _rtl8812ae_phy_set_txpower_limit(struct ieee80211_hw *hw,
+ 			regulation, bandwidth, rate_section, channel_index,
+ 			rtlphy->txpwr_limit_2_4g[regulation][bandwidth]
+ 				[rate_section][channel_index][RF90_PATH_A]);
+-	} else if (_rtl8812ae_eq_n_byte(pband, "5G", 2)) {
++	} else if (strcmp(pband, "5G") == 0) {
+ 		ret = _rtl8812ae_phy_get_chnl_idx_of_txpwr_lmt(hw,
+ 							       BAND_ON_5G,
+ 							       channel);
 -- 
 2.39.2
 
