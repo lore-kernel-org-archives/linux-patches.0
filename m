@@ -1,28 +1,31 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id E3313BA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:50 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id E89B3C433D2;
-	Tue,  7 Mar 2023 17:54:49 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 12850BA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:54:54 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6B36CC433EF;
+	Tue,  7 Mar 2023 17:54:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211690;
-	bh=WkIg0ju4dYTrICm/AZnEQmw58BFhiMBugI/e0nsK6SA=;
+	s=korg; t=1678211693;
+	bh=seEERozg0YtRD8wOgFcyo7P+unP1aDNZesQE8hWrfDg=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QmkU1UWttinojixrd6mDHlstxqA4s2XwM8QbxOpXREyJOHXmwqhIcN3+VDLjXnh46
-	 2tyQ1Q0OlKSpvca8vLhx4GA+WCAUvFGJT0FETEtB8VGajJK6eKYCZMgl/yYKaHWH+H
-	 rMr1vP/cTDpwUW660RzI50VV2GqTaeHN6TOCuing=
+	b=E8OCCxAPYFtVYgHsULR6qf3MUna7LficP2Uehkg2+u2dwsZ1hNS1GwC/wxnB97lML
+	 3VwK9Biivimt/IpbuifggDwUzmC6yBxlKMcobS9SVf6kK/w3rsErf34cZlXx93IXNo
+	 dKq9ZqfX9h0pKx1DNNOpVsWiZ8L1BHO6seQLIoas=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Muchun Song <muchun.song@linux.dev>,
-	Will Deacon <will@kernel.org>,
-	Anshuman Khandual <anshuman.khandual@arm.com>,
-	Catalin Marinas <catalin.marinas@arm.com>
-Subject: [PATCH 6.2 0927/1001] arm64: mm: hugetlb: Disable HUGETLB_PAGE_OPTIMIZE_VMEMMAP
-Date: Tue,  7 Mar 2023 18:01:39 +0100
-Message-Id: <20230307170102.323771061@linuxfoundation.org>
+	Johannes Weiner <hannes@cmpxchg.org>,
+	Shakeel Butt <shakeelb@google.com>,
+	Hugh Dickins <hughd@google.com>,
+	Michal Hocko <mhocko@suse.com>,
+	Muchun Song <songmuchun@bytedance.com>,
+	Roman Gushchin <roman.gushchin@linux.dev>,
+	Andrew Morton <akpm@linux-foundation.org>
+Subject: [PATCH 6.2 0945/1001] mm: memcontrol: deprecate charge moving
+Date: Tue,  7 Mar 2023 18:01:57 +0100
+Message-Id: <20230307170103.152310693@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -36,52 +39,100 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Catalin Marinas <catalin.marinas@arm.com>
+From: Johannes Weiner <hannes@cmpxchg.org>
 
-commit 060a2c92d1b627c86c5c42ca69baf00457c00c5a upstream.
+commit da34a8484d162585e22ed8c1e4114aa2f60e3567 upstream.
 
-Revert the HUGETLB_PAGE_FREE_VMEMMAP selection from commit 1e63ac088f20
-("arm64: mm: hugetlb: enable HUGETLB_PAGE_FREE_VMEMMAP for arm64") but
-keep the flush_dcache_page() compound_head() change as it aligns with
-the corresponding check in the __sync_icache_dcache() function.
+Charge moving mode in cgroup1 allows memory to follow tasks as they
+migrate between cgroups.  This is, and always has been, a questionable
+thing to do - for several reasons.
 
-The original config option was renamed in commit 47010c040dec ("mm:
-hugetlb_vmemmap: cleanup CONFIG_HUGETLB_PAGE_FREE_VMEMMAP*") to
-HUGETLB_PAGE_OPTIMIZE_VMEMMAP and the flush_dcache_page() check was
-further simplified by commit 2da1c30929a2 ("mm: hugetlb_vmemmap: delete
-hugetlb_optimize_vmemmap_enabled()").
+First, it's expensive.  Pages need to be identified, locked and isolated
+from various MM operations, and reassigned, one by one.
 
-The reason for the revert is that the generic vmemmap_remap_pte()
-function changes both the permissions (writeable to read-only) and the
-output address (pfn) of the vmemmap ptes. This is deemed UNPREDICTABLE
-by the Arm architecture without a break-before-make sequence (make the
-PTE invalid, TLBI, write the new valid PTE). However, such sequence is
-not possible since the vmemmap may be concurrently accessed by the
-kernel. Disable the optimisation until a better solution is found.
+Second, it's unreliable.  Once pages are charged to a cgroup, there isn't
+always a clear owner task anymore.  Cache isn't moved at all, for example.
+Mapped memory is moved - but if trylocking or isolating a page fails,
+it's arbitrarily left behind.  Frequent moving between domains may leave a
+task's memory scattered all over the place.
 
-Fixes: 1e63ac088f20 ("arm64: mm: hugetlb: enable HUGETLB_PAGE_FREE_VMEMMAP for arm64")
-Cc: <stable@vger.kernel.org> # 5.19.x
-Cc: Muchun Song <muchun.song@linux.dev>
-Cc: Will Deacon <will@kernel.org>
-Cc: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/Y9pZALdn3pKiJUeQ@arm.com
-Reviewed-by: Anshuman Khandual <anshuman.khandual@arm.com>
-Link: https://lore.kernel.org/r/20230222175232.540851-1-catalin.marinas@arm.com
-Signed-off-by: Catalin Marinas <catalin.marinas@arm.com>
+Third, it isn't really needed.  Launcher tasks can kick off workload tasks
+directly in their target cgroup.  Using dedicated per-workload groups
+allows fine-grained policy adjustments - no need to move tasks and their
+physical pages between control domains.  The feature was never
+forward-ported to cgroup2, and it hasn't been missed.
+
+Despite it being a niche usecase, the maintenance overhead of supporting
+it is enormous.  Because pages are moved while they are live and subject
+to various MM operations, the synchronization rules are complicated.
+There are lock_page_memcg() in MM and FS code, which non-cgroup people
+don't understand.  In some cases we've been able to shift code and cgroup
+API calls around such that we can rely on native locking as much as
+possible.  But that's fragile, and sometimes we need to hold MM locks for
+longer than we otherwise would (pte lock e.g.).
+
+Mark the feature deprecated. Hopefully we can remove it soon.
+
+And backport into -stable kernels so that people who develop against
+earlier kernels are warned about this deprecation as early as possible.
+
+[akpm@linux-foundation.org: fix memory.rst underlining]
+Link: https://lkml.kernel.org/r/Y5COd+qXwk/S+n8N@cmpxchg.org
+Signed-off-by: Johannes Weiner <hannes@cmpxchg.org>
+Acked-by: Shakeel Butt <shakeelb@google.com>
+Acked-by: Hugh Dickins <hughd@google.com>
+Acked-by: Michal Hocko <mhocko@suse.com>
+Cc: Muchun Song <songmuchun@bytedance.com>
+Cc: Roman Gushchin <roman.gushchin@linux.dev>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: Andrew Morton <akpm@linux-foundation.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- arch/arm64/Kconfig |    1 -
- 1 file changed, 1 deletion(-)
+ Documentation/admin-guide/cgroup-v1/memory.rst |   13 +++++++++++--
+ mm/memcontrol.c                                |    4 ++++
+ 2 files changed, 15 insertions(+), 2 deletions(-)
 
---- a/arch/arm64/Kconfig
-+++ b/arch/arm64/Kconfig
-@@ -100,7 +100,6 @@ config ARM64
- 	select ARCH_WANT_DEFAULT_TOPDOWN_MMAP_LAYOUT
- 	select ARCH_WANT_FRAME_POINTERS
- 	select ARCH_WANT_HUGE_PMD_SHARE if ARM64_4K_PAGES || (ARM64_16K_PAGES && !ARM64_VA_BITS_36)
--	select ARCH_WANT_HUGETLB_PAGE_OPTIMIZE_VMEMMAP
- 	select ARCH_WANT_LD_ORPHAN_WARN
- 	select ARCH_WANTS_NO_INSTR
- 	select ARCH_WANTS_THP_SWAP if ARM64_4K_PAGES
+--- a/Documentation/admin-guide/cgroup-v1/memory.rst
++++ b/Documentation/admin-guide/cgroup-v1/memory.rst
+@@ -86,6 +86,8 @@ Brief summary of control files.
+  memory.swappiness		     set/show swappiness parameter of vmscan
+ 				     (See sysctl's vm.swappiness)
+  memory.move_charge_at_immigrate     set/show controls of moving charges
++                                     This knob is deprecated and shouldn't be
++                                     used.
+  memory.oom_control		     set/show oom controls.
+  memory.numa_stat		     show the number of memory usage per numa
+ 				     node
+@@ -717,8 +719,15 @@ NOTE2:
+        It is recommended to set the soft limit always below the hard limit,
+        otherwise the hard limit will take precedence.
+ 
+-8. Move charges at task migration
+-=================================
++8. Move charges at task migration (DEPRECATED!)
++===============================================
++
++THIS IS DEPRECATED!
++
++It's expensive and unreliable! It's better practice to launch workload
++tasks directly from inside their target cgroup. Use dedicated workload
++cgroups to allow fine-grained policy adjustments without having to
++move physical pages between control domains.
+ 
+ Users can move charges associated with a task along with task migration, that
+ is, uncharge task's pages from the old cgroup and charge them to the new cgroup.
+--- a/mm/memcontrol.c
++++ b/mm/memcontrol.c
+@@ -3914,6 +3914,10 @@ static int mem_cgroup_move_charge_write(
+ {
+ 	struct mem_cgroup *memcg = mem_cgroup_from_css(css);
+ 
++	pr_warn_once("Cgroup memory moving (move_charge_at_immigrate) is deprecated. "
++		     "Please report your usecase to linux-mm@kvack.org if you "
++		     "depend on this functionality.\n");
++
+ 	if (val & ~MOVE_MASK)
+ 		return -EINVAL;
+ 
 
 
