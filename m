@@ -1,26 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 276F9BA32
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:08:37 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 98BC5C433EF;
-	Tue,  7 Mar 2023 17:08:36 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 323CCBA32
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:08:40 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9275EC433D2;
+	Tue,  7 Mar 2023 17:08:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678208917;
-	bh=XjvrCQwQamrfGufxM8l94IqEUrbzK7jzjOUTChV4hpo=;
+	s=korg; t=1678208920;
+	bh=+Cyt3TZSjSEhhBE3+FUVefWFPL+ZpWlbegoROY5t29M=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=QDxqOsHZyBQ4PL/2Av1r9SjfslKC1UmL2VUGlXbB7Oog2ksq5olswqmqZHFC9zByd
-	 mGiziTKruRaslWbQN7herjzLPpcG1zhFi2ECl9rrpN4sMkZ94xh5ecJrNO8qlLRyEZ
-	 2fpWUbVbQehwEVh0fFBDpIUSL/fzM1ffSGdJfDG4=
+	b=ES1kMgpY+nccRj0gwz0XWbhdgNfg2G6DiR/hVa6Kx4Rb87Z/rGKTF3ar4BzvgcJnb
+	 hi/l412Nf3gpR/XiBwRy+UpYWpamWLuGEgyEQGw4ReZdOt2UAaPXhIbkQQmMhQHq+0
+	 ZDgj36FNtKS1oQOPv62X2VhH5I+qPAtpsDnQ/iTw=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Thierry Reding <treding@nvidia.com>,
+	Peng Fan <peng.fan@nxp.com>,
+	Marek Vasut <marex@denx.de>,
+	Shawn Guo <shawnguo@kernel.org>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.2 0051/1001] arm64: tegra: Fix duplicate regulator on Jetson TX1
-Date: Tue,  7 Mar 2023 17:47:03 +0100
-Message-Id: <20230307170024.336548031@linuxfoundation.org>
+Subject: [PATCH 6.2 0025/1001] arm64: dts: imx8m: Align SoC unique ID node unit address
+Date: Tue,  7 Mar 2023 17:46:37 +0100
+Message-Id: <20230307170023.247846551@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -34,34 +36,76 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Thierry Reding <treding@nvidia.com>
+From: Marek Vasut <marex@denx.de>
 
-[ Upstream commit 29bcc1eaca315326d1cc883fbe9b451d1f9e3fa5 ]
+[ Upstream commit ee0d68f219be8618f53d3f8808952e20525e3f30 ]
 
-When the top-level regulators were renamed, the 1.2V camera regulator
-accidentally ended up with the same DT node name as the 1.8V camera
-regulator.
+Align the SoC unique ID DT node unit address with its reg property.
 
-Fixes: 097e01c61015 ("arm64: tegra: Rename top-level regulators")
-Signed-off-by: Thierry Reding <treding@nvidia.com>
+Reviewed-by: Peng Fan <peng.fan@nxp.com>
+Fixes: cbff23797fa1 ("arm64: dts: imx8m: add NVMEM provider and consumer to read soc unique ID")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Signed-off-by: Shawn Guo <shawnguo@kernel.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/arm64/boot/dts/freescale/imx8mm.dtsi | 2 +-
+ arch/arm64/boot/dts/freescale/imx8mn.dtsi | 2 +-
+ arch/arm64/boot/dts/freescale/imx8mp.dtsi | 2 +-
+ arch/arm64/boot/dts/freescale/imx8mq.dtsi | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi b/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
-index dd9a17922fe5c..a87e103f3828d 100644
---- a/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
-+++ b/arch/arm64/boot/dts/nvidia/tegra210-p2597.dtsi
-@@ -1667,7 +1667,7 @@ vdd_hdmi: regulator-vdd-hdmi {
- 		vin-supply = <&vdd_5v0_sys>;
- 	};
+diff --git a/arch/arm64/boot/dts/freescale/imx8mm.dtsi b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
+index 4ee89fdcf59bd..b45852e8087a9 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mm.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mm.dtsi
+@@ -563,7 +563,7 @@ ocotp: efuse@30350000 {
+ 				#address-cells = <1>;
+ 				#size-cells = <1>;
  
--	vdd_cam_1v2: regulator-vdd-cam-1v8 {
-+	vdd_cam_1v2: regulator-vdd-cam-1v2 {
- 		compatible = "regulator-fixed";
- 		regulator-name = "vdd-cam-1v2";
- 		regulator-min-microvolt = <1200000>;
+-				imx8mm_uid: unique-id@410 {
++				imx8mm_uid: unique-id@4 {
+ 					reg = <0x4 0x8>;
+ 				};
+ 
+diff --git a/arch/arm64/boot/dts/freescale/imx8mn.dtsi b/arch/arm64/boot/dts/freescale/imx8mn.dtsi
+index b7d91df71cc26..7601a031f85a0 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mn.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mn.dtsi
+@@ -564,7 +564,7 @@ ocotp: efuse@30350000 {
+ 				#address-cells = <1>;
+ 				#size-cells = <1>;
+ 
+-				imx8mn_uid: unique-id@410 {
++				imx8mn_uid: unique-id@4 {
+ 					reg = <0x4 0x8>;
+ 				};
+ 
+diff --git a/arch/arm64/boot/dts/freescale/imx8mp.dtsi b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
+index 03034b439c1f7..bafe0a572f7e9 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mp.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mp.dtsi
+@@ -425,7 +425,7 @@ ocotp: efuse@30350000 {
+ 				#address-cells = <1>;
+ 				#size-cells = <1>;
+ 
+-				imx8mp_uid: unique-id@420 {
++				imx8mp_uid: unique-id@8 {
+ 					reg = <0x8 0x8>;
+ 				};
+ 
+diff --git a/arch/arm64/boot/dts/freescale/imx8mq.dtsi b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
+index 7ce99c084e545..6eb5a98bb1bd4 100644
+--- a/arch/arm64/boot/dts/freescale/imx8mq.dtsi
++++ b/arch/arm64/boot/dts/freescale/imx8mq.dtsi
+@@ -593,7 +593,7 @@ ocotp: efuse@30350000 {
+ 				#address-cells = <1>;
+ 				#size-cells = <1>;
+ 
+-				imx8mq_uid: soc-uid@410 {
++				imx8mq_uid: soc-uid@4 {
+ 					reg = <0x4 0x8>;
+ 				};
+ 
 -- 
 2.39.2
 
