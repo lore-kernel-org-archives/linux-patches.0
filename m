@@ -1,28 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 9BA05BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:09:31 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 14AFFC433D2;
-	Tue,  7 Mar 2023 18:09:30 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 947A5BA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:09:34 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 13FA3C43443;
+	Tue,  7 Mar 2023 18:09:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212571;
-	bh=53k5W8iQlUmNaZVieKK5mVqIu8HV4ClWXO3qXynqBAA=;
+	s=korg; t=1678212574;
+	bh=QIY4WRLGyp1gduhGmVfQFdHf05jMUPSHY/6F033D5xo=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=FMlYHviMAgWtiR4PDWYJx/gG7bnbMtfy5TWQ6bApJJ3nJw/VIQtZoGbXLnw0U0rn7
-	 3H3kM5LVCnI2KtZKXAfbdjJ1iOlEdSmAIORbf5OysU9fZlcwM3CJxoS+Eks6UYNShb
-	 sJM/tIfgDt/I5dXtL6T4RyG7Qk7TU/R9KQ/PqbDM=
+	b=M/YuP6efyebaXrsrWlXeuUfFpS0D9+BwebKqirtKQYmkLfgKY7IS46JHIS4e+JR7K
+	 PSxDfKbkuyG/1YNYkiLH6SgGz9RWGyRPnqVWyNhk6njHWwBL+sQzvZf2TFJDZUme5l
+	 e3DPDxbvsfLtimkUQTznPlkMzVJ9d0N4t/IwPJPE=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Jiasheng Jiang <jiasheng@iscas.ac.cn>,
-	Stanislaw Gruszka <stf_xl@wp.pl>,
-	Kalle Valo <kvalo@kernel.org>,
+	Pietro Borrello <borrello@diag.uniroma1.it>,
+	Eric Dumazet <edumazet@google.com>,
+	"David S. Miller" <davem@davemloft.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 227/885] wifi: iwl3945: Add missing check for create_singlethread_workqueue
-Date: Tue,  7 Mar 2023 17:52:41 +0100
-Message-Id: <20230307170011.891954237@linuxfoundation.org>
+Subject: [PATCH 6.1 210/885] tap: tap_open(): correctly initialize socket uid
+Date: Tue,  7 Mar 2023 17:52:24 +0100
+Message-Id: <20230307170011.184886842@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,83 +36,45 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Jiasheng Jiang <jiasheng@iscas.ac.cn>
+From: Pietro Borrello <borrello@diag.uniroma1.it>
 
-[ Upstream commit 1fdeb8b9f29dfd64805bb49475ac7566a3cb06cb ]
+[ Upstream commit 66b2c338adce580dfce2199591e65e2bab889cff ]
 
-Add the check for the return value of the create_singlethread_workqueue
-in order to avoid NULL pointer dereference.
+sock_init_data() assumes that the `struct socket` passed in input is
+contained in a `struct socket_alloc` allocated with sock_alloc().
+However, tap_open() passes a `struct socket` embedded in a `struct
+tap_queue` allocated with sk_alloc().
+This causes a type confusion when issuing a container_of() with
+SOCK_INODE() in sock_init_data() which results in assigning a wrong
+sk_uid to the `struct sock` in input.
+On default configuration, the type confused field overlaps with
+padding bytes between `int vnet_hdr_sz` and `struct tap_dev __rcu
+*tap` in `struct tap_queue`, which makes the uid of all tap sockets 0,
+i.e., the root one.
+Fix the assignment by using sock_init_data_uid().
 
-Fixes: b481de9ca074 ("[IWLWIFI]: add iwlwifi wireless drivers")
-Signed-off-by: Jiasheng Jiang <jiasheng@iscas.ac.cn>
-Acked-by: Stanislaw Gruszka <stf_xl@wp.pl>
-Signed-off-by: Kalle Valo <kvalo@kernel.org>
-Link: https://lore.kernel.org/r/20230208063032.42763-2-jiasheng@iscas.ac.cn
+Fixes: 86741ec25462 ("net: core: Add a UID field to struct sock.")
+Signed-off-by: Pietro Borrello <borrello@diag.uniroma1.it>
+Reviewed-by: Eric Dumazet <edumazet@google.com>
+Signed-off-by: David S. Miller <davem@davemloft.net>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/net/wireless/intel/iwlegacy/3945-mac.c | 16 ++++++++++++----
- 1 file changed, 12 insertions(+), 4 deletions(-)
+ drivers/net/tap.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/net/wireless/intel/iwlegacy/3945-mac.c b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
-index 7352d5b2095f4..9054a910ca357 100644
---- a/drivers/net/wireless/intel/iwlegacy/3945-mac.c
-+++ b/drivers/net/wireless/intel/iwlegacy/3945-mac.c
-@@ -3378,10 +3378,12 @@ static DEVICE_ATTR(dump_errors, 0200, NULL, il3945_dump_error_log);
-  *
-  *****************************************************************************/
- 
--static void
-+static int
- il3945_setup_deferred_work(struct il_priv *il)
- {
- 	il->workqueue = create_singlethread_workqueue(DRV_NAME);
-+	if (!il->workqueue)
-+		return -ENOMEM;
- 
- 	init_waitqueue_head(&il->wait_command_queue);
- 
-@@ -3398,6 +3400,8 @@ il3945_setup_deferred_work(struct il_priv *il)
- 	timer_setup(&il->watchdog, il_bg_watchdog, 0);
- 
- 	tasklet_setup(&il->irq_tasklet, il3945_irq_tasklet);
-+
-+	return 0;
- }
- 
- static void
-@@ -3717,7 +3721,10 @@ il3945_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 	}
- 
- 	il_set_rxon_channel(il, &il->bands[NL80211_BAND_2GHZ].channels[5]);
--	il3945_setup_deferred_work(il);
-+	err = il3945_setup_deferred_work(il);
-+	if (err)
-+		goto out_remove_sysfs;
-+
- 	il3945_setup_handlers(il);
- 	il_power_initialize(il);
- 
-@@ -3729,7 +3736,7 @@ il3945_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 
- 	err = il3945_setup_mac(il);
- 	if (err)
--		goto out_remove_sysfs;
-+		goto out_destroy_workqueue;
- 
- 	il_dbgfs_register(il, DRV_NAME);
- 
-@@ -3738,9 +3745,10 @@ il3945_pci_probe(struct pci_dev *pdev, const struct pci_device_id *ent)
- 
- 	return 0;
- 
--out_remove_sysfs:
-+out_destroy_workqueue:
- 	destroy_workqueue(il->workqueue);
- 	il->workqueue = NULL;
-+out_remove_sysfs:
- 	sysfs_remove_group(&pdev->dev.kobj, &il3945_attribute_group);
- out_release_irq:
- 	free_irq(il->pci_dev->irq, il);
+diff --git a/drivers/net/tap.c b/drivers/net/tap.c
+index 9e75ed3f08ce5..760d8d1b6cba4 100644
+--- a/drivers/net/tap.c
++++ b/drivers/net/tap.c
+@@ -533,7 +533,7 @@ static int tap_open(struct inode *inode, struct file *file)
+ 	q->sock.state = SS_CONNECTED;
+ 	q->sock.file = file;
+ 	q->sock.ops = &tap_socket_ops;
+-	sock_init_data(&q->sock, &q->sk);
++	sock_init_data_uid(&q->sock, &q->sk, inode->i_uid);
+ 	q->sk.sk_write_space = tap_sock_write_space;
+ 	q->sk.sk_destruct = tap_sock_destruct;
+ 	q->flags = IFF_VNET_HDR | IFF_NO_PI | IFF_TAP;
 -- 
 2.39.2
 
