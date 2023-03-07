@@ -1,29 +1,26 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id AC586BA49
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:36:56 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2BF1BC4339B;
-	Tue,  7 Mar 2023 18:36:55 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 280DEBA49
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:37:00 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6FCADC433D2;
+	Tue,  7 Mar 2023 18:36:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678214216;
-	bh=HXq/6ZjXuusXiycdbXpA5n7j8u0nZx0cU+AyOrSbcWs=;
+	s=korg; t=1678214220;
+	bh=pSxs59gEIRYE7s1dFnLwoAwmSb5+HPPPRBKc3pc4FcY=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=MCE7F0J2/8S2Qgnc9zFDKQk1HegdAqAKhdfPDvpa+lvZshXXk3emdFsvfiNHfmQ5p
-	 PtAys/yI8oyZCyEMKBEFGJtaJKFGp192PvU9FGqer3uXz4mzMxaclTlVHZjGyB49yy
-	 ZLwyCxC4ZJD46MOX17ZYVzFHlCAR1gMpGwH5Ojt4=
+	b=WpA3Fv3WGVCFrh3CssS0an1gTS416zaYG4YGtaaxnBvMWPhyy62IsSm6NDzRCNoqx
+	 EYT7oX2ZTmb729ujMfFRAFlCgsUVbj6OjasdLlz1b/+4Yf8PFJUIDPsrREqbonuzgN
+	 FOmCRZxc8DvNF825ZeUx/KznJhvDATAez3RcxYCo=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Mathieu Desnoyers <mathieu.desnoyers@efficios.com>,
-	Shuah Khan <shuah@kernel.org>,
-	linux-kselftest@vger.kernel.org,
-	Ingo Molnar <mingo@redhat.com>,
-	Shuah Khan <skhan@linuxfoundation.org>
-Subject: [PATCH 6.1 760/885] selftests: filesystems: Fix incorrect kernel headers search path
-Date: Tue,  7 Mar 2023 18:01:34 +0100
-Message-Id: <20230307170034.955326718@linuxfoundation.org>
+	Yang Jihong <yangjihong1@huawei.com>,
+	"Masami Hiramatsu (Google)" <mhiramat@kernel.org>
+Subject: [PATCH 6.1 734/885] x86/kprobes: Fix __recover_optprobed_insn check optimizing logic
+Date: Tue,  7 Mar 2023 18:01:08 +0100
+Message-Id: <20230307170033.867674607@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -37,57 +34,72 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
+From: Yang Jihong <yangjihong1@huawei.com>
 
-commit c2d3cf3653a8ff6e4b402d55e7f84790ac08a8ad upstream.
+commit 868a6fc0ca2407622d2833adefe1c4d284766c4c upstream.
 
-Use $(KHDR_INCLUDES) as lookup path for kernel headers. This prevents
-building against kernel headers from the build environment in scenarios
-where kernel headers are installed into a specific output directory
-(O=...).
+Since the following commit:
 
-Signed-off-by: Mathieu Desnoyers <mathieu.desnoyers@efficios.com>
-Cc: Shuah Khan <shuah@kernel.org>
-Cc: linux-kselftest@vger.kernel.org
-Cc: Ingo Molnar <mingo@redhat.com>
-Cc: <stable@vger.kernel.org> # 5.18+
-Signed-off-by: Shuah Khan <skhan@linuxfoundation.org>
+  commit f66c0447cca1 ("kprobes: Set unoptimized flag after unoptimizing code")
+
+modified the update timing of the KPROBE_FLAG_OPTIMIZED, a optimized_kprobe
+may be in the optimizing or unoptimizing state when op.kp->flags
+has KPROBE_FLAG_OPTIMIZED and op->list is not empty.
+
+The __recover_optprobed_insn check logic is incorrect, a kprobe in the
+unoptimizing state may be incorrectly determined as unoptimizing.
+As a result, incorrect instructions are copied.
+
+The optprobe_queued_unopt function needs to be exported for invoking in
+arch directory.
+
+Link: https://lore.kernel.org/all/20230216034247.32348-2-yangjihong1@huawei.com/
+
+Fixes: f66c0447cca1 ("kprobes: Set unoptimized flag after unoptimizing code")
+Cc: stable@vger.kernel.org
+Signed-off-by: Yang Jihong <yangjihong1@huawei.com>
+Acked-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
+Signed-off-by: Masami Hiramatsu (Google) <mhiramat@kernel.org>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- tools/testing/selftests/filesystems/Makefile          |    2 +-
- tools/testing/selftests/filesystems/binderfs/Makefile |    2 +-
- tools/testing/selftests/filesystems/epoll/Makefile    |    2 +-
- 3 files changed, 3 insertions(+), 3 deletions(-)
+ arch/x86/kernel/kprobes/opt.c |    4 ++--
+ include/linux/kprobes.h       |    1 +
+ kernel/kprobes.c              |    2 +-
+ 3 files changed, 4 insertions(+), 3 deletions(-)
 
---- a/tools/testing/selftests/filesystems/Makefile
-+++ b/tools/testing/selftests/filesystems/Makefile
-@@ -1,6 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
+--- a/arch/x86/kernel/kprobes/opt.c
++++ b/arch/x86/kernel/kprobes/opt.c
+@@ -46,8 +46,8 @@ unsigned long __recover_optprobed_insn(k
+ 		/* This function only handles jump-optimized kprobe */
+ 		if (kp && kprobe_optimized(kp)) {
+ 			op = container_of(kp, struct optimized_kprobe, kp);
+-			/* If op->list is not empty, op is under optimizing */
+-			if (list_empty(&op->list))
++			/* If op is optimized or under unoptimizing */
++			if (list_empty(&op->list) || optprobe_queued_unopt(op))
+ 				goto found;
+ 		}
+ 	}
+--- a/include/linux/kprobes.h
++++ b/include/linux/kprobes.h
+@@ -378,6 +378,7 @@ extern void opt_pre_handler(struct kprob
+ DEFINE_INSN_CACHE_OPS(optinsn);
  
--CFLAGS += -I../../../../usr/include/
-+CFLAGS += $(KHDR_INCLUDES)
- TEST_GEN_PROGS := devpts_pts
- TEST_GEN_PROGS_EXTENDED := dnotify_test
+ extern void wait_for_kprobe_optimizer(void);
++bool optprobe_queued_unopt(struct optimized_kprobe *op);
+ #else /* !CONFIG_OPTPROBES */
+ static inline void wait_for_kprobe_optimizer(void) { }
+ #endif /* CONFIG_OPTPROBES */
+--- a/kernel/kprobes.c
++++ b/kernel/kprobes.c
+@@ -662,7 +662,7 @@ void wait_for_kprobe_optimizer(void)
+ 	mutex_unlock(&kprobe_mutex);
+ }
  
---- a/tools/testing/selftests/filesystems/binderfs/Makefile
-+++ b/tools/testing/selftests/filesystems/binderfs/Makefile
-@@ -1,6 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
- 
--CFLAGS += -I../../../../../usr/include/ -pthread
-+CFLAGS += $(KHDR_INCLUDES) -pthread
- TEST_GEN_PROGS := binderfs_test
- 
- binderfs_test: binderfs_test.c ../../kselftest.h ../../kselftest_harness.h
---- a/tools/testing/selftests/filesystems/epoll/Makefile
-+++ b/tools/testing/selftests/filesystems/epoll/Makefile
-@@ -1,6 +1,6 @@
- # SPDX-License-Identifier: GPL-2.0
- 
--CFLAGS += -I../../../../../usr/include/
-+CFLAGS += $(KHDR_INCLUDES)
- LDLIBS += -lpthread
- TEST_GEN_PROGS := epoll_wakeup_test
+-static bool optprobe_queued_unopt(struct optimized_kprobe *op)
++bool optprobe_queued_unopt(struct optimized_kprobe *op)
+ {
+ 	struct optimized_kprobe *_op;
  
 
 
