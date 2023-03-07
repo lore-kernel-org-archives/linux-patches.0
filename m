@@ -1,29 +1,28 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id D9FFABA44
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:52:59 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1B49EC433EF;
-	Tue,  7 Mar 2023 17:52:58 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id B870DBA44
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 17:53:02 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 1E3E4C433EF;
+	Tue,  7 Mar 2023 17:53:01 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678211579;
-	bh=P6HOpyN/XyldF+qZ1RMx9qaU0NScjd4vs8p3ZGSYO3c=;
+	s=korg; t=1678211582;
+	bh=Slb1EbNJeRZfPyJ2hMNbgXRGYunRv4GUgNpaDaevwM0=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=ozOQ1X1kscCx+muSJgbr9ec1gsxXecJwiLaDUA8+QYWTm8LlIMQSWaX1A3XhozVy5
-	 B7TqHsfhtUrrdA+rwN+4fK8LrewAqc1dg/QWZ0MHKfRjM/O7A5K9M7BYKKwdr/83un
-	 g9hsu/pY7jC3fD/vjOxLAqltUIMebkTzB4nyazWU=
+	b=GcQNtuGMhFZdUvc945/mxhcD1ptLTb3lpxMHGyHmqgs43Kxs/VL7DLhi7izmMklyA
+	 V8tx07EMWfOBXlu1GRLF3fqaFbau1VEn6VSAllbgISCL2sL6QoCs1aKXoxqhWDwBmG
+	 o9UPha+i/v0oZ7SRjDr3fk3s8NHMBHLt3a5ysC6w=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Manish Chopra <manishc@marvell.com>,
-	Bhaskar Upadhaya <bupadhaya@marvell.com>,
-	"David S. Miller" <davem@davemloft.net>,
-	Alok Prasad <palok@marvell.com>,
-	Ariel Elior <aelior@marvell.com>
-Subject: [PATCH 6.2 0909/1001] qede: fix interrupt coalescing configuration
-Date: Tue,  7 Mar 2023 18:01:21 +0100
-Message-Id: <20230307170101.483134094@linuxfoundation.org>
+	syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com,
+	stable@kernel.org,
+	Jun Nie <jun.nie@linaro.org>,
+	Theodore Tso <tytso@mit.edu>
+Subject: [PATCH 6.2 0892/1001] ext4: optimize ea_inode block expansion
+Date: Tue,  7 Mar 2023 18:01:04 +0100
+Message-Id: <20230307170100.667970785@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170022.094103862@linuxfoundation.org>
 References: <20230307170022.094103862@linuxfoundation.org>
@@ -37,52 +36,95 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Manish Chopra <manishc@marvell.com>
+From: Jun Nie <jun.nie@linaro.org>
 
-commit 908d4bb7c54caa58253a363d63e797a468eaf321 upstream.
+commit 1e9d62d252812575ded7c620d8fc67c32ff06c16 upstream.
 
-On default driver load device gets configured with unexpected
-higher interrupt coalescing values instead of default expected
-values as memory allocated from krealloc() is not supposed to
-be zeroed out and may contain garbage values.
+Copy ea data from inode entry when expanding ea block if possible.
+Then remove the ea entry if expansion success. Thus memcpy to a
+temporary buffer may be avoided.
 
-Fix this by allocating the memory of required size first with
-kcalloc() and then use krealloc() to resize and preserve the
-contents across down/up of the interface.
+If the expansion fails, we do not need to recovery the removed ea
+entry neither in this way.
 
-Signed-off-by: Manish Chopra <manishc@marvell.com>
-Fixes: b0ec5489c480 ("qede: preserve per queue stats across up/down of interface")
-Cc: stable@vger.kernel.org
-Cc: Bhaskar Upadhaya <bupadhaya@marvell.com>
-Cc: David S. Miller <davem@davemloft.net>
-Link: https://bugzilla.redhat.com/show_bug.cgi?id=2160054
-Signed-off-by: Alok Prasad <palok@marvell.com>
-Signed-off-by: Ariel Elior <aelior@marvell.com>
-Signed-off-by: David S. Miller <davem@davemloft.net>
+Reported-by: syzbot+2dacb8f015bf1420155f@syzkaller.appspotmail.com
+Link: https://syzkaller.appspot.com/bug?id=3613786cb88c93aa1c6a279b1df6a7b201347d08
+Link: https://lore.kernel.org/r/20230103014517.495275-2-jun.nie@linaro.org
+Cc: stable@kernel.org
+Signed-off-by: Jun Nie <jun.nie@linaro.org>
+Signed-off-by: Theodore Ts'o <tytso@mit.edu>
 Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 ---
- drivers/net/ethernet/qlogic/qede/qede_main.c |   11 +++++++++--
- 1 file changed, 9 insertions(+), 2 deletions(-)
+ fs/ext4/xattr.c |   28 +++++++++++++++++-----------
+ 1 file changed, 17 insertions(+), 11 deletions(-)
 
---- a/drivers/net/ethernet/qlogic/qede/qede_main.c
-+++ b/drivers/net/ethernet/qlogic/qede/qede_main.c
-@@ -970,8 +970,15 @@ static int qede_alloc_fp_array(struct qe
- 		goto err;
+--- a/fs/ext4/xattr.c
++++ b/fs/ext4/xattr.c
+@@ -2567,9 +2567,8 @@ static int ext4_xattr_move_to_block(hand
+ 
+ 	is = kzalloc(sizeof(struct ext4_xattr_ibody_find), GFP_NOFS);
+ 	bs = kzalloc(sizeof(struct ext4_xattr_block_find), GFP_NOFS);
+-	buffer = kvmalloc(value_size, GFP_NOFS);
+ 	b_entry_name = kmalloc(entry->e_name_len + 1, GFP_NOFS);
+-	if (!is || !bs || !buffer || !b_entry_name) {
++	if (!is || !bs || !b_entry_name) {
+ 		error = -ENOMEM;
+ 		goto out;
+ 	}
+@@ -2581,12 +2580,18 @@ static int ext4_xattr_move_to_block(hand
+ 
+ 	/* Save the entry name and the entry value */
+ 	if (entry->e_value_inum) {
++		buffer = kvmalloc(value_size, GFP_NOFS);
++		if (!buffer) {
++			error = -ENOMEM;
++			goto out;
++		}
++
+ 		error = ext4_xattr_inode_get(inode, entry, buffer, value_size);
+ 		if (error)
+ 			goto out;
+ 	} else {
+ 		size_t value_offs = le16_to_cpu(entry->e_value_offs);
+-		memcpy(buffer, (void *)IFIRST(header) + value_offs, value_size);
++		buffer = (void *)IFIRST(header) + value_offs;
  	}
  
--	mem = krealloc(edev->coal_entry, QEDE_QUEUE_CNT(edev) *
--		       sizeof(*edev->coal_entry), GFP_KERNEL);
-+	if (!edev->coal_entry) {
-+		mem = kcalloc(QEDE_MAX_RSS_CNT(edev),
-+			      sizeof(*edev->coal_entry), GFP_KERNEL);
-+	} else {
-+		mem = krealloc(edev->coal_entry,
-+			       QEDE_QUEUE_CNT(edev) * sizeof(*edev->coal_entry),
-+			       GFP_KERNEL);
-+	}
+ 	memcpy(b_entry_name, entry->e_name, entry->e_name_len);
+@@ -2601,25 +2606,26 @@ static int ext4_xattr_move_to_block(hand
+ 	if (error)
+ 		goto out;
+ 
+-	/* Remove the chosen entry from the inode */
+-	error = ext4_xattr_ibody_set(handle, inode, &i, is);
+-	if (error)
+-		goto out;
+-
+ 	i.value = buffer;
+ 	i.value_len = value_size;
+ 	error = ext4_xattr_block_find(inode, &i, bs);
+ 	if (error)
+ 		goto out;
+ 
+-	/* Add entry which was removed from the inode into the block */
++	/* Move ea entry from the inode into the block */
+ 	error = ext4_xattr_block_set(handle, inode, &i, bs);
+ 	if (error)
+ 		goto out;
+-	error = 0;
 +
- 	if (!mem) {
- 		DP_ERR(edev, "coalesce entry allocation failed\n");
- 		kfree(edev->coal_entry);
++	/* Remove the chosen entry from the inode */
++	i.value = NULL;
++	i.value_len = 0;
++	error = ext4_xattr_ibody_set(handle, inode, &i, is);
++
+ out:
+ 	kfree(b_entry_name);
+-	kvfree(buffer);
++	if (entry->e_value_inum && buffer)
++		kvfree(buffer);
+ 	if (is)
+ 		brelse(is->iloc.bh);
+ 	if (bs)
 
 
