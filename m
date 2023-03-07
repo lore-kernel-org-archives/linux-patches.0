@@ -1,28 +1,27 @@
 Received: from smtp.kernel.org (aws-us-west-2-korg-mail-1.web.codeaurora.org [10.30.226.201])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 701F3BA45
-	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:08:48 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id C257EC4339B;
-	Tue,  7 Mar 2023 18:08:47 +0000 (UTC)
+	by smtp.subspace.kernel.org (Postfix) with ESMTPS id 7B36DBA45
+	for <patches@lists.linux.dev>; Tue,  7 Mar 2023 18:08:51 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id D38B0C433EF;
+	Tue,  7 Mar 2023 18:08:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-	s=korg; t=1678212528;
-	bh=/gXLjJrSdJ8V+i+NJPjzu4J4scImOg5kv0BpxiEY7T4=;
+	s=korg; t=1678212531;
+	bh=hX/3mzW5bNUoRzTByddKoMTnd76YycMhD/epkZ5Uy40=;
 	h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-	b=bY1NjGU6zXDg85deHvAtCuP7laezSB2eU2lCF+S9QrARSFzW7XW2MJ8CIj95xCPhR
-	 UzDRR2agzShnQb9wdCycObebAdfRxTXqUyovcW70V+gKvW6nUgpnSOY5uKuEGmJLAr
-	 9A2IcptvtAbYdKqrs1HHn7D3msWfiGY/Pso0kIHI=
+	b=ISKo2QkCZAXp485EOLmy7W96tMs9QfBatqxAygHzNAxNnxb2s94hZC01Nh53PKRNq
+	 pDFwArKGo6s5y7w1CATo+igFqcln3ik5xJxpUbuSOE7UAqFpYUVLy2U4XXjVpwBA2Z
+	 XQcOxhYaoP0RA9uTIhYmTqS78ulM3FMVB0Ju1M34=
 From: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
 To: stable@vger.kernel.org
 Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
 	patches@lists.linux.dev,
-	Artem Savkov <asavkov@redhat.com>,
-	Andrii Nakryiko <andrii@kernel.org>,
-	KP Singh <kpsingh@kernel.org>,
+	"Daniel T. Lee" <danieltimlee@gmail.com>,
+	Daniel Borkmann <daniel@iogearbox.net>,
 	Sasha Levin <sashal@kernel.org>
-Subject: [PATCH 6.1 182/885] selftests/bpf: Use consistent build-id type for liburandom_read.so
-Date: Tue,  7 Mar 2023 17:51:56 +0100
-Message-Id: <20230307170009.899849165@linuxfoundation.org>
+Subject: [PATCH 6.1 183/885] selftests/bpf: Fix vmtest static compilation error
+Date: Tue,  7 Mar 2023 17:51:57 +0100
+Message-Id: <20230307170009.946921875@linuxfoundation.org>
 X-Mailer: git-send-email 2.39.2
 In-Reply-To: <20230307170001.594919529@linuxfoundation.org>
 References: <20230307170001.594919529@linuxfoundation.org>
@@ -36,48 +35,57 @@ MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-From: Artem Savkov <asavkov@redhat.com>
+From: Daniel T. Lee <danieltimlee@gmail.com>
 
-[ Upstream commit 61fc5e66f755db24d27ba37ce1ee4873def1a074 ]
+[ Upstream commit 2514a31241e1e9067d379e0fbdb60e4bc2bf4659 ]
 
-lld produces "fast" style build-ids by default, which is inconsistent
-with ld's "sha1" style. Explicitly specify build-id style to be "sha1"
-when linking liburandom_read.so the same way it is already done for
-urandom_read.
+As stated in README.rst, in order to resolve errors with linker errors,
+'LDLIBS=-static' should be used. Most problems will be solved by this
+option, but in the case of urandom_read, this won't fix the problem. So
+the Makefile is currently implemented to strip the 'static' option when
+compiling the urandom_read. However, stripping this static option isn't
+configured properly on $(LDLIBS) correctly, which is now causing errors
+on static compilation.
 
-Signed-off-by: Artem Savkov <asavkov@redhat.com>
-Signed-off-by: Andrii Nakryiko <andrii@kernel.org>
-Acked-by: KP Singh <kpsingh@kernel.org>
-Link: https://lore.kernel.org/bpf/20221104094016.102049-1-asavkov@redhat.com
-Stable-dep-of: 2514a31241e1 ("selftests/bpf: Fix vmtest static compilation error")
+    # LDLIBS=-static ./vmtest.sh
+    ld.lld: error: attempted static link of dynamic object liburandom_read.so
+    clang: error: linker command failed with exit code 1 (use -v to see invocation)
+    make: *** [Makefile:190: /linux/tools/testing/selftests/bpf/urandom_read] Error 1
+    make: *** Waiting for unfinished jobs....
+
+This commit fixes this problem by configuring the strip with $(LDLIBS).
+
+Fixes: 68084a136420 ("selftests/bpf: Fix building bpf selftests statically")
+Signed-off-by: Daniel T. Lee <danieltimlee@gmail.com>
+Signed-off-by: Daniel Borkmann <daniel@iogearbox.net>
+Link: https://lore.kernel.org/bpf/20230125100440.21734-1-danieltimlee@gmail.com
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- tools/testing/selftests/bpf/Makefile | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ tools/testing/selftests/bpf/Makefile | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
 diff --git a/tools/testing/selftests/bpf/Makefile b/tools/testing/selftests/bpf/Makefile
-index e6cf21fad69f0..5a8fd8b3fb4a5 100644
+index 5a8fd8b3fb4a5..1fda7448f4a2f 100644
 --- a/tools/testing/selftests/bpf/Makefile
 +++ b/tools/testing/selftests/bpf/Makefile
-@@ -182,14 +182,15 @@ endif
+@@ -181,14 +181,15 @@ endif
+ # do not fail. Static builds leave urandom_read relying on system-wide shared libraries.
  $(OUTPUT)/liburandom_read.so: urandom_read_lib1.c urandom_read_lib2.c
  	$(call msg,LIB,,$@)
- 	$(Q)$(CLANG) $(filter-out -static,$(CFLAGS) $(LDFLAGS)) $^ $(LDLIBS)   \
--		     -fuse-ld=$(LLD) -Wl,-znoseparate-code -fPIC -shared -o $@
-+		     -fuse-ld=$(LLD) -Wl,-znoseparate-code -Wl,--build-id=sha1 \
-+		     -fPIC -shared -o $@
+-	$(Q)$(CLANG) $(filter-out -static,$(CFLAGS) $(LDFLAGS)) $^ $(LDLIBS)   \
++	$(Q)$(CLANG) $(filter-out -static,$(CFLAGS) $(LDFLAGS))   \
++		     $^ $(filter-out -static,$(LDLIBS))	     \
+ 		     -fuse-ld=$(LLD) -Wl,-znoseparate-code -Wl,--build-id=sha1 \
+ 		     -fPIC -shared -o $@
  
  $(OUTPUT)/urandom_read: urandom_read.c urandom_read_aux.c $(OUTPUT)/liburandom_read.so
  	$(call msg,BINARY,,$@)
  	$(Q)$(CLANG) $(filter-out -static,$(CFLAGS) $(LDFLAGS)) $(filter %.c,$^) \
- 		     liburandom_read.so $(LDLIBS)			       \
--		     -fuse-ld=$(LLD) -Wl,-znoseparate-code		       \
--		     -Wl,-rpath=. -Wl,--build-id=sha1 -o $@
-+		     -fuse-ld=$(LLD) -Wl,-znoseparate-code -Wl,--build-id=sha1 \
-+		     -Wl,-rpath=. -o $@
+-		     liburandom_read.so $(LDLIBS)			       \
++		     liburandom_read.so $(filter-out -static,$(LDLIBS))	     \
+ 		     -fuse-ld=$(LLD) -Wl,-znoseparate-code -Wl,--build-id=sha1 \
+ 		     -Wl,-rpath=. -o $@
  
- $(OUTPUT)/sign-file: ../../../../scripts/sign-file.c
- 	$(call msg,SIGN-FILE,,$@)
 -- 
 2.39.2
 
